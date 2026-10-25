@@ -1,0 +1,286 @@
+{
+  "root": {
+    "ticker": "KD",
+    "name": "キンドリル・ホールディングス",
+    "cik": 1867072,
+    "name_en": "Kyndryl Holdings"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "AMZN",
+      "ticker": "AMZN",
+      "name": "アマゾン・ウェブ・サービス",
+      "sub": "クラウド",
+      "sub_en": "Cloud",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "AWSと提携している",
+          "text_en": "Kyndryl has a partnership with Amazon Web Services",
+          "source": {
+            "label": "Kyndryl Holdings 10-K(2026年3月期)",
+            "label_en": "Kyndryl Holdings 10-K (fiscal year ended March 31, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1867072/000110465926067881/kd-20260331x10k.htm",
+            "level": "official",
+            "date": "2026-05-29",
+            "quote": "Our strategic relationships with hyperscalers, such as Amazon Web Services, Google Cloud and Microsoft, allow us to expand the role we play with existing customers and access new customers and market opportunities."
+          }
+        }
+      ],
+      "name_en": "Amazon Web Services"
+    },
+    {
+      "id": "GOOGL",
+      "ticker": "GOOGL",
+      "name": "グーグル・クラウド",
+      "sub": "クラウド",
+      "sub_en": "Cloud",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "グーグル・クラウドと提携している",
+          "text_en": "Kyndryl has a partnership with Google Cloud",
+          "source": {
+            "label": "Kyndryl Holdings 10-K(2026年3月期)",
+            "label_en": "Kyndryl Holdings 10-K (fiscal year ended March 31, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1867072/000110465926067881/kd-20260331x10k.htm",
+            "level": "official",
+            "date": "2026-05-29",
+            "quote": "Our strategic relationships with hyperscalers, such as Amazon Web Services, Google Cloud and Microsoft, allow us to expand the role we play with existing customers and access new customers and market opportunities."
+          }
+        }
+      ],
+      "name_en": "Google Cloud"
+    },
+    {
+      "id": "MSFT",
+      "ticker": "MSFT",
+      "name": "マイクロソフト",
+      "sub": "クラウド",
+      "sub_en": "Cloud",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "マイクロソフトと提携している",
+          "text_en": "Kyndryl has a partnership with Microsoft",
+          "source": {
+            "label": "Kyndryl Holdings 10-K(2026年3月期)",
+            "label_en": "Kyndryl Holdings 10-K (fiscal year ended March 31, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1867072/000110465926067881/kd-20260331x10k.htm",
+            "level": "official",
+            "date": "2026-05-29",
+            "quote": "Our strategic relationships with hyperscalers, such as Amazon Web Services, Google Cloud and Microsoft, allow us to expand the role we play with existing customers and access new customers and market opportunities."
+          }
+        }
+      ],
+      "name_en": "Microsoft"
+    },
+    {
+      "id": "CSCO",
+      "ticker": "CSCO",
+      "name": "シスコシステムズ",
+      "sub": "ネットワーク",
+      "sub_en": "Networking",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "シスコと提携している",
+          "text_en": "Kyndryl has a partnership with Cisco",
+          "source": {
+            "label": "Kyndryl Holdings 10-K(2026年3月期)",
+            "label_en": "Kyndryl Holdings 10-K (fiscal year ended March 31, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1867072/000110465926067881/kd-20260331x10k.htm",
+            "level": "official",
+            "date": "2026-05-29",
+            "quote": "We have several key partnerships, including with Amazon Web Services, Broadcom, Cisco, Dell, Dynatrace, Google Cloud, HPE, Microsoft, NVIDIA, Oracle, Palo Alto Networks, Red Hat, Rubrik, SAP and ServiceNow that accelerate market participation, joint solution development and investment in skills and certification enhancements for Kyndryl."
+          }
+        }
+      ],
+      "name_en": "Cisco"
+    },
+    {
+      "id": "DELL",
+      "ticker": "DELL",
+      "name": "デル・テクノロジーズ",
+      "sub": "サーバー・ストレージ",
+      "sub_en": "Servers & storage",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "デルと提携している",
+          "text_en": "Kyndryl has a partnership with Dell",
+          "source": {
+            "label": "Kyndryl Holdings 10-K(2026年3月期)",
+            "label_en": "Kyndryl Holdings 10-K (fiscal year ended March 31, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1867072/000110465926067881/kd-20260331x10k.htm",
+            "level": "official",
+            "date": "2026-05-29",
+            "quote": "We have several key partnerships, including with Amazon Web Services, Broadcom, Cisco, Dell, Dynatrace, Google Cloud, HPE, Microsoft, NVIDIA, Oracle, Palo Alto Networks, Red Hat, Rubrik, SAP and ServiceNow that accelerate market participation, joint solution development and investment in skills and certification enhancements for Kyndryl."
+          }
+        }
+      ],
+      "name_en": "Dell"
+    },
+    {
+      "id": "HPE",
+      "ticker": "HPE",
+      "name": "ヒューレット・パッカード・エンタープライズ",
+      "sub": "サーバー・ストレージ",
+      "sub_en": "Servers & storage",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "HPEと提携している",
+          "text_en": "Kyndryl has a partnership with HPE",
+          "source": {
+            "label": "Kyndryl Holdings 10-K(2026年3月期)",
+            "label_en": "Kyndryl Holdings 10-K (fiscal year ended March 31, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1867072/000110465926067881/kd-20260331x10k.htm",
+            "level": "official",
+            "date": "2026-05-29",
+            "quote": "We have several key partnerships, including with Amazon Web Services, Broadcom, Cisco, Dell, Dynatrace, Google Cloud, HPE, Microsoft, NVIDIA, Oracle, Palo Alto Networks, Red Hat, Rubrik, SAP and ServiceNow that accelerate market participation, joint solution development and investment in skills and certification enhancements for Kyndryl."
+          }
+        }
+      ],
+      "name_en": "HPE"
+    },
+    {
+      "id": "ORCL",
+      "ticker": "ORCL",
+      "name": "オラクル",
+      "sub": "データベース",
+      "sub_en": "Database",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "オラクルと提携している",
+          "text_en": "Kyndryl has a partnership with Oracle",
+          "source": {
+            "label": "Kyndryl Holdings 10-K(2026年3月期)",
+            "label_en": "Kyndryl Holdings 10-K (fiscal year ended March 31, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1867072/000110465926067881/kd-20260331x10k.htm",
+            "level": "official",
+            "date": "2026-05-29",
+            "quote": "We have several key partnerships, including with Amazon Web Services, Broadcom, Cisco, Dell, Dynatrace, Google Cloud, HPE, Microsoft, NVIDIA, Oracle, Palo Alto Networks, Red Hat, Rubrik, SAP and ServiceNow that accelerate market participation, joint solution development and investment in skills and certification enhancements for Kyndryl."
+          }
+        }
+      ],
+      "name_en": "Oracle"
+    },
+    {
+      "id": "NVDA",
+      "ticker": "NVDA",
+      "name": "エヌビディア",
+      "sub": "AI半導体",
+      "sub_en": "AI chips",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "エヌビディアと提携している",
+          "text_en": "Kyndryl has a partnership with NVIDIA",
+          "source": {
+            "label": "Kyndryl Holdings 10-K(2026年3月期)",
+            "label_en": "Kyndryl Holdings 10-K (fiscal year ended March 31, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1867072/000110465926067881/kd-20260331x10k.htm",
+            "level": "official",
+            "date": "2026-05-29",
+            "quote": "We have several key partnerships, including with Amazon Web Services, Broadcom, Cisco, Dell, Dynatrace, Google Cloud, HPE, Microsoft, NVIDIA, Oracle, Palo Alto Networks, Red Hat, Rubrik, SAP and ServiceNow that accelerate market participation, joint solution development and investment in skills and certification enhancements for Kyndryl."
+          }
+        }
+      ],
+      "name_en": "NVIDIA"
+    },
+    {
+      "id": "SAP",
+      "ticker": "SAP",
+      "name": "エスエーピー",
+      "sub": "業務ソフト",
+      "sub_en": "Enterprise software",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "SAPと提携している",
+          "text_en": "Kyndryl has a partnership with SAP",
+          "source": {
+            "label": "Kyndryl Holdings 10-K(2026年3月期)",
+            "label_en": "Kyndryl Holdings 10-K (fiscal year ended March 31, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1867072/000110465926067881/kd-20260331x10k.htm",
+            "level": "official",
+            "date": "2026-05-29",
+            "quote": "We have several key partnerships, including with Amazon Web Services, Broadcom, Cisco, Dell, Dynatrace, Google Cloud, HPE, Microsoft, NVIDIA, Oracle, Palo Alto Networks, Red Hat, Rubrik, SAP and ServiceNow that accelerate market participation, joint solution development and investment in skills and certification enhancements for Kyndryl."
+          }
+        }
+      ],
+      "name_en": "SAP"
+    },
+    {
+      "id": "NOW",
+      "ticker": "NOW",
+      "name": "サービスナウ",
+      "sub": "業務ソフト",
+      "sub_en": "Enterprise software",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "サービスナウと提携している",
+          "text_en": "Kyndryl has a partnership with ServiceNow",
+          "source": {
+            "label": "Kyndryl Holdings 10-K(2026年3月期)",
+            "label_en": "Kyndryl Holdings 10-K (fiscal year ended March 31, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1867072/000110465926067881/kd-20260331x10k.htm",
+            "level": "official",
+            "date": "2026-05-29",
+            "quote": "We have several key partnerships, including with Amazon Web Services, Broadcom, Cisco, Dell, Dynatrace, Google Cloud, HPE, Microsoft, NVIDIA, Oracle, Palo Alto Networks, Red Hat, Rubrik, SAP and ServiceNow that accelerate market participation, joint solution development and investment in skills and certification enhancements for Kyndryl."
+          }
+        }
+      ],
+      "name_en": "ServiceNow"
+    },
+    {
+      "id": "IBM",
+      "ticker": "IBM",
+      "name": "アイビーエム",
+      "sub": "元親会社",
+      "sub_en": "Former parent",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "元親会社IBMのコンテンツを使う顧客向けの契約収益が減ってきている",
+          "text_en": "Revenue from customers consuming IBM content through Kyndryl contracts has declined",
+          "source": {
+            "label": "Kyndryl Holdings 10-K(2026年3月期)",
+            "label_en": "Kyndryl Holdings 10-K (fiscal year ended March 31, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1867072/000110465926067881/kd-20260331x10k.htm",
+            "level": "official",
+            "date": "2026-05-29",
+            "quote": "For example, as our relationship with IBM following the Spin-off continues to evolve, the amount of revenue generated by customers consuming IBM’s content through our service contracts has declined and may continue to decline, while having a limited impact on profitability."
+          }
+        }
+      ],
+      "name_en": "IBM"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

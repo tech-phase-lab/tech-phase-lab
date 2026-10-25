@@ -1,0 +1,219 @@
+{
+  "root": {
+    "ticker": "OLED",
+    "name": "ユニバーサル・ディスプレイ",
+    "cik": 1005284,
+    "name_en": "Universal Display"
+  },
+  "rows": [
+    {
+      "ja": "供給元",
+      "en": "Suppliers",
+      "above": true
+    },
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "PPG",
+      "ticker": "PPG",
+      "name": "ピーピージー",
+      "sub": "材料製造パートナー",
+      "sub_en": "Materials manufacturer",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "25年以上の製造パートナーとして有機EL材料の製造を担う",
+          "text_en": "PPG has manufactured the materials for over 25 years",
+          "source": {
+            "label": "Universal Display 10-K(2025年12月期)",
+            "label_en": "Universal Display 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1005284/000119312526059371/oled-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Our manufacturing partner of over 25 years, PPG, continues to manufacture our materials for us"
+          }
+        }
+      ],
+      "name_en": "PPG Industries"
+    },
+    {
+      "id": "SDC",
+      "ticker": "Samsung Display",
+      "name": "サムスンディスプレイ",
+      "sub": "有機EL パネル",
+      "sub_en": "OLED panels",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "主要な顧客として売上の10%超を占める",
+          "text_en": "Samsung Display is a customer providing over 10% of revenue",
+          "source": {
+            "label": "Universal Display 10-K(2025年12月期)",
+            "label_en": "Universal Display 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1005284/000119312526059371/oled-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "In 2025, we received a majority of our revenue from three customers domiciled in the Asia-Pacific region, BOE, LG Display and SDC, from each of which we had revenue in excess of 10% of our consolidated revenue."
+          }
+        }
+      ],
+      "name_en": "Samsung Display"
+    },
+    {
+      "id": "LPL",
+      "ticker": "LPL",
+      "name": "LGディスプレイ",
+      "sub": "有機EL パネル",
+      "sub_en": "OLED panels",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "特許ライセンスと材料供給の契約を結ぶ顧客である",
+          "text_en": "LG Display holds a patent license and a supply agreement with the company",
+          "source": {
+            "label": "Universal Display 10-K(2025年12月期)",
+            "label_en": "Universal Display 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1005284/000119312526059371/oled-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "The patent license agreement provides LG Display a non-exclusive, royalty bearing portfolio license to make and sell OLED displays under their patent portfolio."
+          }
+        }
+      ],
+      "name_en": "LG Display"
+    },
+    {
+      "id": "BOE",
+      "ticker": "BOE Technology",
+      "name": "京東方科技集団",
+      "sub": "有機EL パネル",
+      "sub_en": "OLED panels",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "特許のライセンスを受けて有機EL材料も供給している",
+          "text_en": "BOE holds patent license rights and is supplied OLED materials",
+          "source": {
+            "label": "Universal Display 10-K(2025年12月期)",
+            "label_en": "Universal Display 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1005284/000119312526059371/oled-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Under these agreements, we have granted BOE non-exclusive license rights under various patents owned or controlled by us to manufacture and sell OLED display products."
+          }
+        }
+      ],
+      "name_en": "BOE Technology"
+    },
+    {
+      "id": "TIANMA",
+      "ticker": "Tianma",
+      "name": "天馬微電子",
+      "sub": "有機EL パネル",
+      "sub_en": "OLED panels",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "2025年に特許ライセンスと材料購入の長期契約を結んだ",
+          "text_en": "The company signed long-term license and material purchase agreements with Tianma in 2025",
+          "source": {
+            "label": "Universal Display 10-K(2025年12月期)",
+            "label_en": "Universal Display 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1005284/000119312526059371/oled-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "In 2025, we entered into long-term, multi-year OLED patent license and material purchase agreements with Tianma."
+          }
+        }
+      ],
+      "name_en": "Tianma Micro-electronics"
+    },
+    {
+      "id": "VISIONOX",
+      "ticker": "Visionox",
+      "name": "維信諾",
+      "sub": "有機EL パネル",
+      "sub_en": "OLED panels",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "2024年に複数年の新契約を結んだ",
+          "text_en": "The company entered into new multi-year agreements with Visionox in 2024",
+          "source": {
+            "label": "Universal Display 10-K(2025年12月期)",
+            "label_en": "Universal Display 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1005284/000119312526059371/oled-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "In 2024, we entered into new long-term, multi-year agreements with Visionox Technology, Inc. (Visionox)."
+          }
+        }
+      ],
+      "name_en": "Visionox Technology"
+    },
+    {
+      "id": "KONICA",
+      "ticker": "Konica Minolta",
+      "name": "コニカミノルタ",
+      "sub": "戦略的関係先",
+      "sub_en": "Strategic partner",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "戦略的な関係にあり、有機EL特許のライセンスも続けている",
+          "text_en": "Konica Minolta is a strategic relationship and a licensee of OLED patents",
+          "source": {
+            "label": "Universal Display 10-K(2025年12月期)",
+            "label_en": "Universal Display 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1005284/000119312526059371/oled-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "We also have strategic relationships with Kaneka, Konica Minolta and Sumitomo, and continue to license our OLED patents and technologies to these customers."
+          }
+        }
+      ],
+      "name_en": "Konica Minolta"
+    },
+    {
+      "id": "KANEKA",
+      "ticker": "Kaneka",
+      "name": "カネカ",
+      "sub": "戦略的関係先",
+      "sub_en": "Strategic partner",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "戦略的な関係にあり、有機EL特許のライセンスも続けている",
+          "text_en": "Kaneka is a strategic relationship and a licensee of OLED patents",
+          "source": {
+            "label": "Universal Display 10-K(2025年12月期)",
+            "label_en": "Universal Display 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1005284/000119312526059371/oled-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "We also have strategic relationships with Kaneka, Konica Minolta and Sumitomo, and continue to license our OLED patents and technologies to these customers."
+          }
+        }
+      ],
+      "name_en": "Kaneka"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

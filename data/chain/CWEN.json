@@ -1,0 +1,118 @@
+{
+  "root": {
+    "ticker": "CWEN",
+    "name": "クリアウェイ・エナジー",
+    "cik": 1567683,
+    "name_en": "Clearway Energy"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "SCE",
+      "ticker": "Southern",
+      "name": "サザンカリフォルニア・エジソン",
+      "sub": "電力会社",
+      "sub_en": "Electric utility",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "最大の顧客で、連結売上高の約22%を占める",
+          "text_en": "SCE is the largest customer, at approximately 22% of consolidated revenue",
+          "source": {
+            "label": "Clearway Energy 10-K(2025-12-31)",
+            "label_en": "Clearway Energy 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1567683/000162828026010952/cwen-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "During the year ended December 31, 2025, the Company’s largest customers as a percentage of consolidated revenue were SCE and PG&E, which represented approximately 22% and 16%, respectively, with the next five largest customers representing a total of approximately 26% of consolidated revenue."
+          }
+        }
+      ],
+      "name_en": "Southern California Edison"
+    },
+    {
+      "id": "PGE",
+      "ticker": "PCG",
+      "name": "パシフィック・ガス・アンド・エレクトリック",
+      "sub": "電力会社",
+      "sub_en": "Electric utility",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "2番目に大きい顧客で、連結売上高の約16%を占める",
+          "text_en": "PG&E is the second largest customer, at approximately 16% of consolidated revenue",
+          "source": {
+            "label": "Clearway Energy 10-K(2025-12-31)",
+            "label_en": "Clearway Energy 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1567683/000162828026010952/cwen-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "During the year ended December 31, 2025, the Company’s largest customers as a percentage of consolidated revenue were SCE and PG&E, which represented approximately 22% and 16%, respectively, with the next five largest customers representing a total of approximately 26% of consolidated revenue."
+          }
+        }
+      ],
+      "name_en": "Pacific Gas and Electric"
+    },
+    {
+      "id": "SDGE",
+      "ticker": "San Diego Gas &",
+      "name": "サンディエゴ・ガス・アンド・エレクトリック",
+      "sub": "電力会社",
+      "sub_en": "Electric utility",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "カールズバッド発電所の電力の販売先である",
+          "text_en": "SDG&E is the counterparty for the Carlsbad facility",
+          "source": {
+            "label": "Clearway Energy 10-K(2025-12-31)",
+            "label_en": "Clearway Energy 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1567683/000162828026010952/cwen-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Carlsbad (b) Carlsbad, CA 523 523 100 % December 2018 SDG&E 2038"
+          }
+        }
+      ],
+      "name_en": "San Diego Gas & Electric"
+    },
+    {
+      "id": "CLP",
+      "ticker": "Connecticut Light",
+      "name": "コネチカット・ライト・アンド・パワー",
+      "sub": "電力会社",
+      "sub_en": "Electric utility",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "GenConnデボン発電所の電力の販売先である",
+          "text_en": "Connecticut Light & Power is the counterparty for the GenConn Devon facility",
+          "source": {
+            "label": "Clearway Energy 10-K(2025-12-31)",
+            "label_en": "Clearway Energy 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1567683/000162828026010952/cwen-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "GenConn Devon (b) Milford, CT 190 95 50 % June 2010 Connecticut Light & Power 2040"
+          }
+        }
+      ],
+      "name_en": "Connecticut Light & Power"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

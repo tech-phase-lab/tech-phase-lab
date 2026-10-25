@@ -1,0 +1,174 @@
+{
+  "root": {
+    "ticker": "SEDG",
+    "name": "ソーラーエッジ・テクノロジーズ",
+    "cik": 1419612,
+    "name_en": "SolarEdge Technologies"
+  },
+  "rows": [
+    {
+      "ja": "供給元",
+      "en": "Suppliers",
+      "above": true
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "TSLA",
+    "ENPH"
+  ],
+  "companies": [
+    {
+      "id": "JBL",
+      "ticker": "JBL",
+      "name": "ジェイビル",
+      "sub": "電子機器受託製造",
+      "sub_en": "Electronics manufacturing",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "太陽光製品の製造を委託している",
+          "text_en": "Contracts Jabil to manufacture its solar products",
+          "source": {
+            "label": "SolarEdge 10-K(2025年12月31日)",
+            "label_en": "SolarEdge 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1419612/000117891326000632/zk2634374.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "We currently contract to have our solar products manufactured by two of the world’s leading global electronics manufacturing service providers, Jabil Inc. (“Jabil”) and Flex Ltd. (“Flex”)."
+          }
+        }
+      ],
+      "name_en": "Jabil"
+    },
+    {
+      "id": "FLEX",
+      "ticker": "FLEX",
+      "name": "フレックス",
+      "sub": "電子機器受託製造",
+      "sub_en": "Electronics manufacturing",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "太陽光製品の製造を委託している",
+          "text_en": "Contracts Flex to manufacture its solar products",
+          "source": {
+            "label": "SolarEdge 10-K(2025年12月31日)",
+            "label_en": "SolarEdge 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1419612/000117891326000632/zk2634374.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "We currently contract to have our solar products manufactured by two of the world’s leading global electronics manufacturing service providers, Jabil Inc. (“Jabil”) and Flex Ltd. (“Flex”)."
+          }
+        }
+      ],
+      "name_en": "Flex"
+    },
+    {
+      "id": "TSLA",
+      "ticker": "TSLA",
+      "name": "テスラ",
+      "sub": "EV・蓄電池",
+      "sub_en": "EVs & storage",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "北米の住宅向け市場で競合する",
+          "text_en": "Competes in the North American residential market",
+          "source": {
+            "label": "SolarEdge 10-K(2025年12月31日)",
+            "label_en": "SolarEdge 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1419612/000117891326000632/zk2634374.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "In the North American residential market, we compete with manufacturers such as Tesla Inc. with traditional string-based solutions, as well as microinverter manufacturers such as Enphase Energy, Inc."
+          }
+        }
+      ],
+      "name_en": "Tesla"
+    },
+    {
+      "id": "ENPH",
+      "ticker": "ENPH",
+      "name": "エンフェーズ・エナジー",
+      "sub": "マイクロインバーター",
+      "sub_en": "Microinverters",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "北米の住宅向け市場でマイクロインバーターで競合する",
+          "text_en": "Competes with microinverters in the North American residential market",
+          "source": {
+            "label": "SolarEdge 10-K(2025年12月31日)",
+            "label_en": "SolarEdge 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1419612/000117891326000632/zk2634374.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "In the North American residential market, we compete with manufacturers such as Tesla Inc. with traditional string-based solutions, as well as microinverter manufacturers such as Enphase Energy, Inc."
+          }
+        }
+      ],
+      "name_en": "Enphase Energy"
+    },
+    {
+      "id": "SMA",
+      "ticker": "SMA Solar",
+      "name": "SMAソーラー・テクノロジー",
+      "sub": "インバーター",
+      "sub_en": "Inverters",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "住宅向けのインバーター・蓄電池で競合する",
+          "text_en": "Competes in residential inverters and batteries",
+          "source": {
+            "label": "SolarEdge 10-K(2025年12月31日)",
+            "label_en": "SolarEdge 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1419612/000117891326000632/zk2634374.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Our DC optimized residential system competes principally with solutions from traditional inverter and battery manufacturers, such as Sungrow Power Supply Co., Ltd., Huawei Technologies Co. Ltd., Sigenergy Technology Co., Ltd., and SMA Solar Technology AG."
+          }
+        }
+      ],
+      "name_en": "SMA Solar Technology"
+    },
+    {
+      "id": "Sungrow",
+      "ticker": "Sungrow Power",
+      "name": "サングロー・パワー・サプライ",
+      "sub": "インバーター",
+      "sub_en": "Inverters",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "住宅向けのインバーター・蓄電池で競合する",
+          "text_en": "Competes in residential inverters and batteries",
+          "source": {
+            "label": "SolarEdge 10-K(2025年12月31日)",
+            "label_en": "SolarEdge 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1419612/000117891326000632/zk2634374.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Our DC optimized residential system competes principally with solutions from traditional inverter and battery manufacturers, such as Sungrow Power Supply Co., Ltd., Huawei Technologies Co. Ltd., Sigenergy Technology Co., Ltd., and SMA Solar Technology AG."
+          }
+        }
+      ],
+      "name_en": "Sungrow Power Supply"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

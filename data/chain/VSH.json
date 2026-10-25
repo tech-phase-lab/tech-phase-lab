@@ -1,0 +1,171 @@
+{
+  "root": {
+    "ticker": "VSH",
+    "name": "ビシェイ・インターテクノロジー",
+    "cik": 103730,
+    "name_en": "Vishay Intertechnology"
+  },
+  "rows": [
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "ON",
+    "STM",
+    "DIOD",
+    "AVGO"
+  ],
+  "companies": [
+    {
+      "id": "IFX",
+      "ticker": "Infineon",
+      "name": "インフィニオン・テクノロジーズ",
+      "sub": "パワー半導体",
+      "sub_en": "Power semiconductors",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "MOSFET分野の主な競合企業として挙げられている",
+          "text_en": "Named as a primary MOSFET competitor",
+          "source": {
+            "label": "ビシェイ・インターテクノロジー 10-K(2025年12月31日)",
+            "label_en": "Vishay Intertechnology 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/103730/000010373026000019/form10k.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "MOSFETs: Infineon, Nexperia, ON Semiconductor, Renesas, STMicroelectronics, Toshiba."
+          }
+        }
+      ],
+      "name_en": "Infineon Technologies"
+    },
+    {
+      "id": "ON",
+      "ticker": "ON",
+      "name": "オン・セミコンダクター",
+      "sub": "パワー半導体",
+      "sub_en": "Power semiconductors",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "MOSFET分野の主な競合企業として挙げられている",
+          "text_en": "Named as a primary MOSFET competitor",
+          "source": {
+            "label": "ビシェイ・インターテクノロジー 10-K(2025年12月31日)",
+            "label_en": "Vishay Intertechnology 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/103730/000010373026000019/form10k.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "MOSFETs: Infineon, Nexperia, ON Semiconductor, Renesas, STMicroelectronics, Toshiba."
+          }
+        }
+      ],
+      "name_en": "ON Semiconductor"
+    },
+    {
+      "id": "STM",
+      "ticker": "STM",
+      "name": "STマイクロエレクトロニクス",
+      "sub": "半導体",
+      "sub_en": "Semiconductors",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "MOSFET分野の主な競合企業として挙げられている",
+          "text_en": "Named as a primary MOSFET competitor",
+          "source": {
+            "label": "ビシェイ・インターテクノロジー 10-K(2025年12月31日)",
+            "label_en": "Vishay Intertechnology 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/103730/000010373026000019/form10k.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "MOSFETs: Infineon, Nexperia, ON Semiconductor, Renesas, STMicroelectronics, Toshiba."
+          }
+        }
+      ],
+      "name_en": "STMicroelectronics"
+    },
+    {
+      "id": "RNECY",
+      "ticker": "Renesas",
+      "name": "ルネサスエレクトロニクス",
+      "sub": "半導体",
+      "sub_en": "Semiconductors",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "MOSFET分野の主な競合企業として挙げられている",
+          "text_en": "Named as a primary MOSFET competitor",
+          "source": {
+            "label": "ビシェイ・インターテクノロジー 10-K(2025年12月31日)",
+            "label_en": "Vishay Intertechnology 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/103730/000010373026000019/form10k.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "MOSFETs: Infineon, Nexperia, ON Semiconductor, Renesas, STMicroelectronics, Toshiba."
+          }
+        }
+      ],
+      "name_en": "Renesas Electronics"
+    },
+    {
+      "id": "DIOD",
+      "ticker": "DIOD",
+      "name": "ダイオーズ",
+      "sub": "ディスクリート半導体",
+      "sub_en": "Discrete semiconductors",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ダイオード分野の主な競合企業として挙げられている",
+          "text_en": "Named as a primary diode competitor",
+          "source": {
+            "label": "ビシェイ・インターテクノロジー 10-K(2025年12月31日)",
+            "label_en": "Vishay Intertechnology 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/103730/000010373026000019/form10k.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "Diodes: Diodes Inc., Nexperia, ON Semiconductor, Rohm, STMicroelectronics."
+          }
+        }
+      ],
+      "name_en": "Diodes Inc."
+    },
+    {
+      "id": "AVGO",
+      "ticker": "AVGO",
+      "name": "ブロードコム",
+      "sub": "半導体",
+      "sub_en": "Semiconductors",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "光半導体部品の分野で主な競合企業として挙げられている",
+          "text_en": "Named as a primary optoelectronic components competitor",
+          "source": {
+            "label": "ビシェイ・インターテクノロジー 10-K(2025年12月31日)",
+            "label_en": "Vishay Intertechnology 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/103730/000010373026000019/form10k.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "Optoelectronic Components: Broadcom, ON Semiconductor, Renesas, Toshiba."
+          }
+        }
+      ],
+      "name_en": "Broadcom"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

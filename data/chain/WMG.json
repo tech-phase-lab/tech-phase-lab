@@ -1,0 +1,214 @@
+{
+  "root": {
+    "ticker": "WMG",
+    "name": "ワーナー・ミュージック・グループ",
+    "cik": 1319161,
+    "name_en": "Warner Music Group"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "SPOT",
+      "ticker": "SPOT",
+      "name": "スポティファイ",
+      "sub": "音楽配信",
+      "sub_en": "Music streaming",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "上位3つのデジタル取引先の一社で、録音音楽収入の約45%を3社で占める",
+          "text_en": "Spotify is one of the top three digital accounts, together about 45% of Recorded Music revenues",
+          "source": {
+            "label": "Warner Music Group 10-K(2025年9月期)",
+            "label_en": "Warner Music Group 10-K (fiscal year ended September 30, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1319161/000131916125000034/wmg-20250930.htm",
+            "level": "official",
+            "date": "2025-11-20",
+            "quote": "In fiscal year 2025, Recorded Music revenue earned under our agreements with our top three digital music accounts, Spotify, YouTube and Apple, accounted for approximately 45% of our Recorded Music revenues."
+          }
+        }
+      ],
+      "name_en": "Spotify"
+    },
+    {
+      "id": "GOOGL",
+      "ticker": "GOOGL",
+      "name": "アルファベット",
+      "sub": "動画・音楽配信",
+      "sub_en": "Video & music streaming",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "上位3つのデジタル取引先の一社で、録音音楽収入の約45%を3社で占める",
+          "text_en": "YouTube is one of the top three digital accounts, together about 45% of Recorded Music revenues",
+          "source": {
+            "label": "Warner Music Group 10-K(2025年9月期)",
+            "label_en": "Warner Music Group 10-K (fiscal year ended September 30, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1319161/000131916125000034/wmg-20250930.htm",
+            "level": "official",
+            "date": "2025-11-20",
+            "quote": "In fiscal year 2025, Recorded Music revenue earned under our agreements with our top three digital music accounts, Spotify, YouTube and Apple, accounted for approximately 45% of our Recorded Music revenues."
+          }
+        }
+      ],
+      "name_en": "YouTube (Alphabet)"
+    },
+    {
+      "id": "AAPL",
+      "ticker": "AAPL",
+      "name": "アップル",
+      "sub": "音楽配信",
+      "sub_en": "Music streaming",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "上位3つのデジタル取引先の一社で、録音音楽収入の約45%を3社で占める",
+          "text_en": "Apple is one of the top three digital accounts, together about 45% of Recorded Music revenues",
+          "source": {
+            "label": "Warner Music Group 10-K(2025年9月期)",
+            "label_en": "Warner Music Group 10-K (fiscal year ended September 30, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1319161/000131916125000034/wmg-20250930.htm",
+            "level": "official",
+            "date": "2025-11-20",
+            "quote": "In fiscal year 2025, Recorded Music revenue earned under our agreements with our top three digital music accounts, Spotify, YouTube and Apple, accounted for approximately 45% of our Recorded Music revenues."
+          }
+        }
+      ],
+      "name_en": "Apple"
+    },
+    {
+      "id": "AMZN",
+      "ticker": "AMZN",
+      "name": "アマゾン",
+      "sub": "音楽配信",
+      "sub_en": "Music streaming",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "楽曲のデジタル配信で提携するサービスの一つである",
+          "text_en": "Amazon is one of the digital music services WMG partners with",
+          "source": {
+            "label": "Warner Music Group 10-K(2025年9月期)",
+            "label_en": "Warner Music Group 10-K (fiscal year ended September 30, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1319161/000131916125000034/wmg-20250930.htm",
+            "level": "official",
+            "date": "2025-11-20",
+            "quote": "In connection with the digital distribution of our music, we currently partner with a broad range of digital music services, such as Amazon, Apple, Deezer, KKBox, Spotify, Tencent Music Entertainment Group and YouTube, and are actively seeking to develop and grow our digital business."
+          }
+        }
+      ],
+      "name_en": "Amazon"
+    },
+    {
+      "id": "TME",
+      "ticker": "TME",
+      "name": "テンセント・ミュージック・エンターテインメント",
+      "sub": "音楽配信",
+      "sub_en": "Music streaming",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "楽曲のデジタル配信で提携するサービスの一つである",
+          "text_en": "Tencent Music is one of the digital music services WMG partners with",
+          "source": {
+            "label": "Warner Music Group 10-K(2025年9月期)",
+            "label_en": "Warner Music Group 10-K (fiscal year ended September 30, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1319161/000131916125000034/wmg-20250930.htm",
+            "level": "official",
+            "date": "2025-11-20",
+            "quote": "In connection with the digital distribution of our music, we currently partner with a broad range of digital music services, such as Amazon, Apple, Deezer, KKBox, Spotify, Tencent Music Entertainment Group and YouTube, and are actively seeking to develop and grow our digital business."
+          }
+        }
+      ],
+      "name_en": "Tencent Music Entertainment"
+    },
+    {
+      "id": "DEEZER",
+      "ticker": "Deezer",
+      "name": "ディーザー",
+      "sub": "音楽配信",
+      "sub_en": "Music streaming",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "少数株主として出資するフランスの音楽配信サービスである",
+          "text_en": "WMG holds a minority equity stake in Deezer, a French digital music service",
+          "source": {
+            "label": "Warner Music Group 10-K(2025年9月期)",
+            "label_en": "Warner Music Group 10-K (fiscal year ended September 30, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1319161/000131916125000034/wmg-20250930.htm",
+            "level": "official",
+            "date": "2025-11-20",
+            "quote": "we opportunistically invest in some of those services as well as other companies in our industry, including a minority equity stake in Deezer, a French digital music service in which Access owns a controlling equity interest"
+          }
+        }
+      ],
+      "name_en": "Deezer"
+    },
+    {
+      "id": "UMG",
+      "ticker": "Universal Music",
+      "name": "ユニバーサル・ミュージック・グループ",
+      "sub": "大手レーベル",
+      "sub_en": "Major label",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "録音音楽で上位3社を成す競合として挙がる",
+          "text_en": "Universal Music Group is named among the three largest recorded music companies",
+          "source": {
+            "label": "Warner Music Group 10-K(2025年9月期)",
+            "label_en": "Warner Music Group 10-K (fiscal year ended September 30, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1319161/000131916125000034/wmg-20250930.htm",
+            "level": "official",
+            "date": "2025-11-20",
+            "quote": "According to Music & Copyright, in 2024, the three largest recorded music companies were Universal Music Group, Sony Music Entertainment and us, which collectively accounted for approximately 70% of global recorded music revenues."
+          }
+        }
+      ],
+      "name_en": "Universal Music Group"
+    },
+    {
+      "id": "SONY",
+      "ticker": "SONY",
+      "name": "ソニーグループ",
+      "sub": "大手レーベル",
+      "sub_en": "Major label",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "録音音楽で上位3社を成す競合として挙がる",
+          "text_en": "Sony Music Entertainment is named among the three largest recorded music companies",
+          "source": {
+            "label": "Warner Music Group 10-K(2025年9月期)",
+            "label_en": "Warner Music Group 10-K (fiscal year ended September 30, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1319161/000131916125000034/wmg-20250930.htm",
+            "level": "official",
+            "date": "2025-11-20",
+            "quote": "According to Music & Copyright, in 2024, the three largest recorded music companies were Universal Music Group, Sony Music Entertainment and us, which collectively accounted for approximately 70% of global recorded music revenues."
+          }
+        }
+      ],
+      "name_en": "Sony Music Entertainment"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

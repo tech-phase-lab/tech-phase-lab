@@ -1,0 +1,202 @@
+{
+  "root": {
+    "ticker": "YELP",
+    "name": "イェルプ",
+    "cik": 1345016,
+    "name_en": "Yelp"
+  },
+  "rows": [
+    {
+      "ja": "供給元",
+      "en": "Suppliers"
+    },
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "GOOGL",
+    "META",
+    "ANGI"
+  ],
+  "companies": [
+    {
+      "id": "AMZN",
+      "ticker": "AMZN",
+      "name": "アマゾン・ウェブ・サービス(アマゾン)",
+      "sub": "クラウド基盤",
+      "sub_en": "Cloud infrastructure",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "プラットフォームの大半がAWS上で運用されている",
+          "text_en": "The vast majority of the platform is hosted by AWS",
+          "source": {
+            "label": "イェルプ 10-K(2025年12月31日)",
+            "label_en": "Yelp 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1345016/000134501626000019/yelp-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "The vast majority of our platform is currently hosted by Amazon Web Services (“AWS”) from multiple locations"
+          }
+        }
+      ],
+      "name_en": "Amazon Web Services (Amazon)"
+    },
+    {
+      "id": "AAPL",
+      "ticker": "AAPL",
+      "name": "アップル",
+      "sub": "スマートフォン・OS",
+      "sub_en": "Devices & software",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Appleマップと音声アシスタントSiriでYelpの情報が使われている",
+          "text_en": "Apple makes Yelp content available through Apple Maps and Siri",
+          "source": {
+            "label": "イェルプ 10-K(2025年12月31日)",
+            "label_en": "Yelp 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1345016/000134501626000019/yelp-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "We partner with industry leaders like Apple, which makes our content available through Apple Maps and its virtual assistant Siri"
+          }
+        }
+      ],
+      "name_en": "Apple"
+    },
+    {
+      "id": "AUDI",
+      "ticker": "Audi",
+      "name": "アウディ",
+      "sub": "自動車",
+      "sub_en": "Automaker",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "車載の画面でYelpの情報を表示する提携を結んでいる",
+          "text_en": "Audi AG shows Yelp content in its in-dash experiences",
+          "source": {
+            "label": "イェルプ 10-K(2025年12月31日)",
+            "label_en": "Yelp 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1345016/000134501626000019/yelp-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "as well as several auto manufacturers, including Audi AG and BMW, to make our content available in their in-dash experiences"
+          }
+        }
+      ],
+      "name_en": "Audi AG"
+    },
+    {
+      "id": "BMW",
+      "ticker": "BMW",
+      "name": "ビー・エム・ダブリュー",
+      "sub": "自動車",
+      "sub_en": "Automaker",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "車載の画面でYelpの情報を表示する提携を結んでいる",
+          "text_en": "BMW shows Yelp content in its in-dash experiences",
+          "source": {
+            "label": "イェルプ 10-K(2025年12月31日)",
+            "label_en": "Yelp 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1345016/000134501626000019/yelp-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "as well as several auto manufacturers, including Audi AG and BMW, to make our content available in their in-dash experiences"
+          }
+        }
+      ],
+      "name_en": "BMW"
+    },
+    {
+      "id": "GOOGL",
+      "ticker": "GOOGL",
+      "name": "アルファベット(グーグル)",
+      "sub": "検索・広告",
+      "sub_en": "Search & advertising",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "地域事業者向けの広告サービスで競合する大手ネット企業である",
+          "text_en": "A major internet company competing in local business advertising",
+          "source": {
+            "label": "イェルプ 10-K(2025年12月31日)",
+            "label_en": "Yelp 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1345016/000134501626000019/yelp-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "major Internet companies, such as Google and Meta, may be more successful than us in developing and marketing online advertising and other services directly to local businesses"
+          }
+        }
+      ],
+      "name_en": "Alphabet (Google)"
+    },
+    {
+      "id": "META",
+      "ticker": "META",
+      "name": "メタ・プラットフォームズ",
+      "sub": "SNS・広告",
+      "sub_en": "Social media & ads",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "地域事業者向けの広告サービスで競合する大手ネット企業である",
+          "text_en": "A major internet company competing in local business advertising",
+          "source": {
+            "label": "イェルプ 10-K(2025年12月31日)",
+            "label_en": "Yelp 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1345016/000134501626000019/yelp-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "major Internet companies, such as Google and Meta, may be more successful than us in developing and marketing online advertising and other services directly to local businesses"
+          }
+        }
+      ],
+      "name_en": "Meta Platforms"
+    },
+    {
+      "id": "ANGI",
+      "ticker": "ANGI",
+      "name": "アンジ",
+      "sub": "住宅サービス仲介",
+      "sub_en": "Home services platform",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "住宅・地域サービスの仲介プラットフォームとして競合する",
+          "text_en": "Competes as a home and local services platform",
+          "source": {
+            "label": "イェルプ 10-K(2025年12月31日)",
+            "label_en": "Yelp 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1345016/000134501626000019/yelp-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "home and/or local services-related platforms and offerings, such as Angi and Thumbtack."
+          }
+        }
+      ],
+      "name_en": "Angi"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

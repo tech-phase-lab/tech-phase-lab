@@ -1,0 +1,147 @@
+{
+  "root": {
+    "ticker": "PPLI",
+    "name": "ピープル・インク",
+    "cik": 1800227,
+    "name_en": "People Inc"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    },
+    {
+      "ja": "供給元",
+      "en": "Suppliers",
+      "above": true
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "GOOGL",
+      "ticker": "GOOGL",
+      "name": "グーグル(アルファベット)",
+      "sub": "検索広告",
+      "sub_en": "Search ads",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "検索結果に表示する有料広告の大半をGoogleから受け取る",
+          "text_en": "Google supplies most of the paid listings shown by Ask Media Group",
+          "source": {
+            "label": "People Inc 10-K(2025年12月31日)",
+            "label_en": "People Inc 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1800227/000162828026009997/iaci-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "The majority of the paid listings displayed by Ask Media Group is supplied to us by Google Inc. (“Google”) pursuant to our services agreement with Google, dated as of October 26, 2015 and as subsequently amended (the “Services Agreement”)."
+          }
+        }
+      ],
+      "name_en": "Google (Alphabet)"
+    },
+    {
+      "id": "AAPL",
+      "ticker": "AAPL",
+      "name": "アップル",
+      "sub": "スマホ・OS",
+      "sub_en": "Phones & OS",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Apple News+との関係からコンテンツのライセンス収入を得る",
+          "text_en": "Earns content licensing royalties from its relationship with Apple News+",
+          "source": {
+            "label": "People Inc 10-K(2025年12月31日)",
+            "label_en": "People Inc 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1800227/000162828026009997/iaci-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "Content licensing royalties are earned from our relationship with Apple News+ as well as other content use and distribution relationships, including utilization in large-language models and other artificial intelligence (“AI”) related activities."
+          }
+        }
+      ],
+      "name_en": "Apple"
+    },
+    {
+      "id": "MSFT",
+      "ticker": "MSFT",
+      "name": "マイクロソフト",
+      "sub": "ソフト・クラウド",
+      "sub_en": "Software & cloud",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "検索キーワード広告をGoogleに加えてMicrosoftからも購入する",
+          "text_en": "Buys search keywords from Microsoft as well as Google",
+          "source": {
+            "label": "People Inc 10-K(2025年12月31日)",
+            "label_en": "People Inc 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1800227/000162828026009997/iaci-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "We have made, and expect to continue to make, significant expenditures for search engine marketing primarily in the form of the purchase of keywords, which we purchase primarily through Google and, to a lesser extent, Microsoft and Yahoo!"
+          }
+        }
+      ],
+      "name_en": "Microsoft"
+    },
+    {
+      "id": "META",
+      "ticker": "META",
+      "name": "メタ・プラットフォームズ",
+      "sub": "SNS",
+      "sub_en": "Social media",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "集客と配信をAppleやGoogleなどのプラットフォームに頼り、Metaもその1つ",
+          "text_en": "Relies on distribution platforms operated by firms including Meta",
+          "source": {
+            "label": "People Inc 10-K(2025年12月31日)",
+            "label_en": "People Inc 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1800227/000162828026009997/iaci-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "We rely on search engines, digital app stores, advertising networks, social media platforms, and other third-party content discovery and distribution platforms (particularly those operated by Apple, Google, Microsoft, Meta and Amazon)"
+          }
+        }
+      ],
+      "name_en": "Meta Platforms"
+    },
+    {
+      "id": "AMZN",
+      "ticker": "AMZN",
+      "name": "アマゾン",
+      "sub": "EC・クラウド",
+      "sub_en": "E-commerce & cloud",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "集客と配信をAmazonなどのプラットフォームに頼る",
+          "text_en": "Relies on distribution platforms operated by firms including Amazon",
+          "source": {
+            "label": "People Inc 10-K(2025年12月31日)",
+            "label_en": "People Inc 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1800227/000162828026009997/iaci-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "We rely on search engines, digital app stores, advertising networks, social media platforms, and other third-party content discovery and distribution platforms (particularly those operated by Apple, Google, Microsoft, Meta and Amazon)"
+          }
+        }
+      ],
+      "name_en": "Amazon"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

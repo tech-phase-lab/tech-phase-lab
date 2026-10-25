@@ -1,0 +1,343 @@
+{
+  "root": {
+    "ticker": "SCSC",
+    "name": "スキャンソース",
+    "cik": 918965,
+    "name_en": "ScanSource"
+  },
+  "rows": [
+    {
+      "ja": "供給元",
+      "en": "Suppliers",
+      "above": true
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "INGM",
+    "SNX",
+    "WCC"
+  ],
+  "companies": [
+    {
+      "id": "CSCO",
+      "ticker": "CSCO",
+      "name": "シスコシステムズ",
+      "sub": "ネットワーク機器",
+      "sub_en": "Networking gear",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Cisco製品が2026年6月期の売上の10%超を占めた",
+          "text_en": "Cisco products each made up more than 10% of net sales in the fiscal year ended June 30, 2026",
+          "source": {
+            "label": "ScanSource 10-K(2026年6月30日)",
+            "label_en": "ScanSource 10-K (fiscal year ended June 30, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/918965/000091896526000044/scsc-20260630.htm",
+            "level": "official",
+            "date": "2026-08-20",
+            "quote": "Products from two suppliers, Cisco and Zebra, each constituted more than 10% of our net sales for the fiscal year ended June 30, 2026."
+          }
+        }
+      ],
+      "name_en": "Cisco Systems"
+    },
+    {
+      "id": "ZBRA",
+      "ticker": "ZBRA",
+      "name": "ゼブラ・テクノロジーズ",
+      "sub": "バーコード機器",
+      "sub_en": "Barcode & mobile devices",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Zebra製品が2026年6月期の売上の10%超を占めた",
+          "text_en": "Zebra products each made up more than 10% of net sales in the fiscal year ended June 30, 2026",
+          "source": {
+            "label": "ScanSource 10-K(2026年6月30日)",
+            "label_en": "ScanSource 10-K (fiscal year ended June 30, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/918965/000091896526000044/scsc-20260630.htm",
+            "level": "official",
+            "date": "2026-08-20",
+            "quote": "Products from two suppliers, Cisco and Zebra, each constituted more than 10% of our net sales for the fiscal year ended June 30, 2026."
+          }
+        }
+      ],
+      "name_en": "Zebra Technologies"
+    },
+    {
+      "id": "MSFT",
+      "ticker": "MSFT",
+      "name": "マイクロソフト",
+      "sub": "ソフト・クラウド",
+      "sub_en": "Software & cloud",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "主要な仕入先の1社として製品・サービスを調達する",
+          "text_en": "Named as a key supplier of products and services",
+          "source": {
+            "label": "ScanSource 10-K(2026年6月30日)",
+            "label_en": "ScanSource 10-K (fiscal year ended June 30, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/918965/000091896526000044/scsc-20260630.htm",
+            "level": "official",
+            "date": "2026-08-20",
+            "quote": "including key suppliers AT&T, Avaya, Axis, Cisco, Comcast Business, Dell, Elo, Extreme, Five9, Fortinet, Hanwha, Honeywell, HP Poly, HPE/Aruba, HPE/Juniper, Ingenico, Lumen, Microsoft, NiCE, RingCentral, Ubiquiti, Verifone, Verizon, Zebra Technologies and Zoom"
+          }
+        }
+      ],
+      "name_en": "Microsoft"
+    },
+    {
+      "id": "DELL",
+      "ticker": "DELL",
+      "name": "デル・テクノロジーズ",
+      "sub": "PC・サーバー",
+      "sub_en": "PCs & servers",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "主要な仕入先の1社として製品・サービスを調達する",
+          "text_en": "Named as a key supplier of products and services",
+          "source": {
+            "label": "ScanSource 10-K(2026年6月30日)",
+            "label_en": "ScanSource 10-K (fiscal year ended June 30, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/918965/000091896526000044/scsc-20260630.htm",
+            "level": "official",
+            "date": "2026-08-20",
+            "quote": "including key suppliers AT&T, Avaya, Axis, Cisco, Comcast Business, Dell, Elo, Extreme, Five9, Fortinet, Hanwha, Honeywell, HP Poly, HPE/Aruba, HPE/Juniper, Ingenico, Lumen, Microsoft, NiCE, RingCentral, Ubiquiti, Verifone, Verizon, Zebra Technologies and Zoom"
+          }
+        }
+      ],
+      "name_en": "Dell Technologies"
+    },
+    {
+      "id": "FTNT",
+      "ticker": "FTNT",
+      "name": "フォーティネット",
+      "sub": "セキュリティ",
+      "sub_en": "Cybersecurity",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "主要な仕入先の1社として製品・サービスを調達する",
+          "text_en": "Named as a key supplier of products and services",
+          "source": {
+            "label": "ScanSource 10-K(2026年6月30日)",
+            "label_en": "ScanSource 10-K (fiscal year ended June 30, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/918965/000091896526000044/scsc-20260630.htm",
+            "level": "official",
+            "date": "2026-08-20",
+            "quote": "including key suppliers AT&T, Avaya, Axis, Cisco, Comcast Business, Dell, Elo, Extreme, Five9, Fortinet, Hanwha, Honeywell, HP Poly, HPE/Aruba, HPE/Juniper, Ingenico, Lumen, Microsoft, NiCE, RingCentral, Ubiquiti, Verifone, Verizon, Zebra Technologies and Zoom"
+          }
+        }
+      ],
+      "name_en": "Fortinet"
+    },
+    {
+      "id": "HON",
+      "ticker": "HON",
+      "name": "ハネウェル",
+      "sub": "産業機器",
+      "sub_en": "Industrial equipment",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "主要な仕入先の1社として製品・サービスを調達する",
+          "text_en": "Named as a key supplier of products and services",
+          "source": {
+            "label": "ScanSource 10-K(2026年6月30日)",
+            "label_en": "ScanSource 10-K (fiscal year ended June 30, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/918965/000091896526000044/scsc-20260630.htm",
+            "level": "official",
+            "date": "2026-08-20",
+            "quote": "including key suppliers AT&T, Avaya, Axis, Cisco, Comcast Business, Dell, Elo, Extreme, Five9, Fortinet, Hanwha, Honeywell, HP Poly, HPE/Aruba, HPE/Juniper, Ingenico, Lumen, Microsoft, NiCE, RingCentral, Ubiquiti, Verifone, Verizon, Zebra Technologies and Zoom"
+          }
+        }
+      ],
+      "name_en": "Honeywell"
+    },
+    {
+      "id": "T",
+      "ticker": "T",
+      "name": "AT&Tインク",
+      "sub": "通信",
+      "sub_en": "Telecom",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "主要な仕入先の1社として製品・サービスを調達する",
+          "text_en": "Named as a key supplier of products and services",
+          "source": {
+            "label": "ScanSource 10-K(2026年6月30日)",
+            "label_en": "ScanSource 10-K (fiscal year ended June 30, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/918965/000091896526000044/scsc-20260630.htm",
+            "level": "official",
+            "date": "2026-08-20",
+            "quote": "including key suppliers AT&T, Avaya, Axis, Cisco, Comcast Business, Dell, Elo, Extreme, Five9, Fortinet, Hanwha, Honeywell, HP Poly, HPE/Aruba, HPE/Juniper, Ingenico, Lumen, Microsoft, NiCE, RingCentral, Ubiquiti, Verifone, Verizon, Zebra Technologies and Zoom"
+          }
+        }
+      ],
+      "name_en": "AT&T"
+    },
+    {
+      "id": "VZ",
+      "ticker": "VZ",
+      "name": "ベライゾン",
+      "sub": "通信",
+      "sub_en": "Telecom",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "主要な仕入先の1社として製品・サービスを調達する",
+          "text_en": "Named as a key supplier of products and services",
+          "source": {
+            "label": "ScanSource 10-K(2026年6月30日)",
+            "label_en": "ScanSource 10-K (fiscal year ended June 30, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/918965/000091896526000044/scsc-20260630.htm",
+            "level": "official",
+            "date": "2026-08-20",
+            "quote": "including key suppliers AT&T, Avaya, Axis, Cisco, Comcast Business, Dell, Elo, Extreme, Five9, Fortinet, Hanwha, Honeywell, HP Poly, HPE/Aruba, HPE/Juniper, Ingenico, Lumen, Microsoft, NiCE, RingCentral, Ubiquiti, Verifone, Verizon, Zebra Technologies and Zoom"
+          }
+        }
+      ],
+      "name_en": "Verizon"
+    },
+    {
+      "id": "ZM",
+      "ticker": "ZM",
+      "name": "ズーム・コミュニケーションズ",
+      "sub": "Web会議",
+      "sub_en": "Video conferencing",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "主要な仕入先の1社として製品・サービスを調達する",
+          "text_en": "Named as a key supplier of products and services",
+          "source": {
+            "label": "ScanSource 10-K(2026年6月30日)",
+            "label_en": "ScanSource 10-K (fiscal year ended June 30, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/918965/000091896526000044/scsc-20260630.htm",
+            "level": "official",
+            "date": "2026-08-20",
+            "quote": "including key suppliers AT&T, Avaya, Axis, Cisco, Comcast Business, Dell, Elo, Extreme, Five9, Fortinet, Hanwha, Honeywell, HP Poly, HPE/Aruba, HPE/Juniper, Ingenico, Lumen, Microsoft, NiCE, RingCentral, Ubiquiti, Verifone, Verizon, Zebra Technologies and Zoom"
+          }
+        }
+      ],
+      "name_en": "Zoom Communications"
+    },
+    {
+      "id": "HPE",
+      "ticker": "HPE",
+      "name": "ヒューレット・パッカード・エンタープライズ",
+      "sub": "ネットワーク・サーバー",
+      "sub_en": "Networking & servers",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "HPE/ArubaなどHPE系の製品を主要な仕入先から調達する",
+          "text_en": "Named as a key supplier through its HPE/Aruba and HPE/Juniper lines",
+          "source": {
+            "label": "ScanSource 10-K(2026年6月30日)",
+            "label_en": "ScanSource 10-K (fiscal year ended June 30, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/918965/000091896526000044/scsc-20260630.htm",
+            "level": "official",
+            "date": "2026-08-20",
+            "quote": "including key suppliers AT&T, Avaya, Axis, Cisco, Comcast Business, Dell, Elo, Extreme, Five9, Fortinet, Hanwha, Honeywell, HP Poly, HPE/Aruba, HPE/Juniper, Ingenico, Lumen, Microsoft, NiCE, RingCentral, Ubiquiti, Verifone, Verizon, Zebra Technologies and Zoom"
+          }
+        }
+      ],
+      "name_en": "Hewlett Packard Enterprise"
+    },
+    {
+      "id": "INGM",
+      "ticker": "INGM",
+      "name": "イングラム・マイクロ",
+      "sub": "IT流通",
+      "sub_en": "IT distribution",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "広域型ディストリビューターとして競合する",
+          "text_en": "Competes as a broad-line distributor",
+          "source": {
+            "label": "ScanSource 10-K(2026年6月30日)",
+            "label_en": "ScanSource 10-K (fiscal year ended June 30, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/918965/000091896526000044/scsc-20260630.htm",
+            "level": "official",
+            "date": "2026-08-20",
+            "quote": "we compete with broad-line distributors, such as Ingram Micro and TD Synnex, in most geographic areas, and more specialized security distributors, such as ADI and Wesco."
+          }
+        }
+      ],
+      "name_en": "Ingram Micro"
+    },
+    {
+      "id": "SNX",
+      "ticker": "SNX",
+      "name": "TDシンネックス",
+      "sub": "IT流通",
+      "sub_en": "IT distribution",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "広域型ディストリビューターとして競合する",
+          "text_en": "Competes as a broad-line distributor",
+          "source": {
+            "label": "ScanSource 10-K(2026年6月30日)",
+            "label_en": "ScanSource 10-K (fiscal year ended June 30, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/918965/000091896526000044/scsc-20260630.htm",
+            "level": "official",
+            "date": "2026-08-20",
+            "quote": "we compete with broad-line distributors, such as Ingram Micro and TD Synnex, in most geographic areas, and more specialized security distributors, such as ADI and Wesco."
+          }
+        }
+      ],
+      "name_en": "TD Synnex"
+    },
+    {
+      "id": "WCC",
+      "ticker": "WCC",
+      "name": "ウェスコ・インターナショナル",
+      "sub": "電材流通",
+      "sub_en": "Electrical distribution",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "セキュリティ製品の専門ディストリビューターとして競合する",
+          "text_en": "Competes as a specialized security distributor",
+          "source": {
+            "label": "ScanSource 10-K(2026年6月30日)",
+            "label_en": "ScanSource 10-K (fiscal year ended June 30, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/918965/000091896526000044/scsc-20260630.htm",
+            "level": "official",
+            "date": "2026-08-20",
+            "quote": "we compete with broad-line distributors, such as Ingram Micro and TD Synnex, in most geographic areas, and more specialized security distributors, such as ADI and Wesco."
+          }
+        }
+      ],
+      "name_en": "Wesco International"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

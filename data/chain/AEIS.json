@@ -1,0 +1,193 @@
+{
+  "root": {
+    "ticker": "AEIS",
+    "name": "アドバンスト・エナジー・インダストリーズ",
+    "cik": 927003,
+    "name_en": "Advanced Energy Industries"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [
+    "MKSI",
+    "FLEX"
+  ],
+  "companies": [
+    {
+      "id": "MKSI",
+      "ticker": "MKSI",
+      "name": "MKSインスツルメンツ",
+      "sub": "半導体装置電源",
+      "sub_en": "Semiconductor power",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "電源製品の競合として名前が挙がる",
+          "text_en": "MKS Instruments, Inc. is named as a competitor in Advanced Energy's market verticals",
+          "source": {
+            "label": "Advanced Energy 10-K(2025年12月期)",
+            "label_en": "Advanced Energy 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/927003/000110465926014731/aeis-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "COMET Holding AG. Daihen Corp. MKS Instruments, Inc. TRUMPF Hüttinger GmbH + Co. KG Delta Electronics, Inc. Flex Ltd. Lite-On Technology Corp."
+          }
+        }
+      ],
+      "name_en": "MKS Instruments"
+    },
+    {
+      "id": "DELTA",
+      "ticker": "Delta Electronics",
+      "name": "デルタ電子",
+      "sub": "電源・電子部品",
+      "sub_en": "Power electronics",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "電源製品の競合として名前が挙がる",
+          "text_en": "Delta Electronics, Inc. is named as a competitor in Advanced Energy's market verticals",
+          "source": {
+            "label": "Advanced Energy 10-K(2025年12月期)",
+            "label_en": "Advanced Energy 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/927003/000110465926014731/aeis-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "COMET Holding AG. Daihen Corp. MKS Instruments, Inc. TRUMPF Hüttinger GmbH + Co. KG Delta Electronics, Inc. Flex Ltd. Lite-On Technology Corp."
+          }
+        }
+      ],
+      "name_en": "Delta Electronics"
+    },
+    {
+      "id": "FLEX",
+      "ticker": "FLEX",
+      "name": "フレックス",
+      "sub": "電源・受託製造",
+      "sub_en": "Power & EMS",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "電源製品の競合として名前が挙がる",
+          "text_en": "Flex Ltd. is named as a competitor in Advanced Energy's market verticals",
+          "source": {
+            "label": "Advanced Energy 10-K(2025年12月期)",
+            "label_en": "Advanced Energy 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/927003/000110465926014731/aeis-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "COMET Holding AG. Daihen Corp. MKS Instruments, Inc. TRUMPF Hüttinger GmbH + Co. KG Delta Electronics, Inc. Flex Ltd. Lite-On Technology Corp."
+          }
+        }
+      ],
+      "name_en": "Flex"
+    },
+    {
+      "id": "COMET",
+      "ticker": "COMET Holding",
+      "name": "コメット・ホールディング",
+      "sub": "半導体装置電源",
+      "sub_en": "Semiconductor RF",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "電源製品の競合として名前が挙がる",
+          "text_en": "COMET Holding AG is named as a competitor in Advanced Energy's market verticals",
+          "source": {
+            "label": "Advanced Energy 10-K(2025年12月期)",
+            "label_en": "Advanced Energy 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/927003/000110465926014731/aeis-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "COMET Holding AG. Daihen Corp. MKS Instruments, Inc. TRUMPF Hüttinger GmbH + Co. KG Delta Electronics, Inc. Flex Ltd. Lite-On Technology Corp."
+          }
+        }
+      ],
+      "name_en": "COMET Holding"
+    },
+    {
+      "id": "DAIHEN",
+      "ticker": "Daihen",
+      "name": "ダイヘン",
+      "sub": "電源機器",
+      "sub_en": "Power equipment",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "電源製品の競合として名前が挙がる",
+          "text_en": "Daihen Corp. is named as a competitor in Advanced Energy's market verticals",
+          "source": {
+            "label": "Advanced Energy 10-K(2025年12月期)",
+            "label_en": "Advanced Energy 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/927003/000110465926014731/aeis-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "COMET Holding AG. Daihen Corp. MKS Instruments, Inc. TRUMPF Hüttinger GmbH + Co. KG Delta Electronics, Inc. Flex Ltd. Lite-On Technology Corp."
+          }
+        }
+      ],
+      "name_en": "Daihen"
+    },
+    {
+      "id": "LITEON",
+      "ticker": "Lite-On Technology",
+      "name": "ライトオン・テクノロジー",
+      "sub": "電源・電子部品",
+      "sub_en": "Power electronics",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "電源製品の競合として名前が挙がる",
+          "text_en": "Lite-On Technology Corp. is named as a competitor in Advanced Energy's market verticals",
+          "source": {
+            "label": "Advanced Energy 10-K(2025年12月期)",
+            "label_en": "Advanced Energy 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/927003/000110465926014731/aeis-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "COMET Holding AG. Daihen Corp. MKS Instruments, Inc. TRUMPF Hüttinger GmbH + Co. KG Delta Electronics, Inc. Flex Ltd. Lite-On Technology Corp."
+          }
+        }
+      ],
+      "name_en": "Lite-On Technology"
+    },
+    {
+      "id": "XPP",
+      "ticker": "XP Power",
+      "name": "XPパワー",
+      "sub": "電源機器",
+      "sub_en": "Power equipment",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "電源製品の競合として名前が挙がる",
+          "text_en": "XP Power Ltd. is named as a competitor in Advanced Energy's market verticals",
+          "source": {
+            "label": "Advanced Energy 10-K(2025年12月期)",
+            "label_en": "Advanced Energy 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/927003/000110465926014731/aeis-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "TDK-Lambda Corp. TRUMPF Hüttinger GmbH + Co. KG XP Power Ltd."
+          }
+        }
+      ],
+      "name_en": "XP Power"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

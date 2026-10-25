@@ -61613,7 +61613,7 @@
       "strength": "データ、識別、接続、管理の力が強み。中立性と相互運用性を土台にネットワーク効果を生む。",
       "risks": "競合は提携先でもあり、競争が常態。大手プラットフォームの囲い込みも影響しうる。",
       "competition": "",
-      "relationships": ""
+      "relationships": "プラットフォーム機能の大半を運用するデータセンターの提供元。 プラットフォーム機能の大半を運用するデータセンターの提供元。"
     },
     "en": {
       "business": "A data collaboration technology company that lets businesses share and use data securely.",
@@ -61621,11 +61621,38 @@
       "strength": "Its strengths are data access, identity, connectivity and data stewardship, built on neutrality and interoperability.",
       "risks": "Its competitors are often also its partners, so competition is the norm. Walled gardens can cut into its services.",
       "competition": "",
-      "relationships": ""
+      "relationships": "Provides data center hosting for most of LiveRamp's platform functions. Provides data center hosting for most of LiveRamp's platform functions."
     },
     "maps": {
       "competition": [],
-      "relationships": []
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "Google Cloud Platform",
+          "role": "supplier",
+          "label": {
+            "ja": "データセンターの提供元",
+            "en": "Data center hosting provider"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "GOOGL"
+        },
+        {
+          "kind": "company",
+          "name": "Amazon Web Services",
+          "role": "supplier",
+          "label": {
+            "ja": "データセンターの提供元",
+            "en": "Data center hosting provider"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "AMZN"
+        }
+      ]
     }
   },
   {
@@ -61986,7 +62013,7 @@
       "strength": "約240,000の光ファイバールートマイルと、約1.9百万世帯に届く光網が特徴。",
       "risks": "無線やケーブル各社との競争を抱える。約95億ドルの借入があり、財務の自由度も狭めうる。",
       "competition": "",
-      "relationships": ""
+      "relationships": "住宅向けKinetic光ファイバー回線を、AT&Tの携帯プランとセットで提供している。"
     },
     "en": {
       "business": "A digital infrastructure company that runs a fiber network across the US and sells communications services.",
@@ -61994,11 +62021,25 @@
       "strength": "Its network spans approximately 240,000 fiber route miles and reaches approximately 1.9 million fiber-equipped households.",
       "risks": "It faces competition from wireless and cable companies. About $9.5 billion of debt can limit its flexibility.",
       "competition": "",
-      "relationships": ""
+      "relationships": "Residential customers can bundle Kinetic broadband with a post-paid wireless plan from AT&T."
     },
     "maps": {
       "competition": [],
-      "relationships": []
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "AT&T",
+          "role": "partner",
+          "label": {
+            "ja": "携帯プランのセット提供",
+            "en": "Wireless plan bundle"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "T"
+        }
+      ]
     }
   },
   {
@@ -62527,7 +62568,7 @@
       "strength": "クラウド基盤のCommvault Cloudで、保護、復旧、セキュリティをまとめて提供するのが特徴。",
       "risks": "競争が激しい。競合は資金力で上回ることがあり、価格を下げられうる。",
       "competition": "主な競合にRubrikがある。",
-      "relationships": ""
+      "relationships": "Azureなどマイクロソフトの製品・サービスに依存している。"
     },
     "en": {
       "business": "A company that provides cyber resilience products to protect and recover data.",
@@ -62535,7 +62576,7 @@
       "strength": "Its Commvault Cloud platform brings data protection, recovery and security together.",
       "risks": "Competition is intense. Some rivals have more money and can price lower.",
       "competition": "Main competitors include Rubrik.",
-      "relationships": ""
+      "relationships": "Commvault relies on Microsoft's products and services, including Azure."
     },
     "maps": {
       "competition": [
@@ -62553,7 +62594,21 @@
           ]
         }
       ],
-      "relationships": []
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "Microsoft",
+          "role": "supplier",
+          "label": {
+            "ja": "クラウド基盤の供給元",
+            "en": "Cloud platform supplier"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "MSFT"
+        }
+      ]
     }
   },
   {
@@ -62609,7 +62664,7 @@
       "strength": "信号処理の知見と、映画や音楽の制作者との近い関係が持ち味。Dolby AtmosとDolby Visionが柱。",
       "risks": "ストリーミング移行でセットトップボックスの需要が減った。スマホ市場は集中し、技術を外されやすい。",
       "competition": "",
-      "relationships": ""
+      "relationships": "WindowsでのDolby音声デコーダーの提供方法を変更した。"
     },
     "en": {
       "business": "A company that licenses audio and video technology to device makers.",
@@ -62617,11 +62672,25 @@
       "strength": "Its signal processing expertise and close ties with film and music creators set it apart, led by Dolby Atmos and Dolby Vision.",
       "risks": "The shift to streaming cut demand for set-top boxes. The mobile market is concentrated, so its technology is easy to drop.",
       "competition": "",
-      "relationships": ""
+      "relationships": "Microsoft changed how Dolby's DD and DD+ decoders are provided to PC OEMs."
     },
     "maps": {
       "competition": [],
-      "relationships": []
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "Microsoft",
+          "role": "partner",
+          "label": {
+            "ja": "PC向けコーデック提供",
+            "en": "PC codec distribution"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "MSFT"
+        }
+      ]
     }
   },
   {
@@ -62974,7 +63043,7 @@
       "strength": "独自で質の高い報道が強み。2025年末の購読者は約12.78百万人で、過去最多。",
       "risks": "ニュースアグリゲーターやSNS、AI企業などとの競争が激しい。AIによる無断利用も課題。",
       "competition": "主な競合にApple、Alphabet、Meta Platforms、Microsoftがある。",
-      "relationships": ""
+      "relationships": "個人読者が購読を申し込むアプリストアを運営している。 個人読者が購読を申し込むアプリストアを運営している。"
     },
     "en": {
       "business": "A global news organization that publishes The New York Times and related products.",
@@ -62982,7 +63051,7 @@
       "strength": "Original, high-quality reporting is its core feature. It had approximately 12.78 million subscribers at the end of 2025, a record.",
       "risks": "It faces tough competition from aggregators, social media and AI companies, and from unauthorized use of its content by AI developers.",
       "competition": "Main competitors include Apple, Alphabet, Meta Platforms, Microsoft.",
-      "relationships": ""
+      "relationships": "Apple operates an app store through which individual consumers can subscribe. Alphabet operates an app store through which individual consumers can subscribe."
     },
     "maps": {
       "competition": [
@@ -63039,7 +63108,34 @@
           ]
         }
       ],
-      "relationships": []
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "Apple",
+          "role": "partner",
+          "label": {
+            "ja": "アプリ配信の提携先",
+            "en": "App store distribution partner"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "AAPL"
+        },
+        {
+          "kind": "company",
+          "name": "Alphabet",
+          "role": "partner",
+          "label": {
+            "ja": "アプリ配信の提携先",
+            "en": "App store distribution partner"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "GOOGL"
+        }
+      ]
     }
   },
   {
@@ -63231,7 +63327,7 @@
       "strength": "MS NOW、CNBC、Golf Channelなど知名度の高いブランドと、大きな視聴者規模が特徴。",
       "risks": "契約者数の減少で配信料と広告収入が落ちている。コムキャストからの分離で、負債と独立運営のコストも抱える。",
       "competition": "",
-      "relationships": ""
+      "relationships": "分離後も共通の契約で関係が続く元親会社。"
     },
     "en": {
       "business": "A media company that runs TV networks such as MS NOW and CNBC, plus digital platforms.",
@@ -63239,11 +63335,25 @@
       "strength": "Well-known brands such as MS NOW, CNBC and Golf Channel and a large viewing audience are its features.",
       "risks": "Falling subscribers cut distribution and advertising revenue. The split from Comcast brings debt and standalone costs.",
       "competition": "",
-      "relationships": ""
+      "relationships": "Comcast, the former parent, remains linked through separation and commercial agreements."
     },
     "maps": {
       "competition": [],
-      "relationships": []
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "Comcast",
+          "role": "partner",
+          "label": {
+            "ja": "元親会社との契約",
+            "en": "Former parent agreements"
+          },
+          "sourceIndexes": [
+            0
+          ],
+          "ticker": "CMCSA"
+        }
+      ]
     }
   },
   {
@@ -63367,7 +63477,7 @@
       "strength": "オアフ、ハワイ、マウイなどの島ごとに独立した送電網を運営するのが特徴。",
       "risks": "マウイの暴風と山火事に関する訴訟の和解を抱える。子会社の配当は規制や契約で制限されうる。",
       "competition": "",
-      "relationships": ""
+      "relationships": "電力子会社に燃料を供給する契約を2022年に結んだ供給元。"
     },
     "en": {
       "business": "A holding company that supplies electricity in Hawaii.",
@@ -63375,11 +63485,24 @@
       "strength": "It operates separate grids on islands such as Oahu, Hawaii and Maui.",
       "risks": "It carries settlements from the Maui windstorm and wildfire litigation, and subsidiary dividends can be limited by regulation or contract.",
       "competition": "",
-      "relationships": ""
+      "relationships": "The Utilities entered into a fuel supply contract with PAR Hawaii on February 1, 2022, commencing January 1, 2023."
     },
     "maps": {
       "competition": [],
-      "relationships": []
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "PAR Hawaii Refining, LLC",
+          "role": "supplier",
+          "label": {
+            "ja": "燃料の供給元",
+            "en": "Fuel supplier"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
     }
   },
   {
@@ -63469,7 +63592,7 @@
       "strength": "認可された給水地域では、成長をめぐる直接の競合がほぼない。",
       "risks": "干ばつや汚染で水の供給が止まりうる。汚染をめぐる訴訟や賠償も抱える。",
       "competition": "",
-      "relationships": ""
+      "relationships": "住宅向けの水道・排水関連の保守プログラムを提供する販売提携先。"
     },
     "en": {
       "business": "A company that runs water and wastewater systems in New Jersey and Delaware.",
@@ -63477,11 +63600,24 @@
       "strength": "In its franchised service areas it is substantially free from direct competition for growth.",
       "risks": "Drought or contamination can interrupt water supply, and contamination can bring lawsuits and damages.",
       "competition": "",
-      "relationships": ""
+      "relationships": "HomeServe is the marketing partner for home maintenance programs offered to NJ and DE residential customers under an agreement expiring in 2031."
     },
     "maps": {
       "competition": [],
-      "relationships": []
+      "relationships": [
+        {
+          "kind": "company",
+          "name": "HomeServe USA Corp.",
+          "role": "partner",
+          "label": {
+            "ja": "販売提携",
+            "en": "Marketing agreement"
+          },
+          "sourceIndexes": [
+            0
+          ]
+        }
+      ]
     }
   },
   {

@@ -1,0 +1,118 @@
+{
+  "root": {
+    "ticker": "SPHR",
+    "name": "スフィア・エンターテインメント",
+    "cik": 1795250,
+    "name_en": "Sphere Entertainment"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "ATUS",
+      "ticker": "Altice USA",
+      "name": "アルティス・ユーエスエー",
+      "sub": "ケーブル配信事業者",
+      "sub_en": "Cable distributor",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "MSGネットワークスの放映契約をAltice USAと複数年で更新し、2025年2月22日に放送が再開された",
+          "text_en": "MSG Networks renewed its affiliation agreement with Altice for multiple years on February 22, 2025, and carriage resumed",
+          "source": {
+            "label": "スフィア・エンターテインメント 10-K(2025年12月31日)",
+            "label_en": "Sphere Entertainment 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1795250/000162828026007760/sphr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "On February 22, 2025, MSG Networks and Altice entered into a multi-year renewal of the MSG Networks affiliation agreement and Altice resumed carriage of the Company’s networks."
+          }
+        }
+      ],
+      "name_en": "Altice USA"
+    },
+    {
+      "id": "CMCSA",
+      "ticker": "CMCSA",
+      "name": "コムキャスト",
+      "sub": "ケーブル配信事業者",
+      "sub_en": "Cable distributor",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "MSGネットワークスはコムキャストとの放映契約を2021年9月の満了時に更新できなかった",
+          "text_en": "MSG Networks could not renew its affiliation agreement with Comcast when it expired in September 2021",
+          "source": {
+            "label": "スフィア・エンターテインメント 10-K(2025年12月31日)",
+            "label_en": "Sphere Entertainment 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1795250/000162828026007760/sphr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "Prior to that, MSG Networks was not able to renew its affiliation agreement with Comcast when it expired in September 2021, which caused a reduction in annual affiliation revenue, operating income and adjusted operating income."
+          }
+        }
+      ],
+      "name_en": "Comcast"
+    },
+    {
+      "id": "DAL",
+      "ticker": "DAL",
+      "name": "デルタ航空",
+      "sub": "航空会社",
+      "sub_en": "Airline",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2026年1月にデルタ航空をスフィアの公式航空会社とすると発表した",
+          "text_en": "In January 2026 the Company announced Delta Air Lines as the Official Airline of Sphere",
+          "source": {
+            "label": "スフィア・エンターテインメント 10-K(2025年12月31日)",
+            "label_en": "Sphere Entertainment 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1795250/000162828026007760/sphr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "in January 2026, the Company announced Delta Air Lines as the Official Airline of Sphere"
+          }
+        }
+      ],
+      "name_en": "Delta Air Lines"
+    },
+    {
+      "id": "MSGE",
+      "ticker": "MSGE",
+      "name": "MSGエンターテインメント",
+      "sub": "興行・会場運営",
+      "sub_en": "Venues & entertainment",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "分配後もMSGエンターテインメントの普通株式を約33%保有している",
+          "text_en": "The Company retains approximately 33% of the common stock of MSG Entertainment",
+          "source": {
+            "label": "スフィア・エンターテインメント 10-K(2025年12月31日)",
+            "label_en": "Sphere Entertainment 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1795250/000162828026007760/sphr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "with the Company retaining approximately 33% of the outstanding common stock of MSG Entertainment"
+          }
+        }
+      ],
+      "name_en": "MSG Entertainment"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
