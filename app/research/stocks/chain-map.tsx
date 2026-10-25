@@ -3,16 +3,15 @@ import {useEffect,useMemo,useRef,useState} from 'react';
 import {chainFocus} from '@/lib/research/chain-network';
 import {layoutCompanyNetwork,networkLayers,networkEdgePath} from '@/lib/research/company-network';
 import type {CompanyNetwork,NetworkEdge,NetworkMode} from '@/lib/research/company-network';
-import {chainDataFor} from '@/lib/research/chain-map-data';
-import {StockChainMap} from './stock-chain-map';
+import {GatedChainMap} from './gated-chain-map';
 import styles from './company-network.module.css';
 type Props={graph:CompanyNetwork;lang:'ja'|'en'};
 export function CompanyNetworkMap(props:Props){
- const chain=chainDataFor(props.graph.root);
- if(chain)return <StockChainMap data={chain} lang={props.lang}/>;
+ // The profile only says that a map exists; the map itself comes from the PRO-gated API (NVDA is the free sample).
+ if(props.graph.chained)return <GatedChainMap root={props.graph.root} lang={props.lang}/>;
  return <ChainCompanyNetworkMap {...props}/>;
 }
-function ChainCompanyNetworkMap({graph}:Props){
+export function ChainCompanyNetworkMap({graph}:Props){
  const [mode,setMode]=useState<NetworkMode>('direct'),[width,setWidth]=useState(640);
  const board=useRef<HTMLDivElement>(null);
  const focus=useMemo(()=>chainFocus(graph,mode),[graph,mode]);
