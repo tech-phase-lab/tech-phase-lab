@@ -5,6 +5,9 @@ import type { Language } from "@/lib/research/data";
 import { availableNewsPayload, type GeneralNewsFeed } from "@/lib/research/general-news";
 import { parseCompanyWire, type CompanyWireItem } from "@/lib/research/company-wire";
 import { flashRows, WATCH_TICKERS, type FlashRow } from "@/lib/research/flash-rows";
+import { freeFlashRows, FREE_FLASH_LIMIT } from "@/lib/research/free-flash";
+import Link from "next/link";
+import { useMemberDisplay, useOwnerAccount, useResearchOwner } from "../member-display-provider";
 import { providers } from "@/lib/research/intake";
 import { isFreshItem } from "@/lib/research/company-freshness";
 import { createNewsPoller } from "@/lib/research/news-poller";
@@ -51,6 +54,11 @@ export default function FlashPage({ lang, onReady }: { lang: Language; onReady?:
   const [view, setView] = useState<"all" | "earnings">("all");
   const [page, setPage] = useState(1);
   const [seenAtLoad] = useState(() => readVisitStart());
+  // Until PRO (or the owner) is confirmed, the page shows the FREE version: 30 minutes behind, the latest five, headlines only.
+  const memberPlan = useMemberDisplay();
+  const ownerAccount = useOwnerAccount();
+  const ownerRole = useResearchOwner();
+  const full = memberPlan === "pro" || ownerAccount || ownerRole;
   const tracker = useRef(createWatchTracker());
   const wireTracker = useRef(createWatchTracker());
   const list = useRef<HTMLDivElement>(null);
@@ -110,7 +118,8 @@ export default function FlashPage({ lang, onReady }: { lang: Language; onReady?:
   // The page shell shows the shared branded loader until the first feed (or its failure) is known (owner, Oct 20).
   useEffect(() => { if (feed || failed) onReady?.(); }, [feed, failed, onReady]);
 
-  const rows = flashRows(feed, wire, lang).filter(row => (row.kind === "earnings" || row.tickers.some(ticker => WATCH_TICKERS.has(ticker))) && (view === "all" || row.kind === "earnings"));
+  const allRows = flashRows(feed, wire, lang).filter(row => (row.kind === "earnings" || row.tickers.some(ticker => WATCH_TICKERS.has(ticker))) && (view === "all" || row.kind === "earnings"));
+  const rows = full ? allRows : freeFlashRows(allRows, checkedAt || Date.now());
   const pages = Math.max(1, Math.ceil(rows.length / PAGE));
   const current = Math.min(page, pages);
   const shown = rows.slice((current - 1) * PAGE, current * PAGE);
@@ -124,7 +133,7 @@ export default function FlashPage({ lang, onReady }: { lang: Language; onReady?:
     <div className={timeline.entry}>
       <div className={timeline.meta}><span className={styles.ticker}>{row.tickers.join(" · ")}</span><span className={`${timeline.tag} ${row.kind === "earnings" ? styles.earnings : timeline.news}`}>{kindLabel[row.kind]}</span>{marked(row) && <span className={timeline.newMark}>NEW</span>}</div>
       {/* A long headline shows two lines and the ＋ opens the whole text, never a cut-off "…" (owner, Oct 18). */}
-      <NewsStory lang={lang} label="" title={row.title} body={row.body} publication={publication(row)} jaLimit={36} capDetail />
+      <NewsStory lang={lang} label="" title={row.title} body={full ? row.body : undefined} publication={publication(row)} jaLimit={36} capDetail />
     </div>
   </article>;
   return <section className={styles.flash} aria-label={ja ? "速報" : "Alerts"}>
@@ -140,6 +149,7 @@ export default function FlashPage({ lang, onReady }: { lang: Language; onReady?:
         </div>
       </details>
     </div>
+    {!full && <p className={styles.freeNote} role="note"><b>FREE</b>{ja ? `30分遅れで、新しい順に直近${FREE_FLASH_LIMIT}件・見出しのみを表示しています。` : `Showing the latest ${FREE_FLASH_LIMIT} headlines, 30 minutes behind.`} <Link href="/research#tech-phase-pro">{ja ? "PROでは、30分早く、要約付きで読めます" : "PRO shows them 30 minutes earlier, with summaries"}</Link></p>}
     <div ref={list} className={styles.panel}>
       {failed && <p className={timeline.problem} role="status">{ja ? "最新の配信状況を確認できません。" : "Unable to check the latest feed."}{feed && (ja ? " 前回取得した内容を表示しています。" : " Showing previously loaded items.")}</p>}
       {feed && !rows.length && <p className={timeline.problem}>{ja ? "現在、該当する速報はありません。" : "No matching alerts right now."}</p>}

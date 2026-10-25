@@ -8,8 +8,9 @@
 .cta { color:#241b07; background:linear-gradient(135deg,#fbeab8,#d4aa55 55%,#b8923f); box-shadow:0 4px 18px #d4aa5540; }
 .sample { color:#e8d3a0; border:1px solid #b8923f88; background:#1b1810; }
 .cta:focus-visible, .sample:focus-visible { outline:2px solid #ecd08e; outline-offset:3px; }
-.badge { margin:14px 0 10px; padding:9px 14px; border:1px dashed #b8923f; border-radius:10px; background:#1b1810; color:#e8d3a0; font-size:12.5px; line-height:1.7; }
+.badge { margin:-6px 0 14px; border-top-left-radius:0; border-top-right-radius:0; padding:9px 14px; border:1px dashed #b8923f; border-radius:10px; background:#1b1810; color:#e8d3a0; font-size:12.5px; line-height:1.7; }
 .badge b { margin-right:8px; padding:2px 9px; border-radius:999px; background:linear-gradient(135deg,#fbeab8,#b8923f); color:#241b07; font-size:11px; letter-spacing:.08em; }
 .note { margin:18px 0; padding:14px 16px; border:1px solid #2d3948; border-radius:12px; background:#0f1822; color:#aab6c4; font-size:13.5px; }
 .placeholder { display:grid; gap:10px; margin:18px 0; min-height:180px; }
 .placeholder span { height:44px; border-radius:10px; background:linear-gradient(90deg,#141d28,#1a2430,#141d28); }
+.badge a { color:#ecd08e; text-decoration:underline; text-underline-offset:3px; white-space:nowrap; }

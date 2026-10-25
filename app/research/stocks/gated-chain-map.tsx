@@ -39,7 +39,7 @@ export function GatedChainMap({ root, lang }: { root: string; lang: "ja" | "en" 
   }, [root, plan, ownerAccount, ownerRole]);
 
   if (state.kind === "loading") return <section className={styles.placeholder} role="status" aria-label={ja ? "連関マップを読み込み中" : "Loading relationship map"}><span /><span /><span /></section>;
-  if (state.kind === "error") return <p className={styles.note} role="alert">{ja ? "連関マップを取得できませんでした。しばらくしてからもう一度お試しください。" : "The relationship map could not be loaded. Please try again shortly."}</p>;
+  if (state.kind === "error") return <p className={styles.note} role="alert">{ja ? "会員情報を確認できなかったため、連関マップを表示できませんでした。しばらくしてから、もう一度お試しください。" : "The relationship map could not be shown because membership could not be checked. Please try again shortly."}</p>;
   if (state.kind === "locked") return <section className={styles.lock} aria-labelledby={`map-lock-${root}`}>
     <svg className={styles.gem} viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l7 9-7 9-7-9z" /></svg>
     <h3 id={`map-lock-${root}`}>{ja ? "連関マップはPRO会員限定です" : "Relationship maps are exclusive to PRO"}</h3>
@@ -51,7 +51,8 @@ export function GatedChainMap({ root, lang }: { root: string; lang: "ja" | "en" 
   </section>;
   const data = state.data;
   return <>
-    {root === FREE_SAMPLE_TICKER && !full && <p className={styles.badge}><b>{ja ? "無料サンプル" : "FREE SAMPLE"}</b>{ja ? "ほかの企業の連関マップはPRO会員向けです。" : "Maps of other companies are for PRO members."}</p>}
     {"chain" in data ? <StockChainMap data={data.chain} lang={lang} /> : <ChainCompanyNetworkMap graph={data.graph} lang={lang} />}
+    {/* Owner, Oct 25: the sample note sits right under the map it describes. */}
+    {root === FREE_SAMPLE_TICKER && !full && <p className={styles.badge}><b>{ja ? "無料サンプル" : "FREE SAMPLE"}</b>{ja ? "他の企業の連関マップはPRO会員限定です。" : "Maps of other companies are exclusive to PRO members."} <Link href="/research#tech-phase-pro">{ja ? "PROを見る" : "See PRO"}</Link></p>}
   </>;
 }
