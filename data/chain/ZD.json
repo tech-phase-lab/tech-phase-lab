@@ -1,0 +1,172 @@
+{
+  "root": {
+    "ticker": "ZD",
+    "name": "ジフ・デイビス",
+    "cik": 1084048,
+    "name_en": "Ziff Davis"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [
+    "IAC",
+    "TTGT",
+    "DOCS",
+    "GOOGL",
+    "META"
+  ],
+  "companies": [
+    {
+      "id": "IAC",
+      "ticker": "IAC",
+      "name": "アイエーシー",
+      "sub": "デジタルメディア",
+      "sub_en": "Digital media",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "広告・デジタルメディア事業で競合する企業として名前が挙がる",
+          "text_en": "IAC is named as a competitor of Ziff Davis's digital media businesses",
+          "source": {
+            "label": "Ziff Davis 10-K(2025年12月期)",
+            "label_en": "Ziff Davis 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1084048/000108404826000005/zd-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "diversified internet and digital media companies like IAC, Future PLC"
+          }
+        }
+      ],
+      "name_en": "IAC"
+    },
+    {
+      "id": "TTGT",
+      "ticker": "TTGT",
+      "name": "テックターゲット",
+      "sub": "B2Bメディア",
+      "sub_en": "B2B media",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "広告・デジタルメディア事業で競合する企業として名前が挙がる",
+          "text_en": "TechTarget is named as a competitor of Ziff Davis's digital media businesses",
+          "source": {
+            "label": "Ziff Davis 10-K(2025年12月期)",
+            "label_en": "Ziff Davis 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1084048/000108404826000005/zd-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "vertical-specific digital media companies like RVO Health, TechTarget, Vox Media, Centerfield, Doximity"
+          }
+        }
+      ],
+      "name_en": "TechTarget"
+    },
+    {
+      "id": "DOCS",
+      "ticker": "DOCS",
+      "name": "ドクシミティ",
+      "sub": "医療メディア",
+      "sub_en": "Medical media",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "広告・デジタルメディア事業で競合する企業として名前が挙がる",
+          "text_en": "Doximity is named as a competitor of Ziff Davis's digital media businesses",
+          "source": {
+            "label": "Ziff Davis 10-K(2025年12月期)",
+            "label_en": "Ziff Davis 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1084048/000108404826000005/zd-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "vertical-specific digital media companies like RVO Health, TechTarget, Vox Media, Centerfield, Doximity"
+          }
+        }
+      ],
+      "name_en": "Doximity"
+    },
+    {
+      "id": "GOOGL",
+      "ticker": "GOOGL",
+      "name": "アルファベット",
+      "sub": "広告・検索",
+      "sub_en": "Advertising & search",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "広告・デジタルメディア事業で競合する企業として名前が挙がる",
+          "text_en": "Alphabet is named as a competitor of Ziff Davis's digital media businesses",
+          "source": {
+            "label": "Ziff Davis 10-K(2025年12月期)",
+            "label_en": "Ziff Davis 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1084048/000108404826000005/zd-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "other large sellers of advertising products and solutions, including Alphabet, Meta, Snap, Twitch"
+          }
+        }
+      ],
+      "name_en": "Alphabet"
+    },
+    {
+      "id": "META",
+      "ticker": "META",
+      "name": "メタ・プラットフォームズ",
+      "sub": "広告・SNS",
+      "sub_en": "Advertising & social",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "広告・デジタルメディア事業で競合する企業として名前が挙がる",
+          "text_en": "Meta is named as a competitor of Ziff Davis's digital media businesses",
+          "source": {
+            "label": "Ziff Davis 10-K(2025年12月期)",
+            "label_en": "Ziff Davis 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1084048/000108404826000005/zd-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "other large sellers of advertising products and solutions, including Alphabet, Meta, Snap, Twitch"
+          }
+        }
+      ],
+      "name_en": "Meta Platforms"
+    },
+    {
+      "id": "SNAP",
+      "ticker": "SNAP",
+      "name": "スナップ",
+      "sub": "広告・SNS",
+      "sub_en": "Advertising & social",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "広告・デジタルメディア事業で競合する企業として名前が挙がる",
+          "text_en": "Snap is named as a competitor of Ziff Davis's digital media businesses",
+          "source": {
+            "label": "Ziff Davis 10-K(2025年12月期)",
+            "label_en": "Ziff Davis 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1084048/000108404826000005/zd-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "other large sellers of advertising products and solutions, including Alphabet, Meta, Snap, Twitch"
+          }
+        }
+      ],
+      "name_en": "Snap"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

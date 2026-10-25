@@ -1,0 +1,145 @@
+{
+  "root": {
+    "ticker": "VECO",
+    "name": "ビーコ・インスツルメンツ",
+    "cik": 103145,
+    "name_en": "Veeco Instruments"
+  },
+  "rows": [
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "AMAT",
+    "CAJ"
+  ],
+  "companies": [
+    {
+      "id": "AMAT",
+      "ticker": "AMAT",
+      "name": "アプライド マテリアルズ",
+      "sub": "半導体製造装置",
+      "sub_en": "Semiconductor equipment",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主な競合企業として挙げられている会社である",
+          "text_en": "Named among the principal competitors",
+          "source": {
+            "label": "ビーコ・インスツルメンツ 10-K(2025年12月31日)",
+            "label_en": "Veeco Instruments 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/103145/000110465926019711/veco-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Our principal competitors include: Aixtron; Applied Materials; Canon; Grand Plastics Technology; Mattson Technology; Screen Semiconductor Solutions; Shanghai Micro Electronics Equipment; and Suss MicroTec."
+          }
+        }
+      ],
+      "name_en": "Applied Materials"
+    },
+    {
+      "id": "AIXA",
+      "ticker": "Aixtron",
+      "name": "アイクストロン",
+      "sub": "成膜装置",
+      "sub_en": "Deposition equipment",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主な競合企業として挙げられている会社である",
+          "text_en": "Named among the principal competitors",
+          "source": {
+            "label": "ビーコ・インスツルメンツ 10-K(2025年12月31日)",
+            "label_en": "Veeco Instruments 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/103145/000110465926019711/veco-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Our principal competitors include: Aixtron; Applied Materials; Canon; Grand Plastics Technology; Mattson Technology; Screen Semiconductor Solutions; Shanghai Micro Electronics Equipment; and Suss MicroTec."
+          }
+        }
+      ],
+      "name_en": "Aixtron"
+    },
+    {
+      "id": "CAJ",
+      "ticker": "CAJ",
+      "name": "キヤノン",
+      "sub": "露光・光学機器",
+      "sub_en": "Lithography & optics",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主な競合企業として挙げられている会社である",
+          "text_en": "Named among the principal competitors",
+          "source": {
+            "label": "ビーコ・インスツルメンツ 10-K(2025年12月31日)",
+            "label_en": "Veeco Instruments 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/103145/000110465926019711/veco-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Our principal competitors include: Aixtron; Applied Materials; Canon; Grand Plastics Technology; Mattson Technology; Screen Semiconductor Solutions; Shanghai Micro Electronics Equipment; and Suss MicroTec."
+          }
+        }
+      ],
+      "name_en": "Canon"
+    },
+    {
+      "id": "SCREEN",
+      "ticker": "Screen",
+      "name": "スクリーン セミコンダクター ソリューションズ",
+      "sub": "洗浄装置",
+      "sub_en": "Cleaning equipment",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主な競合企業として挙げられている会社である",
+          "text_en": "Named among the principal competitors",
+          "source": {
+            "label": "ビーコ・インスツルメンツ 10-K(2025年12月31日)",
+            "label_en": "Veeco Instruments 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/103145/000110465926019711/veco-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Our principal competitors include: Aixtron; Applied Materials; Canon; Grand Plastics Technology; Mattson Technology; Screen Semiconductor Solutions; Shanghai Micro Electronics Equipment; and Suss MicroTec."
+          }
+        }
+      ],
+      "name_en": "Screen Semiconductor Solutions"
+    },
+    {
+      "id": "SUSS",
+      "ticker": "Suss MicroTec",
+      "name": "ズース・マイクロテック",
+      "sub": "接合・露光装置",
+      "sub_en": "Bonding & exposure",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主な競合企業として挙げられている会社である",
+          "text_en": "Named among the principal competitors",
+          "source": {
+            "label": "ビーコ・インスツルメンツ 10-K(2025年12月31日)",
+            "label_en": "Veeco Instruments 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/103145/000110465926019711/veco-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Our principal competitors include: Aixtron; Applied Materials; Canon; Grand Plastics Technology; Mattson Technology; Screen Semiconductor Solutions; Shanghai Micro Electronics Equipment; and Suss MicroTec."
+          }
+        }
+      ],
+      "name_en": "Suss MicroTec"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

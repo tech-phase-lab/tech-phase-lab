@@ -1,0 +1,123 @@
+{
+  "root": {
+    "ticker": "MDU",
+    "name": "MDUリソーシズ・グループ",
+    "cik": 67716,
+    "name_en": "MDU Resources Group"
+  },
+  "rows": [
+    {
+      "ja": "供給元",
+      "en": "Suppliers",
+      "above": true
+    },
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "OTP",
+      "ticker": "Otter Tail Power",
+      "name": "オッター・テイル・パワー",
+      "sub": "電力会社",
+      "sub_en": "Electric utility",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "JETx送電事業を共同で保有する計画の相手である",
+          "text_en": "Otter Tail Power Company is the planned co-owner of the JETx transmission project",
+          "source": {
+            "label": "MDU Resources Group 10-K(2025-12-31)",
+            "label_en": "MDU Resources Group 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/67716/000006771626000014/mdu-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "As part of MISO's long range transmission plan, in August 2022, the Company announced its intent to develop, construct and co-own JETx with Otter Tail Power Company in central North Dakota."
+          }
+        }
+      ],
+      "name_en": "Otter Tail Power Company"
+    },
+    {
+      "id": "BHP",
+      "ticker": "Black Hills Power",
+      "name": "ブラックヒルズ・パワー",
+      "sub": "電力会社",
+      "sub_en": "Electric utility",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "電力供給契約を結んでいる供給元である",
+          "text_en": "Black Hills Power supplies power to Montana-Dakota under a power supply contract",
+          "source": {
+            "label": "MDU Resources Group 10-K(2025-12-31)",
+            "label_en": "MDU Resources Group 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/67716/000006771626000014/mdu-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "Montana-Dakota has a power supply contract with Black Hills Power, Inc."
+          }
+        }
+      ],
+      "name_en": "Black Hills Power"
+    },
+    {
+      "id": "WRDC",
+      "ticker": "Wyodak Resources",
+      "name": "ワイオダック・リソーシズ",
+      "sub": "石炭供給",
+      "sub_en": "Coal supply",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Wygen III向けの石炭供給契約を結んでいる供給元である",
+          "text_en": "Wyodak Resources supplies coal for Wygen III under a coal supply agreement",
+          "source": {
+            "label": "MDU Resources Group 10-K(2025-12-31)",
+            "label_en": "MDU Resources Group 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/67716/000006771626000014/mdu-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "Montana-Dakota has a coal supply agreement with Wyodak Resources Development Corp., to supply the coal requirements of Wygen III at contracted pricing through June 1, 2060."
+          }
+        }
+      ],
+      "name_en": "Wyodak Resources Development"
+    },
+    {
+      "id": "NTEC",
+      "ticker": "Navajo",
+      "name": "ナバホ・トランジショナル・エナジー",
+      "sub": "石炭供給",
+      "sub_en": "Coal supply",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "ビッグストーン発電所の燃料向けに石炭供給契約を結んでいる",
+          "text_en": "Navajo Transitional Energy supplies coal for Big Stone Station under a coal supply agreement",
+          "source": {
+            "label": "MDU Resources Group 10-K(2025-12-31)",
+            "label_en": "MDU Resources Group 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/67716/000006771626000014/mdu-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "The owners of Big Stone Station, including Montana-Dakota, have a coal supply agreement with Navajo Transitional Energy Company, LLC to meet all of the Big Stone Station's fuel requirements through 2026."
+          }
+        }
+      ],
+      "name_en": "Navajo Transitional Energy Company"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

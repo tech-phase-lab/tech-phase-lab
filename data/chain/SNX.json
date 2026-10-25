@@ -1,0 +1,150 @@
+{
+  "root": {
+    "ticker": "SNX",
+    "name": "TDシネックス",
+    "cik": 1177394,
+    "name_en": "TD SYNNEX"
+  },
+  "rows": [
+    {
+      "ja": "供給元",
+      "en": "Suppliers",
+      "above": true
+    },
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [
+    "ARW",
+    "SCSC"
+  ],
+  "companies": [
+    {
+      "id": "AAPL",
+      "ticker": "AAPL",
+      "name": "アップル",
+      "sub": "IT製品メーカー",
+      "sub_en": "IT OEM",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "主要な仕入先で、流通契約を結んでいる",
+          "text_en": "Apple is a major OEM supplier with which TD SYNNEX has a distribution agreement",
+          "source": {
+            "label": "TD SYNNEX 10-K(2025-11-30)",
+            "label_en": "TD SYNNEX 10-K (fiscal year ended November 30, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1177394/000162828026003598/snx-20251130.htm",
+            "level": "official",
+            "date": "2026-01-27",
+            "quote": "We have distribution agreements with most of our suppliers, including Apple Inc."
+          }
+        }
+      ],
+      "name_en": "Apple"
+    },
+    {
+      "id": "HPQ",
+      "ticker": "HPQ",
+      "name": "HPインク",
+      "sub": "IT製品メーカー",
+      "sub_en": "IT OEM",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "主要な仕入先で、流通契約を結んでいる",
+          "text_en": "HP Inc. is a major OEM supplier with which TD SYNNEX has a distribution agreement",
+          "source": {
+            "label": "TD SYNNEX 10-K(2025-11-30)",
+            "label_en": "TD SYNNEX 10-K (fiscal year ended November 30, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1177394/000162828026003598/snx-20251130.htm",
+            "level": "official",
+            "date": "2026-01-27",
+            "quote": "We have distribution agreements with most of our suppliers, including Apple Inc."
+          }
+        }
+      ],
+      "name_en": "HP Inc."
+    },
+    {
+      "id": "IM",
+      "ticker": "Ingram Micro",
+      "name": "イングラム・マイクロ",
+      "sub": "IT流通",
+      "sub_en": "IT distribution",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "国際的なIT流通の競合として挙げられている",
+          "text_en": "Ingram Micro is named as an international distribution competitor",
+          "source": {
+            "label": "TD SYNNEX 10-K(2025-11-30)",
+            "label_en": "TD SYNNEX 10-K (fiscal year ended November 30, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1177394/000162828026003598/snx-20251130.htm",
+            "level": "official",
+            "date": "2026-01-27",
+            "quote": "We compete against several international distributors, including Ingram Micro Holding Corporation, Arrow Electronics, Inc."
+          }
+        }
+      ],
+      "name_en": "Ingram Micro Holding"
+    },
+    {
+      "id": "ARW",
+      "ticker": "ARW",
+      "name": "アロー・エレクトロニクス",
+      "sub": "電子部品流通",
+      "sub_en": "Electronics distribution",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "国際的な流通の競合として挙げられている",
+          "text_en": "Arrow Electronics is named as an international distribution competitor",
+          "source": {
+            "label": "TD SYNNEX 10-K(2025-11-30)",
+            "label_en": "TD SYNNEX 10-K (fiscal year ended November 30, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1177394/000162828026003598/snx-20251130.htm",
+            "level": "official",
+            "date": "2026-01-27",
+            "quote": "We compete against several international distributors, including Ingram Micro Holding Corporation, Arrow Electronics, Inc."
+          }
+        }
+      ],
+      "name_en": "Arrow Electronics"
+    },
+    {
+      "id": "SCSC",
+      "ticker": "SCSC",
+      "name": "スキャンソース",
+      "sub": "IT流通",
+      "sub_en": "IT distribution",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "地域の流通競合として挙げられている",
+          "text_en": "ScanSource is named as a regional distribution competitor",
+          "source": {
+            "label": "TD SYNNEX 10-K(2025-11-30)",
+            "label_en": "TD SYNNEX 10-K (fiscal year ended November 30, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1177394/000162828026003598/snx-20251130.htm",
+            "level": "official",
+            "date": "2026-01-27",
+            "quote": "and Westcon-Comstor, as well as regional distributors including ScanSource, Inc., ALSO Holding, Esprinet, VSTECS Holdings Ltd."
+          }
+        }
+      ],
+      "name_en": "ScanSource"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

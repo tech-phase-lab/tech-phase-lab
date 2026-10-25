@@ -1,0 +1,148 @@
+{
+  "root": {
+    "ticker": "QNST",
+    "name": "クインストリート",
+    "cik": 1117297,
+    "name_en": "QuinStreet"
+  },
+  "rows": [
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "TREE",
+    "MAX",
+    "GOOGL",
+    "MSFT",
+    "META"
+  ],
+  "companies": [
+    {
+      "id": "TREE",
+      "ticker": "TREE",
+      "name": "レンディングツリー",
+      "sub": "ネット金融比較",
+      "sub_en": "Online finance marketplace",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "金融サービス分野で競合する",
+          "text_en": "Competes in the financial services client vertical",
+          "source": {
+            "label": "QuinStreet 10-K(2026年6月30日)",
+            "label_en": "QuinStreet 10-K (fiscal year ended June 30, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1117297/000119312526367160/qnst-20260630.htm",
+            "level": "official",
+            "date": "2026-08-26",
+            "quote": "Examples include LendingTree and MediaAlpha in the financial services client vertical."
+          }
+        }
+      ],
+      "name_en": "LendingTree"
+    },
+    {
+      "id": "MAX",
+      "ticker": "MAX",
+      "name": "メディアアルファ",
+      "sub": "保険広告",
+      "sub_en": "Insurance ad platform",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "金融サービス分野で競合する",
+          "text_en": "Competes in the financial services client vertical",
+          "source": {
+            "label": "QuinStreet 10-K(2026年6月30日)",
+            "label_en": "QuinStreet 10-K (fiscal year ended June 30, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1117297/000119312526367160/qnst-20260630.htm",
+            "level": "official",
+            "date": "2026-08-26",
+            "quote": "Examples include LendingTree and MediaAlpha in the financial services client vertical."
+          }
+        }
+      ],
+      "name_en": "MediaAlpha"
+    },
+    {
+      "id": "GOOGL",
+      "ticker": "GOOGL",
+      "name": "グーグル(アルファベット)",
+      "sub": "検索・広告",
+      "sub_en": "Search & ads",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "広告主の予算が大手サイトへ直接流れる分で競合する",
+          "text_en": "Competes where clients spend directly with larger websites such as Google",
+          "source": {
+            "label": "QuinStreet 10-K(2026年6月30日)",
+            "label_en": "QuinStreet 10-K (fiscal year ended June 30, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1117297/000119312526367160/qnst-20260630.htm",
+            "level": "official",
+            "date": "2026-08-26",
+            "quote": "Some of our competition also comes from agencies or clients spending directly with larger websites or portals, including Google, Yahoo!, Microsoft and Meta."
+          }
+        }
+      ],
+      "name_en": "Google (Alphabet)"
+    },
+    {
+      "id": "MSFT",
+      "ticker": "MSFT",
+      "name": "マイクロソフト",
+      "sub": "ソフト・広告",
+      "sub_en": "Software & ads",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "広告主の予算が大手サイトへ直接流れる分で競合する",
+          "text_en": "Competes where clients spend directly with larger websites such as Microsoft",
+          "source": {
+            "label": "QuinStreet 10-K(2026年6月30日)",
+            "label_en": "QuinStreet 10-K (fiscal year ended June 30, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1117297/000119312526367160/qnst-20260630.htm",
+            "level": "official",
+            "date": "2026-08-26",
+            "quote": "Some of our competition also comes from agencies or clients spending directly with larger websites or portals, including Google, Yahoo!, Microsoft and Meta."
+          }
+        }
+      ],
+      "name_en": "Microsoft"
+    },
+    {
+      "id": "META",
+      "ticker": "META",
+      "name": "メタ・プラットフォームズ",
+      "sub": "SNS・広告",
+      "sub_en": "Social media & ads",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "広告主の予算が大手サイトへ直接流れる分で競合する",
+          "text_en": "Competes where clients spend directly with larger websites such as Meta",
+          "source": {
+            "label": "QuinStreet 10-K(2026年6月30日)",
+            "label_en": "QuinStreet 10-K (fiscal year ended June 30, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1117297/000119312526367160/qnst-20260630.htm",
+            "level": "official",
+            "date": "2026-08-26",
+            "quote": "Some of our competition also comes from agencies or clients spending directly with larger websites or portals, including Google, Yahoo!, Microsoft and Meta."
+          }
+        }
+      ],
+      "name_en": "Meta Platforms"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

@@ -1,0 +1,187 @@
+{
+  "root": {
+    "ticker": "TDS",
+    "name": "テレフォン・アンド・データ・システムズ",
+    "cik": 1051512,
+    "name_en": "Telephone & Data Systems"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "AMT",
+    "CCI",
+    "SBAC"
+  ],
+  "companies": [
+    {
+      "id": "TMUS",
+      "ticker": "TMUS",
+      "name": "TモバイルUS",
+      "sub": "携帯通信事業者",
+      "sub_en": "Wireless carrier",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "タワー事業Arrayの最大級のテナントの一つで、長期のMLAを結んでいる",
+          "text_en": "T-Mobile is among Array's largest tenants and a long-term MLA is in place with it",
+          "source": {
+            "label": "テレフォン・アンド・データ・システムズ 10-K(2025年12月31日)",
+            "label_en": "Telephone & Data Systems 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1051512/000105151226000011/tds-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Array's largest tenants include T-Mobile, AT&T and Verizon."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "T-Mobileとは長期MLAの実行に向けて引き続き協力している",
+          "text_en": "Array continues its partnership with T-Mobile to implement the long-term MLA",
+          "source": {
+            "label": "テレフォン・アンド・データ・システムズ 10-K(2025年12月31日)",
+            "label_en": "Telephone & Data Systems 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1051512/000105151226000011/tds-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Continued partnership with T-Mobile to implement the provisions of the long-term MLA."
+          }
+        }
+      ],
+      "name_en": "T-Mobile US"
+    },
+    {
+      "id": "T",
+      "ticker": "T",
+      "name": "エーティーアンドティー",
+      "sub": "携帯通信事業者",
+      "sub_en": "Wireless carrier",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "タワー事業Arrayの最大級のテナントの一つである",
+          "text_en": "AT&T is among Array's largest tenants",
+          "source": {
+            "label": "テレフォン・アンド・データ・システムズ 10-K(2025年12月31日)",
+            "label_en": "Telephone & Data Systems 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1051512/000105151226000011/tds-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Array's largest tenants include T-Mobile, AT&T and Verizon."
+          }
+        }
+      ],
+      "name_en": "AT&T"
+    },
+    {
+      "id": "VZ",
+      "ticker": "VZ",
+      "name": "ベライゾン",
+      "sub": "携帯通信事業者",
+      "sub_en": "Wireless carrier",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "タワー事業Arrayの最大級のテナントの一つである",
+          "text_en": "Verizon is among Array's largest tenants",
+          "source": {
+            "label": "テレフォン・アンド・データ・システムズ 10-K(2025年12月31日)",
+            "label_en": "Telephone & Data Systems 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1051512/000105151226000011/tds-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Array's largest tenants include T-Mobile, AT&T and Verizon."
+          }
+        }
+      ],
+      "name_en": "Verizon"
+    },
+    {
+      "id": "AMT",
+      "ticker": "AMT",
+      "name": "アメリカン・タワー",
+      "sub": "通信タワー",
+      "sub_en": "Tower operator",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Arrayの競合である大手タワー事業者の一社",
+          "text_en": "A large tower operator that competes with Array",
+          "source": {
+            "label": "テレフォン・アンド・データ・システムズ 10-K(2025年12月31日)",
+            "label_en": "Telephone & Data Systems 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1051512/000105151226000011/tds-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "This includes, but is not limited to, large tower operators (American Tower Corporation, Crown Castle Inc and SBA Communications Corporation), regional tower operators"
+          }
+        }
+      ],
+      "name_en": "American Tower"
+    },
+    {
+      "id": "CCI",
+      "ticker": "CCI",
+      "name": "クラウン・キャッスル",
+      "sub": "通信タワー",
+      "sub_en": "Tower operator",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Arrayの競合である大手タワー事業者の一社",
+          "text_en": "A large tower operator that competes with Array",
+          "source": {
+            "label": "テレフォン・アンド・データ・システムズ 10-K(2025年12月31日)",
+            "label_en": "Telephone & Data Systems 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1051512/000105151226000011/tds-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "This includes, but is not limited to, large tower operators (American Tower Corporation, Crown Castle Inc and SBA Communications Corporation), regional tower operators"
+          }
+        }
+      ],
+      "name_en": "Crown Castle"
+    },
+    {
+      "id": "SBAC",
+      "ticker": "SBAC",
+      "name": "SBAコミュニケーションズ",
+      "sub": "通信タワー",
+      "sub_en": "Tower operator",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Arrayの競合である大手タワー事業者の一社",
+          "text_en": "A large tower operator that competes with Array",
+          "source": {
+            "label": "テレフォン・アンド・データ・システムズ 10-K(2025年12月31日)",
+            "label_en": "Telephone & Data Systems 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1051512/000105151226000011/tds-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "This includes, but is not limited to, large tower operators (American Tower Corporation, Crown Castle Inc and SBA Communications Corporation), regional tower operators"
+          }
+        }
+      ],
+      "name_en": "SBA Communications"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

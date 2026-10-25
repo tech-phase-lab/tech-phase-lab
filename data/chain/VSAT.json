@@ -1,0 +1,196 @@
+{
+  "root": {
+    "ticker": "VSAT",
+    "name": "ヴィアサット",
+    "cik": 797721,
+    "name_en": "Viasat"
+  },
+  "rows": [
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "SATS",
+    "GD",
+    "GILT",
+    "LHX",
+    "IRDM"
+  ],
+  "companies": [
+    {
+      "id": "CMTL",
+      "ticker": "CMTL",
+      "name": "コムテック・テレコミュニケーションズ",
+      "sub": "衛星通信機器",
+      "sub_en": "Satellite equipment",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "防衛・先端技術分野で競合する通信機器・サービス事業者の一社である",
+          "text_en": "Competes in the defense and advanced technology segment",
+          "source": {
+            "label": "ヴィアサット 10-K(2026年3月31日)",
+            "label_en": "Viasat 10-K (fiscal year ended March 31, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/797721/000119312526248290/vsat-20260331.htm",
+            "level": "official",
+            "date": "2026-05-29",
+            "quote": "other providers of satellite and terrestrial communications systems, products and equipment, including: CPI Antenna Systems Division, Comtech, EchoStar (Hughes Network Systems), General Dynamics, Gilat, iDirect Technologies, L3Harris, Maxar, Newtec, Panasonic Avionics Corporation, Safran Aerosystems, SpaceX and Thales Group."
+          }
+        }
+      ],
+      "name_en": "Comtech Telecommunications"
+    },
+    {
+      "id": "SATS",
+      "ticker": "SATS",
+      "name": "エコースター",
+      "sub": "衛星通信",
+      "sub_en": "Satellite communications",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "防衛・先端技術分野で競合する通信機器・サービス事業者の一社である",
+          "text_en": "Competes in the defense and advanced technology segment",
+          "source": {
+            "label": "ヴィアサット 10-K(2026年3月31日)",
+            "label_en": "Viasat 10-K (fiscal year ended March 31, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/797721/000119312526248290/vsat-20260331.htm",
+            "level": "official",
+            "date": "2026-05-29",
+            "quote": "other providers of satellite and terrestrial communications systems, products and equipment, including: CPI Antenna Systems Division, Comtech, EchoStar (Hughes Network Systems), General Dynamics, Gilat, iDirect Technologies, L3Harris, Maxar, Newtec, Panasonic Avionics Corporation, Safran Aerosystems, SpaceX and Thales Group."
+          }
+        }
+      ],
+      "name_en": "EchoStar"
+    },
+    {
+      "id": "GD",
+      "ticker": "GD",
+      "name": "ゼネラル・ダイナミクス",
+      "sub": "防衛",
+      "sub_en": "Defense",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "防衛・先端技術分野で競合する通信機器・サービス事業者の一社である",
+          "text_en": "Competes in the defense and advanced technology segment",
+          "source": {
+            "label": "ヴィアサット 10-K(2026年3月31日)",
+            "label_en": "Viasat 10-K (fiscal year ended March 31, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/797721/000119312526248290/vsat-20260331.htm",
+            "level": "official",
+            "date": "2026-05-29",
+            "quote": "other providers of satellite and terrestrial communications systems, products and equipment, including: CPI Antenna Systems Division, Comtech, EchoStar (Hughes Network Systems), General Dynamics, Gilat, iDirect Technologies, L3Harris, Maxar, Newtec, Panasonic Avionics Corporation, Safran Aerosystems, SpaceX and Thales Group."
+          }
+        }
+      ],
+      "name_en": "General Dynamics"
+    },
+    {
+      "id": "GILT",
+      "ticker": "GILT",
+      "name": "ギラット・サテライト・ネットワークス",
+      "sub": "衛星通信機器",
+      "sub_en": "Satellite equipment",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "防衛・先端技術分野で競合する通信機器・サービス事業者の一社である",
+          "text_en": "Competes in the defense and advanced technology segment",
+          "source": {
+            "label": "ヴィアサット 10-K(2026年3月31日)",
+            "label_en": "Viasat 10-K (fiscal year ended March 31, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/797721/000119312526248290/vsat-20260331.htm",
+            "level": "official",
+            "date": "2026-05-29",
+            "quote": "other providers of satellite and terrestrial communications systems, products and equipment, including: CPI Antenna Systems Division, Comtech, EchoStar (Hughes Network Systems), General Dynamics, Gilat, iDirect Technologies, L3Harris, Maxar, Newtec, Panasonic Avionics Corporation, Safran Aerosystems, SpaceX and Thales Group."
+          }
+        }
+      ],
+      "name_en": "Gilat Satellite Networks"
+    },
+    {
+      "id": "LHX",
+      "ticker": "LHX",
+      "name": "L3ハリス・テクノロジーズ",
+      "sub": "防衛・通信",
+      "sub_en": "Defense & comms",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "防衛・先端技術分野で競合する通信機器・サービス事業者の一社である",
+          "text_en": "Competes in the defense and advanced technology segment",
+          "source": {
+            "label": "ヴィアサット 10-K(2026年3月31日)",
+            "label_en": "Viasat 10-K (fiscal year ended March 31, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/797721/000119312526248290/vsat-20260331.htm",
+            "level": "official",
+            "date": "2026-05-29",
+            "quote": "other providers of satellite and terrestrial communications systems, products and equipment, including: CPI Antenna Systems Division, Comtech, EchoStar (Hughes Network Systems), General Dynamics, Gilat, iDirect Technologies, L3Harris, Maxar, Newtec, Panasonic Avionics Corporation, Safran Aerosystems, SpaceX and Thales Group."
+          }
+        }
+      ],
+      "name_en": "L3Harris Technologies"
+    },
+    {
+      "id": "IRDM",
+      "ticker": "IRDM",
+      "name": "イリジウム・コミュニケーションズ",
+      "sub": "衛星通信",
+      "sub_en": "Satellite communications",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "機内通信サービスで競合する衛星系事業者の一社である",
+          "text_en": "Competes in aviation communication services",
+          "source": {
+            "label": "ヴィアサット 10-K(2026年3月31日)",
+            "label_en": "Viasat 10-K (fiscal year ended March 31, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/797721/000119312526248290/vsat-20260331.htm",
+            "level": "official",
+            "date": "2026-05-29",
+            "quote": "other satellite-based services, such as the services offered by Amazon Leo, Anuvu, Gogo, Iridium, Panasonic Avionics Corporation, SES, SpaceX and Thales Group, among others."
+          }
+        }
+      ],
+      "name_en": "Iridium Communications"
+    },
+    {
+      "id": "GOGO",
+      "ticker": "GOGO",
+      "name": "ゴーゴー",
+      "sub": "機内通信",
+      "sub_en": "In-flight connectivity",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "機内通信サービスで競合する衛星系事業者の一社である",
+          "text_en": "Competes in aviation communication services",
+          "source": {
+            "label": "ヴィアサット 10-K(2026年3月31日)",
+            "label_en": "Viasat 10-K (fiscal year ended March 31, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/797721/000119312526248290/vsat-20260331.htm",
+            "level": "official",
+            "date": "2026-05-29",
+            "quote": "other satellite-based services, such as the services offered by Amazon Leo, Anuvu, Gogo, Iridium, Panasonic Avionics Corporation, SES, SpaceX and Thales Group, among others."
+          }
+        }
+      ],
+      "name_en": "Gogo"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

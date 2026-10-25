@@ -1,0 +1,172 @@
+{
+  "root": {
+    "ticker": "NXST",
+    "name": "ネクスターメディアグループ",
+    "cik": 1142417,
+    "name_en": "Nexstar Media Group"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [
+    "NFLX",
+    "AMZN",
+    "ROKU",
+    "GOOGL",
+    "META"
+  ],
+  "companies": [
+    {
+      "id": "WBD",
+      "ticker": "WBD",
+      "name": "ワーナー・ブラザース・ディスカバリー",
+      "sub": "フードネットワーク共同保有",
+      "sub_en": "TV Food Network partner",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "TVフードネットワークを共同で保有し、同社が運営を担う",
+          "text_en": "Warner Bros. Discovery is the partner in TV Food Network and operates the networks",
+          "source": {
+            "label": "Nexstar Media Group 10-K(2025年12月期)",
+            "label_en": "Nexstar Media Group 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1142417/000119312526078361/nxst-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Our partner in TV Food Network is Warner Bros. Discovery, Inc., which owns a 68.7% interest in TV Food Network and operates the networks on behalf of the partnership."
+          }
+        }
+      ],
+      "name_en": "Warner Bros. Discovery"
+    },
+    {
+      "id": "NFLX",
+      "ticker": "NFLX",
+      "name": "ネットフリックス",
+      "sub": "動画配信",
+      "sub_en": "Video streaming",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "広告収入をめぐる競合媒体として挙がる",
+          "text_en": "Netflix is named among competing advertising media",
+          "source": {
+            "label": "Nexstar Media Group 10-K(2025年12月期)",
+            "label_en": "Nexstar Media Group 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1142417/000119312526078361/nxst-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Our stations compete for advertising revenue with other television stations in their respective markets and other advertising media such as streaming video services (e.g. Netflix, Amazon Prime Video, Roku, YouTube, etc.), online media (e.g., Google, Meta, Tiktok, Snapchat, etc.)"
+          }
+        }
+      ],
+      "name_en": "Netflix"
+    },
+    {
+      "id": "AMZN",
+      "ticker": "AMZN",
+      "name": "アマゾン",
+      "sub": "動画配信",
+      "sub_en": "Video streaming",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "広告収入をめぐる競合媒体として挙がる",
+          "text_en": "Amazon Prime Video is named among competing advertising media",
+          "source": {
+            "label": "Nexstar Media Group 10-K(2025年12月期)",
+            "label_en": "Nexstar Media Group 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1142417/000119312526078361/nxst-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Our stations compete for advertising revenue with other television stations in their respective markets and other advertising media such as streaming video services (e.g. Netflix, Amazon Prime Video, Roku, YouTube, etc.), online media (e.g., Google, Meta, Tiktok, Snapchat, etc.)"
+          }
+        }
+      ],
+      "name_en": "Amazon Prime Video"
+    },
+    {
+      "id": "ROKU",
+      "ticker": "ROKU",
+      "name": "ロク",
+      "sub": "動画配信",
+      "sub_en": "Video streaming",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "広告収入をめぐる競合媒体として挙がる",
+          "text_en": "Roku is named among competing advertising media",
+          "source": {
+            "label": "Nexstar Media Group 10-K(2025年12月期)",
+            "label_en": "Nexstar Media Group 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1142417/000119312526078361/nxst-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Our stations compete for advertising revenue with other television stations in their respective markets and other advertising media such as streaming video services (e.g. Netflix, Amazon Prime Video, Roku, YouTube, etc.), online media (e.g., Google, Meta, Tiktok, Snapchat, etc.)"
+          }
+        }
+      ],
+      "name_en": "Roku"
+    },
+    {
+      "id": "GOOGL",
+      "ticker": "GOOGL",
+      "name": "アルファベット",
+      "sub": "動画・検索広告",
+      "sub_en": "Online video & ads",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "広告収入をめぐる競合媒体として挙がる",
+          "text_en": "YouTube (Alphabet) is named among competing advertising media",
+          "source": {
+            "label": "Nexstar Media Group 10-K(2025年12月期)",
+            "label_en": "Nexstar Media Group 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1142417/000119312526078361/nxst-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Our stations compete for advertising revenue with other television stations in their respective markets and other advertising media such as streaming video services (e.g. Netflix, Amazon Prime Video, Roku, YouTube, etc.), online media (e.g., Google, Meta, Tiktok, Snapchat, etc.)"
+          }
+        }
+      ],
+      "name_en": "YouTube (Alphabet)"
+    },
+    {
+      "id": "META",
+      "ticker": "META",
+      "name": "メタ・プラットフォームズ",
+      "sub": "ネット広告",
+      "sub_en": "Online advertising",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "広告収入をめぐる競合媒体として挙がる",
+          "text_en": "Meta is named among competing advertising media",
+          "source": {
+            "label": "Nexstar Media Group 10-K(2025年12月期)",
+            "label_en": "Nexstar Media Group 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1142417/000119312526078361/nxst-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Our stations compete for advertising revenue with other television stations in their respective markets and other advertising media such as streaming video services (e.g. Netflix, Amazon Prime Video, Roku, YouTube, etc.), online media (e.g., Google, Meta, Tiktok, Snapchat, etc.)"
+          }
+        }
+      ],
+      "name_en": "Meta"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

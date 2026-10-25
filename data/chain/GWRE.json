@@ -1,0 +1,199 @@
+{
+  "root": {
+    "ticker": "GWRE",
+    "name": "ガイドワイヤ・ソフトウェア",
+    "cik": 1528396,
+    "name_en": "Guidewire Software"
+  },
+  "rows": [
+    {
+      "ja": "供給元",
+      "en": "Suppliers",
+      "above": true
+    },
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [
+    "DXC",
+    "CRM",
+    "NOW"
+  ],
+  "companies": [
+    {
+      "id": "AWS",
+      "ticker": "AMZN",
+      "name": "アマゾン・ウェブ・サービス",
+      "sub": "クラウド基盤",
+      "sub_en": "Cloud infrastructure",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "GWCPはAWS上で稼働し、基盤の提供を受けている",
+          "text_en": "GWCP is enabled by and hosted on AWS",
+          "source": {
+            "label": "Guidewire Software 10-K(2026年7月期)",
+            "label_en": "Guidewire Software 10-K (fiscal year ended July 31, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1528396/000152839626000046/gwre-20260731.htm",
+            "level": "official",
+            "date": "2026-09-11",
+            "quote": "GWCP is a Guidewire-developed infrastructure layer enabled by and hosted on Amazon Web Services (“AWS”)."
+          }
+        }
+      ],
+      "name_en": "Amazon Web Services"
+    },
+    {
+      "id": "OKTA",
+      "ticker": "OKTA",
+      "name": "オクタ",
+      "sub": "認証サービス",
+      "sub_en": "Identity services",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "製品の運用にオクタの技術やサービスを利用している",
+          "text_en": "Guidewire uses services and technology from Okta to operate its products",
+          "source": {
+            "label": "Guidewire Software 10-K(2026年7月期)",
+            "label_en": "Guidewire Software 10-K (fiscal year ended July 31, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1528396/000152839626000046/gwre-20260731.htm",
+            "level": "official",
+            "date": "2026-09-11",
+            "quote": "We utilize services and technology and intellectual property provided or licensed by unaffiliated third parties to operate our products, including AWS, Okta and Datadog."
+          }
+        }
+      ],
+      "name_en": "Okta"
+    },
+    {
+      "id": "DDOG",
+      "ticker": "DDOG",
+      "name": "データドッグ",
+      "sub": "監視サービス",
+      "sub_en": "Monitoring services",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "製品の運用にデータドッグの技術やサービスを利用している",
+          "text_en": "Guidewire uses services and technology from Datadog to operate its products",
+          "source": {
+            "label": "Guidewire Software 10-K(2026年7月期)",
+            "label_en": "Guidewire Software 10-K (fiscal year ended July 31, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1528396/000152839626000046/gwre-20260731.htm",
+            "level": "official",
+            "date": "2026-09-11",
+            "quote": "We utilize services and technology and intellectual property provided or licensed by unaffiliated third parties to operate our products, including AWS, Okta and Datadog."
+          }
+        }
+      ],
+      "name_en": "Datadog"
+    },
+    {
+      "id": "DXC",
+      "ticker": "DXC",
+      "name": "DXCテクノロジー",
+      "sub": "保険ソフト競合",
+      "sub_en": "Insurance software rival",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "損害保険向けソフトの競合として名前が挙がる",
+          "text_en": "DXC Technology is named among P&C insurance software competitors",
+          "source": {
+            "label": "Guidewire Software 10-K(2026年7月期)",
+            "label_en": "Guidewire Software 10-K (fiscal year ended July 31, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1528396/000152839626000046/gwre-20260731.htm",
+            "level": "official",
+            "date": "2026-09-11",
+            "quote": "P&C insurance software vendors such as Duck Creek, Majesco, Origami Risk, Sapiens, and DXC Technology; horizontal software vendors such as SAP SE, Salesforce, and ServiceNow; and enterprise AI platform providers and new market entrants utilizing AI technologies."
+          }
+        }
+      ],
+      "name_en": "DXC Technology"
+    },
+    {
+      "id": "SAP",
+      "ticker": "SAP",
+      "name": "エスエーピー",
+      "sub": "業務ソフト競合",
+      "sub_en": "Enterprise software rival",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "汎用ソフトの競合としてSAPが挙がる",
+          "text_en": "SAP SE is named among horizontal software competitors",
+          "source": {
+            "label": "Guidewire Software 10-K(2026年7月期)",
+            "label_en": "Guidewire Software 10-K (fiscal year ended July 31, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1528396/000152839626000046/gwre-20260731.htm",
+            "level": "official",
+            "date": "2026-09-11",
+            "quote": "horizontal software vendors such as SAP SE, Salesforce, and ServiceNow; and enterprise AI platform providers and new market entrants utilizing AI technologies."
+          }
+        }
+      ],
+      "name_en": "SAP SE"
+    },
+    {
+      "id": "CRM",
+      "ticker": "CRM",
+      "name": "セールスフォース",
+      "sub": "業務ソフト競合",
+      "sub_en": "Enterprise software rival",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "汎用ソフトの競合としてセールスフォースが挙がる",
+          "text_en": "Salesforce is named among horizontal software competitors",
+          "source": {
+            "label": "Guidewire Software 10-K(2026年7月期)",
+            "label_en": "Guidewire Software 10-K (fiscal year ended July 31, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1528396/000152839626000046/gwre-20260731.htm",
+            "level": "official",
+            "date": "2026-09-11",
+            "quote": "horizontal software vendors such as SAP SE, Salesforce, and ServiceNow; and enterprise AI platform providers and new market entrants utilizing AI technologies."
+          }
+        }
+      ],
+      "name_en": "Salesforce"
+    },
+    {
+      "id": "NOW",
+      "ticker": "NOW",
+      "name": "サービスナウ",
+      "sub": "業務ソフト競合",
+      "sub_en": "Enterprise software rival",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "汎用ソフトの競合としてサービスナウが挙がる",
+          "text_en": "ServiceNow is named among horizontal software competitors",
+          "source": {
+            "label": "Guidewire Software 10-K(2026年7月期)",
+            "label_en": "Guidewire Software 10-K (fiscal year ended July 31, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1528396/000152839626000046/gwre-20260731.htm",
+            "level": "official",
+            "date": "2026-09-11",
+            "quote": "horizontal software vendors such as SAP SE, Salesforce, and ServiceNow; and enterprise AI platform providers and new market entrants utilizing AI technologies."
+          }
+        }
+      ],
+      "name_en": "ServiceNow"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
