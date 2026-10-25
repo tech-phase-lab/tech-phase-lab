@@ -1,34 +1,36 @@
 export type ReactionCounts = Record<string, { count: number; selected: boolean }>;
-// Separate the user's latest intent from server acknowledgements. Late responses
-// cannot overwrite a second tap, and every request sets a value (never increments).
+// One intent for the whole post. A late acknowledgement must never restore an
+// older choice while a newer tap is waiting to be saved.
 export function reactionState(initial: ReactionCounts, draw: (counts: ReactionCounts) => void, save: (key: string, selected: boolean) => Promise<ReactionCounts>, failed: () => void) {
-  let confirmed = initial, running = false;
-  const desired = new Map<string, boolean>();
-  function render() {
-    const next = Object.fromEntries(Object.entries(confirmed).map(([key, value]) => [key, { ...value }]));
-    for (const [key, selected] of desired) {
-      const previous = confirmed[key] ?? { count: 0, selected: false };
-      next[key] = { selected, count: Math.max(0, previous.count + Number(selected) - Number(previous.selected)) };
-    }
-    draw(next);
+  let confirmed = initial, running = false, version = 0;
+  let desired: { key: string; selected: boolean; version: number } | null = null;
+  function snapshot() {
+    return Object.fromEntries(Object.entries(confirmed).map(([key, value]) => {
+      const selected = desired ? desired.selected && desired.key === key : value.selected;
+      return [key, { selected, count: Math.max(0, value.count + Number(selected) - Number(value.selected)) }];
+    }));
   }
   async function flush() {
     if (running) return;
     running = true;
     try {
-      while (desired.size) {
-        const [key, selected] = desired.entries().next().value!;
+      while (desired) {
+        const sent = desired;
         try {
-          confirmed = await save(key, selected);
-          if (desired.get(key) === selected) desired.delete(key);
-        } catch { desired.delete(key); failed(); }
-        render();
+          // A → B → undo B may happen before A is acknowledged. Clear the
+          // server's acknowledged choice, even when B was never sent.
+          const key = sent.selected ? sent.key : Object.keys(confirmed).find(key => confirmed[key].selected) ?? sent.key;
+          confirmed = await save(key, sent.selected);
+        }
+        catch { failed(); }
+        if (desired.version === sent.version) desired = null;
+        draw(snapshot());
       }
     } finally { running = false; }
   }
   return { toggle(key: string) {
     if (!Object.hasOwn(confirmed, key)) return;
-    desired.set(key, !(desired.get(key) ?? confirmed[key].selected));
-    render(); void flush();
+    desired = { key, selected: !snapshot()[key].selected, version: ++version };
+    draw(snapshot()); void flush();
   } };
 }

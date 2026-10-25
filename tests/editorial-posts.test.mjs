@@ -36,6 +36,11 @@ test('actual columns route gates bodies using verified membership, expiry and pr
   }
   globalThis.__posts.member={status:'signed-in',plan:'pro',accessExpiresAt:Date.now()+30000};
   const result=await (await GET()).json();assert.equal(result.items[0].bodyEn,item.bodyEn);assert.equal(result.access,'pro');assert.ok(result.validUntil<=globalThis.__posts.member.accessExpiresAt);
+  let calledUrl;
+  globalThis.fetch=async url=>{calledUrl=new URL(url);return Response.json({ok:true,items:[item]});};
+  assert.equal((await GET(new Request(`https://example.test/api/research/posts?id=${item.id}`))).status,200);
+  assert.equal(calledUrl.searchParams.get('id'),item.id);
+  assert.equal((await GET(new Request('https://example.test/api/research/posts?id=invalid'))).status,400);
   process.env.RESEARCH_MONITOR_URL='https://user:password@monitor.example';
   assert.equal((await GET()).status,503);
   process.env.RESEARCH_MONITOR_URL='https://monitor.example';

@@ -28,6 +28,6 @@ export default function Reactions({ postId, ja }: { postId: string; ja: boolean 
   }
   return <div className={styles.reactions} aria-label={ja ? "リアクション" : "Reactions"}>{choices.map(choice => {
     const value = counts?.[choice.key];
-    return <button type="button" key={choice.key} aria-label={ja ? choice.ja : choice.en} aria-pressed={value?.selected ?? false} disabled={!counts} onClick={() => react(choice.key)}><span className={styles.reactionEmoji} key={`${choice.key}-${value?.selected}`} aria-hidden="true">{choice.emoji}</span><span className={styles.reactionCount} key={`${choice.key}-${value?.count}`} aria-live="polite">{value?.count ?? "–"}</span></button>;
+    return <button type="button" key={choice.key} aria-label={ja ? choice.ja : choice.en} aria-pressed={value?.selected ?? false} disabled={!counts} onClick={() => react(choice.key)}><span className={styles.reactionEmoji} key={`emoji-${value?.selected}`} aria-hidden="true">{choice.emoji}</span><span className={styles.reactionCount} key={`count-${value?.count}`} aria-live="polite">{value?.count ?? "–"}</span></button>;
   })}{error && <small role="status">{ja ? "通信に失敗しました。もう一度お試しください。" : "Could not sync reactions. Please try again."}</small>}</div>;
 }

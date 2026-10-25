@@ -81,13 +81,19 @@ def item(row, private=False):
     return result
 
 
-def queue(db, limit=20, published=False, offset=0):
+def queue(db, limit=20, published=False, offset=0, post_id=None):
     limit = max(1, min(int(limit), 20))
     offset = max(0, min(int(offset), 100000))
     where = "WHERE status='published'" if published else ""
+    params = ()
+    if post_id is not None:
+        if not isinstance(post_id, str) or not re.fullmatch(r"[a-z0-9-]{16,64}", post_id):
+            raise ValueError("invalid-post-id")
+        where += " AND id=?" if where else "WHERE id=?"
+        params = (post_id,)
     order = "published_at" if published else "updated_at"
-    rows = db.execute(f"SELECT * FROM editorial_posts {where} ORDER BY {order} DESC,id LIMIT ? OFFSET ?", (limit, offset)).fetchall()
-    total = db.execute(f"SELECT count(*) FROM editorial_posts {where}").fetchone()[0]
+    rows = db.execute(f"SELECT * FROM editorial_posts {where} ORDER BY {order} DESC,id LIMIT ? OFFSET ?", (*params, limit, offset)).fetchall()
+    total = db.execute(f"SELECT count(*) FROM editorial_posts {where}", params).fetchone()[0]
     return {"items": [item(row, not published) for row in rows],
             "nextOffset": offset + len(rows) if offset + len(rows) < total else None}
 

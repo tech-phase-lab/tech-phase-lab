@@ -9,6 +9,12 @@ def connect(path):
     db = editorial_posts.connect(path)
     db.execute("CREATE TABLE IF NOT EXISTS desk_reactions(post_id TEXT NOT NULL, owner_key TEXT NOT NULL, emoji TEXT NOT NULL, PRIMARY KEY(post_id,owner_key,emoji))")
     db.commit()
+    # Collapse historical multi-choice votes once, retaining the last choice.
+    if not db.execute("SELECT 1 FROM sqlite_master WHERE type='index' AND name='desk_reactions_one_choice'").fetchone():
+        with db:
+            db.execute("BEGIN IMMEDIATE")
+            db.execute("DELETE FROM desk_reactions WHERE rowid NOT IN (SELECT max(rowid) FROM desk_reactions GROUP BY post_id,owner_key)")
+            db.execute("CREATE UNIQUE INDEX IF NOT EXISTS desk_reactions_one_choice ON desk_reactions(post_id,owner_key)")
     return db
 
 
@@ -36,6 +42,7 @@ def save(db, owner, payload):
         db.execute("BEGIN IMMEDIATE")
         validate(db, owner, post_id)
         if selected:
+            db.execute("DELETE FROM desk_reactions WHERE post_id=? AND owner_key=? AND emoji<>?", (post_id, owner, emoji))
             db.execute("INSERT OR IGNORE INTO desk_reactions VALUES(?,?,?)", (post_id, owner, emoji))
         else:
             db.execute("DELETE FROM desk_reactions WHERE post_id=? AND owner_key=? AND emoji=?", (post_id, owner, emoji))
