@@ -4,7 +4,7 @@ import Link from "next/link";
 import ResearchToolShell from "../research-tool-shell";
 import { useMemberDisplay, useMemberSettled, useOwnerAccount, useResearchOwner } from "../member-display-provider";
 import { useResearchLanguage } from "../use-research-language";
-import { THEMES, THEME_TICKERS } from "@/lib/research/theme-definitions";
+import { GROUPS, themesOf, tickersOf, type GroupId } from "@/lib/research/theme-definitions";
 import { PERIODS, rankThemes, sampleStockReturns, type Period, type StockReturns } from "@/lib/research/theme-ranking";
 import styles from "./themes.module.css";
 
@@ -22,6 +22,8 @@ export default function ThemeRankingScreen() {
   const ja = lang === "ja";
   const t = (a: string, b: string) => ja ? a : b;
   const [period, setPeriod] = useState<Period>("1w");
+  const [group, setGroup] = useState<GroupId>("tech");
+  const groupThemes = useMemo(() => themesOf(group), [group]);
   const [state, setState] = useState<State>("loading");
   const [data, setData] = useState<Data | null>(null);
   // Owner-only: look at the finished screen with clearly labelled sample numbers while the price feed is not connected.
@@ -37,7 +39,7 @@ export default function ThemeRankingScreen() {
     setState("loading");
     (async () => {
       try {
-        const response = await fetch("/api/research/themes", { cache: "no-store", signal: AbortSignal.any([controller.signal, AbortSignal.timeout(20_000)]) });
+        const response = await fetch(`/api/research/themes?group=${group}`, { cache: "no-store", signal: AbortSignal.any([controller.signal, AbortSignal.timeout(20_000)]) });
         const body = await response.json();
         if (controller.signal.aborted) return;
         if (response.status === 401 || response.status === 403) { setData(null); window.dispatchEvent(new Event("tech-phase:membership-changed")); return; }
@@ -47,7 +49,7 @@ export default function ThemeRankingScreen() {
       } catch { if (!controller.signal.aborted) setState("error"); }
     })();
     return () => controller.abort();
-  }, [plan]);
+  }, [plan, group]);
 
   // The access window can close while the page is open: drop the numbers then.
   useEffect(() => {
@@ -56,12 +58,12 @@ export default function ThemeRankingScreen() {
     return () => clearTimeout(timer);
   }, [data]);
 
-  const shown = useMemo<Data | null>(() => sample ? { stocks: sampleStockReturns(THEME_TICKERS), asOf: "SAMPLE", validUntil: 0 } : data, [sample, data]);
-  const rows = useMemo(() => shown ? rankThemes(shown.stocks, period) : [], [shown, period]);
+  const shown = useMemo<Data | null>(() => sample ? { stocks: sampleStockReturns(tickersOf(group)), asOf: "SAMPLE", validUntil: 0 } : data, [sample, data]);
+  const rows = useMemo(() => shown ? rankThemes(shown.stocks, period, groupThemes) : [], [shown, period]);
   const widest = Math.max(1, ...rows.map(row => Math.abs(row.value)));
 
   return <ResearchToolShell lang={lang} setLang={setLang} title={t("テーマランキング", "Theme Ranking")}
-    description={t("ハイテクのテーマごとに、値動きの強さを並べます。", "High-tech themes, ranked by how strongly they are moving.")}>
+    description={t("米国株をテーマ（ジャンル）ごとに、値動きの強さで並べます。", "U.S. stocks grouped by theme and ranked by how strongly they are moving.")}>
     <div className={styles.eyebrow}><span>TECH PHASE PRO</span><i aria-hidden="true" /><span>THEME RANKING</span></div>
 
     {plan === null && <p role="status" className={styles.note}>{t("会員情報を確認中…", "Checking membership…")}</p>}
@@ -69,12 +71,15 @@ export default function ThemeRankingScreen() {
     {plan === "free" && <section className={styles.lock} aria-labelledby="theme-lock">
       <svg className={styles.gem} viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l7 9-7 9-7-9z" /></svg>
       <h2 id="theme-lock">{t("テーマランキングはPRO会員限定です", "Theme Ranking is exclusive to PRO")}</h2>
-      <p>{t("AI半導体、メモリ、光通信など、ハイテクの主要テーマを、期間ごとの強さ順に確認できます。", "See the main high-tech themes — AI chips, memory, optical links and more — ranked by strength over 1 day to 3 months.")}</p>
-      <ol className={styles.teaser} aria-label={t("対象のテーマ", "Themes covered")}>{THEMES.map(theme => <li key={theme.id}><span aria-hidden="true">◇</span>{ja ? theme.ja : theme.en}<b aria-hidden="true">••••</b></li>)}</ol>
+      <p>{t("AI半導体、メモリ、光・フォトニクスなどのハイテクをはじめ、資源・金融・ヘルスケアなど6ジャンルのテーマを、期間ごとの強さ順に確認できます。", "See themes across six genres — high-tech (AI chips, memory, optical & photonics…), resources, finance, health and more — ranked by strength over 1 day to 3 months.")}</p>
+      <ol className={styles.teaser} aria-label={t("対象のテーマ", "Themes covered")}>{themesOf("tech").map(theme => <li key={theme.id}><span aria-hidden="true">◇</span>{ja ? theme.ja : theme.en}<b aria-hidden="true">••••</b></li>)}</ol>
       <Link className={styles.cta} href="/research#tech-phase-pro">{t("Tech Phase PROを見る", "See Tech Phase PRO")}</Link>
     </section>}
 
     {plan === "pro" && <section aria-label={t("テーマ別ランキング", "Theme ranking")}>
+      <div className={styles.groups} role="group" aria-label={t("ジャンル", "Genre")}>
+        {GROUPS.map(item => <button key={item.id} type="button" aria-pressed={item.id === group} onClick={() => { setGroup(item.id); setSample(false); }}>{ja ? item.ja : item.en}</button>)}
+      </div>
       <div className={styles.tabs} role="group" aria-label={t("期間", "Period")}>
         {PERIODS.map(key => <button key={key} type="button" aria-pressed={key === period} onClick={() => setPeriod(key)}>{periodLabel[key]}</button>)}
       </div>
@@ -82,7 +87,7 @@ export default function ThemeRankingScreen() {
       {state === "not-connected" && !sample && <>
         <p role="status" className={styles.note}>{t("株価データの接続を準備中です。接続でき次第、順位と騰落率がここに入ります。それまでは、対象のテーマと銘柄を一覧で表示しています。", "The price data feed is being connected. Rankings and returns will fill in once it is; until then the themes and their stocks are listed.")}</p>
         {owner && <button type="button" className={styles.sampleButton} onClick={() => setSample(true)}>{t("見本の数字で見た目を確認（運営者のみ・実際の株価ではありません）", "Preview with sample numbers (owner only · not real prices)")}</button>}
-        <ol className={styles.list}>{THEMES.map(theme => <li key={theme.id}>
+        <ol className={styles.list}>{groupThemes.map(theme => <li key={theme.id}>
           <details>
             <summary>
               <span className={styles.rank} aria-hidden="true">–</span>

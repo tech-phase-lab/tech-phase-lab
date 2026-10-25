@@ -18,3 +18,11 @@ export function assessFreshness(payload: unknown, now = Date.now()): Freshness {
   const delayed = issues.some(issue => typeof issue === "string" && DELAY_ISSUES.has(issue)) || age > staleAfter;
   return delayed ? { status: "delayed", ...(at ? { lastCycleAt: at } : {}) } : { status: "ok", ...(at ? { lastCycleAt: at } : {}) };
 }
+
+/** Counting bad answers for the notice. Returning to the app fires visibilitychange, pageshow, focus and online
+ * together, so several answers can arrive within a second; they are one observation, not several. A bad answer
+ * only counts when the last counted one is at least `gapMs` old, and any good answer starts over. */
+export function countBadAnswer(state: { bad: number; at: number }, status: FreshnessStatus, now: number, gapMs = 25_000) {
+  if (status === "ok") return { bad: 0, at: 0 };
+  return now - state.at >= gapMs ? { bad: state.bad + 1, at: now } : state;
+}

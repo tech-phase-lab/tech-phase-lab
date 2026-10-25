@@ -1,7 +1,7 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { Language } from "@/lib/research/data";
-import type { Freshness } from "@/lib/research/freshness";
+import { countBadAnswer, type Freshness } from "@/lib/research/freshness";
 import { observePageActivity } from "@/lib/research/page-activity";
 import styles from "./freshness-notice.module.css";
 
@@ -13,20 +13,25 @@ export default function FreshnessNotice({ lang }: { lang: Language }) {
   const [freshness, setFreshness] = useState<Freshness | null>(null);
   // One slow answer (the monitor is busy catching up) is not an outage: say so only after two bad answers in a row.
   const [bad, setBad] = useState(0);
+  // The same app-return event can start several checks at once: share the running one and count answers apart in time.
+  const counter = useRef({ bad: 0, at: 0 });
   useEffect(() => {
-    let alive = true, timer: ReturnType<typeof setInterval> | undefined;
-    const load = async () => {
+    let alive = true, timer: ReturnType<typeof setInterval> | undefined, running: Promise<void> | null = null;
+    const load = () => running ??= (async () => {
       try {
         const response = await fetch("/api/research/freshness", { cache: "no-store" });
         if (!response.ok) return;
         const body = await response.json() as Freshness;
         if (alive && ["ok", "delayed", "unreachable"].includes(body.status)) {
           setFreshness({ status: body.status, lastCycleAt: typeof body.lastCycleAt === "string" ? body.lastCycleAt : undefined });
-          setBad(count => body.status === "ok" ? 0 : count + 1);
+          counter.current = countBadAnswer(counter.current, body.status, Date.now());
+          setBad(counter.current.bad);
         }
       } catch { /* Offline or interrupted: say nothing rather than guess. */ }
-    };
-    const stop = observePageActivity(() => { void load(); timer ??= setInterval(load, POLL_MS); }, () => { clearInterval(timer); timer = undefined; });
+      finally { running = null; }
+    })();
+    // After a long time away the old verdict says nothing about now: start from a clean slate on return.
+    const stop = observePageActivity(() => { if (!timer) { counter.current = { bad: 0, at: 0 }; setBad(0); } void load(); timer ??= setInterval(load, POLL_MS); }, () => { clearInterval(timer); timer = undefined; });
     void load(); timer = setInterval(load, POLL_MS);
     return () => { alive = false; clearInterval(timer); stop(); };
   }, []);
