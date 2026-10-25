@@ -28,3 +28,7 @@ test('the pre-paint hint script exposes only an unexpired owner/PRO state on <ht
   assert.equal(run({ plan: 'free', accessExpiresAt: later }), undefined);
   assert.equal(run(undefined), undefined);
 });
+
+test('the owner hint outlives the owner access window (about an hour) so the next open still shows the header at once', () => {
+  assert.match(source, /ownerHint \? Math\.max\(pro \? member\.accessExpiresAt : 0, Date\.now\(\) \+ 7 \* 24 \* 3_600_000\) : member\.accessExpiresAt/);
+});
