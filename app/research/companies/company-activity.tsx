@@ -12,6 +12,9 @@ import { observePageActivity } from "@/lib/research/page-activity";
 import { createWatchTracker } from "@/lib/research/watch-new-items";
 import { parseCompanyWire, type CompanyWireItem } from "@/lib/research/company-wire";
 import NewsStory from "../news/news-story";
+import Link from "next/link";
+import { freeWindow } from "@/lib/research/free-flash";
+import { useMemberDisplay, useOwnerAccount, useResearchOwner } from "../member-display-provider";
 import styles from "./company-activity.module.css";
 import DeepAnalysisPanel from "../deep-analysis-panel";
 
@@ -37,6 +40,11 @@ function timeCell(row: Row) {
 // rules remain owned by the news pipeline. This is a recent window, not history.
 export default function CompanyActivity({ ticker, lang }: { ticker: string; lang: Language }) {
   const [data, setData] = useState<GeneralNewsFeed | null>(null);
+  // Until PRO (or the owner) is confirmed this panel is the FREE version: 30 minutes behind, the latest five, headlines only.
+  const memberPlan = useMemberDisplay();
+  const ownerAccount = useOwnerAccount();
+  const ownerRole = useResearchOwner();
+  const full = memberPlan === "pro" || ownerAccount || ownerRole;
   const [failed, setFailed] = useState(false);
   const [attempt, setAttempt] = useState(0);
   const [checkedAt, setCheckedAt] = useState<string | null>(null);
@@ -96,9 +104,10 @@ export default function CompanyActivity({ ticker, lang }: { ticker: string; lang
     void load(); timer = setInterval(load, 60_000);
     return () => { alive = false; clearInterval(timer); stop(); };
   }, [ticker]);
+  const clockNow = checkedAt ? Date.parse(checkedAt) : Date.now();
   const wireLabel = (item: CompanyWireItem) => `${item.origin === "wire" ? (ja ? "企業・配信会社" : "Company / wire") : item.origin === "third-party" ? (ja ? "第三者" : "Third party") : (ja ? "発信元不明" : "Source unknown")}${item.publisher ? ` · ${item.publisher}` : ""}`;
   const wireRows = wire.filter(item => !ja || item.titleJa);
-  const rows: Row[] = [
+  const allRows: Row[] = [
     ...(data?.officialUpdates ?? []).filter(item => item.tickers.includes(ticker) && shownInLanguage(item, lang)).map(item => {
       const display = officialNewsDisplay(item, lang, data?.resultBriefs);
       return { id: `official-${item.id}`, observedAt: item.observedAt, tag: (item.brief || /^X\b/.test(item.publisher) ? "flash" : "news") as Tag, ...display, ...officialTime(item) };
@@ -107,6 +116,8 @@ export default function CompanyActivity({ ticker, lang }: { ticker: string; lang
     ...(data?.items ?? []).filter(item => item.tickers.includes(ticker)).map(item => ({ id: `news-${item.id}`, observedAt: item.observedAt, tag: "news" as Tag, label: ja ? "企業ニュース" : "Company news", title: (ja ? item.summaryJa : item.summaryEn) ?? "", body: ja ? item.impactJa : item.impactEn, at: item.publishedAt, kind: "published" })),
     ...wireRows.map(item => ({ id: `wire-${item.id}`, tag: "news" as Tag, title: (ja ? item.titleJa : item.titleEn) ?? "", at: item.publishedAt, kind: "published", wire: item })),
   ].sort((a, b) => Date.parse(b.at) - Date.parse(a.at));
+  const rowInstant = (row: Row) => Date.parse(row.kind === "date" ? `${row.at}T00:00:00Z` : row.at);
+  const rows = full ? allRows : freeWindow(allRows, rowInstant, clockNow).map(row => ({ ...row, body: undefined }));
   const tagText: Record<Tag, string> = ja ? { flash: "速報", analyst: "アナリスト", news: "ニュース" } : { flash: "Flash", analyst: "Analyst", news: "News" };
   const newest = rows[0];
   const [seenAtLoad] = useState(() => readSeen()[ticker] ?? 0);
@@ -129,18 +140,19 @@ export default function CompanyActivity({ ticker, lang }: { ticker: string; lang
     <div className={styles.entry}>
       <div className={styles.meta}><span className={`${styles.tag} ${styles[row.tag]}`}>{tagText[row.tag]}</span>{marked.has(row.id) && <span className={styles.newMark}>NEW</span>}</div>
       {row.wire
-        ? <><p className={styles.headline} lang={lang}><a href={row.wire.url} target="_blank" rel="noopener noreferrer nofollow">{row.title}</a></p><p className={styles.src}>{wireLabel(row.wire)}</p></>
+        ? <><p className={styles.headline} lang={lang}>{full ? <a href={row.wire.url} target="_blank" rel="noopener noreferrer nofollow">{row.title}</a> : row.title}</p><p className={styles.src}>{wireLabel(row.wire)}</p></>
         : <NewsStory lang={lang} label={row.label ?? ""} title={row.title} body={row.body} publication={detected(row, ja)}/>}
     </div>
   </article>;
   return <><DeepAnalysisPanel lang={lang} ticker={ticker} kind="earnings" />
   <section className={`${styles.rt} ${open ? styles.open : ""} ${hasFresh ? styles.fresh : ""}`} aria-label={ja?'銘柄監視':'Company monitor'}>
     <h2 className={styles.rtTitle}><button type="button" className={styles.head} aria-expanded={open} aria-controls={bodyId} onClick={toggle}>
-      <span className={styles.ttl}><svg className={styles.chev} viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M7 4l6 6-6 6"/></svg>{ja ? 'リアルタイム監視' : 'Live monitor'}</span>
+      <span className={styles.ttl}><svg className={styles.chev} viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M7 4l6 6-6 6"/></svg>{full ? (ja ? 'リアルタイム監視' : 'Live monitor') : (ja ? 'ニュース監視' : 'News monitor')}{!full && <small className={styles.delayTag}>{ja ? '30分遅れ' : '30 min behind'}</small>}</span>
       <span className={styles.state} data-failed={failed}>{hasFresh ? <span className={styles.badge}>{ja ? "新着" : "New"} {freshCount > 9 ? "9+" : freshCount}</span> : <span>{status}</span>}<i className={styles.dot} data-live={!!data && !failed && !paused} aria-hidden="true"/></span>
       {!open && <span className={styles.peek}>{newest ? <>{newest.kind === "date" ? <time>{newest.at.slice(5).replace("-", "/")}</time> : <time>{clock(newest.at)}</time>}<span>{newest.title}</span></> : <span>{data ? (ja ? "現在の配信データ内に該当銘柄の記事はありません。" : "No matching articles in the current feed window.") : (ja ? "配信済み記事を読み込んでいます…" : "Loading published updates…")}</span>}</span>}
     </button></h2>
     <div id={bodyId} hidden={!open}>
+      {!full && <p className={styles.freeNote} role="note"><b>FREE</b>{ja ? "版　30分遅延・新着5件・見出しのみ" : " 30 min behind · latest 5 · headlines only"}<br /><Link href="/research#tech-phase-pro">{ja ? "PRO版は、リアルタイム＋要約付きです。" : "PRO: real-time, with summaries."}</Link></p>}
       {failed && <p className={styles.problem} role="status">{ja ? "最新の配信状況を確認できません。" : "Unable to check the latest feed."}{data && (ja ? " 前回取得した記事を表示しています。" : " Showing previously loaded articles.")} <button onClick={() => setAttempt(value => value + 1)}>{ja ? "再試行" : "Retry"}</button></p>}
       {!data && !failed && <p className={styles.problem} role="status">{ja ? "配信済み記事を読み込んでいます…" : "Loading published updates…"}</p>}
       {data && !rows.length && <p className={styles.problem}>{ja ? "現在の配信データ内に該当銘柄の記事はありません。" : "No matching articles in the current feed window."}</p>}

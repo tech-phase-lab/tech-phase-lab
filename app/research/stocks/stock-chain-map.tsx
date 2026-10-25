@@ -1,7 +1,7 @@
 "use client";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { CHAIN_KINDS, chainAbove, chainCounts, chainGroup, chainKinds, chainText } from "@/lib/research/chain-map-data";
-import type { ChainCompany, ChainKind, ChainMapData, ChainSource, ChainTone } from "@/lib/research/chain-map-data";
+import { CHAIN_KINDS, chainAbove, chainCounts, chainGroup, chainKinds, chainText } from "@/lib/research/chain-map-core";
+import type { ChainCompany, ChainKind, ChainMapData, ChainSource, ChainTone } from "@/lib/research/chain-map-core";
 import styles from "./stock-chain-map.module.css";
 
 type Line = { d: string; tone: ChainTone; on: boolean };

@@ -48,7 +48,7 @@ function compile(file, extra) {
   new Function('require', 'module', 'exports', compiled)(name => name.endsWith('.css') ? { default: {} } : extra[name] ?? require(name), mod, mod.exports);
   return mod.exports;
 }
-const { StockChainMap } = compile('stock-chain-map', { '@/lib/research/chain-map-data': chain });
+const { StockChainMap } = compile('stock-chain-map', { '@/lib/research/chain-map-core': chain });
 const { renderToStaticMarkup } = require('react-dom/server');
 const { createElement } = require('react');
 

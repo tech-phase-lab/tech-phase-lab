@@ -2,7 +2,9 @@ export type NetworkText = { ja: string; en: string };
 export type NetworkNode = { id: string; name: string; ticker?: string; nameJa?: string; kind: "company" | "industry"; layer: number; summary?: NetworkText; businessLabel?: NetworkText };
 export type NetworkEvidence = { about: string; label: NetworkText; reviewedOn: string; evidence_quote?: string; sources: { label: string; url: string }[] };
 export type NetworkEdge = { id: string; from: string; to: string; kind: "supply" | "partner" | "investment" | "competition"; evidence: NetworkEvidence[] };
-export type CompanyNetwork = { root: string; nodes: NetworkNode[]; edges: NetworkEdge[]; status?: string; layerLabels?: Record<number, NetworkText> };
+export type CompanyNetwork = { root: string; nodes: NetworkNode[]; edges: NetworkEdge[]; status?: string; layerLabels?: Record<number, NetworkText>;
+  /** Placeholder: a map exists for this company; fetch it from the PRO-gated /api/research/chain-map (NVDA is the free sample). */
+  chained?: boolean };
 export type NetworkMode = "direct" | "two" | "all";
 // A missing US ticker does not imply private ownership. These names identify
 // listed overseas issuers; unresolved names stay out of the stock map.
