@@ -64,9 +64,10 @@ export function MemberDisplayProvider({ children, initial }: { children: ReactNo
         const pro = member.status === "signed-in" && member.plan === "pro" && Number.isFinite(member.accessExpiresAt) && member.accessExpiresAt > Date.now();
         // A signed-out or restoring session is not a verified FREE membership.
         setPlan(member.status === "signed-in" ? (pro ? "pro" : "free") : null);
-        // The owner account reads as a member without a paid plan, so it keeps its own short-lived hint.
+        // The owner account's live access window is only about an hour (and it may read as a member without a paid plan),
+        // so its display hint keeps its own 7-day life instead of the server's access time.
         const ownerHint = member.status === "signed-in" && member.ownerAccount === true;
-        writeHint(pro || ownerHint ? { plan: pro ? "pro" : "free", owner: member.isAdmin === true, ownerMode: member.ownerMode === true, ownerAccount: ownerHint, accessExpiresAt: pro ? member.accessExpiresAt : Date.now() + 7 * 24 * 3_600_000 } : null);
+        writeHint(pro || ownerHint ? { plan: pro ? "pro" : "free", owner: member.isAdmin === true, ownerMode: member.ownerMode === true, ownerAccount: ownerHint, accessExpiresAt: ownerHint ? Math.max(pro ? member.accessExpiresAt : 0, Date.now() + 7 * 24 * 3_600_000) : member.accessExpiresAt } : null);
         if (pro) expiry = setTimeout(() => { setPlan(null); void check(true); }, Math.min(member.accessExpiresAt - Date.now(), 2147483647));
       } catch (error) { if (error instanceof Error && error.message === "identity-loading") return; if (active && !signal.aborted && current === generation) { setSettled(true); setPlan(null); setOwner(false); setOwnerMode(false); setOwnerAccount(false); retrySoon(); } }
       finally { if (current === generation) request = null; }
