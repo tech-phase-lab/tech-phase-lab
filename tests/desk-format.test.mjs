@@ -33,3 +33,10 @@ test('media is opt-in, accepts only HTTPS supported formats and exact YouTube ho
   assert.match(render('[video](https://example.com/movie.mp4)', true), /<video controls="" preload="none"/);
   assert.doesNotMatch(render('[video](https://youtube.com.evil.test/watch?v=abcdefghijk)', true), /<iframe/);
 });
+
+test('images and audio alone are valid attachments, nested formatting remains visible', () => {
+  assert.match(render('[image](https://example.com/photo.webp)',true), /<img[^>]+src="https:\/\/example.com\/photo.webp"/);
+  assert.equal(mediaSource('https://example.com/script.svg','image'),null);
+  assert.doesNotMatch(render('[image](https://example.com/photo.webp)'), /<img/);
+  assert.match(render('==**[red]強調[/red]**=='), /<mark[^>]*><strong><span class="red">強調<\/span><\/strong><\/mark>/);
+});

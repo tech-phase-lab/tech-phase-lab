@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { postNames, type EditorialPost, type PostKind } from "@/lib/research/editorial-posts";
 import DeskTextEditor from "../desk/text-editor";
-import DeskBody from "../desk/body";
 import styles from "./styles.module.css";
 const blank = (kind: PostKind): EditorialPost => ({ id: crypto.randomUUID(), version: 0, kind, status: "draft", titleJa: "", titleEn: "", introJa: "", introEn: "", bodyJa: "", bodyEn: "", sourceNotes: "", sources: [], updatedAt: "", publishedAt: null });
 const statusNames = { draft: "下書き", published: "公開中", withdrawn: "取り下げ" };
@@ -34,7 +33,6 @@ function Workspace({ token }: { token: string }) {
   const [reason, setReason] = useState("");
   const [verified, setVerified] = useState(false);
   const [writingLanguage, setWritingLanguage] = useState<"Ja" | "En">("Ja");
-  const [preview, setPreview] = useState<"ja" | "en">("ja");
   const dirty = draft !== null && JSON.stringify(draft) !== saved;
   useEffect(() => {
     if (!dirty) return;
@@ -102,7 +100,7 @@ function Workspace({ token }: { token: string }) {
       <section className={styles.review}><h2>公開確認</h2><p>下書きを保存した後、日英の文章と元メモを確認して公開します。</p><label>確認者<input value={reviewer} maxLength={120} onChange={e => setReviewer(e.target.value)} /></label><label>確認・取り下げの理由<input value={reason} maxLength={500} onChange={e => setReason(e.target.value)} /></label>
       <label className={styles.check}><input type="checkbox" checked={verified} onChange={e => setVerified(e.target.checked)} />日英の意味・数字・出典・本人の見解・個人情報を確認しました</label>
       <div className={styles.actions}><button disabled={busy || dirty || !draft.version || !verified || reviewer.trim().length < 2 || reason.trim().length < 5 || draft.status === "published"} onClick={() => void write("published")}>PRO記事として公開</button><button disabled={busy || dirty || draft.status !== "published" || reviewer.trim().length < 2 || reason.trim().length < 5} onClick={() => void write("withdrawn")}>公開を取り下げる</button></div></section>
-      <section className={styles.preview}><h2>表示プレビュー（未保存の入力を含む）</h2><select aria-label="プレビュー言語" value={preview} onChange={e => setPreview(e.target.value as "ja" | "en")}><option value="ja">日本語</option><option value="en">English</option></select><p>{postNames[draft.kind][preview]}</p><h3>{preview === "ja" ? draft.titleJa : draft.titleEn}</h3><p>{preview === "ja" ? draft.introJa : draft.introEn}</p><hr /><div className={styles.text}>{draft.kind === "weekly" ? (preview === "ja" ? draft.bodyJa : draft.bodyEn) : <DeskBody text={preview === "ja" ? draft.bodyJa : draft.bodyEn} media={draft.kind === "notes"} />}</div></section>
+
     </section>}</div>
   </>;
 }
