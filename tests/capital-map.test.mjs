@@ -178,3 +178,38 @@ test('prior-quarter reports reconcile and cover all managers and corporate portf
   assert.equal(rows.find(h => h.ticker === 'ALGT').change, 'new');
   assert.equal(rows.find(h => h.securityId === '63909J108').change, 'exited');
 });
+
+test('additional managers reconcile full reports including bonds and restated history', () => {
+  const data = JSON.parse(readFileSync(new URL('../lib/research/capital-map-additional-managers.json', import.meta.url), 'utf8'));
+  assert.deepEqual(data.map(p => p.id), ['thiel-13f', 'soros-13f', 'ark-13f', 'jpmorgan-13f', 'blackrock-13f']);
+  assert.deepEqual(data.map(p => p.current.source.entryCount), [8, 266, 191, 34064, 49968]);
+  assert.deepEqual(data.map(p => p.current.source.totalValue), [418666506, 8143628824, 15402788184, 1807041234839, 6729538649155]);
+  assert.deepEqual(data.map(p => p.current.holdings.length), [8, 266, 191, 7720, 5696]);
+  for (const p of data) {
+    for (const [period, date] of [['current', '2026-06-30'], ['previous', '2026-03-31']]) {
+      const snapshot = p[period];
+      assert.equal(snapshot.asOf, date);
+      assert.equal(snapshot.complete, true);
+      assert.equal(snapshot.holdings.reduce((sum, h) => sum + h.value, 0), snapshot.source.totalValue);
+      assert.equal(new Set(snapshot.holdings.map(h => `${h.securityId}:${h.instrument}`)).size, snapshot.holdings.length);
+      assert.match(snapshot.source.sha256, /^[a-f0-9]{64}$/);
+      assert.ok(snapshot.holdings.every(h => Number.isSafeInteger(h.value) && Number.isSafeInteger(h.shares) && h.value >= 0 && h.shares >= 0));
+      assert.equal(Number(snapshot.source.url.split('/')[6]), Number(p.current.source.url.split('/')[6]));
+    }
+    const rows = capitalRows(p.current, p.previous);
+    assert.ok(Math.abs(rows.reduce((sum, h) => sum + h.weight, 0) - 100) < 1e-8);
+    assert.ok(rows.every(h => h.companyPercent === null));
+  }
+  assert.equal(data[3].previous.source.accession, '000001961726000225'); // Full restatement, not additive amendment.
+  assert.deepEqual(data[0].previous.holdings, []); // SEC's zero-value NA placeholder is not a security.
+  assert.ok(capitalRows(data[0].current, data[0].previous).every(h => h.change === 'new'));
+  for (const p of [data[1], data[3], data[4]]) assert.ok(p.current.holdings.some(h => h.instrument === 'bond'));
+});
+
+test('bond principal stays distinct from stock shares and never implies company ownership', () => {
+  const bond = { ...holding('NOTE', 100000, 90000, 'bond'), outstandingShares: 1000000 };
+  const rows = capitalRows(snapshot([bond]), snapshot([{ ...bond, shares: 200000 }]));
+  assert.equal(rows[0].shareChangePercent, -50);
+  assert.equal(rows[0].companyPercent, null);
+  assert.equal(etfOverlap(snapshot([bond]), snapshot([bond])).percent, 0);
+});

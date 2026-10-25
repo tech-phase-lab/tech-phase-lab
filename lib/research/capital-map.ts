@@ -3,7 +3,8 @@ export type CapitalHolding = {
   ticker: string;
   name: string;
   shareClass?: string;
-  instrument: "stock" | "put" | "call";
+  instrument: "stock" | "put" | "call" | "bond";
+  // For bonds, the SEC-reported principal amount in USD; otherwise shares.
   shares: number;
   value: number;
   // Issuer-published ETF weight; never renormalize after excluding cash.

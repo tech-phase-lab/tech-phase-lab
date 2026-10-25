@@ -1,3 +1,26 @@
+## 2026-10-25 JST — Capital Map expansion
+
+Owner priority: preserve the existing map and add the requested managers. Added
+Thiel Macro, Soros Fund Management, ARK Investment Management, JPMorgan Chase and
+BlackRock using the same manager UI with current/prior SEC reports. Berkshire is
+unchanged. Original datasets and CSS remain byte-identical. Bond quantities are
+explicitly USD principal; existing stock/option displays remain unchanged.
+Sources, import reproduction, outstanding Trump/Pelosi limitations and adjacent
+FREE/PRO/theme-ranking decisions are recorded in `docs/CAPITAL-MAP.md`.
+
+Local render comparison: 76 Japanese/English existing map/detail HTML cases match
+before/after with shell/navigation/images stubbed. Added managers render in both
+languages. This is not a production browser acceptance receipt. Final integrated gates on base 4d56d98a: lint (0 errors, 5 existing warnings),
+Node 1405/1405, Python 2639/2639, production build/typecheck, compileall and diff
+check passed. Python was rerun with verbose diagnostics because the first output
+lacked a completion summary; the completed run took 225.988 seconds. This record
+precedes the normal preview-branch publication, not a live deployment receipt.
+Railway access and
+reauthentication are prohibited; none were used. No Twelve Data integration or
+new PRO pillar page is part of this change.
+
+---
+
 ## 2026-10-24 JST — PRO checkout final integrated local gates passed
 
 Integrated preview 9f6134c4 while preserving all independently published changes.
