@@ -2,6 +2,7 @@ import type { Temperature, ThermometerIndex } from './thermometer.ts';
 
 export type ThermometerSnapshot = {
  asOf: string;
+ validUntil?: number;
  nas100: Temperature | {status: 'unavailable'; reason: string};
  sox: Temperature | {status: 'unavailable'; reason: string};
  vix: {status: 'ready'; asOf: string; level: number; percentile: number} | {status: 'unavailable'; reason: string};
