@@ -1,8 +1,8 @@
-// Only MPEG Layer III files are accepted for direct uploads.
+// Direct uploads are limited to MP3 and audio-only M4A.
 export const maxDeskAudioBytes = 50 * 1024 * 1024;
-export const deskAudioFile = /^[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}\.mp3$/;
+export const deskAudioFile = /^[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}\.(?:mp3|m4a)$/;
 export function validAudioUpload(name: unknown, size: unknown): size is number {
-  return typeof name === "string" && name.length <= 255 && /\.mp3$/i.test(name) && typeof size === "number" && Number.isSafeInteger(size) && size >= 512 && size <= maxDeskAudioBytes;
+  return typeof name === "string" && name.length <= 255 && /\.(?:mp3|m4a)$/i.test(name) && typeof size === "number" && Number.isSafeInteger(size) && size >= 512 && size <= maxDeskAudioBytes;
 }
 export function mp3Start(bytes: Uint8Array, total: number) {
   if (bytes[0] !== 73 || bytes[1] !== 68 || bytes[2] !== 51) return 0;
@@ -26,4 +26,66 @@ export function hasMp3Frames(bytes: Uint8Array) {
     if (length && frameLength(bytes, i + length)) return true;
   }
   return false;
+}
+
+export function audioFormat(name: string) {
+  const extension = /\.m4a$/i.test(name) ? "m4a" : "mp3";
+  return { extension, contentType: extension === "m4a" ? "audio/mp4" : "audio/mpeg" };
+}
+// Inspect bounded ISO BMFF metadata without downloading the audio payload.
+// Every track must be audio; a renamed MP4 containing a video track is rejected.
+export async function verifyM4a(total: number, read: (offset: number, length: number) => Promise<Uint8Array>) {
+  const bad = () => { throw Error("invalid-audio"); };
+  const word = (b: Uint8Array, i: number) => { if (i + 4 > b.length) return bad(); return new DataView(b.buffer, b.byteOffset, b.byteLength).getUint32(i); };
+  const tag = (b: Uint8Array, i: number) => String.fromCharCode(...b.slice(i, i + 4));
+  function header(b: Uint8Array, remaining: number) {
+    if (b.length < 8) return bad();
+    let size = word(b, 0); const type = tag(b, 4), head = size === 1 ? 16 : 8;
+    if (size === 1) size = word(b, 8) * 4294967296 + word(b, 12);
+    else if (size === 0) size = remaining;
+    if (!Number.isSafeInteger(size) || size < head || size > remaining) return bad();
+    return { size, type, head };
+  }
+  function boxes(b: Uint8Array) {
+    const result: { type: string; data: Uint8Array }[] = [];
+    for (let at = 0; at < b.length;) {
+      if (result.length >= 256) return bad();
+      const h = header(b.subarray(at, at + 16), b.length - at);
+      result.push({ type: h.type, data: b.subarray(at + h.head, at + h.size) }); at += h.size;
+    }
+    return result;
+  }
+  const one = (b: Uint8Array, type: string) => {
+    const matches = boxes(b).filter(box => box.type === type);
+    if (matches.length !== 1) return bad(); return matches[0].data;
+  };
+  let ftyp = false, moov = false, mdat = false, count = 0;
+  for (let at = 0; at < total;) {
+    if (++count > 128) return bad();
+    const h = header(await read(at, Math.min(16, total - at)), total - at);
+    if (h.type === "ftyp") {
+      if (ftyp || h.size > 1024 || h.size - h.head < 8) return bad();
+      const b = await read(at + h.head, h.size - h.head);
+      const brands = [tag(b, 0)]; for (let i = 8; i + 4 <= b.length; i += 4) brands.push(tag(b, i));
+      if (!brands.some(v => ["M4A ", "isom", "iso2", "mp41", "mp42", "qt  "].includes(v))) return bad();
+      ftyp = true;
+    } else if (h.type === "moov") {
+      if (moov || h.size > 2 * 1024 * 1024) return bad();
+      const b = await read(at + h.head, h.size - h.head), children = boxes(b);
+      const tracks = children.filter(v => v.type === "trak");
+      if (!tracks.length || tracks.length > 8 || children.some(v => v.type === "mvex")) return bad();
+      for (const track of tracks) {
+        const media = one(track.data, "mdia"), handler = one(media, "hdlr");
+        if (handler.length < 12 || tag(handler, 8) !== "soun") return bad();
+        const descriptions = one(one(one(media, "minf"), "stbl"), "stsd");
+        if (descriptions.length < 8 || word(descriptions, 0) !== 0) return bad();
+        const samples = boxes(descriptions.subarray(8));
+        if (!samples.length || samples.length !== word(descriptions, 4) || samples.some(v => !["mp4a", "alac"].includes(v.type) || v.data.length < 28)) return bad();
+      }
+      moov = true;
+    } else if (h.type === "mdat") { if (h.size > h.head) mdat = true; }
+    else if (h.type === "moof") return bad();
+    at += h.size;
+  }
+  if (!ftyp || !moov || !mdat) return bad();
 }

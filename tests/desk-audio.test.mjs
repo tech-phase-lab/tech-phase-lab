@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { stripTypeScriptTypes } from 'node:module';
 import { S3Client } from '@aws-sdk/client-s3';
-import { validAudioUpload, maxDeskAudioBytes, hasMp3Frames, mp3Start } from '../lib/research/desk-audio.ts';
+import { validAudioUpload, maxDeskAudioBytes, hasMp3Frames, mp3Start, verifyM4a } from '../lib/research/desk-audio.ts';
 const file='12345678-1234-4123-8123-123456789abc.mp3';
 function mp3(){const b=new Uint8Array(1024);b.set([255,251,144,0],0);b.set([255,251,144,0],417);return b;}
 async function load(path,replacements={}){
@@ -14,8 +14,8 @@ async function load(path,replacements={}){
 }
 const storage=await load('../lib/research/desk-audio-storage.ts');
 test('MP3 upload accepts only bounded .mp3 files and verifies Layer III frames beyond valid ID3 tags',()=>{
- assert.equal(validAudioUpload('録音.MP3',1024),true);
- for(const [name,size] of [['movie.mp4',1024],['voice.m4a',1024],['a.mp3',0],['a.mp3',maxDeskAudioBytes+1],['a.mp3','1024']])assert.equal(validAudioUpload(name,size),false);
+ assert.equal(validAudioUpload('録音.MP3',1024),true);assert.equal(validAudioUpload('録音.M4A',1024),true);
+ for(const [name,size] of [['movie.mp4',1024],['a.mp3',0],['a.mp3',maxDeskAudioBytes+1],['a.mp3','1024']])assert.equal(validAudioUpload(name,size),false);
  assert.equal(hasMp3Frames(mp3()),true);assert.equal(hasMp3Frames(Buffer.from('ftypmp42'+'.'.repeat(1024))),false);
  const single=mp3();single[417]=0;assert.equal(hasMp3Frames(single),false);
  assert.equal(mp3Start(new Uint8Array([73,68,51,4,0,0,0,0,0,10]),1024),20);
@@ -27,10 +27,10 @@ test('R2 upload binds type/size, verifies the immutable source before promotion,
  const original=Object.fromEntries(keys.map(k=>[k,process.env[k]])),send=S3Client.prototype.send;
  keys.forEach(k=>delete process.env[k]);assert.throws(()=>storage.audioStorage(),/not-configured/);
  Object.assign(process.env,{DESK_MEDIA_R2_ACCOUNT_ID:'a'.repeat(32),DESK_MEDIA_R2_BUCKET:'desk-audio-test',DESK_MEDIA_R2_ACCESS_KEY_ID:'b'.repeat(32),DESK_MEDIA_R2_SECRET_ACCESS_KEY:'c'.repeat(64)});
- const calls=[];let bytes=mp3(),length=1024;
+ const calls=[];let bytes=mp3(),length=1024,contentType="audio/mpeg",verified="mp3";
  S3Client.prototype.send=async function(command){
   calls.push({type:command.constructor.name,input:command.input});
-  if(command.constructor.name==='HeadObjectCommand')return {ContentLength:length,ContentType:'audio/mpeg',ETag:'"test"',Metadata:{verified:'mp3'}};
+  if(command.constructor.name==='HeadObjectCommand')return {ContentLength:length,ContentType:contentType,ETag:'"test"',Metadata:{verified}};
   if(command.constructor.name==='GetObjectCommand') {const [,a,b]=/bytes=(\d+)-(\d+)/.exec(command.input.Range);const part=bytes.slice(+a,+b+1);return {ContentLength:part.length,Body:{transformToByteArray:async()=>part}};}
   return {};
  };
@@ -42,11 +42,19 @@ test('R2 upload binds type/size, verifies the immutable source before promotion,
   assert.equal(calls.find(c=>c.type==='CopyObjectCommand').input.Metadata.verified,'mp3');
   assert.equal(calls.at(-1).type,'DeleteObjectCommand');
   calls.length=0;bytes=new Uint8Array(1024);
-  await assert.rejects(storage.finishAudioUpload(file),/invalid-mp3/);assert.equal(calls.some(c=>c.type==='CopyObjectCommand'),false);assert.equal(calls.at(-1).type,'DeleteObjectCommand');
+  await assert.rejects(storage.finishAudioUpload(file),/invalid-(mp3|audio)/);assert.equal(calls.some(c=>c.type==='CopyObjectCommand'),false);assert.equal(calls.at(-1).type,'DeleteObjectCommand');
   calls.length=0;length=maxDeskAudioBytes+1;
-  await assert.rejects(storage.finishAudioUpload(file),/invalid-mp3/);assert.equal(calls.some(c=>c.type==='GetObjectCommand'),false);
+  await assert.rejects(storage.finishAudioUpload(file),/invalid-(mp3|audio)/);assert.equal(calls.some(c=>c.type==='GetObjectCommand'),false);
   length=1024;await assert.rejects(storage.audioPlaybackUrl(file,Date.now()-1),/access-expired/);
   const playback=new URL(await storage.audioPlaybackUrl(file,Date.now()+30000));assert.ok(+playback.searchParams.get('X-Amz-Expires')<=30);assert.match(playback.pathname,/audio\//);
+  const m4aFile=file.replace('.mp3','.m4a');bytes=m4a();length=bytes.length;contentType='audio/mp4';verified='m4a';calls.length=0;
+  const m4aStart=await storage.beginAudioUpload(length,'ボイスメモ.M4A');assert.match(m4aStart.file,/\.m4a$/);assert.equal(m4aStart.contentType,'audio/mp4');
+  assert.equal(await storage.finishAudioUpload(m4aFile),`/api/research/desk-media/${m4aFile}`);
+  const promoted=calls.find(c=>c.type==='CopyObjectCommand').input;assert.equal(promoted.ContentType,'audio/mp4');assert.equal(promoted.Metadata.verified,'m4a');
+  const signed=new URL(await storage.audioPlaybackUrl(m4aFile,Date.now()+60000));assert.equal(signed.searchParams.get('response-content-type'),'audio/mp4');
+  bytes=m4a('vide');length=bytes.length;calls.length=0;
+  await assert.rejects(storage.finishAudioUpload(m4aFile),/invalid-audio/);assert.equal(calls.some(c=>c.type==='CopyObjectCommand'),false);assert.equal(calls.at(-1).type,'DeleteObjectCommand');
+
  }finally{S3Client.prototype.send=send;for(const k of keys)if(original[k]===undefined)delete process.env[k];else process.env[k]=original[k];}
 });
 const memberImport='import { getMembership } from "@/lib/membership/server";';
@@ -77,6 +85,8 @@ test('upload endpoints reject cross-origin, non-owner, MP4, oversized bodies and
   assert.equal((await api.POST(request({action:'start',name:'a.mp3',size:1024}))).status,200);
   assert.equal((await api.POST(request({action:'finish',file:'../../other'}))).status,400);
   assert.equal((await api.POST(request({action:'finish',file}))).status,200);
+  assert.equal((await api.POST(request({action:'start',name:'録音.m4a',size:1024}))).status,200);
+  assert.equal((await api.POST(request({action:'finish',file:file.replace('.mp3','.m4a')}))).status,200);
  }finally{delete globalThis.__audio;}
 });
 test('playback needs PRO plus exact published attachment; owner can preview; private redirects never cache',async()=>{
@@ -96,4 +106,25 @@ test('playback needs PRO plus exact published attachment; owner can preview; pri
 });
 test('Clerk middleware covers upload status, writes and playback',()=>{
  assert.match(readFileSync(new URL('../proxy.ts',import.meta.url),'utf8'),/"\/api\/research\/desk-media\/:path\*"/);
+});
+
+function box(type,...parts){const data=Buffer.concat(parts),b=Buffer.alloc(8);b.writeUInt32BE(data.length+8);b.write(type,4);return Buffer.concat([b,data]);}
+function m4a(handler='soun',codec='mp4a',fast=false){
+ const h=Buffer.alloc(24);h.write(handler,8);
+ const sd=Buffer.alloc(8);sd.writeUInt32BE(1,4);
+ const moov=box('moov',box('trak',box('mdia',box('hdlr',h),box('minf',box('stbl',box('stsd',sd,box(codec,Buffer.alloc(28))))))));
+ const data=box('mdat',Buffer.alloc(1024));
+ return Buffer.concat([box('ftyp',Buffer.from('M4A '+String.fromCharCode(0,0,0,0)+'isom')), ...(fast?[moov,data]:[data,moov])]);
+}
+test('M4A metadata accepts AAC/ALAC, skips media payload, and rejects video and malformed containers',async()=>{
+ for(const codec of ['mp4a','alac'])for(const fast of [true,false]){
+  const b=m4a('soun',codec,fast),reads=[];
+  await verifyM4a(b.length,async(offset,length)=>{reads.push(length);return b.subarray(offset,offset+length);});
+  assert.ok(Math.max(...reads)<1024);
+ }
+ for(const b of [m4a('vide'),m4a('soun','avc1'),Buffer.alloc(1024),m4a().subarray(0,100),Buffer.concat([m4a(),box('moof',Buffer.alloc(8))])]){
+  await assert.rejects(verifyM4a(b.length,async(offset,length)=>b.subarray(offset,offset+length)),/invalid-audio/);
+ }
+ const oversized=box('moov',Buffer.alloc(2*1024*1024));
+ await assert.rejects(verifyM4a(oversized.length,async(offset,length)=>oversized.subarray(offset,offset+length)),/invalid-audio/);
 });
