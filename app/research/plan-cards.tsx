@@ -1,5 +1,4 @@
 "use client";
-import Link from "next/link";
 import type { Language } from "@/lib/research/data";
 import styles from "./plan-cards.module.css";
 
@@ -64,9 +63,8 @@ export default function PlanCards({ lang }: { lang: Language }) {
     <article className={styles.freeCard}>
       <p className={styles.kicker}>FREE</p>
       <p className={styles.price}>{t("¥0", "$0")}<small>{t(" / 月", " / month")}</small></p>
-      <h3>{t("米国株を調べる、基本の機能。", "The essentials for exploring U.S. stocks.")}</h3>
+      <h3>{t("株価も、資本マップも、目標株価も、無料で。", "Prices, Capital Map and price targets, all free.")}</h3>
       {groups(free)}
-      <Link href="/research/stocks" className={styles.link}>{t("無料で銘柄を探す", "Explore stocks for free")} <span aria-hidden="true">↗</span></Link>
     </article>
   </div>;
 }
