@@ -22,7 +22,7 @@ export default function HomeTools({ lang, onPro, onWatch }: { lang: Language; on
       <Link href="/research/capital-map"><span className={styles.cardTop}><span className={styles.icon} aria-hidden="true">🗺️</span><strong>{t("資本マップ", "Capital Map")}</strong></span><small>{t("運用会社・ETFの投資先", "Funds and ETFs")}</small></Link>
       <Link href="/research#monitored-companies" onClick={event => { if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return; event.preventDefault(); onWatch(); }}><span className={styles.cardTop}><span className={styles.icon} aria-hidden="true">🔭</span><strong>{t("監視22銘柄", "22 Tracked Stocks")}</strong></span><small>{t("厳選株をリアルタイムで", "Live, curated")}</small></Link>
     </nav>
-    <nav className={`${styles.reading} ${covered ? styles.readingLocked : ""}`} aria-label={t("リゼルのリサーチ", "RIZEL’s research")}>
+    <nav id="rizels-desk" className={`${styles.reading} ${covered ? styles.readingLocked : ""}`} aria-label={t("リゼルのリサーチ", "RIZEL’s research")}>
       <div className={styles.deskHeading}><span>RIZEL’S DESK</span><span className={styles.deskEdition}>TECH PHASE PRO</span></div>
       <Link href="/research/notes" className={styles.deskLead}><div><strong>{t("リゼルのひとりごと", "RIZEL’s Notes")}</strong><p>{t("数字の先にある、相場の着眼点。", "A perspective beyond the numbers.")}</p></div><span aria-hidden="true">→</span></Link>
       <div className={styles.deskPair}>

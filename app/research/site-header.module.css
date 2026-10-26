@@ -215,3 +215,14 @@
 :global(html[data-member-hint]) .planName {
   background:linear-gradient(90deg,#fbeab8,#b8923f); -webkit-background-clip:text; background-clip:text; color:transparent; font-weight:700;
 }
+
+/* PRO emblem (faceted gold gem) and the small mark on PRO-only rows; the light sweep runs only on the member card. */
+.proBadge { flex:none; display:block; overflow:hidden; filter:drop-shadow(0 0 5px rgba(236,208,142,.35)); }
+.proSweep { animation:proSweep 3.6s ease-in-out infinite; }
+@keyframes proSweep { 0%,55% { transform:translateX(0) skewX(-20deg); } 100% { transform:translateX(70px) skewX(-20deg); } }
+@media (prefers-reduced-motion:reduce) { .proSweep { animation:none; } }
+.badge .proBadge { filter:drop-shadow(0 0 7px rgba(236,208,142,.5)); }
+.frTitle .proBadge { margin-right:2px; }
+.proMark { display:inline-flex; margin-left:auto; margin-right:2px; }
+.itemNote { display:block; margin-top:1px; font-size:11px; font-weight:400; color:#8fa0aa; letter-spacing:0; }
+.item span.proMark { flex:none; margin-left:0; }
