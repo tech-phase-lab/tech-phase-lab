@@ -219,6 +219,7 @@ function SiteMenu({ lang, member, ownerAccount, onClose, onRefresh, onPro }: { l
               <span className={styles.badge}><ProBadge size={26} shine star={ownerAccount} /><span>{ownerAccount ? (ja ? "運営者" : "Owner") : (ja ? "PRO　全機能" : "PRO · All features")}</span></span>
               <Link className={styles.manage} href="/research/account" onClick={event => navigate(event, "/research/account")}>{ja ? "プランの管理" : "Manage plan"}</Link>
             </div>
+            <span className={styles.paidPerks}><span>RIZEL&apos;S DESK</span><span>{ja ? "テーマランキング" : "Theme Ranking"}</span><span>{ja ? "銘柄比較" : "Compare"}</span><span>{ja ? "連関マップ" : "Relationship maps"}</span><span>{realtime}</span><span>{alerts}</span></span>
           </div>
         : <button type="button" className={styles.cardFree} aria-label={ja ? "PROの案内を見る" : "Learn more about PRO"} onClick={act(onPro)}>
             <span className={styles.frTop}><span className={styles.frTitle}><ProBadge size={24} />{ja ? "PROで、もっと深く" : "Go deeper with PRO"}</span><span className={styles.frGo}>{ja ? "案内を見る" : "Learn more"}<Icon name="next" /></span></span>
