@@ -12,6 +12,7 @@ export default function PostActions({ item, onUpdated, editing, setEditing, chil
   async function save(action: "edit" | "delete") {
     if (inFlight.current || mediaBusy || (action === "edit" && !body.trim())) return;
     if (action === "delete" && !window.confirm(item.kind === "qa" ? "この回答を削除しますか？質問は残ります。" : "この投稿を削除しますか？")) return;
+    if (action === "edit" && body.includes("[audio](") && !window.confirm("音声を含む変更を公開しますか？PRO会員が再生できるようになります。")) return;
     inFlight.current = true; setBusy(true); setMessage("");
     try {
       const response = await fetch("/api/research/desk-post", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ id: item.id, version: version.current, kind: item.kind, action, bodyJa: body }), signal: AbortSignal.timeout(20_000) });
@@ -26,7 +27,7 @@ export default function PostActions({ item, onUpdated, editing, setEditing, chil
       <button type="button" aria-label={item.kind === "qa" ? "回答を編集" : "投稿を編集"} title="編集" aria-pressed={editing} disabled={busy || mediaBusy} onClick={() => { if (editing) { setEditing(false); return; } if (!dirty) { setBody(item.bodyJa); version.current = item.version; } setEditing(true); }}><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 5 4 4M4 20l4-1L20 7a2.8 2.8 0 0 0-4-4L4 15z" /></svg></button>
       <button type="button" aria-label={item.kind === "qa" ? "回答を削除" : "投稿を削除"} title="削除" disabled={busy || mediaBusy} onClick={() => void save("delete")}><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13M10 11v5M14 11v5" /></svg></button>
     </div></div>
-    {editing && <div className={styles.inlineEditor}><DeskTextEditor label={item.kind === "qa" ? "回答の本文" : "投稿の本文"} value={body} onChange={setBody} disabled={busy || mediaBusy} media={item.kind === "notes"} onMediaBusyChange={setMediaBusy} /><div className={styles.saveActions}><button type="button" disabled={busy || mediaBusy || !dirty || !body.trim()} onClick={() => void save("edit")}>{busy ? "保存中…" : "保存"}</button><button type="button" disabled={busy || mediaBusy} onClick={() => { setBody(item.bodyJa); setEditing(false); setMessage(""); }}>キャンセル</button></div></div>}
+    {editing && <div className={styles.inlineEditor}><DeskTextEditor label={item.kind === "qa" ? "回答の本文" : "投稿の本文"} value={body} onChange={setBody} disabled={busy} media={item.kind === "notes"} onMediaBusyChange={setMediaBusy} /><div className={styles.saveActions}><button type="button" disabled={busy || mediaBusy || !dirty || !body.trim()} onClick={() => void save("edit")}>{busy ? "保存中…" : "保存"}</button><button type="button" disabled={busy || mediaBusy} onClick={() => { setBody(item.bodyJa); setEditing(false); setMessage(""); }}>キャンセル</button></div></div>}
     {message && <p className={styles.actionMessage} role="status">{message}</p>}
   </>;
 }

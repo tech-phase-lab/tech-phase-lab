@@ -11,3 +11,5 @@
 .reactionEmoji{display:inline-block;font-size:13px;line-height:1}.editor{user-select:text;-webkit-user-select:text;-webkit-touch-callout:default}
 
 .audioUpload{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:7px 0 10px}.audioUpload button{padding:7px 10px;border:1px solid #627579;border-radius:5px;background:#14212c;color:#e6e8e4;font-size:12px;cursor:pointer}.audioUpload button:disabled{opacity:.45;cursor:default}.audioUpload small,.audioUpload span{font-size:11px;color:#afbec2}.audioUpload p{width:100%;margin:0;font-size:12px;color:#efb6a8}
+
+.audioReview{flex-basis:100%;display:grid;gap:10px;padding:14px;border:1px solid #43574d;border-radius:10px;background:#121c18}.audioReview audio{width:100%;max-width:420px}.audioReview label{display:flex;align-items:center;gap:8px;font-size:13px}.audioReview input{width:18px;height:18px;accent-color:#8bbca2}.audioReview small{overflow-wrap:anywhere}.audioReview>div{display:flex;gap:8px}.recorder{display:flex;align-items:center;flex-wrap:wrap;gap:8px}.recording{color:#ffaaaa;font-variant-numeric:tabular-nums}

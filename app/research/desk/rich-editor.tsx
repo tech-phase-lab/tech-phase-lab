@@ -18,6 +18,8 @@ function parts(value: string, enabled: boolean) {
   return { text: lines.join("\n"), attachments };
 }
 export default function DeskTextEditor({ value, onChange, disabled = false, label = "本文", media = false, onMediaBusyChange }: { onMediaBusyChange?: (busy: boolean) => void; value: string; onChange: (value: string) => void; disabled?: boolean; label?: string; media?: boolean }) {
+  const attachmentPanel = useRef<HTMLDetailsElement>(null);
+  useEffect(() => { if (media && new URL(window.location.href).searchParams.get("voiceMemo") === "1" && attachmentPanel.current) attachmentPanel.current.open = true; }, [media]);
   const last = useRef(value), reserved = useRef(0);
   const [uploading, setUploading] = useState(false);
   const locked = disabled || uploading;
@@ -65,7 +67,7 @@ export default function DeskTextEditor({ value, onChange, disabled = false, labe
     <EditorToolbar editor={editor} disabled={locked} label={label} />
     <EditorContent editor={editor} />
     {attachments.map((attachment, index) => <div className={styles.attachment} key={`${index}-${attachment}`}><DeskBody text={attachment} media /><button type="button" aria-label="添付を削除" disabled={locked} onClick={() => emit(editor ? deskText(editor.getJSON()) : parts(value, media).text, attachments.filter((_, i) => i !== index))}>×</button></div>)}
-    {media && <details><summary>添付</summary><AudioUpload disabled={disabled} onBusyChange={busy => { setUploading(busy); onMediaBusyChange?.(busy); }} onUploaded={audioUrl => {
+    {media && <details ref={attachmentPanel}><summary>添付</summary><AudioUpload disabled={disabled} onBusyChange={busy => { setUploading(busy); onMediaBusyChange?.(busy); }} onUploaded={audioUrl => {
       const current = parts(last.current, media);
       emit(current.text, [...current.attachments, `[audio](${audioUrl})`]);
     }} /><div className={styles.mediaInput}><select aria-label="メディアの種類" value={kind} disabled={locked} onChange={event => setKind(event.target.value)}><option value="image">画像</option><option value="video">YouTube</option></select><input type="url" aria-label="画像またはYouTubeのURL" value={url} disabled={locked} onChange={event => setUrl(event.target.value)} placeholder="https://" /><button type="button" disabled={locked || !url} onClick={insertMedia}>追加</button></div><p className={styles.hint}>動画はYouTubeにアップロードしてリンクを貼れます。MP4の直接アップロードはできません。</p></details>}

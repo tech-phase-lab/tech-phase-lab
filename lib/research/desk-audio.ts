@@ -59,22 +59,41 @@ export async function verifyM4a(total: number, read: (offset: number, length: nu
     const matches = boxes(b).filter(box => box.type === type);
     if (matches.length !== 1) return bad(); return matches[0].data;
   };
-  let ftyp = false, moov = false, mdat = false, count = 0;
+  let ftyp = false, moov = false, mdat = false, count = 0, fragmented = false;
+  const trackIds = new Set<number>();
+  let cacheStart = -1, cache: Uint8Array = new Uint8Array(0), metadataBytes = 0;
+  async function metadata(offset: number, length: number) {
+    if (!fragmented) return read(offset, length);
+    // Browser recordings can contain hundreds of tiny fragments. Batch nearby
+    // range reads so a ten-minute recording does not require thousands of RTTs.
+    if (offset < cacheStart || offset + length > cacheStart + cache.length) {
+      cacheStart = offset;
+      cache = await read(offset, Math.min(total - offset, Math.max(length, 1024 * 1024)));
+    }
+    return cache.subarray(offset - cacheStart, offset - cacheStart + length);
+  }
   for (let at = 0; at < total;) {
-    if (++count > 128) return bad();
-    const h = header(await read(at, Math.min(16, total - at)), total - at);
+    if (++count > 2048) return bad();
+    const h = header(await metadata(at, Math.min(16, total - at)), total - at);
     if (h.type === "ftyp") {
       if (ftyp || h.size > 1024 || h.size - h.head < 8) return bad();
-      const b = await read(at + h.head, h.size - h.head);
+      const b = await metadata(at + h.head, h.size - h.head);
       const brands = [tag(b, 0)]; for (let i = 8; i + 4 <= b.length; i += 4) brands.push(tag(b, i));
       if (!brands.some(v => ["M4A ", "isom", "iso2", "mp41", "mp42", "qt  "].includes(v))) return bad();
       ftyp = true;
     } else if (h.type === "moov") {
       if (moov || h.size > 2 * 1024 * 1024) return bad();
-      const b = await read(at + h.head, h.size - h.head), children = boxes(b);
+      const b = await metadata(at + h.head, h.size - h.head), children = boxes(b);
       const tracks = children.filter(v => v.type === "trak");
-      if (!tracks.length || tracks.length > 8 || children.some(v => v.type === "mvex")) return bad();
+      if (!tracks.length || tracks.length > 8) return bad();
+      fragmented = children.some(v => v.type === "mvex");
       for (const track of tracks) {
+        if (fragmented) {
+          const tkhd = one(track.data, "tkhd");
+          if (![0, 1].includes(tkhd[0])) return bad();
+          const id = word(tkhd, tkhd[0] === 1 ? 20 : 12);
+          if (!id || trackIds.has(id)) return bad(); trackIds.add(id);
+        }
         const media = one(track.data, "mdia"), handler = one(media, "hdlr");
         if (handler.length < 12 || tag(handler, 8) !== "soun") return bad();
         const descriptions = one(one(one(media, "minf"), "stbl"), "stsd");
@@ -82,9 +101,31 @@ export async function verifyM4a(total: number, read: (offset: number, length: nu
         const samples = boxes(descriptions.subarray(8));
         if (!samples.length || samples.length !== word(descriptions, 4) || samples.some(v => !["mp4a", "alac"].includes(v.type) || v.data.length < 28)) return bad();
       }
+      if (fragmented) {
+        const defaults = boxes(one(b, "mvex")).filter(v => v.type === "trex");
+        const seen = new Set<number>();
+        for (const entry of defaults) {
+          if (entry.data.length !== 24 || word(entry.data, 0) !== 0) return bad();
+          const id = word(entry.data, 4);
+          if (!trackIds.has(id) || seen.has(id) || word(entry.data, 8) !== 1) return bad(); seen.add(id);
+        }
+        if (seen.size !== trackIds.size) return bad();
+      }
       moov = true;
     } else if (h.type === "mdat") { if (h.size > h.head) mdat = true; }
-    else if (h.type === "moof") return bad();
+    else if (h.type === "moof") {
+      metadataBytes += h.size;
+      if (!moov || !fragmented || h.size > 256 * 1024 || metadataBytes > 4 * 1024 * 1024) return bad();
+      const fragments = boxes(await metadata(at + h.head, h.size - h.head)).filter(v => v.type === "traf");
+      if (!fragments.length || fragments.length > 8) return bad();
+      for (const fragment of fragments) {
+        const tfhd = one(fragment.data, "tfhd");
+        if (tfhd.length < 8 || tfhd[0] !== 0 || !trackIds.has(word(tfhd, 4))) return bad();
+        // Only the first, already verified audio sample description may be used.
+        const flags = word(tfhd, 0) & 0xffffff;
+        if ((flags & 2) && word(tfhd, 8 + ((flags & 1) ? 8 : 0)) !== 1) return bad();
+      }
+    }
     at += h.size;
   }
   if (!ftyp || !moov || !mdat) return bad();
