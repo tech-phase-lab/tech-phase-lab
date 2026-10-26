@@ -55,3 +55,16 @@ async function collect(group: GroupId): Promise<{ stocks: StockReturns[]; asOf: 
  * so the credits follow what is actually looked at; a failed fetch is never cached (unstable_cache throws through). */
 export const loadThemeReturns = (group: GroupId) =>
   unstable_cache(() => collect(group), ["theme-ranking-returns-v2", group], { revalidate: 600 })();
+
+async function collectTickers(tickers: string[]): Promise<{ stocks: StockReturns[]; asOf: string }> {
+  const key = process.env.TWELVE_DATA_API_KEY;
+  if (!key) throw new Error("not-configured");
+  const series: CloseSeries[] = [];
+  for (let i = 0; i < tickers.length; i += CHUNK) series.push(...await fetchChunk(tickers.slice(i, i + CHUNK), key));
+  if (!series.length) throw new Error("no-data");
+  return { stocks: series.map(stockReturns), asOf: series.map(item => item.asOf).sort().at(-1)! };
+}
+
+/** The same ten-minute cache for an arbitrary list of tickers (the 銘柄手帳 weekly moves); the key is the sorted list. */
+export const loadReturnsFor = (tickers: string[]) =>
+  unstable_cache(() => collectTickers(tickers), ["watchlist-week-returns-v1", tickers.join(",")], { revalidate: 600 })();
