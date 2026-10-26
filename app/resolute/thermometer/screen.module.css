@@ -1,0 +1,3 @@
+.indexSwitch{width:min(100%,250px)}
+.indexSwitch button{font-size:13px;padding:10px 12px;white-space:nowrap}
+.reading .explanation{font-size:13px;line-height:1.6;color:var(--sub);margin:8px 0}
