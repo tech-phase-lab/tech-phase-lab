@@ -75,15 +75,18 @@ for (const extension of ['mp3','m4a']) test(extension+' picker rejects video, re
  globalThis.XMLHttpRequest=class{constructor(){requests.push(this);this.upload={};}open(method,url){assert.equal(method,'PUT');assert.equal(url,'https://r2.test/upload');}setRequestHeader(name,value){assert.equal(name,'Content-Type');assert.equal(value,extension==='m4a'?'audio/mp4':'audio/mpeg');}send(){this.upload.onprogress({lengthComputable:true,loaded:512,total:1024});}abort(){this.onabort();this.onloadend();}};
  const host=document.createElement('div');document.body.append(host);const root=createRoot(host);
  try{
-  await act(async()=>{root.render(React.createElement(AudioUpload,{disabled:false,onUploaded:url=>attached.push(url),onBusyChange:value=>busy.push(value)}));await tick();});
+  await act(async()=>{root.render(React.createElement(AudioUpload,{disabled:false,onUploaded:(url,title)=>{attached.push({url,title});},onBusyChange:value=>busy.push(value)}));await tick();});
   const input=host.querySelector('input[type=file]');assert.equal(input.accept,'.mp3,.m4a,audio/mpeg,audio/mp4,audio/x-m4a');
   const choose=async name=>{Object.defineProperty(input,'files',{configurable:true,value:[new File(['x'.repeat(1024)],name)]});await act(async()=>{input.dispatchEvent(new window.Event('change',{bubbles:true}));await tick();});};
   await choose('movie.mp4');assert.deepEqual(calls,['status']);assert.match(host.textContent,/動画は添付できません/);
   await choose('voice.'+extension);assert.equal(busy.at(-1),true);assert.deepEqual(calls,['status']);
+  const titleInput=host.querySelector('input[type=text]');assert.equal(titleInput.value,'voice');
+  await act(async()=>{titleInput[Object.keys(titleInput).find(key=>key.startsWith('__reactProps'))].onChange({target:{value:'週末の相場メモ'}});await tick();});
+  assert.deepEqual(calls,['status']);
   await act(async()=>{host.querySelector('input[type=checkbox]').click();await tick();});
   await act(async()=>{[...host.querySelectorAll('button')].find(b=>b.textContent==='この音声を添付').click();await tick();});assert.match(host.textContent,/50%/);assert.deepEqual(attached,[]);
   await act(async()=>{const xhr=requests[0];xhr.status=200;xhr.onload();xhr.onloadend();await tick();});
-  assert.deepEqual(calls,['status','start','finish']);assert.equal(busy.at(-1),false);assert.deepEqual(attached,['/api/research/desk-media/test.'+extension]);
+  assert.deepEqual(calls,['status','start','finish']);assert.equal(busy.at(-1),false);assert.deepEqual(attached,[{url:'/api/research/desk-media/test.'+extension,title:'週末の相場メモ'}]);
  }finally{await act(async()=>root.unmount());host.remove();globalThis.fetch=originalFetch;if(originalXHR===undefined)delete globalThis.XMLHttpRequest;else globalThis.XMLHttpRequest=originalXHR;delete globalThis.__testRecorder;}
 });
 
@@ -180,6 +183,6 @@ test('audio editing supports a cut and undo locally; cancel preserves the origin
   await click('区間をカット');assert.equal(busy,true);assert.match(host.textContent,/音声の長さ：10.0秒/);
   await click('選択区間を削除');assert.match(host.textContent,/音声の長さ：9.0秒/);assert.equal(applied,0);
   await click('1つ戻す');assert.match(host.textContent,/音声の長さ：10.0秒/);
-  await click('編集を取り消す');assert.equal(applied,0);assert.equal(busy,false);assert.equal(host.querySelector('svg'),null);
+  await click('キャンセル');assert.equal(applied,0);assert.equal(busy,false);assert.equal(host.querySelector('svg'),null);
  }finally{await act(async()=>root.unmount());host.remove();globalThis.AudioContext=oldContext;globalThis.AudioEncoder=oldEncoder;globalThis.AudioData=oldData;}
 });

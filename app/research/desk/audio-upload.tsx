@@ -5,12 +5,13 @@ import VoiceMemoImport from "./voice-memo-import";
 import AudioEditor from "./audio-editor";
 import AudioRecorder from "./audio-recorder";
 import styles from "./format.module.css";
-export default function AudioUpload({ disabled, onUploaded, onBusyChange }: { disabled: boolean; onUploaded: (url: string) => void; onBusyChange: (busy: boolean) => void }) {
+export default function AudioUpload({ disabled, onUploaded, onBusyChange }: { disabled: boolean; onUploaded: (url: string, title: string) => boolean | void; onBusyChange: (busy: boolean) => void }) {
   const input = useRef<HTMLInputElement>(null), active = useRef<AbortController | null>(null), mounted = useRef(true);
   const [ready, setReady] = useState<boolean | null>(null), [progress, setProgress] = useState<number | null>(null), [error, setError] = useState("");
   const original = useRef<File | null>(null), audioPlayer = useRef<HTMLAudioElement>(null);
   const [editing, setEditing] = useState(false), [edited, setEdited] = useState(false);
   const [retry, setRetry] = useState(0);
+  const [title, setTitle] = useState("");
   const [candidate, setCandidate] = useState<File | null>(null), [preview, setPreview] = useState(""), [checked, setChecked] = useState(false), [recording, setRecording] = useState(false), [importing, setImporting] = useState(false);
   const busyCallback = useRef(onBusyChange);
   useEffect(() => { busyCallback.current = onBusyChange; }, [onBusyChange]);
@@ -25,14 +26,15 @@ export default function AudioUpload({ disabled, onUploaded, onBusyChange }: { di
     return () => window.removeEventListener("beforeunload", warn);
   }, [pending]);
   function discard() {
-    original.current = null; setEdited(false);
+    original.current = null; setEdited(false); setTitle("");
     if (previewRef.current) URL.revokeObjectURL(previewRef.current);
     previewRef.current = ""; setPreview(""); setCandidate(null); setChecked(false); setError("");
   }
-  function choose(file?: File, isEdit = false) {
+  function choose(file?: File, isEdit = false, keepTitle = false) {
     if (!file) return;
     if (!validAudioUpload(file.name, file.size)) { setError("50MB以内のMP3・M4A音声を選んでください。動画は添付できません。"); return; }
     if (!isEdit) original.current = file;
+    if (!isEdit && !keepTitle) setTitle(/^(voice-memo-|rizel-)/.test(file.name) ? "音声メモ" : file.name.replace(/\.(mp3|m4a)$/i, "").slice(0, 80));
     setEdited(isEdit);
     if (previewRef.current) URL.revokeObjectURL(previewRef.current);
     previewRef.current = URL.createObjectURL(file);
@@ -69,7 +71,7 @@ export default function AudioUpload({ disabled, onUploaded, onBusyChange }: { di
         xhr.send(file);
       });
       const result = await call({ action: "finish", file: start.file });
-      if (mounted.current && !controller.signal.aborted) { onUploaded(result.url); discard(); }
+      if (mounted.current && !controller.signal.aborted) { if (onUploaded(result.url, title.trim() || "音声メモ") !== false) discard(); else setError("本文を短くしてから、もう一度添付してください。"); }
     } catch (reason) {
       if (mounted.current) setError(controller.signal.aborted ? "アップロードを中止しました。" : reason instanceof Error && reason.message === "audio-only" ? "対応する音声として確認できませんでした。MP3、またはボイスメモから書き出したM4Aを選んでください。" : reason instanceof Error && reason.message === "setup-required" ? "音声の保存先はまだ接続されていません。" : "アップロードできませんでした。ファイルを選び直してください。");
     } finally {
@@ -82,7 +84,7 @@ export default function AudioUpload({ disabled, onUploaded, onBusyChange }: { di
     <button className={styles.audioFileEntry} type="button" aria-label="音声ファイルを選ぶ" disabled={disabled || ready !== true || pending} onClick={() => { setError(""); input.current?.click(); }}>音声ファイル</button>
     <AudioRecorder disabled={disabled || ready !== true || candidate !== null || importing || progress !== null} onFile={choose} onBusyChange={setRecording} onMessage={setError} />
     <VoiceMemoImport disabled={disabled || ready !== true || pending} onFile={choose} onBusyChange={setImporting} onMessage={setError} />
-    {candidate && <div className={styles.audioReview}><strong>まだ公開されていません</strong><small>{candidate.name}</small>{preview && <audio ref={audioPlayer} hidden={editing} controls preload="metadata" src={preview} />}<AudioEditor key={candidate.name + candidate.lastModified} file={candidate} disabled={disabled || progress !== null} onApply={file => choose(file, true)} onBusyChange={value => { setEditing(value); if (value) audioPlayer.current?.pause(); }} />{edited && <button type="button" disabled={editing || progress !== null} onClick={() => { if (original.current) choose(original.current); }}>元の音声に戻す</button>}<label><input type="checkbox" checked={checked} disabled={editing || progress !== null} onChange={event => setChecked(event.target.checked)} />この音声を添付することを確認しました</label><div><button type="button" disabled={disabled || editing || !checked || progress !== null} onClick={() => void upload(candidate)}>この音声を添付</button><button type="button" disabled={editing || progress !== null} onClick={discard}>破棄</button></div><small>添付後も、投稿の公開操作が必要です。</small></div>}
+    {candidate && <div className={styles.audioReview}><strong>まだ公開されていません</strong><label className={styles.audioTitle}>音声タイトル<input type="text" maxLength={80} value={title} disabled={progress !== null} placeholder="音声メモ" onChange={event => setTitle(event.target.value)} /></label>{preview && <audio ref={audioPlayer} hidden={editing} controls preload="metadata" src={preview} />}<AudioEditor key={candidate.name + candidate.lastModified} file={candidate} disabled={disabled || progress !== null} onApply={file => choose(file, true)} onBusyChange={value => { setEditing(value); if (value) audioPlayer.current?.pause(); }} />{edited && <button type="button" disabled={editing || progress !== null} onClick={() => { if (original.current) choose(original.current, false, true); }}>元の音声に戻す</button>}<label><input type="checkbox" checked={checked} disabled={editing || progress !== null} onChange={event => setChecked(event.target.checked)} />この音声を添付することを確認しました</label><div className={styles.audioReviewActions}><button type="button" disabled={disabled || editing || !checked || progress !== null} onClick={() => void upload(candidate)}>この音声を添付</button><button type="button" disabled={editing || progress !== null} onClick={discard}>破棄</button></div><small>添付後も、投稿の公開操作が必要です。</small></div>}
     {progress !== null ? <><span role="status">{progress < 99 ? `送信中 ${progress}%` : "音声を確認中…"}</span><button type="button" onClick={() => active.current?.abort()}>中止</button></> : ready !== true ? <small>{ready === false ? "保存先の接続準備中" : "接続を確認中…"}</small> : null}
     {error && <p role="status">{error}{ready === null && <button type="button" onClick={() => { setError(""); setRetry(value => value + 1); }}>再確認</button>}</p>}
   </div>;

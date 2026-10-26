@@ -67,9 +67,12 @@ export default function DeskTextEditor({ value, onChange, disabled = false, labe
     <EditorToolbar editor={editor} disabled={locked} label={label} />
     <EditorContent editor={editor} />
     {attachments.map((attachment, index) => <div className={styles.attachment} key={`${index}-${attachment}`}><DeskBody text={attachment} media /><button type="button" aria-label="添付を削除" disabled={locked} onClick={() => emit(editor ? deskText(editor.getJSON()) : parts(value, media).text, attachments.filter((_, i) => i !== index))}>×</button></div>)}
-    {media && <details ref={attachmentPanel}><summary>添付</summary><AudioUpload disabled={disabled} onBusyChange={busy => { setUploading(busy); onMediaBusyChange?.(busy); }} onUploaded={audioUrl => {
+    {media && <details ref={attachmentPanel}><summary>添付</summary><AudioUpload disabled={disabled} onBusyChange={busy => { setUploading(busy); onMediaBusyChange?.(busy); }} onUploaded={(audioUrl, title) => {
       const current = parts(last.current, media);
-      emit(current.text, [...current.attachments, `[audio](${audioUrl})`]);
+      const text = [current.text, `音声：${title}`].filter(Boolean).join("\n");
+      if (!emit(text, [...current.attachments, `[audio](${audioUrl})`])) return false;
+      editor?.commands.setContent(deskDocument(text), { emitUpdate: false });
+      return true;
     }} /><div className={styles.mediaInput}><select aria-label="メディアの種類" value={kind} disabled={locked} onChange={event => setKind(event.target.value)}><option value="image">画像</option><option value="video">YouTube</option></select><input type="url" aria-label="画像またはYouTubeのURL" value={url} disabled={locked} onChange={event => setUrl(event.target.value)} placeholder="https://" /><button type="button" disabled={locked || !url} onClick={insertMedia}>追加</button></div><p className={styles.hint}>動画はYouTubeにアップロードしてリンクを貼れます。MP4の直接アップロードはできません。</p></details>}
     {message && <p role="status">{message}</p>}
   </div>;
