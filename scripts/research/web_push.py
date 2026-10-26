@@ -4,7 +4,7 @@ No delivery until configured. Ambiguous network failures are NOT retried: this
 pilot favors avoiding duplicate alerts; its ledger records uncertain delivery.
 """
 import base64
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 import hashlib
 import json
 import math
@@ -76,6 +76,8 @@ def connect(path):
         db.execute("ALTER TABLE push_devices ADD COLUMN owner_id TEXT")
     if 'access_until' not in columns:
         db.execute("ALTER TABLE push_devices ADD COLUMN access_until REAL")
+    if 'weekly_notebook' not in columns:
+        db.execute("ALTER TABLE push_devices ADD COLUMN weekly_notebook INTEGER NOT NULL DEFAULT 1")
     return db
 
 
@@ -157,10 +159,13 @@ def register_member(db, payload, allowed, now=None):
                 any(not isinstance(t, str) or t not in allowed and not (t == '*' and payload.get('allTargets') is True) for t in tickers)
                 or lang not in {'ja', 'en'}):
             raise ValueError('invalid-preferences')
-        db.execute("""INSERT INTO push_devices (id,subscription,tickers,language,since,active,owner_id,access_until)
-          VALUES(?,?,?,?,?,1,?,?) ON CONFLICT(id) DO UPDATE SET tickers=excluded.tickers,
-          language=excluded.language,since=excluded.since,active=1,owner_id=excluded.owner_id,access_until=excluded.access_until""",
-          (device,json.dumps(sub),json.dumps(sorted(set(tickers))),lang,now,owner,until))
+        # The Sunday-night notebook notice is on unless the device says otherwise.
+        weekly = 0 if payload.get('weeklyNotebook') is False else 1
+        db.execute("""INSERT INTO push_devices (id,subscription,tickers,language,since,active,owner_id,access_until,weekly_notebook)
+          VALUES(?,?,?,?,?,1,?,?,?) ON CONFLICT(id) DO UPDATE SET tickers=excluded.tickers,
+          language=excluded.language,since=excluded.since,active=1,owner_id=excluded.owner_id,access_until=excluded.access_until,
+          weekly_notebook=excluded.weekly_notebook""",
+          (device,json.dumps(sub),json.dumps(sorted(set(tickers))),lang,now,owner,until,weekly))
     return {'registered': True}
 
 
@@ -506,3 +511,62 @@ def deliver(db, items, transport=send, now=None, monotonic_now=time.monotonic,
                    (now - DELIVERY_RETENTION_SECONDS,))
     return {'status': 'ready', 'attempted': attempted, 'accepted': accepted,
             'uncertain': uncertain, **public_status(db, status_now)}
+
+
+JST = timezone(timedelta(hours=9))
+NOTEBOOK_WINDOW_HOURS = (20, 23)
+
+
+def notebook_week_key(now):
+    """Delivery key for the Stock Notebook notice: set only on Sunday 20:00-23:00 JST, one per ISO week."""
+    moment = datetime.fromtimestamp(now, JST)
+    if moment.weekday() != 6 or not NOTEBOOK_WINDOW_HOURS[0] <= moment.hour < NOTEBOOK_WINDOW_HOURS[1]:
+        return None
+    year, week, _ = moment.isocalendar()
+    return f'notebook-{year}-W{week:02d}'
+
+
+def deliver_weekly(db, transport=send, now=None, wall_now=time.time, entitlement=member_expiry):
+    """Tell PRO members' devices that this week's Stock Notebook is ready (owner, Oct 26).
+
+    Same guarantees as deliver(): the claim is written before the network call, an
+    ambiguous failure is never retried, and the current PRO entitlement is checked."""
+    if not configuration()['enabled']:
+        return {'status': 'disabled', 'attempted': 0}
+    now = wall_now() if now is None else now
+    key = notebook_week_key(now)
+    if key is None:
+        return {'status': 'ready', 'attempted': 0, 'accepted': 0}
+    attempted = accepted = 0
+    for device in db.execute('SELECT * FROM push_devices WHERE active=1 AND owner_id IS NOT NULL AND weekly_notebook=1').fetchall():
+        if db.execute('SELECT 1 FROM push_deliveries WHERE device_id=? AND event_key=?', (device['id'], key)).fetchone():
+            continue
+        try:
+            until = entitlement(device['owner_id'])
+        except Exception:
+            until = 0
+        attempted_at = wall_now()
+        if not isinstance(until, (int, float)) or isinstance(until, bool) or not math.isfinite(until) or until <= attempted_at:
+            continue
+        with db:
+            claim = db.execute("""INSERT OR IGNORE INTO push_deliveries
+                (device_id,event_key,status,attempted_at,observed_at) VALUES(?,?,?,?,?)""",
+                (device['id'], key, 'uncertain', attempted_at, now)).rowcount
+        if not claim:
+            continue
+        ja = device['language'] == 'ja'
+        payload = {'title': '銘柄手帳' if ja else 'Stock Notebook',
+                   'body': '今週のウォッチリストの動きをまとめました。' if ja else "This week's watchlist moves are ready.",
+                   'tag': key, 'url': '/research/notebook'}
+        try:
+            code = transport(json.loads(device['subscription']), payload)
+        except Exception:
+            code = 0
+        status = 'accepted' if 200 <= code < 300 else 'expired' if code in (404, 410) else 'uncertain'
+        with db:
+            db.execute('UPDATE push_deliveries SET status=? WHERE device_id=? AND event_key=?', (status, device['id'], key))
+            if status == 'expired':
+                db.execute('DELETE FROM push_devices WHERE id=?', (device['id'],))
+        attempted += 1
+        accepted += status == 'accepted'
+    return {'status': 'ready', 'attempted': attempted, 'accepted': accepted}

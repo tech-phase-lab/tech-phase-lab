@@ -358,3 +358,31 @@ class PushTests(unittest.TestCase):
         self.assertIsNone(status['detectionToAttemptAverageMs24Hours'])
         self.assertEqual(status['providerResponseSamples24Hours'], 0)
         self.assertEqual(status['detectionToOutcomeSamples24Hours'], 0)
+
+    def test_notebook_notice_goes_out_once_on_sunday_night_to_pro_devices(self):
+        sunday = datetime(2026, 10, 25, 12, 0, tzinfo=timezone.utc).timestamp()  # Sunday 21:00 JST
+        push.register_member(self.db, {**self.member_payload(), 'accessExpiresAt': sunday + 3600}, {'MU'}, sunday - 10)
+        sent = []
+        transport = lambda sub, payload: sent.append(payload) or 201
+        entitlement = lambda owner: sunday + 3600
+        first = push.deliver_weekly(self.db, transport, sunday, wall_now=lambda: sunday, entitlement=entitlement)
+        self.assertEqual((first['attempted'], first['accepted']), (1, 1))
+        self.assertEqual((sent[0]['title'], sent[0]['url']), ('銘柄手帳', '/research/notebook'))
+        again = push.deliver_weekly(self.db, transport, sunday + 600, wall_now=lambda: sunday + 600, entitlement=entitlement)
+        self.assertEqual(again['attempted'], 0)
+        self.assertEqual(len(sent), 1)
+
+    def test_notebook_notice_stays_quiet_outside_the_sunday_window_and_when_switched_off_or_lapsed(self):
+        sunday = datetime(2026, 10, 25, 12, 0, tzinfo=timezone.utc).timestamp()
+        self.assertIsNone(push.notebook_week_key(sunday - 86400))            # Saturday night
+        self.assertIsNone(push.notebook_week_key(sunday - 4 * 3600))         # Sunday 17:00 JST
+        self.assertIsNone(push.notebook_week_key(sunday + 3 * 3600))         # Monday 00:00 JST
+        self.assertEqual(push.notebook_week_key(sunday), 'notebook-2026-W43')
+        sent = []
+        transport = lambda sub, payload: sent.append(payload) or 201
+        push.register_member(self.db, {**self.member_payload(), 'accessExpiresAt': sunday + 3600, 'weeklyNotebook': False}, {'MU'}, sunday - 10)
+        push.deliver_weekly(self.db, transport, sunday, wall_now=lambda: sunday, entitlement=lambda owner: sunday + 3600)
+        self.assertEqual(sent, [])
+        push.register_member(self.db, {**self.member_payload(), 'accessExpiresAt': sunday + 3600}, {'MU'}, sunday - 5)
+        push.deliver_weekly(self.db, transport, sunday, wall_now=lambda: sunday, entitlement=lambda owner: sunday - 1)
+        self.assertEqual(sent, [])

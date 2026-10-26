@@ -5,6 +5,9 @@ import { waitForIdentity } from "@/lib/research/member-recovery";
 import type { Language } from "@/lib/research/data";
 import styles from "./price-targets-panel.module.css";
 
+const WEEKLY_KEY = "tech-phase:notebook-weekly-push";
+/** The Sunday-night Stock Notebook notice is on unless this device turned it off. */
+const readWeekly = () => { try { return localStorage.getItem(WEEKLY_KEY) !== "off"; } catch { return true; } };
 type State = "checking" | "off" | "on" | "unknown" | "blocked" | "unsupported" | "unavailable" | "sign-in" | "pro-required";
 export default function NotificationSettings({ lang, initiallyOpen = false }: { lang: Language; initiallyOpen?: boolean }) {
   const [open, setOpen] = useState(initiallyOpen);
@@ -20,6 +23,7 @@ export default function NotificationSettings({ lang, initiallyOpen = false }: { 
   const operation = useRef(false);
   const pendingInspection = useRef(false);
   const [refresh, setRefresh] = useState(0);
+  const [weekly, setWeekly] = useState(readWeekly);
   const t = (ja: string, en: string) => lang === "ja" ? ja : en;
   useEffect(() => {
     if (!open) return;
@@ -75,7 +79,7 @@ export default function NotificationSettings({ lang, initiallyOpen = false }: { 
   async function request(action: string, subscription: PushSubscription) {
     const response = await fetch("/api/research/notifications", {
       method: "POST", headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ action, subscription: subscription.toJSON(), allTargets: true, language: lang }),
+      body: JSON.stringify({ action, subscription: subscription.toJSON(), allTargets: true, language: lang, weeklyNotebook: readWeekly() }),
       signal: AbortSignal.timeout(15_000),
     });
     if (response.status === 401 || response.status === 403) { setState(response.status === 401 ? "sign-in" : "pro-required"); throw new Error(t("ログインとPRO会員の有効期限を確認してください。", "Check your sign-in and PRO membership.")); }
@@ -157,6 +161,7 @@ export default function NotificationSettings({ lang, initiallyOpen = false }: { 
           {state === "unknown" && <><button type="button" disabled={busy} onClick={() => void run("status")}>{t("登録状態を確認", "Check registration")}</button><button type="button" disabled={busy} onClick={() => void run("disable")}>{t("この端末の通知をオフ", "Turn off on this device")}</button></>}
           {state === "on" && <button type="button" disabled={busy} onClick={() => void run("test")}>{t("テスト通知を送る", "Send test notification")}</button>}
         </div>
+        {state === "on" && <label><input type="checkbox" checked={weekly} disabled={busy} onChange={event => { const next = event.target.checked; try { localStorage.setItem(WEEKLY_KEY, next ? "on" : "off"); } catch { /* storage may be blocked */ } setWeekly(next); void run("enable"); }} /> {t("日曜の夜に、銘柄手帳の今週のまとめを通知", "Notify me on Sunday night when the Stock Notebook is ready")}</label>}
       </>}
       {busy && <p role="status">{t("処理中…", "Working…")}</p>}
       {message && <p role="status">{message}</p>}
