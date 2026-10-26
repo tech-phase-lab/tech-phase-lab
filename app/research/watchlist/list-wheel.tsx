@@ -7,8 +7,8 @@ const ROW = 46;
 
 /** The list picker (owner, Oct 26): the current list on one compact button; tapping it opens a wheel to turn to
  * the list you want. Up to seven lists, so the wheel stays short; no row of chips taking space above the stocks. */
-export default function ListWheel({ items, value, onChange, title, doneLabel, stocksLabel }: {
-  items: WheelItem[]; value: string; onChange: (id: string) => void; title: string; doneLabel: string; stocksLabel: (count: number) => string;
+export default function ListWheel({ items, value, onChange, title, doneLabel, stocksLabel, triggerClass }: {
+  triggerClass?: string; items: WheelItem[]; value: string; onChange: (id: string) => void; title: string; doneLabel: string; stocksLabel: (count: number) => string;
 }) {
   const [open, setOpen] = useState(false);
   const current = Math.max(0, items.findIndex(item => item.id === value));
@@ -37,7 +37,7 @@ export default function ListWheel({ items, value, onChange, title, doneLabel, st
   const label = items[current]?.label ?? "";
 
   return <>
-    <button type="button" className={styles.trigger} aria-haspopup="dialog" aria-expanded={open} onClick={() => { setActive(current); setOpen(true); }}>
+    <button type="button" className={triggerClass ?? styles.trigger} aria-haspopup="dialog" aria-expanded={open} onClick={() => { setActive(current); setOpen(true); }}>
       <span>{label}</span>
       <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m7 10 5-5 5 5M7 14l5 5 5-5" /></svg>
     </button>
