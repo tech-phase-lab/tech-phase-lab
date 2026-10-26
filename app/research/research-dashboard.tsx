@@ -16,6 +16,7 @@ import { effectiveHash, rememberHash } from "@/lib/research/view-hash";
 import { useResearchLanguage } from "./use-research-language";
 import styles from "./research.module.css";
 import HomeTools, { HomeHelp } from "./home-tools";
+import ResoluteBar from "./resolute-bar";
 import FreshnessNotice from "./freshness-notice";
 import HomeToday from "./home-today";
 import type { InitialNewsSnapshot } from "@/lib/research/general-news";
@@ -216,6 +217,7 @@ export default function ResearchDashboard({ events, monitoredCompanies, initialN
           <ResearchPulse lang={lang} />
           <FreshnessNotice lang={lang} />
           <HomeTools lang={lang} onPro={() => openView("pro")} onWatch={() => openView("companies")} />
+          <ResoluteBar />
           <HomeToday lang={lang} />
           <NewsFeed lang={lang} initialNews={initialNews} />
           <HomeHelp lang={lang} />
