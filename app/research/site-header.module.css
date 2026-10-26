@@ -247,3 +247,15 @@
 .paidPerks { position:relative; display:grid; grid-template-columns:repeat(3,auto); justify-content:space-between; gap:5px 6px; padding-top:9px; border-top:1px solid rgba(236,208,142,.2); }
 .paidPerks span { display:flex; align-items:center; gap:5px; font-size:11px; line-height:1.3; white-space:nowrap; color:#e8d9a8; }
 .paidPerks span::before { content:"✓"; font-weight:700; color:var(--gold); }
+
+/* RESOLUTE: a separate service, set apart from the research list with a small caption and a glass-like frame (owner, Oct 26). */
+.rzBlock { display:grid; gap:6px; margin-top:6px; }
+.rzCap { margin:0 0 0 2px; font-size:10px; letter-spacing:.2em; color:#9aa6b4; }
+.sheet .rzCard { display:flex; align-items:center; gap:12px; padding:11px 14px; border-radius:14px; border:1px solid #3a4452; background:linear-gradient(135deg,#1d2530,#0f151c); box-shadow:inset 0 1px 0 rgba(255,255,255,.08); }
+.rzIcon { width:21px; height:21px; flex:none; color:#c3ccd8; }
+.rzText { flex:1; display:grid; gap:1px; }
+.rzText b { font-size:15px; letter-spacing:.1em; font-weight:700; }
+.rzText small { font-size:11.5px; color:#8b9aa6; }
+.luxe .rzCap { color:#8d8466; }
+.sheet.luxe .rzCard { border-color:#4a4636; background:linear-gradient(135deg,#1a1a1e,#08080a); box-shadow:inset 0 1px 0 rgba(255,255,255,.07); }
+.luxe .rzIcon { color:#d6dbe3; }

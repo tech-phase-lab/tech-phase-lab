@@ -247,8 +247,13 @@ function SiteMenu({ lang, member, ownerAccount, onClose, onRefresh, onPro }: { l
         {item("/research/price-targets", "targets", ja ? "目標株価" : "Price targets")}
         {item("/research#saved", "saved", ja ? "保存したリサーチ" : "Saved research")}
       </div>
-      <div className={styles.grp}>
-        {item("/resolute", "anchor", "RESOLUTE", ja ? "暴落に備える、自分だけのルール作り" : "Your own rules for a market crash")}
+      <div className={styles.rzBlock}>
+        <p className={styles.rzCap}>{ja ? "もうひとつのサービス" : "Another service"}</p>
+        <Link href="/resolute" className={styles.rzCard} onClick={event => navigate(event, "/resolute")}>
+          <Icon name="anchor" className={styles.rzIcon} />
+          <span className={styles.rzText}><b>RESOLUTE</b><small>{ja ? "暴落に備える、自分だけのルール作り" : "Your own rules for a market crash"}</small></span>
+          <Icon name="next" className={styles.chev} />
+        </Link>
       </div>
       <div className={styles.grp}>
         <h4>{ja ? "ガイド" : "Guides"}</h4>
