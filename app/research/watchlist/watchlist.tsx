@@ -17,6 +17,7 @@ import { quoteForSession, type WatchlistSession } from "@/lib/research/watchlist
 import { quoteFreshness, freshnessLabel, quoteTimeText } from "@/lib/research/watchlist-freshness";
 import { useQuoteClock } from "./use-quote-clock";
 import StockLogo from "./stock-logo";
+import ListWheel from "./list-wheel";
 import { useWatchlistSectors } from "./use-watchlist-sectors";
 import { watchlistSector } from "@/lib/research/watchlist-sector";
 import { formatAlertPrice, upsertPriceAlert } from "@/lib/research/price-alert-settings";
@@ -50,7 +51,6 @@ export default function Watchlist({ companies, quotes = {} }: { companies: Compa
   const slots = watchlistSlots(lists);
   const list = slots.find(item => item.id === listId) ?? slots[0];
   const favorites = list.tickers;
-  const firstEmpty = slots.find(item => item.tickers.length === 0);
   const fetchedSectors = useWatchlistSectors(favorites.filter(ticker => !watchlistSector(ticker, companies.find(item => item.ticker === ticker)?.sector)));
   const [listAction, setListAction] = useState<"rename" | null>(null);
   const [listName, setListName] = useState("");
@@ -130,18 +130,15 @@ export default function Watchlist({ companies, quotes = {} }: { companies: Compa
   return <WatchlistFrame lang={lang}><ResearchToolShell lang={lang} setLang={setLang} title={t("ウォッチリスト", "Watchlist")} description="" showHeading={false}>
     <div className={styles.page}>
       <header className={styles.heading}>
-        <h1>{t("ウォッチリスト", "Watchlist")}</h1>
+        <h1 className={styles.srOnly}>{t("ウォッチリスト", "Watchlist")}</h1>
+        <ListWheel items={slots.map((item, index) => ({ id: item.id, label: item.name || t(`マイリスト${index + 1}`, `My list ${index + 1}`), count: item.tickers.length }))} value={list.id}
+          title={t("リストを選ぶ", "Choose a list")} doneLabel={t("決定", "Done")} stocksLabel={count => t(`${count}銘柄`, `${count}`)}
+          onChange={id => { setListId(id); setSelected(""); setQuery(""); setListAction(null); setRevealed(""); }} />
         {ready && <span className={styles.count}>{t(`${favorites.length}銘柄`, `${favorites.length} stocks`)}</span>}
         <button disabled={!editable} className={styles.renameButton} onClick={() => { setListAction(listAction ? null : "rename"); setListName(list.name || t(`マイリスト${slots.indexOf(list) + 1}`, `My list ${slots.indexOf(list) + 1}`)); }} aria-label={t("リスト名を編集", "Edit list name")} aria-expanded={!!listAction}>
           <svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25ZM20.71 7.04a1 1 0 0 0 0-1.41l-2.34-2.34a1 1 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83Z" /></svg>
         </button>
       </header>
-      <nav className={styles.listChips} aria-label={t("マイリスト", "My lists")}>
-        {slots.map((item, index) => ({ item, index })).filter(({ item }) => item.tickers.length > 0 || item.id === list.id || item.id === firstEmpty?.id).map(({ item, index }) => {
-          const label = item.name || t(`マイリスト${index + 1}`, `My list ${index + 1}`);
-          return <button type="button" key={item.id} aria-pressed={item.id === list.id} className={item.id === list.id ? styles.chipOn : ""} onClick={() => { setListId(item.id); setSelected(""); setQuery(""); setListAction(null); setRevealed(""); }}>{item.tickers.length === 0 && item.id !== list.id ? `＋ ${label}` : label}</button>;
-        })}
-      </nav>
       {listAction && <form className={styles.listForm} onSubmit={event => {
         event.preventDefault();
         const name = listName.trim(); if (!name) return;

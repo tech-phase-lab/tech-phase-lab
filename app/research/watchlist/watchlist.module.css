@@ -201,3 +201,13 @@
 .page .controls .marketBar label span { display:none; }
 .page .controls .marketBar time { white-space:nowrap; }
 @media(max-width:380px) { .page .controls { padding:10px;gap:8px; } .page .controls .marketBar>span { display:none; } }
+
+/* Compact top, second pass (owner, Oct 26): list wheel + count + edit on one line, search, then one thin row of
+   sort / view / clock. No card chrome; the stocks are the page. */
+.page .heading { padding:2px 0 8px;gap:8px; }
+.page .heading .count { padding:2px 9px;font-size:11.5px; }
+.page .controls { display:grid;grid-template-columns:auto minmax(0,1fr);gap:6px 10px;margin-bottom:8px;padding:0;border:0;border-radius:0;background:none;box-shadow:none; }
+.page .controls .searchRow { height:42px;border-radius:12px; }
+.page .controls .searchRow input { height:40px;min-height:40px; }
+.page .controls .toolbar select,.page .controls .marketBar select { min-height:30px;font-size:12px; }
+.page .tableHead { padding-top:4px; }
