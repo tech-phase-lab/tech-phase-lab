@@ -128,7 +128,7 @@
 /* Lists. */
 .grp { display:grid; gap:2px; }
 .grp h4 { margin:0 0 4px; padding-left:2px; font-size:11px; font-weight:500; letter-spacing:.1em; color:var(--muted); }
-.sheet .item { display:flex; align-items:center; gap:12px; width:100%; padding:11px 2px; border-bottom:1px solid #1a2631; font-size:14px; text-align:left; }
+.sheet .item { display:flex; align-items:center; gap:12px; width:100%; padding:8px 2px; min-height:44px; border-bottom:1px solid #1a2631; font-size:14px; text-align:left; }
 .grp .item:last-child { border-bottom:0; }
 .itemIcon { width:19px; height:19px; color:#7fc9ab; flex:none; }
 .item span { flex:1; }
@@ -225,19 +225,20 @@
 .frTitle .proBadge { margin-right:2px; }
 .itemNote { display:block; margin-top:1px; font-size:11px; font-weight:400; color:#8fa0aa; letter-spacing:0; }
 
-/* Members' menu (owner, Oct 26): black and gold. The sheet is near-black; gold appears only as hairlines, icons and type. */
-.luxe { background:linear-gradient(180deg,#0e0e10,#070708); box-shadow:inset 0 1px 0 rgba(224,189,104,.35),0 -18px 48px -12px #000e; border-top:1px solid #7d6732; }
-.luxe .grab { background:#7d6732; }
+/* Members' menu (owner, Oct 26): lacquer black with a soft sheen, and gold only as hairlines, icons and type. */
+.luxe { background:linear-gradient(155deg,#1b1b1f 0%,#0a0a0c 22%,#000 48%,#0b0b0d 78%,#1a1a1e 100%); box-shadow:inset 0 1px 0 rgba(255,236,180,.45),inset 0 0 0 1px rgba(255,255,255,.04),0 -18px 48px -12px #000e; border-top:1px solid #8a7137; }
+.luxe::before { content:""; position:absolute; left:0; right:0; top:0; height:150px; background:linear-gradient(180deg,rgba(255,255,255,.07),transparent); pointer-events:none; border-radius:22px 22px 0 0; }
+.luxe .grab { background:#8a7137; }
 .luxe .shHead h2 { background:linear-gradient(90deg,#f6e3a8,#c99c3e); -webkit-background-clip:text; background-clip:text; color:transparent; letter-spacing:.14em; }
-.sheet.luxe .close { background:#121214; color:#d4b25e; box-shadow:inset 0 0 0 1px #4a3d1f; }
-.sheet.luxe .tile { background:#0d0d0f; box-shadow:inset 0 0 0 1px #4a3d1f; color:#efe3bd; }
+.sheet.luxe .close { background:linear-gradient(180deg,#1c1c20,#08080a); color:#d4b25e; box-shadow:inset 0 0 0 1px #4a3d1f,inset 0 1px 0 rgba(255,255,255,.08); }
+.sheet.luxe .tile { background:linear-gradient(180deg,#19191d,#060607); box-shadow:inset 0 0 0 1px #4a3d1f,inset 0 1px 0 rgba(255,255,255,.07); color:#efe3bd; }
 .luxe .tile svg, .luxe .bell svg { color:#d4b25e; }
 .luxe .grp h4 { display:flex; align-items:center; gap:10px; color:#b8964a; letter-spacing:.2em; }
 .luxe .grp h4::after { content:""; flex:1; height:1px; background:linear-gradient(90deg,#5d4b25,transparent); }
-.sheet.luxe .item { border-bottom-color:#1d1a12; }
+.sheet.luxe .item { border-bottom-color:#1c1a14; }
 .luxe .itemIcon { color:#d4b25e; }
 .luxe .chev { color:#5f4f28; }
 .luxe .itemNote { color:#8d8466; }
 .luxe .item:hover { background:linear-gradient(90deg,rgba(212,178,94,.07),transparent); }
-.sheet.luxe .cardPaid { background:linear-gradient(135deg,#131210,#0b0b0c 70%); box-shadow:inset 0 0 0 1px #9a7c36,0 0 22px -12px rgba(212,178,94,.5); }
-.luxe .cardPaid::before { background:radial-gradient(90% 120% at 100% 0,rgba(212,178,94,.10),transparent 60%); }
+.sheet.luxe .cardPaid { background:linear-gradient(150deg,#222226 0%,#0b0b0d 38%,#000 70%,#121215 100%); box-shadow:inset 0 0 0 1px #9a7c36,inset 0 1px 0 rgba(255,236,180,.35),0 0 22px -12px rgba(212,178,94,.5); }
+.luxe .cardPaid::before { background:linear-gradient(115deg,transparent 30%,rgba(255,255,255,.06) 45%,transparent 60%); }

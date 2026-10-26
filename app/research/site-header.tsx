@@ -216,7 +216,7 @@ function SiteMenu({ lang, member, ownerAccount, onClose, onRefresh, onPro }: { l
       {member
         ? <div className={styles.cardPaid}>
             <div className={styles.cardRow}>
-              <span className={styles.badge}><ProBadge size={26} shine star={ownerAccount} /><span>{ownerAccount ? (ja ? "運営者　全機能" : "Owner · Full access") : "TECH PHASE PRO"}</span></span>
+              <span className={styles.badge}><ProBadge size={26} shine star={ownerAccount} /><span>{ownerAccount ? (ja ? "運営者" : "Owner") : "TECH PHASE PRO"}</span></span>
               <Link className={styles.manage} href="/research/account" onClick={event => navigate(event, "/research/account")}>{ja ? "プランの管理" : "Manage plan"}</Link>
             </div>
             <h3>{ja ? "すべての機能が使えます" : "All features unlocked"}</h3>
