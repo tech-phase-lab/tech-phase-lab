@@ -63,7 +63,7 @@ export default function PlanCards({ lang }: { lang: Language }) {
     <article className={styles.freeCard}>
       <p className={styles.kicker}>FREE</p>
       <p className={styles.price}>{t("¥0", "$0")}<small>{t(" / 月", " / month")}</small></p>
-      <h3>{t("株価も、資本マップも、目標株価も、無料で。", "Prices, Capital Map and price targets, all free.")}</h3>
+      <h3>{t("米国株を調べる", "Research US stocks")}</h3>
       {groups(free)}
     </article>
   </div>;
