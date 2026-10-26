@@ -259,3 +259,71 @@
 .luxe .rzCap { color:#8d8466; }
 .sheet.luxe .rzCard { border-color:#4a4636; background:linear-gradient(135deg,#1a1a1e,#08080a); box-shadow:inset 0 1px 0 rgba(255,255,255,.07); }
 .luxe .rzIcon { color:#d6dbe3; }
+
+/* ===== Menu rebuilt from the owner's design (Oct 26): navy for FREE, black and gold for PRO. ===== */
+.sheet.navy { background:#121c2a; box-shadow:inset 0 1px 0 rgba(255,255,255,.06),0 -18px 48px -12px #000c; }
+.sheet.luxe { background:#08090b; border-top:1px solid #8a7240; box-shadow:inset 0 1px 0 rgba(243,220,155,.35),0 -18px 48px -12px #000e; }
+.luxe::before { display:none; }
+.sheet { gap:0; }
+.sheet > * { min-width:0; }
+.shHead { height:40px; margin-bottom:12px; }
+.shHead h2 { font-size:20px; font-weight:500; letter-spacing:.1em; background:none; color:inherit; -webkit-background-clip:border-box; background-clip:border-box; }
+.headTools { display:flex; align-items:center; gap:10px; }
+.sheet .refreshPill { display:flex; align-items:center; gap:6px; padding:7px 12px; border-radius:17px; font-size:12px; border:1px solid #243449; color:#c9d3df; }
+.refreshPill svg { width:14px; height:14px; color:#5de0b0; }
+.sheet .close { width:34px; height:34px; }
+.sheet.luxe .refreshPill { border-color:#3a3118; color:#d9d2c0; }
+.luxe .refreshPill svg { color:#d9b56a; }
+.sheet.luxe .close { background:transparent; box-shadow:none; border:1px solid #8a7240; color:#d9b56a; }
+.sheet.navy .close { background:#1c2a3d; color:#a9b6c6; }
+
+/* Sections: small, widely spaced headings; rows are icon, label, "›". */
+.grp { display:block; margin:0; }
+.grp h4 { display:flex; align-items:center; gap:8px; margin:18px 0 8px; padding:0; font-size:11px; font-weight:500; letter-spacing:.18em; color:#6f8097; }
+.luxe .grp h4 { color:#b8975a; }
+.luxe .grp h4::after { display:none; }
+.headCrown { width:14px; height:14px; color:#d9b56a; fill:#d9b56a; stroke:none; }
+.sheet .item { min-height:44px; padding:0 2px; gap:12px; font-size:14px; border-bottom:1px solid #1f2d3f; }
+.sheet.luxe .item { border-bottom-color:#1e1b14; }
+.grp .item:last-child { border-bottom:0; }
+.navy .itemIcon { color:#5de0b0; }
+.luxe .itemIcon { color:#d9b56a; }
+.navy .chev { color:#5c6d82; }
+.luxe .chev { color:#6d5a2e; }
+.itemNote { display:block; margin-top:1px; font-size:10px; color:#6f8097; }
+.liveTag { margin-left:auto; padding:2px 6px; border-radius:8px; font-size:9px; font-weight:700; letter-spacing:.08em; color:#1a1408; background:linear-gradient(120deg,#f3dc9b,#d9b56a 60%,#b8913f); }
+.liveTag + .chev { margin-left:8px; }
+
+/* PRO functions: four equal tiles, 2 x 2. */
+.proTiles { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; }
+.sheet .proTile { display:flex; align-items:center; gap:10px; height:52px; padding:0 12px; border-radius:14px; font-size:13px; font-weight:500; background:linear-gradient(180deg,#151517,#0c0c0e); border:1px solid #3a3118; box-shadow:inset 0 1px 0 rgba(243,220,155,.08); }
+.proTile span { white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+
+/* Member card: metallic gold frame, a gold disc with the crown, and a slow light passing over it. */
+.memberCard { position:relative; overflow:hidden; margin:0 0 2px; padding:1px; border-radius:18px; background:linear-gradient(120deg,#f6e3a8 0%,#9c7a34 28%,#f0d48c 52%,#8a6a28 76%,#e8c878 100%); box-shadow:0 6px 22px rgba(217,181,106,.18); }
+.memberInner { display:flex; align-items:center; gap:14px; padding:14px 16px; border-radius:17px; background:linear-gradient(120deg,#211a0b,#0d0b07 55%,#2a2010); }
+.crownDisc { display:grid; place-items:center; flex:none; width:40px; height:40px; border-radius:50%; background:linear-gradient(135deg,#fbeab8,#d4aa55 55%,#a67c24); color:#1a1408; box-shadow:inset 0 1px 0 rgba(255,255,255,.55),0 2px 8px rgba(0,0,0,.5); }
+.crownDisc svg { width:22px; height:22px; fill:currentColor; stroke:none; }
+.memberText { display:grid; flex:1; min-width:0; gap:2px; }
+.memberText b { font-family:"Noto Serif JP","Hiragino Mincho ProN","Yu Mincho","YuMincho","Times New Roman",serif; font-size:16px; font-weight:600; letter-spacing:.22em; white-space:nowrap; background:linear-gradient(180deg,#fff2c6 0%,#e9cf86 45%,#b8913f 100%); -webkit-background-clip:text; background-clip:text; color:transparent; }
+.memberText small { font-size:11px; color:#b8a77a; white-space:nowrap; }
+.sheet .memberCard .manage { font-size:11px; font-weight:500; white-space:nowrap; color:#d9b56a; }
+.memberCard::after { content:""; position:absolute; top:0; bottom:0; left:0; width:38%; pointer-events:none; background:linear-gradient(100deg,transparent,rgba(255,244,205,.28),transparent); transform:translateX(-130%) skewX(-18deg); animation:memberSheen 7s ease-in-out infinite; }
+@keyframes memberSheen { 0%,60% { transform:translateX(-130%) skewX(-18deg); } 100% { transform:translateX(330%) skewX(-18deg); } }
+@media (prefers-reduced-motion:reduce) { .memberCard::after { animation:none; display:none; } }
+
+/* RESOLUTE card (both menus): gold edge, navy into gold. */
+.sheet .resCard { display:flex; align-items:center; gap:14px; margin-top:20px; padding:14px 16px; border-radius:16px; border:1px solid #b8975a; background:linear-gradient(120deg,#16263d,#101b2b 60%,#2a2214); }
+.resEmblem { display:grid; place-items:center; flex:none; width:42px; height:42px; border-radius:50%; border:1.5px solid #d9b56a; color:#d9b56a; }
+.resEmblem svg { width:24px; height:24px; }
+.resText { display:grid; flex:1; min-width:0; gap:2px; }
+.resText b { font-family:"Noto Serif JP","Hiragino Mincho ProN","Yu Mincho","YuMincho","Times New Roman",serif; font-size:18px; font-weight:600; letter-spacing:.14em; color:#f1dfae; }
+.resText small { font-size:11px; color:#a9b6c6; }
+.resChev { width:18px; height:18px; color:#d9b56a; flex:none; }
+
+/* One line of guide links at the very bottom, with room beneath so nothing is cut off. */
+.footLinks { display:flex; justify-content:center; align-items:center; gap:12px; margin:20px 0 6px; font-size:12px; white-space:nowrap; color:#8697ab; }
+.luxe .footLinks { color:#8a7f66; }
+.footLinks i { font-style:normal; color:#2f3f55; }
+.luxe .footLinks i { color:#3a3118; }
+.sheet { padding-bottom:calc(64px + env(safe-area-inset-bottom)); }

@@ -1,4 +1,5 @@
 "use client";
+import {writeBarState} from '@/lib/research/resolute-bar-state';
 import { ReviewLink as Link, useReview } from "./review-context";
 import { usePathname } from "next/navigation";
 import { useEffect, useState, type ReactNode } from "react";
@@ -28,6 +29,7 @@ export default function ToolShell({ identityReady=true, home=false, children }: 
     if(!r.ok) throw new Error("unavailable");
     const text=await r.text(); if(text.length>8192) throw new Error("unavailable");
     const value=validateSnapshot(JSON.parse(text));
+    writeBarState({owned:value.canUseTools,anon:false});
     if(!controller.signal.aborted) {setEntitlement(value);setAccess(value.canUseTools ? "allowed" : "denied");}
    } catch {if(!controller.signal.aborted) setAccess("unavailable");} finally {inFlight=false;}
   }
