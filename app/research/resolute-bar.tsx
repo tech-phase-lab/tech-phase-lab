@@ -3,7 +3,7 @@ import { useEffect, useLayoutEffect, useState, useSyncExternalStore } from "reac
 import Link from "next/link";
 import { useResearchLanguage } from "./use-research-language";
 import { useMemberDisplay } from "./member-display-provider";
-import { BAR_DISMISS_KEY, BAR_EVENT, BAR_STATE_KEY, REFRESH_MS, barVisible, parseBarState, writeBarState } from "@/lib/research/resolute-bar-state";
+import { BAR_DISMISS_KEY, BAR_EVENT, BAR_STATE_KEY, barVisible, needsRefresh, parseBarState, writeBarState } from "@/lib/research/resolute-bar-state";
 import styles from "./resolute-bar.module.css";
 
 /** RESOLUTE's standing bar (owner, Oct 26): home screen, phones only, floating 8px above the bottom menu.
@@ -25,12 +25,14 @@ export default function ResoluteBar() {
   const [stateRaw, dismissRaw] = raw.split("|");
   const state = parseBarState(stateRaw || null);
   const dismissedAt = Number(dismissRaw) || 0;
-  const shown = barVisible(state, dismissedAt, plan !== null, Date.now());
+  const [openedAt] = useState(() => Date.now());
+  const shown = barVisible(state, dismissedAt, plan !== null, openedAt);
   const [lift, setLift] = useState<number | null>(null);
 
   // Background refresh: never blocks the bar. A fresh enough answer is left alone.
+  const planKnown = plan !== null;
   useEffect(() => {
-    if (state && !(state.anon && plan !== null) && Date.now() - state.at < REFRESH_MS) return;
+    if (!needsRefresh(parseBarState(localStorage.getItem(BAR_STATE_KEY)), planKnown, Date.now())) return;
     const controller = new AbortController();
     (async () => {
       try {
@@ -43,8 +45,8 @@ export default function ResoluteBar() {
       } catch { /* unknown keeps what is remembered */ }
     })();
     return () => controller.abort();
-  // eslint-disable-next-line react-hooks/exhaustive-deps -- runs once per visit to the home screen
-  }, []);
+  // Runs again when the member check answers: a signed-out answer remembered from before must be refreshed then.
+  }, [planKnown]);
 
   // `?resoluteBar=reset` forgets the seven-day mark (for checking the preview); it never overrides a purchase.
   useEffect(() => {

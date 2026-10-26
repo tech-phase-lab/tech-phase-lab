@@ -30,3 +30,11 @@ export function barVisible(state: BarState | null, dismissedAt: number, signedIn
   if (state.anon && signedIn) return false; // learned while signed out: wait for a fresh answer
   return !(dismissedAt > 0 && now - dismissedAt < DISMISS_MS);
 }
+
+/** Pure: does the remembered answer need asking again? An answer learned while signed out is stale as soon as
+ * the member check shows someone is signed in, however recent it is. */
+export function needsRefresh(state: BarState | null, signedInKnown: boolean, now: number) {
+  if (!state) return true;
+  if (state.anon && signedInKnown) return true;
+  return now - state.at >= REFRESH_MS;
+}

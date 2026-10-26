@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { barVisible, parseBarState, DISMISS_MS } from "../lib/research/resolute-bar-state.ts";
+import { barVisible, needsRefresh, parseBarState, DISMISS_MS, REFRESH_MS } from "../lib/research/resolute-bar-state.ts";
 
 const now = Date.parse("2026-10-27T00:00:00Z");
 const state = (owned, anon = false) => ({ owned, anon, at: now });
@@ -28,4 +28,12 @@ test("a damaged remembered state is ignored", () => {
   assert.equal(parseBarState("{"), null);
   assert.equal(parseBarState(JSON.stringify({ owned: "yes", anon: false, at: 1 })), null);
   assert.deepEqual(parseBarState(JSON.stringify({ owned: false, anon: true, at: 5 })), { owned: false, anon: true, at: 5 });
+});
+
+test("a signed-out answer is asked again once the member check shows a signed-in person", () => {
+  assert.equal(needsRefresh(state(false, true), false, now), false);
+  assert.equal(needsRefresh(state(false, true), true, now), true);
+  assert.equal(needsRefresh(state(false), true, now), false);
+  assert.equal(needsRefresh(null, false, now), true);
+  assert.equal(needsRefresh({ ...state(false), at: now - REFRESH_MS }, false, now), true);
 });
