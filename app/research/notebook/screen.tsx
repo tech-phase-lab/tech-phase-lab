@@ -15,10 +15,10 @@ const ALL = "all";
 export default function NotebookScreen() {
   const [lang, setLang] = useResearchLanguage();
   const t = (a: string, b: string) => lang === "ja" ? a : b;
-  const { lists, names, ready } = useFavoriteLists();
+  const { lists, ready } = useFavoriteLists();
   const [choice, setChoice] = useState(ALL);
   // A member can keep up to seven lists; the notebook reads one list at a time, or all of them together.
-  const filled = watchlistSlots(lists).map((list, index) => ({ id: list.id, tickers: list.tickers, label: list.name || names[list.id] || t(`リスト${index + 1}`, `List ${index + 1}`) })).filter(list => list.tickers.length > 0);
+  const filled = watchlistSlots(lists).map((list, index) => ({ id: list.id, tickers: list.tickers, label: list.name || t(`マイリスト${index + 1}`, `My list ${index + 1}`) })).filter(list => list.tickers.length > 0);
   const everything = [...new Set(filled.flatMap(list => list.tickers))].sort();
   const selected = filled.find(list => list.id === choice);
   const tickers = (selected ? [...selected.tickers].sort() : everything).slice(0, WEEK_TICKER_LIMIT);

@@ -47,7 +47,9 @@ export default function WeekMoves({ tickers, lang }: { tickers: string[]; lang: 
   const rows = shown?.full || (shown && full) ? shown.ranked : undefined;
   const top = rows?.slice(0, 5) ?? [], bottom = rows && rows.length > 5 ? rows.slice(-Math.min(5, rows.length - 5)).reverse() : [];
   const tone = (value: number) => value > 0 ? styles.up : value < 0 ? styles.down : "";
-  const line = (item: WeekMover) => <li key={item.ticker}><Link href={`/research/stocks?q=${encodeURIComponent(item.ticker)}`}><b>{item.ticker}</b></Link><span className={tone(item.change)}>{signedPercent(item.change)}</span></li>;
+  const reach = Math.max(1, ...(rows ?? []).map(item => Math.abs(item.change)));
+  const line = (item: WeekMover) => <li key={item.ticker} style={{ "--reach": `${Math.max(4, Math.abs(item.change) / reach * 100)}%` } as React.CSSProperties} data-dir={item.change >= 0 ? "up" : "down"}><Link href={`/research/stocks?q=${encodeURIComponent(item.ticker)}`}><b>{item.ticker}</b></Link><span className={tone(item.change)}>{signedPercent(item.change)}</span></li>;
+  const total = shown ? shown.up + shown.down + shown.flat : 0;
 
   return <section className={styles.week} aria-label={t("今週の値動き", "This week's moves")}>
     <h2>{t("今週の値動き", "This week's moves")}</h2>
@@ -65,6 +67,7 @@ export default function WeekMoves({ tickers, lang }: { tickers: string[]; lang: 
           <div className={styles.tile}><span>{t("下落", "Down")}</span><strong className={styles.down}>{shown.down}</strong><small>{t("銘柄", "stocks")}</small></div>
           <div className={styles.tile}><span>{t("変わらず", "Flat")}</span><strong>{shown.flat}</strong><small>{t("銘柄", "stocks")}</small></div>
         </div>
+        {total > 0 && <div className={styles.split} role="img" aria-label={t(`上昇${shown.up}・下落${shown.down}・変わらず${shown.flat}`, `Up ${shown.up}, down ${shown.down}, flat ${shown.flat}`)}><i className={styles.upBar} style={{ flexGrow: shown.up }} /><i className={styles.flatBar} style={{ flexGrow: shown.flat }} /><i className={styles.downBar} style={{ flexGrow: shown.down }} /></div>}
         {rows ? <div className={styles.lists}>
           <div><h3>{t("上昇ベスト", "Top gainers")}</h3><ol>{top.map(line)}</ol></div>
           {bottom.length > 0 && <div><h3>{t("下落ワースト", "Top losers")}</h3><ol>{bottom.map(line)}</ol></div>}
