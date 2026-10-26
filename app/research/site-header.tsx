@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useCallback, useEffect, useId, useRef, useState, type MouseEvent, type ReactNode } from "react";
+import { useCallback, useEffect, useId, useRef, useState, useSyncExternalStore, type MouseEvent, type ReactNode } from "react";
 import type { Language } from "@/lib/research/data";
 import { useMemberDisplay, useMemberSettled, useOwnerAccount } from "./member-display-provider";
 import { useProIntroduction } from "./header-pro";
@@ -29,7 +29,11 @@ export default function SiteHeader({ lang, setLang, nav }: { lang: Language; set
   const ownerAccount = useOwnerAccount();
   const settled = useMemberSettled() || ownerAccount || plan !== null;
   const pathname = usePathname();
+  // The menu is drawn from what the device remembers (the pre-paint hint) until the membership check answers, so it never changes shape after opening.
+  const hint = useSyncExternalStore(() => () => {}, () => document.documentElement.dataset.memberHint ?? "", () => "");
   const member = ownerAccount || plan === "pro";
+  const menuMember = member || (!settled && hint !== "");
+  const menuOwner = ownerAccount || (!settled && hint === "owner");
   const pro = useProIntroduction();
   const [menu, setMenu] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
@@ -97,7 +101,7 @@ export default function SiteHeader({ lang, setLang, nav }: { lang: Language; set
         </button>
       </div>
     </header>
-    {menu && <SiteMenu lang={lang} member={member} ownerAccount={ownerAccount} onClose={closeMenu} onRefresh={refresh} onPro={() => pro.toggle(true)} />}
+    {menu && <SiteMenu lang={lang} member={menuMember} ownerAccount={menuOwner} onClose={closeMenu} onRefresh={refresh} onPro={() => pro.toggle(true)} />}
   </>;
 }
 
@@ -214,10 +218,10 @@ function SiteMenu({ lang, member, ownerAccount, onClose, onRefresh, onPro }: { l
   const realtime = ja ? "リアルタイム監視" : "Real-time monitoring";
   const alerts = ja ? "スマホ通知" : "Mobile alerts";
   const item = (href: string, icon: MenuIcon, label: string, extra?: ReactNode, note?: string) =>
-    <Link key={href} className={styles.item} href={href} onClick={event => navigate(event, href)}><Icon name={icon} className={styles.itemIcon} /><span>{label}{note && <small className={styles.itemNote}>{note}</small>}</span>{extra}<Icon name="next" className={styles.chev} /></Link>;
+    <Link key={href} className={styles.item} href={href} onClick={event => navigate(event, href)}><span className={styles.glassIcon}><Icon name={icon} className={styles.itemIcon} /></span><span>{label}{note && <small className={styles.itemNote}>{note}</small>}</span>{extra}<Icon name="next" className={styles.chev} /></Link>;
   const tile = (href: string, icon: MenuIcon, label: string) =>
     <Link key={href} className={styles.proTile} href={href} onClick={event => navigate(event, href)}><Icon name={icon} className={styles.itemIcon} /><span>{label}</span></Link>;
-  const heading = (text: string, crown = false) => <h4>{crown && <Icon name="crown" className={styles.headCrown} />}{text}</h4>;
+  const heading = (text: string, crown = false) => <h4>{crown && <Icon name="crown" className={styles.headCrown} />}<span className={styles.headText}>{text}</span></h4>;
   const perks = [`RIZEL'S DESK`, ja ? "テーマランキング" : "Theme Ranking", ja ? "銘柄比較" : "Compare", ja ? "連関マップ" : "Relationship maps", realtime, alerts];
   return <>
     <button type="button" className={styles.backdrop} aria-label={ja ? "メニューを閉じる" : "Close menu"} onClick={onClose} />

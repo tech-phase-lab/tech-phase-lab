@@ -332,3 +332,26 @@
 .crownDisc .ownerSeal { width:24px; height:24px; fill:#1a1408; stroke:none; }
 .crownDisc .ownerSeal .ownerGem { fill:#f3dc9b; }
 .sheet:focus, .sheet:focus-visible { outline:none; }
+
+/* ===== FREE menu, glass finish (owner's design, Oct 27): no boxed cards except the PRO card and RESOLUTE. ===== */
+.sheet.navy { background:radial-gradient(120% 60% at 100% 0%,rgba(122,152,204,.34) 0%,transparent 58%),linear-gradient(180deg,#1a2540 0%,#131b2d 45%,#0f1624 100%); }
+.navy .shHead h2 { font-size:22px; letter-spacing:.12em; }
+.sheet.navy .refreshPill { background:rgba(255,255,255,.03); border-color:rgba(150,175,215,.18); color:#b9c6da; }
+.sheet.navy .close { background:#1c2638; color:#a9b6c6; }
+.navy .grp h4 { display:flex; align-items:center; gap:10px; margin:20px 0 6px; font-size:12px; letter-spacing:.2em; }
+.navy .grp h4::before { content:""; flex:none; width:3px; height:14px; border-radius:2px; background:#5de0b0; box-shadow:0 0 8px rgba(93,224,176,.8),0 0 2px #5de0b0; }
+.navy .grp h4::after { content:""; flex:1; height:1px; background:linear-gradient(90deg,rgba(180,198,225,.4),transparent); }
+.navy .headText { background:linear-gradient(180deg,#f4f7fb 0%,#aab9cf 100%); -webkit-background-clip:text; background-clip:text; color:transparent; font-weight:600; }
+.navy .glassIcon { display:grid; place-items:center; flex:none; width:38px; height:38px; border-radius:50%; border:1px solid rgba(160,200,225,.32);
+  background:radial-gradient(circle at 30% 22%,rgba(255,255,255,.24),rgba(255,255,255,.05) 46%,rgba(93,224,176,.10) 100%),linear-gradient(145deg,#27425c,#15222f);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.38),inset 0 -6px 10px rgba(0,0,0,.28),0 4px 10px -4px rgba(0,0,0,.6); }
+.navy .glassIcon .itemIcon { width:18px; height:18px; color:#7fe6c2; }
+.luxe .glassIcon { display:contents; }
+.sheet.navy .item { min-height:58px; padding:0 2px; gap:14px; border-bottom:0; font-size:15px; font-weight:600; color:#eef2f8;
+  background:linear-gradient(90deg,rgba(176,196,226,.42),rgba(176,196,226,0) 92%) no-repeat bottom/100% 1px; }
+.navy .grp .item:last-child { background:none; }
+.navy .itemNote { margin-top:2px; font-size:10.5px; font-weight:400; color:#8393ad; }
+.sheet.navy .cardFree { padding:16px; border-radius:18px; background:linear-gradient(120deg,#1a2436,#2a2214); box-shadow:inset 0 0 0 1px #8a7240,0 8px 24px rgba(217,181,106,.12); }
+.navy .frTitle { font-size:17px; font-weight:700; }
+.navy .frPerks { grid-template-columns:repeat(3,auto); justify-content:space-between; margin-top:12px; padding-top:12px; border-top:1px solid #4a3d1f; gap:9px 6px; }
+.navy .frPerks span { font-size:11px; color:#d9d2c0; gap:6px; }
