@@ -27,3 +27,10 @@ export function gaugeStatus(snapshot: ThermometerSnapshot | undefined, index: Th
  if (reading.status === 'unavailable' && reading.reason === 'stale-data') return en ? 'Waiting for confirmed closing data.' : '確定終値の更新を待っています。';
  return en ? 'The reading is currently unavailable.' : '現在の判定を取得できません。';
 }
+
+/** The same boundary clears all readings on both screens, without inventing a date. */
+export function expireThermometerSnapshot(snapshot: ThermometerSnapshot | undefined, now: number): ThermometerSnapshot | undefined {
+ if (!snapshot || snapshot.validUntil === undefined || Number.isFinite(snapshot.validUntil) && now < snapshot.validUntil) return snapshot;
+ const absent = {status:'unavailable' as const,reason:'stale-data'};
+ return {asOf:snapshot.asOf,validUntil:snapshot.validUntil,nas100:absent,sox:absent,vix:absent};
+}

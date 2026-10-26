@@ -6,12 +6,16 @@ import {useRisk,riskStatus} from '../features/use-risk';
 import {RISK_PREVIEW_DETAILS} from '@/lib/resolute/risk-preview';
 import {validateSnapshot} from '@/lib/resolute/transport';
 import s from './reference.module.css';
+import MarketGaugeCard from './market-gauge-card';
+import { useThermometerSnapshot } from '../use-thermometer-snapshot';
+import type { ThermometerSnapshot } from '@/lib/resolute/thermometer-view';
 type Snapshot=ReturnType<typeof validateSnapshot>;
 const colors=['','#7fb6e0','#e0c070','#f0a24a','#ee7a3c','#ff4d55'];
-export default function HomeScreen({identityReady=true}:{identityReady?:boolean}) {
- return <ToolShell home identityReady={identityReady}>{(locale,_deny,entitlement)=><Home locale={locale} entitlement={entitlement}/>}</ToolShell>;
+export default function HomeScreen({identityReady=true,snapshot}:{identityReady?:boolean;snapshot?:ThermometerSnapshot}) {
+ const current = useThermometerSnapshot(snapshot);
+ return <ToolShell home identityReady={identityReady}>{(locale,_deny,entitlement)=><Home locale={locale} entitlement={entitlement} thermometerSnapshot={current}/>}</ToolShell>;
 }
-export function Home({locale,entitlement}:{locale:'ja'|'en';entitlement:Snapshot|null}) {
+export function Home({locale,entitlement,thermometerSnapshot}:{thermometerSnapshot?:ThermometerSnapshot;locale:'ja'|'en';entitlement:Snapshot|null}) {
  const en=locale==='en',review=useReview(),live=useRisk();
  const {feed,status}=live;
  const available=status==='ready'&&feed?.state==='ready';
@@ -46,7 +50,7 @@ export function Home({locale,entitlement}:{locale:'ja'|'en';entitlement:Snapshot
      {displaySample?<p className={s.notice}>{feed?.date} · {en?'Display sample':'表示見本'}</p>:null}
     </>}
    </div>
-   <div className={s.card}><div className={s.row}><h2>{en?'Market gauge':'相場の温度計'}</h2><Link className={s.more} href="/resolute/thermometer">{en?'Details →':'くわしく →'}</Link></div><div className={`${s.temp} ${displaySample?s.sample:''}`}><div className={s.big}>{displaySample?(en?'Very hot':'かなり熱い'):en?'Current reading not available yet':'現在の判定は準備中です'}</div>{displaySample?<small className={s.sampleLabel}>{en?'Display sample':'表示見本'}</small>:null}<div className={s.track} aria-hidden="true">{displaySample?<i className={s.needle}/>:null}</div><div className={s.scale}><span>{en?'Cool':'冷えている'}</span><span>{en?'Hot':'熱い'}</span></div></div></div>
+   <MarketGaugeCard locale={locale} snapshot={thermometerSnapshot} sample={displaySample}/>
   </section>
   <section className={s.sec}><div className={s.lab}>YOUR RULES</div><div className={s.grid}>{tiles.map(([path,ja,eng,sub,subEn,icon])=><Link key={path} className={s.tile} href={`/resolute/${path}`}><div className={s.t}><b>{en?eng:ja}</b><span>{en?subEn:sub}</span></div><svg viewBox="0 0 48 48" aria-hidden="true">{path==='tax'?<circle cx="24" cy="24" r="16"/>:null}<path d={icon}/></svg></Link>)}</div></section>
   <section className={s.sec}><div className={s.lab}>ALERTS</div><div className={s.list}>
