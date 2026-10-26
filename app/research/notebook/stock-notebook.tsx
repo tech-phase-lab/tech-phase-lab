@@ -27,7 +27,6 @@ export default function StockNotebook({ tickers, lang }: { tickers: string[]; la
   const [targets, setTargets] = useState<PriceTarget[] | null>(null);
   const [state, setState] = useState<"loading" | "ready" | "failed">("loading");
   const [now, setNow] = useState(0);
-  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -48,18 +47,20 @@ export default function StockNotebook({ tickers, lang }: { tickers: string[]; la
     tickers, now, lang, rows: flashRows(feed, wire, lang), targets: targets ?? [], events: calendarEvents,
   }) : null, [state, now, tickers, lang, feed, wire, targets]);
 
-  const summary = notebook ? [[t("決算", "Earnings"), notebook.earnings.length], [t("目標株価", "Targets"), notebook.targets.length], [t("ニュース", "News"), notebook.news.length]] as const : null;
-  return <section className={styles.notebook} aria-label={t("銘柄手帳", "Stock Notebook")}>
-    <button type="button" className={styles.bar} aria-expanded={open} aria-controls="stock-notebook-body" onClick={() => setOpen(value => !value)}>
-      <span className={styles.name}>{t("銘柄手帳", "Notebook")}</span>
-      <span className={styles.summary}>{state === "loading" ? t("集計中…", "Tallying…") : state === "failed" ? t("取得できません", "Unavailable") : summary?.map(([label, count]) => <span key={label}>{label}<b>{count}</b></span>)}</span>
-      <span className={styles.period}>{now > 0 ? weekLabel(now, lang) : ""}</span>
-      <svg aria-hidden="true" viewBox="0 0 24 24" className={open ? styles.chevOpen : styles.chev}><path d="m6 9 6 6 6-6" fill="none" stroke="currentColor" strokeWidth="2" /></svg>
-    </button>
-    {open && <div id="stock-notebook-body" className={styles.body}>
+  const tile = (label: string, count: number, note?: string) => <div className={styles.tile}><span>{label}</span><strong>{count}</strong><small>{note ?? (count ? t("件", "") : t("動きなし", "None"))}</small></div>;
+  return <section className={styles.notebook} aria-labelledby="stock-notebook-title">
+    <header>
+      <div><p className={styles.eyebrow}>{notebook?.previous ? t("あなたの銘柄の先週", "YOUR LAST WEEK") : t("あなたの銘柄の今週", "YOUR WEEK")}</p><h2 id="stock-notebook-title">{t("ニュース・決算・目標株価", "News, earnings and targets")}</h2></div>
+      {now > 0 && <time className={styles.period}>{weekLabel(now, lang)}</time>}
+    </header>
     {state === "loading" && <p role="status" className={styles.note}>{t("今週の動きを集計中…", "Tallying this week…")}</p>}
     {state === "failed" && <p role="alert" className={styles.note}>{t("今週の動きを取得できませんでした。しばらくしてからもう一度お試しください。", "This week's moves could not be loaded. Please try again shortly.")}</p>}
     {notebook && <>
+      <div className={styles.tiles}>
+        {tile(t("決算", "Earnings"), notebook.earnings.length)}
+        {tile(t("目標株価の変更", "Target changes"), notebook.targets.length)}
+        {tile(t("ニュース", "News"), notebook.news.length)}
+      </div>
       {full ? <div className={styles.details}>
         {notebook.earnings.length > 0 && <section><h3>{t("決算", "Earnings")}</h3><ul>{notebook.earnings.map(item => <li key={item.ticker}><b>{item.ticker}</b><span>{item.title}</span><time dateTime={item.at}>{jstTime(item.at)}</time></li>)}</ul></section>}
         {notebook.targets.length > 0 && <section><h3>{t("目標株価の変更", "Target changes")}</h3><ul>{notebook.targets.map((item, index) => <li key={`${item.ticker}-${index}`}><b>{item.ticker}</b><span>{item.firm}　{usd(item.previous)} → {usd(item.latest)}</span><time dateTime={item.at}>{jstTime(item.at)}</time></li>)}</ul></section>}
@@ -68,6 +69,5 @@ export default function StockNotebook({ tickers, lang }: { tickers: string[]; la
       </div> : <p className={styles.lock}><b>FREE</b>{t("件数のみ表示しています。", "Counts only.")}<br /><Link href="/research#tech-phase-pro">{t("PRO版は、中身まで読めます。", "PRO shows what is behind them.")}</Link></p>}
       <p className={styles.fine}>{notebook.previous ? t("先週（月曜〜日曜）の集計です。", "Last week, Monday to Sunday. ") : t("月曜〜今日までの集計です。", "Monday to today. ")}{t("ニュースは、監視している銘柄の分のみです。", "News covers the stocks Tech Phase monitors.")}</p>
     </>}
-    </div>}
   </section>;
 }

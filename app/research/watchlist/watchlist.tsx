@@ -50,6 +50,7 @@ export default function Watchlist({ companies, quotes = {} }: { companies: Compa
   const slots = watchlistSlots(lists);
   const list = slots.find(item => item.id === listId) ?? slots[0];
   const favorites = list.tickers;
+  const firstEmpty = slots.find(item => item.tickers.length === 0);
   const fetchedSectors = useWatchlistSectors(favorites.filter(ticker => !watchlistSector(ticker, companies.find(item => item.ticker === ticker)?.sector)));
   const [listAction, setListAction] = useState<"rename" | null>(null);
   const [listName, setListName] = useState("");
@@ -130,16 +131,17 @@ export default function Watchlist({ companies, quotes = {} }: { companies: Compa
     <div className={styles.page}>
       <header className={styles.heading}>
         <h1>{t("ウォッチリスト", "Watchlist")}</h1>
-        <div className={styles.listPicker}>
-          <span className={styles.pickerArrow} aria-hidden="true">▼</span>
-          <label className={styles.listChoice}><span className={styles.listName} aria-hidden="true">{list.name || t(`マイリスト${slots.indexOf(list) + 1}`, `My list ${slots.indexOf(list) + 1}`)}</span><select aria-label={t("マイリストを選択", "Choose list")} value={list.id} onChange={event => { setListId(event.target.value); setSelected(""); setQuery(""); setListAction(null); setRevealed(""); }}>
-            {slots.map((item, index) => <option key={item.id} value={item.id}>{item.name || t(`マイリスト${index + 1}`, `My list ${index + 1}`)}</option>)}
-          </select></label>
-          <button disabled={!editable} className={styles.renameButton} onClick={() => { setListAction(listAction ? null : "rename"); setListName(list.name || t(`マイリスト${slots.indexOf(list) + 1}`, `My list ${slots.indexOf(list) + 1}`)); }} aria-label={t("リスト名を編集", "Edit list name")} aria-expanded={!!listAction}>
-            <svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25ZM20.71 7.04a1 1 0 0 0 0-1.41l-2.34-2.34a1 1 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83Z" /></svg>
-          </button>
-        </div>
+        {ready && <span className={styles.count}>{t(`${favorites.length}銘柄`, `${favorites.length} stocks`)}</span>}
+        <button disabled={!editable} className={styles.renameButton} onClick={() => { setListAction(listAction ? null : "rename"); setListName(list.name || t(`マイリスト${slots.indexOf(list) + 1}`, `My list ${slots.indexOf(list) + 1}`)); }} aria-label={t("リスト名を編集", "Edit list name")} aria-expanded={!!listAction}>
+          <svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25ZM20.71 7.04a1 1 0 0 0 0-1.41l-2.34-2.34a1 1 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83Z" /></svg>
+        </button>
       </header>
+      <nav className={styles.listChips} aria-label={t("マイリスト", "My lists")}>
+        {slots.map((item, index) => ({ item, index })).filter(({ item }) => item.tickers.length > 0 || item.id === list.id || item.id === firstEmpty?.id).map(({ item, index }) => {
+          const label = item.name || t(`マイリスト${index + 1}`, `My list ${index + 1}`);
+          return <button type="button" key={item.id} aria-pressed={item.id === list.id} className={item.id === list.id ? styles.chipOn : ""} onClick={() => { setListId(item.id); setSelected(""); setQuery(""); setListAction(null); setRevealed(""); }}>{item.tickers.length === 0 && item.id !== list.id ? `＋ ${label}` : label}</button>;
+        })}
+      </nav>
       {listAction && <form className={styles.listForm} onSubmit={event => {
         event.preventDefault();
         const name = listName.trim(); if (!name) return;
@@ -157,6 +159,7 @@ export default function Watchlist({ companies, quotes = {} }: { companies: Compa
       {listFull && <p className={styles.searchStatus} role="status">{t("このリストは100銘柄までです。削除するか、別のリストに追加してください。", "This list is full (100 stocks). Remove a stock or add it to another list.")}</p>}
       </section>
       {favorites.length > 0 && <div className={styles.toolbar}><label><span className={styles.srOnly}>{t("並び順", "Sort order")}</span><select value={sort} onChange={event => setSort(event.target.value)}><option value="saved">{t("追加した順", "Date added")}</option><option value="ticker">{t("ティッカー順", "Ticker A–Z")}</option><option value="gainers">{t("上昇率順", "Top gainers")}</option><option value="losers">{t("下落率順", "Top losers")}</option></select></label></div>}
+      {favorites.length > 0 && <div className={styles.marketBar}><label><span>{t("表示", "View")}</span><select aria-label={t("取引時間帯の表示", "Market session view")} value={sessionView} onChange={event => { setSessionView(event.target.value as WatchlistSession); setRevealed(""); }}><option value="auto">{t("自動", "Auto")}</option><option value="regular">{t("取引中", "Market open")}</option><option value="pre">{t("プレ", "Pre-market")}</option><option value="closed">{t("前日比", "Daily change")}</option></select></label><span>{t("現在", "Now")} <CurrentTime /> JST</span></div>}
       </div>
       <span className={styles.srOnly} role="status">{status === "saving" ? t("保存中…", "Saving…") : status === "loading" ? t("保存先を確認中…", "Checking sync…") : status === "synced" ? t("保存しました", "Saved") : ""}</span>
       {(status === "error" || status === "conflict") && <div className={styles.syncNotice} role="alert">
@@ -168,7 +171,6 @@ export default function Watchlist({ companies, quotes = {} }: { companies: Compa
       {error && <p role="alert" className={styles.error}>{t("保存できませんでした。ブラウザーの保存設定をご確認ください。", "Could not save. Check your browser storage settings.")}</p>}
       {!ready ? <div className={styles.loading} role="status">{t("保存済みのリストを確認できません", "Your saved watchlist is unavailable")}</div> : favorites.length > 0 ? <>
 
-        <div className={styles.marketBar}><label><span>{t("表示", "View")}</span><select aria-label={t("取引時間帯の表示", "Market session view")} value={sessionView} onChange={event => { setSessionView(event.target.value as WatchlistSession); setRevealed(""); }}><option value="auto">{t("自動", "Auto")}</option><option value="regular">{t("取引中", "Market open")}</option><option value="pre">{t("プレ", "Pre-market")}</option><option value="closed">{t("前日比", "Daily change")}</option></select></label><span>{t("現在", "Now")} <CurrentTime /> JST</span></div>
         <div className={styles.quoteTable}>
           <div className={styles.tableHead}><span>{t("銘柄", "Stock")}</span><span>{hasStaleQuotes ? t("値動き", "Change") : sharedSession ? sessionLabels[sharedSession] : t("値動き", "Change")}</span><span>{t("株価", "Price")}</span></div>
           <ul className={styles.quoteRows} data-watchlist-rows>{ordered.map(ticker => {
