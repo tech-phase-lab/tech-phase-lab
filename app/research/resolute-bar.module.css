@@ -1,0 +1,14 @@
+/* Phone only: the bar floats just above the bottom menu, 12px from each side. */
+.bar { display:none; }
+@media (max-width:760px) {
+  .bar { position:fixed; z-index:55; left:12px; right:12px; bottom:calc(92px + env(safe-area-inset-bottom)); display:flex; align-items:center; gap:10px; height:44px; padding:0 8px 0 6px; border-radius:22px;
+    border:1px solid #b99a55; background:linear-gradient(90deg,#141a2b,#1b1c25); box-shadow:0 10px 24px -10px #000,inset 0 1px 0 rgba(255,255,255,.06); }
+  .emblem { display:grid; place-items:center; flex:none; width:32px; height:32px; border-radius:50%; border:1.5px solid #b99a55; color:#d8b86a; }
+  .emblem svg { width:17px; height:17px; fill:none; stroke:currentColor; stroke-width:1.9; stroke-linecap:round; stroke-linejoin:round; }
+  .text { display:grid; gap:0; flex:1; min-width:0; line-height:1.15; }
+  .text b { font:700 14px/1.1 Georgia,"Times New Roman",serif; letter-spacing:.08em; color:#f3dfae; }
+  .text small { font-size:11px; color:#aeb7d4; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .open { flex:none; display:grid; place-items:center; height:30px; padding:0 16px; border-radius:999px; background:#d4b36a; color:#1d1608; font-size:13px; font-weight:700; text-decoration:none; }
+  .close { flex:none; display:grid; place-items:center; width:30px; height:30px; border:0; border-radius:50%; background:#222a3a; color:#aeb7d4; font-size:16px; cursor:pointer; }
+  .open:focus-visible, .close:focus-visible { outline:2px solid #f3dfae; outline-offset:2px; }
+}

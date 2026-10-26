@@ -74,7 +74,7 @@
   --gold-hi:#fbeab8; --gold-lo:#b8923f; --gold:#ecd08e; --fg:#e6eef2; --muted:#8b9aa6; --mint:#8fe3c0;
   position:fixed; z-index:62; left:0; right:0; bottom:0; display:grid; gap:14px; align-content:start;
   max-height:min(88dvh, calc(100dvh - 40px - env(safe-area-inset-top))); overflow-y:auto; overscroll-behavior:contain;
-  padding:10px max(16px, env(safe-area-inset-right)) calc(18px + env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left));
+  padding:10px max(16px, env(safe-area-inset-right)) calc(46px + env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left));
   border-radius:22px 22px 0 0; background:linear-gradient(180deg,#16212c,#0f1720); box-shadow:inset 0 1px 0 rgba(255,255,255,.07),0 -18px 48px -12px #000c;
   color:var(--fg); font-family:"Zen Kaku Gothic New","Hiragino Kaku Gothic ProN","Yu Gothic","Meiryo",sans-serif;
 }
