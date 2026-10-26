@@ -46,7 +46,7 @@ export function MarketGauge({ locale, snapshot }: { locale: DiagnosisLocale; sna
         <button type="button" aria-pressed={index === "nas100"} onClick={() => setIndex("nas100")}>NASDAQ100</button>
         <button type="button" aria-pressed={index === "sox"} onClick={() => setIndex("sox")}>SOX</button>
       </div>
-      <p className={styles.muted}>{index === "nas100" ? "NASDAQ-100" : t("半導体株の指数", "Semiconductor stock index")}</p>
+      <p className={styles.muted}>{index === "nas100" ? "NASDAQ-100" : t("半導体指数", "Semiconductor index")}</p>
       <svg className={styles.gauge} viewBox="0 0 300 170" role="img" aria-label={`${index === "nas100" ? "NASDAQ100" : "SOX"} · ${label}${sample ? t("・表示見本", " · Display sample") : ""}`}>
         {colors.map((color, i) => <path key={color} d={segment(i)} fill={color} opacity={score !== undefined ? 1 : .28}/>)}
         {Array.from({length:21},(_,k)=>{const a=(180-k*9)*Math.PI/180,r=k%5===0?80:84;return <line key={k} x1={150+88*Math.cos(a)} y1={150-88*Math.sin(a)} x2={150+r*Math.cos(a)} y2={150-r*Math.sin(a)} stroke="#9aa8b8" strokeOpacity={k%5===0?.7:.35} strokeWidth={k%5===0?1.5:1}/>;})}
