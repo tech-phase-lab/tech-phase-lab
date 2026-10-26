@@ -18,7 +18,7 @@ export default function HomeTools({ lang, onPro, onWatch }: { lang: Language; on
   return <>
     <nav className={styles.grid} aria-label={t("よく使う機能", "Quick tools")}>
       <Link href="/research/calendar"><span className={styles.cardTop}><span className={styles.icon} aria-hidden="true">📅</span><strong>{t("決算・経済指標", "Earnings & Economy")}</strong></span><small>{t("今週の予定を確認", "This week")}</small></Link>
-      <Link href="/resolute"><span className={styles.cardTop}><span className={styles.icon} aria-hidden="true">⚓</span><strong className={styles.paidTitle}>RESOLUTE</strong></span><small>{t("独自ルール開発キット", "Build your own rules")}</small></Link>
+      <Link href="/research/themes"><span className={styles.cardTop}><span className={styles.icon} aria-hidden="true">📊</span><strong className={styles.longTitle}>{t("テーマランキング", "Theme Ranking")}</strong></span><small>{t("テーマ別の値動きの強さ", "Which themes are moving")}</small></Link>
       <Link href="/research/capital-map"><span className={styles.cardTop}><span className={styles.icon} aria-hidden="true">🗺️</span><strong>{t("資本マップ", "Capital Map")}</strong></span><small>{t("運用会社・ETFの投資先", "Funds and ETFs")}</small></Link>
       <Link href="/research#monitored-companies" onClick={event => { if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return; event.preventDefault(); onWatch(); }}><span className={styles.cardTop}><span className={styles.icon} aria-hidden="true">🔭</span><strong>{t("監視22銘柄", "22 Tracked Stocks")}</strong></span><small>{t("厳選株をリアルタイムで", "Live, curated")}</small></Link>
     </nav>

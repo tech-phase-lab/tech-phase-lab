@@ -123,3 +123,5 @@
 
 /* Keep English quick-tool titles on one line within phone cards. */
 @media(max-width:650px){.grid:lang(en) .cardTop{gap:5px}.grid:lang(en) strong{font-size:11px;letter-spacing:-.01em}.grid:lang(en) .icon{font-size:16px;flex:none}}
+
+.grid .longTitle{font-size:12.5px;letter-spacing:0}

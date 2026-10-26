@@ -327,3 +327,8 @@
 .footLinks i { font-style:normal; color:#2f3f55; }
 .luxe .footLinks i { color:#3a3118; }
 .sheet { padding-bottom:calc(64px + env(safe-area-inset-bottom)); }
+
+/* Owner seal: a dark shield with a gold gem on the gold disc. The sheet itself takes focus on open, so no button starts with a ring. */
+.crownDisc .ownerSeal { width:24px; height:24px; fill:#1a1408; stroke:none; }
+.crownDisc .ownerSeal .ownerGem { fill:#f3dc9b; }
+.sheet:focus, .sheet:focus-visible { outline:none; }

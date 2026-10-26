@@ -81,6 +81,6 @@ export default function ResoluteBar() {
     <span className={styles.emblem} aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="5" r="2" /><path d="M12 7v14M7 11h10M5 15c0 3 3 5 7 5s7-2 7-5" /></svg></span>
     <span className={styles.text}><b>RESOLUTE</b><small>{ja ? "暴落の夜も、迷わない" : "Steady on the night of a crash"}</small></span>
     <Link href="/resolute" className={styles.open}>{ja ? "開く" : "Open"}</Link>
-    <button type="button" className={styles.close} aria-label={ja ? "RESOLUTEの案内を閉じる（7日間表示しません）" : "Dismiss (hidden for 7 days)"} onClick={() => { try { localStorage.setItem(BAR_DISMISS_KEY, String(Date.now())); window.dispatchEvent(new Event(BAR_EVENT)); } catch { /* storage may be blocked */ } }}>×</button>
+    <button type="button" className={styles.close} aria-label={ja ? "RESOLUTEの案内を閉じる（7日間表示しません）" : "Dismiss (hidden for 7 days)"} onClick={() => { try { localStorage.setItem(BAR_DISMISS_KEY, String(Date.now())); window.dispatchEvent(new Event(BAR_EVENT)); } catch { /* storage may be blocked */ } }}><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3 3l6 6M9 3l-6 6" /></svg></button>
   </aside>;
 }

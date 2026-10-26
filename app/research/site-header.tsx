@@ -59,8 +59,8 @@ export default function SiteHeader({ lang, setLang, nav }: { lang: Language; set
       <Link href="/research" className={styles.brand} aria-label="Tech Phase Research">
         <span className={styles.markWrap}><span className={`${base.logoMark} ${styles.mark}`} aria-hidden="true" /></span>
         <span className={styles.words}><span className={`${base.brandText} ${styles.name}`}>TECH PHASE</span><small className={styles.sub}>
-          {tier === "pro" && <svg className={styles.planIcon} viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l7 9-7 9-7-9z" /></svg>}
-          {tier === "owner" && <svg className={styles.planIcon} viewBox="0 0 24 24" aria-hidden="true"><path d="M3 8l4.5 4L12 5l4.5 7L21 8l-2 11H5z" /></svg>}
+          {tier === "pro" && <svg className={styles.planIcon} viewBox="0 0 24 24" aria-hidden="true"><path d="M3 8l4.5 4L12 5l4.5 7L21 8l-2 11H5z" /></svg>}
+          {tier === "owner" && <svg className={styles.planIcon} viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5l8 3v6c0 5-3.4 8.6-8 10-4.6-1.4-8-5-8-10v-6z" /><path d="M12 8l3.2 3.5L12 16l-3.2-4.5z" /></svg>}
           {settled
             ? <><span>RESEARCH ·</span><span className={styles.planName}>{planLabel(lang, plan, ownerAccount)}</span></>
             : <><span>RESEARCH</span>
@@ -160,7 +160,7 @@ function SiteMenu({ lang, member, ownerAccount, onClose, onRefresh, onPro }: { l
   const panel = useRef<HTMLElement>(null);
   const unlock = useScrollLock(true);
   useEffect(() => {
-    panel.current?.querySelector<HTMLElement>("button,a")?.focus({ preventScroll: true });
+    panel.current?.focus({ preventScroll: true });
     const close = (event: KeyboardEvent) => { if (event.key === "Escape") onClose(); };
     window.addEventListener("keydown", close);
     return () => window.removeEventListener("keydown", close);
@@ -221,7 +221,7 @@ function SiteMenu({ lang, member, ownerAccount, onClose, onRefresh, onPro }: { l
   const perks = [`RIZEL'S DESK`, ja ? "テーマランキング" : "Theme Ranking", ja ? "銘柄比較" : "Compare", ja ? "連関マップ" : "Relationship maps", realtime, alerts];
   return <>
     <button type="button" className={styles.backdrop} aria-label={ja ? "メニューを閉じる" : "Close menu"} onClick={onClose} />
-    <nav ref={panel} id="site-menu" className={member ? `${styles.sheet} ${styles.luxe}` : `${styles.sheet} ${styles.navy}`} aria-label={ja ? "メニュー" : "Menu"}>
+    <nav ref={panel} id="site-menu" tabIndex={-1} className={member ? `${styles.sheet} ${styles.luxe}` : `${styles.sheet} ${styles.navy}`} aria-label={ja ? "メニュー" : "Menu"}>
       <div className={styles.grab} aria-hidden="true" />
       <div className={styles.shHead}><h2>{ja ? "メニュー" : "Menu"}</h2>
         <span className={styles.headTools}>
@@ -231,7 +231,7 @@ function SiteMenu({ lang, member, ownerAccount, onClose, onRefresh, onPro }: { l
       </div>
       {member
         ? <div className={styles.memberCard}><div className={styles.memberInner}>
-            <span className={styles.crownDisc} aria-hidden="true"><Icon name={ownerAccount ? "star" : "crown"} /></span>
+            <span className={styles.crownDisc} aria-hidden="true">{ownerAccount ? <svg viewBox="0 0 24 24" className={styles.ownerSeal}><path d="M12 2.5l8 3v6c0 5-3.4 8.6-8 10-4.6-1.4-8-5-8-10v-6z" /><path d="M12 7.6l3.6 4-3.6 5-3.6-5z" className={styles.ownerGem} /></svg> : <Icon name="crown" />}</span>
             <span className={styles.memberText}><b>{ownerAccount ? "OWNER" : "PRO MEMBER"}</b><small>{ja ? "全機能をご利用中です" : "All features unlocked"}</small></span>
             <Link className={styles.manage} href="/research/account" onClick={event => navigate(event, "/research/account")}>{ja ? "プランの管理" : "Manage plan"} ›</Link>
           </div></div>

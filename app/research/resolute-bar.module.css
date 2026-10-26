@@ -9,11 +9,15 @@
   .emblem { display:grid; place-items:center; flex:none; width:26px; height:26px; border-radius:50%; border:1.5px solid #d8b86a; color:#d8b86a; }
   .emblem svg { width:15px; height:15px; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
   .text { display:grid; gap:3px; flex:1; min-width:0; }
-  .text b { font:700 14px/1 Georgia,"Times New Roman",serif; letter-spacing:.08em; color:#f3dfae; }
+  .text b { font:700 14px/1 Georgia,"Times New Roman",serif; letter-spacing:.08em; background:linear-gradient(100deg,#b8913f 0%,#fff3c9 35%,#f3dfae 55%,#d4aa55 100%); -webkit-background-clip:text; background-clip:text; color:transparent; text-shadow:none; filter:drop-shadow(0 0 6px rgba(243,223,174,.35)); }
   .text small { font-size:9.5px; line-height:1; color:#9aa8bd; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-  .open { flex:none; display:grid; place-items:center; height:28px; padding:0 14px; border-radius:999px; background:#d4b36a; color:#1d1608; font-size:11px; font-weight:700; text-decoration:none; }
-  .close { flex:none; display:grid; place-items:center; width:18px; height:18px; padding:0; border:0; border-radius:50%; background:#222a3a; color:#aeb7d4; font-size:12px; line-height:1; cursor:pointer; }
+  .open { position:relative; overflow:hidden; flex:none; display:grid; place-items:center; height:28px; padding:0 14px; border-radius:999px; background:linear-gradient(135deg,#fbeab8 0%,#e3c274 40%,#b8913f 100%); box-shadow:inset 0 1px 0 rgba(255,255,255,.65),0 0 12px rgba(227,194,116,.45); color:#1d1608; font-size:11px; font-weight:800; text-decoration:none; }
+  .open::after { content:""; position:absolute; top:0; bottom:0; left:0; width:40%; background:linear-gradient(100deg,transparent,rgba(255,255,255,.7),transparent); transform:translateX(-140%) skewX(-18deg); animation:openSheen 4.5s ease-in-out infinite; }
+  .close { flex:none; display:grid; place-items:center; width:18px; height:18px; padding:0; border:0; border-radius:50%; background:#222a3a; color:#aeb7d4; cursor:pointer; }
+  .close svg { display:block; width:9px; height:9px; fill:none; stroke:currentColor; stroke-width:1.6; stroke-linecap:round; }
   .open:focus-visible, .close:focus-visible { outline:2px solid #f3dfae; outline-offset:2px; }
 }
 @keyframes barRise { from { transform:translateY(24px); opacity:0; } to { transform:none; opacity:1; } }
 @media (prefers-reduced-motion:reduce) { .bar { animation:none; } }
+@keyframes openSheen { 0%,55% { transform:translateX(-140%) skewX(-18deg); } 100% { transform:translateX(380%) skewX(-18deg); } }
+@media (prefers-reduced-motion:reduce) { .open::after { animation:none; display:none; } }
