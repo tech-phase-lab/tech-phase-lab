@@ -1,10 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import type { ReactNode } from "react";
+import { useSyncExternalStore, type ReactNode } from "react";
 import type { Language } from "@/lib/research/data";
 import { researchViewHashes, type ResearchView } from "@/lib/research/navigation";
 import { useAlertsUnread } from "./use-alerts-unread";
+import { useMemberDisplay, useMemberSettled, useOwnerAccount } from "./member-display-provider";
 import styles from "./home-sidebar.module.css";
 
 const icon = (paths: ReactNode) => <svg viewBox="0 0 24 24" aria-hidden="true">{paths}</svg>;
@@ -35,6 +36,13 @@ export default function HomeSidebar({ lang, tab, companyCount, savedCount, openV
   const ja = lang === "ja";
   const t = (jaText: string, en: string) => ja ? jaText : en;
   const unread = useAlertsUnread(false);
+  // Same rule as the phone menu (owner, Oct 27): PRO-only rows are shown to members only, with no PRO tags; until the
+  // membership check answers, the remembered plan decides, so the list never changes shape after it appears.
+  const plan = useMemberDisplay();
+  const ownerAccount = useOwnerAccount();
+  const settled = useMemberSettled() || ownerAccount || plan !== null;
+  const hint = useSyncExternalStore(() => () => {}, () => document.documentElement.dataset.memberHint ?? "", () => "");
+  const member = ownerAccount || plan === "pro" || (!settled && hint !== "");
   const quick: Item[] = [
     { key: "alerts", icon: icons.alerts, label: t("ハイテク速報", "Tech Alerts"), href: "/research/news", badge: unread ? <em className={`${styles.count} ${styles.fresh}`}>NEW</em> : null },
     { key: "search", icon: icons.search, label: t("銘柄検索", "Stock search"), href: "/research/stocks" },
@@ -45,17 +53,20 @@ export default function HomeSidebar({ lang, tab, companyCount, savedCount, openV
     { key: "targets", icon: icons.target, label: t("目標株価", "Price targets"), href: "/research/price-targets" },
   ];
   const research: Item[] = [
-    { key: "watch", icon: icons.watch, label: t("監視22銘柄", "22 Tracked Stocks"), onClick: () => openView?.("companies"), current: tab === "companies", badge: companyCount === undefined ? null : <em className={styles.count}>{companyCount}</em> },
+    ...(member ? [{ key: "desk", icon: icons.gem, label: "RIZEL'S DESK", href: "/research#rizels-desk" }] : []),
+    ...(member ? [{ key: "watch", icon: icons.watch, label: t("監視22銘柄", "22 Tracked Stocks"), onClick: () => openView?.("companies"), current: tab === "companies", badge: companyCount === undefined ? null : <em className={styles.count}>{companyCount}</em> }] : []),
     { key: "metrics", icon: icons.calendar, label: t("決算・経済指標", "Earnings & Economy"), href: "/research/calendar", current: pathname === "/research/calendar" },
     { key: "map", icon: icons.map, label: t("資本マップ", "Capital Map"), href: "/research/capital-map" },
-    { key: "themes", icon: icons.market, label: t("テーマランキング", "Theme Ranking"), href: "/research/themes", pro: true },
-    { key: "compare", icon: icons.compare, label: t("銘柄比較", "Stock Comparison"), href: "/research/compare", pro: true },
+    ...(member ? [
+      { key: "themes", icon: icons.market, label: t("テーマランキング", "Theme Ranking"), href: "/research/themes" },
+      { key: "compare", icon: icons.compare, label: t("銘柄比較", "Stock Comparison"), href: "/research/compare" },
+    ] : []),
     { key: "saved", icon: icons.saved, label: t("保存したリサーチ", "Saved research"), onClick: () => openView?.("saved"), current: tab === "saved", badge: savedCount === undefined ? null : <em className={styles.count}>{savedCount}</em> },
   ];
   const destinations: Record<string, string> = { watch: "/research" + researchViewHashes.companies, metrics: "/research/calendar", saved: "/research" + researchViewHashes.saved };
   const row = (original: Item) => {
     const item = standalone ? { ...original, href: original.href ?? destinations[original.key], current: original.href ? original.href === pathname : original.current } : original;
-    const inner = <>{item.icon}<span>{item.label}</span>{item.badge}{item.pro && <b className={styles.tag}>PRO</b>}</>;
+    const inner = <>{item.icon}<span>{item.label}</span>{item.badge}</>;
     const props = { className: `${styles.item} ${item.current ? styles.on : ""}`, "aria-current": item.current ? "page" as const : undefined };
     return item.href ? <Link key={item.key} href={item.href} {...props}>{inner}</Link> : <button key={item.key} type="button" onClick={item.onClick} {...props}>{inner}</button>;
   };

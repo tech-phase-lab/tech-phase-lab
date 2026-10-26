@@ -100,3 +100,12 @@ test('teasers, foreign-currency quotes, law-firm notices are dropped; press-rele
   assert.equal(cleanTitle('Bloom Energy signs deal | NYSE: BE | Press Release'), 'Bloom Energy signs deal');
   assert.equal(cleanTitle('Plain headline'), 'Plain headline');
 });
+
+test('lead-plaintiff notices and other companies\' earnings round-ups are dropped; "(NYSE:XX)" is trimmed (owner, Oct 27)', () => {
+  for (const title of ['GOOGL/GOOG 株主向け警告：2026年12月1日リード', 'Alphabet shareholder alert: lead plaintiff deadline December 1', 'AT&Tからシエナまで：2026年第3四半期の光学関連決算を追う', 'From AT&T to Ciena: tracking Q3 2026 optical earnings', 'AI銘柄の安定化でウォール街がラリー・モードに'])
+    assert.equal(isNotNews(title), true, title);
+  for (const title of ['Lumentum raises outlook on AI demand', 'ウォール街のアナリストがルメンタムの目標株価を引き上げ', 'Bloom Energy signs a new supply agreement'])
+    assert.equal(isNotNews(title), false, title);
+  assert.equal(cleanTitle('ブルーム・エナジー：リスク・リワードは改善も、依然として不安感残る (NYSE:BE)'), 'ブルーム・エナジー：リスク・リワードは改善も、依然として不安感残る');
+  assert.equal(cleanTitle('Bloom Energy: risk-reward improves (NASDAQ: BE) as demand grows'), 'Bloom Energy: risk-reward improves as demand grows');
+});

@@ -31,11 +31,13 @@ const NOT_NEWS = [
   /\bwhat (?:it|this|that) means for\b|\bwhat (?:it|this) (?:could )?mean(?:s)? for (?:investors|the stock)\b|(?:株|社|銘柄)?(?:にとっての意味|に与える影響とは|が意味すること|は何を意味|にとって何を意味)\s*$/i, // teasers: the answer is in an article we do not carry (owner, Oct 26)
   /(?:\b(?:EUR|GBP|CHF)\s?\d[\d.,]*|\d[\d.,]*\s?(?:EUR|GBP|CHF)\b|(?:ユーロ|ポンド)\s?\d[\d.,]*).{0,12}(?:で取引|\btrad)|\btrad\w*\b.{0,24}\b(?:EUR|GBP|CHF)\s?\d/i, // a foreign-currency quote, not news
   /\b(?:Bronstein,? Gewirtz|Rosen Law|Pomerantz|Levi & Korsinsky|Faruqi|Glancy Prongay|Schall Law|Gross Law|Kessler Topaz|Johnson Fistel|Block & Leviton)\b|ブロンスタイン|ローゼン法律|ポメランツ|株主に対し.{0,20}(?:調査|問い合わせ)|\b(?:encourages?|urges?|reminds?) (?:shareholders|investors)\b|\binvestors? who (?:lost|suffered)\b/i, // law-firm solicitations (owner, Oct 26)
+  /\bshareholder alert\b|\blead plaintiff\b|\bclass action\b.{0,60}\b(?:deadline|lawsuit|filed)\b|株主向け警告|リード原告|集団訴訟.{0,20}(?:期限|締切)/i, // law-firm lead-plaintiff notices (owner, Oct 27)
+  /\b(?:tracking|following|eyeing)\b.{0,50}\bearnings\b|決算を追う|ウォール街が(?:ラリー|反発|続伸|下落|急落)|\bWall Street (?:rallies|rally mode|slides|falls|climbs|stabili[sz]es)\b/i, // other companies' earnings round-ups and market-wide wraps
   /\bweekend trading\b|\bin (?:after|pre)-?(?:hours|market) trading\b.{0,20}\b(?:euros?|yen|pounds?)\b|\btrades? (?:at|for) [\d.,]+ (?:euros?|yen|pounds?)\b|週末取引|[\d.,]+\s?(?:ユーロ|ポンド)で取引/i, // price quotes in a foreign currency while the U.S. market is shut (owner, Oct 26)
 ];
 /** A press-release label glued onto the headline ("2026年10月25日｜… ｜NYSE:BE｜プレスリリース") is not part of it (owner, Oct 26). */
 export function cleanTitle(title: string) {
-  return title.replace(/^\s*(?:20\d\d年\d{1,2}月\d{1,2}日|[A-Z][a-z]{2,8}\.? \d{1,2}, 20\d\d)\s*[|｜]\s*/, "")
+  return title.replace(/\s*[(（]\s*(?:NYSE|NASDAQ|Nasdaq|AMEX|NYSEARCA|NYSEAMERICAN)\s*[:：]\s*[A-Z.]{1,6}\s*[)）]/g, "").replace(/^\s*(?:20\d\d年\d{1,2}月\d{1,2}日|[A-Z][a-z]{2,8}\.? \d{1,2}, 20\d\d)\s*[|｜]\s*/, "")
     .replace(/\s*[|｜]\s*(?:NYSE|NASDAQ|Nasdaq|AMEX)\s*[:：]\s*[A-Z.]{1,6}\s*(?:[|｜]\s*(?:プレスリリース|Press Release))?\s*$/, "")
     .replace(/\s*[|｜]\s*(?:プレスリリース|Press Release)\s*$/, "").trim();
 }

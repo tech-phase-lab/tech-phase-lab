@@ -17,6 +17,7 @@ import { useResearchLanguage } from "./use-research-language";
 import styles from "./research.module.css";
 import HomeTools, { HomeHelp } from "./home-tools";
 import ResoluteBar from "./resolute-bar";
+import PlanCards from "./plan-cards";
 import FreshnessNotice from "./freshness-notice";
 import HomeToday from "./home-today";
 import type { InitialNewsSnapshot } from "@/lib/research/general-news";
@@ -226,44 +227,7 @@ export default function ResearchDashboard({ events, monitoredCompanies, initialN
         {tab === "companies" && <CompanyDirectory companies={monitoredCompanies} lang={lang} />}
 
         {tab === "pro" && <section id="tech-phase-pro" className={`${styles.accessMatrix} ${styles.proPlans}`} aria-labelledby="research-page-title">
-          <div className={styles.planStack}>
-            <article className={styles.accessCard}>
-              <div className={styles.accessStatus}><span>FREE</span></div>
-              <p className={styles.planPrice}>{t("¥0", "$0")}<small>{t(" / 月", " / month")}</small></p>
-              <h3>{t("米国株を調べる、基本の機能。", "The essentials for exploring U.S. stocks.")}</h3>
-              <ul>{[
-                t("米国株の銘柄検索", "U.S. stock search"),
-                t("株価とチャートの確認", "Stock quotes and charts"),
-                t("指数・債券・為替のマーケット情報", "Indices, bonds and currencies"),
-                t("ウォッチリストへの銘柄登録", "Your stock watchlist"),
-                t("決算・経済指標カレンダー", "Earnings and economic calendar"),
-                t("決算の主要数字と変化の要点", "Key earnings figures and changes"),
-                t("独自リサーチの無料公開記事", "Selected full research articles"),
-              ].map(item => <li key={item}>{item}</li>)}</ul>
-              <Link href="/research/stocks">{t("無料で銘柄を探す", "Explore stocks for free")} <Arrow /></Link>
-            </article>
-            <article className={`${styles.accessCard} ${styles.proCard}`}>
-              <div className={styles.accessStatus}><span>TECH PHASE PRO</span></div>
-              <p className={styles.planPrice}>{t("¥2,980", "$20")}<small>{t(" / 月", " / month")}</small></p>
-              <button className={styles.planCta} disabled>{t("お申し込み準備中", "Coming soon")}</button>
-              <p className={styles.planIncludes}>{t("無料プランのすべての機能に加えて", "Everything in Free, plus")}</p>
-              <ul className={styles.proBenefits}>
-                {[
-                t("決算の裏側まで読み解く独自リサーチ", "In-depth earnings research"),
-                t("業界の動きから企業の競争力を分析", "Industry trends and competitive strengths"),
-                t("予想利益から株価の妥当性を検証", "Earnings and P/E valuation"),
-                t("成長の転換点と、その先の展開を読む", "Growth turning points and what comes next"),
-                t("決算後に変わった専門家の見方を追う", "How analyst views change after earnings"),
-                t("企業の先行きを左右するニュースを厳選", "Key news shaping company prospects"),
-                t("目標株価の変更をスマホに通知", "Price target alerts on your phone"),
-              ].map(item => <li key={item}>{item}</li>)}
-                <li><strong>{t("週刊 Tech Phase PRO", "Tech Phase PRO Weekly")}</strong>{t("｜変化と展望", " · Outlook")}</li>
-                <li><strong>{t("リゼルに聞く", "Ask Rizel")}</strong>{t("｜会員の疑問を深掘り", " · Member questions explored")}</li>
-                <li><strong>{t("リゼルのひとりごと", "RIZEL’s Notes")}</strong>{t("｜相場の着眼点", " · Market perspectives")}</li>
-                <li><strong>{t("銘柄比較 PRO", "Stock comparison PRO")}</strong>{t("｜気になる2〜3銘柄を瞬時に判断", " · Assess 2–3 stocks at a glance")}</li>
-              </ul>
-            </article>
-          </div>
+          <PlanCards lang={lang} />
         </section>}
 
         {(tab === "changes" || tab === "metrics" || tab === "saved") && <section id="what-changed" ref={workspaceRef} className={`${styles.workspace} ${tab === "saved" ? styles.savedWorkspace : ""}`}>
