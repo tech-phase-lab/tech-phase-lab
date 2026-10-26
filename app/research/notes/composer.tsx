@@ -1,7 +1,6 @@
 "use client";
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import DeskTextEditor from "../desk/text-editor";
-import AudioShortcut from "../desk/audio-shortcut";
 import styles from "./composer.module.css";
 
 export default function NoteComposer({ onPublished }: { onPublished: () => void }) {
@@ -46,7 +45,6 @@ export default function NoteComposer({ onPublished }: { onPublished: () => void 
       <span>{body.length.toLocaleString()} / 6,000</span>
       <button type="submit" disabled={busy || mediaBusy || !body.trim()}>{busy ? "投稿中…" : "投稿"}</button>
     </div>
-    <AudioShortcut />
     {message && <p role="status">{message}</p>}
   </form>;
 }
