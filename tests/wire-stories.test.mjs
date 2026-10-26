@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { wireStories, isNotNews, staleResults } from '../lib/research/wire-stories.ts';
+import { wireStories, isNotNews, staleResults, cleanTitle } from '../lib/research/wire-stories.ts';
 
 const item = (id, titleEn, titleJa, publishedAt, origin = 'third-party') => ({ id, titleEn, titleJa, publisher: 'P', origin, url: `https://example.com/${id}`, publishedAt });
 const WATCHED = new Set(['MU', 'SNDK', 'NVDA', 'CRWV']);
@@ -88,4 +88,15 @@ test('a results headline is stale only days after the known release; other earni
   assert.equal(staleResults('ASML', 'ASML Holding reports third-quarter results', '2026-10-14T08:00:00Z'), false); // same day
   assert.equal(staleResults('ASML', 'ASML orders surge as AI demand lifts outlook', '2026-10-25T16:48:02Z'), false); // not a results headline
   assert.equal(staleResults('ZZZZ', 'ZZZZ reports third-quarter results', '2026-10-25T16:48:02Z'), false); // no known date
+});
+
+test('teasers, foreign-currency quotes, law-firm notices are dropped; press-release labels are trimmed (owner, Oct 26)', () => {
+  for (const title of ['ルメンタムがAIラック光学デモンストレーションを発表：ルメンタム株にとっての意味', 'アステラ・ラボ、Orionを発表：アステラ・ラボ株に与える影響とは', 'Lumentum unveils AI rack optics demo: what it means for LITE stock',
+    'ネビウス、ライブGPU価格を拡大。ネビウス株はEUR 141.91で取引される', 'Nebius stock trades at EUR 141.91', 'Bloom Energy (BE) investigation: Bronstein, Gewirtz & Grossman urges shareholders to inquire'])
+    assert.equal(isNotNews(title), true, title);
+  for (const title of ['Nebius signs EUR 2 billion data center deal', 'ルメンタム、光学部品の新工場を発表', 'Lumentum raises outlook on AI demand'])
+    assert.equal(isNotNews(title), false, title);
+  assert.equal(cleanTitle('2026年10月25日｜ブルーム・エナジー、新契約を発表｜NYSE:BE｜プレスリリース'), 'ブルーム・エナジー、新契約を発表');
+  assert.equal(cleanTitle('Bloom Energy signs deal | NYSE: BE | Press Release'), 'Bloom Energy signs deal');
+  assert.equal(cleanTitle('Plain headline'), 'Plain headline');
 });
