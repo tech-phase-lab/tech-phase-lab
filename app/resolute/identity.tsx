@@ -15,7 +15,7 @@ import NewsScreen from "./news/screen";
 export default function ResoluteIdentity({ simulation=false, notification, extra, thermometerSnapshot }: {thermometerSnapshot?:ThermometerSnapshot;simulation?:boolean;notification?:"alerts"|"morning";extra?:"home"|"tax"|"thermometer"|"notebook"|"wall"|"tonight"|"news"}) {
  const {isLoaded,sessionId}=useAuth();
  useDiagnosisSessionIdentity(isLoaded,sessionId);
- if(extra==="home")return <HomeScreen key={sessionId ?? "signed-out"} identityReady={isLoaded}/>;
+ if(extra==="home")return <HomeScreen snapshot={thermometerSnapshot} key={sessionId ?? "signed-out"} identityReady={isLoaded}/>;
  if(extra==="wall")return <WallScreen key={sessionId ?? "signed-out"} identityReady={isLoaded}/>;
  if(extra==="tonight")return <TonightScreen key={sessionId ?? "signed-out"} identityReady={isLoaded}/>;
  if(extra==="news")return <NewsScreen key={sessionId ?? "signed-out"} identityReady={isLoaded}/>;

@@ -17,8 +17,9 @@ import ThermometerScreen from "../thermometer/screen";
 import WallScreen from "../wall/screen";
 import TonightScreen from "../tonight/screen";
 import NewsScreen from "../news/screen";
+import type { ThermometerSnapshot } from "@/lib/resolute/thermometer-view";
 import ReviewAccessScreen from "./access-screen";
-export default function ReviewScreen({getSessionToken,draftSession}:{getSessionToken?:ReviewSessionToken;draftSession?:string}) {
+export default function ReviewScreen({getSessionToken,draftSession,thermometerSnapshot}:{thermometerSnapshot?:ThermometerSnapshot;getSessionToken?:ReviewSessionToken;draftSession?:string}) {
  const [access, setAccess] = useState<{status:ReviewAccess|"loading"; authorized:boolean}>({status:"loading",authorized:false});
  const {status,authorized}=access;
  const tokenRef=useRef(getSessionToken);
@@ -38,7 +39,7 @@ export default function ReviewScreen({getSessionToken,draftSession}:{getSessionT
   const focus = () => void check(); window.addEventListener("focus",focus);
   return () => { controller.abort(); clearInterval(timer); window.removeEventListener("focus",focus); };
  },[attempt]);
- return <>{authorized ? <div hidden={status !== "allowed"}><Workspace draftSession={draftSession}/></div> : null}
+ return <>{authorized ? <div hidden={status !== "allowed"}><Workspace draftSession={draftSession} thermometerSnapshot={thermometerSnapshot}/></div> : null}
  {status === "loading" ? <ReviewAccessScreen loading/> : status !== "allowed" ?
   <ReviewAccessScreen message={status === "denied" ?
    "この入口はRIZELさんの運営者アカウント専用です。Tech Phaseと同じアカウントでログインしてください。" : authorized ? "接続を確認できませんでした。入力は保持しています。「再確認」を押してください。" : "接続を確認できませんでした。もう一度お試しください。"}>
@@ -47,7 +48,7 @@ export default function ReviewScreen({getSessionToken,draftSession}:{getSessionT
   </ReviewAccessScreen> : null}</>;
 
 }
-function Workspace({draftSession}:{draftSession?:string}) {
+function Workspace({draftSession,thermometerSnapshot}:{draftSession?:string;thermometerSnapshot?:ThermometerSnapshot}) {
  const [resuming] = useState(()=>draftSession ? readDiagnosisSession(draftSession,"preview") : null);
  const [store] = useState(() => {
   try { return createReviewStore(window.localStorage); } catch { return createReviewStore(); }
@@ -99,10 +100,10 @@ function Workspace({draftSession}:{draftSession?:string}) {
    {persistence.error?<p role="status">{en?"We couldn’t save or remove the copy on this device. Your changes are still here in this tab.":"端末への保存・削除を確認できませんでした。この画面内の入力は保持しています"}</p>:null}
    </details>
   </aside>
-  {path === "/resolute" ? <HomeScreen/> : null}
+  {path === "/resolute" ? <HomeScreen snapshot={thermometerSnapshot}/> : null}
   <div hidden={path !== "/resolute/diagnosis"}><DiagnosisScreen key={planVersion} draftSession={draftSession}/></div>
   {path === "/resolute/simulation" ? <SimulationScreen/> : path === "/resolute/tax" ? <TaxScreen/> :
-   path === "/resolute/wall" ? <WallScreen/> : path === "/resolute/tonight" ? <TonightScreen/> : path === "/resolute/news" ? <NewsScreen/> : path === "/resolute/notebook" ? <NotebookScreen/> : path === "/resolute/thermometer" ? <ThermometerScreen/> : null}
+   path === "/resolute/wall" ? <WallScreen/> : path === "/resolute/tonight" ? <TonightScreen/> : path === "/resolute/news" ? <NewsScreen/> : path === "/resolute/notebook" ? <NotebookScreen/> : path === "/resolute/thermometer" ? <ThermometerScreen snapshot={thermometerSnapshot}/> : null}
   {notificationsVisited?<div hidden={path!=="/resolute/alerts"&&path!=="/resolute/morning"}><NotificationScreen mode={path==="/resolute/morning"?"morning":"alerts"}/></div>:null}
  </ReviewContext.Provider>;
 }
