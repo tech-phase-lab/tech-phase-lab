@@ -102,7 +102,7 @@ test("bottom bar: five items in order, bilingual labels, raised search, unread d
 test("menu follows the plan sample: cards, two short buttons, Research/Guides, English labels", () => {
   const menu = read("app/research/site-header.tsx");
   for (const [ja, en] of [["PROで、もっと深く", "Go deeper with PRO"], ["案内を見る", "Learn more"], ["プランの管理", "Manage plan"],
-    ["すべての機能が使えます", "All features unlocked"], ["運営者", "Owner"], ["アカウント", "Account"],
+    ["リサーチのすべてをご利用中です", "Everything in Tech Phase, unlocked"], ["運営者", "Owner"], ["アカウント", "Account"],
     ["スマホ通知", "Mobile alerts"], ["再読み込み", "Refresh"], ["監視22銘柄リスト", "22 Tracked Stocks"],
     ["決算・経済指標", "Earnings & Economy"], ["銘柄比較", "Compare"], ["連関マップ", "Relationship maps"], ["テーマランキング", "Theme Ranking"]]) {
     assert.ok(menu.includes(`"${ja}" : "${en}"`), ja);

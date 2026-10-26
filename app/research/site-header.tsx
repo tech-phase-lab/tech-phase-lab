@@ -216,10 +216,10 @@ function SiteMenu({ lang, member, ownerAccount, onClose, onRefresh, onPro }: { l
       {member
         ? <div className={styles.cardPaid}>
             <div className={styles.cardRow}>
-              <span className={styles.badge}><ProBadge size={26} shine star={ownerAccount} /><span>{ownerAccount ? (ja ? "運営者" : "Owner") : "TECH PHASE PRO"}</span></span>
+              <span className={styles.badge}><ProBadge size={26} shine star={ownerAccount} /><span>{ownerAccount ? (ja ? "運営者" : "Owner") : (ja ? "PRO　全機能" : "PRO · All features")}</span></span>
               <Link className={styles.manage} href="/research/account" onClick={event => navigate(event, "/research/account")}>{ja ? "プランの管理" : "Manage plan"}</Link>
             </div>
-            <h3>{ja ? "すべての機能が使えます" : "All features unlocked"}</h3>
+            <h3>{ja ? "リサーチのすべてをご利用中です" : "Everything in Tech Phase, unlocked"}</h3>
           </div>
         : <button type="button" className={styles.cardFree} aria-label={ja ? "PROの案内を見る" : "Learn more about PRO"} onClick={act(onPro)}>
             <span className={styles.frTop}><span className={styles.frTitle}><ProBadge size={24} />{ja ? "PROで、もっと深く" : "Go deeper with PRO"}</span><span className={styles.frGo}>{ja ? "案内を見る" : "Learn more"}<Icon name="next" /></span></span>
@@ -234,8 +234,8 @@ function SiteMenu({ lang, member, ownerAccount, onClose, onRefresh, onPro }: { l
       </div>
       <div className={styles.grp}>
         <h4>{ja ? "リサーチ" : "Research"}</h4>
-        {member && item("/research#rizels-desk", "desk", "RIZEL'S DESK", ja ? "ひとりごと・リゼルに聞く・週刊PRO" : "Notes · Ask Rizel · Weekly PRO")}
-        {item("/research/news", "alerts", ja ? "ハイテク速報" : "Tech Alerts", ja ? "PROはリアルタイム" : "PRO is real-time")}
+        {member && item("/research#rizels-desk", "desk", "RIZEL'S DESK")}
+        {item("/research/news", "alerts", ja ? "ハイテク速報" : "Tech Alerts")}
         {item("/research/general-news", "news", ja ? "一般ニュース" : "General News")}
         {member && item("/research#monitored-companies", "tracked", ja ? "監視22銘柄リスト" : "22 Tracked Stocks")}
         {item("/research/calendar", "calendar", ja ? "決算・経済指標" : "Earnings & Economy")}
@@ -247,9 +247,11 @@ function SiteMenu({ lang, member, ownerAccount, onClose, onRefresh, onPro }: { l
         {item("/research/price-targets", "targets", ja ? "目標株価" : "Price targets")}
         {item("/research#saved", "saved", ja ? "保存したリサーチ" : "Saved research")}
       </div>
-      <div className={styles.grp}>
-        {item("/resolute", "anchor", "RESOLUTE", ja ? "暴落に備える、自分だけのルール作り" : "Your own rules for a market crash")}
-      </div>
+      <Link href="/resolute" className={styles.platinum} onClick={event => navigate(event, "/resolute")}>
+        <Icon name="anchor" className={styles.platIcon} />
+        <span className={styles.platText}><b>RESOLUTE</b><small>{ja ? "暴落に備える、自分だけのルール作り" : "Your own rules for a market crash"}</small></span>
+        <Icon name="next" className={styles.platChev} />
+      </Link>
       <div className={styles.grp}>
         <h4>{ja ? "ガイド" : "Guides"}</h4>
         {item("/research/learn", "book", ja ? "米国株のはじめ方" : "US stock basics")}
