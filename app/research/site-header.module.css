@@ -223,6 +223,4 @@
 @media (prefers-reduced-motion:reduce) { .proSweep { animation:none; } }
 .badge .proBadge { filter:drop-shadow(0 0 7px rgba(236,208,142,.5)); }
 .frTitle .proBadge { margin-right:2px; }
-.proMark { display:inline-flex; margin-left:auto; margin-right:2px; }
 .itemNote { display:block; margin-top:1px; font-size:11px; font-weight:400; color:#8fa0aa; letter-spacing:0; }
-.item span.proMark { flex:none; margin-left:0; }

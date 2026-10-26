@@ -110,12 +110,10 @@ test("menu follows the plan sample: cards, two short buttons, Research/Guides, E
   // Manage plan opens the account page; paid buttons are Account + Mobile alerts, free ones Refresh + Account.
   assert.match(menu, /className=\{styles\.manage\} href="\/research\/account"/);
   assert.match(menu, /href="\/research\/notifications"/);
-  // PRO-only rows carry one small gem mark (owner, Oct 26); nothing else in the list is tagged or locked.
+  // The list carries no PRO marks (owner, Oct 26): the plan card names the PRO features.
   const research = menu.slice(menu.indexOf('{ja ? "リサーチ" : "Research"}'), menu.indexOf('{ja ? "ガイド" : "Guides"}'));
-  const comparisonEntry = '{item("/research/compare", "targets", ja ? "銘柄比較" : "Stock Comparison", true)}';
+  const comparisonEntry = '{item("/research/compare", "targets", ja ? "銘柄比較" : "Stock Comparison")}';
   assert.ok(research.includes(comparisonEntry));
-  const marked = [...research.matchAll(/\{item\("([^"]+)"[^\n]*, true(?:,[^\n]*)?\)\}/g)].map(match => match[1]);
-  assert.deepEqual(marked, ["/research#rizels-desk", "/research#monitored-companies", "/research/themes", "/research/compare"]);
   assert.ok(research.indexOf('/research/themes') < research.indexOf('/research/compare'));
   assert.ok(research.indexOf('/research/compare') < research.indexOf('/research/watchlist'));
   assert.doesNotMatch(research, /lock|tag/);

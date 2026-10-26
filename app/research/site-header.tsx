@@ -123,19 +123,22 @@ const menuIcons = {
   book: <path d="M4 5h7a3 3 0 0 1 3 3v12a2 2 0 0 0-2-2H4zM20 5h-6" />,
   help: <><circle cx="12" cy="12" r="9" /><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.7.4-1 .9-1 1.7M12 17h.01" /></>,
 } as const;
-/** The PRO emblem (owner, Oct 26): a faceted gold gem instead of the plain diamond; `shine` lets light sweep across it. */
-function ProBadge({ size = 22, shine = false }: { size?: number; shine?: boolean }) {
+/** The PRO emblem (owner, Oct 26): a gold crown for PRO, a star for the owner; `shine` lets light sweep across it. */
+function ProBadge({ size = 22, shine = false, star = false }: { size?: number; shine?: boolean; star?: boolean }) {
   const id = useId();
   return <svg className={shine ? `${styles.proBadge} ${styles.proShine}` : styles.proBadge} width={size} height={size} viewBox="0 0 32 32" aria-hidden="true">
     <defs>
-      <linearGradient id={`${id}a`} x1="0" y1="0" x2="1" y2="1"><stop offset="0" stopColor="#fff3c9" /><stop offset=".45" stopColor="#e8c46a" /><stop offset="1" stopColor="#9a7424" /></linearGradient>
-      <linearGradient id={`${id}b`} x1="0" y1="0" x2="0" y2="1"><stop offset="0" stopColor="#fff8dc" /><stop offset="1" stopColor="#d4a843" /></linearGradient>
-      <linearGradient id={`${id}c`} x1="1" y1="0" x2="0" y2="1"><stop offset="0" stopColor="#c99a35" /><stop offset="1" stopColor="#7d5b17" /></linearGradient>
+      <linearGradient id={`${id}a`} x1="0" y1="0" x2="1" y2="1"><stop offset="0" stopColor="#fff3c9" /><stop offset=".5" stopColor="#e8c46a" /><stop offset="1" stopColor="#a67c24" /></linearGradient>
+      <linearGradient id={`${id}b`} x1="0" y1="0" x2="0" y2="1"><stop offset="0" stopColor="#fff8dc" /><stop offset="1" stopColor="#c9972f" /></linearGradient>
     </defs>
-    <path d="M16 2.5l11 6.2v14.6L16 29.5 5 23.3V8.7z" fill={`url(#${id}a)`} stroke="#7d5b17" strokeWidth=".8" strokeLinejoin="round" />
-    <path d="M16 7l7 4v10l-7 4-7-4V11z" fill={`url(#${id}c)`} />
-    <path d="M16 7l7 4-7 4-7-4z" fill={`url(#${id}b)`} />
-    <path d="M16 15v10M9 11l7 4 7-4" stroke="#fff3c9" strokeOpacity=".55" strokeWidth=".7" fill="none" />
+    {star
+      ? <path d="M16 2.8l3.9 8.1 8.9 1.2-6.5 6.2 1.6 8.8L16 22.7l-7.9 4.4 1.6-8.8-6.5-6.2 8.9-1.2z" fill={`url(#${id}a)`} stroke="#8a6518" strokeWidth=".9" strokeLinejoin="round" />
+      : <>
+        <path d="M3.5 10.5l5.6 5.2L16 6l6.9 9.7 5.6-5.2-2.1 14.2H5.6z" fill={`url(#${id}a)`} stroke="#8a6518" strokeWidth=".9" strokeLinejoin="round" />
+        <path d="M5.6 24.7h20.8v3.1H5.6z" fill={`url(#${id}b)`} stroke="#8a6518" strokeWidth=".8" strokeLinejoin="round" />
+        <circle cx="3.5" cy="9.6" r="2" fill={`url(#${id}b)`} stroke="#8a6518" strokeWidth=".6" /><circle cx="16" cy="5.2" r="2.2" fill={`url(#${id}b)`} stroke="#8a6518" strokeWidth=".6" /><circle cx="28.5" cy="9.6" r="2" fill={`url(#${id}b)`} stroke="#8a6518" strokeWidth=".6" />
+        <path d="M9 24l1.4-6.5M16 24V13M23 24l-1.4-6.5" stroke="#fff3c9" strokeOpacity=".5" strokeWidth=".8" fill="none" />
+      </>}
     {shine && <rect className={styles.proSweep} x="-14" y="0" width="9" height="32" fill="#fff" fillOpacity=".55" transform="skewX(-20)" />}
   </svg>;
 }
@@ -203,8 +206,8 @@ function SiteMenu({ lang, member, ownerAccount, onClose, onRefresh, onPro }: { l
   const act = (run: () => void) => () => { unlock(); onClose(); run(); };
   const realtime = ja ? "リアルタイム監視" : "Real-time monitoring";
   const alerts = ja ? "スマホ通知" : "Mobile alerts";
-  const item = (href: string, icon: MenuIcon, label: string, pro = false, note?: string) =>
-    <Link key={href} className={styles.item} href={href} onClick={event => navigate(event, href)}><Icon name={icon} className={styles.itemIcon} /><span>{label}{note && <small className={styles.itemNote}>{note}</small>}</span>{pro && <span className={styles.proMark} role="img" aria-label="PRO"><ProBadge size={16} /></span>}<Icon name="next" className={styles.chev} /></Link>;
+  const item = (href: string, icon: MenuIcon, label: string, note?: string) =>
+    <Link key={href} className={styles.item} href={href} onClick={event => navigate(event, href)}><Icon name={icon} className={styles.itemIcon} /><span>{label}{note && <small className={styles.itemNote}>{note}</small>}</span><Icon name="next" className={styles.chev} /></Link>;
   return <>
     <button type="button" className={styles.backdrop} aria-label={ja ? "メニューを閉じる" : "Close menu"} onClick={onClose} />
     <nav ref={panel} id="site-menu" className={styles.sheet} aria-label={ja ? "メニュー" : "Menu"}>
@@ -213,14 +216,14 @@ function SiteMenu({ lang, member, ownerAccount, onClose, onRefresh, onPro }: { l
       {member
         ? <div className={styles.cardPaid}>
             <div className={styles.cardRow}>
-              <span className={styles.badge}><ProBadge size={24} shine /><span>{ownerAccount ? (ja ? "運営者　全機能" : "Owner · Full access") : "TECH PHASE PRO"}</span></span>
+              <span className={styles.badge}><ProBadge size={26} shine star={ownerAccount} /><span>{ownerAccount ? (ja ? "運営者　全機能" : "Owner · Full access") : "TECH PHASE PRO"}</span></span>
               <Link className={styles.manage} href="/research/account" onClick={event => navigate(event, "/research/account")}>{ja ? "プランの管理" : "Manage plan"}</Link>
             </div>
             <h3>{ja ? "すべての機能が使えます" : "All features unlocked"}</h3>
             <p className={styles.featline}>{ja ? `RIZEL'S DESK、テーマランキング、銘柄比較、連関マップ、${realtime}、${alerts}` : `RIZEL'S DESK, Theme Ranking, Compare, Relationship maps, ${realtime}, ${alerts}`}</p>
           </div>
         : <button type="button" className={styles.cardFree} aria-label={ja ? "PROの案内を見る" : "Learn more about PRO"} onClick={act(onPro)}>
-            <span className={styles.frTop}><span className={styles.frTitle}><ProBadge size={22} />{ja ? "PROで、もっと深く" : "Go deeper with PRO"}</span><span className={styles.frGo}>{ja ? "案内を見る" : "Learn more"}<Icon name="next" /></span></span>
+            <span className={styles.frTop}><span className={styles.frTitle}><ProBadge size={24} />{ja ? "PROで、もっと深く" : "Go deeper with PRO"}</span><span className={styles.frGo}>{ja ? "案内を見る" : "Learn more"}<Icon name="next" /></span></span>
             <span className={styles.frPerks}><span>RIZEL&apos;S DESK</span><span>{ja ? "テーマランキング" : "Theme Ranking"}</span><span>{ja ? "銘柄比較" : "Compare"}</span><span>{ja ? "連関マップ" : "Relationship maps"}</span><span>{realtime}</span><span>{alerts}</span></span>
           </button>}
       <div className={styles.tiles}>
@@ -232,21 +235,21 @@ function SiteMenu({ lang, member, ownerAccount, onClose, onRefresh, onPro }: { l
       </div>
       <div className={styles.grp}>
         <h4>{ja ? "リサーチ" : "Research"}</h4>
-        {item("/research#rizels-desk", "desk", "RIZEL'S DESK", true, ja ? "ひとりごと・リゼルに聞く・週刊PRO" : "Notes · Ask Rizel · Weekly PRO")}
-        {item("/research/news", "alerts", ja ? "ハイテク速報" : "Tech Alerts", false, ja ? "PROはリアルタイム" : "PRO is real-time")}
+        {item("/research#rizels-desk", "desk", "RIZEL'S DESK", ja ? "ひとりごと・リゼルに聞く・週刊PRO" : "Notes · Ask Rizel · Weekly PRO")}
+        {item("/research/news", "alerts", ja ? "ハイテク速報" : "Tech Alerts", ja ? "PROはリアルタイム" : "PRO is real-time")}
         {item("/research/general-news", "news", ja ? "一般ニュース" : "General News")}
-        {item("/research#monitored-companies", "tracked", ja ? "監視22銘柄リスト" : "22 Tracked Stocks", true)}
+        {item("/research#monitored-companies", "tracked", ja ? "監視22銘柄リスト" : "22 Tracked Stocks")}
         {item("/research/calendar", "calendar", ja ? "決算・経済指標" : "Earnings & Economy")}
         {item("/research/capital-map", "changes", ja ? "資本マップ" : "Capital Map")}
-        {item("/research/themes", "targets", ja ? "テーマランキング" : "Theme Ranking", true)}
-        {item("/research/compare", "targets", ja ? "銘柄比較" : "Stock Comparison", true)}
+        {item("/research/themes", "targets", ja ? "テーマランキング" : "Theme Ranking")}
+        {item("/research/compare", "targets", ja ? "銘柄比較" : "Stock Comparison")}
         {item("/research/watchlist", "star", ja ? "ウォッチリスト" : "Watchlist")}
         {item("/research/notebook", "notebook", ja ? "銘柄手帳" : "Stock Notebook")}
         {item("/research/price-targets", "targets", ja ? "目標株価" : "Price targets")}
         {item("/research#saved", "saved", ja ? "保存したリサーチ" : "Saved research")}
       </div>
       <div className={styles.grp}>
-        {item("/resolute", "anchor", "RESOLUTE", false, ja ? "暴落に備える、自分だけのルール作り" : "Your own rules for a market crash")}
+        {item("/resolute", "anchor", "RESOLUTE", ja ? "暴落に備える、自分だけのルール作り" : "Your own rules for a market crash")}
       </div>
       <div className={styles.grp}>
         <h4>{ja ? "ガイド" : "Guides"}</h4>
