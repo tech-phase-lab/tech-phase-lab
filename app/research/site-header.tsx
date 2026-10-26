@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useCallback, useEffect, useRef, useState, type MouseEvent, type ReactNode } from "react";
+import { useCallback, useEffect, useId, useRef, useState, type MouseEvent, type ReactNode } from "react";
 import type { Language } from "@/lib/research/data";
 import { useMemberDisplay, useMemberSettled, useOwnerAccount } from "./member-display-provider";
 import { useProIntroduction } from "./header-pro";
@@ -117,9 +117,31 @@ const menuIcons = {
   star: <path d="M12 3.5l2.6 5.4 5.9.8-4.3 4.1 1 5.9L12 16.9l-5.2 2.8 1-5.9L3.5 9.7l5.9-.8z" />,
   targets: <path d="M4 4v16h16M9 16v-5M13 16V8M17 16v-3" />,
   saved: <path d="M7 4h10v16l-5-4-5 4z" />,
+  notebook: <><path d="M6 3h11a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6zM6 3v18M10 8h6M10 12h6" /></>,
+  anchor: <><circle cx="12" cy="5" r="2" /><path d="M12 7v14M7 11h10M5 15c0 3 3 5 7 5s7-2 7-5" /></>,
+  desk: <path d="M4 6h16v10H4zM9 20h6M12 16v4M8 10h8" />,
   book: <path d="M4 5h7a3 3 0 0 1 3 3v12a2 2 0 0 0-2-2H4zM20 5h-6" />,
   help: <><circle cx="12" cy="12" r="9" /><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.7.4-1 .9-1 1.7M12 17h.01" /></>,
 } as const;
+/** The PRO emblem (owner, Oct 26): a gold crown for PRO, a star for the owner; `shine` lets light sweep across it. */
+function ProBadge({ size = 22, shine = false, star = false }: { size?: number; shine?: boolean; star?: boolean }) {
+  const id = useId();
+  return <svg className={shine ? `${styles.proBadge} ${styles.proShine}` : styles.proBadge} width={size} height={size} viewBox="0 0 32 32" aria-hidden="true">
+    <defs>
+      <linearGradient id={`${id}a`} x1="0" y1="0" x2="1" y2="1"><stop offset="0" stopColor="#fff3c9" /><stop offset=".5" stopColor="#e8c46a" /><stop offset="1" stopColor="#a67c24" /></linearGradient>
+      <linearGradient id={`${id}b`} x1="0" y1="0" x2="0" y2="1"><stop offset="0" stopColor="#fff8dc" /><stop offset="1" stopColor="#c9972f" /></linearGradient>
+    </defs>
+    {star
+      ? <path d="M16 2.8l3.9 8.1 8.9 1.2-6.5 6.2 1.6 8.8L16 22.7l-7.9 4.4 1.6-8.8-6.5-6.2 8.9-1.2z" fill={`url(#${id}a)`} stroke="#8a6518" strokeWidth=".9" strokeLinejoin="round" />
+      : <>
+        <path d="M3.5 10.5l5.6 5.2L16 6l6.9 9.7 5.6-5.2-2.1 14.2H5.6z" fill={`url(#${id}a)`} stroke="#8a6518" strokeWidth=".9" strokeLinejoin="round" />
+        <path d="M5.6 24.7h20.8v3.1H5.6z" fill={`url(#${id}b)`} stroke="#8a6518" strokeWidth=".8" strokeLinejoin="round" />
+        <circle cx="3.5" cy="9.6" r="2" fill={`url(#${id}b)`} stroke="#8a6518" strokeWidth=".6" /><circle cx="16" cy="5.2" r="2.2" fill={`url(#${id}b)`} stroke="#8a6518" strokeWidth=".6" /><circle cx="28.5" cy="9.6" r="2" fill={`url(#${id}b)`} stroke="#8a6518" strokeWidth=".6" />
+        <path d="M9 24l1.4-6.5M16 24V13M23 24l-1.4-6.5" stroke="#fff3c9" strokeOpacity=".5" strokeWidth=".8" fill="none" />
+      </>}
+    {shine && <rect className={styles.proSweep} x="-14" y="0" width="9" height="32" fill="#fff" fillOpacity=".55" transform="skewX(-20)" />}
+  </svg>;
+}
 const Icon = ({ name, className }: { name: MenuIcon; className?: string }) => <svg className={className} viewBox="0 0 24 24" aria-hidden="true">{menuIcons[name]}</svg>;
 
 /** Menu sheet (owner's "プラン別メニュー見本"): plan card, two short buttons,
@@ -174,7 +196,7 @@ function SiteMenu({ lang, member, ownerAccount, onClose, onRefresh, onPro }: { l
   function navigate(event: MouseEvent<HTMLAnchorElement>, href: string) {
     unlock();
     onClose();
-    if (pathname !== "/research" || !href.startsWith("/research#")) return;
+    if (href === "/research#rizels-desk" || pathname !== "/research" || !href.startsWith("/research#")) return;
     event.preventDefault();
     window.history.pushState(null, "", href);
     rememberHash(href.slice(href.indexOf("#")));
@@ -184,25 +206,24 @@ function SiteMenu({ lang, member, ownerAccount, onClose, onRefresh, onPro }: { l
   const act = (run: () => void) => () => { unlock(); onClose(); run(); };
   const realtime = ja ? "リアルタイム監視" : "Real-time monitoring";
   const alerts = ja ? "スマホ通知" : "Mobile alerts";
-  const item = (href: string, icon: MenuIcon, label: string) =>
-    <Link key={href} className={styles.item} href={href} onClick={event => navigate(event, href)}><Icon name={icon} className={styles.itemIcon} /><span>{label}</span><Icon name="next" className={styles.chev} /></Link>;
+  const item = (href: string, icon: MenuIcon, label: string, note?: string) =>
+    <Link key={href} className={styles.item} href={href} onClick={event => navigate(event, href)}><Icon name={icon} className={styles.itemIcon} /><span>{label}{note && <small className={styles.itemNote}>{note}</small>}</span><Icon name="next" className={styles.chev} /></Link>;
   return <>
     <button type="button" className={styles.backdrop} aria-label={ja ? "メニューを閉じる" : "Close menu"} onClick={onClose} />
-    <nav ref={panel} id="site-menu" className={styles.sheet} aria-label={ja ? "メニュー" : "Menu"}>
+    <nav ref={panel} id="site-menu" className={member ? `${styles.sheet} ${styles.luxe}` : styles.sheet} aria-label={ja ? "メニュー" : "Menu"}>
       <div className={styles.grab} aria-hidden="true" />
       <div className={styles.shHead}><h2>{ja ? "メニュー" : "Menu"}</h2><button type="button" className={styles.close} aria-label={ja ? "閉じる" : "Close"} onClick={onClose}><Icon name="close" /></button></div>
       {member
         ? <div className={styles.cardPaid}>
             <div className={styles.cardRow}>
-              <span className={styles.badge}><Icon name="gem" /><span>{ownerAccount ? (ja ? "運営者　全機能" : "Owner · Full access") : "TECH PHASE PRO"}</span></span>
+              <span className={styles.badge}><ProBadge size={26} shine star={ownerAccount} /><span>{ownerAccount ? (ja ? "運営者" : "Owner") : (ja ? "PRO　全機能" : "PRO · All features")}</span></span>
               <Link className={styles.manage} href="/research/account" onClick={event => navigate(event, "/research/account")}>{ja ? "プランの管理" : "Manage plan"}</Link>
             </div>
-            <h3>{ja ? "すべての機能が使えます" : "All features unlocked"}</h3>
-            <p className={styles.featline}>{ja ? `銘柄比較 PRO、RIZEL'S DESK、${realtime}、${alerts}` : `Compare · PRO, RIZEL'S DESK, ${realtime}, ${alerts}`}</p>
+            <span className={styles.paidPerks}><span>RIZEL&apos;S DESK</span><span>{ja ? "テーマランキング" : "Theme Ranking"}</span><span>{ja ? "銘柄比較" : "Compare"}</span><span>{ja ? "連関マップ" : "Relationship maps"}</span><span>{realtime}</span><span>{alerts}</span></span>
           </div>
         : <button type="button" className={styles.cardFree} aria-label={ja ? "PROの案内を見る" : "Learn more about PRO"} onClick={act(onPro)}>
-            <span className={styles.frTop}><span className={styles.frTitle}><Icon name="gem" />{ja ? "PROで、もっと深く" : "Go deeper with PRO"}</span><span className={styles.frGo}>{ja ? "案内を見る" : "Learn more"}<Icon name="next" /></span></span>
-            <span className={styles.frPerks}><span>RIZEL&apos;S DESK</span><span>{ja ? "銘柄比較 PRO" : "Compare · PRO"}</span><span>{realtime}</span><span>{alerts}</span></span>
+            <span className={styles.frTop}><span className={styles.frTitle}><ProBadge size={24} />{ja ? "PROで、もっと深く" : "Go deeper with PRO"}</span><span className={styles.frGo}>{ja ? "案内を見る" : "Learn more"}<Icon name="next" /></span></span>
+            <span className={styles.frPerks}><span>RIZEL&apos;S DESK</span><span>{ja ? "テーマランキング" : "Theme Ranking"}</span><span>{ja ? "銘柄比較" : "Compare"}</span><span>{ja ? "連関マップ" : "Relationship maps"}</span><span>{realtime}</span><span>{alerts}</span></span>
           </button>}
       <div className={styles.tiles}>
         {member
@@ -213,17 +234,26 @@ function SiteMenu({ lang, member, ownerAccount, onClose, onRefresh, onPro }: { l
       </div>
       <div className={styles.grp}>
         <h4>{ja ? "リサーチ" : "Research"}</h4>
+        {member && item("/research#rizels-desk", "desk", "RIZEL'S DESK")}
         {item("/research/news", "alerts", ja ? "ハイテク速報" : "Tech Alerts")}
         {item("/research/general-news", "news", ja ? "一般ニュース" : "General News")}
-        {item("/research#monitored-companies", "tracked", ja ? "監視22銘柄リスト" : "22 Tracked Stocks")}
+        {member && item("/research#monitored-companies", "tracked", ja ? "監視22銘柄リスト" : "22 Tracked Stocks")}
         {item("/research/calendar", "calendar", ja ? "決算・経済指標" : "Earnings & Economy")}
         {item("/research/capital-map", "changes", ja ? "資本マップ" : "Capital Map")}
-        {item("/research/themes", "targets", ja ? "テーマランキング" : "Theme Ranking")}
-        {item("/research/compare", "targets", ja ? "銘柄比較 PRO" : "Stock Comparison PRO")}
+        {member && item("/research/themes", "targets", ja ? "テーマランキング" : "Theme Ranking")}
+        {member && item("/research/compare", "targets", ja ? "銘柄比較" : "Stock Comparison")}
         {item("/research/watchlist", "star", ja ? "ウォッチリスト" : "Watchlist")}
-        {item("/research/notebook", "saved", ja ? "銘柄手帳" : "Stock Notebook")}
+        {item("/research/notebook", "notebook", ja ? "銘柄手帳" : "Stock Notebook")}
         {item("/research/price-targets", "targets", ja ? "目標株価" : "Price targets")}
         {item("/research#saved", "saved", ja ? "保存したリサーチ" : "Saved research")}
+      </div>
+      <div className={styles.rzWrap}>
+        <p className={styles.rzCap}>{ja ? "もうひとつのサービス" : "Another service"}</p>
+        <Link href="/resolute" className={styles.rzCard} onClick={event => navigate(event, "/resolute")}>
+          <Icon name="anchor" className={styles.rzIcon} />
+          <span className={styles.rzText}><b>RESOLUTE</b><small>{ja ? "暴落に備える、自分だけのルール作り" : "Your own rules for a market crash"}</small></span>
+          <Icon name="next" className={styles.chev} />
+        </Link>
       </div>
       <div className={styles.grp}>
         <h4>{ja ? "ガイド" : "Guides"}</h4>

@@ -102,21 +102,21 @@ test("bottom bar: five items in order, bilingual labels, raised search, unread d
 test("menu follows the plan sample: cards, two short buttons, Research/Guides, English labels", () => {
   const menu = read("app/research/site-header.tsx");
   for (const [ja, en] of [["PROで、もっと深く", "Go deeper with PRO"], ["案内を見る", "Learn more"], ["プランの管理", "Manage plan"],
-    ["すべての機能が使えます", "All features unlocked"], ["運営者　全機能", "Owner · Full access"], ["アカウント", "Account"],
+    ["運営者", "Owner"], ["アカウント", "Account"],
     ["スマホ通知", "Mobile alerts"], ["再読み込み", "Refresh"], ["監視22銘柄リスト", "22 Tracked Stocks"],
-    ["決算・経済指標", "Earnings & Economy"], ["銘柄比較 PRO", "Compare · PRO"]]) {
+    ["決算・経済指標", "Earnings & Economy"], ["銘柄比較", "Compare"], ["連関マップ", "Relationship maps"], ["テーマランキング", "Theme Ranking"]]) {
     assert.ok(menu.includes(`"${ja}" : "${en}"`), ja);
   }
   // Manage plan opens the account page; paid buttons are Account + Mobile alerts, free ones Refresh + Account.
   assert.match(menu, /className=\{styles\.manage\} href="\/research\/account"/);
   assert.match(menu, /href="\/research\/notifications"/);
-  // The three research items carry no PRO tag or lock.
+  // The list carries no PRO marks, and PRO-only rows are shown to members only (owner, Oct 26): the FREE card names them.
   const research = menu.slice(menu.indexOf('{ja ? "リサーチ" : "Research"}'), menu.indexOf('{ja ? "ガイド" : "Guides"}'));
-  const comparisonEntry = '{item("/research/compare", "targets", ja ? "銘柄比較 PRO" : "Stock Comparison PRO")}';
+  const comparisonEntry = '{member && item("/research/compare", "targets", ja ? "銘柄比較" : "Stock Comparison")}';
   assert.ok(research.includes(comparisonEntry));
   assert.ok(research.indexOf('/research/themes') < research.indexOf('/research/compare'));
   assert.ok(research.indexOf('/research/compare') < research.indexOf('/research/watchlist'));
-  assert.doesNotMatch(research.replace(comparisonEntry, ''), /lock|PRO|tag/);
+  assert.doesNotMatch(research, /lock|tag/);
   // The sample has no PRO group under the two buttons (owner, Oct 8).
   assert.doesNotMatch(menu, /proHead|item\("\/research\/(notes|qa|weekly)"/);
   assert.doesNotMatch(menu, /: `銘柄比較 PRO, /);
