@@ -18,6 +18,7 @@ export function inlineBody(text: string, depth = 0): ReactNode[] {
   return parts;
 }
 export function mediaSource(value: string, kind: string): { url: string; embed?: string } | null {
+  if (kind === "audio" && /^\/api\/research\/desk-media\/[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}\.mp3$/.test(value)) return { url: value };
   try {
     const url = new URL(value);
     if (url.protocol !== "https:" || url.username || url.password || url.port || /\s/.test(value)) return null;
@@ -25,16 +26,17 @@ export function mediaSource(value: string, kind: string): { url: string; embed?:
     if (kind === "audio" && /\.(mp3|m4a|ogg|wav)$/i.test(url.pathname)) return { url: url.href };
     if (kind === "video" && /\.(mp4|webm)$/i.test(url.pathname)) return { url: url.href };
     if (kind === "video") {
-      const id = url.hostname === "youtu.be" ? url.pathname.slice(1) : ["youtube.com", "www.youtube.com"].includes(url.hostname) && url.pathname === "/watch" ? url.searchParams.get("v") : null;
+      const id = url.hostname === "youtu.be" ? url.pathname.slice(1) : ["youtube.com", "www.youtube.com", "m.youtube.com"].includes(url.hostname) ? (url.pathname === "/watch" ? url.searchParams.get("v") : /^\/(shorts|live)\/[\w-]{11}$/.test(url.pathname) ? url.pathname.split("/")[2] : null) : null;
       if (id && /^[\w-]{11}$/.test(id)) return { url: url.href, embed: `https://www.youtube-nocookie.com/embed/${id}` };
     }
   } catch { /* Invalid media stays visible as ordinary text. */ }
   return null;
 }
-export default function DeskBody({ text, media = false }: { text: string; media?: boolean }) {
+export default function DeskBody({ text, media = false, postId }: { text: string; media?: boolean; postId?: string }) {
   return <div className={styles.body}>{text.split("\n").map((line, index) => {
-    const match = media ? /^\[(audio|video|image)\]\((https:\/\/[^\s]+)\)$/.exec(line.trim()) : null;
+    const match = media ? /^\[(audio|video|image)\]\(((?:https:\/\/|\/api\/research\/desk-media\/)[^\s]+)\)$/.exec(line.trim()) : null;
     const source = match && mediaSource(match[2], match[1]);
+    if (source?.url.startsWith("/api/research/desk-media/") && postId) source.url += `?post=${encodeURIComponent(postId)}`;
     if (source && match) return <div className={styles.media} key={index}>
       {match[1] === "image" ? <img src={source.url} alt="投稿画像 / Attached image" loading="lazy" referrerPolicy="no-referrer" /> : source.embed ? <details><summary>動画を開く / Open video</summary><iframe loading="lazy" src={source.embed} title="RIZEL video" referrerPolicy="no-referrer" allowFullScreen /></details> : match[1] === "audio" ? <audio controls preload="none" src={source.url} /> : <video controls preload="none" src={source.url} />}
       {match[1] !== "image" && <a href={source.url} target="_blank" rel="noopener noreferrer">{match[1] === "audio" ? "音声を開く / Open audio" : "動画を開く / Open video"}</a>}

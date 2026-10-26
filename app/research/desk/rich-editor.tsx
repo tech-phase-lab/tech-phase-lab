@@ -7,17 +7,20 @@ import { EditorContent, useEditor, useEditorState } from "@tiptap/react";
 import DeskBody, { mediaSource } from "./body";
 import { deskDocument, deskText } from "./document";
 import { deskExtensions } from "./editor-extensions";
+import AudioUpload from "./audio-upload";
 import styles from "./format.module.css";
 function parts(value: string, enabled: boolean) {
   const attachments: string[] = [], lines: string[] = [];
   for (const line of value.split("\n")) {
-    const match = enabled && /^\[(audio|video|image)\]\((https:\/\/[^\s]+)\)$/.exec(line.trim());
+    const match = enabled && /^\[(audio|video|image)\]\(((?:https:\/\/|\/api\/research\/desk-media\/)[^\s]+)\)$/.exec(line.trim());
     if (match && mediaSource(match[2], match[1])) attachments.push(line.trim()); else lines.push(line);
   }
   return { text: lines.join("\n"), attachments };
 }
-export default function DeskTextEditor({ value, onChange, disabled = false, label = "本文", media = false }: { value: string; onChange: (value: string) => void; disabled?: boolean; label?: string; media?: boolean }) {
+export default function DeskTextEditor({ value, onChange, disabled = false, label = "本文", media = false, onMediaBusyChange }: { onMediaBusyChange?: (busy: boolean) => void; value: string; onChange: (value: string) => void; disabled?: boolean; label?: string; media?: boolean }) {
   const last = useRef(value), reserved = useRef(0);
+  const [uploading, setUploading] = useState(false);
+  const locked = disabled || uploading;
   const [url, setUrl] = useState(""), [kind, setKind] = useState("image"), [message, setMessage] = useState("");
   const { attachments } = parts(value, media);
   const attachmentLength = attachments.length ? attachments.join("\n").length + 1 : 0;
@@ -44,7 +47,7 @@ export default function DeskTextEditor({ value, onChange, disabled = false, labe
   const editor = useEditor({
     immediatelyRender: false,
     shouldRerenderOnTransaction: false,
-    extensions, content: initialContent, editable: !disabled,
+    extensions, content: initialContent, editable: !locked,
     enableInputRules: false, enablePasteRules: false, editorProps,
     onUpdate: ({ editor: current }) => { emit(deskText(current.getJSON())); },
   });
@@ -52,16 +55,20 @@ export default function DeskTextEditor({ value, onChange, disabled = false, labe
   useEffect(() => {
     if (editor && last.current !== value) { editor.commands.setContent(deskDocument(parts(value, media).text), { emitUpdate: false }); last.current = value; }
   }, [editor, value, media]);
-  useEffect(() => { editor?.setEditable(!disabled); }, [editor, disabled]);
+  useEffect(() => { editor?.setEditable(!locked); }, [editor, locked]);
   function insertMedia() {
-    if (!mediaSource(url, kind)) { setMessage("HTTPSの画像・音声・動画ファイル、またはYouTubeのURLを入力してください。"); return; }
+    const source = mediaSource(url, kind);
+    if (!source || (kind === "video" && !source.embed)) { setMessage("画像のHTTPS URL、またはYouTubeの共有リンクを入力してください。"); return; }
     if (emit(editor ? deskText(editor.getJSON()) : parts(value, media).text, [...attachments, `[${kind}](${url})`])) setUrl("");
   }
   return <div className={styles.editor}>
-    <EditorToolbar editor={editor} disabled={disabled} label={label} />
+    <EditorToolbar editor={editor} disabled={locked} label={label} />
     <EditorContent editor={editor} />
-    {attachments.map((attachment, index) => <div className={styles.attachment} key={`${index}-${attachment}`}><DeskBody text={attachment} media /><button type="button" aria-label="添付を削除" disabled={disabled} onClick={() => emit(editor ? deskText(editor.getJSON()) : parts(value, media).text, attachments.filter((_, i) => i !== index))}>×</button></div>)}
-    {media && <details><summary>添付</summary><div className={styles.mediaInput}><select aria-label="メディアの種類" value={kind} disabled={disabled} onChange={event => setKind(event.target.value)}><option value="image">画像</option><option value="audio">音声</option><option value="video">動画</option></select><input type="url" aria-label="画像・音声・動画のURL" value={url} disabled={disabled} onChange={event => setUrl(event.target.value)} placeholder="https://" /><button type="button" disabled={disabled || !url} onClick={insertMedia}>追加</button></div><p className={styles.hint}>文章なしでも投稿できます。画像・音声・動画はURLで追加します。</p></details>}
+    {attachments.map((attachment, index) => <div className={styles.attachment} key={`${index}-${attachment}`}><DeskBody text={attachment} media /><button type="button" aria-label="添付を削除" disabled={locked} onClick={() => emit(editor ? deskText(editor.getJSON()) : parts(value, media).text, attachments.filter((_, i) => i !== index))}>×</button></div>)}
+    {media && <details><summary>添付</summary><AudioUpload disabled={disabled} onBusyChange={busy => { setUploading(busy); onMediaBusyChange?.(busy); }} onUploaded={audioUrl => {
+      const current = parts(last.current, media);
+      emit(current.text, [...current.attachments, `[audio](${audioUrl})`]);
+    }} /><div className={styles.mediaInput}><select aria-label="メディアの種類" value={kind} disabled={locked} onChange={event => setKind(event.target.value)}><option value="image">画像</option><option value="video">YouTube</option></select><input type="url" aria-label="画像またはYouTubeのURL" value={url} disabled={locked} onChange={event => setUrl(event.target.value)} placeholder="https://" /><button type="button" disabled={locked || !url} onClick={insertMedia}>追加</button></div><p className={styles.hint}>動画はYouTubeにアップロードしてリンクを貼れます。MP4の直接アップロードはできません。</p></details>}
     {message && <p role="status">{message}</p>}
   </div>;
 }

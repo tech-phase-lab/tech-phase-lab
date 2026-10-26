@@ -64,3 +64,23 @@ test('selecting differently formatted text updates toolbar without resetting edi
   assert.equal(editor.state.selection.from,4);assert.equal(editor.state.selection.to,6);
  }finally{await act(async()=>root.unmount());host.remove();}
 });
+test('MP3 picker rejects video, reports upload progress and attaches only after server verification',async()=>{
+ const AudioUpload=await component('../app/research/desk/audio-upload.tsx');
+ const originalFetch=globalThis.fetch,originalXHR=globalThis.XMLHttpRequest;
+ const calls=[],busy=[],attached=[],requests=[];
+ globalThis.fetch=async(url,options)=>{
+  const body=options?.body&&JSON.parse(options.body);calls.push(body?.action||'status');
+  return {ok:true,json:async()=>body?.action==='start'?{ok:true,file:'test.mp3',uploadUrl:'https://r2.test/upload'}:body?.action==='finish'?{ok:true,url:'/api/research/desk-media/test.mp3'}:{ok:true,enabled:true}};
+ };
+ globalThis.XMLHttpRequest=class{constructor(){requests.push(this);this.upload={};}open(method,url){assert.equal(method,'PUT');assert.equal(url,'https://r2.test/upload');}setRequestHeader(name,value){assert.equal(name,'Content-Type');assert.equal(value,'audio/mpeg');}send(){this.upload.onprogress({lengthComputable:true,loaded:512,total:1024});}abort(){this.onabort();this.onloadend();}};
+ const host=document.createElement('div');document.body.append(host);const root=createRoot(host);
+ try{
+  await act(async()=>{root.render(React.createElement(AudioUpload,{disabled:false,onUploaded:url=>attached.push(url),onBusyChange:value=>busy.push(value)}));await tick();});
+  const input=host.querySelector('input[type=file]');assert.equal(input.accept,'.mp3,audio/mpeg');
+  const choose=async name=>{Object.defineProperty(input,'files',{configurable:true,value:[{name,size:1024}]});await act(async()=>{input.dispatchEvent(new window.Event('change',{bubbles:true}));await tick();});};
+  await choose('movie.mp4');assert.deepEqual(calls,['status']);assert.match(host.textContent,/MP4・M4A/);
+  await choose('voice.mp3');assert.deepEqual(busy,[true]);assert.match(host.textContent,/50%/);assert.deepEqual(attached,[]);
+  await act(async()=>{const xhr=requests[0];xhr.status=200;xhr.onload();xhr.onloadend();await tick();});
+  assert.deepEqual(calls,['status','start','finish']);assert.deepEqual(busy,[true,false]);assert.deepEqual(attached,['/api/research/desk-media/test.mp3']);
+ }finally{await act(async()=>root.unmount());host.remove();globalThis.fetch=originalFetch;if(originalXHR===undefined)delete globalThis.XMLHttpRequest;else globalThis.XMLHttpRequest=originalXHR;}
+});

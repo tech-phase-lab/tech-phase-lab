@@ -5,6 +5,7 @@ import styles from "./composer.module.css";
 
 export default function NoteComposer({ onPublished }: { onPublished: () => void }) {
   const [body, setBody] = useState("");
+  const [mediaBusy, setMediaBusy] = useState(false);
   const [busy, setBusy] = useState(false);
   const [message, setMessage] = useState("");
   const post = useRef<{ id: string; version: number } | null>(null);
@@ -17,7 +18,7 @@ export default function NoteComposer({ onPublished }: { onPublished: () => void 
   }, [body]);
   async function publish(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    if (inFlight.current || !body.trim()) return;
+    if (inFlight.current || mediaBusy || !body.trim()) return;
     inFlight.current = true; setBusy(true); setMessage("");
     post.current ??= { id: crypto.randomUUID(), version: 0 };
     try {
@@ -38,10 +39,10 @@ export default function NoteComposer({ onPublished }: { onPublished: () => void 
     } finally { inFlight.current = false; setBusy(false); }
   }
   return <form className={styles.composer} onSubmit={event => void publish(event)} aria-label="ひとりごとを投稿" aria-busy={busy}>
-    <DeskTextEditor label="ひとりごとの本文" value={body} onChange={setBody} disabled={busy} media />
+    <DeskTextEditor label="ひとりごとの本文" value={body} onChange={setBody} disabled={busy} media onMediaBusyChange={setMediaBusy} />
     <div className={styles.actions}>
       <span>{body.length.toLocaleString()} / 6,000</span>
-      <button type="submit" disabled={busy || !body.trim()}>{busy ? "投稿中…" : "投稿"}</button>
+      <button type="submit" disabled={busy || mediaBusy || !body.trim()}>{busy ? "投稿中…" : "投稿"}</button>
     </div>
     {message && <p role="status">{message}</p>}
   </form>;
