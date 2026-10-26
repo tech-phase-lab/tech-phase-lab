@@ -15,11 +15,14 @@ export default function PullToRefresh() {
     const blocked = () => document.body.style.position === "fixed"
       || !!document.querySelector("input:focus,textarea:focus,[contenteditable=true]:focus");
     const down = (event: TouchEvent) => {
-      start.current = window.scrollY <= 0 && event.touches.length === 1 && !blocked()
+      // A long press starts before the editable target necessarily has focus.
+      const editing = event.target instanceof Element && !!event.target.closest("input,textarea,[contenteditable=true]");
+      start.current = window.scrollY <= 0 && event.touches.length === 1 && !editing && !blocked()
         ? { x: event.touches[0].clientX, y: event.touches[0].clientY } : null;
     };
     const move = (event: TouchEvent) => {
       if (!start.current) return;
+      if (blocked()) { start.current = null; distance.current = 0; setPull(0); return; }
       const dy = event.touches[0].clientY - start.current.y;
       const dx = Math.abs(event.touches[0].clientX - start.current.x);
       if (window.scrollY > 0 || dy <= 0 || dx > dy) { start.current = null; distance.current = 0; setPull(0); return; }

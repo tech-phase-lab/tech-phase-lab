@@ -1316,9 +1316,9 @@ class AutomaticMonitor:
             self.news_compute_steps = steps
             return payload
 
-    def posts_queue(self, limit=20, published=False, offset=0):
+    def posts_queue(self, limit=20, published=False, offset=0, post_id=None):
         with editorial_posts.connect(self.db_path) as db:
-            return editorial_posts.queue(db, limit, published, offset)
+            return editorial_posts.queue(db, limit, published, offset, post_id)
 
     def save_post(self, payload, review=False):
         with editorial_posts.connect(self.db_path) as db:
@@ -3268,7 +3268,7 @@ class Handler(BaseHTTPRequestHandler):
             return
         try:
             if path == "/posts":
-                self.send_json(200, {"ok": True, **self.app.posts_queue(published=True)})
+                self.send_json(200, {"ok": True, **self.app.posts_queue(published=True, post_id=parse_qs(parsed.query).get("id", [None])[0])})
                 return
             if path == "/news":
                 if parse_qs(parsed.query).get("originalPreview") == ["1"]:

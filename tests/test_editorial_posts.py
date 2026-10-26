@@ -50,6 +50,23 @@ class EditorialPostsTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "invalid-post-correction"):
             posts.review(self.db, {**review(removed, "corrected"), "bodyJa": "非公開を復活させない"})
 
+    def test_direct_link_finds_old_answer_beyond_latest_twenty_and_hides_unpublished(self):
+        first = posts.save(self.db, draft("qa"))["item"]
+        first = posts.review(self.db, review(first))["item"]
+        self.db.execute("UPDATE editorial_posts SET published_at='2020-01-01T00:00:00Z' WHERE id=?", (first["id"],))
+        self.db.commit()
+        for i in range(21):
+            saved = posts.save(self.db, {**draft("notes"), "id": f"synthetic-note-{i:04}"})["item"]
+            posts.review(self.db, review(saved))
+        self.assertNotIn(first["id"], [v["id"] for v in posts.queue(self.db, published=True)["items"]])
+        found = posts.queue(self.db, published=True, post_id=first["id"])["items"]
+        self.assertEqual([v["id"] for v in found], [first["id"]])
+        self.assertNotIn("sourceNotes", found[0])
+        posts.review(self.db, review(first, "withdrawn"))
+        self.assertEqual(posts.queue(self.db, published=True, post_id=first["id"])["items"], [])
+        with self.assertRaises(ValueError):
+            posts.queue(self.db, published=True, post_id="' OR 1=1")
+
     def tearDown(self):
         self.db.close(); self.tmp.cleanup()
 

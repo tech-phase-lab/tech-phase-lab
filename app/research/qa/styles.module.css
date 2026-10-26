@@ -13,3 +13,5 @@
 
 .answerIdentity{display:flex;align-items:center;gap:10px;margin-bottom:10px}.answerIdentity img{border-radius:50%;flex-shrink:0}.answerIdentity>div{display:flex;flex-direction:column;gap:1px}.answerIdentity strong{font-size:12px}.answerIdentity time{font-size:11px}.pagination{display:flex;justify-content:center;align-items:center;gap:18px;margin-top:20px}.pagination button{border:1px solid #627579;border-radius:6px;background:transparent;color:#e8dfcd;padding:8px 16px;cursor:pointer}.pagination button:disabled{opacity:.35;cursor:default}
 .answerIdentity{color:#d7c397}.answerIdentity time{color:#9eaaab}.answer:not(:has([contenteditable=true]))>div:last-child:not(.answerIdentity){border-left:2px solid #ac9461;padding:4px 0 4px 13px;line-height:1.9;background:linear-gradient(90deg,#b5985a08,transparent)}
+
+.history article>a.answeredLink{gap:8px;align-items:center;padding:4px 9px;border:1px solid #a8905b70;border-radius:4px;background:transparent;font-size:11px;line-height:1.6;color:#d2bf95}.answeredLink:hover{border-color:#d2bf95;background:#a8905b0d}.answeredLink:focus-visible{outline:2px solid #d2bf95;outline-offset:3px}

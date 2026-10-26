@@ -17,7 +17,7 @@ import Reactions from "../desk/reactions";
 import NoteComposer from "../notes/composer";
 import { useMemberDisplay, useOwnerMode } from "../member-display-provider";
 type Result = { items: EditorialPost[]; access: string; status: string; validUntil?: number };
-export default function ColumnsPage({ initialKind = "all", initial }: { initialKind?: PostKind | "all"; initial?: Result } = {}) {
+export default function ColumnsPage({ initialKind = "all", initial, postId }: { postId?: string; initialKind?: PostKind | "all"; initial?: Result } = {}) {
   const refreshIdentity = useIdentityRefresh();
   const [lang, setLang] = useResearchLanguage();
   const kind = initialKind;
@@ -53,7 +53,7 @@ export default function ColumnsPage({ initialKind = "all", initial }: { initialK
       }
       try {
         await refreshIdentity();
-        const response = await fetch("/api/research/posts", { cache: "no-store", signal: AbortSignal.any([current.signal, AbortSignal.timeout(15_000)]) });
+        const response = await fetch(postId ? `/api/research/posts?id=${encodeURIComponent(postId)}` : "/api/research/posts", { cache: "no-store", signal: AbortSignal.any([current.signal, AbortSignal.timeout(15_000)]) });
         const data = await response.json();
         if (current.signal.aborted || stopped) return;
         if (!response.ok || !data.ok || !Array.isArray(data.items) || !Number.isFinite(data.validUntil) || data.validUntil <= Date.now()) throw new Error("unavailable");
@@ -77,7 +77,7 @@ export default function ColumnsPage({ initialKind = "all", initial }: { initialK
     const changed = () => { void load(true); };
     window.addEventListener("focus", focused); window.addEventListener("tech-phase:membership-changed", changed);
     return () => { stopped = true; controller?.abort(); cancelLease?.(); window.removeEventListener("focus", focused); window.removeEventListener("tech-phase:membership-changed", changed); };
-  }, [retry, initial, memberPlan, refreshIdentity]);
+  }, [retry, initial, memberPlan, refreshIdentity, postId]);
   const membershipMismatch = memberPlan !== null && result.status === "ready" && (result.access === "pro") !== (memberPlan === "pro");
   const shown = membershipMismatch ? { items: [], access: "", status: "loading" } : result;
   return <ResearchToolShell desk lang={lang} setLang={setLang} title={initialKind === "all" ? "RIZEL’S DESK" : initialKind === "qa" ? ja ? "リゼルに聞く" : "Ask Rizel" : postNames[initialKind][lang]} description="">
@@ -94,6 +94,12 @@ export default function ColumnsPage({ initialKind = "all", initial }: { initialK
 
 function ColumnArticle({ item, ja, ownerMode, access, onUpdated }: { item: EditorialPost; ja: boolean; ownerMode: boolean; access: string; onUpdated: () => void }) {
   const [editing, setEditing] = useState(false);
+  useEffect(() => {
+    if (item.kind !== "qa" || window.location.hash !== `#${encodeURIComponent(item.id)}`) return;
+    // Answers arrive asynchronously, after the browser's initial anchor scroll.
+    const frame = requestAnimationFrame(() => document.getElementById(item.id)?.scrollIntoView({ block: "start" }));
+    return () => cancelAnimationFrame(frame);
+  }, [item.id, item.kind]);
   const lang = ja ? "ja" : "en";
   const date = <time dateTime={item.publishedAt!}>{new Intl.DateTimeFormat(ja ? "ja-JP" : "en-US", { dateStyle: "medium", ...(item.kind !== "weekly" ? { timeStyle: "short", hourCycle: "h23" } as const : {}), timeZone: "Asia/Tokyo" }).format(new Date(item.publishedAt!))}</time>;
   const answerLabel = <div className={styles.answerLabel}><Image src="/rizel-avatar.webp" alt={ja ? "リゼル" : "RIZEL"} width={32} height={32} unoptimized /><div><span>{ja ? "リゼル" : "RIZEL"}</span><small>{date} JST</small></div></div>;

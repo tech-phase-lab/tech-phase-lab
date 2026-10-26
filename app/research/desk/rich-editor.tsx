@@ -1,5 +1,7 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import type { Editor } from "@tiptap/core";
+import type { EditorProps } from "@tiptap/pm/view";
 import { Slice } from "@tiptap/pm/model";
 import { EditorContent, useEditor, useEditorState } from "@tiptap/react";
 import DeskBody, { mediaSource } from "./body";
@@ -24,14 +26,11 @@ export default function DeskTextEditor({ value, onChange, disabled = false, labe
     if (next.length > 6000) { setMessage("6,000文字以内で入力してください。"); return false; }
     last.current = next; onChange(next); setMessage(""); return true;
   }
-  const editor = useEditor({
-    immediatelyRender: false,
-    // eslint-disable-next-line react-hooks/refs -- Read only when ProseMirror filters an editing transaction, never during render.
-    extensions: deskExtensions(() => 6000 - reserved.current),
-    content: deskDocument(parts(value, media).text),
-    editable: !disabled,
-    enableInputRules: false, enablePasteRules: false,
-    editorProps: {
+  // Keep editor configuration stable while native selection handles move.
+  const [initialContent] = useState(() => deskDocument(parts(value, media).text));
+  // eslint-disable-next-line react-hooks/refs -- Budget is read only by an editing transaction.
+  const [extensions] = useState(() => deskExtensions(() => 6000 - reserved.current));
+  const editorProps = useMemo<EditorProps>(() => ({
       attributes: { class: styles.editable, role: "textbox", "aria-label": label, "aria-multiline": "true", spellcheck: "true" },
       handlePaste(view, event) {
         const text = event.clipboardData?.getData("text/plain");
@@ -41,15 +40,35 @@ export default function DeskTextEditor({ value, onChange, disabled = false, labe
         view.dispatch(view.state.tr.replaceSelection(slice)); return true;
       },
       handleDrop: () => true,
-    },
+  }), [label]);
+  const editor = useEditor({
+    immediatelyRender: false,
+    shouldRerenderOnTransaction: false,
+    extensions, content: initialContent, editable: !disabled,
+    enableInputRules: false, enablePasteRules: false, editorProps,
     onUpdate: ({ editor: current }) => { emit(deskText(current.getJSON())); },
   });
-  const active = useEditorState({ editor, selector: ({ editor: current }) => ({ bold: current?.isActive("bold") ?? false, red: current?.isActive("textStyle", { color: "#ff8888" }) ?? false, highlight: current?.isActive("highlight") ?? false }) });
   useEffect(() => { reserved.current = attachmentLength; }, [attachmentLength]);
   useEffect(() => {
     if (editor && last.current !== value) { editor.commands.setContent(deskDocument(parts(value, media).text), { emitUpdate: false }); last.current = value; }
   }, [editor, value, media]);
   useEffect(() => { editor?.setEditable(!disabled); }, [editor, disabled]);
+  function insertMedia() {
+    if (!mediaSource(url, kind)) { setMessage("HTTPSの画像・音声・動画ファイル、またはYouTubeのURLを入力してください。"); return; }
+    if (emit(editor ? deskText(editor.getJSON()) : parts(value, media).text, [...attachments, `[${kind}](${url})`])) setUrl("");
+  }
+  return <div className={styles.editor}>
+    <EditorToolbar editor={editor} disabled={disabled} label={label} />
+    <EditorContent editor={editor} />
+    {attachments.map((attachment, index) => <div className={styles.attachment} key={`${index}-${attachment}`}><DeskBody text={attachment} media /><button type="button" aria-label="添付を削除" disabled={disabled} onClick={() => emit(editor ? deskText(editor.getJSON()) : parts(value, media).text, attachments.filter((_, i) => i !== index))}>×</button></div>)}
+    {media && <details><summary>添付</summary><div className={styles.mediaInput}><select aria-label="メディアの種類" value={kind} disabled={disabled} onChange={event => setKind(event.target.value)}><option value="image">画像</option><option value="audio">音声</option><option value="video">動画</option></select><input type="url" aria-label="画像・音声・動画のURL" value={url} disabled={disabled} onChange={event => setUrl(event.target.value)} placeholder="https://" /><button type="button" disabled={disabled || !url} onClick={insertMedia}>追加</button></div><p className={styles.hint}>文章なしでも投稿できます。画像・音声・動画はURLで追加します。</p></details>}
+    {message && <p role="status">{message}</p>}
+  </div>;
+}
+
+// Selection updates render only the toolbar, never the editable surface.
+function EditorToolbar({ editor, disabled, label }: { editor: Editor | null; disabled: boolean; label: string }) {
+  const active = useEditorState({ editor, selector: ({ editor: current }) => ({ bold: current?.isActive("bold") ?? false, red: current?.isActive("textStyle", { color: "#ff8888" }) ?? false, highlight: current?.isActive("highlight") ?? false }) });
   function format(command: "bold" | "red" | "highlight" | "clear") {
     if (!editor || disabled) return;
     const chain = editor.chain().focus();
@@ -59,11 +78,7 @@ export default function DeskTextEditor({ value, onChange, disabled = false, labe
     if (command === "clear") chain.unsetBold().unsetColor().unsetHighlight().run();
   }
   function selectText() { editor?.chain().focus().selectAll().run(); }
-  function insertMedia() {
-    if (!mediaSource(url, kind)) { setMessage("HTTPSの画像・音声・動画ファイル、またはYouTubeのURLを入力してください。"); return; }
-    if (emit(editor ? deskText(editor.getJSON()) : parts(value, media).text, [...attachments, `[${kind}](${url})`])) setUrl("");
-  }
-  return <div className={styles.editor}>
+  return (
     <div className={styles.toolbar} role="group" aria-label={`${label}の文字装飾`}>
       <button type="button" aria-label="太字" aria-pressed={active?.bold ?? false} disabled={disabled} onMouseDown={e => e.preventDefault()} onClick={() => format("bold")} title="太字"><strong>B</strong></button>
       <button type="button" className={styles.red} aria-label="赤文字" aria-pressed={active?.red ?? false} disabled={disabled} onMouseDown={e => e.preventDefault()} onClick={() => format("red")}>赤</button>
@@ -71,9 +86,5 @@ export default function DeskTextEditor({ value, onChange, disabled = false, labe
       <button type="button" aria-label="装飾を解除" disabled={disabled} onMouseDown={e => e.preventDefault()} onClick={() => format("clear")}>解除</button>
       <button type="button" aria-label="本文を全選択" disabled={disabled} onMouseDown={e => e.preventDefault()} onClick={selectText}>選択</button>
     </div>
-    <EditorContent editor={editor} />
-    {attachments.map((attachment, index) => <div className={styles.attachment} key={`${index}-${attachment}`}><DeskBody text={attachment} media /><button type="button" aria-label="添付を削除" disabled={disabled} onClick={() => emit(editor ? deskText(editor.getJSON()) : parts(value, media).text, attachments.filter((_, i) => i !== index))}>×</button></div>)}
-    {media && <details><summary>添付</summary><div className={styles.mediaInput}><select aria-label="メディアの種類" value={kind} disabled={disabled} onChange={event => setKind(event.target.value)}><option value="image">画像</option><option value="audio">音声</option><option value="video">動画</option></select><input type="url" aria-label="画像・音声・動画のURL" value={url} disabled={disabled} onChange={event => setUrl(event.target.value)} placeholder="https://" /><button type="button" disabled={disabled || !url} onClick={insertMedia}>追加</button></div><p className={styles.hint}>文章なしでも投稿できます。画像・音声・動画はURLで追加します。</p></details>}
-    {message && <p role="status">{message}</p>}
-  </div>;
+  );
 }
