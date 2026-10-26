@@ -110,9 +110,9 @@ test("menu follows the plan sample: cards, two short buttons, Research/Guides, E
   // Manage plan opens the account page; paid buttons are Account + Mobile alerts, free ones Refresh + Account.
   assert.match(menu, /className=\{styles\.manage\} href="\/research\/account"/);
   assert.match(menu, /href="\/research\/notifications"/);
-  // The list carries no PRO marks (owner, Oct 26): the plan card names the PRO features.
+  // The list carries no PRO marks, and PRO-only rows are shown to members only (owner, Oct 26): the FREE card names them.
   const research = menu.slice(menu.indexOf('{ja ? "リサーチ" : "Research"}'), menu.indexOf('{ja ? "ガイド" : "Guides"}'));
-  const comparisonEntry = '{item("/research/compare", "targets", ja ? "銘柄比較" : "Stock Comparison")}';
+  const comparisonEntry = '{member && item("/research/compare", "targets", ja ? "銘柄比較" : "Stock Comparison")}';
   assert.ok(research.includes(comparisonEntry));
   assert.ok(research.indexOf('/research/themes') < research.indexOf('/research/compare'));
   assert.ok(research.indexOf('/research/compare') < research.indexOf('/research/watchlist'));

@@ -210,7 +210,7 @@ function SiteMenu({ lang, member, ownerAccount, onClose, onRefresh, onPro }: { l
     <Link key={href} className={styles.item} href={href} onClick={event => navigate(event, href)}><Icon name={icon} className={styles.itemIcon} /><span>{label}{note && <small className={styles.itemNote}>{note}</small>}</span><Icon name="next" className={styles.chev} /></Link>;
   return <>
     <button type="button" className={styles.backdrop} aria-label={ja ? "メニューを閉じる" : "Close menu"} onClick={onClose} />
-    <nav ref={panel} id="site-menu" className={styles.sheet} aria-label={ja ? "メニュー" : "Menu"}>
+    <nav ref={panel} id="site-menu" className={member ? `${styles.sheet} ${styles.luxe}` : styles.sheet} aria-label={ja ? "メニュー" : "Menu"}>
       <div className={styles.grab} aria-hidden="true" />
       <div className={styles.shHead}><h2>{ja ? "メニュー" : "Menu"}</h2><button type="button" className={styles.close} aria-label={ja ? "閉じる" : "Close"} onClick={onClose}><Icon name="close" /></button></div>
       {member
@@ -220,7 +220,6 @@ function SiteMenu({ lang, member, ownerAccount, onClose, onRefresh, onPro }: { l
               <Link className={styles.manage} href="/research/account" onClick={event => navigate(event, "/research/account")}>{ja ? "プランの管理" : "Manage plan"}</Link>
             </div>
             <h3>{ja ? "すべての機能が使えます" : "All features unlocked"}</h3>
-            <p className={styles.featline}>{ja ? `RIZEL'S DESK、テーマランキング、銘柄比較、連関マップ、${realtime}、${alerts}` : `RIZEL'S DESK, Theme Ranking, Compare, Relationship maps, ${realtime}, ${alerts}`}</p>
           </div>
         : <button type="button" className={styles.cardFree} aria-label={ja ? "PROの案内を見る" : "Learn more about PRO"} onClick={act(onPro)}>
             <span className={styles.frTop}><span className={styles.frTitle}><ProBadge size={24} />{ja ? "PROで、もっと深く" : "Go deeper with PRO"}</span><span className={styles.frGo}>{ja ? "案内を見る" : "Learn more"}<Icon name="next" /></span></span>
@@ -235,14 +234,14 @@ function SiteMenu({ lang, member, ownerAccount, onClose, onRefresh, onPro }: { l
       </div>
       <div className={styles.grp}>
         <h4>{ja ? "リサーチ" : "Research"}</h4>
-        {item("/research#rizels-desk", "desk", "RIZEL'S DESK", ja ? "ひとりごと・リゼルに聞く・週刊PRO" : "Notes · Ask Rizel · Weekly PRO")}
+        {member && item("/research#rizels-desk", "desk", "RIZEL'S DESK", ja ? "ひとりごと・リゼルに聞く・週刊PRO" : "Notes · Ask Rizel · Weekly PRO")}
         {item("/research/news", "alerts", ja ? "ハイテク速報" : "Tech Alerts", ja ? "PROはリアルタイム" : "PRO is real-time")}
         {item("/research/general-news", "news", ja ? "一般ニュース" : "General News")}
-        {item("/research#monitored-companies", "tracked", ja ? "監視22銘柄リスト" : "22 Tracked Stocks")}
+        {member && item("/research#monitored-companies", "tracked", ja ? "監視22銘柄リスト" : "22 Tracked Stocks")}
         {item("/research/calendar", "calendar", ja ? "決算・経済指標" : "Earnings & Economy")}
         {item("/research/capital-map", "changes", ja ? "資本マップ" : "Capital Map")}
-        {item("/research/themes", "targets", ja ? "テーマランキング" : "Theme Ranking")}
-        {item("/research/compare", "targets", ja ? "銘柄比較" : "Stock Comparison")}
+        {member && item("/research/themes", "targets", ja ? "テーマランキング" : "Theme Ranking")}
+        {member && item("/research/compare", "targets", ja ? "銘柄比較" : "Stock Comparison")}
         {item("/research/watchlist", "star", ja ? "ウォッチリスト" : "Watchlist")}
         {item("/research/notebook", "notebook", ja ? "銘柄手帳" : "Stock Notebook")}
         {item("/research/price-targets", "targets", ja ? "目標株価" : "Price targets")}

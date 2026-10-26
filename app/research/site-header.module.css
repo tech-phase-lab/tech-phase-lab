@@ -101,13 +101,13 @@
 .frGo { display:flex; align-items:center; gap:2px; padding:6px 8px 6px 12px; border-radius:999px; font-size:12px; font-weight:700; color:#2a1f08; white-space:nowrap;
   background:linear-gradient(135deg,var(--gold-hi),var(--gold) 45%,var(--gold-lo)); box-shadow:0 6px 16px -6px rgba(236,208,142,.7),inset 0 1px 0 rgba(255,255,255,.5); }
 .frGo svg { width:14px; height:14px; stroke-width:2.2; }
-.frPerks { position:relative; display:grid; grid-template-columns:1fr 1fr; gap:6px 12px; margin-top:11px; padding-top:11px; border-top:1px solid rgba(236,208,142,.14); }
-.frPerks span { display:flex; align-items:center; gap:7px; font-size:12px; font-weight:500; color:#b8c5cf; letter-spacing:.02em; white-space:nowrap; }
+.frPerks { position:relative; display:grid; grid-template-columns:repeat(3,auto); justify-content:space-between; gap:5px 6px; margin-top:9px; padding-top:9px; border-top:1px solid rgba(236,208,142,.14); }
+.frPerks span { display:flex; align-items:center; gap:5px; font-size:11px; line-height:1.3; font-weight:500; color:#b8c5cf; letter-spacing:.02em; white-space:nowrap; }
 .frPerks span::before { content:""; flex:none; width:5px; height:5px; transform:rotate(45deg); background:var(--gold); border-radius:1px; }
 
 /* PRO / Owner card. */
 .cardPaid {
-  position:relative; display:grid; gap:10px; overflow:hidden; padding:14px; border-radius:16px;
+  position:relative; display:grid; gap:8px; overflow:hidden; padding:14px; border-radius:16px;
   background:linear-gradient(135deg,#2b2417 0%,#1a1a17 55%,#14201c 100%); box-shadow:inset 0 0 0 1px #6f5c34,0 8px 20px -16px rgba(236,208,142,.3);
 }
 .cardPaid::before { content:""; position:absolute; inset:0; background:radial-gradient(120% 90% at 100% 0,rgba(236,208,142,.20),transparent 55%); pointer-events:none; }
@@ -224,3 +224,20 @@
 .badge .proBadge { filter:drop-shadow(0 0 7px rgba(236,208,142,.5)); }
 .frTitle .proBadge { margin-right:2px; }
 .itemNote { display:block; margin-top:1px; font-size:11px; font-weight:400; color:#8fa0aa; letter-spacing:0; }
+
+/* Members' menu (owner, Oct 26): black and gold. The sheet is near-black; gold appears only as hairlines, icons and type. */
+.luxe { background:linear-gradient(180deg,#0e0e10,#070708); box-shadow:inset 0 1px 0 rgba(224,189,104,.35),0 -18px 48px -12px #000e; border-top:1px solid #7d6732; }
+.luxe .grab { background:#7d6732; }
+.luxe .shHead h2 { background:linear-gradient(90deg,#f6e3a8,#c99c3e); -webkit-background-clip:text; background-clip:text; color:transparent; letter-spacing:.14em; }
+.sheet.luxe .close { background:#121214; color:#d4b25e; box-shadow:inset 0 0 0 1px #4a3d1f; }
+.sheet.luxe .tile { background:#0d0d0f; box-shadow:inset 0 0 0 1px #4a3d1f; color:#efe3bd; }
+.luxe .tile svg, .luxe .bell svg { color:#d4b25e; }
+.luxe .grp h4 { display:flex; align-items:center; gap:10px; color:#b8964a; letter-spacing:.2em; }
+.luxe .grp h4::after { content:""; flex:1; height:1px; background:linear-gradient(90deg,#5d4b25,transparent); }
+.sheet.luxe .item { border-bottom-color:#1d1a12; }
+.luxe .itemIcon { color:#d4b25e; }
+.luxe .chev { color:#5f4f28; }
+.luxe .itemNote { color:#8d8466; }
+.luxe .item:hover { background:linear-gradient(90deg,rgba(212,178,94,.07),transparent); }
+.sheet.luxe .cardPaid { background:linear-gradient(135deg,#131210,#0b0b0c 70%); box-shadow:inset 0 0 0 1px #9a7c36,0 0 22px -12px rgba(212,178,94,.5); }
+.luxe .cardPaid::before { background:radial-gradient(90% 120% at 100% 0,rgba(212,178,94,.10),transparent 60%); }
