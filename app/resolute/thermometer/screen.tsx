@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import { useEffect } from "react";
 import ToolShell from "../tool-shell";
 import {useReview} from "../review-context";
 import FlowNavigation from "../flow-navigation";
@@ -25,7 +26,16 @@ function segment(i: number) {
   return `M${point(124, start)} A124 124 0 0 1 ${point(124, end)} L${point(98, end)} A98 98 0 0 0 ${point(98, start)} Z`;
 }
 export default function ThermometerScreen({ identityReady = true, snapshot }: { identityReady?: boolean; snapshot?: ThermometerSnapshot }) {
-  return <ToolShell identityReady={identityReady}>{locale => <MarketGauge locale={locale} snapshot={snapshot}/>}</ToolShell>;
+  const [expired, setExpired] = useState(false);
+  useEffect(() => {
+    if (snapshot?.validUntil === undefined) return;
+    const check = () => setExpired(Date.now() >= snapshot.validUntil!);
+    check();
+    const timer = setInterval(check, 30000);
+    return () => clearInterval(timer);
+  }, [snapshot?.validUntil]);
+  const current = expired && snapshot ? {asOf:snapshot.asOf,nas100:{status:'unavailable' as const,reason:'stale-data'},sox:{status:'unavailable' as const,reason:'stale-data'},vix:{status:'unavailable' as const,reason:'stale-data'}} : snapshot;
+  return <ToolShell identityReady={identityReady}>{locale => <MarketGauge locale={locale} snapshot={current}/>}</ToolShell>;
 }
 export function MarketGauge({ locale, snapshot }: { locale: DiagnosisLocale; snapshot?: ThermometerSnapshot }) {
   const review=useReview(), sample=!!review&&review.scenario!=='live';
