@@ -219,7 +219,6 @@ function SiteMenu({ lang, member, ownerAccount, onClose, onRefresh, onPro }: { l
               <span className={styles.badge}><ProBadge size={26} shine star={ownerAccount} /><span>{ownerAccount ? (ja ? "運営者" : "Owner") : (ja ? "PRO　全機能" : "PRO · All features")}</span></span>
               <Link className={styles.manage} href="/research/account" onClick={event => navigate(event, "/research/account")}>{ja ? "プランの管理" : "Manage plan"}</Link>
             </div>
-            <h3>{ja ? "リサーチのすべてをご利用中です" : "Everything in Tech Phase, unlocked"}</h3>
           </div>
         : <button type="button" className={styles.cardFree} aria-label={ja ? "PROの案内を見る" : "Learn more about PRO"} onClick={act(onPro)}>
             <span className={styles.frTop}><span className={styles.frTitle}><ProBadge size={24} />{ja ? "PROで、もっと深く" : "Go deeper with PRO"}</span><span className={styles.frGo}>{ja ? "案内を見る" : "Learn more"}<Icon name="next" /></span></span>
@@ -247,11 +246,9 @@ function SiteMenu({ lang, member, ownerAccount, onClose, onRefresh, onPro }: { l
         {item("/research/price-targets", "targets", ja ? "目標株価" : "Price targets")}
         {item("/research#saved", "saved", ja ? "保存したリサーチ" : "Saved research")}
       </div>
-      <Link href="/resolute" className={styles.platinum} onClick={event => navigate(event, "/resolute")}>
-        <Icon name="anchor" className={styles.platIcon} />
-        <span className={styles.platText}><b>RESOLUTE</b><small>{ja ? "暴落に備える、自分だけのルール作り" : "Your own rules for a market crash"}</small></span>
-        <Icon name="next" className={styles.platChev} />
-      </Link>
+      <div className={styles.grp}>
+        {item("/resolute", "anchor", "RESOLUTE", ja ? "暴落に備える、自分だけのルール作り" : "Your own rules for a market crash")}
+      </div>
       <div className={styles.grp}>
         <h4>{ja ? "ガイド" : "Guides"}</h4>
         {item("/research/learn", "book", ja ? "米国株のはじめ方" : "US stock basics")}

@@ -242,19 +242,3 @@
 .luxe .item:hover { background:linear-gradient(90deg,rgba(212,178,94,.07),transparent); }
 .sheet.luxe .cardPaid { background:linear-gradient(150deg,#222226 0%,#0b0b0d 38%,#000 70%,#121215 100%); box-shadow:inset 0 0 0 1px #9a7c36,inset 0 1px 0 rgba(255,236,180,.35),0 0 22px -12px rgba(212,178,94,.5); }
 .luxe .cardPaid::before { background:linear-gradient(115deg,transparent 30%,rgba(255,255,255,.06) 45%,transparent 60%); }
-
-/* PRO member card as a gold card, and RESOLUTE as a platinum card (owner, Oct 26). */
-.sheet.luxe .cardPaid { background:linear-gradient(135deg,#f7e8b4 0%,#dcb764 28%,#b78d34 55%,#e9d08a 78%,#a67d2c 100%); box-shadow:inset 0 0 0 1px #fff1c4aa,inset 0 -18px 30px -18px #6b4d12aa,0 10px 26px -12px rgba(212,178,94,.55); color:#2a1d06; }
-.luxe .cardPaid::before { background:linear-gradient(115deg,transparent 25%,rgba(255,255,255,.45) 42%,transparent 58%); }
-.luxe .cardPaid .badge span { background:none; -webkit-background-clip:border-box; background-clip:border-box; color:#2a1d06; }
-.luxe .cardPaid .manage { color:#4a3410; font-weight:600; }
-.luxe .cardPaid h3 { color:#33230a; font-weight:600; letter-spacing:.02em; }
-.luxe .cardPaid .proBadge { filter:drop-shadow(0 1px 1px rgba(60,40,5,.45)); }
-.sheet .platinum { display:flex; align-items:center; gap:12px; padding:12px 14px; border-radius:14px; color:#1d2128;
-  background:linear-gradient(135deg,#f4f6f8 0%,#c9ced6 30%,#9aa1ac 55%,#dfe3e8 78%,#8d949f 100%); box-shadow:inset 0 0 0 1px #ffffffaa,inset 0 -14px 24px -16px #4a5260aa,0 8px 20px -12px rgba(0,0,0,.6); position:relative; overflow:hidden; }
-.platinum::before { content:""; position:absolute; inset:0; background:linear-gradient(115deg,transparent 25%,rgba(255,255,255,.55) 42%,transparent 58%); pointer-events:none; }
-.platIcon { width:22px; height:22px; flex:none; color:#2b313b; position:relative; }
-.platText { flex:1; display:grid; gap:1px; position:relative; }
-.platText b { font-size:15px; letter-spacing:.14em; }
-.platText small { font-size:11.5px; color:#3a414d; }
-.platChev { width:16px; height:16px; color:#3a414d; position:relative; flex:none; }
