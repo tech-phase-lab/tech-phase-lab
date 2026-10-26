@@ -59,7 +59,7 @@ test('synthetic holdings never leak into the live route or invent an institution
   const live = readFileSync(new URL('../app/research/capital-map/page.tsx', import.meta.url), 'utf8');
   assert.doesNotMatch(live, /capitalMapSamples|capital-map-sample/);
   const header = readFileSync(new URL('../app/research/site-header.tsx', import.meta.url), 'utf8');
-  assert.match(header, /item\("\/research\/capital-map", "changes", ja \? "資本マップ" : "Capital Map"\)/);
+  assert.match(header, /item\("\/research\/capital-map", "pulse", ja \? "資本マップ" : "Capital Map"\)/);
   assert.doesNotMatch(header, /何が変わった？/);
 });
 

@@ -99,41 +99,42 @@ test("bottom bar: five items in order, bilingual labels, raised search, unread d
   assert.match(css, /\.bar a\[aria-current="page"\] \.star \{ fill:rgba\(143,227,192,\.22\)/);
 });
 
-test("menu follows the plan sample: cards, two short buttons, Research/Guides, English labels", () => {
+test("menu follows the owner's design: navy FREE, black-and-gold PRO, one structure, English labels (Oct 26)", () => {
   const menu = read("app/research/site-header.tsx");
   for (const [ja, en] of [["PROで、もっと深く", "Go deeper with PRO"], ["案内を見る", "Learn more"], ["プランの管理", "Manage plan"],
-    ["運営者", "Owner"], ["アカウント", "Account"],
-    ["スマホ通知", "Mobile alerts"], ["再読み込み", "Refresh"], ["監視22銘柄リスト", "22 Tracked Stocks"],
-    ["決算・経済指標", "Earnings & Economy"], ["銘柄比較", "Compare"], ["連関マップ", "Relationship maps"], ["テーマランキング", "Theme Ranking"]]) {
-    assert.ok(menu.includes(`"${ja}" : "${en}"`), ja);
+    ["全機能をご利用中です", "All features unlocked"], ["再読み込み", "Refresh"], ["アカウント", "Account"], ["米国株のはじめ方", "US stock basics"],
+    ["よくある質問・使い方", "FAQ & help"], ["ニュース", "News"], ["リサーチ", "Research"], ["マイページ", "My page"], ["PRO機能", "PRO features"],
+    ["ハイテク速報", "Tech Alerts"], ["一般ニュース", "General News"], ["銘柄検索", "Stock Search"], ["マーケット", "Markets"],
+    ["決算・経済指標", "Earnings & Economy"], ["資本マップ", "Capital Map"], ["目標株価", "Price targets"],
+    ["ウォッチリスト", "Watchlist"], ["銘柄手帳", "Stock Notebook"], ["保存したリサーチ", "Saved research"], ["スマホ通知", "Mobile alerts"],
+    ["監視22銘柄", "22 Tracked Stocks"], ["テーマランキング", "Theme Ranking"], ["銘柄比較", "Compare"], ["連関マップ", "Relationship maps"]]) {
+    assert.ok(menu.includes(`"${ja}" : "${en}"`) || menu.includes(`"${ja}", "${en}"`), ja);
   }
-  // Manage plan opens the account page; paid buttons are Account + Mobile alerts, free ones Refresh + Account.
   assert.match(menu, /className=\{styles\.manage\} href="\/research\/account"/);
-  assert.match(menu, /href="\/research\/notifications"/);
-  // The list carries no PRO marks, and PRO-only rows are shown to members only (owner, Oct 26): the FREE card names them.
-  const research = menu.slice(menu.indexOf('{ja ? "リサーチ" : "Research"}'), menu.indexOf('{ja ? "ガイド" : "Guides"}'));
-  const comparisonEntry = '{member && item("/research/compare", "targets", ja ? "銘柄比較" : "Stock Comparison")}';
-  assert.ok(research.includes(comparisonEntry));
-  assert.ok(research.indexOf('/research/themes') < research.indexOf('/research/compare'));
-  assert.ok(research.indexOf('/research/compare') < research.indexOf('/research/watchlist'));
-  assert.doesNotMatch(research, /lock|tag/);
-  // The sample has no PRO group under the two buttons (owner, Oct 8).
-  assert.doesNotMatch(menu, /proHead|item\("\/research\/(notes|qa|weekly)"/);
-  assert.doesNotMatch(menu, /: `銘柄比較 PRO, /);
+  // FREE: navy; members: black and gold. Members get the PRO tiles (2 x 2) and Mobile alerts; FREE lists no PRO function.
+  assert.match(menu, /`\$\{styles\.sheet\} \$\{styles\.luxe\}` : `\$\{styles\.sheet\} \$\{styles\.navy\}`/);
+  for (const href of ["/research#rizels-desk", "/research#monitored-companies", "/research/themes", "/research/compare"]) assert.ok(menu.includes(`tile("${href}"`), href);
+  assert.match(menu, /\{member && <div className=\{styles\.grp\}>\s*\{heading\(ja \? "PRO機能" : "PRO features", true\)\}/);
+  assert.match(menu, /\{member && item\("\/research\/notifications", "bell", alerts\)\}/);
+  assert.doesNotMatch(menu, /item\("\/research\/(themes|compare)"|item\("\/research#(rizels-desk|monitored-companies)"/);
+  // The Tech Alerts note is FREE-only; members see a LIVE mark and no description.
+  assert.match(menu, /member \? <b className=\{styles\.liveTag\}>LIVE<\/b> : undefined/);
+  assert.match(menu, /30分遅れ · 見出しのみ · 直近5件/);
+  // No relationship-map row: it opens from stock search.
+  assert.doesNotMatch(menu, /item\("[^"]*relationship/i);
+  // One closing line of guide links and room under it.
+  assert.ok(menu.indexOf('className={styles.footLinks}') > menu.indexOf('className={styles.resCard}'));
   const css = read("app/research/site-header.module.css");
   assert.match(css, /border-radius:22px 22px 0 0/);
-  // ".app button { font:inherit }" must not enlarge the free PRO button past the sample's 12px.
+  assert.match(css, /\.sheet \{ padding-bottom:calc\(64px \+ env\(safe-area-inset-bottom\)\); \}/);
+  assert.match(css, /\.memberCard::after \{[^}]*animation:memberSheen 7s/);
+  assert.match(css, /prefers-reduced-motion:reduce\) \{ \.memberCard::after \{ animation:none; display:none; \}/);
   assert.match(css, /\.tools \.pro \{\n[^}]*font-size:11px/);
-  // The sheet sits above the bottom bar (z-index 60) so a swipe anywhere scrolls it.
   assert.match(css, /\.backdrop \{ position:fixed; inset:0; z-index:61;/);
   assert.match(css, /position:fixed; z-index:62; left:0; right:0; bottom:0;/);
-  // Desktop: a home button left of JA/EN.
   assert.ok(menu.indexOf('aria-label={ja ? "ホームへ" : "Home"}') < menu.indexOf('aria-label={ja ? "言語" : "Language"}'));
   assert.match(css, /\.home \{ display:none; \}/);
   assert.match(css, /\.home \{ display:grid; \}/);
-  // Paid buttons: Mobile alerts on the left, Account on the right (owner, Oct 8).
-  const tiles = menu.slice(menu.indexOf("{member\n          ? <>"));
-  assert.ok(tiles.indexOf('href="/research/notifications"') < tiles.indexOf('href="/research/account"'));
 });
 
 test("phone menu follows the finger and closes when pulled down", () => {

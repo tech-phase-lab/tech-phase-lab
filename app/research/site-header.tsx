@@ -120,6 +120,13 @@ const menuIcons = {
   notebook: <><path d="M6 3h11a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6zM6 3v18M10 8h6M10 12h6" /></>,
   anchor: <><circle cx="12" cy="5" r="2" /><path d="M12 7v14M7 11h10M5 15c0 3 3 5 7 5s7-2 7-5" /></>,
   desk: <path d="M4 6h16v10H4zM9 20h6M12 16v4M8 10h8" />,
+  search: <><circle cx="11" cy="11" r="6" /><path d="M16 16l5 5" /></>,
+  market: <><circle cx="12" cy="12" r="3" /><path d="M12 2v5M12 17v5M2 12h5M17 12h5" /></>,
+  watch22: <><circle cx="12" cy="12" r="8" /><circle cx="12" cy="12" r="3" /></>,
+  bars: <path d="M4 20V10M10 20V4M16 20v-8M22 20H2" />,
+  compare: <path d="M12 4v16M5 8h14M5 8l-2 5h4zM19 8l-2 5h4z" />,
+  pulse: <path d="M3 12h4l3-7 4 14 3-7h4" />,
+  crown: <path d="M3 8l4.5 4L12 5l4.5 7L21 8l-2 11H5z" />,
   book: <path d="M4 5h7a3 3 0 0 1 3 3v12a2 2 0 0 0-2-2H4zM20 5h-6" />,
   help: <><circle cx="12" cy="12" r="9" /><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.7.4-1 .9-1 1.7M12 17h.01" /></>,
 } as const;
@@ -206,59 +213,70 @@ function SiteMenu({ lang, member, ownerAccount, onClose, onRefresh, onPro }: { l
   const act = (run: () => void) => () => { unlock(); onClose(); run(); };
   const realtime = ja ? "リアルタイム監視" : "Real-time monitoring";
   const alerts = ja ? "スマホ通知" : "Mobile alerts";
-  const item = (href: string, icon: MenuIcon, label: string, note?: string) =>
-    <Link key={href} className={styles.item} href={href} onClick={event => navigate(event, href)}><Icon name={icon} className={styles.itemIcon} /><span>{label}{note && <small className={styles.itemNote}>{note}</small>}</span><Icon name="next" className={styles.chev} /></Link>;
+  const item = (href: string, icon: MenuIcon, label: string, extra?: ReactNode, note?: string) =>
+    <Link key={href} className={styles.item} href={href} onClick={event => navigate(event, href)}><Icon name={icon} className={styles.itemIcon} /><span>{label}{note && <small className={styles.itemNote}>{note}</small>}</span>{extra}<Icon name="next" className={styles.chev} /></Link>;
+  const tile = (href: string, icon: MenuIcon, label: string) =>
+    <Link key={href} className={styles.proTile} href={href} onClick={event => navigate(event, href)}><Icon name={icon} className={styles.itemIcon} /><span>{label}</span></Link>;
+  const heading = (text: string, crown = false) => <h4>{crown && <Icon name="crown" className={styles.headCrown} />}{text}</h4>;
+  const perks = [`RIZEL'S DESK`, ja ? "テーマランキング" : "Theme Ranking", ja ? "銘柄比較" : "Compare", ja ? "連関マップ" : "Relationship maps", realtime, alerts];
   return <>
     <button type="button" className={styles.backdrop} aria-label={ja ? "メニューを閉じる" : "Close menu"} onClick={onClose} />
-    <nav ref={panel} id="site-menu" className={member ? `${styles.sheet} ${styles.luxe}` : styles.sheet} aria-label={ja ? "メニュー" : "Menu"}>
+    <nav ref={panel} id="site-menu" className={member ? `${styles.sheet} ${styles.luxe}` : `${styles.sheet} ${styles.navy}`} aria-label={ja ? "メニュー" : "Menu"}>
       <div className={styles.grab} aria-hidden="true" />
-      <div className={styles.shHead}><h2>{ja ? "メニュー" : "Menu"}</h2><button type="button" className={styles.close} aria-label={ja ? "閉じる" : "Close"} onClick={onClose}><Icon name="close" /></button></div>
+      <div className={styles.shHead}><h2>{ja ? "メニュー" : "Menu"}</h2>
+        <span className={styles.headTools}>
+          <button type="button" className={styles.refreshPill} onClick={act(onRefresh)}><Icon name="refresh" />{ja ? "再読み込み" : "Refresh"}</button>
+          <button type="button" className={styles.close} aria-label={ja ? "閉じる" : "Close"} onClick={onClose}><Icon name="close" /></button>
+        </span>
+      </div>
       {member
-        ? <div className={styles.cardPaid}>
-            <div className={styles.cardRow}>
-              <span className={styles.badge}><ProBadge size={26} shine star={ownerAccount} /><span>{ownerAccount ? (ja ? "運営者" : "Owner") : (ja ? "PRO　全機能" : "PRO · All features")}</span></span>
-              <Link className={styles.manage} href="/research/account" onClick={event => navigate(event, "/research/account")}>{ja ? "プランの管理" : "Manage plan"}</Link>
-            </div>
-            <span className={styles.paidPerks}><span>RIZEL&apos;S DESK</span><span>{ja ? "テーマランキング" : "Theme Ranking"}</span><span>{ja ? "銘柄比較" : "Compare"}</span><span>{ja ? "連関マップ" : "Relationship maps"}</span><span>{realtime}</span><span>{alerts}</span></span>
-          </div>
+        ? <div className={styles.memberCard}><div className={styles.memberInner}>
+            <span className={styles.crownDisc} aria-hidden="true"><Icon name={ownerAccount ? "star" : "crown"} /></span>
+            <span className={styles.memberText}><b>{ownerAccount ? "OWNER" : "PRO MEMBER"}</b><small>{ja ? "全機能をご利用中です" : "All features unlocked"}</small></span>
+            <Link className={styles.manage} href="/research/account" onClick={event => navigate(event, "/research/account")}>{ja ? "プランの管理" : "Manage plan"} ›</Link>
+          </div></div>
         : <button type="button" className={styles.cardFree} aria-label={ja ? "PROの案内を見る" : "Learn more about PRO"} onClick={act(onPro)}>
             <span className={styles.frTop}><span className={styles.frTitle}><ProBadge size={24} />{ja ? "PROで、もっと深く" : "Go deeper with PRO"}</span><span className={styles.frGo}>{ja ? "案内を見る" : "Learn more"}<Icon name="next" /></span></span>
-            <span className={styles.frPerks}><span>RIZEL&apos;S DESK</span><span>{ja ? "テーマランキング" : "Theme Ranking"}</span><span>{ja ? "銘柄比較" : "Compare"}</span><span>{ja ? "連関マップ" : "Relationship maps"}</span><span>{realtime}</span><span>{alerts}</span></span>
+            <span className={styles.frPerks}>{perks.map(name => <span key={name}>{name}</span>)}</span>
           </button>}
-      <div className={styles.tiles}>
-        {member
-          ? <><Link className={`${styles.tile} ${styles.bell}`} href="/research/notifications" onClick={event => navigate(event, "/research/notifications")}><Icon name="bell" />{alerts}</Link>
-              <Link className={styles.tile} href="/research/account" onClick={event => navigate(event, "/research/account")}><Icon name="account" />{ja ? "アカウント" : "Account"}</Link></>
-          : <><button type="button" className={styles.tile} onClick={act(onRefresh)}><Icon name="refresh" />{ja ? "再読み込み" : "Refresh"}</button>
-              <Link className={styles.tile} href="/research/account" onClick={event => navigate(event, "/research/account")}><Icon name="account" />{ja ? "アカウント" : "Account"}</Link></>}
+      <div className={styles.grp}>
+        {heading(ja ? "ニュース" : "News")}
+        {item("/research/news", "alerts", ja ? "ハイテク速報" : "Tech Alerts", member ? <b className={styles.liveTag}>LIVE</b> : undefined, member ? undefined : (ja ? "30分遅れ · 見出しのみ · 直近5件" : "30 min delay · headlines only · latest 5"))}
+        {item("/research/general-news", "news", ja ? "一般ニュース" : "General News")}
+      </div>
+      {member && <div className={styles.grp}>
+        {heading(ja ? "PRO機能" : "PRO features", true)}
+        <div className={styles.proTiles}>
+          {tile("/research#rizels-desk", "desk", "RIZEL'S DESK")}
+          {tile("/research#monitored-companies", "watch22", ja ? "監視22銘柄" : "22 Tracked Stocks")}
+          {tile("/research/themes", "bars", ja ? "テーマランキング" : "Theme Ranking")}
+          {tile("/research/compare", "compare", ja ? "銘柄比較" : "Compare")}
+        </div>
+      </div>}
+      <div className={styles.grp}>
+        {heading(ja ? "リサーチ" : "Research")}
+        {item("/research/stocks", "search", ja ? "銘柄検索" : "Stock Search")}
+        {item("/research/market", "market", ja ? "マーケット" : "Markets")}
+        {item("/research/calendar", "calendar", ja ? "決算・経済指標" : "Earnings & Economy")}
+        {item("/research/capital-map", "pulse", ja ? "資本マップ" : "Capital Map")}
+        {item("/research/price-targets", "bars", ja ? "目標株価" : "Price targets")}
       </div>
       <div className={styles.grp}>
-        <h4>{ja ? "リサーチ" : "Research"}</h4>
-        {member && item("/research#rizels-desk", "desk", "RIZEL'S DESK")}
-        {item("/research/news", "alerts", ja ? "ハイテク速報" : "Tech Alerts")}
-        {item("/research/general-news", "news", ja ? "一般ニュース" : "General News")}
-        {member && item("/research#monitored-companies", "tracked", ja ? "監視22銘柄リスト" : "22 Tracked Stocks")}
-        {item("/research/calendar", "calendar", ja ? "決算・経済指標" : "Earnings & Economy")}
-        {item("/research/capital-map", "changes", ja ? "資本マップ" : "Capital Map")}
-        {member && item("/research/themes", "targets", ja ? "テーマランキング" : "Theme Ranking")}
-        {member && item("/research/compare", "targets", ja ? "銘柄比較" : "Stock Comparison")}
+        {heading(ja ? "マイページ" : "My page")}
         {item("/research/watchlist", "star", ja ? "ウォッチリスト" : "Watchlist")}
         {item("/research/notebook", "notebook", ja ? "銘柄手帳" : "Stock Notebook")}
-        {item("/research/price-targets", "targets", ja ? "目標株価" : "Price targets")}
         {item("/research#saved", "saved", ja ? "保存したリサーチ" : "Saved research")}
+        {member && item("/research/notifications", "bell", alerts)}
       </div>
-      <div className={styles.rzWrap}>
-        <p className={styles.rzCap}>{ja ? "もうひとつのサービス" : "Another service"}</p>
-        <Link href="/resolute" className={styles.rzCard} onClick={event => navigate(event, "/resolute")}>
-          <Icon name="anchor" className={styles.rzIcon} />
-          <span className={styles.rzText}><b>RESOLUTE</b><small>{ja ? "暴落に備える、自分だけのルール作り" : "Your own rules for a market crash"}</small></span>
-          <Icon name="next" className={styles.chev} />
-        </Link>
-      </div>
-      <div className={styles.grp}>
-        <h4>{ja ? "ガイド" : "Guides"}</h4>
-        {item("/research/learn", "book", ja ? "米国株のはじめ方" : "US stock basics")}
-        {item("/research/faq", "help", ja ? "よくある質問・使い方" : "FAQ & help")}
+      <Link href="/resolute" className={styles.resCard} onClick={event => navigate(event, "/resolute")}>
+        <span className={styles.resEmblem} aria-hidden="true"><Icon name="anchor" /></span>
+        <span className={styles.resText}><b>RESOLUTE</b><small>{ja ? "暴落に備える、自分だけのルール作り" : "Your own rules for a market crash"}</small></span>
+        <Icon name="next" className={styles.resChev} />
+      </Link>
+      <div className={styles.footLinks}>
+        <Link href="/research/account" onClick={event => navigate(event, "/research/account")}>{ja ? "アカウント" : "Account"}</Link><i aria-hidden="true">|</i>
+        <Link href="/research/learn" onClick={event => navigate(event, "/research/learn")}>{ja ? "米国株のはじめ方" : "US stock basics"}</Link><i aria-hidden="true">|</i>
+        <Link href="/research/faq" onClick={event => navigate(event, "/research/faq")}>{ja ? "よくある質問・使い方" : "FAQ & help"}</Link>
       </div>
     </nav>
   </>;

@@ -42,7 +42,7 @@ test("beginner guide explains orders and risk without fabricated affiliate links
   const dashboard = read("app/research/research-dashboard.tsx");
   assert.ok(dashboard.indexOf("<HomeHelp") > dashboard.indexOf("<PriceTargetsPanel"));
   const nav = read("app/research/site-header.tsx");
-  assert.ok(nav.indexOf('item("/research/learn"') > nav.indexOf('item("/research/calendar"'));
+  assert.ok(nav.indexOf('href="/research/learn"') > nav.indexOf('item("/research/calendar"'));
   assert.match(nav, /const member = ownerAccount \|\| plan === "pro"/);
 });
 
