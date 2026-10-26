@@ -53,7 +53,7 @@ export async function POST(request: Request) {
     }
     const result = await monitor(`/push/member/${body.action}`, {
       memberId: member.userId, accessExpiresAt: member.accessExpiresAt / 1000,
-      subscription: body.subscription, tickers: body.tickers, allTargets: body.allTargets === true, language: body.language,
+      subscription: body.subscription, tickers: body.tickers, allTargets: body.allTargets === true, language: body.language, weeklyNotebook: body.weeklyNotebook !== false,
     });
     return Response.json(result, { headers });
   } catch { return Response.json({ ok: false }, { status: 503, headers }); }

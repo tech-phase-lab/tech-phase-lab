@@ -1041,6 +1041,7 @@ class AutomaticMonitor:
                     print("web-push-results-unavailable", flush=True)
                 with web_push.connect(self.db_path) as db:
                     result = web_push.deliver(db, items)
+                    web_push.deliver_weekly(db)
                 with self.state_lock:
                     previous = self.state["webPush"]
                     self.state["webPush"] = {
