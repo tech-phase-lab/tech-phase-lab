@@ -18,7 +18,7 @@ export default function HomeTools({ lang, onPro, onWatch }: { lang: Language; on
   return <>
     <nav className={styles.grid} aria-label={t("よく使う機能", "Quick tools")}>
       <Link href="/research/calendar"><span className={styles.cardTop}><span className={styles.icon} aria-hidden="true">📅</span><strong>{t("決算・経済指標", "Earnings & Economy")}</strong></span><small>{t("今週の予定を確認", "This week")}</small></Link>
-      <Link href="/resolute"><span className={styles.cardTop}><span className={styles.icon} aria-hidden="true">⚓</span><strong className={styles.paidTitle}>RESOLUTE</strong></span><small>{t("独自ルール開発キット", "Build your own rules")}</small></Link>
+      <Link href="/research/themes"><span className={styles.cardTop}><span className={styles.icon} aria-hidden="true">📊</span><strong className={styles.longTitle}>{t("テーマランキング", "Theme Ranking")}</strong></span><small>{t("テーマ別の値動きの強さ", "Which themes are moving")}</small></Link>
       <Link href="/research/capital-map"><span className={styles.cardTop}><span className={styles.icon} aria-hidden="true">🗺️</span><strong>{t("資本マップ", "Capital Map")}</strong></span><small>{t("運用会社・ETFの投資先", "Funds and ETFs")}</small></Link>
       <Link href="/research#monitored-companies" onClick={event => { if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return; event.preventDefault(); onWatch(); }}><span className={styles.cardTop}><span className={styles.icon} aria-hidden="true">🔭</span><strong>{t("監視22銘柄", "22 Tracked Stocks")}</strong></span><small>{t("厳選株をリアルタイムで", "Live, curated")}</small></Link>
     </nav>
@@ -62,4 +62,22 @@ export function FavoriteResearch({ lang, events, onOpenResearch }: { lang: Langu
       <p className={styles.favoriteFoot}>{t("公開済みの過去リサーチです。速報・自動監視ではありません。", "Published historical research; this is not a live alert or automated monitoring feed.")}</p>
     </>}
   </section>;
+}
+
+/** The RESOLUTE entrance on the home screen (owner, Oct 26): a separate service, so it gets its own dusk-blue banner
+ * in silver, clearly apart from the gold of PRO. */
+export function ResoluteEntrance({ lang }: { lang: Language }) {
+  const ja = lang === "ja";
+  return <Link href="/resolute" className={styles.resolute} aria-label={ja ? "RESOLUTE　暴落に備える、自分だけのルール作り" : "RESOLUTE: your own rules for a market crash"}>
+    <span className={styles.rzEmblem} aria-hidden="true">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="5" r="2" /><path d="M12 7v14M7 11h10M5 15c0 3 3 5 7 5s7-2 7-5" /></svg>
+    </span>
+    <span className={styles.rzBody}>
+      <span className={styles.rzEyebrow}>{ja ? "もうひとつのサービス" : "ANOTHER SERVICE"}</span>
+      <strong className={styles.rzTitle}>RESOLUTE</strong>
+      <span className={styles.rzCopy}>{ja ? "暴落の夜も、迷わない。" : "Stay steady when the market falls."}</span>
+      <span className={styles.rzSub}>{ja ? "診断から、自分だけの投資ルールとお守りまで。" : "From a quick quiz to your own rules."}</span>
+    </span>
+    <span className={styles.rzGo}>{ja ? "はじめる" : "Start"}<span aria-hidden="true">→</span></span>
+  </Link>;
 }
