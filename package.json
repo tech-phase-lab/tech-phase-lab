@@ -26,6 +26,7 @@
     "@tiptap/pm": "3.32.0",
     "@tiptap/react": "3.32.0",
     "@tiptap/starter-kit": "3.32.0",
+    "mp4-muxer": "5.2.2",
     "next": "16.2.4",
     "node-html-parser": "7.0.2",
     "pdf-lib": "^1.17.1",
@@ -38,6 +39,7 @@
   "devDependencies": {
     "@electric-sql/pglite": "^0.5.8",
     "@tailwindcss/postcss": "^4",
+    "@types/dom-webcodecs": "0.1.17",
     "@types/node": "^20",
     "@types/pg": "^8.23.1",
     "@types/react": "^19",

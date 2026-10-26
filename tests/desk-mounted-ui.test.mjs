@@ -154,3 +154,32 @@ test('audio publication requires a separate explicit confirmation and cancellati
   allow=true;await submit();assert.equal(confirmation,2);assert.equal(sent,1);assert.equal(published,1);
  }finally{await act(async()=>root.unmount());host.remove();globalThis.fetch=oldFetch;window.confirm=oldConfirm;}
 });
+
+test('recording pauses and resumes, then stops or discards correctly while paused without publishing',async()=>{
+ const Recorder=await component('../app/research/desk/audio-recorder.tsx');const old=globalThis.MediaRecorder;let recorder,files=0,stops=0,busy=false;
+ globalThis.MediaRecorder=class {static isTypeSupported(){return true;}state='inactive';constructor(){globalThis.__pausedRecorder=this;}start(){this.state='recording';}pause(){this.state='paused';}resume(){this.state='recording';}stop(){this.state='inactive';this.ondataavailable?.({data:new Blob(['x'.repeat(1024)])});this.onstop?.();}};
+ Object.defineProperty(navigator,'mediaDevices',{configurable:true,value:{getUserMedia:async()=>({getTracks:()=>[{stop:()=>stops++}],getAudioTracks:()=>[{addEventListener:()=>{}}]})}});
+ const host=document.createElement('div');document.body.append(host);const root=createRoot(host);const click=async text=>act(async()=>{[...host.querySelectorAll('button')].find(b=>b.textContent===text).click();await tick();});
+ try{
+  await act(async()=>root.render(React.createElement(Recorder,{disabled:false,onFile:()=>files++,onBusyChange:v=>busy=v})));
+  await click('ここで録音');recorder=globalThis.__pausedRecorder;
+  await click('一時停止');assert.equal(recorder.state,'paused');assert.equal(busy,true);assert.equal(files,0);assert.match(host.textContent,/一時停止中/);
+  await click('録音を再開');assert.equal(recorder.state,'recording');
+  await click('一時停止');await click('停止して試聴');assert.equal(files,1);assert.equal(busy,false);assert.ok(stops>0);
+  await click('ここで録音');await click('一時停止');await click('録音を破棄');assert.equal(files,1);assert.equal(busy,false);
+ }finally{await act(async()=>root.unmount());host.remove();globalThis.MediaRecorder=old;delete globalThis.__pausedRecorder;}
+});
+
+test('audio editing supports a cut and undo locally; cancel preserves the original without applying or uploading',async()=>{
+ const Editor=await component('../app/research/desk/audio-editor.tsx');const oldContext=globalThis.AudioContext,oldEncoder=globalThis.AudioEncoder,oldData=globalThis.AudioData;let applied=0,busy=false;
+ globalThis.AudioEncoder=class{static async isConfigSupported(){return {supported:true};}};globalThis.AudioData=class{};
+ globalThis.AudioContext=class {state='running';async decodeAudioData(){return {length:1000,duration:10,sampleRate:100,numberOfChannels:1,getChannelData:()=>new Float32Array(1000)};}async close(){this.state='closed';}};
+ const host=document.createElement('div');document.body.append(host);const root=createRoot(host);const click=async text=>act(async()=>{[...host.querySelectorAll('button')].find(b=>b.textContent===text).click();await tick();});
+ try{
+  await act(async()=>root.render(React.createElement(Editor,{file:new File(['x'.repeat(1024)],'memo.m4a'),disabled:false,onApply:()=>applied++,onBusyChange:v=>busy=v})));
+  await click('区間をカット');assert.equal(busy,true);assert.match(host.textContent,/音声の長さ：10.0秒/);
+  await click('選択区間を削除');assert.match(host.textContent,/音声の長さ：9.0秒/);assert.equal(applied,0);
+  await click('1つ戻す');assert.match(host.textContent,/音声の長さ：10.0秒/);
+  await click('編集を取り消す');assert.equal(applied,0);assert.equal(busy,false);assert.equal(host.querySelector('svg'),null);
+ }finally{await act(async()=>root.unmount());host.remove();globalThis.AudioContext=oldContext;globalThis.AudioEncoder=oldEncoder;globalThis.AudioData=oldData;}
+});

@@ -3,37 +3,48 @@ import { useEffect, useRef, useState } from "react";
 import { maxDeskAudioBytes } from "@/lib/research/desk-audio";
 import styles from "./format.module.css";
 
-type RecordingSession = { recorder: MediaRecorder | null; stream: MediaStream | null; cancelled: boolean; timer?: ReturnType<typeof setInterval> };
+type RecordingSession = { recorder: MediaRecorder | null; stream: MediaStream | null; cancelled: boolean; elapsed: number; runningSince: number; timer?: ReturnType<typeof setInterval> };
 // A recording is only a local File. This component cannot upload or publish.
 export default function AudioRecorder({ disabled, onFile, onBusyChange }: { disabled: boolean; onFile: (file: File) => void; onBusyChange: (busy: boolean) => void }) {
-  const [state, setState] = useState<"idle" | "requesting" | "recording">("idle"), [seconds, setSeconds] = useState(0), [error, setError] = useState("");
+  const [state, setState] = useState<"idle" | "requesting" | "recording" | "paused">("idle"), [seconds, setSeconds] = useState(0), [error, setError] = useState("");
   const session = useRef<RecordingSession | null>(null);
   const callbacks = useRef({ onFile, onBusyChange });
   useEffect(() => { callbacks.current = { onFile, onBusyChange }; }, [onFile, onBusyChange]);
   useEffect(() => {
-    const stop = () => { const current = session.current; if (current?.recorder?.state === "recording") current.recorder.stop(); };
+    const stop = () => { const current = session.current; if (current?.recorder && current.recorder.state !== "inactive") current.recorder.stop(); };
     const hide = () => { if (document.visibilityState === "hidden") stop(); };
     document.addEventListener("visibilitychange", hide);
     return () => {
       document.removeEventListener("visibilitychange", hide);
       const current = session.current; session.current = null;
-      if (current) { current.cancelled = true; clearInterval(current.timer); if (current.recorder?.state === "recording") current.recorder.stop(); current.stream?.getTracks().forEach(track => track.stop()); }
+      if (current) { current.cancelled = true; clearInterval(current.timer); if (current.recorder && current.recorder.state !== "inactive") current.recorder.stop(); current.stream?.getTracks().forEach(track => track.stop()); }
     };
   }, []);
   function cancel() {
     const current = session.current;
     if (!current) return;
     current.cancelled = true; clearInterval(current.timer);
-    if (current.recorder?.state === "recording") current.recorder.stop();
+    if (current.recorder && current.recorder.state !== "inactive") current.recorder.stop();
     current.stream?.getTracks().forEach(track => track.stop());
     session.current = null; setState("idle"); callbacks.current.onBusyChange(false);
+  }
+  function togglePause() {
+    const current = session.current, recorder = current?.recorder;
+    if (!current || !recorder) return;
+    try {
+      if (recorder.state === "recording") {
+        recorder.pause(); current.elapsed += performance.now() - current.runningSince; setState("paused");
+      } else if (recorder.state === "paused") {
+        recorder.resume(); current.runningSince = performance.now(); setState("recording");
+      }
+    } catch { setError("一時停止・再開ができませんでした。停止して音声を確認してください。"); }
   }
   async function start() {
     if (disabled || session.current) return;
     if (!navigator.mediaDevices?.getUserMedia || typeof MediaRecorder === "undefined") { setError("このブラウザでは録音できません。iPhoneのSafariで開くか、音声ファイルを選んでください。"); return; }
     const mime = ["audio/mp4;codecs=mp4a.40.2", "audio/mp4"].find(type => MediaRecorder.isTypeSupported(type));
     if (!mime) { setError("このブラウザはM4A録音に対応していません。iPhoneのSafariで開くか、音声ファイルを選んでください。"); return; }
-    const current: RecordingSession = { recorder: null, stream: null, cancelled: false };
+    const current: RecordingSession = { recorder: null, stream: null, cancelled: false, elapsed: 0, runningSince: 0 };
     session.current = current; setState("requesting"); setError(""); setSeconds(0); callbacks.current.onBusyChange(true);
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true, video: false });
@@ -55,10 +66,10 @@ export default function AudioRecorder({ disabled, onFile, onBusyChange }: { disa
         setState("idle"); callbacks.current.onBusyChange(false);
       }
       recorder.onstop = finish;
-      stream.getAudioTracks().forEach(track => track.addEventListener("ended", () => { if (recorder.state === "recording") recorder.stop(); }, { once: true }));
+      stream.getAudioTracks().forEach(track => track.addEventListener("ended", () => { if (recorder.state !== "inactive") recorder.stop(); }, { once: true }));
       recorder.start(); setState("recording");
-      const began = Date.now();
-      current.timer = setInterval(() => { const elapsed = Math.floor((Date.now() - began) / 1000); setSeconds(elapsed); }, 250);
+      current.runningSince = performance.now();
+      current.timer = setInterval(() => { setSeconds(Math.floor((current.elapsed + (recorder.state === "recording" ? performance.now() - current.runningSince : 0)) / 1000)); }, 250);
     } catch {
       clearInterval(current.timer); current.stream?.getTracks().forEach(track => track.stop());
       if (session.current === current) { session.current = null; setState("idle"); setError("録音を開始できませんでした。マイクの許可と、他のアプリで録音していないか確認してください。"); callbacks.current.onBusyChange(false); }
@@ -66,8 +77,8 @@ export default function AudioRecorder({ disabled, onFile, onBusyChange }: { disa
   }
   return <div className={styles.recorder}>
     {state === "idle" ? <button type="button" disabled={disabled} onClick={() => void start()}>ここで録音</button> : <>
-      <span className={styles.recording} role="status">{state === "requesting" ? "マイクの許可を待っています…" : `● 録音中 ${Math.floor(seconds / 60)}:${String(seconds % 60).padStart(2, "0")}`}</span>
-      {state === "recording" && <button type="button" onClick={() => { if (session.current?.recorder?.state === "recording") session.current.recorder.stop(); }}>停止して試聴</button>}
+      <span className={styles.recording} role="status">{state === "requesting" ? "マイクの許可を待っています…" : `${state === "paused" ? "一時停止中" : "● 録音中"} ${Math.floor(seconds / 60)}:${String(seconds % 60).padStart(2, "0")}`}</span>
+      {(state === "recording" || state === "paused") && <><button type="button" onClick={togglePause}>{state === "paused" ? "録音を再開" : "一時停止"}</button><button type="button" onClick={() => { const recorder = session.current?.recorder; if (recorder && recorder.state !== "inactive") recorder.stop(); }}>停止して試聴</button></>}
       <button type="button" onClick={cancel}>録音を破棄</button>
     </>}
     {state === "recording" && <small>画面を離れると停止します。自動投稿されません。</small>}
