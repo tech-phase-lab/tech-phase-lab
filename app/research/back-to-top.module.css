@@ -54,5 +54,5 @@
 
 @media(max-width:760px){:global(body:has(input:focus,textarea:focus,[contenteditable="true"]:focus)) .dock{display:none}}
 
-/* While RESOLUTE's bar is on screen (50px: 44px bar + 6px gap) the button rides above it; "×" puts it back. */
-@media (max-width:760px) { :global(html[data-resolute-bar]) .dock { bottom:calc(154px + env(safe-area-inset-bottom)); } }
+/* While RESOLUTE's bar is on screen (54px: the 50px bar plus a 4px margin) the button rides above it; "×" puts it back. */
+@media (max-width:760px) { :global(html[data-resolute-bar]) .dock { bottom:calc(158px + env(safe-area-inset-bottom)); } }
