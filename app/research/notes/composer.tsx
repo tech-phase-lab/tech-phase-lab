@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import DeskTextEditor from "../desk/text-editor";
+import AudioShortcut from "../desk/audio-shortcut";
 import styles from "./composer.module.css";
 
 export default function NoteComposer({ onPublished }: { onPublished: () => void }) {
@@ -19,6 +20,7 @@ export default function NoteComposer({ onPublished }: { onPublished: () => void 
   async function publish(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (inFlight.current || mediaBusy || !body.trim()) return;
+    if (body.includes("[audio](") && !window.confirm("この音声を公開しますか？PRO会員が再生できるようになります。")) return;
     inFlight.current = true; setBusy(true); setMessage("");
     post.current ??= { id: crypto.randomUUID(), version: 0 };
     try {
@@ -38,12 +40,13 @@ export default function NoteComposer({ onPublished }: { onPublished: () => void 
         : "投稿を完了できませんでした。入力は残しています。下書きに保存されている場合があります。");
     } finally { inFlight.current = false; setBusy(false); }
   }
-  return <form className={styles.composer} onSubmit={event => void publish(event)} aria-label="ひとりごとを投稿" aria-busy={busy}>
+  return <form id="note-composer" className={styles.composer} onSubmit={event => void publish(event)} aria-label="ひとりごとを投稿" aria-busy={busy}>
     <DeskTextEditor label="ひとりごとの本文" value={body} onChange={setBody} disabled={busy} media onMediaBusyChange={setMediaBusy} />
     <div className={styles.actions}>
       <span>{body.length.toLocaleString()} / 6,000</span>
       <button type="submit" disabled={busy || mediaBusy || !body.trim()}>{busy ? "投稿中…" : "投稿"}</button>
     </div>
+    <AudioShortcut />
     {message && <p role="status">{message}</p>}
   </form>;
 }

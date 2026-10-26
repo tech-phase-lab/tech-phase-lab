@@ -128,3 +128,31 @@ test('M4A metadata accepts AAC/ALAC, skips media payload, and rejects video and 
  const oversized=box('moov',Buffer.alloc(2*1024*1024));
  await assert.rejects(verifyM4a(oversized.length,async(offset,length)=>oversized.subarray(offset,offset+length)),/invalid-audio/);
 });
+
+function fragmentedAudio(id=1,handler='soun') {
+ const tk=Buffer.alloc(24);tk.writeUInt32BE(1,12);
+ const hd=Buffer.alloc(24);hd.write(handler,8);const sd=Buffer.alloc(8);sd.writeUInt32BE(1,4);
+ const trex=Buffer.alloc(24);trex.writeUInt32BE(1,4);trex.writeUInt32BE(1,8);
+ const tfhd=Buffer.alloc(8);tfhd.writeUInt32BE(id,4);
+ return Buffer.concat([box('ftyp',Buffer.from('isom\0\0\0\0mp42')),box('moov',box('trak',box('tkhd',tk),box('mdia',box('hdlr',hd),box('minf',box('stbl',box('stsd',sd,box('mp4a',Buffer.alloc(28))))))),box('mvex',box('trex',trex))),box('moof',box('traf',box('tfhd',tfhd))),box('mdat',Buffer.alloc(1024))]);
+}
+test('browser fragmented AAC accepts verified audio tracks and rejects video or unknown fragment tracks',async()=>{
+ const verify=bytes=>verifyM4a(bytes.length,async(at,n)=>bytes.subarray(at,at+n));
+ await verify(fragmentedAudio());
+ await assert.rejects(verify(fragmentedAudio(2)),/invalid-audio/);
+ await assert.rejects(verify(fragmentedAudio(1,'vide')),/invalid-audio/);
+});
+
+const voiceMemo=await load('../lib/research/desk-voice-memo.ts');
+test('voice memo clipboard decoder preserves bytes and rejects unrelated, malformed or oversized clipboard data',async()=>{
+ const bytes=m4a();const file=voiceMemo.voiceMemoFile(voiceMemo.voiceMemoPrefix+bytes.toString('base64'));
+ assert.equal(file.type,'audio/mp4');assert.match(file.name,/\.m4a$/);assert.deepEqual(Buffer.from(await file.arrayBuffer()),bytes);
+ for(const text of ['password', '<script>alert(1)</script>',voiceMemo.voiceMemoPrefix+'a'.repeat(683),voiceMemo.voiceMemoPrefix+'!'.repeat(1024),voiceMemo.voiceMemoPrefix+'a'.repeat(Math.ceil(maxDeskAudioBytes/3)*4+20)])assert.throws(()=>voiceMemo.voiceMemoFile(text),/invalid-voice-memo/);
+});
+
+test('long browser recordings batch adjacent fragment metadata without thousands of storage requests',async()=>{
+ const original=fragmentedAudio();const moof=original.indexOf(Buffer.from('moof'))-4;
+ const bytes=Buffer.concat([original.subarray(0,moof),...Array.from({length:600},()=>original.subarray(moof))]);let reads=0,maxRead=0;
+ await verifyM4a(bytes.length,async(at,n)=>{reads++;maxRead=Math.max(maxRead,n);return bytes.subarray(at,at+n);});
+ assert.ok(reads<12,`metadata requests: ${reads}`);assert.ok(maxRead<=1024*1024);
+});

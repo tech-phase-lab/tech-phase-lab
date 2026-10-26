@@ -19,6 +19,7 @@ function WriterContent() {
   const [saved, setSaved] = useState("");
   const [ready, setReady] = useState(false);
   const [busy, setBusy] = useState(false);
+  const [mediaBusy, setMediaBusy] = useState(false);
   const [pending, setPending] = useState("");
   const [message, setMessage] = useState("運営者アカウントを確認中…");
   const [offset, setOffset] = useState<number | null>(null);
@@ -31,8 +32,9 @@ function WriterContent() {
   useEffect(() => { if (!dirty) return; const warn = (e: BeforeUnloadEvent) => e.preventDefault(); window.addEventListener("beforeunload", warn); return () => window.removeEventListener("beforeunload", warn); }, [dirty]);
   function select(value: Note) { const selected = { id: value.id, version: value.version, bodyJa: value.bodyJa, status: value.status }; setNote(selected); setSaved(JSON.stringify(selected)); }
   async function write(action: string) {
-    if (!note || inFlight.current) return;
+    if (!note || mediaBusy || inFlight.current) return;
     if (action === "withdraw" && !window.confirm("この投稿を公開一覧から削除します。本文は管理画面に残り、再公開できます。")) return;
+    if (action === "publish" && note.bodyJa.includes("[audio](") && !window.confirm("この音声を公開しますか？PRO会員が再生できるようになります。")) return;
     inFlight.current = true; setBusy(true); setPending(action); setMessage(action === "publish" ? "公開しています…このままお待ちください。" : action === "withdraw" ? "公開を取り下げています…" : "保存しています…このままお待ちください。");
     try {
       const r = await fetch("/api/research/author", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ ...note, action }), signal: AbortSignal.timeout(45_000) }); const data = await r.json();
@@ -48,12 +50,12 @@ function WriterContent() {
   return <main className={`${styles.main} ${noteStyles.main}`}><header><Link href="/research">Tech Phaseへ戻る</Link><h1>ひとりごとを書く</h1></header>
     {message && <p role="status" aria-live="polite">{message}</p>}
     {!ready && isLoaded && !isSignedIn && <SignIn routing="hash" signUpUrl="/research/account/sign-up" forceRedirectUrl="/research/write" />}{!ready && isLoaded && isSignedIn && <p><Link href="/research/account">アカウントを確認</Link></p>}
-    {ready && note && <div className={`${styles.layout} ${noteStyles.layout}`} aria-busy={busy}><section className={styles.editor}><div className={styles.saveBar}><div><strong>{pending === "publish" ? "公開中…" : pending === "draft" ? "保存中…" : pending === "withdraw" ? "取り下げ中…" : note.status === "published" ? "公開中" : note.status === "withdrawn" ? "削除済み・再公開可能" : "下書き"}</strong><span>{pending ? "完了までこの画面を閉じないでください" : dirty ? "未保存の変更があります" : note.version ? "保存済み" : "新しい投稿"}</span></div><button disabled={busy || !dirty} onClick={() => void write("draft")}>{pending === "draft" ? "保存中…" : "下書き保存"}</button></div>
-        <fieldset disabled={busy}><DeskTextEditor value={note.bodyJa} onChange={bodyJa => setNote({ ...note, bodyJa })} disabled={busy} media /><small className={styles.counter}>{note.bodyJa.length.toLocaleString()} / 6,000文字</small></fieldset>
+    {ready && note && <div className={`${styles.layout} ${noteStyles.layout}`} aria-busy={busy}><section className={styles.editor}><div className={styles.saveBar}><div><strong>{pending === "publish" ? "公開中…" : pending === "draft" ? "保存中…" : pending === "withdraw" ? "取り下げ中…" : note.status === "published" ? "公開中" : note.status === "withdrawn" ? "削除済み・再公開可能" : "下書き"}</strong><span>{pending ? "完了までこの画面を閉じないでください" : dirty ? "未保存の変更があります" : note.version ? "保存済み" : "新しい投稿"}</span></div><button disabled={mediaBusy || busy || !dirty} onClick={() => void write("draft")}>{pending === "draft" ? "保存中…" : "下書き保存"}</button></div>
+        <fieldset disabled={busy}><DeskTextEditor value={note.bodyJa} onChange={bodyJa => setNote({ ...note, bodyJa })} disabled={busy} media onMediaBusyChange={setMediaBusy} /><small className={styles.counter}>{note.bodyJa.length.toLocaleString()} / 6,000文字</small></fieldset>
         <p className={noteStyles.hint}>文章の英語版は翻訳待ちになります。音声・動画そのものは日本語のままです。</p>
         {note.status === "published" && <p>下書き保存すると一度非公開になります。修正内容をすぐ反映する場合は「更新する」を押してください。</p>}
-        <div className={`${styles.actions} ${noteStyles.publishBar}`}><button disabled={busy || !note.bodyJa.trim() || (note.status === "published" && !dirty)} onClick={() => void write("publish")}>{pending === "publish" ? "公開中…" : note.status === "published" ? "更新する" : "投稿する"}</button>{note.version > 0 && note.status !== "withdrawn" && <button disabled={busy || dirty} onClick={() => void write("withdraw")}>{pending === "withdraw" ? "取り下げ中…" : "削除（非公開にする）"}</button>}{dirty && <button disabled={busy} onClick={() => { if (saved) setNote(JSON.parse(saved)); else { const value = empty(); setNote(value); setSaved(JSON.stringify(value)); } }}>未保存の変更を破棄</button>}</div>
-      </section><details className={noteStyles.history}><summary>過去の投稿・下書き（{items.length}件）</summary><nav aria-label="これまでの投稿"><button disabled={busy || dirty} onClick={() => { const value = empty(); setNote(value); setSaved(JSON.stringify(value)); }}>新しく書く</button>{items.map(item => <button key={item.id} disabled={busy || dirty} onClick={() => select(item)}>{excerpt(item.bodyJa)}<small>{item.status === "published" ? "公開中" : item.status === "withdrawn" ? "削除済み・再公開可能" : "下書き"}</small></button>)}{offset !== null && <button disabled={busy} onClick={() => void more()}>以前の投稿</button>}</nav></details></div>}
+        <div className={`${styles.actions} ${noteStyles.publishBar}`}><button disabled={mediaBusy || busy || !note.bodyJa.trim() || (note.status === "published" && !dirty)} onClick={() => void write("publish")}>{pending === "publish" ? "公開中…" : note.status === "published" ? "更新する" : "投稿する"}</button>{note.version > 0 && note.status !== "withdrawn" && <button disabled={mediaBusy || busy || dirty} onClick={() => void write("withdraw")}>{pending === "withdraw" ? "取り下げ中…" : "削除（非公開にする）"}</button>}{dirty && <button disabled={mediaBusy || busy} onClick={() => { if (saved) setNote(JSON.parse(saved)); else { const value = empty(); setNote(value); setSaved(JSON.stringify(value)); } }}>未保存の変更を破棄</button>}</div>
+      </section><details className={noteStyles.history}><summary>過去の投稿・下書き（{items.length}件）</summary><nav aria-label="これまでの投稿"><button disabled={mediaBusy || busy || dirty} onClick={() => { const value = empty(); setNote(value); setSaved(JSON.stringify(value)); }}>新しく書く</button>{items.map(item => <button key={item.id} disabled={mediaBusy || busy || dirty} onClick={() => select(item)}>{excerpt(item.bodyJa)}<small>{item.status === "published" ? "公開中" : item.status === "withdrawn" ? "削除済み・再公開可能" : "下書き"}</small></button>)}{offset !== null && <button disabled={mediaBusy || busy} onClick={() => void more()}>以前の投稿</button>}</nav></details></div>}
   </main>;
 }
 
