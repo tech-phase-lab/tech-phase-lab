@@ -18,7 +18,7 @@ export function inlineBody(text: string, depth = 0): ReactNode[] {
   return parts;
 }
 export function mediaSource(value: string, kind: string): { url: string; embed?: string } | null {
-  if (kind === "audio" && /^\/api\/research\/desk-media\/[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}\.mp3$/.test(value)) return { url: value };
+  if (kind === "audio" && /^\/api\/research\/desk-media\/[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}\.(?:mp3|m4a)$/.test(value)) return { url: value };
   try {
     const url = new URL(value);
     if (url.protocol !== "https:" || url.username || url.password || url.port || /\s/.test(value)) return null;

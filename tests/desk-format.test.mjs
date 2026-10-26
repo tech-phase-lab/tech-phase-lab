@@ -41,10 +41,10 @@ test('images and audio alone are valid attachments, nested formatting remains vi
   assert.match(render('==**[red]強調[/red]**=='), /<mark[^>]*><strong><span class="red">強調<\/span><\/strong><\/mark>/);
 });
 
-test('uploaded MP3 links stay on the membership-gated route and carry the published post reference',()=>{
- const path='/api/research/desk-media/12345678-1234-4123-8123-123456789abc.mp3';
+for(const extension of ['mp3','m4a']) test(extension+' uploaded links stay on the membership-gated route and carry the published post reference',()=>{
+ const path='/api/research/desk-media/12345678-1234-4123-8123-123456789abc.'+extension;
  const html=renderToStaticMarkup(React.createElement(Body,{text:`[audio](${path})`,media:true,postId:'synthetic-note-0001'}));
  assert.match(html,/audio[^>]+src="[^"]+\?post=synthetic-note-0001"/);
- for(const bad of [path+'?other=1',path.replace('.mp3','.mp4'),'/api/research/desk-media/../../secret','//evil.test/a.mp3']) assert.equal(mediaSource(bad,'audio'),null);
+ for(const bad of [path+'?other=1',path.replace('.'+extension,'.mp4'),'/api/research/desk-media/../../secret','//evil.test/a.mp3']) assert.equal(mediaSource(bad,'audio'),null);
  for(const url of ['https://m.youtube.com/watch?v=abcdefghijk','https://youtube.com/shorts/abcdefghijk','https://youtube.com/live/abcdefghijk']) assert.match(mediaSource(url,'video').embed,/youtube-nocookie/);
 });
