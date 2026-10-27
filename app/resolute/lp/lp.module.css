@@ -162,3 +162,25 @@
 @keyframes leafTwo { 0%,41.7% { transform:translateZ(calc(2 * var(--z))) rotateY(0deg); } 46.7%,72.2% { transform:translateZ(calc(2 * var(--z))) rotateY(-180deg); } 76.1%,100% { transform:translateZ(calc(2 * var(--z))) rotateY(0deg); } }
 @keyframes leafThree { 0%,55.6% { transform:translateZ(var(--z)) rotateY(0deg); } 60.6%,69.4% { transform:translateZ(calc(3 * var(--z))) rotateY(-180deg); } 73.3%,100% { transform:translateZ(var(--z)) rotateY(0deg); } }
 @media (prefers-reduced-motion:reduce) { .bookPlay, .bookPlay .leaf { animation:none !important; } }
+
+/* ---- English page ---- */
+.en .catch { font-size:clamp(26px,7.8vw,33px); line-height:1.4; letter-spacing:.01em; }
+.en .kana { letter-spacing:.34em; }
+.en .h2 { line-height:1.5; letter-spacing:.01em; }
+.en .steps li { grid-template-columns:30px 64px 1fr; }
+.foot .footWide { gap:8px 28px; }
+.miniHead { display:flex; justify-content:space-between; align-items:baseline; gap:6px; }
+.miniAll { font-size:9px; color:var(--gold2); white-space:nowrap; }
+.lockDate { font-size:9.5px; color:var(--sub); margin-top:2px !important; }
+.thermoLab { font-size:11px; letter-spacing:.2em; color:var(--gold); }
+.bookEn { --w:172px; --h:240px; }
+.bookEn .coverTitle { white-space:normal; text-wrap:balance; font-size:8.5px; }
+.pageEn { display:flex; flex-direction:column; gap:5px; }
+.pageEn .pageTitle { margin-top:10px !important; font-size:8.5px; line-height:1.5; gap:2px; }
+.pageEn .pageTitle i { font-size:15px; }
+.pageHead { font-family:var(--serif); font-size:8px; line-height:1.45; color:#5a4620; margin-top:2px; }
+.pageRows { margin:0; display:flex; flex-direction:column; gap:1.5px; }
+.pageRows div { display:flex; justify-content:space-between; gap:6px; font-size:6.3px; line-height:1.5; border-bottom:.4px solid rgba(138,111,51,.35); padding-bottom:1px; }
+.pageRows dt { color:#6f5a2c; } .pageRows dd { margin:0; font-weight:700; color:#3a2f1a; text-align:right; }
+.pageNote { font-size:5.8px; color:#8a6f33; text-align:right; margin-top:-3px; }
+.pageText { font-size:6px; line-height:1.55; color:#4a3d22; margin-top:2px !important; }

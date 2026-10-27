@@ -95,7 +95,7 @@ test("the guard hides the landing page before paint on a device that remembers a
 
 test("the entry page routes through the gate and the quiz comes first, once", () => {
   const entry = read("../app/resolute/page.tsx");
-  assert.match(entry, /<EntryGate landing=\{<Landing embedded \/>\}>/);
+  assert.match(entry, /<EntryGate landing=\{english \? <LandingEn embedded \/> : <Landing embedded \/>\}>/);
   const gate = read("../app/resolute/entry-gate.tsx");
   assert.match(gate, /router\.replace\("\/resolute\/diagnosis"\)/);
   assert.match(gate, /FIRST_VISIT_KEY/);
