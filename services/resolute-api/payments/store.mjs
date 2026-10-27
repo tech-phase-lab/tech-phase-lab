@@ -1,6 +1,7 @@
 import { randomUUID } from 'node:crypto';
 import { addYear, reject } from './policy.mjs';
 import { sandboxAccess } from './access.mjs';
+import { isGuest } from './guest.mjs';
 const iso = row => row && Object.fromEntries(Object.entries(row).map(([k,v]) => [k,v instanceof Date ? v.toISOString() : v]));
 export function paymentStore(pool, { environment = 'sandbox' } = {}) {
   if (!['sandbox', 'live'].includes(environment)) throw Error('Invalid payment ledger');
@@ -20,7 +21,7 @@ export function paymentStore(pool, { environment = 'sandbox' } = {}) {
     const { rows } = await db.query(`INSERT INTO ${S}.audit(order_id,code,dedup_key) VALUES ($1,$2,$3) ON CONFLICT (dedup_key) DO NOTHING RETURNING id`, [orderId, code, dedupKey]);
     if (alert && rows.length) await db.query(`INSERT INTO ${S}.alert_outbox(audit_id) VALUES ($1)`, [rows[0].id]);
   }
-  async function rights(db, user, now) {
+  async function rights(db, user, now, includeScheduled = false) {
     // Purchase eligibility must require the same verified ledger relationship as access.
     // An active grant alone cannot override a held/refunded or mismatched order.
     const { rows } = await db.query(`SELECT g.kind, g.starts_at, g.expires_at
@@ -28,7 +29,7 @@ export function paymentStore(pool, { environment = 'sandbox' } = {}) {
       WHERE g.user_id=$1 AND o.user_id=$1 AND g.state='active' AND o.state='paid'
         AND o.quote->>'product'='resolute_v1' AND o.quote->>'kind'=g.kind
         AND o.capture_id IS NOT NULL AND o.paid_at IS NOT NULL`, [user]);
-    return { use: rows.some(r => r.kind === 'initial' && Date.parse(r.starts_at) <= now),
+    return { use: rows.some(r => r.kind === 'initial' && (includeScheduled || Date.parse(r.starts_at) <= now)),
       until: rows.reduce((max,r) => Math.max(max, Date.parse(r.expires_at)), 0) };
   }
   async function get(id) {
@@ -51,13 +52,18 @@ export function paymentStore(pool, { environment = 'sandbox' } = {}) {
     },
     async create(user, key, makeQuote, now) {
       return tx(user, async db => {
-        const existing = await db.query(`SELECT * FROM ${S}.orders WHERE user_id=$1 AND request_key=$2`, [user,key]);
+        const existing = await db.query(`SELECT * FROM ${S}.orders WHERE ${isGuest(user) && environment === 'live' ? '(user_id=$1 OR guest_id=$1)' : 'user_id=$1'} AND request_key=$2`, [user,key]);
         if (existing.rows.length) return iso(existing.rows[0]);
         const pending = await db.query(`SELECT count(*)::int AS n FROM ${S}.orders WHERE user_id=$1 AND state IN ('creating','created','capturing') AND expires_at>$2`, [user,new Date(now)]);
         if (pending.rows[0].n >= 3) reject('TOO_MANY_ORDERS', 429);
         const q = await makeQuote(await rights(db,user,now));
         const { rows } = await db.query(`INSERT INTO ${S}.orders(id,user_id,request_key,capture_key,quote,state,created_at,expires_at)
           VALUES ($1,$2,$3,$4,$5,'creating',$6,$7) RETURNING *`, [randomUUID(),user,key,randomUUID(),q,new Date(now),new Date(now+15*60000)]);
+        if (isGuest(user)) {
+          if (environment !== 'live') reject('AUTH_REQUIRED',401);
+          await db.query(`UPDATE ${S}.orders SET guest_id=$2 WHERE id=$1`,[rows[0].id,user]);
+          rows[0].guest_id=user;
+        }
         await audit(db,rows[0].id,'ORDER_CREATED'); return iso(rows[0]);
       });
     },
@@ -74,7 +80,7 @@ export function paymentStore(pool, { environment = 'sandbox' } = {}) {
         const current=iso(rows[0]);
         if(current.state !== 'created') reject('ORDER_NOT_CAPTURABLE');
         if(Date.parse(current.expires_at) <= now) reject('ORDER_EXPIRED');
-        await verifyQuote(current, await rights(db,order.user_id,now));
+        await verifyQuote(current, await rights(db,order.user_id,now,current.quote.kind === 'initial'));
         await db.query(`UPDATE ${S}.orders SET state='capturing',capture_checked_at=$2,capture_pro_until=$3 WHERE id=$1`,[order.id,new Date(now),member.proUntil]);
         await audit(db,order.id,'CAPTURE_AUTHORIZED');
         return { ...current,state:'capturing',capture_checked_at:new Date(now).toISOString(),capture_pro_until:member.proUntil };
@@ -95,7 +101,13 @@ export function paymentStore(pool, { environment = 'sandbox' } = {}) {
         if(current.state === 'paid') { if(current.capture_id !== payment.captureId) reject('PAYMENT_MISMATCH'); return 'already-paid'; }
         // A late success must NEVER undo a refund, hold or dispute.
         if(current.state !== 'capturing') return 'review-required';
-        const now=Date.parse(payment.paidAt), r=await rights(db,order.user_id,now);
+        // A guest payment is verified money, not yet an account entitlement.
+        if (isGuest(current.user_id)) {
+          if (environment !== 'live' || current.quote.kind !== 'initial') reject('PAYMENT_MISMATCH');
+          await db.query(`UPDATE ${S}.orders SET state='paid',capture_id=$2,paid_at=$3 WHERE id=$1`,[order.id,payment.captureId,payment.paidAt]);
+          await audit(db,order.id,'GUEST_PAYMENT_VERIFIED'); return 'paid';
+        }
+        const now=Date.parse(payment.paidAt), r=await rights(db,order.user_id,now,order.quote.kind === 'initial');
         if(order.quote.kind === 'renewal' && !r.use || order.quote.kind === 'initial' && r.use) {
           await db.query(`UPDATE ${S}.orders SET state='held',capture_id=$2,paid_at=$3 WHERE id=$1`,[order.id,payment.captureId,payment.paidAt]);
           await audit(db,order.id,'ELIGIBILITY_CHANGED',true); return 'review-required';
@@ -105,6 +117,26 @@ export function paymentStore(pool, { environment = 'sandbox' } = {}) {
           [order.id,order.user_id,order.quote.kind,new Date(start),addYear(start)]);
         await db.query(`UPDATE ${S}.orders SET state='paid',capture_id=$2,paid_at=$3 WHERE id=$1`,[order.id,payment.captureId,payment.paidAt]);
         await audit(db,order.id,grantAudit); return 'paid';
+      });
+    },
+    async claim(guest, user, id, now) {
+      if (environment !== 'live' || !isGuest(guest) || !/^user_[A-Za-z0-9]{1,128}$/.test(user)) reject('AUTH_REQUIRED',401);
+      // Account lock serializes this claim with normal purchases and other claims.
+      // The order row lock serializes it with captures and adverse webhook updates.
+      return tx(user, async db => {
+        const {rows}=await db.query(`SELECT * FROM ${S}.orders WHERE id=$1 FOR UPDATE`,[id]);
+        const current=rows[0];
+        if (!current || current.guest_id !== guest || ![guest,user].includes(current.user_id)) reject('ORDER_NOT_FOUND',404);
+        if (current.state !== 'paid' || !current.capture_id || !current.paid_at ||
+            current.quote.product !== 'resolute_v1' || current.quote.kind !== 'initial') reject('PAYMENT_REVIEW_REQUIRED');
+        if (current.user_id === user) return 'already-claimed';
+        if ((await rights(db,user,now,true)).use) reject('ALREADY_PURCHASED');
+        // Keep the paid date: claiming later never restarts the first year.
+        const start=new Date(current.paid_at);
+        await db.query(`UPDATE ${S}.orders SET user_id=$2 WHERE id=$1`,[id,user]);
+        await db.query(`INSERT INTO ${S}.grants(order_id,user_id,kind,starts_at,expires_at) VALUES ($1,$2,'initial',$3,$4)`,
+          [id,user,start,addYear(start)]);
+        await audit(db,id,grantAudit); return 'claimed';
       });
     },
     async adverse(paypalId, state, code, eventId) {

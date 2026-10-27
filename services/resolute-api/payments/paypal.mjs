@@ -72,8 +72,8 @@ export function createPaypal(config, fetcher = fetch) {
       const q = order.quote, amount = { currency_code: q.currency, value: q.value };
       return call('/v2/checkout/orders', 'POST', { intent: 'CAPTURE', payment_source: { paypal: { experience_context: {
         shipping_preference: 'NO_SHIPPING', user_action: 'CONTINUE',
-        return_url: `${returnUrl}?order=${order.id}&lang=${q.language}`,
-        cancel_url: `${returnUrl}?order=${order.id}&lang=${q.language}&cancel=1`
+        return_url: `${returnUrl}?order=${order.id}&lang=${q.language}${order.guest_id ? "&guest=1" : ""}`,
+        cancel_url: `${returnUrl}?order=${order.id}&lang=${q.language}${order.guest_id ? "&guest=1" : ""}&cancel=1`
       } } }, purchase_units: [{ reference_id: order.id,
         custom_id: order.id, invoice_id: order.id, payee: { merchant_id: config.merchantId },
         amount: { ...amount, breakdown: { item_total: amount } },

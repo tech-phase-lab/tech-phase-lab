@@ -1,14 +1,23 @@
 import { createHash } from 'node:crypto';
+import { isGuest } from './guest.mjs';
 import { paypalEnvironment } from './paypal-environments.mjs';
 import { identity, input, quote, sameQuote, verifyOrder, reject, minorUnits, PaymentError } from './policy.mjs';
 const uuid = value => typeof value === 'string' && /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(value);
-export function paymentEngine({ store, paypal, merchantId, getUser, now = Date.now, environment = 'sandbox', canCharge = () => true }) {
+export function paymentEngine({ store, paypal, merchantId, getUser, now = Date.now, environment = 'sandbox', canCharge = () => true, allowGuest = () => false }) {
   const selected=paypalEnvironment(environment), sandbox=environment === 'sandbox';
   const requireSales=()=>{ if (!canCharge()) reject('PAYMENT_DISABLED',503); };
+  async function buyer(userId) {
+    if (isGuest(userId)) {
+      if (sandbox || !allowGuest()) reject('AUTH_REQUIRED',401);
+      return {userId,pro:false,proUntil:null};
+    }
+    return member(userId);
+  }
   async function member(userId) { const m = identity(await getUser(userId), now()); if(m.userId !== userId) reject('AUTH_REQUIRED',401); return m; }
   async function owned(userId,id) {
+    if(isGuest(userId) && (sandbox || !allowGuest())) reject('AUTH_REQUIRED',401);
     if(!uuid(id)) reject('INVALID_PAYMENT_INPUT',400);
-    const order = await store.get(id); if(!order || order.user_id !== userId) reject('ORDER_NOT_FOUND',404); return order;
+    const order = await store.get(id); if(!order || (order.user_id !== userId && !(isGuest(userId) && order.guest_id === userId))) reject('ORDER_NOT_FOUND',404); return order;
   }
   async function settle(order, remote) {
     try { return await store.paid(order,verifyOrder(order,remote,merchantId,true)); }
@@ -18,7 +27,8 @@ export function paymentEngine({ store, paypal, merchantId, getUser, now = Date.n
     async create(userId,body) {
       requireSales();
       input(body,['kind','language','requestKey']); if(!uuid(body.requestKey)) reject('INVALID_PAYMENT_INPUT',400);
-      const m=await member(userId), time=now();
+      const m=await buyer(userId), time=now();
+      if(isGuest(userId) && body.kind !== 'initial') reject('AUTH_REQUIRED',401);
       let order=await store.create(userId,body.requestKey,rights=>quote(body.kind,body.language,m,rights,time),time);
       if(order.quote.kind !== body.kind || order.quote.language !== body.language) reject('IDEMPOTENCY_CONFLICT');
       if(Date.parse(order.expires_at) <= now()) reject('ORDER_EXPIRED');
@@ -28,7 +38,7 @@ export function paymentEngine({ store, paypal, merchantId, getUser, now = Date.n
         if(!/^[A-Z0-9]{8,32}$/.test(remote.id ?? '')) reject('PAYPAL_UNAVAILABLE',503);
         order=await store.bind(order,remote.id);
       }
-      return { orderId:order.id,paypalOrderId:order.paypal_id,state:order.state,quote:order.quote,expiresAt:order.expires_at,
+      return { orderId:order.id,paypalOrderId:order.paypal_id,state:order.state,claimRequired:isGuest(order.user_id),quote:order.quote,expiresAt:order.expires_at,
         approvalUrl:order.state === 'created' ? await paypal.approval(order.paypal_id) : null,sandbox };
     },
     async capture(userId,body) {
@@ -42,12 +52,12 @@ export function paymentEngine({ store, paypal, merchantId, getUser, now = Date.n
         return { state:await settle(order,remote),sandbox };
       }
       verifyOrder(order,remote,merchantId);
-      const m=await member(userId);
+      const m=await buyer(userId);
       order=await store.prepare(order,m,now(),(current,rights)=>{
         if(!sameQuote(current.quote,quote(current.quote.kind,current.quote.language,m,rights,now()))) reject('PRICE_CHANGED');
       });
       // Fresh authoritative identity lookup immediately before the irreversible API operation.
-      const finalMember=await member(userId), time=now();
+      const finalMember=await buyer(userId), time=now();
       if(time >= Date.parse(order.expires_at) || !sameQuote(order.quote,quote(order.quote.kind,order.quote.language,finalMember,
         { use:order.quote.kind === 'renewal' },time))) {
         await store.flag(order,'CAPTURE_ELIGIBILITY_CHANGED'); reject('PRICE_CHANGED');
@@ -64,8 +74,14 @@ export function paymentEngine({ store, paypal, merchantId, getUser, now = Date.n
         if(remote.status === 'COMPLETED') await settle(order,remote);
       }
       const current=await owned(userId,id);
-      return { orderId:current.id,state:current.state,quote:current.quote,expiresAt:current.expires_at,sandbox,
+      return { orderId:current.id,state:current.state,claimRequired:isGuest(current.user_id),quote:current.quote,expiresAt:current.expires_at,sandbox,
         ...(!sandbox ? {approvalUrl:current.state === 'created' ? await paypal.approval(current.paypal_id) : null} : {}) };
+    },
+    async claim(userId,guest,body) {
+      input(body,['orderId']);
+      if(sandbox || !allowGuest() || !uuid(body.orderId) || !isGuest(guest)) reject('INVALID_PAYMENT_INPUT',400);
+      await member(userId); // Never accept a browser-provided account or email as identity.
+      return {state:await store.claim(guest,userId,body.orderId,now()),sandbox};
     },
     async webhook(headers,event) {
       if(!await paypal.verify(headers,event)) { await store.flag(null,'INVALID_WEBHOOK_SIGNATURE'); reject('INVALID_SIGNATURE',400); }

@@ -53,9 +53,10 @@ test('live frontend proxy fails closed and forwards only signed same-origin requ
   const originalFetch=globalThis.fetch;
   try {
     await build({entryPoints:['app/api/resolute/live-payments/[...action]/route.ts'],outfile:join(dir,'route.mjs'),bundle:true,platform:'node',format:'esm',plugins:[{name:'identity-fixture',setup(b){
+      b.onResolve({filter:/^next\/headers$/},()=>({path:'cookies',namespace:'fixture'}));
       b.onResolve({filter:/^@clerk\/nextjs\/server$/},()=>({path:'clerk',namespace:'fixture'}));
       b.onResolve({filter:/^@\/lib\/membership\/entitlements$/},()=>({path:'member',namespace:'fixture'}));
-      b.onLoad({filter:/.*/,namespace:'fixture'},a=>({contents:a.path==='clerk'?'export async function auth(){return {userId:"member",getToken:async()=>"signed-token"}}':'export const OWNER_ACCOUNT_ID="owner"'}));
+      b.onLoad({filter:/.*/,namespace:'fixture'},a=>({contents:a.path==='cookies'?'export async function cookies(){return {get(){return undefined}}}':a.path==='clerk'?'export async function auth(){return {userId:"member",getToken:async()=>"signed-token"}}':'export const OWNER_ACCOUNT_ID="owner"'}));
     }}]});
     const route=await import(pathToFileURL(join(dir,'route.mjs')));
     const context={params:Promise.resolve({action:['orders']})};

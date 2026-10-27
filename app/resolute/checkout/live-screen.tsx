@@ -1,9 +1,10 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import { checkoutUrl, liveApprovalUrl, liveCheckoutRequest, liveOrder, type LiveOrder } from "@/lib/resolute/live-checkout";
 import type { CheckoutProps } from "./screen";
 import styles from "./styles.module.css";
 const errors: Record<string,[string,string]> = {
+ GUEST_SESSION_REQUIRED:["購入時と同じブラウザで開いてください。解決しない場合は注文番号を添えてお問い合わせください。","Open this page in the browser you used to purchase. If you still need help, contact support with your order number."],
  PAYMENT_DISABLED:["現在、購入の受付を停止しています。","Checkout is currently closed."],
  ALREADY_PURCHASED:["初回購入は確認済みです。更新を選んでください。","You’ve already purchased RESOLUTE. Choose annual renewal."],
  INITIAL_PURCHASE_REQUIRED:["更新するには、初回購入が必要です。","Purchase RESOLUTE before renewing your alerts."],
@@ -12,9 +13,11 @@ const errors: Record<string,[string,string]> = {
  PAYMENT_NOT_APPROVED:["PayPalでの承認が確認できません。","PayPal hasn’t confirmed your approval yet."],
  ORDER_NOT_FOUND:["このアカウントの注文を確認できません。","We couldn’t find this order for your account."],
 };
-export default function LiveCheckoutScreen({orderId,language:initialLanguage,cancelled,salesEnabled}: CheckoutProps & {salesEnabled:boolean}) {
+export default function LiveCheckoutScreen({orderId,language:initialLanguage,cancelled,salesEnabled,guest=false,signedIn=false,signIn,signingUp=false,accountLabel}: CheckoutProps & {salesEnabled:boolean;guest?:boolean;signedIn?:boolean;signIn?:(id:string|null)=>ReactNode;signingUp?:boolean;accountLabel?:string}) {
  const [language,setLanguage]=useState(initialLanguage),[kind,setKind]=useState<"initial"|"renewal">("initial");
  const [order,setOrder]=useState<LiveOrder|null>(null),[busy,setBusy]=useState(false),[error,setError]=useState("");
+ const [showSignIn,setShowSignIn]=useState(signingUp);
+ const [claimed,setClaimed]=useState(false);
  const [uncertain,setUncertain]=useState(false);
  const generation=useRef(0),mounted=useRef(true);
  useEffect(()=>{mounted.current=true;return ()=>{mounted.current=false;};},[]);
@@ -23,29 +26,33 @@ export default function LiveCheckoutScreen({orderId,language:initialLanguage,can
  useEffect(()=>{
   if (!orderId) return;
   let active=true;const version=++generation.current;
-  liveCheckoutRequest(`orders/${orderId}`).then(data=>{const next=liveOrder(data);if(active && version===generation.current)setOrder(next);})
+  liveCheckoutRequest(`orders/${orderId}`,undefined,guest).then(data=>{const next=liveOrder(data);if(active && version===generation.current)setOrder(next);})
    .catch(e=>{if(active && version===generation.current)setError(e instanceof Error ? e.message : "PAYMENT_UNAVAILABLE");});
   return ()=>{active=false;};
- },[orderId]);
+ },[orderId,guest]);
  function switchLanguage(next:"ja"|"en") {
   if(lock.current)return;
   setLanguage(next);
-  window.history.replaceState(null,"",checkoutUrl(next,id,cancelled));
+  window.history.replaceState(null,"",checkoutUrl(next,id,cancelled,guest));
  }
- async function act(action:"create"|"capture"|"status") {
+ async function act(action:"create"|"capture"|"status"|"claim") {
   if(lock.current)return;
-  if(action!=="status" && !salesEnabled){setError("PAYMENT_DISABLED");return;}
+  if(["create","capture"].includes(action) && !salesEnabled){setError("PAYMENT_DISABLED");return;}
   generation.current++;lock.current=true;setBusy(true);setError("");
   try {
-   if(action==="create") {
+   if(action==="claim" && id) {
+    await liveCheckoutRequest("claim",{orderId:id});
+    if(mounted.current)setClaimed(true);
+   } else if(action==="create") {
+    if(guest)await liveCheckoutRequest("session",{},true);
     attempt.current ??= {kind,language,requestKey:crypto.randomUUID()};
-    const next=liveOrder(await liveCheckoutRequest("orders",attempt.current));
+    const next=liveOrder(await liveCheckoutRequest("orders",attempt.current,guest));
     if(!mounted.current)return;
-    setOrder(next);window.history.replaceState(null,"",checkoutUrl(language,next.orderId));
+    setOrder(next);window.history.replaceState(null,"",checkoutUrl(language,next.orderId,false,guest));
    } else if(id) {
-    if(action==="capture"){setUncertain(true);await liveCheckoutRequest("capture",{orderId:id});}
+    if(action==="capture"){setUncertain(true);await liveCheckoutRequest("capture",{orderId:id},guest);}
     if(!mounted.current)return;
-    const next=liveOrder(await liveCheckoutRequest(`orders/${id}`));
+    const next=liveOrder(await liveCheckoutRequest(`orders/${id}`,undefined,guest));
     if(!mounted.current)return;
     setOrder(next);setUncertain(false);
    }
@@ -71,7 +78,7 @@ export default function LiveCheckoutScreen({orderId,language:initialLanguage,can
   {!id && <>
    <p>{en?"Your first purchase includes RESOLUTE and one year of alerts and the Risk Checker. Annual renewals are separate purchases and never renew automatically.":"初回購入にはRESOLUTEと、1年間のアラート・危険度チェッカーが含まれます。2年目以降の更新は1年ごとの購入で、自動継続はありません。"}</p>
    <label>{en?"Purchase type":"購入内容"}<select value={kind} disabled={busy || !salesEnabled || attempt.current!==null} onChange={e=>setKind(e.target.value as "initial"|"renewal")}>
-    <option value="initial">{en?"First purchase":"初回購入"}</option><option value="renewal">{en?"Annual renewal":"1年間の更新"}</option>
+    <option value="initial">{en?"First purchase":"初回購入"}</option><option value="renewal" disabled={guest}>{en?"Annual renewal":"1年間の更新"}</option>
    </select></label>
    <p>{en?"We’ll confirm your renewal eligibility and any PRO discount using your account. You’ll see the amount and currency before continuing to PayPal.":"更新の可否とPRO割引は会員情報で確認します。PayPalへ進む前に金額と通貨を表示します。"}</p>
    <button disabled={busy || !salesEnabled} onClick={()=>void act("create")}>{en?"Check price and continue":"価格を確認して進む"}</button>
@@ -90,6 +97,18 @@ export default function LiveCheckoutScreen({orderId,language:initialLanguage,can
     <p>{en?"After approving in PayPal, return here to complete your payment.":"PayPalで承認した後、この画面で支払いを確定します。"}</p>
     <button disabled={busy} onClick={()=>void act("capture")}>{en?"Complete payment":"支払いを確定する"}</button>
    </div>}
+  </>}
+  {paid && order?.claimRequired && !claimed && <section>
+   <h2>{en?"Connect your purchase":"購入したRESOLUTEを受け取る"}</h2>
+   <p>{en?"Sign in or create an account to use RESOLUTE. Your included year starts on the payment date.":"ログインまたはアカウント作成後に、この購入を紐づけます。1年間の対象期間は決済日から始まります。"}</p>
+   {signedIn && accountLabel && <p>{accountLabel}</p>}
+   {signedIn?<button disabled={busy} onClick={()=>void act("claim")}>{en?"Connect to this account":"このアカウントで受け取る"}</button>:id ? signIn?.(id) : null}
+  </section>}
+  {paid && (claimed || !order?.claimRequired) && <a className={styles.button} href={`/resolute?lang=${language}`}>{en?"Open RESOLUTE":"RESOLUTEを開く"}</a>}
+  {guest && !id && <p>{en?"You can make your first purchase without an account. Sign in after payment to connect your purchase. Annual renewal requires sign-in.":"初回はログインなしで購入できます。決済後にログインして利用権を受け取ります。年間更新にはログインが必要です。"}</p>}
+  {guest && !id && !signedIn && <>
+   <button onClick={()=>setShowSignIn(v=>!v)}>{en?"Sign in for annual renewal":"年間更新のためにログイン"}</button>
+   {showSignIn && signIn?.(null)}
   </>}
   {id && <button disabled={busy} onClick={()=>void act("status")}>{en?"Refresh payment status":"支払い状況を再確認する"}</button>}
   {busy && <p role="status">{en?"Checking…":"確認しています…"}</p>}

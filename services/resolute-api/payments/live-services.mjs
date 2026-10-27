@@ -20,7 +20,8 @@ export function createLivePaymentServices(env) {
   pool.on('error',()=>{});
   const store=paymentStore(pool,{environment:'live'}), paypal=createPaypal(config.paypal);
   const clerk=createClerkClient({secretKey:env.RESOLUTE_PAYMENT_CLERK_SECRET_KEY});
+  // Guest checkout remains off until migration, browser-loss recovery and live acceptance are ready.
   return {store, access:createLiveEntitlementReader(pool), close:()=>pool.end(),
     engine:paymentEngine({store,paypal,environment:'live',merchantId:config.paypal.merchantId,
-      getUser:id=>clerk.users.getUser(id), canCharge:()=>env.RESOLUTE_LIVE_SALES_ENABLED === 'true'})};
+      getUser:id=>clerk.users.getUser(id), allowGuest:()=>env.RESOLUTE_GUEST_CHECKOUT_ENABLED === 'true', canCharge:()=>env.RESOLUTE_LIVE_SALES_ENABLED === 'true'})};
 }

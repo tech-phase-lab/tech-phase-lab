@@ -1,3 +1,4 @@
+import { authenticateGuest } from './guest.mjs';
 import { authenticate } from '../auth.mjs';
 import { OWNER_ACCOUNT_ID } from '../../../lib/membership/entitlements.ts';
 import { createLivePaymentServices } from './live-services.mjs';
@@ -17,6 +18,8 @@ export function livePaymentRuntime(env, authConfig, createServices = createLiveP
         const services = createServices(env);
         handler = paymentHttp({ ...services, environment:'live', enabled:true,
           authenticate:headers => authenticate(headers, authConfig),
+          authenticateGuest:headers => authenticateGuest(headers,authConfig),
+          guestEnabled:()=>env.RESOLUTE_GUEST_CHECKOUT_ENABLED === 'true',
           allowedUsers:null, auditUsers:[OWNER_ACCOUNT_ID] });
       }
       return await handler(request);
