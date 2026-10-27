@@ -119,3 +119,12 @@ test('earnings previews and "what to expect" teasers are not news; the exchange 
   assert.equal(cleanTitle('SK Hynix (NasdaqGS:SKHY) to invest 16 trillion won'), 'SK Hynix to invest 16 trillion won');
   assert.equal(cleanTitle('Bloom Energy (NYSE:BE) wins order'), 'Bloom Energy wins order');
 });
+
+test('vulnerability-database entries are not news; a trailing ": report" tag is trimmed (owner, Oct 27)', () => {
+  assert.equal(isNotNews('アリスタ VeloCloud CVE-2026-114625：CVSS 9.9 [2026]'), true);
+  assert.equal(isNotNews('Arista VeloCloud CVE-2026-114625: CVSS 9.9 [2026]'), true);
+  assert.equal(isNotNews('Arista wins a $500M order from a hyperscaler'), false);
+  assert.equal(cleanTitle('ネビウス、ネオクラウドの売却にもかかわらず資金調達を継続：レポート'), 'ネビウス、ネオクラウドの売却にもかかわらず資金調達を継続');
+  assert.equal(cleanTitle('Nebius keeps raising funds despite neocloud sale: report'), 'Nebius keeps raising funds despite neocloud sale');
+  assert.equal(cleanTitle('ネビウスの年次報告書'), 'ネビウスの年次報告書');
+});

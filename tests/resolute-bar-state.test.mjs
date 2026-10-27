@@ -5,10 +5,11 @@ import { barVisible, needsRefresh, parseBarState, DISMISS_MS, REFRESH_MS } from 
 const now = Date.parse("2026-10-27T00:00:00Z");
 const state = (owned, anon = false) => ({ owned, anon, at: now });
 
-test("the bar is never drawn for a purchaser or while nothing is known", () => {
+test("the bar is never drawn for a purchaser; a signed-in person with nothing remembered waits, a signed-out visitor does not", () => {
   assert.equal(barVisible(state(true), 0, true, now), false);
   assert.equal(barVisible(state(true, true), 0, false, now), false);
-  assert.equal(barVisible(null, 0, false, now), false);
+  assert.equal(barVisible(null, 0, true, now), false);   // signed in, unknown: wait for the answer
+  assert.equal(barVisible(null, 0, false, now), true);   // signed out: nothing bought, show at once
   assert.equal(barVisible(state(false), 0, true, now), true);
   assert.equal(barVisible(state(false, true), 0, false, now), true); // signed out, no purchase
 });

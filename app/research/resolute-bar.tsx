@@ -2,7 +2,7 @@
 import { useEffect, useLayoutEffect, useState, useSyncExternalStore } from "react";
 import Link from "next/link";
 import { useResearchLanguage } from "./use-research-language";
-import { useMemberDisplay } from "./member-display-provider";
+import { signedInFromCookies } from "@/lib/resolute/landing-gate";
 import { BAR_DISMISS_KEY, BAR_EVENT, BAR_STATE_KEY, barVisible, needsRefresh, parseBarState, writeBarState } from "@/lib/research/resolute-bar-state";
 import styles from "./resolute-bar.module.css";
 
@@ -14,25 +14,24 @@ function subscribe(notify: () => void) {
   window.addEventListener(BAR_EVENT, notify);
   return () => { window.removeEventListener("storage", notify); window.removeEventListener(BAR_EVENT, notify); };
 }
-const snapshot = () => { try { return `${localStorage.getItem(BAR_STATE_KEY) ?? ""}|${localStorage.getItem(BAR_DISMISS_KEY) ?? ""}`; } catch { return "|"; } };
-const serverSnapshot = () => "|";
+const snapshot = () => { try { return `${localStorage.getItem(BAR_STATE_KEY) ?? ""}|${localStorage.getItem(BAR_DISMISS_KEY) ?? ""}|${signedInFromCookies(document.cookie) ? "1" : "0"}`; } catch { return "||"; } };
+const serverSnapshot = () => "||";
 
 export default function ResoluteBar() {
   const [lang] = useResearchLanguage();
   const ja = lang === "ja";
-  const plan = useMemberDisplay();
   const raw = useSyncExternalStore(subscribe, snapshot, serverSnapshot);
-  const [stateRaw, dismissRaw] = raw.split("|");
+  const [stateRaw, dismissRaw, signedRaw] = raw.split("|");
+  const signedIn = signedRaw === "1";
   const state = parseBarState(stateRaw || null);
   const dismissedAt = Number(dismissRaw) || 0;
   const [openedAt] = useState(() => Date.now());
-  const shown = barVisible(state, dismissedAt, plan !== null, openedAt);
+  const shown = barVisible(state, dismissedAt, signedIn, openedAt);
   const [lift, setLift] = useState<number | null>(null);
 
   // Background refresh: never blocks the bar. A fresh enough answer is left alone.
-  const planKnown = plan !== null;
   useEffect(() => {
-    if (!needsRefresh(parseBarState(localStorage.getItem(BAR_STATE_KEY)), planKnown, Date.now())) return;
+    if (!needsRefresh(parseBarState(localStorage.getItem(BAR_STATE_KEY)), signedIn, Date.now())) return;
     const controller = new AbortController();
     (async () => {
       try {
@@ -45,8 +44,8 @@ export default function ResoluteBar() {
       } catch { /* unknown keeps what is remembered */ }
     })();
     return () => controller.abort();
-  // Runs again when the member check answers: a signed-out answer remembered from before must be refreshed then.
-  }, [planKnown]);
+  // Asked at once on opening (not after the member check), and again if the sign-in state changes.
+  }, [signedIn]);
 
   // `?resoluteBar=reset` forgets the seven-day mark (for checking the preview); it never overrides a purchase.
   useEffect(() => {
