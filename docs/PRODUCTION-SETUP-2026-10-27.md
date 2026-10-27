@@ -118,3 +118,122 @@ signed out; retain the login form. When the SDK establishes a signed-in session,
 normal server verification resumes. Never infer owner/PRO from browser state.
 Regression tests cover signed-out startup, no-token-call behavior, signed-in renewal
 deduplication, and the previous account redirect race. End-user acceptance pending.
+
+Startup fix deployment receipt: commit `cbfe97ac3af772f3751ad96dff744bce743d86b6`.
+Production `dpl_FiTafSoABaXZ7gcNTCxbG1FDrwTj` READY and root alias verified;
+Preview alias verified on `dpl_3Ci5RyE2DKB1oSQoekui4wvw4Sfb`.
+Gates: lint 0 errors/9 existing warnings, Node1599/1599, Python2648/2648,
+build/typecheck, compileall, diff check passed. Public browser verified the account
+page transitions from loading to the Google/email login form without a membership
+error. No site console error (only the browser extension's unrelated metadata error).
+The actual owner login and overall site performance remain unverified. A separate
+public HTTP probe from this execution environment measured Clerk script download
+at 11.74s; this is not the user's device timing or proof of universal network latency.
+
+## Production incident audit — 2026-10-27 15:28 UTC
+
+User still reports membership failure and slow loading. No successful owner login
+has been verified. Do not ship additional production changes before authenticated
+login/display acceptance, as explicitly requested by the user.
+
+- Vercel environment metadata confirms RESEARCH_MONITOR_URL and
+  RESEARCH_MONITOR_TOKEN exist only for Preview (codex/research-preview), not
+  Production. The price-target route returns 503 before any backend call when
+  either variable is absent. News code was not modified.
+- Production logs at 15:19:05, 15:19:12 and 15:19:16 UTC show
+  membership-session-unverified, unexpected-error, middlewareSignedIn=false,
+  sessionCookiePresent=true and clientCookiePresent=true. These records contain
+  no user identity; they do not definitively identify the owner. The earlier
+  missing-cookie explanation is insufficient. Clerk verification fails before
+  the membership lookup. Underlying exception remains unknown; do not assert a
+  wrong secret or DB outage as the cause.
+- Production Clerk public key points to clerk.techphase.app. Public environment
+  home/return URLs use techphase.app; account URLs use accounts.techphase.app.
+  Google console allowlists were not independently inspected.
+- CLERK_SECRET_KEY is present as a Production Secret; presence does not verify
+  correctness, formatting or pairing. Secret contents were not exposed.
+- Application display cookie is HttpOnly, Secure in production, SameSite=Lax,
+  path /, host-only. This is not the Clerk authentication cookie. Actual cookie
+  attributes on the user's device remain unverified despite cookie presence logs.
+- getMembership exits before user lookup/billing when auth has no userId.
+  Current failure does not reach the application DB. Account/header have separate
+  recovery paths; header polls every 60 seconds while visible and recovery can
+  retry. This can duplicate auth requests, not SQL queries in this failing path.
+- Railway credentials, database region and private-network wiring remain
+  unverified because Railway access/reauthentication is prohibited. Vercel
+  cannot directly use a Railway private hostname as an external client.
+- Automatic approval review REJECTED adding Production to the existing Preview
+  monitor Secret targets: reusing an unverified Preview credential across a
+  production security boundary requires explicit approval. No environment change
+  was applied. Do not bypass via secret copying or another API.
+
+This audit made no application-code, DNS, Railway or production deployment changes.
+Monitoring configuration repair and authenticated login verification are pending.
+
+Follow-up: after the user said to proceed, the same monitor Secret target change
+was again rejected by automatic approval review. It required explicit permission
+for this exact Preview-to-Production credential promotion rather than a general
+instruction. No retry via another API or secret-copy workaround was attempted.
+SDK inspection confirms unexpected-error masks exceptions outside the SDK's typed
+TokenVerificationError; it does not establish an invalid secret. Remote JWKS fetch
+is part of verification when no local JWT public key is configured. Networkless
+verification is supported by Clerk but has not been configured as a speculative
+production workaround. Login remains unresolved; no deployment was performed.
+
+Explicit approval follow-up: user authorized applying both named Preview monitor
+variables to Production. Review allowed the request, but Vercel returned 400:
+gitBranch-scoped variables can only target Preview. Native get_project_env confirms
+the monitor token is sensitive and has no readable value. Existing Preview branch
+scope was preserved; it was not broadened to other branches or removed.
+Created a separate encrypted RESEARCH_MONITOR_URL for Production using the existing
+Preview Config value. Production RESEARCH_MONITOR_TOKEN still requires original
+credential input directly into Vercel. No token was exposed and no production
+redeployment was performed; the live 503 is not claimed resolved.
+
+2026-10-27 15:37 UTC: user reported completing the manual token entry. Vercel
+metadata now confirms both RESEARCH_MONITOR_URL (encrypted) and
+RESEARCH_MONITOR_TOKEN (sensitive) target Production separately. Existing
+branch-scoped Preview entries remain intact. Token value/correctness was not
+read back. No production redeployment performed; configuration save is not runtime
+acceptance. Latest production logs at 15:35:56 and 15:35:59 UTC still show
+unexpected-error with both cookie-presence booleans true. Auth remains unresolved.
+
+## Authorized configuration-only production redeploy
+
+User explicitly authorized redeploy before authenticated login acceptance, solely
+for the monitor configuration on the same production code. Production deployment
+`dpl_G5JLPbBTLzCjsDXcY9WRZ7srzwXK` is READY, commit
+`cbfe97ac3af772f3751ad96dff744bce743d86b6`. Root techphase.app alias verified on it;
+Preview branch alias restored and verified on `dpl_3Ci5RyE2DKB1oSQoekui4wvw4Sfb`.
+No application code, news behavior, main branch or Railway configuration changed.
+
+Public post-deploy probes: price-targets HTTP200 ok=true 20 items; company-wire
+HTTP200 ok=true 22 keys; news HTTP200 ok=true but enabled=false, 0 items. Do not
+claim complete high-tech feed recovery. Account HTML HTTP200. First concurrent
+probes from this environment took 5.7–6.2 seconds, not end-user timings. Browser
+home visibly shows company news and target-price changes. Authenticated owner
+login and overall speed remain unverified.
+
+## Clerk secret replacement follow-up
+
+User reported Clerk production Secret key as Created Oct 27 / Never used. This is
+a clue, not proof of an invalid key. User created a replacement via Add new key and
+reported saving it into Vercel Production. Metadata confirms CLERK_SECRET_KEY
+(sensitive, Production) updated at 1793116489322. Secret contents were not read.
+Redeployed the same code cbfe97ac as dpl_4R8R6S1PxYtDWNTcatejELWfesAG (READY).
+techphase.app alias confirmed on the new deployment; Preview alias restored and
+confirmed on dpl_3Ci5RyE2DKB1oSQoekui4wvw4Sfb. Initial logs show anonymous missing
+session requests only; absence of unexpected-error is not authenticated acceptance.
+Owner login/PRO display must still be checked after this actual credential change.
+Do not delete the previous Clerk key until replacement verification succeeds.
+
+Owner acceptance: user confirms login works after Clerk Secret replacement and
+reports loading is now very fast. Do not repeat login-failure troubleshooting.
+Read-only public feed check following user's one-hour news gap concern:
+company-wire HTTP200 contains 22 ticker groups, including articles at
+2026-10-27T15:50:35Z (Oct28 00:50:35 JST). news HTTP200 contains officialUpdates
+89 rows; newest NVIDIA article published 16:00:00Z, observed 16:01:11.532Z
+(Oct28 01:00 / 01:01 JST). Previous NVIDIA article published 15:00Z.
+Correction: enabled=false/items=[] describes one subsection; it does not mean
+all news output is empty or collection stopped. officialUpdates is populated and
+advancing. No claim that all sources have no missed news. No news code changed.
