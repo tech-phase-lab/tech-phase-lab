@@ -1,6 +1,6 @@
 "use client";
 import { useMemo } from "react";
-import { X_TICKS, Y_TICKS, beyondText, isBeyond, placeLabels, spreadEdgeDots, xPosition, yPosition, zoneName, zoneOf, type RadarDotFree, type RadarDotPro, type Zone } from "@/lib/research/radar";
+import { X_TICKS, Y_TICKS, beyondText, isBeyond, placeLabels, previousBeyondText, spreadEdgeDots, xPosition, yPosition, zoneName, zoneOf, type RadarDotFree, type RadarDotPro, type Zone } from "@/lib/research/radar";
 import styles from "./radar.module.css";
 
 const W = 340, H = 316, L = 46, T = 10, R = 330, B = 282;
@@ -42,10 +42,12 @@ export default function RadarChart({ dots, selected, onSelect }: { dots: (RadarD
     });
   }, [dots, x0, yMid, where]);
   const extras = useMemo(() => Object.fromEntries(dots.map(dot => [dot.ticker, isBeyond(dot.ocfMargin, dot.cover) ? beyondText(dot.ocfMargin, dot.cover) : ""])), [dots]);
+  // A previous position outside the chart has no dotted line; its value is written beside the name.
+  const earlier = useMemo(() => Object.fromEntries(dots.map(dot => [dot.ticker, isPro(dot) ? previousBeyondText(dot.previous) : ""])), [dots]);
   const labels = useMemo(() => placeLabels(dots.map(dot => {
     const r = RADIUS[dot.size], extra = extras[dot.ticker];
-    return { id: dot.ticker, x: where[dot.ticker].x, y: where[dot.ticker].y, r, w: dot.ticker.length * 6.3 + 2 + (extra ? extra.length * 4.7 + 7 : 0) };
-  }), { left: L + 2, top: T + 2, right: R - 2, bottom: B - 2 }, 11, zoneLabels.map(label => label.box)), [dots, zoneLabels, extras, where]);
+    return { id: dot.ticker, x: where[dot.ticker].x, y: where[dot.ticker].y, r, w: dot.ticker.length * 6.3 + 2 + (extra ? extra.length * 4.7 + 7 : 0) + (earlier[dot.ticker] ? earlier[dot.ticker].length * 5.2 + 7 : 0) };
+  }), { left: L + 2, top: T + 2, right: R - 2, bottom: B - 2 }, 11, zoneLabels.map(label => label.box)), [dots, zoneLabels, extras, earlier, where]);
   const selectedDot = dots.find(dot => dot.ticker === selected);
   return <>
     <svg className={styles.svg} viewBox={`0 0 ${W} ${H}`} role="img" aria-label="横軸が稼ぐ力、縦軸が守る力の散布図" onClick={() => onSelect?.(null)}>
@@ -57,7 +59,7 @@ export default function RadarChart({ dots, selected, onSelect }: { dots: (RadarD
       {X_TICKS.map(tick => <g key={tick}><line x1={px(tick)} x2={px(tick)} y1={T} y2={B} className={tick === 0 ? styles.base : styles.grid} /><text x={px(tick)} y={B + 14} textAnchor="middle" className={styles.tick}>{`${tick}%`}</text></g>)}
       {zoneLabels.map(label => <text key={label.zone} x={label.box.x} y={label.box.y + 10} className={styles.zone} fill={ZONE_INK[label.zone]}>{zoneName[label.zone]}</text>)}
       {dots.map(dot => {
-        if (!isPro(dot) || !dot.previous) return null;
+        if (!isPro(dot) || !dot.previous || isBeyond(dot.previous.ocfMargin, dot.previous.cover)) return null;
         const x1 = px(dot.previous.ocfMargin), y1 = py(dot.previous.cover), x2 = where[dot.ticker].x, y2 = where[dot.ticker].y;
         if (Math.hypot(x2 - x1, y2 - y1) < TRAIL_MIN) return null;
         return <g key={`p-${dot.ticker}`}>
@@ -78,7 +80,7 @@ export default function RadarChart({ dots, selected, onSelect }: { dots: (RadarD
       })}
       {dots.map(dot => {
         const box = labels[dot.ticker], extra = extras[dot.ticker];
-        return box && <text key={`t-${dot.ticker}`} x={box.x} y={box.y + box.h - 2} className={styles.name}>{dot.ticker}{extra && <tspan dx="5" className={styles.beyond}>{extra}</tspan>}</text>;
+        return box && <text key={`t-${dot.ticker}`} x={box.x} y={box.y + box.h - 2} className={styles.name}>{dot.ticker}{extra && <tspan dx="5" className={styles.beyond}>{extra}</tspan>}{earlier[dot.ticker] && <tspan dx="5" className={styles.earlier}>{earlier[dot.ticker]}</tspan>}</text>;
       })}
     </svg>
     {selectedDot && isPro(selectedDot) && <p className={styles.picked} role="status">

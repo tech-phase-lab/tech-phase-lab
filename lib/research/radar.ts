@@ -13,7 +13,7 @@ export const radarGenre = (id: string | null) => radarGenres.find(genre => genre
 
 // ---- scales: evenly spaced ticks, values beyond the range stop at the edge ----
 export const X_TICKS = [-40, -20, 0, 20, 40, 60] as const;
-export const Y_TICKS = [0.25, 0.5, 1, 2, 4] as const;
+export const Y_TICKS = [0.1, 0.25, 0.5, 1, 2, 4] as const;
 const X_MIN = X_TICKS[0], X_MAX = X_TICKS[X_TICKS.length - 1], Y_MIN = Y_TICKS[0], Y_MAX = Y_TICKS[Y_TICKS.length - 1];
 const clamp = (value: number, low: number, high: number) => Math.min(high, Math.max(low, value));
 /** 0 (left) to 1 (right). */
@@ -104,6 +104,15 @@ export function arrow(now: number, before: number | undefined): "up" | "down" | 
   const change = now - before;
   const tolerance = Math.max(Math.abs(before), 1) * 0.005;
   return change > tolerance ? "up" : change < -tolerance ? "down" : null;
+}
+
+/** When the previous earnings fall outside the chart, no dotted line is drawn; the value is written beside the name instead ("前回 49x"). */
+export function previousBeyondText(previous: { ocfMargin: number; cover: number } | null): string {
+  if (!previous || !isBeyond(previous.ocfMargin, previous.cover)) return "";
+  const parts: string[] = [];
+  if (previous.ocfMargin < X_MIN || previous.ocfMargin > X_MAX) parts.push(`${Math.abs(previous.ocfMargin) >= 100 ? previous.ocfMargin.toFixed(0) : previous.ocfMargin.toFixed(1)}%`);
+  if (previous.cover < Y_MIN || previous.cover > Y_MAX) parts.push(previous.cover >= 100 ? "100x超" : `${previous.cover >= 10 ? previous.cover.toFixed(0) : previous.cover.toFixed(2)}x`);
+  return `前回 ${parts.join(" ")}`;
 }
 
 // ---- ticker labels: always beside their own dot, moved up or down (with a thin line back to the dot) when crowded ----
