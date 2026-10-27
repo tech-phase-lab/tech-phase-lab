@@ -54,7 +54,7 @@
 .notificationSwitch[aria-checked=true]{color:#a7efcc}.notificationSwitch[aria-checked=true] .switchTrack{background:#36795f}.notificationSwitch[aria-checked=true] .switchTrack>span{transform:translateX(16px)}
 .notificationSwitch:focus-visible{outline:2px solid #a8d8ff;outline-offset:3px}
 
-.pending{min-height:48px;border-radius:8px;background:#122430}.panel{scroll-margin-top:100px}
+.pending{height:150px;border-radius:8px;background:repeating-linear-gradient(180deg,#122430 0 64px,transparent 64px 78px);animation:frameWait 1.5s ease-in-out infinite}@keyframes frameWait{50%{opacity:.55}}@media(prefers-reduced-motion:reduce){.pending{animation:none}}.panel{scroll-margin-top:100px}
 
 .card .ticker{font-size:14px;min-height:36px;display:inline-flex;align-items:center;justify-content:center;align-self:start}@media(max-width:700px){.card{grid-template-columns:auto minmax(0,1fr);gap:10px}.targetChange strong{font-size:16px;white-space:normal}.body small{margin-top:4px}.ticker{grid-column:1}.body{grid-column:2}}
 
