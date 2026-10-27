@@ -81,3 +81,22 @@ but the user's actual session and owner display still need acceptance. Productio
 lacks RESEARCH_MONITOR_URL/TOKEN; the price-target API requires both. Home shows
 missing data; no news code or Railway connection was changed. Full performance
 resolution is not claimed.
+
+Account recovery deployment receipt: commit `733af152bc24ae238aea29a37df67ad5e76e4d94`,
+Production `dpl_DSPRDgNUx1DeBBqwfijFRCY6HHTd` READY. Preview branch alias assigned
+back to Preview `dpl_FkjmpzPSW5uYiVQhhL9RKP7zkZcA`. Production `/research/account`
+returned HTTP 200 after deploy. Local gates: lint (9 existing warnings), Node
+1593/1593, Python 2648/2648, build, compileall and diff check passed. No authenticated
+owner browser acceptance yet; incomplete production backend configuration remains.
+
+## Continuing production authentication investigation
+
+Owner reports the same membership error in a fresh Chrome incognito session.
+Direct member API response is signed-out, not a verified FREE membership. Stale
+browser state is not established as the cause. The account redirect guard does
+not resolve the underlying authentication failure.
+
+Add fixed-category diagnostics to the membership API: middleware auth status,
+known reason codes, cookie-presence booleans (never values), and elapsed time.
+Caught failures log only the stage and duration, never raw errors or credentials.
+This is instrumentation, not proof of a repaired login or faster production site.
