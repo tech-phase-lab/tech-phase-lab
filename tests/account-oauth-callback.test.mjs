@@ -14,6 +14,8 @@ const compiled = ts.transpileModule(source, { compilerOptions: {
 } }).outputText;
 let clientSnapshot = true;
 let signedIn = false;
+let effects = [];
+let recoveryCalls = 0;
 let hash = '';
 let returnPath = null;
 let signInProps, signUpProps;
@@ -21,7 +23,7 @@ let callbackProps;
 const target = { exports: {} };
 new Function('require', 'module', 'exports', 'window', compiled)(id => {
   if (id === '@/lib/research/account-return') return accountReturn;
-  if (id === 'react') return { ...React, useSyncExternalStore: (_subscribe, snapshot, serverSnapshot) => clientSnapshot ? snapshot() : serverSnapshot() };
+  if (id === 'react') return { ...React, useEffect: fn => { effects.push(fn); }, useSyncExternalStore: (_subscribe, snapshot, serverSnapshot) => clientSnapshot ? snapshot() : serverSnapshot() };
   if (id === '@clerk/nextjs') return {
     useAuth: () => ({ isLoaded: true, isSignedIn: signedIn }),
     SignIn: props => { signInProps = props; return React.createElement('p', null, 'Sign in'); },
@@ -33,7 +35,7 @@ new Function('require', 'module', 'exports', 'window', compiled)(id => {
   if (id === 'next/link') return { default: ({ children }) => children };
   if (id === '../research-tool-shell') return { default: ({ children }) => children };
   if (id === '../use-research-language') return { useResearchLanguage: () => ['ja', () => {}] };
-  if (id === '@/lib/research/member-recovery') return { recoverMember: () => { throw Error('Unexpected effect'); } };
+  if (id === '@/lib/research/member-recovery') return { recoverMember: () => { recoveryCalls++; return new Promise(() => {}); } };
   if (id === '../identity-provider') return { useIdentityRefresh: () => async () => {} };
   if (id === './preview-controls') return { default: () => null };
   return require(id);
@@ -95,4 +97,17 @@ test('an established client session waits for membership instead of mounting red
     renderToStaticMarkup(React.createElement(target.exports.default, {status:'signed-out',plan:'free',signingUp:true}));
     assert.equal(signUpProps, undefined);
   } finally { signedIn = false; }
+});
+
+test('signed-out account never waits for token renewal or replaces login with a membership error', () => {
+  signedIn = false; effects = []; recoveryCalls = 0;
+  const html = renderToStaticMarkup(React.createElement(target.exports.default, {
+    status:'signed-out',plan:'free',
+    initialMember:{status:'unavailable',plan:'free',isAdmin:false,ownerMode:false,canTest:false,testing:false}
+  }));
+  const cleanups = effects.map(fn => fn());
+  assert.equal(recoveryCalls, 0);
+  assert.match(html, /Sign in/);
+  assert.doesNotMatch(html, /会員情報を確認できませんでした/);
+  for (const cleanup of cleanups) cleanup?.();
 });

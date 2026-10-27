@@ -31,11 +31,16 @@ function AccountContent({ status, plan, signingUp = false, initialMember, billin
   const [lang, setLang] = useResearchLanguage(); const ja = lang === "ja";
   const { isLoaded, isSignedIn } = useAuth();
   const returnTo = useAccountReturn();
-  const [member, setMember] = useState(initialMember ?? {status, plan, isAdmin: false, ownerMode: false, canTest: false, testing: false});
+  const [verifiedMember, setMember] = useState(initialMember ?? {status, plan, isAdmin: false, ownerMode: false, canTest: false, testing: false});
+  // Server hints may be signed-out while Clerk JS is still starting. Do not renew
+  // a nonexistent session or replace the sign-in form with a membership error.
+  const member: Member = isLoaded && isSignedIn === false
+    ? {status:"signed-out",plan:"free",isAdmin:false,ownerMode:false,canTest:false,testing:false}
+    : verifiedMember;
   const refreshIdentity = useIdentityRefresh();
   const [retry, setRetry] = useState(0);
   useEffect(() => {
-    if (!isLoaded) return;
+    if (!isLoaded || !isSignedIn) return;
     const controller = new AbortController();
     recoverMember(refreshIdentity, AbortSignal.any([controller.signal, AbortSignal.timeout(10_000)]), true)
       .then(({ response, member }) => { if (!response.ok || (isSignedIn && member.status === "signed-out")) throw new Error("membership"); return member; })

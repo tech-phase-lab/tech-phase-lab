@@ -100,3 +100,21 @@ Add fixed-category diagnostics to the membership API: middleware auth status,
 known reason codes, cookie-presence booleans (never values), and elapsed time.
 Caught failures log only the stage and duration, never raw errors or credentials.
 This is instrumentation, not proof of a repaired login or faster production site.
+
+Diagnostics deployed as `816ba11ec80bc04fe5ae4e7ce338dc881ab59af3`, Production
+`dpl_A1bfsZxTy6ExQKDvWZXoNxQ3m5j6` READY; Preview alias restored to
+`dpl_ECPPEfgk9VTukBkX8njtppAfuuad`. Gates: Node1595, Python2648, lint/build/compileall.
+Observed public production requests had no session cookie, middleware reason
+session-token-and-uat-missing, and membership handler duration 0–6ms. These logs
+have no user identifier and are not definitive attribution to the owner's session.
+Public Clerk environment and shipped browser bundle both identify the Production
+techphase.app instance. Its home/return domain is correct.
+
+Startup correction: Clerk useAuth can report isLoaded=true from signed-out server
+hints before Clerk JS is ready; getToken waits for SDK readiness. The account
+previously renewed even signed-out sessions, then replaced the sign-in widget on
+the ten-second timeout. Skip session renewal and account membership recovery while
+signed out; retain the login form. When the SDK establishes a signed-in session,
+normal server verification resumes. Never infer owner/PRO from browser state.
+Regression tests cover signed-out startup, no-token-call behavior, signed-in renewal
+deduplication, and the previous account redirect race. End-user acceptance pending.
