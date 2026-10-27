@@ -29,13 +29,5 @@ export function effectiveHash(): string {
   return window.location.hash;
 }
 
-/** Open the home view's RIZEL'S DESK block from a menu on the home page (owner, Oct 27: it used to do nothing or land on the 22-stock list). */
-export function showDesk() {
-  if (typeof window === "undefined") return;
-  window.history.pushState(null, "", "/research#rizels-desk");
-  rememberHash("#rizels-desk");
-  window.dispatchEvent(new HashChangeEvent("hashchange"));
-}
-
 /** Test hook. */
 export function resetRememberedHash() { remembered = null; }

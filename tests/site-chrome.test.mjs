@@ -113,7 +113,7 @@ test("menu follows the owner's design: navy FREE, black-and-gold PRO, one struct
   assert.match(menu, /className=\{styles\.manage\} href="\/research\/account"/);
   // FREE: navy; members: black and gold. Members get the PRO tiles (2 x 2) and Mobile alerts; FREE lists no PRO function.
   assert.match(menu, /`\$\{styles\.sheet\} \$\{styles\.luxe\}` : `\$\{styles\.sheet\} \$\{styles\.navy\}`/);
-  for (const href of ["/research#rizels-desk", "/research#monitored-companies", "/research/themes", "/research/compare"]) assert.ok(menu.includes(`tile("${href}"`), href);
+  for (const href of ["/research/notes", "/research#monitored-companies", "/research/themes", "/research/compare"]) assert.ok(menu.includes(`tile("${href}"`), href);
   assert.match(menu, /\{member && <div className=\{styles\.grp\}>\s*\{heading\(ja \? "PRO機能" : "PRO features", true\)\}/);
   assert.match(menu, /\{member && item\("\/research\/notifications", "bell", alerts\)\}/);
   assert.doesNotMatch(menu, /item\("\/research\/(themes|compare)"|item\("\/research#(rizels-desk|monitored-companies)"/);

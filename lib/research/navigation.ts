@@ -17,7 +17,5 @@ export function researchViewFromHash(hash: string): ResearchView | null {
   if (hash === "#saved") return "saved";
   if (hash === "#monitored-companies") return "companies";
   if (hash === "#tech-phase-pro") return "pro";
-  // RIZEL'S DESK is a block of the home view: the home view opens and the page scrolls to it.
-  if (hash === "#rizels-desk") return "home";
   return null;
 }

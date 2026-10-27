@@ -74,10 +74,6 @@ export default function ResearchDashboard({ events, monitoredCompanies, initialN
   useEffect(() => {
     const syncHash = () => {
       const next = researchViewFromHash(effectiveHash());
-      if (effectiveHash() === "#rizels-desk") {
-        // The desk block exists only once the home view is drawn: wait two frames, then bring it to the top.
-        requestAnimationFrame(() => requestAnimationFrame(() => document.getElementById("rizels-desk")?.scrollIntoView({ block: "start" })));
-      }
       if (next) {
         if (next === "saved") {
           const id = window.history.state?.techPhaseSavedArticle;
