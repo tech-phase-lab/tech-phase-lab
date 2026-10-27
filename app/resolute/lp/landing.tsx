@@ -62,7 +62,7 @@ export default function Landing({ embedded = false }: { embedded?: boolean }) {
    <section className={s.sec}>
     <p className={s.eyebrow}>WHAT IS RESOLUTE</p>
     <h2 className={s.h2}>どんな相場でも<br />冷静に立ち回れる自分へ。</h2>
-    <p className={s.body}>RESOLUTEは相場が荒れた日に冷静に立ち回るためのキットです。30問の診断で自分だけのルールを作り、毎日目に入る場所に置いておく。相場が大きく動いた日はアラートが知らせてくれるので、感情で売り買いする前に立ち止まれます。</p>
+    <p className={s.body}>RESOLUTEは相場が荒れる日でも冷静に立ち回るためのキットです。30問の診断で自分だけのルールを作り、壁紙と一冊の本にしていつも手元に置いておく。決めたラインに株価が届けばアラートが知らせてくれるので、感情で売り買いする前に立ち止まれます。</p>
     <p className={s.pull}>暴落が来ても<br />もう慌てない。</p>
     <ol className={s.steps}>
      <li><span>01</span><b>決める</b><p>30問の診断であなたのルールができあがる</p></li>
@@ -105,7 +105,7 @@ export default function Landing({ embedded = false }: { embedded?: boolean }) {
      <p className={s.groupNo}>03 <b>知らせる</b></p>
      <AlertSample />
      <div className={s.thermo} aria-hidden="true"><p className={s.thermoWord}>やや熱い</p><p className={s.thermoIdx}>NASDAQ100</p><div className={s.track}><i style={{ left: "66%" }} /></div><p className={s.thermoEnds}><span>冷えている</span><span>熱い</span></p></div>
-     <Feature title="終値アラート" text="下落のラインや上昇の目安に届いた銘柄があれば、終値でメールが届きます。画面を見張る必要はありません。" />
+     <Feature title="終値アラート" text="自分で決めたラインに到達すると、選んだ朝の時間にメールでお知らせします。画面を見張る必要はありません。" />
      <Feature title="翌朝のひとこと" text="アラートが届いた翌朝に1通だけ。ひと晩おいた頭で読み返せます。" />
      <Feature title="相場の温度計" text="いまの相場が冷えているか熱いかを5段階で表示します。急騰で浮かれそうな日にも役立ちます。" />
     </div>

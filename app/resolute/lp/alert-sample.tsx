@@ -7,7 +7,7 @@ export default function AlertSample() {
  const [open, setOpen] = useState(false);
  return <div className={s.alert}>
   <button type="button" className={s.push} aria-expanded={open} aria-controls="lp-alert-mail" onClick={() => setOpen(true)} hidden={open}>
-   <span className={s.pushHead}><b>RESOLUTE ・ 終値アラート</b><time>6:02</time></span>
+   <span className={s.pushHead}><b>RESOLUTE ・ 終値アラート</b><time>7:00</time></span>
    <span className={s.pushTitle}>計画のラインに届いた銘柄があります</span>
    <span className={s.pushBody}>NVDA −10.2% ・ PLTR +41.5%</span>
    <small className={s.tap}>タップして詳細を見る</small>
