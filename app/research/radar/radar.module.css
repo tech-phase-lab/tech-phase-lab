@@ -58,3 +58,5 @@
 .beyond { font-size: 8px; fill: #9fb0c2; font-weight: 500; }
 .order { margin: -4px 0 2px; font-size: 11px; color: #7b8897; }
 .review { margin-right: 4px; padding: 0 4px; border: 1px solid rgba(224, 194, 122, .5); border-radius: 999px; font-size: 8.5px; font-weight: 500; color: #e0c27a; font-family: inherit; letter-spacing: 0; vertical-align: 1px; }
+.skeleton { aspect-ratio: 340 / 316; border-radius: 12px; background: linear-gradient(180deg, #0d1620, #09111a); }
+.rankWait { margin-top: 24px; min-height: 150px; border-radius: 16px; background: #070b10; }

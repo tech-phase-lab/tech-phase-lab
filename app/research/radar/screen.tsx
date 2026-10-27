@@ -1,30 +1,44 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import ResearchToolShell from "../research-tool-shell";
 import { useResearchLanguage } from "../use-research-language";
 import { arrow, radarGenres, zoneName, zoneOf, xPosition, yPosition, type RadarDotPro, type RadarGenreId, type RadarPayload } from "@/lib/research/radar";
 import RadarChart, { fmtCover, fmtPercent } from "./chart";
 import styles from "./radar.module.css";
 
-type Loaded = { genre: RadarGenreId; radar: RadarPayload } | "error";
 const growthText = (g: number | null) => g === null ? "売上 —" : Math.abs(g) < 0.5 ? "売上 ±0%" : `売上 ${g > 0 ? "+" : "−"}${Math.abs(g).toFixed(0)}%`;
 const monthOf = (date: string | null) => { const m = date ? /^(\d{4})-(\d{2})/.exec(date) : null; return m ? `${m[1]}年${Number(m[2])}月時点` : ""; };
 const Arrow = ({ kind }: { kind: "up" | "down" | null }) => kind ? <i className={kind === "up" ? styles.up : styles.down} aria-label={kind === "up" ? "前回より上昇" : "前回より低下"}>{kind === "up" ? "↑" : "↓"}</i> : null;
 
-export default function RadarScreen() {
+type Payloads = Partial<Record<RadarGenreId, RadarPayload>>;
+
+export default function RadarScreen({ initial }: { initial: RadarPayload | null }) {
   const [lang, setLang] = useResearchLanguage();
   const [genre, setGenre] = useState<RadarGenreId>(radarGenres[0].id);
-  const [loaded, setLoaded] = useState<Loaded | null>(null);
+  // The page arrives with the first genre's dots (FREE view). The API then confirms the plan and adds the PRO parts.
+  const [payloads, setPayloads] = useState<Payloads>(() => initial ? { [initial.genre]: initial } : {});
+  const [confirmed, setConfirmed] = useState(false);
+  const [failed, setFailed] = useState<RadarGenreId | null>(null);
   const [selected, setSelected] = useState<string | null>(null);
+  const requested = useRef(new Set<RadarGenreId>());
+  const request = useCallback(async (id: RadarGenreId) => {
+    if (requested.current.has(id)) return;
+    requested.current.add(id);
+    try {
+      const response = await fetch(`/api/research/radar?genre=${id}`, { cache: "no-store" });
+      const body = await response.json() as { ok: boolean; radar?: RadarPayload };
+      if (!body.ok || !body.radar) throw new Error("radar");
+      setPayloads(current => ({ ...current, [id]: body.radar }));
+      setConfirmed(true);
+    } catch { requested.current.delete(id); setFailed(id); }
+  }, []);
+  // The tab in view first, then the other genres one by one in the background, so that switching is instant.
+  useEffect(() => { setFailed(null); void request(genre); }, [genre, request]);
   useEffect(() => {
-    const controller = new AbortController();
-    fetch(`/api/research/radar?genre=${genre}`, { cache: "no-store", signal: controller.signal })
-      .then(response => response.json() as Promise<{ ok: boolean; radar?: RadarPayload }>)
-      .then(body => setLoaded(body.ok && body.radar ? { genre, radar: body.radar } : "error"))
-      .catch(error => { if ((error as Error).name !== "AbortError") setLoaded("error"); });
-    return () => controller.abort();
-  }, [genre]);
-  const radar = loaded && loaded !== "error" && loaded.genre === genre ? loaded.radar : null;
+    if (!confirmed) return;
+    void (async () => { for (const item of radarGenres) await request(item.id); })();
+  }, [confirmed, request]);
+  const radar = payloads[genre] ?? null;
   const pro = radar?.tier === "pro" ? radar : null;
   const ranked = pro ? pro.dots.filter(dot => dot.rank !== null).sort((a, b) => a.rank! - b.rank!) : [];
   const review = pro ? pro.dots.filter(dot => dot.review) : [];
@@ -36,8 +50,8 @@ export default function RadarScreen() {
       <div className={styles.tabs} role="group" aria-label="ジャンル">
         {radarGenres.map(item => <button type="button" key={item.id} aria-pressed={item.id === genre} className={item.id === genre ? styles.on : ""} onClick={() => { setGenre(item.id); setSelected(null); }}>{item.ja}</button>)}
       </div>
-      {loaded === "error" ? <p className={styles.note} role="alert">数値を取得できませんでした。しばらくしてからもう一度お試しください。</p>
-        : !radar ? <p className={styles.note} role="status">開示資料を読み込み中…</p>
+      {!radar && failed === genre ? <p className={styles.note} role="alert">数値を取得できませんでした。しばらくしてからもう一度お試しください。</p>
+        : !radar ? <section className={styles.card} aria-hidden="true"><div className={styles.skeleton} /></section>
         : <>
           <section className={styles.card}>
             <p className={styles.axisY}>↑ 守る力 ｜ 現金÷(借入+リース)</p>
@@ -59,7 +73,7 @@ export default function RadarScreen() {
             {pro.missing.length > 0
               ? <details className={styles.missing}><summary>データが足りない銘柄 ・ {pro.missing.length}件</summary><p>{pro.missing.join("　")}</p></details>
               : <p className={styles.missing}>データが足りない銘柄 ・ 0件</p>}
-          </section> : <section className={styles.locked} aria-label="PRO限定">
+          </section> : !confirmed ? <section className={styles.rankWait} aria-hidden="true" /> : <section className={styles.locked} aria-label="PRO限定">
             <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2" /><path d="M8 11V8a4 4 0 0 1 8 0v3" /></svg>
             <span>PRO限定</span>
           </section>}
