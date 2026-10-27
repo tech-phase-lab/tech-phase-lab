@@ -1,6 +1,6 @@
 /** Financial Radar numbers from SEC "company facts" (standard us-gaap tags), tolerant of how companies name things.
  *
- *  - Free cash flow = operating cash flow - capital expenditure, as a share of revenue.
+ *  - Earning power = operating cash flow as a share of revenue; free cash flow (minus capital expenditure) is kept for the detail.
  *  - Staying power = cash and short-term investments / (borrowings + lease liabilities), at the balance date.
  *  - Flows use the latest fiscal year when the balance date is a year end, otherwise the trailing four quarters
  *    (last fiscal year + this year to date - last year's same period). Which one was used is recorded.
@@ -17,7 +17,9 @@ export type RadarSnapshot = {
   /** "annual" when a full fiscal year ends on that date, "ttm" for the trailing four quarters. */
   basis: "annual" | "ttm";
   revenue: number;
-  /** Free cash flow as a percentage of revenue. */
+  /** Operating cash flow as a percentage of revenue (the "earning power" axis). */
+  ocfMargin: number;
+  /** Free cash flow (operating cash flow - capital expenditure) as a percentage of revenue. */
   fcfMargin: number;
   /** Cash and short-term investments divided by borrowings plus lease liabilities. */
   cover: number;
@@ -128,6 +130,7 @@ function snapshotAt(data: CompanyFacts, end: string): RadarSnapshot | null {
     const before = twelveMonths(data, [tag], shift(end, -364));
     return {
       end, basis: now.basis, revenue: now.value,
+      ocfMargin: operating.value / now.value * 100,
       fcfMargin: (operating.value - Math.abs(capex.value)) / now.value * 100,
       cover: owed > 0 ? cash / owed : Number.POSITIVE_INFINITY,
       revenueGrowth: before && before.value > 0 ? (now.value / before.value - 1) * 100 : null,
