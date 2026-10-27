@@ -2883,3 +2883,28 @@ October 22 user report in TECH-PHASE-INCIDENT-HANDOFF-2026-10-22.md is historica
 not a replacement for later rotations or confirmed R2 recovery. Do not repeat
 completed setup. Live PRO acceptance still waits for runtime availability.
 News/earnings acquisition, RESOLUTE implementation and main are outside scope.
+
+## 2026-10-27 — Account and PayPal security hardening
+
+User requested the 17-item security audit and explicitly authorized continuing past blockers.
+Baseline a1308eda on codex/research-preview. Full findings and activation order:
+[SECURITY-ACCOUNT-PAYPAL-2026-10-27.md](SECURITY-ACCOUNT-PAYPAL-2026-10-27.md).
+Added Clerk security settings entry, conditional MFA checks for common membership
+admin paths and PRO sandbox entry, account/payment response headers, shared PRO Live
+checkout limits, pseudonymous alert outbox, and an inactive notification worker.
+The admin MFA flag is NOT enabled. Clerk lockout/reset/enumeration/MFA dashboard
+settings remain unverified. RESOLUTE-specific owner checks still need MFA coverage;
+news-related code belongs to Claude and was not modified. Clerk's SDK session cookie
+is not HttpOnly, so the requested all-cookie rule remains unmet.
+PRO Live rate limits/alerts require migration 007 BEFORE service rollout and a
+configured notification destination/worker. None of those runtime changes were
+performed. No Railway connection, reauthentication, purchase, external notification,
+main update, or force push. Vercel environment metadata was inspected without
+reading decrypted values; Live payment configuration was absent there.
+Do not mark provider setup, admin MFA enforcement or billing alert delivery complete
+based on the presence of this code. Existing PII exports/log retention also need review.
+
+Final integrated checks passed: Node 1,561 + Python 2,648; lint 0 errors / 9 existing
+warnings; production build/typecheck, compileall and diff check. New security tests
+cover shared DB concurrency, retries, MFA membership integration and non-admin
+sandbox tester compatibility. These checks do not verify the blocked live settings.

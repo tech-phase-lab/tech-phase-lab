@@ -16,6 +16,7 @@ export function liveHandler({env,identity,services}){
  return async(request,action)=>{
   const notifications=action==='webhook'&&env.VERCEL_ENV==='production'&&env.TECH_PHASE_PAYPAL_ENV==='live'&&env.TECH_PHASE_BILLING_LIVE_WEBHOOK_ENABLED==='true';
   if(!liveEnabled(env)&&!notifications)return response({error:'billing-disabled'},503);
+  let checkoutUser,checkoutServices;
   try{
    if(action==='webhook'){
     if(!notifications)return response({error:'billing-disabled'},503);
@@ -30,6 +31,7 @@ export function liveHandler({env,identity,services}){
    if(action==='create'&&!liveSalesEnabled(env))return response({error:'billing-disabled'},503);
    if(action==='status')return response(await(await services()).store.summary(userId));
    if(action==='entitlement')return response(await(await services()).store.entitlement(userId));
+   if(action==='create'){checkoutUser=userId;checkoutServices=await services();await checkoutServices.abuse?.attempt(userId);}
    const body=await readBody(request,2048),keys=action==='create'?['currency','acceptedTerms']:['id'];
    if(Object.keys(body).length!==keys.length||keys.some(key=>!Object.hasOwn(body,key))||
     (action==='create'?!['JPY','USD'].includes(body.currency)||body.acceptedTerms!=='pro-live-v1':!uuid.test(body.id??'')))return response({error:'input'},400);
@@ -39,6 +41,9 @@ export function liveHandler({env,identity,services}){
    return response(await svc.reconciliation.reconcile(userId,body.id));
   }catch(error){
    const code=error?.message;
+   if(code==='RATE_LIMITED')return new Response(JSON.stringify({error:'rate-limited'}),{status:429,headers:{'Content-Type':'application/json','Cache-Control':'no-store','Retry-After':String(Math.min(600,Math.max(1,error.retryAfter||600)))}});
+   if(checkoutUser && checkoutServices?.abuse)try{await checkoutServices.abuse.failure(checkoutUser);}catch{ /* No raw exception, credentials or request body in logs. */ }
+
    if(code==='INVALID_SIGNATURE')return response({error:'signature'},401);
    if(['INVALID_INPUT','INVALID_EVENT'].includes(code))return response({error:'input'},400);
    if(code==='SUBSCRIPTION_NOT_FOUND')return response({error:'not-found'},404);
