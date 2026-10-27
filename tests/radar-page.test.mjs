@@ -7,7 +7,7 @@ const screen = read("../app/research/radar/screen.tsx") + read("../app/research/
 
 test("the page carries the owner's wording", () => {
   for (const text of ["FINANCIAL RADAR", "財務レーダー", "稼ぐ力と守る力を、ジャンルごとに1枚で見比べます。点線は前の決算からの動きです。",
-    "↑ 守る力 ｜ 現金÷(借入+リース)", "稼ぐ力 ｜ 売上に対するフリーキャッシュフロー →", "売上が前年より増加", "減少", "大きさ=売上規模", "点線=前の決算から",
+    "↑ 守る力 ｜ 現金÷(借入+リース)", "稼ぐ力 ｜ 売上に対する営業キャッシュフロー →", "売上が前年より増加", "減少", "大きさ=売上規模", "白抜き=売上の比較なし", "点線=前の決算から", "フリーキャッシュフロー率", "稼ぐ力は営業キャッシュフローの売上に対する割合です。",
     "体力ランキング", "最新の決算 ・", "データが足りない銘柄 ・", "PRO限定", "稼ぐ力", "守る力",
     "数字は米SECの開示資料から計算しています。範囲を超える値はグラフの端に表示します。売買をすすめるものではありません。"]) assert.ok(screen.includes(text), text);
   for (const text of ["盤石", "借入で攻める", "守りで耐える", "余力が小さい"]) assert.ok(read("../lib/research/radar.ts").includes(text), text);
@@ -18,7 +18,7 @@ test("FREE sees the chart only: the locked block says 鍵 and PRO限定 and noth
   assert.match(screen, /<section className=\{styles\.locked\} aria-label="PRO限定">\s*<svg[^>]*>.*<\/svg>\s*<span>PRO限定<\/span>\s*<\/section>/s);
   assert.match(screen, /onSelect=\{pro \? setSelected : undefined\}/);
   assert.match(screen, /\{pro && <li><b aria-hidden="true">┈<\/b>点線=前の決算から<\/li>\}/);
-  assert.match(screen, /isPro\(dot\) && dot\.previous/);
+  assert.match(screen, /!isPro\(dot\) \|\| !dot\.previous/);
 });
 
 test("the server decides PRO and a FREE caller is sent the dots only", () => {
@@ -43,4 +43,13 @@ test("the menu lists 財務レーダー under Research, after 資本マップ, a
 
 test("the old health map address leads to the radar", () => {
   assert.match(read("../app/research/health/page.tsx"), /redirect\("\/research\/radar"\)/);
+});
+
+test("the free-cash-flow ratio is only in the tapped detail; the axis, bars and ranking use operating cash flow", () => {
+  const chart = read("../app/research/radar/chart.tsx"), screen = read("../app/research/radar/screen.tsx");
+  assert.equal((chart.match(/fcfMargin/g) ?? []).length, 1); // the detail line only
+  assert.ok(!screen.includes("fcfMargin"));
+  assert.ok(screen.includes("xPosition(dot.ocfMargin)"));
+  assert.match(chart, /TRAIL_MIN = 6/);
+  assert.match(chart, /Math\.hypot\(x2 - x1, y2 - y1\) < TRAIL_MIN\) return null/);
 });

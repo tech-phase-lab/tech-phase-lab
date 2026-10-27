@@ -24,6 +24,7 @@ test("a fiscal year end uses the whole year: free cash flow = operating cash flo
   assert.equal(result.latest?.end, "2025-12-31");
   assert.equal(result.latest?.basis, "annual");
   assert.equal(result.latest?.fcfMargin, 20);
+  assert.equal(result.latest?.ocfMargin, 30);       // operating cash flow 30 on revenue 100
   assert.equal(result.latest?.cover, 2);            // (50 + 10) / (20 + 5 + 5)
   assert.equal(result.latest?.revenueGrowth, 25);   // 100 / 80
   assert.equal(result.previous?.end, "2024-12-31"); assert.equal(result.previous?.fcfMargin, 15);

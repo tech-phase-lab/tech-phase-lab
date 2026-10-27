@@ -25,6 +25,7 @@
 .legend { display: flex; flex-wrap: wrap; gap: 6px 14px; margin: 10px 6px 0; padding: 0; list-style: none; font-size: 11px; color: #9aa8b8; }
 .legend li { display: flex; align-items: center; gap: 6px; }
 .legend i { width: 9px; height: 9px; border-radius: 50%; display: inline-block; }
+.legend .hollow { background: transparent; border: 1.6px solid; width: 10px; height: 10px; }
 .legend b { letter-spacing: -1px; color: #8fa3b8; font-weight: 400; }
 .ranking { margin-top: 24px; display: flex; flex-direction: column; gap: 10px; }
 .ranking header { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; }
@@ -53,3 +54,5 @@
 .locked svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
 .locked span { font-size: 14px; letter-spacing: .12em; }
 .foot { margin: 16px 2px 0; font-size: 11.5px; line-height: 1.8; color: #7b8897; }
+.leader { stroke: #7f90a6; stroke-width: .7; opacity: .9; }
+.beyond { font-size: 8px; fill: #9fb0c2; font-weight: 500; }

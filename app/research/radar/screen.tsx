@@ -41,11 +41,12 @@ export default function RadarScreen() {
           <section className={styles.card}>
             <p className={styles.axisY}>↑ 守る力 ｜ 現金÷(借入+リース)</p>
             <RadarChart dots={radar.dots} selected={pro ? selected : null} onSelect={pro ? setSelected : undefined} />
-            <p className={styles.axisX}>稼ぐ力 ｜ 売上に対するフリーキャッシュフロー →</p>
+            <p className={styles.axisX}>稼ぐ力 ｜ 売上に対する営業キャッシュフロー →</p>
             <ul className={styles.legend}>
               <li><i style={{ background: "#59d6a6" }} />売上が前年より増加</li>
               <li><i style={{ background: "#f08a8a" }} />減少</li>
-              <li><i style={{ background: "#8a95a3" }} />大きさ=売上規模</li>
+              <li><i className={styles.hollow} style={{ borderColor: "#cfd8e3" }} />大きさ=売上規模</li>
+              <li><i className={styles.hollow} style={{ borderColor: "#59d6a6" }} />白抜き=売上の比較なし</li>
               {pro && <li><b aria-hidden="true">┈</b>点線=前の決算から</li>}
             </ul>
           </section>
@@ -61,20 +62,20 @@ export default function RadarScreen() {
           </section>}
         </>}
       <p className={styles.foot}>数字は米SECの開示資料から計算しています。範囲を超える値はグラフの端に表示します。売買をすすめるものではありません。</p>
-      <p className={styles.foot}>現金は現金同等物と短期の投資、借入は短期・長期の借入とリース負債の合計です。売上や現金の流れは、年の決算の日は1年分、それ以外は直近4四半期分を使います。</p>
+      <p className={styles.foot}>稼ぐ力は営業キャッシュフローの売上に対する割合です。守る力の現金は現金同等物と短期の投資、借入は短期・長期の借入とリース負債の合計です。売上や現金の流れは、年の決算の日は1年分、それ以外は直近4四半期分を使います。</p>
     </div>
   </ResearchToolShell>;
 }
 
 function RankCard({ dot }: { dot: RadarDotPro }) {
-  const zone = zoneOf(dot.fcfMargin, dot.cover);
+  const zone = zoneOf(dot.ocfMargin, dot.cover);
   const g = dot.growth;
   return <article className={styles.rank}>
     <div className={styles.rankTop}>
       <b>{dot.ticker}</b><span className={`${styles.chip} ${styles[zone]}`}>{zoneName[zone]}</span>
       <em className={g === null || Math.abs(g) < 0.5 ? styles.flat : g > 0 ? styles.up : styles.down}>{growthText(g)}</em>
     </div>
-    <div className={styles.bar}><span>稼ぐ力</span><div><u className={styles.fcf} style={{ width: `${Math.max(3, xPosition(dot.fcfMargin) * 100)}%` }} /></div><strong>{fmtPercent(dot.fcfMargin)} <Arrow kind={arrow(dot.fcfMargin, dot.previous?.fcfMargin)} /></strong></div>
+    <div className={styles.bar}><span>稼ぐ力</span><div><u className={styles.fcf} style={{ width: `${Math.max(3, xPosition(dot.ocfMargin) * 100)}%` }} /></div><strong>{fmtPercent(dot.ocfMargin)} <Arrow kind={arrow(dot.ocfMargin, dot.previous?.ocfMargin)} /></strong></div>
     <div className={styles.bar}><span>守る力</span><div><u className={styles.cover} style={{ width: `${Math.max(3, yPosition(dot.cover) * 100)}%` }} /></div><strong>{fmtCover(dot.cover)} <Arrow kind={arrow(dot.cover, dot.previous?.cover)} /></strong></div>
   </article>;
 }
