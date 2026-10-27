@@ -123,10 +123,11 @@ function snapshotAt(data: CompanyFacts, end: string): RadarSnapshot | null {
   const cash = cashAt(data, end), owed = owedAt(data, end);
   if (cash === null || cash < 0 || owed === null || owed < 0) return null;
   const operating = twelveMonths(data, OPERATING_CASH, end), capex = twelveMonths(data, CAPEX, end);
-  if (!operating || !capex) return null;
+  if (!operating || !capex || operating.basis !== capex.basis) return null;
   for (const tag of REVENUE) {
     const now = twelveMonths(data, [tag], end);
-    if (!now || now.value <= 0) continue;
+    // Revenue and cash flow must cover exactly the same twelve months: both the fiscal year, or both the trailing four quarters.
+    if (!now || now.value <= 0 || now.basis !== operating.basis) continue;
     const before = twelveMonths(data, [tag], shift(end, -364));
     return {
       end, basis: now.basis, revenue: now.value,

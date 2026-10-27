@@ -76,3 +76,13 @@ test("an amended restatement replaces the original figure", () => {
   t.NetCashProvidedByUsedInOperatingActivities.units.USD.push({ ...row("2025-12-31", 40, "2025-01-01", "10-K/A"), filed: "2027-01-30" });
   assert.equal(radarFacts(data, NOW).latest?.fcfMargin, 30);
 });
+
+test("revenue, operating cash flow and capex must cover the same twelve months", () => {
+  // Operating cash flow is only known as a fiscal year while revenue has a newer year-to-date: no mixing of periods.
+  const data = yearEnd(), t = data.facts["us-gaap"];
+  t.RevenueFromContractWithCustomerExcludingAssessedTax.units.USD.push(row("2026-06-30", 60, "2026-01-01"), row("2025-06-30", 45, "2025-01-01"), row("2025-06-30", 90, "2024-07-01", "10-K"));
+  for (const tag of ["CashAndCashEquivalentsAtCarryingValue", "ShortTermInvestments", "LongTermDebtNoncurrent", "DebtCurrent", "OperatingLeaseLiability"]) t[tag].units.USD.push(row("2026-06-30", t[tag].units.USD[0].val, undefined));
+  const result = radarFacts(data, NOW);
+  assert.equal(result.latest?.end, "2025-12-31");   // 2026-06-30 has revenue to date but no matching cash flow
+  assert.equal(result.latest?.basis, "annual");
+});

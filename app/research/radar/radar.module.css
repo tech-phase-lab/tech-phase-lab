@@ -40,7 +40,7 @@
 .lever { color: #e0c27a; border-color: rgba(224, 194, 122, .45); background: rgba(224, 194, 122, .08); }
 .guard { color: #8fbfe6; border-color: rgba(143, 191, 230, .45); background: rgba(143, 191, 230, .08); }
 .thin { color: #f19a9a; border-color: rgba(241, 154, 154, .45); background: rgba(241, 154, 154, .08); }
-.bar { display: grid; grid-template-columns: 44px 1fr 92px; align-items: center; gap: 10px; font-size: 12px; color: #9aa8b8; }
+.bar { display: grid; grid-template-columns: 44px 1fr 100px; align-items: center; gap: 10px; font-size: 12px; color: #9aa8b8; }
 .bar div { height: 6px; border-radius: 4px; background: #17212d; overflow: hidden; }
 .bar u { display: block; height: 100%; border-radius: 4px; }
 .fcf { background: linear-gradient(90deg, #2f9f7c, #59d6a6); }
@@ -56,3 +56,7 @@
 .foot { margin: 16px 2px 0; font-size: 11.5px; line-height: 1.8; color: #7b8897; }
 .leader { stroke: #7f90a6; stroke-width: .7; opacity: .9; }
 .beyond { font-size: 8px; fill: #9fb0c2; font-weight: 500; }
+.order { margin: -4px 0 2px; font-size: 11px; color: #7b8897; }
+.review { margin-right: 4px; padding: 0 4px; border: 1px solid rgba(224, 194, 122, .5); border-radius: 999px; font-size: 8.5px; font-weight: 500; color: #e0c27a; font-family: inherit; letter-spacing: 0; vertical-align: 1px; }
+.skeleton { aspect-ratio: 340 / 316; border-radius: 12px; background: linear-gradient(180deg, #0d1620, #09111a); }
+.rankWait { margin-top: 24px; min-height: 150px; border-radius: 16px; background: #070b10; }

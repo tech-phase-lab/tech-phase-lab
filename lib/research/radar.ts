@@ -53,13 +53,28 @@ export type Tone = "up" | "down" | null;
  * `tone` is the colour of that dot: the year-on-year direction, or failing that the direction since the previous earnings. */
 export type RadarDotFree = { ticker: string } & Point & { up: boolean | null; tone: Tone; size: SizeTier };
 /** PRO adds the movement from the previous earnings, the numbers behind the dot and the ranking order. */
-export type RadarDotPro = RadarDotFree & { fcfMargin: number; growth: number | null; asOf: string; basis: "annual" | "ttm"; previous: (Point & { asOf: string }) | null; rank: number };
+export type RadarDotPro = RadarDotFree & { fcfMargin: number; growth: number | null; asOf: string; basis: "annual" | "ttm"; previous: (Point & { asOf: string }) | null;
+  /** Position in the ranking; null for a dot that needs checking (not ranked). */
+  rank: number | null;
+  /** Earning power above 100% usually comes from customers paying in advance, not from the business: it is flagged and left out of the ranking. */
+  review: boolean };
+/** Operating cash flow above this share of revenue is flagged for checking. */
+export const REVIEW_ABOVE = 100;
 export type RadarPayload =
   | { tier: "free"; genre: RadarGenreId; dots: RadarDotFree[] }
   | { tier: "pro"; genre: RadarGenreId; dots: RadarDotPro[]; missing: string[]; asOf: string | null };
 
 const finite = (value: number) => Number.isFinite(value) ? value : 1000; // JSON cannot carry Infinity: 1000x is far beyond the 4x edge
-export const rankScore = (point: Point) => xPosition(point.ocfMargin) + yPosition(point.cover);
+/** Order inside a genre: rank by earning power and rank by staying power, then the average of the two ranks (the lower the better).
+ * Raw numbers are never added. Ties go to the stronger earning power. */
+export function rankByAverage(points: { ticker: string; ocfMargin: number; cover: number }[]): string[] {
+  const rankOf = (value: (point: typeof points[number]) => number) => {
+    const sorted = [...points].sort((a, b) => value(b) - value(a));
+    return Object.fromEntries(sorted.map((point, i) => [point.ticker, i + 1]));
+  };
+  const earning = rankOf(point => point.ocfMargin), staying = rankOf(point => point.cover);
+  return [...points].sort((a, b) => (earning[a.ticker] + staying[a.ticker]) - (earning[b.ticker] + staying[b.ticker]) || earning[a.ticker] - earning[b.ticker]).map(point => point.ticker);
+}
 
 /** Builds the response for one genre. Only a PRO payload ever contains the previous earnings, the numbers or the ranking. */
 export function buildRadar(genre: RadarGenreId, entries: { ticker: string; facts: RadarFacts }[], tier: RadarTier): RadarPayload {
@@ -72,12 +87,12 @@ export function buildRadar(genre: RadarGenreId, entries: { ticker: string; facts
     return { ticker: entry.ticker, ocfMargin: entry.latest.ocfMargin, cover: finite(entry.latest.cover), up: growth === null ? null : growth >= 0, tone, size: sizes[entry.ticker] };
   });
   if (tier === "free") return { tier, genre, dots: base };
-  const score = (entry: typeof ready[number]) => rankScore({ ocfMargin: entry.latest.ocfMargin, cover: finite(entry.latest.cover) });
-  const order = [...ready].sort((a, b) => score(b) - score(a)).map(entry => entry.ticker);
+  const flagged = (entry: typeof ready[number]) => entry.latest.ocfMargin > REVIEW_ABOVE;
+  const order = rankByAverage(ready.filter(entry => !flagged(entry)).map(entry => ({ ticker: entry.ticker, ocfMargin: entry.latest.ocfMargin, cover: finite(entry.latest.cover) })));
   const dots: RadarDotPro[] = ready.map((entry, i) => ({
     ...base[i], fcfMargin: entry.latest.fcfMargin, growth: entry.latest.revenueGrowth, asOf: entry.latest.end, basis: entry.latest.basis,
     previous: entry.previous ? { ocfMargin: entry.previous.ocfMargin, cover: finite(entry.previous.cover), asOf: entry.previous.end } : null,
-    rank: order.indexOf(entry.ticker) + 1,
+    rank: flagged(entry) ? null : order.indexOf(entry.ticker) + 1, review: flagged(entry),
   }));
   const asOf = ready.map(entry => entry.latest.end).sort().at(-1) ?? null;
   return { tier, genre, dots, missing: entries.filter(entry => !entry.facts.latest).map(entry => entry.ticker), asOf };
@@ -125,4 +140,33 @@ export function placeLabels(inputs: LabelInput[], bounds: { left: number; top: n
     placed[input.id] = { ...box, shifted, anchor }; boxes.push(box);
   }
   return placed;
+}
+
+// ---- dots stopped at the edge: spread so that each stays visible ----
+export type EdgeDot = { id: string; x: number; y: number; r: number; edgeX: boolean; edgeY: boolean };
+/** Dots that were stopped at an edge of the plot can land on top of each other. They are nudged along the edge until each one
+ * shows; dots inside the plot keep their exact place. */
+export function spreadEdgeDots(dots: EdgeDot[], bounds: { left: number; top: number; right: number; bottom: number }): Record<string, { x: number; y: number }> {
+  const at = Object.fromEntries(dots.map(dot => [dot.id, { x: dot.x, y: dot.y }]));
+  const movable = (dot: EdgeDot) => dot.edgeX || dot.edgeY;
+  for (let pass = 0; pass < 80; pass++) {
+    let moved = false;
+    for (let i = 0; i < dots.length; i++) for (let j = i + 1; j < dots.length; j++) {
+      const a = dots[i], b = dots[j];
+      if (!movable(a) && !movable(b)) continue;
+      const pa = at[a.id], pb = at[b.id], need = a.r + b.r + 1.5, distance = Math.hypot(pb.x - pa.x, pb.y - pa.y);
+      if (distance >= need) continue;
+      const gap = (need - distance + 0.05) / (movable(a) && movable(b) ? 2 : 1);
+      // A dot on a left/right edge slides up or down; one only on a top/bottom edge slides sideways.
+      const push = (dot: EdgeDot, point: { x: number; y: number }, other: { x: number; y: number }, toward: number) => {
+        if (dot.edgeX) { const sign = point.y === other.y ? toward : Math.sign(point.y - other.y); point.y = clamp(point.y + sign * gap, bounds.top + dot.r, bounds.bottom - dot.r); }
+        else { const sign = point.x === other.x ? toward : Math.sign(point.x - other.x); point.x = clamp(point.x + sign * gap, bounds.left + dot.r, bounds.right - dot.r); }
+      };
+      if (movable(a)) push(a, pa, pb, -1);
+      if (movable(b)) push(b, pb, pa, 1);
+      moved = true;
+    }
+    if (!moved) break;
+  }
+  return at;
 }

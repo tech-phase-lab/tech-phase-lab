@@ -1,6 +1,6 @@
 "use client";
 import { useMemo } from "react";
-import { X_TICKS, Y_TICKS, beyondText, isBeyond, placeLabels, xPosition, yPosition, zoneName, zoneOf, type RadarDotFree, type RadarDotPro, type Zone } from "@/lib/research/radar";
+import { X_TICKS, Y_TICKS, beyondText, isBeyond, placeLabels, spreadEdgeDots, xPosition, yPosition, zoneName, zoneOf, type RadarDotFree, type RadarDotPro, type Zone } from "@/lib/research/radar";
 import styles from "./radar.module.css";
 
 const W = 340, H = 316, L = 46, T = 10, R = 330, B = 282;
@@ -18,9 +18,14 @@ const toneColor = (tone: RadarDotFree["tone"]) => tone === "up" ? GROW : tone ==
 
 export default function RadarChart({ dots, selected, onSelect }: { dots: (RadarDotFree | RadarDotPro)[]; selected: string | null; onSelect?: (ticker: string | null) => void }) {
   const x0 = L + xPosition(0) * (R - L), yMid = B - yPosition(1) * (B - T);
+  // Where each dot is drawn: its exact place, except that dots stopped at an edge are nudged apart so that all stay visible.
+  const where = useMemo(() => spreadEdgeDots(dots.map(dot => ({
+    id: dot.ticker, x: px(dot.ocfMargin, RADIUS[dot.size]), y: py(dot.cover, RADIUS[dot.size]), r: RADIUS[dot.size],
+    edgeX: dot.ocfMargin < X_TICKS[0] || dot.ocfMargin > X_TICKS[X_TICKS.length - 1], edgeY: dot.cover < Y_TICKS[0] || dot.cover > Y_TICKS[Y_TICKS.length - 1],
+  })), { left: L, top: T, right: R, bottom: B }), [dots]);
   // Each zone name sits in its outer corner, or beside the cross lines when a dot would cover the corner.
   const zoneLabels = useMemo(() => {
-    const circles = dots.map(dot => ({ x: px(dot.ocfMargin, RADIUS[dot.size]), y: py(dot.cover, RADIUS[dot.size]), r: RADIUS[dot.size] + 2 }));
+    const circles = dots.map(dot => ({ x: where[dot.ticker].x, y: where[dot.ticker].y, r: RADIUS[dot.size] + 2 }));
     const hits = (box: { x: number; y: number; w: number; h: number }) => circles.filter(c => {
       const nx = Math.min(Math.max(c.x, box.x), box.x + box.w), ny = Math.min(Math.max(c.y, box.y), box.y + box.h);
       return (nx - c.x) ** 2 + (ny - c.y) ** 2 < c.r ** 2;
@@ -35,12 +40,12 @@ export default function RadarChart({ dots, selected, onSelect }: { dots: (RadarD
       const box = options.reduce((best, option) => hits(option) < hits(best) ? option : best);
       return { ...spec, box };
     });
-  }, [dots, x0, yMid]);
+  }, [dots, x0, yMid, where]);
   const extras = useMemo(() => Object.fromEntries(dots.map(dot => [dot.ticker, isBeyond(dot.ocfMargin, dot.cover) ? beyondText(dot.ocfMargin, dot.cover) : ""])), [dots]);
   const labels = useMemo(() => placeLabels(dots.map(dot => {
     const r = RADIUS[dot.size], extra = extras[dot.ticker];
-    return { id: dot.ticker, x: px(dot.ocfMargin, r), y: py(dot.cover, r), r, w: dot.ticker.length * 6.3 + 2 + (extra ? extra.length * 4.7 + 7 : 0) };
-  }), { left: L + 2, top: T + 2, right: R - 2, bottom: B - 2 }, 11, zoneLabels.map(label => label.box)), [dots, zoneLabels, extras]);
+    return { id: dot.ticker, x: where[dot.ticker].x, y: where[dot.ticker].y, r, w: dot.ticker.length * 6.3 + 2 + (extra ? extra.length * 4.7 + 7 : 0) };
+  }), { left: L + 2, top: T + 2, right: R - 2, bottom: B - 2 }, 11, zoneLabels.map(label => label.box)), [dots, zoneLabels, extras, where]);
   const selectedDot = dots.find(dot => dot.ticker === selected);
   return <>
     <svg className={styles.svg} viewBox={`0 0 ${W} ${H}`} role="img" aria-label="横軸が稼ぐ力、縦軸が守る力の散布図" onClick={() => onSelect?.(null)}>
@@ -53,16 +58,16 @@ export default function RadarChart({ dots, selected, onSelect }: { dots: (RadarD
       {zoneLabels.map(label => <text key={label.zone} x={label.box.x} y={label.box.y + 10} className={styles.zone} fill={ZONE_INK[label.zone]}>{zoneName[label.zone]}</text>)}
       {dots.map(dot => {
         if (!isPro(dot) || !dot.previous) return null;
-        const r = RADIUS[dot.size], x1 = px(dot.previous.ocfMargin), y1 = py(dot.previous.cover), x2 = px(dot.ocfMargin, r), y2 = py(dot.cover, r);
+        const x1 = px(dot.previous.ocfMargin), y1 = py(dot.previous.cover), x2 = where[dot.ticker].x, y2 = where[dot.ticker].y;
         if (Math.hypot(x2 - x1, y2 - y1) < TRAIL_MIN) return null;
         return <g key={`p-${dot.ticker}`}>
           <line x1={x1} y1={y1} x2={x2} y2={y2} className={styles.trail} />
           <circle cx={x1} cy={y1} r={2.2} fill={toneColor(dot.tone)} opacity=".7" />
         </g>;
       })}
-      {dots.map(dot => { const box = labels[dot.ticker]; return box?.shifted && <line key={`l-${dot.ticker}`} x1={px(dot.ocfMargin, RADIUS[dot.size])} y1={py(dot.cover, RADIUS[dot.size])} x2={box.anchor.x} y2={box.anchor.y} className={styles.leader} />; })}
+      {dots.map(dot => { const box = labels[dot.ticker]; return box?.shifted && <line key={`l-${dot.ticker}`} x1={where[dot.ticker].x} y1={where[dot.ticker].y} x2={box.anchor.x} y2={box.anchor.y} className={styles.leader} />; })}
       {dots.map(dot => {
-        const r = RADIUS[dot.size], cx = px(dot.ocfMargin, r), cy = py(dot.cover, r), hollow = dot.up === null;
+        const r = RADIUS[dot.size], cx = where[dot.ticker].x, cy = where[dot.ticker].y, hollow = dot.up === null;
         return <g key={dot.ticker} className={onSelect ? styles.tappable : undefined} onClick={event => { event.stopPropagation(); onSelect?.(selected === dot.ticker ? null : dot.ticker); }}>
           {onSelect && <circle cx={cx} cy={cy} r={r + 9} fill="transparent" />}
           {selected === dot.ticker && <circle cx={cx} cy={cy} r={r + 4} fill="none" stroke="#e8eef5" strokeWidth="1" />}
@@ -80,7 +85,7 @@ export default function RadarChart({ dots, selected, onSelect }: { dots: (RadarD
       <b>{selectedDot.ticker}</b><span>稼ぐ力 {fmtPercent(selectedDot.ocfMargin)}</span><span>守る力 {fmtCover(selectedDot.cover)}</span>
       <span>売上の前年比 {selectedDot.growth === null ? "—" : `${selectedDot.growth > 0 ? "+" : ""}${selectedDot.growth.toFixed(0)}%`}</span><span>決算日 {selectedDot.asOf}</span>
       <span>フリーキャッシュフロー率 {fmtPercent(selectedDot.fcfMargin)}</span>
-      <i>{zoneName[zoneOf(selectedDot.ocfMargin, selectedDot.cover)]}</i>
+      {selectedDot.review && <span>要確認</span>}<i>{zoneName[zoneOf(selectedDot.ocfMargin, selectedDot.cover)]}</i>
     </p>}
   </>;
 }

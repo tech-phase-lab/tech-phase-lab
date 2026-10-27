@@ -7,7 +7,7 @@ const screen = read("../app/research/radar/screen.tsx") + read("../app/research/
 
 test("the page carries the owner's wording", () => {
   for (const text of ["FINANCIAL RADAR", "財務レーダー", "稼ぐ力と守る力を、ジャンルごとに1枚で見比べます。点線は前の決算からの動きです。",
-    "↑ 守る力 ｜ 現金÷(借入+リース)", "稼ぐ力 ｜ 売上に対する営業キャッシュフロー →", "売上が前年より増加", "減少", "大きさ=売上規模", "白抜き=売上の比較なし", "点線=前の決算から", "フリーキャッシュフロー率", "稼ぐ力は営業キャッシュフローの売上に対する割合です。",
+    "↑ 守る力 ｜ 現金÷(借入+リース)", "稼ぐ力 ｜ 売上に対する営業キャッシュフロー →", "売上が前年より増加", "減少", "大きさ=売上規模", "白抜き=売上の比較なし", "点線=前の決算から", "フリーキャッシュフロー率", "稼ぐ力は営業キャッシュフローの売上に対する割合です。", "並び順:稼ぐ力と守る力の順位の平均", "要確認", "前受け金(顧客からの前払い)が大きい会社は、営業キャッシュフローが膨らんで見えます。",
     "体力ランキング", "最新の決算 ・", "データが足りない銘柄 ・", "PRO限定", "稼ぐ力", "守る力",
     "数字は米SECの開示資料から計算しています。範囲を超える値はグラフの端に表示します。売買をすすめるものではありません。"]) assert.ok(screen.includes(text), text);
   for (const text of ["盤石", "借入で攻める", "守りで耐える", "余力が小さい"]) assert.ok(read("../lib/research/radar.ts").includes(text), text);
@@ -52,4 +52,18 @@ test("the free-cash-flow ratio is only in the tapped detail; the axis, bars and 
   assert.ok(screen.includes("xPosition(dot.ocfMargin)"));
   assert.match(chart, /TRAIL_MIN = 6/);
   assert.match(chart, /Math\.hypot\(x2 - x1, y2 - y1\) < TRAIL_MIN\) return null/);
+});
+
+test("the page opens with the first genre's dots already in it, and the screen needs no loading message", () => {
+  const page = read("../app/research/radar/page.tsx"), screen = read("../app/research/radar/screen.tsx");
+  assert.match(page, /buildRadar\(first, entries, "free"\)/);          // public dots only; the plan is settled by the API afterwards
+  assert.match(page, /setTimeout\(\(\) => resolve\(null\), 2500\)/);   // never held up for long
+  assert.match(page, /after\(\(\) => warmGenres\(first\)\)/);
+  assert.ok(!/getMembership/.test(page));
+  assert.ok(!screen.includes("読み込み中"));
+  assert.match(screen, /for \(const item of radarGenres\) await request\(item\.id\)/); // other tabs fetched quietly, one at a time
+  assert.match(screen, /!confirmed \? <section className=\{styles\.rankWait\} aria-hidden="true" \/>/); // no lock flashed at a PRO visitor
+  const route = read("../app/api/research/radar/route.ts");
+  assert.match(route, /await loadGenreEntries\(genre\.id\)/);
+  assert.match(route, /after\(\(\) => warmGenres\(genre\.id\)\)/);
 });
