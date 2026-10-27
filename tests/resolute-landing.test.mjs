@@ -102,6 +102,12 @@ test("the entry page routes through the gate and the quiz comes first, once", ()
   assert.equal(FIRST_VISIT_KEY, "tech-phase:resolute-first-visit-done");
 });
 
+test("the owner opens RESOLUTE like a visitor; the sandbox home is behind ?view=review", () => {
+  const entry = read("../app/resolute/page.tsx");
+  assert.match(entry, /params\.view === "review" && canReviewResolute\(userId,process\.env\.VERCEL_ENV\)/);
+  assert.ok(!/^ if\(canReviewResolute/m.test(entry));
+});
+
 test("the book respects reduced motion and starts only when it scrolls into view", () => {
   assert.match(css, /prefers-reduced-motion:reduce\) \{ \.bookPlay, \.bookPlay \.leaf \{ animation:none !important; \} \}/);
   const book = read("../app/resolute/lp/book.tsx");
