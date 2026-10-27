@@ -308,7 +308,7 @@ export default function ResearchDashboard({ events, monitoredCompanies, initialN
           </div>}
           {tab === "saved" && collection.status === "synced" && <SavedSyncStatus collection={collection} lang={lang} />}
         </section>}
-        <footer className={styles.footer}><span>TECH PHASE RESEARCH</span><p>{t("変化を読み、一歩先へ。", "Read the shifts. Think ahead.")}</p></footer>
+        <footer className={styles.footer}><span>TECH PHASE RESEARCH</span><p>{t("変化を読み、一歩先へ。", "Read the shifts. Think ahead.")}</p><nav className={styles.legalLinks} aria-label={t("規約", "Legal")}><Link href="/terms">{t("利用規約", "Terms of Service")}</Link><Link href="/privacy">{t("プライバシーポリシー", "Privacy Policy")}</Link></nav></footer>
       </main>
     </div>
   </div>;
