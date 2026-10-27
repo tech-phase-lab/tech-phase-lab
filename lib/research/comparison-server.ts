@@ -6,7 +6,7 @@ import { parseSecDirectory } from "./stock-directory";
 import { emptyFinancials } from "./comparison";
 import { prepareComparisonAnalysis, currentComparisonAnalysis } from "./comparison-analysis";
 import { loadSecComparison } from "./comparison-loader";
-async function secText(url: string, limit: number) {
+export async function secText(url: string, limit: number) {
   const response = await fetch(url, { cache: "no-store", headers: { Accept: "application/json", "User-Agent": process.env.RESEARCH_USER_AGENT || "TechPhaseResearch/1.0 research-preview" }, signal: AbortSignal.timeout(12_000) });
   if (!response.ok || !response.body) throw Error("sec-unavailable");
   const reader = response.body.getReader();
@@ -23,6 +23,13 @@ const financials = unstable_cache(async (ticker: string, cik: string) => {
   const data = await loadSecComparison(ticker,cik,secText);
   return { ...data, preparedAnalysis: prepareComparisonAnalysis(data) };
 }, ["comparison-financials-v6-prepared-analysis"], { revalidate: 300 });
+/** The SEC identifier of a listed company, from the provider list or the SEC's own directory. */
+export async function secCik(ticker: string): Promise<string | null> {
+  const provider = providers.find(p => p.ticker === ticker);
+  const cik = provider?.supplementalSources?.find(s => "cik" in s && s.cik)?.cik ?? (await directory()).find(c => c.ticker === ticker)?.cik.toString();
+  return cik && /^\d{1,10}$/.test(cik) ? cik : null;
+}
+
 export async function loadComparisonFinancials(ticker: string) {
   try {
     const provider = providers.find(p => p.ticker === ticker);

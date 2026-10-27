@@ -130,6 +130,7 @@ const menuIcons = {
   bars: <path d="M4 20V10M10 20V4M16 20v-8M22 20H2" />,
   compare: <path d="M12 4v16M5 8h14M5 8l-2 5h4zM19 8l-2 5h4z" />,
   pulse: <path d="M3 12h4l3-7 4 14 3-7h4" />,
+  radar: <><circle cx="12" cy="12" r="8.5" /><circle cx="12" cy="12" r="4.5" /><path d="M12 12l5-5M12 3.5v2M3.5 12h2" /></>,
   crown: <path d="M3 8l4.5 4L12 5l4.5 7L21 8l-2 11H5z" />,
   book: <path d="M4 5h7a3 3 0 0 1 3 3v12a2 2 0 0 0-2-2H4zM20 5h-6" />,
   help: <><circle cx="12" cy="12" r="9" /><path d="M9.5 9.5a2.5 2.5 0 1 1 3.5 2.3c-.7.4-1 .9-1 1.7M12 17h.01" /></>,
@@ -263,6 +264,7 @@ function SiteMenu({ lang, member, ownerAccount, onClose, onRefresh, onPro }: { l
         {item("/research/market", "market", ja ? "マーケット" : "Markets")}
         {item("/research/calendar", "calendar", ja ? "決算・経済指標" : "Earnings & Economy")}
         {item("/research/capital-map", "pulse", ja ? "資本マップ" : "Capital Map")}
+        {item("/research/radar", "radar", ja ? "財務レーダー" : "Financial Radar")}
         {item("/research/price-targets", "bars", ja ? "目標株価" : "Price targets")}
       </div>
       <div className={styles.grp}>
