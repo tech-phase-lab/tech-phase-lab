@@ -26,7 +26,8 @@ export default function RadarScreen() {
   }, [genre]);
   const radar = loaded && loaded !== "error" && loaded.genre === genre ? loaded.radar : null;
   const pro = radar?.tier === "pro" ? radar : null;
-  const ranking = pro ? [...pro.dots].sort((a, b) => a.rank - b.rank) : [];
+  const ranked = pro ? pro.dots.filter(dot => dot.rank !== null).sort((a, b) => a.rank! - b.rank!) : [];
+  const review = pro ? pro.dots.filter(dot => dot.review) : [];
   return <ResearchToolShell lang={lang} setLang={setLang} title="" description="" showHeading={false}>
     <div className={styles.page}>
       <p className={styles.eyebrow}>FINANCIAL RADAR</p>
@@ -52,7 +53,9 @@ export default function RadarScreen() {
           </section>
           {pro ? <section className={styles.ranking}>
             <header><h2>体力ランキング</h2><small>最新の決算 ・ {monthOf(pro.asOf)}</small></header>
-            {ranking.map(dot => <RankCard key={dot.ticker} dot={dot} />)}
+            <p className={styles.order}>並び順:稼ぐ力と守る力の順位の平均</p>
+            {ranked.map(dot => <RankCard key={dot.ticker} dot={dot} />)}
+            {review.map(dot => <RankCard key={dot.ticker} dot={dot} />)}
             {pro.missing.length > 0
               ? <details className={styles.missing}><summary>データが足りない銘柄 ・ {pro.missing.length}件</summary><p>{pro.missing.join("　")}</p></details>
               : <p className={styles.missing}>データが足りない銘柄 ・ 0件</p>}
@@ -62,6 +65,7 @@ export default function RadarScreen() {
           </section>}
         </>}
       <p className={styles.foot}>数字は米SECの開示資料から計算しています。範囲を超える値はグラフの端に表示します。売買をすすめるものではありません。</p>
+      <p className={styles.foot}>前受け金(顧客からの前払い)が大きい会社は、営業キャッシュフローが膨らんで見えます。稼ぐ力が100%を超える銘柄は「要確認」とし、順位からは外しています。</p>
       <p className={styles.foot}>稼ぐ力は営業キャッシュフローの売上に対する割合です。守る力の現金は現金同等物と短期の投資、借入は短期・長期の借入とリース負債の合計です。売上や現金の流れは、年の決算の日は1年分、それ以外は直近4四半期分を使います。</p>
     </div>
   </ResearchToolShell>;
@@ -75,7 +79,7 @@ function RankCard({ dot }: { dot: RadarDotPro }) {
       <b>{dot.ticker}</b><span className={`${styles.chip} ${styles[zone]}`}>{zoneName[zone]}</span>
       <em className={g === null || Math.abs(g) < 0.5 ? styles.flat : g > 0 ? styles.up : styles.down}>{growthText(g)}</em>
     </div>
-    <div className={styles.bar}><span>稼ぐ力</span><div><u className={styles.fcf} style={{ width: `${Math.max(3, xPosition(dot.ocfMargin) * 100)}%` }} /></div><strong>{fmtPercent(dot.ocfMargin)} <Arrow kind={arrow(dot.ocfMargin, dot.previous?.ocfMargin)} /></strong></div>
+    <div className={styles.bar}><span>稼ぐ力</span><div><u className={styles.fcf} style={{ width: `${Math.max(3, xPosition(dot.ocfMargin) * 100)}%` }} /></div><strong>{dot.review && <small className={styles.review}>要確認</small>}{fmtPercent(dot.ocfMargin)} <Arrow kind={arrow(dot.ocfMargin, dot.previous?.ocfMargin)} /></strong></div>
     <div className={styles.bar}><span>守る力</span><div><u className={styles.cover} style={{ width: `${Math.max(3, yPosition(dot.cover) * 100)}%` }} /></div><strong>{fmtCover(dot.cover)} <Arrow kind={arrow(dot.cover, dot.previous?.cover)} /></strong></div>
   </article>;
 }

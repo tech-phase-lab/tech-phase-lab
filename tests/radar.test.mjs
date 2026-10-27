@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { arrow, beyondText, buildRadar, isBeyond, placeLabels, radarGenre, radarGenres, sizeTiers, xPosition, yPosition, zoneOf } from "../lib/research/radar.ts";
+import { arrow, beyondText, buildRadar, isBeyond, placeLabels, radarGenre, radarGenres, rankByAverage, sizeTiers, spreadEdgeDots, xPosition, yPosition, zoneOf } from "../lib/research/radar.ts";
 
 const snap = (end, ocfMargin, cover, revenue = 1e9, revenueGrowth = 10) => ({ end, basis: "ttm", revenue, ocfMargin, fcfMargin: ocfMargin - 5, cover, revenueGrowth });
 
@@ -58,7 +58,7 @@ test("a PRO payload adds movement, numbers, ranking order and the missing list",
   const pro = buildRadar("semis", entries, "pro");
   assert.equal(pro.tier, "pro");
   assert.deepEqual(pro.missing, ["C"]); assert.equal(pro.asOf, "2026-06-30");
-  assert.deepEqual(pro.dots.map(d => [d.ticker, d.rank]), [["A", 1], ["B", 2]]);
+  assert.deepEqual(pro.dots.map(d => [d.ticker, d.rank, d.review]), [["A", 1, false], ["B", 2, false]]);
   assert.deepEqual(pro.dots[0].previous, { ocfMargin: 15, cover: 3, asOf: "2026-03-31" }); assert.equal(pro.dots[0].fcfMargin, 15); assert.equal(pro.dots[1].previous, null);
   assert.equal(pro.dots[0].growth, 12);
 });
@@ -105,4 +105,48 @@ test("labels keep clear of the zone names", () => {
   const boxes = placeLabels([{ id: "A", x: 20, y: 14, r: 5, w: 30 }], { left: 0, top: 0, right: 300, bottom: 300 }, 11, avoid);
   const b = boxes.A;
   assert.ok(b.x >= 66 || b.y >= 16 || b.y + b.h <= 3 || b.x + b.w <= 4);
+});
+
+test("the order is the average of the earning-power rank and the staying-power rank, never a sum of raw numbers", () => {
+  // A: earning 1st, staying 3rd (avg 2); B: 2nd and 1st (1.5); C: 3rd and 2nd (2.5)
+  assert.deepEqual(rankByAverage([{ ticker: "A", ocfMargin: 90, cover: 0.2 }, { ticker: "B", ocfMargin: 30, cover: 40 }, { ticker: "C", ocfMargin: 10, cover: 3 }]), ["B", "A", "C"]);
+  // a huge cover cannot buy a place: raw numbers are not added
+  assert.deepEqual(rankByAverage([{ ticker: "A", ocfMargin: 50, cover: 1 }, { ticker: "B", ocfMargin: 40, cover: 3 }, { ticker: "C", ocfMargin: 30, cover: 2 }, { ticker: "D", ocfMargin: 10, cover: 1000 }]), ["B", "A", "D", "C"]);
+  // a tie goes to the stronger earning power
+  assert.deepEqual(rankByAverage([{ ticker: "A", ocfMargin: 10, cover: 3 }, { ticker: "B", ocfMargin: 20, cover: 1 }]), ["B", "A"]);
+});
+
+test("earning power above 100% is flagged and left out of the ranking, and stays on the chart", () => {
+  const entries = [
+    { ticker: "A", facts: { latest: snap("2026-06-30", 40, 2), previous: null } },
+    { ticker: "B", facts: { latest: snap("2026-06-30", 297, 0.7), previous: null } },
+    { ticker: "C", facts: { latest: snap("2026-06-30", 100, 1.2), previous: null } },
+    { ticker: "D", facts: { latest: snap("2026-06-30", 20, 0.5), previous: null } },
+  ];
+  const pro = buildRadar("semis", entries, "pro");
+  assert.deepEqual(pro.dots.map(d => [d.ticker, d.rank, d.review]), [["A", 2, false], ["B", null, true], ["C", 1, false], ["D", 3, false]]);
+  assert.equal(pro.dots.length, 4);
+  assert.ok(!JSON.stringify(buildRadar("semis", entries, "free")).includes("review"));
+});
+
+test("dots stopped at an edge that land on each other are spread so both show; dots inside keep their place", () => {
+  const bounds = { left: 46, top: 10, right: 330, bottom: 282 };
+  const dots = [
+    { id: "IREN", x: 320, y: 200, r: 6.5, edgeX: true, edgeY: false },
+    { id: "NBIS", x: 320, y: 202, r: 6.5, edgeX: true, edgeY: false },
+    { id: "MID", x: 150, y: 120, r: 6.5, edgeX: false, edgeY: false },
+    { id: "TOP", x: 200, y: 14, r: 4.5, edgeX: false, edgeY: true },
+    { id: "TOP2", x: 203, y: 14, r: 4.5, edgeX: false, edgeY: true },
+  ];
+  const at = spreadEdgeDots(dots, bounds);
+  assert.ok(Math.hypot(at.IREN.x - at.NBIS.x, at.IREN.y - at.NBIS.y) >= 13);
+  assert.equal(at.IREN.x, 320); assert.equal(at.NBIS.x, 320);   // they slide along the edge
+  assert.ok(Math.hypot(at.TOP.x - at.TOP2.x, at.TOP.y - at.TOP2.y) >= 9);
+  assert.equal(at.TOP.y, 14);
+  assert.deepEqual(at.MID, { x: 150, y: 120 });
+  for (const dot of dots) { const p = at[dot.id]; assert.ok(p.x >= bounds.left && p.x <= bounds.right && p.y >= bounds.top && p.y <= bounds.bottom); }
+  // a free dot beside an edge dot: only the edge dot moves
+  const near = spreadEdgeDots([{ id: "E", x: 320, y: 100, r: 6.5, edgeX: true, edgeY: false }, { id: "F", x: 316, y: 101, r: 6.5, edgeX: false, edgeY: false }], bounds);
+  assert.deepEqual(near.F, { x: 316, y: 101 });
+  assert.ok(Math.hypot(near.E.x - near.F.x, near.E.y - near.F.y) >= 13);
 });
