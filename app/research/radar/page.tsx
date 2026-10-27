@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { after } from "next/server";
 import { buildRadar, radarGenres } from "@/lib/research/radar";
-import { loadGenreEntries, warmGenres } from "@/lib/research/radar-server";
+import { afterRadar, loadGenreEntries } from "@/lib/research/radar-server";
 import RadarScreen from "./screen";
 
 export const metadata: Metadata = { title: "財務レーダー | Tech Phase", robots: { index: false, follow: false } };
@@ -14,6 +14,6 @@ export default async function Page() {
   const first = radarGenres[0].id;
   const ready = loadGenreEntries(first).then(entries => buildRadar(first, entries, "free")).catch(() => null);
   const initial = await Promise.race([ready, new Promise<null>(resolve => setTimeout(() => resolve(null), 2500))]);
-  after(() => warmGenres(first));
+  after(() => afterRadar(first));
   return <RadarScreen initial={initial} />;
 }
