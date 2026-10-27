@@ -7,6 +7,8 @@ import { canReviewResolute } from "@/lib/resolute/review-policy";
 import { loadThermometerSnapshot } from "@/lib/resolute/thermometer-server";
 import HomeScreen from "./home/screen";
 import ResoluteIdentity from "./identity";
+import EntryGate from "./entry-gate";
+import Landing from "./lp/landing";
 export const metadata: Metadata = { title: "RESOLUTE | Your investing rules", robots: { index: false, follow: false } };
 export const dynamic = "force-dynamic";
 export default async function ResolutePage() {
@@ -17,5 +19,8 @@ export default async function ResolutePage() {
  try { ({userId} = await auth()); } catch { /* Fail closed to normal access checks. */ }
  if(canReviewResolute(userId,process.env.VERCEL_ENV)) redirect("/resolute/review");
  const snapshot = await loadThermometerSnapshot();
- return <ClerkProvider signInUrl="/research/account" signUpUrl="/research/account/sign-up"><ResoluteIdentity extra="home" thermometerSnapshot={snapshot} /></ClerkProvider>;
+ // Purchasers go to the home, everyone else sees the landing page (decided on the device; see EntryGate).
+ return <EntryGate landing={<Landing embedded />}>
+  <ClerkProvider signInUrl="/research/account" signUpUrl="/research/account/sign-up"><ResoluteIdentity extra="home" thermometerSnapshot={snapshot} /></ClerkProvider>
+ </EntryGate>;
 }
