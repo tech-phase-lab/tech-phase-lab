@@ -69,6 +69,7 @@ export default function RadarScreen({ initial }: { initial: RadarPayload | null 
             <header><h2>体力ランキング</h2><small>最新の決算 ・ {monthOf(pro.asOf)}</small></header>
             <p className={styles.order}>並び順:稼ぐ力と守る力の順位の平均</p>
             {ranked.map(dot => <RankCard key={dot.ticker} dot={dot} />)}
+            {review.length > 0 && <h3 className={styles.reviewHead}>要確認(順位外)</h3>}
             {review.map(dot => <RankCard key={dot.ticker} dot={dot} />)}
             {pro.missing.length > 0
               ? <details className={styles.missing}><summary>データが足りない銘柄 ・ {pro.missing.length}件</summary><p>{pro.missing.join("　")}</p></details>
@@ -93,7 +94,7 @@ function RankCard({ dot }: { dot: RadarDotPro }) {
       <b>{dot.ticker}</b><span className={`${styles.chip} ${styles[zone]}`}>{zoneName[zone]}</span>
       <em className={g === null || Math.abs(g) < 0.5 ? styles.flat : g > 0 ? styles.up : styles.down}>{growthText(g)}</em>
     </div>
-    <div className={styles.bar}><span>稼ぐ力</span><div><u className={styles.fcf} style={{ width: `${Math.max(3, xPosition(dot.ocfMargin) * 100)}%` }} /></div><strong>{dot.review && <small className={styles.review}>要確認</small>}{fmtPercent(dot.ocfMargin)} <Arrow kind={arrow(dot.ocfMargin, dot.previous?.ocfMargin)} /></strong></div>
+    <div className={styles.bar}><span>稼ぐ力</span><div><u className={`${styles.fcf} ${dot.ocfMargin < 0 ? styles.negative : ""}`} style={{ width: `${Math.max(3, xPosition(dot.ocfMargin) * 100)}%` }} /></div><strong>{dot.review && <small className={styles.review}>要確認</small>}{fmtPercent(dot.ocfMargin)} <Arrow kind={arrow(dot.ocfMargin, dot.previous?.ocfMargin)} /></strong></div>
     <div className={styles.bar}><span>守る力</span><div><u className={styles.cover} style={{ width: `${Math.max(3, yPosition(dot.cover) * 100)}%` }} /></div><strong>{fmtCover(dot.cover)} <Arrow kind={arrow(dot.cover, dot.previous?.cover)} /></strong></div>
   </article>;
 }

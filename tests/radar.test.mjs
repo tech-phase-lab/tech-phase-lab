@@ -11,9 +11,12 @@ test("genres list unique tickers", () => {
 });
 
 test("ticks are evenly spaced and values beyond the range stop at the edge", () => {
-  const xs = [-40, -20, 0, 20, 40, 60].map(xPosition), ys = [0.25, 0.5, 1, 2, 4].map(yPosition);
+  const xs = [-40, -20, 0, 20, 40, 60].map(xPosition), ys = [0.1, 0.25, 0.5, 1, 2, 4].map(yPosition);
   for (const [i, x] of xs.entries()) assert.ok(Math.abs(x - i / 5) < 1e-9);
-  for (const [i, y] of ys.entries()) assert.ok(Math.abs(y - i / 4) < 1e-9);
+  assert.equal(ys[0], 0); assert.equal(ys[5], 1);
+  for (let i = 1; i < ys.length; i++) assert.ok(ys[i] > ys[i - 1]);
+  const gaps = ys.slice(2).map((y, i) => y - ys[i + 1]);
+  for (const g of gaps) assert.ok(Math.abs(g - gaps[0]) < 1e-9);
   assert.equal(xPosition(-1500), 0); assert.equal(xPosition(300), 1);
   assert.equal(yPosition(0.001), 0); assert.equal(yPosition(1000), 1); assert.equal(yPosition(Number.POSITIVE_INFINITY), 1);
   assert.equal(isBeyond(-180, 1), true); assert.equal(isBeyond(-35, 1), false); assert.equal(isBeyond(10, 44), true);
@@ -24,7 +27,7 @@ test("a dot stopped at the edge shows its real value beside it", () => {
   assert.equal(beyondText(-52.4, 1), "◀ -52.4%");
   assert.equal(beyondText(80, 1), "80.0% ▶");
   assert.equal(beyondText(10, 44), "▲ 44x");
-  assert.equal(beyondText(-180, 0.1), "◀ -180% ▼ 0.10x");
+  assert.equal(beyondText(-180, 0.05), "◀ -180% ▼ 0.05x");
   assert.equal(beyondText(10, 1), "");
 });
 

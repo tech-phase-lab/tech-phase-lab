@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useSyncExternalStore, type ReactNode } from "react";
 import type { Language } from "@/lib/research/data";
 import { researchViewHashes, type ResearchView } from "@/lib/research/navigation";
+import { showDesk } from "@/lib/research/view-hash";
 import { useAlertsUnread } from "./use-alerts-unread";
 import { useMemberDisplay, useMemberSettled, useOwnerAccount } from "./member-display-provider";
 import styles from "./home-sidebar.module.css";
@@ -70,7 +71,8 @@ export default function HomeSidebar({ lang, tab, companyCount, savedCount, openV
     const item = standalone ? { ...original, href: original.href ?? destinations[original.key], current: original.href ? original.href === pathname : original.current } : original;
     const inner = <>{item.icon}<span>{item.label}</span>{item.badge}</>;
     const props = { className: `${styles.item} ${item.current ? styles.on : ""}`, "aria-current": item.current ? "page" as const : undefined };
-    return item.href ? <Link key={item.key} href={item.href} {...props}>{inner}</Link> : <button key={item.key} type="button" onClick={item.onClick} {...props}>{inner}</button>;
+    const toDesk = !standalone && item.key === "desk";
+    return item.href ? <Link key={item.key} href={item.href} {...props} onClick={toDesk ? (event => { event.preventDefault(); showDesk(); }) : undefined}>{inner}</Link> : <button key={item.key} type="button" onClick={item.onClick} {...props}>{inner}</button>;
   };
   return <nav className={styles.menu} aria-label={t("メインメニュー", "Main menu")}>
     <div className={styles.group}><p className={styles.eyebrow}>QUICK</p>{quick.map(row)}</div>

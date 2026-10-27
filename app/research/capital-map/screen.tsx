@@ -113,7 +113,7 @@ function CapitalMapContent({ portfolios = emptyPortfolios, mode = "sample" }: { 
   }
   const detailBaseline = searchParams.get("baseline") === detailPortfolio?.current.id ? detailPortfolio?.current
     : searchParams.get("baseline") === "unknown" ? undefined : detailPortfolio?.previous;
-  return <ResearchToolShell lang={lang} setLang={setLang} title="CAPITAL MAP" description="" showHeading={false} showTools={false}>
+  return <ResearchToolShell lang={lang} setLang={setLang} title="CAPITAL MAP" description="" showHeading={false}>
     <div className={styles.page}>
       {detailId && hasData && <HoldingDetail portfolio={detailPortfolio} securityId={detailId} instrument={searchParams.get("instrument") ?? "stock"} baseline={detailBaseline} lang={lang} sample={!reported} onBack={backToList} />}
       <div hidden={Boolean(detailId) && hasData}>
