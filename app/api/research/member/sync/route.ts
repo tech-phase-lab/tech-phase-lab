@@ -1,5 +1,5 @@
 import { clerkClient } from '@clerk/nextjs/server';
-import { resolvePlan } from '@/lib/membership/entitlements';
+import { isOwnerAccount, resolvePlan } from '@/lib/membership/entitlements';
 import { validSyncToken } from '@/lib/membership/sync-auth';
 export const dynamic = 'force-dynamic';
 export async function GET(request: Request) {
@@ -15,7 +15,7 @@ export async function GET(request: Request) {
       total = page.totalCount;
       for (const user of page.data) {
         const email = user.emailAddresses.find(item=>item.id===user.primaryEmailAddressId);
-        members.set(user.id, {id:user.id,kind:user.id==='user_3JulL4D07KtVl5Eg2zdY1iczKbC'?'運営':'一般',name:[user.firstName,user.lastName].filter(Boolean).join(' '),email:email?.emailAddress??'',verified:email?.verification?.status==='verified',plan:resolvePlan(user.privateMetadata).toUpperCase(),createdAt:new Date(user.createdAt).toISOString(),lastSignInAt:user.lastSignInAt?new Date(user.lastSignInAt).toISOString():null,proExpiresAt:typeof user.privateMetadata.proExpiresAt==='string'?user.privateMetadata.proExpiresAt:null});
+        members.set(user.id, {id:user.id,kind:isOwnerAccount(user.id)?'運営':'一般',name:[user.firstName,user.lastName].filter(Boolean).join(' '),email:email?.emailAddress??'',verified:email?.verification?.status==='verified',plan:resolvePlan(user.privateMetadata).toUpperCase(),createdAt:new Date(user.createdAt).toISOString(),lastSignInAt:user.lastSignInAt?new Date(user.lastSignInAt).toISOString():null,proExpiresAt:typeof user.privateMetadata.proExpiresAt==='string'?user.privateMetadata.proExpiresAt:null});
       }
       if (offset+page.data.length>=total) break;
       if (!page.data.length) throw new Error('Incomplete snapshot');

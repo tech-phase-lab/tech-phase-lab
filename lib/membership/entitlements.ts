@@ -4,12 +4,19 @@ export function resolvePlan(metadata: Record<string, unknown>, now = Date.now())
   return metadata.plan === "pro" && Number.isFinite(expires) && expires > now ? "pro" : "free";
 }
 
-/** The one approved owner account; identifier is not a credential. */
+/** Approved development owner; retained for existing Sandbox integrations. */
 export const OWNER_ACCOUNT_ID = "user_3JulL4D07KtVl5Eg2zdY1iczKbC";
+/** Production Clerk account explicitly supplied by the owner on 2026-10-27. */
+export const PRODUCTION_OWNER_ACCOUNT_ID = "user_3LHR1K8f8zwyDcVzMg7ud6KB9Wb";
 
 /** Header "Owner" label: only the approved owner account, never a role. Server use only. */
 export function isOwnerAccount(userId: string | null | undefined): boolean {
-  return userId === OWNER_ACCOUNT_ID;
+  return userId === OWNER_ACCOUNT_ID || userId === PRODUCTION_OWNER_ACCOUNT_ID;
+}
+
+/** Verified production owner only; isAdmin must include the server's MFA gate. */
+export function productionOwnerMode(userId: string, isAdmin: boolean, environment: string | undefined): boolean {
+  return environment === "production" && isAdmin && userId === PRODUCTION_OWNER_ACCOUNT_ID;
 }
 
 /** Server use only: userId must come from a verified Clerk session, never request input. */

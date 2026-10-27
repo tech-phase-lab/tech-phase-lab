@@ -3,7 +3,7 @@ import {liveMembership} from "@/services/tech-phase-billing/live-membership.mjs"
 import { cache } from "react";
 import { auth, clerkClient } from "@clerk/nextjs/server";
 import { adminMfaAllowed } from "./admin-mfa";
-import { isOwnerAccount, ownerPreviewMode, previewPlan, resolveAdmin, resolvePlan } from "./entitlements";
+import { isOwnerAccount, ownerPreviewMode, previewPlan, productionOwnerMode, resolveAdmin, resolvePlan } from "./entitlements";
 export function membershipConfigured() {
   return Boolean(process.env.CLERK_SECRET_KEY && process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY);
 }
@@ -22,9 +22,11 @@ export async function getMembershipForUser(userId: string, sessionClaims?: unkno
   const adminMfaRequired = adminCandidate && process.env.TECH_PHASE_REQUIRE_ADMIN_MFA === "true" && !adminMfaAllowed(user.twoFactorEnabled, sessionClaims);
   const isAdmin = adminCandidate && !adminMfaRequired;
   const testPlan = previewPlan(user.privateMetadata, isAdmin, process.env.VERCEL_ENV);
-  const ownerMode = ownerPreviewMode(user.privateMetadata, isAdmin, process.env.VERCEL_ENV);
+  const productionOwner = productionOwnerMode(userId, isAdmin, process.env.VERCEL_ENV);
+  const ownerMode = productionOwner || ownerPreviewMode(user.privateMetadata, isAdmin, process.env.VERCEL_ENV);
   const test = user.privateMetadata.membershipPreview as Record<string, string> | undefined;
-  const live=await liveMembership(process.env,userId);
+  // Owner access is operational access, not a paid subscription or payment receipt.
+  const live=productionOwner ? null : await liveMembership(process.env,userId);
   const accessExpiresAt = live ? live.accessExpiresAt : ownerMode ? Date.now() + 3_600_000 : testPlan !== null ? Math.min(Date.parse(test?.proExpiresAt ?? ""), Date.parse(test?.testUntil ?? "")) : Date.parse(String(user.privateMetadata.proExpiresAt ?? ""));
   return { accessExpiresAt: Number.isFinite(accessExpiresAt) ? accessExpiresAt : 0, status: "signed-in", plan: live ? live.plan : ownerMode ? "pro" : testPlan ?? resolvePlan(user.privateMetadata), userId, isAdmin, ownerMode, adminMfaRequired,
     // Owner label: the approved account itself, unless it is previewing a member plan.
