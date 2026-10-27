@@ -24,10 +24,12 @@ export function writeBarState(state: { owned: boolean; anon: boolean }) {
   } catch { /* storage may be blocked */ }
 }
 
-/** Pure: should the bar be drawn? Never for a purchaser; never while unknown; not while dismissed. */
+/** Pure: should the bar be drawn? Never for a purchaser; not while dismissed. Someone signed out cannot have
+ * bought anything under an account, so the bar needs no remembered answer for them; a signed-in person with
+ * nothing (or only a signed-out answer) remembered waits for the real answer. */
 export function barVisible(state: BarState | null, dismissedAt: number, signedIn: boolean, now: number) {
-  if (!state || state.owned) return false;
-  if (state.anon && signedIn) return false; // learned while signed out: wait for a fresh answer
+  if (state?.owned) return false;
+  if (!state ? signedIn : state.anon && signedIn) return false;
   return !(dismissedAt > 0 && now - dismissedAt < DISMISS_MS);
 }
 

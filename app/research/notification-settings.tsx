@@ -161,7 +161,8 @@ export default function NotificationSettings({ lang, initiallyOpen = false }: { 
           {state === "unknown" && <><button type="button" disabled={busy} onClick={() => void run("status")}>{t("登録状態を確認", "Check registration")}</button><button type="button" disabled={busy} onClick={() => void run("disable")}>{t("この端末の通知をオフ", "Turn off on this device")}</button></>}
           {state === "on" && <button type="button" disabled={busy} onClick={() => void run("test")}>{t("テスト通知を送る", "Send test notification")}</button>}
         </div>
-        {state === "on" && <label><input type="checkbox" checked={weekly} disabled={busy} onChange={event => { const next = event.target.checked; try { localStorage.setItem(WEEKLY_KEY, next ? "on" : "off"); } catch { /* storage may be blocked */ } setWeekly(next); void run("enable"); }} /> {t("日曜の夜に、銘柄手帳の今週のまとめを通知", "Notify me on Sunday night when the Stock Notebook is ready")}</label>}
+        <label><input type="checkbox" checked={weekly} disabled={busy} onChange={event => { const next = event.target.checked; try { localStorage.setItem(WEEKLY_KEY, next ? "on" : "off"); } catch { /* storage may be blocked */ } setWeekly(next); if (state === "on") void run("enable"); }} /> {t("日曜の夜に、銘柄手帳の今週のまとめを通知", "Notify me on Sunday night when the Stock Notebook is ready")}</label>
+        {state !== "on" && <p>{t("通知をオンにすると、この設定で届きます。", "This applies once notifications are on.")}</p>}
       </>}
       {busy && <p role="status">{t("処理中…", "Working…")}</p>}
       {message && <p role="status">{message}</p>}

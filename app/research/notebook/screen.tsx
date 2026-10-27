@@ -35,5 +35,6 @@ export default function NotebookScreen() {
         <StockNotebook tickers={tickers} lang={lang} />
       </>
       : <p>{t("ウォッチリストに銘柄を追加すると、ここに今週の動きが出ます。", "Add stocks to your watchlist to see their week here.")} <Link href="/research/watchlist">{t("ウォッチリストへ", "Go to Watchlist")}</Link></p>}
+    <p className={styles.cap}>{t("日曜の夜に、今週のまとめをスマホへ通知できます。", "Get a phone notice on Sunday night when this week's recap is ready.")} <Link href="/research/notifications">{t("スマホ通知設定へ", "Phone notification settings")}</Link></p>
   </ResearchToolShell>;
 }
