@@ -1,5 +1,24 @@
 # Production setup — 2026-10-27 JST
 
+## Deployment follow-up (later on the same day)
+
+Production deployment of approved commit `91e064a85d19b3f09ac200dcf74232255b22f741`
+completed READY: `dpl_9sXcSRNapog8M1nXzGsGwq7LbWCL`,
+`https://tech-phase-7lceba5sx-chehon7144-5412.vercel.app`.
+Rebuilt from the exact preview deployment with target Production, not from main.
+Authenticated Vercel fetch returned HTTP 200 for `/research`, `/privacy`, `/terms`.
+`/api/research/member` returned signed-out/FREE, no admin, no owner, no testing,
+with private/no-store and Secure/HttpOnly/SameSite=lax display-cookie clearing.
+This does not verify an authenticated owner's full browser flow.
+
+The redeploy also moved the branch alias automatically; it was explicitly restored
+to Preview deployment `dpl_CEC8wjW1D6BsSXhc72M4BX7okDka` and verified afterwards.
+Root DNS now uses `216.150.1.1` and `216.150.16.1`; Vercel reports no
+misconfiguration. TLS was issued and the owner confirms HTTPS opens. Preserve
+all five Clerk DNS records. Authenticated owner acceptance remains outstanding.
+Billing remains disabled. Backend/media setup and Google publication remain pending.
+The earlier status sections below describe the pre-deployment checkpoint.
+
 ## Confirmed progress
 
 - Domain: `techphase.app`, purchased at Porkbun by the owner.
@@ -11,9 +30,7 @@
 - Google OAuth remains Testing. Branding/public URLs and public release remain pending.
 - Owner confirmed their account appears in Clerk Production after Google login:
   `user_3LHR1K8f8zwyDcVzMg7ud6KB9Wb` (identifier, not a credential).
-- Vercel DNS inspection still reports root domain misconfigured, pointing to
-  `207.207.210.107` / `207.207.210.229`, not Vercel. The root-site TLS failure is
-  not evidence of a failed Clerk account creation. Root DNS was not changed.
+- Root DNS and HTTPS have now been verified. The original TLS failure is resolved.
 
 ## Owner access change
 
@@ -26,10 +43,9 @@ Owner operational access does not create a subscription, charge, or payment reco
 
 ## Still required before launch
 
-- Deploy the reviewed preview-branch code with Production configuration; existing
-  Production deployment is old main code. Do not redeploy it or change main.
+- Production now runs reviewed preview-branch code; do not change main.
 - Complete Production API/media configuration and verify actual feature access.
-- Connect root DNS to Vercel and verify HTTPS, then finish Google branding URLs,
+- Finish Google branding URLs,
   domain verification/publication requirements and public Google sign-in acceptance.
 - Enroll owner MFA/recovery before enabling the administrator MFA requirement.
 - Dedicated Live billing API/DB/migrations (including 007), PayPal integration,
@@ -49,3 +65,19 @@ Next.js production build/typecheck, Python compileall and diff check passed.
 New integration tests verify operational PRO, ordinary Live billing precedence,
 MFA denial and absence of Production Sandbox controls. These are local automated
 checks, not an acceptance receipt for the deployed Production site.
+
+## Account recovery correction
+
+A signed-in Clerk client could mount SignIn against a stale signed-out server
+snapshot, causing an automatic redirect to the remembered home page before
+membership recovery completed. Wait for server membership instead. If the server
+still cannot verify that session after recovery, keep the account page with its
+retry action; never grant access from client state. Regression coverage exercises
+both SignIn and SignUp with that mismatched initial state.
+
+Anonymous production browser inspection displays the login form normally. This
+is not an authenticated owner test. Owner entitlement recognition is deployed,
+but the user's actual session and owner display still need acceptance. Production
+lacks RESEARCH_MONITOR_URL/TOKEN; the price-target API requires both. Home shows
+missing data; no news code or Railway connection was changed. Full performance
+resolution is not claimed.

@@ -13,6 +13,7 @@ const compiled = ts.transpileModule(source, { compilerOptions: {
   module: ts.ModuleKind.CommonJS, jsx: ts.JsxEmit.ReactJSX, target: ts.ScriptTarget.ES2022,
 } }).outputText;
 let clientSnapshot = true;
+let signedIn = false;
 let hash = '';
 let returnPath = null;
 let signInProps, signUpProps;
@@ -22,7 +23,7 @@ new Function('require', 'module', 'exports', 'window', compiled)(id => {
   if (id === '@/lib/research/account-return') return accountReturn;
   if (id === 'react') return { ...React, useSyncExternalStore: (_subscribe, snapshot, serverSnapshot) => clientSnapshot ? snapshot() : serverSnapshot() };
   if (id === '@clerk/nextjs') return {
-    useAuth: () => ({ isLoaded: true, isSignedIn: false }),
+    useAuth: () => ({ isLoaded: true, isSignedIn: signedIn }),
     SignIn: props => { signInProps = props; return React.createElement('p', null, 'Sign in'); },
     SignUp: props => { signUpProps = props; return React.createElement('p', null, 'Sign up'); },
     SignOutButton: ({ children }) => children,
@@ -79,4 +80,19 @@ test('server render never starts the sign-in widget before the tab return destin
   render('');
   assert.equal(signInProps, undefined);
   clientSnapshot = true;
+});
+
+// A prefetched server page can still say signed-out after OAuth establishes the SDK session.
+// Mounting Clerk SignIn here redirects the member away before server recovery finishes.
+test('an established client session waits for membership instead of mounting redirecting sign-in', () => {
+  signedIn = true;
+  signInProps = undefined;
+  signUpProps = undefined;
+  try {
+    const html = render('');
+    assert.equal(signInProps, undefined);
+    assert.match(html, /aria-busy="true"/);
+    renderToStaticMarkup(React.createElement(target.exports.default, {status:'signed-out',plan:'free',signingUp:true}));
+    assert.equal(signUpProps, undefined);
+  } finally { signedIn = false; }
 });
