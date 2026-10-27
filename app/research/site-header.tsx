@@ -6,7 +6,7 @@ import type { Language } from "@/lib/research/data";
 import { useMemberDisplay, useMemberSettled, useOwnerAccount } from "./member-display-provider";
 import { useProIntroduction } from "./header-pro";
 import { useScrollLock } from "./use-scroll-lock";
-import { rememberHash } from "@/lib/research/view-hash";
+import { rememberHash, showDesk } from "@/lib/research/view-hash";
 import base from "./research.module.css";
 import styles from "./site-header.module.css";
 
@@ -45,8 +45,8 @@ export default function SiteHeader({ lang, setLang, nav }: { lang: Language; set
     // The arrow turns once (0.7 s) as the page reloads immediately after.
     reloadPage();
   }
-  // Desktop home only (owner, Oct 14): two buttons left of the home icon.
-  const promo = pathname === "/research";
+  // Desktop (owner, Oct 14; every research page since Oct 27): two buttons left of the home icon.
+  const home = pathname === "/research";
   const tier = ownerAccount ? "owner" : plan === "pro" ? "pro" : "free";
   // Desktop home button (owner, Oct 9): on the home page itself, return to the
   // main view the same way the phone bar does.
@@ -59,7 +59,7 @@ export default function SiteHeader({ lang, setLang, nav }: { lang: Language; set
     window.scrollTo({ top: 0, behavior: "instant" });
   }
   return <>
-    <header className={styles.header} data-plan={tier} data-promo={promo ? "on" : undefined}>
+    <header className={styles.header} data-plan={tier} data-promo={home ? "home" : "on"}>
       <Link href="/research" className={styles.brand} aria-label="Tech Phase Research">
         <span className={styles.markWrap}><span className={`${base.logoMark} ${styles.mark}`} aria-hidden="true" /></span>
         <span className={styles.words}><span className={`${base.brandText} ${styles.name}`}>TECH PHASE</span><small className={styles.sub}>
@@ -73,10 +73,10 @@ export default function SiteHeader({ lang, setLang, nav }: { lang: Language; set
       </Link>
       {nav && <div className={styles.center}>{nav}</div>}
       <div className={styles.tools}>
-        {promo && <div className={styles.promo}>
+        <div className={styles.promo}>
           <button type="button" className={styles.proBtn} aria-label={ja ? "Tech Phase PROを見る" : "See Tech Phase PRO"} onClick={() => pro.toggle(true)}><span>Tech Phase PRO</span><b className={styles.proTag}>PRO</b></button>
           <Link href="/resolute" className={styles.rzBtn} aria-label="RESOLUTE"><span aria-hidden="true">⚓</span>RESOLUTE</Link>
-        </div>}
+        </div>
         <Link href="/research#research-main" className={`${styles.ico} ${styles.home}`} aria-label={ja ? "ホームへ" : "Home"} onClick={goHome}>
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11l8-7 8 7v8a1 1 0 0 1-1 1h-4v-6H9v6H5a1 1 0 0 1-1-1z" /></svg>
         </Link>
@@ -208,8 +208,9 @@ function SiteMenu({ lang, member, ownerAccount, onClose, onRefresh, onPro }: { l
   function navigate(event: MouseEvent<HTMLAnchorElement>, href: string) {
     unlock();
     onClose();
-    if (href === "/research#rizels-desk" || pathname !== "/research" || !href.startsWith("/research#")) return;
+    if (pathname !== "/research" || !href.startsWith("/research#")) return;
     event.preventDefault();
+    if (href === "/research#rizels-desk") { showDesk(); return; }
     window.history.pushState(null, "", href);
     rememberHash(href.slice(href.indexOf("#")));
     window.dispatchEvent(new HashChangeEvent("hashchange"));

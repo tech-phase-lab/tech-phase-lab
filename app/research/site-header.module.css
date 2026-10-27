@@ -200,7 +200,7 @@
   .rzBtn{height:30px;padding:0 10px;font-size:11px;letter-spacing:.14em}
 }
 @media (min-width:761px) and (max-width:900px){
-  .header[data-promo] .lang,.header[data-promo] .menuBtn{display:none}
+  .header[data-promo="home"] .lang,.header[data-promo="home"] .menuBtn{display:none}
 }
 @media (prefers-reduced-motion:reduce){.proBtn::before{animation:none;display:none}.rzBtn{animation:none}}
 /* PRO and owner: a little more room between JA/EN and the refresh ring so the two are easier to tap (owner, Oct 21). */
