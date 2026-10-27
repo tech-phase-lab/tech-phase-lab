@@ -1,5 +1,4 @@
-import type { Metadata } from "next";
-import HealthScreen from "./screen";
+import { redirect } from "next/navigation";
 
-export const metadata: Metadata = { title: "財務健全性マップ | Tech Phase PRO", robots: { index: false, follow: false } };
-export default function Page() { return <HealthScreen />; }
+// The map was renamed Financial Radar (財務レーダー).
+export default function Page() { redirect("/research/radar"); }

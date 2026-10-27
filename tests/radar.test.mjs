@@ -1,0 +1,78 @@
+import assert from "node:assert/strict";
+import test from "node:test";
+import { arrow, buildRadar, isBeyond, placeLabels, radarGenre, radarGenres, sizeTiers, xPosition, yPosition, zoneOf } from "../lib/research/radar.ts";
+
+const snap = (end, fcfMargin, cover, revenue = 1e9, revenueGrowth = 10) => ({ end, basis: "ttm", revenue, fcfMargin, cover, revenueGrowth });
+
+test("genres list unique tickers", () => {
+  for (const genre of radarGenres) assert.equal(new Set(genre.tickers).size, genre.tickers.length);
+  assert.equal(radarGenre("semis")?.ja, "半導体");
+  assert.equal(radarGenre("nope"), undefined);
+});
+
+test("ticks are evenly spaced and values beyond the range stop at the edge", () => {
+  const xs = [-20, 0, 20, 40, 60].map(xPosition), ys = [0.25, 0.5, 1, 2, 4].map(yPosition);
+  assert.deepEqual(xs, [0, 0.25, 0.5, 0.75, 1]);
+  for (const [i, y] of ys.entries()) assert.ok(Math.abs(y - i / 4) < 1e-9);
+  assert.equal(xPosition(-1500), 0); assert.equal(xPosition(300), 1);
+  assert.equal(yPosition(0.001), 0); assert.equal(yPosition(1000), 1); assert.equal(yPosition(Number.POSITIVE_INFINITY), 1);
+  assert.equal(isBeyond(-1500, 1), true); assert.equal(isBeyond(10, 1), false); assert.equal(isBeyond(10, 44), true);
+});
+
+test("zones: 盤石 / 借入で攻める / 守りで耐える / 余力が小さい", () => {
+  assert.equal(zoneOf(10, 2), "solid"); assert.equal(zoneOf(10, 0.5), "lever");
+  assert.equal(zoneOf(-5, 2), "guard"); assert.equal(zoneOf(-5, 0.5), "thin");
+  assert.equal(zoneOf(0, 1), "solid");
+});
+
+test("three dot sizes by revenue rank inside the genre", () => {
+  assert.deepEqual(sizeTiers({ A: 1, B: 2, C: 3, D: 4, E: 5, F: 6 }), { A: 1, B: 1, C: 2, D: 2, E: 3, F: 3 });
+  assert.deepEqual(sizeTiers({ A: 5 }), { A: 1 });
+});
+
+test("arrows compare with the previous earnings", () => {
+  assert.equal(arrow(47, 40), "up"); assert.equal(arrow(25, 28), "down"); assert.equal(arrow(25, 25), null); assert.equal(arrow(25, undefined), null);
+  assert.equal(arrow(3.2, 3.95), "down");
+});
+
+test("a FREE payload holds positions, colours and sizes only", () => {
+  const entries = [{ ticker: "A", facts: { latest: snap("2026-06-30", 20, 2, 5e9, 12), previous: snap("2026-03-31", 15, 3) } }, { ticker: "B", facts: { latest: snap("2026-06-30", -30, 0.4, 1e9, -3), previous: null } }, { ticker: "C", facts: { latest: null, previous: null } }];
+  const free = buildRadar("semis", entries, "free");
+  assert.equal(free.tier, "free");
+  const text = JSON.stringify(free);
+  for (const secret of ["previous", "growth", "asOf", "basis", "missing", "rank", "2026"]) assert.ok(!text.includes(secret), secret);
+  assert.deepEqual(free.dots.map(d => [d.ticker, d.up, d.size]), [["A", true, 2], ["B", false, 1]]);
+});
+
+test("a PRO payload adds movement, numbers, ranking order and the missing list", () => {
+  const entries = [{ ticker: "A", facts: { latest: snap("2026-06-30", 20, 2, 5e9, 12), previous: snap("2026-03-31", 15, 3) } }, { ticker: "B", facts: { latest: snap("2026-05-31", -30, 0.4, 1e9, -3), previous: null } }, { ticker: "C", facts: { latest: null, previous: null } }];
+  const pro = buildRadar("semis", entries, "pro");
+  assert.equal(pro.tier, "pro");
+  assert.deepEqual(pro.missing, ["C"]); assert.equal(pro.asOf, "2026-06-30");
+  assert.deepEqual(pro.dots.map(d => [d.ticker, d.rank]), [["A", 1], ["B", 2]]);
+  assert.deepEqual(pro.dots[0].previous, { fcfMargin: 15, cover: 3, asOf: "2026-03-31" }); assert.equal(pro.dots[1].previous, null);
+  assert.equal(pro.dots[0].growth, 12);
+});
+
+test("an unlimited cover is sent as a finite number", () => {
+  const pro = buildRadar("semis", [{ ticker: "A", facts: { latest: snap("2026-06-30", 20, Infinity), previous: null } }], "pro");
+  assert.equal(pro.dots[0].cover, 1000);
+  JSON.stringify(pro);
+});
+
+test("labels never sit on each other or on a dot", () => {
+  const bounds = { left: 0, top: 0, right: 300, bottom: 300 };
+  const inputs = [["A", 100, 100], ["B", 106, 104], ["C", 112, 98], ["D", 104, 112], ["E", 290, 20], ["F", 10, 290]].map(([id, x, y]) => ({ id, x, y, r: 6, w: 34 }));
+  const boxes = placeLabels(inputs, bounds);
+  const list = Object.values(boxes);
+  for (let i = 0; i < list.length; i++) for (let j = i + 1; j < list.length; j++) {
+    const a = list[i], b = list[j];
+    assert.ok(a.x + a.w <= b.x || b.x + b.w <= a.x || a.y + a.h <= b.y || b.y + b.h <= a.y, `${i}/${j} overlap`);
+  }
+  for (const input of inputs) {
+    const box = boxes[input.id];
+    assert.ok(box.x >= 0 && box.y >= 0 && box.x + box.w <= 300 && box.y + box.h <= 300);
+    const nx = Math.min(Math.max(input.x, box.x), box.x + box.w), ny = Math.min(Math.max(input.y, box.y), box.y + box.h);
+    assert.ok(Math.hypot(nx - input.x, ny - input.y) >= input.r, `${input.id} label covers its dot`);
+  }
+});
