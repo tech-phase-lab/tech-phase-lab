@@ -1793,3 +1793,6 @@
 .savedLoading span { display:block; height:12px; margin:0 0 20px; border-radius:4px; background:#a7b4c314; }
 .savedLoading span:first-child { width:25%; }
 .savedLoading span:last-child { width:65%; }
+
+.legalLinks { display:flex; flex-wrap:wrap; justify-content:center; gap:6px 22px; margin-top:12px; font-size:12px; }
+.legalLinks a { color:var(--muted,#8a95a3); text-decoration:underline; text-underline-offset:3px; }

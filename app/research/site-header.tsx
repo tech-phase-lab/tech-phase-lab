@@ -282,6 +282,10 @@ function SiteMenu({ lang, member, ownerAccount, onClose, onRefresh, onPro }: { l
         <Link href="/research/learn" onClick={event => navigate(event, "/research/learn")}>{ja ? "米国株のはじめ方" : "US stock basics"}</Link><i aria-hidden="true">|</i>
         <Link href="/research/faq" onClick={event => navigate(event, "/research/faq")}>{ja ? "よくある質問・使い方" : "FAQ & help"}</Link>
       </div>
+      <div className={styles.footLinks}>
+        <Link href="/terms" onClick={event => navigate(event, "/terms")}>{ja ? "利用規約" : "Terms of Service"}</Link><i aria-hidden="true">|</i>
+        <Link href="/privacy" onClick={event => navigate(event, "/privacy")}>{ja ? "プライバシーポリシー" : "Privacy Policy"}</Link>
+      </div>
     </nav>
   </>;
 }
