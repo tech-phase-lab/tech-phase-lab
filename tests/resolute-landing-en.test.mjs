@@ -66,5 +66,5 @@ test("the English page buys through the English checkout and stays public", () =
   const page = read("../app/resolute/lp/landing-en.tsx");
   assert.match(page, /CHECKOUT = "\/resolute\/checkout\?lang=en"/);
   assert.ok(!/clerk/i.test(page) && !/clerk|auth\(/i.test(read("../app/resolute/lp/en/page.tsx")));
-  assert.match(read("../app/resolute/page.tsx"), /\(await searchParams\)\.lang === "en"/);
+  assert.match(read("../app/resolute/page.tsx"), /params\.lang === "en"/);
 });

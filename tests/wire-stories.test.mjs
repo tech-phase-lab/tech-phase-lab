@@ -109,3 +109,13 @@ test('lead-plaintiff notices and other companies\' earnings round-ups are droppe
   assert.equal(cleanTitle('ブルーム・エナジー：リスク・リワードは改善も、依然として不安感残る (NYSE:BE)'), 'ブルーム・エナジー：リスク・リワードは改善も、依然として不安感残る');
   assert.equal(cleanTitle('Bloom Energy: risk-reward improves (NASDAQ: BE) as demand grows'), 'Bloom Energy: risk-reward improves as demand grows');
 });
+
+test('earnings previews and "what to expect" teasers are not news; the exchange code is trimmed from titles (owner, Oct 27)', () => {
+  for (const title of ['アルファベット決算：GOOGLから注目すべき点', '注目の決算：Carvana（CVNA）が明日第3四半期の結果を発表', 'Frontier（ULCC）第3四半期決算：何を期待すべきか',
+    'WEX決算：WEXの注目点は何か', 'マイクロソフト (MSFT) 第3四半期決算報告プレビュー：注目点', 'カーライル（CSL）が明日決算発表：予想される内容',
+    'Alphabet earnings preview: what to watch', 'Carvana set to report third-quarter results tomorrow', 'Frontier Q3 earnings: What to expect']) assert.equal(isNotNews(title), true, title);
+  for (const title of ['SKテレコムがSKハイニックスの工場をAI事業に転換する取り組みの内幕', 'Micron raises its dividend', 'Alphabet reports third-quarter results, cloud revenue up 34%']) assert.equal(isNotNews(title), false, title);
+  assert.equal(cleanTitle('SKハイニックス（NasdaqGS:SKHY）16兆ウォンを投資'), 'SKハイニックス16兆ウォンを投資');
+  assert.equal(cleanTitle('SK Hynix (NasdaqGS:SKHY) to invest 16 trillion won'), 'SK Hynix to invest 16 trillion won');
+  assert.equal(cleanTitle('Bloom Energy (NYSE:BE) wins order'), 'Bloom Energy wins order');
+});

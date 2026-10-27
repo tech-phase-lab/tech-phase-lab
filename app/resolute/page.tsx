@@ -18,11 +18,13 @@ export default async function ResolutePage({ searchParams }: { searchParams: Pro
  // routed to the existing sandbox; customer purchase checks stay unchanged.
  let userId: string | null = null;
  try { ({userId} = await auth()); } catch { /* Fail closed to normal access checks. */ }
- if(canReviewResolute(userId,process.env.VERCEL_ENV)) redirect("/resolute/review");
+ const params = await searchParams;
+ // The preview owner opens RESOLUTE like a visitor (landing page); `?view=review` goes to the sandbox home (owner, Oct 27).
+ if(params.view === "review" && canReviewResolute(userId,process.env.VERCEL_ENV)) redirect("/resolute/review");
  const snapshot = await loadThermometerSnapshot();
  // Purchasers go to the home, everyone else sees the landing page (decided on the device; see EntryGate).
  // `?lang=en` shows the English page; everything else the Japanese one.
- const english = (await searchParams).lang === "en";
+ const english = params.lang === "en";
  return <EntryGate landing={english ? <LandingEn embedded /> : <Landing embedded />}>
   <ClerkProvider signInUrl="/research/account" signUpUrl="/research/account/sign-up"><ResoluteIdentity extra="home" thermometerSnapshot={snapshot} /></ClerkProvider>
  </EntryGate>;

@@ -33,12 +33,13 @@ const NOT_NEWS = [
   /\b(?:Bronstein,? Gewirtz|Rosen Law|Pomerantz|Levi & Korsinsky|Faruqi|Glancy Prongay|Schall Law|Gross Law|Kessler Topaz|Johnson Fistel|Block & Leviton)\b|ブロンスタイン|ローゼン法律|ポメランツ|株主に対し.{0,20}(?:調査|問い合わせ)|\b(?:encourages?|urges?|reminds?) (?:shareholders|investors)\b|\binvestors? who (?:lost|suffered)\b/i, // law-firm solicitations (owner, Oct 26)
   /\bshareholder alert\b|\blead plaintiff\b|\bclass action\b.{0,60}\b(?:deadline|lawsuit|filed)\b|株主向け警告|リード原告|集団訴訟.{0,20}(?:期限|締切)/i, // law-firm lead-plaintiff notices (owner, Oct 27)
   /\b(?:tracking|following|eyeing)\b.{0,50}\bearnings\b|決算を追う|ウォール街が(?:ラリー|反発|続伸|下落|急落)|\bWall Street (?:rallies|rally mode|slides|falls|climbs|stabili[sz]es)\b/i, // other companies' earnings round-ups and market-wide wraps
+  /\bearnings preview\b|\b(?:Q[1-4]|quarter(?:ly)?) (?:earnings )?preview\b|\bwhat to (?:expect|watch)\b|\bwhat (?:investors )?should (?:you )?expect\b|\bkey things to watch\b|\b(?:set|slated|scheduled) to (?:report|release|announce)\b.{0,60}\btomorrow\b|\b(?:reports?|releases?) (?:Q[1-4]|\w+ quarter) (?:results|earnings) tomorrow\b|決算[：:].{0,30}(?:注目点|注目すべき点|何を期待|期待すべき|予想される)|決算.{0,40}(?:注目点|注目すべき点|期待すべきか|予想される内容)\s*$|が明日.{0,24}(?:決算|結果)を?発表|決算(?:報告)?プレビュー|^注目の決算[：:]/i, // earnings previews and "what to expect" teasers (owner, Oct 27)
   /\bweekend trading\b|\bin (?:after|pre)-?(?:hours|market) trading\b.{0,20}\b(?:euros?|yen|pounds?)\b|\btrades? (?:at|for) [\d.,]+ (?:euros?|yen|pounds?)\b|週末取引|[\d.,]+\s?(?:ユーロ|ポンド)で取引/i, // price quotes in a foreign currency while the U.S. market is shut (owner, Oct 26)
 ];
 /** A press-release label glued onto the headline ("2026年10月25日｜… ｜NYSE:BE｜プレスリリース") is not part of it (owner, Oct 26). */
 export function cleanTitle(title: string) {
-  return title.replace(/\s*[(（]\s*(?:NYSE|NASDAQ|Nasdaq|AMEX|NYSEARCA|NYSEAMERICAN)\s*[:：]\s*[A-Z.]{1,6}\s*[)）]/g, "").replace(/^\s*(?:20\d\d年\d{1,2}月\d{1,2}日|[A-Z][a-z]{2,8}\.? \d{1,2}, 20\d\d)\s*[|｜]\s*/, "")
-    .replace(/\s*[|｜]\s*(?:NYSE|NASDAQ|Nasdaq|AMEX)\s*[:：]\s*[A-Z.]{1,6}\s*(?:[|｜]\s*(?:プレスリリース|Press Release))?\s*$/, "")
+  return title.replace(/\s*[(（]\s*(?:NYSE|NASDAQ|Nasdaq(?:GS|GM|CM)?|AMEX|NYSEARCA|NYSEAMERICAN|NYSEAM|NYSEMKT|OTC(?:QX|QB)?)\s*[:：]\s*[A-Z.]{1,6}\s*[)）]/g, "").replace(/^\s*(?:20\d\d年\d{1,2}月\d{1,2}日|[A-Z][a-z]{2,8}\.? \d{1,2}, 20\d\d)\s*[|｜]\s*/, "")
+    .replace(/\s*[|｜]\s*(?:NYSE|NASDAQ|Nasdaq(?:GS|GM|CM)?|AMEX)\s*[:：]\s*[A-Z.]{1,6}\s*(?:[|｜]\s*(?:プレスリリース|Press Release))?\s*$/, "")
     .replace(/\s*[|｜]\s*(?:プレスリリース|Press Release)\s*$/, "").trim();
 }
 export const isNotNews = (text: string) => NOT_NEWS.some(pattern => pattern.test(text));
