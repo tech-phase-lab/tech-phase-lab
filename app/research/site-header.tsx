@@ -6,7 +6,7 @@ import type { Language } from "@/lib/research/data";
 import { useMemberDisplay, useMemberSettled, useOwnerAccount } from "./member-display-provider";
 import { useProIntroduction } from "./header-pro";
 import { useScrollLock } from "./use-scroll-lock";
-import { rememberHash, showDesk } from "@/lib/research/view-hash";
+import { rememberHash } from "@/lib/research/view-hash";
 import base from "./research.module.css";
 import styles from "./site-header.module.css";
 
@@ -210,7 +210,6 @@ function SiteMenu({ lang, member, ownerAccount, onClose, onRefresh, onPro }: { l
     onClose();
     if (pathname !== "/research" || !href.startsWith("/research#")) return;
     event.preventDefault();
-    if (href === "/research#rizels-desk") { showDesk(); return; }
     window.history.pushState(null, "", href);
     rememberHash(href.slice(href.indexOf("#")));
     window.dispatchEvent(new HashChangeEvent("hashchange"));
@@ -253,7 +252,7 @@ function SiteMenu({ lang, member, ownerAccount, onClose, onRefresh, onPro }: { l
       {member && <div className={styles.grp}>
         {heading(ja ? "PRO機能" : "PRO features", true)}
         <div className={styles.proTiles}>
-          {tile("/research#rizels-desk", "desk", "RIZEL'S DESK")}
+          {tile("/research/notes", "desk", "RIZEL'S DESK")}
           {tile("/research#monitored-companies", "watch22", ja ? "監視22銘柄" : "22 Tracked Stocks")}
           {tile("/research/themes", "bars", ja ? "テーマランキング" : "Theme Ranking")}
           {tile("/research/compare", "compare", ja ? "銘柄比較" : "Compare")}

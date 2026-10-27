@@ -9,7 +9,6 @@ test("each research view can be restored from its URL on reload or history navig
   }
   assert.equal(researchViewFromHash(""), "home");
   assert.equal(researchViewFromHash("#what-changed/mu-q3-2026"), "changes");
-  assert.equal(researchViewFromHash("#rizels-desk"), "home");
 });
 
 test("unknown hashes do not silently replace the selected view", () => {
