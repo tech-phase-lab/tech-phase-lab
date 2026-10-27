@@ -3,7 +3,7 @@ import { isGuest } from './guest.mjs';
 import { paypalEnvironment } from './paypal-environments.mjs';
 import { identity, input, quote, sameQuote, verifyOrder, reject, minorUnits, PaymentError } from './policy.mjs';
 const uuid = value => typeof value === 'string' && /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(value);
-export function paymentEngine({ store, paypal, merchantId, getUser, now = Date.now, environment = 'sandbox', canCharge = () => true, allowGuest = () => false }) {
+export function paymentEngine({ store, paypal, merchantId, getUser, now = Date.now, environment = 'sandbox', canCharge = () => true, allowGuest = () => false, recovery = null }) {
   const selected=paypalEnvironment(environment), sandbox=environment === 'sandbox';
   const requireSales=()=>{ if (!canCharge()) reject('PAYMENT_DISABLED',503); };
   async function buyer(userId) {
@@ -82,6 +82,16 @@ export function paymentEngine({ store, paypal, merchantId, getUser, now = Date.n
       if(sandbox || !allowGuest() || !uuid(body.orderId) || !isGuest(guest)) reject('INVALID_PAYMENT_INPUT',400);
       await member(userId); // Never accept a browser-provided account or email as identity.
       return {state:await store.claim(guest,userId,body.orderId,now()),sandbox};
+    },
+    async claimRecovery(userId,token,body) {
+      if(sandbox || !allowGuest() || !recovery) reject('PAYMENT_DISABLED',503);
+      input(body,['orderId']);
+      const proof=recovery.read(token);
+      if(body.orderId!==proof.id) reject('INVALID_RECOVERY_LINK',400);
+      await member(userId);
+      const order=await store.get(proof.id);
+      if(!order || !isGuest(order.guest_id) || Date.parse(order.paid_at)!==proof.paid) reject('INVALID_RECOVERY_LINK',400);
+      return {state:await store.claim(order.guest_id,userId,order.id,now()),sandbox};
     },
     async webhook(headers,event) {
       if(!await paypal.verify(headers,event)) { await store.flag(null,'INVALID_WEBHOOK_SIGNATURE'); reject('INVALID_SIGNATURE',400); }

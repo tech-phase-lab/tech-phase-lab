@@ -41,6 +41,13 @@ test('guest proxy establishes an HttpOnly capability before orders, strips clien
   assert.equal((await request('claim')).status,200);
   assert.equal(calls.at(-1).init.headers.Authorization,'Bearer trusted-clerk-jwt');
   assert.equal(calls.at(-1).init.headers['X-Resolute-Guest-Token'],token);
+  assert.equal((await request('recovery/claim')).status,400);
+  jar.set('__Host-resolute-recovery','signed.recovery-token');
+  assert.equal((await request('recovery/claim',{extra:{'x-resolute-recovery-token':'attacker'}})).status,200);
+  assert.equal(calls.at(-1).init.headers['X-Resolute-Recovery-Token'],'signed.recovery-token');
+  assert.equal(calls.at(-1).init.headers['X-Resolute-Guest-Token'],undefined);
+  assert.equal((await request('recovery/claim',{origin:'https://attacker.test'})).status,403);
+  userId=null;assert.equal((await request('recovery/claim')).status,401);
   process.env.RESOLUTE_GUEST_CHECKOUT_ENABLED='false';
   assert.equal((await request('guest/orders',{method:'GET'})).status,503);
  } finally {

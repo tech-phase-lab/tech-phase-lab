@@ -15,15 +15,15 @@ async function handle(request: Request, context: { params: Promise<{ action: str
     if (!userId && !guest) return Response.json({ error: "AUTH_REQUIRED" }, { status: 401, headers });
     if (process.env.RESOLUTE_PAYPAL_LIVE_ENABLED !== "true")
       return Response.json({ error: "PAYMENT_DISABLED" }, { status: 503, headers });
-    if ((guest || path === "claim") && process.env.RESOLUTE_GUEST_CHECKOUT_ENABLED !== "true")
+    if ((guest || path === "claim" || path === "recovery/claim") && process.env.RESOLUTE_GUEST_CHECKOUT_ENABLED !== "true")
       return Response.json({ error: "PAYMENT_DISABLED" }, { status: 503, headers });
     const route = guest ? path.slice(6) : path;
     if (path === "audit" && userId !== OWNER_ACCOUNT_ID)
       return Response.json({ error: "PAYMENT_ACCESS_DENIED" }, { status: 403, headers });
-    if (!(request.method === "POST" && (guest ? ["session", "orders", "capture"] : ["orders", "capture", "claim"]).includes(route)) &&
+    if (!(request.method === "POST" && (guest ? ["session", "orders", "capture"] : ["orders", "capture", "claim", "recovery/claim"]).includes(route)) &&
         !(request.method === "GET" && ((!guest && (path === "audit" || path === "access")) || /^orders\/[0-9a-f-]{36}$/i.test(route))))
       return Response.json({ error: "NOT_FOUND" }, { status: 404, headers });
-    if (request.method === "POST" && path !== "claim" && process.env.RESOLUTE_LIVE_SALES_ENABLED !== "true")
+    if (request.method === "POST" && !["claim", "recovery/claim"].includes(path) && process.env.RESOLUTE_LIVE_SALES_ENABLED !== "true")
       return Response.json({ error: "PAYMENT_DISABLED" }, { status: 503, headers });
     const incoming = new URL(request.url);
     if (incoming.search || request.method === "POST" && request.headers.get("origin") !== incoming.origin)
@@ -41,6 +41,9 @@ async function handle(request: Request, context: { params: Promise<{ action: str
     }
     if ((guest || path === "claim") && !guestToken)
       return Response.json({ error: "GUEST_SESSION_REQUIRED" }, { status: 401, headers });
+    const recoveryToken = jar.get("__Host-resolute-recovery")?.value;
+    if (path === "recovery/claim" && (!recoveryToken || recoveryToken.length > 512))
+      return Response.json({ error: "INVALID_RECOVERY_LINK" }, { status: 400, headers });
     const base = process.env.RESOLUTE_API_URL, secret = process.env.RESOLUTE_API_SERVICE_TOKEN;
     if (!base || !secret || secret.length < 43) throw Error("Unavailable");
     const url = new URL(base);
@@ -64,6 +67,7 @@ async function handle(request: Request, context: { params: Promise<{ action: str
     const response = await fetch(url, { method: request.method, body, cache: "no-store", redirect: "error",
       signal: AbortSignal.timeout(20000), headers: { ...(token ? { Authorization: `Bearer ${token}` } : {}),
         ...((guest || path === "claim") && guestToken ? { "X-Resolute-Guest-Token": guestToken } : {}),
+        ...(path === "recovery/claim" && recoveryToken ? { "X-Resolute-Recovery-Token": recoveryToken } : {}),
         "X-Resolute-Service-Token": secret, "Content-Type": "application/json" } });
     // Only our fixed backend may answer; failures never expose upstream text or secrets.
     if (!response.headers.get("content-type")?.startsWith("application/json")) throw Error("Invalid response");

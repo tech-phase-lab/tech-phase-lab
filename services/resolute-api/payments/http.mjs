@@ -39,6 +39,10 @@ export function paymentHttp({ engine, store, authenticate, enabled, allowedUsers
         if(webhook) return json(await engine.webhook(request.headers,await readJson(request)));
         if(route === base+'/orders' && request.method === 'POST') return json(await engine.create(user,await readJson(request,2048)));
         if(route === base+'/capture' && request.method === 'POST') return json(await engine.capture(user,await readJson(request,2048)));
+        if(path === base+'/recovery/claim' && request.method === 'POST') {
+          if(!guestEnabled()) return json({error:'PAYMENT_DISABLED'},503);
+          return json(await engine.claimRecovery(user,request.headers.get('x-resolute-recovery-token'),await readJson(request,2048)));
+        }
         if(path === base+'/claim' && request.method === 'POST') {
           if(!guestEnabled()) return json({error:'PAYMENT_DISABLED'},503);
           return json(await engine.claim(user,await authenticateGuest(request.headers),await readJson(request,2048)));
