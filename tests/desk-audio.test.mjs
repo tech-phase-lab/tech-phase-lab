@@ -71,12 +71,12 @@ const playback=await load('../app/api/research/desk-media/[file]/route.ts',{
  'import { GET as getPosts } from "../../posts/route";':'const getPosts=async()=>{if(globalThis.__audio.expire)globalThis.__audio.member.accessExpiresAt=0;return Response.json(globalThis.__audio.posts)};'
 });
 test('upload endpoints reject cross-origin, non-owner, MP4, oversized bodies and missing setup',async()=>{
- globalThis.__audio={calls:0,member:{status:'signed-in',isAdmin:true},config:()=>{throw Error();}};
+ globalThis.__audio={calls:0,member:{status:'signed-in',isAdmin:true,userId:'owner-one'},config:()=>{throw Error();}};
  const request=(body,origin='https://example.test')=>new Request('https://example.test/api/research/desk-media',{method:'POST',headers:{Origin:origin,'Content-Type':'application/json'},body:JSON.stringify(body)});
  try {
-  assert.equal((await (await api.GET()).json()).enabled,false);
+  const status=await (await api.GET()).json();assert.equal(status.enabled,false);assert.equal(status.draftOwner,'owner-one');
   assert.equal((await api.POST(request({action:'start',name:'a.mp3',size:1024},'https://evil.test'))).status,403);
-  globalThis.__audio.member.isAdmin=false;assert.equal((await api.POST(request({action:'start',name:'a.mp3',size:1024}))).status,403);
+  globalThis.__audio.member.isAdmin=false;assert.equal((await api.GET()).status,403);assert.equal((await api.POST(request({action:'start',name:'a.mp3',size:1024}))).status,403);
   globalThis.__audio.member.isAdmin=true;
   assert.equal((await api.POST(request({action:'start',name:'a.mp4',size:1024}))).status,400);
   assert.equal((await api.POST(request({action:'start',name:'a.mp3',size:maxDeskAudioBytes+1}))).status,400);

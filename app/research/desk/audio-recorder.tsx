@@ -38,13 +38,13 @@ export default function AudioRecorder({ disabled, onFile, onBusyChange, onMessag
       } else if (recorder.state === "paused") {
         recorder.resume(); current.runningSince = performance.now(); setState("recording");
       }
-    } catch { report("一時停止・再開ができませんでした。停止して音声を確認してください。"); }
+    } catch { report("一時停止・再開できませんでした。"); }
   }
   async function start() {
     if (disabled || session.current) return;
-    if (!navigator.mediaDevices?.getUserMedia || typeof MediaRecorder === "undefined") { report("このブラウザでは録音できません。Safariでお試しください。"); return; }
+    if (!navigator.mediaDevices?.getUserMedia || typeof MediaRecorder === "undefined") { report("録音を開始できませんでした。"); return; }
     const mime = ["audio/mp4;codecs=mp4a.40.2", "audio/mp4"].find(type => MediaRecorder.isTypeSupported(type));
-    if (!mime) { report("M4A録音に非対応です。音声ファイルを選んでください。"); return; }
+    if (!mime) { report("録音を開始できませんでした。"); return; }
     const current: RecordingSession = { recorder: null, stream: null, cancelled: false, elapsed: 0, runningSince: 0 };
     session.current = current; setState("requesting"); report(""); setSeconds(0); callbacks.current.onBusyChange(true);
     try {
@@ -61,7 +61,7 @@ export default function AudioRecorder({ disabled, onFile, onBusyChange, onMessag
         if (session.current !== current) return;
         session.current = null;
         if (!current.cancelled) {
-          if (failed || bytes < 512) report("録音を保存できませんでした。もう一度録音してください。");
+          if (failed || bytes < 512) report("録音を保存できませんでした。");
           else callbacks.current.onFile(new File(chunks, `rizel-${new Date().toISOString().replace(/[:.]/g, "-")}.m4a`, { type: "audio/mp4" }));
         }
         setState("idle"); callbacks.current.onBusyChange(false);
@@ -73,13 +73,13 @@ export default function AudioRecorder({ disabled, onFile, onBusyChange, onMessag
       current.timer = setInterval(() => { setSeconds(Math.floor((current.elapsed + (recorder.state === "recording" ? performance.now() - current.runningSince : 0)) / 1000)); }, 250);
     } catch {
       clearInterval(current.timer); current.stream?.getTracks().forEach(track => track.stop());
-      if (session.current === current) { session.current = null; setState("idle"); report("録音できません。マイクの許可をご確認ください。"); callbacks.current.onBusyChange(false); }
+      if (session.current === current) { session.current = null; setState("idle"); report("録音を開始できませんでした。"); callbacks.current.onBusyChange(false); }
     }
   }
   return <div className={styles.recorder}>
     <button className={styles.audioRecordEntry} type="button" disabled={disabled || state !== "idle"} onClick={() => void start()}>ここで録音</button>
     {state !== "idle" && <div className={styles.recorderControls}>
-      <span className={styles.recording} role="status">{state === "requesting" ? "マイクの許可を待っています…" : `${state === "paused" ? "一時停止中" : "● 録音中"} ${Math.floor(seconds / 60)}:${String(seconds % 60).padStart(2, "0")}`}</span>
+      <span className={styles.recording} role="status">{state === "requesting" ? "マイクの許可待ち…" : `${state === "paused" ? "一時停止中" : "● 録音中"} ${Math.floor(seconds / 60)}:${String(seconds % 60).padStart(2, "0")}`}</span>
       {(state === "recording" || state === "paused") && <><button type="button" onClick={togglePause}>{state === "paused" ? "録音を再開" : "一時停止"}</button><button type="button" onClick={() => { const recorder = session.current?.recorder; if (recorder && recorder.state !== "inactive") recorder.stop(); }}>停止して試聴</button></>}
       <button type="button" onClick={cancel}>録音を破棄</button>
     </div>}

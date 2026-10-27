@@ -9,8 +9,8 @@ export async function GET() {
   try {
     const member = await getMembership();
     if (member.status !== "signed-in" || !member.isAdmin) return reply(403, { ok: false });
-    try { const { client } = audioStorage(); client.destroy(); return reply(200, { ok: true, enabled: true, maxBytes: maxDeskAudioBytes }); }
-    catch { return reply(200, { ok: true, enabled: false, maxBytes: maxDeskAudioBytes }); }
+    try { const { client } = audioStorage(); client.destroy(); return reply(200, { ok: true, enabled: true, maxBytes: maxDeskAudioBytes, draftOwner: member.userId }); }
+    catch { return reply(200, { ok: true, enabled: false, maxBytes: maxDeskAudioBytes, draftOwner: member.userId }); }
   } catch { return reply(503, { ok: false }); }
 }
 export async function POST(request: Request) {

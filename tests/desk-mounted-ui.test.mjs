@@ -78,7 +78,7 @@ for (const extension of ['mp3','m4a']) test(extension+' picker rejects video, re
   await act(async()=>{root.render(React.createElement(AudioUpload,{disabled:false,onUploaded:(url,title)=>{attached.push({url,title});},onBusyChange:value=>busy.push(value)}));await tick();});
   const input=host.querySelector('input[type=file]');assert.equal(input.accept,'.mp3,.m4a,audio/mpeg,audio/mp4,audio/x-m4a');
   const choose=async name=>{Object.defineProperty(input,'files',{configurable:true,value:[new File(['x'.repeat(1024)],name)]});await act(async()=>{input.dispatchEvent(new window.Event('change',{bubbles:true}));await tick();});};
-  await choose('movie.mp4');assert.deepEqual(calls,['status']);assert.match(host.textContent,/動画は添付できません/);
+  await choose('movie.mp4');assert.deepEqual(calls,['status']);assert.match(host.textContent,/MP3・M4A／50MBまで/);
   await choose('voice.'+extension);assert.equal(busy.at(-1),true);assert.deepEqual(calls,['status']);
   const titleInput=host.querySelector('input[type=text]');assert.equal(titleInput.value,'voice');
   await act(async()=>{titleInput[Object.keys(titleInput).find(key=>key.startsWith('__reactProps'))].onChange({target:{value:'週末の相場メモ'}});await tick();});
