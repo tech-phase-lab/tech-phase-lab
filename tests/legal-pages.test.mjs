@@ -38,12 +38,12 @@ test("the pages are public drafts: no sign-in, not indexed, at /terms and /priva
   assert.ok(!/\/terms|\/privacy/.test(proxy));
 });
 
-test("links: LP footer, menu footer and home footer reach both pages", () => {
+test("links: LP footer and home footer reach both pages; the menu no longer carries them (owner, Oct 28)", () => {
   const lp = read("../app/resolute/lp/landing.tsx");
   assert.match(lp, /href="\/terms">利用規約/);
   assert.match(lp, /href="\/privacy">プライバシー</);
   const header = read("../app/research/site-header.tsx");
-  assert.match(header, /href="\/terms"/); assert.match(header, /href="\/privacy"/);
+  assert.doesNotMatch(header, /href="\/terms"/); assert.doesNotMatch(header, /href="\/privacy"/);
   const home = read("../app/research/research-dashboard.tsx");
   assert.match(home, /<Link href="\/terms">/); assert.match(home, /<Link href="\/privacy">/);
 });

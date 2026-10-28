@@ -146,3 +146,9 @@ test('the same feed, language and company set gives the same stories without gro
   assert.notEqual(wireStories(wire, 'en', WATCHED), first);
   assert.notEqual(wireStories({ ...wire }, 'ja', WATCHED), first);
 });
+
+test('"how it was done" explainers are not news (owner, Oct 28)', () => {
+  for (const title of ['研究者が明かす、ロジックバグのみでMicrosoft Edgeを175,000ドルのPwn2Own勝利で攻略した方法', 'AIが認知症患者5700万人のための新発見の速度を変革する方法',
+    'How researchers took down Microsoft Edge with logic bugs alone', 'How AI Is Transforming the Pace of Discovery']) assert.equal(isNotNews(title), true, title);
+  for (const title of ['Microsoft says Edge patch fixes the Pwn2Own bugs', 'マイクロソフト、Edgeの脆弱性を修正', 'Nebius adds capacity, and how much it costs is undisclosed']) assert.equal(isNotNews(title), false, title);
+});
