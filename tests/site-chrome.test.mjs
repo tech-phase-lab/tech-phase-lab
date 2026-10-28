@@ -43,7 +43,7 @@ test("header label follows the plan in both languages; signed-out reads FREE", a
   assert.ok(header.indexOf(">JA</button>") < header.indexOf("styles.ring") && header.indexOf("styles.pro}") < header.indexOf("aria-controls=\"site-menu\""));
   const css = read("app/research/site-header.module.css");
   // The ring only glows softly; the arrow turns once when pressed (no orbit or countdown).
-  assert.match(css, /\.spinOnce > svg:last-child \{ animation:spin \.7s cubic-bezier\(\.4,0,\.2,1\) 1; \}/);
+  assert.match(css, /\.spinOnce > svg:last-child \{ animation:spin \.7s cubic-bezier\(\.4,0,\.2,1\) infinite; \}/); // turns until the page reloads (owner, Oct 28)
   assert.doesNotMatch(css, /stroke-dashoffset|orbit/);
   // Reload is also in the menu for every reader.
   assert.match(header, /ja \? "再読み込み" : "Refresh"\}<\/button>/);
@@ -156,4 +156,14 @@ test("news list sorts by the time each card shows, newest first", () => {
   assert.match(panel, /at: shown\.kind === "date" \? `\$\{shown\.at\}T00:00:00Z` : shown\.at/);
   assert.match(panel, /const publication = update\.publication,/);
   assert.match(panel, /\.sort\(\(a, b\) => Date\.parse\(b\.publishedAt\) - Date\.parse\(a\.publishedAt\)\)/);
+});
+
+test("a reload says 'updating' at once and 'updated' on the page that comes back; the screen cannot be zoomed by double tap (owner, Oct 28)", () => {
+  const header = read("app/research/site-header.tsx");
+  assert.match(header, /sessionStorage\.setItem\(REFRESHED_KEY/);
+  assert.match(header, /更新中…/); assert.match(header, /更新しました/);
+  const layout = read("app/layout.tsx");
+  assert.match(layout, /maximumScale: 1, userScalable: false/);
+  const css = read("app/globals.css");
+  assert.match(css, /html, body \{ touch-action: manipulation; \}/);
 });

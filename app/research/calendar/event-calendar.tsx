@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { calendarDateKey, dateOnlyEvents, selectDateOnlyEvents, calendarEvents, selectCalendarEvents, type CalendarEvent } from "@/lib/research/calendar";
 import { useCalendarClock } from "../use-calendar-clock";
 import coverage from "@/lib/research/calendar-coverage.json";
@@ -41,7 +41,13 @@ export default function EventCalendar() {
   // The same goes for an economic release (jobs, CPI, PPI, PCE) once its result is posted.
   const resultKey = (event: CalendarEvent) => event.ticker ?? (event.kind === "economic" ? `econ:${/^[a-z]+/.exec(event.id)?.[0]}` : undefined);
   const resultPosted = (event: CalendarEvent) => { const key = resultKey(event); return !!key && reported.some(row => row.ticker === key && Math.abs(row.at - Date.parse(event.startsAt)) <= 36 * 3_600_000); };
-  const now = useCalendarClock();
+  const clock = useCalendarClock();
+  // Upcoming rows are listed once it is known which results are already posted (or after a short grace period), so a call row
+  // does not show first and then move to the results (owner, Oct 28).
+  const [resultsKnown, setResultsKnown] = useState(false);
+  const onSettled = useCallback(() => setResultsKnown(true), []);
+  useEffect(() => { const timer = setTimeout(() => setResultsKnown(true), 3_500); return () => clearTimeout(timer); }, []);
+  const now = resultsKnown ? clock : null;
   const t = (ja: string, en: string) => lang === "ja" ? ja : en;
   const visible = now === null ? [] : selectCalendarEvents(calendarEvents, kind, "today-upcoming", now, zone).filter(event => period === "all" || calendarDateKey(event.startsAt, zone).startsWith(period)).filter(event => !resultPosted(event));
   const visibleDateOnly = now === null ? [] : selectDateOnlyEvents(dateOnlyEvents, kind, "today-upcoming", now).filter(event => period === "all" || event.date.startsWith(period));
@@ -61,7 +67,8 @@ export default function EventCalendar() {
       <select aria-label={t("表示月", "Month")} value={period} onChange={event => setPeriod(event.target.value)}><option value="all">{t("すべての月", "All months")}</option>{months.map(month => <option key={month} value={month}>{month}</option>)}</select>
       <select aria-label={t("時間帯", "Time zone")} value={zone} onChange={event => { setZoneOverride(event.target.value); setPeriod("all"); }}><option value="Asia/Tokyo">JST</option><option value="America/New_York">ET</option></select>
     </div>
-    <EconomicResultsPanel lang={lang} zone={zone} period={period} kind={kind} onReported={onReported} active={view === "results"} />
+    <EconomicResultsPanel lang={lang} zone={zone} period={period} kind={kind} onReported={onReported} onSettled={onSettled} active={view === "results"} />
+    {view === "upcoming" && now === null && <div className={calendarStyles.waiting} aria-busy="true" aria-label={t("予定を読み込み中", "Loading the schedule")} />}
     {view === "upcoming" && <div className={calendarStyles.upcomingContent}>
     <ol className={calendarStyles.agenda}>{visible.map((event) => <li key={event.id}>
       <details>

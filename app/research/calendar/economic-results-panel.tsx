@@ -21,10 +21,11 @@ function ResultList({ rows, lang }: { rows: ReactNode[]; lang: "ja" | "en" }) {
   </>;
 }
 
-export default function EconomicResultsPanel({ lang, zone, period, kind = "all", active = true, onReported }: { lang: "ja" | "en"; zone: string; period: string; active?: boolean; kind?: "all" | "earnings" | "economic"; onReported?: (rows: { ticker: string; at: number }[]) => void }) {
+export default function EconomicResultsPanel({ lang, zone, period, kind = "all", active = true, onSettled, onReported }: { lang: "ja" | "en"; zone: string; period: string; active?: boolean; kind?: "all" | "earnings" | "economic"; onSettled?: () => void; onReported?: (rows: { ticker: string; at: number }[]) => void }) {
   const [updates, setUpdates] = useState<OfficialUpdate[]>([]);
   const [briefs, setBriefs] = useState<ResultBrief[]>([]);
   const [failed, setFailed] = useState(false);
+  const [loaded, setLoaded] = useState(false);
   useEffect(() => {
     const poller = createNewsPoller({
       push: true,
@@ -33,8 +34,8 @@ export default function EconomicResultsPanel({ lang, zone, period, kind = "all",
         if (!response.ok) throw Error("unavailable");
         return publicNewsPayload(await response.json());
       },
-      onSuccess: payload => { setUpdates(payload.officialUpdates ?? []); setBriefs(payload.resultBriefs ?? []); setFailed(false); },
-      onFailure: () => { setUpdates([]); setBriefs([]); setFailed(true); },
+      onSuccess: payload => { setUpdates(payload.officialUpdates ?? []); setBriefs(payload.resultBriefs ?? []); setFailed(false); setLoaded(true); },
+      onFailure: () => { setUpdates([]); setBriefs([]); setFailed(true); setLoaded(true); },
     });
     poller.start();
     const stopObserving = observePageActivity(() => poller.resume(), () => poller.pause());
@@ -49,7 +50,9 @@ export default function EconomicResultsPanel({ lang, zone, period, kind = "all",
     // Posted economic releases count too, keyed "econ:ppi" etc., so their calendar row goes away (owner, Oct 15).
     const economic = mergeEconomicResults(updates, briefs).filter(row => !ja || row.title.ja).map(row => ({ ticker: `econ:${/^[a-z]+/.exec(row.id)?.[0]}`, at: Date.parse(row.releasedAt) }));
     onReported?.([...earningsResults(updates, briefs).filter(row => !ja || row.result.ja).map(row => ({ ticker: row.ticker, at: Date.parse(row.releasedAt) })), ...economic]);
-  }, [updates, briefs, ja, onReported]);
+    // Said after the rows above, in the same step, so the agenda never lists a call that is already posted.
+    if (loaded) onSettled?.();
+  }, [updates, briefs, ja, onReported, onSettled, loaded]);
   if (!active) return null;
   const results = mergeEconomicResults(updates, briefs).filter(event => period === "all" || calendarDateKey(event.releasedAt, zone).startsWith(period));
   const zoneLabel = zone === "Asia/Tokyo" ? "JST" : "ET";
