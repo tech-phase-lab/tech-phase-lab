@@ -43,3 +43,15 @@ test("favicon.ico holds the mark at 16, 32 and 48 px", async () => {
   const sizes = Array.from({ length: count }, (_, i) => ico[6 + i * 16]);
   assert.deepEqual(sizes, [16, 32, 48]);
 });
+
+test("browser-tab icon: transparent mark only (no square tile), with a light-theme variant", async () => {
+  const svg = await readFile(new URL("../app/icon.svg", import.meta.url), "utf8");
+  assert.doesNotMatch(svg, /<rect/); // no background square
+  assert.match(svg, /prefers-color-scheme: light/);
+  const ico = await readFile(new URL("../app/favicon.ico", import.meta.url));
+  for (let i = 0; i < ico.readUInt16LE(4); i++) {
+    const offset = ico.readUInt32LE(6 + i * 16 + 12);
+    assert.deepEqual([...ico.subarray(offset + 1, offset + 4)], [0x50, 0x4e, 0x47]); // PNG entry
+    assert.equal(ico[offset + 25], 6, "RGBA colour type: the corners can be transparent");
+  }
+});
