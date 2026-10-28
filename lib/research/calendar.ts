@@ -25,7 +25,7 @@ export type DateOnlyCalendarEvent = {
   note?: Copy;
 };
 
-export const calendarReviewedOn = "2026-10-02";
+export const calendarReviewedOn = "2026-10-28";
 const blsUrl = "https://www.bls.gov/schedule/2026/";
 const labels: Record<string, Copy> = {
   jobs: { ja: "米国雇用統計", en: "U.S. employment report" },
@@ -211,6 +211,91 @@ export const calendarEvents: CalendarEvent[] = [
     sourceUrl: "https://www.adobe.com/investor-relations/events-presentations.html",
     note: { ja: "説明会の開始予定です。決算資料の公開時刻を示すものではありません。", en: "Scheduled call start, not the publication time of the earnings release." },
   },
+  // Company-announced dates read on 2026-10-28 (owner: confirmed dates were missing). Only dates the company itself announced are listed.
+  {
+    id: "googl-q3-2026-call", afterClose: true, ticker: "GOOGL", kind: "earnings" as const, title: { ja: "Alphabet（Google）決算説明会（2026年Q3）", en: "Alphabet Q3 2026 earnings call" },
+    startsAt: "2026-10-28T13:30:00-07:00", sourceTimezone: "America/Los_Angeles", sourceName: "Alphabet IR",
+    sourceUrl: "https://abc.xyz/investor/events/event-details/",
+    note: { ja: "説明会の開始予定です。決算資料は同日の米国市場終了後に公開予定ですが、正確な公開時刻は公表されていません。", en: "Scheduled call start. Results are due after the U.S. market closes that day, but no exact publication time was announced." },
+  },
+  {
+    id: "vrt-q3-2026-call", ticker: "VRT", kind: "earnings" as const, title: { ja: "Vertiv 決算説明会（2026年Q3）", en: "Vertiv Q3 2026 earnings call" },
+    startsAt: "2026-10-28T11:00:00-04:00", sourceTimezone: "America/New_York", sourceName: "Vertiv (SEC Form 8-K)",
+    sourceUrl: "https://www.sec.gov/Archives/edgar/data/0001674101/000162828026067707/q32026exhibit991vrt10282026.htm",
+    note: { ja: "説明会の開始予定です。決算資料は同日の米国市場の開始前に公開されます。", en: "Scheduled call start. Results are released before the U.S. market opens that day." },
+  },
+  {
+    id: "aapl-fq4-2026-call", afterClose: true, ticker: "AAPL", kind: "earnings" as const, title: { ja: "Apple 決算説明会（2026年度Q4）", en: "Apple fiscal Q4 2026 earnings call" },
+    startsAt: "2026-11-02T14:00:00-08:00", sourceTimezone: "America/Los_Angeles", sourceName: "Apple Investor Relations",
+    sourceUrl: "https://investor.apple.com/investor-relations/event-details/2026/FY-26-Fourth-Quarter-Results/default.aspx",
+    note: { ja: "説明会の開始予定です。決算資料は同日の米国市場終了後に公開予定ですが、正確な公開時刻は公表されていません。", en: "Scheduled call start. Results are due after the U.S. market closes that day, but no exact publication time was announced." },
+  },
+  {
+    id: "pltr-q3-2026-webcast", afterClose: true, ticker: "PLTR", kind: "earnings" as const, title: { ja: "Palantir 決算説明会（2026年Q3）", en: "Palantir Q3 2026 earnings webcast" },
+    startsAt: "2026-11-02T17:00:00-05:00", sourceTimezone: "America/New_York", sourceName: "Palantir IR (press release)",
+    sourceUrl: "https://investors.palantir.com/",
+    note: { ja: "説明会の開始予定です。決算資料は同日の米国市場終了後に公開予定ですが、正確な公開時刻は公表されていません。", en: "Scheduled call start. Results are due after the U.S. market closes that day, but no exact publication time was announced." },
+  },
+  {
+    id: "alab-q3-2026-call", afterClose: true, ticker: "ALAB", kind: "earnings" as const, title: { ja: "Astera Labs 決算説明会（2026年Q3）", en: "Astera Labs Q3 2026 earnings call" },
+    startsAt: "2026-11-03T16:30:00-05:00", sourceTimezone: "America/New_York", sourceName: "Astera Labs IR",
+    sourceUrl: "https://ir.asteralabs.com/news-releases/news-release-details/astera-labs-announces-conference-call-review-third-quarter-2026",
+    note: { ja: "説明会の開始予定です。決算資料は同日の米国市場終了後に公開予定ですが、正確な公開時刻は公表されていません。", en: "Scheduled call start. Results are due after the U.S. market closes that day, but no exact publication time was announced." },
+  },
+  {
+    id: "qcom-fq4-2026-call", afterClose: true, ticker: "QCOM", kind: "earnings" as const, title: { ja: "Qualcomm 決算説明会（2026年度Q4）", en: "Qualcomm fiscal Q4 2026 earnings call" },
+    startsAt: "2026-11-04T13:45:00-08:00", sourceTimezone: "America/Los_Angeles", sourceName: "Qualcomm IR",
+    sourceUrl: "https://investor.qualcomm.com/news-events/investor-events/events/event-details/2026/Q4-FY26-Earnings-Conference-Call-2026-zipgVlNz63/default.aspx",
+    note: { ja: "説明会の開始予定です。決算資料は同日の米国市場終了後に公開予定ですが、正確な公開時刻は公表されていません。", en: "Scheduled call start. Results are due after the U.S. market closes that day, but no exact publication time was announced." },
+  },
+  {
+    id: "cohr-fq1-2027-call", afterClose: true, ticker: "COHR", kind: "earnings" as const, title: { ja: "Coherent 決算説明会（2027年度Q1）", en: "Coherent fiscal Q1 2027 earnings webcast" },
+    startsAt: "2026-11-04T16:30:00-05:00", sourceTimezone: "America/New_York", sourceName: "Coherent (press release)",
+    sourceUrl: "https://ir.coherent.com/news-events/financial-releases",
+    note: { ja: "説明会の開始予定です。決算資料は同日の米国市場終了後に公開予定ですが、正確な公開時刻は公表されていません。", en: "Scheduled call start. Results are due after the U.S. market closes that day, but no exact publication time was announced." },
+  },
+  {
+    id: "ionq-q3-2026-call", afterClose: true, ticker: "IONQ", kind: "earnings" as const, title: { ja: "IonQ 決算説明会（2026年Q3）", en: "IonQ Q3 2026 earnings call" },
+    startsAt: "2026-11-05T16:30:00-05:00", sourceTimezone: "America/New_York", sourceName: "IonQ IR",
+    sourceUrl: "https://investors.ionq.com/events-and-presentations/events/event-details/2026/IonQ-Third-Quarter-2026-Earnings-Call/default.aspx",
+    note: { ja: "説明会の開始予定です。決算資料は同日の米国市場終了後に公開予定ですが、正確な公開時刻は公表されていません。", en: "Scheduled call start. Results are due after the U.S. market closes that day, but no exact publication time was announced." },
+  },
+  {
+    id: "aaoi-q3-2026-call", afterClose: true, ticker: "AAOI", kind: "earnings" as const, title: { ja: "Applied Optoelectronics 決算説明会（2026年Q3）", en: "Applied Optoelectronics Q3 2026 earnings call" },
+    startsAt: "2026-11-05T16:30:00-05:00", sourceTimezone: "America/New_York", sourceName: "Applied Optoelectronics IR",
+    sourceUrl: "https://investors.ao-inc.com/news-events/press-releases",
+    note: { ja: "説明会の開始予定です。決算資料は同日の米国市場終了後に公開予定ですが、正確な公開時刻は公表されていません。", en: "Scheduled call start. Results are due after the U.S. market closes that day, but no exact publication time was announced." },
+  },
+  {
+    id: "iren-fq1-2027-call", afterClose: true, ticker: "IREN", kind: "earnings" as const, title: { ja: "IREN 決算説明会（2027年度Q1）", en: "IREN fiscal Q1 2027 earnings call" },
+    startsAt: "2026-11-05T17:00:00-05:00", sourceTimezone: "America/New_York", sourceName: "IREN IR",
+    sourceUrl: "https://iren.com/investors/news",
+    note: { ja: "説明会の開始予定です。決算資料は同日の米国市場終了後に公開予定ですが、正確な公開時刻は公表されていません。", en: "Scheduled call start. Results are due after the U.S. market closes that day, but no exact publication time was announced." },
+  },
+  {
+    id: "ceg-q3-2026-call", ticker: "CEG", kind: "earnings" as const, title: { ja: "Constellation Energy 決算説明会（2026年Q3）", en: "Constellation Energy Q3 2026 earnings call" },
+    startsAt: "2026-11-09T09:00:00-05:00", sourceTimezone: "America/New_York", sourceName: "Constellation Energy IR",
+    sourceUrl: "https://investors.constellationenergy.com/events/event-details/q3-2026-constellation-energy-corporation-earnings-conference-call",
+    note: { ja: "説明会の開始予定です。決算資料の公開時刻を示すものではありません。", en: "Scheduled call start, not the publication time of the earnings release." },
+  },
+  {
+    id: "crwv-q3-2026-call", afterClose: true, ticker: "CRWV", kind: "earnings" as const, title: { ja: "CoreWeave 決算説明会（2026年Q3）", en: "CoreWeave Q3 2026 earnings call" },
+    startsAt: "2026-11-10T17:00:00-05:00", sourceTimezone: "America/New_York", sourceName: "CoreWeave IR",
+    sourceUrl: "https://investors.coreweave.com/news/news-details/2026/CoreWeave-Announces-Date-of-Third-Quarter-2026-Financial-Results-and-Conference-Call/default.aspx",
+    note: { ja: "説明会の開始予定です。決算資料は同日の米国市場終了後に公開予定ですが、正確な公開時刻は公表されていません。", en: "Scheduled call start. Results are due after the U.S. market closes that day, but no exact publication time was announced." },
+  },
+  {
+    id: "amat-fq4-2026-call", afterClose: true, ticker: "AMAT", kind: "earnings" as const, title: { ja: "Applied Materials 決算説明会（2026年度Q4）", en: "Applied Materials fiscal Q4 2026 earnings call" },
+    startsAt: "2026-11-12T16:30:00-05:00", sourceTimezone: "America/New_York", sourceName: "Applied Materials IR",
+    sourceUrl: "https://ir.appliedmaterials.com/news-releases/news-release-details/applied-materials-report-fourth-quarter-and-fiscal-2026-results",
+    note: { ja: "説明会の開始予定です。決算資料は同日の米国市場終了後に公開予定ですが、正確な公開時刻は公表されていません。", en: "Scheduled call start. Results are due after the U.S. market closes that day, but no exact publication time was announced." },
+  },
+  {
+    id: "fomc-2026-10-28", kind: "economic" as const, title: { ja: "FOMC 声明発表（会合最終日）", en: "FOMC statement (final day of meeting)" },
+    startsAt: "2026-10-28T14:00:00-04:00", sourceTimezone: "America/New_York", sourceName: "Federal Reserve",
+    sourceUrl: "https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm",
+    note: { ja: "声明の公表は米東部時間14:00の予定です。議長会見はその後に行われます。", en: "The statement is scheduled for 2:00 p.m. ET; the chair's press conference follows." },
+  },
 ].sort((a, b) => Date.parse(a.startsAt) - Date.parse(b.startsAt));
 
 export function calendarDateKey(startsAt: string, timezone = "Asia/Tokyo") {
@@ -229,7 +314,7 @@ export const dateOnlyEvents: DateOnlyCalendarEvent[] = [
     sourceUrl: "https://ir.kla.com/news-events/press-releases/detail/522/kla-announces-first-quarter-fiscal-year-2027-earnings-date", checkedOn: "2026-10-01",
     note: { ja: "米国市場終了後の公開予定です。公式発表に正確な公開時刻がないため、日付のみ掲載しています。", en: "Due after the U.S. market closes. Only the date is shown because the announcement does not give an exact publication time." },
   },
-  ...["2026-10-28", "2026-12-09"].map((date): DateOnlyCalendarEvent => ({
+  ...["2026-12-09"].map((date): DateOnlyCalendarEvent => ({
     id: `fomc-${date}`, kind: "economic", date, sourceTimezone: "America/New_York",
     title: { ja: "FOMC会合 最終日", en: "FOMC meeting final day" }, sourceName: "Federal Reserve",
     sourceUrl: "https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm", checkedOn: calendarReviewedOn,
