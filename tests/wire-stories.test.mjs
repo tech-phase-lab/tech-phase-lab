@@ -128,3 +128,13 @@ test('vulnerability-database entries are not news; a trailing ": report" tag is 
   assert.equal(cleanTitle('Nebius keeps raising funds despite neocloud sale: report'), 'Nebius keeps raising funds despite neocloud sale');
   assert.equal(cleanTitle('ネビウスの年次報告書'), 'ネビウスの年次報告書');
 });
+
+test('a bare SEC form notice is not news, and the wire service tag is trimmed from a headline (owner, Oct 28)', () => {
+  for (const title of ['SKハイニックス株式会社のフォーム6-K：10月28日', 'SKハイニックス株式会社のフォーム 6-K：10月28日', 'GEベルノバ社のフォーム10-Q（9月30日分）',
+    'SK hynix Inc. Form 6-K: October 28', 'GE Vernova Inc. Form 10-Q (September 30)', 'Form 8-K filed by Nebius']) assert.equal(isNotNews(title), true, title);
+  for (const title of ['GEベルノバ株は業績上振れとガイダンス引き上げで上昇', 'Micron files its 10-Q showing record revenue', 'Nebius announces new Form factor servers', 'フォームファクターの小型化で受注拡大']) assert.equal(isNotNews(title), false, title);
+  assert.equal(cleanTitle('GEベルノバ株は業績上振れとガイダンス引き上げで上昇（Investing.comより）'), 'GEベルノバ株は業績上振れとガイダンス引き上げで上昇');
+  assert.equal(cleanTitle('GE Vernova stock rises on earnings beat and raised guidance (Investing.com)'), 'GE Vernova stock rises on earnings beat and raised guidance');
+  assert.equal(cleanTitle('GE Vernova stock rises on earnings beat - Investing.com'), 'GE Vernova stock rises on earnings beat');
+  assert.equal(cleanTitle('売上は予想を上回る（前年より）'), '売上は予想を上回る（前年より）');
+});
