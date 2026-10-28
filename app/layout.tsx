@@ -5,6 +5,10 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "Tech Phase Research Lab",
   description: "Real-time market intelligence delivery prototype.",
+  // Add to Home Screen: name, icon (180x180, opaque, square: iOS rounds the corners itself) and the web app manifest.
+  manifest: "/manifest.webmanifest",
+  icons: { icon: [{ url: "/favicon.ico", sizes: "any" }], apple: [{ url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" }] },
+  appleWebApp: { capable: true, title: "Tech Phase" },
 };
 
 export default function RootLayout({

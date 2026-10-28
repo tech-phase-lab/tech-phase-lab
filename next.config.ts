@@ -9,8 +9,10 @@ const cached = [
   ["/brand/:path*", keepAWeek],
   ["/intro/screens/:path*", keepAWeek],
   ["/rizel-avatar.webp", keepAWeek],
+  ["/apple-touch-icon.png", keepAWeek],
   ["/tech-phase-192.png", keepAWeek],
   ["/tech-phase-512.png", keepAWeek],
+  ["/tech-phase-512-maskable.png", keepAWeek],
   ["/favicon.ico", keepAWeek],
 ].map(([source, value]) => ({ source, headers: [{ key: "Cache-Control", value }] }));
 
