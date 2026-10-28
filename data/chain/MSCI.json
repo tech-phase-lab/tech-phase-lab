@@ -1,0 +1,159 @@
+{
+  "root": {
+    "ticker": "MSCI",
+    "name": "MSCI",
+    "cik": 1408198,
+    "name_en": "MSCI Inc."
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [
+    "SPGI",
+    "FDS",
+    "MORN"
+  ],
+  "companies": [
+    {
+      "id": "BLK",
+      "ticker": "BLK",
+      "name": "ブラックロック",
+      "sub": "資産運用・最大顧客",
+      "sub_en": "Asset manager, top client",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "2025年は最大の顧客で、連結営業収益の10.8%を占めた",
+          "text_en": "BlackRock was the largest client organization in 2025, accounting for 10.8% of consolidated operating revenues",
+          "source": {
+            "label": "MSCI 10-K(2025年12月期)",
+            "label_en": "MSCI Inc. 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1408198/000140819826000011/msci-20251231.htm",
+            "level": "official",
+            "date": "2026-02-06",
+            "quote": "For the year ended December 31, 2025, our largest client organization by revenue, BlackRock, accounted for 10.8% of our consolidated operating revenues, with 96.5% of the operating revenues from BlackRock coming from fees based on the assets in BlackRock’s ETFs and non-ETF products that are based on our indexes ."
+          }
+        }
+      ],
+      "name_en": "BlackRock"
+    },
+    {
+      "id": "SPGI",
+      "ticker": "SPGI",
+      "name": "S&Pグローバル",
+      "sub": "指数・格付け",
+      "sub_en": "Indexes & ratings",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "GICS Directの業界分類を、S&Pダウ・ジョーンズ・インデックスと共同で開発・維持している",
+          "text_en": "MSCI jointly develops and maintains the GICS classification with S&P Dow Jones Indices, a division of S&P Global",
+          "source": {
+            "label": "MSCI 10-K(2025年12月期)",
+            "label_en": "MSCI Inc. 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1408198/000140819826000011/msci-20251231.htm",
+            "level": "official",
+            "date": "2026-02-06",
+            "quote": "Our Index segment also includes revenues from licenses of GICS Direct , the global industry classification standard jointly developed and maintained by MSCI and S&P Dow Jones Indices, a division of S&P Global Inc."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "指数事業の競合にS&Pダウ・ジョーンズ・インデックスがある",
+          "text_en": "S&P Dow Jones Indices is an index competitor",
+          "source": {
+            "label": "MSCI 10-K(2025年12月期)",
+            "label_en": "MSCI Inc. 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1408198/000140819826000011/msci-20251231.htm",
+            "level": "official",
+            "date": "2026-02-06",
+            "quote": "Among our Index competitors are S&P Dow Jones Indices LLC (a joint venture of S&P Global Inc. and CME Group Inc.);"
+          }
+        }
+      ],
+      "name_en": "S&P Global"
+    },
+    {
+      "id": "FDS",
+      "ticker": "FDS",
+      "name": "ファクトセット",
+      "sub": "金融データ・分析",
+      "sub_en": "Financial data & analytics",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "分析事業の競合にファクトセットがある",
+          "text_en": "FactSet is a competitor in analytics",
+          "source": {
+            "label": "MSCI 10-K(2025年12月期)",
+            "label_en": "MSCI Inc. 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1408198/000140819826000011/msci-20251231.htm",
+            "level": "official",
+            "date": "2026-02-06",
+            "quote": "Our Analytics offerings compete with those from a range of competitors, including Axioma (part of SimCorp), BlackRock Solutions, Bloomberg, and FactSet Research Systems Inc."
+          }
+        }
+      ],
+      "name_en": "FactSet Research Systems"
+    },
+    {
+      "id": "MORN",
+      "ticker": "MORN",
+      "name": "モーニングスター",
+      "sub": "サステナ評価",
+      "sub_en": "Sustainability ratings",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "サステナビリティ分野の競合にサステイナリティクス(モーニングスター傘下)がある",
+          "text_en": "Sustainalytics, part of Morningstar, competes in sustainability and climate offerings",
+          "source": {
+            "label": "MSCI 10-K(2025年12月期)",
+            "label_en": "MSCI Inc. 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1408198/000140819826000011/msci-20251231.htm",
+            "level": "official",
+            "date": "2026-02-06",
+            "quote": "Our Sustainability and Climate offerings compete with a range of companies that issue sustainability and climate data, ratings or research, including Sustainalytics Holding B.V. (a part of Morningstar, Inc.), Institutional Shareholder Services Inc. (majority owned by Deutsche Börse AG), S&P Global Inc., Refinitiv (a London Stock Exchange Group business) and Bloomberg."
+          }
+        }
+      ],
+      "name_en": "Morningstar"
+    },
+    {
+      "id": "BBG",
+      "ticker": "Bloomberg Finance",
+      "name": "ブルームバーグ",
+      "sub": "金融情報",
+      "sub_en": "Financial information",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "指数事業の競合にブルームバーグがある",
+          "text_en": "Bloomberg is an index competitor",
+          "source": {
+            "label": "MSCI 10-K(2025年12月期)",
+            "label_en": "MSCI Inc. 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1408198/000140819826000011/msci-20251231.htm",
+            "level": "official",
+            "date": "2026-02-06",
+            "quote": "Bloomberg Finance L.P. (“Bloomberg”); and Solactive AG."
+          }
+        }
+      ],
+      "name_en": "Bloomberg Finance L.P."
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

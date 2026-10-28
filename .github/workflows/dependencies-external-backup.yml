@@ -1,0 +1,88 @@
+name: Dependencies external backup and rebuild
+
+# One-shot recovery preparation. No schedule, normal application push or deployment.
+on:
+  push:
+    branches: [codex/research-preview]
+    paths:
+      - .github/workflows/dependencies-external-backup.yml
+      - docs/dependencies-backup-request.txt
+
+permissions:
+  contents: read
+
+concurrency:
+  group: dependencies-external-backup
+  cancel-in-progress: false
+
+jobs:
+  backup:
+    if: github.repository == 'tech-phase-lab/tech-phase-lab' && github.ref == 'refs/heads/codex/research-preview'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+          ref: ${{ github.sha }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22.23.4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install dependencies without backup credentials or lifecycle scripts
+        run: |
+          npm ci --ignore-scripts --no-audit --no-fund
+          python -m pip install -r services/tech-phase-backup/requirements.txt
+      - name: Prepare private packages without credentials
+        env:
+          EXPECTED_COMMIT: ${{ github.sha }}
+        run: |
+          set -euo pipefail
+          umask 077
+          mkdir "$RUNNER_TEMP/dependency-custody"
+          python scripts/tech-phase/prepare_offline_dependencies.py --repo "$GITHUB_WORKSPACE" --output "$RUNNER_TEMP/dependency-custody/package"
+          python scripts/tech-phase/prepare_source_recovery.py --repo "$GITHUB_WORKSPACE" --commit "$EXPECTED_COMMIT" --output "$RUNNER_TEMP/dependency-custody/source"
+      - name: Encrypt, upload, download and restore matching source and dependencies
+        env:
+          EXPECTED_COMMIT: ${{ github.sha }}
+          TECH_PHASE_SOURCE_UPLOAD_ENABLED: 'true'
+          TECH_PHASE_DEPENDENCIES_UPLOAD_ENABLED: 'true'
+          MIRROR_DESTINATION_ENDPOINT: ${{ secrets.MIRROR_DESTINATION_ENDPOINT }}
+          MIRROR_DESTINATION_BUCKET: resolute-backup-external
+          MIRROR_DESTINATION_REGION: auto
+          MIRROR_DESTINATION_ACCESS_KEY_ID: ${{ secrets.MIRROR_DESTINATION_ACCESS_KEY_ID }}
+          MIRROR_DESTINATION_SECRET_ACCESS_KEY: ${{ secrets.MIRROR_DESTINATION_SECRET_ACCESS_KEY }}
+          TECH_PHASE_EXTERNAL_KEY_HEX: ${{ secrets.TECH_PHASE_EXTERNAL_KEY_HEX }}
+        run: |
+          set -euo pipefail
+          umask 077
+          expected_lock=$(sha256sum package-lock.json | cut -d ' ' -f1)
+          python scripts/tech-phase/upload_source_recovery.py --package "$RUNNER_TEMP/dependency-custody/source" --expected-commit "$EXPECTED_COMMIT" > "$RUNNER_TEMP/dependency-custody/source-report.json"
+          python scripts/tech-phase/external_dependencies.py --package "$RUNNER_TEMP/dependency-custody/package" --expected-lock "$expected_lock" --output "$RUNNER_TEMP/dependency-custody/restored" > "$RUNNER_TEMP/dependency-custody/dependency-report.json"
+          cat "$RUNNER_TEMP/dependency-custody/source-report.json"
+          cat "$RUNNER_TEMP/dependency-custody/dependency-report.json"
+      - name: Build clean source using only restored dependencies with networking disabled
+        env:
+          NEXT_TELEMETRY_DISABLED: '1'
+        run: |
+          set -euo pipefail
+          mkdir "$RUNNER_TEMP/dependency-custody/build"
+          git archive HEAD | tar -x -C "$RUNNER_TEMP/dependency-custody/build"
+          mv "$RUNNER_TEMP/dependency-custody/restored/node_modules" "$RUNNER_TEMP/dependency-custody/build/node_modules"
+          cd "$RUNNER_TEMP/dependency-custody/build"
+          # Separate step: no R2/encryption secrets. Kernel network namespace
+          # blocks public network access, including subprocesses/native modules.
+          sudo unshare --net -- bash -c 'ip link set lo up; exec "$@"' -- env PATH="$PATH" NEXT_TELEMETRY_DISABLED=1 npm run build
+          echo '{"event":"DEPENDENCIES_OFFLINE_BUILD_OK","network_disabled":true,"new_npm_install":false,"live_database_verified":false}'
+          {
+            echo 'Source and npm dependencies: encrypted external restore and offline build passed.'
+            echo 'Node binary, Python dependencies, live DB and full service recovery remain separate.'
+            cat "$RUNNER_TEMP/dependency-custody/source-report.json"
+            cat "$RUNNER_TEMP/dependency-custody/dependency-report.json"
+          } >> "$GITHUB_STEP_SUMMARY"
+      - name: Remove private staging
+        if: always()
+        run: sudo rm -rf -- "$RUNNER_TEMP/dependency-custody"

@@ -1,0 +1,328 @@
+{
+  "root": {
+    "ticker": "CMI",
+    "name": "カミンズ",
+    "cik": 26172,
+    "name_en": "Cummins"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [
+    "DAN",
+    "BWA"
+  ],
+  "companies": [
+    {
+      "id": "PCAR",
+      "ticker": "PCAR",
+      "name": "パッカー",
+      "sub": "トラックメーカー",
+      "sub_en": "Truck maker",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "最大の顧客で、2025年の連結売上高の13%を占めた",
+          "text_en": "PACCAR is the largest customer, accounting for 13 percent of consolidated net sales in 2025",
+          "source": {
+            "label": "カミンズ 10-K(2025年12月期)",
+            "label_en": "Cummins 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/26172/000002617226000009/cmi-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "PACCAR is our largest customer, accounting for 13 percent of our consolidated net sales in 2025, 16 percent in 2024 and 16 percent in 2023."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "アクセレラ、ダイムラー・トラックと並び、バッテリー合弁会社の30%を保有している",
+          "text_en": "PACCAR owns 30 percent of the Amplify battery joint venture alongside Accelera and Daimler Truck",
+          "source": {
+            "label": "カミンズ 10-K(2025年12月期)",
+            "label_en": "Cummins 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/26172/000002617226000009/cmi-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "Accelera, Daimler Truck and US Holding LLC and PACCAR, Inc. each own 30 percent of the joint venture and have two board positions, while EVE Energy owns 10 percent and has one board position."
+          }
+        }
+      ],
+      "name_en": "PACCAR"
+    },
+    {
+      "id": "DAIMLER",
+      "ticker": "Daimler Truck",
+      "name": "ダイムラー・トラック",
+      "sub": "トラックメーカー",
+      "sub_en": "Truck maker",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "大型トラック用エンジンの主要顧客の1社である",
+          "text_en": "Daimler is one of the principal customers of its heavy-duty truck engines",
+          "source": {
+            "label": "カミンズ 10-K(2025年12月期)",
+            "label_en": "Cummins 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/26172/000002617226000009/cmi-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "The principal customers of our heavy-duty truck engines include truck manufacturers such as PACCAR Inc. (PACCAR), Traton Group (Traton) and Daimler Trucks AG (Daimler)."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "バッテリー合弁会社の30%を保有している",
+          "text_en": "Daimler Truck owns 30 percent of the Amplify battery joint venture",
+          "source": {
+            "label": "カミンズ 10-K(2025年12月期)",
+            "label_en": "Cummins 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/26172/000002617226000009/cmi-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "Accelera, Daimler Truck and US Holding LLC and PACCAR, Inc. each own 30 percent of the joint venture and have two board positions, while EVE Energy owns 10 percent and has one board position."
+          }
+        }
+      ],
+      "name_en": "Daimler Truck"
+    },
+    {
+      "id": "TRATON",
+      "ticker": "Traton Group",
+      "name": "トレイトン・グループ",
+      "sub": "トラックメーカー",
+      "sub_en": "Truck maker",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "大型トラック用エンジンの主要顧客の1社である",
+          "text_en": "Traton is one of the principal customers of its heavy-duty truck engines",
+          "source": {
+            "label": "カミンズ 10-K(2025年12月期)",
+            "label_en": "Cummins 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/26172/000002617226000009/cmi-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "The principal customers of our heavy-duty truck engines include truck manufacturers such as PACCAR Inc. (PACCAR), Traton Group (Traton) and Daimler Trucks AG (Daimler)."
+          }
+        }
+      ],
+      "name_en": "Traton Group"
+    },
+    {
+      "id": "STLA",
+      "ticker": "STLA",
+      "name": "ステランティス",
+      "sub": "自動車メーカー",
+      "sub_en": "Automaker",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "北米でステランティス向けにピックアップトラック用エンジンを製造している",
+          "text_en": "Cummins makes engines for the pick-up truck market for Stellantis in North America",
+          "source": {
+            "label": "カミンズ 10-K(2025年12月期)",
+            "label_en": "Cummins 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/26172/000002617226000009/cmi-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "• Light-duty automotive (pick-up and light commercial vehicle (LCV)) - We manufacture 105 to 430 horsepower diesel engines, including engines for the pick-up truck market for Stellantis N.V. (Stellantis) in North America and LCV markets in Latin America and China."
+          }
+        }
+      ],
+      "name_en": "Stellantis"
+    },
+    {
+      "id": "ETN",
+      "ticker": "ETN",
+      "name": "イートン",
+      "sub": "産業機器",
+      "sub_en": "Industrial equipment",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "イートンとの50対50の合弁会社が自動変速機を手がけている",
+          "text_en": "Cummins runs a 50/50 joint venture with Eaton that serves automated transmission markets",
+          "source": {
+            "label": "カミンズ 10-K(2025年12月期)",
+            "label_en": "Cummins 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/26172/000002617226000009/cmi-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "The Eaton Cummins Automated Transmission Technologies (ECJV) joint venture is a consolidated 50/50 joint venture between Cummins Inc. and Eaton Corporation plc."
+          }
+        }
+      ],
+      "name_en": "Eaton"
+    },
+    {
+      "id": "DONGFENG",
+      "ticker": "Dongfeng Motor",
+      "name": "東風汽車",
+      "sub": "中国の自動車",
+      "sub_en": "Chinese automaker",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "子会社の東風汽車有限公司と中国で合弁会社を運営している",
+          "text_en": "Cummins runs a joint venture in China with Dongfeng Automotive Co. Ltd., a subsidiary of Dongfeng Motor Corporation",
+          "source": {
+            "label": "カミンズ 10-K(2025年12月期)",
+            "label_en": "Cummins 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/26172/000002617226000009/cmi-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "- Dongfeng Cummins Engine Company, Ltd. (DCEC) is a joint venture in China with Dongfeng Automotive Co. Ltd., a subsidiary of Dongfeng Motor Corporation and one of the largest medium-duty and heavy-duty truck manufacturers in China."
+          }
+        }
+      ],
+      "name_en": "Dongfeng Motor"
+    },
+    {
+      "id": "FOTON",
+      "ticker": "Beiqi Foton Motor",
+      "name": "北汽福田汽車",
+      "sub": "中国の商用車",
+      "sub_en": "Chinese commercial vehicles",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "中国で北汽福田汽車と合弁会社を運営している",
+          "text_en": "Cummins runs a joint venture in China with Beiqi Foton Motor Co., Ltd.",
+          "source": {
+            "label": "カミンズ 10-K(2025年12月期)",
+            "label_en": "Cummins 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/26172/000002617226000009/cmi-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "- Beijing Foton Cummins Engine Co., Ltd. is a joint venture in China with Beiqi Foton Motor Co., Ltd., a commercial vehicle manufacturer, which has two distinct lines of business - a light-duty business and a heavy-duty business."
+          }
+        }
+      ],
+      "name_en": "Beiqi Foton Motor"
+    },
+    {
+      "id": "TATA",
+      "ticker": "Tata Motors",
+      "name": "タタ・モーターズ",
+      "sub": "インドの自動車",
+      "sub_en": "Indian automaker",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "インドでタタ・モーターズと合弁会社を運営している",
+          "text_en": "Cummins runs a joint venture in India with Tata Motors Ltd.",
+          "source": {
+            "label": "カミンズ 10-K(2025年12月期)",
+            "label_en": "Cummins 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/26172/000002617226000009/cmi-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "- Tata Cummins, Ltd. is a joint venture in India with Tata Motors Ltd., the largest automotive company in India and a member of the Tata group of companies."
+          }
+        }
+      ],
+      "name_en": "Tata Motors"
+    },
+    {
+      "id": "KOMATSU",
+      "ticker": "Komatsu",
+      "name": "コマツ",
+      "sub": "建設機械",
+      "sub_en": "Construction machinery",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "建設・農業機械メーカーとして産業用エンジンの販売先に含まれる",
+          "text_en": "Komatsu is among the construction and agricultural equipment makers it sells industrial engines to",
+          "source": {
+            "label": "カミンズ 10-K(2025年12月期)",
+            "label_en": "Cummins 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/26172/000002617226000009/cmi-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "We sell our industrial engines to manufacturers of construction and agricultural equipment including Hyundai Heavy Industries, Komatsu Ltd. (Komatsu), J.C."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "チリとペルーの販売会社をコマツ・アメリカと合弁で運営している",
+          "text_en": "Komatsu Cummins Chile is a joint venture with Komatsu America Corporation that distributes its products in Chile and Peru",
+          "source": {
+            "label": "カミンズ 10-K(2025年12月期)",
+            "label_en": "Cummins 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/26172/000002617226000009/cmi-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "- Komatsu Cummins Chile, Ltda. is a joint venture with Komatsu America Corporation."
+          }
+        }
+      ],
+      "name_en": "Komatsu"
+    },
+    {
+      "id": "DAN",
+      "ticker": "DAN",
+      "name": "ダナ",
+      "sub": "車両部品",
+      "sub_en": "Vehicle components",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "アクセレラ事業の主な競合の1社である",
+          "text_en": "Dana is one of its primary competitors in the Accelera segment",
+          "source": {
+            "label": "カミンズ 10-K(2025年12月期)",
+            "label_en": "Cummins 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/26172/000002617226000009/cmi-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "Our primary competitors include Daimler, PACCAR, Traton, BYD Company Limited, Dana Incorporated and BorgWarner Inc."
+          }
+        }
+      ],
+      "name_en": "Dana"
+    },
+    {
+      "id": "BWA",
+      "ticker": "BWA",
+      "name": "ボルグワーナー",
+      "sub": "車両部品",
+      "sub_en": "Vehicle components",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "アクセレラ事業の主な競合の1社である",
+          "text_en": "BorgWarner is one of its primary competitors in the Accelera segment",
+          "source": {
+            "label": "カミンズ 10-K(2025年12月期)",
+            "label_en": "Cummins 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/26172/000002617226000009/cmi-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "Our primary competitors include Daimler, PACCAR, Traton, BYD Company Limited, Dana Incorporated and BorgWarner Inc."
+          }
+        }
+      ],
+      "name_en": "BorgWarner"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

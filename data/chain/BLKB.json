@@ -1,0 +1,164 @@
+{
+  "root": {
+    "ticker": "BLKB",
+    "name": "ブラックバウド",
+    "cik": 1280058,
+    "name_en": "BLACKBAUD INC"
+  },
+  "rows": [
+    {
+      "ja": "供給元",
+      "en": "Suppliers",
+      "above": true
+    },
+    {
+      "ja": "競合(同社の資料に記載)",
+      "en": "Competitors (named in its filing)"
+    }
+  ],
+  "rivals": [
+    "MSFT",
+    "ORCL",
+    "CRM"
+  ],
+  "companies": [
+    {
+      "id": "AMZN",
+      "ticker": "AMZN",
+      "name": "アマゾン・ウェブ・サービス",
+      "sub": "クラウド基盤",
+      "sub_en": "Cloud infrastructure",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "複数あるクラウド基盤の一つとしてAWSを使っている",
+          "text_en": "Uses AWS as one of the clouds in its architecture",
+          "source": {
+            "label": "BLACKBAUD INC 10-K(2025年12月期)",
+            "label_en": "BLACKBAUD INC 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1280058/000128005826000006/blkb-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "We leverage multiple clouds in our architectures (including AWS and Azure) and have both single and multi-tenant solutions."
+          }
+        }
+      ],
+      "name_en": "Amazon Web Services"
+    },
+    {
+      "id": "MSFT",
+      "ticker": "MSFT",
+      "name": "マイクロソフト",
+      "sub": "クラウド・ソフト",
+      "sub_en": "Cloud & software",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "複数あるクラウド基盤の一つとしてAzureを使っている",
+          "text_en": "Uses Azure as one of the clouds in its architecture",
+          "source": {
+            "label": "BLACKBAUD INC 10-K(2025年12月期)",
+            "label_en": "BLACKBAUD INC 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1280058/000128005826000006/blkb-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "We leverage multiple clouds in our architectures (including AWS and Azure) and have both single and multi-tenant solutions."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "汎用の業務ソフトで一部の事業領域が競合する",
+          "text_en": "Competes in certain areas as a general business software vendor",
+          "source": {
+            "label": "BLACKBAUD INC 10-K(2025年12月期)",
+            "label_en": "BLACKBAUD INC 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1280058/000128005826000006/blkb-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "General business software vendors , such as Microsoft, Oracle and Salesforce.com, compete with us in certain areas of our business."
+          }
+        }
+      ],
+      "name_en": "Microsoft"
+    },
+    {
+      "id": "CRWD",
+      "ticker": "CRWD",
+      "name": "クラウドストライク",
+      "sub": "サイバーセキュリティ",
+      "sub_en": "Cybersecurity",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "同社が運用するWindows環境にもセキュリティサービスを提供している",
+          "text_en": "Provides cybersecurity services to certain Windows systems operated by Blackbaud",
+          "source": {
+            "label": "BLACKBAUD INC 10-K(2025年12月期)",
+            "label_en": "BLACKBAUD INC 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1280058/000128005826000006/blkb-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "CrowdStrike Holdings, Inc. (“CrowdStrike”), which provides cybersecurity services to millions of Microsoft Windows systems worldwide, including to certain Windows systems operated by Blackbaud"
+          }
+        }
+      ],
+      "name_en": "CrowdStrike"
+    },
+    {
+      "id": "ORCL",
+      "ticker": "ORCL",
+      "name": "オラクル",
+      "sub": "業務ソフト",
+      "sub_en": "Business software",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "汎用の業務ソフトで一部の事業領域が競合する",
+          "text_en": "Competes in certain areas as a general business software vendor",
+          "source": {
+            "label": "BLACKBAUD INC 10-K(2025年12月期)",
+            "label_en": "BLACKBAUD INC 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1280058/000128005826000006/blkb-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "General business software vendors , such as Microsoft, Oracle and Salesforce.com, compete with us in certain areas of our business."
+          }
+        }
+      ],
+      "name_en": "Oracle"
+    },
+    {
+      "id": "CRM",
+      "ticker": "CRM",
+      "name": "セールスフォース",
+      "sub": "業務ソフト",
+      "sub_en": "Business software",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "汎用の業務ソフトで一部の事業領域が競合する",
+          "text_en": "Competes in certain areas as a general business software vendor",
+          "source": {
+            "label": "BLACKBAUD INC 10-K(2025年12月期)",
+            "label_en": "BLACKBAUD INC 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1280058/000128005826000006/blkb-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "General business software vendors , such as Microsoft, Oracle and Salesforce.com, compete with us in certain areas of our business."
+          }
+        }
+      ],
+      "name_en": "Salesforce"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

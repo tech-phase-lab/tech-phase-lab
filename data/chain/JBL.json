@@ -1,0 +1,281 @@
+{
+  "root": {
+    "ticker": "JBL",
+    "name": "ジェイビル",
+    "cik": 898293,
+    "name_en": "Jabil"
+  },
+  "rows": [
+    {
+      "ja": "顧客(相手の年次報告に記載)",
+      "en": "Customers (named in their annual reports)"
+    },
+    {
+      "ja": "提携・投資",
+      "en": "Partnerships & investments"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "BHE",
+    "UCTT"
+  ],
+  "companies": [
+    {
+      "id": "COHU",
+      "ticker": "COHU",
+      "name": "コヒュー",
+      "sub": "半導体試験装置",
+      "sub_en": "Semiconductor test equipment",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "コヒューは、Jabilの工場に半導体ATE(試験装置)の専用製造拠点を置いている",
+          "text_en": "Cohu has dedicated semiconductor ATE manufacturing operations at a Jabil facility",
+          "source": {
+            "label": "Cohu 10-K",
+            "label_en": "Cohu 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/21535/000143774926004339/cohu20251227_10k.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "Cohu’s supply chain is further strengthened by long-standing relationships with strategic partners, including dedicated semiconductor ATE manufacturing operations at a facility of Jabil, Inc."
+          }
+        },
+        {
+          "type": "down",
+          "text": "コヒューは半導体試験システムの大半の製造をマレーシアのJabil工場に依存している",
+          "text_en": "Cohu depends on Jabil to manufacture most of its semiconductor test systems at a facility in Malaysia",
+          "source": {
+            "label": "Cohu 10-K",
+            "label_en": "Cohu 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/21535/000143774926004339/cohu20251227_10k.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "For example, we depend upon Jabil to manufacture most of our semiconductor test systems from its facility located in Malaysia."
+          }
+        }
+      ],
+      "name_en": "Cohu"
+    },
+    {
+      "id": "ANET",
+      "ticker": "ANET",
+      "name": "アリスタネットワークス",
+      "sub": "ネットワーク機器",
+      "sub_en": "Networking",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Jabilは、Sanmina、Foxconn Hon Haiと並ぶアリスタの主な製造パートナーだ",
+          "text_en": "Jabil, Sanmina and Foxconn Hon Hai are Arista's primary manufacturing partners.",
+          "source": {
+            "label": "Arista Networks 10-K",
+            "label_en": "Arista Networks 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1596532/000159653226000013/anet-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "Our primary manufacturing partners are Jabil Inc., Sanmina Corporation and Foxconn Hon Hai."
+          }
+        }
+      ],
+      "name_en": "Arista Networks"
+    },
+    {
+      "id": "AMZN",
+      "ticker": "AMZN",
+      "name": "アマゾン",
+      "sub": "クラウド・EC",
+      "sub_en": "Cloud & e-commerce",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2024年12月、Amazon.com NV Investment Holdings LLCに普通株最大1,158,539株を取得できるワラントを発行した",
+          "text_en": "In December 2024, issued a warrant to Amazon.com NV Investment Holdings LLC to acquire up to 1,158,539 of its ordinary shares",
+          "source": {
+            "label": "Jabil 10-K",
+            "label_en": "Jabil 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/898293/000162828025045293/jbl-20250831.htm",
+            "level": "official",
+            "date": "2025-10-17",
+            "quote": "In December 2024, we issued a warrant to Amazon.com NV Investment Holdings LLC to acquire up to 1,158,539 of our ordinary shares as reported in a Current Report on Form 8-K filed on January 3, 2025."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "このワラントの初期行使価格は1株137.7671ドルで、直前30取引日のVWAPである",
+          "text_en": "The warrant has an initial exercise price of $137.7671 per share, the preceding 30 trading day VWAP",
+          "source": {
+            "label": "Jabil 10-K",
+            "label_en": "Jabil 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/898293/000162828025045293/jbl-20250831.htm",
+            "level": "official",
+            "date": "2025-10-17",
+            "quote": "On December 27, 2024, we issued a warrant (the “Warrant”) to Amazon.com NV Investment Holdings LLC (“Warrantholder”) to acquire up to 1,158,539 of our ordinary shares (“Warrant Shares”) at an initial exercise price of $137.7671 per share, which is the preceding 30 trading day VWAP."
+          }
+        }
+      ],
+      "name_en": "Amazon"
+    },
+    {
+      "id": "INTC",
+      "ticker": "INTC",
+      "name": "インテル",
+      "sub": "半導体",
+      "sub_en": "Semiconductors",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Jabilが、Intelのシリコンフォトニクス方式のプラガブル光トランシーバー製品の製造・販売を引き継ぐと発表した",
+          "text_en": "Jabil announced it will take over the manufacture and sale of Intel's current Silicon Photonics-based pluggable optical transceiver product lines",
+          "source": {
+            "label": "Jabil の発表",
+            "label_en": "Jabil press release",
+            "url": "https://s27.q4cdn.com/276975351/files/doc_news/Jabil-Invests-in-the-Future-of-AI-with-Intel-Silicon-Photonics-Transceiver-Deal-2023.pdf",
+            "level": "official",
+            "date": "2023-10-30",
+            "quote": "Jabil Inc. (NYSE: JBL), a global leader in design, manufacturing, and supply chain solutions, today announced it will take over the manufacture and sale of Intel’s current Silicon Photonics",
+            "note": "2023年の発表で、やや古い情報です。",
+            "note_en": "From a 2023 release (older)."
+          }
+        }
+      ],
+      "name_en": "Intel"
+    },
+    {
+      "id": "UMC",
+      "ticker": "UMC",
+      "name": "ユナイテッド・マイクロエレクトロニクス",
+      "sub": "半導体受託製造",
+      "sub_en": "Foundry",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "HyperLight、UMC、Jabilが、TFLNフォトニクスをデータセンター規模で展開する協業を発表した",
+          "text_en": "HyperLight, UMC and Jabil announced a collaboration to deploy TFLN photonics at data-center scale",
+          "source": {
+            "label": "HyperLight, UMC and Jabil の発表",
+            "label_en": "HyperLight, UMC and Jabil press release (Business Wire)",
+            "url": "https://www.nasdaq.com/press-release/hyperlight-and-umc-collaborate-jabil-bring-tfln-photonics-data-center-scale",
+            "level": "official",
+            "date": "2026-03-13",
+            "quote": "The collaboration brings together HyperLight’s TFLN photonic technology, UMC and Wavetek’s qualified foundry manufacturing, and Jabil’s expertise in high-volume manufacturing and assembly to support deployment of next-generation optical modules at data-center scale."
+          }
+        }
+      ],
+      "name_en": "United Microelectronics"
+    },
+    {
+      "id": "ADANI",
+      "ticker": "Adani Enterprises",
+      "name": "アダニ・エンタープライジズ",
+      "sub": "インフラ・複合企業",
+      "sub_en": "Infrastructure conglomerate",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Adani EnterprisesとJabilが、インドでAI・データセンター機器を製造する50対50の合弁事業に向けた覚書を結んだ",
+          "text_en": "Adani Enterprises and Jabil signed a non-binding MoU for a proposed 50:50 joint venture to manufacture AI and data centre equipment in India",
+          "source": {
+            "label": "Adani Group の発表",
+            "label_en": "Adani Group press release",
+            "url": "https://www.adani.com/newsroom/media-releases/adani-enterprises-jabil-sign-mou-for-50-50-data-centre-hardware-joint-venture",
+            "level": "official",
+            "date": "2026-10-13",
+            "quote": "Adani Enterprises Limited (AEL), the flagship company of the Adani Group, and Jabil Inc. (NYSE: JBL), a global engineering, supply chain and manufacturing company, have signed a non-binding Memorandum of Understanding (MoU) setting out the framework for a proposed 50:50 joint venture to manufacture and assemble artificial intelligence (AI) and data centre equipment in India.",
+            "note": "拘束力のない覚書の段階です。",
+            "note_en": "Non-binding MoU stage only."
+          }
+        }
+      ],
+      "name_en": "Adani Enterprises"
+    },
+    {
+      "id": "VITROX",
+      "ticker": "ViTrox",
+      "name": "ヴィトロックス",
+      "sub": "検査装置・ソフト",
+      "sub_en": "Inspection equipment & software",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "JabilとViTroxが提携し、ViTroxのデジタル工場ソリューションV-ONEをJabilの製造に導入した",
+          "text_en": "Jabil and ViTrox partnered to integrate ViTrox's V-ONE digital factory solution into Jabil's manufacturing",
+          "source": {
+            "label": "ViTrox の発表",
+            "label_en": "ViTrox press release",
+            "url": "https://vitrox.com/news/news-26-may-26-strengthen-manufacturing-control-tower-digital-factory-collaboration.php",
+            "level": "official",
+            "date": "2026-05-26",
+            "quote": "This partnership focuses on navigating the complexities of Industry 4.0, combining Jabil’s manufacturing expertise with ViTrox’s smart technology to drive operational agility and data-driven decision-making."
+          }
+        }
+      ],
+      "name_en": "ViTrox"
+    },
+    {
+      "id": "BHE",
+      "ticker": "BHE",
+      "name": "ベンチマーク・エレクトロニクス",
+      "sub": "電子機器受託製造",
+      "sub_en": "EMS",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ジェイビルと競合する",
+          "text_en": "Competes with Jabil",
+          "source": {
+            "label": "Benchmark Electronics 10-K",
+            "label_en": "Benchmark Electronics 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/863436/000119312526064849/bhe-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Our competitors include Celestica Inc., Flex Ltd., Jabil Inc., Kimball Electronics Inc., Plexus Corp, and Sanmina Corporation."
+          }
+        }
+      ],
+      "name_en": "Benchmark Electronics"
+    },
+    {
+      "id": "UCTT",
+      "ticker": "UCTT",
+      "name": "ウルトラ・クリーン・ホールディングス",
+      "sub": "半導体装置サブシステム",
+      "sub_en": "Semiconductor subsystems",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ジェイビルと競合する",
+          "text_en": "Competes with Jabil",
+          "source": {
+            "label": "Ultra Clean Holdings 10-K",
+            "label_en": "Ultra Clean Holdings 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1275014/000162828026010744/uctt-20251226.htm",
+            "level": "official",
+            "date": "2026-02-23",
+            "quote": "Our principal competitors for gas delivery systems are Ichor Systems, Inc. and Fujikin Incorporated; our principal competitors for other critical subsystems are Foxsemicon Integrated Technology Inc., Jabil, Inc., VDL ETG, Celestica Inc. and Benchmark Electronics, Inc.",
+            "note": "半導体装置のサブシステム分野での競合としての記載です。",
+            "note_en": "Listed as a competitor for critical subsystems."
+          }
+        }
+      ],
+      "name_en": "Ultra Clean Holdings"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

@@ -1,0 +1,147 @@
+{
+  "root": {
+    "ticker": "ULTA",
+    "name": "ウルタ・ビューティー",
+    "cik": 1403568,
+    "name_en": "Ulta Beauty"
+  },
+  "rows": [
+    {
+      "ja": "供給元",
+      "en": "Suppliers",
+      "above": true
+    },
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "LOREAL",
+      "ticker": "L’Oréal",
+      "name": "ロレアル",
+      "sub": "化粧品メーカー",
+      "sub_en": "Beauty brand",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "上位10社のブランドパートナーの一つとして、商品を供給している",
+          "text_en": "L’Oréal is named among Ulta U.S.’s top ten brand partners",
+          "source": {
+            "label": "Ulta Beauty 10-K(2026-01-31)",
+            "label_en": "Ulta Beauty 10-K (fiscal year ended 2026-01-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1403568/000110465926035243/ulta-20260131x10k.htm",
+            "level": "official",
+            "date": "2026-03-26",
+            "quote": "Ulta U.S.’s top ten brand partners, such as L’Oréal and Estée Lauder Companies, among others, represented approximately 51% and 54% of its total net sales in fiscal 2025 and the fiscal year ended February 1, 2025 (“fiscal 2024”), respectively."
+          }
+        }
+      ],
+      "name_en": "L’Oréal"
+    },
+    {
+      "id": "EL",
+      "ticker": "EL",
+      "name": "エスティローダー・カンパニーズ",
+      "sub": "化粧品メーカー",
+      "sub_en": "Beauty brand",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "上位10社のブランドパートナーの一つとして、商品を供給している",
+          "text_en": "Estée Lauder Companies is named among Ulta U.S.’s top ten brand partners",
+          "source": {
+            "label": "Ulta Beauty 10-K(2026-01-31)",
+            "label_en": "Ulta Beauty 10-K (fiscal year ended 2026-01-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1403568/000110465926035243/ulta-20260131x10k.htm",
+            "level": "official",
+            "date": "2026-03-26",
+            "quote": "Ulta U.S.’s top ten brand partners, such as L’Oréal and Estée Lauder Companies, among others, represented approximately 51% and 54% of its total net sales in fiscal 2025 and the fiscal year ended February 1, 2025 (“fiscal 2024”), respectively."
+          }
+        }
+      ],
+      "name_en": "Estée Lauder Companies"
+    },
+    {
+      "id": "TGT",
+      "ticker": "TGT",
+      "name": "ターゲット",
+      "sub": "小売りの提携先",
+      "sub_en": "Retail partner",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2021年から店内店舗「アルタ・ビューティー・アット・ターゲット」を共同で運営している",
+          "text_en": "Since 2021, Ulta Beauty at Target has operated as a shop-in-shop concept in over 600 Target locations",
+          "source": {
+            "label": "Ulta Beauty 10-K(2026-01-31)",
+            "label_en": "Ulta Beauty 10-K (fiscal year ended 2026-01-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1403568/000110465926035243/ulta-20260131x10k.htm",
+            "level": "official",
+            "date": "2026-03-26",
+            "quote": "Since 2021, Ulta U.S. has partnered with Target Corporation (“Target”) to create Ulta Beauty at Target, a “shop-in-shop” concept that offers a curated assortment of more than 60 established and emerging prestige brands across a variety of categories. As of January 31, 2026, Ulta Beauty at Target was available in over 600 Target locations and on target.com."
+          }
+        }
+      ],
+      "name_en": "Target"
+    },
+    {
+      "id": "AXO",
+      "ticker": "Grupo Axo",
+      "name": "グルポ・アクソ",
+      "sub": "メキシコ合弁",
+      "sub_en": "Mexico JV partner",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "メキシコでアルタ店舗を運営する合弁事業のパートナーである",
+          "text_en": "Grupo Axo is the joint venture partner that operates Ulta Beauty-branded stores in Mexico",
+          "source": {
+            "label": "Ulta Beauty 10-K(2026-01-31)",
+            "label_en": "Ulta Beauty 10-K (fiscal year ended 2026-01-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1403568/000110465926035243/ulta-20260131x10k.htm",
+            "level": "official",
+            "date": "2026-03-26",
+            "quote": "In Mexico, the Company has a joint venture partnership with Grupo Axo, whereby the joint venture licenses the Ulta Beauty brand name and operating model from the Company to launch and operate Ulta Beauty-branded stores in Mexico."
+          }
+        }
+      ],
+      "name_en": "Grupo Axo"
+    },
+    {
+      "id": "ALSHAYA",
+      "ticker": "Alshaya Group",
+      "name": "アルシャヤ・グループ",
+      "sub": "中東フランチャイズ",
+      "sub_en": "Middle East franchisee",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "中東でアルタ店舗を運営するフランチャイズ提携先である",
+          "text_en": "Alshaya Group is the franchise partner that operates Ulta Beauty-branded stores in the Middle East",
+          "source": {
+            "label": "Ulta Beauty 10-K(2026-01-31)",
+            "label_en": "Ulta Beauty 10-K (fiscal year ended 2026-01-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1403568/000110465926035243/ulta-20260131x10k.htm",
+            "level": "official",
+            "date": "2026-03-26",
+            "quote": "In the Middle East, the Company has a franchise partnership with Alshaya Group, a leading international franchise operator with substantial expertise in the consumer market in the Middle East, whereby Alshaya licenses the Ulta Beauty brand name and operating model from the Company to launch and operate Ulta Beauty-branded stores in the Middle East."
+          }
+        }
+      ],
+      "name_en": "Alshaya Group"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

@@ -1,0 +1,270 @@
+{
+  "root": {
+    "ticker": "NTCT",
+    "name": "ネットスカウト・システムズ",
+    "cik": 1078075,
+    "name_en": "NetScout Systems"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [
+    "CSCO",
+    "IBM",
+    "DT",
+    "DDOG",
+    "VIAV"
+  ],
+  "companies": [
+    {
+      "id": "CSCO",
+      "ticker": "CSCO",
+      "name": "シスコシステムズ",
+      "sub": "ネットワーク機器",
+      "sub_en": "Networking equipment",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "自社のDDoS対策機能を、シスコのルーターのブレード上に組み込んでいる",
+          "text_en": "Embeds its Arbor DDoS mitigation capabilities on a blade within a Cisco router",
+          "source": {
+            "label": "ネットスカウト・システムズ 10-K(March 31, 2026)",
+            "label_en": "NetScout Systems 10-K (fiscal year ended March 31, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1078075/000107807526000050/ntct-20260331.htm",
+            "level": "official",
+            "date": "2026-05-14",
+            "quote": "we have embedded NetScout Arbor DDoS mitigation capabilities on a blade within Cisco's market-leading ASR9000 router"
+          }
+        },
+        {
+          "type": "rival",
+          "text": "エンタープライズ市場で、オブザーバビリティや性能管理の分野で競合している",
+          "text_en": "Competes in the enterprise market in observability and performance management",
+          "source": {
+            "label": "ネットスカウト・システムズ 10-K(March 31, 2026)",
+            "label_en": "NetScout Systems 10-K (fiscal year ended March 31, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1078075/000107807526000050/ntct-20260331.htm",
+            "level": "official",
+            "date": "2026-05-14",
+            "quote": "our competitors include companies who provide network observability, application performance management, infrastructure performance management and other related solutions such as CA Technologies (a Broadcom Inc. business), Cisco Systems, Dynatrace, Datadog, ExtraHop, IBM, Infovista, Viavi, Gigamon, New Relic, Riverbed Technology, and SolarWinds."
+          }
+        }
+      ],
+      "name_en": "Cisco Systems"
+    },
+    {
+      "id": "IBM",
+      "ticker": "IBM",
+      "name": "アイ・ビー・エム",
+      "sub": "IT基盤・ソフト",
+      "sub_en": "IT infrastructure & software",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "大手企業向け管理ベンダーのIBMとは、競合しつつ提携もしている",
+          "text_en": "Both competes with and partners with IBM, a large enterprise management vendor",
+          "source": {
+            "label": "ネットスカウト・システムズ 10-K(March 31, 2026)",
+            "label_en": "NetScout Systems 10-K (fiscal year ended March 31, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1078075/000107807526000050/ntct-20260331.htm",
+            "level": "official",
+            "date": "2026-05-14",
+            "quote": "In addition, we both compete with and partner with large enterprise management vendors, such as HP and IBM, who offer performance management solutions."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "エンタープライズ市場で、オブザーバビリティや性能管理の分野で競合している",
+          "text_en": "Competes in the enterprise market in observability and performance management",
+          "source": {
+            "label": "ネットスカウト・システムズ 10-K(March 31, 2026)",
+            "label_en": "NetScout Systems 10-K (fiscal year ended March 31, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1078075/000107807526000050/ntct-20260331.htm",
+            "level": "official",
+            "date": "2026-05-14",
+            "quote": "our competitors include companies who provide network observability, application performance management, infrastructure performance management and other related solutions such as CA Technologies (a Broadcom Inc. business), Cisco Systems, Dynatrace, Datadog, ExtraHop, IBM, Infovista, Viavi, Gigamon, New Relic, Riverbed Technology, and SolarWinds."
+          }
+        }
+      ],
+      "name_en": "IBM"
+    },
+    {
+      "id": "DT",
+      "ticker": "DT",
+      "name": "ダイナトレース",
+      "sub": "オブザーバビリティ",
+      "sub_en": "Observability",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "エンタープライズ市場で、オブザーバビリティや性能管理の分野で競合している",
+          "text_en": "Competes in the enterprise market in observability and performance management",
+          "source": {
+            "label": "ネットスカウト・システムズ 10-K(March 31, 2026)",
+            "label_en": "NetScout Systems 10-K (fiscal year ended March 31, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1078075/000107807526000050/ntct-20260331.htm",
+            "level": "official",
+            "date": "2026-05-14",
+            "quote": "our competitors include companies who provide network observability, application performance management, infrastructure performance management and other related solutions such as CA Technologies (a Broadcom Inc. business), Cisco Systems, Dynatrace, Datadog, ExtraHop, IBM, Infovista, Viavi, Gigamon, New Relic, Riverbed Technology, and SolarWinds."
+          }
+        }
+      ],
+      "name_en": "Dynatrace"
+    },
+    {
+      "id": "DDOG",
+      "ticker": "DDOG",
+      "name": "データドッグ",
+      "sub": "クラウド監視",
+      "sub_en": "Cloud monitoring",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "エンタープライズ市場で、オブザーバビリティや性能管理の分野で競合している",
+          "text_en": "Competes in the enterprise market in observability and performance management",
+          "source": {
+            "label": "ネットスカウト・システムズ 10-K(March 31, 2026)",
+            "label_en": "NetScout Systems 10-K (fiscal year ended March 31, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1078075/000107807526000050/ntct-20260331.htm",
+            "level": "official",
+            "date": "2026-05-14",
+            "quote": "our competitors include companies who provide network observability, application performance management, infrastructure performance management and other related solutions such as CA Technologies (a Broadcom Inc. business), Cisco Systems, Dynatrace, Datadog, ExtraHop, IBM, Infovista, Viavi, Gigamon, New Relic, Riverbed Technology, and SolarWinds."
+          }
+        }
+      ],
+      "name_en": "Datadog"
+    },
+    {
+      "id": "VIAV",
+      "ticker": "VIAV",
+      "name": "ビアビ・ソリューションズ",
+      "sub": "ネットワーク試験",
+      "sub_en": "Network test",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "エンタープライズ市場で、オブザーバビリティや性能管理の分野で競合している",
+          "text_en": "Competes in the enterprise market in observability and performance management",
+          "source": {
+            "label": "ネットスカウト・システムズ 10-K(March 31, 2026)",
+            "label_en": "NetScout Systems 10-K (fiscal year ended March 31, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1078075/000107807526000050/ntct-20260331.htm",
+            "level": "official",
+            "date": "2026-05-14",
+            "quote": "our competitors include companies who provide network observability, application performance management, infrastructure performance management and other related solutions such as CA Technologies (a Broadcom Inc. business), Cisco Systems, Dynatrace, Datadog, ExtraHop, IBM, Infovista, Viavi, Gigamon, New Relic, Riverbed Technology, and SolarWinds."
+          }
+        }
+      ],
+      "name_en": "Viavi Solutions"
+    },
+    {
+      "id": "AVGO",
+      "ticker": "AVGO",
+      "name": "ブロードコム",
+      "sub": "半導体・ソフト",
+      "sub_en": "Semiconductors & software",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "エンタープライズ市場で、オブザーバビリティや性能管理の分野で競合している",
+          "text_en": "Competes in the enterprise market in observability and performance management",
+          "source": {
+            "label": "ネットスカウト・システムズ 10-K(March 31, 2026)",
+            "label_en": "NetScout Systems 10-K (fiscal year ended March 31, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1078075/000107807526000050/ntct-20260331.htm",
+            "level": "official",
+            "date": "2026-05-14",
+            "quote": "our competitors include companies who provide network observability, application performance management, infrastructure performance management and other related solutions such as CA Technologies (a Broadcom Inc. business), Cisco Systems, Dynatrace, Datadog, ExtraHop, IBM, Infovista, Viavi, Gigamon, New Relic, Riverbed Technology, and SolarWinds."
+          }
+        }
+      ],
+      "name_en": "Broadcom"
+    },
+    {
+      "id": "SWI",
+      "ticker": "SolarWinds",
+      "name": "ソーラーウインズ",
+      "sub": "IT運用管理",
+      "sub_en": "IT operations management",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "エンタープライズ市場で、オブザーバビリティや性能管理の分野で競合している",
+          "text_en": "Competes in the enterprise market in observability and performance management",
+          "source": {
+            "label": "ネットスカウト・システムズ 10-K(March 31, 2026)",
+            "label_en": "NetScout Systems 10-K (fiscal year ended March 31, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1078075/000107807526000050/ntct-20260331.htm",
+            "level": "official",
+            "date": "2026-05-14",
+            "quote": "our competitors include companies who provide network observability, application performance management, infrastructure performance management and other related solutions such as CA Technologies (a Broadcom Inc. business), Cisco Systems, Dynatrace, Datadog, ExtraHop, IBM, Infovista, Viavi, Gigamon, New Relic, Riverbed Technology, and SolarWinds."
+          }
+        }
+      ],
+      "name_en": "SolarWinds"
+    },
+    {
+      "id": "SPLUNK",
+      "ticker": "Splunk",
+      "name": "スプランク",
+      "sub": "データ分析",
+      "sub_en": "Data analytics",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "取得したメタデータの分析結果を、パートナーであるSplunkに送れる",
+          "text_en": "Can stream its data insights to its partner Splunk",
+          "source": {
+            "label": "ネットスカウト・システムズ 10-K(March 31, 2026)",
+            "label_en": "NetScout Systems 10-K (fiscal year ended March 31, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1078075/000107807526000050/ntct-20260331.htm",
+            "level": "official",
+            "date": "2026-05-14",
+            "quote": "These insights can be easily ingested into data lakes or streamed to our partners like Splunk and ServiceNow."
+          }
+        }
+      ],
+      "name_en": "Splunk"
+    },
+    {
+      "id": "NOW",
+      "ticker": "NOW",
+      "name": "サービスナウ",
+      "sub": "業務ワークフロー",
+      "sub_en": "Workflow software",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "取得したメタデータの分析結果を、パートナーであるServiceNowに送れる",
+          "text_en": "Can stream its data insights to its partner ServiceNow",
+          "source": {
+            "label": "ネットスカウト・システムズ 10-K(March 31, 2026)",
+            "label_en": "NetScout Systems 10-K (fiscal year ended March 31, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1078075/000107807526000050/ntct-20260331.htm",
+            "level": "official",
+            "date": "2026-05-14",
+            "quote": "These insights can be easily ingested into data lakes or streamed to our partners like Splunk and ServiceNow."
+          }
+        }
+      ],
+      "name_en": "ServiceNow"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

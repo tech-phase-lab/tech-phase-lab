@@ -1,0 +1,190 @@
+{
+  "root": {
+    "ticker": "TPR",
+    "name": "タペストリー",
+    "cik": 1116132,
+    "name_en": "Tapestry"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "Luxottica",
+      "ticker": "Luxottica",
+      "name": "ルックスオティカ",
+      "sub": "アイウェア",
+      "sub_en": "Eyewear",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "コーチのアイウェアのライセンス提携先",
+          "text_en": "Licensing partner for Coach eyewear",
+          "source": {
+            "label": "Tapestry 10-K(2026年6月27日期)",
+            "label_en": "Tapestry 10-K (fiscal year ended June 27, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1116132/000111613226000018/tpr-20260627.htm",
+            "level": "official",
+            "date": "2026-08-13",
+            "quote": "Coach Eyewear Luxottica 2026 (1)"
+          }
+        }
+      ],
+      "name_en": "Luxottica"
+    },
+    {
+      "id": "MOV",
+      "ticker": "MOV",
+      "name": "モバード",
+      "sub": "腕時計",
+      "sub_en": "Watches",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "コーチの腕時計のライセンス提携先",
+          "text_en": "Licensing partner for Coach watches",
+          "source": {
+            "label": "Tapestry 10-K(2026年6月27日期)",
+            "label_en": "Tapestry 10-K (fiscal year ended June 27, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1116132/000111613226000018/tpr-20260627.htm",
+            "level": "official",
+            "date": "2026-08-13",
+            "quote": "Coach Watches Movado 2028"
+          }
+        }
+      ],
+      "name_en": "Movado"
+    },
+    {
+      "id": "IPAR",
+      "ticker": "IPAR",
+      "name": "インターパルファム",
+      "sub": "香水",
+      "sub_en": "Fragrance",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "コーチとケイト・スペードの香水のライセンス提携先",
+          "text_en": "Licensing partner for Coach and Kate Spade fragrance",
+          "source": {
+            "label": "Tapestry 10-K(2026年6月27日期)",
+            "label_en": "Tapestry 10-K (fiscal year ended June 27, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1116132/000111613226000018/tpr-20260627.htm",
+            "level": "official",
+            "date": "2026-08-13",
+            "quote": "Coach Fragrance Interparfums 2031 Kate Spade Tech Accessories Case-Mate 2027 Kate Spade Sleepwear Komar 2028 Kate Spade Fashion Bedding Live Comfortably 2028 Kate Spade Stationery and Gift Lifeguard Press 2030 Kate Spade Fragrance Interparfums 2030"
+          }
+        }
+      ],
+      "name_en": "Interparfums"
+    },
+    {
+      "id": "CaseMate",
+      "ticker": "Case-Mate",
+      "name": "ケースメイト",
+      "sub": "テック小物",
+      "sub_en": "Tech accessories",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ケイト・スペードのテック小物のライセンス提携先",
+          "text_en": "Licensing partner for Kate Spade tech accessories",
+          "source": {
+            "label": "Tapestry 10-K(2026年6月27日期)",
+            "label_en": "Tapestry 10-K (fiscal year ended June 27, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1116132/000111613226000018/tpr-20260627.htm",
+            "level": "official",
+            "date": "2026-08-13",
+            "quote": "Kate Spade Tech Accessories Case-Mate 2027"
+          }
+        }
+      ],
+      "name_en": "Case-Mate"
+    },
+    {
+      "id": "Komar",
+      "ticker": "Komar",
+      "name": "コマー",
+      "sub": "寝間着",
+      "sub_en": "Sleepwear",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ケイト・スペードの寝間着のライセンス提携先",
+          "text_en": "Licensing partner for Kate Spade sleepwear",
+          "source": {
+            "label": "Tapestry 10-K(2026年6月27日期)",
+            "label_en": "Tapestry 10-K (fiscal year ended June 27, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1116132/000111613226000018/tpr-20260627.htm",
+            "level": "official",
+            "date": "2026-08-13",
+            "quote": "Kate Spade Sleepwear Komar 2028"
+          }
+        }
+      ],
+      "name_en": "Komar"
+    },
+    {
+      "id": "Safilo",
+      "ticker": "Safilo",
+      "name": "サフィロ",
+      "sub": "アイウェア",
+      "sub_en": "Eyewear",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ケイト・スペードのアイウェアのライセンス提携先",
+          "text_en": "Licensing partner for Kate Spade eyewear",
+          "source": {
+            "label": "Tapestry 10-K(2026年6月27日期)",
+            "label_en": "Tapestry 10-K (fiscal year ended June 27, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1116132/000111613226000018/tpr-20260627.htm",
+            "level": "official",
+            "date": "2026-08-13",
+            "quote": "Kate Spade Eyewear Safilo 2031"
+          }
+        }
+      ],
+      "name_en": "Safilo"
+    },
+    {
+      "id": "LiveComfortably",
+      "ticker": "Live Comfortably",
+      "name": "リブ・コンフォタブリー",
+      "sub": "寝具",
+      "sub_en": "Bedding",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ケイト・スペードのファッション寝具のライセンス提携先",
+          "text_en": "Licensing partner for Kate Spade fashion bedding",
+          "source": {
+            "label": "Tapestry 10-K(2026年6月27日期)",
+            "label_en": "Tapestry 10-K (fiscal year ended June 27, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1116132/000111613226000018/tpr-20260627.htm",
+            "level": "official",
+            "date": "2026-08-13",
+            "quote": "Kate Spade Fashion Bedding Live Comfortably 2028"
+          }
+        }
+      ],
+      "name_en": "Live Comfortably"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

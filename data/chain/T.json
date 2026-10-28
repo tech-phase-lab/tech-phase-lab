@@ -1,0 +1,142 @@
+{
+  "root": {
+    "ticker": "T",
+    "name": "AT&T",
+    "cik": 732717,
+    "name_en": "AT&T"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "TPG",
+      "ticker": "TPG Capital",
+      "name": "TPGキャピタル",
+      "sub": "投資会社",
+      "sub_en": "Investment firm",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "DIRECTVの残りの持分をTPGに売却した",
+          "text_en": "Sold its remaining DIRECTV interest to TPG",
+          "source": {
+            "label": "AT&T 10-K(2025年12月31日)",
+            "label_en": "AT&T 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/732717/000073271726000120/t-20251231.htm",
+            "level": "official",
+            "date": "2026-02-09",
+            "quote": "On July 2, 2025, we sold our interest in DIRECTV to TPG Capital (TPG)."
+          }
+        }
+      ],
+      "name_en": "TPG Capital"
+    },
+    {
+      "id": "DriveNets",
+      "ticker": "DriveNets",
+      "name": "ドライブネッツ",
+      "sub": "ネットワーク機器",
+      "sub_en": "Networking",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "DriveNetsの16.6%を持つ持分法投資先である",
+          "text_en": "Holds a 16.6% interest in DriveNets",
+          "source": {
+            "label": "AT&T 10-K(2025年12月31日)",
+            "label_en": "AT&T 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/732717/000073271726000120/t-20251231.htm",
+            "level": "official",
+            "date": "2026-02-09",
+            "quote": "We hold a 16.6 % interest in DriveNets, which designs and builds high-scale networking solutions for service providers and AI infrastructures."
+          }
+        }
+      ],
+      "name_en": "DriveNets"
+    },
+    {
+      "id": "Gigapower",
+      "ticker": "Gigapower",
+      "name": "ギガパワー",
+      "sub": "光ファイバー合弁",
+      "sub_en": "Fiber JV",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "光ファイバー網を提供する合弁会社ギガパワーの50%を持つ",
+          "text_en": "Holds a 50% interest in the joint venture Gigapower",
+          "source": {
+            "label": "AT&T 10-K(2025年12月31日)",
+            "label_en": "AT&T 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/732717/000073271726000120/t-20251231.htm",
+            "level": "official",
+            "date": "2026-02-09",
+            "quote": "We hold a 50 % interest in our joint venture Gigapower, LLC (Gigapower), which provides a fiber network in select areas to internet service providers and other businesses across the United States."
+          }
+        }
+      ],
+      "name_en": "Gigapower"
+    },
+    {
+      "id": "SATS",
+      "ticker": "SATS",
+      "name": "エコースター",
+      "sub": "衛星・通信",
+      "sub_en": "Satellite & telecom",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "エコースターから約23,000百万ドルで周波数免許を購入することに合意した",
+          "text_en": "Agreed to buy FCC licenses from EchoStar for approximately $23,000",
+          "source": {
+            "label": "AT&T 10-K(2025年12月31日)",
+            "label_en": "AT&T 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/732717/000073271726000120/t-20251231.htm",
+            "level": "official",
+            "date": "2026-02-09",
+            "quote": "On August 25, 2025, we agreed to purchase FCC licenses in the 600 MHz and 3.45 GHz bands from EchoStar for approximately $23,000, subject to certain adjustments."
+          }
+        }
+      ],
+      "name_en": "EchoStar"
+    },
+    {
+      "id": "LUMN",
+      "ticker": "LUMN",
+      "name": "ルーメン・テクノロジーズ",
+      "sub": "光ファイバー事業",
+      "sub_en": "Fiber business",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ルーメンの個人向け光ファイバー事業の大部分を5,750百万ドルで取得することに合意した",
+          "text_en": "Agreed to acquire substantially all of Lumen’s Mass Markets fiber business for $5,750 in cash",
+          "source": {
+            "label": "AT&T 10-K(2025年12月31日)",
+            "label_en": "AT&T 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/732717/000073271726000120/t-20251231.htm",
+            "level": "official",
+            "date": "2026-02-09",
+            "quote": "On May 21, 2025, we agreed to acquire substantially all of Lumen’s Mass Markets fiber business for $5,750 in cash, subject to purchase price adjustments."
+          }
+        }
+      ],
+      "name_en": "Lumen"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

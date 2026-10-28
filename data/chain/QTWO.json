@@ -1,0 +1,329 @@
+{
+  "root": {
+    "ticker": "QTWO",
+    "name": "Q2ホールディングス",
+    "name_en": "Q2 Holdings",
+    "cik": 1410384
+  },
+  "rows": [
+    {
+      "ja": "プラットフォーム供給元",
+      "en": "Platform supplier",
+      "above": true
+    },
+    {
+      "ja": "資金調達",
+      "en": "Financing"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "FISV",
+    "FIS",
+    "JKHY",
+    "ALKT",
+    "NCNO"
+  ],
+  "companies": [
+    {
+      "id": "CRM",
+      "ticker": "CRM",
+      "name": "Salesforce",
+      "sub": "業務ソフト",
+      "sub_en": "Business software",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Salesforce.comによるForce.comの変更や料金引き上げの可能性が、リスクとして残る",
+          "text_en": "Salesforce.com may discontinue or modify Force.com or increase its fees.",
+          "source": {
+            "label": "Q2 Holdings 10-K",
+            "label_en": "Q2 Holdings 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1410384/000141038426000006/qtwo-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "Salesforce.com may discontinue or modify Force.com or increase its fees or modify its pricing structures for our customers' environments.",
+            "note": "リスク記載での言及です。",
+            "note_en": "Mentioned as a risk factor."
+          }
+        }
+      ]
+    },
+    {
+      "id": "WFC",
+      "ticker": "WFC",
+      "name": "Wells Fargo",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2024年7月29日付で、Wells Fargo Bank, National Associationなどと1億2,500万ドルの回転与信枠を持つ5年物の担保付き契約を結んだ",
+          "text_en": "Entered into a five-year secured revolving credit agreement with Wells Fargo Bank, National Association and others on July 29, 2024, providing a $125.0 million revolving line of credit",
+          "source": {
+            "label": "Q2 Holdings 10-K",
+            "label_en": "Q2 Holdings 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1410384/000141038426000006/qtwo-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "We entered into a five-year secured revolving credit agreement with Wells Fargo Bank, National Association, Wells Fargo Securities, LLC and Texas Capital Bank on July 29, 2024, the Revolving Credit Agreement, which provides for a $125.0 million revolving line of credit, none of which was drawn as of December 31, 2025.",
+            "note": "2025年12月31日時点で未使用です。資金調達のみの関係です。",
+            "note_en": "Undrawn as of December 31, 2025; financing relationship only."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "同クレジット契約の当事者に、Wells Fargo Securities, LLCとTexas Capital Bankも含まれる",
+          "text_en": "The credit agreement parties also include Wells Fargo Securities, LLC and Texas Capital Bank",
+          "source": {
+            "label": "Q2 Holdings 10-K",
+            "label_en": "Q2 Holdings 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1410384/000141038426000006/qtwo-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "Credit Agreement, dated July 29, 2024, by and among Q2 Holdings, Inc., Wells Fargo Bank, National Association, Wells Fargo Securities, LLC and Texas Capital Bank 8-K 001-36350 7/31/2024 10.1"
+          }
+        }
+      ]
+    },
+    {
+      "id": "MS",
+      "ticker": "MS",
+      "name": "Morgan Stanley",
+      "sub": "証券",
+      "sub_en": "Securities",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2019年6月5日付の購入契約の当事者にMorgan Stanley & Co.が含まれる",
+          "text_en": "Morgan Stanley & Co. is a party to a Purchase Agreement dated June 5, 2019",
+          "source": {
+            "label": "Q2 Holdings 10-K",
+            "label_en": "Q2 Holdings 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1410384/000141038426000006/qtwo-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "Purchase Agreement, dated June 5, 2019 by and among the Registrant, Morgan Stanley & Co.",
+            "note": "別表の契約名の記載のみです。",
+            "note_en": "Exhibit listing mention only."
+          }
+        }
+      ]
+    },
+    {
+      "id": "FISV",
+      "ticker": "FISV",
+      "name": "フィサーブ",
+      "sub": "金融システム",
+      "sub_en": "Financial technology",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Q2ホールディングスと競合する",
+          "text_en": "Competes with Q2 Holdings",
+          "source": {
+            "label": "Q2 Holdings 10-K",
+            "label_en": "Q2 Holdings 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1410384/000141038426000006/qtwo-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "With respect to our digital lending and relationship pricing solutions, we compete against several point system competitors, including Abrigo, Baker Hill Solutions, nCino, Finastra, Brilliance Financial Technology, Temenos AG, and core processing vendors, including FIS and Fiserv."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "Fiserv傘下のFinxactは、Helixのクラウドコア分野の競合に当たる",
+          "text_en": "Finxact, a Fiserv company, is a cloud-core competitor to Helix.",
+          "source": {
+            "label": "Q2 Holdings 10-K",
+            "label_en": "Q2 Holdings 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1410384/000141038426000006/qtwo-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "With respect to our Helix solution, we primarily compete with Galileo Financial Technologies, Marqeta and Green Dot in the BaaS and embedded finance markets, and we compete with Finxact, a Fiserv company, Nymbus, Mambu and Thought Machine Group in the cloud-core markets."
+          }
+        }
+      ],
+      "name_en": "Fiserv"
+    },
+    {
+      "id": "FIS",
+      "ticker": "FIS",
+      "name": "フィデリティ・ナショナル・インフォメーション・サービシーズ",
+      "sub": "金融システム",
+      "sub_en": "Financial technology",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Q2ホールディングスと競合する",
+          "text_en": "Competes with Q2 Holdings",
+          "source": {
+            "label": "Q2 Holdings 10-K",
+            "label_en": "Q2 Holdings 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1410384/000141038426000006/qtwo-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "We also compete with core processing vendors that provide systems and services such as Fiserv, Jack Henry and Associates and Fidelity National Information Services, or FIS."
+          }
+        }
+      ],
+      "name_en": "Fidelity National Information Services"
+    },
+    {
+      "id": "JKHY",
+      "ticker": "JKHY",
+      "name": "ジャック・ヘンリー",
+      "sub": "金融システム",
+      "sub_en": "Financial technology",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Jack Henry and Associatesは、コア処理ベンダーの競合に当たる",
+          "text_en": "Jack Henry and Associates is a competing core processing vendor.",
+          "source": {
+            "label": "Q2 Holdings 10-K",
+            "label_en": "Q2 Holdings 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1410384/000141038426000006/qtwo-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "We also compete with core processing vendors that provide systems and services such as Fiserv, Jack Henry and Associates and Fidelity National Information Services, or FIS."
+          }
+        }
+      ],
+      "name_en": "Jack Henry"
+    },
+    {
+      "id": "ALKT",
+      "ticker": "ALKT",
+      "name": "アルカミ・テクノロジー",
+      "sub": "デジタルバンキング",
+      "sub_en": "Digital banking",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Q2ホールディングスと競合する",
+          "text_en": "Competes with Q2 Holdings",
+          "source": {
+            "label": "Q2 Holdings 10-K",
+            "label_en": "Q2 Holdings 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1410384/000141038426000006/qtwo-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "With respect to our digital banking platform, we have several point solution competitors, including Candescent, Alkami Technology, CSI, Backbase and Lumin Digital in the online, consumer and SMB banking space and Finastra and Bottomline Technologies in the commercial banking space."
+          }
+        }
+      ],
+      "name_en": "Alkami Technology"
+    },
+    {
+      "id": "NCNO",
+      "ticker": "NCNO",
+      "name": "nCino",
+      "sub": "銀行向けソフト",
+      "sub_en": "Banking software",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "nCinoは、デジタル融資分野の競合だ",
+          "text_en": "nCino is a competitor in digital lending.",
+          "source": {
+            "label": "Q2 Holdings 10-K",
+            "label_en": "Q2 Holdings 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1410384/000141038426000006/qtwo-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "With respect to our digital lending and relationship pricing solutions, we compete against several point system competitors, including Abrigo, Baker Hill Solutions, nCino, Finastra, Brilliance Financial Technology, Temenos AG, and core processing vendors, including FIS and Fiserv."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MQ",
+      "ticker": "MQ",
+      "name": "Marqeta",
+      "sub": "カード発行基盤",
+      "sub_en": "Card issuing",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Helixは、BaaS・組み込み金融分野でMarqetaと競合する",
+          "text_en": "Marqeta competes with Q2's Helix in BaaS and embedded finance.",
+          "source": {
+            "label": "Q2 Holdings 10-K",
+            "label_en": "Q2 Holdings 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1410384/000141038426000006/qtwo-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "With respect to our Helix solution, we primarily compete with Galileo Financial Technologies, Marqeta and Green Dot in the BaaS and embedded finance markets, and we compete with Finxact, a Fiserv company, Nymbus, Mambu and Thought Machine Group in the cloud-core markets."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GDOT",
+      "ticker": "GDOT",
+      "name": "Green Dot",
+      "sub": "金融サービス",
+      "sub_en": "Financial services",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Green Dotは、HelixのBaaS・組み込み金融分野で主な競合相手となる",
+          "text_en": "Green Dot is a primary competitor to Helix in BaaS and embedded finance.",
+          "source": {
+            "label": "Q2 Holdings 10-K",
+            "label_en": "Q2 Holdings 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1410384/000141038426000006/qtwo-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "With respect to our Helix solution, we primarily compete with Galileo Financial Technologies, Marqeta and Green Dot in the BaaS and embedded finance markets, and we compete with Finxact, a Fiserv company, Nymbus, Mambu and Thought Machine Group in the cloud-core markets."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SOFI",
+      "ticker": "SOFI",
+      "name": "ソーファイ・テクノロジーズ",
+      "sub": "フィンテック",
+      "sub_en": "Fintech",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "子会社のGalileo Financial Technologiesが、HelixのBaaS・組み込み金融分野で競合している",
+          "text_en": "Through its subsidiary Galileo Financial Technologies, SoFi competes with Helix in BaaS and embedded finance.",
+          "source": {
+            "label": "Q2 Holdings 10-K",
+            "label_en": "Q2 Holdings 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1410384/000141038426000006/qtwo-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "With respect to our Helix solution, we primarily compete with Galileo Financial Technologies, Marqeta and Green Dot in the BaaS and embedded finance markets, and we compete with Finxact, a Fiserv company, Nymbus, Mambu and Thought Machine Group in the cloud-core markets.",
+            "note": "子会社Galileoを通じた関係です。",
+            "note_en": "Subsidiary-level: through Galileo."
+          }
+        }
+      ],
+      "name_en": "SoFi Technologies"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

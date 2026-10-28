@@ -1,0 +1,314 @@
+{
+  "root": {
+    "ticker": "SIMO",
+    "name": "Silicon Motion",
+    "cik": 1329394
+  },
+  "rows": [
+    {
+      "ja": "ファウンドリ",
+      "en": "Foundries",
+      "above": true
+    },
+    {
+      "ja": "顧客(売上の10%超)",
+      "en": "Customers (over 10% of revenue)"
+    },
+    {
+      "ja": "提携・買収・特許",
+      "en": "Partnerships, M&A and patents"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "MCHP",
+    "Phison"
+  ],
+  "companies": [
+    {
+      "id": "TSM",
+      "ticker": "TSMC",
+      "name": "TSMC",
+      "sub": "ファウンドリ",
+      "sub_en": "Foundry",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "半導体の製造を、主に外部ファウンドリのTSMCに委託している",
+          "text_en": "Its semiconductors are fabricated by outside foundries, primarily TSMC",
+          "source": {
+            "label": "Silicon Motion 20-F",
+            "label_en": "Silicon Motion 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/1329394/000119312526197184/d17718d20f.htm",
+            "level": "official",
+            "date": "2026-04-30",
+            "quote": "Two outside foundries, primarily Taiwan Semiconductor Manufacturing Company (“TSMC”), and secondarily Semiconductor Manufacturing International Corporation (“SMIC”), fabricate our semiconductors."
+          }
+        },
+        {
+          "type": "up",
+          "text": "半導体の製造を、主にTSMCに委託している",
+          "text_en": "Its semiconductors are fabricated primarily by TSMC",
+          "source": {
+            "label": "Silicon Motion 20-F",
+            "label_en": "Silicon Motion 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/1329394/000119312526197184/d17718d20f.htm",
+            "level": "official",
+            "date": "2026-04-30",
+            "quote": "Two outside foundries, primarily TSMC, and secondarily SMIC, fabricate our semiconductors."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SMIC",
+      "ticker": "SMIC",
+      "name": "SMIC",
+      "sub": "ファウンドリ",
+      "sub_en": "Foundry",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "半導体の製造を、副次的に外部ファウンドリのSMICに委託している",
+          "text_en": "Its semiconductors are fabricated secondarily by outside foundry SMIC",
+          "source": {
+            "label": "Silicon Motion 20-F",
+            "label_en": "Silicon Motion 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/1329394/000119312526197184/d17718d20f.htm",
+            "level": "official",
+            "date": "2026-04-30",
+            "quote": "Two outside foundries, primarily Taiwan Semiconductor Manufacturing Company (“TSMC”), and secondarily Semiconductor Manufacturing International Corporation (“SMIC”), fabricate our semiconductors."
+          }
+        },
+        {
+          "type": "up",
+          "text": "半導体の製造を、副次的にSMICに委託している",
+          "text_en": "Its semiconductors are fabricated secondarily by SMIC",
+          "source": {
+            "label": "Silicon Motion 20-F",
+            "label_en": "Silicon Motion 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/1329394/000119312526197184/d17718d20f.htm",
+            "level": "official",
+            "date": "2026-04-30",
+            "quote": "Two outside foundries, primarily TSMC, and secondarily SMIC, fabricate our semiconductors."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MU",
+      "ticker": "MU",
+      "name": "Micron",
+      "sub": "メモリ",
+      "sub_en": "Memory",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Micronは2023年、2024年、2025年のいずれも純売上高の10%超を占める顧客だ",
+          "text_en": "Micron accounted for more than 10% of Silicon Motion's net revenue as a customer in each of 2023, 2024 and 2025",
+          "source": {
+            "label": "Silicon Motion 20-F",
+            "label_en": "Silicon Motion 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/1329394/000119312526197184/d17718d20f.htm",
+            "level": "official",
+            "date": "2026-04-30",
+            "quote": "Our customers constituting more than 10% of our net revenue were (i) Micron, SK Hynix and AFASTOR in 2023, (ii) Micron, Kioxia, PHISEMI and AFASTOR in 2024 and (iii) PHISEMI, Kioxia, AFASTOR, and Micron in 2025."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Kioxia",
+      "ticker": "Kioxia",
+      "name": "キオクシア",
+      "sub": "フラッシュメモリ",
+      "sub_en": "Flash memory",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "キオクシアは2024年と2025年、純売上高の10%超を占める顧客だった",
+          "text_en": "Kioxia accounted for more than 10% of Silicon Motion's net revenue as a customer in 2024 and 2025",
+          "source": {
+            "label": "Silicon Motion 20-F",
+            "label_en": "Silicon Motion 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/1329394/000119312526197184/d17718d20f.htm",
+            "level": "official",
+            "date": "2026-04-30",
+            "quote": "Our customers constituting more than 10% of our net revenue were (i) Micron, SK Hynix and AFASTOR in 2023, (ii) Micron, Kioxia, PHISEMI and AFASTOR in 2024 and (iii) PHISEMI, Kioxia, AFASTOR, and Micron in 2025."
+          }
+        }
+      ],
+      "name_en": "Kioxia"
+    },
+    {
+      "id": "SK hynix",
+      "ticker": "SK hynix",
+      "name": "SK hynix",
+      "sub": "メモリ",
+      "sub_en": "Memory",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "SK hynixは2023年、純売上高の10%超を占めた顧客の一角を担った",
+          "text_en": "SK hynix accounted for more than 10% of Silicon Motion's net revenue as a customer in 2023",
+          "source": {
+            "label": "Silicon Motion 20-F",
+            "label_en": "Silicon Motion 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/1329394/000119312526197184/d17718d20f.htm",
+            "level": "official",
+            "date": "2026-04-30",
+            "quote": "Our customers constituting more than 10% of our net revenue were (i) Micron, SK Hynix and AFASTOR in 2023, (ii) Micron, Kioxia, PHISEMI and AFASTOR in 2024 and (iii) PHISEMI, Kioxia, AFASTOR, and Micron in 2025."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MXL",
+      "ticker": "MXL",
+      "name": "MaxLinear",
+      "sub": "通信半導体",
+      "sub_en": "Communications chips",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2022年5月5日に、MaxLinearと合併契約を締結した",
+          "text_en": "Entered into a merger agreement with MaxLinear on May 5, 2022",
+          "source": {
+            "label": "Silicon Motion 20-F",
+            "label_en": "Silicon Motion 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/1329394/000119312526197184/d17718d20f.htm",
+            "level": "official",
+            "date": "2026-04-30",
+            "quote": "On May 5, 2022, the Company entered into an Agreement and Plan of Merger (the “Merger Agreement”) with MaxLinear, Inc., a Delaware Corporation (“MaxLinear”), and Shark Merger Sub, an exempted company with limited liability incorporated under the law of the Cayman Islands and a",
+            "note": "合併契約は終了しています。",
+            "note_en": "The merger agreement was terminated."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "Silicon Motionは2023年8月16日、MaxLinearに合併契約の解除を通知し、損害賠償を求める仲裁を始める構えだ",
+          "text_en": "Silicon Motion notified MaxLinear on August 16, 2023 that it was terminating the merger agreement and would start arbitration to seek damages",
+          "source": {
+            "label": "MaxLinear 10-K",
+            "label_en": "MaxLinear 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1288469/000128846926000011/mxl-20251231.htm",
+            "level": "official",
+            "date": "2026-01-29",
+            "quote": "On August 16, 2023, Silicon Motion delivered to us a notice, which Silicon Motion publicly disclosed, that it was purporting to terminate the Merger Agreement and that Silicon Motion would be commencing an arbitration before the Singapore International Arbitration Centre to seek damages from us arising from our alleged breaches of the Merger Agreement."
+          }
+        }
+      ]
+    },
+    {
+      "id": "RMBS",
+      "ticker": "RMBS",
+      "name": "Rambus",
+      "sub": "メモリインターフェース・IP",
+      "sub_en": "Memory interface & IP",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Rambusは、Silicon Motionをはじめ特許のライセンスを受けた企業を抱える",
+          "text_en": "Rambus has licensed its patents to companies including Silicon Motion.",
+          "source": {
+            "label": "Rambus 10-K",
+            "label_en": "Rambus 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/917273/000119312526057101/rmbs-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "Leading semiconductor and electronic system companies, such as AMD, Amlogic, Broadcom, CXMT, IBM, Infineon, Kioxia, Marvell, MediaTek, Micron, Nanya, Nuvoton, NVIDIA, Phison, Qualcomm, Samsung, Silicon Motion, SK hynix, Socionext, STMicroelectronics, Toshiba, Western Digital and Winbond have licensed our patents.",
+            "note": "一覧に名前が挙がっているものです。",
+            "note_en": "List mention only."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MCHP",
+      "ticker": "MCHP",
+      "name": "Microchip Technology",
+      "sub": "マイコン・アナログ",
+      "sub_en": "Microcontrollers & analog",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Silicon Motionと競合する",
+          "text_en": "Competes with Silicon Motion",
+          "source": {
+            "label": "Silicon Motion 20-F",
+            "label_en": "Silicon Motion 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/1329394/000119312526197184/d17718d20f.htm",
+            "level": "official",
+            "date": "2026-04-30",
+            "quote": "We face competition from several competitors, including Microchip and Phison, our flash memory customers and smaller merchant suppliers in China."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "Silicon Motionと競合する",
+          "text_en": "Competes with Silicon Motion",
+          "source": {
+            "label": "Silicon Motion 20-F",
+            "label_en": "Silicon Motion 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/1329394/000119312526197184/d17718d20f.htm",
+            "level": "official",
+            "date": "2026-04-30",
+            "quote": "We face competition from multiple competitors, including Microchip and Phison, our flash memory customers’ internal captive developments and small Chinese merchant controller suppliers."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Phison",
+      "ticker": "Phison",
+      "name": "Phison",
+      "sub": "フラッシュコントローラー",
+      "sub_en": "Flash controllers",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Silicon Motionと競合する",
+          "text_en": "Competes with Silicon Motion",
+          "source": {
+            "label": "Silicon Motion 20-F",
+            "label_en": "Silicon Motion 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/1329394/000119312526197184/d17718d20f.htm",
+            "level": "official",
+            "date": "2026-04-30",
+            "quote": "We face competition from several competitors, including Microchip and Phison, our flash memory customers and smaller merchant suppliers in China."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "Silicon Motionと競合する",
+          "text_en": "Competes with Silicon Motion",
+          "source": {
+            "label": "Silicon Motion 20-F",
+            "label_en": "Silicon Motion 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/1329394/000119312526197184/d17718d20f.htm",
+            "level": "official",
+            "date": "2026-04-30",
+            "quote": "We face competition from multiple competitors, including Microchip and Phison, our flash memory customers’ internal captive developments and small Chinese merchant controller suppliers."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

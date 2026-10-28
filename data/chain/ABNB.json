@@ -1,0 +1,321 @@
+{
+  "root": {
+    "ticker": "ABNB",
+    "name": "Airbnb",
+    "cik": 1559720
+  },
+  "rows": [
+    {
+      "ja": "供給元(配信・クラウド)",
+      "en": "Suppliers (delivery & cloud)",
+      "above": true
+    },
+    {
+      "ja": "提携・金融",
+      "en": "Partnerships & financing"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "GOOG"
+  ],
+  "companies": [
+    {
+      "id": "AKAM",
+      "ticker": "AKAM",
+      "name": "Akamai Technologies",
+      "sub": "コンテンツ配信・セキュリティ",
+      "sub_en": "Content delivery & security",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Akamaiが年次報告で、顧客の1社としてAirbnbを挙げている(Airbnbにとっては供給元)",
+          "text_en": "Akamai’s 10-K lists Airbnb among its customers (Akamai is a supplier to Airbnb)",
+          "source": {
+            "label": "Akamai Technologies 10-K",
+            "label_en": "Akamai Technologies 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1086222/000108622226000022/akam-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "Our customers include many of the world's leading corporations, such as adidas, Adobe, Aflac, Airbnb, Asus, Autodesk, Bank of Montreal, Carnival Corporation, Comcast, Commerzbank, Daiwa Institute of Research, eBay, Electronic Arts, Epic Games, Fidelity Investments,",
+            "note": "Akamaiの年次報告に基づく記載です。",
+            "note_en": "Per Akamai’s annual report."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AMZN",
+      "ticker": "AMZN",
+      "name": "Amazon(AWS)",
+      "sub": "クラウド",
+      "sub_en": "Cloud",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "AWSをAirbnbが優先するクラウド事業者とし、OpenAIのモデルをAmazon Bedrock経由でも利用できる",
+          "text_en": "AWS is Airbnb’s preferred cloud provider, and OpenAI models are accessible through Amazon Bedrock on AWS",
+          "source": {
+            "label": "Airbnb — OpenAI model-access agreement, September 23, 2026",
+            "label_en": "Airbnb — OpenAI model-access agreement, September 23, 2026",
+            "url": "https://news.airbnb.com/expanding-access-to-openai-frontier-models-including-gpt-6-astra",
+            "level": "official",
+            "quote": "The agreement gives us broader access to OpenAI models through OpenAI's APIs and Amazon Bedrock on AWS, Airbnb's preferred cloud provider.",
+            "note": "2026年9月23日のAirbnb発表に基づきます。",
+            "note_en": "Per Airbnb’s September 23, 2026 announcement."
+          }
+        }
+      ]
+    },
+    {
+      "id": "OpenAI",
+      "ticker": "OpenAI",
+      "name": "OpenAI",
+      "sub": "生成AI",
+      "sub_en": "Generative AI",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "新たな契約により、Airbnbのエンジニアリング・製品開発チームがOpenAIの先端モデルをより広く利用できる",
+          "text_en": "Under a new agreement, Airbnb engineering and product development teams get broader access to OpenAI frontier models",
+          "source": {
+            "label": "Airbnb — OpenAI model-access agreement, September 23, 2026",
+            "label_en": "Airbnb — OpenAI model-access agreement, September 23, 2026",
+            "url": "https://news.airbnb.com/expanding-access-to-openai-frontier-models-including-gpt-6-astra",
+            "level": "official",
+            "quote": "Under a new agreement, our engineering and product development teams get broader access to OpenAI frontier models.",
+            "note": "OpenAIは未上場です。",
+            "note_en": "OpenAI is not listed."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "新たな契約により、GPT-6 Astraを含むOpenAIの先端モデルへのアクセスを拡大する",
+          "text_en": "Under a new agreement, Airbnb teams get broader access to OpenAI frontier models, including GPT-6 Astra",
+          "source": {
+            "label": "Airbnb — OpenAI model-access agreement, September 23, 2026",
+            "label_en": "Airbnb — OpenAI model-access agreement, September 23, 2026",
+            "url": "https://news.airbnb.com/expanding-access-to-openai-frontier-models-including-gpt-6-astra",
+            "level": "official",
+            "quote": "Under a new agreement, we're giving Airbnb engineering and product development teams broader access to OpenAI frontier models, including GPT-6 Astra.",
+            "note": "OpenAIは未上場です。",
+            "note_en": "OpenAI is not listed."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MS",
+      "ticker": "MS",
+      "name": "モルガン・スタンレー",
+      "sub": "投資銀行",
+      "sub_en": "Investment bank",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "モルガン・スタンレー系列が主導する貸し手団が、10億ドルの無担保リボルビング・クレジット契約(5年)の初期コミットメントを提供した",
+          "text_en": "A group of lenders led by Morgan Stanley Senior Funding, Inc. provided initial commitments of $1.0 billion under a five-year unsecured revolving credit agreement",
+          "source": {
+            "label": "Airbnb 10-K",
+            "label_en": "Airbnb 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1559720/000155972026000004/abnb-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "In October 2022, the Company terminated its then existing credit facility and entered into a five-year unsecured Revolving Credit Agreement, which provides for initial commitments by a group of lenders led by Morgan Stanley Senior Funding, Inc. of $ 1.0 billion (“2022 Credit Facility”).",
+            "note": "融資のみの関係で、2022年10月の契約です。",
+            "note_en": "Financing only; agreement dated October 2022."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "2022年10月31日付のリボルビング・クレジット契約の当事者として、Morgan Stanley Seniorが記載されている(2023年2月16日改定)",
+          "text_en": "Morgan Stanley Senior is a party to the Revolving Credit Agreement dated October 31, 2022, as amended February 16, 2023",
+          "source": {
+            "label": "Airbnb 10-K",
+            "label_en": "Airbnb 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1559720/000155972026000004/abnb-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "Revolving Credit Agreement, dated October 31, 2022, by and among the Registrant, certain subsidiaries of the Registrant, and Morgan Stanley Senior, as amended on February 16, 2023"
+          }
+        },
+        {
+          "type": "tie",
+          "text": "2026年3月12日の引受契約で、Morgan Stanleyは引受会社の代表の1社を務める",
+          "text_en": "Morgan Stanley is also a representative of the underwriters in the March 12, 2026 underwriting agreement",
+          "source": {
+            "label": "Airbnb Form 8-K",
+            "label_en": "Airbnb Form 8-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1559720/000119312526108514/d106317d8k.htm",
+            "level": "official",
+            "date": "2026-03-12",
+            "quote": "On March 12, 2026, Airbnb, Inc. (the “Company”) entered into an underwriting agreement (the “Underwriting Agreement”) with BofA Securities, Inc., Goldman Sachs & Co. LLC, and Morgan Stanley & Co. LLC, as representatives of the several underwriters named therein"
+          }
+        }
+      ],
+      "name_en": "Morgan Stanley"
+    },
+    {
+      "id": "BAC",
+      "ticker": "BAC",
+      "name": "バンク・オブ・アメリカ",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2026年3月12日、AirbnbはBofA Securitiesなどと、シニアノート発行に関する引受契約を結んだ",
+          "text_en": "On March 12, 2026, Airbnb entered into an underwriting agreement with BofA Securities, Goldman Sachs and Morgan Stanley as representatives of the underwriters",
+          "source": {
+            "label": "Airbnb Form 8-K",
+            "label_en": "Airbnb Form 8-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1559720/000119312526108514/d106317d8k.htm",
+            "level": "official",
+            "date": "2026-03-12",
+            "quote": "On March 12, 2026, Airbnb, Inc. (the “Company”) entered into an underwriting agreement (the “Underwriting Agreement”) with BofA Securities, Inc., Goldman Sachs & Co. LLC, and Morgan Stanley & Co. LLC, as representatives of the several underwriters named therein",
+            "note": "資金調達のみの関係で、引受会社の代表としての記載です。",
+            "note_en": "Financing only; named as a representative of the underwriters."
+          }
+        }
+      ],
+      "name_en": "Bank of America"
+    },
+    {
+      "id": "GS",
+      "ticker": "GS",
+      "name": "ゴールドマン・サックス",
+      "sub": "投資銀行",
+      "sub_en": "Investment bank",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2026年3月12日、AirbnbはGoldman Sachsなどと、シニアノート発行に関する引受契約を結んだ",
+          "text_en": "On March 12, 2026, Airbnb entered into an underwriting agreement with BofA Securities, Goldman Sachs and Morgan Stanley as representatives of the underwriters",
+          "source": {
+            "label": "Airbnb Form 8-K",
+            "label_en": "Airbnb Form 8-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1559720/000119312526108514/d106317d8k.htm",
+            "level": "official",
+            "date": "2026-03-12",
+            "quote": "On March 12, 2026, Airbnb, Inc. (the “Company”) entered into an underwriting agreement (the “Underwriting Agreement”) with BofA Securities, Inc., Goldman Sachs & Co. LLC, and Morgan Stanley & Co. LLC, as representatives of the several underwriters named therein",
+            "note": "資金調達のみの関係で、引受会社の代表としての記載です。",
+            "note_en": "Financing only; named as a representative of the underwriters."
+          }
+        }
+      ],
+      "name_en": "Goldman Sachs"
+    },
+    {
+      "id": "TRIP",
+      "ticker": "TRIP",
+      "name": "Tripadvisor",
+      "sub": "旅行口コミ・体験予約",
+      "sub_en": "Travel reviews & experiences",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Tripadvisor Groupの体験(ツアー・アクティビティ・アトラクション)の一部がAirbnbで予約できるようになる新たな提携を発表した",
+          "text_en": "Tripadvisor Group announced a new partnership to make a selection of its tours, activities and attractions available to book on Airbnb",
+          "source": {
+            "label": "Tripadvisor Group の発表",
+            "label_en": "Tripadvisor Group press release",
+            "url": "https://tripadvisor.mediaroom.com/2026-08-11-Tripadvisor-Group-and-Airbnb-Announce-Experiences-Partnership",
+            "level": "official",
+            "date": "2026-08-11",
+            "quote": "Tripadvisor Group today announced a new partnership with Airbnb that will make a selection of tours, activities, and attractions from Tripadvisor Group available to book on Airbnb.",
+            "note": "2026年8月11日のTripadvisor発表に基づきます。",
+            "note_en": "Per Tripadvisor’s August 11, 2026 announcement."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CART",
+      "ticker": "CART",
+      "name": "Instacart(Maplebear)",
+      "sub": "食料品配送",
+      "sub_en": "Grocery delivery",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Airbnbの食料品配送サービスを、米国の25を超える都市でInstacartとの提携により提供している",
+          "text_en": "Airbnb offers grocery delivery in over 25 US cities in partnership with Instacart",
+          "source": {
+            "label": "Airbnb ニュースルーム",
+            "label_en": "Airbnb newsroom (2026 May Release)",
+            "url": "https://news.airbnb.com/en-au/2026-may-release-now-theres-even-more-to-airbnb/",
+            "level": "official",
+            "date": "2026-05-12",
+            "quote": "Available in over 25 US cities in partnership with Instacart.",
+            "note": "2026年5月のAirbnb発表に基づきます。",
+            "note_en": "Per Airbnb’s May 2026 release."
+          }
+        }
+      ]
+    },
+    {
+      "id": "V",
+      "ticker": "V",
+      "name": "Visa",
+      "sub": "決済ネットワーク",
+      "sub_en": "Payment network",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "AirbnbはVisa Directを利用し、ホストが対象のVisaデビットカードに紐づく銀行口座へ収益を受け取れる選択肢を提供する",
+          "text_en": "Airbnb uses Visa Direct to let Hosts move earnings to a bank account tied to an eligible Visa debit card",
+          "source": {
+            "label": "Airbnb ニュースルーム",
+            "label_en": "Airbnb newsroom (joint Visa release)",
+            "url": "https://news.airbnb.com/visa-and-airbnb-partner-to-get-hosts-paid-faster-with-visa-direct/",
+            "level": "official",
+            "date": "2021-04-28",
+            "quote": "Through Airbnb’s use of Visa Direct 1 , Visa’s real-time 2 push payments platform, Hosts will have an option to move money from Airbnb to a bank account associated with an eligible Visa debit card.",
+            "note": "2021年4月の発表で、古い情報です。",
+            "note_en": "From an April 2021 announcement; older."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GOOG",
+      "ticker": "GOOG",
+      "name": "Alphabet(Google)",
+      "sub": "検索・クラウド",
+      "sub_en": "Search & cloud",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Airbnbと競合する",
+          "text_en": "Competes with Airbnb",
+          "source": {
+            "label": "Airbnb 10-K",
+            "label_en": "Airbnb 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1559720/000155972026000004/abnb-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "We also face competition from search engines like Google, which can influence search traffic and promote their own travel services, potentially disintermediating our platform."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

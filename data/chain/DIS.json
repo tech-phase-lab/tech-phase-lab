@@ -1,0 +1,246 @@
+{
+  "root": {
+    "ticker": "DIS",
+    "name": "Disney",
+    "cik": 1744489
+  },
+  "rows": [
+    {
+      "ja": "顧客・販売チャネル",
+      "en": "Customers & channels"
+    },
+    {
+      "ja": "提携・投資",
+      "en": "Partnerships & investments"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "AMZN",
+      "ticker": "AMZN",
+      "name": "Amazon",
+      "sub": "EC・クラウド",
+      "sub_en": "E-commerce & cloud",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Disneyは物理媒体の流通権を第三者に許諾し、その第三者がAmazonなどの小売に販売する。",
+          "text_en": "Disney licenses physical distribution rights to third parties, who sell to retailers such as Amazon.",
+          "source": {
+            "label": "Disney 10-K",
+            "label_en": "Disney 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1744489/000174448925000155/dis-20250927.htm",
+            "level": "official",
+            "date": "2025-11-13",
+            "quote": "We have licensed the rights for physical distribution to third parties who generally sell to retailers, such as Walmart and Amazon."
+          }
+        },
+        {
+          "type": "down",
+          "text": "Disneyの電子版は、Amazonなどのe-tailer経由で配信される。",
+          "text_en": "Disney distributes electronic formats through e-tailers such as Amazon.",
+          "source": {
+            "label": "Disney 10-K",
+            "label_en": "Disney 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1744489/000174448925000155/dis-20250927.htm",
+            "level": "official",
+            "date": "2025-11-13",
+            "quote": "We distribute electronic formats through e-tailers such as Apple and Amazon, and MVPDs, such as Comcast and DirecTV."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AAPL",
+      "ticker": "AAPL",
+      "name": "Apple",
+      "sub": "スマホ・OS",
+      "sub_en": "Devices & OS",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Disneyは電子版をAppleなどのe-tailerで配信する。",
+          "text_en": "Disney distributes electronic formats through e-tailers such as Apple.",
+          "source": {
+            "label": "Disney 10-K",
+            "label_en": "Disney 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1744489/000174448925000155/dis-20250927.htm",
+            "level": "official",
+            "date": "2025-11-13",
+            "quote": "We distribute electronic formats through e-tailers such as Apple and Amazon, and MVPDs, such as Comcast and DirecTV."
+          }
+        }
+      ]
+    },
+    {
+      "id": "FOXA",
+      "ticker": "FOXA",
+      "name": "Fox Corporation",
+      "sub": "放送・メディア",
+      "sub_en": "Broadcasting & media",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Foxは、21CFおよびDisneyとの関係の一部を、分離・配分契約で定めている。",
+          "text_en": "Fox is party to a separation and distribution agreement that governs certain aspects of its relationship with 21CF and Disney.",
+          "source": {
+            "label": "Fox Corporation 10-K",
+            "label_en": "Fox Corporation 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1754301/000162828026053960/fox-20260630.htm",
+            "level": "official",
+            "date": "2026-08-06",
+            "quote": "The Company is party to a separation and distribution agreement and a tax matters agreement that govern certain aspects of the Company’s relationship with 21CF and Disney following the Disney Transaction."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "FOX SportsとDisney/ESPNは、UFLの試合の国内配信パートナーとなる",
+          "text_en": "FOX Sports and Disney/ESPN are the domestic distribution partners of UFL games",
+          "source": {
+            "label": "Fox Corporation 10-K",
+            "label_en": "Fox Corporation 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1754301/000162828026053960/fox-20260630.htm",
+            "level": "official",
+            "date": "2026-08-06",
+            "quote": "FOX Sports and Disney/ESPN are the domestic distribution partners of the UFL games under multi-year rights agreements."
+          }
+        }
+      ]
+    },
+    {
+      "id": "OpenAI",
+      "ticker": "OpenAI",
+      "name": "OpenAI",
+      "sub": "生成AI",
+      "sub_en": "Generative AI",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Disneyは2026年2月に、OpenAIとの提携を発表した。",
+          "text_en": "In February 2026, Disney announced its partnership with OpenAI.",
+          "source": {
+            "label": "Disney 8-K Ex.99 の発表",
+            "label_en": "Disney 8-K Ex.99 press release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1744489/000174448926000022/fy2026_q2x8kxneoxex991.htm",
+            "level": "official",
+            "date": "2026-02-03",
+            "quote": "“I’m confident Disney will continue to innovate and put the spirit of Walt at the heart of everything it does – from its new park in Abu Dhabi to the groundbreaking partnerships just announced with OpenAI and the NFL, to the countless upcoming creative projects that will enthrall audiences around the world.",
+            "note": "OpenAIは未上場です。",
+            "note_en": "OpenAI is not listed."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "OpenAIがSoraを終了したため、Disneyは予定していた同社への投資を行わない",
+          "text_en": "Because OpenAI shut down Sora, Disney will not proceed with its previously planned investment in the company",
+          "source": {
+            "label": "Disney 8-K Ex.99 の発表",
+            "label_en": "Disney 8-K Ex.99 press release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1744489/000174448926000036/fy2026_q2xprxex991.htm",
+            "level": "official",
+            "date": "2026-05-06",
+            "quote": "As widely reported, OpenAI opted to shut down Sora, and as a result we will not proceed with our previously planned investment in the company."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GOOGL",
+      "ticker": "GOOGL",
+      "name": "アルファベット",
+      "sub": "検索・動画・クラウド",
+      "sub_en": "Search, video & cloud",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Disneyが、YouTube TVとの複数年の配信契約を発表した",
+          "text_en": "Disney announced a multi-year distribution agreement with YouTube TV",
+          "source": {
+            "label": "Disney の発表",
+            "label_en": "Disney press release",
+            "url": "https://thewaltdisneycompany.com/press-releases/the-walt-disney-company-announces-multi-year-distribution-agreement-with-youtube-tv/",
+            "level": "official",
+            "date": "2025-11-14",
+            "quote": "The Walt Disney Company announced a multi-year distribution agreement with YouTube TV that delivers Disney’s marquee sports, news and entertainment programming – along with greater choice and value for their customers.",
+            "note": "YouTube TVはAlphabet傘下のサービスです。",
+            "note_en": "YouTube TV is a service of Alphabet."
+          }
+        }
+      ],
+      "name_en": "Alphabet"
+    },
+    {
+      "id": "CHTR",
+      "ticker": "CHTR",
+      "name": "チャーター・コミュニケーションズ",
+      "sub": "ケーブル・通信",
+      "sub_en": "Cable & telecom",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "DisneyとCharterが、複数年の配信契約を発表した",
+          "text_en": "Disney and Charter announced a multi-year distribution agreement",
+          "source": {
+            "label": "Charter 8-K exhibit(joint の発表)",
+            "label_en": "Charter 8-K exhibit (joint press release)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1091667/000109166723000128/a091123chtr8kexh991.htm",
+            "level": "official",
+            "date": "2023-09-11",
+            "quote": "The Walt Disney Company (NYSE: DIS) and Charter Communications, Inc. (NASDAQ: CHTR) today announced a transformative, multi-year distribution agreement that maximizes value for consumers and supports the linear TV experience as the industry continues to evolve.",
+            "note": "2023年の発表で、古い情報です。",
+            "note_en": "From a 2023 announcement (older)."
+          }
+        },
+        {
+          "type": "down",
+          "text": "CharterとDisneyが、Spectrum TV SelectにHuluを加える拡大配信契約を発表した",
+          "text_en": "Charter and Disney announced an expanded distribution agreement that brings Hulu (With Ads) to all Spectrum TV Select customers",
+          "source": {
+            "label": "Charter の発表",
+            "label_en": "Charter press release",
+            "url": "https://corporate.charter.com/newsroom/spectrum-tv-select-customers-to-receive-hulu-as-part-of-expanded-agreement-between-charter-and-the-walt-disney-company",
+            "level": "official",
+            "date": "2025-06-26",
+            "quote": "Charter Communications (NASDAQ: CHTR) and The Walt Disney Company (NYSE: DIS) today announced an expanded distribution agreement that brings Hulu (With Ads) to all Spectrum TV Select customers at no additional cost."
+          }
+        }
+      ],
+      "name_en": "Charter Communications"
+    },
+    {
+      "id": "FUBO",
+      "ticker": "FUBO",
+      "name": "Fubo",
+      "sub": "動画配信",
+      "sub_en": "Streaming TV",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "DisneyとFuboが、Hulu + Live TVとFuboを統合する正式契約を結んだと発表した",
+          "text_en": "Disney and Fubo announced a definitive agreement to combine Disney's Hulu + Live TV business with Fubo",
+          "source": {
+            "label": "Disney の発表",
+            "label_en": "Disney press release",
+            "url": "https://thewaltdisneycompany.com/press-releases/fubo-and-disneys-hulu-live-tv-virtual-mvpd-businesses-to-combine/",
+            "level": "official",
+            "date": "2025-01-06",
+            "quote": "FuboTV Inc. (NYSE: FUBO) and The Walt Disney Company (NYSE: DIS) today announced that they have entered into a definitive agreement for Disney to combine its Hulu + Live TV business with Fubo (the “Transaction”), forming a combined virtual MVPD company."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "pershing-cover.xml": "https://www.sec.gov/Archives/edgar/data/2026053/000117266126003790/primary_doc.xml",
+  "pershing-table.xml": "https://www.sec.gov/Archives/edgar/data/2026053/000117266126003790/infotable.xml",
+  "bridgewater-cover.xml": "https://www.sec.gov/Archives/edgar/data/1350694/000135069426000003/primary_doc.xml",
+  "bridgewater-table.xml": "https://www.sec.gov/Archives/edgar/data/1350694/000135069426000003/infotable.xml",
+  "coatue-cover.xml": "https://www.sec.gov/Archives/edgar/data/1135730/000091957426005478/primary_doc.xml",
+  "coatue-table.xml": "https://www.sec.gov/Archives/edgar/data/1135730/000091957426005478/infotable.xml",
+  "appaloosa-cover.xml": "https://www.sec.gov/Archives/edgar/data/1656456/000165645626000003/primary_doc.xml",
+  "appaloosa-table.xml": "https://www.sec.gov/Archives/edgar/data/1656456/000165645626000003/Form13FInfoTable.xml",
+  "tiger-cover.xml": "https://www.sec.gov/Archives/edgar/data/1167483/000091957426005427/primary_doc.xml",
+  "tiger-table.xml": "https://www.sec.gov/Archives/edgar/data/1167483/000091957426005427/infotable.xml",
+  "viking-cover.xml": "https://www.sec.gov/Archives/edgar/data/1103804/000110380426000006/primary_doc.xml",
+  "viking-table.xml": "https://www.sec.gov/Archives/edgar/data/1103804/000110380426000006/Q2202613F.xml",
+  "SPY.xlsx": "https://www.ssga.com/library-content/products/fund-data/etfs/us/holdings-daily-us-en-spy.xlsx",
+  "SOXX.csv": "https://www.ishares.com/us/products/239705/ishares-semiconductor-etf/latest-holdings.csv",
+  "SMH.xlsx": "https://www.vaneck.com/us/en/investments/semiconductor-etf-smh/downloads/holdings/",
+  "XLK.xlsx": "https://www.ssga.com/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xlk.xlsx",
+  "XLF.xlsx": "https://www.ssga.com/library-content/products/fund-data/etfs/us/holdings-daily-us-en-xlf.xlsx",
+  "fundsmith-cover.xml": "https://www.sec.gov/Archives/edgar/data/1569205/000156920526000012/primary_doc.xml",
+  "fundsmith-table.xml": "https://www.sec.gov/Archives/edgar/data/1569205/000156920526000012/FLLPq22026.xml"
+}

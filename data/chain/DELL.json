@@ -1,0 +1,443 @@
+{
+  "root": {
+    "ticker": "DELL",
+    "name": "Dell Technologies",
+    "cik": 1571996
+  },
+  "rows": [
+    {
+      "ja": "供給元・ソフトウェア・部品",
+      "en": "Suppliers, software & components",
+      "above": true
+    },
+    {
+      "ja": "顧客(AIインフラ購入)",
+      "en": "Customers (AI infrastructure purchases)"
+    },
+    {
+      "ja": "提携・金融・事業上の関係",
+      "en": "Partnerships, financing & other ties"
+    },
+    {
+      "ja": "競合(各社の報告に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "HPE",
+    "HPQ",
+    "SMCI",
+    "CSCO",
+    "IBM"
+  ],
+  "companies": [
+    {
+      "id": "INTC",
+      "ticker": "INTC",
+      "name": "Intel",
+      "sub": "半導体",
+      "sub_en": "Semiconductors",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "IntelがDell製品に使われるIntel製CPUについて、特許侵害の主張からDellを補償している",
+          "text_en": "Intel supplies CPUs used in Dell products and is indemnifying Dell against patent claims over Intel CPUs",
+          "source": {
+            "label": "Intel 10-Q",
+            "label_en": "Intel 10-Q (quarter ended 2026-06-27)",
+            "url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000157/intc-20260627.htm",
+            "level": "official",
+            "date": "2026-07-24",
+            "quote": "Intel is indemnifying Amazon Web Services (AWS), Cisco, Dell, HPE, IBM, Lenovo, and Oracle in connection with Intel CPUs accused of infringing three patents.",
+            "note": "供給契約の記載ではなく、訴訟の開示から読み取れる関係です。",
+            "note_en": "Inferred from a litigation disclosure, not from a supply-contract statement."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MSFT",
+      "ticker": "MSFT",
+      "name": "Microsoft",
+      "sub": "クラウド・ソフト",
+      "sub_en": "Cloud & software",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "MicrosoftがDellを含む主要OEMと販売契約を結んでいる",
+          "text_en": "Microsoft has OEM distribution agreements with Dell, which pre-installs Microsoft software",
+          "source": {
+            "label": "Microsoft 10-K",
+            "label_en": "Microsoft 10-K (FY ended 2025-06-30)",
+            "url": "https://www.sec.gov/Archives/edgar/data/789019/000095017025100235/msft-20250630.htm",
+            "level": "official",
+            "date": "2025-07-30",
+            "quote": "We have distribution agreements covering one or more of our products with virtually all the multinational OEMs, including Dell, Hewlett-Packard, Lenovo,",
+            "note": "2025年度の記載で、2026年度の10-KにはDellの名前がありません。",
+            "note_en": "From the FY2025 filing; the FY2026 10-K does not name Dell."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AMD",
+      "ticker": "AMD",
+      "name": "AMD",
+      "sub": "半導体",
+      "sub_en": "Semiconductors",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "AMDが、Dell Pro商用PCにRyzen AI PROプロセッサーが搭載されると発表",
+          "text_en": "AMD announced Dell Pro commercial PCs will be powered by AMD Ryzen AI PRO processors",
+          "source": {
+            "label": "AMD の発表",
+            "label_en": "AMD press release (Ryzen AI PRO in Dell PCs)",
+            "url": "https://www.amd.com/en/newsroom/press-releases/2025-1-6-amd-announces-first-dell-commercial-pcs-powered-by.html",
+            "level": "official",
+            "date": "2025-01-06",
+            "quote": "Dell Pro commercial PCs will be powered by AMD Ryzen AI PRO processors."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "AMDとDellが、ケンブリッジ大学のAIスーパーコンピューター「Zenith」と核融合AIシステム「Sunrise」を支援",
+          "text_en": "AMD and Dell are supporting the University of Cambridge’s Zenith AI supercomputer and Sunrise fusion AI system",
+          "source": {
+            "label": "AMD の発表",
+            "label_en": "AMD press release (UK investment)",
+            "url": "https://ir.amd.com/news-events/press-releases/detail/1288/amd-commits-up-to-2-billion-to-accelerate-ai-innovation-and-research-in-the-united-kingdom",
+            "level": "official",
+            "date": "2026-06-08",
+            "quote": "AMD and Dell Technologies are supporting the University of Cambridge's Zenith AI supercomputer and Sunrise fusion AI system"
+          }
+        }
+      ]
+    },
+    {
+      "id": "MU",
+      "ticker": "MU",
+      "name": "Micron Technology",
+      "sub": "メモリー・SSD",
+      "sub_en": "Memory & SSDs",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "MicronがDellのインフラとMicronのAI向けストレージ・メモリー製品(Micron 6550 ION SSDなど)の組み合わせを紹介",
+          "text_en": "Micron describes combining Dell infrastructure with Micron AI-ready storage and memory products (e.g., Micron 6550 ION SSD) for data centers",
+          "source": {
+            "label": "Micron ブログ",
+            "label_en": "Micron blog (Dell Tech World 2025)",
+            "url": "https://www.micron.com/about/blog/company/events/thriving-synergy-dell-and-micron-are-advancing-ai-for-data-centers-and-pcs",
+            "level": "official",
+            "date": "2025-05-15",
+            "quote": "By combining Dell's robust infrastructure solutions with Micron’s cutting-edge AI-ready storage and memory products",
+            "note": "供給契約ではなく、企業ブログでの紹介です。",
+            "note_en": "A company blog post, not a supply contract."
+          }
+        }
+      ]
+    },
+    {
+      "id": "IREN",
+      "ticker": "IREN",
+      "name": "IREN",
+      "sub": "AIクラウド・データセンター",
+      "sub_en": "AI cloud & data centers",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "IRENがDell Canadaから、GPUと関連製品・サービスを約23億ドルで購入することで合意。2026年後半に段階的に納入",
+          "text_en": "IREN agreed to buy GPUs and ancillary products and services from Dell Canada for about $2.3B, with delivery in phases in the second half of calendar 2026",
+          "source": {
+            "label": "IREN 10-Q",
+            "label_en": "IREN 10-Q (quarter ended 2026-03-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1878848/000187884826000026/iren-20260331.htm",
+            "level": "official",
+            "date": "2026-05-08",
+            "quote": "On March 4, 2026, the Group and Dell Canada Inc. (“Dell Canada”) entered into purchase documentation (the “Dell Canada Purchase Agreement”) pursuant to which Dell Canada will supply to the Group GPUs and ancillary products and services",
+            "note": "契約の当事者は子会社のDell Canada Inc.です。Dell Marketing L.P.との別契約は約12億ドルです。",
+            "note_en": "The contracting entity is the subsidiary Dell Canada Inc.; a separate agreement with Dell Marketing L.P. covers about $1.2B."
+          }
+        },
+        {
+          "type": "down",
+          "text": "IRENは、AIクラウド向けGPU・ネットワーク・ストレージを限られた供給元の1社、Dell Technologiesから調達する。",
+          "text_en": "Dell Technologies is one of the limited set of suppliers from which IREN sources GPUs, networking and storage for AI Cloud Services.",
+          "source": {
+            "label": "IREN 10-K",
+            "label_en": "IREN 10-K (FY ended 2026-06-30)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1878848/000187884826000052/iren-20260630.htm",
+            "level": "official",
+            "date": "2026-08-27",
+            "quote": "In particular, we source certain hardware solutions (such as GPUs, networking and storage equipment utilized for AI Cloud Services) from a limited number of suppliers, including NVIDIA, AMD, Dell Technologies, Lenovo, Supermicro, Gigabyte and leading storage and networking providers."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "IRENがDell Financial Servicesと、GPU発注の一部を対象とする24か月のリース融資を結んだ",
+          "text_en": "IREN entered financing arrangements with Dell Financial Services for a 24-month lease financing a portion of its GPU orders",
+          "source": {
+            "label": "IREN 10-Q",
+            "label_en": "IREN 10-Q (quarter ended 2026-03-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1878848/000187884826000026/iren-20260331.htm",
+            "level": "official",
+            "date": "2026-05-08",
+            "quote": "On November 5, 2025, the Group entered into financing arrangements with Dell Financial Services to finance a portion of the Group’s GPU orders.",
+            "note": "Dell Financial Servicesは子会社で、枠は1.998億ドルです。",
+            "note_en": "Dell Financial Services is a Dell subsidiary; the facility is $199.8 million."
+          }
+        }
+      ]
+    },
+    {
+      "id": "NTNX",
+      "ticker": "NTNX",
+      "name": "Nutanix",
+      "sub": "ハイブリッドクラウド・ソフト",
+      "sub_en": "Hybrid cloud software",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Nutanixのソフトは認定済みのDellハードウェア(Dell XC)で動作し、Dell PowerFlex・PowerStoreの外部ストレージとも連携する",
+          "text_en": "Nutanix software runs on qualified Dell hardware (Dell XC) and integrates with Dell PowerFlex and PowerStore external storage",
+          "source": {
+            "label": "Nutanix 10-K",
+            "label_en": "Nutanix 10-K (FY ended 2026-07-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1618732/000119312526394793/ntnx-20260731.htm",
+            "level": "official",
+            "date": "2026-09-18",
+            "quote": "OEM Partners . Our software can run on qualified hardware from Cisco Systems, Inc. (\"Cisco\"), Dell Technologies (\"Dell\"), Fujitsu Technology Solutions GmbH (\"Fujitsu\"), Hewlett Packard Enterprise (\"HPE\"), and Lenovo Group Ltd. (\"Lenovo\")"
+          }
+        },
+        {
+          "type": "rival",
+          "text": "Nutanixは、競合する従来型ITシステムベンダーの1社であるDellと競合する。",
+          "text_en": "Nutanix competes with traditional IT systems vendors such as Dell.",
+          "source": {
+            "label": "Nutanix 10-K",
+            "label_en": "Nutanix 10-K (FY ended 2026-07-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1618732/000119312526394793/ntnx-20260731.htm",
+            "level": "official",
+            "date": "2026-09-18",
+            "quote": "traditional IT systems vendors, such as Dell, Everpure, Inc., Fujitsu, HPE, Hitachi Vantara, Lenovo, Inc., NetApp, Inc., and Huawei Technologies Co., Ltd."
+          }
+        }
+      ]
+    },
+    {
+      "id": "NVDA",
+      "ticker": "NVDA",
+      "name": "NVIDIA",
+      "sub": "AI半導体",
+      "sub_en": "AI chips",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Dell Technologiesは、NVIDIAのRTX PRO 6000 Blackwell Server Edition GPU搭載の2U RTX PROサーバーを提供する予定のシステムパートナー1社だ",
+          "text_en": "Dell Technologies is one of the system partners that will offer 2U RTX PRO servers with NVIDIA RTX PRO 6000 Blackwell Server Edition GPUs",
+          "source": {
+            "label": "NVIDIA の発表",
+            "label_en": "NVIDIA press release (RTX PRO Servers)",
+            "url": "https://nvidianews.nvidia.com/news/nvidia-rtx-pro-servers-with-blackwell-coming-to-worlds-most-popular-enterprise-systems",
+            "level": "official",
+            "date": "2025-08-11",
+            "quote": "Global system partners including Cisco, Dell Technologies , HPE , Lenovo and Supermicro will offer the 2U NVIDIA RTX PRO Servers",
+            "note": "製品レベルの発表です。",
+            "note_en": "A product-level announcement."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AVGO",
+      "ticker": "AVGO",
+      "name": "Broadcom",
+      "sub": "半導体・インフラソフト",
+      "sub_en": "Semiconductors & infrastructure software",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "BroadcomによるVMware買収を受け、DellはVMware製品の販売契約を2024年3月に終了(2026年度、10-K)。VxRailには引き続きVMware製品を組み込んでいる",
+          "text_en": "Dell terminated its VMware distribution agreement after Broadcom acquired VMware, but still embeds VMware products in its VxRail solution",
+          "source": {
+            "label": "Dell Technologies 10-K",
+            "label_en": "Dell Technologies 10-K (FY ended 2026-01-30)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1571996/000157199626000008/dell-20260130.htm",
+            "level": "official",
+            "date": "2026-03-16",
+            "quote": "In March 2024, following the acquisition of VMware by Broadcom, we terminated our Commercial Framework Agreement with VMware, whereby we acted as a distributor of VMware standalone products and services.",
+            "note": "関係はほぼ解消済みです。VxRailでの組み込みと、分離上場に伴う税の補償が残ります。",
+            "note_en": "The relationship is largely wound down; VxRail integration and spin-off tax indemnities remain."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "Broadcomが、2021年のVMware分離がDellの非課税扱いにならなかった場合、Dellの税負担を補償する可能性があると開示",
+          "text_en": "Broadcom discloses it may have to indemnify Dell for tax liabilities if the 2021 VMware spin-off from Dell fails to qualify as tax-free",
+          "source": {
+            "label": "Broadcom 10-Q",
+            "label_en": "Broadcom 10-Q (quarter ended 2026-08-02)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1730168/000173016826000080/avgo-20260802.htm",
+            "level": "official",
+            "date": "2026-09-10",
+            "quote": "Dell, its affiliates and, potentially, its stockholders would incur significant tax liabilities and we may be required to indemnify Dell and its affiliates for any such tax liabilities",
+            "note": "条件付きの補償のみです。",
+            "note_en": "A contingent indemnity only."
+          }
+        }
+      ]
+    },
+    {
+      "id": "HPE",
+      "ticker": "HPE",
+      "name": "Hewlett Packard Enterprise",
+      "sub": "サーバー・ネットワーク",
+      "sub_en": "Servers & networking",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Hewlett Packard Enterpriseのデータセンター基盤事業では、Dell Technologiesが主な競合となる。",
+          "text_en": "Dell Technologies is one of Hewlett Packard Enterprise's primary competitors in data center infrastructure (FY2025).",
+          "source": {
+            "label": "HPE 10-K",
+            "label_en": "HPE 10-K (FY ended 2025-10-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1645590/000164559025000130/hpe-20251031.htm",
+            "level": "official",
+            "date": "2025-12-18",
+            "quote": "Our primary competitors in data center infrastructure are technology vendors, such as Dell Technologies Inc., Super Micro Computer, Inc., Cisco Systems, Inc., and Lenovo Group Ltd."
+          }
+        }
+      ]
+    },
+    {
+      "id": "HPQ",
+      "ticker": "HPQ",
+      "name": "HP Inc.",
+      "sub": "PC・プリンター",
+      "sub_en": "PCs & printers",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "HP Inc.の主な競合に、Dell Technologiesが入る。",
+          "text_en": "Dell is one of HP Inc.'s primary competitors (FY2025).",
+          "source": {
+            "label": "HP Inc. 10-K",
+            "label_en": "HP Inc. 10-K (FY ended 2025-10-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/47217/000004721725000071/hpq-20251031.htm",
+            "level": "official",
+            "date": "2025-12-10",
+            "quote": "Our primary competitors are Acer Inc., Apple Inc., ASUSTeK Computer Inc., Dell Inc., Huawei Technologies Co., Ltd., Lenovo Group Limited"
+          }
+        }
+      ]
+    },
+    {
+      "id": "SMCI",
+      "ticker": "SMCI",
+      "name": "Super Micro Computer",
+      "sub": "AIサーバー",
+      "sub_en": "AI servers",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Super Micro Computerの主な競合には、Dell Technologiesがいる。",
+          "text_en": "Dell is among Super Micro Computer's principal competitors (FY2026).",
+          "source": {
+            "label": "Super Micro 10-K",
+            "label_en": "Super Micro 10-K (FY ended 2026-06-30)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1375365/000137536526000022/smci-20260630.htm",
+            "level": "official",
+            "date": "2026-08-31",
+            "quote": "We believe our principal competitors include: • global technology vendors, such as Cisco, Dell, Hewlett-Packard Enterprise, and Lenovo"
+          }
+        }
+      ]
+    },
+    {
+      "id": "CSCO",
+      "ticker": "CSCO",
+      "name": "Cisco Systems",
+      "sub": "ネットワーク機器",
+      "sub_en": "Networking equipment",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Cisco SystemsはDell Technologiesを競合とみなす。",
+          "text_en": "Cisco Systems treats Dell Technologies as a competitor (FY2026).",
+          "source": {
+            "label": "Cisco 10-K",
+            "label_en": "Cisco 10-K (FY ended 2026-07-25)",
+            "url": "https://www.sec.gov/Archives/edgar/data/858877/000085887726000132/csco-20260725.htm",
+            "level": "official",
+            "date": "2026-09-02",
+            "quote": "Dell Technologies Inc.; Dynatrace Inc.;"
+          }
+        }
+      ]
+    },
+    {
+      "id": "IBM",
+      "ticker": "IBM",
+      "name": "IBM",
+      "sub": "ITサービス・ソフト",
+      "sub_en": "IT services & software",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "IBMの主な競合は、Dell Technologiesだ。",
+          "text_en": "Dell Technologies is among IBM's principal competitors (FY2025).",
+          "source": {
+            "label": "IBM 10-K(2025年度)",
+            "label_en": "IBM 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/51143/000005114326000010/ibm-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Our principal competitors include: Dell Technologies, Hewlett-Packard Enterprise (HPE), Intel, NetApp and Pure Storage"
+          }
+        }
+      ]
+    },
+    {
+      "id": "PSTG",
+      "ticker": "PSTG",
+      "name": "Pure Storage(Everpure)",
+      "sub": "ストレージ",
+      "sub_en": "Data storage",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Pure Storage(Everpure)は、Dell Technologies(Dell EMC)など既存の大手と競合する。",
+          "text_en": "Pure Storage (Everpure) competes with established companies such as Dell EMC (September 2026 10-Q).",
+          "source": {
+            "label": "Pure Storage 10-Q",
+            "label_en": "Pure Storage 10-Q (quarter ended 2026-08-02)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1474432/000147443226000088/pstg-20260802.htm",
+            "level": "official",
+            "date": "2026-09-04",
+            "quote": "We face intense competition from a number of established companies that sell competing storage products, including Dell EMC, HP Enterprise"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

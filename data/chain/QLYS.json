@@ -1,0 +1,319 @@
+{
+  "root": {
+    "ticker": "QLYS",
+    "name": "クオリス",
+    "name_en": "Qualys",
+    "cik": 1107843
+  },
+  "rows": [
+    {
+      "ja": "クラウド・AI・ソフトの提携先",
+      "en": "Cloud, AI & software partners",
+      "above": true
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "CRWD",
+    "PANW",
+    "RPD",
+    "TENB"
+  ],
+  "companies": [
+    {
+      "id": "GOOG",
+      "ticker": "GOOG",
+      "name": "Google",
+      "sub": "検索・クラウド",
+      "sub_en": "Search & cloud",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "脆弱性管理機能を、Google Cloud Platformなどのクラウド事業者のセキュリティ製品に統合している",
+          "text_en": "Qualys integrates its vulnerability management capabilities into security offerings from cloud providers including the Google Cloud Platform",
+          "source": {
+            "label": "Qualys 8-K Ex.99 の発表",
+            "label_en": "Qualys 8-K Ex.99 press release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1107843/000110784326000034/qlys-20260804xex991.htm",
+            "level": "official",
+            "date": "2026-08-04",
+            "quote": "partnerships and seamlessly integrates its vulnerability management capabilities into security offerings from cloud service providers, including Amazon Web Services, the Google Cloud Platform and Microsoft Azure, along with a number of leading managed service providers and global consulting organizations."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AMZN",
+      "ticker": "AMZN",
+      "name": "Amazon",
+      "sub": "EC・クラウド",
+      "sub_en": "E-commerce & cloud",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "脆弱性管理機能を、Amazon Web Servicesなどのクラウド事業者のセキュリティ製品に統合している",
+          "text_en": "Qualys integrates its vulnerability management capabilities into security offerings from cloud providers including Amazon Web Services",
+          "source": {
+            "label": "Qualys 8-K Ex.99 の発表",
+            "label_en": "Qualys 8-K Ex.99 press release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1107843/000110784326000034/qlys-20260804xex991.htm",
+            "level": "official",
+            "date": "2026-08-04",
+            "quote": "Qualys has strategic partnerships and seamlessly integrates its vulnerability management capabilities into security offerings from cloud service providers, including Amazon Web Services, the Google Cloud Platform and Microsoft Azure, along with a number of leading managed service providers and global consulting organizations."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MSFT",
+      "ticker": "MSFT",
+      "name": "Microsoft",
+      "sub": "ソフト・クラウド",
+      "sub_en": "Software & cloud",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "脆弱性管理機能を、Microsoft Azureなどのクラウド事業者のセキュリティ製品に統合している",
+          "text_en": "Qualys integrates its vulnerability management capabilities into security offerings from cloud providers including Microsoft Azure",
+          "source": {
+            "label": "Qualys 8-K Ex.99 の発表",
+            "label_en": "Qualys 8-K Ex.99 press release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1107843/000110784326000034/qlys-20260804xex991.htm",
+            "level": "official",
+            "date": "2026-08-04",
+            "quote": "integrates its vulnerability management capabilities into security offerings from cloud service providers, including Amazon Web Services, the Google Cloud Platform and Microsoft Azure, along with a number of leading managed service providers and global consulting organizations."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ORCL",
+      "ticker": "ORCL",
+      "name": "Oracle",
+      "sub": "ソフト・クラウド",
+      "sub_en": "Software & cloud",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "VMDRとTotalCloudがOracle Cloud Infrastructureと標準で統合され、Oracle Cloud Marketplaceでも提供されている",
+          "text_en": "VMDR and TotalCloud are natively integrated with Oracle Cloud Infrastructure and available on the Oracle Cloud Marketplace",
+          "source": {
+            "label": "Qualys 8-K Ex.99 の発表",
+            "label_en": "Qualys 8-K Ex.99 press release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1107843/000110784325000005/qlys-2025206xex991.htm",
+            "level": "official",
+            "date": "2025-02-06",
+            "quote": "• Expanded Qualys' partnership with Oracle to include VMDR and TotalCloud, which are both now integrated natively with Oracle Cloud Infrastructure (OCI), and available on the Oracle Cloud Marketplace."
+          }
+        }
+      ]
+    },
+    {
+      "id": "NOW",
+      "ticker": "NOW",
+      "name": "ServiceNow",
+      "sub": "業務ワークフロー",
+      "sub_en": "Workflow software",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Container SecurityをServiceNowと統合し、脆弱性の検出から修復までを自動化している",
+          "text_en": "Qualys integrated Container Security with ServiceNow to automate vulnerability detection, prioritization and remediation",
+          "source": {
+            "label": "Qualys 8-K Ex.99 の発表",
+            "label_en": "Qualys 8-K Ex.99 press release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1107843/000110784326000004/qlys-2026205xex991.htm",
+            "level": "official",
+            "date": "2026-02-05",
+            "quote": "• Integrated Qualys’ Container Security solution with ServiceNow to automate vulnerability detection, prioritization, and remediation seamlessly through ServiceNow workflows."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "Container SecurityをServiceNowのワークフローと統合している",
+          "text_en": "Qualys integrated Container Security with ServiceNow workflows",
+          "source": {
+            "label": "Qualys 8-K Ex.99 の発表",
+            "label_en": "Qualys 8-K Ex.99 press release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1107843/000110784325000015/qlys-2025506xex991.htm",
+            "level": "official",
+            "date": "2025-05-06",
+            "quote": "• Integrated Container Security with ServiceNow to enable organizations to seamlessly detect, prioritize, and remediate vulnerabilities at scale using Qualys’ runtime-aware security intelligence with ServiceNow’s workflow automation."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Anthropic",
+      "ticker": "Anthropic",
+      "name": "Anthropic",
+      "sub": "生成AI",
+      "sub_en": "Generative AI",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "AnthropicのProject Glasswingと連携し、先端AIの安全な展開を後押ししている",
+          "text_en": "Qualys collaborated with Anthropic Project Glasswing to help advance the secure deployment of frontier AI",
+          "source": {
+            "label": "Qualys 8-K Ex.99 の発表",
+            "label_en": "Qualys 8-K Ex.99 press release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1107843/000110784326000034/qlys-20260804xex991.htm",
+            "level": "official",
+            "date": "2026-08-04",
+            "quote": "• Qualys collaborated with leading AI and cybersecurity organizations, Anthropic Project Glasswing and Open AI’s Trusted Access for Cyber program, to help advance the secure and responsible deployment of frontier AI technologies.",
+            "note": "Anthropicは未上場です。",
+            "note_en": "Anthropic is not listed."
+          }
+        }
+      ]
+    },
+    {
+      "id": "OpenAI",
+      "ticker": "OpenAI",
+      "name": "OpenAI",
+      "sub": "生成AI",
+      "sub_en": "Generative AI",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "OpenAIのTrusted Access for Cyberプログラムと連携し、先端AIの安全な展開を後押ししている",
+          "text_en": "Qualys collaborated with Open AI's Trusted Access for Cyber program to help advance the secure deployment of frontier AI",
+          "source": {
+            "label": "Qualys 8-K Ex.99 の発表",
+            "label_en": "Qualys 8-K Ex.99 press release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1107843/000110784326000034/qlys-20260804xex991.htm",
+            "level": "official",
+            "date": "2026-08-04",
+            "quote": "• Qualys collaborated with leading AI and cybersecurity organizations, Anthropic Project Glasswing and Open AI’s Trusted Access for Cyber program, to help advance the secure and responsible deployment of frontier AI technologies.",
+            "note": "OpenAIは未上場です。",
+            "note_en": "OpenAI is not listed."
+          }
+        }
+      ]
+    },
+    {
+      "id": "TENB",
+      "ticker": "TENB",
+      "name": "テナブル",
+      "sub": "脆弱性管理",
+      "sub_en": "Vulnerability management",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "クオリスと競合する",
+          "text_en": "Competes with Qualys",
+          "source": {
+            "label": "Tenable 10-K",
+            "label_en": "Tenable 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1660280/000166028026000005/tenb-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Our competitors include: vulnerability management and assessment vendors, including Qualys and Rapid7; diversified security software and services vendors; endpoint security vendors with vulnerability assessment capabilities, including CrowdStrike; public cloud"
+          }
+        },
+        {
+          "type": "rival",
+          "text": "Qualysは、Tenable Holdingsと競合する",
+          "text_en": "Qualys competes with Tenable Holdings.",
+          "source": {
+            "label": "Qualys 10-K",
+            "label_en": "Qualys 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1107843/000110784326000008/qlys-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "We compete with large and small public companies, such as CrowdStrike, Palo Alto Networks, Rapid7, and Tenable Holdings, as well as privately held security providers including Invicti, Tanium, and Wiz (which has announced a pending acquisition by Google)."
+          }
+        }
+      ],
+      "name_en": "Tenable"
+    },
+    {
+      "id": "CRWD",
+      "ticker": "CRWD",
+      "name": "クラウドストライク",
+      "sub": "エンドポイント保護",
+      "sub_en": "Endpoint security",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "CrowdStrikeは、Qualysの競合に当たる",
+          "text_en": "CrowdStrike is a competitor of Qualys.",
+          "source": {
+            "label": "Qualys 10-K",
+            "label_en": "Qualys 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1107843/000110784326000008/qlys-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "We compete with large and small public companies, such as CrowdStrike, Palo Alto Networks, Rapid7, and Tenable Holdings, as well as privately held security providers including Invicti, Tanium, and Wiz (which has announced a pending acquisition by Google)."
+          }
+        }
+      ],
+      "name_en": "CrowdStrike"
+    },
+    {
+      "id": "PANW",
+      "ticker": "PANW",
+      "name": "パロアルトネットワークス",
+      "sub": "ネットワーク保護",
+      "sub_en": "Network security",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Palo Alto Networksは、Qualysの競合だ",
+          "text_en": "Palo Alto Networks is a competitor of Qualys.",
+          "source": {
+            "label": "Qualys 10-K",
+            "label_en": "Qualys 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1107843/000110784326000008/qlys-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "We compete with large and small public companies, such as CrowdStrike, Palo Alto Networks, Rapid7, and Tenable Holdings, as well as privately held security providers including Invicti, Tanium, and Wiz (which has announced a pending acquisition by Google)."
+          }
+        }
+      ],
+      "name_en": "Palo Alto Networks"
+    },
+    {
+      "id": "RPD",
+      "ticker": "RPD",
+      "name": "ラピッド7",
+      "sub": "脆弱性管理",
+      "sub_en": "Vulnerability management",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Rapid7は、Qualysの競合相手だ",
+          "text_en": "Rapid7 is a competitor of Qualys.",
+          "source": {
+            "label": "Qualys 10-K",
+            "label_en": "Qualys 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1107843/000110784326000008/qlys-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "We compete with large and small public companies, such as CrowdStrike, Palo Alto Networks, Rapid7, and Tenable Holdings, as well as privately held security providers including Invicti, Tanium, and Wiz (which has announced a pending acquisition by Google)."
+          }
+        }
+      ],
+      "name_en": "Rapid7"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

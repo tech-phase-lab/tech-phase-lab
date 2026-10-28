@@ -1,0 +1,85 @@
+name: Research preview checks
+
+on:
+  push:
+    branches:
+      - codex/research-preview
+  pull_request:
+    branches:
+      - codex/research-preview
+      - main
+
+permissions:
+  contents: read
+
+concurrency:
+  group: research-preview-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  payment-concurrency:
+    name: Sandbox payment PostgreSQL concurrency
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    services:
+      postgres:
+        image: postgres:17
+        env:
+          POSTGRES_DB: resolute
+          POSTGRES_USER: resolute_test
+          POSTGRES_PASSWORD: disposable-ci-only
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U resolute_test -d resolute"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22.23.4
+          cache: npm
+      - run: npm ci
+      - name: Verify simultaneous payment ledger operations
+        env:
+          RESOLUTE_TEST_POSTGRES_URL: postgresql://resolute_test:disposable-ci-only@127.0.0.1:5432/resolute
+        run: node --test tests/integration/resolute-payments-postgres.mjs
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install cryptography==46.0.3
+      - name: Verify signed storage routes with scoped PostgreSQL logins and recovery
+        env:
+          RESOLUTE_TEST_STORAGE_POSTGRES_URL: postgresql://resolute_test:disposable-ci-only@127.0.0.1:5432/resolute
+          RESOLUTE_TEST_DISPOSABLE_POSTGRES: 'true'
+        run: PYTHONPATH=scripts/test_clock node --experimental-strip-types --test --test-concurrency=2 tests/resolute-protection-flow.test.mjs
+  verify:
+    name: Lint, test, and build preview
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22.23.4
+          cache: npm
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install JavaScript dependencies
+        run: npm ci
+      - name: Install PDF extraction dependency
+        run: python -m pip install -r scripts/research/requirements.txt
+      - name: Lint
+        run: npm run lint
+      - name: Run research logic tests
+        run: npm test
+      - name: Run monitor and intake tests
+        run: npm run test:python
+      - name: Build Next.js preview
+        run: npm run build

@@ -1,0 +1,326 @@
+{
+  "root": {
+    "ticker": "DOW",
+    "name": "ダウ",
+    "cik": 1751788,
+    "name_en": "Dow Inc."
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [
+    "XOM",
+    "LYB"
+  ],
+  "companies": [
+    {
+      "id": "ARAMCO",
+      "ticker": "Aramco",
+      "name": "サウジアラムコ",
+      "sub": "産油・合弁相手",
+      "sub_en": "Oil company, JV partner",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2011年にダウとサウジアラビア国営石油会社が合弁会社サダラを設立した",
+          "text_en": "Dow and Saudi Arabian Oil Company formed the Sadara joint venture in 2011",
+          "source": {
+            "label": "Dow 10-K(2025年12月31日期)",
+            "label_en": "Dow 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1751788/000175178826000018/dow-20251231.htm",
+            "level": "official",
+            "date": "2026-02-03",
+            "quote": "In 2011, the Company and Saudi Arabian Oil Company formed Sadara - a joint venture between the two companies that constructed and operates a world-scale, fully integrated chemicals complex in Jubail Industrial City, Kingdom of Saudi Arabia."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "2021年にダウとサウジアラビア国営石油会社はサダラ製品の販売権の移管計画で合意した",
+          "text_en": "In 2021, Dow and Saudi Arabian Oil Company agreed to a marketing rights transition plan",
+          "source": {
+            "label": "Dow 10-K(2025年12月31日期)",
+            "label_en": "Dow 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1751788/000175178826000018/dow-20251231.htm",
+            "level": "official",
+            "date": "2026-02-03",
+            "quote": "In 2021, Dow and the Saudi Arabian Oil Company agreed to a marketing rights transition plan."
+          }
+        }
+      ],
+      "name_en": "Saudi Arabian Oil Company"
+    },
+    {
+      "id": "SADARA",
+      "ticker": "Sadara Chemical",
+      "name": "サダラ・ケミカル",
+      "sub": "サウジの合弁化学",
+      "sub_en": "Saudi chemicals JV",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ダウはサダラに35%を出資し、製品の相当部分を自社の販路で販売している",
+          "text_en": "Dow holds a 35 percent equity interest in Sadara and markets a significant portion of its products",
+          "source": {
+            "label": "Dow 10-K(2025年12月31日期)",
+            "label_en": "Dow 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1751788/000175178826000018/dow-20251231.htm",
+            "level": "official",
+            "date": "2026-02-03",
+            "quote": "The Company has a 35 percent equity interest in this joint venture and continues to be responsible for marketing a significant portion of Sadara’s products through the Company’s established sales channels."
+          }
+        }
+      ],
+      "name_en": "Sadara Chemical Company"
+    },
+    {
+      "id": "EQUATE",
+      "ticker": "EQUATE",
+      "name": "イクエート・ペトロケミカル",
+      "sub": "クウェートの合弁",
+      "sub_en": "Kuwait JV",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "クウェートのエチレン・ポリエチレン製造会社で、ダウが42.5%を保有する",
+          "text_en": "Kuwait-based ethylene and polyethylene maker in which Dow owns 42.5 percent",
+          "source": {
+            "label": "Dow 10-K(2025年12月31日期)",
+            "label_en": "Dow 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1751788/000175178826000018/dow-20251231.htm",
+            "level": "official",
+            "date": "2026-02-03",
+            "quote": "EQUATE Petrochemical Company K.S.C.C. (“EQUATE”) - a Kuwait-based company that manufactures ethylene, polyethylene and ethylene glycol, and manufactures and markets monoethylene glycol, diethylene glycol and polyethylene terephthalate resins; owned 42.5 percent by the Company."
+          }
+        }
+      ],
+      "name_en": "EQUATE Petrochemical Company"
+    },
+    {
+      "id": "TKSC",
+      "ticker": "TKSC",
+      "name": "クウェート・スチレン",
+      "sub": "スチレンの合弁",
+      "sub_en": "Styrene JV",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "クウェートでスチレンモノマーを製造する会社で、ダウが42.5%を保有する",
+          "text_en": "Kuwait-based styrene monomer maker in which Dow owns 42.5 percent",
+          "source": {
+            "label": "Dow 10-K(2025年12月31日期)",
+            "label_en": "Dow 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1751788/000175178826000018/dow-20251231.htm",
+            "level": "official",
+            "date": "2026-02-03",
+            "quote": "The Kuwait Styrene Company K.S.C.C. - a Kuwait-based company that manufactures styrene monomer; owned 42.5 percent by the Company."
+          }
+        }
+      ],
+      "name_en": "The Kuwait Styrene Company"
+    },
+    {
+      "id": "SCGDOW",
+      "ticker": "SCG-Dow",
+      "name": "SCGC・ダウ・グループ",
+      "sub": "タイの合弁グループ",
+      "sub_en": "Thailand JV group",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "タイでポリエチレンやスチレンなどを製造する企業群で、ダウが50%を保有する",
+          "text_en": "Thailand-based group making polyethylene and styrene, 50 percent owned by Dow",
+          "source": {
+            "label": "Dow 10-K(2025年12月31日期)",
+            "label_en": "Dow 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1751788/000175178826000018/dow-20251231.htm",
+            "level": "official",
+            "date": "2026-02-03",
+            "quote": "The SCGC-Dow Group - a group of Thailand-based companies (consisting of Siam Polyethylene Company Limited; Siam Polystyrene Company Limited; Siam Styrene Monomer Company Limited; and Siam Synthetic Latex Company Limited) that manufactures polyethylene, polystyrene, styrene, latex and specialty elastomers; owned 50 percent by the Company."
+          }
+        }
+      ],
+      "name_en": "The SCGC-Dow Group"
+    },
+    {
+      "id": "MAPTAPHUT",
+      "ticker": "Map Ta Phut",
+      "name": "マプタプット・オレフィンズ",
+      "sub": "タイのオレフィン合弁",
+      "sub_en": "Thailand olefins JV",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "タイでプロピレンとエチレンを製造する会社で、ダウの実効持分は32.77%である",
+          "text_en": "Thailand-based propylene and ethylene maker with an effective Dow ownership of 32.77 percent",
+          "source": {
+            "label": "Dow 10-K(2025年12月31日期)",
+            "label_en": "Dow 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1751788/000175178826000018/dow-20251231.htm",
+            "level": "official",
+            "date": "2026-02-03",
+            "quote": "Map Ta Phut Olefins Company Limited (“Map Ta Phut”) - a Thailand-based company that manufactures propylene and ethylene; the Company has an effective ownership of 32.77 percent"
+          }
+        }
+      ],
+      "name_en": "Map Ta Phut Olefins Company Limited"
+    },
+    {
+      "id": "XOM",
+      "ticker": "XOM",
+      "name": "エクソンモービル",
+      "sub": "石化の競合",
+      "sub_en": "Petrochemical rival",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ポリエチレンなど包装・特殊プラスチック分野の主な競合として名が挙がる",
+          "text_en": "Listed among key competitors in packaging and specialty plastics",
+          "source": {
+            "label": "Dow 10-K(2025年12月31日期)",
+            "label_en": "Dow 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1751788/000175178826000018/dow-20251231.htm",
+            "level": "official",
+            "date": "2026-02-03",
+            "quote": "Borealis, CNPC, ExxonMobil, INEOS, Lanxess, LyondellBasell, Nova, SABIC, Sinopec"
+          }
+        }
+      ],
+      "name_en": "ExxonMobil"
+    },
+    {
+      "id": "LYB",
+      "ticker": "LYB",
+      "name": "ライオンデルバセル",
+      "sub": "石化の競合",
+      "sub_en": "Petrochemical rival",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "包装・特殊プラスチック分野の主な競合として名が挙がる",
+          "text_en": "Listed among key competitors in packaging and specialty plastics",
+          "source": {
+            "label": "Dow 10-K(2025年12月31日期)",
+            "label_en": "Dow 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1751788/000175178826000018/dow-20251231.htm",
+            "level": "official",
+            "date": "2026-02-03",
+            "quote": "Borealis, CNPC, ExxonMobil, INEOS, Lanxess, LyondellBasell, Nova, SABIC, Sinopec"
+          }
+        }
+      ],
+      "name_en": "LyondellBasell"
+    },
+    {
+      "id": "INEOS",
+      "ticker": "INEOS",
+      "name": "イネオス",
+      "sub": "石化の競合",
+      "sub_en": "Petrochemical rival",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "炭化水素・エネルギー分野の主な競合として名が挙がる",
+          "text_en": "Listed among key competitors in hydrocarbons and energy",
+          "source": {
+            "label": "Dow 10-K(2025年12月31日期)",
+            "label_en": "Dow 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1751788/000175178826000018/dow-20251231.htm",
+            "level": "official",
+            "date": "2026-02-03",
+            "quote": "Chevron Phillips Chemical, ExxonMobil, INEOS, LyondellBasell, SABIC, Shell, Sinopec"
+          }
+        }
+      ],
+      "name_en": "INEOS"
+    },
+    {
+      "id": "SABIC",
+      "ticker": "SABIC",
+      "name": "サウジ基礎産業公社(SABIC)",
+      "sub": "石化の競合",
+      "sub_en": "Petrochemical rival",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "包装・特殊プラスチック分野の主な競合として名が挙がる",
+          "text_en": "Listed among key competitors in packaging and specialty plastics",
+          "source": {
+            "label": "Dow 10-K(2025年12月31日期)",
+            "label_en": "Dow 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1751788/000175178826000018/dow-20251231.htm",
+            "level": "official",
+            "date": "2026-02-03",
+            "quote": "Borealis, CNPC, ExxonMobil, INEOS, Lanxess, LyondellBasell, Nova, SABIC, Sinopec"
+          }
+        }
+      ],
+      "name_en": "SABIC"
+    },
+    {
+      "id": "SINOPEC",
+      "ticker": "Sinopec",
+      "name": "中国石油化工(シノペック)",
+      "sub": "石化の競合",
+      "sub_en": "Petrochemical rival",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "包装・特殊プラスチック分野の主な競合として名が挙がる",
+          "text_en": "Listed among key competitors in packaging and specialty plastics",
+          "source": {
+            "label": "Dow 10-K(2025年12月31日期)",
+            "label_en": "Dow 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1751788/000175178826000018/dow-20251231.htm",
+            "level": "official",
+            "date": "2026-02-03",
+            "quote": "Borealis, CNPC, ExxonMobil, INEOS, Lanxess, LyondellBasell, Nova, SABIC, Sinopec"
+          }
+        }
+      ],
+      "name_en": "Sinopec"
+    },
+    {
+      "id": "NOVA",
+      "ticker": "Nova",
+      "name": "ノバ・ケミカルズ",
+      "sub": "石化の競合",
+      "sub_en": "Petrochemical rival",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "包装・特殊プラスチック分野の主な競合として名が挙がる",
+          "text_en": "Listed among key competitors in packaging and specialty plastics",
+          "source": {
+            "label": "Dow 10-K(2025年12月31日期)",
+            "label_en": "Dow 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1751788/000175178826000018/dow-20251231.htm",
+            "level": "official",
+            "date": "2026-02-03",
+            "quote": "Borealis, CNPC, ExxonMobil, INEOS, Lanxess, LyondellBasell, Nova, SABIC, Sinopec"
+          }
+        }
+      ],
+      "name_en": "Nova"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

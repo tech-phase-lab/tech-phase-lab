@@ -1,0 +1,203 @@
+{
+  "root": {
+    "ticker": "VRTX",
+    "name": "バーテックス・ファーマシューティカルズ",
+    "cik": 875320,
+    "name_en": "Vertex Pharmaceuticals"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "CRSP",
+      "ticker": "CRSP",
+      "name": "クリスパー・セラピューティクス",
+      "sub": "遺伝子編集",
+      "sub_en": "Gene editing",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "鎌状赤血球症などの治療薬CASGEVYを、共同で開発・販売する契約を結んでいる",
+          "text_en": "Vertex has a joint development and commercialization agreement with CRISPR to co-develop and co-commercialize CASGEVY for SCD and TDT",
+          "source": {
+            "label": "バーテックス・ファーマシューティカルズ 10-K(2025-12-31)",
+            "label_en": "Vertex Pharmaceuticals 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/875320/000087532026000056/vrtx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "In 2017, we entered into a joint development and commercialization agreement (“Original JDCA”) with CRISPR Therapeutics AG (“CRISPR”), pursuant to which we are co-developing and co-commercializing CASGEVY for SCD and TDT"
+          }
+        },
+        {
+          "type": "tie",
+          "text": "CASGEVYの純損益は、自社60%、CRISPR 40%で配分される",
+          "text_en": "Net profits and losses on CASGEVY are split 60% to Vertex and 40% to CRISPR",
+          "source": {
+            "label": "バーテックス・ファーマシューティカルズ 10-K(2025-12-31)",
+            "label_en": "Vertex Pharmaceuticals 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/875320/000087532026000056/vrtx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "The net profits and net losses incurred pursuant to the A&R JDCA with respect to CASGEVY are allocated 60% to us and 40% to CRISPR, subject to certain adjustments"
+          }
+        }
+      ],
+      "name_en": "CRISPR Therapeutics"
+    },
+    {
+      "id": "MRNA",
+      "ticker": "MRNA",
+      "name": "モデルナ",
+      "sub": "mRNA医薬",
+      "sub_en": "mRNA therapeutics",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "嚢胞性線維症向けのmRNA治療薬を探す共同研究を、モデルナと進めている",
+          "text_en": "Vertex collaborates with Moderna on mRNA therapeutics encoding CFTR for cystic fibrosis",
+          "source": {
+            "label": "バーテックス・ファーマシューティカルズ 10-K(2025-12-31)",
+            "label_en": "Vertex Pharmaceuticals 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/875320/000087532026000056/vrtx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "In 2016, we entered into a collaboration with Moderna for the identification and development of mRNA therapeutics encoding CFTR for the treatment of CF."
+          }
+        }
+      ],
+      "name_en": "Moderna"
+    },
+    {
+      "id": "LONZA",
+      "ticker": "Lonza",
+      "name": "ロンザ",
+      "sub": "受託製造",
+      "sub_en": "Contract manufacturing",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "1型糖尿病の細胞治療薬の製造を、ロンザが支える戦略契約がある",
+          "text_en": "Lonza supports manufacture of Vertex's T1D cell therapy candidates under a strategic agreement",
+          "source": {
+            "label": "バーテックス・ファーマシューティカルズ 10-K(2025-12-31)",
+            "label_en": "Vertex Pharmaceuticals 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/875320/000087532026000056/vrtx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "we have a strategic agreement with Lonza to support the manufacture of T1D cell therapy product candidates"
+          }
+        }
+      ],
+      "name_en": "Lonza"
+    },
+    {
+      "id": "ZLAB",
+      "ticker": "ZLAB",
+      "name": "ザイ・ラボ",
+      "sub": "中国のバイオ薬",
+      "sub_en": "China biopharma",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "povetaciceptをアジアの市場で開発・販売するため、ザイ・ラボと契約した",
+          "text_en": "Vertex entered into an agreement with Zai Lab for development and commercialization of povetacicept in certain Asian markets",
+          "source": {
+            "label": "バーテックス・ファーマシューティカルズ 10-K(2025-12-31)",
+            "label_en": "Vertex Pharmaceuticals 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/875320/000087532026000056/vrtx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "In 2025, we entered into agreements with Zai Lab Limited (“Zai”) and Ono Pharmaceuticals Co., Ltd (“Ono”) related to the development and commercialization of povetacicept in certain Asian markets"
+          }
+        }
+      ],
+      "name_en": "Zai Lab"
+    },
+    {
+      "id": "ONO",
+      "ticker": "Ono Pharmaceutical",
+      "name": "小野薬品工業",
+      "sub": "日本の製薬",
+      "sub_en": "Japan pharma",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "povetaciceptをアジアの市場で開発・販売するため、小野薬品と契約した",
+          "text_en": "Vertex entered into an agreement with Ono for development and commercialization of povetacicept in certain Asian markets",
+          "source": {
+            "label": "バーテックス・ファーマシューティカルズ 10-K(2025-12-31)",
+            "label_en": "Vertex Pharmaceuticals 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/875320/000087532026000056/vrtx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "In 2025, we entered into agreements with Zai Lab Limited (“Zai”) and Ono Pharmaceuticals Co., Ltd (“Ono”) related to the development and commercialization of povetacicept in certain Asian markets"
+          }
+        }
+      ],
+      "name_en": "Ono Pharmaceutical"
+    },
+    {
+      "id": "EDIT",
+      "ticker": "EDIT",
+      "name": "エディタス・メディスン",
+      "sub": "遺伝子編集",
+      "sub_en": "Gene editing",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "CRISPR/Cas9の特許について、エディタスから非独占の再実施権を得た",
+          "text_en": "Vertex obtained a non-exclusive sublicense from Editas to certain CRISPR/Cas9 patents",
+          "source": {
+            "label": "バーテックス・ファーマシューティカルズ 10-K(2025-12-31)",
+            "label_en": "Vertex Pharmaceuticals 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/875320/000087532026000056/vrtx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "In December 2023, we entered into an agreement with Editas Medicine, Inc. (“Editas”), providing us a non-exclusive sublicense to certain patents relating to CRISPR/Cas9 technology"
+          }
+        }
+      ],
+      "name_en": "Editas Medicine"
+    },
+    {
+      "id": "TRDA",
+      "ticker": "TRDA",
+      "name": "エントラーダ・セラピューティクス",
+      "sub": "創薬提携",
+      "sub_en": "Drug collaboration",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "提携先のエントラーダに、マイルストーン支払いを行った",
+          "text_en": "Vertex made a milestone payment to its collaborator Entrada",
+          "source": {
+            "label": "バーテックス・ファーマシューティカルズ 10-K(2025-12-31)",
+            "label_en": "Vertex Pharmaceuticals 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/875320/000087532026000056/vrtx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "Most of these collaboration payments are expensed as AIPR&D, including, a $75.0 million milestone paid to Entrada in 2024"
+          }
+        }
+      ],
+      "name_en": "Entrada Therapeutics"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

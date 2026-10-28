@@ -1,0 +1,107 @@
+{
+  "root": {
+    "ticker": "VLO",
+    "name": "バレロ・エナジー",
+    "cik": 1035002,
+    "name_en": "Valero Energy"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "DAR",
+      "ticker": "DAR",
+      "name": "ダーリング・イングレディエンツ",
+      "sub": "再生ディーゼル合弁",
+      "sub_en": "Renewable diesel JV",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "DGDはダーリング社との合弁事業である",
+          "text_en": "DGD is a joint venture with Darling Ingredients Inc.",
+          "source": {
+            "label": "Valero Energy 10-K(2025-12-31)",
+            "label_en": "Valero Energy 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1035002/000162828026011499/vlo-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "DGD is a joint venture with Darling Ingredients Inc. (Darling) and we consolidate DGD’s financial statements."
+          }
+        },
+        {
+          "type": "up",
+          "text": "ダーリング社は原料需要の一部をDGDに提示する義務を負う",
+          "text_en": "Darling is obligated to offer DGD a portion of its feedstock requirements at market pricing",
+          "source": {
+            "label": "Valero Energy 10-K(2025-12-31)",
+            "label_en": "Valero Energy 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1035002/000162828026011499/vlo-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "DGD is party to a raw material supply agreement with Darling under which Darling is obligated to offer to DGD a portion of its feedstock requirements at market pricing, but DGD is not obligated to purchase all or any part of its feedstock from Darling."
+          }
+        }
+      ],
+      "name_en": "Darling Ingredients Inc."
+    },
+    {
+      "id": "COLONIAL",
+      "ticker": "Colonial Pipeline",
+      "name": "コロニアル・パイプライン",
+      "sub": "製品の輸送路",
+      "sub_en": "Product pipeline",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "テキサスシティ製油所は、コロニアル・パイプラインなどで製品を出荷する",
+          "text_en": "The Texas City refinery ships products via pipelines including the Colonial Pipeline",
+          "source": {
+            "label": "Valero Energy 10-K(2025-12-31)",
+            "label_en": "Valero Energy 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1035002/000162828026011499/vlo-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "The refinery receives feedstocks via pipeline and by ship and barge using docks on the Texas City Ship Channel and distributes its products via ship and barge, as well as via pipeline, including the Colonial Pipeline and Explorer Pipeline."
+          }
+        }
+      ],
+      "name_en": "Colonial Pipeline"
+    },
+    {
+      "id": "EXPLORER",
+      "ticker": "Explorer Pipeline",
+      "name": "エクスプローラー・パイプライン",
+      "sub": "製品の輸送路",
+      "sub_en": "Product pipeline",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "製油所はエクスプローラー・パイプラインなどを通じて製品を出荷している",
+          "text_en": "The refinery distributes products through pipelines including the Explorer Pipeline",
+          "source": {
+            "label": "Valero Energy 10-K(2025-12-31)",
+            "label_en": "Valero Energy 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1035002/000162828026011499/vlo-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "The refinery receives feedstocks via pipeline, ship, and barge and distributes its products via pipeline, including the Colonial Pipeline and Explorer Pipeline."
+          }
+        }
+      ],
+      "name_en": "Explorer Pipeline"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

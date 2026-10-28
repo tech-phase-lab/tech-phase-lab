@@ -1,0 +1,214 @@
+{
+  "root": {
+    "ticker": "O",
+    "name": "リアルティ・インカム",
+    "cik": 726728,
+    "name_en": "Realty Income"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "SEVEN",
+      "ticker": "7-Eleven",
+      "name": "セブン-イレブン",
+      "sub": "コンビニ",
+      "sub_en": "Convenience stores",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "セブン-イレブンは主要テナントで、812件の賃貸借と年間基本賃料の3.3%を占める",
+          "text_en": "7-Eleven is a major client with 812 leases and 3.3 percent of portfolio annualized base rent",
+          "source": {
+            "label": "Realty Income 10-K(2025-12-31)",
+            "label_en": "Realty Income 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/726728/000072672826000011/o-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "7-Eleven 812 3.3 %"
+          }
+        }
+      ],
+      "name_en": "7-Eleven"
+    },
+    {
+      "id": "DG",
+      "ticker": "DG",
+      "name": "ダラー・ゼネラル",
+      "sub": "ディスカウント小売",
+      "sub_en": "Discount retail",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "ダラー・ゼネラルは主要テナントで、1,797件の賃貸借と年間基本賃料の3.2%を占める",
+          "text_en": "Dollar General is a major client with 1,797 leases and 3.2 percent of portfolio annualized base rent",
+          "source": {
+            "label": "Realty Income 10-K(2025-12-31)",
+            "label_en": "Realty Income 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/726728/000072672826000011/o-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Dollar General 1,797 3.2"
+          }
+        }
+      ],
+      "name_en": "Dollar General"
+    },
+    {
+      "id": "WBA",
+      "ticker": "Walgreens",
+      "name": "ウォルグリーン",
+      "sub": "ドラッグストア",
+      "sub_en": "Drugstore",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "ウォルグリーンは主要テナントで、400件の賃貸借と年間基本賃料の3.1%を占める",
+          "text_en": "Walgreens is a major client with 400 leases and 3.1 percent of portfolio annualized base rent",
+          "source": {
+            "label": "Realty Income 10-K(2025-12-31)",
+            "label_en": "Realty Income 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/726728/000072672826000011/o-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Walgreens 400 3.1"
+          }
+        }
+      ],
+      "name_en": "Walgreens"
+    },
+    {
+      "id": "FDX",
+      "ticker": "FDX",
+      "name": "フェデックス",
+      "sub": "物流",
+      "sub_en": "Logistics",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "フェデックスは主要テナントで、81件の賃貸借と年間基本賃料の1.8%を占める",
+          "text_en": "FedEx is a major client with 81 leases and 1.8 percent of portfolio annualized base rent",
+          "source": {
+            "label": "Realty Income 10-K(2025-12-31)",
+            "label_en": "Realty Income 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/726728/000072672826000011/o-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "FedEx 81 1.8"
+          }
+        }
+      ],
+      "name_en": "FedEx"
+    },
+    {
+      "id": "HD",
+      "ticker": "HD",
+      "name": "ホーム・デポ",
+      "sub": "住宅建材小売",
+      "sub_en": "Home improvement retail",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "ホーム・デポは主要テナントで、41件の賃貸借と年間基本賃料の1.1%を占める",
+          "text_en": "Home Depot is a major client with 41 leases and 1.1 percent of portfolio annualized base rent",
+          "source": {
+            "label": "Realty Income 10-K(2025-12-31)",
+            "label_en": "Realty Income 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/726728/000072672826000011/o-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Home Depot 41 1.1"
+          }
+        }
+      ],
+      "name_en": "Home Depot"
+    },
+    {
+      "id": "BX",
+      "ticker": "Blackstone",
+      "name": "ブラックストーン",
+      "sub": "不動産投資",
+      "sub_en": "Real estate investor",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ベラージオ・ラスベガスの不動産を持つ合弁事業を共同で組成した",
+          "text_en": "Realty Income formed a joint venture with Blackstone that owns a 95.0% equity interest in the real estate of The Bellagio Las Vegas",
+          "source": {
+            "label": "Realty Income 10-K(2025-12-31)",
+            "label_en": "Realty Income 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/726728/000072672826000011/o-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "The joint venture we formed with Blackstone Real Estate Income Trust (\"Blackstone\") owns a 95.0 % equity interest in the real estate of The Bellagio Las Vegas."
+          }
+        }
+      ],
+      "name_en": "Blackstone"
+    },
+    {
+      "id": "GIC",
+      "ticker": "GIC",
+      "name": "ジーアイシー",
+      "sub": "機関投資家",
+      "sub_en": "Institutional investor",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "開発型の合弁事業を作り、総額15億ドル超の出資枠を設けた",
+          "text_en": "Realty Income announced a strategic relationship with GIC, including a build-to-suit development joint venture with combined commitments of over $1.5 billion",
+          "source": {
+            "label": "Realty Income 10-K(2025-12-31)",
+            "label_en": "Realty Income 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/726728/000072672826000011/o-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "In January 2026, we announced the establishment of a strategic relationship with GIC, a leading global institutional investor, including the formation of a build-to-suit development joint venture with total combined commitments of over $1.5 billion."
+          }
+        }
+      ],
+      "name_en": "GIC"
+    },
+    {
+      "id": "TCC",
+      "ticker": "Trammell Crow",
+      "name": "トラメル・クロウ",
+      "sub": "不動産開発",
+      "sub_en": "Real estate developer",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "テキサス州アービングで産業施設3棟を開発する合弁事業を組んでいる",
+          "text_en": "Realty Income set up a joint venture with Trammell Crow to develop and operate three industrial facilities in Irving, Texas",
+          "source": {
+            "label": "Realty Income 10-K(2025-12-31)",
+            "label_en": "Realty Income 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/726728/000072672826000011/o-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "In November 2024, we established a joint venture with Trammell Crow Company (\"TCC\") to develop and operate three industrial facilities in Irving, Texas."
+          }
+        }
+      ],
+      "name_en": "Trammell Crow Company"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

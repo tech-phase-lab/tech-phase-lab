@@ -1,0 +1,2910 @@
+## 2026-10-25 JST — Capital Map expansion
+
+Owner priority: preserve the existing map and add the requested managers. Added
+Thiel Macro, Soros Fund Management, ARK Investment Management, JPMorgan Chase and
+BlackRock using the same manager UI with current/prior SEC reports. Berkshire is
+unchanged. Original datasets and CSS remain byte-identical. Bond quantities are
+explicitly USD principal; existing stock/option displays remain unchanged.
+Sources, import reproduction, outstanding Trump/Pelosi limitations and adjacent
+FREE/PRO/theme-ranking decisions are recorded in `docs/CAPITAL-MAP.md`.
+
+Local render comparison: 76 Japanese/English existing map/detail HTML cases match
+before/after with shell/navigation/images stubbed. Added managers render in both
+languages. This is not a production browser acceptance receipt. Final integrated gates on base 4d56d98a: lint (0 errors, 5 existing warnings),
+Node 1405/1405, Python 2639/2639, production build/typecheck, compileall and diff
+check passed. Python was rerun with verbose diagnostics because the first output
+lacked a completion summary; the completed run took 225.988 seconds. This record
+precedes the normal preview-branch publication, not a live deployment receipt.
+Railway access and
+reauthentication are prohibited; none were used. No Twelve Data integration or
+new PRO pillar page is part of this change.
+
+---
+
+## 2026-10-24 JST — PRO checkout final integrated local gates passed
+
+Integrated preview 9f6134c4 while preserving all independently published changes.
+Approved PRO scope remains six files: billing screen, client regression tests and
+four handoff/acceptance records. No news, earnings, RESOLUTE or Railway changes.
+Final sequential gates passed: lint (0 errors, 5 existing warnings), Node 1339/1339
+(408.792s), Python 2624/2624 (806.844s), production build/typecheck, compileall and
+git diff --check. Full local tree must match the GitHub candidate tree before the
+approved preview ref update. This record precedes publication, not a deployment receipt.
+Existing browser state still shows Sandbox review required, renewal stopped and PRO
+until 2026-11-20 19:00 JST. No payment/cancellation operation was repeated.
+Two-member live ledger reconciliation, recurring/dispute acceptance and live backup
+verification remain incomplete; production PRO is not opened by this UI change.
+
+---
+
+## 2026-10-24 JST — PRO recovery resumed on latest preview
+
+Restored checkpoint 1f3b9ef4 on preview f453ce1b in a separate checkout outside
+the previously deleted scratch directory. Retained all parallel runtime/backup
+work without repeating those operations. Diff remains the six approved PRO files;
+news implementation and tests are unchanged. Required gates run sequentially.
+Prior interrupted runs are not accepted as full validation; no branch update yet.
+
+---
+
+## 2026-10-24 07:17 JST — External live-data backup gap actually observed
+
+Read-only R2 run40032566590 (implementation61cfc1f2) listed the seven known prefixes
+twice with identical results: source18, dependencies6, runtime26 objects; research DB,
+RESOLUTE DB, billing Sandbox DB and protection history each0 in their listed prefixes.
+Implementation CI40032566501 passed Node1336/Python2623, build and Sandbox PG concurrency.
+See [exact observation and next access requirements](EXTERNAL-DATA-INVENTORY-2026-10-24.md).
+This is not a whole-bucket inventory, DB freshness check or restore proof. Runtime26
+includes unsuccessful initial-run objects; use the verified seven-image receipt, not counts.
+No object body/key decryption, upload, deletion, Railway connection or production mutation.
+Next live-data transfer requires the source research volume/DB or existing encrypted dumps
+and the protection source inventory. Those source connections are not available to this
+GitHub read-only job. Do not retry Railway auth or repeat completed owner key/SQL/deploy work.
+Keep saving gates OFF; fresh actual writer fence/queue/inventory and isolated restore remain
+required. The observation SHA is NOT a protection manifest pin. Preserve consumed AI claim.
+
+---
+
+## 2026-10-24 JST — All seven runtime images restored from R2 and probed offline
+
+Source/runtime commit81b4e775 (tree172ec963) passed actual run39998902799.
+All seven encrypted image archives were uploaded, downloaded, authenticated, loaded,
+and checked with networking disabled. CI39998902797 passed Node1336, Python2613,
+build and Sandbox PostgreSQL concurrency. See [actual receipts and limits](EXTERNAL-RUNTIME-BACKUP-2026-10-24.md).
+This closes the Node/Python/PostgreSQL/OS custody gap for freshly built Linux amd64
+recovery images; it is not an export of deployed Railway containers.
+Frontend/API/billing/research servers booted; protection/recovery disabled CLIs and
+backup tools passed their narrower probes. No live DB/authenticated storage verified.
+The first run failed on restrictive source permissions; fixed without weakening container
+isolation. Only the successful corrected run is accepted as seven-runtime evidence.
+Next: fresh writer-fenced complete production DB/history/queue/consumed-claim inventory,
+external custody and isolated restore before saving activation; Render standby afterwards
+with exact endpoint allowlists, TLS, least privilege and configured frontend auth checks.
+Keep saving gates OFF, preserve owner-key-check-2026-10-23, no more AI calls,
+no Railway reconnect/key-entry requests. User operation currently unnecessary.
+
+---
+
+## 2026-10-24 JST — Billing dependencies restored from R2 and booted offline
+
+Actual run39981635463 restored source f8312b9e and 139 billing dependency files.
+Kernel-network-isolated boot and 17 health/auth/disabled-payment checks passed.
+Implementation CI39981635331 also succeeded: Node1336, Python2598 and build.
+See [actual evidence](EXTERNAL-BILLING-DEPENDENCY-BACKUP-2026-10-24.md).
+No live payments, DB verification or AI calls. Node binary/Bookworm/Render remain unverified.
+Render endpoint restrictions were inventoried; no allowlist/authentication was weakened.
+Next: remaining Python services and complete runtime-image custody with offline probes.
+Keep saving gates OFF, preserve consumed AI claim, no Railway reconnect/key-entry requests.
+
+---
+
+## 2026-10-23 JST — Verification interrupted by a second workspace removal
+
+Recovered candidate d4e29a8f passed 19 PRO client tests, lint (zero errors, five
+existing warnings), production build/typecheck, compileall and diff checks.
+The first recovered full Python run completed 2,598 tests in 1751.726 seconds:
+one failure in test_bloom_independent_sec.py line 599 (thread still alive after
+a two-second cleanup join). The unchanged failing case passed alone; its entire
+19-test module also passed. News code and tests were NOT changed. Baseline remote
+26732969 has successful GitHub CI run 39960775889.
+An isolated full rerun passed the earlier failure point and approximately 1,973
+tests without failures, then the workspace directory was deleted again while
+running. File-not-found errors followed. The interrupted session exited 130.
+This is NOT a passing full gate. JavaScript full rerun was not reached.
+Do not publish a branch ref from this incomplete validation. Restore from the
+GitHub recovery snapshot into a location protected from workspace pruning before
+another full run; avoid repeatedly installing/running inside the removed path.
+All six original changes remain preserved. No main, news, Railway, payment or
+RESOLUTE operations were performed. Earlier handoff-upload review rejection was
+resolved by proving every historical line already existed in this same repository;
+only non-secret restoration status was added. No branch update/deployment occurred.
+
+---
+
+## 2026-10-23 JST — PRO workspace recovered after automated pruning
+
+Workspace maintenance removed the checkout and interrupted validation. The last
+retained Node log reports 1,339/1,339 passing; Python stopped with a failure marker
+before its diagnostic summary. Build was not reached. This is NOT a passing gate.
+Re-cloned preview at 26732969 and recovered all six original publication blobs
+from GitHub tree 1bac8f211b695a72473401f7acac4dfe4dedf4dd. Every recovered blob
+matches its original Git SHA. Application and client-test content are unchanged
+since that candidate; current remote documents were three-way merged, preserving
+parallel work. Later local validation-only notes were lost and are summarized here.
+The independently published SK hynix fixture-time repair and regression remain
+exactly as remote; no news implementation or tests are changed by this work.
+Owner publication approval remains valid. No remote ref/deployment update yet.
+Repeat final gates on the recovered integrated tree. Do not repeat RESOLUTE,
+Railway connection, key setup, SQL, payment or backup operations.
+
+---
+
+## 2026-10-23 JST — API dependencies restored from R2 and booted offline
+
+Actual run39959285394 restored source caaff68d and 5,384 API dependency files
+from encrypted R2 objects. Offline API boot, health200, four unauthenticated401s,
+two disabled-payment503s and clean shutdown passed with fixture-only settings.
+See [actual evidence and platform limits](EXTERNAL-API-DEPENDENCY-BACKUP-2026-10-23.md).
+Ubuntu24.04/Node24.22.1/glibc2.39 verified; Bookworm/Render runtime and live DB are NOT verified.
+Keep saving gates OFF, preserve the consumed AI claim; no Railway reconnect/key-entry requests.
+Next: remaining service dependencies and matching runtime custody, then fresh writer-fenced
+DB/history inventory and isolated restore before storage activation or Render cutover.
+
+---
+
+## 2026-10-23 JST — Encrypted dependency restore and offline build verified
+
+Actual R2 source and npm dependency download/decryption/restore passed, followed
+by a clean build with networking disabled and no new npm install (run39936499622).
+See [evidence and remaining scope](EXTERNAL-DEPENDENCY-BACKUP-2026-10-23.md).
+[Render standby](RENDER-STANDBY-PLAN.md) remains planned; no paid provisioning.
+Latest live DB/history acceptance is still pending. Keep saving gates OFF and
+retain the consumed one-attempt AI claim. No Railway reconnect or repeated key entry.
+
+---
+
+## 2026-10-23 JST — Actual one-attempt AI connection verified
+
+Owner completed the reviewed ai_connection_checks SQL (reported COMMIT), enabled
+RESOLUTE_AI_CHECK_ENABLED=true, and deployed the connected preview branch's latest
+code. Earlier variable-only deployment still returned NOT_FOUND; do not repeat
+SQL, key rotation, variable entry or deployment requests for that resolved issue.
+
+Authenticated browser /resolute/ai-check returned not-started with execute enabled.
+Assistant clicked execute exactly once and observed RESOLUTE_OK. A subsequent
+GET-only status read returned the same success with execute disabled, verifying
+stored-result readback. Exactly one real model request was made in this test;
+no retry. This proves this deployment's configured key/model access and diagnostic
+ledger write/read path, NOT customer plan/notification/protection writes or full
+news-generation acceptance. No Railway connector call was made.
+
+Retain fixed claim owner-key-check-2026-10-23. Never clear it, change the ID, or
+restore an older ledger and repeat. The single-call authorization is now consumed.
+Root password entry worked via the existing Postgres browser Console using an
+explicit password prompt. Earlier environment-based authentication failed; this
+does not establish whether every service's post-rotation credentials are current.
+Never request secrets in chat or repeat the completed password rotation.
+
+Next: archive current source through the established encrypted R2 workflow and
+verify actual readback/isolated Git restore. Live DB/protection acceptance remains
+pending a fresh complete write-fenced inventory and isolated restore. Saving gates
+must not be enabled on the basis of this AI test. No schedule, billing, email,
+approved content or customer-storage gate changes are authorized by this receipt.
+
+---
+
+## 2026-10-23 JST — Owner approved six-file PRO preview publication
+
+Owner explicitly approved publishing the six prepared PRO files to
+tech-phase-lab/tech-phase-lab, codex/research-preview, including its automatic
+preview deployment. The previous approval blocker below is historical and
+resolved. No further publication confirmation is required for this scope.
+Remote f9c46edf was integrated without changes to its freshness implementation.
+The integrated tree is undergoing the required gates before publication.
+Do not change main, news acquisition, RESOLUTE, Railway settings or payment data.
+
+---
+
+## 2026-10-23 JST — PRO preview publication blocked by automatic approval review
+
+Candidate local2be83db9/tree8e4ec4da9506b0b89768a753739d7275a4ce1856 passed all
+local gates (Node1338, Python2589, lint, build/typecheck, compileall, diff).
+First GitHub create_blob for the PRO screen was rejected by automatic approval
+review: development continuation was not accepted as explicit authorization to
+publish source to tech-phase-lab/tech-phase-lab. No successful blob/tree/commit/ref
+write occurred in this attempt. Do not bypass with CLI or another API.
+Ask the owner explicitly to publish the six PRO files to codex/research-preview
+and its automatic preview deployment. No main/production release is requested.
+This record is local only. Recheck remote HEAD before any later publication.
+
+---
+
+## 2026-10-23 JST — PRO continuation after owner-reported Railway recovery
+
+Owner reports Railway running again. Railway connector and reconnect prompts
+remain prohibited. RESOLUTE-API redeploy and AI-check preparation belong to the
+other task; do not repeat. Current preview7f485c87 is integrated locally with
+PRO23d8a601. Public PRO /healthz returned200 with sandbox/up; this proves neither
+DB/PayPal readiness nor recovery/backup completion. No payment mutation made.
+Final combined-tree gates passed: Node1338, Python2589, lint0errors with five
+existing warnings, production build/typecheck, compileall and diff checks.
+Prior Python failures did not recur; their historical records remain below.
+PRO also distinguishes identity-loading as a neutral bilingual status instead
+of a false communication-error alert. Other failures/review holds remain visible.
+Prepared preview publication only; live backup/two-member ledger acceptance and
+production opening remain pending. No Railway connector, new purchase or refund.
+
+---
+
+## 2026-10-23 JST — One-attempt AI check implementation prepared
+
+Owner confirms RESOLUTE_OPENAI_API_KEY rotated and API redeployed. Do not repeat
+key setup or Railway connector/reconnection prompts: explicitly prohibited.
+Browser owner review API returned six pending reviews, but this is not a new
+AI request. Actual model calls in this work: zero; key validity remains unknown.
+
+Prepared owner-only /resolute/ai-check and authenticated proxy/backend with a
+fixed durable DB claim before model I/O; no automatic retries or arbitrary input.
+Local gates passed: Node1335, Python2588, focused7, lint, production build,
+compileall and diff checks. Default OFF, separate minimal ledger SQL, existing
+shared budget. No live schema,
+settings, publishing or deployment changes made. Runtime prerequisites and exact
+scope are in [RESOLUTE-AI-CONNECTION-CHECK.md](RESOLUTE-AI-CONNECTION-CHECK.md).
+Existing main, schedules, approved copy and customer storage gates untouched.
+
+---
+
+## 2026-10-23 JST — Independent retrieval of EXISTING R2 backup restored successfully
+
+Owner explicitly requested a separate real retrieval/open/restore drill.
+New read-only workflow Existing source restore drill (run39820351545,
+job119969679972) downloaded the PREVIOUS stored18155548-byte ciphertext and
+verified pinned SHA-256, authenticated AES-GCM decryption and isolated Git
+restore. Log EXISTING_SOURCE_EXTERNAL_RESTORE_OK at02:10:57JST confirms
+source_restore_verified=true, new_upload=false, promotion=false.
+Source719ec8cd/tree483815e7 matches original receipt. No new backup substituted.
+See EXISTING-SOURCE-RESTORE-DRILL.md for complete evidence and run link.
+
+Implementation83f692e4 passed local3913tests and build; uses existing four
+GitHub Secrets, separate TECH_PHASE_SOURCE_RESTORE_ENABLED opt-in and GET only.
+No user login, credential reentry, key rotation, cron change or runtime startup.
+Source recovery confirmed; live DB/protection-history restore remains pending
+Railway access and fresh complete write-fenced inventory. User action unnecessary.
+
+---
+
+## 2026-10-23 JST — Actual Cloudflare R2 source upload and recovery SUCCESS
+
+Owner registered four GitHub Secrets. Assistant re-ran backup job; actual log
+SOURCE_EXTERNAL_UPLOAD_VERIFIED confirms R2 ciphertext upload, full download,
+authenticated decryption and isolated Git commit/tree match, plus manifest
+readback. Run39815593175/job119961269313 succeeded. Source commit719ec8cd,
+tree483815e7,1650files,207configuration names,18155548cipher bytes.
+See EXTERNAL-SOURCE-BACKUP-2026-10-23.md for exact object/hash and limitations.
+
+No actual .env or known key/token signatures found in reachable source scan;
+.env.example uses placeholders; historical SQLite fixtures contain zero rows.
+Data is encrypted; only non-secret checksum/revision manifest is plaintext.
+Existing bucket-scoped R2 token reused; no permission/key rotation. Successful
+readback is not an independent proof of other-bucket denial.
+
+THIS IS SOURCE RECOVERY ONLY. Live DB/protection-history acquisition remains
+pending Railway recovery and fresh complete write-fenced inventory. No runtime
+restore, saving activation, billing/email/AI calls or schedule changes.
+No further user operation currently needed. Existing Secrets are configured;
+do not ask the owner to re-register or retry shared-browser Google login.
+
+---
+
+## 2026-10-23 JST — GitHub runner route bypasses shared-browser login dependency
+
+Owner confirms Google sign-in works without a password in their own browser,
+but three shared-browser attempts failed. Do not ask their registration method
+again or repeat Google sign-in. Root cause remains unproven.
+
+Prepared .github/workflows/source-external-backup.yml: preview branch only,
+explicit workflow/request-file push trigger, contents:read, no schedule/deploy.
+Requires four repository secrets; missing values fail BACKUP_NOT_STARTED before
+checkout/upload. Checkout full history at exact triggering SHA; credentials not
+persisted. Existing uploader performs full readback and isolated source restore.
+No real R2 operation is confirmed. User must once register retained R2 values
+and a new independently retained TECH_PHASE_EXTERNAL_KEY_HEX in GitHub Secrets.
+No existing keys are rotated. Offline local key generator provided; no keys
+created/stored by assistant. See SOURCE-BACKUP-GITHUB-SETUP.md for exact steps.
+After registration, assistant can rerun failed job via connected GitHub app,
+verify logs and record actual commit/tree/object/hash. Re-runs back up original
+trigger SHA; do not describe it as latest without comparing remote head.
+
+---
+
+## 2026-10-23 JST — Source upload implementation, real R2 still pending
+
+Owner asks assistant to perform transfer/verification. Added
+scripts/tech-phase/upload_source_recovery.py, which seals the package, uploads
+conditionally, fully downloads/checksums the ciphertext, authenticates/decrypts
+and restores Git in isolation, then publishes/readbacks the manifest last.
+Default disabled; R2 HTTPS allowlist; no delete/latest/cron/deploy/provider API.
+Five tests cover downloaded-byte restore, corruption/oversize, manifest/write
+failures, trusted revision rejection and destination/opt-in validation.
+
+Current environment has none of the five MIRROR_DESTINATION settings and no
+TECH_PHASE_EXTERNAL_KEY_HEX (presence-only check; no secrets printed). Owner
+has retained R2 credentials already; do not regenerate or request them in chat.
+Actual external upload remains pending secure credential/key availability.
+Railway remains untouched. No Cloudflare plugin was found. A dedicated cloud
+browser reaches the Cloudflare sign-in screen and has no signed-in session;
+owner browser sessions are separate. Secure browser authentication is required
+before UI work, and is not proof that S3 credentials are configured.
+Do not count fake-storage success as R2 evidence.
+See TECH-PHASE-RECOVERY-SETTINGS.md for executable command and boundaries.
+
+---
+
+## 2026-10-23 JST — Offline authenticated source sealing
+
+Railway login screenshot reports OAuth invalid_request / id_token_hint validation
+failure. Root cause is not established; owner requests work without Railway.
+No login retry, Railway mutation, deployment, cron change or R2 call was made.
+
+Added seal_source_recovery.py: AES-256-GCM streaming encryption, trusted commit
+bound as authenticated context, authenticated decryption before parsing, exact
+three-file extraction, isolated Git restore, and exclusive output publication.
+Wrong keys/commits, tampering, links/traversal, extra files and existing outputs
+are rejected. The encryption key is supplied only via environment; none created
+for production. See TECH-PHASE-RECOVERY-SETTINGS.md for commands.
+
+Actual fa8347c8 source package round-trip passed: tree1bce1f08, encrypted archive
+16,803,868 bytes. Used a disposable test key; test ciphertext and plaintext were
+deleted on exit. This is validation, NOT a retained production backup.
+Prior CI39807323003 is confirmed SUCCESS. Current change gates are recorded in
+the subsequent commit/report; do not infer remote CI success from local tests.
+
+Remaining: secure external-backup key custody/injection and R2 transfer/readback
+for source; live DB acquisition waits for Railway access. Cloudflare remains the
+intended external store. All live/runtime/external storage verification remains
+false. Existing bucket credentials and recovery keys must not be regenerated.
+User operation currently unnecessary.
+
+---
+
+## 2026-10-23 JST — Offline source recovery and settings inventory
+
+Owner confirms Railway outage continues: do NOT retry Railway access or ask for
+reconnection/login during the outage. A connector UNAUTHORIZED response does not
+establish that owner reauthentication can fix the outage. No Railway call was
+made in this continuation. R2 bucket/token custody and prior rotations stay done.
+
+Added scripts/tech-phase/prepare_source_recovery.py: explicit clean commit only,
+complete-history bundle, tracked-asset inventory, names-only configuration index,
+and empty-repo restore with exact commit/tree comparison. No provider calls,
+credential values, encryption, uploads, cron changes, or service startup.
+Dirty checkouts, wrong revisions, LFS pointers, symlinks/submodules, overwritten
+destinations and corrupt packages fail closed. Five regression tests pass.
+
+Actual offline source6c0ebd8a:1635files/206configuration names/treeabd10c2a match.
+Coworker8a7f801a:1625files/199names/tree7ac65c27 match in a separate package;
+original clean coworker checkout remains8a7f801a. These are private temporary
+verification packages, not durable R2 custody or full runtime recovery evidence.
+Full local Node1323 + Python2575 =3898 passed; lint0errors/5existingwarnings.
+Build, compileall and diff-check passed on the integrated tree.
+Prior publication CI39802323253 (6c0ebd8a) is SUCCESS; new CI is separate.
+
+See [settings and offline package procedure](TECH-PHASE-RECOVERY-SETTINGS.md).
+Dynamic env names, provider-only settings, Clerk export, live payment/deletion
+reconciliation, browser-only data and external image payloads still need separate
+coverage. Source package verification is self-consistency; compare the commit
+against trusted release records before adoption. No current user operation.
+Next after provider recovery: verify live inventory, securely configure existing
+R2 credentials, real copy/readback and isolated restore. No key recreation.
+
+---
+
+## 2026-10-22 — Expand external backup to Tech Phase (not deployed)
+
+Owner requests all Tech Phase + RESOLUTE recovery data, not only RESOLUTE.
+Owner reports R2 bucket resolute-backup-external and scoped key created/saved.
+No credentials pasted here, no R2 production transfer or runtime configuration.
+Railway list_services currently returns UNAUTHORIZED / reauthentication required.
+Do not repeat bucket signup, token creation, previous rotations or key custody.
+
+Added opt-in research SQLite online snapshot of ALL tables, streamed AES-GCM,
+conditional upload + bounded checksum readback, and disposable authenticated
+restore check. Includes server-synced member saved research/annotations/favorites;
+browser-only or pending data is excluded. Added PRO Sandbox encrypted-copy profile
+and independent RESOLUTE protection-history copy requiring fresh fenced inventory.
+Old empty manifests, incomplete/changing inventories and bad readback fail closed.
+No copy event is evidence of full restoration, fresh state or verified writer fence.
+
+Local Node1323 + Python2570 = 3893 passed; lint0errors/5existingwarnings, build,
+compileall and diff-check passed. Actual SQLite WAL + AES-GCM fixture restored with
+saved notes intact. Source bundle of aad63d08 restored into empty repo with exact
+tree6365e6c9 match. All external storage clients in new tests are fakes.
+Previous CI39795559198 (aad63d08) is success; new publication CI is separate.
+
+See [full scope, safe commands and remaining gates](TECH-PHASE-EXTERNAL-RECOVERY.md).
+Still needed: real service/volume/bucket inventory; secure R2 runtime injection;
+separately retained research encryption key; real copy/restore; code/static asset
+offsite storage; Clerk recovery data; configuration/key inventory; latest payment
+and deletion reconciliation. No full-site recovery or free-cost guarantee.
+R2 Object Read & Write is NOT proof of no-delete permissions. Existing mirror
+re-PUTs need review before any bucket lock. Saving/payment/AI flags remain OFF;
+Vercel pause and all schedules remain unchanged. main/coworker work untouched.
+
+---
+
+## 2026-10-22 — External recovery preparation (not deployed)
+
+Prepared on remote5a44a2f2 in an isolated worktree; coworker local8a7f801a
+is preserved. Node Docker pins24.22.1/22.23.4 and CI22.23.4 now explicitly
+select the October21 security fixes. .nvmrc selects24.22.1. No running
+provider version has been verified or changed by this preparation.
+
+Added opt-in encrypted-dump external copy with source/destination checksum and
+manifest readback, no database/decryption/deletion, and no latest-pointer update.
+Five regression tests pass. This does NOT copy deletion/suppression history or
+prove a complete recovery set. Added a schema-validated Render API standby
+Blueprint: no auto-deploys, schedules or DB provisioning; saving/payments/AI OFF.
+Importing it would incur cost; no external resource was created or configured.
+
+Local final gates on Node24.22.1: Node1323, Python2560 (total3883), lint0errors/
+5existingwarnings, build, compileall and diff check passed. Synthetic API startup
+verified READY, health200, unauthenticated401, disabled payments503 without DB
+or external calls. Docker tags exist but no Docker build/provider runtime test.
+See [configuration, cost boundaries and recovery procedure](RESOLUTE-EXTERNAL-RECOVERY-PLAN.md).
+CI result for this publication must be checked separately.
+
+User reports OpenAI/X plus DB management and3scoped passwords/variables rotated;
+runtime adoption remains unverified. Do not repeat those inputs. Saving OFF,
+Vercel pause, all jobs/reservations, UI and main unchanged. Next: agree external
+storage/service cost, provision independent backup/history custody, then actual
+isolated restoration and measured failover. No user operation needed for the
+completed source preparation. Fresh complete write-fenced history inventory is
+still mandatory before activation; old empty/3-event manifests are not reusable.
+
+---
+
+## RESOLUTE restore rollout blocked by Railway — 2026-10-21 20:09 JST
+
+Preflight found and fixed PostgreSQL image PG_SHA256 compatibility and the
+entry-point heartbeat preceding credential validation. Focused tests10/10.
+V4 bundle prepared and exact-source/mode/digest checks passed; not deployed.
+Railway rejected isolated service creation with "Deploys have been paused
+temporarily". Inventory confirms no new service and no pending changes.
+Official status reports current dashboard/API outage and all-region build pause.
+No production settings or schedules were changed. Storage remains OFF.
+See [fix, blocker and recovery steps](RESOLUTE-RESTORE-ISOLATION-CHECK.md).
+Next: complete CI, then provider recovery, isolated actual restore, and weekly
+bundle rollout. Do not ask for completed login/password/key/Run now steps again.
+
+---
+
+## RESOLUTE restore isolation — 2026-10-21
+
+Scheduled daily backup actual logs confirm upload/readback success at00:04:24Z
+with bundle fb7c4eda. New weekly-bundle execution remains unconfirmed; deployment
+SUCCESS alone is not restore evidence. Restore source now rejects scoped DB URLs
+and libpq alternate connection configuration before any client imports/I/O.
+See [isolation change and dated evidence](RESOLUTE-RESTORE-ISOLATION-CHECK.md).
+The source guard is not yet in the pinned Railway job bundle. Storage stays OFF;
+schedules and Vercel remain unchanged. Next: verify CI, roll out the reviewed
+restore guard without schedule changes, then fresh write-fenced inventory and
+live owner acceptance before activation. Owner action is not needed now.
+
+---
+
+## RESOLUTE signed-route verification — 2026-10-21 16:44 JST
+
+Implemented and verified CI-only real PostgreSQL coverage in d9999b8a, preserving
+coworker7fb58a21. Run39562964611: both jobs SUCCESS; actual logs confirm scoped
+password-authenticated signed HTTP save/delete/notification stop and isolated
+replay test1/1, payment concurrency5/5, Node1,311, Python2,549 and build success.
+Wrong passwords are rejected; stale save/stop requests return409 without reviving
+deleted plans or notifications; independent encrypted receipt readback and two
+replays succeed. The CI object store is in memory and the signed session is a
+fixture, not the live owner's Clerk session. See
+[full evidence](RESOLUTE-RUNTIME-CONNECTION-CHECK.md).
+Production remains at the prior verified scoped-connection state with storage OFF.
+Next: live-member/browser-route acceptance (Vercel currently paused), and a newly
+collected complete write-fenced manifest before any customer-save activation.
+No owner password entry, key entry, login, Run now or redeployment is needed for
+the completed steps. No schedule, payment, mail, AI, UI or Vercel setting changed.
+
+---
+
+## RESOLUTE runtime update — 2026-10-21 16:00 JST
+
+Supersedes older NOLOGIN/pending runtime statements below. All three existing
+scoped roles now LOGIN with unchanged minimum grants. Actual API password
+connections and full ACL checks passed for all three, including a repeat using
+the deployed DB_URL references. Deployment46d3e773 reached SUCCESS and actual
+API_READY; final checks06:58:25–33Z. Storage/protection/retry remain OFF.
+Post-check06:59:11Z: scoped connections0, deletion history0, notification rows0,
+outbox0. Health200 and unauthenticated plan/notification401 verified.
+See [runtime evidence and remaining gates](RESOLUTE-RUNTIME-CONNECTION-CHECK.md).
+Owner password entry, variable entry and deployment are complete: do not request
+these again. Next: authenticated route acceptance and fresh write-fenced complete
+inventory before activation. Prior restore evidence is not a new inventory.
+
+---
+
+## RESOLUTE runtime connection preparation — 2026-10-21
+
+Prior c5eb09e8 passed CI39446888627 (both jobs). A read-only scoped runtime
+identity/ACL checker is now implemented; see RESOLUTE-RUNTIME-CONNECTION-CHECK.md.
+The default preparation audit still requires all3 roles NOLOGIN. The new check
+requires the explicit expected LOGIN set and rejects administrator SET ROLE,
+wrong host/user, unexpected LOGIN and excess table/column/schema/function grants.
+Integrated local gates: Node1,296,Python2,549,lint0errors/5existing warnings,
+build,compileall,diff check passed. No production role, password, runtime flag,
+scheduler or API start changed.
+Production actual scoped login/normal save-route acceptance remains pending;
+local PGlite session checks do not prove production password authentication.
+Prior nonempty restore evidence and retained manifest remain valid dated evidence,
+not a reusable activation inventory. Saving remains OFF.
+
+---
+
+## RESOLUTE update — 2026-10-21 00:12 JST
+
+This dated update supersedes older pending claims for the checks below.
+Actual public HTTPS publication/readback of exactly3 synthetic protection events
+passed at2026-10-20T14:51:45Z; independent complete manifest pin
+72f819a298d8f5365f0fcb404c80ea3fd48e1b5139ffebbd9830cdad92bace75.
+Fresh baseline and final seal were produced while backend45509 held5 DB write
+fence locks. Production histories/outbox remained0; locks released14:55:10Z.
+Writer restored to disabled; temporary listener removed. Isolated actual-backup
+restore passed14:56:55Z with deletion1/both notification stops, pending0 and two
+idempotent replays. No source DB credentials exported. Disposable restore service
+deletion is pending: the tool confirmation expired/cancelled; service still exists.
+It was safely retired at15:14:19Z (actual RETIRED log, six credential/key references
+neutralized, inert start, no cron/domain/volume).
+See [complete evidence](RESOLUTE-NONEMPTY-CUTOVER-CHECK.md) and its retained manifest.
+
+Customer saving remains OFF; all3 storage roles NOLOGIN. Next: scoped runtime
+connections and normal authenticated route acceptance before any activation; obtain
+a fresh complete write-fenced manifest at that time. No owner key entry, login or
+Run now needed. Daily/weekly new-pin deployments ready; schedules unchanged and
+no new scheduled-run success claimed. Morning/news/earnings/UI/Vercel/billing/mail/AI
+untouched. Integrated2c056205 gates: Node1294,Python2549,lint0errors/5existingwarnings,
+build,compileall,diff check passed. GitHub/CI result must be verified separately.
+
+---
+
+## Current RESOLUTE status — 2026-10-20 evening JST
+
+This summary supersedes older pending/completed statements below for RESOLUTE
+storage only. Earlier dated entries remain historical evidence, not instructions
+to repeat completed operations. Other product work is unchanged.
+
+- Evening code follow-up: all four independent-history S3 reads now close their
+  response on success and failure. Three regression cases were added; local
+  gates passed: Node1,257, Python2,545, lint, build, compileall and diff check.
+  Based on coworker30eda76f; CI39417464527 passed for8daeaf3c. At21:27 JST,
+  rebuilt backup/restore bundles reached deployment SUCCESS with unchanged
+  schedules. At21:31 JST an isolated one-shot restore of the actual backup
+  verified8daeaf3c and its bundle digest, then RESOLUTE_RESTORE_OK. Production
+  protection history was empty; nonempty acceptance and scheduled-job execution
+  remain pending. The one-shot service was deleted. See the final cutover entry.
+- Owner reports Vercel paused at100% usage. Do not resume it or change billing.
+  Continue local/CI and scoped Railway work; frontend availability is not verified.
+- At21:50 JST the exact rollback SQL passed on isolated PostgreSQL18 with real
+  psql: two success passes, error-disconnect rollback, lock release, dormancy and
+  wrong-database rejection, collision preservation. No production credentials
+  or data were supplied; temporary service deleted. This closes the simulated
+  disconnect gap only. Production execution access remains blocked; see
+  RESOLUTE-SCOPED-WRITE-CHECK.md for evidence and the outstanding gate.
+
+- Completed: owner recovery-key custody and retrieval; production storage schemas
+  and minimum-permission audit; three storage roles remain NOLOGIN. Do not request
+  key regeneration, re-entry or another owner Run now for those completed checks.
+- API is deployed at 7875e998 (actual READY plus reader-only DB/HTTP checks).
+  Customer saving and protection publishing remain disabled. Token/reference
+  equality does not establish an operational writer or successful storage.
+- Actual post-schema production-backup restore passed with an empty history.
+  Synthetic loopback HTTP plus real S3 persisted three events and verified
+  readback after an in-process server restart. Neither proves production
+  nonempty-history recovery, public HTTPS acceptance or container-restart durability.
+- Production rollback-only check PASSED at2026-10-20T13:59:48Z through the
+  existing Postgres browser Console/local socket. Exact reviewed SQL SHA256
+  14abb5cb35417c878cd666a8393d3e696b862f70d8e650a9a7d26bb7cdcf9f81;
+  RESOLUTE_SCOPED_ROLLBACK_OK, committed_rows0, activation=false, psql exit0.
+  No admin credentials were exported and no persistent probe rows remain.
+- Independent read-only postcheck at14:00:29Z found production deletion and
+  suppression histories0, unpublished outbox0, LOGIN roles0 and writer sessions0.
+  Full effective catalog ACL audit passed at14:01:56Z for all3 dormant roles.
+- Remaining: fresh complete write-fenced inventory, actual public HTTPS gateway
+  receipts/durable objects, then isolated nonempty-history restore/replay before
+  reviewing customer-save activation. The rollback receipt was synthetic and
+  rolled back; it is not proof of external durability or authenticated saving.
+  Never reuse the initial empty manifest after writes. See
+  [cutover evidence](RESOLUTE-STORAGE-CUTOVER.md) and
+  [scoped check](RESOLUTE-SCOPED-WRITE-CHECK.md).
+- Browser access is now verified: correct radiant-magic production project and
+  existing Postgres Console. CLI policy denial remains; no retry or workaround.
+  No owner login, key re-entry or Run now is needed.
+- No live payment, charge, email, additional AI call or billing change. Preserve
+  morning/backup/restore schedules and reservations. October20 morning news is
+  not a successful acquisition. Keep RIZEL90 hidden and approved copy/UI intact.
+
+---
+
+# Company chain map — October 13, 2026
+
+The layered map now stays centered on the stock page's own company. After user
+feedback, removed company/competitor selection, Back/Reset, sticky header and the
+connection-details button. Direct/two-step/all display modes remain. Short direct
+relationship descriptions are visible below the graph; sources are collapsed.
+Colors have stronger contrast and the root node is white. Do not reintroduce
+ANET-centered content on an NVDA page. Shared structured data still builds the
+maps; no per-company hand drawing is needed. Full-directory research is incomplete.
+See `docs/COMPANY-INTRODUCTIONS.md`. Verify publication/CI/browser status against
+the resulting commit. News, price targets, translation and RESOLUTE are untouched.
+
+# Stock introductions — October 13, 2026
+
+Added the agreed six-part JA/EN company introductions below the stock price.
+Initial coverage: seven issuers / eight tickers (NVDA, MU, GOOG, GOOGL, AAPL,
+AMZN, META, COST). Full searchable-directory coverage remains the goal, not a
+completed claim. See `docs/COMPANY-INTRODUCTIONS.md` for sources, extension rules
+and the server-only issuer registry. No automatic research/update job is active.
+Local gates: 817 JS tests, 2,411 Python tests, production build, compileall and
+diff check passed; lint has zero errors and two existing warnings. Publication
+and browser verification must be checked against the resulting commit.
+PayPal registration is complete according to the user; identity verification
+is pending. No payment integration changed. News and RESOLUTE were untouched.
+
+# Scoped market feeds and suspended-route verification — October 2, 2026 11:46–11:51 JST
+
+Four concurrent branch commits through `422e95d60948f7ff6d465ac67cc76e8fb2fdd3e3`
+were integrated before verification. They scope the two newly requested X
+accounts to TrendSpider index-membership changes and Barchart government-bond
+or crude-oil facts, add revision-bound bilingual publication with strict
+number/status checks, label persistently blocked supplemental routes as
+suspended, and keep valid news visible when an unrelated candidate fails
+strict validation. No general X firehose, paid service, external delivery or
+investment-impact auto-publication was enabled.
+
+The complete integrated gate passed: Node 201/201, Python 559/559, ESLint with
+zero errors and one pre-existing warning, the Next.js production build and
+TypeScript check, `compileall`, and `git diff --check`. Vercel deployment
+`dpl_9KKjtT2ADmNJ7DZqftHDKyLVriWD` reached Ready for `422e95d`; Railway staging
+also reported success.
+
+The deployed operations preview was live at 11:48 JST with 22/22 company lists
+and all five priority issuers healthy. Supplemental coverage now reports 23/24
+instead of 23/26 because the persistently access-restricted Marvell Blog and
+TSMC Press Center routes are explicitly suspended rather than misreported as
+recovered or left to retry forever. MRVL remains monitored through its IR RSS
+and SEC route; TSM remains monitored through TWSE disclosures and SEC. One
+long-running timeout remains at bounded attempt 57, with its next normal retry
+at 14:49:01 JST. This route count is a point-in-time observation, not complete
+coverage or a delivery guarantee.
+
+The Japanese and English news views both rendered the revision-bound
+TrendSpider Nasdaq-100 membership item detected at 09:24:57 JST: Moderna
+`$MRNA` added on a scheduled basis and Warner Bros Discovery `$WBD` removed on
+a scheduled basis. The exact supported grammar used deterministic bilingual
+copy without waiting for a model call. Current NVIDIA and Nebius items remained
+visible beside it, live-verifying that one invalid article no longer suppresses
+otherwise valid news. Headline translation remained 49/49 with no pending,
+running, retrying or exhausted item at observation.
+
+Calendar files were reviewed first. All 40 companies already had an actual
+October 2 attempt and BLS/Federal Reserve schedules already had their daily
+review, so no event, time or coverage marker changed. The 14 inconclusive
+companies retain their exact blockers in
+`docs/CALENDAR-HANDOFF-2026-10-02.md`.
+
+---
+
+# Scheduled retry and translation recovery — October 2, 2026 10:47–10:52 JST
+
+The deployed operations preview initially rendered its bundled September 19
+snapshot, then reconnected through the normal client refresh without a forced
+worker action. At 10:51 JST it showed 22/22 current company-list results and all
+five priority issuers healthy. Vercel's reviewed one-hour preview window had no
+runtime error cluster; `/api/research/live` and `/api/research/news` returned
+HTTP 200. The six HTTP 503 responses in that window were confined to the
+separate price-target route. This is a point-in-time connection check, not an
+availability or delivery guarantee.
+
+The long-running supplemental timeout received its next lawful retry after the
+previous 10:32:40 JST schedule, failed again, and advanced from 56 to 57 bounded
+attempts. Supplemental coverage remains 23/26: two access restrictions and one
+timeout. The timeout is next due at 14:49:01 JST; the access-restricted routes
+remain deferred until 20:16:46 JST. Do not force either class early or describe
+23/26 as complete coverage.
+
+The deployed headline worker recovered the earlier three-item backlog: 49/49
+eligible official headlines were translated, with zero missing, running,
+retrying, exhausted or daily-limit-blocked jobs at observation. The rolling
+24-hour aggregate was 121/200 logical calls (51 completed, 67 failed and three
+discarded after source revision). This verifies current queue recovery after
+the bounded failure-classification and token-limit fixes; it does not establish
+publication-to-Japanese latency or an SLA. The body extractor remained at 209
+stored extractions, with lawful host blocks and retry waits still visible in
+aggregate.
+
+Calendar files were reviewed first. All 40 companies already had an actual
+October 2 attempt and BLS/Federal Reserve dates already had their daily review,
+so no event, time or coverage marker changed. The 14 inconclusive companies
+retain the exact blockers in `docs/CALENDAR-HANDOFF-2026-10-02.md`. The finite
+news-readiness backlog remains complete; no discretionary product feature,
+paid service, external delivery, production setting or access control changed.
+
+---
+
+# Abbreviated financial-unit validation — October 2, 2026 09:42–09:53 JST
+
+Commit `f1b0e9d61d0947a0b92493eb8d436ca3a7ba3627` closes a fail-open
+numeric-validation gap in the automatic Japanese headline and official-research
+paths. Previously, evidence containing `$10B` could support generated copy that
+said `$10M`, because the shared validator compared the number but did not bind
+single-letter magnitude abbreviations to it. The validator now normalizes
+K/M/B/T with thousand/million/billion/trillion and normalizes `%`, `％`,
+`percent` and `パーセント`, while still requiring the same literal number.
+Focused regressions cover changed magnitudes, an unrelated same-unit number,
+spelled/abbreviated equivalence and Japanese text immediately following the
+unit.
+
+A concurrent approved change, commit
+`e9a96994ade02f6af60d2a0d89f27d4c308719a4`, landed before publication and was
+integrated before the final gates. The combined tree passed Node 198/198,
+Python 544/544, ESLint with zero errors and one pre-existing warning, the
+Next.js production build, `compileall` and `git diff --check`. The local and
+GitHub Git Data trees matched exactly at
+`05206795e6f2affbfe23db464d5a5e5c1692cc80`. Vercel deployment
+`dpl_HwZ2MYs7sjAWveqiCvm9b2bHM4VA` reached Ready and Railway staging reported
+success.
+
+The deployed branch preview was reloaded at 09:53 JST. Current official news
+and the target-price stream rendered, the newest-news carousel remained
+populated, and no The Fly item appeared in the loaded public page. This is a
+point-in-time UI check, not a delivery-latency guarantee. The long-running
+supplemental-route timeout is not due before 10:32:40 JST, and the two
+access-restricted routes remain deferred until 20:16:46 JST; do not force an
+early retry or infer recovery before those normal attempts.
+
+Calendar files and the October 2 handoff were reviewed first. All 40 companies
+already had an actual October 2 attempt and BLS/Federal Reserve had their daily
+review, so no date, time or coverage marker changed. Fourteen inconclusive
+companies remain pending with the exact blockers recorded in
+`docs/CALENDAR-HANDOFF-2026-10-02.md`.
+
+---
+
+# Safe fallback reason in the operations UI — October 2, 2026 08:49–09:03 JST
+
+Commit `31beeae85e6601282e9a7f42a0ab889c05c42385` preserves the fixed
+server-side fallback categories and now carries only a validated category into
+the client state. The operations preview renders a Japanese `接続診断` label
+only while it is showing the saved snapshot. Automatic responses clear the
+reason. A shared runtime parser rejects unknown values, URLs, numbers and raw
+response or exception text, so the UI cannot turn an untrusted diagnostic
+string into private evidence.
+
+The complete gate passed: Node 195/195, Python 520/520, ESLint zero errors with
+one pre-existing warning, the Next.js production build, `compileall`, and
+`git diff --check`. The connector-created and local Git trees matched exactly
+at `71588067230e30e46d5e90ab344c151784655396`. Vercel deployment
+`dpl_EXjuVEUembTMn86VRXPbG1xSvk38` reached Ready and Railway staging succeeded.
+The deployment's reviewed runtime window had no 4xx/5xx request, warning,
+error, or fatal log.
+
+The deployed page initially rendered the saved September 19 snapshot, then its
+client refresh reconnected and showed automatic data at 09:01:17 JST. At
+09:02:12 JST the monitor and all five priority issuers remained healthy, all
+22 registered issuers had a current list result, and 49/49 eligible official
+headlines had translations. Because the monitor recovered, this run verified
+that the fallback reason is cleared on recovery; the new reason label itself
+was not live-observable during an active fallback and remains covered by the
+offline fixed-category regressions.
+
+The supplemental `other` route was lawfully retried at 09:01:42 JST, failed
+again, and was deferred to 09:03:42 JST; do not mark it recovered. The separate
+long-running timeout remains scheduled for 10:32:40 JST and the two
+access-restricted routes remain deferred until 20:16:46 JST. These are worker
+retry times, not polling or subscriber-delivery guarantees. Calendar files were
+reviewed first; all 40 companies already had an actual October 2 attempt and
+BLS/Federal Reserve dates already had their daily review, so no marker, date or
+time was changed.
+
+---
+
+# Safe live-monitor fallback diagnostics — October 2, 2026 07:41–07:59 JST
+
+Vercel runtime evidence showed 196 requests to `/api/research/live` during the
+review window, with no route-level 4xx/5xx response and no uncaught runtime
+exception. The route intentionally returned a saved snapshot with HTTP 200
+after its upstream monitor request failed, but the previous response exposed
+only a generic fallback state. Existing `console.warn` output was also absent
+from the Vercel runtime-log view, so operators could not distinguish timeout,
+connection, upstream status, invalid JSON or invalid payload without protected
+diagnostics.
+
+Commit `a4632086bf0a0338e05424e169f5b162f2993600` adds a fixed, aggregate-safe
+fallback reason to the JSON response and to `X-Tech-Phase-Monitor-Mode` /
+`X-Tech-Phase-Monitor-Reason` headers. Successful automatic responses report
+only `automatic`; fallback responses report only one of the predefined reason
+codes. URLs, route IDs, response bodies, exception strings, tokens and other
+private evidence are never returned. Focused regressions cover the fixed header
+surface and intake-response wiring.
+
+The integrated tree passed ESLint with zero errors and one pre-existing warning,
+Node 194/194, Python 514/514, the Next.js production build, `compileall` and
+`git diff --check`. Vercel deployment `dpl_FqjQPrAeq669b94YHNhR6ADRUvc8` reached
+Ready and Railway staging succeeded for the same commit.
+
+Live browser verification at 07:59 JST still showed `自動監視サービスの接続待ち`
+and the saved September 19 snapshot, so the intermittent Vercel-to-monitor
+failure remains active. The protected preview allowed the page itself but
+blocked direct API navigation, and the deployment connector returned the Vercel
+Authentication redirect; therefore the deployed reason code could not be read
+back in this run. Do not infer a specific cause from the fallback banner alone.
+Use the new fixed reason on the next authenticated API observation, then confirm
+recovery without exposing raw upstream evidence. The timeout route is not due
+for its next lawful retry until 10:32:40 JST, and the two access-restricted
+routes are not due before 20:16:46 JST.
+
+Calendar maintenance made no marker change: all 40 companies already had an
+actual October 2 attempt, and BLS/Federal Reserve dates had already received
+their required daily review. No estimated date or time was added.
+
+---
+
+# Scheduled retry and preview fallback checkpoint — October 2, 2026 06:47 JST
+
+The deployed operations preview showed the live monitor at 06:47:42 JST long
+enough to verify that the long-running supplemental-route timeout retried after
+its 06:16:20 schedule and failed again. Its bounded attempt count increased
+from 55 to 56; the next retry is scheduled for 10:32:40 JST. Supplemental
+coverage therefore remains 23/26, with two access restrictions and one timeout.
+The access-restricted routes are not due before 20:16:46 JST. Core lists were
+still 22/22 and all five priority issuers were healthy. These are point-in-time
+worker observations, not polling or delivery guarantees.
+
+The same live state showed one additional extracted body (209 total) and a new
+Microsoft official item detected at 06:27:27 JST with body evidence ready at
+06:27:37 JST, a measured 11-second detection-to-body interval. The official
+source exposed only a publication date, not an exact source time, so no
+publication-to-detection latency is reported. Across the four new body samples
+shown by the worker, detection-to-body averaged 446 seconds with a 1,747-second
+maximum; these are recovery samples, not an SLA. Headline translation remained
+at its rolling 50/50 request limit with 47 translated and three pending.
+
+Immediately after the live observation, the same page switched to its saved
+September 19 fallback. One normal reload still showed that fallback, so this
+checkpoint does not claim that the preview proxy reconnected. The worker was
+healthy in the last live observation; the exact remaining blocker is the
+intermittent Vercel-to-monitor connection, and the public-safe fallback does not
+expose private route identities, URLs or raw errors. No access control was
+bypassed and no protected diagnostics were published.
+
+Calendar maintenance made no marker change: all 40 companies already had an
+actual October 2 attempt, and BLS and Federal Reserve dates had already received
+their required daily review. The 14 inconclusive companies keep their exact
+pending blockers; no estimated date or time was added.
+
+---
+
+# MU automatic publication recovery — October 2, 2026
+
+Verified deployment: `f1af6f8f13ee45134f39b2243701792e01adfb9e` (Railway,
+Vercel, GitHub preview checks all success). Core fix: `c3295f8`.
+All concurrent calendar edits through `e4f12f9` are preserved.
+
+- Exact root causes: HTML extraction skipped Micron's ASP.NET `fmForm1`;
+  source title was NULL so the issuer bridge excluded the release; concurrent
+  startup schema migration crashed the monitor thread with duplicate-column
+  OperationalError. Translation's rolling 24-hour budget was also at 50/50.
+- Fixed fmForm1 extraction, revision-bound re-extraction, synchronous schema
+  initialization before 13 workers, monitor supervisor/retry, and missing MU
+  titles recovered only from an explicit heading in the fetched official body.
+- Added a bounded MU issuer-format adapter: quarterly revenue, non-GAAP EPS,
+  operating cash flow, next-quarter revenue/EPS guidance. No invented consensus,
+  no unit conversion, no extra OpenAI call, no budget increase. Unknown formats
+  fail closed. This is a factual earnings brief, not complete qualitative PRO analysis.
+- Existing record repair: requeued only the healthy MU source with old extractor
+  version; normal worker fetched 18,733 chars (previously 614). Recovered its
+  missing title from the same stored official body; recurring title repair now
+  deployed. Financial values were not manually inserted into the publication.
+- Worker automatically published exactly one MU issuer note `ir-result-1126`.
+  First detection: 2026-09-30T20:18:32.104Z (Oct 1 05:18:32.104 JST).
+  Complete body: 2026-10-01T18:53:53.271Z (Oct 2 03:53:53.271 JST).
+  Generation start: 2026-10-01T18:58:47.563458Z.
+  Publication: 2026-10-01T18:58:47.579Z (Oct 2 03:58:47.579 JST).
+  Generation/publication processing: 16 ms, deterministic/no API.
+  First detection to public: 81,615,475 ms = 22h 40m 15.475s.
+  These are RECOVERY timings, not a successful real-time earnings SLA.
+- Actual deployed Japanese and English detail UI verified (5 facts and exact
+  revenue/EPS/guidance). URL:
+  https://tech-phase-lab-git-codex-research-preview-chehon7144-5412.vercel.app/research?result=ir-result-1126#what-changed/ir-result-1126
+- News route now omits the manual MU fallback when a valid live MU earnings
+  note is present. Other historical research cards are retained. API URL cannot
+  be directly opened by this browser (ERR_BLOCKED_BY_CLIENT); do not bypass.
+- Final local checks: lint 0 errors/1 existing warning, Node 191/191,
+  Python 514/514, build, compileall, diff check. Equivalent checked tree verified
+  before connector ref updates. Remote code gates passed.
+- Remaining: no promise of all-news launch readiness. Other issuer notes still
+  show unsupported-number failures and the 50-call budget is exhausted. Global
+  translation backlog/quotas, alert delivery, general earnings formats and true
+  next-event end-to-end SLA need separate resolution. Never report 16 ms as
+  announcement-to-public speed. Existing old MU rehearsal input570 chars is not
+  evidence of full-body automatic publication.
+
+---
+
+# Supplemental-route recovery checkpoint — October 2, 2026 05:45 JST
+
+The deployed operations preview was reloaded after the bounded retries recorded
+in the prior handoff. Supplemental first-party routes improved from 21/26 to
+23/26. The prior `invalid response` and `other` failures both cleared through
+the normal retry path; no code, credential, source substitution or access-control
+bypass was used. The core lists remained 22/22 and all five priority issuers
+remained healthy.
+
+Three supplemental routes were still waiting: two access restrictions and one
+long-running timeout. The timeout had 55 bounded attempts and a measured active
+age of 551,876 seconds; its next scheduled retry was 06:16:20 JST. The access
+restrictions were scheduled no earlier than 20:16:46 JST. Those are point-in-time
+worker observations, not polling or delivery guarantees. The public-safe page
+does not expose route identities, URLs or raw errors, so resolving the remaining
+timeout beyond the lawful scheduled retry still requires protected staging
+diagnostics.
+
+The same live view showed automatic headline translation still at the rolling
+50/50 request limit with three items pending. Body evidence remained 208
+extracted, 783 not extracted, with 791 rows on three host circuits and six
+bounded retry waits. A newly detected NBIS SEC 6-K had no body evidence yet;
+the page classified SEC body errors as access restrictions. Do not treat the
+filing metadata as an extracted article body or work around the SEC restriction.
+
+Calendar maintenance did not rewrite any marker in this checkpoint: all 40
+companies already had an actual October 2 attempt, while BLS and Federal Reserve
+dates had already received their required daily review. The existing 14 pending
+companies retain their exact blockers and older completed-check dates where
+appropriate; no estimated date or time was added.
+
+---
+
+# Micron official-item live verification and reader deduplication — October 2, 2026 04:42–04:46 JST
+
+The deployed intake view confirms that the Micron issuer page is now extracted
+and published without an LLM round trip: `ir-result-1126` was public at
+03:58:47 JST, with a reported generation time of 0.0 seconds. The source was
+first detected at 05:18:32 JST on October 1 and its body was ready 12 seconds
+later; the displayed 81,615-second detection-to-public interval is incident
+recovery, not an SLA. Core lists were 22/22 and all five priority issuers were
+healthy. Supplementary routes were 21/26, with two access restrictions, one
+timeout, one invalid response and one short-lived `other` failure, all waiting
+for bounded retry. No access control was bypassed.
+
+The live Japanese and English research detail for `ir-result-1126` preserves
+the issuer-backed figures: $54.23B revenue, $33.42 adjusted diluted EPS,
+$43.97B operating cash flow, $61.5B ± $1.5B next-quarter revenue guidance and
+$38.15 ± $1.00 adjusted diluted EPS guidance, with a direct Micron source link.
+The reader list also exposed three representations of the same September 30 MU
+earnings event (issuer note, checked-in fallback and X flash). Research assembly
+now keeps the first, highest-priority earnings representation for each
+ticker/publication date. It intentionally does not collapse non-earnings items,
+because multiple distinct product or partnership releases can share a date.
+Two regressions cover both behaviors.
+
+After integrating the concurrent title-recovery/news-preference commits, the
+final gate passed: ESLint had zero errors and one pre-existing warning, Node
+193/193, Python 514/514, Next.js production build, `compileall` and
+`git diff --check`. Commit `112c7ff` used the exact local/Git Data tree
+`12ab7e5f`; Railway staging and Vercel both succeeded. Post-deployment browser
+verification showed exactly one September 30 MU earnings card in Japanese and
+English. The older June 24 analysis remains separately visible, so legitimate
+historical research was not removed. The selected item retained all five
+issuer-backed facts and its direct Micron link.
+
+---
+
+# Full October 2 calendar rotation and live intake observation — October 2, 2026 03:47 JST
+
+Reviewed the final rotation batch: ORCL, PANW, PLTR, QCOM, SKHY, SNDK, SNOW,
+TSLA, TSM and VRT. Sandisk and TSMC reconfirmed their existing stored calls;
+the other official pages published no later firm earnings date. No estimated
+date or time was added. All 40 tracked companies now have an October 2 review
+attempt; 26 have conclusive October 2 checks and 14 remain pending from
+inaccessible, tentative or otherwise inconclusive evidence. The 14 include
+AMAT's explicitly projected date, whose older completed-check date was
+deliberately retained. Exact evidence is in `CALENDAR-HANDOFF-2026-10-02.md`.
+
+Before this edit, the deployed intake view showed 22/22 company lists and all
+five priority issuers healthy. Supplementary routes were 21/26: two access
+restrictions, one timeout, one invalid response and one short-lived `other`
+failure, all in bounded backoff. Child-article failures were zero. The live
+24-hour source-publication-to-monitor sample was nine items, averaging 4,572
+seconds with a 40,711-second maximum. These are point-in-time measurements,
+not complete coverage or a latency SLA.
+
+Calendar refresh commit `4c24f5e` preserved the concurrent Micron recovery
+commit and used the exact local/Git Data tree `1c4063b0`. Railway staging and
+Vercel both succeeded. The integrated gate passed: ESLint zero errors with one
+pre-existing warning, Node 190/190, Python 514/514, Next.js production build,
+`compileall` and `git diff --check`. Post-deployment browser verification showed
+the October 2 review date, 24 upcoming schedules and 40 tracked companies;
+TSMC and Sandisk retained their exact source times.
+
+# Third October 2 calendar batch and live intake observation — October 2, 2026 02:41–02:48 JST
+
+Reviewed KLAC, LRCX, META, MRVL, MSFT, MU, NBIS, NFLX, NOW and NVDA against
+current first-party investor sources. KLA, Lam Research and Netflix reconfirmed
+their existing stored schedules; no new firm earnings date or clock time was
+published. Marvell's October 6 item is Investor Day rather than earnings,
+ServiceNow's official page remained inconclusive, and NVIDIA says only that the
+next earnings event is coming soon, so those three remain pending without an
+estimated date. The day's BLS and Federal Reserve review was already complete.
+Exact evidence and blockers are in `CALENDAR-HANDOFF-2026-10-02.md`.
+
+The canonical preview first showed its saved September 19 fallback, then
+reconnected automatically to the live monitor. At observation, core company
+lists were 22/22 and priority sources 5/5 healthy. Supplementary routes were
+21/26: two access restrictions, one timeout, one invalid response and one other
+failure, all with bounded retries; child-article failures were zero. Source
+publication-to-monitor latency had seven 24-hour samples averaging 5,868
+seconds with a 40,711-second maximum. These are point-in-time incident metrics,
+not complete coverage or a latency SLA. The public preview intentionally lacks
+private route identities/evidence; no discretionary diagnostics endpoint was
+added because the finite news-readiness backlog is complete. Protected staging
+diagnostics remain the exact blocker if further classification is authorized.
+
+Calendar refresh commit `f05a53a` used the exact local and Git Data tree
+`c64a60ce`; Vercel and Railway staging both succeeded. The complete gate
+passed: ESLint zero errors with one pre-existing warning, Node 190/190, Python
+510/510, Next.js production build, `compileall` and `git diff --check`.
+Post-deployment browser verification showed the October 2 review date, 24
+upcoming schedules and 40 tracked companies. The live intake had recovered to
+22/26 supplementary routes: two access restrictions, one timeout and one
+invalid response; the prior `other` failure cleared. The next calendar batch is
+ORCL, PANW, PLTR, QCOM, SKHY, SNDK, SNOW, TSLA, TSM and VRT.
+
+# ASML exact release/call times and second October 2 calendar batch — October 2, 2026 01:44–02:00 JST
+
+Reviewed ADBE, AMAT, AMD, ASML, COHR, CRM, CRWD, DELL, GEV and INTC against
+current first-party investor sources. ASML's official quarterly-results page
+now confirms an October 14 results release at 07:00 and a separate investor
+call at 15:00 Amsterdam time. The prior date-only item was replaced by those
+two exact events; Adobe and GE Vernova were reconfirmed, and no tentative or
+estimated date was added. AMAT remains pending because its page describes
+November 12 only as projected. The day's BLS and Federal Reserve review was
+already complete and unchanged. Exact evidence and blockers are in
+`CALENDAR-HANDOFF-2026-10-02.md`.
+
+Before edits, the canonical preview first served its saved September 19
+fallback snapshot, then reconnected to the live monitor after the normal
+refresh. The recovered view showed 22/22 core company lists and priority 5/5
+healthy. Supplementary routes were 21/26: two access restrictions, one timeout,
+one invalid response and one other failure. Child-article failures were zero;
+body-host blocks remained 790 rows across four routes. Headline translation
+was active at the observation point and had used its 50/50 rolling 24-hour
+call budget. These are point-in-time observations, not complete coverage or a
+latency SLA. The next safe diagnostic priority is protected inspection of the
+fixed persisted codes behind `invalidResponse` and `other`; do not expose
+route identities, URLs, exception text or private evidence publicly.
+
+Calendar commit `7f6e383` used the exact local and Git Data tree
+`6a3c9e9`; Vercel and Railway staging checks succeeded. The complete gate
+passed: ESLint zero errors with one pre-existing warning, Node 190/190,
+Python 510/510, Next.js production build, `compileall` and
+`git diff --check`. Post-deployment browser verification showed 24 upcoming
+schedules, with ASML results at 14:00 JST and its separate call at 22:00 JST.
+The time-unpublished section now retains only the date-only KLA release and
+FOMC meeting dates.
+
+# Calendar refresh and explicit route failure categories — October 2, 2026 00:18–00:29 JST
+
+Reviewed AAPL, AMZN, ANET, ARM, AVGO, BE, CRDO, CRWV, GOOGL and LITE against
+current first-party investor sources. No firm future earnings release/call date
+was published; Arm's November 4 date remains explicitly tentative. The BLS
+October schedule and Federal Reserve meeting calendar still match the stored
+events, so no event or invented time was added. Advanced only the 10 attempted
+company markers and the macro review date. Exact sources and blockers are in
+`CALENDAR-HANDOFF-2026-10-02.md`.
+
+The live preview remained healthy for the core pipeline at 00:28 JST: 22/22
+company lists and priority 5/5 healthy. Supplementary coverage remained 22/26,
+with two access restrictions, one long-running timeout and one rapidly
+recovering/refailing route reported only as `other`; this is not complete
+coverage. A new safe aggregate classification maps only fixed persisted codes
+to `fetchFailure` and `noLinks`, leaving arbitrary/legacy detail in `other`.
+The owner UI now shows 取得失敗 and リンク未検出 separately for route, retry,
+active-outage and child-article aggregates. Older backend payloads render both
+new values as zero during rollout. No route IDs, URLs, exception text, evidence
+bodies or credentials are exposed.
+
+Post-deployment browser verification at 00:41 JST showed the new 取得失敗 and
+リンク未検出 labels in the preview, both at zero, while `other` remained one.
+Therefore the current persisted safe code is outside the newly recognized
+`fetchFailure` and `noLinks` sets; this route was not reclassified or recovered.
+Next inspect protected staging diagnostics, or add another allowlisted fixed
+code only after evidence confirms it, without exposing route identity or
+private evidence.
+
+# Live monitor recovery and safe proxy diagnostics — October 1, 2026 23:49–23:56 JST
+
+The latest branch deployment at ac998c3 is Ready on Vercel. An authenticated
+browser check at 23:52:41 JST confirmed the live intake had recovered: 22/22
+company lists, priority 5/5 healthy, headline translation 45/45, and the NBIS
+issuer-note line visibly reported one published and one unpublished item. The
+published ir-result-1106 still shows 6.9 seconds for its final generation and
+11,153 seconds from detection to publication; the latter is incident recovery,
+not an SLA. Supplementary routes were 22/26 with two access restrictions, one
+timeout and one other retry, so total official coverage is not claimed.
+
+The Vercel proxy had previously returned its checked-in fallback snapshot
+without a safe causal log. `/api/research/live` now emits only fixed diagnostic
+categories, coalesces the same failure for five minutes per warm instance, and
+emits one recovery record with elapsed time. It rejects credential-bearing
+monitor URLs and never logs URLs, tokens, response bodies, exception text or
+private evidence. The public fallback payload and cache behavior are unchanged.
+
+Rechecked LITE, MRVL, NOW, NVDA, PANW, PLTR, SKHY, SNOW, VRT and QCOM against
+current first-party investor sources. No new confirmed earnings event was found;
+Marvell's October 6 Investor Day is not an earnings release. BLS still lists the
+October 2 Employment Situation, October 14 CPI and October 15 PPI at 08:30
+Eastern; the Federal Reserve still lists October 27–28 and December 8–9 without
+future statement or press-conference times. Existing October 1 coverage dates
+were not rewritten. Exact blockers are in `CALENDAR-HANDOFF-2026-10-01.md`.
+
+# Live bilingual NBIS publication recovery — October 1, 2026 23:06–23:11 JST
+
+Current code commit d427c6b003b213dca493ef833ae845b3f21ee3be (after 82ce99c). GitHub Research preview checks, Vercel and Railway all succeeded. Integrated KLA calendar work f005c6a preserved. Final gates: 186 Node tests, 508 Python tests, lint zero errors/one existing warning, Next production build, compileall, diff check.
+
+NBIS Inferize acquisition is now automatically published as ir-result-1106. Browser verified home news -> internal what-changed detail -> Japanese and English titles, summary and four factual points. No manual insertion of this article. Public URL: https://tech-phase-lab-git-codex-research-preview-chehon7144-5412.vercel.app/research?result=ir-result-1106#what-changed/ir-result-1106 . Official date unknown remains explicitly labelled detection, not invented publication time. Screenshot techphase-nbis-bilingual-20261001.jpg retained as libfile_fcd968eb79d08191b9f306d209c16669.
+
+Measured source detection 20:00:29 JST, body ready 20:00:41 JST, public at 23:06:22 JST. Final successful generation/publication processing 6.9 seconds; detection-to-public 11,153 seconds (~3h05m53s). This is incident recovery, NOT a timely delivery success or seconds-level SLA.
+
+Root causes fixed in this active investigation:
+- Numerical flash worker had been coupled to the headline LLM loop/config. It now independently runs every 5 seconds even with OpenAI absent. Never attribute a polling interval to achieved end-to-end latency.
+- Issuer full-body notes were missing from automatic what-changed events. Added revision-bound bilingual factual notes, shared existing model/call budget, private evidence, validated issuer URLs and existing FREE/PRO analysis gates. Existing private drafts/review approvals untouched.
+- Actual note failures were unsupported-quote: model-written quotations did not exactly match source. Notes now select evidence excerpt IDs; code resolves exact source strings before validation.
+- Subsequent unsupported-number failures were exposed. Non-earnings notes omit figures/date digits to avoid invented or converted quantities. Earnings notes retain strict literal numeric verification. Legacy failures receive only explicitly bounded recovery attempts (up to 6 for the identified quote/number migrations); fresh normal attempts remain max3. No budget or access protection weakened.
+- Invalid issuer-note parsing no longer suppresses otherwise valid numerical flashes/news. Dates distinguish detection vs official publication.
+
+Remaining launch blockers; do not claim all fixed:
+- MU official release is still extracted as only 614 characters. The prior rehearsal sent 570 chars and remained a private draft; headline API4.5s + summary API3.4s did NOT mean public end-to-end success. Browser showed Cloudflare security verification on MU IR, still blocked after one reload; local official URL fetch HTTP403. No bypass attempted. We do not have the raw successful full HTML to establish the extraction defect precisely.
+- MU WallStEngine automatic bilingual numerical flash x-result-1051 exists: source05:01:11 JST, recovered detection07:04:26.110, public07:04:28.763. Detection-to-public2.653s, source-to-detection123m15.110s. This is backfill, NOT real-time success. Its actual record lacks guidance. Static manual MU article is separate; do not present it as automatically generated analysis.
+- One older issuer job1098 remains held after6 attempts unsupported-number. NBIS1106 is done. At23:07 diagnostics headline45/45, calls48/50 rolling24h, note published1/pending1. Further failures must not silently loop or increase paid quotas. Existing operational incident records flag overdue material notes; external notification remains OFF.
+- Broad earnings/macro format coverage and fresh event timings still need work. Supplementary routes22/26 at observation with2 access restrictions,1timeout,1other; this is not total coverage.
+
+OpenAI API is ACTIVE since September29 (older handoff lines saying unconfigured are stale). Vercel Pro active; $10 is additional usage budget, not subscription price. Do not request keys in chat or change billing. Work only codex/research-preview, never main. User wants prompt real results and no premature completion; keep status factual and clearly separate recovered incidents from unresolved launch readiness.
+
+# NBIS publication recovery verified — October 1, 2026 21:50–21:52 JST
+
+Deployed code 489c997 + 39bf79b on codex/research-preview. Railway and Vercel success; GitHub Lint/test/build check success. Fix gates: 181 Node tests, 499 Python tests; after integrating concurrent Lam calendar update 371842b, 182 Node tests and 499 Python tests pass. Final gates also include lint (one pre-existing unused-ticker warning), build, compileall, diff check.
+
+Live home on the branch alias shows "Nebius、Inferizeを買収しNebius Token Factoryの推論スタックを強化へ 2026年10月1日" with "取得 2026/10/1 20:00:29 JST". Observed in browser at 21:50:31 JST; screenshot captured 21:51. This is the existing translator's automatic output, not a manually inserted headline. The source DB publication date was NULL although the source title included a date; fresh release_events with verified bodies now stay eligible with unknown publication date, without fabricating a timestamp. Generic Read story headlines excluded.
+
+Live intake afterward: eligible42, translated42, pending0, running0, retrying0, exhausted0; calls24h32/50 (completed29, failed0, prior stale3). This is recovery evidence, NOT a seconds-level original publication SLA, and NOT proof all external sources are healthy or full earnings analysis is complete. Prior 20/20 did not include the primary IR pipeline. Official-source access/backoff gaps elsewhere still require work; no bypass or quota increase made.
+
+Screenshot retained: libfile_64923f4e9d38819181d3e920bcd3a0b3, techphase-nbis-recovered-1790859067420.jpg. Final current source tree before this documentation: 5c520d239c23de28c5e4a5f8dcf91c4235f9b07e.
+
+# Primary IR publication gap — October 1, 2026 evening
+
+Root cause of missing Nebius/Inferize acquisition: primary monitor persisted the release in sources/source_revisions/release_events, but service.public_news used only supplementary signal_events. The official IR release was never eligible for headline translation or the homepage. Detection 20:00:29 JST, fetched body 20:00:41 JST. Prior 20/20 translation recovery measured supplementary items only, NOT this acquisition. Never describe that as end-to-end coverage.
+
+Fix: official_release_bridge projects recent, fetched, eligible issuer release metadata into the shared signal headline pipeline. Exact company article rules, title/body/date revision binding, held/rejected exclusions, no SEC boilerplate, no private bodies or research auto-approval. Existing translation budget/model/access boundaries remain unchanged. Translation and diagnostics cover the bounded 7-day/500-event queue independently of homepage's 20-item limit. The incident watch records a stalled (5 minutes), exhausted, misconfigured or budget-blocked translation queue without requiring page visits, and resolves after recovery. This records incidents through the existing mechanism; do not claim a new external notification delivery was configured.
+
+Regression tests reproduce primary acquisition -> translation -> public projection; date precision/privacy/idempotency; current revision changed during translation; rejected/held, old, promotional, unfetched suppression; more than 20 eligible items; incident recovery; frontend company URL validation. Live post-deployment verification remains required before reporting this incident resolved. This change does NOT finish all-format earnings/macro parsing or full bilingual analytical articles; those launch blockers above remain.
+
+# News selection — owner instruction October 1, 07:16 JST
+
+Official status alone does not make a post public news. Course/webinar/workshop/recruiting/registration promotions stay in private acquisition and are excluded before headline translation/public feed. Material earnings, acquisitions and business changes remain eligible. News headline display strips CTA tails and raw URLs in both languages, including existing stored translations. No data deletion, account removal or membership changes. The Nebius Agentic AI course promotion reported by the owner must disappear from the visible news and ticker after deployment.
+
+# Automatic result recovery — October 1, 2026
+
+Owner requires immediate earnings and macro intake, bilingual flashes and what-changed pages. Wall St Engine already existed; FabyMETAL4 is newly authorized. Existing three reporters plus Faby now share one 30-second route, Nebius stays 120 seconds; nominal 3,600 requests/day within unchanged configured cap. Old separate reporter routes disabled to avoid duplicate charges. Incremental cursor/pagination is persisted; initial bounded recovery window is 12 hours.
+
+Recognized earnings numbers are projected into bilingual fact labels without an LLM roundtrip. Unsupported/preview/ambiguous formats remain private. Consensus and commentary are not copied or blended. Result stage timestamps are stored separately; numeric projection milliseconds are NOT API translation timings or end-to-end SLA. Dynamic result articles preserve membership authorization. Macro facts also reach the calendar. Browser visible polling is five seconds, hidden tabs pause requests. Full official-document verification and complete narrative analysis remain launch work; do not describe a numerical flash as a complete analysis.
+
+Verified on the deployed branch (3305ea8, frontend fix 5a97dea): actual Wall St Engine MU post https://x.com/wallstengine/status/2105387504291786928 automatically produced x-result-1051. Source timestamp 05:01:11 JST, recovered detection 07:04:26.110, bilingual publication 07:04:28.763 on October 1. Detection-to-publication 2.653 seconds; source-to-detection 7,395.110 seconds (123m15.110s), i.e. recovery/backfill, NOT fresh delivery SLA. Parsed revenue, EPS, gross margin and operating cash flow; this observed record does not include guidance. News JP and dynamic what-changed JP/EN visibly verified; owner premium body authorized. Existing NVDA 05:54 story also visibly Japanese. Both deployments succeeded; final CI 36783800159 succeeded, 177 Node and 484 Python tests plus lint/build/compileall/diff check passed.
+
+The first release exposed a client validator that only accepted static MU research IDs. Fixed by requiring an exact match to a validated earnings result in the same public payload, with an integration regression test. FREE/protected article boundaries unchanged and tested, including dynamic IDs. No manual static financial entry was needed for this X result.
+
+Live macro results and Faby-derived publication have NOT been observed yet. Macro parser currently requires an explicit actual/result label and recognized indicator; other formats remain held. Poll cadence is configured 30s plus worker5s and visible browser5s, not an unconditional seconds-level guarantee. Full official-document verification, richer narrative analysis and all-format coverage remain launch blockers. Do not claim complete earnings analysis is automatically finished.
+
+# Immediate recovery — owner instruction 2026-10-01
+
+This section overrides stale December holds below. The owner already configured OpenAI on September 29 and explicitly requires immediate automatic news translation on October 1. Do not reinstate a December approval gate. Stock News activation remains separate.
+
+- Translation uses existing enabled flag, approved provider/model and daily cap, with a five-second worker poll. Authorization date is September 30 UTC / October 1 JST; the specifically superseded December 1 environment date cannot reinstate the old hold.
+- MU current results are manually verified against SEC Exhibit 99.1, available as a numerical flash and bilingual what-changed event. This recovery is not proof of a general automatic publication pipeline.
+- The MU release was detected 05:18:32.104 JST and its partial 614-character body was ready 05:18:44.545 (12.441 seconds). Original delayed rehearsal started 06:24:12.023: translation 2.070 seconds, summary 2.124 seconds, total API time 4.194 seconds. Its completion at 06:24:16.222 was 3,944.118 seconds after detection and remained a private draft. No original automatic subscriber delivery occurred.
+- The reviewed SEC-fact replay ran 06:30:37.805–06:30:45.669 JST: headline API 4.507 seconds, bilingual summary API 3.353 seconds, total 7.860 seconds. It preserves the original log and remains a private generated draft. Numerical flash and reviewed JP/EN current article were separately deployed in 29a0461 and observed in the browser by 06:33 JST. That is a manual recovery, not original automatic publication or a live SLA.
+- Full official source acquisition, numeric validation and automatic bilingual publication for future company events remain launch blockers. FREE/PRO/editor boundaries must not change.
+
+# Tech Phase — current handoff, 2026-09-30 14:47 JST
+
+Start here, then read AGENTS.md and docs/AUTONOMOUS-NEXT-2026-09-29.md. Current source and newer owner instructions override older documents.
+
+## Repository and delivery
+- Repo tech-phase-lab/tech-phase-lab; publish only codex/research-preview. Never main, production, billing, paid activation or unsolicited email.
+- Local checkout /workspace/scratch/c75a19ba2698/tech-phase-membership, branch codex/member-content-20260928.
+- Preview https://tech-phase-lab-git-codex-research-preview-chehon7144-5412.vercel.app/research
+- Git CLI fetch works; use connected GitHub Git Data for writes. Exact checked git write-tree must equal connector tree SHA; fresh parent and force:false. Run every AGENTS gate after integrating concurrent updates.
+- Existing hourly continuation can modify the same preview branch. Fetch before work/publish; do not duplicate automation.
+
+## Latest accepted UI and owner preferences
+- Avoid repetitive explanations and lists of nouns joined by Japanese middle dots. Short, natural prose; do not add generic AI slogans.
+- Changes page heading: 何が変わった？ with subtitle 決算や提携、新サービスなど企業の変化を1ページで。 No duplicate section heading or article count badge.
+- Remove top verification banner and RESEARCH PREVIEW label. Removal is presentation only, not launch readiness.
+- External research footer note: 公開要約をもとに独自に整理しています。
+- Shared footer: 変化を読み、一歩先へ。 / Read the shifts. Think ahead. This was documented as approved PRO copy and is now reused in footer.
+- Home news: show full available Japanese headline/summary with wrapping, NO external link. Left/right touch swipe plus keyboard arrows; auto rotation and pause retained. Full source article body is not available here. Touch has not been verified on a physical phone.
+- Market starts on index chart. Category labels just 指数 / 債券ETF / 為替; no explanatory examples. Sector performance and heatmap remain direct choices. Nine themes use one compact dropdown, not chips. Remove extra attribution/explanation paragraphs; original embedded TradingView branding stays intact.
+- Themes: memory, AI cloud, optical, chips, power/cooling, cybersecurity, gold miners, software, space.
+- Price-target card accepted: do not redesign. News five per page, compact; Free desk dark overlay with lock and no chains; small right-aligned PRO feature link below.
+
+## Actual status and unfinished work
+- What changed articles come from lib/research/content.ts, not the live news feed. Includes earnings, partnerships, financing, products and external research. Not exclusively previous-quarter comparisons. Latest review label derived from article dates, not a hardcoded date. Article contents have NOT been refreshed in these UI turns. Review original evidence before changing claims/dates; never manufacture freshness.
+- Official news acquisition, source publication vs discovery timestamps, NEW logic, bounded latency measurement, dormant headline translation worker, aggregate owner diagnostics, duplicate/stale/reconnect recovery implemented. Read NEWS-HANDOFF for measured facts and deployment limitations.
+- OpenAI and Stock News remain unconfigured at owner's request until early December for January launch. Do not claim automatic translation or seconds-level delivery is live.
+- Stock comparison is not fully production-ready without authorized data. No scraping/redistribution workaround or TradingView branding concealment.
+- Membership, notification and publication boundaries need final end-to-end launch checks. Preview is not production-ready merely because labels were removed.
+- Latest autonomous backlog and calendar maintenance are in AUTONOMOUS-NEXT and CALENDAR-HANDOFF. Preserve paid-provider OFF state.
+
+## External replies and finances
+- User already sent TradingView licensing inquiry to platforms@tradingview.com and affiliate inquiries to marketing@webull.com, partnerships@trading212.com, affiliates@firstrade.com. Use user's edited email versions. Do not resend. Affiliate approvals/URLs pending.
+- Vercel Pro upgraded. $10 is additional spending budget, NOT the plan's monthly fee. Memory saying $10 plan is wrong.
+- FAQ text approved by owner. X account for RIZEL planned for December; do not invent handle. Guide broker links await approvals.
+
+## Suggested continuation
+1. Verify user's latest screen feedback without reintroducing rejected labels/layouts.
+2. Refresh stored company analysis from verified primary evidence as a separate content task; keep news ingestion and analysis updates distinct.
+3. Finish remaining delivery/recovery checks and December activation checklist; no paid calls now.
+
+Owner explicitly wants progression from verification toward production readiness. Prioritize genuine readiness work and article freshness; do not just remove labels or activate deferred paid services.
+
+## September 29 21:20 JST
+- Owner mostly views mobile; explicitly asked for desktop review. Home → What changed must start at main heading, not workspace/articles. Adjusted openView scroll destination for changes to research-main.
+- Stock research empty state intentionally only has search/history currently. Proposed next enhancement: compact theme-based stock discovery below history, hidden during search; no fabricated popularity/ranking or prices. Not implemented pending choice.
+
+## September 29 21:25 JST request
+- Theme discovery approved and implemented under stock search history: nine themes, compact dropdown, company names, exact directory match opens profile; hidden while searching. HOT deferred: no invented popularity metric.
+- Owner flagged untranslated Nebius X post 2104904708980953430 (published 21:02:44 JST). Visible source excerpt says Diamond Sponsor at NVIDIA GTC Berlin Oct 20–22, booth 3013, demos/experts. Added manual Japanese headline from this excerpt. This is NOT automatic-translation latency measurement; worker remains disabled. Record browser verification time separately, never equate manual release time with API speed.
+
+## September 29 21:36 JST owner direction
+- Owner now explicitly authorizes automatic translation setup and timing; this supersedes December deferral for translation activation, but does not authorize a new paid contract. No OPENAI_API_KEY in local environment; Railway variables tab timed out twice. Not activated and no real-provider timing yet. Need secure API key/model configuration. Do not claim done.
+- Home pulse default is two rows including date, compact Japanese editorial headline where available, tap expands full text without leaving site. Swipes preserved.
+- Discovery begins with diverse all-themes examples; added finance/healthcare/consumer/energy, SKHY and DRAM, company site icons with initials fallback. SKHY NASDAQ confirmed by Nasdaq ETA2026-40; DRAM Cboe memory ETF confirmed by issuer Roundhill.
+
+DRAM is absent from the SEC operating-company directory. Theme selection falls back to its verified CBOE:DRAM TradingView market view, without inventing SEC filings or a CIK. SKHY exact search is confirmed present. Company icons use domain favicons, not full official wordmarks; failed loads show initials.
+
+
+## 2026-09-29 additional theme stocks
+- Owner requested optical GLW/AAOI/CIEN; space SPCX/PL; software PLTR/APP; AI chips CBRS/ARM; manufacturing ASML/TSM/AEHR; connectivity ALAB/ANET/APH; consumer PM; gold GLDM; drones AVAV/ONDS/RCAT; quantum IONQ/RGTI plus QBTS. All added with site icons.
+- Gold theme renamed 金・金鉱山 because GLDM tracks bullion, not mining companies. Added GLDM quote-only fallback for absent SEC directory results, matching existing DRAM flow.
+- Primary verification: SpaceX IR IPO closing confirms SPCX trading June 12, 2026; Cerebras IPO closing confirms CBRS May 14, 2026; State Street GLDM page confirms gold bullion and NYSE Arca; D-Wave Q2 2026 release confirms NASDAQ QBTS.
+- Theme placement does not expand automatic news monitoring or imply investment recommendations.
+
+## September 29 22:46 JST continuation
+- Rechecked SNOW, VRT, AMAT, QCOM, CRM, ORCL, NOW, NVDA, PANW and PLTR plus the BLS and Federal Reserve calendars. No new confirmed earnings date or economic-calendar change was found; inconclusive sources remain pending with exact blockers in `CALENDAR-HANDOFF-2026-09-29.md`.
+- Full local gates passed on the integrated tree: ESLint has zero errors and one pre-existing warning, Node 159/159, Python 451/451, Next.js 55 pages, `compileall` and `git diff --check`.
+- Published the calendar and continuation handoff as documentation-only commits on `codex/research-preview` with exact local/connector tree SHA equality. The status hooks were initially delayed, then both Railway staging and Vercel reported success for final commit `bf621e1`; no GitHub Actions workflow run was associated with it. The canonical preview home also loaded successfully.
+- Next calendar batch: AAPL, AMZN, ANET, ARM, AVGO, BE, CRDO, CRWV, GOOGL and KLAC. Continue to leave empty, inaccessible, historical-only and tentative sources pending.
+
+## September 29 23:45 JST continuation
+- Rechecked AAPL, AMZN, ANET, ARM, AVGO, BE, CRDO, CRWV, GOOGL and KLAC plus the BLS and Federal Reserve calendars. No new confirmed date was found; Arm's November 4 date remains explicitly tentative and all inconclusive sources remain pending with exact blockers in `CALENDAR-HANDOFF-2026-09-29.md`.
+- The existing preview commit `92d8c87` remained green on Railway staging and Vercel, and the canonical Japanese research home loaded successfully with live news data timestamped 23:44:13 JST.
+- The finite news-readiness backlog remains complete. No discretionary product code, paid provider, production or external-delivery setting was changed.
+- Next calendar batch: LITE, MRVL, SKHY, SNOW, VRT, AMAT, QCOM, CRM, ORCL and NOW.
+
+## September 30 00:49 JST continuation
+- Rechecked LITE, MRVL, SKHY, SNOW, VRT, AMAT, QCOM, CRM, ORCL and NOW against first-party investor calendars, events pages and indexed official announcements. No new confirmed earnings date or explicit current no-events statement was found. MRVL's October 6 item is Investor Day, not an earnings event.
+- Rechecked the BLS October release schedule and Federal Reserve meeting calendar. The existing October 2 Employment Situation, October 14 CPI, October 15 PPI, October 27–28 FOMC and December 8–9 FOMC records remain unchanged; the FOMC source still omits future statement and press-conference clock times.
+- Advanced `lastAttemptedOn` only for the ten companies actually reviewed and advanced `calendarReviewedOn` for the daily BLS/Federal Reserve verification. No inconclusive company `lastCheckedOn` value, event date or fabricated time was added.
+- Detailed evidence and exact blockers are in `CALENDAR-HANDOFF-2026-09-30.md`. The finite product/news-readiness backlog remains complete and automatic translation remains disabled pending secure credentials and an explicitly approved model.
+- Next calendar batch: AAPL, AMZN, ANET, ARM, AVGO, BE, CRDO, CRWV, GOOGL and KLAC.
+- Calendar commit `835ccd3` passed the complete local gate (ESLint zero errors with one pre-existing warning, Node 159/159, Python 451/451, Next.js 55 pages, `compileall`, and `git diff --check`) and deployed Ready to the Vercel branch preview. Railway staging reported success with “No deployment needed — watched paths not modified.” The connector-created tree exactly matched the locally staged tree (`8bf37c9`).
+- A direct canonical-page browser refresh was attempted after deployment, but the existing Chrome DevTools connection timed out twice. Do not claim a new visual browser verification for this commit; the deployment status and prior canonical preview remain the available evidence.
+
+## September 30 01:43 JST continuation
+- Rechecked AAPL, AMZN, ANET, ARM, AVGO, BE, CRDO, CRWV, GOOGL and KLAC against first-party investor pages and indexed official announcements. No new confirmed earnings date was found. Arm's November 4 date remains explicitly tentative; inaccessible, empty and historical-only sources remain pending.
+- Rechecked the BLS October schedule and Federal Reserve calendar. The existing October 2 Employment Situation, October 14 CPI, October 15 PPI, October 27–28 FOMC and December 8–9 FOMC records remain unchanged; no missing clock time was inferred.
+- Advanced `lastAttemptedOn` only for the ten companies actually reviewed. No pending `lastCheckedOn`, calendar event, product code, paid provider, production or delivery setting changed.
+- Next calendar batch: ADBE, AMD, ASML, COHR, CRWD, DELL, GEV, INTC, LRCX and META. The finite product/news-readiness backlog remains complete; automatic translation remains disabled pending secure credentials and an explicitly approved model.
+- Calendar commit `9240613` passed the complete local gate (ESLint zero errors with one pre-existing warning, Node 159/159, Python 451/451, Next.js 55 pages, `compileall`, and `git diff --check`). Its local and connector tree matched exactly (`ecf4aa5`); Vercel preview deployed Ready and Railway staging reported success without redeploying because no monitored service path changed. The canonical Japanese calendar loaded with all 17 schedules and retained date-only FOMC entries.
+
+
+## September 30 11:33 JST — accepted RIZEL identity and notes
+- Owner explicitly adopted the final youthful chibi anime avatar generated after the two reference images (exec-e43c92a3-21d9-42c0-84b4-198f6e4e102f.png). Canonical reusable asset: public/rizel-avatar.webp. Use this exact approved artwork; do not regenerate or replace it without owner instruction.
+- Visual identity: softly tousled creamy pale-yellow blond hair, natural gray eyes, plain black face mask, black clothing, navy background, approachable chibi proportions. No red eyes, horror teeth mask, eyepatch, or realistic mature face. RIZEL is distinct from AI fairy Liz.
+- Each notes speech bubble now has the avatar outside its upper-left edge and a small tail toward the avatar. Preserve the approved note text, date/time and compact luxury styling; no heading is required for a note.
+- Only owner mode sees the inline composer at the top of /research/notes; Free and PRO reader views hide it. Server author endpoint still requires authenticated admin and same-origin JSON. Older /research/write remains for history/drafts.
+- September 30 morning: global research ClerkProvider now renews sessions outside the account page. Home owner display survived over two minutes idle. Node 161 and Python 451 tests passed; preview commit 85179cf deployed. Inline composer commit 4029a4d also deployed with all gates passing. OpenAI translation is configured and working as verified on September 30; older December deferral notes above are stale for OpenAI, but Stock News remains deferred.
+
+## September 30 11:43 JST — avatar overlap and silent notes renewal
+- User requested a slight overlap at the top-left of each speech bubble. Avatar now overlaps the rim, date sits to its right, and body uses the full card width. Approved artwork unchanged.
+- Idle blink root cause: ColumnsPage cleared all posts at every 60-second lease renewal. Renew in the background 20 seconds before expiry; retain only the still-valid server projection and independently clear it at the original deadline if renewal stalls. Explicit membership change, failed requests, and mismatched plans still hide private content; API authorization unchanged.
+
+- September 30 11:53 JST: User likes the overlapping avatar but explicitly wants the speech bubble tail retained. Added an upward tail immediately beside the avatar; full-width text and silent renewal remain.
+
+- September 30 12:06 JST: User found the overlapping-icon/top-notch version unnatural. Current trial: avatar and date/time in a row above a full-width bubble, with an upward tail aligned under the avatar. Keep approved art and silent lease renewal unchanged.
+
+- September 30 12:11 JST: User prefers avatar beside bubble for a stronger speaking effect, and timestamp below the text. Latest layout uses compact left avatar (32px mobile), left-pointing tail, and small right-aligned date/time under body. This supersedes overlap/above-bubble trials.
+
+- September 30 12:18 JST: Move the side avatar 5px left, and reduce timestamp top margin from 10px to 6px. Keep bubble width and text size unchanged.
+
+- September 30 12:24 JST: Current trial moves date/time to the top-left inside the speech bubble; compact side avatar stays 5px left. If user dislikes this final trial, restore previous timestamp-bottom layout from commit 2d3500db6cb3ee4f9a2281412f4f7a6b6ee8c7c4.
+
+## September 30 13:49 JST continuation
+- Fast-forwarded the clean local checkout across 23 concurrent preview commits before editing, preserving the accepted RIZEL avatar, note layout, membership boundaries and translation recovery work.
+- Rechecked ADBE, AMD, ASML, COHR, CRWD, DELL, GEV, INTC, LRCX and META against current first-party investor event pages. Adobe and GE Vernova still match their registered calls; AMD, Coherent, Dell, Intel and Meta explicitly show no current upcoming event. CrowdStrike shows only presentations and past events, while Lam's only upcoming item is its annual meeting rather than earnings. ASML's redirected official calendar remained inaccessible, so its completed-check date did not advance.
+- Rechecked the BLS October schedule and Federal Reserve calendar. The existing October 2 Employment Situation, October 14 CPI, October 15 PPI, October 27–28 FOMC and December 8–9 FOMC records remain unchanged; no clock time was inferred for future FOMC decisions.
+- No calendar event, product UI, paid-provider setting, production environment or external delivery changed. Next calendar batch: MSFT, MU, NBIS, NFLX, NVDA, PANW, PLTR, SNDK, TSLA and TSM.
+- Calendar commit `e784e87` used the exact locally staged and connector-created tree (`1bf3130`). The complete gate passed: ESLint zero errors with one pre-existing warning, Node 163/163, Python 451/451, Next.js 55 routes, `compileall` and `git diff --check`. Vercel deployment `dpl_EwZRZucxgH9zkM9fNtqVeaUQK2JY` reached Ready; Railway staging reported success without redeploying because no watched monitor path changed. The canonical Japanese calendar loaded with the September 30 confirmation date, 17 schedules, and unchanged date-only ASML/FOMC items.
+
+## September 30 14:47 JST continuation
+- Rechecked MSFT, MU, NBIS, NFLX, NVDA, PANW, PLTR, SNDK, TSLA and TSM against first-party investor sources. Microsoft explicitly says its next earnings release will be announced soon; Nebius explicitly has no upcoming event; Sandisk shows past events only; Tesla's 2026 Q3 row still has no earnings date. Micron, Netflix and TSM still match their registered calls.
+- NVIDIA and Palo Alto Networks remained inaccessible through their lawful official endpoints. Palantir exposed only an uninspectable events-page shell. These three remain pending; no access control was bypassed and their `lastCheckedOn` values did not advance.
+- Rechecked the BLS October schedule and Federal Reserve calendar. The existing October 2 Employment Situation, October 14 CPI, October 15 PPI, October 27–28 FOMC and December 8–9 FOMC records remain unchanged; no clock time was inferred for future FOMC decisions.
+- All 40 roster companies now have a September 30 attempt. No calendar event, product UI, paid-provider setting, production environment or external delivery changed. Restart the next rotation from the oldest or still-unreviewed sources, preserving exact pending blockers.
+- The complete local gate passed: ESLint reported zero errors and one pre-existing warning, Node tests passed 163/163, Python tests passed 451/451, Next.js production build succeeded, and `compileall` plus `git diff --check` passed.
+- Calendar commit `f335fcc` used the exact local/connector tree `83cc89d`; Vercel deployment `dpl_EvkzCRjKyP76fZ6MX4VUvLLZgMcL` reached Ready. The canonical Japanese calendar loaded with 17 schedules and retained date-only ASML/FOMC entries.
+
+## September 30 15:39 JST owner request
+- Hide question composer in owner mode; RIZEL reads member questions rather than posting questions to himself. Existing owner test posts preserved. PRO reader preview still shows composer.
+- Add durable English question translation using configured note translation credentials/model. Board-only backlog, no owner identity in model input, store:false, 3 attempts and bounded daily calls. English view uses bodyEn, pending message instead of Japanese fallback.
+- Comparison picker condensed: six initial suggestions, eight filtered matches maximum, smaller slots/input/chips. Brief SEC/valuation pending note retained without claiming valuation works.
+- Affiliate applications deferred until public website ready; TG denial cause unknown. Existing moomoo agreement needs confirmation of referral cap vs publisher terms.
+
+## September 30 15:55 JST
+- Owner asks how to answer questions. Current legacy flow is /research/questions → /research/editorial to publish bilingual QA with token and sources → link published answer in question inbox. Do not claim inline answering or automatic QA answer translation exists; only member questions and notes auto-translate currently. Added owner-only entry and reciprocal Questions/Published answers tabs.
+- Compare picker changed from suggested ticker chips to three native selects, all supported companies in each; third optional, no duplicates, first two required. Mobile rows compact.
+
+## September 30 16:07 JST
+- Owner requested direct per-question reply. Pending PRO board questions have owner-only inline Answer → Japanese body → Publish answer. Authenticated admin relay to /admin/questions/answer creates published QA and links question atomically; deterministic ID/retries prevent duplicate answers, private/closed questions rejected. No token entry, English entry or manual linking required for this new flow. Legacy editorial review constraints unchanged.
+- New owner-authored QA answers auto-translate via configured note worker, preserving title/body and publication time. Does not invent RIZEL answers. Existing test question left unanswered; owner should write their actual opinion.
+- Comparison uses searchable company inputs with SEC directory candidates beyond monitored 22; backend resolves names/CIKs server-side, marks unsupported/missing data. Gold/navy PRO palette. Never imply ETF or arbitrary global company fundamentals always available.
+- Notes avatar moved 10px desktop/8px mobile lower to align with bubble tail. Exact approved artwork preserved.
+
+## September 30 17:49 JST continuation
+- Fast-forwarded the clean checkout to `afabd50`, preserving the owner-requested inline question replies, automatic translation of owner-authored answers and searchable PRO comparison.
+- Rechecked AAPL, AMZN, ANET, ARM, AVGO, BE, CRDO, CRWV, GOOGL and KLAC against first-party investor sources. No new confirmed earnings date was found. Empty, historical-only, inaccessible and shell-only sources remain pending; no access control was bypassed.
+- BLS still lists October 2 Employment Situation, October 14 CPI and October 15 PPI at 08:30 Eastern. The Federal Reserve still lists October 27–28 and December 8–9 without future decision times. No calendar data or company `lastCheckedOn` value changed.
+- The integrated tree passed ESLint with one pre-existing warning, Node 164/164, Python 455/455, the Next.js production build, `compileall` and `git diff --check`. Vercel deployment `dpl_5ZJ94KjM1x8rGUfB5yceLPqFYtA9` for `afabd50` is Ready; the protected preview Q&A route returned 200 in signed-out mode and kept PRO content gated.
+- Next calendar batch: LITE, MRVL, NOW, NVDA, PANW, PLTR, SKHY, SNOW, VRT and QCOM. The finite news-readiness backlog remains complete; do not add discretionary product work.
+
+
+## 2026-09-30 17:58 JST — Safari return and mobile editing
+- Request: owner goes to Free after phone screen suspension; keyboard obstructs reply/compare; remove redundant owner answer link; make published answers visibly answers; enlarge/centre notes avatar.
+- Identity refresh bridge waits for Clerk SDK and token renewal before entitlement fetch; forced renewal on visibility/pageshow/focus, one retry for signed-out server response. Server still exclusively grants all roles; no local role cache. Signed-out SSR header uses neutral state until client verification. Actual expiry/sign-out still revoke privileges.
+- Full-width inline answer editor overrides metadata flex rules. All relevant inputs are at least 16px; mobile bottom navigation/top button hidden during input focus; comparison list max132px, autocomplete disabled.
+- Notes avatar 48px desktop/42px mobile, vertically centred with matching bubble tail. Timestamp stays above message.
+- Removed top owner answer-management link. Published answers show Question and RIZEL’s answer labels, divider and indented answer block. Existing real user answer must not be replaced by test content.
+
+
+## 2026-09-30 18:57 JST — speaker alignment and intake diagnosis
+- UI commit `2af5db16ba8abf3ac8c8a8f9a8dd1d79e43e4496`: note avatar and bubble tail at 40% height; avatar moved 5px farther left (left:-10px). Approved artwork and top timestamp preserved. Published Q&A answers use the same avatar. Compare suggestions render only for non-empty input, including keyboard Enter behavior.
+- Verified deployed notes and published real answer visually; empty comparison focus showed no options, typing M showed matching candidates. No new note/answer was published.
+- Health diagnostics commit `b8523cafa389c628f33ab4030967c028eab268d1`: adds aggregate-only X intake health (budget, request spacing, success/error counts and timestamps). No source IDs, tokens, URLs, queries or post bodies exposed. Privacy regression added; original aggregate privacy tests preserved. All local gates passed including 456 Python tests; GitHub Actions, Vercel and Railway success.
+- Live health at 18:55 JST: X enabled/configured, 4179/4400 requests in trailing 24h, limit not reached, four routes checked with zero errors, all successful within preceding ~80sec. Do not raise paid request budget without authorization.
+- Deployed home observed: newest official update NVDA published 9/30 04:10:51 JST; latest NBIS 9/29 21:02:44 JST. Headline translation 19 eligible/19 translated, zero pending. Latest displayed target remains AMD BofA $620 to $720, 9/25 19:50:28 JST. Data-read timestamp is NOT article publication timestamp.
+- X fetching is not stopped. Target parser accepts only known-firm, explicit old/new dollar target changes on a single ticker; reaffirmed targets and other formats excluded. Completeness against latest original posts remains unverified; do not claim no new target changes exist. Private raw queue still requires editor token, which was not entered or retrieved. No authentication was weakened.
+
+## September 30 19:46 JST continuation
+- Fast-forwarded the clean checkout to `31ae627`, which implements the owner's latest visual corrections: the notes bubble extends slightly farther left and the approved RIZEL avatar sits beside the published-answer label. No alternate artwork or title field was introduced.
+- Rechecked QCOM, AMAT, CRM, ORCL, ASML, ADBE, AMD, COHR, CRWD and DELL against current first-party investor pages. No new confirmed earnings date was found. Empty sections and inaccessible redirects remain pending; confirmed current-status pages remain unchanged. Exact evidence is recorded in `CALENDAR-HANDOFF-2026-09-30.md`.
+- BLS still lists the October 2 Employment Situation, October 14 CPI and October 15 PPI at 08:30 Eastern. The Federal Reserve still lists October 27–28 and December 8–9 without future decision times. No event or clock time was inferred.
+- The finite news-readiness backlog remains complete. Continue recurring calendar maintenance only unless the owner reports a concrete defect or supplies a new priority.
+
+
+## 2026-09-30 21:30 JST — ratings, ADP result and finite MU timing rehearsal
+- Owner explicitly requested rating coverage, ADP result check, and exact MU earnings detection/translation/summary measurements.
+- Three analyst X queries now include initiated/upgraded/downgraded/reiterated/maintained for the existing ticker roster, preserving price-target and earnings retrieval and unchanged request cadence/maxResults/budget. Adapter retains such rating posts without requiring numerical targets. They enter the private intake/review queue; numeric target cards still only show changes with both old/new dollar values. Do not mislabel third-party rating posts as company official announcements.
+- Calendar adds separately labelled confirmed ADP September result: +90,000 private jobs, base pay YoY +3.2%, scheduled September30 08:15 Eastern /21:15 JST. Primary ADP release URL stored with record. This addition is manually verified, NOT an automatic economic-results feed. No consensus inferred.
+- MU finite worker scripts/research/mu_earnings_measurement.py is explicitly authorised for this earnings rehearsal, bounded to one official actual FQ4 release detected after September30 19:00 UTC, expires October2 00:00 UTC. It uses the existing authorised headline API model/key; max3 job attempts, headline translation then separate bilingual factual summary based on up to45k release characters. It stores PRIVATE drafts and measured stage timestamps/durations in persistent SQLite, exposed only as safe timing/status metrics in public health.muEarningsMeasurement. It does NOT enable general RESEARCH_AUTO_DRAFTS or publish analysis to subscribers. TranslationScope=headline, not full release. Input truncation flagged.
+- Announcement title/old-release/wrong-host exclusions and no-public-draft-leak regression tests added. Official release may provide only publication DATE: publicationToDetectionMs remains null/date-only rather than fabricating precise latency. Actual detected-to-body/translation/summary times can be measured.
+- Existing one-time automation 6ab5fbc99890819186fd0123bf583cfe (MU決算の投稿速度を比較, October1 08:00 JST flexible morning run) updated to read persisted public timing metrics, verify actual official publication time if available, and report exact seconds or missing evidence. Existing X source-post timing comparison retained, no added paid X reads. Do not create a duplicate task.
+- September 30 21:57 JST live check: branch commit `0dd8c64` was Ready on Vercel and successful on Railway staging. Public health was ready and the bounded MU worker reported `waiting-for-release`, configured, with no generated body exposed. X intake remained enabled/configured with all four routes successful and no route error. Added explicit safe `detectionToBodyMs`, `bodyToSummaryMs`, and `modelRequestTotalMs` diagnostics so the morning result does not require reconstructing elapsed time from timestamps. Publication-to-detection stays null unless an exact source publication clock is verified.
+
+## October 1 00:58 JST continuation
+- Rechecked AAPL, AMZN, ANET, ARM, AVGO, BE, CRDO, CRWV, GOOGL and KLAC against current first-party investor pages. No new confirmed earnings date was found. Their October 1 attempt is recorded while every inconclusive completed-check date remains unchanged; exact blockers are in `CALENDAR-HANDOFF-2026-10-01.md`.
+- Rechecked the BLS October schedule and Federal Reserve calendar. Employment Situation remains October 2, CPI October 14 and PPI October 15 at 08:30 Eastern; FOMC remains October 27–28 and December 8–9 without future decision clock times. No event or time was inferred.
+- Added the existing bounded MU rehearsal diagnostics to the operations preview: official-release wait state, detection/body timestamps, individual headline-translation and factual-summary API timings, end-to-end internal timings, input truncation and private-draft label. Generated content and credentials remain absent. Publication-to-detection remains visibly uncalculated when the official source supplies only date precision.
+- Verified that X intake uses a rolling 24-hour cap plus persisted global pacing. The near-cap count alone does not mean the MU window will exhaust; no paid limit, cadence or activation changed.
+- Commit `8ca815d` deployed successfully to Vercel preview and Railway staging. After a hard reload, the live operations preview showed `MU決算実測：公式発表待ち · 計測準備済み` with the bounded worker end time and the rule that publication-to-detection is calculated only when an exact official publication clock is available. No generated translation, summary body or credential was exposed.
+- The full gate for this tree passed: ESLint zero errors with one pre-existing warning, Node 171/171, Python 467/467, Next.js production build, `compileall` and `git diff --check`. Continue with the existing bounded MU rehearsal; do not create another task or infer a release time before first-party evidence appears.
+
+## October 1 02:06 JST continuation
+- Rechecked LITE, MRVL, NOW, NVDA, PANW, PLTR, SKHY, SNOW, VRT and QCOM against current first-party sources. No new confirmed future earnings release or call was found. Exact inaccessible, shell-only, empty and historical-only blockers are recorded in `CALENDAR-HANDOFF-2026-10-01.md`; no `lastCheckedOn` value advanced.
+- Rechecked BLS and Federal Reserve dates. Existing October 2/14/15 BLS releases and October 27–28/December 8–9 FOMC meetings remain unchanged; no future FOMC clock time was inferred.
+- The finite MU worker now preserves a same-URL, timezone-bearing official publication timestamp and calculates publication-to-detection only when that evidence is valid, non-future and within seven days. Naive, reversed, other-URL and date-only evidence remains unmeasured. Public diagnostics still expose timings only; generated translation and summary content remain private.
+- Live preview remained healthy and showed the MU rehearsal configured but still waiting for the official release. X intake remained enabled with 4,183/4,400 rolling 24-hour attempts and zero route errors; no budget, cadence, provider or delivery setting changed.
+
+## October 1 02:46 JST continuation
+- Rechecked the ten oldest company attempts: AMAT, CRM, ORCL, ASML, ADBE, AMD, COHR, CRWD, DELL and GEV. No new earnings date was found. Adobe and GE Vernova still match the registered calls; AMD, Coherent and Dell explicitly have no scheduled upcoming item; CrowdStrike lists only past events. AMAT remained inaccessible, CRM/ORCL exposed empty event headings and ASML exposed only a general page plus external widget, so those four remain pending.
+- Advanced `lastAttemptedOn` only for the ten reviewed companies and `lastCheckedOn` only for the six conclusive sources. The daily BLS/Federal Reserve verification had already completed earlier on October 1; `calendarReviewedOn` now records that date without changing any event or inventing a clock time.
+- The finite product/news-readiness backlog remains complete. Continue recurring calendar maintenance and the already-authorized bounded MU rehearsal only; do not add discretionary product work before an actual release or a concrete owner defect.
+
+## October 1 03:47 JST continuation
+- Rechecked INTC, LRCX, META, MSFT, MU, NBIS, NFLX, SNDK, TSLA and TSM against current first-party investor pages. Sandisk newly confirms its fiscal Q1 2027 earnings call for October 29 at 4:30 p.m. EDT; added it as a call start, not a results-publication time. The other nine sources reconfirmed existing events or explicitly showed no new earnings date.
+- All 40 calendar-roster companies now have an October 1 attempt. The daily BLS/Federal Reserve verification was already complete, so no event or inferred clock time changed there. Exact evidence is in `CALENDAR-HANDOFF-2026-10-01.md`.
+- MU remains under the existing bounded measurement path; do not create a duplicate task or infer an official release time. Continue recurring calendar maintenance only after this verified calendar addition.
+- The complete local gate passed: ESLint zero errors with one pre-existing warning, Node 172/172, Python 469/469, Next.js production build, `compileall` and `git diff --check`.
+
+## October 1 04:43 JST continuation
+- Rechecked AAPL, AMZN, ANET, ARM, AVGO, BE, CRDO, CRWV, GOOGL and KLAC. No new confirmed earnings event was found. Arm's November 4 fiscal Q2 date remains excluded because the issuer explicitly labels it tentative. October 1 BLS/Federal Reserve checks were already complete; no calendar event, company completion date or inferred clock time changed.
+- Live operations unexpectedly reported general official-headline translation ON with 4 logical calls in the preceding 24 hours and 19 current translations, despite the owner's December activation hold. Added a second fail-closed gate: `OFFICIAL_HEADLINE_TRANSLATION_APPROVED_ON` must be a valid, non-future date on or after 2026-12-01. Enable flag, API key and model alone can no longer start the general worker. The bounded MU earnings rehearsal remains separate and unaffected.
+- The operations UI now distinguishes missing dated approval from incomplete provider configuration without exposing credentials, models, headlines or errors. Do not add the approval date before the owner explicitly approves general activation in December or later.
+- The complete gate passed: ESLint zero errors with one pre-existing warning, Node 172/172, Python 470/470, Next.js production build, `compileall` and `git diff --check`.
+- Commit `2562633` used the exact local/connector tree `0a50667`; Vercel preview and Railway staging both reached success. After the staging restart, the live operations preview reported `承認記録なしのため停止（外部送信なし）`. The historical 24-hour call count remained four across the verification interval, so no additional general headline-translation call was observed. Browser-visible application content loaded normally; the only console errors were unrelated Chrome-extension metadata errors.
+- The same live check reported the separately authorized finite MU measurement as `公式発表待ち · 設定不足のため停止`, rather than the earlier configured wait state. No credential, provider, model or environment setting was read or changed in this run. Treat this as an exact staging blocker: inspect the scoped MU worker configuration without revealing secret values before claiming the release-time rehearsal is ready.
+
+## October 1 05:44 JST continuation
+- Rechecked LITE, MRVL, NOW, NVDA, PANW, PLTR, SKHY, SNOW, VRT and QCOM against current first-party investor pages. No new confirmed earnings event was found. Empty, archived-only, inaccessible and shell-only sources remain pending; no coverage timestamp, BLS/Federal Reserve date or inferred clock time changed.
+- The live monitor detected Micron's actual fiscal Q4 2026 results at 05:18:32 JST and completed article-body retrieval at 05:18:44 JST, an observed 12-second detection-to-body interval. This is internal acquisition latency, not publication-to-detection or a delivery SLA. The first-party page did not yet supply a verified timezone-bearing publication clock, so publication-to-detection remains uncalculated.
+- Root cause of the stopped finite measurement: the MU worker called the general headline-translation configuration function, so the new December approval gate unintentionally blocked the already-authorized one-release rehearsal. The worker now has a separate fail-closed configuration adapter that still requires the existing explicit enable flag, provider credential and approved model, while remaining bounded to the single MU release, three attempts and the October 2 UTC expiry. It does not re-enable general headline translation or publish generated text.
+- The first recovery deployment restored `計測準備済み`, but Micron's page omitted the structured publication-date field even though the official results URL, actual-results title, bounded detection time and extracted body all matched. Candidate validation now accepts a missing date while still rejecting a supplied date outside September 30/October 1, a wrong host or a preannouncement title. It does not invent a publication date or time.
+- Live evidence inspection then showed that the protected Micron page yielded a 614-character official excerpt, below the rehearsal's generic 1,200-character floor. For this already-authorized single-release private timing rehearsal only, the explicit minimum is now 300 stored characters so extractor-count normalization cannot discard the bounded official excerpt. ISO timestamps are compared by date; an unparseable source date remains unconfirmed rather than becoming fabricated evidence. The prompt remains fact-only and allows omission of metrics absent from the excerpt; the draft cannot reach subscribers without human review. General automatic summarization remains disabled.
+- Offline tests cover missing credentials, a disabled enable flag, expiry without a provider call, absent/unparseable/timestamp publication dates, the observed 614-character official excerpt, rejection below the bounded minimum, and successful MU processing without the general December approval date. Live deployment verification is still required before treating translation/summary timing as complete.
+- Because the current live worker still reported no candidate after the bounded excerpt/date fixes, waiting diagnostics now expose only the count of event rows and fixed rejection-reason counts. They never expose a URL, title, source text, generated draft, provider error or credential. This is temporary operational evidence for identifying the remaining mismatch without guessing.
+- Live candidate audit isolated two event rows: the SEC row was correctly excluded as a non-Micron host, while the first-party Micron results URL was rejected only by its stored title representation. Candidate identity now accepts the same required `Reports` / fiscal fourth-quarter / `Results` markers from either the stored title or the first-party URL slug, while retaining the exact official host, date window, minimum official text and preannouncement rejection gates.
+- October 1 06:24 JST live verification: commit `bb7a53e` deployed successfully to both Vercel preview and Railway staging. The bounded rehearsal completed with the 614-character official excerpt: headline translation API 2.1 seconds, bilingual factual-summary API 2.1 seconds, model-response total 4.2 seconds. Detection-to-body remained 12 seconds. Detection-to-summary was 3,944 seconds and body-to-summary 3,932 seconds because those end-to-end measurements honestly include the candidate-fix and redeployment delay; they are not model latency or an SLA. The first-party page still lacks a verified timezone-bearing publication clock, so publication-to-detection remains uncalculated. The generated summary remains a private draft and was not delivered to subscribers.
+- Final verification on the integrated tree: Node 172/172, Python 476/476, lint zero errors with one pre-existing test warning, Python compileall, diff check and Next.js production build all passed. Git Data/local tree equality was verified before every preview-branch ref update. General headline translation remains approval-gated and disabled.
+
+## 2026-10-01 Weekly PRO authoring
+- Weekly page now includes an owner-only composer without exposing editor credentials. Server-signed admin identity, same-origin POST, bounded JSON, immutable weekly scope, reviewer identity and explicit review are required.
+- Japanese drafts translate automatically through the existing bounded note translation worker; translations remain private until owner review and publication. A Japanese edit clears prior English, and revision checks discard stale generation.
+- Four compact expandable report sections; draft archive pagination; input unsaved guard and English preview. FREE public projection and PRO authorization remain unchanged.
+- New tests cover Free/PRO denial, forged kind/reviewer, CSRF, verification, draft privacy, concurrent edits and parser preservation. Full gates: 179 Node and 490 Python tests, build, lint (only preexisting test warning), compileall and diff check.
+- Proposed (not implemented or sold): a separate ¥9,800 one-time portfolio inspection tool with user-entered holdings, concentration, user-selected loss scenarios and thesis checkpoints. Do not assume this product is approved. News/stock comparison remain in recurring PRO.
+- Actual first weekly report and live automatic English timing still require a saved weekly draft; do not claim a measured production latency from unit tests.
+- Live weekly GET initially returned 503 because proxy.ts omitted the new author route from Clerk identity middleware. Added the route and a regression test; final Node count is 180. Existing Vercel editor key was confirmed present and branch-scoped; no key values or settings changed.
+
+- Live verification succeeded after the Clerk matcher fix: weekly GET/POST returned 200, Japanese MU draft saved privately, English appeared by the UI observation 35.626 seconds after clicking save (observation upper bound, not exact provider latency/SLA). Reloading and reopening the archive preserved Japanese, English and sources. Draft title: 週刊PRO 下書き｜MU決算を振り返る; market review and next-week schedule remain placeholders; do not publish until completed/reviewed.
+- Vercel and Railway deployment checks and GitHub Actions were successful for e34763abb49ada4c507f66f7fe193ac5a6674189. Final integrated checks passed: 180 Node / 490 Python tests, lint, build, compileall, diff check.
+
+## October 1 15:50 JST — supplemental-route recovery observed
+- The live operations preview retried the single supplemental official route previously classified as `other` and recovered it at 15:50:42 JST. Current supplemental coverage is 23/26 successful routes; `other` is now zero.
+- Three routes remain pending: two access restrictions with the earliest retry at October 2 20:16:46 JST, and one timeout with the earliest retry at October 1 17:27:11 JST. These are lawful wait states; do not bypass access controls or present 23/26 as complete coverage.
+- Priority coverage remained healthy at 5/5 and general official-headline translation remained 19/19 with no pending, retry or exhausted item. No provider, polling interval, paid service, subscriber-delivery or production setting changed.
+
+## October 1 17:47 JST — supplemental-route relapse observed
+- The 15:50 recovery above was transient. The same supplemental route later failed again as `other`; its 17:47:16 JST retry did not recover it and the next lawful retry is October 1 17:55:16 JST. Current live coverage is therefore back to 22/26, not 23/26.
+- The separate timeout route also failed its 17:27 retry and now waits until October 1 21:43:32 JST. Together with two access-restricted routes waiting until October 2 20:16:46 JST, four routes remain pending: two access restrictions, one timeout and one `other` failure.
+- Priority coverage remains healthy at 5/5, article-body child failures remain zero, and official-headline translation remains 19/19 with no pending or failed item. Treat route recoveries as point-in-time observations rather than stable coverage or a latency guarantee; do not bypass access controls.
+
+## October 1 17:55 JST — supplemental-route recovery after relapse
+- The `other` route recovered on its next retry at 17:55:17 JST, restoring the current point-in-time result to 23/26 and reducing pending routes to three. Because this route already relapsed once after recovery, do not describe it as a stable or permanent recovery.
+- Remaining waits are unchanged: the timeout route's next retry is October 1 21:43:32 JST, and two access-restricted routes wait until October 2 20:16:46 JST. Priority coverage is still 5/5 and child-article failures remain zero.
+
+## October 1 19:43 JST — body-host recovery and new supplemental 5xx
+- The scheduled article-body host probe ran at 19:39:06 JST, 7.1 seconds after it became eligible, and recovered successfully. The rolling 24-hour body-host probe record is now seven attempts: six recoveries, one reblock and zero transient failures. This is a point-in-time recovery measurement, not a delivery or availability guarantee.
+- A different supplemental official route then entered an `official-side 5xx` state. At 19:43 JST the live supplemental result was 22/26 with four pending routes: two access restrictions, one timeout and one official-side 5xx. The 5xx route's next lawful retry is October 1 20:26:20 JST; the timeout route waits until October 1 21:43:32 JST; the two access-restricted routes wait until October 2 20:16:46 JST. No access control was bypassed.
+- Priority coverage remained healthy at 5/5, child-article failures remained zero and official-headline translation remained 19/19 with no pending item. Rechecked LITE, MRVL, NOW, NVDA, PANW, PLTR, SKHY, SNOW, VRT and QCOM against current first-party investor pages and indexed first-party announcements; no new confirmed earnings release or call was found, so calendar records and coverage timestamps were unchanged. The October 1 BLS and Federal Reserve reviews were already complete and were not rewritten.
+
+## October 1 20:49 JST — NBIS acquisition detection and route recovery
+- The supplemental official route that entered an official-side 5xx state recovered on its scheduled retry. At the 20:40 JST observation the point-in-time result was restored to 23/26, with only two access restrictions and one timeout pending; the timeout's next retry is October 1 21:43:32 JST and the access-restricted routes wait until October 2 20:16:46 JST. Priority coverage remained 5/5 and child-article failures remained zero. This is a current observation, not an availability guarantee.
+- A separate `other` route recovered at 20:46:55 JST, then failed again at 20:47:57 JST. At 20:50 JST supplemental coverage was therefore 22/26 with four pending routes. The next scheduled retry was 20:50:58 JST. Preserve this chronology rather than describing either recovery as permanent.
+- The live monitor detected Nebius's first-party article, [Nebius acquires Inferize to strengthen Nebius Token Factory's production inference stack](https://nebius.com/newsroom/nebius-acquires-inferize-to-strengthen-nebius-token-factorys-production-inference-stack), at 20:00:29 JST and completed body retrieval at 20:00:41 JST: 12 seconds from detection to body. The official page supplies only October 1, 2026 without a clock time, so publication-to-detection remains uncalculated rather than inferred.
+- Article-body diagnostics now show four host-blocked routes with the earliest scheduled probe at October 2 02:42:31 JST, plus seven item retries (four access restrictions and three invalid responses). These aggregate counts do not identify the affected article or imply that the new NBIS body failed; the NBIS body is visibly complete.
+- NBIS headline translation made three provider calls with no provider failure, but each completed output was discarded as `stale`; diagnostics reached 19/20 translated and one exhausted job at 20:49 JST. Root cause was an incorrect equality check between the public display projection and the raw source title. The worker now sends the public projection to the translation provider while validating the unchanged raw title plus exact event ID, source, URL, SHA and lease. A persisted `source_title` marker gives only legacy stale-exhausted jobs one revision-bound recovery; real provider failures still retain the existing three-attempt ceiling. Offline tests cover projected-title divergence, one-time legacy recovery and the database migration. Live recovery must be verified after deployment before this item is considered complete.
+- Rechecked AMAT, CRM, ORCL, ASML, ADBE, AMD, COHR, CRWD, DELL and GEV against current first-party evidence. No calendar event or time changed. ASML's official quarterly-results page conclusively reconfirms the stored October 14 date, so only ASML's `lastCheckedOn` advanced. The October 1 BLS and Federal Reserve checks were already complete and were not rewritten.
+
+## October 1 20:59 JST — projected-headline recovery verified live
+- Commit `3a75706` reached successful Vercel preview and Railway staging checks. The live operations preview then reported 20 eligible official headlines, 20 translated, zero missing, zero running/retrying and zero exhausted. The rolling 24-hour record was 11/50 provider calls: eight completed, zero provider failures and three stale source-revision results. This verifies that the one-time legacy recovery completed without weakening the three-attempt ceiling for real failures.
+- The same observation reported supplemental coverage at 23/26: two access-restricted routes and one timeout remain in lawful backoff, with no `other` or official-side 5xx route currently pending. This is point-in-time evidence only; the earlier relapse history remains relevant and no access control was bypassed.
+
+## October 1 21:47 JST — Lam Research call and retry outcome
+- Rechecked INTC, LRCX, META, MSFT, MU, NBIS, NFLX, SNDK, TSLA and TSM against current first-party evidence. Lam Research's September 30 announcement newly confirms its September 2026 quarter financial conference call for October 21 at 2:00 p.m. Pacific / 5:00 p.m. Eastern. Added the exact source URL, Pacific timezone and fiscal period; the calendar labels it as a call start rather than a results-publication time. In JST it appears on October 22 at 06:00. The other nine records remain unchanged; BLS and Federal Reserve had already been checked on October 1.
+- The timeout route retried at 21:43:53 JST, failed again and now waits until October 2 01:59:53 JST. The separate `other` route recovered at 21:46:57 JST, returning point-in-time supplemental coverage to 23/26. The remaining three routes are two access restrictions and one timeout. Priority coverage remains 5/5 and child-article failures remain zero. Treat the recovery as point-in-time evidence, not a stable availability or latency guarantee.
+- During the live observation the headline worker expanded its eligible set from 20 to 40, briefly showed 34/40, then converged to 40/40 with zero missing, running, retrying, exhausted or provider-failed item. The final rolling record was 30/50 calls: 27 completed, zero provider failures and three stale source-revision results. This is a point-in-time queue result, not a delivery-speed guarantee.
+- Full integrated verification after rebasing concurrent branch work passed: ESLint zero errors with one pre-existing warning, Node 182/182, Python 499/499, Next.js production build, `compileall` and `git diff --check`.
+
+## October 1 22:45 JST — KLA release and webcast separated
+- Rechecked AAPL, AMZN, ANET, ARM, AVGO, BE, CRDO, CRWV, GOOGL and KLAC against current first-party evidence. KLA's October 1 announcement newly confirms fiscal Q1 2027 results on October 28 after the U.S. market closes and an earnings webcast at 2:00 p.m. Pacific. Added a date-only results record plus a separate exact webcast record; no after-close publication time was inferred. The other nine sources remain pending under the exact blockers in `CALENDAR-HANDOFF-2026-10-01.md`.
+- BLS still lists October 2 Employment Situation, October 14 CPI and October 15 PPI at 08:30 Eastern. The Federal Reserve still lists October 27–28 and December 8–9 without future statement or press-conference clock times. No economic record changed.
+- Integrated concurrent commits `da6ba98`, `c8c3fca`, `6efbe44` and `a778648` before publishing this calendar work. They add verified NBIS publication recovery, grounded bilingual issuer notes kept separate from numerical flashes, aggregate-safe publication failure/stage diagnostics, and one budget-bounded classification probe for legacy generation failures. Preserve their FREE/PRO boundaries and do not claim complete all-format earnings coverage.
+- Full integrated verification passed after rebasing the concurrent classification fix: ESLint zero errors with one pre-existing warning, Node 185/185, Python 506/506, Next.js production build, `compileall` and `git diff --check`.
+- Live operations at 22:46 JST still showed supplemental coverage at 22/26: two access restrictions, one timeout and one transient `other` failure due for retry at 22:47:28 JST. Priority coverage remained 5/5 and article-body child failures remained zero. The frontend was deployed at `6efbe44`, but the expected aggregate `公式本文の日英記事` line was absent, which means the staging signal did not expose `officialResearch` at that observation; do not claim the new publication-stage diagnostics are live-verified until that payload appears. No access control, provider setting or polling cadence was changed.
+- Commit `0fa4bc8` reached successful Vercel preview and Railway staging checks. The live calendar then showed the separate KLA records correctly: October 29 06:00 JST for the webcast and October 28 `時刻未定` for the results, with the exact KLA IR link and no fabricated publication clock. However, repeated post-deployment intake reloads fell back to the September 19 saved snapshot with `自動監視サービスの接続待ち` even though Railway's commit status was successful. Treat current monitor data, the 22:47 route retry outcome and the new `officialResearch` diagnostics as unverified until the preview reconnects; the calendar rendering itself is live-verified.
+
+
+## 2026-10-10 Claude
+
+- 変更ファイル: なし。Claudeはこの時点で本体リポジトリを変更していない。
+- 追加した成果物(リポジトリの外):
+  - 税金計算のロジックとテスト(日本の税制、2026年分のみ対応)。依存なしの純粋関数。本体への組み込み時にTypeScript化する予定。
+  - コンテンツ①(日本語版・英語版)。
+  - 接続仕様書(Claude Docs)。この追記の元になっている。
+- Claude報告の検証結果: 税金計算のテスト20本がすべて通過。ChatGPT側ではコードとテストを受領・実行しておらず、未検証。
+- 未確認:
+  - 税率20.315%、復興特別所得税2.1%、繰越控除3年は、民間の解説と証券会社の説明で確認した。国税庁の令和8年度改正のあらまし本文は読めていない。確認できた範囲ではNISAの改正が中心で、税率の変更は見当たらなかった。
+  - 特定口座の年末精算は簡略化している。
+  - 通知や税金計算の文面は、法務確認が済んでいない。
+  - Twelve Dataは未契約(11月中旬の予定)。温度計の基準は、契約後に過去データで検証する。
+
+### 2026-10-10 ChatGPT — RESOLUTE専用チャットへの引き継ぎ
+
+- 添付 `repo-append(2).md` のパートA/Bを既存ファイル末尾へ追記。既存本文は維持。
+- 「またはPro」を削除し、「通知利用権」に呼び方を統一。ユーザーが確定した購入必須・初年度通知利用権込み・2年目PRO無料化未決の条件を接続メモに明記。
+- 権限DB、決済Webhook、メール配信、新商品用ジョブは未実装。税金計算の20本通過はClaude報告で、ChatGPTでは未検証。
+- ニュース・目標株価・ホーム・メニュー、main、サービス設定は変更していない。メール送信や有料サービスの新設は行っていない。
+- 検証: 既存ファイルのバイト列が先頭にそのまま残ること、追加対象が2資料のみであること、git diff --checkを確認。
+
+## 2026-10-10 ChatGPT — RESOLUTE更新条件の追加記録
+
+- 変更ファイル: `docs/NEW-PRODUCT-INTEGRATION.md` と本書。既存本文を維持して末尾に追記。
+- 商品ID `resolute_v1`、FREE5,980円/PRO3,980円の年間通知更新価格、更新購入後のPRO解約でも通知利用権を維持する条件を記録。
+- 決済開始時とWebhookでの再検証を提案。PRO資格は支払い完了日時とサーバー側の会員履歴で検証する。Webhook処理時の現在の会員状態とは区別する。
+- 古い割引リンクは決済会社側でも停止する。失効後に例外的な決済が成立した場合の精算方針は未確定。Webhookで権限付与を止めるだけでは既に成立した決済を防げない。
+- Railwayは既存契約内へ追加する方針。作成前に実際の追加費用の見込みを確認し、本チャットへ報告・承認後に作成する。今回DB・サービス・契約・設定は変更していない。
+- 権限DB、決済Webhook、メール配信、新商品用ジョブは未実装。税金計算20本通過はClaude報告で、ChatGPTでは未検証。今回アプリコード・ニュース・目標株価・ホーム・メニューは変更していない。
+- 検証: 既存本文のバイト列保持と文書2本のみの追加差分を確認。`git diff --check`を実施。実装テストは今回の文書追記の検証ではない。
+
+
+## 2026-10-10 ChatGPT — RESOLUTE Hobbyバックアップと復元確認
+
+- Railway Proへの変更は保留。既存Hobby内の追加費用は月3ドルを目安にし、超える見込みで相談する。検証用ニュース監視を除く月約7ドル＋通信料は仮見込みで、RESOLUTE通知処理は未算入。本番が20ドル超になるとは未判断。
+- RESOLUTE専用Postgres（サービス表示名 `Postgres`、DB名 `resolute`）のみを対象に、新規 `resolute-backup` と `resolute-restore-check`、非公開Bucket `resolute-backups` を追加。既存サービス・他DB・既存変数・請求/プラン設定は変更していない。
+- 日次 `0 0 * * *`（日本時間09:00）、週次 `0 0 * * 1`（月曜09:00）を設定。週次は保存完了済みの最新バックアップを復元するため、同時刻の日次完了前には前回分を対象にする場合がある。Cron時刻による初回実行と継続稼働は今後の確認事項。
+- PostgreSQL 18の `pg_dump -Fc --no-owner --no-acl` で論理バックアップ。ageで保存前に公開鍵暗号化し、Bucketへ保存後に読み戻してSHA-256を照合。日次7日分＋ISO週ごとの最新4回分を保持。同日の再実行で日数を減らさない。
+- 復元ジョブは本番接続変数を持たず、独立した一時Postgresクラスタ（Unixソケットのみ、永続ボリュームなし）へ復元。新設したテスト専用スキーマ `resolute_backup_probe` の架空データ2件を含むバックアップを取得・復号し、チェックサム、pg_restore成功、内容・件数・主キーの復元を確認。本番DBは上書きしていない。
+- 初回手動バックアップ: 暗号化後2,286バイト（dump 2,086バイト）、処理2.240秒、起動・準備を含む約25.4秒。初回復元: 処理2.597秒、起動・準備を含む約24.4秒。スケジュール設定後の手動再実行もバックアップ1.120秒・復元1.832秒で成功。将来の実データ・アプリ全体復旧を検証した結果ではない。
+- 新規ジョブは上限RAM0.5GB/CPU0.5、再起動NEVER、15分の実行上限。現在の小容量なら追加月0.1〜0.5ドルの保守的な見込み。暗号化後1GB級では月約2〜3ドルが目安。1GiB超はアップロード前に失敗扱いとして費用見直しを要求する。容量しきい値は請求上限ではない。請求額と継続運用の実測は未確認。
+- 新規ジョブの主な変数: `RESOLUTE_JOB_B64`（本書と同じコミットのscripts/resolute/backup.pyをbase64化）、`RESOLUTE_BACKUP_MODE`、`BACKUP_BUCKET`、`BACKUP_ENDPOINT`、`BACKUP_REGION`、`BACKUP_ACCESS_KEY_ID`、`BACKUP_SECRET_ACCESS_KEY`。バックアップ側だけに `PGHOST/PGPORT/PGUSER/PGPASSWORD/PGDATABASE` と `BACKUP_AGE_RECIPIENT`、復元側だけに `BACKUP_AGE_IDENTITY` を設定。値・接続文字列・鍵は記載しない。
+- 復号鍵は復元用Railway変数と、Railway外の本人用非共有復旧ファイルへ保存。復旧ファイルを運営者のパスワード管理・オフライン保管へ移すことは別途確認する。
+- 失敗通知: Healthchecks.ioの無料枠を候補とし、任意の `BACKUP_MONITOR_PING_URL` をコード側で準備。送信先とテスト送信の承認前なので変数は未設定・外部通知未送信。起動漏れの検知と通知到達は未確認。現在はRailwayの成功/失敗ログだけを記録する。
+- 今後の課題: DBとBucketが同じRailwayアカウント内なので、アカウントにアクセスできない場合に備える暗号化バックアップの別保管を設計する。今回その別保管先は未作成。
+- 権限DBスキーマ、決済Webhook、商品メール配信、RESOLUTE通知ジョブは引き続き未実装。税金計算20本通過もChatGPT未検証。バックアップ作成・復元は実確認済みだが、失敗通知を含む運用全体を完了扱いしない。
+
+- リポジトリ検証: lintはエラー0（既存警告2）、Node619/619、Python2368/2368、Next.js build、compileall、git diff --checkが成功。保持期間のテストは同日再実行と年をまたぐISO週を含む。秘密値をコミットしていない。
+
+
+## 2026-10-10 ChatGPT — RESOLUTEバックアップ失敗通知の接続確認
+
+- 運営者によるHealthchecks.ioログイン後、Railway登録の運営者メールと一致する宛先を確認。20:17 JSTの許可に基づき、メール連携のテスト送信を1回だけ実施し、管理画面の「Test notification sent!」「Delivered」を確認。受信箱への到着は運営者による確認待ち。追加の失敗メール・復旧メールは送っていない。
+- 新設監視は `RESOLUTE daily backup`（UTC `0 0 * * *`）と `RESOLUTE weekly restore`（UTC `0 0 * * 1`）、猶予30分。メールはこの2監視だけに割り当て、down only（失敗時だけ）で設定。実行漏れは猶予後、実行中の停止はstartから猶予後に検知する構成。実際の時間超過・失敗イベントでのメール発報は今回未実測。
+- 新設Railwayジョブ2つだけに `BACKUP_MONITOR_PING_URL` を設定。値・鍵・接続文字列は文書・チャットに記載しない。既存サービス・DB・変数・請求/プラン設定は変更していない。
+- 接続後の手動再実行: backup deployment `0a221376-c453-49e6-9c4b-65a8b8a56496` はSUCCESS、暗号化後2,286バイト（dump 2,086）、処理1.083秒・起動準備込み約25.1秒。restore deployment `35a2cd33-f9d9-43d8-a90d-82461baeae7e` はSUCCESS、処理1.919秒・起動準備込み約25.7秒。架空データ2件、チェックサム、復号、pg_restore、内容・主キーを確認。両ログの `monitor_ping_sent: true` とHealthchecks画面の受信・処理時間を確認。
+- 監視の追加費用は無料枠を使用し0ドル。現在の小容量でのバックアップ構成の追加月0.1〜0.5ドル見込みを維持。請求実績・本番データ量は未確認で、月3ドルを超える見込みの場合は相談する。
+- 未確認: 日次Cronの初回（10月11日09:00 JST）、週次Cronの初回（10月12日09:00 JST）、継続稼働、実障害・実行漏れでの発報、運営者の受信箱到着、復旧ファイルのパスワード管理/オフライン移行。Railwayアカウント喪失対策の暗号化バックアップ別保管も継続課題。これらまで完了したとは扱わない。
+- 今回のリポジトリ変更は既存文書2本の末尾追記のみ。既存本文のバイト列保持と `git diff --check` を確認。
+
+
+## 2026-10-10 ChatGPT — 担当範囲と権限APIの接続案（未実装）
+
+- 運営者から20:45 JSTにテストメール件名 `"TEST" is DOWN` の受信報告があり、受信箱への到着を確認済みに更新する。これはHealthchecksの連携テストで実バックアップ障害ではない。追加テストメールは送信しない。Cron初回・実障害による発報・継続稼働は引き続き未確認。
+- ChatGPTはRESOLUTEとTech Phaseの接続仕様、専用DB・バックアップ、認証と購入権限API、計画データの保存API、会員の言語/タイムゾーン設定、決済検証と権限付与、専用通知ジョブの接続・運用検証を担当する。Claudeはコンテンツ、計画ツール、シミュレーション、温度計、税金計算と終値・翌朝メールの判定/内容を制作する。ニュース・目標株価・ホーム・メニューは変更しない。
+- 完了条件は、購入者がツールを利用でき、未購入者はPROでも利用不可、通知期限切れでは通知不可、更新と停止が正しく反映され、保存・配信・バックアップ/復元を実確認できること。決済会社と送信サービス、商用データ契約が未確定の箇所はテスト可能な範囲と本番確認を分ける。大きな仕様変更・追加費用・未許可のメール送信は事前相談する。
+
+### Claude向け権限API案
+
+- `GET /api/resolute/entitlements`。既存Clerkセッションで本人を認証。入力のuserId・メールアドレス・PROフラグは受け付けず、サーバーでClerk userIdを取得する。固定商品ID `resolute_v1`。本人用エンドポイントを通知ジョブ用に流用しない。
+- 200レスポンス例（日時は例示、実データではない）。`use` と `alerts` を別々に返す。`canReceiveNotifications` は両方が有効な場合だけtrue。PROを判定に使わない。
+
+```json
+{
+  "productId": "resolute_v1",
+  "asOf": "2027-01-15T00:00:00Z",
+  "use": {"status": "active", "startsAt": "2027-01-01T00:00:00Z", "expiresAt": null},
+  "alerts": {"status": "active", "startsAt": "2027-01-01T00:00:00Z", "expiresAt": "2028-01-01T00:00:00Z"},
+  "canUseTools": true,
+  "canReceiveNotifications": true
+}
+```
+
+- 各権限のstatusは `missing | scheduled | active | expired | revoked`。権限なしの日時はnull。`startsAt <= asOf < expiresAt` が通知期間の有効条件で、expiresAtと同時刻は期限切れ。利用権だけが期限なし。失効は明示的なrevokedAtを優先する。statusと能力フラグはサーバー計算とする。
+- 401 `AUTH_REQUIRED`（未ログイン）、503 `ENTITLEMENT_UNAVAILABLE`（認証設定・DB・依存サービス障害）。障害を未購入200へ変換せず、権限を許可しない。全応答を `Cache-Control: private, no-store` とし共有キャッシュへ保存しない。
+- ブラウザはこの応答を表示に使い、計画データの読込/保存APIは毎回本人認証・DB上の利用権・データ所有者を独立して検証する。画面上のフラグだけで許可しない。管理者プレビュー/PROのテスト権限はRESOLUTEの購入権限に転用しない。
+- `canReceiveNotifications` は権限条件だけを表す。実配信は同意、停止設定、宛先確認、営業日とデータ確定、送信直前の権限再検証、重複防止も満たす必要がある。このAPIからメールは送らない。
+- 計画データは専用Postgres内の権限とは別テーブルに保存する案。ルール・ライン・保有理由をClerk userIdに紐付け、更新競合を検知するversionを持たせる。通貨・数値精度・入力制限・削除/保存期間はClaudeの計画ツール仕様を受けて確定する。
+- 初回通知期間の購入日起算、翌年同日までの年単位計算（うるう日を含む）、期限前更新時の延長開始日は詳細合意前。API例でこの商用ルールを確定したとは扱わない。返金なし方針の販売条件と例外時の失効処理も別途確認する。
+- 実装順は権限スキーマ/読み取りAPI、計画保存APIとClaudeツール接続、決済・専用通知ジョブの接続、日英の一連の動作検証。次の実装で会員データ構造や共通認証を変更する場合は最新ブランチを確認し、この案と照合する。
+
+
+## 2026-10-10 ChatGPT — 権限スキーマと本人用読み取りAPIの実装
+
+- 実装追加: `db/resolute/001_entitlements.sql`、`lib/resolute/{entitlements,database-config,server}.ts`、`app/api/resolute/entitlements/route.ts`。`GET /api/resolute/entitlements` は先のJSON案どおり利用権/通知利用権と能力フラグを返す。ユーザーIDはClerkの検証済みセッションだけから取得し、ブラウザのuserId/PRO/管理者主張は使わない。
+- `proxy.ts` は既存matcherを保持して `/resolute/:path*` と `/api/resolute/:path*` を追加。既存FREE/PRO判定は変更しない。今回RESOLUTE画面本体・Claudeツール・ニュース・目標株価・ホーム・メニューは変更していない。
+- スキーマは専用DB名 `resolute` 以外でトランザクションを中止する。新規 `resolute.entitlements` の主キーはClerk userId＋商品ID＋kind。商品IDは `resolute_v1`、kindはuse/alerts、UTCのtimestamptz、明示的なrevoked_atを使用。useは期限なし、alertsは有限で開始より後の期限を必須とする。HTTPからスキーマ作成・購入権限付与はしない。
+- このテーブルは現在の権限状態で、決済台帳ではない。1決済からuse/alertsの両方を付与するため、同じpayment_event_idに対する単独UNIQUEをこの表には置かない。注文/支払い/イベント台帳と二重処理防止はWebhook実装時に別途追加し、同一トランザクションで権限を更新する。初回1年/更新起算点の詳細計算と権限書き込みは未実装。
+- DB読込はパラメータ化SQLで本人・固定商品だけを取得し、同一SQLのstatement_timestampを判定時刻にする。PRO・プレビューは受け付けない。未購入は200かつmissing/false、未ログイン401 AUTH_REQUIRED、認証/DB障害は503 ENTITLEMENT_UNAVAILABLE。全応答private,no-storeで、例外や接続文字列を返さない。不正な権限レコードも503になり許可しない。
+- 新規依存はpg（本番DBクライアント）、@types/pg（型）、@electric-sql/pglite（開発テスト専用）。ENTITLEMENT_DB_URLだけを読む。他のDATABASE_URLやニュースDBへフォールバックしない。接続プールは上限2、接続3秒・SQL3秒・問い合わせ4秒。外部ホストは証明書検証を必須とし、sslmode=require/disable等の弱いURL設定は拒否。非公開postgres.railway.internalのみRailway内部接続として扱う。
+- 検証: Node628/628（RESOLUTE追加9テストを含む）、Python2368/2368、lintエラー0/既存警告2、Next.js build/型チェック、compileall、git diff --checkが成功。隔離PGliteのPostgreSQLエンジンでスキーマ実行、他DBでの中止、制約、購入者/非購入者/別ユーザー、失効を確認。期限の開始直前・開始時刻・終了直前・終了同時刻、重複/不正レコード、PROだけでは不可、認証/DBエラーと秘密非開示も検証。
+- ローカルのビルド済みNext.jsへHTTPリクエストを送って、設定不足時503＋private,no-store＋公開用エラーだけの応答を確認。Clerk実ユーザー・RailwayとのTCP/TLS接続・Vercelプレビューでの成功応答は未検証。PGliteの検証を実Railway DBの確認とは扱わない。テストで変化した既存SQLite fixtureと補助ファイルはコミットに含めない。
+- 実環境ではVercel本体からRailwayの非公開DNSへ直接接続できない。DBを公開する変更や既存サービス/変数の変更は今回していない。スキーマはRailwayへ未適用で、購入権限DBが稼働したとは扱わない。今後は専用APIをRailway内部に置く構成などを、認証方法・費用・既存設定に触れる範囲とともに具体化し、必要な承認後に接続する。
+- 次はClaudeの計画データ仕様との照合と保存API、実環境の接続方式。決済Webhook・実商品の通知配信・税金計算テスト20本の検証は引き続き未実施。
+
+
+## 2026-10-10 ChatGPT — 非公開DBへの専用API接続仕様（推奨案・費用承認前）
+
+### 構成と今回の状態
+
+ユーザーから、DBを非公開のままRailwayにRESOLUTE専用APIを置き、Vercelのサーバーから認証付きで呼ぶ案の検討と、実装前の費用・仕様提示を依頼された。本節はその実装前レビュー用の推奨仕様で、専用APIは未作成・未実装。画面側の既存契約は維持する。費用が発生する設定は承認後に行う。
+
+`画面/Claudeツール → Vercel /api/resolute/entitlements → HTTPS認証付きRailway resolute-api → 非公開Postgres resolute`
+
+- 新設 `resolute-api` を既存のradiant-magic/production内、RESOLUTE DBと同じリージョンに置く。既存Hobbyを維持し、新規契約・プラン変更はしない。軽量Node.js APIを1レプリカ、永続ボリュームなしで稼働させ、Next.js画面全体は移さない。
+- 外部へ公開するのは専用APIのHTTPS入口だけ。DBのTCP proxy・公開ドメインは追加しない。2026-10-10の読み取り確認でも専用Postgresの公開ドメイン/公開TCPは0件、既存deploymentはa81b42b9-8da3-4397-b3f1-8f5098531204で変更なし。
+- API→DBは同じRailway環境の内部DNS接続。VercelへDB接続文字列を置かない。先の直接DB読込APIは、承認後にVercel側の転送処理とRailway側のDB読込へ分離し、権限判定を共有する。
+
+### 追加費用の試算（実測ではない）
+
+- Railway公式料金はRAM10ドル/GB月、CPU20ドル/vCPU月、外向き通信0.05ドル/GB。Hobbyは既存契約を使用するので、新しいHobby基本料をもう1件追加しない。税込・為替換算はここでは含めない。
+- 小さいAPIの平均RAMを0.1〜0.2GB、平均CPUを0.005〜0.02vCPU、月の外向き通信を1GB以内と仮定すると、常時稼働でも約1.15〜2.45ドル/月。余裕を含めAPI追加分を月1〜3ドルと提示する。まだプロセスの実RAM/CPU・負荷を測っていないため保証額ではない。
+- バックアップの現行小容量見込み月0.1〜0.5ドルと合算すると約1.1〜3.5ドル/月。従来の月3ドルの目安を超える可能性があるため、API追加費用の承認前にサービスを作成しない。これは既存DBの仮予算月5〜15ドルや既存Tech Phase費用とは別の追加分。RESOLUTE商品通知のメール/データ料金も含めない。
+- Vercel側にもAPI呼出の実行時間・通信が増える。既存契約の使用量が未確認なので0円とは断定せず、実測時に別途確認する。今回この設定を追加していない。
+- 初期リソース制限案はRAM0.25GB/CPU0.25/1台。両方を常時上限まで使うとRAM+CPUだけで月約7.5ドルとなり、通信は別。制限は月3ドルの請求上限ではない。起動時にRAM不足の場合も勝手に増枠せず相談する。
+- 新設APIだけServerless候補。DBプールのアイドル接続を10秒程度で閉じ、定期DBポーリング/ウォームアップを入れない。睡眠は外向き通信やDB接続に左右されるため、節約を前提に予算を下げない。実負荷・起動遅延を確認してから設定する。既存DBとニュース監視のServerless設定は変更しない。
+- 運用開始後24〜48時間とテスト終了後に平均RAM/CPU/通信から月額を再計算し、バックアップ込み月3ドル超の見込みで相談する。既存workspaceの請求/停止上限設定は変更しない。
+
+### 認証と内部API
+
+- 第一段階は読み取りだけ。Railwayの固定ルート `GET /internal/v1/entitlements` をVercelから呼ぶ。userId/productIdをqueryやbodyで指定させない。APIは本人のClerkトークンsubjectと固定商品resolute_v1でDBを検索する。
+- Vercelは既存Clerk auth()でログインを確認し、サーバーで取得した短命セッショントークンを `Authorization: Bearer <session token>` として送る。同時にサーバー間専用の `X-Resolute-Service-Token` を付ける。ブラウザの任意ヘッダーをそのまま転送しない。秘密値はコード/チャット/ログへ出さない。
+- Railwayは専用トークンを定数時間比較し、次にClerk Backend SDKでJWTの署名、有効期限/開始時刻、固定issuer、許可した正確なorigin（azp）、セッション種別とsubのuser_ID形式を検証する。本人トークンだけ、専用トークンだけ、改ざん・期限切れ・別Clerk環境のトークンでは通さない。PRO/管理者/画面のフラグから購入権限を推測しない。
+- Clerk検証用には同じClerk環境の公開JWT鍵を専用APIへ設定し、Clerk管理用秘密キーをRailwayへ複製しない。鍵ローテーションは更新と検証を必要とし、更新前は許可しない。SDK検証に加えてissuer/azp/セッションclaimの欠落・不一致も明示的に拒否する。署名検証できないJWKS URLをリクエストから指定させない。
+- previewとproductionは固定の許可origin/issuerで分離し、*.vercel.appのような全体ワイルドカードを使わない。初期接続確認はcodex/research-previewの固定プレビューだけ。本番ドメインや鍵は確認・承認後に追加する。
+- 初期DB接続は専用の読み取りユーザー（例resolute_api_reader）とし、resolute.entitlementsへのSELECT以外を許可しない。既存postgres管理者のパスワードは変更しない。新設RESOLUTE DBへのスキーマ適用・専用ユーザー作成は明示的な移行作業で行い、通常のAPI起動やHTTPからDDLを実行しない。
+- 計画保存、決済付与、通知ジョブは別の操作契約/権限。今回の読み取りエンドポイントを管理APIや商品メール送信APIとして転用しない。CORSでブラウザ向けの許可は追加しないが、CORSを認証の代用にはしない。
+
+### 画面側の固定契約とエラー
+
+| 項目 | Claudeの画面/ツールが使う契約 |
+| --- | --- |
+| 入口 | 同一オリジン GET /api/resolute/entitlements。Railway URLは呼ばない |
+| 入力 | なし。既存Clerkログインだけを使用。userId/PRO/購入フラグは送らない |
+| 200 | 先のproductId/asOf/use/alerts/canUseTools/canReceiveNotificationsと同じJSON。形は変更しない |
+| 利用 | canUseToolsがtrueのとき。FREE/PROとは独立 |
+| 通知権限 | canReceiveNotificationsがtrueのとき。実配信は別途同意・停止・宛先確認等も必要 |
+| 401 | AUTH_REQUIRED。ログイン案内 |
+| 429 | RATE_LIMITED。Retry-Afterに従って再試行 |
+| 503 | ENTITLEMENT_UNAVAILABLE。確認できない旨と再読込を表示。未購入として購入へ誘導しない |
+| キャッシュ | 全応答Cache-Control: private, no-store。権限の共有キャッシュ/固定購入済みフラグを使わない |
+
+- Vercelの転送先は設定したHTTPS originと固定pathだけに限定。リクエストからURLを受け取らず、リダイレクトに認証ヘッダーを引き継がない。応答サイズとJSON形/固定商品IDを検証してから返す。DB情報や内部認証エラーの詳細をブラウザへ返さない。
+- 依存APIの401/403（サービス鍵/JWT拒否）、5xx、異常JSON、タイムアウトはVercelで503へ変換し、権限を許可しない。ブラウザ入口の未ログインだけは401。GETの一時的な502/503・通信失敗は1回だけ再試行、合計20秒以内を案とする。将来の書き込みAPIを同じ規則で自動再送しない。
+- APIは検証前の安価な認証拒否、同時実行制限、ユーザー単位のレート制限を用意する。外部から無制限の購入判定やDB接続を起こさせない。上限の具体値は負荷テストで確定し、Redis等の有料追加サービスは使わない。
+- 将来の計画保存APIでも、Railwayで本人・利用権・データ所有者・versionを毎回検証する。画面でボタンを隠すだけでは許可しない。計画の項目/通貨/精度はClaudeのデータ仕様を受けて決める。
+
+### 追加する環境変数名と変更範囲（値は記載しない）
+
+| 設定先 | 新規変数 |
+| --- | --- |
+| Vercelの対象previewだけ | RESOLUTE_API_URL、RESOLUTE_API_SERVICE_TOKEN |
+| 新設Railway resolute-api | ENTITLEMENT_DB_URL（読み取りユーザー）、RESOLUTE_API_SERVICE_TOKEN、RESOLUTE_CLERK_JWT_PUBLIC_KEY、RESOLUTE_CLERK_ISSUER、RESOLUTE_CLERK_AUTHORIZED_PARTIES、PORT |
+
+- 全変数はサーバー専用でNEXT_PUBLIC_を付けない。DB接続文字列はRailwayだけ。サービス間秘密鍵の2つの保管先はVercelと新設Railway APIの環境変数に限定する。
+- この構成にはVercelへの新規サーバー変数2つの追加が必要。既存変数の上書き/削除はしないが、「既存設定を一切変更しない」ままでは接続できないため、追加範囲を費用と一緒に事前確認する。既存Railwayサービス/変数・他DB・請求/プラン設定は変更しない。専用RESOLUTE DBだけにスキーマと読み取りユーザーを追加する範囲も確認する。
+
+### 承認後の実装・検証順
+
+1. 既存コードのDB読込をRailway専用APIに分離し、Vercel側は固定契約の転送処理に変更。ローカルで両段の認証、JSON、エラー、権限境界を検証し、AGENTS.mdの全チェックを通す。
+2. 費用と追加範囲の承認後に新設APIを作成し、RESOLUTE専用DBにスキーマ/読み取りユーザーを適用。移行前に暗号化バックアップを取得する。接続文字列や鍵はチャットへ出さない。
+3. 固定previewだけに新規変数を追加し、未ログイン・非購入・PROだけ・購入済み・通知期限切れ・失効・別人・障害・認証改ざんを実確認。架空ユーザーの権限行と実購入は区別する。
+4. RAM/CPU/通信/初回起動時間を測り、月額予測を報告。秘密非表示とDBの非公開を再確認し、Claudeへ到達できた入口と未確認項目を渡す。
+
+### Claudeへ渡す説明
+
+画面・ツールは同一オリジンのGET /api/resolute/entitlementsだけを呼んでください。応答JSONは前の仕様から変えません。use/alertsを別々に読み、canUseToolsでツール利用、canReceiveNotificationsで通知権限を表示してください。PROによる迂回はありません。401はログイン、503は一時的に権限を確認できない表示にし、未購入と区別してください。RailwayのURL・DB情報・サービス間秘密鍵を画面コードへ埋め込む必要はありません。計画保存のエンドポイントはデータ項目を照合してから別途共有します。現時点では専用APIは未作成、実DB接続は未確認で、実環境で200が返る完成状態とは扱わないでください。
+
+### 確認資料
+
+- Railway料金: https://docs.railway.com/pricing/plans
+- 算定式: https://docs.railway.com/guides/right-size-cpu-memory
+- 非公開通信: https://docs.railway.com/networking/private-networking
+- Serverlessの睡眠条件/初回502: https://docs.railway.com/deployments/serverless
+- Clerk JWT検証: https://clerk.com/docs/reference/backend/verify-token と https://clerk.com/docs/guides/sessions/session-tokens
+
+今回の変更は文書末尾への追記だけ。既存本文のバイト保持、git diff --check、Git Dataとlocal treeの一致を確認して公開する。
+
+
+## 2026-10-10 ChatGPT — 専用API実装・配置の進行状況
+
+ユーザーは専用API追加分月1〜3ドル、バックアップ込み月1.1〜3.5ドルの見込みで、専用API作成、RESOLUTE用DBのスキーマ適用、Vercel対象プレビューへの新規変数追加を承認した。Hobbyのまま進める。
+
+- Vercel側の `/api/resolute/entitlements` はClerk認証後に `getToken()` で取得したセッションJWTを専用APIへ渡す。ブラウザのuserId・PRO・管理者指定は使わない。専用認証キーはサーバー内だけで使う。
+- Railway用Node 24 APIは `services/resolute-api/`。署名・期限・発行元・許可origin・session IDを検証し、JWTの本人IDでだけ権限を読む。DB読取は `lib/resolute/database.ts`。API起動・HTTP経由ではDDLを実行しない。
+- APIは1台、メモリ上限0.25GB、CPU上限0.25、Serverless有効、ボリュームなし。上限は請求上限ではない。実測値と費用見込みは配置後に確認する。
+- Railwayの新規サービス `resolute-api`（7108edd6-952c-474a-8ed6-97482be50c2b）に `ENTITLEMENT_DB_URL`、`RESOLUTE_API_SERVICE_TOKEN`、`RESOLUTE_CLERK_JWT_PUBLIC_KEY`、`RESOLUTE_CLERK_ISSUER`、`RESOLUTE_CLERK_AUTHORIZED_PARTIES`、`PORT` を設定済み。値は本書に記載しない。
+- Vercel `tech-phase-lab` のpreview / `codex/research-preview` だけに `RESOLUTE_API_URL` と `RESOLUTE_API_SERVICE_TOKEN` を新規追加済み。productionや既存変数の値は変更していない。
+- 新規一回実行ジョブ `resolute-db-provision`（ab53b28a-62ef-4e0e-9626-0dabb5206cf9）はスキーマと読取専用roleを作り、購入状態・通知期限切れ・失効・他人・書込拒否・reader接続を実DBで検証する。テスト権限は同一トランザクション内でロールバックする。ソースは `scripts/resolute/provision-reader.mjs` と既存migrationから生成する。
+- このDB適用ジョブのステージ済み変更は、新規ジョブと専用変数だけで、既存サービス変更を含まないことを読み取りで確認した。ただし適用ツールは「承認されずキャンセル」と返したため、DB適用は未実行。確認前にschema適用済み・実接続完了とは扱わない。
+- 既存バックアップの手動再実行も自動レビューにより拒否され、実行していない。2026-10-10 11:35 UTCの既存バックアップ成功ログを読み取りで再確認した（暗号化2,286 bytes / dump 2,086 bytes / 1.083秒）。今回のDDLやテスト権限書込はまだない。
+
+### Claudeに渡す説明
+
+画面は `GET /api/resolute/entitlements` のままで接続できます。RailwayのURL、DB接続文字列、専用キーを画面コードに入れる必要はありません。`use` と `alerts` は独立して表示し、利用可否には `canUseTools` と `canReceiveNotifications` を使ってください。PROだけでは許可しません。401はログイン案内、429は再試行を待つ案内、503は一時的に確認できない案内にし、503を未購入表示へ変換しないでください。
+
+現在は実装済みですが、DB適用とVercel経由のログイン済み200応答は未確認です。実環境の接続完成扱いは、その確認結果が追記されるまで保留してください。計画データの保存API・決済付与・商品通知は本変更の対象に含まず、これから別途実装します。
+
+検証: Node 631本 / Python 2,368本成功、lint 0 errors（既存warnings 2件）、Next.js build成功、compileall成功。今回の変更範囲はRESOLUTE専用コードとdocsのみ。
+
+
+## 2026-10-10 ChatGPT — API配置後の確認結果
+
+- 実装コミット: `01bfd4708c39f8ddf7edb1c33d4da9f39e3d5d11`。Railwayの `resolute-api` はこのコミットに固定し、以降のdocs追記だけでは再デプロイしない。
+- Railway deployment `1aadf9a4-a979-43c5-8adc-10f38b43b35d` はSUCCESS。`/healthz` の200、認証なし401、不正JWT（正しいサービスキーあり）401、userIdクエリ指定404、POST 405を公開HTTPSで実測確認した。すべて `Cache-Control: private, no-store`。この検証はDB接続の証明ではない。
+- 起動直後のメモリ使用量: 0.042770432 GB（約43MB）。1時間平均には起動前のゼロが含まれるので、その平均値で月額を過小計算しない。実DB・Clerkの正常認証・本番負荷はまだ含まない。承認済み月1〜3ドル（バックアップ込み1.1〜3.5ドル）の試算は据え置き、接続完了後24〜48時間の使用量から見直す。
+- Vercel preview deployment `dpl_9fJBPF5X889oViCwMHPwAd2JYTRg` は同じ実装コミットでREADY。接続変数はこのpreviewへ反映対象として作成済み。
+- 保護されたVercelプレビューの取得ツールは `deployment_authentication_required` / 401を返した。これはVercel保護段階での失敗であり、アプリの未ログイン401やDB読み取り結果とは扱わない。ローカルVercel CLI認証もない。保護設定は変更していない。
+- 残り: ステージ済み新規 `resolute-db-provision` の適用、実DBのスキーマ・reader role・ロールバック検証、Vercelのログイン済みセッションからの200確認。必要なブラウザ操作の範囲は新規ジョブ適用と対象プレビュー確認に限定する。既存サービス・DB・変数・請求・プランは対象外。
+- Claudeは前項の画面側契約で作業を進められる。接続完成の報告は上記3点の実測確認後に行う。秘密情報を受け渡す必要はない。
+
+
+## 2026-10-10 ChatGPT — DB適用完了と一回用ジョブの復旧
+
+- 新規 `resolute-db-provision` の専用ステージ変更だけをブラウザで適用した。初回は12:54:10 UTCに `RESOLUTE_PROVISION_OK`。専用DB `resolute` にschema/tableと `resolute_api_reader` を作成し、購入済み・通知期限切れ・利用権失効・別人・書込拒否・readerログインを実DBで確認した。架空ユーザーの検証行は同一トランザクションで全件ロールバックし、残存なしを確認した。実ユーザーへの購入権付与は行っていない。
+- 初回成功後、ChatGPT側のリソース上限/配置設定変更で同じ一回用ジョブを再実行させてしまった。12:54:48 UTCに既存tableを検出する重複適用ガードで停止し、CRASHEDとなった。DBの再作成・再適用は実行されず、API/DBのdeploymentはSUCCESSのまま。この停止が今回のクラッシュ通知の対象として確認できた。
+- 同ジョブを `scripts/resolute/verify-reader.mjs` から生成した読み取り専用確認コードへ置換した。再実行時もDDL・GRANT・パスワード変更・権限行の書込を行わず、readerとして接続しSELECTだけで状態を検証する。元の一回用適用スクリプトは明示的な初回適用専用のまま残す。
+- 修正deployment `bddc6fbc-1d40-4a4d-9550-72a78b610349` はSUCCESS、画面はCOMPLETED。13:01:20 UTCの `RESOLUTE_READER_VERIFIED` でreaderログイン・schema読取・書込権限なし・管理者権限なし・検証行残存なし、writes=0を実確認した。restartPolicyはNEVER、定期実行なし、HTTP公開なし。正常終了後の常駐処理はない。
+- 専用API `resolute-api` とPostgresは稼働中。DBは引き続き非公開。既存ニュース監視、他DB、既存変数、請求/プラン設定は変更していない。新規ジョブの専用変数名は `RESOLUTE_SETUP_DB_URL` と `RESOLUTE_READER_PASSWORD`（値は記録しない）。
+- Vercel経由のログイン済み200応答は未確認。ブラウザの対象previewアクセスは `ERR_BLOCKED_BY_CLIENT`、続く操作はブラウザURLポリシーで拒否された。迂回や保護設定の変更は行わない。これはAPI/DBの故障を示す結果ではないが、画面→Vercel→Railway→DBの通し検証の代わりにもならない。
+- 費用は承認済みのAPI追加月1〜3ドル（バックアップ込み1.1〜3.5ドル）の試算を据え置く。24〜48時間の正常認証/読込を含む使用量は未取得なので実測確定額とは扱わない。バックアップのschema適用後の取得/復元結果もまだ確認していない。
+
+### Claudeへ渡す接続説明（今回の確認結果）
+
+画面は同一originの `GET /api/resolute/entitlements` だけを呼んでください。Railway URL、DB情報、サービス間キーを画面へ渡す必要はありません。`use` と `alerts` を別々に読み、`canUseTools` と `canReceiveNotifications` で判定します。PROは購入権限を代替しません。401はログイン、429は待機、503は一時的な確認不能として表示し、未購入と混同しないでください。
+
+専用DBの適用と実DB検証は完了しました。Vercelログイン済みセッションでの200、計画保存API、決済Webhookによる付与/更新、商品メール送信は未確認または未実装です。画面契約に沿った制作は進められますが、これらを接続完成扱いにはしないでください。
+
+補足: 修正後の読み取り確認で専用APIはServerlessの `SLEEPING`、Postgresは `SUCCESS`。APIの睡眠は待機時の状態として設定したもので、今回のCRASHEDとは別。HTTP起動後の正常認証200と初回起動時間は未確認。ローカル検証はNode 634本成功、lint 0 errors（既存warnings 2件）、Next.js build/compileall/diff check成功。Python全テストの結果は完了確認後に記録する。
+
+追加実測: Serverlessの睡眠確認後、公開 `/healthz` へのGETは200、JSON `{"status":"ok"}`。クライアントからの所要時間10.407864秒（通信/起動を含む。API処理時間だけとは扱わない）。正常認証した権限APIの200の代わりにはならない。
+
+最終ローカル検証: Python 2,368本成功（206.217秒）、Node 634本成功、lint 0 errors（既存warnings 2件）、Next.js build、compileall、git diff --check成功。
+
+
+## 2026-10-10 ChatGPT — 言語・タイムゾーン保存API
+
+前回のDB復旧コミット `82a35b2330c3a23a66a7172cac8437596eb782da` のGitHub Actions（run 38054385093）はcompleted/successを確認した。以下は会員設定のAPI実装であり、商品メール送信や画面からの実環境検証の完了ではない。
+
+### Claudeが画面に接続する契約
+
+- 入口は同一originの `GET /api/resolute/preferences` と `PUT /api/resolute/preferences`。既存Clerkセッションで本人を識別する。userId・PROフラグ・購入権限をリクエストで渡さない。
+- 保存先は既存合意どおりClerkのpublicMetadataの `locale` と `timezone` だけ。Clerk BackendのupdateUserMetadataで部分更新し、他のpublicMetadata、privateMetadata、unsafeMetadataを上書きしない。設定変更で購入権限やメール配信同意を付与しない。
+- GETの200例: `{"locale":"ja","timezone":"Asia/Tokyo","configured":true}`。両方未設定/不正の例: `{"locale":null,"timezone":null,"configured":false}`。片方だけ有効なら有効な項目は返し、不正/未設定の項目はnull。メール、他metadata、userIdは返さない。
+- PUTは `Content-Type: application/json`、同一originで `{"locale":"en","timezone":"America/New_York"}` の2項目を必ず送る。正常保存後はGETと同じ形を返す。ja/en以外、UTC/IANAタイムゾーン以外、余分なキー、null、配列、不正JSONは拒否する。IANAの別名は実行環境のIntlによる正規名へ統一する。UTCも受け付ける。UTCオフセットだけの文字列は受け付けない。
+- GET/PUTの401はログイン案内。PUTの400は入力確認、403はorigin不一致、413は本文1,024 bytes超、415はJSON以外。Clerk/認証障害・保存結果確認不能は503 `PREFERENCES_UNAVAILABLE`。全GET/PUT応答はprivate/no-store。他人の設定や秘密情報を含むエラーは返さない。
+- 未設定時に日本語/日本時間を通知用の保存値として勝手に選ばない。画面で候補を提示し、本人が保存してconfigured=trueを確認してから通知ジョブとの接続を進める。現時点で通知ジョブはこのAPIへ接続していない。
+- 設定は無料/PRO/RESOLUTE未購入でも本人なら読み書きできる一般的な会員設定。商品利用や通知利用の判定は別の `/api/resolute/entitlements` を使い続ける。
+- 設定画面本体への組み込み、Clerk実ユーザーへの保存/再読込、日英画面とメールへの反映は未検証。今回、実ユーザーのmetadata変更やテストメール送信はしていない。新たなサービス・変数・有料契約は不要。既存契約のAPI使用量は増えるため、追加費用ゼロの保証ではない。
+
+### 計画保存APIの着手に必要なClaude素材
+
+計画保存は同じ非公開RESOLUTE Postgres内の別テーブルを予定する。次にClaudeから計画データのTypeScript型またはJSON例（ルール、各ラインの意味、保有理由、銘柄識別子、通貨、数量/金額/価格の精度、入力の上限）を受け取り、保存APIの検証項目と照合する。一人の計画数、編集/削除、保存期間の条件も記載してほしい。まだ項目を推測したテーブルや書込roleを本番DBに作らない。本人認証・有効なuse・所有者確認・versionによる更新競合検知は必須とし、通知利用権の期限切れだけで計画の閲覧/編集を止めない。
+
+公式確認資料: https://clerk.com/docs/reference/backend/user/update-user-metadata （publicMetadataの部分更新/深いマージ）。
+
+補足: 専用設定画面は今回未作成。既存ホーム/メニュー/言語切替の変更はしていない。保存APIの実装と、画面への組み込み完了は区別する。前回コミットのVercelプレビューは deployment dpl_AnmBinP71zvQqJDgya5tzJa4H7Vu / READY を確認したが、正常認証した権限API応答の検証ではない。
+
+検証結果: Node 639/639、Python 2,368/2,368（210.544秒）、lint 0 errors（既存warnings 2件）、Next.js build、compileall、git diff --check成功。実ユーザーのClerk読書きと設定画面の通し検証は未実施。
+
+
+## 2026-10-10 ChatGPT — RESOLUTEの言語・タイムゾーン設定画面
+
+言語・タイムゾーンを本人が保存する専用画面 `/resolute/settings` を追加した。日英共通パスで、表示言語の切替と保存するlocaleの選択を分ける。未設定のlocale/timezoneは空欄にし、自動保存しない。「端末のタイムゾーンを使う」は入力候補の設定だけで、保存ボタンを押すまで永続化しない。
+
+通信は既存の同一origin `GET/PUT /api/resolute/preferences` の契約をそのまま使用する。読込・保存中と認証確認中は保存を止める。アカウントのセッションが変わった場合は入力をリセットして再読込する。ClerkProviderを専用ページ内に置き、既存のresearchレイアウトやホーム・メニューは変更しない。未ログインは既存の `/research/account` へ案内する。取得失敗と未設定を分け、保存失敗時は入力を残す。応答の設定値が送信値と一致しない場合は保存成功と表示せず、書込の自動再試行もしない。
+
+ブラウザにはRailway URL・DB接続情報・サービス間キーを渡さない。ブラウザ用の純粋な入力検証を `preferences-data.ts` に分け、サーバー側のHTTP処理を読み込まない。購入・PRO・通知利用権の契約は変更せず、設定保存だけではメール配信や通知利用権を開始しない。新しいサービス、環境変数、契約は追加していない。
+
+Claude向け: 設定画面は `/resolute/settings` を利用できる。計画ツール側に設定保存処理を重複実装する必要はない。設定APIと権限APIは引き続き別であり、計画ツールは `use`、通知は `use` と有効な `alerts` の両方を確認する。計画データの型・JSON例を受け取るまで本番DBの計画テーブルや書込roleは作成しない。
+
+確認の範囲: ローカルの通信テストでは同一originのGET/PUT、応答不整合、認証/入力/通信障害、失敗時の自動再試行なしを確認する。実際の画面表示・スマートフォン操作・ログインした実ユーザーでの保存/再読込は未検証。前回のブラウザアクセスがポリシーでブロックされたため、別URL等で回避していない。VercelのREADYとGitHub Actionsの成功だけで、この通し検証を完了扱いにしない。今回、実ユーザーのmetadata変更とテストメール送信は行っていない。
+
+最終ローカル検証: Node 643/643、Python 2,368/2,368（191.788秒）、lint 0 errors（既存warnings 2件）、Next.js build、compileall、git diff --cached --check成功。前回の保存APIコミット `f9967daa6323852dcd34d7371c3f4ffaab32ebd2` はGitHub Actions run 38055516418のsuccessとVercel deployment dpl_EjJMWxbxuYKdeyhz2uF6JgPMKMR3のREADYを確認済み。今回の画面の実ログイン/保存/再読込は未確認。
+
+統合後の再検証: 別担当のウォッチリストCSSコミット `66e0620967ca43e9086c5a8f2aafeae8ad6f8720` をそのまま含めた状態で、Node 643/643、Python 2,368/2,368（223.006秒）、lint 0 errors（既存warnings 2件）、Next.js build、compileall、diff checkが成功。ChatGPT側からウォッチリストCSSの追加編集は行っていない。
+
+## 2026-10-11 ChatGPT — 銘柄検索から詳細・検索結果へ戻る操作
+
+公開画面で、検索語をAPHからVSに変えてVSTを開いてもURLがAPHのまま残り、ブラウザの戻るが検索結果を飛ばしてウォッチリストへ戻る問題を再現した。`stocks/stock-directory.tsx` の検索語をURLのqへ反映し、詳細選択をstockパラメータと履歴へ保存する。検索の入力は履歴を増やさず、詳細を開く操作で1段追加する。ブラウザの戻る/進むと「検索結果に戻る」に対応し、結果一覧へ戻る際は元のスクロール位置を復元する。戻った後の遅い詳細応答は破棄する。URLからの詳細再表示にも対応する。
+
+ニュース・目標株価、共通ヘッダー/メニュー、RESOLUTEは変更しない。株価接続や通知配信を開始する変更ではない。回帰テストは検索語のURL反映、詳細→戻る→進む、遅延応答、詳細URLからの復元を対象とする。スマートフォン実機の戻るジェスチャー・キーボード表示を含む確認は未実施であり、ブラウザ検証と区別する。
+
+
+## 2026-10-12 ChatGPT — ウォッチリストの登録先選択と戻る操作
+
+銘柄検索の詳細に、7つのマイリストへ個別登録・解除できる選択欄を追加済み（c4914c6、f0c8941）。変更済みのリスト名を表示し、複数リストへの登録と選択したリストだけからの解除に対応する。既存のアカウント同期・競合処理を使用する。選択欄はボタンの下へ重ねて開き、詳細ヘッダーを縦に伸ばさない。
+
+ログイン済みの公開ブラウザで、LITEをマイリスト3へ追加して直ちにウォッチリストへ移動すると登録が反映されること、詳細へ戻ってもチェックが残ること、解除して直ちに移動すると対象リストから消えることを確認した。確認用のLITEは解除済み。元のマイリスト1の9銘柄は保持している。
+
+戻った際に選択中のリストがマイリスト1へ戻る問題が見つかったため、通常ウォッチリストの選択IDをタブ単位のsessionStorageへ保持する。銘柄・アカウント情報はこの保存領域に含めない。保存領域が使えない場合も、そのページセッション内で選択を維持する。存在しないIDは従来どおり先頭リストへフォールバックする。表示サンプルは専用実装のままで、この選択保存の対象外。スマホ実機の表示・戻るジェスチャーは未検証。ニュース・目標株価、共通メニュー、RESOLUTEは変更していない。
+
+
+## 2026-10-12 ChatGPT — Claude回答の計画計算と保存契約
+
+Claudeから計算式・制約の回答を受領した。以下は計画保存APIに向けた接続契約であり、DBへの保存・削除や商品画面の接続が完成したという報告ではない。未決のanswersと閲覧条件を確定扱いにしない。
+
+### 金額計算
+
+- 金額はJPY=円、USD=セントの整数で、入力は0〜10^12最小単位。USDも小数を入力しない。月数は小数1桁、reserveMonthsは0〜120、savingsMonthsは0〜600。割合は小数1桁で0〜100、買付ラインのdropPctだけは0より大きく99.9以下。fx.usdJpyは小数2桁で50〜500。
+- reserve = floor(monthlyLivingCost × reserveMonths)。investable = max(0, financialAssets − reserve − nearTermExpense)。financialAssetsは現金と投資済み資産の合計で、nullならinvestableもnull。前の暫定Plan型のinvestable:numberをnumber|nullへ修正する。
+- investBaseはinvestedAmountがnullでなく正数ならinvestedAmount、それ以外はinvestable。保存せず毎回計算する。toleranceDrop = floor(investBase × tolerancePct / 100)、buyBudget = floor(investBase × buyBudgetPct / 100)。基準額または各割合がnullなら結果もnull。
+- toleranceMonthsはtoleranceDrop / monthlyLivingCostを小数1桁で切り捨て、生活費が0なら非表示。toleranceDropがnullなら非表示。buyBudgetとtoleranceMonthsは表示用で保存しない。investableとtoleranceDropは保存時にサーバー再計算して一致を確認し、不一致は400にする契約。
+- 共通の純粋な計算をlib/resolute/plan-calculation.tsに実装した。金額の乗算/切り捨てはBigInt、月数/割合は10倍した整数で扱う。calculatePlanAmountsにはcurrency、monthlyLivingCost、reserveMonths、nearTermExpense、financialAssets、investedAmount、tolerancePct、buyBudgetPctの8項目だけを渡す。assertPlanCalculatedAmountsで送信されたinvestable/toleranceDropの一致を確認できる。
+- このモジュールは計算入力だけを検証する。savingsMonths・fx・buyMode・文字配列などを含むPlan全体の検証器やHTTP APIではない。通常/未回答/全未回答/投資可能額0のJPY例、USDセント、精度境界、入力不正、計算値改ざんをローカルテストする。税金計算テスト20本の検証とは別。
+
+### 買い増しと更新/削除の接続契約
+
+noneはbuyLines空、buyBudgetPct/allocationはnull。singleはライン1件、allocationはnull。stepsは2〜10件、allocationはequal/heavier。質問画面は最大4段階、計画ツールで最大10に編集可能。dropPctは昇順・重複なし、amountは共通の金額単位。amount合計がbuyBudgetを超えても保存は拒否せず画面で警告する。none以外のbuyBudgetPctがnullの場合の警告表示と、予算未算出時の表示は画面仕様として確認する。条件配列は各最大10件・1件100文字、fx.noteは200文字まで。
+
+1ユーザー1計画、本人認証、購入のuse確認、所有者確認を前提とする。未作成GETは{plan:null,revision:0}、初回PUTはbaseRevision:0、競合409は最新のplan/revisionを返す。createdAt/updatedAt/revisionはサーバー管理。DELETEの対象は本人の計画データとanswersで、購入履歴・利用権は削除しない。削除後は有効なuseがあれば再作成可能。削除を許可する権限状態、削除直後のrevisionと再作成時の競合/古いリクエスト対策、バックアップ復元時の削除情報の再適用はまだ実装していない。
+
+### 未決・現行APIとの違い
+
+- answersは質問ID・型・選択肢・保存理由の一覧をClaudeから受領するまで保存する実装を作らない。計画テーブル/書込role/PUT/DELETEを本番DBに追加していない。
+- 通知期間終了後も、有効な買い切りuseがあれば閲覧・編集・シミュレーションは継続できる。PROは商品権限判定に使わない。
+- Claude案のuse.expiredで閲覧だけ許可、revoked/not_ownedで閲覧不可はオーナー未確認。現行のuseにはexpiresAt:nullという制約があり、use.expiredは通常データでは作れない。未購入のAPI上の状態名はmissingで、not_ownedではない。この変更にはDB/API契約との整合が必要で、今回の計算実装では権限を変更していない。
+
+### 削除とバックアップ保持の事実・表示案
+
+現行scripts/resolute/backup.pyの保持ロジックは、成功したバックアップの直近7つの異なる日付について各最新1件と、直近4つのISO週について各最新1件の和集合。重複を除くため最大11件。同日再実行で日数を減らさない。経過日数による強制消去ではなく、新しいバックアップの成功時に古い保存分を整理する。停止/失敗が続くと古いバックアップが残るため「削除から最大28日以内に必ず消去」とは表示できない。通常の毎日成功を前提にすると日次7日分＋週ごとの最新4回分という目安になる。
+
+10月10日に記録した手動バックアップ/隔離DB復元の成功は確認済みの記録として保持する。10月11日の日次Cron結果、10月12日の週次Cron、今回時点のBucket内容・実際の最古データの日付は再確認していない。計画テーブル適用後の取得/復元も未確認。本番DBやバックアップの設定・保存物を今回変更/削除していない。
+
+購入者への表示案: 「計画を削除すると、保存した計画と回答が通常の利用画面から削除されます。購入履歴と利用権は残ります。復旧用の暗号化バックアップには削除前のデータが残ることがあります。バックアップは直近7日分と週ごとの最新4回分を目安に保管し、新しいバックアップの成功時に古いものを整理します。」この文はDELETE実装前の案であり、削除完了の表示にはまだ使用しない。復旧時に削除済み計画を通常データへ戻さない仕組みはDELETEと合わせて設計・確認する。
+
+検証結果: Node 680/680（計画計算の追加6テストを含む）、Python 2,400/2,400（164.933秒）、lint 0 errors（既存warnings 2件）、Next.js build、compileall、git diff --cached --check成功。これは計画の保存/削除・実画面・実DBやバックアップ最新実行の検証ではない。
+
+
+## 2026-10-12 ChatGPT — 計画権限・削除revisionの確定とfx保留
+
+Claude経由の最新回答を受領した。この追記は直前の暫定記述に優先する。既存本文は変更しない。
+
+### 確定した接続契約
+
+- Planのinvestableはnumber | null。financialAssetsがnullならinvestableもnull。既存の共通計算モジュールはこの契約に対応済み。
+- 買い切りのuseは期限なしでexpiresAt:null。計画の閲覧・編集・シミュレーションはuse.statusがactiveのときだけ許可する。revokedとmissingは閲覧も不可。未購入の状態名はmissing。use.expiredは通常発生しないため例外時の扱いは保留し、閲覧許可へ流用しない。通知利用権alertsの期限終了だけでは、有効なuseによる計画利用を止めない。PROは商品権限を代替しない。
+- PUTは{plan, baseRevision}、DELETEは{baseRevision}。本人をサーバー側の認証から識別する。baseRevisionは0以上の安全な整数。createdAt、updatedAt、revisionはサーバー管理。未作成GETは{plan:null,revision:0}、初回PUTはbaseRevision:0。権限・本人確認を競合応答より先に行い、閲覧不可の利用者に409の最新計画を漏らさない。
+- DELETEでは計画データとanswersを削除し、削除済みの印にはユーザーID・revision・削除日時だけを残す。購入履歴と利用権は別で保持する。更新と削除は同じrevisionを使って原子的に競合判定し、削除のたびにrevisionを+1する。既にplan:nullの場合も、正しいbaseRevisionで受理したDELETEは+1し、0に戻さない。古いbaseRevisionは409と最新のplan/revisionを返す。権限確認に失敗した場合は最新計画を返さない。
+- 削除後のGETは{plan:null,revision:現在の値}。再作成PUTにはその値をbaseRevisionとして使い、作成時もrevisionを増やす。削除前の古いPUT/DELETEは409とし、削除済み計画を復活させない。
+- DELETEの非active利用者への受付条件はまだ確定していない。今回の回答は閲覧・編集・シミュレーションの条件を確定するもので、取り消し後の本人によるデータ削除請求の導線を閉じる決定とは扱わない。DELETE実装前に受付条件を確認し、不可視の計画をエラー応答へ含めない。
+
+### answersとfxは実装保留
+
+answersは30問確定後の質問ID・型・選択肢・保存理由の一覧を受領するまで永続化を実装しない。fxは質問内容の変更に伴い持ち方を再提示するため、検証・計算・保存・画面接続の実装を止める。前節のfx.usdJpyの範囲/精度とfx.noteの文字数は現時点の確定仕様ではなく、新しい回答で再確定する。現行の共通計算はfx/answersを入力に含めず、計画保存APIやDBテーブルもまだ作成していない。
+
+### バックアップ復元時の削除優先（未実装の設計案）
+
+DBの削除済みの印だけでは、削除前のバックアップから復元した際にその印自体が失われる。削除履歴を復元対象DBのスナップショットとは別の永続保存先にも残し、復元時に最新の履歴を再適用する構成が必要。保存項目はユーザーID・削除revision・削除日時だけで、計画本文やanswersを含めず、アクセス制限と暗号化を行う。
+
+復元は隔離DBで行い、削除revision以下の復元計画は消去する。削除後に再作成され、そのrevisionが最新削除revisionを上回る計画は一律に削除しない。行がなければ削除済みの印を再作成し、revisionを後退させない。履歴の取得・照合・再適用が確認できるまで復元DBを利用者へ開放しない。DELETEと外部履歴への記録の間の障害も考慮し、耐久性のある再送・未反映検知と、削除を完了扱いにする条件を実装前に確定する。
+
+これは設計案であり、独立した削除履歴保存先、再送処理、復元時の再適用は未実装。既存のpg_dump/隔離DBへのpg_restore成功は、この削除保護の検証を意味しない。追加保存先の容量・費用を確認してから設定する。DBとBucketが同じRailwayアカウント内にあるため、アカウントアクセス喪失に備える別保管は引き続き課題。
+
+バックアップ保持は「直近7日分＋週ごとの最新4回分を目安」とし、「28日以内に必ず消える」とは記載しない。前節の購入者向け削除表示案は了承済みで、法務確認時に最終文面を修正する。DELETE実装前に削除成功の表示として使用しない。
+
+今回の作業は仕様資料への追記のみ。実DB、Railwayサービス/変数/費用、既存ニュース監視、メール送信は変更していない。検証はgit diff --checkと既存本文がそのまま残ることの照合。計画保存・削除API、独立削除履歴、削除後の復元保護は未実装であり、完成扱いにしない。
+
+
+## 2026-10-12 ChatGPT — 計画保存・削除APIの先行実装（answers/fxを除外）
+
+最新回答により、本人のDELETEはuse.revokedでも許可する。missingでも本人認証後は成功応答を選択し、閲覧・編集・シミュレーションは引き続きuse.activeのみ。技術的な細部はChatGPT側で決めて進め、確認は費用・個人情報・利用者に見える文言に関わる事項に限る。この追記は前節のDELETE受付条件の未決記述に優先する。
+
+### Claudeが画面を接続する契約
+
+入口は同一originのGET/PUT/DELETE /api/resolute/plan。内部ではVercelサーバーがClerkセッションJWTと既存サービス間トークンを使ってRailwayの/internal/v1/planを呼ぶ。ブラウザからuserId・購入権限・PRO状態・Railway URL・秘密情報を渡さない。GET/PUTには有効な買い切りuseが必要。DELETEは本人認証だけで受付し、useの取り消し・未購入でも自分のデータ削除を止めない。
+
+PUTは{plan,baseRevision}、DELETEは{baseRevision}。初回は0。200と409は共に{plan,revision}で、DELETEの200はplan:null。GETの未作成はplan:null/revision:0、削除後は保持したrevision。PUT/DELETEの成功でrevisionを+1する。既にplan:nullや未購入でデータがない場合も、正しいbaseRevisionのDELETEを成功として受理し、削除済みの印と次のrevisionを保持する。権限取り消し後はGETできないため、DELETEで競合したら409のrevisionを使って本人が再実行できる。非active本人のDELETEの409はplan:nullにしてrevisionだけ返し、不可視の計画本文を漏らさない。書込の自動再試行はしない。応答を受け取れなかった場合は保存失敗と断定せず、GETまたは本人による競合確認で結果を確認する。
+
+Planの入力型はlib/resolute/plan-data.tsのPlanInputが正本。schemaVersionは1。現時点の保存項目はcurrency、monthlyLivingCost、savingsMonths、reserveMonths、nearTermExpense、financialAssets、investedAmount、investable、tolerancePct、toleranceDrop、perStockCapPct、buyMode、buyLines、buyBudgetPct、allocation、noBuyConditions、haltConditions、ruleType。全項目を送る。nullable項目はnullを明示する。金額計算・上限・精度・買い増し制約は前節の確定事項を検証し、investable/toleranceDropの不一致は400。買い増し額の合計がbuyBudgetを超える入力は拒否しない。条件の文字数はUnicodeコードポイントで数える。
+
+answersとfxはキー自体を受付せず、送信されたら400。createdAt/updatedAtも入力では送らない。GET/PUTのplanにはサーバー管理のcreatedAt/updatedAt（ISO UTC）が含まれるため、編集してPUTする際はこれらを除く。revisionはplanの外側で扱う。表示用のreserve/investBase/toleranceMonths/buyBudgetは保存項目に追加せず、既存共通計算を使う。計画内容やメールアドレスをエラー・ログへ出力しない。
+
+GET/PUT/DELETEの401はAUTH_REQUIRED、GET/PUTの403はPLAN_ACCESS_DENIED、PUT/DELETEのorigin不一致はORIGIN_REJECTED、400はINVALID_PLAN、413はBODY_TOO_LARGE、415はJSON_REQUIRED、429はRATE_LIMITED（Retry-After:60）、503はPLAN_UNAVAILABLE。本文はapplication/jsonで最大16,384 bytes、URLのクエリによるユーザー選択等は受付しない。全応答はprivate/no-store。503を未購入や保存成功と表示しない。今回、画面の文言変更は行っていない。
+
+### DB・削除・復元の実装と有効化条件
+
+明示適用用db/resolute/002_plans.sqlを追加した。専用resolute DB以外では適用を拒否する。1ユーザー1行で、更新・削除はトランザクションとユーザー単位のDBロックで直列化し、baseRevisionを照合する。useの確認はDBで行い、PROや通知期間を代用しない。DELETEは計画本文をNULLにし、作成/更新日時も消去してユーザーID・revision・削除日時を保持する。購入履歴・利用権には書き込まない。同じトランザクションでplan_deletionsへユーザーID・revision・削除日時だけを記録し、記録失敗なら削除全体をロールバックする。
+
+lib/resolute/plan-restore.tsに削除履歴の再適用処理を追加した。resolute_restore_testという隔離DB以外には実行できない。独立保存先から取得・復号・完全性を確認した最新履歴を渡す前提で、削除revision以下の復元計画を削除済みの印へ置換し、欠けた印を再作成する。削除後に再作成され、削除revisionより新しい計画は保持する。不正履歴を受付せず、再適用によってrevisionを後退させない。
+
+plan_deletionsが復元スナップショット内にあるだけでは削除保護を保証できない。独立した暗号化履歴への出力・読戻し・障害時の再送・完全性確認と、既存pg_restoreジョブへの接続は未実装。このため本番の計画APIは既定で無効（503）。RailwayのRESOLUTE_PLAN_API_ENABLEDをtrueにする前に、独立削除履歴と復元確認を完了する。DB接続は将来の専用変数RESOLUTE_PLAN_DB_URLだけを使い、resolute_plan_writerという限定roleを要求する。既存ENTITLEMENT_DB_URL/resolute_api_readerはそのまま読取専用で維持し、他DBやDATABASE_URLへフォールバックしない。
+
+今回、本番のSQL適用・writer作成・環境変数設定・有効化はしていない。新しいサービス・契約・費用設定・メール送信は追加していない。費用を伴う独立保存先の設定は見込みを確認してから行う。独立履歴と復元保護、実画面からVercel/Railway/実DBへの通し確認を終えるまで「計画保存・削除が本番で完成」とは扱わない。answers/fxの最終仕様を受領後、保存範囲を再確認して追加する。
+
+### 確認済みと未確認
+
+ローカルPostgreSQLエンジンでSQL適用、未作成、保存、競合、削除、再作成、取り消し後の閲覧/編集拒否と本人削除、未購入本人の削除、削除記録失敗時のロールバックを確認した。隔離DBで古い計画の削除履歴再適用、新しい再作成計画の保持、欠けた削除済みの印の復元、再適用の冪等性、不正履歴と別DBの拒否を確認した。HTTPテストで本人識別・origin・入力上限・競合応答・秘密を含まないエラー・書込再試行なしを確認した。これはRailwayの実DBでの保存や、実Bucketの独立履歴を使ったpg_restoreの実測結果ではない。
+
+検証結果: Node 685/685、Python 2,400/2,400（156.300秒）、lint 0 errors（既存warnings 2件）、Next.js build、compileall、git diff --check成功。実際のNode HTTP起動・署名JWT認証・DELETE本文転送・本番無効時の503もローカル確認済みで、DBへは接続していない。最初のPython実行は既存test_deep_analysisの全文文字列検査がpublishedAtの45秒を45%と誤検出して1件失敗した。対象外のニュース実装/テストを変更せず、全体再実行の成功を確認した。
+
+
+## 2026-10-12 ChatGPT — 計画APIの最小DB権限を再確認
+
+計画writerにはentitlementsのSELECTだけを付与し、INSERT/UPDATE/DELETEは付与しない。PostgreSQLのSELECT FOR SHAREはUPDATE権限も必要になるため、権限確認クエリから行ロックを除いた。専用DBの明示適用用002_plans.sqlには、entitlementsのINSERT/UPDATE/DELETEも計画処理と同じユーザー単位のadvisory transaction lockを取得するtriggerを追加した。これにより購入権限を書き換える権限を計画APIへ与えずに、購入権限の変更と計画処理を直列化する。entitlementsのユーザーIDの変更は拒否し、別ユーザーへの権限移動をこの更新処理で行わない。
+
+ローカルPostgreSQLの計画テストはresolute_plan_writerの限定roleへ切り替えて実行し、保存・更新・削除の成功と、entitlementsのUPDATEが42501で拒否されることを確認した。既存のAPI読取role、実DB、Railwayの環境変数・サービス設定は変更していない。本番有効化前に独立した削除履歴と復元ジョブを接続する条件は維持する。triggerも本番へ未適用であり、適用後の実DBでの同時実行確認は未実施。
+
+公式参照: https://www.postgresql.org/docs/current/sql-select.html （locking clauseにはSELECTに加えてUPDATE権限が必要）。
+
+最小権限修正後の最終検証: Node 685/685、Python 2,400/2,400（159.378秒）、lint 0 errors（既存warnings 2件）、Next.js build、compileall、git diff --check成功。限定roleによる実SQLテストは成功したが、実DBへのmigration/role適用・独立削除履歴の出力/読戻し・pg_restoreジョブ接続・画面からの実環境検証は未実施。
+
+
+## 2026-10-12 ChatGPT — 30問のanswersとfx最終仕様を受領・実装
+
+Claudeから質問30問と保存仕様の確定回答を受領した。この追記は前節の「answers/fxは受付しない・実装保留」に優先する。既存本文はそのまま残す。PlanInputへanswersVersion:1、answers、fxを追加し、APIの保存・読込・入力検証のコードを更新した。タイプとアドバイスの判定はClaude側の純粋関数が担当し、サーバーはruleTypeの既存enumを検証して参考値として保存するだけ。再計算や分類ロジックは追加していない。金額の既存再計算・権限判定・競合revisionの契約は維持する。
+
+### answersVersion=1の契約
+
+answersはq01〜q30の全30キーを必須とする。出さなかった質問と未回答はnull。省略・余分なキー・undefined・数値・自由記述は受付しない。単一選択は選択肢IDの文字列、q21/q28/q29だけは選択肢IDの配列。配列は重複なしで1件以上、それぞれ選択肢数を上限とする。何も選んでいなければ空配列ではなくnullにする。
+
+選択肢の正本はlib/resolute/plan-answers.tsのPLAN_ANSWER_OPTIONS。PlanAnswers型も公開し、emptyPlanAnswers()で全30キーがnullの初期値を作れる。parsePlanAnswersは保存形式の検証だけを行い、タイプ判定は行わない。
+
+| 質問ID | 選択肢ID |
+| --- | --- |
+| q01 | first / 1to3 / 3plus |
+| q02 | l15 / l25 / l40 / l40plus / custom |
+| q03 | stable / uneven / none |
+| q04 | m0 / m1 / m3 / m6 / m12 / custom |
+| q05 | m3 / m6 / m12 / custom |
+| q06 | none / has |
+| q07 | input / unknown |
+| q08 | not_yet / input |
+| q09 | y3to5 / y5to10 / y10plus / undecided |
+| q10 | often / sometimes / rarely / no_drop_yet |
+| q11 | p10 / p20 / p30 / p40plus / unknown |
+| q12 | no / yes / no_drop_yet |
+| q13 | wait / buy_more / reduce / unknown |
+| q14 | never / once / often / no_rally_yet |
+| q15 | hold / sell_some / buy_more / undecided |
+| q16 | steady / fast / defensive / undecided |
+| q17 | monthly / on_drop / on_rise / news / undecided |
+| q18 | many_daily / daily / weekly / rarely |
+| q19 | never / sometimes / often |
+| q20 | fund_etf / stock / bond / gold / mixed |
+| q21（複数） | tech_semis / dividend / healthcare / finance / energy_materials / other |
+| q22 | p10 / p20 / p30 / p50 / custom |
+| q23 | lt10 / p10to30 / p30to50 / gt50 / none |
+| q24 | none / single / steps2 / steps3 / steps4 |
+| q25 | d5 / d10 / d15 / d20 / custom |
+| q26 | b10 / b20 / b30 / custom |
+| q27 | equal / heavier |
+| q28（複数） | cash_low / income_unstable / over_cap / no_reason |
+| q29（複数） | over_tolerance / cant_sleep / thesis_broken |
+| q30 | ignore / yen3 / yen7 / custom |
+
+q21はq20がstock/mixedのときだけ回答可能、それ以外はnull。q25/q26はq24がsingle/steps2/steps3/steps4のときだけ回答可能。q27はq24がsteps2/steps3/steps4のときだけ回答可能。親質問がnullまたは対象外なら子質問もnullを要求する。条件に該当していても未回答ならnullを保存できる。
+
+### 数値とfx
+
+数値の回答はanswersへ入れず、Planの既存数値項目へ入れる。質問から計画を作成するとき、生活費の代表値はl15=150000、l25=250000、l40/l40plus=400000（提示されたJPYの例）。貯金月数はm0=0、m1=1、m3=3、m6=6、m12=12、q11のp40plusは40。customは本人が入力した値を使う。金額の通貨単位は引き続きJPY=円/USD=セントで、サーバーは為替による自動換算や質問の代表値への書換えをしない。その他の代表値とPlan項目への取込みはClaudeの質問画面が担当する。
+
+計画ツールでの数値編集を妨げないため、代表値と現在のPlan数値を一律に同値必須とはしない。サーバーは各項目の型・範囲・精度と金額計算の整合を検証する。ただし明示されたunknown/not_yetの条件は検証し、q07=unknownならfinancialAssets=null、q08=not_yetならinvestedAmount=nullを要求する。これらの金額を後から入力する場合は該当回答IDもinputへ更新する。ruleTypeは選択肢や数値と照合して判定し直さない。
+
+fxは{thresholdYen:number|null,usdJpy:number|null,note:string}の3キーだけ。thresholdYenは0.1〜50で小数1桁、usdJpyは50〜500で小数2桁、noteはUnicodeコードポイントで200文字まで。usdJpyはq30とは独立した入力で、未入力ならnull。q30=ignoreならthresholdYen=null、yen3なら3、yen7なら7、customなら範囲内の入力値を要求する。q30が未回答のnullなら、fx自身の型・範囲を検証し、回答を勝手に生成しない。旧fxの形や余分なキーは400にする。USDの計算入力でもthresholdYenの単位は円で変更しない。
+
+### 自由記述と削除
+
+q28/q29の自由記述はanswersへ入れず、noBuyConditions/haltConditionsへ保存する。各配列は最大10件、各文字列はUnicodeコードポイントで100文字まで。入力欄の表示はClaude指定の「個人が特定できる情報は書かないでください」を使う。ChatGPT側は今回画面の文言を変更していない。
+
+条件本文、回答、fx.noteをログへ出さない。想定外の例外に本文が含まれてもAPI応答へ出さず、一般的なエラーコードだけを返す。商品メールへの接続は今回実装しない。今後の通知ジョブでも自由記述とfx.noteをメール本文へ載せない。保存目的は回答のやり直しとClaude側のタイプ/文章再計算で、メールアドレスをPlanへ追加しない。
+
+保存できるUnicode文字列だけを受け付け、DBのjsonbで保存できないNUL/孤立サロゲートを400にする。不正UTF-8のJSON本文も勝手に置換せず400にする。本文上限16,384 bytes、createdAt/updatedAtはサーバー管理、PUTは{plan,baseRevision}、DELETEは{baseRevision}のまま。DELETEでplan本文をNULLにするためanswersVersion/answers/fxも同時に消える。削除済みの印と独立履歴への引渡しには計画・回答・自由記述を含めない。
+
+### DB適用・確認の範囲
+
+明示適用用db/resolute/003_plan_answers_fx.sqlを追加した。001→002→003の順に専用resolute DBへ適用する。002の暫定的なanswers/fx禁止制約を003で置換し、保存計画にanswersVersion=1とanswers/fxのobject型を要求する。既存のmigration本文は書き換えない。不完全な古い計画が残っていれば制約適用は失敗してロールバックする。回答を推測して補完したり、古い計画を削除して適用を通したりしない。今回の本番DBに計画テーブルを適用していないという前回記録は維持する。
+
+ローカルPostgreSQLの限定roleで回答とfxの保存/読込、DELETEでの消去、同時更新/削除の競合、再作成、削除記録失敗のロールバック、隔離DBへの削除履歴再適用を確認する。回答全30問の選択肢、非表示分岐、バージョン、null、複数選択の型/重複、fxの境界/精度、秘密を含まないエラーも検証する。これらは実Bucketの独立削除履歴や実環境のpg_restoreを確認した結果ではない。
+
+実DBへの002/003適用、writer作成、本番有効化、独立暗号化削除履歴の出力/読戻しと復元ジョブへの接続は引き続き未実施。Railwayの契約・プラン・変数・サービス設定、既存ニュース監視、他DBとメール送信は変更しない。前回コミット4ab29300adaf9dba6cffefe6f5aeea45d1bebb78のGitHub Actions run 38157631781はcompleted/successを確認した。今回の計画APIの本番有効化完了とは区別する。
+
+最終ローカル検証: Node 690/690（回答/fxの追加5テストを含む）、Python 2,400/2,400（159.386秒）、lint 0 errors（既存warnings 2件）、Next.js build、compileall、git diff --check成功。Pythonは既存test_deep_analysisの全文検査がpublishedAtの45秒を45%と誤検出する問題を避けるため、RESEARCH_TEST_NOW=2026-10-08T06:00:15+00:00で公式runnerを実行した。初回のデフォルト固定時刻ではこの既存テストだけが失敗した。ニュース関連の実装/テスト/CIは変更していない。本番の保存・削除、商品メール送信、独立削除履歴と実Bucketを使った復元は未検証。
+
+
+## 2026-10-12 JST — CAPITAL MAP / 資本マップ初版
+
+- 日本語メニュー「資本マップ」、英語メニューとページ見出し「CAPITAL MAP」でユーザー合意。運用会社の保有銘柄とETF構成が二本柱。
+- 既存「何が変わった？」のメニュー・ホーム導線を `/research/capital-map` に置換し、PRO月額案内に提供準備中として追記。装飾・過去記事・保存・旧ハッシュ・ニュース/目標株価・RESOLUTEを維持。
+- 本ページは準備画面。`/research/capital-map/sample` は全数値・日付が架空の専用サンプル。構成比、株数増減、銘柄入力・全ウォッチリストでの絞り込み、対象保存、前回確認との差分、ETF加重重複率を表示。
+- 保存はこのブラウザーのみ。企業の株式に対する保有率は未確認で「—」。実データ取得・自動更新・商用掲載条件・機関投資家合計・企業出資先・実機スマホは未完了。稼働済み扱いしない。
+- 詳細と実データ接続前の条件は `docs/CAPITAL-MAP.md`。企業紹介6項目を銘柄検索の株価下へ置く案は別の今後作業。
+- 深夜の公開処理が中断し、その後の環境整理で未公開作業が失われたため、朝に最新 `2ffa239` 上で復元。別担当のRESOLUTE更新を維持。
+
+
+## 2026-10-12 ChatGPT — RESOLUTE診断最新版の画面実装
+
+- Claudeの最新版resolute-logic.zipを使用。`lib/resolute/diagnosis.ts`、日英質問辞書・10タイプ・23アドバイス、`/resolute` の30問と結果カードを追加。参考HTMLの濃紺と金、1画面1問、入力選択時だけ数字欄を表示する構成。
+- q01を6区分へ、q25へunknown、q26へb5を反映。未知の買い増しラインは空のまま保存できる。Planへoptional firstDropPctを追加し、基準額不明でもcustom幅を失わない。APIの具体的なライン検証とrevision競合は維持。
+- 保存は既存PUT {plan,baseRevision}。成功確認後だけ②への導線を出し、`/resolute/simulation` は保存計画をGETして添付simulate.tsで試算する。API失敗・競合で保存成功を表示しない。
+- 日英とも診断金額はJPY。既存USD計画の上書きを拒否。シミュレーションは通貨を維持する。タイプ10種は回答から画面で計算し、既存4分類への対応を創作せずruleType=undecidedを参考値として送る。
+- Claudeの分類採点は維持。アドバイス条件だけ、選択式停止条件の見落としと「50%超」からの過剰な上限超過断定を補正。日本語本文は保持。
+- 自由記述・回答をログ/メール/URL/localStorageへ出さず、画面メモリに保持。Clerkセッションが変わったら破棄する。PROだけでは使えない。通知期限終了でもuse activeなら診断可能。
+- 本番計画API503は維持。削除履歴の独立保存/復元等の有効化条件が未完了なので、実運用で保存が完成したとは扱わない。実DB/変数/費用設定/メール送信の変更なし。税金・通知ロジックは今回未検証。
+- 接続契約は `docs/NEW-PRODUCT-INTEGRATION.md` 末尾、実装内訳は `lib/resolute/README.md`。この作業中に入った資本マップの80b1e2eは取り込んで保持した。
+
+
+検証結果（今回の最終コード）: Node 749/749、Python 2,400/2,400（125.078秒）、lint 0 errors（既存warnings 2件）、Next.js build、compileall、git diff --check成功。Pythonは公式runnerをRESEARCH_TEST_NOW=2026-10-08T06:00:30+00:00で実行した。15秒開始の再確認では既存test_deep_analysisがpublishedAtの45秒を記事の45という数値と誤認して1件失敗したため、対象外のニュース実装・テストを変更せず時刻条件を変えて通し直した。
+
+ローカルのproduction buildをChromiumで操作し、1280px/390px幅、日英30問、入力選択時だけ数字欄が出ること、7結果カード、1回のPUTと保存成功後の②への遷移、q25未確定の保存、409/503で成功や②導線を出さないこと、未購入の遮断を確認した。利用権・設定・計画APIの応答をテスト用に差し替えた画面検証で、実Clerk/Railway/Postgresへの通し確認ではない。通知期間終了・use activeの条件でも画面を使えることを確認した。実環境の保存・削除・復元は引き続き未検証。
+
+
+公開直前に別担当の8fa05e58ffd4531520b6e6d5af7fd3b5d3afc388が追加されたため、同コミットをfast-forwardで取り込んで再検証した。別担当のニュース修正6ファイルはそのまま保持し、今回の差分には含めない。統合後の最終結果はNode 749/749、Python 2,404/2,404（125.556秒、RESEARCH_TEST_NOW=2026-10-08T06:00:30+00:00）、lint 0 errors（既存warnings 2件）、Next.js build、compileall、差分チェック成功。
+
+
+## 2026-10-12 — 診断の英語説明と締めのコピー修正
+
+ユーザー承認のClaude案を反映。許容できる下落が未設定の説明を「Choose how much of a drop would feel painful, and the amount will appear here.」へ差し替えた。結果画面のアドバイスの下、免責と保存操作の前に、日英それぞれ2行の締めを追加。日本語は「マイルールを定めれば / 暴落も上昇も怖くない」、英語は「With rules of your own, / crashes and rallies lose their grip.」。計算・権限・保存APIの動作変更はない。
+
+
+## 2026-10-12 — RESOLUTE ②③④と通知時刻の接続
+
+最新版ZIP（SHA-256: a283e2798f2913d6ce9e7b93c5aba534550dbb59dc9a229f0b87f347298d7e8b）の4画面を参考に、②の保存計画読込と保有額0、③アラート、④初期オフの翌朝、日英共通メニューを追加。③④は7/8/9/10時（日本時間、初期7）の共通設定をrevision付きAPIで保存する実装。添付alert-judge.tsは変更せず、未確定終値は通知状態を進めない。本人の利用権＋通知利用権、指定時刻、宛先確認と配信停止を検査し、重複を防ぐoutboxと翌朝の判定を追加した。
+
+仕様・API入出力・UTC cron・DB/変数名・未接続事項は `docs/RESOLUTE-NOTIFICATIONS.md`。実DBへの002〜005適用、通知writer作成、Cron、価格・メール提供元、署名付き配信停止、独立削除履歴と実復元は未完了。通知設定APIの本番ゲートは無効のまま、計画API503も維持。本番保存・配信完了とは扱わない。実メール、既存ニュース、他DB、Railwayサービス・変数・プラン・費用設定は変更していない。④メール下書きの「昨夜」は朝配信と合わないため「昨日」への文言確認を残す。
+
+
+検証結果：Node 781/781、Python 2,406/2,406（131.439秒、RESEARCH_TEST_NOW=2026-10-08T06:00:30+00:00）、lint 0 errors（既存warnings 2件）、Next.js build、compileall、git diff --check成功。添付のalert-judge/mail-templatesもテストへ組み込み、元ファイルとの一致を確認。隔離PostgreSQLで通知設定の保存・再読込・別人拒否・更新競合・限定writerの権限、outboxの重複時に未送信ラインを既通知にしないこと、確定前の除外、受付確認済み③だけを起点にする④を確認。送信直前の権限・時刻・設定変更・配信停止・宛先確認も純粋なテストで確認した。
+
+Chromiumの390px幅で日英の③→④→②→③を操作し、9時設定の保存/読戻し、④初期オフとオン保存、②保有額0と保存計画の初期値、横はみ出しなし、409で上書きしないことを確認。ブラウザ側のAPI応答はテスト用に差し替えた。実Clerk/Railway/本番DBの保存や実メール到達を確認した結果ではない。基準ブランチは別担当更新を含むe7666dc。
+
+
+## 2026-10-12 — ④翌朝メールの文言変更（承認済み）
+
+ユーザー承認により、④の件名・本文にある「昨夜」をすべて「昨日」へ、"last night's alert"をすべて"yesterday's alert"へ変更した。日本語3か所・英語2か所。共通テンプレートを使う画面のメール例にも反映される。以前の文言確認待ちは解消。配信条件・時刻は変更せず、本番メール配信は引き続き未稼働。実メールは送信していない。
+
+
+## 2026-10-12 — RESOLUTE 最終参考画面①〜⑥の統合
+
+最新版resolute-logic(2).zip（SHA-256: 90fe0a508ef76fc01cbce099b4e2781bca71d0f405f435280cdff2283be09c1e）のREADME、6つのpreview-ref HTML、EN-UI-texts.mdを確認。①〜⑥をRESOLUTE内の共通メニューで接続し、⑤ `/resolute/thermometer` と⑥ `/resolute/tax` を追加。HTMLの確認用バナー・状態切替・Claudeへの外部ページリンクは製品に組み込まない。英語は添付案を基に自然な表現へ調整した。①の診断ロジックには既存の計算共通化・検証済み修正があるため、ZIPで上書きしていない。既承認の「昨日／yesterday's alert」も維持。
+
+②の上昇画面は最新参考HTMLに合わせ、3銘柄が同じ率で上昇した場合の総額・銘柄別割合・上限の線を表示する。銘柄名は画面内だけで扱い、保有額はすべて0から。保存済み計画の生活費・許容額・上限割合・買い増しラインを初期値とする。③④の設定・revision・時刻・未確定終値の扱いは維持。
+
+⑤は画面のみ。メーター、4区分の説明、セクター一覧、判断方法の欄を用意する。実際のスコア・針・現在位置・更新日時は出さず準備中とする。4区分を押す操作は説明の閲覧であり、相場の状態を変更するテスト操作ではない。計算式・しきい値・価格提供元・実更新はデータ契約後に確定する。セクターの通知利用権表示は参考デザインで、データ取得や権限別の実データ提供は今回未実装。
+
+⑥は添付jp-tax.tsを組み込み、売却・損切り、源泉徴収あり／なし／NISAの入力と結果を日英で表示。2026年分に固定し、両言語とも円の整数（0〜1兆円）で入力する。小数・負数・上限超過は計算結果を出さない。外貨を自動換算しない。自由入力・銘柄名・税務金額をDB、ブラウザ保存領域、メール、ログへ保存・送信しない。免責は「入力した条件に基づく概算であり、税務相談ではありません。」／"An estimate based on what you entered. Not tax advice."へ統一。
+
+税額の基本式と繰越条件は国税庁No.1463・1474（令和8年4月1日現在法令等の掲載本文）を参照した。税制改正の網羅確認や個別事例の税務確認を完了した扱いにはしない。各税目の1円未満切捨てによる概算であり、申告の端数処理とは異なる。画面では前年繰越損失・配当等・外国税額控除・為替換算を対象外と明記。英語注記のother incomeは相殺対象を広げないようeligible gainsへ修正。
+
+参考一次情報: https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/1463.htm / https://www.nta.go.jp/taxes/shiraberu/taxanswer/shotoku/1474.htm
+
+購入権限は⑤⑥も既存ToolShellのuse.activeで確認する。PROだけでは使えない。計画・通知設定APIの本番ゲート、DB移行・独立削除履歴・復元、メール・価格提供元・Cronは従前どおり未稼働／未確認。今回インフラ・費用・既存ニュース・他DB・mainは変更せず、実メールも送信していない。
+
+検証結果：Node 805/805（添付税計算21件と円入力の境界確認を含む）、Python 2,408/2,408（138.884秒、RESEARCH_TEST_NOW=2026-10-08T06:00:30+00:00）、lint 0 errors（既存warnings 2件）、Next.js build、compileall、git diff --check成功。Chromiumで日英の6画面を320/390/1280px幅で確認し、横はみ出しなし、共通メニュー、通知設定の共有・409、保有額0、税金の売却／損切り／NISA／不正入力拒否、温度計の説明選択と架空データなし、未購入で税計算入力を表示しないことを確認した。ブラウザの利用権・計画・設定APIはテスト用に差し替えており、本番の計画保存やメール到達を検証した結果ではない。別担当のd7371afを取り込んで検証した。
+
+
+## 2026-10-12 — RIZEL専用の購入前確認入口
+
+購入権限がないため運営者も全画面を確認できなかった問題に対応し、Preview環境限定の `/resolute/review` を追加。`GET /api/resolute/review-access` は検証済みClerkセッションのuserIdを既存の唯一の運営者IDと照合する。PRO・adminロール・URLパラメータ・購入権限の偽装では通さない。productionでは運営者もこの確認入口を許可しない。通常の利用権API、購入必須条件、通知利用権の判定は変更しない。
+
+専用入口では①〜⑥の実際の画面部品を使い、画面内だけのサンプル計画・通知設定で操作できる。最初からサンプル計画を用意し、①の診断・結果・一時保存から②へ移動できる。③④の設定も同じ画面内で共有する。保存ボタンの操作はブラウザのメモリだけに反映し、DB・localStorage・sessionStorageには記録せず、メールは送らない。画面上部にサンプル・一時保存・再読み込みで消える旨を明示する。通常の計画・通知APIには一切リクエストしない。ログインセッション変更で画面を破棄し、60秒ごととフォーカス時に運営者判定を再確認、失敗時は画面内データごと閉じる。日本語・英語の切替は6画面で共通。
+
+認証前には専用入口内でClerkのログインを表示し、ログイン後はこの入口へ戻す。未購入の一般アカウントを許可する設定や購入履歴は作成していない。金額・プラン・Railway・本番メール配信は変更していない。通常の計画保存・通知設定APIの稼働が完了した扱いにはしない。
+
+検証: Node 808/808、Python 2409/2409（146.163秒）、lint 0 errors、Next.js build、compileall、git diff --check成功。ローカルChromiumで運営者判定APIだけをテスト用に差し替え、①の結果表示・一時保存→②試算、③設定→④への共有、⑤説明、⑥税額計算、言語維持、再読み込みでの初期化、認証失敗時の画面破棄を確認。計画・通知APIへの通信は0件。運営者本人の実ログインを使用した確認とは区別する。税計算テストのSetに型を付け、TypeScript検査エラーも修正した。別担当のce50500を取り込んだ統合ツリーで再確認。
+
+
+## 2026-10-13 JST — 診断開始画面と運営者確認の画面移動を修正
+
+オーナーから、Claudeの開始画面との相違、上部6項目、30問が見つからない、スマホ見出しの改行・数字のずれ、②への移動時にログインが外れたようになるとの報告を受けた。前回の確認用サンプル計画は初回状態から除去し、`{plan:null, revision:0}`で始める。「はじめる」から未回答の質問を1問ずつ進め、結果・画面内保存・②へ進む流れに戻した。共通メニューは開閉式に変更し、6項目を常時表示しない。Claudeの開始文・中央配置・600px幅・配色・結果の見出しとアドバイス表示に合わせた。見出しは「投資ルールを、」で改行し、Noto Serif JP／Noto Sans JPをライセンス付きのローカルWOFF2として組み込む。Google Fontsへの表示時通信やビルド時の多数の字体ダウンロードは不要。フォントは既存のRESOLUTE文字集合のサブセットで、他の文字は日本語システムフォントへフォールバックする。
+
+運営者用の画面移動はリンク・hash・Nextルーターによる移動から、同じ画面内のボタン操作へ変更した。既存の確認URLのフラグメントは画面切替に使用しない。Clerkのログイン用hashルーターと混在させない。運営者確認はClerkのgetToken({skipCache:true})でセッショントークンを更新してから、同一オリジンの確認APIへBearerで渡す。トークンはログ・保存領域へ出さない。通信失敗・429・5xxはログイン解除と同一視せず、入力をメモリに保持したまま画面を隠して再確認を表示する。明示的な401／403やClerkセッション変更は引き続き画面内データを破棄する。診断は他ツールへ移動中も隠して保持するため、未完了の30問へ戻れる。
+
+購入権限・通知利用権・本人限定のサーバー検証は緩めていない。確認操作の保存先は画面内メモリのみ。本保存・通知API・メール配信の完成を意味しない。ニュース・他DB・請求／プラン・mainは変更していない。オーナーのiPhoneで起きた事象自体の原因を完全に再現した扱いにはせず、確認できた脆い経路を修正する。
+
+検証：ローカルChromiumのモバイル・タップ操作（320px／390px）で未回答開始、30問すべての回答・結果・一時保存→②試算、メニュー往復、言語切替、通信503からの回答復旧、403時のデータ破棄、見出し2行・横はみ出しなしを確認。認証APIはこのローカル試験では差し替えている。セッショントークン更新が確認APIより先に実行されることは別途単体試験済み。WebKitは実行環境の依存ライブラリを用意できず未実行で、実機Safari確認済みとは書かない。別担当の21b7276を統合し、リポジトリ指定の検証を実施する。
+
+## 2026-10-13 JST — RESOLUTEの参照デザイン再現と操作性
+
+オーナーの画面レビューを受け、`resolute-logic(2).zip` の6つのHTMLに沿ってRESOLUTE内だけを再調整。30問の句単位改行、英語開始見出し、タッチ時ホバー抑制、桁区切り・ゼロ消去・単一フォーカス枠、③のライン色別カード、④のインライン時刻変更と文言、⑤の目盛りと選択時の光、⑥の万円入力と結果カード、各ツール末尾の次へ/戻るを対応。金額の表示単位換算は整数精度を保ち、税額計算本体は未変更。
+
+③④の運営者確認の未保存設定は同じタブの画面移動で維持。再読み込みで消える既存の一時保存仕様は継続。利用権を偽装せず、メールも送らない。⑤の実データは未接続なので数値・判定を完成扱いしない。入力・全30問・6画面の導線は320/390/600pxで確認。iPhone Safari実機は未確認。
+
+接続仕様の詳細は同日付の `docs/NEW-PRODUCT-INTEGRATION.md` 末尾を参照。main、ニュース、ホーム、資本マップ、既存サービス・課金設定には変更を加えない。
+
+## 2026-10-13 JST — RESOLUTE再レビューへの対応
+
+①の指定開始文・質問への直接スクロール・追従する次へ、②の投資済み金額の初期表示、③の初期入力欄・会社名検索・全選択とクリア、④の文言整理・画面内の計画表示と復帰、⑥の外部リンク除去、金色の視覚階層を修正。詳細は接続仕様末尾。金融資産総額は現金を含むため保有額へ自動転記せず、investedAmountを利用する。メールは未送信。市場データや本番通知・DB保存の稼働確認とは別。
+
+## 2026-10-13 — RESOLUTE 通貨と個人ノート
+
+①は表示言語と独立したJPY/USD選択に対応。USD入力はドルから整数セントへ変換し、保存済み計画の通貨を勝手に変更しない。USDの生活費は入力式。⑥は日本の税金用のため日本円を維持する。
+
+⑥から `/resolute/notebook` の「マイルールを仕上げる」へ進む。保存計画を濃紺と金の一冊にまとめ、準備月数・1銘柄上限・自由条件を最終調整できる。買い増しラインと通知設定は維持し、通知の変更は③④への小さなリンクから。端末保存はエスケープ済み・外部通信なしのHTMLの写し。確認入口のメモリ保存、本番API未稼働、メール未送信という制限は変わらない。接続仕様末尾に詳細を追記。通常利用権・オーナー限定確認を緩めていない。
+
+## 2026-10-14 JST — RESOLUTEルールブックの再制作
+
+オーナー要望で通貨選択の見出しと説明を外し上部余白を圧縮。マイルールはページをめくる本へ変更し、回答の傾向・暮らしの予算・下落／上昇時の行動・買い増しライン・停止条件を章ごとに要約。為替は本に載せない。保存HTMLも同じ章立てでページ送りでき、外部通信・スクリプトなし。
+
+任意の `stopLossPct` をPlanInputに追加。未設定の損切りラインを許容下落率から推測しない。本人入力0.1〜99.9%、小数1桁まで、既存investBaseに対する損失額と評価額を整数計算。個別銘柄の買値基準ではなく、自動売却・新通知も行わない。診断の再保存で保持し、tolerance系とは独立。Plan APIの本番開始前はVercelとRailwayの対応コードを揃える。既存の確認入口は引き続きメモリ保存のみで、追加費用や実メール送信なし。
+
+
+## 2026-10-14 — 危険度チェッカーの実ニュース表示見本
+
+引き継いだ未公開6ファイルを保持し、10月14日のJefferies見解を伝えるBarron’s報道の日英見本を運営者確認の初期表示にする。確認入口に「危険度チェッカーを見る」を追加。仮基準★3、自動更新ではない旨を表示し、出典リンクを有効化。濃紺・金のCSSや承認済み文言は変更していない。一般利用のAPIへ見本を配信せず、価格未接続の表示も維持する。メール送信・費用設定・mainの変更なし。自動収集・実配信の稼働確認とは別。
+
+更新フォントの日本語文字集合を検査し、現在のTS/TSX/CSSで使う日本語に欠落なし。ローカルproduction buildのChromiumで日英320/390/430pxの見本初期表示・言語切替・横はみ出しなしを確認。認証応答はローカル試験のみ差し替え。参考画像上の危険度カードに重なりなし。iPhone Safari実機の検証ではない。公開URLでの本人認証・表示確認はデプロイ後に別途行う。別担当の保存したリサーチda4bd3f、企業紹介bc65db2を保持して統合する。
+
+## 2026-10-15 JST — RESOLUTE英語版の全体校閲
+
+ユーザー依頼で現在の英語UIを通読し、診断30問・タイプ説明・結果、②〜⑥、マイルール全章、壁紙、今夜のひと息、危険度チェッカー3件とRIZEL文案、通知メール見本、設定・エラー案内を確認。直訳調と堅い表現を平易な英語に修正した。例: `notification entitlement` を `access to RESOLUTE alerts`、税画面の `realize a loss` を `sell at a loss`、法案についての一言を `I don’t treat a proposal as a done deal.` へ。ニュースは原記事の事実関係と仮基準の表示を保つ。税画面の口座選択はスマホで単語が途中改行されない短い表現にする。
+
+既存の日本語文言・濃紺と金のデザイン・計算・判定・API・利用権は変更していない。英語の株式入力ARIAラベルに混ざっていた日本語だけを除去。通知メールの既存テストは変更後の英語へ期待値を更新。未承認RIZEL文案は未承認のまま。メール送信、費用設定、mainへの更新は行わない。英語校閲はニュース自動更新や本番通知稼働の確認を意味しない。
+
+ローカルChromiumで英語118表示（全30問、全ツール、ニュース3件、マイルール各章）と日英ニュース18組を確認。320/390/430pxで横はみ出しなし。認証APIだけをローカル試験用に差し替えた。iPhone Safari実機の検証ではない。差分の構文比較で文言以外のロジック変更なしを確認。別担当の企業紹介99d19b4を保持して統合し、最終ツリーでリポジトリ指定の検証を再実行する。
+
+## 2026-10-15 — RESOLUTE Sandbox決済の基盤
+
+会員別注文方式と返金/異議の停止方針をユーザー承認済み。Railway resolute-apiへユーザーがPayPal Sandbox用5変数を追加し、deployment d6c7b39b-f714-48f7-a18a-9a59c95bc2f1 SUCCESSを確認。値の取得や実認証は未実施。
+
+運営者限定・既定無効のSandbox注文API、PayPal検証、専用台帳SQLと不正防止テストを追加。Sandboxは本番利用権へ書き込まない。既存のreader権限・画面・ニュース・mainは変更しない。実DB適用、追加のmerchant/webhook/Clerk/writer設定、実Sandbox決済、メール送信、本番付与、旧固定リンク停止は未完了。詳しくは `docs/RESOLUTE-PAYMENTS.md`。これらの未完了項目を購入機能の完成扱いにしない。
+
+
+## 2026-10-15 — RESOLUTE Sandbox接続確認の続報
+
+専用決済スキーマと最小権限writerを実DBへ適用し、PayPal Sandboxの認証、同じアプリのWebhook URLと6イベント、Clerkでの運営者照合と確認済みメールを実接続で検証済み。購入受付は無効のまま。本番利用権、実決済、メール送信は未稼働。証跡と次の作業は `docs/RESOLUTE-PAYMENTS-OPERATIONS-2026-10-15.md` を参照。追加した接続設定のやり直しは不要。
+
+## 2026-10-16 — RESOLUTE決済復元チェック（ローカル・未公開）
+
+Vercel使用料の相談を受け、小刻みな公開を控え、変更をまとめて公開する。
+他担当のPDFページ選択394f6d1を保持。Sandboxの6価格の追加購入は不要。
+購入台帳の復元時に5テーブルと注文/利用権/監査の整合性を検査する処理を追加した。
+詳細と限界は `docs/RESOLUTE-SANDBOX-TESTER.md` 末尾を参照。
+実バックアップでの検証とRailwayへの反映は未実施。本番販売・通知は有効にしていない。
+次はこの変更をまとめた公開に含め、既存の隔離復元サービスで実バックアップを検証する。
+## 2026-10-16 07:21 UTC — 実バックアップで決済台帳の復元確認
+
+既存バックアップ ac7a5ff8-0107-4d72-a70d-cd6f888077bf が成功（暗号化20,148 bytes、dump19,948 bytes）。更新した既存隔離復元サービス a5e7b373-11fe-4296-bbb1-407c6f890d12 で RESOLUTE_RESTORE_OK を確認。注文11件、利用権7件、イベント8件、監査32件、通知待ち7件を読み、sandbox_payment_integrityを含む全検査が成功した。両deploymentはSUCCESS、monitor_ping_sentはtrue。本体DBへの復元・メール送信・本番決済・課金設定変更は行っていない。復元サービスの実行コードだけを更新し、既存の週次スケジュールと隔離構成を維持した。これは本番販売や独立削除履歴の復元確認を意味しない。
+
+## 2026-10-17 — RIZEL private selection and review switches (local, NOT deployed)
+
+Owner approved JA/EN 90 entries, excluding D-executive-03 and including seven
+English price-level corrections. Private Library bank/review now version 1;
+raw copy is outside this public repository. See RESOLUTE-RIZEL-SELECTION.md.
+Local selection engine/AI adapter/audit SQL and owner-only scenario controls
+added. No migration, hosting bank installation, AI spending, publish or email.
+User requires a brief change summary before preview-site reflection. Keep main
+untouched; baseline was remote 78a1139, preserving colleague's watchlist work.
+Private approval admin is mock only, not a completed editing/publish interface.
+
+Validation: Node 982 passed, Python 2474 passed, lint 0 errors (2 pre-existing
+warnings), Next production build passed, compileall and diff check passed.
+Browser visual QA remains incomplete: Playwright Chromium download failed.
+A local-only harness in /tmp/rizel-qa is available for subsequent checks, but is
+not a deliverable and must never be published (contains private test copy).
+Latest logs: /tmp/rizel-node-final.log, /tmp/rizel-python.log,
+/tmp/rizel-build.log, /tmp/rizel-lint.log. No live model calls were made.
+
+## 2026-10-17 — Preview reflection authorized, private text upload blocked
+
+User authorized deploying review switches to codex/research-preview, not public
+RIZEL publication. Integrated ee168dd without overwriting colleague changes.
+The preview reader now accepts a 12-entry layout-only, server-only secret named
+RESOLUTE_RIZEL_LAYOUT_PREVIEW_JSON, scoped to the preview branch. Full bank,
+AI calls and private DB remain disconnected as requested.
+
+Automatic approval review rejected uploading the 12 unpublished texts to Vercel:
+destination-specific disclosure authorization is required. No upload took place.
+Do not retry through another channel; ask the owner explicitly before storing
+these unpublished excerpts on Vercel. Until then the review checkbox reaches the
+private preview endpoint but displays the unconfigured message, not the text.
+
+Smartphone check: reviewed wrapping and widths in controls/home/news CSS at the
+320/375px constraints. Chromium preparation was retried and failed downloading;
+actual visual rendering, overlaps and authenticated owner interaction were NOT
+verified. No visual pass should be claimed. Public comments remain suppressed.
+
+## 2026-10-19 — RESOLUTE independent recovery checkpoint preparation
+
+Added migration017 for transactional notification OFF history and an encrypted,
+readback-verified maintenance checkpoint outside dump rotation. Restore now
+requires an independently pinned complete checkpoint whenever plans/settings
+are present, replays deletions/stops in the isolated DB, rejects incomplete
+history, and clears restored unaccepted notification tasks. Details and explicit
+remaining gates: `docs/RESOLUTE-RECOVERY-PROTECTION.md`.
+
+No Railway migration/job/configuration was applied in this batch. Online
+per-mutation independent durability is STILL pending: maintenance exports alone
+cannot guarantee deletion/stop completion between exports. Plan/settings APIs
+and writer logins must remain disabled. No sales, email, AI, RIZEL publication,
+UI/design, morning cron or verification reservation changed. October20 morning
+execution still needs its scheduled verification. Do not deploy backup.py alone;
+its sibling protection.py is now part of the job package.
+
+## 2026-10-19 — Online RESOLUTE protection implementation
+
+Prepared transactional protection outbox, encrypted immutable publisher, completion
+barriers on storage operations, bounded retries and independent online restore
+manifest. Actual private-bucket conditional writes and real isolated PostgreSQL18
+restore passed with synthetic data (deployment594765aa). Details and remaining
+activation gates are in docs/RESOLUTE-RECOVERY-PROTECTION.md. Production schemas,
+writer credentials, API flags and retry scheduling remain disabled/unapplied.
+Existing 7AM job/reservation, payment activation, private RIZEL text and UI untouched.
+
+
+## 2026-10-19 — Protected restore job installed
+
+Restore service now runs all three tested protection modules plus cryptography;
+deployment1c8654a4 emitted bundle identity and actual RESOLUTE_RESTORE_OK. Existing
+payment data restored correctly. data_protection=not_installed because production
+plan/settings migrations are still absent; never label storage as enabled.
+Schedules, morning service/reservation, API flags and original job bundle preserved.
+See RESOLUTE-RECOVERY-PROTECTION.md for exact evidence and remaining gates.
+db418e7 GitHub CI (both jobs) and both Vercel deployments passed. Integrated
+colleague ed2383f0 without modifying their chain-map changes.
+
+
+## 2026-10-19 — Dormant storage role preparation and effective ACL audit
+
+Added migration019 and explicit operator runner with atomic grant/audit/rollback.
+Catalog checks reject extra table/column privileges, PUBLIC leaks, grant options,
+ownership, sequence/DDL access, executable definer routines and role membership
+in either direction. Login/admin/inherit attributes must remain disabled. No
+production apply, keys, runtime flags, cron or reservation changes. See
+RESOLUTE-STORAGE-PERMISSIONS.md for exact scope and remaining object-credential/
+key-custody gates. NOLOGIN alone is not proof of a complete recovery write fence.
+
+## 2026-10-19 — Offline recovery-key escrow and workspace recovery
+
+Recovered codex/research-preview at d445d163 after prior scratch directories were
+removed by workspace maintenance. The uncommitted original operations log was
+not recovered; docs/RESOLUTE-LAUNCH-READINESS.md is explicitly a reconstruction.
+Added offline age escrow with decrypt-before-publish, independent integrity pins,
+strict schema validation and exclusive mode0600 recovery output. Real age
+synthetic acceptance passed; see RESOLUTE-KEY-ESCROW.md. No production key,
+storage custody, permissions, feature flags or services changed. Remote custody
+and non-delete writer permissions remain blockers before enabling saves.
+
+## 2026-10-19 — Separate protection writer prepared
+
+Application/retry protection runtime now uses a narrow authenticated HTTPS writer,
+not S3 credentials. A separate dormant process accepts only exact encrypted event
+PUT/GET, authenticates envelope/name binding and always uses conditional S3 writes.
+No delete/list/copy route or direct bucket fallback. See
+RESOLUTE-PROTECTION-WRITER.md for deployment configuration and residual risk:
+this is application-level isolation, NOT provider object lock. Real isolated
+service credentials, independent key custody and production replay remain open.
+No service provision, production activation, reservation or morning-job change.
+
+## 2026-10-19 — Isolated writer actual synthetic acceptance completed
+
+Packaged/deployed pinned4b3bdd8 after integrating colleague cbb8310 and passing
+Node1154/Python2498/lint/build. New dedicated writer9d9728c1 and bucket978cea1c
+are separate from backup/API. Credential-limited probe310e0e6e used an age-recovered
+synthetic key and logged actual ACCEPTANCE_OK:3 encrypted records, readback,
+retry and negative-operation checks. External executor proxy timeout attempts
+failed; the Railway probe passed unchanged4-second limits. Both new services
+were then disabled; test keys/tokens cleared, actual DISABLED logs verified.
+See RESOLUTE-PROTECTION-DEPLOYMENT.md and its acceptance JSON. No customer saving,
+DB migration, payment, mail, AI call or morning-job/reservation changes. Next:
+production independent key custody and fenced API-to-isolated-restore acceptance.
+
+## 2026-10-19 — Restore acceptance assertions strengthened
+
+The synthetic restore harness now proves the stale backup contains the original
+plan, notification consent and pending queue before applying independent history.
+It checks the first replay and the second replay separately. Inherited PG*/DB URL
+variables are rejected before imports or I/O. Seven regression tests cover the
+entry guard and false-positive restore states. The revised harness still needs
+an actual isolated PostgreSQL/S3 run; previous actual deployment logs prove only
+the prior revision. Production key custody and API-to-restore flow remain open.
+No live service, production key, saving flag or schedule changes in this step.
+
+## 2026-10-19 — Strengthened restore harness verified in real isolation
+
+Commit2ce61a69 passed GitHub CI39268699563 (both jobs). Dedicated acceptance
+service058b8f14 ran unchanged hash-pinned modules against fresh PostgreSQL18 and
+the protection bucket's unique synthetic namespace. Deployment0d2e0a94 logged
+actual ACCEPTANCE_OK: stale backup verified, three encrypted records, three
+conditional conflicts, first replay and second replay each erased plan/stopped
+notifications/cleared queue. Initial initdb failures were fixed in launcher PATH,
+not assertions. Retirementa2305d23 logged DISABLED; bucket references cleared,
+no staged patch. See RESOLUTE-RESTORE-ACCEPTANCE.md and adjacent evidence JSON.
+Production key custody, exact production DB gates and authenticated API-to-writer-
+to-restore acceptance remain open. All existing service IDs/crons preserved.
+
+## 2026-10-19 — Authenticated recovery flow joined locally
+
+Added a single integration regression joining browser routes, forwarding,
+actual RSA/Clerk token verification, API handlers, separate scoped plan/settings
+roles, real stores/barrier, loopback HTTP writer, encrypted independent records
+and Python replay SQL against a stale PGlite fixture. Covers unauthorized users,
+storage outage503, durable retry, read completion barrier, both notification
+stops, two checked replays and corrupted ciphertext. See
+RESOLUTE-AUTHENTICATED-RECOVERY-FLOW.md for exact evidence boundaries. Live Clerk,
+real API network/database and S3 have NOT all been exercised in one deployed
+flow. No Railway configuration/deployment change in this step.
+
+## 2026-10-20 JST — Recovery capsule verification without plaintext output
+
+Added protection_keys.py verify for readback checks using independently retained
+checksum/fingerprint and the recovery age identity. No --output option and no
+plaintext file write; generic redacted failure only. Real age1.3.2 synthetic
+acceptance passed positive verification, four negative cases and compatibility
+of explicit recover mode0600 output. Production keys/identities were not used;
+independent production custody and live-member deployed API-to-restore acceptance
+remain open. No Railway mutation or deployment in this step.
+
+## 2026-10-20 JST — Authenticated recovery regression uses the actual HTTP bridge
+
+Extracted the unchanged Node API HTTP bridge to http-server.mjs and reused it
+in the signed API-to-replay regression. The API and writer now both cross real
+loopback sockets, including streamed JSON bodies and responses. Missing service
+credentials are rejected before the signed-session cases. Only the validated
+Railway origin is remapped by the test transport; production HTTPS restrictions
+remain intact. Synthetic JWT/PGlite evidence is not live-member/real-PG/S3
+deployed acceptance. Production saving, keys, Railway services and schedules
+were not changed. See RESOLUTE-AUTHENTICATED-RECOVERY-FLOW.md.
+
+## 2026-10-20 JST — Live owner read verified; recovery transport prepared
+
+Owner sign-in succeeded in the preview browser. Entitlements returned both
+RESOLUTE grants missing and capabilities false; plan/settings stayed unavailable.
+Added an inactive, short-window, exact-owner POST recovery-check transport with
+same-origin/empty-body restrictions, separate destination/token, no retries and
+bounded allowlisted evidence. No configuration was enabled. Its dedicated runner
+is not implemented/deployed yet; synthetic response tests are not live recovery
+acceptance. See RESOLUTE-AUTHENTICATED-RECOVERY-FLOW.md. The disposable Google /
+Evernote custody rehearsal is recorded in RESOLUTE-KEY-ESCROW.md; production key
+custody remains open. Next: implement and verify the isolated authenticated runner
+before enabling the preview transport. Morning job and reservations unchanged.
+
+## 2026-10-20 JST — Isolated recovery coordinator implemented, not activated
+
+Added services/resolute-recovery/handler.mjs: actual Clerk signature/issuer/party
+verification, exact-owner gate, bounded UUID-only input, expiring window and one
+execution permit. The exclusive private permit survives process reconstruction;
+concurrent requests and failed runs cannot retry. Reports require all recovery
+checks and explicit no-production/mail/payment/AI evidence, with extra fields
+removed. Tests use real ephemeral signatures and synthetic executor reports.
+The actual PostgreSQL/API/writer executor and service entrypoint remain unbuilt;
+do not enable the transport or mistake these tests for deployed acceptance.
+See services/resolute-recovery/README.md for the remaining adapter contract.
+Integrated remote16b5a166 without changing others' UI/data. Earlier CI39286167172
+was cancelled by later pushes, not a pass. No live configuration/schedule changes.
+
+## 2026-10-20 morning — zero-output investigation
+
+07:02 worker logged ready/count0. Independent read-only DB inspection confirmed
+candidate_count0 and saved_count0, publication withheld. Live source is reachable,
+but general-news intake is disabled. At09:18 the exact reader/sanitizer/selector
+inspected72 official entries: body27, unrelated16, no-downside-headline28 rejected;
+one remaining candidate exceeded96h. This is current-feed evidence, not historical
+07:02 replay. Added no-candidates outcome, aggregate reasons/coverage and mandatory
+DB readback before reporting success. See RESOLUTE-MORNING-2026-10-20.md. No AI,
+mail, sales, daily claim reset or schedule/reservation change in the diagnostic.
+
+## 2026-10-20 — Morning deployment confirmed and intake follow-up
+
+Owner applied f9c167f5 to morning deployment baf2b22a: actual preflight ready,
+90 withheld pairs, zero AI/writes; cron unchanged. GitHub CI passed. No new daily
+saved output was observed. Follow-up fixes substring false positives (Urban/ban,
+bandwidth, cutting-edge, executive) and missing downgrade inflections. Added a
+GET-only diagnostic sharing the daily selector, without DB/AI/day claims. See
+RESOLUTE-MORNING-2026-10-20.md for exact command and remaining source-contract gap.
+No upstream news, schedule, public UI, publication gate or payment changes.
+
+## 2026-10-20 — Concrete missing-news comparison and disabled report intake
+
+Located October19 reporting on continuing AI financing concerns despite rebound
+headlines. Fixed headline-only exclusion with a conservative concrete body-risk
+fallback; ordinary disclaimers/negation remain excluded. Staging health shows
+many separate company RSS headlines but these contain no body; general feed0,
+Stock News API configuration absent. Added a separate disabled RESOLUTE reporting
+adapter using the existing provider contract; no home/monitor edits, provider
+calls, new AI calls, publication or billing changes. See
+RESOLUTE-NEWS-COVERAGE-2026-10-20.md for evidence, exact enable conditions and the
+unverified live source/positive-generation boundary. Do not call this recovered.
+
+## 2026-10-20 — Confirmed subscription plan and publication-date guard
+
+Stock News API is uncontracted, planned for mid-November (owner reconfirmed).
+Twelve Data is separately uncontracted with the same planned timing. Do not ask
+again or enable paid intake now. Today-only RESOLUTE selection replaces96h with
+explicit publication timestamps in the current JST day, never acquisition dates.
+Date-only/previous-day/future articles stay out; the scheduled job remains unchanged.
+Validation and deployment evidence will follow; no live verification claimed here.
+
+Validation: Node1183/1183, Python2508/2508 (266.840s), lint0 errors
+(5 existing warnings), Next build, compileall and diff check passed.
+Total3691 tests. No actual provider/model calls were made. Live rollout and
+next scheduled generation/storage remain separate verification steps.
+
+## 2026-10-20 — Recovery subprocess lifecycle prerequisite
+
+Freshness commit9ff1ed6f CI39356200347 completed successfully (verified via
+GitHub Actions API). Morning remains pinned to20a3069e; no schedule change.
+Added services/resolute-recovery/process.mjs: trusted fixed Linux commands,
+explicit environment, no shell/stdin, bounded stdout+stderr, redacted failures,
+abort/deadline TERM then KILL to the process group, and awaited close. Real-child
+regressions cover resistant descendants and abort despite exit0. This is a
+prerequisite for the fixed PG/API/writer executor, which remains unimplemented;
+no actual authenticated recovery acceptance or production saving is claimed.
+No new deployment, credentials, DB changes, provider calls or AI/mail/payment.
+
+## 2026-10-20 — Continue through actual isolated executor
+
+Connected the authenticated coordinator to a fixed real PostgreSQL/API/writer
+executor, acceptance-only S3 namespace and disabled one-shot container CLI.
+Synthetic session is clearly distinguished from the pending real Clerk session.
+See RESOLUTE-AUTHENTICATED-RECOVERY-FLOW.md for checks and actual-run evidence.
+Production saving/key custody, mail, payments and RIZEL publication remain off.
+
+
+## 2026-10-20 — Deployed authenticated synthetic recovery verified
+
+fafbf53c passed real PostgreSQL/API/writer/external-storage/dump/restore acceptance
+on deployment6f822e7a at11:30 JST; all nine observed checks true, both replays
+preserved deletion/OFF/empty queue. Session was synthetic, not live Clerk.
+Retired immediately: a382d959 logged ACCEPTANCE_DISABLED, storage refs cleared.
+No production database, cron, mail, payment, AI or RIZEL publication changed.
+See RESOLUTE-AUTHENTICATED-RECOVERY-FLOW.md for complete evidence and remaining
+live-session/key-custody gates. Do not describe production saving as available.
+
+
+## 2026-10-20 — Live-session continuation prepared; exposure approval blocked
+
+The preview browser still displayed an authenticated owner account. Added an
+owner-only preview page at /resolute/recovery-check with an explicit one-shot
+button, no mount-time request/retry, a synchronous double-click latch and
+allowlisted evidence display. Both page and API remain disabled. No session
+token was read from the browser. The existing server-side transport owns JWT
+forwarding; ordinary plan/settings destinations are unchanged.
+
+Automatic approval review rejected generating a public Railway domain for the
+isolated runner because this would widen exposure without specific owner
+approval. The service inspection confirmed no domain, no staged changes and
+the disabled retirement deployment. Do not bypass that rejection or activate
+credentials before approval. Required approval: a temporary HTTPS endpoint for
+the isolated runner, with a separate service token, exact-owner signed-session
+check, one execution and <=1h expiry, removed after verification. Synthetic
+DB/storage only; no production DB, mail, payments or AI. No Vercel recovery
+variables or live runner credentials were installed.
+
+Validation of the owner-page tree: Node1193/1193, Python2508/2508 (258.697s),
+lint0 errors/5 existing warnings, Next build, compileall and diff check passed.
+The earlier executor commit fafbf53c GitHub CI39358938320 completed successfully.
+
+
+## 2026-10-20 11:53–11:59 JST — Live Clerk recovery acceptance completed
+
+Owner explicitly approved temporary HTTPS exposure for the isolated acceptance.
+Preview024aea9e (Vercel dpl_CDKSdeVyksEsdhqdMiibSBERwbiC) forwarded the real
+signed-in owner session server-side to runner fafbf53c on Railway deployment
+59a94566-9b0a-4cdc-b7bb-9537b81ccc55. No browser JWT was extracted. Authorized browser automation
+invoked the prepared UI exactly once. Browser
+verifiedAt=2026-10-20T02:53:13.793Z, all nine checks true: authenticatedSession,
+isolatedDatabase, staleBackupVerified, independentReadback, firstReplay,
+secondReplay, planErased, notificationsStopped, pendingQueueEmpty.
+
+Actual runtime logs show cluster, migrations, API save, stale backup, API
+DELETE/both OFF, independent readback, restore, stale-state check, two replay
+assertions and cleanup; RESOLUTE_RECOVERY_HTTP status200 at02:53:13.825169938Z.
+This closes the previously pending live Clerk -> preview transport -> isolated
+real PostgreSQL18/API/encrypted external storage -> pg_dump/pg_restore -> twice
+replayed protection acceptance. It does not activate or mutate production data.
+
+Retirement was verified, not inferred from deployment status:
+- Temporary domain0a627f6b-135a-4a72-8baa-17038b9232bb was removed; service has no
+  public domains/TCP proxies and no staged changes.
+- Check flag false; token/until, three Clerk refs and five storage refs cleared.
+- Railway retirement69a9adea-8db4-4b33-a4ff-aa423716aa04 logged
+  RESOLUTE_RECOVERY_SERVER_DISABLED at2026-10-20T02:59:45.660319374Z.
+- Four preview-only recovery envs retired (false/empty); Vercel retirement
+  dpl_AQYviULTPxtvwS2SfKBMJef6ekCj READY. Browser reload showed disabled button
+  and confirmation that the check is disabled.
+- GitHub CI39360248328 for024aea9e completed both jobs successfully; local3701
+  tests/lint/build/compileall were previously passed on that code tree.
+
+No main change, production DB/schema/writer activation, mail, live payment,
+additional AI call, RIZEL publication, cron or reservation modification.
+Google Password Manager/Evernote disposable custody rehearsal is complete as
+previously documented; actual production key creation/custody/readback and
+production activation remain pending. Do not call customer saving operational.
+Other contributor commit d1a76eaa was fast-forwarded before this docs-only record;
+its account navigation/recovery changes were preserved unchanged.
+
+
+## 2026-10-20 13:13 JST — Owner production custody completed
+
+Owner reported FILE_MATCH, PASSWORD_MATCH, MEMO_MATCH and finally
+RESOLUTE_CUSTODY_VERIFIED on WSL Ubuntu. Actual Google identity/pins retrieval
+was compared locally, and the Evernote-returned ciphertext authenticated and
+matched the recovered key fingerprint. See RESOLUTE-KEY-ESCROW.md for evidence
+limits. No production key was received here or installed into any service.
+The preceding temporary verifier failure is not root-caused; do not regenerate
+keys or ask the owner to repeat completed custody setup.
+
+Production saving remains off. Next review: backup/export module packaging,
+independent fenced manifest provisioning and restoration key path BEFORE
+production schema/ACL application. backup.py requires protection inputs once
+plan/settings schema is present; applying schemas without the restore inputs
+can break the scheduled recovery verification. NOLOGIN alone is not a write
+fence. Keep active connection verification and post-replay checks in the cutover.
+Do not enable mail, payments, AI, or alter the morning job/reservations.
+Other contributor53fb0e46 notification/account changes were fast-forwarded and
+preserved unchanged. This record is documentation-only; diff validation applies.
+
+
+## 2026-10-20 — Separate online-history reads from DB dump storage
+
+Found and fixed a cutover blocker in scripts/resolute/backup.py: online manifest
+recovery was using the DB dump S3 client/bucket despite the isolated writer's
+separate history bucket. Online recovery now requires the five explicit
+RESOLUTE_RESTORE_PROTECTION_* connection settings and independently pinned
+key/manifest, rejects the dump bucket and unsafe endpoint forms, and never falls
+back to dump credentials. The legacy checkpoint path is unchanged. No production
+key was read, no schema/grants/flags were changed and no service was deployed.
+
+New regression coverage decrypts an actual synthetic AES-GCM event through the
+manifest loader, verifies independent GETs only, and rejects missing config,
+invalid pins, tampering, missing history and unsafe/same-store configuration.
+See RESOLUTE-STORAGE-CUTOVER.md for read-only Railway evidence, payload packaging
+check and ordered production steps. The actual new provider read path remains
+unverified; production saving stays disabled. Owner custody remains completed,
+not a reason to request another key or repeat the owner setup.
+
+Final integrated local validation on base86a329d4: Node1207/1207, Python2520/2520 (278.110s), lint0 errors/5 existing warnings, Next build, compileall and diff check passed. No production deployment or new live recovery pass is claimed.
+
+
+## 2026-10-20 13:26–13:29 JST — Restore V2 deployed, execution still unverified
+
+Installed the c792d51d three-module bundle in restore-check service
+c0eec3c0-cdd2-47da-bd48-fef21e30934b as new
+RESOLUTE_PROTECTED_JOB_V2_B64; retained both older job variables. Changed only
+startCommand to select V2, then redeployed3aaa54dc-91e4-40db-8547-7f19fc77a99a.
+The launcher requires restore mode, verifies bundle digest and exact module set,
+compiles/extracts the three files, runs backup.py and removes the temporary files.
+Local extraction/source equality/cleanup checks passed. Bundle SHA256 remains
+0d3c10c14440ede9be4bc862a90fcd991c2d59a2386f7bf9034d9fd01215424d;
+launcher SHA256 df78d35f2309dab2161f82c8145ae9c0a59f16e99c41957825d876f24e8f382f.
+
+Readback: deployment SUCCESS, state cronReady, no staged changes, domains or
+volumes; weekly cron remains0 0 * * 1. No runtime result was returned by bounded
+log reads, including an explicit time window. One restart also left cronReady
+with no execution result. Therefore neither an actual restore nor online-history
+provider reads are claimed successful. Do not repeat deploy/restart to substitute
+for a cron run. Official Railway docs distinguish railway cron run from redeploy;
+the installed remote connector does not expose cron run, and this workspace has
+no Railway CLI or token authentication. A dashboard manual Run or an authorized
+browser fallback is still needed; never alter the schedule to force a run.
+
+Morning service006aea7e was read back unchanged: pin20a3069e, deploymentb43e335e,
+cron0 22 * * 0-4, no staged changes. No customer-save flag, production key,
+DB schema/privilege, mail, payment, AI invocation or reservation changed.
+GitHub CI39369328863: payment concurrency passed; main validation still running
+at this observation. Do not report overall CI success yet.
+
+
+## 2026-10-20 13:47–13:49 JST — Actual old-version restore passed; V2 redeployed
+
+Owner clicked Run now. Deployment3aaa54dc's actual04:47:38Z structured logs
+show RESOLUTE_RESTORE_OK:69247 encrypted bytes, probe_rows2, Sandbox
+orders11/grants7/events8/audit32/alert_outbox7, live ledger verified with all
+five counts0. Download/decryption/checksums/pg_restore/probe/PK/both payment
+integrity checks passed in2.355s; monitor_ping_sent=true. Cron execution status
+succeeded, no running replica afterward. data_protection=not_installed is
+expected while application storage schemas are absent, not a protection pass.
+
+Crucially, the same execution logged bundle commitdb418e7 and digest
+aab5c9ca86efbf2bc1af5ca7cd6d25c783aee9a9cbc0499b41c4ae555bc3c151.
+Thus the earlier c792 V2 deployment claim established configuration only:
+redeploy reused the old execution configuration despite describe-service showing
+the V2 start command. The actual run is NOT evidence of executing c792d51d.
+
+Corrective operation: added a fixed c792d51d/bundle-digest marker to the V2
+launcher, then set RESOLUTE_PROTECTED_JOB_V2_B64 with skipDeploys=false so a
+fresh deployment is generated from current settings. New deployment
+c6ef3efc-604c-4133-8a4d-91c319f5b0f0 reached SUCCESS at13:49 JST with V2 start
+command and unchanged weekly cron; no staged changes. New launcher digest
+259c9cadbb0811358ac9bee290bf32bf48a9c76cdf9af65e887cc0eb64224672.
+Old variables retained. A fresh manual Run now is still required; verify the
+c792d51d marker AND RESOLUTE_RESTORE_OK before accepting this deployment.
+No runtime success for c6ef3efc is claimed yet. No production storage/key/DB
+activation, schedule modification, mail, payment or AI call occurred.
+
+GitHub CI39369328863 for c792d51d is now completed/success. Local3727 tests,
+lint/build/compileall passed as previously recorded. Owner custody stays complete;
+no need to repeat Google/Evernote setup or regenerate keys.
+
+
+## 2026-10-20 13:54 JST observation — V2 actual restore verified
+
+Owner reported pressing Run now; subsequent inspection found the completed V2
+execution at13:51:43 JST (log time, not inferred from the report time).
+Deploymentc6ef3efc-604c-4133-8a4d-91c319f5b0f0 logged both:
+- RESOLUTE_PROTECTED_BUNDLE_READY: commitc792d51d06437a27748f03ee2714a8c23ce7409e,
+  digest0d3c10c14440ede9be4bc862a90fcd991c2d59a2386f7bf9034d9fd01215424d,
+  modules3, timestamp2026-10-20T04:51:43.084940930Z.
+- RESOLUTE_RESTORE_OK at04:51:43.084946050Z:69247 encrypted bytes, probe_rows2,
+  Sandbox orders11/grants7/events8/audit32/alert_outbox7; live ledger verified
+  with all five counts0; download/decrypt/checksums/pg_restore/probe/primary-key/
+  both payment-integrity assertions passed,2.67s, monitor_ping_sent=true.
+
+Environment status confirms cronSucceeded, lastExecutionStatus=succeeded,
+lastExecutionAt04:51:41.853Z, running replicas0, no pending work or recent
+failures. This closes the pending V2 execution gate and the stale-build confusion.
+Do not ask for another Run now or repeat owner key custody verification.
+
+The result data_protection.state=not_installed correctly reflects the existing
+backup without application storage schemas. This is NOT an actual production
+online-history replay acceptance. Production protection key and independent
+store connection provisioning, fenced complete manifest and schema/ACL cutover
+remain pending; customer saving stays off. The successful synthetic live-Clerk
+replay remains separate evidence. Existing daily/weekly/morning schedules and
+reservations were not modified. The apt-utils debconf notice did not prevent
+the verified execution. Main, billing, live payments, email and AI were untouched.
+
+
+Latest 2026-10-20 14:03 JST: production protection bucket prepared separately; read-only DB/catalog and empty-bucket preflight passed on real Railway execution, then temporary probe retired and credentials blanked. Writer/restore connection references stored with skipDeploys=true, not runtime verified. Production PC-only online key installation remains owner-only; do not repeat custody or Run now. Saving stays off. Full IDs/evidence in RESOLUTE-STORAGE-CUTOVER.md.
+
+
+2026-10-20 14:18 JST RESOLUTE update: owner online key installed and runtime AES-GCM check passed; restore references match key and read back pinned empty bootstrap manifest. Seven migrations and three-role ACL audit passed on real DB inside a rolled-back transaction; no schemas installed. Probes retired, temporary secrets blanked. See RESOLUTE-STORAGE-CUTOVER.md for exact evidence and remaining backup/schema/replay gates. Empty bootstrap pin MUST NOT survive customer-write activation without fresh fenced inventory. No repeated owner custody step needed. Other担当 PRO commit33dbd918 preserved by fast-forward.
+
+
+2026-10-20 14:29 JST RESOLUTE: storage migrations002–005/017–019 COMMITTED,3-role ACL audit passed before/after; all roles NOLOGIN and app saving OFF. Daily backup upgraded to checked three-module payload; real pre/post backups passed. Post-schema isolated restore of84933-byte dump passed including independent online empty baseline. Read RESOLUTE-STORAGE-CUTOVER.md latest entry for exact IDs, retained pre-schema dump, remaining activation gates, and IMPORTANT discovery: empty-string variable update did NOT neutralize referenced PGHOST/PGPASSWORD. Use fresh restore-only service; guard blocked unsafe attempts. Temp function references now DISABLED with runtime verification. Never use empty bootstrap pin after customer writes begin.
+
+Final14:33 JST cleanup confirmed: temporary cutover services deleted, no volumes; probe14/provision3 temporary references verified absent or DISABLED at runtime. Daily/weekly/morning schedules unchanged. All detailed evidence appended to storage cutover record.
+
+
+2026-10-20 recovery hardening: runtime restores now require complete, stable
+GET+LIST inventory matching the pinned manifest; stale empty bootstrap pins fail
+when events exist. Actual recovery still requires fencing writers and resealing.
+Retry CLI reports whole-queue pending/dueRemaining and cannot report completion
+while delayed or unselected events remain. Saving and retry scheduling stay OFF.
+Validation: Node1236 + Python2523 =3759 passed; lint0 errors/5 existing warnings,
+build passed after preserving and replacing stale generated cache, compileall and
+diff check passed. Railway runtime validation is pending in this entry.
+
+
+2026-10-20 14:53 JST: fafde179 complete-inventory/whole-retry-queue fix passed
+3759 local tests and actual isolated production-backup restore (f70b1204,05:51:24Z).
+V3 bundle730cf53f deployed to daily/weekly configs; schedules unchanged. Temporary
+restore-only service deleted. Source saving/writer/retry remain OFF. Empty
+baseline acceptance only; actual recovery requires fencing and resealing. No owner
+key/Run now step. CI cancelled by coworker push; d10c04f8 integrated and combined
+gates rerunning. See STORAGE-CUTOVER latest evidence for exact IDs.
+
+Final combined d10c04f8 gates: Node1237/Python2523 (3760 total) passed;
+lint0 errors/5 existing warnings, build, compileall and diff check passed.
+Deployed three-module payload verified byte-for-byte against integrated source.
+
+
+2026-10-20 15:11 JST: previous integrated CI39377657564 SUCCESS. New read-only
+storage readiness command actually ran on production: all3 dormant ACLs verified,
+scoped sessions0 and unpublished protection0. Evidence445bb4fa at06:11:34Z in
+STORAGE-CUTOVER. One-shot service removed. This is a snapshot, NOT a maintained
+recovery fence or save activation. No owner action/key custody/Run now needed.
+
+Final readiness gates: Node1239/1239 (89.614s), Python2523/2523
+(376.676s), total3762 passed. Lint0 errors/5 existing warnings; build,
+compileall and diff check passed. Node rerun completed with no additional
+OOM kills (counter stayed9). No test skipped or removed.
+
+Coworker accf4368 arrived during publication; ref update did not overwrite it.
+Integrated PRO checkout changes and repeated all gates: Node1245/Python2523
+(total3768) passed, lint0 errors/5 existing warnings, build/compileall/diff check
+passed. Sequential heavy gates avoided further OOM kills.
+
+
+2026-10-20 15:34 JST: CI39379931568 SUCCESS. Provisioned valid service-auth
+token (NOT encryption key) on disabled writer; API disabled gateway URL/token/key
+references stored with skipDeploys=true. Actual one-shot rendered configuration
+comparison passed ea42bc94 at06:33:55Z, no network/data writes. Original API and
+writer runtime deployments unchanged; no DB logins or saving enabled. Probe
+deleted. See STORAGE-CUTOVER for fingerprint-check correction and exact evidence
+boundaries. No repeat owner custody or Run now.
+
+
+2026-10-20 15:51 JST: API now pinned7875e998; eaa96549 actual READY log.
+Real reader-only Postgres connection and API HTTP200/unauth401 checks passed
+(c0155713). Storage roles NOLOGIN/sessions0; saving remains OFF. Scoped write
+probe blocked before DB connection, then automatic approval rejected putting
+superuser credentials in a temporary service. No workaround attempted. Both
+new helpers are credential-neutralized/inert with actual retired logs; first
+helper deletion was not approved, so neither is claimed deleted. See latest
+STORAGE-CUTOVER/LAUNCH-READINESS for exact IDs, remaining write/recovery gate and
+approval boundary. No owner key/Run now repetition; all schedules untouched.
+
+
+2026-10-20 16:19 JST: continued isolated real-S3 gateway verification through
+connected app. Three synthetic events persisted; six overwrite conflicts rejected;
+writer server restart readback/decryption/receipt checks and four HTTP negatives
+passed (10279dd3,07:18:26Z). Production bucket/DB untouched. Existing acceptance
+service retired with actual referencesNeutralized=true log (981857b9,07:18:58Z).
+This proves synthetic loopback HTTP + real S3 durability, NOT public HTTPS or
+production save/restore. Saving OFF; in-container production DB execution remains
+blocked, with owner approval already retained. See STORAGE-CUTOVER latest entry.
+
+
+2026-10-20 RESOLUTE: added guarded local-socket-only check-storage-write.sh and
+moved reviewed rollback SQL unchanged into check-storage-write.sql. Five regression
+tests cover success/repeat, mid-write privilege failure rollback, dormant/collision
+checks, wrong DB and shell connection isolation/exit status. Node1257/Python2523
+(3780) pass; build/compileall/shell/diff checks pass. No production connection or
+activation: current execution environment still blocks Railway CLI, and connected
+app lacks SQL/SSH. Owner permission persists; no repeat login/key/Run now.
+See RESOLUTE-SCOPED-WRITE-CHECK.md for exact procedure and evidence limits.
+
+## 2026-10-20 — Require an explicit terminal history-inventory page
+
+The resumed local command and Git fetch succeeded after the execution platform's
+session-metadata recovery timeout. No Railway/GitHub login changes were needed;
+the underlying platform root cause is not observable from this workspace.
+
+Found and reproduced a separate recovery issue: inventory() accepted an exhausted
+page iterator as a complete listing without checking ListObjectsV2 IsTruncated.
+An incomplete/invalid listing could therefore seal an empty manifest or validate
+an existing empty manifest in require_complete_inventory mode. Now each page must
+have a boolean IsTruncated, truncated pages must carry a nonempty continuation
+token, and enumeration must end with exactly one terminal page. Empty intermediate
+pages remain valid. Missing/invalid completion metadata and premature enumeration
+end fail closed before manifest publication or successful recovery acceptance.
+
+Regression evidence: the original implementation failed all seven negative
+subcases across two new tests. Updated code passed all11 event tests and all5
+restore-storage tests. These are local tests, not production provider acceptance.
+Reference: https://docs.aws.amazon.com/AmazonS3/latest/API/API_ListObjectsV2.html
+
+This change does not provide a maintained write fence. Fresh full inventory under
+stopped writes remains mandatory. No production DB connection, save activation,
+role change, schedule change, key operation or mail/payment/AI call was performed.
+Railway backup/restore payloads still contain8daeaf3c until a separately verified
+bundle rollout; publishing this source alone does not change those runtimes.
+
+Provider acceptance attempt: empty temporary service5b80a31a-3754-4ff0-a2ff-ed8807ce64b8
+was created without source. Automatic approval rejected setting restore-only
+backup/protection credential references and the candidate bundle: the prior
+explicit approval covered SQL/test code without production credentials/data.
+No variables were applied and no image was connected. The empty service was
+then deleted successfully, with no detached volumes. Do not bypass the rejection
+using another service/tool. Explicit approval for the backup/protection references
+is required before this additional provider acceptance. Production DB credentials
+are excluded from the proposed test. Candidate three-module digest:
+8e9cae071117da8b293ea3d6c3c529b29b6ef8a7b57e3cabadecd82330590063.
+
+Final integrated local gates on29ae7138: Node1257/1257 (81.063s),
+Python2547/2547 (298.713s), total3804 tests; lint0 errors/5 existing warnings,
+production build, compileall and git diff --check passed. The initial Node run
+caught missing IsTruncated in the cross-language fixture; that fixture now models
+an explicit final page, and the full Node suite was rerun successfully. No test
+was skipped or disabled. Provider acceptance of this candidate remains blocked
+as described above; existing deployed8daeaf3c evidence must not be relabeled.
+
+## 2026-10-20 22:34 JST — approved pagination fix provider acceptance
+
+Owner explicitly approved restoring the real backup in a disposable service using
+existing backup/protection credential and recovery-key references, excluding any
+production DB connection, with deletion afterward. CI39429622017 forfb7c4eda
+completed successfully in both jobs before this acceptance.
+
+Preflight caught that the earlier candidate launcher preparation had replaced the
+expected digest but failed to replace its compressed payload. That candidate was
+never deployed. Rebuilt by replacing the parsed literal, decoded it again and
+required exact equality for all3 modules against checked commitfb7c4eda before
+setting variables. Actual runtime emitted the correct module digest below.
+
+Temporary09678c6f-e362-43a4-89f0-2dfbfd2e19cd used postgres:18-bookworm,
+0.5CPU/0.5GB, restart NEVER, timeout900, no cron/domain/volume/monitor URL and no
+PG*/DATABASE*/DB_URL variables. Required protection and live-ledger checks true.
+Deployment509de334-8af7-4e3d-b4b7-2cb1885be94c reached SUCCESS and logged at
+2026-10-20T13:33:56.066350444Z:
+- RESOLUTE_PROTECTED_BUNDLE_READY commitfb7c4eda6b9462931e817a6052ffe8eb086a5911,
+  modules SHA2568e9cae071117da8b293ea3d6c3c529b29b6ef8a7b57e3cabadecd82330590063.
+- RESOLUTE_RESTORE_OK:84933 encrypted bytes, probe_rows2, Sandbox
+  orders11/grants7/events8/audit32/alert_outbox7; live five counts0;
+  independent_online_manifest verified with deletions0/suppressions0;
+  download/decrypt/checksums/pg_restore/probe/primary-key/both-payment-integrity
+  checks passed in2.898s, monitor_ping_sent=false.
+
+This proves actual provider compatibility of the explicit-terminal-page check and
+isolated restore. It does not prove nonempty production replay, a maintained write
+fence, authenticated customer saving, or a new backup write. Saving remains OFF;
+regular daily/weekly payloads remain8daeaf3c, schedules untouched. A fresh complete
+write-fenced inventory remains required before activation; never reuse an initial
+empty pin after events. No owner login/key entry/Run now is needed.
+
+Provider confirmed deletion of the temporary service with no detached volumes.
+Coworker34fafeec (Maps/watchlist/company introductions) was fast-forwarded and
+preserved. This follow-up changes documentation only and passed diff check;
+3804 local tests/CI39429622017 apply tofb7c4eda, not a fresh combined-tree run.
+
+## 2026-10-20 22:42 JST — pagination bundle rolled out to scheduled services
+
+After the approved actual restore passed, rebuilt both launchers with a parsed
+payload replacement and verified all3 extracted modules byte-for-byte against
+fb7c4eda. Executed each launcher locally with runpy intercepted to verify exact
+extraction without running a job. Previous payloads matched8daeaf3c source.
+Only RESOLUTE_PROTECTED_JOB_V3_B64 and its ROLLBACK_B64 were updated on the
+existing daily/weekly services; rollback now retains the prior8daeaf3c launchers.
+No new credentials, keys, pins, role or saving flags were installed.
+
+Backup deploymentab1eba37-9af5-4438-be5b-71e086fdf49e and restore deployment
+20089892-946b-4c46-a184-764b3f27ec08 both reached SUCCESS. Readback confirmed
+unchanged start commands, daily0 0 * * *, weekly0 0 * * 1 and no staged changes.
+Both new deployment log queries returned0 entries: scheduled execution of these
+new deployments is still pending, not an actual new backup/restore success.
+The earlier isolated509de334 actual restore remains the runtime evidence for
+fb7c4eda with module digest8e9cae071117da8b293ea3d6c3c529b29b6ef8a7b57e3cabadecd82330590063.
+Do not request Run now or alter cron to manufacture evidence. Production DB
+scoped-write/fresh fenced nonempty history/gateway acceptance remain outstanding;
+customer saving remains disabled. Morning service and reservations untouched.
+
+
+## 2026-10-20 23:05 JST — production rollback passed; dormant writer refreshed
+
+The existing Postgres browser Console is now usable with the owner's existing
+login. Actual reviewed rollback-only SQL passed at13:59:48Z: scoped writes,
+readbacks, protection triggers and denied excess privileges, then ROLLBACK and
+five-table absence checks; committed_rows0, activation=false, exit0. Independent
+postcheck14:00:29Z found production deletions/suppressions/unpublished events0,
+LOGIN writer roles0 and writer sessions0. Full read-only effective ACL translation
+passed at14:01:56Z. See RESOLUTE-SCOPED-WRITE-CHECK.md for exact evidence and the
+corrected read-only audit alias error. No DB credential export or role change.
+
+Refreshed the existing dormant writer by explicitly retaining ENABLED=false and
+redeploying its existing build. Deployment1bfaefad-07bc-4660-ae62-eb28b22c55c9
+reached SUCCESS; actual structured log at14:04:51.634215819Z emitted
+RESOLUTE_WRITER_DISABLED. The source pin4b3bdd8e and start command are unchanged;
+writer Dockerfile/server/ledger are identical to testedfb7c4eda. Node emitted its
+existing typeless-package warning, not a failed deployment. This updates the
+runtime deployment after the earlier skipDeploys configuration; the disabled
+branch does not parse credentials, so no token authentication/HTTPS receipt or
+bucket durability is claimed. API and all customer-saving gates remain disabled.
+
+Remaining: establish a maintained fence across DB writers and object publishers,
+produce and independently retain a fresh complete inventory, verify real public
+HTTPS receipts/durable readback, then isolated nonempty deletion/both-stop replay
+and idempotence. The zero histories are point-in-time observations, not a reusable
+empty activation pin. No owner key entry, login or Run now is needed. Morning,
+daily/weekly schedules, reservations, UI, live payments, billing, mail and AI
+were untouched. Documentation-only update: git diff --check; no new combined-tree
+test claim. Previous3804 tests/CI39429622017 remain scoped tofb7c4eda.
+
+
+## 2026-10-20 23:16 JST — actual public HTTPS authentication passed
+
+API runtime config and all4 disabled save/retry gates verified inside the existing
+API container without credential export. A temporary no-storage wrapper on the
+existing writer passed public HTTPS token acceptance/rejection from that API:
+404/401/401/405/503 as designed, exit0 at14:14:43.379Z. S3 access0, persisted
+objects0. This is real HTTPS authentication, not durable publication/readback.
+Original start restored; ab018522 emitted RESOLUTE_WRITER_DISABLED at14:15:44Z;
+preflight3dd5d74d verified REMOVED. See RESOLUTE-HTTPS-AUTH-CHECK.md for deployment
+snapshot behavior and full evidence. Fresh maintained-fence inventory, real object
+receipts and independent nonempty restore/replay remain. User action unnecessary.
+
+---
+
+## 2026-10-23 JST — Local PRO checkout fixes integrated with current preview
+
+Local PRO commit 8a7f801a is integrated with preview bd5141f6. The PRO
+change is limited to billing-screen notice recovery, stopping asynchronous work
+on departure, regression tests and handoff records. It remains unpublished;
+no Railway/Vercel operation, payment request or schedule change is authorized
+by this integration. Node1331 passed; lint0errors/5existingwarnings and
+build/typecheck/compileall/diff checks passed. Python2585 completed with four
+failures in unchanged news tests. Those four passed a focused rerun, but a
+second full run showed failures and was interrupted. Full gates are NOT green;
+do not publish. See the October23 entry in TECH-PHASE-LOCAL-CONTINUATION-2026-10-20.md.
+Local Node24.19.0 also differs from the repository/CI pins.
+
+Preserve the newer source-backup and credential-recovery records below. The
+October 22 user report in TECH-PHASE-INCIDENT-HANDOFF-2026-10-22.md is historical,
+not a replacement for later rotations or confirmed R2 recovery. Do not repeat
+completed setup. Live PRO acceptance still waits for runtime availability.
+News/earnings acquisition, RESOLUTE implementation and main are outside scope.
+
+## 2026-10-27 — Account and PayPal security hardening
+
+User requested the 17-item security audit and explicitly authorized continuing past blockers.
+Baseline a1308eda on codex/research-preview. Full findings and activation order:
+[SECURITY-ACCOUNT-PAYPAL-2026-10-27.md](SECURITY-ACCOUNT-PAYPAL-2026-10-27.md).
+Added Clerk security settings entry, conditional MFA checks for common membership
+admin paths and PRO sandbox entry, account/payment response headers, shared PRO Live
+checkout limits, pseudonymous alert outbox, and an inactive notification worker.
+The admin MFA flag is NOT enabled. Clerk lockout/reset/enumeration/MFA dashboard
+settings remain unverified. RESOLUTE-specific owner checks still need MFA coverage;
+news-related code belongs to Claude and was not modified. Clerk's SDK session cookie
+is not HttpOnly, so the requested all-cookie rule remains unmet.
+PRO Live rate limits/alerts require migration 007 BEFORE service rollout and a
+configured notification destination/worker. None of those runtime changes were
+performed. No Railway connection, reauthentication, purchase, external notification,
+main update, or force push. Vercel environment metadata was inspected without
+reading decrypted values; Live payment configuration was absent there.
+Do not mark provider setup, admin MFA enforcement or billing alert delivery complete
+based on the presence of this code. Existing PII exports/log retention also need review.
+
+Final integrated checks passed: Node 1,561 + Python 2,648; lint 0 errors / 9 existing
+warnings; production build/typecheck, compileall and diff check. New security tests
+cover shared DB concurrency, retries, MFA membership integration and non-admin
+sandbox tester compatibility. These checks do not verify the blocked live settings.

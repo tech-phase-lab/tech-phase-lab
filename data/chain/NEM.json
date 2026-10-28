@@ -1,0 +1,120 @@
+{
+  "root": {
+    "ticker": "NEM",
+    "name": "ニューモント",
+    "cik": 1164727,
+    "name_en": "Newmont Corporation"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "B",
+      "ticker": "B",
+      "name": "バリック・マイニング",
+      "sub": "金鉱山の共同事業",
+      "sub_en": "Gold JV partner",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ネバダの鉱山を統合した合弁会社NGMの経済的持分を、ニューモント38.5%、バリック61.5%で持つ",
+          "text_en": "In the Nevada JV, Newmont holds a 38.5 percent economic interest and Barrick holds a 61.5 percent economic interest in NGM",
+          "source": {
+            "label": "ニューモント 10-K(2025年12月期)",
+            "label_en": "Newmont Corporation 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1164727/000116472726000010/nem-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Pursuant to the terms of the Nevada JV Agreement, we hold a 38.5 percent economic interest and Barrick holds a 61.5 percent economic interest in NGM."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "プエブロ・ビエホ鉱山はバリックが運営し、バリックが残り60%を持つ合弁事業である",
+          "text_en": "Pueblo Viejo is a joint venture with Barrick, which operates it and holds the remaining 60% interest",
+          "source": {
+            "label": "ニューモント 10-K(2025年12月期)",
+            "label_en": "Newmont Corporation 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1164727/000116472726000010/nem-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Pueblo Viejo, Dominican Republic. (40% owned) Pueblo Viejo is a joint venture with Barrick, where Barrick is the operator who holds the remaining 60% interest."
+          }
+        }
+      ],
+      "name_en": "Barrick Mining Corporation"
+    },
+    {
+      "id": "TECK",
+      "ticker": "TECK",
+      "name": "テック・リソーシズ",
+      "sub": "銅・金の共同事業",
+      "sub_en": "Copper/gold JV partner",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "テックと共同運営する合弁事業があり、持分法で処理している",
+          "text_en": "A joint venture with Teck Resources Limited is jointly operated and accounted for as an equity method investment",
+          "source": {
+            "label": "ニューモント 10-K(2025年12月期)",
+            "label_en": "Newmont Corporation 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1164727/000116472726000010/nem-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Joint venture with Teck Resources Limited that is jointly operated and accounted for as an equity method investment."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "あるプロジェクトを、残り50%を持つテックと共同で管理している",
+          "text_en": "One project is jointly managed with Teck Resources Limited, which holds the remaining 50% interest",
+          "source": {
+            "label": "ニューモント 10-K(2025年12月期)",
+            "label_en": "Newmont Corporation 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1164727/000116472726000010/nem-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "The project is jointly managed by Newmont and Teck Resources Limited, who holds the remaining 50 % interest."
+          }
+        }
+      ],
+      "name_en": "Teck Resources Limited"
+    },
+    {
+      "id": "LUG",
+      "ticker": "Lundin Gold",
+      "name": "ランディン・ゴールド",
+      "sub": "金鉱山(持分法投資先)",
+      "sub_en": "Gold miner, equity investee",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "エクアドルのフルタ・デル・ノルテ金鉱山を運営するランディン・ゴールドの株式32%を持つ",
+          "text_en": "Newmont holds a 32% equity interest in Lundin Gold, which operates the Fruta del Norte gold mine in Ecuador",
+          "source": {
+            "label": "ニューモント 10-K(2025年12月期)",
+            "label_en": "Newmont Corporation 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1164727/000116472726000010/nem-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "We also hold a 32% equity interest in Lundin Gold, a Canadian mine development and operating company, operating the Fruta del Norte gold mine in Ecuador, in addition to a variety of exploration and project joint ventures."
+          }
+        }
+      ],
+      "name_en": "Lundin Gold Inc."
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

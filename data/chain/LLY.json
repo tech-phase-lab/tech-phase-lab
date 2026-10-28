@@ -1,0 +1,214 @@
+{
+  "root": {
+    "ticker": "LLY",
+    "name": "イーライリリー",
+    "cik": 59478,
+    "name_en": "Eli Lilly and Company"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "BI",
+      "ticker": "Boehringer",
+      "name": "ベーリンガーインゲルハイム",
+      "sub": "大手製薬",
+      "sub_en": "Large pharma",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "バサグラーの提携先で、ジャディアンスも提携の対象である",
+          "text_en": "Boehringer Ingelheim is the partner for Basaglar, and Jardiance is part of the collaboration",
+          "source": {
+            "label": "Eli Lilly and Company 10-K(2025-12-31)",
+            "label_en": "Eli Lilly and Company 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/59478/000005947826000013/lly-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "In August 2023, HHS selected Jardiance, which is part of our collaboration with Boehringer Ingelheim, as one of the first ten medicines subject to government-set prices effective in 2026."
+          }
+        }
+      ],
+      "name_en": "Boehringer Ingelheim"
+    },
+    {
+      "id": "ROCHE",
+      "ticker": "Roche",
+      "name": "ロシュ",
+      "sub": "大手製薬",
+      "sub_en": "Large pharma",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "レブリキズマブ(エブグリス)の開発・商業化権をリリーに許諾している",
+          "text_en": "Roche licenses the lebrikizumab (Ebglyss) rights to Lilly",
+          "source": {
+            "label": "Eli Lilly and Company 10-K(2025-12-31)",
+            "label_en": "Eli Lilly and Company 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/59478/000005947826000013/lly-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "Hoffmann-La Roche Ltd and Genentech, Inc. (collectively, Roche), which provides us the worldwide development and commercialization rights to lebrikizumab, which is branded and trademarked as Ebglyss."
+          }
+        }
+      ],
+      "name_en": "Hoffmann-La Roche / Genentech"
+    },
+    {
+      "id": "ALMIRALL",
+      "ticker": "Almirall",
+      "name": "アルミラル",
+      "sub": "皮膚科製薬",
+      "sub_en": "Dermatology pharma",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "欧州でのエブグリスの皮膚科領域の権利を許諾している",
+          "text_en": "Lilly licensed Ebglyss dermatology rights in Europe to Almirall",
+          "source": {
+            "label": "Eli Lilly and Company 10-K(2025-12-31)",
+            "label_en": "Eli Lilly and Company 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/59478/000005947826000013/lly-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "We have a license agreement with Almirall, S.A. (Almirall), under which Almirall licensed the rights to develop and commercialize Ebglyss, for the treatment or prevention of dermatology indications, including, but not limited to, atopic dermatitis in Europe."
+          }
+        }
+      ],
+      "name_en": "Almirall, S.A."
+    },
+    {
+      "id": "CHUGAI",
+      "ticker": "Chugai",
+      "name": "中外製薬",
+      "sub": "製薬",
+      "sub_en": "Pharmaceuticals",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "オルフォルグリプロンの世界での開発・商業化権をリリーに与えている",
+          "text_en": "Chugai licenses the worldwide orforglipron rights to Lilly",
+          "source": {
+            "label": "Eli Lilly and Company 10-K(2025-12-31)",
+            "label_en": "Eli Lilly and Company 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/59478/000005947826000013/lly-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "Orforglipron We have a license agreement with Chugai Pharmaceutical Co., Ltd (Chugai), which provides us with the worldwide development and commercialization rights to orforglipron."
+          }
+        }
+      ],
+      "name_en": "Chugai Pharmaceutical"
+    },
+    {
+      "id": "TAKEDA",
+      "ticker": "Takeda",
+      "name": "武田薬品工業",
+      "sub": "大手製薬",
+      "sub_en": "Large pharma",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "アクトスをめぐる米国訴訟で、リリーを防御・補償する契約がある",
+          "text_en": "Takeda is to defend and indemnify Lilly in U.S. Actos litigation",
+          "source": {
+            "label": "Eli Lilly and Company 10-K(2025-12-31)",
+            "label_en": "Eli Lilly and Company 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/59478/000005947826000013/lly-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "Our agreement with Takeda calls for Takeda to defend and indemnify us against losses and expenses with respect to U.S. litigation arising out of the manufacture, use, or sale of Actos and other related expenses in accordance with the terms of the agreement."
+          }
+        }
+      ],
+      "name_en": "Takeda Pharmaceutical"
+    },
+    {
+      "id": "MCK",
+      "ticker": "MCK",
+      "name": "マッケソン",
+      "sub": "医薬品卸",
+      "sub_en": "Drug wholesaler",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "米国の卸売業者三社の一つで、連結売上高に占める割合が大きい",
+          "text_en": "It is one of three U.S. wholesale distributors that each accounted for a significant percentage of consolidated revenue",
+          "source": {
+            "label": "Eli Lilly and Company 10-K(2025-12-31)",
+            "label_en": "Eli Lilly and Company 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/59478/000005947826000013/lly-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "In 2025, 2024, and 2023, three wholesale distributors in the U.S.—McKesson Corporation, Cencora, Inc., and Cardinal Health, Inc.—each accounted for a significant percentage of our consolidated revenue."
+          }
+        }
+      ],
+      "name_en": "McKesson Corporation"
+    },
+    {
+      "id": "COR",
+      "ticker": "COR",
+      "name": "シンコラ",
+      "sub": "医薬品卸",
+      "sub_en": "Drug wholesaler",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "米国の卸売業者三社の一つで、連結売上高に占める割合が大きい",
+          "text_en": "It is one of three U.S. wholesale distributors that each accounted for a significant percentage of consolidated revenue",
+          "source": {
+            "label": "Eli Lilly and Company 10-K(2025-12-31)",
+            "label_en": "Eli Lilly and Company 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/59478/000005947826000013/lly-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "In 2025, 2024, and 2023, three wholesale distributors in the U.S.—McKesson Corporation, Cencora, Inc., and Cardinal Health, Inc.—each accounted for a significant percentage of our consolidated revenue."
+          }
+        }
+      ],
+      "name_en": "Cencora, Inc."
+    },
+    {
+      "id": "CAH",
+      "ticker": "CAH",
+      "name": "カーディナル・ヘルス",
+      "sub": "医薬品卸",
+      "sub_en": "Drug wholesaler",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "米国の卸売業者三社の一つで、連結売上高に占める割合が大きい",
+          "text_en": "It is one of three U.S. wholesale distributors that each accounted for a significant percentage of consolidated revenue",
+          "source": {
+            "label": "Eli Lilly and Company 10-K(2025-12-31)",
+            "label_en": "Eli Lilly and Company 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/59478/000005947826000013/lly-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "In 2025, 2024, and 2023, three wholesale distributors in the U.S.—McKesson Corporation, Cencora, Inc., and Cardinal Health, Inc.—each accounted for a significant percentage of our consolidated revenue."
+          }
+        }
+      ],
+      "name_en": "Cardinal Health, Inc."
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

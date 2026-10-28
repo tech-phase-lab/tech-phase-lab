@@ -1,0 +1,94 @@
+{
+  "root": {
+    "ticker": "FE",
+    "name": "ファーストエナジー",
+    "cik": 1031296,
+    "name_en": "FirstEnergy"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "BN",
+      "ticker": "BN",
+      "name": "ブルックフィールド",
+      "sub": "インフラ投資家",
+      "sub_en": "Infrastructure investor",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "送電子会社FETの持分のうち49.9%を保有している",
+          "text_en": "Brookfield owns the remaining 49.9% of FET membership interests",
+          "source": {
+            "label": "FirstEnergy 10-K(2025-12-31)",
+            "label_en": "FirstEnergy 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1031296/000103129626000046/fe-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "Brookfield owns the remaining 49.9% of the issued and outstanding membership interests of FET."
+          }
+        }
+      ],
+      "name_en": "Brookfield"
+    },
+    {
+      "id": "D",
+      "ticker": "D",
+      "name": "ドミニオン・エナジー",
+      "sub": "電力会社",
+      "sub_en": "Electric utility",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "傘下のDominionHVとともに送電合弁Valley Linkの運営契約を結んだ",
+          "text_en": "Dominion affiliate DominionHV entered the Valley Link Operating Agreement with FET",
+          "source": {
+            "label": "FirstEnergy 10-K(2025-12-31)",
+            "label_en": "FirstEnergy 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1031296/000103129626000046/fe-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "On February 21, 2025, FET, DominionHV and Transource entered into the Valley Link Operating Agreement, which established the general framework for Valley Link and the Valley Link Subsidiaries to accept, design, develop, construct, own, operate and finance those transmission projects awarded by PJM to Valley Link."
+          }
+        }
+      ],
+      "name_en": "Dominion Energy"
+    },
+    {
+      "id": "AEP",
+      "ticker": "AEP",
+      "name": "アメリカン・エレクトリック・パワー(トランスソース)",
+      "sub": "電力会社",
+      "sub_en": "Electric utility",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Transourceとともに送電合弁Valley Linkの運営契約を結んだ",
+          "text_en": "Transource entered the Valley Link Operating Agreement with FET",
+          "source": {
+            "label": "FirstEnergy 10-K(2025-12-31)",
+            "label_en": "FirstEnergy 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1031296/000103129626000046/fe-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "On February 21, 2025, FET, DominionHV and Transource entered into the Valley Link Operating Agreement, which established the general framework for Valley Link and the Valley Link Subsidiaries to accept, design, develop, construct, own, operate and finance those transmission projects awarded by PJM to Valley Link."
+          }
+        }
+      ],
+      "name_en": "AEP (Transource)"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

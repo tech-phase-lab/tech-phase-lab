@@ -1,0 +1,371 @@
+{
+  "root": {
+    "ticker": "EXTR",
+    "name": "エクストリーム・ネットワークス",
+    "cik": 1078271,
+    "name_en": "Extreme Networks"
+  },
+  "rows": [
+    {
+      "ja": "供給元",
+      "en": "Suppliers",
+      "above": true
+    },
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "CSCO",
+    "HPE",
+    "ANET"
+  ],
+  "companies": [
+    {
+      "id": "QUANTA",
+      "ticker": "Quanta Computer",
+      "name": "クアンタ・コンピューター",
+      "sub": "受託製造",
+      "sub_en": "Contract manufacturing",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "自社製品の製造・サポート・出荷を担う製造委託先のひとつである",
+          "text_en": "Quanta Computer is one of the ODMs that manufacture, support and ship its products",
+          "source": {
+            "label": "エクストリーム・ネットワークス 10-K(2026-06-30)",
+            "label_en": "Extreme Networks 10-K (fiscal year ended June 30, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1078271/000119312526352872/extr-20260630.htm",
+            "level": "official",
+            "date": "2026-08-17",
+            "quote": "We rely upon original design manufacturers (“ODM”), such as Alpha Networks, Inc., Lite-On Technology Corporation, Quanta Computer Inc., Senao Networks, Inc., Sercomm Corporation and Wistron Neweb Corporation to manufacture, support and ship our products"
+          }
+        }
+      ],
+      "name_en": "Quanta Computer"
+    },
+    {
+      "id": "LITEON",
+      "ticker": "Lite-On Technology",
+      "name": "ライトオン・テクノロジー",
+      "sub": "受託製造",
+      "sub_en": "Contract manufacturing",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "自社製品の製造・サポート・出荷を担う製造委託先のひとつである",
+          "text_en": "Lite-On Technology is one of the ODMs that manufacture, support and ship its products",
+          "source": {
+            "label": "エクストリーム・ネットワークス 10-K(2026-06-30)",
+            "label_en": "Extreme Networks 10-K (fiscal year ended June 30, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1078271/000119312526352872/extr-20260630.htm",
+            "level": "official",
+            "date": "2026-08-17",
+            "quote": "We rely upon original design manufacturers (“ODM”), such as Alpha Networks, Inc., Lite-On Technology Corporation, Quanta Computer Inc., Senao Networks, Inc., Sercomm Corporation and Wistron Neweb Corporation to manufacture, support and ship our products"
+          }
+        }
+      ],
+      "name_en": "Lite-On Technology"
+    },
+    {
+      "id": "WNC",
+      "ticker": "Wistron Neweb",
+      "name": "ウィストロン・ニューウェブ",
+      "sub": "受託製造",
+      "sub_en": "Contract manufacturing",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "自社製品の製造・サポート・出荷を担う製造委託先のひとつである",
+          "text_en": "Wistron Neweb is one of the ODMs that manufacture, support and ship its products",
+          "source": {
+            "label": "エクストリーム・ネットワークス 10-K(2026-06-30)",
+            "label_en": "Extreme Networks 10-K (fiscal year ended June 30, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1078271/000119312526352872/extr-20260630.htm",
+            "level": "official",
+            "date": "2026-08-17",
+            "quote": "We rely upon original design manufacturers (“ODM”), such as Alpha Networks, Inc., Lite-On Technology Corporation, Quanta Computer Inc., Senao Networks, Inc., Sercomm Corporation and Wistron Neweb Corporation to manufacture, support and ship our products"
+          }
+        }
+      ],
+      "name_en": "Wistron Neweb"
+    },
+    {
+      "id": "SERCOMM",
+      "ticker": "Sercomm",
+      "name": "サーコム",
+      "sub": "受託製造",
+      "sub_en": "Contract manufacturing",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "自社製品の製造・サポート・出荷を担う製造委託先のひとつである",
+          "text_en": "Sercomm is one of the ODMs that manufacture, support and ship its products",
+          "source": {
+            "label": "エクストリーム・ネットワークス 10-K(2026-06-30)",
+            "label_en": "Extreme Networks 10-K (fiscal year ended June 30, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1078271/000119312526352872/extr-20260630.htm",
+            "level": "official",
+            "date": "2026-08-17",
+            "quote": "We rely upon original design manufacturers (“ODM”), such as Alpha Networks, Inc., Lite-On Technology Corporation, Quanta Computer Inc., Senao Networks, Inc., Sercomm Corporation and Wistron Neweb Corporation to manufacture, support and ship our products"
+          }
+        }
+      ],
+      "name_en": "Sercomm"
+    },
+    {
+      "id": "WESTCON",
+      "ticker": "Westcon Group",
+      "name": "ウェストコン・グループ",
+      "sub": "流通業者",
+      "sub_en": "Distributor",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "最大手の流通業者として販売契約を結んでいる",
+          "text_en": "Westcon Group holds a distribution agreement as one of its largest distributors",
+          "source": {
+            "label": "エクストリーム・ネットワークス 10-K(2026-06-30)",
+            "label_en": "Extreme Networks 10-K (fiscal year ended June 30, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1078271/000119312526352872/extr-20260630.htm",
+            "level": "official",
+            "date": "2026-08-17",
+            "quote": "Extreme maintains distribution agreements with our largest distributors, Westcon Group Inc., TD Synnex Corporation and Jenne Inc. on substantially the same material terms as we generally enter into with each of our distribution partners."
+          }
+        }
+      ],
+      "name_en": "Westcon Group"
+    },
+    {
+      "id": "SNX",
+      "ticker": "SNX",
+      "name": "TDシネックス",
+      "sub": "流通業者",
+      "sub_en": "Distributor",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "最大手の流通業者として販売契約を結んでいる",
+          "text_en": "TD Synnex holds a distribution agreement as one of its largest distributors",
+          "source": {
+            "label": "エクストリーム・ネットワークス 10-K(2026-06-30)",
+            "label_en": "Extreme Networks 10-K (fiscal year ended June 30, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1078271/000119312526352872/extr-20260630.htm",
+            "level": "official",
+            "date": "2026-08-17",
+            "quote": "Extreme maintains distribution agreements with our largest distributors, Westcon Group Inc., TD Synnex Corporation and Jenne Inc. on substantially the same material terms as we generally enter into with each of our distribution partners."
+          }
+        }
+      ],
+      "name_en": "TD Synnex"
+    },
+    {
+      "id": "JENNE",
+      "ticker": "Jenne",
+      "name": "ジェニー",
+      "sub": "流通業者",
+      "sub_en": "Distributor",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "最大手の流通業者として販売契約を結んでいる",
+          "text_en": "Jenne holds a distribution agreement as one of its largest distributors",
+          "source": {
+            "label": "エクストリーム・ネットワークス 10-K(2026-06-30)",
+            "label_en": "Extreme Networks 10-K (fiscal year ended June 30, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1078271/000119312526352872/extr-20260630.htm",
+            "level": "official",
+            "date": "2026-08-17",
+            "quote": "Extreme maintains distribution agreements with our largest distributors, Westcon Group Inc., TD Synnex Corporation and Jenne Inc. on substantially the same material terms as we generally enter into with each of our distribution partners."
+          }
+        }
+      ],
+      "name_en": "Jenne"
+    },
+    {
+      "id": "LENOVO",
+      "ticker": "Lenovo",
+      "name": "レノボ",
+      "sub": "PCメーカー",
+      "sub_en": "PC maker",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "アライアンスやOEMなどの戦略的関係を結んでいる",
+          "text_en": "It has alliance, OEM and strategic relationships with Lenovo",
+          "source": {
+            "label": "エクストリーム・ネットワークス 10-K(2026-06-30)",
+            "label_en": "Extreme Networks 10-K (fiscal year ended June 30, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1078271/000119312526352872/extr-20260630.htm",
+            "level": "official",
+            "date": "2026-08-17",
+            "quote": "We have active alliance, OEM and strategic relationships with Barco NV, Ericsson Enterprise AB, Lenovo, Motorola Solutions, Schneider Electric, and Verizon as well as other global industry technology leaders in which our products are qualified to be included into an overall solution or reference architecture."
+          }
+        }
+      ],
+      "name_en": "Lenovo"
+    },
+    {
+      "id": "MSI",
+      "ticker": "MSI",
+      "name": "モトローラ・ソリューションズ",
+      "sub": "通信機器",
+      "sub_en": "Communications equipment",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "アライアンスやOEMなどの戦略的関係を結んでいる",
+          "text_en": "It has alliance, OEM and strategic relationships with Motorola Solutions",
+          "source": {
+            "label": "エクストリーム・ネットワークス 10-K(2026-06-30)",
+            "label_en": "Extreme Networks 10-K (fiscal year ended June 30, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1078271/000119312526352872/extr-20260630.htm",
+            "level": "official",
+            "date": "2026-08-17",
+            "quote": "We have active alliance, OEM and strategic relationships with Barco NV, Ericsson Enterprise AB, Lenovo, Motorola Solutions, Schneider Electric, and Verizon as well as other global industry technology leaders in which our products are qualified to be included into an overall solution or reference architecture."
+          }
+        }
+      ],
+      "name_en": "Motorola Solutions"
+    },
+    {
+      "id": "VZ",
+      "ticker": "VZ",
+      "name": "ベライゾン",
+      "sub": "通信キャリア",
+      "sub_en": "Carrier",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "アライアンスやOEMなどの戦略的関係を結んでいる",
+          "text_en": "It has alliance, OEM and strategic relationships with Verizon",
+          "source": {
+            "label": "エクストリーム・ネットワークス 10-K(2026-06-30)",
+            "label_en": "Extreme Networks 10-K (fiscal year ended June 30, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1078271/000119312526352872/extr-20260630.htm",
+            "level": "official",
+            "date": "2026-08-17",
+            "quote": "We have active alliance, OEM and strategic relationships with Barco NV, Ericsson Enterprise AB, Lenovo, Motorola Solutions, Schneider Electric, and Verizon as well as other global industry technology leaders in which our products are qualified to be included into an overall solution or reference architecture."
+          }
+        }
+      ],
+      "name_en": "Verizon"
+    },
+    {
+      "id": "CSCO",
+      "ticker": "CSCO",
+      "name": "シスコシステムズ",
+      "sub": "ネットワーク機器",
+      "sub_en": "Networking equipment",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "競合するネットワーク機器メーカーのひとつである",
+          "text_en": "Cisco Systems is one of the network equipment makers it competes with",
+          "source": {
+            "label": "エクストリーム・ネットワークス 10-K(2026-06-30)",
+            "label_en": "Extreme Networks 10-K (fiscal year ended June 30, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1078271/000119312526352872/extr-20260630.htm",
+            "level": "official",
+            "date": "2026-08-17",
+            "quote": "However, the market for network switching solutions is dominated by a few large companies, particularly Cisco Systems, Inc., Hewlett Packard Enterprise Company, and Huawei Technologies Co. Ltd."
+          }
+        }
+      ],
+      "name_en": "Cisco Systems"
+    },
+    {
+      "id": "HPE",
+      "ticker": "HPE",
+      "name": "ヒューレット・パッカード・エンタープライズ",
+      "sub": "ネットワーク機器",
+      "sub_en": "Networking equipment",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "競合するネットワーク機器メーカーのひとつである",
+          "text_en": "Hewlett Packard Enterprise is one of the network equipment makers it competes with",
+          "source": {
+            "label": "エクストリーム・ネットワークス 10-K(2026-06-30)",
+            "label_en": "Extreme Networks 10-K (fiscal year ended June 30, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1078271/000119312526352872/extr-20260630.htm",
+            "level": "official",
+            "date": "2026-08-17",
+            "quote": "However, the market for network switching solutions is dominated by a few large companies, particularly Cisco Systems, Inc., Hewlett Packard Enterprise Company, and Huawei Technologies Co. Ltd."
+          }
+        }
+      ],
+      "name_en": "Hewlett Packard Enterprise"
+    },
+    {
+      "id": "HUAWEI",
+      "ticker": "Huawei",
+      "name": "ファーウェイ",
+      "sub": "ネットワーク機器",
+      "sub_en": "Networking equipment",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "競合するネットワーク機器メーカーのひとつである",
+          "text_en": "Huawei Technologies is one of the network equipment makers it competes with",
+          "source": {
+            "label": "エクストリーム・ネットワークス 10-K(2026-06-30)",
+            "label_en": "Extreme Networks 10-K (fiscal year ended June 30, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1078271/000119312526352872/extr-20260630.htm",
+            "level": "official",
+            "date": "2026-08-17",
+            "quote": "However, the market for network switching solutions is dominated by a few large companies, particularly Cisco Systems, Inc., Hewlett Packard Enterprise Company, and Huawei Technologies Co. Ltd."
+          }
+        }
+      ],
+      "name_en": "Huawei Technologies"
+    },
+    {
+      "id": "ANET",
+      "ticker": "ANET",
+      "name": "アリスタネットワークス",
+      "sub": "ネットワーク機器",
+      "sub_en": "Networking equipment",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "競合するネットワーク機器メーカーのひとつである",
+          "text_en": "Arista Networks is one of the network equipment makers it competes with",
+          "source": {
+            "label": "エクストリーム・ネットワークス 10-K(2026-06-30)",
+            "label_en": "Extreme Networks 10-K (fiscal year ended June 30, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1078271/000119312526352872/extr-20260630.htm",
+            "level": "official",
+            "date": "2026-08-17",
+            "quote": "To a lesser extent, Extreme competes with products and solutions from Arista Networks Inc., RUCKUS Networks, Inc., Fortinet, Inc., and Ubiquiti Inc."
+          }
+        }
+      ],
+      "name_en": "Arista Networks"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

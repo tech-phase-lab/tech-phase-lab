@@ -1,0 +1,299 @@
+{
+  "root": {
+    "ticker": "CRSR",
+    "name": "コルセア・ゲーミング",
+    "cik": 1743759,
+    "name_en": "Corsair Gaming, Inc."
+  },
+  "rows": [
+    {
+      "ja": "供給元",
+      "en": "Suppliers",
+      "above": true
+    },
+    {
+      "ja": "販売先",
+      "en": "Customers"
+    },
+    {
+      "ja": "競合(同社の資料に記載)",
+      "en": "Competitors (named in its filing)"
+    }
+  ],
+  "rivals": [
+    "LOGI",
+    "MSFT",
+    "HPQ"
+  ],
+  "companies": [
+    {
+      "id": "NVDA",
+      "ticker": "NVDA",
+      "name": "エヌビディア",
+      "sub": "GPU",
+      "sub_en": "GPUs",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "製品開発の方向性を確認するため定期的に会う主要な業界供給元の一社",
+          "text_en": "One of the key industry suppliers its marketing staff meet regularly",
+          "source": {
+            "label": "Corsair Gaming, Inc. 10-K(2025年12月期)",
+            "label_en": "Corsair Gaming, Inc. 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1743759/000119312526067833/crsr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "our marketing personnel regularly meets with other key industry suppliers such as NVIDIA, Intel, AMD and game publishers"
+          }
+        }
+      ],
+      "name_en": "NVIDIA"
+    },
+    {
+      "id": "INTC",
+      "ticker": "INTC",
+      "name": "インテル",
+      "sub": "CPU",
+      "sub_en": "CPUs",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "製品開発の方向性を確認するため定期的に会う主要な業界供給元の一社",
+          "text_en": "One of the key industry suppliers its marketing staff meet regularly",
+          "source": {
+            "label": "Corsair Gaming, Inc. 10-K(2025年12月期)",
+            "label_en": "Corsair Gaming, Inc. 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1743759/000119312526067833/crsr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "our marketing personnel regularly meets with other key industry suppliers such as NVIDIA, Intel, AMD and game publishers"
+          }
+        }
+      ],
+      "name_en": "Intel"
+    },
+    {
+      "id": "AMD",
+      "ticker": "AMD",
+      "name": "AMD社",
+      "sub": "CPU・GPU",
+      "sub_en": "CPUs & GPUs",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "製品開発の方向性を確認するため定期的に会う主要な業界供給元の一社",
+          "text_en": "One of the key industry suppliers its marketing staff meet regularly",
+          "source": {
+            "label": "Corsair Gaming, Inc. 10-K(2025年12月期)",
+            "label_en": "Corsair Gaming, Inc. 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1743759/000119312526067833/crsr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "our marketing personnel regularly meets with other key industry suppliers such as NVIDIA, Intel, AMD and game publishers"
+          }
+        }
+      ],
+      "name_en": "AMD"
+    },
+    {
+      "id": "AMZN",
+      "ticker": "AMZN",
+      "name": "アマゾン",
+      "sub": "eコマース",
+      "sub_en": "E-commerce",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "2025年の純売上高の27.4%を占める最大の販売先",
+          "text_en": "Accounted for 27.4% of net revenue in 2025, its largest customer",
+          "source": {
+            "label": "Corsair Gaming, Inc. 10-K(2025年12月期)",
+            "label_en": "Corsair Gaming, Inc. 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1743759/000119312526067833/crsr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "In 2025, 2024 and 2023, e-retailer Amazon accounted for more than 10% of our net revenue, at 27.4%, 30.9%, and 30.7%, respectively."
+          }
+        }
+      ],
+      "name_en": "Amazon"
+    },
+    {
+      "id": "BBY",
+      "ticker": "BBY",
+      "name": "ベスト・バイ",
+      "sub": "家電小売",
+      "sub_en": "Electronics retail",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "製品を販売している主要な小売店の一つ",
+          "text_en": "One of the leading retailers that sell its products",
+          "source": {
+            "label": "Corsair Gaming, Inc. 10-K(2025年12月期)",
+            "label_en": "Corsair Gaming, Inc. 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1743759/000119312526067833/crsr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "with our products being sold at leading retailers including Amazon, Best Buy and Walmart"
+          }
+        }
+      ],
+      "name_en": "Best Buy"
+    },
+    {
+      "id": "WMT",
+      "ticker": "WMT",
+      "name": "ウォルマート",
+      "sub": "小売",
+      "sub_en": "Retail",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "製品を販売している主要な小売店の一つ",
+          "text_en": "One of the leading retailers that sell its products",
+          "source": {
+            "label": "Corsair Gaming, Inc. 10-K(2025年12月期)",
+            "label_en": "Corsair Gaming, Inc. 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1743759/000119312526067833/crsr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "with our products being sold at leading retailers including Amazon, Best Buy and Walmart"
+          }
+        }
+      ],
+      "name_en": "Walmart"
+    },
+    {
+      "id": "LOGI",
+      "ticker": "LOGI",
+      "name": "ロジクール",
+      "sub": "ゲーム周辺機器",
+      "sub_en": "Gaming peripherals",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ゲーミングキーボードやマウスの主な競合",
+          "text_en": "A primary competitor in gaming keyboards and mice",
+          "source": {
+            "label": "Corsair Gaming, Inc. 10-K(2025年12月期)",
+            "label_en": "Corsair Gaming, Inc. 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1743759/000119312526067833/crsr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Our primary competitors in the market for gaming keyboards and mice include Logitech and Razer."
+          }
+        }
+      ],
+      "name_en": "Logitech"
+    },
+    {
+      "id": "RAZER",
+      "ticker": "Razer",
+      "name": "レイザー",
+      "sub": "ゲーム周辺機器",
+      "sub_en": "Gaming peripherals",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ゲーミングキーボードやマウスの主な競合",
+          "text_en": "A primary competitor in gaming keyboards and mice",
+          "source": {
+            "label": "Corsair Gaming, Inc. 10-K(2025年12月期)",
+            "label_en": "Corsair Gaming, Inc. 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1743759/000119312526067833/crsr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Our primary competitors in the market for gaming keyboards and mice include Logitech and Razer."
+          }
+        }
+      ],
+      "name_en": "Razer"
+    },
+    {
+      "id": "MSFT",
+      "ticker": "MSFT",
+      "name": "マイクロソフト",
+      "sub": "ゲームコントローラー",
+      "sub_en": "Game controllers",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "高性能コントローラー市場の主な競合",
+          "text_en": "A primary competitor in the performance controller market",
+          "source": {
+            "label": "Corsair Gaming, Inc. 10-K(2025年12月期)",
+            "label_en": "Corsair Gaming, Inc. 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1743759/000119312526067833/crsr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Our primary competitors in the performance controller market include Microsoft and Logitech."
+          }
+        }
+      ],
+      "name_en": "Microsoft"
+    },
+    {
+      "id": "HPQ",
+      "ticker": "HPQ",
+      "name": "HPインク(HyperX)",
+      "sub": "ヘッドセット",
+      "sub_en": "Headsets",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ヘッドセット市場でHyperXブランドが主な競合",
+          "text_en": "A primary headset competitor through its HyperX brand",
+          "source": {
+            "label": "Corsair Gaming, Inc. 10-K(2025年12月期)",
+            "label_en": "Corsair Gaming, Inc. 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1743759/000119312526067833/crsr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Our primary competitors in the market for headset and related audio products include Logitech, Razer, Steel Series and HP through its HyperX brand."
+          }
+        }
+      ],
+      "name_en": "HP Inc. (HyperX)"
+    },
+    {
+      "id": "KINGSTON",
+      "ticker": "Kingston",
+      "name": "キングストン",
+      "sub": "メモリ",
+      "sub_en": "Memory modules",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "DRAMモジュール市場の主な競合",
+          "text_en": "A primary competitor in the DRAM module market",
+          "source": {
+            "label": "Corsair Gaming, Inc. 10-K(2025年12月期)",
+            "label_en": "Corsair Gaming, Inc. 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1743759/000119312526067833/crsr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Our primary competitors in the market for DRAM modules include Crucial, G.Skill, and Kingston."
+          }
+        }
+      ],
+      "name_en": "Kingston"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

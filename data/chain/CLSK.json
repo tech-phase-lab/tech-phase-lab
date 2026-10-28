@@ -1,0 +1,373 @@
+{
+  "root": {
+    "ticker": "CLSK",
+    "name": "クリーンスパーク",
+    "cik": 827876,
+    "name_en": "CLEANSPARK, INC."
+  },
+  "rows": [
+    {
+      "ja": "供給元",
+      "en": "Suppliers",
+      "above": true
+    },
+    {
+      "ja": "提携",
+      "en": "Partners"
+    },
+    {
+      "ja": "競合(同社の資料に記載)",
+      "en": "Competitors (named in its filing)"
+    }
+  ],
+  "rivals": [
+    "MARA",
+    "RIOT",
+    "CORZ",
+    "BITF",
+    "IREN"
+  ],
+  "companies": [
+    {
+      "id": "BITMAIN",
+      "ticker": "Bitmain",
+      "name": "ビットメイン",
+      "sub": "採掘機メーカー",
+      "sub_en": "Miner maker",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "主力のビットコイン採掘機メーカーで、購入した機器の大半を製造した",
+          "text_en": "Manufactured most of the miners it bought this year",
+          "source": {
+            "label": "CLEANSPARK, INC. 10-K(2025年9月期)",
+            "label_en": "CLEANSPARK, INC. 10-K (fiscal year ended September 30, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/827876/000119312525297510/clsk-20250930.htm",
+            "level": "official",
+            "date": "2025-11-25",
+            "quote": "Most of the machines we purchased this year were manufactured by Bitmain Technologies Delaware Limited (“Bitmain”), one of the leading manufacturers of bitcoin miners."
+          }
+        }
+      ],
+      "name_en": "Bitmain"
+    },
+    {
+      "id": "MICROBT",
+      "ticker": "MicroBT",
+      "name": "マイクロBT",
+      "sub": "採掘機メーカー",
+      "sub_en": "Miner maker",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "採掘機の調達を依存する供給元の一社",
+          "text_en": "One of the suppliers it depends on for its miners",
+          "source": {
+            "label": "CLEANSPARK, INC. 10-K(2025年9月期)",
+            "label_en": "CLEANSPARK, INC. 10-K (fiscal year ended September 30, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/827876/000119312525297510/clsk-20250930.htm",
+            "level": "official",
+            "date": "2025-11-25",
+            "quote": "we depend on Bitmain, MicroBT, Canaan Crypt Solutions and Sunnyside Digital for our miners"
+          }
+        }
+      ],
+      "name_en": "MicroBT"
+    },
+    {
+      "id": "CAN",
+      "ticker": "CAN",
+      "name": "カナン",
+      "sub": "採掘機メーカー",
+      "sub_en": "Miner maker",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "採掘機の調達を依存する供給元の一社",
+          "text_en": "One of the suppliers it depends on for its miners",
+          "source": {
+            "label": "CLEANSPARK, INC. 10-K(2025年9月期)",
+            "label_en": "CLEANSPARK, INC. 10-K (fiscal year ended September 30, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/827876/000119312525297510/clsk-20250930.htm",
+            "level": "official",
+            "date": "2025-11-25",
+            "quote": "we depend on Bitmain, MicroBT, Canaan Crypt Solutions and Sunnyside Digital for our miners"
+          }
+        }
+      ],
+      "name_en": "Canaan"
+    },
+    {
+      "id": "SUBMER",
+      "ticker": "Submer",
+      "name": "サブマー・テクノロジーズ",
+      "sub": "AIデータセンター設計",
+      "sub_en": "AI data center design",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "将来の協業機会を評価するため、共同で取り組んでいる",
+          "text_en": "Working together to evaluate opportunities for future collaboration",
+          "source": {
+            "label": "CLEANSPARK, INC. 10-K(2025年9月期)",
+            "label_en": "CLEANSPARK, INC. 10-K (fiscal year ended September 30, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/827876/000119312525297510/clsk-20250930.htm",
+            "level": "official",
+            "date": "2025-11-25",
+            "quote": "we announced that we are working with Submer, a global leader in sustainable, modular AI center design and construction to evaluate opportunities for future collaboration"
+          }
+        }
+      ],
+      "name_en": "Submer Technologies"
+    },
+    {
+      "id": "MARA",
+      "ticker": "MARA",
+      "name": "マラ・ホールディングス",
+      "sub": "ビットコイン採掘",
+      "sub_en": "Bitcoin mining",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "北米のビットコイン採掘事業で競合する",
+          "text_en": "Competes in North American bitcoin mining",
+          "source": {
+            "label": "CLEANSPARK, INC. 10-K(2025年9月期)",
+            "label_en": "CLEANSPARK, INC. 10-K (fiscal year ended September 30, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/827876/000119312525297510/clsk-20250930.htm",
+            "level": "official",
+            "date": "2025-11-25",
+            "quote": "Within North America, our major competitors include: • MARA Holdings, Inc.; • Riot Platforms, Inc.; • Core Scientific, Inc.; • Bitfarms Ltd.; • IREN Limited; • Cipher Mining Inc.; and • TeraWulf Inc."
+          }
+        }
+      ],
+      "name_en": "MARA Holdings"
+    },
+    {
+      "id": "RIOT",
+      "ticker": "RIOT",
+      "name": "ライオット・プラットフォームズ",
+      "sub": "ビットコイン採掘",
+      "sub_en": "Bitcoin mining",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "北米のビットコイン採掘事業で競合する",
+          "text_en": "Competes in North American bitcoin mining",
+          "source": {
+            "label": "CLEANSPARK, INC. 10-K(2025年9月期)",
+            "label_en": "CLEANSPARK, INC. 10-K (fiscal year ended September 30, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/827876/000119312525297510/clsk-20250930.htm",
+            "level": "official",
+            "date": "2025-11-25",
+            "quote": "Within North America, our major competitors include: • MARA Holdings, Inc.; • Riot Platforms, Inc.; • Core Scientific, Inc.; • Bitfarms Ltd.; • IREN Limited; • Cipher Mining Inc.; and • TeraWulf Inc."
+          }
+        }
+      ],
+      "name_en": "Riot Platforms"
+    },
+    {
+      "id": "CORZ",
+      "ticker": "CORZ",
+      "name": "コア・サイエンティフィック",
+      "sub": "採掘・データセンター",
+      "sub_en": "Mining & data centers",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "北米のビットコイン採掘事業で競合する",
+          "text_en": "Competes in North American bitcoin mining",
+          "source": {
+            "label": "CLEANSPARK, INC. 10-K(2025年9月期)",
+            "label_en": "CLEANSPARK, INC. 10-K (fiscal year ended September 30, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/827876/000119312525297510/clsk-20250930.htm",
+            "level": "official",
+            "date": "2025-11-25",
+            "quote": "Within North America, our major competitors include: • MARA Holdings, Inc.; • Riot Platforms, Inc.; • Core Scientific, Inc.; • Bitfarms Ltd.; • IREN Limited; • Cipher Mining Inc.; and • TeraWulf Inc."
+          }
+        }
+      ],
+      "name_en": "Core Scientific"
+    },
+    {
+      "id": "BITF",
+      "ticker": "BITF",
+      "name": "ビットファームズ",
+      "sub": "ビットコイン採掘",
+      "sub_en": "Bitcoin mining",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "北米のビットコイン採掘事業で競合する",
+          "text_en": "Competes in North American bitcoin mining",
+          "source": {
+            "label": "CLEANSPARK, INC. 10-K(2025年9月期)",
+            "label_en": "CLEANSPARK, INC. 10-K (fiscal year ended September 30, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/827876/000119312525297510/clsk-20250930.htm",
+            "level": "official",
+            "date": "2025-11-25",
+            "quote": "Within North America, our major competitors include: • MARA Holdings, Inc.; • Riot Platforms, Inc.; • Core Scientific, Inc.; • Bitfarms Ltd.; • IREN Limited; • Cipher Mining Inc.; and • TeraWulf Inc."
+          }
+        }
+      ],
+      "name_en": "Bitfarms"
+    },
+    {
+      "id": "IREN",
+      "ticker": "IREN",
+      "name": "アイレン",
+      "sub": "採掘・AIクラウド",
+      "sub_en": "Mining & AI cloud",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "北米のビットコイン採掘事業で競合する",
+          "text_en": "Competes in North American bitcoin mining",
+          "source": {
+            "label": "CLEANSPARK, INC. 10-K(2025年9月期)",
+            "label_en": "CLEANSPARK, INC. 10-K (fiscal year ended September 30, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/827876/000119312525297510/clsk-20250930.htm",
+            "level": "official",
+            "date": "2025-11-25",
+            "quote": "Within North America, our major competitors include: • MARA Holdings, Inc.; • Riot Platforms, Inc.; • Core Scientific, Inc.; • Bitfarms Ltd.; • IREN Limited; • Cipher Mining Inc.; and • TeraWulf Inc."
+          }
+        }
+      ],
+      "name_en": "IREN"
+    },
+    {
+      "id": "CIFR",
+      "ticker": "CIFR",
+      "name": "サイファー・マイニング",
+      "sub": "ビットコイン採掘",
+      "sub_en": "Bitcoin mining",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "北米のビットコイン採掘事業で競合する",
+          "text_en": "Competes in North American bitcoin mining",
+          "source": {
+            "label": "CLEANSPARK, INC. 10-K(2025年9月期)",
+            "label_en": "CLEANSPARK, INC. 10-K (fiscal year ended September 30, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/827876/000119312525297510/clsk-20250930.htm",
+            "level": "official",
+            "date": "2025-11-25",
+            "quote": "Within North America, our major competitors include: • MARA Holdings, Inc.; • Riot Platforms, Inc.; • Core Scientific, Inc.; • Bitfarms Ltd.; • IREN Limited; • Cipher Mining Inc.; and • TeraWulf Inc."
+          }
+        }
+      ],
+      "name_en": "Cipher Mining"
+    },
+    {
+      "id": "WULF",
+      "ticker": "WULF",
+      "name": "テラウルフ",
+      "sub": "ビットコイン採掘",
+      "sub_en": "Bitcoin mining",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "北米のビットコイン採掘事業で競合する",
+          "text_en": "Competes in North American bitcoin mining",
+          "source": {
+            "label": "CLEANSPARK, INC. 10-K(2025年9月期)",
+            "label_en": "CLEANSPARK, INC. 10-K (fiscal year ended September 30, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/827876/000119312525297510/clsk-20250930.htm",
+            "level": "official",
+            "date": "2025-11-25",
+            "quote": "Within North America, our major competitors include: • MARA Holdings, Inc.; • Riot Platforms, Inc.; • Core Scientific, Inc.; • Bitfarms Ltd.; • IREN Limited; • Cipher Mining Inc.; and • TeraWulf Inc."
+          }
+        }
+      ],
+      "name_en": "TeraWulf"
+    },
+    {
+      "id": "EQIX",
+      "ticker": "EQIX",
+      "name": "エクイニクス",
+      "sub": "データセンター",
+      "sub_en": "Data centers",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "HPC・AI向けデータセンター事業で競合する",
+          "text_en": "Competes in data centers for HPC and AI workloads",
+          "source": {
+            "label": "CLEANSPARK, INC. 10-K(2025年9月期)",
+            "label_en": "CLEANSPARK, INC. 10-K (fiscal year ended September 30, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/827876/000119312525297510/clsk-20250930.htm",
+            "level": "official",
+            "date": "2025-11-25",
+            "quote": "These competitors include Equinix, Inc., Digital Realty Trust, Inc., and CoreWeave, Inc., among others"
+          }
+        }
+      ],
+      "name_en": "Equinix"
+    },
+    {
+      "id": "DLR",
+      "ticker": "DLR",
+      "name": "デジタル・リアルティ・トラスト",
+      "sub": "データセンター",
+      "sub_en": "Data centers",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "HPC・AI向けデータセンター事業で競合する",
+          "text_en": "Competes in data centers for HPC and AI workloads",
+          "source": {
+            "label": "CLEANSPARK, INC. 10-K(2025年9月期)",
+            "label_en": "CLEANSPARK, INC. 10-K (fiscal year ended September 30, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/827876/000119312525297510/clsk-20250930.htm",
+            "level": "official",
+            "date": "2025-11-25",
+            "quote": "These competitors include Equinix, Inc., Digital Realty Trust, Inc., and CoreWeave, Inc., among others"
+          }
+        }
+      ],
+      "name_en": "Digital Realty Trust"
+    },
+    {
+      "id": "CRWV",
+      "ticker": "CRWV",
+      "name": "コアウィーブ",
+      "sub": "AIクラウド",
+      "sub_en": "AI cloud",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "HPC・AI向けデータセンター事業で競合する",
+          "text_en": "Competes in data centers for HPC and AI workloads",
+          "source": {
+            "label": "CLEANSPARK, INC. 10-K(2025年9月期)",
+            "label_en": "CLEANSPARK, INC. 10-K (fiscal year ended September 30, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/827876/000119312525297510/clsk-20250930.htm",
+            "level": "official",
+            "date": "2025-11-25",
+            "quote": "These competitors include Equinix, Inc., Digital Realty Trust, Inc., and CoreWeave, Inc., among others"
+          }
+        }
+      ],
+      "name_en": "CoreWeave"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

@@ -1,0 +1,223 @@
+{
+  "root": {
+    "ticker": "LII",
+    "name": "レノックス・インターナショナル",
+    "cik": 1069202,
+    "name_en": "Lennox International"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    },
+    {
+      "ja": "競合",
+      "en": "Rivals"
+    }
+  ],
+  "rivals": [
+    "CARR",
+    "TT",
+    "EMR",
+    "AAON"
+  ],
+  "companies": [
+    {
+      "id": "SAMSUNG",
+      "ticker": "Samsung",
+      "name": "サムスン",
+      "sub": "ダクトレス空調JV",
+      "sub_en": "Ductless HVAC JV",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "49.9%を出資する合弁会社で、サムスンのダクトレス空調機とヒートポンプを米国とカナダで販売する",
+          "text_en": "Lennox owns a 49.9% interest in a joint venture that distributes Samsung ductless AC and heat pump products in the U.S. and Canada",
+          "source": {
+            "label": "レノックス・インターナショナル 10-K(2025年12月31日)",
+            "label_en": "Lennox International 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1069202/000106920226000028/lii-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "We own a 49.9% interest in a joint venture with Samsung that distributes Samsung ductless AC and heat pump products in the U.S. and Canada as well as \"Lennox powered by Samsung\" branded products through Lennox Stores and direct-to-dealer network."
+          }
+        }
+      ],
+      "name_en": "Samsung"
+    },
+    {
+      "id": "ARISTON",
+      "ticker": "Ariston Group",
+      "name": "アリストン・グループ",
+      "sub": "給湯器JV",
+      "sub_en": "Water heater JV",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "49.9%を出資する合弁会社で、給湯器を製造・販売する",
+          "text_en": "Lennox owns a 49.9% interest in a joint venture with Ariston Group that will manufacture and distribute water heaters",
+          "source": {
+            "label": "レノックス・インターナショナル 10-K(2025年12月31日)",
+            "label_en": "Lennox International 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1069202/000106920226000028/lii-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "We own a 49.9% interest in a joint venture with Ariston Group that will manufacture and distribute water heaters through Lennox Stores and our direct-to-dealer network."
+          }
+        }
+      ],
+      "name_en": "Ariston Group"
+    },
+    {
+      "id": "CARR",
+      "ticker": "CARR",
+      "name": "キャリア・グローバル",
+      "sub": "空調大手",
+      "sub_en": "HVAC major",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主要な競合企業として名前が挙がっている",
+          "text_en": "Carrier Global Corporation is named as a significant competitor",
+          "source": {
+            "label": "レノックス・インターナショナル 10-K(2025年12月31日)",
+            "label_en": "Lennox International 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1069202/000106920226000028/lii-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "Carrier Global Corporation (Carrier, Bryant, Payne, Tempstar, Comfortmaker, Heil, Arcoaire, KeepRite, Day & Night)"
+          }
+        }
+      ],
+      "name_en": "Carrier Global Corporation"
+    },
+    {
+      "id": "TT",
+      "ticker": "TT",
+      "name": "トレイン・テクノロジーズ",
+      "sub": "空調大手",
+      "sub_en": "HVAC major",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主要な競合企業として名前が挙がっている",
+          "text_en": "Trane Technologies is named as a significant competitor",
+          "source": {
+            "label": "レノックス・インターナショナル 10-K(2025年12月31日)",
+            "label_en": "Lennox International 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1069202/000106920226000028/lii-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "Trane Technologies plc (Trane, American Standard, Ameristar, Oxbox, RunTru)"
+          }
+        }
+      ],
+      "name_en": "Trane Technologies"
+    },
+    {
+      "id": "DAIK",
+      "ticker": "Daikin Industries",
+      "name": "ダイキン工業",
+      "sub": "空調大手",
+      "sub_en": "HVAC major",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主要な競合企業として名前が挙がっている",
+          "text_en": "Daikin Industries is named as a significant competitor",
+          "source": {
+            "label": "レノックス・インターナショナル 10-K(2025年12月31日)",
+            "label_en": "Lennox International 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1069202/000106920226000028/lii-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "Daikin Industries, Ltd. (Daikin, Goodman, Amana, GMC)"
+          }
+        }
+      ],
+      "name_en": "Daikin Industries"
+    },
+    {
+      "id": "PALOMA",
+      "ticker": "Paloma Industries",
+      "name": "パロマ工業",
+      "sub": "給湯・空調",
+      "sub_en": "Water heating & HVAC",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主要な競合企業として名前が挙がっている",
+          "text_en": "Paloma Industries is named as a significant competitor",
+          "source": {
+            "label": "レノックス・インターナショナル 10-K(2025年12月31日)",
+            "label_en": "Lennox International 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1069202/000106920226000028/lii-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "Paloma Industries, Inc. (Rheem, Ruud, Weather King, Friedrich, Nortek)"
+          }
+        }
+      ],
+      "name_en": "Paloma Industries"
+    },
+    {
+      "id": "EMR",
+      "ticker": "EMR",
+      "name": "エマソン・エレクトリック",
+      "sub": "冷凍機器",
+      "sub_en": "Refrigeration",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主要な競合企業として名前が挙がっている",
+          "text_en": "Emerson Electric is named as a significant competitor",
+          "source": {
+            "label": "レノックス・インターナショナル 10-K(2025年12月31日)",
+            "label_en": "Lennox International 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1069202/000106920226000028/lii-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "Emerson Electric Co. (Copeland)"
+          }
+        }
+      ],
+      "name_en": "Emerson Electric"
+    },
+    {
+      "id": "AAON",
+      "ticker": "AAON",
+      "name": "エーエーオーエヌ",
+      "sub": "業務用空調",
+      "sub_en": "Commercial HVAC",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主要な競合企業として名前が挙がっている",
+          "text_en": "AAON, Inc. is named as a significant competitor",
+          "source": {
+            "label": "レノックス・インターナショナル 10-K(2025年12月31日)",
+            "label_en": "Lennox International 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1069202/000106920226000028/lii-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "CSW Industrials, Inc.; Daikin Industries, Ltd. (Goodman, McQuay); and AAON, Inc."
+          }
+        }
+      ],
+      "name_en": "AAON, Inc."
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

@@ -1,0 +1,521 @@
+{
+  "root": {
+    "ticker": "IONQ",
+    "name": "IonQ",
+    "cik": 1824920
+  },
+  "rows": [
+    {
+      "ja": "クラウドでの提供先",
+      "en": "Cloud platforms offering IonQ",
+      "above": true
+    },
+    {
+      "ja": "顧客・販売代理店",
+      "en": "Customers & distributors"
+    },
+    {
+      "ja": "提携・出資・共同研究",
+      "en": "Partnerships, investors & research"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in 10-Ks)"
+    }
+  ],
+  "rivals": [
+    "IBM",
+    "GOOGL",
+    "MSFT",
+    "AMZN",
+    "INTC"
+  ],
+  "companies": [
+    {
+      "id": "AMZN",
+      "ticker": "AMZN",
+      "name": "Amazon(AWS)",
+      "sub": "クラウド",
+      "sub_en": "Cloud",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "IonQ Forte Enterpriseが、AWSの量子コンピューティング・サービスAmazon Braket経由で世界の顧客に提供される",
+          "text_en": "IonQ Forte Enterprise is available to customers globally through Amazon Braket, the AWS managed quantum computing service",
+          "source": {
+            "label": "IonQ の発表",
+            "label_en": "IonQ press release (2025-04-01)",
+            "url": "https://ionq.com/news/ionq-announces-global-availability-of-forte-enterprise-through-amazon-braket",
+            "level": "official",
+            "date": "2025-04-01",
+            "quote": "IonQ Forte Enterprise, IonQ’s recently commissioned quantum computer is now officially available to customers globally through Amazon Braket, a managed quantum computing service from Amazon Web Services (AWS)",
+            "note": "AWSはAmazonの事業部門です。",
+            "note_en": "AWS is a unit of Amazon.com."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "Amazonは、量子コンピューターでIonQと現在競合する1社だ",
+          "text_en": "Amazon is one of the large technology companies currently competing with IonQ in quantum computing.",
+          "source": {
+            "label": "IonQ 10-K(2025年度)",
+            "label_en": "IonQ 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1824920/000119312526071562/ionq-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "large, well-established technology companies that generally compete in all of our markets, including Amazon, Google, IBM, Intel and Microsoft"
+          }
+        }
+      ]
+    },
+    {
+      "id": "MSFT",
+      "ticker": "MSFT",
+      "name": "Microsoft",
+      "sub": "クラウド・ソフト",
+      "sub_en": "Cloud & software",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "IonQの量子コンピューターをMicrosoftのクラウド基盤Azure Quantumで提供",
+          "text_en": "IonQ makes its quantum computers available through Microsoft’s Azure Quantum cloud platform",
+          "source": {
+            "label": "IonQ 10-K(2025年度)",
+            "label_en": "IonQ 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1824920/000119312526071562/ionq-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "We currently make access to our quantum computers available through three major cloud platforms, Amazon Web Services’, or AWS’s, Braket, Microsoft’s Azure Quantum and Google’s Cloud Marketplace"
+          }
+        },
+        {
+          "type": "rival",
+          "text": "Microsoftは、量子コンピューターにおけるIonQの現在の競合の1社に当たる",
+          "text_en": "Microsoft is one of the large technology companies currently competing with IonQ in quantum computing.",
+          "source": {
+            "label": "IonQ 10-K(2025年度)",
+            "label_en": "IonQ 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1824920/000119312526071562/ionq-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "large, well-established technology companies that generally compete in all of our markets, including Amazon, Google, IBM, Intel and Microsoft"
+          }
+        }
+      ]
+    },
+    {
+      "id": "GOOGL",
+      "ticker": "GOOGL",
+      "name": "Alphabet(Google)",
+      "sub": "クラウド・AI",
+      "sub_en": "Cloud & AI",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "IonQの量子コンピューターをGoogle Cloud Marketplaceで提供",
+          "text_en": "IonQ makes its quantum computers available through the Google Cloud Marketplace",
+          "source": {
+            "label": "IonQ 10-K(2025年度)",
+            "label_en": "IonQ 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1824920/000119312526071562/ionq-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "We currently make access to our quantum computers available through three major cloud platforms, Amazon Web Services’, or AWS’s, Braket, Microsoft’s Azure Quantum and Google’s Cloud Marketplace"
+          }
+        },
+        {
+          "type": "rival",
+          "text": "Alphabet(Google)は、IonQが量子コンピューターで現在競う相手の1社となる",
+          "text_en": "Alphabet (Google) is one of the large technology companies currently competing with IonQ in quantum computing.",
+          "source": {
+            "label": "IonQ 10-K(2025年度)",
+            "label_en": "IonQ 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1824920/000119312526071562/ionq-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "large, well-established technology companies that generally compete in all of our markets, including Amazon, Google, IBM, Intel and Microsoft"
+          }
+        }
+      ]
+    },
+    {
+      "id": "8015",
+      "ticker": "Toyota Tsusho",
+      "name": "豊田通商",
+      "sub": "商社",
+      "sub_en": "Trading house",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "日本でIonQの量子コンピューターを販売する旗艦的な販売代理店契約を豊田通商と締結",
+          "text_en": "Signed a flagship distributor partnership with Toyota Tsusho to sell IonQ quantum computing in Japan",
+          "source": {
+            "label": "IonQ の発表",
+            "label_en": "IonQ press release (2025-04-23)",
+            "url": "https://ionq.com/news/ionq-signs-historic-agreement-with-toyota-tsusho-corporation-to-advance",
+            "level": "official",
+            "date": "2025-04-23",
+            "quote": "today announced a pivotal flagship distributor partnership with Toyota Tsusho Corporation (Toyota Tsusho) to accelerate quantum computing in Japan"
+          }
+        }
+      ],
+      "name_en": "Toyota Tsusho"
+    },
+    {
+      "id": "GD",
+      "ticker": "GD",
+      "name": "General Dynamics",
+      "sub": "防衛",
+      "sub_en": "Defense",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "GDIT(General Dynamicsの事業部門)と、政府・防衛向けの量子ソリューションを共同開発・販売する提携",
+          "text_en": "IonQ and General Dynamics Information Technology (GDIT) partnered to co-develop and market quantum solutions for government and defense",
+          "source": {
+            "label": "IonQ の発表",
+            "label_en": "IonQ press release (2025-01-22)",
+            "url": "https://ionq.com/news/ionq-and-general-dynamics-information-technology-gdit-partner-to-develop",
+            "level": "official",
+            "date": "2025-01-22",
+            "quote": "General Dynamics Information Technology (GDIT), a business unit of General Dynamics, announced a partnership to bring the power of quantum computing to government and defense sectors",
+            "note": "相手はGeneral Dynamicsの事業部門のGDITです。",
+            "note_en": "The partner is GDIT, a business unit of General Dynamics."
+          }
+        }
+      ]
+    },
+    {
+      "id": "NVDA",
+      "ticker": "NVDA",
+      "name": "NVIDIA",
+      "sub": "AI半導体",
+      "sub_en": "AI chips",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "NVIDIAのAccelerated Quantum Research Centerで、初のオンプレミス量子コンピューターとして導入。NVQLink経由でNVIDIA GB200 NVL72と接続",
+          "text_en": "IonQ will be the first on-premise quantum computing deployment at NVIDIA’s Accelerated Quantum Research Center, linked to NVIDIA GB200 NVL72 via NVQLink",
+          "source": {
+            "label": "IonQ の発表",
+            "label_en": "IonQ press release (2026-09-23)",
+            "url": "https://ionq.com/news/ionq-to-advance-quantum-supercomputing-by-bringing-first-qpu-to-nvidia-accelerated-quantum-research-center",
+            "level": "official",
+            "date": "2026-09-23",
+            "quote": "IonQ (NYSE: IONQ) announced that it will be the first on-premise quantum computing deployment at the NVIDIA Accelerated Quantum Research Center (NVAQC)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "AZN",
+      "ticker": "AZN",
+      "name": "AstraZeneca",
+      "sub": "製薬",
+      "sub_en": "Pharma",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "IonQ・AstraZeneca・AWS・NVIDIAが、量子で加速した計算化学の共同研究を実施し20倍の高速化を確認",
+          "text_en": "IonQ, AstraZeneca, AWS and NVIDIA ran a joint quantum-accelerated computational chemistry research program with a 20x speedup",
+          "source": {
+            "label": "IonQ の発表",
+            "label_en": "IonQ press release (2025-06-09)",
+            "url": "https://ionq.com/news/ionq-speeds-quantum-accelerated-drug-development-application-with",
+            "level": "official",
+            "date": "2025-06-09",
+            "quote": "announced results of a collaborative research program between IonQ, AstraZeneca, Amazon Web Services (AWS), and NVIDIA"
+          }
+        }
+      ]
+    },
+    {
+      "id": "SNPS",
+      "ticker": "SNPS",
+      "name": "Synopsys",
+      "sub": "半導体設計ソフト",
+      "sub_en": "Chip design software",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Synopsysとの共同研究で、量子アルゴリズムが工学シミュレーションを最大14.6%高速化することを示した",
+          "text_en": "IonQ detailed joint research with Synopsys showing quantum algorithms accelerating engineering simulation workloads by up to 14.6%",
+          "source": {
+            "label": "IonQ の発表",
+            "label_en": "IonQ press release (2026-09-17)",
+            "url": "https://ionq.com/news/ionq-demonstrates-computer-aided-engineering-workload-acceleration-by-up-to-14-6-with-quantum-technology",
+            "level": "official",
+            "date": "2026-09-17",
+            "quote": "today detailed research conducted with Synopsys"
+          }
+        }
+      ]
+    },
+    {
+      "id": "189300",
+      "ticker": "Intellian",
+      "name": "Intellian Technologies",
+      "sub": "衛星通信機器",
+      "sub_en": "Satellite antennas",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "衛星通信向けの安全な量子ネットワークを探るため、Intellianと覚書(MoU)を締結",
+          "text_en": "Signed an MoU with Intellian to explore secure quantum networking for satellite communications",
+          "source": {
+            "label": "IonQ の発表",
+            "label_en": "IonQ press release (2025-04-16)",
+            "url": "https://ionq.com/news/ionq-signs-mou-with-intellian-deepening-its-commitment-to-advancing-south",
+            "level": "official",
+            "date": "2025-04-16",
+            "quote": "announced that it has signed a memorandum of understanding (MoU) with Intellian Technologies, Inc.",
+            "note": "検討段階の覚書で、正式な商取引の契約は書かれていません。",
+            "note_en": "An MoU to explore; no definitive commercial agreement is stated."
+          }
+        }
+      ]
+    },
+    {
+      "id": "017670",
+      "ticker": "SK Telecom",
+      "name": "SK Telecom",
+      "sub": "通信",
+      "sub_en": "Telecom",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ID Quantiqueの買収とあわせ、SK Telecomと量子分野の戦略的提携に入る見込みと発表",
+          "text_en": "Expected to enter a quantum-focused strategic partnership with SK Telecom alongside the ID Quantique acquisition",
+          "source": {
+            "label": "IonQ の発表",
+            "label_en": "IonQ press release (2025-02-26)",
+            "url": "https://ionq.com/news/ionq-to-acquire-id-quantique-enter-into-strategic-partnership-with-sk",
+            "level": "official",
+            "date": "2025-02-26",
+            "quote": "IonQ expects to enter into a strategic partnership focused on quantum with SK Telecom, the largest wireless telecommunications operator in South Korea",
+            "note": "2025年2月の発表時点では予定・覚書の段階でした。",
+            "note_en": "Planned or MoU stage as of the February 2025 announcement."
+          }
+        }
+      ]
+    },
+    {
+      "id": "005930",
+      "ticker": "Samsung",
+      "name": "Samsung Electronics",
+      "sub": "半導体・電機",
+      "sub_en": "Semiconductors & electronics",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Samsung Electronicsは、IonQの上場前の出資者の1社",
+          "text_en": "Samsung Electronics was a pre-IPO investor in IonQ",
+          "source": {
+            "label": "IonQ の発表",
+            "label_en": "IonQ press release (2025-04-16)",
+            "url": "https://ionq.com/news/ionq-signs-mou-with-intellian-deepening-its-commitment-to-advancing-south",
+            "level": "official",
+            "date": "2025-04-16",
+            "quote": "Key milestones include investments from Korean global technology leaders Samsung Electronics and Hyundai Motor Company prior to IonQ’s 2021 IPO",
+            "note": "出資は2021年の上場前で、現在の保有は書かれていません。",
+            "note_en": "The investment predates IonQ’s 2021 IPO; the current holding is not stated."
+          }
+        }
+      ]
+    },
+    {
+      "id": "005380",
+      "ticker": "Hyundai Motor",
+      "name": "Hyundai Motor",
+      "sub": "自動車",
+      "sub_en": "Automaker",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Hyundai Motorは上場前にIonQへ出資し、電池や自動運転の量子プロジェクトで協業",
+          "text_en": "Hyundai Motor invested in IonQ pre-IPO and has collaborated on quantum projects for batteries and autonomous vehicles",
+          "source": {
+            "label": "IonQ の発表",
+            "label_en": "IonQ press release (2025-04-16)",
+            "url": "https://ionq.com/news/ionq-signs-mou-with-intellian-deepening-its-commitment-to-advancing-south",
+            "level": "official",
+            "date": "2025-04-16",
+            "quote": "IonQ has since collaborated with Hyundai on multiple quantum projects aimed at advancing next-generation batteries and autonomous vehicle technologies",
+            "note": "出資は2021年の上場前で、協業の時期は書かれていません。",
+            "note_en": "The investment predates the 2021 IPO; collaboration dates are not specified."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AIR",
+      "ticker": "Airbus",
+      "name": "Airbus",
+      "sub": "航空機",
+      "sub_en": "Aircraft",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2022年にAirbusと、貨物の積載・配分の量子アルゴリズム開発で提携",
+          "text_en": "IonQ and Airbus partnered in 2022 on a project to develop quantum algorithms for cargo loading and distribution",
+          "source": {
+            "label": "IonQ の発表",
+            "label_en": "IonQ press release (2025-03-14)",
+            "url": "https://ionq.com/news/ionq-and-desy-research-highlights-quantums-potential-benefits-for-airport",
+            "level": "official",
+            "date": "2025-03-14",
+            "quote": "In 2022, IonQ and Airbus partnered on a project to develop smarter algorithms based on quantum computers to achieve cost savings due to more efficient cargo loading and distribution",
+            "note": "プロジェクトは2022年のもので、2025年の発表で振り返って触れています。",
+            "note_en": "The project dates from 2022 and is cited retrospectively in a 2025 release."
+          }
+        }
+      ]
+    },
+    {
+      "id": "IBM",
+      "ticker": "IBM",
+      "name": "IBM",
+      "sub": "IT・量子",
+      "sub_en": "IT & quantum",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "IBMは、量子コンピューター分野でIonQと現在競合する1社である",
+          "text_en": "IBM is one of the large technology companies currently competing with IonQ in quantum computing.",
+          "source": {
+            "label": "IonQ 10-K(2025年度)",
+            "label_en": "IonQ 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1824920/000119312526071562/ionq-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "large, well-established technology companies that generally compete in all of our markets, including Amazon, Google, IBM, Intel and Microsoft"
+          }
+        }
+      ]
+    },
+    {
+      "id": "INTC",
+      "ticker": "INTC",
+      "name": "Intel",
+      "sub": "半導体",
+      "sub_en": "Semiconductors",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Intelも、IonQの量子コンピューター事業の現在の競合1社に入る",
+          "text_en": "Intel is one of the large technology companies currently competing with IonQ in quantum computing.",
+          "source": {
+            "label": "IonQ 10-K(2025年度)",
+            "label_en": "IonQ 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1824920/000119312526071562/ionq-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "large, well-established technology companies that generally compete in all of our markets, including Amazon, Google, IBM, Intel and Microsoft"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RGTI",
+      "ticker": "RGTI",
+      "name": "Rigetti Computing",
+      "sub": "量子コンピューター",
+      "sub_en": "Quantum computers",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "IonQの超伝導方式の競合に、Rigetti Computingがいる",
+          "text_en": "Rigetti Computing competes with IonQ using a superconducting circuit technology approach.",
+          "source": {
+            "label": "IonQ 10-K(2025年度)",
+            "label_en": "IonQ 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1824920/000119312526071562/ionq-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "startup companies such as Rigetti Computing, are adopting a superconducting circuit technology approach"
+          }
+        },
+        {
+          "type": "rival",
+          "text": "IonQは、Rigettiが競合とみなす量子コンピューター企業の1社だ",
+          "text_en": "IonQ is one of the quantum computing competitors Rigetti identifies.",
+          "source": {
+            "label": "Rigetti 10-K(2025年度)",
+            "label_en": "Rigetti 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1838359/000110465926023454/rgti-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-03-04",
+            "quote": "Major companies now developing both quantum hardware and software include IBM, Google, Microsoft, IonQ, D-Wave, Quantinuum and PsiQuantum, among others"
+          }
+        }
+      ]
+    },
+    {
+      "id": "QBTS",
+      "ticker": "QBTS",
+      "name": "D-Wave Quantum",
+      "sub": "量子コンピューター",
+      "sub_en": "Quantum computers",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "IonQは、D-Waveと競合する、ゲート方式の量子コンピューターに取り組む1社だ",
+          "text_en": "IonQ is one of the companies pursuing gate-model quantum computing in competition with D-Wave.",
+          "source": {
+            "label": "D-Wave 10-K(2025年度)",
+            "label_en": "D-Wave 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1907982/000190798226000026/qbts-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Other companies, including Rigetti Computing, IBM, Google, IonQ, Quantinuum, QuEra, Atom, Pasqal, PsiQuantum, and Xanadu, are pursuing gate-model quantum computing"
+          }
+        }
+      ]
+    },
+    {
+      "id": "QUBT",
+      "ticker": "QUBT",
+      "name": "Quantum Computing Inc.",
+      "sub": "量子技術",
+      "sub_en": "Quantum technology",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "IonQは、Quantum Computing Inc.が競合とみなす企業の1社に数えられる",
+          "text_en": "IonQ is one of the competitors of Quantum Computing Inc.",
+          "source": {
+            "label": "Quantum Computing Inc 10-K(2025年度)",
+            "label_en": "Quantum Computing Inc 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1758009/000121390026022417/ea0278445-10k_quantum.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "less-established public and private companies with competing technology, including IonQ, Rigetti Computing, PsiQuantum, Infleqtion, Xanadu and D-Wave Quantum"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

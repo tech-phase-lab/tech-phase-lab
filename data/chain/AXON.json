@@ -1,0 +1,281 @@
+{
+  "root": {
+    "ticker": "AXON",
+    "name": "アクソン・エンタープライズ",
+    "cik": 1069183,
+    "name_en": "Axon Enterprise"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [
+    "MSI",
+    "ORCL",
+    "TYL",
+    "WRAP",
+    "DGLY"
+  ],
+  "companies": [
+    {
+      "id": "MSI",
+      "ticker": "MSI",
+      "name": "モトローラ・ソリューションズ",
+      "sub": "公共安全の通信機器",
+      "sub_en": "Public safety technology",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ボディカメラ事業の競合に挙がる",
+          "text_en": "Motorola Solutions is named among Axon's competitors in body cameras",
+          "source": {
+            "label": "Axon 10-K(2025年12月31日期)",
+            "label_en": "Axon 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1069183/000162828026011360/axon-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Our competition includes 10-8 Video Systems, 365Labs, Applied Concepts, Axis Communications, Coreforce, Digital Ally, Duress, Genetec, Getac, HALOS Body Cameras, Hikvision, Hytera, Insight LPR, IONODES, i-PRO, Kustom Signals, LensLock, Motorola Solutions, Tait Communications, Oracle"
+          }
+        }
+      ],
+      "name_en": "Motorola Solutions"
+    },
+    {
+      "id": "GENETEC",
+      "ticker": "Genetec",
+      "name": "ジェネテック",
+      "sub": "映像監視ソフト",
+      "sub_en": "Video surveillance software",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ボディカメラとナンバー読取の両分野で競合する",
+          "text_en": "Genetec is named as a competitor in body cameras and in license plate recognition",
+          "source": {
+            "label": "Axon 10-K(2025年12月31日期)",
+            "label_en": "Axon 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1069183/000162828026011360/axon-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Our competition includes 10-8 Video Systems, 365Labs, Applied Concepts, Axis Communications, Coreforce, Digital Ally, Duress, Genetec, Getac, HALOS Body Cameras, Hikvision, Hytera, Insight LPR, IONODES, i-PRO, Kustom Signals, LensLock, Motorola Solutions, Tait Communications, Oracle"
+          }
+        },
+        {
+          "type": "rival",
+          "text": "ナンバー読取分野の競合としても名前がある",
+          "text_en": "Genetec (AutoVu) is named as a competitor in fixed license plate recognition",
+          "source": {
+            "label": "Axon 10-K(2025年12月31日期)",
+            "label_en": "Axon 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1069183/000162828026011360/axon-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Our competition in this area includes Flock Safety, Genetec (AutoVu), Jenoptik, Motorola Solutions (including its Vigilant and fixed LPR solutions)"
+          }
+        }
+      ],
+      "name_en": "Genetec"
+    },
+    {
+      "id": "FLOCK",
+      "ticker": "Flock Safety",
+      "name": "フロック・セーフティ",
+      "sub": "ナンバー読取",
+      "sub_en": "License plate recognition",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "固定式ナンバー読取カメラの競合として挙げられる",
+          "text_en": "Flock Safety is named as a competitor in fixed license plate recognition",
+          "source": {
+            "label": "Axon 10-K(2025年12月31日期)",
+            "label_en": "Axon 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1069183/000162828026011360/axon-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Our competition in this area includes Flock Safety, Genetec (AutoVu), Jenoptik, Motorola Solutions (including its Vigilant and fixed LPR solutions)"
+          }
+        }
+      ],
+      "name_en": "Flock Safety"
+    },
+    {
+      "id": "ORCL",
+      "ticker": "ORCL",
+      "name": "オラクル",
+      "sub": "クラウドソフト",
+      "sub_en": "Cloud software",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ボディカメラ関連事業の競合に含まれる",
+          "text_en": "Oracle is named among Axon's competitors in the body camera area",
+          "source": {
+            "label": "Axon 10-K(2025年12月31日期)",
+            "label_en": "Axon 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1069183/000162828026011360/axon-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Our competition includes 10-8 Video Systems, 365Labs, Applied Concepts, Axis Communications, Coreforce, Digital Ally, Duress, Genetec, Getac, HALOS Body Cameras, Hikvision, Hytera, Insight LPR, IONODES, i-PRO, Kustom Signals, LensLock, Motorola Solutions, Tait Communications, Oracle"
+          }
+        }
+      ],
+      "name_en": "Oracle"
+    },
+    {
+      "id": "TYL",
+      "ticker": "TYL",
+      "name": "タイラー・テクノロジーズ",
+      "sub": "行政向けソフト",
+      "sub_en": "Public sector software",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "記録管理システム分野で競合する",
+          "text_en": "Tyler Technologies is named as a competitor in records management systems",
+          "source": {
+            "label": "Axon 10-K(2025年12月31日期)",
+            "label_en": "Axon 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1069183/000162828026011360/axon-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Southern Software, Sun Ridge Systems, Tyler Technologies and Versaterm."
+          }
+        }
+      ],
+      "name_en": "Tyler Technologies"
+    },
+    {
+      "id": "WRAP",
+      "ticker": "WRAP",
+      "name": "ラップ・テクノロジーズ",
+      "sub": "非致死性護身機器",
+      "sub_en": "Less-lethal devices",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "競合として名前が挙がっている",
+          "text_en": "Wrap Technologies is named among Axon's competitors",
+          "source": {
+            "label": "Axon 10-K(2025年12月31日期)",
+            "label_en": "Axon 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1069183/000162828026011360/axon-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Reveal Media, Safe Fleet, Versaterm, Wireless CCTV, Wolfcom Enterprises, Wrap Technologies and Zepcam."
+          }
+        }
+      ],
+      "name_en": "Wrap Technologies"
+    },
+    {
+      "id": "HEXAGON",
+      "ticker": "Hexagon",
+      "name": "ヘキサゴン",
+      "sub": "測位・情報システム",
+      "sub_en": "Positioning & information systems",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "監視カメラ映像を取り込む基盤で競合する",
+          "text_en": "Hexagon's Connect is named as a competing platform that ingests video feeds from surveillance cameras",
+          "source": {
+            "label": "Axon 10-K(2025年12月31日期)",
+            "label_en": "Axon 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1069183/000162828026011360/axon-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "like Hexagon's Connect, Live Earth and Spatialitics's GeoShield"
+          }
+        }
+      ],
+      "name_en": "Hexagon"
+    },
+    {
+      "id": "AXIS",
+      "ticker": "Axis",
+      "name": "アクシス・コミュニケーションズ",
+      "sub": "ネットワークカメラ",
+      "sub_en": "Network cameras",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ボディカメラ事業の競合の1社だ",
+          "text_en": "Axis Communications is named among Axon's competitors in body cameras",
+          "source": {
+            "label": "Axon 10-K(2025年12月31日期)",
+            "label_en": "Axon 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1069183/000162828026011360/axon-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Our competition includes 10-8 Video Systems, 365Labs, Applied Concepts, Axis Communications, Coreforce, Digital Ally, Duress, Genetec, Getac, HALOS Body Cameras, Hikvision, Hytera, Insight LPR, IONODES, i-PRO, Kustom Signals, LensLock, Motorola Solutions, Tait Communications, Oracle"
+          }
+        }
+      ],
+      "name_en": "Axis Communications"
+    },
+    {
+      "id": "HIKVISION",
+      "ticker": "Hikvision",
+      "name": "ハイクビジョン",
+      "sub": "監視カメラ",
+      "sub_en": "Surveillance cameras",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ボディカメラ事業の競合に名前がある",
+          "text_en": "Hikvision is named among Axon's competitors in body cameras",
+          "source": {
+            "label": "Axon 10-K(2025年12月31日期)",
+            "label_en": "Axon 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1069183/000162828026011360/axon-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Our competition includes 10-8 Video Systems, 365Labs, Applied Concepts, Axis Communications, Coreforce, Digital Ally, Duress, Genetec, Getac, HALOS Body Cameras, Hikvision, Hytera, Insight LPR, IONODES, i-PRO, Kustom Signals, LensLock, Motorola Solutions, Tait Communications, Oracle"
+          }
+        }
+      ],
+      "name_en": "Hikvision"
+    },
+    {
+      "id": "DGLY",
+      "ticker": "DGLY",
+      "name": "デジタル・アライ",
+      "sub": "ボディカメラ",
+      "sub_en": "Body cameras",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ボディカメラ事業で競合する",
+          "text_en": "Digital Ally is named among Axon's competitors in body cameras",
+          "source": {
+            "label": "Axon 10-K(2025年12月31日期)",
+            "label_en": "Axon 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1069183/000162828026011360/axon-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Our competition includes 10-8 Video Systems, 365Labs, Applied Concepts, Axis Communications, Coreforce, Digital Ally, Duress, Genetec, Getac, HALOS Body Cameras, Hikvision, Hytera, Insight LPR, IONODES, i-PRO, Kustom Signals, LensLock, Motorola Solutions, Tait Communications, Oracle"
+          }
+        }
+      ],
+      "name_en": "Digital Ally"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

@@ -1,0 +1,372 @@
+{
+  "root": {
+    "ticker": "CALX",
+    "name": "カリックス",
+    "cik": 1406666,
+    "name_en": "CALIX, INC"
+  },
+  "rows": [
+    {
+      "ja": "顧客(通信事業者)",
+      "en": "Customers (service providers)"
+    },
+    {
+      "ja": "提携",
+      "en": "Partners"
+    },
+    {
+      "ja": "競合(同社の資料に記載)",
+      "en": "Competitors (named in its filing)"
+    }
+  ],
+  "rivals": [
+    "ADTN",
+    "CIEN",
+    "HLIT",
+    "NOK",
+    "UI"
+  ],
+  "companies": [
+    {
+      "id": "VZ",
+      "ticker": "VZ",
+      "name": "ベライゾン・コミュニケーションズ",
+      "sub": "通信事業者",
+      "sub_en": "Telecom carrier",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "ブロードバンド事業者として製品・サービスを購入している",
+          "text_en": "Is one of its named service provider customers",
+          "source": {
+            "label": "CALIX, INC 10-K(2025年12月期)",
+            "label_en": "CALIX, INC 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1406666/000140666626000005/calx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "Tombigbee Electric Power Association and Tombigbee Fiber, LLC and Verizon Communications Inc."
+          }
+        }
+      ],
+      "name_en": "Verizon Communications"
+    },
+    {
+      "id": "COX",
+      "ticker": "Cox Communications",
+      "name": "コックス・コミュニケーションズ",
+      "sub": "ケーブル事業者",
+      "sub_en": "Cable operator",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "ブロードバンド事業者として製品・サービスを購入している",
+          "text_en": "Is one of its named service provider customers",
+          "source": {
+            "label": "CALIX, INC 10-K(2025年12月期)",
+            "label_en": "CALIX, INC 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1406666/000140666626000005/calx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "Our service provider customers include: ALLO Communications, LLC; Connect Holding II LLC (dba Brightspeed); CityFibre Holdings Limited; Conexon Connect, LLC; Cox Communications, Inc."
+          }
+        }
+      ],
+      "name_en": "Cox Communications"
+    },
+    {
+      "id": "TMUS",
+      "ticker": "TMUS",
+      "name": "Tモバイル(Lumos)",
+      "sub": "光ファイバー事業者",
+      "sub_en": "Fiber operator",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "ブロードバンド事業者として製品・サービスを購入している",
+          "text_en": "Is one of its named service provider customers",
+          "source": {
+            "label": "CALIX, INC 10-K(2025年12月期)",
+            "label_en": "CALIX, INC 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1406666/000140666626000005/calx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "Gridiron Fiber Corp. (dba Lumos, a T-Mobile Fiber company)"
+          }
+        }
+      ],
+      "name_en": "T-Mobile Fiber (Lumos)"
+    },
+    {
+      "id": "BRIGHTSPEED",
+      "ticker": "Brightspeed",
+      "name": "ブライトスピード",
+      "sub": "通信事業者",
+      "sub_en": "Telecom carrier",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "ブロードバンド事業者として製品・サービスを購入している",
+          "text_en": "Is one of its named service provider customers",
+          "source": {
+            "label": "CALIX, INC 10-K(2025年12月期)",
+            "label_en": "CALIX, INC 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1406666/000140666626000005/calx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "Connect Holding II LLC (dba Brightspeed)"
+          }
+        }
+      ],
+      "name_en": "Brightspeed"
+    },
+    {
+      "id": "CITYFIBRE",
+      "ticker": "CityFibre",
+      "name": "シティファイバー",
+      "sub": "光ファイバー事業者",
+      "sub_en": "Fiber operator",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "ブロードバンド事業者として製品・サービスを購入している",
+          "text_en": "Is one of its named service provider customers",
+          "source": {
+            "label": "CALIX, INC 10-K(2025年12月期)",
+            "label_en": "CALIX, INC 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1406666/000140666626000005/calx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "CityFibre Holdings Limited"
+          }
+        }
+      ],
+      "name_en": "CityFibre"
+    },
+    {
+      "id": "GOOGL",
+      "ticker": "GOOGL",
+      "name": "グーグル",
+      "sub": "提携企業",
+      "sub_en": "Partner",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "顧客の市場展開を支える提携先の例に挙げられている",
+          "text_en": "Named as an example of partners that help customers plan and execute in-market",
+          "source": {
+            "label": "CALIX, INC 10-K(2025年12月期)",
+            "label_en": "CALIX, INC 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1406666/000140666626000005/calx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "Examples of these partners are Conexon, LLC, ePlus Technology, Inc., BroadEngagement (Refindable LLC business), Google LLC and GOCare™ (NuTEQ Solutions, LLC business)."
+          }
+        }
+      ],
+      "name_en": "Google"
+    },
+    {
+      "id": "EPLUS",
+      "ticker": "PLUS",
+      "name": "イープラス・テクノロジー",
+      "sub": "提携企業",
+      "sub_en": "Partner",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "顧客の市場展開を支える提携先の例に挙げられている",
+          "text_en": "Named as an example of partners that help customers plan and execute in-market",
+          "source": {
+            "label": "CALIX, INC 10-K(2025年12月期)",
+            "label_en": "CALIX, INC 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1406666/000140666626000005/calx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "Examples of these partners are Conexon, LLC, ePlus Technology, Inc., BroadEngagement (Refindable LLC business), Google LLC and GOCare™ (NuTEQ Solutions, LLC business)."
+          }
+        }
+      ],
+      "name_en": "ePlus Technology"
+    },
+    {
+      "id": "ADTN",
+      "ticker": "ADTN",
+      "name": "アドトラン・ホールディングス",
+      "sub": "通信機器",
+      "sub_en": "Telecom equipment",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ブロードバンド機器の分野で競合する可能性がある",
+          "text_en": "May compete in broadband access and platform equipment",
+          "source": {
+            "label": "CALIX, INC 10-K(2025年12月期)",
+            "label_en": "CALIX, INC 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1406666/000140666626000005/calx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "Vendors with which we may compete include: ADTRAN Holdings, Inc.; Ciena Corporation; CommScope Holding Company, Inc.; eero/Ring (Amazon companies); Harmonic Inc.; Huawei Technologies Co., Ltd.; Nokia Corporation; Plume Design, Inc. and Ubiquiti Inc."
+          }
+        }
+      ],
+      "name_en": "ADTRAN Holdings"
+    },
+    {
+      "id": "CIEN",
+      "ticker": "CIEN",
+      "name": "シエナ",
+      "sub": "通信機器",
+      "sub_en": "Telecom equipment",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ブロードバンド機器の分野で競合する可能性がある",
+          "text_en": "May compete in broadband access and platform equipment",
+          "source": {
+            "label": "CALIX, INC 10-K(2025年12月期)",
+            "label_en": "CALIX, INC 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1406666/000140666626000005/calx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "Vendors with which we may compete include: ADTRAN Holdings, Inc.; Ciena Corporation; CommScope Holding Company, Inc.; eero/Ring (Amazon companies); Harmonic Inc.; Huawei Technologies Co., Ltd.; Nokia Corporation; Plume Design, Inc. and Ubiquiti Inc."
+          }
+        }
+      ],
+      "name_en": "Ciena"
+    },
+    {
+      "id": "COMM",
+      "ticker": "CommScope",
+      "name": "コムスコープ",
+      "sub": "通信機器",
+      "sub_en": "Telecom equipment",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ブロードバンド機器の分野で競合する可能性がある",
+          "text_en": "May compete in broadband access and platform equipment",
+          "source": {
+            "label": "CALIX, INC 10-K(2025年12月期)",
+            "label_en": "CALIX, INC 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1406666/000140666626000005/calx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "Vendors with which we may compete include: ADTRAN Holdings, Inc.; Ciena Corporation; CommScope Holding Company, Inc.; eero/Ring (Amazon companies); Harmonic Inc.; Huawei Technologies Co., Ltd.; Nokia Corporation; Plume Design, Inc. and Ubiquiti Inc."
+          }
+        }
+      ],
+      "name_en": "CommScope"
+    },
+    {
+      "id": "HLIT",
+      "ticker": "HLIT",
+      "name": "ハーモニック",
+      "sub": "ブロードバンド機器",
+      "sub_en": "Broadband equipment",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ブロードバンド機器の分野で競合する可能性がある",
+          "text_en": "May compete in broadband access and platform equipment",
+          "source": {
+            "label": "CALIX, INC 10-K(2025年12月期)",
+            "label_en": "CALIX, INC 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1406666/000140666626000005/calx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "Vendors with which we may compete include: ADTRAN Holdings, Inc.; Ciena Corporation; CommScope Holding Company, Inc.; eero/Ring (Amazon companies); Harmonic Inc.; Huawei Technologies Co., Ltd.; Nokia Corporation; Plume Design, Inc. and Ubiquiti Inc."
+          }
+        }
+      ],
+      "name_en": "Harmonic"
+    },
+    {
+      "id": "NOK",
+      "ticker": "NOK",
+      "name": "ノキア",
+      "sub": "通信機器",
+      "sub_en": "Telecom equipment",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ブロードバンド機器の分野で競合する可能性がある",
+          "text_en": "May compete in broadband access and platform equipment",
+          "source": {
+            "label": "CALIX, INC 10-K(2025年12月期)",
+            "label_en": "CALIX, INC 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1406666/000140666626000005/calx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "Vendors with which we may compete include: ADTRAN Holdings, Inc.; Ciena Corporation; CommScope Holding Company, Inc.; eero/Ring (Amazon companies); Harmonic Inc.; Huawei Technologies Co., Ltd.; Nokia Corporation; Plume Design, Inc. and Ubiquiti Inc."
+          }
+        }
+      ],
+      "name_en": "Nokia"
+    },
+    {
+      "id": "UI",
+      "ticker": "UI",
+      "name": "ユビキティ",
+      "sub": "ネットワーク機器",
+      "sub_en": "Networking equipment",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ブロードバンド機器の分野で競合する可能性がある",
+          "text_en": "May compete in broadband access and platform equipment",
+          "source": {
+            "label": "CALIX, INC 10-K(2025年12月期)",
+            "label_en": "CALIX, INC 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1406666/000140666626000005/calx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "Vendors with which we may compete include: ADTRAN Holdings, Inc.; Ciena Corporation; CommScope Holding Company, Inc.; eero/Ring (Amazon companies); Harmonic Inc.; Huawei Technologies Co., Ltd.; Nokia Corporation; Plume Design, Inc. and Ubiquiti Inc."
+          }
+        }
+      ],
+      "name_en": "Ubiquiti"
+    },
+    {
+      "id": "AMZN",
+      "ticker": "AMZN",
+      "name": "アマゾン(eero/Ring)",
+      "sub": "ホームWi-Fi",
+      "sub_en": "Home Wi-Fi",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "eero/Ringを通じた宅内機器で競合する可能性がある",
+          "text_en": "May compete through its eero/Ring products",
+          "source": {
+            "label": "CALIX, INC 10-K(2025年12月期)",
+            "label_en": "CALIX, INC 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1406666/000140666626000005/calx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "Vendors with which we may compete include: ADTRAN Holdings, Inc.; Ciena Corporation; CommScope Holding Company, Inc.; eero/Ring (Amazon companies); Harmonic Inc.; Huawei Technologies Co., Ltd.; Nokia Corporation; Plume Design, Inc. and Ubiquiti Inc."
+          }
+        }
+      ],
+      "name_en": "Amazon (eero/Ring)"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

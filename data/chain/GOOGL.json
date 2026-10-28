@@ -1,0 +1,584 @@
+{
+  "root": {
+    "ticker": "GOOGL",
+    "name": "Alphabet",
+    "cik": 1652044
+  },
+  "rows": [
+    {
+      "ja": "供給元(TPU・半導体)",
+      "en": "Suppliers (TPUs & chips)",
+      "above": true
+    },
+    {
+      "ja": "AI・クラウドの提携先",
+      "en": "AI & cloud partners"
+    },
+    {
+      "ja": "利用企業",
+      "en": "Customers & platform users"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "ORCL",
+    "IBM",
+    "PINS",
+    "YELP",
+    "SPOT"
+  ],
+  "companies": [
+    {
+      "id": "AVGO",
+      "ticker": "AVGO",
+      "name": "Broadcom",
+      "sub": "半導体",
+      "sub_en": "Chips",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Google向けにカスタムTPUを開発・供給する長期契約",
+          "text_en": "Long Term Agreement for Broadcom to develop and supply custom TPUs for Google",
+          "source": {
+            "label": "Broadcom 8-K(Item 8.01)",
+            "label_en": "Broadcom 8-K (Item 8.01)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1730168/000119312526144028/d87999d8k.htm",
+            "level": "official",
+            "date": "2026-04",
+            "quote": "Broadcom Inc. (“Broadcom”) and Google LLC (“Google”) have entered into a Long Term Agreement for Broadcom to develop and supply custom Tensor Processing Units (“TPUs”) for Google’s future generations of TPUs",
+            "note": "契約の相手方はGoogle LLCです。",
+            "note_en": "The agreement counterparty is Google LLC."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Anthropic",
+      "ticker": "Anthropic",
+      "name": "Anthropic",
+      "sub": "AI",
+      "sub_en": "AI",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Google CloudのTPUとサービスの利用を大きく拡大する計画",
+          "text_en": "Plans to greatly expand use of Google Cloud TPUs and services, worth tens of billions of dollars",
+          "source": {
+            "label": "Anthropic の発表",
+            "label_en": "Anthropic announcement",
+            "url": "https://www.anthropic.com/news/expanding-our-use-of-google-cloud-tpus-and-services",
+            "level": "official",
+            "date": "2025-10-23",
+            "quote": "we are announcing that we plan to expand our use of Google Cloud technologies, including up to one million TPUs, dramatically increasing our compute resources as we continue to push the boundaries of AI research and product development. The expansion is worth tens of billions of dollars",
+            "note": "計画・見込みの段階の記載です。",
+            "note_en": "Capacity is described as planned/expected."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "Broadcom・Google・Anthropicが協業を拡大し、AnthropicがTPUの約3.5GW分を利用",
+          "text_en": "Broadcom, Google and Anthropic expanded their collaboration; Anthropic will access about 3.5GW of TPU capacity",
+          "source": {
+            "label": "Broadcom 8-K(Item 8.01)",
+            "label_en": "Broadcom 8-K (Item 8.01)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1730168/000119312526144028/d87999d8k.htm",
+            "level": "official",
+            "date": "2026-04",
+            "quote": "Separately, Broadcom, Google and Anthropic PBC (“Anthropic”) have expanded their current strategic collaboration under which Anthropic, beginning in 2027, will access through Broadcom approximately 3.5 gigawatts",
+            "note": "Anthropicの利用は、Anthropicの事業の継続などに左右されます。",
+            "note_en": "Consumption depends on Anthropic’s continued business."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AAPL",
+      "ticker": "AAPL",
+      "name": "Apple",
+      "sub": "スマホ・OS",
+      "sub_en": "Phones & OS",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "次世代のApple Foundation Modelsの基盤にGoogleのGeminiを使う複数年の協業",
+          "text_en": "Multi-year collaboration: next-generation Apple Foundation Models will be based on Google’s Gemini",
+          "source": {
+            "label": "Google ブログ: Joint statement from Google and Apple",
+            "label_en": "Google blog: Joint statement from Google and Apple",
+            "url": "https://blog.google/company-news/inside-google/company-announcements/joint-statement-google-apple/",
+            "level": "official",
+            "date": "2026-01-12",
+            "quote": "Apple and Google have entered into a multi-year collaboration under which the next generation of Apple Foundation Models will be based on Google's Gemini models and cloud technology."
+          }
+        },
+        {
+          "type": "down",
+          "text": "AppleはApple製品でのGoogle検索の提供に対するライセンス収入を得ている",
+          "text_en": "Apple earns revenue from licensing arrangements with Google to offer Google search on Apple platforms",
+          "source": {
+            "label": "Apple 10-K(2025年度)",
+            "label_en": "Apple 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/320193/000032019325000079/aapl-20250927.htm",
+            "level": "official",
+            "date": "2025-10",
+            "quote": "the Company earns revenue from licensing arrangements with Google LLC (“Google”) and other companies to offer their search services on the Company’s platforms and applications",
+            "note": "米司法省の訴訟の判決や控訴の影響を受けると記載しています。",
+            "note_en": "Apple describes these arrangements as subject to the DOJ v. Google remedies order and appeal."
+          }
+        }
+      ]
+    },
+    {
+      "id": "WULF",
+      "ticker": "WULF",
+      "name": "TeraWulf",
+      "sub": "データセンター",
+      "sub_en": "Data centers",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "FluidstackのTeraWulfでのリース債務の保証を約32億ドルに拡大し、新株予約権を保有",
+          "text_en": "Increased its backstop of Fluidstack lease obligations at TeraWulf to about $3.2B and holds warrants",
+          "source": {
+            "label": "TeraWulf の発表(8-K Ex. 99.1)",
+            "label_en": "TeraWulf press release (8-K Ex. 99.1)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1083301/000110465925079463/tm2523651d3_ex99-1.htm",
+            "level": "official",
+            "date": "2025-08-18",
+            "quote": "Google Increases Backstop to $3.2 Billion and Stake in TeraWulf to 14%",
+            "note": "株式の保有は新株予約権を通じたものです。",
+            "note_en": "The equity stake is via warrants."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CIFR",
+      "ticker": "CIFR",
+      "name": "Cipher Digital",
+      "sub": "データセンター",
+      "sub_en": "Data centers",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "FluidstackのCipherでのリース債務14億ドルを保証し、新株予約権を取得",
+          "text_en": "Backstops $1.4B of Fluidstack lease obligations at Cipher and receives warrants",
+          "source": {
+            "label": "Cipher Mining の発表(8-K Ex. 99.1)",
+            "label_en": "Cipher Mining press release (8-K Ex. 99.1)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1819989/000095010325012168/dp234624_ex9901.htm",
+            "level": "official",
+            "date": "2025-09-25",
+            "quote": "Google will backstop $1.4 billion of Fluidstack’s lease obligations to support project-related debt financing and will receive warrants to acquire approximately 24 million shares of Cipher common stock, equating to an approximately 5.4% pro forma equity ow",
+            "note": "株式の保有は新株予約権を通じたものです。",
+            "note_en": "The stake is via warrants."
+          }
+        }
+      ]
+    },
+    {
+      "id": "KD",
+      "ticker": "KD",
+      "name": "Kyndryl",
+      "sub": "ITサービス",
+      "sub_en": "IT services",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Kyndrylは、共同ソリューション開発の主要な提携先にGoogle Cloudを置く",
+          "text_en": "Google Cloud is one of Kyndryl's key alliance partners.",
+          "source": {
+            "label": "Kyndryl 10-K(2026年度)",
+            "label_en": "Kyndryl 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1867072/000110465926067881/kd-20260331x10k.htm",
+            "level": "official",
+            "date": "2026-05",
+            "quote": "We have several key partnerships, including with Amazon Web Services, Broadcom, Cisco, Dell, Dynatrace, Google Cloud"
+          }
+        }
+      ]
+    },
+    {
+      "id": "NOW",
+      "ticker": "NOW",
+      "name": "ServiceNow",
+      "sub": "業務ソフト",
+      "sub_en": "Business software",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ServiceNowは、AI強化のため関係を広げた技術提供企業の1社として、Googleと組む",
+          "text_en": "ServiceNow expanded its relationship with Google to strengthen its AI capabilities.",
+          "source": {
+            "label": "ServiceNow 10-K(2025年度)",
+            "label_en": "ServiceNow 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1373715/000137371526000007/now-20251231.htm",
+            "level": "official",
+            "date": "2026-01",
+            "quote": "We have expanded relationships with technology providers to strengthen our AI capabilities and improve cloud interoperability, including relationships with AWS, Google, Microsoft, and NVIDIA"
+          }
+        }
+      ]
+    },
+    {
+      "id": "UBER",
+      "ticker": "UBER",
+      "name": "Uber",
+      "sub": "配車",
+      "sub_en": "Ride-hailing",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Waymoの自動運転車をUberのプラットフォームで提供",
+          "text_en": "Waymo makes a fleet of autonomous vehicles available through the Uber platform",
+          "source": {
+            "label": "Uber 10-K(2025年度)",
+            "label_en": "Uber 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1543151/000154315126000015/uber-20251231.htm",
+            "level": "official",
+            "date": "2026-02",
+            "quote": "Waymo has introduced a commercialized ridehailing fleet of autonomous vehicles on its own platform in addition to a fleet of autonomous vehicles that it makes available through our platform",
+            "note": "相手はAlphabet子会社のWaymoです。",
+            "note_en": "The relationship is with Waymo, an Alphabet subsidiary."
+          }
+        }
+      ]
+    },
+    {
+      "id": "LYFT",
+      "ticker": "LYFT",
+      "name": "Lyft",
+      "sub": "配車",
+      "sub_en": "Ride-hailing",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ナッシュビルの車両運用をWaymoと提携して実施",
+          "text_en": "Fleet operations in Nashville run in partnership with Waymo",
+          "source": {
+            "label": "Lyft 決算発表(8-K、2026年第2四半期)",
+            "label_en": "Lyft Q2 2026 earnings release (8-K)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1759509/000162828026054305/lyft-20260630xpressrelease.htm",
+            "level": "official",
+            "date": "2026-08-06",
+            "quote": "In Nashville, in partnership with Waymo, our fleet operations officially began in June",
+            "note": "相手はAlphabet子会社のWaymoです。",
+            "note_en": "The relationship is with Waymo, an Alphabet subsidiary."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SNAP",
+      "ticker": "SNAP",
+      "name": "Snap",
+      "sub": "SNS",
+      "sub_en": "Social",
+      "row": 2,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Snapは計算処理の大半をGoogle CloudとAWSで動かしている",
+          "text_en": "Snap runs the vast majority of its computing on Google Cloud and AWS",
+          "source": {
+            "label": "Snap 10-K(2025年度)",
+            "label_en": "Snap 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1564408/000156440826000013/snap-20251231.htm",
+            "level": "official",
+            "date": "2026-02",
+            "quote": "We currently run the vast majority of our computing on Google Cloud and AWS",
+            "note": "AWSと併用しています。",
+            "note_en": "Shared with AWS."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "Alphabet(GoogleとYouTube)は、Snapが競合する企業の1社だ",
+          "text_en": "Alphabet (including Google and YouTube) competes with Snap.",
+          "source": {
+            "label": "Snap 10-K(2025年度)",
+            "label_en": "Snap 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1564408/000156440826000013/snap-20251231.htm",
+            "level": "official",
+            "date": "2026-02",
+            "quote": "such as Alphabet (including Google and YouTube), Apple, ByteDance (TikTok and affiliated joint ventures), Meta (including Facebook, Instagram, Threads, and WhatsApp), Pinterest"
+          }
+        }
+      ]
+    },
+    {
+      "id": "SNOW",
+      "ticker": "SNOW",
+      "name": "Snowflake",
+      "sub": "データ基盤",
+      "sub_en": "Data platform",
+      "row": 2,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Snowflakeの基盤はAWS・Azure・Google Cloudで稼働する",
+          "text_en": "Snowflake's platform operates on public cloud infrastructure from AWS, Azure and Google Cloud",
+          "source": {
+            "label": "Snowflake 10-K(2026年度)",
+            "label_en": "Snowflake 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1640147/000164014726000008/snow-20260131.htm",
+            "level": "official",
+            "date": "2026-03",
+            "quote": "our platform currently operates on public cloud infrastructure provided by Amazon Web Services (AWS), Microsoft Azure (Azure), and Google Cloud Platform (GCP)",
+            "note": "SnowflakeはGoogle Cloudを競合としても挙げています。",
+            "note_en": "Snowflake also lists Google Cloud among its competitors."
+          }
+        }
+      ]
+    },
+    {
+      "id": "NVDA",
+      "ticker": "NVDA",
+      "name": "NVIDIA",
+      "sub": "AI半導体",
+      "sub_en": "AI chips",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Alphabetは、AI計算機能を自社設計に組み込む企業の1社として、NVIDIAと競合する",
+          "text_en": "Alphabet competes with NVIDIA by designing hardware and software with AI computing functionality.",
+          "source": {
+            "label": "NVIDIA 10-K(2026年度)",
+            "label_en": "NVIDIA 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm",
+            "level": "official",
+            "date": "2026-02",
+            "quote": "such as Alibaba Group, Alphabet Inc., Amazon, Inc., or Amazon, Baidu, Inc., Huawei, and Microsoft Corporation, or Microsoft"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ORCL",
+      "ticker": "ORCL",
+      "name": "Oracle",
+      "sub": "クラウド・ソフト",
+      "sub_en": "Cloud & software",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Alphabetは、Oracleのクラウドと直接競合する大手の一社である",
+          "text_en": "Alphabet is one of the largest companies whose offerings compete directly with Oracle's cloud offerings.",
+          "source": {
+            "label": "Oracle 10-K(2026年度)",
+            "label_en": "Oracle 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1341439/000119312526277521/orcl-20260531.htm",
+            "level": "official",
+            "date": "2026-06",
+            "quote": "including Adobe Systems Incorporated, Alphabet Inc., Amazon.com, Inc., Cisco Systems, Inc., Intel Corporation, International Business Machines Corporation, Microsoft Corporation, Salesforce, Inc. and SAP SE"
+          }
+        }
+      ]
+    },
+    {
+      "id": "IBM",
+      "ticker": "IBM",
+      "name": "IBM",
+      "sub": "IT・ソフト",
+      "sub_en": "IT & software",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Alphabet(Google)は、IBMのソフトウェア事業における主要な競合だ",
+          "text_en": "Alphabet (Google) is a principal competitor of IBM in its software segment.",
+          "source": {
+            "label": "IBM 10-K(2025年度)",
+            "label_en": "IBM 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/51143/000005114326000010/ibm-20251231.htm",
+            "level": "official",
+            "date": "2026-02",
+            "quote": "The principal competitors in this segment include: Alphabet (Google), Amazon, BMC, Broadcom, Microsoft, Oracle, Salesforce, SAP and Splunk"
+          }
+        }
+      ]
+    },
+    {
+      "id": "PANW",
+      "ticker": "PANW",
+      "name": "Palo Alto Networks",
+      "sub": "セキュリティ",
+      "sub_en": "Security",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "AlphabetはPalo Alto Networksの主な競合の一つとなる",
+          "text_en": "Alphabet is one of Palo Alto Networks' main competitors.",
+          "source": {
+            "label": "Palo Alto Networks 10-K(2026年度)",
+            "label_en": "Palo Alto Networks 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1327567/000132756726000023/panw-20260731.htm",
+            "level": "official",
+            "date": "2026-09",
+            "quote": "large companies that incorporate security or observability features in their products, such as Alphabet Inc., Cisco Systems, Inc., and Microsoft Corporation"
+          }
+        }
+      ]
+    },
+    {
+      "id": "PINS",
+      "ticker": "PINS",
+      "name": "Pinterest",
+      "sub": "SNS",
+      "sub_en": "Social",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Google(Gemini・Lens・YouTubeを含む)は、Pinterestと競合する立場にある",
+          "text_en": "Google (including Gemini, Lens and YouTube) competes with Pinterest.",
+          "source": {
+            "label": "Pinterest 10-K(2025年度)",
+            "label_en": "Pinterest 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1506293/000150629326000021/pins-20251231.htm",
+            "level": "official",
+            "date": "2026-02",
+            "quote": "Competitors such as Amazon, Meta (including Facebook, Instagram, Threads and MetaAI), Google (including Gemini, Lens and YouTube)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "SPOT",
+      "ticker": "SPOT",
+      "name": "Spotify",
+      "sub": "音楽配信",
+      "sub_en": "Audio streaming",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Alphabetは、音声配信サービスを機器に事前搭載してSpotifyと競う1社だ",
+          "text_en": "Alphabet is a Spotify competitor that preloads its own audio services on devices.",
+          "source": {
+            "label": "Spotify 20-F(2025年度)",
+            "label_en": "Spotify 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1639920/000162828026006874/ck0001639920-20251231.htm",
+            "level": "official",
+            "date": "2026-02",
+            "quote": "Some of our competitors, including Apple, Alphabet, and Amazon, have developed, and are continuing to develop, devices for which their audio streaming services are preloaded"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RDDT",
+      "ticker": "RDDT",
+      "name": "Reddit",
+      "sub": "SNS",
+      "sub_en": "Social",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Google(YouTube・検索・マップなど)は、Redditとユーザーを奪い合う",
+          "text_en": "Google (including YouTube, Search, Maps, and Shopping) competes with Reddit for users.",
+          "source": {
+            "label": "Reddit 10-K(2025年度)",
+            "label_en": "Reddit 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1713445/000171344526000022/rddt-20251231.htm",
+            "level": "official",
+            "date": "2026-02",
+            "quote": "We compete against many companies that provide content and communications services to online users, including Google (including YouTube, Search, Maps, and Shopping)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "YELP",
+      "ticker": "YELP",
+      "name": "Yelp",
+      "sub": "口コミ・広告",
+      "sub_en": "Reviews & ads",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Googleは、Yelpにとって検索・ディレクトリ分野で最大の競合である",
+          "text_en": "Google is Yelp's primary competitor among online search engines and directories.",
+          "source": {
+            "label": "Yelp 10-K(2025年度)",
+            "label_en": "Yelp 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1345016/000134501626000019/yelp-20251231.htm",
+            "level": "official",
+            "date": "2026-02",
+            "quote": "such as our primary competitor, Google"
+          }
+        }
+      ]
+    },
+    {
+      "id": "TTD",
+      "ticker": "TTD",
+      "name": "The Trade Desk",
+      "sub": "広告配信",
+      "sub_en": "Ad buying",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Googleは、The Trade Deskの競合であり、広告枠の大手供給元でもある",
+          "text_en": "Google is both a competitor of The Trade Desk and one of its largest advertising inventory suppliers.",
+          "source": {
+            "label": "Trade Desk 10-K(2025年度)",
+            "label_en": "Trade Desk 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1671933/000167193326000014/ttd-20251231.htm",
+            "level": "official",
+            "date": "2026-02",
+            "quote": "Google is one of our largest advertising inventory suppliers in addition to being one of our competitors."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CAR",
+      "ticker": "CAR",
+      "name": "Avis Budget Group",
+      "sub": "レンタカー",
+      "sub_en": "Car rental",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "AvisとWaymo(Alphabet傘下)の自動運転の提携は、6月1日にダラスで始まった",
+          "text_en": "Avis's autonomous vehicle partnership with Waymo (Alphabet subsidiary) went live in Dallas on June 1",
+          "source": {
+            "label": "Avis Budget 決算発表(8-K、2026年第2四半期)",
+            "label_en": "Avis Budget Q2 2026 earnings release (8-K)",
+            "url": "https://www.sec.gov/Archives/edgar/data/723612/000072361226000037/a03-pressreleasexq2f26.htm",
+            "level": "official",
+            "date": "2026-07-28",
+            "quote": "Avis’ autonomous vehicle partnership with Waymo went live in Dallas, TX on June 1st",
+            "note": "提携の相手はAlphabet傘下のWaymoです。",
+            "note_en": "The partnership is with Waymo, an Alphabet subsidiary."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

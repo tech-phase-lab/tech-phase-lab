@@ -1,0 +1,198 @@
+{
+  "root": {
+    "ticker": "PINS",
+    "name": "Pinterest",
+    "cik": 1506293
+  },
+  "rows": [
+    {
+      "ja": "提携・連携",
+      "en": "Partnerships & integrations"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "SNAP",
+    "RDDT",
+    "AMZN",
+    "OpenAI"
+  ],
+  "companies": [
+    {
+      "id": "AMZN",
+      "ticker": "AMZN",
+      "name": "アマゾン",
+      "sub": "EC・クラウド",
+      "sub_en": "E-commerce & cloud",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Amazon Adsが、ショッパブルコンテンツを通じた商品発見と購入を容易にするため、Pinterestと提携した",
+          "text_en": "Amazon Ads partnered with Pinterest to make it easier to discover and buy products through shoppable content",
+          "source": {
+            "label": "Pinterest — Amazon advertising partnership, April 27, 2023",
+            "label_en": "Pinterest — Amazon advertising partnership, April 27, 2023",
+            "url": "https://newsroom.pinterest.com/news/pinterest-announces-partnership-with-amazon-to-bring-third-party-ad-demand-to-the-platform/",
+            "level": "official",
+            "quote": "Amazon Ads is delighted to partner with Pinterest and make it even easier for customers to discover and buy relevant products through shoppable content, while also providing differentiated value for brands.”"
+          }
+        },
+        {
+          "type": "rival",
+          "text": "Pinterestと競合する",
+          "text_en": "Competes with Pinterest",
+          "source": {
+            "label": "Pinterest 10-K",
+            "label_en": "Pinterest 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1506293/000150629326000021/pins-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "Competitors such as Amazon, Meta (including Facebook, Instagram, Threads and MetaAI), Google (including Gemini, Lens and YouTube), OpenAI (including ChatGPT), Snap, Reddit, TikTok and X, many of"
+          }
+        }
+      ],
+      "name_en": "Amazon"
+    },
+    {
+      "id": "KVYO",
+      "ticker": "KVYO",
+      "name": "Klaviyo",
+      "sub": "マーケティング基盤",
+      "sub_en": "Marketing platform",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Pinterestは、Klaviyoの連携先の技術プラットフォームの1つだ",
+          "text_en": "Pinterest is one of the technology platforms Klaviyo integrates with.",
+          "source": {
+            "label": "Klaviyo 10-K",
+            "label_en": "Klaviyo 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1835830/000183583026000007/kvyo-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "We enhance our platform through our large technology partner ecosystem and robust library of integrations with other technology platforms, including Google, Meta, Zendesk, Gorgias, LoyaltyLion, Pinterest, and Canva."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SPT",
+      "ticker": "SPT",
+      "name": "Sprout Social",
+      "sub": "SNS運用ソフト",
+      "sub_en": "Social media software",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Sprout Socialは、主要SNSの1つであるPinterestと戦略的な関係を築いた",
+          "text_en": "Sprout Social has built a strategic relationship with Pinterest, one of the leading social networks.",
+          "source": {
+            "label": "Sprout Social 10-K",
+            "label_en": "Sprout Social 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1517375/000151737526000015/spt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "We have cultivated strong, strategic relationships with leading social networks—including Facebook, Instagram, Threads, X (formerly Twitter), Pinterest, LinkedIn, YouTube, Reddit, Tumblr, Bluesky and TikTok."
+          }
+        }
+      ]
+    },
+    {
+      "id": "RDDT",
+      "ticker": "RDDT",
+      "name": "レディット",
+      "sub": "掲示板・SNS",
+      "sub_en": "Social platform",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Pinterestと競合する",
+          "text_en": "Competes with Pinterest",
+          "source": {
+            "label": "Pinterest 10-K",
+            "label_en": "Pinterest 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1506293/000150629326000021/pins-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "Competitors such as Amazon, Meta (including Facebook, Instagram, Threads and MetaAI), Google (including Gemini, Lens and YouTube), OpenAI (including ChatGPT), Snap, Reddit, TikTok and X, many of which are larger and have significantly greater financial and human resources, offer users engaging content and commerce opportunities through"
+          }
+        }
+      ],
+      "name_en": "Reddit"
+    },
+    {
+      "id": "SNAP",
+      "ticker": "SNAP",
+      "name": "スナップ",
+      "sub": "SNS・カメラ",
+      "sub_en": "Social & camera",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Pinterestと競合する",
+          "text_en": "Competes with Pinterest",
+          "source": {
+            "label": "Pinterest 10-K",
+            "label_en": "Pinterest 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1506293/000150629326000021/pins-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "Competitors such as Amazon, Meta (including Facebook, Instagram, Threads and MetaAI), Google (including Gemini, Lens and YouTube), OpenAI (including ChatGPT), Snap, Reddit, TikTok and X, many of"
+          }
+        },
+        {
+          "type": "rival",
+          "text": "Pinterestと競合する",
+          "text_en": "Competes with Pinterest",
+          "source": {
+            "label": "Snap 10-K",
+            "label_en": "Snap 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1564408/000156440826000013/snap-20251231.htm",
+            "level": "official",
+            "date": "2026-02-05",
+            "quote": "Our competitors range from smaller or newer companies to larger, more established companies such as Alphabet (including Google and YouTube), Apple, ByteDance ( TikTok and affiliated joint ventures), Kakao, LINE, Meta (including Facebook, Instagram, Threads, and WhatsApp), Naver (including Snow), Pinterest, Reddit, Tencent, and X (formerly Twitter)."
+          }
+        }
+      ],
+      "name_en": "Snap"
+    },
+    {
+      "id": "OpenAI",
+      "ticker": "OpenAI",
+      "name": "OpenAI",
+      "sub": "生成AI",
+      "sub_en": "Generative AI",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Pinterestと競合する",
+          "text_en": "Competes with Pinterest",
+          "source": {
+            "label": "Pinterest 10-K",
+            "label_en": "Pinterest 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1506293/000150629326000021/pins-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "Competitors such as Amazon, Meta (including Facebook, Instagram, Threads and MetaAI), Google (including Gemini, Lens and YouTube), OpenAI (including ChatGPT), Snap, Reddit, TikTok and X, many of which are larger and have significantly greater financial and human resources, offer users engaging content and",
+            "note": "OpenAIは未上場です。",
+            "note_en": "OpenAI is not listed."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

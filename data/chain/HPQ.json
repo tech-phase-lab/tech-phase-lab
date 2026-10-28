@@ -1,0 +1,390 @@
+{
+  "root": {
+    "ticker": "HPQ",
+    "name": "HP",
+    "cik": 47217
+  },
+  "rows": [
+    {
+      "ja": "供給元",
+      "en": "Suppliers",
+      "above": true
+    },
+    {
+      "ja": "提携・資金調達",
+      "en": "Partnerships & financing"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "AAPL",
+    "DELL",
+    "Lenovo",
+    "MSFT"
+  ],
+  "companies": [
+    {
+      "id": "INTC",
+      "ticker": "INTC",
+      "name": "インテル",
+      "sub": "半導体",
+      "sub_en": "Semiconductors",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "HPは、PCとワークステーションの大半に使うプロセッサの供給をIntel、AMD、NVIDIAなどに頼っている",
+          "text_en": "HP relies on Intel, AMD, NVIDIA or other suppliers for a sufficient supply of processors for the majority of its PCs and workstations",
+          "source": {
+            "label": "HP 10-K",
+            "label_en": "HP 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/47217/000004721725000071/hpq-20251031.htm",
+            "level": "official",
+            "date": "2025-12-10",
+            "quote": "We also rely on Intel, AMD, and NVIDIA, or other suppliers to provide us with a sufficient supply of processors for the majority of our PCs and workstations."
+          }
+        },
+        {
+          "type": "up",
+          "text": "HPの製品群は、IntelとAMDのプロセッサを搭載している",
+          "text_en": "HP's platforms incorporate processors from Intel and AMD",
+          "source": {
+            "label": "HP 10-K",
+            "label_en": "HP 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/47217/000004721725000071/hpq-20251031.htm",
+            "level": "official",
+            "date": "2025-12-10",
+            "quote": "Our platforms incorporate processors from Intel, and AMD, including integrated AI acceleration, as well as NVIDIA GPUs for advanced graphics and compute workloads."
+          }
+        }
+      ],
+      "name_en": "Intel"
+    },
+    {
+      "id": "AMD",
+      "ticker": "AMD",
+      "name": "アドバンスト・マイクロ・デバイセズ",
+      "sub": "半導体",
+      "sub_en": "Semiconductors",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "HPは、PCとワークステーションの大半に使うプロセッサの供給をIntel、AMD、NVIDIAなどに頼っている",
+          "text_en": "HP relies on Intel, AMD, NVIDIA or other suppliers for a sufficient supply of processors for the majority of its PCs and workstations",
+          "source": {
+            "label": "HP 10-K",
+            "label_en": "HP 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/47217/000004721725000071/hpq-20251031.htm",
+            "level": "official",
+            "date": "2025-12-10",
+            "quote": "We also rely on Intel, AMD, and NVIDIA, or other suppliers to provide us with a sufficient supply of processors for the majority of our PCs and workstations."
+          }
+        },
+        {
+          "type": "up",
+          "text": "HPの製品群は、IntelとAMDのプロセッサを搭載している",
+          "text_en": "HP's platforms incorporate processors from Intel and AMD",
+          "source": {
+            "label": "HP 10-K",
+            "label_en": "HP 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/47217/000004721725000071/hpq-20251031.htm",
+            "level": "official",
+            "date": "2025-12-10",
+            "quote": "Our platforms incorporate processors from Intel, and AMD, including integrated AI acceleration, as well as NVIDIA GPUs for advanced graphics and compute workloads."
+          }
+        }
+      ],
+      "name_en": "Advanced Micro Devices"
+    },
+    {
+      "id": "NVDA",
+      "ticker": "NVDA",
+      "name": "エヌビディア",
+      "sub": "AI半導体",
+      "sub_en": "AI chips",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "HPは、PCとワークステーションの大半に使うプロセッサの供給をIntel、AMD、NVIDIAなどに頼っている",
+          "text_en": "HP relies on Intel, AMD, NVIDIA or other suppliers for a sufficient supply of processors for the majority of its PCs and workstations",
+          "source": {
+            "label": "HP 10-K",
+            "label_en": "HP 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/47217/000004721725000071/hpq-20251031.htm",
+            "level": "official",
+            "date": "2025-12-10",
+            "quote": "We also rely on Intel, AMD, and NVIDIA, or other suppliers to provide us with a sufficient supply of processors for the majority of our PCs and workstations."
+          }
+        },
+        {
+          "type": "up",
+          "text": "HPの製品群は、高度なグラフィックスと計算向けにNVIDIAのGPUを搭載している",
+          "text_en": "HP's platforms incorporate NVIDIA GPUs for advanced graphics and compute workloads",
+          "source": {
+            "label": "HP 10-K",
+            "label_en": "HP 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/47217/000004721725000071/hpq-20251031.htm",
+            "level": "official",
+            "date": "2025-12-10",
+            "quote": "Our platforms incorporate processors from Intel, and AMD, including integrated AI acceleration, as well as NVIDIA GPUs for advanced graphics and compute workloads."
+          }
+        }
+      ],
+      "name_en": "NVIDIA"
+    },
+    {
+      "id": "Canon",
+      "ticker": "Canon",
+      "name": "キヤノン",
+      "sub": "事務機器",
+      "sub_en": "Imaging equipment",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "HPは、レーザープリンターのエンジンとトナーカートリッジの一部をCanonに頼っている",
+          "text_en": "HP relies on Canon for certain laser printer engines and laser toner cartridges",
+          "source": {
+            "label": "HP 10-K",
+            "label_en": "HP 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/47217/000004721725000071/hpq-20251031.htm",
+            "level": "official",
+            "date": "2025-12-10",
+            "quote": "For example, we rely on Canon for certain laser printer engines and laser toner cartridges and certain key suppliers for application specific integrated circuits (“ASICs”)."
+          }
+        },
+        {
+          "type": "up",
+          "text": "HPは、Canonのような単一供給元から多くの部品を調達している",
+          "text_en": "HP obtains a significant number of components from single source suppliers like Canon",
+          "source": {
+            "label": "HP 10-K",
+            "label_en": "HP 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/47217/000004721725000071/hpq-20251031.htm",
+            "level": "official",
+            "date": "2025-12-10",
+            "quote": "HP obtains a significant number of components from single source suppliers like Canon, due to technology, availability, price, quality or other considerations."
+          }
+        }
+      ],
+      "name_en": "Canon"
+    },
+    {
+      "id": "HPE",
+      "ticker": "HPE",
+      "name": "ヒューレット・パッカード・エンタープライズ",
+      "sub": "IT基盤",
+      "sub_en": "IT infrastructure",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "HPとHPEは、両事業の分離に伴い分離・配布契約などを結んだ",
+          "text_en": "HP and Hewlett Packard Enterprise entered into a separation and distribution agreement and other agreements in connection with the separation of the two businesses",
+          "source": {
+            "label": "HP 10-K",
+            "label_en": "HP 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/47217/000004721725000071/hpq-20251031.htm",
+            "level": "official",
+            "date": "2025-12-10",
+            "quote": "We and Hewlett Packard Enterprise entered into a separation and distribution agreement and various other agreements in connection with the separation of the two businesses."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "HPEは2019会計年度に、HP Inc.との税務事項契約を終了させる解約・相互解除契約を結んだ",
+          "text_en": "During fiscal 2019, HPE executed a Termination and Mutual Release Agreement which terminated its Tax Matters Agreement with HP Inc.",
+          "source": {
+            "label": "Hewlett Packard Enterprise 10-K",
+            "label_en": "Hewlett Packard Enterprise 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1645590/000164559025000130/hpe-20251031.htm",
+            "level": "official",
+            "date": "2025-12-18",
+            "quote": "During fiscal 2019, we executed a Termination and Mutual Release Agreement which terminated our Tax Matters Agreement with HP Inc."
+          }
+        }
+      ],
+      "name_en": "Hewlett Packard Enterprise"
+    },
+    {
+      "id": "JPM",
+      "ticker": "JPMorgan",
+      "name": "JPモルガン・チェース",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "JPMorgan Chase Bank, N.A.が管理代理人を務める5年のクレジット契約(2024年8月1日付)がある",
+          "text_en": "HP has a Five-Year Credit Agreement dated August 1, 2024 with JPMorgan Chase Bank, N.A. as Administrative Agent",
+          "source": {
+            "label": "HP 10-K",
+            "label_en": "HP 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/47217/000004721725000071/hpq-20251031.htm",
+            "level": "official",
+            "date": "2025-12-10",
+            "quote": "Five-Year Credit Agreement dated August 1, 2024, by and among the Registrant, the lenders party thereto and JPMorgan Chase Bank, N.A., as Administrative Agent.",
+            "note": "資金調達のみの関係です。",
+            "note_en": "Financing relationship only."
+          }
+        }
+      ],
+      "name_en": "JPMorgan Chase"
+    },
+    {
+      "id": "AAPL",
+      "ticker": "AAPL",
+      "name": "アップル",
+      "sub": "消費者向け機器",
+      "sub_en": "Consumer devices",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "HPと競合する",
+          "text_en": "Competes with HP",
+          "source": {
+            "label": "HP 10-K",
+            "label_en": "HP 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/47217/000004721725000071/hpq-20251031.htm",
+            "level": "official",
+            "date": "2025-12-10",
+            "quote": "Our primary competitors are Acer Inc., Apple Inc., ASUSTeK Computer Inc., Dell Inc., Huawei Technologies Co., Ltd., Lenovo Group Limited, Logitech International S.A., Microsoft Corporation, Samsung Electronics Co., Ltd., and Toshiba Corporation."
+          }
+        }
+      ],
+      "name_en": "Apple"
+    },
+    {
+      "id": "DELL",
+      "ticker": "DELL",
+      "name": "デル・テクノロジーズ",
+      "sub": "PC・サーバー",
+      "sub_en": "PCs & servers",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "HPと競合する",
+          "text_en": "Competes with HP",
+          "source": {
+            "label": "HP 10-K",
+            "label_en": "HP 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/47217/000004721725000071/hpq-20251031.htm",
+            "level": "official",
+            "date": "2025-12-10",
+            "quote": "Our primary competitors are Acer Inc., Apple Inc., ASUSTeK Computer Inc., Dell Inc., Huawei Technologies Co., Ltd., Lenovo Group Limited, Logitech International S.A., Microsoft Corporation, Samsung Electronics Co., Ltd., and Toshiba Corporation."
+          }
+        }
+      ],
+      "name_en": "Dell Technologies"
+    },
+    {
+      "id": "Lenovo",
+      "ticker": "Lenovo",
+      "name": "レノボ・グループ",
+      "sub": "PC",
+      "sub_en": "PCs",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "HPと競合する",
+          "text_en": "Competes with HP",
+          "source": {
+            "label": "HP 10-K",
+            "label_en": "HP 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/47217/000004721725000071/hpq-20251031.htm",
+            "level": "official",
+            "date": "2025-12-10",
+            "quote": "Our primary competitors are Acer Inc., Apple Inc., ASUSTeK Computer Inc., Dell Inc., Huawei Technologies Co., Ltd., Lenovo Group Limited, Logitech International S.A., Microsoft Corporation, Samsung Electronics Co., Ltd., and Toshiba Corporation."
+          }
+        }
+      ],
+      "name_en": "Lenovo Group"
+    },
+    {
+      "id": "MSFT",
+      "ticker": "MSFT",
+      "name": "マイクロソフト",
+      "sub": "ソフト・クラウド",
+      "sub_en": "Software & cloud",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "HPと競合する",
+          "text_en": "Competes with HP",
+          "source": {
+            "label": "HP 10-K",
+            "label_en": "HP 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/47217/000004721725000071/hpq-20251031.htm",
+            "level": "official",
+            "date": "2025-12-10",
+            "quote": "Our primary competitors are Acer Inc., Apple Inc., ASUSTeK Computer Inc., Dell Inc., Huawei Technologies Co., Ltd., Lenovo Group Limited, Logitech International S.A., Microsoft Corporation, Samsung Electronics Co., Ltd., and Toshiba Corporation."
+          }
+        }
+      ],
+      "name_en": "Microsoft"
+    },
+    {
+      "id": "Samsung",
+      "ticker": "Samsung",
+      "name": "サムスン電子",
+      "sub": "電機・半導体",
+      "sub_en": "Electronics & chips",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "HPと競合する",
+          "text_en": "Competes with HP",
+          "source": {
+            "label": "HP 10-K",
+            "label_en": "HP 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/47217/000004721725000071/hpq-20251031.htm",
+            "level": "official",
+            "date": "2025-12-10",
+            "quote": "Our primary competitors are Acer Inc., Apple Inc., ASUSTeK Computer Inc., Dell Inc., Huawei Technologies Co., Ltd., Lenovo Group Limited, Logitech International S.A., Microsoft Corporation, Samsung Electronics Co., Ltd., and Toshiba Corporation."
+          }
+        }
+      ],
+      "name_en": "Samsung Electronics"
+    },
+    {
+      "id": "LOGI",
+      "ticker": "LOGI",
+      "name": "ロジクール",
+      "sub": "周辺機器",
+      "sub_en": "PC peripherals",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "HPと競合する",
+          "text_en": "Competes with HP",
+          "source": {
+            "label": "HP 10-K",
+            "label_en": "HP 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/47217/000004721725000071/hpq-20251031.htm",
+            "level": "official",
+            "date": "2025-12-10",
+            "quote": "Our primary competitors are Acer Inc., Apple Inc., ASUSTeK Computer Inc., Dell Inc., Huawei Technologies Co., Ltd., Lenovo Group Limited, Logitech International S.A., Microsoft Corporation, Samsung Electronics Co., Ltd., and Toshiba Corporation."
+          }
+        }
+      ],
+      "name_en": "Logitech"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

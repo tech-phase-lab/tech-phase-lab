@@ -1,0 +1,142 @@
+{
+  "root": {
+    "ticker": "RL",
+    "name": "ラルフ ローレン",
+    "cik": 1037038,
+    "name_en": "Ralph Lauren"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "LOREAL",
+      "ticker": "L’Oreal",
+      "name": "ロレアル",
+      "sub": "化粧品・香水",
+      "sub_en": "Beauty & fragrance",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ラルフ ローレンの商標を使う製品ライセンス先で、対象は香水である",
+          "text_en": "L’Oreal is a product licensing partner of Ralph Lauren for fragrances",
+          "source": {
+            "label": "ラルフ ローレン 10-K(2026年3月28日期)",
+            "label_en": "Ralph Lauren 10-K (fiscal year ended March 28, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1037038/000162828026037074/rl-20260328.htm",
+            "level": "official",
+            "date": "2026-05-21",
+            "quote": "Beauty Products Fragrances L'Oreal S.A. (global)"
+          }
+        }
+      ],
+      "name_en": "L’Oreal"
+    },
+    {
+      "id": "LUX",
+      "ticker": "Luxottica Group",
+      "name": "ルックスオティカ",
+      "sub": "アイウェア",
+      "sub_en": "Eyewear",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ラルフ ローレンの商標を使う製品ライセンス先で、対象はアイウェアである",
+          "text_en": "Luxottica Group is a product licensing partner of Ralph Lauren for eyewear",
+          "source": {
+            "label": "ラルフ ローレン 10-K(2026年3月28日期)",
+            "label_en": "Ralph Lauren 10-K (fiscal year ended March 28, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1037038/000162828026037074/rl-20260328.htm",
+            "level": "official",
+            "date": "2026-05-21",
+            "quote": "Accessories Eyewear Luxottica Group S.p.A. (global)"
+          }
+        }
+      ],
+      "name_en": "Luxottica Group"
+    },
+    {
+      "id": "VC",
+      "ticker": "Visual Comfort",
+      "name": "ビジュアル・コンフォート",
+      "sub": "照明器具",
+      "sub_en": "Lighting",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ラルフ ローレンの商標を使う製品ライセンス先で、対象は照明である",
+          "text_en": "Visual Comfort is a product licensing partner of Ralph Lauren for lighting",
+          "source": {
+            "label": "ラルフ ローレン 10-K(2026年3月28日期)",
+            "label_en": "Ralph Lauren 10-K (fiscal year ended March 28, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1037038/000162828026037074/rl-20260328.htm",
+            "level": "official",
+            "date": "2026-05-21",
+            "quote": "Lighting Visual Comfort LLC (global)"
+          }
+        }
+      ],
+      "name_en": "Visual Comfort"
+    },
+    {
+      "id": "DELTA",
+      "ticker": "Delta Galil",
+      "name": "デルタ・ガリル",
+      "sub": "インナー・ナイトウェア",
+      "sub_en": "Intimates & sleepwear",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ラルフ ローレンの商標を使う製品ライセンス先で、対象はインナーとナイトウェアである",
+          "text_en": "Delta Galil is a product licensing partner of Ralph Lauren for intimates and sleepwear",
+          "source": {
+            "label": "ラルフ ローレン 10-K(2026年3月28日期)",
+            "label_en": "Ralph Lauren 10-K (fiscal year ended March 28, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1037038/000162828026037074/rl-20260328.htm",
+            "level": "official",
+            "date": "2026-05-21",
+            "quote": "Intimates and Sleepwear Delta Galil (global)"
+          }
+        }
+      ],
+      "name_en": "Delta Galil"
+    },
+    {
+      "id": "RENFRO",
+      "ticker": "Renfro",
+      "name": "レンフロ",
+      "sub": "靴下・ホーザリー",
+      "sub_en": "Socks & hosiery",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ラルフ ローレンの商標を使う製品ライセンス先で、対象は靴下である",
+          "text_en": "Renfro Corporation is a product licensing partner of Ralph Lauren for socks and hosiery",
+          "source": {
+            "label": "ラルフ ローレン 10-K(2026年3月28日期)",
+            "label_en": "Ralph Lauren 10-K (fiscal year ended March 28, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1037038/000162828026037074/rl-20260328.htm",
+            "level": "official",
+            "date": "2026-05-21",
+            "quote": "Socks and Hosiery Renfro Corporation Socks and Hosiery Naigai Co., Ltd."
+          }
+        }
+      ],
+      "name_en": "Renfro Corporation"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

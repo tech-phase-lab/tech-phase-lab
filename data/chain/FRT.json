@@ -1,0 +1,142 @@
+{
+  "root": {
+    "ticker": "FRT",
+    "name": "フェデラル・リアルティ・インベストメント・トラスト",
+    "cik": 34903,
+    "name_en": "Federal Realty Investment Trust"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "ROST",
+      "ticker": "ROST",
+      "name": "ロス・ストアーズ",
+      "sub": "小売テナント",
+      "sub_en": "Retail tenant",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "チャンドラー・フェスティバルの主要テナントとして入居している",
+          "text_en": "Ross Dress for Less is a principal tenant at Chandler Festival",
+          "source": {
+            "label": "Federal Realty Investment Trust 10-K(2025-12-31)",
+            "label_en": "Federal Realty Investment Trust 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/34903/000003490326000017/frt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "Chandler Festival Chandler, AZ 85224(5)(6) 2000 2022 355,000 $19.22 98% Ross Dress for Less Nordstrom Rack TJ Maxx Ulta"
+          }
+        }
+      ],
+      "name_en": "Ross Stores"
+    },
+    {
+      "id": "TJX",
+      "ticker": "TJX",
+      "name": "TJX(TJマックス)",
+      "sub": "小売テナント",
+      "sub_en": "Retail tenant",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "チャンドラー・フェスティバルの主要テナントとして入居している",
+          "text_en": "TJ Maxx is a principal tenant at Chandler Festival",
+          "source": {
+            "label": "Federal Realty Investment Trust 10-K(2025-12-31)",
+            "label_en": "Federal Realty Investment Trust 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/34903/000003490326000017/frt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "Chandler Festival Chandler, AZ 85224(5)(6) 2000 2022 355,000 $19.22 98% Ross Dress for Less Nordstrom Rack TJ Maxx Ulta"
+          }
+        }
+      ],
+      "name_en": "TJX (TJ Maxx)"
+    },
+    {
+      "id": "ULTA",
+      "ticker": "ULTA",
+      "name": "アルタ・ビューティー",
+      "sub": "小売テナント",
+      "sub_en": "Retail tenant",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "チャンドラー・フェスティバルの主要テナントとして入居している",
+          "text_en": "Ulta is a principal tenant at Chandler Festival",
+          "source": {
+            "label": "Federal Realty Investment Trust 10-K(2025-12-31)",
+            "label_en": "Federal Realty Investment Trust 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/34903/000003490326000017/frt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "Chandler Festival Chandler, AZ 85224(5)(6) 2000 2022 355,000 $19.22 98% Ross Dress for Less Nordstrom Rack TJ Maxx Ulta"
+          }
+        }
+      ],
+      "name_en": "Ulta Beauty"
+    },
+    {
+      "id": "KR",
+      "ticker": "KR",
+      "name": "クローガー",
+      "sub": "食品小売テナント",
+      "sub_en": "Grocery tenant",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "グラティオット・プラザの主要テナントとして入居している",
+          "text_en": "Kroger is a principal tenant at Gratiot Plaza",
+          "source": {
+            "label": "Federal Realty Investment Trust 10-K(2025-12-31)",
+            "label_en": "Federal Realty Investment Trust 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/34903/000003490326000017/frt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "Gratiot Plaza Roseville, MI 48066 1964 1973 205,000 $14.68 85% Kroger Best Buy Bob's Discount Furniture"
+          }
+        }
+      ],
+      "name_en": "Kroger"
+    },
+    {
+      "id": "BBY",
+      "ticker": "BBY",
+      "name": "ベスト・バイ",
+      "sub": "家電小売テナント",
+      "sub_en": "Electronics tenant",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "グラティオット・プラザの主要テナントとして入居している",
+          "text_en": "Best Buy is a principal tenant at Gratiot Plaza",
+          "source": {
+            "label": "Federal Realty Investment Trust 10-K(2025-12-31)",
+            "label_en": "Federal Realty Investment Trust 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/34903/000003490326000017/frt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "Gratiot Plaza Roseville, MI 48066 1964 1973 205,000 $14.68 85% Kroger Best Buy Bob's Discount Furniture"
+          }
+        }
+      ],
+      "name_en": "Best Buy"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

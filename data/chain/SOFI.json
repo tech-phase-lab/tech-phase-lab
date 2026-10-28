@@ -1,0 +1,308 @@
+{
+  "root": {
+    "ticker": "SOFI",
+    "name": "SoFi Technologies",
+    "cik": 1818874
+  },
+  "rows": [
+    {
+      "ja": "ローン債権の買い手・資金の出し手",
+      "en": "Loan buyers & funding partners",
+      "above": true
+    },
+    {
+      "ja": "提携・決済・暗号資産",
+      "en": "Partnerships, payments & crypto"
+    },
+    {
+      "ja": "銀行・融資の取りまとめ",
+      "en": "Banks & arrangers"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "BLK",
+      "ticker": "BLK",
+      "name": "BlackRock",
+      "sub": "資産運用",
+      "sub_en": "Asset management",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "個人ローンの証券化(3.75億ドル)を、BlackRockの運用ファンド・口座のみに販売",
+          "text_en": "Placed a $375M personal loan securitization exclusively with funds and accounts managed by BlackRock investment advisors",
+          "source": {
+            "label": "SoFi の発表(2023年10月30日)",
+            "label_en": "SoFi press release (Oct 30, 2023)",
+            "url": "https://www.sofi.com/newsroom/sofi-blackrock-partner-375-million-personal-loan-securitization/",
+            "level": "official",
+            "date": "2023-10-30",
+            "quote": "today announced an agreement to place a $375 million personal loan securitization exclusively with funds and accounts managed by BlackRock (NYSE: BLK) investment advisors.",
+            "note": "2023年の単発の取引で、相手はBlackRockが運用するファンドです。",
+            "note_en": "A one-off 2023 transaction with BlackRock-managed funds."
+          }
+        }
+      ]
+    },
+    {
+      "id": "OWL",
+      "ticker": "OWL",
+      "name": "Blue Owl Capital",
+      "sub": "資産運用",
+      "sub_en": "Asset management",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Blue Owlが運用するファンドと、最大50億ドル・2年間の個人ローン事業(Loan Platform Business)契約を確定",
+          "text_en": "Finalized an up to $5B two-year Loan Platform Business agreement for personal loans with funds managed by Blue Owl Capital",
+          "source": {
+            "label": "SoFi の発表(2025年3月13日)",
+            "label_en": "SoFi press release (Mar 13, 2025)",
+            "url": "https://www.sofi.com/newsroom/sofi-expands-loan-platform-business-5-billion-agreement-blue-owl-capital-funds/",
+            "level": "official",
+            "date": "2025-03-13",
+            "quote": "SoFi Technologies, Inc. (NASDAQ: SOFI) finalized an up to $5 billion Loan Platform Business agreement for personal loans with funds managed by Blue Owl Capital",
+            "note": "相手はBlue Owlが運用するファンドで、期間は2025年3月からの2年間です。",
+            "note_en": "The counterparty is funds managed by Blue Owl; two-year term from March 2025."
+          }
+        }
+      ]
+    },
+    {
+      "id": "PRU",
+      "ticker": "PRU",
+      "name": "Prudential Financial(PGIM)",
+      "sub": "保険・資産運用",
+      "sub_en": "Insurance & asset management",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "2024年第4四半期に、5.25億ドルの個人ローン証券化をPGIM Fixed Incomeが運用するファンド・口座と実施",
+          "text_en": "Closed a $525M personal loan securitization in Q4 2024 with funds and accounts managed by PGIM Fixed Income",
+          "source": {
+            "label": "SoFi の発表(2025年1月16日)",
+            "label_en": "SoFi press release (Jan 16, 2025)",
+            "url": "https://www.sofi.com/newsroom/sofi-pgim-fixed-income-announce-525-million-securitization-agreement-signaling-continued-demand-personal-loans/",
+            "level": "official",
+            "date": "2025-01-16",
+            "quote": "a $525 million personal loan securitization agreement closed in Q4 2024 with funds and accounts managed by PGIM Fixed Income",
+            "note": "相手はPrudential傘下のPGIM Fixed Incomeです。",
+            "note_en": "The counterparty is PGIM Fixed Income, an asset manager within Prudential Financial."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MA",
+      "ticker": "MA",
+      "name": "Mastercard",
+      "sub": "決済",
+      "sub_en": "Payments",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Mastercardと提携を強化し、SoFiのステーブルコインSoFiUSDをMastercardの世界の決済網での決済手段にできるようにする",
+          "text_en": "Announced an enhanced partnership with Mastercard to enable its SoFiUSD stablecoin as a settlement option across Mastercard’s global payments network",
+          "source": {
+            "label": "SoFi の発表(2026年3月3日)",
+            "label_en": "SoFi press release (Mar 3, 2026)",
+            "url": "https://www.sofi.com/newsroom/sofi-and-mastercard-partner-to-enable-sofiusd-settlement-across-mastercards-global-payments-network/",
+            "level": "official",
+            "date": "2026-03-03",
+            "quote": "SoFi Technologies, Inc. today announced an enhanced partnership with Mastercard to enable SoFiUSD as a settlement option across Mastercard’s global payments network."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "Mastercardは、法人向けの法定通貨・暗号資産バンキング「SoFi Big Business Banking」の最初の参加企業となる予定だ",
+          "text_en": "Mastercard will be an initial participant in SoFi Big Business Banking, SoFi’s fiat and crypto banking offering for enterprise partners",
+          "source": {
+            "label": "SoFi の発表(2026年4月2日)",
+            "label_en": "SoFi press release (Apr 2, 2026)",
+            "url": "https://www.sofi.com/newsroom/sofi-launches-big-business-banking-to-power-fiat-and-crypto-banking-on-a-single-regulated-platform/",
+            "level": "official",
+            "date": "2026-04-02",
+            "quote": "Initial participants will include Cumberland, Bullish, BitGo, B2C2, Fireblocks, Wintermute, Galaxy, Jupiter, Mesh Payments, and Mastercard.",
+            "note": "開始時の参加企業の一覧で、参加条件の詳細は書かれていません。",
+            "note_en": "An initial-participant list at launch; participation terms are not detailed."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BLSH",
+      "ticker": "BLSH",
+      "name": "Bullish",
+      "sub": "暗号資産取引所",
+      "sub_en": "Crypto exchange",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "SoFi Big Business Bankingには、最初の参加企業としてBullishが加わる見込みだ",
+          "text_en": "Bullish will be an initial participant in SoFi Big Business Banking",
+          "source": {
+            "label": "SoFi の発表(2026年4月2日)",
+            "label_en": "SoFi press release (Apr 2, 2026)",
+            "url": "https://www.sofi.com/newsroom/sofi-launches-big-business-banking-to-power-fiat-and-crypto-banking-on-a-single-regulated-platform/",
+            "level": "official",
+            "date": "2026-04-02",
+            "quote": "Initial participants will include Cumberland, Bullish, BitGo, B2C2, Fireblocks, Wintermute, Galaxy, Jupiter, Mesh Payments, and Mastercard.",
+            "note": "開始時の参加企業の一覧で、参加条件の詳細は書かれていません。",
+            "note_en": "An initial-participant list at launch; participation terms are not detailed."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BTGO",
+      "ticker": "BTGO",
+      "name": "BitGo",
+      "sub": "暗号資産カストディ",
+      "sub_en": "Crypto custody",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "BitGoもSoFi Big Business Bankingに最初から参加する構想だ",
+          "text_en": "BitGo will be an initial participant in SoFi Big Business Banking",
+          "source": {
+            "label": "SoFi の発表(2026年4月2日)",
+            "label_en": "SoFi press release (Apr 2, 2026)",
+            "url": "https://www.sofi.com/newsroom/sofi-launches-big-business-banking-to-power-fiat-and-crypto-banking-on-a-single-regulated-platform/",
+            "level": "official",
+            "date": "2026-04-02",
+            "quote": "Initial participants will include Cumberland, Bullish, BitGo, B2C2, Fireblocks, Wintermute, Galaxy, Jupiter, Mesh Payments, and Mastercard.",
+            "note": "開始時の参加企業の一覧で、参加条件の詳細は書かれていません。",
+            "note_en": "An initial-participant list at launch; participation terms are not detailed."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GLXY",
+      "ticker": "GLXY",
+      "name": "Galaxy Digital",
+      "sub": "暗号資産",
+      "sub_en": "Crypto",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "GalaxyはSoFi Big Business Bankingの最初の参加企業に名を連ねる見通し",
+          "text_en": "Galaxy will be an initial participant in SoFi Big Business Banking",
+          "source": {
+            "label": "SoFi の発表(2026年4月2日)",
+            "label_en": "SoFi press release (Apr 2, 2026)",
+            "url": "https://www.sofi.com/newsroom/sofi-launches-big-business-banking-to-power-fiat-and-crypto-banking-on-a-single-regulated-platform/",
+            "level": "official",
+            "date": "2026-04-02",
+            "quote": "Initial participants will include Cumberland, Bullish, BitGo, B2C2, Fireblocks, Wintermute, Galaxy, Jupiter, Mesh Payments, and Mastercard.",
+            "note": "開始時の参加企業の一覧です。「Galaxy」はGalaxy Digitalと解釈しています。",
+            "note_en": "An initial-participant list; “Galaxy” is read as Galaxy Digital."
+          }
+        }
+      ]
+    },
+    {
+      "id": "STEP",
+      "ticker": "STEP",
+      "name": "StepStone Group",
+      "sub": "プライベート投資",
+      "sub_en": "Private markets",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Templum経由で、SoFiの会員がStepStone Private Markets Fundを利用できるようにした",
+          "text_en": "SoFi gave members access to the StepStone Private Markets Fund through its relationship with Templum",
+          "source": {
+            "label": "SoFi の発表(2024年12月4日)",
+            "label_en": "SoFi press release (Dec 4, 2024)",
+            "url": "https://www.sofi.com/newsroom/sofi-expands-access-alts-new-partnership-templum-cosmos-fund-sole-exposure-spacex-pomona-investment-fund-stepstone-private-markets-fund/",
+            "level": "official",
+            "date": "2024-12-04",
+            "quote": "announced access to three new private market funds through a relationship with Templum",
+            "note": "利用はTemplum(未上場)のプラットフォーム経由で、SoFiの直接の取引相手はStepStoneとは限りません。",
+            "note_en": "Access is via the Templum (private) platform; SoFi’s direct counterparty is not necessarily StepStone."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GS",
+      "ticker": "GS",
+      "name": "Goldman Sachs",
+      "sub": "投資銀行",
+      "sub_en": "Investment bank",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Goldman Sachs Bank USAが、SoFiの改定済み回転与信契約の管理代理人",
+          "text_en": "Goldman Sachs Bank USA is administrative agent under SoFi’s amended and restated revolving credit agreement",
+          "source": {
+            "label": "SoFi 10-K(2025年度)",
+            "label_en": "SoFi 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1818874/000181887426000013/sofi-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "the issuing banks party thereto and Goldman Sachs Bank USA, as administrative agent.",
+            "note": "相手は子会社のGoldman Sachs Bank USAです。",
+            "note_en": "The counterparty is the subsidiary Goldman Sachs Bank USA."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "SoFiの6.976億ドルの個人ローン証券化で、組成代理人・共同主幹事を務めた",
+          "text_en": "Goldman Sachs was structuring agent and joint lead bookrunner on SoFi’s $697.6M personal loan securitization",
+          "source": {
+            "label": "SoFi の発表(2025年3月3日)",
+            "label_en": "SoFi press release (Mar 3, 2025)",
+            "url": "https://www.sofi.com/newsroom/sofi-closes-697-6-million-securitization-loan-platform-business-volume/",
+            "level": "official",
+            "date": "2025-03-03",
+            "quote": "Goldman Sachs was the structuring agent and joint lead bookrunner with Bank of America.",
+            "note": "1回の取引です。",
+            "note_en": "A single transaction."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BAC",
+      "ticker": "BAC",
+      "name": "Bank of America",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "SoFiの6.976億ドルの個人ローン証券化で、共同主幹事を務めた",
+          "text_en": "Bank of America was joint lead bookrunner on SoFi’s $697.6M personal loan securitization",
+          "source": {
+            "label": "SoFi の発表(2025年3月3日)",
+            "label_en": "SoFi press release (Mar 3, 2025)",
+            "url": "https://www.sofi.com/newsroom/sofi-closes-697-6-million-securitization-loan-platform-business-volume/",
+            "level": "official",
+            "date": "2025-03-03",
+            "quote": "Goldman Sachs was the structuring agent and joint lead bookrunner with Bank of America.",
+            "note": "1回の取引です。",
+            "note_en": "A single transaction."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

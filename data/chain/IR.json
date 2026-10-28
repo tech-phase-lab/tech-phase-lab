@@ -1,0 +1,268 @@
+{
+  "root": {
+    "ticker": "IR",
+    "name": "インガソール・ランド",
+    "cik": 1699150,
+    "name_en": "Ingersoll Rand"
+  },
+  "rows": [
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "FLS",
+    "IEX",
+    "DOV",
+    "GGG",
+    "NOV"
+  ],
+  "companies": [
+    {
+      "id": "ATLAS",
+      "ticker": "Atlas Copco",
+      "name": "アトラスコプコ",
+      "sub": "圧縮機",
+      "sub_en": "Compressors",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "圧縮機・真空・ブロワー製品で競合する",
+          "text_en": "Competes in compression, vacuum and blower products",
+          "source": {
+            "label": "Ingersoll Rand 10-K(2025年12月31日)",
+            "label_en": "Ingersoll Rand 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1699150/000162828026008617/iri-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "Our principal competitors in sales of compression, vacuum and blower products include Atlas Copco, Flowserve, IDEX Corporation, Kaeser Compressors"
+          }
+        }
+      ],
+      "name_en": "Atlas Copco"
+    },
+    {
+      "id": "FLS",
+      "ticker": "FLS",
+      "name": "フローサーブ",
+      "sub": "ポンプ・バルブ",
+      "sub_en": "Pumps & valves",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "圧縮機・真空・ブロワー製品で競合する",
+          "text_en": "Competes in compression, vacuum and blower products",
+          "source": {
+            "label": "Ingersoll Rand 10-K(2025年12月31日)",
+            "label_en": "Ingersoll Rand 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1699150/000162828026008617/iri-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "Our principal competitors in sales of compression, vacuum and blower products include Atlas Copco, Flowserve, IDEX Corporation, Kaeser Compressors"
+          }
+        }
+      ],
+      "name_en": "Flowserve"
+    },
+    {
+      "id": "IEX",
+      "ticker": "IEX",
+      "name": "アイデックス",
+      "sub": "ポンプ・流体機器",
+      "sub_en": "Pumps & fluids",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "圧縮機・真空・ブロワー製品と精密・科学技術分野で競合する",
+          "text_en": "Competes in compression, vacuum and blower products and precision technologies",
+          "source": {
+            "label": "Ingersoll Rand 10-K(2025年12月31日)",
+            "label_en": "Ingersoll Rand 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1699150/000162828026008617/iri-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "Our principal competitors in sales of compression, vacuum and blower products include Atlas Copco, Flowserve, IDEX Corporation, Kaeser Compressors"
+          }
+        }
+      ],
+      "name_en": "IDEX Corporation"
+    },
+    {
+      "id": "KAESER",
+      "ticker": "Kaeser Compressors",
+      "name": "ケーザー・コンプレッサー",
+      "sub": "圧縮機",
+      "sub_en": "Compressors",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "圧縮機・真空・ブロワー製品で競合する",
+          "text_en": "Competes in compression, vacuum and blower products",
+          "source": {
+            "label": "Ingersoll Rand 10-K(2025年12月31日)",
+            "label_en": "Ingersoll Rand 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1699150/000162828026008617/iri-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "Our principal competitors in sales of compression, vacuum and blower products include Atlas Copco, Flowserve, IDEX Corporation, Kaeser Compressors"
+          }
+        }
+      ],
+      "name_en": "Kaeser Compressors"
+    },
+    {
+      "id": "DOV",
+      "ticker": "DOV",
+      "name": "ドーバー",
+      "sub": "産業機器",
+      "sub_en": "Industrial equipment",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "精密・科学技術分野で競合する",
+          "text_en": "Competes in precision and science technologies",
+          "source": {
+            "label": "Ingersoll Rand 10-K(2025年12月31日)",
+            "label_en": "Ingersoll Rand 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1699150/000162828026008617/iri-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "Our primary competitors include Dover, Graco, IDEX Corporation, KNF Neuberger, Netzsch, NOV, Sartorius, SPX Flow, Thermo Fisher Scientific, and Watson-Marlow"
+          }
+        }
+      ],
+      "name_en": "Dover"
+    },
+    {
+      "id": "GGG",
+      "ticker": "GGG",
+      "name": "グラコ",
+      "sub": "流体制御",
+      "sub_en": "Fluid handling",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "精密・科学技術分野で競合する",
+          "text_en": "Competes in precision and science technologies",
+          "source": {
+            "label": "Ingersoll Rand 10-K(2025年12月31日)",
+            "label_en": "Ingersoll Rand 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1699150/000162828026008617/iri-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "Our primary competitors include Dover, Graco, IDEX Corporation, KNF Neuberger, Netzsch, NOV, Sartorius, SPX Flow, Thermo Fisher Scientific, and Watson-Marlow"
+          }
+        }
+      ],
+      "name_en": "Graco"
+    },
+    {
+      "id": "NOV",
+      "ticker": "NOV",
+      "name": "NOVインク",
+      "sub": "エネルギー機器",
+      "sub_en": "Energy equipment",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "精密・科学技術分野で競合する",
+          "text_en": "Competes in precision and science technologies",
+          "source": {
+            "label": "Ingersoll Rand 10-K(2025年12月31日)",
+            "label_en": "Ingersoll Rand 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1699150/000162828026008617/iri-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "Our primary competitors include Dover, Graco, IDEX Corporation, KNF Neuberger, Netzsch, NOV, Sartorius, SPX Flow, Thermo Fisher Scientific, and Watson-Marlow"
+          }
+        }
+      ],
+      "name_en": "NOV Inc."
+    },
+    {
+      "id": "SART",
+      "ticker": "Sartorius",
+      "name": "ザルトリウス",
+      "sub": "バイオ機器",
+      "sub_en": "Bioprocess equipment",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "精密・科学技術分野で競合する",
+          "text_en": "Competes in precision and science technologies",
+          "source": {
+            "label": "Ingersoll Rand 10-K(2025年12月31日)",
+            "label_en": "Ingersoll Rand 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1699150/000162828026008617/iri-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "Our primary competitors include Dover, Graco, IDEX Corporation, KNF Neuberger, Netzsch, NOV, Sartorius, SPX Flow, Thermo Fisher Scientific, and Watson-Marlow"
+          }
+        }
+      ],
+      "name_en": "Sartorius"
+    },
+    {
+      "id": "TMO",
+      "ticker": "TMO",
+      "name": "サーモフィッシャーサイエンティフィック",
+      "sub": "ライフサイエンス",
+      "sub_en": "Life sciences",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "精密・科学技術分野で競合する",
+          "text_en": "Competes in precision and science technologies",
+          "source": {
+            "label": "Ingersoll Rand 10-K(2025年12月31日)",
+            "label_en": "Ingersoll Rand 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1699150/000162828026008617/iri-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "Our primary competitors include Dover, Graco, IDEX Corporation, KNF Neuberger, Netzsch, NOV, Sartorius, SPX Flow, Thermo Fisher Scientific, and Watson-Marlow"
+          }
+        }
+      ],
+      "name_en": "Thermo Fisher Scientific"
+    },
+    {
+      "id": "WM",
+      "ticker": "Watson-Marlow",
+      "name": "ワトソン・マーロー",
+      "sub": "蠕動ポンプ",
+      "sub_en": "Peristaltic pumps",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "精密・科学技術分野で競合する",
+          "text_en": "Competes in precision and science technologies",
+          "source": {
+            "label": "Ingersoll Rand 10-K(2025年12月31日)",
+            "label_en": "Ingersoll Rand 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1699150/000162828026008617/iri-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "Our primary competitors include Dover, Graco, IDEX Corporation, KNF Neuberger, Netzsch, NOV, Sartorius, SPX Flow, Thermo Fisher Scientific, and Watson-Marlow"
+          }
+        }
+      ],
+      "name_en": "Watson-Marlow"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

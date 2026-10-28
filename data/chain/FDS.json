@@ -1,0 +1,171 @@
+{
+  "root": {
+    "ticker": "FDS",
+    "name": "ファクトセット・リサーチ・システムズ",
+    "cik": 1013237,
+    "name_en": "FactSet Research Systems"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [
+    "SPGI",
+    "BLK",
+    "MSCI",
+    "MORN"
+  ],
+  "companies": [
+    {
+      "id": "BBG",
+      "ticker": "Bloomberg",
+      "name": "ブルームバーグ",
+      "sub": "金融データ",
+      "sub_en": "Financial data",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "金融市場データ分野で主な競合として挙げられている",
+          "text_en": "Bloomberg is named among the most notable competitors in financial market data",
+          "source": {
+            "label": "FactSet Research Systems 10-K(2026-08-31)",
+            "label_en": "FactSet Research Systems 10-K (fiscal year ended 2026-08-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1013237/000162828026066391/fds-20260831.htm",
+            "level": "official",
+            "date": "2026-10-20",
+            "quote": "most notably Bloomberg L.P., S&P, London Stock Exchange Group (\"LSEG\"), BlackRock, MSCI Inc., and Morningstar Inc., in addition to clients with in-house teams developing their own solutions"
+          }
+        }
+      ],
+      "name_en": "Bloomberg L.P."
+    },
+    {
+      "id": "SPGI",
+      "ticker": "SPGI",
+      "name": "S&Pグローバル",
+      "sub": "金融データ・格付け",
+      "sub_en": "Financial data & ratings",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "金融市場データ分野の主な競合の1社",
+          "text_en": "S&P is named among the most notable competitors in financial market data",
+          "source": {
+            "label": "FactSet Research Systems 10-K(2026-08-31)",
+            "label_en": "FactSet Research Systems 10-K (fiscal year ended 2026-08-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1013237/000162828026066391/fds-20260831.htm",
+            "level": "official",
+            "date": "2026-10-20",
+            "quote": "most notably Bloomberg L.P., S&P, London Stock Exchange Group (\"LSEG\"), BlackRock, MSCI Inc., and Morningstar Inc., in addition to clients with in-house teams developing their own solutions"
+          }
+        }
+      ],
+      "name_en": "S&P Global"
+    },
+    {
+      "id": "LSEG",
+      "ticker": "London Stock",
+      "name": "ロンドン証券取引所グループ",
+      "sub": "取引所・データ",
+      "sub_en": "Exchange & data",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "金融市場データ分野の主な競合の1社",
+          "text_en": "LSEG is named among the most notable competitors in financial market data",
+          "source": {
+            "label": "FactSet Research Systems 10-K(2026-08-31)",
+            "label_en": "FactSet Research Systems 10-K (fiscal year ended 2026-08-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1013237/000162828026066391/fds-20260831.htm",
+            "level": "official",
+            "date": "2026-10-20",
+            "quote": "most notably Bloomberg L.P., S&P, London Stock Exchange Group (\"LSEG\"), BlackRock, MSCI Inc., and Morningstar Inc., in addition to clients with in-house teams developing their own solutions"
+          }
+        }
+      ],
+      "name_en": "London Stock Exchange Group"
+    },
+    {
+      "id": "BLK",
+      "ticker": "BLK",
+      "name": "ブラックロック",
+      "sub": "資産運用・分析",
+      "sub_en": "Asset management & analytics",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "金融市場データ分野の主な競合の1社",
+          "text_en": "BlackRock is named among the most notable competitors in financial market data",
+          "source": {
+            "label": "FactSet Research Systems 10-K(2026-08-31)",
+            "label_en": "FactSet Research Systems 10-K (fiscal year ended 2026-08-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1013237/000162828026066391/fds-20260831.htm",
+            "level": "official",
+            "date": "2026-10-20",
+            "quote": "most notably Bloomberg L.P., S&P, London Stock Exchange Group (\"LSEG\"), BlackRock, MSCI Inc., and Morningstar Inc., in addition to clients with in-house teams developing their own solutions"
+          }
+        }
+      ],
+      "name_en": "BlackRock"
+    },
+    {
+      "id": "MSCI",
+      "ticker": "MSCI",
+      "name": "MSCI(エムエスシーアイ)",
+      "sub": "指数・分析",
+      "sub_en": "Indexes & analytics",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "金融市場データ分野の主な競合の1社",
+          "text_en": "MSCI Inc. is named among the most notable competitors in financial market data",
+          "source": {
+            "label": "FactSet Research Systems 10-K(2026-08-31)",
+            "label_en": "FactSet Research Systems 10-K (fiscal year ended 2026-08-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1013237/000162828026066391/fds-20260831.htm",
+            "level": "official",
+            "date": "2026-10-20",
+            "quote": "most notably Bloomberg L.P., S&P, London Stock Exchange Group (\"LSEG\"), BlackRock, MSCI Inc., and Morningstar Inc., in addition to clients with in-house teams developing their own solutions"
+          }
+        }
+      ],
+      "name_en": "MSCI Inc."
+    },
+    {
+      "id": "MORN",
+      "ticker": "MORN",
+      "name": "モーニングスター",
+      "sub": "投資調査・データ",
+      "sub_en": "Investment research",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "金融市場データ分野の主な競合の1社",
+          "text_en": "Morningstar is named among the most notable competitors in financial market data",
+          "source": {
+            "label": "FactSet Research Systems 10-K(2026-08-31)",
+            "label_en": "FactSet Research Systems 10-K (fiscal year ended 2026-08-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1013237/000162828026066391/fds-20260831.htm",
+            "level": "official",
+            "date": "2026-10-20",
+            "quote": "most notably Bloomberg L.P., S&P, London Stock Exchange Group (\"LSEG\"), BlackRock, MSCI Inc., and Morningstar Inc., in addition to clients with in-house teams developing their own solutions"
+          }
+        }
+      ],
+      "name_en": "Morningstar"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

@@ -1,0 +1,413 @@
+{
+  "root": {
+    "ticker": "STX",
+    "name": "Seagate",
+    "cik": 1137789
+  },
+  "rows": [
+    {
+      "ja": "供給元(部品・メモリー)",
+      "en": "Suppliers (parts & memory)",
+      "above": true
+    },
+    {
+      "ja": "顧客・利用企業",
+      "en": "Customers & users"
+    },
+    {
+      "ja": "提携・出資・取引",
+      "en": "Partnerships & deals"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in 10-Ks)"
+    }
+  ],
+  "rivals": [
+    "WDC"
+  ],
+  "companies": [
+    {
+      "id": "8299",
+      "ticker": "Phison",
+      "name": "Phison Electronics",
+      "sub": "SSDコントローラー",
+      "sub_en": "SSD controllers",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "エンタープライズSSDの開発・販売で長期の提携。PhisonがNANDコントローラーなどを供給",
+          "text_en": "Long-term partnership on development and distribution of enterprise-class SSDs; Phison supplies NAND flash controller and storage solutions",
+          "source": {
+            "label": "Seagate の発表",
+            "label_en": "Seagate press release (Phison partnership)",
+            "url": "https://www.seagate.com/stories/articles/seagate-and-phison-broaden-partnership-to-bolster-portfolio-of-high-performance,-high-density-enterprise-class-solid-state-drives-optimized-to-lower-data-center-tco-pr-master/",
+            "level": "official",
+            "date": "2022-04",
+            "quote": "The companies also announced that they have entered a long-term partnership that will strengthen the development cycle and distribution of enterprise-class SSDs.",
+            "note": "2022年の発表で、現在の状況は再確認していません。",
+            "note_en": "A 2022 release; the current status has not been re-confirmed."
+          }
+        }
+      ]
+    },
+    {
+      "id": "285A",
+      "ticker": "Kioxia",
+      "name": "Kioxia(旧 東芝メモリ)",
+      "sub": "NANDメモリー",
+      "sub_en": "NAND flash",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "東芝メモリ(現Kioxia)と長期のNAND供給契約を締結",
+          "text_en": "Signed a long-term NAND supply agreement with Toshiba Memory Corporation (now Kioxia)",
+          "source": {
+            "label": "Seagate の発表",
+            "label_en": "Seagate press release (NAND supply agreement)",
+            "url": "https://www.seagate.com/stories/articles/seagate-technology-announces-preliminary-financial-information-for-fiscal-second-quarter-2018-and-completion-of-long-term-nand-supply-agreement-with-toshiba-memory-corporation-pr/",
+            "level": "official",
+            "date": "2018-01-08",
+            "quote": "Long-term NAND supply agreement with Toshiba Memory Corporation signed to benefit portfolio expansion and portfolio continuity",
+            "note": "2018年の発表で、現在の状況は確認していません。社名はその後Kioxiaに変わりました。",
+            "note_en": "A 2018 release; the current status is not verified. Toshiba Memory was later renamed Kioxia."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "ベインキャピタル主導の、東芝メモリ(現Kioxia)を買収するコンソーシアムに出資",
+          "text_en": "Invested in the Bain Capital-led consortium that acquired Toshiba Memory Corporation (now Kioxia)",
+          "source": {
+            "label": "Seagate の発表",
+            "label_en": "Seagate press release (Toshiba Memory investment)",
+            "url": "https://www.seagate.com/stories/articles/seagate-completes-invest-in-bain-capital-pvt-equity-acq-of-toshiba-mem-corp-master-pr/",
+            "level": "official",
+            "date": "2018-06-01",
+            "quote": "completed the previously announced acquisition of Toshiba Memory Corporation by K. K. Pangea",
+            "note": "2018年の出資で、現在の持分は確認していません。",
+            "note_en": "A 2018 investment; the current stake is not verified."
+          }
+        }
+      ],
+      "name_en": "Kioxia (formerly Toshiba Memory)"
+    },
+    {
+      "id": "5991",
+      "ticker": "NHK Spring",
+      "name": "NHK Spring",
+      "sub": "HDD用サスペンション",
+      "sub_en": "HDD suspension assemblies",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "SeagateがHDD用サスペンション部品の供給元として名前を挙げ、反トラスト法違反の損害賠償を求めている",
+          "text_en": "Named as an HDD suspension assembly supplier against which Seagate is pursuing antitrust claims",
+          "source": {
+            "label": "Seagate 10-K(2026年度)",
+            "label_en": "Seagate 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1137789/000113778926000159/stx-20260703.htm",
+            "level": "official",
+            "date": "2026-08-04",
+            "quote": "against suppliers of HDD suspension assemblies, including NHK Spring Co. Ltd. (“NHK”), TDK Corporation (“TDK”) and Hutchinson Technology Inc",
+            "note": "供給契約ではなく、訴訟の中で述べられた関係です。",
+            "note_en": "The relationship is described through litigation, not a supply agreement."
+          }
+        }
+      ]
+    },
+    {
+      "id": "6762",
+      "ticker": "TDK",
+      "name": "TDK",
+      "sub": "HDD用部品",
+      "sub_en": "HDD components",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "SeagateのHDD用サスペンション部品の供給元として名前が挙げられた反トラスト訴訟",
+          "text_en": "Named as an HDD suspension assembly supplier in Seagate’s antitrust action",
+          "source": {
+            "label": "Seagate 10-K(2026年度)",
+            "label_en": "Seagate 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1137789/000113778926000159/stx-20260703.htm",
+            "level": "official",
+            "date": "2026-08-04",
+            "quote": "against suppliers of HDD suspension assemblies, including NHK Spring Co. Ltd. (“NHK”), TDK Corporation (“TDK”) and Hutchinson Technology Inc",
+            "note": "TDKに対する請求は2022年に和解済みで、訴訟を通じて述べられた関係です。",
+            "note_en": "Claims against TDK were settled in 2022; the relationship is described via litigation."
+          }
+        }
+      ]
+    },
+    {
+      "id": "DELL",
+      "ticker": "DELL",
+      "name": "Dell Technologies",
+      "sub": "PC・サーバー",
+      "sub_en": "PCs & servers",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Dellが、Seagate Mozaic 3+を最初に採用する顧客の1社で、Exos M 32TBドライブを自社ストレージに組み込む",
+          "text_en": "Dell is among the first customers to adopt Seagate Mozaic 3+ and will integrate Exos M 32TB drives into its storage systems",
+          "source": {
+            "label": "Seagate の発表",
+            "label_en": "Seagate press release (Mozaic 3+ / Exos M)",
+            "url": "https://www.seagate.com/stories/articles/seagate-introduces-hard-drive-capacities-of-up-to-36tb-extending-its-hamr-based-mozaic-3-technology-platform-pr/",
+            "level": "official",
+            "date": "2025-01-21",
+            "quote": "Dell Technologies is among the first customers to adopt Mozaic 3+ and will soon integrate Exos M 32TB into their high-density storage systems.",
+            "note": "組み込みは発表時点では今後の予定でした。",
+            "note_en": "The integration was described as upcoming at the time of the release."
+          }
+        }
+      ]
+    },
+    {
+      "id": "DBX",
+      "ticker": "DBX",
+      "name": "Dropbox",
+      "sub": "クラウドストレージ",
+      "sub_en": "Cloud storage",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "DropboxがHAMR技術のExos 32TBドライブ(Mozaic)をデータセンター向けに認定",
+          "text_en": "Dropbox qualified Seagate HAMR-based Exos 32TB drives (Mozaic platform) for deployment in its data centers",
+          "source": {
+            "label": "Seagate の記事",
+            "label_en": "Seagate Stories: Powering AI at scale",
+            "url": "https://www.seagate.com/stories/articles/powering-ai-at-scale/",
+            "level": "official",
+            "date": "2025-09-29",
+            "quote": "Dropbox successfully qualified Seagate's HAMR-enabled Exos® 32TB hard drives",
+            "note": "導入の認定で、数量は書かれていません。",
+            "note_en": "Qualification for deployment; volume is not stated."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ZM",
+      "ticker": "ZM",
+      "name": "Zoom Communications",
+      "sub": "ビデオ会議",
+      "sub_en": "Video conferencing",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Zoomの顧客が会議の録画をSeagate Lyve Cloudに保存できるようにする",
+          "text_en": "Zoom agreed to let its customers store meeting recordings on Seagate Lyve Cloud",
+          "source": {
+            "label": "Seagate の発表",
+            "label_en": "Seagate press release (Zoom / Lyve Cloud)",
+            "url": "https://www.seagate.com/stories/articles/zoom-selects-seagates-lyve-cloud-master-pr/",
+            "level": "official",
+            "date": "2021-08-31",
+            "quote": "reached an agreement with Zoom that will soon enable the video conferencing company’s customers to use Seagate Lyve™ Cloud to store meeting recordings.",
+            "note": "2021年の発表で、現在の状況は再確認していません。",
+            "note_en": "A 2021 release; the current status has not been re-confirmed."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AMZN",
+      "ticker": "AMZN",
+      "name": "Amazon(AWS)",
+      "sub": "クラウド",
+      "sub_en": "Cloud",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Seagate Lyve ServicesとExos XシステムをAWS Marketplace・AWS Outpostsなどと連携",
+          "text_en": "Seagate Lyve Services and Exos X systems are integrated with AWS services, including AWS Marketplace and AWS Outposts",
+          "source": {
+            "label": "Seagate の発表",
+            "label_en": "Seagate press release (AWS re:Invent)",
+            "url": "https://www.seagate.com/stories/articles/invent-unlocking-the-power-of-seagate-lyve-services-with-aws-pr/",
+            "level": "official",
+            "date": "2024-12-03",
+            "quote": "Seagate's Lyve Services portfolio is now integrated with many AWS services",
+            "note": "相手はAmazonの事業部門のAmazon Web Servicesです。",
+            "note_en": "The counterparty is Amazon Web Services, a unit of Amazon."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MSFT",
+      "ticker": "MSFT",
+      "name": "Microsoft(Xbox)",
+      "sub": "クラウド・ソフト",
+      "sub_en": "Cloud & software",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Xbox Series X|S用のSeagate拡張ストレージカードを、Xbox(Microsoft)と共同で設計",
+          "text_en": "Seagate’s Storage Expansion Card for Xbox Series X|S was designed in collaboration with Xbox (Microsoft)",
+          "source": {
+            "label": "Seagate の発表",
+            "label_en": "Seagate press release (4TB Xbox expansion card)",
+            "url": "https://www.seagate.com/stories/articles/seagate-unveils-4tb-storage-expansion-card-for-xbox-series-x-s-the-ideal-storage-upgrade-for-players-pr/",
+            "level": "official",
+            "date": "2025-06-09",
+            "quote": "Designed in collaboration with Xbox, this expansion card delivers plug-and-play simplicity",
+            "note": "資料にはMicrosoftではなくXbox(Microsoftのブランド)と書かれています。",
+            "note_en": "The source names Xbox (a Microsoft brand), not Microsoft itself."
+          }
+        }
+      ]
+    },
+    {
+      "id": "6758",
+      "ticker": "Sony",
+      "name": "Sony Group(PlayStation)",
+      "sub": "ゲーム・電機",
+      "sub_en": "Games & electronics",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "PS5・PS4向けのPlayStation公式ライセンスのGame Drive外付けSSDを販売",
+          "text_en": "Seagate sells a Game Drive External SSD officially licensed by PlayStation for PS5 and PS4 consoles",
+          "source": {
+            "label": "Seagate の発表",
+            "label_en": "Seagate press release (PlayStation licensed Game Drive)",
+            "url": "https://www.seagate.com/stories/articles/seagate-announces-playstation5-and-playstation4-storage-with-officially-licensed-game-drive-external-ssd-pr/",
+            "level": "official",
+            "date": "2024-09-17",
+            "quote": "Seagate Announces Game Drive External SSD Officially Licensed by PlayStation® for PlayStation®5 and PlayStation®4 Consoles",
+            "note": "資料にはSony GroupではなくPlayStation(Sony Interactive Entertainment)と書かれています。",
+            "note_en": "The source names PlayStation (Sony Interactive Entertainment), not Sony Group."
+          }
+        }
+      ]
+    },
+    {
+      "id": "EBAY",
+      "ticker": "EBAY",
+      "name": "eBay",
+      "sub": "ネット通販",
+      "sub_en": "E-commerce",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "eBayと持続可能性の協業で合意し、SeagateのeBay店舗を工場で再認定したドライブの販売チャネルにする",
+          "text_en": "Agreed a sustainability collaboration with eBay making Seagate’s eBay storefront a channel for factory-recertified drives",
+          "source": {
+            "label": "Seagate の発表",
+            "label_en": "Seagate press release (eBay circularity)",
+            "url": "https://www.seagate.com/stories/articles/seagate-teams-up-with-ebay-to-expand-hard-drive-circularity-program-pr/",
+            "level": "official",
+            "date": "2024-06-18",
+            "quote": "announced its sustainability collaboration with e-commerce site eBay.",
+            "note": "部品の供給関係ではなく、販売・循環利用の提携です。",
+            "note_en": "A sales-channel and circularity tie, not a component supply relationship."
+          }
+        }
+      ]
+    },
+    {
+      "id": "EQIX",
+      "ticker": "EQIX",
+      "name": "Equinix",
+      "sub": "データセンター",
+      "sub_en": "Data centers",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "EquinixはLyve Cloudのエコシステムに参加するクラウド提携先の1社",
+          "text_en": "Equinix is part of the Lyve Cloud ecosystem network of cloud partners",
+          "source": {
+            "label": "Seagate の発表",
+            "label_en": "Seagate press release (Lyve Cloud Singapore)",
+            "url": "https://www.seagate.com/stories/articles/seagate-expands-lyve-cloud-storage-services-to-singapore/",
+            "level": "official",
+            "date": "2022-02-27",
+            "quote": "Lyve Cloud now has over 50 companies in its ecosystem network, including Zadara, Equinix and PacketFabric",
+            "note": "2022年の発表で、現在の状況は再確認していません。",
+            "note_en": "A 2022 release; the current status has not been re-confirmed."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AVGO",
+      "ticker": "AVGO",
+      "name": "Broadcom",
+      "sub": "半導体",
+      "sub_en": "Semiconductors",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2024年4月、SoCの設計・開発・製造に関する資産をBroadcom子会社のAvagoに売却",
+          "text_en": "Sold its SoC design, development and manufacturing assets to Broadcom subsidiary Avago in April 2024",
+          "source": {
+            "label": "Seagate 10-K(2026年度)",
+            "label_en": "Seagate 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1137789/000113778926000159/stx-20260703.htm",
+            "level": "official",
+            "date": "2026-08-04",
+            "quote": "the Company entered into an Asset Purchase Agreement with Avago Technologies International Sales Pte. Limited (“Purchaser”), a subsidiary of Broadcom Inc., and sold certain intellectual property, equipment and other assets related to the design, development and manufacture of its SoC products to Purchaser.",
+            "note": "取引は2024年4月23日で、10-Kに記載されています。",
+            "note_en": "The transaction was on April 23, 2024, as described in the FY2026 10-K."
+          }
+        }
+      ]
+    },
+    {
+      "id": "WDC",
+      "ticker": "WDC",
+      "name": "Western Digital",
+      "sub": "HDD・ストレージ",
+      "sub_en": "HDD & storage",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Seagateは、世界のHDD市場でWestern Digitalと競合する",
+          "text_en": "Seagate competes with Western Digital in the global HDD market.",
+          "source": {
+            "label": "Seagate 10-K(2026年度)",
+            "label_en": "Seagate 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1137789/000113778926000159/stx-20260703.htm",
+            "level": "official",
+            "date": "2026-08-04",
+            "quote": "Our global competitors include HDD manufacturers such as Western Digital Corporation"
+          }
+        },
+        {
+          "type": "rival",
+          "text": "Western DigitalにとってSeagateは、HDDの競合相手",
+          "text_en": "Seagate is one of Western Digital's HDD competitors.",
+          "source": {
+            "label": "Western Digital 10-K(2026年度)",
+            "label_en": "Western Digital 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/106040/000162828026057139/wdc-20260703.htm",
+            "level": "official",
+            "date": "2026-08-14",
+            "quote": "Our competitors include HDD competitors such as Seagate Technology Holdings plc"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

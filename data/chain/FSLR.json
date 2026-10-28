@@ -1,0 +1,145 @@
+{
+  "root": {
+    "ticker": "FSLR",
+    "name": "ファースト・ソーラー",
+    "cik": 1274494,
+    "name_en": "First Solar"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [
+    "JKS",
+    "CSIQ"
+  ],
+  "companies": [
+    {
+      "id": "SR",
+      "ticker": "Silicon Ranch",
+      "name": "シリコン・ランチ",
+      "sub": "太陽光開発・運営",
+      "sub_en": "Solar developer & operator",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "2025年に、モジュール事業の純売上高の10%以上を占めた顧客である",
+          "text_en": "Silicon Ranch Corporation accounted for 10% or more of modules business net sales in 2025",
+          "source": {
+            "label": "First Solar 10-K(2025年12月期)",
+            "label_en": "First Solar 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1274494/000127449426000021/fslr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "During 2025, Silicon Ranch Corporation and NextEra Energy each accounted for 10% or more of our modules business net sales."
+          }
+        }
+      ],
+      "name_en": "Silicon Ranch"
+    },
+    {
+      "id": "NEE",
+      "ticker": "NEE",
+      "name": "ネクステラ・エナジー",
+      "sub": "電力・再エネ",
+      "sub_en": "Power & renewables",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "2025年に、モジュール事業の純売上高の10%以上を占めた顧客である",
+          "text_en": "NextEra Energy accounted for 10% or more of modules business net sales in 2025",
+          "source": {
+            "label": "First Solar 10-K(2025年12月期)",
+            "label_en": "First Solar 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1274494/000127449426000021/fslr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "During 2025, Silicon Ranch Corporation and NextEra Energy each accounted for 10% or more of our modules business net sales."
+          }
+        }
+      ],
+      "name_en": "NextEra Energy"
+    },
+    {
+      "id": "BP",
+      "ticker": "BP Solar Holding",
+      "name": "BPソーラー・ホールディング",
+      "sub": "太陽光開発",
+      "sub_en": "Solar developer",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "基本供給契約を2025年に解除した相手で、顧客が複数の義務違反を是正しなかったことが理由である",
+          "text_en": "First Solar terminated various master supply agreements with BP Solar Holding LLC in 2025 after the customers failed to cure several breaches",
+          "source": {
+            "label": "First Solar 10-K(2025年12月期)",
+            "label_en": "First Solar 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1274494/000127449426000021/fslr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "During 2025, we terminated various master supply agreements with BP Solar Holding LLC and its affiliate Lightsource Renewable Energy Trading, LLC due to the customers’ failure to cure several breaches of their contractual obligations."
+          }
+        }
+      ],
+      "name_en": "BP Solar Holding"
+    },
+    {
+      "id": "JKS",
+      "ticker": "JKS",
+      "name": "ジンコソーラー",
+      "sub": "太陽光パネル",
+      "sub_en": "Solar modules",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "TOPCon製品が特許を侵害しているとして、First Solarが特許侵害を主張している相手である",
+          "text_en": "First Solar alleges JinkoSolar's TOPCon products contain solar cells made using a method claimed in its patent",
+          "source": {
+            "label": "First Solar 10-K(2025年12月期)",
+            "label_en": "First Solar 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1274494/000127449426000021/fslr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "First Solar alleges that the JinkoSolar TOPCon products contain solar cells manufactured using a method claimed in the patent."
+          }
+        }
+      ],
+      "name_en": "JinkoSolar"
+    },
+    {
+      "id": "CSIQ",
+      "ticker": "CSIQ",
+      "name": "カナディアン・ソーラー",
+      "sub": "太陽光パネル",
+      "sub_en": "Solar modules",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "TOPCon製品が特許を侵害しているとして、First Solarが特許侵害を主張している相手である",
+          "text_en": "First Solar alleges that Canadian Solar's TOPCon products contain solar cells made using a method claimed in its patent",
+          "source": {
+            "label": "First Solar 10-K(2025年12月期)",
+            "label_en": "First Solar 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1274494/000127449426000021/fslr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "First Solar alleges that the Canadian Solar TOPCon products contain solar cells manufactured using a method claimed in the patent."
+          }
+        }
+      ],
+      "name_en": "Canadian Solar"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

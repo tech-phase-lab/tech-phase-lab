@@ -1,0 +1,260 @@
+{
+  "root": {
+    "ticker": "NVMI",
+    "name": "ノバ",
+    "cik": 1109345,
+    "name_en": "Nova"
+  },
+  "rows": [
+    {
+      "ja": "共同研究・提携先",
+      "en": "Joint research & partners"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "KLAC",
+    "ONTO",
+    "ASML",
+    "AMAT",
+    "LRCX"
+  ],
+  "companies": [
+    {
+      "id": "Samsung",
+      "ticker": "Samsung",
+      "name": "サムスン電子",
+      "sub": "メモリ・半導体",
+      "sub_en": "Memory & chips",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ノバとサムスン電子の研究部門が、SPIEで2本の共著論文を発表すると発表した",
+          "text_en": "Nova announced it will publish two co-authored papers with Samsung R&D Center research at SPIE Advanced Lithography 2024",
+          "source": {
+            "label": "Nova の発表",
+            "label_en": "Nova press release",
+            "url": "https://www.novami.com/investors/press-releases/samsung-and-nova-publish-joint-research-at-spie-advanced-lithography-conference/",
+            "level": "official",
+            "date": "2024-02-27",
+            "quote": "Nova (Nasdaq: NVMI) today announced that it will publish two co-authored papers with Samsung R&D Center research at SPIE Advanced Lithography 2024."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "ノバとサムスン電子の共同論文がSPIEで賞を受け、両社の継続的な協力による成果とされた",
+          "text_en": "A joint Nova and Samsung paper won an SPIE award and is described as the result of continuous collaboration between the companies",
+          "source": {
+            "label": "Nova の発表",
+            "label_en": "Nova press release (Form 6-K)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1109345/000117891325000877/zk2532877.htm",
+            "level": "official",
+            "date": "2025-03-18",
+            "quote": "The paper is a result of continuous collaboration between the companies to explore innovative approaches to metrology in advanced chip manufacturing."
+          }
+        }
+      ],
+      "name_en": "Samsung Electronics"
+    },
+    {
+      "id": "IBM",
+      "ticker": "IBM",
+      "name": "IBM",
+      "sub": "ITサービス・量子",
+      "sub_en": "IT services & quantum",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ノバはIBM Researchとの協力の一環として、ニューヨーク州オールバニの同研究所に最新の装置群を設置した",
+          "text_en": "As part of the collaboration with IBM Research, Nova installed its most advanced portfolio at IBM Research's lab in Albany, New York",
+          "source": {
+            "label": "Nova の発表",
+            "label_en": "Nova press release",
+            "url": "https://www.novami.com/investors/press-releases/ibm-research-and-nova-jointly-awarded-the-best-metrology-paper-at-spie-advanced-lithography-conference/",
+            "level": "official",
+            "date": "2022-04-26",
+            "quote": "As part of the collaboration with IBM Research, Nova installed its most advanced portfolio at IBM Research’s lab in Albany, New York.",
+            "note": "2022年の発表です。",
+            "note_en": "From a 2022 announcement."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GFS",
+      "ticker": "GFS",
+      "name": "GlobalFoundries",
+      "sub": "受託製造",
+      "sub_en": "Foundry",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ノバとGlobalFoundriesの共同論文が、両社の継続的な提携の成果とされた",
+          "text_en": "A joint paper is described as the result of the continuous partnership between Nova and GlobalFoundries",
+          "source": {
+            "label": "Nova の発表",
+            "label_en": "Nova press release (Form 6-K)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1109345/000117891319000695/zk1922757.htm",
+            "level": "official",
+            "date": "2019-02-27",
+            "quote": "The paper is a result of the continuous partnership between the companies and demonstrates the innovation Nova promotes in advanced process control utilizing its unique and differentiated software solutions.",
+            "note": "2019年の発表です。",
+            "note_en": "From a 2019 announcement."
+          }
+        }
+      ]
+    },
+    {
+      "id": "KLAC",
+      "ticker": "KLAC",
+      "name": "KLA",
+      "sub": "半導体検査・計測装置",
+      "sub_en": "Inspection & metrology",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ノバと競合する",
+          "text_en": "Competes with Nova",
+          "source": {
+            "label": "Nova 20-F",
+            "label_en": "Nova 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/1109345/000117891326000504/zk2634307.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "We compete mainly with Onto Innovation Inc., and KLA Corp., which manufacture and sell CD,"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ONTO",
+      "ticker": "ONTO",
+      "name": "Onto Innovation",
+      "sub": "半導体検査・計測装置",
+      "sub_en": "Inspection & metrology",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ノバと競合する",
+          "text_en": "Competes with Nova",
+          "source": {
+            "label": "Onto Innovation 10-K",
+            "label_en": "Onto Innovation 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/704532/000119312526066937/onto-20260103.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "In automated systems for the semiconductor industry, our principal competitors are KLA Corporation (“KLA”) and Nova Ltd."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ASML",
+      "ticker": "ASML",
+      "name": "ASML",
+      "sub": "露光装置",
+      "sub_en": "Lithography equipment",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ノバと競合する",
+          "text_en": "Competes with Nova",
+          "source": {
+            "label": "Nova 20-F",
+            "label_en": "Nova 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/1109345/000117891326000504/zk2634307.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "In addition, we compete with process equipment manufacturers, such as ASML"
+          }
+        }
+      ]
+    },
+    {
+      "id": "AMAT",
+      "ticker": "AMAT",
+      "name": "アプライド マテリアルズ",
+      "sub": "半導体製造装置",
+      "sub_en": "Semiconductor equipment",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ノバと競合する",
+          "text_en": "Competes with Nova",
+          "source": {
+            "label": "Nova annual report",
+            "label_en": "Nova annual report (20-F)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1109345/000117891326000504/zk2634307.htm",
+            "level": "official",
+            "date": "2026-02-01",
+            "quote": "In addition, we compete with process equipment manufacturers, such as ASML Holdings N.V., LAM Research, and Applied Materials Inc., which develop (or may acquire companies which develop) in-situ sensors and metrology"
+          }
+        }
+      ],
+      "name_en": "Applied Materials"
+    },
+    {
+      "id": "LRCX",
+      "ticker": "LRCX",
+      "name": "ラムリサーチ",
+      "sub": "半導体製造装置",
+      "sub_en": "Semiconductor equipment",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ノバと競合する",
+          "text_en": "Competes with Nova",
+          "source": {
+            "label": "Nova annual report",
+            "label_en": "Nova annual report (20-F)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1109345/000117891326000504/zk2634307.htm",
+            "level": "official",
+            "date": "2026-02-01",
+            "quote": "In addition, we compete with process equipment manufacturers, such as ASML Holdings N.V., LAM Research, and Applied Materials Inc., which develop (or may acquire companies which develop) in-situ sensors and metrology"
+          }
+        }
+      ],
+      "name_en": "Lam Research"
+    },
+    {
+      "id": "CAMT",
+      "ticker": "CAMT",
+      "name": "カムテック",
+      "sub": "検査・計測装置",
+      "sub_en": "Inspection & metrology",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ノバと競合する",
+          "text_en": "Competes with Nova",
+          "source": {
+            "label": "Nova annual report",
+            "label_en": "Nova annual report (20-F)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1109345/000117891326000504/zk2634307.htm",
+            "level": "official",
+            "date": "2026-02-01",
+            "quote": "The recent acquisition of Sentronics and the expansion of our portfolio in the wafer level packaging and specialty markets, positions us in direct competition with companies such as Merck and Camtek."
+          }
+        }
+      ],
+      "name_en": "Camtek"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

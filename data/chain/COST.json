@@ -1,0 +1,174 @@
+{
+  "root": {
+    "ticker": "COST",
+    "name": "Costco",
+    "cik": 909832
+  },
+  "rows": [
+    {
+      "ja": "提携先",
+      "en": "Partners"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "AMZN",
+    "WMT"
+  ],
+  "companies": [
+    {
+      "id": "V",
+      "ticker": "V",
+      "name": "ビザ",
+      "sub": "決済ネットワーク",
+      "sub_en": "Payment network",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Costcoは、Visaとの加盟店受け入れ・共同ブランドの契約を結んでいる",
+          "text_en": "Costco has an acceptance and co-brand incentive agreement with Visa",
+          "source": {
+            "label": "Costco — Citi co-brand / Visa acceptance agreement announcement, March 2, 2015",
+            "label_en": "Costco — Citi co-brand / Visa acceptance agreement announcement, March 2, 2015",
+            "url": "https://www.sec.gov/Archives/edgar/data/909832/000119312515078956/d885985dex991.htm",
+            "level": "official",
+            "quote": "co-brand credit card program agreement with Citi and an acceptance and co-brand incentive agreement with Visa.",
+            "note": "2015年の発表に基づく記載です。",
+            "note_en": "Based on a 2015 announcement."
+          }
+        }
+      ],
+      "name_en": "Visa"
+    },
+    {
+      "id": "C",
+      "ticker": "C",
+      "name": "シティグループ",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Costcoは、Citiとの共同ブランドのクレジットカード提携契約を結んでいる",
+          "text_en": "Costco has a co-brand credit card program agreement with Citi",
+          "source": {
+            "label": "Costco — Citi co-brand / Visa acceptance agreement announcement, March 2, 2015",
+            "label_en": "Costco — Citi co-brand / Visa acceptance agreement announcement, March 2, 2015",
+            "url": "https://www.sec.gov/Archives/edgar/data/909832/000119312515078956/d885985dex991.htm",
+            "level": "official",
+            "quote": "co-brand credit card program agreement with Citi and an acceptance and co-brand incentive agreement with Visa.",
+            "note": "2015年の発表に基づく記載です。",
+            "note_en": "Based on a 2015 announcement."
+          }
+        }
+      ],
+      "name_en": "Citigroup"
+    },
+    {
+      "id": "AMZN",
+      "ticker": "AMZN",
+      "name": "アマゾン",
+      "sub": "EC・クラウド",
+      "sub_en": "E-commerce & cloud",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Costcoと競合する",
+          "text_en": "Competes with Costco",
+          "source": {
+            "label": "Costco 10-K",
+            "label_en": "Costco 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/909832/000090983226000093/cost-20260830.htm",
+            "level": "official",
+            "date": "2026-10-07",
+            "quote": "Walmart, Target, Kroger, and Amazon are among our significant general merchandise retail competitors in the U.S."
+          }
+        }
+      ],
+      "name_en": "Amazon"
+    },
+    {
+      "id": "WMT",
+      "ticker": "WMT",
+      "name": "ウォルマート",
+      "sub": "小売",
+      "sub_en": "Retail",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Costcoと競合する",
+          "text_en": "Competes with Costco",
+          "source": {
+            "label": "Costco 10-K",
+            "label_en": "Costco 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/909832/000090983226000093/cost-20260830.htm",
+            "level": "official",
+            "date": "2026-10-07",
+            "quote": "We also compete with other warehouse clubs, including Walmart’s Sam’s Club and BJ’s Wholesale Club in the U.S."
+          }
+        }
+      ],
+      "name_en": "Walmart"
+    },
+    {
+      "id": "DASH",
+      "ticker": "DASH",
+      "name": "ドアダッシュ",
+      "sub": "宅配プラットフォーム",
+      "sub_en": "Delivery platform",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "CostcoとDoorDashは、米国全域でCostcoのDoorDash出店を始めたと発表した",
+          "text_en": "Costco and DoorDash announced the launch of Costco on the DoorDash Marketplace across the U.S.",
+          "source": {
+            "label": "DoorDash の発表",
+            "label_en": "DoorDash press release",
+            "url": "https://about.doordash.com/en-us/news/doordash-costco-partnership",
+            "level": "official",
+            "date": "2026-09-17",
+            "quote": "Costco Wholesale Corporation (NASDAQ: COST) and DoorDash (NASDAQ: DASH), a global leader in local commerce, today announced the launch of Costco on the DoorDash Marketplace across the U.S."
+          }
+        }
+      ],
+      "name_en": "DoorDash"
+    },
+    {
+      "id": "CART",
+      "ticker": "CART",
+      "name": "インスタカート",
+      "sub": "宅配・EC基盤",
+      "sub_en": "Delivery & e-commerce platform",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "InstacartとCostcoは、フランスとスペインで、InstacartのStorefront Proを使った当日配達サイトを始めた",
+          "text_en": "Instacart and Costco launched same-day delivery websites in France and Spain powered by Instacart's Storefront Pro",
+          "source": {
+            "label": "Instacart の発表",
+            "label_en": "Instacart press release",
+            "url": "https://company.instacart.com/pressreleases/costco-launches-first-same-day-websites-in-france-and-spain-with-instacart",
+            "level": "official",
+            "date": "2026-01-30",
+            "quote": "Today, Instacart (NASDAQ: CART) and Costco Wholesale announced the expansion of their North American partnership into Europe, with the launch of Costco’s first-ever same-day delivery websites in France and Spain, powered by Instacart’s Storefront Pro commerce platform and fulfillment solutions services."
+          }
+        }
+      ],
+      "name_en": "Instacart"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

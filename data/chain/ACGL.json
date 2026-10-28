@@ -1,0 +1,196 @@
+{
+  "root": {
+    "ticker": "ACGL",
+    "name": "アーチ・キャピタル・グループ",
+    "cik": 947484,
+    "name_en": "Arch Capital Group"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [
+    "AFG",
+    "AIG",
+    "ESNT",
+    "ACT",
+    "MTG"
+  ],
+  "companies": [
+    {
+      "id": "AFG",
+      "ticker": "AFG",
+      "name": "アメリカン・ファイナンシャル・グループ",
+      "sub": "損害保険",
+      "sub_en": "Property casualty insurance",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "特殊・損害保険と再保険の分野で競合している",
+          "text_en": "Competes with Arch in specialty, property and casualty insurance and reinsurance",
+          "source": {
+            "label": "Arch Capital Group 10-K(December 31, 2025)",
+            "label_en": "Arch Capital Group 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/947484/000094748426000017/acgl-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "we compete with insurers and reinsurers that provide specialty, property, and casualty lines of insurance, including, but not limited to Allianz, American Financial Group, Inc., American International Group, Inc."
+          }
+        }
+      ],
+      "name_en": "American Financial Group"
+    },
+    {
+      "id": "AIG",
+      "ticker": "AIG",
+      "name": "アメリカン・インターナショナル・グループ",
+      "sub": "総合保険",
+      "sub_en": "Insurance",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "特殊・損害保険と再保険の分野で競合している",
+          "text_en": "Competes with Arch in specialty, property and casualty insurance and reinsurance",
+          "source": {
+            "label": "Arch Capital Group 10-K(December 31, 2025)",
+            "label_en": "Arch Capital Group 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/947484/000094748426000017/acgl-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "we compete with insurers and reinsurers that provide specialty, property, and casualty lines of insurance, including, but not limited to Allianz, American Financial Group, Inc., American International Group, Inc."
+          }
+        }
+      ],
+      "name_en": "American International Group"
+    },
+    {
+      "id": "ESNT",
+      "ticker": "ESNT",
+      "name": "エッセント・グループ",
+      "sub": "住宅ローン保険",
+      "sub_en": "Mortgage insurance",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "住宅ローン保険事業で競合している",
+          "text_en": "Competes with Arch in mortgage insurance",
+          "source": {
+            "label": "Arch Capital Group 10-K(December 31, 2025)",
+            "label_en": "Arch Capital Group 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/947484/000094748426000017/acgl-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "In our mortgage business, we compete with insurers and reinsurers that provide mortgage insurance, including the U.S mortgage insurance subsidiaries of Essent Group Ltd., Enact Holdings Inc., MGIC Investment Corp., NMI Holdings Inc. and Radian Group Inc."
+          }
+        }
+      ],
+      "name_en": "Essent Group"
+    },
+    {
+      "id": "ACT",
+      "ticker": "ACT",
+      "name": "イナクト・ホールディングス",
+      "sub": "住宅ローン保険",
+      "sub_en": "Mortgage insurance",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "住宅ローン保険事業で競合している",
+          "text_en": "Competes with Arch in mortgage insurance",
+          "source": {
+            "label": "Arch Capital Group 10-K(December 31, 2025)",
+            "label_en": "Arch Capital Group 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/947484/000094748426000017/acgl-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "In our mortgage business, we compete with insurers and reinsurers that provide mortgage insurance, including the U.S mortgage insurance subsidiaries of Essent Group Ltd., Enact Holdings Inc., MGIC Investment Corp., NMI Holdings Inc. and Radian Group Inc."
+          }
+        }
+      ],
+      "name_en": "Enact Holdings"
+    },
+    {
+      "id": "MTG",
+      "ticker": "MTG",
+      "name": "MGICインベストメント",
+      "sub": "住宅ローン保険",
+      "sub_en": "Mortgage insurance",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "住宅ローン保険事業で競合している",
+          "text_en": "Competes with Arch in mortgage insurance",
+          "source": {
+            "label": "Arch Capital Group 10-K(December 31, 2025)",
+            "label_en": "Arch Capital Group 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/947484/000094748426000017/acgl-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "In our mortgage business, we compete with insurers and reinsurers that provide mortgage insurance, including the U.S mortgage insurance subsidiaries of Essent Group Ltd., Enact Holdings Inc., MGIC Investment Corp., NMI Holdings Inc. and Radian Group Inc."
+          }
+        }
+      ],
+      "name_en": "MGIC Investment"
+    },
+    {
+      "id": "NMIH",
+      "ticker": "NMIH",
+      "name": "NMIホールディングス",
+      "sub": "住宅ローン保険",
+      "sub_en": "Mortgage insurance",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "住宅ローン保険事業で競合している",
+          "text_en": "Competes with Arch in mortgage insurance",
+          "source": {
+            "label": "Arch Capital Group 10-K(December 31, 2025)",
+            "label_en": "Arch Capital Group 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/947484/000094748426000017/acgl-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "In our mortgage business, we compete with insurers and reinsurers that provide mortgage insurance, including the U.S mortgage insurance subsidiaries of Essent Group Ltd., Enact Holdings Inc., MGIC Investment Corp., NMI Holdings Inc. and Radian Group Inc."
+          }
+        }
+      ],
+      "name_en": "NMI Holdings"
+    },
+    {
+      "id": "RDN",
+      "ticker": "RDN",
+      "name": "レイディアン・グループ",
+      "sub": "住宅ローン保険",
+      "sub_en": "Mortgage insurance",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "住宅ローン保険事業で競合している",
+          "text_en": "Competes with Arch in mortgage insurance",
+          "source": {
+            "label": "Arch Capital Group 10-K(December 31, 2025)",
+            "label_en": "Arch Capital Group 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/947484/000094748426000017/acgl-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "In our mortgage business, we compete with insurers and reinsurers that provide mortgage insurance, including the U.S mortgage insurance subsidiaries of Essent Group Ltd., Enact Holdings Inc., MGIC Investment Corp., NMI Holdings Inc. and Radian Group Inc."
+          }
+        }
+      ],
+      "name_en": "Radian Group"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

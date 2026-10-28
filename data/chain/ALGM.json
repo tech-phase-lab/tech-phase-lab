@@ -1,0 +1,118 @@
+{
+  "root": {
+    "ticker": "ALGM",
+    "name": "アレグロ・マイクロシステムズ",
+    "cik": 866291,
+    "name_en": "Allegro MicroSystems"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "UMC",
+      "ticker": "UMC",
+      "name": "ユナイテッド・マイクロエレクトロニクス",
+      "sub": "ウエハー製造",
+      "sub_en": "Wafer foundry",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "ICウエハーの製造を委託する主要ファブの一つ",
+          "text_en": "United Microelectronics Corporation is one of the primary third-party wafer fabs Allegro relies on",
+          "source": {
+            "label": "Allegro MicroSystems 10-K(2026年3月27日期)",
+            "label_en": "Allegro MicroSystems 10-K (fiscal year ended March 27, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/866291/000119312526233537/algm-20260327.htm",
+            "level": "official",
+            "date": "2026-05-21",
+            "quote": "We currently rely on a limited number of third-party wafer fabrication facilities for the fabrication of semiconductor wafers used in the manufacture of our IC products, primarily United Microelectronics Corporation (“UMC”), Polar, Tower Semiconductor Ltd. (“Tower”) and Taiwan Semiconductor Manufacturing Company (“TSMC”)"
+          }
+        }
+      ],
+      "name_en": "United Microelectronics"
+    },
+    {
+      "id": "TSEM",
+      "ticker": "TSEM",
+      "name": "タワー・セミコンダクター",
+      "sub": "ウエハー製造",
+      "sub_en": "Wafer foundry",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "ICウエハーの製造を委託する主要ファブの一つ",
+          "text_en": "Tower Semiconductor Ltd. is one of the primary third-party wafer fabs Allegro relies on",
+          "source": {
+            "label": "Allegro MicroSystems 10-K(2026年3月27日期)",
+            "label_en": "Allegro MicroSystems 10-K (fiscal year ended March 27, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/866291/000119312526233537/algm-20260327.htm",
+            "level": "official",
+            "date": "2026-05-21",
+            "quote": "We currently rely on a limited number of third-party wafer fabrication facilities for the fabrication of semiconductor wafers used in the manufacture of our IC products, primarily United Microelectronics Corporation (“UMC”), Polar, Tower Semiconductor Ltd. (“Tower”) and Taiwan Semiconductor Manufacturing Company (“TSMC”)"
+          }
+        }
+      ],
+      "name_en": "Tower Semiconductor"
+    },
+    {
+      "id": "TSM",
+      "ticker": "TSM",
+      "name": "台湾積体電路製造",
+      "sub": "ウエハー製造",
+      "sub_en": "Wafer foundry",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "ICウエハーの製造を委託する主要ファブの一つ",
+          "text_en": "Taiwan Semiconductor Manufacturing Company is one of the primary third-party wafer fabs Allegro relies on",
+          "source": {
+            "label": "Allegro MicroSystems 10-K(2026年3月27日期)",
+            "label_en": "Allegro MicroSystems 10-K (fiscal year ended March 27, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/866291/000119312526233537/algm-20260327.htm",
+            "level": "official",
+            "date": "2026-05-21",
+            "quote": "We currently rely on a limited number of third-party wafer fabrication facilities for the fabrication of semiconductor wafers used in the manufacture of our IC products, primarily United Microelectronics Corporation (“UMC”), Polar, Tower Semiconductor Ltd. (“Tower”) and Taiwan Semiconductor Manufacturing Company (“TSMC”)"
+          }
+        }
+      ],
+      "name_en": "Taiwan Semiconductor Manufacturing"
+    },
+    {
+      "id": "SANKEN",
+      "ticker": "Sanken Electric",
+      "name": "サンケン電気",
+      "sub": "大株主・提携",
+      "sub_en": "Shareholder & partner",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "自社株買い契約を結んだ株主で、株主間契約の当事者でもある",
+          "text_en": "Allegro agreed to repurchase 38,767,315 shares of its common stock from Sanken",
+          "source": {
+            "label": "Allegro MicroSystems 10-K(2026年3月27日期)",
+            "label_en": "Allegro MicroSystems 10-K (fiscal year ended March 27, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/866291/000119312526233537/algm-20260327.htm",
+            "level": "official",
+            "date": "2026-05-21",
+            "quote": "On July 23, 2024, we entered into a share repurchase agreement with Sanken (the “Share Repurchase Agreement”) pursuant to which we agreed to repurchase 38,767,315 shares of our common stock from Sanken"
+          }
+        }
+      ],
+      "name_en": "Sanken Electric"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

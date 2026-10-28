@@ -1,0 +1,32 @@
+[
+  {
+    "ticker": "NBIS",
+    "url": "https://nebius.com/newsroom/palantir-and-nebius-partner-to-deliver-a-complete-sovereign-ai-stack-to-palantir-customers",
+    "publishedOn": "2026-09-08"
+  },
+  {
+    "ticker": "NBIS",
+    "url": "https://assets.nebius.com/assets/72a8c258-bbb7-4df7-ab9d-8698f6cb88fc/PR.pdf?cache-buster=2026-08-12T11:54:07.336Z",
+    "publishedOn": "2026-08-12"
+  },
+  {
+    "ticker": "NBIS",
+    "url": "https://assets.nebius.com/assets/a6ecfd85-a6cb-4967-8ef7-9a25bd261f9c/SHLQ226.pdf?cache-buster=2026-08-12T11:54:46.695Z",
+    "publishedOn": "2026-08-12"
+  },
+  {
+    "ticker": "MU",
+    "url": "https://investors.micron.com/news/press-release/2026/Micron-Technology-Inc--Reports-Record-Results-for-the-Third-Quarter-of-Fiscal-2026/default.aspx",
+    "publishedOn": "2026-06-24"
+  },
+  {
+    "ticker": "NBIS",
+    "url": "https://assets.nebius.com/assets/0de223a2-f519-408d-8c7e-04f2fef342a9/Financial%20results_Q1%202026.pdf?cache-buster=2026-05-13T10:36:29.509Z",
+    "publishedOn": "2026-05-13"
+  },
+  {
+    "ticker": "NBIS",
+    "url": "https://assets.nebius.com/assets/aa1bc2e6-df83-40cd-a6a2-95e7cda3d16c/Nebius%20SHL_Q1%202026.pdf?cache-buster=2026-05-13T14:00:35.352Z",
+    "publishedOn": "2026-05-13"
+  }
+]

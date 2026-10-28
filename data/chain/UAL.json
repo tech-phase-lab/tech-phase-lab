@@ -1,0 +1,291 @@
+{
+  "root": {
+    "ticker": "UAL",
+    "name": "ユナイテッド航空ホールディングス",
+    "cik": 100517,
+    "name_en": "United Airlines Holdings"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    },
+    {
+      "ja": "供給元",
+      "en": "Suppliers",
+      "above": true
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "JPM",
+      "ticker": "JPM",
+      "name": "JPモルガン・チェース銀行",
+      "sub": "コブランドカード提携",
+      "sub_en": "Co-brand card partner",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "マイレージプラスのカード発行元で、利用に応じてマイルを購入する提携先である",
+          "text_en": "Chase issues the MileagePlus card and buys miles based on card activity",
+          "source": {
+            "label": "United Airlines Holdings 10-K(2025年12月31日期)",
+            "label_en": "United Airlines Holdings 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/100517/000010051726000023/ual-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "United has a contract (the \"Co-Brand Agreement\") to sell MileagePlus miles to its co-branded credit card partner Chase."
+          }
+        }
+      ],
+      "name_en": "JPMorgan Chase Bank"
+    },
+    {
+      "id": "AC",
+      "ticker": "Air Canada",
+      "name": "エア・カナダ",
+      "sub": "共同事業の提携",
+      "sub_en": "Joint business partner",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "エア・カナダとは米加間の路線で共同事業契約を結んでいる",
+          "text_en": "United has a joint business arrangement with Air Canada for US-Canada transborder routes",
+          "source": {
+            "label": "United Airlines Holdings 10-K(2025年12月31日期)",
+            "label_en": "United Airlines Holdings 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/100517/000010051726000023/ual-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "one with Air Canada covering certain United States and Canada transborder routes."
+          }
+        }
+      ],
+      "name_en": "Air Canada"
+    },
+    {
+      "id": "LH",
+      "ticker": "Lufthansa Group",
+      "name": "ルフトハンザ",
+      "sub": "共同事業の提携",
+      "sub_en": "Joint business partner",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "エア・カナダとルフトハンザ・グループとは大西洋路線で共同事業を行っている",
+          "text_en": "United has a transatlantic joint business arrangement with Air Canada and the Lufthansa Group",
+          "source": {
+            "label": "United Airlines Holdings 10-K(2025年12月31日期)",
+            "label_en": "United Airlines Holdings 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/100517/000010051726000023/ual-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "one with Air Canada and the Lufthansa Group (which includes Lufthansa and its affiliates Air Dolomiti, Austrian Airlines, Brussels Airlines, Discover Airlines, Edelweiss, Eurowings, Lufthansa City Airlines and SWISS) covering transatlantic routes"
+          }
+        }
+      ],
+      "name_en": "Lufthansa Group"
+    },
+    {
+      "id": "ANA",
+      "ticker": "All Nippon Airways",
+      "name": "全日本空輸",
+      "sub": "共同事業の提携",
+      "sub_en": "Joint business partner",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "全日本空輸とは太平洋路線の一部で共同事業契約を結んでいる",
+          "text_en": "United has a joint business arrangement with ANA for certain transpacific routes",
+          "source": {
+            "label": "United Airlines Holdings 10-K(2025年12月31日期)",
+            "label_en": "United Airlines Holdings 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/100517/000010051726000023/ual-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "one with ANA covering certain transpacific 4 Table of Contents routes"
+          }
+        }
+      ],
+      "name_en": "All Nippon Airways"
+    },
+    {
+      "id": "AZUL",
+      "ticker": "Azul",
+      "name": "アズール航空",
+      "sub": "出資先の航空会社",
+      "sub_en": "Equity-investee airline",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年11月にアズールの株式1億ドル分を引き受ける投資契約を結んだ",
+          "text_en": "In November 2025 United agreed to subscribe for $100 million of Azul shares",
+          "source": {
+            "label": "United Airlines Holdings 10-K(2025年12月31日期)",
+            "label_en": "United Airlines Holdings 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/100517/000010051726000023/ual-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "On November 7, 2025, United entered into an equity investment agreement with Azul and certain of Azul's subsidiaries, pursuant to which United subscribed for $ 100 million of Azul shares"
+          }
+        }
+      ],
+      "name_en": "Azul"
+    },
+    {
+      "id": "CA",
+      "ticker": "CommuteAir",
+      "name": "コミュートエア",
+      "sub": "地域航空の出資先",
+      "sub_en": "Regional carrier investee",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "コミュートエアの株式40%を保有している",
+          "text_en": "United owns a 40% minority stake in CommuteAir",
+          "source": {
+            "label": "United Airlines Holdings 10-K(2025年12月31日期)",
+            "label_en": "United Airlines Holdings 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/100517/000010051726000023/ual-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "United owns a 40 % minority ownership stake in CommuteAir LLC (\"CommuteAir\")."
+          }
+        }
+      ],
+      "name_en": "CommuteAir"
+    },
+    {
+      "id": "RJET",
+      "ticker": "Republic Airways",
+      "name": "リパブリック航空ホールディングス",
+      "sub": "地域航空の出資先",
+      "sub_en": "Regional carrier investee",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年末時点でリパブリック航空の少数株式を約16.5%保有していた",
+          "text_en": "As of December 31, 2025, United held about a 16.5% minority interest in Republic",
+          "source": {
+            "label": "United Airlines Holdings 10-K(2025年12月31日期)",
+            "label_en": "United Airlines Holdings 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/100517/000010051726000023/ual-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "As of December 31, 2025, United held approximately 16.5 % minority interest in Republic."
+          }
+        }
+      ],
+      "name_en": "Republic Airways Holdings"
+    },
+    {
+      "id": "SKYW",
+      "ticker": "SKYW",
+      "name": "スカイウエスト",
+      "sub": "地域路線の運航委託",
+      "sub_en": "Regional flying contractor",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "スカイウエストなどの地域航空会社が、ユナイテッドから購入された座席で運航している",
+          "text_en": "SkyWest and other regional carriers operate capacity contracted to United under CPAs",
+          "source": {
+            "label": "United Airlines Holdings 10-K(2025年12月31日期)",
+            "label_en": "United Airlines Holdings 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/100517/000010051726000023/ual-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "(\"SkyWest\") are all regional carriers that operate with capacity contracted to United under capacity purchase agreements (\"CPAs\")."
+          }
+        }
+      ],
+      "name_en": "SkyWest"
+    },
+    {
+      "id": "BA",
+      "ticker": "BA",
+      "name": "ボーイング",
+      "sub": "航空機メーカー",
+      "sub_en": "Aircraft maker",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "航空機と関連部品のほぼすべてをボーイングまたはエアバスから調達している",
+          "text_en": "United sources substantially all of its aircraft and many parts from Boeing or Airbus",
+          "source": {
+            "label": "United Airlines Holdings 10-K(2025年12月31日期)",
+            "label_en": "United Airlines Holdings 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/100517/000010051726000023/ual-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "The Company currently sources substantially all of its aircraft and many related aircraft parts from The Boeing Company (\"Boeing\") or Airbus S.A.S."
+          }
+        }
+      ],
+      "name_en": "The Boeing Company"
+    },
+    {
+      "id": "AIRBUS",
+      "ticker": "Airbus",
+      "name": "エアバス",
+      "sub": "航空機メーカー",
+      "sub_en": "Aircraft maker",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "航空機と関連部品のほぼすべてをボーイングまたはエアバスから調達している",
+          "text_en": "United sources substantially all of its aircraft and many parts from Boeing or Airbus",
+          "source": {
+            "label": "United Airlines Holdings 10-K(2025年12月31日期)",
+            "label_en": "United Airlines Holdings 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/100517/000010051726000023/ual-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "The Company currently sources substantially all of its aircraft and many related aircraft parts from The Boeing Company (\"Boeing\") or Airbus S.A.S."
+          }
+        }
+      ],
+      "name_en": "Airbus S.A.S."
+    },
+    {
+      "id": "RR",
+      "ticker": "Rolls-Royce",
+      "name": "ロールス・ロイス",
+      "sub": "エンジンの供給元",
+      "sub_en": "Engine supplier",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "2010年に広胴機向けのエンジン購入と整備サービスの契約をロールス・ロイスと結んだ",
+          "text_en": "In 2010 United entered into engine purchase and maintenance agreements with Rolls-Royce",
+          "source": {
+            "label": "United Airlines Holdings 10-K(2025年12月31日期)",
+            "label_en": "United Airlines Holdings 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/100517/000010051726000023/ual-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "In 2010, the Company entered into agreements with Rolls-Royce for engine purchases and related maintenance services for certain widebody aircraft."
+          }
+        }
+      ],
+      "name_en": "Rolls-Royce"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

@@ -1,0 +1,270 @@
+{
+  "root": {
+    "ticker": "KDP",
+    "name": "キューリグ・ドクターペッパー",
+    "cik": 1418135,
+    "name_en": "Keurig Dr Pepper"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [
+    "KO",
+    "PEP",
+    "SBUX",
+    "SJM",
+    "KHC"
+  ],
+  "companies": [
+    {
+      "id": "WMT",
+      "ticker": "WMT",
+      "name": "ウォルマート",
+      "sub": "最大の小売顧客",
+      "sub_en": "Largest retail customer",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "2025年の連結純売上高の約16%を占める最大の小売顧客",
+          "text_en": "Walmart is its largest retailer, about 16% of consolidated net sales in 2025",
+          "source": {
+            "label": "キューリグ・ドクターペッパー 10-K(2025年12月31日)",
+            "label_en": "Keurig Dr Pepper 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1418135/000141813526000016/kdp-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Our largest retailer, Walmart, represented approximately 16% of our consolidated net sales in 2025."
+          }
+        }
+      ],
+      "name_en": "Walmart"
+    },
+    {
+      "id": "KO",
+      "ticker": "KO",
+      "name": "コカ・コーラ",
+      "sub": "清涼飲料",
+      "sub_en": "Soft drinks",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主な競合に入る",
+          "text_en": "Coca-Cola is named among its primary competitors",
+          "source": {
+            "label": "キューリグ・ドクターペッパー 10-K(2025年12月31日)",
+            "label_en": "Keurig Dr Pepper 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1418135/000141813526000016/kdp-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Our primary competitors include Coca-Cola, PepsiCo, Starbucks Corporation, The J.M. Smucker Company, The Kraft Heinz Company, and Nestlé S.A."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "一部地域では、同社のドクターペッパーの製造・販売権をコカ・コーラなどが持つ",
+          "text_en": "In many countries, third parties including competitors such as Coca-Cola own the manufacturing and distribution rights to its CSD brands",
+          "source": {
+            "label": "キューリグ・ドクターペッパー 10-K(2025年12月31日)",
+            "label_en": "Keurig Dr Pepper 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1418135/000141813526000016/kdp-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "In many countries outside the U.S., Canada, and Mexico, the manufacturing and distribution rights to many of our CSD brands, including our Dr Pepper trademark and formula, are owned by third parties, including, in certain cases, competitors such as Coca-Cola."
+          }
+        }
+      ],
+      "name_en": "Coca-Cola"
+    },
+    {
+      "id": "PEP",
+      "ticker": "PEP",
+      "name": "ペプシコ",
+      "sub": "清涼飲料",
+      "sub_en": "Soft drinks",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主な競合に入る",
+          "text_en": "PepsiCo is named among its primary competitors",
+          "source": {
+            "label": "キューリグ・ドクターペッパー 10-K(2025年12月31日)",
+            "label_en": "Keurig Dr Pepper 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1418135/000141813526000016/kdp-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Our primary competitors include Coca-Cola, PepsiCo, Starbucks Corporation, The J.M. Smucker Company, The Kraft Heinz Company, and Nestlé S.A."
+          }
+        }
+      ],
+      "name_en": "PepsiCo"
+    },
+    {
+      "id": "SBUX",
+      "ticker": "SBUX",
+      "name": "スターバックス",
+      "sub": "コーヒー",
+      "sub_en": "Coffee",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Kカップのパートナーブランドの一つ",
+          "text_en": "Starbucks is one of its K-Cup partner brands",
+          "source": {
+            "label": "キューリグ・ドクターペッパー 10-K(2025年12月31日)",
+            "label_en": "Keurig Dr Pepper 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1418135/000141813526000016/kdp-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Our partner brands include Starbucks, Dunkin', Folgers, and Peet's, among others."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "主な競合に入る",
+          "text_en": "Starbucks Corporation is named among its primary competitors",
+          "source": {
+            "label": "キューリグ・ドクターペッパー 10-K(2025年12月31日)",
+            "label_en": "Keurig Dr Pepper 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1418135/000141813526000016/kdp-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Our primary competitors include Coca-Cola, PepsiCo, Starbucks Corporation, The J.M. Smucker Company, The Kraft Heinz Company, and Nestlé S.A."
+          }
+        }
+      ],
+      "name_en": "Starbucks"
+    },
+    {
+      "id": "SJM",
+      "ticker": "SJM",
+      "name": "J.M.スマッカー",
+      "sub": "コーヒー・食品",
+      "sub_en": "Coffee & food",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主な競合に入る",
+          "text_en": "The J.M. Smucker Company is named among its primary competitors",
+          "source": {
+            "label": "キューリグ・ドクターペッパー 10-K(2025年12月31日)",
+            "label_en": "Keurig Dr Pepper 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1418135/000141813526000016/kdp-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Our primary competitors include Coca-Cola, PepsiCo, Starbucks Corporation, The J.M. Smucker Company, The Kraft Heinz Company, and Nestlé S.A."
+          }
+        }
+      ],
+      "name_en": "J.M. Smucker"
+    },
+    {
+      "id": "KHC",
+      "ticker": "KHC",
+      "name": "クラフト・ハインツ",
+      "sub": "食品",
+      "sub_en": "Food",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主な競合に入る",
+          "text_en": "The Kraft Heinz Company is named among its primary competitors",
+          "source": {
+            "label": "キューリグ・ドクターペッパー 10-K(2025年12月31日)",
+            "label_en": "Keurig Dr Pepper 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1418135/000141813526000016/kdp-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Our primary competitors include Coca-Cola, PepsiCo, Starbucks Corporation, The J.M. Smucker Company, The Kraft Heinz Company, and Nestlé S.A."
+          }
+        }
+      ],
+      "name_en": "Kraft Heinz"
+    },
+    {
+      "id": "NSRGY",
+      "ticker": "NSRGY",
+      "name": "ネスレ",
+      "sub": "食品・飲料",
+      "sub_en": "Food & beverage",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主な競合に入る",
+          "text_en": "Nestlé S.A. is named among its primary competitors",
+          "source": {
+            "label": "キューリグ・ドクターペッパー 10-K(2025年12月31日)",
+            "label_en": "Keurig Dr Pepper 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1418135/000141813526000016/kdp-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Our primary competitors include Coca-Cola, PepsiCo, Starbucks Corporation, The J.M. Smucker Company, The Kraft Heinz Company, and Nestlé S.A."
+          }
+        }
+      ],
+      "name_en": "Nestlé"
+    },
+    {
+      "id": "VITA",
+      "ticker": "The Vita Coco",
+      "name": "ビタココ",
+      "sub": "ココナッツウォーター",
+      "sub_en": "Coconut water",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年末時点のパートナーブランドにココナッツウォーターのビタココが入る",
+          "text_en": "Vita Coco coconut water was part of its partner brand portfolio as of December 31, 2025",
+          "source": {
+            "label": "キューリグ・ドクターペッパー 10-K(2025年12月31日)",
+            "label_en": "Keurig Dr Pepper 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1418135/000141813526000016/kdp-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "As of December 31, 2025, our portfolio of partner brands included C4 energy drinks, Electrolit instant hydration beverages, Vita Coco coconut water, Bloom energy drinks and prebiotic sodas, evian water, Polar Beverages seltzer water, La Colombe shelf-stable RTD coffee, and Black Rifle Coffee Company energy drinks."
+          }
+        }
+      ],
+      "name_en": "The Vita Coco Company"
+    },
+    {
+      "id": "BRC",
+      "ticker": "Black Rifle Coffee",
+      "name": "ブラックライフルコーヒー",
+      "sub": "コーヒー",
+      "sub_en": "Coffee",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年末時点のパートナーブランドにエナジードリンクが入る",
+          "text_en": "Black Rifle Coffee Company energy drinks were part of its partner brand portfolio as of December 31, 2025",
+          "source": {
+            "label": "キューリグ・ドクターペッパー 10-K(2025年12月31日)",
+            "label_en": "Keurig Dr Pepper 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1418135/000141813526000016/kdp-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "As of December 31, 2025, our portfolio of partner brands included C4 energy drinks, Electrolit instant hydration beverages, Vita Coco coconut water, Bloom energy drinks and prebiotic sodas, evian water, Polar Beverages seltzer water, La Colombe shelf-stable RTD coffee, and Black Rifle Coffee Company energy drinks."
+          }
+        }
+      ],
+      "name_en": "Black Rifle Coffee Company"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

@@ -1,0 +1,121 @@
+{
+  "root": {
+    "ticker": "ICE",
+    "name": "インターコンチネンタル取引所",
+    "cik": 1571949,
+    "name_en": "Intercontinental Exchange"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [
+    "NDAQ",
+    "CBOE"
+  ],
+  "companies": [
+    {
+      "id": "NDAQ",
+      "ticker": "NDAQ",
+      "name": "ナスダック",
+      "sub": "取引所",
+      "sub_en": "Exchange operator",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "株式オプション市場での主な米国の競合先に挙がる",
+          "text_en": "Named as a principal U.S. competitor in equity options markets",
+          "source": {
+            "label": "Intercontinental Exchange 10-K(2025)",
+            "label_en": "Intercontinental Exchange 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1571949/000157194926000004/ice-20251231.htm",
+            "level": "official",
+            "date": "2026-02-05",
+            "quote": "their principal U.S. competitors are Nasdaq, Inc., or Nasdaq, and Cboe Global Markets, Inc., or Cboe."
+          }
+        }
+      ],
+      "name_en": "Nasdaq"
+    },
+    {
+      "id": "CBOE",
+      "ticker": "CBOE",
+      "name": "シーボー・グローバル・マーケッツ",
+      "sub": "取引所",
+      "sub_en": "Exchange operator",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "株式オプション市場での主な米国の競合先にあたる",
+          "text_en": "Named as a principal U.S. competitor in equity options markets",
+          "source": {
+            "label": "Intercontinental Exchange 10-K(2025)",
+            "label_en": "Intercontinental Exchange 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1571949/000157194926000004/ice-20251231.htm",
+            "level": "official",
+            "date": "2026-02-05",
+            "quote": "their principal U.S. competitors are Nasdaq, Inc., or Nasdaq, and Cboe Global Markets, Inc., or Cboe."
+          }
+        }
+      ],
+      "name_en": "Cboe Global Markets"
+    },
+    {
+      "id": "POLY",
+      "ticker": "Polymarket",
+      "name": "ポリマーケット",
+      "sub": "予測市場",
+      "sub_en": "Prediction market",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "出資先の一つで、事業モデルの変化が評判リスクになりうる",
+          "text_en": "An investee whose evolving business model may raise reputational risk",
+          "source": {
+            "label": "Intercontinental Exchange 10-K(2025)",
+            "label_en": "Intercontinental Exchange 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1571949/000157194926000004/ice-20251231.htm",
+            "level": "official",
+            "date": "2026-02-05",
+            "quote": "We also may face increased reputational risks from our investments in companies like Polymarket and Bakkt due to their evolving business models."
+          }
+        }
+      ],
+      "name_en": "Polymarket"
+    },
+    {
+      "id": "BKKT",
+      "ticker": "BKKT",
+      "name": "バクト",
+      "sub": "暗号資産サービス",
+      "sub_en": "Crypto services",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "出資先の一つで、事業モデルの変化が評判リスクになりうる",
+          "text_en": "An investee whose evolving business model may raise reputational risk",
+          "source": {
+            "label": "Intercontinental Exchange 10-K(2025)",
+            "label_en": "Intercontinental Exchange 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1571949/000157194926000004/ice-20251231.htm",
+            "level": "official",
+            "date": "2026-02-05",
+            "quote": "We also may face increased reputational risks from our investments in companies like Polymarket and Bakkt due to their evolving business models."
+          }
+        }
+      ],
+      "name_en": "Bakkt"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

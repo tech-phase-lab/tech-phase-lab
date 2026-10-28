@@ -1,0 +1,174 @@
+{
+  "root": {
+    "ticker": "CEG",
+    "name": "Constellation",
+    "cik": 1868275
+  },
+  "rows": [
+    {
+      "ja": "供給元(上流)",
+      "en": "Suppliers (upstream)",
+      "above": true
+    },
+    {
+      "ja": "電力の販売先(データセンター)",
+      "en": "Power buyers (data centers)"
+    },
+    {
+      "ja": "共同保有・関連会社",
+      "en": "Co-owners & affiliates"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "MSFT",
+      "ticker": "MSFT",
+      "name": "Microsoft",
+      "sub": "クラウド",
+      "sub_en": "Cloud",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "再稼働するスリーマイル島(Crane Clean Energy Center)の出力をMicrosoftが20年間購入する契約",
+          "text_en": "20-year PPA under which Microsoft buys the output of the restarted Crane Clean Energy Center",
+          "source": {
+            "label": "Constellation 10-K(2025年度)",
+            "label_en": "Constellation 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1868275/000186827526000032/ceg-20251231.htm",
+            "level": "official",
+            "date": "2024-09",
+            "quote": "In September 2024, we executed a 20-year PPA with Microsoft that will support the restart of Three Mile Island Unit 1, renamed as the Crane Clean Energy Center",
+            "note": "再稼働と供給開始は、規制当局の承認が前提です。",
+            "note_en": "Restart and deliveries are subject to regulatory approvals."
+          }
+        }
+      ]
+    },
+    {
+      "id": "META",
+      "ticker": "META",
+      "name": "Meta Platforms",
+      "sub": "SNS・AI",
+      "sub_en": "Social & AI",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "イリノイ州Clinton発電所の出力1,121MWを20年間供給する契約",
+          "text_en": "20-year PPA for 1,121MW of output from the Clinton Clean Energy Center in Illinois",
+          "source": {
+            "label": "Constellation の発表(2025年6月3日)",
+            "label_en": "Constellation press release (Jun 3, 2025)",
+            "url": "https://www.constellationenergy.com/news/2025/constellation-meta-sign-20-year-deal-for-clean-reliable-nuclear-energy-in-illinois.html.html",
+            "level": "official",
+            "date": "2025-06-03",
+            "quote": "Constellation (Nasdaq: CEG) and Meta have signed a 20-year power purchase agreement (PPA) for the output of the Clinton Clean Energy Center"
+          }
+        }
+      ]
+    },
+    {
+      "id": "NRG",
+      "ticker": "NRG",
+      "name": "NRG Energy",
+      "sub": "電力",
+      "sub_en": "Power",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "NRGが持つSouth Texas Project原子力発電所の44%持分を約16.5億ドルで取得",
+          "text_en": "Constellation acquired NRG’s 44% interest in the South Texas Project nuclear plant for about $1.65B",
+          "source": {
+            "label": "NRG Energy 10-K(2025年度)",
+            "label_en": "NRG Energy 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1013871/000101387126000004/nrg-20251231.htm",
+            "level": "official",
+            "date": "2023-11",
+            "quote": "On November 1, 2023, the Company closed on the sale of its 44 % equity interest in STP to Constellation Energy Generation"
+          }
+        }
+      ]
+    },
+    {
+      "id": "PEG",
+      "ticker": "PEG",
+      "name": "PSEG",
+      "sub": "電力",
+      "sub_en": "Power",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "SalemとPeach Bottomの原子力発電所を共同保有",
+          "text_en": "Co-owns the Salem and Peach Bottom nuclear stations with Constellation",
+          "source": {
+            "label": "PSEG 10-K(2025年度)",
+            "label_en": "PSEG 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/788784/000119312526077446/peg-20251231.htm",
+            "level": "official",
+            "date": "2026-02",
+            "quote": "PSEG Power co-owns Salem and Peach Bottom with Constellation Energy Generation, LLC. PSEG Power is the operator of Salem and Constellation Energy Generation, LLC is the operator of Peach Bottom."
+          }
+        }
+      ]
+    },
+    {
+      "id": "EXC",
+      "ticker": "EXC",
+      "name": "Exelon",
+      "sub": "電力",
+      "sub_en": "Power",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2022年2月にExelonから分離独立。移行サービス契約でつながりが残る",
+          "text_en": "Spun off from Exelon in February 2022; the two remain linked by a transition services agreement",
+          "source": {
+            "label": "Constellation 10-K(2025年度)",
+            "label_en": "Constellation 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1868275/000186827526000032/ceg-20251231.htm",
+            "level": "official",
+            "date": "2022-02",
+            "quote": "On February 1, 2022, Exelon completed the separation by distributing all the outstanding shares of the Company's common stock",
+            "note": "分離は過去の出来事です。",
+            "note_en": "A historical separation."
+          }
+        }
+      ]
+    },
+    {
+      "id": "NEE",
+      "ticker": "NEE",
+      "name": "NextEra Energy",
+      "sub": "電力会社",
+      "sub_en": "Utility",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "メイン州Wyman石油火力発電所の少数持分を保有。主な所有者NextEra Energy Resourcesが運営",
+          "text_en": "Constellation holds a minority stake in the Wyman (Maine) oil-fired plant, operated by principal owner NextEra Energy Resources",
+          "source": {
+            "label": "Constellation 10-K(2025年度)",
+            "label_en": "Constellation 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1868275/000186827526000032/ceg-20251231.htm",
+            "level": "official",
+            "date": "2026-02",
+            "quote": "except for Wyman, which is operated by the principal owner, NextEra Energy Resources LLC, a subsidiary of NextEra Energy, Inc.",
+            "note": "小規模な石油・ガス資産で、この文では持分割合は書かれていません。",
+            "note_en": "A small oil/gas asset; this sentence does not state the ownership percentage."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

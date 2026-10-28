@@ -1,0 +1,387 @@
+{
+  "root": {
+    "ticker": "DT",
+    "name": "Dynatrace",
+    "cik": 1773383
+  },
+  "rows": [
+    {
+      "ja": "クラウド・SIの提携先",
+      "en": "Cloud & integrator partners",
+      "above": true
+    },
+    {
+      "ja": "ソフト・AIの提携先",
+      "en": "Software & AI partners"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "CSCO",
+    "DDOG",
+    "ESTC"
+  ],
+  "companies": [
+    {
+      "id": "AMZN",
+      "ticker": "AMZN",
+      "name": "アマゾン",
+      "sub": "クラウド・EC",
+      "sub_en": "Cloud & e-commerce",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "DynatraceのプラットフォームはAWSなどのハイパースケーラーと提携・統合する。",
+          "text_en": "The Dynatrace platform partners and integrates with hyperscalers such as AWS.",
+          "source": {
+            "label": "Dynatrace 10-K",
+            "label_en": "Dynatrace 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1773383/000177338326000019/dt-20260331.htm",
+            "level": "official",
+            "date": "2026-05-20",
+            "quote": "The Dynatrace platform is built to scale, partnering and integrating seamlessly into hybrid, multicloud ecosystems, including major hyperscalers such as Amazon Web Services (“AWS”), Microsoft Azure (“Azure”), and Google Cloud Platform (“GCP”), as well as traditional on-premises and mainframe solutions."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "AWS、Azure、GCPにまたがるクラウドネイティブ連携を拡充した",
+          "text_en": "Dynatrace expanded cloud-native integrations across AWS, Azure and GCP",
+          "source": {
+            "label": "Dynatrace 8-K Ex.99 の発表",
+            "label_en": "Dynatrace 8-K Ex.99 press release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1773383/000177338326000006/q3fy26-earningsreleaseex99.htm",
+            "level": "official",
+            "date": "2026-02-09",
+            "quote": "• Expanded cloud-native integrations across Amazon Web Services (AWS), Microsoft Azure, and Google Cloud Platform (GCP) to give enterprises a unified view across multi‑cloud environments."
+          }
+        }
+      ],
+      "name_en": "Amazon"
+    },
+    {
+      "id": "MSFT",
+      "ticker": "MSFT",
+      "name": "マイクロソフト",
+      "sub": "ソフト・クラウド",
+      "sub_en": "Software & cloud",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Dynatraceは2024 Microsoft Americas Partner of the Year Awardsで受賞した",
+          "text_en": "Dynatrace was named a Winner in the 2024 Microsoft Americas Partner of the Year Awards",
+          "source": {
+            "label": "Dynatrace 8-K Ex.99 の発表",
+            "label_en": "Dynatrace 8-K Ex.99 press release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1773383/000177338324000155/fy25q1-earningsreleaseex991.htm",
+            "level": "official",
+            "date": "2024-08-07",
+            "quote": "In addition, Dynatrace was named a Winner in the 2024 Microsoft Americas Partner of the Year Awards for our ability to innovate and collaborate to foster customer success, AI and CoPilot activation, and transform businesses on the Microsoft Cloud."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "Dynatraceは、Azureなどのハイパースケーラーと提携・統合する構成を採る。",
+          "text_en": "The Dynatrace platform partners and integrates with hyperscalers such as Azure.",
+          "source": {
+            "label": "Dynatrace 10-K",
+            "label_en": "Dynatrace 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1773383/000177338326000019/dt-20260331.htm",
+            "level": "official",
+            "date": "2026-05-20",
+            "quote": "The Dynatrace platform is built to scale, partnering and integrating seamlessly into hybrid, multicloud ecosystems, including major hyperscalers such as Amazon Web Services (“AWS”), Microsoft Azure (“Azure”), and Google Cloud Platform (“GCP”), as well as traditional on-premises and mainframe solutions."
+          }
+        }
+      ],
+      "name_en": "Microsoft"
+    },
+    {
+      "id": "GOOGL",
+      "ticker": "GOOGL",
+      "name": "アルファベット",
+      "sub": "検索・クラウド",
+      "sub_en": "Search & cloud",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "GCPは、Dynatraceが提携・統合するハイパースケーラーの例。",
+          "text_en": "GCP is one of the hyperscalers the Dynatrace platform partners and integrates with.",
+          "source": {
+            "label": "Dynatrace 10-K",
+            "label_en": "Dynatrace 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1773383/000177338326000019/dt-20260331.htm",
+            "level": "official",
+            "date": "2026-05-20",
+            "quote": "The Dynatrace platform is built to scale, partnering and integrating seamlessly into hybrid, multicloud ecosystems, including major hyperscalers such as Amazon Web Services (“AWS”), Microsoft Azure (“Azure”), and Google Cloud Platform (“GCP”), as well as traditional on-premises and mainframe solutions."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "顧客はGoogleなどのマーケットプレイスで製品を購入できる",
+          "text_en": "Customers can procure the software through marketplaces such as Google",
+          "source": {
+            "label": "Dynatrace 10-K",
+            "label_en": "Dynatrace 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1773383/000177338326000019/dt-20260331.htm",
+            "level": "official",
+            "date": "2026-05-20",
+            "quote": "Our customers are also able to procure our software through leading marketplaces, such as AWS, Azure, SAP, and Google."
+          }
+        }
+      ],
+      "name_en": "Alphabet"
+    },
+    {
+      "id": "ACN",
+      "ticker": "ACN",
+      "name": "アクセンチュア",
+      "sub": "ITサービス",
+      "sub_en": "IT services",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Accentureは、Dynatraceの戦略的なGSI(グローバルSI)を務める。",
+          "text_en": "Accenture is one of Dynatrace's strategic GSIs.",
+          "source": {
+            "label": "Dynatrace 10-K",
+            "label_en": "Dynatrace 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1773383/000177338326000019/dt-20260331.htm",
+            "level": "official",
+            "date": "2026-05-20",
+            "quote": "We work closely with a number of strategic GSIs, including Accenture, Atos, Deloitte, DXC, and Kyndryl, to help customers digitally transform their businesses and reduce cloud complexity."
+          }
+        }
+      ],
+      "name_en": "Accenture"
+    },
+    {
+      "id": "NOW",
+      "ticker": "NOW",
+      "name": "サービスナウ",
+      "sub": "業務ソフト",
+      "sub_en": "Workflow software",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ServiceNowと自律的なIT運用に向けた複数年の戦略協業を発表した",
+          "text_en": "Dynatrace announced a multi-year strategic collaboration with ServiceNow on autonomous IT operations",
+          "source": {
+            "label": "Dynatrace 8-K Ex.99 の発表",
+            "label_en": "Dynatrace 8-K Ex.99 press release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1773383/000162828025049224/q2fy26-earningsreleaseex991.htm",
+            "level": "official",
+            "date": "2025-11-05",
+            "quote": "• Announced a multi-year strategic collaboration with ServiceNow to advance autonomous IT operations to empower customers to drive better outcomes, optimize services, and provide seamless digital experiences that drive customer and employee satisfaction."
+          }
+        }
+      ],
+      "name_en": "ServiceNow"
+    },
+    {
+      "id": "TEAM",
+      "ticker": "TEAM",
+      "name": "アトラシアン",
+      "sub": "開発者向けソフト",
+      "sub_en": "Developer software",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Dynatraceは、Atlassianと連携開発で提携する。",
+          "text_en": "Dynatrace partners with Atlassian to develop integrations.",
+          "source": {
+            "label": "Dynatrace 10-K",
+            "label_en": "Dynatrace 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1773383/000177338326000019/dt-20260331.htm",
+            "level": "official",
+            "date": "2026-05-20",
+            "quote": "We partner with leading innovative technology organizations such as Atlassian, Red Hat, ServiceNow, and VMware to develop integrations, best practices, and extended capabilities that help our customers and solution partners achieve faster time to market and enhanced value in dynamic multicloud environments."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "本番環境の知見をインシデント管理に組み込むAtlassian連携を発表した",
+          "text_en": "Dynatrace announced an integration with Atlassian for incident management",
+          "source": {
+            "label": "Dynatrace 8-K Ex.99 の発表",
+            "label_en": "Dynatrace 8-K Ex.99 press release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1773383/000162828025049224/q2fy26-earningsreleaseex991.htm",
+            "level": "official",
+            "date": "2025-11-05",
+            "quote": "• Announced an integration with Atlassian, embedding real-time production insights directly into incident management processes."
+          }
+        }
+      ],
+      "name_en": "Atlassian"
+    },
+    {
+      "id": "NVDA",
+      "ticker": "NVDA",
+      "name": "エヌビディア",
+      "sub": "AI半導体",
+      "sub_en": "AI chips",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "NVIDIAのEnterprise AI Factoryと統合する新たな協業を発表した",
+          "text_en": "Dynatrace announced a collaboration to integrate its observability solution with NVIDIA's Enterprise AI Factory",
+          "source": {
+            "label": "Dynatrace 8-K Ex.99 の発表",
+            "label_en": "Dynatrace 8-K Ex.99 press release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1773383/000177338325000153/fy26q1-earningsreleaseex991.htm",
+            "level": "official",
+            "date": "2025-08-06",
+            "quote": "• Announced a new collaboration to integrate Dynatrace's full-stack, AI and LLM observability solution with NVIDIA’s Enterprise AI Factory, enabling customers to deploy their own AI factory with real-time observability and AI-powered insights."
+          }
+        }
+      ],
+      "name_en": "NVIDIA"
+    },
+    {
+      "id": "DELL",
+      "ticker": "DELL",
+      "name": "デル・テクノロジーズ",
+      "sub": "IT機器",
+      "sub_en": "IT hardware",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "DynatraceはDell Technologies AI Ecosystem Programに参加する",
+          "text_en": "Dynatrace is joining the Dell Technologies AI Ecosystem Program",
+          "source": {
+            "label": "Dynatrace — Dell AI Ecosystem Program participation, May 19 / June 1, 2026",
+            "label_en": "Dynatrace — Dell AI Ecosystem Program participation, May 19 / June 1, 2026",
+            "url": "https://www.dynatrace.com/news/blog/scaling-enterprise-ai-with-confidence-dynatrace-joins-the-dell-technologies-ai-ecosystem-program/",
+            "level": "official",
+            "quote": "That’s why Dynatrace is joining the Dell Technologies AI Ecosystem Program , bringing full-stack AI and LLM observability natively into a broad and integrated AI infrastructure ecosystem."
+          }
+        }
+      ],
+      "name_en": "Dell Technologies"
+    },
+    {
+      "id": "OpenAI",
+      "ticker": "OpenAI",
+      "name": "OpenAI",
+      "sub": "生成AI",
+      "sub_en": "Generative AI",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "OpenAI Agent SDKの監視に対応した",
+          "text_en": "Dynatrace announced agent support for the OpenAI Agent SDK",
+          "source": {
+            "label": "Dynatrace 8-K Ex.99 の発表",
+            "label_en": "Dynatrace 8-K Ex.99 press release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1773383/000177338325000153/fy26q1-earningsreleaseex991.htm",
+            "level": "official",
+            "date": "2025-08-06",
+            "quote": "• Announced Dynatrace agent support for Amazon Bedrock Agent monitoring, OpenAI Agent Software Development Kit (SDK), and Google Agent Development Kit (ADK) to help customers improve performance and compliance and provide detailed debugging tools.",
+            "note": "OpenAIは未上場です。",
+            "note_en": "OpenAI is not listed."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CSCO",
+      "ticker": "CSCO",
+      "name": "シスコシステムズ",
+      "sub": "ネットワーク機器",
+      "sub_en": "Networking",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Dynatraceと競合する",
+          "text_en": "Competes with Dynatrace",
+          "source": {
+            "label": "Dynatrace 10-K",
+            "label_en": "Dynatrace 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1773383/000177338326000019/dt-20260331.htm",
+            "level": "official",
+            "date": "2026-05-20",
+            "quote": "Our principal competitors include Cisco (which includes AppDynamics and Splunk), Datadog, Elastic, Grafana, and New Relic."
+          }
+        }
+      ],
+      "name_en": "Cisco Systems"
+    },
+    {
+      "id": "DDOG",
+      "ticker": "DDOG",
+      "name": "データドッグ",
+      "sub": "オブザーバビリティ",
+      "sub_en": "Observability",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Dynatraceと競合する",
+          "text_en": "Competes with Dynatrace",
+          "source": {
+            "label": "Datadog 10-K",
+            "label_en": "Datadog 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1561550/000162828026008819/ddog-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "• with respect to APM, we compete with Cisco Systems, Inc., New Relic, Inc. and Dynatrace Software Inc."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "Dynatraceと競合する",
+          "text_en": "Competes with Dynatrace",
+          "source": {
+            "label": "Dynatrace 10-K",
+            "label_en": "Dynatrace 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1773383/000177338326000019/dt-20260331.htm",
+            "level": "official",
+            "date": "2026-05-20",
+            "quote": "Our principal competitors include Cisco (which includes AppDynamics and Splunk), Datadog, Elastic, Grafana, and New Relic."
+          }
+        }
+      ],
+      "name_en": "Datadog"
+    },
+    {
+      "id": "ESTC",
+      "ticker": "ESTC",
+      "name": "エラスティック",
+      "sub": "検索・分析",
+      "sub_en": "Search & analytics",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Dynatraceと競合する",
+          "text_en": "Competes with Dynatrace",
+          "source": {
+            "label": "Dynatrace 10-K",
+            "label_en": "Dynatrace 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1773383/000177338326000019/dt-20260331.htm",
+            "level": "official",
+            "date": "2026-05-20",
+            "quote": "Our principal competitors include Cisco (which includes AppDynamics and Splunk), Datadog, Elastic, Grafana, and New Relic."
+          }
+        }
+      ],
+      "name_en": "Elastic"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

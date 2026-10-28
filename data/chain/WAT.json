@@ -1,0 +1,219 @@
+{
+  "root": {
+    "ticker": "WAT",
+    "name": "ウォーターズ",
+    "cik": 1000697,
+    "name_en": "Waters Corporation"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [
+    "A",
+    "BRKR",
+    "DHR",
+    "TMO"
+  ],
+  "companies": [
+    {
+      "id": "A",
+      "ticker": "A",
+      "name": "アジレント・テクノロジーズ",
+      "sub": "分析機器",
+      "sub_en": "Analytical instruments",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Watersの事業領域で主要な競合先のひとつである",
+          "text_en": "One of the principal competitors in the markets served by Waters",
+          "source": {
+            "label": "Waters Corporation 10-K(December 31, 2025)",
+            "label_en": "Waters Corporation 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1000697/000119312526062604/d778470d10k.htm",
+            "level": "official",
+            "date": "2026-02-23",
+            "quote": "In the markets served by Waters, the Company’s principal competitors include: Agilent Technologies, Inc., Shimadzu Corporation, Bruker Corporation, Danaher Corporation and Thermo Fisher Scientific Inc."
+          }
+        }
+      ],
+      "name_en": "Agilent Technologies"
+    },
+    {
+      "id": "SHIMADZU",
+      "ticker": "Shimadzu",
+      "name": "島津製作所",
+      "sub": "分析機器",
+      "sub_en": "Analytical instruments",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Watersの事業領域で主要な競合先のひとつである",
+          "text_en": "One of the principal competitors in the markets served by Waters",
+          "source": {
+            "label": "Waters Corporation 10-K(December 31, 2025)",
+            "label_en": "Waters Corporation 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1000697/000119312526062604/d778470d10k.htm",
+            "level": "official",
+            "date": "2026-02-23",
+            "quote": "In the markets served by Waters, the Company’s principal competitors include: Agilent Technologies, Inc., Shimadzu Corporation, Bruker Corporation, Danaher Corporation and Thermo Fisher Scientific Inc."
+          }
+        }
+      ],
+      "name_en": "Shimadzu Corporation"
+    },
+    {
+      "id": "BRKR",
+      "ticker": "BRKR",
+      "name": "ブルカー",
+      "sub": "分析機器",
+      "sub_en": "Analytical instruments",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Watersの事業領域で主要な競合先のひとつである",
+          "text_en": "One of the principal competitors in the markets served by Waters",
+          "source": {
+            "label": "Waters Corporation 10-K(December 31, 2025)",
+            "label_en": "Waters Corporation 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1000697/000119312526062604/d778470d10k.htm",
+            "level": "official",
+            "date": "2026-02-23",
+            "quote": "In the markets served by Waters, the Company’s principal competitors include: Agilent Technologies, Inc., Shimadzu Corporation, Bruker Corporation, Danaher Corporation and Thermo Fisher Scientific Inc."
+          }
+        }
+      ],
+      "name_en": "Bruker Corporation"
+    },
+    {
+      "id": "DHR",
+      "ticker": "DHR",
+      "name": "ダナハー",
+      "sub": "ライフサイエンス機器",
+      "sub_en": "Life science tools",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Watersの事業領域で主要な競合先のひとつである",
+          "text_en": "One of the principal competitors in the markets served by Waters",
+          "source": {
+            "label": "Waters Corporation 10-K(December 31, 2025)",
+            "label_en": "Waters Corporation 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1000697/000119312526062604/d778470d10k.htm",
+            "level": "official",
+            "date": "2026-02-23",
+            "quote": "In the markets served by Waters, the Company’s principal competitors include: Agilent Technologies, Inc., Shimadzu Corporation, Bruker Corporation, Danaher Corporation and Thermo Fisher Scientific Inc."
+          }
+        }
+      ],
+      "name_en": "Danaher Corporation"
+    },
+    {
+      "id": "TMO",
+      "ticker": "TMO",
+      "name": "サーモフィッシャーサイエンティフィック",
+      "sub": "ライフサイエンス機器",
+      "sub_en": "Life science tools",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Watersの事業領域で主要な競合先のひとつである",
+          "text_en": "One of the principal competitors in the markets served by Waters",
+          "source": {
+            "label": "Waters Corporation 10-K(December 31, 2025)",
+            "label_en": "Waters Corporation 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1000697/000119312526062604/d778470d10k.htm",
+            "level": "official",
+            "date": "2026-02-23",
+            "quote": "In the markets served by Waters, the Company’s principal competitors include: Agilent Technologies, Inc., Shimadzu Corporation, Bruker Corporation, Danaher Corporation and Thermo Fisher Scientific Inc."
+          }
+        }
+      ],
+      "name_en": "Thermo Fisher Scientific"
+    },
+    {
+      "id": "NETZSCH",
+      "ticker": "NETZSCH-Geraetebau",
+      "name": "ネッチ",
+      "sub": "熱分析機器",
+      "sub_en": "Thermal analysis",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "TAの事業領域で主要な競合先のひとつである",
+          "text_en": "One of the principal competitors in the markets served by TA",
+          "source": {
+            "label": "Waters Corporation 10-K(December 31, 2025)",
+            "label_en": "Waters Corporation 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1000697/000119312526062604/d778470d10k.htm",
+            "level": "official",
+            "date": "2026-02-23",
+            "quote": "In the markets served by TA, the Company’s principal competitors include: PerkinElmer, Inc., NETZSCH-Geraetebau GmbH, Malvern PANalytical Ltd., Spectris plc, Anton-Paar GmbH and others not identified here."
+          }
+        }
+      ],
+      "name_en": "NETZSCH-Geraetebau"
+    },
+    {
+      "id": "SPECTRIS",
+      "ticker": "Spectris",
+      "name": "スペクトリス",
+      "sub": "計測機器",
+      "sub_en": "Measurement instruments",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "TAの事業領域で主要な競合先のひとつである",
+          "text_en": "One of the principal competitors in the markets served by TA",
+          "source": {
+            "label": "Waters Corporation 10-K(December 31, 2025)",
+            "label_en": "Waters Corporation 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1000697/000119312526062604/d778470d10k.htm",
+            "level": "official",
+            "date": "2026-02-23",
+            "quote": "In the markets served by TA, the Company’s principal competitors include: PerkinElmer, Inc., NETZSCH-Geraetebau GmbH, Malvern PANalytical Ltd., Spectris plc, Anton-Paar GmbH and others not identified here."
+          }
+        }
+      ],
+      "name_en": "Spectris plc"
+    },
+    {
+      "id": "ANTONPAAR",
+      "ticker": "Anton-Paar GmbH",
+      "name": "アントンパール",
+      "sub": "計測機器",
+      "sub_en": "Measurement instruments",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "TAの事業領域で主要な競合先のひとつである",
+          "text_en": "One of the principal competitors in the markets served by TA",
+          "source": {
+            "label": "Waters Corporation 10-K(December 31, 2025)",
+            "label_en": "Waters Corporation 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1000697/000119312526062604/d778470d10k.htm",
+            "level": "official",
+            "date": "2026-02-23",
+            "quote": "In the markets served by TA, the Company’s principal competitors include: PerkinElmer, Inc., NETZSCH-Geraetebau GmbH, Malvern PANalytical Ltd., Spectris plc, Anton-Paar GmbH and others not identified here."
+          }
+        }
+      ],
+      "name_en": "Anton-Paar GmbH"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

@@ -1,0 +1,131 @@
+{
+  "root": {
+    "ticker": "SBUX",
+    "name": "スターバックス",
+    "cik": 829224,
+    "name_en": "Starbucks Corporation"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "NESN",
+      "ticker": "Nestlé",
+      "name": "ネスレ",
+      "sub": "食品・飲料",
+      "sub_en": "Food & beverage",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ネスレにパッケージ商品の世界的な流通権を与えている",
+          "text_en": "Nestlé holds global rights to distribute certain Starbucks branded packaged goods",
+          "source": {
+            "label": "Starbucks Corporation 10-K(2025年9月28日期)",
+            "label_en": "Starbucks Corporation 10-K (fiscal year ended September 28, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/829224/000082922425000114/sbux-20250928.htm",
+            "level": "official",
+            "date": "2025-11-14",
+            "quote": "Our Channel Development business is heavily reliant on Nestlé, which holds global rights to distribute certain Starbucks branded packaged goods."
+          }
+        },
+        {
+          "type": "down",
+          "text": "ネスレから製品販売とロイヤルティ収入を得ている",
+          "text_en": "Starbucks earns product sales and royalty revenues from Nestlé",
+          "source": {
+            "label": "Starbucks Corporation 10-K(2025年9月28日期)",
+            "label_en": "Starbucks Corporation 10-K (fiscal year ended September 28, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/829224/000082922425000114/sbux-20250928.htm",
+            "level": "official",
+            "date": "2025-11-14",
+            "quote": "Most of our Channel Development revenues are from product sales to, and royalty revenues from, Nestlé through the Global Coffee Alliance."
+          }
+        }
+      ],
+      "name_en": "Nestlé"
+    },
+    {
+      "id": "PEP",
+      "ticker": "PEP",
+      "name": "ペプシコ",
+      "sub": "飲料・食品",
+      "sub_en": "Beverages & food",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "北米ではペプシ・コーラ社との折半出資の合弁で瓶入り飲料を扱う",
+          "text_en": "In North America a joint venture with the Pepsi-Cola Company handles bottled beverages",
+          "source": {
+            "label": "Starbucks Corporation 10-K(2025年9月28日期)",
+            "label_en": "Starbucks Corporation 10-K (fiscal year ended September 28, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/829224/000082922425000114/sbux-20250928.htm",
+            "level": "official",
+            "date": "2025-11-14",
+            "quote": "We also license the rights to produce and distribute Starbucks-branded products to our 50 % owned joint venture, The North American Coffee Partnership with the Pepsi-Cola Company, which develops and distributes bottled Starbucks ® beverages"
+          }
+        }
+      ],
+      "name_en": "PepsiCo"
+    },
+    {
+      "id": "BOYU",
+      "ticker": "Boyu Capital",
+      "name": "ボーユー・キャピタル",
+      "sub": "投資会社",
+      "sub_en": "Investment firm",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "中国の店舗運営に向けた合弁会社を組むことで合意した",
+          "text_en": "Starbucks agreed to form a joint venture to operate its retail business in China",
+          "source": {
+            "label": "Starbucks Corporation 10-K(2025年9月28日期)",
+            "label_en": "Starbucks Corporation 10-K (fiscal year ended September 28, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/829224/000082922425000114/sbux-20250928.htm",
+            "level": "official",
+            "date": "2025-11-14",
+            "quote": "we announced the Company has entered an agreement to form a joint venture with Boyu Capital, a leading alternative investment firm, to operate Starbucks retail in China."
+          }
+        }
+      ],
+      "name_en": "Boyu Capital"
+    },
+    {
+      "id": "TATA",
+      "ticker": "Tata Starbucks",
+      "name": "タタ・スターバックス",
+      "sub": "インド合弁",
+      "sub_en": "India venture",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "インドでライセンス店舗を運営する持分法適用の関連会社である",
+          "text_en": "It operates licensed Starbucks stores in India and is an equity method investment",
+          "source": {
+            "label": "Starbucks Corporation 10-K(2025年9月28日期)",
+            "label_en": "Starbucks Corporation 10-K (fiscal year ended September 28, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/829224/000082922425000114/sbux-20250928.htm",
+            "level": "official",
+            "date": "2025-11-14",
+            "quote": "Tata Starbucks Limited (India) operates licensed Starbucks ® retail stores."
+          }
+        }
+      ],
+      "name_en": "Tata Starbucks Limited"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

@@ -1,0 +1,256 @@
+{
+  "root": {
+    "ticker": "CDW",
+    "name": "CDW",
+    "cik": 1402057,
+    "name_en": "CDW"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    },
+    {
+      "ja": "供給元",
+      "en": "Suppliers",
+      "above": true
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "AAPL",
+      "ticker": "AAPL",
+      "name": "アップル",
+      "sub": "IT機器メーカー",
+      "sub_en": "IT hardware maker",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "売上の大きな部分を占める製品のメーカーの一つである",
+          "text_en": "Apple is among the makers of products that account for a significant portion of CDW's sales",
+          "source": {
+            "label": "CDW 10-K(2025年12月期)",
+            "label_en": "CDW 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1402057/000140205726000011/cdw-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "A significant portion of our sales are derived from products manufactured by Apple, Cisco, Dell Technologies, HP Inc., Lenovo, and Microsoft."
+          }
+        }
+      ],
+      "name_en": "Apple"
+    },
+    {
+      "id": "CSCO",
+      "ticker": "CSCO",
+      "name": "シスコシステムズ",
+      "sub": "ネットワーク機器",
+      "sub_en": "Networking equipment",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "売上の大きな部分を占める製品のメーカーの一つである",
+          "text_en": "Cisco is among the makers of products that account for a significant portion of CDW's sales",
+          "source": {
+            "label": "CDW 10-K(2025年12月期)",
+            "label_en": "CDW 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1402057/000140205726000011/cdw-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "A significant portion of our sales are derived from products manufactured by Apple, Cisco, Dell Technologies, HP Inc., Lenovo, and Microsoft."
+          }
+        },
+        {
+          "type": "up",
+          "text": "最上位の認証を受けた主要ベンダーパートナーの一つである",
+          "text_en": "Cisco is among the major vendor partners from which CDW received the highest level of certification",
+          "source": {
+            "label": "CDW 10-K(2025年12月期)",
+            "label_en": "CDW 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1402057/000140205726000011/cdw-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "We have received the highest level of certification from major vendor partners such as Broadcom Inc., Cisco, Dell Technologies, Hewlett Packard Enterprise, IBM, Lenovo, Microsoft, NetApp, Nutanix, Palo Alto Networks, and Samsung which reflects the extensive product and solution knowledge and capabilities that we bring to our customers."
+          }
+        }
+      ],
+      "name_en": "Cisco"
+    },
+    {
+      "id": "DELL",
+      "ticker": "DELL",
+      "name": "デル・テクノロジーズ",
+      "sub": "IT機器メーカー",
+      "sub_en": "IT hardware maker",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "売上の大きな部分を占める製品のメーカーの一つである",
+          "text_en": "Dell Technologies is among the makers of products that account for a significant portion of CDW's sales",
+          "source": {
+            "label": "CDW 10-K(2025年12月期)",
+            "label_en": "CDW 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1402057/000140205726000011/cdw-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "A significant portion of our sales are derived from products manufactured by Apple, Cisco, Dell Technologies, HP Inc., Lenovo, and Microsoft."
+          }
+        }
+      ],
+      "name_en": "Dell Technologies"
+    },
+    {
+      "id": "HPQ",
+      "ticker": "HPQ",
+      "name": "HPインク",
+      "sub": "PC・プリンター",
+      "sub_en": "PCs & printers",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "売上の大きな部分を占める製品のメーカーの一つである",
+          "text_en": "HP Inc. is among the makers of products that account for a significant portion of CDW's sales",
+          "source": {
+            "label": "CDW 10-K(2025年12月期)",
+            "label_en": "CDW 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1402057/000140205726000011/cdw-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "A significant portion of our sales are derived from products manufactured by Apple, Cisco, Dell Technologies, HP Inc., Lenovo, and Microsoft."
+          }
+        }
+      ],
+      "name_en": "HP Inc."
+    },
+    {
+      "id": "LNVGY",
+      "ticker": "Lenovo",
+      "name": "レノボ",
+      "sub": "PCメーカー",
+      "sub_en": "PC maker",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "売上の大きな部分を占める製品のメーカーの一つである",
+          "text_en": "Lenovo is among the makers of products that account for a significant portion of CDW's sales",
+          "source": {
+            "label": "CDW 10-K(2025年12月期)",
+            "label_en": "CDW 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1402057/000140205726000011/cdw-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "A significant portion of our sales are derived from products manufactured by Apple, Cisco, Dell Technologies, HP Inc., Lenovo, and Microsoft."
+          }
+        }
+      ],
+      "name_en": "Lenovo"
+    },
+    {
+      "id": "MSFT",
+      "ticker": "MSFT",
+      "name": "マイクロソフト",
+      "sub": "ソフトウェア・クラウド",
+      "sub_en": "Software & cloud",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "売上の大きな部分を占める製品のメーカーの一つである",
+          "text_en": "Microsoft is among the makers of products that account for a significant portion of CDW's sales",
+          "source": {
+            "label": "CDW 10-K(2025年12月期)",
+            "label_en": "CDW 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1402057/000140205726000011/cdw-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "A significant portion of our sales are derived from products manufactured by Apple, Cisco, Dell Technologies, HP Inc., Lenovo, and Microsoft."
+          }
+        }
+      ],
+      "name_en": "Microsoft"
+    },
+    {
+      "id": "IM",
+      "ticker": "Ingram Micro",
+      "name": "イングラム・マイクロ",
+      "sub": "卸売ディストリビューター",
+      "sub_en": "Wholesale distributor",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "2社で総仕入れの25%超を占める卸売ディストリビューターの一つである",
+          "text_en": "Ingram Micro is one of two wholesale distributors that together account for over 25% of CDW's total purchases",
+          "source": {
+            "label": "CDW 10-K(2025年12月期)",
+            "label_en": "CDW 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1402057/000140205726000011/cdw-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "In addition, purchases from two wholesale distributors, Ingram Micro and TD SYNNEX, represent over 25% of our total purchases."
+          }
+        }
+      ],
+      "name_en": "Ingram Micro"
+    },
+    {
+      "id": "SNX",
+      "ticker": "SNX",
+      "name": "TDシネックス",
+      "sub": "卸売ディストリビューター",
+      "sub_en": "Wholesale distributor",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "2社で総仕入れの25%超を占める卸売ディストリビューターの一つである",
+          "text_en": "TD SYNNEX is one of two wholesale distributors that together account for over 25% of CDW's total purchases",
+          "source": {
+            "label": "CDW 10-K(2025年12月期)",
+            "label_en": "CDW 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1402057/000140205726000011/cdw-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "In addition, purchases from two wholesale distributors, Ingram Micro and TD SYNNEX, represent over 25% of our total purchases."
+          }
+        }
+      ],
+      "name_en": "TD SYNNEX"
+    },
+    {
+      "id": "PANW",
+      "ticker": "PANW",
+      "name": "パロアルトネットワークス",
+      "sub": "セキュリティ",
+      "sub_en": "Cybersecurity",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "最上位の認証を受けた主要ベンダーパートナーの一つである",
+          "text_en": "Palo Alto Networks is among the major vendor partners from which CDW received the highest level of certification",
+          "source": {
+            "label": "CDW 10-K(2025年12月期)",
+            "label_en": "CDW 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1402057/000140205726000011/cdw-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "We have received the highest level of certification from major vendor partners such as Broadcom Inc., Cisco, Dell Technologies, Hewlett Packard Enterprise, IBM, Lenovo, Microsoft, NetApp, Nutanix, Palo Alto Networks, and Samsung which reflects the extensive product and solution knowledge and capabilities that we bring to our customers."
+          }
+        }
+      ],
+      "name_en": "Palo Alto Networks"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

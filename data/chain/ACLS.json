@@ -1,0 +1,130 @@
+{
+  "root": {
+    "ticker": "ACLS",
+    "name": "Axcelis Technologies",
+    "cik": 1113232
+  },
+  "rows": [
+    {
+      "ja": "合併・提携",
+      "en": "Merger & partnerships"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "AMAT",
+    "SHI"
+  ],
+  "companies": [
+    {
+      "id": "AMAT",
+      "ticker": "AMAT",
+      "name": "アプライド マテリアルズ",
+      "sub": "半導体製造装置",
+      "sub_en": "Chip equipment",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Axcelis Technologiesと競合する",
+          "text_en": "Competes with Axcelis Technologies",
+          "source": {
+            "label": "Axcelis Technologies 10-K",
+            "label_en": "Axcelis Technologies 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1113232/000110465926020461/acls-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "In the market for ion implantation systems, we mainly compete against Applied Materials, Inc."
+          }
+        }
+      ],
+      "name_en": "Applied Materials"
+    },
+    {
+      "id": "SHI",
+      "ticker": "Sumitomo Heavy",
+      "name": "住友重機械工業",
+      "sub": "イオン注入装置",
+      "sub_en": "Ion implanters",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Axcelis Technologiesと競合する",
+          "text_en": "Competes with Axcelis Technologies",
+          "source": {
+            "label": "Axcelis Technologies 10-K",
+            "label_en": "Axcelis Technologies 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1113232/000110465926020461/acls-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Other implantation equipment manufacturers we compete with include Sumitomo Heavy Industries Ion Technology Co.",
+            "note": "子会社の住友重機械イオンテクノロジーに関する記載です。",
+            "note_en": "Refers to subsidiary Sumitomo Heavy Industries Ion Technology."
+          }
+        }
+      ],
+      "name_en": "Sumitomo Heavy Industries"
+    },
+    {
+      "id": "VECO",
+      "ticker": "VECO",
+      "name": "ビーコ・インスツルメンツ",
+      "sub": "薄膜プロセス装置",
+      "sub_en": "Thin-film equipment",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Axcelisは、Veeco Instruments Inc.との合併契約を2025年9月30日に結んだ",
+          "text_en": "Axcelis entered into an Agreement and Plan of Merger with Veeco Instruments Inc. on September 30, 2025",
+          "source": {
+            "label": "Axcelis 10-K",
+            "label_en": "Axcelis 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1113232/000110465926020461/acls-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "On September 30, 2025, the Company, Victory Merger Sub, Inc., a Delaware corporation and a wholly-owned subsidiary of the Company (“Merger Sub”), and Veeco Instruments Inc., a Delaware corporation (“Veeco”), entered into an Agreement and Plan of Merger (the “Merger Agreement”).",
+            "note": "年次報告時点の合併契約の記載で、完了を示すものではありません。",
+            "note_en": "Describes the signed merger agreement as of the annual report; completion is not stated."
+          }
+        }
+      ],
+      "name_en": "Veeco Instruments"
+    },
+    {
+      "id": "SCREEN",
+      "ticker": "SCREEN",
+      "name": "SCREENホールディングス",
+      "sub": "半導体製造装置",
+      "sub_en": "Chip equipment",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Axcelisは、日本市場向けにPurionの販売・サポートで、SCREEN Semiconductor Solutionsと戦略的契約を結んだ",
+          "text_en": "Axcelis entered into a strategic agreement for distribution and support with SCREEN Semiconductor Solutions to bring the Purion platform to the Japanese market",
+          "source": {
+            "label": "Axcelis 2018年第1四半期の決算発表",
+            "label_en": "Axcelis Q1 2018 earnings release",
+            "url": "https://www.sec.gov/Archives/edgar/data/0001113232/000110465918029850/a18-12568_1ex99d1.htm",
+            "level": "official",
+            "date": "2018-05-02",
+            "quote": "During the quarter, we entered into a strategic agreement for distribution and support with SCREEN Semiconductor Solutions to bring the Purion platform to the Japanese market.",
+            "note": "子会社のSCREEN Semiconductor Solutionsとの契約で、2018年の発表です。",
+            "note_en": "Agreement with subsidiary SCREEN Semiconductor Solutions, announced in 2018."
+          }
+        }
+      ],
+      "name_en": "SCREEN Holdings"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

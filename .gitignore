@@ -32,6 +32,7 @@ yarn-error.log*
 
 # env files (can opt-in for committing if needed)
 .env*
+!.env.example
 
 # vercel
 .vercel
@@ -39,3 +40,16 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Local editorial intake: never publish operational state or review identities
+/.research-private/
+__pycache__/
+*.pyc
+
+# Generated from the pinned font package before dev/build
+/public/research-pdf-fonts/
+
+/public/research-pdf-viewer/
+
+# Independently packaged RESOLUTE API dependencies
+/services/resolute-api/node_modules/

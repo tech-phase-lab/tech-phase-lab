@@ -1,0 +1,281 @@
+{
+  "root": {
+    "ticker": "LHX",
+    "name": "L3ハリス・テクノロジーズ",
+    "cik": 202058,
+    "name_en": "L3Harris Technologies"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [
+    "BA",
+    "GD",
+    "LMT",
+    "NOC",
+    "RTX"
+  ],
+  "companies": [
+    {
+      "id": "PLTR",
+      "ticker": "PLTR",
+      "name": "パランティア・テクノロジーズ",
+      "sub": "データ分析ソフト",
+      "sub_en": "Data analytics software",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "新たな能力を開発するための戦略的パートナーシップ先の一社である",
+          "text_en": "One of the strategic partners for developing new capabilities",
+          "source": {
+            "label": "L3Harris 10-K(2026年1月2日)",
+            "label_en": "L3Harris Technologies 10-K (fiscal year ended January 2, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/202058/000020205826000015/hrs-20260102.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "We also collaborate with innovative partners, such as our strategic partnerships with Palantir Technologies, Shield Capital, Anduril and Amazon Kuiper to develop new capabilities to meet the demands of our customers."
+          }
+        }
+      ],
+      "name_en": "Palantir Technologies"
+    },
+    {
+      "id": "AMZN",
+      "ticker": "AMZN",
+      "name": "アマゾン(カイパー)",
+      "sub": "衛星通信",
+      "sub_en": "Satellite communications",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "新たな能力を開発するための戦略的パートナーシップ先の一社である",
+          "text_en": "One of the strategic partners for developing new capabilities",
+          "source": {
+            "label": "L3Harris 10-K(2026年1月2日)",
+            "label_en": "L3Harris Technologies 10-K (fiscal year ended January 2, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/202058/000020205826000015/hrs-20260102.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "We also collaborate with innovative partners, such as our strategic partnerships with Palantir Technologies, Shield Capital, Anduril and Amazon Kuiper to develop new capabilities to meet the demands of our customers."
+          }
+        }
+      ],
+      "name_en": "Amazon Kuiper"
+    },
+    {
+      "id": "SHIELD",
+      "ticker": "Shield Capital",
+      "name": "シールド・キャピタル",
+      "sub": "投資会社",
+      "sub_en": "Investment firm",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "新たな能力を開発するための戦略的パートナーシップ先に含まれる",
+          "text_en": "Included among strategic partners for developing new capabilities",
+          "source": {
+            "label": "L3Harris 10-K(2026年1月2日)",
+            "label_en": "L3Harris Technologies 10-K (fiscal year ended January 2, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/202058/000020205826000015/hrs-20260102.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "We also collaborate with innovative partners, such as our strategic partnerships with Palantir Technologies, Shield Capital, Anduril and Amazon Kuiper to develop new capabilities to meet the demands of our customers."
+          }
+        }
+      ],
+      "name_en": "Shield Capital"
+    },
+    {
+      "id": "ANDURIL",
+      "ticker": "Anduril",
+      "name": "アンドゥリル",
+      "sub": "防衛テクノロジー",
+      "sub_en": "Defense technology",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "新たな能力を開発するための戦略的パートナーシップ先に含まれる",
+          "text_en": "Included among strategic partners for developing new capabilities",
+          "source": {
+            "label": "L3Harris 10-K(2026年1月2日)",
+            "label_en": "L3Harris Technologies 10-K (fiscal year ended January 2, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/202058/000020205826000015/hrs-20260102.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "We also collaborate with innovative partners, such as our strategic partnerships with Palantir Technologies, Shield Capital, Anduril and Amazon Kuiper to develop new capabilities to meet the demands of our customers."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "非伝統的な防衛請負企業として競合先に挙げられている",
+          "text_en": "Named as a non-traditional defense contractor it competes against",
+          "source": {
+            "label": "L3Harris 10-K(2026年1月2日)",
+            "label_en": "L3Harris Technologies 10-K (fiscal year ended January 2, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/202058/000020205826000015/hrs-20260102.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "We compete domestically and internationally against large defense companies; principally BAE Systems, Boeing, General Dynamics, Lockheed Martin, Northrop Grumman, RTX, Thales and non-traditional defense contractors, such as Anduril, Ursa Major and Silvus Technologies."
+          }
+        }
+      ],
+      "name_en": "Anduril"
+    },
+    {
+      "id": "AEI",
+      "ticker": "AE Industrial",
+      "name": "AEインダストリアル・パートナーズ",
+      "sub": "宇宙事業の共同設立",
+      "sub_en": "Space venture co-founder",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "新しい宇宙技術会社を設立する契約を2025年第4四半期に結んだ",
+          "text_en": "Entered an agreement in fourth quarter 2025 to establish a new space technology company",
+          "source": {
+            "label": "L3Harris 10-K(2026年1月2日)",
+            "label_en": "L3Harris Technologies 10-K (fiscal year ended January 2, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/202058/000020205826000015/hrs-20260102.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "During fourth quarter 2025, we entered into an agreement with AE Industrial Partners (“AE Industrial”) to establish a new space technology company."
+          }
+        }
+      ],
+      "name_en": "AE Industrial Partners"
+    },
+    {
+      "id": "BA",
+      "ticker": "BA",
+      "name": "ボーイング",
+      "sub": "航空宇宙・防衛",
+      "sub_en": "Aerospace & defense",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "国内外で競う大手防衛企業の一社である",
+          "text_en": "One of the large defense companies it competes against",
+          "source": {
+            "label": "L3Harris 10-K(2026年1月2日)",
+            "label_en": "L3Harris Technologies 10-K (fiscal year ended January 2, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/202058/000020205826000015/hrs-20260102.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "We compete domestically and internationally against large defense companies; principally BAE Systems, Boeing, General Dynamics, Lockheed Martin, Northrop Grumman, RTX, Thales and non-traditional defense contractors, such as Anduril, Ursa Major and Silvus Technologies."
+          }
+        }
+      ],
+      "name_en": "Boeing"
+    },
+    {
+      "id": "GD",
+      "ticker": "GD",
+      "name": "ゼネラル・ダイナミクス",
+      "sub": "防衛・航空機",
+      "sub_en": "Defense & aircraft",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "国内外で競う大手防衛企業の一社として名前が出ている",
+          "text_en": "Named as a large defense company it competes against",
+          "source": {
+            "label": "L3Harris 10-K(2026年1月2日)",
+            "label_en": "L3Harris Technologies 10-K (fiscal year ended January 2, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/202058/000020205826000015/hrs-20260102.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "We compete domestically and internationally against large defense companies; principally BAE Systems, Boeing, General Dynamics, Lockheed Martin, Northrop Grumman, RTX, Thales and non-traditional defense contractors, such as Anduril, Ursa Major and Silvus Technologies."
+          }
+        }
+      ],
+      "name_en": "General Dynamics"
+    },
+    {
+      "id": "LMT",
+      "ticker": "LMT",
+      "name": "ロッキード・マーチン",
+      "sub": "防衛・航空宇宙",
+      "sub_en": "Defense & aerospace",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "国内外での主な競合先に挙げられている",
+          "text_en": "Listed among its principal competitors",
+          "source": {
+            "label": "L3Harris 10-K(2026年1月2日)",
+            "label_en": "L3Harris Technologies 10-K (fiscal year ended January 2, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/202058/000020205826000015/hrs-20260102.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "We compete domestically and internationally against large defense companies; principally BAE Systems, Boeing, General Dynamics, Lockheed Martin, Northrop Grumman, RTX, Thales and non-traditional defense contractors, such as Anduril, Ursa Major and Silvus Technologies."
+          }
+        }
+      ],
+      "name_en": "Lockheed Martin"
+    },
+    {
+      "id": "NOC",
+      "ticker": "NOC",
+      "name": "ノースロップ・グラマン",
+      "sub": "防衛・宇宙",
+      "sub_en": "Defense & space",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "国内外で競う大手防衛企業の一社である",
+          "text_en": "One of the large defense companies it competes against",
+          "source": {
+            "label": "L3Harris 10-K(2026年1月2日)",
+            "label_en": "L3Harris Technologies 10-K (fiscal year ended January 2, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/202058/000020205826000015/hrs-20260102.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "We compete domestically and internationally against large defense companies; principally BAE Systems, Boeing, General Dynamics, Lockheed Martin, Northrop Grumman, RTX, Thales and non-traditional defense contractors, such as Anduril, Ursa Major and Silvus Technologies."
+          }
+        }
+      ],
+      "name_en": "Northrop Grumman"
+    },
+    {
+      "id": "RTX",
+      "ticker": "RTX",
+      "name": "RTXコーポレーション",
+      "sub": "航空宇宙・防衛",
+      "sub_en": "Aerospace & defense",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主な競合先として名前が挙がっている",
+          "text_en": "Named among its principal competitors",
+          "source": {
+            "label": "L3Harris 10-K(2026年1月2日)",
+            "label_en": "L3Harris Technologies 10-K (fiscal year ended January 2, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/202058/000020205826000015/hrs-20260102.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "We compete domestically and internationally against large defense companies; principally BAE Systems, Boeing, General Dynamics, Lockheed Martin, Northrop Grumman, RTX, Thales and non-traditional defense contractors, such as Anduril, Ursa Major and Silvus Technologies."
+          }
+        }
+      ],
+      "name_en": "RTX"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

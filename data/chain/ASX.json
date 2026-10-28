@@ -1,0 +1,424 @@
+{
+  "root": {
+    "ticker": "ASX",
+    "name": "ASE Technology Holding",
+    "cik": 1122411
+  },
+  "rows": [
+    {
+      "ja": "装置の調達先",
+      "en": "Equipment suppliers",
+      "above": true
+    },
+    {
+      "ja": "顧客(顧客側の年次報告に記載)",
+      "en": "Customers (named in their annual reports)"
+    },
+    {
+      "ja": "提携・ライセンス・買収・協業",
+      "en": "Partnerships, licensing & deals"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "AMKR"
+  ],
+  "companies": [
+    {
+      "id": "LRCX",
+      "ticker": "LRCX",
+      "name": "ラム・リサーチ",
+      "sub": "半導体製造装置",
+      "sub_en": "Semiconductor equipment",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "ASEは、パッケージング装置をLam Research Corporationなどの大手メーカーから購入している",
+          "text_en": "ASE purchases packaging equipment from major international manufacturers, including Lam Research Corporation",
+          "source": {
+            "label": "ASE Technology Holding 20-F",
+            "label_en": "ASE Technology Holding 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/1122411/000119312526135585/d50802d20f.htm",
+            "level": "official",
+            "date": "2026-04-01",
+            "quote": "We purchase our packaging equipment from major international manufacturers, including All Ring Tech Co., Ltd., Marketech lnternational Corp., Grand Process Technology Corporation, Tokyo Electron Limited, and Lam Research Corporation."
+          }
+        }
+      ],
+      "name_en": "Lam Research"
+    },
+    {
+      "id": "TOELY",
+      "ticker": "Tokyo Electron",
+      "name": "東京エレクトロン",
+      "sub": "半導体製造装置",
+      "sub_en": "Semiconductor equipment",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "ASEは、テスターを主にTeradyne, Inc.、Tokyo Electron Limited、Advantest Corporationから購入している",
+          "text_en": "ASE purchases testers primarily from Teradyne, Inc., Tokyo Electron Limited and Advantest Corporation",
+          "source": {
+            "label": "ASE Technology Holding 20-F",
+            "label_en": "ASE Technology Holding 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/1122411/000119312526135585/d50802d20f.htm",
+            "level": "official",
+            "date": "2026-04-01",
+            "quote": "We purchase testers from major international manufacturers, primarily Teradyne, Inc., Tokyo Electron Limited, and Advantest Corporation."
+          }
+        }
+      ],
+      "name_en": "Tokyo Electron"
+    },
+    {
+      "id": "LSCC",
+      "ticker": "LSCC",
+      "name": "ラティス・セミコンダクター",
+      "sub": "プログラマブル半導体",
+      "sub_en": "Programmable chips",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "ASEとAmkorは、Lattice(Form 10-K)が認定済みの主要な組立パートナー2社に当たる",
+          "text_en": "Lattice has qualified ASE and Amkor as its two major assembly partners.",
+          "source": {
+            "label": "Lattice Semiconductor 10-K",
+            "label_en": "Lattice Semiconductor 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/855658/000143774926004100/lscc20260103_10k.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "We have qualified two major assembly partners, ASE and Amkor Technology (\"Amkor\") and are second sourced where volume and customer requirements make it necessary."
+          }
+        },
+        {
+          "type": "down",
+          "text": "Latticeのウェハーソートテストは、主にASEが台湾とマレーシアで行っている",
+          "text_en": "Lattice's wafer sort testing is primarily performed by ASE in Taiwan and Malaysia",
+          "source": {
+            "label": "Lattice Semiconductor 10-K",
+            "label_en": "Lattice Semiconductor 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/855658/000143774926004100/lscc20260103_10k.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "Wafer sort testing is primarily performed by ASE in Taiwan and Malaysia, and by our second source King Yuan Electronics Company (“KYEC”) in Taiwan."
+          }
+        }
+      ],
+      "name_en": "Lattice Semiconductor"
+    },
+    {
+      "id": "AMBA",
+      "ticker": "AMBA",
+      "name": "アンバレラ",
+      "sub": "画像処理半導体",
+      "sub_en": "Vision chips",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Ambarellaは、Samsungから購入したテスト済みダイの組立をASEに委託している",
+          "text_en": "Ambarella contracts the assembly of tested die purchased from Samsung to ASE",
+          "source": {
+            "label": "Ambarella 10-K",
+            "label_en": "Ambarella 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1280263/000119312526119321/amba-20260131.htm",
+            "level": "official",
+            "date": "2026-03-23",
+            "quote": "In the case of purchases of tested die from Samsung, we contract the assembly to Advanced Semiconductor Engineering, Inc., or ASE."
+          }
+        }
+      ],
+      "name_en": "Ambarella"
+    },
+    {
+      "id": "CRDO",
+      "ticker": "CRDO",
+      "name": "クレド・セミコンダクター",
+      "sub": "接続用半導体",
+      "sub_en": "Connectivity chips",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Credoは、IC製品の組立・テストの大部分を、Amkor、ASE、KYEC、Sigurdなどの外部製造委託先に任せている",
+          "text_en": "Credo uses third-party contract manufacturers, including Amkor, ASE, KYEC and Sigurd, for a significant majority of its assembly and test operations for IC products",
+          "source": {
+            "label": "Credo 10-K",
+            "label_en": "Credo 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1807794/000162828026043303/crdo-20260502.htm",
+            "level": "official",
+            "date": "2026-06-15",
+            "quote": "We also use third-party contract manufacturers for a significant majority of our assembly and test operations, including Amkor, ASE, KYEC and Sigurd for our IC products, and BizLink for our AEC products."
+          }
+        }
+      ],
+      "name_en": "Credo Semiconductor"
+    },
+    {
+      "id": "INDI",
+      "ticker": "INDI",
+      "name": "インディ・セミコンダクター",
+      "sub": "車載半導体",
+      "sub_en": "Automotive chips",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "indie Semiconductorは、ASEなどでパッケージングを複数社に分けて調達している",
+          "text_en": "indie Semiconductor multi-sources packaging at ASE and other suppliers",
+          "source": {
+            "label": "indie Semiconductor 10-K",
+            "label_en": "indie Semiconductor 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1841925/000119312526082535/indi-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "We multi-source packaging at ASE, SCK, and other suppliers."
+          }
+        }
+      ],
+      "name_en": "indie Semiconductor"
+    },
+    {
+      "id": "MXL",
+      "ticker": "MXL",
+      "name": "マックスリニア",
+      "sub": "接続用半導体",
+      "sub_en": "Connectivity chips",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "ASEはMaxLinearの最大級の製造パートナー4社の1社に入る",
+          "text_en": "ASE is one of MaxLinear's four largest manufacturing partners.",
+          "source": {
+            "label": "MaxLinear 10-K",
+            "label_en": "MaxLinear 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1288469/000128846926000011/mxl-20251231.htm",
+            "level": "official",
+            "date": "2026-01-29",
+            "quote": "For example, according to their websites, four of our largest manufacturing partners, ASE, Intel, TSMC, and UMC, each maintain well-developed environmental management and sustainability programs that are publicly avowed and supported by the highest levels of"
+          }
+        }
+      ],
+      "name_en": "MaxLinear"
+    },
+    {
+      "id": "SITM",
+      "ticker": "SITM",
+      "name": "サイタイム",
+      "sub": "タイミング半導体",
+      "sub_en": "Timing chips",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "SiTimeは、組立・テストを主にASE、Carsem、UTACに頼っている",
+          "text_en": "SiTime primarily relies on ASE, Carsem and UTAC for assembly and testing",
+          "source": {
+            "label": "SiTime 10-K",
+            "label_en": "SiTime 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1451809/000145180926000012/sitm-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "We currently primarily rely on ASE, Carsem, and UTAC for assembly and testing, as well as Daishinku, UTAC, Hana Semiconductor (Ayutthaya) Co., Ltd, and ASE for ceramic packaging for some of our products."
+          }
+        }
+      ],
+      "name_en": "SiTime"
+    },
+    {
+      "id": "TSM",
+      "ticker": "TSM",
+      "name": "TSMC",
+      "sub": "半導体受託製造",
+      "sub_en": "Foundry",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ASEはTSMCとの戦略的提携と地理的な近さを生かし、ファウンドリ・サービスを含む総合的な製造ソリューションを提供できる",
+          "text_en": "ASE's strategic alliance with and proximity to TSMC let it offer a total semiconductor manufacturing solution that includes foundry services.",
+          "source": {
+            "label": "ASE Technology Holding 20-F",
+            "label_en": "ASE Technology Holding 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/1122411/000119312526135585/d50802d20f.htm",
+            "level": "official",
+            "date": "2026-04-01",
+            "quote": "Through our strategic alliance with and close geographic proximity to TSMC, we are able to offer our customers a total semiconductor manufacturing solution that includes access to foundry services in addition to our packaging, testing, and direct shipment services."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "ASEは1997年からTSMCと戦略的提携を結び、TSMCから製造半導体の非独占的な優先パッケージング・テスト提供者に指定されている",
+          "text_en": "Since 1997 ASE has had a strategic alliance with TSMC, which designates it a non-exclusive preferred provider of packaging and testing services for TSMC-made semiconductors",
+          "source": {
+            "label": "ASE Technology Holding 20-F",
+            "label_en": "ASE Technology Holding 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/1122411/000119312526135585/d50802d20f.htm",
+            "level": "official",
+            "date": "2026-04-01",
+            "quote": "Since 1997, we have maintained a strategic alliance with TSMC, which designates us as their non-exclusive preferred provider of packaging and testing services for semiconductors manufactured by TSMC."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ADI",
+      "ticker": "ADI",
+      "name": "アナログ・デバイセズ",
+      "sub": "アナログ半導体",
+      "sub_en": "Analog chips",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ASE Malaysiaの取締役会が2026年3月に、Analog Devicesのマレーシアの製造子会社の取得を決議した",
+          "text_en": "In March 2026 the board of ASE Malaysia resolved to acquire Analog Devices's manufacturing subsidiaries in Malaysia",
+          "source": {
+            "label": "ASE Technology Holding 20-F",
+            "label_en": "ASE Technology Holding 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/1122411/000119312526135585/d50802d20f.htm",
+            "level": "official",
+            "date": "2026-04-01",
+            "quote": "and South Korea to expand power chip module packaging and testing and lead frame packaging, and in March 2026, the board of directors of ASE Malaysia resolved to acquire Analog Devices’s manufacturing subsidiaries in Malaysia to enhance supply chain resilience and manufacturing diversity.",
+            "note": "取得決議の段階の記載です。",
+            "note_en": "Describes a board resolution to acquire."
+          }
+        }
+      ],
+      "name_en": "Analog Devices"
+    },
+    {
+      "id": "TTDKY",
+      "ticker": "TDK",
+      "name": "TDK",
+      "sub": "電子部品",
+      "sub_en": "Electronic components",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ASEは、TDK Corporationなどと非独占の技術ライセンス契約を結んでいる",
+          "text_en": "ASE has entered into non-exclusive technology license agreements with companies including TDK Corporation",
+          "source": {
+            "label": "ASE Technology Holding 20-F",
+            "label_en": "ASE Technology Holding 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/1122411/000119312526135585/d50802d20f.htm",
+            "level": "official",
+            "date": "2026-04-01",
+            "quote": "We have also entered into various non-exclusive technology license agreements with other companies involved in the semiconductor manufacturing process, including Infineon Technologies AG, TDK Corporation, and DECA Technologies Inc."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "TDKとのライセンス契約は、許諾された特許が満了するまで有効である",
+          "text_en": "The license agreement with TDK remains in effect until expiration of the licensed patents",
+          "source": {
+            "label": "ASE Technology Holding 20-F",
+            "label_en": "ASE Technology Holding 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/1122411/000119312526135585/d50802d20f.htm",
+            "level": "official",
+            "date": "2026-04-01",
+            "quote": "Our license agreements with TDK Corporation and DECA remain in effect until expiration of their respective patents licensed by the agreements."
+          }
+        }
+      ]
+    },
+    {
+      "id": "NXPI",
+      "ticker": "NXPI",
+      "name": "NXPセミコンダクターズ",
+      "sub": "車載・産業用半導体",
+      "sub_en": "Automotive & industrial chips",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ASEは、NXPとの合弁会社ASENの60%を取得した",
+          "text_en": "ASE acquired 60% of ASEN, its joint venture with NXP Semiconductors",
+          "source": {
+            "label": "ASE Technology Holding 20-F",
+            "label_en": "ASE Technology Holding 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/1122411/000119312526135585/d50802d20f.htm",
+            "level": "official",
+            "date": "2026-04-01",
+            "quote": "Equity Interests Transfer Agreement dated August 6, 2007 by and among NXP B.V., NXP Semiconductors Suzhou Ltd. and J&R Holding Limited relating to our acquisition of 60% of ASEN, our joint venture with NXP Semiconductors (incorporated by",
+            "note": "2007年付の契約の記載です。",
+            "note_en": "Refers to an agreement dated 2007."
+          }
+        }
+      ],
+      "name_en": "NXP Semiconductors"
+    },
+    {
+      "id": "SIEGY",
+      "ticker": "Siemens",
+      "name": "シーメンス",
+      "sub": "電機・ソフトウェア",
+      "sub_en": "Industrial & software",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ASEのVIPackプラットフォーム向けに、SiemensのInnovator3D ICを用いた3Dblox対応ワークフローを開発している",
+          "text_en": "Siemens works with ASE to develop 3Dblox-based workflows for the ASE VIPack platform using Siemens' Innovator3D IC solution",
+          "source": {
+            "label": "Siemens — ASE VIPack / 3Dblox collaboration, September 25, 2025",
+            "label_en": "Siemens — ASE VIPack / 3Dblox collaboration, September 25, 2025",
+            "url": "https://news.siemens.com/nl-nl/siemens-ase-3dblox-for-vipack/",
+            "level": "official",
+            "quote": "(ASE), the leading global provider of semiconductor manufacturing services in assembly and test, to develop 3Dblox-based workflows for the ASE VIPack™ platform using Siemens’ Innovator3D IC™ solution, which is fully certified for the 3Dblox standard.."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "SiemensとASEが3Dbloxワークフローで協業している",
+          "text_en": "Siemens and ASE collaborate on 3Dblox workflows",
+          "source": {
+            "label": "Siemens — ASE VIPack / 3Dblox collaboration, September 25, 2025",
+            "label_en": "Siemens — ASE VIPack / 3Dblox collaboration, September 25, 2025",
+            "url": "https://news.siemens.com/nl-nl/siemens-ase-3dblox-for-vipack/",
+            "level": "official",
+            "quote": "Siemens & ASE collaborate on 3Dblox workflows | Siemens"
+          }
+        }
+      ],
+      "name_en": "Siemens"
+    },
+    {
+      "id": "AMKR",
+      "ticker": "AMKR",
+      "name": "アムコー・テクノロジー",
+      "sub": "半導体後工程",
+      "sub_en": "Packaging & test",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ASE Technology Holdingと競合する",
+          "text_en": "Competes with ASE Technology Holding",
+          "source": {
+            "label": "Amkor Technology 10-K",
+            "label_en": "Amkor Technology 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1047127/000104712726000014/amkr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "We face competition from established packaging and test service providers primarily located in Asia, including ASE Technology, JCET Group and Powertech Technology."
+          }
+        }
+      ],
+      "name_en": "Amkor Technology"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

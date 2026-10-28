@@ -1,0 +1,146 @@
+{
+  "root": {
+    "ticker": "OSIS",
+    "name": "OSIシステムズ",
+    "cik": 1039065,
+    "name_en": "OSI Systems"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [
+    "CNMD",
+    "LDOS",
+    "EVLV"
+  ],
+  "companies": [
+    {
+      "id": "CNMD",
+      "ticker": "CNMD",
+      "name": "コンメッド",
+      "sub": "医療機器",
+      "sub_en": "Medical devices",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "これまで競合してきた上場企業として、比較対象のグループに入れている",
+          "text_en": "Included in the peer group of public companies it has generally competed with",
+          "source": {
+            "label": "OSIシステムズ 10-K(June 30, 2026)",
+            "label_en": "OSI Systems 10-K (fiscal year ended June 30, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1039065/000110465926099752/osis-20260630x10k.htm",
+            "level": "official",
+            "date": "2026-08-21",
+            "quote": "(b) a peer group of publicly traded issuer(s) with which we have generally competed. The old peer group includes the following companies: Conmed Corp, Leidos Holdings Inc. and Smiths Group plc."
+          }
+        }
+      ],
+      "name_en": "CONMED"
+    },
+    {
+      "id": "LDOS",
+      "ticker": "LDOS",
+      "name": "リードス・ホールディングス",
+      "sub": "防衛・保安検査",
+      "sub_en": "Defense & security screening",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "これまで競合してきた上場企業として、比較対象のグループに入れている",
+          "text_en": "Included in the peer group of public companies it has generally competed with",
+          "source": {
+            "label": "OSIシステムズ 10-K(June 30, 2026)",
+            "label_en": "OSI Systems 10-K (fiscal year ended June 30, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1039065/000110465926099752/osis-20260630x10k.htm",
+            "level": "official",
+            "date": "2026-08-21",
+            "quote": "(b) a peer group of publicly traded issuer(s) with which we have generally competed. The old peer group includes the following companies: Conmed Corp, Leidos Holdings Inc. and Smiths Group plc."
+          }
+        }
+      ],
+      "name_en": "Leidos Holdings"
+    },
+    {
+      "id": "SMGZY",
+      "ticker": "Smiths Group",
+      "name": "スミスグループ",
+      "sub": "保安検査・産業機器",
+      "sub_en": "Detection & industrial",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "これまで競合してきた上場企業として、比較対象のグループに入れている",
+          "text_en": "Included in the peer group of public companies it has generally competed with",
+          "source": {
+            "label": "OSIシステムズ 10-K(June 30, 2026)",
+            "label_en": "OSI Systems 10-K (fiscal year ended June 30, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1039065/000110465926099752/osis-20260630x10k.htm",
+            "level": "official",
+            "date": "2026-08-21",
+            "quote": "(b) a peer group of publicly traded issuer(s) with which we have generally competed. The old peer group includes the following companies: Conmed Corp, Leidos Holdings Inc. and Smiths Group plc."
+          }
+        }
+      ],
+      "name_en": "Smiths Group"
+    },
+    {
+      "id": "EVLV",
+      "ticker": "EVLV",
+      "name": "エボルブ・テクノロジーズ",
+      "sub": "保安スクリーニング",
+      "sub_en": "Security screening",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "保安検査・検知市場への参入を最もよく反映する比較企業とされている",
+          "text_en": "Regarded as the peer that best reflects the Company's participation in security screening and detection",
+          "source": {
+            "label": "OSIシステムズ 10-K(June 30, 2026)",
+            "label_en": "OSI Systems 10-K (fiscal year ended June 30, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1039065/000110465926099752/osis-20260630x10k.htm",
+            "level": "official",
+            "date": "2026-08-21",
+            "quote": "Because of this pending divestiture, we believe that Evolv Technologies Holdings, Inc. more closely reflects our Company's participation in the security screening and detection market."
+          }
+        }
+      ],
+      "name_en": "Evolv Technologies"
+    },
+    {
+      "id": "ECIL",
+      "ticker": "ECIL-Rapiscan",
+      "name": "ECILラピスカン・セキュリティ・プロダクツ",
+      "sub": "検査機器の合弁会社",
+      "sub_en": "Inspection systems JV",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "インドで合弁会社を設立した",
+          "text_en": "Formed a joint venture organized under the laws of India",
+          "source": {
+            "label": "OSIシステムズ 10-K(June 30, 2026)",
+            "label_en": "OSI Systems 10-K (fiscal year ended June 30, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1039065/000110465926099752/osis-20260630x10k.htm",
+            "level": "official",
+            "date": "2026-08-21",
+            "quote": "In 1994, we, together with an unrelated company, formed ECIL-Rapiscan Security Products Limited, a joint venture organized under the laws of India."
+          }
+        }
+      ],
+      "name_en": "ECIL-Rapiscan Security Products"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

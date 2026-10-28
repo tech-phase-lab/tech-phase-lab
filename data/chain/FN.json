@@ -1,0 +1,232 @@
+{
+  "root": {
+    "ticker": "FN",
+    "name": "ファブリネット",
+    "cik": 1408710,
+    "name_en": "Fabrinet"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [
+    "JBL",
+    "SANM",
+    "CLS",
+    "BHE"
+  ],
+  "companies": [
+    {
+      "id": "CSCO",
+      "ticker": "CSCO",
+      "name": "シスコシステムズ",
+      "sub": "通信機器",
+      "sub_en": "Networking equipment",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "2026年度の売上の約19.9%を占める主要顧客である",
+          "text_en": "Cisco Systems, Inc. contributed 19.9% of Fabrinet's revenues in fiscal year 2026",
+          "source": {
+            "label": "Fabrinet 10-K(2026年6月26日期)",
+            "label_en": "Fabrinet 10-K (fiscal year ended June 26, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1408710/000140871026000028/fn-20260626.htm",
+            "level": "official",
+            "date": "2026-08-18",
+            "quote": "During fiscal year 2026, Cisco Systems, Inc., NVIDIA Corporation, Nokia Corporation and Amazon.com, Inc. contributed 19.9%, 16.3%, 10.7% and 10.5%, respectively, of our revenues."
+          }
+        }
+      ],
+      "name_en": "Cisco Systems"
+    },
+    {
+      "id": "NVDA",
+      "ticker": "NVDA",
+      "name": "エヌビディア",
+      "sub": "AI半導体",
+      "sub_en": "AI semiconductors",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "2026年度の売上の約16.3%を占める主要顧客である",
+          "text_en": "NVIDIA Corporation contributed 16.3% of Fabrinet's revenues in fiscal year 2026",
+          "source": {
+            "label": "Fabrinet 10-K(2026年6月26日期)",
+            "label_en": "Fabrinet 10-K (fiscal year ended June 26, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1408710/000140871026000028/fn-20260626.htm",
+            "level": "official",
+            "date": "2026-08-18",
+            "quote": "During fiscal year 2026, Cisco Systems, Inc., NVIDIA Corporation, Nokia Corporation and Amazon.com, Inc. contributed 19.9%, 16.3%, 10.7% and 10.5%, respectively, of our revenues."
+          }
+        }
+      ],
+      "name_en": "NVIDIA"
+    },
+    {
+      "id": "NOK",
+      "ticker": "NOK",
+      "name": "ノキア",
+      "sub": "通信機器",
+      "sub_en": "Telecom equipment",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "2026年度の売上の約10.7%を占める主要顧客である",
+          "text_en": "Nokia Corporation contributed 10.7% of Fabrinet's revenues in fiscal year 2026",
+          "source": {
+            "label": "Fabrinet 10-K(2026年6月26日期)",
+            "label_en": "Fabrinet 10-K (fiscal year ended June 26, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1408710/000140871026000028/fn-20260626.htm",
+            "level": "official",
+            "date": "2026-08-18",
+            "quote": "During fiscal year 2026, Cisco Systems, Inc., NVIDIA Corporation, Nokia Corporation and Amazon.com, Inc. contributed 19.9%, 16.3%, 10.7% and 10.5%, respectively, of our revenues."
+          }
+        }
+      ],
+      "name_en": "Nokia"
+    },
+    {
+      "id": "AMZN",
+      "ticker": "AMZN",
+      "name": "アマゾン",
+      "sub": "クラウド・EC",
+      "sub_en": "Cloud & e-commerce",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "2026年度の売上の約10.5%を占める主要顧客である",
+          "text_en": "Amazon.com, Inc. contributed 10.5% of Fabrinet's revenues in fiscal year 2026",
+          "source": {
+            "label": "Fabrinet 10-K(2026年6月26日期)",
+            "label_en": "Fabrinet 10-K (fiscal year ended June 26, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1408710/000140871026000028/fn-20260626.htm",
+            "level": "official",
+            "date": "2026-08-18",
+            "quote": "During fiscal year 2026, Cisco Systems, Inc., NVIDIA Corporation, Nokia Corporation and Amazon.com, Inc. contributed 19.9%, 16.3%, 10.7% and 10.5%, respectively, of our revenues."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "アマゾンの関連会社に新株予約権を発行した",
+          "text_en": "Fabrinet issued a warrant to an Amazon affiliate to acquire up to 381,922 ordinary shares",
+          "source": {
+            "label": "Fabrinet 10-K(2026年6月26日期)",
+            "label_en": "Fabrinet 10-K (fiscal year ended June 26, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1408710/000140871026000028/fn-20260626.htm",
+            "level": "official",
+            "date": "2026-08-18",
+            "quote": "On March 12, 2025, the Company issued a warrant (the “Warrant”) to Amazon.com NV Investment Holdings LLC to acquire up to 381,922 ordinary shares (the “Warrant Shares”) of the Company at an exercise price of $ 208.48 per share."
+          }
+        }
+      ],
+      "name_en": "Amazon"
+    },
+    {
+      "id": "JBL",
+      "ticker": "JBL",
+      "name": "ジェイビル",
+      "sub": "受託製造",
+      "sub_en": "Contract manufacturing",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "光学製造サービス市場の競合として名前が挙がる",
+          "text_en": "Jabil Inc. is named as a competitor in optical manufacturing services",
+          "source": {
+            "label": "Fabrinet 10-K(2026年6月26日期)",
+            "label_en": "Fabrinet 10-K (fiscal year ended June 26, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1408710/000140871026000028/fn-20260626.htm",
+            "level": "official",
+            "date": "2026-08-18",
+            "quote": "Competitors in the market for optical manufacturing services include Benchmark Electronics, Inc., Celestica Inc., InnoLight Technology (Suzhou) Ltd., Jabil Inc., Sanmina Corporation, Venture Corporation Limited and Eoptolink Technology Inc., Ltd., as well as the internal manufacturing capabilities of our customers."
+          }
+        }
+      ],
+      "name_en": "Jabil"
+    },
+    {
+      "id": "SANM",
+      "ticker": "SANM",
+      "name": "サンミナ",
+      "sub": "受託製造",
+      "sub_en": "Contract manufacturing",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "光学製造サービス市場の競合として名前が挙がる",
+          "text_en": "Sanmina Corporation is named as a competitor in optical manufacturing services",
+          "source": {
+            "label": "Fabrinet 10-K(2026年6月26日期)",
+            "label_en": "Fabrinet 10-K (fiscal year ended June 26, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1408710/000140871026000028/fn-20260626.htm",
+            "level": "official",
+            "date": "2026-08-18",
+            "quote": "Competitors in the market for optical manufacturing services include Benchmark Electronics, Inc., Celestica Inc., InnoLight Technology (Suzhou) Ltd., Jabil Inc., Sanmina Corporation, Venture Corporation Limited and Eoptolink Technology Inc., Ltd., as well as the internal manufacturing capabilities of our customers."
+          }
+        }
+      ],
+      "name_en": "Sanmina"
+    },
+    {
+      "id": "CLS",
+      "ticker": "CLS",
+      "name": "セレスティカ",
+      "sub": "受託製造",
+      "sub_en": "Contract manufacturing",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "光学製造サービス市場の競合として名前が挙がる",
+          "text_en": "Celestica Inc. is named as a competitor in optical manufacturing services",
+          "source": {
+            "label": "Fabrinet 10-K(2026年6月26日期)",
+            "label_en": "Fabrinet 10-K (fiscal year ended June 26, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1408710/000140871026000028/fn-20260626.htm",
+            "level": "official",
+            "date": "2026-08-18",
+            "quote": "Competitors in the market for optical manufacturing services include Benchmark Electronics, Inc., Celestica Inc., InnoLight Technology (Suzhou) Ltd., Jabil Inc., Sanmina Corporation, Venture Corporation Limited and Eoptolink Technology Inc., Ltd., as well as the internal manufacturing capabilities of our customers."
+          }
+        }
+      ],
+      "name_en": "Celestica"
+    },
+    {
+      "id": "BHE",
+      "ticker": "BHE",
+      "name": "ベンチマーク・エレクトロニクス",
+      "sub": "受託製造",
+      "sub_en": "Contract manufacturing",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "光学製造サービス市場の競合として名前が挙がる",
+          "text_en": "Benchmark Electronics, Inc. is named as a competitor in optical manufacturing services",
+          "source": {
+            "label": "Fabrinet 10-K(2026年6月26日期)",
+            "label_en": "Fabrinet 10-K (fiscal year ended June 26, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1408710/000140871026000028/fn-20260626.htm",
+            "level": "official",
+            "date": "2026-08-18",
+            "quote": "Competitors in the market for optical manufacturing services include Benchmark Electronics, Inc., Celestica Inc., InnoLight Technology (Suzhou) Ltd., Jabil Inc., Sanmina Corporation, Venture Corporation Limited and Eoptolink Technology Inc., Ltd., as well as the internal manufacturing capabilities of our customers."
+          }
+        }
+      ],
+      "name_en": "Benchmark Electronics"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

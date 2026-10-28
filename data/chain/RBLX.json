@@ -1,0 +1,316 @@
+{
+  "root": {
+    "ticker": "RBLX",
+    "name": "Roblox",
+    "cik": 1315098
+  },
+  "rows": [
+    {
+      "ja": "決済・配信チャネル",
+      "en": "Payment & distribution channels",
+      "above": true
+    },
+    {
+      "ja": "提携・合弁",
+      "en": "Partnerships & joint ventures"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "META",
+    "AMZN",
+    "MSFT",
+    "TTWO",
+    "SNAP"
+  ],
+  "companies": [
+    {
+      "id": "AAPL",
+      "ticker": "AAPL",
+      "name": "Apple",
+      "sub": "スマートフォン・端末",
+      "sub_en": "Devices",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年12月期のRobux販売のうち、Apple App Store経由が売上の29%を占める",
+          "text_en": "For the year ended December 31, 2025, 29% of Roblox's revenue was attributable to Robux sales through the Apple App Store",
+          "source": {
+            "label": "Roblox 10-K",
+            "label_en": "Roblox 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1315098/000131509826000024/rblx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "For the year ended December 31, 2025, 29% of our revenue was attributable to Robux sales through the Apple App Store and 15% of our revenue was attributable to Robux sales through the Google Play Store.",
+            "note": "配信チャネルとしての関係です。",
+            "note_en": "Distribution channel relationship."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GOOG",
+      "ticker": "GOOG",
+      "name": "アルファベット(Google)",
+      "sub": "検索・クラウド",
+      "sub_en": "Search & cloud",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年12月期のRobux販売のうち、Google Playストア経由が売上の15%を占める",
+          "text_en": "For the year ended December 31, 2025, 15% of Roblox's revenue was attributable to Robux sales through the Google Play Store",
+          "source": {
+            "label": "Roblox 10-K",
+            "label_en": "Roblox 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1315098/000131509826000024/rblx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "For the year ended December 31, 2025, 29% of our revenue was attributable to Robux sales through the Apple App Store and 15% of our revenue was attributable to Robux sales through the Google Play Store.",
+            "note": "配信チャネルとしての関係です。",
+            "note_en": "Distribution channel relationship."
+          }
+        }
+      ],
+      "name_en": "Alphabet (Google)"
+    },
+    {
+      "id": "Tencent",
+      "ticker": "Tencent",
+      "name": "テンセント",
+      "sub": "インターネット・ゲーム",
+      "sub_en": "Internet & gaming",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2019年2月にTencent関連会社のSonghuaと合弁契約を結び、Roblox側が51%を持つRoblox China Holding Corp(China JV)を設立した",
+          "text_en": "In February 2019, Roblox entered into a joint venture agreement with Songhua, an affiliate of Tencent Holdings, creating Roblox China Holding Corp, of which Roblox owns 51%",
+          "source": {
+            "label": "Roblox 10-K",
+            "label_en": "Roblox 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1315098/000131509826000024/rblx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "In February 2019, we entered into a joint venture agreement with Songhua River Investment Limited, referred to as Songhua, an affiliate of Tencent Holdings Limited (“Tencent Holdings”), under which we created Roblox China Holding Corp (the “China JV”), of which we own a 51% ownership interest."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "Tencentは中国政府の出版ライセンスを得て、Robloxクライアントの現地版を「Luobulesi」の名で中国で配信できるようになった",
+          "text_en": "Tencent received a publishing license from the Chinese government, enabling it to publish a localized version of the Roblox Client in China as 'Luobulesi'",
+          "source": {
+            "label": "Roblox 10-K",
+            "label_en": "Roblox 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1315098/000131509826000024/rblx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "Ltd (“Tencent”), received a required publishing license from the Chinese government, which enabled Tencent to publish a localized version of the Roblox Client as a game in China under the name “Luobulesi.” The license could be withdrawn if Tencent fails to comply with applicable existing or future regulations."
+          }
+        }
+      ],
+      "name_en": "Tencent"
+    },
+    {
+      "id": "SHOP",
+      "ticker": "SHOP",
+      "name": "ショッピファイ",
+      "sub": "ECプラットフォーム",
+      "sub_en": "E-commerce platform",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年第2四半期に、Shopifyを最初の連携パートナーとしてRoblox Commerce APIsを開始した",
+          "text_en": "In Q2 2025, Roblox launched Roblox Commerce APIs with Shopify as its inaugural integrated partner",
+          "source": {
+            "label": "Roblox 8-K Ex.99 の発表",
+            "label_en": "Roblox 8-K Ex.99 press release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1315098/000131509825000261/q225shletterex992.htm",
+            "level": "official",
+            "date": "2025-07-31",
+            "quote": "In Q2 2025, we also launched Roblox Commerce APIs, with Shopify as our inaugural integrated partner and the Approved Merchandiser Program, bridging physical goods with virtual benefits to our platform."
+          }
+        }
+      ],
+      "name_en": "Shopify"
+    },
+    {
+      "id": "NFLX",
+      "ticker": "NFLX",
+      "name": "ネットフリックス",
+      "sub": "動画配信",
+      "sub_en": "Video streaming",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Lionsgate、Netflix、Sega、Kodanshaを主要なIPパートナーとして開始した",
+          "text_en": "Roblox launched with prominent IP partners Lionsgate, Netflix, Sega and Kodansha",
+          "source": {
+            "label": "Roblox 8-K Ex.99 の発表",
+            "label_en": "Roblox 8-K Ex.99 press release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1315098/000131509825000261/q225shletterex992.htm",
+            "level": "official",
+            "date": "2025-07-31",
+            "quote": "We've launched with prominent IP partners Lionsgate, Netflix, Sega, and Kodansha."
+          }
+        }
+      ],
+      "name_en": "Netflix"
+    },
+    {
+      "id": "META",
+      "ticker": "META",
+      "name": "メタ・プラットフォームズ",
+      "sub": "SNS・メタバース",
+      "sub_en": "Social & metaverse",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Robloxと競合する",
+          "text_en": "Competes with Roblox",
+          "source": {
+            "label": "Roblox 10-K",
+            "label_en": "Roblox 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1315098/000131509826000024/rblx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "We compete to attract and retain creators with gaming and metaverse platforms such as Epic Games, Unity, Meta Platforms, and Valve, which also give creators the ability to create or distribute interactive content, and we expect competition to continue to increase in the future."
+          }
+        }
+      ],
+      "name_en": "Meta Platforms"
+    },
+    {
+      "id": "AMZN",
+      "ticker": "AMZN",
+      "name": "アマゾン",
+      "sub": "EC・クラウド",
+      "sub_en": "E-commerce & cloud",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Robloxと競合する",
+          "text_en": "Competes with Roblox",
+          "source": {
+            "label": "Roblox 10-K",
+            "label_en": "Roblox 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1315098/000131509826000024/rblx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "We compete for users and their engagement hours with global technology leaders such as Amazon, Apple, Meta Platforms, Google, Microsoft, and Tencent, global entertainment companies such as Comcast, Disney, Paramount Global, and Warner Bros Discovery, global"
+          }
+        }
+      ],
+      "name_en": "Amazon"
+    },
+    {
+      "id": "MSFT",
+      "ticker": "MSFT",
+      "name": "マイクロソフト",
+      "sub": "ソフト・クラウド",
+      "sub_en": "Software & cloud",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Robloxと競合する",
+          "text_en": "Competes with Roblox",
+          "source": {
+            "label": "Roblox 10-K",
+            "label_en": "Roblox 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1315098/000131509826000024/rblx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "We compete for users and their engagement hours with global technology leaders such as Amazon, Apple, Meta Platforms, Google, Microsoft, and Tencent, global entertainment companies such as Comcast, Disney, Paramount Global, and Warner Bros Discovery, global gaming companies such as Activision Blizzard"
+          }
+        }
+      ],
+      "name_en": "Microsoft"
+    },
+    {
+      "id": "TTWO",
+      "ticker": "TTWO",
+      "name": "テイクツー・インタラクティブ",
+      "sub": "ゲーム",
+      "sub_en": "Video games",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Robloxと競合する",
+          "text_en": "Competes with Roblox",
+          "source": {
+            "label": "Take-Two Interactive 10-K",
+            "label_en": "Take-Two Interactive 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/946581/000162828026037434/ttwo-20260331.htm",
+            "level": "official",
+            "date": "2026-05-22",
+            "quote": "Examples of our competitors include Electronic Arts, Embracer Group, Epic Games, Playrix, Playtika, Roblox, Savvy Games, Tencent, and Ubisoft."
+          }
+        }
+      ],
+      "name_en": "Take-Two Interactive"
+    },
+    {
+      "id": "SNAP",
+      "ticker": "SNAP",
+      "name": "スナップ",
+      "sub": "SNS・カメラ",
+      "sub_en": "Social & camera",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Robloxと競合する",
+          "text_en": "Competes with Roblox",
+          "source": {
+            "label": "Snap 10-K",
+            "label_en": "Snap 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1564408/000156440826000013/snap-20251231.htm",
+            "level": "official",
+            "date": "2026-02-05",
+            "quote": "We also compete for users and their time, so we may lose users or their attention not only to companies that offer products and services that specifically compete with Snapchat features or offerings, but to companies with products or services that target or otherwise appeal to certain demographics, such as Discord or Roblox."
+          }
+        }
+      ],
+      "name_en": "Snap"
+    },
+    {
+      "id": "RDDT",
+      "ticker": "RDDT",
+      "name": "レディット",
+      "sub": "掲示板・SNS",
+      "sub_en": "Social platform",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Robloxと競合する",
+          "text_en": "Competes with Roblox",
+          "source": {
+            "label": "Reddit 10-K",
+            "label_en": "Reddit 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1713445/000171344526000022/rddt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-06",
+            "quote": "• For Peer-to-peer Commerce —Facebook Marketplace, Nextdoor, Craigslist, Poshmark, Etsy, and Roblox."
+          }
+        }
+      ],
+      "name_en": "Reddit"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

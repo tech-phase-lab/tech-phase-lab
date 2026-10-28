@@ -1,0 +1,333 @@
+{
+  "root": {
+    "ticker": "PL",
+    "name": "Planet Labs",
+    "cik": 1836833
+  },
+  "rows": [
+    {
+      "ja": "供給元(打ち上げ)",
+      "en": "Suppliers (launch)",
+      "above": true
+    },
+    {
+      "ja": "提携先",
+      "en": "Partners"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "Airbus",
+    "BKSY",
+    "LUNR",
+    "SPCX"
+  ],
+  "companies": [
+    {
+      "id": "RKLB",
+      "ticker": "RKLB",
+      "name": "ロケット・ラボ",
+      "sub": "ロケット打ち上げ",
+      "sub_en": "Launch services",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Rocket Lab USAは、Planetの衛星を打ち上げられる限られた供給元の1社に入る",
+          "text_en": "Rocket Lab USA is one of the limited number of suppliers able to launch Planet's satellites.",
+          "source": {
+            "label": "Planet Labs 10-K",
+            "label_en": "Planet Labs 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1836833/000119312526119957/pl-20260131.htm",
+            "level": "official",
+            "date": "2026-03-23",
+            "quote": "There are also a limited number of suppliers able to launch our satellites, including ArianeSpace SA, Blue Origin, LLC, Firefly Aerospace Inc., ISAR Aerospace Technologies Inc., Mitsubishi Heavy Industries, Ltd., NewSpace India Limited (Indian Space Research Organization), Rocket Lab USA Inc., Space Exploration Technologies Corp."
+          }
+        }
+      ],
+      "name_en": "Rocket Lab"
+    },
+    {
+      "id": "MHI",
+      "ticker": "MHI",
+      "name": "三菱重工業",
+      "sub": "重工業",
+      "sub_en": "Heavy industry",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "三菱重工業も、Planetの衛星を打ち上げられる限られた供給元の1社となる",
+          "text_en": "Mitsubishi Heavy Industries is one of the limited number of suppliers able to launch Planet's satellites.",
+          "source": {
+            "label": "Planet Labs 10-K",
+            "label_en": "Planet Labs 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1836833/000119312526119957/pl-20260131.htm",
+            "level": "official",
+            "date": "2026-03-23",
+            "quote": "There are also a limited number of suppliers able to launch our satellites, including ArianeSpace SA, Blue Origin, LLC, Firefly Aerospace Inc., ISAR Aerospace Technologies Inc., Mitsubishi Heavy Industries, Ltd., NewSpace India Limited (Indian Space Research Organization), Rocket Lab USA Inc., Space Exploration Technologies Corp."
+          }
+        }
+      ],
+      "name_en": "Mitsubishi Heavy Industries"
+    },
+    {
+      "id": "GOOG",
+      "ticker": "GOOG",
+      "name": "グーグル",
+      "sub": "ソフト・クラウド",
+      "sub_en": "Software & cloud",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "PlanetはGoogleと研究開発サービスで提携する",
+          "text_en": "Planet partners with Google on research and development services.",
+          "source": {
+            "label": "Planet Labs 10-K",
+            "label_en": "Planet Labs 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1836833/000119312526119957/pl-20260131.htm",
+            "level": "official",
+            "date": "2026-03-23",
+            "quote": "These efforts include our technology partnerships, such as with Carbon Mapper and NASA Jet Propulsion Laboratory, our partnerships with Telesat and SES as part of the NASA Communications Services Project (“CSP”), and our research and development services partnership with Google LLC (“Google”)."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "2025年10月にGoogleとの研究開発サービス契約を結んだ",
+          "text_en": "In October 2025 Planet entered into a research and development services agreement with Google",
+          "source": {
+            "label": "Planet Labs 10-K",
+            "label_en": "Planet Labs 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1836833/000119312526119957/pl-20260131.htm",
+            "level": "official",
+            "date": "2026-03-23",
+            "quote": "In October 2025, the Company entered into an agreement with Google LLC (\"Google\"), a related party (see Note 14), whereby the Company agreed to provide research and development services relating to testing the viability and performance of a payload integrated on prototype satellites (the \"Google R&D Services Agreement\")."
+          }
+        }
+      ],
+      "name_en": "Alphabet (Google)"
+    },
+    {
+      "id": "MCO",
+      "ticker": "MCO",
+      "name": "ムーディーズ",
+      "sub": "格付け・リスク分析",
+      "sub_en": "Ratings & risk analytics",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ESGリスクの評価・監視の需要に対応するため、Moody'sと契約した",
+          "text_en": "Planet agreed with Moody's to address demand for assessing and monitoring ESG risks",
+          "source": {
+            "label": "Planet Labs 8-K Ex.99 の発表",
+            "label_en": "Planet Labs 8-K Ex.99 press release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1836833/000183683322000034/ex991.htm",
+            "level": "official",
+            "date": "2022-06-14",
+            "quote": "Planet entered into an agreement with Moody’s, a leading global integrated risk assessment firm serving financial markets, to explore and address the growing demand for assessing and monitoring solutions on Environmental, Social and Governance (ESG) risks.",
+            "note": "2022年の発表で、古い情報です。",
+            "note_en": "From a 2022 announcement; older."
+          }
+        },
+        {
+          "type": "down",
+          "text": "Planetの高頻度の地理空間データをMoody'sの既存サービスの改善に生かす計画を示した",
+          "text_en": "Planet and Moody's plan to use Planet's high-cadence geospatial data to refine Moody's existing offerings",
+          "source": {
+            "label": "Planet Labs 8-K Ex.99 の発表",
+            "label_en": "Planet Labs 8-K Ex.99 press release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1836833/000183683322000034/ex991.htm",
+            "level": "official",
+            "date": "2022-06-14",
+            "quote": "Planet and Moody’s plan to address how Planet’s high-cadence geospatial data and Moody’s market-leading entity data, methodologies, and products can be leveraged to further refine Moody’s existing offerings spanning ESG, Know-Your-Customer, supply chain and commercial real estate through real-time, on-the ground insights."
+          }
+        }
+      ],
+      "name_en": "Moody's"
+    },
+    {
+      "id": "Telesat",
+      "ticker": "Telesat",
+      "name": "テレサット",
+      "sub": "衛星通信",
+      "sub_en": "Satellite communications",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "NASAの通信サービス計画で、Telesat Government Solutionsなどとともに支援に加わった",
+          "text_en": "Planet is supporting NASA's Communication Services Project alongside Telesat Government Solutions and SES Government Solutions",
+          "source": {
+            "label": "Planet Labs 8-K Ex.99 の発表",
+            "label_en": "Planet Labs 8-K Ex.99 press release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1836833/000183683322000067/ex9912023q2.htm",
+            "level": "official",
+            "date": "2022-09-12",
+            "quote": "Planet announced that it is supporting NASA’s Communication Services Project, or \"CSP\", alongside two partners, SES Government Solutions and Telesat Government Solutions, to demonstrate real-time space-to-space connectivity solutions from Planet’s LEO satellites to other in-space communication satellites operated by SES and Telesat.",
+            "note": "2022年の発表で、子会社レベルの記載です。",
+            "note_en": "From a 2022 announcement; subsidiary-level."
+          }
+        }
+      ],
+      "name_en": "Telesat"
+    },
+    {
+      "id": "Airbus",
+      "ticker": "Airbus",
+      "name": "エアバス",
+      "sub": "航空宇宙",
+      "sub_en": "Aerospace",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Planet Labsと競合する",
+          "text_en": "Competes with Planet Labs",
+          "source": {
+            "label": "Planet Labs 10-K",
+            "label_en": "Planet Labs 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1836833/000119312526119957/pl-20260131.htm",
+            "level": "official",
+            "date": "2026-03-23",
+            "quote": "Existing competitors include (without limitation) Airbus Defense and Space, BlackSky Technology, Inc., ImageSat International N.V., Vantor Holdings, Inc., Intuitive Machines, Inc., Satellogic Inc., and CG Satellite, foreign"
+          }
+        }
+      ],
+      "name_en": "Airbus"
+    },
+    {
+      "id": "BKSY",
+      "ticker": "BKSY",
+      "name": "ブラックスカイ・テクノロジー",
+      "sub": "衛星画像",
+      "sub_en": "Satellite imagery",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Planet Labsと競合する",
+          "text_en": "Competes with Planet Labs",
+          "source": {
+            "label": "Planet Labs 10-K",
+            "label_en": "Planet Labs 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1836833/000119312526119957/pl-20260131.htm",
+            "level": "official",
+            "date": "2026-03-23",
+            "quote": "Existing competitors include (without limitation) Airbus Defense and Space, BlackSky Technology, Inc., ImageSat International N.V., Vantor Holdings, Inc., Intuitive Machines, Inc., Satellogic Inc., and CG Satellite, foreign"
+          }
+        }
+      ],
+      "name_en": "BlackSky Technology"
+    },
+    {
+      "id": "LUNR",
+      "ticker": "LUNR",
+      "name": "インテュイティブ・マシーンズ",
+      "sub": "宇宙開発",
+      "sub_en": "Space systems",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Planet Labsと競合する",
+          "text_en": "Competes with Planet Labs",
+          "source": {
+            "label": "Planet Labs 10-K",
+            "label_en": "Planet Labs 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1836833/000119312526119957/pl-20260131.htm",
+            "level": "official",
+            "date": "2026-03-23",
+            "quote": "Existing competitors include (without limitation) Airbus Defense and Space, BlackSky Technology, Inc., ImageSat International N.V., Vantor Holdings, Inc., Intuitive Machines, Inc., Satellogic Inc., and CG Satellite, foreign"
+          }
+        }
+      ],
+      "name_en": "Intuitive Machines"
+    },
+    {
+      "id": "SATL",
+      "ticker": "SATL",
+      "name": "サテロジック",
+      "sub": "衛星画像",
+      "sub_en": "Satellite imagery",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Planet Labsと競合する",
+          "text_en": "Competes with Planet Labs",
+          "source": {
+            "label": "Planet Labs 10-K",
+            "label_en": "Planet Labs 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1836833/000119312526119957/pl-20260131.htm",
+            "level": "official",
+            "date": "2026-03-23",
+            "quote": "Existing competitors include (without limitation) Airbus Defense and Space, BlackSky Technology, Inc., ImageSat International N.V., Vantor Holdings, Inc., Intuitive Machines, Inc., Satellogic Inc., and CG Satellite, foreign"
+          }
+        }
+      ],
+      "name_en": "Satellogic"
+    },
+    {
+      "id": "SPCX",
+      "ticker": "SPCX",
+      "name": "スペースX",
+      "sub": "ロケット・衛星",
+      "sub_en": "Launch & satellites",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "SpaceXは、自社ロケットで直接競合に動けば、コストと速度で優位に立ち得る",
+          "text_en": "SpaceX's vertical integration and own launch vehicles could give it cost and speed advantages if it competed directly.",
+          "source": {
+            "label": "Planet Labs 10-K",
+            "label_en": "Planet Labs 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1836833/000119312526119957/pl-20260131.htm",
+            "level": "official",
+            "date": "2026-03-23",
+            "quote": "For example, SpaceX’s vertical integration and use of its own launch vehicles provides cost and speed advantages that could enable it to offer more advanced or lower priced offerings, if they were to decide to compete with us directly.",
+            "note": "潜在的な競合としての記載です。",
+            "note_en": "Mentioned as a potential competitor."
+          }
+        }
+      ],
+      "name_en": "SpaceX"
+    },
+    {
+      "id": "AMZN",
+      "ticker": "AMZN",
+      "name": "アマゾン",
+      "sub": "クラウド・EC",
+      "sub_en": "Cloud & e-commerce",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Amazon Leoなどの新たな衛星群は参入障壁を下げ、直接競合する可能性もある",
+          "text_en": "New satellite fleets such as Amazon Leo may lower barriers to entry or lead the company to compete directly.",
+          "source": {
+            "label": "Planet Labs 10-K",
+            "label_en": "Planet Labs 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1836833/000119312526119957/pl-20260131.htm",
+            "level": "official",
+            "date": "2026-03-23",
+            "quote": "In addition, the increase in launch vehicle development along with frequent and routine transport access to space, as well as the new fleets of satellites from companies such as SpaceX, OneWeb and Amazon Leo, may lower barriers to entry and further increase risk of competition or such companies may decide to compete directly.",
+            "note": "潜在的な競合としての記載です。",
+            "note_en": "Mentioned as a potential competitor."
+          }
+        }
+      ],
+      "name_en": "Amazon"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

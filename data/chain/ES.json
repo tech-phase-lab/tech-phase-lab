@@ -1,0 +1,195 @@
+{
+  "root": {
+    "ticker": "ES",
+    "name": "エバーソース・エナジー",
+    "cik": 72741,
+    "name_en": "Eversource Energy"
+  },
+  "rows": [
+    {
+      "ja": "供給元",
+      "en": "Suppliers",
+      "above": true
+    },
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "HQ",
+      "ticker": "Hydro-Quebec",
+      "name": "ハイドロ・ケベック",
+      "sub": "水力発電",
+      "sub_en": "Hydropower",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "NSTAR Electricは、同社から再生可能な水力電力を買う20年の契約を結んでいる",
+          "text_en": "NSTAR Electric has a 20-year power purchase agreement with Hydro-Quebec for hydroelectric energy",
+          "source": {
+            "label": "Eversource 10-K(2025年12月31日)",
+            "label_en": "Eversource Energy 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/72741/000162828026008461/es-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "NSTAR Electric entered into a 20-year power purchase agreement for the purchase of renewable hydroelectric energy and renewable energy attributes from Hydro-Québec."
+          }
+        }
+      ],
+      "name_en": "Hydro-Quebec"
+    },
+    {
+      "id": "NECEC",
+      "ticker": "NECEC Transmission",
+      "name": "NECECトランスミッション",
+      "sub": "送電線",
+      "sub_en": "Transmission line",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "NSTAR Electricは、同社の送電線を使う20年の送電サービス契約を結んでいる",
+          "text_en": "NSTAR Electric has a 20-year transmission service agreement with NECEC Transmission",
+          "source": {
+            "label": "Eversource 10-K(2025年12月31日)",
+            "label_en": "Eversource Energy 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/72741/000162828026008461/es-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "In June 2018, in connection with the Hydro-Québec power purchase agreement, NSTAR Electric entered into a 20-year transmission service agreement (TSA) with NECEC Transmission LLC, the developer and owner of the NECEC transmission line."
+          }
+        }
+      ],
+      "name_en": "NECEC Transmission"
+    },
+    {
+      "id": "VW",
+      "ticker": "Vineyard Wind",
+      "name": "ヴィンヤード・ウィンド",
+      "sub": "洋上風力",
+      "sub_en": "Offshore wind",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "NSTAR Electricは、同社の洋上風力発電の電力を長期で購入する契約を持っている",
+          "text_en": "NSTAR Electric holds a long-term purchase contract with Vineyard Wind",
+          "source": {
+            "label": "Eversource 10-K(2025年12月31日)",
+            "label_en": "Eversource Energy 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/72741/000162828026008461/es-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "Renewable energy purchase contracts include long-term commitments of NSTAR Electric pertaining to the Vineyard Wind LLC contract awarded under the Massachusetts Clean Energy 83C procurement solicitation."
+          }
+        }
+      ],
+      "name_en": "Vineyard Wind"
+    },
+    {
+      "id": "TGP",
+      "ticker": "Tennessee Gas",
+      "name": "テネシー・ガス・パイプライン",
+      "sub": "ガス導管",
+      "sub_en": "Gas pipeline",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "NSTAR GasとEGMAは、同社から天然ガスの輸送・貯蔵などのサービスを買っている",
+          "text_en": "NSTAR Gas and EGMA buy transportation, storage and balancing services from Tennessee Gas Pipeline",
+          "source": {
+            "label": "Eversource 10-K(2025年12月31日)",
+            "label_en": "Eversource Energy 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/72741/000162828026008461/es-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "NSTAR Gas and EGMA purchase transportation, storage, and balancing services from Tennessee Gas Pipeline Company and Algonquin Gas Transmission Company, as well as other upstream pipelines"
+          }
+        }
+      ],
+      "name_en": "Tennessee Gas Pipeline"
+    },
+    {
+      "id": "ALGQ",
+      "ticker": "Algonquin Gas",
+      "name": "アルゴンキン・ガス・トランスミッション",
+      "sub": "ガス導管",
+      "sub_en": "Gas pipeline",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "NSTAR GasとEGMAは、同社から天然ガスの輸送・貯蔵などのサービスを買っている",
+          "text_en": "NSTAR Gas and EGMA buy transportation, storage and balancing services from Algonquin Gas Transmission",
+          "source": {
+            "label": "Eversource 10-K(2025年12月31日)",
+            "label_en": "Eversource Energy 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/72741/000162828026008461/es-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "NSTAR Gas and EGMA purchase transportation, storage, and balancing services from Tennessee Gas Pipeline Company and Algonquin Gas Transmission Company, as well as other upstream pipelines"
+          }
+        }
+      ],
+      "name_en": "Algonquin Gas Transmission"
+    },
+    {
+      "id": "NGRID",
+      "ticker": "NGG",
+      "name": "ナショナル・グリッド",
+      "sub": "送電事業者",
+      "sub_en": "Grid operator",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ニューイングランドの送電事業者グループ（NETO）で、エバーソースと並ぶ構成員である",
+          "text_en": "National Grid is a member of the New England Transmission Owners group alongside Eversource",
+          "source": {
+            "label": "Eversource 10-K(2025年12月31日)",
+            "label_en": "Eversource Energy 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/72741/000162828026008461/es-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "New England Transmission Owners (including Eversource, National Grid and Avangrid)"
+          }
+        }
+      ],
+      "name_en": "National Grid"
+    },
+    {
+      "id": "AGR",
+      "ticker": "Avangrid",
+      "name": "アバングリッド",
+      "sub": "送電事業者",
+      "sub_en": "Grid operator",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ニューイングランドの送電事業者グループ（NETO）で、エバーソースと並ぶ構成員である",
+          "text_en": "Avangrid is a member of the New England Transmission Owners group alongside Eversource",
+          "source": {
+            "label": "Eversource 10-K(2025年12月31日)",
+            "label_en": "Eversource Energy 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/72741/000162828026008461/es-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "New England Transmission Owners (including Eversource, National Grid and Avangrid)"
+          }
+        }
+      ],
+      "name_en": "Avangrid"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

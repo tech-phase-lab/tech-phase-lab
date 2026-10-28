@@ -1,0 +1,304 @@
+{
+  "root": {
+    "ticker": "P",
+    "name": "エバーピュア",
+    "cik": 1474432,
+    "name_en": "Everpure"
+  },
+  "rows": [
+    {
+      "ja": "提携・競合",
+      "en": "Partners & rivals"
+    }
+  ],
+  "rivals": [
+    "DELL",
+    "NTAP",
+    "HPE",
+    "IBM"
+  ],
+  "companies": [
+    {
+      "id": "MSFT",
+      "ticker": "MSFT",
+      "name": "マイクロソフト",
+      "sub": "クラウド・ソフト",
+      "sub_en": "Cloud & software",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "マイクロソフトとは、アプリケーションとクラウド（Azure）の両面で技術提携を組んでいる",
+          "text_en": "Microsoft is both an application partner and a cloud partner through Azure",
+          "source": {
+            "label": "Everpure 10-K(2026年2月1日)",
+            "label_en": "Everpure 10-K (fiscal year ended February 1, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1474432/000147443226000027/pstg-20260201.htm",
+            "level": "official",
+            "date": "2026-03-25",
+            "quote": "Our technology partners include application partners such as VMware, RedHat, Nutanix, Microsoft, Oracle and SAP, cloud partners such as Microsoft Azure, AWS, Google, and IBM, data protection partners such as Commvault, Rubrik and Veeam, and infrastructure partners such as Cisco and NVIDIA."
+          }
+        }
+      ],
+      "name_en": "Microsoft"
+    },
+    {
+      "id": "NVDA",
+      "ticker": "NVDA",
+      "name": "エヌビディア",
+      "sub": "AI半導体",
+      "sub_en": "AI chips",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "エヌビディアとは、インフラ分野の技術パートナーとして組んでいる",
+          "text_en": "NVIDIA is one of the infrastructure technology partners",
+          "source": {
+            "label": "Everpure 10-K(2026年2月1日)",
+            "label_en": "Everpure 10-K (fiscal year ended February 1, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1474432/000147443226000027/pstg-20260201.htm",
+            "level": "official",
+            "date": "2026-03-25",
+            "quote": "Our technology partners include application partners such as VMware, RedHat, Nutanix, Microsoft, Oracle and SAP, cloud partners such as Microsoft Azure, AWS, Google, and IBM, data protection partners such as Commvault, Rubrik and Veeam, and infrastructure partners such as Cisco and NVIDIA."
+          }
+        }
+      ],
+      "name_en": "NVIDIA"
+    },
+    {
+      "id": "CSCO",
+      "ticker": "CSCO",
+      "name": "シスコシステムズ",
+      "sub": "ネットワーク機器",
+      "sub_en": "Networking",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "シスコとは、インフラ分野の技術パートナーとして組んでいる",
+          "text_en": "Cisco is one of the infrastructure technology partners",
+          "source": {
+            "label": "Everpure 10-K(2026年2月1日)",
+            "label_en": "Everpure 10-K (fiscal year ended February 1, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1474432/000147443226000027/pstg-20260201.htm",
+            "level": "official",
+            "date": "2026-03-25",
+            "quote": "Our technology partners include application partners such as VMware, RedHat, Nutanix, Microsoft, Oracle and SAP, cloud partners such as Microsoft Azure, AWS, Google, and IBM, data protection partners such as Commvault, Rubrik and Veeam, and infrastructure partners such as Cisco and NVIDIA."
+          }
+        }
+      ],
+      "name_en": "Cisco Systems"
+    },
+    {
+      "id": "ORCL",
+      "ticker": "ORCL",
+      "name": "オラクル",
+      "sub": "データベース",
+      "sub_en": "Database software",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "オラクルとは、アプリケーション分野の技術パートナーである",
+          "text_en": "Oracle is one of the application technology partners",
+          "source": {
+            "label": "Everpure 10-K(2026年2月1日)",
+            "label_en": "Everpure 10-K (fiscal year ended February 1, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1474432/000147443226000027/pstg-20260201.htm",
+            "level": "official",
+            "date": "2026-03-25",
+            "quote": "Our technology partners include application partners such as VMware, RedHat, Nutanix, Microsoft, Oracle and SAP, cloud partners such as Microsoft Azure, AWS, Google, and IBM, data protection partners such as Commvault, Rubrik and Veeam, and infrastructure partners such as Cisco and NVIDIA."
+          }
+        }
+      ],
+      "name_en": "Oracle"
+    },
+    {
+      "id": "NTNX",
+      "ticker": "NTNX",
+      "name": "ニュータニックス",
+      "sub": "ハイパーコンバージド",
+      "sub_en": "Hyperconverged",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ニュータニックスとは、アプリケーション分野の技術パートナーである",
+          "text_en": "Nutanix is one of the application technology partners",
+          "source": {
+            "label": "Everpure 10-K(2026年2月1日)",
+            "label_en": "Everpure 10-K (fiscal year ended February 1, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1474432/000147443226000027/pstg-20260201.htm",
+            "level": "official",
+            "date": "2026-03-25",
+            "quote": "Our technology partners include application partners such as VMware, RedHat, Nutanix, Microsoft, Oracle and SAP, cloud partners such as Microsoft Azure, AWS, Google, and IBM, data protection partners such as Commvault, Rubrik and Veeam, and infrastructure partners such as Cisco and NVIDIA."
+          }
+        }
+      ],
+      "name_en": "Nutanix"
+    },
+    {
+      "id": "CVLT",
+      "ticker": "CVLT",
+      "name": "コムボルト",
+      "sub": "データ保護",
+      "sub_en": "Data protection",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "コムボルトとは、データ保護分野の技術パートナーである",
+          "text_en": "Commvault is one of the data protection technology partners",
+          "source": {
+            "label": "Everpure 10-K(2026年2月1日)",
+            "label_en": "Everpure 10-K (fiscal year ended February 1, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1474432/000147443226000027/pstg-20260201.htm",
+            "level": "official",
+            "date": "2026-03-25",
+            "quote": "Our technology partners include application partners such as VMware, RedHat, Nutanix, Microsoft, Oracle and SAP, cloud partners such as Microsoft Azure, AWS, Google, and IBM, data protection partners such as Commvault, Rubrik and Veeam, and infrastructure partners such as Cisco and NVIDIA."
+          }
+        }
+      ],
+      "name_en": "Commvault"
+    },
+    {
+      "id": "RBRK",
+      "ticker": "RBRK",
+      "name": "ルーブリック",
+      "sub": "データ保護",
+      "sub_en": "Data protection",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ルーブリックとは、データ保護分野の技術パートナーである",
+          "text_en": "Rubrik is one of the data protection technology partners",
+          "source": {
+            "label": "Everpure 10-K(2026年2月1日)",
+            "label_en": "Everpure 10-K (fiscal year ended February 1, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1474432/000147443226000027/pstg-20260201.htm",
+            "level": "official",
+            "date": "2026-03-25",
+            "quote": "Our technology partners include application partners such as VMware, RedHat, Nutanix, Microsoft, Oracle and SAP, cloud partners such as Microsoft Azure, AWS, Google, and IBM, data protection partners such as Commvault, Rubrik and Veeam, and infrastructure partners such as Cisco and NVIDIA."
+          }
+        }
+      ],
+      "name_en": "Rubrik"
+    },
+    {
+      "id": "DELL",
+      "ticker": "DELL",
+      "name": "デル・テクノロジーズ",
+      "sub": "ストレージ競合",
+      "sub_en": "Storage rival",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "デルEMCは、ストレージ市場で競合する相手である",
+          "text_en": "Dell EMC is named as a main competitor in storage",
+          "source": {
+            "label": "Everpure 10-K(2026年2月1日)",
+            "label_en": "Everpure 10-K (fiscal year ended February 1, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1474432/000147443226000027/pstg-20260201.htm",
+            "level": "official",
+            "date": "2026-03-25",
+            "quote": "Our main competitors include legacy vendors, such as Dell EMC, NetApp, Hitachi Vantara, HP Enterprise, and IBM,"
+          }
+        }
+      ],
+      "name_en": "Dell Technologies"
+    },
+    {
+      "id": "NTAP",
+      "ticker": "NTAP",
+      "name": "ネットアップ",
+      "sub": "ストレージ競合",
+      "sub_en": "Storage rival",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ネットアップは、ストレージ市場の主な競合である",
+          "text_en": "NetApp is named as a main competitor in storage",
+          "source": {
+            "label": "Everpure 10-K(2026年2月1日)",
+            "label_en": "Everpure 10-K (fiscal year ended February 1, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1474432/000147443226000027/pstg-20260201.htm",
+            "level": "official",
+            "date": "2026-03-25",
+            "quote": "Our main competitors include legacy vendors, such as Dell EMC, NetApp, Hitachi Vantara, HP Enterprise, and IBM,"
+          }
+        }
+      ],
+      "name_en": "NetApp"
+    },
+    {
+      "id": "HPE",
+      "ticker": "HPE",
+      "name": "ヒューレット・パッカード・エンタープライズ",
+      "sub": "ストレージ競合",
+      "sub_en": "Storage rival",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "HPエンタープライズは、ストレージ市場の主な競合である",
+          "text_en": "HP Enterprise is named as a main competitor in storage",
+          "source": {
+            "label": "Everpure 10-K(2026年2月1日)",
+            "label_en": "Everpure 10-K (fiscal year ended February 1, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1474432/000147443226000027/pstg-20260201.htm",
+            "level": "official",
+            "date": "2026-03-25",
+            "quote": "Our main competitors include legacy vendors, such as Dell EMC, NetApp, Hitachi Vantara, HP Enterprise, and IBM,"
+          }
+        }
+      ],
+      "name_en": "Hewlett Packard Enterprise"
+    },
+    {
+      "id": "IBM",
+      "ticker": "IBM",
+      "name": "アイ・ビー・エム",
+      "sub": "ITサービス",
+      "sub_en": "IT & cloud",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "IBMは、ストレージ市場の主な競合である",
+          "text_en": "IBM is named as a main competitor in storage",
+          "source": {
+            "label": "Everpure 10-K(2026年2月1日)",
+            "label_en": "Everpure 10-K (fiscal year ended February 1, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1474432/000147443226000027/pstg-20260201.htm",
+            "level": "official",
+            "date": "2026-03-25",
+            "quote": "Our main competitors include legacy vendors, such as Dell EMC, NetApp, Hitachi Vantara, HP Enterprise, and IBM,"
+          }
+        },
+        {
+          "type": "tie",
+          "text": "IBMは、クラウド分野の技術パートナーでもある",
+          "text_en": "IBM is also one of the cloud technology partners",
+          "source": {
+            "label": "Everpure 10-K(2026年2月1日)",
+            "label_en": "Everpure 10-K (fiscal year ended February 1, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1474432/000147443226000027/pstg-20260201.htm",
+            "level": "official",
+            "date": "2026-03-25",
+            "quote": "Our technology partners include application partners such as VMware, RedHat, Nutanix, Microsoft, Oracle and SAP, cloud partners such as Microsoft Azure, AWS, Google, and IBM, data protection partners such as Commvault, Rubrik and Veeam, and infrastructure partners such as Cisco and NVIDIA."
+          }
+        }
+      ],
+      "name_en": "IBM"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

@@ -1,0 +1,870 @@
+{
+  "root": {
+    "ticker": "IBM",
+    "name": "IBM",
+    "cik": 51143
+  },
+  "rows": [
+    {
+      "ja": "供給元(上流)",
+      "en": "Suppliers (upstream)",
+      "above": true
+    },
+    {
+      "ja": "クラウド・企業向けソフト",
+      "en": "Cloud & enterprise software"
+    },
+    {
+      "ja": "サーバー・インフラ",
+      "en": "Servers & infrastructure"
+    },
+    {
+      "ja": "コンサルティング",
+      "en": "Consulting"
+    },
+    {
+      "ja": "AI・半導体・量子の提携",
+      "en": "AI, chips & quantum partners"
+    },
+    {
+      "ja": "買収・顧客",
+      "en": "Acquisitions & customers"
+    }
+  ],
+  "rivals": [
+    "AMZN",
+    "GOOG",
+    "MSFT",
+    "ORCL",
+    "ACN"
+  ],
+  "companies": [
+    {
+      "id": "MSFT",
+      "ticker": "MSFT",
+      "name": "Microsoft",
+      "sub": "クラウド・ソフト",
+      "sub_en": "Cloud & software",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "MicrosoftはIBMの戦略パートナーだ",
+          "text_en": "Microsoft is a strategic partner of IBM",
+          "source": {
+            "label": "IBM 10-K(2025年12月期)",
+            "label_en": "IBM 10-K (fiscal year ended December 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/51143/000005114326000010/ibm-20251231.htm",
+            "level": "official",
+            "quote": "Our strategic partners include: Adobe, Amazon Web Services (AWS), Microsoft, Oracle, Palo Alto Networks, Salesforce, Samsung Electronics and SAP, among others."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "Microsoftはソフトウェア事業で主要な競合にあたる",
+          "text_en": "Microsoft is a principal competitor of IBM in software",
+          "source": {
+            "label": "IBM 10-K(2025年12月期)",
+            "label_en": "IBM 10-K (fiscal year ended December 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/51143/000005114326000010/ibm-20251231.htm",
+            "level": "official",
+            "quote": "The principal competitors in this segment include: Alphabet (Google), Amazon, BMC, Broadcom, Microsoft, Oracle, Salesforce, SAP and Splunk, a CISCO Company."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GOOG",
+      "ticker": "GOOG",
+      "name": "Alphabet(Google)",
+      "sub": "クラウド・ソフト",
+      "sub_en": "Cloud & software",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Google Cloudと企業のAI導入・基幹システム刷新で協業",
+          "text_en": "Partners with Google Cloud on enterprise AI adoption and core-system modernization",
+          "source": {
+            "label": "IBM の発表(2026年6月4日)",
+            "label_en": "IBM announcement (June 4, 2026)",
+            "url": "https://newsroom.ibm.com/2026-06-04-ibm-and-google-cloud-announce-strategic-partnership-to-scale-ai-with-human-expertise-and-ai-powered-delivery",
+            "level": "official",
+            "date": "2026-06-04",
+            "note": "専任体制の発足と今後の展開を区別して読む必要があります。",
+            "note_en": "The newly formed practice and future rollout should be read separately."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "GoogleはIBMのソフトウェア事業と競合する",
+          "text_en": "Google (Alphabet) competes with IBM in software",
+          "source": {
+            "label": "IBM 10-K(2025年12月期)",
+            "label_en": "IBM 10-K (fiscal year ended December 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/51143/000005114326000010/ibm-20251231.htm",
+            "level": "official",
+            "quote": "The principal competitors in this segment include: Alphabet (Google), Amazon, BMC, Broadcom, Microsoft, Oracle, Salesforce, SAP and Splunk, a CISCO Company."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AMZN",
+      "ticker": "AMZN",
+      "name": "Amazon",
+      "sub": "クラウド(AWS)",
+      "sub_en": "Cloud (AWS)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "IBMはAWSと戦略的に提携する",
+          "text_en": "IBM partners strategically with Amazon Web Services (AWS)",
+          "source": {
+            "label": "IBM 10-K(2025年12月期)",
+            "label_en": "IBM 10-K (fiscal year ended December 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/51143/000005114326000010/ibm-20251231.htm",
+            "level": "official",
+            "quote": "Our strategic partners include: Adobe, Amazon Web Services (AWS), Microsoft, Oracle, Palo Alto Networks, Salesforce, Samsung Electronics and SAP, among others."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "Amazonはソフトウェア事業の主要な競合に数えられる",
+          "text_en": "Amazon is a principal competitor of IBM in software",
+          "source": {
+            "label": "IBM 10-K(2025年12月期)",
+            "label_en": "IBM 10-K (fiscal year ended December 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/51143/000005114326000010/ibm-20251231.htm",
+            "level": "official",
+            "quote": "The principal competitors in this segment include: Alphabet (Google), Amazon, BMC, Broadcom, Microsoft, Oracle, Salesforce, SAP and Splunk, a CISCO Company."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ORCL",
+      "ticker": "ORCL",
+      "name": "Oracle",
+      "sub": "データベース・ソフト",
+      "sub_en": "Database & software",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Oracleとは戦略パートナーの関係にある",
+          "text_en": "Oracle is a strategic partner of IBM",
+          "source": {
+            "label": "IBM 10-K(2025年12月期)",
+            "label_en": "IBM 10-K (fiscal year ended December 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/51143/000005114326000010/ibm-20251231.htm",
+            "level": "official",
+            "quote": "Our strategic partners include: Adobe, Amazon Web Services (AWS), Microsoft, Oracle, Palo Alto Networks, Salesforce, Samsung Electronics and SAP, among others."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "IBMのソフトウェア事業はOracleと競合する",
+          "text_en": "Oracle competes with IBM's software business",
+          "source": {
+            "label": "IBM 10-K(2025年12月期)",
+            "label_en": "IBM 10-K (fiscal year ended December 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/51143/000005114326000010/ibm-20251231.htm",
+            "level": "official",
+            "quote": "The principal competitors in this segment include: Alphabet (Google), Amazon, BMC, Broadcom, Microsoft, Oracle, Salesforce, SAP and Splunk, a CISCO Company."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "IBMは、Oracleと競合関係にある",
+          "text_en": "IBM is a competitor of Oracle.",
+          "source": {
+            "label": "Oracle 10-K(2026年度)",
+            "label_en": "Oracle 10-K FY2026",
+            "url": "https://www.sec.gov/Archives/edgar/data/1341439/000119312526277521/orcl-20260531.htm",
+            "level": "official",
+            "date": "2026-06",
+            "quote": "International Business Machines Corporation, Microsoft Corporation, Salesforce, Inc. and SAP SE"
+          }
+        }
+      ]
+    },
+    {
+      "id": "PANW",
+      "ticker": "PANW",
+      "name": "Palo Alto Networks",
+      "sub": "セキュリティ",
+      "sub_en": "Security",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Palo Alto NetworksはIBMの提携先だ",
+          "text_en": "Palo Alto Networks is a strategic partner of IBM",
+          "source": {
+            "label": "IBM 10-K(2025年12月期)",
+            "label_en": "IBM 10-K (fiscal year ended December 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/51143/000005114326000010/ibm-20251231.htm",
+            "level": "official",
+            "quote": "Our strategic partners include: Adobe, Amazon Web Services (AWS), Microsoft, Oracle, Palo Alto Networks, Salesforce, Samsung Electronics and SAP, among others."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CRM",
+      "ticker": "CRM",
+      "name": "Salesforce",
+      "sub": "業務ソフト",
+      "sub_en": "Business software",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "SalesforceはIBMの戦略パートナーの一社だ",
+          "text_en": "Salesforce is one of IBM's strategic partners",
+          "source": {
+            "label": "IBM 10-K(2025年12月期)",
+            "label_en": "IBM 10-K (fiscal year ended December 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/51143/000005114326000010/ibm-20251231.htm",
+            "level": "official",
+            "quote": "Our strategic partners include: Adobe, Amazon Web Services (AWS), Microsoft, Oracle, Palo Alto Networks, Salesforce, Samsung Electronics and SAP, among others."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "Salesforceはソフトウェア事業の主要な競合だ",
+          "text_en": "Salesforce is a principal competitor of IBM in software",
+          "source": {
+            "label": "IBM 10-K(2025年12月期)",
+            "label_en": "IBM 10-K (fiscal year ended December 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/51143/000005114326000010/ibm-20251231.htm",
+            "level": "official",
+            "quote": "The principal competitors in this segment include: Alphabet (Google), Amazon, BMC, Broadcom, Microsoft, Oracle, Salesforce, SAP and Splunk, a CISCO Company."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ADBE",
+      "ticker": "ADBE",
+      "name": "Adobe",
+      "sub": "業務ソフト",
+      "sub_en": "Business software",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "IBMはAdobeと戦略的パートナーシップを結ぶ",
+          "text_en": "IBM has a strategic partnership with Adobe",
+          "source": {
+            "label": "IBM 10-K(2025年12月期)",
+            "label_en": "IBM 10-K (fiscal year ended December 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/51143/000005114326000010/ibm-20251231.htm",
+            "level": "official",
+            "quote": "Our strategic partners include: Adobe, Amazon Web Services (AWS), Microsoft, Oracle, Palo Alto Networks, Salesforce, Samsung Electronics and SAP, among others."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SAP",
+      "ticker": "SAP",
+      "name": "SAP",
+      "sub": "業務ソフト",
+      "sub_en": "Business software",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "SAPはIBMの戦略パートナーに名を連ねる",
+          "text_en": "SAP is a strategic partner of IBM",
+          "source": {
+            "label": "IBM 10-K(2025年12月期)",
+            "label_en": "IBM 10-K (fiscal year ended December 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/51143/000005114326000010/ibm-20251231.htm",
+            "level": "official",
+            "quote": "Our strategic partners include: Adobe, Amazon Web Services (AWS), Microsoft, Oracle, Palo Alto Networks, Salesforce, Samsung Electronics and SAP, among others."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "ソフトウェア事業の主要な競合にSAPがある",
+          "text_en": "SAP is a principal competitor of IBM in software",
+          "source": {
+            "label": "IBM 10-K(2025年12月期)",
+            "label_en": "IBM 10-K (fiscal year ended December 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/51143/000005114326000010/ibm-20251231.htm",
+            "level": "official",
+            "quote": "The principal competitors in this segment include: Alphabet (Google), Amazon, BMC, Broadcom, Microsoft, Oracle, Salesforce, SAP and Splunk, a CISCO Company."
+          }
+        }
+      ]
+    },
+    {
+      "id": "DELL",
+      "ticker": "DELL",
+      "name": "Dell Technologies",
+      "sub": "サーバー",
+      "sub_en": "Servers",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "インフラ事業ではDell Technologiesが主要な競合となる",
+          "text_en": "Dell Technologies is a principal competitor of IBM in infrastructure",
+          "source": {
+            "label": "IBM 10-K(2025年12月期)",
+            "label_en": "IBM 10-K (fiscal year ended December 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/51143/000005114326000010/ibm-20251231.htm",
+            "level": "official",
+            "quote": "Our principal competitors include: Dell Technologies, Hewlett-Packard Enterprise (HPE), Intel, NetApp and Pure Storage as well as original device manufacturers (ODMs) who provide systems that are re-branded."
+          }
+        }
+      ]
+    },
+    {
+      "id": "HPE",
+      "ticker": "HPE",
+      "name": "Hewlett Packard Enterprise",
+      "sub": "サーバー",
+      "sub_en": "Servers",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "HPEはインフラ事業で主要な競合の一社だ",
+          "text_en": "HPE is a principal competitor of IBM in infrastructure",
+          "source": {
+            "label": "IBM 10-K(2025年12月期)",
+            "label_en": "IBM 10-K (fiscal year ended December 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/51143/000005114326000010/ibm-20251231.htm",
+            "level": "official",
+            "quote": "Our principal competitors include: Dell Technologies, Hewlett-Packard Enterprise (HPE), Intel, NetApp and Pure Storage as well as original device manufacturers (ODMs) who provide systems that are re-branded."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "IBMとHPEは、インフラ分野で競い合う",
+          "text_en": "IBM is a competitor of HPE.",
+          "source": {
+            "label": "HPE 10-K(2025年度)",
+            "label_en": "HPE 10-K FY2025",
+            "url": "https://www.sec.gov/Archives/edgar/data/1645590/000164559025000130/hpe-20251031.htm",
+            "level": "official",
+            "date": "2025-12",
+            "quote": "such as Broadcom, Cisco Systems Inc., Dell Technologies Inc., IBM, NetApp Inc., Nutanix, and Pure Storage"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ACN",
+      "ticker": "ACN",
+      "name": "Accenture",
+      "sub": "ITコンサル",
+      "sub_en": "IT consulting",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Accentureはコンサルティング事業の競合だ",
+          "text_en": "Accenture is a competitor of IBM in consulting",
+          "source": {
+            "label": "IBM 10-K(2025年12月期)",
+            "label_en": "IBM 10-K (fiscal year ended December 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/51143/000005114326000010/ibm-20251231.htm",
+            "level": "official",
+            "quote": "Our competitors include global firms such as Accenture, Capgemini, India-based service providers, management consulting firms, the consulting practices of public accounting firms, engineering service providers, and niche specialists."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CAP",
+      "ticker": "Capgemini",
+      "name": "Capgemini",
+      "sub": "ITコンサル",
+      "sub_en": "IT consulting",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "コンサルティング事業ではCapgeminiと競合する",
+          "text_en": "IBM competes with Capgemini in consulting",
+          "source": {
+            "label": "IBM 10-K(2025年12月期)",
+            "label_en": "IBM 10-K (fiscal year ended December 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/51143/000005114326000010/ibm-20251231.htm",
+            "level": "official",
+            "quote": "Our competitors include global firms such as Accenture, Capgemini, India-based service providers, management consulting firms, the consulting practices of public accounting firms, engineering service providers, and niche specialists."
+          }
+        }
+      ]
+    },
+    {
+      "id": "005930",
+      "ticker": "Samsung",
+      "name": "Samsung Electronics",
+      "sub": "半導体製造",
+      "sub_en": "Chip manufacturing",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Samsung Foundryが、IBM Z向けのTelum IIプロセッサとSpyreアクセラレーターを製造",
+          "text_en": "Samsung Foundry manufactures the Telum II processors and Spyre Accelerators for IBM Z",
+          "source": {
+            "label": "IBM の公式サイト(ibm.com/samsung)",
+            "label_en": "IBM website (ibm.com/samsung)",
+            "url": "https://www.ibm.com/samsung",
+            "level": "official",
+            "quote": "Foundry partner Samsung Foundry manufactures the new IBM Telum® II processors and IBM Spyre™ Accelerators for the next-generation IBM Z® systems."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "Samsung ElectronicsはIBMの提携先となる",
+          "text_en": "Samsung Electronics is a strategic partner of IBM",
+          "source": {
+            "label": "IBM 10-K(2025年度)",
+            "label_en": "IBM 10-K FY2025",
+            "url": "https://www.sec.gov/Archives/edgar/data/51143/000005114326000010/ibm-20251231.htm",
+            "level": "official",
+            "date": "2026-02",
+            "quote": "Our strategic partners include: Adobe, Amazon Web Services (AWS), Microsoft, Oracle, Palo Alto Networks, Salesforce, Samsung Electronics and SAP, among others."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CRWV",
+      "ticker": "CRWV",
+      "name": "CoreWeave",
+      "sub": "AIクラウド",
+      "sub_en": "AI cloud",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "NVIDIA GB200 NVL72のAIスーパーコンピューターをIBMへ納入し、IBMがGraniteモデルの学習に利用",
+          "text_en": "To deliver an NVIDIA GB200 NVL72 AI supercomputer to IBM for training Granite models",
+          "source": {
+            "label": "IBM ニュースルーム(2025年1月)",
+            "label_en": "IBM newsroom (CoreWeave release, Jan 2025)",
+            "url": "https://newsroom.ibm.com/2025-01-15-coreweave-partners-with-ibm-to-deliver-new-ai-supercomputer-for-ibm-granite-models",
+            "level": "official",
+            "date": "2025-01-15",
+            "quote": "IBM will use CoreWeave’s highly performant, reliable, and resilient cloud platform to train the next generations of its Granite models",
+            "note": "発表時点では計画の段階でした。",
+            "note_en": "Described as plans at announcement."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AMD",
+      "ticker": "AMD",
+      "name": "AMD",
+      "sub": "半導体",
+      "sub_en": "Chips",
+      "row": 4,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "量子コンピューターとスーパーコンピューターを組み合わせた次世代の計算基盤を共同で開発する計画",
+          "text_en": "Plans to develop quantum-centric supercomputing architectures together",
+          "source": {
+            "label": "IBM ニュースルーム(2025年8月)",
+            "label_en": "IBM newsroom (Aug 2025)",
+            "url": "https://newsroom.ibm.com/2025-08-26-ibm-and-amd-join-forces-to-build-the-future-of-computing",
+            "level": "official",
+            "date": "2025-08-26",
+            "quote": "IBM (NYSE: IBM ) and AMD (NASDAQ: AMD) announced plans to develop next-generation computing architectures based on the combination of quantum computers and high-performance computing, known as quantum-centric supercomputing.",
+            "note": "開発計画の段階です。",
+            "note_en": "Announced plans; development stage."
+          }
+        }
+      ]
+    },
+    {
+      "id": "NVDA",
+      "ticker": "NVDA",
+      "name": "NVIDIA",
+      "sub": "半導体",
+      "sub_en": "Chips",
+      "row": 4,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "GPUを使ったデータ分析・文書処理・インフラ・クラウドなどで協業を拡大",
+          "text_en": "Expanded collaboration on GPU-native analytics, document processing, infrastructure and cloud",
+          "source": {
+            "label": "IBM ニュースルーム(2026年3月)",
+            "label_en": "IBM newsroom (Mar 2026)",
+            "url": "https://newsroom.ibm.com/2026-03-16-ibm-and-nvidia-announce-expanded-collaboration-at-gtc-2026-to-advance-ai-for-the-enterprise",
+            "level": "official",
+            "date": "2026-03-16",
+            "quote": "IBM (NYSE: IBM ) today announced at GTC 2026 an expanded collaboration with NVIDIA to help enterprises operationalize AI at scale."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ANTH",
+      "ticker": "Anthropic",
+      "name": "Anthropic",
+      "sub": "AI",
+      "sub_en": "AI",
+      "row": 4,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "IBMのソフトウェアにClaudeを組み込む戦略的提携",
+          "text_en": "Strategic partnership to integrate Claude into select IBM software",
+          "source": {
+            "label": "IBM ニュースルーム(2025年10月)",
+            "label_en": "IBM newsroom (Oct 2025)",
+            "url": "https://newsroom.ibm.com/2025-10-07-2025-ibm-and-anthropic-partner-to-advance-enterprise-software-development-with-proven-security-and-governance",
+            "level": "official",
+            "date": "2025-10-07",
+            "quote": "IBM (NYSE: IBM) and Anthropic today announced a strategic partnership to accelerate the development of enterprise-ready AI by infusing Anthropic’s Claude"
+          }
+        }
+      ]
+    },
+    {
+      "id": "CSCO",
+      "ticker": "CSCO",
+      "name": "Cisco",
+      "sub": "ネットワーク",
+      "sub_en": "Networking",
+      "row": 4,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ネットワークでつないだ分散型量子コンピューターの基盤づくりで協力する意向",
+          "text_en": "Intention to collaborate on networked distributed quantum computing",
+          "source": {
+            "label": "IBM ニュースルーム(2025年11月)",
+            "label_en": "IBM newsroom (Nov 2025)",
+            "url": "https://newsroom.ibm.com/2025-11-20-ibm-and-cisco-announce-plans-to-build-a-network-of-large-scale,-fault-tolerant-quantum-computers",
+            "level": "official",
+            "date": "2025-11-20",
+            "quote": "IBM (NYSE: IBM ) and Cisco (NASDAQ: CSCO) announced an intention to collaborate on the groundwork for networked distributed quantum computing",
+            "note": "意向の表明で、5年以内の実証を目標としています。",
+            "note_en": "An intention; a proof of concept is targeted within five years."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "ソフトウェア事業ではSplunk(Cisco傘下)が主要な競合を担う",
+          "text_en": "Splunk, a Cisco company, is a principal competitor of IBM in software",
+          "source": {
+            "label": "IBM 10-K(2025年12月期)",
+            "label_en": "IBM 10-K (fiscal year ended December 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/51143/000005114326000010/ibm-20251231.htm",
+            "level": "official",
+            "quote": "The principal competitors in this segment include: Alphabet (Google), Amazon, BMC, Broadcom, Microsoft, Oracle, Salesforce, SAP and Splunk, a CISCO Company."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SIE",
+      "ticker": "Siemens",
+      "name": "Siemens",
+      "sub": "産業・技術",
+      "sub_en": "Industrial technology",
+      "row": 4,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "IBMのナノスタック型トランジスタの研究でSiemensと協力",
+          "text_en": "Research with Siemens to advance IBM’s nanostack transistor architecture",
+          "source": {
+            "label": "IBM ニュースルーム(2026年10月)",
+            "label_en": "IBM newsroom (Oct 2026)",
+            "url": "https://newsroom.ibm.com/2026-10-14-ibm-and-siemens-collaborate-on-research-to-advance-nanostack-architecture",
+            "level": "official",
+            "date": "2026-10-14",
+            "quote": "Today, IBM (NYSE: IBM ), in collaboration with Siemens, announced new research aimed at advancing IBM’s nanostack architecture"
+          }
+        }
+      ]
+    },
+    {
+      "id": "NOW",
+      "ticker": "NOW",
+      "name": "ServiceNow",
+      "sub": "業務ソフト",
+      "sub_en": "Business software",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Now PlatformとIBM watsonxを連携し、Graniteモデルを組み込む協業",
+          "text_en": "Integration of the Now Platform with IBM watsonx and Granite models",
+          "source": {
+            "label": "IBM ニュースルーム(May 2024; ServiceNow Knowledge 2024)",
+            "label_en": "IBM newsroom (May 2024; ServiceNow Knowledge 2024)",
+            "url": "https://newsroom.ibm.com/2024-05-08-ServiceNow-and-IBM-Collaborate-to-Accelerate-the-Impact-of-Generative-AI-Across-the-Enterprise",
+            "level": "official",
+            "date": "2024-05-08",
+            "quote": "ServiceNow will also incorporate watsonx.ai and IBM Granite foundation large language models (LLMs) into its Now Assist GenAI experience for ServiceNow customers."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MDB",
+      "ticker": "MDB",
+      "name": "MongoDB",
+      "sub": "データベース",
+      "sub_en": "Database",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "IBMは、MongoDBが提携を広げたソフトウェア会社・システム会社の1社である",
+          "text_en": "IBM is one of the software vendors and systems integrators with which MongoDB has expanded its partnerships.",
+          "source": {
+            "label": "MongoDB 10-K(2026年度)(2026年1月)",
+            "label_en": "MongoDB 10-K FY2026 (Jan 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1441816/000162828026016799/mdb-20260131.htm",
+            "level": "official",
+            "date": "2026-03",
+            "quote": "We have also expanded our existing partnerships with independent software vendors and global systems integrators including IBM, Accenture, Infosys, Capgemini"
+          }
+        },
+        {
+          "type": "rival",
+          "text": "IBMは、MongoDBが主に競合する既存データベース企業の一例だ",
+          "text_en": "IBM is one of the established database software providers MongoDB primarily competes with.",
+          "source": {
+            "label": "MongoDB 10-K(2026年度)",
+            "label_en": "MongoDB 10-K FY2026",
+            "url": "https://www.sec.gov/Archives/edgar/data/1441816/000162828026016799/mdb-20260131.htm",
+            "level": "official",
+            "date": "2026-03",
+            "quote": "We primarily compete with established legacy database software providers such as IBM, Microsoft, Oracle and other similar companies."
+          }
+        }
+      ]
+    },
+    {
+      "id": "PEGA",
+      "ticker": "PEGA",
+      "name": "Pegasystems",
+      "sub": "業務ソフト",
+      "sub_en": "Business software",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "IBMは、Pegasystemsの競合に含まれる",
+          "text_en": "IBM is a competitor of Pegasystems.",
+          "source": {
+            "label": "Pegasystems 10-K(2025年度)",
+            "label_en": "Pegasystems 10-K FY2025",
+            "url": "https://www.sec.gov/Archives/edgar/data/1013857/000101385726000017/pega-20251231.htm",
+            "level": "official",
+            "date": "2026-02",
+            "quote": "Competitors vary in size, scope, and breadth of the products and services they offer and include some of the world’s largest companies, including International Business Machines Corporation (“IBM”)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "AVGO",
+      "ticker": "AVGO",
+      "name": "Broadcom",
+      "sub": "ソフト・半導体",
+      "sub_en": "Software & chips",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Broadcomはソフトウェア事業でIBMと競い合う",
+          "text_en": "Broadcom is a principal competitor of IBM in software",
+          "source": {
+            "label": "IBM 10-K(2025年12月期)",
+            "label_en": "IBM 10-K (fiscal year ended December 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/51143/000005114326000010/ibm-20251231.htm",
+            "level": "official",
+            "quote": "The principal competitors in this segment include: Alphabet (Google), Amazon, BMC, Broadcom, Microsoft, Oracle, Salesforce, SAP and Splunk, a CISCO Company."
+          }
+        }
+      ]
+    },
+    {
+      "id": "INTC",
+      "ticker": "INTC",
+      "name": "Intel",
+      "sub": "半導体・サーバー",
+      "sub_en": "Chips & servers",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "インフラ事業ではIntelも主要な競合に入る",
+          "text_en": "Intel is a principal competitor of IBM in infrastructure",
+          "source": {
+            "label": "IBM 10-K(2025年12月期)",
+            "label_en": "IBM 10-K (fiscal year ended December 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/51143/000005114326000010/ibm-20251231.htm",
+            "level": "official",
+            "quote": "Our principal competitors include: Dell Technologies, Hewlett-Packard Enterprise (HPE), Intel, NetApp and Pure Storage as well as original device manufacturers (ODMs) who provide systems that are re-branded."
+          }
+        }
+      ]
+    },
+    {
+      "id": "NTAP",
+      "ticker": "NTAP",
+      "name": "NetApp",
+      "sub": "ストレージ",
+      "sub_en": "Storage",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "NetAppはインフラ事業の主要な競合に含まれる",
+          "text_en": "NetApp is a principal competitor of IBM in infrastructure",
+          "source": {
+            "label": "IBM 10-K(2025年12月期)",
+            "label_en": "IBM 10-K (fiscal year ended December 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/51143/000005114326000010/ibm-20251231.htm",
+            "level": "official",
+            "quote": "Our principal competitors include: Dell Technologies, Hewlett-Packard Enterprise (HPE), Intel, NetApp and Pure Storage as well as original device manufacturers (ODMs) who provide systems that are re-branded."
+          }
+        }
+      ]
+    },
+    {
+      "id": "PSTG",
+      "ticker": "PSTG",
+      "name": "Pure Storage(現Everpure)",
+      "sub": "ストレージ",
+      "sub_en": "Storage",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Pure Storageはインフラ事業で競合する主要企業だ",
+          "text_en": "Pure Storage is a principal competitor of IBM in infrastructure",
+          "source": {
+            "label": "IBM 10-K(2025年12月期)",
+            "label_en": "IBM 10-K (fiscal year ended December 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/51143/000005114326000010/ibm-20251231.htm",
+            "level": "official",
+            "quote": "Our principal competitors include: Dell Technologies, Hewlett-Packard Enterprise (HPE), Intel, NetApp and Pure Storage as well as original device manufacturers (ODMs) who provide systems that are re-branded."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "IBMは、Pure Storageのクラウド技術パートナーを務める",
+          "text_en": "IBM is a cloud technology partner of Pure Storage.",
+          "source": {
+            "label": "Pure Storage/Everpure 10-K(2026年度)",
+            "label_en": "Pure Storage/Everpure 10-K FY2026",
+            "url": "https://www.sec.gov/Archives/edgar/data/1474432/000147443226000027/pstg-20260201.htm",
+            "level": "official",
+            "date": "2026-03",
+            "quote": "cloud partners such as Microsoft Azure, AWS, Google, and IBM"
+          }
+        },
+        {
+          "type": "rival",
+          "text": "Pure Storageの主な競合には、IBMも入る",
+          "text_en": "IBM is one of Pure Storage's main competitors.",
+          "source": {
+            "label": "Pure Storage/Everpure 10-K(2026年度)",
+            "label_en": "Pure Storage/Everpure 10-K FY2026",
+            "url": "https://www.sec.gov/Archives/edgar/data/1474432/000147443226000027/pstg-20260201.htm",
+            "level": "official",
+            "date": "2026-03",
+            "quote": "Our main competitors include legacy vendors, such as Dell EMC, NetApp, Hitachi Vantara, HP Enterprise, and IBM"
+          }
+        }
+      ],
+      "name_en": "Pure Storage (now Everpure)"
+    },
+    {
+      "id": "CTSH",
+      "ticker": "CTSH",
+      "name": "Cognizant",
+      "sub": "ITコンサル",
+      "sub_en": "IT consulting",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "IBM Consultingは、Cognizantの直接の競合だ",
+          "text_en": "IBM Consulting is a direct competitor of Cognizant.",
+          "source": {
+            "label": "Cognizant 10-K(2025年度)",
+            "label_en": "Cognizant 10-K FY2025",
+            "url": "https://www.sec.gov/Archives/edgar/data/1058290/000105829026000008/ctsh-20251231.htm",
+            "level": "official",
+            "date": "2026-02",
+            "quote": "Our direct competitors include, among others, Accenture, Atos, Capgemini, CGI, Deloitte Digital, DXC Technology, EPAM Systems, Genpact, HCL Technologies, IBM Consulting"
+          }
+        }
+      ]
+    },
+    {
+      "id": "GFS",
+      "ticker": "GFS",
+      "name": "GlobalFoundries",
+      "sub": "半導体製造",
+      "sub_en": "Chip foundry",
+      "row": 4,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "GlobalFoundriesはIBMなど大手半導体企業と特許のクロスライセンスを結んでいる",
+          "text_en": "GlobalFoundries has patent cross-licenses with leading semiconductor companies including IBM",
+          "source": {
+            "label": "GlobalFoundries 20-F(2025年度)",
+            "label_en": "GlobalFoundries 20-F FY2025",
+            "url": "https://www.sec.gov/Archives/edgar/data/1709048/000170904826000022/gfs-20251231.htm",
+            "level": "official",
+            "quote": "We have entered into patent cross-licenses with a number of other leading advanced semiconductor companies, including AMD, Samsung, TSMC and IBM.",
+            "note": "特許の相互利用のみで、IBM向けの製造については書かれていません。",
+            "note_en": "A patent cross-license only; manufacturing for IBM is not mentioned."
+          }
+        }
+      ]
+    },
+    {
+      "id": "KD",
+      "ticker": "KD",
+      "name": "Kyndryl",
+      "sub": "ITサービス",
+      "sub_en": "IT services",
+      "row": 5,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "KyndrylはIBMから分離独立した会社。IBMの製品をKyndrylのサービス契約経由で使う顧客からの収益は、関係の変化に伴い減少",
+          "text_en": "Kyndryl states it was spun off from IBM and that revenue from customers consuming IBM content through Kyndryl service contracts has declined as the relationship evolves",
+          "source": {
+            "label": "Kyndryl 10-K(2026年度)(2026年3月)",
+            "label_en": "Kyndryl 10-K FY2026 (Mar 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1867072/000110465926067881/kd-20260331x10k.htm",
+            "level": "official",
+            "date": "2026-05",
+            "quote": "as our relationship with IBM following the Spin-off continues to evolve, the amount of revenue generated by customers consuming IBM’s content through our service contracts has declined and may continue to decline"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

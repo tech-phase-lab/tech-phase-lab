@@ -1,0 +1,249 @@
+{
+  "root": {
+    "ticker": "PAYX",
+    "name": "Paychex",
+    "cik": 723531
+  },
+  "rows": [
+    {
+      "ja": "提携・連携",
+      "en": "Partnerships & integrations",
+      "above": true
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "PAYC",
+    "PCTY",
+    "TNET"
+  ],
+  "companies": [
+    {
+      "id": "BILL",
+      "ticker": "BILL",
+      "name": "ビル・ホールディングス",
+      "sub": "請求・支払ソフト",
+      "sub_en": "Billing & payments software",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "BILLは最近、Paychexとの提携を発表した",
+          "text_en": "BILL has announced a partnership with Paychex.",
+          "source": {
+            "label": "BILL 10-K",
+            "label_en": "BILL 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1786352/000162828026058238/bill-20260630.htm",
+            "level": "official",
+            "date": "2026-08-20",
+            "quote": "Our recently-announced partnerships with Paychex, Oracle NetSuite, and Acumatica exemplify this approach, as each of these partners' customers are able to utilize some or all of our platform's capabilities."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "BILLはPaychexなどと組み込み型の提携を開始した",
+          "text_en": "BILL launched embed partnerships with Paychex and others",
+          "source": {
+            "label": "BILL 10-K",
+            "label_en": "BILL 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1786352/000162828026058238/bill-20260630.htm",
+            "level": "official",
+            "date": "2026-08-20",
+            "quote": "In addition, we launched embed partnerships with Paychex, Oracle NetSuite, and Acumatica as part of our \"Embed 2.0\" initiative to deploy our platform offerings as a set of embeddable capabilities through third-party platforms."
+          }
+        }
+      ],
+      "name_en": "BILL Holdings"
+    },
+    {
+      "id": "MSFT",
+      "ticker": "MSFT",
+      "name": "マイクロソフト",
+      "sub": "ソフト・クラウド",
+      "sub_en": "Software & cloud",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "PaychexはMicrosoftとの連携を進めている",
+          "text_en": "Paychex describes its integration with Microsoft",
+          "source": {
+            "label": "Paychex — WISE Microsoft 365 / Teams integration, August 3, 2026",
+            "label_en": "Paychex — WISE Microsoft 365 / Teams integration, August 3, 2026",
+            "url": "https://www.paychex.com/newsroom/news-releases/paychex-wise-microsoft-365-teams",
+            "level": "official",
+            "quote": "“Our integration with Microsoft is a clear expression of that vision, delivering trusted insights, expert-backed guidance and autonomous actions directly into the tools our clients already use every day."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "Paychexの顧客はMicrosoft 365 Copilot内で機能を使える",
+          "text_en": "Paychex customers can use features within Microsoft 365 Copilot",
+          "source": {
+            "label": "Paychex — WISE Microsoft 365 / Teams integration, August 3, 2026",
+            "label_en": "Paychex — WISE Microsoft 365 / Teams integration, August 3, 2026",
+            "url": "https://www.paychex.com/newsroom/news-releases/paychex-wise-microsoft-365-teams",
+            "level": "official",
+            "quote": "Within Microsoft 365 Copilot today, Paychex customers* can:"
+          }
+        }
+      ],
+      "name_en": "Microsoft"
+    },
+    {
+      "id": "PYPL",
+      "ticker": "PYPL",
+      "name": "ペイパル",
+      "sub": "決済",
+      "sub_en": "Payments",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Paychex Flex Perksの中で、PayPalとの新しい提携を発表した",
+          "text_en": "Announced a new partnership with PayPal within Paychex Flex Perks",
+          "source": {
+            "label": "Paychex の発表",
+            "label_en": "Paychex press release",
+            "url": "https://www.paychex.com/newsroom/news-releases/paychex-and-paypal-partnership",
+            "level": "official",
+            "date": "2026-01-08",
+            "quote": "Through this collaboration, employees of Paychex customers have the ability to easily set up PayPal Direct Deposit, providing up to two-day early access to their paychecks."
+          }
+        }
+      ],
+      "name_en": "PayPal"
+    },
+    {
+      "id": "INTU",
+      "ticker": "INTU",
+      "name": "インテュイット",
+      "sub": "会計ソフト",
+      "sub_en": "Accounting software",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Paychexの総勘定元帳サービスから、IntuitのQuickBooks Onlineへ給与データを連携する",
+          "text_en": "Payroll data flows from the Paychex general ledger service into Intuit's QuickBooks Online",
+          "source": {
+            "label": "Paychex の発表",
+            "label_en": "Paychex press release",
+            "url": "https://www.paychex.com/newsroom/news-releases/paychex-introduces-quickbooks-integration",
+            "level": "official",
+            "date": "2018-12-17",
+            "quote": "After setup, with each payroll processed, payroll transactions flow into the user’s QuickBooks Online journal entry, using an API tailored to Intuit.",
+            "note": "2018年の発表で、古い内容です。",
+            "note_en": "A 2018 announcement; older."
+          }
+        }
+      ],
+      "name_en": "Intuit"
+    },
+    {
+      "id": "FISV",
+      "ticker": "FISV",
+      "name": "フィサーブ",
+      "sub": "決済・金融ソフト",
+      "sub_en": "Payments & fintech",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Paychexは、FiservのClover向けに給与・勤怠のアプリを提供している",
+          "text_en": "Paychex offers a payroll and time-attendance app for Fiserv's Clover platform",
+          "source": {
+            "label": "Paychex の発表",
+            "label_en": "Paychex press release",
+            "url": "https://www.paychex.com/newsroom/news-release/hr-management-solutions-integration-clover",
+            "level": "official",
+            "date": "2020-12-23",
+            "quote": "This relationship with Fiserv and Clover significantly streamlines employer operations, delivering a superior client experience and giving employees access to extensive self-service benefits.",
+            "note": "2020年の発表で、古い内容です。",
+            "note_en": "A 2020 announcement; older."
+          }
+        }
+      ],
+      "name_en": "Fiserv"
+    },
+    {
+      "id": "TNET",
+      "ticker": "TNET",
+      "name": "トライネット・グループ",
+      "sub": "PEO・人事サービス",
+      "sub_en": "PEO & HR services",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Paychexと競合する",
+          "text_en": "Competes with Paychex",
+          "source": {
+            "label": "TriNet 2025年度 Form 10-K · PEO competition names ADP TotalSource and Paychex",
+            "label_en": "TriNet FY2025 Form 10-K · PEO competition names ADP TotalSource and Paychex",
+            "url": "https://www.sec.gov/Archives/edgar/data/937098/000093709826000010/tnet-20251231.htm",
+            "level": "official",
+            "quote": "Our PEO service competitors include large PEOs such as the TotalSource unit of Automatic Data Processing, Inc., the PEO operations of Paychex, Inc. and Insperity, Inc., as well as numerous specialized and smaller PEOs and similar HR service providers with PEO operations."
+          }
+        }
+      ],
+      "name_en": "TriNet Group"
+    },
+    {
+      "id": "PAYC",
+      "ticker": "PAYC",
+      "name": "ペイコム・ソフトウェア",
+      "sub": "給与・人事ソフト",
+      "sub_en": "Payroll & HR software",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Paychexと競合する",
+          "text_en": "Competes with Paychex",
+          "source": {
+            "label": "Paycom Software 10-K",
+            "label_en": "Paycom Software 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1590955/000119312526059372/payc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "We compete with companies such as Automatic Data Processing, Inc., Dayforce, Inc., Intuit, Inc., Oracle Corporation, Paychex, Inc., Paylocity Holding Corporation, SAP SE, ServiceNow, Inc., Ultimate Kronos Group, Workday, Inc., and other international, national, regional, and local providers."
+          }
+        }
+      ],
+      "name_en": "Paycom Software"
+    },
+    {
+      "id": "PCTY",
+      "ticker": "PCTY",
+      "name": "ペイロシティ",
+      "sub": "給与・人事ソフト",
+      "sub_en": "Payroll & HR software",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Paychexと競合する",
+          "text_en": "Competes with Paychex",
+          "source": {
+            "label": "Paylocity 10-K",
+            "label_en": "Paylocity 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1591698/000159169826000069/pcty-20260630.htm",
+            "level": "official",
+            "date": "2026-08-05",
+            "quote": "Our competitors vary for each of our solutions and primarily include payroll and HR service and software providers, such as Automatic Data Processing, Inc., Dayforce, Inc., Paychex, Inc., Paycom Software, Inc., Ultimate Kronos Group and other local and regional providers."
+          }
+        }
+      ],
+      "name_en": "Paylocity"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

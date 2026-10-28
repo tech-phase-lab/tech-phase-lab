@@ -1,0 +1,669 @@
+{
+  "root": {
+    "ticker": "MSFT",
+    "name": "Microsoft",
+    "cik": 789019
+  },
+  "rows": [
+    {
+      "ja": "供給元(半導体・電力・計算)",
+      "en": "Suppliers (chips, power, compute)",
+      "above": true
+    },
+    {
+      "ja": "AI・クラウドの提携先",
+      "en": "AI & cloud partners"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "ORCL",
+    "NOW",
+    "SNOW",
+    "WDAY",
+    "PANW"
+  ],
+  "companies": [
+    {
+      "id": "NVDA",
+      "ticker": "NVDA",
+      "name": "NVIDIA",
+      "sub": "AI半導体",
+      "sub_en": "AI chips",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Microsoftは液冷のGrace Blackwell GPUを数十万基導入済みで、Vera Rubinを動かす最初の大手クラウドになる",
+          "text_en": "Microsoft has deployed hundreds of thousands of liquid-cooled Grace Blackwell GPUs and will be first to power on Vera Rubin",
+          "source": {
+            "label": "Microsoft ブログ(2026年3月)",
+            "label_en": "Microsoft blog (Mar 2026)",
+            "url": "https://blogs.microsoft.com/blog/2026/03/16/microsoft-at-nvidia-gtc-new-solutions-for-microsoft-foundry-azure-ai-infrastructure-and-physical-ai/",
+            "level": "official",
+            "date": "2026-03-16",
+            "quote": "we’ve deployed hundreds of thousands of liquid-cooled Grace Blackwell GPUs across our global datacenter footprint, and now we are excited to be the first hyperscale cloud to power on NVIDIA’s newest Vera Rubin NVL72 in our labs",
+            "note": "Vera Rubinのデータセンター導入はこれからの話です。",
+            "note_en": "Vera Rubin rollout is described as upcoming."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "Microsoftは、AI計算機能を自社の仕組みに組み込む企業の1社として、NVIDIAの競合に入る",
+          "text_en": "Microsoft is one of the companies building accelerated and AI computing into their own solutions, competing with NVIDIA.",
+          "source": {
+            "label": "NVIDIA 10-K(2026年度)",
+            "label_en": "NVIDIA 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "such as Alibaba Group, Alphabet Inc., Amazon, Inc., or Amazon, Baidu, Inc., Huawei, and Microsoft Corporation, or Microsoft"
+          }
+        }
+      ]
+    },
+    {
+      "id": "AMD",
+      "ticker": "AMD",
+      "name": "AMD",
+      "sub": "半導体",
+      "sub_en": "Chips",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "AMDのHeliosとEPYCをAzureのAI・HPC向け仮想マシンに導入",
+          "text_en": "Bringing AMD’s Helios platform and next-generation EPYC to Azure AI and HPC VMs",
+          "source": {
+            "label": "Microsoft ブログ(2026年7月)",
+            "label_en": "Microsoft blog (Jul 2026)",
+            "url": "https://blogs.microsoft.com/blog/2026/07/20/microsoft-expands-azure-ai-and-hpc-infrastructure-with-amd/",
+            "level": "official",
+            "date": "2026-07-20",
+            "quote": "Microsoft is bringing AMD’s latest Helios AI platform and next-generation EPYC datacenter processors to Azure.",
+            "note": "提供開始はこれからです。",
+            "note_en": "Offerings described as upcoming."
+          }
+        }
+      ]
+    },
+    {
+      "id": "TSM",
+      "ticker": "TSM",
+      "name": "TSMC",
+      "sub": "受託製造",
+      "sub_en": "Foundry",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "自社AIチップMaia 300の計算チップレットをTSMCのN2Pで製造",
+          "text_en": "Maia 300 compute chiplets are built on TSMC’s N2P process",
+          "source": {
+            "label": "Microsoft ブログ(2026年10月)",
+            "label_en": "Microsoft blog (Oct 2026)",
+            "url": "https://blogs.microsoft.com/blog/2026/10/12/microsoft-to-expand-azure-maia-system-to-multi-gigawatt-deployments/",
+            "level": "official",
+            "date": "2026-10-12",
+            "quote": "Compute chiplets are built on TSMC’s N2P process node to maximize performance-per-watt.",
+            "note": "Maia 300は2027年の予定です。",
+            "note_en": "Maia 300 is coming in 2027."
+          }
+        }
+      ]
+    },
+    {
+      "id": "INTC",
+      "ticker": "INTC",
+      "name": "Intel",
+      "sub": "半導体",
+      "sub_en": "Chips",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Microsoftが選んだチップ設計を、Intel 18Aで生産する計画",
+          "text_en": "Microsoft chose a chip design it plans to produce on Intel 18A",
+          "source": {
+            "label": "Intel ニュースルーム(2024年2月)",
+            "label_en": "Intel newsroom (Feb 2024)",
+            "url": "https://www.intel.com/content/www/us/en/newsroom/news/foundry-news-roadmaps-updates.html",
+            "level": "official",
+            "date": "2024-02-21",
+            "quote": "Microsoft CEO Satya Nadella shares that Microsoft has chosen a chip design it plans to produce on the Intel 18A process.",
+            "note": "2024年2月時点の計画で、製品名は示されていません。",
+            "note_en": "A plan as of Feb 2024; the product is not named."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "Intelが年次報告で、自社設計の半導体を開発する大手クラウド企業の1社としてMicrosoftを挙げ、競合として扱っている",
+          "text_en": "Intel’s annual report names Microsoft among hyperscalers developing their own custom silicon, which it lists as competition",
+          "source": {
+            "label": "Intel 10-K(2025年度)",
+            "label_en": "Intel 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000011/intc-20251227.htm",
+            "level": "official",
+            "date": "2026-01-23",
+            "quote": "companies developing their own custom silicon, including many hyperscalers such as Amazon, Google, Meta and Microsoft"
+          }
+        }
+      ]
+    },
+    {
+      "id": "NBIS",
+      "ticker": "NBIS",
+      "name": "Nebius",
+      "sub": "AIクラウド",
+      "sub_en": "AI cloud",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "ニュージャージー州のデータセンターで、専用GPU基盤を5年間Microsoftに提供",
+          "text_en": "Provides dedicated GPU capacity at its Vineland, New Jersey data center over five years",
+          "source": {
+            "label": "Nebius 20-F(2025年度)",
+            "label_en": "Nebius 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926052948/nbis-20251231x20f.htm",
+            "level": "official",
+            "date": "2025-09-07",
+            "quote": "entered into a commercial agreement with Microsoft Corp (“Microsoft”), pursuant to which we are providing Microsoft access to dedicated GPU infrastructure capacity in clusters at our new data center in Vineland, New Jersey over a five-year term.",
+            "note": "契約額は最大約174億ドルと見積もられ、導入状況などに左右されます。",
+            "note_en": "Contract value estimated at up to about $17.4B, subject to deployment and other conditions."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CRWV",
+      "ticker": "CRWV",
+      "name": "CoreWeave",
+      "sub": "AIクラウド",
+      "sub_en": "AI cloud",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Microsoftは、CoreWeaveの最大の顧客だ",
+          "text_en": "Microsoft was CoreWeave's top customer, about 67% of its 2025 revenue.",
+          "source": {
+            "label": "CoreWeave 10-K(2025年度)",
+            "label_en": "CoreWeave 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000104/crwv-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "We recognized an aggregate of approximately 67% of our revenue from our top customer, Microsoft, for the year ended December 31, 2025."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CEG",
+      "ticker": "CEG",
+      "name": "Constellation Energy",
+      "sub": "電力",
+      "sub_en": "Power",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "スリーマイル島1号機の再稼働に伴う20年の電力購入契約",
+          "text_en": "20-year power purchase agreement tied to the restart of Three Mile Island Unit 1",
+          "source": {
+            "label": "Constellation の発表(2024年9月)",
+            "label_en": "Constellation press release (Sep 2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1868275/000186827524000058/ceg-202409208kexh991.htm",
+            "level": "official",
+            "date": "2024-09-20",
+            "quote": "announced today the signing of a 20-year power purchase agreement with Microsoft that will pave the way for the launch of the Crane Clean Energy Center (CCEC) and restart of Three Mile Island Unit 1",
+            "note": "再稼働には規制当局の承認が必要です。",
+            "note_en": "Restart is subject to regulatory approvals."
+          }
+        }
+      ]
+    },
+    {
+      "id": "OPENAI",
+      "ticker": "OpenAI",
+      "name": "OpenAI",
+      "sub": "AI",
+      "sub_en": "AI",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "OpenAIと長期の戦略的提携。持分法投資で、出資比率は約25%",
+          "text_en": "Long-term strategic partnership with OpenAI; equity-method investment of about 25%",
+          "source": {
+            "label": "Microsoft 10-K(2026年度)",
+            "label_en": "Microsoft 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526323660/msft-20260630.htm",
+            "level": "official",
+            "date": "2026-07-29",
+            "quote": "We have an investment accounted for under the equity method that represents an approximate 25 % interest on an as-converted basis.",
+            "note": "OpenAIは非上場で、再編や追加の資金調達で持分は薄まっています。",
+            "note_en": "OpenAI is private; ownership is diluted by recapitalization and funding."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "2026年4月に契約を見直し、Microsoftは引き続きOpenAIの主要クラウドで、新製品はまずAzureで提供",
+          "text_en": "April 2026 amendment: Microsoft remains OpenAI’s primary cloud partner and products ship first on Azure",
+          "source": {
+            "label": "Microsoft ブログ(2026年4月)",
+            "label_en": "Microsoft blog (Apr 2026)",
+            "url": "https://blogs.microsoft.com/blog/2026/04/27/the-next-phase-of-the-microsoft-openai-partnership/",
+            "level": "official",
+            "date": "2026-04-27",
+            "quote": "Microsoft remains OpenAI’s primary cloud partner, and OpenAI products will ship first on Azure"
+          }
+        },
+        {
+          "type": "down",
+          "text": "OpenAIがAzureを追加で2,500億ドル分購入すると契約",
+          "text_en": "OpenAI contracted to purchase an incremental $250B of Azure services",
+          "source": {
+            "label": "Microsoft ブログ(2025年10月)",
+            "label_en": "Microsoft blog (Oct 2025)",
+            "url": "https://blogs.microsoft.com/blog/2025/10/28/the-next-chapter-of-the-microsoft-openai-partnership/",
+            "level": "official",
+            "date": "2025-10-28",
+            "quote": "OpenAI has contracted to purchase an incremental $250B of Azure services"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ANTH",
+      "ticker": "Anthropic",
+      "name": "Anthropic",
+      "sub": "AI",
+      "sub_en": "AI",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "AnthropicがAzureの計算容量を300億ドル分購入すると約束し、Microsoftは最大50億ドルを出資",
+          "text_en": "Anthropic committed to buy $30B of Azure compute; Microsoft to invest up to $5B",
+          "source": {
+            "label": "Microsoft ブログ(2025年11月)",
+            "label_en": "Microsoft blog (Nov 2025)",
+            "url": "https://blogs.microsoft.com/blog/2025/11/18/microsoft-nvidia-and-anthropic-announce-strategic-partnerships/",
+            "level": "official",
+            "date": "2025-11-18",
+            "quote": "NVIDIA and Microsoft are committing to invest up to $10 billion and up to $5 billion respectively in Anthropic.",
+            "note": "出資額は「最大」の数字で、Anthropicは非上場です。",
+            "note_en": "“Up to” investment amount; Anthropic is private."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SAP",
+      "ticker": "SAP",
+      "name": "SAP",
+      "sub": "業務ソフト",
+      "sub_en": "Business software",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "「RISE with SAP on Microsoft Azure」の共同プログラムを世界で拡大",
+          "text_en": "Expanded the global RISE with SAP on Microsoft Azure joint program",
+          "source": {
+            "label": "SAP ニュース(2026年5月)",
+            "label_en": "SAP News (May 2026)",
+            "url": "https://news.sap.com/2026/05/expanding-rise-with-sap-microsoft-azure-elevating-customer-success/",
+            "level": "official",
+            "date": "2026-05-11",
+            "quote": "Microsoft and SAP are excited to announce the expansion of the global RISE with SAP on Microsoft Azure initiative, a joint program between Microsoft and SAP"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ORCL",
+      "ticker": "ORCL",
+      "name": "Oracle",
+      "sub": "データベース・クラウド",
+      "sub_en": "Database & cloud",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Azureのデータセンター内でOracleのデータベースサービスを提供する「Oracle Database@Azure」",
+          "text_en": "Oracle Database@Azure: Oracle database services on OCI inside Azure datacenters",
+          "source": {
+            "label": "Microsoft Source(2023年9月)",
+            "label_en": "Microsoft Source (Sep 2023)",
+            "url": "https://news.microsoft.com/source/2023/09/14/microsoft-and-oracle-expand-partnership-to-deliver-oracle-database-services-on-oracle-cloud-infrastructure-in-microsoft-azure/",
+            "level": "official",
+            "date": "2023-09-14",
+            "quote": "Oracle Corp and Microsoft Corp today announced Oracle Database@Azure, which gives customers direct access to Oracle database services running on Oracle Cloud Infrastructure (OCI) and deployed in Microsoft Azure datacenters."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "Oracleにとって、Microsoftは最も競合する企業の1社に当たる",
+          "text_en": "Microsoft is one of Oracle's principal competitors.",
+          "source": {
+            "label": "Oracle 10-K(2026年度)",
+            "label_en": "Oracle 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1341439/000119312526277521/orcl-20260531.htm",
+            "level": "official",
+            "date": "2026-06-22",
+            "quote": "Adobe Systems Incorporated, Alphabet Inc., Amazon.com, Inc., Cisco Systems, Inc., Intel Corporation, International Business Machines Corporation, Microsoft Corporation, Salesforce, Inc. and SAP SE"
+          }
+        }
+      ]
+    },
+    {
+      "id": "SNOW",
+      "ticker": "SNOW",
+      "name": "Snowflake",
+      "sub": "データ基盤",
+      "sub_en": "Data platform",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Microsoftは、Snowflakeが競合するパブリッククラウド事業者の一つだ",
+          "text_en": "Microsoft is one of the public cloud providers Snowflake competes with.",
+          "source": {
+            "label": "Snowflake 10-K",
+            "label_en": "Snowflake 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1640147/000164014726000008/snow-20260131.htm",
+            "level": "official",
+            "date": "2026-03-20",
+            "quote": "large, well-established, public cloud providers that generally compete in all of our markets, including Amazon Web Services (AWS), Microsoft Azure (Azure)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "S",
+      "ticker": "S",
+      "name": "SentinelOne",
+      "sub": "セキュリティ",
+      "sub_en": "Security",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Microsoftは、SentinelOneの競合に位置する",
+          "text_en": "Microsoft is a competitor of SentinelOne.",
+          "source": {
+            "label": "SentinelOne 10-K",
+            "label_en": "SentinelOne 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1583708/000158370826000020/s-20260131.htm",
+            "level": "official",
+            "date": "2026-03-19",
+            "quote": "legacy antivirus providers such as Trellix (formerly McAfee Corp.), Symantec (a subsidiary of Broadcom, Inc.) (Symantec), and Microsoft Corporation (Microsoft)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "PEGA",
+      "ticker": "PEGA",
+      "name": "Pegasystems",
+      "sub": "業務ソフト",
+      "sub_en": "Business software",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Pegasystemsの競合にはMicrosoftが名を連ねる",
+          "text_en": "Microsoft is among Pegasystems' competitors.",
+          "source": {
+            "label": "Pegasystems 10-K",
+            "label_en": "Pegasystems 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1013857/000101385726000017/pega-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "Competitors vary in size, scope, and breadth of the products and services they offer and include some of the world’s largest companies, including International Business Machines Corporation (“IBM”), Microsoft Corporation"
+          }
+        }
+      ]
+    },
+    {
+      "id": "OKTA",
+      "ticker": "OKTA",
+      "name": "Okta",
+      "sub": "認証",
+      "sub_en": "Identity",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Oktaの主な競合はMicrosoftだ",
+          "text_en": "Microsoft is Okta's principal competitor.",
+          "source": {
+            "label": "Okta 10-K",
+            "label_en": "Okta 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1660134/000166013426000020/okta-20260131.htm",
+            "level": "official",
+            "date": "2026-03-05",
+            "quote": "Our principal competitor is Microsoft."
+          }
+        }
+      ]
+    },
+    {
+      "id": "NOW",
+      "ticker": "NOW",
+      "name": "ServiceNow",
+      "sub": "業務ソフト",
+      "sub_en": "Business software",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ServiceNowのライバルには、Microsoftなど企業向けアプリケーションソフト大手が並ぶ",
+          "text_en": "ServiceNow competes with enterprise application software vendors such as Microsoft.",
+          "source": {
+            "label": "ServiceNow 10-K",
+            "label_en": "ServiceNow 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1373715/000137371526000007/now-20251231.htm",
+            "level": "official",
+            "date": "2026-01-29",
+            "quote": "enterprise application software vendors, both cloud-based and on-premises, such as Microsoft, Oracle, SAP, Salesforce and Workday"
+          }
+        }
+      ]
+    },
+    {
+      "id": "WDAY",
+      "ticker": "WDAY",
+      "name": "Workday",
+      "sub": "業務ソフト",
+      "sub_en": "Business software",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Workdayにとって、Microsoftは競合の一角を占める",
+          "text_en": "Microsoft is among Workday's competitors.",
+          "source": {
+            "label": "Workday 10-K",
+            "label_en": "Workday 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1327811/000132781126000014/wday-20260131.htm",
+            "level": "official",
+            "date": "2026-03-06",
+            "quote": "These vendors include, without limitation: Anaplan, Inc., ADP, Coupa Software Inc., Dayforce, Inc., Microsoft, ServiceNow, Inc., and UKG Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ZM",
+      "ticker": "ZM",
+      "name": "Zoom",
+      "sub": "ビデオ会議",
+      "sub_en": "Video meetings",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ZoomはMicrosoftと競合する",
+          "text_en": "Zoom competes with Microsoft.",
+          "source": {
+            "label": "Zoom 10-K",
+            "label_en": "Zoom 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1585521/000158552126000030/zm-20260131.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "bundled productivity suite providers with communications offerings, including Microsoft 365 (with Teams)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "DDOG",
+      "ticker": "DDOG",
+      "name": "Datadog",
+      "sub": "監視ソフト",
+      "sub_en": "Observability",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Datadogの競合には、Microsoftも含まれる",
+          "text_en": "Microsoft is among Datadog's competitors.",
+          "source": {
+            "label": "Datadog 10-K",
+            "label_en": "Datadog 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1561550/000162828026008819/ddog-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "we compete with diversified technology companies and systems management vendors including IBM, Microsoft Corporation, and SolarWinds Corporation"
+          }
+        }
+      ]
+    },
+    {
+      "id": "PANW",
+      "ticker": "PANW",
+      "name": "Palo Alto Networks",
+      "sub": "セキュリティ",
+      "sub_en": "Security",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Microsoftは、Palo Alto Networksと競合する大企業の一つだ",
+          "text_en": "Microsoft is one of the large companies Palo Alto Networks competes with.",
+          "source": {
+            "label": "Palo Alto Networks 10-K",
+            "label_en": "Palo Alto Networks 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1327567/000132756726000023/panw-20260731.htm",
+            "level": "official",
+            "date": "2026-09-10",
+            "quote": "large companies that incorporate security or observability features in their products, such as Alphabet Inc., Cisco Systems, Inc., and Microsoft Corporation"
+          }
+        }
+      ]
+    },
+    {
+      "id": "FTNT",
+      "ticker": "FTNT",
+      "name": "Fortinet",
+      "sub": "セキュリティ",
+      "sub_en": "Security",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "FortinetはMicrosoftを競合とする",
+          "text_en": "Fortinet competes with Microsoft.",
+          "source": {
+            "label": "Fortinet 10-K",
+            "label_en": "Fortinet 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1262039/000126203926000007/ftnt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Microsoft Corporation (“Microsoft”), Netskope Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MDB",
+      "ticker": "MDB",
+      "name": "MongoDB",
+      "sub": "データベース",
+      "sub_en": "Database",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "MongoDBが主に競合する既存データベース大手に、Microsoftがある",
+          "text_en": "Microsoft is one of the established legacy database providers MongoDB primarily competes with.",
+          "source": {
+            "label": "MongoDB 10-K",
+            "label_en": "MongoDB 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1441816/000162828026016799/mdb-20260131.htm",
+            "level": "official",
+            "date": "2026-03-11",
+            "quote": "We primarily compete with established legacy database software providers such as IBM, Microsoft, Oracle and other similar companies."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BOX",
+      "ticker": "BOX",
+      "name": "Box",
+      "sub": "ファイル共有",
+      "sub_en": "Content cloud",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Boxの主な競合の一つが、Microsoftだ",
+          "text_en": "Microsoft is one of Box's primary competitors.",
+          "source": {
+            "label": "Box 10-K",
+            "label_en": "Box 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1372612/000119312526098466/box-20260131.htm",
+            "level": "official",
+            "date": "2026-03-09",
+            "quote": "In the content management market, our primary competitors include, but are not limited to, Microsoft (SharePoint) and OpenText (Documentum)."
+          }
+        }
+      ]
+    },
+    {
+      "id": "DBX",
+      "ticker": "DBX",
+      "name": "Dropbox",
+      "sub": "ファイル共有",
+      "sub_en": "File sharing",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Dropboxは、Microsoftとクラウドストレージ市場で競争している",
+          "text_en": "Dropbox competes with Microsoft in the cloud storage market.",
+          "source": {
+            "label": "Dropbox 10-K",
+            "label_en": "Dropbox 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1467623/000146762326000008/dbx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "compete in the cloud storage market with products offered by Microsoft, Amazon, Apple, Google, and Adobe"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

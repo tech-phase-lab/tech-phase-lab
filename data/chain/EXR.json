@@ -1,0 +1,122 @@
+{
+  "root": {
+    "ticker": "EXR",
+    "name": "エクストラ・スペース・ストレージ",
+    "cik": 1289490,
+    "name_en": "Extra Space Storage"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [
+    "CUBE",
+    "NSA",
+    "PSA"
+  ],
+  "companies": [
+    {
+      "id": "CUBE",
+      "ticker": "CUBE",
+      "name": "キューブスマート",
+      "sub": "セルフストレージREIT",
+      "sub_en": "Self-storage REIT",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "上場セルフストレージREITとして主要な競合3社の1つ",
+          "text_en": "CubeSmart is one of three primary public self-storage REIT competitors",
+          "source": {
+            "label": "Extra Space Storage 10-K(2025-12-31)",
+            "label_en": "Extra Space Storage 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1289490/000128949026000011/exr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "Our three primary competitors who are public self-storage REITs are CubeSmart, National Storage Affiliates and Public Storage."
+          }
+        }
+      ],
+      "name_en": "CubeSmart"
+    },
+    {
+      "id": "NSA",
+      "ticker": "NSA",
+      "name": "ナショナル・ストレージ・アフィリエイツ",
+      "sub": "セルフストレージREIT",
+      "sub_en": "Self-storage REIT",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "上場セルフストレージREITとして主要な競合3社の1つ",
+          "text_en": "National Storage Affiliates is one of three primary public self-storage REIT competitors",
+          "source": {
+            "label": "Extra Space Storage 10-K(2025-12-31)",
+            "label_en": "Extra Space Storage 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1289490/000128949026000011/exr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "Our three primary competitors who are public self-storage REITs are CubeSmart, National Storage Affiliates and Public Storage."
+          }
+        }
+      ],
+      "name_en": "National Storage Affiliates"
+    },
+    {
+      "id": "PSA",
+      "ticker": "PSA",
+      "name": "パブリック・ストレージ",
+      "sub": "セルフストレージREIT",
+      "sub_en": "Self-storage REIT",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "上場セルフストレージREITとして主要な競合3社の1つ",
+          "text_en": "Public Storage is one of three primary public self-storage REIT competitors",
+          "source": {
+            "label": "Extra Space Storage 10-K(2025-12-31)",
+            "label_en": "Extra Space Storage 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1289490/000128949026000011/exr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "Our three primary competitors who are public self-storage REITs are CubeSmart, National Storage Affiliates and Public Storage."
+          }
+        }
+      ],
+      "name_en": "Public Storage"
+    },
+    {
+      "id": "PRU",
+      "ticker": "PRU",
+      "name": "プルデンシャル・ファイナンシャル",
+      "sub": "金融・不動産投資",
+      "sub_en": "Financial services",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2004年6月1日付でジョイント・ベンチャー契約を結んでいる",
+          "text_en": "Extra Space Storage LLC and Prudential Financial have a Joint Venture Agreement dated June 1, 2004",
+          "source": {
+            "label": "Extra Space Storage 10-K(2025-12-31)",
+            "label_en": "Extra Space Storage 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1289490/000128949026000011/exr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "Joint Venture Agreement, dated June 1, 2004, by and between Extra Space Storage LLC and Prudential Financial, Inc."
+          }
+        }
+      ],
+      "name_en": "Prudential Financial"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

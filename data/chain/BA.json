@@ -1,0 +1,195 @@
+{
+  "root": {
+    "ticker": "BA",
+    "name": "ボーイング",
+    "cik": 12927,
+    "name_en": "Boeing"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [
+    "GD",
+    "LMT",
+    "NOC",
+    "RTX"
+  ],
+  "companies": [
+    {
+      "id": "AIRBUS",
+      "ticker": "Airbus",
+      "name": "エアバス",
+      "sub": "航空機メーカー",
+      "sub_en": "Aircraft maker",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "民間機部門が競争する相手としてエアバスが名指しされた",
+          "text_en": "Airbus is named as a competitor of the commercial airplanes segment",
+          "source": {
+            "label": "Boeing 10-K(2025年12月31日期)",
+            "label_en": "Boeing 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/12927/000162828026004357/ba-20251231.htm",
+            "level": "official",
+            "date": "2026-01-30",
+            "quote": "BCA faces aggressive international competitors who are intent on increasing their market share, such as Airbus and entrants from China."
+          }
+        }
+      ],
+      "name_en": "Airbus"
+    },
+    {
+      "id": "GD",
+      "ticker": "GD",
+      "name": "ジェネラル・ダイナミクス",
+      "sub": "防衛",
+      "sub_en": "Defense",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "防衛・宇宙部門の主な競合として名指しされた",
+          "text_en": "Named as a primary competitor of the defense and space segment",
+          "source": {
+            "label": "Boeing 10-K(2025年12月31日期)",
+            "label_en": "Boeing 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/12927/000162828026004357/ba-20251231.htm",
+            "level": "official",
+            "date": "2026-01-30",
+            "quote": "BDS faces strong competition primarily from General Dynamics Corporation, Lockheed Martin Corporation, Northrop Grumman Corporation, RTX Corporation and SpaceX."
+          }
+        }
+      ],
+      "name_en": "General Dynamics"
+    },
+    {
+      "id": "LMT",
+      "ticker": "LMT",
+      "name": "ロッキード・マーチン",
+      "sub": "防衛・宇宙",
+      "sub_en": "Defense & space",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "防衛・宇宙部門の主な競合として名指しされた",
+          "text_en": "Named as a primary competitor of the defense and space segment",
+          "source": {
+            "label": "Boeing 10-K(2025年12月31日期)",
+            "label_en": "Boeing 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/12927/000162828026004357/ba-20251231.htm",
+            "level": "official",
+            "date": "2026-01-30",
+            "quote": "BDS faces strong competition primarily from General Dynamics Corporation, Lockheed Martin Corporation, Northrop Grumman Corporation, RTX Corporation and SpaceX."
+          }
+        }
+      ],
+      "name_en": "Lockheed Martin"
+    },
+    {
+      "id": "NOC",
+      "ticker": "NOC",
+      "name": "ノースロップ・グラマン",
+      "sub": "防衛・宇宙",
+      "sub_en": "Defense & space",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "防衛・宇宙部門の主な競合として名指しされた",
+          "text_en": "Named as a primary competitor of the defense and space segment",
+          "source": {
+            "label": "Boeing 10-K(2025年12月31日期)",
+            "label_en": "Boeing 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/12927/000162828026004357/ba-20251231.htm",
+            "level": "official",
+            "date": "2026-01-30",
+            "quote": "BDS faces strong competition primarily from General Dynamics Corporation, Lockheed Martin Corporation, Northrop Grumman Corporation, RTX Corporation and SpaceX."
+          }
+        }
+      ],
+      "name_en": "Northrop Grumman"
+    },
+    {
+      "id": "RTX",
+      "ticker": "RTX",
+      "name": "RTX社",
+      "sub": "防衛・航空",
+      "sub_en": "Defense & aerospace",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "防衛・宇宙部門の主な競合として名指しされた",
+          "text_en": "Named as a primary competitor of the defense and space segment",
+          "source": {
+            "label": "Boeing 10-K(2025年12月31日期)",
+            "label_en": "Boeing 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/12927/000162828026004357/ba-20251231.htm",
+            "level": "official",
+            "date": "2026-01-30",
+            "quote": "BDS faces strong competition primarily from General Dynamics Corporation, Lockheed Martin Corporation, Northrop Grumman Corporation, RTX Corporation and SpaceX."
+          }
+        }
+      ],
+      "name_en": "RTX"
+    },
+    {
+      "id": "SPACEX",
+      "ticker": "SpaceX",
+      "name": "スペースX",
+      "sub": "宇宙開発",
+      "sub_en": "Space launch",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "防衛・宇宙部門の主な競合として名指しされた",
+          "text_en": "Named as a primary competitor of the defense and space segment",
+          "source": {
+            "label": "Boeing 10-K(2025年12月31日期)",
+            "label_en": "Boeing 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/12927/000162828026004357/ba-20251231.htm",
+            "level": "official",
+            "date": "2026-01-30",
+            "quote": "BDS faces strong competition primarily from General Dynamics Corporation, Lockheed Martin Corporation, Northrop Grumman Corporation, RTX Corporation and SpaceX."
+          }
+        }
+      ],
+      "name_en": "SpaceX"
+    },
+    {
+      "id": "ULA",
+      "ticker": "ULA",
+      "name": "ユナイテッド・ローンチ・アライアンス",
+      "sub": "ロケット打上げ合弁",
+      "sub_en": "Launch joint venture",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ULAに50%出資する持分法投資先である",
+          "text_en": "ULA is an equity method investment in which Boeing holds 50%",
+          "source": {
+            "label": "Boeing 10-K(2025年12月31日期)",
+            "label_en": "Boeing 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/12927/000162828026004357/ba-20251231.htm",
+            "level": "official",
+            "date": "2026-01-30",
+            "quote": "Equity Method Investments Our equity method investments consisted of the following at December 31: Segment Ownership Percentages Investment Balance 2025 2024 United Launch Alliance BDS 50 % $ 556 $ 557"
+          }
+        }
+      ],
+      "name_en": "United Launch Alliance"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

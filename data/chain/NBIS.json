@@ -1,0 +1,390 @@
+{
+  "root": {
+    "ticker": "NBIS",
+    "name": "Nebius",
+    "cik": 1513845
+  },
+  "rows": [
+    {
+      "ja": "供給元(半導体・電力)",
+      "en": "Suppliers (chips & power)",
+      "above": true
+    },
+    {
+      "ja": "顧客(大口のAI計算契約)",
+      "en": "Customers (large AI compute deals)"
+    },
+    {
+      "ja": "提携・出資",
+      "en": "Partnerships & investments"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "CRWV",
+    "ORCL",
+    "AMZN",
+    "GOOGL"
+  ],
+  "companies": [
+    {
+      "id": "NVDA",
+      "ticker": "NVDA",
+      "name": "NVIDIA",
+      "sub": "AI半導体",
+      "sub_en": "AI chips",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "NVIDIAやOEMとの強い関係が、Nebiusによる最新GPUの提供を支える",
+          "text_en": "Nebius's strong relationships with NVIDIA and OEM partners support its ability to provide the latest GPUs",
+          "source": {
+            "label": "Nebius 20-F(2025年度)",
+            "label_en": "Nebius 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926052948/nbis-20251231x20f.htm",
+            "level": "official",
+            "date": "2026-04",
+            "quote": "Our strong relationships with NVIDIA and OEM partners support our ability to consistently provide the latest and most advanced GPU technology available in the marketplace."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "NVIDIAがNebiusに20億ドルを出資する戦略的提携",
+          "text_en": "NVIDIA and Nebius announced a strategic partnership under which NVIDIA will invest $2B in Nebius",
+          "source": {
+            "label": "Nebius 6-K Ex. 99.1(NVIDIA/Nebius joint の発表, 2026-03-11)",
+            "label_en": "Nebius 6-K Ex. 99.1 (NVIDIA/Nebius joint press release, 2026-03-11)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926026163/tm268532d1_ex99-1.htm",
+            "level": "official",
+            "date": "2026-03-11",
+            "quote": "NVIDIA will invest $2 billion in Nebius",
+            "note": "6-Kでは、出資は事前に払い込む形の新株予約権とされています。",
+            "note_en": "Per the 6-K, the investment is a pre-funded warrant."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BE",
+      "ticker": "BE",
+      "name": "Bloom Energy",
+      "sub": "燃料電池",
+      "sub_en": "Fuel cells",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "AIインフラ向けに、送電網を介さない電源としてBloomの燃料電池を導入する契約",
+          "text_en": "Agreement to deploy Bloom fuel cells for behind-the-meter power for Nebius’s AI infrastructure",
+          "source": {
+            "label": "Nebius ニュースルーム の発表(2026-05-20)",
+            "label_en": "Nebius newsroom press release (2026-05-20)",
+            "url": "https://nebius.com/newsroom/nebius-and-bloom-energy-partner-to-power-ai-infrastructure-build-out",
+            "level": "official",
+            "date": "2026-05-20",
+            "quote": "Bloom's fuel cell systems will provide behind-the-meter electricity for Nebius",
+            "note": "最初の328MWは稼働予定で、稼働済みではありません。",
+            "note_en": "The first 328MW is expected, not yet operating."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MSFT",
+      "ticker": "MSFT",
+      "name": "Microsoft",
+      "sub": "クラウド",
+      "sub_en": "Cloud",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "ニュージャージー州Vinelandのデータセンターで、専用GPU基盤を5年間Microsoftに提供",
+          "text_en": "Provides Microsoft dedicated GPU capacity at its Vineland, New Jersey data center over five years",
+          "source": {
+            "label": "Nebius 20-F(2025年度)",
+            "label_en": "Nebius 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926052948/nbis-20251231x20f.htm",
+            "level": "official",
+            "date": "2025-09",
+            "quote": "we are providing Microsoft access to dedicated GPU infrastructure capacity in clusters at our new data center in Vineland, New Jersey over a five-year term",
+            "note": "契約額は最大約174億ドルと見積もられ、導入状況などに左右されます。",
+            "note_en": "Contract value estimated at up to about $17.4B, subject to deployment and other conditions."
+          }
+        }
+      ]
+    },
+    {
+      "id": "META",
+      "ticker": "META",
+      "name": "Meta Platforms",
+      "sub": "SNS・AI",
+      "sub_en": "Social & AI",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "専用GPU容量の発注に関するインフラサービス契約をMetaと締結",
+          "text_en": "Infrastructure Services Agreement with Meta for dedicated GPU capacity orders",
+          "source": {
+            "label": "Nebius 20-F(2025年度)",
+            "label_en": "Nebius 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926052948/nbis-20251231x20f.htm",
+            "level": "official",
+            "date": "2026-03",
+            "quote": "entered into an Infrastructure Services Agreement with Meta Platforms, Inc. (\"Meta\"), pursuant to which we and Meta will enter into a series of orders",
+            "note": "最初の発注分を含む契約総額は最大約270億ドルと見積もられています。",
+            "note_en": "Total contract value including initial orders is estimated at up to about $27B."
+          }
+        }
+      ]
+    },
+    {
+      "id": "PLTR",
+      "ticker": "PLTR",
+      "name": "Palantir",
+      "sub": "データ分析",
+      "sub_en": "Data analytics",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "PalantirがNebiusを推奨するソブリンAI基盤パートナーに指定",
+          "text_en": "Palantir named Nebius its preferred sovereign AI infrastructure partner",
+          "source": {
+            "label": "Nebius 6-K Ex. 99.1(Palantir/Nebius joint の発表, 2026-09-08)",
+            "label_en": "Nebius 6-K Ex. 99.1 (Palantir/Nebius joint press release, 2026-09-08)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926105749/tm2624958d1_ex99-1.htm",
+            "level": "official",
+            "date": "2026-09-08",
+            "quote": "Palantir has named Nebius its preferred sovereign AI infrastructure partner"
+          }
+        }
+      ]
+    },
+    {
+      "id": "UBER",
+      "ticker": "UBER",
+      "name": "Uber",
+      "sub": "配車",
+      "sub_en": "Ride-hailing",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "UberとNebiusが、自動運転子会社Avrideに最大3.75億ドルを共同出資",
+          "text_en": "Uber and Nebius jointly invested up to $375M in Nebius’s autonomous-driving subsidiary Avride",
+          "source": {
+            "label": "Nebius 20-F(2025年度)",
+            "label_en": "Nebius 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926052948/nbis-20251231x20f.htm",
+            "level": "official",
+            "date": "2025-10-22",
+            "quote": "In October 2025, Uber participated alongside us in an investment of up to $375 million into Avride.",
+            "note": "関係はNebiusの子会社Avrideを通じたものです。",
+            "note_en": "The relationship is at the Avride (Nebius subsidiary) level."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CRWV",
+      "ticker": "CRWV",
+      "name": "CoreWeave",
+      "sub": "AIクラウド",
+      "sub_en": "AI cloud",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "CoreWeaveは、特化型AIクラウドでNebiusの主な競合に当たる",
+          "text_en": "CoreWeave is a key competitor of Nebius among specialized AI cloud providers",
+          "source": {
+            "label": "Nebius 20-F(2025年度)",
+            "label_en": "Nebius 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926052948/nbis-20251231x20f.htm",
+            "level": "official",
+            "date": "2026-04",
+            "quote": "our key competitors are specialized cloud service providers focused on AI, including CoreWeave, Crusoe and Lambda"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ORCL",
+      "ticker": "ORCL",
+      "name": "Oracle",
+      "sub": "クラウド",
+      "sub_en": "Cloud",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Oracleは、汎用クラウドでNebiusと競合する",
+          "text_en": "Oracle competes with Nebius among general-purpose cloud providers",
+          "source": {
+            "label": "Nebius 20-F(2025年度)",
+            "label_en": "Nebius 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926052948/nbis-20251231x20f.htm",
+            "level": "official",
+            "date": "2026-04",
+            "quote": "We also compete with general purpose cloud computing providers including Amazon (AWS), Google (Google Cloud Platform), Microsoft (Azure), and Oracle."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AMZN",
+      "ticker": "AMZN",
+      "name": "Amazon(AWS)",
+      "sub": "クラウド",
+      "sub_en": "Cloud",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Amazon(AWS)も汎用クラウドでNebiusの競合相手だ",
+          "text_en": "Amazon (AWS) competes with Nebius among general-purpose cloud providers",
+          "source": {
+            "label": "Nebius 20-F(2025年度)",
+            "label_en": "Nebius 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926052948/nbis-20251231x20f.htm",
+            "level": "official",
+            "date": "2026-04",
+            "quote": "We also compete with general purpose cloud computing providers including Amazon (AWS), Google (Google Cloud Platform), Microsoft (Azure), and Oracle."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GOOGL",
+      "ticker": "GOOGL",
+      "name": "Alphabet(Google Cloud)",
+      "sub": "クラウド",
+      "sub_en": "Cloud",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Google Cloudは汎用クラウドでNebiusと競う",
+          "text_en": "Google Cloud competes with Nebius among general-purpose cloud providers",
+          "source": {
+            "label": "Nebius 20-F(2025年度)",
+            "label_en": "Nebius 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926052948/nbis-20251231x20f.htm",
+            "level": "official",
+            "date": "2026-04",
+            "quote": "We also compete with general purpose cloud computing providers including Amazon (AWS), Google (Google Cloud Platform), Microsoft (Azure), and Oracle."
+          }
+        }
+      ]
+    },
+    {
+      "id": "IREN",
+      "ticker": "IREN",
+      "name": "IREN",
+      "sub": "AIクラウド・マイニング",
+      "sub_en": "AI cloud & mining",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "IRENは、特化型AIクラウドの競合の1社としてNebiusと競合関係にある",
+          "text_en": "IREN competes with Nebius among specialized AI cloud providers",
+          "source": {
+            "label": "IREN 10-K(2026年6月期)",
+            "label_en": "IREN 10-K (FY ended 2026-06-30)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1878848/000187884826000052/iren-20260630.htm",
+            "level": "official",
+            "date": "2026-08-27",
+            "quote": "specialized AI Cloud Services providers, including CoreWeave, Nebius, Crusoe, Lambda, Nscale, SpaceX and others"
+          }
+        }
+      ]
+    },
+    {
+      "id": "WYFI",
+      "ticker": "WYFI",
+      "name": "WhiteFiber",
+      "sub": "AIクラウド",
+      "sub_en": "AI cloud",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "WhiteFiberにとって、Nebiusは主な競合になる",
+          "text_en": "Nebius is one of WhiteFiber's primary competitors",
+          "source": {
+            "label": "WhiteFiber 10-K(2025年度)",
+            "label_en": "WhiteFiber 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2042022/000121390026034341/ea0278305-10k_white.htm",
+            "level": "official",
+            "date": "2026-03-26",
+            "quote": "Our primary competitors in the cloud service business are CoreWeave, Crusoe Energy, Nebius, and Lambda Labs."
+          }
+        }
+      ]
+    },
+    {
+      "id": "HYMTF",
+      "ticker": "Hyundai",
+      "name": "Hyundai(現代)",
+      "sub": "自動車",
+      "sub_en": "Automaker",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "子会社Avrideが、自動運転プラットフォームの共同開発でHyundaiと戦略的提携",
+          "text_en": "Nebius subsidiary Avride entered a strategic partnership with Hyundai for joint development of an autonomous driving platform",
+          "source": {
+            "label": "Nebius 20-F(2025年度)",
+            "label_en": "Nebius 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926052948/nbis-20251231x20f.htm",
+            "level": "official",
+            "date": "2025-03",
+            "quote": "In March 2025, Avride entered a strategic partnership with Hyundai for the joint development of an autonomous driving platform",
+            "note": "資料には「Hyundai」とだけあり、どの法人かは書かれていません。関係はAvrideを通じたものです。",
+            "note_en": "The source says only “Hyundai” without naming the legal entity; the relationship is at the Avride level."
+          }
+        }
+      ],
+      "name_en": "Hyundai"
+    },
+    {
+      "id": "MUFG",
+      "ticker": "MUFG",
+      "name": "三菱UFJフィナンシャル・グループ",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "傘下の三菱UFJ銀行ロンドン支店が、Nebiusの約7.75億ドルの担保付きターム・ローンの主幹事・引受・ブックランナーを務める",
+          "text_en": "MUFG Bank, London Branch acts as mandated lead arranger, underwriter and sole bookrunner on Nebius’s roughly $775M senior secured term loan",
+          "source": {
+            "label": "Nebius 6-K(2026年7月17日)",
+            "label_en": "Nebius 6-K (2026-07-17)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926084452/tm2620683d1_6k.htm",
+            "level": "official",
+            "date": "2026-07-10",
+            "quote": "MUFG Bank, Ltd., London Branch, as mandated lead arranger, underwriter, sole bookrunner and structuring agent",
+            "note": "融資関係で、他の銀行も参加するシンジケート型です。",
+            "note_en": "A lending relationship; the facility is syndicated with other banks."
+          }
+        }
+      ],
+      "name_en": "Mitsubishi UFJ Financial Group (MUFG)"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

@@ -1,0 +1,222 @@
+{
+  "root": {
+    "ticker": "JKHY",
+    "name": "ジャック・ヘンリー&アソシエイツ",
+    "cik": 779152,
+    "name_en": "Jack Henry & Associates Inc"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    },
+    {
+      "ja": "供給元",
+      "en": "Suppliers",
+      "above": true
+    }
+  ],
+  "rivals": [
+    "FIS",
+    "FISV"
+  ],
+  "companies": [
+    {
+      "id": "FIS",
+      "ticker": "FIS",
+      "name": "フィデリティ・ナショナル・インフォメーション・サービシズ",
+      "sub": "銀行向けシステム",
+      "sub_en": "Bank processing",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "銀行向けの勘定系・取引処理で競合する",
+          "text_en": "Competes in core processing for banks and credit unions",
+          "source": {
+            "label": "JKHY 10-K(2026-06-30)",
+            "label_en": "JKHY 10-K (fiscal year ended 2026-06-30)",
+            "url": "https://www.sec.gov/Archives/edgar/data/779152/000077915226000067/jkhy-20260630.htm",
+            "level": "official",
+            "date": "2026-08-28",
+            "quote": "Our core solutions compete with large vendors that provide information and transaction processing solutions to banks and credit unions, including Fidelity National Information Services, Inc.; Fiserv, Inc.; Corelation, Inc.; and Finastra."
+          }
+        }
+      ],
+      "name_en": "Fidelity National Information Services"
+    },
+    {
+      "id": "FISV",
+      "ticker": "FISV",
+      "name": "フィサーブ",
+      "sub": "銀行向けシステム",
+      "sub_en": "Bank processing",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "銀行・信用組合向けの処理で競合する",
+          "text_en": "Competes in core processing for banks and credit unions",
+          "source": {
+            "label": "JKHY 10-K(2026-06-30)",
+            "label_en": "JKHY 10-K (fiscal year ended 2026-06-30)",
+            "url": "https://www.sec.gov/Archives/edgar/data/779152/000077915226000067/jkhy-20260630.htm",
+            "level": "official",
+            "date": "2026-08-28",
+            "quote": "Our core solutions compete with large vendors that provide information and transaction processing solutions to banks and credit unions, including Fidelity National Information Services, Inc.; Fiserv, Inc.; Corelation, Inc.; and Finastra."
+          }
+        }
+      ],
+      "name_en": "Fiserv"
+    },
+    {
+      "id": "CORE",
+      "ticker": "Corelation",
+      "name": "コアレーション",
+      "sub": "信用組合向け",
+      "sub_en": "Credit union core",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "信用組合向けの基幹システムで競合する",
+          "text_en": "Competes in core processing for banks and credit unions",
+          "source": {
+            "label": "JKHY 10-K(2026-06-30)",
+            "label_en": "JKHY 10-K (fiscal year ended 2026-06-30)",
+            "url": "https://www.sec.gov/Archives/edgar/data/779152/000077915226000067/jkhy-20260630.htm",
+            "level": "official",
+            "date": "2026-08-28",
+            "quote": "Our core solutions compete with large vendors that provide information and transaction processing solutions to banks and credit unions, including Fidelity National Information Services, Inc.; Fiserv, Inc.; Corelation, Inc.; and Finastra."
+          }
+        }
+      ],
+      "name_en": "Corelation"
+    },
+    {
+      "id": "FNS",
+      "ticker": "Finastra",
+      "name": "フィナストラ",
+      "sub": "銀行向けシステム",
+      "sub_en": "Bank software",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "金融機関向けソフトで競合する",
+          "text_en": "Competes in core processing for banks and credit unions",
+          "source": {
+            "label": "JKHY 10-K(2026-06-30)",
+            "label_en": "JKHY 10-K (fiscal year ended 2026-06-30)",
+            "url": "https://www.sec.gov/Archives/edgar/data/779152/000077915226000067/jkhy-20260630.htm",
+            "level": "official",
+            "date": "2026-08-28",
+            "quote": "Our core solutions compete with large vendors that provide information and transaction processing solutions to banks and credit unions, including Fidelity National Information Services, Inc.; Fiserv, Inc.; Corelation, Inc.; and Finastra."
+          }
+        }
+      ],
+      "name_en": "Finastra"
+    },
+    {
+      "id": "IBM",
+      "ticker": "IBM",
+      "name": "アイ・ビー・エム",
+      "sub": "ハードウェア",
+      "sub_en": "Hardware",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "再販契約を結び、ハードウェアを割引価格で仕入れて顧客へ販売する",
+          "text_en": "Remarketing agreement lets Jack Henry buy hardware at a discount and resell it",
+          "source": {
+            "label": "JKHY 10-K(2026-06-30)",
+            "label_en": "JKHY 10-K (fiscal year ended 2026-06-30)",
+            "url": "https://www.sec.gov/Archives/edgar/data/779152/000077915226000067/jkhy-20260630.htm",
+            "level": "official",
+            "date": "2026-08-28",
+            "quote": "We have established remarketing agreements with IBM Corporation, and many other hardware providers that allow Jack Henry to purchase hardware and related maintenance services at a discount and resell them directly to our clients."
+          }
+        }
+      ],
+      "name_en": "IBM Corporation"
+    },
+    {
+      "id": "DELL",
+      "ticker": "Dell",
+      "name": "デル",
+      "sub": "サーバー",
+      "sub_en": "Servers",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "デルのサーバーを顧客向けに販売している",
+          "text_en": "Dell servers are sold to clients",
+          "source": {
+            "label": "JKHY 10-K(2026-06-30)",
+            "label_en": "JKHY 10-K (fiscal year ended 2026-06-30)",
+            "url": "https://www.sec.gov/Archives/edgar/data/779152/000077915226000067/jkhy-20260630.htm",
+            "level": "official",
+            "date": "2026-08-28",
+            "quote": "We currently sell IBM Power Systems™; 10 Lenovo ® , Dell, Hewlett Packard Enterprise, and Cisco servers and workstations"
+          }
+        }
+      ],
+      "name_en": "Dell"
+    },
+    {
+      "id": "HPE",
+      "ticker": "HPE",
+      "name": "ヒューレット・パッカード・エンタープライズ",
+      "sub": "サーバー",
+      "sub_en": "Servers",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "HPEのサーバーを顧客向けに販売している",
+          "text_en": "HPE servers are sold to clients",
+          "source": {
+            "label": "JKHY 10-K(2026-06-30)",
+            "label_en": "JKHY 10-K (fiscal year ended 2026-06-30)",
+            "url": "https://www.sec.gov/Archives/edgar/data/779152/000077915226000067/jkhy-20260630.htm",
+            "level": "official",
+            "date": "2026-08-28",
+            "quote": "We currently sell IBM Power Systems™; 10 Lenovo ® , Dell, Hewlett Packard Enterprise, and Cisco servers and workstations"
+          }
+        }
+      ],
+      "name_en": "Hewlett Packard Enterprise"
+    },
+    {
+      "id": "CSCO",
+      "ticker": "CSCO",
+      "name": "シスコシステムズ",
+      "sub": "ネットワーク機器",
+      "sub_en": "Networking",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "シスコの機器を顧客向けに販売している",
+          "text_en": "Cisco equipment is sold to clients",
+          "source": {
+            "label": "JKHY 10-K(2026-06-30)",
+            "label_en": "JKHY 10-K (fiscal year ended 2026-06-30)",
+            "url": "https://www.sec.gov/Archives/edgar/data/779152/000077915226000067/jkhy-20260630.htm",
+            "level": "official",
+            "date": "2026-08-28",
+            "quote": "We currently sell IBM Power Systems™; 10 Lenovo ® , Dell, Hewlett Packard Enterprise, and Cisco servers and workstations"
+          }
+        }
+      ],
+      "name_en": "Cisco"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

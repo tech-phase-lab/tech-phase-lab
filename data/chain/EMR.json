@@ -1,0 +1,107 @@
+{
+  "root": {
+    "ticker": "EMR",
+    "name": "エマソン・エレクトリック",
+    "cik": 32604,
+    "name_en": "Emerson Electric"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "BX",
+      "ticker": "Blackstone",
+      "name": "ブラックストーン",
+      "sub": "プライベートエクイティ",
+      "sub_en": "Private equity",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "空調事業の過半を、ブラックストーンが運用するファンドに売却した",
+          "text_en": "Emerson sold a majority stake in its Climate Technologies business to funds managed by Blackstone",
+          "source": {
+            "label": "Emerson 10-K(2025年9月30日期)",
+            "label_en": "Emerson 10-K (fiscal year ended September 30, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/32604/000003260425000087/emr-20250930.htm",
+            "level": "official",
+            "date": "2025-11-10",
+            "quote": "On May 31, 2023, the Company completed the sale of a majority stake in its Climate Technologies business (which constitutes the former Climate Technologies segment, excluding Therm-O-Disc which was divested earlier in 2022) to private equity funds managed by Blackstone in a $ 14.0 billion transaction."
+          }
+        }
+      ],
+      "name_en": "Blackstone"
+    },
+    {
+      "id": "COPELAND",
+      "ticker": "Copeland",
+      "name": "コープランド",
+      "sub": "空調コンプレッサー",
+      "sub_en": "Climate technologies",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ブラックストーンとの新しい独立合弁に、40%の持分を残した",
+          "text_en": "Emerson retained a 40 percent stake in the new standalone joint venture with Blackstone",
+          "source": {
+            "label": "Emerson 10-K(2025年9月30日期)",
+            "label_en": "Emerson 10-K (fiscal year ended September 30, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/32604/000003260425000087/emr-20250930.htm",
+            "level": "official",
+            "date": "2025-11-10",
+            "quote": "Emerson received upfront, pre-tax cash proceeds of approximately $9.7 billion and a note receivable with a face value of $2.25 billion, while retaining a 40 percent non-controlling common equity interest in a new standalone joint venture between Emerson and Blackstone."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "その持分は2024年8月にブラックストーン系ファンドへ売却済みである",
+          "text_en": "The stake was sold to Blackstone-managed funds in August 2024",
+          "source": {
+            "label": "Emerson 10-K(2025年9月30日期)",
+            "label_en": "Emerson 10-K (fiscal year ended September 30, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/32604/000003260425000087/emr-20250930.htm",
+            "level": "official",
+            "date": "2025-11-10",
+            "quote": "Subsequently, in August 2024, Emerson sold its 40 percent non-controlling common equity interest in Copeland to private equity funds managed by Blackstone for $1.5 billion and sold the note receivable to Copeland for $1.9 billion."
+          }
+        }
+      ],
+      "name_en": "Copeland"
+    },
+    {
+      "id": "WHR",
+      "ticker": "WHR",
+      "name": "ワールプール",
+      "sub": "家電メーカー",
+      "sub_en": "Home appliances",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "InSinkErator事業をワールプールに売却した",
+          "text_en": "Emerson divested its InSinkErator business to Whirlpool",
+          "source": {
+            "label": "Emerson 10-K(2025年9月30日期)",
+            "label_en": "Emerson 10-K (fiscal year ended September 30, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/32604/000003260425000087/emr-20250930.htm",
+            "level": "official",
+            "date": "2025-11-10",
+            "quote": "On October 31, 2022, the Company completed the divestiture of its InSinkErator business, which manufactures food waste disposers, to Whirlpool Corporation for $3.0 billion."
+          }
+        }
+      ],
+      "name_en": "Whirlpool"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

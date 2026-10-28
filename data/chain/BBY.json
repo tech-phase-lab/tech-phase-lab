@@ -1,0 +1,143 @@
+{
+  "root": {
+    "ticker": "BBY",
+    "name": "ベスト・バイ",
+    "cik": 764478,
+    "name_en": "Best Buy"
+  },
+  "rows": [
+    {
+      "ja": "供給元",
+      "en": "Suppliers",
+      "above": true
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "AAPL",
+      "ticker": "AAPL",
+      "name": "アップル",
+      "sub": "電子機器メーカー",
+      "sub_en": "Consumer electronics",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "主要仕入先5社の1社である（5社で商品仕入高の約55%）",
+          "text_en": "Apple is one of five suppliers representing approximately 55% of total merchandise purchased",
+          "source": {
+            "label": "Best Buy 10-K(2026年1月31日期)",
+            "label_en": "Best Buy 10-K (fiscal year ended January 31, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/764478/000076447826000009/bby-20260131.htm",
+            "level": "official",
+            "date": "2026-03-18",
+            "quote": "In fiscal 2026, our 20 largest suppliers accounted for approximately 80% of the merchandise we purchased, with five suppliers – Apple, Samsung, HP, LG and Sony – representing approximately 55% of total merchandise purchased."
+          }
+        }
+      ],
+      "name_en": "Apple"
+    },
+    {
+      "id": "SAMSUNG",
+      "ticker": "Samsung",
+      "name": "サムスン",
+      "sub": "電子機器メーカー",
+      "sub_en": "Consumer electronics",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "5社で商品仕入高の約55%を占める主要仕入先の1社だ",
+          "text_en": "Samsung is one of five suppliers representing approximately 55% of total merchandise purchased",
+          "source": {
+            "label": "Best Buy 10-K(2026年1月31日期)",
+            "label_en": "Best Buy 10-K (fiscal year ended January 31, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/764478/000076447826000009/bby-20260131.htm",
+            "level": "official",
+            "date": "2026-03-18",
+            "quote": "In fiscal 2026, our 20 largest suppliers accounted for approximately 80% of the merchandise we purchased, with five suppliers – Apple, Samsung, HP, LG and Sony – representing approximately 55% of total merchandise purchased."
+          }
+        }
+      ],
+      "name_en": "Samsung"
+    },
+    {
+      "id": "HPQ",
+      "ticker": "HPQ",
+      "name": "エイチピー",
+      "sub": "PC・周辺機器",
+      "sub_en": "PCs & peripherals",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "商品仕入高の約55%を占める上位5社の仕入先に含まれる",
+          "text_en": "HP is one of five suppliers representing approximately 55% of total merchandise purchased",
+          "source": {
+            "label": "Best Buy 10-K(2026年1月31日期)",
+            "label_en": "Best Buy 10-K (fiscal year ended January 31, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/764478/000076447826000009/bby-20260131.htm",
+            "level": "official",
+            "date": "2026-03-18",
+            "quote": "In fiscal 2026, our 20 largest suppliers accounted for approximately 80% of the merchandise we purchased, with five suppliers – Apple, Samsung, HP, LG and Sony – representing approximately 55% of total merchandise purchased."
+          }
+        }
+      ],
+      "name_en": "HP"
+    },
+    {
+      "id": "LG",
+      "ticker": "LG",
+      "name": "エルジー",
+      "sub": "家電メーカー",
+      "sub_en": "Appliances & electronics",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "上位5社の仕入先の1つで、5社合計で商品仕入高の約55%にあたる",
+          "text_en": "LG is one of five suppliers representing approximately 55% of total merchandise purchased",
+          "source": {
+            "label": "Best Buy 10-K(2026年1月31日期)",
+            "label_en": "Best Buy 10-K (fiscal year ended January 31, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/764478/000076447826000009/bby-20260131.htm",
+            "level": "official",
+            "date": "2026-03-18",
+            "quote": "In fiscal 2026, our 20 largest suppliers accounted for approximately 80% of the merchandise we purchased, with five suppliers – Apple, Samsung, HP, LG and Sony – representing approximately 55% of total merchandise purchased."
+          }
+        }
+      ],
+      "name_en": "LG"
+    },
+    {
+      "id": "SONY",
+      "ticker": "SONY",
+      "name": "ソニー",
+      "sub": "電子機器メーカー",
+      "sub_en": "Consumer electronics",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "商品仕入高の約55%を占める5社の仕入先の1つである",
+          "text_en": "Sony is one of five suppliers representing approximately 55% of total merchandise purchased",
+          "source": {
+            "label": "Best Buy 10-K(2026年1月31日期)",
+            "label_en": "Best Buy 10-K (fiscal year ended January 31, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/764478/000076447826000009/bby-20260131.htm",
+            "level": "official",
+            "date": "2026-03-18",
+            "quote": "In fiscal 2026, our 20 largest suppliers accounted for approximately 80% of the merchandise we purchased, with five suppliers – Apple, Samsung, HP, LG and Sony – representing approximately 55% of total merchandise purchased."
+          }
+        }
+      ],
+      "name_en": "Sony"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

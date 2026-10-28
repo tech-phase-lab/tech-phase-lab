@@ -1,0 +1,47 @@
+name: External data backup inventory (read only)
+
+on:
+  push:
+    branches: [codex/research-preview]
+    paths:
+      - .github/workflows/external-data-inventory.yml
+      - docs/external-data-inventory-request.txt
+
+permissions:
+  contents: read
+
+concurrency:
+  group: external-data-inventory
+  cancel-in-progress: false
+
+jobs:
+  inventory:
+    if: github.repository == 'tech-phase-lab/tech-phase-lab' && github.ref == 'refs/heads/codex/research-preview'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          ref: ${{ github.sha }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install pinned storage client without credentials
+        run: python -m pip install -r services/tech-phase-backup/requirements.txt
+      - name: Observe existing external prefixes without downloading data
+        env:
+          TECH_PHASE_EXTERNAL_INVENTORY_ENABLED: 'true'
+          MIRROR_DESTINATION_ENDPOINT: ${{ secrets.MIRROR_DESTINATION_ENDPOINT }}
+          MIRROR_DESTINATION_BUCKET: resolute-backup-external
+          MIRROR_DESTINATION_REGION: auto
+          MIRROR_DESTINATION_ACCESS_KEY_ID: ${{ secrets.MIRROR_DESTINATION_ACCESS_KEY_ID }}
+          MIRROR_DESTINATION_SECRET_ACCESS_KEY: ${{ secrets.MIRROR_DESTINATION_SECRET_ACCESS_KEY }}
+        run: |
+          set -euo pipefail
+          umask 077
+          python scripts/tech-phase/audit_external_inventory.py | tee "$RUNNER_TEMP/external-inventory.json"
+          cat "$RUNNER_TEMP/external-inventory.json" >> "$GITHUB_STEP_SUMMARY"
+      - name: Remove observation file
+        if: always()
+        run: rm -f -- "$RUNNER_TEMP/external-inventory.json"

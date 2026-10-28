@@ -1,0 +1,316 @@
+{
+  "root": {
+    "ticker": "ROKU",
+    "name": "Roku",
+    "cik": 1428439
+  },
+  "rows": [
+    {
+      "ja": "提携・買収・販売先",
+      "en": "Partnerships, acquisition & channels"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "AMZN",
+    "AAPL",
+    "GOOG",
+    "CMCSA"
+  ],
+  "companies": [
+    {
+      "id": "FOXA",
+      "ticker": "FOXA",
+      "name": "Fox Corporation",
+      "sub": "メディア",
+      "sub_en": "Media",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Fox Corporationが、現金とFOXクラスA普通株の組み合わせでRokuを買収する合併契約を結んでいる",
+          "text_en": "Fox Corporation has agreed to acquire Roku for a combination of cash and FOX Class A Common Stock under a Merger Agreement",
+          "source": {
+            "label": "Fox Corporation 10-K",
+            "label_en": "Fox Corporation 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1754301/000162828026053960/fox-20260630.htm",
+            "level": "official",
+            "date": "2026-08-06",
+            "quote": "(“Roku”) entered into a definitive agreement (the “Merger Agreement”) under which the Company has agreed to acquire Roku for a combination of cash and FOX Class A Common Stock (the “Roku Transaction” or “Merger”).",
+            "note": "合併は未完了で、条件未達や遅延の可能性があります。",
+            "note_en": "The merger is not yet completed and may be delayed or not close."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "合併契約は、成立条件が満たされない場合などに終了されることがある",
+          "text_en": "The Merger Agreement may be terminated in accordance with its terms",
+          "source": {
+            "label": "Fox Corporation 10-K",
+            "label_en": "Fox Corporation 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1754301/000162828026053960/fox-20260630.htm",
+            "level": "official",
+            "date": "2026-08-06",
+            "quote": "The Roku Transaction may not be completed or may be delayed if the closing conditions in the Merger Agreement are not satisfied, and the Merger Agreement may be terminated in accordance with its terms."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SHOP",
+      "ticker": "SHOP",
+      "name": "Shopify",
+      "sub": "Eコマース基盤",
+      "sub_en": "E-commerce platform",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Shopifyと提携し、Roku対応テレビから同社の加盟店の商品を購入できるようにした",
+          "text_en": "Roku partnered with Shopify to let consumers buy products from Shopify merchants directly from Roku-powered TVs",
+          "source": {
+            "label": "Roku 8-K Ex.99 の発表",
+            "label_en": "Roku 8-K Ex.99 press release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1428439/000142843923000024/a08q22023form8ker-ex991.htm",
+            "level": "official",
+            "date": "2023-07-27",
+            "quote": "Building on the Shoppable Ad technology that we launched with Walmart last year, we partnered with Shopify to enable consumers to purchase products from Shopify merchants directly from Roku-powered TVs."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "RokuはWalmartやShopifyなどと組んでアクション広告を展開する",
+          "text_en": "Roku runs action ads in partnership with companies such as Walmart and Shopify.",
+          "source": {
+            "label": "Roku 10-K",
+            "label_en": "Roku 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1428439/000162828026008114/roku-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "Many of our action ads are in partnership with companies such as Walmart, Shopify, and Instacart that connect their products with viewers and provide enhanced targeting and closed-loop measurement."
+          }
+        }
+      ]
+    },
+    {
+      "id": "WMT",
+      "ticker": "WMT",
+      "name": "Walmart",
+      "sub": "小売",
+      "sub_en": "Retail",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Rokuとライセンス先Roku TVパートナーの製品は、Walmartなどの実店舗小売とそのオンライン販売を通じて売られている",
+          "text_en": "Roku products and those of licensed Roku TV partners are sold through retailers such as Best Buy, Target, and Walmart, including their online platforms",
+          "source": {
+            "label": "Roku 10-K",
+            "label_en": "Roku 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1428439/000162828026008114/roku-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "In the United States, the majority of our products and our licensed Roku TV partners’ products are sold through brick and mortar retailers, such as Best Buy, Target, and Walmart, including their online sales platforms, and online retailers such as Amazon, and to a lesser extent our website (excluding Roku TV models)."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "Rokuのアクション広告の多くは、Walmartなどとの提携によるもの",
+          "text_en": "Many of Roku's action ads are run in partnership with companies such as Walmart.",
+          "source": {
+            "label": "Roku 10-K",
+            "label_en": "Roku 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1428439/000162828026008114/roku-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "Many of our action ads are in partnership with companies such as Walmart, Shopify, and Instacart that connect their products with viewers and provide enhanced targeting and closed-loop measurement."
+          }
+        }
+      ]
+    },
+    {
+      "id": "DASH",
+      "ticker": "DASH",
+      "name": "DoorDash",
+      "sub": "デリバリー",
+      "sub_en": "Delivery",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Best Buy、Walmart、Krogerと並び、DoorDashとの小売パートナーシップを拡大している",
+          "text_en": "Roku is expanding retail partnerships with industry leaders including Best Buy, DoorDash, Walmart, and Kroger",
+          "source": {
+            "label": "Roku 8-K Ex.99 の発表",
+            "label_en": "Roku 8-K Ex.99 press release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1428439/000142843923000013/a08q12023form8-kerxex991.htm",
+            "level": "official",
+            "date": "2023-04-26",
+            "quote": "We are also expanding our retail partnerships with industry leaders that include Best Buy, DoorDash, Walmart, and Kroger."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SPOT",
+      "ticker": "SPOT",
+      "name": "Spotify",
+      "sub": "音楽配信",
+      "sub_en": "Music streaming",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "SpotifyがRokuを最初のTVストリーミングの提携先として、Roku機器上のSpotifyアプリに動画広告を導入した",
+          "text_en": "Spotify partnered with Roku as its first TV streaming partner to introduce video ads in the Spotify app on Roku devices",
+          "source": {
+            "label": "Roku 8-K Ex.99 の発表",
+            "label_en": "Roku 8-K Ex.99 press release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1428439/000142843923000037/a08q32023form8ker-ex991.htm",
+            "level": "official",
+            "date": "2023-11-01",
+            "quote": "Spotify partnered with Roku as its first TV streaming partner to introduce video ads in the Spotify app on Roku devices.",
+            "note": "2023年の発表に基づきます。",
+            "note_en": "Based on a 2023 announcement."
+          }
+        }
+      ]
+    },
+    {
+      "id": "NFLX",
+      "ticker": "NFLX",
+      "name": "Netflix",
+      "sub": "動画配信",
+      "sub_en": "Video streaming",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Netflixは、Rokuの主要なコンテンツパートナーの1社に数えられる",
+          "text_en": "Netflix is one of Roku's leading content partners.",
+          "source": {
+            "label": "Roku 10-K",
+            "label_en": "Roku 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1428439/000162828026008114/roku-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "Some of our leading content partners, including Netflix, also have implemented similar features within their apps."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AMZN",
+      "ticker": "AMZN",
+      "name": "Amazon",
+      "sub": "EC・クラウド",
+      "sub_en": "E-commerce & cloud",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Rokuと競合する",
+          "text_en": "Competes with Roku",
+          "source": {
+            "label": "Roku 10-K",
+            "label_en": "Roku 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1428439/000162828026008114/roku-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "Large companies such as Amazon, Apple, and Google offer TV streaming devices that compete with Roku streaming devices and those of our licensed Roku TV partners and the Roku TV OS."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "AmazonやGoogleは、Rokuより強いブランドと販売資源を持つ競合の代表格",
+          "text_en": "Amazon and Google compete with Roku with stronger brand identity and greater marketing resources.",
+          "source": {
+            "label": "Roku 10-K",
+            "label_en": "Roku 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1428439/000162828026008114/roku-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "Competition is intense for these resources, and a competitor with more extensive product lines, stronger brand identity, and greater marketing resources, such as Amazon or Google, possesses greater bargaining power with retailers."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AAPL",
+      "ticker": "AAPL",
+      "name": "Apple",
+      "sub": "ハード・ソフト",
+      "sub_en": "Devices & software",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Rokuと競合する",
+          "text_en": "Competes with Roku",
+          "source": {
+            "label": "Roku 10-K",
+            "label_en": "Roku 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1428439/000162828026008114/roku-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "Large companies such as Amazon, Apple, and Google offer TV streaming devices that compete with Roku streaming devices and those of our licensed Roku TV partners and the Roku TV OS."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GOOG",
+      "ticker": "GOOG",
+      "name": "Alphabet(Google)",
+      "sub": "検索・クラウド",
+      "sub_en": "Search & cloud",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Rokuと競合する",
+          "text_en": "Competes with Roku",
+          "source": {
+            "label": "Roku 10-K",
+            "label_en": "Roku 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1428439/000162828026008114/roku-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "Large companies such as Amazon, Apple, and Google offer TV streaming devices that compete with Roku streaming devices and those of our licensed Roku TV partners and the Roku TV OS."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CMCSA",
+      "ticker": "CMCSA",
+      "name": "Comcast",
+      "sub": "通信・メディア",
+      "sub_en": "Telecom & media",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Comcastは、有料テレビの契約にTVストリーミングのアプリと機器を付けてRokuと競合する",
+          "text_en": "Comcast competes with Roku by offering TV streaming applications and devices as part of its cable service plans.",
+          "source": {
+            "label": "Roku 10-K",
+            "label_en": "Roku 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1428439/000162828026008114/roku-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "Similarly, some service operators, such as Comcast and Charter Communications (and their joint venture, Xumo, LLC), offer TV streaming applications and devices as part of their cable service plans and can leverage their existing user bases, installation networks, broadband delivery networks, and name recognition to gain traction in TV streaming."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

@@ -1,0 +1,118 @@
+{
+  "root": {
+    "ticker": "MDLZ",
+    "name": "モンデリーズ・インターナショナル",
+    "cik": 1103982,
+    "name_en": "Mondelez International"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "KHC",
+      "ticker": "KHC",
+      "name": "クラフト・ハインツ",
+      "sub": "知的財産の相互許諾先",
+      "sub_en": "IP license counterparty",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2012年の分離後、互いに知的財産の使用を許諾し合っている",
+          "text_en": "The two companies granted each other licenses to use intellectual property after the 2012 spin-off",
+          "source": {
+            "label": "モンデリーズ 10-K(2025年12月31日)",
+            "label_en": "Mondelez International 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1103982/000162828026005345/mdlz-20251231.htm",
+            "level": "official",
+            "date": "2026-02-04",
+            "quote": "In our agreement with Kraft Foods Group, Inc. (which is now part of The Kraft Heinz Company), we each granted the other party various licenses to use certain of our and their respective intellectual property rights in named jurisdictions following the spin-off of our North American grocery business in 2012."
+          }
+        }
+      ],
+      "name_en": "Kraft Heinz"
+    },
+    {
+      "id": "KDP",
+      "ticker": "KDP",
+      "name": "キューリグ・ドクターペッパー",
+      "sub": "出資先",
+      "sub_en": "Equity investee",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "KDPの持株比率が2023年第1四半期に5%を下回り、会計処理を変更した",
+          "text_en": "Mondelez's KDP stake fell below 5% in the first quarter of 2023 and the accounting treatment changed",
+          "source": {
+            "label": "モンデリーズ 10-K(2025年12月31日)",
+            "label_en": "Mondelez International 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1103982/000162828026005345/mdlz-20251231.htm",
+            "level": "official",
+            "date": "2026-02-04",
+            "quote": "During the first quarter of 2023, our ownership in KDP fell to below 5% of the outstanding shares, resulting in a change in the accounting for our KDP investment, from equity method investment accounting to accounting for equity interests with readily determinable fair values as we no longer retained significant influence"
+          }
+        }
+      ],
+      "name_en": "Keurig Dr Pepper"
+    },
+    {
+      "id": "JDEP",
+      "ticker": "JDE Peet’s",
+      "name": "JDEピーツ",
+      "sub": "コーヒー会社・元出資先",
+      "sub_en": "Coffee company, former investee",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2024年第4四半期にJDEピーツの残り株式をJABに売却した",
+          "text_en": "Sold its remaining shares in JDE Peet's to JAB in the fourth quarter of 2024",
+          "source": {
+            "label": "モンデリーズ 10-K(2025年12月31日)",
+            "label_en": "Mondelez International 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1103982/000162828026005345/mdlz-20251231.htm",
+            "level": "official",
+            "date": "2026-02-04",
+            "quote": "In the fourth quarter of 2024, we sold our remaining 85.9 million shares in JDEP to JAB."
+          }
+        }
+      ],
+      "name_en": "JDE Peet’s"
+    },
+    {
+      "id": "JAB",
+      "ticker": "JAB Holding",
+      "name": "JABホールディング",
+      "sub": "株式の売却先",
+      "sub_en": "Share buyer",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "KDPによるJDEP買収の合意を受け、JABから1億4,500万ユーロの現金支払を受けた",
+          "text_en": "Received a EUR 145 million cash payment from JAB after the KDP and JDEP acquisition agreement",
+          "source": {
+            "label": "モンデリーズ 10-K(2025年12月31日)",
+            "label_en": "Mondelez International 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1103982/000162828026005345/mdlz-20251231.htm",
+            "level": "official",
+            "date": "2026-02-04",
+            "quote": "As a result of that definitive agreement, we became entitled to a cash payment of €145 million ($169 million) from JAB Holding Company (“JAB”) that we received in 2025."
+          }
+        }
+      ],
+      "name_en": "JAB Holding Company"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

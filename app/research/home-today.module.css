@@ -1,0 +1,11 @@
+.today{margin:0}
+.label{margin:0 0 6px 2px;font:10px var(--font-geist-mono),ui-monospace,monospace;letter-spacing:.2em;color:#566174}
+.row{display:flex;align-items:stretch}
+.today .row>a,.today .row>button{flex:1 1 auto;min-width:0;display:flex;flex-direction:column;align-items:flex-start;gap:1px;margin:0;padding:4px 4px 4px 14px;border:0;border-left:1px solid #1f2a3b;border-radius:0;background:transparent;color:#8c98ab;font:inherit;font-size:10.5px;line-height:1.35;text-align:left;text-decoration:none;white-space:nowrap;cursor:pointer}
+.today .row>a:first-child,.today .row>button:first-child{padding-left:2px;border-left:0}
+.row b{font:600 16px/1.2 var(--font-geist-mono),ui-monospace,monospace;color:#eef2f8}
+.row b i{margin-left:2px;font-family:inherit;font-size:10.5px;font-weight:400;font-style:normal;color:#8c98ab}
+.row .news b{color:#5dffb4}
+.row>a:hover,.row>button:hover{color:#c3ccda}
+.row>a:focus-visible,.row>button:focus-visible{outline:2px solid #7fd6b0;outline-offset:2px}
+@media(max-width:400px){.today .row>a,.today .row>button{padding-left:10px}.today .row>a:first-child,.today .row>button:first-child{padding-left:2px}}

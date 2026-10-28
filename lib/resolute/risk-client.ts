@@ -1,0 +1,2 @@
+import {parseRiskFeed} from './risk.ts';
+export async function requestRisk(signal?:AbortSignal){const r=await fetch('/api/resolute/risk',{cache:'no-store',credentials:'same-origin',redirect:'error',signal:signal?AbortSignal.any([signal,AbortSignal.timeout(25000)]):AbortSignal.timeout(25000)});if(r.status===403)throw Error('denied');if(!r.ok)throw Error('failed');const t=await r.text();if(t.length>40000)throw Error('failed');return parseRiskFeed(JSON.parse(t));}

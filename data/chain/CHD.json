@@ -1,0 +1,221 @@
+{
+  "root": {
+    "ticker": "CHD",
+    "name": "チャーチ・アンド・ドワイト",
+    "cik": 313927,
+    "name_en": "Church & Dwight"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [
+    "PG",
+    "CLX",
+    "CL",
+    "KVUE",
+    "PFE",
+    "HLN"
+  ],
+  "companies": [
+    {
+      "id": "WMT",
+      "ticker": "WMT",
+      "name": "ウォルマート",
+      "sub": "小売",
+      "sub_en": "Retail",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "最大の顧客で、連結売上高の約23%を占める",
+          "text_en": "Largest customer, accounting for approximately 23% of consolidated net sales",
+          "source": {
+            "label": "Church & Dwight 10-K(December 31, 2025)",
+            "label_en": "Church & Dwight 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/313927/000119312526048139/chd-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "In each of the years ended December 31, 2025, 2024 and 2023, net sales to our largest customer, Walmart Inc. and its affiliates (“Walmart”), were approximately 23% of our consolidated net sales."
+          }
+        }
+      ],
+      "name_en": "Walmart"
+    },
+    {
+      "id": "OXY",
+      "ticker": "OXY",
+      "name": "オキシデンタル・ケミカル",
+      "sub": "化学",
+      "sub_en": "Chemicals",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "カリ系化学品の合弁会社Armandを折半出資で運営している",
+          "text_en": "Equal partner in the Armand Products joint venture for potassium carbonate and bicarbonate",
+          "source": {
+            "label": "Church & Dwight 10-K(December 31, 2025)",
+            "label_en": "Church & Dwight 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/313927/000119312526048139/chd-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "We and Occidental Chemical Corporation are equal partners in a joint venture, Armand Products Company (“Armand”), which manufactures and markets potassium carbonate and potassium bicarbonate for sale in domestic and international markets."
+          }
+        }
+      ],
+      "name_en": "Occidental Chemical"
+    },
+    {
+      "id": "PG",
+      "ticker": "PG",
+      "name": "プロクター・アンド・ギャンブル",
+      "sub": "日用品",
+      "sub_en": "Household products",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "家庭用品・パーソナルケアの分野で競合している",
+          "text_en": "Competes with Church & Dwight in household and personal care products",
+          "source": {
+            "label": "Church & Dwight 10-K(December 31, 2025)",
+            "label_en": "Church & Dwight 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/313927/000119312526048139/chd-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "Many of our competitors are large companies, including, among others, P&G, The Clorox Company, Colgate-Palmolive Company, S.C. Johnson & Son, Inc., Nestlé S.A., Haleon plc, Henkel, Reckitt Benckiser Group plc, LifeStyles Healthcare, Kenvue Inc., Pfizer Inc., Bayer AG"
+          }
+        }
+      ],
+      "name_en": "Procter & Gamble"
+    },
+    {
+      "id": "CLX",
+      "ticker": "CLX",
+      "name": "クロロックス",
+      "sub": "日用品",
+      "sub_en": "Household products",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "家庭用品・パーソナルケアの分野で競合している",
+          "text_en": "Competes with Church & Dwight in household and personal care products",
+          "source": {
+            "label": "Church & Dwight 10-K(December 31, 2025)",
+            "label_en": "Church & Dwight 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/313927/000119312526048139/chd-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "Many of our competitors are large companies, including, among others, P&G, The Clorox Company, Colgate-Palmolive Company, S.C. Johnson & Son, Inc., Nestlé S.A., Haleon plc, Henkel, Reckitt Benckiser Group plc, LifeStyles Healthcare, Kenvue Inc., Pfizer Inc., Bayer AG"
+          }
+        }
+      ],
+      "name_en": "The Clorox Company"
+    },
+    {
+      "id": "CL",
+      "ticker": "CL",
+      "name": "コルゲート・パルモリブ",
+      "sub": "日用品・オーラルケア",
+      "sub_en": "Household & oral care",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "家庭用品・パーソナルケアの分野で競合している",
+          "text_en": "Competes with Church & Dwight in household and personal care products",
+          "source": {
+            "label": "Church & Dwight 10-K(December 31, 2025)",
+            "label_en": "Church & Dwight 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/313927/000119312526048139/chd-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "Many of our competitors are large companies, including, among others, P&G, The Clorox Company, Colgate-Palmolive Company, S.C. Johnson & Son, Inc., Nestlé S.A., Haleon plc, Henkel, Reckitt Benckiser Group plc, LifeStyles Healthcare, Kenvue Inc., Pfizer Inc., Bayer AG"
+          }
+        }
+      ],
+      "name_en": "Colgate-Palmolive"
+    },
+    {
+      "id": "KVUE",
+      "ticker": "KVUE",
+      "name": "ケンビュー",
+      "sub": "コンシューマーヘルス",
+      "sub_en": "Consumer health",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "家庭用品・パーソナルケアの分野で競合している",
+          "text_en": "Competes with Church & Dwight in household and personal care products",
+          "source": {
+            "label": "Church & Dwight 10-K(December 31, 2025)",
+            "label_en": "Church & Dwight 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/313927/000119312526048139/chd-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "Many of our competitors are large companies, including, among others, P&G, The Clorox Company, Colgate-Palmolive Company, S.C. Johnson & Son, Inc., Nestlé S.A., Haleon plc, Henkel, Reckitt Benckiser Group plc, LifeStyles Healthcare, Kenvue Inc., Pfizer Inc., Bayer AG"
+          }
+        }
+      ],
+      "name_en": "Kenvue"
+    },
+    {
+      "id": "PFE",
+      "ticker": "PFE",
+      "name": "ファイザー",
+      "sub": "医薬品",
+      "sub_en": "Pharmaceuticals",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "家庭用品・パーソナルケアの分野で競合している",
+          "text_en": "Competes with Church & Dwight in household and personal care products",
+          "source": {
+            "label": "Church & Dwight 10-K(December 31, 2025)",
+            "label_en": "Church & Dwight 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/313927/000119312526048139/chd-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "Many of our competitors are large companies, including, among others, P&G, The Clorox Company, Colgate-Palmolive Company, S.C. Johnson & Son, Inc., Nestlé S.A., Haleon plc, Henkel, Reckitt Benckiser Group plc, LifeStyles Healthcare, Kenvue Inc., Pfizer Inc., Bayer AG"
+          }
+        }
+      ],
+      "name_en": "Pfizer"
+    },
+    {
+      "id": "HLN",
+      "ticker": "HLN",
+      "name": "ヘイリオン",
+      "sub": "コンシューマーヘルス",
+      "sub_en": "Consumer health",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "家庭用品・パーソナルケアの分野で競合している",
+          "text_en": "Competes with Church & Dwight in household and personal care products",
+          "source": {
+            "label": "Church & Dwight 10-K(December 31, 2025)",
+            "label_en": "Church & Dwight 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/313927/000119312526048139/chd-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "Many of our competitors are large companies, including, among others, P&G, The Clorox Company, Colgate-Palmolive Company, S.C. Johnson & Son, Inc., Nestlé S.A., Haleon plc, Henkel, Reckitt Benckiser Group plc, LifeStyles Healthcare, Kenvue Inc., Pfizer Inc., Bayer AG"
+          }
+        }
+      ],
+      "name_en": "Haleon"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

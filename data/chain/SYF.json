@@ -1,0 +1,270 @@
+{
+  "root": {
+    "ticker": "SYF",
+    "name": "シンクロニー・ファイナンシャル",
+    "cik": 1601712,
+    "name_en": "Synchrony Financial"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    },
+    {
+      "ja": "供給元",
+      "en": "Suppliers",
+      "above": true
+    }
+  ],
+  "rivals": [
+    "BFH",
+    "AXP"
+  ],
+  "companies": [
+    {
+      "id": "LOW",
+      "ticker": "LOW",
+      "name": "ロウズ",
+      "sub": "住宅資材小売",
+      "sub_en": "Home improvement retailer",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "最大級のプログラム提携先のひとつで、取引関係は46年に及ぶ",
+          "text_en": "Lowe's is one of the five largest programs, with a relationship of 46 years",
+          "source": {
+            "label": "Synchrony 10-K(2025年12月31日期)",
+            "label_en": "Synchrony 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1601712/000160171226000006/syf-20251231.htm",
+            "level": "official",
+            "date": "2026-02-06",
+            "quote": "The length of our relationship with each of our five largest partners is over 14 years, and in the case of Lowe's, 46 years."
+          }
+        }
+      ],
+      "name_en": "Lowe's"
+    },
+    {
+      "id": "AMZN",
+      "ticker": "AMZN",
+      "name": "アマゾン",
+      "sub": "ネット通販",
+      "sub_en": "Online marketplace",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "上位5プログラムのひとつで、デジタル提携先として挙げられている",
+          "text_en": "Amazon is one of the five largest programs by interest and fees on loans",
+          "source": {
+            "label": "Synchrony 10-K(2025年12月31日期)",
+            "label_en": "Synchrony 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1601712/000160171226000006/syf-20251231.htm",
+            "level": "official",
+            "date": "2026-02-06",
+            "quote": "Our five largest programs based upon interest and fees on loans for the year ended December 31, 2025, were Amazon, Lowe’s, PayPal, Sam’s Club and TJX Companies, Inc."
+          }
+        }
+      ],
+      "name_en": "Amazon"
+    },
+    {
+      "id": "PYPL",
+      "ticker": "PYPL",
+      "name": "ペイパル",
+      "sub": "決済サービス",
+      "sub_en": "Digital payments",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "提携は21年に及び、Venmoプログラムも含む",
+          "text_en": "The partnership spans 21 years and includes the Venmo program",
+          "source": {
+            "label": "Synchrony 10-K(2025年12月31日期)",
+            "label_en": "Synchrony 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1601712/000160171226000006/syf-20251231.htm",
+            "level": "official",
+            "date": "2026-02-06",
+            "quote": "At December 31, 2025, the length of our relationship with each of our three largest partners was over 10 years, and in the case of PayPal, 21 years."
+          }
+        }
+      ],
+      "name_en": "PayPal"
+    },
+    {
+      "id": "TJX",
+      "ticker": "TJX",
+      "name": "TJXカンパニーズ",
+      "sub": "オフプライス小売",
+      "sub_en": "Off-price retailer",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "大手小売提携先6社のひとつで、上位5プログラムにも入る",
+          "text_en": "TJX is one of six large retail partners in the Diversified & Value platform",
+          "source": {
+            "label": "Synchrony 10-K(2025年12月31日期)",
+            "label_en": "Synchrony 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1601712/000160171226000006/syf-20251231.htm",
+            "level": "official",
+            "date": "2026-02-06",
+            "quote": "Our Diversified & Value sales platform is comprised of six large retail partners: Belk, Fleet Farm, JCPenney, OnePay, Sam's Club and TJX Companies, Inc."
+          }
+        }
+      ],
+      "name_en": "TJX Companies"
+    },
+    {
+      "id": "OnePay",
+      "ticker": "OnePay",
+      "name": "ワンペイ",
+      "sub": "ウォルマート決済",
+      "sub_en": "Walmart fintech",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年9月、ウォルマート向けのクレジットカードプログラムで新たに提携した",
+          "text_en": "In September 2025 Synchrony launched a partnership with OnePay for credit card programs at Walmart",
+          "source": {
+            "label": "Synchrony 10-K(2025年12月31日期)",
+            "label_en": "Synchrony 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1601712/000160171226000006/syf-20251231.htm",
+            "level": "official",
+            "date": "2026-02-06",
+            "quote": "In September 2025, we launched our new partnership with OnePay to become the exclusive issuer of a general purpose and private label credit card program at Walmart."
+          }
+        }
+      ],
+      "name_en": "OnePay"
+    },
+    {
+      "id": "CVX",
+      "ticker": "CVX",
+      "name": "シェブロン",
+      "sub": "石油・給油所",
+      "sub_en": "Fuel retail",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "自動車関連のホーム＆オート提携先として挙げられている",
+          "text_en": "Chevron is named among the automotive Home & Auto partners",
+          "source": {
+            "label": "Synchrony 10-K(2025年12月31日期)",
+            "label_en": "Synchrony 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1601712/000160171226000006/syf-20251231.htm",
+            "level": "official",
+            "date": "2026-02-06",
+            "quote": "as well as automotive merchandise and services, such as Chevron and Discount Tire."
+          }
+        }
+      ],
+      "name_en": "Chevron"
+    },
+    {
+      "id": "VZ",
+      "ticker": "VZ",
+      "name": "ベライゾン",
+      "sub": "通信",
+      "sub_en": "Telecom",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "デジタル販売プラットフォームの提携先として挙げられている",
+          "text_en": "Verizon is named among the digital-first merchant partners",
+          "source": {
+            "label": "Synchrony 10-K(2025年12月31日期)",
+            "label_en": "Synchrony 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1601712/000160171226000006/syf-20251231.htm",
+            "level": "official",
+            "date": "2026-02-06",
+            "quote": "and digital-first brands and merchants, such as the QVC Group, Inc., Verizon and Virgin Red."
+          }
+        }
+      ],
+      "name_en": "Verizon"
+    },
+    {
+      "id": "FISV",
+      "ticker": "FISV",
+      "name": "フィサーブ",
+      "sub": "決済・口座基盤",
+      "sub_en": "Processing & banking platform",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "主要契約は2030年12月まで続く、取引処理や預金基盤の委託先",
+          "text_en": "Fiserv provides processing and deposit platform services under an agreement expiring in December 2030",
+          "source": {
+            "label": "Synchrony 10-K(2025年12月31日期)",
+            "label_en": "Synchrony 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1601712/000160171226000006/syf-20251231.htm",
+            "level": "official",
+            "date": "2026-02-06",
+            "quote": "Our principal agreement with Fiserv for technology, production, and online retail deposits services expires in December 2030, unless it is terminated earlier or is extended pursuant to the terms thereof."
+          }
+        }
+      ],
+      "name_en": "Fiserv"
+    },
+    {
+      "id": "BFH",
+      "ticker": "BFH",
+      "name": "ブレッド・ファイナンシャル",
+      "sub": "カード競合",
+      "sub_en": "Card competitor",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "提携先の獲得をめぐる主な競合として挙げられている",
+          "text_en": "Bread Financial is named a primary competitor for partners",
+          "source": {
+            "label": "Synchrony 10-K(2025年12月31日期)",
+            "label_en": "Synchrony 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1601712/000160171226000006/syf-20251231.htm",
+            "level": "official",
+            "date": "2026-02-06",
+            "quote": "Our primary competitors for partners include major financial institutions such as American Express, Bread Financial, Capital One/Discover, JPMorgan Chase, Citibank, TD Bank and Wells Fargo, as well as, financial technology companies, point-of-sale lending focused companies and potential partners’ own in-house financing capabilities."
+          }
+        }
+      ],
+      "name_en": "Bread Financial"
+    },
+    {
+      "id": "AXP",
+      "ticker": "AXP",
+      "name": "アメリカン・エキスプレス",
+      "sub": "カード競合",
+      "sub_en": "Card competitor",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "提携先の獲得をめぐる主な競合として挙げられている",
+          "text_en": "American Express is named a primary competitor for partners",
+          "source": {
+            "label": "Synchrony 10-K(2025年12月31日期)",
+            "label_en": "Synchrony 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1601712/000160171226000006/syf-20251231.htm",
+            "level": "official",
+            "date": "2026-02-06",
+            "quote": "Our primary competitors for partners include major financial institutions such as American Express, Bread Financial, Capital One/Discover, JPMorgan Chase, Citibank, TD Bank and Wells Fargo, as well as, financial technology companies, point-of-sale lending focused companies and potential partners’ own in-house financing capabilities."
+          }
+        }
+      ],
+      "name_en": "American Express"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

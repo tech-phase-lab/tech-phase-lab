@@ -1,0 +1,244 @@
+{
+  "root": {
+    "ticker": "YOU",
+    "name": "クリア・セキュア",
+    "cik": 1856314,
+    "name_en": "Clear Secure"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [
+    "GOOGL",
+    "AMZN",
+    "AAPL",
+    "MSFT",
+    "META"
+  ],
+  "companies": [
+    {
+      "id": "DAL",
+      "ticker": "DAL",
+      "name": "デルタ航空",
+      "sub": "航空会社",
+      "sub_en": "Airline",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "デルタ航空の顧客向けにCLEAR+を割引・補助付きで案内する販売提携先である",
+          "text_en": "Delta Air Lines is a strategic distribution partner that promotes CLEAR+ to its customers on a discounted or subsidized basis",
+          "source": {
+            "label": "Clear Secure 10-K(2025年12月期)",
+            "label_en": "Clear Secure 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1856314/000185631426000006/you-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "We also entered into strategic distribution partnerships with partners such as Delta Air Lines, United Airlines, Hawaiian Airlines, Alaska Airlines and American Express that promote our services to their customers on a discounted or subsidized basis which allows us to efficiently scale membership in CLEAR+."
+          }
+        }
+      ],
+      "name_en": "Delta Air Lines"
+    },
+    {
+      "id": "UAL",
+      "ticker": "UAL",
+      "name": "ユナイテッド航空",
+      "sub": "航空会社",
+      "sub_en": "Airline",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ユナイテッド航空の顧客向けにCLEAR+を割引・補助付きで案内する販売提携先である",
+          "text_en": "United Airlines is a strategic distribution partner that promotes CLEAR+ to its customers on a discounted or subsidized basis",
+          "source": {
+            "label": "Clear Secure 10-K(2025年12月期)",
+            "label_en": "Clear Secure 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1856314/000185631426000006/you-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "We also entered into strategic distribution partnerships with partners such as Delta Air Lines, United Airlines, Hawaiian Airlines, Alaska Airlines and American Express that promote our services to their customers on a discounted or subsidized basis which allows us to efficiently scale membership in CLEAR+."
+          }
+        }
+      ],
+      "name_en": "United Airlines"
+    },
+    {
+      "id": "ALK",
+      "ticker": "ALK",
+      "name": "アラスカ航空",
+      "sub": "航空会社",
+      "sub_en": "Airline",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "アラスカ航空の顧客向けにCLEAR+を割引・補助付きで案内する販売提携先である",
+          "text_en": "Alaska Airlines is a strategic distribution partner that promotes CLEAR+ to its customers on a discounted or subsidized basis",
+          "source": {
+            "label": "Clear Secure 10-K(2025年12月期)",
+            "label_en": "Clear Secure 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1856314/000185631426000006/you-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "We also entered into strategic distribution partnerships with partners such as Delta Air Lines, United Airlines, Hawaiian Airlines, Alaska Airlines and American Express that promote our services to their customers on a discounted or subsidized basis which allows us to efficiently scale membership in CLEAR+."
+          }
+        }
+      ],
+      "name_en": "Alaska Airlines"
+    },
+    {
+      "id": "AXP",
+      "ticker": "AXP",
+      "name": "アメリカン・エキスプレス",
+      "sub": "カード会社",
+      "sub_en": "Card issuer",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "アメリカン・エキスプレスの顧客向けにCLEAR+を割引・補助付きで案内する販売提携先である",
+          "text_en": "American Express is a strategic distribution partner that promotes CLEAR+ to its customers on a discounted or subsidized basis",
+          "source": {
+            "label": "Clear Secure 10-K(2025年12月期)",
+            "label_en": "Clear Secure 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1856314/000185631426000006/you-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "We also entered into strategic distribution partnerships with partners such as Delta Air Lines, United Airlines, Hawaiian Airlines, Alaska Airlines and American Express that promote our services to their customers on a discounted or subsidized basis which allows us to efficiently scale membership in CLEAR+."
+          }
+        }
+      ],
+      "name_en": "American Express"
+    },
+    {
+      "id": "GOOGL",
+      "ticker": "GOOGL",
+      "name": "アルファベット",
+      "sub": "IT大手",
+      "sub_en": "Big tech",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "CLEARと直接競合するプラットフォームを持ちうる大手企業の一つ",
+          "text_en": "Alphabet/Google is a large technology platform that could build a platform competing directly with CLEAR",
+          "source": {
+            "label": "Clear Secure 10-K(2025年12月期)",
+            "label_en": "Clear Secure 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1856314/000185631426000006/you-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "large, well-established technology platforms, such as Alphabet/Google, Amazon, Apple, Microsoft or Meta"
+          }
+        }
+      ],
+      "name_en": "Alphabet"
+    },
+    {
+      "id": "AMZN",
+      "ticker": "AMZN",
+      "name": "アマゾン",
+      "sub": "IT大手",
+      "sub_en": "Big tech",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "CLEARと直接競合するプラットフォームを持ちうる大手企業の一つ",
+          "text_en": "Amazon is a large technology platform that could build a platform competing directly with CLEAR",
+          "source": {
+            "label": "Clear Secure 10-K(2025年12月期)",
+            "label_en": "Clear Secure 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1856314/000185631426000006/you-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "large, well-established technology platforms, such as Alphabet/Google, Amazon, Apple, Microsoft or Meta"
+          }
+        }
+      ],
+      "name_en": "Amazon"
+    },
+    {
+      "id": "AAPL",
+      "ticker": "AAPL",
+      "name": "アップル",
+      "sub": "IT大手",
+      "sub_en": "Big tech",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "CLEARと直接競合するプラットフォームを持ちうる大手企業の一つ",
+          "text_en": "Apple is a large technology platform that could build a platform competing directly with CLEAR",
+          "source": {
+            "label": "Clear Secure 10-K(2025年12月期)",
+            "label_en": "Clear Secure 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1856314/000185631426000006/you-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "large, well-established technology platforms, such as Alphabet/Google, Amazon, Apple, Microsoft or Meta"
+          }
+        }
+      ],
+      "name_en": "Apple"
+    },
+    {
+      "id": "MSFT",
+      "ticker": "MSFT",
+      "name": "マイクロソフト",
+      "sub": "IT大手",
+      "sub_en": "Big tech",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "CLEARと直接競合するプラットフォームを持ちうる大手企業の一つ",
+          "text_en": "Microsoft is a large technology platform that could build a platform competing directly with CLEAR",
+          "source": {
+            "label": "Clear Secure 10-K(2025年12月期)",
+            "label_en": "Clear Secure 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1856314/000185631426000006/you-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "large, well-established technology platforms, such as Alphabet/Google, Amazon, Apple, Microsoft or Meta"
+          }
+        }
+      ],
+      "name_en": "Microsoft"
+    },
+    {
+      "id": "META",
+      "ticker": "META",
+      "name": "メタ・プラットフォームズ",
+      "sub": "IT大手",
+      "sub_en": "Big tech",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "CLEARと直接競合するプラットフォームを持ちうる大手企業の一つ",
+          "text_en": "Meta is a large technology platform that could build a platform competing directly with CLEAR",
+          "source": {
+            "label": "Clear Secure 10-K(2025年12月期)",
+            "label_en": "Clear Secure 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1856314/000185631426000006/you-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "large, well-established technology platforms, such as Alphabet/Google, Amazon, Apple, Microsoft or Meta"
+          }
+        }
+      ],
+      "name_en": "Meta Platforms"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

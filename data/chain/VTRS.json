@@ -1,0 +1,166 @@
+{
+  "root": {
+    "ticker": "VTRS",
+    "name": "ヴィアトリス",
+    "cik": 1792044,
+    "name_en": "Viatris"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "COR",
+      "ticker": "COR",
+      "name": "センコラ",
+      "sub": "医薬品卸",
+      "sub_en": "Drug wholesaler",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "主要顧客で、2025年の連結売上高の11%を占めた",
+          "text_en": "Cencora is a major customer and accounted for 11% of consolidated net sales in 2025",
+          "source": {
+            "label": "Viatris 10-K(2025-12-31)",
+            "label_en": "Viatris 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1792044/000179204426000013/vtrs-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "The following table represents the percentage of consolidated net sales to Viatris’ major customers during the years ended December 31, 2025, 2024, and 2023: Percentage of Consolidated Net Sales 2025 2024 2023 McKesson Corporation * * 10 % Cencora, Inc. 11 % 12 % 10 %"
+          }
+        }
+      ],
+      "name_en": "Cencora"
+    },
+    {
+      "id": "MCK",
+      "ticker": "MCK",
+      "name": "マッケソン",
+      "sub": "医薬品卸",
+      "sub_en": "Drug wholesaler",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "主要顧客で、2023年の連結売上高の10%を占めた",
+          "text_en": "McKesson is a major customer and accounted for 10% of consolidated net sales in 2023",
+          "source": {
+            "label": "Viatris 10-K(2025-12-31)",
+            "label_en": "Viatris 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1792044/000179204426000013/vtrs-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "The following table represents the percentage of consolidated net sales to Viatris’ major customers during the years ended December 31, 2025, 2024, and 2023: Percentage of Consolidated Net Sales 2025 2024 2023 McKesson Corporation * * 10 %"
+          }
+        }
+      ],
+      "name_en": "McKesson"
+    },
+    {
+      "id": "CAH",
+      "ticker": "CAH",
+      "name": "カーディナル・ヘルス",
+      "sub": "医薬品卸",
+      "sub_en": "Drug wholesaler",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "主要顧客で、2023年の連結売上高の5%を占めた",
+          "text_en": "Cardinal Health is a major customer and accounted for 5% of consolidated net sales in 2023",
+          "source": {
+            "label": "Viatris 10-K(2025-12-31)",
+            "label_en": "Viatris 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1792044/000179204426000013/vtrs-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "The following table represents the percentage of consolidated net sales to Viatris’ major customers during the years ended December 31, 2025, 2024, and 2023: Percentage of Consolidated Net Sales 2025 2024 2023 McKesson Corporation * * 10 % Cencora, Inc. 11 % 12 % 10 % Cardinal Health, Inc. * * 5 %"
+          }
+        }
+      ],
+      "name_en": "Cardinal Health"
+    },
+    {
+      "id": "BIOCON",
+      "ticker": "Biocon Biologics",
+      "name": "バイオコン・バイオロジクス",
+      "sub": "バイオシミラー",
+      "sub_en": "Biosimilars",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "バイオシミラー事業の移管後、商業化などの移行サービスを同社が提供した",
+          "text_en": "After the biosimilars transaction, Viatris provided commercialization and other transition services for Biocon Biologics",
+          "source": {
+            "label": "Viatris 10-K(2025-12-31)",
+            "label_en": "Viatris 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1792044/000179204426000013/vtrs-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "At the time of closing of the Biocon Biologics Transaction, Viatris and Biocon Biologics also entered an agreement pursuant to which Viatris was providing commercialization and certain other transition services on behalf of Biocon Biologics, including billings, collections and the remittance of rebates, to ensure business continuity for patients, customers and colleagues."
+          }
+        }
+      ],
+      "name_en": "Biocon Biologics"
+    },
+    {
+      "id": "PFE",
+      "ticker": "PFE",
+      "name": "ファイザー",
+      "sub": "分離元の製薬大手",
+      "sub_en": "Former parent of Upjohn",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "分離・分配契約に基づき、訴訟の補償を求めている",
+          "text_en": "Viatris is seeking indemnification from Pfizer under the Separation and Distribution Agreement",
+          "source": {
+            "label": "Viatris 10-K(2025-12-31)",
+            "label_en": "Viatris 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1792044/000179204426000013/vtrs-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "The Company has sought to tender its defense and is seeking indemnification for these claims from Pfizer pursuant to the Separation and Distribution Agreement"
+          }
+        }
+      ],
+      "name_en": "Pfizer"
+    },
+    {
+      "id": "LXRX",
+      "ticker": "LXRX",
+      "name": "レキシコン・ファーマシューティカルズ",
+      "sub": "創薬の提携先",
+      "sub_en": "Licensing partner",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ソタグリフロジンに関するライセンスの前払金を支払った",
+          "text_en": "Viatris paid an upfront licensing payment to Lexicon for sotagliflozin",
+          "source": {
+            "label": "Viatris 10-K(2025-12-31)",
+            "label_en": "Viatris 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1792044/000179204426000013/vtrs-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "This was partially offset by an upfront licensing payment of $25.0 million to Lexicon related to sotagliflozin recorded during the fourth quarter of 2024."
+          }
+        }
+      ],
+      "name_en": "Lexicon Pharmaceuticals"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

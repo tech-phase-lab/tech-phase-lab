@@ -1,0 +1,544 @@
+{
+  "root": {
+    "ticker": "TSLA",
+    "name": "Tesla",
+    "cik": 1318605
+  },
+  "rows": [
+    {
+      "ja": "電池・半導体の供給元",
+      "en": "Battery & chip suppliers",
+      "above": true
+    },
+    {
+      "ja": "蓄電・宇宙・AIの取引先",
+      "en": "Energy storage, space & AI counterparts"
+    },
+    {
+      "ja": "充電ネットワーク(NACS)",
+      "en": "Charging network (NACS)"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "FLNC",
+    "ENPH",
+    "SEDG",
+    "EOSE"
+  ],
+  "companies": [
+    {
+      "id": "6752",
+      "ticker": "Panasonic",
+      "name": "Panasonic Holdings",
+      "sub": "電池セル",
+      "sub_en": "Battery cells",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Panasonic Holdingsは電池セルの供給元だ",
+          "text_en": "Panasonic Holdings supplies Tesla with battery cells",
+          "source": {
+            "label": "Tesla 10-K(2025年12月期)",
+            "label_en": "Tesla 10-K (fiscal year ended December 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1318605/000162828026003952/tsla-20251231.htm",
+            "level": "official",
+            "quote": "Currently, we rely on suppliers such as Panasonic and Contemporary Amperex Technology Co. Limited (CATL) for these cells.",
+            "note": "上場親会社はPanasonic Holdings(東証6752)です。",
+            "note_en": "Listed parent is Panasonic Holdings (TSE: 6752)."
+          }
+        }
+      ]
+    },
+    {
+      "id": "3750",
+      "ticker": "CATL",
+      "name": "CATL",
+      "sub": "電池セル",
+      "sub_en": "Battery cells",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "CATLはTeslaに電池セルを供給している",
+          "text_en": "CATL supplies Tesla with battery cells",
+          "source": {
+            "label": "Tesla 10-K(2025年12月期)",
+            "label_en": "Tesla 10-K (fiscal year ended December 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1318605/000162828026003952/tsla-20251231.htm",
+            "level": "official",
+            "quote": "Currently, we rely on suppliers such as Panasonic and Contemporary Amperex Technology Co. Limited (CATL) for these cells.",
+            "note": "香港上場(3750)です。",
+            "note_en": "Listed in Hong Kong (3750)."
+          }
+        }
+      ]
+    },
+    {
+      "id": "005930",
+      "ticker": "Samsung",
+      "name": "Samsung Electronics",
+      "sub": "半導体製造",
+      "sub_en": "Chip manufacturing",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "AI向け先端半導体を米国で製造する協業を発表",
+          "text_en": "Announced a collaboration to manufacture advanced AI chips in the U.S.",
+          "source": {
+            "label": "Tesla 10-K(2025年12月期)",
+            "label_en": "Tesla 10-K (fiscal year ended December 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1318605/000162828026003952/tsla-20251231.htm",
+            "level": "official",
+            "quote": "announced a new collaboration with Samsung to manufacture advanced semiconductors for AI inference and training in the U.S."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AMD",
+      "ticker": "AMD",
+      "name": "AMD",
+      "sub": "車載プロセッサ",
+      "sub_en": "In-car processors",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "AMDは、技術パートナーのTeslaに車内体験向けのプロセッサ・SoCを提供する",
+          "text_en": "AMD provides processors and SoCs for in-cabin experiences to technology partners such as Tesla",
+          "source": {
+            "label": "AMD 車載ソリューションのページ",
+            "label_en": "AMD automotive in-vehicle experience page",
+            "url": "https://www.amd.com/en/solutions/automotive/in-vehicle-experience.html",
+            "level": "official",
+            "quote": "processors and adaptive SoCs powering unique in-cabin experiences from technology partners such as Tesla and Daimler",
+            "note": "全車種や運転用AI半導体にまで広げて読むことはできません。",
+            "note_en": "Not to be read as covering every model or self-driving chips."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SPCX",
+      "ticker": "SPCX",
+      "name": "SpaceX",
+      "sub": "宇宙・AI",
+      "sub_en": "Space & AI",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "SpaceX向けのMegapack売上が2026年6月期の半年で4.05億ドル(第2四半期は3.18億ドル)",
+          "text_en": "Megapack sales to SpaceX were $405M for the first half to June 2026 ($318M in Q2)",
+          "source": {
+            "label": "Tesla 10-Q(2026年6月30日終了の四半期)",
+            "label_en": "Tesla 10-Q (quarter ended June 30, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1318605/000162828026049270/tsla-20260630.htm",
+            "level": "official"
+          }
+        },
+        {
+          "type": "tie",
+          "text": "2026年3月、SpaceXの普通株に20億ドルを投資(当時1%未満)",
+          "text_en": "Invested $2B in SpaceX common stock in March 2026 (under 1% at the time)",
+          "source": {
+            "label": "Tesla 10-Q(2026年6月30日終了の四半期)",
+            "label_en": "Tesla 10-Q (quarter ended June 30, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1318605/000162828026049270/tsla-20260630.htm",
+            "level": "official",
+            "note": "現在の持分比率は推定していません。",
+            "note_en": "Current ownership is not estimated."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "MacrohardのAI開発とTerafab構想を共同で推進",
+          "text_en": "Jointly pursuing the Macrohard AI effort and the Terafab plan",
+          "source": {
+            "label": "SpaceX 目論見書(2026年6月5日)",
+            "label_en": "SpaceX prospectus (June 5, 2026)",
+            "url": "https://content.spacex.com/cms-assets/FINAL_Documents%20and%20Updates/SpaceX%20-%20EU%20Prospectus%20%28Approved%20by%20Bafin%29%20-%20June%205%2C%202026.pdf",
+            "level": "official",
+            "date": "2026-06-05",
+            "note": "開発・構想の段階の話で、完成した製品や確定した調達量ではありません。",
+            "note_en": "Describes development and plans, not finished products or confirmed purchase volumes."
+          }
+        }
+      ]
+    },
+    {
+      "id": "FLNC",
+      "ticker": "FLNC",
+      "name": "Fluence Energy",
+      "sub": "大規模蓄電",
+      "sub_en": "Utility-scale storage",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Teslaは、Fluenceの主要な競合に含まれる",
+          "text_en": "Tesla is one of Fluence's key competitors.",
+          "source": {
+            "label": "Fluence 10-K(2025年9月期)",
+            "label_en": "Fluence 10-K (fiscal year ended September 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1868941/000186894125000081/flnc-20250930.htm",
+            "level": "official",
+            "quote": "Our key competitors currently include, but are not limited to, Tesla, Inc., Wärtsilä, Sungrow, and Contemporary Amperex Technology Co., Limited (“CATL”)."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ENPH",
+      "ticker": "ENPH",
+      "name": "Enphase Energy",
+      "sub": "家庭用蓄電",
+      "sub_en": "Home storage",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "蓄電市場では、EnphaseがTeslaと競合する",
+          "text_en": "Enphase competes with Tesla in the storage market.",
+          "source": {
+            "label": "Enphase 10-K(2025年12月期)",
+            "label_en": "Enphase 10-K (fiscal year ended December 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1463101/000146310126000013/enph-20251231.htm",
+            "level": "official",
+            "quote": "Competitors in the storage market include Tesla, SolarEdge, Huawei, BYD Company Limited (“BYD”), Franklin Solar Battery and other producers of battery cells and integrated storage systems."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GM",
+      "ticker": "GM",
+      "name": "General Motors",
+      "sub": "自動車",
+      "sub_en": "Automaker",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "GMの充電アプリがTesla Superchargerでの充電に対応",
+          "text_en": "GM’s charging app supports charging at Tesla Superchargers",
+          "source": {
+            "label": "GM の発表(2026年8月)",
+            "label_en": "GM announcement (August 2026)",
+            "url": "https://news.gm.com/home.detail.html/Pages/topic/us/en/2026/aug/0813-electric-vehicle-nacs-charging.html",
+            "level": "official",
+            "quote": "Tesla Supercharger, IONNA, Electrify America, and ChargePoint are supported today",
+            "note": "北米の対象車が対象で、全車種・全拠点が無条件で使えるわけではありません。",
+            "note_en": "Applies to eligible North American vehicles; not every model or site is covered unconditionally."
+          }
+        }
+      ]
+    },
+    {
+      "id": "F",
+      "ticker": "F",
+      "name": "Ford",
+      "sub": "自動車",
+      "sub_en": "Automaker",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Ford車がTesla Superchargerを使えると発表",
+          "text_en": "Ford EV customers gain Tesla Supercharger access",
+          "source": {
+            "label": "Ford の発表(2024年1月)",
+            "label_en": "Ford press release (Jan 2024)",
+            "url": "https://media.ford.com/content/fordmedia/fna/us/en/news/2024/01/31/ford-to-offer-complimentary-tesla-supercharger-adapter-to-eligib.html",
+            "level": "official",
+            "date": "2024-01-31",
+            "quote": "Last year, Ford announced that its EV customers would gain access to Tesla Superchargers across the U.S. and Canada beginning in Spring 2024.",
+            "note": "対象車種はアダプター利用で、2025年からNACSポートに移行します。",
+            "note_en": "Eligible models use an adapter; NACS ports from 2025."
+          }
+        }
+      ]
+    },
+    {
+      "id": "RIVN",
+      "ticker": "RIVN",
+      "name": "Rivian",
+      "sub": "EV",
+      "sub_en": "EV maker",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Rivian車がTesla Superchargerを利用可能に",
+          "text_en": "Rivian owners can use the Tesla Supercharger network",
+          "source": {
+            "label": "Rivian ストーリー(2024年3月)",
+            "label_en": "Rivian Stories (Mar 2024)",
+            "url": "https://rivian.com/stories/supercharger-network-access",
+            "level": "official",
+            "date": "2024-03-18",
+            "quote": "Rivian owners now have access to the Tesla Supercharger network and will start receiving NACS DC adapters in April.",
+            "note": "古い車種はNACS用アダプターが必要です。",
+            "note_en": "Earlier models need a NACS DC adapter."
+          }
+        }
+      ]
+    },
+    {
+      "id": "HMC",
+      "ticker": "HMC",
+      "name": "Honda",
+      "sub": "自動車",
+      "sub_en": "Automaker",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "北米向けEVで2025年からNACS採用でTeslaと合意",
+          "text_en": "Agreed with Tesla to adopt NACS on North American EVs from 2025",
+          "source": {
+            "label": "Honda の発表(2023年9月)",
+            "label_en": "Honda press release (Sep 2023)",
+            "url": "https://hondanews.com/en-US/releases/honda-to-adopt-north-american-charging-standard-nacs-for-its-ev-models-in-north-america",
+            "level": "official",
+            "date": "2023-09-07",
+            "quote": "Honda Motor Co., Ltd. today announced that it has reached an agreement with Tesla, Inc. to adopt Tesla's North American Charging Standard (NACS) for the charging port of its EV models",
+            "note": "発表時点の将来計画です。",
+            "note_en": "Forward-looking as of the announcement."
+          }
+        }
+      ]
+    },
+    {
+      "id": "NSANY",
+      "ticker": "NSANY",
+      "name": "Nissan",
+      "sub": "自動車",
+      "sub_en": "Automaker",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年からNACS採用でTeslaと合意",
+          "text_en": "Agreed with Tesla to adopt NACS from 2025",
+          "source": {
+            "label": "Nissan USA の発表(2023年7月)",
+            "label_en": "Nissan USA press release (Jul 2023)",
+            "url": "https://usa.nissannews.com/en-US/releases/nissan-to-adopt-north-american-charging-standard-nacs-for-ariya-and-future-ev-models",
+            "level": "official",
+            "date": "2023-07-19",
+            "quote": "Nissan has reached an agreement with Tesla to adopt the North American Charging Standard (NACS) beginning in 2025, providing Nissan customers even more choices when it comes to charging their electric vehicle.",
+            "note": "発表時点の将来計画です。",
+            "note_en": "Forward-looking as of the announcement."
+          }
+        }
+      ]
+    },
+    {
+      "id": "TM",
+      "ticker": "TM",
+      "name": "Toyota",
+      "sub": "自動車",
+      "sub_en": "Automaker",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "北米向けのバッテリーEVで2025年からNACS採用でTeslaと合意",
+          "text_en": "Agreed with Tesla to adopt NACS on its battery EVs from 2025",
+          "source": {
+            "label": "Toyota USA ニュースルーム(2023年10月)",
+            "label_en": "Toyota USA Newsroom (Oct 2023)",
+            "url": "https://pressroom.toyota.com/toyota-adopts-the-north-american-charging-standard-to-expand-customer-charging-options/",
+            "level": "official",
+            "date": "2023-10-19",
+            "quote": "Toyota Motor North America, Inc. (TMNA) today announced it has reached an agreement with Tesla, Inc. to adopt the North American Charging Standard (NACS) on its battery electric vehicles (BEVs) beginning in 2025.",
+            "note": "発表時点の将来計画です。",
+            "note_en": "Forward-looking as of the announcement."
+          }
+        }
+      ]
+    },
+    {
+      "id": "LCID",
+      "ticker": "LCID",
+      "name": "Lucid",
+      "sub": "EV",
+      "sub_en": "EV maker",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Lucid車が2025年1月31日からTeslaの充電網を利用可能",
+          "text_en": "Lucid customers gained access to Tesla’s Supercharger network on January 31, 2025",
+          "source": {
+            "label": "Lucid 10-K(2025年度)",
+            "label_en": "Lucid 10-K FY2025",
+            "url": "https://www.sec.gov/Archives/edgar/data/1811210/000162828026011053/lcid-20251231.htm",
+            "level": "official",
+            "quote": "On January 31, 2025, our customers gained access to Tesla’s supercharging network in addition to the vast CCS infrastructure",
+            "note": "Airはアダプター利用、Gravityは最初からNACSポート付きです。",
+            "note_en": "Air uses an adapter; Gravity has a native NACS port."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SEDG",
+      "ticker": "SEDG",
+      "name": "SolarEdge",
+      "sub": "太陽光・蓄電",
+      "sub_en": "Solar & storage",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "SolarEdgeは北米の住宅用インバーターで、Teslaと競い合う",
+          "text_en": "SolarEdge competes with Tesla in North American residential solar inverters.",
+          "source": {
+            "label": "SolarEdge 10-K(2025年度)",
+            "label_en": "SolarEdge 10-K FY2025",
+            "url": "https://www.sec.gov/Archives/edgar/data/1419612/000117891326000632/zk2634374.htm",
+            "level": "official",
+            "date": "2026-02",
+            "quote": "we compete with manufacturers such as Tesla Inc. with traditional string-based solutions",
+            "note": "北米の住宅用に限った記載です。",
+            "note_en": "Limited to the North American residential market."
+          }
+        }
+      ]
+    },
+    {
+      "id": "EOSE",
+      "ticker": "EOSE",
+      "name": "Eos Energy",
+      "sub": "蓄電池",
+      "sub_en": "Batteries",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Eos Energyは、Teslaなどのリチウムイオン電池メーカーと競合している",
+          "text_en": "Eos Energy competes with Tesla and other Li-ion battery manufacturers and solution providers.",
+          "source": {
+            "label": "Eos Energy 10-K(2025年度)",
+            "label_en": "Eos Energy 10-K FY2025",
+            "url": "https://www.sec.gov/Archives/edgar/data/1805077/000162828026011961/eose-20251231.htm",
+            "level": "official",
+            "date": "2026-02",
+            "quote": "Our Znyth ™ battery system competes with products from traditional Li-ion battery manufacturers and solution providers such as Fluence Energy, Panasonic, Samsung Electronics Co. Ltd., LG Chem Ltd., Tesla, BYD, Sungrow and Contemporary Amperex Technology Co. Limited."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ALB",
+      "ticker": "ALB",
+      "name": "Albemarle",
+      "sub": "リチウム",
+      "sub_en": "Lithium",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Albemarleのリチウム化合物事業では、Teslaも主要な競合に含まれる",
+          "text_en": "Tesla is among Albemarle's major competitors in lithium compounds.",
+          "source": {
+            "label": "Albemarle 10-K(2025年度)",
+            "label_en": "Albemarle 10-K FY2025",
+            "url": "https://www.sec.gov/Archives/edgar/data/915913/000091591326000018/alb-20251231.htm",
+            "level": "official",
+            "date": "2026-02",
+            "quote": "Major competitors in lithium compounds include Sociedad Quimica y Minera de Chile S.A., Sichuan Tianqi Lithium, Jiangxi Ganfeng Lithium, Rio Tinto plc, Pilbara Minerals, Tesla",
+            "note": "Teslaが自社で行う精製との競合です。",
+            "note_en": "Competition with Tesla’s in-house refining."
+          }
+        }
+      ]
+    },
+    {
+      "id": "LI",
+      "ticker": "LI",
+      "name": "Li Auto",
+      "sub": "EVメーカー",
+      "sub_en": "EV maker",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Li Autoと競合するTeslaは、20万人民元超の中国NEV市場で支配的な地位を持つ",
+          "text_en": "Tesla holds a dominant position in China’s NEV segment priced above RMB 200,000, where it competes with Li Auto",
+          "source": {
+            "label": "Li Auto 20-F(2025年度)",
+            "label_en": "Li Auto 20-F FY2025",
+            "url": "https://www.sec.gov/Archives/edgar/data/1791706/000110465926041705/li-20251231x20f.htm",
+            "level": "official",
+            "date": "2026-04",
+            "quote": "Tesla holds a dominant position in the segment for NEVs priced above RMB 200,000 (US$28,600)",
+            "note": "中国のNEV市場についての記述です。",
+            "note_en": "A statement about the China NEV market."
+          }
+        }
+      ]
+    },
+    {
+      "id": "XPEV",
+      "ticker": "XPEV",
+      "name": "XPeng",
+      "sub": "EVメーカー",
+      "sub_en": "EV maker",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Teslaは合弁パートナーなしで上海にGiga Shanghaiを建設した、XPengの外国EV競合の実例",
+          "text_en": "Tesla built the Tesla Giga Shanghai factory without a joint venture partner, an example of the foreign EV competitors XPeng faces in China.",
+          "source": {
+            "label": "XPeng 20-F(2025年度)",
+            "label_en": "XPeng 20-F FY2025",
+            "url": "https://www.sec.gov/Archives/edgar/data/1810997/000119312526157849/d36361d20f.htm",
+            "level": "official",
+            "date": "2026-04",
+            "quote": "foreign EV competitors could build wholly-owned facilities in China without the need for a domestic joint venture partner. For example, Tesla has constructed the Tesla Giga Shanghai factory in Shanghai without a joint venture partner.",
+            "note": "リスク要因の中での記述です。",
+            "note_en": "Stated in a risk-factor context."
+          }
+        }
+      ]
+    },
+    {
+      "id": "FFIE",
+      "ticker": "FFAI",
+      "name": "Faraday Future",
+      "sub": "EVメーカー",
+      "sub_en": "EV maker",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Teslaは、EVを提供する主要自動車メーカーの1社で、Faraday Futureの競合となる",
+          "text_en": "Tesla and other major automakers offer electric vehicles, competing with Faraday Future.",
+          "source": {
+            "label": "Faraday Future 10-K(2025年度)",
+            "label_en": "Faraday Future 10-K FY2025",
+            "url": "https://www.sec.gov/Archives/edgar/data/1805521/000162828026022509/ffie-20251231.htm",
+            "level": "official",
+            "date": "2026-03",
+            "quote": "Many major automobile manufacturers, such as Tesla, Porsche, Mercedes-Benz, Rolls-Royce, and Audi, currently offer electric vehicles."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

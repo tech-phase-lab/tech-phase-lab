@@ -1,0 +1,282 @@
+{
+  "root": {
+    "ticker": "JD",
+    "name": "JD.com",
+    "cik": 1549802
+  },
+  "rows": [
+    {
+      "ja": "提携先・投資",
+      "en": "Partners & investors",
+      "above": true
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "BABA"
+  ],
+  "companies": [
+    {
+      "id": "Tencent",
+      "ticker": "Tencent",
+      "name": "テンセント",
+      "sub": "インターネット",
+      "sub_en": "Internet",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "戦略提携により、Tencentが微信とモバイルQQ内の目立つ入口とトラフィックの支援を提供している",
+          "text_en": "Under the strategic partnership, Tencent offers prominent access points in Weixin and Mobile QQ and traffic support",
+          "source": {
+            "label": "JD.com 20-F",
+            "label_en": "JD.com 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/1549802/000119312526157870/d53690d20f.htm",
+            "level": "official",
+            "date": "2026-04-16",
+            "quote": "Under the strategic partnership, Tencent offers us prominent access points in its mobile apps Weixin and Mobile QQ and provide us with traffic and other support from other key platforms, which has helped us generate mobile user traffic from Tencent’s large mobile user base and enhance our customers’ mobile shopping experience."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "2014年3月10日にTencentのEC事業と資産を取得し、戦略的協力契約を結んだ",
+          "text_en": "On March 10, 2014, JD acquired certain e-commerce businesses and assets from Tencent and entered into a strategic cooperation agreement",
+          "source": {
+            "label": "JD.com 20-F",
+            "label_en": "JD.com 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/1549802/000119312526157870/d53690d20f.htm",
+            "level": "official",
+            "date": "2026-04-16",
+            "quote": "On March 10, 2014, we acquired certain e-commerce businesses and assets from, and entered into a strategic cooperation agreement and formed a strategic partnership with Tencent, a leading internet company serving the largest online community in China.",
+            "note": "2014年の記載で、古い内容です。",
+            "note_en": "A 2014 event; older."
+          }
+        }
+      ],
+      "name_en": "Tencent"
+    },
+    {
+      "id": "COST",
+      "ticker": "COST",
+      "name": "コストコ",
+      "sub": "会員制小売",
+      "sub_en": "Warehouse retail",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2026年7月22日、CostcoはJD.comと提携し、JD.comを公式の中国向け窓口に選んだ",
+          "text_en": "On July 22, 2026, Costco entered into a partnership with JD.com, making JD.com its sole official partner",
+          "source": {
+            "label": "JD.com Q2 and interim 2026 results",
+            "label_en": "JD.com Q2 and interim 2026 results",
+            "url": "https://www.sec.gov/Archives/edgar/data/1549802/000119312526347753/d143720dex991.htm",
+            "level": "official",
+            "quote": "On July 22, 2026, Costco entered into a partnership with JD.com, making JD.com its sole official",
+            "note": "引用が途中で切れています。",
+            "note_en": "The quote is truncated."
+          }
+        },
+        {
+          "type": "up",
+          "text": "JDの供給網を生かし、JDのプラットフォーム上のCostco旗艦店が中国の消費者に厳選した海外商品を届ける",
+          "text_en": "The Costco flagship store on JD's platform brings a curated selection of global goods to consumers across China",
+          "source": {
+            "label": "JD.com Q2 and interim 2026 results",
+            "label_en": "JD.com Q2 and interim 2026 results",
+            "url": "https://www.sec.gov/Archives/edgar/data/1549802/000119312526347753/d143720dex991.htm",
+            "level": "official",
+            "quote": "Leveraging JD’s supply chain advantages, the Costco flagship store on JD’s platform brings a curated selection of high-quality global goods to consumers across China,"
+          }
+        }
+      ],
+      "name_en": "Costco Wholesale"
+    },
+    {
+      "id": "WMT",
+      "ticker": "WMT",
+      "name": "ウォルマート",
+      "sub": "小売",
+      "sub_en": "Retail",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Walmartは、JD.comへの投資を売却し、36億ドルを受け取った",
+          "text_en": "Walmart sold its JD.com investment and received $3.6 billion in proceeds.",
+          "source": {
+            "label": "Walmart 10-K",
+            "label_en": "Walmart 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/104169/000010416926000055/wmt-20260131.htm",
+            "level": "official",
+            "date": "2026-03-13",
+            "quote": "consideration of $1.9 billion, partially offset by net proceeds received from sales of certain strategic investments, including $3.6 billion related to the sale of our JD.com investment.",
+            "note": "売却済みの投資です。",
+            "note_en": "The investment has been sold."
+          }
+        }
+      ],
+      "name_en": "Walmart"
+    },
+    {
+      "id": "BABA",
+      "ticker": "BABA",
+      "name": "アリババ",
+      "sub": "EC・クラウド",
+      "sub_en": "E-commerce & cloud",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "JD.comと競合する",
+          "text_en": "Competes with JD.com",
+          "source": {
+            "label": "JD.com 20-F",
+            "label_en": "JD.com 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/1549802/000119312526157870/d53690d20f.htm",
+            "level": "official",
+            "date": "2026-04-16",
+            "quote": "Our current or potential competitors include (i) major e-commerce companies in China that offer a wide range of general merchandise product categories, such as Alibaba Group, which operates taobao.com and tmall.com , and (ii) major traditional retailers in China that are moving into online retailing, such as Suning.com Group Co., Ltd.,"
+          }
+        }
+      ],
+      "name_en": "Alibaba"
+    },
+    {
+      "id": "Ceconomy",
+      "ticker": "Ceconomy",
+      "name": "セコノミー",
+      "sub": "家電小売",
+      "sub_en": "Consumer electronics retail",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "JDドットコムとCECONOMYは戦略的投資契約を結び、CECONOMYの成長と家電プラットフォームへの転換を進める",
+          "text_en": "JD.com and CECONOMY aim to drive CECONOMY's growth and its transformation into an omni-channel consumer electronics platform under a strategic investment agreement",
+          "source": {
+            "label": "JD.com 6-K Ex.99.1 の発表",
+            "label_en": "JD.com 6-K Ex.99.1 press release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1549802/000119312525169356/d67552dex991.htm",
+            "level": "official",
+            "date": "2025-07-30",
+            "quote": "Under the strategic investment agreement, the Company and CECONOMY aim to drive CECONOMY’s growth as a stand-alone business and accelerate CECONOMY’s transformation into Europe’s leading omni-channel consumer electronics platform.",
+            "note": "公開買付けの成立までは記載していません。",
+            "note_en": "The quote does not state that the offer was completed."
+          }
+        }
+      ],
+      "name_en": "CECONOMY"
+    },
+    {
+      "id": "MA",
+      "ticker": "MA",
+      "name": "マスターカード",
+      "sub": "決済",
+      "sub_en": "Payments",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "MastercardとJD.comが戦略的パートナーシップを発表した",
+          "text_en": "Mastercard and JD.com announced a strategic partnership",
+          "source": {
+            "label": "Mastercard and JD.com joint の発表",
+            "label_en": "Mastercard and JD.com joint press release (PR Newswire)",
+            "url": "https://www.prnewswire.com/apac/news-releases/mastercard-and-jdcom-announce-strategic-partnership-to-support-business-growth-through-payments-innovation-302774620.html",
+            "level": "official",
+            "date": "2026-05-18",
+            "quote": "Mastercard, a world leading technology company in payment, and JD.com, a Nasdaq-listed technology and service company with supply chain at its core, announced a strategic partnership to deliver innovations that build a more connected, secure and intelligent commerce ecosystem."
+          }
+        }
+      ],
+      "name_en": "Mastercard"
+    },
+    {
+      "id": "LLY",
+      "ticker": "LLY",
+      "name": "イーライリリー",
+      "sub": "製薬",
+      "sub_en": "Pharmaceuticals",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年第3四半期に、JD Healthが製薬会社のEli Lillyなどと戦略的協力契約を結んだ",
+          "text_en": "In the third quarter of 2025, JD Health entered into strategic cooperation agreements with pharmaceutical companies including Eli Lilly",
+          "source": {
+            "label": "JD.com 6-K Ex.99.1 earnings release",
+            "label_en": "JD.com 6-K Ex.99.1 earnings release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1549802/000119312525278665/d715997dex991.htm",
+            "level": "official",
+            "date": "2025-11-13",
+            "quote": "During the third quarter of 2025, JD Health entered into strategic cooperation agreements with leading pharmaceutical companies, including Eli Lilly, Innovent Biologics, Eisai China, and Bayer China.",
+            "note": "子会社のJD Healthの契約です。",
+            "note_en": "An agreement of JD's subsidiary JD Health."
+          }
+        }
+      ],
+      "name_en": "Eli Lilly"
+    },
+    {
+      "id": "Innovent",
+      "ticker": "Innovent",
+      "name": "イノベント・バイオロジクス",
+      "sub": "バイオ医薬",
+      "sub_en": "Biopharmaceuticals",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年第3四半期に、JD Healthが製薬会社のInnovent Biologicsなどと戦略的協力契約を結んだ",
+          "text_en": "In the third quarter of 2025, JD Health entered into strategic cooperation agreements with pharmaceutical companies including Innovent Biologics",
+          "source": {
+            "label": "JD.com 6-K Ex.99.1 earnings release",
+            "label_en": "JD.com 6-K Ex.99.1 earnings release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1549802/000119312525278665/d715997dex991.htm",
+            "level": "official",
+            "date": "2025-11-13",
+            "quote": "During the third quarter of 2025, JD Health entered into strategic cooperation agreements with leading pharmaceutical companies, including Eli Lilly, Innovent Biologics, Eisai China, and Bayer China.",
+            "note": "子会社のJD Healthの契約です。",
+            "note_en": "An agreement of JD's subsidiary JD Health."
+          }
+        }
+      ],
+      "name_en": "Innovent Biologics"
+    },
+    {
+      "id": "MMM",
+      "ticker": "MMM",
+      "name": "スリーエム",
+      "sub": "電機・素材",
+      "sub_en": "Industrial & materials",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "JD Industrialsが、3M Chinaを含む主要サプライヤーとの戦略的協力を深めた",
+          "text_en": "JD Industrials deepened strategic collaborations with leading suppliers including 3M China",
+          "source": {
+            "label": "JD.com 6-K Ex.99.1 earnings release",
+            "label_en": "JD.com 6-K Ex.99.1 earnings release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1549802/000119312526218013/d128173dex991.htm",
+            "level": "official",
+            "date": "2026-05-12",
+            "quote": "In the first quarter, JD Industrials (“JDI”) continued to strengthen its industrial supply chain capabilities and deepened its strategic collaborations with leading suppliers, including SATA Tools, 3M China and Linde (China) Forklift Truck.",
+            "note": "子会社JD Industrialsと3M Chinaの関係です。",
+            "note_en": "A relationship between JD Industrials, a JD subsidiary, and 3M China."
+          }
+        }
+      ],
+      "name_en": "3M"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

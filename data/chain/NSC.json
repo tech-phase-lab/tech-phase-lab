@@ -1,0 +1,133 @@
+{
+  "root": {
+    "ticker": "NSC",
+    "name": "ノーフォーク・サザン",
+    "cik": 702165,
+    "name_en": "Norfolk Southern Corporation"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [
+    "CSX"
+  ],
+  "companies": [
+    {
+      "id": "CSX",
+      "ticker": "CSX",
+      "name": "CSXコーポレーション",
+      "sub": "鉄道・競合",
+      "sub_en": "Railroad rival",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主な鉄道上の競合相手はCSXで、両社は同じ地域の多くで事業を行っている",
+          "text_en": "CSX is the primary rail competitor, and both companies operate throughout much of the same territory",
+          "source": {
+            "label": "Norfolk Southern 10-K(2025-12-31)",
+            "label_en": "Norfolk Southern 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/702165/000162828026006268/nsc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-09",
+            "quote": "Our primary rail competitor is CSX Corporation (CSX); both we and CSX operate throughout much of the same territory."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "NSとCSXは有限責任会社を通じてConrailを共同で所有し、NSの経済的持分は58%である",
+          "text_en": "NS and CSX jointly own Conrail through a limited liability company, with NS holding a 58% economic interest",
+          "source": {
+            "label": "Norfolk Southern 10-K(2025-12-31)",
+            "label_en": "Norfolk Southern 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/702165/000162828026006268/nsc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-09",
+            "quote": "Through a limited liability company, we and CSX jointly own Conrail, whose primary subsidiary is CRC. We have a 58 % economic and 50 % voting interest in the jointly-owned entity, and CSX has the remainder of the economic and voting interests."
+          }
+        }
+      ],
+      "name_en": "CSX Corporation"
+    },
+    {
+      "id": "CONRAIL",
+      "ticker": "Conrail",
+      "name": "コンレール",
+      "sub": "共同保有の鉄道",
+      "sub_en": "Jointly owned rail",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "NSはCSXとともにConrailを共同所有し、議決権の持分は50%である",
+          "text_en": "NS jointly owns Conrail with CSX and holds a 50% voting interest",
+          "source": {
+            "label": "Norfolk Southern 10-K(2025-12-31)",
+            "label_en": "Norfolk Southern 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/702165/000162828026006268/nsc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-09",
+            "quote": "We have a 58 % economic and 50 % voting interest in the jointly-owned entity, and CSX has the remainder of the economic and voting interests."
+          }
+        }
+      ],
+      "name_en": "Conrail"
+    },
+    {
+      "id": "TTX",
+      "ticker": "TTX",
+      "name": "TTX社",
+      "sub": "貨車プール",
+      "sub_en": "Railcar pooling",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "NSは他の6つの北米鉄道会社とともに、貨車プール会社のTTXを共同で所有している",
+          "text_en": "NS and six other North American railroads collectively own TTX, a railcar pooling company",
+          "source": {
+            "label": "Norfolk Southern 10-K(2025-12-31)",
+            "label_en": "Norfolk Southern 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/702165/000162828026006268/nsc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-09",
+            "quote": "We and six other North American railroads collectively own TTX Company (TTX), a railcar pooling company that provides its owner-railroads with standardized fleets of intermodal, automotive, and general use railcars at stated rates."
+          }
+        }
+      ],
+      "name_en": "TTX Company"
+    },
+    {
+      "id": "UNP",
+      "ticker": "UNP",
+      "name": "ユニオン・パシフィック",
+      "sub": "鉄道・合併予定",
+      "sub_en": "Railroad, merger",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年7月28日にユニオン・パシフィックと合併契約を結んでいる",
+          "text_en": "NS entered into an Agreement and Plan of Merger with Union Pacific on July 28, 2025",
+          "source": {
+            "label": "Norfolk Southern 10-K(2025-12-31)",
+            "label_en": "Norfolk Southern 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/702165/000162828026006268/nsc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-09",
+            "quote": "On July 28, 2025, we entered into an Agreement and Plan of Merger (the “Merger Agreement”) with Union Pacific Corporation, a Utah corporation (“Union Pacific”)"
+          }
+        }
+      ],
+      "name_en": "Union Pacific"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

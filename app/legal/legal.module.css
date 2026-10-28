@@ -1,0 +1,9 @@
+.doc { max-width: 720px; margin: 0 auto; padding: 8px 0 48px; color: var(--text, #e8eef5); font-size: 15px; line-height: 2; overflow-wrap: anywhere; }
+.doc h1 { font-size: clamp(1.5rem, 5vw, 2rem); line-height: 1.5; margin: 22px 0 24px; }
+.doc h2 { font-size: 1.05rem; line-height: 1.7; margin: 44px 0 12px; padding-top: 22px; border-top: 1px solid var(--line, #243040); }
+.doc p { margin: 0 0 14px; color: #cfd8e3; }
+.doc ul { list-style: disc; margin: 0 0 14px; padding-left: 1.4em; color: #cfd8e3; }
+.doc li { margin-bottom: 6px; }
+.items { margin: 0 0 14px; }
+.items p { display: grid; grid-template-columns: 2em 1fr; gap: 4px; margin: 0 0 10px; }
+.no { color: var(--muted, #8a95a3); font-variant-numeric: tabular-nums; }

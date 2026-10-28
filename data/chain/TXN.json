@@ -1,0 +1,442 @@
+{
+  "root": {
+    "ticker": "TXN",
+    "name": "Texas Instruments",
+    "cik": 97476
+  },
+  "rows": [
+    {
+      "ja": "製造委託元(UMC)",
+      "en": "Foundry",
+      "above": true
+    },
+    {
+      "ja": "買収・提携",
+      "en": "Acquisitions & partnerships"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "NXPI",
+    "MPWR",
+    "SWKS",
+    "AMD"
+  ],
+  "companies": [
+    {
+      "id": "UMC",
+      "ticker": "UMC",
+      "name": "UMC",
+      "sub": "半導体受託製造",
+      "sub_en": "Foundry",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Texas Instrumentsは、UMCの主要顧客に含まれる",
+          "text_en": "Texas Instruments is one of UMC's primary customers.",
+          "source": {
+            "label": "United Microelectronics 20-F",
+            "label_en": "United Microelectronics 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/1033767/000119312526193757/d91630d20f.htm",
+            "level": "official",
+            "date": "2026-04-30",
+            "quote": "Our primary customers, in terms of our sales revenues, include premier integrated device manufacturers, such as Texas Instruments and Intel, plus leading fabless design companies, such as MediaTek, Realtek and Novatek."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SLAB",
+      "ticker": "SLAB",
+      "name": "Silicon Laboratories",
+      "sub": "無線・IoT半導体",
+      "sub_en": "Wireless & IoT chips",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Silicon Laboratoriesは2026年2月4日にTexas Instrumentsとの合併契約を結んだ",
+          "text_en": "Silicon Laboratories entered into a Merger Agreement with Texas Instruments on February 4, 2026",
+          "source": {
+            "label": "Silicon Laboratories 10-K",
+            "label_en": "Silicon Laboratories 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1038074/000103807426000005/slab-20260103.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "On February 4, 2026, we entered into an Agreement and Plan of Merger (the “Merger Agreement”) with Texas Instruments Incorporated, a Delaware corporation (“Parent”), and Caldwell Merger Corp., a Delaware corporation and wholly-owned direct subsidiary of Parent (“Merger Subsidiary”),",
+            "note": "契約締結の記載です。",
+            "note_en": "Describes the signed merger agreement."
+          }
+        },
+        {
+          "type": "up",
+          "text": "Texas Instrumentsは、この取引でSilicon Labsの製造を外部ファウンドリから切り替える方針",
+          "text_en": "Through the transaction, Texas Instruments plans to reshore Silicon Labs' manufacturing from external foundries.",
+          "source": {
+            "label": "Texas Instruments 8-K Ex.99 の発表",
+            "label_en": "Texas Instruments 8-K Ex.99 press release",
+            "url": "https://www.sec.gov/Archives/edgar/data/97476/000119312526036727/d100130dex991.htm",
+            "level": "official",
+            "date": "2026-02-04",
+            "quote": "The transaction positions the combined company to deliver fully integrated process, design and manufacturing capabilities by reshoring Silicon Labs’ manufacturing from external foundries, leveraging"
+          }
+        }
+      ]
+    },
+    {
+      "id": "NVDA",
+      "ticker": "NVDA",
+      "name": "NVIDIA",
+      "sub": "AI半導体",
+      "sub_en": "AI chips",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "TIはmmWaveレーダー技術をNVIDIA Jetson ThorとNVIDIA Holoscanに統合し、物理AI向けの低遅延3D認識を可能にした",
+          "text_en": "TI integrated its mmWave radar technology with NVIDIA Jetson Thor and NVIDIA Holoscan to enable low-latency 3D perception for physical AI applications",
+          "source": {
+            "label": "Texas Instruments — physical-AI collaboration with NVIDIA, March 5, 2026",
+            "label_en": "Texas Instruments — physical-AI collaboration with NVIDIA, March 5, 2026",
+            "url": "https://www.ti.com/about-ti/newsroom/news-releases/2026/2026-03-05-ti-accelerates-the-next-generation-of-physical-ai-with-nvidia.html",
+            "level": "official",
+            "quote": "As part of this collaboration, TI integrated its mmWave radar technology with NVIDIA Jetson Thor and NVIDIA Holoscan to enable low-latency 3D perception and safety awareness for physical AI applications."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "TIはmmWaveレーダーとNVIDIA Jetson Thorを組み合わせたセンサーフュージョン構成を、ヒューマノイドロボット向けに設計した",
+          "text_en": "TI designed a sensor fusion solution integrating its mmWave radar technology with NVIDIA Jetson Thor for humanoid robots",
+          "source": {
+            "label": "Texas Instruments — physical-AI collaboration with NVIDIA, March 5, 2026",
+            "label_en": "Texas Instruments — physical-AI collaboration with NVIDIA, March 5, 2026",
+            "url": "https://www.ti.com/about-ti/newsroom/news-releases/2026/2026-03-05-ti-accelerates-the-next-generation-of-physical-ai-with-nvidia.html",
+            "level": "official",
+            "quote": "As part of this collaboration, TI designed a sensor fusion solution by integrating its mmWave radar technology with NVIDIA Jetson Thor using NVIDIA Holoscan Sensor Bridge to enable low-latency, 3D perception and safety awareness for humanoid robots ."
+          }
+        }
+      ]
+    },
+    {
+      "id": "NXPI",
+      "ticker": "NXPI",
+      "name": "NXP Semiconductors",
+      "sub": "車載・組み込み半導体",
+      "sub_en": "Automotive & embedded chips",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Texas Instrumentsと競合する",
+          "text_en": "Competes with Texas Instruments",
+          "source": {
+            "label": "NXP Semiconductors 10-K",
+            "label_en": "NXP Semiconductors 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1413447/000141344726000008/nxpi-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Our primary key public competitors in alphabetical order include, but are not limited to, Analog Devices Inc., Broadcom Inc., Infineon Technologies AG, Microchip Technology Inc., Qualcomm Inc., Renesas Electronics Corp., STMicroelectronics NV and Texas Instruments Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SWKS",
+      "ticker": "SWKS",
+      "name": "Skyworks Solutions",
+      "sub": "RF半導体",
+      "sub_en": "RF chips",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Texas Instrumentsと競合する",
+          "text_en": "Competes with Texas Instruments",
+          "source": {
+            "label": "Skyworks Solutions 10-K",
+            "label_en": "Skyworks Solutions 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/4127/000000412725000085/swks-20251003.htm",
+            "level": "official",
+            "date": "2025-11-07",
+            "quote": "We compete with international and United States semiconductor manufacturers of all sizes in terms of resources and market share, including, but not limited to, Analog Devices, Broadcom, Cirrus Logic, Murata Manufacturing, NXP Semiconductors, Qorvo, Qualcomm, and Texas Instruments."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MPWR",
+      "ticker": "MPWR",
+      "name": "Monolithic Power Systems",
+      "sub": "電源半導体",
+      "sub_en": "Power chips",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Texas Instrumentsと競合する",
+          "text_en": "Competes with Texas Instruments",
+          "source": {
+            "label": "Monolithic Power Systems 10-K",
+            "label_en": "Monolithic Power Systems 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1280452/000143774926006113/mpwr20251231_10k.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "We consider our primary competitors to include Analog Devices, Infineon Technologies, NXP Semiconductors, ON Semiconductor, Power Integrations, Renesas Electronics, ROHM Semiconductor, Semtech, STMicroelectronics and Texas Instruments."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AMD",
+      "ticker": "AMD",
+      "name": "AMD",
+      "sub": "CPU・GPU",
+      "sub_en": "CPUs & GPUs",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Texas Instrumentsと競合する",
+          "text_en": "Competes with Texas Instruments",
+          "source": {
+            "label": "AMD 10-K",
+            "label_en": "AMD 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000018/amd-20251227.htm",
+            "level": "official",
+            "date": "2026-02-04",
+            "quote": "We expect continued competition from our primary FPGA competitors such as Altera, Lattice Semiconductor Corporation and Microsemi Corporation, and from ASSP vendors such as Broadcom Corporation, Marvell Technology Group, Ltd., Analog Devices, Texas Instruments Incorporated, NXP Semiconductors N.V., Qualcomm Incorporated and NVIDIA."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AOSL",
+      "ticker": "AOSL",
+      "name": "Alpha and Omega Semiconductor",
+      "sub": "パワー半導体",
+      "sub_en": "Power semiconductors",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Texas Instrumentsと競合する",
+          "text_en": "Competes with Texas Instruments",
+          "source": {
+            "label": "Alpha and Omega Semiconductor 10-K",
+            "label_en": "Alpha and Omega Semiconductor 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1387467/000162828026059261/aosl-20260630.htm",
+            "level": "official",
+            "date": "2026-08-27",
+            "quote": "Our major competitors for our power ICs include Monolithic Power Systems, Inc., ON Semiconductor Corp., Richtek Technology Corp., Semtech Corporation, Texas Instruments Inc. and Vishay Intertechnology, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "POWI",
+      "ticker": "POWI",
+      "name": "Power Integrations",
+      "sub": "高電圧電源IC",
+      "sub_en": "High-voltage power ICs",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Texas Instrumentsと競合する",
+          "text_en": "Competes with Texas Instruments",
+          "source": {
+            "label": "Power Integrations 10-K",
+            "label_en": "Power Integrations 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/833640/000083364026000037/powi-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-06",
+            "quote": "Competing suppliers of high-voltage GaN products include InnoScience, Infineon, Renesas, Texas Instruments, Navitas Semiconductor and others."
+          }
+        }
+      ]
+    },
+    {
+      "id": "NVTS",
+      "ticker": "NVTS",
+      "name": "Navitas Semiconductor",
+      "sub": "GaNパワー半導体",
+      "sub_en": "GaN power chips",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Texas Instrumentsと競合する",
+          "text_en": "Competes with Texas Instruments",
+          "source": {
+            "label": "Navitas Semiconductor 10-K",
+            "label_en": "Navitas Semiconductor 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1821769/000182176926000007/nvts-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Our primary GaN competitors include Infineon Technologies AG, Power Integrations, Inc., Texas Instruments Incorporated, Innoscience (Suzhou) Semiconductor Co., Ltd., Renesas Electronics Corp., and Efficient Power Conversion Corporation (EPC)."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GFS",
+      "ticker": "GFS",
+      "name": "GlobalFoundries",
+      "sub": "半導体受託製造",
+      "sub_en": "Foundry",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Texas Instrumentsと競合する",
+          "text_en": "Competes with Texas Instruments",
+          "source": {
+            "label": "GlobalFoundries 20-F",
+            "label_en": "GlobalFoundries 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/1709048/000170904826000022/gfs-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "We also compete with the foundry operation services of some IDMs, such as Texas Instruments, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MXL",
+      "ticker": "MXL",
+      "name": "MaxLinear",
+      "sub": "通信半導体",
+      "sub_en": "Connectivity chips",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Texas Instrumentsと競合する",
+          "text_en": "Competes with Texas Instruments",
+          "source": {
+            "label": "MaxLinear 10-K",
+            "label_en": "MaxLinear 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1288469/000128846926000011/mxl-20251231.htm",
+            "level": "official",
+            "date": "2026-01-29",
+            "quote": "Our primary merchant semiconductor competitors include Broadcom Inc., Qualcomm Incorporated, Realtek Semiconductor Corp., Skyworks Solutions, Inc., Credo Semiconductor Inc., MediaTek, Inc., Marvell Technology Group Ltd., MACOM Technology Solutions Holdings, Inc., Texas Instruments Incorporated, Analog Devices, Inc., Renesas Electronics Corporation, Microchip"
+          }
+        }
+      ]
+    },
+    {
+      "id": "AMBA",
+      "ticker": "AMBA",
+      "name": "Ambarella",
+      "sub": "画像処理半導体",
+      "sub_en": "Vision chips",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Texas Instrumentsと競合する",
+          "text_en": "Competes with Texas Instruments",
+          "source": {
+            "label": "Ambarella 10-K",
+            "label_en": "Ambarella 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1280263/000119312526119321/amba-20260131.htm",
+            "level": "official",
+            "date": "2026-03-23",
+            "quote": "In the automotive camera market, we compete against Horizon Robotics Inc., Mobileye, a subsidiary of Intel Corporation, Novatek, NVIDIA, Qualcomm, Renesas Electronics Corporation, and Texas Instruments."
+          }
+        }
+      ]
+    },
+    {
+      "id": "RMBS",
+      "ticker": "RMBS",
+      "name": "Rambus",
+      "sub": "メモリ関連半導体",
+      "sub_en": "Memory interface chips",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Texas Instrumentsと競合する",
+          "text_en": "Competes with Texas Instruments",
+          "source": {
+            "label": "Rambus 10-K",
+            "label_en": "Rambus 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/917273/000119312526057101/rmbs-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "In the memory interface chip market, we compete with international semiconductor companies, including but not limited to Monolithic Power Systems, Montage Technology, Renesas and Texas Instruments."
+          }
+        }
+      ]
+    },
+    {
+      "id": "HIMX",
+      "ticker": "HIMX",
+      "name": "Himax Technologies",
+      "sub": "ディスプレイ半導体",
+      "sub_en": "Display chips",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Texas Instrumentsと競合する",
+          "text_en": "Competes with Texas Instruments",
+          "source": {
+            "label": "Himax Technologies 20-F",
+            "label_en": "Himax Technologies 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/1342338/000110465926035507/himx-20251231x20f.htm",
+            "level": "official",
+            "date": "2026-03-27",
+            "quote": "We also compete with alternative microdisplay technology providers such as Texas Instruments with DLP, Sony with micro OLED and JBD with micro LED."
+          }
+        }
+      ]
+    },
+    {
+      "id": "DIOD",
+      "ticker": "DIOD",
+      "name": "Diodes Incorporated",
+      "sub": "ディスクリート半導体",
+      "sub_en": "Discrete semiconductors",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Texas Instrumentsと競合する",
+          "text_en": "Competes with Texas Instruments",
+          "source": {
+            "label": "Diodes Incorporated 10-K",
+            "label_en": "Diodes Incorporated 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/29002/000119312526044918/diod-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "larger competitors include Infineon Technologies A.G., Epson, Kyocera, Nexperia, NXP Semiconductors N.V., ON Semiconductor Corporation, Renesas Electronics Corporation, Texas Instruments, and Vishay Intertechnology, Inc., many of which have greater financial, marketing, distribution, brand name recognition, research and development, manufacturing, and"
+          }
+        },
+        {
+          "type": "tie",
+          "text": "Diodesは2019年にTexas Instrumentsからスコットランド・GreenockのGFABウェハー工場と事業を取得した",
+          "text_en": "In 2019, Diodes acquired from Texas Instruments a 200mm wafer fabrication facility and operations in Greenock, Scotland (GFAB)",
+          "source": {
+            "label": "Diodes Incorporated 10-K",
+            "label_en": "Diodes Incorporated 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/29002/000119312526044918/diod-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "• In 2019, we acquired from Texas Instruments a 200mm wafer fabrication facility and operations located in Greenock, Scotland (“GFAB”)."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

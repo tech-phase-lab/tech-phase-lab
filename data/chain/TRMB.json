@@ -1,0 +1,171 @@
+{
+  "root": {
+    "ticker": "TRMB",
+    "name": "トリンブル",
+    "cik": 864749,
+    "name_en": "Trimble"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    },
+    {
+      "ja": "供給元",
+      "en": "Suppliers",
+      "above": true
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "CAT",
+      "ticker": "CAT",
+      "name": "キャタピラー",
+      "sub": "建機メーカー",
+      "sub_en": "Construction machinery",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "合弁会社Caterpillar-Trimble Control Technologiesを通じ、土工機械向けの誘導・制御製品を開発している",
+          "text_en": "Trimble and Caterpillar run a joint venture, Caterpillar-Trimble Control Technologies, to develop guidance and control products for earth-moving machines",
+          "source": {
+            "label": "Trimble 10-K(2026年1月2日期)",
+            "label_en": "Trimble 10-K (fiscal year ended January 2, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/864749/000086474926000015/trmb-20260102.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Our joint venture with Caterpillar, Caterpillar-Trimble Control Technologies, was formed to develop the next generation of advanced electronic guidance and control products for earth-moving machines."
+          }
+        }
+      ],
+      "name_en": "Caterpillar"
+    },
+    {
+      "id": "AGCO",
+      "ticker": "AGCO",
+      "name": "アグコ",
+      "sub": "農機メーカー",
+      "sub_en": "Agricultural machinery",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "合弁会社PTx Trimbleを通じ、農業向けの誘導・制御製品を開発している",
+          "text_en": "Trimble maintains the PTx Trimble joint venture with AGCO to develop guidance and control products for agriculture",
+          "source": {
+            "label": "Trimble 10-K(2026年1月2日期)",
+            "label_en": "Trimble 10-K (fiscal year ended January 2, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/864749/000086474926000015/trmb-20260102.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "We maintain a joint venture, PTx Trimble, with AGCO to develop the next generation of advanced electronic guidance and control products for agriculture."
+          }
+        }
+      ],
+      "name_en": "AGCO"
+    },
+    {
+      "id": "HILTI",
+      "ticker": "Hilti",
+      "name": "ヒルティ",
+      "sub": "建設工具",
+      "sub_en": "Construction tools",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "建設業向けの計測ソリューションを共同開発する合弁会社を持つ",
+          "text_en": "Trimble maintains a joint venture with Hilti to jointly develop measuring solutions for the building construction trades",
+          "source": {
+            "label": "Trimble 10-K(2026年1月2日期)",
+            "label_en": "Trimble 10-K (fiscal year ended January 2, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/864749/000086474926000015/trmb-20260102.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "We also maintain a joint venture with Hilti, which focuses on the joint development of measuring solutions for the building construction trades and integrating data for construction management."
+          }
+        }
+      ],
+      "name_en": "Hilti"
+    },
+    {
+      "id": "NIKON",
+      "ticker": "Nikon",
+      "name": "ニコン",
+      "sub": "光学・測量機器",
+      "sub_en": "Optics & surveying",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "日本で測量機器を設計・製造する合弁会社を持つ",
+          "text_en": "Trimble's joint venture with Nikon designs and manufactures surveying instruments in Japan",
+          "source": {
+            "label": "Trimble 10-K(2026年1月2日期)",
+            "label_en": "Trimble 10-K (fiscal year ended January 2, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/864749/000086474926000015/trmb-20260102.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Our joint venture with Nikon focuses on the design and manufacture in Japan of surveying instruments including mechanical total stations and related products."
+          }
+        }
+      ],
+      "name_en": "Nikon"
+    },
+    {
+      "id": "JBL",
+      "ticker": "JBL",
+      "name": "ジェイビル",
+      "sub": "受託製造",
+      "sub_en": "Contract manufacturing",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "ハードウェア製品の製造を委託している主要な製造パートナーである",
+          "text_en": "Jabil is one of Trimble's key contract manufacturing partners for hardware products",
+          "source": {
+            "label": "Trimble 10-K(2026年1月2日期)",
+            "label_en": "Trimble 10-K (fiscal year ended January 2, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/864749/000086474926000015/trmb-20260102.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "We outsource the manufacturing of many of our hardware products to our key contract manufacturing partners, which include Jabil and Benchmark Electronics Inc."
+          }
+        }
+      ],
+      "name_en": "Jabil"
+    },
+    {
+      "id": "BHE",
+      "ticker": "BHE",
+      "name": "ベンチマーク・エレクトロニクス",
+      "sub": "受託製造",
+      "sub_en": "Contract manufacturing",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "ハードウェア製品の製造を委託している主要な製造パートナーである",
+          "text_en": "Benchmark Electronics is one of Trimble's key contract manufacturing partners for hardware products",
+          "source": {
+            "label": "Trimble 10-K(2026年1月2日期)",
+            "label_en": "Trimble 10-K (fiscal year ended January 2, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/864749/000086474926000015/trmb-20260102.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "We outsource the manufacturing of many of our hardware products to our key contract manufacturing partners, which include Jabil and Benchmark Electronics Inc."
+          }
+        }
+      ],
+      "name_en": "Benchmark Electronics"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

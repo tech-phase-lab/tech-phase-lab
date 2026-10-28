@@ -1,0 +1,357 @@
+/* One-row site header (owner's final design, Oct 8). Values follow the
+   approved sample: dark ground, gold PRO, JA/EN pill, compact icon tools. */
+.header {
+  --line:#1d2a36; --fg:#e6eef2; --muted:#8b9aa6; --mint:#8fe3c0;
+  --gold:#ecd08e; --gold-deep:#2b2417; --gold-line:#8d7647;
+  position:sticky; top:0; z-index:40;
+  display:flex; align-items:center; justify-content:space-between; gap:8px;
+  min-height:60px; padding:10px max(14px, env(safe-area-inset-right)) 10px max(14px, env(safe-area-inset-left));
+  background:#0d1218; border-bottom:1px solid var(--line);
+  color:var(--fg);
+}
+.brand { display:flex; align-items:center; gap:8px; min-width:0; color:inherit; text-decoration:none; }
+.brand:focus-visible, .header button:focus-visible { outline:2px solid var(--mint); outline-offset:2px; border-radius:10px; }
+.mark { width:30px !important; height:30px !important; }
+.words { display:grid; min-width:0; line-height:1.25; }
+.name { font-size:13px; font-weight:700; letter-spacing:.1em; white-space:nowrap; }
+.sub { font-size:10px; font-weight:500; letter-spacing:.14em; color:var(--muted); white-space:nowrap; }
+.center { display:none; min-width:0; }
+.tools { display:flex; flex:none; align-items:center; gap:4px; }
+.lang { display:flex; padding:3px; border-radius:10px; background:#0f1822; box-shadow:inset 0 0 0 1px #1f2d3a; }
+.header .lang button { padding:3px 7px; border:0; border-radius:7px; background:none; color:var(--muted); font:inherit; font-size:11px; font-weight:700; letter-spacing:.03em; cursor:pointer; }
+.header .lang button[aria-pressed="true"] { background:#2b3b4b; color:var(--fg); }
+.tools .pro {
+  position:relative; padding:3px 8px; border:0; border-radius:8px; cursor:pointer;
+  font:inherit; font-size:11px; line-height:1.45; font-weight:700; letter-spacing:.08em; color:var(--gold);
+  background:linear-gradient(180deg,#352c1a,var(--gold-deep));
+  box-shadow:inset 0 0 0 1px var(--gold-line),0 0 10px -4px rgba(236,208,142,.3);
+  animation:proGlow 3.2s ease-in-out infinite;
+}
+.pro[aria-expanded="true"] { background:var(--gold); color:#172028; }
+@keyframes proGlow {
+  0%,100% { box-shadow:inset 0 0 0 1px var(--gold-line),0 0 8px -4px rgba(236,208,142,.25); }
+  50% { box-shadow:inset 0 0 0 1px var(--gold-line),0 0 12px -3px rgba(236,208,142,.45); }
+}
+.refresh {
+  display:inline-flex; align-items:center; gap:6px; padding:5px 10px 5px 8px; border:0; border-radius:10px; cursor:pointer;
+  color:var(--fg); font:inherit; font-size:12px; font-weight:700; background:#14202b; box-shadow:inset 0 0 0 1px #243445; transition:background .2s;
+}
+.refresh:hover { background:#1a2a38; }
+.refresh svg { width:16px; height:16px; color:var(--mint); fill:none; stroke:currentColor; stroke-width:1.7; stroke-linecap:round; stroke-linejoin:round; }
+.refresh[aria-busy="true"] svg, .spin svg { animation:spin .7s cubic-bezier(.4,0,.2,1) infinite; }
+@keyframes spin { to { transform:rotate(360deg); } }
+.ico { display:grid; place-items:center; width:30px; height:30px; border:0; border-radius:10px; background:none; color:var(--muted); cursor:pointer; transition:color .2s,background .2s; }
+.ico:hover, .ico[aria-expanded="true"] { color:var(--fg); background:#16212b; }
+.home { display:none; }
+.ico svg { width:20px; height:20px; fill:none; stroke:currentColor; stroke-width:1.7; stroke-linecap:round; stroke-linejoin:round; }
+
+@media (min-width:761px) {
+  .header { min-height:68px; padding:12px 28px; gap:18px; }
+  .mark { width:38px !important; height:38px !important; }
+  .name { font-size:14px; }
+  .center { display:flex; flex:1 1 auto; justify-content:center; }
+  .tools { gap:8px; }
+  .header .lang button { padding:4px 10px; font-size:12px; }
+  .tools .pro { padding:5px 11px; font-size:12px; }
+  .refresh { padding:7px 12px 7px 10px; font-size:13px; }
+  .ico { width:36px; height:36px; }
+  .home { display:grid; }
+}
+@media (max-width:360px) {
+  .name { font-size:12px; letter-spacing:.06em; }
+  .header .lang button { padding:3px 5px; }
+  .tools .pro { padding-inline:7px; }
+  .refresh { padding-inline:8px; }
+}
+@media (prefers-reduced-motion:reduce) {
+  .pro, .refresh svg, .spin svg { animation:none !important; }
+}
+
+/* Menu sheet (owner's "プラン別メニュー見本"). Sits above the bottom bar (z-index 60)
+   so the whole sheet can be swiped and its last items are not hidden. */
+.backdrop { position:fixed; inset:0; z-index:61; border:0; background:rgba(2,5,8,.55); touch-action:none; }
+.sheet {
+  --gold-hi:#fbeab8; --gold-lo:#b8923f; --gold:#ecd08e; --fg:#e6eef2; --muted:#8b9aa6; --mint:#8fe3c0;
+  position:fixed; z-index:62; left:0; right:0; bottom:0; display:grid; gap:14px; align-content:start;
+  max-height:min(88dvh, calc(100dvh - 40px - env(safe-area-inset-top))); overflow-y:auto; overscroll-behavior:contain;
+  padding:10px max(16px, env(safe-area-inset-right)) calc(46px + env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left));
+  border-radius:22px 22px 0 0; background:linear-gradient(180deg,#16212c,#0f1720); box-shadow:inset 0 1px 0 rgba(255,255,255,.07),0 -18px 48px -12px #000c;
+  color:var(--fg); font-family:"Zen Kaku Gothic New","Hiragino Kaku Gothic ProN","Yu Gothic","Meiryo",sans-serif;
+}
+.sheet > * { min-width:0; }
+.sheet svg { display:block; fill:none; stroke:currentColor; stroke-width:1.7; stroke-linecap:round; stroke-linejoin:round; }
+.sheet button { font:inherit; color:inherit; background:none; border:0; padding:0; cursor:pointer; }
+.sheet a { color:inherit; text-decoration:none; }
+.sheet a:focus-visible, .sheet button:focus-visible { outline:2px solid var(--mint); outline-offset:2px; border-radius:12px; }
+.grab { width:38px; height:4px; border-radius:2px; background:#33414e; margin:0 auto; }
+.shHead { display:flex; align-items:center; justify-content:space-between; }
+.shHead h2 { margin:0; font-size:16px; letter-spacing:.04em; }
+.sheet .close { display:grid; place-items:center; width:32px; height:32px; border-radius:50%; background:#1b2833; color:var(--muted); }
+.close svg { width:16px; height:16px; }
+
+/* FREE card: one compact banner; the whole card is the button. */
+.sheet .cardFree {
+  position:relative; display:block; width:100%; overflow:hidden; text-align:left; padding:14px; border-radius:16px;
+  background:linear-gradient(135deg,#1a1d1c,#141c24 60%); box-shadow:inset 0 0 0 1px #3a3423,0 10px 26px -16px rgba(236,208,142,.5);
+}
+.cardFree::before { content:""; position:absolute; inset:0; background:radial-gradient(90% 120% at 100% 0,rgba(236,208,142,.14),transparent 60%); pointer-events:none; }
+.frTop { position:relative; display:flex; align-items:center; justify-content:space-between; gap:10px; }
+.frTitle { display:flex; align-items:center; gap:8px; font-size:15px; font-weight:700; }
+.frTitle svg { width:14px; height:14px; stroke:var(--gold); stroke-width:1.6; }
+.frGo { display:flex; align-items:center; gap:2px; padding:6px 8px 6px 12px; border-radius:999px; font-size:12px; font-weight:700; color:#2a1f08; white-space:nowrap;
+  background:linear-gradient(135deg,var(--gold-hi),var(--gold) 45%,var(--gold-lo)); box-shadow:0 6px 16px -6px rgba(236,208,142,.7),inset 0 1px 0 rgba(255,255,255,.5); }
+.frGo svg { width:14px; height:14px; stroke-width:2.2; }
+.frPerks { position:relative; display:grid; grid-template-columns:repeat(3,auto); justify-content:space-between; gap:5px 6px; margin-top:9px; padding-top:9px; border-top:1px solid rgba(236,208,142,.14); }
+.frPerks span { display:flex; align-items:center; gap:5px; font-size:11px; line-height:1.3; font-weight:500; color:#b8c5cf; letter-spacing:.02em; white-space:nowrap; }
+.frPerks span::before { content:""; flex:none; width:5px; height:5px; transform:rotate(45deg); background:var(--gold); border-radius:1px; }
+
+/* PRO / Owner card. */
+.cardPaid {
+  position:relative; display:grid; gap:8px; overflow:hidden; padding:14px; border-radius:16px;
+  background:linear-gradient(135deg,#2b2417 0%,#1a1a17 55%,#14201c 100%); box-shadow:inset 0 0 0 1px #6f5c34,0 8px 20px -16px rgba(236,208,142,.3);
+}
+.cardPaid::before { content:""; position:absolute; inset:0; background:radial-gradient(120% 90% at 100% 0,rgba(236,208,142,.20),transparent 55%); pointer-events:none; }
+.cardRow { position:relative; display:flex; align-items:center; justify-content:space-between; gap:10px; }
+.badge { display:inline-flex; align-items:center; gap:6px; font-size:12px; font-weight:700; letter-spacing:.12em; }
+.badge span { background:linear-gradient(90deg,var(--gold-hi),var(--gold-lo)); -webkit-background-clip:text; background-clip:text; color:transparent; }
+.badge svg { width:13px; height:13px; stroke:var(--gold); stroke-width:1.5; }
+.sheet .manage { position:relative; font-size:12px; color:var(--gold); }
+.cardPaid h3 { position:relative; margin:0; font-size:15px; }
+.featline { position:relative; margin:0; font-size:clamp(10px,2.75vw,11.5px); line-height:1.6; color:#cfc6ab; letter-spacing:.01em; text-wrap:balance; }
+
+/* Two short buttons under the card. */
+.tiles { position:relative; z-index:1; display:grid; grid-template-columns:repeat(2,1fr); gap:8px; }
+.sheet .tile { display:flex; align-items:center; justify-content:center; gap:9px; padding:11px 8px; border-radius:14px; background:#141f29; box-shadow:inset 0 0 0 1px #1f2d3a; font-size:13px; color:var(--fg); }
+.tile svg { width:19px; height:19px; color:var(--mint); }
+.bell svg { color:var(--gold); }
+
+/* Lists. */
+.grp { display:grid; gap:2px; }
+.grp h4 { margin:0 0 4px; padding-left:2px; font-size:11px; font-weight:500; letter-spacing:.1em; color:var(--muted); }
+.sheet .item { display:flex; align-items:center; gap:12px; width:100%; padding:8px 2px; min-height:44px; border-bottom:1px solid #1a2631; font-size:14px; text-align:left; }
+.grp .item:last-child { border-bottom:0; }
+.itemIcon { width:19px; height:19px; color:#7fc9ab; flex:none; }
+.item span { flex:1; }
+.chev { width:16px; height:16px; color:#4b5b69; flex:none; }
+@media (min-width:761px) {
+  .sheet { top:76px; bottom:auto; left:auto; right:28px; width:380px; max-height:calc(100dvh - 110px); border-radius:18px; padding:14px 16px 16px; }
+  .grab { display:none; }
+}
+@media (prefers-reduced-motion:no-preference) and (max-width:760px) {
+  .sheet { animation:sheetUp .28s cubic-bezier(.3,.9,.3,1); }
+  @keyframes sheetUp { from { transform:translateY(24px); opacity:.6; } to { transform:none; opacity:1; } }
+}
+
+/* Pull-to-refresh indicator (mobile). */
+.pull {
+  position:fixed; z-index:70; top:calc(8px + env(safe-area-inset-top)); left:50%;
+  display:grid; place-items:center; width:38px; height:38px; margin-left:-19px; border-radius:50%;
+  background:#14202b; box-shadow:0 0 0 1px #2a3d4a,0 8px 20px -6px #000a; color:#8fe3c0; pointer-events:none;
+}
+.pull svg { width:20px; height:20px; fill:none; stroke:currentColor; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; }
+.pull[data-ready="true"] { background:#1d3b31; }
+
+/* Plan styling (owner's "プラン別メニュー見本"): PRO and Owner read gold. */
+.sub { display:flex; align-items:center; gap:5px; }
+.planIcon { width:11px; height:11px; flex:none; fill:none; stroke:var(--gold); stroke-width:1.5; stroke-linecap:round; stroke-linejoin:round; }
+.header[data-plan="pro"] .sub, .header[data-plan="owner"] .sub { color:var(--gold); }
+.header[data-plan="pro"] .planName, .header[data-plan="owner"] .planName {
+  background:linear-gradient(90deg,#fbeab8,#b8923f); -webkit-background-clip:text; background-clip:text; color:transparent; font-weight:700;
+}
+.markWrap { position:relative; display:block; flex:none; }
+.header[data-plan="pro"] .markWrap::before, .header[data-plan="owner"] .markWrap::before {
+  content:""; position:absolute; inset:-10px; background:radial-gradient(circle,rgba(236,208,142,.22),transparent 65%); pointer-events:none;
+}
+.header { border-bottom:0; }
+.header::after { content:""; position:absolute; left:0; right:0; bottom:0; height:1px; background:var(--line); }
+.header[data-plan="pro"]::after, .header[data-plan="owner"]::after {
+  background:linear-gradient(90deg,transparent,rgba(236,208,142,.15) 12%,var(--gold) 50%,rgba(236,208,142,.15) 88%,transparent);
+  box-shadow:0 0 10px rgba(236,208,142,.35);
+}
+/* Gold reload ring: a steady ring with a soft glow; the arrow turns once when pressed. */
+.ring {
+  position:relative; display:grid; place-items:center; width:36px; height:36px; border:0; border-radius:50%; padding:0;
+  background:none; color:var(--gold); cursor:pointer; animation:ringGlow 3.6s ease-in-out infinite;
+}
+.ring > svg:last-child { position:relative; z-index:1; width:17px; height:17px; fill:none; stroke:currentColor; stroke-width:1.7; stroke-linecap:round; stroke-linejoin:round; }
+.ringTrack { position:absolute; inset:0; width:36px; height:36px; fill:none; stroke:#b8923f; stroke-width:2; opacity:.65; }
+.spinOnce > svg:last-child { animation:spin .7s cubic-bezier(.4,0,.2,1) 1; }
+@keyframes ringGlow { 0%,100% { box-shadow:0 0 4px -2px rgba(236,208,142,.18); } 50% { box-shadow:0 0 9px -2px rgba(236,208,142,.38); } }
+@media (prefers-reduced-motion:reduce) { .ring, .spinOnce > svg:last-child { animation:none !important; } }
+
+/* Home header buttons (owner, Oct 14): desktop only; phones keep the existing header. */
+.promo{display:none}
+@property --ang{syntax:"<angle>";initial-value:0deg;inherits:false}
+@media (min-width:761px){
+  .promo{display:flex;align-items:center;gap:10px;margin-right:8px}
+  .proBtn{position:relative;display:inline-flex;align-items:center;gap:8px;height:34px;padding:0 10px 0 14px;border:1px solid rgba(240,215,154,.55);border-radius:10px;overflow:hidden;cursor:pointer;font:inherit;background:linear-gradient(145deg,#2a2112,#17130b 60%,#201807);box-shadow:inset 0 1px 0 rgba(255,235,190,.22)}
+  .proBtn::before{content:"";position:absolute;inset:0;background:linear-gradient(115deg,transparent 35%,rgba(255,232,170,.2) 50%,transparent 65%);transform:translateX(-120%);animation:promoSheen 5s ease-in-out infinite;pointer-events:none}
+  .proBtn span{position:relative;font-size:13px;font-weight:700;letter-spacing:.02em;background:linear-gradient(100deg,#f0d79a,#d9b46a 60%,#f6e6bd);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .proTag{position:relative;font:600 9px var(--font-geist-mono),monospace;letter-spacing:.14em;color:#d9b46a;border:1px solid rgba(217,180,106,.5);border-radius:5px;padding:0 5px;line-height:15px}
+  .rzBtn{display:inline-flex;align-items:center;gap:7px;height:34px;padding:0 14px;border:1.5px solid transparent;border-radius:10px;text-decoration:none;color:#ee8f4f;font:600 12px var(--font-geist-mono),monospace;letter-spacing:.2em;background:linear-gradient(135deg,#1e130c,#120c08) padding-box,conic-gradient(from var(--ang),rgba(238,143,79,.25),#ffb27a 12%,rgba(238,143,79,.25) 28%,rgba(238,143,79,.25) 62%,#ff9a5a 78%,rgba(238,143,79,.25)) border-box;animation:promoSpin 6s linear infinite;box-shadow:0 0 18px -8px rgba(238,143,79,.6)}
+  .rzBtn span{font-size:15px;letter-spacing:0;line-height:1}
+  .proBtn:focus-visible,.rzBtn:focus-visible{outline:2px solid #ee8f4f;outline-offset:2px}
+}
+@keyframes promoSheen{0%,55%{transform:translateX(-120%)}100%{transform:translateX(120%)}}
+@keyframes promoSpin{to{--ang:360deg}}
+@media (min-width:761px) and (max-width:1100px){
+  .proTag{display:none}
+  .proBtn{height:30px;padding:0 10px}.proBtn span{font-size:12px}
+  .rzBtn{height:30px;padding:0 10px;font-size:11px;letter-spacing:.14em}
+}
+@media (min-width:761px) and (max-width:900px){
+  .header[data-promo="home"] .lang,.header[data-promo="home"] .menuBtn{display:none}
+}
+@media (prefers-reduced-motion:reduce){.proBtn::before{animation:none;display:none}.rzBtn{animation:none}}
+/* PRO and owner: a little more room between JA/EN and the refresh ring so the two are easier to tap (owner, Oct 21). */
+.header[data-plan="pro"] .lang, .header[data-plan="owner"] .lang { margin-right:6px; }
+
+/* First paint before hydration: the last verified owner/PRO state (set by an inline script) shows the gold label and reload ring at once. */
+.hintOwner, .hintPro, .hintRing { display:none; }
+:global(html[data-member-hint="owner"]) .hintOwner, :global(html[data-member-hint="pro"]) .hintPro { display:inline-flex; gap:5px; }
+:global(html[data-member-hint]) .hintRing { display:grid; }
+:global(html[data-member-hint]) .hintHide { display:none; }
+:global(html[data-member-hint]) .sub { color:var(--gold); }
+:global(html[data-member-hint]) .planName {
+  background:linear-gradient(90deg,#fbeab8,#b8923f); -webkit-background-clip:text; background-clip:text; color:transparent; font-weight:700;
+}
+
+/* PRO emblem (faceted gold gem) and the small mark on PRO-only rows; the light sweep runs only on the member card. */
+.proBadge { flex:none; display:block; overflow:hidden; filter:drop-shadow(0 0 5px rgba(236,208,142,.35)); }
+.proSweep { animation:proSweep 3.6s ease-in-out infinite; }
+@keyframes proSweep { 0%,55% { transform:translateX(0) skewX(-20deg); } 100% { transform:translateX(70px) skewX(-20deg); } }
+@media (prefers-reduced-motion:reduce) { .proSweep { animation:none; } }
+.badge .proBadge { filter:drop-shadow(0 0 7px rgba(236,208,142,.5)); }
+.frTitle .proBadge { margin-right:2px; }
+.itemNote { display:block; margin-top:1px; font-size:11px; font-weight:400; color:#8fa0aa; letter-spacing:0; }
+
+/* Members' menu (owner, Oct 26): lacquer black with a soft sheen, and gold only as hairlines, icons and type. */
+.luxe { background:linear-gradient(155deg,#1b1b1f 0%,#0a0a0c 22%,#000 48%,#0b0b0d 78%,#1a1a1e 100%); box-shadow:inset 0 1px 0 rgba(255,236,180,.45),inset 0 0 0 1px rgba(255,255,255,.04),0 -18px 48px -12px #000e; border-top:1px solid #8a7137; }
+.luxe::before { content:""; position:absolute; left:0; right:0; top:0; height:150px; background:linear-gradient(180deg,rgba(255,255,255,.07),transparent); pointer-events:none; border-radius:22px 22px 0 0; }
+.luxe .grab { background:#8a7137; }
+.luxe .shHead h2 { background:linear-gradient(90deg,#f6e3a8,#c99c3e); -webkit-background-clip:text; background-clip:text; color:transparent; letter-spacing:.14em; }
+.sheet.luxe .close { background:linear-gradient(180deg,#1c1c20,#08080a); color:#d4b25e; box-shadow:inset 0 0 0 1px #4a3d1f,inset 0 1px 0 rgba(255,255,255,.08); }
+.sheet.luxe .tile { background:linear-gradient(180deg,#19191d,#060607); box-shadow:inset 0 0 0 1px #4a3d1f,inset 0 1px 0 rgba(255,255,255,.07); color:#efe3bd; }
+.luxe .tile svg, .luxe .bell svg { color:#d4b25e; }
+.luxe .grp h4 { display:flex; align-items:center; gap:10px; color:#b8964a; letter-spacing:.2em; }
+.luxe .grp h4::after { content:""; flex:1; height:1px; background:linear-gradient(90deg,#5d4b25,transparent); }
+.sheet.luxe .item { border-bottom-color:#1c1a14; }
+.luxe .itemIcon { color:#d4b25e; }
+.luxe .chev { color:#5f4f28; }
+.luxe .itemNote { color:#8d8466; }
+.luxe .item:hover { background:linear-gradient(90deg,rgba(212,178,94,.07),transparent); }
+.sheet.luxe .cardPaid { background:linear-gradient(150deg,#222226 0%,#0b0b0d 38%,#000 70%,#121215 100%); box-shadow:inset 0 0 0 1px #9a7c36,inset 0 1px 0 rgba(255,236,180,.35),0 0 22px -12px rgba(212,178,94,.5); }
+.luxe .cardPaid::before { background:linear-gradient(115deg,transparent 30%,rgba(255,255,255,.06) 45%,transparent 60%); }
+
+/* Members' card: the same six features the FREE card lists, ticked as available (owner, Oct 26). */
+.paidPerks { position:relative; display:grid; grid-template-columns:repeat(3,auto); justify-content:space-between; gap:5px 6px; padding-top:9px; border-top:1px solid rgba(236,208,142,.2); }
+.paidPerks span { display:flex; align-items:center; gap:5px; font-size:11px; line-height:1.3; white-space:nowrap; color:#e8d9a8; }
+.paidPerks span::before { content:"✓"; font-weight:700; color:var(--gold); }
+
+/* RESOLUTE: a separate service, set apart from the research list with a small caption and a glass-like frame (owner, Oct 26). */
+.rzWrap { display:grid; gap:6px; margin-top:6px; }
+.rzCap { margin:0 0 0 2px; font-size:10px; letter-spacing:.2em; color:#9aa6b4; }
+.sheet .rzCard { display:flex; align-items:center; gap:12px; padding:11px 14px; border-radius:14px; border:1px solid #3a4452; background:linear-gradient(135deg,#1d2530,#0f151c); box-shadow:inset 0 1px 0 rgba(255,255,255,.08); }
+.rzIcon { width:21px; height:21px; flex:none; color:#c3ccd8; }
+.rzText { flex:1; display:grid; gap:1px; }
+.rzText b { font-size:15px; letter-spacing:.1em; font-weight:700; }
+.rzText small { font-size:11.5px; color:#8b9aa6; }
+.luxe .rzCap { color:#8d8466; }
+.sheet.luxe .rzCard { border-color:#4a4636; background:linear-gradient(135deg,#1a1a1e,#08080a); box-shadow:inset 0 1px 0 rgba(255,255,255,.07); }
+.luxe .rzIcon { color:#d6dbe3; }
+
+/* ===== Menu rebuilt from the owner's design (Oct 26): navy for FREE, black and gold for PRO. ===== */
+.sheet.navy { background:#121c2a; box-shadow:inset 0 1px 0 rgba(255,255,255,.06),0 -18px 48px -12px #000c; }
+.sheet.luxe { background:#08090b; border-top:1px solid #8a7240; box-shadow:inset 0 1px 0 rgba(243,220,155,.35),0 -18px 48px -12px #000e; }
+.luxe::before { display:none; }
+.sheet { gap:0; }
+.sheet > * { min-width:0; }
+.shHead { height:40px; margin-bottom:12px; }
+.shHead h2 { font-size:20px; font-weight:500; letter-spacing:.1em; background:none; color:inherit; -webkit-background-clip:border-box; background-clip:border-box; }
+.headTools { display:flex; align-items:center; gap:10px; }
+.sheet .refreshPill { display:flex; align-items:center; gap:6px; padding:7px 12px; border-radius:17px; font-size:12px; border:1px solid #243449; color:#c9d3df; }
+.refreshPill svg { width:14px; height:14px; color:#5de0b0; }
+.sheet .close { width:34px; height:34px; }
+.sheet.luxe .refreshPill { border-color:#3a3118; color:#d9d2c0; }
+.luxe .refreshPill svg { color:#d9b56a; }
+.sheet.luxe .close { background:transparent; box-shadow:none; border:1px solid #8a7240; color:#d9b56a; }
+.sheet.navy .close { background:#1c2a3d; color:#a9b6c6; }
+
+/* Sections: small, widely spaced headings; rows are icon, label, "›". */
+.grp { display:block; margin:0; }
+.grp h4 { display:flex; align-items:center; gap:8px; margin:18px 0 8px; padding:0; font-size:11px; font-weight:500; letter-spacing:.18em; color:#6f8097; }
+.luxe .grp h4 { color:#b8975a; }
+.luxe .grp h4::after { display:none; }
+.headCrown { width:14px; height:14px; color:#d9b56a; fill:#d9b56a; stroke:none; }
+.sheet .item { min-height:44px; padding:0 2px; gap:12px; font-size:14px; border-bottom:1px solid #1f2d3f; }
+.sheet.luxe .item { border-bottom-color:#1e1b14; }
+.grp .item:last-child { border-bottom:0; }
+.navy .itemIcon { color:#5de0b0; }
+.luxe .itemIcon { color:#d9b56a; }
+.navy .chev { color:#5c6d82; }
+.luxe .chev { color:#6d5a2e; }
+.itemNote { display:block; margin-top:1px; font-size:10px; color:#6f8097; }
+.liveTag { margin-left:auto; padding:2px 6px; border-radius:8px; font-size:9px; font-weight:700; letter-spacing:.08em; color:#1a1408; background:linear-gradient(120deg,#f3dc9b,#d9b56a 60%,#b8913f); }
+.liveTag + .chev { margin-left:8px; }
+
+/* PRO functions: four equal tiles, 2 x 2. */
+.proTiles { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; }
+.sheet .proTile { display:flex; align-items:center; gap:10px; height:52px; padding:0 12px; border-radius:14px; font-size:13px; font-weight:500; background:linear-gradient(180deg,#151517,#0c0c0e); border:1px solid #3a3118; box-shadow:inset 0 1px 0 rgba(243,220,155,.08); }
+.proTile span { white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+
+/* Member card: metallic gold frame, a gold disc with the crown, and a slow light passing over it. */
+.memberCard { position:relative; overflow:hidden; margin:0 0 2px; padding:1px; border-radius:18px; background:linear-gradient(120deg,#f6e3a8 0%,#9c7a34 28%,#f0d48c 52%,#8a6a28 76%,#e8c878 100%); box-shadow:0 6px 22px rgba(217,181,106,.18); }
+.memberInner { display:flex; align-items:center; gap:14px; padding:14px 16px; border-radius:17px; background:linear-gradient(120deg,#211a0b,#0d0b07 55%,#2a2010); }
+.crownDisc { display:grid; place-items:center; flex:none; width:40px; height:40px; border-radius:50%; background:linear-gradient(135deg,#fbeab8,#d4aa55 55%,#a67c24); color:#1a1408; box-shadow:inset 0 1px 0 rgba(255,255,255,.55),0 2px 8px rgba(0,0,0,.5); }
+.crownDisc svg { width:22px; height:22px; fill:currentColor; stroke:none; }
+.memberText { display:grid; flex:1; min-width:0; gap:2px; }
+.memberText b { font-family:"Noto Serif JP","Hiragino Mincho ProN","Yu Mincho","YuMincho","Times New Roman",serif; font-size:16px; font-weight:600; letter-spacing:.22em; white-space:nowrap; background:linear-gradient(180deg,#fff2c6 0%,#e9cf86 45%,#b8913f 100%); -webkit-background-clip:text; background-clip:text; color:transparent; }
+.memberText small { font-size:11px; color:#b8a77a; white-space:nowrap; }
+.sheet .memberCard .manage { font-size:11px; font-weight:500; white-space:nowrap; color:#d9b56a; }
+.memberCard::after { content:""; position:absolute; top:0; bottom:0; left:0; width:38%; pointer-events:none; background:linear-gradient(100deg,transparent,rgba(255,244,205,.28),transparent); transform:translateX(-130%) skewX(-18deg); animation:memberSheen 7s ease-in-out infinite; }
+@keyframes memberSheen { 0%,60% { transform:translateX(-130%) skewX(-18deg); } 100% { transform:translateX(330%) skewX(-18deg); } }
+@media (prefers-reduced-motion:reduce) { .memberCard::after { animation:none; display:none; } }
+
+/* RESOLUTE card (both menus): gold edge, navy into gold. */
+.sheet .resCard { display:flex; align-items:center; gap:14px; margin-top:20px; padding:14px 16px; border-radius:16px; border:1px solid #b8975a; background:linear-gradient(120deg,#16263d,#101b2b 60%,#2a2214); }
+.resEmblem { display:grid; place-items:center; flex:none; width:42px; height:42px; border-radius:50%; border:1.5px solid #d9b56a; color:#d9b56a; }
+.resEmblem svg { width:24px; height:24px; }
+.resText { display:grid; flex:1; min-width:0; gap:2px; }
+.resText b { font-family:"Noto Serif JP","Hiragino Mincho ProN","Yu Mincho","YuMincho","Times New Roman",serif; font-size:18px; font-weight:600; letter-spacing:.14em; color:#f1dfae; }
+.resText small { font-size:11px; color:#a9b6c6; }
+.resChev { width:18px; height:18px; color:#d9b56a; flex:none; }
+
+/* One line of guide links at the very bottom, with room beneath so nothing is cut off. */
+.footLinks { display:flex; justify-content:center; align-items:center; gap:12px; margin:20px 0 6px; font-size:12px; white-space:nowrap; color:#8697ab; }
+.luxe .footLinks { color:#8a7f66; }
+.footLinks i { font-style:normal; color:#2f3f55; }
+.luxe .footLinks i { color:#3a3118; }
+.sheet { padding-bottom:calc(64px + env(safe-area-inset-bottom)); }
+
+/* Owner seal: a dark shield with a gold gem on the gold disc. The sheet itself takes focus on open, so no button starts with a ring. */
+.crownDisc .ownerSeal { width:24px; height:24px; fill:#1a1408; stroke:none; }
+.crownDisc .ownerSeal .ownerGem { fill:#f3dc9b; }
+.sheet:focus, .sheet:focus-visible { outline:none; }
+
+/* ===== FREE menu, glass finish (owner's design, Oct 27): no boxed cards except the PRO card and RESOLUTE. ===== */
+.sheet.navy { background:radial-gradient(120% 60% at 100% 0%,rgba(122,152,204,.34) 0%,transparent 58%),linear-gradient(180deg,#1a2540 0%,#131b2d 45%,#0f1624 100%); }
+.navy .shHead h2 { font-size:22px; letter-spacing:.12em; }
+.sheet.navy .refreshPill { background:rgba(255,255,255,.03); border-color:rgba(150,175,215,.18); color:#b9c6da; }
+.sheet.navy .close { background:#1c2638; color:#a9b6c6; }
+.navy .grp h4 { display:flex; align-items:center; gap:10px; margin:20px 0 6px; font-size:12px; letter-spacing:.2em; }
+.navy .grp h4::before { content:""; flex:none; width:3px; height:14px; border-radius:2px; background:#5de0b0; box-shadow:0 0 8px rgba(93,224,176,.8),0 0 2px #5de0b0; }
+.navy .grp h4::after { content:""; flex:1; height:1px; background:linear-gradient(90deg,rgba(180,198,225,.4),transparent); }
+.navy .headText { background:linear-gradient(180deg,#f4f7fb 0%,#aab9cf 100%); -webkit-background-clip:text; background-clip:text; color:transparent; font-weight:600; }
+.navy .glassIcon { display:grid; place-items:center; flex:none; width:38px; height:38px; border-radius:50%; border:1px solid rgba(160,200,225,.32);
+  background:radial-gradient(circle at 30% 22%,rgba(255,255,255,.24),rgba(255,255,255,.05) 46%,rgba(93,224,176,.10) 100%),linear-gradient(145deg,#27425c,#15222f);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.38),inset 0 -6px 10px rgba(0,0,0,.28),0 4px 10px -4px rgba(0,0,0,.6); }
+.navy .glassIcon .itemIcon { width:18px; height:18px; color:#7fe6c2; }
+.luxe .glassIcon { display:contents; }
+.sheet.navy .item { min-height:58px; padding:0 2px; gap:14px; border-bottom:0; font-size:15px; font-weight:600; color:#eef2f8;
+  background:linear-gradient(90deg,rgba(176,196,226,.42),rgba(176,196,226,0) 92%) no-repeat bottom/100% 1px; }
+.navy .grp .item:last-child { background:none; }
+.navy .itemNote { margin-top:2px; font-size:10.5px; font-weight:400; color:#8393ad; }
+.sheet.navy .cardFree { padding:16px; border-radius:18px; background:linear-gradient(120deg,#1a2436,#2a2214); box-shadow:inset 0 0 0 1px #8a7240,0 8px 24px rgba(217,181,106,.12); }
+.navy .frTitle { font-size:17px; font-weight:700; }
+.navy .frPerks { grid-template-columns:repeat(3,auto); justify-content:space-between; margin-top:12px; padding-top:12px; border-top:1px solid #4a3d1f; gap:9px 6px; }
+.navy .frPerks span { font-size:11px; color:#d9d2c0; gap:6px; }

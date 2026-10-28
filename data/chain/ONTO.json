@@ -1,0 +1,359 @@
+{
+  "root": {
+    "ticker": "ONTO",
+    "name": "Onto Innovation",
+    "cik": 704532
+  },
+  "rows": [
+    {
+      "ja": "顧客(Ontoの年次報告に記載)",
+      "en": "Customers (named in Onto's annual report)"
+    },
+    {
+      "ja": "提携・投資・共同開発",
+      "en": "Partnerships, investments & collaboration"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "KLAC",
+    "NVMI",
+    "CAMT"
+  ],
+  "companies": [
+    {
+      "id": "TSM",
+      "ticker": "TSM",
+      "name": "TSMC",
+      "sub": "半導体受託製造",
+      "sub_en": "Foundry",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "年次報告で、台湾のファウンドリであるTSMCへの販売が売上の重要な部分を占めるとしている",
+          "text_en": "The annual report says Onto derives substantial revenue from sales to semiconductor device foundries in Taiwan such as Taiwan Semiconductor Manufacturing Company Ltd.",
+          "source": {
+            "label": "Onto Innovation 10-K",
+            "label_en": "Onto Innovation 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/704532/000119312526066937/onto-20260103.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "types of events on our revenue and cash flows could be material because we derive substantial revenue from sales to semiconductor device foundries in Taiwan such as Taiwan Semiconductor Manufacturing Company Ltd., from memory chip manufacturers in South Korea such as Samsung Electronics Co., Ltd., and from semiconductor device manufacturers in Japan",
+            "note": "主要顧客の例としての記載です。",
+            "note_en": "Cited as an example customer region."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "TSMCと共同で、先端ロジック向けにAtlasプラットフォームを用いた独自のプロセス制御ソリューションを開発した",
+          "text_en": "TSMC and Onto have developed unique process control solutions for advanced logic applications using the Atlas platform",
+          "source": {
+            "label": "Onto Innovation の発表",
+            "label_en": "Onto Innovation press release",
+            "url": "https://s24.q4cdn.com/480160064/files/doc_news/Onto-Innovation-Receives-TSMC-Honor-for-Unique-Advanced-Node-and-Packaging-Technologies-2023.pdf",
+            "level": "official",
+            "date": "2023-03-28",
+            "quote": "Working together, TSMC and Onto have developed unique process control solutions for advanced logic applications using our Atlas® platform",
+            "note": "2023年の発表で、やや古い情報です。",
+            "note_en": "From a 2023 release (older)."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SMSN",
+      "ticker": "Samsung",
+      "name": "サムスン電子",
+      "sub": "メモリ・半導体",
+      "sub_en": "Memory & chips",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "年次報告で、韓国のメモリメーカーであるSamsung Electronicsへの販売が売上の重要な部分を占めるとしている",
+          "text_en": "The annual report says Onto derives substantial revenue from sales to memory chip manufacturers in South Korea such as Samsung Electronics Co., Ltd.",
+          "source": {
+            "label": "Onto Innovation 10-K",
+            "label_en": "Onto Innovation 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/704532/000119312526066937/onto-20260103.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "from sales to semiconductor device foundries in Taiwan such as Taiwan Semiconductor Manufacturing Company Ltd., from memory chip manufacturers in South Korea such as Samsung Electronics Co., Ltd., and from semiconductor device manufacturers in Japan such as Toshiba Corporation.",
+            "note": "主要顧客の例としての記載です。",
+            "note_en": "Cited as an example customer region."
+          }
+        }
+      ],
+      "name_en": "Samsung Electronics"
+    },
+    {
+      "id": "RIGAKU",
+      "ticker": "Rigaku",
+      "name": "リガク・ホールディングス",
+      "sub": "X線分析装置",
+      "sub_en": "X-ray analytical equipment",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "リガクが、Onto Innovationと戦略的な資本・事業提携を結んだと発表した",
+          "text_en": "Rigaku announced a strategic capital and business alliance with Onto Innovation",
+          "source": {
+            "label": "Rigaku の発表",
+            "label_en": "Rigaku press release",
+            "url": "https://rigaku.com/about/news-and-press-releases/rigaku-strategic-alliance-with-onto-innovation",
+            "level": "official",
+            "date": "2026-04-20",
+            "quote": "Rigaku Holdings Corporation (headquarters: Akishima, Tokyo; President and CEO: Jun Kawakami; “Rigaku”), a global leader in X-ray analytical technologies, today announced that it has entered into a strategic capital and business alliance with Onto Innovation Inc."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "Ontoがリガクの株式27%(少数株主持分)の取得を完了した",
+          "text_en": "Onto completed the acquisition of a 27% minority equity stake in Rigaku",
+          "source": {
+            "label": "Onto Innovation の発表",
+            "label_en": "Onto Innovation press release",
+            "url": "https://s24.q4cdn.com/480160064/files/doc_news/Onto-Innovation-Completes-Strategic-Investment-in-Rigaku-Holdings-Corporation-2026.pdf",
+            "level": "official",
+            "date": "2026-08-10",
+            "quote": "Onto Innovation Inc. (NYSE: ONTO) today announced the successful closing of its previously announced acquisition of a 27% minority equity stake in Rigaku Holdings Corporation"
+          }
+        }
+      ],
+      "name_en": "Rigaku Holdings"
+    },
+    {
+      "id": "SKH",
+      "ticker": "SK hynix",
+      "name": "SKハイニックス",
+      "sub": "メモリ半導体",
+      "sub_en": "Memory chips",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Ontoは、HBM向けの欠陥防止システムの開発により、SK hynixから技術功績のBest Partner Awardを受けた",
+          "text_en": "Onto received the Best Partner Award for technology achievement from SK hynix for a defect prevention system for HBM applications",
+          "source": {
+            "label": "Onto Innovation の発表",
+            "label_en": "Onto Innovation press release",
+            "url": "https://s24.q4cdn.com/480160064/files/doc_news/Onto-Innovation-Receives-Best-Partner-Award-from-SK-hynix-for-Hidden-Defect-Prevention-in-High-Bandwidth-Memory-Production-2026.pdf",
+            "level": "official",
+            "date": "2026-10-12",
+            "quote": "SK hynix bestowed the honor on Onto, the only company recognized for technology achievement, for developing a defect prevention system with breakthrough measurement technology for high-bandwidth memory (HBM) applications."
+          }
+        }
+      ],
+      "name_en": "SK hynix"
+    },
+    {
+      "id": "LRCX",
+      "ticker": "LRCX",
+      "name": "ラム・リサーチ",
+      "sub": "半導体製造装置",
+      "sub_en": "Chip equipment",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Lam Researchは、OntoのPACE(パネル級パッケージング研究施設)の協力企業だ",
+          "text_en": "Lam Research is a collaborator at Onto's Packaging Applications Center of Excellence",
+          "source": {
+            "label": "Onto Innovation の発表",
+            "label_en": "Onto Innovation press release",
+            "url": "https://s24.q4cdn.com/480160064/files/doc_news/Onto-Innovation-Announces-Opening-of-Packaging-Applications-Center-of-Excellence-2024.pdf",
+            "level": "official",
+            "date": "2024-09-04",
+            "quote": "Collaborators include: ASMPT, Corning, Evatec, Lam Research, LPKF Laser & Electronics SE, MKS Instruments, Resonac Corporation, Taiyo Ink Mfg. Co., Ltd., and multiple others.",
+            "note": "2024年の発表で、協力企業一覧への記載です。",
+            "note_en": "From a 2024 release; list mention only."
+          }
+        }
+      ],
+      "name_en": "Lam Research"
+    },
+    {
+      "id": "GLW",
+      "ticker": "GLW",
+      "name": "コーニング",
+      "sub": "ガラス・素材",
+      "sub_en": "Glass & materials",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Corningは、OntoのPACE(パネル級パッケージング研究施設)に協力する",
+          "text_en": "Corning is a collaborator at Onto's Packaging Applications Center of Excellence",
+          "source": {
+            "label": "Onto Innovation の発表",
+            "label_en": "Onto Innovation press release",
+            "url": "https://s24.q4cdn.com/480160064/files/doc_news/Onto-Innovation-Announces-Opening-of-Packaging-Applications-Center-of-Excellence-2024.pdf",
+            "level": "official",
+            "date": "2024-09-04",
+            "quote": "Collaborators include: ASMPT, Corning, Evatec, Lam Research, LPKF Laser & Electronics SE, MKS Instruments, Resonac Corporation, Taiyo Ink Mfg. Co., Ltd., and multiple others.",
+            "note": "2024年の発表で、協力企業一覧への記載です。",
+            "note_en": "From a 2024 release; list mention only."
+          }
+        }
+      ],
+      "name_en": "Corning"
+    },
+    {
+      "id": "MKSI",
+      "ticker": "MKSI",
+      "name": "MKSインスツルメンツ",
+      "sub": "半導体装置部品",
+      "sub_en": "Equipment subsystems",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "MKS Instrumentsは、OntoのPACE(パネル級パッケージング研究施設)の協力企業に加わる",
+          "text_en": "MKS Instruments is a collaborator at Onto's Packaging Applications Center of Excellence",
+          "source": {
+            "label": "Onto Innovation の発表",
+            "label_en": "Onto Innovation press release",
+            "url": "https://s24.q4cdn.com/480160064/files/doc_news/Onto-Innovation-Announces-Opening-of-Packaging-Applications-Center-of-Excellence-2024.pdf",
+            "level": "official",
+            "date": "2024-09-04",
+            "quote": "Collaborators include: ASMPT, Corning, Evatec, Lam Research, LPKF Laser & Electronics SE, MKS Instruments, Resonac Corporation, Taiyo Ink Mfg. Co., Ltd., and multiple others.",
+            "note": "2024年の発表で、協力企業一覧への記載です。",
+            "note_en": "From a 2024 release; list mention only."
+          }
+        }
+      ],
+      "name_en": "MKS Instruments"
+    },
+    {
+      "id": "RESONAC",
+      "ticker": "Resonac",
+      "name": "レゾナック・ホールディングス",
+      "sub": "半導体材料",
+      "sub_en": "Semiconductor materials",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Resonacは、OntoのPACE(パネル級パッケージング研究施設)の協力企業の一社となる",
+          "text_en": "Resonac is a collaborator at Onto's Packaging Applications Center of Excellence",
+          "source": {
+            "label": "Onto Innovation の発表",
+            "label_en": "Onto Innovation press release",
+            "url": "https://s24.q4cdn.com/480160064/files/doc_news/Onto-Innovation-Announces-Opening-of-Packaging-Applications-Center-of-Excellence-2024.pdf",
+            "level": "official",
+            "date": "2024-09-04",
+            "quote": "Collaborators include: ASMPT, Corning, Evatec, Lam Research, LPKF Laser & Electronics SE, MKS Instruments, Resonac Corporation, Taiyo Ink Mfg. Co., Ltd., and multiple others.",
+            "note": "2024年の発表で、協力企業一覧への記載です。",
+            "note_en": "From a 2024 release; list mention only."
+          }
+        }
+      ],
+      "name_en": "Resonac Holdings"
+    },
+    {
+      "id": "KLAC",
+      "ticker": "KLAC",
+      "name": "KLA",
+      "sub": "半導体検査・計測",
+      "sub_en": "Process control",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Onto Innovationと競合する",
+          "text_en": "Competes with Onto Innovation",
+          "source": {
+            "label": "KLA 10-K",
+            "label_en": "KLA 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/319201/000031920126000027/klac-20260630.htm",
+            "level": "official",
+            "date": "2026-08-06",
+            "quote": "In each of our product markets, we have many competitors, including companies such as Applied Materials, Inc., ASML Holding N.V., Hitachi High-Tech Corporation, Lasertec, Inc. and Onto Innovation, Inc., some of which may have greater financial, research, engineering, manufacturing and marketing resources than we have."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "Onto Innovationと競合する",
+          "text_en": "Competes with Onto Innovation",
+          "source": {
+            "label": "Onto Innovation 10-K",
+            "label_en": "Onto Innovation 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/704532/000119312526066937/onto-20260103.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "In automated systems for the semiconductor industry, our principal competitors are KLA Corporation (“KLA”) and Nova Ltd."
+          }
+        }
+      ]
+    },
+    {
+      "id": "NVMI",
+      "ticker": "NVMI",
+      "name": "Nova",
+      "sub": "半導体計測",
+      "sub_en": "Metrology",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Onto Innovationと競合する",
+          "text_en": "Competes with Onto Innovation",
+          "source": {
+            "label": "Onto Innovation 10-K",
+            "label_en": "Onto Innovation 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/704532/000119312526066937/onto-20260103.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "In automated systems for the semiconductor industry, our principal competitors are KLA Corporation (“KLA”) and Nova Ltd."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "Onto Innovationと競合する",
+          "text_en": "Competes with Onto Innovation",
+          "source": {
+            "label": "Nova 20-F",
+            "label_en": "Nova 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/1109345/000117891326000504/zk2634307.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "We compete mainly with Onto Innovation Inc., and KLA Corp., which manufacture and sell CD,"
+          }
+        }
+      ]
+    },
+    {
+      "id": "CAMT",
+      "ticker": "CAMT",
+      "name": "Camtek",
+      "sub": "検査・計測装置",
+      "sub_en": "Inspection & metrology",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Onto Innovationと競合する",
+          "text_en": "Competes with Onto Innovation",
+          "source": {
+            "label": "Onto Innovation 10-K",
+            "label_en": "Onto Innovation 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/704532/000119312526066937/onto-20260103.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Our principal competitors for advanced packaging inspection are KLA and Camtek Ltd."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

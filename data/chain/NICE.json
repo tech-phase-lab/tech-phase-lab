@@ -1,0 +1,285 @@
+{
+  "root": {
+    "ticker": "NICE",
+    "name": "NiCE",
+    "cik": 1003935
+  },
+  "rows": [
+    {
+      "ja": "クラウド基盤の提供元",
+      "en": "Cloud platform providers",
+      "above": true
+    },
+    {
+      "ja": "金融機関(融資・預託)",
+      "en": "Financial institutions (credit & depositary)"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "AMZN",
+    "CSCO",
+    "FIVN",
+    "CRM",
+    "ORCL"
+  ],
+  "companies": [
+    {
+      "id": "AMZN",
+      "ticker": "AMZN",
+      "name": "Amazon",
+      "sub": "クラウド",
+      "sub_en": "Cloud",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "AmazonはNiCEにクラウド基盤を提供する戦略パートナー",
+          "text_en": "Amazon is a strategic partner that provides NiCE with cloud platforms",
+          "source": {
+            "label": "NiCE 20-F",
+            "label_en": "NiCE 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/1003935/000100393526000010/nice-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "We rely on cloud computing platforms provided by third parties, including PaaS provided by strategic partners, such as Amazon and Microsoft."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "Amazon ConnectはCCaaS市場でNiCEと競合する",
+          "text_en": "Amazon Connect competes with NiCE in the CCaaS market",
+          "source": {
+            "label": "NiCE 20-F",
+            "label_en": "NiCE 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/1003935/000100393526000010/nice-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "In the CCaaS market, which is a part of the broader Contact Center Infrastructure market that is still mainly held by traditional on-premises players, we compete against Amazon Connect, Avaya, Cisco, Five9, Genesys, and TalkDesk, as well as other niche vendors."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MSFT",
+      "ticker": "MSFT",
+      "name": "Microsoft",
+      "sub": "ソフト・クラウド",
+      "sub_en": "Software & cloud",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "MicrosoftはNiCEのクラウド基盤を支える戦略パートナーだ",
+          "text_en": "Microsoft is a strategic partner that provides NiCE with cloud platforms",
+          "source": {
+            "label": "NiCE 20-F",
+            "label_en": "NiCE 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/1003935/000100393526000010/nice-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "We rely on cloud computing platforms provided by third parties, including PaaS provided by strategic partners, such as Amazon and Microsoft."
+          }
+        }
+      ]
+    },
+    {
+      "id": "JPM",
+      "ticker": "JPMorgan",
+      "name": "JPモルガン・チェース",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "NICE Systemsが、JPMorgan Chase Bank, N.A.を管理代理人とする3億米ドルの優先担保付リボルビング融資枠のクレジット契約を結んだ",
+          "text_en": "NICE Systems entered into a secured Credit Agreement with JPMorgan Chase Bank, N.A. as administrative agent for a $300 million senior secured revolving facility",
+          "source": {
+            "label": "NiCE 20-F",
+            "label_en": "NiCE 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/1003935/000100393526000010/nice-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "(“NICE Systems”) entered into a secured Credit Agreement with the lenders party thereto and JPMorgan Chase Bank, N.A., as administrative agent (the “Credit Agreement”), which provides for a senior secured revolving facility in an aggregate amount of $300 million USD.",
+            "note": "融資関係の記載です。",
+            "note_en": "Financing relationship."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "JPMorgan Chase Bank, N.A.がADRの預託銀行を務めている",
+          "text_en": "JPMorgan Chase Bank, N.A. is the depositary under the ADR Deposit Agreement",
+          "source": {
+            "label": "NiCE 20-F",
+            "label_en": "NiCE 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/1003935/000100393526000010/nice-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Set forth below is a summary of certain provisions in relation to charges and other payments under the Deposit Agreement, as amended, among NiCE, JPMorgan Chase Bank, N.A. as depositary (the “Depositary”), and the owners and holders from time to time of ADRs issued thereunder (the “Deposit Agreement”)."
+          }
+        }
+      ],
+      "name_en": "JPMorgan Chase"
+    },
+    {
+      "id": "CSCO",
+      "ticker": "CSCO",
+      "name": "Cisco",
+      "sub": "ネットワーク機器",
+      "sub_en": "Networking",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "CiscoはCCaaS市場でNiCEの競合に当たる",
+          "text_en": "Cisco competes with NiCE in the CCaaS market",
+          "source": {
+            "label": "NiCE 20-F",
+            "label_en": "NiCE 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/1003935/000100393526000010/nice-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "In the CCaaS market, which is a part of the broader Contact Center Infrastructure market that is still mainly held by traditional on-premises players, we compete against Amazon Connect, Avaya, Cisco, Five9, Genesys, and TalkDesk, as well as other niche vendors."
+          }
+        }
+      ]
+    },
+    {
+      "id": "FIVN",
+      "ticker": "FIVN",
+      "name": "Five9",
+      "sub": "コンタクトセンター",
+      "sub_en": "Contact center",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Five9もCCaaS市場でNiCEと競う",
+          "text_en": "Five9 competes with NiCE in the CCaaS market",
+          "source": {
+            "label": "NiCE 20-F",
+            "label_en": "NiCE 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/1003935/000100393526000010/nice-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "In the CCaaS market, which is a part of the broader Contact Center Infrastructure market that is still mainly held by traditional on-premises players, we compete against Amazon Connect, Avaya, Cisco, Five9, Genesys, and TalkDesk, as well as other niche vendors."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CRM",
+      "ticker": "CRM",
+      "name": "Salesforce",
+      "sub": "CRM・クラウド",
+      "sub_en": "CRM & cloud",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Salesforceは対話型・エージェント型AI市場でNiCEの競合となる",
+          "text_en": "Salesforce competes with NiCE in the Conversational and Agentic AI market",
+          "source": {
+            "label": "NiCE 20-F",
+            "label_en": "NiCE 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/1003935/000100393526000010/nice-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "In the Conversational and Agentic AI market, we compete against vendors such as Kore.ai, Sierra.ai, Cresta and Salesforce."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ORCL",
+      "ticker": "ORCL",
+      "name": "Oracle",
+      "sub": "データベース・クラウド",
+      "sub_en": "Database & cloud",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "OracleはNiCEとアンチ・マネーロンダリング市場で競合関係にある",
+          "text_en": "Oracle competes with NiCE in the Anti-Money Laundering market",
+          "source": {
+            "label": "NiCE 20-F",
+            "label_en": "NiCE 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/1003935/000100393526000010/nice-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "In the Anti-Money Laundering market we compete against vendors such as SAS, Oracle and Quantexa."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "金融市場コンプライアンス市場でも、OracleはNiCEのライバルだ",
+          "text_en": "Oracle also competes with NiCE in the Financial Markets Compliance market",
+          "source": {
+            "label": "NiCE 20-F",
+            "label_en": "NiCE 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/1003935/000100393526000010/nice-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "In the Financial Markets Compliance market, we compete against vendors such as SMARTS (Nasdaq), Oracle and SAS."
+          }
+        }
+      ]
+    },
+    {
+      "id": "EGHT",
+      "ticker": "EGHT",
+      "name": "8x8",
+      "sub": "クラウド通信",
+      "sub_en": "Cloud communications",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "NiCEと競合する",
+          "text_en": "Competes with NiCE",
+          "source": {
+            "label": "NiCE 20-F",
+            "label_en": "NiCE 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/1003935/000100393526000010/nice-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "We also compete against certain UCaaS and collaboration software vendors such as 8x8, Vonage and Zoom, which offer basic CCaaS capabilities."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ZM",
+      "ticker": "ZM",
+      "name": "Zoom",
+      "sub": "ビデオ会議",
+      "sub_en": "Video conferencing",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ZoomはUCaaS・コラボ系ベンダーとして基本的なCCaaS機能を持ち、NiCEと競合する",
+          "text_en": "Zoom, a UCaaS and collaboration vendor offering basic CCaaS capabilities, competes with NiCE",
+          "source": {
+            "label": "NiCE 20-F",
+            "label_en": "NiCE 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/1003935/000100393526000010/nice-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "We also compete against certain UCaaS and collaboration software vendors such as 8x8, Vonage and Zoom, which offer basic CCaaS capabilities."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

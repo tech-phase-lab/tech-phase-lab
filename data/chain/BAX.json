@@ -1,0 +1,118 @@
+{
+  "root": {
+    "ticker": "BAX",
+    "name": "バクスター・インターナショナル",
+    "cik": 10456,
+    "name_en": "Baxter International"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "CAH",
+      "ticker": "CAH",
+      "name": "カーディナル・ヘルス",
+      "sub": "医薬品・医療流通",
+      "sub_en": "Healthcare distribution",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "米国で自社製品の相当部分を物流センターで保管・出荷している",
+          "text_en": "In the United States, Cardinal Health warehouses and ships a significant portion of Baxter's products through its distribution centers",
+          "source": {
+            "label": "Baxter 10-K(2025年12月31日期)",
+            "label_en": "Baxter 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/10456/000162828026007733/bax-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "In the United States, third parties, such as Cardinal Health, Inc. and Medline Inc., warehouse and ship a significant portion of our products through their distribution centers."
+          }
+        }
+      ],
+      "name_en": "Cardinal Health"
+    },
+    {
+      "id": "MEDLINE",
+      "ticker": "Medline",
+      "name": "メドライン",
+      "sub": "医療用品の流通",
+      "sub_en": "Medical supply distribution",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "米国で自社製品の相当部分の保管・出荷を担う",
+          "text_en": "In the United States, Medline warehouses and ships a significant portion of Baxter's products through its distribution centers",
+          "source": {
+            "label": "Baxter 10-K(2025年12月31日期)",
+            "label_en": "Baxter 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/10456/000162828026007733/bax-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "In the United States, third parties, such as Cardinal Health, Inc. and Medline Inc., warehouse and ship a significant portion of our products through their distribution centers."
+          }
+        }
+      ],
+      "name_en": "Medline"
+    },
+    {
+      "id": "VANTIVE",
+      "ticker": "Vantive Health",
+      "name": "バンティブ・ヘルス",
+      "sub": "腎ケア事業",
+      "sub_en": "Kidney care",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "腎ケア事業の製造供給契約に基づき、同社向けに製品を販売している",
+          "text_en": "Baxter sells products to Vantive under the Kidney Care manufacturing and supply agreement (MSA)",
+          "source": {
+            "label": "Baxter 10-K(2025年12月31日期)",
+            "label_en": "Baxter 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/10456/000162828026007733/bax-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "Other sales not allocated to a segment primarily include sales to Vantive, pursuant to the Kidney Care MSA, and sales of products and services provided directly through certain of our manufacturing facilities."
+          }
+        }
+      ],
+      "name_en": "Vantive Health"
+    },
+    {
+      "id": "CARLYLE",
+      "ticker": "Carlyle Group",
+      "name": "カーライル・グループ",
+      "sub": "投資会社",
+      "sub_en": "Investment firm",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "腎ケア事業をカーライルに売却する取引を完了した",
+          "text_en": "Baxter completed the sale of its Kidney Care business to Carlyle for $3.80 billion in cash, subject to adjustments",
+          "source": {
+            "label": "Baxter 10-K(2025年12月31日期)",
+            "label_en": "Baxter 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/10456/000162828026007733/bax-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "On January 31, 2025, we completed the sale of our Kidney Care business to Carlyle for an aggregate purchase price of $3.80 billion in cash, subject to certain closing cash, working capital and debt adjustments."
+          }
+        }
+      ],
+      "name_en": "Carlyle Group"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

@@ -1,0 +1,166 @@
+{
+  "root": {
+    "ticker": "HAS",
+    "name": "ハズブロ",
+    "cik": 46080,
+    "name_en": "Hasbro"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "AMZN",
+      "ticker": "AMZN",
+      "name": "アマゾン・ドット・コム",
+      "sub": "EC小売",
+      "sub_en": "E-commerce",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "最大の顧客のひとつで、連結売上の11%を占める",
+          "text_en": "Amazon.com is one of the largest customers, at 11% of consolidated net revenues",
+          "source": {
+            "label": "ハズブロ 10-K(2025-12-28)",
+            "label_en": "Hasbro 10-K (fiscal year ended 2025-12-28)",
+            "url": "https://www.sec.gov/Archives/edgar/data/46080/000004608026000011/has-20251228.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Our largest customers, Amazon.com, Inc. and Wal-Mart, Inc. together represented 20% of consolidated global net revenues, with each accounting for 11% and 9%, respectively."
+          }
+        }
+      ],
+      "name_en": "Amazon.com"
+    },
+    {
+      "id": "WMT",
+      "ticker": "WMT",
+      "name": "ウォルマート",
+      "sub": "小売",
+      "sub_en": "Retail",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "最大の顧客のひとつで、連結売上の9%を占める",
+          "text_en": "Walmart is one of the largest customers, at 9% of consolidated net revenues",
+          "source": {
+            "label": "ハズブロ 10-K(2025-12-28)",
+            "label_en": "Hasbro 10-K (fiscal year ended 2025-12-28)",
+            "url": "https://www.sec.gov/Archives/edgar/data/46080/000004608026000011/has-20251228.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Our largest customers, Amazon.com, Inc. and Wal-Mart, Inc. together represented 20% of consolidated global net revenues, with each accounting for 11% and 9%, respectively."
+          }
+        }
+      ],
+      "name_en": "Walmart"
+    },
+    {
+      "id": "DIS",
+      "ticker": "DIS",
+      "name": "ウォルト・ディズニー",
+      "sub": "ライセンス提供元",
+      "sub_en": "Licensor",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "契約の延長を含め、主要パートナーとの関係を強める",
+          "text_en": "Hasbro is strengthening partnerships including the extension of its agreement with Disney",
+          "source": {
+            "label": "ハズブロ 10-K(2025-12-28)",
+            "label_en": "Hasbro 10-K (fiscal year ended 2025-12-28)",
+            "url": "https://www.sec.gov/Archives/edgar/data/46080/000004608026000011/has-20251228.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "strengthening existing partnerships with key partners, including the extension of our agreement with The Walt Disney Company"
+          }
+        }
+      ],
+      "name_en": "The Walt Disney Company"
+    },
+    {
+      "id": "SCOPELY",
+      "ticker": "Scopely",
+      "name": "スコープリー",
+      "sub": "モバイルゲーム",
+      "sub_en": "Mobile games",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "モノポリーGo!を手がけるデジタルライセンスの提携先",
+          "text_en": "Scopely is the digital licensing partner behind Monopoly Go!",
+          "source": {
+            "label": "ハズブロ 10-K(2025-12-28)",
+            "label_en": "Hasbro 10-K (fiscal year ended 2025-12-28)",
+            "url": "https://www.sec.gov/Archives/edgar/data/46080/000004608026000011/has-20251228.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Digital licensing was once again led by Monopoly Go!, a mobile game from our partners at Scopely, Inc., and remains a meaningful contributor to licensing revenues."
+          }
+        }
+      ],
+      "name_en": "Scopely"
+    },
+    {
+      "id": "LARIAN",
+      "ticker": "Larian Studios",
+      "name": "ラリアン・スタジオ",
+      "sub": "ゲーム開発",
+      "sub_en": "Game development",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ダンジョンズ&ドラゴンズ原作のゲームを共同で世に出した",
+          "text_en": "Larian Studios is a partner on the DUNGEONS & DRAGONS-based video game",
+          "source": {
+            "label": "ハズブロ 10-K(2025-12-28)",
+            "label_en": "Hasbro 10-K (fiscal year ended 2025-12-28)",
+            "url": "https://www.sec.gov/Archives/edgar/data/46080/000004608026000011/has-20251228.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "the DUNGEONS & DRAGONS-based role-playing video game from our partners at Larian Studios"
+          }
+        }
+      ],
+      "name_en": "Larian Studios"
+    },
+    {
+      "id": "MERLIN",
+      "ticker": "Merlin",
+      "name": "マーリン・エンターテインメント",
+      "sub": "テーマパーク",
+      "sub_en": "Theme parks",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ペッパピッグのテーマパークなどの体験施設で組んでいる",
+          "text_en": "Merlin Entertainment runs Peppa Pig theme parks and play experiences with Hasbro",
+          "source": {
+            "label": "ハズブロ 10-K(2025-12-28)",
+            "label_en": "Hasbro 10-K (fiscal year ended 2025-12-28)",
+            "url": "https://www.sec.gov/Archives/edgar/data/46080/000004608026000011/has-20251228.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Peppa Pig Theme Parks and several Peppa Pig World of Play experiences with Merlin Entertainment"
+          }
+        }
+      ],
+      "name_en": "Merlin Entertainment"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

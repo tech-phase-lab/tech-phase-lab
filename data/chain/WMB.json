@@ -1,0 +1,190 @@
+{
+  "root": {
+    "ticker": "WMB",
+    "name": "ウィリアムズ・カンパニーズ",
+    "cik": 107263,
+    "name_en": "Williams Companies"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "DUK",
+      "ticker": "DUK",
+      "name": "デューク・エナジー",
+      "sub": "電力・ガス事業者",
+      "sub_en": "Utility",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Transcoの最大の顧客で、同社の営業収益の約9%を占めた",
+          "text_en": "Duke Energy was Transco's largest customer at about 9 percent of its operating revenue",
+          "source": {
+            "label": "Williams Companies 10-K(2025年12月期)",
+            "label_en": "Williams Companies 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/107263/000010726326000006/wmb-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "For the year ended December 31, 2025, Transco’s largest customer was Duke Energy Corporation, which accounted for approximately 9 percent of its operating revenue"
+          }
+        }
+      ],
+      "name_en": "Duke Energy"
+    },
+    {
+      "id": "PSE",
+      "ticker": "Puget Sound Energy",
+      "name": "ピュージェット・サウンド・エナジー",
+      "sub": "電力・ガス事業者",
+      "sub_en": "Utility",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "NWPの最大の顧客で、同社の営業収益の約31%を占めた",
+          "text_en": "Puget Sound Energy was NWP's largest customer at about 31 percent of its operating revenue",
+          "source": {
+            "label": "Williams Companies 10-K(2025年12月期)",
+            "label_en": "Williams Companies 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/107263/000010726326000006/wmb-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "NWP’s largest customer was Puget Sound Energy, Inc., which accounted for approximately 31 percent of its operating revenue"
+          }
+        }
+      ],
+      "name_en": "Puget Sound Energy"
+    },
+    {
+      "id": "EXE",
+      "ticker": "EXE",
+      "name": "エクスパンド・エナジー",
+      "sub": "天然ガス生産者",
+      "sub_en": "Gas producer",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "旧チェサピーク・エナジーで、ロイヤルティ訴訟で被告に挙げられた顧客の一社である",
+          "text_en": "Expand Energy, formerly Chesapeake, is among customers named in royalty lawsuits",
+          "source": {
+            "label": "Williams Companies 10-K(2025年12月期)",
+            "label_en": "Williams Companies 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/107263/000010726326000006/wmb-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Certain customers, including Expand Energy Corporation (formerly Chesapeake Energy Corporation or Chesapeake), have been named in various lawsuits alleging underpayment of royalties"
+          }
+        }
+      ],
+      "name_en": "Expand Energy"
+    },
+    {
+      "id": "BLUERACER",
+      "ticker": "Blue Racer",
+      "name": "ブルー・レーサー・ミッドストリーム",
+      "sub": "中流合弁会社",
+      "sub_en": "Midstream JV",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ユティカ層などの中流資産を持つ合弁会社に50%出資している",
+          "text_en": "Williams owns 50 percent of the Utica-focused midstream joint venture",
+          "source": {
+            "label": "Williams Companies 10-K(2025年12月期)",
+            "label_en": "Williams Companies 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/107263/000010726326000006/wmb-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Williams operates and owns a 50 percent interest in Blue Racer Midstream LLC (Blue Racer). Blue Racer is a joint venture to own, operate, develop, and acquire midstream assets in the Utica Shale and certain adjacent areas in the Marcellus Shale."
+          }
+        }
+      ],
+      "name_en": "Blue Racer Midstream"
+    },
+    {
+      "id": "LAUREL",
+      "ticker": "Laurel Mountain",
+      "name": "ローレル・マウンテン・ミッドストリーム",
+      "sub": "集ガス合弁会社",
+      "sub_en": "Gathering JV",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ペンシルベニア州西部の集ガス網を持つ合弁会社に69%出資している",
+          "text_en": "Williams owns 69 percent of the joint venture with a gathering system in western Pennsylvania",
+          "source": {
+            "label": "Williams Companies 10-K(2025年12月期)",
+            "label_en": "Williams Companies 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/107263/000010726326000006/wmb-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Williams operates and owns a 69 percent interest in a joint venture, Laurel Mountain Midstream, LLC (Laurel Mountain), which includes a 1,151-mile gathering system in western Pennsylvania"
+          }
+        }
+      ],
+      "name_en": "Laurel Mountain Midstream"
+    },
+    {
+      "id": "LALNG",
+      "ticker": "Louisiana LNG",
+      "name": "ルイジアナLNG",
+      "sub": "LNG輸出事業",
+      "sub_en": "LNG export project",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "LNG輸出施設を開発する同社の持分10%を2025年10月に取得した",
+          "text_en": "Williams acquired a 10 percent equity-method investment in Louisiana LNG in October 2025",
+          "source": {
+            "label": "Williams Companies 10-K(2025年12月期)",
+            "label_en": "Williams Companies 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/107263/000010726326000006/wmb-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "In October 2025, Williams closed on various agreements with the same counterparty to acquire a 10 percent equity-method investment in Louisiana LNG LLC (Louisiana LNG), which is developing a fully permitted LNG export facility"
+          }
+        }
+      ],
+      "name_en": "Louisiana LNG"
+    },
+    {
+      "id": "COGENTRIX",
+      "ticker": "Cogentrix",
+      "name": "コージェントリックス共同投資ファンド",
+      "sub": "ガス火力投資ファンド",
+      "sub_en": "Gas power fund",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "少数持分を取得しており、同ファンドは11のガス火力発電所に持分を持つ",
+          "text_en": "Williams bought a minority interest, with interests in 11 gas power plants",
+          "source": {
+            "label": "Williams Companies 10-K(2025年12月期)",
+            "label_en": "Williams Companies 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/107263/000010726326000006/wmb-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "In March 2025, Williams purchased a minority interest in Cogentrix Co-Investment Fund, LP (Cogentrix) which is accounted for as an equity-method investment within the Gas & NGL Marketing Services segment. Cogentrix owns interests in 11 natural gas power plants"
+          }
+        }
+      ],
+      "name_en": "Cogentrix Co-Investment Fund"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

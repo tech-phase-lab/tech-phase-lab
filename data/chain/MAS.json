@@ -1,0 +1,220 @@
+{
+  "root": {
+    "ticker": "MAS",
+    "name": "マスコ",
+    "cik": 62996,
+    "name_en": "Masco"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [
+    "FBIN",
+    "SPB",
+    "ZWS",
+    "SHW",
+    "RPM"
+  ],
+  "companies": [
+    {
+      "id": "HD",
+      "ticker": "HD",
+      "name": "ホーム・デポ",
+      "sub": "住宅リフォーム小売",
+      "sub_en": "Home improvement retail",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "2025年の同社向け売上高は29億ドルで、連結売上高の約38%を占めた",
+          "text_en": "Net sales to The Home Depot were $2.9 billion in 2025, approximately 38 percent of consolidated net sales",
+          "source": {
+            "label": "Masco 10-K(2025年12月31日期)",
+            "label_en": "Masco 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/62996/000006299626000005/mas-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "In 2025, our net sales to The Home Depot were $2.9 billion (approximately 38 percent of our consolidated net sales), and our net sales to Ferguson and Lowe’s were each less than 10 percent of our consolidated net sales."
+          }
+        }
+      ],
+      "name_en": "The Home Depot"
+    },
+    {
+      "id": "FERG",
+      "ticker": "FERG",
+      "name": "ファーガソン",
+      "sub": "配管資材の卸売",
+      "sub_en": "Plumbing distribution",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "同社向け売上高は連結売上高の10%未満だった",
+          "text_en": "Net sales to Ferguson were less than 10 percent of consolidated net sales",
+          "source": {
+            "label": "Masco 10-K(2025年12月31日期)",
+            "label_en": "Masco 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/62996/000006299626000005/mas-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "In 2025, our net sales to The Home Depot were $2.9 billion (approximately 38 percent of our consolidated net sales), and our net sales to Ferguson and Lowe’s were each less than 10 percent of our consolidated net sales."
+          }
+        }
+      ],
+      "name_en": "Ferguson"
+    },
+    {
+      "id": "LOW",
+      "ticker": "LOW",
+      "name": "ロウズ",
+      "sub": "住宅リフォーム小売",
+      "sub_en": "Home improvement retail",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "同社向け売上高は連結売上高の10%未満だった",
+          "text_en": "Net sales to Lowe's were less than 10 percent of consolidated net sales",
+          "source": {
+            "label": "Masco 10-K(2025年12月31日期)",
+            "label_en": "Masco 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/62996/000006299626000005/mas-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "In 2025, our net sales to The Home Depot were $2.9 billion (approximately 38 percent of our consolidated net sales), and our net sales to Ferguson and Lowe’s were each less than 10 percent of our consolidated net sales."
+          }
+        }
+      ],
+      "name_en": "Lowe's"
+    },
+    {
+      "id": "FBIN",
+      "ticker": "FBIN",
+      "name": "フォーチュン・ブランズ・イノベーションズ",
+      "sub": "水栓・住宅設備",
+      "sub_en": "Faucets & home products",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "水栓などの配管製品で競合する(モーエンなどのブランド)",
+          "text_en": "Competes with Masco's plumbing products through brands such as Moen",
+          "source": {
+            "label": "Masco 10-K(2025年12月31日期)",
+            "label_en": "Masco 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/62996/000006299626000005/mas-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "Fortune Brands Innovations, Inc.'s Moen, Rohl and Riobel brands"
+          }
+        }
+      ],
+      "name_en": "Fortune Brands Innovations"
+    },
+    {
+      "id": "SPB",
+      "ticker": "SPB",
+      "name": "スペクトラム・ブランズ・ホールディングス",
+      "sub": "水栓・家庭用品",
+      "sub_en": "Faucets & household goods",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "フィスターの水栓ブランドで競合する",
+          "text_en": "Competes through its Pfister faucets brand",
+          "source": {
+            "label": "Masco 10-K(2025年12月31日期)",
+            "label_en": "Masco 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/62996/000006299626000005/mas-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "Spectrum Brands Holdings, Inc.'s Pfister faucets, Villeroy & Boch's Ideal Standard brand"
+          }
+        }
+      ],
+      "name_en": "Spectrum Brands Holdings"
+    },
+    {
+      "id": "ZWS",
+      "ticker": "ZWS",
+      "name": "ズーン・エルカイ・ウォーター・ソリューションズ",
+      "sub": "水まわり製品",
+      "sub_en": "Water solutions",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "配管製品の競合として名前が挙がる",
+          "text_en": "Named among the competitors in plumbing products",
+          "source": {
+            "label": "Masco 10-K(2025年12月31日期)",
+            "label_en": "Masco 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/62996/000006299626000005/mas-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "Villeroy & Boch's Ideal Standard brand, Zurn Elkay Water Solutions Corporation"
+          }
+        }
+      ],
+      "name_en": "Zurn Elkay Water Solutions"
+    },
+    {
+      "id": "SHW",
+      "ticker": "SHW",
+      "name": "シャーウィン・ウィリアムズ",
+      "sub": "塗料",
+      "sub_en": "Paints & coatings",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "塗料分野でミンワックスやバルスパーなどのブランドで競合する",
+          "text_en": "Competes in architectural coatings with brands such as Minwax and Valspar",
+          "source": {
+            "label": "Masco 10-K(2025年12月31日期)",
+            "label_en": "Masco 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/62996/000006299626000005/mas-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "The Sherwin‑Williams Company's Minwax, Sherwin-Williams, Thompson’s Water Seal, Valspar and Purdy brands"
+          }
+        }
+      ],
+      "name_en": "The Sherwin-Williams Company"
+    },
+    {
+      "id": "RPM",
+      "ticker": "RPM",
+      "name": "RPMインターナショナル",
+      "sub": "塗料・防錆材",
+      "sub_en": "Coatings & sealants",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "塗料分野でラストオレウムやジンサーのブランドで競合する",
+          "text_en": "Competes in architectural coatings with the Rust-Oleum and Zinsser brands",
+          "source": {
+            "label": "Masco 10-K(2025年12月31日期)",
+            "label_en": "Masco 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/62996/000006299626000005/mas-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "RPM International Inc.'s Rust-Oleum and Zinsser brands"
+          }
+        }
+      ],
+      "name_en": "RPM International"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

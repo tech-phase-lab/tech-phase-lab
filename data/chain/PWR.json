@@ -1,0 +1,238 @@
+{
+  "root": {
+    "ticker": "PWR",
+    "name": "クアンタ・サービシズ",
+    "cik": 1050915,
+    "name_en": "Quanta Services"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "AEP",
+      "ticker": "AEP",
+      "name": "アメリカン・エレクトリック・パワー",
+      "sub": "電力会社",
+      "sub_en": "Electric utility",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "主な顧客として名前が挙げられている電力会社の企業である",
+          "text_en": "American Electric Power is named among Quanta’s representative customers",
+          "source": {
+            "label": "クアンタ 10-K(2025年12月31日期)",
+            "label_en": "Quanta Services 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1050915/000105091526000006/pwr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Representative customers include: l American Electric Power Company, Inc. l National Grid plc l CenterPoint Energy, Inc."
+          }
+        }
+      ],
+      "name_en": "American Electric Power"
+    },
+    {
+      "id": "NGG",
+      "ticker": "NGG",
+      "name": "ナショナル・グリッド",
+      "sub": "電力・ガス会社",
+      "sub_en": "Electric & gas utility",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "主な顧客として名前が挙げられている電力・ガス会社の企業である",
+          "text_en": "National Grid is named among Quanta’s representative customers",
+          "source": {
+            "label": "クアンタ 10-K(2025年12月31日期)",
+            "label_en": "Quanta Services 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1050915/000105091526000006/pwr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Representative customers include: l American Electric Power Company, Inc. l National Grid plc l CenterPoint Energy, Inc."
+          }
+        }
+      ],
+      "name_en": "National Grid"
+    },
+    {
+      "id": "CNP",
+      "ticker": "CNP",
+      "name": "センターポイント・エナジー",
+      "sub": "電力・ガス会社",
+      "sub_en": "Electric & gas utility",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "主な顧客として名前が挙げられている電力・ガス会社の企業である",
+          "text_en": "CenterPoint Energy is named among Quanta’s representative customers",
+          "source": {
+            "label": "クアンタ 10-K(2025年12月31日期)",
+            "label_en": "Quanta Services 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1050915/000105091526000006/pwr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Representative customers include: l American Electric Power Company, Inc. l National Grid plc l CenterPoint Energy, Inc."
+          }
+        }
+      ],
+      "name_en": "CenterPoint Energy"
+    },
+    {
+      "id": "NEE",
+      "ticker": "NEE",
+      "name": "ネクステラ・エナジー",
+      "sub": "電力会社",
+      "sub_en": "Electric utility",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "主な顧客として名前が挙げられている電力会社の企業である",
+          "text_en": "NextEra Energy is named among Quanta’s representative customers",
+          "source": {
+            "label": "クアンタ 10-K(2025年12月31日期)",
+            "label_en": "Quanta Services 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1050915/000105091526000006/pwr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "l CenterPoint Energy, Inc. l NextEra Energy, Inc. l Comcast Corporation l NiSource, Inc."
+          }
+        }
+      ],
+      "name_en": "NextEra Energy"
+    },
+    {
+      "id": "CMCSA",
+      "ticker": "CMCSA",
+      "name": "コムキャスト",
+      "sub": "通信・メディア",
+      "sub_en": "Telecom & media",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "主な顧客として名前が挙げられている通信・メディアの企業である",
+          "text_en": "Comcast is named among Quanta’s representative customers",
+          "source": {
+            "label": "クアンタ 10-K(2025年12月31日期)",
+            "label_en": "Quanta Services 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1050915/000105091526000006/pwr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "l CenterPoint Energy, Inc. l NextEra Energy, Inc. l Comcast Corporation l NiSource, Inc."
+          }
+        }
+      ],
+      "name_en": "Comcast"
+    },
+    {
+      "id": "DUK",
+      "ticker": "DUK",
+      "name": "デューク・エナジー",
+      "sub": "電力会社",
+      "sub_en": "Electric utility",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "主な顧客として名前が挙げられている電力会社の企業である",
+          "text_en": "Duke Energy is named among Quanta’s representative customers",
+          "source": {
+            "label": "クアンタ 10-K(2025年12月31日期)",
+            "label_en": "Quanta Services 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1050915/000105091526000006/pwr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "l NiSource, Inc. l Duke Energy Corporation l Pattern Energy"
+          }
+        }
+      ],
+      "name_en": "Duke Energy"
+    },
+    {
+      "id": "EXC",
+      "ticker": "EXC",
+      "name": "エクセロン",
+      "sub": "電力会社",
+      "sub_en": "Electric utility",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "主な顧客として名前が挙げられている電力会社の企業である",
+          "text_en": "Exelon is named among Quanta’s representative customers",
+          "source": {
+            "label": "クアンタ 10-K(2025年12月31日期)",
+            "label_en": "Quanta Services 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1050915/000105091526000006/pwr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "l Puget Sound Energy, Inc. l Exelon Corporation l RWE AG l FirstEnergy Corp."
+          }
+        }
+      ],
+      "name_en": "Exelon"
+    },
+    {
+      "id": "WMB",
+      "ticker": "WMB",
+      "name": "ウィリアムズ・カンパニーズ",
+      "sub": "エネルギーインフラ",
+      "sub_en": "Energy infrastructure",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "主な顧客として名前が挙げられているエネルギーインフラの企業である",
+          "text_en": "Williams Companies is named among Quanta’s representative customers",
+          "source": {
+            "label": "クアンタ 10-K(2025年12月31日期)",
+            "label_en": "Quanta Services 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1050915/000105091526000006/pwr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "l The Southern Company l Idaho Power Company l The Williams Companies, Inc. l Invenergy LLC"
+          }
+        }
+      ],
+      "name_en": "Williams Companies"
+    },
+    {
+      "id": "LUMA",
+      "ticker": "LUMA Energy",
+      "name": "ルーマ・エナジー",
+      "sub": "プエルトリコの送配電",
+      "sub_en": "Puerto Rico T&D JV",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "プエルトリコの送配電網を運営する合弁会社である",
+          "text_en": "It is the Puerto Rico transmission and distribution joint venture of Quanta",
+          "source": {
+            "label": "クアンタ 10-K(2025年12月31日期)",
+            "label_en": "Quanta Services 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1050915/000105091526000006/pwr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "The receivables balances and revenues recognized are primarily related to services provided to LUMA Energy, LLC (LUMA), Quanta’s joint venture that operates and maintains the electric transmission and distribution system in Puerto Rico, at cost."
+          }
+        }
+      ],
+      "name_en": "LUMA Energy"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

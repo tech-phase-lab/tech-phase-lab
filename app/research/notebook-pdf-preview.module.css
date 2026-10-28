@@ -1,0 +1,26 @@
+.preview { position:fixed; inset:0; width:100%; height:100dvh; max-width:none; max-height:none; margin:0; padding:0; border:0; color:#e8edf3; background:#141b23; overflow:hidden; outline:none; }
+.preview::backdrop { background:#080d13; }
+.preview[open] { display:flex; flex-direction:column; }
+.header { display:flex; align-items:center; justify-content:space-between; flex-shrink:0; gap:10px; padding:calc(8px + env(safe-area-inset-top)) 14px 8px; border-bottom:1px solid #ffffff18; background:#101720; }
+.header button, .status button { min-height:32px; padding:4px 10px; border:1px solid transparent; border-radius:6px; background:transparent; color:inherit; font:inherit; font-size:14px; cursor:pointer; }
+.header button span { font-size:22px; margin-right:6px; vertical-align:-1px; }
+.header .save { color:#d3fff1; background:#294b48; border-color:#8be6cf66; min-width:66px; font-weight:600; }
+.header button:disabled { opacity:.45; cursor:wait; }
+.header button:focus-visible, .status button:focus-visible, .pageTap:focus-visible { outline:2px solid #8be6cf; outline-offset:2px; }
+.pages { overflow:auto; overscroll-behavior:contain; flex:1; min-height:0; padding:18px 12px calc(20px + env(safe-area-inset-bottom)); -webkit-overflow-scrolling:touch; }
+.page { width:100%; max-width:min(720px, calc((100dvh - 140px) * .70588)); margin:0 auto 20px; }
+.paper { position:relative; aspect-ratio:420 / 595; background:white; box-shadow:0 4px 16px #0005; }
+.paper canvas { display:block; width:100%; height:100%; }
+.page figcaption { text-align:center; padding:0 0 8px; color:#b3becb; font-size:12px; }
+.status { margin:48px 16px; text-align:center; color:#b3becb; }
+.status button { border-color:#8be6cf66; }
+@media (max-width:480px) { .pages { padding:12px 6px calc(14px + env(safe-area-inset-bottom)); } .header { padding-left:8px; padding-right:8px; } }
+
+.header .selectPages { border-color:#ffffff24; color:#cbd6df; white-space:nowrap; font-size:12px; }
+.header .selectPages[aria-pressed=true] { border-color:#f5d36188; color:#f5d361; }
+.selectedNumbers { display:flex; flex-wrap:wrap; justify-content:center; gap:6px; flex-shrink:0; max-height:20dvh; overflow:auto; padding:8px 12px; background:#101720; }
+.selectedNumbers>span { padding:3px 9px; border-radius:4px; background:#f5d361; color:#17212b; font-size:12px; font-weight:600; }
+.selectedNumbers>.selectionHint { background:transparent; color:#b3becb; font-weight:400; }
+.selectedPage figcaption { color:#f5d361; font-weight:600; }
+.pageTap { position:absolute; inset:0; width:100%; height:100%; padding:0; border:2px solid #ffffff55; background:transparent; cursor:pointer; touch-action:pan-y; }
+.pageTap[aria-pressed=true] { border:3px solid #f5d361; background:#f5d36122; }

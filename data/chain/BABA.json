@@ -1,0 +1,367 @@
+{
+  "root": {
+    "ticker": "BABA",
+    "name": "Alibaba",
+    "cik": 1577552
+  },
+  "rows": [
+    {
+      "ja": "提携先",
+      "en": "Partners",
+      "above": true
+    },
+    {
+      "ja": "顧客・採用企業",
+      "en": "Customers & adopters"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "BIDU",
+    "JD"
+  ],
+  "companies": [
+    {
+      "id": "SAP",
+      "ticker": "SAP",
+      "name": "SAP",
+      "sub": "業務ソフト",
+      "sub_en": "Business software",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "SAPとAlibaba Groupが戦略的提携の拡大を発表した(5月27日)",
+          "text_en": "SAP and Alibaba Group announced an extension of their strategic partnership on May 27",
+          "source": {
+            "label": "SAP 20-F",
+            "label_en": "SAP 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/1000184/000110465926020058/sap-20251231x20f.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "- On May 27, SAP and Alibaba Group announced an extension of their strategic partnership to accelerate cloud transformation."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "SAPのクラウド製品4種を、中国企業向けにAlibaba Cloudで段階的に提供する計画を、SAPとAlibabaが発表した",
+          "text_en": "SAP and Alibaba announced the phased launch of four SAP cloud solutions on Alibaba Cloud for Chinese enterprises",
+          "source": {
+            "label": "SAP 20-F",
+            "label_en": "SAP 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/1000184/000110465926020058/sap-20251231x20f.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "- Also on September 24, SAP and Alibaba announced plans to advance their strategic partnership with the phased launch of four SAP cloud solutions (SAP Cloud ERP, SAP Cloud ERP Private, SAP BTP, and SAP Integrated Business Planning) on Alibaba Cloud for Chinese enterprises in China."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MDB",
+      "ticker": "MDB",
+      "name": "MongoDB",
+      "sub": "データベース",
+      "sub_en": "Database",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "MongoDBは、Alibaba Cloudなどと組み、中国で認定MongoDB-as-a-Serviceを提供している",
+          "text_en": "MongoDB offers an authorized MongoDB-as-a-Service solution in China with Alibaba Cloud and Tencent Cloud",
+          "source": {
+            "label": "MongoDB 10-K",
+            "label_en": "MongoDB 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1441816/000162828026016799/mdb-20260131.htm",
+            "level": "official",
+            "date": "2026-03-11",
+            "quote": "We have expanded our global partner ecosystem with Alibaba Cloud and Tencent Cloud to offer an authorized MongoDB-as-a-Service solution in China, allowing their customers to easily adopt and consume our hosted solution.",
+            "note": "MongoDBの文書による記載です。",
+            "note_en": "As described in MongoDB's document."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SoftBank",
+      "ticker": "SoftBank",
+      "name": "ソフトバンクグループ",
+      "sub": "投資・通信",
+      "sub_en": "Investment & telecom",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Alipayの持分と支配権を手放した後、2011年7月にSoftBankおよびAltaba Inc.と基本契約を結んだ",
+          "text_en": "After the divestment of Alipay, the company entered into a framework agreement in July 2011 with SoftBank and Altaba Inc.",
+          "source": {
+            "label": "Alibaba 20-F",
+            "label_en": "Alibaba 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/1577552/000119312526231755/baba-20260331.htm",
+            "level": "official",
+            "date": "2026-05-20",
+            "quote": "After the divestment of our interest in and control over Alipay, we entered into a framework agreement in July 2011, or the 2011 framework agreement, with SoftBank, Altaba Inc.",
+            "note": "2011年の契約で、古い記載です。",
+            "note_en": "A 2011 agreement; older."
+          }
+        }
+      ],
+      "name_en": "SoftBank Group"
+    },
+    {
+      "id": "HPQ",
+      "ticker": "HPQ",
+      "name": "HP",
+      "sub": "パソコン・IT機器",
+      "sub_en": "PCs & IT hardware",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Alibaba CloudとHPが、中国でのAI PCの拡大に向けた協業の拡大を発表した",
+          "text_en": "Alibaba Cloud and HP announced an expanded collaboration to accelerate the growth of AI PCs in China",
+          "source": {
+            "label": "Alibaba Cloud の発表",
+            "label_en": "Alibaba Cloud press release",
+            "url": "https://www.alibabacloud.com/en/press-room/alibaba-cloud-and-hp-partner-on-qwen-powered?_p_lc=1",
+            "level": "official",
+            "date": "2025-07-22",
+            "quote": "Alibaba Cloud, the digital technology and intelligence backbone of Alibaba Group, and HP, have announced an expanded collaboration to accelerate the growth of AI PCs in China."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "AlibabaのQwen(30億パラメータ)を、HPのスマートアシスタントに組み込む",
+          "text_en": "Alibaba's Qwen model (3 billion parameters) will be integrated into HP's smart assistant",
+          "source": {
+            "label": "Alibaba Cloud の発表",
+            "label_en": "Alibaba Cloud press release",
+            "url": "https://www.alibabacloud.com/en/press-room/alibaba-cloud-and-hp-partner-on-qwen-powered?_p_lc=1",
+            "level": "official",
+            "date": "2025-07-22",
+            "quote": "As part of the partnership, Alibaba’s open-source large language model, Qwen (with 3 billion parameters), will be integrated into HP’s smart assistant"
+          }
+        }
+      ]
+    },
+    {
+      "id": "QCOM",
+      "ticker": "QCOM",
+      "name": "クアルコム",
+      "sub": "半導体",
+      "sub_en": "Semiconductors",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "車載コックピット向けのQwenベースのマルチモーダルモデルを、QualcommおよびBanmaと共同で開発した",
+          "text_en": "Alibaba developed its Qwen-powered automotive cockpit multimodal model in collaboration with Qualcomm and Banma",
+          "source": {
+            "label": "Alibaba Cloud の発表",
+            "label_en": "Alibaba Cloud press release",
+            "url": "https://www.alibabacloud.com/en/press-room/alibaba-unveils-intelligent-cockpits-enterprise?_p_lc=1",
+            "level": "official",
+            "date": "2025-07-28",
+            "quote": "Alibaba has unveiled its latest large multimodal model (LMM) solution powered by Qwen and specifically designed for automotive intelligent cockpits, developed in collaboration with global semiconductor leader Qualcomm and Banma, its intelligent cockpit solution provider."
+          }
+        }
+      ],
+      "name_en": "Qualcomm"
+    },
+    {
+      "id": "NVDA",
+      "ticker": "NVDA",
+      "name": "NVIDIA",
+      "sub": "AI半導体",
+      "sub_en": "AI chips",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Alibaba CloudのPAIが、NVIDIAのPhysical AIソフトウェア群の全体を統合すると発表した",
+          "text_en": "Alibaba Cloud's Platform for AI (PAI) announced an integration of the full suite of the NVIDIA Physical AI software stack",
+          "source": {
+            "label": "Alibaba Cloud の発表",
+            "label_en": "Alibaba Cloud press release",
+            "url": "https://www.alibabacloud.com/en/press-room/alibaba-cloud-announces-international-expansion-pi?_p_lc=1",
+            "level": "official",
+            "date": "2025-09-24",
+            "quote": "Alibaba Cloud’s Platform for AI (PAI) announced an integration of the full suite of the NVIDIA Physical AI software stack,"
+          }
+        },
+        {
+          "type": "tie",
+          "text": "自動車向けのマルチモーダルモデルを、NVIDIAおよびBanmaと共同開発した",
+          "text_en": "Alibaba Cloud's automotive multimodal model was co-developed with NVIDIA and Banma",
+          "source": {
+            "label": "Alibaba Cloud の発表",
+            "label_en": "Alibaba Cloud press release",
+            "url": "https://www.alibabacloud.com/en/press-room/alibaba-cloud-empowers-customers-and-partners-with?_p_lc=1",
+            "level": "official",
+            "date": "2024-09-20",
+            "quote": "Alibaba Cloud today unveiled its large multimodal model (LMM) solution designed for automotive applications and co-developed with NVIDIA and Banma",
+            "note": "2024年の発表で、古い記載です。",
+            "note_en": "A 2024 announcement; older."
+          }
+        }
+      ]
+    },
+    {
+      "id": "PANW",
+      "ticker": "PANW",
+      "name": "パロアルトネットワークス",
+      "sub": "セキュリティ",
+      "sub_en": "Cybersecurity",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Palo Alto NetworksがAlibaba Cloudとの技術提携を発表した",
+          "text_en": "Palo Alto Networks announced a technology partnership with Alibaba Cloud",
+          "source": {
+            "label": "Palo Alto Networks ブログ",
+            "label_en": "Palo Alto Networks blog",
+            "url": "https://www.paloaltonetworks.com/blog/2018/09/partnership-announcement-alibaba-cloud/",
+            "level": "official",
+            "date": "2018-09-20",
+            "quote": "Today we announced our technology partnership with Alibaba Cloud at the Computing Conference 2018, hosted by Alibaba Cloud in Hangzhou, China.",
+            "note": "2018年の記載で、古い情報です。",
+            "note_en": "A 2018 post; older."
+          }
+        }
+      ],
+      "name_en": "Palo Alto Networks"
+    },
+    {
+      "id": "SGNFF",
+      "ticker": "Signify",
+      "name": "シグニファイ",
+      "sub": "照明",
+      "sub_en": "Lighting",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Signifyが、AlibabaのQwenを使った生成AIエージェントを公開した",
+          "text_en": "Signify launched a GenAI agent powered by Alibaba's Qwen model",
+          "source": {
+            "label": "Alibaba Cloud の発表",
+            "label_en": "Alibaba Cloud press release",
+            "url": "https://www.alibabacloud.com/en/press-room/alibaba-unveils-intelligent-cockpits-enterprise?_p_lc=1",
+            "level": "official",
+            "date": "2025-07-28",
+            "quote": "Signify, the world leader in lighting , has launched the industry's first GenAI agent powered by Alibaba's self-developed large language model Qwen."
+          }
+        }
+      ],
+      "name_en": "Signify"
+    },
+    {
+      "id": "BYD",
+      "ticker": "BYD",
+      "name": "BYD",
+      "sub": "自動車",
+      "sub_en": "Automobiles",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "BYDなどの中国の自動車メーカーが、Qwenを車載システムに統合すると発表した",
+          "text_en": "BYD is among Chinese automakers that announced the integration of Qwen into their intelligent vehicle systems",
+          "source": {
+            "label": "Alibaba Cloud community post",
+            "label_en": "Alibaba Cloud community post",
+            "url": "https://www.alibabacloud.com/blog/603065",
+            "level": "official",
+            "date": "2026-04-24",
+            "quote": "On the opening day of the 2026 Beijing Auto Show (April 24), leading Chinese automakers – including BYD, Geely, Li Auto, Changan Automobile, Dongfeng Motor, BAIC (Beijing Automotive Industry Holding Co., Ltd.), Great Wall Motor, SAIC Volkswagen, SAIC IM Motors – announced the integration of Qwen into their intelligent vehicle systems.",
+            "note": "Alibaba Cloudの公式ブログの記載です。",
+            "note_en": "Per Alibaba Cloud's official community post."
+          }
+        }
+      ]
+    },
+    {
+      "id": "LI",
+      "ticker": "LI",
+      "name": "リ・オート",
+      "sub": "自動車",
+      "sub_en": "Automobiles",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "リ・オートなどの中国の自動車メーカーが、Qwenを車載システムに統合すると発表した",
+          "text_en": "Li Auto is among Chinese automakers that announced the integration of Qwen into their intelligent vehicle systems",
+          "source": {
+            "label": "Alibaba Cloud community post",
+            "label_en": "Alibaba Cloud community post",
+            "url": "https://www.alibabacloud.com/blog/603065",
+            "level": "official",
+            "date": "2026-04-24",
+            "quote": "On the opening day of the 2026 Beijing Auto Show (April 24), leading Chinese automakers – including BYD, Geely, Li Auto, Changan Automobile, Dongfeng Motor, BAIC (Beijing Automotive Industry Holding Co., Ltd.), Great Wall Motor, SAIC Volkswagen, SAIC IM Motors – announced the integration of Qwen into their intelligent vehicle systems.",
+            "note": "Alibaba Cloudの公式ブログの記載です。",
+            "note_en": "Per Alibaba Cloud's official community post."
+          }
+        }
+      ],
+      "name_en": "Li Auto"
+    },
+    {
+      "id": "BIDU",
+      "ticker": "BIDU",
+      "name": "百度(バイドゥ)",
+      "sub": "検索・AI",
+      "sub_en": "Search & AI",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Alibabaと競合する",
+          "text_en": "Competes with Alibaba",
+          "source": {
+            "label": "Baidu 20-F",
+            "label_en": "Baidu 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/1329099/000119312526109289/d38065d20f.htm",
+            "level": "official",
+            "date": "2026-03-17",
+            "quote": "We compete with Alibaba Cloud, Volcano Engine, Huawei and Kingsoft cloud for our cloud offerings."
+          }
+        }
+      ],
+      "name_en": "Baidu"
+    },
+    {
+      "id": "JD",
+      "ticker": "JD",
+      "name": "JDドットコム",
+      "sub": "EC",
+      "sub_en": "E-commerce",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Alibabaと競合する",
+          "text_en": "Competes with Alibaba",
+          "source": {
+            "label": "JD.com 20-F",
+            "label_en": "JD.com 20-F",
+            "url": "https://www.sec.gov/Archives/edgar/data/1549802/000119312526157870/d53690d20f.htm",
+            "level": "official",
+            "date": "2026-04-16",
+            "quote": "Our current or potential competitors include (i) major e-commerce companies in China that offer a wide range of general merchandise product categories, such as Alibaba Group, which operates taobao.com and tmall.com , and (ii) major traditional retailers in China that are moving into online retailing, such as Suning.com Group Co., Ltd.,"
+          }
+        }
+      ],
+      "name_en": "JD.com"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

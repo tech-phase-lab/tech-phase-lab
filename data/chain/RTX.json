@@ -1,0 +1,214 @@
+{
+  "root": {
+    "ticker": "RTX",
+    "name": "RTX",
+    "cik": 101829,
+    "name_en": "RTX Corp"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "LMT",
+      "ticker": "LMT",
+      "name": "ロッキード・マーチン",
+      "sub": "防衛・航空機メーカー",
+      "sub_en": "Defense & aircraft maker",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "F-35戦闘機の機体メーカーで、プラット・アンド・ホイットニーのF135エンジンがその唯一の動力になる",
+          "text_en": "Lockheed Martin builds the F-35, which Pratt & Whitney's F135 engine exclusively powers",
+          "source": {
+            "label": "RTX 10-K(2025年12月31日期)",
+            "label_en": "RTX 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/101829/000010182926000006/rtx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-06",
+            "quote": "Pratt & Whitney produces and sustains the F135 engine for the U.S. government’s F-35 Joint Program Office to exclusively power the single-engine F-35 Lightning II fifth generation aircraft (commonly known as the Joint Strike Fighter) produced by Lockheed Martin."
+          }
+        }
+      ],
+      "name_en": "Lockheed Martin"
+    },
+    {
+      "id": "BA",
+      "ticker": "BA",
+      "name": "ボーイング",
+      "sub": "航空機メーカー",
+      "sub_en": "Aircraft maker",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "コリンズ・エアロスペースの最大の民間向け顧客の一つで、ボーイングとエアバスの合計はコリンズ売上の2025年16%にあたる",
+          "text_en": "Boeing is one of Collins' largest commercial customers; with Airbus it was 16% of Collins segment sales in 2025",
+          "source": {
+            "label": "RTX 10-K(2025年12月31日期)",
+            "label_en": "RTX 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/101829/000010182926000006/rtx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-06",
+            "quote": "Collins’ largest commercial customers are Boeing and Airbus with combined sales, prior to discounts and incentives, of 16%, 16%, and 19% of total Collins segment sales in 2025, 2024, and 2023, respectively."
+          }
+        }
+      ],
+      "name_en": "Boeing"
+    },
+    {
+      "id": "AIRBUS",
+      "ticker": "Airbus",
+      "name": "エアバス",
+      "sub": "航空機メーカー",
+      "sub_en": "Aircraft maker",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "コリンズの最大の民間向け顧客の一つで、ボーイングとの合計はコリンズ売上の2025年16%にあたる",
+          "text_en": "Airbus is one of Collins' largest commercial customers; with Boeing it was 16% of Collins segment sales in 2025",
+          "source": {
+            "label": "RTX 10-K(2025年12月31日期)",
+            "label_en": "RTX 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/101829/000010182926000006/rtx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-06",
+            "quote": "Collins’ largest commercial customers are Boeing and Airbus with combined sales, prior to discounts and incentives, of 16%, 16%, and 19% of total Collins segment sales in 2025, 2024, and 2023, respectively."
+          }
+        }
+      ],
+      "name_en": "Airbus"
+    },
+    {
+      "id": "MTU",
+      "ticker": "MTU",
+      "name": "MTUエアロ・エンジンズ",
+      "sub": "航空エンジン共同事業",
+      "sub_en": "Engine collaborator",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "プラット・アンド・ホイットニーとIAEの共同事業を組み、61%のプログラム持分をP&Wが持つ",
+          "text_en": "MTU collaborates with Pratt & Whitney in IAE, where P&W holds a 61% program share interest",
+          "source": {
+            "label": "RTX 10-K(2025年12月31日期)",
+            "label_en": "RTX 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/101829/000010182926000006/rtx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-06",
+            "quote": "Pratt & Whitney holds a 61 % program share interest in the International Aero Engines AG (IAE) collaboration with MTU Aero Engines AG (MTU) and Japanese Aero Engines Corporation (JAEC), and a 49.5 % ownership interest in IAE."
+          }
+        }
+      ],
+      "name_en": "MTU Aero Engines"
+    },
+    {
+      "id": "JAEC",
+      "ticker": "JAEC",
+      "name": "日本航空機エンジン協会",
+      "sub": "航空エンジン共同事業",
+      "sub_en": "Engine collaborator",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "プラット・アンド・ホイットニーとIAEの共同事業を組み、61%のプログラム持分をP&Wが持つ",
+          "text_en": "JAEC collaborates with Pratt & Whitney in IAE, where P&W holds a 61% program share interest",
+          "source": {
+            "label": "RTX 10-K(2025年12月31日期)",
+            "label_en": "RTX 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/101829/000010182926000006/rtx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-06",
+            "quote": "Pratt & Whitney holds a 61 % program share interest in the International Aero Engines AG (IAE) collaboration with MTU Aero Engines AG (MTU) and Japanese Aero Engines Corporation (JAEC), and a 49.5 % ownership interest in IAE."
+          }
+        }
+      ],
+      "name_en": "Japanese Aero Engines Corporation"
+    },
+    {
+      "id": "GE",
+      "ticker": "GE",
+      "name": "GEエアロスペース",
+      "sub": "航空エンジン合弁相手",
+      "sub_en": "Engine JV partner",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "GE Aviationとの合弁エンジン・アライアンスが、エアバスA380のGP7000エンジンの補修部品とサービスを担う",
+          "text_en": "The Engine Alliance, a joint venture with GE Aviation, supports the GP7000 engine for the Airbus A380",
+          "source": {
+            "label": "RTX 10-K(2025年12月31日期)",
+            "label_en": "RTX 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/101829/000010182926000006/rtx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-06",
+            "quote": "Pratt & Whitney is the principal participant in all existing collaborative arrangements, with the exception of the Engine Alliance (EA), a joint venture with GE Aviation, which provides aftermarket support, spare parts, and service for the GP7000 engine for the Airbus A380 aircraft."
+          }
+        }
+      ],
+      "name_en": "GE Aviation"
+    },
+    {
+      "id": "THALES",
+      "ticker": "Thales",
+      "name": "タレス",
+      "sub": "防衛合弁相手",
+      "sub_en": "Defense JV partner",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "レイセオンはタレスとの合弁会社タレス・レイセオン・システムズを持つ",
+          "text_en": "Raytheon Company has a joint venture with Thales, Thales-Raytheon Systems (TRS)",
+          "source": {
+            "label": "RTX 10-K(2025年12月31日期)",
+            "label_en": "RTX 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/101829/000010182926000006/rtx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-06",
+            "quote": "to resolve the previously disclosed criminal and civil government investigations into payments made by Raytheon Company and its joint venture, Thales-Raytheon Systems (TRS), since 2012 in connection with certain Middle East contracts."
+          }
+        }
+      ],
+      "name_en": "Thales"
+    },
+    {
+      "id": "RR",
+      "ticker": "Rolls-Royce",
+      "name": "ロールス・ロイス",
+      "sub": "航空エンジン事業の旧持分",
+      "sub_en": "Former engine stakeholder",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2012年の契約でIAEの持分を取得した相手で、2027年6月まで飛行時間に応じた支払いが続く",
+          "text_en": "RTX acquired Rolls-Royce's IAE interests under a 2012 agreement and owes flight-hour payments through June 2027",
+          "source": {
+            "label": "RTX 10-K(2025年12月31日期)",
+            "label_en": "RTX 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/101829/000010182926000006/rtx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-06",
+            "quote": "In addition, in connection with our 2012 agreement to acquire Rolls-Royce’s ownership and collaboration interests in International Aero Engines AG (IAE), additional payments are due to Rolls-Royce contingent upon each hour flown through June 2027 by the V2500-powered aircraft in service as of the acquisition date."
+          }
+        }
+      ],
+      "name_en": "Rolls-Royce"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

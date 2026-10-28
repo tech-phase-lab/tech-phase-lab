@@ -1,0 +1,220 @@
+{
+  "root": {
+    "ticker": "J",
+    "name": "ジェイコブズ・ソリューションズ",
+    "cik": 52988,
+    "name_en": "Jacobs Solutions Inc."
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [
+    "ACM",
+    "TTEK",
+    "PSN",
+    "ACN",
+    "FLR"
+  ],
+  "companies": [
+    {
+      "id": "ACM",
+      "ticker": "ACM",
+      "name": "エイコム",
+      "sub": "エンジニアリング",
+      "sub_en": "Engineering",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "競合する企業のひとつである",
+          "text_en": "One of Jacobs' named competitors",
+          "source": {
+            "label": "J 10-K(2025-09-26)",
+            "label_en": "J 10-K (fiscal year ended 2025-09-26)",
+            "url": "https://www.sec.gov/Archives/edgar/data/52988/000162828025053316/jec-20250926.htm",
+            "level": "official",
+            "date": "2025-11-20",
+            "quote": "AECOM, Tetra Tech, WSP, Arcadis, Bechtel, Arup, Endava, Exponent, Mott MacDonald, Stantec, Parsons, Accenture, Mace, AtkinsRealis, Altair, Montrose, Capgemini, Fluor, Deloitte, KPMG, PwC, Bain & Company and McKinsey & Company are some of our competitors."
+          }
+        }
+      ],
+      "name_en": "AECOM"
+    },
+    {
+      "id": "TTEK",
+      "ticker": "TTEK",
+      "name": "テトラ・テック",
+      "sub": "エンジニアリング",
+      "sub_en": "Engineering",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "競合する企業のひとつである",
+          "text_en": "One of Jacobs' named competitors",
+          "source": {
+            "label": "J 10-K(2025-09-26)",
+            "label_en": "J 10-K (fiscal year ended 2025-09-26)",
+            "url": "https://www.sec.gov/Archives/edgar/data/52988/000162828025053316/jec-20250926.htm",
+            "level": "official",
+            "date": "2025-11-20",
+            "quote": "AECOM, Tetra Tech, WSP, Arcadis, Bechtel, Arup, Endava, Exponent, Mott MacDonald, Stantec, Parsons, Accenture, Mace, AtkinsRealis, Altair, Montrose, Capgemini, Fluor, Deloitte, KPMG, PwC, Bain & Company and McKinsey & Company are some of our competitors."
+          }
+        }
+      ],
+      "name_en": "Tetra Tech"
+    },
+    {
+      "id": "WSP",
+      "ticker": "WSP",
+      "name": "ダブリューエスピー",
+      "sub": "エンジニアリング",
+      "sub_en": "Engineering",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "競合する企業のひとつである",
+          "text_en": "One of Jacobs' named competitors",
+          "source": {
+            "label": "J 10-K(2025-09-26)",
+            "label_en": "J 10-K (fiscal year ended 2025-09-26)",
+            "url": "https://www.sec.gov/Archives/edgar/data/52988/000162828025053316/jec-20250926.htm",
+            "level": "official",
+            "date": "2025-11-20",
+            "quote": "AECOM, Tetra Tech, WSP, Arcadis, Bechtel, Arup, Endava, Exponent, Mott MacDonald, Stantec, Parsons, Accenture, Mace, AtkinsRealis, Altair, Montrose, Capgemini, Fluor, Deloitte, KPMG, PwC, Bain & Company and McKinsey & Company are some of our competitors."
+          }
+        }
+      ],
+      "name_en": "WSP"
+    },
+    {
+      "id": "BECH",
+      "ticker": "Bechtel",
+      "name": "ベクテル",
+      "sub": "建設・設計",
+      "sub_en": "Engineering & construction",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "競合する企業のひとつである",
+          "text_en": "One of Jacobs' named competitors",
+          "source": {
+            "label": "J 10-K(2025-09-26)",
+            "label_en": "J 10-K (fiscal year ended 2025-09-26)",
+            "url": "https://www.sec.gov/Archives/edgar/data/52988/000162828025053316/jec-20250926.htm",
+            "level": "official",
+            "date": "2025-11-20",
+            "quote": "AECOM, Tetra Tech, WSP, Arcadis, Bechtel, Arup, Endava, Exponent, Mott MacDonald, Stantec, Parsons, Accenture, Mace, AtkinsRealis, Altair, Montrose, Capgemini, Fluor, Deloitte, KPMG, PwC, Bain & Company and McKinsey & Company are some of our competitors."
+          }
+        }
+      ],
+      "name_en": "Bechtel"
+    },
+    {
+      "id": "PSN",
+      "ticker": "PSN",
+      "name": "パーソンズ",
+      "sub": "政府系エンジニアリング",
+      "sub_en": "Government engineering",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "競合する企業のひとつである",
+          "text_en": "One of Jacobs' named competitors",
+          "source": {
+            "label": "J 10-K(2025-09-26)",
+            "label_en": "J 10-K (fiscal year ended 2025-09-26)",
+            "url": "https://www.sec.gov/Archives/edgar/data/52988/000162828025053316/jec-20250926.htm",
+            "level": "official",
+            "date": "2025-11-20",
+            "quote": "AECOM, Tetra Tech, WSP, Arcadis, Bechtel, Arup, Endava, Exponent, Mott MacDonald, Stantec, Parsons, Accenture, Mace, AtkinsRealis, Altair, Montrose, Capgemini, Fluor, Deloitte, KPMG, PwC, Bain & Company and McKinsey & Company are some of our competitors."
+          }
+        }
+      ],
+      "name_en": "Parsons"
+    },
+    {
+      "id": "FLR",
+      "ticker": "FLR",
+      "name": "フルアー",
+      "sub": "建設・設計",
+      "sub_en": "Engineering & construction",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "競合する企業のひとつである",
+          "text_en": "One of Jacobs' named competitors",
+          "source": {
+            "label": "J 10-K(2025-09-26)",
+            "label_en": "J 10-K (fiscal year ended 2025-09-26)",
+            "url": "https://www.sec.gov/Archives/edgar/data/52988/000162828025053316/jec-20250926.htm",
+            "level": "official",
+            "date": "2025-11-20",
+            "quote": "AECOM, Tetra Tech, WSP, Arcadis, Bechtel, Arup, Endava, Exponent, Mott MacDonald, Stantec, Parsons, Accenture, Mace, AtkinsRealis, Altair, Montrose, Capgemini, Fluor, Deloitte, KPMG, PwC, Bain & Company and McKinsey & Company are some of our competitors."
+          }
+        }
+      ],
+      "name_en": "Fluor"
+    },
+    {
+      "id": "ACN",
+      "ticker": "ACN",
+      "name": "アクセンチュア",
+      "sub": "コンサル・IT",
+      "sub_en": "Consulting & IT",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "競合する企業のひとつである",
+          "text_en": "One of Jacobs' named competitors",
+          "source": {
+            "label": "J 10-K(2025-09-26)",
+            "label_en": "J 10-K (fiscal year ended 2025-09-26)",
+            "url": "https://www.sec.gov/Archives/edgar/data/52988/000162828025053316/jec-20250926.htm",
+            "level": "official",
+            "date": "2025-11-20",
+            "quote": "AECOM, Tetra Tech, WSP, Arcadis, Bechtel, Arup, Endava, Exponent, Mott MacDonald, Stantec, Parsons, Accenture, Mace, AtkinsRealis, Altair, Montrose, Capgemini, Fluor, Deloitte, KPMG, PwC, Bain & Company and McKinsey & Company are some of our competitors."
+          }
+        }
+      ],
+      "name_en": "Accenture"
+    },
+    {
+      "id": "AMTM",
+      "ticker": "AMTM",
+      "name": "アメンタム",
+      "sub": "分離した事業",
+      "sub_en": "Spun-off business",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "分離にあたり、移行サービスとプロジェクトサービスの契約を結んだ",
+          "text_en": "Entered into transition services and project services agreements in connection with the Separation Transaction",
+          "source": {
+            "label": "J 10-K(2025-09-26)",
+            "label_en": "J 10-K (fiscal year ended 2025-09-26)",
+            "url": "https://www.sec.gov/Archives/edgar/data/52988/000162828025053316/jec-20250926.htm",
+            "level": "official",
+            "date": "2025-11-20",
+            "quote": "In connection with the Separation Transaction, we and Amentum entered into various transaction agreements, including a transition services agreement and project services agreement."
+          }
+        }
+      ],
+      "name_en": "Amentum"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

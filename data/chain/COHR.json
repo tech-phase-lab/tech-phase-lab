@@ -1,0 +1,304 @@
+{
+  "root": {
+    "ticker": "COHR",
+    "name": "Coherent",
+    "cik": 820318
+  },
+  "rows": [
+    {
+      "ja": "顧客・供給契約",
+      "en": "Customers & supply deals",
+      "above": true
+    },
+    {
+      "ja": "出資・提携",
+      "en": "Investors & partners"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "IPGP",
+    "LASR",
+    "AAOI",
+    "MKSI"
+  ],
+  "companies": [
+    {
+      "id": "NVDA",
+      "ticker": "NVDA",
+      "name": "NVIDIA",
+      "sub": "AI半導体",
+      "sub_en": "AI chips",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "NVIDIAと、AIインフラ向けの先端レーザーと光ネットワーク製品の複数年の供給契約を締結",
+          "text_en": "Entered a strategic multi-year supply agreement with NVIDIA for advanced lasers and optical networking products supporting next-generation AI infrastructure",
+          "source": {
+            "label": "Coherent 10-K(2026年度)",
+            "label_en": "Coherent 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/820318/000082031826000020/iivi-20260630.htm",
+            "level": "official",
+            "date": "2026-08-14",
+            "quote": "entered into a strategic multi-year supply agreement with NVIDIA for advanced lasers and optical networking products supporting next-generation AI infrastructure"
+          }
+        },
+        {
+          "type": "down",
+          "text": "NVIDIAと複数年・非独占の戦略契約を結び、数十億ドル規模のNVIDIAの購入コミットメントと、先端技術の今後の利用・生産枠の権利を含む",
+          "text_en": "NVIDIA entered a multi-year, non-exclusive strategic agreement with Coherent that includes a multi-billion-dollar NVIDIA purchase commitment and future access and capacity rights for advanced technologies",
+          "source": {
+            "label": "Coherent 8-K Exhibit 99.1 の発表(2026年3月2日)",
+            "label_en": "Coherent 8-K Exhibit 99.1 press release (Mar 2, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/820318/000119312526084366/d42735dex991.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "The non-exclusive agreement includes an NVIDIA multi-billion-dollar purchase commitment and future access and capacity rights for advanced laser and optical networking products."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "NVIDIAが、2026年3月2日に新規発行のCoherent普通株7,788,161株を20億ドルの現金で私募により取得",
+          "text_en": "NVIDIA bought 7,788,161 newly issued Coherent common shares for $2B in cash in a private placement on March 2, 2026",
+          "source": {
+            "label": "Coherent 8-K(2026年3月2日)",
+            "label_en": "Coherent 8-K (Mar 2, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/820318/000119312526084366/d42735d8k.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "Coherent completed the issuance and sale of 7,788,161 shares of the Company’s common stock, no par value (the “Shares”), pursuant to the Purchase Agreement, at a price of $256.80 per share for an aggregate purchase price of $2 billion in cash."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AAPL",
+      "ticker": "AAPL",
+      "name": "Apple",
+      "sub": "スマホ・PC",
+      "sub_en": "Devices",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Appleが、Face IDなどに使うVCSELレーザーを作る長年のパートナーCoherentと、新たな複数年契約を締結",
+          "text_en": "Apple entered a new multiyear agreement with Coherent, a long-standing partner that produces the VCSEL lasers used for features including Face ID",
+          "source": {
+            "label": "Apple ニュースルーム(2025年8月6日)",
+            "label_en": "Apple Newsroom (Aug 6, 2025)",
+            "url": "https://www.apple.com/newsroom/2025/08/apple-increases-us-commitment-to-600-billion-usd-announces-ambitious-program/",
+            "level": "official",
+            "date": "2025-08-06",
+            "quote": "Apple has also entered into a new multiyear agreement with Coherent, a long-standing partner that produces the VCSEL lasers that enable multiple features — including Face ID"
+          }
+        }
+      ]
+    },
+    {
+      "id": "6902",
+      "ticker": "DENSO",
+      "name": "DENSO",
+      "sub": "自動車部品",
+      "sub_en": "Auto parts",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "DENSOが、Coherent子会社Silicon Carbide LLCのクラスA普通ユニットに5億ドルを出資",
+          "text_en": "Denso invested $500M in Coherent’s Silicon Carbide LLC subsidiary for Class A Common Units (about 12.5% ownership)",
+          "source": {
+            "label": "Coherent 10-K(2026年度), 注記15",
+            "label_en": "Coherent 10-K (FY2026), Note 15",
+            "url": "https://www.sec.gov/Archives/edgar/data/820318/000082031826000020/iivi-20260630.htm",
+            "level": "official",
+            "date": "2026-08-14",
+            "quote": "Silicon Carbide LLC (“Silicon Carbide”), one of the Company’s subsidiaries, completed (i) the sale of 16,666,667 Class A Common Units to Denso Corporation (“Denso”) for $ 500,000,000",
+            "note": "出資先は子会社のSilicon Carbide LLCで、取引は2023年12月に完了しています。",
+            "note_en": "A subsidiary-level investment (Silicon Carbide LLC); the transaction closed in December 2023."
+          }
+        }
+      ]
+    },
+    {
+      "id": "6503",
+      "ticker": "Mitsubishi Electric",
+      "name": "三菱電機",
+      "sub": "電機",
+      "sub_en": "Electrical equipment",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "三菱電機が、Coherent子会社Silicon Carbide LLCのクラスA普通ユニットに5億ドルを出資",
+          "text_en": "Mitsubishi Electric (MELCO) invested $500M in Coherent’s Silicon Carbide LLC subsidiary for Class A Common Units (about 12.5% ownership)",
+          "source": {
+            "label": "Coherent 10-K(2026年度), 注記15",
+            "label_en": "Coherent 10-K (FY2026), Note 15",
+            "url": "https://www.sec.gov/Archives/edgar/data/820318/000082031826000020/iivi-20260630.htm",
+            "level": "official",
+            "date": "2026-08-14",
+            "quote": "the sale of 16,666,667 Class A Common Units to Mitsubishi Electric Corporation (“MELCO”) for $ 500,000,000",
+            "note": "出資先は子会社のSilicon Carbide LLCで、取引は2023年12月に完了しています。",
+            "note_en": "A subsidiary-level investment (Silicon Carbide LLC); the transaction closed in December 2023."
+          }
+        }
+      ],
+      "name_en": "Mitsubishi Electric"
+    },
+    {
+      "id": "IPGP",
+      "ticker": "IPGP",
+      "name": "IPG Photonics",
+      "sub": "レーザー",
+      "sub_en": "Lasers",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "IPGは材料加工で、レーザーメーカーの1社「Coherent, Inc.」と競合する",
+          "text_en": "IPG Photonics competes with laser makers such as Coherent, Inc. in materials processing.",
+          "source": {
+            "label": "IPG Photonics 10-K(2025年度)",
+            "label_en": "IPG Photonics 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1111928/000111192826000040/ipgp-20251231.htm",
+            "level": "official",
+            "date": "2026-02-23",
+            "quote": "we compete with makers of fiber lasers and other lasers, such as Coherent, Inc.,",
+            "note": "資料の名前は、のちにCoherent Corp.(旧II-VI)が2022年に買収した旧Coherent, Inc.です。",
+            "note_en": "The filing names the legacy Coherent, Inc., later acquired by Coherent Corp. (formerly II-VI)."
+          }
+        }
+      ]
+    },
+    {
+      "id": "LASR",
+      "ticker": "LASR",
+      "name": "nLIGHT",
+      "sub": "レーザー",
+      "sub_en": "Lasers",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "nLIGHTと競合する半導体レーザー・ファイバーレーザー企業の1社がCoherentだ",
+          "text_en": "Coherent is among the companies offering semiconductor lasers, fiber lasers and other laser products that compete with nLIGHT.",
+          "source": {
+            "label": "nLIGHT 10-K(2025年度)",
+            "label_en": "nLIGHT 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1124796/000112479626000012/lasr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "such as IPG Photonics, Coherent, BWT Ltd.,",
+            "note": "資料には「Coherent」とだけあり、Coherent Corp.を指すと解釈しています。",
+            "note_en": "The filing says only “Coherent”; it is read as Coherent Corp."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AAOI",
+      "ticker": "AAOI",
+      "name": "Applied Optoelectronics",
+      "sub": "光トランシーバー",
+      "sub_en": "Optical transceivers",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Coherent CorporationはAAOIの主要な競合の1社に当たる",
+          "text_en": "Coherent Corporation is one of Applied Optoelectronics' major competitors.",
+          "source": {
+            "label": "Applied Optoelectronics 10-K(2025年度)",
+            "label_en": "Applied Optoelectronics 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1158114/000143774926005875/aaoi20251231_10k.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Our major competitors in one or more of our markets include Coherent Corporation,"
+          }
+        }
+      ]
+    },
+    {
+      "id": "MKSI",
+      "ticker": "MKSI",
+      "name": "MKS Instruments",
+      "sub": "半導体装置部品",
+      "sub_en": "Semiconductor equipment parts",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Coherent Corp.の製品は、MKSのレーザー・フォトニクス製品と競合関係にある",
+          "text_en": "Coherent Corp. offers products that compete with MKS's laser and photonics products",
+          "source": {
+            "label": "MKS Instruments 10-K(2025年度)",
+            "label_en": "MKS Instruments 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1049502/000119312526066820/mksi-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Coherent Corp., Excelitas Technologies Corp., Jenoptik AG and Thorlabs, Inc. offer products that compete with our laser and photonics products."
+          }
+        }
+      ]
+    },
+    {
+      "id": "VIAV",
+      "ticker": "VIAV",
+      "name": "Viavi Solutions",
+      "sub": "通信測定機器",
+      "sub_en": "Network test",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Coherentは、Viaviの光セキュリティ・性能事業で競合する受動部品などのメーカーの1社だ",
+          "text_en": "Coherent is one of the manufacturers of passive and other optical components that compete with Viavi's optical security and performance business.",
+          "source": {
+            "label": "Viavi Solutions 10-K(2026年度)",
+            "label_en": "Viavi Solutions 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/912093/000162828026056765/viav-20260627.htm",
+            "level": "official",
+            "date": "2026-08-13",
+            "quote": "manufacturers of passive and other optical components such as Coherent.",
+            "note": "資料には「Coherent」とだけあり、Coherent Corp.を指すと解釈しています。",
+            "note_en": "The filing says only “Coherent”; it is read as Coherent Corp."
+          }
+        }
+      ]
+    },
+    {
+      "id": "FN",
+      "ticker": "FN",
+      "name": "Fabrinet",
+      "sub": "光部品の受託製造",
+      "sub_en": "Optical contract manufacturing",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Fabrinetのカスタム光学・ガラス事業は、Coherent傘下のPhotop Technologiesと競合する",
+          "text_en": "Fabrinet's customized optics and glass operations compete with Photop Technologies, a subsidiary of Coherent Corp.",
+          "source": {
+            "label": "Fabrinet 10-K(2026年度)",
+            "label_en": "Fabrinet 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1408710/000140871026000028/fn-20260626.htm",
+            "level": "official",
+            "date": "2026-08-18",
+            "quote": "Photop Technologies, Inc. (a subsidiary of Coherent Corp.).",
+            "note": "Fabrinetの光学・ガラス事業での、子会社Photopとの競合です。",
+            "note_en": "Subsidiary-level competition (Photop) in Fabrinet’s optics and glass operations only."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

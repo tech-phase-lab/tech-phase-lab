@@ -1,0 +1,898 @@
+{
+  "root": {
+    "ticker": "ORCL",
+    "name": "Oracle",
+    "cik": 1341439
+  },
+  "rows": [
+    {
+      "ja": "供給元(GPU・電力・光部品)",
+      "en": "Suppliers (GPUs, power & optical)",
+      "above": true
+    },
+    {
+      "ja": "顧客(契約残高に計上)",
+      "en": "Customers (RPO & revenue)"
+    },
+    {
+      "ja": "提携・出資・共同取り組み",
+      "en": "Partnerships, investments & joint efforts"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in 10-Ks)"
+    }
+  ],
+  "rivals": [
+    "MSFT",
+    "AMZN",
+    "GOOGL",
+    "SAP",
+    "CRM"
+  ],
+  "companies": [
+    {
+      "id": "NVDA",
+      "ticker": "NVDA",
+      "name": "NVIDIA",
+      "sub": "AI半導体",
+      "sub_en": "AI chips",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "NVIDIAとの協業を拡大し、OCI SuperclusterでNVIDIA GB200 NVL72システムを提供",
+          "text_en": "Oracle expanded its collaboration with NVIDIA, offering NVIDIA GB200 NVL72 systems on OCI Supercluster",
+          "source": {
+            "label": "Oracle の発表",
+            "label_en": "Oracle press release",
+            "url": "https://www.oracle.com/news/announcement/oracle-and-nvidia-help-enterprises-and-developers-accelerate-ai-innovation-2025-06-12/",
+            "level": "official",
+            "date": "2025-06-12",
+            "quote": "Oracle has expanded its collaboration with NVIDIA to help customers streamline the development and deployment of production-ready AI"
+          }
+        },
+        {
+          "type": "up",
+          "text": "OCI Zettascale10クラスターは、複数のデータセンターにまたがり数十万基のNVIDIA GPUを接続",
+          "text_en": "OCI Zettascale10 connects hundreds of thousands of NVIDIA GPUs across multiple data centers",
+          "source": {
+            "label": "Oracle の発表",
+            "label_en": "Oracle press release",
+            "url": "https://www.oracle.com/news/announcement/ai-world-oracle-unveils-next-generation-oci-zettascale10-cluster-for-ai-2025-10-14/",
+            "level": "official",
+            "date": "2025-10-14",
+            "quote": "OCI Zettascale10 connects hundreds of thousands of NVIDIA GPUs across multiple data centers to form multi-gigawatt clusters"
+          }
+        },
+        {
+          "type": "tie",
+          "text": "NVIDIA AI EnterpriseをOCIと統合すると発表",
+          "text_en": "Oracle and NVIDIA announced an integration of NVIDIA AI Enterprise with OCI",
+          "source": {
+            "label": "NVIDIA の発表",
+            "label_en": "NVIDIA press release",
+            "url": "https://nvidianews.nvidia.com/news/oracle-and-nvidia-collaborate-to-help-enterprises-accelerate-agentic-ai-inference",
+            "level": "official",
+            "date": "2025-03-18",
+            "quote": "Oracle and NVIDIA today announced a first-of-its-kind integration between NVIDIA accelerated computing and inference software with Oracle’s AI infrastructure"
+          }
+        },
+        {
+          "type": "down",
+          "text": "2026年度第2四半期の契約残高(RPO)は、NVIDIAなどの新規契約で押し上げられた",
+          "text_en": "New commitments from NVIDIA and others lifted Oracle's RPO in Q2 FY26",
+          "source": {
+            "label": "Oracle 8-K Ex.99.1",
+            "label_en": "Oracle 8-K Ex.99.1 (Q2 FY26 results)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1341439/000119312525314207/orcl-ex99_1.htm",
+            "level": "official",
+            "date": "2025-12-10",
+            "quote": "highlighted by new commitments from Meta, NVIDIA, and others",
+            "note": "決算発表の中で顧客の契約として名前が挙がっただけで、条件は示されていません。",
+            "note_en": "Named as a customer commitment in the results release; terms are not given."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AMD",
+      "ticker": "AMD",
+      "name": "AMD",
+      "sub": "半導体",
+      "sub_en": "Semiconductors",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "2026年第3四半期から、AMD Instinct MI450シリーズGPU 50,000基による一般向けAIスーパークラスターを、ハイパースケーラーとして初めて提供する",
+          "text_en": "Oracle will be the first hyperscaler to offer a publicly available AI supercluster of 50,000 AMD Instinct MI450 GPUs from Q3 2026",
+          "source": {
+            "label": "AMD の発表",
+            "label_en": "AMD press release",
+            "url": "https://newsroom.amd.com/news/oracle-and-amd-expand-partnership-to-help-customers-ach/",
+            "level": "official",
+            "date": "2025-10-14",
+            "quote": "Oracle will be the first hyperscaler to offer a publicly available AI supercluster powered by 50,000 AMD Instinct MI450 Series GPUs."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BE",
+      "ticker": "BE",
+      "name": "Bloom Energy",
+      "sub": "燃料電池",
+      "sub_en": "Fuel cells",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "マスター・サービス契約のもとで、最大2.8GWのBloomの燃料電池システムを調達する意向",
+          "text_en": "Oracle intends to procure up to 2.8 GW of Bloom fuel cell systems under a master services agreement",
+          "source": {
+            "label": "Bloom Energy の発表",
+            "label_en": "Bloom Energy press release",
+            "url": "https://www.bloomenergy.com/news/bloom-energy-and-oracle-expand-strategic-partnership-to-deploy-up-to-2-8-gw-to-accelerate-ai-infrastructure-build-out/",
+            "level": "official",
+            "date": "2026-04-13",
+            "quote": "Under a master services agreement, Oracle intends to procure up to 2.8 gigawatts (GW) of Bloom’s fuel cell systems.",
+            "note": "調達の意向であり、Bloomはデータセンターへの電力供給元です。",
+            "note_en": "Intent to procure; Bloom is a power supplier to Oracle data centers."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "電力提携に関連してBloomが発行したワラントをOracleが行使し、1,905,433株を取得",
+          "text_en": "Bloom issued Oracle a warrant tied to the on-site power partnership; Oracle completed a cashless exercise on May 1, 2026, resulting in 1,905,433 shares",
+          "source": {
+            "label": "Bloom Energy 10-Q(2026年第2四半期)",
+            "label_en": "Bloom Energy 10-Q (Q2 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1664703/000162828026050247/be-20260630.htm",
+            "level": "official",
+            "date": "2026-05-01",
+            "quote": "On May 1, 2026 (the “Exercise Date”), Oracle completed a cashless exercise of the Warrant, resulting in the issuance of 1,905,433 shares of our common stock."
+          }
+        }
+      ]
+    },
+    {
+      "id": "META",
+      "ticker": "META",
+      "name": "Meta Platforms",
+      "sub": "SNS・広告",
+      "sub_en": "Social media",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Metaの新規契約が、2026年度第2四半期の契約残高(RPO)を押し上げた",
+          "text_en": "New commitments from Meta lifted Oracle's RPO in Q2 FY26",
+          "source": {
+            "label": "Oracle 8-K Ex.99.1",
+            "label_en": "Oracle 8-K Ex.99.1 (Q2 FY26 results)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1341439/000119312525314207/orcl-ex99_1.htm",
+            "level": "official",
+            "date": "2025-12-10",
+            "quote": "highlighted by new commitments from Meta, NVIDIA, and others",
+            "note": "条件は開示されていません。",
+            "note_en": "Terms are not disclosed."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AAOI",
+      "ticker": "AAOI",
+      "name": "Applied Optoelectronics",
+      "sub": "光通信部品",
+      "sub_en": "Optical components",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Applied Optoelectronicsは2024年の売上の12.4%をOracleから得た",
+          "text_en": "Oracle accounted for 12.4% of Applied Optoelectronics' revenue in 2024",
+          "source": {
+            "label": "Applied Optoelectronics 10-K(2025年度)",
+            "label_en": "Applied Optoelectronics 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1158114/000143774926005875/aaoi20251231_10k.htm",
+            "level": "official",
+            "date": "2026-02",
+            "quote": "in 2024, Oracle accounted for 12.4% of our revenue",
+            "note": "2024年の売上に関する記載です。",
+            "note_en": "Relates to FY2024 revenue."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MSFT",
+      "ticker": "MSFT",
+      "name": "Microsoft",
+      "sub": "クラウド・ソフト",
+      "sub_en": "Cloud & software",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "OCIのマルチクラウド・サービスがMicrosoft Azureなど競合他社の製品と連携",
+          "text_en": "Oracle’s OCI multicloud services work with Microsoft Azure, among other competitors’ products",
+          "source": {
+            "label": "Oracle 10-K(2026年度)",
+            "label_en": "Oracle 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1341439/000119312526277521/orcl-20260531.htm",
+            "level": "official",
+            "date": "2026-06-22",
+            "quote": "OCI’s multicloud services work with a number of our competitors’ products, including Microsoft Azure, Amazon Web Services and Google Cloud."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "OracleとMicrosoftがOracle Database@Azureを発表し、OCIのデータベース・サービスをAzureのデータセンターで提供",
+          "text_en": "Oracle and Microsoft announced Oracle Database@Azure, putting OCI database services in Azure datacenters",
+          "source": {
+            "label": "Microsoft の発表",
+            "label_en": "Microsoft press release",
+            "url": "https://news.microsoft.com/source/2023/09/14/microsoft-and-oracle-expand-partnership-to-deliver-oracle-database-services-on-oracle-cloud-infrastructure-in-microsoft-azure/",
+            "level": "official",
+            "date": "2023-09-14",
+            "quote": "Oracle Corp and Microsoft Corp today announced Oracle Database@Azure, which gives customers direct access to Oracle database services running on Oracle Cloud Infrastructure (OCI) and deployed in Microsoft Azure datacenters.",
+            "note": "2023年の発表です。",
+            "note_en": "A 2023 announcement."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "MicrosoftはOracleの主な競合の1社だ",
+          "text_en": "Microsoft is one of Oracle's principal competitors",
+          "source": {
+            "label": "Oracle 10-K(2026年度)",
+            "label_en": "Oracle 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1341439/000119312526277521/orcl-20260531.htm",
+            "level": "official",
+            "date": "2026-06-22",
+            "quote": "compete directly with certain offerings from some of the largest and most competitive companies in the world, including Adobe Systems Incorporated, Alphabet Inc., Amazon.com, Inc., Cisco Systems, Inc., Intel Corporation, International Business Machines Corporation, Microsoft Corporation, Salesforce, Inc. and SAP SE, as well as other companies like Hewlett-Packard Enterprise and Workday, Inc.",
+            "note": "競合として挙げられた企業の一覧の中での記載で、特定の事業分野に限った記述ではありません。",
+            "note_en": "Named in a list of competitors for Oracle offerings; not segment-specific."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MRVL",
+      "ticker": "MRVL",
+      "name": "Marvell Technology",
+      "sub": "半導体",
+      "sub_en": "Semiconductors",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Marvell、MicrosoftとともにOCPの作業部会を設立し、データセンターのハードウェア・セキュリティ・モジュールを標準化",
+          "text_en": "Marvell, Microsoft and Oracle formed an OCP working group to standardize data-center hardware security modules",
+          "source": {
+            "label": "Marvell の発表",
+            "label_en": "Marvell press release",
+            "url": "https://investor.marvell.com/news-events/press-releases/detail/1038/marvell-microsoft-and-oracle-establish-ocp-working-group-to-standardize-data-center-hardware-security",
+            "level": "official",
+            "date": "2026-10-13",
+            "quote": "As founding members of the new OCP working group, Marvell, Microsoft and Oracle will collaborate with the broader OCP community"
+          }
+        }
+      ]
+    },
+    {
+      "id": "AMZN",
+      "ticker": "AMZN",
+      "name": "Amazon(AWS)",
+      "sub": "クラウド",
+      "sub_en": "Cloud",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "OCIのマルチクラウド・サービスがAmazon Web Servicesなど競合他社の製品と連携",
+          "text_en": "Oracle’s OCI multicloud services work with Amazon Web Services, among other competitors’ products",
+          "source": {
+            "label": "Oracle 10-K(2026年度)",
+            "label_en": "Oracle 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1341439/000119312526277521/orcl-20260531.htm",
+            "level": "official",
+            "date": "2026-06-22",
+            "quote": "OCI’s multicloud services work with a number of our competitors’ products, including Microsoft Azure, Amazon Web Services and Google Cloud.",
+            "note": "AWSはAmazonの事業部門です。",
+            "note_en": "AWS is a unit of Amazon.com."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "OracleとAWSがOracle Database@AWSの一般提供開始を発表",
+          "text_en": "Oracle and AWS announced general availability of Oracle Database@AWS",
+          "source": {
+            "label": "Amazon/AWS の発表",
+            "label_en": "Amazon/AWS press release",
+            "url": "https://press.aboutamazon.com/aws/2025/7/oracle-database-aws-now-generally-available",
+            "level": "official",
+            "date": "2025-07-08",
+            "quote": "Oracle and Amazon Web Services, Inc. (AWS) today announced the general availability of OracleDatabase@AWS",
+            "note": "AWSはAmazonの事業部門です。",
+            "note_en": "AWS is a unit of Amazon.com."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "Amazon、Google、MicrosoftからのマルチクラウドDB売上が2026年度第1四半期に1,529%増",
+          "text_en": "MultiCloud database revenue from Amazon, Google and Microsoft grew 1,529% in Q1 FY26",
+          "source": {
+            "label": "Oracle 8-K Ex.99.1",
+            "label_en": "Oracle 8-K Ex.99.1 (Q1 FY26 results)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1341439/000119312525199175/orcl-ex99_1.htm",
+            "level": "official",
+            "date": "2025-09-09",
+            "quote": "MultiCloud database revenue from Amazon, Google and Microsoft grew at the incredible rate of 1,529% in Q1",
+            "note": "AWSはAmazonの事業部門です。同じ文にGoogleとMicrosoftも挙げられています。",
+            "note_en": "AWS is a unit of Amazon.com; the same sentence also names Google and Microsoft."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "AmazonはOracleの主な競合の1社として、一部製品と直接競合する",
+          "text_en": "Amazon competes directly with certain Oracle offerings",
+          "source": {
+            "label": "Oracle 10-K(2026年度)",
+            "label_en": "Oracle 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1341439/000119312526277521/orcl-20260531.htm",
+            "level": "official",
+            "date": "2026-06-22",
+            "quote": "compete directly with certain offerings from some of the largest and most competitive companies in the world, including Adobe Systems Incorporated, Alphabet Inc., Amazon.com, Inc., Cisco Systems, Inc., Intel Corporation, International Business Machines Corporation, Microsoft Corporation, Salesforce, Inc. and SAP SE, as well as other companies like Hewlett-Packard Enterprise and Workday, Inc.",
+            "note": "競合として挙げられた企業の一覧の中での記載で、特定の事業分野に限った記述ではありません。",
+            "note_en": "Named in a list of competitors for Oracle offerings; not segment-specific."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GOOGL",
+      "ticker": "GOOGL",
+      "name": "Alphabet(Google)",
+      "sub": "クラウド・AI",
+      "sub_en": "Cloud & AI",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "OCIのマルチクラウド・サービスがGoogle Cloudなど競合他社の製品と連携",
+          "text_en": "Oracle’s OCI multicloud services work with Google Cloud, among other competitors’ products",
+          "source": {
+            "label": "Oracle 10-K(2026年度)",
+            "label_en": "Oracle 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1341439/000119312526277521/orcl-20260531.htm",
+            "level": "official",
+            "date": "2026-06-22",
+            "quote": "OCI’s multicloud services work with a number of our competitors’ products, including Microsoft Azure, Amazon Web Services and Google Cloud.",
+            "note": "Google CloudはAlphabetの事業部門です。",
+            "note_en": "Google Cloud is a unit of Alphabet."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "Google Cloudと提携を拡大し、OCI Generative AIでGemini 2.5をはじめとするGoogleのAIモデルを提供",
+          "text_en": "Oracle and Google Cloud expanded their partnership to offer Google’s AI models, starting with Gemini 2.5, via OCI Generative AI",
+          "source": {
+            "label": "Oracle の発表",
+            "label_en": "Oracle press release",
+            "url": "https://www.oracle.com/news/announcement/oracle-to-offer-google-gemini-models-to-customers-2025-08-14/",
+            "level": "official",
+            "date": "2025-08-14",
+            "quote": "Oracle and Google Cloud have expanded their partnership to offer customers access to Google’s most advanced AI models, starting with Gemini 2.5, via Oracle Cloud Infrastructure (OCI) Generative AI service",
+            "note": "Google CloudはAlphabetの事業部門です。",
+            "note_en": "Google Cloud is a unit of Alphabet."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "Alphabet(Google)もOracleの主な競合の1社に数えられる",
+          "text_en": "Alphabet (Google) is one of Oracle's principal competitors",
+          "source": {
+            "label": "Oracle 10-K(2026年度)",
+            "label_en": "Oracle 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1341439/000119312526277521/orcl-20260531.htm",
+            "level": "official",
+            "date": "2026-06-22",
+            "quote": "compete directly with certain offerings from some of the largest and most competitive companies in the world, including Adobe Systems Incorporated, Alphabet Inc., Amazon.com, Inc., Cisco Systems, Inc., Intel Corporation, International Business Machines Corporation, Microsoft Corporation, Salesforce, Inc. and SAP SE, as well as other companies like Hewlett-Packard Enterprise and Workday, Inc.",
+            "note": "競合として挙げられた企業の一覧の中での記載で、特定の事業分野に限った記述ではありません。",
+            "note_en": "Named in a list of competitors for Oracle offerings; not segment-specific."
+          }
+        }
+      ]
+    },
+    {
+      "id": "PLTR",
+      "ticker": "PLTR",
+      "name": "Palantir Technologies",
+      "sub": "データ分析ソフト",
+      "sub_en": "Data analytics software",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Oracleは戦略的パートナーとしてPalantirを挙げ、Oracle Distributed CloudでPalantirを提供",
+          "text_en": "Oracle lists Palantir as a strategic partner, offering Palantir on Oracle Distributed Cloud",
+          "source": {
+            "label": "Oracle パートナーのページ",
+            "label_en": "Oracle partner page",
+            "url": "https://www.oracle.com/partner/palantir/",
+            "level": "official",
+            "quote": "Oracle and Palantir revolutionize data-driven operations, combining AI with sovereignty and lower costs.",
+            "note": "日付のないページです。",
+            "note_en": "Undated page."
+          }
+        }
+      ]
+    },
+    {
+      "id": "NTAP",
+      "ticker": "NTAP",
+      "name": "NetApp",
+      "sub": "データストレージ",
+      "sub_en": "Data storage",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "NetAppとOracleが、OCIで動く完全マネージド型のNetAppストレージ・サービスを発表",
+          "text_en": "NetApp and Oracle announced a fully managed NetApp storage service native to OCI",
+          "source": {
+            "label": "Oracle の発表",
+            "label_en": "Oracle press release",
+            "url": "https://www.oracle.com/news/announcement/netapp-and-oracle-to-launch-fully-managed-cloud-storage-service-for-demanding-ai-and-enterprise-workloads-2026-09-29/",
+            "level": "official",
+            "date": "2026-09-29",
+            "quote": "NetApp® (NASDAQ: NTAP), the Intelligent Data Infrastructure company, and Oracle today announced a new fully managed storage service that brings enterprise-grade NetApp storage natively to Oracle Cloud Infrastructure (OCI).",
+            "note": "サービスは提供開始に向けた計画段階です。",
+            "note_en": "The service is planned to launch."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ARM",
+      "ticker": "ARM",
+      "name": "Arm Holdings",
+      "sub": "半導体IP",
+      "sub_en": "Chip IP",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ArmはStargate Project(SoftBank Group、OpenAI、Oracleの合弁事業)で重要な技術パートナーに指名された",
+          "text_en": "Arm was named a key technology partner in the Stargate Project, the joint venture of SoftBank Group, OpenAI and Oracle",
+          "source": {
+            "label": "Arm 10-K(2026年度)",
+            "label_en": "Arm 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1973239/000197323926000097/arm-20260331.htm",
+            "level": "official",
+            "date": "2026-05-26",
+            "quote": "SoftBank Group announced the Stargate Project, a joint venture between SoftBank Group, OpenAI and Oracle Corporation, to invest in building new AI infrastructure, where we were named as a key technology partner.",
+            "note": "Armは正式な契約はないと記載しており、これはArmとStargateの関係です。Oracleの合弁事業として表示しています。",
+            "note_en": "Arm reports no formal commitments; the relationship is Arm-Stargate, shown for the Oracle JV."
+          }
+        }
+      ]
+    },
+    {
+      "id": "9984",
+      "ticker": "SoftBank",
+      "name": "SoftBank Group",
+      "sub": "投資持株会社",
+      "sub_en": "Investment holding",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Stargate Project(SoftBank Group、OpenAI、Oracleの合弁事業)に参加",
+          "text_en": "Arm’s 10-K describes the Stargate Project, a joint venture between SoftBank Group, OpenAI and Oracle",
+          "source": {
+            "label": "Arm 10-K(2026年度)",
+            "label_en": "Arm 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1973239/000197323926000097/arm-20260331.htm",
+            "level": "official",
+            "date": "2026-05-26",
+            "quote": "SoftBank Group announced the Stargate Project, a joint venture between SoftBank Group, OpenAI and Oracle Corporation, to invest in building new AI infrastructure",
+            "note": "他社(Arm)の年次報告に基づく記載です。",
+            "note_en": "Third-party filing."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "2025年11月25日にSoftBank GroupがAmpereの全持分を取得。Oracleは持分法で出資していたAmpereの持分を売却し、利益を計上",
+          "text_en": "SoftBank Group acquired all equity interests of Ampere on November 25, 2025; Oracle, an equity-method investor, sold its stake and booked a gain",
+          "source": {
+            "label": "Oracle 10-K(2026年度)",
+            "label_en": "Oracle 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1341439/000119312526277521/orcl-20260531.htm",
+            "level": "official",
+            "date": "2026-06-22",
+            "quote": "On November 25, 2025, SoftBank Group Corp. acquired all of the equity interests of Ampere (the Ampere Acquisition).",
+            "note": "Oracleは2026年5月31日時点でAmpereの持分を持っておらず、この出資は終了しています。",
+            "note_en": "Oracle exited its Ampere investment (no remaining stake as of May 31, 2026); this tie has ended."
+          }
+        }
+      ]
+    },
+    {
+      "id": "OpenAI",
+      "ticker": "OpenAI",
+      "name": "OpenAI",
+      "sub": "生成AI",
+      "sub_en": "Generative AI",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Stargate Project(SoftBank Group、OpenAI、Oracleの合弁事業)に参加",
+          "text_en": "Stargate Project, a joint venture between SoftBank Group, OpenAI and Oracle, per Arm’s 10-K",
+          "source": {
+            "label": "Arm 10-K(2026年度)",
+            "label_en": "Arm 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1973239/000197323926000097/arm-20260331.htm",
+            "level": "official",
+            "date": "2026-05-26",
+            "quote": "SoftBank Group announced the Stargate Project, a joint venture between SoftBank Group, OpenAI and Oracle Corporation, to invest in building new AI infrastructure",
+            "note": "OpenAIは未上場です。OpenAIとの関係は上場パートナー(Arm)の年次報告で確認されたもので、Oracle自身の10-Kにはその名前がありません。",
+            "note_en": "OpenAI is not listed. The tie is confirmed by a listed partner’s (Arm) filing; Oracle’s own 10-K does not name OpenAI."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "Oracle AI Databaseで、OpenAIのChatGPTなどのLLMをOracle Database上で利用可能",
+          "text_en": "Oracle AI Database lets customers use LLMs including OpenAI’s ChatGPT on Oracle Database",
+          "source": {
+            "label": "Oracle 8-K Ex.99.1",
+            "label_en": "Oracle 8-K Ex.99.1 (Q1 FY26 results)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1341439/000119312525199175/orcl-ex99_1.htm",
+            "level": "official",
+            "date": "2025-09-09",
+            "quote": "including Google’s Gemini, OpenAI’s ChatGPT, xAI’s Grok, etc.",
+            "note": "OpenAIは未上場です。モデルの連携であり、計算資源の契約ではありません。",
+            "note_en": "OpenAI is not listed. A model integration, not the compute contract."
+          }
+        }
+      ]
+    },
+    {
+      "id": "IBM",
+      "ticker": "IBM",
+      "name": "IBM",
+      "sub": "IT・クラウド",
+      "sub_en": "IT & cloud",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "OracleはIBMの戦略的パートナーの1社に名を連ねる",
+          "text_en": "Oracle is one of IBM's strategic partners",
+          "source": {
+            "label": "IBM 10-K(2025年度)",
+            "label_en": "IBM 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/51143/000005114326000010/ibm-20251231.htm",
+            "level": "official",
+            "date": "2026-02",
+            "quote": "Our strategic partners include: Adobe, Amazon Web Services (AWS), Microsoft, Oracle, Palo Alto Networks, Salesforce, Samsung Electronics and SAP, among others."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "IBMは、Oracleの主な競合の1社として一部製品でぶつかる",
+          "text_en": "IBM competes directly with certain Oracle offerings",
+          "source": {
+            "label": "Oracle 10-K(2026年度)",
+            "label_en": "Oracle 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1341439/000119312526277521/orcl-20260531.htm",
+            "level": "official",
+            "date": "2026-06-22",
+            "quote": "compete directly with certain offerings from some of the largest and most competitive companies in the world, including Adobe Systems Incorporated, Alphabet Inc., Amazon.com, Inc., Cisco Systems, Inc., Intel Corporation, International Business Machines Corporation, Microsoft Corporation, Salesforce, Inc. and SAP SE, as well as other companies like Hewlett-Packard Enterprise and Workday, Inc.",
+            "note": "競合として挙げられた企業の一覧の中での記載で、特定の事業分野に限った記述ではありません。",
+            "note_en": "Named in a list of competitors for Oracle offerings; not segment-specific."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ADBE",
+      "ticker": "ADBE",
+      "name": "Adobe",
+      "sub": "クリエイティブ・ソフト",
+      "sub_en": "Creative software",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "AdobeはOracleの主要な競合の1社となる",
+          "text_en": "Adobe is one of Oracle's principal competitors",
+          "source": {
+            "label": "Oracle 10-K(2026年度)",
+            "label_en": "Oracle 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1341439/000119312526277521/orcl-20260531.htm",
+            "level": "official",
+            "date": "2026-06-22",
+            "quote": "compete directly with certain offerings from some of the largest and most competitive companies in the world, including Adobe Systems Incorporated, Alphabet Inc., Amazon.com, Inc., Cisco Systems, Inc., Intel Corporation, International Business Machines Corporation, Microsoft Corporation, Salesforce, Inc. and SAP SE, as well as other companies like Hewlett-Packard Enterprise and Workday, Inc.",
+            "note": "競合として挙げられた企業の一覧の中での記載で、特定の事業分野に限った記述ではありません。",
+            "note_en": "Named in a list of competitors for Oracle offerings; not segment-specific."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CSCO",
+      "ticker": "CSCO",
+      "name": "Cisco Systems",
+      "sub": "ネットワーク機器",
+      "sub_en": "Networking gear",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Cisco Systemsは、Oracleの一部製品と競う大手の1社",
+          "text_en": "Cisco Systems competes directly with certain Oracle offerings",
+          "source": {
+            "label": "Oracle 10-K(2026年度)",
+            "label_en": "Oracle 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1341439/000119312526277521/orcl-20260531.htm",
+            "level": "official",
+            "date": "2026-06-22",
+            "quote": "compete directly with certain offerings from some of the largest and most competitive companies in the world, including Adobe Systems Incorporated, Alphabet Inc., Amazon.com, Inc., Cisco Systems, Inc., Intel Corporation, International Business Machines Corporation, Microsoft Corporation, Salesforce, Inc. and SAP SE, as well as other companies like Hewlett-Packard Enterprise and Workday, Inc.",
+            "note": "競合として挙げられた企業の一覧の中での記載で、特定の事業分野に限った記述ではありません。",
+            "note_en": "Named in a list of competitors for Oracle offerings; not segment-specific."
+          }
+        }
+      ]
+    },
+    {
+      "id": "INTC",
+      "ticker": "INTC",
+      "name": "Intel",
+      "sub": "半導体",
+      "sub_en": "Semiconductors",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "IntelはOracleの主な競合の1社に含まれる",
+          "text_en": "Intel is one of Oracle's principal competitors",
+          "source": {
+            "label": "Oracle 10-K(2026年度)",
+            "label_en": "Oracle 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1341439/000119312526277521/orcl-20260531.htm",
+            "level": "official",
+            "date": "2026-06-22",
+            "quote": "compete directly with certain offerings from some of the largest and most competitive companies in the world, including Adobe Systems Incorporated, Alphabet Inc., Amazon.com, Inc., Cisco Systems, Inc., Intel Corporation, International Business Machines Corporation, Microsoft Corporation, Salesforce, Inc. and SAP SE, as well as other companies like Hewlett-Packard Enterprise and Workday, Inc.",
+            "note": "競合として挙げられた企業の一覧の中での記載で、特定の事業分野に限った記述ではありません。",
+            "note_en": "Named in a list of competitors for Oracle offerings; not segment-specific."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CRM",
+      "ticker": "CRM",
+      "name": "Salesforce",
+      "sub": "業務ソフト",
+      "sub_en": "Enterprise software",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "SalesforceはOracleの主な競合の1社で、直接競い合う",
+          "text_en": "Salesforce competes directly with certain Oracle offerings",
+          "source": {
+            "label": "Oracle 10-K(2026年度)",
+            "label_en": "Oracle 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1341439/000119312526277521/orcl-20260531.htm",
+            "level": "official",
+            "date": "2026-06-22",
+            "quote": "compete directly with certain offerings from some of the largest and most competitive companies in the world, including Adobe Systems Incorporated, Alphabet Inc., Amazon.com, Inc., Cisco Systems, Inc., Intel Corporation, International Business Machines Corporation, Microsoft Corporation, Salesforce, Inc. and SAP SE, as well as other companies like Hewlett-Packard Enterprise and Workday, Inc.",
+            "note": "競合として挙げられた企業の一覧の中での記載で、特定の事業分野に限った記述ではありません。",
+            "note_en": "Named in a list of competitors for Oracle offerings; not segment-specific."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SAP",
+      "ticker": "SAP",
+      "name": "SAP",
+      "sub": "業務ソフト",
+      "sub_en": "Enterprise software",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "SAPは、Oracleの主な競合の1社に位置する",
+          "text_en": "SAP is one of Oracle's principal competitors",
+          "source": {
+            "label": "Oracle 10-K(2026年度)",
+            "label_en": "Oracle 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1341439/000119312526277521/orcl-20260531.htm",
+            "level": "official",
+            "date": "2026-06-22",
+            "quote": "compete directly with certain offerings from some of the largest and most competitive companies in the world, including Adobe Systems Incorporated, Alphabet Inc., Amazon.com, Inc., Cisco Systems, Inc., Intel Corporation, International Business Machines Corporation, Microsoft Corporation, Salesforce, Inc. and SAP SE, as well as other companies like Hewlett-Packard Enterprise and Workday, Inc.",
+            "note": "競合として挙げられた企業の一覧の中での記載で、特定の事業分野に限った記述ではありません。",
+            "note_en": "Named in a list of competitors for Oracle offerings; not segment-specific."
+          }
+        }
+      ]
+    },
+    {
+      "id": "HPE",
+      "ticker": "HPE",
+      "name": "Hewlett Packard Enterprise",
+      "sub": "サーバー・ITインフラ",
+      "sub_en": "Servers & IT infrastructure",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Hewlett Packard EnterpriseもOracleの主な競合の1社を担う",
+          "text_en": "Hewlett Packard Enterprise is one of Oracle's principal competitors",
+          "source": {
+            "label": "Oracle 10-K(2026年度)",
+            "label_en": "Oracle 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1341439/000119312526277521/orcl-20260531.htm",
+            "level": "official",
+            "date": "2026-06-22",
+            "quote": "compete directly with certain offerings from some of the largest and most competitive companies in the world, including Adobe Systems Incorporated, Alphabet Inc., Amazon.com, Inc., Cisco Systems, Inc., Intel Corporation, International Business Machines Corporation, Microsoft Corporation, Salesforce, Inc. and SAP SE, as well as other companies like Hewlett-Packard Enterprise and Workday, Inc.",
+            "note": "競合として挙げられた企業の一覧の中での記載で、特定の事業分野に限った記述ではありません。",
+            "note_en": "Named in a list of competitors for Oracle offerings; not segment-specific."
+          }
+        }
+      ]
+    },
+    {
+      "id": "WDAY",
+      "ticker": "WDAY",
+      "name": "Workday",
+      "sub": "業務ソフト",
+      "sub_en": "Enterprise software",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Workdayは、Oracleと直接競合する企業の1つ",
+          "text_en": "Workday is one of Oracle's principal competitors",
+          "source": {
+            "label": "Oracle 10-K(2026年度)",
+            "label_en": "Oracle 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1341439/000119312526277521/orcl-20260531.htm",
+            "level": "official",
+            "date": "2026-06-22",
+            "quote": "compete directly with certain offerings from some of the largest and most competitive companies in the world, including Adobe Systems Incorporated, Alphabet Inc., Amazon.com, Inc., Cisco Systems, Inc., Intel Corporation, International Business Machines Corporation, Microsoft Corporation, Salesforce, Inc. and SAP SE, as well as other companies like Hewlett-Packard Enterprise and Workday, Inc.",
+            "note": "競合として挙げられた企業の一覧の中での記載で、特定の事業分野に限った記述ではありません。",
+            "note_en": "Named in a list of competitors for Oracle offerings; not segment-specific."
+          }
+        }
+      ]
+    },
+    {
+      "id": "NOW",
+      "ticker": "NOW",
+      "name": "ServiceNow",
+      "sub": "業務ソフト",
+      "sub_en": "Enterprise software",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ServiceNowは企業向けソフト大手の1社Oracleをライバルとする",
+          "text_en": "Oracle is one of the enterprise application vendors that compete with ServiceNow",
+          "source": {
+            "label": "ServiceNow 10-K(2025年度)",
+            "label_en": "ServiceNow 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1373715/000137371526000007/now-20251231.htm",
+            "level": "official",
+            "date": "2026-01-29",
+            "quote": "such as Microsoft, Oracle, SAP, Salesforce and Workday"
+          }
+        }
+      ]
+    },
+    {
+      "id": "MDB",
+      "ticker": "MDB",
+      "name": "MongoDB",
+      "sub": "データベース",
+      "sub_en": "Databases",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "MongoDBは、従来型データベース大手の1社Oracleとの競合が中心",
+          "text_en": "MongoDB competes mainly with established legacy database providers such as Oracle",
+          "source": {
+            "label": "MongoDB 10-K(2026年度)",
+            "label_en": "MongoDB 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1441816/000162828026016799/mdb-20260131.htm",
+            "level": "official",
+            "date": "2026-03-11",
+            "quote": "We primarily compete with established legacy database software providers such as IBM, Microsoft, Oracle and other similar companies."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CRWV",
+      "ticker": "CRWV",
+      "name": "CoreWeave",
+      "sub": "AIクラウド",
+      "sub_en": "AI cloud",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "CoreWeaveが年次報告で、汎用クラウドで競合する企業の1社としてOracleを挙げている。競合の一部は顧客でもあるとしている",
+          "text_en": "CoreWeave’s 10-K names Oracle as a general-purpose cloud competitor and notes that some of them are also its customers",
+          "source": {
+            "label": "CoreWeave 10-K",
+            "label_en": "CoreWeave 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000366/crwv-20260630.htm",
+            "level": "official",
+            "date": "2026-08-12",
+            "quote": "Key competitors that offer general purpose cloud computing services as part of a broader, diversified product portfolio include Amazon (AWS), Google (Google Cloud Platform), Microsoft (Azure), and Oracle, a number of which are also our current customers."
+          }
+        }
+      ]
+    },
+    {
+      "id": "NBIS",
+      "ticker": "NBIS",
+      "name": "Nebius Group",
+      "sub": "AIクラウド",
+      "sub_en": "AI cloud",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Oracleは、Nebius(20-F)で汎用クラウドの競合1社となる",
+          "text_en": "Oracle competes with Nebius as a general-purpose cloud provider",
+          "source": {
+            "label": "Nebius 20-F(2025年度)",
+            "label_en": "Nebius 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926052948/nbis-20251231x20f.htm",
+            "level": "official",
+            "date": "2026-04",
+            "quote": "We also compete with general purpose cloud computing providers including Amazon (AWS), Google (Google Cloud Platform), Microsoft (Azure), and Oracle."
+          }
+        }
+      ]
+    },
+    {
+      "id": "IREN",
+      "ticker": "IREN",
+      "name": "IREN",
+      "sub": "AIクラウド",
+      "sub_en": "AI cloud",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Oracle Cloudは、IRENが競合するハイパースケーラーの1つ",
+          "text_en": "Oracle Cloud is one of the hyperscalers IREN competes with",
+          "source": {
+            "label": "IREN 10-K(2026年度)",
+            "label_en": "IREN 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1878848/000187884826000052/iren-20260630.htm",
+            "level": "official",
+            "date": "2026-08-27",
+            "quote": "we compete with hyperscalers, including Amazon Web Services, Google Cloud, Microsoft Azure and Oracle Cloud"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

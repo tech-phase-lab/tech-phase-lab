@@ -1,0 +1,236 @@
+{
+  "root": {
+    "ticker": "LSCC",
+    "name": "ラティスセミコンダクター",
+    "name_en": "Lattice Semiconductor",
+    "cik": 855658
+  },
+  "rows": [
+    {
+      "ja": "製造・組立の委託先",
+      "en": "Foundry & assembly suppliers",
+      "above": true
+    },
+    {
+      "ja": "提携",
+      "en": "Partnerships"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "AMD"
+  ],
+  "companies": [
+    {
+      "id": "TSM",
+      "ticker": "TSM",
+      "name": "TSMC",
+      "sub": "半導体ファウンドリ",
+      "sub_en": "Semiconductor foundry",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "TSMCと提携し、AvantとNexus 2向けの16nm品と350nm・130nm・55nm・40nm品を製造している",
+          "text_en": "Lattice partners with TSMC to develop and manufacture on 16nm for its Avant and Nexus 2 platforms, and to manufacture its 350nm, 130nm, 55nm and 40nm products",
+          "source": {
+            "label": "Lattice Semiconductor 10-K",
+            "label_en": "Lattice Semiconductor 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/855658/000143774926004100/lscc20260103_10k.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "We partner with Taiwan Semiconductor Manufacturing Company (\"TSMC\") to develop and manufacture on 16nm technology, which is used in our Avant and Nexus 2 platforms of FPGA products, and to manufacture our 350nm, 130nm, 55nm and 40nm products."
+          }
+        }
+      ]
+    },
+    {
+      "id": "UMC",
+      "ticker": "UMC",
+      "name": "ユナイテッド・マイクロエレクトロニクス",
+      "sub": "半導体ファウンドリ",
+      "sub_en": "Semiconductor foundry",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "UMCとその子会社USJCと提携し、130nm・90nm・65nm・40nmのCMOSプロセスで製品を製造している",
+          "text_en": "Lattice partners with UMC and its subsidiary USJC to manufacture its products on 130nm, 90nm, 65nm and 40nm CMOS processes, plus embedded flash",
+          "source": {
+            "label": "Lattice Semiconductor 10-K",
+            "label_en": "Lattice Semiconductor 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/855658/000143774926004100/lscc20260103_10k.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "Lattice partners with United Microelectronics Corporation (\"UMC\") and its subsidiary United Semiconductor Japan Corporation (\"USJC\") to manufacture our products on its 130nm, 90nm, 65nm, and 40nm CMOS process technologies, as well as embedded flash memory in these process nodes."
+          }
+        },
+        {
+          "type": "up",
+          "text": "UMCは、シリコンウェハーの調達先となるファウンドリだ",
+          "text_en": "UMC is one of the foundry partners from which Lattice sources silicon wafers.",
+          "source": {
+            "label": "Lattice Semiconductor 10-K",
+            "label_en": "Lattice Semiconductor 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/855658/000143774926004100/lscc20260103_10k.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "We source silicon wafers from our foundry partners, UMC, USJC, Samsung, TSMC, and Epson, pursuant to agreements with each company and their respective affiliates."
+          }
+        }
+      ],
+      "name_en": "United Microelectronics"
+    },
+    {
+      "id": "Samsung",
+      "ticker": "Samsung",
+      "name": "サムスン",
+      "sub": "半導体ファウンドリ",
+      "sub_en": "Semiconductor foundry",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "日本・韓国・台湾のファウンドリ(Samsung Semiconductorを含む)にウェハー製造を頼っている",
+          "text_en": "Lattice relies on foundries in Japan, Korea and Taiwan, including Samsung Semiconductor, to supply and fabricate silicon wafers",
+          "source": {
+            "label": "Lattice Semiconductor 10-K",
+            "label_en": "Lattice Semiconductor 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/855658/000143774926004100/lscc20260103_10k.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "We rely on foundries in Japan, Korea and Taiwan to supply and fabricate silicon wafers for our semiconductor products, including Taiwan Semiconductor Manufacturing, Samsung Semiconductor, United Microelectronics Corporation, and Seiko Epson."
+          }
+        }
+      ],
+      "name_en": "Samsung"
+    },
+    {
+      "id": "ASX",
+      "ticker": "ASE",
+      "name": "ASEテクノロジー・ホールディング",
+      "sub": "半導体後工程",
+      "sub_en": "Semiconductor assembly & test",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "ウェハーソート試験は主に台湾とマレーシアのASEが行う",
+          "text_en": "Wafer sort testing is primarily performed by ASE in Taiwan and Malaysia",
+          "source": {
+            "label": "Lattice Semiconductor 10-K",
+            "label_en": "Lattice Semiconductor 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/855658/000143774926004100/lscc20260103_10k.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "Wafer sort testing is primarily performed by ASE in Taiwan and Malaysia, and by our second source King Yuan Electronics Company (“KYEC”) in Taiwan."
+          }
+        },
+        {
+          "type": "up",
+          "text": "ASEとAmkorの2社を主要な組立パートナーとして認定している",
+          "text_en": "Lattice has qualified ASE and Amkor as its two major assembly partners",
+          "source": {
+            "label": "Lattice Semiconductor 10-K",
+            "label_en": "Lattice Semiconductor 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/855658/000143774926004100/lscc20260103_10k.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "We have qualified two major assembly partners, ASE and Amkor Technology (\"Amkor\") and are second sourced where volume and customer requirements make it necessary."
+          }
+        }
+      ],
+      "name_en": "ASE Technology Holding"
+    },
+    {
+      "id": "AMKR",
+      "ticker": "AMKR",
+      "name": "アムコー・テクノロジー",
+      "sub": "半導体後工程",
+      "sub_en": "Semiconductor assembly & test",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "ASEとAmkorの2社を主要な組立パートナーとして認定している",
+          "text_en": "Lattice has qualified ASE and Amkor as its two major assembly partners",
+          "source": {
+            "label": "Lattice Semiconductor 10-K",
+            "label_en": "Lattice Semiconductor 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/855658/000143774926004100/lscc20260103_10k.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "We have qualified two major assembly partners, ASE and Amkor Technology (\"Amkor\") and are second sourced where volume and customer requirements make it necessary."
+          }
+        },
+        {
+          "type": "up",
+          "text": "ASEとAmkorによる製造は、すべてアジアで行われる",
+          "text_en": "All ASE and Amkor manufacturing of Lattice's products is in Asia",
+          "source": {
+            "label": "Lattice Semiconductor 10-K",
+            "label_en": "Lattice Semiconductor 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/855658/000143774926004100/lscc20260103_10k.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "All ASE and Amkor manufacturing of our products is in Asia."
+          }
+        }
+      ],
+      "name_en": "Amkor Technology"
+    },
+    {
+      "id": "NVDA",
+      "ticker": "NVDA",
+      "name": "NVIDIA",
+      "sub": "AI半導体",
+      "sub_en": "AI chips",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "NVIDIA GTC 2026で、LatticeはHalosエコシステムの参加者としてNVIDIAと連携し、Holoscan Sensor Bridgeを使うHalos認証設計づくりに取り組むと発表した",
+          "text_en": "Announced at NVIDIA GTC 2026, Lattice will engage with NVIDIA and other Halos ecosystem members to build Halos-certified Holoscan Sensor Bridge-based designs for physical AI",
+          "source": {
+            "label": "Lattice — NVIDIA Halos participation, March 16, 2026",
+            "label_en": "Lattice — NVIDIA Halos participation, March 16, 2026",
+            "url": "https://www.latticesemi.com/en/About/Newsroom/PressReleases/2026/Lattice-Joins-NVIDIA-Halos-Ecosystem-to-Advance-Safety-for-Physical-AI-with-Holoscan-Sensor-Bridge",
+            "level": "official",
+            "quote": "Announced at the NVIDIA GTC 2026 , Lattice will engage with NVIDIA and other Halos ecosystem members to build Halos-certified Holoscan Sensor Bridge-based designs for physical AI and to help shape best practices as the industry evolves."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AMD",
+      "ticker": "AMD",
+      "name": "AMD",
+      "sub": "FPGA・CPU",
+      "sub_en": "FPGAs & CPUs",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ラティスセミコンダクターと競合する",
+          "text_en": "Competes with Lattice Semiconductor",
+          "source": {
+            "label": "AMD 10-K",
+            "label_en": "AMD 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000018/amd-20251227.htm",
+            "level": "official",
+            "date": "2026-02-04",
+            "quote": "We expect continued competition from our primary FPGA competitors such as Altera, Lattice Semiconductor Corporation and Microsemi Corporation, and from ASSP vendors such as Broadcom Corporation, Marvell Technology Group, Ltd., Analog Devices, Texas Instruments Incorporated, NXP Semiconductors N.V., Qualcomm Incorporated and NVIDIA."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

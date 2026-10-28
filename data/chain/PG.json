@@ -1,0 +1,94 @@
+{
+  "root": {
+    "ticker": "PG",
+    "name": "プロクター・アンド・ギャンブル",
+    "cik": 80424,
+    "name_en": "Procter & Gamble"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "WMT",
+      "ticker": "WMT",
+      "name": "ウォルマート",
+      "sub": "小売・最大顧客",
+      "sub_en": "Retail, largest customer",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "ウォルマートとその関連会社向けの売上は、総売上の約16%を占める",
+          "text_en": "Sales to Walmart and its affiliates are about 16% of total sales",
+          "source": {
+            "label": "P&G 10-K(2026年6月30日終了年度)",
+            "label_en": "P&G 10-K (fiscal year ended June 30, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/80424/000008042426000103/pg-20260630.htm",
+            "level": "official",
+            "date": "2026-08-04",
+            "quote": "Sales to Walmart Inc. and its affiliates represent approximately 16% of our total sales in 2026, 2025 and 2024."
+          }
+        }
+      ],
+      "name_en": "Walmart"
+    },
+    {
+      "id": "THORNE",
+      "ticker": "Thorne",
+      "name": "ソーン",
+      "sub": "栄養補助食品",
+      "sub_en": "Supplements",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ソーンを38億ドルで買収する契約を2026年8月4日に結んだ",
+          "text_en": "P&G agreed on August 4, 2026 to acquire Thorne for $3.8 billion",
+          "source": {
+            "label": "P&G 10-K(2026年6月30日終了年度)",
+            "label_en": "P&G 10-K (fiscal year ended June 30, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/80424/000008042426000103/pg-20260630.htm",
+            "level": "official",
+            "date": "2026-08-04",
+            "quote": "On August 4, 2026, the Company entered into an agreement to acquire Thorne, a premium wellness and supplement brand in the vitamins, minerals and supplements category for $3.8 billion."
+          }
+        }
+      ],
+      "name_en": "Thorne"
+    },
+    {
+      "id": "CLX",
+      "ticker": "CLX",
+      "name": "クロロックス",
+      "sub": "家庭用品",
+      "sub_en": "Household products",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Glad事業の合弁契約は2026年1月に満了した",
+          "text_en": "The Glad joint venture agreement with Clorox expired in January 2026",
+          "source": {
+            "label": "P&G Form 8-K (2026-07-29)",
+            "label_en": "P&G Form 8-K (2026-07-29)",
+            "url": "https://www.sec.gov/Archives/edgar/data/80424/000008042426000093/fy2526q4amj8-kexhibit991.htm",
+            "level": "official",
+            "date": "2026-07-29",
+            "quote": "In January 2026, the Glad joint venture agreement between the Company and Clorox expired."
+          }
+        }
+      ],
+      "name_en": "Clorox"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

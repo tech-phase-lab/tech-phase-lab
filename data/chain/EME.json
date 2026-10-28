@@ -1,0 +1,390 @@
+{
+  "root": {
+    "ticker": "EME",
+    "name": "エムコア・グループ",
+    "cik": 105634,
+    "name_en": "EMCOR Group, Inc."
+  },
+  "rows": [
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "APG",
+    "FIX",
+    "DY",
+    "ECG",
+    "IESC"
+  ],
+  "companies": [
+    {
+      "id": "APG",
+      "ticker": "APG",
+      "name": "APIグループ",
+      "sub": "設備・保守",
+      "sub_en": "Building services",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "電気・機械工事分野で競合する大手企業のひとつである",
+          "text_en": "Named among larger competitors in electrical and mechanical construction services",
+          "source": {
+            "label": "エムコア・グループ 10-K(2025-12-31)",
+            "label_en": "EMCOR Group, Inc. 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/105634/000010563426000025/eme-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "there are a number of larger companies focused on providing electrical and/or mechanical construction services, such as APi Group Corporation, Comfort Systems USA, Inc., Dycom Industries, Inc., Everus Construction Group, Inc., IES Holdings, Inc., MasTec, Inc., MYR Group Inc., Quanta Services, Inc., and Tutor Perini Corporation."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "機械サービス部門で競合している",
+          "text_en": "Named as a competitor of the mechanical services division",
+          "source": {
+            "label": "エムコア・グループ 10-K(2025-12-31)",
+            "label_en": "EMCOR Group, Inc. 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/105634/000010563426000025/eme-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Within our mechanical services division, we compete with entities such as APi Group Corporation, Comfort Systems USA, Inc., and Service Logic LLC, as well as Carrier Global Corporation and Trane Technologies plc."
+          }
+        }
+      ],
+      "name_en": "APi Group"
+    },
+    {
+      "id": "FIX",
+      "ticker": "FIX",
+      "name": "コンフォート・システムズUSA",
+      "sub": "機械設備工事",
+      "sub_en": "Mechanical contracting",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "電気・機械工事分野で競合する大手企業のひとつである",
+          "text_en": "Named among larger competitors in electrical and mechanical construction services",
+          "source": {
+            "label": "エムコア・グループ 10-K(2025-12-31)",
+            "label_en": "EMCOR Group, Inc. 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/105634/000010563426000025/eme-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "there are a number of larger companies focused on providing electrical and/or mechanical construction services, such as APi Group Corporation, Comfort Systems USA, Inc., Dycom Industries, Inc., Everus Construction Group, Inc., IES Holdings, Inc., MasTec, Inc., MYR Group Inc., Quanta Services, Inc., and Tutor Perini Corporation."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "機械サービス部門で競合している",
+          "text_en": "Named as a competitor of the mechanical services division",
+          "source": {
+            "label": "エムコア・グループ 10-K(2025-12-31)",
+            "label_en": "EMCOR Group, Inc. 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/105634/000010563426000025/eme-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Within our mechanical services division, we compete with entities such as APi Group Corporation, Comfort Systems USA, Inc., and Service Logic LLC, as well as Carrier Global Corporation and Trane Technologies plc."
+          }
+        }
+      ],
+      "name_en": "Comfort Systems USA"
+    },
+    {
+      "id": "DY",
+      "ticker": "DY",
+      "name": "ダイコム・インダストリーズ",
+      "sub": "通信インフラ工事",
+      "sub_en": "Telecom infrastructure",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "電気・機械工事分野で競合する大手企業のひとつである",
+          "text_en": "Named among larger competitors in electrical and mechanical construction services",
+          "source": {
+            "label": "エムコア・グループ 10-K(2025-12-31)",
+            "label_en": "EMCOR Group, Inc. 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/105634/000010563426000025/eme-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "there are a number of larger companies focused on providing electrical and/or mechanical construction services, such as APi Group Corporation, Comfort Systems USA, Inc., Dycom Industries, Inc., Everus Construction Group, Inc., IES Holdings, Inc., MasTec, Inc., MYR Group Inc., Quanta Services, Inc., and Tutor Perini Corporation."
+          }
+        }
+      ],
+      "name_en": "Dycom Industries"
+    },
+    {
+      "id": "ECG",
+      "ticker": "ECG",
+      "name": "エバラス・コンストラクション",
+      "sub": "電気・機械工事",
+      "sub_en": "Electrical & mechanical",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "電気・機械工事分野で競合する大手企業のひとつである",
+          "text_en": "Named among larger competitors in electrical and mechanical construction services",
+          "source": {
+            "label": "エムコア・グループ 10-K(2025-12-31)",
+            "label_en": "EMCOR Group, Inc. 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/105634/000010563426000025/eme-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "there are a number of larger companies focused on providing electrical and/or mechanical construction services, such as APi Group Corporation, Comfort Systems USA, Inc., Dycom Industries, Inc., Everus Construction Group, Inc., IES Holdings, Inc., MasTec, Inc., MYR Group Inc., Quanta Services, Inc., and Tutor Perini Corporation."
+          }
+        }
+      ],
+      "name_en": "Everus Construction"
+    },
+    {
+      "id": "IESC",
+      "ticker": "IESC",
+      "name": "IESホールディングス",
+      "sub": "電気工事",
+      "sub_en": "Electrical contracting",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "電気・機械工事分野で競合する大手企業のひとつである",
+          "text_en": "Named among larger competitors in electrical and mechanical construction services",
+          "source": {
+            "label": "エムコア・グループ 10-K(2025-12-31)",
+            "label_en": "EMCOR Group, Inc. 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/105634/000010563426000025/eme-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "there are a number of larger companies focused on providing electrical and/or mechanical construction services, such as APi Group Corporation, Comfort Systems USA, Inc., Dycom Industries, Inc., Everus Construction Group, Inc., IES Holdings, Inc., MasTec, Inc., MYR Group Inc., Quanta Services, Inc., and Tutor Perini Corporation."
+          }
+        }
+      ],
+      "name_en": "IES Holdings"
+    },
+    {
+      "id": "MTZ",
+      "ticker": "MTZ",
+      "name": "マステック",
+      "sub": "インフラ工事",
+      "sub_en": "Infrastructure construction",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "電気・機械工事分野で競合する大手企業のひとつである",
+          "text_en": "Named among larger competitors in electrical and mechanical construction services",
+          "source": {
+            "label": "エムコア・グループ 10-K(2025-12-31)",
+            "label_en": "EMCOR Group, Inc. 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/105634/000010563426000025/eme-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "there are a number of larger companies focused on providing electrical and/or mechanical construction services, such as APi Group Corporation, Comfort Systems USA, Inc., Dycom Industries, Inc., Everus Construction Group, Inc., IES Holdings, Inc., MasTec, Inc., MYR Group Inc., Quanta Services, Inc., and Tutor Perini Corporation."
+          }
+        }
+      ],
+      "name_en": "MasTec"
+    },
+    {
+      "id": "MYRG",
+      "ticker": "MYRG",
+      "name": "MYRグループ",
+      "sub": "送配電工事",
+      "sub_en": "Electrical construction",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "電気・機械工事分野で競合する大手企業のひとつである",
+          "text_en": "Named among larger competitors in electrical and mechanical construction services",
+          "source": {
+            "label": "エムコア・グループ 10-K(2025-12-31)",
+            "label_en": "EMCOR Group, Inc. 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/105634/000010563426000025/eme-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "there are a number of larger companies focused on providing electrical and/or mechanical construction services, such as APi Group Corporation, Comfort Systems USA, Inc., Dycom Industries, Inc., Everus Construction Group, Inc., IES Holdings, Inc., MasTec, Inc., MYR Group Inc., Quanta Services, Inc., and Tutor Perini Corporation."
+          }
+        }
+      ],
+      "name_en": "MYR Group"
+    },
+    {
+      "id": "PWR",
+      "ticker": "PWR",
+      "name": "クオンタ・サービシズ",
+      "sub": "インフラ工事",
+      "sub_en": "Infrastructure construction",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "電気・機械工事分野で競合する大手企業のひとつである",
+          "text_en": "Named among larger competitors in electrical and mechanical construction services",
+          "source": {
+            "label": "エムコア・グループ 10-K(2025-12-31)",
+            "label_en": "EMCOR Group, Inc. 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/105634/000010563426000025/eme-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "there are a number of larger companies focused on providing electrical and/or mechanical construction services, such as APi Group Corporation, Comfort Systems USA, Inc., Dycom Industries, Inc., Everus Construction Group, Inc., IES Holdings, Inc., MasTec, Inc., MYR Group Inc., Quanta Services, Inc., and Tutor Perini Corporation."
+          }
+        }
+      ],
+      "name_en": "Quanta Services"
+    },
+    {
+      "id": "TPC",
+      "ticker": "TPC",
+      "name": "タトル・ペリーニ",
+      "sub": "建設",
+      "sub_en": "Construction",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "電気・機械工事分野で競合する大手企業のひとつである",
+          "text_en": "Named among larger competitors in electrical and mechanical construction services",
+          "source": {
+            "label": "エムコア・グループ 10-K(2025-12-31)",
+            "label_en": "EMCOR Group, Inc. 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/105634/000010563426000025/eme-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "there are a number of larger companies focused on providing electrical and/or mechanical construction services, such as APi Group Corporation, Comfort Systems USA, Inc., Dycom Industries, Inc., Everus Construction Group, Inc., IES Holdings, Inc., MasTec, Inc., MYR Group Inc., Quanta Services, Inc., and Tutor Perini Corporation."
+          }
+        }
+      ],
+      "name_en": "Tutor Perini"
+    },
+    {
+      "id": "CARR",
+      "ticker": "CARR",
+      "name": "キャリア・グローバル",
+      "sub": "空調機器",
+      "sub_en": "HVAC equipment",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "機械サービス部門で競合している",
+          "text_en": "Named as a competitor of the mechanical services division",
+          "source": {
+            "label": "エムコア・グループ 10-K(2025-12-31)",
+            "label_en": "EMCOR Group, Inc. 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/105634/000010563426000025/eme-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Within our mechanical services division, we compete with entities such as APi Group Corporation, Comfort Systems USA, Inc., and Service Logic LLC, as well as Carrier Global Corporation and Trane Technologies plc."
+          }
+        }
+      ],
+      "name_en": "Carrier Global"
+    },
+    {
+      "id": "TT",
+      "ticker": "TT",
+      "name": "トレイン・テクノロジーズ",
+      "sub": "空調機器",
+      "sub_en": "HVAC equipment",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "機械サービス部門で競合している",
+          "text_en": "Named as a competitor of the mechanical services division",
+          "source": {
+            "label": "エムコア・グループ 10-K(2025-12-31)",
+            "label_en": "EMCOR Group, Inc. 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/105634/000010563426000025/eme-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Within our mechanical services division, we compete with entities such as APi Group Corporation, Comfort Systems USA, Inc., and Service Logic LLC, as well as Carrier Global Corporation and Trane Technologies plc."
+          }
+        }
+      ],
+      "name_en": "Trane Technologies"
+    },
+    {
+      "id": "FLR",
+      "ticker": "FLR",
+      "name": "フルアー",
+      "sub": "エンジニアリング",
+      "sub_en": "Engineering",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "商業・政府向けの施設サービス部門で競合している",
+          "text_en": "Named as a competitor of the commercial and government site-based divisions",
+          "source": {
+            "label": "エムコア・グループ 10-K(2025-12-31)",
+            "label_en": "EMCOR Group, Inc. 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/105634/000010563426000025/eme-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Within our commercial and government site-based divisions, competition includes companies such as Amentum Services, Inc., IAP Worldwide Services, Inc., Fluor Corporation, Cushman & Wakefield plc, CBRE Group, Inc., Jones Lang LaSalle Incorporated, Sodexo, Inc., Aramark, and ABM Industries Incorporated."
+          }
+        }
+      ],
+      "name_en": "Fluor"
+    },
+    {
+      "id": "CBRE",
+      "ticker": "CBRE",
+      "name": "CBREグループ",
+      "sub": "不動産サービス",
+      "sub_en": "Real estate services",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "商業・政府向けの施設サービス部門で競合している",
+          "text_en": "Named as a competitor of the commercial and government site-based divisions",
+          "source": {
+            "label": "エムコア・グループ 10-K(2025-12-31)",
+            "label_en": "EMCOR Group, Inc. 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/105634/000010563426000025/eme-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Within our commercial and government site-based divisions, competition includes companies such as Amentum Services, Inc., IAP Worldwide Services, Inc., Fluor Corporation, Cushman & Wakefield plc, CBRE Group, Inc., Jones Lang LaSalle Incorporated, Sodexo, Inc., Aramark, and ABM Industries Incorporated."
+          }
+        }
+      ],
+      "name_en": "CBRE Group"
+    },
+    {
+      "id": "ABM",
+      "ticker": "ABM",
+      "name": "ABMインダストリーズ",
+      "sub": "施設管理",
+      "sub_en": "Facility services",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "商業・政府向けの施設サービス部門で競合している",
+          "text_en": "Named as a competitor of the commercial and government site-based divisions",
+          "source": {
+            "label": "エムコア・グループ 10-K(2025-12-31)",
+            "label_en": "EMCOR Group, Inc. 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/105634/000010563426000025/eme-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Within our commercial and government site-based divisions, competition includes companies such as Amentum Services, Inc., IAP Worldwide Services, Inc., Fluor Corporation, Cushman & Wakefield plc, CBRE Group, Inc., Jones Lang LaSalle Incorporated, Sodexo, Inc., Aramark, and ABM Industries Incorporated."
+          }
+        }
+      ],
+      "name_en": "ABM Industries"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

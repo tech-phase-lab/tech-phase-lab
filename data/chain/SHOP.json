@@ -1,0 +1,275 @@
+{
+  "root": {
+    "ticker": "SHOP",
+    "name": "Shopify",
+    "cik": 1594805
+  },
+  "rows": [
+    {
+      "ja": "提携・投資先",
+      "en": "Partners & investments",
+      "above": true
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "KVYO",
+      "ticker": "KVYO",
+      "name": "Klaviyo",
+      "sub": "マーケティングソフト",
+      "sub_en": "Marketing software",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Shopifyの投資先としてKlaviyoのSeries B普通株の購入オプションを保有し、その価値が2025年12月31日時点で7500万ドルである",
+          "text_en": "Shopify holds an option to purchase Series B common shares in Klaviyo, representing $75 million of its investments as of December 31, 2025",
+          "source": {
+            "label": "Shopify 10-K",
+            "label_en": "Shopify 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1594805/000159480526000007/shop-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "Additionally, Shopify evaluates its investments to determine if the investment should be accounted for as an equity method investment based upon equity ownership, significant influence and ongoing involvement in the investee."
+          }
+        },
+        {
+          "type": "down",
+          "text": "Klaviyoは、Shopifyに普通株を発行・売却し、2030年7月28日までShopifyが追加購入できるオプションを付けた",
+          "text_en": "Klaviyo issued and sold common stock to Shopify with an option to purchase additional shares until July 28, 2030",
+          "source": {
+            "label": "Klaviyo 10-K",
+            "label_en": "Klaviyo 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1835830/000183583026000007/kvyo-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "Under the stock purchase agreement, we issued and sold shares of common stock to Shopify and provided an investment option which allows Shopify to purchase additional shares of common stock at a fixed price, exercisable at any time at Shopify’s option until July 28, 2030."
+          }
+        },
+        {
+          "type": "down",
+          "text": "KlaviyoはShopifyと連携しており、その終了や劣化は顧客喪失につながり得る",
+          "text_en": "Klaviyo integrates with Shopify, and termination or degradation of that integration could cost it customers.",
+          "source": {
+            "label": "Klaviyo 10-K",
+            "label_en": "Klaviyo 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1835830/000183583026000007/kvyo-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "However, the termination or degradation of our integration with Shopify could cause us to lose customers if these customers do not transition to a new eCommerce platform, or if they transition to a platform that does not integrate with our platform."
+          }
+        }
+      ]
+    },
+    {
+      "id": "PYPL",
+      "ticker": "PYPL",
+      "name": "ペイパル",
+      "sub": "決済",
+      "sub_en": "Payments",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "PayPalとの契約は初期期間後、12か月ごとに自動更新される",
+          "text_en": "The PayPal agreement automatically renews every 12 months after its initial term",
+          "source": {
+            "label": "Shopify 10-K",
+            "label_en": "Shopify 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1594805/000159480526000007/shop-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "The PayPal agreement, following its initial term, automatically renews every 12 months, unless either party terminates the agreement earlier."
+          }
+        }
+      ],
+      "name_en": "PayPal"
+    },
+    {
+      "id": "MSFT",
+      "ticker": "MSFT",
+      "name": "マイクロソフト",
+      "sub": "ソフト・クラウド",
+      "sub_en": "Software & cloud",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Microsoft Copilotとの連携を更新し、新しい組み込み型チェックアウトを導入する",
+          "text_en": "Shopify is updating its Microsoft Copilot integration with a new embedded checkout experience",
+          "source": {
+            "label": "Shopify — agentic commerce / UCP, January 11, 2026",
+            "label_en": "Shopify — agentic commerce / UCP, January 11, 2026",
+            "url": "https://www.shopify.com/news/ai-commerce-at-scale",
+            "level": "official",
+            "quote": "We are also releasing an update to our Microsoft Copilot integration with a new embedded checkout experience."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "Shopifyの加盟店がCopilot Checkoutで販売できるようにする",
+          "text_en": "The update lets Shopify merchants sell through Copilot Checkout",
+          "source": {
+            "label": "Shopify — agentic commerce / UCP, January 11, 2026",
+            "label_en": "Shopify — agentic commerce / UCP, January 11, 2026",
+            "url": "https://www.shopify.com/news/ai-commerce-at-scale",
+            "level": "official",
+            "quote": "We're also rolling out an update to our Microsoft integration, enabling Shopify merchants to sell through Copilot Checkout, a new embedded checkout that allows users to shop directly in Copilot."
+          }
+        }
+      ],
+      "name_en": "Microsoft"
+    },
+    {
+      "id": "ROKU",
+      "ticker": "ROKU",
+      "name": "Roku",
+      "sub": "動画配信機器",
+      "sub_en": "Streaming devices",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Rokuは、Shopifyなどとの提携でアクション広告を展開した",
+          "text_en": "Roku runs many of its action ads in partnership with companies such as Shopify.",
+          "source": {
+            "label": "Roku 10-K",
+            "label_en": "Roku 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1428439/000162828026008114/roku-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "Many of our action ads are in partnership with companies such as Walmart, Shopify, and Instacart that connect their products with viewers and provide enhanced targeting and closed-loop measurement.",
+            "note": "Rokuの文書による記載です。",
+            "note_en": "As described in Roku's document."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GOOGL",
+      "ticker": "GOOGL",
+      "name": "アルファベット",
+      "sub": "検索・動画・クラウド",
+      "sub_en": "Search, video & cloud",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ShopifyはGoogleと共同でUniversal Commerce Protocolを開発したと発表した",
+          "text_en": "Shopify announced the Universal Commerce Protocol, an open standard co-developed with Google",
+          "source": {
+            "label": "Shopify の発表",
+            "label_en": "Shopify press release",
+            "url": "https://www.shopify.com/news/ai-commerce-at-scale",
+            "level": "official",
+            "date": "2026-01-11",
+            "quote": "We're announcing the Universal Commerce Protocol (UCP), a new open standard co-developed with Google to bring commerce to agents at scale."
+          }
+        }
+      ],
+      "name_en": "Alphabet"
+    },
+    {
+      "id": "OpenAI",
+      "ticker": "OpenAI",
+      "name": "OpenAI",
+      "sub": "生成AI",
+      "sub_en": "Generative AI",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ShopifyがOpenAIとの提携を発表した",
+          "text_en": "Shopify announced its partnership with OpenAI",
+          "source": {
+            "label": "Shopify の発表",
+            "label_en": "Shopify press release",
+            "url": "https://www.shopify.com/news/shopify-open-ai-commerce",
+            "level": "official",
+            "date": "2025-09-29",
+            "quote": "Today, we’re taking another step toward that vision through our partnership with OpenAI.",
+            "note": "OpenAIは未上場です。",
+            "note_en": "OpenAI is not listed."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AFRM",
+      "ticker": "AFRM",
+      "name": "アファーム",
+      "sub": "後払い決済",
+      "sub_en": "Buy now, pay later",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "AffirmとShopifyが、拡大した世界規模の契約を発表した",
+          "text_en": "Affirm and Shopify announced an expanded global agreement",
+          "source": {
+            "label": "Affirm 8-K exhibit(joint の発表)",
+            "label_en": "Affirm 8-K exhibit (joint press release)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1820953/000182095325000017/shopifypressreleasefebru.htm",
+            "level": "official",
+            "date": "2025-02-20",
+            "quote": "Affirm (NASDAQ: AFRM), the payment network that empowers consumers and helps merchants drive growth, and Shopify, a provider of essential internet infrastructure for commerce, today announced an expanded global agreement."
+          }
+        }
+      ],
+      "name_en": "Affirm"
+    },
+    {
+      "id": "COIN",
+      "ticker": "COIN",
+      "name": "コインベース",
+      "sub": "暗号資産取引",
+      "sub_en": "Crypto exchange",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ShopifyがCoinbaseおよびStripeと提携し、安定通貨決済を提供すると発表した",
+          "text_en": "Shopify announced a partnership with Coinbase and Stripe to bring stablecoin payments to merchants",
+          "source": {
+            "label": "Shopify の発表",
+            "label_en": "Shopify press release",
+            "url": "https://www.shopify.com/news/stablecoins-on-shopify",
+            "level": "official",
+            "quote": "And today, Shopify is excited to partner with Coinbase and Stripe to bring stablecoins to everyday commerce."
+          }
+        }
+      ],
+      "name_en": "Coinbase"
+    },
+    {
+      "id": "GLBE",
+      "ticker": "GLBE",
+      "name": "グローバル・イー",
+      "sub": "越境EC",
+      "sub_en": "Cross-border e-commerce",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Global-eがShopifyとの新たな提携契約に基づき、Shop Payを提供すると発表した",
+          "text_en": "Global-e announced Shop Pay availability under its new partnership agreement with Shopify",
+          "source": {
+            "label": "Global-e の発表",
+            "label_en": "Global-e press release",
+            "url": "https://www.prnewswire.com/news-releases/shop-pay-one-click-checkout-now-available-on-global-e-platform-302584546.html",
+            "level": "official",
+            "date": "2025-10-15",
+            "quote": "As part of the new partnership agreement with Shopify, Global-e can now enable its Shopify platform-based merchants to offer Shop Pay's one-click checkout with pre-filled details as part of the shopping journey operated by Global-e."
+          }
+        }
+      ],
+      "name_en": "Global-e"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

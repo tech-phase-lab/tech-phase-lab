@@ -1,0 +1,147 @@
+{
+  "root": {
+    "ticker": "CI",
+    "name": "シグナ・グループ",
+    "cik": 1739940,
+    "name_en": "The Cigna Group"
+  },
+  "rows": [
+    {
+      "ja": "供給元",
+      "en": "Suppliers",
+      "above": true
+    },
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "CNC",
+      "ticker": "CNC",
+      "name": "センテン",
+      "sub": "医療保険",
+      "sub_en": "Health insurer",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "エクスプレス・スクリプツがセンテンの加入者向けに薬剤給付管理を行う複数年契約を結んでいる",
+          "text_en": "Express Scripts manages pharmacy benefit services for Centene's customers under a multiyear agreement",
+          "source": {
+            "label": "シグナ 10-K(2025年12月31日期)",
+            "label_en": "Cigna 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1739940/000173994026000006/ci-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Express Scripts and Centene Corporation (\"Centene\") have a multiyear agreement, which began January 1, 2024, to manage pharmacy benefit services for Centene's customers"
+          }
+        }
+      ],
+      "name_en": "Centene"
+    },
+    {
+      "id": "PRIME",
+      "ticker": "Prime",
+      "name": "プライム・セラピューティクス",
+      "sub": "薬剤給付管理",
+      "sub_en": "Pharmacy benefits",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "エクスプレス・スクリプツとの間で、小売薬局網の強化などに関する契約がある",
+          "text_en": "Express Scripts has agreements with Prime covering retail pharmacy networks and access to Accredo and Express Scripts Pharmacy",
+          "source": {
+            "label": "シグナ 10-K(2025年12月31日期)",
+            "label_en": "Cigna 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1739940/000173994026000006/ci-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Express Scripts and Prime Therapeutics LLC (\"Prime\") have agreements to deliver improved choice and affordability for Prime's clients and customers by enhancing retail pharmacy networks, providing access to Accredo and Express Scripts Pharmacy, and providing pharmaceutical manufacturer value."
+          }
+        }
+      ],
+      "name_en": "Prime Therapeutics"
+    },
+    {
+      "id": "UNH",
+      "ticker": "UNH",
+      "name": "ユナイテッドヘルス・グループ",
+      "sub": "医療保険・IT",
+      "sub_en": "Insurer / health IT",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "傘下のチェンジ・ヘルスケアが、薬剤給付管理サービスの一部で委託先になっている",
+          "text_en": "Its unit Change Healthcare is a service provider for some of Cigna's pharmacy benefit management services",
+          "source": {
+            "label": "シグナ 10-K(2025年12月31日期)",
+            "label_en": "Cigna 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1739940/000173994026000006/ci-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Change Healthcare, a health technology company owned by UnitedHealth Group and a service provider for certain of our pharmacy benefit management services"
+          }
+        }
+      ],
+      "name_en": "UnitedHealth Group"
+    },
+    {
+      "id": "SHIELDS",
+      "ticker": "Shields Health",
+      "name": "シールズ・ヘルス・ソリューションズ",
+      "sub": "専門薬局管理",
+      "sub_en": "Specialty pharmacy mgmt",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "専門薬局管理会社であるシールズへの投資を行った",
+          "text_en": "Cigna made an investment in Shields, a specialty pharmacy management company",
+          "source": {
+            "label": "シグナ 10-K(2025年12月31日期)",
+            "label_en": "Cigna 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1739940/000173994026000006/ci-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "to partially fund an investment in Shields Health Solutions (\"Shields\"), a leading specialty pharmacy management company"
+          }
+        }
+      ],
+      "name_en": "Shields Health Solutions"
+    },
+    {
+      "id": "VMD",
+      "ticker": "VillageMD",
+      "name": "ビレッジMD",
+      "sub": "プライマリケア",
+      "sub_en": "Primary care",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ビレッジMDへの投資は全額減損処理された",
+          "text_en": "Its investment in VillageMD was determined to be fully impaired",
+          "source": {
+            "label": "シグナ 10-K(2025年12月31日期)",
+            "label_en": "Cigna 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1739940/000173994026000006/ci-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "we determined our investment in VillageMD was fully impaired"
+          }
+        }
+      ],
+      "name_en": "VillageMD"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

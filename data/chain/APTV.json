@@ -1,0 +1,131 @@
+{
+  "root": {
+    "ticker": "APTV",
+    "name": "アプティブ",
+    "cik": 1521332,
+    "name_en": "Aptiv"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "GM",
+      "ticker": "GM",
+      "name": "ゼネラル・モーターズ",
+      "sub": "自動車メーカー",
+      "sub_en": "Automaker",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "フォード、ステランティスと並ぶ最大級の顧客である",
+          "text_en": "GM is among the largest customers, alongside Ford and Stellantis",
+          "source": {
+            "label": "アプティブ 10-K(2025-12-31)",
+            "label_en": "Aptiv 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1521332/000152133226000009/aptv-20251231.htm",
+            "level": "official",
+            "date": "2026-02-06",
+            "quote": "GM, Ford and Stellantis are among our largest customers, these labor strikes adversely impacted our financial condition, operating results and cash flows for the year ended December 31, 2023."
+          }
+        }
+      ],
+      "name_en": "General Motors"
+    },
+    {
+      "id": "F",
+      "ticker": "F",
+      "name": "フォード・モーター",
+      "sub": "自動車メーカー",
+      "sub_en": "Automaker",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "GM、ステランティスと並ぶ最大級の顧客のひとつだ",
+          "text_en": "Ford is among the largest customers, alongside GM and Stellantis",
+          "source": {
+            "label": "アプティブ 10-K(2025-12-31)",
+            "label_en": "Aptiv 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1521332/000152133226000009/aptv-20251231.htm",
+            "level": "official",
+            "date": "2026-02-06",
+            "quote": "GM, Ford and Stellantis are among our largest customers, these labor strikes adversely impacted our financial condition, operating results and cash flows for the year ended December 31, 2023."
+          }
+        }
+      ],
+      "name_en": "Ford Motor"
+    },
+    {
+      "id": "STLA",
+      "ticker": "STLA",
+      "name": "ステランティス",
+      "sub": "自動車メーカー",
+      "sub_en": "Automaker",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "GM、フォードと並ぶ最大級の顧客のひとつである",
+          "text_en": "Stellantis is among the largest customers, alongside GM and Ford",
+          "source": {
+            "label": "アプティブ 10-K(2025-12-31)",
+            "label_en": "Aptiv 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1521332/000152133226000009/aptv-20251231.htm",
+            "level": "official",
+            "date": "2026-02-06",
+            "quote": "GM, Ford and Stellantis are among our largest customers, these labor strikes adversely impacted our financial condition, operating results and cash flows for the year ended December 31, 2023."
+          }
+        }
+      ],
+      "name_en": "Stellantis"
+    },
+    {
+      "id": "HYUNDAI",
+      "ticker": "Hyundai Motor",
+      "name": "現代自動車グループ",
+      "sub": "自動車メーカー",
+      "sub_en": "Automaker",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2020年3月に自動運転技術を手がける合弁会社モーショナルを共同で設立した",
+          "text_en": "In March 2020 the two formed Motional, a joint venture for autonomous driving technologies",
+          "source": {
+            "label": "アプティブ 10-K(2025-12-31)",
+            "label_en": "Aptiv 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1521332/000152133226000009/aptv-20251231.htm",
+            "level": "official",
+            "date": "2026-02-06",
+            "quote": "In March 2020, we completed a transaction with Hyundai Motor Group (“Hyundai”) to form Motional AD LLC (“Motional”), a joint venture focused on the design, development and commercialization of autonomous driving technologies."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "2025年5月の追加出資で、モーショナルの普通株持分は約13%まで下がった",
+          "text_en": "After Hyundai's additional funding in May 2025, Aptiv's common equity interest in Motional fell to approximately 13%",
+          "source": {
+            "label": "アプティブ 10-K(2025-12-31)",
+            "label_en": "Aptiv 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1521332/000152133226000009/aptv-20251231.htm",
+            "level": "official",
+            "date": "2026-02-06",
+            "quote": "In May 2025, Hyundai provided additional funding to Motional, further reducing Aptiv’s common equity interest in Motional from 15% as of March 31, 2025 to approximately 13% as of December 31, 2025."
+          }
+        }
+      ],
+      "name_en": "Hyundai Motor Group"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

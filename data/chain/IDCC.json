@@ -1,0 +1,238 @@
+{
+  "root": {
+    "ticker": "IDCC",
+    "name": "インターデジタル",
+    "cik": 1405495,
+    "name_en": "InterDigital"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "SSNLF",
+      "ticker": "Samsung",
+      "name": "サムスン電子",
+      "sub": "スマホ特許ライセンス",
+      "sub_en": "Smartphone licensee",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "売上の10%以上を占める主要な特許ライセンス先である",
+          "text_en": "Samsung is one of three licensees each providing 10% or more of revenue",
+          "source": {
+            "label": "InterDigital 10-K(2025年12月期)",
+            "label_en": "InterDigital 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1405495/000140549526000011/idcc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-05",
+            "quote": "In fiscal 2025, revenue (in descending order) from Samsung, Apple, and vivo each comprised 10% or more of our consolidated revenue."
+          }
+        }
+      ],
+      "name_en": "Samsung"
+    },
+    {
+      "id": "AAPL",
+      "ticker": "AAPL",
+      "name": "アップル",
+      "sub": "スマホ特許ライセンス",
+      "sub_en": "Smartphone licensee",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "2022年にアップルとの特許ライセンス契約を更新した",
+          "text_en": "InterDigital renewed its patent license agreement with Apple in 2022",
+          "source": {
+            "label": "InterDigital 10-K(2025年12月期)",
+            "label_en": "InterDigital 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1405495/000140549526000011/idcc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-05",
+            "quote": "In 2022, we renewed a multi-year, royalty-bearing, worldwide, and non-exclusive patent license agreement with Apple (the “Apple PLA”)."
+          }
+        }
+      ],
+      "name_en": "Apple"
+    },
+    {
+      "id": "HPQ",
+      "ticker": "HPQ",
+      "name": "エイチピー",
+      "sub": "パソコン特許ライセンス",
+      "sub_en": "PC licensee",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "2025年4月にHPと複数年のライセンス契約を結んだ",
+          "text_en": "InterDigital signed a multi-year license agreement with HP in April 2025",
+          "source": {
+            "label": "InterDigital 10-K(2025年12月期)",
+            "label_en": "InterDigital 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1405495/000140549526000011/idcc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-05",
+            "quote": "In April 2025, we signed a new multi-year license agreement with HP Inc."
+          }
+        }
+      ],
+      "name_en": "HP Inc."
+    },
+    {
+      "id": "LNVGY",
+      "ticker": "Lenovo",
+      "name": "レノボ",
+      "sub": "パソコン特許ライセンス",
+      "sub_en": "PC licensee",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "2024年にレノボと新ライセンス条件を決める仲裁に合意した",
+          "text_en": "InterDigital agreed with Lenovo in 2024 to arbitrate a new patent license",
+          "source": {
+            "label": "InterDigital 10-K(2025年12月期)",
+            "label_en": "InterDigital 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1405495/000140549526000011/idcc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-05",
+            "quote": "Additionally, in 2024 we entered into an arbitration agreement with Lenovo to determine the terms of a new patent license for our cellular and other technologies."
+          }
+        }
+      ],
+      "name_en": "Lenovo"
+    },
+    {
+      "id": "XIACY",
+      "ticker": "Xiaomi",
+      "name": "シャオミ",
+      "sub": "スマホ特許ライセンス",
+      "sub_en": "Smartphone licensee",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "2026年1月にシャオミとのライセンスを更新した",
+          "text_en": "InterDigital renewed its license with Xiaomi in January 2026",
+          "source": {
+            "label": "InterDigital 10-K(2025年12月期)",
+            "label_en": "InterDigital 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1405495/000140549526000011/idcc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-05",
+            "quote": "In January 2026, we renewed a worldwide, non-exclusive, royalty bearing license with Xiaomi."
+          }
+        }
+      ],
+      "name_en": "Xiaomi"
+    },
+    {
+      "id": "LGE",
+      "ticker": "LG Electronics",
+      "name": "LGエレクトロニクス",
+      "sub": "テレビ特許ライセンス",
+      "sub_en": "TV licensee",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "2026年1月にLGエレクトロニクスと新たな特許ライセンスを結んだ",
+          "text_en": "InterDigital signed a new patent license agreement with LG Electronics in January 2026",
+          "source": {
+            "label": "InterDigital 10-K(2025年12月期)",
+            "label_en": "InterDigital 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1405495/000140549526000011/idcc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-05",
+            "quote": "In January 2026, we signed a new patent license agreement with LG Electronics."
+          }
+        }
+      ],
+      "name_en": "LG Electronics"
+    },
+    {
+      "id": "SONY",
+      "ticker": "SONY",
+      "name": "ソニー",
+      "sub": "共同ライセンス",
+      "sub_en": "Joint licensing",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ソニーとテレビ・モニター向けの特許を合わせて共同でライセンスしている",
+          "text_en": "InterDigital and Sony combine DTV and CDM patent portfolios for joint licensing",
+          "source": {
+            "label": "InterDigital 10-K(2025年12月期)",
+            "label_en": "InterDigital 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1405495/000140549526000011/idcc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-05",
+            "quote": "Under the Madison Arrangement, InterDigital and Sony combine portions of their respective DTV and CDM patent portfolios and have created a combined licensing opportunity for DTV and CDM manufacturers."
+          }
+        }
+      ],
+      "name_en": "Sony"
+    },
+    {
+      "id": "SHRPY",
+      "ticker": "Sharp",
+      "name": "シャープ",
+      "sub": "機器ライセンス",
+      "sub_en": "Device licensee",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "機器向けの特許ライセンス先の一社である",
+          "text_en": "Sharp is among the companies with device licenses",
+          "source": {
+            "label": "InterDigital 10-K(2025年12月期)",
+            "label_en": "InterDigital 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1405495/000140549526000011/idcc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-05",
+            "quote": "Additionally, we entered into device licenses covering our technologies with a significant social media company, along with Eaton, Seiko Solutions Inc., Sharp, and Teltronic."
+          }
+        }
+      ],
+      "name_en": "Sharp"
+    },
+    {
+      "id": "ETN",
+      "ticker": "ETN",
+      "name": "イートン",
+      "sub": "機器ライセンス",
+      "sub_en": "Device licensee",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "機器向けの特許ライセンス先の一社になっている",
+          "text_en": "Eaton is among the companies with device licenses",
+          "source": {
+            "label": "InterDigital 10-K(2025年12月期)",
+            "label_en": "InterDigital 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1405495/000140549526000011/idcc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-05",
+            "quote": "Additionally, we entered into device licenses covering our technologies with a significant social media company, along with Eaton, Seiko Solutions Inc., Sharp, and Teltronic."
+          }
+        }
+      ],
+      "name_en": "Eaton"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

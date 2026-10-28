@@ -1,0 +1,202 @@
+{
+  "root": {
+    "ticker": "ZETA",
+    "name": "Zeta Global",
+    "cik": 1851003
+  },
+  "rows": [
+    {
+      "ja": "基盤・モデルの供給元",
+      "en": "Infrastructure & model suppliers",
+      "above": true
+    },
+    {
+      "ja": "提携・連携・資金調達",
+      "en": "Partnerships, integrations & financing"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "GOOG",
+      "ticker": "GOOG",
+      "name": "グーグル",
+      "sub": "ネット・クラウド",
+      "sub_en": "Internet & cloud",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "ZMPはパブリッククラウド(AWS/Google/Azure)とプライベートクラウドを組み合わせたZeta Hybrid Cloud上で稼働する",
+          "text_en": "The ZMP is hosted in the Zeta Hybrid Cloud, pairing a public cloud (AWS/Google/Azure) with a self-hosted private cloud",
+          "source": {
+            "label": "Zeta Global 10-K",
+            "label_en": "Zeta Global 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1851003/000119312526068598/zeta-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "The ZMP is hosted in the Zeta Hybrid Cloud, which is a unique pairing of a public cloud (AWS/Google/Azure) deployment and self-hosted private cloud (VMware/Docker/Kubernetes) resources designed to facilitate workload management in a cost-effective, performant and efficient manner.",
+            "note": "AWS、Azureと並んで挙げられている記載です。",
+            "note_en": "Named alongside AWS and Azure."
+          }
+        }
+      ],
+      "name_en": "Google"
+    },
+    {
+      "id": "OpenAI",
+      "ticker": "OpenAI",
+      "name": "OpenAI",
+      "sub": "生成AI",
+      "sub_en": "Generative AI",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ZetaはOpenAIとの提携のもとで、ライセンスを受けたAI技術を利用している",
+          "text_en": "Zeta uses AI technologies licensed from third parties, including under its partnership with OpenAI",
+          "source": {
+            "label": "Zeta Global 10-K",
+            "label_en": "Zeta Global 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1851003/000119312526068598/zeta-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "In addition to our proprietary AI Technologies, we use AI Technologies licensed from third parties in our technologies, including under our partnership with OpenAI, and our ability to continue to use such technologies at the scale we need may be dependent on access to specific third-party software and infrastructure.",
+            "note": "OpenAIは未上場です。",
+            "note_en": "OpenAI is not listed."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "2026年1月、ZetaはOpenAIとの戦略的協業を発表し、Athena by Zetaの対話知能とエージェント機能を支える",
+          "text_en": "In January 2026, Zeta announced a strategic collaboration with OpenAI to power the conversational intelligence and agentic applications behind Athena by Zeta",
+          "source": {
+            "label": "Zeta Global の発表",
+            "label_en": "Zeta Global press release",
+            "url": "https://www.zetaglobal.com/news/zeta-global-and-openai-team-up-to-deliver-answer-driven-marketing-with-athena-by-zeta/",
+            "level": "official",
+            "date": "2026-01-05",
+            "quote": "Today, at CES 2026, Zeta Global (NYSE: ZETA), the AI Marketing Cloud, announced a strategic collaboration with OpenAI to power the conversational intelligence and agentic applications behind Athena by Zeta",
+            "note": "OpenAIは未上場です。",
+            "note_en": "OpenAI is not listed."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CRM",
+      "ticker": "CRM",
+      "name": "セールスフォース",
+      "sub": "ビジネスソフト",
+      "sub_en": "Business software",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Zeta Marketing PlatformとSalesforce CRMの連携で、顧客データをSalesforce CRMへ作成・同期できる",
+          "text_en": "The Salesforce CRM integration allows customers to be created and syndicated from the Zeta Marketing Platform to Salesforce CRM",
+          "source": {
+            "label": "Zeta product documentation · Salesforce CRM integration",
+            "label_en": "Zeta product documentation · Salesforce CRM integration",
+            "url": "https://knowledgebase.zetaglobal.com/kb/salesforce-crm",
+            "level": "official",
+            "quote": "This channel manager integration with Salesforce CRM allows for the creation and syndication of customers from the Zeta Marketing Platform to Salesforce CRM."
+          }
+        }
+      ],
+      "name_en": "Salesforce"
+    },
+    {
+      "id": "BAC",
+      "ticker": "BAC",
+      "name": "バンク・オブ・アメリカ",
+      "sub": "銀行",
+      "sub_en": "Bank",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2024年8月30日付のBank of America, N.A.との借入契約で、2億ドルが残っている",
+          "text_en": "$200.0 million is outstanding under the loan and security agreement with Bank of America, N.A. dated August 30, 2024",
+          "source": {
+            "label": "Zeta Global 10-K",
+            "label_en": "Zeta Global 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1851003/000119312526068598/zeta-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "As of the date hereof, we have $200.0 million outstanding under our loan and security agreement (“Senior Secured Credit Facility”) with Bank of America, N.A., dated August 30, 2024.",
+            "note": "資金調達のみの関係です。",
+            "note_en": "Financing relationship only."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "Bank of AmericaとBofA Securitiesが貸し手側に名を連ねるクレジット契約がある",
+          "text_en": "A credit agreement lists Bank of America and BofA Securities, Inc. among the parties",
+          "source": {
+            "label": "Zeta Global 10-K",
+            "label_en": "Zeta Global 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1851003/000119312526068598/zeta-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Credit Agreement among Zeta Global Corp., Zeta Global Holdings Corp., Certain Subsidiaries, the lenders party thereto, Bank of America, and BofA Securities, Inc."
+          }
+        }
+      ],
+      "name_en": "Bank of America"
+    },
+    {
+      "id": "PLTR",
+      "ticker": "PLTR",
+      "name": "Palantir",
+      "sub": "データ分析ソフト",
+      "sub_en": "Data analytics software",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ZetaのData CloudをPalantirのFoundry上で再構築する、戦略提携を結んだ",
+          "text_en": "Zeta's Data Cloud will be rearchitected on Palantir's Foundry under a strategic partnership",
+          "source": {
+            "label": "Zeta Global and Palantir の発表",
+            "label_en": "Zeta Global and Palantir press release",
+            "url": "https://s25.q4cdn.com/525061491/files/doc_news/Palantir-and-Zeta-Global-Announce-Strategic-Partnership-to-Build-a-Unified-Data-and-AI-Infrastructure-for-the-Future-of-Marketing-wit-0IIKV.pdf",
+            "level": "official",
+            "date": "2026-06-23",
+            "quote": "Palantir Foundry brings the ontology, governance, and operational infrastructure that enterprise data demands. Zeta's Data Cloud will be rearchitected on Foundry, with Athena by Zeta™, Zeta's AI-powered intelligence layer, turning that data into decisions and measurable outcomes at enterprise scale."
+          }
+        }
+      ]
+    },
+    {
+      "id": "NVDA",
+      "ticker": "NVDA",
+      "name": "NVIDIA",
+      "sub": "AI半導体",
+      "sub_en": "AI chips",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "ZetaのAthena Inference Modelsは、NVIDIA Nemotronのオープンモデルを基盤としている",
+          "text_en": "Zeta's Athena Inference Models are powered by NVIDIA Nemotron open models",
+          "source": {
+            "label": "Zeta Global の発表",
+            "label_en": "Zeta Global press release",
+            "url": "https://www.zetaglobal.com/news/zeta-global-fireworks-new-athena-inference-models-nvidia-nemotron/",
+            "level": "official",
+            "date": "2026-10-08",
+            "quote": "Developed in collaboration with Fireworks and powered by NVIDIA Nemotron open models, Athena Inference Models work across enterprise data and Zeta’s proprietary intelligence to connect changes in customer demand and what it means for the business.",
+            "note": "Fireworksとの共同開発による記載です。",
+            "note_en": "Developed in collaboration with Fireworks."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

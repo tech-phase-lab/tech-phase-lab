@@ -1,0 +1,189 @@
+{
+  "root": {
+    "ticker": "FROG",
+    "name": "JFrog",
+    "cik": 1800667
+  },
+  "rows": [
+    {
+      "ja": "クラウド・AIの提携先",
+      "en": "Cloud & AI partners"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "MSFT",
+    "GOOG",
+    "GTLB",
+    "SNPS"
+  ],
+  "companies": [
+    {
+      "id": "AMZN",
+      "ticker": "AMZN",
+      "name": "Amazon",
+      "sub": "クラウド",
+      "sub_en": "Cloud",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Amazon Web Servicesと戦略的協業契約を発表し、顧客のクラウド移行を共同で進める",
+          "text_en": "Announced a Strategic Collaboration Agreement with Amazon Web Services to jointly streamline JFrog customer cloud migrations",
+          "source": {
+            "label": "JFrog 8-K Ex.99 の発表",
+            "label_en": "JFrog 8-K Ex.99 press release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1800667/000095017025019881/frog-ex99_1.htm",
+            "level": "official",
+            "date": "2025-02-13",
+            "quote": "• Announced Strategic Collaboration Agreement with Amazon Web Services to jointly streamline JFrog customer cloud migrations."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "AWSはJFrogのパートナーだが、機能の一部で競合する可能性がある",
+          "text_en": "AWS is also a JFrog partner but may compete with a subset of JFrog functionality.",
+          "source": {
+            "label": "JFrog 10-K",
+            "label_en": "JFrog 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1800667/000119312526051382/frog-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "While also partners, cloud providers, such as Amazon Web Services (“AWS”), Microsoft Azure (including Azure DevOps) and Alphabet Inc.’s Google Cloud, may compete with a subset of JFrog functionality.",
+            "note": "提携先であり、一部機能では競合し得るとの記載です。",
+            "note_en": "Described as both a partner and a possible competitor on a subset of functionality."
+          }
+        }
+      ]
+    },
+    {
+      "id": "NVDA",
+      "ticker": "NVDA",
+      "name": "NVIDIA",
+      "sub": "AI半導体",
+      "sub_en": "AI chips",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "NVIDIAと協業し、透明性と追跡性を備えた安全な機械学習モデルと大規模言語モデルを提供する",
+          "text_en": "Announced collaboration with NVIDIA to deliver secure machine learning models and large language models with transparency, traceability, and trust",
+          "source": {
+            "label": "JFrog 8-K Ex.99 の発表",
+            "label_en": "JFrog 8-K Ex.99 press release",
+            "url": "https://www.sec.gov/Archives/edgar/data/1800667/000095017024123318/frog-ex99_1.htm",
+            "level": "official",
+            "date": "2024-11-07",
+            "quote": "• Announced collaboration with NVIDIA to deliver secure machine learning (ML) models and large language models (LLMs) with transparency, traceability, and trust."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MSFT",
+      "ticker": "MSFT",
+      "name": "Microsoft",
+      "sub": "ソフト・クラウド",
+      "sub_en": "Software & cloud",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Microsoft Azure(Azure DevOps含む)はJFrogのパートナーでもあるが、機能の一部で競合し得る",
+          "text_en": "Microsoft Azure (including Azure DevOps) is also a JFrog partner but may compete with a subset of JFrog functionality.",
+          "source": {
+            "label": "JFrog 10-K",
+            "label_en": "JFrog 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1800667/000119312526051382/frog-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "While also partners, cloud providers, such as Amazon Web Services (“AWS”), Microsoft Azure (including Azure DevOps) and Alphabet Inc.’s Google Cloud, may compete with a subset of JFrog functionality.",
+            "note": "提携先であり、一部機能では競合し得るとの記載です。",
+            "note_en": "Described as both a partner and a possible competitor on a subset of functionality."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GOOG",
+      "ticker": "GOOG",
+      "name": "アルファベット",
+      "sub": "検索・クラウド",
+      "sub_en": "Search & cloud",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Google CloudもJFrogのパートナーでありつつ、機能の一部で競合する可能性を持つ",
+          "text_en": "Google Cloud is also a JFrog partner but may compete with a subset of JFrog functionality.",
+          "source": {
+            "label": "JFrog 10-K",
+            "label_en": "JFrog 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1800667/000119312526051382/frog-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "While also partners, cloud providers, such as Amazon Web Services (“AWS”), Microsoft Azure (including Azure DevOps) and Alphabet Inc.’s Google Cloud, may compete with a subset of JFrog functionality.",
+            "note": "提携先であり、一部機能では競合し得るとの記載です。",
+            "note_en": "Described as both a partner and a possible competitor on a subset of functionality."
+          }
+        }
+      ],
+      "name_en": "Alphabet"
+    },
+    {
+      "id": "GTLB",
+      "ticker": "GTLB",
+      "name": "GitLab",
+      "sub": "DevOps",
+      "sub_en": "DevOps",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "JFrogと競合する",
+          "text_en": "Competes with JFrog",
+          "source": {
+            "label": "GitLab 10-K",
+            "label_en": "GitLab 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1653482/000162828026018731/gtlb-20260131.htm",
+            "level": "official",
+            "date": "2026-03-17",
+            "quote": "We also compete with DevOps product collections and point solutions from vendors such as Atlassian, JFrog, and Harness."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SNPS",
+      "ticker": "SNPS",
+      "name": "シノプシス",
+      "sub": "半導体設計・ソフト",
+      "sub_en": "Design software",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "セキュリティ分野では、SynopsysなどがJFrogの機能の一部と競合し得る",
+          "text_en": "In security, Synopsys and others may compete with a subset of JFrog's security offerings.",
+          "source": {
+            "label": "JFrog 10-K",
+            "label_en": "JFrog 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1800667/000119312526051382/frog-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "Some security-focused companies may compete with a subset of JFrog’s holistic security offerings or address only developer-level security, such as Aqua Security, Snyk, Checkmarx, Sonatype, and Synopsys."
+          }
+        }
+      ],
+      "name_en": "Synopsys"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

@@ -1,0 +1,217 @@
+{
+  "root": {
+    "ticker": "IQV",
+    "name": "IQVIA",
+    "cik": 1478242,
+    "name_en": "Iqvia Holdings Inc."
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [
+    "ACN",
+    "CTSH"
+  ],
+  "companies": [
+    {
+      "id": "ACN",
+      "ticker": "ACN",
+      "name": "アクセンチュア",
+      "sub": "コンサル・IT",
+      "sub_en": "Consulting & IT",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "技術・分析サービスで競合する",
+          "text_en": "Competes in technology and analytics offerings",
+          "source": {
+            "label": "IQV 10-K(2025-12-31)",
+            "label_en": "IQV 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1478242/000162828026008322/iqv-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "Our offerings compete with various firms, including Accenture, Aetion (a Datavant company), Panalgo (a Norstella company), Cognizant Technology Solutions, Deloitte"
+          }
+        }
+      ],
+      "name_en": "Accenture"
+    },
+    {
+      "id": "CTSH",
+      "ticker": "CTSH",
+      "name": "コグニザント",
+      "sub": "IT サービス",
+      "sub_en": "IT services",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "IT・分析サービスで競合する",
+          "text_en": "Competes in technology services",
+          "source": {
+            "label": "IQV 10-K(2025-12-31)",
+            "label_en": "IQV 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1478242/000162828026008322/iqv-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "Our offerings compete with various firms, including Accenture, Aetion (a Datavant company), Panalgo (a Norstella company), Cognizant Technology Solutions, Deloitte"
+          }
+        }
+      ],
+      "name_en": "Cognizant Technology Solutions"
+    },
+    {
+      "id": "ICON",
+      "ticker": "ICON",
+      "name": "アイコン",
+      "sub": "臨床試験受託",
+      "sub_en": "Contract research",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "臨床試験の受託で競合する大手である",
+          "text_en": "A larger competitor in clinical research",
+          "source": {
+            "label": "IQV 10-K(2025-12-31)",
+            "label_en": "IQV 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1478242/000162828026008322/iqv-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "Some of our larger competitors include ICON plc, Parexel International Corporation, Pharmaceutical Product Development, Inc. (part of Thermo Fisher Scientific Inc.), and Syneos Health, among others."
+          }
+        }
+      ],
+      "name_en": "ICON plc"
+    },
+    {
+      "id": "PRXL",
+      "ticker": "Parexel",
+      "name": "パレクセル",
+      "sub": "臨床試験受託",
+      "sub_en": "Contract research",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "臨床試験の受託で競合する大手である",
+          "text_en": "A larger competitor in clinical research",
+          "source": {
+            "label": "IQV 10-K(2025-12-31)",
+            "label_en": "IQV 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1478242/000162828026008322/iqv-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "Some of our larger competitors include ICON plc, Parexel International Corporation, Pharmaceutical Product Development, Inc. (part of Thermo Fisher Scientific Inc.), and Syneos Health, among others."
+          }
+        }
+      ],
+      "name_en": "Parexel International Corporation"
+    },
+    {
+      "id": "PPD",
+      "ticker": "TMO",
+      "name": "サーモフィッシャー(PPD)",
+      "sub": "臨床試験受託",
+      "sub_en": "Contract research",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "サーモフィッシャー傘下のPPDが競合する",
+          "text_en": "PPD, part of Thermo Fisher Scientific, is a larger competitor",
+          "source": {
+            "label": "IQV 10-K(2025-12-31)",
+            "label_en": "IQV 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1478242/000162828026008322/iqv-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "Some of our larger competitors include ICON plc, Parexel International Corporation, Pharmaceutical Product Development, Inc. (part of Thermo Fisher Scientific Inc.), and Syneos Health, among others."
+          }
+        }
+      ],
+      "name_en": "Pharmaceutical Product Development (Thermo Fisher Scientific)"
+    },
+    {
+      "id": "SYNE",
+      "ticker": "Syneos Health",
+      "name": "シネオス・ヘルス",
+      "sub": "臨床試験受託",
+      "sub_en": "Contract research",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "臨床試験や営業受託で競合する",
+          "text_en": "A larger competitor in clinical research",
+          "source": {
+            "label": "IQV 10-K(2025-12-31)",
+            "label_en": "IQV 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1478242/000162828026008322/iqv-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "Some of our larger competitors include ICON plc, Parexel International Corporation, Pharmaceutical Product Development, Inc. (part of Thermo Fisher Scientific Inc.), and Syneos Health, among others."
+          }
+        }
+      ],
+      "name_en": "Syneos Health"
+    },
+    {
+      "id": "OPT",
+      "ticker": "UNH",
+      "name": "オプタム・インサイト(ユナイテッドヘルス)",
+      "sub": "医療情報",
+      "sub_en": "Healthcare information",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ユナイテッドヘルス傘下のオプタム・インサイトが競合する",
+          "text_en": "Optum Insight, part of UnitedHealth Group, competes",
+          "source": {
+            "label": "IQV 10-K(2025-12-31)",
+            "label_en": "IQV 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1478242/000162828026008322/iqv-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "Oracle Health, McKinsey, NielsenIQ, Optum Insight (part of UnitedHealth Group)"
+          }
+        }
+      ],
+      "name_en": "Optum Insight (UnitedHealth Group)"
+    },
+    {
+      "id": "VEEV",
+      "ticker": "VEEV",
+      "name": "ヴィーバ・システムズ",
+      "sub": "ライフサイエンスIT",
+      "sub_en": "Life sciences software",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ライフサイエンス向けソフトで競合する",
+          "text_en": "Competes in life sciences software",
+          "source": {
+            "label": "IQV 10-K(2025-12-31)",
+            "label_en": "IQV 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1478242/000162828026008322/iqv-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "Press Ganey, RTI Health Solutions, ICON plc, Definitive Healthcare, Cegedim, Tempus, Merative, CompuGroup Medical, Medidata (Part of Dassault Systèmes), Clarivate, Veeva, and ZS Associates."
+          }
+        }
+      ],
+      "name_en": "Veeva"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

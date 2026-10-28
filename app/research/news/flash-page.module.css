@@ -1,0 +1,25 @@
+.flash{margin:18px 0 28px}
+.controls{position:relative;display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px;margin:0 0 16px}
+.controls>div{margin:0}
+.sources{margin-left:auto}
+.sources>summary{display:flex;align-items:center;gap:8px;min-height:38px;padding:0 14px;border:1px solid #26334a;border-radius:999px;background:#0d121b;color:#c3ccda;font-size:13px;cursor:pointer;list-style:none;white-space:nowrap}
+.sources>summary::-webkit-details-marker{display:none}
+.sources>summary:focus-visible{outline:2px solid #7fd6b0;outline-offset:2px}
+.sources[open]>summary{position:relative;z-index:21;border-color:#527969;color:#7fd6b0}
+.sources[open]::after{content:"";position:fixed;inset:0;z-index:19;background:rgba(6,9,15,.93)}
+.sourcesPanel{position:absolute;left:0;right:0;top:calc(100% + 8px);z-index:20;padding:14px 16px 12px;border:1px solid #3d5170;border-radius:14px;background:#1a2538;box-shadow:0 0 0 1px #0a0f18,0 22px 44px -12px #000}
+.sourcesPanel h4{margin:4px 0 8px;font-size:11.5px;font-weight:600;letter-spacing:.06em;color:#9fb0c8}.sourcesPanel h4:not(:first-child){margin-top:14px;padding-top:12px;border-top:1px solid #2d3d57}
+.sourcesPanel ul{display:grid;grid-template-columns:repeat(auto-fill,minmax(146px,1fr));gap:5px 14px;margin:0;padding:0;list-style:none}
+.sourcesPanel li{display:flex;align-items:baseline;gap:8px;min-width:0;font-size:12px;line-height:1.35;color:#b4c0d2}
+.sourcesPanel li b{flex:none;min-width:46px;font:600 12px ui-monospace,monospace;color:#eef2f8}
+.sourcesPanel li span{min-width:0;overflow-wrap:anywhere}
+.day{display:flex;align-items:center;gap:10px;margin:14px 0 2px;padding:0 0 0 2px;font:600 13px ui-monospace,monospace;letter-spacing:.06em;color:#c3ccda}
+.day span{font:500 10.5px sans-serif;letter-spacing:.1em;color:#5dffb4}
+.panel{--live:#5dffb4;--live-soft:rgba(93,255,180,.14);--hair:rgba(255,255,255,.07);border:1px solid #26334a;border-radius:20px;background:linear-gradient(180deg,#111826 0%,#0e131c 38%);padding:8px 0}
+.ticker{font:600 12px ui-monospace,monospace;letter-spacing:.08em;color:#d6e0f0}
+.earnings{color:#d9b46a}
+
+/* FREE version notice on the 速報 page */
+.freeNote { margin:0 0 14px; padding:10px 14px; border:1px solid #b8923f55; border-radius:10px; background:linear-gradient(110deg,#1b1810,#101821 70%); color:#cdbd93; font-size:12.5px; line-height:1.75; }
+.freeNote b { margin-right:8px; padding:2px 9px; border-radius:999px; background:linear-gradient(135deg,#fbeab8,#b8923f); color:#241b07; font-size:10.5px; letter-spacing:.1em; }
+.freeNote a { color:#ecd08e; text-decoration:underline; text-underline-offset:3px; white-space:nowrap; }

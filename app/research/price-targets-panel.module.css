@@ -1,0 +1,97 @@
+.panel{margin:0 0 23px;padding:20px;border:1px solid #2e5249;border-radius:9px;background:linear-gradient(145deg,#10221f,#111b26);color:#e6f2ec}
+.head{margin-bottom:15px}
+.head h3{margin:5px 0 0;font-size:19px}.kicker{color:#85d6b4;font-size:11px;letter-spacing:.08em;font-weight:700}
+.refresh,.updated{color:#a9bcb8;font-size:12px}
+.state{padding:15px;color:#b8cec5;border-top:1px solid #36504c;font-size:13px}
+.list{display:grid;gap:9px}.card{display:flex;align-items:center;gap:14px;padding:14px;border:1px solid #334c48;border-radius:6px;background:#14252b}
+.ticker{font-weight:700;color:#e5eaf0;background:#303d49;border-radius:4px;padding:6px 9px;min-width:58px;text-align:center}
+.body{flex:1;min-width:0}.body strong{display:block;font-size:14px;line-height:1.5}.body small{display:block;margin-top:7px;color:#b2c5c4;line-height:1.5}
+.newBadge{display:inline-block;margin-right:8px;padding:1px 6px;border-radius:3px;background:#d0f4df;color:#123c2f;font-size:10px;line-height:1.5;vertical-align:2px;letter-spacing:.04em}
+.card a{font-size:12px;color:#a8ecd0;white-space:nowrap}
+@media(max-width:700px){.card{align-items:flex-start;flex-direction:column}.refresh,.updated{font-size:11px}}
+
+.footer{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:center;gap:10px 12px;margin-top:14px}
+.panel .notificationToggle{grid-column:1;grid-row:1;justify-self:start;min-height:44px;cursor:pointer;padding:0 4px;border:0;border-radius:4px;background:transparent;color:#a8d8ff;font-size:11px;font-weight:600;line-height:1.4;white-space:nowrap}
+.panel .notificationToggle:hover{background:#213e5b;border-color:#76baff}
+.notificationToggle:focus-visible,.notificationActions button:focus-visible,.codeInput:focus-visible{outline:2px solid #a8d8ff;outline-offset:3px}
+.syncMeta{grid-column:2;grid-row:1;justify-self:end;min-width:0;text-align:right;display:flex;flex-direction:column;align-items:flex-end;gap:2px}
+.updated{margin:0;white-space:nowrap;font-variant-numeric:tabular-nums}
+.notificationBody{grid-column:1/-1;grid-row:2;padding:14px;border:1px solid #34526c;border-radius:7px;background:#111e2c;font-size:13px;line-height:1.6}
+.notificationBody p{margin:0 0 10px}.notificationBody p:last-child{margin-bottom:0}
+.notificationTitle{display:block;margin-bottom:8px;font-size:14px}
+.pilotNote{color:#adc5d7;font-size:12px}
+.codeLabel{display:block;margin:12px 0 5px;font-weight:600}
+.codeInput{box-sizing:border-box;display:block;width:100%;max-width:380px;padding:9px 10px;border:1px solid #64748b;border-radius:6px;background:#0b1723;color:#e6f2ec;font:inherit}
+.notificationActions{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+.notificationActions button{cursor:pointer;padding:8px 12px;border:1px solid #64748b;border-radius:6px;background:#172e45;color:#e6f2ec;font:inherit}
+.notificationActions button:first-child{border-color:#69b89e;background:#1a443b}
+.notificationActions button:disabled{cursor:not-allowed;opacity:.5}
+
+.firm{font-size:13px;color:#b2c5c4;line-height:1.5;overflow-wrap:anywhere}
+.targetChange{display:flex;flex-wrap:wrap;align-items:center;gap:4px 10px;margin-top:3px}
+.targetChange strong{font-size:18px;white-space:nowrap;font-variant-numeric:tabular-nums}
+.raised,.lowered{font-size:11px;white-space:nowrap;border-radius:4px;padding:2px 6px}
+.raised{color:#a7efcc;background:#214138}.lowered{color:#ffb6b0;background:#482e32}
+.firm .newBadge{margin:0 0 0 8px}
+.body small{font-size:11px}
+.published{display:block;margin-top:4px;color:#b2c5c4;font-size:11px;line-height:1.5;font-variant-numeric:tabular-nums}
+.panel .notificationActions button{font-size:13px;min-height:44px}
+@media(max-width:700px){
+  .panel{padding:16px}.head h3{font-size:17px;line-height:1.5}
+  .card{display:grid;grid-template-columns:minmax(0,1fr);gap:10px;padding:12px}
+  .ticker{justify-self:start;min-width:0;padding:3px 8px;font-size:14px}
+  .targetChange strong{font-size:18px}.card a{font-size:11px}
+  .footer{gap:6px 8px;margin-top:8px}.refresh,.updated{font-size:10px}
+  .notificationBody{padding:12px}.notificationTitle{font-size:13px}
+  .codeLabel{font-size:12px}.codeInput{font-size:16px}
+}
+.notificationPreference{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:12px}
+.notificationPreference .notificationTitle{margin-bottom:3px}
+.notificationPreference p{margin:0;color:#b2c5c4;font-size:12px}
+.panel .notificationSwitch{display:flex;align-items:center;gap:8px;flex-shrink:0;border:0;padding:0;min-height:44px;background:transparent;color:#c3cece;font-size:12px}
+.switchTrack{display:block;position:relative;width:40px;height:24px;background:#50616d;border-radius:16px}
+.switchTrack>span{position:absolute;left:3px;top:3px;width:18px;height:18px;border-radius:50%;background:#fff;transition:transform .15s}
+.notificationSwitch[aria-checked=true]{color:#a7efcc}.notificationSwitch[aria-checked=true] .switchTrack{background:#36795f}.notificationSwitch[aria-checked=true] .switchTrack>span{transform:translateX(16px)}
+.notificationSwitch:focus-visible{outline:2px solid #a8d8ff;outline-offset:3px}
+
+.pending{height:150px;border-radius:8px;background:repeating-linear-gradient(180deg,#122430 0 64px,transparent 64px 78px);animation:frameWait 1.5s ease-in-out infinite}@keyframes frameWait{50%{opacity:.55}}@media(prefers-reduced-motion:reduce){.pending{animation:none}}.panel{scroll-margin-top:100px}
+
+.card .ticker{font-size:14px;min-height:36px;display:inline-flex;align-items:center;justify-content:center;align-self:start}@media(max-width:700px){.card{grid-template-columns:auto minmax(0,1fr);gap:10px}.targetChange strong{font-size:16px;white-space:normal}.body small{margin-top:4px}.ticker{grid-column:1}.body{grid-column:2}}
+
+/* Design (owner, Oct 14): flat rows, direction and change rate on the right. */
+.panel{margin:26px 0 24px;padding:0;border:0;border-radius:0;background:none;color:#eef2f8}
+.head{margin-bottom:14px}
+.eyebrow{margin:0;font:10.5px var(--font-geist-mono),monospace;letter-spacing:.2em;color:#566174}
+.head h2{margin:4px 0 0;font-size:24px;font-weight:800;letter-spacing:.02em}
+.period{margin:4px 0 0;font-size:12.5px;color:#566174}
+.list{gap:10px}
+.card{display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;gap:14px;padding:14px;border:1px solid #1a2332;border-radius:16px;background:linear-gradient(180deg,#111826,#0d121b);box-shadow:inset 0 1px 0 rgba(255,255,255,.07)}
+.card .ticker{min-width:58px;min-height:0;padding:9px 6px;border-radius:10px;background:#18202e;border:1px solid #1a2332;font:600 14px var(--font-geist-mono),monospace;color:#eef2f8;justify-self:auto;align-self:center}
+.firm{font-size:12.5px;color:#8c98ab}
+.targetChange{margin-top:2px}
+.targetChange strong{font:600 18px var(--font-geist-mono),monospace;white-space:nowrap}
+.published{margin-top:1px;color:#566174;font-size:11px}
+.chip{display:flex;flex-direction:column;align-items:flex-end;gap:2px;font-family:var(--font-geist-mono),monospace}
+.chip .raised,.chip .lowered{font-size:12px;font-weight:600;padding:2px 9px;border-radius:999px}
+.chip em{font-style:normal;font-size:14px;font-weight:600}
+.up .raised{color:#46d19a;background:rgba(70,209,154,.12)}.up .chip em{color:#46d19a}
+.down .lowered{color:#ff7b7b;background:rgba(255,107,107,.12)}.down .chip em{color:#ff7b7b}
+.card .newBadge{margin:0 0 0 8px;background:#5dffb4;color:#06201a;border-radius:5px;font-weight:600}
+@media(max-width:700px){.panel{padding:0}.head h2{font-size:22px}.card{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:10px;padding:12px}.card .ticker{min-width:50px;font-size:13px;padding:8px 4px}.targetChange strong{font-size:16px;white-space:nowrap}}
+
+/* Phone notification setting is a PRO feature: gold bell on the left (owner, Oct 14). */
+.panel .notificationToggle{display:inline-flex;align-items:center;gap:7px;color:#d9b46a;font-size:12px}
+.panel .notificationToggle:hover{background:rgba(217,180,106,.1);border-color:transparent}
+.bellIcon{width:15px;height:15px;flex:none}
+.notificationToggle:focus-visible{outline:2px solid #d9b46a}
+
+/* Larger ticker; the phone-notification setting lines up with the "data fetched" line (owner, Oct 14). */
+.card .ticker{font-size:18px;min-width:70px;padding:11px 8px}
+@media(max-width:700px){.card .ticker{font-size:17px;min-width:64px;padding:10px 6px}}
+.footer{align-items:start}
+.panel .notificationToggle{min-height:0;padding:0;line-height:1.5;align-self:start}
+.updated{line-height:1.5}
+.updated{white-space:normal}
+.syncMeta{min-width:0}
+.panel .notificationToggle{white-space:nowrap}
+.updated time{white-space:nowrap}

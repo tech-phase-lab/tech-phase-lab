@@ -1,0 +1,146 @@
+{
+  "root": {
+    "ticker": "NCLH",
+    "name": "ノルウェージャン・クルーズ・ライン・ホールディングス",
+    "cik": 1513761,
+    "name_en": "Norwegian Cruise Line Holdings Ltd."
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [
+    "CCL",
+    "RCL",
+    "VIK"
+  ],
+  "companies": [
+    {
+      "id": "CCL",
+      "ticker": "CCL",
+      "name": "カーニバル",
+      "sub": "クルーズ大手",
+      "sub_en": "Cruise operator",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主な競合として、カーニバルなどのクルーズ運営会社を挙げる",
+          "text_en": "Carnival is named among its primary competitors",
+          "source": {
+            "label": "ノルウェージャン・クルーズ・ライン・ホールディングス 10-K(2025年12月期)",
+            "label_en": "Norwegian Cruise Line Holdings Ltd. 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1513761/000110465926022067/nclh-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "Our primary competition includes operators such as Carnival and Royal Caribbean, as well as other cruise lines such as MSC Cruises, Viking Ocean Cruises and Virgin Voyages."
+          }
+        }
+      ],
+      "name_en": "Carnival"
+    },
+    {
+      "id": "RCL",
+      "ticker": "RCL",
+      "name": "ロイヤル・カリビアン",
+      "sub": "クルーズ大手",
+      "sub_en": "Cruise operator",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主な競合として、ロイヤル・カリビアンなどのクルーズ運営会社を挙げる",
+          "text_en": "Royal Caribbean is named among its primary competitors",
+          "source": {
+            "label": "ノルウェージャン・クルーズ・ライン・ホールディングス 10-K(2025年12月期)",
+            "label_en": "Norwegian Cruise Line Holdings Ltd. 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1513761/000110465926022067/nclh-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "Our primary competition includes operators such as Carnival and Royal Caribbean, as well as other cruise lines such as MSC Cruises, Viking Ocean Cruises and Virgin Voyages."
+          }
+        }
+      ],
+      "name_en": "Royal Caribbean"
+    },
+    {
+      "id": "VIK",
+      "ticker": "VIK",
+      "name": "バイキング(外洋クルーズ)",
+      "sub": "クルーズ会社",
+      "sub_en": "Cruise line",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "競合するクルーズ会社の一つにバイキング・オーシャン・クルーズがある",
+          "text_en": "Viking Ocean Cruises is among competing cruise lines",
+          "source": {
+            "label": "ノルウェージャン・クルーズ・ライン・ホールディングス 10-K(2025年12月期)",
+            "label_en": "Norwegian Cruise Line Holdings Ltd. 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1513761/000110465926022067/nclh-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "Our primary competition includes operators such as Carnival and Royal Caribbean, as well as other cruise lines such as MSC Cruises, Viking Ocean Cruises and Virgin Voyages."
+          }
+        }
+      ],
+      "name_en": "Viking Ocean Cruises"
+    },
+    {
+      "id": "MSC",
+      "ticker": "MSC Cruises",
+      "name": "MSCクルーズ",
+      "sub": "クルーズ会社",
+      "sub_en": "Cruise line",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "競合するクルーズ会社の一つにMSCクルーズがある",
+          "text_en": "MSC Cruises is among competing cruise lines",
+          "source": {
+            "label": "ノルウェージャン・クルーズ・ライン・ホールディングス 10-K(2025年12月期)",
+            "label_en": "Norwegian Cruise Line Holdings Ltd. 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1513761/000110465926022067/nclh-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "Our primary competition includes operators such as Carnival and Royal Caribbean, as well as other cruise lines such as MSC Cruises, Viking Ocean Cruises and Virgin Voyages."
+          }
+        }
+      ],
+      "name_en": "MSC Cruises"
+    },
+    {
+      "id": "REGENT",
+      "ticker": "Regent",
+      "name": "リージェント・ホスピタリティ・ワールドワイド",
+      "sub": "ブランド使用許諾元",
+      "sub_en": "Brand licensor",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "リージェントのブランド群を使う権利を、商標使用許諾契約で得ている",
+          "text_en": "NCLH holds a trademark license for the Regent family of marks",
+          "source": {
+            "label": "ノルウェージャン・クルーズ・ライン・ホールディングス 10-K(2025年12月期)",
+            "label_en": "Norwegian Cruise Line Holdings Ltd. 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1513761/000110465926022067/nclh-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "We entered into a trademark license agreement with Regent Hospitality Worldwide, Inc., which we amended in February 2011, granting us the right to use the “Regent” brand family of marks."
+          }
+        }
+      ],
+      "name_en": "Regent Hospitality Worldwide, Inc."
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

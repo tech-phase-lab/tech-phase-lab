@@ -1,0 +1,248 @@
+{
+  "root": {
+    "ticker": "RCL",
+    "name": "ロイヤル・カリビアン・クルーズ",
+    "cik": 884887,
+    "name_en": "Royal Caribbean Cruises"
+  },
+  "rows": [
+    {
+      "ja": "供給元",
+      "en": "Suppliers",
+      "above": true
+    },
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [
+    "CCL",
+    "NCLH",
+    "DIS",
+    "VIK"
+  ],
+  "companies": [
+    {
+      "id": "TUI",
+      "ticker": "TUI",
+      "name": "TUI社",
+      "sub": "ドイツの観光会社",
+      "sub_en": "German tourism company",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "TUI Cruisesを運営する合弁会社を、TUI AGと50%ずつ保有する",
+          "text_en": "TUIC is a joint venture owned 50% by Royal Caribbean and 50% by TUI AG",
+          "source": {
+            "label": "Royal Caribbean Cruises 10-K(2025年12月31日)",
+            "label_en": "Royal Caribbean Cruises 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/884887/000088488726000007/rcl-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "TUIC is a joint venture owned 50% by us and 50% by TUI AG, a German tourism company"
+          }
+        }
+      ],
+      "name_en": "TUI AG"
+    },
+    {
+      "id": "CDA",
+      "ticker": "Chantiers",
+      "name": "シャンティエ・ド・ラトランティック",
+      "sub": "造船所",
+      "sub_en": "Shipyard",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "2025年12月に、ディスカバリー級の新造船2隻の建造契約をシャンティエ・ド・ラトランティックと結んだ",
+          "text_en": "In December 2025, Royal Caribbean signed agreements with Chantiers de l'Atlantique to build two Discovery-class ships",
+          "source": {
+            "label": "Royal Caribbean Cruises 10-K(2025年12月31日)",
+            "label_en": "Royal Caribbean Cruises 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/884887/000088488726000007/rcl-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "In December 2025, we signed agreements with Chantiers de l'Atlantique to build two ships of a new generation for Royal Caribbean, known as Discovery-class ships"
+          }
+        }
+      ],
+      "name_en": "Chantiers de l'Atlantique"
+    },
+    {
+      "id": "MEYER",
+      "ticker": "Meyer Turku",
+      "name": "マイヤー・トゥルク",
+      "sub": "造船所",
+      "sub_en": "Shipyard",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "5隻目のアイコン級船の建造でマイヤー・トゥルクと契約した",
+          "text_en": "Royal Caribbean entered into an agreement with Meyer Turku Oy to build a fifth Icon-class ship for delivery in 2028",
+          "source": {
+            "label": "Royal Caribbean Cruises 10-K(2025年12月31日)",
+            "label_en": "Royal Caribbean Cruises 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/884887/000088488726000007/rcl-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "During the quarter ended December 31, 2025, we entered into an agreement with Meyer Turku Oy to build a fifth Icon-class ship for delivery in 2028."
+          }
+        }
+      ],
+      "name_en": "Meyer Turku Oy"
+    },
+    {
+      "id": "FCT",
+      "ticker": "Fincantieri",
+      "name": "フィンカンティエリ",
+      "sub": "造船所",
+      "sub_en": "Shipyard",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "TUI Cruisesの発注船の建造先にフィンカンティエリが並ぶ",
+          "text_en": "Fincantieri is listed as the shipyard for ships on order for TUI Cruises' Mein Schiff",
+          "source": {
+            "label": "Royal Caribbean Cruises 10-K(2025年12月31日)",
+            "label_en": "Royal Caribbean Cruises 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/884887/000088488726000007/rcl-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "Mein Schiff Flow Fincantieri 2nd Quarter 2026 4,100"
+          }
+        }
+      ],
+      "name_en": "Fincantieri"
+    },
+    {
+      "id": "SPACEX",
+      "ticker": "SpaceX",
+      "name": "スペースX",
+      "sub": "衛星通信",
+      "sub_en": "Satellite connectivity",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "全船にスペースXとの提携でStarlinkを搭載している",
+          "text_en": "The entire fleet is equipped with Starlink through the partnership with SpaceX",
+          "source": {
+            "label": "Royal Caribbean Cruises 10-K(2025年12月31日)",
+            "label_en": "Royal Caribbean Cruises 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/884887/000088488726000007/rcl-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "Our entire fleet is equipped with Starlink through our partnership with SpaceX"
+          }
+        }
+      ],
+      "name_en": "SpaceX"
+    },
+    {
+      "id": "CCL",
+      "ticker": "CCL",
+      "name": "カーニバル",
+      "sub": "クルーズ大手",
+      "sub_en": "Cruise operator",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主要なクルーズ競合のひとつにカーニバルがある",
+          "text_en": "Carnival Corporation & plc is named as a principal cruise competitor",
+          "source": {
+            "label": "Royal Caribbean Cruises 10-K(2025年12月31日)",
+            "label_en": "Royal Caribbean Cruises 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/884887/000088488726000007/rcl-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "Our principal cruise competitors are Carnival Corporation & plc"
+          }
+        }
+      ],
+      "name_en": "Carnival Corporation & plc"
+    },
+    {
+      "id": "NCLH",
+      "ticker": "NCLH",
+      "name": "ノルウェージャン・クルーズ・ライン",
+      "sub": "クルーズ大手",
+      "sub_en": "Cruise operator",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "競合先としてノルウェージャン・クルーズ・ラインが挙がる",
+          "text_en": "Norwegian Cruise Line Holdings Ltd is named among the competitors",
+          "source": {
+            "label": "Royal Caribbean Cruises 10-K(2025年12月31日)",
+            "label_en": "Royal Caribbean Cruises 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/884887/000088488726000007/rcl-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "Norwegian Cruise Line Holdings Ltd, which owns Norwegian Cruise Line, Oceania Cruises, and Regent Seven Seas Cruises"
+          }
+        }
+      ],
+      "name_en": "Norwegian Cruise Line Holdings"
+    },
+    {
+      "id": "DIS",
+      "ticker": "DIS",
+      "name": "ディズニー",
+      "sub": "クルーズ競合",
+      "sub_en": "Cruise competitor",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ディズニー・クルーズ・ラインも競合先の一社である",
+          "text_en": "Disney Cruise Line is named among the competitors",
+          "source": {
+            "label": "Royal Caribbean Cruises 10-K(2025年12月31日)",
+            "label_en": "Royal Caribbean Cruises 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/884887/000088488726000007/rcl-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "Disney Cruise Line; MSC Cruises; Norwegian Cruise Line Holdings Ltd"
+          }
+        }
+      ],
+      "name_en": "Disney Cruise Line"
+    },
+    {
+      "id": "VIK",
+      "ticker": "VIK",
+      "name": "バイキング",
+      "sub": "クルーズ競合",
+      "sub_en": "Cruise competitor",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "競合先にバイキングが含まれる",
+          "text_en": "Viking is named among the competitors",
+          "source": {
+            "label": "Royal Caribbean Cruises 10-K(2025年12月31日)",
+            "label_en": "Royal Caribbean Cruises 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/884887/000088488726000007/rcl-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "Viking, and Virgin Voyages"
+          }
+        }
+      ],
+      "name_en": "Viking"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

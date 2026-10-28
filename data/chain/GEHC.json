@@ -1,0 +1,241 @@
+{
+  "root": {
+    "ticker": "GEHC",
+    "name": "GEヘルスケア・テクノロジーズ",
+    "cik": 1932393,
+    "name_en": "GE HealthCare Technologies"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [
+    "PHG",
+    "CAJ"
+  ],
+  "companies": [
+    {
+      "id": "SHL",
+      "ticker": "Siemens",
+      "name": "シーメンス・ヘルシニアーズ",
+      "sub": "医用画像機器",
+      "sub_en": "Medical imaging",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "画像診断など主要分野で競合する",
+          "text_en": "Siemens Healthineers is named as a primary global competitor",
+          "source": {
+            "label": "GEヘルスケア・テクノロジーズ 10-K(2025-12-31)",
+            "label_en": "GE HealthCare Technologies 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1932393/000193239326000007/gehc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-04",
+            "quote": "In the industries we serve, we believe our primary global competitors include Siemens Healthineers, Philips Healthcare, United Imaging, Mindray, and Canon, among others."
+          }
+        }
+      ],
+      "name_en": "Siemens Healthineers"
+    },
+    {
+      "id": "PHG",
+      "ticker": "PHG",
+      "name": "フィリップス",
+      "sub": "医療機器",
+      "sub_en": "Medical technology",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "世界の主要な競合先として名前が挙がる",
+          "text_en": "Philips Healthcare is named as a primary global competitor",
+          "source": {
+            "label": "GEヘルスケア・テクノロジーズ 10-K(2025-12-31)",
+            "label_en": "GE HealthCare Technologies 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1932393/000193239326000007/gehc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-04",
+            "quote": "In the industries we serve, we believe our primary global competitors include Siemens Healthineers, Philips Healthcare, United Imaging, Mindray, and Canon, among others."
+          }
+        }
+      ],
+      "name_en": "Philips"
+    },
+    {
+      "id": "UIH",
+      "ticker": "United Imaging",
+      "name": "ユナイテッド・イメージング",
+      "sub": "医用画像機器",
+      "sub_en": "Medical imaging",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "世界市場での主要な競合先のひとつ",
+          "text_en": "United Imaging is named as a primary global competitor",
+          "source": {
+            "label": "GEヘルスケア・テクノロジーズ 10-K(2025-12-31)",
+            "label_en": "GE HealthCare Technologies 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1932393/000193239326000007/gehc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-04",
+            "quote": "In the industries we serve, we believe our primary global competitors include Siemens Healthineers, Philips Healthcare, United Imaging, Mindray, and Canon, among others."
+          }
+        }
+      ],
+      "name_en": "United Imaging"
+    },
+    {
+      "id": "MDR",
+      "ticker": "Mindray",
+      "name": "マインドレイ",
+      "sub": "医療機器",
+      "sub_en": "Medical devices",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "世界市場での主要な競合先のひとつ",
+          "text_en": "Mindray is named as a primary global competitor",
+          "source": {
+            "label": "GEヘルスケア・テクノロジーズ 10-K(2025-12-31)",
+            "label_en": "GE HealthCare Technologies 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1932393/000193239326000007/gehc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-04",
+            "quote": "In the industries we serve, we believe our primary global competitors include Siemens Healthineers, Philips Healthcare, United Imaging, Mindray, and Canon, among others."
+          }
+        }
+      ],
+      "name_en": "Mindray"
+    },
+    {
+      "id": "CAJ",
+      "ticker": "CAJ",
+      "name": "キヤノン",
+      "sub": "画像機器",
+      "sub_en": "Imaging equipment",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "世界市場での主要な競合先のひとつ",
+          "text_en": "Canon is named as a primary global competitor",
+          "source": {
+            "label": "GEヘルスケア・テクノロジーズ 10-K(2025-12-31)",
+            "label_en": "GE HealthCare Technologies 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1932393/000193239326000007/gehc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-04",
+            "quote": "In the industries we serve, we believe our primary global competitors include Siemens Healthineers, Philips Healthcare, United Imaging, Mindray, and Canon, among others."
+          }
+        }
+      ],
+      "name_en": "Canon"
+    },
+    {
+      "id": "BAYN",
+      "ticker": "Bayer",
+      "name": "バイエル",
+      "sub": "造影剤",
+      "sub_en": "Contrast agents",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "医薬診断(PDx)部門で主に競合する",
+          "text_en": "Bayer is a main competitor in the PDx segment",
+          "source": {
+            "label": "GEヘルスケア・テクノロジーズ 10-K(2025-12-31)",
+            "label_en": "GE HealthCare Technologies 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1932393/000193239326000007/gehc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-04",
+            "quote": "In our PDx business segment, we primarily compete with Bayer, Bracco, Guerbet, and Curium."
+          }
+        }
+      ],
+      "name_en": "Bayer"
+    },
+    {
+      "id": "BRACCO",
+      "ticker": "Bracco",
+      "name": "ブラッコ",
+      "sub": "造影剤",
+      "sub_en": "Contrast agents",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "医薬診断(PDx)部門で主に競合する",
+          "text_en": "Bracco is a main competitor in the PDx segment",
+          "source": {
+            "label": "GEヘルスケア・テクノロジーズ 10-K(2025-12-31)",
+            "label_en": "GE HealthCare Technologies 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1932393/000193239326000007/gehc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-04",
+            "quote": "In our PDx business segment, we primarily compete with Bayer, Bracco, Guerbet, and Curium."
+          }
+        }
+      ],
+      "name_en": "Bracco"
+    },
+    {
+      "id": "GUERBET",
+      "ticker": "Guerbet",
+      "name": "ゲルベ",
+      "sub": "造影剤",
+      "sub_en": "Contrast agents",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "医薬診断(PDx)部門で主に競合する",
+          "text_en": "Guerbet is a main competitor in the PDx segment",
+          "source": {
+            "label": "GEヘルスケア・テクノロジーズ 10-K(2025-12-31)",
+            "label_en": "GE HealthCare Technologies 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1932393/000193239326000007/gehc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-04",
+            "quote": "In our PDx business segment, we primarily compete with Bayer, Bracco, Guerbet, and Curium."
+          }
+        }
+      ],
+      "name_en": "Guerbet"
+    },
+    {
+      "id": "CURIUM",
+      "ticker": "Curium",
+      "name": "キュリウム",
+      "sub": "核医学診断薬",
+      "sub_en": "Nuclear medicine",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "医薬診断(PDx)部門で主に競合する",
+          "text_en": "Curium is a main competitor in the PDx segment",
+          "source": {
+            "label": "GEヘルスケア・テクノロジーズ 10-K(2025-12-31)",
+            "label_en": "GE HealthCare Technologies 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1932393/000193239326000007/gehc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-04",
+            "quote": "In our PDx business segment, we primarily compete with Bayer, Bracco, Guerbet, and Curium."
+          }
+        }
+      ],
+      "name_en": "Curium"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

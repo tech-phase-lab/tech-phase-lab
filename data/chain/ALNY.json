@@ -1,0 +1,216 @@
+{
+  "root": {
+    "ticker": "ALNY",
+    "name": "アルナイラム・ファーマシューティカルズ",
+    "cik": 1178670,
+    "name_en": "Alnylam Pharmaceuticals"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [
+    "ARWR"
+  ],
+  "companies": [
+    {
+      "id": "ROCHE",
+      "ticker": "Roche",
+      "name": "ロシュ",
+      "sub": "製薬・共同開発",
+      "sub_en": "Pharma co-development",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ジルベシランを共同開発・共同商業化する提携がある",
+          "text_en": "Alnylam announced a collaboration with Roche in July 2023 to co-develop and co-commercialize zilebesiran",
+          "source": {
+            "label": "Alnylam Pharmaceuticals 10-K(2025-12-31)",
+            "label_en": "Alnylam Pharmaceuticals 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1178670/000162828026007497/alny-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "In July 2023, we announced a collaboration with Roche to co-develop and co-commercialize zilebesiran."
+          }
+        }
+      ],
+      "name_en": "Roche"
+    },
+    {
+      "id": "REGN",
+      "ticker": "REGN",
+      "name": "リジェネロン・ファーマシューティカルズ",
+      "sub": "バイオ医薬",
+      "sub_en": "Biopharma",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "眼と中枢神経などを標的にするRNAi医薬の戦略的提携を2019年に結んだ",
+          "text_en": "In 2019 Alnylam entered a global strategic collaboration with Regeneron on RNAi therapeutics for eye and CNS targets",
+          "source": {
+            "label": "Alnylam Pharmaceuticals 10-K(2025-12-31)",
+            "label_en": "Alnylam Pharmaceuticals 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1178670/000162828026007497/alny-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "In 2019, we entered into a global, strategic collaboration with Regeneron Pharmaceuticals, Inc., or Regeneron, to discover, develop and commercialize RNAi therapeutics for a broad range of diseases by addressing therapeutic targets expressed in the eye and central nervous system, or CNS, in addition to a select number of targets expressed in the liver, which we refer to as the Regeneron Collaborat"
+          }
+        }
+      ],
+      "name_en": "Regeneron Pharmaceuticals"
+    },
+    {
+      "id": "NVS",
+      "ticker": "Novartis",
+      "name": "ノバルティス",
+      "sub": "製薬",
+      "sub_en": "Pharma",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ノバルティスがLeqvioの承認を得ている提携先である",
+          "text_en": "Novartis has received approval for Leqvio",
+          "source": {
+            "label": "Alnylam Pharmaceuticals 10-K(2025-12-31)",
+            "label_en": "Alnylam Pharmaceuticals 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1178670/000162828026007497/alny-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "As indicated in the table above, to date we have received marketing approval for AMVUTTRA, ONPATTRO, GIVLAARI and OXLUMO, Novartis has received approval for Leqvio, and Sanofi has received approval for Qfitlia, in each case in certain territories for the specific indications approved in each such territory, with additional regulatory submissions pending."
+          }
+        }
+      ],
+      "name_en": "Novartis"
+    },
+    {
+      "id": "SNY",
+      "ticker": "Sanofi",
+      "name": "サノフィ",
+      "sub": "製薬",
+      "sub_en": "Pharma",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "サノフィ傘下のGenzymeがQfitlia(フィツシラン)を商業化している",
+          "text_en": "Genzyme, a Sanofi company, commercializes Qfitlia (fitusiran)",
+          "source": {
+            "label": "Alnylam Pharmaceuticals 10-K(2025-12-31)",
+            "label_en": "Alnylam Pharmaceuticals 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1178670/000162828026007497/alny-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "Qfitlia (fitusiran) is being commercialized by our collaborator, Genzyme Corporation, a Sanofi Company, or Sanofi, and was approved by the FDA in March 2025 for routine prophylaxis to prevent or reduce the frequency of bleeding episodes in adult and pediatric patients 12 years of age and older with hemophilia A or B, with or without factor VIII or IX inhibitors (neutralizing antibodies), and by Ch"
+          }
+        }
+      ],
+      "name_en": "Sanofi"
+    },
+    {
+      "id": "PEPTIDREAM",
+      "ticker": "PeptiDream",
+      "name": "ペプチドリーム",
+      "sub": "ペプチド創薬",
+      "sub_en": "Peptide discovery",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ペプチド-siRNAコンジュゲートの創出に向けた提携・ライセンス契約が2021年にある",
+          "text_en": "A July 2021 license and collaboration agreement covers peptide-siRNA conjugates",
+          "source": {
+            "label": "Alnylam Pharmaceuticals 10-K(2025-12-31)",
+            "label_en": "Alnylam Pharmaceuticals 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1178670/000162828026007497/alny-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "In July 2021, we entered into a license and collaboration agreement with PeptiDream to discover and develop peptide-siRNA conjugates to create multiple opportunities to deliver RNAi therapeutics to tissues outside the liver."
+          }
+        }
+      ],
+      "name_en": "PeptiDream"
+    },
+    {
+      "id": "VIR",
+      "ticker": "VIR",
+      "name": "ヴィア・バイオテクノロジー",
+      "sub": "バイオ医薬",
+      "sub_en": "Biopharma",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "エレブシランはヴィアが開発を進めている提携先である",
+          "text_en": "Elebsiran is being advanced by collaborator Vir Biotechnology",
+          "source": {
+            "label": "Alnylam Pharmaceuticals 10-K(2025-12-31)",
+            "label_en": "Alnylam Pharmaceuticals 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1178670/000162828026007497/alny-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "Elebsiran — Chronic Hepatitis Delta Virus Infection Elebsiran (formerly ALN-HBV02 (VIR-2218)) is a subcutaneously administered, investigational RNAi therapeutic targeting the HBV genome for the treatment of chronic hepatitis delta, or CHD, which is being advanced by our collaborator, Vir Biotechnology, Inc., or Vir."
+          }
+        }
+      ],
+      "name_en": "Vir Biotechnology"
+    },
+    {
+      "id": "IONS",
+      "ticker": "IONS",
+      "name": "アイオニス・ファーマシューティカルズ",
+      "sub": "RNA医薬",
+      "sub_en": "RNA therapeutics",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2015年に戦略的提携・ライセンス契約を改定して結んでいる",
+          "text_en": "The two companies entered a second amended and restated strategic collaboration and license agreement in January 2015",
+          "source": {
+            "label": "Alnylam Pharmaceuticals 10-K(2025-12-31)",
+            "label_en": "Alnylam Pharmaceuticals 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1178670/000162828026007497/alny-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "In January 2015, we and Ionis Pharmaceuticals, Inc., or Ionis, entered into a second amended and restated strategic collaboration and license agreement, which we further amended in July 2015, or the 2015 Ionis agreement."
+          }
+        }
+      ],
+      "name_en": "Ionis Pharmaceuticals"
+    },
+    {
+      "id": "ARWR",
+      "ticker": "ARWR",
+      "name": "アローヘッド・ファーマシューティカルズ",
+      "sub": "RNA医薬",
+      "sub_en": "RNA therapeutics",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "高コレステロール血症で開発中の競合企業の一つである",
+          "text_en": "Arrowhead is among companies developing drugs for hypercholesterolemia",
+          "source": {
+            "label": "Alnylam Pharmaceuticals 10-K(2025-12-31)",
+            "label_en": "Alnylam Pharmaceuticals 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1178670/000162828026007497/alny-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "There are also several companies with investigational drugs in varying stages of clinical development for the treatment of hypercholesterolemia, including Merck & Co., Inc., Jiangsu Hengrui Pharmaceuticals Co., Ltd., AstraZeneca, Arrowhead, Ahn-Gook Pharmaceuticals Co., Ltd., AddPharma, Inc., Hasten Biopharmaceutical Co., Ltd., Visirna Therapeutics HK Limited, and Verve Therapeutics, Inc."
+          }
+        }
+      ],
+      "name_en": "Arrowhead Pharmaceuticals"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

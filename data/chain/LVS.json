@@ -1,0 +1,193 @@
+{
+  "root": {
+    "ticker": "LVS",
+    "name": "ラスベガス・サンズ",
+    "cik": 1300514,
+    "name_en": "Las Vegas Sands"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [
+    "WYNN",
+    "MLCO"
+  ],
+  "companies": [
+    {
+      "id": "MAR",
+      "ticker": "MAR",
+      "name": "マリオット・インターナショナル",
+      "sub": "ホテルブランド",
+      "sub_en": "Hotel brand",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "シェラトン・グランド・マカオを、マカオ初のマリオット・インターナショナル系ラグジュアリーコレクションのホテルに転換した",
+          "text_en": "The Sheraton Grand Macao was converted into the Londoner Grand, Macao's first Marriott International Luxury Collection hotel",
+          "source": {
+            "label": "Las Vegas Sands 10-K(2025年12月31日)",
+            "label_en": "Las Vegas Sands 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1300514/000130051426000013/lvs-20251231.htm",
+            "level": "official",
+            "date": "2026-02-06",
+            "quote": "The conversion of the Sheraton Grand Macao into the Londoner Grand, which represents Macao’s first Marriott International Luxury Collection hotel, resulted in a total of 2,405 rooms and suites."
+          }
+        }
+      ],
+      "name_en": "Marriott International"
+    },
+    {
+      "id": "WYNN",
+      "ticker": "WYNN",
+      "name": "ウィン・リゾーツ",
+      "sub": "マカオ競合",
+      "sub_en": "Macao rival",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "マカオの他のコンセッション事業者にウィン・リゾーツ(マカオ)がある",
+          "text_en": "Wynn Resorts (Macau), S.A. is one of the other Macao concessionaires",
+          "source": {
+            "label": "Las Vegas Sands 10-K(2025年12月31日)",
+            "label_en": "Las Vegas Sands 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1300514/000130051426000013/lvs-20251231.htm",
+            "level": "official",
+            "date": "2026-02-06",
+            "quote": "The other concessionaires are SJM Resorts, S.A., Wynn Resorts (Macau), S.A., Galaxy Casino, S.A., MGM Grand Paradise, S.A. and Melco Resorts (Macau), S.A."
+          }
+        }
+      ],
+      "name_en": "Wynn Resorts (Macau)"
+    },
+    {
+      "id": "MLCO",
+      "ticker": "MLCO",
+      "name": "メルコ・リゾーツ",
+      "sub": "マカオ競合",
+      "sub_en": "Macao rival",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "マカオの他のコンセッション事業者にメルコ・リゾーツ(マカオ)がある",
+          "text_en": "Melco Resorts (Macau), S.A. is one of the other Macao concessionaires",
+          "source": {
+            "label": "Las Vegas Sands 10-K(2025年12月31日)",
+            "label_en": "Las Vegas Sands 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1300514/000130051426000013/lvs-20251231.htm",
+            "level": "official",
+            "date": "2026-02-06",
+            "quote": "The other concessionaires are SJM Resorts, S.A., Wynn Resorts (Macau), S.A., Galaxy Casino, S.A., MGM Grand Paradise, S.A. and Melco Resorts (Macau), S.A."
+          }
+        }
+      ],
+      "name_en": "Melco Resorts (Macau)"
+    },
+    {
+      "id": "MGP",
+      "ticker": "MGM Grand Paradise",
+      "name": "MGMグランド・パラダイス",
+      "sub": "マカオ競合",
+      "sub_en": "Macao rival",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "マカオの他のコンセッション事業者にMGMグランド・パラダイスがある",
+          "text_en": "MGM Grand Paradise, S.A. is one of the other Macao concessionaires",
+          "source": {
+            "label": "Las Vegas Sands 10-K(2025年12月31日)",
+            "label_en": "Las Vegas Sands 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1300514/000130051426000013/lvs-20251231.htm",
+            "level": "official",
+            "date": "2026-02-06",
+            "quote": "The other concessionaires are SJM Resorts, S.A., Wynn Resorts (Macau), S.A., Galaxy Casino, S.A., MGM Grand Paradise, S.A. and Melco Resorts (Macau), S.A."
+          }
+        }
+      ],
+      "name_en": "MGM Grand Paradise"
+    },
+    {
+      "id": "SJM",
+      "ticker": "SJM Resorts",
+      "name": "SJMリゾーツ",
+      "sub": "マカオ競合",
+      "sub_en": "Macao rival",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "マカオの他のコンセッション事業者にSJMリゾーツがある",
+          "text_en": "SJM Resorts, S.A. is one of the other Macao concessionaires",
+          "source": {
+            "label": "Las Vegas Sands 10-K(2025年12月31日)",
+            "label_en": "Las Vegas Sands 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1300514/000130051426000013/lvs-20251231.htm",
+            "level": "official",
+            "date": "2026-02-06",
+            "quote": "The other concessionaires are SJM Resorts, S.A., Wynn Resorts (Macau), S.A., Galaxy Casino, S.A., MGM Grand Paradise, S.A. and Melco Resorts (Macau), S.A."
+          }
+        }
+      ],
+      "name_en": "SJM Resorts"
+    },
+    {
+      "id": "GALAXY",
+      "ticker": "Galaxy Casino",
+      "name": "ギャラクシー・カジノ",
+      "sub": "マカオ競合",
+      "sub_en": "Macao rival",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "マカオの他のコンセッション事業者にギャラクシー・カジノが含まれる",
+          "text_en": "Galaxy Casino, S.A. is one of the other Macao concessionaires",
+          "source": {
+            "label": "Las Vegas Sands 10-K(2025年12月31日)",
+            "label_en": "Las Vegas Sands 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1300514/000130051426000013/lvs-20251231.htm",
+            "level": "official",
+            "date": "2026-02-06",
+            "quote": "The other concessionaires are SJM Resorts, S.A., Wynn Resorts (Macau), S.A., Galaxy Casino, S.A., MGM Grand Paradise, S.A. and Melco Resorts (Macau), S.A."
+          }
+        }
+      ],
+      "name_en": "Galaxy Casino"
+    },
+    {
+      "id": "RWS",
+      "ticker": "Resorts World",
+      "name": "リゾート・ワールド・セントーサ",
+      "sub": "シンガポール競合",
+      "sub_en": "Singapore rival",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "シンガポールのもう一つのカジノ事業者はリゾート・ワールド・セントーサである",
+          "text_en": "Resorts World Sentosa, owned 100% by Genting Singapore PLC, is the other Singapore casino operator",
+          "source": {
+            "label": "Las Vegas Sands 10-K(2025年12月31日)",
+            "label_en": "Las Vegas Sands 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1300514/000130051426000013/lvs-20251231.htm",
+            "level": "official",
+            "date": "2026-02-06",
+            "quote": "Gaming in Singapore is administered by the government through the award of licenses to two operators, our Company and Resorts World Sentosa, which is 100% owned by Genting Singapore PLC."
+          }
+        }
+      ],
+      "name_en": "Resorts World Sentosa"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

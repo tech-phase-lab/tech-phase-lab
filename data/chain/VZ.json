@@ -1,0 +1,195 @@
+{
+  "root": {
+    "ticker": "VZ",
+    "name": "ベライゾン・コミュニケーションズ",
+    "cik": 732712,
+    "name_en": "Verizon Communications"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [
+    "T",
+    "TMUS",
+    "CMCSA",
+    "CHTR"
+  ],
+  "companies": [
+    {
+      "id": "T",
+      "ticker": "T",
+      "name": "エーティーアンドティー",
+      "sub": "通信大手",
+      "sub_en": "Wireless carrier",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "全米規模の無線通信事業者として競合している",
+          "text_en": "AT&T is a national wireless service provider that competes with Verizon",
+          "source": {
+            "label": "ベライゾン 10-K(2025年12月期)",
+            "label_en": "Verizon Communications 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/732712/000073271226000007/vz-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "With respect to our wireless connectivity products and services, we compete against other national wireless service providers, including AT&T Inc. and T-Mobile US, Inc., as well as various regional wireless service providers."
+          }
+        }
+      ],
+      "name_en": "AT&T"
+    },
+    {
+      "id": "TMUS",
+      "ticker": "TMUS",
+      "name": "Tモバイル・US",
+      "sub": "通信大手",
+      "sub_en": "Wireless carrier",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "全米規模の無線通信事業者として競合している",
+          "text_en": "T-Mobile US is a national wireless service provider that competes with Verizon",
+          "source": {
+            "label": "ベライゾン 10-K(2025年12月期)",
+            "label_en": "Verizon Communications 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/732712/000073271226000007/vz-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "With respect to our wireless connectivity products and services, we compete against other national wireless service providers, including AT&T Inc. and T-Mobile US, Inc., as well as various regional wireless service providers."
+          }
+        }
+      ],
+      "name_en": "T-Mobile US"
+    },
+    {
+      "id": "CMCSA",
+      "ticker": "CMCSA",
+      "name": "コムキャスト",
+      "sub": "ケーブル大手",
+      "sub_en": "Cable operator",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "卸売サービスを買って再販する事業者として、小売の契約獲得で競合する",
+          "text_en": "Comcast resells wholesale wireless service and competes for retail activations",
+          "source": {
+            "label": "ベライゾン 10-K(2025年12月期)",
+            "label_en": "Verizon Communications 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/732712/000073271226000007/vz-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "We also compete for retail activations with resellers that buy bulk wholesale service from wireless service providers, including Verizon, and resell it to their customers. Resellers include cable companies, such as Comcast Corporation and Charter Communications, Inc., and others."
+          }
+        }
+      ],
+      "name_en": "Comcast"
+    },
+    {
+      "id": "CHTR",
+      "ticker": "CHTR",
+      "name": "チャーター・コミュニケーションズ",
+      "sub": "ケーブル大手",
+      "sub_en": "Cable operator",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "卸売サービスを買って再販する事業者として、小売の契約獲得で競合する",
+          "text_en": "Charter resells wholesale wireless service and competes for retail activations",
+          "source": {
+            "label": "ベライゾン 10-K(2025年12月期)",
+            "label_en": "Verizon Communications 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/732712/000073271226000007/vz-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "We also compete for retail activations with resellers that buy bulk wholesale service from wireless service providers, including Verizon, and resell it to their customers. Resellers include cable companies, such as Comcast Corporation and Charter Communications, Inc., and others."
+          }
+        }
+      ],
+      "name_en": "Charter Communications"
+    },
+    {
+      "id": "AMT",
+      "ticker": "AMT",
+      "name": "アメリカン・タワー",
+      "sub": "通信タワー",
+      "sub_en": "Cell towers",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年3月にタワーのリース契約を更新した",
+          "text_en": "Verizon renewed its tower lease with American Tower in March 2025",
+          "source": {
+            "label": "ベライゾン 10-K(2025年12月期)",
+            "label_en": "Verizon Communications 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/732712/000073271226000007/vz-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "In March 2025, we renewed our lease with American Tower Corporation (American Tower) originally entered into in March 2015."
+          }
+        }
+      ],
+      "name_en": "American Tower"
+    },
+    {
+      "id": "VB",
+      "ticker": "Vertical Bridge",
+      "name": "バーティカル・ブリッジ",
+      "sub": "通信タワー",
+      "sub_en": "Cell towers",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "タワー取引を結び、賃借料が増えた",
+          "text_en": "Verizon has a tower transaction with Vertical Bridge that raised rent and lease expense",
+          "source": {
+            "label": "ベライゾン 10-K(2025年12月期)",
+            "label_en": "Verizon Communications 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/732712/000073271226000007/vz-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "an increase of $145 million in rent and lease expense primarily related to the tower transaction with Vertical Bridge REIT, LLC (Vertical Bridge) along with new leases and lease modifications related to the continued deployment of the C-Band spectrum."
+          }
+        }
+      ],
+      "name_en": "Vertical Bridge"
+    },
+    {
+      "id": "TGH",
+      "ticker": "Tillman",
+      "name": "ティルマン・グローバル・ホールディングス",
+      "sub": "光ファイバー",
+      "sub_en": "Fiber access",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "関連会社と光ファイバーの商用契約を結んだ",
+          "text_en": "Verizon entered into a commercial fiber arrangement with an affiliate of Tillman Global Holdings",
+          "source": {
+            "label": "ベライゾン 10-K(2025年12月期)",
+            "label_en": "Verizon Communications 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/732712/000073271226000007/vz-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "In addition, in October 2025, we entered into a commercial fiber arrangement with an affiliate of Tillman Global Holdings to further increase our fiber access reach."
+          }
+        }
+      ],
+      "name_en": "Tillman Global Holdings"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

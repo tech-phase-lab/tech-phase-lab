@@ -1,0 +1,278 @@
+{
+  "root": {
+    "ticker": "AOS",
+    "name": "A.O.スミス",
+    "cik": 91142,
+    "name_en": "SMITH A O CORP"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [
+    "PNR",
+    "FELE"
+  ],
+  "companies": [
+    {
+      "id": "LOW",
+      "ticker": "LOW",
+      "name": "ロウズ",
+      "sub": "小売の販売先",
+      "sub_en": "Retail customer",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "A.O.スミスブランド製品を販売する独占的な関係が長く続いている",
+          "text_en": "Lowe's has a long-standing exclusive relationship for A. O. Smith branded products",
+          "source": {
+            "label": "A. O. Smith 10-K(2025-12-31)",
+            "label_en": "A. O. Smith 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/91142/000009114226000008/aos-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "including a long-standing exclusive relationship with Lowe’s where we sell A. O. Smith branded products"
+          }
+        }
+      ],
+      "name_en": "Lowe's"
+    },
+    {
+      "id": "AMZN",
+      "ticker": "AMZN",
+      "name": "アマゾン",
+      "sub": "浄水製品の販路",
+      "sub_en": "Water treatment channel",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "浄水製品の主な販路のひとつになっている",
+          "text_en": "Amazon is a main channel for water treatment products",
+          "source": {
+            "label": "A. O. Smith 10-K(2025-12-31)",
+            "label_en": "A. O. Smith 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/91142/000009114226000008/aos-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "We sell our A. O. Smith branded water treatment products primarily through our water quality dealer network and Amazon"
+          }
+        }
+      ],
+      "name_en": "Amazon"
+    },
+    {
+      "id": "RHEEM",
+      "ticker": "Rheem",
+      "name": "リーム",
+      "sub": "給湯器の競合",
+      "sub_en": "Water heater competitor",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "北米の給湯器・ボイラーで競合する",
+          "text_en": "Competes in North American water heaters and boilers",
+          "source": {
+            "label": "A. O. Smith 10-K(2025-12-31)",
+            "label_en": "A. O. Smith 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/91142/000009114226000008/aos-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "Our principal water heating and boiler competitors in North America include Rheem, Bradford White, Rinnai, Aerco and Navien"
+          }
+        }
+      ],
+      "name_en": "Rheem"
+    },
+    {
+      "id": "BRADFORD",
+      "ticker": "Bradford White",
+      "name": "ブラッドフォード・ホワイト",
+      "sub": "給湯器の競合",
+      "sub_en": "Water heater competitor",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "北米の給湯器・ボイラーで競合する",
+          "text_en": "Competes in North American water heaters and boilers",
+          "source": {
+            "label": "A. O. Smith 10-K(2025-12-31)",
+            "label_en": "A. O. Smith 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/91142/000009114226000008/aos-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "Our principal water heating and boiler competitors in North America include Rheem, Bradford White, Rinnai, Aerco and Navien"
+          }
+        }
+      ],
+      "name_en": "Bradford White"
+    },
+    {
+      "id": "RINNAI",
+      "ticker": "Rinnai",
+      "name": "リンナイ",
+      "sub": "給湯器の競合",
+      "sub_en": "Water heater competitor",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "北米の給湯器・ボイラーで競合する",
+          "text_en": "Competes in North American water heaters and boilers",
+          "source": {
+            "label": "A. O. Smith 10-K(2025-12-31)",
+            "label_en": "A. O. Smith 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/91142/000009114226000008/aos-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "Our principal water heating and boiler competitors in North America include Rheem, Bradford White, Rinnai, Aerco and Navien"
+          }
+        },
+        {
+          "type": "rival",
+          "text": "中国の給湯器でも競合する",
+          "text_en": "Also competes in China water heaters",
+          "source": {
+            "label": "A. O. Smith 10-K(2025-12-31)",
+            "label_en": "A. O. Smith 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/91142/000009114226000008/aos-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "Our primary competitors in China in the water heater market segment are Haier/Casarte, Midea/COLMO, and Rinnai"
+          }
+        }
+      ],
+      "name_en": "Rinnai"
+    },
+    {
+      "id": "NAVIEN",
+      "ticker": "Navien",
+      "name": "ナビエン",
+      "sub": "給湯器の競合",
+      "sub_en": "Water heater competitor",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "北米の給湯器・ボイラーで競合する",
+          "text_en": "Competes in North American water heaters and boilers",
+          "source": {
+            "label": "A. O. Smith 10-K(2025-12-31)",
+            "label_en": "A. O. Smith 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/91142/000009114226000008/aos-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "Our principal water heating and boiler competitors in North America include Rheem, Bradford White, Rinnai, Aerco and Navien"
+          }
+        }
+      ],
+      "name_en": "Navien"
+    },
+    {
+      "id": "PNR",
+      "ticker": "PNR",
+      "name": "ペンテア",
+      "sub": "浄水の競合",
+      "sub_en": "Water treatment competitor",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "米国の浄水分野で競合する",
+          "text_en": "Competes in U.S. water treatment",
+          "source": {
+            "label": "A. O. Smith 10-K(2025-12-31)",
+            "label_en": "A. O. Smith 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/91142/000009114226000008/aos-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "Our principal water treatment competitors in the U.S. are Culligan, Kinetico, Pentair, Franklin Electric and Ecowater"
+          }
+        }
+      ],
+      "name_en": "Pentair"
+    },
+    {
+      "id": "FELE",
+      "ticker": "FELE",
+      "name": "フランクリン・エレクトリック",
+      "sub": "浄水の競合",
+      "sub_en": "Water treatment competitor",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "米国の浄水分野で競合する",
+          "text_en": "Competes in U.S. water treatment",
+          "source": {
+            "label": "A. O. Smith 10-K(2025-12-31)",
+            "label_en": "A. O. Smith 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/91142/000009114226000008/aos-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "Our principal water treatment competitors in the U.S. are Culligan, Kinetico, Pentair, Franklin Electric and Ecowater"
+          }
+        }
+      ],
+      "name_en": "Franklin Electric"
+    },
+    {
+      "id": "CULLIGAN",
+      "ticker": "Culligan",
+      "name": "カリガン",
+      "sub": "浄水の競合",
+      "sub_en": "Water treatment competitor",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "米国の浄水分野で競合する",
+          "text_en": "Competes in U.S. water treatment",
+          "source": {
+            "label": "A. O. Smith 10-K(2025-12-31)",
+            "label_en": "A. O. Smith 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/91142/000009114226000008/aos-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "Our principal water treatment competitors in the U.S. are Culligan, Kinetico, Pentair, Franklin Electric and Ecowater"
+          }
+        }
+      ],
+      "name_en": "Culligan"
+    },
+    {
+      "id": "HAIER",
+      "ticker": "Haier",
+      "name": "ハイアール",
+      "sub": "中国の競合",
+      "sub_en": "China competitor",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "中国の給湯器分野で競合する",
+          "text_en": "Competes in China water heaters",
+          "source": {
+            "label": "A. O. Smith 10-K(2025-12-31)",
+            "label_en": "A. O. Smith 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/91142/000009114226000008/aos-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "Our primary competitors in China in the water heater market segment are Haier/Casarte, Midea/COLMO, and Rinnai"
+          }
+        }
+      ],
+      "name_en": "Haier"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

@@ -1,0 +1,111 @@
+{
+  "root": {
+    "ticker": "AWK",
+    "name": "アメリカン・ウォーター・ワークス",
+    "cik": 1410636,
+    "name_en": "American Water Works"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [
+    "WTRG",
+    "AWR",
+    "CWT"
+  ],
+  "companies": [
+    {
+      "id": "WTRG",
+      "ticker": "WTRG",
+      "name": "エッセンシャル・ユーティリティーズ",
+      "sub": "水道事業",
+      "sub_en": "Water utility",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年10月26日に、全株式交換による経営統合の合併契約を結んだ",
+          "text_en": "On October 26, 2025, the parent company signed a stock-for-stock merger agreement",
+          "source": {
+            "label": "アメリカン・ウォーター・ワークス 10-K(2025-12-31)",
+            "label_en": "American Water Works 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1410636/000141063626000034/awk-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "On October 26, 2025, parent company entered into an Agreement and Plan of Merger (the “Essential Merger Agreement”) with Essential Utilities, Inc. (“Essential”) to combine the two companies in a stock-for-stock transaction."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "買収を進める際の、最大級の民間競合として名前が挙がる",
+          "text_en": "Named among the largest investor-owned competitors when pursuing acquisitions",
+          "source": {
+            "label": "アメリカン・ウォーター・ワークス 10-K(2025-12-31)",
+            "label_en": "American Water Works 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1410636/000141063626000034/awk-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "When pursuing acquisitions, the Company’s largest investor-owned competitors, based on a comparison of operating revenues and population served, include Essential, American States Water Company and California Water Service Group."
+          }
+        }
+      ],
+      "name_en": "Essential Utilities"
+    },
+    {
+      "id": "AWR",
+      "ticker": "AWR",
+      "name": "アメリカン・ステーツ・ウォーター",
+      "sub": "水道事業",
+      "sub_en": "Water utility",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "買収を進める際の、最大級の民間競合のひとつである",
+          "text_en": "One of the largest investor-owned competitors when pursuing acquisitions",
+          "source": {
+            "label": "アメリカン・ウォーター・ワークス 10-K(2025-12-31)",
+            "label_en": "American Water Works 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1410636/000141063626000034/awk-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "When pursuing acquisitions, the Company’s largest investor-owned competitors, based on a comparison of operating revenues and population served, include Essential, American States Water Company and California Water Service Group."
+          }
+        }
+      ],
+      "name_en": "American States Water"
+    },
+    {
+      "id": "CWT",
+      "ticker": "CWT",
+      "name": "カリフォルニア・ウォーター・サービス",
+      "sub": "水道事業",
+      "sub_en": "Water utility",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "買収を進める際の、最大級の民間競合のひとつとされる",
+          "text_en": "Listed as one of the largest investor-owned competitors when pursuing acquisitions",
+          "source": {
+            "label": "アメリカン・ウォーター・ワークス 10-K(2025-12-31)",
+            "label_en": "American Water Works 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1410636/000141063626000034/awk-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "When pursuing acquisitions, the Company’s largest investor-owned competitors, based on a comparison of operating revenues and population served, include Essential, American States Water Company and California Water Service Group."
+          }
+        }
+      ],
+      "name_en": "California Water Service Group"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

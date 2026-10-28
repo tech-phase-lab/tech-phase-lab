@@ -1,0 +1,220 @@
+{
+  "root": {
+    "ticker": "MSI",
+    "name": "モトローラ・ソリューションズ",
+    "cik": 68505,
+    "name_en": "Motorola Solutions, Inc."
+  },
+  "rows": [
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    }
+  ],
+  "rivals": [
+    "LHX",
+    "ZBRA",
+    "AXON",
+    "HON",
+    "JCI"
+  ],
+  "companies": [
+    {
+      "id": "LHX",
+      "ticker": "LHX",
+      "name": "L3ハリス・テクノロジーズ",
+      "sub": "通信・防衛",
+      "sub_en": "Communications & defense",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "無線ネットワークの分野で競合している企業のひとつである",
+          "text_en": "Named as a major competitor in mission-critical networks (MCN)",
+          "source": {
+            "label": "モトローラ・ソリューションズ 10-K(2025-12-31)",
+            "label_en": "Motorola Solutions, Inc. 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/68505/000006850526000010/msi-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "MCN Airbus, BK Technologies, DTC, Doodle Labs, Hytera, iCOM, JVCKenwood Corporation, L3Harris Technologies, Persistent Systems, RCA, Samsung, Sepura, Tait, TrellisWare Technologies, Zebra"
+          }
+        }
+      ],
+      "name_en": "L3Harris Technologies"
+    },
+    {
+      "id": "ZBRA",
+      "ticker": "ZBRA",
+      "name": "ゼブラ・テクノロジーズ",
+      "sub": "業務用端末",
+      "sub_en": "Enterprise devices",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "無線ネットワークの分野で競合している企業のひとつである",
+          "text_en": "Named as a major competitor in mission-critical networks (MCN)",
+          "source": {
+            "label": "モトローラ・ソリューションズ 10-K(2025-12-31)",
+            "label_en": "Motorola Solutions, Inc. 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/68505/000006850526000010/msi-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "MCN Airbus, BK Technologies, DTC, Doodle Labs, Hytera, iCOM, JVCKenwood Corporation, L3Harris Technologies, Persistent Systems, RCA, Samsung, Sepura, Tait, TrellisWare Technologies, Zebra"
+          }
+        }
+      ],
+      "name_en": "Zebra Technologies"
+    },
+    {
+      "id": "AXON",
+      "ticker": "AXON",
+      "name": "アクソン・エンタープライズ",
+      "sub": "公共安全",
+      "sub_en": "Public safety",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "映像セキュリティの分野で競合している企業のひとつである",
+          "text_en": "Named as a major competitor in video security and command center",
+          "source": {
+            "label": "モトローラ・ソリューションズ 10-K(2025-12-31)",
+            "label_en": "Motorola Solutions, Inc. 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/68505/000006850526000010/msi-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "Video Axis Communications, Axon Enterprise, Bosch, Brivo, Dahua Technology Company, Eagle Eye Networks, ECAM, Flock, Genetec, Hanwha Group, Hikvision, Honeywell, Johnson Controls, Milestone Systems"
+          }
+        }
+      ],
+      "name_en": "Axon Enterprise"
+    },
+    {
+      "id": "HON",
+      "ticker": "HON",
+      "name": "ハネウェル・インターナショナル",
+      "sub": "総合産業",
+      "sub_en": "Industrial conglomerate",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "映像セキュリティの分野で競合している企業のひとつである",
+          "text_en": "Named as a major competitor in video security",
+          "source": {
+            "label": "モトローラ・ソリューションズ 10-K(2025-12-31)",
+            "label_en": "Motorola Solutions, Inc. 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/68505/000006850526000010/msi-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "Video Axis Communications, Axon Enterprise, Bosch, Brivo, Dahua Technology Company, Eagle Eye Networks, ECAM, Flock, Genetec, Hanwha Group, Hikvision, Honeywell, Johnson Controls, Milestone Systems"
+          }
+        }
+      ],
+      "name_en": "Honeywell"
+    },
+    {
+      "id": "JCI",
+      "ticker": "JCI",
+      "name": "ジョンソンコントロールズ",
+      "sub": "ビル設備",
+      "sub_en": "Building systems",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "映像セキュリティの分野で競合している企業のひとつである",
+          "text_en": "Named as a major competitor in video security",
+          "source": {
+            "label": "モトローラ・ソリューションズ 10-K(2025-12-31)",
+            "label_en": "Motorola Solutions, Inc. 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/68505/000006850526000010/msi-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "Video Axis Communications, Axon Enterprise, Bosch, Brivo, Dahua Technology Company, Eagle Eye Networks, ECAM, Flock, Genetec, Hanwha Group, Hikvision, Honeywell, Johnson Controls, Milestone Systems"
+          }
+        }
+      ],
+      "name_en": "Johnson Controls"
+    },
+    {
+      "id": "ORCL",
+      "ticker": "ORCL",
+      "name": "オラクル",
+      "sub": "公共安全ソフト",
+      "sub_en": "Public safety software",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "指令センターの分野で競合している企業のひとつである",
+          "text_en": "Named as a major competitor in command center software",
+          "source": {
+            "label": "モトローラ・ソリューションズ 10-K(2025-12-31)",
+            "label_en": "Motorola Solutions, Inc. 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/68505/000006850526000010/msi-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "Command Center AlertMedia, AT&T, Axon Enterprise, Carbyne, CentralSquare Technologies, Comtech Telecommunications, Everbridge, Hexagon, Intrado, Mark43, Crisis24, Oracle Public Safety, RapidSOS, Tyler Technologies, Versaterm"
+          }
+        }
+      ],
+      "name_en": "Oracle"
+    },
+    {
+      "id": "TYL",
+      "ticker": "TYL",
+      "name": "タイラー・テクノロジーズ",
+      "sub": "行政ソフト",
+      "sub_en": "Government software",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "指令センターの分野で競合している企業のひとつである",
+          "text_en": "Named as a major competitor in command center software",
+          "source": {
+            "label": "モトローラ・ソリューションズ 10-K(2025-12-31)",
+            "label_en": "Motorola Solutions, Inc. 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/68505/000006850526000010/msi-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "Command Center AlertMedia, AT&T, Axon Enterprise, Carbyne, CentralSquare Technologies, Comtech Telecommunications, Everbridge, Hexagon, Intrado, Mark43, Crisis24, Oracle Public Safety, RapidSOS, Tyler Technologies, Versaterm"
+          }
+        }
+      ],
+      "name_en": "Tyler Technologies"
+    },
+    {
+      "id": "T",
+      "ticker": "T",
+      "name": "AT&Tインク",
+      "sub": "通信事業者",
+      "sub_en": "Telecom carrier",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "指令センターの分野で競合している企業のひとつである",
+          "text_en": "Named as a major competitor in command center software",
+          "source": {
+            "label": "モトローラ・ソリューションズ 10-K(2025-12-31)",
+            "label_en": "Motorola Solutions, Inc. 10-K (fiscal year ended 2025-12-31)",
+            "url": "https://www.sec.gov/Archives/edgar/data/68505/000006850526000010/msi-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "Command Center AlertMedia, AT&T, Axon Enterprise, Carbyne, CentralSquare Technologies, Comtech Telecommunications, Everbridge, Hexagon, Intrado, Mark43, Crisis24, Oracle Public Safety, RapidSOS, Tyler Technologies, Versaterm"
+          }
+        }
+      ],
+      "name_en": "AT&T"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

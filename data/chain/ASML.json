@@ -1,0 +1,338 @@
+{
+  "root": {
+    "ticker": "ASML",
+    "name": "ASML",
+    "cik": 937966
+  },
+  "rows": [
+    {
+      "ja": "供給元(部品)",
+      "en": "Suppliers (parts)",
+      "above": true
+    },
+    {
+      "ja": "顧客(半導体メーカー)",
+      "en": "Customers (chipmakers)"
+    },
+    {
+      "ja": "競合",
+      "en": "Competitors"
+    },
+    {
+      "ja": "共同出資",
+      "en": "Co-investments"
+    }
+  ],
+  "rivals": [
+    "Canon",
+    "Nikon",
+    "AMAT",
+    "KLAC"
+  ],
+  "companies": [
+    {
+      "id": "ICHR",
+      "ticker": "ICHR",
+      "name": "Ichor Holdings",
+      "sub": "ガス・流体部品",
+      "sub_en": "Fluid delivery subsystems",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "ASMLは、Ichorにとって最上位のOEM顧客の1社となる",
+          "text_en": "ASML is one of Ichor's top-tier OEM customers.",
+          "source": {
+            "label": "Ichor Holdings Form 10-K(2025年度)",
+            "label_en": "Ichor Holdings Form 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1652535/000165253526000012/ichr-20251226.htm",
+            "level": "official",
+            "quote": "We have established deep relationships with top tier OEMs, including Lam Research, Applied Materials, and ASML.",
+            "note": "相手側の資料にもとづく関係です。",
+            "note_en": "Based on the counterparty’s filing."
+          }
+        }
+      ]
+    },
+    {
+      "id": "INTC",
+      "ticker": "INTC",
+      "name": "Intel",
+      "sub": "半導体",
+      "sub_en": "Chips",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Intel 4・Intel 3・Intel 18AなどのEUV露光装置は、ASMLが唯一の供給元となる",
+          "text_en": "ASML is the sole supplier of the EUV lithography tools Intel deploys in Intel 4, Intel 3 and Intel 18A",
+          "source": {
+            "label": "Intel Form 10-K(2025年度)",
+            "label_en": "Intel Form 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000011/intc-20251227.htm",
+            "level": "official",
+            "quote": "ASML Holding N.V. (ASML) is currently the sole supplier of EUV lithography tools that we are deploying in our Intel 4, Intel 3, Intel 18A and planned future leading-edge manufacturing process nodes."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "IntelがHigh-NA EUV「TWINSCAN EXE:5200」の初の発注をASMLへ",
+          "text_en": "Intel placed its first purchase order for the High-NA EUV TWINSCAN EXE:5200",
+          "source": {
+            "label": "ASML Form 6-K(joint の発表 with Intel, 2022-01-19)",
+            "label_en": "ASML Form 6-K (joint press release with Intel, 2022-01-19)",
+            "url": "https://www.sec.gov/Archives/edgar/data/937966/000119312522011881/d180474dex991.htm",
+            "level": "official",
+            "date": "2022-01-19",
+            "quote": "Intel has issued its first purchase order to ASML for the delivery of the industry's first TWINSCAN EXE:5200 system"
+          }
+        },
+        {
+          "type": "tie",
+          "text": "IntelとASMLが、Intel FoundryでHigh-NA EUVを量産に使っていると発表",
+          "text_en": "Intel Foundry and ASML report High-NA EUV used in high-volume manufacturing at Intel Foundry",
+          "source": {
+            "label": "Intel の発表(Intel Foundry and ASML, 2026-09-08)",
+            "label_en": "Intel press release (Intel Foundry and ASML, 2026-09-08)",
+            "url": "https://www.intc.com/news-events/press-releases/detail/1781/intel-foundry-and-asml-collaborate-to-accelerate-industry",
+            "level": "official",
+            "date": "2026-09-08",
+            "quote": "High NA continues to be used in high-volume manufacturing production at Intel Foundry today , with more than one million wafers processed to date across early tool certification and testing, research and development efforts, and volume production on select layers for a subset of Intel",
+            "note": "処理したウエハー数には、装置の認定・研究開発・量産が含まれます。",
+            "note_en": "The wafer count includes tool certification, R&D and volume production."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SK hynix",
+      "ticker": "SK hynix",
+      "name": "SK hynix",
+      "sub": "メモリー",
+      "sub_en": "Memory",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "M16工場に、量産向けで業界初となるHigh-NA EUV「EXE:5200B」を導入",
+          "text_en": "Brought the ASML EXE:5200B High-NA EUV system to its M16 fab, an industry first for commercial use",
+          "source": {
+            "label": "SK hynix の発表",
+            "label_en": "SK hynix press release",
+            "url": "https://news.skhynix.com/sk-hynix-introduces-industrys-first-commercial-high-na-euv/",
+            "level": "official",
+            "date": "2025-09-03",
+            "quote": "Brings ASML's EXE:5200B, critical system for next-generation chips, to M16 fab"
+          }
+        }
+      ]
+    },
+    {
+      "id": "TSM",
+      "ticker": "TSM",
+      "name": "TSMC",
+      "sub": "受託製造",
+      "sub_en": "Foundry",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "TSMCの「グリーン製造の優秀サプライヤー賞」を受賞",
+          "text_en": "Received the TSMC Supplier Excellence in Green Manufacturing Award",
+          "source": {
+            "label": "ASML Form 20-F(2025年度)",
+            "label_en": "ASML Form 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/937966/000162828026011378/asml-20251231.htm",
+            "level": "official",
+            "date": "2025-11",
+            "quote": "In November 2025, we were honored to receive the TSMC Supplier 'Excellence in Green Manufacturing' Award",
+            "note": "表彰の記載で、販売条件は示されていません。",
+            "note_en": "An award only; sales terms are not described."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Canon",
+      "ticker": "Canon",
+      "name": "Canon",
+      "sub": "露光装置",
+      "sub_en": "Lithography",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ASMLはDUV露光装置で、主にCanonとNikonと競う",
+          "text_en": "ASML competes primarily with Canon and Nikon in DUV systems",
+          "source": {
+            "label": "ASML Form 20-F(2025年度)",
+            "label_en": "ASML Form 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/937966/000162828026011378/asml-20251231.htm",
+            "level": "official",
+            "quote": "We compete primarily with Canon and Nikon in respect of DUV systems."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Nikon",
+      "ticker": "Nikon",
+      "name": "Nikon",
+      "sub": "露光装置",
+      "sub_en": "Lithography",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "DUV露光装置では、NikonとCanonが主な競合相手だ",
+          "text_en": "Nikon and Canon are ASML's primary competitors in DUV systems",
+          "source": {
+            "label": "ASML Form 20-F(2025年度)",
+            "label_en": "ASML Form 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/937966/000162828026011378/asml-20251231.htm",
+            "level": "official",
+            "quote": "We compete primarily with Canon and Nikon in respect of DUV systems."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AMAT",
+      "ticker": "AMAT",
+      "name": "Applied Materials",
+      "sub": "製造装置",
+      "sub_en": "Equipment",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Applied Materialsは、複雑なパターニングを支えるアプリケーション分野でASMLの競合の一例だ",
+          "text_en": "Applied Materials is an example of a competitor in applications supporting complex patterning",
+          "source": {
+            "label": "ASML Form 20-F(2025年度)",
+            "label_en": "ASML Form 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/937966/000162828026011378/asml-20251231.htm",
+            "level": "official",
+            "quote": "We also compete with providers of applications that support or enhance complex patterning solutions, such as Applied Materials Inc. and KLA-Tencor Corporation.",
+            "note": "パターニングを支える製品に限った記載です。",
+            "note_en": "Limited to patterning-support applications."
+          }
+        }
+      ]
+    },
+    {
+      "id": "KLAC",
+      "ticker": "KLAC",
+      "name": "KLA",
+      "sub": "検査・計測装置",
+      "sub_en": "Inspection & metrology",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "KLAは、複雑なパターニングを支えるアプリケーション分野でASMLと競合関係にある",
+          "text_en": "KLA competes with ASML in applications supporting complex patterning",
+          "source": {
+            "label": "ASML Form 20-F(2025年度)",
+            "label_en": "ASML Form 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/937966/000162828026011378/asml-20251231.htm",
+            "level": "official",
+            "quote": "We also compete with providers of applications that support or enhance complex patterning solutions, such as Applied Materials Inc. and KLA-Tencor Corporation.",
+            "note": "パターニングを支える製品に限った記載です。",
+            "note_en": "Limited to patterning-support applications."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "ASMLはKLAの競合企業に含まれる",
+          "text_en": "ASML is one of KLA's competitors.",
+          "source": {
+            "label": "KLA Form 10-K(2026年度)",
+            "label_en": "KLA Form 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/319201/000031920126000027/klac-20260630.htm",
+            "level": "official",
+            "quote": "we have many competitors, including companies such as Applied Materials, Inc., ASML Holding N.V., Hitachi High-Tech Corporation, Lasertec, Inc. and Onto Innovation, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "NVMI",
+      "ticker": "NVMI",
+      "name": "Nova",
+      "sub": "計測装置",
+      "sub_en": "Metrology",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Novaは工程内センサー・計測製品で、ASML・Lam・Applied Materialsと競合する立場にある",
+          "text_en": "Nova competes with process equipment makers such as ASML, Lam and Applied Materials, which develop (or may acquire companies that develop) in-situ sensors and metrology products.",
+          "source": {
+            "label": "Nova Ltd Form 20-F(2025年度)",
+            "label_en": "Nova Ltd Form 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1109345/000117891326000504/zk2634307.htm",
+            "level": "official",
+            "quote": "we compete with process equipment manufacturers, such as ASML Holdings N.V., LAM Research, and Applied Materials Inc., which develop (or may acquire companies which develop) in-situ sensors and metrology products.",
+            "note": "工程内センサーなどに限った記載です。",
+            "note_en": "Limited to in-situ sensors and similar products."
+          }
+        }
+      ]
+    },
+    {
+      "id": "UCTT",
+      "ticker": "UCTT",
+      "name": "Ultra Clean Holdings",
+      "sub": "半導体装置の部品",
+      "sub_en": "Equipment subsystems",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Ultra Cleanが、2024年12月27日時点の売掛金の10%超を占める3顧客の1つとしてASMLを挙げている(Applied Materials・Lamと並ぶ、10-K)",
+          "text_en": "Ultra Clean reports ASML among three customers each above 10% of gross accounts receivable at December 27, 2024",
+          "source": {
+            "label": "Ultra Clean Holdings Form 10-K(2025年度)",
+            "label_en": "Ultra Clean Holdings Form 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1275014/000162828026010744/uctt-20251226.htm",
+            "level": "official",
+            "date": "2024-12",
+            "quote": "Three customers' gross accounts receivable balances, Applied Materials, Inc., Lam Research Corporation and ASML Holding NV were individually greater than 10.0% of gross accounts receivable as of December 27, 2024",
+            "note": "2024年12月27日時点の売掛金についての記載です。",
+            "note_en": "The statement concerns receivables at December 27, 2024."
+          }
+        }
+      ]
+    },
+    {
+      "id": "PHG",
+      "ticker": "Philips",
+      "name": "Koninklijke Philips",
+      "sub": "医療機器",
+      "sub_en": "Medical devices",
+      "row": 3,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ASMLはPhilipsなどと並ぶHighTechXLの主要株主で、DeepTechXL Fund Iの共同設立者・戦略投資家",
+          "text_en": "ASML is a main shareholder of HighTechXL together with partners such as Philips, and both are co-initiators and strategic investors in DeepTechXL Fund I",
+          "source": {
+            "label": "ASML Form 20-F(2025年度)",
+            "label_en": "ASML Form 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/937966/000162828026011378/asml-20251231.htm",
+            "level": "official",
+            "quote": "Together with other strategic investors and co-initiators – Philips, Brabantse Ontwikkelings Maatschappij, TNO, PME Pension Fund and Invest-NL",
+            "note": "小規模なベンチャーファンドへの共同出資で、中核事業の関係ではありません。",
+            "note_en": "A minor venture-fund co-investment, not a core business relationship."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

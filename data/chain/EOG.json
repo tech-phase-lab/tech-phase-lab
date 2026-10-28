@@ -1,0 +1,118 @@
+{
+  "root": {
+    "ticker": "EOG",
+    "name": "EOGリソーシズ",
+    "cik": 821189,
+    "name_en": "EOG Resources"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "NGC",
+      "ticker": "NGC",
+      "name": "トリニダード・トバゴ国営ガス会社",
+      "sub": "ガス購入先",
+      "sub_en": "Gas purchaser",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "トリニダード産の天然ガスは、同社とその子会社に全量が販売された",
+          "text_en": "All natural gas from EOG's Trinidad operations was sold to this company and its subsidiary",
+          "source": {
+            "label": "EOG Resources 10-K(2025-12-31)",
+            "label_en": "EOG Resources 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/821189/000082118926000054/eog-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "In 2025 and 2024, all natural gas from EOG's Trinidad operations was sold to the National Gas Company of Trinidad and Tobago Limited and its subsidiary."
+          }
+        }
+      ],
+      "name_en": "National Gas Company of Trinidad and Tobago"
+    },
+    {
+      "id": "HERITAGE",
+      "ticker": "Heritage",
+      "name": "ヘリテージ・ペトロリアム",
+      "sub": "原油の販売先",
+      "sub_en": "Crude oil buyer",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "トリニダード産の原油とコンデンセートの販売先になっている",
+          "text_en": "Trinidad crude oil and condensate is sold to this company and/or BP Trinidad and Tobago LLC",
+          "source": {
+            "label": "EOG Resources 10-K(2025-12-31)",
+            "label_en": "EOG Resources 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/821189/000082118926000054/eog-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "In 2025 and 2024, all crude oil and condensate from EOG's Trinidad operations was sold to Heritage Petroleum Company Limited and/or BP Trinidad and Tobago LLC."
+          }
+        }
+      ],
+      "name_en": "Heritage Petroleum Company Limited"
+    },
+    {
+      "id": "BPTT",
+      "ticker": "BPTT",
+      "name": "BPトリニダード・トバゴ",
+      "sub": "原油の販売先",
+      "sub_en": "Crude oil buyer",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "原油とコンデンセートは、ヘリテージ社とBPトリニダード・トバゴの両社に販売される",
+          "text_en": "Crude oil and condensate are sold to both Heritage Petroleum and BP Trinidad and Tobago LLC",
+          "source": {
+            "label": "EOG Resources 10-K(2025-12-31)",
+            "label_en": "EOG Resources 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/821189/000082118926000054/eog-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Crude oil and condensate are sold to both Heritage Petroleum Company Limited and BP Trinidad and Tobago LLC."
+          }
+        }
+      ],
+      "name_en": "BP Trinidad and Tobago LLC"
+    },
+    {
+      "id": "BAPCO",
+      "ticker": "Bapco Energies",
+      "name": "バプコ・エナジーズ",
+      "sub": "バーレーンの提携先",
+      "sub_en": "Bahrain partner",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年2月、子会社がバーレーンのガス探鉱案件で探鉱参加契約を結んだ",
+          "text_en": "In February 2025, an EOG subsidiary signed an exploration participation agreement with Bapco in Bahrain",
+          "source": {
+            "label": "EOG Resources 10-K(2025-12-31)",
+            "label_en": "EOG Resources 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/821189/000082118926000054/eog-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "In February 2025, a subsidiary of EOG signed an exploration participation agreement with Bapco Energies B.S.C. (Closed) (Bapco) to evaluate a gas exploration prospect in the Kingdom of Bahrain."
+          }
+        }
+      ],
+      "name_en": "Bapco Energies"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

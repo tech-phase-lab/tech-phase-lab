@@ -1,0 +1,238 @@
+{
+  "root": {
+    "ticker": "EFOR",
+    "name": "エバーフォース",
+    "cik": 890564,
+    "name_en": "Everforth"
+  },
+  "rows": [
+    {
+      "ja": "提携・顧客",
+      "en": "Partners & customers"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "AMZN",
+      "ticker": "AMZN",
+      "name": "アマゾン・ウェブ・サービス",
+      "sub": "クラウド基盤",
+      "sub_en": "Cloud platform",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ハイパースケーラーとして提携している",
+          "text_en": "It partners with AWS (Amazon Web Services) as a cloud platform provider",
+          "source": {
+            "label": "エバーフォース 10-K(2025-12-31)",
+            "label_en": "Everforth 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/890564/000089056426000013/asgn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "We partner with hyperscalers, such as AWS, Microsoft, and Google; enterprise platforms, including Salesforce, ServiceNow, and Workday; cybersecurity players, such as CrowdStrike, Elastic, SailPoint, and Trellix; and data & AI platforms, such as Databricks and Snowflake."
+          }
+        }
+      ],
+      "name_en": "AWS (Amazon Web Services)"
+    },
+    {
+      "id": "MSFT",
+      "ticker": "MSFT",
+      "name": "マイクロソフト",
+      "sub": "クラウド基盤",
+      "sub_en": "Cloud platform",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ハイパースケーラーとして提携している",
+          "text_en": "It partners with Microsoft as a cloud platform provider",
+          "source": {
+            "label": "エバーフォース 10-K(2025-12-31)",
+            "label_en": "Everforth 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/890564/000089056426000013/asgn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "We partner with hyperscalers, such as AWS, Microsoft, and Google; enterprise platforms, including Salesforce, ServiceNow, and Workday; cybersecurity players, such as CrowdStrike, Elastic, SailPoint, and Trellix; and data & AI platforms, such as Databricks and Snowflake."
+          }
+        }
+      ],
+      "name_en": "Microsoft"
+    },
+    {
+      "id": "GOOGL",
+      "ticker": "GOOGL",
+      "name": "グーグル",
+      "sub": "クラウド基盤",
+      "sub_en": "Cloud platform",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ハイパースケーラーとして提携している",
+          "text_en": "It partners with Google as a cloud platform provider",
+          "source": {
+            "label": "エバーフォース 10-K(2025-12-31)",
+            "label_en": "Everforth 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/890564/000089056426000013/asgn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "We partner with hyperscalers, such as AWS, Microsoft, and Google; enterprise platforms, including Salesforce, ServiceNow, and Workday; cybersecurity players, such as CrowdStrike, Elastic, SailPoint, and Trellix; and data & AI platforms, such as Databricks and Snowflake."
+          }
+        }
+      ],
+      "name_en": "Google"
+    },
+    {
+      "id": "CRM",
+      "ticker": "CRM",
+      "name": "セールスフォース",
+      "sub": "業務ソフト",
+      "sub_en": "Enterprise software",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "企業向けプラットフォームとして提携している",
+          "text_en": "It partners with Salesforce as a enterprise software provider",
+          "source": {
+            "label": "エバーフォース 10-K(2025-12-31)",
+            "label_en": "Everforth 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/890564/000089056426000013/asgn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "We partner with hyperscalers, such as AWS, Microsoft, and Google; enterprise platforms, including Salesforce, ServiceNow, and Workday; cybersecurity players, such as CrowdStrike, Elastic, SailPoint, and Trellix; and data & AI platforms, such as Databricks and Snowflake."
+          }
+        }
+      ],
+      "name_en": "Salesforce"
+    },
+    {
+      "id": "NOW",
+      "ticker": "NOW",
+      "name": "サービスナウ",
+      "sub": "業務ソフト",
+      "sub_en": "Enterprise software",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "企業向けプラットフォームとして提携している",
+          "text_en": "It partners with ServiceNow as a enterprise software provider",
+          "source": {
+            "label": "エバーフォース 10-K(2025-12-31)",
+            "label_en": "Everforth 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/890564/000089056426000013/asgn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "We partner with hyperscalers, such as AWS, Microsoft, and Google; enterprise platforms, including Salesforce, ServiceNow, and Workday; cybersecurity players, such as CrowdStrike, Elastic, SailPoint, and Trellix; and data & AI platforms, such as Databricks and Snowflake."
+          }
+        }
+      ],
+      "name_en": "ServiceNow"
+    },
+    {
+      "id": "WDAY",
+      "ticker": "WDAY",
+      "name": "ワークデイ",
+      "sub": "業務ソフト",
+      "sub_en": "Enterprise software",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "企業向けプラットフォームとして提携している",
+          "text_en": "It partners with Workday as a enterprise software provider",
+          "source": {
+            "label": "エバーフォース 10-K(2025-12-31)",
+            "label_en": "Everforth 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/890564/000089056426000013/asgn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "We partner with hyperscalers, such as AWS, Microsoft, and Google; enterprise platforms, including Salesforce, ServiceNow, and Workday; cybersecurity players, such as CrowdStrike, Elastic, SailPoint, and Trellix; and data & AI platforms, such as Databricks and Snowflake."
+          }
+        }
+      ],
+      "name_en": "Workday"
+    },
+    {
+      "id": "CRWD",
+      "ticker": "CRWD",
+      "name": "クラウドストライク",
+      "sub": "セキュリティ",
+      "sub_en": "Cybersecurity",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "サイバーセキュリティ企業として提携している",
+          "text_en": "It partners with CrowdStrike as a cybersecurity provider",
+          "source": {
+            "label": "エバーフォース 10-K(2025-12-31)",
+            "label_en": "Everforth 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/890564/000089056426000013/asgn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "We partner with hyperscalers, such as AWS, Microsoft, and Google; enterprise platforms, including Salesforce, ServiceNow, and Workday; cybersecurity players, such as CrowdStrike, Elastic, SailPoint, and Trellix; and data & AI platforms, such as Databricks and Snowflake."
+          }
+        }
+      ],
+      "name_en": "CrowdStrike"
+    },
+    {
+      "id": "SNOW",
+      "ticker": "SNOW",
+      "name": "スノーフレイク",
+      "sub": "データ基盤",
+      "sub_en": "Data platform",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "データ・AIプラットフォームとして提携している",
+          "text_en": "It partners with Snowflake as a data platform provider",
+          "source": {
+            "label": "エバーフォース 10-K(2025-12-31)",
+            "label_en": "Everforth 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/890564/000089056426000013/asgn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "We partner with hyperscalers, such as AWS, Microsoft, and Google; enterprise platforms, including Salesforce, ServiceNow, and Workday; cybersecurity players, such as CrowdStrike, Elastic, SailPoint, and Trellix; and data & AI platforms, such as Databricks and Snowflake."
+          }
+        }
+      ],
+      "name_en": "Snowflake"
+    },
+    {
+      "id": "DBX",
+      "ticker": "Databricks",
+      "name": "データブリックス",
+      "sub": "データ基盤",
+      "sub_en": "Data platform",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "データ・AIプラットフォームとして提携している",
+          "text_en": "It partners with Databricks as a data platform provider",
+          "source": {
+            "label": "エバーフォース 10-K(2025-12-31)",
+            "label_en": "Everforth 10-K (fiscal year ended December 31, 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/890564/000089056426000013/asgn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "We partner with hyperscalers, such as AWS, Microsoft, and Google; enterprise platforms, including Salesforce, ServiceNow, and Workday; cybersecurity players, such as CrowdStrike, Elastic, SailPoint, and Trellix; and data & AI platforms, such as Databricks and Snowflake."
+          }
+        }
+      ],
+      "name_en": "Databricks"
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
