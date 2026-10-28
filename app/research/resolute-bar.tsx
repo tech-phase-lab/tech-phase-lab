@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useLayoutEffect, useState, useSyncExternalStore } from "react";
+import { useEffect, useLayoutEffect, useRef, useState, useSyncExternalStore, type CSSProperties } from "react";
 import Link from "next/link";
 import { useResearchLanguage } from "./use-research-language";
 import { signedInFromCookies } from "@/lib/resolute/landing-gate";
@@ -28,6 +28,8 @@ export default function ResoluteBar() {
   const [openedAt] = useState(() => Date.now());
   const shown = barVisible(state, dismissedAt, signedIn, openedAt);
   const [lift, setLift] = useState<number | null>(null);
+  const [notch, setNotch] = useState<{ x: number; y: number; r: number } | null>(null);
+  const bar = useRef<HTMLElement>(null);
 
   // Background refresh: never blocks the bar. A fresh enough answer is left alone.
   useEffect(() => {
@@ -64,7 +66,15 @@ export default function ResoluteBar() {
     if (!shown) return;
     const place = () => {
       const menu = document.querySelector<HTMLElement>("[data-tab]")?.parentElement;
-      if (menu) setLift(Math.round(window.innerHeight - menu.getBoundingClientRect().top + 8));
+      if (!menu) return;
+      const next = Math.round(window.innerHeight - menu.getBoundingClientRect().top + 8);
+      setLift(next);
+      // The round notch is cut around the Search button where it really is: in a browser tab the menu is docked differently
+      // and sits a few pixels off the middle, and a fixed notch left a dark sliver beside the button (owner, Oct 28).
+      const orb = document.querySelector<HTMLElement>("[data-tab] [data-orb]")?.getBoundingClientRect(), self = bar.current;
+      if (!orb || !self) return;
+      const top = window.innerHeight - next - self.offsetHeight;
+      setNotch({ x: Math.round((orb.left + orb.width / 2 - self.getBoundingClientRect().left) * 10) / 10, y: Math.round((orb.top + orb.height / 2 - top) * 10) / 10, r: Math.round(orb.width / 2 + 7) });
     };
     place();
     window.addEventListener("resize", place);
@@ -78,7 +88,8 @@ export default function ResoluteBar() {
   }, [shown]);
 
   if (!shown) return null;
-  return <aside className={styles.bar} style={lift === null ? undefined : { bottom: lift }} aria-label="RESOLUTE">
+  const style = { ...(lift === null ? {} : { bottom: lift }), ...(notch ? { "--notch-x": `${notch.x}px`, "--notch-y": `${notch.y}px`, "--notch-r": `${notch.r}px` } : {}) } as CSSProperties;
+  return <aside ref={bar} className={styles.bar} style={style} aria-label="RESOLUTE">
     <span className={styles.emblem} aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="5" r="2" /><path d="M12 7v14M7 11h10M5 15c0 3 3 5 7 5s7-2 7-5" /></svg></span>
     <span className={styles.text}><b>RESOLUTE</b><small>{ja ? "暴落の夜も、迷わない" : "Steady on the night of a crash"}</small></span>
     <Link href="/resolute" className={styles.open}>{ja ? "開く" : "Open"}</Link>
