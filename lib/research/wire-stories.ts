@@ -35,13 +35,17 @@ const NOT_NEWS = [
   /\b(?:tracking|following|eyeing)\b.{0,50}\bearnings\b|決算を追う|ウォール街が(?:ラリー|反発|続伸|下落|急落)|\bWall Street (?:rallies|rally mode|slides|falls|climbs|stabili[sz]es)\b/i, // other companies' earnings round-ups and market-wide wraps
   /\bearnings preview\b|\b(?:Q[1-4]|quarter(?:ly)?) (?:earnings )?preview\b|\bwhat to (?:expect|watch)\b|\bwhat (?:investors )?should (?:you )?expect\b|\bkey things to watch\b|\b(?:set|slated|scheduled) to (?:report|release|announce)\b.{0,60}\btomorrow\b|\b(?:reports?|releases?) (?:Q[1-4]|\w+ quarter) (?:results|earnings) tomorrow\b|決算[：:].{0,30}(?:注目点|注目すべき点|何を期待|期待すべき|予想される)|決算.{0,40}(?:注目点|注目すべき点|期待すべきか|予想される内容)\s*$|が明日.{0,24}(?:決算|結果)を?発表|決算(?:報告)?プレビュー|^注目の決算[：:]/i, // earnings previews and "what to expect" teasers (owner, Oct 27)
   /\bCVE-\d{4}-\d{4,}\b|\bCVSS\s?\d/i, // vulnerability database entries, not company news (owner, Oct 27)
+  /(?:^|\s)(?:Form|Filing)\s+(?:6-K|8-K|10-Q|10-K|20-F|40-F)(?:\/A)?\b|(?:の|^)フォーム\s?(?:6-K|8-K|10-Q|10-K|20-F|40-F)(?:\/A)?(?![A-Za-z0-9])/i, // a bare SEC form notice ("… Form 6-K: October 28", "…のフォーム10-Q（9月30日分）"), not news (owner, Oct 28)
   /\bweekend trading\b|\bin (?:after|pre)-?(?:hours|market) trading\b.{0,20}\b(?:euros?|yen|pounds?)\b|\btrades? (?:at|for) [\d.,]+ (?:euros?|yen|pounds?)\b|週末取引|[\d.,]+\s?(?:ユーロ|ポンド)で取引/i, // price quotes in a foreign currency while the U.S. market is shut (owner, Oct 26)
 ];
 /** A press-release label glued onto the headline ("2026年10月25日｜… ｜NYSE:BE｜プレスリリース") is not part of it (owner, Oct 26). */
 export function cleanTitle(title: string) {
   return title.replace(/\s*[(（]\s*(?:NYSE|NASDAQ|Nasdaq(?:GS|GM|CM)?|AMEX|NYSEARCA|NYSEAMERICAN|NYSEAM|NYSEMKT|OTC(?:QX|QB)?)\s*[:：]\s*[A-Z.]{1,6}\s*[)）]/g, "").replace(/^\s*(?:20\d\d年\d{1,2}月\d{1,2}日|[A-Z][a-z]{2,8}\.? \d{1,2}, 20\d\d)\s*[|｜]\s*/, "")
     .replace(/\s*[|｜]\s*(?:NYSE|NASDAQ|Nasdaq(?:GS|GM|CM)?|AMEX)\s*[:：]\s*[A-Z.]{1,6}\s*(?:[|｜]\s*(?:プレスリリース|Press Release))?\s*$/, "")
-    .replace(/\s*[|｜]\s*(?:プレスリリース|Press Release)\s*$/, "").replace(/\s*[：:]\s*(?:レポート|報道|report)\s*$/i, "").trim();
+    .replace(/\s*[|｜]\s*(?:プレスリリース|Press Release)\s*$/, "").replace(/\s*[：:]\s*(?:レポート|報道|report)\s*$/i, "")
+    // The wire service's name tacked on the end ("…で上昇（Investing.comより）") is not part of the headline (owner, Oct 28).
+    .replace(/\s*[(（]\s*(?:Investing\.com|Reuters|Bloomberg|MarketWatch|Benzinga|Yahoo Finance|Seeking Alpha|The Motley Fool|TipRanks|Barron['’]?s|ロイター|ブルームバーグ)\s*(?:より|による|報道|via)?\s*[)）]\s*$/i, "")
+    .replace(/\s*[-–—|｜]\s*(?:Investing\.com|Yahoo Finance|MarketWatch|Benzinga|Seeking Alpha|TipRanks)(?:\s*(?:Japan|日本))?\s*$/i, "").trim();
 }
 export const isNotNews = (text: string) => NOT_NEWS.some(pattern => pattern.test(text));
 
@@ -71,7 +75,23 @@ function similar(a: Set<string>, b: Set<string>) {
   return shared / (a.size + b.size - shared) >= SAME_STORY;
 }
 
+// The home screen asks for the same stories on every render (a clock tick, a poll, a page turn): the answer for the same
+// feed object, language and company set is kept, so the screen does the filtering and grouping once (owner, Oct 28: slow home).
+const memo = new WeakMap<object, Map<string, WireStory[]>>();
+const watchedIds = new WeakMap<object, number>();
+let watchedCounter = 0;
 export function wireStories(wire: Record<string, CompanyWireItem[]>, lang: Language, watched?: ReadonlySet<string>): WireStory[] {
+  let byFeed = memo.get(wire);
+  if (!byFeed) { byFeed = new Map(); memo.set(wire, byFeed); }
+  let watchedId = 0;
+  if (watched) { watchedId = watchedIds.get(watched) ?? ++watchedCounter; watchedIds.set(watched, watchedId); }
+  const key = `${lang}:${watchedId}:${watched?.size ?? -1}`;
+  let stories = byFeed.get(key);
+  if (!stories) { stories = buildWireStories(wire, lang, watched); byFeed.set(key, stories); }
+  return stories;
+}
+
+function buildWireStories(wire: Record<string, CompanyWireItem[]>, lang: Language, watched?: ReadonlySet<string>): WireStory[] {
   const ja = lang === "ja";
   const items = Object.entries(wire).flatMap(([ticker, list]) => watched && !watched.has(ticker) ? [] : list.flatMap(item => {
     const title = ja ? (item.titleJa && tidyJapanese(cleanTitle(item.titleJa))) : cleanTitle(item.titleEn);
