@@ -50,6 +50,8 @@ export default function FlashPage({ lang, onReady }: { lang: Language; onReady?:
   const [wire, setWire] = useState<Record<string, CompanyWireItem[]>>({});
   const [failed, setFailed] = useState(false);
   const [checkedAt, setCheckedAt] = useState(0);
+  // The page is shown once the company headlines have answered (or a short grace period passed), so they do not slide in on top afterwards.
+  const [wireSettled, setWireSettled] = useState(false);
   const [unread, setUnread] = useState<ReadonlySet<string>>(new Set());
   const [view, setView] = useState<"all" | "earnings">("all");
   const [page, setPage] = useState(1);
@@ -109,14 +111,16 @@ export default function FlashPage({ lang, onReady }: { lang: Language; onReady?:
         markFresh(wireTracker.current(Object.values(items).flat().map(item => ({ id: `wire:${item.id}`, at: item.publishedAt }))).map(row => row.id));
         setWire(items); setCheckedAt(Date.now());
       } catch { /* keep the previous list */ }
+      finally { if (alive) setWireSettled(true); }
     };
+    const grace = setTimeout(() => setWireSettled(true), 2_500);
     const stop = observePageActivity(() => { void load(); timer ??= setInterval(load, 60_000); }, () => { clearInterval(timer); timer = undefined; });
     void load(); timer = setInterval(load, 60_000);
-    return () => { alive = false; clearInterval(timer); stop(); };
+    return () => { alive = false; clearTimeout(grace); clearInterval(timer); stop(); };
   }, []);
 
   // The page shell shows the shared branded loader until the first feed (or its failure) is known (owner, Oct 20).
-  useEffect(() => { if (feed || failed) onReady?.(); }, [feed, failed, onReady]);
+  useEffect(() => { if ((feed || failed) && wireSettled) onReady?.(); }, [feed, failed, wireSettled, onReady]);
 
   const allRows = flashRows(feed, wire, lang).filter(row => (row.kind === "earnings" || row.tickers.some(ticker => WATCH_TICKERS.has(ticker))) && (view === "all" || row.kind === "earnings"));
   const rows = full ? allRows : freeFlashRows(allRows, checkedAt || Date.now());

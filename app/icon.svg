@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 104 104">
+<style>
+:root{--a:#c6f6e3;--b:#97e8c9;--c:#54c7a0;--edge:#0b1220;--edge-o:.0}
+@media (prefers-color-scheme: light){:root{--a:#3fd1a2;--b:#17ae82;--c:#0b8a66;--edge:#0b1220;--edge-o:0}}
+</style>
+<defs><linearGradient id="g" x1=".15" y1="0" x2=".55" y2="1"><stop offset="0" stop-color="var(--a)"/><stop offset=".4" stop-color="var(--b)"/><stop offset="1" stop-color="var(--c)"/></linearGradient></defs>
+<g fill="url(#g)"><path d="M2 32 72 2v28L2 60Z"/><path d="m27 56 19-8v50l-19-9Z"/><path d="m72 30 30 17v34l-49 21V65l19-9Z"/></g>
+</svg>

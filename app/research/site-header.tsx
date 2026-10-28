@@ -16,9 +16,33 @@ export function planLabel(lang: Language, plan: "free" | "pro" | null, ownerAcco
   return plan === "pro" ? "PRO" : "FREE";
 }
 
+const REFRESHED_KEY = "tech-phase:refreshed-at";
 export function reloadPage() {
+  // Leave a note for the next page, which says "updated" for a moment so a reload can be told from nothing happening (owner, Oct 28).
+  try { sessionStorage.setItem(REFRESHED_KEY, String(Date.now())); } catch { /* storage may be blocked */ }
   // Paint the pressed state before the full document reload.
   window.setTimeout(() => window.location.reload(), 150);
+}
+
+/** "Updating…" while the reload starts, "Updated" on the page that comes back from it. */
+let updatedShown = false, updatedRead = false;
+const updatedListeners = new Set<() => void>();
+function subscribeUpdated(notify: () => void) { updatedListeners.add(notify); return () => { updatedListeners.delete(notify); }; }
+function updatedSnapshot() {
+  if (!updatedRead) {
+    updatedRead = true;
+    try {
+      const at = Number(sessionStorage.getItem(REFRESHED_KEY));
+      sessionStorage.removeItem(REFRESHED_KEY);
+      if (at > 0 && Date.now() - at < 20_000) { updatedShown = true; window.setTimeout(() => { updatedShown = false; updatedListeners.forEach(listener => listener()); }, 2200); }
+    } catch { /* storage may be blocked */ }
+  }
+  return updatedShown;
+}
+function RefreshNote({ updating, ja }: { updating: boolean; ja: boolean }) {
+  const updated = useSyncExternalStore(subscribeUpdated, updatedSnapshot, () => false);
+  if (!updating && !updated) return null;
+  return <div className={styles.refreshNote} role="status" aria-live="polite">{updating ? (ja ? "更新中…" : "Updating…") : (ja ? "更新しました" : "Updated")}</div>;
 }
 
 const RefreshIcon = () => <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.6-5.9M20 4v5h-5" /></svg>;
@@ -101,6 +125,7 @@ export default function SiteHeader({ lang, setLang, nav }: { lang: Language; set
         </button>
       </div>
     </header>
+    <RefreshNote updating={refreshing} ja={ja} />
     {menu && <SiteMenu lang={lang} member={menuMember} ownerAccount={menuOwner} onClose={closeMenu} onRefresh={refresh} onPro={() => pro.toggle(true)} />}
   </>;
 }
