@@ -204,6 +204,8 @@
 }
 @media (prefers-reduced-motion:reduce){.proBtn::before{animation:none;display:none}.rzBtn{animation:none}}
 /* PRO and owner: a little more room between JA/EN and the refresh ring so the two are easier to tap (owner, Oct 21). */
+/* FREE: JA/EN sat too close to the PRO button; 3px more room (owner, Oct 28). PRO and owner keep the room they had next to the reload ring. */
+.header .lang { margin-right:3px; }
 .header[data-plan="pro"] .lang, .header[data-plan="owner"] .lang { margin-right:6px; }
 
 /* First paint before hydration: the last verified owner/PRO state (set by an inline script) shows the gold label and reload ring at once. */

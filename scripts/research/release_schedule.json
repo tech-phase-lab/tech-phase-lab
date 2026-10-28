@@ -174,6 +174,31 @@
       "titleJa": "GE Vernova 決算説明会（2026年Q3）"
     },
     {
+      "id": "vrt-q3-2026-call",
+      "kind": "earnings",
+      "ticker": "VRT",
+      "phase": "call",
+      "at": "2026-10-28T15:00:00.000Z",
+      "titleJa": "Vertiv 決算説明会（2026年Q3）"
+    },
+    {
+      "id": "fomc-2026-10-28",
+      "kind": "economic",
+      "indicator": "fomc",
+      "phase": "release",
+      "at": "2026-10-28T18:00:00.000Z",
+      "titleJa": "FOMC 声明発表（会合最終日）"
+    },
+    {
+      "id": "googl-q3-2026-call-close",
+      "kind": "earnings",
+      "ticker": "GOOGL",
+      "phase": "release",
+      "at": "2026-10-28T20:00:00.000Z",
+      "titleJa": "Alphabet（Google）決算説明会（2026年Q3） 決算（米国市場終了後）",
+      "approximate": true
+    },
+    {
       "id": "msft-fq1-2027-call-close",
       "kind": "earnings",
       "ticker": "MSFT",
@@ -190,6 +215,14 @@
       "at": "2026-10-28T20:00:00.000Z",
       "titleJa": "ServiceNow 決算（米国市場終了後）",
       "approximate": true
+    },
+    {
+      "id": "googl-q3-2026-call",
+      "kind": "earnings",
+      "ticker": "GOOGL",
+      "phase": "call",
+      "at": "2026-10-28T20:30:00.000Z",
+      "titleJa": "Alphabet（Google）決算説明会（2026年Q3）"
     },
     {
       "id": "klac-fq1-2027-call",
@@ -257,6 +290,49 @@
       "titleJa": "Intel 決算説明会（2026年Q3）"
     },
     {
+      "id": "aapl-fq4-2026-call-close",
+      "kind": "earnings",
+      "ticker": "AAPL",
+      "phase": "release",
+      "at": "2026-11-02T21:00:00.000Z",
+      "titleJa": "Apple 決算（米国市場終了後）",
+      "approximate": true
+    },
+    {
+      "id": "pltr-q3-2026-webcast-close",
+      "kind": "earnings",
+      "ticker": "PLTR",
+      "phase": "release",
+      "at": "2026-11-02T21:00:00.000Z",
+      "titleJa": "Palantir 決算（米国市場終了後）",
+      "approximate": true
+    },
+    {
+      "id": "aapl-fq4-2026-call",
+      "kind": "earnings",
+      "ticker": "AAPL",
+      "phase": "call",
+      "at": "2026-11-02T22:00:00.000Z",
+      "titleJa": "Apple 決算説明会（2026年度Q4）"
+    },
+    {
+      "id": "pltr-q3-2026-webcast",
+      "kind": "earnings",
+      "ticker": "PLTR",
+      "phase": "call",
+      "at": "2026-11-02T22:00:00.000Z",
+      "titleJa": "Palantir 決算説明会（2026年Q3）"
+    },
+    {
+      "id": "alab-q3-2026-call-close",
+      "kind": "earnings",
+      "ticker": "ALAB",
+      "phase": "release",
+      "at": "2026-11-03T21:00:00.000Z",
+      "titleJa": "Astera Labs 決算（米国市場終了後）",
+      "approximate": true
+    },
+    {
       "id": "amd-q3-2026-call-close",
       "kind": "earnings",
       "ticker": "AMD",
@@ -273,6 +349,14 @@
       "at": "2026-11-03T21:00:00.000Z",
       "titleJa": "Arista 決算（米国市場終了後）",
       "approximate": true
+    },
+    {
+      "id": "alab-q3-2026-call",
+      "kind": "earnings",
+      "ticker": "ALAB",
+      "phase": "call",
+      "at": "2026-11-03T21:30:00.000Z",
+      "titleJa": "Astera Labs 決算説明会（2026年Q3）"
     },
     {
       "id": "anet-q3-2026-call",
@@ -300,12 +384,73 @@
       "approximate": true
     },
     {
+      "id": "cohr-fq1-2027-call-close",
+      "kind": "earnings",
+      "ticker": "COHR",
+      "phase": "release",
+      "at": "2026-11-04T21:00:00.000Z",
+      "titleJa": "Coherent 決算（米国市場終了後）",
+      "approximate": true
+    },
+    {
+      "id": "qcom-fq4-2026-call-close",
+      "kind": "earnings",
+      "ticker": "QCOM",
+      "phase": "release",
+      "at": "2026-11-04T21:00:00.000Z",
+      "titleJa": "Qualcomm 決算（米国市場終了後）",
+      "approximate": true
+    },
+    {
+      "id": "cohr-fq1-2027-call",
+      "kind": "earnings",
+      "ticker": "COHR",
+      "phase": "call",
+      "at": "2026-11-04T21:30:00.000Z",
+      "titleJa": "Coherent 決算説明会（2027年度Q1）"
+    },
+    {
+      "id": "qcom-fq4-2026-call",
+      "kind": "earnings",
+      "ticker": "QCOM",
+      "phase": "call",
+      "at": "2026-11-04T21:45:00.000Z",
+      "titleJa": "Qualcomm 決算説明会（2026年度Q4）"
+    },
+    {
       "id": "arm-fq2-2027-call",
       "kind": "earnings",
       "ticker": "ARM",
       "phase": "call",
       "at": "2026-11-04T22:00:00.000Z",
       "titleJa": "Arm 決算説明会（2027年度Q2）"
+    },
+    {
+      "id": "aaoi-q3-2026-call-close",
+      "kind": "earnings",
+      "ticker": "AAOI",
+      "phase": "release",
+      "at": "2026-11-05T21:00:00.000Z",
+      "titleJa": "Applied Optoelectronics 決算（米国市場終了後）",
+      "approximate": true
+    },
+    {
+      "id": "ionq-q3-2026-call-close",
+      "kind": "earnings",
+      "ticker": "IONQ",
+      "phase": "release",
+      "at": "2026-11-05T21:00:00.000Z",
+      "titleJa": "IonQ 決算（米国市場終了後）",
+      "approximate": true
+    },
+    {
+      "id": "iren-fq1-2027-call-close",
+      "kind": "earnings",
+      "ticker": "IREN",
+      "phase": "release",
+      "at": "2026-11-05T21:00:00.000Z",
+      "titleJa": "IREN 決算（米国市場終了後）",
+      "approximate": true
     },
     {
       "id": "lite-fq1-2027-call-close",
@@ -315,6 +460,30 @@
       "at": "2026-11-05T21:00:00.000Z",
       "titleJa": "Lumentum 決算（米国市場終了後）",
       "approximate": true
+    },
+    {
+      "id": "aaoi-q3-2026-call",
+      "kind": "earnings",
+      "ticker": "AAOI",
+      "phase": "call",
+      "at": "2026-11-05T21:30:00.000Z",
+      "titleJa": "Applied Optoelectronics 決算説明会（2026年Q3）"
+    },
+    {
+      "id": "ionq-q3-2026-call",
+      "kind": "earnings",
+      "ticker": "IONQ",
+      "phase": "call",
+      "at": "2026-11-05T21:30:00.000Z",
+      "titleJa": "IonQ 決算説明会（2026年Q3）"
+    },
+    {
+      "id": "iren-fq1-2027-call",
+      "kind": "earnings",
+      "ticker": "IREN",
+      "phase": "call",
+      "at": "2026-11-05T22:00:00.000Z",
+      "titleJa": "IREN 決算説明会（2027年度Q1）"
     },
     {
       "id": "lite-fq1-2027-call",
@@ -341,12 +510,54 @@
       "titleJa": "Vistra 決算説明会（2026年Q3）"
     },
     {
+      "id": "ceg-q3-2026-call",
+      "kind": "earnings",
+      "ticker": "CEG",
+      "phase": "call",
+      "at": "2026-11-09T14:00:00.000Z",
+      "titleJa": "Constellation Energy 決算説明会（2026年Q3）"
+    },
+    {
       "id": "cpi-2026-11-10",
       "kind": "economic",
       "indicator": "cpi",
       "phase": "release",
       "at": "2026-11-10T13:30:00.000Z",
       "titleJa": "米国CPI（消費者物価指数）"
+    },
+    {
+      "id": "crwv-q3-2026-call-close",
+      "kind": "earnings",
+      "ticker": "CRWV",
+      "phase": "release",
+      "at": "2026-11-10T21:00:00.000Z",
+      "titleJa": "CoreWeave 決算（米国市場終了後）",
+      "approximate": true
+    },
+    {
+      "id": "crwv-q3-2026-call",
+      "kind": "earnings",
+      "ticker": "CRWV",
+      "phase": "call",
+      "at": "2026-11-10T22:00:00.000Z",
+      "titleJa": "CoreWeave 決算説明会（2026年Q3）"
+    },
+    {
+      "id": "amat-fq4-2026-call-close",
+      "kind": "earnings",
+      "ticker": "AMAT",
+      "phase": "release",
+      "at": "2026-11-12T21:00:00.000Z",
+      "titleJa": "Applied Materials 決算（米国市場終了後）",
+      "approximate": true
+    },
+    {
+      "id": "amat-fq4-2026-call",
+      "kind": "earnings",
+      "ticker": "AMAT",
+      "phase": "call",
+      "at": "2026-11-12T21:30:00.000Z",
+      "titleJa": "Applied Materials 決算説明会（2026年度Q4）"
     },
     {
       "id": "ppi-2026-11-13",

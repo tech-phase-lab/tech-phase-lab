@@ -58,7 +58,7 @@ test("registered schedules are ordered, unique and linked to official sources", 
     assert.ok(Number.isFinite(timestamp) && timestamp >= previous);
     previous = timestamp;
     assert.ok(event.title.ja && event.title.en);
-    assert.ok(["www.bls.gov", "www.bea.gov", "investors.micron.com", "ir.netflix.net", "investor.asml.com", "investor.sandisk.com", "investor.tsmc.com", "investor.lamresearch.com", "ir.kla.com", "www.gevernova.com", "www.adobe.com", "news.microsoft.com", "www.bloomenergy.com", "www.sec.gov", "ir.amd.com", "www.arista.com", "newsroom.arm.com", "investor.lumentum.com", "investor.vistracorp.com", "newsroom.ibm.com", "s21.q4cdn.com", "s205.q4cdn.com", "www.seagate.com", "www.intc.com", "www.aboutamazon.com"].includes(new URL(event.sourceUrl).hostname));
+    assert.ok(["www.bls.gov", "www.bea.gov", "investors.micron.com", "ir.netflix.net", "investor.asml.com", "investor.sandisk.com", "investor.tsmc.com", "investor.lamresearch.com", "ir.kla.com", "www.gevernova.com", "www.adobe.com", "news.microsoft.com", "www.bloomenergy.com", "www.sec.gov", "ir.amd.com", "www.arista.com", "newsroom.arm.com", "investor.lumentum.com", "investor.vistracorp.com", "newsroom.ibm.com", "s21.q4cdn.com", "s205.q4cdn.com", "www.seagate.com", "www.intc.com", "www.aboutamazon.com", "abc.xyz", "investor.apple.com", "investors.palantir.com", "ir.asteralabs.com", "investor.qualcomm.com", "ir.coherent.com", "investors.ionq.com", "investors.ao-inc.com", "iren.com", "investors.constellationenergy.com", "investors.coreweave.com", "ir.appliedmaterials.com", "www.federalreserve.gov"].includes(new URL(event.sourceUrl).hostname));
     if (event.sourceName === "BLS") {
       assert.equal(new Intl.DateTimeFormat("en-GB", { timeZone: event.sourceTimezone, hour: "2-digit", minute: "2-digit" }).format(new Date(event.startsAt)), "08:30");
     }
@@ -188,11 +188,14 @@ test("KLA keeps its date-only results release separate from the exact Pacific we
   assert.match(release.note.en, /only the date is shown/i);
 });
 
-test("FOMC meetings stay date-only until the Federal Reserve publishes clock times", () => {
+test("FOMC: the October meeting has its clock time; the December meeting stays date-only until the Federal Reserve publishes it", () => {
+  const timed = calendarEvents.find((event) => event.id === "fomc-2026-10-28");
+  assert.equal(timed.startsAt, "2026-10-28T14:00:00-04:00");
+  assert.equal(timed.kind, "economic");
   const fomc = dateOnlyEvents.filter((event) => event.id.startsWith("fomc-"));
-  assert.deepEqual(fomc.map((event) => event.date), ["2026-10-28", "2026-12-09"]);
+  assert.deepEqual(fomc.map((event) => event.date), ["2026-12-09"]);
   assert.ok(fomc.every((event) => event.kind === "economic" && !("startsAt" in event)));
-  assert.equal(selectDateOnlyEvents(dateOnlyEvents, "economic", "upcoming", Date.parse("2026-09-23T00:00:00Z")).length, 2);
+  assert.equal(selectDateOnlyEvents(dateOnlyEvents, "economic", "upcoming", Date.parse("2026-09-23T00:00:00Z")).length, 1);
   assert.equal(selectDateOnlyEvents(dateOnlyEvents, "earnings", "2026-10", 0).length, 1);
 });
 

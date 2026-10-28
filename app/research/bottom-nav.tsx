@@ -80,7 +80,7 @@ export default function BottomNav() {
       <span className={styles.glow} aria-hidden="true" style={glow ? { transform: `translateX(${glow.x}px)`, width: glow.w } : { opacity: 0 }} />
       {tabs.map(tab => <Link key={tab.key} data-tab="" href={tab.href} className={tab.key === "search" ? styles.mid : undefined}
         aria-current={tab.active ? "page" : undefined} onClick={event => navigate(event, tab.href)}>
-        {tab.key === "search" ? <span className={styles.orb}>{icons.search}</span> : icons[tab.key]}
+        {tab.key === "search" ? <span className={styles.orb} data-orb="">{icons.search}</span> : icons[tab.key]}
         <span className={styles.label}>{tab.label}</span>
         {tab.key === "alerts" && unread && <span className={styles.live} role="status" aria-label={ja ? "新着あり" : "New alerts"} />}
       </Link>)}
