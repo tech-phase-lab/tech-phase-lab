@@ -1,0 +1,21 @@
+{
+  "name": "youtube-comment-moderator",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22.18"
+  },
+  "scripts": {
+    "start": "node src/run.ts",
+    "typecheck": "tsc --noEmit -p ."
+  },
+  "devDependencies": {
+    "@types/node": "^22",
+    "@types/nodemailer": "^8.0.2",
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "nodemailer": "^10.0.16",
+    "openai": "^7.30.0"
+  }
+}
