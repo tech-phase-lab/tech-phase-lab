@@ -9,6 +9,7 @@ const cached = [
   ["/brand/:path*", keepAWeek],
   ["/intro/screens/:path*", keepAWeek],
   ["/rizel-avatar.webp", keepAWeek],
+  ["/capital-map/:path*", keepAWeek],
   ["/apple-touch-icon.png", keepAWeek],
   ["/tech-phase-192.png", keepAWeek],
   ["/tech-phase-512.png", keepAWeek],

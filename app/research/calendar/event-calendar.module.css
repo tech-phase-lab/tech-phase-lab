@@ -32,3 +32,7 @@
 .publicationNote{margin:20px 0 8px;padding-left:12px;border-left:2px solid var(--line);color:var(--muted);font-size:12px;line-height:1.8;max-width:75ch}
 
 @media(max-width:600px){.displayOptions select{font-size:16px}}
+/* Frame shown until the list is known (a short moment), so nothing appears and then moves. */
+.waiting{height:240px;margin:14px 0;border-radius:10px;background:repeating-linear-gradient(180deg,#172a35 0 52px,transparent 52px 66px);animation:calendarWait 1.5s ease-in-out infinite}
+@keyframes calendarWait{50%{opacity:.55}}
+@media(prefers-reduced-motion:reduce){.waiting{animation:none}}

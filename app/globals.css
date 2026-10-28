@@ -33,3 +33,6 @@ button,
 a {
   -webkit-tap-highlight-color: transparent;
 }
+
+/* No double-tap zoom: two quick taps (for example on reload) must not enlarge the page. */
+html, body { touch-action: manipulation; }

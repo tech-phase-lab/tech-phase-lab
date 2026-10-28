@@ -1,6 +1,9 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import "./geist-fonts.css";
 import "./globals.css";
+
+// The screen never zooms by double tap or pinch: pressing reload twice quickly had enlarged the page (owner, Oct 28).
+export const viewport: Viewport = { width: "device-width", initialScale: 1, maximumScale: 1, userScalable: false };
 
 export const metadata: Metadata = {
   title: "Tech Phase Research Lab",
