@@ -138,3 +138,11 @@ test('a bare SEC form notice is not news, and the wire service tag is trimmed fr
   assert.equal(cleanTitle('GE Vernova stock rises on earnings beat - Investing.com'), 'GE Vernova stock rises on earnings beat');
   assert.equal(cleanTitle('売上は予想を上回る（前年より）'), '売上は予想を上回る（前年より）');
 });
+
+test('the same feed, language and company set gives the same stories without grouping again', () => {
+  const wire = { MU: [item('m1', 'Micron raises its dividend', 'マイクロン増配', '2026-10-17T05:33:00Z')] };
+  const first = wireStories(wire, 'ja', WATCHED);
+  assert.equal(wireStories(wire, 'ja', WATCHED), first);
+  assert.notEqual(wireStories(wire, 'en', WATCHED), first);
+  assert.notEqual(wireStories({ ...wire }, 'ja', WATCHED), first);
+});

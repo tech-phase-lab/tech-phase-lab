@@ -17,6 +17,7 @@ import { useResearchLanguage } from "./use-research-language";
 import styles from "./research.module.css";
 import HomeTools, { HomeHelp } from "./home-tools";
 import ResoluteBar from "./resolute-bar";
+import Deferred from "./deferred";
 import PlanCards from "./plan-cards";
 import FreshnessNotice from "./freshness-notice";
 import HomeToday from "./home-today";
@@ -220,7 +221,7 @@ export default function ResearchDashboard({ events, monitoredCompanies, initialN
           <HomeTools lang={lang} onPro={() => openView("pro")} onWatch={() => openView("companies")} />
           <ResoluteBar />
           <HomeToday lang={lang} />
-          <NewsFeed lang={lang} initialNews={initialNews} />
+          <Deferred fallback={<div aria-busy="true" style={{ minHeight: 420 }} />}><NewsFeed lang={lang} initialNews={initialNews} /></Deferred>
           <HomeHelp lang={lang} />
         </>}
 

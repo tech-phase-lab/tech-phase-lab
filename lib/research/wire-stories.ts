@@ -75,7 +75,23 @@ function similar(a: Set<string>, b: Set<string>) {
   return shared / (a.size + b.size - shared) >= SAME_STORY;
 }
 
+// The home screen asks for the same stories on every render (a clock tick, a poll, a page turn): the answer for the same
+// feed object, language and company set is kept, so the screen does the filtering and grouping once (owner, Oct 28: slow home).
+const memo = new WeakMap<object, Map<string, WireStory[]>>();
+const watchedIds = new WeakMap<object, number>();
+let watchedCounter = 0;
 export function wireStories(wire: Record<string, CompanyWireItem[]>, lang: Language, watched?: ReadonlySet<string>): WireStory[] {
+  let byFeed = memo.get(wire);
+  if (!byFeed) { byFeed = new Map(); memo.set(wire, byFeed); }
+  let watchedId = 0;
+  if (watched) { watchedId = watchedIds.get(watched) ?? ++watchedCounter; watchedIds.set(watched, watchedId); }
+  const key = `${lang}:${watchedId}:${watched?.size ?? -1}`;
+  let stories = byFeed.get(key);
+  if (!stories) { stories = buildWireStories(wire, lang, watched); byFeed.set(key, stories); }
+  return stories;
+}
+
+function buildWireStories(wire: Record<string, CompanyWireItem[]>, lang: Language, watched?: ReadonlySet<string>): WireStory[] {
   const ja = lang === "ja";
   const items = Object.entries(wire).flatMap(([ticker, list]) => watched && !watched.has(ticker) ? [] : list.flatMap(item => {
     const title = ja ? (item.titleJa && tidyJapanese(cleanTitle(item.titleJa))) : cleanTitle(item.titleEn);
