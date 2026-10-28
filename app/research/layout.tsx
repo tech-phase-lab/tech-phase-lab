@@ -13,7 +13,7 @@ import { memberHintBoot } from "@/lib/research/member-hint-boot";
 // Protected APIs verify membership independently; the public shell must not wait for a remote user lookup.
 export const dynamic = "force-dynamic";
 
-export const metadata: Metadata = { appleWebApp: { capable: true, title: "Tech Phase" }, icons: { apple: "/tech-phase-192.png" } };
+export const metadata: Metadata = { appleWebApp: { capable: true, title: "Tech Phase" }, icons: { apple: [{ url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" }] } };
 
 // The shell does no identity lookup before it streams: the member badge is settled by the client check
 // (which never shows FREE before it answers), so opening the app does not wait on the identity service (owner, Oct 21).
