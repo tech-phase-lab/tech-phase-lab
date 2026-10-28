@@ -1,0 +1,92 @@
+name: YouTube comment moderator
+
+on:
+  # 1回の起動で約55分間、1分おきにチェックを続ける。各回は開始時に次の回を予約しておき、
+  # 終わった瞬間に次の回が始まる（リレー方式）。
+  # GitHub の定期実行は30分以上遅れたり止まったりするため、cron はリレーが途切れたときの予備。
+  schedule:
+    - cron: "*/30 * * * *"
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "YouTube を変更せず、通知も送らずにログで確認する"
+        type: boolean
+        default: false
+
+concurrency:
+  group: youtube-comment-moderator
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+  actions: write # 次の回を起動するため
+
+jobs:
+  moderate:
+    # MODERATOR_ENABLED が true のときだけ動く（試運転の dry_run はいつでも可）
+    if: ${{ vars.MODERATOR_ENABLED == 'true' || inputs.dry_run }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 65
+    defaults:
+      run:
+        working-directory: scripts/youtube-moderator
+    steps:
+      # 最初に次の回を予約しておく。同時に動くのは1回分だけなので、次の回はこの回が終わるまで待機し、
+      # 終わった瞬間に始まる（定期実行のような遅れがない）。止めたいときは MODERATOR_ENABLED を true 以外にする
+      - name: Queue next run
+        if: ${{ !inputs.dry_run && vars.MODERATOR_ENABLED == 'true' }}
+        working-directory: .
+        run: gh workflow run youtube-comment-moderator.yml --repo "$GITHUB_REPOSITORY" --ref "$GITHUB_REF_NAME"
+        env:
+          GH_TOKEN: ${{ github.token }}
+
+      # 予約された回でも最新のプログラムで動くよう、予約時点ではなく今のブランチの先頭を取得する
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.ref_name }}
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: scripts/youtube-moderator/package-lock.json
+
+      - run: npm ci --omit=dev
+
+      # 通知済みコメントIDの記録（本文は含まない）を実行間で引き継ぐ
+      - uses: actions/cache/restore@v4
+        with:
+          path: scripts/youtube-moderator/.state
+          key: yt-moderator-state-${{ github.run_id }}
+          restore-keys: yt-moderator-state-
+
+      - name: Moderate held comments
+        run: npm start
+        env:
+          MODERATION_MODE: ${{ vars.MODERATION_MODE || 'suggest' }}
+          NG_WORDS: ${{ vars.NG_WORDS }}
+          OPENAI_MODEL: ${{ vars.OPENAI_MODEL }}
+          # 導入前（2026-10-08 02:20 JST より前）のコメントは審査しない
+          IGNORE_BEFORE: ${{ vars.IGNORE_BEFORE || '2026-10-08T02:20:00+09:00' }}
+          DRY_RUN: ${{ inputs.dry_run && '1' || '' }}
+          # 繰り返しチェックする（試運転の dry_run は1回で終わる）
+          LOOP_MINUTES: ${{ !inputs.dry_run && '55' || '0' }}
+          INTERVAL_MINUTES: "1"
+          YT_CLIENT_ID: ${{ secrets.YT_CLIENT_ID }}
+          YT_CLIENT_SECRET: ${{ secrets.YT_CLIENT_SECRET }}
+          YT_REFRESH_TOKEN: ${{ secrets.YT_REFRESH_TOKEN }}
+          YT_CHANNEL_ID: ${{ secrets.YT_CHANNEL_ID }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          GMAIL_USER: ${{ secrets.GMAIL_USER }}
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+          MAIL_TO: ${{ secrets.MAIL_TO }}
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          LINE_CHANNEL_ACCESS_TOKEN: ${{ secrets.LINE_CHANNEL_ACCESS_TOKEN }}
+          LINE_USER_ID: ${{ secrets.LINE_USER_ID }}
+
+      # 失敗した回でも連続失敗の回数を残すため always()
+      - uses: actions/cache/save@v4
+        if: ${{ always() && hashFiles('scripts/youtube-moderator/.state/state.json') != '' }}
+        with:
+          path: scripts/youtube-moderator/.state
+          key: yt-moderator-state-${{ hashFiles('scripts/youtube-moderator/.state/state.json') }}
