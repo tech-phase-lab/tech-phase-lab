@@ -30,6 +30,26 @@ function initialSnapshot(initialNews?: InitialNewsSnapshot | null) {
   return { data: initialNews.data, time: initialNews.checkedAt, at: new Date(initialNews.checkedAt).toISOString() };
 }
 
+/** Starts the feed as soon as the home page is on screen, so the top strip has its headlines at once instead of waiting for the news list below
+ * (which is drawn a moment later). The list then adopts this snapshot rather than asking again (owner, Oct 29: the strip appeared empty first). */
+export function warmNews() {
+  if (typeof window === "undefined" || recent()) return;
+  void (async () => {
+    try {
+      const started = takeNewsStartup();
+      let payload: GeneralNewsFeed;
+      if (started) { const result = await started; if (result.error) throw new Error("unavailable"); payload = availableNewsPayload(result.data); }
+      else {
+        const response = await fetch("/api/research/news", { cache: "no-store", signal: AbortSignal.timeout(10_000) });
+        if (!response.ok) throw new Error("unavailable");
+        payload = availableNewsPayload(await response.json());
+      }
+      snapshot = { data: payload, at: new Date().toISOString(), time: Date.now() };
+      publishNews(payload);
+    } catch { /* the list asks again when it appears */ }
+  })();
+}
+
 export default function GeneralNewsPanel({ lang, officialOnly = false, generalOnly = false, initialNews }: { lang: Language; officialOnly?: boolean; generalOnly?: boolean; initialNews?: InitialNewsSnapshot | null }) {
   const [fetchedData, setData] = useState<GeneralNewsFeed | null>(() => initialSnapshot(initialNews)?.data ?? null);
   const [failed, setError] = useState(false);
