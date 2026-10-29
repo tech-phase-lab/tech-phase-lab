@@ -124,7 +124,7 @@ test("the fitness score is the average of the two chart points, and ties go to t
 test("genres after the reclassification", () => {
   const of = id => radarGenre(id).tickers;
   assert.deepEqual(of("semis"), ["NVDA", "AMD", "INTC", "QCOM", "AMAT", "LRCX"]);
-  assert.deepEqual(of("memory"), ["MU", "SNDK", "WDC", "STX"]);
+  assert.deepEqual(of("memory"), ["MU", "SNDK", "WDC", "STX", "RMBS", "P"]); // P: Everpure (formerly Pure Storage, PSTG)
   assert.deepEqual(radarGenres.map(genre => genre.id).slice(0, 3), ["ai-cloud", "semis", "memory"]);
   assert.ok(of("network").includes("MRVL") && of("network").includes("AVGO") && of("ai-cloud").includes("ORCL"));
   assert.ok(!of("software").includes("ORCL") && !of("semis").some(t => ["MU", "MRVL", "AVGO"].includes(t)));
