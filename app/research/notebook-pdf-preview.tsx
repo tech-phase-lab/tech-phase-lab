@@ -133,7 +133,7 @@ export default function NotebookPdfPreview({ snapshot, onClose }: { snapshot: Pd
       <button onClick={onClose} aria-label={t("プレビューを閉じる", "Close preview")}><span aria-hidden="true">×</span>{t("閉じる", "Close")}</button>
       <button className={styles.selectPages} aria-pressed={selecting} disabled={!current || sharing} onClick={() => {
         setSelecting(!selecting); changePages(selecting ? null : []);
-      }}>{selecting ? t("全ページに戻す", "Use all pages") : t("ページを選択する", "Select pages")}</button>
+      }}>{selecting ? t("全ページに戻す", "Use all pages") : t("ページを選択", "Select pages")}</button>
       <button className={styles.save} disabled={!exportFile || !ready || failed || selectionError || sharing} onClick={async () => {
         if (!exportFile) return;
         setSharing(true); setSaveError(false);
