@@ -4,6 +4,7 @@ import ResearchToolShell from "../research-tool-shell";
 import { useResearchLanguage } from "../use-research-language";
 import { arrow, radarGenres, zoneName, zoneOf, xPosition, yPosition, type RadarDotPro, type RadarGenreId, type RadarPayload } from "@/lib/research/radar";
 import RadarChart, { fmtCover, fmtPercent } from "./chart";
+import GenrePicker from "./genre-picker";
 import styles from "./radar.module.css";
 
 const growthText = (g: number | null) => g === null ? "売上 —" : Math.abs(g) < 0.5 ? "売上 ±0%" : `売上 ${g > 0 ? "+" : "−"}${Math.abs(g).toFixed(0)}%`;
@@ -47,9 +48,7 @@ export default function RadarScreen({ initial }: { initial: RadarPayload | null 
       <p className={styles.eyebrow}>FINANCIAL RADAR</p>
       <h1>財務レーダー</h1>
       <p className={styles.lead}>稼ぐ力と守る力を、ジャンルごとに1枚で見比べます。点線は前の決算からの動きです。</p>
-      <div className={styles.tabs} role="group" aria-label="ジャンル">
-        {radarGenres.map(item => <button type="button" key={item.id} aria-pressed={item.id === genre} className={item.id === genre ? styles.on : ""} onClick={() => { setGenre(item.id); setSelected(null); }}>{item.ja}</button>)}
-      </div>
+      <GenrePicker lang={lang} value={genre} onChange={id => { setGenre(id); setSelected(null); }} />
       {!radar && failed === genre ? <p className={styles.note} role="alert">数値を取得できませんでした。しばらくしてからもう一度お試しください。</p>
         : !radar ? <section className={styles.card} aria-hidden="true"><div className={styles.skeleton} /></section>
         : <>
@@ -94,7 +93,7 @@ function RankCard({ dot }: { dot: RadarDotPro }) {
       <b>{dot.ticker}</b><span className={`${styles.chip} ${styles[zone]}`}>{zoneName[zone]}</span>
       <em className={g === null || Math.abs(g) < 0.5 ? styles.flat : g > 0 ? styles.up : styles.down}>{growthText(g)}</em>
     </div>
-    <div className={styles.bar}><span>稼ぐ力</span><div><u className={`${styles.fcf} ${dot.ocfMargin < 0 ? styles.negative : ""}`} style={{ width: `${Math.max(3, xPosition(dot.ocfMargin) * 100)}%` }} /></div><strong>{dot.review && <small className={styles.review}>要確認</small>}{fmtPercent(dot.ocfMargin)} <Arrow kind={arrow(dot.ocfMargin, dot.previous?.ocfMargin)} /></strong></div>
+    <div className={styles.bar}><span>稼ぐ力</span><div><u className={`${styles.fcf} ${dot.ocfMargin < 0 ? styles.negative : ""}`} style={{ width: `${Math.max(3, dot.noRevenue ? 0 : xPosition(dot.ocfMargin) * 100)}%` }} /></div><strong>{dot.review && !dot.noRevenue && <small className={styles.review}>要確認</small>}{dot.noRevenue ? "売上なし" : fmtPercent(dot.ocfMargin)} <Arrow kind={dot.noRevenue ? null : arrow(dot.ocfMargin, dot.previous?.ocfMargin)} /></strong></div>
     <div className={styles.bar}><span>守る力</span><div><u className={styles.cover} style={{ width: `${Math.max(3, yPosition(dot.cover) * 100)}%` }} /></div><strong>{fmtCover(dot.cover)} <Arrow kind={arrow(dot.cover, dot.previous?.cover)} /></strong></div>
   </article>;
 }

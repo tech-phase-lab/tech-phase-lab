@@ -25,6 +25,8 @@ export type RadarSnapshot = {
   cover: number;
   /** Revenue growth against the same period a year earlier, in percent; null when that year is not available. */
   revenueGrowth: number | null;
+  /** True for a company with no revenue (not yet selling): earning power cannot be calculated, so it is a stand-in of -1000% and the screen says "no revenue". */
+  noRevenue?: boolean;
 };
 export type RadarFacts = { latest: RadarSnapshot | null; previous: RadarSnapshot | null; reason?: string };
 
@@ -119,13 +121,16 @@ function owedAt(data: CompanyFacts, end: string): number | null {
   return noRecentBorrowing(data, end) ? 0 : null;
 }
 
+export const NO_REVENUE_MARGIN = -1000;
 function snapshotAt(data: CompanyFacts, end: string): RadarSnapshot | null {
   const cash = cashAt(data, end), owed = owedAt(data, end);
   if (cash === null || cash < 0 || owed === null || owed < 0) return null;
   const operating = twelveMonths(data, OPERATING_CASH, end), capex = twelveMonths(data, CAPEX, end);
   if (!operating || !capex || operating.basis !== capex.basis) return null;
+  let sawRevenue = false;
   for (const tag of REVENUE) {
     const now = twelveMonths(data, [tag], end);
+    if (now && now.value > 0) sawRevenue = true;
     // Revenue and cash flow must cover exactly the same twelve months: both the fiscal year, or both the trailing four quarters.
     if (!now || now.value <= 0 || now.basis !== operating.basis) continue;
     const before = twelveMonths(data, [tag], shift(end, -364));
@@ -137,6 +142,8 @@ function snapshotAt(data: CompanyFacts, end: string): RadarSnapshot | null {
       revenueGrowth: before && before.value > 0 ? (now.value / before.value - 1) * 100 : null,
     };
   }
+  // No revenue for these twelve months (not selling yet, or too little history to add up a year): the balance sheet is still shown, earning power is not.
+  if (!sawRevenue) return { end, basis: operating.basis, revenue: 0, ocfMargin: NO_REVENUE_MARGIN, fcfMargin: NO_REVENUE_MARGIN, cover: owed > 0 ? cash / owed : Number.POSITIVE_INFINITY, revenueGrowth: null, noRevenue: true };
   return null;
 }
 

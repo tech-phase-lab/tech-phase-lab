@@ -29,9 +29,26 @@ export function weekLabel(now: number, lang: Language): string {
   return `${fmt(from)}〜${fmt(to)}`;
 }
 
-export type NotebookEarnings = { ticker: string; title: string; at: string };
+/** Mon-Fri of the week shown, as "10/26 – 10/30" (Japan time). `weeksBack` 0 is the week the notebook opens on. */
+export function weekRangeLabel(now: number, weeksBack: number): string {
+  const { from } = recapWindow(now - weeksBack * 7 * DAY_MS);
+  const fmt = (value: number) => new Intl.DateTimeFormat("en-US", { timeZone: "Asia/Tokyo", month: "numeric", day: "numeric" }).format(value);
+  return `${fmt(from + 12 * 3_600_000)} – ${fmt(from + 4 * DAY_MS + 12 * 3_600_000)}`;
+}
+
+/** A headline about an investment firm buying or selling shares (a fund adding to a stake, a manager trimming one).
+ * Judged from the wording, as the feed carries no such category. */
+export function isInstitutionalTrade(title: string): boolean {
+  const firm = /(機関投資家|ブラックロック|バンガード|ステート・ストリート|フィデリティ|ヘッジファンド|ファンド|投資顧問|運用会社|資産運用|キャピタル|マネジメント|アドバイザーズ|パートナーズ|ウェルス|投資会社|信託)/;
+  const trade = /(買い増|買い付け|買い越|買った|買う|購入|取得|売却|売った|売り越|売り出|削減|保有を|保有株|持ち株|持株|株式を|株を)/;
+  const firmEn = /\b(Capital|Management|Advisors?|Partners|Wealth|Investments?|Asset|Fund|Trust|Holdings|LLC|LP|Securities)\b/;
+  const tradeEn = /\b(acquires?|acquired|buys?|bought|sells?|sold|purchases?|purchased|boosts?|lifts?|raises?|trims?|cuts?|lowers?|reduces?|adds?|increases?|decreases?|invests?|takes?)\b.*\b(shares?|stake|position|holdings?)\b/i;
+  return (firm.test(title) && trade.test(title)) || (firmEn.test(title) && tradeEn.test(title));
+}
+
+export type NotebookEarnings = { ticker: string; title: string; at: string; facts: string[] };
 export type NotebookTarget = { ticker: string; firm: string; previous: number; latest: number; at: string };
-export type NotebookNews = { ticker: string; title: string; at: string };
+export type NotebookNews = { ticker: string; title: string; at: string; /** An investment firm buying or selling shares: shown as one line per day. */ institutional: boolean };
 export type Notebook = { since: number; previous: boolean; earnings: NotebookEarnings[]; targets: NotebookTarget[]; news: NotebookNews[] };
 
 export function buildNotebook(input: {
@@ -46,12 +63,12 @@ export function buildNotebook(input: {
   const earnings = new Map<string, NotebookEarnings>();
   for (const row of input.rows) {
     if (row.kind !== "earnings" || !inWeek(flashInstant(row))) continue;
-    for (const ticker of row.tickers) if (mine.has(ticker) && !earnings.has(ticker)) earnings.set(ticker, { ticker, title: row.title, at: row.at });
+    for (const ticker of row.tickers) if (mine.has(ticker) && !earnings.has(ticker)) earnings.set(ticker, { ticker, title: row.title, at: row.at, facts: row.facts ?? [] });
   }
   // A result the feed has not reached yet is still on the calendar once its time has passed.
   for (const event of input.events) {
     if (event.kind !== "earnings" || !event.ticker || !mine.has(event.ticker) || earnings.has(event.ticker)) continue;
-    if (inWeek(Date.parse(event.startsAt))) earnings.set(event.ticker, { ticker: event.ticker, title: event.title[lang], at: event.startsAt });
+    if (inWeek(Date.parse(event.startsAt))) earnings.set(event.ticker, { ticker: event.ticker, title: event.title[lang], at: event.startsAt, facts: [] });
   }
 
   const targets = input.targets
@@ -61,7 +78,7 @@ export function buildNotebook(input: {
 
   const news = input.rows
     .filter(row => row.kind === "news" && inWeek(flashInstant(row)))
-    .flatMap(row => row.tickers.filter(ticker => mine.has(ticker)).map(ticker => ({ ticker, title: row.title, at: row.at })))
+    .flatMap(row => row.tickers.filter(ticker => mine.has(ticker)).map(ticker => ({ ticker, title: row.title, at: row.at, institutional: isInstitutionalTrade(row.title) })))
     .sort((a, b) => Date.parse(b.at) - Date.parse(a.at));
 
   return { since, previous, earnings: [...earnings.values()].sort((a, b) => Date.parse(b.at) - Date.parse(a.at)), targets, news };

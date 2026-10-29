@@ -1796,3 +1796,60 @@
 
 .legalLinks { display:flex; flex-wrap:wrap; justify-content:center; gap:6px 22px; margin-top:12px; font-size:12px; }
 .legalLinks a { color:var(--muted,#8a95a3); text-decoration:underline; text-underline-offset:3px; }
+
+/* ---- 保存したリサーチ / 記事選び / 記事ページ (Oct 29 design) ---- */
+.ribbon { position:absolute; top:-6px; right:18px; width:22px; height:46px; background:#b8975a; clip-path:polygon(0 0,100% 0,100% 100%,50% 76%,0 100%); }
+.savedHeader { position:relative; flex-direction:column; align-items:flex-start; justify-content:flex-start; gap:16px; padding:8px 0 0; margin-bottom:22px; border-bottom:0; background:none; }
+.savedEyebrow { color:#d9b56a; font:600 10.5px var(--font-geist-mono),"JetBrains Mono",monospace; letter-spacing:.3em; }
+.savedHeader h1 { margin:10px 0 8px; font:600 28px "Noto Serif JP","Hiragino Mincho ProN","Yu Mincho",serif; letter-spacing:.06em; line-height:1.35; color:#f2f5f8; }
+.savedHeader p { margin:0; font-size:13px; line-height:1.7; color:#8697ab; }
+.savedCount { display:inline-flex; align-items:center; gap:8px; padding:8px 16px; border:1px solid #243244; border-left:1px solid #243244; border-radius:999px; color:#9fe8c8; }
+.savedCount svg { width:16px; }
+.savedCount strong { font:600 15px var(--font-geist-mono),"JetBrains Mono",monospace; line-height:1.2; color:#9fe8c8; }
+.savedCount span { grid-column:auto; text-align:left; color:#cfd8e2; font-size:13px; }
+.savedImport summary { display:flex; align-items:center; gap:8px; list-style:none; font-size:12.5px; color:#7d8ca0; }
+.savedImport summary::-webkit-details-marker { display:none; }
+.savedImport summary::before { content:"▶"; font-size:9px; }
+.savedImport[open] summary::before { content:"▼"; }
+.savedWorkspace .researchGrid:has(.savedEmpty) { grid-template-columns:1fr; }
+
+.pickHeader { margin:0 0 18px; }
+.pickBar { display:flex; align-items:center; justify-content:space-between; margin-bottom:22px; }
+.pickBar button { padding:6px 0; border:0; background:none; color:#8697ab; font:inherit; font-size:14px; cursor:pointer; }
+.pickBar span { font:11px var(--font-geist-mono),"JetBrains Mono",monospace; color:#6f8097; }
+.pickEyebrow { display:block; font:600 10.5px var(--font-geist-mono),"JetBrains Mono",monospace; letter-spacing:.3em; color:#d9b56a; }
+.pickHeader h1 { margin:10px 0 8px; font:600 24px "Noto Serif JP","Hiragino Mincho ProN","Yu Mincho",serif; letter-spacing:.05em; line-height:1.4; color:#f2f5f8; }
+.pickHeader p { margin:0; font-size:13px; color:#8697ab; }
+.pickChips { display:flex; gap:8px; margin:0 0 14px; padding:2px 2px 6px; overflow-x:auto; scrollbar-width:none; }
+.pickChips::-webkit-scrollbar { display:none; }
+.pickChips button { flex:none; padding:9px 18px; border:1px solid #243244; border-radius:999px; background:transparent; color:#aab6c4; font:inherit; font-size:14px; cursor:pointer; white-space:nowrap; }
+.pickChips button[aria-pressed=true] { border-color:#d9b56a; background:rgba(217,181,106,.07); color:#f1e4c4; }
+.pickCard { display:grid; grid-template-columns:minmax(0,1fr) 40px; align-items:center; gap:12px; padding:14px 14px 14px 16px; border:1px solid #1e2a3a; border-radius:16px; background:#0e1520; }
+.pickSaved { border-color:#2c5a4a; }
+.pickOpen { display:block; min-width:0; padding:0; border:0; background:none; color:inherit; font:inherit; text-align:left; cursor:pointer; }
+.pickTop { display:flex; align-items:center; gap:10px; }
+.pickTop b { font:700 14px var(--font-geist-mono),"JetBrains Mono",monospace; letter-spacing:.03em; color:#f2f5f8; }
+.pickTag { padding:1px 10px; border:1px solid; border-radius:9px; font-size:11.5px; font-weight:600; }
+.tagOfficial { color:#d9b56a; border-color:rgba(217,181,106,.5); background:rgba(217,181,106,.09); }
+.tagNews { color:#7ad8ab; border-color:rgba(122,216,171,.4); background:rgba(122,216,171,.08); }
+.pickOpen h3 { margin:10px 0 8px; font-size:13.5px; font-weight:500; line-height:1.65; color:#e8edf3; overflow-wrap:anywhere; }
+.pickOpen small { display:block; font:10.5px var(--font-geist-mono),"JetBrains Mono",monospace; color:#5d6c80; }
+.pickSave { display:grid; place-items:center; width:40px; height:40px; padding:0; border:1px solid #25344a; border-radius:13px; background:transparent; color:#8697ab; cursor:pointer; }
+.pickSave svg { width:18px; height:18px; }
+.pickSave[aria-pressed=true] { border-color:transparent; background:#9fe8c8; color:#05281d; }
+.pickOpen:focus-visible, .pickSave:focus-visible, .pickChips button:focus-visible, .pickBar button:focus-visible { outline:2px solid #5de0b0; outline-offset:3px; }
+.savedToast { position:fixed; z-index:70; left:50%; transform:translateX(-50%); bottom:calc(98px + env(safe-area-inset-bottom)); display:flex; align-items:center; gap:12px; box-sizing:border-box; width:min(560px,calc(100vw - 32px)); height:54px; padding:0 18px; border:1px solid #2c5a4a; border-radius:16px; background:#0b1a17; color:#e8edf3; font-size:14px; box-shadow:0 10px 30px rgba(0,0,0,.5); }
+.savedToast svg { width:18px; flex:none; color:#5de0b0; }
+.savedToast span { flex:1; }
+.savedToast button { flex:none; border:0; background:none; color:#9fe8c8; font:inherit; font-size:14px; font-weight:700; cursor:pointer; }
+
+.articleSaveBar { flex-wrap:nowrap; justify-content:space-between; margin-bottom:14px; }
+.app .backToSaved, .app .articleSaveBar .backToSaved { gap:6px; min-height:44px; padding:4px 0; color:#8697ab; font-size:15px; }
+.articleSaveBar .articleSaveButton, .articleSaveBar .savedMark { margin-left:auto; }
+.articleSaveButton { min-height:42px; padding:0 18px; border:1px solid #2c5a4a; border-radius:13px; background:#0f1d21; color:#bfeedb; box-shadow:none; }
+.articleSaveButton:hover { background:#13262b; }
+.articleSaveButton:active { box-shadow:none; }
+.articleSaveButton[aria-pressed=true] { width:auto; }
+.savedMark { display:inline-flex; align-items:center; gap:8px; min-height:44px; padding:0; border:0; background:none; color:#9fe8c8; font:inherit; font-size:15px; font-weight:600; cursor:pointer; }
+.savedMark svg { width:18px; height:18px; }
+span.savedMark { cursor:default; }
