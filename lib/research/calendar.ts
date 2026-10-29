@@ -333,6 +333,14 @@ export function selectDateOnlyEarnings(period: string, now: number) {
 
 // Confirmed official releases, separate from scheduled future events.
 export const economicResults = [{
+  id: "fomc-2026-10", title: { ja: "FOMC 政策金利の発表（10月会合）", en: "FOMC rate decision (October 2026)" },
+  sourceName: "Federal Reserve", releasedAt: "2026-10-28T14:00:00-04:00",
+  result: { ja: "政策金利を据え置き（誘導目標レンジ3.75〜4.00%）。採決は10対2", en: "Target range held at 3.75%-4.00%; vote 10-2" },
+  detail: { ja: "クック理事とハマック・クリーブランド連銀総裁が、0.25ポイントの利上げを主張して反対。声明は「インフレ率は高止まりしている」と指摘。ウォーシュ議長は会見で、2027年から会合の回数を減らすと表明。複数の報道（CNBC、Fox Business、Advisor Perspectives）で確認。連邦準備制度の声明原文との照合は未実施です。",
+    en: "Governor Cook and Cleveland Fed President Hammack dissented, preferring a quarter-point hike. The statement says inflation remains elevated. Chair Warsh said the number of meetings will be reduced from 2027. Confirmed in several press reports (CNBC, Fox Business, Advisor Perspectives); not yet checked against the Federal Reserve's own statement text." },
+  sourceUrl: "https://www.federalreserve.gov/newsevents/pressreleases.htm",
+  verifiedOn: "2026-10-29",
+}, {
   id: "jobs-2026-09", title: { ja: "米国雇用統計（9月）", en: "U.S. employment report (September 2026)" },
   sourceName: "BLS", releasedAt: "2026-10-02T08:30:00-04:00",
   result: { ja: "非農業部門雇用者数 +29,000人／失業率 4.2%", en: "Nonfarm payrolls +29,000; unemployment rate 4.2%" },

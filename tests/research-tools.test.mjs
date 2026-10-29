@@ -285,3 +285,12 @@ test("IBM call uses the official Eastern time without inventing a release time",
   assert.equal(ibm.afterClose, undefined);
   assert.equal(calendarEvents.filter(event => event.ticker === "IBM").length, 1);
 });
+
+test("the FOMC decision of Oct 28 is in the results and takes the place of its upcoming row (owner, Oct 29)", () => {
+  const result = economicResults.find(event => event.id === "fomc-2026-10");
+  assert.ok(result && /据え置き/.test(result.result.ja) && /3\.75/.test(result.result.en));
+  const upcoming = calendarEvents.find(event => event.id === "fomc-2026-10-28");
+  // The calendar hides a row whose result is posted: same indicator key and within 36 hours.
+  assert.equal(/^[a-z]+/.exec(result.id)[0], /^[a-z]+/.exec(upcoming.id)[0]);
+  assert.ok(Math.abs(Date.parse(result.releasedAt) - Date.parse(upcoming.startsAt)) <= 36 * 3_600_000);
+});

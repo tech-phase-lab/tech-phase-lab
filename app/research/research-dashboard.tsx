@@ -23,6 +23,7 @@ import FreshnessNotice from "./freshness-notice";
 import HomeToday from "./home-today";
 import type { InitialNewsSnapshot } from "@/lib/research/general-news";
 import NewsFeed from "./news/news-feed";
+import { warmNews } from "./news/general-news-panel";
 import ResearchPulse from "./research-pulse";
 import HomeHero from "./home-hero";
 import HomeSidebar from "./home-sidebar";
@@ -72,6 +73,7 @@ export default function ResearchDashboard({ events, monitoredCompanies, initialN
   const saved = collection.document.saved;
   const t = (ja: string, en: string) => lang === "ja" ? ja : en;
 
+  useEffect(() => { if (tab === "home") warmNews(); }, [tab]);
   useEffect(() => {
     const syncHash = () => {
       const next = researchViewFromHash(effectiveHash());
