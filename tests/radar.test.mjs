@@ -11,15 +11,16 @@ test("genres list unique tickers", () => {
 });
 
 test("ticks are evenly spaced and values beyond the range stop at the edge", () => {
-  const xs = [-40, -20, 0, 20, 40, 60].map(xPosition), ys = [0.1, 0.25, 0.5, 1, 2, 4].map(yPosition);
+  const xs = [-40, -20, 0, 20, 40, 60].map(xPosition), ys = [0.1, 0.25, 0.5, 1, 2, 4, 10].map(yPosition);
   for (const [i, x] of xs.entries()) assert.ok(Math.abs(x - i / 5) < 1e-9);
-  assert.equal(ys[0], 0); assert.equal(ys[5], 1);
+  assert.equal(ys[0], 0); assert.equal(ys[6], 1);
   for (let i = 1; i < ys.length; i++) assert.ok(ys[i] > ys[i - 1]);
-  const gaps = ys.slice(2).map((y, i) => y - ys[i + 1]);
+  // 0.5 → 1 → 2 → 4 are doublings: the same distance each
+  const gaps = ys.slice(2, 6).map((y, i) => ys[i + 3] - y).slice(0, 3);
   for (const g of gaps) assert.ok(Math.abs(g - gaps[0]) < 1e-9);
   assert.equal(xPosition(-1500), 0); assert.equal(xPosition(300), 1);
   assert.equal(yPosition(0.001), 0); assert.equal(yPosition(1000), 1); assert.equal(yPosition(Number.POSITIVE_INFINITY), 1);
-  assert.equal(isBeyond(-180, 1), true); assert.equal(isBeyond(-35, 1), false); assert.equal(isBeyond(10, 44), true);
+  assert.equal(isBeyond(-180, 1), true); assert.equal(isBeyond(-35, 1), false); assert.equal(isBeyond(10, 44), true); assert.equal(isBeyond(10, 5.74), false); assert.equal(isBeyond(10, 12), true);
 });
 
 test("a dot stopped at the edge shows its real value beside it", () => {
@@ -80,7 +81,7 @@ test("a dot without a year-on-year comparison is hollow and takes its colour fro
   assert.deepEqual([dot(12, 3e9).up, dot(12, 3e9).tone], [true, "up"]);   // the year-on-year figure wins
 });
 
-test("labels sit beside their own dot; crowded ones move up or down and are joined to the dot", () => {
+test("labels stay clear of the dots and of each other; crowded ones are joined to their dot by a line", () => {
   const bounds = { left: 0, top: 0, right: 300, bottom: 300 };
   const inputs = [["A", 100, 100], ["B", 106, 104], ["C", 112, 98], ["D", 104, 112], ["E", 290, 20], ["F", 10, 290]].map(([id, x, y]) => ({ id, x, y, r: 6, w: 34 }));
   const boxes = placeLabels(inputs, bounds);
@@ -94,9 +95,9 @@ test("labels sit beside their own dot; crowded ones move up or down and are join
     assert.ok(box.x >= 0 && box.y >= 0 && box.x + box.w <= 300 && box.y + box.h <= 300);
     const nx = Math.min(Math.max(input.x, box.x), box.x + box.w), ny = Math.min(Math.max(input.y, box.y), box.y + box.h);
     assert.ok(Math.hypot(nx - input.x, ny - input.y) >= input.r, `${input.id} label covers its dot`);
-    // beside the dot: the label's vertical span stays within a few lines of the dot, and it is at its left or right
-    assert.ok(box.x >= input.x + input.r || box.x + box.w <= input.x - input.r, `${input.id} not beside its dot`);
-    assert.equal(box.shifted, Math.abs(box.y + box.h / 2 - input.y) > 1);
+    // near its own dot (a crowded one may sit above or below, further out)
+    assert.ok(Math.hypot(nx - input.x, ny - input.y) < 60, `${input.id} too far from its dot`);
+    for (const other of inputs) if (other !== input) assert.ok(Math.hypot(Math.min(Math.max(other.x, box.x), box.x + box.w) - other.x, Math.min(Math.max(other.y, box.y), box.y + box.h) - other.y) >= other.r, `${input.id} covers ${other.id}`);
   }
   assert.equal(boxes.E.shifted, false);   // alone: right beside, no line
   assert.ok(Object.values(boxes).some(box => box.shifted)); // the crowd needed lines
@@ -112,13 +113,13 @@ test("labels keep clear of the zone names", () => {
 
 test("the fitness score is the average of the two chart points, and ties go to the stronger staying power", () => {
   assert.equal(earningScore(-40), 0); assert.equal(earningScore(60), 100); assert.equal(earningScore(10), 50); assert.equal(earningScore(297), 100); assert.equal(earningScore(-90), 0);
-  assert.equal(stayingScore(0.1), 0); assert.ok(Math.abs(stayingScore(4) - 100) < 1e-9); assert.equal(stayingScore(5.74), 100); assert.equal(stayingScore(0.06), 0); assert.equal(stayingScore(1000), 100);
-  assert.ok(Math.abs(fitnessScore(10, 4) - 75) < 1e-9);
-  // A: 90 and 62.4; B: 80 and 92.2; C: 70 and 81.2; D: 50 and 100 (a cover beyond the edge counts as the edge)
-  assert.deepEqual(rankByScore([{ ticker: "A", ocfMargin: 50, cover: 1 }, { ticker: "B", ocfMargin: 40, cover: 3 }, { ticker: "C", ocfMargin: 30, cover: 2 }, { ticker: "D", ocfMargin: 10, cover: 1000 }]), ["B", "A", "C", "D"]);
-  // same score: 60/0.1 and 20/4 are both 30 points; the higher staying power is placed above
-  assert.deepEqual(rankByScore([{ ticker: "A", ocfMargin: 20, cover: 4 }, { ticker: "B", ocfMargin: 60, cover: 0.1 }]), ["A", "B"]);
-  assert.deepEqual(rankByScore([{ ticker: "B", ocfMargin: 60, cover: 0.1 }, { ticker: "A", ocfMargin: 20, cover: 4 }]), ["A", "B"]);
+  assert.equal(stayingScore(0.1), 0); assert.ok(Math.abs(stayingScore(10) - 100) < 1e-9); assert.ok(Math.abs(stayingScore(1) - 50) < 1e-9); assert.equal(stayingScore(0.06), 0); assert.equal(stayingScore(1000), 100);
+  assert.ok(Math.abs(fitnessScore(10, 1) - 50) < 1e-9);
+  // A: 90 and 50; B: 80 and 73.8; C: 70 and 65.1; D: 50 and 100 (a cover beyond the edge counts as the edge)
+  assert.deepEqual(rankByScore([{ ticker: "A", ocfMargin: 50, cover: 1 }, { ticker: "B", ocfMargin: 40, cover: 3 }, { ticker: "C", ocfMargin: 30, cover: 2 }, { ticker: "D", ocfMargin: 10, cover: 1000 }]), ["B", "D", "A", "C"]);
+  // same score: 10%/1x and 60%/0.1x are both 50 points; the higher staying power is placed above
+  assert.deepEqual(rankByScore([{ ticker: "A", ocfMargin: 10, cover: 1 }, { ticker: "B", ocfMargin: 60, cover: 0.1 }]), ["A", "B"]);
+  assert.deepEqual(rankByScore([{ ticker: "B", ocfMargin: 60, cover: 0.1 }, { ticker: "A", ocfMargin: 10, cover: 1 }]), ["A", "B"]);
 });
 
 test("genres after the reclassification", () => {
@@ -154,7 +155,8 @@ test("a company with no revenue sits at the left edge, says so, and stays out of
 test("arrows point the way a dot was stopped", () => {
   assert.deepEqual(beyondDirections(297, 2), { left: false, right: true, up: false, down: false });
   assert.deepEqual(beyondDirections(-60, 0.06), { left: true, right: false, up: false, down: true });
-  assert.deepEqual(beyondDirections(10, 5.74), { left: false, right: false, up: true, down: false });
+  assert.deepEqual(beyondDirections(10, 23.69), { left: false, right: false, up: true, down: false });
+  assert.deepEqual(beyondDirections(10, 5.74), { left: false, right: false, up: false, down: false });
   assert.deepEqual(beyondDirections(10, 1), { left: false, right: false, up: false, down: false });
 });
 

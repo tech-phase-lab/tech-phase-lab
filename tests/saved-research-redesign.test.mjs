@@ -34,3 +34,9 @@ test("the writing sheet and the PDF carry the parts the design names", () => {
   for (const layout of ["meta", "company", "title", "facts", "change", "section", "metrics"]) assert.ok(walker.includes(`layout === "${layout}"`), layout);
   for (const layout of ["meta", "company", "title", "facts", "change", "section", "metrics"]) assert.ok(dashboard.includes(`data-pdf="${layout}"`), layout);
 });
+
+test("the printed page leaves out source numbers and the comparison basis, and keeps the date", () => {
+  assert.match(walker, /A" && \/\^\\\[\\d\+\\\]\$\/\.test\(text\(node\)\)\) return;/);
+  assert.ok(walker.includes("(発表日|取得日|Announced|Detected)"));
+  assert.doesNotMatch(walker, /比較の基準/);
+});

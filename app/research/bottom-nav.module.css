@@ -9,7 +9,7 @@
     bottom:calc(10px + env(safe-area-inset-bottom));
   }
   .bar {
-    position:relative; display:grid; grid-template-columns:1fr 1fr 84px 1fr 1fr; align-items:end;
+    position:relative; display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr) 84px minmax(0,1fr) minmax(0,1fr); align-items:end;
     padding:8px 6px 10px; border-radius:22px;
     background:linear-gradient(180deg,rgba(24,36,48,.92),rgba(13,20,28,.96));
     -webkit-backdrop-filter:blur(14px); backdrop-filter:blur(14px);
@@ -77,5 +77,5 @@
 @media (max-width:760px) { :global(body:has(input:focus,textarea:focus,[contenteditable="true"]:focus)) .dock { display:none; } }
 
 /* Keep the full watchlist name readable within the phone dock. */
-@media(max-width:760px){.bar{grid-template-columns:minmax(0,1fr) minmax(0,1fr) 84px minmax(0,1.3fr) minmax(0,1fr)}.bar a[href="/research/watchlist"] .label{font-size:10px;letter-spacing:0}}
+@media(max-width:760px){.bar{grid-template-columns:minmax(0,1fr) minmax(0,1fr) 84px minmax(0,1fr) minmax(0,1fr)}.bar a[href="/research/watchlist"] .label{font-size:10px;letter-spacing:0}}
 @media(max-width:380px){.bar a[href="/research/watchlist"] .label{font-size:9px}}
