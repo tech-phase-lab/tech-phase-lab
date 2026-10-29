@@ -18,6 +18,7 @@ import { quoteFreshness, freshnessLabel, quoteTimeText } from "@/lib/research/wa
 import { useQuoteClock } from "./use-quote-clock";
 import StockLogo from "./stock-logo";
 import ListWheel from "./list-wheel";
+import EmptyWatchlist from "./empty-watchlist";
 import { useWatchlistSectors } from "./use-watchlist-sectors";
 import { watchlistSector } from "@/lib/research/watchlist-sector";
 import { formatAlertPrice, upsertPriceAlert } from "@/lib/research/price-alert-settings";
@@ -220,7 +221,7 @@ export default function Watchlist({ companies, quotes = {} }: { companies: Compa
           <div className={styles.attribution}>{Object.keys(displayedQuotes).length > 0 ? <>{t("提供：", "Data: ")}<a href="https://twelvedata.com" target="_blank" rel="noopener">Twelve Data</a></> : <span>{t("提供予定：Twelve Data", "Planned data provider: Twelve Data")}</span>}</div>
         </div>
 
-      </> : <div className={styles.empty}><span aria-hidden="true" className={styles.emptyStar}>☆</span><h2>{t("いつもの銘柄を、ひとつの画面に。", "Your stocks, together.")}</h2><p>{t("上の検索欄から追加できます", "Add a stock using the search above")}</p></div>}
+      </> : <EmptyWatchlist lang={lang} disabled={!editable || listFull} listName={list.name || t(`マイリスト${slots.indexOf(list) + 1}`, `My list ${slots.indexOf(list) + 1}`)} onAdd={ticker => { add(ticker); }} />}
 
     </div>
   </ResearchToolShell></WatchlistFrame>;

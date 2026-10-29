@@ -4,7 +4,7 @@ import type { RadarFacts } from "./radar-facts.ts";
 export const radarGenres = [
   { id: "ai-cloud", ja: "AIクラウド", tickers: ["CRWV", "NBIS", "IREN", "APLD", "CIFR", "WULF", "CORZ", "ORCL"] },
   { id: "semis", ja: "半導体", tickers: ["NVDA", "AMD", "INTC", "QCOM", "AMAT", "LRCX"] },
-  { id: "memory", ja: "メモリ・ストレージ", tickers: ["MU", "SNDK", "WDC", "STX"] },
+  { id: "memory", ja: "メモリ・ストレージ", tickers: ["MU", "SNDK", "WDC", "STX", "RMBS", "P"] },
   { id: "network", ja: "通信・光", tickers: ["ANET", "LITE", "COHR", "CRDO", "ALAB", "AAOI", "MRVL", "AVGO"] },
   { id: "software", ja: "ソフトウェア", tickers: ["MSFT", "NOW", "CRM", "ADBE", "PLTR", "SNOW"] },
   { id: "power", ja: "電力・設備", tickers: ["VST", "CEG", "GEV", "BE", "VRT"] },

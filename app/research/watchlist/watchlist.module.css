@@ -30,10 +30,6 @@
 .detailHeading h2 { min-width:0;margin:0;font-size:21px;font-weight:500;overflow-wrap:anywhere; }
 .detailHeading a { flex-shrink:0;color:#a5d3c2;font-size:12px;padding:12px 0; }
 .detail>section { margin-top:14px;box-shadow:none; }
-.empty { min-height:260px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;text-align:center; }
-.emptyStar { color:#9bd9c2;font-size:40px; }
-.empty h2 { margin:0;font-size:18px;font-weight:500;color:#dce8e9; }
-.empty p { margin:0;color:#8fa5b0;font-size:12px; }
 .error { font-size:13px;color:#e0b99c; }
 .loading { display:grid;place-items:center;min-height:180px;color:#8fa5b0;font-size:12px; }
 .page button:focus-visible,.page a:focus-visible { outline:2px solid #9bd9c2;outline-offset:3px; }
