@@ -27,10 +27,13 @@ export async function loadGenreEntries(genre: RadarGenreId) {
   // A company that has just joined is taken from its former genre's rows until it has its own.
   const former = new Map<string, Awaited<ReturnType<typeof readRows>>>();
   const formerRow = async (ticker: string) => {
-    const id = formerGenres[ticker];
-    if (!id || id === genre) return undefined;
-    if (!former.has(id)) former.set(id, await readRows(id));
-    return former.get(id)?.get(ticker);
+    for (const id of formerGenres[ticker] ?? []) {
+      if (id === genre) continue;
+      if (!former.has(id)) former.set(id, await readRows(id));
+      const row = former.get(id)?.get(ticker);
+      if (row) return row;
+    }
+    return undefined;
   };
   return Promise.all(tickers.map(async ticker => {
     const row = rows?.get(ticker) ?? (rows ? await formerRow(ticker) : undefined);
