@@ -144,3 +144,18 @@ test("the jobs report read from bls.gov is accepted only at its dated archive pa
   assert.equal(row.sourceName, "BLS");
   assert.equal(row.result.ja, jobs.translationJa);
 });
+
+test("a month-less PCE flash on the day of the verified BEA release adds no second row", () => {
+  const bea = { ...update, title: "U.S. September PCE: headline +0.5% MoM / +3.6% YoY; core +0.3% MoM / +3.1% YoY",
+    translationJa: "米国9月PCE：総合 前月比+0.5%・前年比+3.6%／コア 前月比+0.3%・前年比+3.1%",
+    url: "https://www.bea.gov/news/2026/personal-income-and-outlays-september-2026", observedAt: "2026-10-29T12:30:10Z", publishedAt: "2026-10-29T12:30:00Z" };
+  const brief = { id: "5", researchId: "x-result-5", kind: "economic", ticker: "ECON", period: "U.S. PCE",
+    titleJa: "米国PCE：コア前年比 3.1%", titleEn: "U.S. PCE: core YoY 3.1%",
+    facts: [{ key: "pce-core-yoy", ja: "コア前年比", en: "Core YoY", value: "3.1%" }],
+    url: "https://x.com/wallstengine/status/5", publisher: "Wall St Engine",
+    publishedAt: "2026-10-29T12:31:00Z", observedAt: "2026-10-29T12:31:10Z", publicAt: "2026-10-29T12:31:11Z" };
+  const rows = mergeEconomicResults([bea], [brief]).filter(item => item.releasedAt.startsWith("2026-10-29"));
+  assert.equal(rows.length, 1);
+  assert.equal(rows[0].title.ja, "米国PCE物価指数（9月）");
+  assert.equal(mergeEconomicResults([], [brief]).filter(item => item.releasedAt.startsWith("2026-10-29")).length, 1);
+});

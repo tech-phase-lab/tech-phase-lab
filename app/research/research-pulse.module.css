@@ -31,5 +31,9 @@
 @media(prefers-reduced-motion:reduce){.progress{animation:none;transform:none;opacity:.5}}
 
 /* Reserved space (same box as the live band) while the first headline loads. */
-.slot{min-height:46px;margin:0 0 20px;border-top:1px solid transparent;border-bottom:1px solid transparent}
+.slot{display:flex;align-items:center;gap:12px;min-height:46px;box-sizing:border-box;padding:10px 2px 11px;margin:0 0 20px;border-top:1px solid #1a2332;border-bottom:1px solid #1a2332}
+.slot::before{content:"LIVE";flex:none;font:600 8.5px var(--font-geist-mono),monospace;letter-spacing:.1em;color:#06201a;background:#5dffb4;border-radius:4px;padding:0 5px;line-height:15px;opacity:.45}
+.slot::after{content:"";flex:1;height:10px;border-radius:5px;background:linear-gradient(90deg,#161f2c 25%,#222e3f 50%,#161f2c 75%) 0 0/200% 100%;animation:shimmer 1.4s linear infinite}
+@keyframes shimmer{to{background-position:-200% 0}}
+@media(prefers-reduced-motion:reduce){.slot::after{animation:none}}
 @media(max-width:600px){.slot{margin-bottom:18px}}
