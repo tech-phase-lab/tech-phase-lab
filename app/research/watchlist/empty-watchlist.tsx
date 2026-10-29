@@ -7,7 +7,6 @@ export const emptyWatchlistSuggestions = ["NVDA", "MU", "AMD", "AVGO", "NBIS", "
 const SAMPLE_ROWS = [
   { ticker: "NVDA", line: "0,22 14,26 28,16 42,22 56,10 70,16 80,8" },
   { ticker: "MU", line: "0,10 14,18 28,8 42,20 56,14 70,24 80,12" },
-  { ticker: "AVGO", line: "0,24 14,22 28,26 42,16 56,20 70,12 80,16" },
 ] as const;
 
 /** The screen of a list with no stock yet. No real prices: the sample rows are drawn shapes only. */

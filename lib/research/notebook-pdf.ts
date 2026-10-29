@@ -163,7 +163,7 @@ export async function createNotebookPdf(blocks: PdfBlock[], title: string, manif
       if (right) drawSpaced(right, PAGE[0] - MARGIN - spacedWidth(right, 8, .02), y, 8, QUIET, .02);
       y -= 24; continue;
     }
-    if (block.kind === "company") { paragraph(block.runs.map(run => ({ ...run, href: undefined, color: LINK })), 12, 12 * 1.5, MARGIN, width); y -= 4; continue; }
+    if (block.kind === "company") { paragraph(block.runs.map(run => ({ ...run, href: undefined, color: LINK })), 12, 12 * 1.5, MARGIN, width); y -= 8; continue; }
     if (block.kind === "title") { if (y < floor() + 19 * 1.55 * 2) newPage(); paragraph(block.runs, 19, 19 * 1.55, MARGIN, width, TEXT, true); y -= 8; continue; }
     if (block.kind === "facts" && block.items?.length) {
       const columns = Math.min(3, block.items.length), columnWidth = width / columns;
@@ -179,7 +179,7 @@ export async function createNotebookPdf(blocks: PdfBlock[], title: string, manif
       y -= 16 + tall * 18 + 10; continue;
     }
     if (block.kind === "change") {
-      const inner = width - 22, body = measure(block.runs, 12.5, inner), boxHeight = 12 + 14 + body * 20 + 8;
+      const inner = width - 22, body = measure(block.runs, 12.5, inner), boxHeight = 12 + 14 + 6 + body * 20 + 8;
       if (y - boxHeight < floor()) newPage();
       const top = y + 6, bottom = top - boxHeight;
       const bands = ["#e8f4ed", "#ebf6f0", "#eef7f2", "#f1f8f4", "#f4faf6", "#f6faf7", "#f8fbf9", "#f9fcfa"];
@@ -187,7 +187,7 @@ export async function createNotebookPdf(blocks: PdfBlock[], title: string, manif
       page.drawRectangle({ x: MARGIN, y: bottom, width: 3, height: boxHeight, color: ink("#4fb58d") });
       let lineY = top - 17;
       for (const line of lines(block.label ?? [], 10, inner, true)) { drawGlyphs(line, MARGIN + 14, lineY, 10, "#2f8f6a", false); lineY -= 14; }
-      lineY -= 2;
+      lineY -= 8;
       y = lineY;
       paragraph(block.runs, 12.5, 20, MARGIN + 14, inner);
       y = bottom - 24; continue;
