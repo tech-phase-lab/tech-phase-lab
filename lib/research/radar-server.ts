@@ -2,7 +2,7 @@ import "server-only";
 import { unstable_cache } from "next/cache";
 import { radarFacts, type RadarFacts } from "./radar-facts";
 import { secCik, secText } from "./comparison-server";
-import { REVIEW_ABOVE, radarGenre, radarGenres, type RadarGenreId } from "./radar";
+import { REVIEW_ABOVE, formerGenres, radarGenre, radarGenres, type RadarGenreId } from "./radar";
 import { factsFromRow, isStale, readRows, saveRow, storeConfig, toRow } from "./radar-store";
 
 // Read again every half hour, so a new earnings report or filing shows up on its own; the previous earnings
@@ -23,8 +23,17 @@ export async function loadRadarFacts(ticker: string): Promise<RadarFacts> {
 export async function loadGenreEntries(genre: RadarGenreId) {
   const tickers = radarGenre(genre)?.tickers ?? [];
   const rows = await readRows(genre);
+  // Only the genre's own companies are read: a stored row of a company that has left the genre is never looked at.
+  // A company that has just joined is taken from its former genre's rows until it has its own.
+  const former = new Map<string, Awaited<ReturnType<typeof readRows>>>();
+  const formerRow = async (ticker: string) => {
+    const id = formerGenres[ticker];
+    if (!id || id === genre) return undefined;
+    if (!former.has(id)) former.set(id, await readRows(id));
+    return former.get(id)?.get(ticker);
+  };
   return Promise.all(tickers.map(async ticker => {
-    const row = rows?.get(ticker);
+    const row = rows?.get(ticker) ?? (rows ? await formerRow(ticker) : undefined);
     return { ticker, facts: row ? factsFromRow(row) : await loadRadarFacts(ticker) };
   }));
 }
