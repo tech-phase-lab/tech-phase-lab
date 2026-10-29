@@ -2,17 +2,22 @@ import type { RadarFacts } from "./radar-facts.ts";
 
 /** Genres the Financial Radar can show. Tickers are listed in the order they are drawn. */
 export const radarGenres = [
-  { id: "ai-cloud", ja: "AIクラウド", tickers: ["CRWV", "NBIS", "IREN", "APLD", "CIFR", "WULF", "CORZ", "ORCL"] },
-  { id: "semis", ja: "半導体", tickers: ["NVDA", "AMD", "INTC", "QCOM", "AMAT", "LRCX"] },
-  { id: "memory", ja: "メモリ・ストレージ", tickers: ["MU", "SNDK", "WDC", "STX", "RMBS", "P"] },
-  { id: "network", ja: "通信・光", tickers: ["ANET", "LITE", "COHR", "CRDO", "ALAB", "AAOI", "MRVL", "AVGO"] },
-  { id: "software", ja: "ソフトウェア", tickers: ["MSFT", "NOW", "CRM", "ADBE", "PLTR", "SNOW"] },
-  { id: "power", ja: "電力・設備", tickers: ["VST", "CEG", "GEV", "BE", "VRT"] },
+  { id: "ai-cloud", ja: "AIクラウド", en: "AI Cloud", tickers: ["CRWV", "NBIS", "IREN", "APLD", "CIFR", "WULF", "CORZ", "ORCL"] },
+  { id: "semis", ja: "半導体", en: "Semiconductors", tickers: ["NVDA", "AMD", "INTC", "QCOM", "AMAT", "LRCX"] },
+  { id: "memory", ja: "メモリ", en: "Memory", tickers: ["MU", "SNDK", "WDC", "STX", "RMBS", "P"] },
+  { id: "network", ja: "通信", en: "Networking", tickers: ["ANET", "MRVL", "CRDO", "APH", "ALAB", "CSCO"] },
+  { id: "photonics", ja: "光・フォトニクス", en: "Optical & Photonics", tickers: ["AAOI", "COHR", "LITE", "CIEN", "GLW", "AVGO", "FN"] },
+  { id: "software", ja: "ソフトウェア", en: "Software", tickers: ["MSFT", "NOW", "CRM", "ADBE", "PLTR", "SNOW"] },
+  { id: "power", ja: "電力・設備", en: "Power & Infrastructure", tickers: ["VST", "CEG", "GEV", "BE", "VRT", "ETN", "PWR", "OKLO"] },
+  { id: "cyber", ja: "サイバーセキュリティ", en: "Cybersecurity", tickers: ["CRWD", "PANW", "ZS", "FTNT", "NET", "S", "OKTA"] },
 ] as const;
 export type RadarGenreId = typeof radarGenres[number]["id"];
 export const radarGenre = (id: string | null) => radarGenres.find(genre => genre.id === id);
-/** Where a moved company's stored row may still sit: its figures do not depend on the genre, so they are read from there until the new genre has its own. */
-export const formerGenres: Record<string, RadarGenreId> = { MRVL: "semis", AVGO: "semis", MU: "semis", ORCL: "software" };
+/** Where a moved company's stored row may still sit, newest first: its figures do not depend on the genre, so they are read from there until the new genre has its own. */
+export const formerGenres: Record<string, RadarGenreId[]> = {
+  MRVL: ["semis"], AVGO: ["network", "semis"], MU: ["semis"], ORCL: ["software"],
+  AAOI: ["network"], COHR: ["network"], LITE: ["network"],
+};
 
 // ---- scales: evenly spaced ticks, values beyond the range stop at the edge ----
 export const X_TICKS = [-40, -20, 0, 20, 40, 60] as const;
@@ -25,10 +30,11 @@ export const xPosition = (ocfMargin: number) => (clamp(ocfMargin, X_MIN, X_MAX) 
 export const yPosition = (cover: number) => (Math.log2(clamp(cover, Y_MIN, Y_MAX)) - Math.log2(Y_MIN)) / (Math.log2(Y_MAX) - Math.log2(Y_MIN));
 export const isBeyond = (ocfMargin: number, cover: number) => ocfMargin < X_MIN || ocfMargin > X_MAX || cover < Y_MIN || cover > Y_MAX;
 /** The real value of a dot that was stopped at the edge, e.g. "◀ -180%" or "80% ▶" (and "▲ 44x" / "▼ 0.1x" for the other axis). */
-export function beyondText(ocfMargin: number, cover: number): string {
+export function beyondText(ocfMargin: number, cover: number, noRevenue = false): string {
   const parts: string[] = [];
   const percent = `${Math.abs(ocfMargin) >= 100 ? ocfMargin.toFixed(0) : ocfMargin.toFixed(1)}%`;
-  if (ocfMargin < X_MIN) parts.push(`◀ ${percent}`); else if (ocfMargin > X_MAX) parts.push(`${percent} ▶`);
+  if (noRevenue) parts.push("◀ 売上なし");
+  else if (ocfMargin < X_MIN) parts.push(`◀ ${percent}`); else if (ocfMargin > X_MAX) parts.push(`${percent} ▶`);
   const times = cover >= 100 ? "100x超" : `${cover >= 10 ? cover.toFixed(0) : cover.toFixed(2)}x`;
   if (cover > Y_MAX) parts.push(`▲ ${times}`); else if (cover < Y_MIN) parts.push(`▼ ${times}`);
   return parts.join(" ");
@@ -57,7 +63,7 @@ export type Tone = "up" | "down" | null;
 /** What a FREE visitor receives: where each dot sits, its colour and size. Nothing else.
  * `up` says whether revenue grew against a year earlier (null: no comparison, drawn as a hollow dot);
  * `tone` is the colour of that dot: the year-on-year direction, or failing that the direction since the previous earnings. */
-export type RadarDotFree = { ticker: string } & Point & { up: boolean | null; tone: Tone; size: SizeTier };
+export type RadarDotFree = { ticker: string } & Point & { up: boolean | null; tone: Tone; size: SizeTier; /** No revenue: earning power cannot be calculated; the dot sits at the left edge. */ noRevenue?: boolean };
 /** PRO adds the movement from the previous earnings, the numbers behind the dot and the ranking order. */
 export type RadarDotPro = RadarDotFree & { fcfMargin: number; growth: number | null; asOf: string; basis: "annual" | "ttm"; previous: (Point & { asOf: string }) | null;
   /** Position in the ranking; null for a dot that needs checking (not ranked). */
@@ -91,14 +97,14 @@ export function buildRadar(genre: RadarGenreId, entries: { ticker: string; facts
     const growth = entry.latest.revenueGrowth;
     const sinceBefore = entry.previous && entry.previous.revenue > 0 ? Math.sign(entry.latest.revenue - entry.previous.revenue) : 0;
     const tone: Tone = growth !== null ? (growth >= 0 ? "up" : "down") : sinceBefore > 0 ? "up" : sinceBefore < 0 ? "down" : null;
-    return { ticker: entry.ticker, ocfMargin: entry.latest.ocfMargin, cover: finite(entry.latest.cover), up: growth === null ? null : growth >= 0, tone, size: sizes[entry.ticker] };
+    return { ticker: entry.ticker, ocfMargin: entry.latest.ocfMargin, cover: finite(entry.latest.cover), up: growth === null ? null : growth >= 0, tone, size: sizes[entry.ticker], ...(entry.latest.noRevenue ? { noRevenue: true } : {}) };
   });
   if (tier === "free") return { tier, genre, dots: base };
-  const flagged = (entry: typeof ready[number]) => entry.latest.ocfMargin > REVIEW_ABOVE;
+  const flagged = (entry: typeof ready[number]) => entry.latest.ocfMargin > REVIEW_ABOVE || entry.latest.noRevenue === true;
   const order = rankByScore(ready.filter(entry => !flagged(entry)).map(entry => ({ ticker: entry.ticker, ocfMargin: entry.latest.ocfMargin, cover: finite(entry.latest.cover) })));
   const dots: RadarDotPro[] = ready.map((entry, i) => ({
     ...base[i], fcfMargin: entry.latest.fcfMargin, growth: entry.latest.revenueGrowth, asOf: entry.latest.end, basis: entry.latest.basis,
-    previous: entry.previous ? { ocfMargin: entry.previous.ocfMargin, cover: finite(entry.previous.cover), asOf: entry.previous.end } : null,
+    previous: entry.previous && !entry.latest.noRevenue ? { ocfMargin: entry.previous.ocfMargin, cover: finite(entry.previous.cover), asOf: entry.previous.end } : null,
     score: fitnessScore(entry.latest.ocfMargin, finite(entry.latest.cover)), rank: flagged(entry) ? null : order.indexOf(entry.ticker) + 1, review: flagged(entry),
   }));
   const asOf = ready.map(entry => entry.latest.end).sort().at(-1) ?? null;

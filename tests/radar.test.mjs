@@ -123,14 +123,32 @@ test("the fitness score is the average of the two chart points, and ties go to t
 
 test("genres after the reclassification", () => {
   const of = id => radarGenre(id).tickers;
+  assert.deepEqual(radarGenres.map(genre => genre.id), ["ai-cloud", "semis", "memory", "network", "photonics", "software", "power", "cyber"]);
+  assert.deepEqual(radarGenres.map(genre => genre.ja), ["AIクラウド", "半導体", "メモリ", "通信", "光・フォトニクス", "ソフトウェア", "電力・設備", "サイバーセキュリティ"]);
+  assert.deepEqual(radarGenres.map(genre => genre.en), ["AI Cloud", "Semiconductors", "Memory", "Networking", "Optical & Photonics", "Software", "Power & Infrastructure", "Cybersecurity"]);
   assert.deepEqual(of("semis"), ["NVDA", "AMD", "INTC", "QCOM", "AMAT", "LRCX"]);
   assert.deepEqual(of("memory"), ["MU", "SNDK", "WDC", "STX", "RMBS", "P"]); // P: Everpure (formerly Pure Storage, PSTG)
-  assert.deepEqual(radarGenres.map(genre => genre.id).slice(0, 3), ["ai-cloud", "semis", "memory"]);
-  assert.ok(of("network").includes("MRVL") && of("network").includes("AVGO") && of("ai-cloud").includes("ORCL"));
-  assert.ok(!of("software").includes("ORCL") && !of("semis").some(t => ["MU", "MRVL", "AVGO"].includes(t)));
+  assert.deepEqual(of("network"), ["ANET", "MRVL", "CRDO", "APH", "ALAB", "CSCO"]);
+  assert.deepEqual(of("photonics"), ["AAOI", "COHR", "LITE", "CIEN", "GLW", "AVGO", "FN"]);
+  assert.deepEqual(of("power"), ["VST", "CEG", "GEV", "BE", "VRT", "ETN", "PWR", "OKLO"]);
+  assert.deepEqual(of("cyber"), ["CRWD", "PANW", "ZS", "FTNT", "NET", "S", "OKTA"]);
+  assert.ok(of("ai-cloud").includes("ORCL") && !of("software").includes("ORCL"));
   const all = radarGenres.flatMap(genre => genre.tickers);
   assert.equal(new Set(all).size, all.length);
-  for (const [ticker, former] of Object.entries(formerGenres)) assert.ok(all.includes(ticker) && !radarGenre(former).tickers.includes(ticker));
+  for (const [ticker, formers] of Object.entries(formerGenres)) { assert.ok(all.includes(ticker)); for (const former of formers) assert.ok(!radarGenre(former).tickers.includes(ticker)); }
+});
+
+test("a company with no revenue sits at the left edge, says so, and stays out of the ranking", () => {
+  const pre = { end: "2026-03-31", basis: "ttm", revenue: 0, ocfMargin: -1000, fcfMargin: -1000, cover: 600, revenueGrowth: null, noRevenue: true };
+  const entries = [{ ticker: "A", facts: { latest: snap("2026-06-30", 20, 2), previous: null } }, { ticker: "OKLO", facts: { latest: pre, previous: snap("2025-12-31", 10, 3) } }];
+  const pro = buildRadar("power", entries, "pro");
+  const dot = pro.dots.find(d => d.ticker === "OKLO");
+  assert.equal(dot.noRevenue, true); assert.equal(dot.rank, null); assert.equal(dot.review, true); assert.equal(dot.previous, null);
+  assert.equal(pro.dots.find(d => d.ticker === "A").rank, 1);
+  assert.equal(xPosition(dot.ocfMargin), 0);
+  assert.ok(beyondText(dot.ocfMargin, dot.cover, true).includes("売上なし"));
+  assert.equal(buildRadar("power", entries, "free").dots.find(d => d.ticker === "OKLO").noRevenue, true);
+  assert.ok(!("noRevenue" in buildRadar("power", entries, "free").dots[0]));
 });
 
 test("arrows point the way a dot was stopped", () => {

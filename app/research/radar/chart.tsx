@@ -43,7 +43,7 @@ export default function RadarChart({ dots, selected, onSelect }: { dots: (RadarD
   }, [dots, x0, yMid, where]);
   // PRO view: the long labels with numbers belong to the tapped company only; the others show just their name. FREE view is unchanged.
   const proView = !!onSelect;
-  const extras = useMemo(() => Object.fromEntries(dots.map(dot => [dot.ticker, isBeyond(dot.ocfMargin, dot.cover) && (!proView || dot.ticker === selected) ? beyondText(dot.ocfMargin, dot.cover) : ""])), [dots, selected, proView]);
+  const extras = useMemo(() => Object.fromEntries(dots.map(dot => [dot.ticker, isBeyond(dot.ocfMargin, dot.cover) && (!proView || dot.ticker === selected) ? beyondText(dot.ocfMargin, dot.cover, dot.noRevenue) : ""])), [dots, selected, proView]);
   // A previous position outside the chart has no dotted line; its value is written beside the name.
   const earlier = useMemo(() => Object.fromEntries(dots.map(dot => [dot.ticker, isPro(dot) && (!proView || dot.ticker === selected) ? previousBeyondText(dot.previous) : ""])), [dots, selected, proView]);
   const labels = useMemo(() => placeLabels(dots.map(dot => {
@@ -93,10 +93,10 @@ export default function RadarChart({ dots, selected, onSelect }: { dots: (RadarD
       })}
     </svg>
     {selectedDot && isPro(selectedDot) && <p className={styles.picked} role="status">
-      <b>{selectedDot.ticker}</b><span>稼ぐ力 {fmtPercent(selectedDot.ocfMargin)}</span><span>守る力 {fmtCover(selectedDot.cover)}</span>
+      <b>{selectedDot.ticker}</b><span>稼ぐ力 {selectedDot.noRevenue ? "売上なし" : fmtPercent(selectedDot.ocfMargin)}</span><span>守る力 {fmtCover(selectedDot.cover)}</span>
       <span>売上の前年比 {selectedDot.growth === null ? "—" : `${selectedDot.growth > 0 ? "+" : ""}${selectedDot.growth.toFixed(0)}%`}</span><span>決算日 {selectedDot.asOf}</span>
-      <span>フリーキャッシュフロー率 {fmtPercent(selectedDot.fcfMargin)}</span>
-      {selectedDot.review && <span>要確認</span>}<i>{zoneName[zoneOf(selectedDot.ocfMargin, selectedDot.cover)]}</i>
+      {!selectedDot.noRevenue && <span>フリーキャッシュフロー率 {fmtPercent(selectedDot.fcfMargin)}</span>}
+      {selectedDot.review && !selectedDot.noRevenue && <span>要確認</span>}<i>{zoneName[zoneOf(selectedDot.ocfMargin, selectedDot.cover)]}</i>
     </p>}
   </>;
 }

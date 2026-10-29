@@ -11,7 +11,7 @@ test("the page carries the owner's wording", () => {
     "体力ランキング", "最新の決算 ・", "データが足りない銘柄 ・", "PRO限定", "稼ぐ力", "守る力",
     "数字は米SECの開示資料から計算しています。範囲を超える値はグラフの端に表示します。売買をすすめるものではありません。"]) assert.ok(screen.includes(text), text);
   for (const text of ["盤石", "借入で攻める", "守りで耐える", "余力が小さい"]) assert.ok(read("../lib/research/radar.ts").includes(text), text);
-  for (const tab of ["AIクラウド", "半導体", "通信・光", "ソフトウェア", "電力・設備"]) assert.ok(read("../lib/research/radar.ts").includes(tab), tab);
+  for (const tab of ["AIクラウド", "半導体", "メモリ", "通信", "光・フォトニクス", "ソフトウェア", "電力・設備", "サイバーセキュリティ"]) assert.ok(read("../lib/research/radar.ts").includes(tab), tab);
 });
 
 test("FREE sees the chart only: the locked block says 鍵 and PRO限定 and nothing else; trails and taps are PRO-only", () => {

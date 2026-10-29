@@ -86,3 +86,26 @@ test("revenue, operating cash flow and capex must cover the same twelve months",
   assert.equal(result.latest?.end, "2025-12-31");   // 2026-06-30 has revenue to date but no matching cash flow
   assert.equal(result.latest?.basis, "annual");
 });
+
+test("a company with no revenue at all is shown with a stand-in, not left out and not given a made-up margin", () => {
+  const data = yearEnd();
+  delete data.facts["us-gaap"].RevenueFromContractWithCustomerExcludingAssessedTax;
+  const result = radarFacts(data, NOW);
+  assert.equal(result.latest?.noRevenue, true);
+  assert.equal(result.latest?.revenue, 0);
+  assert.equal(result.latest?.ocfMargin, -1000);
+  assert.equal(result.latest?.cover, 2);
+  assert.equal(result.latest?.revenueGrowth, null);
+});
+
+test("revenue that cannot be added up to twelve months counts as none, but a mismatch of periods is not that", () => {
+  const data = yearEnd(), t = data.facts["us-gaap"];
+  t.Revenues = { units: { USD: [row("2025-09-30", 25, "2025-07-01")] } }; // a lone quarter: no twelve months to be had
+  delete t.RevenueFromContractWithCustomerExcludingAssessedTax;
+  assert.equal(radarFacts(data, NOW).latest?.noRevenue, true);
+  // revenue of a full year that does not match the cash-flow period stays "not derivable", never "no revenue"
+  const mixed = yearEnd();
+  mixed.facts["us-gaap"].RevenueFromContractWithCustomerExcludingAssessedTax.units.USD.push(row("2026-06-30", 60, "2026-01-01"), row("2025-06-30", 45, "2025-01-01"), row("2025-06-30", 90, "2024-07-01", "10-K"));
+  for (const tag of ["CashAndCashEquivalentsAtCarryingValue", "ShortTermInvestments", "LongTermDebtNoncurrent", "DebtCurrent", "OperatingLeaseLiability"]) mixed.facts["us-gaap"][tag].units.USD.push(row("2026-06-30", mixed.facts["us-gaap"][tag].units.USD[0].val, undefined));
+  assert.equal(radarFacts(mixed, NOW).latest?.noRevenue, undefined);
+});

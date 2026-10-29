@@ -27,7 +27,7 @@ const finite = (value: number) => Number.isFinite(value) ? value : 1000; // same
 /** The row to save, or null when the calculation did not succeed (then nothing is saved and the last good values stay). */
 export function toRow(genre: string, ticker: string, facts: RadarFacts, calculatedAt: number, reviewAbove: number): StoredRow | null {
   const latest = facts.latest;
-  if (!latest || facts.reason) return null;
+  if (!latest || facts.reason || latest.noRevenue) return null; // no revenue: nothing to store (the figure is a stand-in), it is calculated live
   const numbers = [latest.ocfMargin, latest.revenue, latest.fcfMargin];
   if (numbers.some(value => !Number.isFinite(value)) || Number.isNaN(latest.cover) || latest.cover < 0 || latest.revenue < 0) return null;
   const before = facts.previous;
