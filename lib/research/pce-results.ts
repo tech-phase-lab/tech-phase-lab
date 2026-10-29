@@ -83,6 +83,8 @@ export function mergeEconomicResults(updates: OfficialUpdate[] = [], briefs: Res
         : { ja: `米国${name}（${month + 1}月）`, en: `U.S. ${name} (${months[month][0].toUpperCase() + months[month].slice(1)} ${year})` };
     }
     if (officialIds.has(id)) continue;
+    // A post that names no month ("U.S. PCE") is the same release as the verified row of that day.
+    if (inflation && !employment && month < 0 && [...results.values()].some(row => row.id.startsWith(`${inflation[1].toLowerCase()}-`) && row.releasedAt.slice(0, 10) === date)) continue;
     results.set(id, {id,title,sourceName:r.publisher,releasedAt:r.publishedAt,
       result:{ja:r.titleJa,en:r.titleEn},
       detail:{ja:r.facts.map(f => `${f.ja}：${f.value}`).join("\n"),en:r.facts.map(f => `${f.en}: ${f.value}`).join("\n")},
