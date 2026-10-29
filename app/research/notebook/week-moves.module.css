@@ -1,29 +1,27 @@
-/* 銘柄手帳: this week's price moves, in the same gold-edged style as the notebook card */
-.week { margin:0 0 18px; padding:18px 18px 16px; border:1px solid #2f7f8f77; border-radius:16px; background:radial-gradient(120% 100% at 0% 0%,#12333c,#111a23 58%); box-shadow:inset 0 1px 0 #bff1ff1a,0 12px 30px #0003; }
-.week h2 { margin:0 0 14px; font-size:20px; letter-spacing:.04em; background:linear-gradient(90deg,#e2f8ff,#6cc5d6); -webkit-background-clip:text; background-clip:text; color:transparent; }
-.tiles { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; }
-.tile { display:grid; gap:2px; padding:12px 10px; border:1px solid #2d3948; border-radius:12px; background:#0e151e; text-align:center; }
-.tile span { font-size:11.5px; color:#9da9b8; }
-.tile strong { font:700 26px var(--font-geist-mono),monospace; color:#e8fbff; font-variant-numeric:tabular-nums; }
-.tile small { font-size:11px; color:#7d8998; }
-.up { color:#7fd9a0 !important; }
-.down { color:#f0888a !important; }
-.lists { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px; margin-top:16px; }
-.lists h3 { margin:0 0 6px; font-size:13px; letter-spacing:.06em; color:#8fd3dd; }
-.lists ol { list-style:none; margin:0; padding:0; display:grid; }
-.lists li { position:relative; display:flex; justify-content:space-between; gap:10px; padding:9px 8px; border-bottom:1px solid #ffffff0a; isolation:isolate; font:600 13px var(--font-geist-mono),monospace; font-variant-numeric:tabular-nums; }
-.lists li a { color:#9fe0ea; text-decoration:none; letter-spacing:.04em; }
-.note { margin:0; padding:12px 14px; border:1px solid #2d3948; border-radius:10px; background:#0f1822; color:#aab6c4; font-size:13px; line-height:1.7; }
-.lock { margin:14px 0 0; padding:10px 14px; border:1px solid #2f7f8f55; border-radius:10px; background:linear-gradient(110deg,#0f2229,#101821 70%); color:#a9cdd5; font-size:12.5px; line-height:1.75; }
-.lock b { margin-right:8px; padding:2px 9px; border-radius:999px; background:linear-gradient(135deg,#e2f8ff,#3aa6b9); color:#062029; font-size:10.5px; letter-spacing:.1em; }
-.lock a { color:#9fe0ea; text-decoration:underline; text-underline-offset:3px; }
-.sample { margin:0 0 12px; padding:8px 12px; border:1px dashed #3aa6b988; border-radius:10px; color:#a9cdd5; font-size:12px; }
+/* 銘柄手帳: this week's price tiles (a row you can slide sideways) */
+.week { margin:0 0 14px; }
+.tiles { display:flex; gap:10px; margin:0; padding:2px 2px 6px; list-style:none; overflow-x:auto; scrollbar-width:none; }
+.tiles::-webkit-scrollbar { display:none; }
+.tiles li { flex:none; width:78px; }
+.tiles a { display:grid; gap:5px; padding:11px 10px 10px; border:1px solid #1e2a3a; border-radius:14px; background:#0e1520; text-decoration:none; }
+.tiles b { font:600 12px var(--font-geist-mono),monospace; color:#e8edf3; letter-spacing:.04em; }
+.tiles strong { font:600 14.5px var(--font-geist-mono),monospace; font-variant-numeric:tabular-nums; }
+.tiles li[data-dir=up] strong { color:#9fe3c4; }
+.tiles li[data-dir=down] strong { color:#f0a8b2; }
+.tiles i { display:block; height:3px; border-radius:2px; background:#17212d; overflow:hidden; }
+.tiles u { display:block; height:100%; width:var(--reach); border-radius:2px; background:#5fc4a0; }
+.tiles li[data-dir=down] u { background:#d9798a; }
+.counts { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:10px; margin:0; padding:0; list-style:none; }
+.counts li { display:grid; gap:2px; padding:11px 10px; border:1px solid #1e2a3a; border-radius:14px; background:#0e1520; text-align:center; }
+.counts span { font-size:11px; color:#8697ab; }
+.counts strong { font:700 22px var(--font-geist-mono),monospace; color:#e8edf3; }
+.counts strong[data-dir=up] { color:#9fe3c4; }
+.counts strong[data-dir=down] { color:#f0a8b2; }
+.note { display:flex; align-items:center; justify-content:space-between; gap:10px; margin:0; padding:9px 12px; border:1px solid #243244; border-radius:10px; background:#0d141d; color:#8697ab; font-size:11.5px; line-height:1.6; }
+.note button { flex:none; padding:4px 10px; border:1px solid #2c5a4a; border-radius:10px; background:rgba(93,224,176,.06); color:#bfeedb; font:inherit; font-size:11.5px; cursor:pointer; }
+.lock { margin:10px 0 0; padding:9px 12px; border:1px solid rgba(217,181,106,.3); border-radius:10px; background:#0d141d; color:#c9b88f; font-size:12px; line-height:1.75; }
+.lock b { margin-right:8px; padding:2px 9px; border-radius:999px; background:#d9b56a; color:#1a1405; font-size:10.5px; letter-spacing:.1em; }
+.lock a { color:#e6cf9a; text-decoration:underline; text-underline-offset:3px; }
+.sample { margin:0 0 10px; padding:7px 12px; border:1px dashed #2c5a4a; border-radius:10px; color:#a9cdd5; font-size:11.5px; }
 .sample b { margin-right:8px; color:#e2f8ff; letter-spacing:.1em; }
-.sampleButton { margin-top:10px; padding:8px 14px; border:1px solid #2f7f8f77; border-radius:10px; background:transparent; color:#9fe0ea; font:inherit; font-size:12.5px; cursor:pointer; }
-.fine { margin:12px 2px 0; font-size:11px; color:#6f7b8a; line-height:1.7; }
-@media (max-width:420px) { .lists { grid-template-columns:1fr; } }
-.lists li::before { content:""; position:absolute; inset:3px auto 3px 0; width:var(--reach); border-radius:6px; z-index:-1; background:linear-gradient(90deg,#3fb98433,#3fb98408); }
-.lists li[data-dir=down]::before { background:linear-gradient(90deg,#e0606733,#e0606708); }
-.split { display:flex; gap:3px; height:8px; margin-top:12px; border-radius:999px; overflow:hidden; }
-.split i { display:block; min-width:0; }
-.upBar { background:#3fb984; } .downBar { background:#e06067; } .flatBar { background:#4a5968; }
+.fine { margin:8px 2px 0; font-size:10.5px; color:#5d6c80; }
