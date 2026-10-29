@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
-import { weekStart, weekLabel, recapWindow, buildNotebook } from "../lib/research/stock-notebook.ts";
+import { weekStart, weekLabel, recapWindow, buildNotebook, isInstitutionalTrade, weekRangeLabel } from "../lib/research/stock-notebook.ts";
 
 const at = text => Date.parse(text);
 
@@ -68,7 +68,35 @@ test("FREE sees counts only; PRO and the owner see the lists (source check)", ()
   assert.match(source, /const full = memberPlan === "pro" \|\| ownerAccount \|\| ownerRole;/);
   assert.match(source, /\{full \? <div className=\{styles\.details\}>/);
   const screen = readFileSync(new URL("../app/research/notebook/screen.tsx", import.meta.url), "utf8");
-  assert.match(screen, /<StockNotebook tickers=\{tickers\} lang=\{lang\} \/>/);
+  assert.match(screen, /<StockNotebook key=\{.*\} tickers=\{tickers\} lang=\{lang\} weeksBack=\{weeksBack\} \/>/);
   const watchlist = readFileSync(new URL("../app/research/watchlist/watchlist.tsx", import.meta.url), "utf8");
   assert.doesNotMatch(watchlist, /StockNotebook/); // the watchlist stays a plain watchlist
+});
+
+test("the week shown runs Monday to Friday and cannot be a week ahead", () => {
+  const wednesday = at("2026-10-28T03:00:00Z");
+  assert.equal(weekRangeLabel(wednesday, 0), "10/26 – 10/30");
+  assert.equal(weekRangeLabel(wednesday, 1), "10/19 – 10/23");
+  const screen = readFileSync(new URL("../app/research/notebook/screen.tsx", import.meta.url), "utf8");
+  assert.match(screen, /disabled=\{weeksBack === 0\}/);
+});
+
+test("news about an investment firm buying or selling shares is told apart by its wording", () => {
+  assert.equal(isInstitutionalTrade("Smith Capital Management LLC Acquires 1,200 Shares of Arista Networks"), true);
+  assert.equal(isInstitutionalTrade("ブラックロックが、エヌビディア株を買い増し"), true);
+  assert.equal(isInstitutionalTrade("アリスタが、自社製品のPHPに関するセキュリティ勧告を発表"), false);
+  assert.equal(isInstitutionalTrade("Meta builds an AI cluster with Arista and Broadcom technology"), false);
+  const notebook = buildNotebook({ tickers: ["ANET"], now: NOW, lang: "ja", rows: [row("n1", "news", ["ANET"], "2026-10-23T01:00:00Z", "ブラックロックが、アリスタ株を買い増し"), row("n2", "news", ["ANET"], "2026-10-23T02:00:00Z", "アリスタが決算を発表")], targets: [], events: [] });
+  assert.deepEqual(notebook.news.map(item => item.institutional).sort(), [false, true]);
+});
+
+test("earnings rows carry their figures, and a price problem never sits in the news part (source check)", () => {
+  const notebook = buildNotebook({ tickers: ["APH"], now: NOW, lang: "ja", rows: [{ ...row("e1", "earnings", ["APH"], "2026-10-22T20:00:00Z", "APH決算"), facts: ["売上 $10.2B", "調整後EPS $0.80"] }], targets: [], events: [] });
+  assert.deepEqual(notebook.earnings[0].facts, ["売上 $10.2B", "調整後EPS $0.80"]);
+  const timeline = readFileSync(new URL("../app/research/notebook/stock-notebook.tsx", import.meta.url), "utf8");
+  assert.doesNotMatch(timeline, /株価を取得できませんでした/);
+  const tiles = readFileSync(new URL("../app/research/notebook/week-moves.tsx", import.meta.url), "utf8");
+  assert.match(tiles, /株価を取得できませんでした/); assert.match(tiles, /再読み込み/);
+  const screen = readFileSync(new URL("../app/research/notebook/screen.tsx", import.meta.url), "utf8");
+  assert.match(screen, /同期確認\|テスト/); // test-looking lists are not shown
 });

@@ -18,6 +18,8 @@ export type FlashRow = {
   id: string; kind: FlashKind; tickers: string[]; title: string; body?: string; url?: string; source?: string;
   /** Publication instant, or a date for a source that states only the day. */
   at: string; timeKind: "published" | "date"; observedAt?: string;
+  /** Earnings rows: the figures of the release (e.g. "売上 $10.2B"), one per entry. */
+  facts?: string[];
 };
 
 /** Sort key: a date-only row sits at the start of its day. */
@@ -61,7 +63,7 @@ export function flashRows(feed: Partial<GeneralNewsFeed> | null | undefined, wir
     if (ja && !row.result.ja) continue;
     rows.push({ id: `earnings:${row.id}`, kind: "earnings", tickers: [row.ticker], title: result ? `${row.title[lang]}｜${result}` : row.title[lang],
       body: [...row.facts.map(fact => ja ? fact.ja : fact.en), (ja ? row.body.ja : row.body.en) ?? ""].filter(Boolean).join("\n") || undefined,
-      at: row.releasedAt, timeKind: "published", source: row.sourceName });
+      at: row.releasedAt, timeKind: "published", source: row.sourceName, facts: row.facts.map(fact => ja ? fact.ja : fact.en) });
   }
   return rows.sort((a, b) => flashInstant(b) - flashInstant(a) || a.id.localeCompare(b.id));
 }
