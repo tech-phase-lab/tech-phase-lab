@@ -26,7 +26,10 @@ const PRINT_INK: Record<string, { line: string; fill: string }> = {
 const CIRCLED = "①②③④⑤⑥⑦⑧⑨⑩";
 const fixed = (date: Date) => new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Tokyo", year: "numeric", month: "2-digit", day: "2-digit" }).format(date).replaceAll("-", ".");
 
-export async function createNotebookPdf(blocks: PdfBlock[], title: string, manifest: FontSubset[], loadFont: (file: string) => Promise<Uint8Array>, lang = "ja", savedOn = new Date()) {
+/** Bold subsets for the headings (optional: without them the headings are set in the regular weight). */
+export type BoldFonts = { manifest: FontSubset[]; loadFont: (file: string) => Promise<Uint8Array> };
+
+export async function createNotebookPdf(blocks: PdfBlock[], title: string, manifest: FontSubset[], loadFont: (file: string) => Promise<Uint8Array>, lang = "ja", savedOn = new Date(), boldFonts?: BoldFonts) {
   const pdf = await PDFDocument.create();
   pdf.registerFontkit(fontkit);
   pdf.setTitle(title); pdf.setAuthor("Tech Phase Research"); pdf.setLanguage(lang === "ja" ? "ja-JP" : "en-US");
@@ -37,13 +40,22 @@ export async function createNotebookPdf(blocks: PdfBlock[], title: string, manif
   const fonts = await Promise.all(needed.map(async item => pdf.embedFont(await loadFont(item.file), { subset: true })));
   const fontMap = new Map<number, PDFFont>();
   for (const font of fonts) for (const c of font.getCharacterSet()) if (characters.has(c)) fontMap.set(c, font);
+  // Headings (title, "what changed", section titles, MEMO labels) are set in bold when the bold subsets are given.
+  const boldRuns = (block: PdfBlock) => block.kind === "title" || block.kind === "section" ? block.runs : block.kind === "change" ? (block.label ?? []) : [];
+  const boldCharacters = new Set(Array.from(blocks.flatMap(boldRuns).map(run => run.text).join("") + `MEMO ${CIRCLED}0123456789`).map(c => c.codePointAt(0)!));
+  const boldMap = new Map<number, PDFFont>();
+  if (boldFonts) {
+    const wanted = boldFonts.manifest.filter(item => item.ranges.some(([start, end]) => [...boldCharacters].some(c => c >= start && c <= end)));
+    const faces = await Promise.all(wanted.map(async item => pdf.embedFont(await boldFonts.loadFont(item.file), { subset: true })));
+    for (const face of faces) for (const c of face.getCharacterSet()) if (boldCharacters.has(c)) boldMap.set(c, face);
+  }
   const fallback = fontMap.get(0x25a1) ?? fontMap.get(63);
   if (!fallback) throw new Error("PDF font unavailable");
   const latin = fontMap.get(84) ?? fallback;
   const circled = (index: number) => { const char = CIRCLED[index - 1]; return char && fontMap.has(char.codePointAt(0)!) ? char : String(index); };
   const memoText = (index: number) => `MEMO${circled(index)}`;
   type Glyph = { text: string; font: PDFFont; width: number; marks: PdfMark[]; href?: string; color?: string; memo?: PdfMemo; parts?: { text: string; font: PDFFont }[]; memoSize?: number };
-  function lines(runs: PdfRun[], size: number, width: number): Glyph[][] {
+  function lines(runs: PdfRun[], size: number, width: number, bold = false): Glyph[][] {
     const result: Glyph[][] = []; let line: Glyph[] = []; let used = 0;
     const flush = () => { result.push(line); line = []; used = 0; };
     for (const run of runs) {
@@ -58,8 +70,9 @@ export async function createNotebookPdf(blocks: PdfBlock[], title: string, manif
       for (const char of run.text.replace(/\r/g, "").replace(/\t/g, "    ")) {
         if (char === "\n") { flush(); continue; }
         if (char.codePointAt(0)! < 32) continue;
-        const font = fontMap.get(char.codePointAt(0)!) ?? fallback!;
-        const text = fontMap.has(char.codePointAt(0)!) ? char : "□";
+        const code = char.codePointAt(0)!;
+        const font = (bold ? boldMap.get(code) : undefined) ?? fontMap.get(code) ?? fallback!;
+        const text = fontMap.has(code) || (bold && boldMap.has(code)) ? char : "□";
         const glyph = { text, font, width: font.widthOfTextAtSize(text, size), marks: run.marks ?? [], href: run.href, color: run.color };
         if (used + glyph.width > width && line.length) {
           // Prefer a word boundary for English; CJK can wrap between characters.
@@ -87,7 +100,7 @@ export async function createNotebookPdf(blocks: PdfBlock[], title: string, manif
     let base = MARGIN + 14;
     for (const item of pageMemos) {
       page.drawRectangle({ x: MARGIN, y: base, width: PAGE[0] - MARGIN * 2, height: item.height, color: ink("#fdf6df"), borderColor: ink("#e3cf95"), borderWidth: .8 });
-      drawSpaced(memoText(item.memo.index), MARGIN + 10, base + item.height - 14, 8, "#a07d2c", .12);
+      drawSpaced(memoText(item.memo.index), MARGIN + 10, base + item.height - 14, 8.5, "#a07d2c", .12, page, true);
       let lineY = base + item.height - 30;
       for (const line of item.lines) { drawGlyphs(line, MARGIN + 10, lineY, 10, TEXT, false); lineY -= 15; }
       base += item.height + 6;
@@ -95,9 +108,9 @@ export async function createNotebookPdf(blocks: PdfBlock[], title: string, manif
     pageMemos = [];
   }
   const newPage = () => { finishPage(); page = newSheet(); y = START; };
-  function drawSpaced(text: string, x: number, atY: number, size: number, color: string, spacing: number, target: PDFPage = page) {
+  function drawSpaced(text: string, x: number, atY: number, size: number, color: string, spacing: number, target: PDFPage = page, bold = false) {
     for (const char of text) {
-      const font = fontMap.get(char.codePointAt(0)!) ?? latin;
+      const font = (bold ? boldMap.get(char.codePointAt(0)!) : undefined) ?? fontMap.get(char.codePointAt(0)!) ?? latin;
       const shown = fontMap.has(char.codePointAt(0)!) ? char : " ";
       target.drawText(shown, { x, y: atY, size, font, color: ink(color) });
       x += font.widthOfTextAtSize(shown, size) + size * spacing;
@@ -129,8 +142,8 @@ export async function createNotebookPdf(blocks: PdfBlock[], title: string, manif
     for (const box of boxes.values()) page.drawRectangle({ x: box.x - 1, y: atY - size * .23, width: box.width + 2, height: size * 1.25, borderColor: ink(box.color), borderWidth: 1 });
   }
   /** Sets wrapped lines from the current place; a note marker pulls its box onto the page of its line. */
-  function paragraph(runs: PdfRun[], size: number, leading: number, x: number, width: number, color = TEXT) {
-    for (const line of lines(runs, size, width)) {
+  function paragraph(runs: PdfRun[], size: number, leading: number, x: number, width: number, color = TEXT, bold = false) {
+    for (const line of lines(runs, size, width, bold)) {
       const fresh = line.flatMap(glyph => glyph.memo ? [memoBox(glyph.memo)] : []);
       const extra = fresh.reduce((sum, item) => sum + item.height + 6, 0);
       if (y - leading < floor() + extra) { newPage(); }
@@ -151,7 +164,7 @@ export async function createNotebookPdf(blocks: PdfBlock[], title: string, manif
       y -= 24; continue;
     }
     if (block.kind === "company") { paragraph(block.runs.map(run => ({ ...run, href: undefined, color: LINK })), 12, 12 * 1.5, MARGIN, width); y -= 4; continue; }
-    if (block.kind === "title") { if (y < floor() + 19 * 1.55 * 2) newPage(); paragraph(block.runs, 19, 19 * 1.55, MARGIN, width); y -= 8; continue; }
+    if (block.kind === "title") { if (y < floor() + 19 * 1.55 * 2) newPage(); paragraph(block.runs, 19, 19 * 1.55, MARGIN, width, TEXT, true); y -= 8; continue; }
     if (block.kind === "facts" && block.items?.length) {
       const columns = Math.min(3, block.items.length), columnWidth = width / columns;
       const rows = block.items.map(item => measure(item.value, 12.5, columnWidth - 10));
@@ -173,7 +186,7 @@ export async function createNotebookPdf(blocks: PdfBlock[], title: string, manif
       bands.forEach((band, index) => page.drawRectangle({ x: MARGIN + (width * index) / bands.length, y: bottom, width: width / bands.length, height: boxHeight, color: ink(band) }));
       page.drawRectangle({ x: MARGIN, y: bottom, width: 3, height: boxHeight, color: ink("#4fb58d") });
       let lineY = top - 17;
-      for (const line of lines(block.label ?? [], 9.5, inner)) { drawGlyphs(line, MARGIN + 14, lineY, 9.5, "#2f8f6a", false); lineY -= 14; }
+      for (const line of lines(block.label ?? [], 10, inner, true)) { drawGlyphs(line, MARGIN + 14, lineY, 10, "#2f8f6a", false); lineY -= 14; }
       lineY -= 2;
       y = lineY;
       paragraph(block.runs, 12.5, 20, MARGIN + 14, inner);
@@ -192,7 +205,7 @@ export async function createNotebookPdf(blocks: PdfBlock[], title: string, manif
     }
     const wrapped = lines(block.runs, size, width);
     if (size > 12 && y < floor() + leading * 3) newPage();
-    paragraph(block.runs, size, leading, MARGIN + indent, width);
+    paragraph(block.runs, size, leading, MARGIN + indent, width, TEXT, block.kind === "section");
     if (wrapped.length) y -= block.kind === "section" ? 4 : size > 12 ? 10 : 8;
   }
   finishPage();

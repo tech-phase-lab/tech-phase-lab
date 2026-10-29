@@ -75,3 +75,33 @@ test('the article head, the change box, note markers and the foot are set as the
     assert.match(text.replaceAll(' ', ''), /01分析の前提となるデータ/);
   } finally { await loading.destroy(); }
 });
+
+test('headings are set in bold when the bold subsets are given, and still print without them', async () => {
+  const { PDFDocument, PDFName } = await import('pdf-lib');
+  const boldBase = 'node_modules/@fontsource/noto-sans-jp/';
+  const boldCss = await readFile(boldBase + '700.css', 'utf8');
+  const boldManifest = [...boldCss.matchAll(/@font-face\s*\{([^}]+)\}/g)].map(([, block]) => ({
+    file: block.match(/url\(\.\/files\/([^)]*\.woff)\)/)[1],
+    ranges: block.match(/unicode-range:\s*([^;]+)/)[1].split(',').map(value => { const [a,b] = value.trim().replace(/^U\+/, '').split('-'); return [parseInt(a,16), parseInt(b ?? a,16)]; }),
+  }));
+  const blocks = [
+    { kind: 'title', runs: [{ text: '最先端AIを公衆衛生に導入へ' }] },
+    { kind: 'change', label: [{ text: '今回の変化' }], runs: [{ text: '連携を進める。' }, { text: '', memo: { index: 1, text: '買い増しの判断材料' } }] },
+    { kind: 'section', size: 14, runs: [{ text: '01', color: '#8a95a1' }, { text: '  ' }, { text: '分析の前提となるデータ' }] },
+  ];
+  const fontNames = async bytes => {
+    const pdf = await PDFDocument.load(bytes);
+    const names = new Set();
+    for (const page of pdf.getPages()) { const fonts = page.node.Resources().lookup(PDFName.of('Font')); for (const key of fonts.keys()) names.add(fonts.lookup(key).get(PDFName.of('BaseFont')).toString()); }
+    return names.size;
+  };
+  const plain = await createNotebookPdf(blocks, 'x', manifest, load, 'ja');
+  const bold = await createNotebookPdf(blocks, 'x', manifest, load, 'ja', new Date(), { manifest: boldManifest, loadFont: load });
+  assert.ok(await fontNames(bold) > await fontNames(plain), 'bold faces are embedded');
+  const { getDocument } = await import('pdfjs-dist/legacy/build/pdf.mjs');
+  const loading = getDocument({ data: new Uint8Array(bold), useWasm: false, disableFontFace: true });
+  try {
+    const text = (await (await (await loading.promise).getPage(1)).getTextContent()).items.map(item => item.str).join('').replaceAll(' ', '');
+    for (const expected of ['最先端AIを公衆衛生に導入へ', '今回の変化', '01分析の前提となるデータ', '買い増しの判断材料']) assert.ok(text.includes(expected), expected);
+  } finally { await loading.destroy(); }
+});

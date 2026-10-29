@@ -91,10 +91,14 @@ export async function generateNotebookPdf(content: HTMLElement, marks: Annotatio
   const response = await fetch("/research-pdf-fonts/manifest.json");
   if (!response.ok) throw new Error("PDF fonts unavailable");
   const manifest: FontSubset[] = await response.json();
-  const bytes = await createNotebookPdf(blocks, title, manifest, async file => {
+  const fetchFont = async (file: string) => {
     const response = await fetch(`/research-pdf-fonts/${encodeURIComponent(file)}`);
     if (!response.ok) throw new Error("PDF font unavailable");
     return new Uint8Array(await response.arrayBuffer());
-  }, lang);
+  };
+  // The bold subsets are for the headings only; if they cannot be had, the headings are set in the regular weight.
+  const boldResponse = await fetch("/research-pdf-fonts/manifest-bold.json").catch(() => null);
+  const boldManifest: FontSubset[] | null = boldResponse?.ok ? await boldResponse.json().catch(() => null) : null;
+  const bytes = await createNotebookPdf(blocks, title, manifest, fetchFont, lang, new Date(), boldManifest ? { manifest: boldManifest, loadFont: fetchFont } : undefined);
   return new Blob([new Uint8Array(bytes)], { type: "application/pdf" });
 }
