@@ -67,7 +67,7 @@ export default function RadarScreen({ initial }: { initial: RadarPayload | null 
           </section>
           {pro ? <section className={styles.ranking}>
             <header><h2>体力ランキング</h2><small>最新の決算 ・ {monthOf(pro.asOf)}</small></header>
-            <p className={styles.order}>並び順:稼ぐ力と守る力の順位の平均</p>
+            <p className={styles.order}>並び順:稼ぐ力と守る力の点数の平均。グラフの右上ほど上位です</p>
             {ranked.map(dot => <RankCard key={dot.ticker} dot={dot} />)}
             {review.length > 0 && <h3 className={styles.reviewHead}>要確認(順位外)</h3>}
             {review.map(dot => <RankCard key={dot.ticker} dot={dot} />)}

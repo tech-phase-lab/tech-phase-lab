@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { arrow, beyondText, buildRadar, isBeyond, placeLabels, radarGenre, radarGenres, rankByAverage, sizeTiers, spreadEdgeDots, xPosition, yPosition, zoneOf } from "../lib/research/radar.ts";
+import { arrow, beyondText, buildRadar, isBeyond, placeLabels, radarGenre, radarGenres, rankByScore, fitnessScore, earningScore, stayingScore, beyondDirections, formerGenres, sizeTiers, spreadEdgeDots, xPosition, yPosition, zoneOf } from "../lib/research/radar.ts";
 
 const snap = (end, ocfMargin, cover, revenue = 1e9, revenueGrowth = 10) => ({ end, basis: "ttm", revenue, ocfMargin, fcfMargin: ocfMargin - 5, cover, revenueGrowth });
 
@@ -110,13 +110,45 @@ test("labels keep clear of the zone names", () => {
   assert.ok(b.x >= 66 || b.y >= 16 || b.y + b.h <= 3 || b.x + b.w <= 4);
 });
 
-test("the order is the average of the earning-power rank and the staying-power rank, never a sum of raw numbers", () => {
-  // A: earning 1st, staying 3rd (avg 2); B: 2nd and 1st (1.5); C: 3rd and 2nd (2.5)
-  assert.deepEqual(rankByAverage([{ ticker: "A", ocfMargin: 90, cover: 0.2 }, { ticker: "B", ocfMargin: 30, cover: 40 }, { ticker: "C", ocfMargin: 10, cover: 3 }]), ["B", "A", "C"]);
-  // a huge cover cannot buy a place: raw numbers are not added
-  assert.deepEqual(rankByAverage([{ ticker: "A", ocfMargin: 50, cover: 1 }, { ticker: "B", ocfMargin: 40, cover: 3 }, { ticker: "C", ocfMargin: 30, cover: 2 }, { ticker: "D", ocfMargin: 10, cover: 1000 }]), ["B", "A", "D", "C"]);
-  // a tie goes to the stronger earning power
-  assert.deepEqual(rankByAverage([{ ticker: "A", ocfMargin: 10, cover: 3 }, { ticker: "B", ocfMargin: 20, cover: 1 }]), ["B", "A"]);
+test("the fitness score is the average of the two chart points, and ties go to the stronger staying power", () => {
+  assert.equal(earningScore(-40), 0); assert.equal(earningScore(60), 100); assert.equal(earningScore(10), 50); assert.equal(earningScore(297), 100); assert.equal(earningScore(-90), 0);
+  assert.equal(stayingScore(0.1), 0); assert.ok(Math.abs(stayingScore(4) - 100) < 1e-9); assert.equal(stayingScore(5.74), 100); assert.equal(stayingScore(0.06), 0); assert.equal(stayingScore(1000), 100);
+  assert.ok(Math.abs(fitnessScore(10, 4) - 75) < 1e-9);
+  // A: 90 and 62.4; B: 80 and 92.2; C: 70 and 81.2; D: 50 and 100 (a cover beyond the edge counts as the edge)
+  assert.deepEqual(rankByScore([{ ticker: "A", ocfMargin: 50, cover: 1 }, { ticker: "B", ocfMargin: 40, cover: 3 }, { ticker: "C", ocfMargin: 30, cover: 2 }, { ticker: "D", ocfMargin: 10, cover: 1000 }]), ["B", "A", "C", "D"]);
+  // same score: 60/0.1 and 20/4 are both 30 points; the higher staying power is placed above
+  assert.deepEqual(rankByScore([{ ticker: "A", ocfMargin: 20, cover: 4 }, { ticker: "B", ocfMargin: 60, cover: 0.1 }]), ["A", "B"]);
+  assert.deepEqual(rankByScore([{ ticker: "B", ocfMargin: 60, cover: 0.1 }, { ticker: "A", ocfMargin: 20, cover: 4 }]), ["A", "B"]);
+});
+
+test("genres after the reclassification", () => {
+  const of = id => radarGenre(id).tickers;
+  assert.deepEqual(of("semis"), ["NVDA", "AMD", "INTC", "QCOM", "AMAT", "LRCX"]);
+  assert.deepEqual(of("memory"), ["MU", "SNDK", "WDC", "STX"]);
+  assert.deepEqual(radarGenres.map(genre => genre.id).slice(0, 3), ["ai-cloud", "semis", "memory"]);
+  assert.ok(of("network").includes("MRVL") && of("network").includes("AVGO") && of("ai-cloud").includes("ORCL"));
+  assert.ok(!of("software").includes("ORCL") && !of("semis").some(t => ["MU", "MRVL", "AVGO"].includes(t)));
+  const all = radarGenres.flatMap(genre => genre.tickers);
+  assert.equal(new Set(all).size, all.length);
+  for (const [ticker, former] of Object.entries(formerGenres)) assert.ok(all.includes(ticker) && !radarGenre(former).tickers.includes(ticker));
+});
+
+test("arrows point the way a dot was stopped", () => {
+  assert.deepEqual(beyondDirections(297, 2), { left: false, right: true, up: false, down: false });
+  assert.deepEqual(beyondDirections(-60, 0.06), { left: true, right: false, up: false, down: true });
+  assert.deepEqual(beyondDirections(10, 5.74), { left: false, right: false, up: true, down: false });
+  assert.deepEqual(beyondDirections(10, 1), { left: false, right: false, up: false, down: false });
+});
+
+test("crowded labels are moved apart so that none covers another, and the tapped one keeps its place", () => {
+  const inputs = ["NVDA", "AMD", "INTC", "QCOM", "AMAT", "LRCX", "MU"].map((id, i) => ({ id, x: 150 + (i % 3), y: 100 + (i % 2), r: 6.5, w: 30 }));
+  const boxes = placeLabels(inputs, { left: 0, top: 0, right: 340, bottom: 300 }, 11, [], "AMAT");
+  const list = Object.values(boxes);
+  for (let i = 0; i < list.length; i++) for (let j = i + 1; j < list.length; j++) {
+    const a = list[i], b = list[j];
+    assert.ok(a.x >= b.x + b.w || b.x >= a.x + a.w || a.y >= b.y + b.h || b.y >= a.y + a.h, `${i} and ${j} overlap`);
+  }
+  assert.equal(boxes.AMAT.shifted, false);
 });
 
 test("earning power above 100% is flagged and left out of the ranking, and stays on the chart", () => {
