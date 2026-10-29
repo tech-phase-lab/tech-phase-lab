@@ -1,6 +1,6 @@
 "use client";
 import { useMemo } from "react";
-import { X_TICKS, Y_TICKS, beyondText, isBeyond, placeLabels, previousBeyondText, spreadEdgeDots, xPosition, yPosition, zoneName, zoneOf, type RadarDotFree, type RadarDotPro, type Zone } from "@/lib/research/radar";
+import { X_TICKS, Y_TICKS, beyondDirections, beyondText, isBeyond, placeLabels, previousBeyondText, spreadEdgeDots, xPosition, yPosition, zoneName, zoneOf, type RadarDotFree, type RadarDotPro, type Zone } from "@/lib/research/radar";
 import styles from "./radar.module.css";
 
 const W = 340, H = 316, L = 46, T = 10, R = 330, B = 282;
@@ -41,13 +41,15 @@ export default function RadarChart({ dots, selected, onSelect }: { dots: (RadarD
       return { ...spec, box };
     });
   }, [dots, x0, yMid, where]);
-  const extras = useMemo(() => Object.fromEntries(dots.map(dot => [dot.ticker, isBeyond(dot.ocfMargin, dot.cover) ? beyondText(dot.ocfMargin, dot.cover) : ""])), [dots]);
+  // PRO view: the long labels with numbers belong to the tapped company only; the others show just their name. FREE view is unchanged.
+  const proView = !!onSelect;
+  const extras = useMemo(() => Object.fromEntries(dots.map(dot => [dot.ticker, isBeyond(dot.ocfMargin, dot.cover) && (!proView || dot.ticker === selected) ? beyondText(dot.ocfMargin, dot.cover) : ""])), [dots, selected, proView]);
   // A previous position outside the chart has no dotted line; its value is written beside the name.
-  const earlier = useMemo(() => Object.fromEntries(dots.map(dot => [dot.ticker, isPro(dot) ? previousBeyondText(dot.previous) : ""])), [dots]);
+  const earlier = useMemo(() => Object.fromEntries(dots.map(dot => [dot.ticker, isPro(dot) && (!proView || dot.ticker === selected) ? previousBeyondText(dot.previous) : ""])), [dots, selected, proView]);
   const labels = useMemo(() => placeLabels(dots.map(dot => {
     const r = RADIUS[dot.size], extra = extras[dot.ticker];
     return { id: dot.ticker, x: where[dot.ticker].x, y: where[dot.ticker].y, r, w: dot.ticker.length * 6.3 + 2 + (extra ? extra.length * 4.7 + 7 : 0) + (earlier[dot.ticker] ? earlier[dot.ticker].length * 5.2 + 7 : 0) };
-  }), { left: L + 2, top: T + 2, right: R - 2, bottom: B - 2 }, 11, zoneLabels.map(label => label.box)), [dots, zoneLabels, extras, earlier, where]);
+  }), { left: L + 2, top: T + 2, right: R - 2, bottom: B - 2 }, 11, zoneLabels.map(label => label.box), selected), [dots, zoneLabels, extras, earlier, where, selected]);
   const selectedDot = dots.find(dot => dot.ticker === selected);
   return <>
     <svg className={styles.svg} viewBox={`0 0 ${W} ${H}`} role="img" aria-label="横軸が稼ぐ力、縦軸が守る力の散布図" onClick={() => onSelect?.(null)}>
@@ -76,6 +78,13 @@ export default function RadarChart({ dots, selected, onSelect }: { dots: (RadarD
           {hollow
             ? <circle cx={cx} cy={cy} r={r - 0.75} fill={BACKGROUND} stroke={toneColor(dot.tone)} strokeWidth="1.8" />
             : <circle cx={cx} cy={cy} r={r} fill={toneColor(dot.tone)} stroke={BACKGROUND} strokeWidth="2" />}
+          {/* A dot stopped at an edge carries a small arrow on its rim, pointing the way its real value lies. */}
+          {Object.entries(beyondDirections(dot.ocfMargin, dot.cover)).filter(([, beyond]) => beyond).map(([way]) => {
+            const d = r + 1.5, a = 3;
+            const points = way === "left" ? `${cx - d - a},${cy} ${cx - d},${cy - a} ${cx - d},${cy + a}` : way === "right" ? `${cx + d + a},${cy} ${cx + d},${cy - a} ${cx + d},${cy + a}`
+              : way === "up" ? `${cx},${cy - d - a} ${cx - a},${cy - d} ${cx + a},${cy - d}` : `${cx},${cy + d + a} ${cx - a},${cy + d} ${cx + a},${cy + d}`;
+            return <polygon key={way} points={points} fill={toneColor(dot.tone)} data-beyond={way} />;
+          })}
         </g>;
       })}
       {dots.map(dot => {

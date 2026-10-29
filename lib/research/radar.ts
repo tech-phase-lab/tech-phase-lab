@@ -2,14 +2,17 @@ import type { RadarFacts } from "./radar-facts.ts";
 
 /** Genres the Financial Radar can show. Tickers are listed in the order they are drawn. */
 export const radarGenres = [
-  { id: "ai-cloud", ja: "AIクラウド", tickers: ["CRWV", "NBIS", "IREN", "APLD", "CIFR", "WULF", "CORZ"] },
-  { id: "semis", ja: "半導体", tickers: ["NVDA", "AMD", "AVGO", "MU", "QCOM", "INTC", "MRVL"] },
-  { id: "network", ja: "通信・光", tickers: ["ANET", "LITE", "COHR", "CRDO", "ALAB", "AAOI"] },
-  { id: "software", ja: "ソフトウェア", tickers: ["MSFT", "ORCL", "NOW", "CRM", "ADBE", "PLTR", "SNOW"] },
+  { id: "ai-cloud", ja: "AIクラウド", tickers: ["CRWV", "NBIS", "IREN", "APLD", "CIFR", "WULF", "CORZ", "ORCL"] },
+  { id: "semis", ja: "半導体", tickers: ["NVDA", "AMD", "INTC", "QCOM", "AMAT", "LRCX"] },
+  { id: "memory", ja: "メモリ・ストレージ", tickers: ["MU", "SNDK", "WDC", "STX", "RMBS", "P"] },
+  { id: "network", ja: "通信・光", tickers: ["ANET", "LITE", "COHR", "CRDO", "ALAB", "AAOI", "MRVL", "AVGO"] },
+  { id: "software", ja: "ソフトウェア", tickers: ["MSFT", "NOW", "CRM", "ADBE", "PLTR", "SNOW"] },
   { id: "power", ja: "電力・設備", tickers: ["VST", "CEG", "GEV", "BE", "VRT"] },
 ] as const;
 export type RadarGenreId = typeof radarGenres[number]["id"];
 export const radarGenre = (id: string | null) => radarGenres.find(genre => genre.id === id);
+/** Where a moved company's stored row may still sit: its figures do not depend on the genre, so they are read from there until the new genre has its own. */
+export const formerGenres: Record<string, RadarGenreId> = { MRVL: "semis", AVGO: "semis", MU: "semis", ORCL: "software" };
 
 // ---- scales: evenly spaced ticks, values beyond the range stop at the edge ----
 export const X_TICKS = [-40, -20, 0, 20, 40, 60] as const;
@@ -30,6 +33,9 @@ export function beyondText(ocfMargin: number, cover: number): string {
   if (cover > Y_MAX) parts.push(`▲ ${times}`); else if (cover < Y_MIN) parts.push(`▼ ${times}`);
   return parts.join(" ");
 }
+
+/** Which edges a dot was stopped at, for the small arrows on its rim. */
+export const beyondDirections = (ocfMargin: number, cover: number) => ({ left: ocfMargin < X_MIN, right: ocfMargin > X_MAX, up: cover > Y_MAX, down: cover < Y_MIN });
 
 export type Zone = "solid" | "lever" | "guard" | "thin";
 export const zoneName: Record<Zone, string> = { solid: "盤石", lever: "借入で攻める", guard: "守りで耐える", thin: "余力が小さい" };
@@ -56,6 +62,8 @@ export type RadarDotFree = { ticker: string } & Point & { up: boolean | null; to
 export type RadarDotPro = RadarDotFree & { fcfMargin: number; growth: number | null; asOf: string; basis: "annual" | "ttm"; previous: (Point & { asOf: string }) | null;
   /** Position in the ranking; null for a dot that needs checking (not ranked). */
   rank: number | null;
+  /** Fitness score out of 100 (average of the two chart points). */
+  score: number;
   /** Earning power above 100% usually comes from customers paying in advance, not from the business: it is flagged and left out of the ranking. */
   review: boolean };
 /** Operating cash flow above this share of revenue is flagged for checking. */
@@ -65,15 +73,14 @@ export type RadarPayload =
   | { tier: "pro"; genre: RadarGenreId; dots: RadarDotPro[]; missing: string[]; asOf: string | null };
 
 const finite = (value: number) => Number.isFinite(value) ? value : 1000; // JSON cannot carry Infinity: 1000x is far beyond the 4x edge
-/** Order inside a genre: rank by earning power and rank by staying power, then the average of the two ranks (the lower the better).
- * Raw numbers are never added. Ties go to the stronger earning power. */
-export function rankByAverage(points: { ticker: string; ocfMargin: number; cover: number }[]): string[] {
-  const rankOf = (value: (point: typeof points[number]) => number) => {
-    const sorted = [...points].sort((a, b) => value(b) - value(a));
-    return Object.fromEntries(sorted.map((point, i) => [point.ticker, i + 1]));
-  };
-  const earning = rankOf(point => point.ocfMargin), staying = rankOf(point => point.cover);
-  return [...points].sort((a, b) => (earning[a.ticker] + staying[a.ticker]) - (earning[b.ticker] + staying[b.ticker]) || earning[a.ticker] - earning[b.ticker]).map(point => point.ticker);
+/** The two chart positions as points out of 100: earning power on its -40%..60% axis, staying power on the 0.1x..4x log axis. */
+export const earningScore = (ocfMargin: number) => xPosition(ocfMargin) * 100;
+export const stayingScore = (cover: number) => yPosition(cover) * 100;
+/** Fitness score: the average of the two chart points. */
+export const fitnessScore = (ocfMargin: number, cover: number) => (earningScore(ocfMargin) + stayingScore(cover)) / 2;
+/** Order inside a genre: the higher fitness score first; on a tie the stronger staying power goes first. */
+export function rankByScore(points: { ticker: string; ocfMargin: number; cover: number }[]): string[] {
+  return [...points].sort((a, b) => fitnessScore(b.ocfMargin, b.cover) - fitnessScore(a.ocfMargin, a.cover) || stayingScore(b.cover) - stayingScore(a.cover)).map(point => point.ticker);
 }
 
 /** Builds the response for one genre. Only a PRO payload ever contains the previous earnings, the numbers or the ranking. */
@@ -88,11 +95,11 @@ export function buildRadar(genre: RadarGenreId, entries: { ticker: string; facts
   });
   if (tier === "free") return { tier, genre, dots: base };
   const flagged = (entry: typeof ready[number]) => entry.latest.ocfMargin > REVIEW_ABOVE;
-  const order = rankByAverage(ready.filter(entry => !flagged(entry)).map(entry => ({ ticker: entry.ticker, ocfMargin: entry.latest.ocfMargin, cover: finite(entry.latest.cover) })));
+  const order = rankByScore(ready.filter(entry => !flagged(entry)).map(entry => ({ ticker: entry.ticker, ocfMargin: entry.latest.ocfMargin, cover: finite(entry.latest.cover) })));
   const dots: RadarDotPro[] = ready.map((entry, i) => ({
     ...base[i], fcfMargin: entry.latest.fcfMargin, growth: entry.latest.revenueGrowth, asOf: entry.latest.end, basis: entry.latest.basis,
     previous: entry.previous ? { ocfMargin: entry.previous.ocfMargin, cover: finite(entry.previous.cover), asOf: entry.previous.end } : null,
-    rank: flagged(entry) ? null : order.indexOf(entry.ticker) + 1, review: flagged(entry),
+    score: fitnessScore(entry.latest.ocfMargin, finite(entry.latest.cover)), rank: flagged(entry) ? null : order.indexOf(entry.ticker) + 1, review: flagged(entry),
   }));
   const asOf = ready.map(entry => entry.latest.end).sort().at(-1) ?? null;
   return { tier, genre, dots, missing: entries.filter(entry => !entry.facts.latest).map(entry => entry.ticker), asOf };
@@ -126,12 +133,12 @@ const hitsDot = (box: LabelBox, dot: { x: number; y: number; r: number }) => {
 };
 /** Each label sits at the side of its own dot (right first, left when there is no room). When it would cover another label,
  * dot or zone name it is moved up or down in steps and joined to its dot by a thin line. */
-export function placeLabels(inputs: LabelInput[], bounds: { left: number; top: number; right: number; bottom: number }, height = 11, avoid: LabelBox[] = []): Record<string, PlacedLabel> {
+export function placeLabels(inputs: LabelInput[], bounds: { left: number; top: number; right: number; bottom: number }, height = 11, avoid: LabelBox[] = [], first: string | null = null): Record<string, PlacedLabel> {
   const placed: Record<string, PlacedLabel> = {};
   const boxes: LabelBox[] = [...avoid];
   const crowd = (input: LabelInput) => inputs.filter(other => other !== input && Math.hypot(other.x - input.x, other.y - input.y) < 40).length;
-  const steps = [0, -1, 1, -2, 2, -3, 3, -4, 4, -5, 5];
-  for (const input of [...inputs].sort((a, b) => crowd(b) - crowd(a))) {
+  const steps = [0, -1, 1, -2, 2, -3, 3, -4, 4, -5, 5, -6, 6, -7, 7, -8, 8];
+  for (const input of [...inputs].sort((a, b) => Number(b.id === first) - Number(a.id === first) || crowd(b) - crowd(a))) {
     const { x, y, r, w } = input, h = height, g = 3, lift = h + 1;
     const candidates = steps.flatMap(step => [
       { box: { x: x + r + g + (step ? 6 : 0), y: y - h / 2 + step * lift, w, h }, step },

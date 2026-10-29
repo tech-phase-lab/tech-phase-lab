@@ -34,5 +34,9 @@ test('a hash chosen by a tap wins over an address bar that Next.js put back (own
   window.location.pathname = '/research/news';
   window.location.hash = '';
   assert.equal(effectiveHash(), '');
+  // ...and coming back to the home page later does not bring the old choice back.
+  window.location.pathname = '/research';
+  window.location.hash = '#research-main';
+  assert.equal(effectiveHash(), '#research-main');
   delete globalThis.window;
 });

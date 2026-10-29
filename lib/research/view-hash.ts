@@ -25,7 +25,9 @@ export function rememberHash(hash: string) {
 /** The hash the screen should act on: a tapped one while it still applies, else the address bar's. */
 export function effectiveHash(): string {
   if (typeof window === "undefined") return "";
-  if (remembered && remembered.path === window.location.pathname) return remembered.hash;
+  // Once the reader is on another page the choice is over: coming back to the home page starts from the address bar again.
+  if (remembered && remembered.path !== window.location.pathname) remembered = null;
+  if (remembered) return remembered.hash;
   return window.location.hash;
 }
 
