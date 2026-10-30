@@ -9,9 +9,9 @@ import ts from "typescript";
 const require = createRequire(import.meta.url);
 function load(path, stubs = {}) {
   const out = ts.transpileModule(readFileSync(new URL(path, import.meta.url), "utf8"), { compilerOptions: { module: ts.ModuleKind.CommonJS, jsx: ts.JsxEmit.ReactJSX, target: ts.ScriptTarget.ES2022 } }).outputText;
-  const module = { exports: {} };
-  new Function("require", "module", "exports", out)(id => id.endsWith(".module.css") ? { default: new Proxy({}, { get: (_, key) => String(key) }) } : id in stubs ? stubs[id] : require(id), module, module.exports);
-  return module.exports;
+  const mod = { exports: {} };
+  new Function("require", "module", "exports", out)(id => id.endsWith(".module.css") ? { default: new Proxy({}, { get: (_, key) => String(key) }) } : id in stubs ? stubs[id] : require(id), mod, mod.exports);
+  return mod.exports;
 }
 const avatars = load("../app/research/account/avatars.ts");
 const sheets = load("../app/research/account/account-sheets.tsx", {
