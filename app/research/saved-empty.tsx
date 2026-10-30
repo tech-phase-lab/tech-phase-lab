@@ -11,8 +11,8 @@ export default function SavedEmpty({ lang, onFind }: { lang: Language; onFind: (
       <div className={styles.card} aria-label={t("書き込みの例", "Example of writing")}>
         <div className={styles.top}><span className={styles.example}>{t("書き込みの例", "Example")}</span></div>
         <p>{ja
-          ? <>同社は新工場の<mark className={styles.hl}>稼働を来期の初めに前倒しし</mark>、<span className={styles.ul}>生産能力の引き上げ</span>と<span className={styles.bx}>需要の取り込み</span>を狙う。</>
-          : <>The company will <mark className={styles.hl}>start the new fab early next quarter</mark>, aiming to <span className={styles.ul}>raise capacity</span> and <span className={styles.bx}>capture demand</span>.</>}</p>
+          ? <>同社は新工場の<mark className={styles.hl}>稼働を来期の初めに前倒しし</mark>、<br /><span className={styles.ul}>生産能力の引き上げ</span>と<span className={styles.bx}>需要の取り込み</span>を狙う。</>
+          : <>The company will <mark className={styles.hl}>start the new fab early next quarter</mark>,<br />aiming to <span className={styles.ul}>raise capacity</span> and <span className={styles.bx}>capture demand</span>.</>}</p>
         <div className={styles.memo}>
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#d9b56a" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="m15 4 5 5M4 20l5-1L21 7a2 2 0 0 0-5-5L4 14v6Z" /></svg>
           <span>{t("次の決算で、設備投資の額を確認する", "Check capital spending at the next earnings")}</span>
