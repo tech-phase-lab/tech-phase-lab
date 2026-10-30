@@ -38,6 +38,7 @@ new Function('require', 'module', 'exports', 'window', compiled)(id => {
   if (id === '@/lib/research/member-recovery') return { recoverMember: () => { recoveryCalls++; return new Promise(() => {}); } };
   if (id === '../identity-provider') return { useIdentityRefresh: () => async () => {} };
   if (id === './preview-controls') return { default: () => null };
+  if (id === './account-view') return { default: () => null };
   return require(id);
 }, target, target.exports, { location: { get hash() { return hash; } }, sessionStorage: { getItem: () => returnPath } });
 function render(fragment) {

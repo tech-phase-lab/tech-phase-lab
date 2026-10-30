@@ -1,0 +1,149 @@
+.page{--gold:#d9b56a;--gold-l:#f0d796;--gold-d:#c9a24f;max-width:520px;margin:0 auto;padding:6px 0 130px;color:#e8edf3;font-family:"Noto Sans JP",system-ui,sans-serif}
+.page .kick{font:500 10.5px "JetBrains Mono",ui-monospace,monospace;letter-spacing:.3em;color:#5de0b0}
+.page .kickGold{color:var(--gold)}
+.page .h1{margin:8px 0 0;font:600 28px/1.35 "Noto Serif JP","Hiragino Mincho ProN",serif;letter-spacing:.06em;color:#e8edf3}
+.page .cd{position:relative;margin-top:20px;border-radius:18px;border:1px solid #1e2a3a;background:#0e1520}
+.page .cdGold{border-color:#6b5a2e;background:linear-gradient(160deg,#17130b,#0e1118 65%);box-shadow:0 0 34px rgba(217,181,106,.10)}
+.page .hero{display:flex;align-items:center;gap:14px;padding:16px 16px 14px}
+.page .av{position:relative;flex:none}
+.page .avc{width:52px;height:52px;border-radius:26px;border:1.5px solid #3d7a64;box-shadow:0 0 20px rgba(93,224,176,.18);color:#9fe3c4;background:rgba(93,224,176,.06);display:flex;align-items:center;justify-content:center;font:600 21px "Noto Serif JP",serif;overflow:hidden;font-size:21px}
+.page .avPro{border-color:var(--gold-d);box-shadow:0 0 20px rgba(217,181,106,.25);color:var(--gold-l);background:rgba(217,181,106,.07)}
+.page .avOwner{border:2px solid var(--gold-d);box-shadow:0 0 22px rgba(217,181,106,.35);padding:0;background:#10141c}
+.page .avOwner img{width:100%;height:100%;object-fit:cover;display:block}
+.page .avEmoji{font-size:27px;line-height:1;font-family:"Noto Color Emoji",sans-serif}
+.page .pencil{position:absolute;right:-3px;bottom:-3px;width:22px;height:22px;padding:0;border-radius:11px;background:#141d29;border:1px solid #2f4259;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.page .pencil:focus-visible,.page .row:focus-visible,.page .btn:focus-visible,.page .link:focus-visible,.page .chip:focus-visible,.page .tile:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.page .who{flex:1;min-width:0}
+.page .name{font-size:17px;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.page .mail{margin-top:3px;font-size:12px;color:#8697ab;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.page .pt{display:inline-flex;align-items:center;height:24px;padding:0 10px;border-radius:12px;font-size:11px;font-weight:700;letter-spacing:.1em;border:1px solid;white-space:nowrap}
+.page .ptFree{color:#9fe3c4;border-color:#2c5a4a;background:rgba(122,216,171,.08)}
+.page .ptPro,.page .ptOwner{color:#2a1f05;border-color:var(--gold-d);background:linear-gradient(120deg,var(--gold-l),var(--gold-d))}
+.page .ptOn{color:#9fe3c4;border-color:#2c5a4a;background:rgba(122,216,171,.08);letter-spacing:.04em}
+.page .ptOn i{width:6px;height:6px;border-radius:3px;background:#7ad8ab;margin-right:6px}
+.page .ptStop{color:#f0c27a;border-color:#6b4d22;background:rgba(240,194,122,.08);letter-spacing:.04em}
+.page .ptUnknown{color:#c9d3df;border-color:#3a4658;background:rgba(150,170,195,.08);letter-spacing:.04em}
+.page .grp{border-top:1px solid #1a2330}
+.page .cdIn .grp{border-top:0}
+.page .row{display:flex;align-items:center;gap:13px;width:100%;min-height:54px;padding:0 14px;border:0;border-bottom:1px solid #1a2330;background:none;color:#e8edf3;font:inherit;font-size:14px;text-align:left;text-decoration:none;cursor:pointer;box-sizing:border-box}
+.page .row:last-child{border-bottom:0}
+.page .ri{width:34px;height:34px;border-radius:11px;border:1px solid #243449;background:#101a25;display:flex;align-items:center;justify-content:center;flex:none}
+.page .rt{flex:1;min-width:0}
+.page .rt small{display:block;margin-top:2px;font-size:11.5px;color:#7d8ca0}
+.page .rv{font-size:12px;color:#7d8ca0}
+.page .rvOn{color:#9fe3c4}
+.page .proTag{font:700 9.5px "JetBrains Mono",monospace;letter-spacing:.14em;color:#2a1f05;background:var(--gold);border-radius:6px;padding:2px 6px;margin-right:2px}
+.page .danger{color:#e5838c}
+.page .muted{color:#a9b6c6}
+.page .sl{margin:30px 2px 10px;font-size:12px;letter-spacing:.14em;color:#7d8ca0;display:flex;align-items:center;gap:10px}
+.page .sl:after{content:"";flex:1;height:1px;background:#1a2330}
+.page .slGold{color:#8a7a52}
+.page .pro{padding:18px 18px 18px;border-radius:20px}
+.page .proFree{padding:20px 18px 18px;border-radius:22px;background:radial-gradient(120% 90% at 100% 0%,rgba(217,181,106,.14),transparent 55%),linear-gradient(160deg,#17130b,#0e1118 65%);box-shadow:0 0 34px rgba(217,181,106,.12)}
+.page .proHead{display:flex;align-items:center;gap:12px}
+.page .proName{font:600 18px "Noto Serif JP",serif}
+.page .proTagRow{margin-top:6px}
+.page .price{margin-top:16px;display:flex;align-items:baseline;gap:6px}
+.page .priceN{font-size:34px;font-weight:700;background:linear-gradient(120deg,#f6e4b0,var(--gold));-webkit-background-clip:text;background-clip:text;color:transparent}
+.page .priceU{font-size:13px;color:#8a7a52}
+.page .priceR{margin-left:auto;font-size:11.5px;color:#7d8ca0}
+.page .perks{margin:12px 0 0;padding:4px 0 0;border-top:1px solid #2a2518;list-style:none}
+.page .perks li{display:flex;align-items:center;gap:10px;font-size:13px;color:#d5dde6;margin-top:9px}
+.page .kv{display:flex;align-items:baseline;justify-content:space-between;gap:12px;padding:13px 0;border-bottom:1px solid #1d2733;font-size:13px}
+.page .kv:last-child{border-bottom:0}
+.page .kv>span:first-child{color:#8697ab}
+.page .kv b{font-weight:700;font-size:14px;text-align:right}
+.page .kv small{font-size:11px;color:#7d8ca0;font-weight:500}
+.page .kvs{margin-top:10px}
+.page .note{margin:6px 0 0;font-size:12.5px;color:#a9b6c6;line-height:1.7}
+.page .ctaNote{margin-top:11px;text-align:center;font-size:11.5px;color:#7d8ca0}
+.page .btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;height:52px;border-radius:15px;border:0;font:700 15px "Noto Sans JP",system-ui,sans-serif;cursor:pointer;text-decoration:none;box-sizing:border-box}
+.page .gbt{background:linear-gradient(120deg,var(--gold-l),var(--gold-d));color:#2a1f05;box-shadow:0 8px 24px rgba(217,181,106,.22)}
+.page .gbtO{background:transparent;border:1px solid #6b5a2e;color:#e7c982;box-shadow:none}
+.page .mbt{background:linear-gradient(120deg,#9fe8c8,#5fcca2);color:#05281d}
+.page .abt{background:linear-gradient(120deg,#f0b27c,#d98748);color:#2b1404;height:50px}
+.page .abtO{background:transparent;border:1px solid #6b4528;color:#f0b27c}
+.page .btn:disabled{opacity:.4;cursor:not-allowed;box-shadow:none}
+.page .btnS{height:48px;font-size:14px}
+.page .link{display:block;width:100%;margin-top:14px;padding:8px 0;border:0;background:none;text-align:center;font:inherit;font-size:13px;color:#a9b6c6;cursor:pointer}
+.page .link:disabled{opacity:.4;cursor:not-allowed}
+.page .res{padding:16px;border-radius:20px;border:1px solid #5a3a20;background:linear-gradient(160deg,#18110b,#0e1118 65%)}
+.page .resHead{display:flex;flex-wrap:wrap;align-items:center;gap:10px 12px}
+.page .resIcon{width:44px;height:44px;border-radius:14px;border:1px solid #6b4528;background:rgba(240,178,124,.08);display:flex;align-items:center;justify-content:center}
+.page .resName{flex:1;font:700 15px "JetBrains Mono",monospace;letter-spacing:.16em;color:#f0b27c}
+.page .resSub{width:100%;order:3;font-size:10.5px;white-space:nowrap;color:#8697ab;letter-spacing:0}
+@media(max-width:350px){.page .resSub{font-size:9.5px}
+}.page .stack{display:grid;gap:10px;margin-top:14px}
+.page .foot{margin-top:22px;text-align:center;font-size:11px;color:#4c5d72}
+.page .err{margin-top:12px;font-size:12.5px;color:#e5838c;line-height:1.7}
+.page .ownerHero{border-color:var(--gold-d);background:linear-gradient(160deg,#17130b,#0e1118 65%);box-shadow:0 0 36px rgba(217,181,106,.14)}
+.page .ownerBadge{display:flex;align-items:center;gap:16px;padding:16px;margin-top:12px;border-radius:20px;border:1px solid var(--gold-d);background:linear-gradient(160deg,#17130b,#0e1118 65%)}
+.page .seal{width:56px;height:56px;border-radius:28px;background:linear-gradient(140deg,var(--gold-l),var(--gold-d));display:flex;align-items:center;justify-content:center;box-shadow:0 0 22px rgba(217,181,106,.3);flex:none}
+.page .ownerWord{font:600 20px "Noto Serif JP",serif;letter-spacing:.3em;color:var(--gold-l)}
+.page .ownerSub{margin-top:3px;font-size:13px;color:#a58c55}
+.page .ownerNone{font-size:12px;color:#8697ab;text-align:right;max-width:5em}
+.page .mode{margin-top:10px;padding:16px;border-radius:18px;border:1px solid #3a3220;background:#0d0f13}
+.page .modeHead{display:flex;align-items:baseline;gap:10px;font-size:15px;font-weight:700}
+.page .modeHead span{font:500 10.5px "JetBrains Mono",monospace;letter-spacing:.2em;color:#8a7a52}
+.page .seg{display:grid;grid-template-columns:repeat(3,1fr);margin-top:12px;padding:4px;border-radius:16px;border:1px solid #3a3220;background:#090b0f}
+.page .seg button{height:44px;border:0;border-radius:12px;background:none;color:#8697ab;font:inherit;font-size:14px;font-weight:500;cursor:pointer}
+.page .seg button[aria-pressed=true]{background:linear-gradient(120deg,var(--gold-l),var(--gold-d));color:#2a1f05;font-weight:700;box-shadow:0 4px 14px rgba(217,181,106,.25)}
+.page .modeNote{margin:12px 2px 0;font-size:12.5px;color:#8a7a52}
+.page .ownerMenu{border-color:#3a3220}
+.page .ownerMenu .ri{border-color:#3a3220;color:#e7c982}
+.page .previewBar{margin-top:14px;padding:10px 14px;border-radius:12px;border:1px solid #3a3220;background:rgba(217,181,106,.06);font-size:12px;color:#c9b27a;line-height:1.6}
+.page .scrim{position:fixed;inset:0;z-index:90;display:flex;align-items:flex-end;justify-content:center;background:rgba(3,5,8,.72)}
+.page .sheet{width:100%;max-width:520px;max-height:90vh;overflow-y:auto;padding:10px 20px 30px;border:1px solid #6b5a2e;border-bottom:0;border-radius:26px 26px 0 0;background:linear-gradient(180deg,#17130b,#0b1018 45%);box-sizing:border-box;color:#e8edf3;font-family:"Noto Sans JP",system-ui,sans-serif}
+.page .sheetPlain{border-color:#243449;background:#0c1118}
+.page .handle{width:42px;height:4px;margin:0 auto 18px;border-radius:2px;background:#3a3220}
+.page .sTitle{margin:0 0 16px;font:600 22px/1.4 "Noto Serif JP",serif}
+.page .sBox{padding:4px 16px;border-radius:18px;border:1px solid #4a3f22;background:#1c1810}
+.page .sBox .kv{padding:17px 0;border-color:#2a2518}
+.page .check{display:flex;align-items:flex-start;gap:12px;margin:18px 0;font-size:13.5px;line-height:1.7;color:#a9b6c6;cursor:pointer}
+.page .check input{position:absolute;opacity:0;pointer-events:none}
+.page .box{flex:none;width:44px;height:44px;margin:-6px -6px -6px -6px;display:flex;align-items:center;justify-content:center}
+.page .box i{width:32px;height:32px;border-radius:9px;border:1.5px solid #4a5568;display:flex;align-items:center;justify-content:center;box-sizing:border-box}
+.page .check input:checked+.box i{background:linear-gradient(120deg,var(--gold-l),var(--gold-d));border-color:var(--gold-d)}
+.page .check input:focus-visible+.box i{outline:2px solid var(--gold);outline-offset:2px}
+.page .check a{color:#e7c982;text-decoration:underline}
+.page .sCancel{display:block;width:100%;margin-top:6px;padding:12px 0;border:0;background:none;font:inherit;font-size:14px;color:#a9b6c6;cursor:pointer}
+.page .sBody{margin:0 0 16px;font-size:14px;line-height:1.8;color:#c9d3df}
+.page .warn{margin:0 0 16px;padding:12px 14px;border-radius:12px;border:1px solid #5a3a20;background:rgba(240,178,124,.08);font-size:13px;line-height:1.7;color:#f0c59a}
+.page .dBtn{background:#6d2530;color:#ffe9eb;border:1px solid #a64453}
+.page .field{display:block;margin:0 0 16px}
+.page .field span{display:block;margin-bottom:6px;font-size:12px;color:#8697ab}
+.page .field input{width:100%;height:48px;padding:0 14px;border-radius:12px;border:1px solid #2a3647;background:#0b1118;color:#e8edf3;font:inherit;font-size:15px;box-sizing:border-box}
+.page .preview{display:flex;justify-content:center;margin:6px 0 20px}
+.page .pv{width:88px;height:88px;border-radius:44px;border:2.5px solid var(--gold-d);box-shadow:0 0 34px rgba(217,181,106,.4);display:flex;align-items:center;justify-content:center;font-size:42px;overflow:hidden}
+.page .tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:11px;margin-bottom:18px}
+.page .tile{height:66px;border-radius:18px;border:1px solid rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center;font-size:31px;line-height:1;font-family:"Noto Color Emoji",sans-serif;cursor:pointer;padding:0;color:#9fe3c4}
+.page .tile[aria-pressed=true]{border:2px solid #5de0b0;box-shadow:0 0 16px rgba(93,224,176,.4)}
+.page .tileInit{font:600 30px "Noto Serif JP",serif}
+.page .back{display:inline-flex;align-items:center;gap:4px;min-height:44px;font-size:12.5px;color:#e7c982;text-decoration:none}
+.page .search{display:flex;align-items:center;gap:10px;margin-top:16px;height:48px;padding:0 14px;border-radius:14px;border:1px solid #3a3220;background:#0b0d12}
+.page .search input{flex:1;min-width:0;border:0;background:none;color:#e8edf3;font:inherit;font-size:13.5px;outline:0}
+.page .chips{display:flex;gap:8px;margin-top:12px;overflow-x:auto;padding-bottom:2px}
+.page .chip{flex:none;height:32px;padding:0 14px;border-radius:16px;border:1px solid #243449;background:none;color:#8697ab;font:inherit;font-size:12.5px;cursor:pointer;white-space:nowrap}
+.page .chip[aria-pressed=true]{background:rgba(217,181,106,.14);border-color:#8a6f33;color:var(--gold-l)}
+.page .count{margin-top:14px;font-size:12px;color:#7d8ca0}
+.page .list{margin-top:8px;border-radius:18px;border:1px solid #3a3220;background:#0e1520;overflow:hidden}
+.page .item{padding:13px 14px;border-bottom:1px solid #1a2330}
+.page .item:last-child{border-bottom:0}
+.page .itemTop{display:flex;align-items:center;gap:10px}
+.page .itemName{font-size:14px;font-weight:700}
+.page .itemMail{font-size:11.5px;color:#7d8ca0;margin-top:2px;overflow:hidden;text-overflow:ellipsis}
+.page .itemSub{margin-top:7px;font-size:12px;color:#8697ab}
+.page .help{margin-top:12px;font-size:11.5px;line-height:1.7;color:#6b7a8e}
+.page .stat{margin-top:12px;padding:16px;border-radius:18px;border:1px solid #243449;background:#0e1520}
+.page .statHead{display:flex;align-items:center;justify-content:space-between;font-size:15px;font-weight:700}
+.page .statGrid{display:grid;grid-template-columns:1fr 1fr;gap:12px 10px;margin-top:12px}
+.page .statGrid div{padding:10px 12px;border-radius:12px;background:#101a25;font-size:12px;color:#8697ab}
+.page .statGrid b{display:block;margin-top:4px;font-size:15px;color:#e8edf3;font-weight:700}
+.page .okTag{color:#9fe3c4;border-color:#2c5a4a;background:rgba(122,216,171,.08)}
+.page .skel{height:150px;border-radius:20px;background:linear-gradient(90deg,#10161f 25%,#18212d 50%,#10161f 75%) 0 0/200% 100%;animation:sh 1.4s linear infinite}
+@keyframes sh{to{background-position:-200% 0}}@media(prefers-reduced-motion:reduce){.page .skel{animation:none}
+}
+.page .delBlock{margin-top:12px;padding:16px 18px;border-radius:18px;border:1px solid #1e2a3a;background:#0e1520}
+.page .delBlock h2{margin:0;font-size:15px;font-weight:700;color:#e8edf3}
+.page .delBlock p{margin:8px 0 0;font-size:13px;line-height:1.8;color:#7d8ca0}
+.page .stopBtn{background:transparent;border:1px solid #7a2f3c;color:#f08a96}
