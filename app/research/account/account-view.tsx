@@ -112,7 +112,7 @@ export default function AccountView({ ja, member, billingAvailable, upgradeFirst
     if (upgradeFirst) router.replace("/research");
   }, [upgradeFirst, router]);
   const closePlain = useCallback(() => setSheet(""), []);
-  const ownerPreviewNote = <p className={styles.previewBar}>{t("表示の確認中です。ここでの操作は、実際の契約や権限には反映されません。", "Previewing the view. Actions here do not change your real contract or access.")}</p>;
+  const ownerPreviewNote = <p className={styles.previewBar}>{t("表示の確認中です。金額や日付は表示例で、運営者には契約がありません。ここでの操作は、実際の契約や権限には反映されません。", "Previewing the view. Amounts and dates are samples; the owner has no contract. Actions here change nothing real.")}</p>;
 
   async function saveAvatar(id: string) { setProfile({ state: "ok", value: await patchProfile({ icon: id }) }); }
   async function saveName(name: string) { setProfile({ state: "ok", value: await patchProfile({ displayName: name }) }); }
@@ -157,7 +157,8 @@ export default function AccountView({ ja, member, billingAvailable, upgradeFirst
           </>
           : <>
             {!loadingContract && <div className={styles.kvs}>
-              <div className={styles.kv}><span>{t("月額料金", "Monthly price")}</span><b>{price ?? "—"} {c?.currency && <small>{c.currency}</small>}</b></div>
+              <div className={styles.kv}><span>{t("月額料金", "Monthly price")}</span><b>{preview ? "¥2,980" : price ?? "—"} {(preview || c?.currency) && <small>{preview ? "JPY" : c?.currency}</small>}</b></div>
+              {preview && <div className={styles.kv}><span>{t("次回請求日", "Next billing date")}</span><b>{t("（表示例）", "(sample)")}</b></div>}
               {activeContract && <div className={styles.kv}><span>{t("次回請求日", "Next billing date")}</span><b>{formatDay(c?.nextBillingAt, ja)}</b></div>}
               {stopped && <div className={styles.kv}><span>{t("利用期限", "Access until")}</span><b>{accessUntil}</b></div>}
             </div>}
@@ -212,10 +213,11 @@ export default function AccountView({ ja, member, billingAvailable, upgradeFirst
     {profile.state === "ok" && <div className={`${styles.cd} ${owner ? styles.ownerHero : ""}`}>
       <div className={styles.hero}>{avatar}
         <div className={styles.who}><div className={styles.name}>{owner ? "リゼル" : display}</div><div className={styles.mail}>{email}</div></div>
-        <span className={`${styles.pt} ${owner ? styles.ptOwner : effective === "pro" ? styles.ptPro : styles.ptFree}`}>{owner ? "OWNER" : effective === "pro" ? "PRO" : "FREE"}</span></div>
-      {!owner && <div className={`${styles.grp} ${styles.cdIn}`}>
-        {row(I.user, t("表示名を変更", "Change display name"), { onClick: () => setSheet("name") })}
-        {row(I.mail, t("メールアドレスを変更", "Change email"), { href: "/research/account/security" })}
+        <span className={`${styles.pt} ${owner && !preview ? styles.ptOwner : effective === "pro" ? styles.ptPro : styles.ptFree}`}>{owner && !preview ? "OWNER" : effective === "pro" ? "PRO" : "FREE"}</span></div>
+      {(!owner || preview) && <div className={`${styles.grp} ${styles.cdIn}`}>
+        {preview ? <>{row(I.user, t("表示名を変更", "Change display name"))}{row(I.mail, t("メールアドレスを変更", "Change email"))}</>
+          : <>{row(I.user, t("表示名を変更", "Change display name"), { onClick: () => setSheet("name") })}
+        {row(I.mail, t("メールアドレスを変更", "Change email"), { href: "/research/account/security" })}</>}
       </div>}
     </div>}
 
