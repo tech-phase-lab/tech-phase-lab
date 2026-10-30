@@ -8,7 +8,7 @@ test("the weekly notebook preference is saved to the server and never re-sent fr
   const panel = read("../app/research/notification-settings.tsx");
   assert.match(panel, /action: "save-preferences"/);
   assert.match(panel, /action: "preferences"/);
-  assert.doesNotMatch(panel, /localStorage/);
+  assert.doesNotMatch(panel, /notebook-weekly-push/); // no browser copy of the choice
   assert.doesNotMatch(panel, /weeklyNotebook: /);
   assert.match(read("../app/api/research/notifications/route.ts"), /weeklyNotebook: body\.weeklyNotebook !== false/);
   assert.match(read("../scripts/research/web_push.py"), /payload\.get\('weeklyNotebook'\) is False/);

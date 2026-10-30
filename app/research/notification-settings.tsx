@@ -1,11 +1,13 @@
 "use client";
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { waitForIdentity } from "@/lib/research/member-recovery";
 import type { Language } from "@/lib/research/data";
 import styles from "./price-targets-panel.module.css";
 import NotificationPageView, { type Preferences } from "./notification-page-view";
 
+const DEVICE_KEY = "tech-phase:notification-device-state";
+const readDeviceState = () => { try { return localStorage.getItem(DEVICE_KEY) ?? ""; } catch { return ""; } };
 type State = "checking" | "off" | "on" | "unknown" | "blocked" | "unsupported" | "unavailable" | "sign-in" | "pro-required";
 export default function NotificationSettings({ lang, initiallyOpen = false, page = false }: { lang: Language; initiallyOpen?: boolean; page?: boolean }) {
   const [open, setOpen] = useState(initiallyOpen || page);
@@ -22,6 +24,9 @@ export default function NotificationSettings({ lang, initiallyOpen = false, page
   const pendingInspection = useRef(false);
   const [refresh, setRefresh] = useState(0);
   // Per-device choices live on the server. Nothing stored in this browser is ever sent back.
+  // The last settled device state is remembered only to draw the card at once; the check below has the final say.
+  const remembered = useSyncExternalStore(() => () => {}, readDeviceState, () => "");
+  const [starting, setStarting] = useState(false);
   const [prefs, setPrefs] = useState<Preferences | null>(null);
   const [prefsState, setPrefsState] = useState<"idle" | "loading" | "ready" | "error" | "unsupported">("idle");
   const [prefsMessage, setPrefsMessage] = useState("");
@@ -29,24 +34,24 @@ export default function NotificationSettings({ lang, initiallyOpen = false, page
   const saveQueue = useRef<Promise<void>>(Promise.resolve());
   const saving = useRef(0);
   const t = (ja: string, en: string) => lang === "ja" ? ja : en;
+  async function loadPreferences(subscription: PushSubscription, signal: AbortSignal, active: () => boolean) {
+    // Wait for any save in flight so an older read cannot replace a newer choice.
+    if (saving.current) return;
+    setPrefsState(current => current === "ready" ? current : "loading");
+    try {
+      const response = await fetch("/api/research/notifications", { method: "POST", credentials: "same-origin", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ action: "preferences", subscription: subscription.toJSON() }), signal });
+      const result = await response.json();
+      if (!active() || saving.current) return;
+      if (!response.ok || !result.ok || !result.preferences) throw new Error("preferences");
+      confirmed.current = result.preferences; setPrefs(result.preferences); setPrefsState("ready"); setPrefsMessage("");
+    } catch { if (active()) { setPrefsState("error"); setPrefsMessage(t("設定を読み込めませんでした。再読み込みしてください。", "Could not load your settings. Reload to try again.")); } }
+  }
   useEffect(() => {
     if (!open) return;
     let cancelled = false;
     let requestController: AbortController | undefined;
     let resumeTimer: ReturnType<typeof setTimeout> | undefined;
     let expiryTimer: ReturnType<typeof setTimeout> | undefined;
-    async function loadPreferences(subscription: PushSubscription, signal: AbortSignal, active: () => boolean) {
-      // Wait for any save in flight so an older read cannot replace a newer choice.
-      if (saving.current) return;
-      setPrefsState(current => current === "ready" ? current : "loading");
-      try {
-        const response = await fetch("/api/research/notifications", { method: "POST", credentials: "same-origin", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ action: "preferences", subscription: subscription.toJSON() }), signal });
-        const result = await response.json();
-        if (!active() || saving.current) return;
-        if (!response.ok || !result.ok || !result.preferences) throw new Error("preferences");
-        confirmed.current = result.preferences; setPrefs(result.preferences); setPrefsState("ready"); setPrefsMessage("");
-      } catch { if (active()) { setPrefsState("error"); setPrefsMessage(t("設定を読み込めませんでした。再読み込みしてください。", "Could not load your settings. Reload to try again.")); } }
-    }
     async function inspect() {
       if (operation.current) { pendingInspection.current = true; return; }
       pendingInspection.current = false;
@@ -141,7 +146,7 @@ export default function NotificationSettings({ lang, initiallyOpen = false, page
         setHasSubscription(true);
         const result = await request("register", subscription);
         setState(result.registered ? "on" : "unknown"); setReceived(false); setTestSent(false);
-        if (page && result.registered) setRefresh(value => value + 1);
+        if (page && result.registered) await loadPreferences(subscription, AbortSignal.timeout(15_000), () => true);
       } else if (!subscription) { setState("off"); }
       else if (action === "status") {
         const result = await request("status", subscription); setState(result.registered ? "on" : "off");
@@ -186,9 +191,22 @@ export default function NotificationSettings({ lang, initiallyOpen = false, page
       } finally { saving.current--; }
     });
   }
-  if (page) return <NotificationPageView lang={lang} state={state} label={label} busy={busy} usable={usable} hasSubscription={hasSubscription} message={message} testSent={testSent} received={received}
+  // While the check runs the card keeps showing the remembered state (off on a first visit).
+  const shownState: State = state === "checking" ? remembered === "on" ? "on" : "off" : state;
+  useEffect(() => {
+    if (state === "on" || state === "off") { try { localStorage.setItem(DEVICE_KEY, state); } catch { /* storage may be blocked */ } }
+  }, [state]);
+  // A press made before the check finished waits for it, then turns notifications on.
+  useEffect(() => {
+    if (!starting || state === "checking") return;
+    const id = setTimeout(() => { setStarting(false); if (state === "off") void run("enable"); }, 0);
+    return () => clearTimeout(id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [starting, state]);
+  const toggle = () => { if (state === "checking" && shownState === "off") { setStarting(true); return; } void run(shownState === "on" ? "disable" : "enable"); };
+  if (page) return <NotificationPageView lang={lang} state={shownState} label={label} busy={busy} starting={starting} usable={usable || state === "checking"} hasSubscription={hasSubscription} message={message} testSent={testSent} received={received}
     prefs={prefs} prefsState={prefsState} prefsMessage={prefsMessage} onPrefs={savePreferences}
-    onToggle={() => void run(state === "on" ? "disable" : "enable")} onDisable={() => void run("disable")} onTest={() => void run("test")} onRetry={() => setRefresh(value => value + 1)} onStatus={() => void run("status")} onReceived={() => { setReceived(true); setMessage(""); }} />;
+    onToggle={toggle} onDisable={() => void run("disable")} onTest={() => void run("test")} onRetry={() => setRefresh(value => value + 1)} onStatus={() => void run("status")} onReceived={() => { setReceived(true); setMessage(""); }} />;
   return <>
     <button type="button" className={styles.notificationToggle} aria-expanded={open} aria-controls={open ? "price-target-notifications" : undefined} onClick={() => setOpen(!open)}><svg className={styles.bellIcon} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 22a2.3 2.3 0 0 0 2.3-2.3H9.7A2.3 2.3 0 0 0 12 22zm6.6-6.4V11a6.6 6.6 0 0 0-5.1-6.4V3.9a1.5 1.5 0 0 0-3 0v.7A6.6 6.6 0 0 0 5.4 11v4.6L3.6 17.4V19h16.8v-1.6z"/></svg>{t("スマホ通知設定", "Phone notifications")}</button>
     {open && <div id="price-target-notifications" className={styles.notificationBody}>

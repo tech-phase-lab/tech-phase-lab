@@ -18,7 +18,7 @@ function harness(fetch, subscription=null) {
  const source=ts.transpileModule(readFileSync(new URL('../app/research/notification-settings.tsx',import.meta.url),'utf8'),{compilerOptions:{jsx:ts.JsxEmit.ReactJSX,module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2022}}).outputText;
  const target={exports:{}};
  new Function('require','module','exports','window','document','navigator','Notification','fetch','setTimeout','clearTimeout',source)(id=>{
-  if(id==='react')return {...React,useState(initial){const i=index++;if(!(i in states))states[i]=initial;return [states[i],v=>{states[i]=typeof v==='function'?v(states[i]):v;}];},useRef(initial){const i=refIndex++;return refs[i]??(refs[i]={current:initial});},useEffect(effect){if(!mounted)effects.push(effect);}};
+  if(id==='react')return {...React,useSyncExternalStore(_subscribe,_snapshot,server){return server();},useState(initial){const i=index++;if(!(i in states))states[i]=initial;return [states[i],v=>{states[i]=typeof v==='function'?v(states[i]):v;}];},useRef(initial){const i=refIndex++;return refs[i]??(refs[i]={current:initial});},useEffect(effect){if(!mounted)effects.push(effect);}};
   if(id==='next/link')return {default:({children,...props})=>React.createElement('a',props,children)};
   if(id==='@/lib/research/member-recovery')return {waitForIdentity};
   if(id==='./notification-page-view')return {default:()=>null};
