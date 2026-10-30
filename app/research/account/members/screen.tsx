@@ -2,7 +2,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { memberCsv } from "@/lib/membership/csv";
 import OwnerGate from "../owner-gate";
-import { formatDay, getJson } from "../account-data";
+import { formatDay, getJson, maskEmail } from "../account-data";
 import styles from "../account.module.css";
 
 type Contract = { status: "active" | "renewal-stopped" | "none" | null; verification: string; amount: string | null; currency: string | null; nextBillingAt: string | null; accessExpiresAt: string | null };
@@ -63,7 +63,7 @@ function Members({ ja }: { ja: boolean }) {
   // "Download what is shown": the CSV is made from the rows on screen, with the same columns as the server's page export.
   function download() {
     const rows = [["会員ID", "表示名", "メール", "プラン", "契約状況", "金額", "通貨", "次回請求日", "利用期限", "確認状態"],
-      ...items.map(r => [r.id, r.displayName, r.email, r.plan ?? "確認できません", r.contract?.status ?? "確認できません", r.contract?.amount, r.contract?.currency, r.contract?.nextBillingAt, r.contract?.accessExpiresAt, r.contract?.verification])];
+      ...items.map(r => [r.id, r.displayName, r.plan === "owner" && r.email ? maskEmail(r.email) : r.email, r.plan ?? "確認できません", r.contract?.status ?? "確認できません", r.contract?.amount, r.contract?.currency, r.contract?.nextBillingAt, r.contract?.accessExpiresAt, r.contract?.verification])];
     const url = URL.createObjectURL(new Blob([memberCsv(rows)], { type: "text/csv;charset=utf-8" }));
     const link = Object.assign(document.createElement("a"), { href: url, download: "tech-phase-members-shown.csv" });
     document.body.append(link); link.click(); link.remove(); setTimeout(() => URL.revokeObjectURL(url), 1000);
@@ -80,7 +80,7 @@ function Members({ ja }: { ja: boolean }) {
     {state === "ok" && <>
       <div className={styles.count}>{t(`${items.length}件を表示中`, `${items.length} shown`)}{next !== null && t("（続きがあります）", " (more available)")}</div>
       <div className={styles.list}>{items.map(r => <div className={styles.item} key={r.id}>
-        <div className={styles.itemTop}><div style={{ flex: 1, minWidth: 0 }}><div className={styles.itemName}>{r.displayName || t("（表示名なし）", "(no name)")}</div><div className={styles.itemMail}>{r.email}</div></div>{tag(r)}</div>
+        <div className={styles.itemTop}><div style={{ flex: 1, minWidth: 0 }}><div className={styles.itemName}>{r.displayName || t("（表示名なし）", "(no name)")}</div><div className={styles.itemMail}>{r.plan === "owner" && r.email ? maskEmail(r.email) : r.email}</div></div>{tag(r)}</div>
         <div className={styles.itemSub}>{sub(r)}</div></div>)}
         {!items.length && <div className={styles.item}><div className={styles.itemSub}>{next !== null ? t("このページに該当する会員はいません。「もっと見る」で続きを探せます。", "No match on this page. Use Show more to keep looking.") : t("該当する会員はいません。", "No matching members.")}</div></div>}</div>
       {next !== null && <button type="button" className={`${styles.btn} ${styles.gbtO} ${styles.btnS}`} style={{ marginTop: 14 }} disabled={more} onClick={() => void load(next, false, applied, filter)}>{more ? t("読み込んでいます…", "Loading…") : t("もっと見る", "Show more")}</button>}

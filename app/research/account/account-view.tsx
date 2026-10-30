@@ -7,7 +7,7 @@ import { useIdentityRefresh } from "../identity-provider";
 import Crown from "./crown";
 import { INITIAL, tileBackground, tileById } from "./avatars";
 import { AvatarSheet, NameSheet, StopSheet, UpgradeSheet, type Mode } from "./account-sheets";
-import { contractComplete, formatAmount, formatDay, getJson, patchProfile, readContract, readProfile, type Contract, type Profile } from "./account-data";
+import { contractComplete, formatAmount, formatDay, maskEmail, getJson, patchProfile, readContract, readProfile, type Contract, type Profile } from "./account-data";
 import styles from "./account.module.css";
 
 export type Member = { adminMfaRequired?: boolean; accessExpiresAt?: number; status: string; plan: string; isAdmin: boolean; ownerMode: boolean; canTest: boolean; testing: boolean };
@@ -45,19 +45,30 @@ export default function AccountView({ ja, member, billingAvailable, upgradeFirst
   const clerk = useClerk();
   const refresh = useIdentityRefresh();
   const owner = member.isAdmin && (member.ownerMode || member.testing);
-  const viewAs: ViewAs = member.testing ? (member.plan === "pro" ? "pro" : "free") : "owner";
+  const savedView: ViewAs = member.testing ? (member.plan === "pro" ? "pro" : "free") : "owner";
+  // The screen follows the tap at once; the server save and the membership refresh finish behind it.
+  const [pendingView, setPendingView] = useState<ViewAs | null>(null);
+  const viewAs = pendingView ?? savedView;
   const [switching, setSwitching] = useState(false);
   const [switchError, setSwitchError] = useState(false);
+  useEffect(() => {
+    if (pendingView === null || pendingView !== savedView) return;
+    const id = setTimeout(() => setPendingView(null), 0);
+    return () => clearTimeout(id);
+  }, [pendingView, savedView]);
   async function changeView(value: ViewAs) {
     if (switching || value === viewAs) return;
-    setSwitching(true); setSwitchError(false);
+    setSwitching(true); setSwitchError(false); setPendingView(value);
     try {
       const result = await fetch("/api/research/member/preview", { method: "POST", credentials: "same-origin", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ mode: value === "owner" ? "restore" : value }), signal: AbortSignal.timeout(15000) });
       if (!result.ok) throw Error("switch-failed");
-      // A new document refreshes both protected page data and the shared header.
       try { localStorage.removeItem("tech-phase:member-hint"); localStorage.removeItem("tech-phase:owner-view-as"); } catch { /* optional display hints */ }
-      window.location.reload();
-    } catch { setSwitchError(true); setSwitching(false); }
+      // No page reload: the header, the menu and this screen listen for this and re-read the membership themselves.
+      window.dispatchEvent(new Event("tech-phase:membership-changed"));
+      setSwitching(false);
+      // If the membership read never confirms the change, fall back to what the server says.
+      setTimeout(() => setPendingView(null), 8000);
+    } catch { setPendingView(null); setSwitchError(true); setSwitching(false); }
   }
   const preview = owner && viewAs !== "owner";
   const mode: Mode | null = billingAvailable ? "live" : member.canTest ? "sandbox" : null;
@@ -98,6 +109,8 @@ export default function AccountView({ ja, member, billingAvailable, upgradeFirst
 
   const me = profile.state === "ok" ? profile.value : null;
   const email = me?.email ?? "";
+  // The owner often films this screen: the owner's own address is shown masked (am***@gmail.com). Everyone else sees their own address as is.
+  const shownEmail = owner ? maskEmail(email) : email;
   const display = (me?.displayName || email.split("@")[0] || t("会員", "Member")).trim();
   const initial = Array.from(display)[0] ?? "?";
   const tile = tileById(me?.icon);
@@ -221,7 +234,7 @@ export default function AccountView({ ja, member, billingAvailable, upgradeFirst
     {profile.state === "loading" && <div className={styles.skel} style={{ marginTop: 20 }} aria-busy="true" />}
     {profile.state === "ok" && <div className={`${styles.cd} ${owner ? styles.ownerHero : ""}`}>
       <div className={styles.hero}>{avatar}
-        <div className={styles.who}><div className={styles.name}>{owner ? "リゼル" : display}</div><div className={styles.mail}>{email}</div></div>
+        <div className={styles.who}><div className={styles.name}>{owner ? "リゼル" : display}</div><div className={styles.mail}>{shownEmail}</div></div>
         <span className={`${styles.pt} ${owner && !preview ? styles.ptOwner : effective === "pro" ? styles.ptPro : styles.ptFree}`}>{owner && !preview ? "OWNER" : effective === "pro" ? "PRO" : "FREE"}</span></div>
       {(!owner || preview) && <div className={`${styles.grp} ${styles.cdIn}`}>
         {preview ? <>{row(I.user, t("表示名を変更", "Change display name"))}{row(I.mail, t("メールアドレスを変更", "Change email"))}</>
