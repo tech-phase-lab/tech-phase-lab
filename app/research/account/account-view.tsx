@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useClerk } from "@clerk/nextjs";
-import { useCallback, useEffect, useState, useSyncExternalStore, type ReactNode } from "react";
+import { useCallback, useEffect, useState, type ReactNode } from "react";
 import { useIdentityRefresh } from "../identity-provider";
 import Crown from "./crown";
 import { INITIAL, tileBackground, tileById } from "./avatars";
@@ -12,11 +12,6 @@ import styles from "./account.module.css";
 
 export type Member = { adminMfaRequired?: boolean; accessExpiresAt?: number; status: string; plan: string; isAdmin: boolean; ownerMode: boolean; canTest: boolean; testing: boolean };
 type ViewAs = "owner" | "free" | "pro";
-const VIEW_KEY = "tech-phase:owner-view-as";
-const viewListeners = new Set<() => void>();
-const readView = (): ViewAs => { try { const v = localStorage.getItem(VIEW_KEY); return v === "free" || v === "pro" ? v : "owner"; } catch { return "owner"; } };
-const subscribeView = (cb: () => void) => { viewListeners.add(cb); return () => { viewListeners.delete(cb); }; };
-function writeView(value: ViewAs) { try { localStorage.setItem(VIEW_KEY, value); } catch { /* storage may be blocked */ } viewListeners.forEach(cb => cb()); }
 
 const ico = (d: ReactNode, color = "#a9b6c6", size = 18) => <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">{d}</svg>;
 const I = {
@@ -49,8 +44,21 @@ export default function AccountView({ ja, member, billingAvailable, upgradeFirst
   const router = useRouter();
   const clerk = useClerk();
   const refresh = useIdentityRefresh();
-  const owner = member.ownerMode && !member.testing;
-  const viewAs = useSyncExternalStore(subscribeView, readView, () => "owner" as ViewAs);
+  const owner = member.isAdmin && (member.ownerMode || member.testing);
+  const viewAs: ViewAs = member.testing ? (member.plan === "pro" ? "pro" : "free") : "owner";
+  const [switching, setSwitching] = useState(false);
+  const [switchError, setSwitchError] = useState(false);
+  async function changeView(value: ViewAs) {
+    if (switching || value === viewAs) return;
+    setSwitching(true); setSwitchError(false);
+    try {
+      const result = await fetch("/api/research/member/preview", { method: "POST", credentials: "same-origin", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ mode: value === "owner" ? "restore" : value }), signal: AbortSignal.timeout(15000) });
+      if (!result.ok) throw Error("switch-failed");
+      // A new document refreshes both protected page data and the shared header.
+      try { localStorage.removeItem("tech-phase:member-hint"); localStorage.removeItem("tech-phase:owner-view-as"); } catch { /* optional display hints */ }
+      window.location.reload();
+    } catch { setSwitchError(true); setSwitching(false); }
+  }
   const preview = owner && viewAs !== "owner";
   const mode: Mode | null = billingAvailable ? "live" : member.canTest ? "sandbox" : null;
   const [profile, setProfile] = useState<ProfileState>({ state: "loading" });
@@ -196,7 +204,8 @@ export default function AccountView({ ja, member, billingAvailable, upgradeFirst
   const ownerMenu = owner && <>
     <div className={styles.sl} style={{ color: "#8a7a52" }}>{t("運営者専用メニュー", "Owner menu")}</div>
     <div className={styles.mode}><div className={styles.modeHead}>{t("表示モード", "View mode")}<span>VIEW AS</span></div>
-      <div className={styles.seg} role="group" aria-label={t("表示モード", "View mode")}>{modes.map(([id, label]) => <button key={id} type="button" aria-pressed={viewAs === id} onClick={() => writeView(id)}>{label}</button>)}</div>
+      <div className={styles.seg} role="group" aria-label={t("表示モード", "View mode")}>{modes.map(([id, label]) => <button key={id} type="button" aria-pressed={viewAs === id} disabled={switching} onClick={() => void changeView(id)}>{label}</button>)}</div>
+      {switchError && <p role="alert">{t("切り替えできませんでした。もう一度お試しください。", "Could not switch. Please try again.")}</p>}
       <p className={styles.modeNote}>{t("会員の画面を、運営者のまま確認できます。", "Preview the member screens while staying the owner.")}</p></div>
     <div className={`${styles.cd} ${styles.ownerMenu}`} style={{ marginTop: 14 }}>
       {row(I.plus, t("会員・契約の確認", "Members & contracts"), { href: "/research/account/members", sub: t("会員の検索と、契約状況・利用期限の確認", "Search members; contracts and expiry") })}
@@ -204,7 +213,7 @@ export default function AccountView({ ja, member, billingAvailable, upgradeFirst
     </div></>;
 
   return <div className={styles.page}>
-    <div className={`${styles.kick} ${owner || effective === "pro" ? styles.kickGold : ""}`}>{owner ? "OWNER" : "MY ACCOUNT"}</div>
+    <div className={`${styles.kick} ${owner || effective === "pro" ? styles.kickGold : ""}`}>{owner && !preview ? "OWNER" : effective === "pro" ? "PRO MEMBER" : "FREE MEMBER"}</div>
     <h1 className={styles.h1}>{t("アカウント", "Account")}</h1>
 
     {profile.state === "error" && <div className={styles.cd}><div style={{ padding: 16 }}><p className={styles.note} role="alert" style={{ margin: 0 }}>{t("アカウント情報を確認できませんでした。", "Could not load your account.")}</p>

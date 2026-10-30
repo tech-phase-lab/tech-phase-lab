@@ -30,6 +30,11 @@ test('production owner gets operational PRO without buying; ordinary accounts st
   const state=globalThis.__productionOwner={calls:0,live:{plan:'free',accessExpiresAt:0},session:{userId:PRODUCTION_OWNER_ACCOUNT_ID,sessionClaims:{fva:[0,0]}},user:{twoFactorEnabled:true,privateMetadata:{}}};
   let member=await getMembership();
   assert.equal(member.plan,'pro');assert.equal(member.isAdmin,true);assert.equal(member.ownerMode,true);assert.equal(member.ownerAccount,true);assert.equal(member.canTest,false);assert.equal(member.testing,false);assert.ok(member.accessExpiresAt>Date.now());assert.equal(state.calls,0);
+  for (const plan of ['free','pro']) {
+   state.user.privateMetadata={membershipPreview:{plan,proExpiresAt:new Date(Date.now()+3600000).toISOString(),testUntil:new Date(Date.now()+3600000).toISOString()}};
+   member=await getMembership();assert.equal(member.plan,plan);assert.equal(member.ownerMode,false);assert.equal(member.ownerAccount,false);assert.equal(member.testing,true);assert.equal(member.isAdmin,true);assert.equal(state.calls,0);
+  }
+  state.user.privateMetadata={membershipPreview:null};member=await getMembership();assert.equal(member.ownerAccount,true);assert.equal(member.ownerMode,true);assert.equal(member.testing,false);
   state.session.sessionClaims={fva:[0,-1]};member=await getMembership();
   assert.equal(member.plan,'free');assert.equal(member.isAdmin,false);assert.equal(member.ownerMode,false);assert.equal(member.adminMfaRequired,true);assert.equal(state.calls,1);
   state.session={userId:'user_other',sessionClaims:{fva:[0,0]}};state.user.privateMetadata={role:'admin',plan:'pro',proExpiresAt:'2099-01-01'};
