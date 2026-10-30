@@ -20,3 +20,13 @@ test('Clerk proxy supplies identity to research pages and membership APIs',()=>{
  assert.doesNotMatch(server('page.tsx'),/getMembership|@clerk\/nextjs\/server/);
  assert.doesNotMatch(server('layout.tsx'),/initialMemberDisplay|auth\(/);
 });
+
+// Every account route must receive Clerk context before calling auth().
+test('all account APIs receive Clerk identity, including nested owner routes',()=>{
+ const source=readFileSync(new URL('../proxy.ts',import.meta.url),'utf8');
+ const matcher=JSON.parse(source.match(/matcher:\s*(\[[^\]]+\])/)[1]);
+ for(const path of ['','/profile','/contract','/deletion','/admin/members','/admin/delivery']) {
+  const url='/api/research/account'+path;
+  assert.equal(unstable_doesProxyMatch({config:{matcher},nextConfig:{},url}),true,url);
+ }
+});
