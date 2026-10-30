@@ -24,7 +24,7 @@ export function notebookPdfBlocks(root: HTMLElement, notes: Annotation[], lang: 
     if (layout === "title") { flush(); blocks.push({ kind: "title", runs: collect(node.childNodes, marks) }); return; }
     if (layout === "facts") {
       flush();
-      const items = [...node.children].map(row => ({ label: [{ text: text(row.querySelector("dt")) }], value: collect(row.querySelector("dd")?.childNodes ?? [], marks).map(run => ({ ...run, text: run.text.replace(/\s+/g, " ") })) })).filter(item => item.label[0].text);
+      const items = [...node.children].map(row => ({ label: [{ text: text(row.querySelector("dt")) }], value: collect(row.querySelector("dd")?.childNodes ?? [], marks).map(run => ({ ...run, text: run.text.replace(/\s+/g, " ") })) })).filter(item => /^(発表日|取得日|Announced|Detected)$/.test(item.label[0].text));
       if (items.length) blocks.push({ kind: "facts", runs: [], items });
       return;
     }
@@ -45,6 +45,8 @@ export function notebookPdfBlocks(root: HTMLElement, notes: Annotation[], lang: 
       blocks.push({ kind: "section", size: 14, runs: [...(number ? [{ text: number, color: "#8a95a1" }, { text: "  " }] : []), ...collect(rest, marks)] });
       return;
     }
+    // Source numbers such as [1] are for the screen; the printed page leaves them out.
+    if (node.tagName === "A" && /^\[\d+\]$/.test(text(node))) return;
     if (node.tagName === "A") href = node.getAttribute("href") ? new URL(node.getAttribute("href")!, root.ownerDocument.baseURI).href : undefined;
     if (node.tagName === "BR") { pending.push({ text: "\n" }); return; }
     if (node.tagName === "TABLE") {

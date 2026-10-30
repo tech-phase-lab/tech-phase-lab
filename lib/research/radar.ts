@@ -21,7 +21,7 @@ export const formerGenres: Record<string, RadarGenreId[]> = {
 
 // ---- scales: evenly spaced ticks, values beyond the range stop at the edge ----
 export const X_TICKS = [-40, -20, 0, 20, 40, 60] as const;
-export const Y_TICKS = [0.1, 0.25, 0.5, 1, 2, 4] as const;
+export const Y_TICKS = [0.1, 0.25, 0.5, 1, 2, 4, 10] as const;
 const X_MIN = X_TICKS[0], X_MAX = X_TICKS[X_TICKS.length - 1], Y_MIN = Y_TICKS[0], Y_MAX = Y_TICKS[Y_TICKS.length - 1];
 const clamp = (value: number, low: number, high: number) => Math.min(high, Math.max(low, value));
 /** 0 (left) to 1 (right). */
@@ -78,8 +78,8 @@ export type RadarPayload =
   | { tier: "free"; genre: RadarGenreId; dots: RadarDotFree[] }
   | { tier: "pro"; genre: RadarGenreId; dots: RadarDotPro[]; missing: string[]; asOf: string | null };
 
-const finite = (value: number) => Number.isFinite(value) ? value : 1000; // JSON cannot carry Infinity: 1000x is far beyond the 4x edge
-/** The two chart positions as points out of 100: earning power on its -40%..60% axis, staying power on the 0.1x..4x log axis. */
+const finite = (value: number) => Number.isFinite(value) ? value : 1000; // JSON cannot carry Infinity: 1000x is far beyond the 10x edge
+/** The two chart positions as points out of 100: earning power on its -40%..60% axis, staying power on the 0.1x..10x log axis. */
 export const earningScore = (ocfMargin: number) => xPosition(ocfMargin) * 100;
 export const stayingScore = (cover: number) => yPosition(cover) * 100;
 /** Fitness score: the average of the two chart points. */
@@ -137,29 +137,52 @@ const hitsDot = (box: LabelBox, dot: { x: number; y: number; r: number }) => {
   const nx = clamp(dot.x, box.x, box.x + box.w), ny = clamp(dot.y, box.y, box.y + box.h);
   return (nx - dot.x) ** 2 + (ny - dot.y) ** 2 < (dot.r + 1.5) ** 2;
 };
-/** Each label sits at the side of its own dot (right first, left when there is no room). When it would cover another label,
- * dot or zone name it is moved up or down in steps and joined to its dot by a thin line. */
+const nearestOn = (box: LabelBox, dot: { x: number; y: number }) => ({ x: clamp(dot.x, box.x, box.x + box.w), y: clamp(dot.y, box.y, box.y + box.h) });
+type Segment = { x1: number; y1: number; x2: number; y2: number };
+const cross = (a: Segment, b: Segment) => {
+  const d = (p: Segment, x: number, y: number) => (p.x2 - p.x1) * (y - p.y1) - (p.y2 - p.y1) * (x - p.x1);
+  return d(a, b.x1, b.y1) * d(a, b.x2, b.y2) < 0 && d(b, a.x1, a.y1) * d(b, a.x2, a.y2) < 0;
+};
+const nearSegment = (segment: Segment, dot: { x: number; y: number }, within: number) => {
+  const dx = segment.x2 - segment.x1, dy = segment.y2 - segment.y1, length = dx * dx + dy * dy || 1;
+  const t = clamp(((dot.x - segment.x1) * dx + (dot.y - segment.y1) * dy) / length, 0, 1);
+  return Math.hypot(segment.x1 + t * dx - dot.x, segment.y1 + t * dy - dot.y) < within;
+};
+/** Each label sits at the side of its own dot (right first, left when there is no room). When that would cover another label,
+ * dot or zone name, the place is chosen around the dot (beside, above, below, further out) as the one that stays clear of other
+ * labels and dots, stays closest to its dot and crosses no other line; a thin line joins it to its dot. */
 export function placeLabels(inputs: LabelInput[], bounds: { left: number; top: number; right: number; bottom: number }, height = 11, avoid: LabelBox[] = [], first: string | null = null): Record<string, PlacedLabel> {
   const placed: Record<string, PlacedLabel> = {};
   const boxes: LabelBox[] = [...avoid];
+  const lines: { id: string; segment: Segment }[] = [];
   const crowd = (input: LabelInput) => inputs.filter(other => other !== input && Math.hypot(other.x - input.x, other.y - input.y) < 40).length;
   const steps = [0, -1, 1, -2, 2, -3, 3, -4, 4, -5, 5, -6, 6, -7, 7, -8, 8];
   for (const input of [...inputs].sort((a, b) => Number(b.id === first) - Number(a.id === first) || crowd(b) - crowd(a))) {
     const { x, y, r, w } = input, h = height, g = 3, lift = h + 1;
-    const candidates = steps.flatMap(step => [
-      { box: { x: x + r + g + (step ? 6 : 0), y: y - h / 2 + step * lift, w, h }, step },
-      { box: { x: x - r - g - (step ? 6 : 0) - w, y: y - h / 2 + step * lift, w, h }, step },
+    const candidates: LabelBox[] = steps.flatMap(step => [
+      { x: x + r + g + (step ? 6 : 0), y: y - h / 2 + step * lift, w, h },
+      { x: x - r - g - (step ? 6 : 0) - w, y: y - h / 2 + step * lift, w, h },
     ]);
+    // Above and below the dot, a little to either side, and further out.
+    for (const reach of [1, 2, 3, 4]) for (const shift of [0, -0.5, 0.5, -1, 1]) for (const way of [-1, 1]) {
+      candidates.push({ x: x - w / 2 + shift * w * 0.6, y: way < 0 ? y - r - g - reach * lift : y + r + g + (reach - 1) * lift, w, h });
+    }
     const inside = (box: LabelBox) => box.x >= bounds.left && box.y >= bounds.top && box.x + box.w <= bounds.right && box.y + box.h <= bounds.bottom;
-    const clear = (box: LabelBox) => !boxes.some(other => overlaps(box, other)) && !inputs.some(dot => hitsDot(box, dot));
     const fit = (box: LabelBox): LabelBox => ({ ...box, x: clamp(box.x, bounds.left, bounds.right - box.w), y: clamp(box.y, bounds.top, bounds.bottom - box.h) });
-    const cost = (box: LabelBox) => boxes.filter(other => overlaps(box, other)).length * 10 + inputs.filter(dot => hitsDot(box, dot)).length * 10;
-    const free = candidates.find(candidate => inside(candidate.box) && clear(candidate.box));
-    const choice = free ?? candidates.map(candidate => ({ ...candidate, box: fit(candidate.box) })).reduce((best, candidate) => cost(candidate.box) < cost(best.box) ? candidate : best);
-    const box = choice.box;
-    const shifted = Math.abs(box.y + h / 2 - y) > 1;
-    const anchor = { x: box.x + box.w / 2 < x ? box.x + box.w : box.x, y: box.y + h / 2 };
+    const cost = (raw: LabelBox) => {
+      const box = fit(raw), near = nearestOn(box, input), segment: Segment = { x1: x, y1: y, x2: near.x, y2: near.y };
+      const covered = boxes.filter(other => overlaps(box, other)).length + inputs.filter(dot => hitsDot(box, dot)).length;
+      const lineHits = lines.filter(line => cross(segment, line.segment)).length;
+      const dotsOnLine = inputs.filter(dot => dot !== input && Math.hypot(near.x - x, near.y - y) > r + g + 2 && nearSegment(segment, dot, dot.r + 1)).length;
+      return covered * 1000 + (inside(raw) ? 0 : 40) + lineHits * 120 + dotsOnLine * 80 + Math.hypot(near.x - x, near.y - y);
+    };
+    const best = candidates.reduce((chosen, candidate) => cost(candidate) < cost(chosen) ? candidate : chosen);
+    const box = fit(best), near = nearestOn(box, input);
+    const gap = Math.hypot(near.x - x, near.y - y);
+    const shifted = gap > r + g + 2.5 || Math.abs(box.y + h / 2 - y) > h;
+    const anchor = shifted ? near : { x: box.x + box.w / 2 < x ? box.x + box.w : box.x, y: box.y + h / 2 };
     placed[input.id] = { ...box, shifted, anchor }; boxes.push(box);
+    if (shifted) lines.push({ id: input.id, segment: { x1: x, y1: y, x2: anchor.x, y2: anchor.y } });
   }
   return placed;
 }

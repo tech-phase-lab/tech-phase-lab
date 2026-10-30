@@ -4,7 +4,7 @@ import { X_TICKS, Y_TICKS, beyondDirections, beyondText, isBeyond, placeLabels, 
 import styles from "./radar.module.css";
 
 const W = 340, H = 316, L = 46, T = 10, R = 330, B = 282;
-const RADIUS = { 1: 4.5, 2: 6.5, 3: 8.5 } as const;
+const RADIUS = { 1: 3.5, 2: 5.5, 3: 7.5 } as const;
 const GROW = "#59d6a6", SHRINK = "#f08a8a", PLAIN = "#cfd8e3", BACKGROUND = "#0b1118";
 const ZONE_FILL: Record<Zone, string> = { solid: "rgba(89,214,166,.09)", lever: "rgba(216,179,106,.09)", guard: "rgba(127,182,224,.09)", thin: "rgba(240,138,138,.10)" };
 const ZONE_INK: Record<Zone, string> = { solid: "#6fdcb0", lever: "#e0c27a", guard: "#8fbfe6", thin: "#f19a9a" };

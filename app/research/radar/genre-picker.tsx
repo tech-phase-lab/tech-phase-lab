@@ -54,7 +54,7 @@ export default function GenrePicker({ lang, value, onChange }: { lang: "ja" | "e
       <div className={styles.row}>
         <button type="button" className={styles.arrow} aria-label={ja ? "前のジャンル" : "Previous genre"} onClick={() => move(-1)}><Chevron /></button>
         <button type="button" className={styles.name} onClick={() => setOpen(true)} aria-label={`${name(current)} (${ja ? "ジャンルを選ぶ" : "Choose a genre"})`}>
-          <strong>{name(current)}</strong>
+          <strong style={{ fontSize: name(current).length <= 8 ? 24 : name(current).length <= 12 ? 20 : 17 }}>{name(current)}</strong>
           <small>{current.tickers.join(" ")}</small>
         </button>
         <button type="button" className={styles.arrow} aria-label={ja ? "次のジャンル" : "Next genre"} onClick={() => move(1)}><Chevron flip /></button>
