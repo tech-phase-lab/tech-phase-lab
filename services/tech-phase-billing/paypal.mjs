@@ -139,6 +139,7 @@ export function createPaypal(config, fetcher = fetch) {
       return { id: subscriptionId(result.id), approvalUrl: approvalUrl(result,mode) };
     },
     get: id => call(`/v1/billing/subscriptions/${subscriptionId(id)}`),
+    getDetails: id => call(`/v1/billing/subscriptions/${subscriptionId(id)}?fields=plan`),
     cancel: id => call(`/v1/billing/subscriptions/${subscriptionId(id)}/cancel`, 'POST', { reason: 'Cancelled by the subscriber' }),
     async transactions(id, start, end) {
       subscriptionId(id);

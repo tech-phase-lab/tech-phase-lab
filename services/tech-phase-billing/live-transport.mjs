@@ -2,7 +2,7 @@ import {timingSafeEqual} from 'node:crypto';
 import {bounded} from './transport.mjs';
 import {liveEnabled,liveSalesEnabled,liveMember,liveOrigin,liveHandler} from './live-http.mjs';
 const reply=(body,status=200)=>Response.json(body,{status,headers:{'Cache-Control':'private, no-store',Vary:'Cookie'}});
-const actions=new Set(['readiness','status','entitlement','create','cancel','reconcile']);
+const actions=new Set(['readiness','account','status','entitlement','create','cancel','reconcile']);
 const validToken=value=>typeof value==='string'&&/^[A-Za-z0-9_-]{43,128}$/.test(value);
 export function liveTransportConfig(env){
  const token=env.TECH_PHASE_BILLING_LIVE_SERVICE_TOKEN;
@@ -15,7 +15,7 @@ export function liveGateway({env,identity,fetcher=fetch}){
  return async(request,action)=>{
   if(!liveEnabled(env))return reply({error:'billing-disabled'},503);
   if(!actions.has(action))return reply({error:'not-found'},404);
-  if(request.method!==(['status','readiness','entitlement'].includes(action)?'GET':'POST'))return reply({error:'method'},405);
+  if(request.method!==(['status','account','readiness','entitlement'].includes(action)?'GET':'POST'))return reply({error:'method'},405);
   try{
    const config=liveTransportConfig(env);
    if(new URL(request.url).origin!==config.origin||(request.method==='POST'&&request.headers.get('origin')!==config.origin))return reply({error:'origin'},403);

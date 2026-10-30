@@ -23,12 +23,13 @@ export function liveHandler({env,identity,services}){
     if(request.method!=='POST')return response({error:'method'},405);
     return response(await(await services()).webhook(request.headers,await readBody(request,131072)));
    }
-   if(!['readiness','status','entitlement','create','cancel','reconcile'].includes(action))return response({error:'not-found'},404);
-   if(request.method!==(['readiness','status','entitlement'].includes(action)?'GET':'POST'))return response({error:'method'},405);
+   if(!['readiness','account','status','entitlement','create','cancel','reconcile'].includes(action))return response({error:'not-found'},404);
+   if(request.method!==(['readiness','account','status','entitlement'].includes(action)?'GET':'POST'))return response({error:'method'},405);
    if(request.method==='POST'&&request.headers.get('origin')!==liveOrigin(env))return response({error:'origin'},403);
    const userId=await identity();if(!liveMember(userId))return response({error:'sign-in'},401);
    if(action==='readiness')return response(liveReadiness(env));
    if(action==='create'&&!liveSalesEnabled(env))return response({error:'billing-disabled'},503);
+   if(action==='account')return response(await(await services()).accountContract(userId));
    if(action==='status')return response(await(await services()).store.summary(userId));
    if(action==='entitlement')return response(await(await services()).store.entitlement(userId));
    if(action==='create'){checkoutUser=userId;checkoutServices=await services();await checkoutServices.abuse?.attempt(userId);}
