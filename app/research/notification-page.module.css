@@ -1,0 +1,58 @@
+.page { --gold:#d9b56a; --gold-light:#f0d796; --gold-dark:#c9a24f; margin:0 auto; max-width:560px; padding:8px 0 120px; color:#e8edf3; font-family:"Noto Sans JP",system-ui,sans-serif; }
+.eyebrow { display:flex; align-items:center; gap:10px; margin:0 0 8px; }
+.eyebrow span { font:500 10.5px "JetBrains Mono",ui-monospace,monospace; letter-spacing:.3em; color:var(--gold); }
+.eyebrow b { padding:3px 8px; border-radius:6px; background:var(--gold); color:#2a1f05; font:700 9.5px "JetBrains Mono",ui-monospace,monospace; letter-spacing:.08em; }
+.title { margin:0; font:600 28px/1.35 "Noto Serif JP","Hiragino Mincho ProN","Yu Mincho",serif; color:#e8edf3; }
+.sub { margin:8px 0 22px; font-size:12.5px; color:#8697ab; }
+.status { padding:20px; border:1px solid #6b5a2e; border-radius:20px; background:radial-gradient(120% 90% at 0% 0%,rgba(217,181,106,.12),transparent 60%),linear-gradient(160deg,#17130b,#0e1118); box-shadow:0 0 40px rgba(217,181,106,.06); }
+.statusRow { display:flex; align-items:center; gap:14px; }
+.bell { display:grid; place-items:center; flex:none; width:56px; height:56px; border-radius:50%; border:1px solid #6b5a2e; color:var(--gold); background:rgba(217,181,106,.08); opacity:.6; }
+.bell svg { width:26px; height:26px; }
+.bellOn { opacity:1; color:var(--gold-light); border-color:var(--gold); box-shadow:0 0 22px rgba(217,181,106,.4); }
+.statusName { flex:1; font-size:16px; font-weight:700; }
+.tag { display:inline-flex; align-items:center; gap:6px; padding:5px 11px; border:1px solid #3a4658; border-radius:999px; font-size:12px; font-weight:700; color:#8697ab; }
+.tag i { width:7px; height:7px; border-radius:50%; background:#6f8097; }
+.tagOn { border-color:#4fbf94; color:#7fe3bc; }
+.tagOn i { background:#5dffb4; box-shadow:0 0 8px #5dffb4; }
+.statusText { margin:14px 0 16px; font-size:12.5px; line-height:1.7; color:#8697ab; }
+.main, .outline { width:100%; height:52px; border-radius:15px; font:700 15px "Noto Sans JP",system-ui,sans-serif; cursor:pointer; }
+.main { border:0; background:linear-gradient(90deg,var(--gold-light),var(--gold-dark)); color:#2a1f05; }
+.outline { border:1px solid var(--gold); background:transparent; color:#e7c982; }
+.main:disabled, .outline:disabled { opacity:.5; cursor:not-allowed; }
+.aux { display:flex; flex-wrap:wrap; gap:8px; margin-top:12px; }
+.aux button, .aux a { min-height:40px; padding:0 14px; border:1px solid #2a3647; border-radius:12px; background:transparent; color:#a9b6c6; font:inherit; font-size:12.5px; cursor:pointer; display:inline-flex; align-items:center; text-decoration:none; }
+.note { margin:12px 0 0; font-size:12px; line-height:1.6; color:#c9a98a; }
+.heading { margin:28px 0 6px; font:500 10.5px "JetBrains Mono",ui-monospace,monospace; letter-spacing:.24em; color:#8a7a52; }
+.rows { margin:0; padding:0; list-style:none; transition:opacity .2s; }
+.rowsOff { opacity:.5; }
+.row { display:grid; grid-template-columns:40px 1fr auto; gap:0 14px; align-items:center; padding:16px 0; border-bottom:1px solid #1a2330; }
+.row:last-child { border-bottom:0; }
+.icon { display:grid; place-items:center; width:40px; height:40px; border-radius:13px; border:1px solid #3a3220; background:rgba(217,181,106,.07); color:var(--gold); }
+.icon svg { width:20px; height:20px; }
+.rowTitle { margin:0; font-size:14px; font-weight:700; }
+.rowDesc { margin:3px 0 0; font-size:12px; line-height:1.55; color:#7d8ca0; }
+.link { grid-column:2/-1; justify-self:start; margin-top:8px; padding:0; border:0; background:none; color:var(--gold); font:inherit; font-size:12.5px; font-weight:700; cursor:pointer; }
+.switch { position:relative; width:46px; height:28px; padding:0; border:1px solid #2a3647; border-radius:14px; background:#1d2733; cursor:pointer; flex:none; }
+.switch::after { content:""; position:absolute; top:3px; left:3px; width:20px; height:20px; border-radius:50%; background:#6f8097; transition:transform .18s,background .18s; }
+.switchOn { border-color:var(--gold-dark); background:linear-gradient(90deg,var(--gold-dark),var(--gold-light)); }
+.switchOn::after { transform:translateX(18px); background:#2a1f05; }
+.switch:disabled { cursor:not-allowed; }
+.foot { margin:18px 0 0; font-size:11px; color:#5d6c80; }
+.scrim { position:fixed; inset:0; z-index:80; display:flex; align-items:flex-end; justify-content:center; background:rgba(3,5,8,.72); }
+.sheet { width:100%; max-width:560px; max-height:82vh; display:flex; flex-direction:column; padding:10px 20px 24px; border:1px solid #6b5a2e; border-bottom:0; border-radius:26px 26px 0 0; background:linear-gradient(180deg,#15120b,#0b1018); }
+.handle { width:42px; height:4px; margin:0 auto 14px; border-radius:2px; background:#3a3220; }
+.sheetHead { display:flex; align-items:center; justify-content:space-between; gap:12px; }
+.sheetTitle { margin:0; font:600 19px "Noto Serif JP","Hiragino Mincho ProN","Yu Mincho",serif; }
+.close { border:0; background:none; color:var(--gold); font:inherit; font-size:14px; font-weight:700; cursor:pointer; padding:8px 0 8px 8px; }
+.sheetSub { margin:6px 0 14px; font-size:12px; color:#8697ab; }
+.scroll { overflow-y:auto; overscroll-behavior:contain; }
+.group { margin:14px 0 8px; font:500 11px "JetBrains Mono",ui-monospace,monospace; letter-spacing:.14em; color:#8a7a52; }
+.chips { display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin:0; padding:0; list-style:none; }
+.chip { display:grid; place-items:center; height:34px; border:1px solid #3a3220; border-radius:17px; font:500 12px "JetBrains Mono",ui-monospace,monospace; color:#d6dde6; background:transparent; padding:0; }
+button.chip { cursor:pointer; border-color:#2a3647; color:#a9b6c6; }
+button.chipOn { border-color:var(--gold); background:linear-gradient(90deg,var(--gold-light),var(--gold-dark)); color:#2a1f05; font-weight:700; }
+.pickBar { display:flex; align-items:center; justify-content:space-between; margin:0 0 12px; font-size:13px; color:#c3ccd8; }
+.pickBar button { border:0; background:none; font:inherit; font-size:13px; font-weight:700; cursor:pointer; padding:6px 0 6px 12px; }
+.all { color:var(--gold); }
+.none { color:#8697ab; }
+@media (max-width:380px) { .chips { gap:6px; } .title { font-size:25px; } }

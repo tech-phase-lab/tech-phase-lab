@@ -4,13 +4,14 @@ import { useEffect, useRef, useState } from "react";
 import { waitForIdentity } from "@/lib/research/member-recovery";
 import type { Language } from "@/lib/research/data";
 import styles from "./price-targets-panel.module.css";
+import NotificationPageView from "./notification-page-view";
 
 const WEEKLY_KEY = "tech-phase:notebook-weekly-push";
 /** The Sunday-night Stock Notebook notice is on unless this device turned it off. */
 const readWeekly = () => { try { return localStorage.getItem(WEEKLY_KEY) !== "off"; } catch { return true; } };
 type State = "checking" | "off" | "on" | "unknown" | "blocked" | "unsupported" | "unavailable" | "sign-in" | "pro-required";
-export default function NotificationSettings({ lang, initiallyOpen = false }: { lang: Language; initiallyOpen?: boolean }) {
-  const [open, setOpen] = useState(initiallyOpen);
+export default function NotificationSettings({ lang, initiallyOpen = false, page = false }: { lang: Language; initiallyOpen?: boolean; page?: boolean }) {
+  const [open, setOpen] = useState(initiallyOpen || page);
   const [state, setState] = useState<State>("checking");
   const [hasSubscription, setHasSubscription] = useState(false);
   const [key, setKey] = useState("");
@@ -145,6 +146,9 @@ export default function NotificationSettings({ lang, initiallyOpen = false }: { 
   }
   const label = { "sign-in": t("通知を利用するにはログインしてください", "Sign in to use notifications"), "pro-required": t("スマホ通知はPRO会員向けです", "Phone notifications are available with PRO"), checking: t("確認中…", "Checking…"), off: t("この端末：通知オフ", "This device: off"), on: t("この端末：通知オン", "This device: on"), unknown: t("この端末：登録状態を確認", "This device: verify registration"), blocked: t("この端末：通知が許可されていません", "This device: permission blocked"), unsupported: t("このブラウザでは通知を利用できません", "Notifications unavailable in this browser"), unavailable: t("通知サービスに接続できません", "Notification service unavailable") }[state];
   const usable = ["off", "on", "unknown"].includes(state);
+  const changeWeekly = (next: boolean) => { try { localStorage.setItem(WEEKLY_KEY, next ? "on" : "off"); } catch { /* storage may be blocked */ } setWeekly(next); if (state === "on") void run("enable"); };
+  if (page) return <NotificationPageView lang={lang} state={state} label={label} busy={busy} usable={usable} hasSubscription={hasSubscription} message={message} testSent={testSent} received={received} weekly={weekly}
+    onToggle={() => void run(state === "on" ? "disable" : "enable")} onDisable={() => void run("disable")} onTest={() => void run("test")} onRetry={() => setRefresh(value => value + 1)} onStatus={() => void run("status")} onReceived={() => { setReceived(true); setMessage(""); }} onWeekly={changeWeekly} />;
   return <>
     <button type="button" className={styles.notificationToggle} aria-expanded={open} aria-controls={open ? "price-target-notifications" : undefined} onClick={() => setOpen(!open)}><svg className={styles.bellIcon} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 22a2.3 2.3 0 0 0 2.3-2.3H9.7A2.3 2.3 0 0 0 12 22zm6.6-6.4V11a6.6 6.6 0 0 0-5.1-6.4V3.9a1.5 1.5 0 0 0-3 0v.7A6.6 6.6 0 0 0 5.4 11v4.6L3.6 17.4V19h16.8v-1.6z"/></svg>{t("スマホ通知設定", "Phone notifications")}</button>
     {open && <div id="price-target-notifications" className={styles.notificationBody}>
