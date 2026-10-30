@@ -31,7 +31,7 @@ test('profile whitelist rejects impersonation and fixed-owner icon changes',()=>
  for(const icon of accountIcons)assert.equal(profileInput({icon},false).icon,icon);
  for(const input of [{role:'admin'},{icon:'https://image.test/photo'},{displayName:'\u0000x'},{displayName:' '},{userId:'another',icon:'fire'}])assert.throws(()=>profileInput(input,false));
  assert.throws(()=>profileInput({icon:'fire'},true),/owner-icon-fixed/);
- assert.equal(selectedIcon('fire',true),'owner');assert.equal(selectedIcon('bad',false),'initials');
+ assert.equal(selectedIcon('fire',true),'owner');assert.equal(selectedIcon('bad',false),'initial');assert.equal(selectedIcon('initials',false),'initial');assert.throws(()=>profileInput({icon:'initials'},false));
 });
 test('delivery aggregates never confuse worker success with a delivered notification or leak endpoints',()=>{
  const result=deliveryView({webPush:{status:'ready',lastSuccessAt:'2026-01-01T00:00:00Z',accepted24Hours:3,failures:4,endpoint:'secret-endpoint',keys:'secret-key'}});
