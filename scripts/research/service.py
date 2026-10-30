@@ -1039,6 +1039,12 @@ class AutomaticMonitor:
                         items = [*items, *(item for item in market_results.public_feed(results_db) if item.get("kind") == "earnings")]
                 except Exception:
                     print("web-push-results-unavailable", flush=True)
+                try:
+                    # Approved stock-news articles; the device's own news choices are applied inside deliver.
+                    with self.db_lock, stock_news.connect(self.db_path) as news_db:
+                        items = [*items, *({**item, "kind": "news"} for item in news_drafts.public_feed(news_db, limit=10)["items"])]
+                except Exception:
+                    print("web-push-news-unavailable", flush=True)
                 with web_push.connect(self.db_path) as db:
                     result = web_push.deliver(db, items)
                     web_push.deliver_weekly(db)

@@ -130,7 +130,7 @@ def notification_allowed(db, device_id, category, tickers=()):
     """Preference-only fail-open. Callers MUST retain ownership/PRO/freshness checks.
 
     News senders must pass all matched company tickers; any selected match suffices.
-    There is currently no member-facing stock-news Web Push sender to call this gate.
+    The stock-news sender is `deliver` with items of kind "news" (approved articles).
     """
     if category not in ('targets', 'earnings', 'news'):
         raise ValueError('invalid-category')
@@ -390,10 +390,37 @@ def normalize_result(item):
             'published': published, 'observed_timestamp': observed_timestamp}
 
 
+def normalize_news(item):
+    """An approved stock-news article. Approval time is the freshness evidence: a push goes out
+    only for a story approved moments ago, never for the backlog."""
+    ident, tickers = item.get('id'), item.get('tickers')
+    if (not isinstance(ident, (str, int)) or isinstance(ident, bool) or not 1 <= len(str(ident)) <= 128
+            or not isinstance(tickers, list) or not 1 <= len(tickers) <= 20
+            or any(not isinstance(t, str) or not re.fullmatch(r'[A-Z][A-Z0-9.-]{0,14}', t) for t in tickers)):
+        return None
+    texts = {}
+    for lang, keys in (('ja', ('summaryJa',)), ('en', ('summaryEn', 'title'))):
+        value = next((item[k] for k in keys if isinstance(item.get(k), str) and item[k].strip()), None)
+        if value is None:
+            return None
+        texts[lang] = value.strip()[:140]
+    approved = parse_event_time(item.get('approvedAt'))
+    if approved is None:
+        return None
+    try:
+        timestamp = approved.timestamp()
+    except (OverflowError, OSError, ValueError):
+        return None
+    return {'kind': 'news', 'id': str(ident), 'ticker': tickers[0], 'tickers': sorted(set(tickers)), 'texts': texts,
+            'published': approved, 'observed_timestamp': timestamp}
+
+
 def normalize_event(item):
     """Validate public change data before it can reach a push provider."""
     if not isinstance(item, dict):
         return None
+    if item.get('kind') == 'news':
+        return normalize_news(item)
     if item.get('kind') == 'earnings':
         return normalize_result(item)
     ticker, firm = item.get('ticker'), item.get('firm')
@@ -422,6 +449,8 @@ def normalize_event(item):
 
 
 def event_key(item):
+    if item.get('kind') == 'news':
+        return hashlib.sha256(json.dumps(['news', item['id']]).encode()).hexdigest()
     if item.get('kind') == 'earnings':
         # One result is one notification, whichever account posted it first (Oct 15).
         return hashlib.sha256(json.dumps(['earnings', item['ticker'], item['quarter'],
@@ -538,7 +567,7 @@ def deliver(db, items, transport=send, now=None, monotonic_now=time.monotonic,
             # Late discoveries belong in history, never in a fresh-news push.
             if not 0 <= now - item['published'].timestamp() <= 900:
                 continue
-            if ('*' not in watched and item['ticker'] not in watched) or observed <= device['since'] or not 0 <= now - observed <= 300:
+            if ('*' not in watched and not watched.intersection(item.get('tickers') or [item['ticker']])) or observed <= device['since'] or not 0 <= now - observed <= 300:
                 continue
             key = event_key(item)
             # Record each network attempt when it actually starts. Reusing the
@@ -557,8 +586,8 @@ def deliver(db, items, transport=send, now=None, monotonic_now=time.monotonic,
             current = db.execute('SELECT active,owner_id FROM push_devices WHERE id=?', (device['id'],)).fetchone()
             if not current or not current['active'] or current['owner_id'] != device['owner_id']:
                 continue
-            category = 'earnings' if item.get('kind') == 'earnings' else 'targets'
-            if not notification_allowed(db, device['id'], category):
+            category = {'earnings': 'earnings', 'news': 'news'}.get(item.get('kind'), 'targets')
+            if not notification_allowed(db, device['id'], category, item.get('tickers', ())):
                 continue
             # Reserve before network; a restart cannot silently send it twice.
             with db:
@@ -576,6 +605,9 @@ def deliver(db, items, transport=send, now=None, monotonic_now=time.monotonic,
                 name = DISPLAY_NAME.get(item['ticker'], item['ticker'])
                 payload = {'title': f"{name} · " + ('決算速報' if ja else 'Earnings flash'),
                            'body': item['titles']['ja' if ja else 'en'], 'tag': key, 'url': '/research/news'}
+            elif item.get('kind') == 'news':
+                payload = {'title': f"{' · '.join(item['tickers'][:3])} · " + ('ニュース' if ja else 'News'),
+                           'body': item['texts']['ja' if ja else 'en'], 'tag': key, 'url': '/research/news'}
             else:
                 payload = {'title': f"{item['ticker']} · " + ('目標株価の変更' if ja else 'Price target update'),
                            'body': f"{item['firm']}: ${item['previous']:g} → ${item['latest']:g}",
