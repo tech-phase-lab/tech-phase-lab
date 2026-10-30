@@ -3365,7 +3365,7 @@ class Handler(BaseHTTPRequestHandler):
             except Exception:
                 self.send_json(503, {"ok": False, "error": "question-submit-unavailable"})
             return
-        if path in {"/push/register", "/push/remove", "/push/status", "/push/test", "/push/member/register", "/push/member/remove", "/push/member/status", "/push/member/test", "/push/member/revoke"}:
+        if path in {"/push/register", "/push/remove", "/push/status", "/push/test", "/push/member/register", "/push/member/remove", "/push/member/status", "/push/member/test", "/push/member/revoke", "/push/member/preferences", "/push/member/save-preferences"}:
             if not self.authorized():
                 self.send_json(401, {"ok": False})
                 return
@@ -3375,7 +3375,9 @@ class Handler(BaseHTTPRequestHandler):
             try:
                 payload = self.read_json()
                 with web_push.connect(self.app.db_path) as db:
-                    if path == "/push/member/register":
+                    if path in {"/push/member/preferences", "/push/member/save-preferences"}:
+                        result = web_push.member_preferences(db, payload, save=path.endswith('/save-preferences'))
+                    elif path == "/push/member/register":
                         result = web_push.register_member(db, payload, set(self.app.tickers) | signals.X_EXTRA_TICKERS)
                     elif path == "/push/member/revoke":
                         result = web_push.revoke_member(db, payload)

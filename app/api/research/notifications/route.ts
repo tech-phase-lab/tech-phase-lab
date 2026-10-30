@@ -24,7 +24,8 @@ export async function GET() {
     if (member.plan !== "pro" || !Number.isFinite(member.accessExpiresAt) || member.accessExpiresAt <= Date.now()) return Response.json({ enabled: false, reason: "pro-required" }, { headers });
     const config = await monitor("/push/config");
     return Response.json({ enabled: config.enabled === true && config.memberAccessVersion === 1,
-      publicKey: config.memberAccessVersion === 1 ? config.publicKey : "", validUntil: member.accessExpiresAt }, { headers });
+      publicKey: config.memberAccessVersion === 1 ? config.publicKey : "", validUntil: member.accessExpiresAt,
+      preferencesVersion: config.preferencesVersion === 1 ? 1 : 0 }, { headers });
   } catch { return Response.json({ enabled: false }, { status: 503, headers }); }
 }
 export async function POST(request: Request) {
@@ -47,13 +48,15 @@ export async function POST(request: Request) {
       chunks.push(value);
     }
     const body = JSON.parse(Buffer.concat(chunks).toString());
-    if (!["register", "remove", "status", "test"].includes(body.action)) throw new Error("Invalid action");
+    if (!body || !["register", "remove", "status", "test", "preferences", "save-preferences"].includes(body.action)) throw new Error("Invalid action");
     if (body.action !== "remove" && (member.plan !== "pro" || !Number.isFinite(member.accessExpiresAt) || member.accessExpiresAt <= Date.now())) {
       return Response.json({ ok: false, error: "pro-required" }, { status: 403, headers });
     }
     const result = await monitor(`/push/member/${body.action}`, {
       memberId: member.userId, accessExpiresAt: member.accessExpiresAt / 1000,
-      subscription: body.subscription, tickers: body.tickers, allTargets: body.allTargets === true, language: body.language, weeklyNotebook: body.weeklyNotebook !== false,
+      subscription: body.subscription, tickers: body.tickers, allTargets: body.allTargets === true, language: body.language,
+      ...(body.weeklyNotebook === undefined ? {} : { weeklyNotebook: body.weeklyNotebook !== false }),
+      ...(body.preferences === undefined ? {} : { preferences: body.preferences }),
     });
     return Response.json(result, { headers });
   } catch { return Response.json({ ok: false }, { status: 503, headers }); }

@@ -33,3 +33,26 @@ test('member notification routes enforce verified identity, expiry and fixed own
   assert.equal((await (await GET()).json()).reason,'sign-in');
  } finally {globalThis.fetch=saved.fetch;delete globalThis.__pushMember;for(const [key,value] of [['RESEARCH_MONITOR_URL',saved.url],['RESEARCH_MONITOR_TOKEN',saved.token]]){if(value===undefined)delete process.env[key];else process.env[key]=value;}}
 });
+
+test('preference reads and writes require current PRO, preserve partial patches and trusted ownership',async()=>{
+ const saved={fetch:globalThis.fetch,url:process.env.RESEARCH_MONITOR_URL,token:process.env.RESEARCH_MONITOR_TOKEN};
+ process.env.RESEARCH_MONITOR_URL='https://monitor.example';process.env.RESEARCH_MONITOR_TOKEN='fixture';
+ const calls=[];const preferences={targets:false,earnings:true,news:true,newsTickers:[],weeklyNotebook:false};
+ globalThis.fetch=async(url,options)=>{calls.push({url:String(url),body:JSON.parse(options.body)});return Response.json({ok:true,preferences});};
+ const req=(action,patch,origin='https://example.test')=>new Request('https://example.test/api/research/notifications',{method:'POST',headers:{origin,'content-type':'application/json'},body:JSON.stringify({action,subscription:{endpoint:'fixture'},preferences:patch,memberId:'user_other',accessExpiresAt:9999999999999})});
+ try {
+  for(const action of ['preferences','save-preferences']) {
+   for(const [member,status] of [[{status:'signed-out'},401],[{status:'unavailable'},503],[{status:'signed-in',plan:'free'},403],[{status:'signed-in',plan:'pro',accessExpiresAt:0},403]]) {
+    globalThis.__pushMember=member;assert.equal((await POST(req(action,{targets:false}))).status,status);
+   }
+   globalThis.__pushMember={status:'signed-in',userId:'user_owner',plan:'pro',accessExpiresAt:Date.now()+60000};
+   assert.equal((await POST(req(action,{targets:false},'https://elsewhere.test'))).status,403);
+  }
+  assert.equal(calls.length,0);
+  const read=await POST(req('preferences'));assert.deepEqual(await read.json(),{ok:true,preferences});assert.match(read.headers.get('cache-control'),/no-store/);
+  const write=await POST(req('save-preferences',{newsTickers:[]}));assert.equal(write.status,200);
+  assert.deepEqual(calls.map(c=>c.url),['preferences','save-preferences'].map(a=>'https://monitor.example/push/member/'+a));
+  for(const c of calls){assert.equal(c.body.memberId,'user_owner');assert.equal(c.body.accessExpiresAt,globalThis.__pushMember.accessExpiresAt/1000);assert.equal('weeklyNotebook' in c.body,false);}
+  assert.deepEqual(calls[1].body.preferences,{newsTickers:[]});
+ } finally {globalThis.fetch=saved.fetch;delete globalThis.__pushMember;for(const [key,value] of [['RESEARCH_MONITOR_URL',saved.url],['RESEARCH_MONITOR_TOKEN',saved.token]]){if(value===undefined)delete process.env[key];else process.env[key]=value;}}
+});
