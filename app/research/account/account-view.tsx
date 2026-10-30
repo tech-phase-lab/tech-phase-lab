@@ -1,13 +1,13 @@
 "use client";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useClerk, useUser } from "@clerk/nextjs";
+import { useClerk } from "@clerk/nextjs";
 import { useCallback, useEffect, useState, useSyncExternalStore, type ReactNode } from "react";
-import { billingRequest, billingSummary, type BillingSummary } from "@/lib/membership/billing-client";
 import { useIdentityRefresh } from "../identity-provider";
 import Crown from "./crown";
 import { INITIAL, tileBackground, tileById } from "./avatars";
-import { AvatarSheet, DeleteSheet, NameSheet, StopSheet, UpgradeSheet, type Mode } from "./account-sheets";
+import { AvatarSheet, NameSheet, StopSheet, UpgradeSheet, type Mode } from "./account-sheets";
+import { contractComplete, formatAmount, formatDay, getJson, patchProfile, readContract, readProfile, type Contract, type Profile } from "./account-data";
 import styles from "./account.module.css";
 
 export type Member = { adminMfaRequired?: boolean; accessExpiresAt?: number; status: string; plan: string; isAdmin: boolean; ownerMode: boolean; canTest: boolean; testing: boolean };
@@ -40,72 +40,72 @@ const I = {
 const chev = <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#5d6c80" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7" /></svg>;
 
 
-const dateText = (iso: string | number | null | undefined, ja: boolean) => {
-  const ms = typeof iso === "number" ? iso : iso ? Date.parse(iso) : NaN;
-  return Number.isFinite(ms) && ms > 0 ? new Intl.DateTimeFormat(ja ? "ja-JP" : "en-US", { timeZone: "Asia/Tokyo", year: "numeric", month: "long", day: "numeric" }).format(ms) : null;
-};
-
 type Resolute = { state: "loading" } | { state: "unknown" } | { state: "none" } | { state: "bought"; alertsUntil: string | null };
-type Contract = { state: "loading" } | { state: "unknown" } | { state: "ok"; summary: BillingSummary };
+type ContractState = { state: "loading" } | { state: "unknown" } | { state: "ok"; value: Contract };
+type ProfileState = { state: "loading" } | { state: "error" } | { state: "ok"; value: Profile };
 
 export default function AccountView({ ja, member, billingAvailable, upgradeFirst, onRecheck }: { ja: boolean; member: Member; billingAvailable: boolean; upgradeFirst: boolean; onRecheck: () => void }) {
   const t = (a: string, b: string) => ja ? a : b;
   const router = useRouter();
-  const { user } = useUser();
   const clerk = useClerk();
   const refresh = useIdentityRefresh();
   const owner = member.ownerMode && !member.testing;
   const viewAs = useSyncExternalStore(subscribeView, readView, () => "owner" as ViewAs);
   const preview = owner && viewAs !== "owner";
   const mode: Mode | null = billingAvailable ? "live" : member.canTest ? "sandbox" : null;
-  const [contract, setContract] = useState<Contract>({ state: "loading" });
+  const [profile, setProfile] = useState<ProfileState>({ state: "loading" });
+  const [contract, setContract] = useState<ContractState>({ state: "loading" });
   const [resolute, setResolute] = useState<Resolute>({ state: "loading" });
   const [tick, setTick] = useState(0);
-  const [sheet, setSheet] = useState<"" | "upgrade" | "stop" | "delete" | "avatar" | "name">(upgradeFirst && member.plan !== "pro" && !owner ? "upgrade" : "");
-  const needsContract = !owner && member.plan === "pro";
+  const [sheet, setSheet] = useState<"" | "upgrade" | "stop" | "avatar" | "name">(upgradeFirst && member.plan !== "pro" && !owner ? "upgrade" : "");
 
   useEffect(() => {
-    if (!needsContract) return;
-    if (!mode) return;
     const controller = new AbortController();
-    billingRequest("status", undefined, AbortSignal.any([controller.signal, AbortSignal.timeout(15_000)]), mode)
-      .then(value => { if (!controller.signal.aborted) setContract({ state: "ok", summary: billingSummary(value, mode) }); })
-      .catch(() => { if (!controller.signal.aborted) setContract({ state: "unknown" }); });
+    getJson("/api/research/account/profile", controller.signal)
+      .then(value => { if (!controller.signal.aborted) setProfile({ state: "ok", value: readProfile(value) }); })
+      .catch(() => { if (!controller.signal.aborted) setProfile({ state: "error" }); });
     return () => controller.abort();
-  }, [needsContract, mode, tick]);
+  }, [tick]);
   useEffect(() => {
     if (owner) return;
     const controller = new AbortController();
-    fetch("/api/resolute/entitlements", { cache: "no-store", credentials: "same-origin", signal: AbortSignal.any([controller.signal, AbortSignal.timeout(15_000)]) })
-      .then(async response => {
-        if (!response.ok) throw new Error("entitlements");
-        const value = await response.json();
+    getJson("/api/research/account/contract", controller.signal)
+      .then(value => { if (!controller.signal.aborted) setContract({ state: "ok", value: readContract(value) }); })
+      .catch(() => { if (!controller.signal.aborted) setContract({ state: "unknown" }); });
+    return () => controller.abort();
+  }, [owner, tick]);
+  useEffect(() => {
+    if (owner) return;
+    const controller = new AbortController();
+    getJson("/api/resolute/entitlements", controller.signal)
+      .then(value => {
         const use = value?.use?.status, alerts = value?.alerts;
         if (typeof use !== "string") throw new Error("entitlements");
-        if (!controller.signal.aborted) setResolute(use === "active" ? { state: "bought", alertsUntil: alerts?.status === "active" && typeof alerts.expiresAt === "string" ? alerts.expiresAt : null } : { state: "none" });
+        if (!controller.signal.aborted) setResolute(use === "active" ? { state: "bought", alertsUntil: alerts?.status === "active" && typeof alerts.expiresAt === "string" ? alerts.expiresAt : null } : use === "missing" ? { state: "none" } : { state: "unknown" });
       })
       .catch(() => { if (!controller.signal.aborted) setResolute({ state: "unknown" }); });
     return () => controller.abort();
   }, [owner, tick]);
-
   const recheck = useCallback(() => { setContract({ state: "loading" }); setResolute({ state: "loading" }); setTick(v => v + 1); onRecheck(); }, [onRecheck]);
 
-  const metaAvatar = user?.unsafeMetadata?.avatar;
-  const email = user?.primaryEmailAddress?.emailAddress ?? "";
-  const display = (user?.firstName || user?.username || email.split("@")[0] || t("会員", "Member")).trim();
+  const me = profile.state === "ok" ? profile.value : null;
+  const email = me?.email ?? "";
+  const display = (me?.displayName || email.split("@")[0] || t("会員", "Member")).trim();
   const initial = Array.from(display)[0] ?? "?";
-  const tile = tileById(metaAvatar);
-  const twoFactor = user?.twoFactorEnabled === true;
-  const passwordRow = user?.passwordEnabled === true && !owner;
+  const tile = tileById(me?.icon);
+  const twoFactor = me?.twoFactorEnabled === true;
+  const passwordRow = me?.passwordEnabled === true && !owner;
 
-  // What this screen shows as the plan.
-  const effective: "free" | "pro" = owner ? (viewAs === "pro" ? "pro" : "free") : member.plan === "pro" ? "pro" : "free";
-  const summary = contract.state === "ok" ? contract.summary : null;
-  const sub = summary?.subscription ?? null;
-  const stopped = effective === "pro" && !preview && sub?.state === "cancelled";
-  const proUntil = !preview ? dateText(summary?.proExpiresAt ?? (mode ? null : member.accessExpiresAt), ja) : null;
-  const unknown = effective === "pro" && !preview && contract.state === "unknown";
-  const loadingContract = effective === "pro" && !preview && mode !== null && contract.state === "loading";
+  const effective: "free" | "pro" = owner ? (viewAs === "pro" ? "pro" : "free") : me?.plan === "pro" ? "pro" : member.plan === "pro" && !me ? "pro" : "free";
+  const c = contract.state === "ok" ? contract.value : null;
+  const contractReady = !!c && contractComplete(c);
+  const stopped = effective === "pro" && !preview && contractReady && c.status === "renewal-stopped";
+  const activeContract = effective === "pro" && !preview && contractReady && c.status === "active";
+  // PRO members whose contract cannot be confirmed (or contradicts the plan) see the "could not check" card.
+  const unknown = effective === "pro" && !preview && contract.state !== "loading" && !stopped && !activeContract;
+  const loadingContract = effective === "pro" && !preview && contract.state === "loading";
+  const freeUnverified = effective === "free" && !preview && !owner && (contract.state === "unknown" || (c !== null && !(c.verification === "verified" && c.status === "none")));
+  const accessUntil = formatDay(c?.accessExpiresAt, ja);
 
   const closeSheet = useCallback(() => {
     setSheet("");
@@ -114,9 +114,8 @@ export default function AccountView({ ja, member, billingAvailable, upgradeFirst
   const closePlain = useCallback(() => setSheet(""), []);
   const ownerPreviewNote = <p className={styles.previewBar}>{t("表示の確認中です。ここでの操作は、実際の契約や権限には反映されません。", "Previewing the view. Actions here do not change your real contract or access.")}</p>;
 
-  async function saveAvatar(id: string) { if (!user) throw new Error("user"); await user.update({ unsafeMetadata: { ...user.unsafeMetadata, avatar: id } }); }
-  async function saveName(name: string) { if (!user) throw new Error("user"); await user.update({ firstName: name, lastName: "" }); }
-  async function deleteAccount() { if (!user) throw new Error("user"); await user.delete(); window.location.assign("/research"); }
+  async function saveAvatar(id: string) { setProfile({ state: "ok", value: await patchProfile({ icon: id }) }); }
+  async function saveName(name: string) { setProfile({ state: "ok", value: await patchProfile({ displayName: name }) }); }
 
   // Entry from the PRO introduction card: the confirmation sheet opens without the account screen behind it.
   if (upgradeFirst && sheet === "upgrade" && member.plan !== "pro" && !owner) {
@@ -126,25 +125,28 @@ export default function AccountView({ ja, member, billingAvailable, upgradeFirst
   const row = (icon: ReactNode, label: ReactNode, opts: { href?: string; onClick?: () => void; value?: ReactNode; sub?: string; pro?: boolean; chevron?: boolean; className?: string; disabled?: boolean } = {}) => {
     const body = <><span className={styles.ri}>{icon}</span><span className={`${styles.rt} ${opts.className ?? ""}`}>{label}{opts.sub && <small>{opts.sub}</small>}</span>{opts.pro && <span className={styles.proTag}>PRO</span>}{opts.value}{opts.chevron !== false && chev}</>;
     return opts.href ? <Link className={styles.row} href={opts.href} prefetch={false}>{body}</Link>
-      : <button type="button" className={styles.row} disabled={opts.disabled} onClick={opts.onClick}>{body}</button>;
+      : opts.onClick ? <button type="button" className={styles.row} disabled={opts.disabled} onClick={opts.onClick}>{body}</button>
+      : <div className={styles.row} style={{ cursor: "default" }}>{body}</div>;
   };
   const avatar = <div className={styles.av}>
     <div className={`${styles.avc} ${effective === "pro" || owner ? styles.avPro : ""} ${owner ? styles.avOwner : ""} ${tile ? styles.avEmoji : ""}`} style={!owner && tile ? { background: tileBackground(tile), borderColor: "rgba(255,255,255,.18)" } : undefined}>
       {owner ? <img src="/rizel-avatar.webp" alt="" width={52} height={52} /> : tile ? tile.glyph : initial}
     </div>
-    {!owner && <button type="button" className={styles.pencil} aria-label={t("アイコンを変更", "Change icon")} onClick={() => setSheet("avatar")}>{I.pencil}</button>}
+    {!owner && me?.iconEditable !== false && <button type="button" className={styles.pencil} aria-label={t("アイコンを変更", "Change icon")} disabled={!me} onClick={() => setSheet("avatar")}>{I.pencil}</button>}
   </div>;
   const stopTag = <span className={`${styles.pt} ${styles.ptStop}`}>{t("自動更新停止済み", "Renewal stopped")}</span>;
 
   // ---- plan card
-  const money = sub?.currency === "USD" ? { n: "$20", u: "USD" } : { n: "¥2,980", u: "JPY" };
+  const price = c?.amount && c.currency ? formatAmount(c.amount, c.currency) : null;
   const planCard = effective === "free"
     ? <div className={`${styles.cd} ${styles.proFree}`} style={{ marginTop: 0 }}>
         <div className={styles.proHead}><Crown size={36} /><span className={styles.proName} style={{ fontSize: 19, letterSpacing: ".04em" }}>Tech Phase PRO</span></div>
         <div className={styles.price}><span className={styles.priceN}>¥2,980</span><span className={styles.priceU}>/ {t("月", "mo")}</span><span className={styles.priceR}>{t("毎月自動更新", "Renews monthly")}</span></div>
         <ul className={styles.perks}>{[t("RIZEL'S DESK", "RIZEL'S DESK"), t("ハイテク速報をリアルタイムで", "Real-time Tech Alerts"), t("監視22銘柄リストとテーマランキング", "22-stock list and Theme Ranking"), t("銘柄比較・スマホ通知", "Compare and phone alerts")].map(text => <li key={text}>{I.tick}<span>{text}</span></li>)}</ul>
-        <button type="button" className={`${styles.btn} ${styles.gbt}`} style={{ marginTop: 18 }} disabled={preview || !mode} onClick={() => setSheet("upgrade")}>{t("PROにアップグレード", "Upgrade to PRO")}</button>
-        <div className={styles.ctaNote}>{!mode && !preview ? t("お申し込みの受付は、現在停止中です。", "New subscriptions are closed right now.") : t("料金と規約を確認してから、PayPalへ進みます。", "Review the price and terms, then continue to PayPal.")}</div>
+        <button type="button" className={`${styles.btn} ${styles.gbt}`} style={{ marginTop: 18 }} disabled={preview || !mode || freeUnverified || contract.state === "loading" && !preview} onClick={() => setSheet("upgrade")}>{t("PROにアップグレード", "Upgrade to PRO")}</button>
+        {freeUnverified
+          ? <div className={styles.ctaNote} role="status">{t("契約の状態を確認できませんでした。", "Could not check your contract.")} <button type="button" className={styles.link} style={{ display: "inline", width: "auto", margin: 0, padding: "0 0 0 6px", color: "#e7c982" }} onClick={recheck}>{t("再確認", "Check again")}</button></div>
+          : <div className={styles.ctaNote}>{!mode && !preview ? t("お申し込みの受付は、現在停止中です。", "New subscriptions are closed right now.") : t("料金と規約を確認してから、PayPalへ進みます。", "Review the price and terms, then continue to PayPal.")}</div>}
       </div>
     : <div className={`${styles.cd} ${styles.cdGold} ${styles.pro}`} style={{ marginTop: 0 }}>
         <div className={styles.proHead}><Crown size={46} /><div style={{ flex: 1, minWidth: 0 }}><div className={styles.proName}>Tech Phase PRO</div>
@@ -155,12 +157,13 @@ export default function AccountView({ ja, member, billingAvailable, upgradeFirst
           </>
           : <>
             {!loadingContract && <div className={styles.kvs}>
-              <div className={styles.kv}><span>{t("月額料金", "Monthly price")}</span><b>{money.n} <small>{money.u}</small></b></div>
-              {proUntil && <div className={styles.kv}><span>{stopped ? t("利用期限", "Access until") : t("確認済みの利用期限", "Verified access until")}</span><b>{proUntil}</b></div>}
+              <div className={styles.kv}><span>{t("月額料金", "Monthly price")}</span><b>{price ?? "—"} {c?.currency && <small>{c.currency}</small>}</b></div>
+              {activeContract && <div className={styles.kv}><span>{t("次回請求日", "Next billing date")}</span><b>{formatDay(c?.nextBillingAt, ja)}</b></div>}
+              {stopped && <div className={styles.kv}><span>{t("利用期限", "Access until")}</span><b>{accessUntil}</b></div>}
             </div>}
-            {stopped && proUntil && <p className={styles.note}>{t("この日まで、PROの機能を利用できます。", "PRO stays available until this date.")}</p>}
-            {mode && !preview && <Link className={`${styles.btn} ${styles.gbtO} ${styles.btnS}`} style={{ marginTop: 14 }} href="/research/account/billing" prefetch={false}>{t("支払い方法・履歴を確認", "Payment method & history")} {I.ext}</Link>}
-            {mode && !preview && !stopped && sub && ["active", "suspended"].includes(sub.state) && <button type="button" className={styles.link} onClick={() => setSheet("stop")}>{t("自動更新を停止する", "Stop automatic renewal")}</button>}
+            {stopped && <p className={styles.note}>{t("この日まで、PROの機能を利用できます。", "PRO stays available until this date.")}</p>}
+            {mode && !preview && !loadingContract && <Link className={`${styles.btn} ${styles.gbtO} ${styles.btnS}`} style={{ marginTop: 14 }} href="/research/account/billing" prefetch={false}>{t("支払い方法・履歴を確認", "Payment method & history")} {I.ext}</Link>}
+            {mode && !preview && activeContract && <button type="button" className={styles.link} onClick={() => setSheet("stop")}>{t("自動更新を停止する", "Stop automatic renewal")}</button>}
             {preview && <button type="button" className={styles.link} disabled>{t("自動更新を停止する", "Stop automatic renewal")}</button>}
           </>}
       </div>;
@@ -171,7 +174,7 @@ export default function AccountView({ ja, member, billingAvailable, upgradeFirst
       {resolute.state === "bought" && !preview && <span className={`${styles.pt} ${styles.ptOn}`}>{t("購入済み", "Purchased")}</span>}
       <span className={styles.resSub}>{t("暴落の夜も、上昇の朝も、自分のルールに立ち戻るためのキット。", "A kit to return to your own rules, on crash nights and rally mornings.")}</span></div>
     {resolute.state === "bought" && !preview
-      ? <>{resolute.alertsUntil && dateText(resolute.alertsUntil, ja) && <div className={styles.kvs} style={{ marginTop: 6 }}><div className={styles.kv}><span>{t("通知サービスの有効期限", "Alerts valid until")}</span><b>{dateText(resolute.alertsUntil, ja)}</b></div></div>}
+      ? <>{resolute.alertsUntil && formatDay(resolute.alertsUntil, ja) && <div className={styles.kvs} style={{ marginTop: 6 }}><div className={styles.kv}><span>{t("通知サービスの有効期限", "Alerts valid until")}</span><b>{formatDay(resolute.alertsUntil, ja)}</b></div></div>}
           <div className={styles.stack}><Link className={`${styles.btn} ${styles.abt}`} href="/resolute">{t("RESOLUTEを開く", "Open RESOLUTE")}</Link>
             <Link className={`${styles.btn} ${styles.abt} ${styles.abtO}`} style={{ height: 46, fontSize: 14 }} href="/resolute/settings">{t("通知サービスを更新", "Renew alerts")}</Link></div></>
       : <Link className={`${styles.btn} ${styles.abt} ${styles.abtO}`} style={{ marginTop: 16 }} href="/resolute">{t("RESOLUTEを見る", "See RESOLUTE")}</Link>}
@@ -182,7 +185,8 @@ export default function AccountView({ ja, member, billingAvailable, upgradeFirst
   const security = <div className={styles.cd} style={{ marginTop: 0 }}>
     {row(I.bell, t("スマホ通知の設定", "Phone notifications"), { href: "/research/notifications", pro: true })}
     {passwordRow && row(I.key, t("パスワードを変更", "Change password"), { href: "/research/account/security" })}
-    {row(I.shield, t("2段階認証", "Two-step verification"), { href: "/research/account/security", value: twoValue })}
+    {/* The owner's two-step verification is required for admin access: shown, never offered to turn off. */}
+    {owner ? row(I.shield, t("2段階認証", "Two-step verification"), { value: twoValue, chevron: false }) : row(I.shield, t("2段階認証", "Two-step verification"), { href: "/research/account/security", value: twoValue })}
     {row(I.out, t("ログアウト", "Log out"), { onClick: () => void clerk.signOut({ redirectUrl: "/research" }), chevron: false, className: styles.muted })}
   </div>;
 
@@ -202,7 +206,10 @@ export default function AccountView({ ja, member, billingAvailable, upgradeFirst
     <div className={`${styles.kick} ${owner || effective === "pro" ? styles.kickGold : ""}`}>{owner ? "OWNER" : "MY ACCOUNT"}</div>
     <h1 className={styles.h1}>{t("アカウント", "Account")}</h1>
 
-    <div className={`${styles.cd} ${owner ? styles.ownerHero : ""}`}>
+    {profile.state === "error" && <div className={styles.cd}><div style={{ padding: 16 }}><p className={styles.note} role="alert" style={{ margin: 0 }}>{t("アカウント情報を確認できませんでした。", "Could not load your account.")}</p>
+      <button type="button" className={`${styles.btn} ${styles.gbtO} ${styles.btnS}`} style={{ marginTop: 12 }} onClick={() => { setProfile({ state: "loading" }); recheck(); }}>{t("再確認", "Check again")}</button></div></div>}
+    {profile.state === "loading" && <div className={styles.skel} style={{ marginTop: 20 }} aria-busy="true" />}
+    {profile.state === "ok" && <div className={`${styles.cd} ${owner ? styles.ownerHero : ""}`}>
       <div className={styles.hero}>{avatar}
         <div className={styles.who}><div className={styles.name}>{owner ? "リゼル" : display}</div><div className={styles.mail}>{email}</div></div>
         <span className={`${styles.pt} ${owner ? styles.ptOwner : effective === "pro" ? styles.ptPro : styles.ptFree}`}>{owner ? "OWNER" : effective === "pro" ? "PRO" : "FREE"}</span></div>
@@ -210,7 +217,7 @@ export default function AccountView({ ja, member, billingAvailable, upgradeFirst
         {row(I.user, t("表示名を変更", "Change display name"), { onClick: () => setSheet("name") })}
         {row(I.mail, t("メールアドレスを変更", "Change email"), { href: "/research/account/security" })}
       </div>}
-    </div>
+    </div>}
 
     {owner && viewAs === "owner" && <div className={styles.ownerBadge}><span className={styles.seal}>{I.seal}</span>
       <div style={{ flex: 1, minWidth: 0 }}><div className={styles.ownerWord}>OWNER</div><div className={styles.ownerSub}>{t("全機能をご利用中です", "All features unlocked")}</div></div>
@@ -238,21 +245,14 @@ export default function AccountView({ ja, member, billingAvailable, upgradeFirst
         {row(I.doc, t("利用規約", "Terms"), { href: "/terms" })}
         {row(I.lock, t("プライバシーポリシー", "Privacy policy"), { href: "/privacy" })}
       </div>
-      <div className={styles.cd} style={{ marginTop: 12, borderColor: "#3a2226" }}>
-        {row(I.trash, t("アカウントを削除", "Delete account"), { onClick: () => setSheet("delete"), className: styles.danger, sub: effective === "pro" && !stopped ? t("有効な契約がある場合は、先に自動更新の停止を確認します。", "If you have an active contract, confirm that renewal is stopped first.") : t("PROの解約とは別の操作です。", "Separate from cancelling PRO.") })}
-      </div>
+      {/* Deletion is not available yet (docs/ACCOUNT-API-HANDOFF-2026-10-31.md): no button, no sheet. */}
+      <div className={styles.delBlock}><h2>{t("アカウントの削除", "Delete account")}</h2><p>{t("現在、この画面からは削除できません。お問い合わせください。", "Accounts cannot be deleted from this screen right now. Please contact us.")}</p></div>
     </>}
     <div className={styles.foot}>Tech Phase Research</div>
 
     {sheet === "upgrade" && <UpgradeSheet ja={ja} mode={mode} refresh={refresh} onClose={closePlain} />}
-    {sheet === "stop" && mode && sub && <StopSheet ja={ja} mode={mode} subscriptionId={sub.id} until={proUntil} onDone={() => { closePlain(); recheck(); }} onClose={closePlain} />}
-    {sheet === "delete" && <DeleteSheet ja={ja}
-      locked={member.plan === "pro" && !owner && (contract.state !== "ok" || ["active", "suspended", "creating", "approval_pending"].includes(sub?.state ?? ""))}
-      lockedReason={contract.state === "ok" ? t("PROの契約が有効です。先に、自動更新の停止を確認してください。", "Your PRO contract is active. Stop automatic renewal first.") : t("契約の状態を確認できません。確認できるまで、削除はできません。", "Your contract cannot be checked, so deletion is unavailable.")}
-      proUntil={member.plan === "pro" ? proUntil : null}
-      onRecheck={() => { recheck(); if (sub && ["active", "suspended"].includes(sub.state)) { closePlain(); } }}
-      onDelete={deleteAccount} onClose={closePlain} />}
-    {sheet === "avatar" && <AvatarSheet ja={ja} initial={initial} current={tile ? tile.id : INITIAL} onSave={saveAvatar} onClose={closePlain} />}
-    {sheet === "name" && <NameSheet ja={ja} current={display} onSave={saveName} onClose={closePlain} />}
+    {sheet === "stop" && mode && <StopSheet ja={ja} mode={mode} until={accessUntil} onDone={() => { closePlain(); recheck(); }} onClose={closePlain} />}
+    {sheet === "avatar" && me && <AvatarSheet ja={ja} initial={initial} current={tile ? tile.id : INITIAL} onSave={saveAvatar} onClose={closePlain} />}
+    {sheet === "name" && me && <NameSheet ja={ja} current={display} onSave={saveName} onClose={closePlain} />}
   </div>;
 }

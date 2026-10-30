@@ -143,3 +143,7 @@
 .page .skel{height:150px;border-radius:20px;background:linear-gradient(90deg,#10161f 25%,#18212d 50%,#10161f 75%) 0 0/200% 100%;animation:sh 1.4s linear infinite}
 @keyframes sh{to{background-position:-200% 0}}@media(prefers-reduced-motion:reduce){.page .skel{animation:none}
 }
+.page .delBlock{margin-top:12px;padding:16px 18px;border-radius:18px;border:1px solid #1e2a3a;background:#0e1520}
+.page .delBlock h2{margin:0;font-size:15px;font-weight:700;color:#e8edf3}
+.page .delBlock p{margin:8px 0 0;font-size:13px;line-height:1.8;color:#7d8ca0}
+.page .stopBtn{background:transparent;border:1px solid #7a2f3c;color:#f08a96}

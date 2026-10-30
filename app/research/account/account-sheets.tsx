@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { useEffect, useRef, useState, type ReactNode } from "react";
-import { billingRequest, sandboxApproval } from "@/lib/membership/billing-client";
+import { billingRequest, billingSummary, sandboxApproval } from "@/lib/membership/billing-client";
 import { INITIAL, TILES, tileBackground, tileById } from "./avatars";
 import styles from "./account.module.css";
 
@@ -65,38 +65,27 @@ export function UpgradeSheet({ ja, mode, blocked, refresh, onClose }: { ja: bool
   </Sheet>;
 }
 
-/** A6: stop automatic renewal (the existing billing "cancel" call). */
-export function StopSheet({ ja, mode, subscriptionId, until, onDone, onClose }: { ja: boolean; mode: Mode; subscriptionId: string; until: string | null; onDone: () => void; onClose: () => void }) {
+/** Stop automatic renewal: look up the contract id, then the existing billing "cancel" call. */
+export function StopSheet({ ja, mode, until, onDone, onClose }: { ja: boolean; mode: Mode; until: string | null; onDone: () => void; onClose: () => void }) {
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState(false);
   const t = (a: string, b: string) => ja ? a : b;
   async function stop() {
     setBusy(true); setError(false);
-    try { await billingRequest("cancel", { id: subscriptionId }, AbortSignal.timeout(20_000), mode); onDone(); }
-    catch { setBusy(false); setError(true); }
+    try {
+      const signal = AbortSignal.timeout(30_000);
+      const current = billingSummary(await billingRequest("status", undefined, signal, mode), mode);
+      const sub = current.subscription;
+      if (!sub || !["active", "suspended"].includes(sub.state)) throw new Error("not-cancellable");
+      await billingRequest("cancel", { id: sub.id }, signal, mode);
+      onDone();
+    } catch { setBusy(false); setError(true); }
   }
-  return <Sheet title={t("自動更新を停止しますか？", "Stop automatic renewal?")} onClose={onClose} plain dismissible={!busy}>
-    <p className={styles.sBody}>{until ? t(`停止すると、次回の請求はありません。${until}まで、PROの機能を利用できます。`, `No further charges after you stop. PRO stays available until ${until}.`) : t("停止すると、次回の請求はありません。", "No further charges after you stop.")}</p>
+  return <Sheet title={t("自動更新を停止しますか？", "Stop automatic renewal?")} onClose={onClose} dismissible={!busy}>
+    <p className={styles.sBody}>{t("停止すると、次回の請求はありません。", "No further charges after you stop.")}{until && <><br />{t(`${until}まで、PROの機能を利用できます。`, `PRO stays available until ${until}.`)}</>}</p>
     {error && <p className={styles.err} role="alert">{t("停止できませんでした。契約の状態を確認して、もう一度お試しください。", "Could not stop renewal. Check your contract and try again.")}</p>}
     <button type="button" className={`${styles.btn} ${styles.gbt}`} disabled={busy} onClick={onClose}>{t("このまま続ける", "Keep renewing")}</button>
-    <button type="button" className={styles.sCancel} disabled={busy} onClick={() => void stop()} style={{ color: "#e5838c" }}>{busy ? t("停止しています…", "Stopping…") : t("自動更新を停止する", "Stop automatic renewal")}</button>
-  </Sheet>;
-}
-
-/** A7 / A7b: deletion stays locked until the renewal is confirmed stopped. */
-export function DeleteSheet({ ja, locked, lockedReason, proUntil, onRecheck, onDelete, onClose }: { ja: boolean; locked: boolean; lockedReason: string; proUntil: string | null; onRecheck: () => void; onDelete: () => Promise<void>; onClose: () => void }) {
-  const [busy, setBusy] = useState(false);
-  const [error, setError] = useState(false);
-  const t = (a: string, b: string) => ja ? a : b;
-  async function remove() { setBusy(true); setError(false); try { await onDelete(); } catch { setBusy(false); setError(true); } }
-  return <Sheet title={t("アカウントを削除しますか？", "Delete your account?")} onClose={onClose} plain dismissible={!busy}>
-    <p className={styles.sBody}>{t("削除すると、会員情報と保存したリサーチが消えます。元に戻すことはできません。", "Deleting removes your membership and saved research. This cannot be undone.")}</p>
-    {locked ? <p className={styles.warn} role="status">{lockedReason}</p>
-      : proUntil && <p className={styles.warn}>{t(`PROは${proUntil}まで利用できます。削除すると、その権利も失われます。`, `PRO runs until ${proUntil}. Deleting also forfeits that.`)}</p>}
-    {error && <p className={styles.err} role="alert">{t("削除できませんでした。時間をおいて、もう一度お試しください。", "Could not delete. Please try again shortly.")}</p>}
-    {locked && <button type="button" className={`${styles.btn} ${styles.gbtO}`} onClick={onRecheck} style={{ marginBottom: 10 }}>{t("契約を確認する", "Check my contract")}</button>}
-    <button type="button" className={`${styles.btn} ${styles.dBtn}`} disabled={locked || busy} onClick={() => void remove()}>{busy ? t("削除しています…", "Deleting…") : t("アカウントを削除する", "Delete account")}</button>
-    <button type="button" className={styles.sCancel} disabled={busy} onClick={onClose}>{t("キャンセル", "Cancel")}</button>
+    <button type="button" className={`${styles.btn} ${styles.stopBtn}`} style={{ marginTop: 12 }} disabled={busy} onClick={() => void stop()}>{busy ? t("停止しています…", "Stopping…") : t("自動更新を停止する", "Stop automatic renewal")}</button>
   </Sheet>;
 }
 
