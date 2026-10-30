@@ -1,5 +1,5 @@
 /** The account icon choices (canvas A9): the initial plus 23 emoji tiles. No photo upload. */
-export const INITIAL = "initials";
+export const INITIAL = "initial";
 const IDS = ["rocket", "chart", "diamond", "crown", "bolt", "fire", "moon", "sun", "wave", "mountain", "compass", "shield", "anchor", "target", "eagle", "bull", "bear", "lion", "dragon", "robot", "brain", "telescope", "coin"];
 export const TILES: { id: string; glyph: string; from: string; to: string }[] = [
   ["🚀", "#ff7a5955", "#7a2a8ccc"], ["📈", "#34d39955", "#0f766ecc"], ["💎", "#60a5fa55", "#6d28d9cc"], ["👑", "#f6d36b55", "#b45309cc"],

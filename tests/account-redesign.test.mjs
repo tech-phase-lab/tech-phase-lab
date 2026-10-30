@@ -6,6 +6,7 @@ import { createElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import ts from "typescript";
 
+import { accountIcons } from "../lib/account/profile.ts";
 const require = createRequire(import.meta.url);
 function load(path, stubs = {}) {
   const out = ts.transpileModule(readFileSync(new URL(path, import.meta.url), "utf8"), { compilerOptions: { module: ts.ModuleKind.CommonJS, jsx: ts.JsxEmit.ReactJSX, target: ts.ScriptTarget.ES2022 } }).outputText;
@@ -23,12 +24,14 @@ const sheets = load("../app/research/account/account-sheets.tsx", {
 const data = load("../app/research/account/account-data.ts");
 const profileLib = load("../lib/account/profile.ts");
 
-test("icon ids are exactly the ones the profile API accepts (initials + 23)", () => {
+test("icon ids are exactly the ones the profile API accepts (initial + 23)", () => {
   assert.deepEqual([avatars.INITIAL, ...avatars.TILES.map(tile => tile.id)], profileLib.accountIcons);
 });
 
 test("the icon sheet offers the initial and exactly 23 distinct emoji tiles, no photo upload", () => {
   assert.equal(avatars.TILES.length, 23);
+  assert.deepEqual([avatars.INITIAL, ...avatars.TILES.map(tile => tile.id)], [...accountIcons]);
+  assert.equal(avatars.tileById("🚀"), undefined);
   assert.equal(new Set(avatars.TILES.map(tile => tile.id)).size, 23);
   const html = renderToStaticMarkup(createElement(sheets.AvatarSheet, { ja: true, initial: "ゆ", current: "initial", onSave: async () => {}, onClose: () => {} }));
   assert.equal((html.match(/aria-pressed/g) ?? []).length, 24);

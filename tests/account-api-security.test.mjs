@@ -10,7 +10,7 @@ source=source.replace("import 'server-only';",'')
  .replace("import {liveTransportConfig} from '@/services/tech-phase-billing/live-transport.mjs';",'const liveTransportConfig=()=>{throw Error("not-configured");};')
  .replace("import {bounded} from '@/services/tech-phase-billing/transport.mjs';",`import {bounded} from '${new URL('../services/tech-phase-billing/transport.mjs',import.meta.url)}';`)
  .replace("import {unknownContract} from '@/services/tech-phase-billing/account-view.mjs';",`import {unknownContract} from '${new URL('../services/tech-phase-billing/account-view.mjs',import.meta.url)}';`)
- .replace("import {selectedIcon} from './profile';",'const selectedIcon=(value,owner)=>owner?"owner":value??"initials";');
+ .replace("import {selectedIcon} from './profile';",'const selectedIcon=(value,owner)=>owner?"owner":value??"initial";');
 const api=await import('data:text/javascript;base64,'+Buffer.from(stripTypeScriptTypes(source)).toString('base64'));
 test('owner routes require approved identity AND server MFA/admin permission',async()=>{
  for(const member of [{status:'signed-out'},{status:'signed-in',userId:'owner',isAdmin:false},{status:'signed-in',userId:'other-admin',isAdmin:true},{status:'signed-in',userId:'buyer',plan:'pro'}]){

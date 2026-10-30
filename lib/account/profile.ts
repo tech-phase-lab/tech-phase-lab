@@ -1,4 +1,4 @@
-export const accountIcons = ['initials','rocket','chart','diamond','crown','bolt','fire','moon','sun','wave','mountain','compass','shield','anchor','target','eagle','bull','bear','lion','dragon','robot','brain','telescope','coin'] as const;
+export const accountIcons = ['initial','rocket','chart','diamond','crown','bolt','fire','moon','sun','wave','mountain','compass','shield','anchor','target','eagle','bull','bear','lion','dragon','robot','brain','telescope','coin'] as const;
 export function profileInput(value: unknown, owner: boolean): {displayName?:string;icon?:string} {
  if (!value || typeof value !== 'object' || Array.isArray(value)) throw Error('invalid-input');
  const body=value as Record<string,unknown>, keys=Object.keys(body);
@@ -17,4 +17,4 @@ export function profileInput(value: unknown, owner: boolean): {displayName?:stri
  }
  return result;
 }
-export function selectedIcon(value:unknown, owner:boolean){return owner?'owner':accountIcons.some(i=>i===value)?String(value):'initials';}
+export function selectedIcon(value:unknown, owner:boolean){return owner?'owner':accountIcons.some(i=>i===value)?String(value):'initial';}

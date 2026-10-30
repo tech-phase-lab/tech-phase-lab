@@ -8,7 +8,7 @@ GET /api/research/account/profile
 Returns displayName,email,plan (free/pro/owner),ownerAccess,passwordEnabled,twoFactorEnabled,icon,iconEditable,security.
 Owner is the account identity, not a paid subscription. Owner icon="owner" is fixed. UI reuses its owner artwork.
 PATCH same endpoint: {displayName?:string,icon?:string}. Name 1–60 code points, trimmed. Only specified keys accepted. Icons:
-initials,rocket,chart,diamond,crown,bolt,fire,moon,sun,wave,mountain,compass,shield,anchor,target,eagle,bull,bear,lion,dragon,robot,brain,telescope,coin.
+initial,rocket,chart,diamond,crown,bolt,fire,moon,sun,wave,mountain,compass,shield,anchor,target,eagle,bull,bear,lion,dragon,robot,brain,telescope,coin.
 No photos, arbitrary metadata, role or user ID accepted. Storage: Clerk firstName (lastName cleared) and privateMetadata.accountIcon; no other metadata replaced. Separate provider writes may partially succeed; refetch on error.
 
 ## Email / password / MFA
