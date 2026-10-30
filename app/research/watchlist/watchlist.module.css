@@ -187,3 +187,10 @@
 .wheelTrigger { flex:0 1 auto;min-width:0;justify-content:flex-start; }
 .page .heading h1 { flex:0 0 auto; }
 @media(max-width:760px) { .page .listPicker { max-width:56%; } }
+
+/* the empty list's search box (Oct 30 design): full width, glowing mint edge, a small ＋ at the right */
+.controls .searchEmpty, .searchEmpty { flex:1 1 100%; max-width:none; width:100%; }
+.searchEmpty .searchRow { height:46px; padding:0 9px 0 14px; gap:10px; border:1.5px solid #4fae8c; border-radius:14px; background:linear-gradient(180deg,#10222a,#0d1a20); box-shadow:0 0 26px rgba(93,224,176,.16); }
+.searchEmpty .searchRow input { height:44px; min-height:44px; padding:0; font-size:14.5px; }
+.searchEmpty .searchRow input::placeholder { color:#9fb3b8; }
+.searchPlus { flex:none; display:grid; place-items:center; width:28px; height:28px; padding:0; border:0; border-radius:9px; background:linear-gradient(135deg,#9fe8c8,#5fcca2); color:#05281d; font-size:18px; font-weight:700; line-height:1; cursor:pointer; }

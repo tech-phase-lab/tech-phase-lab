@@ -14,7 +14,7 @@ export default function EmptyWatchlist({ lang, listName, disabled, onAdd }: { la
   const ja = lang === "ja";
   return <section className={styles.empty} aria-label={ja ? "ウォッチリストは空です" : "Your watchlist is empty"}>
     <div className={styles.glow} aria-hidden="true" />
-    <svg className={styles.art} width="132" height="132" viewBox="0 0 132 132" fill="none" aria-hidden="true">
+    <svg className={styles.art} width="124" height="124" viewBox="0 0 132 132" fill="none" aria-hidden="true">
       <circle cx="66" cy="66" r="64" stroke="#1f3a33" />
       <circle cx="66" cy="66" r="46" stroke="#2a5646" strokeDasharray="2 5" />
       <circle cx="66" cy="66" r="28" stroke="#3a7b63" strokeWidth="1.2" />

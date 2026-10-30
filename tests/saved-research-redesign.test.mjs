@@ -8,8 +8,9 @@ const empty = read("../app/research/saved-empty.tsx");
 const notebook = read("../app/research/research-notebook.tsx");
 const walker = read("../lib/research/notebook-pdf-browser.ts");
 
-test("the empty saved page shows the invented sample, exactly as worded, and never a real article", () => {
-  for (const text of ["TICKER", "書き込みの例", "ある半導体メーカーが、新工場の稼働を前倒しへ", "稼働を来期の初めに前倒しし", "生産能力の引き上げ", "需要の取り込み", "次の決算で、設備投資の額を確認する", "蛍光ペン", "下線", "囲み", "メモ", "気づきを残す、自分だけの一冊。", "何度でも立ち戻れる場所に。", "保存する記事を調べる"]) assert.ok(empty.includes(text), text);
+test("the empty saved page shows a quiet invented sample (no ticker, tag or headline), exactly as worded, and never a real article", () => {
+  for (const gone of ["TICKER", "ある半導体メーカーが、新工場の稼働を前倒しへ"]) assert.ok(!empty.includes(gone), gone);
+  for (const text of ["書き込みの例", "稼働を来期の初めに前倒しし", "生産能力の引き上げ", "需要の取り込み", "次の決算で、設備投資の額を確認する", "蛍光ペン", "下線", "囲み", "メモ", "気づきを残す、自分だけの一冊。", "何度でも立ち戻れる場所に。", "保存する記事を調べる"]) assert.ok(empty.includes(text), text);
   assert.match(dashboard, /<SavedEmpty lang=\{lang\} onFind=/);
   assert.match(dashboard, /MY RESEARCH/);
 });

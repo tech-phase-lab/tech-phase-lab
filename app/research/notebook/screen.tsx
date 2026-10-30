@@ -56,7 +56,7 @@ export default function NotebookScreen() {
           <StockNotebook key={`${tickers.join(",")}:${weeksBack}`} tickers={tickers} lang={lang} weeksBack={weeksBack} />
         </>
         : <EmptyNotebook lang={lang} range={range} />}
-      <p className={styles.notice}><span aria-hidden="true">🔔</span><span>{t("日曜の夜に、今週のまとめをスマホへ通知できます", "Get a phone notice on Sunday night when this week's recap is ready")}</span><Link href="/research/notifications">{t("設定へ ›", "Settings ›")}</Link></p>
+      {ready && <p className={styles.notice}><span aria-hidden="true">🔔</span><span>{t("日曜の夜に、今週のまとめをスマホへ通知できます", "Get a phone notice on Sunday night when this week's recap is ready")}</span><Link href="/research/notifications">{t("設定へ ›", "Settings ›")}</Link></p>}
     </div>
   </ResearchToolShell>;
 }

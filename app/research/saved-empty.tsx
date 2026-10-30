@@ -9,8 +9,7 @@ export default function SavedEmpty({ lang, onFind }: { lang: Language; onFind: (
     <div className={styles.stack}>
       <span className={styles.backTwo} aria-hidden="true" /><span className={styles.backOne} aria-hidden="true" />
       <div className={styles.card} aria-label={t("書き込みの例", "Example of writing")}>
-        <div className={styles.top}><b>TICKER</b><span className={styles.tag}>{t("ニュース", "News")}</span><span className={styles.example}>{t("書き込みの例", "Example")}</span></div>
-        <h3>{t("ある半導体メーカーが、新工場の稼働を前倒しへ", "A chipmaker brings its new fab forward")}</h3>
+        <div className={styles.top}><span className={styles.example}>{t("書き込みの例", "Example")}</span></div>
         <p>{ja
           ? <>同社は新工場の<mark className={styles.hl}>稼働を来期の初めに前倒しし</mark>、<span className={styles.ul}>生産能力の引き上げ</span>と<span className={styles.bx}>需要の取り込み</span>を狙う。</>
           : <>The company will <mark className={styles.hl}>start the new fab early next quarter</mark>, aiming to <span className={styles.ul}>raise capacity</span> and <span className={styles.bx}>capture demand</span>.</>}</p>
