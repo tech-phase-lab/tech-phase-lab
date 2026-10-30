@@ -12,6 +12,8 @@ import os
 import re
 import sqlite3
 import time
+from pathlib import Path
+from functools import lru_cache
 from urllib.parse import urlsplit, urlencode, urlunsplit
 from urllib.request import Request, build_opener, HTTPRedirectHandler
 
@@ -24,7 +26,7 @@ def configuration():
     ready = all(os.environ.get(k, '').strip() for k in (
         'WEB_PUSH_PRIVATE_KEY', 'WEB_PUSH_PUBLIC_KEY', 'WEB_PUSH_SUBJECT'))
     enabled = os.environ.get('WEB_PUSH_ENABLED', '').lower() == 'true' and ready
-    return {'memberAccessVersion': 1 if os.environ.get('WEB_PUSH_MEMBERSHIP_URL') else 0, 'enabled': enabled, 'publicKey': os.environ.get('WEB_PUSH_PUBLIC_KEY', '') if enabled else ''}
+    return {'preferencesVersion': 1, 'memberAccessVersion': 1 if os.environ.get('WEB_PUSH_MEMBERSHIP_URL') else 0, 'enabled': enabled, 'publicKey': os.environ.get('WEB_PUSH_PUBLIC_KEY', '') if enabled else ''}
 
 
 def member_expiry(owner):
@@ -78,7 +80,94 @@ def connect(path):
         db.execute("ALTER TABLE push_devices ADD COLUMN access_until REAL")
     if 'weekly_notebook' not in columns:
         db.execute("ALTER TABLE push_devices ADD COLUMN weekly_notebook INTEGER NOT NULL DEFAULT 1")
+    db.execute('''CREATE TABLE IF NOT EXISTS push_device_preferences (
+      device_id TEXT PRIMARY KEY, targets INTEGER NOT NULL, earnings INTEGER NOT NULL,
+      news INTEGER NOT NULL, news_tickers TEXT NOT NULL)''')
     return db
+
+
+@lru_cache(maxsize=1)
+def monitored_news_tickers():
+    registry = json.loads((Path(__file__).resolve().parents[2] / 'lib/research/providers.json').read_text())
+    return tuple(p['ticker'] for p in registry if p.get('scope') != 'earnings')
+
+
+def validate_preferences(value):
+    if not isinstance(value, dict) or not value or set(value) - {
+            'targets', 'earnings', 'news', 'newsTickers', 'weeklyNotebook'}:
+        raise ValueError('invalid-preferences')
+    for field in ('targets', 'earnings', 'news', 'weeklyNotebook'):
+        if field in value and type(value[field]) is not bool:
+            raise ValueError('invalid-preferences')
+    if 'newsTickers' in value:
+        tickers = value['newsTickers']
+        allowed = monitored_news_tickers()
+        if (not isinstance(tickers, list) or len(tickers) > len(allowed) or
+                any(not isinstance(t, str) or t not in allowed for t in tickers)):
+            raise ValueError('invalid-preferences')
+    return {**value, **({'newsTickers': sorted(set(value['newsTickers']))} if 'newsTickers' in value else {})}
+
+
+def stored_preferences(db, device):
+    """None means legacy delivery; malformed settings raise for the caller to handle."""
+    row = db.execute('SELECT * FROM push_device_preferences WHERE device_id=?', (device,)).fetchone()
+    if row is None:
+        return None
+    if any(type(row[k]) is not int or row[k] not in (0, 1) for k in ('targets', 'earnings', 'news')):
+        raise ValueError('invalid-preferences')
+    return validate_preferences({k: bool(row[k]) for k in ('targets', 'earnings', 'news')} |
+                                {'newsTickers': json.loads(row['news_tickers'])})
+
+
+def preference_view(db, device):
+    prefs = stored_preferences(db, device['id'])
+    return {**(prefs or {'targets': True, 'earnings': True, 'news': True,
+                        'newsTickers': list(monitored_news_tickers())}),
+            'weeklyNotebook': bool(device['weekly_notebook'])}
+
+
+def notification_allowed(db, device_id, category, tickers=()):
+    """Preference-only fail-open. Callers MUST retain ownership/PRO/freshness checks.
+
+    News senders must pass all matched company tickers; any selected match suffices.
+    There is currently no member-facing stock-news Web Push sender to call this gate.
+    """
+    if category not in ('targets', 'earnings', 'news'):
+        raise ValueError('invalid-category')
+    try:
+        prefs = stored_preferences(db, device_id)
+    except (sqlite3.Error, ValueError, TypeError, KeyError, OSError):
+        return True
+    if prefs is None:
+        return True
+    return prefs[category] and (category != 'news' or bool(set(tickers) & set(prefs['newsTickers'])))
+
+
+def write_preferences(db, device, patch):
+    prefs = {**preference_view(db, device), **validate_preferences(patch)}
+    db.execute('''INSERT INTO push_device_preferences VALUES(?,?,?,?,?)
+      ON CONFLICT(device_id) DO UPDATE SET targets=excluded.targets,earnings=excluded.earnings,
+      news=excluded.news,news_tickers=excluded.news_tickers''',
+      (device['id'], int(prefs['targets']), int(prefs['earnings']), int(prefs['news']), json.dumps(prefs['newsTickers'])))
+    db.execute('UPDATE push_devices SET weekly_notebook=? WHERE id=?', (int(prefs['weeklyNotebook']), device['id']))
+    return prefs
+
+
+def member_preferences(db, payload, *, save=False, now=None):
+    owner = member_identity(payload)
+    now = time.time() if now is None else now
+    until = payload.get('accessExpiresAt')
+    if not isinstance(until, (float, int)) or isinstance(until, bool) or not math.isfinite(until) or until <= now:
+        raise ValueError('expired-membership')
+    sub = validate_subscription(payload.get('subscription'))
+    device_id = hashlib.sha256(sub['endpoint'].encode()).hexdigest()
+    with db:
+        db.execute('BEGIN IMMEDIATE' if save else 'BEGIN')
+        device = db.execute('SELECT * FROM push_devices WHERE id=?', (device_id,)).fetchone()
+        if not device or device['owner_id'] != owner or json.loads(device['subscription']) != sub:
+            raise ValueError('not-owned')
+        prefs = write_preferences(db, device, payload.get('preferences')) if save else preference_view(db, device)
+    return {'preferences': prefs}
 
 
 def validate_subscription(value):
@@ -160,12 +249,15 @@ def register_member(db, payload, allowed, now=None):
                 or lang not in {'ja', 'en'}):
             raise ValueError('invalid-preferences')
         # The Sunday-night notebook notice is on unless the device says otherwise.
-        weekly = 0 if payload.get('weeklyNotebook') is False else 1
+        weekly = (0 if payload.get('weeklyNotebook') is False else 1) if 'weeklyNotebook' in payload else (existing['weekly_notebook'] if existing else 1)
         db.execute("""INSERT INTO push_devices (id,subscription,tickers,language,since,active,owner_id,access_until,weekly_notebook)
           VALUES(?,?,?,?,?,1,?,?,?) ON CONFLICT(id) DO UPDATE SET tickers=excluded.tickers,
           language=excluded.language,since=excluded.since,active=1,owner_id=excluded.owner_id,access_until=excluded.access_until,
           weekly_notebook=excluded.weekly_notebook""",
           (device,json.dumps(sub),json.dumps(sorted(set(tickers))),lang,now,owner,until,weekly))
+        if 'preferences' in payload:
+            current = db.execute('SELECT * FROM push_devices WHERE id=?', (device,)).fetchone()
+            write_preferences(db, current, payload['preferences'])
     return {'registered': True}
 
 
@@ -205,6 +297,7 @@ def remove(db, payload):
     with db:
         db.execute('DELETE FROM push_devices WHERE id=?', (device,))
         db.execute('DELETE FROM push_deliveries WHERE device_id=?', (device,))
+        db.execute('DELETE FROM push_device_preferences WHERE device_id=?', (device,))
     return {'registered': False}
 
 
@@ -464,6 +557,9 @@ def deliver(db, items, transport=send, now=None, monotonic_now=time.monotonic,
             current = db.execute('SELECT active,owner_id FROM push_devices WHERE id=?', (device['id'],)).fetchone()
             if not current or not current['active'] or current['owner_id'] != device['owner_id']:
                 continue
+            category = 'earnings' if item.get('kind') == 'earnings' else 'targets'
+            if not notification_allowed(db, device['id'], category):
+                continue
             # Reserve before network; a restart cannot silently send it twice.
             with db:
                 claim = db.execute('''INSERT OR IGNORE INTO push_deliveries
@@ -501,6 +597,7 @@ def deliver(db, items, transport=send, now=None, monotonic_now=time.monotonic,
                     (status, provider_duration_ms, device['id'], key))
                 if status == 'expired':
                     db.execute('DELETE FROM push_devices WHERE id=?', (device['id'],))
+                    db.execute('DELETE FROM push_device_preferences WHERE device_id=?', (device['id'],))
             attempted += 1
             accepted += status == 'accepted'
             uncertain += status == 'uncertain'
@@ -548,6 +645,9 @@ def deliver_weekly(db, transport=send, now=None, wall_now=time.time, entitlement
         attempted_at = wall_now()
         if not isinstance(until, (int, float)) or isinstance(until, bool) or not math.isfinite(until) or until <= attempted_at:
             continue
+        current = db.execute('SELECT active,owner_id,weekly_notebook FROM push_devices WHERE id=?', (device['id'],)).fetchone()
+        if not current or not current['active'] or current['owner_id'] != device['owner_id'] or not current['weekly_notebook']:
+            continue
         with db:
             claim = db.execute("""INSERT OR IGNORE INTO push_deliveries
                 (device_id,event_key,status,attempted_at,observed_at) VALUES(?,?,?,?,?)""",
@@ -567,6 +667,7 @@ def deliver_weekly(db, transport=send, now=None, wall_now=time.time, entitlement
             db.execute('UPDATE push_deliveries SET status=? WHERE device_id=? AND event_key=?', (status, device['id'], key))
             if status == 'expired':
                 db.execute('DELETE FROM push_devices WHERE id=?', (device['id'],))
+                db.execute('DELETE FROM push_device_preferences WHERE device_id=?', (device['id'],))
         attempted += 1
         accepted += status == 'accepted'
     return {'status': 'ready', 'attempted': attempted, 'accepted': accepted}
