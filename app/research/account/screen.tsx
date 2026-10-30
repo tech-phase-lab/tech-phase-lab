@@ -1,5 +1,5 @@
 "use client";
-import { AuthenticateWithRedirectCallback, SignIn, SignUp, SignOutButton, useAuth } from "@clerk/nextjs";
+import { AuthenticateWithRedirectCallback, SignIn, SignUp, useAuth } from "@clerk/nextjs";
 import { useEffect, useState, useSyncExternalStore } from "react";
 import Link from "next/link";
 import ResearchToolShell from "../research-tool-shell";
@@ -7,12 +7,14 @@ import { useResearchLanguage } from "../use-research-language";
 import { recoverMember } from "@/lib/research/member-recovery";
 import { useIdentityRefresh } from "../identity-provider";
 import { readAccountReturn } from "@/lib/research/account-return";
-import PreviewControls from "./preview-controls";
+import AccountView from "./account-view";
 import styles from "./styles.module.css";
 const subscribeReturn = () => () => {};
 function returnSnapshot() {
   try { return readAccountReturn(window.sessionStorage); } catch { return "/research/account"; }
 }
+const upgradeSnapshot = () => new URLSearchParams(window.location.search).get("upgrade") === "1";
+function useUpgradeFirst() { return useSyncExternalStore(subscribeReturn, upgradeSnapshot, () => false); }
 function useAccountReturn() { return useSyncExternalStore<string | null>(subscribeReturn, returnSnapshot, () => null); }
 function AccountUnavailable() {
   const [lang, setLang] = useResearchLanguage();
@@ -74,9 +76,14 @@ function AccountContent({ status, plan, signingUp = false, initialMember, billin
       document.removeEventListener("visibilitychange", resume);
     };
   }, [isLoaded, isSignedIn, member.plan, member.ownerMode, member.accessExpiresAt]);
+  const upgradeFirst = useUpgradeFirst();
+  // The redesigned account screen (canvas A1-A11) replaces the old signed-in card.
+  if (member.status === "signed-in" && isLoaded && isSignedIn) return <ResearchToolShell showTools={false} showHeading={false} lang={lang} setLang={setLang} title={ja ? "アカウント" : "Account"} description="">
+    <AccountView ja={ja} member={member} billingAvailable={billingAvailable} upgradeFirst={upgradeFirst} onRecheck={() => setRetry(value => value + 1)} />
+  </ResearchToolShell>;
   const content = <ResearchToolShell showTools={false} lang={lang} setLang={setLang} title={ja ? "マイアカウント" : "My account"} description="">
     <section className={styles.card}>
-      {member.status === "unavailable" ? <><h2>{ja ? "会員情報を確認できませんでした" : "Could not verify your membership"}</h2><p>{ja ? "時間をおいて、もう一度お試しください。" : "Please wait a moment and try again."}</p><button onClick={() => setRetry(value => value + 1)}>{ja ? "再確認" : "Try again"}</button><Link href="/research">{ja ? "ホームへ戻る" : "Back to home"}</Link></> : (!isLoaded || returnTo === null || (isSignedIn && member.status === "signed-out")) && member.status !== "signed-in" ? <div className={styles.placeholder} aria-busy="true" aria-label={ja ? "ログイン画面を準備しています" : "Loading sign-in"} /> : member.status === "signed-out" ? (signingUp ? <SignUp routing="hash" signInUrl="/research/account" forceRedirectUrl={returnTo ?? "/research/account"} /> : <SignIn routing="hash" signUpUrl="/research/account/sign-up" forceRedirectUrl={returnTo ?? "/research/account"} />) : <><span className={styles.plan}>TECH PHASE {member.ownerMode ? (ja ? "運営者" : "Owner") : member.plan === "pro" ? "PRO" : "FREE"}</span><>{member.testing && <p>{ja ? "運営者用の試験状態です（課金なし）" : "Admin test mode — no charge"}</p>}</><h2>{member.ownerMode ? ja ? "運営者としてログインしています" : "Owner view" : ja ? "ログインしています" : "You’re signed in"}</h2><p>{member.plan === "pro" ? (ja ? "PRO会員として登録されています。" : "Your PRO membership is active.") : (ja ? "無料プランをご利用中です。" : "You’re on the Free plan.")}</p>{member.plan === "pro" && !member.ownerMode && !member.testing && Number.isFinite(member.accessExpiresAt) && member.accessExpiresAt! > 0 && member.accessExpiresAt! <= 8_640_000_000_000_000 && <p>{ja ? "PRO利用期限：" : "PRO access until: "}<time dateTime={new Date(member.accessExpiresAt!).toISOString()}>{new Intl.DateTimeFormat(ja ? "ja-JP" : "en-US", { timeZone: "Asia/Tokyo", year: "numeric", month: "short", day: "numeric", hour: "2-digit", minute: "2-digit", timeZoneName: "short" }).format(member.accessExpiresAt)}</time></p>}<Link href="/research/columns">{ja ? "PROリサーチ・コラム" : "PRO Research & Columns"}</Link><Link href="/research/notifications">{ja ? "スマホ通知設定" : "Phone notifications"}</Link>{member.isAdmin && <Link href="/research/write">{ja ? "ひとりごとを書く" : "Write a note"}</Link>}{member.status === "signed-in" && member.isAdmin === true && <Link href="/research/review" prefetch={false}>{ja ? "ニュース配信状況" : "News delivery status"}</Link>}{member.isAdmin && <Link href="/api/research/member/export">{ja ? "登録者一覧をダウンロード" : "Download member list"}</Link>}<>{member.status === "signed-in" && (member.canTest === true || billingAvailable) && <Link href="/research/account/billing" prefetch={false}>{billingAvailable ? (ja ? "PROのお申し込み・契約管理" : "PRO subscription") : (ja ? "PROのテスト購入・契約確認" : "PRO test checkout & subscription")}</Link>}</><>{member.canTest && <PreviewControls ja={ja} testing={member.testing} onChange={() => setRetry(value => value + 1)} />}</><Link href="/research/account/security">{ja ? "パスワード・2段階認証の設定" : "Password & two-step verification"}</Link>{member.adminMfaRequired && <p role="alert">{ja ? "管理機能には2段階認証が必要です。設定後、ログインし直してください。" : "Admin access requires two-step verification. Set it up, then sign in again."}</p>}<SignOutButton redirectUrl="/research/account"><button>{ja ? "ログアウト" : "Sign out"}</button></SignOutButton></>}
+      {member.status === "unavailable" ? <><h2>{ja ? "会員情報を確認できませんでした" : "Could not verify your membership"}</h2><p>{ja ? "時間をおいて、もう一度お試しください。" : "Please wait a moment and try again."}</p><button onClick={() => setRetry(value => value + 1)}>{ja ? "再確認" : "Try again"}</button><Link href="/research">{ja ? "ホームへ戻る" : "Back to home"}</Link></> : (!isLoaded || returnTo === null || (isSignedIn && member.status === "signed-out")) && member.status !== "signed-in" ? <div className={styles.placeholder} aria-busy="true" aria-label={ja ? "ログイン画面を準備しています" : "Loading sign-in"} /> : member.status === "signed-out" ? (signingUp ? <SignUp routing="hash" signInUrl="/research/account" forceRedirectUrl={returnTo ?? "/research/account"} /> : <SignIn routing="hash" signUpUrl="/research/account/sign-up" forceRedirectUrl={returnTo ?? "/research/account"} />) : null}
     </section>
   </ResearchToolShell>;
   return content;
