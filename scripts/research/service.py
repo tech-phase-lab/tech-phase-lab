@@ -1039,6 +1039,12 @@ class AutomaticMonitor:
                         items = [*items, *(item for item in market_results.public_feed(results_db) if item.get("kind") == "earnings")]
                 except Exception:
                     print("web-push-results-unavailable", flush=True)
+                try:
+                    # Approved stock-news articles; the device's own news choices are applied inside deliver.
+                    with self.db_lock, stock_news.connect(self.db_path) as news_db:
+                        items = [*items, *({**item, "kind": "news"} for item in news_drafts.public_feed(news_db, limit=10)["items"])]
+                except Exception:
+                    print("web-push-news-unavailable", flush=True)
                 with web_push.connect(self.db_path) as db:
                     result = web_push.deliver(db, items)
                     web_push.deliver_weekly(db)
@@ -3365,7 +3371,7 @@ class Handler(BaseHTTPRequestHandler):
             except Exception:
                 self.send_json(503, {"ok": False, "error": "question-submit-unavailable"})
             return
-        if path in {"/push/register", "/push/remove", "/push/status", "/push/test", "/push/member/register", "/push/member/remove", "/push/member/status", "/push/member/test", "/push/member/revoke"}:
+        if path in {"/push/register", "/push/remove", "/push/status", "/push/test", "/push/member/register", "/push/member/remove", "/push/member/status", "/push/member/test", "/push/member/revoke", "/push/member/preferences", "/push/member/save-preferences"}:
             if not self.authorized():
                 self.send_json(401, {"ok": False})
                 return
@@ -3375,7 +3381,9 @@ class Handler(BaseHTTPRequestHandler):
             try:
                 payload = self.read_json()
                 with web_push.connect(self.app.db_path) as db:
-                    if path == "/push/member/register":
+                    if path in {"/push/member/preferences", "/push/member/save-preferences"}:
+                        result = web_push.member_preferences(db, payload, save=path.endswith('/save-preferences'))
+                    elif path == "/push/member/register":
                         result = web_push.register_member(db, payload, set(self.app.tickers) | signals.X_EXTRA_TICKERS)
                     elif path == "/push/member/revoke":
                         result = web_push.revoke_member(db, payload)

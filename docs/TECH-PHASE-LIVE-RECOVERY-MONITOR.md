@@ -23,3 +23,20 @@ capture, cancellation, refund or public sales are enabled by monitoring.
 Validate a deployment using the `TECH_PHASE_LIVE_RECOVERY` completed result,
 `TECH_PHASE_LIVE_RECOVERY_MONITOR` sent/sent, and the corresponding check's
 received start and success. Cron deployment success alone does not prove a run.
+
+## Verified 2026-10-28, 19:30 JST
+
+- Source `f76cec90d984575a0cda1588efad2513bec4aaae`; deployment
+  `22f66077-eac4-4856-a07c-ac697005c946` SUCCESS, no staged changes.
+- Scheduled run at 10:30:36 UTC: completed, checked=0, failed=0,
+  reviewRequired=0, leaseLost=0; monitor_start=sent, monitor_finish=sent.
+- Healthchecks visibly green, received signal and duration 0.29 seconds.
+  Existing operator email assigned; ten checks in the twenty-check capacity.
+- No real paid-subscription reconciliation or new failure-email delivery test.
+- Validation: lint zero errors/nine existing warnings, Node 1,638 passed,
+  Python 2,667 passed, Next build passed, compileall/diff checks passed.
+- Live purchase acceptance remains pending. The current sales switch opens
+  checkout to all authenticated members, not a single test account. Before
+  enabling it, obtain approval for that scope and the real JPY 2,980 charge;
+  the owner performs PayPal approval. Do not treat a mock or empty-queue run
+  as evidence of payment, PRO activation, cancellation or refund acceptance.
