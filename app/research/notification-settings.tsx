@@ -4,11 +4,8 @@ import { useEffect, useRef, useState } from "react";
 import { waitForIdentity } from "@/lib/research/member-recovery";
 import type { Language } from "@/lib/research/data";
 import styles from "./price-targets-panel.module.css";
-import NotificationPageView from "./notification-page-view";
+import NotificationPageView, { type Preferences } from "./notification-page-view";
 
-const WEEKLY_KEY = "tech-phase:notebook-weekly-push";
-/** The Sunday-night Stock Notebook notice is on unless this device turned it off. */
-const readWeekly = () => { try { return localStorage.getItem(WEEKLY_KEY) !== "off"; } catch { return true; } };
 type State = "checking" | "off" | "on" | "unknown" | "blocked" | "unsupported" | "unavailable" | "sign-in" | "pro-required";
 export default function NotificationSettings({ lang, initiallyOpen = false, page = false }: { lang: Language; initiallyOpen?: boolean; page?: boolean }) {
   const [open, setOpen] = useState(initiallyOpen || page);
@@ -24,7 +21,13 @@ export default function NotificationSettings({ lang, initiallyOpen = false, page
   const operation = useRef(false);
   const pendingInspection = useRef(false);
   const [refresh, setRefresh] = useState(0);
-  const [weekly, setWeekly] = useState(readWeekly);
+  // Per-device choices live on the server. Nothing stored in this browser is ever sent back.
+  const [prefs, setPrefs] = useState<Preferences | null>(null);
+  const [prefsState, setPrefsState] = useState<"idle" | "loading" | "ready" | "error" | "unsupported">("idle");
+  const [prefsMessage, setPrefsMessage] = useState("");
+  const confirmed = useRef<Preferences | null>(null);
+  const saveQueue = useRef<Promise<void>>(Promise.resolve());
+  const saving = useRef(0);
   const t = (ja: string, en: string) => lang === "ja" ? ja : en;
   useEffect(() => {
     if (!open) return;
@@ -32,6 +35,18 @@ export default function NotificationSettings({ lang, initiallyOpen = false, page
     let requestController: AbortController | undefined;
     let resumeTimer: ReturnType<typeof setTimeout> | undefined;
     let expiryTimer: ReturnType<typeof setTimeout> | undefined;
+    async function loadPreferences(subscription: PushSubscription, signal: AbortSignal, active: () => boolean) {
+      // Wait for any save in flight so an older read cannot replace a newer choice.
+      if (saving.current) return;
+      setPrefsState(current => current === "ready" ? current : "loading");
+      try {
+        const response = await fetch("/api/research/notifications", { method: "POST", credentials: "same-origin", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ action: "preferences", subscription: subscription.toJSON() }), signal });
+        const result = await response.json();
+        if (!active() || saving.current) return;
+        if (!response.ok || !result.ok || !result.preferences) throw new Error("preferences");
+        confirmed.current = result.preferences; setPrefs(result.preferences); setPrefsState("ready"); setPrefsMessage("");
+      } catch { if (active()) { setPrefsState("error"); setPrefsMessage(t("設定を読み込めませんでした。再読み込みしてください。", "Could not load your settings. Reload to try again.")); } }
+    }
     async function inspect() {
       if (operation.current) { pendingInspection.current = true; return; }
       pendingInspection.current = false;
@@ -55,6 +70,7 @@ export default function NotificationSettings({ lang, initiallyOpen = false, page
         setHasSubscription(Boolean(subscription));
         if (config.reason === "sign-in" || config.reason === "pro-required") { setState(config.reason); return; }
         if (!response.ok || !config.enabled || !config.publicKey) { setState("unavailable"); return; }
+        setPrefsState(current => config.preferencesVersion === 1 ? current === "unsupported" ? "idle" : current : "unsupported");
         if (!Number.isFinite(config.validUntil) || config.validUntil <= Date.now()) { setState("pro-required"); return; }
         // A capped browser timer is a recheck, not proof that paid access expired.
         expiryTimer = setTimeout(() => { void inspect(); }, Math.min(config.validUntil - Date.now(), 2_147_483_647));
@@ -65,6 +81,7 @@ export default function NotificationSettings({ lang, initiallyOpen = false, page
           const check = await fetch("/api/research/notifications", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ action: "status", subscription: subscription.toJSON() }), signal });
           const result = await check.json();
           if (active()) setState(check.status === 401 ? "sign-in" : check.status === 403 ? "pro-required" : check.ok && result.ok ? result.registered ? "on" : "off" : "unknown");
+          if (active() && page && config.preferencesVersion === 1 && check.ok && result.ok && result.registered) await loadPreferences(subscription, signal, active);
         } else if (active()) setState("off");
       } catch { if (!cancelled && current === inspection.current) setState("unavailable"); }
     }
@@ -80,7 +97,7 @@ export default function NotificationSettings({ lang, initiallyOpen = false, page
   async function request(action: string, subscription: PushSubscription) {
     const response = await fetch("/api/research/notifications", {
       method: "POST", headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ action, subscription: subscription.toJSON(), allTargets: true, language: lang, weeklyNotebook: readWeekly() }),
+      body: JSON.stringify({ action, subscription: subscription.toJSON(), allTargets: true, language: lang }),
       signal: AbortSignal.timeout(15_000),
     });
     if (response.status === 401 || response.status === 403) { setState(response.status === 401 ? "sign-in" : "pro-required"); throw new Error(t("ログインとPRO会員の有効期限を確認してください。", "Check your sign-in and PRO membership.")); }
@@ -116,7 +133,7 @@ export default function NotificationSettings({ lang, initiallyOpen = false, page
           if (!await subscription.unsubscribe()) throw new Error(t("停止できませんでした。", "Could not stop notifications."));
           try { await request("remove", subscription); } catch { /* Browser endpoint has already been revoked. */ }
         }
-        setHasSubscription(false); setState("off"); setTestSent(false); setReceived(false); return;
+        setHasSubscription(false); setState("off"); setTestSent(false); setReceived(false); confirmed.current = null; setPrefs(null); setPrefsState("idle"); return;
       }
       if (action === "enable") {
         const bytes = Uint8Array.from(atob(key.replace(/-/g, "+").replace(/_/g, "/")), c => c.charCodeAt(0));
@@ -124,6 +141,7 @@ export default function NotificationSettings({ lang, initiallyOpen = false, page
         setHasSubscription(true);
         const result = await request("register", subscription);
         setState(result.registered ? "on" : "unknown"); setReceived(false); setTestSent(false);
+        if (page && result.registered) setRefresh(value => value + 1);
       } else if (!subscription) { setState("off"); }
       else if (action === "status") {
         const result = await request("status", subscription); setState(result.registered ? "on" : "off");
@@ -146,9 +164,31 @@ export default function NotificationSettings({ lang, initiallyOpen = false, page
   }
   const label = { "sign-in": t("通知を利用するにはログインしてください", "Sign in to use notifications"), "pro-required": t("スマホ通知はPRO会員向けです", "Phone notifications are available with PRO"), checking: t("確認中…", "Checking…"), off: t("この端末：通知オフ", "This device: off"), on: t("この端末：通知オン", "This device: on"), unknown: t("この端末：登録状態を確認", "This device: verify registration"), blocked: t("この端末：通知が許可されていません", "This device: permission blocked"), unsupported: t("このブラウザでは通知を利用できません", "Notifications unavailable in this browser"), unavailable: t("通知サービスに接続できません", "Notification service unavailable") }[state];
   const usable = ["off", "on", "unknown"].includes(state);
-  const changeWeekly = (next: boolean) => { try { localStorage.setItem(WEEKLY_KEY, next ? "on" : "off"); } catch { /* storage may be blocked */ } setWeekly(next); if (state === "on") void run("enable"); };
-  if (page) return <NotificationPageView lang={lang} state={state} label={label} busy={busy} usable={usable} hasSubscription={hasSubscription} message={message} testSent={testSent} received={received} weekly={weekly}
-    onToggle={() => void run(state === "on" ? "disable" : "enable")} onDisable={() => void run("disable")} onTest={() => void run("test")} onRetry={() => setRefresh(value => value + 1)} onStatus={() => void run("status")} onReceived={() => { setReceived(true); setMessage(""); }} onWeekly={changeWeekly} />;
+  // Saves run one at a time. A failed save returns to the last value the server confirmed.
+  function savePreferences(patch: Partial<Preferences>) {
+    if (!prefs || prefsState !== "ready") return;
+    setPrefs({ ...prefs, ...patch }); setPrefsMessage("");
+    saving.current++;
+    saveQueue.current = saveQueue.current.then(async () => {
+      try {
+        const registration = await navigator.serviceWorker.getRegistration("/research");
+        const subscription = await registration?.pushManager.getSubscription();
+        if (!subscription) throw new Error("subscription");
+        const response = await fetch("/api/research/notifications", { method: "POST", credentials: "same-origin", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ action: "save-preferences", subscription: subscription.toJSON(), preferences: patch }), signal: AbortSignal.timeout(15_000) });
+        const result = await response.json();
+        if (response.status === 401 || response.status === 403) setState(response.status === 401 ? "sign-in" : "pro-required");
+        if (!response.ok || !result.ok || !result.preferences) throw new Error("save");
+        confirmed.current = result.preferences;
+        if (saving.current === 1) setPrefs(result.preferences);
+      } catch {
+        if (saving.current === 1 && confirmed.current) setPrefs(confirmed.current);
+        setPrefsMessage(t("保存できませんでした。もう一度お試しください。", "Could not save. Please try again."));
+      } finally { saving.current--; }
+    });
+  }
+  if (page) return <NotificationPageView lang={lang} state={state} label={label} busy={busy} usable={usable} hasSubscription={hasSubscription} message={message} testSent={testSent} received={received}
+    prefs={prefs} prefsState={prefsState} prefsMessage={prefsMessage} onPrefs={savePreferences}
+    onToggle={() => void run(state === "on" ? "disable" : "enable")} onDisable={() => void run("disable")} onTest={() => void run("test")} onRetry={() => setRefresh(value => value + 1)} onStatus={() => void run("status")} onReceived={() => { setReceived(true); setMessage(""); }} />;
   return <>
     <button type="button" className={styles.notificationToggle} aria-expanded={open} aria-controls={open ? "price-target-notifications" : undefined} onClick={() => setOpen(!open)}><svg className={styles.bellIcon} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 22a2.3 2.3 0 0 0 2.3-2.3H9.7A2.3 2.3 0 0 0 12 22zm6.6-6.4V11a6.6 6.6 0 0 0-5.1-6.4V3.9a1.5 1.5 0 0 0-3 0v.7A6.6 6.6 0 0 0 5.4 11v4.6L3.6 17.4V19h16.8v-1.6z"/></svg>{t("スマホ通知設定", "Phone notifications")}</button>
     {open && <div id="price-target-notifications" className={styles.notificationBody}>
@@ -165,7 +205,7 @@ export default function NotificationSettings({ lang, initiallyOpen = false, page
           {state === "unknown" && <><button type="button" disabled={busy} onClick={() => void run("status")}>{t("登録状態を確認", "Check registration")}</button><button type="button" disabled={busy} onClick={() => void run("disable")}>{t("この端末の通知をオフ", "Turn off on this device")}</button></>}
           {state === "on" && <button type="button" disabled={busy} onClick={() => void run("test")}>{t("テスト通知を送る", "Send test notification")}</button>}
         </div>
-        <label><input type="checkbox" checked={weekly} disabled={busy} onChange={event => { const next = event.target.checked; try { localStorage.setItem(WEEKLY_KEY, next ? "on" : "off"); } catch { /* storage may be blocked */ } setWeekly(next); if (state === "on") void run("enable"); }} /> {t("日曜の夜に、銘柄手帳の今週のまとめを通知", "Notify me on Sunday night when the Stock Notebook is ready")}</label>
+        {state === "on" && <p><Link href="/research/notifications">{t("届く内容を選ぶ", "Choose what you receive")}</Link></p>}
         {state !== "on" && <p>{t("通知をオンにすると、この設定で届きます。", "This applies once notifications are on.")}</p>}
       </>}
       {busy && <p role="status">{t("処理中…", "Working…")}</p>}

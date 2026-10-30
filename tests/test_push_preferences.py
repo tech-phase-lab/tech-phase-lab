@@ -71,6 +71,25 @@ class PreferenceTests(unittest.TestCase):
                 self.assertIn(allowed_title, sent[0]['title'])
                 self.assertEqual(self.db.execute('SELECT count(*) FROM push_deliveries').fetchone()[0], 1)
 
+    def news(self, tickers=('MU',), ident='n1', approved='2026-09-26T14:00:00+00:00'):
+        return {'kind': 'news', 'id': ident, 'tickers': list(tickers), 'title': 'Title', 'summaryJa': '要約', 'summaryEn': 'Summary', 'approvedAt': approved}
+
+    def test_news_push_follows_selection_switch_freshness_and_dedupe(self):
+        self.save({'newsTickers': ['MU']})
+        sent = self.deliver([self.news(['MU', 'NVDA'])])
+        self.assertEqual(len(sent), 1)
+        self.assertEqual(sent[0]['url'], '/research/news')
+        self.assertEqual(self.deliver([self.news(['MU', 'NVDA'])]), [])  # same article is never sent twice
+        self.assertEqual(self.deliver([self.news(['NVDA'], 'n2')]), [])  # not a selected company
+        self.save({'newsTickers': ['MU', 'NVDA']})
+        self.assertEqual(len(self.deliver([self.news(['NVDA'], 'n3')])), 1)
+        self.save({'news': False})
+        self.assertEqual(self.deliver([self.news(['MU'], 'n4')]), [])  # switch off
+        self.save({'news': True, 'targets': False})
+        self.assertEqual(len(self.deliver([self.news(['MU'], 'n5')])), 1)  # other switches do not stop news
+        self.assertEqual(self.deliver([self.news(['MU'], 'n6', '2026-09-26T13:00:00+00:00')]), [])  # backlog is not pushed
+        self.assertEqual(self.deliver([self.news([], 'n7')]), [])
+
     def test_news_gate_off_selection_multiticker_and_empty_selection(self):
         self.save({'news': False, 'newsTickers': ['MU']})
         self.assertFalse(push.notification_allowed(self.db, self.device, 'news', ['MU']))

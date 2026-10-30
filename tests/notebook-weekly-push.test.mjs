@@ -4,8 +4,12 @@ import test from "node:test";
 
 const read = path => readFileSync(new URL(path, import.meta.url), "utf8");
 
-test("the weekly notebook preference travels from the settings panel to the monitor", () => {
-  assert.match(read("../app/research/notification-settings.tsx"), /weeklyNotebook: readWeekly\(\)/);
+test("the weekly notebook preference is saved to the server and never re-sent from this browser", () => {
+  const panel = read("../app/research/notification-settings.tsx");
+  assert.match(panel, /action: "save-preferences"/);
+  assert.match(panel, /action: "preferences"/);
+  assert.doesNotMatch(panel, /localStorage/);
+  assert.doesNotMatch(panel, /weeklyNotebook: /);
   assert.match(read("../app/api/research/notifications/route.ts"), /weeklyNotebook: body\.weeklyNotebook !== false/);
   assert.match(read("../scripts/research/web_push.py"), /payload\.get\('weeklyNotebook'\) is False/);
 });
