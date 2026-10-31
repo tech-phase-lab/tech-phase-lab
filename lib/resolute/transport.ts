@@ -38,6 +38,8 @@ export function validateSnapshot(value: unknown) {
     canUseTools: v.canUseTools, canReceiveNotifications: v.canReceiveNotifications };
 }
 export class ResoluteRateLimited extends Error {}
+/** Authentication passed upstream, but the owner session did not satisfy its MFA gate. */
+export class ResoluteOwnerMfaRequired extends Error {}
 
 export async function fetchResoluteEntitlements(token: string, base: string | undefined,
   secret: string | undefined, request: typeof fetch = fetch) {
@@ -62,6 +64,7 @@ export async function fetchResoluteEntitlements(token: string, base: string | un
       if (attempt === 0 && Date.now() < deadline) continue;
       throw new Error("RESOLUTE connection unavailable");
     }
+    if (res.status === 403) { await res.body?.cancel(); throw new ResoluteOwnerMfaRequired(); }
     if (res.status === 429) { await res.body?.cancel(); throw new ResoluteRateLimited(); }
     if ((res.status === 502 || res.status === 503) && attempt === 0 && Date.now() < deadline) {
       await res.body?.cancel(); continue;

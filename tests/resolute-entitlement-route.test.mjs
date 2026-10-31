@@ -2,11 +2,12 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {stripTypeScriptTypes} from 'node:module';
+import {ResoluteOwnerMfaRequired} from '../lib/resolute/transport.ts';
 
 const source = readFileSync(new URL('../app/api/resolute/entitlements/route.ts',import.meta.url),'utf8')
   .replace('import { auth } from "@clerk/nextjs/server";', 'const auth = () => globalThis.__resoluteAuth();')
   .replace('import { membershipConfigured } from "@/lib/membership/server";', 'const membershipConfigured = () => globalThis.__resoluteConfigured;')
-  .replace('import { ResoluteRateLimited } from "@/lib/resolute/transport";', 'class ResoluteRateLimited extends Error {}')
+  .replace('import { ResoluteRateLimited, ResoluteOwnerMfaRequired } from "@/lib/resolute/transport";', `import {ResoluteRateLimited,ResoluteOwnerMfaRequired} from ${JSON.stringify(new URL('../lib/resolute/transport.ts',import.meta.url).href)};`)
   .replace('import { getResoluteEntitlementsForSession } from "@/lib/resolute/server";', 'const getResoluteEntitlementsForSession = id => globalThis.__resoluteRead(id);');
 const {GET}=await import('data:text/javascript;base64,'+Buffer.from(stripTypeScriptTypes(source)).toString('base64'));
 test('entitlement route uses authenticated identity, returns private errors and never trusts request claims', async () => {
@@ -26,6 +27,8 @@ test('entitlement route uses authenticated identity, returns private errors and 
     res=await GET();assert.equal(res.status,503);
     assert.deepEqual(await res.json(),{error:'ENTITLEMENT_UNAVAILABLE'});
     assert.equal(res.headers.get('cache-control'),'private, no-store');
+    globalThis.__resoluteRead=async()=>{throw new ResoluteOwnerMfaRequired();};
+    res=await GET();assert.equal(res.status,403);assert.deepEqual(await res.json(),{error:'OWNER_MFA_REQUIRED'});
     globalThis.__resoluteConfigured=false;
     assert.equal((await GET()).status,503);
     globalThis.__resoluteConfigured=true;
