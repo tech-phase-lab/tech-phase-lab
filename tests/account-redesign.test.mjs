@@ -199,3 +199,11 @@ test("the FREE view of the owner works like a FREE member's screen; the iPhone a
   assert.match(pull, /window\.scrollTo\(0, 1\)/);
   assert.match(pull, /if \(window\.scrollY > 0\) return;/);
 });
+
+test("PRO view and PRO members get a PRO MEMBER badge under the account card", async () => {
+  const { readFile } = await import("node:fs/promises");
+  const source = await readFile(new URL("../app/research/account/account-view.tsx", import.meta.url), "utf8");
+  assert.match(source, /effective === "pro" && \(!owner \|\| preview\)[\s\S]{0,400}PRO MEMBER/);
+  const shell = await readFile(new URL("../app/resolute/tool-shell.tsx", import.meta.url), "utf8");
+  assert.match(shell, /window\.scrollTo\(0,0\)/);
+});

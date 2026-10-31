@@ -10,6 +10,8 @@ import styles from "./diagnosis.module.css";
 type Access = "loading"|"allowed"|"denied"|"signed-out"|"unavailable";
 export default function ToolShell({ identityReady=true, home=false, children }: { identityReady?: boolean; home?: boolean;
  children: (locale: DiagnosisLocale, deny: () => void, entitlement: ReturnType<typeof validateSnapshot> | null) => ReactNode }) {
+ // Opening from another page must start at the top, not where the previous page was scrolled to.
+ useEffect(()=>{ window.scrollTo(0,0); },[]);
  const [entitlement,setEntitlement]=useState<ReturnType<typeof validateSnapshot>|null>(null);
  const pathname=usePathname();
  const review=useReview(), reviewing=review !== null;
