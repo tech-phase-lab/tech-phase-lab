@@ -233,7 +233,7 @@ export default function AccountView({ ja, member, billingAvailable, upgradeFirst
     {passwordRow && row(I.key, t("パスワードを変更", "Change password"), { href: "/research/account/security" })}
     {/* The owner's two-step verification is required for admin access: shown, never offered to turn off. */}
     {owner ? row(I.shield, t("2段階認証", "Two-step verification"), { value: twoValue, chevron: false }) : row(I.shield, t("2段階認証", "Two-step verification"), { href: "/research/account/security", value: twoValue })}
-    {row(I.out, t("ログアウト", "Log out"), { onClick: () => void clerk.signOut({ redirectUrl: "/research" }), chevron: false, className: styles.muted })}
+    {row(I.out, t("ログアウト", "Log out"), { onClick: () => { if (clerk.loaded) void clerk.signOut({ redirectUrl: "/research" }); }, chevron: false, className: styles.muted })}
   </div>;
 
   // ---- owner menu
