@@ -184,3 +184,7 @@
 .pageRows dt { color:#6f5a2c; } .pageRows dd { margin:0; font-weight:700; color:#3a2f1a; text-align:right; }
 .pageNote { font-size:5.8px; color:#8a6f33; text-align:right; margin-top:-3px; }
 .pageText { font-size:6px; line-height:1.55; color:#4a3d22; margin-top:2px !important; }
+
+/* A trailing full stop must not pull centred headings to the left. */
+.hang { margin-right:-1em; }
+.lines { white-space:pre-line; }

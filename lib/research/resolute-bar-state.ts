@@ -27,7 +27,9 @@ export function writeBarState(state: { owned: boolean; anon: boolean }) {
 /** Pure: should the bar be drawn? Never for a purchaser; not while dismissed. Someone signed out cannot have
  * bought anything under an account, so the bar needs no remembered answer for them; a signed-in person with
  * nothing (or only a signed-out answer) remembered waits for the real answer. */
-export function barVisible(state: BarState | null, dismissedAt: number, signedIn: boolean, now: number) {
+export function barVisible(state: BarState | null, dismissedAt: number, signedIn: boolean, now: number, owner = false) {
+  // The owner sees it in every view (FREE, PRO, owner) to show RESOLUTE off; "×" still hides it for seven days (owner, Oct 31).
+  if (owner) return !(dismissedAt > 0 && now - dismissedAt < DISMISS_MS);
   if (state?.owned) return false;
   if (!state ? signedIn : state.anon && signedIn) return false;
   return !(dismissedAt > 0 && now - dismissedAt < DISMISS_MS);
