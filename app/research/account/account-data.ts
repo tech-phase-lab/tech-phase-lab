@@ -32,10 +32,25 @@ export function contractComplete(contract: Contract) {
   if (contract.status === "renewal-stopped") return !!contract.amount && !!contract.currency && !!contract.accessExpiresAt;
   return contract.status === "none";
 }
-export async function getJson(url: string, signal?: AbortSignal) {
+const EARLY = ["/api/research/account/contract", "/api/resolute/entitlements"];
+const early = new Map<string, { task: Promise<unknown>; at: number }>();
+let earlyAt = 0;
+async function fetchJson(url: string, signal?: AbortSignal) {
   const response = await fetch(url, { cache: "no-store", credentials: "same-origin", signal: signal ? AbortSignal.any([signal, AbortSignal.timeout(20_000)]) : AbortSignal.timeout(20_000) });
   if (!response.ok) throw Object.assign(Error("request"), { status: response.status });
   return response.json();
+}
+/** Start the two slow reads during hydration; the screen picks them up once, so nothing is asked twice. */
+export function prefetchAccountData() {
+  // Render runs many times: start once per visit (a visit is anything more than 8 s after the last start).
+  if (typeof window === "undefined" || Date.now() - earlyAt < 8_000) return;
+  earlyAt = Date.now();
+  for (const url of EARLY) { const task = fetchJson(url); task.catch(() => {}); early.set(url, { task, at: earlyAt }); }
+}
+export function getJson(url: string, signal?: AbortSignal) {
+  const started = early.get(url);
+  if (started) { early.delete(url); if (Date.now() - started.at < 10_000) return started.task; }
+  return fetchJson(url, signal);
 }
 export async function patchProfile(body: { displayName?: string; icon?: string }) {
   const response = await fetch("/api/research/account/profile", { method: "PATCH", credentials: "same-origin", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body), signal: AbortSignal.timeout(20_000) });

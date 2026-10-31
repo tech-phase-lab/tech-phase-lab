@@ -39,7 +39,7 @@ type Resolute = { state: "loading" } | { state: "unknown" } | { state: "none" } 
 type ContractState = { state: "loading" } | { state: "unknown" } | { state: "ok"; value: Contract };
 type ProfileState = { state: "loading" } | { state: "error" } | { state: "ok"; value: Profile };
 
-export default function AccountView({ ja, member, billingAvailable, upgradeFirst, onRecheck }: { ja: boolean; member: Member; billingAvailable: boolean; upgradeFirst: boolean; onRecheck: () => void }) {
+export default function AccountView({ ja, member, billingAvailable, upgradeFirst, onRecheck, initialProfile = null }: { ja: boolean; initialProfile?: unknown; member: Member; billingAvailable: boolean; upgradeFirst: boolean; onRecheck: () => void }) {
   const t = (a: string, b: string) => ja ? a : b;
   const router = useRouter();
   const clerk = useClerk();
@@ -72,7 +72,7 @@ export default function AccountView({ ja, member, billingAvailable, upgradeFirst
   }
   const preview = owner && viewAs !== "owner";
   const mode: Mode | null = billingAvailable ? "live" : member.canTest ? "sandbox" : null;
-  const [profile, setProfile] = useState<ProfileState>({ state: "loading" });
+  const [profile, setProfile] = useState<ProfileState>(() => { try { return initialProfile ? { state: "ok", value: readProfile(initialProfile) } : { state: "loading" }; } catch { return { state: "loading" }; } });
   const [contract, setContract] = useState<ContractState>({ state: "loading" });
   const [resolute, setResolute] = useState<Resolute>({ state: "loading" });
   const [tick, setTick] = useState(0);
@@ -150,6 +150,10 @@ export default function AccountView({ ja, member, billingAvailable, upgradeFirst
     : c.status === "none" ? t("有料契約\nなし", "No paid contract")
     : c.status === "active" ? t("有料契約\nあり", "Paid subscription")
     : c.status === "renewal-stopped" ? t("自動更新\n停止済み", "Renewal stopped") : null;
+  // Everything below the RESOLUTE card waits (at most 3 s) for what is above it, so it never jumps when a card grows.
+  const [patient, setPatient] = useState(false);
+  useEffect(() => { const id = setTimeout(() => setPatient(true), 3000); return () => clearTimeout(id); }, []);
+  const settled = patient || profile.state === "error" || (profile.state !== "loading" && (owner || (contract.state !== "loading" && resolute.state !== "loading")));
   const closeSheet = useCallback(() => {
     setSheet("");
     if (upgradeFirst) router.replace("/research");
@@ -191,7 +195,7 @@ export default function AccountView({ ja, member, billingAvailable, upgradeFirst
           ? <div className={styles.ctaNote} role="status">{t("契約の状態を確認できませんでした。", "Could not check your contract.")} <button type="button" className={styles.link} style={{ display: "inline", width: "auto", margin: 0, padding: "0 0 0 6px", color: "#e7c982" }} onClick={recheck}>{t("再確認", "Check again")}</button></div>
           : <div className={styles.ctaNote}>{!mode && !preview ? t("お申し込みの受付は、現在停止中です。", "New subscriptions are closed right now.") : t("料金と規約を確認してから、PayPalへ進みます。", "Review the price and terms, then continue to PayPal.")}</div>}
       </div>
-    : <div className={`${styles.cd} ${styles.cdGold} ${styles.pro}`} style={{ marginTop: 0 }}>
+    : <div className={`${styles.cd} ${styles.cdGold} ${styles.pro}`} style={{ marginTop: 0, minHeight: loadingContract ? 285 : undefined }}>
         <div className={styles.proHead}><Crown size={46} /><div style={{ flex: 1, minWidth: 0 }}><div className={styles.proName}>Tech Phase PRO</div>
           <div className={styles.proTagRow}>{unknown ? <span className={`${styles.pt} ${styles.ptUnknown}`}>{t("確認できません", "Unavailable")}</span> : stopped ? stopTag : loadingContract ? <span className={`${styles.pt} ${styles.ptUnknown}`}>{t("確認中", "Checking")}</span> : <span className={`${styles.pt} ${styles.ptOn}`}><i />{t("利用中", "Active")}</span>}</div></div></div>
         {unknown ? <>
@@ -218,7 +222,6 @@ export default function AccountView({ ja, member, billingAvailable, upgradeFirst
       {resolute.state === "bought" && !preview && <span className={`${styles.pt} ${styles.ptOn}`}>{t("購入済み", "Purchased")}</span>}
       <span className={styles.resSub}>{t("暴落の夜も、上昇の朝も、自分のルールに立ち戻るためのキット。", "A kit to return to your own rules, on crash nights and rally mornings.")}</span></div>
     {!preview && resolute.state === "unknown" && <p className={styles.note} role="status">{t("購入状況を確認できませんでした。", "Could not check your purchase.")} <button type="button" className={styles.link} onClick={recheck}>{t("再確認", "Check again")}</button></p>}
-    {!preview && resolute.state === "loading" && <p className={styles.note} role="status">{t("購入状況を確認中", "Checking purchase")}</p>}
     {resolute.state === "bought" && !preview
       ? <>{resolute.alertsUntil && formatDay(resolute.alertsUntil, ja) && <div className={styles.kvs} style={{ marginTop: 6 }}><div className={styles.kv}><span>{t("通知サービスの有効期限", "Alerts valid until")}</span><b>{formatDay(resolute.alertsUntil, ja)}</b></div></div>}
           <div className={styles.stack}><Link className={`${styles.btn} ${styles.abt}`} href="/resolute">{t("RESOLUTEを開く", "Open RESOLUTE")}</Link>
@@ -255,7 +258,7 @@ export default function AccountView({ ja, member, billingAvailable, upgradeFirst
 
     {profile.state === "error" && <div className={styles.cd}><div style={{ padding: 16 }}><p className={styles.note} role="alert" style={{ margin: 0 }}>{t("アカウント情報を確認できませんでした。", "Could not load your account.")}</p>
       <button type="button" className={`${styles.btn} ${styles.gbtO} ${styles.btnS}`} style={{ marginTop: 12 }} onClick={() => { setProfile({ state: "loading" }); recheck(); }}>{t("再確認", "Check again")}</button></div></div>}
-    {profile.state === "loading" && <div className={styles.skel} style={{ marginTop: 20 }} aria-busy="true" />}
+    {profile.state === "loading" && <div className={styles.skel} style={{ marginTop: 20, height: owner ? 84 : 191 }} aria-busy="true" />}
     {profile.state === "ok" && <div className={`${styles.cd} ${owner ? styles.ownerHero : ""}`}>
       <div className={styles.hero}>{avatar}
         <div className={styles.who}><div className={styles.name}>{owner ? "リゼル" : display}</div><div className={styles.mail}>{shownEmail}</div></div>
@@ -286,6 +289,8 @@ export default function AccountView({ ja, member, billingAvailable, upgradeFirst
       {resoluteCard}
     </>}
 
+    {!settled && <div className={styles.skel} style={{ marginTop: 30, height: owner ? 270 : 640 }} aria-busy="true" />}
+    {settled && <>
     <div className={styles.sl}>{t("通知・セキュリティ", "Notifications & security")}</div>
     {security}
 
@@ -300,6 +305,7 @@ export default function AccountView({ ja, member, billingAvailable, upgradeFirst
       <div className={styles.delBlock}><h2>{t("アカウントの削除", "Delete account")}</h2><p>{t("現在、この画面からは削除できません。お問い合わせください。", "Accounts cannot be deleted from this screen right now. Please contact us.")}</p></div>
     </>}
     <div className={styles.foot}>Tech Phase Research</div>
+    </>}
 
     {sheet === "upgrade" && <UpgradeSheet ja={ja} mode={mode} refresh={refresh} onClose={closePlain} />}
     {sheet === "stop" && mode && <StopSheet ja={ja} mode={mode} until={accessUntil} onDone={() => { closePlain(); recheck(); }} onClose={closePlain} />}
