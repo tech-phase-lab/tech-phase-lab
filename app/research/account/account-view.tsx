@@ -145,11 +145,9 @@ export default function AccountView({ ja, member, billingAvailable, upgradeFirst
   const freeUnverified = effective === "free" && !preview && !owner && (contract.state === "unknown" || (c !== null && !(c.verification === "verified" && c.status === "none")));
   const accessUntil = formatDay(c?.accessExpiresAt, ja);
 
-  // The owner is one person: say something only when the contract state is verified; otherwise leave it blank.
-  const ownerContractText = !(c?.verification === "verified") ? null
-    : c.status === "none" ? t("有料契約\nなし", "No paid contract")
-    : c.status === "active" ? t("有料契約\nあり", "Paid subscription")
-    : c.status === "renewal-stopped" ? t("自動更新\n停止済み", "Renewal stopped") : null;
+  // The owner is one person with no contract: "no paid contract" is shown from the start and only replaced when the server says otherwise.
+  const ownerContractText = c?.verification === "verified" && c.status === "active" ? t("有料契約\nあり", "Paid subscription")
+    : c?.verification === "verified" && c.status === "renewal-stopped" ? t("自動更新\n停止済み", "Renewal stopped") : t("有料契約\nなし", "No paid contract");
   // Everything below the RESOLUTE card waits (at most 3 s) for what is above it, so it never jumps when a card grows.
   const [patient, setPatient] = useState(false);
   useEffect(() => { const id = setTimeout(() => setPatient(true), 3000); return () => clearTimeout(id); }, []);
@@ -190,7 +188,7 @@ export default function AccountView({ ja, member, billingAvailable, upgradeFirst
         <div className={styles.proHead}><Crown size={36} /><span className={styles.proName} style={{ fontSize: 19, letterSpacing: ".04em" }}>Tech Phase PRO</span></div>
         <div className={styles.price}><span className={styles.priceN}>¥2,980</span><span className={styles.priceU}>/ {t("月", "mo")}</span><span className={styles.priceR}>{t("毎月自動更新", "Renews monthly")}</span></div>
         <ul className={styles.perks}>{[t("RIZEL'S DESK", "RIZEL'S DESK"), t("ハイテク速報をリアルタイムで", "Real-time Tech Alerts"), t("監視22銘柄リストとテーマランキング", "22-stock list and Theme Ranking"), t("銘柄比較・スマホ通知", "Compare and phone alerts")].map(text => <li key={text}>{I.tick}<span>{text}</span></li>)}</ul>
-        <button type="button" className={`${styles.btn} ${styles.gbt}`} style={{ marginTop: 18 }} disabled={preview || !mode || freeUnverified || contract.state === "loading" && !preview} onClick={() => setSheet("upgrade")}>{t("PROにアップグレード", "Upgrade to PRO")}</button>
+        <button type="button" className={`${styles.btn} ${styles.gbt}`} style={{ marginTop: 18 }} disabled={!preview && (!mode || freeUnverified || contract.state === "loading")} onClick={() => setSheet("upgrade")}>{t("PROにアップグレード", "Upgrade to PRO")}</button>
         {freeUnverified
           ? <div className={styles.ctaNote} role="status">{t("契約の状態を確認できませんでした。", "Could not check your contract.")} <button type="button" className={styles.link} style={{ display: "inline", width: "auto", margin: 0, padding: "0 0 0 6px", color: "#e7c982" }} onClick={recheck}>{t("再確認", "Check again")}</button></div>
           : <div className={styles.ctaNote}>{!mode && !preview ? t("お申し込みの受付は、現在停止中です。", "New subscriptions are closed right now.") : t("料金と規約を確認してから、PayPalへ進みます。", "Review the price and terms, then continue to PayPal.")}</div>}
@@ -307,7 +305,7 @@ export default function AccountView({ ja, member, billingAvailable, upgradeFirst
     <div className={styles.foot}>Tech Phase Research</div>
     </>}
 
-    {sheet === "upgrade" && <UpgradeSheet ja={ja} mode={mode} refresh={refresh} onClose={closePlain} />}
+    {sheet === "upgrade" && <UpgradeSheet ja={ja} mode={mode} preview={preview} refresh={refresh} onClose={closePlain} />}
     {sheet === "stop" && mode && <StopSheet ja={ja} mode={mode} until={accessUntil} onDone={() => { closePlain(); recheck(); }} onClose={closePlain} />}
     {sheet === "avatar" && me && <AvatarSheet ja={ja} initial={initial} current={tile ? tile.id : INITIAL} onSave={saveAvatar} onClose={closePlain} />}
     {sheet === "name" && me && <NameSheet ja={ja} current={display} onSave={saveName} onClose={closePlain} />}

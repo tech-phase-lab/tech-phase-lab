@@ -134,7 +134,7 @@ test('rendered owner account reflects real contract evidence independently of ow
   assert.match(html,new RegExp([...label].join('\\s*'))); /* the badge may break the label over two lines */ if(status!=='none')assert.doesNotMatch(html,/有料契約\s*なし/);
  }
  const unknown=renderAccount({owner:true,contract:{state:'unknown'}});
- assert.doesNotMatch(unknown,/契約を確認\s*できません|契約を確認中|有料契約\s*なし|有料契約を確認/); /* the owner is one person: unverified means nothing is written */
+ assert.doesNotMatch(unknown,/契約を確認\s*できません|契約を確認中|有料契約を確認/); assert.match(unknown,/有料契約\s*なし/); /* the owner is one person with no contract: shown from the start */
 });
 test('rendered account does not show MFA off or silently hide unavailable purchases',()=>{
  const html=renderAccount({profile:{state:'error'},resolute:{state:'unknown'}});
@@ -187,4 +187,16 @@ test("leaving a page from the menu does not carry its scroll position to the nex
   assert.match(lock, /left: restore \? x : 0, top: restore \? y : 0/);
   const header = readFileSync(new URL("../app/research/site-header.tsx", import.meta.url), "utf8");
   assert.match(header, /unlock\(samePage\)/);
+});
+
+test("the FREE view of the owner opens the introduction sheet and starts no payment; the iPhone app nudge exists", () => {
+  const sheets = readFileSync(new URL("../app/research/account/account-sheets.tsx", import.meta.url), "utf8");
+  assert.match(sheets, /if \(preview\) \{ setError\("preview"\); return; \}/);
+  assert.match(sheets, /const closed = !preview && \(!mode \|\| blocked\)/);
+  const view = readFileSync(new URL("../app/research/account/account-view.tsx", import.meta.url), "utf8");
+  assert.match(view, /disabled=\{!preview && \(!mode \|\| freeUnverified/);
+  assert.match(view, /<UpgradeSheet ja=\{ja\} mode=\{mode\} preview=\{preview\}/);
+  const pull = readFileSync(new URL("../app/research/pull-to-refresh.tsx", import.meta.url), "utf8");
+  assert.match(pull, /window\.scrollTo\(0, 1\)/);
+  assert.match(pull, /if \(window\.scrollY > 0\) return;/);
 });
