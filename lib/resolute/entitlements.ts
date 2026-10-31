@@ -1,6 +1,6 @@
 export const RESOLUTE_PRODUCT_ID = "resolute_v1";
 export type EntitlementKind = "use" | "alerts";
-export type EntitlementStatus = "missing" | "scheduled" | "active" | "expired" | "revoked";
+export type EntitlementStatus = "missing" | "scheduled" | "active" | "expired" | "revoked" | "owner";
 export type EntitlementRecord = {
   kind: EntitlementKind;
   startsAt: string;

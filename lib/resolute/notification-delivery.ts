@@ -1,3 +1,4 @@
+import {hasOwnerAccess,type OwnerAccess} from './owner-access.ts';
 import type { Pool, PoolClient } from "pg";
 import {jstSlot} from "./notification-job.ts";
 import type { Digest } from "./alert-judge.ts";
@@ -10,7 +11,7 @@ import { notificationRuleKey } from "./notification-rule-key.ts";
 import { renderAlertMail, renderNextMorningMail, type RenderedMail } from "./mail-templates.ts";
 
 export type AlertReceipt={key:string;messageId:string;acceptedAt:string};
-export type AlertRecipient={userId:string;email:string;verified:boolean;preferencesConfigured:boolean;unsubscribed:boolean;locale:"ja"|"en"};
+export type AlertRecipient={ownerAccess?:OwnerAccess;userId:string;email:string;verified:boolean;preferencesConfigured:boolean;unsubscribed:boolean;locale:"ja"|"en"};
 export type AlertProvider={
  name:string;
  recipientAllowed?:(email:string)=>Promise<boolean>;
@@ -104,11 +105,11 @@ export function createAlertDelivery(pool:Pick<Pool,"connect">,deps:Dependencies)
      const snapshot=parseNotificationSnapshot(saved?{settings:saved.settings,revision:Number(saved.revision)}:undefined);
      const p=(await client.query("SELECT plan,revision,created_at,updated_at FROM resolute.plans WHERE clerk_user_id=$1",[userId])).rows[0];
      const plan=parsePlanSnapshot(p?{plan:p.plan?{...p.plan,createdAt:p.created_at.toISOString(),updatedAt:p.updated_at.toISOString()}:null,revision:Number(p.revision)}:{plan:null,revision:0}).plan;
-     const rights=await readEntitlementSnapshot(client,userId,deps.source??entitlementSource());
      recipient=await deps.recipient(userId);
+     const rights=hasOwnerAccess(recipient.ownerAccess,userId,clock().getTime())?{records:[]}:await readEntitlementSnapshot(client,userId,deps.source??entitlementSource());
      if(recipient.userId!==userId)throw new Error("Recipient identity mismatch");
      if(recipient.verified&&provider.recipientAllowed&&!await provider.recipientAllowed(recipient.email))recipient={...recipient,unsubscribed:true};
-     return {settings:snapshot.settings,revision:snapshot.revision,ruleKey:notificationRuleKey(snapshot.settings,plan),entitlements:rights.records,
+     return {userId,ownerAccess:recipient.ownerAccess,settings:snapshot.settings,revision:snapshot.revision,ruleKey:notificationRuleKey(snapshot.settings,plan),entitlements:rights.records,
       recipientVerified:recipient.verified,preferencesConfigured:recipient.preferencesConfigured,unsubscribed:recipient.unsubscribed,planExists:!!plan};
     },
     claimAlert:async()=>{

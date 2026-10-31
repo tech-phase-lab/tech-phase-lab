@@ -1,3 +1,4 @@
+import {hasOwnerAccess,type OwnerAccess} from './owner-access.ts';
 import { judge, buildDigest, type Close, type NotifiedState, type Digest } from "./alert-judge.ts";
 import { parseNotificationSettings, type NotificationSettings } from "./notification-settings.ts";
 import { resolveResoluteEntitlements, type EntitlementRecord } from "./entitlements.ts";
@@ -14,7 +15,7 @@ function nextDate(date:string) { return new Date(Date.parse(date+"T00:00:00Z")+8
 function validDate(date:string) {return /^\d{4}-\d{2}-\d{2}$/.test(date)&&Number.isFinite(Date.parse(date))&&new Date(date).toISOString().slice(0,10)===date;}
 export type ConfirmedAlert = { id:string; acceptedAt:string };
 export type NotificationContext = {
- settings:NotificationSettings; entitlements:EntitlementRecord[]; plan:PlanInput|null;
+ ownerAccess?:OwnerAccess; settings:NotificationSettings; entitlements:EntitlementRecord[]; plan:PlanInput|null;
  locale:"ja"|"en"; preferencesConfigured:boolean; recipientVerified:boolean; unsubscribed:boolean;
  marketDate:string; closes:Close[]; state:NotifiedState; lastConfirmedAlert:ConfirmedAlert|null;
 };
@@ -25,7 +26,7 @@ export function prepareNotificationSlot(userId:string,now:Date,c:NotificationCon
  if(!/^user_[A-Za-z0-9]{1,128}$/.test(userId))throw new Error("Invalid identity");
  const settings=parseNotificationSettings(c.settings),slot=jstSlot(now);
  const rights=resolveResoluteEntitlements(c.entitlements,now.toISOString());
- if(!rights.canReceiveNotifications||!c.preferencesConfigured||!c.recipientVerified||c.unsubscribed||slot.hour!==settings.deliveryHourJst)return [];
+ if(!(hasOwnerAccess(c.ownerAccess,userId,now.getTime())||rights.canReceiveNotifications)||!c.preferencesConfigured||!c.recipientVerified||c.unsubscribed||slot.hour!==settings.deliveryHourJst)return [];
  const tasks:NotificationTask[]=[];
  // Only a confirmed accepted alert creates a next-day follow-up. No daily generic mail.
  const source=c.lastConfirmedAlert;

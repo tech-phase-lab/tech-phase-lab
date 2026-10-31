@@ -134,7 +134,7 @@ test('rendered owner account reflects real contract evidence independently of ow
   assert.match(html,new RegExp([...label].join('\\s*'))); /* the badge may break the label over two lines */ if(status!=='none')assert.doesNotMatch(html,/有料契約\s*なし/);
  }
  const unknown=renderAccount({owner:true,contract:{state:'unknown'}});
- assert.doesNotMatch(unknown,/契約を確認\s*できません|契約を確認中|有料契約\s*なし|有料契約を確認/); /* the owner is one person: unverified means nothing is written */
+ assert.doesNotMatch(unknown,/契約を確認\s*できません|契約を確認中|有料契約を確認/); assert.match(unknown,/有料契約\s*なし/); /* the owner is one person with no contract: shown from the start */
 });
 test('rendered account does not show MFA off or silently hide unavailable purchases',()=>{
  const html=renderAccount({profile:{state:'error'},resolute:{state:'unknown'}});
@@ -179,4 +179,23 @@ test("the top card comes with the page and the screen holds its shape while data
   assert.match(view, /minHeight: loadingContract \? 285 : undefined/);
   assert.doesNotMatch(view, /購入状況を確認中/);
   assert.match(view, /settled = patient \|\| profile\.state === "error" \|\| /);
+});
+
+test("leaving a page from the menu does not carry its scroll position to the next page", () => {
+  const lock = readFileSync(new URL("../app/research/use-scroll-lock.ts", import.meta.url), "utf8");
+  assert.match(lock, /const unlock = \(restore = true\) =>/);
+  assert.match(lock, /left: restore \? x : 0, top: restore \? y : 0/);
+  const header = readFileSync(new URL("../app/research/site-header.tsx", import.meta.url), "utf8");
+  assert.match(header, /unlock\(samePage\)/);
+});
+
+test("the FREE view of the owner works like a FREE member's screen; the iPhone app nudge exists", () => {
+  const sheets = readFileSync(new URL("../app/research/account/account-sheets.tsx", import.meta.url), "utf8");
+  assert.doesNotMatch(sheets, /preview\s*[=?]|setError\("preview"\)|if \(preview\)/); // no payment-blocking branch for the owner's FREE view
+  const view = readFileSync(new URL("../app/research/account/account-view.tsx", import.meta.url), "utf8");
+  assert.match(view, /disabled=\{!preview && \(!mode \|\| freeUnverified/);
+  assert.match(view, /<UpgradeSheet ja=\{ja\} mode=\{mode\} refresh=\{refresh\}/);
+  const pull = readFileSync(new URL("../app/research/pull-to-refresh.tsx", import.meta.url), "utf8");
+  assert.match(pull, /window\.scrollTo\(0, 1\)/);
+  assert.match(pull, /if \(window\.scrollY > 0\) return;/);
 });

@@ -16,7 +16,16 @@ function validView(value: unknown, kind: "use" | "alerts"): value is Entitlement
 export function validateSnapshot(value: unknown) {
   if (!value || typeof value !== "object") throw new Error("Invalid entitlement response");
   const v = value as { productId: string; asOf: string; use: EntitlementView;
-    alerts: EntitlementView; canUseTools: boolean; canReceiveNotifications: boolean };
+    alerts: EntitlementView; canUseTools: boolean; canReceiveNotifications: boolean; accessBasis?:unknown };
+  if(v.accessBasis === 'owner') {
+    if(v.productId!==RESOLUTE_PRODUCT_ID||!validDate(v.asOf)||v.canUseTools!==true||v.canReceiveNotifications!==true||
+      ![v.use,v.alerts].every(view=>view?.status==='owner'&&view.startsAt===null&&view.expiresAt===null))
+      throw new Error('Invalid owner access response');
+    return {productId:v.productId,asOf:v.asOf,accessBasis:'owner' as const,
+      use:{status:'owner' as const,startsAt:null,expiresAt:null},alerts:{status:'owner' as const,startsAt:null,expiresAt:null},
+      canUseTools:true,canReceiveNotifications:true};
+  }
+  if(v.accessBasis!==undefined)throw new Error('Invalid access basis');
   if (v.productId !== RESOLUTE_PRODUCT_ID || !validDate(v.asOf) ||
       !validView(v.use, "use") || !validView(v.alerts, "alerts") ||
       v.canUseTools !== (v.use.status === "active") ||
