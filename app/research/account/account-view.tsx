@@ -2,21 +2,16 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useClerk } from "@clerk/nextjs";
-import { useCallback, useEffect, useState, useSyncExternalStore, type ReactNode } from "react";
+import { useCallback, useEffect, useState, type ReactNode } from "react";
 import { useIdentityRefresh } from "../identity-provider";
 import Crown from "./crown";
 import { INITIAL, tileBackground, tileById } from "./avatars";
 import { AvatarSheet, NameSheet, StopSheet, UpgradeSheet, type Mode } from "./account-sheets";
-import { contractComplete, formatAmount, formatDay, getJson, patchProfile, readContract, readProfile, type Contract, type Profile } from "./account-data";
+import { contractComplete, formatAmount, formatDay, maskEmail, getJson, patchProfile, readContract, readProfile, type Contract, type Profile } from "./account-data";
 import styles from "./account.module.css";
 
 export type Member = { adminMfaRequired?: boolean; accessExpiresAt?: number; status: string; plan: string; isAdmin: boolean; ownerMode: boolean; canTest: boolean; testing: boolean };
 type ViewAs = "owner" | "free" | "pro";
-const VIEW_KEY = "tech-phase:owner-view-as";
-const viewListeners = new Set<() => void>();
-const readView = (): ViewAs => { try { const v = localStorage.getItem(VIEW_KEY); return v === "free" || v === "pro" ? v : "owner"; } catch { return "owner"; } };
-const subscribeView = (cb: () => void) => { viewListeners.add(cb); return () => { viewListeners.delete(cb); }; };
-function writeView(value: ViewAs) { try { localStorage.setItem(VIEW_KEY, value); } catch { /* storage may be blocked */ } viewListeners.forEach(cb => cb()); }
 
 const ico = (d: ReactNode, color = "#a9b6c6", size = 18) => <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">{d}</svg>;
 const I = {
@@ -49,8 +44,32 @@ export default function AccountView({ ja, member, billingAvailable, upgradeFirst
   const router = useRouter();
   const clerk = useClerk();
   const refresh = useIdentityRefresh();
-  const owner = member.ownerMode && !member.testing;
-  const viewAs = useSyncExternalStore(subscribeView, readView, () => "owner" as ViewAs);
+  const owner = member.isAdmin && (member.ownerMode || member.testing);
+  const savedView: ViewAs = member.testing ? (member.plan === "pro" ? "pro" : "free") : "owner";
+  // The screen follows the tap at once; the server save and the membership refresh finish behind it.
+  const [pendingView, setPendingView] = useState<ViewAs | null>(null);
+  const viewAs = pendingView ?? savedView;
+  const [switching, setSwitching] = useState(false);
+  const [switchError, setSwitchError] = useState(false);
+  useEffect(() => {
+    if (pendingView === null || pendingView !== savedView) return;
+    const id = setTimeout(() => setPendingView(null), 0);
+    return () => clearTimeout(id);
+  }, [pendingView, savedView]);
+  async function changeView(value: ViewAs) {
+    if (switching || value === viewAs) return;
+    setSwitching(true); setSwitchError(false); setPendingView(value);
+    try {
+      const result = await fetch("/api/research/member/preview", { method: "POST", credentials: "same-origin", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ mode: value === "owner" ? "restore" : value }), signal: AbortSignal.timeout(15000) });
+      if (!result.ok) throw Error("switch-failed");
+      try { localStorage.removeItem("tech-phase:member-hint"); localStorage.removeItem("tech-phase:owner-view-as"); } catch { /* optional display hints */ }
+      // No page reload: the header, the menu and this screen listen for this and re-read the membership themselves.
+      window.dispatchEvent(new Event("tech-phase:membership-changed"));
+      setSwitching(false);
+      // If the membership read never confirms the change, fall back to what the server says.
+      setTimeout(() => setPendingView(null), 8000);
+    } catch { setPendingView(null); setSwitchError(true); setSwitching(false); }
+  }
   const preview = owner && viewAs !== "owner";
   const mode: Mode | null = billingAvailable ? "live" : member.canTest ? "sandbox" : null;
   const [profile, setProfile] = useState<ProfileState>({ state: "loading" });
@@ -90,6 +109,8 @@ export default function AccountView({ ja, member, billingAvailable, upgradeFirst
 
   const me = profile.state === "ok" ? profile.value : null;
   const email = me?.email ?? "";
+  // The owner often films this screen: the owner's own address is shown masked (am***@gmail.com). Everyone else sees their own address as is.
+  const shownEmail = owner ? maskEmail(email) : email;
   const display = (me?.displayName || email.split("@")[0] || t("会員", "Member")).trim();
   const initial = Array.from(display)[0] ?? "?";
   const tile = tileById(me?.icon);
@@ -112,7 +133,7 @@ export default function AccountView({ ja, member, billingAvailable, upgradeFirst
     if (upgradeFirst) router.replace("/research");
   }, [upgradeFirst, router]);
   const closePlain = useCallback(() => setSheet(""), []);
-  const ownerPreviewNote = <p className={styles.previewBar}>{t("表示の確認中です。ここでの操作は、実際の契約や権限には反映されません。", "Previewing the view. Actions here do not change your real contract or access.")}</p>;
+  const ownerPreviewNote = <p className={styles.previewBar}>{t("表示の確認中です。金額や日付は表示例で、運営者には契約がありません。ここでの操作は、実際の契約や権限には反映されません。", "Previewing the view. Amounts and dates are samples; the owner has no contract. Actions here change nothing real.")}</p>;
 
   async function saveAvatar(id: string) { setProfile({ state: "ok", value: await patchProfile({ icon: id }) }); }
   async function saveName(name: string) { setProfile({ state: "ok", value: await patchProfile({ displayName: name }) }); }
@@ -157,7 +178,8 @@ export default function AccountView({ ja, member, billingAvailable, upgradeFirst
           </>
           : <>
             {!loadingContract && <div className={styles.kvs}>
-              <div className={styles.kv}><span>{t("月額料金", "Monthly price")}</span><b>{price ?? "—"} {c?.currency && <small>{c.currency}</small>}</b></div>
+              <div className={styles.kv}><span>{t("月額料金", "Monthly price")}</span><b>{preview ? "¥2,980" : price ?? "—"} {(preview || c?.currency) && <small>{preview ? "JPY" : c?.currency}</small>}</b></div>
+              {preview && <div className={styles.kv}><span>{t("次回請求日", "Next billing date")}</span><b>{t("（表示例）", "(sample)")}</b></div>}
               {activeContract && <div className={styles.kv}><span>{t("次回請求日", "Next billing date")}</span><b>{formatDay(c?.nextBillingAt, ja)}</b></div>}
               {stopped && <div className={styles.kv}><span>{t("利用期限", "Access until")}</span><b>{accessUntil}</b></div>}
             </div>}
@@ -195,7 +217,8 @@ export default function AccountView({ ja, member, billingAvailable, upgradeFirst
   const ownerMenu = owner && <>
     <div className={styles.sl} style={{ color: "#8a7a52" }}>{t("運営者専用メニュー", "Owner menu")}</div>
     <div className={styles.mode}><div className={styles.modeHead}>{t("表示モード", "View mode")}<span>VIEW AS</span></div>
-      <div className={styles.seg} role="group" aria-label={t("表示モード", "View mode")}>{modes.map(([id, label]) => <button key={id} type="button" aria-pressed={viewAs === id} onClick={() => writeView(id)}>{label}</button>)}</div>
+      <div className={styles.seg} role="group" aria-label={t("表示モード", "View mode")}>{modes.map(([id, label]) => <button key={id} type="button" aria-pressed={viewAs === id} disabled={switching} onClick={() => void changeView(id)}>{label}</button>)}</div>
+      {switchError && <p role="alert">{t("切り替えできませんでした。もう一度お試しください。", "Could not switch. Please try again.")}</p>}
       <p className={styles.modeNote}>{t("会員の画面を、運営者のまま確認できます。", "Preview the member screens while staying the owner.")}</p></div>
     <div className={`${styles.cd} ${styles.ownerMenu}`} style={{ marginTop: 14 }}>
       {row(I.plus, t("会員・契約の確認", "Members & contracts"), { href: "/research/account/members", sub: t("会員の検索と、契約状況・利用期限の確認", "Search members; contracts and expiry") })}
@@ -203,7 +226,7 @@ export default function AccountView({ ja, member, billingAvailable, upgradeFirst
     </div></>;
 
   return <div className={styles.page}>
-    <div className={`${styles.kick} ${owner || effective === "pro" ? styles.kickGold : ""}`}>{owner ? "OWNER" : "MY ACCOUNT"}</div>
+    <div className={`${styles.kick} ${owner || effective === "pro" ? styles.kickGold : ""}`}>{owner && !preview ? "OWNER" : effective === "pro" ? "PRO MEMBER" : "FREE MEMBER"}</div>
     <h1 className={styles.h1}>{t("アカウント", "Account")}</h1>
 
     {profile.state === "error" && <div className={styles.cd}><div style={{ padding: 16 }}><p className={styles.note} role="alert" style={{ margin: 0 }}>{t("アカウント情報を確認できませんでした。", "Could not load your account.")}</p>
@@ -211,11 +234,12 @@ export default function AccountView({ ja, member, billingAvailable, upgradeFirst
     {profile.state === "loading" && <div className={styles.skel} style={{ marginTop: 20 }} aria-busy="true" />}
     {profile.state === "ok" && <div className={`${styles.cd} ${owner ? styles.ownerHero : ""}`}>
       <div className={styles.hero}>{avatar}
-        <div className={styles.who}><div className={styles.name}>{owner ? "リゼル" : display}</div><div className={styles.mail}>{email}</div></div>
-        <span className={`${styles.pt} ${owner ? styles.ptOwner : effective === "pro" ? styles.ptPro : styles.ptFree}`}>{owner ? "OWNER" : effective === "pro" ? "PRO" : "FREE"}</span></div>
-      {!owner && <div className={`${styles.grp} ${styles.cdIn}`}>
-        {row(I.user, t("表示名を変更", "Change display name"), { onClick: () => setSheet("name") })}
-        {row(I.mail, t("メールアドレスを変更", "Change email"), { href: "/research/account/security" })}
+        <div className={styles.who}><div className={styles.name}>{owner ? "リゼル" : display}</div><div className={styles.mail}>{shownEmail}</div></div>
+        <span className={`${styles.pt} ${owner && !preview ? styles.ptOwner : effective === "pro" ? styles.ptPro : styles.ptFree}`}>{owner && !preview ? "OWNER" : effective === "pro" ? "PRO" : "FREE"}</span></div>
+      {(!owner || preview) && <div className={`${styles.grp} ${styles.cdIn}`}>
+        {preview ? <>{row(I.user, t("表示名を変更", "Change display name"))}{row(I.mail, t("メールアドレスを変更", "Change email"))}</>
+          : <>{row(I.user, t("表示名を変更", "Change display name"), { onClick: () => setSheet("name") })}
+        {row(I.mail, t("メールアドレスを変更", "Change email"), { href: "/research/account/security" })}</>}
       </div>}
     </div>}
 

@@ -91,3 +91,14 @@ test("members page pages through the cursor and downloads only what is shown; de
   assert.match(delivery, /typeof n === "number" \? .* : "—"/);
   assert.doesNotMatch(delivery, /\?\? 0/);
 });
+
+test("the owner's address is masked on screen (am***@gmail.com); view-mode switching does not reload the page", () => {
+  assert.equal(data.maskEmail("amweb.0815@gmail.com"), "am***@gmail.com");
+  assert.equal(data.maskEmail("a@x.jp"), "a***@x.jp");
+  assert.equal(data.maskEmail(""), "");
+  const view = readFileSync(new URL("../app/research/account/account-view.tsx", import.meta.url), "utf8");
+  assert.match(view, /shownEmail = owner \? maskEmail\(email\) : email/);
+  assert.doesNotMatch(view, /location\.reload/);
+  assert.match(view, /membership-changed/);
+  assert.match(readFileSync(new URL("../app/research/account/members/screen.tsx", import.meta.url), "utf8"), /r\.plan === "owner" && r\.email \? maskEmail/);
+});

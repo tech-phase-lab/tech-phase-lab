@@ -21,9 +21,10 @@ export async function getMembershipForUser(userId: string, sessionClaims?: unkno
   const adminCandidate = resolveAdmin(userId, user.privateMetadata);
   const adminMfaRequired = adminCandidate && process.env.TECH_PHASE_REQUIRE_ADMIN_MFA === "true" && !adminMfaAllowed(user.twoFactorEnabled, sessionClaims);
   const isAdmin = adminCandidate && !adminMfaRequired;
-  const testPlan = previewPlan(user.privateMetadata, isAdmin, process.env.VERCEL_ENV);
   const productionOwner = productionOwnerMode(userId, isAdmin, process.env.VERCEL_ENV);
-  const ownerMode = productionOwner || ownerPreviewMode(user.privateMetadata, isAdmin, process.env.VERCEL_ENV);
+  // Only the approved, MFA-verified production owner may use the existing self-preview.
+  const testPlan = previewPlan(user.privateMetadata, isAdmin, productionOwner ? "preview" : process.env.VERCEL_ENV);
+  const ownerMode = (productionOwner && testPlan === null) || ownerPreviewMode(user.privateMetadata, isAdmin, process.env.VERCEL_ENV);
   const test = user.privateMetadata.membershipPreview as Record<string, string> | undefined;
   // Owner access is operational access, not a paid subscription or payment receipt.
   const live=productionOwner ? null : await liveMembership(process.env,userId);

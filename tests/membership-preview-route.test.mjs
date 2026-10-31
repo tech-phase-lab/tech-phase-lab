@@ -5,6 +5,7 @@ import {stripTypeScriptTypes} from 'node:module';
 
 // Exercise the real route with identity-provider boundaries stubbed; no real users are modified.
 const source=readFileSync(new URL('../app/api/research/member/preview/route.ts',import.meta.url),'utf8')
+ .replace('import { productionOwnerMode } from "@/lib/membership/entitlements";', 'const productionOwnerMode=(id,admin,env)=>id==="production-owner"&&admin&&env==="production";')
  .replace('import { saveMemberDisplay } from "@/lib/membership/display-server";', 'const saveMemberDisplay = async () => {};')
  .replace('import { clerkClient } from "@clerk/nextjs/server";', 'const clerkClient = async () => globalThis.__previewTest.client;')
  .replace('import { getMembership } from "@/lib/membership/server";', 'const getMembership = async () => globalThis.__previewTest.member;');
@@ -16,7 +17,11 @@ test('preview route enforces environment, authenticated admin, same-origin and s
  const req=(body={mode:'pro'},origin='https://example.test')=>new Request('https://example.test/api/research/member/preview',{method:'POST',headers:{Origin:origin,'Content-Type':'application/json'},body:JSON.stringify(body)});
  try {
   process.env.VERCEL_ENV='production';
-  assert.equal((await POST(req())).status,404);
+  assert.equal((await POST(req())).status,403);
+  globalThis.__previewTest.member={status:"signed-in",userId:"production-owner",isAdmin:true};
+  for (const mode of ["free","pro","restore"]) assert.equal((await POST(req({mode}))).status,200);
+  assert.equal(calls.every(([id])=>id==="production-owner"),true);
+  calls.length=0;
   process.env.VERCEL_ENV='preview';
   assert.equal((await POST(req({},'https://attacker.test'))).status,403);
   for(const member of [{status:'signed-out'},{status:'signed-in',userId:'other',isAdmin:false,plan:'free'},{status:'signed-in',userId:'other',isAdmin:false,plan:'pro'}]) {

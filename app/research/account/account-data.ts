@@ -51,3 +51,10 @@ export const formatAmount = (amount: string, currency: "JPY" | "USD") => {
   if (!Number.isFinite(n)) return null;
   return currency === "JPY" ? `¥${Math.round(n).toLocaleString("ja-JP")}` : `$${n.toLocaleString("en-US", { minimumFractionDigits: n % 1 ? 2 : 0 })}`;
 };
+/** am***@gmail.com: the first two characters of the local part, then the domain. */
+export function maskEmail(email: string) {
+  const at = email.lastIndexOf("@");
+  if (at < 1) return email ? "***" : "";
+  const local = Array.from(email.slice(0, at));
+  return `${local.slice(0, Math.min(2, local.length)).join("")}***${email.slice(at)}`;
+}

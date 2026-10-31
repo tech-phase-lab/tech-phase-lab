@@ -1,10 +1,11 @@
+import { productionOwnerMode } from "@/lib/membership/entitlements";
 import { saveMemberDisplay } from "@/lib/membership/display-server";
 import { clerkClient } from "@clerk/nextjs/server";
 import { getMembership } from "@/lib/membership/server";
 export const dynamic = "force-dynamic";
 const headers = { "Cache-Control": "private, no-store", Vary: "Cookie" };
 export async function POST(request: Request) {
-  if (process.env.VERCEL_ENV !== "preview") return Response.json({ ok: false }, { status: 404, headers });
+  if (!["preview", "production"].includes(process.env.VERCEL_ENV ?? "")) return Response.json({ ok: false }, { status: 404, headers });
   if (request.headers.get("origin") !== new URL(request.url).origin ||
       !request.headers.get("content-type")?.startsWith("application/json")) {
     return Response.json({ ok: false }, { status: 403, headers });
@@ -12,6 +13,7 @@ export async function POST(request: Request) {
   try {
     const member = await getMembership();
     if (member.status !== "signed-in" || !member.isAdmin) return Response.json({ ok: false }, { status: 403, headers });
+    if (process.env.VERCEL_ENV === "production" && !productionOwnerMode(member.userId, member.isAdmin, process.env.VERCEL_ENV)) return Response.json({ ok: false }, { status: 403, headers });
     // Only the caller's own test state is mutable. Never accept a user ID or arbitrary metadata.
     const reader = request.body?.getReader();
     if (!reader) return Response.json({ ok: false }, { status: 400, headers });
