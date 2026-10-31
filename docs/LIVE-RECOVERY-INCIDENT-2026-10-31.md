@@ -1,5 +1,15 @@
 # Live reconciliation incident — 2026-10-31 JST
 
+## Production verification — 11:00 JST
+
+- Owner applied the staged fix. Deployment `8ec1108a-88ec-4bb0-bee5-bbecc7e8a723` is SUCCESS and uses `e4885e99d89da31728a5d73b94c79bf154476ab5`.
+- At 10:56 JST predeploy confirmed approval_pending=1 and made exactly one failed unpaid application eligible for retry. No payment or entitlement writes were performed by the retry preparation.
+- At 11:00:32 JST the new runner processed the actual record: completed, checked=1, failed=0, reviewRequired=1, leaseLost=0. The record remains for review and a six-hour recheck; this is not payment verification or an inferred cancellation.
+- Healthchecks was directly observed UP after this actual processing, not merely after an empty batch. No synthetic success ping or notification disabling was used.
+- Removed the one-time preDeployCommand from future deployment configuration; read-back confirms empty, original startup, five-minute schedule, no pending changes.
+- At 11:05:34 JST the next scheduled run also completed: checked=0, failed=0, reviewRequired=0, leaseLost=0. Healthchecks was directly observed UP again after its completion. The incident crash loop is resolved; the preserved missing application still requires review.
+- The preceding failure history below is retained for audit; its statements of unreflected/pending state describe those earlier times.
+
 ## Confirmed diagnosis at 09:10 JST
 
 - Owner applied the staged diagnostic; deployment `eb2521be-a11d-4f87-b735-18d6b82ae2f4` executed it at 00:10 UTC.
@@ -43,3 +53,12 @@
 - Identify the actual failed operation and verify queue backlog, missing queue records, and payments without verified periods with read-only aggregate queries.
 - Verify a real due-item retry succeeds; an empty batch or green heartbeat is insufficient.
 - Do not claim payment reconciliation completeness until provider/ledger evidence has been checked.
+
+## Fix publication and deployment boundary — 09:25 JST
+
+- Published tested fix `e4885e99d89da31728a5d73b94c79bf154476ab5` to codex/research-preview, without force or main changes. Git Data tree matched staged local tree exactly.
+- Staged only production recovery-live: pinned fix SHA, restore original startup, and one-time predeploy retry of failed approval_pending records with no recorded payments and no active lease. No payment/subscription/entitlement writes are made by this retry setup.
+- The deployment approval tool returned `Cancelled — the user did not approve this action. No changes were made.` No bypass attempted.
+- Read-back confirms exactly three pending fields for this service and no destructive changes. The fix is NOT live. Owner must apply these three pending changes.
+- After owner applies: inspect predeploy state counts and retry count; require actual checked item, reviewRequired=1 and failed=0 (if approval_pending/no-payments guard applies); verify monitor up after real processing. If guard does not apply, continue diagnosis rather than suppress failure.
+- Clear the temporary preDeployCommand after successful execution. Verify next scheduled run. The missing provider record still needs review and is not proof of payment/cancellation.
