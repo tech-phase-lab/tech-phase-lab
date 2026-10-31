@@ -47,14 +47,14 @@ export default function Landing({ embedded = false }: { embedded?: boolean }) {
     <h2 className={s.h2}>相場には判断を誤りやすい<br />夜が2つあります。</h2>
     <article className={`${s.night} ${s.crash}`}><p className={s.tag}>CRASH</p><h3>暴落の夜</h3><p>含み損が気になって眠れない。SNSを何度も開いては不安が大きくなる。気づけば朝まで売るかどうか迷っている。</p></article>
     <article className={`${s.night} ${s.surge}`}><p className={s.tag}>SURGE</p><h3>急騰の夜</h3><p>上がり続ける株を見て、もっと入れておけばと焦る。根拠より勢いで買い増したくなる。決めていた上限をつい忘れてしまう。</p></article>
-    <p className={s.closing}>どちらの夜も<br />判断を狂わせるのは<br /><em>その瞬間の感情</em>です。</p>
+    <p className={s.closing}>どちらの夜も<br />判断を狂わせるのは<br /><em>その瞬間の感情</em>です<span className={s.hang}>。</span></p>
    </section>
 
    {/* 3 WHAT IS RESOLUTE */}
    <section className={s.sec}>
     <p className={s.eyebrow}>WHAT IS RESOLUTE</p>
-    <h2 className={s.h2}>どんな相場でも<br />冷静に立ち回れる自分へ。</h2>
-    <p className={s.body}>RESOLUTEは相場が荒れる日でも冷静に立ち回るためのキットです。30問の診断で自分だけのルールを作り、壁紙と一冊の本にしていつも手元に置いておく。決めたラインに株価が届けばアラートが知らせてくれるので、感情で売り買いする前に立ち止まれます。</p>
+    <h2 className={s.h2}>どんな相場でも<br />冷静に立ち回れる自分へ<span className={s.hang}>。</span></h2>
+    <p className={s.body}>RESOLUTEは相場が荒れる日でも冷静に立ち回るためのキットです。30問の診断で自分だけのルールを作り、壁紙と一冊の本にしていつも手元に置いておく。<br />決めたラインに株価が届けばアラートが知らせてくれるので、感情で売り買いする前に立ち止まれます。</p>
     <p className={s.pull}>暴落が来ても<br />もう慌てない。</p>
     <ol className={s.steps}>
      <li><span>01</span><b>決める</b><p>30問の診断であなたのルールができあがる</p></li>
