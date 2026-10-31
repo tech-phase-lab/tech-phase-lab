@@ -25,6 +25,7 @@ import incident_delivery
 import persistence
 import signals
 import price_target_reconciliation
+import price_target_reader
 import signal_source_detail
 import retained_source_detail
 import stock_news
@@ -1372,8 +1373,7 @@ class AutomaticMonitor:
         return signal_source_detail.detail(self.db_path, event_id)
 
     def public_price_targets(self):
-        with self.db_lock, monitor.connect(self.db_path) as db:
-            return signals.public_price_targets(db)
+        return price_target_reader.read(self.db_path)
 
     def run_signals(self):
         if not self.signals_enabled:
