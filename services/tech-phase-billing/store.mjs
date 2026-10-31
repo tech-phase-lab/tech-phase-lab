@@ -12,6 +12,12 @@ export function billingStore(pool, mode = 'sandbox') {
     finally{client.release(discard?Error('BILLING_TRANSACTION_FAILED'):undefined);}
   }
   return {
+    async deletionContracts(userId) {
+      // No state filter: a historical row must not conceal a still-live provider contract.
+      // The extra row makes truncation detectable. This is not a deletion authority.
+      return (await pool.query(`SELECT id,user_id,paypal_id,currency,state,updated_at
+        FROM ${S}.subscriptions WHERE user_id=$1 ORDER BY id LIMIT 21`,[userId])).rows;
+    },
     async summary(userId, now = Date.now()) {
       if (!Number.isFinite(now)) throw Error('INVALID_TIME');
       // One statement gives access, selected contract and review state the same

@@ -86,7 +86,6 @@ export default function AccountView({ ja, member, billingAvailable, upgradeFirst
     return () => controller.abort();
   }, [tick]);
   useEffect(() => {
-    if (owner) return;
     const controller = new AbortController();
     getJson("/api/research/account/contract", controller.signal)
       .then(value => { if (!controller.signal.aborted) setContract({ state: "ok", value: readContract(value) }); })
@@ -107,6 +106,24 @@ export default function AccountView({ ja, member, billingAvailable, upgradeFirst
   }, [owner, tick]);
   const recheck = useCallback(() => { setContract({ state: "loading" }); setResolute({ state: "loading" }); setTick(v => v + 1); onRecheck(); }, [onRecheck]);
 
+  useEffect(() => {
+    let lastRefresh = 0;
+    const resume = () => {
+      if (document.visibilityState !== "visible" || Date.now() - lastRefresh < 1000) return;
+      lastRefresh = Date.now();
+      setProfile({ state: "loading" }); setContract({ state: "loading" }); setResolute({ state: "loading" });
+      setTick(v => v + 1);
+    };
+    window.addEventListener("focus", resume);
+    window.addEventListener("pageshow", resume);
+    document.addEventListener("visibilitychange", resume);
+    return () => {
+      window.removeEventListener("focus", resume);
+      window.removeEventListener("pageshow", resume);
+      document.removeEventListener("visibilitychange", resume);
+    };
+  }, []);
+
   const me = profile.state === "ok" ? profile.value : null;
   const email = me?.email ?? "";
   // The owner often films this screen: the owner's own address is shown masked (am***@gmail.com). Everyone else sees their own address as is.
@@ -114,7 +131,7 @@ export default function AccountView({ ja, member, billingAvailable, upgradeFirst
   const display = (me?.displayName || email.split("@")[0] || t("会員", "Member")).trim();
   const initial = Array.from(display)[0] ?? "?";
   const tile = tileById(me?.icon);
-  const twoFactor = me?.twoFactorEnabled === true;
+  const twoFactor = me ? me.twoFactorEnabled : null;
   const passwordRow = me?.passwordEnabled === true && !owner;
 
   const effective: "free" | "pro" = owner ? (viewAs === "pro" ? "pro" : "free") : me?.plan === "pro" ? "pro" : member.plan === "pro" && !me ? "pro" : "free";
@@ -133,7 +150,7 @@ export default function AccountView({ ja, member, billingAvailable, upgradeFirst
     if (upgradeFirst) router.replace("/research");
   }, [upgradeFirst, router]);
   const closePlain = useCallback(() => setSheet(""), []);
-  const ownerPreviewNote = <p className={styles.previewBar}>{t("表示の確認中です。金額や日付は表示例で、運営者には契約がありません。ここでの操作は、実際の契約や権限には反映されません。", "Previewing the view. Amounts and dates are samples; the owner has no contract. Actions here change nothing real.")}</p>;
+  const ownerPreviewNote = <p className={styles.previewBar}>{t("表示の確認中です。金額や日付は表示例です。ここでの操作は、実際の契約や権限には反映されません。", "Previewing the view. Amounts and dates are samples. Actions here change nothing real.")}</p>;
 
   async function saveAvatar(id: string) { setProfile({ state: "ok", value: await patchProfile({ icon: id }) }); }
   async function saveName(name: string) { setProfile({ state: "ok", value: await patchProfile({ displayName: name }) }); }
@@ -195,6 +212,8 @@ export default function AccountView({ ja, member, billingAvailable, upgradeFirst
     <div className={styles.resHead}><span className={styles.resIcon}>{I.anchor}</span><span className={styles.resName}>RESOLUTE</span>
       {resolute.state === "bought" && !preview && <span className={`${styles.pt} ${styles.ptOn}`}>{t("購入済み", "Purchased")}</span>}
       <span className={styles.resSub}>{t("暴落の夜も、上昇の朝も、自分のルールに立ち戻るためのキット。", "A kit to return to your own rules, on crash nights and rally mornings.")}</span></div>
+    {!preview && resolute.state === "unknown" && <p className={styles.note} role="status">{t("購入状況を確認できませんでした。", "Could not check your purchase.")} <button type="button" className={styles.link} onClick={recheck}>{t("再確認", "Check again")}</button></p>}
+    {!preview && resolute.state === "loading" && <p className={styles.note} role="status">{t("購入状況を確認中", "Checking purchase")}</p>}
     {resolute.state === "bought" && !preview
       ? <>{resolute.alertsUntil && formatDay(resolute.alertsUntil, ja) && <div className={styles.kvs} style={{ marginTop: 6 }}><div className={styles.kv}><span>{t("通知サービスの有効期限", "Alerts valid until")}</span><b>{formatDay(resolute.alertsUntil, ja)}</b></div></div>}
           <div className={styles.stack}><Link className={`${styles.btn} ${styles.abt}`} href="/resolute">{t("RESOLUTEを開く", "Open RESOLUTE")}</Link>
@@ -203,7 +222,7 @@ export default function AccountView({ ja, member, billingAvailable, upgradeFirst
   </div>;
 
   // ---- security / support
-  const twoValue = <span className={`${styles.rv} ${twoFactor ? styles.rvOn : ""}`}>{twoFactor ? t("オン", "On") : t("オフ", "Off")}</span>;
+  const twoValue = <span className={`${styles.rv} ${twoFactor ? styles.rvOn : ""}`}>{twoFactor === null ? t("確認できません", "Unavailable") : twoFactor ? t("オン", "On") : t("オフ", "Off")}</span>;
   const security = <div className={styles.cd} style={{ marginTop: 0 }}>
     {row(I.bell, t("スマホ通知の設定", "Phone notifications"), { href: "/research/notifications", pro: true })}
     {passwordRow && row(I.key, t("パスワードを変更", "Change password"), { href: "/research/account/security" })}
@@ -245,10 +264,13 @@ export default function AccountView({ ja, member, billingAvailable, upgradeFirst
 
     {owner && viewAs === "owner" && <div className={styles.ownerBadge}><span className={styles.seal}>{I.seal}</span>
       <div style={{ flex: 1, minWidth: 0 }}><div className={styles.ownerWord}>OWNER</div><div className={styles.ownerSub}>{t("全機能をご利用中です", "All features unlocked")}</div></div>
-      <span className={styles.ownerNone}>{ja ? <>有料契約<br />なし</> : "No paid contract"}</span></div>}
+      <span className={styles.ownerNone}>{contract.state === "loading" ? t("契約を確認中", "Checking contract") : c?.verification === "verified" && c.status === "none" ? t("有料契約なし", "No paid contract") : c?.verification === "verified" && c.status === "active" ? t("有料契約あり", "Paid subscription") : c?.verification === "verified" && c.status === "renewal-stopped" ? t("自動更新停止済み", "Renewal stopped") : t("契約を確認できません", "Contract unavailable")}</span></div>}
 
     {member.adminMfaRequired && <p className={styles.warn} role="alert" style={{ marginTop: 12 }}>{t("管理機能には2段階認証が必要です。設定後、ログインし直してください。", "Admin access requires two-step verification. Set it up, then sign in again.")} <Link href="/research/account/security" style={{ color: "#e7c982" }}>{t("2段階認証を設定する", "Set up")}</Link></p>}
 
+    {owner && !preview && c?.status !== "none" && <div className={styles.cd}>
+      {row(I.key, t("有料契約を確認", "View paid subscription"), { href: "/research/account/billing" })}
+    </div>}
     {ownerMenu}
     {preview && ownerPreviewNote}
 
