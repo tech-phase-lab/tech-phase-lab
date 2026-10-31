@@ -131,13 +131,22 @@ test('rendered owner account reflects real contract evidence independently of ow
  const base={verification:'verified',autoRenew:false,accessPlan:'free',amount:null,currency:null,nextBillingAt:null,accessExpiresAt:null,unavailableFields:[]};
  for(const [status,label] of [['none','有料契約なし'],['active','有料契約あり'],['renewal-stopped','自動更新停止済み']]){
   const html=renderAccount({owner:true,contract:{state:'ok',value:{...base,status}}});
-  assert.match(html,new RegExp(label));if(status!=='none')assert.doesNotMatch(html,/有料契約なし/);
+  assert.match(html,new RegExp([...label].join('\\s*'))); /* the badge may break the label over two lines */ if(status!=='none')assert.doesNotMatch(html,/有料契約\s*なし/);
  }
  const unknown=renderAccount({owner:true,contract:{state:'unknown'}});
- assert.match(unknown,/契約を確認できません/);assert.doesNotMatch(unknown,/有料契約なし/);
+ assert.doesNotMatch(unknown,/契約を確認\s*できません|契約を確認中|有料契約\s*なし|有料契約を確認/); /* the owner is one person: unverified means nothing is written */
 });
 test('rendered account does not show MFA off or silently hide unavailable purchases',()=>{
  const html=renderAccount({profile:{state:'error'},resolute:{state:'unknown'}});
  assert.match(html,/2段階認証/);assert.match(html,/確認できません/);assert.doesNotMatch(html,/>オフ</);
  assert.match(html,/購入状況を確認できませんでした/);
+});
+
+test("returning to the account page refreshes silently: no skeleton, an open sheet keeps its input", () => {
+  const view = readFileSync(new URL("../app/research/account/account-view.tsx", import.meta.url), "utf8");
+  const resume = view.slice(view.indexOf("const resume = () =>"), view.indexOf('window.addEventListener("focus", resume)'));
+  assert.ok(resume.includes("setTick"));
+  assert.doesNotMatch(resume, /setProfile|setContract|setResolute/);
+  assert.match(view, /setProfile\(prev => prev\.state === "ok" \? prev : \{ state: "error" \}\)/);
+  assert.match(view, /owner && !preview && c\?\.verification === "verified" && \(c\.status === "active" \|\| c\.status === "renewal-stopped"\)/);
 });

@@ -82,7 +82,7 @@ export default function AccountView({ ja, member, billingAvailable, upgradeFirst
     const controller = new AbortController();
     getJson("/api/research/account/profile", controller.signal)
       .then(value => { if (!controller.signal.aborted) setProfile({ state: "ok", value: readProfile(value) }); })
-      .catch(() => { if (!controller.signal.aborted) setProfile({ state: "error" }); });
+      .catch(() => { if (!controller.signal.aborted) setProfile(prev => prev.state === "ok" ? prev : { state: "error" }); });
     return () => controller.abort();
   }, [tick]);
   useEffect(() => {
@@ -111,7 +111,7 @@ export default function AccountView({ ja, member, billingAvailable, upgradeFirst
     const resume = () => {
       if (document.visibilityState !== "visible" || Date.now() - lastRefresh < 1000) return;
       lastRefresh = Date.now();
-      setProfile({ state: "loading" }); setContract({ state: "loading" }); setResolute({ state: "loading" });
+      // Silent: what is on screen stays (and an open sheet keeps its input) until the new answers arrive.
       setTick(v => v + 1);
     };
     window.addEventListener("focus", resume);
@@ -145,6 +145,11 @@ export default function AccountView({ ja, member, billingAvailable, upgradeFirst
   const freeUnverified = effective === "free" && !preview && !owner && (contract.state === "unknown" || (c !== null && !(c.verification === "verified" && c.status === "none")));
   const accessUntil = formatDay(c?.accessExpiresAt, ja);
 
+  // The owner is one person: say something only when the contract state is verified; otherwise leave it blank.
+  const ownerContractText = !(c?.verification === "verified") ? null
+    : c.status === "none" ? t("有料契約\nなし", "No paid contract")
+    : c.status === "active" ? t("有料契約\nあり", "Paid subscription")
+    : c.status === "renewal-stopped" ? t("自動更新\n停止済み", "Renewal stopped") : null;
   const closeSheet = useCallback(() => {
     setSheet("");
     if (upgradeFirst) router.replace("/research");
@@ -264,11 +269,11 @@ export default function AccountView({ ja, member, billingAvailable, upgradeFirst
 
     {owner && viewAs === "owner" && <div className={styles.ownerBadge}><span className={styles.seal}>{I.seal}</span>
       <div style={{ flex: 1, minWidth: 0 }}><div className={styles.ownerWord}>OWNER</div><div className={styles.ownerSub}>{t("全機能をご利用中です", "All features unlocked")}</div></div>
-      <span className={styles.ownerNone}>{contract.state === "loading" ? t("契約を確認中", "Checking contract") : c?.verification === "verified" && c.status === "none" ? t("有料契約なし", "No paid contract") : c?.verification === "verified" && c.status === "active" ? t("有料契約あり", "Paid subscription") : c?.verification === "verified" && c.status === "renewal-stopped" ? t("自動更新停止済み", "Renewal stopped") : t("契約を確認できません", "Contract unavailable")}</span></div>}
+      {ownerContractText && <span className={styles.ownerNone}>{ownerContractText}</span>}</div>}
 
     {member.adminMfaRequired && <p className={styles.warn} role="alert" style={{ marginTop: 12 }}>{t("管理機能には2段階認証が必要です。設定後、ログインし直してください。", "Admin access requires two-step verification. Set it up, then sign in again.")} <Link href="/research/account/security" style={{ color: "#e7c982" }}>{t("2段階認証を設定する", "Set up")}</Link></p>}
 
-    {owner && !preview && c?.status !== "none" && <div className={styles.cd}>
+    {owner && !preview && c?.verification === "verified" && (c.status === "active" || c.status === "renewal-stopped") && <div className={styles.cd}>
       {row(I.key, t("有料契約を確認", "View paid subscription"), { href: "/research/account/billing" })}
     </div>}
     {ownerMenu}
