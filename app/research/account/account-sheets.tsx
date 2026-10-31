@@ -27,17 +27,14 @@ function Sheet({ title, onClose, children, plain = false, dismissible = true }: 
 }
 
 /** A5 / A5b: the consent starts off, and "PayPalへ進む" stays dimmed until it is ticked. */
-export function UpgradeSheet({ ja, mode, blocked, preview = false, refresh, onClose }: { ja: boolean; mode: Mode | null; blocked?: boolean; preview?: boolean; refresh: (force?: boolean) => Promise<void>; onClose: () => void }) {
+export function UpgradeSheet({ ja, mode, blocked, refresh, onClose }: { ja: boolean; mode: Mode | null; blocked?: boolean; refresh: (force?: boolean) => Promise<void>; onClose: () => void }) {
   const [agreed, setAgreed] = useState(false);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
   const t = (a: string, b: string) => ja ? a : b;
-  // preview: the owner is looking at the FREE screen; the sheet works as it does for a FREE member, except that no payment is started.
-  const closed = !preview && (!mode || blocked);
+  const closed = !mode || blocked;
   async function go() {
-    if (busy || !agreed) return;
-    if (preview) { setError("preview"); return; }
-    if (!mode) return;
+    if (!mode || busy || !agreed) return;
     setBusy(true); setError("");
     try {
       await refresh(true);
@@ -61,7 +58,6 @@ export function UpgradeSheet({ ja, mode, blocked, preview = false, refresh, onCl
       <span>{ja ? <><Link href="/terms">利用規約</Link>に同意し、毎月自動で更新されることを確認しました。</> : <>I agree to the <Link href="/terms">Terms</Link> and understand it renews monthly.</>}</span>
     </label>
     {closed && <p className={styles.err}>{t("お申し込みの受付は、現在停止中です。", "New subscriptions are closed right now.")}</p>}
-    {error === "preview" && <p className={styles.note} role="status" style={{ margin: "0 0 12px" }}>{t("表示の確認中のため、PayPalへは進みません。", "Previewing: PayPal is not opened.")}</p>}
     {error === "failed" && <p className={styles.err} role="alert">{t("お申し込みを開始できませんでした。時間をおいて、もう一度お試しください。", "Could not start checkout. Please try again shortly.")}</p>}
     {error === "existing" && <p className={styles.err} role="alert">{t("手続き中の契約があります。", "A checkout is already in progress.")} <Link href="/research/account/billing" style={{ color: "#e7c982" }}>{t("手続きを再開する", "Resume")}</Link></p>}
     <button type="button" className={`${styles.btn} ${styles.gbt}`} disabled={!agreed || busy || closed} onClick={() => void go()}>{busy ? t("PayPalへ移動しています…", "Opening PayPal…") : t("PayPalへ進む", "Continue to PayPal")}</button>

@@ -189,13 +189,12 @@ test("leaving a page from the menu does not carry its scroll position to the nex
   assert.match(header, /unlock\(samePage\)/);
 });
 
-test("the FREE view of the owner opens the introduction sheet and starts no payment; the iPhone app nudge exists", () => {
+test("the FREE view of the owner works like a FREE member's screen; the iPhone app nudge exists", () => {
   const sheets = readFileSync(new URL("../app/research/account/account-sheets.tsx", import.meta.url), "utf8");
-  assert.match(sheets, /if \(preview\) \{ setError\("preview"\); return; \}/);
-  assert.match(sheets, /const closed = !preview && \(!mode \|\| blocked\)/);
+  assert.doesNotMatch(sheets, /preview\s*[=?]|setError\("preview"\)|if \(preview\)/); // no payment-blocking branch for the owner's FREE view
   const view = readFileSync(new URL("../app/research/account/account-view.tsx", import.meta.url), "utf8");
   assert.match(view, /disabled=\{!preview && \(!mode \|\| freeUnverified/);
-  assert.match(view, /<UpgradeSheet ja=\{ja\} mode=\{mode\} preview=\{preview\}/);
+  assert.match(view, /<UpgradeSheet ja=\{ja\} mode=\{mode\} refresh=\{refresh\}/);
   const pull = readFileSync(new URL("../app/research/pull-to-refresh.tsx", import.meta.url), "utf8");
   assert.match(pull, /window\.scrollTo\(0, 1\)/);
   assert.match(pull, /if \(window\.scrollY > 0\) return;/);

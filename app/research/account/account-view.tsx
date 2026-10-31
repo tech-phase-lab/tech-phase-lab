@@ -305,7 +305,7 @@ export default function AccountView({ ja, member, billingAvailable, upgradeFirst
     <div className={styles.foot}>Tech Phase Research</div>
     </>}
 
-    {sheet === "upgrade" && <UpgradeSheet ja={ja} mode={mode} preview={preview} refresh={refresh} onClose={closePlain} />}
+    {sheet === "upgrade" && <UpgradeSheet ja={ja} mode={mode} refresh={refresh} onClose={closePlain} />}
     {sheet === "stop" && mode && <StopSheet ja={ja} mode={mode} until={accessUntil} onDone={() => { closePlain(); recheck(); }} onClose={closePlain} />}
     {sheet === "avatar" && me && <AvatarSheet ja={ja} initial={initial} current={tile ? tile.id : INITIAL} onSave={saveAvatar} onClose={closePlain} />}
     {sheet === "name" && me && <NameSheet ja={ja} current={display} onSave={saveName} onClose={closePlain} />}
