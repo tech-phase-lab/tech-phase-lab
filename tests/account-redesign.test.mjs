@@ -150,3 +150,33 @@ test("returning to the account page refreshes silently: no skeleton, an open she
   assert.match(view, /setProfile\(prev => prev\.state === "ok" \? prev : \{ state: "error" \}\)/);
   assert.match(view, /owner && !preview && c\?\.verification === "verified" && \(c\.status === "active" \|\| c\.status === "renewal-stopped"\)/);
 });
+
+test("the contract and RESOLUTE reads start once during hydration and are consumed once", async () => {
+  const calls = [];
+  const realFetch = globalThis.fetch, realWindow = globalThis.window;
+  globalThis.window = {};
+  globalThis.fetch = async url => { calls.push(String(url)); return new Response(JSON.stringify({ ok: true }), { status: 200, headers: { "content-type": "application/json" } }); };
+  try {
+    const fresh = load("../app/research/account/account-data.ts");
+    fresh.prefetchAccountData(); fresh.prefetchAccountData(); fresh.prefetchAccountData();
+    assert.deepEqual(calls, ["/api/research/account/contract", "/api/resolute/entitlements"], "started once, however often the screen renders");
+    await fresh.getJson("/api/research/account/contract");
+    await fresh.getJson("/api/resolute/entitlements");
+    assert.equal(calls.length, 2, "the started reads are used, not repeated");
+    await fresh.getJson("/api/research/account/contract");
+    assert.equal(calls.length, 3, "a later read is a new request");
+    await fresh.getJson("/api/research/account/profile");
+    assert.equal(calls.length, 4, "the profile is never prefetched");
+  } finally { globalThis.fetch = realFetch; globalThis.window = realWindow; }
+});
+
+test("the top card comes with the page and the screen holds its shape while data loads", () => {
+  const page = readFileSync(new URL("../app/research/account/page.tsx", import.meta.url), "utf8");
+  assert.match(page, /readProfile\(member\.userId\)/);
+  assert.match(page, /initialProfile=\{initialProfile\}/);
+  const view = readFileSync(new URL("../app/research/account/account-view.tsx", import.meta.url), "utf8");
+  assert.match(view, /height: owner \? 84 : 191/);
+  assert.match(view, /minHeight: loadingContract \? 285 : undefined/);
+  assert.doesNotMatch(view, /購入状況を確認中/);
+  assert.match(view, /settled = patient \|\| profile\.state === "error" \|\| /);
+});

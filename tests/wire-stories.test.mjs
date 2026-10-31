@@ -167,3 +167,19 @@ test('call transcripts, mover roundups, data pages, vendor bulletins and teasers
     'Vertiv CEOが決算説明会でAI需要の強さを強調', 'Broadcom unveils a new AI networking chip', 'Arista Networks raises full-year outlook', 'Microsoft stock rises after earnings call',
   ]) assert.equal(isNotNews(title), false, title);
 });
+
+test('"what X said" summaries, year-tagged teasers and PC trivia are not news (owner, Oct 31)', () => {
+  for (const title of [
+    'サム・アルトマンとサムスンの会議：50人の幹部、チップ【2026年】',
+    '電源ボタンを長押しするとPCの電源が切れるだけでなく、Windows 11はマイクロソフト向けにクラッシュダンプを静かに保存する',
+    'アマゾンとグーグルの両社がカスタムチップを持つ。両社がその将来について語った内容。(AMZN:NASDAQ)',
+    'Amazon and Google both have custom chips. What both said about their future',
+    'Sam Altman and Samsung meeting: 50 executives, chips [2026]',
+    'Windows 11 quietly saves crash dumps for Microsoft when you hold the power button',
+  ]) assert.equal(isNotNews(title), true, title);
+  for (const title of [
+    'グーグル、自社設計の新型AIチップを発表', 'アマゾン、新しいAIチップの出荷を開始', 'マイクロソフト、2026年度の売上見通しを引き上げ', 'Windows 11の利用者が10億人を突破',
+    'サムスン、HBM4の供給でエヌビディアと合意', 'Microsoft raises fiscal 2026 revenue outlook', 'Google unveils a new AI chip',
+  ]) assert.equal(isNotNews(title), false, title);
+  assert.equal(cleanTitle('アマゾン、新しいAIチップの出荷を開始 (AMZN:NASDAQ)'), 'アマゾン、新しいAIチップの出荷を開始');
+});
