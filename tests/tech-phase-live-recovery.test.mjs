@@ -54,6 +54,29 @@ test('Live recovery is off without explicit activation; invalid configs never in
  for(const change of [{TECH_PHASE_PAYPAL_ENV:'sandbox'},{TECH_PHASE_BILLING_RUNTIME:'railway-sandbox'},{RAILWAY_GIT_BRANCH:'wrong'},{TECH_PHASE_BILLING_LIVE_RECOVERY_LIMIT:'26'},{TECH_PHASE_BILLING_LIVE_RECOVERY_LIMIT:'0'},{TECH_PHASE_BILLING_LIVE_RECOVERY_LIMIT:'1.5'}])await assert.rejects(runLiveRecovery({env:{...env,...change},services}),/INVALID_RECOVERY_CONFIG/);
  assert.equal(calls,0);
 });
+test('missing unpaid pending provider application is retained for review without crash or grant',async()=>fixture(async({db,store,queue})=>{
+ await attach(store,1);
+ const time=Date.now()+1000;
+ const services=async()=>({recoveryQueue:queue,reconciliation:{async reconcile(){throw Error('PAYPAL_SUBSCRIPTION_NOT_FOUND');}}});
+ const result=await runLiveRecovery({env,services,now:()=>time,wait:async()=>{}});
+ assert.equal(result.outcome,'completed');assert.equal(result.checked,1);assert.equal(result.reviewRequired,1);assert.equal(result.failed,0);
+ const row=(await db.query('SELECT last_outcome,failures,next_attempt_at FROM tech_phase_billing_live.recovery_queue')).rows[0];
+ assert.equal(row.last_outcome,'review-required');assert.equal(row.failures,0);
+ assert.equal(new Date(row.next_attempt_at).getTime(),time+6*3600000);
+ assert.equal((await db.query('SELECT state FROM tech_phase_billing_live.subscriptions')).rows[0].state,'approval_pending');
+ assert.equal((await db.query('SELECT count(*)::int n FROM tech_phase_billing_live.payments')).rows[0].n,0);
+ assert.equal((await db.query('SELECT count(*)::int n FROM tech_phase_billing_live.periods')).rows[0].n,0);
+ assert.equal(await queue.claim(time+1),null);
+ assert.ok(await queue.claim(time+6*3600000));
+}));
+test('active or previously paid missing contracts and transport errors still fail and alert',async()=>{
+ for(const item of [{state:'active',has_payments:false},{state:'approval_pending',has_payments:true},{state:'cancelled',has_payments:true},{state:'approval_pending'}]){
+  let claimed=false;const outcomes=[];
+  const services=async()=>({recoveryQueue:{async claim(){if(claimed)return null;claimed=true;return item;},async finish(i,o){outcomes.push(o);return true;}},reconciliation:{async reconcile(){throw Error('PAYPAL_SUBSCRIPTION_NOT_FOUND');}}});
+  const result=await runLiveRecovery({env,services,wait:async()=>{}});
+  assert.equal(result.outcome,'partial-failure');assert.deepEqual(outcomes,['failed']);
+ }
+});
 test('Live runner stops at time budget or cancellation and rejects cross-environment responses',async()=>{
  const controller=new AbortController();let claims=0,finishes=0;const outcomes=[];
  const services=async()=>({recoveryQueue:{async claim(){claims++;return {id:'fixture',user_id:'user_First'};},async finish(item,outcome){finishes++;outcomes.push(outcome);return true;}},reconciliation:{async reconcile(){controller.abort();return {environment:'sandbox',status:'verified'};}}});
