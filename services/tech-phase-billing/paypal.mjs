@@ -30,6 +30,9 @@ export const OFFERS = Object.freeze({
   USD: Object.freeze({ currency: 'USD', minor: 2000, value: '20.00' }),
 });
 const fail = (code = 'PAYPAL_UNAVAILABLE') => { throw new Error(code); };
+class ProviderSubscriptionNotFound extends Error {
+  constructor() { super('PAYPAL_SUBSCRIPTION_NOT_FOUND'); }
+}
 const matches = (value, pattern) => typeof value === 'string' && pattern.test(value);
 const planId = value => matches(value, /^P-[A-Z0-9]{24}$/) ? value : fail('INVALID_PLAN');
 const subscriptionId = value => matches(value, /^I-[A-Z0-9]{8,32}$/) ? value : fail('INVALID_SUBSCRIPTION');
@@ -114,17 +117,25 @@ export function createPaypal(config, fetcher = fetch) {
     })().finally(() => { tokenRequest = undefined; });
     return tokenRequest;
   }
-  async function call(path, method = 'GET', body, key) {
+  async function call(path, method = 'GET', body, key, subscriptionRead = false) {
     try {
       const credential = await authorize();
       const res = await fetcher(base + path, { method, redirect: 'error', cache: 'no-store', signal: AbortSignal.timeout(10000),
         headers: { Authorization: `Bearer ${credential}`, 'Content-Type': 'application/json', Prefer: 'return=representation',
           ...(key ? { 'PayPal-Request-Id': requestId(key) } : {}) },
         ...(body === undefined ? {} : { body: JSON.stringify(body) }) });
-      if (!res.ok) { if (res.status === 401 && token === credential) token = undefined; await res.body?.cancel(); fail(); }
+      if (!res.ok) {
+        if (res.status === 401 && token === credential) token = undefined;
+        await res.body?.cancel();
+        if (subscriptionRead && res.status === 404) throw new ProviderSubscriptionNotFound();
+        fail();
+      }
       if (res.status === 204) return null;
       return await json(res);
-    } catch { fail(); } // Never expose provider error bodies, credentials or buyer details.
+    } catch (error) {
+      if (error instanceof ProviderSubscriptionNotFound) throw error;
+      fail();
+    } // Never expose provider error bodies, credentials or buyer details.
   }
   return {
     environment:mode,
@@ -138,7 +149,7 @@ export function createPaypal(config, fetcher = fetch) {
       if (!result || result.plan_id !== plans[currency] || result.custom_id !== id) fail();
       return { id: subscriptionId(result.id), approvalUrl: approvalUrl(result,mode) };
     },
-    get: id => call(`/v1/billing/subscriptions/${subscriptionId(id)}`),
+    get: id => call(`/v1/billing/subscriptions/${subscriptionId(id)}`, 'GET', undefined, undefined, true),
     getDetails: id => call(`/v1/billing/subscriptions/${subscriptionId(id)}?fields=plan`),
     cancel: id => call(`/v1/billing/subscriptions/${subscriptionId(id)}/cancel`, 'POST', { reason: 'Cancelled by the subscriber' }),
     async transactions(id, start, end) {

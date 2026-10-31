@@ -14,7 +14,8 @@ export function liveRecoveryQueue(pool){
      SET lease_token=$2,lease_until=$1::timestamptz+interval '5 minutes'
      FROM candidate c,tech_phase_billing_live.subscriptions s
      WHERE q.subscription_id=c.subscription_id AND s.id=q.subscription_id
-     RETURNING q.subscription_id AS id,s.user_id,q.lease_token AS token,q.failures`,[new Date(now),token]);
+     RETURNING q.subscription_id AS id,s.user_id,q.lease_token AS token,q.failures,s.state,
+       EXISTS (SELECT 1 FROM tech_phase_billing_live.payments p WHERE p.subscription_id=s.id) AS has_payments`,[new Date(now),token]);
    return result.rows[0]??null;
   },
   async finish(item,outcome,now=Date.now()){
@@ -49,7 +50,15 @@ export async function runLiveRecovery({env,services,signal,now=Date.now,wait=ms=
    const value=await svc.reconciliation.reconcile(item.user_id,item.id);
    if(value?.environment!=='live'||!['verified','payment-pending','review-required'].includes(value.status))throw Error('INVALID_RECOVERY_RESULT');
    outcome=value.status;
-  }catch{outcome='failed';}
+  }catch(error){
+   // An authenticated provider 404 for an unpaid, unapproved application needs
+   // review, not an infrastructure-crash loop. Preserve the record and retry
+   // normally; never infer cancellation, payment or entitlement from a 404.
+   // Previously paid/active contracts and all transport/auth failures remain
+   // failures so real payment reconciliation problems cannot be hidden.
+   outcome=error?.message==='PAYPAL_SUBSCRIPTION_NOT_FOUND' &&
+    item.state==='approval_pending' && item.has_payments===false ? 'review-required':'failed';
+  }
   result.checked++;
   if(outcome==='failed')result.failed++;
   if(outcome==='review-required')result.reviewRequired++;
