@@ -180,3 +180,11 @@ test("the top card comes with the page and the screen holds its shape while data
   assert.doesNotMatch(view, /購入状況を確認中/);
   assert.match(view, /settled = patient \|\| profile\.state === "error" \|\| /);
 });
+
+test("leaving a page from the menu does not carry its scroll position to the next page", () => {
+  const lock = readFileSync(new URL("../app/research/use-scroll-lock.ts", import.meta.url), "utf8");
+  assert.match(lock, /const unlock = \(restore = true\) =>/);
+  assert.match(lock, /left: restore \? x : 0, top: restore \? y : 0/);
+  const header = readFileSync(new URL("../app/research/site-header.tsx", import.meta.url), "utf8");
+  assert.match(header, /unlock\(samePage\)/);
+});
