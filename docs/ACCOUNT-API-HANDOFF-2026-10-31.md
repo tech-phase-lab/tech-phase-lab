@@ -47,7 +47,7 @@ DELETE same path always 409 after auth/origin check; NO user or data deleted.
 No safe unified deletion exists for saved research, watchlists, push devices, RESOLUTE data and Clerk. Missing: distributed deletion ledger/retries, checkout fence, authoritative all-contract recheck, billing/security retention, local storage cleanup, final session revocation. Do not wire Clerk direct delete as fallback. This explicit blocker follows instruction to skip troubled items and continue.
 
 ## Not included
-Production FREE/PRO owner preview extension, UI redesign, infrastructure credentials/config changes, live payments. Existing owner preview remains Preview-only; separate task.
+This original API change did not include the UI redesign or owner preview extension. Subsequent commits 8f55 and 7f704 enabled production owner FREE/PRO view switching and immediate UI updates. Do not treat the earlier Preview-only limitation as current. Infrastructure credentials/config changes and live payments are outside this account follow-up.
 
 Provider reference: https://developer.paypal.com/api/subscriptions/v1/subscriptions-get/ (fields=plan, plan.billing_cycles fixed_price, billing_info.next_billing_time). No provider write is added.
 

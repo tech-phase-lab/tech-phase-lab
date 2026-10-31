@@ -13,7 +13,7 @@ export type Contract = {
 const isDate = (value: unknown) => typeof value === "string" && Number.isFinite(Date.parse(value));
 export function readProfile(value: unknown): Profile {
   const v = value as Partial<Profile> | null;
-  if (!v || typeof v.displayName !== "string" || !["free", "pro", "owner"].includes(v.plan as string) || typeof v.icon !== "string") throw Error("profile");
+  if (!v || typeof v.displayName !== "string" || !["free", "pro", "owner"].includes(v.plan as string) || typeof v.icon !== "string" || typeof v.passwordEnabled !== "boolean" || typeof v.twoFactorEnabled !== "boolean") throw Error("profile");
   return { displayName: v.displayName, email: typeof v.email === "string" ? v.email : null, plan: v.plan as Profile["plan"], ownerAccess: v.ownerAccess === true,
     passwordEnabled: v.passwordEnabled === true, twoFactorEnabled: v.twoFactorEnabled === true, icon: v.icon, iconEditable: v.iconEditable === true };
 }
