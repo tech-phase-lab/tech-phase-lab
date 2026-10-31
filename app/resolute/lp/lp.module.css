@@ -187,3 +187,4 @@
 
 /* A trailing full stop must not pull centred headings to the left. */
 .hang { margin-right:-1em; }
+.lines { white-space:pre-line; }

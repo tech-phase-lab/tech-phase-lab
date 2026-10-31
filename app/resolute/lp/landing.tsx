@@ -21,6 +21,7 @@ function Buy({ small = false }: { small?: boolean }) {
   <p className={s.guest}>ログインなしでも購入できます</p>
  </div>;
 }
+const WHAT = "RESOLUTEは相場が荒れる日でも冷静に立ち回るためのキットです。30問の診断で自分だけのルールを作り、壁紙と一冊の本にしていつも手元に置いておく。決めたラインに株価が届けばアラートが知らせてくれるので、感情で売り買いする前に立ち止まれます。";
 export default function Landing({ embedded = false }: { embedded?: boolean }) {
  return <div className={s.root}>
   {embedded ? null : <><script dangerouslySetInnerHTML={{ __html: ownedGuardScript(BAR_STATE_KEY) }} /><OwnedRedirect /></>}
@@ -53,8 +54,8 @@ export default function Landing({ embedded = false }: { embedded?: boolean }) {
    {/* 3 WHAT IS RESOLUTE */}
    <section className={s.sec}>
     <p className={s.eyebrow}>WHAT IS RESOLUTE</p>
-    <h2 className={s.h2}>どんな相場でも<br />冷静に立ち回れる自分へ<span className={s.hang}>。</span></h2>
-    <p className={s.body}>RESOLUTEは相場が荒れる日でも冷静に立ち回るためのキットです。30問の診断で自分だけのルールを作り、壁紙と一冊の本にしていつも手元に置いておく。<br />決めたラインに株価が届けばアラートが知らせてくれるので、感情で売り買いする前に立ち止まれます。</p>
+    <h2 className={s.h2}>どんな相場でも<br /><span className={s.hang}>冷静に立ち回れる自分へ。</span></h2>
+    <p className={`${s.body} ${s.lines}`}>{WHAT.replace("置いておく。", "置いておく。\n")}</p>
     <p className={s.pull}>暴落が来ても<br />もう慌てない。</p>
     <ol className={s.steps}>
      <li><span>01</span><b>決める</b><p>30問の診断であなたのルールができあがる</p></li>
