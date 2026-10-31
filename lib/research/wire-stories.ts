@@ -44,10 +44,13 @@ const NOT_NEWS = [
   /(?:総資産|総負債|株主資本|\bTotal (?:Assets|Liabilities)|\bShareholders.? Equity)\s*[–—-]\s*\S/i, // financial-data pages, not news (owner, Oct 31)
   /シマンテック(?:の)?(?:脅威|保護)|\bSymantec (?:Protection|Threat|Security) (?:Bulletin|Intelligence|Report|Research)|\bProtection Bulletin\b/i, // vendor threat bulletins (owner, Oct 31)
   /唯一の疑問|疑問に答えられ|\b(?:only|one) (?:big |key |real )?question\b.{0,40}\b(?:investors?|unanswered|remains)\b|\b(?:doesn.t|does not|fail(?:s|ed)? to) answer\b.{0,40}\bquestion\b/i, // a teaser whose answer is not in the headline (owner, Oct 31)
+  /(?:が|は|も|両社が|それぞれが).{0,40}(?:語った|述べた|話した|明かした)(?:内容|こと)[。.]?\s*(?:[(（][A-Z.]{1,6}\s*[:：]\s*[A-Za-z]{2,10}[)）])?\s*$|\bwhat\b.{0,60}\b(?:both|each|they|he|she)\b.{0,30}\b(?:said|says|told)\b|^\s*what\b.{0,60}\b(?:said|says|told)\b/i, // "what X said" summaries: no fact in the headline (owner, Oct 31)
+  /【\s*20\d\d(?:年)?\s*】\s*$|\[\s*20\d\d\s*\]\s*$/, // a search-engine year tag glued on the end ("…チップ【2026年】")
+  /Windows\s?1[01]\b.{0,60}(?:クラッシュダンプ|ブルースクリーン|ショートカット|隠し機能|長押し)|(?:電源ボタン|長押し).{0,40}Windows|\b(?:crash dumps?|blue screen|BSOD|keyboard shortcuts?)\b/i, // PC how-to trivia, not company news (owner, Oct 31)
 ];
 /** A press-release label glued onto the headline ("2026年10月25日｜… ｜NYSE:BE｜プレスリリース") is not part of it (owner, Oct 26). */
 export function cleanTitle(title: string) {
-  return title.replace(/\s*[(（]\s*(?:NYSE|NASDAQ|Nasdaq(?:GS|GM|CM)?|AMEX|NYSEARCA|NYSEAMERICAN|NYSEAM|NYSEMKT|OTC(?:QX|QB)?)\s*[:：]\s*[A-Z.]{1,6}\s*[)）]/g, "").replace(/^\s*(?:20\d\d年\d{1,2}月\d{1,2}日|[A-Z][a-z]{2,8}\.? \d{1,2}, 20\d\d)\s*[|｜]\s*/, "")
+  return title.replace(/\s*[(（]\s*[A-Z.]{1,6}\s*[:：]\s*(?:NYSE|NASDAQ|Nasdaq|AMEX|NYSEARCA|OTC)\s*[)）]\s*$/, "").replace(/\s*[(（]\s*(?:NYSE|NASDAQ|Nasdaq(?:GS|GM|CM)?|AMEX|NYSEARCA|NYSEAMERICAN|NYSEAM|NYSEMKT|OTC(?:QX|QB)?)\s*[:：]\s*[A-Z.]{1,6}\s*[)）]/g, "").replace(/^\s*(?:20\d\d年\d{1,2}月\d{1,2}日|[A-Z][a-z]{2,8}\.? \d{1,2}, 20\d\d)\s*[|｜]\s*/, "")
     .replace(/\s*[|｜]\s*(?:NYSE|NASDAQ|Nasdaq(?:GS|GM|CM)?|AMEX)\s*[:：]\s*[A-Z.]{1,6}\s*(?:[|｜]\s*(?:プレスリリース|Press Release))?\s*$/, "")
     .replace(/\s*[|｜]\s*(?:プレスリリース|Press Release)\s*$/, "").replace(/\s*[：:]\s*(?:レポート|報道|report)\s*$/i, "")
     // The wire service's name tacked on the end ("…で上昇（Investing.comより）") is not part of the headline (owner, Oct 28).
