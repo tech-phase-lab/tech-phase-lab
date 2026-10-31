@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useLayoutEffect, useRef, useState, useSyncExternalStore, type CSSProperties } from "react";
 import Link from "next/link";
+import { useOwnerAccount } from "./member-display-provider";
 import { useResearchLanguage } from "./use-research-language";
 import { signedInFromCookies } from "@/lib/resolute/landing-gate";
 import { BAR_DISMISS_KEY, BAR_EVENT, BAR_STATE_KEY, barVisible, needsRefresh, parseBarState, writeBarState } from "@/lib/research/resolute-bar-state";
@@ -19,6 +20,7 @@ const serverSnapshot = () => "||";
 
 export default function ResoluteBar() {
   const [lang] = useResearchLanguage();
+  const ownerAccount = useOwnerAccount();
   const ja = lang === "ja";
   const raw = useSyncExternalStore(subscribe, snapshot, serverSnapshot);
   const [stateRaw, dismissRaw, signedRaw] = raw.split("|");
@@ -26,7 +28,7 @@ export default function ResoluteBar() {
   const state = parseBarState(stateRaw || null);
   const dismissedAt = Number(dismissRaw) || 0;
   const [openedAt] = useState(() => Date.now());
-  const shown = barVisible(state, dismissedAt, signedIn, openedAt);
+  const shown = barVisible(state, dismissedAt, signedIn, openedAt, ownerAccount);
   const [lift, setLift] = useState<number | null>(null);
   const [notch, setNotch] = useState<{ x: number; y: number; r: number } | null>(null);
   const bar = useRef<HTMLElement>(null);

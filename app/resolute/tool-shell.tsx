@@ -11,7 +11,17 @@ type Access = "loading"|"allowed"|"denied"|"signed-out"|"unavailable";
 export default function ToolShell({ identityReady=true, home=false, children }: { identityReady?: boolean; home?: boolean;
  children: (locale: DiagnosisLocale, deny: () => void, entitlement: ReturnType<typeof validateSnapshot> | null) => ReactNode }) {
  // Opening from another page must start at the top, not where the previous page was scrolled to.
- useEffect(()=>{ window.scrollTo(0,0); },[]);
+ useEffect(()=>{
+  // iPhone Safari restores or keeps an earlier scroll after the first paint, so top is re-asserted a few times until the reader touches the page.
+  let touched=false; const stop=()=>{touched=true;};
+  const top=()=>{ if(!touched && window.scrollY>0) window.scrollTo(0,0); };
+  const previous=history.scrollRestoration;
+  try { history.scrollRestoration="manual"; } catch { /* not supported */ }
+  window.scrollTo(0,0);
+  const frame=requestAnimationFrame(top), timers=[120,400,900].map(ms=>window.setTimeout(top,ms));
+  window.addEventListener("touchstart",stop,{passive:true,once:true}); window.addEventListener("wheel",stop,{passive:true,once:true});
+  return ()=>{ cancelAnimationFrame(frame); timers.forEach(clearTimeout); window.removeEventListener("touchstart",stop); window.removeEventListener("wheel",stop); try { history.scrollRestoration=previous; } catch { /* not supported */ } };
+ },[]);
  const [entitlement,setEntitlement]=useState<ReturnType<typeof validateSnapshot>|null>(null);
  const pathname=usePathname();
  const review=useReview(), reviewing=review !== null;
