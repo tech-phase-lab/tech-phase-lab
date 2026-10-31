@@ -78,7 +78,8 @@ function AccountContent({ status, plan, signingUp = false, initialMember, billin
   }, [isLoaded, isSignedIn, member.plan, member.ownerMode, member.accessExpiresAt]);
   const upgradeFirst = useUpgradeFirst();
   // The redesigned account screen (canvas A1-A11) replaces the old signed-in card.
-  if (member.status === "signed-in" && isLoaded && isSignedIn) return <ResearchToolShell showTools={false} showHeading={false} lang={lang} setLang={setLang} title={ja ? "アカウント" : "Account"} description="">
+  // The server already knows this reader is signed in, so the screen (and its data requests, which need only the cookie) does not wait for the sign-in SDK to load.
+  if (member.status === "signed-in" && (!isLoaded || isSignedIn)) return <ResearchToolShell showTools={false} showHeading={false} lang={lang} setLang={setLang} title={ja ? "アカウント" : "Account"} description="">
     <AccountView ja={ja} member={member} billingAvailable={billingAvailable} upgradeFirst={upgradeFirst} onRecheck={() => setRetry(value => value + 1)} />
   </ResearchToolShell>;
   const content = <ResearchToolShell showTools={false} lang={lang} setLang={setLang} title={ja ? "マイアカウント" : "My account"} description="">

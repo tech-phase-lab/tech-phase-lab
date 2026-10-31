@@ -81,7 +81,7 @@
 .page .seal{width:56px;height:56px;border-radius:28px;background:linear-gradient(140deg,var(--gold-l),var(--gold-d));display:flex;align-items:center;justify-content:center;box-shadow:0 0 22px rgba(217,181,106,.3);flex:none}
 .page .ownerWord{font:600 20px "Noto Serif JP",serif;letter-spacing:.3em;color:var(--gold-l)}
 .page .ownerSub{margin-top:3px;font-size:13px;color:#a58c55}
-.page .ownerNone{font-size:12px;color:#8697ab;text-align:right;max-width:5em}
+.page .ownerNone{white-space:pre-line;font-size:12px;color:#8697ab;text-align:right;max-width:5em}
 .page .mode{margin-top:10px;padding:16px;border-radius:18px;border:1px solid #3a3220;background:#0d0f13}
 .page .modeHead{display:flex;align-items:baseline;gap:10px;font-size:15px;font-weight:700}
 .page .modeHead span{font:500 10.5px "JetBrains Mono",monospace;letter-spacing:.2em;color:#8a7a52}
