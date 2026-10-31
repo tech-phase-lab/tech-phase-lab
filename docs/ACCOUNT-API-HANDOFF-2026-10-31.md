@@ -42,7 +42,8 @@ push.successCount maps accepted24Hours if supplied; this means push provider acc
 ## Deletion — BLOCKED, not complete
 GET /api/research/account/deletion returns canDelete:false and reason:
 owner-account / auto-renew-active / contract-unverified / deletion-orchestration-unavailable.
-Also affectedData, retainedData, proAccessLostAtDeletion (verified expiry or null), warning.
+Also affectedData, retainedData, proAccessLostAtDeletion (verified expiry or null), message.
+Follow-up: eligibility now calls the read-only billing `GET /live/deletion-check`, which checks historical contracts as well as the current one. Deploy that billing action first; an old backend remains safely `contract-unverified`. See ACCOUNT-DELETION-CHECK-2026-10-31.md. This evidence does not enable deletion.
 DELETE same path always 409 after auth/origin check; NO user or data deleted.
 No safe unified deletion exists for saved research, watchlists, push devices, RESOLUTE data and Clerk. Missing: distributed deletion ledger/retries, checkout fence, authoritative all-contract recheck, billing/security retention, local storage cleanup, final session revocation. Do not wire Clerk direct delete as fallback. This explicit blocker follows instruction to skip troubled items and continue.
 
