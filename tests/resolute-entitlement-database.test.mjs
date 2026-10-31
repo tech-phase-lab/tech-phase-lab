@@ -9,6 +9,7 @@ import {PGlite} from '@electric-sql/pglite';
 const source=readFileSync(new URL('../lib/resolute/database.ts',import.meta.url),'utf8')
   .replace('import "server-only";','')
   .replace('import { Pool } from "pg";', 'class Pool { on() {} query(...args) { return globalThis.__resoluteQuery(...args); } }')
+  .replace(/from ["']\.\/owner-access\.ts["']/, `from ${JSON.stringify(new URL('../lib/resolute/owner-access.ts',import.meta.url).href)}`)
   .replace('from "./database-config.ts"', `from ${JSON.stringify(new URL('../lib/resolute/database-config.ts',import.meta.url).href)}`)
   .replace('from "./entitlement-source.ts"', `from ${JSON.stringify(new URL('../lib/resolute/entitlement-source.ts',import.meta.url).href)}`);
 const {getResoluteEntitlementsForUser}=await import('data:text/javascript;base64,'+Buffer.from(stripTypeScriptTypes(source)).toString('base64'));

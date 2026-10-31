@@ -16,7 +16,7 @@ export function createResendAlertDelivery(pool:Pick<Pool,"connect">,options:{
  return async(userId:string,key:string,mode:"send"|"reconcile"="send")=>{
   if(!options.enabled)return "disabled";
   const tokens=createMailStopTokens(options.stopKey,()=>now().getTime());
-  const recipient=createClerkNotificationRecipient(options.clerk);let locale:"ja"|"en"="ja";
+  const recipient=createClerkNotificationRecipient(options.clerk,options.publicOrigin==='https://techphase.app');let locale:"ja"|"en"="ja";
   const deliver=createAlertDelivery(pool,{enabled:true,now,publicOrigin:options.publicOrigin,
    recipient:async id=>{const result=await recipient(id);locale=result.locale;return result;},
    links:async id=>({...mailStopLinks(options.publicOrigin,tokens,id,locale),doneUrl:options.publicOrigin+"/resolute/morning#done",skippedUrl:options.publicOrigin+"/resolute/morning#skipped",unsureUrl:options.publicOrigin+"/resolute/morning#unsure"}),

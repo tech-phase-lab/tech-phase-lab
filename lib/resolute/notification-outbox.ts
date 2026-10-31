@@ -1,3 +1,5 @@
+import {hasOwnerAccess} from './owner-access.ts';
+import {readBackgroundOwnerAccess} from './owner-background.ts';
 import { entitlementSource, readEntitlementSnapshot, type EntitlementSource } from "./entitlement-source.ts";
 import { reconcileAlertReservations } from "./notification-reservation.ts";
 import { notificationRuleKey } from "./notification-rule-key.ts";
@@ -11,7 +13,7 @@ type Inputs=Pick<NotificationContext,"locale"|"preferencesConfigured"|"recipient
  * resolveInputs must return fresh verified account consent and provider-final closes, never request-body identity.
  * Sender remains a separate, disabled-until-approved integration. An outbox row is NOT proof of delivery.
  */
-export function createNotificationOutboxJob(pool:Pick<Pool,"connect">,resolveInputs:(userId:string,symbols:string[])=>Promise<Inputs>,clock:()=>Date=()=>new Date(),source:EntitlementSource=entitlementSource()) {
+export function createNotificationOutboxJob(pool:Pick<Pool,"connect">,resolveInputs:(userId:string,symbols:string[])=>Promise<Inputs>,clock:()=>Date=()=>new Date(),source:EntitlementSource=entitlementSource(),readOwner=readBackgroundOwnerAccess) {
  return async (userId:string)=>{
   if(!/^user_[A-Za-z0-9]{1,128}$/.test(userId))throw new Error("Invalid identity");
   const client=await pool.connect();
@@ -20,10 +22,12 @@ export function createNotificationOutboxJob(pool:Pick<Pool,"connect">,resolveInp
    await client.query("SELECT pg_advisory_xact_lock(hashtextextended($1, 0))",[userId]);
    const row=(await client.query("SELECT settings,revision FROM resolute.notification_settings WHERE clerk_user_id=$1",[userId])).rows[0];
    const settings=parseNotificationSettings(row?.settings??defaultNotificationSettings());
-   const live=source==="live"?await readEntitlementSnapshot(client,userId,source):null;
+   const ownerAccess=await readOwner(userId);
+   const owner=hasOwnerAccess(ownerAccess,userId,clock().getTime());
+   const live=owner?{records:[]}:source==="live"?await readEntitlementSnapshot(client,userId,source):null;
    const rights=live?[]:(await client.query("SELECT kind,starts_at,expires_at,revoked_at FROM resolute.entitlements WHERE clerk_user_id=$1 AND product_id='resolute_v1'",[userId])).rows;
    const entitlements:EntitlementRecord[]=live?live.records:rights.map(r=>({kind:r.kind,startsAt:r.starts_at.toISOString(),expiresAt:r.expires_at?.toISOString()??null,revokedAt:r.revoked_at?.toISOString()??null}));
-   if(!resolveResoluteEntitlements(entitlements,clock().toISOString()).canReceiveNotifications||
+   if(!(owner||resolveResoluteEntitlements(entitlements,clock().toISOString()).canReceiveNotifications)||
     jstSlot(clock()).hour!==settings.deliveryHourJst||(!settings.alertsEnabled&&!settings.morningEnabled)){
     await client.query("COMMIT");return [];
    }
@@ -36,7 +40,7 @@ export function createNotificationOutboxJob(pool:Pick<Pool,"connect">,resolveInp
    const receipt=(await client.query("SELECT idempotency_key,accepted_at FROM resolute.notification_outbox WHERE clerk_user_id=$1 AND kind='alerts' AND accepted_at IS NOT NULL ORDER BY accepted_at DESC LIMIT 1",[userId])).rows[0];
    const inputs=await resolveInputs(userId,settings.watchItems.map(i=>i.symbol));
    const baseState=previous?.rule_key===ruleKey?previous.notified:{};
-   const tasks=prepareNotificationSlot(userId,clock(),{...inputs,settings,plan,entitlements,state:baseState,lastConfirmedAlert:receipt?{id:receipt.idempotency_key,acceptedAt:receipt.accepted_at.toISOString()}:null});
+   const tasks=prepareNotificationSlot(userId,clock(),{...inputs,settings,plan,entitlements,ownerAccess,state:baseState,lastConfirmedAlert:receipt?{id:receipt.idempotency_key,acceptedAt:receipt.accepted_at.toISOString()}:null});
    const results:{kind:NotificationTask["kind"];status:"queued"|"duplicate"}[]=[];
    for(const task of tasks){
     if(task.kind==="alerts"&&pendingAlert){results.push({kind:"alerts",status:"duplicate"});continue;}

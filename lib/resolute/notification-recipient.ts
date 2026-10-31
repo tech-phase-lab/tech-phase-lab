@@ -1,3 +1,4 @@
+import {ownerAccessFromVerifiedAccount} from './owner-access.ts';
 import { readPreferences } from "./preferences-data.ts";
 import type { AlertRecipient } from "./notification-delivery.ts";
 
@@ -7,7 +8,7 @@ type ClerkUser={id?:unknown;banned?:boolean;locked?:boolean;primaryEmailAddressI
  * public metadata or the queued payload, and never fall back to a secondary email.
  * Per-channel opt-outs are rechecked from notification_settings by the sender.
  */
-export function createClerkNotificationRecipient(client:{users:{getUser:(id:string)=>Promise<unknown>}}) {
+export function createClerkNotificationRecipient(client:{users:{getUser:(id:string)=>Promise<unknown>}},production=false) {
  return async(userId:string):Promise<AlertRecipient>=>{
   if(!/^user_[A-Za-z0-9]{1,128}$/.test(userId))throw new Error("Invalid recipient identity");
   const user=await client.users.getUser(userId) as ClerkUser|null;
@@ -17,7 +18,8 @@ export function createClerkNotificationRecipient(client:{users:{getUser:(id:stri
   const email=primary?.emailAddress;
   const verified=!user.banned&&!user.locked&&typeof user.primaryEmailAddressId==="string"&&
    primary?.verification?.status==="verified"&&typeof email==="string"&&email.length<=320&&/^\S+@\S+\.\S+$/.test(email)&&!/[\r\n<>]/.test(email);
-  return {userId,email:verified?email as string:"",verified,preferencesConfigured:preferences.configured,
+  const ownerAccess=ownerAccessFromVerifiedAccount(user,production);
+  return {...(ownerAccess?{ownerAccess}:{}),userId,email:verified?email as string:"",verified,preferencesConfigured:preferences.configured,
    unsubscribed:false,locale:preferences.locale??"ja"};
  };
 }
