@@ -38,6 +38,12 @@ const NOT_NEWS = [
   /\bCVE-\d{4}-\d{4,}\b|\bCVSS\s?\d/i, // vulnerability database entries, not company news (owner, Oct 27)
   /(?:^|\s)(?:Form|Filing)\s+(?:6-K|8-K|10-Q|10-K|20-F|40-F)(?:\/A)?\b|(?:の|^)フォーム\s?(?:6-K|8-K|10-Q|10-K|20-F|40-F)(?:\/A)?(?![A-Za-z0-9])/i, // a bare SEC form notice ("… Form 6-K: October 28", "…のフォーム10-Q（9月30日分）"), not news (owner, Oct 28)
   /\bweekend trading\b|\bin (?:after|pre)-?(?:hours|market) trading\b.{0,20}\b(?:euros?|yen|pounds?)\b|\btrades? (?:at|for) [\d.,]+ (?:euros?|yen|pounds?)\b|週末取引|[\d.,]+\s?(?:ユーロ|ポンド)で取引/i, // price quotes in a foreign currency while the U.S. market is shut (owner, Oct 26)
+  /決算説明会(?:で|での)(?:述べたこと|発言内容|の発言(?:内容|要旨)?|語ったこと|話したこと)|決算説明会の(?:書き起こし|トランスクリプト)|\bearnings call transcript\b|\bwhat\b.{0,60}\b(?:said|says|told)\b.{0,40}\b(?:earnings call|conference call)\b|\b(?:Q[1-4]|(?:first|second|third|fourth) quarter) (?:20\d\d )?earnings call (?:highlights|takeaways)\b/i, // call transcripts, mostly of other companies tagged to a watched one (owner, Oct 31)
+  /(?:大きく|最も|大幅に)動いた(?:株式|株|銘柄)|\b(?:biggest|big|top) (?:stock )?(?:movers|moves)\b|\bstocks? (?:making|that made)\b.{0,30}\b(?:moves?|midday|premarket)\b|\b(?:midday|pre-?market|after-?hours) movers\b/i, // "stocks that moved most" roundups that merely list the company (owner, Oct 31)
+  /\b[A-Z]{2,8}[:：]\d{2,6}\b/, // a stock-data page title carrying an exchange code ("… – BSESOF:1170")
+  /(?:総資産|総負債|株主資本|\bTotal (?:Assets|Liabilities)|\bShareholders.? Equity)\s*[–—-]\s*\S/i, // financial-data pages, not news (owner, Oct 31)
+  /シマンテック(?:の)?(?:脅威|保護)|\bSymantec (?:Protection|Threat|Security) (?:Bulletin|Intelligence|Report|Research)|\bProtection Bulletin\b/i, // vendor threat bulletins (owner, Oct 31)
+  /唯一の疑問|疑問に答えられ|\b(?:only|one) (?:big |key |real )?question\b.{0,40}\b(?:investors?|unanswered|remains)\b|\b(?:doesn.t|does not|fail(?:s|ed)? to) answer\b.{0,40}\bquestion\b/i, // a teaser whose answer is not in the headline (owner, Oct 31)
 ];
 /** A press-release label glued onto the headline ("2026年10月25日｜… ｜NYSE:BE｜プレスリリース") is not part of it (owner, Oct 26). */
 export function cleanTitle(title: string) {

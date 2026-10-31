@@ -152,3 +152,18 @@ test('"how it was done" explainers are not news (owner, Oct 28)', () => {
     'How researchers took down Microsoft Edge with logic bugs alone', 'How AI Is Transforming the Pace of Discovery']) assert.equal(isNotNews(title), true, title);
   for (const title of ['Microsoft says Edge patch fixes the Pwn2Own bugs', 'マイクロソフト、Edgeの脆弱性を修正', 'Nebius adds capacity, and how much it costs is undisclosed']) assert.equal(isNotNews(title), false, title);
 });
+
+test('call transcripts, mover roundups, data pages, vendor bulletins and teasers are not news (owner, Oct 31)', () => {
+  for (const title of [
+    'WECエナジー・グループ（WEC）が第3四半期決算説明会で述べたこと', 'nVent Electric (NVT)、第3四半期決算説明会での発言内容',
+    '正午に大きく動いた株式：インテル、ルメンタム、サンディスク、トゥイリオ、コインベースなど', 'アリスタ・ネットワークス社の総資産 – BSESOF:1170',
+    'シマンテック脅威保護速報：9月の脅威状況レポート', 'SKハイニックスの記録的な四半期決算が投資家の唯一の疑問に答えられない',
+    'What WEC Energy Group said on its third-quarter earnings call', 'Stocks making the biggest moves midday: Intel, Lumentum, SanDisk',
+    'Arista Networks Total Assets – BSESOF:1170', 'Symantec Protection Bulletin: September Threat Landscape Report',
+    'SK hynix record quarter fails to answer investors\' one question',
+  ]) assert.equal(isNotNews(title), true, title);
+  for (const title of [
+    'ブロードコム、新しいAIネットワーク向けチップを発表', 'SKハイニックスが第3四半期の過去最高益を発表', 'アリスタ、通期見通しを引き上げ', 'インテルとサンディスクが上昇',
+    'Vertiv CEOが決算説明会でAI需要の強さを強調', 'Broadcom unveils a new AI networking chip', 'Arista Networks raises full-year outlook', 'Microsoft stock rises after earnings call',
+  ]) assert.equal(isNotNews(title), false, title);
+});
