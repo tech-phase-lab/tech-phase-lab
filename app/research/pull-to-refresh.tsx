@@ -12,6 +12,14 @@ export default function PullToRefresh() {
   const start = useRef<{ x: number; y: number } | null>(null);
   const distance = useRef(0);
   useEffect(() => {
+    // iPhone home-screen app: right after a reload the sticky header can ignore taps until the page is scrolled once.
+    // Nudge the page by 1px and back (only at the very top, never during a touch scroll).
+    const kick = () => { if (window.scrollY > 0) return; window.scrollTo(0, 1); window.requestAnimationFrame(() => { if (window.scrollY === 1) window.scrollTo(0, 0); }); };
+    const timers = [60, 700].map(ms => window.setTimeout(kick, ms));
+    window.addEventListener("pageshow", kick);
+    return () => { timers.forEach(window.clearTimeout); window.removeEventListener("pageshow", kick); };
+  }, []);
+  useEffect(() => {
     const blocked = () => document.body.style.position === "fixed"
       || !!document.querySelector("input:focus,textarea:focus,[contenteditable=true]:focus");
     const down = (event: TouchEvent) => {

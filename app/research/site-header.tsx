@@ -231,9 +231,11 @@ function SiteMenu({ lang, member, ownerAccount, onClose, onRefresh, onPro }: { l
     };
   }, [onClose]);
   function navigate(event: MouseEvent<HTMLAnchorElement>, href: string) {
-    unlock();
+    const samePage = pathname === "/research" && href.startsWith("/research#");
+    // Going to another page: do not carry this page's scroll position over to it (it used to open halfway down).
+    unlock(samePage);
     onClose();
-    if (pathname !== "/research" || !href.startsWith("/research#")) return;
+    if (!samePage) return;
     event.preventDefault();
     window.history.pushState(null, "", href);
     rememberHash(href.slice(href.indexOf("#")));
