@@ -2,7 +2,7 @@ import { auth } from "@clerk/nextjs/server";
 import { membershipConfigured } from "@/lib/membership/server";
 import { getResoluteEntitlementsForSession } from "@/lib/resolute/server";
 
-import { ResoluteRateLimited } from "@/lib/resolute/transport";
+import { ResoluteRateLimited, ResoluteOwnerMfaRequired } from "@/lib/resolute/transport";
 
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
@@ -17,6 +17,8 @@ export async function GET() {
     if (!token) throw new Error("Authentication unavailable");
     return Response.json(await getResoluteEntitlementsForSession(token), { headers });
   } catch (error) {
+    if (error instanceof ResoluteOwnerMfaRequired) return Response.json({ error: "OWNER_MFA_REQUIRED" },
+      { status: 403, headers });
     if (error instanceof ResoluteRateLimited) return Response.json({ error: "RATE_LIMITED" },
       { status: 429, headers: { ...headers, "Retry-After": "60" } });
     // DB/auth errors must not become a missing purchase or reveal secrets.
