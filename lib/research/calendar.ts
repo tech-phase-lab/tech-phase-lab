@@ -25,7 +25,7 @@ export type DateOnlyCalendarEvent = {
   note?: Copy;
 };
 
-export const calendarReviewedOn = "2026-10-28";
+export const calendarReviewedOn = "2026-10-31";
 const blsUrl = "https://www.bls.gov/schedule/2026/";
 const labels: Record<string, Copy> = {
   jobs: { ja: "米国雇用統計", en: "U.S. employment report" },
@@ -289,6 +289,20 @@ export const calendarEvents: CalendarEvent[] = [
     startsAt: "2026-11-12T16:30:00-05:00", sourceTimezone: "America/New_York", sourceName: "Applied Materials IR",
     sourceUrl: "https://ir.appliedmaterials.com/news-releases/news-release-details/applied-materials-report-fourth-quarter-and-fiscal-2026-results",
     note: { ja: "説明会の開始予定です。決算資料は同日の米国市場終了後に公開予定ですが、正確な公開時刻は公表されていません。", en: "Scheduled call start. Results are due after the U.S. market closes that day, but no exact publication time was announced." },
+  },
+  // NVIDIA's own announcement (checked 2026-10-31): results at about 1:20 p.m. PT, call at 2 p.m. PT on Nov 17.
+  {
+    id: "nvda-q3-fy2027-call", afterClose: true, ticker: "NVDA", kind: "earnings" as const, title: { ja: "NVIDIA 決算説明会（2027年度Q3）", en: "NVIDIA fiscal Q3 2027 earnings call" },
+    startsAt: "2026-11-17T14:00:00-08:00", sourceTimezone: "America/Los_Angeles", sourceName: "NVIDIA Newsroom",
+    sourceUrl: "https://nvidianews.nvidia.com/news/nvidia-sets-conference-call-for-third-quarter-financial-results-6928873",
+    note: { ja: "説明会の開始予定です。決算資料は同日の太平洋時間13:20ごろに公開される予定です。", en: "Scheduled call start. The results are due at about 1:20 p.m. PT that day." },
+  },
+  // Date and time given by the owner (about 21:00 JST = 07:00 ET, before the U.S. open); Nebius's own notice was not yet public on 2026-10-31.
+  {
+    id: "nbis-q3-2026-call", ticker: "NBIS", kind: "earnings" as const, title: { ja: "Nebius 決算発表（2026年Q3）", en: "Nebius Q3 2026 results" },
+    startsAt: "2026-11-12T07:00:00-05:00", sourceTimezone: "America/New_York", sourceName: "Nebius IR",
+    sourceUrl: "https://nebius.com/newsroom",
+    note: { ja: "運営者が確認した日時です（日本時間21時ごろ）。Nebiusの公式発表が出たら、公式の時刻に更新します。", en: "Date and time confirmed by the owner (about 21:00 JST). It will be updated to the official time once Nebius announces it." },
   },
   {
     id: "fomc-2026-10-28", kind: "economic" as const, title: { ja: "FOMC 声明発表（会合最終日）", en: "FOMC statement (final day of meeting)" },

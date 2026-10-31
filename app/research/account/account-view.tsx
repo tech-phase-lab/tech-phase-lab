@@ -39,7 +39,7 @@ type Resolute = { state: "loading" } | { state: "unknown" } | { state: "none" } 
 type ContractState = { state: "loading" } | { state: "unknown" } | { state: "ok"; value: Contract };
 type ProfileState = { state: "loading" } | { state: "error" } | { state: "ok"; value: Profile };
 
-export default function AccountView({ ja, member, billingAvailable, upgradeFirst, onRecheck }: { ja: boolean; member: Member; billingAvailable: boolean; upgradeFirst: boolean; onRecheck: () => void }) {
+export default function AccountView({ ja, member, billingAvailable, upgradeFirst, onRecheck, initialProfile = null }: { ja: boolean; initialProfile?: unknown; member: Member; billingAvailable: boolean; upgradeFirst: boolean; onRecheck: () => void }) {
   const t = (a: string, b: string) => ja ? a : b;
   const router = useRouter();
   const clerk = useClerk();
@@ -72,7 +72,7 @@ export default function AccountView({ ja, member, billingAvailable, upgradeFirst
   }
   const preview = owner && viewAs !== "owner";
   const mode: Mode | null = billingAvailable ? "live" : member.canTest ? "sandbox" : null;
-  const [profile, setProfile] = useState<ProfileState>({ state: "loading" });
+  const [profile, setProfile] = useState<ProfileState>(() => { try { return initialProfile ? { state: "ok", value: readProfile(initialProfile) } : { state: "loading" }; } catch { return { state: "loading" }; } });
   const [contract, setContract] = useState<ContractState>({ state: "loading" });
   const [resolute, setResolute] = useState<Resolute>({ state: "loading" });
   const [tick, setTick] = useState(0);
@@ -82,11 +82,10 @@ export default function AccountView({ ja, member, billingAvailable, upgradeFirst
     const controller = new AbortController();
     getJson("/api/research/account/profile", controller.signal)
       .then(value => { if (!controller.signal.aborted) setProfile({ state: "ok", value: readProfile(value) }); })
-      .catch(() => { if (!controller.signal.aborted) setProfile({ state: "error" }); });
+      .catch(() => { if (!controller.signal.aborted) setProfile(prev => prev.state === "ok" ? prev : { state: "error" }); });
     return () => controller.abort();
   }, [tick]);
   useEffect(() => {
-    if (owner) return;
     const controller = new AbortController();
     getJson("/api/research/account/contract", controller.signal)
       .then(value => { if (!controller.signal.aborted) setContract({ state: "ok", value: readContract(value) }); })
@@ -107,6 +106,24 @@ export default function AccountView({ ja, member, billingAvailable, upgradeFirst
   }, [owner, tick]);
   const recheck = useCallback(() => { setContract({ state: "loading" }); setResolute({ state: "loading" }); setTick(v => v + 1); onRecheck(); }, [onRecheck]);
 
+  useEffect(() => {
+    let lastRefresh = 0;
+    const resume = () => {
+      if (document.visibilityState !== "visible" || Date.now() - lastRefresh < 1000) return;
+      lastRefresh = Date.now();
+      // Silent: what is on screen stays (and an open sheet keeps its input) until the new answers arrive.
+      setTick(v => v + 1);
+    };
+    window.addEventListener("focus", resume);
+    window.addEventListener("pageshow", resume);
+    document.addEventListener("visibilitychange", resume);
+    return () => {
+      window.removeEventListener("focus", resume);
+      window.removeEventListener("pageshow", resume);
+      document.removeEventListener("visibilitychange", resume);
+    };
+  }, []);
+
   const me = profile.state === "ok" ? profile.value : null;
   const email = me?.email ?? "";
   // The owner often films this screen: the owner's own address is shown masked (am***@gmail.com). Everyone else sees their own address as is.
@@ -114,7 +131,7 @@ export default function AccountView({ ja, member, billingAvailable, upgradeFirst
   const display = (me?.displayName || email.split("@")[0] || t("会員", "Member")).trim();
   const initial = Array.from(display)[0] ?? "?";
   const tile = tileById(me?.icon);
-  const twoFactor = me?.twoFactorEnabled === true;
+  const twoFactor = me ? me.twoFactorEnabled : null;
   const passwordRow = me?.passwordEnabled === true && !owner;
 
   const effective: "free" | "pro" = owner ? (viewAs === "pro" ? "pro" : "free") : me?.plan === "pro" ? "pro" : member.plan === "pro" && !me ? "pro" : "free";
@@ -128,12 +145,21 @@ export default function AccountView({ ja, member, billingAvailable, upgradeFirst
   const freeUnverified = effective === "free" && !preview && !owner && (contract.state === "unknown" || (c !== null && !(c.verification === "verified" && c.status === "none")));
   const accessUntil = formatDay(c?.accessExpiresAt, ja);
 
+  // The owner is one person: say something only when the contract state is verified; otherwise leave it blank.
+  const ownerContractText = !(c?.verification === "verified") ? null
+    : c.status === "none" ? t("有料契約\nなし", "No paid contract")
+    : c.status === "active" ? t("有料契約\nあり", "Paid subscription")
+    : c.status === "renewal-stopped" ? t("自動更新\n停止済み", "Renewal stopped") : null;
+  // Everything below the RESOLUTE card waits (at most 3 s) for what is above it, so it never jumps when a card grows.
+  const [patient, setPatient] = useState(false);
+  useEffect(() => { const id = setTimeout(() => setPatient(true), 3000); return () => clearTimeout(id); }, []);
+  const settled = patient || profile.state === "error" || (profile.state !== "loading" && (owner || (contract.state !== "loading" && resolute.state !== "loading")));
   const closeSheet = useCallback(() => {
     setSheet("");
     if (upgradeFirst) router.replace("/research");
   }, [upgradeFirst, router]);
   const closePlain = useCallback(() => setSheet(""), []);
-  const ownerPreviewNote = <p className={styles.previewBar}>{t("表示の確認中です。金額や日付は表示例で、運営者には契約がありません。ここでの操作は、実際の契約や権限には反映されません。", "Previewing the view. Amounts and dates are samples; the owner has no contract. Actions here change nothing real.")}</p>;
+  const ownerPreviewNote = <p className={styles.previewBar}>{t("表示の確認中です。金額や日付は表示例です。ここでの操作は、実際の契約や権限には反映されません。", "Previewing the view. Amounts and dates are samples. Actions here change nothing real.")}</p>;
 
   async function saveAvatar(id: string) { setProfile({ state: "ok", value: await patchProfile({ icon: id }) }); }
   async function saveName(name: string) { setProfile({ state: "ok", value: await patchProfile({ displayName: name }) }); }
@@ -169,7 +195,7 @@ export default function AccountView({ ja, member, billingAvailable, upgradeFirst
           ? <div className={styles.ctaNote} role="status">{t("契約の状態を確認できませんでした。", "Could not check your contract.")} <button type="button" className={styles.link} style={{ display: "inline", width: "auto", margin: 0, padding: "0 0 0 6px", color: "#e7c982" }} onClick={recheck}>{t("再確認", "Check again")}</button></div>
           : <div className={styles.ctaNote}>{!mode && !preview ? t("お申し込みの受付は、現在停止中です。", "New subscriptions are closed right now.") : t("料金と規約を確認してから、PayPalへ進みます。", "Review the price and terms, then continue to PayPal.")}</div>}
       </div>
-    : <div className={`${styles.cd} ${styles.cdGold} ${styles.pro}`} style={{ marginTop: 0 }}>
+    : <div className={`${styles.cd} ${styles.cdGold} ${styles.pro}`} style={{ marginTop: 0, minHeight: loadingContract ? 285 : undefined }}>
         <div className={styles.proHead}><Crown size={46} /><div style={{ flex: 1, minWidth: 0 }}><div className={styles.proName}>Tech Phase PRO</div>
           <div className={styles.proTagRow}>{unknown ? <span className={`${styles.pt} ${styles.ptUnknown}`}>{t("確認できません", "Unavailable")}</span> : stopped ? stopTag : loadingContract ? <span className={`${styles.pt} ${styles.ptUnknown}`}>{t("確認中", "Checking")}</span> : <span className={`${styles.pt} ${styles.ptOn}`}><i />{t("利用中", "Active")}</span>}</div></div></div>
         {unknown ? <>
@@ -195,6 +221,7 @@ export default function AccountView({ ja, member, billingAvailable, upgradeFirst
     <div className={styles.resHead}><span className={styles.resIcon}>{I.anchor}</span><span className={styles.resName}>RESOLUTE</span>
       {resolute.state === "bought" && !preview && <span className={`${styles.pt} ${styles.ptOn}`}>{t("購入済み", "Purchased")}</span>}
       <span className={styles.resSub}>{t("暴落の夜も、上昇の朝も、自分のルールに立ち戻るためのキット。", "A kit to return to your own rules, on crash nights and rally mornings.")}</span></div>
+    {!preview && resolute.state === "unknown" && <p className={styles.note} role="status">{t("購入状況を確認できませんでした。", "Could not check your purchase.")} <button type="button" className={styles.link} onClick={recheck}>{t("再確認", "Check again")}</button></p>}
     {resolute.state === "bought" && !preview
       ? <>{resolute.alertsUntil && formatDay(resolute.alertsUntil, ja) && <div className={styles.kvs} style={{ marginTop: 6 }}><div className={styles.kv}><span>{t("通知サービスの有効期限", "Alerts valid until")}</span><b>{formatDay(resolute.alertsUntil, ja)}</b></div></div>}
           <div className={styles.stack}><Link className={`${styles.btn} ${styles.abt}`} href="/resolute">{t("RESOLUTEを開く", "Open RESOLUTE")}</Link>
@@ -203,13 +230,13 @@ export default function AccountView({ ja, member, billingAvailable, upgradeFirst
   </div>;
 
   // ---- security / support
-  const twoValue = <span className={`${styles.rv} ${twoFactor ? styles.rvOn : ""}`}>{twoFactor ? t("オン", "On") : t("オフ", "Off")}</span>;
+  const twoValue = <span className={`${styles.rv} ${twoFactor ? styles.rvOn : ""}`}>{twoFactor === null ? t("確認できません", "Unavailable") : twoFactor ? t("オン", "On") : t("オフ", "Off")}</span>;
   const security = <div className={styles.cd} style={{ marginTop: 0 }}>
     {row(I.bell, t("スマホ通知の設定", "Phone notifications"), { href: "/research/notifications", pro: true })}
     {passwordRow && row(I.key, t("パスワードを変更", "Change password"), { href: "/research/account/security" })}
     {/* The owner's two-step verification is required for admin access: shown, never offered to turn off. */}
     {owner ? row(I.shield, t("2段階認証", "Two-step verification"), { value: twoValue, chevron: false }) : row(I.shield, t("2段階認証", "Two-step verification"), { href: "/research/account/security", value: twoValue })}
-    {row(I.out, t("ログアウト", "Log out"), { onClick: () => void clerk.signOut({ redirectUrl: "/research" }), chevron: false, className: styles.muted })}
+    {row(I.out, t("ログアウト", "Log out"), { onClick: () => { if (clerk.loaded) void clerk.signOut({ redirectUrl: "/research" }); }, chevron: false, className: styles.muted })}
   </div>;
 
   // ---- owner menu
@@ -231,7 +258,7 @@ export default function AccountView({ ja, member, billingAvailable, upgradeFirst
 
     {profile.state === "error" && <div className={styles.cd}><div style={{ padding: 16 }}><p className={styles.note} role="alert" style={{ margin: 0 }}>{t("アカウント情報を確認できませんでした。", "Could not load your account.")}</p>
       <button type="button" className={`${styles.btn} ${styles.gbtO} ${styles.btnS}`} style={{ marginTop: 12 }} onClick={() => { setProfile({ state: "loading" }); recheck(); }}>{t("再確認", "Check again")}</button></div></div>}
-    {profile.state === "loading" && <div className={styles.skel} style={{ marginTop: 20 }} aria-busy="true" />}
+    {profile.state === "loading" && <div className={styles.skel} style={{ marginTop: 20, height: owner ? 84 : 191 }} aria-busy="true" />}
     {profile.state === "ok" && <div className={`${styles.cd} ${owner ? styles.ownerHero : ""}`}>
       <div className={styles.hero}>{avatar}
         <div className={styles.who}><div className={styles.name}>{owner ? "リゼル" : display}</div><div className={styles.mail}>{shownEmail}</div></div>
@@ -245,10 +272,13 @@ export default function AccountView({ ja, member, billingAvailable, upgradeFirst
 
     {owner && viewAs === "owner" && <div className={styles.ownerBadge}><span className={styles.seal}>{I.seal}</span>
       <div style={{ flex: 1, minWidth: 0 }}><div className={styles.ownerWord}>OWNER</div><div className={styles.ownerSub}>{t("全機能をご利用中です", "All features unlocked")}</div></div>
-      <span className={styles.ownerNone}>{ja ? <>有料契約<br />なし</> : "No paid contract"}</span></div>}
+      {ownerContractText && <span className={styles.ownerNone}>{ownerContractText}</span>}</div>}
 
     {member.adminMfaRequired && <p className={styles.warn} role="alert" style={{ marginTop: 12 }}>{t("管理機能には2段階認証が必要です。設定後、ログインし直してください。", "Admin access requires two-step verification. Set it up, then sign in again.")} <Link href="/research/account/security" style={{ color: "#e7c982" }}>{t("2段階認証を設定する", "Set up")}</Link></p>}
 
+    {owner && !preview && c?.verification === "verified" && (c.status === "active" || c.status === "renewal-stopped") && <div className={styles.cd}>
+      {row(I.key, t("有料契約を確認", "View paid subscription"), { href: "/research/account/billing" })}
+    </div>}
     {ownerMenu}
     {preview && ownerPreviewNote}
 
@@ -259,6 +289,8 @@ export default function AccountView({ ja, member, billingAvailable, upgradeFirst
       {resoluteCard}
     </>}
 
+    {!settled && <div className={styles.skel} style={{ marginTop: 30, height: owner ? 270 : 640 }} aria-busy="true" />}
+    {settled && <>
     <div className={styles.sl}>{t("通知・セキュリティ", "Notifications & security")}</div>
     {security}
 
@@ -273,6 +305,7 @@ export default function AccountView({ ja, member, billingAvailable, upgradeFirst
       <div className={styles.delBlock}><h2>{t("アカウントの削除", "Delete account")}</h2><p>{t("現在、この画面からは削除できません。お問い合わせください。", "Accounts cannot be deleted from this screen right now. Please contact us.")}</p></div>
     </>}
     <div className={styles.foot}>Tech Phase Research</div>
+    </>}
 
     {sheet === "upgrade" && <UpgradeSheet ja={ja} mode={mode} refresh={refresh} onClose={closePlain} />}
     {sheet === "stop" && mode && <StopSheet ja={ja} mode={mode} until={accessUntil} onDone={() => { closePlain(); recheck(); }} onClose={closePlain} />}

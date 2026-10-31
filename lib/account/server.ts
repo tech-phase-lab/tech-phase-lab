@@ -23,6 +23,7 @@ export async function readContract(userId:string){
 export async function readProfile(userId:string){
  const user=await(await clerkClient()).users.getUser(userId);
  const member=await getMembership();
+ if(member.status!=='signed-in'||member.userId!==userId)throw Error('account-unavailable');
  const owner=isOwnerAccount(user.id);
  return {displayName:[user.firstName,user.lastName].filter(Boolean).join(' '),email:user.emailAddresses.find(e=>e.id===user.primaryEmailAddressId)?.emailAddress??null,
   plan:owner?'owner':member.plan,ownerAccess:member.status==='signed-in'&&member.ownerMode,

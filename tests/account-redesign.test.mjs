@@ -102,3 +102,81 @@ test("the owner's address is masked on screen (am***@gmail.com); view-mode switc
   assert.match(view, /membership-changed/);
   assert.match(readFileSync(new URL("../app/research/account/members/screen.tsx", import.meta.url), "utf8"), /r\.plan === "owner" && r\.email \? maskEmail/);
 });
+
+test('missing security flags are unavailable, never an implicit MFA-off state',()=>{
+ const p={displayName:'Member',icon:'initial',plan:'free',passwordEnabled:false,twoFactorEnabled:false};
+ assert.equal(data.readProfile(p).twoFactorEnabled,false);
+ assert.equal(data.readProfile({...p,twoFactorEnabled:true}).twoFactorEnabled,true);
+ for(const key of ['passwordEnabled','twoFactorEnabled']){
+  const incomplete={...p};delete incomplete[key];assert.throws(()=>data.readProfile(incomplete));
+ }
+});
+
+function renderAccount({owner=false,profile={state:'loading'},contract={state:'loading'},resolute={state:'loading'}}={}) {
+ let index=0;
+ const react=require('react');
+ const view=load('../app/research/account/account-view.tsx',{
+  react:{...react,useEffect:()=>{},useCallback:fn=>fn,useState:initial=>{
+   const value=({3:profile,4:contract,5:resolute})[index++]??initial;return [value,()=>{}];
+  }},
+  'next/link':{default:({children,...props})=>createElement('a',props,children)},
+  'next/navigation':{useRouter:()=>({replace:()=>{}})},
+  '@clerk/nextjs':{useClerk:()=>({})},
+  '../identity-provider':{useIdentityRefresh:()=>()=>{}},
+  './crown':{default:()=>null},'./avatars':avatars,'./account-sheets':sheets,'./account-data':data,
+ });
+ return renderToStaticMarkup(createElement(view.default,{ja:true,member:{status:'signed-in',plan:owner?'pro':'free',isAdmin:owner,ownerMode:owner,testing:false,canTest:false},billingAvailable:true,upgradeFirst:false,onRecheck:()=>{}}));
+}
+test('rendered owner account reflects real contract evidence independently of owner access',()=>{
+ const base={verification:'verified',autoRenew:false,accessPlan:'free',amount:null,currency:null,nextBillingAt:null,accessExpiresAt:null,unavailableFields:[]};
+ for(const [status,label] of [['none','有料契約なし'],['active','有料契約あり'],['renewal-stopped','自動更新停止済み']]){
+  const html=renderAccount({owner:true,contract:{state:'ok',value:{...base,status}}});
+  assert.match(html,new RegExp([...label].join('\\s*'))); /* the badge may break the label over two lines */ if(status!=='none')assert.doesNotMatch(html,/有料契約\s*なし/);
+ }
+ const unknown=renderAccount({owner:true,contract:{state:'unknown'}});
+ assert.doesNotMatch(unknown,/契約を確認\s*できません|契約を確認中|有料契約\s*なし|有料契約を確認/); /* the owner is one person: unverified means nothing is written */
+});
+test('rendered account does not show MFA off or silently hide unavailable purchases',()=>{
+ const html=renderAccount({profile:{state:'error'},resolute:{state:'unknown'}});
+ assert.match(html,/2段階認証/);assert.match(html,/確認できません/);assert.doesNotMatch(html,/>オフ</);
+ assert.match(html,/購入状況を確認できませんでした/);
+});
+
+test("returning to the account page refreshes silently: no skeleton, an open sheet keeps its input", () => {
+  const view = readFileSync(new URL("../app/research/account/account-view.tsx", import.meta.url), "utf8");
+  const resume = view.slice(view.indexOf("const resume = () =>"), view.indexOf('window.addEventListener("focus", resume)'));
+  assert.ok(resume.includes("setTick"));
+  assert.doesNotMatch(resume, /setProfile|setContract|setResolute/);
+  assert.match(view, /setProfile\(prev => prev\.state === "ok" \? prev : \{ state: "error" \}\)/);
+  assert.match(view, /owner && !preview && c\?\.verification === "verified" && \(c\.status === "active" \|\| c\.status === "renewal-stopped"\)/);
+});
+
+test("the contract and RESOLUTE reads start once during hydration and are consumed once", async () => {
+  const calls = [];
+  const realFetch = globalThis.fetch, realWindow = globalThis.window;
+  globalThis.window = {};
+  globalThis.fetch = async url => { calls.push(String(url)); return new Response(JSON.stringify({ ok: true }), { status: 200, headers: { "content-type": "application/json" } }); };
+  try {
+    const fresh = load("../app/research/account/account-data.ts");
+    fresh.prefetchAccountData(); fresh.prefetchAccountData(); fresh.prefetchAccountData();
+    assert.deepEqual(calls, ["/api/research/account/contract", "/api/resolute/entitlements"], "started once, however often the screen renders");
+    await fresh.getJson("/api/research/account/contract");
+    await fresh.getJson("/api/resolute/entitlements");
+    assert.equal(calls.length, 2, "the started reads are used, not repeated");
+    await fresh.getJson("/api/research/account/contract");
+    assert.equal(calls.length, 3, "a later read is a new request");
+    await fresh.getJson("/api/research/account/profile");
+    assert.equal(calls.length, 4, "the profile is never prefetched");
+  } finally { globalThis.fetch = realFetch; globalThis.window = realWindow; }
+});
+
+test("the top card comes with the page and the screen holds its shape while data loads", () => {
+  const page = readFileSync(new URL("../app/research/account/page.tsx", import.meta.url), "utf8");
+  assert.match(page, /readProfile\(member\.userId\)/);
+  assert.match(page, /initialProfile=\{initialProfile\}/);
+  const view = readFileSync(new URL("../app/research/account/account-view.tsx", import.meta.url), "utf8");
+  assert.match(view, /height: owner \? 84 : 191/);
+  assert.match(view, /minHeight: loadingContract \? 285 : undefined/);
+  assert.doesNotMatch(view, /購入状況を確認中/);
+  assert.match(view, /settled = patient \|\| profile\.state === "error" \|\| /);
+});

@@ -8,6 +8,7 @@ import { recoverMember } from "@/lib/research/member-recovery";
 import { useIdentityRefresh } from "../identity-provider";
 import { readAccountReturn } from "@/lib/research/account-return";
 import AccountView from "./account-view";
+import { prefetchAccountData } from "./account-data";
 import styles from "./styles.module.css";
 const subscribeReturn = () => () => {};
 function returnSnapshot() {
@@ -29,7 +30,7 @@ function AccountUnavailable() {
   </ResearchToolShell>;
 }
 type Member = { adminMfaRequired?: boolean; accessExpiresAt?: number; status: string; plan: string; isAdmin: boolean; ownerMode: boolean; canTest: boolean; testing: boolean };
-function AccountContent({ status, plan, signingUp = false, initialMember, billingAvailable = false }: { status: string; plan: string; signingUp?: boolean; initialMember?: Member; billingAvailable?: boolean }) {
+function AccountContent({ status, plan, signingUp = false, initialMember, billingAvailable = false, initialProfile = null }: { initialProfile?: unknown; status: string; plan: string; signingUp?: boolean; initialMember?: Member; billingAvailable?: boolean }) {
   const [lang, setLang] = useResearchLanguage(); const ja = lang === "ja";
   const { isLoaded, isSignedIn } = useAuth();
   const returnTo = useAccountReturn();
@@ -78,8 +79,9 @@ function AccountContent({ status, plan, signingUp = false, initialMember, billin
   }, [isLoaded, isSignedIn, member.plan, member.ownerMode, member.accessExpiresAt]);
   const upgradeFirst = useUpgradeFirst();
   // The redesigned account screen (canvas A1-A11) replaces the old signed-in card.
-  if (member.status === "signed-in" && isLoaded && isSignedIn) return <ResearchToolShell showTools={false} showHeading={false} lang={lang} setLang={setLang} title={ja ? "アカウント" : "Account"} description="">
-    <AccountView ja={ja} member={member} billingAvailable={billingAvailable} upgradeFirst={upgradeFirst} onRecheck={() => setRetry(value => value + 1)} />
+  // The server already knows this reader is signed in, so the screen (and its data requests, which need only the cookie) does not wait for the sign-in SDK to load.
+  if (member.status === "signed-in" && (!isLoaded || isSignedIn)) return <ResearchToolShell showTools={false} showHeading={false} lang={lang} setLang={setLang} title={ja ? "アカウント" : "Account"} description="">
+    <AccountView ja={ja} initialProfile={initialProfile} member={member} billingAvailable={billingAvailable} upgradeFirst={upgradeFirst} onRecheck={() => setRetry(value => value + 1)} />
   </ResearchToolShell>;
   const content = <ResearchToolShell showTools={false} lang={lang} setLang={setLang} title={ja ? "マイアカウント" : "My account"} description="">
     <section className={styles.card}>
@@ -115,8 +117,10 @@ function AccountCallback() {
   </>;
 }
 
-export default function AccountScreen(props: {status:string; plan:string; signingUp?:boolean; initialMember?:Member; billingAvailable?:boolean}) {
+export default function AccountScreen(props: {initialProfile?:unknown; status:string; plan:string; signingUp?:boolean; initialMember?:Member; billingAvailable?:boolean}) {
   const callback = useSyncExternalStore(subscribeCallbackRoute, isCallbackRoute, () => false);
+  // Signed in per the server: ask for the contract and RESOLUTE now, not after the screen has mounted.
+  if (props.status === "signed-in") prefetchAccountData();
   // Handle the OAuth return independently of the SignIn widget's hash router.
   // In particular, a nested return fragment must not leave an empty Clerk card.
   if (callback) return <AccountCallback />;

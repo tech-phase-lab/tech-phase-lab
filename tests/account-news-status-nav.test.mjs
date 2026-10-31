@@ -33,6 +33,7 @@ new Function("require", "module", "exports", compiled)(id => {
   if (id === "../use-research-language") return { useResearchLanguage: () => [language, () => {}] };
   if (id === "@/lib/research/member-recovery") return { recoverMember: () => { throw Error("Unexpected effect during server render"); } };
   if (id === "../identity-provider") return { useIdentityRefresh: () => async () => {} };
+  if (id === "./account-data") return { prefetchAccountData() {} };
   if (id === "./account-view") return { default: ({ member }) => createElement("p", null, `account-view:${member.ownerMode}:${member.isAdmin}`) };
   return require(id);
 }, compiledModule, compiledModule.exports);
@@ -49,6 +50,8 @@ const read = path => readFileSync(new URL(path, import.meta.url), "utf8");
 
 test("a signed-in member reaches the redesigned account view; the owner menu links live there", () => {
   assert.match(render(owner).html, /account-view:true:true/);
+  // The server already knows the reader is signed in: the screen does not wait for the sign-in SDK to load.
+  assert.match(render(owner, "ja", false).html, /account-view:true:true/);
   assert.match(render({ ...owner, isAdmin: false, ownerMode: false, plan: "free" }).html, /account-view:false:false/);
   const view = read("../app/research/account/account-view.tsx");
   // The owner-only menu (members and delivery status) is built only for the owner.

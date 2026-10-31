@@ -35,3 +35,13 @@ test('provider error content is suppressed and account responses cannot be cache
  assert.equal(response.status,503);assert.equal(response.headers.get('cache-control'),'private, no-store');
  return response.text().then(body=>assert.doesNotMatch(body,/secret-token|password/));
 });
+
+test('profile never reports FREE on membership failure or a different session identity',async()=>{
+ const user={id:'buyer',firstName:'Buyer',lastName:'',emailAddresses:[],privateMetadata:{},passwordEnabled:true,twoFactorEnabled:false};
+ for(const member of [{status:'unavailable',plan:'free'},{status:'signed-out',plan:'free'},{status:'signed-in',userId:'other',plan:'free'}]){
+  globalThis.__accountTest={client:{users:{getUser:async()=>user}},member};
+  await assert.rejects(()=>api.readProfile('buyer'),/account-unavailable/);
+ }
+ globalThis.__accountTest={client:{users:{getUser:async()=>user}},member:{status:'signed-in',userId:'buyer',plan:'pro'}};
+ assert.equal((await api.readProfile('buyer')).plan,'pro');
+});
