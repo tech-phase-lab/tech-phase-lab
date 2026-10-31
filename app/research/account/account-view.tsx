@@ -272,6 +272,9 @@ export default function AccountView({ ja, member, billingAvailable, upgradeFirst
       <div style={{ flex: 1, minWidth: 0 }}><div className={styles.ownerWord}>OWNER</div><div className={styles.ownerSub}>{t("全機能をご利用中です", "All features unlocked")}</div></div>
       {ownerContractText && <span className={styles.ownerNone}>{ownerContractText}</span>}</div>}
 
+    {effective === "pro" && (!owner || preview) && <div className={styles.ownerBadge}><span className={styles.seal}><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#2a1f05" strokeWidth="1.8" strokeLinejoin="round" aria-hidden="true"><path d="M3.5 8l4.5 4 4-7 4 7 4.5-4-1.8 10H5.3z" /></svg></span>
+      <div style={{ flex: 1, minWidth: 0 }}><div className={styles.ownerWord} style={{ letterSpacing: ".22em" }}>PRO MEMBER</div><div className={styles.ownerSub}>{t("全機能をご利用中です", "All features unlocked")}</div></div></div>}
+
     {member.adminMfaRequired && <p className={styles.warn} role="alert" style={{ marginTop: 12 }}>{t("管理機能には2段階認証が必要です。設定後、ログインし直してください。", "Admin access requires two-step verification. Set it up, then sign in again.")} <Link href="/research/account/security" style={{ color: "#e7c982" }}>{t("2段階認証を設定する", "Set up")}</Link></p>}
 
     {owner && !preview && c?.verification === "verified" && (c.status === "active" || c.status === "renewal-stopped") && <div className={styles.cd}>
