@@ -83,10 +83,12 @@ function AccountContent({ status, plan, signingUp = false, initialMember, billin
   if (member.status === "signed-in" && (!isLoaded || isSignedIn)) return <ResearchToolShell showTools={false} showHeading={false} lang={lang} setLang={setLang} title={ja ? "アカウント" : "Account"} description="">
     <AccountView ja={ja} initialProfile={initialProfile} member={member} billingAvailable={billingAvailable} upgradeFirst={upgradeFirst} onRecheck={() => setRetry(value => value + 1)} />
   </ResearchToolShell>;
+  // Between finishing the sign-in code and the redirect the screen only waits: show nothing (no empty framed card).
+  const waiting = member.status !== "unavailable" && (!isLoaded || returnTo === null || (isSignedIn && member.status === "signed-out")) && member.status !== "signed-in";
   const content = <ResearchToolShell showTools={false} lang={lang} setLang={setLang} title={ja ? "マイアカウント" : "My account"} description="">
-    <section className={styles.card}>
+    {waiting ? <div className={styles.placeholder} aria-busy="true" aria-label={ja ? "ログイン画面を準備しています" : "Loading sign-in"} /> : <section className={styles.card}>
       {member.status === "unavailable" ? <><h2>{ja ? "会員情報を確認できませんでした" : "Could not verify your membership"}</h2><p>{ja ? "時間をおいて、もう一度お試しください。" : "Please wait a moment and try again."}</p><button onClick={() => setRetry(value => value + 1)}>{ja ? "再確認" : "Try again"}</button><Link href="/research">{ja ? "ホームへ戻る" : "Back to home"}</Link></> : (!isLoaded || returnTo === null || (isSignedIn && member.status === "signed-out")) && member.status !== "signed-in" ? <div className={styles.placeholder} aria-busy="true" aria-label={ja ? "ログイン画面を準備しています" : "Loading sign-in"} /> : member.status === "signed-out" ? (signingUp ? <SignUp routing="hash" signInUrl="/research/account" forceRedirectUrl={returnTo ?? "/research/account"} /> : <SignIn routing="hash" signUpUrl="/research/account/sign-up" forceRedirectUrl={returnTo ?? "/research/account"} />) : null}
-    </section>
+    </section>}
   </ResearchToolShell>;
   return content;
 }
