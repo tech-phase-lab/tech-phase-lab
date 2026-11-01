@@ -174,3 +174,21 @@ test("the screen follows the design: black and gold, the states, and the hide ru
   assert.match(css, /--gold:#e7c982/);
   assert.match(css, /prefers-reduced-motion/);
 });
+
+test("the screen order of the rows is kept, including rows with a missing number", () => {
+  const parsed = normalizeParsed({ holdings: [
+    { ticker: "NVDA", shares: 40, avgCostUsd: 112.5 }, { ticker: "AVGO", shares: 12, avgCostUsd: 210 },
+    { ticker: "MU", shares: null, avgCostUsd: 98.4 }, { ticker: "MSFT", shares: 8, avgCostUsd: 420 } ] });
+  assert.deepEqual(parsed.order, ["NVDA", "AVGO", "MU", "MSFT"]);
+});
+
+test("the manual form finds stocks by Japanese company name through the same search as the stock search page", async () => {
+  const { searchStocks } = await import("../lib/research/stock-search.ts");
+  const entries = [{ ticker: "NVDA", name: "NVIDIA CORP", cik: 1045810 }, { ticker: "MU", name: "MICRON TECHNOLOGY INC", cik: 723125 }];
+  assert.equal(searchStocks(entries, "エヌビディア", 5)[0]?.ticker, "NVDA");
+  assert.equal(searchStocks(entries, "マイクロン", 5)[0]?.ticker, "MU");
+  const screen = await src("../app/research/portfolio/screen.tsx");
+  assert.match(screen, /\/api\/research\/stocks\?q=/);
+  assert.match(screen, /日本語の会社名でも探せます/);
+  assert.match(await src("../app/api/research/stocks/route.ts"), /searchDirectory\(entries, query/);
+});

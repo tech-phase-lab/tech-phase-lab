@@ -98,7 +98,11 @@ export default function PortfolioScreen() {
       const complete: ReviewRow[] = (data.holdings ?? []).map((h: Holding) => ({ id: nextId++, ticker: h.ticker, name: h.name, shares: String(h.shares), avg: String(h.avgCostUsd), fx: h.avgCostFx }));
       const partial: ReviewRow[] = (data.incomplete ?? []).map((r: { ticker: string; name?: string; shares: number | null; avgCostUsd: number | null }) => ({ id: nextId++, ticker: r.ticker, name: r.name, shares: r.shares === null ? "" : String(r.shares), avg: r.avgCostUsd === null ? "" : String(r.avgCostUsd) }));
       if (!complete.length && !partial.length) { setProblem("unreadable"); return; }
-      setReview({ rows: [...complete, ...partial], warnings: [...(data.mismatch ? [data.mismatch as string] : []), ...(data.warnings ?? [])], mode });
+      // Keep the order of the screen (rows with a missing number stay where they were).
+      const order: string[] = Array.isArray(data.order) ? data.order : [];
+      const position = (row: ReviewRow) => { const at = order.indexOf(row.ticker); return at < 0 ? order.length : at; };
+      const rowsInOrder = [...complete, ...partial].sort((a, b) => position(a) - position(b));
+      setReview({ rows: rowsInOrder, warnings: [...(data.mismatch ? [data.mismatch as string] : []), ...(data.warnings ?? [])], mode });
     } catch (error) {
       if ((error as Error)?.name !== "AbortError") setProblem("unreadable");
     } finally { setReading(null); abort.current = null; }
@@ -322,7 +326,7 @@ function ManualForm({ onAdd, onCancel }: { onAdd: (holding: Holding) => void; on
   return <>
     <header className={s.head}><p className={s.kicker}>ADD</p><h1>手入力で追加</h1><p className={s.sub}>ティッカー、株数、平均取得価額を入力します。</p></header>
     <form className={s.form} onSubmit={event => { event.preventDefault(); if (valid) onAdd({ ticker: symbol, shares: Number(qty), avgCostUsd: Number(cost), ...(rate ? { avgCostFx: rate } : {}) }); }}>
-      <label>ティッカー<input value={ticker} onChange={event => { setTicker(event.target.value); setPicked(false); if (!event.target.value.trim()) setOptions([]); }} autoCapitalize="characters" placeholder="例: NVDA" autoComplete="off" /></label>
+      <label>ティッカーまたは会社名<input value={ticker} onChange={event => { setTicker(event.target.value); setPicked(false); if (!event.target.value.trim()) setOptions([]); }} autoCapitalize="characters" placeholder="例: NVDA、エヌビディア" autoComplete="off" /><small>日本語の会社名でも探せます。候補から選んでください。</small></label>
       {!picked && options.length > 0 && <ul className={s.options}>{options.map(option => <li key={option.ticker}><button type="button" onClick={() => { setTicker(option.ticker); setPicked(true); setOptions([]); }}><b>{option.ticker}</b><span>{option.name}</span></button></li>)}</ul>}
       <label>株数<input inputMode="decimal" value={qty} onChange={event => setQty(event.target.value)} /><small>小数点も入力できます。</small></label>
       <label>平均取得価額(USD)<input inputMode="decimal" value={cost} onChange={event => setCost(event.target.value)} placeholder="例: 112.50" /></label>

@@ -3,7 +3,7 @@ import type { Holding } from "./calc.ts";
 /** What the screenshot reader returns, checked here before anything reaches the screen or storage. The model's answer is never trusted:
  * every number is range-checked, tickers are normalised, duplicates are merged and anything doubtful becomes a warning for the reader to see. */
 export type Incomplete = { ticker: string; name?: string; shares: number | null; avgCostUsd: number | null };
-export type Parsed = { holdings: Holding[]; incomplete: Incomplete[]; warnings: string[]; reportedGainUsd: number | null; screenPrices: Record<string, number> };
+export type Parsed = { holdings: Holding[]; incomplete: Incomplete[]; /** Tickers in the order they appear on the screen. */ order: string[]; warnings: string[]; reportedGainUsd: number | null; screenPrices: Record<string, number> };
 
 export const PARSE_PROMPT = `これは日本の証券会社アプリの、米国株の「保有銘柄」画面のスクリーンショットです。画面に見える銘柄の行を、すべて読み取ってください。
 JSONだけを返します(説明文や記号は付けません)。形は次のとおりです。
@@ -39,6 +39,7 @@ export function normalizeParsed(raw: unknown): Parsed {
   const warnings: string[] = [];
   const holdings = new Map<string, Holding>();
   const incomplete: Incomplete[] = [];
+  const order: string[] = [];
   const screenPrices: Record<string, number> = {};
   const body = raw && typeof raw === "object" ? raw as Record<string, unknown> : {};
   const list = Array.isArray(body.holdings) ? body.holdings.slice(0, 100) : [];
@@ -56,6 +57,7 @@ export function normalizeParsed(raw: unknown): Parsed {
       // The row is real but a number could not be read: keep it so the reader can type it in (shown as "要確認").
       const label = shares === null ? "株数" : "平均取得価額(ドル)";
       warnings.push(`${ticker} の${label}を読み取れませんでした。数字を入力してください。`);
+      if (!order.includes(ticker)) order.push(ticker);
       incomplete.push({ ticker, name: typeof row.name === "string" && row.name.trim() ? row.name.trim().slice(0, 40) : undefined, shares, avgCostUsd: avg });
       continue;
     }
@@ -72,9 +74,10 @@ export function normalizeParsed(raw: unknown): Parsed {
       warnings.push(`${ticker}: 2行ありました。株数を合計して、平均取得価額を平均しました。確認してください。`);
       continue;
     }
+    if (!order.includes(ticker)) order.push(ticker);
     holdings.set(ticker, { ticker, name, shares, avgCostUsd: avg, ...(fx !== undefined && fx > 50 && fx < 400 ? { avgCostFx: fx } : {}) });
   }
-  return { holdings: [...holdings.values()], incomplete, warnings, reportedGainUsd: num(body.reportedGainUsd), screenPrices };
+  return { holdings: [...holdings.values()], incomplete, order, warnings, reportedGainUsd: num(body.reportedGainUsd), screenPrices };
 }
 
 /** Cross-check against the profit printed at the top of the screen: a missed or misread row shows up as a gap. */
