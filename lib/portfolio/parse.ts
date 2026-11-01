@@ -2,7 +2,8 @@ import type { Holding } from "./calc.ts";
 
 /** What the screenshot reader returns, checked here before anything reaches the screen or storage. The model's answer is never trusted:
  * every number is range-checked, tickers are normalised, duplicates are merged and anything doubtful becomes a warning for the reader to see. */
-export type Parsed = { holdings: Holding[]; warnings: string[]; reportedGainUsd: number | null; screenPrices: Record<string, number> };
+export type Incomplete = { ticker: string; name?: string; shares: number | null; avgCostUsd: number | null };
+export type Parsed = { holdings: Holding[]; incomplete: Incomplete[]; warnings: string[]; reportedGainUsd: number | null; screenPrices: Record<string, number> };
 
 export const PARSE_PROMPT = `これは日本の証券会社アプリの、米国株の「保有銘柄」画面のスクリーンショットです。画面に見える銘柄の行を、すべて読み取ってください。
 JSONだけを返します(説明文や記号は付けません)。形は次のとおりです。
@@ -37,6 +38,7 @@ export function extractJson(text: string): unknown {
 export function normalizeParsed(raw: unknown): Parsed {
   const warnings: string[] = [];
   const holdings = new Map<string, Holding>();
+  const incomplete: Incomplete[] = [];
   const screenPrices: Record<string, number> = {};
   const body = raw && typeof raw === "object" ? raw as Record<string, unknown> : {};
   const list = Array.isArray(body.holdings) ? body.holdings.slice(0, 100) : [];
@@ -48,9 +50,15 @@ export function normalizeParsed(raw: unknown): Parsed {
     const avg = num(row.avgCostUsd);
     const jpy = num(row.avgCostJpy);
     if (!TICKER.test(ticker)) { warnings.push(`ティッカーを読み取れない行がありました(${String(row.ticker ?? "不明").slice(0, 12)})。`); continue; }
-    if (shares === null || !(shares > 0) || shares > 1e9) { warnings.push(`${ticker}: 株数を読み取れなかったため、飛ばしました。`); continue; }
-    if (avg === null && jpy !== null) warnings.push(`${ticker}: 平均取得価額が円でしか読み取れませんでした。ドルの値を確認してください。`);
-    if (avg === null || !(avg > 0) || avg > 1e7) { warnings.push(`${ticker}: 平均取得価額(ドル)を読み取れなかったため、飛ばしました。`); continue; }
+    if (shares !== null && (!(shares > 0) || shares > 1e9)) { warnings.push(`${ticker}: 株数が正しくないため、飛ばしました。`); continue; }
+    if (avg !== null && (!(avg > 0) || avg > 1e7)) { warnings.push(`${ticker}: 平均取得価額(ドル)が正しくないため、飛ばしました。`); continue; }
+    if (shares === null || avg === null) {
+      // The row is real but a number could not be read: keep it so the reader can type it in (shown as "要確認").
+      const label = shares === null ? "株数" : "平均取得価額(ドル)";
+      warnings.push(`${ticker} の${label}を読み取れませんでした。数字を入力してください。`);
+      incomplete.push({ ticker, name: typeof row.name === "string" && row.name.trim() ? row.name.trim().slice(0, 40) : undefined, shares, avgCostUsd: avg });
+      continue;
+    }
     const name = typeof row.name === "string" && row.name.trim() ? row.name.trim().slice(0, 40) : undefined;
     const fx = jpy !== null && jpy > 0 ? jpy / avg : undefined;
     const price = num(row.currentPriceUsd);
@@ -66,12 +74,12 @@ export function normalizeParsed(raw: unknown): Parsed {
     }
     holdings.set(ticker, { ticker, name, shares, avgCostUsd: avg, ...(fx !== undefined && fx > 50 && fx < 400 ? { avgCostFx: fx } : {}) });
   }
-  return { holdings: [...holdings.values()], warnings, reportedGainUsd: num(body.reportedGainUsd), screenPrices };
+  return { holdings: [...holdings.values()], incomplete, warnings, reportedGainUsd: num(body.reportedGainUsd), screenPrices };
 }
 
 /** Cross-check against the profit printed at the top of the screen: a missed or misread row shows up as a gap. */
 export function reconcile(parsed: Parsed): string | null {
-  if (parsed.reportedGainUsd === null) return null;
+  if (parsed.reportedGainUsd === null || parsed.incomplete.length) return null;
   let sum = 0;
   for (const h of parsed.holdings) {
     const price = parsed.screenPrices[h.ticker];

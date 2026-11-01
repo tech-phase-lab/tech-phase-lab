@@ -148,3 +148,15 @@ test("the portfolio is PRO only: hidden from the FREE menu, redirected on the pa
   assert.match(await src("../app/research/plan-cards.tsx"), /米国株の資産管理/);
   assert.match(await src("../app/research/account/account-view.tsx"), /米国株の資産管理/);
 });
+
+test("a real row with an unreadable number is kept as incomplete (to be typed in), not silently dropped", () => {
+  const parsed = normalizeParsed({ holdings: [
+    { ticker: "NVDA", name: "NVIDIA", shares: 40, avgCostUsd: 112.5 },
+    { ticker: "MU", name: "Micron Technology", shares: null, avgCostUsd: 98.4 },
+    { ticker: "ALAB", shares: 10, avgCostUsd: null },
+  ] });
+  assert.deepEqual(parsed.holdings.map(h => h.ticker), ["NVDA"]);
+  assert.deepEqual(parsed.incomplete.map(r => [r.ticker, r.shares, r.avgCostUsd]), [["MU", null, 98.4], ["ALAB", 10, null]]);
+  assert.ok(parsed.warnings.some(w => w.startsWith("MU の株数を読み取れませんでした")));
+  assert.equal(reconcile({ ...parsed, reportedGainUsd: 1, screenPrices: { NVDA: 1 } }), null, "no cross-check while a row is incomplete");
+});

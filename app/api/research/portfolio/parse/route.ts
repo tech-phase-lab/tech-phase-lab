@@ -23,6 +23,6 @@ export async function POST(request: Request) {
     const turn = await takeRead(userId);
     if (!turn.ok) return json({ error: "limit" }, 429);
     const parsed = await readHoldings(image);
-    return json({ holdings: parsed.holdings, warnings: parsed.warnings, mismatch: reconcile(parsed), left: turn.left });
+    return json({ holdings: parsed.holdings, incomplete: parsed.incomplete, warnings: parsed.warnings, mismatch: reconcile(parsed), left: turn.left });
   } catch { return json({ error: "unavailable" }, 503); }
 }
