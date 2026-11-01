@@ -122,7 +122,7 @@ test("while access is being checked RESOLUTE shows its logo and 確認中…, ne
 });
 
 test("the RESOLUTE menu always offers the way back to Tech Phase", async () => {
-  assert.match(await read("../app/resolute/tool-shell.tsx"), /href="\/research" prefetch=\{false\}>\{en\?"← Tech Phase":"← Tech Phaseへ"\}/);
+  assert.match(await read("../app/resolute/tool-shell.tsx"), /href="\/research" onClick=\{close\} prefetch=\{false\}>[\s\S]*\{en\?"Tech Phase":"Tech Phaseへ"\}/);
 });
 
 test("RESOLUTE can measure the top inset (viewport-fit=cover), asks again quietly before showing a sign-in message, and explains adding to the home screen in settings (Nov 1)", async () => {
@@ -130,8 +130,24 @@ test("RESOLUTE can measure the top inset (viewport-fit=cover), asks again quietl
   const shell = await read("../app/resolute/tool-shell.tsx");
   assert.match(shell, /const retryLater=/);
   assert.match(shell, /r\.status===401\) \{if\(!retryLater\(\)\) setAccess\("signed-out"\)/);
-  assert.ok((shell.match(/\/resolute\/settings#home-screen/g) ?? []).length >= 2, "in the menu and in the footer of every page");
+  assert.match(shell, /\/resolute\/settings#home-screen/);
   const settings = await read("../app/resolute/settings/screen.tsx");
   assert.match(settings, /id="home-screen"/);
   assert.match(settings, /<AddToHomeSteps/);
+});
+
+test("RESOLUTE header and menu are the same on every page, with no bottom bar (Nov 1 design)", async () => {
+  const shell = await read("../app/resolute/tool-shell.tsx");
+  assert.doesNotMatch(shell, /<footer/, "the bottom band and its small links are gone");
+  assert.match(shell, /<header className=\{`\$\{h\.bar\}/);
+  assert.match(shell, /\{home \? <span \/> : <Link href="\/resolute" className=\{h\.brand\}/, "home keeps the centre empty, inner pages show a small RESOLUTE that returns home");
+  assert.match(shell, /menuOpen\?\(en\?"Close":"閉じる"\)/);
+  const steps = shell.slice(shell.indexOf("const STEPS"), shell.indexOf("const TOOLS"));
+  assert.deepEqual([...steps.matchAll(/"(\/resolute\/[a-z]+)","([^"]+)"/g)].map(m => [m[1], m[2]]), [["/resolute/diagnosis","投資ルール診断"],["/resolute/simulation","シミュレーション"],["/resolute/alerts","終値アラート"],["/resolute/morning","翌朝のひとこと"],["/resolute/thermometer","相場の温度計"],["/resolute/tax","税金の目安"]]);
+  const tools = shell.slice(shell.indexOf("const TOOLS"), shell.indexOf("export default function ToolShell"));
+  assert.deepEqual([...tools.matchAll(/\["(\/resolute\/[a-z]+)","([^"]+)"/g)].map(m => [m[1], m[2]]), [["/resolute/notebook","マイルール"],["/resolute/wall","ルールのお守り"],["/resolute/tonight","今夜のひと息"],["/resolute/news","危険度チェッカー"]]);
+  const css = await read("../app/resolute/tool-shell.module.css");
+  assert.match(css, /height: 38px/);
+  assert.match(css, /\.step\[aria-current="page"\]/);
+  assert.match(await read("../app/resolute/diagnosis.module.css"), /env\(safe-area-inset-top, 0px\) \+ 56px/);
 });

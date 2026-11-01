@@ -319,10 +319,10 @@
 .chapterPractice li+li{margin-top:12px}
 @media(max-width:360px){.chapterMetrics>div[data-text=true]{grid-template-columns:1fr;gap:2px}.chapterMetrics>div[data-text=true] dd{font-size:17px}}
 
-.homePage{padding:0}.homeWrap{display:flex;flex-direction:column}.homeControls{order:2;padding:16px;max-width:600px;width:100%;margin:auto}.homeWrap>nav{order:3}.homeWrap>footer,.homeWrap>p{order:4;padding:16px;max-width:600px;margin:auto}
+.homePage{padding:0}.homeWrap{display:flex;flex-direction:column}.homeWrap>p{order:4;padding:16px;max-width:600px;margin:auto}
 
 /* iPhone in-app view: the floating close button and address pill must not cover the first line. */
-:global(html[data-overlay-bar="1"]) .wrap, :global(html[data-overlay-bar="1"]) .homeWrap { padding-top:calc(env(safe-area-inset-top, 0px) + 40px); }
+:global(html[data-overlay-bar="1"]) .wrap, :global(html[data-overlay-bar="1"]) .homeWrap { padding-top:calc(env(safe-area-inset-top, 0px) + 56px); }
 :global(html[data-overlay-bar="app"]) .wrap, :global(html[data-overlay-bar="app"]) .homeWrap { padding-top:calc(env(safe-area-inset-top, 0px) + 12px); }
 .loadingBrand{min-height:60vh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;color:var(--gold2)}
 .loadingBrand svg{width:58px;height:58px;fill:none;stroke:var(--gold);stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;animation:brandBreath 1.8s ease-in-out infinite}
