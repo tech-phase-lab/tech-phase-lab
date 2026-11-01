@@ -1,4 +1,4 @@
-# Owner assignment — 2026-10-25 (latest explicit instruction)
+# Owner assignment — 2026-11-01 (latest explicit instruction; earlier 2026-10-25 lines below still apply unless replaced)
 
 - ALL news work belongs to Claude. Codex must not modify news collection, feeds,
   translation, summaries, display, caches, FREE/PRO restrictions, or news-specific tests.
@@ -7,9 +7,12 @@
   to work on news. Relationship maps, Theme Ranking, Stock Comparison PRO and the watchlist weekly review also belong to Claude.
 - Billing implementation/offline checks are complete: do not repeat completed checks or
   purchases without a concrete new change or failure. Remaining live acceptance is blocked
-  on infrastructure/domain readiness. Codex is now assigned Notes/Ask Rizel editing features.
-- Codex owns Tech Phase PRO billing and other explicitly assigned non-news work.
-  Do not repeat completed purchases.
+  on infrastructure/domain readiness.
+- Owner decision, 2026-11-01: Claude owns the whole Tech Phase codebase, including Tech Phase
+  PRO billing, Notes/Ask Rizel editing and Railway. Codex no longer owns any area. Production-
+  changing operations (deploys, variable or schedule changes, database writes, payment-related
+  actions) still need the owner's approval each time. Do not repeat completed purchases.
+  Hand-over inventory: `docs/HANDOFF-INVENTORY-2026-11-01.md`.
 - Railway (owner decision, 2026-11-01): the earlier prohibition on Railway connection is
   lifted for the whole Railway account, for Claude using the official Railway connector.
   Production-changing operations (deploy, variable or schedule changes, database writes)
