@@ -214,3 +214,8 @@ test("the portfolio APIs run behind the sign-in middleware (without it the sessi
   assert.match(screen, /response\.status === 400 \? "unreadable" : "service"/);
   assert.match(screen, /http-\$\{response\.status\}/);
 });
+
+test("the confirmation screen does not repeat the not-advice line under the register button", async () => {
+  const screen = await src("../app/research/portfolio/screen.tsx");
+  assert.match(screen, /\{!review && <p className=\{s\.disclaimer\}>/);
+});
