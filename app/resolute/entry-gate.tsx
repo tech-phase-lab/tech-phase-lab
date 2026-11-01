@@ -2,7 +2,7 @@
 import { useEffect, useState, useSyncExternalStore, type ReactNode } from "react";
 import { useRouter } from "next/navigation";
 import { BAR_EVENT, BAR_STATE_KEY, needsRefresh, parseBarState, writeBarState } from "@/lib/research/resolute-bar-state";
-import { FIRST_VISIT_KEY, entryDecision, signedInFromCookies } from "@/lib/resolute/landing-gate";
+import { FIRST_VISIT_KEY, entryDecision, signedInFromCookies, staleNotOwned } from "@/lib/resolute/landing-gate";
 import { requestPlan } from "@/lib/resolute/plan-client";
 
 /** Opening RESOLUTE: a purchaser goes to the home (the quiz first, once), everyone else sees the landing page.
@@ -13,8 +13,9 @@ function subscribe(notify: () => void) {
  window.addEventListener(BAR_EVENT, notify);
  return () => { window.removeEventListener("storage", notify); window.removeEventListener(BAR_EVENT, notify); };
 }
+const ownerHintNow = () => { try { const hint = JSON.parse(localStorage.getItem("tech-phase:member-hint") ?? "null"); return hint?.ownerAccount === true && Number.isFinite(hint.accessExpiresAt) && hint.accessExpiresAt > Date.now() ? "1" : "0"; } catch { return "0"; } };
 const snapshot = () => {
- try { return `${localStorage.getItem(BAR_STATE_KEY) ?? ""}|${signedInFromCookies(document.cookie) ? "1" : "0"}|${localStorage.getItem(FIRST_VISIT_KEY) ?? ""}`; } catch { return "||"; }
+ try { return `${localStorage.getItem(BAR_STATE_KEY) ?? ""}|${signedInFromCookies(document.cookie) ? "1" : "0"}|${localStorage.getItem(FIRST_VISIT_KEY) ?? ""}|${ownerHintNow()}`; } catch { return "|||"; }
 };
 const serverSnapshot = () => "";
 const splash = <div style={{ minHeight: "100vh", background: "#070b14" }} aria-hidden="true" />;
@@ -23,14 +24,14 @@ export default function EntryGate({ landing, children }: { landing: ReactNode; c
  const router = useRouter();
  const [failed, setFailed] = useState(false);
  const raw = useSyncExternalStore(subscribe, snapshot, serverSnapshot);
- const [stateRaw, signedRaw, visited] = raw.split("|");
+ const [stateRaw, signedRaw, visited, ownerRaw] = raw.split("|");
  const signedIn = raw === "" ? null : signedRaw === "1";
- const decision = entryDecision(stateRaw || null, signedIn);
+ const decision = entryDecision(stateRaw || null, signedIn, undefined, ownerRaw === "1");
  const firstVisit = decision === "home" && !visited;
 
  useEffect(() => {
   if (signedIn === null) return;
-  if (decision !== "unknown" && !needsRefresh(parseBarState(stateRaw || null), signedIn, Date.now())) return;
+  if (decision !== "unknown" && !needsRefresh(parseBarState(stateRaw || null), signedIn, Date.now()) && !staleNotOwned(stateRaw || null, signedIn)) return;
   const controller = new AbortController();
   (async () => {
    try {

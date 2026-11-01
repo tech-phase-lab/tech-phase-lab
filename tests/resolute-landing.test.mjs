@@ -65,8 +65,10 @@ test("the entry shows the landing page only when the device is sure the visitor 
   assert.equal(entryDecision(state(false), true), "landing");
   assert.equal(entryDecision(state(true), true), "home");
   // "Not a purchaser" goes stale after 30 s for a signed-in person (the owner, a new purchase): ask again before showing the landing page.
-  assert.equal(entryDecision(state(false), true, Date.now() + 31_000), "unknown");
-  assert.equal(entryDecision(state(false), true, Date.now() + 10_000), "landing");
+  // Only the remembered owner waits; everyone else keeps the landing page (refreshed in the background), so no dark moment.
+  assert.equal(entryDecision(state(false), true, Date.now() + 31_000, true), "unknown");
+  assert.equal(entryDecision(state(false), true, Date.now() + 31_000, false), "landing");
+  assert.equal(entryDecision(state(false), true, Date.now() + 10_000, true), "landing");
   // A signed-out visitor keeps the landing page without asking.
   assert.equal(entryDecision(state(false, true), false, Date.now() + 3_600_000), "landing");
   // Signed in with nothing or only a signed-out answer remembered: wait, never guess.

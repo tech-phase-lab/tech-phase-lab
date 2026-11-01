@@ -35,3 +35,11 @@ test("RESOLUTE tool pages and both landing pages open at the very top", async ()
   assert.match(await read("../app/resolute/lp/landing.tsx"), /<OpenAtTop \/>/);
   assert.match(await read("../app/resolute/lp/landing-en.tsx"), /<OpenAtTop \/>/);
 });
+
+test("the RESOLUTE bar measures the bottom menu again after returning and when the viewport moves", async () => {
+  const bar = await read("../app/research/resolute-bar.tsx");
+  assert.match(bar, /addEventListener\("pageshow", place\)/);
+  assert.match(bar, /visualViewport/);
+  assert.match(bar, /ResizeObserver/);
+  assert.match(bar, /\[60, 250, 700, 1500, 3000\]/);
+});

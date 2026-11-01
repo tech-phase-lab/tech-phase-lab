@@ -5,16 +5,23 @@ export type EntryDecision = "home" | "landing" | "unknown";
  * (`null` = not known yet). A purchaser is never shown the landing page: when the device cannot say for sure
  * the entry stays blank until the purchase answer arrives. */
 export const NOT_OWNED_FRESH_MS = 30_000;
-export function entryDecision(raw: string | null, signedIn: boolean | null, now: number = Date.now()): EntryDecision {
+/** Signed in, and the remembered answer says "not a purchaser" but is older than 30 s: access may have started since. */
+export function staleNotOwned(raw: string | null, signedIn: boolean | null, now: number = Date.now()): boolean {
+  if (!signedIn) return false;
+  const state = parseBarState(raw);
+  return !!state && !state.anon && !state.owned && now - state.at > NOT_OWNED_FRESH_MS;
+}
+/** `ownerHint`: this device remembers the owner account. The owner never sees the landing page, so a stale answer
+ * makes the entry wait (a dark moment, owner only); everyone else keeps the landing page and the answer is refreshed
+ * in the background, so a visitor is not made to wait. */
+export function entryDecision(raw: string | null, signedIn: boolean | null, now: number = Date.now(), ownerHint = false): EntryDecision {
   if (signedIn === null) return "unknown";
   const state = parseBarState(raw);
   if (!signedIn) return state?.owned ? "home" : "landing";
   // Signed in: an answer learned while signed out says nothing about this person.
   if (!state || state.anon) return "unknown";
   if (state.owned) return "home";
-  // "Not a purchaser" is only trusted for a short while: access can start (the owner, a new purchase, a view switch),
-  // and a stale answer would show the landing page to someone who should see the home. Ask again first.
-  return now - state.at > NOT_OWNED_FRESH_MS ? "unknown" : "landing";
+  return ownerHint && staleNotOwned(raw, signedIn, now) ? "unknown" : "landing";
 }
 
 /** Clerk keeps a readable `__client_uat` cookie: 0 (or absent) when signed out, a timestamp when signed in. */
