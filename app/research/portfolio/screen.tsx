@@ -10,7 +10,7 @@ import s from "./portfolio.module.css";
 type ReviewRow = { id: number; ticker: string; name?: string; shares: string; avg: string; fx?: number; added?: boolean };
 type Review = { rows: ReviewRow[]; warnings: string[]; mode: "replace" | "merge" };
 type Market = { quotes: Record<string, Quote>; usdJpy: number | null; asOf: string | null };
-type Problem = "unreadable" | "limit" | "config" | "other";
+type Problem = "unreadable" | "limit" | "config" | "service" | "other";
 type Stage = "preparing" | "reading";
 
 const COLORS = ["#e7c982", "#7fa8e0", "#b39af0", "#5de0b0", "#f0a67a", "#e07fa0", "#7fd1d9", "#c5d27a"];
@@ -64,6 +64,7 @@ export default function PortfolioScreen() {
   const [review, setReview] = useState<Review | null>(null);
   const [reading, setReading] = useState<Stage | null>(null);
   const [problem, setProblem] = useState<Problem | null>(null);
+  const [reason, setReason] = useState<string | null>(null);
   const [manual, setManual] = useState(false);
   const [sheet, setSheet] = useState(false);
   const abort = useRef<AbortController | null>(null);
@@ -87,14 +88,19 @@ export default function PortfolioScreen() {
     if (!file) return;
     const controller = new AbortController();
     abort.current = controller;
-    setProblem(null); setReading("preparing");
+    setProblem(null); setReason(null); setReading("preparing");
     try {
       const image = await shrink(file);
       if (controller.signal.aborted) return;
       setReading("reading");
       const response = await fetch("/api/research/portfolio/parse", { method: "POST", credentials: "same-origin", signal: controller.signal, headers: { "Content-Type": "application/json" }, body: JSON.stringify({ image }) });
       const data = await response.json().catch(() => ({}));
-      if (!response.ok) { setProblem(data.error === "limit" ? "limit" : data.error === "not-configured" ? "config" : response.status === 400 || response.status === 503 ? "unreadable" : "other"); return; }
+      if (!response.ok) {
+        // A failed call to the reading service is told apart from a picture that simply could not be read.
+        setProblem(data.error === "limit" ? "limit" : data.error === "not-configured" ? "config" : data.error === "unavailable" ? "service" : response.status === 400 ? "unreadable" : "other");
+        if (typeof data.reason === "string") setReason(data.reason);
+        return;
+      }
       const complete: ReviewRow[] = (data.holdings ?? []).map((h: Holding) => ({ id: nextId++, ticker: h.ticker, name: h.name, shares: String(h.shares), avg: String(h.avgCostUsd), fx: h.avgCostFx }));
       const partial: ReviewRow[] = (data.incomplete ?? []).map((r: { ticker: string; name?: string; shares: number | null; avgCostUsd: number | null }) => ({ id: nextId++, ticker: r.ticker, name: r.name, shares: r.shares === null ? "" : String(r.shares), avg: r.avgCostUsd === null ? "" : String(r.avgCostUsd) }));
       if (!complete.length && !partial.length) { setProblem("unreadable"); return; }
@@ -122,7 +128,7 @@ export default function PortfolioScreen() {
         </>
         : <>
           <Head sub={holdings.length > 0} />
-          {problem && <ErrorCard kind={problem} onManual={() => setManual(true)} pick={pick(mode)} onClose={() => setProblem(null)} />}
+          {problem && <ErrorCard kind={problem} reason={reason} onManual={() => setManual(true)} pick={pick(mode)} onClose={() => setProblem(null)} />}
           {!problem && holdings.length === 0 && <Empty pick={pick("replace")} onManual={() => setManual(true)} onInfo={() => setSheet(true)} />}
           {holdings.length > 0 && <List rows={rows} totals={totals} shares={shares} hide={hide} market={market} marketError={marketError} onRetry={() => { setMarketError(false); setRetry(value => value + 1); }}
             pick={pick("merge")} onManual={() => setManual(true)} colorOf={colorOf} onClear={() => { if (window.confirm("この端末に保存した持ち株を、すべて消します。よろしいですか?")) writeHoldings([]); }} />}
@@ -183,20 +189,23 @@ function Reading({ stage, onCancel, onInfo }: { stage: Stage; onCancel: () => vo
   </>;
 }
 
-function ErrorCard({ kind, onManual, pick, onClose }: { kind: Problem; onManual: () => void; pick: (event: React.ChangeEvent<HTMLInputElement>) => void; onClose: () => void }) {
+function ErrorCard({ kind, reason, onManual, pick, onClose }: { kind: Problem; reason: string | null; onManual: () => void; pick: (event: React.ChangeEvent<HTMLInputElement>) => void; onClose: () => void }) {
   if (kind === "limit") return <section className={`${s.drop} ${s.err}`} role="alert">
     <span className={s.errIcon}>{Icon.image}</span>
-    <h2>今日の読み込みは、<br />上限に達しました。</h2>
+    <h2>今日の読み込みは<br />上限に達しました</h2>
     <p>明日になると、また読み込めます。<br />手入力なら、いまでも追加できます。</p>
     <button type="button" className={s.cta} onClick={onManual}>手入力で追加</button>
     <button type="button" className={s.outline} onClick={onClose}>閉じる</button>
   </section>;
+  const title = kind === "config" ? <>画像の読み取りの設定が<br />まだ完了していません</> : kind === "service" ? <>読み取りのサービスに<br />接続できませんでした</> : <>スクショから持ち株を<br />読み取れませんでした</>;
+  const note = kind === "config" ? "手入力なら、いまでも追加できます。" : kind === "service" ? <>時間をおいて、もう一度お試しください。<br />手入力なら、いまでも追加できます。</> : <>保有銘柄の画面全体が写っているか、<br />文字がぼやけていないかを確認してください。</>;
   return <section className={`${s.drop} ${s.err}`} role="alert">
     <span className={s.errIcon}>{Icon.warn}</span>
-    <h2>{kind === "config" ? <>画像の読み取りの設定が、<br />まだ完了していません。</> : <>スクショから、<br />持ち株を読み取れませんでした。</>}</h2>
-    <p>{kind === "config" ? "手入力なら、いまでも追加できます。" : <>保有銘柄の画面全体が写っているか、<br />文字がぼやけていないかを確認してください。</>}</p>
-    {kind !== "config" && <label className={s.cta}><input type="file" accept="image/*" onChange={pick} />別のスクショを選ぶ</label>}
+    <h2>{title}</h2>
+    <p>{note}</p>
+    {kind !== "config" && <label className={s.cta}><input type="file" accept="image/*" onChange={pick} />{kind === "service" ? "もう一度選ぶ" : "別のスクショを選ぶ"}</label>}
     <button type="button" className={kind === "config" ? s.cta : s.outline} onClick={onManual}>手入力で追加</button>
+    {kind === "service" && reason && <small className={s.code}>エラー: {reason}</small>}
   </section>;
 }
 
