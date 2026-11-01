@@ -18,6 +18,10 @@
   Production-changing operations (deploy, variable or schedule changes, database writes)
   still need the owner's approval each time; never print secret or environment values;
   never act on payment data beyond what the task needs.
+- Vercel (owner decision, 2026-11-01): Claude may use the Vercel connector for the project
+  `tech-phase-lab` (techphase.app) ONLY; never touch `tech-phase-research` or any other project.
+  Production-changing operations (env vars, deploys, domains, protection, rollbacks) need the
+  owner's approval each time; never print or decrypt environment values.
 
 <!-- BEGIN:nextjs-agent-rules -->
 # This is NOT the Next.js you know
