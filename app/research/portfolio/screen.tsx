@@ -208,7 +208,7 @@ function List({ rows, totals, shares, hide, market, marketError, onRetry, pick, 
       <button type="button" className={s.retry} onClick={onRetry}>{Icon.retry}もう一度取得する</button></div></div>}
     <section className={s.total} aria-label="合計">
       <div className={s.totalTop}><span>評価額の合計</span><em>{market?.usdJpy ? `USD/JPY ${usd(market.usdJpy)}` : ""}</em></div>
-      {hide ? <b className={s.big}>{MASK}</b>
+      {hide ? <b className={`${s.big} ${s.mask}`}>{MASK}</b>
         : unknown ? <b className={`${s.big} ${s.dim}`}>確認できません</b>
         : loading ? <b className={`${s.big} ${s.dim}`}>取得しています…</b>
         : totals.valueUsd !== null ? <><b className={s.big}>${usd(totals.valueUsd)}</b>{totals.valueJpy !== null && <span className={s.yen}>¥{yen(totals.valueJpy)}</span>}</>
@@ -326,7 +326,7 @@ function ManualForm({ onAdd, onCancel }: { onAdd: (holding: Holding) => void; on
       {!picked && options.length > 0 && <ul className={s.options}>{options.map(option => <li key={option.ticker}><button type="button" onClick={() => { setTicker(option.ticker); setPicked(true); setOptions([]); }}><b>{option.ticker}</b><span>{option.name}</span></button></li>)}</ul>}
       <label>株数<input inputMode="decimal" value={qty} onChange={event => setQty(event.target.value)} /><small>小数点も入力できます。</small></label>
       <label>平均取得価額(USD)<input inputMode="decimal" value={cost} onChange={event => setCost(event.target.value)} placeholder="例: 112.50" /></label>
-      <label>取得時の為替(USD/JPY) <em>任意</em><input inputMode="decimal" value={fx} onChange={event => setFx(event.target.value)} placeholder="例: 150.20" /><small>入力すると、円での損益も表示できます。</small></label>
+      <label><span>取得時の為替(USD/JPY)<em>任意</em></span><input inputMode="decimal" value={fx} onChange={event => setFx(event.target.value)} placeholder="例: 150.20" /><small>入力すると、円での損益も表示できます。</small></label>
       <button type="submit" className={`${s.cta} ${s.wide}`} disabled={!valid}>追加する</button>
       <button type="button" className={s.ghost} onClick={onCancel}>やめる</button>
     </form>

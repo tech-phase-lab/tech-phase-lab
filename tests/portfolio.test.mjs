@@ -160,3 +160,17 @@ test("a real row with an unreadable number is kept as incomplete (to be typed in
   assert.ok(parsed.warnings.some(w => w.startsWith("MU の株数を読み取れませんでした")));
   assert.equal(reconcile({ ...parsed, reportedGainUsd: 1, screenPrices: { NVDA: 1 } }), null, "no cross-check while a row is incomplete");
 });
+
+test("the screen follows the design: black and gold, the states, and the hide rule (only the total and the dollar profit are masked)", async () => {
+  const screen = await src("../app/research/portfolio/screen.tsx");
+  for (const text of ["スクショを選ぶだけで、", "読み取っています", "内容の確認", "要確認", "持ち株 ", "金額を表示する", "終値を取得できませんでした", "もう一度取得する", "今日の読み込みは、", "手入力で追加", "取得時の為替(USD/JPY)", "投資助言ではありません。", "為替が分かる銘柄のみ"]) assert.ok(screen.includes(text), text);
+  // Hidden: the total and the dollar profit amount only.
+  assert.match(screen, /hide \? <b className=\{`\$\{s\.big\} \$\{s\.mask\}`\}>\{MASK\}<\/b>/);
+  assert.match(screen, /hide \? MASK : `\$\{sign\(totals\.gainUsd\)\}/);
+  assert.doesNotMatch(screen, /hide \? MASK : usd\(row/, "the cards are never masked");
+  // The honest progress: the price step is shown as waiting, not as running.
+  assert.match(screen, /data-state="wait"><i \/>終値と為替を取得します/);
+  const css = await src("../app/research/portfolio/portfolio.module.css");
+  assert.match(css, /--gold:#e7c982/);
+  assert.match(css, /prefers-reduced-motion/);
+});

@@ -19,9 +19,9 @@
 .page .pill{display:inline-flex;align-items:center;gap:8px;min-height:44px;margin-top:10px;padding:0 18px;border-radius:999px;border:1px solid #2a3547;background:transparent;color:#d8e0ea;font:500 14px inherit;font-family:inherit;cursor:pointer;white-space:nowrap}
 
 /* empty / reading / error card */
-.page .drop{margin:6px 0 14px;padding:22px 20px 24px;border-radius:26px;border:1.5px dashed rgba(201,162,87,.5);background:radial-gradient(120% 90% at 50% 0%,#17140d,#0a0e15 70%);text-align:center;display:flex;flex-direction:column;align-items:stretch;gap:10px}
-.page .drop h2{margin-top:6px;font-size:21px;line-height:1.55;font-weight:700}
-.page .drop>p{font-size:13.5px;color:var(--mute);line-height:1.8}
+.page .drop{margin:6px 0 14px;padding:20px 14px 22px;border-radius:26px;border:1.5px dashed rgba(201,162,87,.5);background:radial-gradient(120% 90% at 50% 0%,#17140d,#0a0e15 70%);text-align:center;display:flex;flex-direction:column;align-items:stretch;gap:10px}
+.page .drop h2{margin-top:6px;font-size:19px;line-height:1.55;font-weight:700}
+.page .drop>p{font-size:12.5px;color:var(--mute);line-height:1.8}
 .page .drop .outline{align-self:center}
 .page .illust{display:flex;align-items:center;justify-content:center;gap:16px;margin:6px 0 4px}
 .page .phone{width:112px;padding:12px 12px 14px;border-radius:18px;border:1px solid #27344a;background:#0b1220;display:flex;flex-direction:column;gap:7px}
@@ -57,24 +57,25 @@
 .page .err .errIcon svg{width:26px;height:26px}
 .page .err{border-style:solid;border-width:1px}
 
-.page .steps{list-style:none;margin:0 0 12px;padding:16px 16px;border-radius:20px;border:1px solid var(--line);background:#0c121c;display:flex;flex-direction:column;gap:14px}
-.page .steps li{display:flex;align-items:center;gap:14px;font-size:14.5px;color:#d3dbe6;line-height:1.5}
+.page .steps{list-style:none;margin:0 0 12px;padding:14px 14px;border-radius:20px;border:1px solid var(--line);background:#0c121c;display:flex;flex-direction:column;gap:14px}
+.page .steps li{display:flex;align-items:center;gap:12px;font-size:13px;color:#d3dbe6;line-height:1.5}
 .page .steps i{display:grid;place-items:center;width:32px;height:32px;flex:none;border-radius:50%;border:1.5px solid rgba(201,162,87,.6);background:#1a1710;color:var(--gold);font:600 14px ui-monospace,monospace;font-style:normal}
-.page .lockNote{display:flex;gap:12px;margin-bottom:10px;padding:14px 16px;border-radius:18px;border:1px solid #2a2314;background:#0f0d08;color:#b9a574}
-.page .lockNote p{font-size:13.5px;line-height:1.8}
+.page .lockNote{display:flex;gap:10px;margin-bottom:10px;padding:12px 14px;border-radius:18px;border:1px solid #2a2314;background:#0f0d08;color:#b9a574}
+.page .lockNote p{font-size:12px;line-height:1.8}
 .page .lockNote button{margin-top:4px;padding:0;border:0;background:none;color:var(--gold);font:600 14px inherit;font-family:inherit;cursor:pointer}
 
 /* totals */
 .page .total{margin:6px 0 14px;padding:18px 18px 16px;border-radius:24px;border:1px solid rgba(201,162,87,.5);background:linear-gradient(160deg,#241d10,#0d1018 62%)}
 .page .totalTop{display:flex;justify-content:space-between;align-items:baseline;gap:8px;font-size:13.5px;color:#b9a574}
 .page .totalTop em{font:500 11.5px ui-monospace,monospace;font-style:normal;color:#9c8a5d}
-.page .big{display:block;margin-top:8px;font-size:38px;line-height:1.15;font-weight:700;color:var(--gold);letter-spacing:.005em}
+.page .big{display:block;margin-top:8px;font-size:36px;line-height:1.15;font-weight:700;color:var(--gold);letter-spacing:.005em}
+.page .big.mask{font-size:26px;letter-spacing:.3em;margin-top:12px}
 .page .big.dim{font-size:25px;color:#9aa4b2}
 .page .yen{display:block;margin-top:4px;font-size:17px;color:#c9d2de}
-.page .pl{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px;padding-top:12px;border-top:1px solid rgba(201,162,87,.2)}
+.page .pl{display:grid;grid-template-columns:1.35fr 1fr;gap:12px;margin-top:14px;padding-top:12px;border-top:1px solid rgba(201,162,87,.2)}
 .page .pl small{display:block;font-size:12.5px;color:#b9a574}
 .page .pl p{margin-top:4px;display:flex;align-items:baseline;gap:6px;flex-wrap:wrap;font-size:14px}
-.page .pl p b{font-size:19px}
+.page .pl p b{font-size:17px}
 .page .pl p span{font-size:13px;font-weight:700}
 .page .pl .hint{margin-top:4px;color:#8c8466;font-size:11.5px}
 .page .up{color:var(--up)}.page .down{color:var(--down)}.page .dim{color:#9aa4b2}
