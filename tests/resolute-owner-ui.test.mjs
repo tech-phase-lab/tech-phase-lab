@@ -90,7 +90,7 @@ test("after the sign-in code the screen waits without an empty framed card", asy
 test("RESOLUTE pages start below the in-app view's floating buttons on iPhone", async () => {
   const hook = await read("../app/resolute/use-open-at-top.ts");
   assert.match(hook, /safe-area-inset-top/);
-  assert.match(hook, /dataset\.overlayBar="1"/);
+  assert.match(hook, /dataset\.overlayBar=standalone/);
   assert.match(hook, /standalone/);
   assert.match(await read("../app/resolute/diagnosis.module.css"), /html\[data-overlay-bar="1"\]\) \.homeWrap/);
   assert.match(await read("../app/resolute/lp/lp.module.css"), /html\[data-overlay-bar="1"\]\) \.lp/);
@@ -123,4 +123,15 @@ test("while access is being checked RESOLUTE shows its logo and 確認中…, ne
 
 test("the RESOLUTE menu always offers the way back to Tech Phase", async () => {
   assert.match(await read("../app/resolute/tool-shell.tsx"), /href="\/research" prefetch=\{false\}>\{en\?"← Tech Phase":"← Tech Phaseへ"\}/);
+});
+
+test("RESOLUTE can measure the top inset (viewport-fit=cover), asks again quietly before showing a sign-in message, and explains adding to the home screen in settings (Nov 1)", async () => {
+  assert.match(await read("../app/resolute/layout.tsx"), /viewportFit: "cover"/);
+  const shell = await read("../app/resolute/tool-shell.tsx");
+  assert.match(shell, /const retryLater=/);
+  assert.match(shell, /r\.status===401\) \{if\(!retryLater\(\)\) setAccess\("signed-out"\)/);
+  assert.match(shell, /\/resolute\/settings#home-screen/);
+  const settings = await read("../app/resolute/settings/screen.tsx");
+  assert.match(settings, /id="home-screen"/);
+  assert.match(settings, /<AddToHomeSteps/);
 });
