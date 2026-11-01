@@ -77,3 +77,12 @@ test("the security page sits inside the site frame with a proper heading and bac
   assert.match(screen, /href="\/research\/account"/);
   assert.match(screen, /<UserProfile routing="hash" \/>/);
 });
+
+test("after the sign-in code the screen waits without an empty framed card", async () => {
+  const screen = await read("../app/research/account/screen.tsx");
+  assert.match(screen, /const waiting = /);
+  assert.match(screen, /\{waiting \? <div className=\{styles\.placeholder\}/);
+  assert.match(screen, /<section className=\{styles\.card\}>/);
+  const css = await read("../app/research/account/styles.module.css");
+  assert.doesNotMatch(css, /\.placeholder\{[^}]*(border|background)/);
+});
