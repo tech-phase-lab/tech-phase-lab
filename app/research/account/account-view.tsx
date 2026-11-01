@@ -62,9 +62,11 @@ export default function AccountView({ ja, member, billingAvailable, upgradeFirst
     try {
       const result = await fetch("/api/research/member/preview", { method: "POST", credentials: "same-origin", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ mode: value === "owner" ? "restore" : value }), signal: AbortSignal.timeout(15000) });
       if (!result.ok) throw Error("switch-failed");
-      try { localStorage.removeItem("tech-phase:member-hint"); localStorage.removeItem("tech-phase:owner-view-as"); } catch { /* optional display hints */ }
+      try { localStorage.removeItem("tech-phase:member-hint"); localStorage.removeItem("tech-phase:owner-view-as"); localStorage.removeItem("tech-phase:resolute-bar-state:v1"); } catch { /* optional display hints */ }
       // No page reload: the header, the menu and this screen listen for this and re-read the membership themselves.
       window.dispatchEvent(new Event("tech-phase:membership-changed"));
+      // The remembered RESOLUTE answer belongs to the previous view: the entry and the bottom bar ask again.
+      window.dispatchEvent(new Event("tech-phase:resolute-bar"));
       setSwitching(false);
       // If the membership read never confirms the change, fall back to what the server says.
       setTimeout(() => setPendingView(null), 8000);

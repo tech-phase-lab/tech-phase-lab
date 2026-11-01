@@ -39,6 +39,8 @@ export default function EntryGate({ landing, children }: { landing: ReactNode; c
     if (response.status === 401) { writeBarState({ owned: false, anon: true }); return; }
     if (!response.ok) { setFailed(true); return; }
     const body = await response.json();
+    // The owner opens the home directly: the first-time quiz is for purchasers only.
+    if (body && body.accessBasis === "owner" && body.canUseTools === true) { try { localStorage.setItem(FIRST_VISIT_KEY, "1"); } catch { /* storage may be blocked */ } }
     if (body && typeof body.canUseTools === "boolean") writeBarState({ owned: body.canUseTools, anon: false }); else setFailed(true);
    } catch { if (!controller.signal.aborted) setFailed(true); }
   })();
