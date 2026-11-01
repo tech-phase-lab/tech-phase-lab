@@ -133,7 +133,7 @@ test("holdings never leave the browser: the screen stores them locally and sends
   assert.match(screen, /金額を伏せる/);
   const header = await src("../app/research/site-header.tsx");
   assert.match(header, /item\("\/research\/portfolio", "bars"/);
-  assert.ok(header.indexOf('heading(ja ? "マイページ"') < header.indexOf('heading(ja ? "リサーチ"'), "the My page group sits above Research");
+  assert.ok(header.indexOf('heading(ja ? "マイページ"') > header.indexOf('heading(ja ? "リサーチ"'), "the My page group stays below Research");
 });
 
 test("the portfolio is PRO only: hidden from the FREE menu, redirected on the page, and refused by both APIs", async () => {
@@ -163,7 +163,7 @@ test("a real row with an unreadable number is kept as incomplete (to be typed in
 
 test("the screen follows the design: black and gold, the states, and the hide rule (only the total and the dollar profit are masked)", async () => {
   const screen = await src("../app/research/portfolio/screen.tsx");
-  for (const text of ["スクショを選ぶだけで、", "読み取っています", "内容の確認", "要確認", "持ち株 ", "金額を表示する", "終値を取得できませんでした", "もう一度取得する", "今日の読み込みは、", "手入力で追加", "取得時の為替(USD/JPY)", "投資助言ではありません。", "為替が分かる銘柄のみ"]) assert.ok(screen.includes(text), text);
+  for (const text of ["スクショを選ぶだけで、", "読み取っています", "内容の確認", "要確認", "持ち株 ", "金額を表示する", "終値を取得できませんでした", "もう一度取得する", "今日の読み込みは", "手入力で追加", "取得時の為替(USD/JPY)", "投資助言ではありません。", "為替が分かる銘柄のみ"]) assert.ok(screen.includes(text), text);
   // Hidden: the total and the dollar profit amount only.
   assert.match(screen, /hide \? <b className=\{`\$\{s\.big\} \$\{s\.mask\}`\}>\{MASK\}<\/b>/);
   assert.match(screen, /hide \? MASK : `\$\{sign\(totals\.gainUsd\)\}/);
@@ -191,4 +191,18 @@ test("the manual form finds stocks by Japanese company name through the same sea
   assert.match(screen, /\/api\/research\/stocks\?q=/);
   assert.match(screen, /日本語の会社名でも探せます/);
   assert.match(await src("../app/api/research/stocks/route.ts"), /searchDirectory\(entries, query/);
+});
+
+test("a failed call to the reading service is told apart from an unreadable picture, with a safe reason", async () => {
+  const route = await src("../app/api/research/portfolio/parse/route.ts");
+  assert.match(route, /\^vision-\[a-z0-9_\.:-\]\{1,64\}\$/i);
+  const vision = await src("../lib/portfolio/vision.ts");
+  assert.match(vision, /async function providerReason/);
+  assert.doesNotMatch(vision, /console\./);
+  const screen = await src("../app/research/portfolio/screen.tsx");
+  assert.match(screen, /data\.error === "unavailable" \? "service"/);
+  assert.match(screen, /スクショから持ち株を<br \/>読み取れませんでした/);
+  assert.doesNotMatch(screen, /読み取れませんでした。<\/h2>|上限に達しました。<\/h2>/, "no full stop in the headings");
+  const header = await src("../app/research/site-header.tsx");
+  assert.ok(header.indexOf('heading(ja ? "マイページ"') > header.indexOf('heading(ja ? "リサーチ"'), "My page is back below Research");
 });

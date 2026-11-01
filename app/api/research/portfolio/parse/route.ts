@@ -24,5 +24,9 @@ export async function POST(request: Request) {
     if (!turn.ok) return json({ error: "limit" }, 429);
     const parsed = await readHoldings(image);
     return json({ holdings: parsed.holdings, incomplete: parsed.incomplete, order: parsed.order, warnings: parsed.warnings, mismatch: reconcile(parsed), left: turn.left });
-  } catch { return json({ error: "unavailable" }, 503); }
+  } catch (error) {
+    // Only the short provider reason (for example vision-401:invalid_api_key) goes back, so a failure can be told apart.
+    const reason = error instanceof Error && /^vision-[a-z0-9_.:-]{1,64}$/i.test(error.message) ? error.message : undefined;
+    return json({ error: "unavailable", ...(reason ? { reason } : {}) }, 503);
+  }
 }
