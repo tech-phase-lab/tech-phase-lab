@@ -26,3 +26,12 @@ test("the owner opens the RESOLUTE home directly, without the first-time quiz", 
   assert.match(gate, /accessBasis === "owner" && body\.canUseTools === true/);
   assert.match(gate, /FIRST_VISIT_KEY, "1"/);
 });
+
+test("RESOLUTE tool pages and both landing pages open at the very top", async () => {
+  const hook = await read("../app/resolute/use-open-at-top.ts");
+  assert.match(hook, /scrollRestoration="manual"/);
+  assert.match(hook, /window\.scrollTo\(0,0\)/);
+  assert.match(await read("../app/resolute/tool-shell.tsx"), /useOpenAtTop\(\)/);
+  assert.match(await read("../app/resolute/lp/landing.tsx"), /<OpenAtTop \/>/);
+  assert.match(await read("../app/resolute/lp/landing-en.tsx"), /<OpenAtTop \/>/);
+});

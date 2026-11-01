@@ -4,13 +4,17 @@ export type EntryDecision = "home" | "landing" | "unknown";
 /** What /resolute shows, from the answer remembered on this device and whether a sign-in cookie exists
  * (`null` = not known yet). A purchaser is never shown the landing page: when the device cannot say for sure
  * the entry stays blank until the purchase answer arrives. */
-export function entryDecision(raw: string | null, signedIn: boolean | null): EntryDecision {
+export const NOT_OWNED_FRESH_MS = 30_000;
+export function entryDecision(raw: string | null, signedIn: boolean | null, now: number = Date.now()): EntryDecision {
   if (signedIn === null) return "unknown";
   const state = parseBarState(raw);
   if (!signedIn) return state?.owned ? "home" : "landing";
   // Signed in: an answer learned while signed out says nothing about this person.
   if (!state || state.anon) return "unknown";
-  return state.owned ? "home" : "landing";
+  if (state.owned) return "home";
+  // "Not a purchaser" is only trusted for a short while: access can start (the owner, a new purchase, a view switch),
+  // and a stale answer would show the landing page to someone who should see the home. Ask again first.
+  return now - state.at > NOT_OWNED_FRESH_MS ? "unknown" : "landing";
 }
 
 /** Clerk keeps a readable `__client_uat` cookie: 0 (or absent) when signed out, a timestamp when signed in. */

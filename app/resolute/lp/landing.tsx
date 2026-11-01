@@ -3,6 +3,7 @@ import { BAR_STATE_KEY } from "@/lib/research/resolute-bar-state";
 import { ownedGuardScript } from "@/lib/resolute/landing-gate";
 import AlertSample from "./alert-sample";
 import Book from "./book";
+import OpenAtTop from "./open-at-top";
 import OwnedRedirect from "./owned-redirect";
 import { Anchor, Feature, stars } from "./parts";
 import s from "./lp.module.css";
@@ -24,6 +25,7 @@ function Buy({ small = false }: { small?: boolean }) {
 const WHAT = "RESOLUTEは相場が荒れる日でも冷静に立ち回るためのキットです。30問の診断で自分だけのルールを作り、壁紙と一冊の本にしていつも手元に置いておく。決めたラインに株価が届けばアラートが知らせてくれるので、感情で売り買いする前に立ち止まれます。";
 export default function Landing({ embedded = false }: { embedded?: boolean }) {
  return <div className={s.root}>
+  <OpenAtTop />
   {embedded ? null : <><script dangerouslySetInnerHTML={{ __html: ownedGuardScript(BAR_STATE_KEY) }} /><OwnedRedirect /></>}
   <main className={s.lp}>
    {/* 1 ファーストビュー */}
