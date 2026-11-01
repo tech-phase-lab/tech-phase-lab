@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { ClerkProvider } from "@clerk/nextjs";
+import { clerkAppearance } from "@/lib/clerk-appearance";
 import { membershipConfigured } from "@/lib/membership/server";
 import ResoluteIdentity from "../identity";
 import { loadThermometerSnapshot } from "@/lib/resolute/thermometer-server";
@@ -9,5 +10,5 @@ export const dynamic="force-dynamic";
 export default async function Page(){
  const snapshot = await loadThermometerSnapshot();
  if(!membershipConfigured())return <ThermometerScreen snapshot={snapshot}/>;
- return <ClerkProvider signInUrl="/research/account" signUpUrl="/research/account/sign-up"><ResoluteIdentity extra="thermometer" thermometerSnapshot={snapshot}/></ClerkProvider>;
+ return <ClerkProvider appearance={clerkAppearance} signInUrl="/research/account" signUpUrl="/research/account/sign-up"><ResoluteIdentity extra="thermometer" thermometerSnapshot={snapshot}/></ClerkProvider>;
 }

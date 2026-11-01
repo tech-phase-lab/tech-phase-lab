@@ -147,3 +147,8 @@
 .page .delBlock h2{margin:0;font-size:15px;font-weight:700;color:#e8edf3}
 .page .delBlock p{margin:8px 0 0;font-size:13px;line-height:1.8;color:#7d8ca0}
 .page .stopBtn{background:transparent;border:1px solid #7a2f3c;color:#f08a96}
+.page .nudge{display:flex;align-items:center;gap:12px;margin-top:12px;padding:14px;border-radius:16px;border:1px solid rgba(155,222,198,.35);background:linear-gradient(160deg,#0f1f22,#0d1419 70%)}
+.page .nudgeText{flex:1;min-width:0;display:flex;flex-direction:column;gap:4px;font-size:12.5px;line-height:1.6;color:#a9c4c0}
+.page .nudgeText b{font-size:14px;color:#e6f3ef}
+.page .nudgeGo{flex:none;white-space:nowrap;padding:9px 14px;border-radius:999px;background:#9bdec6;color:#0b151d;font-size:13px;font-weight:600;text-decoration:none}
+.page .nudgeX{flex:none;width:28px;height:28px;border:0;border-radius:14px;background:none;color:#8fa6a2;font-size:18px;line-height:1;cursor:pointer}

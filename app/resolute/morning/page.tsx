@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { ClerkProvider } from "@clerk/nextjs";
+import { clerkAppearance } from "@/lib/clerk-appearance";
 import { membershipConfigured } from "@/lib/membership/server";
 import ResoluteIdentity from "../identity";
 import NotificationScreen from "../notifications-screen";
@@ -7,5 +8,5 @@ export const metadata:Metadata={title:"RESOLUTE | Next morning",robots:{index:fa
 export const dynamic="force-dynamic";
 export default function Page(){
  if(!membershipConfigured())return <NotificationScreen mode="morning"/>;
- return <ClerkProvider signInUrl="/research/account" signUpUrl="/research/account/sign-up"><ResoluteIdentity notification="morning"/></ClerkProvider>;
+ return <ClerkProvider appearance={clerkAppearance} signInUrl="/research/account" signUpUrl="/research/account/sign-up"><ResoluteIdentity notification="morning"/></ClerkProvider>;
 }
