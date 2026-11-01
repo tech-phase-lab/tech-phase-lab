@@ -38,3 +38,10 @@ test("a signed-out answer is asked again once the member check shows a signed-in
   assert.equal(needsRefresh(null, false, now), true);
   assert.equal(needsRefresh({ ...state(false), at: now - REFRESH_MS }, false, now), true);
 });
+
+test("the owner sees the bar in every view until the seven-day mark", () => {
+  const now = 1_000_000_000;
+  assert.equal(barVisible(state(true), 0, true, now, true), true);
+  assert.equal(barVisible(state(true), 0, true, now, false), false);
+  assert.equal(barVisible(state(true), now - 1000, true, now, true), false);
+});
