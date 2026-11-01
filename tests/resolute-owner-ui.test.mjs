@@ -130,7 +130,7 @@ test("RESOLUTE can measure the top inset (viewport-fit=cover), asks again quietl
   const shell = await read("../app/resolute/tool-shell.tsx");
   assert.match(shell, /const retryLater=/);
   assert.match(shell, /r\.status===401\) \{if\(!retryLater\(\)\) setAccess\("signed-out"\)/);
-  assert.match(shell, /\/resolute\/settings#home-screen/);
+  assert.ok((shell.match(/\/resolute\/settings#home-screen/g) ?? []).length >= 2, "in the menu and in the footer of every page");
   const settings = await read("../app/resolute/settings/screen.tsx");
   assert.match(settings, /id="home-screen"/);
   assert.match(settings, /<AddToHomeSteps/);

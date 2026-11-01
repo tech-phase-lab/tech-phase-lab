@@ -80,6 +80,7 @@ export default function ToolShell({ identityReady=true, home=false, children }: 
   {review ? <p className={styles.reviewNote}>{en ? "Owner preview · You can choose to save on this device. No emails are sent." : "運営者専用の確認画面です。端末への保存は上の設定で選べます。メールは送信しません。"}</p> : null}
   {home && !reviewing ? <AddToHomeCard en={en} /> : null}
   <footer className={styles.footer}>{!reviewing ? <Link href="/resolute/settings" prefetch={false}>{en?"Language and time zone":"言語とタイムゾーン"}</Link> : null}
+   {!reviewing ? <Link href="/resolute/settings#home-screen" prefetch={false}>{en?"Add to Home Screen":"ホーム画面に追加する方法"}</Link> : null}
    <Link href="/research" prefetch={false}>Tech Phase</Link></footer>
  </div></main>;
 }
