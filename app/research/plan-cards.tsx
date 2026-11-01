@@ -25,7 +25,7 @@ export default function PlanCards({ lang }: { lang: Language }) {
     ] },
     { title: t("自分用", "For you"), rows: [
       [t("ウォッチリストの銘柄登録", "Your stock watchlist")],
-      [t("保存したリサーチ", "Saved research"), t("メモ・PDFで保存", "Save with notes or as PDF")],
+      [t("リサーチノート", "Research notes"), t("メモ・PDFで保存", "Save with notes or as PDF")],
       [t("銘柄手帳", "Stock Notebook"), t("ウォッチ銘柄の動きをまとめて確認", "Your watchlist's moves in one place")],
     ] },
   ];

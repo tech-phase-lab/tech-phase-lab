@@ -63,7 +63,7 @@ export default function HomeSidebar({ lang, tab, companyCount, savedCount, openV
       { key: "themes", icon: icons.market, label: t("テーマランキング", "Theme Ranking"), href: "/research/themes" },
       { key: "compare", icon: icons.compare, label: t("銘柄比較", "Stock Comparison"), href: "/research/compare" },
     ] : []),
-    { key: "saved", icon: icons.saved, label: t("保存したリサーチ", "Saved research"), onClick: () => openView?.("saved"), current: tab === "saved", badge: savedCount === undefined ? null : <em className={styles.count}>{savedCount}</em> },
+    { key: "saved", icon: icons.saved, label: t("リサーチノート", "Research notes"), onClick: () => openView?.("saved"), current: tab === "saved", badge: savedCount === undefined ? null : <em className={styles.count}>{savedCount}</em> },
   ];
   const destinations: Record<string, string> = { watch: "/research" + researchViewHashes.companies, metrics: "/research/calendar", saved: "/research" + researchViewHashes.saved };
   const row = (original: Item) => {
