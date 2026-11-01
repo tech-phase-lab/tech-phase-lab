@@ -271,15 +271,18 @@ function SiteMenu({ lang, member, ownerAccount, onClose, onRefresh, onPro }: { l
             <span className={styles.frTop}><span className={styles.frTitle}><ProBadge size={24} />{ja ? "PROで、もっと深く" : "Go deeper with PRO"}</span><span className={styles.frGo}>{ja ? "案内を見る" : "Learn more"}<Icon name="next" /></span></span>
             <span className={styles.frPerks}>{perks.map(name => <span key={name}>{name}</span>)}</span>
           </button>}
-      <Link href="/research/portfolio" className={styles.assetCard} onClick={event => navigate(event, "/research/portfolio")}>
-        <span className={styles.assetEmblem} aria-hidden="true"><Icon name="bars" /></span>
-        <span className={styles.assetText}><b>{ja ? "資産管理" : "Portfolio"}</b><small>{ja ? "米国株の持ち株を、スクショで登録" : "Add your US holdings from a screenshot"}</small></span>
-        <Icon name="next" className={styles.resChev} />
-      </Link>
       <div className={styles.grp}>
         {heading(ja ? "ニュース" : "News")}
         {item("/research/news", "alerts", ja ? "ハイテク速報" : "Tech Alerts", member ? <b className={styles.liveTag}>LIVE</b> : undefined, member ? undefined : (ja ? "30分遅れ · 見出しのみ · 直近5件" : "30 min delay · headlines only · latest 5"))}
         {item("/research/general-news", "news", ja ? "一般ニュース" : "General News")}
+      </div>
+      <div className={styles.grp}>
+        {heading(ja ? "マイページ" : "My page")}
+        {item("/research/watchlist", "star", ja ? "ウォッチリスト" : "Watchlist")}
+        {member && item("/research/portfolio", "bars", ja ? "資産管理(米国株)" : "Portfolio (US stocks)")}
+        {item("/research/notebook", "notebook", ja ? "銘柄手帳" : "Stock Notebook")}
+        {item("/research#saved", "saved", ja ? "保存したリサーチ" : "Saved research")}
+        {member && item("/research/notifications", "bell", alerts)}
       </div>
       {member && <div className={styles.grp}>
         {heading(ja ? "PRO機能" : "PRO features", true)}
@@ -298,13 +301,6 @@ function SiteMenu({ lang, member, ownerAccount, onClose, onRefresh, onPro }: { l
         {item("/research/capital-map", "pulse", ja ? "資本マップ" : "Capital Map")}
         {item("/research/radar", "radar", ja ? "財務レーダー" : "Financial Radar")}
         {item("/research/price-targets", "bars", ja ? "目標株価" : "Price targets")}
-      </div>
-      <div className={styles.grp}>
-        {heading(ja ? "マイページ" : "My page")}
-        {item("/research/watchlist", "star", ja ? "ウォッチリスト" : "Watchlist")}
-        {item("/research/notebook", "notebook", ja ? "銘柄手帳" : "Stock Notebook")}
-        {item("/research#saved", "saved", ja ? "保存したリサーチ" : "Saved research")}
-        {member && item("/research/notifications", "bell", alerts)}
       </div>
       <Link href="/resolute" className={styles.resCard} onClick={event => navigate(event, "/resolute")}>
         <span className={styles.resEmblem} aria-hidden="true"><Icon name="anchor" /></span>

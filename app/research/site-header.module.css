@@ -359,9 +359,3 @@
 .navy .frTitle { font-size:17px; font-weight:700; }
 .navy .frPerks { grid-template-columns:repeat(3,auto); justify-content:space-between; margin-top:12px; padding-top:12px; border-top:1px solid #4a3d1f; gap:9px 6px; }
 .navy .frPerks span { font-size:11px; color:#d9d2c0; gap:6px; }
-.sheet .assetCard { display:flex; align-items:center; gap:14px; margin-top:14px; padding:14px 16px; border-radius:16px; border:1px solid #4f9d86; background:linear-gradient(120deg,#0f2a2a,#0d1b22 62%,#10222b); }
-.assetEmblem { display:grid; place-items:center; flex:none; width:42px; height:42px; border-radius:50%; border:1.5px solid #7fd1b6; color:#9bdec6; }
-.assetEmblem svg { width:24px; height:24px; }
-.assetText { display:grid; flex:1; min-width:0; gap:2px; }
-.assetText b { font-size:17px; font-weight:600; letter-spacing:.08em; color:#d6f3ea; }
-.assetText small { font-size:11.5px; color:#9fb6b2; }

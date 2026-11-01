@@ -131,5 +131,64 @@ test("holdings never leave the browser: the screen stores them locally and sends
   assert.match(screen, /tickers=\$\{encodeURIComponent\(tickers\)\}/);
   assert.doesNotMatch(screen, /JSON\.stringify\(\{ holdings|body: JSON\.stringify\(holdings/);
   assert.match(screen, /金額を伏せる/);
-  assert.match(await src("../app/research/site-header.tsx"), /href="\/research\/portfolio" className=\{styles\.assetCard\}/);
+  const header = await src("../app/research/site-header.tsx");
+  assert.match(header, /item\("\/research\/portfolio", "bars"/);
+  assert.ok(header.indexOf('heading(ja ? "マイページ"') < header.indexOf('heading(ja ? "リサーチ"'), "the My page group sits above Research");
+});
+
+test("the portfolio is PRO only: hidden from the FREE menu, redirected on the page, and refused by both APIs", async () => {
+  const header = await src("../app/research/site-header.tsx");
+  assert.match(header, /\{member && item\("\/research\/portfolio"/);
+  const page = await src("../app/research/portfolio/page.tsx");
+  assert.match(page, /member\.plan !== "pro"\) redirect\("\/research"\)/);
+  for (const path of ["../app/api/research/portfolio/parse/route.ts", "../app/api/research/portfolio/quotes/route.ts"]) {
+    const route = await src(path);
+    assert.match(route, /getMembership\(\)\)\.plan !== "pro"\) return json\(\{ error: "pro-only" \}, 403\)/, path);
+  }
+  assert.match(await src("../app/research/plan-cards.tsx"), /米国株の資産管理/);
+  assert.match(await src("../app/research/account/account-view.tsx"), /米国株の資産管理/);
+});
+
+test("a real row with an unreadable number is kept as incomplete (to be typed in), not silently dropped", () => {
+  const parsed = normalizeParsed({ holdings: [
+    { ticker: "NVDA", name: "NVIDIA", shares: 40, avgCostUsd: 112.5 },
+    { ticker: "MU", name: "Micron Technology", shares: null, avgCostUsd: 98.4 },
+    { ticker: "ALAB", shares: 10, avgCostUsd: null },
+  ] });
+  assert.deepEqual(parsed.holdings.map(h => h.ticker), ["NVDA"]);
+  assert.deepEqual(parsed.incomplete.map(r => [r.ticker, r.shares, r.avgCostUsd]), [["MU", null, 98.4], ["ALAB", 10, null]]);
+  assert.ok(parsed.warnings.some(w => w.startsWith("MU の株数を読み取れませんでした")));
+  assert.equal(reconcile({ ...parsed, reportedGainUsd: 1, screenPrices: { NVDA: 1 } }), null, "no cross-check while a row is incomplete");
+});
+
+test("the screen follows the design: black and gold, the states, and the hide rule (only the total and the dollar profit are masked)", async () => {
+  const screen = await src("../app/research/portfolio/screen.tsx");
+  for (const text of ["スクショを選ぶだけで、", "読み取っています", "内容の確認", "要確認", "持ち株 ", "金額を表示する", "終値を取得できませんでした", "もう一度取得する", "今日の読み込みは、", "手入力で追加", "取得時の為替(USD/JPY)", "投資助言ではありません。", "為替が分かる銘柄のみ"]) assert.ok(screen.includes(text), text);
+  // Hidden: the total and the dollar profit amount only.
+  assert.match(screen, /hide \? <b className=\{`\$\{s\.big\} \$\{s\.mask\}`\}>\{MASK\}<\/b>/);
+  assert.match(screen, /hide \? MASK : `\$\{sign\(totals\.gainUsd\)\}/);
+  assert.doesNotMatch(screen, /hide \? MASK : usd\(row/, "the cards are never masked");
+  // The honest progress: the price step is shown as waiting, not as running.
+  assert.match(screen, /data-state="wait"><i \/>終値と為替を取得します/);
+  const css = await src("../app/research/portfolio/portfolio.module.css");
+  assert.match(css, /--gold:#e7c982/);
+  assert.match(css, /prefers-reduced-motion/);
+});
+
+test("the screen order of the rows is kept, including rows with a missing number", () => {
+  const parsed = normalizeParsed({ holdings: [
+    { ticker: "NVDA", shares: 40, avgCostUsd: 112.5 }, { ticker: "AVGO", shares: 12, avgCostUsd: 210 },
+    { ticker: "MU", shares: null, avgCostUsd: 98.4 }, { ticker: "MSFT", shares: 8, avgCostUsd: 420 } ] });
+  assert.deepEqual(parsed.order, ["NVDA", "AVGO", "MU", "MSFT"]);
+});
+
+test("the manual form finds stocks by Japanese company name through the same search as the stock search page", async () => {
+  const { searchStocks } = await import("../lib/research/stock-search.ts");
+  const entries = [{ ticker: "NVDA", name: "NVIDIA CORP", cik: 1045810 }, { ticker: "MU", name: "MICRON TECHNOLOGY INC", cik: 723125 }];
+  assert.equal(searchStocks(entries, "エヌビディア", 5)[0]?.ticker, "NVDA");
+  assert.equal(searchStocks(entries, "マイクロン", 5)[0]?.ticker, "MU");
+  const screen = await src("../app/research/portfolio/screen.tsx");
+  assert.match(screen, /\/api\/research\/stocks\?q=/);
+  assert.match(screen, /日本語の会社名でも探せます/);
+  assert.match(await src("../app/api/research/stocks/route.ts"), /searchDirectory\(entries, query/);
 });
