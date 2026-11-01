@@ -320,3 +320,6 @@
 @media(max-width:360px){.chapterMetrics>div[data-text=true]{grid-template-columns:1fr;gap:2px}.chapterMetrics>div[data-text=true] dd{font-size:17px}}
 
 .homePage{padding:0}.homeWrap{display:flex;flex-direction:column}.homeControls{order:2;padding:16px;max-width:600px;width:100%;margin:auto}.homeWrap>nav{order:3}.homeWrap>footer,.homeWrap>p{order:4;padding:16px;max-width:600px;margin:auto}
+
+/* iPhone in-app view: the floating close button and address pill must not cover the first line. */
+:global(html[data-overlay-bar="1"]) .wrap, :global(html[data-overlay-bar="1"]) .homeWrap { padding-top:34px; }

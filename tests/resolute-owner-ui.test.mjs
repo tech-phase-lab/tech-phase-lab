@@ -86,3 +86,12 @@ test("after the sign-in code the screen waits without an empty framed card", asy
   const css = await read("../app/research/account/styles.module.css");
   assert.doesNotMatch(css, /\.placeholder\{[^}]*(border|background)/);
 });
+
+test("RESOLUTE pages start below the in-app view's floating buttons on iPhone", async () => {
+  const hook = await read("../app/resolute/use-open-at-top.ts");
+  assert.match(hook, /safe-area-inset-top/);
+  assert.match(hook, /dataset\.overlayBar="1"/);
+  assert.match(hook, /standalone/);
+  assert.match(await read("../app/resolute/diagnosis.module.css"), /html\[data-overlay-bar="1"\]\) \.homeWrap/);
+  assert.match(await read("../app/resolute/lp/lp.module.css"), /html\[data-overlay-bar="1"\]\) \.lp/);
+});
