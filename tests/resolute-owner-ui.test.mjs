@@ -69,3 +69,11 @@ test("members without two-step verification are invited to turn it on, and can c
   assert.match(view, /tech-phase:two-step-nudge-until/);
   assert.match(view, /14 \* 86_400_000/);
 });
+
+test("the security page sits inside the site frame with a proper heading and back button", async () => {
+  const screen = await read("../app/research/account/security/screen.tsx");
+  assert.match(screen, /<ResearchToolShell/);
+  assert.match(screen, /title=\{ja \? "セキュリティ"/);
+  assert.match(screen, /href="\/research\/account"/);
+  assert.match(screen, /<UserProfile routing="hash" \/>/);
+});
