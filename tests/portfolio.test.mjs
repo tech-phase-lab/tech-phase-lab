@@ -132,13 +132,13 @@ test("holdings never leave the browser: the screen stores them locally and sends
   assert.doesNotMatch(screen, /JSON\.stringify\(\{ holdings|body: JSON\.stringify\(holdings/);
   assert.match(screen, /金額を伏せる/);
   const header = await src("../app/research/site-header.tsx");
-  assert.match(header, /item\("\/research\/portfolio", "bars"/);
+  assert.match(header, /my\("\/research\/portfolio", "wallet"/);
   assert.ok(header.indexOf('heading(ja ? "マイページ"') > header.indexOf('heading(ja ? "リサーチ"'), "the My page group stays below Research");
 });
 
 test("the portfolio is PRO only: hidden from the FREE menu, redirected on the page, and refused by both APIs", async () => {
   const header = await src("../app/research/site-header.tsx");
-  assert.match(header, /\{member && item\("\/research\/portfolio"/);
+  assert.match(header, /\{member \? <div className=\{styles\.myGrid\}>[\s\S]*my\("\/research\/portfolio"[\s\S]*<\/div> : <>/);
   const page = await src("../app/research/portfolio/page.tsx");
   assert.match(page, /member\.plan !== "pro"\) redirect\("\/research"\)/);
   for (const path of ["../app/api/research/portfolio/parse/route.ts", "../app/api/research/portfolio/quotes/route.ts"]) {
@@ -213,4 +213,9 @@ test("the portfolio APIs run behind the sign-in middleware (without it the sessi
   const screen = await src("../app/research/portfolio/screen.tsx");
   assert.match(screen, /response\.status === 400 \? "unreadable" : "service"/);
   assert.match(screen, /http-\$\{response\.status\}/);
+});
+
+test("the confirmation screen does not repeat the not-advice line under the register button", async () => {
+  const screen = await src("../app/research/portfolio/screen.tsx");
+  assert.match(screen, /\{!review && <p className=\{s\.disclaimer\}>/);
 });

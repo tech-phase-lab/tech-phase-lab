@@ -24,3 +24,9 @@
 .page :is(button,a,input,select):focus-visible { outline:2px solid #e4c98c; outline-offset:4px; }
 .srOnly { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
 @media (max-width:480px) { .page { padding:24px 16px; } .top { gap:10px; margin-bottom:24px; } .card { padding:24px 20px; } .brand { font-size:16px; } }
+
+.homeCard { margin-top:20px; padding:24px 28px; }
+.homeCard h2 { margin:0 0 12px; font-size:18px; line-height:1.4; }
+.homeCard ol { margin:0; padding-left:1.4em; font-size:14px; line-height:1.9; color:#d6dde7; }
+.homeCard li b { color:#e4c98c; font-weight:600; }
+.homeCard p { margin:10px 0 0; font-size:13px; color:#9aa6b6; }

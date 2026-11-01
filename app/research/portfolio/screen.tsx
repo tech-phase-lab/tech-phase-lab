@@ -134,7 +134,7 @@ export default function PortfolioScreen() {
           {holdings.length > 0 && <List rows={rows} totals={totals} shares={shares} hide={hide} market={market} marketError={marketError} onRetry={() => { setMarketError(false); setRetry(value => value + 1); }}
             pick={pick("merge")} onManual={() => setManual(true)} colorOf={colorOf} onClear={() => { if (window.confirm("この端末に保存した持ち株を、すべて消します。よろしいですか?")) writeHoldings([]); }} />}
         </>}
-      <p className={s.disclaimer}>投資助言ではありません。</p>
+      {!review && <p className={s.disclaimer}>投資助言ではありません。</p>}
       <p className={s.back}><Link href="/research/account"><span className={s.backIcon}>{Icon.back}</span>マイアカウントに戻る</Link></p>
     </div>
     {sheet && <div className={s.sheetWrap} role="dialog" aria-modal="true" aria-label="画像の扱い">
