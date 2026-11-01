@@ -95,3 +95,19 @@ test("RESOLUTE pages start below the in-app view's floating buttons on iPhone", 
   assert.match(await read("../app/resolute/diagnosis.module.css"), /html\[data-overlay-bar="1"\]\) \.homeWrap/);
   assert.match(await read("../app/resolute/lp/lp.module.css"), /html\[data-overlay-bar="1"\]\) \.lp/);
 });
+
+test("RESOLUTE has its own home-screen app: manifest, icons, scope and a hint to add it", async () => {
+  const manifest = JSON.parse(await read("../public/resolute.webmanifest"));
+  assert.equal(manifest.name, "RESOLUTE");
+  assert.equal(manifest.start_url, "/resolute");
+  assert.equal(manifest.scope, "/resolute");
+  assert.equal(manifest.display, "standalone");
+  for (const icon of manifest.icons) assert.ok((await readFile(new URL(`../public${icon.src}`, import.meta.url))).length > 1000, icon.src);
+  const layout = await read("../app/resolute/layout.tsx");
+  assert.match(layout, /manifest: "\/resolute\.webmanifest"/);
+  assert.match(layout, /appleWebApp: \{ capable: true, title: "RESOLUTE" \}/);
+  assert.match(layout, /resolute-180\.png/);
+  const tech = await read("../app/manifest.ts");
+  assert.match(tech, /scope: "\/research"/, "the Tech Phase app keeps its own scope");
+  assert.match(await read("../app/resolute/tool-shell.tsx"), /ホーム画面に追加/);
+});

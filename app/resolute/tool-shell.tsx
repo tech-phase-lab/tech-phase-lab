@@ -70,6 +70,8 @@ export default function ToolShell({ identityReady=true, home=false, children }: 
    <button type="button" className={styles.secondary} disabled={access==="loading"} onClick={()=>setAttempt(n=>n+1)}>{en?"Check again":"再確認"}</button>
   </section>}
   {review ? <p className={styles.reviewNote}>{en ? "Owner preview · You can choose to save on this device. No emails are sent." : "運営者専用の確認画面です。端末への保存は上の設定で選べます。メールは送信しません。"}</p> : null}
+  {home && !reviewing ? <details className={styles.addHint}><summary>{en?"Put RESOLUTE on your home screen":"ホーム画面にRESOLUTEを置く"}</summary>
+   <p>{en?"In Safari, tap Share, then “Add to Home Screen”. RESOLUTE opens on its own, without going through Tech Phase.":"Safariで、共有ボタン →「ホーム画面に追加」を選ぶと、Tech Phaseを通らず、RESOLUTEだけが開きます。"}</p></details> : null}
   <footer className={styles.footer}>{!reviewing ? <Link href="/resolute/settings" prefetch={false}>{en?"Language and time zone":"言語とタイムゾーン"}</Link> : null}
    <Link href="/research" prefetch={false}>Tech Phase</Link></footer>
  </div></main>;
