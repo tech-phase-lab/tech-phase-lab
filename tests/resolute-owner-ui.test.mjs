@@ -111,3 +111,7 @@ test("RESOLUTE has its own home-screen app: manifest, icons, scope and a hint to
   assert.match(tech, /scope: "\/research"/, "the Tech Phase app keeps its own scope");
   assert.match(await read("../app/resolute/tool-shell.tsx"), /ホーム画面に追加/);
 });
+
+test("the RESOLUTE menu always offers the way back to Tech Phase", async () => {
+  assert.match(await read("../app/resolute/tool-shell.tsx"), /href="\/research" prefetch=\{false\}>\{en\?"← Tech Phase":"← Tech Phaseへ"\}/);
+});

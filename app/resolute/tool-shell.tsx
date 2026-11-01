@@ -62,6 +62,8 @@ export default function ToolShell({ identityReady=true, home=false, children }: 
   {menuOpen ? <nav id="resolute-tools" className={styles.toolMenu} aria-label={en?"RESOLUTE tools":"RESOLUTEのツール"}>
    {[["/resolute/diagnosis","① 診断","① Quiz"],["/resolute/simulation","② シミュレーション","② Simulator"],["/resolute/alerts","③ アラート","③ Alerts"],["/resolute/morning","④ 翌朝","④ Morning note"],["/resolute/thermometer","⑤ 温度計","⑤ Gauge"],["/resolute/tax","⑥ 税金","⑥ Tax"],["/resolute/notebook","マイルール","My rulebook"],["/resolute/wall","ルールのお守り","Rules wallpaper"],["/resolute/tonight","今夜のひと息","A moment to breathe"],["/resolute/news","危険度チェッカー","News risk checker"]].map(([href,ja,eng])=>
     <Link key={href} href={href} onClick={()=>setMenuOpen(false)} prefetch={false} aria-current={(review?.path ?? pathname)===href?"page":undefined}>{en?eng:ja}</Link>)}
+   {/* RESOLUTE can run as its own home-screen app: the way back to Tech Phase is always in this menu. */}
+   {!reviewing ? <Link href="/research" prefetch={false}>{en?"← Tech Phase":"← Tech Phaseへ"}</Link> : null}
   </nav> : null}
   {identityReady && (reviewing || access==="allowed") ? children(locale,()=>setAccess("denied"),entitlement) : <section className={styles.card}>
    <h1>{en?"Your investing rules":"自分の投資ルール"}</h1><p role="status">{message}</p>
