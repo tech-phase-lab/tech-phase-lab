@@ -234,8 +234,9 @@ export default function AccountView({ ja, member, billingAvailable, upgradeFirst
   const security = <div className={styles.cd} style={{ marginTop: 0 }}>
     {row(I.bell, t("スマホ通知の設定", "Phone notifications"), { href: "/research/notifications", pro: true })}
     {passwordRow && row(I.key, t("パスワードを変更", "Change password"), { href: "/research/account/security" })}
-    {/* The owner's two-step verification is required for admin access: shown, never offered to turn off. */}
-    {owner ? row(I.shield, t("2段階認証", "Two-step verification"), { value: twoValue, chevron: false }) : row(I.shield, t("2段階認証", "Two-step verification"), { href: "/research/account/security", value: twoValue })}
+    {/* The owner's two-step verification is required for admin access: when it is on it is only shown (never offered to turn off);
+        when it is off or cannot be read, the row opens the security page so it can be set up. */}
+    {owner && twoFactor === true ? row(I.shield, t("2段階認証", "Two-step verification"), { value: twoValue, chevron: false }) : row(I.shield, t("2段階認証", "Two-step verification"), { href: "/research/account/security", value: twoValue })}
     {row(I.out, t("ログアウト", "Log out"), { onClick: () => { if (clerk.loaded) void clerk.signOut({ redirectUrl: "/research" }); }, chevron: false, className: styles.muted })}
   </div>;
 

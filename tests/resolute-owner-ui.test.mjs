@@ -43,3 +43,9 @@ test("the RESOLUTE bar measures the bottom menu again after returning and when t
   assert.match(bar, /ResizeObserver/);
   assert.match(bar, /\[60, 250, 700, 1500, 3000\]/);
 });
+
+test("the owner can open the security page to set up two-step verification when it is not on", async () => {
+  const view = await read("../app/research/account/account-view.tsx");
+  assert.match(view, /owner && twoFactor === true \? row\(I\.shield/);
+  assert.match(view, /row\(I\.shield, t\("2段階認証", "Two-step verification"\), \{ href: "\/research\/account\/security", value: twoValue \}\)/);
+});
