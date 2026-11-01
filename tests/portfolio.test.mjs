@@ -128,5 +128,5 @@ test("holdings never leave the browser: the screen stores them locally and sends
   assert.match(screen, /tickers=\$\{encodeURIComponent\(tickers\)\}/);
   assert.doesNotMatch(screen, /JSON\.stringify\(\{ holdings|body: JSON\.stringify\(holdings/);
   assert.match(screen, /金額を伏せる/);
-  assert.match(await src("../app/research/site-header.tsx"), /href|"\/research\/portfolio"/);
+  assert.match(await src("../app/research/site-header.tsx"), /href="\/research\/portfolio" className=\{styles\.assetCard\}/);
 });
