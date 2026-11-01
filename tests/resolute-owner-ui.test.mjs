@@ -109,7 +109,16 @@ test("RESOLUTE has its own home-screen app: manifest, icons, scope and a hint to
   assert.match(layout, /resolute-180\.png/);
   const tech = await read("../app/manifest.ts");
   assert.match(tech, /scope: "\/research"/, "the Tech Phase app keeps its own scope");
-  assert.match(await read("../app/resolute/tool-shell.tsx"), /ホーム画面に追加/);
+  assert.match(await read("../app/resolute/add-to-home-steps.tsx"), /ホーム画面に追加/);
+  assert.match(await read("../app/resolute/tool-shell.tsx"), /<AddToHomeCard en=\{en\} \/>/);
+  assert.match(await read("../app/resolute/lp/landing.tsx"), /<AddToHomeSteps className=\{s\.homeSteps\} \/>/);
+});
+
+test("while access is being checked RESOLUTE shows its logo and 確認中…, never an empty framed card", async () => {
+  const shell = await read("../app/resolute/tool-shell.tsx");
+  assert.match(shell, /className=\{styles\.loadingBrand\}/);
+  assert.match(shell, /確認中…/);
+  assert.doesNotMatch(shell, /利用権を確認しています…["']\)? *:/ , "the checking message no longer sits in the card");
 });
 
 test("the RESOLUTE menu always offers the way back to Tech Phase", async () => {
