@@ -200,9 +200,17 @@ test("a failed call to the reading service is told apart from an unreadable pict
   assert.match(vision, /async function providerReason/);
   assert.doesNotMatch(vision, /console\./);
   const screen = await src("../app/research/portfolio/screen.tsx");
-  assert.match(screen, /data\.error === "unavailable" \? "service"/);
+  assert.match(screen, /response\.status === 400 \? "unreadable" : "service"/);
   assert.match(screen, /スクショから持ち株を<br \/>読み取れませんでした/);
   assert.doesNotMatch(screen, /読み取れませんでした。<\/h2>|上限に達しました。<\/h2>/, "no full stop in the headings");
   const header = await src("../app/research/site-header.tsx");
   assert.ok(header.indexOf('heading(ja ? "マイページ"') > header.indexOf('heading(ja ? "リサーチ"'), "My page is back below Research");
+});
+
+test("the portfolio APIs run behind the sign-in middleware (without it the session cannot be read and every call fails)", async () => {
+  const proxy = await src("../proxy.ts");
+  assert.match(proxy, /"\/api\/research\/portfolio\/:path\*"/);
+  const screen = await src("../app/research/portfolio/screen.tsx");
+  assert.match(screen, /response\.status === 400 \? "unreadable" : "service"/);
+  assert.match(screen, /http-\$\{response\.status\}/);
 });

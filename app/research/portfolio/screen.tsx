@@ -97,8 +97,9 @@ export default function PortfolioScreen() {
       const data = await response.json().catch(() => ({}));
       if (!response.ok) {
         // A failed call to the reading service is told apart from a picture that simply could not be read.
-        setProblem(data.error === "limit" ? "limit" : data.error === "not-configured" ? "config" : data.error === "unavailable" ? "service" : response.status === 400 ? "unreadable" : "other");
-        if (typeof data.reason === "string") setReason(data.reason);
+        setProblem(data.error === "limit" ? "limit" : data.error === "not-configured" ? "config" : response.status === 400 ? "unreadable" : "service");
+        // Anything else (for example a server error with no reason) is a service failure, shown with its status so it can be told apart.
+        setReason(typeof data.reason === "string" ? data.reason : `http-${response.status}${typeof data.error === "string" ? `:${data.error}` : ""}`);
         return;
       }
       const complete: ReviewRow[] = (data.holdings ?? []).map((h: Holding) => ({ id: nextId++, ticker: h.ticker, name: h.name, shares: String(h.shares), avg: String(h.avgCostUsd), fx: h.avgCostFx }));
