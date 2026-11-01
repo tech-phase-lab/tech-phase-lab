@@ -42,6 +42,9 @@ export default function PlanCards({ lang }: { lang: Language }) {
       [t("監視22銘柄", "22 Tracked Stocks"), t("主要株の変化を見逃さない", "Keep up with the key stocks")],
       [t("厳選ニュース", "Selected news"), t("細かな企業発表まで配信", "Down to the smaller company releases")],
     ] },
+    { title: t("資産を管理", "Your portfolio"), rows: [
+      [t("米国株の資産管理", "U.S. stock portfolio"), t("スクショで持ち株を登録", "Add holdings from a screenshot")],
+    ] },
     { title: t("会員だけの場", "Members only"), rows: [
       [t("週刊 Tech Phase PRO", "Tech Phase PRO Weekly"), t("1週間の変化と展望", "The week's shifts and outlook")],
       [t("リゼルのひとりごと", "RIZEL's Notes"), t("文章と音声で相場を語る", "Markets in words and audio")],

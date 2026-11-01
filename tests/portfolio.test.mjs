@@ -131,5 +131,20 @@ test("holdings never leave the browser: the screen stores them locally and sends
   assert.match(screen, /tickers=\$\{encodeURIComponent\(tickers\)\}/);
   assert.doesNotMatch(screen, /JSON\.stringify\(\{ holdings|body: JSON\.stringify\(holdings/);
   assert.match(screen, /金額を伏せる/);
-  assert.match(await src("../app/research/site-header.tsx"), /href="\/research\/portfolio" className=\{styles\.assetCard\}/);
+  const header = await src("../app/research/site-header.tsx");
+  assert.match(header, /item\("\/research\/portfolio", "bars"/);
+  assert.ok(header.indexOf('heading(ja ? "マイページ"') < header.indexOf('heading(ja ? "リサーチ"'), "the My page group sits above Research");
+});
+
+test("the portfolio is PRO only: hidden from the FREE menu, redirected on the page, and refused by both APIs", async () => {
+  const header = await src("../app/research/site-header.tsx");
+  assert.match(header, /\{member && item\("\/research\/portfolio"/);
+  const page = await src("../app/research/portfolio/page.tsx");
+  assert.match(page, /member\.plan !== "pro"\) redirect\("\/research"\)/);
+  for (const path of ["../app/api/research/portfolio/parse/route.ts", "../app/api/research/portfolio/quotes/route.ts"]) {
+    const route = await src(path);
+    assert.match(route, /getMembership\(\)\)\.plan !== "pro"\) return json\(\{ error: "pro-only" \}, 403\)/, path);
+  }
+  assert.match(await src("../app/research/plan-cards.tsx"), /米国株の資産管理/);
+  assert.match(await src("../app/research/account/account-view.tsx"), /米国株の資産管理/);
 });
