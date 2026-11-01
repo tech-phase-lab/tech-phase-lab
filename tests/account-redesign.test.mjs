@@ -204,6 +204,6 @@ test("PRO view and PRO members get a PRO MEMBER badge under the account card", a
   const { readFile } = await import("node:fs/promises");
   const source = await readFile(new URL("../app/research/account/account-view.tsx", import.meta.url), "utf8");
   assert.match(source, /effective === "pro" && \(!owner \|\| preview\)[\s\S]{0,400}PRO MEMBER/);
-  const shell = await readFile(new URL("../app/resolute/tool-shell.tsx", import.meta.url), "utf8");
-  assert.match(shell, /window\.scrollTo\(0,0\)/);
+  const hook = await readFile(new URL("../app/resolute/use-open-at-top.ts", import.meta.url), "utf8");
+  assert.match(hook, /window\.scrollTo\(0,0\)/);
 });

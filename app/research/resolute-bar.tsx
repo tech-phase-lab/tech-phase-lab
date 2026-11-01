@@ -79,8 +79,26 @@ export default function ResoluteBar() {
       setNotch({ x: Math.round((orb.left + orb.width / 2 - self.getBoundingClientRect().left) * 10) / 10, y: Math.round((orb.top + orb.height / 2 - top) * 10) / 10, r: Math.round(orb.width / 2 + 7) });
     };
     place();
+    // Coming back from another page (or the phone's browser bars sliding in and out) moves the bottom menu after the first
+    // measurement, and the bar stayed where it was measured, on top of the menu (owner, Oct 31). Measure again whenever the
+    // viewport or the menu changes, and a few times shortly after opening.
+    const timers = [60, 250, 700, 1500, 3000].map(ms => window.setTimeout(place, ms));
+    const viewport = window.visualViewport;
+    const menu = document.querySelector<HTMLElement>("[data-tab]")?.parentElement;
+    const observer = typeof ResizeObserver === "undefined" || !menu ? null : new ResizeObserver(place);
+    if (menu) observer?.observe(menu);
     window.addEventListener("resize", place);
-    return () => window.removeEventListener("resize", place);
+    window.addEventListener("pageshow", place);
+    window.addEventListener("orientationchange", place);
+    document.addEventListener("visibilitychange", place);
+    viewport?.addEventListener("resize", place);
+    viewport?.addEventListener("scroll", place);
+    return () => {
+      timers.forEach(window.clearTimeout); observer?.disconnect();
+      window.removeEventListener("resize", place); window.removeEventListener("pageshow", place);
+      window.removeEventListener("orientationchange", place); document.removeEventListener("visibilitychange", place);
+      viewport?.removeEventListener("resize", place); viewport?.removeEventListener("scroll", place);
+    };
   }, [shown]);
 
   useEffect(() => {

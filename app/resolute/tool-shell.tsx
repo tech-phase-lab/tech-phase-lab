@@ -3,25 +3,15 @@ import {writeBarState} from '@/lib/research/resolute-bar-state';
 import { ReviewLink as Link, useReview } from "./review-context";
 import { usePathname } from "next/navigation";
 import { useEffect, useState, type ReactNode } from "react";
+import { useOpenAtTop } from "./use-open-at-top";
 import { validateSnapshot } from "@/lib/resolute/transport";
 import { requestPreferences } from "@/lib/resolute/preferences-client";
 import type { DiagnosisLocale } from "@/lib/resolute/diagnosis-copy";
 import styles from "./diagnosis.module.css";
-type Access = "loading"|"allowed"|"denied"|"signed-out"|"unavailable";
+type Access = "loading"|"allowed"|"denied"|"signed-out"|"unavailable"|"mfa";
 export default function ToolShell({ identityReady=true, home=false, children }: { identityReady?: boolean; home?: boolean;
  children: (locale: DiagnosisLocale, deny: () => void, entitlement: ReturnType<typeof validateSnapshot> | null) => ReactNode }) {
- // Opening from another page must start at the top, not where the previous page was scrolled to.
- useEffect(()=>{
-  // iPhone Safari restores or keeps an earlier scroll after the first paint, so top is re-asserted a few times until the reader touches the page.
-  let touched=false; const stop=()=>{touched=true;};
-  const top=()=>{ if(!touched && window.scrollY>0) window.scrollTo(0,0); };
-  const previous=history.scrollRestoration;
-  try { history.scrollRestoration="manual"; } catch { /* not supported */ }
-  window.scrollTo(0,0);
-  const frame=requestAnimationFrame(top), timers=[120,400,900].map(ms=>window.setTimeout(top,ms));
-  window.addEventListener("touchstart",stop,{passive:true,once:true}); window.addEventListener("wheel",stop,{passive:true,once:true});
-  return ()=>{ cancelAnimationFrame(frame); timers.forEach(clearTimeout); window.removeEventListener("touchstart",stop); window.removeEventListener("wheel",stop); try { history.scrollRestoration=previous; } catch { /* not supported */ } };
- },[]);
+ useOpenAtTop();
  const [entitlement,setEntitlement]=useState<ReturnType<typeof validateSnapshot>|null>(null);
  const pathname=usePathname();
  const review=useReview(), reviewing=review !== null;
@@ -38,6 +28,12 @@ export default function ToolShell({ identityReady=true, home=false, children }: 
     const r=await fetch("/api/resolute/entitlements",{cache:"no-store",credentials:"same-origin",redirect:"error",signal:AbortSignal.any([controller.signal,AbortSignal.timeout(25000)])});
     if(controller.signal.aborted) return;
     if(r.status===401) {setAccess("signed-out");return;}
+    if(r.status===403) {
+     // The owner's access needs two-step verification in THIS sign-in; turning it on in settings is not enough.
+     let code=""; try { const body=await r.json(); code=typeof body?.error==="string"?body.error:""; } catch { /* not JSON */ }
+     if(!controller.signal.aborted) setAccess(code==="OWNER_MFA_REQUIRED" ? "mfa" : "unavailable");
+     return;
+    }
     if(!r.ok) throw new Error("unavailable");
     const text=await r.text(); if(text.length>8192) throw new Error("unavailable");
     const value=validateSnapshot(JSON.parse(text));
@@ -52,7 +48,8 @@ export default function ToolShell({ identityReady=true, home=false, children }: 
  const [menuOpen,setMenuOpen]=useState(false);
  const en=locale==="en";
  const message=access==="loading" ? (en?"Checking access…":"利用権を確認しています…") : access==="signed-out" ?
-  (en?"Sign in to use RESOLUTE.":"RESOLUTEを使うにはログインしてください。") : access==="denied" ?
+  (en?"Sign in to use RESOLUTE.":"RESOLUTEを使うにはログインしてください。") : access==="mfa" ?
+  (en?"Owner access needs two-step verification in this sign-in. Sign out, sign in again and enter the code from your authenticator app, then check again.":"運営者として使うには、今回のログインで2段階認証のコード入力が必要です。ログアウトして入り直し、認証アプリのコードを入力してから、もう一度確認してください。") : access==="denied" ?
   (en?"You need to have purchased RESOLUTE to use it. PRO membership alone doesn’t include access.":"有効なRESOLUTEの購入権限が必要です。PRO会員資格だけでは利用できません。") :
   (en?"We couldn’t check your access. Please try again in a moment.":"利用権を確認できませんでした。時間をおいて再確認してください。");
  return <main className={`${styles.page} ${home?styles.homePage:""}`} lang={locale}><div className={home?styles.homeWrap:styles.wrap}>
@@ -69,6 +66,7 @@ export default function ToolShell({ identityReady=true, home=false, children }: 
   {identityReady && (reviewing || access==="allowed") ? children(locale,()=>setAccess("denied"),entitlement) : <section className={styles.card}>
    <h1>{en?"Your investing rules":"自分の投資ルール"}</h1><p role="status">{message}</p>
    {access==="signed-out" ? <Link href="/research/account" prefetch={false}>{en?"Sign in":"ログイン"}</Link> : null}
+   {access==="mfa" ? <Link href="/research/account/security" prefetch={false}>{en?"Open security settings":"セキュリティ設定を開く"}</Link> : null}
    <button type="button" className={styles.secondary} disabled={access==="loading"} onClick={()=>setAttempt(n=>n+1)}>{en?"Check again":"再確認"}</button>
   </section>}
   {review ? <p className={styles.reviewNote}>{en ? "Owner preview · You can choose to save on this device. No emails are sent." : "運営者専用の確認画面です。端末への保存は上の設定で選べます。メールは送信しません。"}</p> : null}

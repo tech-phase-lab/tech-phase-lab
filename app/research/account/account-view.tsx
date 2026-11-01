@@ -62,9 +62,11 @@ export default function AccountView({ ja, member, billingAvailable, upgradeFirst
     try {
       const result = await fetch("/api/research/member/preview", { method: "POST", credentials: "same-origin", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ mode: value === "owner" ? "restore" : value }), signal: AbortSignal.timeout(15000) });
       if (!result.ok) throw Error("switch-failed");
-      try { localStorage.removeItem("tech-phase:member-hint"); localStorage.removeItem("tech-phase:owner-view-as"); } catch { /* optional display hints */ }
+      try { localStorage.removeItem("tech-phase:member-hint"); localStorage.removeItem("tech-phase:owner-view-as"); localStorage.removeItem("tech-phase:resolute-bar-state:v1"); } catch { /* optional display hints */ }
       // No page reload: the header, the menu and this screen listen for this and re-read the membership themselves.
       window.dispatchEvent(new Event("tech-phase:membership-changed"));
+      // The remembered RESOLUTE answer belongs to the previous view: the entry and the bottom bar ask again.
+      window.dispatchEvent(new Event("tech-phase:resolute-bar"));
       setSwitching(false);
       // If the membership read never confirms the change, fall back to what the server says.
       setTimeout(() => setPendingView(null), 8000);
@@ -232,8 +234,9 @@ export default function AccountView({ ja, member, billingAvailable, upgradeFirst
   const security = <div className={styles.cd} style={{ marginTop: 0 }}>
     {row(I.bell, t("スマホ通知の設定", "Phone notifications"), { href: "/research/notifications", pro: true })}
     {passwordRow && row(I.key, t("パスワードを変更", "Change password"), { href: "/research/account/security" })}
-    {/* The owner's two-step verification is required for admin access: shown, never offered to turn off. */}
-    {owner ? row(I.shield, t("2段階認証", "Two-step verification"), { value: twoValue, chevron: false }) : row(I.shield, t("2段階認証", "Two-step verification"), { href: "/research/account/security", value: twoValue })}
+    {/* The owner's two-step verification is required for admin access: when it is on it is only shown (never offered to turn off);
+        when it is off or cannot be read, the row opens the security page so it can be set up. */}
+    {owner && twoFactor === true ? row(I.shield, t("2段階認証", "Two-step verification"), { value: twoValue, chevron: false }) : row(I.shield, t("2段階認証", "Two-step verification"), { href: "/research/account/security", value: twoValue })}
     {row(I.out, t("ログアウト", "Log out"), { onClick: () => { if (clerk.loaded) void clerk.signOut({ redirectUrl: "/research" }); }, chevron: false, className: styles.muted })}
   </div>;
 
