@@ -12,7 +12,8 @@ export function useOpenAtTop() {
    const probe=document.createElement("div"); probe.style.cssText="position:fixed;top:0;left:0;visibility:hidden;padding-top:env(safe-area-inset-top)";
    document.body.appendChild(probe); const inset=parseFloat(getComputedStyle(probe).paddingTop)||0; probe.remove();
    const standalone=(navigator as Navigator & {standalone?:boolean}).standalone===true || window.matchMedia("(display-mode: standalone)").matches;
-   if(inset>0 && !standalone) document.documentElement.dataset.overlayBar="1"; else delete document.documentElement.dataset.overlayBar;
+   // viewport-fit=cover lets the page reach under the status bar: keep clear of it in the home-screen app too.
+   if(inset>0) document.documentElement.dataset.overlayBar=standalone?"app":"1"; else delete document.documentElement.dataset.overlayBar;
   } catch { /* optional spacing */ }
   return ()=>{ delete document.documentElement.dataset.overlayBar; };
  },[]);

@@ -6,7 +6,7 @@ export default function SavedSyncStatus({ collection, lang }: { collection: Retu
   const [confirm, setConfirm] = useState(false);
   const t = (ja: string, en: string) => lang === 'ja' ? ja : en;
   const labels = {
-    loading: t('保存データを確認中…', 'Loading saved research…'), guest: t('このブラウザーに保存 · ログインすると端末間で同期できます', 'Saved in this browser · Sign in to sync devices'),
+    loading: t('保存データを確認中…', 'Loading research notes…'), guest: t('このブラウザーに保存 · ログインすると端末間で同期できます', 'Saved in this browser · Sign in to sync devices'),
     synced: t('アカウントに同期済み', 'Synced to your account'), saving: t('同期中…', 'Syncing…'),
     error: t('同期できませんでした。未送信の変更はこの端末に保持しています。', 'Sync unavailable. Pending edits are kept on this device.'),
     conflict: t('同じ書き込みが別の端末で変更されています。この端末の内容は保持しています。', 'The same annotation changed on another device. Your local draft is retained.'),
@@ -18,7 +18,7 @@ export default function SavedSyncStatus({ collection, lang }: { collection: Retu
   }
   if (collection.status === 'guest' || collection.status === 'loading') return null;
   if (collection.status === 'synced') return collection.canImport ? <details className={styles.savedImport}>
-    <summary>{t('保存データの引き継ぎ', 'Import saved research')}</summary>
+    <summary>{t('保存データの引き継ぎ', 'Import research notes')}</summary>
     <button onClick={collection.importLocal}>{t('このブラウザーの保存記事・メモを引き継ぐ', 'Import this browser’s articles and notes')}</button>
   </details> : null;
   return <div className={styles.savedSync}>

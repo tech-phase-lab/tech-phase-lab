@@ -147,6 +147,7 @@ const menuIcons = {
   targets: <path d="M4 4v16h16M9 16v-5M13 16V8M17 16v-3" />,
   saved: <path d="M7 4h10v16l-5-4-5 4z" />,
   notebook: <><path d="M6 3h11a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6zM6 3v18M10 8h6M10 12h6" /></>,
+  wallet: <><path d="M4 7a2 2 0 0 1 2-2h11v3M4 7v10a2 2 0 0 0 2 2h13a1 1 0 0 0 1-1V9a1 1 0 0 0-1-1H6a2 2 0 0 1-2-2z" /><circle cx="16.5" cy="13.5" r="1" /></>,
   anchor: <><circle cx="12" cy="5" r="2" /><path d="M12 7v14M7 11h10M5 15c0 3 3 5 7 5s7-2 7-5" /></>,
   desk: <path d="M4 6h16v10H4zM9 20h6M12 16v4M8 10h8" />,
   search: <><circle cx="11" cy="11" r="6" /><path d="M16 16l5 5" /></>,
@@ -249,6 +250,8 @@ function SiteMenu({ lang, member, ownerAccount, onClose, onRefresh, onPro }: { l
     <Link key={href} className={styles.item} href={href} onClick={event => navigate(event, href)}><span className={styles.glassIcon}><Icon name={icon} className={styles.itemIcon} /></span><span>{label}{note && <small className={styles.itemNote}>{note}</small>}</span>{extra}<Icon name="next" className={styles.chev} /></Link>;
   const tile = (href: string, icon: MenuIcon, label: string) =>
     <Link key={href} className={styles.proTile} href={href} onClick={event => navigate(event, href)}><Icon name={icon} className={styles.itemIcon} /><span>{label}</span></Link>;
+  const my = (href: string, icon: MenuIcon, label: string) =>
+    <Link key={href} className={styles.myItem} href={href} onClick={event => navigate(event, href)}><span className={styles.myIcon}><Icon name={icon} /></span><span className={styles.myName}>{label}</span></Link>;
   const heading = (text: string, crown = false) => <h4>{crown && <Icon name="crown" className={styles.headCrown} />}<span className={styles.headText}>{text}</span></h4>;
   const perks = [`RIZEL'S DESK`, ja ? "テーマランキング" : "Theme Ranking", ja ? "銘柄比較" : "Compare", ja ? "連関マップ" : "Relationship maps", realtime, alerts];
   return <>
@@ -296,11 +299,18 @@ function SiteMenu({ lang, member, ownerAccount, onClose, onRefresh, onPro }: { l
       </div>
       <div className={styles.grp}>
         {heading(ja ? "マイページ" : "My page")}
-        {item("/research/watchlist", "star", ja ? "ウォッチリスト" : "Watchlist")}
-        {member && item("/research/portfolio", "bars", ja ? "資産管理(米国株)" : "Portfolio (US stocks)")}
-        {item("/research/notebook", "notebook", ja ? "銘柄手帳" : "Stock Notebook")}
-        {item("/research#saved", "saved", ja ? "保存したリサーチ" : "Saved research")}
-        {member && item("/research/notifications", "bell", alerts)}
+        {member ? <div className={styles.myGrid}>
+          {my("/research/portfolio", "wallet", ja ? "資産管理" : "Portfolio")}
+          {my("/research/watchlist", "star", ja ? "ウォッチリスト" : "Watchlist")}
+          {my("/research/notebook", "notebook", ja ? "銘柄手帳" : "Stock Notebook")}
+          {my("/research#saved", "saved", ja ? "リサーチノート" : "Research notes")}
+          {my("/research/notifications", "bell", alerts)}
+          {my("/research/account", "account", ja ? "アカウント" : "Account")}
+        </div> : <>
+          {item("/research/watchlist", "star", ja ? "ウォッチリスト" : "Watchlist")}
+          {item("/research/notebook", "notebook", ja ? "銘柄手帳" : "Stock Notebook")}
+          {item("/research#saved", "saved", ja ? "リサーチノート" : "Research notes")}
+        </>}
       </div>
       <Link href="/resolute" className={styles.resCard} onClick={event => navigate(event, "/resolute")}>
         <span className={styles.resEmblem} aria-hidden="true"><Icon name="anchor" /></span>
@@ -308,7 +318,7 @@ function SiteMenu({ lang, member, ownerAccount, onClose, onRefresh, onPro }: { l
         <Icon name="next" className={styles.resChev} />
       </Link>
       <div className={styles.footLinks}>
-        <Link href="/research/account" onClick={event => navigate(event, "/research/account")}>{ja ? "アカウント" : "Account"}</Link><i aria-hidden="true">|</i>
+        {!member && <><Link href="/research/account" onClick={event => navigate(event, "/research/account")}>{ja ? "アカウント" : "Account"}</Link><i aria-hidden="true">|</i></>}
         <Link href="/research/learn" onClick={event => navigate(event, "/research/learn")}>{ja ? "米国株のはじめ方" : "US stock basics"}</Link><i aria-hidden="true">|</i>
         <Link href="/research/faq" onClick={event => navigate(event, "/research/faq")}>{ja ? "よくある質問・使い方" : "FAQ & help"}</Link>
       </div>

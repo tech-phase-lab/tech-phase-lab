@@ -106,7 +106,7 @@ test("menu follows the owner's design: navy FREE, black-and-gold PRO, one struct
     ["よくある質問・使い方", "FAQ & help"], ["ニュース", "News"], ["リサーチ", "Research"], ["マイページ", "My page"], ["PRO機能", "PRO features"],
     ["ハイテク速報", "Tech Alerts"], ["一般ニュース", "General News"], ["銘柄検索", "Stock Search"], ["マーケット", "Markets"],
     ["決算・経済指標", "Earnings & Economy"], ["資本マップ", "Capital Map"], ["目標株価", "Price targets"],
-    ["ウォッチリスト", "Watchlist"], ["銘柄手帳", "Stock Notebook"], ["保存したリサーチ", "Saved research"], ["スマホ通知", "Mobile alerts"],
+    ["ウォッチリスト", "Watchlist"], ["銘柄手帳", "Stock Notebook"], ["リサーチノート", "Research notes"], ["スマホ通知", "Mobile alerts"],
     ["監視22銘柄", "22 Tracked Stocks"], ["テーマランキング", "Theme Ranking"], ["銘柄比較", "Compare"], ["連関マップ", "Relationship maps"]]) {
     assert.ok(menu.includes(`"${ja}" : "${en}"`) || menu.includes(`"${ja}", "${en}"`), ja);
   }
@@ -115,7 +115,7 @@ test("menu follows the owner's design: navy FREE, black-and-gold PRO, one struct
   assert.match(menu, /`\$\{styles\.sheet\} \$\{styles\.luxe\}` : `\$\{styles\.sheet\} \$\{styles\.navy\}`/);
   for (const href of ["/research/notes", "/research#monitored-companies", "/research/themes", "/research/compare"]) assert.ok(menu.includes(`tile("${href}"`), href);
   assert.match(menu, /\{member && <div className=\{styles\.grp\}>\s*\{heading\(ja \? "PRO機能" : "PRO features", true\)\}/);
-  assert.match(menu, /\{member && item\("\/research\/notifications", "bell", alerts\)\}/);
+  assert.match(menu, /my\("\/research\/notifications", "bell", alerts\)/);
   assert.doesNotMatch(menu, /item\("\/research\/(themes|compare)"|item\("\/research#(rizels-desk|monitored-companies)"/);
   // The Tech Alerts note is FREE-only; members see a LIVE mark and no description.
   assert.match(menu, /member \? <b className=\{styles\.liveTag\}>LIVE<\/b> : undefined/);
@@ -166,4 +166,13 @@ test("a reload says 'updating' at once and 'updated' on the page that comes back
   assert.match(layout, /maximumScale: 1, userScalable: false/);
   const css = read("app/globals.css");
   assert.match(css, /html, body \{ touch-action: manipulation; \}/);
+});
+
+test("PRO / owner My page is a two-column grid in the owner's order, Account moves in, FREE keeps its list (Nov 1)", async () => {
+  const menu = read("app/research/site-header.tsx");
+  const grid = menu.slice(menu.indexOf("styles.myGrid"), menu.indexOf("</div> : <>"));
+  const order = ["/research/portfolio", "/research/watchlist", "/research/notebook", "/research#saved", "/research/notifications", "/research/account"].map(path => grid.indexOf(`my("${path}"`));
+  assert.ok(order.every((at, i) => at > 0 && (i === 0 || at > order[i - 1])), "six items in order");
+  assert.match(menu, /\{!member && <><Link href="\/research\/account"/, "FREE keeps Account as the bottom link, PRO does not");
+  assert.doesNotMatch(menu, /保存したリサーチ|Saved research/);
 });

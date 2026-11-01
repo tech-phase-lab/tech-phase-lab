@@ -22,13 +22,15 @@ export default function ToolShell({ identityReady=true, home=false, children }: 
   if(!identityReady || reviewing) return;
   const controller=new AbortController();
   void requestPreferences(undefined,controller.signal).then(p=>{ if(!controller.signal.aborted && p.locale) setNormalLocale(p.locale); },()=>{});
-  let inFlight=false;
+  let inFlight=false, failures=0, retry:ReturnType<typeof setTimeout>|undefined;
+  // Right after the app is reopened the sign-in cookie may still be refreshing: ask again a few times before saying anything.
+  const retryLater=()=>{ if(failures>=3) return false; failures++; retry=setTimeout(()=>void check(),1200*failures); return true; };
   async function check() {
    if(inFlight) return; inFlight=true;
    try {
     const r=await fetch("/api/resolute/entitlements",{cache:"no-store",credentials:"same-origin",redirect:"error",signal:AbortSignal.any([controller.signal,AbortSignal.timeout(25000)])});
     if(controller.signal.aborted) return;
-    if(r.status===401) {setAccess("signed-out");return;}
+    if(r.status===401) {if(!retryLater()) setAccess("signed-out");return;}
     if(r.status===403) {
      // The owner's access needs two-step verification in THIS sign-in; turning it on in settings is not enough.
      let code=""; try { const body=await r.json(); code=typeof body?.error==="string"?body.error:""; } catch { /* not JSON */ }
@@ -38,13 +40,13 @@ export default function ToolShell({ identityReady=true, home=false, children }: 
     if(!r.ok) throw new Error("unavailable");
     const text=await r.text(); if(text.length>8192) throw new Error("unavailable");
     const value=validateSnapshot(JSON.parse(text));
-    writeBarState({owned:value.canUseTools,anon:false});
+    failures=0; writeBarState({owned:value.canUseTools,anon:false});
     if(!controller.signal.aborted) {setEntitlement(value);setAccess(value.canUseTools ? "allowed" : "denied");}
-   } catch {if(!controller.signal.aborted) setAccess("unavailable");} finally {inFlight=false;}
+   } catch {if(!controller.signal.aborted && !retryLater()) setAccess("unavailable");} finally {inFlight=false;}
   }
   void check(); const timer=setInterval(()=>void check(),60000);
   const focus=()=>void check(); window.addEventListener("focus",focus);
-  return()=>{controller.abort();clearInterval(timer);window.removeEventListener("focus",focus);};
+  return()=>{controller.abort();clearInterval(timer);clearTimeout(retry);window.removeEventListener("focus",focus);};
  },[identityReady,attempt,reviewing]);
  const [menuOpen,setMenuOpen]=useState(false);
  const en=locale==="en";
@@ -64,6 +66,7 @@ export default function ToolShell({ identityReady=true, home=false, children }: 
    {[["/resolute/diagnosis","① 診断","① Quiz"],["/resolute/simulation","② シミュレーション","② Simulator"],["/resolute/alerts","③ アラート","③ Alerts"],["/resolute/morning","④ 翌朝","④ Morning note"],["/resolute/thermometer","⑤ 温度計","⑤ Gauge"],["/resolute/tax","⑥ 税金","⑥ Tax"],["/resolute/notebook","マイルール","My rulebook"],["/resolute/wall","ルールのお守り","Rules wallpaper"],["/resolute/tonight","今夜のひと息","A moment to breathe"],["/resolute/news","危険度チェッカー","News risk checker"]].map(([href,ja,eng])=>
     <Link key={href} href={href} onClick={()=>setMenuOpen(false)} prefetch={false} aria-current={(review?.path ?? pathname)===href?"page":undefined}>{en?eng:ja}</Link>)}
    {/* RESOLUTE can run as its own home-screen app: the way back to Tech Phase is always in this menu. */}
+   {!reviewing ? <Link href="/resolute/settings#home-screen" prefetch={false}>{en?"Add to Home Screen":"ホーム画面に追加する方法"}</Link> : null}
    {!reviewing ? <Link href="/research" prefetch={false}>{en?"← Tech Phase":"← Tech Phaseへ"}</Link> : null}
   </nav> : null}
   {identityReady && (reviewing || access==="allowed") ? children(locale,()=>setAccess("denied"),entitlement) : (!identityReady || access==="loading") ? <section className={styles.loadingBrand} role="status" aria-live="polite">
@@ -77,6 +80,7 @@ export default function ToolShell({ identityReady=true, home=false, children }: 
   {review ? <p className={styles.reviewNote}>{en ? "Owner preview · You can choose to save on this device. No emails are sent." : "運営者専用の確認画面です。端末への保存は上の設定で選べます。メールは送信しません。"}</p> : null}
   {home && !reviewing ? <AddToHomeCard en={en} /> : null}
   <footer className={styles.footer}>{!reviewing ? <Link href="/resolute/settings" prefetch={false}>{en?"Language and time zone":"言語とタイムゾーン"}</Link> : null}
+   {!reviewing ? <Link href="/resolute/settings#home-screen" prefetch={false}>{en?"Add to Home Screen":"ホーム画面に追加する方法"}</Link> : null}
    <Link href="/research" prefetch={false}>Tech Phase</Link></footer>
  </div></main>;
 }

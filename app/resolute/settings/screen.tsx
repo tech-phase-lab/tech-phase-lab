@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import type { FormEvent } from "react";
 import { parsePreferences } from "@/lib/resolute/preferences-data";
 import { PreferencesError, requestPreferences } from "@/lib/resolute/preferences-client";
+import AddToHomeSteps from "../add-to-home-steps";
 import styles from "./settings.module.css";
 
 const copy = {
@@ -135,6 +136,10 @@ export default function SettingsScreen({ identityReady = true }: { identityReady
       <p role="status" aria-live="polite" className={styles.status}>{message ? c[message] : ""}</p>
       <button type="button" className={styles.secondary} disabled={busy} onClick={reload}>{c.reload}</button>
       <p className={styles.note}>{c.note}</p>
+    </section>
+    <section id="home-screen" className={`${styles.card} ${styles.homeCard}`} aria-labelledby="home-screen-heading">
+      <h2 id="home-screen-heading">{viewLocale === "en" ? "Add RESOLUTE to your Home Screen" : "ホーム画面に追加する方法"}</h2>
+      <AddToHomeSteps en={viewLocale === "en"} />
     </section>
     <Link className={styles.back} href="/research" prefetch={false}>{c.back}</Link>
   </main>;

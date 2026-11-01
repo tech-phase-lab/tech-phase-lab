@@ -148,7 +148,7 @@ export default function ResearchDashboard({ events, monitoredCompanies, initialN
   const kinds = { acquisition: t("買収", "Acquisition"), partnership: t("提携", "Partnership"), earnings: t("決算", "Earnings"), capacity: t("設備・電力", "Capacity"), financing: t("資金調達", "Funding"), product: t("製品・料金", "Product & pricing"), "external-research": t("外部調査・評価", "External research") };
   function toggleSaved(id: string) {
     const removing = saved.includes(id);
-    if (removing && !window.confirm(t("この記事を保存一覧から外しますか？", "Remove this article from saved research?"))) return;
+    if (removing && !window.confirm(t("この記事を保存一覧から外しますか？", "Remove this article from your research notes?"))) return;
     const ok = collection.update(current => ({ ...current, saved: removing ? current.saved.filter(value => value !== id) : current.saved.includes(id) ? current.saved : [...current.saved, id] }));
     setStorageError(!ok);
     if (ok && !removing) setSavedBurst(count => count + 1);
@@ -248,7 +248,7 @@ export default function ResearchDashboard({ events, monitoredCompanies, initialN
           <span id="saved" className={styles.anchorTarget} aria-hidden="true" />
           {tab === "saved" && <header className={styles.savedHeader}>
             <span className={styles.ribbon} aria-hidden="true" />
-            <div><span className={styles.savedEyebrow}>MY RESEARCH</span><h1>{t("保存したリサーチ", "Saved research")}</h1><p>{t("気になる記事にメモを書き込み、自分だけのノートに。", "Add notes. Make it yours.")}</p></div>
+            <div><span className={styles.savedEyebrow}>MY RESEARCH</span><h1>{t("リサーチノート", "Research notes")}</h1><p>{t("気になる記事にメモを書き込み、自分だけのノートに。", "Add notes. Make it yours.")}</p></div>
             {collection.ready && <div className={styles.savedCount}><Bookmark filled /><strong>{saved.filter((id) => events.some((event) => event.id === id)).length}</strong><span>{t("保存済み", "Saved")}</span></div>}
           </header>}
           {tab === "changes" && !showingResearchArticle && <header className={styles.pickHeader}>

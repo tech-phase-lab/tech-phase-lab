@@ -359,3 +359,12 @@
 .navy .frTitle { font-size:17px; font-weight:700; }
 .navy .frPerks { grid-template-columns:repeat(3,auto); justify-content:space-between; margin-top:12px; padding-top:12px; border-top:1px solid #4a3d1f; gap:9px 6px; }
 .navy .frPerks span { font-size:11px; color:#d9d2c0; gap:6px; }
+
+/* PRO / owner "My page": two columns, gold-framed icon tiles. */
+.myGrid { display:grid; grid-template-columns:1fr 1fr; column-gap:16px; }
+.myItem { display:flex; align-items:center; gap:12px; min-width:0; min-height:58px; padding:10px 0; border-bottom:1px solid #1e1b14; color:inherit; text-decoration:none; font-size:14px; }
+.myItem:hover { background:linear-gradient(90deg,rgba(212,178,94,.07),transparent); }
+.myIcon { display:grid; place-items:center; flex:none; width:34px; height:34px; border-radius:10px; border:1px solid #5a4a24; background:#1d1a12; color:#d9b56a; }
+.myIcon svg { width:18px; height:18px; fill:none; stroke:currentColor; stroke-width:1.7; stroke-linecap:round; stroke-linejoin:round; }
+.myName { min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+@media (max-width:340px) { .myGrid { column-gap:10px; } .myItem { gap:8px; font-size:13px; } }
