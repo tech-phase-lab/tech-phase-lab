@@ -250,6 +250,7 @@ export default function AccountView({ ja, member, billingAvailable, upgradeFirst
       <p className={styles.modeNote}>{t("会員の画面を、運営者のまま確認できます。", "Preview the member screens while staying the owner.")}</p></div>
     <div className={`${styles.cd} ${styles.ownerMenu}`} style={{ marginTop: 14 }}>
       {row(I.plus, t("会員・契約の確認", "Members & contracts"), { href: "/research/account/members", sub: t("会員の検索と、契約状況・利用期限の確認", "Search members; contracts and expiry") })}
+      {row(I.shield, t("運営者の2段階認証(コード)", "Owner two-step code"), { href: "/research/account/owner-2fa", sub: t("認証アプリのコードで、運営者を守ります", "Protect the owner account with an authenticator code") })}
       {row(I.feed, t("配信状況", "Delivery status"), { href: "/research/account/delivery", sub: t("ニュース取得とスマホ通知の送信状況", "News intake and phone-alert sending") })}
     </div></>;
 
