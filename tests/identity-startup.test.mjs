@@ -15,6 +15,7 @@ function fixture(signedIn,loaded=true) {
   if(id==='../resolute/use-diagnosis-session')return {useDiagnosisSessionIdentity:()=>{}};
   if(id==='./use-research-language')return {useResearchLanguage:()=>['ja']};
   if(id==='@/lib/research/member-recovery')return {waitForIdentity:task=>task};
+  if(id==='@/lib/clerk-appearance')return {clerkAppearance:{}};
   return require(id);
  },target,target.exports);
  const wrapper=target.exports.default({enabled:true,children:null});

@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useClerk } from "@clerk/nextjs";
-import { useCallback, useEffect, useState, type ReactNode } from "react";
+import { useCallback, useEffect, useState, useSyncExternalStore, type ReactNode } from "react";
 import { useIdentityRefresh } from "../identity-provider";
 import Crown from "./crown";
 import { INITIAL, tileBackground, tileById } from "./avatars";
@@ -38,6 +38,13 @@ const chev = <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke=
 type Resolute = { state: "loading" } | { state: "unknown" } | { state: "none" } | { state: "bought"; alertsUntil: string | null };
 type ContractState = { state: "loading" } | { state: "unknown" } | { state: "ok"; value: Contract };
 type ProfileState = { state: "loading" } | { state: "error" } | { state: "ok"; value: Profile };
+
+// "Turn on two-step verification" nudge: hidden for 14 days after the reader closes it (this device only).
+const NUDGE_KEY = "tech-phase:two-step-nudge-until";
+const nudgeListeners = new Set<() => void>();
+const subscribeNudge = (notify: () => void) => { nudgeListeners.add(notify); return () => { nudgeListeners.delete(notify); }; };
+const nudgeSnapshot = () => { try { return Number(localStorage.getItem(NUDGE_KEY)) > Date.now() ? "hidden" : "shown"; } catch { return "shown"; } };
+function closeNudge() { try { localStorage.setItem(NUDGE_KEY, String(Date.now() + 14 * 86_400_000)); } catch { /* optional */ } nudgeListeners.forEach(listener => listener()); }
 
 export default function AccountView({ ja, member, billingAvailable, upgradeFirst, onRecheck, initialProfile = null }: { ja: boolean; initialProfile?: unknown; member: Member; billingAvailable: boolean; upgradeFirst: boolean; onRecheck: () => void }) {
   const t = (a: string, b: string) => ja ? a : b;
@@ -134,6 +141,7 @@ export default function AccountView({ ja, member, billingAvailable, upgradeFirst
   const initial = Array.from(display)[0] ?? "?";
   const tile = tileById(me?.icon);
   const twoFactor = me ? me.twoFactorEnabled : null;
+  const nudge = useSyncExternalStore(subscribeNudge, nudgeSnapshot, () => "hidden");
   const passwordRow = me?.passwordEnabled === true && !owner;
 
   const effective: "free" | "pro" = owner ? (viewAs === "pro" ? "pro" : "free") : me?.plan === "pro" ? "pro" : member.plan === "pro" && !me ? "pro" : "free";
@@ -277,6 +285,13 @@ export default function AccountView({ ja, member, billingAvailable, upgradeFirst
 
     {effective === "pro" && (!owner || preview) && <div className={styles.ownerBadge}><span className={styles.seal}><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#2a1f05" strokeWidth="1.8" strokeLinejoin="round" aria-hidden="true"><path d="M3.5 8l4.5 4 4-7 4 7 4.5-4-1.8 10H5.3z" /></svg></span>
       <div style={{ flex: 1, minWidth: 0 }}><div className={styles.ownerWord} style={{ letterSpacing: ".22em" }}>PRO MEMBER</div><div className={styles.ownerSub}>{t("全機能をご利用中です", "All features unlocked")}</div></div></div>}
+
+    {!owner && twoFactor === false && nudge === "shown" && <div className={styles.nudge} role="note">
+      <div className={styles.nudgeText}><b>{t("アカウントを、2段階認証で守りましょう", "Protect your account with two-step verification")}</b>
+        <span>{t("ログインのときに、認証アプリのコードも使います。パスワードが知られても、不正に入られにくくなります。", "Sign in with a code from an authenticator app too. Even if your password leaks, it is much harder to get in.")}</span></div>
+      <Link className={styles.nudgeGo} href="/research/account/security">{t("設定する", "Set up")}</Link>
+      <button type="button" className={styles.nudgeX} aria-label={t("閉じる(14日間表示しません)", "Close (hidden for 14 days)")} onClick={closeNudge}>×</button>
+    </div>}
 
     {member.adminMfaRequired && <p className={styles.warn} role="alert" style={{ marginTop: 12 }}>{t("管理機能には2段階認証が必要です。設定後、ログインし直してください。", "Admin access requires two-step verification. Set it up, then sign in again.")} <Link href="/research/account/security" style={{ color: "#e7c982" }}>{t("2段階認証を設定する", "Set up")}</Link></p>}
 
