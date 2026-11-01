@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { ClerkProvider } from "@clerk/nextjs";
+import { clerkAppearance } from "@/lib/clerk-appearance";
 import { auth } from "@clerk/nextjs/server";
 import { sandboxTester } from "@/lib/resolute/sandbox-access";
 import { membershipConfigured } from "@/lib/membership/server";
@@ -19,14 +20,14 @@ export default async function CheckoutPage({ searchParams }: { searchParams: Pro
  if (live) {
   if (!membershipConfigured()) return <LiveCheckoutScreen orderId={null} language={language} cancelled={false} salesEnabled={false}/>;
   const guestOrder = Boolean(order && params.guest === "1");
-  return <ClerkProvider signInUrl="/resolute/checkout" signUpUrl="/research/account/sign-up">
+  return <ClerkProvider appearance={clerkAppearance} signInUrl="/resolute/checkout" signUpUrl="/research/account/sign-up">
    <LiveCheckoutIdentity signingUp={params.signup === "1"} guestOrder={guestOrder} guestEnabled={process.env.RESOLUTE_GUEST_CHECKOUT_ENABLED === "true"} orderId={order} language={language} cancelled={params.cancel === "1"} salesEnabled={process.env.RESOLUTE_LIVE_SALES_ENABLED === "true"}/>
   </ClerkProvider>;
  }
  if (!membershipConfigured()) return <main><h1>RESOLUTE</h1><p>{language === "en" ? "Test checkout is unavailable." : "テスト購入は現在利用できません。"}</p></main>;
  const { userId } = await auth();
  const authorizedTester = process.env.VERCEL_ENV === "preview" && userId === sandboxTester(process.env) ? userId : null;
- return <ClerkProvider signInUrl="/resolute/checkout" signUpUrl="/research/account/sign-up">
+ return <ClerkProvider appearance={clerkAppearance} signInUrl="/resolute/checkout" signUpUrl="/research/account/sign-up">
   <CheckoutIdentity orderId={order} language={language} cancelled={params.cancel === "1"} authorizedTester={authorizedTester}/>
  </ClerkProvider>;
 }

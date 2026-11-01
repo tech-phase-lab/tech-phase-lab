@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { ClerkProvider } from "@clerk/nextjs";
+import { clerkAppearance } from "@/lib/clerk-appearance";
 import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import { membershipConfigured } from "@/lib/membership/server";
@@ -26,6 +27,6 @@ export default async function ResolutePage({ searchParams }: { searchParams: Pro
  // `?lang=en` shows the English page; everything else the Japanese one.
  const english = params.lang === "en";
  return <EntryGate landing={english ? <LandingEn embedded /> : <Landing embedded />}>
-  <ClerkProvider signInUrl="/research/account" signUpUrl="/research/account/sign-up"><ResoluteIdentity extra="home" thermometerSnapshot={snapshot} /></ClerkProvider>
+  <ClerkProvider appearance={clerkAppearance} signInUrl="/research/account" signUpUrl="/research/account/sign-up"><ResoluteIdentity extra="home" thermometerSnapshot={snapshot} /></ClerkProvider>
  </EntryGate>;
 }

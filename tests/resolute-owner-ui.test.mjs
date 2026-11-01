@@ -49,3 +49,23 @@ test("the owner can open the security page to set up two-step verification when 
   assert.match(view, /owner && twoFactor === true \? row\(I\.shield/);
   assert.match(view, /row\(I\.shield, t\("2段階認証", "Two-step verification"\), \{ href: "\/research\/account\/security", value: twoValue \}\)/);
 });
+
+test("every Clerk screen shares one appearance with readable inputs and one-line buttons", async () => {
+  const look = await read("../lib/clerk-appearance.ts");
+  assert.match(look, /otpCodeFieldInput: \{ color: text/);
+  assert.match(look, /formFieldInput: \{ color: text/);
+  assert.match(look, /whiteSpace: "nowrap"/);
+  assert.match(look, /profileSection__danger: \{ display: "none" \}/);
+  assert.match(await read("../app/research/identity-provider.tsx"), /appearance=\{clerkAppearance\}/);
+  for (const path of ["../app/resolute/page.tsx", "../app/resolute/checkout/page.tsx", "../app/resolute/settings/page.tsx"]) {
+    assert.match(await read(path), /<ClerkProvider appearance=\{clerkAppearance\}/, path);
+  }
+});
+
+test("members without two-step verification are invited to turn it on, and can close the invitation", async () => {
+  const view = await read("../app/research/account/account-view.tsx");
+  assert.match(view, /!owner && twoFactor === false && nudge === "shown"/);
+  assert.match(view, /href="\/research\/account\/security"/);
+  assert.match(view, /tech-phase:two-step-nudge-until/);
+  assert.match(view, /14 \* 86_400_000/);
+});
