@@ -131,5 +131,7 @@ test("holdings never leave the browser: the screen stores them locally and sends
   assert.match(screen, /tickers=\$\{encodeURIComponent\(tickers\)\}/);
   assert.doesNotMatch(screen, /JSON\.stringify\(\{ holdings|body: JSON\.stringify\(holdings/);
   assert.match(screen, /金額を伏せる/);
-  assert.match(await src("../app/research/site-header.tsx"), /href="\/research\/portfolio" className=\{styles\.assetCard\}/);
+  const header = await src("../app/research/site-header.tsx");
+  assert.match(header, /item\("\/research\/portfolio", "bars"/);
+  assert.ok(header.indexOf('heading(ja ? "マイページ"') < header.indexOf('heading(ja ? "リサーチ"'), "the My page group sits above Research");
 });
