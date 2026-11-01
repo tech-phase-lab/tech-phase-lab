@@ -151,3 +151,14 @@ test("RESOLUTE header and menu are the same on every page, with no bottom bar (N
   assert.match(css, /\.step\[aria-current="page"\]/);
   assert.match(await read("../app/resolute/diagnosis.module.css"), /env\(safe-area-inset-top, 0px\) \+ 56px/);
 });
+
+test("RESOLUTE can measure the top inset (viewport-fit=cover), asks again quietly before showing a sign-in message, and explains adding to the home screen in settings (Nov 1)", async () => {
+  assert.match(await read("../app/resolute/layout.tsx"), /viewportFit: "cover"/);
+  const shell = await read("../app/resolute/tool-shell.tsx");
+  assert.match(shell, /const retryLater=/);
+  assert.match(shell, /r\.status===401\) \{if\(!retryLater\(\)\) setAccess\("signed-out"\)/);
+  assert.ok((shell.match(/\/resolute\/settings#home-screen/g) ?? []).length >= 2, "in the menu and in the footer of every page");
+  const settings = await read("../app/resolute/settings/screen.tsx");
+  assert.match(settings, /id="home-screen"/);
+  assert.match(settings, /<AddToHomeSteps/);
+});
