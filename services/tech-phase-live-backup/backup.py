@@ -25,6 +25,23 @@ def run(args, *, env=None):
     result = subprocess.run(args, env=env, capture_output=True, timeout=600)
     if result.returncode:
         reason = 'permission_denied' if b'permission denied' in result.stderr else 'failed'
+        if args[0] == 'pg_dump':
+            diagnostic = result.stderr.lower()
+            for marker, category in (
+                (b'version mismatch', 'version_mismatch'),
+                (b'row-level security', 'row_security'),
+                (b'no matching schemas', 'schema_missing'),
+                (b'no space left', 'disk_full'),
+                (b'no password supplied', 'authentication'),
+                (b'lock timeout', 'lock_timeout'),
+                (b'statement timeout', 'statement_timeout'),
+                (b'could not open output file', 'output_file'),
+                (b'connection to server', 'connection'),
+                (b'unrecognized configuration parameter', 'configuration'),
+            ):
+                if marker in diagnostic:
+                    reason = category
+                    break
         command = next((cmd for cmd in args if cmd in ('psql', 'pg_dump', 'pg_restore', 'initdb', 'pg_ctl', 'createdb')), 'system')
         raise RuntimeError(f'{command}_{reason}')
     return result.stdout
@@ -238,7 +255,7 @@ def run_job(env=None, job=None):
     except Exception as exc:
         import traceback
         frames = [f.lineno for f in traceback.extract_tb(exc.__traceback__) if f.filename == __file__]
-        code = str(exc) if type(exc) is RuntimeError and re.fullmatch(r'(psql|pg_dump|pg_restore|initdb|pg_ctl|createdb|system)_(permission_denied|failed)', str(exc)) else type(exc).__name__
+        code = str(exc) if type(exc) is RuntimeError and re.fullmatch(r'(psql|pg_dump|pg_restore|initdb|pg_ctl|createdb|system)_(permission_denied|failed|version_mismatch|row_security|schema_missing|disk_full|authentication|lock_timeout|statement_timeout|output_file|connection|configuration)', str(exc)) else type(exc).__name__
         finished = monitor_ping(url, 'fail')
         print(json.dumps({'event': 'TECH_PHASE_LIVE_BACKUP_JOB_FAILED',
                           'failure': code, 'location': frames, 'monitor_start': started, 'monitor_finish': finished}), flush=True)
