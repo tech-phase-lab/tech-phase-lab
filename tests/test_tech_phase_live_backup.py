@@ -128,8 +128,19 @@ class TechPhaseLiveBackupTests(unittest.TestCase):
 
     def test_database_failure_never_includes_stderr(self):
         with patch.object(backup.subprocess, 'run', return_value=Mock(returncode=1, stderr=b'secret')):
-            with self.assertRaisesRegex(RuntimeError, '^database command failed$'):
+            with self.assertRaisesRegex(RuntimeError, '^psql_failed$'):
                 backup.run(['psql'])
+
+    def test_dump_failure_detail_drops_quoted_values_and_numbers(self):
+        stderr = b'pg_dump: error: query failed: ERROR:  permission denied for sequence "security_alerts_id_seq"\npg_dump: detail: host "10.0.0.5" port 5432 user \'secret\'\n'
+        detail = backup.safe_detail(stderr)
+        self.assertIn('permission denied for sequence', detail)
+        for forbidden in ('security_alerts_id_seq', '10.0.0.5', '5432', 'secret'):
+            self.assertNotIn(forbidden, detail)
+        with patch.object(backup.subprocess, 'run', return_value=Mock(returncode=2, stderr=stderr)):
+            with self.assertRaises(RuntimeError) as caught:
+                backup.run(['pg_dump'])
+        self.assertEqual(caught.exception.returncode, 2)
 
     def test_monitor_sends_empty_body_to_fixed_host_without_redirects(self):
         url = 'https://hc-ping.com/11111111-2222-3333-4444-555555555555'

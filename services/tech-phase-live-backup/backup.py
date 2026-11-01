@@ -18,13 +18,53 @@ SCHEMA = 'tech_phase_billing_live'
 PREFIX = 'tech-phase/live/v1/'
 MAX_BYTES = 64 * 1024 * 1024
 TABLES = ('adverse_transactions', 'events', 'payments', 'periods',
-          'recovery_queue', 'review_holds', 'subscriptions')
+          'recovery_queue', 'review_holds', 'security_alerts', 'security_windows', 'subscriptions')
+
+
+def safe_detail(stderr):
+    """First error lines of a failed pg_dump, reduced to a short allowlisted summary.
+    Quoted text (hosts, users, object names, values) and numbers are removed; nothing else is kept."""
+    lines = []
+    for raw in stderr.decode('utf-8', 'replace').splitlines():
+        text = raw.strip()
+        if not text:
+            continue
+        text = re.sub(r'"[^"]*"|\'[^\']*\'', '""', text)
+        text = re.sub(r'[0-9]+', '#', text)
+        text = re.sub(r'[^A-Za-z _:.,()=#-]', '?', text)[:120]
+        lines.append(text)
+        if len(lines) == 3:
+            break
+    return ' | '.join(lines)
 
 
 def run(args, *, env=None):
     result = subprocess.run(args, env=env, capture_output=True, timeout=600)
     if result.returncode:
-        raise RuntimeError('database command failed')
+        reason = 'permission_denied' if b'permission denied' in result.stderr else 'failed'
+        if args[0] == 'pg_dump':
+            diagnostic = result.stderr.lower()
+            for marker, category in (
+                (b'version mismatch', 'version_mismatch'),
+                (b'row-level security', 'row_security'),
+                (b'no matching schemas', 'schema_missing'),
+                (b'no space left', 'disk_full'),
+                (b'no password supplied', 'authentication'),
+                (b'lock timeout', 'lock_timeout'),
+                (b'statement timeout', 'statement_timeout'),
+                (b'could not open output file', 'output_file'),
+                (b'connection to server', 'connection'),
+                (b'unrecognized configuration parameter', 'configuration'),
+            ):
+                if marker in diagnostic:
+                    reason = category
+                    break
+        command = next((cmd for cmd in args if cmd in ('psql', 'pg_dump', 'pg_restore', 'initdb', 'pg_ctl', 'createdb')), 'system')
+        error = RuntimeError(f'{command}_{reason}')
+        if command == 'pg_dump':
+            error.detail = safe_detail(result.stderr)
+            error.returncode = result.returncode
+        raise error
     return result.stdout
 
 
@@ -49,15 +89,15 @@ def pg_env(env):
 def validate_mode(env):
     if (env.get('TECH_PHASE_LIVE_BACKUP_ENABLED') != 'true'
             or env.get('TECH_PHASE_PAYPAL_ENV') != 'live'
-            or env.get('TECH_PHASE_LIVE_BACKUP_BRANCH') != 'codex/research-preview'
-            or env.get('RAILWAY_GIT_BRANCH') != 'codex/research-preview'):
+            or env.get('TECH_PHASE_LIVE_BACKUP_BRANCH') not in ('codex/research-preview', 'codex/live-billing-backup')
+            or env.get('RAILWAY_GIT_BRANCH') != env['TECH_PHASE_LIVE_BACKUP_BRANCH']):
         raise RuntimeError('Live backup guard failed')
     mode = env.get('TECH_PHASE_LIVE_BACKUP_MODE')
     if mode not in ('backup', 'restore-check'):
         raise RuntimeError('unsupported backup mode')
     if mode == 'restore-check':
         # No source connection credentials in a restore drill, even unused ones.
-        if any(value and (name.startswith('PG') or 'DATABASE_URL' in name
+        if any(value and name not in ('PGDATA', 'PG_MAJOR', 'PG_VERSION') and (name.startswith('PG') or 'DATABASE_URL' in name
                           or name.endswith('DB_PASSWORD') or 'PAYPAL' in name and name != 'TECH_PHASE_PAYPAL_ENV'
                           or name.endswith('SERVICE_TOKEN'))
                for name, value in env.items()):
@@ -233,10 +273,14 @@ def run_job(env=None, job=None):
     started = monitor_ping(url, 'start')
     try:
         job()
-    except Exception:
+    except Exception as exc:
+        import traceback
+        frames = [f.lineno for f in traceback.extract_tb(exc.__traceback__) if f.filename == __file__]
+        code = str(exc) if type(exc) is RuntimeError and re.fullmatch(r'(psql|pg_dump|pg_restore|initdb|pg_ctl|createdb|system)_(permission_denied|failed|version_mismatch|row_security|schema_missing|disk_full|authentication|lock_timeout|statement_timeout|output_file|connection|configuration)', str(exc)) else type(exc).__name__
         finished = monitor_ping(url, 'fail')
         print(json.dumps({'event': 'TECH_PHASE_LIVE_BACKUP_JOB_FAILED',
-                          'monitor_start': started, 'monitor_finish': finished}), flush=True)
+                          'failure': code, 'location': frames,
+                          'returncode': getattr(exc, 'returncode', None), 'detail': getattr(exc, 'detail', None), 'monitor_start': started, 'monitor_finish': finished}), flush=True)
         return 1
     finished = monitor_ping(url, 'success')
     print(json.dumps({'event': 'TECH_PHASE_LIVE_BACKUP_MONITOR',
@@ -308,12 +352,12 @@ def main():
             for object_key in objects:
                 if object_key not in keep and re.fullmatch(re.escape(PREFIX) + r'dumps/\d{8}T\d{12}Z\.aesgcm', object_key):
                     client.delete_object(Bucket=bucket, Key=object_key)
-            report = {'event': 'TECH_PHASE_LIVE_BACKUP_OK', 'bytes': len(cipher), 'retained': len(keep)}
+            report = {'event': 'TECH_PHASE_LIVE_BACKUP_OK', 'bytes': len(cipher), 'retained': len(keep), 'archive_sha256': manifest['sha256']}
         else:
             manifest = validate_manifest(json.loads(read_object(client, bucket, PREFIX + 'latest.json', 2048)))
             dump.write_bytes(unseal(read_object(client, bucket, manifest['key'], MAX_BYTES + 28), key, manifest))
             counts = restore_check(dump, root)
-            report = {'event': 'TECH_PHASE_RESTORE_CHECK_OK', 'rows': counts,
+            report = {'event': 'TECH_PHASE_RESTORE_CHECK_OK', 'rows': counts, 'archive_sha256': manifest['sha256'],
                       'checks': ['authenticated_decryption', 'pg_restore', 'ledger', 'entitlement_view'],
                       'promotion': False}
         print(json.dumps(report), flush=True)

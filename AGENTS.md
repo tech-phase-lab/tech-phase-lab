@@ -9,7 +9,12 @@
   purchases without a concrete new change or failure. Remaining live acceptance is blocked
   on infrastructure/domain readiness. Codex is now assigned Notes/Ask Rizel editing features.
 - Codex owns Tech Phase PRO billing and other explicitly assigned non-news work.
-  Railway connection/reauthentication is prohibited. Do not repeat completed purchases.
+  Do not repeat completed purchases.
+- Railway (owner decision, 2026-11-01): the earlier prohibition on Railway connection is
+  lifted for the whole Railway account, for Claude using the official Railway connector.
+  Production-changing operations (deploy, variable or schedule changes, database writes)
+  still need the owner's approval each time; never print secret or environment values;
+  never act on payment data beyond what the task needs.
 
 <!-- BEGIN:nextjs-agent-rules -->
 # This is NOT the Next.js you know
