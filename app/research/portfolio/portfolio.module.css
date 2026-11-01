@@ -160,3 +160,4 @@
 .sheet h2{margin:0 0 10px;font-size:17px}
 .sheet p{margin:0 0 14px;font-size:14px;line-height:1.9;color:#c5cfdb}
 .sheet .ghost{display:block;margin:0 auto;padding:10px 18px;border:0;background:none;color:#9aa6b6;font:500 14px inherit;font-family:inherit;cursor:pointer}
+.page .code{display:block;margin-top:4px;font:11.5px ui-monospace,monospace;color:#6f7b8d;text-align:center;word-break:break-all}
