@@ -189,7 +189,7 @@
 .hang { margin-right:-1em; }
 .lines { white-space:pre-line; }
 
-:global(html[data-overlay-bar="1"]) .lp { padding-top:calc(env(safe-area-inset-top, 0px) + 40px); }
+:global(html[data-overlay-bar="1"]) .lp { padding-top:calc(env(safe-area-inset-top, 0px) + 56px); }
 :global(html[data-overlay-bar="app"]) .lp { padding-top:calc(env(safe-area-inset-top, 0px) + 12px); }
 .homeSteps ol { margin:0; padding:16px 18px 16px 2.2em; border:1px solid var(--line); border-radius:14px; background:linear-gradient(180deg,var(--panel),var(--bg2)); font-size:13.5px; line-height:1.9; color:#cfd6df; }
 .homeSteps li b { color:var(--gold2); font-weight:600; }
