@@ -279,7 +279,7 @@ function SiteMenu({ lang, member, ownerAccount, onClose, onRefresh, onPro }: { l
       <div className={styles.grp}>
         {heading(ja ? "マイページ" : "My page")}
         {item("/research/watchlist", "star", ja ? "ウォッチリスト" : "Watchlist")}
-        {item("/research/portfolio", "bars", ja ? "資産管理(米国株)" : "Portfolio (US stocks)")}
+        {member && item("/research/portfolio", "bars", ja ? "資産管理(米国株)" : "Portfolio (US stocks)")}
         {item("/research/notebook", "notebook", ja ? "銘柄手帳" : "Stock Notebook")}
         {item("/research#saved", "saved", ja ? "保存したリサーチ" : "Saved research")}
         {member && item("/research/notifications", "bell", alerts)}
