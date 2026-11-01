@@ -108,6 +108,9 @@ test("the screenshot route is same-origin, signed-in, limited and does not store
   assert.match(route, /Cache-Control": "private, no-store"/);
   assert.doesNotMatch(route, /console\.|writeFile|localStorage/);
   const vision = await src("../lib/portfolio/vision.ts");
+  assert.match(vision, /api\.openai\.com\/v1\/responses/);
+  assert.match(vision, /store: false/);
+  assert.match(vision, /PORTFOLIO_OPENAI_API_KEY \|\| process\.env\.RESOLUTE_OPENAI_API_KEY/);
   assert.match(vision, /temperature: 0/);
   assert.match(vision, /MAX_IMAGE_BYTES/);
   assert.doesNotMatch(vision, /console\./);
