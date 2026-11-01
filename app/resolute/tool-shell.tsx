@@ -62,6 +62,8 @@ export default function ToolShell({ identityReady=true, home=false, children }: 
   {menuOpen ? <nav id="resolute-tools" className={styles.toolMenu} aria-label={en?"RESOLUTE tools":"RESOLUTEのツール"}>
    {[["/resolute/diagnosis","① 診断","① Quiz"],["/resolute/simulation","② シミュレーション","② Simulator"],["/resolute/alerts","③ アラート","③ Alerts"],["/resolute/morning","④ 翌朝","④ Morning note"],["/resolute/thermometer","⑤ 温度計","⑤ Gauge"],["/resolute/tax","⑥ 税金","⑥ Tax"],["/resolute/notebook","マイルール","My rulebook"],["/resolute/wall","ルールのお守り","Rules wallpaper"],["/resolute/tonight","今夜のひと息","A moment to breathe"],["/resolute/news","危険度チェッカー","News risk checker"]].map(([href,ja,eng])=>
     <Link key={href} href={href} onClick={()=>setMenuOpen(false)} prefetch={false} aria-current={(review?.path ?? pathname)===href?"page":undefined}>{en?eng:ja}</Link>)}
+   {/* RESOLUTE can run as its own home-screen app: the way back to Tech Phase is always in this menu. */}
+   {!reviewing ? <Link href="/research" prefetch={false}>{en?"← Tech Phase":"← Tech Phaseへ"}</Link> : null}
   </nav> : null}
   {identityReady && (reviewing || access==="allowed") ? children(locale,()=>setAccess("denied"),entitlement) : <section className={styles.card}>
    <h1>{en?"Your investing rules":"自分の投資ルール"}</h1><p role="status">{message}</p>
@@ -70,6 +72,8 @@ export default function ToolShell({ identityReady=true, home=false, children }: 
    <button type="button" className={styles.secondary} disabled={access==="loading"} onClick={()=>setAttempt(n=>n+1)}>{en?"Check again":"再確認"}</button>
   </section>}
   {review ? <p className={styles.reviewNote}>{en ? "Owner preview · You can choose to save on this device. No emails are sent." : "運営者専用の確認画面です。端末への保存は上の設定で選べます。メールは送信しません。"}</p> : null}
+  {home && !reviewing ? <details className={styles.addHint}><summary>{en?"Put RESOLUTE on your home screen":"ホーム画面にRESOLUTEを置く"}</summary>
+   <p>{en?"In Safari, tap Share, then “Add to Home Screen”. RESOLUTE opens on its own, without going through Tech Phase.":"Safariで、共有ボタン →「ホーム画面に追加」を選ぶと、Tech Phaseを通らず、RESOLUTEだけが開きます。"}</p></details> : null}
   <footer className={styles.footer}>{!reviewing ? <Link href="/resolute/settings" prefetch={false}>{en?"Language and time zone":"言語とタイムゾーン"}</Link> : null}
    <Link href="/research" prefetch={false}>Tech Phase</Link></footer>
  </div></main>;
