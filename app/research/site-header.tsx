@@ -271,6 +271,11 @@ function SiteMenu({ lang, member, ownerAccount, onClose, onRefresh, onPro }: { l
             <span className={styles.frTop}><span className={styles.frTitle}><ProBadge size={24} />{ja ? "PROで、もっと深く" : "Go deeper with PRO"}</span><span className={styles.frGo}>{ja ? "案内を見る" : "Learn more"}<Icon name="next" /></span></span>
             <span className={styles.frPerks}>{perks.map(name => <span key={name}>{name}</span>)}</span>
           </button>}
+      <Link href="/research/portfolio" className={styles.assetCard} onClick={event => navigate(event, "/research/portfolio")}>
+        <span className={styles.assetEmblem} aria-hidden="true"><Icon name="bars" /></span>
+        <span className={styles.assetText}><b>{ja ? "資産管理" : "Portfolio"}</b><small>{ja ? "米国株の持ち株を、スクショで登録" : "Add your US holdings from a screenshot"}</small></span>
+        <Icon name="next" className={styles.resChev} />
+      </Link>
       <div className={styles.grp}>
         {heading(ja ? "ニュース" : "News")}
         {item("/research/news", "alerts", ja ? "ハイテク速報" : "Tech Alerts", member ? <b className={styles.liveTag}>LIVE</b> : undefined, member ? undefined : (ja ? "30分遅れ · 見出しのみ · 直近5件" : "30 min delay · headlines only · latest 5"))}

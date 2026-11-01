@@ -323,7 +323,18 @@
 
 /* iPhone in-app view: the floating close button and address pill must not cover the first line. */
 :global(html[data-overlay-bar="1"]) .wrap, :global(html[data-overlay-bar="1"]) .homeWrap { padding-top:34px; }
-.addHint{max-width:600px;width:100%;margin:8px auto 0;padding:12px 16px;border:1px solid var(--line);border-radius:14px;color:var(--sub);font-size:13px;line-height:1.7}
-.addHint summary{cursor:pointer;color:var(--gold2)}.addHint p{margin:8px 0 0}
-.homeWrap>.addHint{order:4}
-@media (display-mode: standalone){.addHint{display:none}}
+.loadingBrand{min-height:60vh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;color:var(--gold2)}
+.loadingBrand svg{width:58px;height:58px;fill:none;stroke:var(--gold);stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;animation:brandBreath 1.8s ease-in-out infinite}
+.loadingBrand b{font-family:var(--font-resolute-serif,serif);font-weight:500;letter-spacing:.42em;font-size:20px;padding-left:.42em}
+.loadingBrand span{font-size:13px;color:var(--sub);letter-spacing:.1em}
+@keyframes brandBreath{0%,100%{opacity:.55}50%{opacity:1}}
+@media (prefers-reduced-motion:reduce){.loadingBrand svg{animation:none}}
+.homeWrap>.homeGuide{order:1;max-width:600px;width:100%;margin:6px auto 0;padding:16px 18px;border:1px solid #d8b36a44;border-radius:16px;background:linear-gradient(160deg,#17130b,#0e1118 70%);color:var(--ink)}
+.homeGuideHead{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.homeGuideHead b{font-family:var(--font-resolute-serif,serif);font-weight:600;font-size:16px;color:var(--gold2)}
+.homeGuideHead button{border:0;background:none;color:var(--sub);font-size:20px;line-height:1;padding:4px 8px;cursor:pointer}
+.homeGuide>p{margin:4px 0 8px;font-size:13px;color:var(--sub)}
+.homeGuide ol{margin:0;padding-left:1.3em;font-size:13.5px;line-height:1.85;color:#d6dde7}
+.homeGuide li b{color:var(--gold2);font-weight:600}
+.homeGuide div>p{margin:8px 0 0;font-size:12.5px;color:var(--sub)}
+@media (display-mode: standalone){.homeGuide{display:none}}

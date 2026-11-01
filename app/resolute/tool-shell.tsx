@@ -4,6 +4,7 @@ import { ReviewLink as Link, useReview } from "./review-context";
 import { usePathname } from "next/navigation";
 import { useEffect, useState, type ReactNode } from "react";
 import { useOpenAtTop } from "./use-open-at-top";
+import AddToHomeCard from "./add-to-home-card";
 import { validateSnapshot } from "@/lib/resolute/transport";
 import { requestPreferences } from "@/lib/resolute/preferences-client";
 import type { DiagnosisLocale } from "@/lib/resolute/diagnosis-copy";
@@ -47,7 +48,7 @@ export default function ToolShell({ identityReady=true, home=false, children }: 
  },[identityReady,attempt,reviewing]);
  const [menuOpen,setMenuOpen]=useState(false);
  const en=locale==="en";
- const message=access==="loading" ? (en?"Checking access…":"利用権を確認しています…") : access==="signed-out" ?
+ const message=access==="signed-out" ?
   (en?"Sign in to use RESOLUTE.":"RESOLUTEを使うにはログインしてください。") : access==="mfa" ?
   (en?"Owner access needs two-step verification in this sign-in. Sign out, sign in again and enter the code from your authenticator app, then check again.":"運営者として使うには、今回のログインで2段階認証のコード入力が必要です。ログアウトして入り直し、認証アプリのコードを入力してから、もう一度確認してください。") : access==="denied" ?
   (en?"You need to have purchased RESOLUTE to use it. PRO membership alone doesn’t include access.":"有効なRESOLUTEの購入権限が必要です。PRO会員資格だけでは利用できません。") :
@@ -65,15 +66,16 @@ export default function ToolShell({ identityReady=true, home=false, children }: 
    {/* RESOLUTE can run as its own home-screen app: the way back to Tech Phase is always in this menu. */}
    {!reviewing ? <Link href="/research" prefetch={false}>{en?"← Tech Phase":"← Tech Phaseへ"}</Link> : null}
   </nav> : null}
-  {identityReady && (reviewing || access==="allowed") ? children(locale,()=>setAccess("denied"),entitlement) : <section className={styles.card}>
+  {identityReady && (reviewing || access==="allowed") ? children(locale,()=>setAccess("denied"),entitlement) : (!identityReady || access==="loading") ? <section className={styles.loadingBrand} role="status" aria-live="polite">
+   <svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="9" r="4" /><path d="M24 13v28M17 19h14M9 31c0 7 7 11 15 11s15-4 15-11M5 33l4-4 4 4M35 33l4-4 4 4" /></svg>
+   <b>RESOLUTE</b><span>{en?"Checking…":"確認中…"}</span></section> : <section className={styles.card}>
    <h1>{en?"Your investing rules":"自分の投資ルール"}</h1><p role="status">{message}</p>
    {access==="signed-out" ? <Link href="/research/account" prefetch={false}>{en?"Sign in":"ログイン"}</Link> : null}
    {access==="mfa" ? <Link href="/research/account/security" prefetch={false}>{en?"Open security settings":"セキュリティ設定を開く"}</Link> : null}
-   <button type="button" className={styles.secondary} disabled={access==="loading"} onClick={()=>setAttempt(n=>n+1)}>{en?"Check again":"再確認"}</button>
+   <button type="button" className={styles.secondary} onClick={()=>setAttempt(n=>n+1)}>{en?"Check again":"再確認"}</button>
   </section>}
   {review ? <p className={styles.reviewNote}>{en ? "Owner preview · You can choose to save on this device. No emails are sent." : "運営者専用の確認画面です。端末への保存は上の設定で選べます。メールは送信しません。"}</p> : null}
-  {home && !reviewing ? <details className={styles.addHint}><summary>{en?"Put RESOLUTE on your home screen":"ホーム画面にRESOLUTEを置く"}</summary>
-   <p>{en?"In Safari, tap Share, then “Add to Home Screen”. RESOLUTE opens on its own, without going through Tech Phase.":"Safariで、共有ボタン →「ホーム画面に追加」を選ぶと、Tech Phaseを通らず、RESOLUTEだけが開きます。"}</p></details> : null}
+  {home && !reviewing ? <AddToHomeCard en={en} /> : null}
   <footer className={styles.footer}>{!reviewing ? <Link href="/resolute/settings" prefetch={false}>{en?"Language and time zone":"言語とタイムゾーン"}</Link> : null}
    <Link href="/research" prefetch={false}>Tech Phase</Link></footer>
  </div></main>;
