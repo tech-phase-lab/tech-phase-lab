@@ -21,6 +21,23 @@ TABLES = ('adverse_transactions', 'events', 'payments', 'periods',
           'recovery_queue', 'review_holds', 'security_alerts', 'security_windows', 'subscriptions')
 
 
+def safe_detail(stderr):
+    """First error lines of a failed pg_dump, reduced to a short allowlisted summary.
+    Quoted text (hosts, users, object names, values) and numbers are removed; nothing else is kept."""
+    lines = []
+    for raw in stderr.decode('utf-8', 'replace').splitlines():
+        text = raw.strip()
+        if not text:
+            continue
+        text = re.sub(r'"[^"]*"|\'[^\']*\'', '""', text)
+        text = re.sub(r'[0-9]+', '#', text)
+        text = re.sub(r'[^A-Za-z _:.,()=#-]', '?', text)[:120]
+        lines.append(text)
+        if len(lines) == 3:
+            break
+    return ' | '.join(lines)
+
+
 def run(args, *, env=None):
     result = subprocess.run(args, env=env, capture_output=True, timeout=600)
     if result.returncode:
@@ -43,7 +60,11 @@ def run(args, *, env=None):
                     reason = category
                     break
         command = next((cmd for cmd in args if cmd in ('psql', 'pg_dump', 'pg_restore', 'initdb', 'pg_ctl', 'createdb')), 'system')
-        raise RuntimeError(f'{command}_{reason}')
+        error = RuntimeError(f'{command}_{reason}')
+        if command == 'pg_dump':
+            error.detail = safe_detail(result.stderr)
+            error.returncode = result.returncode
+        raise error
     return result.stdout
 
 
@@ -258,7 +279,8 @@ def run_job(env=None, job=None):
         code = str(exc) if type(exc) is RuntimeError and re.fullmatch(r'(psql|pg_dump|pg_restore|initdb|pg_ctl|createdb|system)_(permission_denied|failed|version_mismatch|row_security|schema_missing|disk_full|authentication|lock_timeout|statement_timeout|output_file|connection|configuration)', str(exc)) else type(exc).__name__
         finished = monitor_ping(url, 'fail')
         print(json.dumps({'event': 'TECH_PHASE_LIVE_BACKUP_JOB_FAILED',
-                          'failure': code, 'location': frames, 'monitor_start': started, 'monitor_finish': finished}), flush=True)
+                          'failure': code, 'location': frames,
+                          'returncode': getattr(exc, 'returncode', None), 'detail': getattr(exc, 'detail', None), 'monitor_start': started, 'monitor_finish': finished}), flush=True)
         return 1
     finished = monitor_ping(url, 'success')
     print(json.dumps({'event': 'TECH_PHASE_LIVE_BACKUP_MONITOR',
