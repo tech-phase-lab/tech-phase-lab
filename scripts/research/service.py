@@ -59,6 +59,7 @@ import official_research_detail
 import watch_earnings
 import mu_earnings_measurement
 import web_push
+import voice_inbox
 import release_watch
 import original_preview_news
 
@@ -3007,6 +3008,35 @@ class Handler(BaseHTTPRequestHandler):
         self.end_headers()
         self.wfile.write(payload)
 
+    def send_text(self, status, message):
+        """A short plain-text reply: the phone shortcut shows it as it is."""
+        payload = message.encode()
+        self.send_response(status)
+        self.send_header("Content-Type", "text/plain; charset=utf-8")
+        self.send_header("Content-Length", str(len(payload)))
+        self.send_header("Cache-Control", "no-store")
+        self.send_header("X-Content-Type-Options", "nosniff")
+        self.send_header("Connection", "close")
+        self.end_headers()
+        self.wfile.write(payload)
+        self.close_connection = True
+
+    def inbox_upload(self):
+        """The owner's phone shortcut posts a voice memo here. It signs in with the inbox key, not a login."""
+        try:
+            length = int(self.headers.get("Content-Length", "0"))
+        except ValueError:
+            length = 0
+        # Behind the platform proxy the last address is the one it saw; earlier ones can be made up by the sender.
+        sender = self.headers.get("X-Forwarded-For", "").split(",")[-1].strip() or self.client_address[0]
+        try:
+            with voice_inbox.connect(self.app.db_path) as db:
+                status, message, _ = voice_inbox.receive(db, self.rfile, length, self.headers.get("Content-Type", ""), self.headers.get("Authorization", ""), sender)
+            self.send_text(status, message)
+        except Exception as error:
+            print(f"voice-inbox-error {type(error).__name__}", flush=True)
+            self.send_text(500, "受信箱でエラーが起きました。")
+
     def authorized(self):
         # A dedicated news reader must never inherit legacy token-free access.
         reader = os.environ.get("RESOLUTE_NEWS_READ_TOKEN", "")
@@ -3140,6 +3170,27 @@ class Handler(BaseHTTPRequestHandler):
                 self.send_json(200, {"ok": True, "summary": pipeline_status.summary(articles), "articles": articles})
             except Exception:
                 self.send_json(503, {"ok": False, "error": "pipeline-status-unavailable"})
+            return
+        if path in {"/admin/inbox/items", "/admin/inbox/file", "/admin/inbox/key"}:
+            if not self.editor_authorized():
+                self.send_json(401, {"ok": False, "error": "unauthorized"})
+                return
+            try:
+                with voice_inbox.connect(self.app.db_path) as db:
+                    if path == "/admin/inbox/items":
+                        result = voice_inbox.items(db)
+                    elif path == "/admin/inbox/key":
+                        result = voice_inbox.key_status(db)
+                    else:
+                        result = voice_inbox.file_link(db, parse_qs(parsed.query).get("id", [""])[0])
+                self.send_json(200, {"ok": True, **result})
+            except voice_inbox.StorageError as error:
+                print(f"voice-inbox-link-failed reason={error.reason}", flush=True)
+                self.send_json(503, {"ok": False, "error": error.reason})
+            except ValueError as exc:
+                self.send_json(404 if str(exc) == "inbox-not-found" else 400, {"ok": False, "error": str(exc)})
+            except Exception:
+                self.send_json(503, {"ok": False, "error": "inbox-unavailable"})
             return
         if path in {"/admin/briefs", "/admin/annual-briefs", "/admin/signals", "/admin/news", "/admin/posts", "/admin/questions", "/admin/official-research"}:
             if not self.editor_authorized():
@@ -3325,6 +3376,23 @@ class Handler(BaseHTTPRequestHandler):
             self.send_json(403, {"ok": False, "error": "read-only"})
             return
         path = urlsplit(self.path).path
+        if path == "/inbox/upload":
+            self.inbox_upload()
+            return
+        if path in {"/admin/inbox/rename", "/admin/inbox/read", "/admin/inbox/key"}:
+            if not self.editor_authorized():
+                self.send_json(401, {"ok": False, "error": "unauthorized"})
+                return
+            try:
+                payload = {} if path == "/admin/inbox/key" else self.read_json()
+                with voice_inbox.connect(self.app.db_path) as db:
+                    result = voice_inbox.issue_key(db) if path == "/admin/inbox/key" else voice_inbox.rename(db, payload) if path == "/admin/inbox/rename" else voice_inbox.mark_read(db, payload)
+                self.send_json(200, {"ok": True, **result})
+            except ValueError as exc:
+                self.send_json(404 if str(exc) == "inbox-not-found" else 400, {"ok": False, "error": str(exc)})
+            except Exception:
+                self.send_json(503, {"ok": False, "error": "inbox-unavailable"})
+            return
         if path == "/saved-research":
             if not os.environ.get("RESEARCH_API_TOKEN") or not self.authorized():
                 self.send_json(401, {"ok": False})
