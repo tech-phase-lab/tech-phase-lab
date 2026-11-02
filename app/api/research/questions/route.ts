@@ -23,7 +23,7 @@ async function identity() {
   if (member.plan !== "pro") return "free" as const;
   const { url, token } = configuration();
   const ownerKey = createHmac("sha256", token).update(`question:${member.userId}`).digest("hex");
-  return { url, token, ownerKey, ownerMode: member.ownerMode };
+  return { url, token, ownerKey, ownerMode: member.ownerMode, ownerView: member.ownerMode && member.isAdmin };
 }
 
 async function parse(response: Response) {
@@ -40,7 +40,7 @@ export async function GET(request?: Request) {
     if (!account) return reply(401, { ok: false, error: "sign-in-required" });
     if (account === "free") return reply(403, { ok: false, error: "pro-required" });
     account.url.searchParams.set("page", page);
-    const response = await fetch(account.url, { headers: { Authorization: `Bearer ${account.token}`, "X-Question-Owner": account.ownerKey, "X-Question-Audience": "pro-board" }, cache: "no-store", signal: AbortSignal.timeout(10_000) });
+    const response = await fetch(account.url, { headers: { Authorization: `Bearer ${account.token}`, "X-Question-Owner": account.ownerKey, "X-Question-Audience": "pro-board", "X-Question-Owner-View": account.ownerView ? "1" : "0" }, cache: "no-store", signal: AbortSignal.timeout(10_000) });
     const data = await parse(response);
     if (response.ok && data.audience !== "pro-board") return reply(503, { ok: false, error: "board-unavailable" });
     return reply(response.status, data);
@@ -53,9 +53,16 @@ export async function POST(request: Request) {
     const account = await identity();
     if (!account) return reply(401, { ok: false, error: "sign-in-required" });
     if (account === "free") return reply(403, { ok: false, error: "pro-required" });
-    if (account.ownerMode) return reply(403, { ok: false, error: "owner-posting-disabled" });
     const text = await request.text();
     if (!text || new TextEncoder().encode(text).length > 8_000) return reply(400, { ok: false, error: "invalid-request" });
+    // A member deletes their own post (the owner deletes through the moderation route). The day's count is not given back.
+    const asked = JSON.parse(text) as { action?: unknown; id?: unknown };
+    if (asked.action === "delete") {
+      if (typeof asked.id !== "string" || !/^q-[a-f0-9]{32}$/.test(asked.id)) return reply(400, { ok: false, error: "invalid-request" });
+      const removal = await fetch(account.url, { method: "POST", headers: { Authorization: `Bearer ${account.token}`, "Content-Type": "application/json" }, body: JSON.stringify({ ownerKey: account.ownerKey, action: "delete", id: asked.id }), cache: "no-store", signal: AbortSignal.timeout(10_000) });
+      return reply(removal.status, await parse(removal));
+    }
+    if (account.ownerMode) return reply(403, { ok: false, error: "owner-posting-disabled" });
     const input = JSON.parse(text) as { requestId?: unknown; body?: unknown; audience?: unknown };
     if (input.audience !== "pro-board" || typeof input.requestId !== "string" || !/^q-[a-f0-9]{32}$/.test(input.requestId) || typeof input.body !== "string" || input.body.trim().length < 10 || input.body.length > 1200 || input.body.includes("\0")) return reply(400, { ok: false, error: "invalid-question" });
     const response = await fetch(account.url, { method: "POST", headers: { Authorization: `Bearer ${account.token}`, "Content-Type": "application/json" }, body: JSON.stringify({ ownerKey: account.ownerKey, requestId: input.requestId, body: input.body, audience: "pro-board" }), cache: "no-store", signal: AbortSignal.timeout(10_000) });

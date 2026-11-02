@@ -52,7 +52,7 @@ export async function POST(request: Request) {
       const { url, token } = configuration("/admin/questions/answer");
       return relay(url, token, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ id: input.id, body: input.body, ...(editing ? { expectedVersion: input.expectedVersion } : {}) }) });
     }
-    if (typeof input.id !== "string" || !/^q-[a-f0-9]{32}$/.test(input.id) || !["pending", "answered", "closed"].includes(String(input.decision)) || (input.answerPostId != null && (typeof input.answerPostId !== "string" || input.answerPostId.length > 64))) return reply(400, { ok: false, error: "invalid-request" });
+    if (typeof input.id !== "string" || !/^q-[a-f0-9]{32}$/.test(input.id) || !["pending", "answered", "closed", "release", "delete"].includes(String(input.decision)) || (input.answerPostId != null && (typeof input.answerPostId !== "string" || input.answerPostId.length > 64))) return reply(400, { ok: false, error: "invalid-request" });
     const { url, token } = configuration("/admin/questions/review");
     return relay(url, token, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(input) });
   } catch { return reply(503, { ok: false, error: "questions-unavailable" }); }

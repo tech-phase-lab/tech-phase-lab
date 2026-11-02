@@ -71,10 +71,43 @@ test('moderation route is owner-only and uses the server editor credential', asy
   } finally {globalThis.fetch=saved.fetch;delete globalThis.__questions;for(const [key,value] of [['RESEARCH_MONITOR_URL',saved.url],['RESEARCH_EDITOR_TOKEN',saved.token]]){if(value===undefined)delete process.env[key];else process.env[key]=value;}}
 });
 
-test('question pages separate private intake, moderation and published answers',()=>{
+test('question pages: one list for members and the owner, no separate published-answers page',()=>{
   const intake=readFileSync(new URL('../app/research/qa/questions.tsx',import.meta.url),'utf8');
   const moderation=readFileSync(new URL('../app/research/questions/moderation.tsx',import.meta.url),'utf8');
-  assert.match(intake,/PRO会員全員に公開/);assert.match(intake,/1日10件まで、10〜1,200文字/);assert.match(intake,/すべての質問への回答はお約束していません/);
+  assert.match(intake,/すべてには答えられません/);assert.doesNotMatch(intake,/みんなの質問|公開された回答/);
   assert.match(moderation,/本文をそのまま公開せず/);assert.match(moderation,/公開済みQ&A/);
-  assert.match(readFileSync(new URL('../app/research/qa/answered/page.tsx',import.meta.url),'utf8'),/initialKind="qa"/);
+  const answered=readFileSync(new URL('../app/research/qa/answered/page.tsx',import.meta.url),'utf8');
+  assert.match(answered,/redirect\(match \? `\/research\/qa#q-\$\{match\[1\]\}` : "\/research\/qa"\)/);
+});
+
+test('a member deletes only through the delete action; the owner view is asked for only by the verified owner (Nov 2)', async () => {
+  const saved={fetch:globalThis.fetch,url:process.env.RESEARCH_MONITOR_URL,token:process.env.RESEARCH_MONITOR_TOKEN};
+  const state=globalThis.__questions={member:{status:'signed-in',userId:'user_private_123',plan:'pro'},calls:[]};
+  process.env.RESEARCH_MONITOR_URL='https://monitor.example';process.env.RESEARCH_MONITOR_TOKEN='monitor-token-at-least-24-characters';
+  globalThis.fetch=async(url,init)=>{state.calls.push({url:String(url),init});return Response.json({ok:true,audience:"pro-board",items:[],item:{id:'q-'+'1'.repeat(32),deleted:true},left:1});};
+  try {
+    const {GET,POST}=await import('data:text/javascript;base64,'+Buffer.from(stripTypeScriptTypes(memberSource)).toString('base64'));
+    await GET();assert.equal(state.calls.at(-1).init.headers['X-Question-Owner-View'],'0');
+    state.member={...state.member,ownerMode:true,isAdmin:false};await GET();assert.equal(state.calls.at(-1).init.headers['X-Question-Owner-View'],'0','owner mode without the admin check never gets the owner view');
+    state.member={...state.member,ownerMode:true,isAdmin:true};await GET();assert.equal(state.calls.at(-1).init.headers['X-Question-Owner-View'],'1');
+    state.member={status:'signed-in',userId:'user_private_123',plan:'pro'};
+    const ask=body=>new Request('https://example.test/api/research/questions',{method:'POST',headers:{origin:'https://example.test','content-type':'application/json'},body:JSON.stringify(body)});
+    assert.equal((await POST(ask({action:'delete',id:'q-'+'1'.repeat(32)}))).status,200);
+    const sent=JSON.parse(state.calls.at(-1).init.body);assert.equal(sent.action,'delete');assert.match(sent.ownerKey,/^[a-f0-9]{64}$/);assert.doesNotMatch(JSON.stringify(sent),/user_private_123/);
+    assert.equal((await POST(ask({action:'delete',id:'bad'}))).status,400);
+    const count=state.calls.length;assert.equal((await POST(ask({action:'delete',id:'q-'+'1'.repeat(32)}).clone())).status,200);assert.equal(state.calls.length,count+1);
+  } finally {globalThis.fetch=saved.fetch;delete globalThis.__questions;for(const [key,value] of [['RESEARCH_MONITOR_URL',saved.url],['RESEARCH_MONITOR_TOKEN',saved.token]]){if(value===undefined)delete process.env[key];else process.env[key]=value;}}
+});
+
+test('the ask screen follows the owner spec: one list, tags, the bar with the day count, hold and release for the owner, settings in one file', () => {
+  const screen=readFileSync(new URL('../app/research/qa/questions.tsx',import.meta.url),'utf8');
+  for (const text of ['回答済み','受付中','保留','リゼルに質問する','今日あと','あなたの質問','リゼルの回答','表示する','回答する','回答を編集','文字から']) assert.ok(screen.includes(text), text);
+  assert.match(screen,/const MIN = 10, MAX = 1200/);
+  assert.doesNotMatch(screen,/DeskTextEditor|DeskBody/,'answers are plain text, no bold or marker');
+  assert.match(screen,/ownerMode &&/);assert.match(screen,/\{!ownerMode && \(open/,'owners get no writing box');
+  const settings=JSON.parse(readFileSync(new URL('../scripts/research/question_settings.json',import.meta.url),'utf8'));
+  assert.equal(settings.dailyLimit,2);assert.deepEqual(settings.holdWords,['ドル箱','ゼウス','詐欺','情報商材']);
+  const python=readFileSync(new URL('../scripts/research/questions.py',import.meta.url),'utf8');
+  assert.doesNotMatch(python,/ドル箱|ゼウス|詐欺|情報商材/,'the words are not written into the code');
+  assert.match(readFileSync(new URL('../app/api/research/questions/moderation/route.ts',import.meta.url),'utf8'),/"release", "delete"/);
 });
