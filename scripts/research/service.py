@@ -60,6 +60,7 @@ import watch_earnings
 import mu_earnings_measurement
 import web_push
 import voice_inbox
+import weekly_issues
 import release_watch
 import original_preview_news
 
@@ -1054,10 +1055,17 @@ class AutomaticMonitor:
                 except Exception:
                     notes = []
                     print("web-push-notes-unavailable", flush=True)
+                try:
+                    with self.db_lock, weekly_issues.connect(self.db_path) as weekly_db:
+                        weekly_drafts = weekly_issues.recent_drafts(weekly_db)
+                except Exception:
+                    weekly_drafts = []
+                    print("web-push-weekly-unavailable", flush=True)
                 with web_push.connect(self.db_path) as db:
                     result = web_push.deliver(db, items)
                     web_push.deliver_weekly(db)
                     web_push.deliver_notes(db, notes)
+                    web_push.deliver_weekly_drafts(db, weekly_drafts)
                 with self.state_lock:
                     previous = self.state["webPush"]
                     self.state["webPush"] = {
@@ -3171,6 +3179,32 @@ class Handler(BaseHTTPRequestHandler):
             except Exception:
                 self.send_json(503, {"ok": False, "error": "pipeline-status-unavailable"})
             return
+        if path == "/weekly/issues":
+            if not self.authorized():
+                self.send_json(401, {"ok": False, "error": "unauthorized"})
+                return
+            try:
+                query = parse_qs(parsed.query)
+                number = int(query["number"][0]) if "number" in query else None
+                before = int(query["before"][0]) if "before" in query else None
+                with weekly_issues.connect(self.app.db_path) as db:
+                    result = weekly_issues.member_issues(db, number, int(query.get("limit", ["6"])[0]), before)
+                self.send_json(200, {"ok": True, **result})
+            except (TypeError, ValueError) as exc:
+                self.send_json(400, {"ok": False, "error": str(exc)})
+            except Exception:
+                self.send_json(503, {"ok": False, "error": "weekly-unavailable"})
+            return
+        if path == "/admin/weekly":
+            if not self.editor_authorized():
+                self.send_json(401, {"ok": False, "error": "unauthorized"})
+                return
+            try:
+                with weekly_issues.connect(self.app.db_path) as db:
+                    self.send_json(200, {"ok": True, **weekly_issues.owner_view(db)})
+            except Exception:
+                self.send_json(503, {"ok": False, "error": "weekly-unavailable"})
+            return
         if path in {"/admin/inbox/items", "/admin/inbox/file", "/admin/inbox/key"}:
             if not self.editor_authorized():
                 self.send_json(401, {"ok": False, "error": "unauthorized"})
@@ -3378,6 +3412,21 @@ class Handler(BaseHTTPRequestHandler):
         path = urlsplit(self.path).path
         if path == "/inbox/upload":
             self.inbox_upload()
+            return
+        if path in {"/admin/weekly/draft", "/admin/weekly/publish", "/admin/weekly/delete", "/admin/weekly/settings"}:
+            if not self.editor_authorized():
+                self.send_json(401, {"ok": False, "error": "unauthorized"})
+                return
+            try:
+                payload = self.read_json(256 * 1024)
+                action = {"/admin/weekly/draft": weekly_issues.save_draft, "/admin/weekly/publish": weekly_issues.publish, "/admin/weekly/delete": weekly_issues.delete, "/admin/weekly/settings": weekly_issues.save_settings}[path]
+                with weekly_issues.connect(self.app.db_path) as db:
+                    result = action(db, payload)
+                self.send_json(200, {"ok": True, **result})
+            except ValueError as exc:
+                self.send_json(404 if str(exc) == "weekly-not-found" else 400, {"ok": False, "error": str(exc)})
+            except Exception:
+                self.send_json(503, {"ok": False, "error": "weekly-unavailable"})
             return
         if path in {"/admin/inbox/rename", "/admin/inbox/read", "/admin/inbox/key"}:
             if not self.editor_authorized():

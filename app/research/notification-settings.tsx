@@ -4,12 +4,14 @@ import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { waitForIdentity } from "@/lib/research/member-recovery";
 import type { Language } from "@/lib/research/data";
 import styles from "./price-targets-panel.module.css";
+import { useOwnerMode } from "./member-display-provider";
 import NotificationPageView, { type Preferences } from "./notification-page-view";
 
 const DEVICE_KEY = "tech-phase:notification-device-state";
 const readDeviceState = () => { try { return localStorage.getItem(DEVICE_KEY) ?? ""; } catch { return ""; } };
 type State = "checking" | "off" | "on" | "unknown" | "blocked" | "unsupported" | "unavailable" | "sign-in" | "pro-required";
 export default function NotificationSettings({ lang, initiallyOpen = false, page = false }: { lang: Language; initiallyOpen?: boolean; page?: boolean }) {
+  const ownerMode = useOwnerMode();
   const [open, setOpen] = useState(initiallyOpen || page);
   const [state, setState] = useState<State>("checking");
   const [hasSubscription, setHasSubscription] = useState(false);
@@ -204,7 +206,7 @@ export default function NotificationSettings({ lang, initiallyOpen = false, page
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [starting, state]);
   const toggle = () => { if (state === "checking" && shownState === "off") { setStarting(true); return; } void run(shownState === "on" ? "disable" : "enable"); };
-  if (page) return <NotificationPageView lang={lang} state={shownState} label={label} busy={busy} starting={starting} usable={usable || state === "checking"} hasSubscription={hasSubscription} message={message} testSent={testSent} received={received}
+  if (page) return <NotificationPageView owner={ownerMode} lang={lang} state={shownState} label={label} busy={busy} starting={starting} usable={usable || state === "checking"} hasSubscription={hasSubscription} message={message} testSent={testSent} received={received}
     prefs={prefs} prefsState={prefsState} prefsMessage={prefsMessage} onPrefs={savePreferences}
     onToggle={toggle} onDisable={() => void run("disable")} onTest={() => void run("test")} onRetry={() => setRefresh(value => value + 1)} onStatus={() => void run("status")} onReceived={() => { setReceived(true); setMessage(""); }} />;
   return <>
