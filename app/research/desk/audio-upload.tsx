@@ -2,6 +2,7 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { validAudioUpload } from "@/lib/research/desk-audio";
 import { loadAudioDraft, saveAudioDraft, type AudioDraftMeta } from "@/lib/research/desk-audio-draft";
+import VoiceMemoImport from "./voice-memo-import";
 import InboxSheet from "./inbox-sheet";
 import AudioCard from "./audio-card";
 import AudioEditor from "./audio-editor";
@@ -27,10 +28,10 @@ export default function AudioUpload({ disabled, onUploaded, onBusyChange, draftK
     if (draftScope.current) void saveAudioDraft(draftScope.current, meta.current, files).catch(() => { if (mounted.current) setError("端末に保存できませんでした。"); });
   }
 
-  const [candidate, setCandidate] = useState<File | null>(null), [preview, setPreview] = useState(""), [recording, setRecording] = useState(false), [inbox, setInbox] = useState(false);
+  const [candidate, setCandidate] = useState<File | null>(null), [preview, setPreview] = useState(""), [recording, setRecording] = useState(false), [importing, setImporting] = useState(false), [inbox, setInbox] = useState(false);
   const busyCallback = useRef(onBusyChange);
   useEffect(() => { busyCallback.current = onBusyChange; }, [onBusyChange]);
-  const pending = restoring || recording || candidate !== null || progress !== null;
+  const pending = restoring || recording || importing || candidate !== null || progress !== null;
   useEffect(() => { busyCallback.current(pending); return () => busyCallback.current(false); }, [pending]);
   const previewRef = useRef("");
   useEffect(() => () => { if (previewRef.current) URL.revokeObjectURL(previewRef.current); }, []);
@@ -117,11 +118,13 @@ export default function AudioUpload({ disabled, onUploaded, onBusyChange, draftK
   return <div className={styles.audioUpload}>
     <input ref={input} type="file" accept=".mp3,.m4a,audio/mpeg,audio/mp4,audio/x-m4a" aria-label="MP3・M4A音声を選択" hidden onChange={event => { choose(event.target.files?.[0]); event.target.value = ""; }} />
     <button className={`${styles.attachTile} ${styles.audioFileEntry}`} type="button" aria-label="音声ファイルを選ぶ" disabled={disabled || ready !== true || pending} onClick={() => { setError(""); input.current?.click(); }}>{tileIcons.file}<span>音声ファイル</span></button>
-    <AudioRecorder disabled={disabled || restoring || ready !== true || candidate !== null || progress !== null} onFile={choose} onBusyChange={setRecording} onMessage={setError} />
+    <AudioRecorder disabled={disabled || restoring || ready !== true || candidate !== null || importing || progress !== null} onFile={choose} onBusyChange={setRecording} onMessage={setError} />
     <button className={`${styles.attachTile} ${styles.audioInboxEntry}`} type="button" aria-label="受信箱から選ぶ" disabled={disabled || ready !== true || pending} onClick={() => { setError(""); setInbox(true); }}>{tileIcons.inbox}<span>受信箱</span></button>
     {extraTiles}
+    {/* Kept until the inbox can receive from the phone: copy the voice memo on the iPhone, then paste it here. */}
+    <div className={styles.memoRow}><VoiceMemoImport disabled={disabled || ready !== true || pending} onFile={choose} onBusyChange={setImporting} onMessage={setError} /></div>
     {candidate && <div className={styles.audioReview}>
-      <AudioCard file={candidate} original={original.current} title={title} edited={edited} preview={preview} hold={editing} busy={progress !== null}
+      <AudioCard file={candidate} original={original.current} title={title} onTitle={value => { setTitle(value); persist({ title: value }); }} edited={edited} preview={preview} hold={editing} busy={progress !== null}
         edit={<AudioEditor key={candidate.name + candidate.lastModified} file={candidate} disabled={disabled || progress !== null} onApply={file => choose(file, true)} onBusyChange={value => setEditing(value)} />}
         onRemove={discard} />
       {edited && <button type="button" className={styles.audioPlain} disabled={editing || progress !== null} onClick={() => { if (original.current) choose(original.current, false, true); }}>元の音声に戻す</button>}

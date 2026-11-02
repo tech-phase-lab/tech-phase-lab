@@ -8,3 +8,5 @@
 .remove.remove{flex:none;width:36px;height:36px;padding:0;border:0;background:none;color:#8e98a3;font-size:26px;line-height:1;cursor:pointer}
 .bars{display:flex;align-items:center;gap:2px;height:60px;margin-top:12px}
 .bars i{flex:1;min-width:1px;border-radius:2px;background:#d8b36a}
+.name .title{display:block;width:100%;box-sizing:border-box;padding:2px 0;border:0;border-bottom:1px dashed #6e6244;background:transparent;color:#f0ece4;font:500 17px inherit;font-family:inherit;text-overflow:ellipsis}
+.name .title:focus{outline:none;border-bottom-color:#d8b36a}

@@ -85,3 +85,10 @@ test("the phone notice for a new note: a setting in the notification page, off b
   assert.match(python, /def deliver_notes/);
   assert.match(await read("../scripts/research/service.py"), /web_push\.deliver_notes\(db, notes\)/);
 });
+
+test("the voice memo paste import stays, and the audio title can be edited on the card (owner, Nov 2)", async () => {
+  const upload = await read("../app/research/desk/audio-upload.tsx");
+  assert.match(upload, /<VoiceMemoImport disabled=/);
+  assert.match(upload, /onTitle=\{value => \{ setTitle\(value\); persist\(\{ title: value \}\); \}\}/);
+  assert.match(await read("../app/research/desk/audio-card.tsx"), /aria-label="音声のタイトル"/);
+});

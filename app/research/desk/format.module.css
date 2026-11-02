@@ -78,3 +78,5 @@
 .markTool{padding:2px 6px}
 .attachOpen{min-height:48px;padding:0 16px;font-size:16px;white-space:nowrap}
 .count{font-size:14px;white-space:nowrap}
+.audioUpload .memoRow{grid-column:1/-1;display:block;margin:0}
+.audioUpload .memoRow .audioMemoEntry{grid-column:auto;grid-row:auto;height:auto;min-height:40px;padding:6px 4px;border:0;background:none;color:#a99876;font-size:14px;text-decoration:underline;white-space:normal;text-align:left}

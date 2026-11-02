@@ -13,7 +13,7 @@ function duration(file: File): Promise<number> {
 }
 
 /** The audio waiting to be attached: a play button, its name and length, "編集" and "×", over a waveform. Nothing is uploaded from here. */
-export default function AudioCard({ file, original, title, edited, preview, hold, busy, edit, onRemove }: { file: File; original: File | null; title: string; edited: boolean; preview: string; hold: boolean; busy: boolean; edit: ReactNode; onRemove: () => void }) {
+export default function AudioCard({ file, original, title, onTitle, edited, preview, hold, busy, edit, onRemove }: { file: File; original: File | null; title: string; onTitle: (value: string) => void; edited: boolean; preview: string; hold: boolean; busy: boolean; edit: ReactNode; onRemove: () => void }) {
   const player = useRef<HTMLAudioElement>(null);
   const [bars, setBars] = useState<number[]>([]), [seconds, setSeconds] = useState(0), [before, setBefore] = useState(0), [playing, setPlaying] = useState(false);
   useEffect(() => {
@@ -40,7 +40,7 @@ export default function AudioCard({ file, original, title, edited, preview, hold
       <button type="button" className={styles.play} aria-label={playing ? "一時停止" : "再生"} onClick={toggle}>
         {playing ? <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14M16 5v14" /></svg> : <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5l11 7-11 7z" /></svg>}
       </button>
-      <div className={styles.name}><b>{title || "音声メモ"}</b><small>{edited && before ? `${clock(before)} ・ 編集済み ${clock(seconds)}` : seconds ? clock(seconds) : ""}</small></div>
+      <div className={styles.name}><input className={styles.title} type="text" aria-label="音声のタイトル" maxLength={80} value={title} placeholder="音声メモ" disabled={busy} onChange={event => onTitle(event.target.value)} /><small>{edited && before ? `${clock(before)} ・ 編集済み ${clock(seconds)}` : seconds ? clock(seconds) : ""}</small></div>
       {edit}
       <button type="button" className={styles.remove} aria-label="この音声を外す" disabled={busy} onClick={onRemove}>×</button>
     </div>

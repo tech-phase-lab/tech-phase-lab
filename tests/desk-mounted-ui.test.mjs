@@ -84,7 +84,7 @@ for (const extension of ['mp3','m4a']) test(extension+' picker rejects video, re
   const input=host.querySelector('input[type=file]');assert.equal(input.accept,'.mp3,.m4a,audio/mpeg,audio/mp4,audio/x-m4a');
   const choose=async name=>{Object.defineProperty(input,'files',{configurable:true,value:[new File(['x'.repeat(1024)],name)]});await act(async()=>{input.dispatchEvent(new window.Event('change',{bubbles:true}));await tick();});};
   await choose('movie.mp4');assert.deepEqual(calls,['status']);assert.match(host.textContent,/MP3・M4A／50MBまで/);
-  await choose('voice.'+extension);assert.equal(busy.at(-1),true);assert.deepEqual(calls,['status']);
+  await choose('voice.'+extension);assert.equal(busy.at(-1),true);assert.deepEqual(calls,['status']);assert.equal(host.querySelector('input[aria-label="音声のタイトル"]').value,'voice','the title can be edited on the card');
   assert.deepEqual(calls,['status']);
   await act(async()=>{[...host.querySelectorAll('button')].find(b=>b.textContent==='この音声を添付').click();await tick();});assert.match(host.textContent,/50%/);assert.deepEqual(attached,[]);
   await act(async()=>{const xhr=requests[0];xhr.status=200;xhr.onload();xhr.onloadend();await tick();});
