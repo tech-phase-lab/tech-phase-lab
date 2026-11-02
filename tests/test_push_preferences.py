@@ -164,6 +164,32 @@ class PreferenceTests(unittest.TestCase):
         push.deliver_weekly(self.db, send, sunday, wall_now=lambda: sunday, entitlement=entitlement)
         self.assertEqual(calls, [])
 
+    def test_rizel_note_notice_is_off_by_default_and_never_carries_the_text(self):
+        self.assertFalse(self.read()['rizelNote'])
+        post = lambda id='note-aaaaaaaaaaaaaaaa', at=None: {'id': id, 'kind': 'notes', 'status': 'published',
+            'publishedAt': datetime.fromtimestamp(self.now - 60 if at is None else at, timezone.utc).isoformat().replace('+00:00', 'Z'), 'bodyJa': 'secret text'}
+        sent = []
+        send = lambda _sub, msg: sent.append(msg) or 201
+        push.deliver_notes(self.db, [post()], send, self.now, wall_now=lambda: self.now, entitlement=lambda _: self.now + 60)
+        self.assertEqual(sent, [], 'off by default')
+        self.save({'rizelNote': True})
+        self.assertTrue(self.read()['rizelNote'])
+        push.deliver_notes(self.db, [post()], send, self.now, wall_now=lambda: self.now, entitlement=lambda _: self.now + 60)
+        self.assertEqual(len(sent), 1)
+        self.assertEqual(sent[0]['url'], '/research/notes')
+        self.assertNotIn('secret text', json.dumps(sent[0], ensure_ascii=False))
+        push.deliver_notes(self.db, [post()], send, self.now, wall_now=lambda: self.now, entitlement=lambda _: self.now + 60)
+        self.assertEqual(len(sent), 1, 'one notice per device and post')
+        push.deliver_notes(self.db, [post('note-bbbbbbbbbbbbbbbb', self.now - 7200)], send, self.now, wall_now=lambda: self.now, entitlement=lambda _: self.now + 60)
+        self.assertEqual(len(sent), 1, 'a post older than an hour is not announced')
+        push.deliver_notes(self.db, [{**post('note-cccccccccccccccc'), 'kind': 'weekly'}, {**post('note-dddddddddddddddd'), 'status': 'draft'}], send, self.now, wall_now=lambda: self.now, entitlement=lambda _: self.now + 60)
+        self.assertEqual(len(sent), 1, 'only published notes')
+        push.deliver_notes(self.db, [post('note-eeeeeeeeeeeeeeee')], send, self.now, wall_now=lambda: self.now, entitlement=lambda _: 0)
+        self.assertEqual(len(sent), 1, 'no notice once the PRO access has ended')
+        self.save({'rizelNote': False})
+        push.deliver_notes(self.db, [post('note-ffffffffffffffff')], send, self.now, wall_now=lambda: self.now, entitlement=lambda _: self.now + 60)
+        self.assertEqual(len(sent), 1, 'off again')
+
     def test_registration_can_atomically_apply_preferences_and_remove_cleans_up(self):
         push.register_member(self.db, {**self.payload, 'preferences': {'targets': False}}, {'MU'}, self.now-5)
         self.assertFalse(self.read()['targets'])

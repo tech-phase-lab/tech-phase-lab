@@ -20,32 +20,37 @@ async function component(path, editorStub=false) {
   return (await import(pathToFileURL(outfile).href)).default;
  }finally{await rm(dir,{recursive:true,force:true});}
 }
-test('loading then reacting renders exactly one icon per button, with one selected choice',async()=>{
+test('reactions show only pressed choices as chips; the dotted button opens the five choices; pressing again undoes',async()=>{
  const Reactions=await component('../app/research/desk/reactions.tsx');
  const original=globalThis.fetch;let resolveLoad;
  let votes=Object.fromEntries(['like','smile','sad','angry','fire'].map(k=>[k,{count:0,selected:false}]));
+ votes.smile={count:2,selected:false};
  globalThis.fetch=async(_url,options)=>{
   if(!options.method) await new Promise(resolve=>resolveLoad=resolve);
-  else {const input=JSON.parse(options.body);votes=Object.fromEntries(Object.keys(votes).map(k=>[k,{count:Number(input.selected&&input.emoji===k),selected:input.selected&&input.emoji===k}]));}
+  else {const input=JSON.parse(options.body);votes=Object.fromEntries(Object.keys(votes).map(k=>[k,{count:(k==='smile'?2:0)+Number(input.selected&&input.emoji===k),selected:input.selected&&input.emoji===k}]));}
   return {ok:true,json:async()=>({ok:true,reactions:votes})};
  };
  const host=document.createElement('div');document.body.append(host);const root=createRoot(host);
  try{
   await act(async()=>root.render(React.createElement(Reactions,{postId:'note-reaction-test',ja:true})));
-  assert.equal(host.querySelectorAll('button').length,5);
+  assert.equal(host.querySelectorAll('button').length,1,'before loading only the (disabled) smile button');
   await act(async()=>{resolveLoad();await tick();});
-  const buttons=[...host.querySelectorAll('button')];
-  for(const button of buttons) assert.equal(button.querySelectorAll('[aria-hidden=true]').length,1);
-  assert.equal(host.textContent.split('👍').length-1,1);
-  await act(async()=>{buttons[0].click();await tick();});
-  await act(async()=>{buttons[2].click();await tick();});
-  assert.equal(host.querySelectorAll('[aria-pressed=true]').length,1);
-  assert.equal(buttons[2].getAttribute('aria-pressed'),'true');
-  await act(async()=>{buttons[2].click();await tick();});
-  assert.equal(host.querySelectorAll('[aria-pressed=true]').length,0);
-  for(const button of buttons) assert.equal(button.children.length,2);
+  assert.equal(host.querySelectorAll('[aria-pressed]').length,1,'only the pressed choice (smile, 2) is a chip');
+  assert.match(host.textContent,/😊.*2/);
+  assert.ok(!host.textContent.includes('👍'),'choices nobody pressed are not shown');
+  await act(async()=>{host.querySelector('[aria-haspopup]').click();await tick();});
+  const picker=host.querySelector('[role=group]');
+  assert.equal(picker.querySelectorAll('button').length,5);
+  await act(async()=>{picker.querySelectorAll('button')[4].click();await tick();});
+  assert.equal(host.querySelector('[role=group]'),null,'the picker closes after a choice');
+  const chips=()=>[...host.querySelectorAll('[aria-pressed=true]')];
+  assert.equal(chips().length,1);
+  assert.match(chips()[0].textContent,/🔥/,'my own choice is the highlighted chip');
+  await act(async()=>{chips()[0].click();await tick();});
+  assert.equal(chips().length,0,'pressing it again cancels it');
  }finally{await act(async()=>root.unmount());host.remove();globalThis.fetch=original;}
 });
+
 test('selecting differently formatted text updates toolbar without resetting editor options or DOM selection',async()=>{
  const RichEditor=await component('../app/research/desk/rich-editor.tsx');
  const host=document.createElement('div');document.body.append(host);const root=createRoot(host);
@@ -79,14 +84,11 @@ for (const extension of ['mp3','m4a']) test(extension+' picker rejects video, re
   const input=host.querySelector('input[type=file]');assert.equal(input.accept,'.mp3,.m4a,audio/mpeg,audio/mp4,audio/x-m4a');
   const choose=async name=>{Object.defineProperty(input,'files',{configurable:true,value:[new File(['x'.repeat(1024)],name)]});await act(async()=>{input.dispatchEvent(new window.Event('change',{bubbles:true}));await tick();});};
   await choose('movie.mp4');assert.deepEqual(calls,['status']);assert.match(host.textContent,/MP3・M4A／50MBまで/);
-  await choose('voice.'+extension);assert.equal(busy.at(-1),true);assert.deepEqual(calls,['status']);
-  const titleInput=host.querySelector('input[type=text]');assert.equal(titleInput.value,'voice');
-  await act(async()=>{titleInput[Object.keys(titleInput).find(key=>key.startsWith('__reactProps'))].onChange({target:{value:'週末の相場メモ'}});await tick();});
+  await choose('voice.'+extension);assert.equal(busy.at(-1),true);assert.deepEqual(calls,['status']);assert.equal(host.querySelector('input[aria-label="音声のタイトル"]').value,'voice','the title can be edited on the card');
   assert.deepEqual(calls,['status']);
-  await act(async()=>{host.querySelector('input[type=checkbox]').click();await tick();});
   await act(async()=>{[...host.querySelectorAll('button')].find(b=>b.textContent==='この音声を添付').click();await tick();});assert.match(host.textContent,/50%/);assert.deepEqual(attached,[]);
   await act(async()=>{const xhr=requests[0];xhr.status=200;xhr.onload();xhr.onloadend();await tick();});
-  assert.deepEqual(calls,['status','start','finish']);assert.equal(busy.at(-1),false);assert.deepEqual(attached,[{url:'/api/research/desk-media/test.'+extension,title:'週末の相場メモ'}]);
+  assert.deepEqual(calls,['status','start','finish']);assert.equal(busy.at(-1),false);assert.deepEqual(attached,[{url:'/api/research/desk-media/test.'+extension,title:'voice'}]);
  }finally{await act(async()=>root.unmount());host.remove();globalThis.fetch=originalFetch;if(originalXHR===undefined)delete globalThis.XMLHttpRequest;else globalThis.XMLHttpRequest=originalXHR;delete globalThis.__testRecorder;}
 });
 
@@ -104,12 +106,11 @@ test('selecting or recording audio never uploads automatically; review and expli
   await act(async()=>{root.render(React.createElement(AudioUpload,{disabled:false,onUploaded:url=>attached.push(url),onBusyChange:value=>busy=value}));await tick();});
   const input=host.querySelector('input[type=file]');Object.defineProperty(input,'files',{configurable:true,value:[new File(['x'.repeat(1024)],'memo.m4a',{type:'audio/mp4'})]});
   await act(async()=>{input.dispatchEvent(new window.Event('change',{bubbles:true}));await tick();});
-  assert.equal(busy,true);assert.equal(requests.filter(([,o])=>o.method).length,0);assert.equal(button('この音声を添付').disabled,true);assert.equal(attached.length,0);
-  await act(async()=>{button('破棄').click();await tick();});assert.equal(busy,false);
+  assert.equal(busy,true);assert.equal(requests.filter(([,o])=>o.method).length,0);assert.ok(button('この音声を添付'),'only an explicit tap attaches');assert.equal(attached.length,0);
+  await act(async()=>{host.querySelector('[aria-label="この音声を外す"]').click();await tick();});assert.equal(busy,false);
   await act(async()=>{button('ここで録音').click();await tick();});assert.equal(globalThis.__testRecorder.state,'recording');assert.equal(busy,true);
   await act(async()=>{button('停止して試聴').click();await tick();});
   assert.ok(stopped>0);assert.equal(busy,true);assert.ok(host.querySelector('audio'));assert.equal(requests.filter(([,o])=>o.method).length,0);
-  await act(async()=>{host.querySelector('input[type=checkbox]').click();await tick();});
   await act(async()=>{button('この音声を添付').click();await tick();});
   assert.equal(attached.length,1);assert.equal(busy,false);assert.equal(requests.filter(([,o])=>o.method).length,2);
   assert.ok(requests.every(([url])=>url==='/api/research/desk-media'));
@@ -173,16 +174,21 @@ test('recording pauses and resumes, then stops or discards correctly while pause
  }finally{await act(async()=>root.unmount());host.remove();globalThis.MediaRecorder=old;delete globalThis.__pausedRecorder;}
 });
 
-test('audio editing supports a cut and undo locally; cancel preserves the original without applying or uploading',async()=>{
+test('the audio sheet keeps or deletes a chosen range locally; cancel changes nothing and nothing is applied or uploaded',async()=>{
  const Editor=await component('../app/research/desk/audio-editor.tsx');const oldContext=globalThis.AudioContext,oldEncoder=globalThis.AudioEncoder,oldData=globalThis.AudioData;let applied=0,busy=false;
  globalThis.AudioEncoder=class{static async isConfigSupported(){return {supported:true};}};globalThis.AudioData=class{};
  globalThis.AudioContext=class {state='running';async decodeAudioData(){return {length:1000,duration:10,sampleRate:100,numberOfChannels:1,getChannelData:()=>new Float32Array(1000)};}async close(){this.state='closed';}};
  const host=document.createElement('div');document.body.append(host);const root=createRoot(host);const click=async text=>act(async()=>{[...host.querySelectorAll('button')].find(b=>b.textContent===text).click();await tick();});
+ const times=()=>[...host.querySelectorAll('b')].map(node=>node.textContent);
  try{
   await act(async()=>root.render(React.createElement(Editor,{file:new File(['x'.repeat(1024)],'memo.m4a'),disabled:false,onApply:()=>applied++,onBusyChange:v=>busy=v})));
-  await click('区間をカット');assert.equal(busy,true);assert.match(host.textContent,/音声の長さ：10.0秒/);
-  await click('選択区間を削除');assert.match(host.textContent,/音声の長さ：9.0秒/);assert.equal(applied,0);
-  await click('1つ戻す');assert.match(host.textContent,/音声の長さ：10.0秒/);
-  await click('キャンセル');assert.equal(applied,0);assert.equal(busy,false);assert.equal(host.querySelector('svg'),null);
+  assert.equal(host.querySelector('[role=dialog]'),null);
+  await click('編集');assert.equal(busy,true);assert.ok(host.querySelector('[role=dialog]'));
+  assert.deepEqual(times(),['0:02.5','0:07.5','0:05'],'start, end and the finished length (keep mode)');
+  await click('+1秒');assert.deepEqual(times(),['0:03.5','0:07.5','0:04'],'the buttons move the chosen handle (start)');
+  await click('選んだ部分を削除');assert.deepEqual(times(),['0:03.5','0:07.5','0:06'],'delete mode: the finished length is what remains');
+  await click('選んだ部分を残す');assert.deepEqual(times(),['0:03.5','0:07.5','0:04']);
+  assert.equal(applied,0);
+  await click('やめる');assert.equal(applied,0);assert.equal(busy,false);assert.equal(host.querySelector('[role=dialog]'),null);
  }finally{await act(async()=>root.unmount());host.remove();globalThis.AudioContext=oldContext;globalThis.AudioEncoder=oldEncoder;globalThis.AudioData=oldData;}
 });

@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useMemo, useEffect, useRef, useState, type ReactNode } from "react";
 import type { Editor } from "@tiptap/core";
 import type { EditorProps } from "@tiptap/pm/view";
 import { Slice } from "@tiptap/pm/model";
@@ -8,6 +8,7 @@ import DeskBody, { mediaSource } from "./body";
 import { deskDocument, deskText } from "./document";
 import { deskExtensions } from "./editor-extensions";
 import AudioUpload from "./audio-upload";
+import PhotoTile from "./photo-tile";
 import styles from "./format.module.css";
 function parts(value: string, enabled: boolean) {
   const attachments: string[] = [], lines: string[] = [];
@@ -17,9 +18,9 @@ function parts(value: string, enabled: boolean) {
   }
   return { text: lines.join("\n"), attachments };
 }
-export default function DeskTextEditor({ value, onChange, disabled = false, label = "本文", media = false, onMediaBusyChange, audioDraftKey }: { audioDraftKey?: string; onMediaBusyChange?: (busy: boolean) => void; value: string; onChange: (value: string) => void; disabled?: boolean; label?: string; media?: boolean }) {
-  const attachmentPanel = useRef<HTMLDetailsElement>(null);
-  useEffect(() => { if (media && new URL(window.location.href).searchParams.get("voiceMemo") === "1" && attachmentPanel.current) attachmentPanel.current.open = true; }, [media]);
+export default function DeskTextEditor({ value, onChange, disabled = false, label = "本文", media = false, onMediaBusyChange, audioDraftKey, actions }: { actions?: ReactNode; audioDraftKey?: string; onMediaBusyChange?: (busy: boolean) => void; value: string; onChange: (value: string) => void; disabled?: boolean; label?: string; media?: boolean }) {
+  // The attachment panel opens from the 添付 button (and when a saved audio draft is restored, or the page is opened for a voice memo).
+  const [open, setOpen] = useState(() => media && new URL(window.location.href).searchParams.get("voiceMemo") === "1");
   const last = useRef(value), reserved = useRef(0);
   const [uploading, setUploading] = useState(false);
   const locked = disabled || uploading;
@@ -67,16 +68,33 @@ export default function DeskTextEditor({ value, onChange, disabled = false, labe
     <EditorToolbar editor={editor} disabled={locked} label={label} />
     <EditorContent editor={editor} />
     {attachments.map((attachment, index) => <div className={styles.attachment} key={`${index}-${attachment}`}><DeskBody text={attachment} media /><button type="button" aria-label="添付を削除" disabled={locked} onClick={() => emit(editor ? deskText(editor.getJSON()) : parts(value, media).text, attachments.filter((_, i) => i !== index))}>×</button></div>)}
-    {media && <details ref={attachmentPanel}><summary>添付</summary><AudioUpload draftKey={audioDraftKey} onRestored={() => { if (attachmentPanel.current) attachmentPanel.current.open = true; }} disabled={disabled} onBusyChange={busy => { setUploading(busy); onMediaBusyChange?.(busy); }} onUploaded={(audioUrl, title) => {
-      const current = parts(last.current, media);
-      const text = [current.text, `音声：${title}`].filter(Boolean).join("\n");
-      if (!emit(text, [...current.attachments, `[audio](${audioUrl})`])) return false;
-      editor?.commands.setContent(deskDocument(text), { emitUpdate: false });
-      return true;
-    }} /><div className={styles.mediaInput}><select aria-label="メディアの種類" value={kind} disabled={locked} onChange={event => setKind(event.target.value)}><option value="image">画像</option><option value="video">YouTube</option></select><input type="url" aria-label="画像またはYouTubeのURL" value={url} disabled={locked} onChange={event => setUrl(event.target.value)} placeholder="https://" /><button type="button" disabled={locked || !url} onClick={insertMedia}>追加</button></div><p className={styles.hint}>動画はYouTubeリンクのみ。</p></details>}
+    {media && <div className={styles.attachPanel} hidden={!open}>
+      <div className={styles.attachHead}><span>{clip}添付</span><button type="button" onClick={() => setOpen(false)}>閉じる ▲</button></div>
+      <AudioUpload extraTiles={<PhotoTile disabled={disabled} onBusyChange={busy => { setUploading(busy); onMediaBusyChange?.(busy); }} onAdded={photoUrl => { const current = parts(last.current, media); return emit(current.text, [...current.attachments, `[image](${photoUrl})`]); }} />} draftKey={audioDraftKey} onRestored={() => setOpen(true)} disabled={disabled} onBusyChange={busy => { setUploading(busy); onMediaBusyChange?.(busy); }} onUploaded={(audioUrl, title) => {
+        const current = parts(last.current, media);
+        const text = [current.text, `音声：${title}`].filter(Boolean).join("\n");
+        if (!emit(text, [...current.attachments, `[audio](${audioUrl})`])) return false;
+        editor?.commands.setContent(deskDocument(text), { emitUpdate: false });
+        return true;
+      }} />
+      <div className={styles.urlRow}>
+        <div className={styles.kindSwitch} role="group" aria-label="メディアの種類">
+          <button type="button" aria-pressed={kind === "image"} disabled={locked} onClick={() => setKind("image")}>画像URL</button>
+          <button type="button" aria-pressed={kind === "video"} disabled={locked} onClick={() => setKind("video")}>YouTube</button>
+        </div>
+        <input type="url" aria-label="画像またはYouTubeのURL" value={url} disabled={locked} onChange={event => setUrl(event.target.value)} placeholder="https://" />
+        <button type="button" className={styles.urlAdd} disabled={locked || !url} onClick={insertMedia}>追加</button>
+      </div>
+    </div>}
     {message && <p role="status">{message}</p>}
+    {(media || actions) && <div className={styles.composerFoot}>
+      {media && !open && <button type="button" className={styles.attachOpen} onClick={() => setOpen(true)}>{clip}添付</button>}
+      <span className={styles.count}>{value.length.toLocaleString()} / 6,000</span>
+      {actions}
+    </div>}
   </div>;
 }
+const clip = <svg className={styles.clip} viewBox="0 0 24 24" aria-hidden="true"><path d="M20 11.500l-8 8a5 5 0 0 1-7-7l9-9a3.500 3.500 0 0 1 5 5l-9 9a2 2 0 0 1-3-3l8-8" /></svg>;
 
 // Selection updates render only the toolbar, never the editable surface.
 function EditorToolbar({ editor, disabled, label }: { editor: Editor | null; disabled: boolean; label: string }) {
@@ -93,8 +111,8 @@ function EditorToolbar({ editor, disabled, label }: { editor: Editor | null; dis
   return (
     <div className={styles.toolbar} role="group" aria-label={`${label}の文字装飾`}>
       <button type="button" aria-label="太字" aria-pressed={active?.bold ?? false} disabled={disabled} onMouseDown={e => e.preventDefault()} onClick={() => format("bold")} title="太字"><strong>B</strong></button>
-      <button type="button" className={styles.red} aria-label="赤文字" aria-pressed={active?.red ?? false} disabled={disabled} onMouseDown={e => e.preventDefault()} onClick={() => format("red")}>赤</button>
-      <button type="button" aria-label="黄色マーカー" aria-pressed={active?.highlight ?? false} disabled={disabled} onMouseDown={e => e.preventDefault()} onClick={() => format("highlight")}>マーカー</button>
+      <button type="button" className={styles.redTool} aria-label="赤文字" aria-pressed={active?.red ?? false} disabled={disabled} onMouseDown={e => e.preventDefault()} onClick={() => format("red")}><i aria-hidden="true" />赤</button>
+      <button type="button" aria-label="黄色マーカー" aria-pressed={active?.highlight ?? false} disabled={disabled} onMouseDown={e => e.preventDefault()} onClick={() => format("highlight")}><span className={styles.markTool}>マーカー</span></button>
       <button type="button" aria-label="装飾を解除" disabled={disabled} onMouseDown={e => e.preventDefault()} onClick={() => format("clear")}>解除</button>
       <button type="button" aria-label="本文を全選択" disabled={disabled} onMouseDown={e => e.preventDefault()} onClick={selectText}>選択</button>
     </div>

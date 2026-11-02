@@ -1046,9 +1046,17 @@ class AutomaticMonitor:
                         items = [*items, *({**item, "kind": "news"} for item in news_drafts.public_feed(news_db, limit=10)["items"])]
                 except Exception:
                     print("web-push-news-unavailable", flush=True)
+                try:
+                    # A new "ひとりごと" is announced to the PR members who turned it on (owner, Nov 2).
+                    with self.db_lock, editorial_posts.connect(self.db_path) as notes_db:
+                        notes = [post for post in editorial_posts.queue(notes_db, 20, True, 0, None)["items"] if post.get("kind") == "notes"]
+                except Exception:
+                    notes = []
+                    print("web-push-notes-unavailable", flush=True)
                 with web_push.connect(self.db_path) as db:
                     result = web_push.deliver(db, items)
                     web_push.deliver_weekly(db)
+                    web_push.deliver_notes(db, notes)
                 with self.state_lock:
                     previous = self.state["webPush"]
                     self.state["webPush"] = {
