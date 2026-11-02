@@ -183,3 +183,17 @@ test('"what X said" summaries, year-tagged teasers and PC trivia are not news (o
   ]) assert.equal(isNotNews(title), false, title);
   assert.equal(cleanTitle('アマゾン、新しいAIチップの出荷を開始 (AMZN:NASDAQ)'), 'アマゾン、新しいAIチップの出荷を開始');
 });
+
+test('data-calendar teasers, company videos, teaser answers, Indian broker pages and hashtag tails are not news; a Japanese wire-service tag is trimmed (owner, Nov 2)', () => {
+  for (const title of [
+    '来週、雇用統計発表予定', 'Jobs report due next week', 'Radeon Vega Gfx Mobile - AMDがモバイルGPU Radeon Vega Mobileに関する動画を公開', 'AMD publishes a video about the Radeon Vega Mobile GPU',
+    'マイクロンの受注残がCXMTのサーバー推進への真の答え', 'Micron backlog is the real answer to CXMT server push',
+    'ナビンフルオライドからGEベルノバ第2四半期決算レビュー：IDBIキャピタルの修正目標株価をチェック', 'GE Vernova Q2 review from Navin Fluorine: check IDBI Capital revised target price',
+    'Banyan Group Residences、プーケット限定レジデンス展示会で香港に再進出 #BanyanGroup', 'Banyan Group Residences returns to Hong Kong with a Phuket showcase #BanyanGroup',
+  ]) assert.equal(isNotNews(title), true, title);
+  for (const title of [
+    'エヌビディア、新しいAIチップを発表', 'マイクロン、HBM4の量産を開始', 'アーム、新しいチップ設計を発表', 'ルメンタム社長が135万ドル超の自社株を売却', 'Nvidia unveils a new AI chip', 'Micron starts HBM4 volume production',
+    'インテル、雇用を3割削減へ', 'Intel to cut jobs by 30%',
+  ]) assert.equal(isNotNews(title), false, title);
+  assert.equal(cleanTitle('ルメンタム社長の袁武本が135万ドル超の自社株売却（インベスティング・ドットコム）'), 'ルメンタム社長の袁武本が135万ドル超の自社株売却');
+});

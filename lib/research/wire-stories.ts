@@ -47,6 +47,11 @@ const NOT_NEWS = [
   /(?:が|は|も|両社が|それぞれが).{0,40}(?:語った|述べた|話した|明かした)(?:内容|こと)[。.]?\s*(?:[(（][A-Z.]{1,6}\s*[:：]\s*[A-Za-z]{2,10}[)）])?\s*$|\bwhat\b.{0,60}\b(?:both|each|they|he|she)\b.{0,30}\b(?:said|says|told)\b|^\s*what\b.{0,60}\b(?:said|says|told)\b/i, // "what X said" summaries: no fact in the headline (owner, Oct 31)
   /【\s*20\d\d(?:年)?\s*】\s*$|\[\s*20\d\d\s*\]\s*$/, // a search-engine year tag glued on the end ("…チップ【2026年】")
   /Windows\s?1[01]\b.{0,60}(?:クラッシュダンプ|ブルースクリーン|ショートカット|隠し機能|長押し)|(?:電源ボタン|長押し).{0,40}Windows|\b(?:crash dumps?|blue screen|BSOD|keyboard shortcuts?)\b/i, // PC how-to trivia, not company news (owner, Oct 31)
+  /(?:雇用統計|雇用情勢|非農業部門|消費者物価|\bCPI\b|\bFOMC\b).{0,14}(?:発表予定|公表予定|発表へ|控え|待ち)|来週.{0,10}(?:雇用統計|消費者物価|\bCPI\b|\bFOMC\b)|\b(?:jobs report|nonfarm payrolls?|CPI report|FOMC (?:meeting|decision))\b.{0,30}\b(?:next week|due|scheduled|ahead)\b|\b(?:next|this) week\b.{0,30}\b(?:jobs report|nonfarm payrolls?|CPI|FOMC)\b/i, // market-wide data calendar teasers, not company news (owner, Nov 2)
+  /動画を(?:公開|投稿|アップロード|配信)|\b(?:publish(?:es|ed)?|post(?:s|ed)?|upload(?:s|ed)?|releases?)\s+(?:a |new |an )?(?:promo(?:tional)? )?videos?\b/i, // a company video, not news (owner, Nov 2)
+  /真の(?:答え|理由|原因|狙い|価値)|\bthe (?:true|real) (?:answer|story)\b/i, // a teaser whose answer is not in the headline (owner, Nov 2)
+  /\b(?:IDBI Capital|Motilal Oswal|ICICI Securities|Kotak Securities|Axis Securities|Nirmal Bang|Anand Rathi|HDFC Securities|Sharekhan|Emkay Global|Prabhudas Lilladher|Navin Fluorine|GE Vernova T&D India)\b|IDBIキャピタル|モティラル・オスワル|ICICIセキュリティーズ|コタック証券|ナビンフルオライド|(?:修正|改定)目標株価をチェック|\bcheck (?:out )?(?:the )?(?:revised|updated) target price\b/i, // Indian-market broker target pages, not news about the US company (owner, Nov 2)
+  /(?:^|\s)#[A-Za-z0-9_]{3,}\s*$/, // a social-media hashtag glued on the end: promotional text, not a headline (owner, Nov 2)
 ];
 /** A press-release label glued onto the headline ("2026年10月25日｜… ｜NYSE:BE｜プレスリリース") is not part of it (owner, Oct 26). */
 export function cleanTitle(title: string) {
@@ -54,7 +59,7 @@ export function cleanTitle(title: string) {
     .replace(/\s*[|｜]\s*(?:NYSE|NASDAQ|Nasdaq(?:GS|GM|CM)?|AMEX)\s*[:：]\s*[A-Z.]{1,6}\s*(?:[|｜]\s*(?:プレスリリース|Press Release))?\s*$/, "")
     .replace(/\s*[|｜]\s*(?:プレスリリース|Press Release)\s*$/, "").replace(/\s*[：:]\s*(?:レポート|報道|report)\s*$/i, "")
     // The wire service's name tacked on the end ("…で上昇（Investing.comより）") is not part of the headline (owner, Oct 28).
-    .replace(/\s*[(（]\s*(?:Investing\.com|Reuters|Bloomberg|MarketWatch|Benzinga|Yahoo Finance|Seeking Alpha|The Motley Fool|TipRanks|Barron['’]?s|ロイター|ブルームバーグ)\s*(?:より|による|報道|via)?\s*[)）]\s*$/i, "")
+    .replace(/\s*[(（]\s*(?:Investing\.com|Reuters|Bloomberg|MarketWatch|Benzinga|Yahoo Finance|Seeking Alpha|The Motley Fool|TipRanks|Barron['’]?s|ロイター|ブルームバーグ|インベスティング[・･]?ドットコム|ヤフー[・･]?ファイナンス|マーケットウォッチ|ベンジンガ|シーキング[・･]?アルファ|モトリーフール|ティップランクス)\s*(?:より|による|報道|via)?\s*[)）]\s*$/i, "")
     .replace(/\s*[-–—|｜]\s*(?:Investing\.com|Yahoo Finance|MarketWatch|Benzinga|Seeking Alpha|TipRanks)(?:\s*(?:Japan|日本))?\s*$/i, "").trim();
 }
 export const isNotNews = (text: string) => NOT_NEWS.some(pattern => pattern.test(text));
