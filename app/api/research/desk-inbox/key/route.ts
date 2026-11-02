@@ -13,18 +13,18 @@ function monitor(path: string) {
   if (url.username || url.password || (url.protocol !== "https:" && !(process.env.NODE_ENV !== "production" && local))) throw new Error("invalid-monitor");
   const origin = url.origin;
   url.pathname = `${url.pathname.replace(/\/$/, "")}${path}`; url.search = ""; url.hash = "";
-  return { url, token, uploadUrl: `${origin}/inbox/upload` };
+  return { url, token, startUrl: `${origin}/inbox/start`, finishUrl: `${origin}/inbox/finish` };
 }
 async function owner() { const member = await getMembership(); return member.status === "signed-in" && member.isAdmin; }
 
 export async function GET() {
   try {
     if (!await owner()) return reply(403, { ok: false });
-    const { url, token, uploadUrl } = monitor("/admin/inbox/key");
+    const { url, token, startUrl, finishUrl } = monitor("/admin/inbox/key");
     const response = await fetch(url, { headers: { Authorization: `Bearer ${token}` }, cache: "no-store", signal: AbortSignal.timeout(10_000) });
     const data = await response.json();
     if (!response.ok) return reply(503, { ok: false });
-    return reply(200, { ok: true, exists: data.exists === true, createdAt: data.createdAt ?? null, uploadUrl });
+    return reply(200, { ok: true, exists: data.exists === true, createdAt: data.createdAt ?? null, startUrl, finishUrl });
   } catch { return reply(503, { ok: false }); }
 }
 
@@ -32,11 +32,11 @@ export async function POST(request: Request) {
   if (request.headers.get("origin") !== new URL(request.url).origin) return reply(403, { ok: false });
   try {
     if (!await owner()) return reply(403, { ok: false });
-    const { url, token, uploadUrl } = monitor("/admin/inbox/key");
+    const { url, token, startUrl, finishUrl } = monitor("/admin/inbox/key");
     const response = await fetch(url, { method: "POST", headers: { Authorization: `Bearer ${token}` }, cache: "no-store", signal: AbortSignal.timeout(10_000) });
     const data = await response.json();
     if (!response.ok || typeof data.key !== "string") return reply(503, { ok: false });
     // The only place the whole key is ever sent to a screen. It is not logged and not stored here.
-    return reply(200, { ok: true, key: data.key, createdAt: data.createdAt, uploadUrl });
+    return reply(200, { ok: true, key: data.key, createdAt: data.createdAt, startUrl, finishUrl });
   } catch { return reply(503, { ok: false }); }
 }

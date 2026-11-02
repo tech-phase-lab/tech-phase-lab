@@ -54,6 +54,8 @@ def connect(path):
         id TEXT PRIMARY KEY, title TEXT NOT NULL, file_key TEXT NOT NULL, content_type TEXT NOT NULL,
         bytes INTEGER NOT NULL, seconds REAL, created_at TEXT NOT NULL, read_at TEXT);
       CREATE INDEX IF NOT EXISTS idx_inbox_items_created ON inbox_items(created_at DESC);
+      CREATE TABLE IF NOT EXISTS inbox_pending(
+        id TEXT PRIMARY KEY, file_key TEXT NOT NULL, created_at REAL NOT NULL);
     """)
     return db
 
@@ -263,11 +265,11 @@ def _signing_key(secret, date, region, service):
     return _hmac(_hmac(_hmac(_hmac(("AWS4" + secret).encode(), date), region), service), "aws4_request")
 
 
-def presign(method, host, path, access, secret, expires, amz_date, region="auto", service="s3"):
-    """A query-signed URL (AWS Signature V4), for reading a file straight from the bucket for a short time."""
+def presign(method, host, path, access, secret, expires, amz_date, region="auto", service="s3", extra=None):
+    """A query-signed URL (AWS Signature V4): the bucket lets whoever holds it do one kind of thing, for a short time."""
     date = amz_date[:8]
     scope = f"{date}/{region}/{service}/aws4_request"
-    query = {"X-Amz-Algorithm": "AWS4-HMAC-SHA256", "X-Amz-Credential": f"{access}/{scope}", "X-Amz-Date": amz_date, "X-Amz-Expires": str(expires), "X-Amz-SignedHeaders": "host"}
+    query = {"X-Amz-Algorithm": "AWS4-HMAC-SHA256", "X-Amz-Credential": f"{access}/{scope}", "X-Amz-Date": amz_date, "X-Amz-Expires": str(expires), "X-Amz-SignedHeaders": "host", **(extra or {})}
     canonical_query = "&".join(f"{quote(k, safe='')}={quote(v, safe='')}" for k, v in sorted(query.items()))
     canonical = f"{method}\n{path}\n{canonical_query}\nhost:{host}\n\nhost\nUNSIGNED-PAYLOAD"
     to_sign = f"AWS4-HMAC-SHA256\n{amz_date}\n{scope}\n{hashlib.sha256(canonical.encode()).hexdigest()}"
@@ -300,10 +302,15 @@ def put_object(key, body, length, content_type, now=None, urlopen=urllib.request
         raise StorageError("r2-network-error") from None
 
 
-def file_url(key, expires=900, now=None):
+def signed_url(method, key, expires=900, now=None, extra=None):
     config = _storage()
     moment = datetime.now(timezone.utc) if now is None else now
-    return presign("GET", config["host"], f"/{config['bucket']}/{quote(key, safe='/')}", config["access"], config["secret"], expires, moment.strftime("%Y%m%dT%H%M%SZ"))
+    return presign(method, config["host"], f"/{config['bucket']}/{quote(key, safe='/')}", config["access"], config["secret"], expires, moment.strftime("%Y%m%dT%H%M%SZ"), extra=extra)
+
+
+def file_url(key, expires=900, now=None, content_type=None):
+    # The phone may have stored the file as "binary"; the player needs to be told it is audio.
+    return signed_url("GET", key, expires, now, {"response-content-type": content_type} if content_type else None)
 
 
 # ---- receiving ---------------------------------------------------------------
@@ -453,4 +460,127 @@ def mark_read(db, payload):
 
 def file_link(db, item_id):
     row = _row(db, item_id)
-    return {"url": file_url(row["file_key"]), "contentType": row["content_type"]}
+    return {"url": file_url(row["file_key"], content_type=row["content_type"]), "contentType": row["content_type"]}
+
+
+# ---- two small requests instead of one big one (the platform's front door refuses bodies over 64 KB) ----------
+# 1. start: the shortcut shows its key and is given a short-lived address in the private bucket to put the file in.
+# 2. the shortcut puts the file there itself (the bytes never pass through this service).
+# 3. finish: this service checks the bytes really are audio and only then adds the inbox item.
+
+PENDING_SECONDS = 2 * 3600
+UPLOAD_SECONDS = 1800
+
+
+class Bucket:
+    """What `finish` needs from the bucket: how big the file is, a slice of it, and removal. Replaced by a fake in tests."""
+
+    def _call(self, method, key, headers=None, extra=None, urlopen=urllib.request.urlopen):
+        request = urllib.request.Request(signed_url(method, key, 300, extra=extra), method=method, headers=headers or {})
+        try:
+            with urlopen(request, timeout=60) as response:
+                return response.status, dict(response.headers), response.read()
+        except urllib.error.HTTPError as error:
+            if error.code == 404:
+                return 404, {}, b""
+            raise StorageError("r2-auth-failed-403" if error.code in (401, 403) else f"r2-request-failed-{error.code}") from None
+        except (urllib.error.URLError, TimeoutError, OSError):
+            raise StorageError("r2-network-error") from None
+
+    def size(self, key):
+        status, headers, _ = self._call("HEAD", key)
+        if status == 404:
+            return None
+        lowered = {name.lower(): value for name, value in headers.items()}
+        return int(lowered.get("content-length", "0"))
+
+    def read(self, key, offset, count):
+        status, _, body = self._call("GET", key, {"Range": f"bytes={offset}-{offset + count - 1}"})
+        return body
+
+    def delete(self, key):
+        try:
+            self._call("DELETE", key)
+        except StorageError:
+            pass
+
+
+def _gate(db, authorization, sender, now, count=True):
+    """The same checks as a direct upload, in the same order. (status, message) when refused, else None."""
+    if LIMITER.blocked(sender, now):
+        return 429, "鍵の間違いが続いたため、しばらく受け付けません。"
+    if not key_matches(db, authorization):
+        LIMITER.bad_key(sender, now)
+        return 401, "鍵が合いません。"
+    if count and not LIMITER.allow(sender, now):
+        return 429, "送信が多すぎます。少し待ってからもう一度送ってください。"
+    return None
+
+
+def start(db, authorization, sender, now=None, bucket=None, url=None):
+    """(status, text). On success the text is only the address to put the file at, so the shortcut can use it as it is."""
+    now = time.time() if now is None else now
+    bucket = bucket or Bucket()
+    refused = _gate(db, authorization, sender, now)
+    if refused:
+        return refused
+    with db:
+        stale = db.execute("SELECT id,file_key FROM inbox_pending WHERE created_at<?", (now - PENDING_SECONDS,)).fetchall()
+        db.execute("DELETE FROM inbox_pending WHERE created_at<?", (now - PENDING_SECONDS,))
+    for row in stale:
+        bucket.delete(row["file_key"])  # an upload that was never finished is not kept
+    pending_id = str(uuid.uuid4())
+    file_key = f"inbox/{pending_id}.audio"
+    try:
+        address = (url or signed_url)("PUT", file_key, UPLOAD_SECONDS)
+    except StorageError as error:
+        print(f"voice-inbox-store-failed reason={error.reason}", flush=True)
+        return 503, "受信箱の保存先の設定が、まだ終わっていません。"
+    with db:
+        db.execute("INSERT INTO inbox_pending(id,file_key,created_at) VALUES(?,?,?)", (pending_id, file_key, now))
+    return 200, address
+
+
+def finish(db, authorization, sender, now=None, bucket=None):
+    """(status, short Japanese message, item id or None). Takes the newest upload that was started and has arrived."""
+    now = time.time() if now is None else now
+    bucket = bucket or Bucket()
+    refused = _gate(db, authorization, sender, now, count=False)  # one send is counted once, at its start
+    if refused:
+        return refused[0], refused[1], None
+    config = settings()
+    rows = db.execute("SELECT id,file_key FROM inbox_pending WHERE created_at>=? ORDER BY created_at DESC", (now - PENDING_SECONDS,)).fetchall()
+    if not rows:
+        return 400, "送信の準備ができていません。最初からやり直してください。", None
+    try:
+        for row in rows:
+            size = bucket.size(row["file_key"])
+            if size is None:
+                continue
+            if size > config["maxBytes"]:
+                bucket.delete(row["file_key"])
+                with db:
+                    db.execute("DELETE FROM inbox_pending WHERE id=?", (row["id"],))
+                return 413, f"ファイルが大きすぎます(上限 {config['maxBytes'] // 1_000_000}MB)。", None
+            if size < 512:
+                bucket.delete(row["file_key"])
+                with db:
+                    db.execute("DELETE FROM inbox_pending WHERE id=?", (row["id"],))
+                return 400, "音声ファイルではありません。", None
+            read = lambda offset, count: bucket.read(row["file_key"], offset, min(count, size - offset))
+            try:
+                extension, content_kind, seconds = sniff(read, size)
+            except (NotAudio, struct.error, IndexError, KeyError):
+                bucket.delete(row["file_key"])
+                with db:
+                    db.execute("DELETE FROM inbox_pending WHERE id=?", (row["id"],))
+                return 400, "音声ファイルではありません。", None
+            with db:
+                db.execute("DELETE FROM inbox_pending WHERE id=?", (row["id"],))
+                db.execute("INSERT INTO inbox_items(id,title,file_key,content_type,bytes,seconds,created_at) VALUES(?,?,?,?,?,?,?)",
+                           (row["id"], _title("", now), row["file_key"], content_kind, size, seconds, stamp()))
+            return 200, "受信箱に届きました。", row["id"]
+    except StorageError as error:
+        print(f"voice-inbox-store-failed reason={error.reason}", flush=True)
+        return 503, "受信箱に保存できませんでした。もう一度送ってください。", None
+    return 400, "音声がまだ届いていません。送信が終わってからもう一度。", None
