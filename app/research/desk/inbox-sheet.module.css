@@ -15,3 +15,9 @@
 .pick.pick:disabled{opacity:.5}
 .note{margin:14px 0;font-size:15px;line-height:1.7;color:#a99876}
 .foot{margin:14px 0 0;text-align:center;font-size:14px;line-height:1.7;color:#8e98a3}
+.when .titleInput{display:block;width:100%;box-sizing:border-box;padding:6px 0;border:0;border-bottom:1.5px solid #d8b36a;background:transparent;color:#f0ece4;font:500 19px inherit;font-family:inherit}
+.when .titleInput:focus{outline:none}
+.rename.rename{flex:none;display:grid;place-items:center;width:42px;height:42px;padding:0;border:0;background:none;color:#8e98a3;cursor:pointer}
+.rename svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.foot a{color:#a99876}
+.when b{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
