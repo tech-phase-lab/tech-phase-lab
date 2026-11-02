@@ -1,7 +1,7 @@
 import { randomUUID } from "node:crypto";
 import { S3Client, PutObjectCommand, GetObjectCommand, HeadObjectCommand, CopyObjectCommand, DeleteObjectCommand } from "@aws-sdk/client-s3";
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
-import { deskAudioFile, maxDeskAudioBytes, mp3Start, hasMp3Frames, audioFormat, verifyM4a } from "./desk-audio";
+import { deskAudioFile, deskImageFile, maxDeskAudioBytes, maxDeskImageBytes, mp3Start, hasMp3Frames, audioFormat, verifyM4a, isJpeg } from "./desk-audio";
 export function audioStorage() {
   const account = process.env.DESK_MEDIA_R2_ACCOUNT_ID, bucket = process.env.DESK_MEDIA_R2_BUCKET;
   const accessKeyId = process.env.DESK_MEDIA_R2_ACCESS_KEY_ID, secretAccessKey = process.env.DESK_MEDIA_R2_SECRET_ACCESS_KEY;
@@ -54,4 +54,35 @@ export async function audioPlaybackUrl(file: string, accessExpiresAt: number) {
   const expiresIn = Math.min(3600, Math.floor((accessExpiresAt - Date.now()) / 1000));
   if (expiresIn < 1) throw Error("access-expired");
   return getSignedUrl(client, new GetObjectCommand({ Bucket: bucket, Key: `audio/${file}`, ResponseContentType: contentType, ResponseContentDisposition: `inline; filename="rizel-audio.${extension}"` }), { expiresIn });
+}
+
+export async function beginImageUpload(size: number) {
+  const { client, bucket } = audioStorage();
+  const file = `${randomUUID()}.jpg`;
+  const uploadUrl = await getSignedUrl(client, new PutObjectCommand({ Bucket: bucket, Key: `pending/${file}`, ContentType: "image/jpeg", ContentLength: size }), { expiresIn: 900, signableHeaders: new Set(["content-type", "content-length"]) });
+  return { file, uploadUrl, contentType: "image/jpeg" };
+}
+export async function finishImageUpload(file: string) {
+  if (!deskImageFile.test(file)) throw Error("invalid-image");
+  const { client, bucket } = audioStorage(), key = `pending/${file}`;
+  const options = { abortSignal: AbortSignal.timeout(15000) };
+  const head = await client.send(new HeadObjectCommand({ Bucket: bucket, Key: key }), options);
+  if (!head.ContentLength || head.ContentLength < 512 || head.ContentLength > maxDeskImageBytes || head.ContentType !== "image/jpeg" || !head.ETag) {
+    await client.send(new DeleteObjectCommand({ Bucket: bucket, Key: key }), options); throw Error("invalid-image");
+  }
+  const first = await client.send(new GetObjectCommand({ Bucket: bucket, Key: key, Range: "bytes=0-2", IfMatch: head.ETag }), options);
+  const bytes = first.Body ? await first.Body.transformToByteArray() : new Uint8Array();
+  if (!isJpeg(bytes)) { await client.send(new DeleteObjectCommand({ Bucket: bucket, Key: key }), options); throw Error("invalid-image"); }
+  await client.send(new CopyObjectCommand({ Bucket: bucket, Key: `image/${file}`, CopySource: `${bucket}/${key}`, CopySourceIfMatch: head.ETag, MetadataDirective: "REPLACE", Metadata: { verified: "jpg" }, ContentType: "image/jpeg", ContentDisposition: 'inline; filename="rizel-photo.jpg"' }), options);
+  await client.send(new DeleteObjectCommand({ Bucket: bucket, Key: key }), options);
+  return `/api/research/desk-media/${file}`;
+}
+export async function imagePlaybackUrl(file: string, accessExpiresAt: number) {
+  if (!deskImageFile.test(file)) throw Error("invalid-image");
+  const { client, bucket } = audioStorage();
+  const head = await client.send(new HeadObjectCommand({ Bucket: bucket, Key: `image/${file}` }), { abortSignal: AbortSignal.timeout(10000) });
+  if (head.Metadata?.verified !== "jpg" || head.ContentType !== "image/jpeg") throw Error("invalid-image");
+  const expiresIn = Math.min(3600, Math.floor((accessExpiresAt - Date.now()) / 1000));
+  if (expiresIn < 1) throw Error("access-expired");
+  return getSignedUrl(client, new GetObjectCommand({ Bucket: bucket, Key: `image/${file}`, ResponseContentType: "image/jpeg", ResponseContentDisposition: 'inline; filename="rizel-photo.jpg"' }), { expiresIn });
 }

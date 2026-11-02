@@ -49,3 +49,18 @@
 .qaArticle{background:linear-gradient(125deg,#161f25,#0e1921);border-color:#a28b583d;box-shadow:inset 0 1px #e5d2a00a}.qaArticle .questionLabel{color:#a99b80;letter-spacing:.14em}.qaArticle h2{color:#e3dfd6;font-weight:500}.qaArticle .answerLabel{margin:12px 0 9px;color:#d7c397}.qaArticle .qaBody{padding:4px 0 4px 14px;border-left:2px solid #ac9461;border-radius:0;color:#ede9e0;line-height:1.9;background:linear-gradient(90deg,#b5985a08,transparent)}.qaArticle footer{border-top-color:#a28b5828}
 
 .qaArticle{scroll-margin-top:100px}
+
+/* Notes as a vertical timeline (Nov 2 design): Rizel's round icon on the left, posts joined by a thin gold line. */
+.article.note{position:relative;margin:0;padding:0 0 26px 64px}
+.article.note:not(.editing)::before{content:"";position:absolute;left:23px;top:58px;bottom:2px;width:1px;background:linear-gradient(#8f7851,#8f785166)}
+.article.note:last-of-type::before{display:none}
+.article.note .noteHeader{position:absolute;top:0;left:0;transform:none}
+.article.note .noteAvatar{width:48px;height:48px;border:1.5px solid #b3965a;background:#0c1018}
+.article.note .noteBubble{margin:0;padding:18px 18px 16px;border:1px solid #8f7851aa;border-radius:20px;background:radial-gradient(120% 80% at 0% 0%,#2a2214,#0d1016 62%);box-shadow:inset 0 1px 0 #ead5a512}
+.article.note .noteBubble::before{display:none}
+.article.note .meta{display:flex;align-items:center;gap:10px;margin:0 0 12px;font:13px ui-monospace,"SF Mono",monospace;letter-spacing:.06em;color:#a99876}
+.article.note .text{font-size:17px;line-height:1.9}
+.newTag{display:inline-block;padding:2px 11px;border-radius:999px;background:linear-gradient(120deg,#efd899,#c9a257);color:#2a1f05;font:700 12px ui-monospace,monospace;letter-spacing:.1em}
+.article.note.editing{padding-left:0}
+@media(max-width:700px){.article.note{padding-left:58px}.article.note .noteAvatar{width:44px;height:44px}.article.note:not(.editing)::before{left:21px;top:54px}.article.note .noteBubble{padding:16px 14px 14px}}
+.article.note .zone{font-size:11px;margin-left:-6px;color:#7d7766}

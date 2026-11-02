@@ -1,0 +1,10 @@
+.card{padding:14px 16px 12px;border:1px solid #8f7851aa;border-radius:20px;background:linear-gradient(160deg,#1d170c,#0d1016 70%)}
+.top{display:flex;align-items:center;gap:12px}
+.play.play{display:grid;place-items:center;flex:none;width:58px;height:58px;padding:0;border:0;border-radius:50%;background:linear-gradient(135deg,#f0dca0,#c9a257);color:#2a1f05;cursor:pointer}
+.play.play svg{width:24px;height:24px;fill:currentColor;stroke:currentColor;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round}
+.name{flex:1;min-width:0}
+.name b{display:block;overflow:hidden;font-size:17px;font-weight:500;text-overflow:ellipsis;white-space:nowrap;color:#f0ece4}
+.name small{display:block;margin-top:2px;font:14px ui-monospace,monospace;color:#8f7851}
+.remove.remove{flex:none;width:36px;height:36px;padding:0;border:0;background:none;color:#8e98a3;font-size:26px;line-height:1;cursor:pointer}
+.bars{display:flex;align-items:center;gap:2px;height:60px;margin-top:12px}
+.bars i{flex:1;min-width:1px;border-radius:2px;background:#d8b36a}

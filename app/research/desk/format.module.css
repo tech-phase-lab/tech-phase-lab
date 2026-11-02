@@ -22,3 +22,59 @@
 .audioUpload .audioFileEntry,.audioUpload .audioRecordEntry,.audioUpload .audioMemoEntry{grid-row:1;height:42px;min-width:0;padding:7px 3px;white-space:nowrap;font-size:clamp(10px,2.7vw,12px)}
 .audioUpload .audioFileEntry{grid-column:1}.audioUpload .audioRecordEntry{grid-column:2}.audioUpload .audioMemoEntry{grid-column:3}
 .audioUpload .recorder{display:contents}.recorderControls{grid-column:1/-1;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+
+/* RIZEL'S DESK, Nov 2 design: reactions are chips of what was pressed, plus one dotted button that opens the five choices. */
+.reactions{position:relative;display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:16px}
+.reactions .reactionChip{display:inline-flex;align-items:center;gap:8px;min-height:42px;padding:0 16px;border:1px solid #2a3140;border-radius:999px;background:#0e121a;color:#cfc8b6;font-size:15px}
+.reactions .reactionChip[aria-pressed=true]{border-color:#c8aa70;background:#c9aa5818;color:#f1dba6}
+.reactions .reactionEmoji{font-size:19px}.reactions .reactionCount{font:15px ui-monospace,monospace}
+.reactionAdd{position:relative}
+.reactions .reactionPlus{display:grid;place-items:center;width:42px;height:42px;padding:0;border:1.5px dashed #6e6244;border-radius:50%;background:transparent;color:#a99876}
+.reactionPlus svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.reactionPicker{position:absolute;left:0;bottom:calc(100% + 10px);z-index:20;display:flex;gap:2px;padding:6px;border:1px solid #6e6244;border-radius:999px;background:#10131b;box-shadow:0 14px 34px #000a}
+.reactions .reactionPicker button{display:grid;place-items:center;width:46px;height:46px;padding:0;border:0;border-radius:50%;background:transparent;font-size:24px}
+.reactions .reactionPicker button[aria-pressed=true]{background:#c9aa5826}
+
+/* RIZEL'S DESK composer, Nov 2 design: tool row, quiet input, 添付 panel with four tiles, count and the gold 投稿 button. */
+.editor .toolbar{gap:8px;margin:0 0 12px;flex-wrap:wrap}
+.editor .toolbar button{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;min-width:48px;padding:0 16px;border:1px solid #2a3140;border-radius:14px;background:#0e121a;color:#9aa3ad;font:500 17px inherit;font-family:inherit}
+.editor .toolbar button strong{font-size:22px;color:#fff;font-weight:800}
+.editor .toolbar button[aria-pressed=true]{border-color:#c8aa70}
+.editor .toolbar .redTool{color:#f08a9a}.redTool i{display:block;width:16px;height:16px;border-radius:50%;background:#f08a9a}
+.markTool{padding:3px 8px;border-radius:5px;background:#5f4f1c;color:#f0dca0}
+.editor .editable{min-height:150px;padding:14px 16px;border:1px solid #2a3140;border-radius:18px;background:#05070b;font-size:17px;line-height:1.75}
+.editor .editable:focus,.editor .editable:focus-visible{border-color:#8f7851;box-shadow:none}
+.composerFoot{display:flex;align-items:center;gap:14px;margin-top:16px}
+.attachOpen{display:inline-flex;align-items:center;gap:8px;min-height:54px;padding:0 22px;border:1px solid #2a3140;border-radius:999px;background:#0e121a;color:#d3c8aa;font:500 17px inherit;font-family:inherit;cursor:pointer}
+.clip{width:20px;height:20px;fill:none;stroke:#d8b36a;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.count{font:16px ui-monospace,monospace;color:#6f7686;letter-spacing:.04em}
+.attachPanel{margin-top:14px}.attachPanel[hidden]{display:none}
+.attachHead{display:flex;align-items:center;justify-content:space-between;margin:0 0 12px;font-size:18px;color:#d8c692}
+.attachHead span{display:inline-flex;align-items:center;gap:8px}
+.attachHead button{min-height:40px;padding:0 4px;border:0;background:none;color:#8e98a3;font:500 16px inherit;font-family:inherit;cursor:pointer}
+.audioUpload{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:0 0 12px}
+.audioUpload>*{grid-column:1/-1}
+.audioUpload .attachTile{grid-column:auto;grid-row:auto;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;height:98px;min-width:0;padding:8px 2px;border:1px solid #2a3140;border-radius:18px;background:#0e121a;color:#d3dbe6;font-size:clamp(11px,3.2vw,15px);white-space:nowrap;cursor:pointer}
+.audioUpload .attachTile svg{width:28px;height:28px;fill:none;stroke:#d8b36a;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.audioUpload .attachTile:disabled{opacity:.45;cursor:default}
+.audioUpload .recorder{display:contents}
+.audioReview{display:grid;gap:10px;padding:0;border:0;background:none}
+.audioReview .audioAttach{min-height:50px;border:1px solid #8f7851;border-radius:999px;background:#16120a;color:#e7c982;font:600 17px inherit;font-family:inherit}
+.audioReview .audioPlain{justify-self:start;border:0;background:none;color:#8e98a3;text-decoration:underline;font-size:14px}
+.urlRow{display:flex;align-items:center;gap:8px;padding:8px;border:1px solid #2a3140;border-radius:22px;background:#0b0e14}
+.kindSwitch{display:flex;flex:none;padding:4px;border:1px solid #2a3140;border-radius:999px;background:#0e121a}
+.kindSwitch button{min-height:40px;padding:0 14px;border:0;border-radius:999px;background:transparent;color:#8e98a3;font:500 16px inherit;font-family:inherit;cursor:pointer}
+.kindSwitch button[aria-pressed=true]{background:#1a1e28;color:#f0ece4}
+.urlRow input{flex:1;min-width:0;height:44px;padding:0 8px;border:0;background:transparent;color:#d3dbe6;font-size:16px}
+.urlRow input:focus{outline:none}
+.urlRow .urlAdd{flex:none;min-height:46px;padding:0 20px;border:1px solid #8f7851;border-radius:999px;background:#16120a;color:#e7c982;font:600 16px inherit;font-family:inherit;cursor:pointer}
+.urlRow .urlAdd:disabled{opacity:.45}
+.attachment{margin:12px 0;padding:12px;border:1px solid #8f785199;border-radius:18px;background:#0d1016}
+@media(max-width:420px){.urlRow{flex-wrap:wrap}.urlRow input{flex-basis:60%}}
+.editor .toolbar{gap:6px;flex-wrap:nowrap}
+.editor .toolbar button{min-height:40px;min-width:40px;padding:0 11px;border-radius:12px;font-size:15px;gap:6px;white-space:nowrap}
+.editor .toolbar button strong{font-size:19px}
+.redTool i{width:12px;height:12px}
+.markTool{padding:2px 6px}
+.attachOpen{min-height:48px;padding:0 16px;font-size:16px;white-space:nowrap}
+.count{font-size:14px;white-space:nowrap}

@@ -1,19 +1,24 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import { validAudioUpload } from "@/lib/research/desk-audio";
-import { loadAudioDraft, saveAudioDraft, type AudioDraftMeta, type AudioCutDraft } from "@/lib/research/desk-audio-draft";
-import VoiceMemoImport from "./voice-memo-import";
+import { loadAudioDraft, saveAudioDraft, type AudioDraftMeta } from "@/lib/research/desk-audio-draft";
+import InboxSheet from "./inbox-sheet";
+import AudioCard from "./audio-card";
 import AudioEditor from "./audio-editor";
 import AudioRecorder from "./audio-recorder";
 import styles from "./format.module.css";
-export default function AudioUpload({ disabled, onUploaded, onBusyChange, draftKey = "new-note", onRestored }: { draftKey?: string; onRestored?: () => void; disabled: boolean; onUploaded: (url: string, title: string) => boolean | void; onBusyChange: (busy: boolean) => void }) {
+const tileIcons = {
+  file: <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h7l4 4v14H7zM14 3v4h4M10 12h5M10 16h5" /></svg>,
+  inbox: <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h2.500M8.500 8v8M12 4v16M15.500 8v8M19.500 12H22" /></svg>,
+};
+export default function AudioUpload({ disabled, onUploaded, onBusyChange, draftKey = "new-note", onRestored, extraTiles }: { extraTiles?: ReactNode; draftKey?: string; onRestored?: () => void; disabled: boolean; onUploaded: (url: string, title: string) => boolean | void; onBusyChange: (busy: boolean) => void }) {
   const input = useRef<HTMLInputElement>(null), active = useRef<AbortController | null>(null), mounted = useRef(true);
   const [ready, setReady] = useState<boolean | null>(null), [progress, setProgress] = useState<number | null>(null), [error, setError] = useState("");
-  const original = useRef<File | null>(null), audioPlayer = useRef<HTMLAudioElement>(null);
+  const original = useRef<File | null>(null);
   const [editing, setEditing] = useState(false), [edited, setEdited] = useState(false);
   const [retry, setRetry] = useState(0);
   const [title, setTitle] = useState("");
-  const [restoring, setRestoring] = useState(true), [savedCut, setSavedCut] = useState<AudioCutDraft | null>(null);
+  const [restoring, setRestoring] = useState(true);
   const draftScope = useRef(""), meta = useRef<AudioDraftMeta>({ title: "", edited: false, cut: null });
   const restoredCallback = useRef(onRestored);
   useEffect(() => { restoredCallback.current = onRestored; }, [onRestored]);
@@ -21,13 +26,11 @@ export default function AudioUpload({ disabled, onUploaded, onBusyChange, draftK
     meta.current = { ...meta.current, ...patch };
     if (draftScope.current) void saveAudioDraft(draftScope.current, meta.current, files).catch(() => { if (mounted.current) setError("端末に保存できませんでした。"); });
   }
-  function changeCut(cut: AudioCutDraft | null) { setSavedCut(cut); persist({ cut }); }
 
-  const [candidate, setCandidate] = useState<File | null>(null), [preview, setPreview] = useState(""), [checked, setChecked] = useState(false), [recording, setRecording] = useState(false), [importing, setImporting] = useState(false);
+  const [candidate, setCandidate] = useState<File | null>(null), [preview, setPreview] = useState(""), [recording, setRecording] = useState(false), [inbox, setInbox] = useState(false);
   const busyCallback = useRef(onBusyChange);
   useEffect(() => { busyCallback.current = onBusyChange; }, [onBusyChange]);
-  const needsCutReview = editing || savedCut !== null;
-  const pending = restoring || recording || importing || candidate !== null || progress !== null;
+  const pending = restoring || recording || candidate !== null || progress !== null;
   useEffect(() => { busyCallback.current(pending); return () => busyCallback.current(false); }, [pending]);
   const previewRef = useRef("");
   useEffect(() => () => { if (previewRef.current) URL.revokeObjectURL(previewRef.current); }, []);
@@ -39,22 +42,22 @@ export default function AudioUpload({ disabled, onUploaded, onBusyChange, draftK
   }, [pending]);
   function discard() {
     if (draftScope.current) void saveAudioDraft(draftScope.current, null).catch(() => { if (mounted.current) setError("端末の音声を削除できませんでした。"); });
-    meta.current = { title: "", edited: false, cut: null }; setSavedCut(null);
+    meta.current = { title: "", edited: false, cut: null };
     original.current = null; setEdited(false); setTitle("");
     if (previewRef.current) URL.revokeObjectURL(previewRef.current);
-    previewRef.current = ""; setPreview(""); setCandidate(null); setChecked(false); setError("");
+    previewRef.current = ""; setPreview(""); setCandidate(null); setError("");
   }
   function choose(file?: File, isEdit = false, keepTitle = false) {
     if (!file) return;
     if (!validAudioUpload(file.name, file.size)) { setError("MP3・M4A／50MBまでです。"); return; }
     if (!isEdit) original.current = file;
     const nextTitle = !isEdit && !keepTitle ? (/^(voice-memo-|rizel-)/.test(file.name) ? "音声メモ" : file.name.replace(/\.(mp3|m4a)$/i, "").slice(0, 80)) : meta.current.title;
-    setTitle(nextTitle); setSavedCut(null);
+    setTitle(nextTitle);
     persist({ title: nextTitle, edited: isEdit, cut: null }, { file, original: original.current || file });
     setEdited(isEdit);
     if (previewRef.current) URL.revokeObjectURL(previewRef.current);
     previewRef.current = URL.createObjectURL(file);
-    setError(""); setPreview(previewRef.current); setChecked(false); setCandidate(file);
+    setError(""); setPreview(previewRef.current); setCandidate(file);
   }
   useEffect(() => {
     mounted.current = true; const controller = new AbortController();
@@ -69,9 +72,9 @@ export default function AudioUpload({ disabled, onUploaded, onBusyChange, draftK
           if (controller.signal.aborted) return;
           if (draft && validAudioUpload(draft.file.name, draft.file.size) && validAudioUpload(draft.original.name, draft.original.size)) {
             original.current = draft.original; meta.current = draft.meta;
-            setTitle(draft.meta.title); setEdited(draft.meta.edited); setSavedCut(draft.meta.cut);
+            setTitle(draft.meta.title); setEdited(draft.meta.edited);
             if (previewRef.current) URL.revokeObjectURL(previewRef.current);
-            previewRef.current = URL.createObjectURL(draft.file); setPreview(previewRef.current); setCandidate(draft.file); setChecked(false);
+            previewRef.current = URL.createObjectURL(draft.file); setPreview(previewRef.current); setCandidate(draft.file);
             restoredCallback.current?.();
           }
         } catch { if (!controller.signal.aborted) setError("端末の音声を読み込めませんでした。"); }
@@ -81,7 +84,7 @@ export default function AudioUpload({ disabled, onUploaded, onBusyChange, draftK
     return () => { mounted.current = false; controller.abort(); active.current?.abort(); };
   }, [retry, draftKey]);
   async function upload(file?: File) {
-    if (!file || active.current || disabled || needsCutReview || !checked) return;
+    if (!file || active.current || disabled || editing) return;
     if (!validAudioUpload(file.name, file.size)) { setError("MP3・M4A／50MBまでです。"); return; }
     const controller = new AbortController(); active.current = controller;
     setError(""); setProgress(0);
@@ -113,11 +116,19 @@ export default function AudioUpload({ disabled, onUploaded, onBusyChange, draftK
   }
   return <div className={styles.audioUpload}>
     <input ref={input} type="file" accept=".mp3,.m4a,audio/mpeg,audio/mp4,audio/x-m4a" aria-label="MP3・M4A音声を選択" hidden onChange={event => { choose(event.target.files?.[0]); event.target.value = ""; }} />
-    <button className={styles.audioFileEntry} type="button" aria-label="音声ファイルを選ぶ" disabled={disabled || ready !== true || pending} onClick={() => { setError(""); input.current?.click(); }}>音声ファイル</button>
-    <AudioRecorder disabled={disabled || restoring || ready !== true || candidate !== null || importing || progress !== null} onFile={choose} onBusyChange={setRecording} onMessage={setError} />
-    <VoiceMemoImport disabled={disabled || ready !== true || pending} onFile={choose} onBusyChange={setImporting} onMessage={setError} />
-    {candidate && <div className={styles.audioReview}><strong>未公開の音声</strong><label className={styles.audioTitle}>音声タイトル<input type="text" maxLength={80} value={title} disabled={progress !== null} placeholder="音声メモ" onChange={event => { setTitle(event.target.value); persist({ title: event.target.value }); }} /></label>{preview && <audio ref={audioPlayer} hidden={editing} controls preload="metadata" src={preview} />}<AudioEditor key={candidate.name + candidate.lastModified} file={candidate} initialCut={savedCut} onDraftChange={changeCut} disabled={disabled || progress !== null} onApply={file => choose(file, true)} onBusyChange={value => { setEditing(value); if (value) audioPlayer.current?.pause(); }} />{edited && <button type="button" disabled={editing || progress !== null} onClick={() => { if (original.current) choose(original.current, false, true); }}>元の音声に戻す</button>}<label><input type="checkbox" checked={checked} disabled={needsCutReview || progress !== null} onChange={event => setChecked(event.target.checked)} />この音声で確認済み</label><div className={styles.audioReviewActions}><button type="button" disabled={disabled || needsCutReview || !checked || progress !== null} onClick={() => void upload(candidate)}>この音声を添付</button><button type="button" disabled={editing || progress !== null} onClick={discard}>破棄</button></div></div>}
+    <button className={`${styles.attachTile} ${styles.audioFileEntry}`} type="button" aria-label="音声ファイルを選ぶ" disabled={disabled || ready !== true || pending} onClick={() => { setError(""); input.current?.click(); }}>{tileIcons.file}<span>音声ファイル</span></button>
+    <AudioRecorder disabled={disabled || restoring || ready !== true || candidate !== null || progress !== null} onFile={choose} onBusyChange={setRecording} onMessage={setError} />
+    <button className={`${styles.attachTile} ${styles.audioInboxEntry}`} type="button" aria-label="受信箱から選ぶ" disabled={disabled || ready !== true || pending} onClick={() => { setError(""); setInbox(true); }}>{tileIcons.inbox}<span>受信箱</span></button>
+    {extraTiles}
+    {candidate && <div className={styles.audioReview}>
+      <AudioCard file={candidate} original={original.current} title={title} edited={edited} preview={preview} hold={editing} busy={progress !== null}
+        edit={<AudioEditor key={candidate.name + candidate.lastModified} file={candidate} disabled={disabled || progress !== null} onApply={file => choose(file, true)} onBusyChange={value => setEditing(value)} />}
+        onRemove={discard} />
+      {edited && <button type="button" className={styles.audioPlain} disabled={editing || progress !== null} onClick={() => { if (original.current) choose(original.current, false, true); }}>元の音声に戻す</button>}
+      <button type="button" className={styles.audioAttach} disabled={disabled || editing || progress !== null || ready !== true} onClick={() => void upload(candidate)}>この音声を添付</button>
+    </div>}
     {progress !== null ? <><span role="status">{progress < 99 ? `送信中 ${progress}%` : "音声を確認中…"}</span><button type="button" onClick={() => active.current?.abort()}>中止</button></> : ready !== true ? <small>{ready === false ? "保存先の接続準備中" : "接続を確認中…"}</small> : null}
     {error && <p role="status">{error}{ready === null && <button type="button" onClick={() => { setError(""); setRetry(value => value + 1); }}>再確認</button>}</p>}
+    {inbox && <InboxSheet onClose={() => setInbox(false)} onPick={file => { setInbox(false); choose(file); }} />}
   </div>;
 }

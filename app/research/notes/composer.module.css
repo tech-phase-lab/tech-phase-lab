@@ -9,3 +9,9 @@
 .composer p{margin:12px 0 0;color:#c7b997;font-size:12px;line-height:1.6}
 @media(max-width:600px){.composer{padding:12px}.actions{gap:9px}.actions button{padding:7px 17px}.composer textarea{min-height:115px}}
 .composer{padding:12px;border-color:#465451;border-radius:9px;background:#131b1e;box-shadow:none;margin-bottom:20px}.actions{margin-top:8px;justify-content:space-between}.actions button{min-height:32px;padding:6px 18px;font-size:12px}.composer textarea:focus{outline:none;box-shadow:none}
+
+/* RIZEL'S DESK, Nov 2 design: a gold-framed card with a quiet black input. */
+.composer{margin:0 0 30px;padding:18px;border:1.5px solid #8f7851;border-radius:26px;background:radial-gradient(120% 70% at 0% 0%,#1b1608,#0a0d12 65%);box-shadow:inset 0 1px 0 #ead5a512}
+.composer .submit{margin-left:auto;min-height:54px;padding:0 32px;border:0;border-radius:999px;background:linear-gradient(120deg,#efd899,#c9a257);color:#2a1f05;font:700 20px inherit;font-family:inherit;cursor:pointer}
+.composer .submit:disabled{background:#2c2718;color:#6e6244;cursor:default}
+.composer .submit{min-height:48px;padding:0 26px;font-size:18px;white-space:nowrap}

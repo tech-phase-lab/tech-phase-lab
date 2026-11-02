@@ -130,3 +130,12 @@ export async function verifyM4a(total: number, read: (offset: number, length: nu
   }
   if (!ftyp || !moov || !mdat) return bad();
 }
+
+/** Photos for a note: a JPEG made in the browser (any phone photo is redrawn and shrunk first), stored privately like the audio. */
+export const maxDeskImageBytes = 6 * 1024 * 1024;
+export const deskImageFile = /^[a-f0-9]{8}-[a-f0-9]{4}-4[a-f0-9]{3}-[89ab][a-f0-9]{3}-[a-f0-9]{12}\.jpg$/;
+export function validImageUpload(size: unknown): size is number {
+  return typeof size === "number" && Number.isSafeInteger(size) && size >= 512 && size <= maxDeskImageBytes;
+}
+/** A JPEG starts with FF D8 FF. */
+export const isJpeg = (bytes: Uint8Array) => bytes.length >= 3 && bytes[0] === 0xff && bytes[1] === 0xd8 && bytes[2] === 0xff;

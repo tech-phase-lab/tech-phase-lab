@@ -1,6 +1,6 @@
 import { getMembership } from "@/lib/membership/server";
-import { audioStorage, beginAudioUpload, finishAudioUpload } from "@/lib/research/desk-audio-storage";
-import { deskAudioFile, validAudioUpload, maxDeskAudioBytes } from "@/lib/research/desk-audio";
+import { audioStorage, beginAudioUpload, finishAudioUpload, beginImageUpload, finishImageUpload } from "@/lib/research/desk-audio-storage";
+import { deskAudioFile, deskImageFile, validAudioUpload, validImageUpload, maxDeskAudioBytes } from "@/lib/research/desk-audio";
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
 const headers = { "Cache-Control": "private, no-store", Vary: "Cookie", "X-Content-Type-Options": "nosniff" };
@@ -24,9 +24,12 @@ export async function POST(request: Request) {
     let input; try { input = JSON.parse(Buffer.concat(chunks).toString()); } catch { return reply(400, { ok: false }); }
     if (input?.action === "start" && validAudioUpload(input.name, input.size)) return reply(200, { ok: true, ...await beginAudioUpload(input.size, input.name) });
     if (input?.action === "finish" && typeof input.file === "string" && deskAudioFile.test(input.file)) return reply(200, { ok: true, url: await finishAudioUpload(input.file) });
+    if (input?.action === "start-image" && validImageUpload(input.size)) return reply(200, { ok: true, ...await beginImageUpload(input.size) });
+    if (input?.action === "finish-image" && typeof input.file === "string" && deskImageFile.test(input.file)) return reply(200, { ok: true, url: await finishImageUpload(input.file) });
+    if (typeof input?.action === "string" && input.action.endsWith("-image")) return reply(400, { ok: false, error: "image-only" });
     return reply(400, { ok: false, error: "audio-only" });
   } catch (error) {
     const message = error instanceof Error ? error.message : "";
-    return reply(["invalid-mp3", "invalid-audio"].includes(message) ? 400 : 503, { ok: false, error: message === "storage-not-configured" ? "setup-required" : ["invalid-mp3", "invalid-audio"].includes(message) ? "audio-only" : "upload-unavailable" });
+    return reply(["invalid-mp3", "invalid-audio", "invalid-image"].includes(message) ? 400 : 503, { ok: false, error: message === "storage-not-configured" ? "setup-required" : ["invalid-mp3", "invalid-audio"].includes(message) ? "audio-only" : message === "invalid-image" ? "image-only" : "upload-unavailable" });
   }
 }

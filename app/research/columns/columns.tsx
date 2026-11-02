@@ -14,6 +14,7 @@ import { weeklySections } from "@/lib/research/weekly";
 import PostActions from "../desk/post-actions";
 import DeskBody from "../desk/body";
 import Reactions from "../desk/reactions";
+import { isFresh, useMinuteClock } from "../desk/use-minute";
 import NoteComposer from "../notes/composer";
 import { useMemberDisplay, useOwnerMode } from "../member-display-provider";
 type Result = { items: EditorialPost[]; access: string; status: string; validUntil?: number };
@@ -80,7 +81,7 @@ export default function ColumnsPage({ initialKind = "all", initial, postId }: { 
   }, [retry, initial, memberPlan, refreshIdentity, postId]);
   const membershipMismatch = memberPlan !== null && result.status === "ready" && (result.access === "pro") !== (memberPlan === "pro");
   const shown = membershipMismatch ? { items: [], access: "", status: "loading" } : result;
-  return <ResearchToolShell desk lang={lang} setLang={setLang} title={initialKind === "all" ? "RIZEL’S DESK" : initialKind === "qa" ? ja ? "リゼルに聞く" : "Ask Rizel" : postNames[initialKind][lang]} description="">
+  return <ResearchToolShell desk lang={lang} setLang={setLang} title={initialKind === "all" ? "RIZEL’S DESK" : initialKind === "qa" ? ja ? "リゼルに聞く" : "Ask Rizel" : postNames[initialKind][lang]} description={initialKind === "notes" ? (ja ? "PRO会員だけに、本音を。" : "Candid thoughts, for PRO members only.") : ""}>
     {initialKind === "weekly" && ownerMode && <WeeklyComposer onPublished={() => setRetry(value => value + 1)} />}
     {initialKind === "all" && <nav className={styles.writeAction}><Link href="/research/weekly">{ja ? "週刊 Tech Phase PRO" : "Tech Phase PRO Weekly"}</Link></nav>}
     {initialKind === "qa" && <nav className={questionStyles.views} aria-label={ja ? "質問メニュー" : "Question views"}><Link href="/research/qa">{ja ? "みんなの質問" : "Questions"}</Link><span aria-current="page">{ja ? "公開された回答" : "Published answers"}</span></nav>}
@@ -94,6 +95,7 @@ export default function ColumnsPage({ initialKind = "all", initial, postId }: { 
 
 function ColumnArticle({ item, ja, ownerMode, access, onUpdated }: { item: EditorialPost; ja: boolean; ownerMode: boolean; access: string; onUpdated: () => void }) {
   const [editing, setEditing] = useState(false);
+  const minute = useMinuteClock();
   useEffect(() => {
     if (item.kind !== "qa" || window.location.hash !== `#${encodeURIComponent(item.id)}`) return;
     // Answers arrive asynchronously, after the browser's initial anchor scroll.
@@ -103,10 +105,12 @@ function ColumnArticle({ item, ja, ownerMode, access, onUpdated }: { item: Edito
   const lang = ja ? "ja" : "en";
   const date = <time dateTime={item.publishedAt!}>{new Intl.DateTimeFormat(ja ? "ja-JP" : "en-US", { dateStyle: "medium", ...(item.kind !== "weekly" ? { timeStyle: "short", hourCycle: "h23" } as const : {}), timeZone: "Asia/Tokyo" }).format(new Date(item.publishedAt!))}</time>;
   const answerLabel = <div className={styles.answerLabel}><Image src="/rizel-avatar.webp" alt={ja ? "リゼル" : "RIZEL"} width={32} height={32} unoptimized /><div><span>{ja ? "リゼル" : "RIZEL"}</span><small>{date} JST</small></div></div>;
+  // A post from the last 60 minutes carries a gold NEW tag next to its time.
+  const noteMeta = <p className={styles.meta}>{date}<small className={styles.zone}> JST</small>{item.kind === "notes" && isFresh(minute, item.publishedAt!) && <span className={styles.newTag}>NEW</span>}</p>;
   return <article className={`${styles.article} ${editing ? styles.editing : ""} ${item.kind === "notes" ? styles.note : item.kind === "qa" ? styles.qaArticle : ""}`} id={item.id}>
     {item.kind === "notes" ? <div className={styles.noteHeader}><div className={styles.noteAvatar}><Image src="/rizel-avatar.webp" alt={ja ? "リゼル" : "RIZEL"} width={46} height={46} unoptimized /></div></div> : item.kind === "weekly" ? <p className={styles.meta}>{postNames[item.kind][lang]} · {date}</p> : null}
     <div className={item.kind === "notes" ? styles.noteBubble : undefined}>
-      {item.kind === "notes" && (ownerMode ? <PostActions item={item} editing={editing} setEditing={setEditing} onUpdated={onUpdated}><p className={styles.meta}>{date}<small className={styles.zone}> JST</small></p></PostActions> : <p className={styles.meta}>{date}<small className={styles.zone}> JST</small></p>)}
+      {item.kind === "notes" && (ownerMode ? <PostActions item={item} editing={editing} setEditing={setEditing} onUpdated={onUpdated}>{noteMeta}</PostActions> : noteMeta)}
       {item.kind !== "notes" && <>{item.kind === "qa" && <p className={styles.questionLabel}>{ja ? "質問" : "QUESTION"}</p>}<h2>{ja ? item.titleJa : item.titleEn}</h2>{(ja ? item.introJa : item.introEn) && <p className={styles.text}>{ja ? item.introJa : item.introEn}</p>}</>}
       {item.kind === "qa" && access === "pro" && (ownerMode ? <PostActions item={item} editing={editing} setEditing={setEditing} onUpdated={onUpdated}>{answerLabel}</PostActions> : answerLabel)}
       {!editing && (!ja && item.translationStatus === "pending" ? <p>Translation pending.</p> : access === "pro" ? <><div className={`${styles.text} ${item.kind === "qa" ? styles.qaBody : ""}`}>{item.kind === "weekly" ? weeklySections(ja ? item.bodyJa : item.bodyEn).map((section,index)=><details key={index} className={styles.weeklySection} open={index===0}><summary>{section.title || (ja ? "本文" : "Report")}</summary><p>{section.body}</p></details>) : <DeskBody text={ja ? item.bodyJa : item.bodyEn} media={item.kind === "notes"} postId={item.id} />}</div>{item.sources.length > 0 && (item.kind === "weekly" ? <footer className={styles.weeklySourceFooter}><details className={styles.weeklySources}><summary>{ja ? "出典" : "Sources"}</summary><ul>{item.sources.map((source, index) => <li key={index}><a href={source.url} target="_blank" rel="noopener noreferrer">{source.title} ↗</a></li>)}</ul></details></footer> : <footer><h3>{ja ? "出典" : "Sources"}</h3>{item.sources.map((source, index) => <a key={index} href={source.url} target="_blank" rel="noopener noreferrer">{source.title} ↗</a>)}</footer>)}</> : <aside><p>{ja ? "この先の本文はPRO会員向けです。" : "The full article is available to PRO members."}</p><Link href="/research/account">{ja ? "ログイン・会員情報" : "Sign in / Membership"}</Link></aside>)}
