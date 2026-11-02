@@ -62,7 +62,7 @@ test("the inbox key is made by the owner only, shown once, and never kept or log
   await withMonitor(async state => {
     state.answers["/admin/inbox/key"] = { ok: true, exists: true, createdAt: "2026-11-02T00:00:00.000+00:00", key: "tpinbox_abcdefghijklmnopqrstuvwxyz0123456789ABCDEFG" };
     const status = await (await GET()).json();
-    assert.deepEqual([status.exists, status.uploadUrl], [true, "https://monitor.example/inbox/upload"]);
+    assert.deepEqual([status.exists, status.startUrl, status.finishUrl], [true, "https://monitor.example/inbox/start", "https://monitor.example/inbox/finish"]);
     const made = await POST(new Request("https://example.test/api/research/desk-inbox/key", { method: "POST", headers: { origin: "https://example.test" } }));
     assert.equal((await made.json()).key.startsWith("tpinbox_"), true);
     assert.equal(made.headers.get("cache-control"), "private, no-store");
@@ -83,7 +83,7 @@ test("the inbox screens: rename in the list, the key page for the owner, the pro
   const page = read("../app/research/inbox-key/page.tsx");
   assert.match(page, /!member\.isAdmin\) redirect\("\/research\/notes"\)/);
   const screen = read("../app/research/inbox-key/screen.tsx");
-  for (const text of ["新しく作る", "鍵をコピー", "この鍵は、いまだけ表示されます。", "Authorization", "項目名「file」"]) assert.ok(screen.includes(text), text);
+  for (const text of ["新しく作る", "鍵をコピー", "この鍵は、いまだけ表示されます。", "Authorization", "PUT", "保存先の住所", "②をコピー"]) assert.ok(screen.includes(text), text);
   assert.doesNotMatch(screen, /localStorage|sessionStorage/, "the key is kept only on the screen");
   assert.match(read("../proxy.ts"), /\/api\/research\/desk-inbox\/:path\*/);
   const python = read("../scripts/research/voice_inbox.py");
