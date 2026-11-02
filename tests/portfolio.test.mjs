@@ -1,6 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { valueHoldings, weights } from "../lib/portfolio/calc.ts";
+import { valueHoldings, weights, aggregate, replaceSource, statusOf } from "../lib/portfolio/calc.ts";
+import { normalizeBroker, typedBroker, OTHER, MANUAL } from "../lib/portfolio/brokers.ts";
 import { extractJson, normalizeParsed, reconcile } from "../lib/portfolio/parse.ts";
 
 // Read from a real holdings screen (Rakuten iSPEED, 8 rows); the screen's own total gain was +515,600.53 USD.
@@ -92,12 +93,12 @@ import { parseStored, serialize } from "../lib/portfolio/store.ts";
 const src = path => readFile(new URL(path, import.meta.url), "utf8");
 
 test("stored holdings round-trip, and damaged or out-of-range data is dropped", () => {
-  const holdings = [{ ticker: "NVDA", shares: 10, avgCostUsd: 100, avgCostFx: 150 }];
+  const holdings = [{ ticker: "NVDA", shares: 10, avgCostUsd: 100, avgCostFx: 150, source: "楽天証券" }];
   assert.deepEqual(parseStored(serialize(holdings)), holdings);
   assert.deepEqual(parseStored(""), []);
   assert.deepEqual(parseStored("{broken"), []);
-  assert.deepEqual(parseStored(JSON.stringify({ version: 2, holdings })), []);
-  assert.deepEqual(parseStored(JSON.stringify({ version: 1, holdings: [{ ticker: "bad ticker", shares: 1, avgCostUsd: 1 }, { ticker: "A", shares: -1, avgCostUsd: 1 }, { ticker: "B", shares: 1, avgCostUsd: 1, avgCostFx: 5 }] })), [{ ticker: "B", shares: 1, avgCostUsd: 1 }]);
+  assert.deepEqual(parseStored(JSON.stringify({ version: 3, holdings })), []);
+  assert.deepEqual(parseStored(JSON.stringify({ version: 1, holdings: [{ ticker: "bad ticker", shares: 1, avgCostUsd: 1 }, { ticker: "A", shares: -1, avgCostUsd: 1 }, { ticker: "B", shares: 1, avgCostUsd: 1, avgCostFx: 5 }] })), [{ ticker: "B", shares: 1, avgCostUsd: 1, source: "その他" }]);
 });
 
 test("the screenshot route is same-origin, signed-in, limited and does not store the picture", async () => {
@@ -218,4 +219,77 @@ test("the portfolio APIs run behind the sign-in middleware (without it the sessi
 test("the confirmation screen does not repeat the not-advice line under the register button", async () => {
   const screen = await src("../app/research/portfolio/screen.tsx");
   assert.match(screen, /\{!review && <p className=\{s\.disclaimer\}>/);
+});
+
+test("broker names are folded onto one name each; anything unknown is その他", () => {
+  for (const name of ["SBI", "SBI証券", "SBI Securities", "ＳＢＩ証券", "sbi securities"]) assert.equal(normalizeBroker(name), "SBI証券", name);
+  for (const [name, expected] of [["楽天証券", "楽天証券"], ["Rakuten Securities", "楽天証券"], ["楽天", "楽天証券"], ["マネックス証券", "マネックス証券"], ["Monex", "マネックス証券"], ["松井証券", "松井証券"], ["auカブコム証券", "auカブコム証券"], ["kabu.com証券", "auカブコム証券"],
+    ["大和証券", "大和証券"], ["野村證券", "野村證券"], ["野村証券", "野村證券"], ["SMBC日興証券", "SMBC日興証券"], ["moomoo証券", "moomoo"]]) assert.equal(normalizeBroker(name), expected, name);
+  for (const unknown of [null, undefined, "", "不明", "その他", "ABC証券", 5]) assert.equal(normalizeBroker(unknown), OTHER);
+  assert.equal(typedBroker("  ウィブル証券 "), "ウィブル証券");
+  assert.equal(typedBroker("Rakuten"), "楽天証券");
+  assert.equal(typedBroker("   "), OTHER);
+  assert.equal(normalizeParsed({ broker: "SBI Securities", holdings: [] }).broker, "SBI証券");
+  assert.equal(normalizeParsed({ holdings: [] }).broker, OTHER);
+});
+
+test("reading a broker again replaces only that broker; manual lots are their own group", () => {
+  const lots = [
+    { ticker: "NVDA", shares: 25, avgCostUsd: 100, source: "楽天証券" }, { ticker: "MU", shares: 10, avgCostUsd: 80, source: "楽天証券" },
+    { ticker: "NVDA", shares: 15, avgCostUsd: 140, source: "SBI証券" }, { ticker: "AMD", shares: 3, avgCostUsd: 150, source: MANUAL },
+  ];
+  const again = replaceSource(lots, "楽天証券", [{ ticker: "NVDA", shares: 30, avgCostUsd: 105 }]);
+  assert.deepEqual(again.filter(l => l.source === "楽天証券"), [{ ticker: "NVDA", shares: 30, avgCostUsd: 105, source: "楽天証券" }], "MU, no longer on the screen, is gone from that broker");
+  assert.equal(again.filter(l => l.source === "SBI証券").length, 1, "the other broker is untouched");
+  assert.equal(again.filter(l => l.source === MANUAL).length, 1);
+  const key = l => `${l.source}/${l.ticker}`;
+  const sameAgain = replaceSource(lots, "楽天証券", lots.filter(l => l.source === "楽天証券").map(({ source, ...rest }) => rest));
+  assert.deepEqual([...sameAgain].sort((a, b) => key(a).localeCompare(key(b))), [...lots].sort((a, b) => key(a).localeCompare(key(b))), "the same screenshot twice gives the same lots, not double");
+});
+
+test("the list adds one ticker held at several brokers into a single row", () => {
+  const rows = aggregate([
+    { ticker: "NVDA", name: "NVIDIA", shares: 25, avgCostUsd: 100, avgCostFx: 140, source: "楽天証券" },
+    { ticker: "NVDA", shares: 15, avgCostUsd: 140, avgCostFx: 150, source: "SBI証券" },
+    { ticker: "MU", shares: 10, avgCostUsd: 80, source: "楽天証券" },
+  ]);
+  assert.equal(rows.length, 2);
+  const nvda = rows.find(r => r.ticker === "NVDA");
+  assert.equal(nvda.shares, 40);
+  assert.ok(Math.abs(nvda.avgCostUsd - (25 * 100 + 15 * 140) / 40) < 1e-9, "average cost weighted by shares");
+  assert.ok(Math.abs(nvda.avgCostFx * 25 * 100 + 0 - (25 * 100 * 140 + 15 * 140 * 150) / (25 * 100 + 15 * 140) * 25 * 100) < 1e-6, "the yen rate is weighted so the yen cost stays exact");
+  assert.deepEqual(nvda.breakdown, [{ source: "楽天証券", shares: 25 }, { source: "SBI証券", shares: 15 }]);
+  assert.equal(nvda.name, "NVIDIA");
+  assert.equal(rows.find(r => r.ticker === "MU").breakdown, undefined, "no breakdown for a ticker held at one broker");
+  assert.equal(aggregate([{ ticker: "A", shares: 1, avgCostUsd: 1, avgCostFx: 150, source: "x" }, { ticker: "A", shares: 1, avgCostUsd: 1, source: "y" }])[0].avgCostFx, undefined, "no yen rate unless every lot has one");
+  const valued = valueHoldings(rows, { NVDA: { ticker: "NVDA", close: 200, asOf: "2026-10-30" }, MU: { ticker: "MU", close: 100, asOf: "2026-10-30" } }, 150);
+  assert.equal(valued.rows.find(r => r.ticker === "NVDA").breakdown.length, 2);
+  assert.equal(valued.totals.valueUsd, 40 * 200 + 10 * 100);
+});
+
+test("the check screen marks each row new, updated or unchanged against the same broker", () => {
+  const saved = [{ ticker: "NVDA", shares: 40, avgCostUsd: 112.5, source: "楽天証券" }, { ticker: "AVGO", shares: 12, avgCostUsd: 210, source: "SBI証券" }];
+  assert.equal(statusOf(saved, "楽天証券", { ticker: "NVDA", shares: 40, avgCostUsd: 112.5 }), "same");
+  assert.equal(statusOf(saved, "楽天証券", { ticker: "NVDA", shares: 45, avgCostUsd: 112.5 }), "update");
+  assert.equal(statusOf(saved, "楽天証券", { ticker: "MU", shares: 5, avgCostUsd: 98.4 }), "new");
+  assert.equal(statusOf(saved, "楽天証券", { ticker: "AVGO", shares: 12, avgCostUsd: 210 }), "new", "AVGO is saved under another broker, so it is new for this one");
+  assert.equal(statusOf(saved, "SBI証券", { ticker: "AVGO", shares: 12, avgCostUsd: 210 }), "same", "changing the source re-judges the badges");
+});
+
+test("the check screen, source sheet and list follow the owner's design (Nov 2)", async () => {
+  const screen = await src("../app/research/portfolio/screen.tsx");
+  assert.match(screen, /取り込み元/); assert.match(screen, /更新 \{updates\}/); assert.match(screen, /新規 \{fresh\}/);
+  assert.match(screen, /を読み取れませんでした。数字が見えるようにもう一度取り込むか、手入力してください。/);
+  assert.doesNotMatch(screen, /置き換わります/);
+  assert.match(screen, /className=\{s\.dock\}/, "the register button is docked at the bottom");
+  assert.match(screen, /選ぶとすぐに切り替わります/);
+  assert.match(screen, /証券会社の名前を入力/);
+  assert.match(screen, /className=\{s\.hideBtn\}/, "hide-amounts moved into the total card");
+  assert.doesNotMatch(screen, /USD\/JPY \$\{usd\(market\.usdJpy\)\}`/, "the USD/JPY chip is gone from the total card");
+  assert.match(screen, /1ドル＝\$\{usd\(market\.usdJpy\)\}円で換算/);
+  assert.doesNotMatch(screen, /s\.asof/, "the note at the bottom of the page is gone");
+  assert.match(screen, /内訳/);
+  const manual = screen.slice(screen.indexOf("<ManualForm"), screen.indexOf("<ManualForm") + 400);
+  assert.match(manual, /source === MANUAL/);
+  assert.match(await src("../lib/portfolio/parse.ts"), /broker は証券会社の名前/);
 });

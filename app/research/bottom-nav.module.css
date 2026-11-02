@@ -79,3 +79,5 @@
 /* Keep the full watchlist name readable within the phone dock. */
 @media(max-width:760px){.bar{grid-template-columns:minmax(0,1fr) minmax(0,1fr) 84px minmax(0,1fr) minmax(0,1fr)}.bar a[href="/research/watchlist"] .label{font-size:10px;letter-spacing:0}}
 @media(max-width:380px){.bar a[href="/research/watchlist"] .label{font-size:9px}}
+
+:global(html[data-hide-nav="1"]) .dock, :global(html[data-hide-nav="1"]) .spacer { display:none; }

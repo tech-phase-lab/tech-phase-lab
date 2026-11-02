@@ -23,7 +23,7 @@ export async function POST(request: Request) {
     const turn = await takeRead(userId);
     if (!turn.ok) return json({ error: "limit" }, 429);
     const parsed = await readHoldings(image);
-    return json({ holdings: parsed.holdings, incomplete: parsed.incomplete, order: parsed.order, warnings: parsed.warnings, mismatch: reconcile(parsed), left: turn.left });
+    return json({ broker: parsed.broker, holdings: parsed.holdings, incomplete: parsed.incomplete, order: parsed.order, warnings: parsed.warnings, mismatch: reconcile(parsed), left: turn.left });
   } catch (error) {
     // Only the short provider reason (for example vision-401:invalid_api_key) goes back, so a failure can be told apart.
     const reason = error instanceof Error && /^vision-[a-z0-9_.:-]{1,64}$/i.test(error.message) ? error.message : undefined;

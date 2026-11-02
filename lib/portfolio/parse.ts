@@ -1,14 +1,16 @@
 import type { Holding } from "./calc.ts";
+import { normalizeBroker } from "./brokers.ts";
 
 /** What the screenshot reader returns, checked here before anything reaches the screen or storage. The model's answer is never trusted:
  * every number is range-checked, tickers are normalised, duplicates are merged and anything doubtful becomes a warning for the reader to see. */
 export type Incomplete = { ticker: string; name?: string; shares: number | null; avgCostUsd: number | null };
-export type Parsed = { holdings: Holding[]; incomplete: Incomplete[]; /** Tickers in the order they appear on the screen. */ order: string[]; warnings: string[]; reportedGainUsd: number | null; screenPrices: Record<string, number> };
+export type Parsed = { /** The broker the screen came from, one canonical name (その他 when it cannot be told). */ broker: string; holdings: Holding[]; incomplete: Incomplete[]; /** Tickers in the order they appear on the screen. */ order: string[]; warnings: string[]; reportedGainUsd: number | null; screenPrices: Record<string, number> };
 
 export const PARSE_PROMPT = `これは日本の証券会社アプリの、米国株の「保有銘柄」画面のスクリーンショットです。画面に見える銘柄の行を、すべて読み取ってください。
 JSONだけを返します(説明文や記号は付けません)。形は次のとおりです。
-{"holdings":[{"ticker":"NVDA","name":"エヌビディア","shares":10,"avgCostUsd":120.5,"avgCostJpy":null,"currentPriceUsd":130.2}],"reportedGainUsd":1234.56}
+{"broker":"楽天証券","holdings":[{"ticker":"NVDA","name":"エヌビディア","shares":10,"avgCostUsd":120.5,"avgCostJpy":null,"currentPriceUsd":130.2}],"reportedGainUsd":1234.56}
 決まり:
+- broker は証券会社の名前。画面に会社名やロゴが見えればその名前。見えなくても、アプリの配色や並び方からわかるときは、その名前にする。楽天証券 / SBI証券 / マネックス証券 / 松井証券 / auカブコム証券 / 大和証券 / 野村證券 / SMBC日興証券 / moomoo のどれかで答える。わからないときは null。
 - ticker は画面のティッカー(英字)。銘柄名が途中で切れていても、そのまま name に入れてよい。
 - shares は保有数量(株)。「執行中」の数字は使わない。
 - avgCostUsd は平均取得価額(ドル)。画面が円表示で、ドルの値が無いときは null にして、avgCostJpy に円の値を入れる。
@@ -77,7 +79,7 @@ export function normalizeParsed(raw: unknown): Parsed {
     if (!order.includes(ticker)) order.push(ticker);
     holdings.set(ticker, { ticker, name, shares, avgCostUsd: avg, ...(fx !== undefined && fx > 50 && fx < 400 ? { avgCostFx: fx } : {}) });
   }
-  return { holdings: [...holdings.values()], incomplete, order, warnings, reportedGainUsd: num(body.reportedGainUsd), screenPrices };
+  return { broker: normalizeBroker(body.broker), holdings: [...holdings.values()], incomplete, order, warnings, reportedGainUsd: num(body.reportedGainUsd), screenPrices };
 }
 
 /** Cross-check against the profit printed at the top of the screen: a missed or misread row shows up as a gap. */
