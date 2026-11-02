@@ -41,10 +41,10 @@ test("photo routes: owner-only upload, private bucket, a note's photo is served 
   assert.match(body, /desk-media\\\/\[a-f0-9\]\{8\}.*\\\.jpg\$\/\.test\(value\)/);
 });
 
-test("the inbox is owner-only and, until the receiving side exists, empty (Nov 2)", async () => {
+test("the inbox is owner-only; its list, rename and key now come from the monitoring service (Nov 2)", async () => {
   const route = await read("../app/api/research/desk-inbox/route.ts");
-  assert.match(route, /!member\.isAdmin\) return reply\(403/);
-  assert.match(route, /enabled: false, items: \[\]/);
+  assert.match(route, /async function owner\(\) \{ const member = await getMembership\(\); return member\.status === "signed-in" && member\.isAdmin; \}/);
+  assert.match(route, /RESEARCH_EDITOR_TOKEN/);
   assert.match(await read("../proxy.ts"), /\/api\/research\/desk-inbox\/:path\*/);
   const sheet = await read("../app/research/desk/inbox-sheet.tsx");
   assert.match(sheet, /選ぶと、添付に追加されます。あとから切り取りもできます。/);

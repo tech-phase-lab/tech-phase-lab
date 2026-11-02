@@ -1,0 +1,12 @@
+.card{margin:0 0 20px;padding:20px;border:1px solid #5a4a24;border-radius:24px;background:#0b0e14;color:#e6e2d8}
+.card h2{margin:24px 0 10px;font-size:16px;font-weight:500;color:#d8b36a}
+.card ol{margin:0;padding-left:1.4em;line-height:1.9;color:#b9bec6}
+.state{margin:0 0 14px;font-size:18px}.state small{display:block;margin-top:4px;font-size:13px;color:#8e98a3}
+.make{min-height:52px;padding:0 28px;border:0;border-radius:999px;background:linear-gradient(120deg,#efd899,#c9a257);color:#2a1f05;font:700 18px inherit;font-family:inherit;cursor:pointer}
+.make:disabled{opacity:.5}
+.once{margin:18px 0 0;padding:16px;border:1.5px solid #d8b36a;border-radius:18px;background:#17130a}
+.once b{color:#f0dca0}.once p{margin:6px 0 12px;color:#d7c28a;line-height:1.7}
+.card code{display:block;padding:12px 14px;border:1px solid #2a2f38;border-radius:14px;background:#05070b;font:14px ui-monospace,monospace;word-break:break-all;user-select:all;color:#f0ece4}
+.once button,.plain{margin-top:10px;min-height:44px;padding:0 20px;border:1px solid #6e5a2a;border-radius:999px;background:#10100c;color:#e7c982;font:500 15px inherit;font-family:inherit;cursor:pointer}
+.note{margin:18px 0 0;font-size:13px;line-height:1.7;color:#8e98a3}
+.back{color:#d8b36a;text-decoration:none}

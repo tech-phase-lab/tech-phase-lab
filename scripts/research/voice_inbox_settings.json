@@ -1,0 +1,8 @@
+{
+  "_note": "Settings for the voice memo inbox (owner, Nov 2). maxBytes: the largest file accepted. perMinute / perHour: uploads allowed per sender address. badKeyLimit: wrong keys allowed per sender address in badKeyWindowSeconds before it is blocked. Edit and redeploy to change.",
+  "maxBytes": 104857600,
+  "perMinute": 6,
+  "perHour": 60,
+  "badKeyLimit": 5,
+  "badKeyWindowSeconds": 600
+}
