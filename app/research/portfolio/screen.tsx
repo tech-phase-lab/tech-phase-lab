@@ -3,12 +3,13 @@ import Link from "next/link";
 import { useCallback, useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
 import ResearchToolShell from "../research-tool-shell";
 import { useResearchLanguage } from "../use-research-language";
-import { valueHoldings, weights, type Holding, type Quote, type Row } from "@/lib/portfolio/calc";
+import { aggregate, replaceSource, statusOf, valueHoldings, weights, type Holding, type Quote, type Row } from "@/lib/portfolio/calc";
+import { BROKER_CHOICES, MANUAL, OTHER, typedBroker } from "@/lib/portfolio/brokers";
 import { parseStored, readHide, readRaw, subscribeStore, writeHide, writeHoldings } from "@/lib/portfolio/store";
 import s from "./portfolio.module.css";
 
 type ReviewRow = { id: number; ticker: string; name?: string; shares: string; avg: string; fx?: number; added?: boolean };
-type Review = { rows: ReviewRow[]; warnings: string[]; mode: "replace" | "merge" };
+type Review = { rows: ReviewRow[]; warnings: string[]; source: string };
 type Market = { quotes: Record<string, Quote>; usdJpy: number | null; asOf: string | null };
 type Problem = "unreadable" | "limit" | "config" | "service" | "other";
 type Stage = "preparing" | "reading";
@@ -42,6 +43,8 @@ const Icon = {
   warn: <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4.500L21 19.500H3z" /><path d="M12 10v4.500M12 17.200v.1" /></svg>,
   retry: <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.400-5.700M20 4v4.500h-4.500" /></svg>,
   close: <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" /></svg>,
+  check: <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.500l4.500 4.500L19 7.500" /></svg>,
+  bank: <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.500 9.500L12 4.500l8.500 5M5.500 10v7M9.500 10v7M14.500 10v7M18.500 10v7M3.500 19.500h17" /></svg>,
   back: <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.500 5.500L8 12l6.500 6.500" /></svg>,
 };
 
@@ -57,7 +60,8 @@ export default function PortfolioScreen() {
   const [lang, setLang] = useResearchLanguage();
   const raw = useSyncExternalStore(subscribeStore, readRaw, () => "");
   const hide = useSyncExternalStore(subscribeStore, () => (readHide() ? "1" : "0"), () => "0") === "1";
-  const holdings = useMemo(() => parseStored(raw), [raw]);
+  const lots = useMemo(() => parseStored(raw), [raw]);
+  const holdings = useMemo(() => aggregate(lots), [lots]);
   const [market, setMarket] = useState<Market | null>(null);
   const [marketError, setMarketError] = useState(false);
   const [retry, setRetry] = useState(0);
@@ -84,7 +88,7 @@ export default function PortfolioScreen() {
   const shares = useMemo(() => weights(rows), [rows]);
   const colorOf = useCallback((ticker: string) => COLORS[Math.max(0, holdings.findIndex(h => h.ticker === ticker)) % COLORS.length], [holdings]);
 
-  const read = useCallback(async (file: File | undefined, mode: "replace" | "merge") => {
+  const read = useCallback(async (file: File | undefined) => {
     if (!file) return;
     const controller = new AbortController();
     abort.current = controller;
@@ -109,30 +113,29 @@ export default function PortfolioScreen() {
       const order: string[] = Array.isArray(data.order) ? data.order : [];
       const position = (row: ReviewRow) => { const at = order.indexOf(row.ticker); return at < 0 ? order.length : at; };
       const rowsInOrder = [...complete, ...partial].sort((a, b) => position(a) - position(b));
-      setReview({ rows: rowsInOrder, warnings: [...(data.mismatch ? [data.mismatch as string] : []), ...(data.warnings ?? [])], mode });
+      setReview({ rows: rowsInOrder, warnings: [...(data.mismatch ? [data.mismatch as string] : []), ...(data.warnings ?? [])], source: typeof data.broker === "string" && data.broker ? data.broker : OTHER });
     } catch (error) {
       if ((error as Error)?.name !== "AbortError") setProblem("unreadable");
     } finally { setReading(null); abort.current = null; }
   }, []);
 
-  const pick = (mode: "replace" | "merge") => (event: React.ChangeEvent<HTMLInputElement>) => { void read(event.target.files?.[0], mode); event.target.value = ""; };
-  const mode = holdings.length ? "merge" : "replace";
+  const pick = (event: React.ChangeEvent<HTMLInputElement>) => { void read(event.target.files?.[0]); event.target.value = ""; };
   const ja = lang === "ja";
 
   return <ResearchToolShell showTools={false} showHeading={false} lang={lang} setLang={setLang} title={ja ? "米国株の資産管理" : "US stock portfolio"} description="">
     <div className={s.page}>
-      {manual ? <ManualForm onCancel={() => setManual(false)} onAdd={h => { writeHoldings([...holdings.filter(x => x.ticker !== h.ticker), h]); setManual(false); setProblem(null); }} />
-        : review ? <ReviewScreen review={review} setReview={setReview} existing={holdings} />
+      {manual ? <ManualForm onCancel={() => setManual(false)} onAdd={h => { writeHoldings([...lots.filter(x => !(x.source === MANUAL && x.ticker === h.ticker)), { ...h, source: MANUAL }]); setManual(false); setProblem(null); }} />
+        : review ? <ReviewScreen review={review} setReview={setReview} existing={lots} />
         : reading ? <>
           <Head />
           <Reading stage={reading} onCancel={() => abort.current?.abort()} onInfo={() => setSheet(true)} />
         </>
         : <>
           <Head sub={holdings.length > 0} />
-          {problem && <ErrorCard kind={problem} reason={reason} onManual={() => setManual(true)} pick={pick(mode)} onClose={() => setProblem(null)} />}
-          {!problem && holdings.length === 0 && <Empty pick={pick("replace")} onManual={() => setManual(true)} onInfo={() => setSheet(true)} />}
+          {problem && <ErrorCard kind={problem} reason={reason} onManual={() => setManual(true)} pick={pick} onClose={() => setProblem(null)} />}
+          {!problem && holdings.length === 0 && <Empty pick={pick} onManual={() => setManual(true)} onInfo={() => setSheet(true)} />}
           {holdings.length > 0 && <List rows={rows} totals={totals} shares={shares} hide={hide} market={market} marketError={marketError} onRetry={() => { setMarketError(false); setRetry(value => value + 1); }}
-            pick={pick("merge")} onManual={() => setManual(true)} colorOf={colorOf} onClear={() => { if (window.confirm("この端末に保存した持ち株を、すべて消します。よろしいですか?")) writeHoldings([]); }} />}
+            pick={pick} onManual={() => setManual(true)} colorOf={colorOf} onClear={() => { if (window.confirm("この端末に保存した持ち株を、すべて消します。よろしいですか?")) writeHoldings([]); }} />}
         </>}
       {!review && <p className={s.disclaimer}>投資助言ではありません。</p>}
       <p className={s.back}><Link href="/research/account"><span className={s.backIcon}>{Icon.back}</span>マイアカウントに戻る</Link></p>
@@ -221,7 +224,8 @@ function List({ rows, totals, shares, hide, market, marketError, onRetry, pick, 
     {unknown && <div className={s.warnBar} role="alert">{Icon.warn}<div><b>終値を取得できませんでした</b><p>株数と平均取得は保存されています。評価額と損益は、取得できてから表示します。</p>
       <button type="button" className={s.retry} onClick={onRetry}>{Icon.retry}もう一度取得する</button></div></div>}
     <section className={s.total} aria-label="合計">
-      <div className={s.totalTop}><span>評価額の合計</span><em>{market?.usdJpy ? `USD/JPY ${usd(market.usdJpy)}` : ""}</em></div>
+      <div className={s.totalTop}><span>評価額の合計</span>
+        <button type="button" className={s.hideBtn} onClick={() => writeHide(!hide)} aria-pressed={hide}>{hide ? Icon.eyeOff : Icon.eye}{hide ? "金額を表示する" : "金額を伏せる"}</button></div>
       {hide ? <b className={`${s.big} ${s.mask}`}>{MASK}</b>
         : unknown ? <b className={`${s.big} ${s.dim}`}>確認できません</b>
         : loading ? <b className={`${s.big} ${s.dim}`}>取得しています…</b>
@@ -238,12 +242,12 @@ function List({ rows, totals, shares, hide, market, marketError, onRetry, pick, 
           {totals.gainJpy !== null && !unknown ? <p className={gainClass(totals.gainJpy)}><b>{sign(totals.gainJpy)}¥{yen(Math.abs(totals.gainJpy))}</b></p> : <p className={s.dim}><b>—</b></p>}
           <small className={s.hint}>為替が分かる銘柄のみ</small></div>
       </div>
+      {market?.asOf && !unknown && <p className={s.basis}>{market.usdJpy ? `1ドル＝${usd(market.usdJpy)}円で換算 ・ ` : ""}{dateJa(market.asOf).replace(/^\d+年/, "")}の終値</p>}
     </section>
     <div className={s.actions}>
       <label className={s.cta}><input type="file" accept="image/*" onChange={pick} />{Icon.image}スクショを追加</label>
       <button type="button" className={s.outline} onClick={onManual}>{Icon.plus}手入力</button>
     </div>
-    <button type="button" className={s.pill} onClick={() => writeHide(!hide)} aria-pressed={hide}>{hide ? Icon.eyeOff : Icon.eye}{hide ? "金額を表示する" : "金額を伏せる"}</button>
 
     {shares.length > 0 && <section className={s.weights} aria-label="銘柄の割合">
       <h3>銘柄の割合</h3>
@@ -257,6 +261,7 @@ function List({ rows, totals, shares, hide, market, marketError, onRetry, pick, 
       const known = row.valueUsd !== null && !unknown;
       return <article key={row.ticker} className={s.card} style={{ ["--c" as string]: colorOf(row.ticker) }}>
         <header><b>{row.ticker}</b><span>{row.name ?? ""}</span><em>{w ? `${w.percent.toFixed(1)}%` : ""}</em></header>
+        {row.breakdown && <p className={s.breakdown}><small>内訳</small>{row.breakdown.map(part => <span key={part.source}>{part.source} {usd(part.shares, Number.isInteger(part.shares) ? 0 : 4)}株</span>)}</p>}
         <dl className={s.grid3}>
           <div><dt>株数</dt><dd>{usd(row.shares, Number.isInteger(row.shares) ? 0 : 4)}株</dd></div>
           <div><dt>平均取得</dt><dd>${usd(row.avgCostUsd)}</dd></div>
@@ -270,49 +275,100 @@ function List({ rows, totals, shares, hide, market, marketError, onRetry, pick, 
         </div>
       </article>;
     })}</div>
-    {market?.asOf && !unknown && <p className={s.asof}>終値は{dateJa(market.asOf)}のものです。{market.usdJpy ? `為替は USD/JPY ${usd(market.usdJpy)} で円に換算しています。` : ""}</p>}
     <p className={s.clear}><button type="button" onClick={onClear}>この端末のデータを消す</button></p>
   </>;
 }
 
 function ReviewScreen({ review, setReview, existing }: { review: Review; setReview: (value: Review | null) => void; existing: Holding[] }) {
   const [attempted, setAttempted] = useState(false);
+  const [picking, setPicking] = useState(false);
+  // The check screen is a focused task with its own docked button: the bottom tab bar is hidden meanwhile.
+  useEffect(() => { document.documentElement.dataset.hideNav = "1"; return () => { delete document.documentElement.dataset.hideNav; }; }, []);
   const num = (text: string) => { const value = Number(text.replace(/,/g, "").replace(/^\$/, "")); return text.trim() !== "" && Number.isFinite(value) ? value : null; };
   const bad = (row: ReviewRow) => !TICKER.test(row.ticker.trim().toUpperCase()) || !((num(row.shares) ?? 0) > 0) || !((num(row.avg) ?? 0) > 0);
   const edit = (id: number, patch: Partial<ReviewRow>) => setReview({ ...review, rows: review.rows.map(row => row.id === id ? { ...row, ...patch } : row) });
   const needs = review.rows.filter(bad);
+  const asHolding = (row: ReviewRow): Holding => ({ ticker: row.ticker.trim().toUpperCase(), ...(row.name ? { name: row.name } : {}), shares: num(row.shares) ?? 0, avgCostUsd: num(row.avg) ?? 0, ...(row.fx ? { avgCostFx: row.fx } : {}) });
   const save = () => {
     setAttempted(true);
     if (needs.length || !review.rows.length) return;
-    const next: Holding[] = review.rows.map(row => ({ ticker: row.ticker.trim().toUpperCase(), ...(row.name ? { name: row.name } : {}), shares: num(row.shares)!, avgCostUsd: num(row.avg)!, ...(row.fx ? { avgCostFx: row.fx } : {}) }));
-    writeHoldings(review.mode === "replace" ? next : [...existing.filter(h => !next.some(r => r.ticker === h.ticker)), ...next]);
+    writeHoldings(replaceSource(existing, review.source, review.rows.map(asHolding)));
     setReview(null);
   };
-  const warnings = [...review.warnings, ...(attempted && needs.length ? [`${needs.length}行に、足りない数字があります。入力してから、登録してください。`] : [])];
+  // New / updated, judged against what is saved for the same broker. Unchanged rows carry no badge.
+  const statuses = review.rows.map(row => statusOf(existing, review.source, asHolding(row)));
+  const updates = statuses.filter(status => status === "update").length, fresh = statuses.filter(status => status === "new").length;
+  const missing = review.rows.flatMap(row => {
+    if (row.added || !row.ticker) return [];
+    if (!((num(row.shares) ?? 0) > 0)) return [`${row.ticker} の株数を読み取れませんでした。数字が見えるようにもう一度取り込むか、手入力してください。`];
+    if (!((num(row.avg) ?? 0) > 0)) return [`${row.ticker} の平均取得価額を読み取れませんでした。数字が見えるようにもう一度取り込むか、手入力してください。`];
+    return [];
+  });
+  const warnings = [...review.warnings.filter(text => !/を読み取れませんでした。数字を入力してください。$/.test(text)), ...missing];
   return <>
-    <header className={s.head}><p className={s.kicker}>CHECK</p><h1>内容の確認</h1><p className={s.sub}>{review.rows.length}銘柄を読み取りました。数字は直せます。</p></header>
-    {warnings.length > 0 && <div className={s.warnBox} role="alert">{Icon.warn}<div><b>確認が必要な行があります</b>{warnings.map((text, index) => <p key={index}>・{text}</p>)}</div></div>}
+    <header className={s.head}><h1>内容の確認</h1></header>
+    <section className={s.source} aria-label="取り込み元">
+      <div className={s.sourceTop}>
+        <span className={s.bank} aria-hidden="true">{Icon.bank}</span>
+        <div><small>取り込み元</small><b>{review.source}</b></div>
+        <button type="button" className={s.change} onClick={() => setPicking(true)}>変更</button>
+      </div>
+      <p className={s.sourceMeta}><span>{review.rows.length}銘柄を読み取り</span>{updates > 0 && <em className={s.tagUpdate}>更新 {updates}</em>}{fresh > 0 && <em className={s.tagNew}>新規 {fresh}</em>}</p>
+    </section>
+    {warnings.length > 0 && <div className={s.warnBand} role="alert">{Icon.warn}<div>{warnings.map((text, index) => <p key={index}>{text}</p>)}</div></div>}
     <div className={s.reviewList}>{review.rows.map((row, index) => {
       const flagged = bad(row) && (attempted || row.shares === "" || row.avg === "" || row.added);
+      const status = statuses[index];
       return <section key={row.id} className={`${s.rrow} ${flagged ? s.flag : ""}`}>
         <header>
           {row.added ? <input className={s.tickerInput} aria-label="ティッカー" placeholder="ティッカー" value={row.ticker} onChange={event => edit(row.id, { ticker: event.target.value.toUpperCase() })} autoCapitalize="characters" />
             : <b style={{ color: COLORS[index % COLORS.length] }}>{row.ticker}</b>}
-          <span>{row.name ?? ""}</span>{flagged && !row.added && <em>要確認</em>}
+          <span>{row.name ?? ""}</span>
+          {status === "update" && <em className={s.tagUpdate}>更新</em>}{status === "new" && <em className={s.tagNew}>新規</em>}
+          {flagged && !row.added && <em className={s.tagCheck}>要確認</em>}
           <button type="button" aria-label={`${row.ticker || "この行"}を除く`} onClick={() => setReview({ ...review, rows: review.rows.filter(x => x.id !== row.id) })}>{Icon.close}</button>
         </header>
         <div className={s.fields}>
-          <label>株数<input inputMode="decimal" placeholder="入力してください" value={row.shares} onChange={event => edit(row.id, { shares: event.target.value })} /></label>
-          <label>平均取得価額(USD)<input inputMode="decimal" placeholder="入力してください" value={row.avg === "" ? "" : `$${row.avg.replace(/^\$/, "")}`} onChange={event => edit(row.id, { avg: event.target.value.replace(/^\$/, "") })} /></label>
+          <label className={s.fieldBox}><span>株数</span><input inputMode="decimal" placeholder="入力してください" value={row.shares} onChange={event => edit(row.id, { shares: event.target.value })} /></label>
+          <label className={s.fieldBox}><span>平均取得価額(USD)</span><input inputMode="decimal" placeholder="入力してください" value={row.avg === "" ? "" : `$${row.avg.replace(/^\$/, "")}`} onChange={event => edit(row.id, { avg: event.target.value.replace(/^\$/, "") })} /></label>
         </div>
       </section>;
     })}</div>
-    <div className={s.twoBtn}>
-      <button type="button" className={s.outline} onClick={() => setReview({ ...review, rows: [...review.rows, { id: nextId++, ticker: "", shares: "", avg: "", added: true }] })}>{Icon.plus}追加する</button>
-      <button type="button" className={s.outline} onClick={() => setReview(null)}>やめる</button>
+    <div className={s.reviewTools}>
+      <button type="button" onClick={() => setReview({ ...review, rows: [...review.rows, { id: nextId++, ticker: "", shares: "", avg: "", added: true }] })}>{Icon.plus}追加する</button>
+      <button type="button" onClick={() => setReview(null)}>やめる</button>
     </div>
-    <button type="button" className={`${s.cta} ${s.wide}`} onClick={save}>この内容で登録</button>
+    <div className={s.dock}><button type="button" className={`${s.cta} ${s.wide}`} onClick={save}>この内容で登録</button></div>
+    {picking && <SourceSheet current={review.source} onPick={source => { setReview({ ...review, source }); setPicking(false); }} onClose={() => setPicking(false)} />}
   </>;
+}
+
+/** The sheet that changes where the screenshot came from. Choosing a row switches at once; only "その他" asks for a name. */
+function SourceSheet({ current, onPick, onClose }: { current: string; onPick: (source: string) => void; onClose: () => void }) {
+  const named: string[] = [...BROKER_CHOICES];
+  const extra = current !== OTHER && !named.includes(current) ? [current] : [];
+  const [other, setOther] = useState(false);
+  const [name, setName] = useState("");
+  const row = (source: string) => (
+    <button key={source} type="button" className={`${s.srcRow} ${current === source && !other ? s.srcOn : ""}`} onClick={() => onPick(source)}>
+      <span>{source}</span>{current === source && !other && Icon.check}
+    </button>);
+  const otherOn = other || current === OTHER;
+  return <div className={s.sheetWrap} role="dialog" aria-modal="true" aria-label="取り込み元">
+    <button type="button" className={s.sheetBackdrop} aria-label="閉じる" onClick={onClose} />
+    <div className={`${s.sheet} ${s.srcSheet}`}>
+      <i className={s.grip} aria-hidden="true" />
+      <h2>取り込み元<small>選ぶとすぐに切り替わります</small></h2>
+      {[...named, ...extra].map(row)}
+      <button type="button" className={`${s.srcRow} ${otherOn ? s.srcOn : ""}`} onClick={() => setOther(true)}>
+        <span>{OTHER}</span>{otherOn && Icon.check}
+      </button>
+      {other && <>
+        <input className={s.srcInput} autoFocus value={name} maxLength={20} placeholder="証券会社の名前を入力" onChange={event => setName(event.target.value)} />
+        <button type="button" className={`${s.cta} ${s.wide}`} onClick={() => onPick(typedBroker(name))}>決定</button>
+      </>}
+    </div>
+  </div>;
 }
 
 function ManualForm({ onAdd, onCancel }: { onAdd: (holding: Holding) => void; onCancel: () => void }) {
