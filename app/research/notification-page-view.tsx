@@ -7,10 +7,10 @@ import styles from "./notification-page.module.css";
 
 const monitored = providers.map(p => p.ticker);
 const tracked = earningsOnlyProviders.map(p => p.ticker);
-export type Preferences = { targets: boolean; earnings: boolean; news: boolean; newsTickers: string[]; weeklyNotebook: boolean };
+export type Preferences = { targets: boolean; earnings: boolean; news: boolean; newsTickers: string[]; weeklyNotebook: boolean; /** A new "リゼルのひとりごと" post; off until turned on. */ rizelNote: boolean };
 type PrefsState = "idle" | "loading" | "ready" | "error" | "unsupported";
 // Shown (and locked) until the server's own settings have been read.
-const placeholder: Preferences = { targets: true, earnings: true, news: true, newsTickers: monitored, weeklyNotebook: true };
+const placeholder: Preferences = { targets: true, earnings: true, news: true, newsTickers: monitored, weeklyNotebook: true, rizelNote: false };
 const svg = (d: ReactNode) => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">{d}</svg>;
 const icons = {
   bell: svg(<><path d="M6 16.5V11a6 6 0 0 1 12 0v5.5l1.5 1.5h-15z" /><path d="M10 20.5a2.2 2.2 0 0 0 4 0" /></>),
@@ -92,6 +92,7 @@ export default function NotificationPageView(p: PageViewProps) {
       {row(icons.news, t("銘柄のニュース", "Stock news"), t(`監視${monitored.length}銘柄のうち、選んだ銘柄だけ`, `Only the stocks you pick of the ${monitored.length} monitored`), prefs.news, v => p.onPrefs({ news: v }),
         <button type="button" className={styles.link} onClick={() => setSheet("news")}>{t(`銘柄を選ぶ（${news.length}銘柄を選択中） ›`, `Pick stocks (${news.length} selected) ›`)}</button>)}
       {row(icons.notebook, t("銘柄手帳のまとめ", "Stock Notebook recap"), t("日曜の夜に、今週の動きをお知らせ", "Sunday night: this week’s moves"), prefs.weeklyNotebook, v => p.onPrefs({ weeklyNotebook: v }))}
+      {row(icons.bell, t("ひとりごと", "RIZEL’s Notes"), t("リゼルが新しく書いたときに、お知らせ(本文は通知に出ません)", "When Rizel posts a new note (the text is never in the notice)"), prefs.rizelNote ?? false, v => p.onPrefs({ rizelNote: v }))}
     </ul>
     {p.prefsMessage && <p className={styles.note} role="status">{p.prefsMessage}</p>}
     {p.prefsState === "unsupported" && <p className={styles.note} role="status">{t("届く内容の保存は、現在準備中です。", "Saving what you receive is not available yet.")}</p>}

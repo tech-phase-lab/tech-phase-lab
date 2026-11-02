@@ -5,6 +5,7 @@ import os
 import sys
 import tempfile
 import threading
+import secrets
 import unittest
 from unittest.mock import patch
 from urllib.error import HTTPError
@@ -83,13 +84,73 @@ class QuestionTests(unittest.TestCase):
         questions.review(self.db, {"id": posted["id"], "decision": "pending"})
         self.assertEqual(len(questions.board_queue(self.db, OWNER_B)["items"]), 1)
 
-    def test_board_daily_limit_allows_idempotent_retry(self):
+    def test_board_daily_limit_is_two_by_default_allows_idempotent_retry_and_resets_at_midnight_in_japan(self):
+        self.assertEqual(questions.settings()["dailyLimit"], 2)
         payload = {"ownerKey": OWNER_A, "body": "投稿回数制限を検証するための質問です。", "audience": "pro-board"}
-        for i in range(10):
-            questions.submit(self.db, {**payload, "requestId": "q-" + format(i, "032x")})
-        questions.submit(self.db, {**payload, "requestId": "q-" + format(0, "032x")})
+        for i in range(2):
+            questions.submit(self.db, {**payload, "requestId": "q-" + format(i, "032x"), "body": f"{i}番目の、投稿回数を確かめる質問です。"})
+        questions.submit(self.db, {**payload, "requestId": "q-" + format(0, "032x"), "body": "0番目の、投稿回数を確かめる質問です。"})
         with self.assertRaisesRegex(ValueError, "question-daily-limit"):
-            questions.submit(self.db, payload)
+            questions.submit(self.db, {**payload, "body": "3件目は書けないはずの質問です。"})
+        self.assertEqual(questions.board_queue(self.db, OWNER_A)["left"], 0)
+        self.assertEqual(questions.board_queue(self.db, OWNER_B)["left"], 2, "the limit is per member")
+        # The day changes at 0:00 Japan time (15:00 UTC), not at 0:00 UTC.
+        from datetime import datetime, timezone
+        evening = datetime(2026, 11, 2, 14, 59, tzinfo=timezone.utc)
+        self.assertEqual(questions.day_start(evening), "2026-11-01T15:00:00.000+00:00")
+        after = datetime(2026, 11, 2, 15, 1, tzinfo=timezone.utc)
+        self.assertEqual(questions.day_start(after), "2026-11-02T15:00:00.000+00:00")
+        with patch.object(questions, "day_start", lambda now=None: "9999-01-01T00:00:00.000+00:00"):
+            self.assertEqual(questions.board_queue(self.db, OWNER_A)["left"], 2, "a new day gives the posts back")
+            questions.submit(self.db, {**payload, "body": "次の日になれば、また書ける質問です。"})
+
+    def test_urls_ng_words_and_repeated_posts_are_held_for_the_owner_only(self):
+        post = lambda owner, body: questions.submit(self.db, {"ownerKey": owner, "body": body, "audience": "pro-board", "requestId": "q-" + secrets.token_hex(16)})["item"]
+        cases = [("今すぐ儲かる方法はこちら http://xxxx.example", "URLを含む"), ("詳しくは www.example.com を見て", "URLを含む"),
+                 ("ドル箱の銘柄を教えてください。", "NGワード「ドル箱」を含む"), ("ゼウスという人の話を聞きたいです。", "NGワード「ゼウス」を含む"),
+                 ("これは詐欺ではないのでしょうか。", "NGワード「詐欺」を含む"), ("情報商材を買うべきか迷っています。", "NGワード「情報商材」を含む")]
+        for index, (body, reason) in enumerate(cases):
+            owner = format(index + 10, "064x")
+            item = post(owner, body)
+            self.assertNotIn("held", item, "the author is not told")
+            self.assertEqual([row["id"] for row in questions.board_queue(self.db, owner)["items"]], [item["id"]], "the author still sees it as an ordinary post")
+            self.assertNotIn(item["id"], [row["id"] for row in questions.board_queue(self.db, OWNER_B)["items"]], "other members never see it")
+            seen = {row["id"]: row for row in questions.board_queue(self.db, OWNER_B, owner_view=True)["items"]}
+            self.assertEqual((seen[item["id"]]["held"], seen[item["id"]]["heldReason"]), (True, reason))
+        # An ordinary post is not held.
+        fine = post(OWNER_A, "半導体は、いまから入っても遅いですか？")
+        self.assertIn(fine["id"], [row["id"] for row in questions.board_queue(self.db, OWNER_B)["items"]])
+        # The same text again by the same member is held; another member's identical text is not.
+        again = post(OWNER_A, "半導体は、いまから入っても遅いですか？")
+        self.assertNotIn(again["id"], [row["id"] for row in questions.board_queue(self.db, OWNER_B)["items"]])
+        held = [row for row in questions.board_queue(self.db, OWNER_B, owner_view=True)["items"] if row["id"] == again["id"]][0]
+        self.assertEqual(held["heldReason"], "同じ内容の連投")
+        other = post(format(99, "064x"), "半導体は、いまから入っても遅いですか？")
+        self.assertIn(other["id"], [row["id"] for row in questions.board_queue(self.db, OWNER_B)["items"]])
+        # "表示する": the owner releases a held post and everyone sees it.
+        questions.review(self.db, {"id": again["id"], "decision": "release"})
+        self.assertIn(again["id"], [row["id"] for row in questions.board_queue(self.db, OWNER_B)["items"]])
+
+    def test_only_the_author_can_delete_their_post_and_the_count_is_not_given_back(self):
+        payload = {"ownerKey": OWNER_A, "audience": "pro-board"}
+        first = questions.submit(self.db, {**payload, "body": "消してもその日の件数は戻らない質問です。"})["item"]
+        with self.assertRaisesRegex(ValueError, "question-not-found"):
+            questions.submit(self.db, {"ownerKey": OWNER_B, "action": "delete", "id": first["id"]})
+        self.assertIn(first["id"], [row["id"] for row in questions.board_queue(self.db, OWNER_B)["items"]])
+        result = questions.submit(self.db, {"ownerKey": OWNER_A, "action": "delete", "id": first["id"]})
+        self.assertEqual(result["left"], 1)
+        self.assertEqual(questions.board_queue(self.db, OWNER_B)["items"], [])
+        second = questions.submit(self.db, {**payload, "body": "二つ目の質問です。これも消します。"})["item"]
+        questions.submit(self.db, {"ownerKey": OWNER_A, "action": "delete", "id": second["id"]})
+        self.assertEqual(questions.board_queue(self.db, OWNER_A)["left"], 0, "deleting and rewriting cannot be used to post more")
+        with self.assertRaisesRegex(ValueError, "question-daily-limit"):
+            questions.submit(self.db, {**payload, "body": "三つ目は消した分も数えるので書けません。"})
+        # The owner can delete any post, and the answer goes with it.
+        third = questions.submit(self.db, {"ownerKey": OWNER_B, "audience": "pro-board", "body": "運営者が消す質問と、その回答です。"})["item"]
+        questions.answer(self.db, {"id": third["id"], "body": "回答です。"})
+        questions.review(self.db, {"id": third["id"], "decision": "delete"})
+        self.assertEqual(questions.board_queue(self.db, OWNER_A, owner_view=True)["items"], [])
+        self.assertEqual(self.db.execute("SELECT status FROM editorial_posts WHERE id=?", ("qa-" + third["id"][2:],)).fetchone()[0], "withdrawn")
 
     def test_submit_is_private_owned_and_idempotent(self):
         payload = {"ownerKey": OWNER_A, "requestId": QUESTION_ID, "body": "  決算で最初に見る数字は何ですか？  "}

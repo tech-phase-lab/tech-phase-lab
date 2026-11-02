@@ -1046,9 +1046,17 @@ class AutomaticMonitor:
                         items = [*items, *({**item, "kind": "news"} for item in news_drafts.public_feed(news_db, limit=10)["items"])]
                 except Exception:
                     print("web-push-news-unavailable", flush=True)
+                try:
+                    # A new "ひとりごと" is announced to the PR members who turned it on (owner, Nov 2).
+                    with self.db_lock, editorial_posts.connect(self.db_path) as notes_db:
+                        notes = [post for post in editorial_posts.queue(notes_db, 20, True, 0, None)["items"] if post.get("kind") == "notes"]
+                except Exception:
+                    notes = []
+                    print("web-push-notes-unavailable", flush=True)
                 with web_push.connect(self.db_path) as db:
                     result = web_push.deliver(db, items)
                     web_push.deliver_weekly(db)
+                    web_push.deliver_notes(db, notes)
                 with self.state_lock:
                     previous = self.state["webPush"]
                     self.state["webPush"] = {
@@ -1336,9 +1344,9 @@ class AutomaticMonitor:
         with questions.connect(self.db_path) as db:
             return questions.submit(db, payload)
 
-    def member_questions(self, owner_key, limit=20, board=False, page=1):
+    def member_questions(self, owner_key, limit=20, board=False, page=1, owner_view=False):
         with questions.connect(self.db_path) as db:
-            return questions.board_queue(db, owner_key, 10, page) if board else questions.member_queue(db, owner_key, limit)
+            return questions.board_queue(db, owner_key, 10, page, owner_view) if board else questions.member_queue(db, owner_key, limit)
 
     def question_queue(self, view="pending", limit=50):
         # Ensure the answer-candidate table exists even on a fresh database.
@@ -3261,7 +3269,7 @@ class Handler(BaseHTTPRequestHandler):
             try:
                 owner_key = self.headers.get("X-Question-Owner", "")
                 limit = int(parse_qs(parsed.query).get("limit", ["20"])[0])
-                self.send_json(200, {"ok": True, **self.app.member_questions(owner_key, limit, self.headers.get("X-Question-Audience") == "pro-board", int(parse_qs(parsed.query).get("page", ["1"])[0]))})
+                self.send_json(200, {"ok": True, **self.app.member_questions(owner_key, limit, self.headers.get("X-Question-Audience") == "pro-board", int(parse_qs(parsed.query).get("page", ["1"])[0]), self.headers.get("X-Question-Owner-View") == "1")})
             except (TypeError, ValueError) as exc:
                 self.send_json(400, {"ok": False, "error": str(exc)})
             except Exception:

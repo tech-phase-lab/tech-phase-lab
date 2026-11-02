@@ -80,3 +80,12 @@
 
 .toolSidebar{display:none}
 @media(min-width:1100px){.withSidebar{display:grid;grid-template-columns:256px minmax(0,1fr);max-width:1920px;margin:auto}.withSidebar>.main{margin-block:0;width:100%;min-width:0;box-sizing:border-box}.toolSidebar{display:block;position:sticky;top:84px;height:calc(100dvh - 84px);overflow-y:auto;overscroll-behavior:contain;scrollbar-width:thin;box-sizing:border-box;padding:24px 14px;border-right:1px solid var(--line);background:#0b1118}}
+
+/* RIZEL'S DESK header, Nov 2 design: signature line, serif title, small tagline, gold-underlined tabs. */
+.deskSignature{border-bottom:0;padding:0 0 16px;font-size:12px;letter-spacing:.3em;background:linear-gradient(90deg,#c8aa70,#c8aa7000) bottom/100% 1px no-repeat}
+.deskSignature>span{color:#e0c98f}.deskSignature small{font-size:11px;letter-spacing:.24em;color:#9a8c6a}
+.desk h1{margin:26px 0 8px;font-family:"Hiragino Mincho ProN","Yu Mincho","Noto Serif JP",serif;font-size:clamp(30px,8.4vw,42px);font-weight:400;line-height:1.35;letter-spacing:.06em}
+.desk .description{margin:0;font-size:15px;color:#8e98a3}
+.deskNav{margin:26px 0 24px;gap:0;border-bottom:1px solid #2a2f38}
+.deskNav a{padding:14px 4px;font-size:16px;border-bottom:2px solid transparent;margin-bottom:-1px}
+.deskNav a[aria-current=page]{color:#e7c982;border-color:#d8b36a;background:none}

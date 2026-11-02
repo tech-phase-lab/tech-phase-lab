@@ -77,7 +77,7 @@ export default function AudioRecorder({ disabled, onFile, onBusyChange, onMessag
     }
   }
   return <div className={styles.recorder}>
-    <button className={styles.audioRecordEntry} type="button" disabled={disabled || state !== "idle"} onClick={() => void start()}>ここで録音</button>
+    <button className={`${styles.attachTile} ${styles.audioRecordEntry}`} type="button" disabled={disabled || state !== "idle"} onClick={() => void start()}><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3" /><path d="M5.500 11a6.500 6.500 0 0 0 13 0M12 17.500V21" /></svg><span>ここで録音</span></button>
     {state !== "idle" && <div className={styles.recorderControls}>
       <span className={styles.recording} role="status">{state === "requesting" ? "マイクの許可待ち…" : `${state === "paused" ? "一時停止中" : "● 録音中"} ${Math.floor(seconds / 60)}:${String(seconds % 60).padStart(2, "0")}`}</span>
       {(state === "recording" || state === "paused") && <><button type="button" onClick={togglePause}>{state === "paused" ? "録音を再開" : "一時停止"}</button><button type="button" onClick={() => { const recorder = session.current?.recorder; if (recorder && recorder.state !== "inactive") recorder.stop(); }}>停止して試聴</button></>}

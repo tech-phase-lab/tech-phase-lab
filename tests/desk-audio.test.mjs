@@ -58,16 +58,16 @@ test('R2 upload binds type/size, verifies the immutable source before promotion,
  }finally{S3Client.prototype.send=send;for(const k of keys)if(original[k]===undefined)delete process.env[k];else process.env[k]=original[k];}
 });
 const memberImport='import { getMembership } from "@/lib/membership/server";';
-const audioImport='import { deskAudioFile, validAudioUpload, maxDeskAudioBytes } from "@/lib/research/desk-audio";';
+const audioImport='import { deskAudioFile, deskImageFile, validAudioUpload, validImageUpload, maxDeskAudioBytes } from "@/lib/research/desk-audio";';
 const api=await load('../app/api/research/desk-media/route.ts',{
  [memberImport]:'const getMembership=async()=>globalThis.__audio.member;',
- [audioImport]:`import { deskAudioFile, validAudioUpload, maxDeskAudioBytes } from ${JSON.stringify(new URL('../lib/research/desk-audio.ts',import.meta.url).href)};`,
- 'import { audioStorage, beginAudioUpload, finishAudioUpload } from "@/lib/research/desk-audio-storage";':'const audioStorage=()=>globalThis.__audio.config(); const beginAudioUpload=async size=>{globalThis.__audio.calls++;return {file:"test.mp3",uploadUrl:"https://r2.test/upload"}};const finishAudioUpload=async file=>{globalThis.__audio.calls++;return "/api/research/desk-media/"+file};'
+ [audioImport]:`import { deskAudioFile, deskImageFile, validAudioUpload, validImageUpload, maxDeskAudioBytes } from ${JSON.stringify(new URL('../lib/research/desk-audio.ts',import.meta.url).href)};`,
+ 'import { audioStorage, beginAudioUpload, finishAudioUpload, beginImageUpload, finishImageUpload } from "@/lib/research/desk-audio-storage";':'const beginImageUpload=async()=>({file:"test.jpg",uploadUrl:"https://r2.test/photo",contentType:"image/jpeg"});const finishImageUpload=async file=>"/api/research/desk-media/"+file;const audioStorage=()=>globalThis.__audio.config(); const beginAudioUpload=async size=>{globalThis.__audio.calls++;return {file:"test.mp3",uploadUrl:"https://r2.test/upload"}};const finishAudioUpload=async file=>{globalThis.__audio.calls++;return "/api/research/desk-media/"+file};'
 });
 const playback=await load('../app/api/research/desk-media/[file]/route.ts',{
  [memberImport]:'const getMembership=async()=>globalThis.__audio.member;',
- 'import { audioPlaybackUrl } from "@/lib/research/desk-audio-storage";':'const audioPlaybackUrl=async(file,deadline)=>{globalThis.__audio.calls++;return "https://r2.test/audio?expires="+deadline;};',
- 'import { deskAudioFile } from "@/lib/research/desk-audio";':`import { deskAudioFile } from ${JSON.stringify(new URL('../lib/research/desk-audio.ts',import.meta.url).href)};`,
+ 'import { audioPlaybackUrl, imagePlaybackUrl } from "@/lib/research/desk-audio-storage";':'const imagePlaybackUrl=async(file,deadline)=>"https://r2.test/photo?expires="+deadline;const audioPlaybackUrl=async(file,deadline)=>{globalThis.__audio.calls++;return "https://r2.test/audio?expires="+deadline;};',
+ 'import { deskAudioFile, deskImageFile } from "@/lib/research/desk-audio";':`import { deskAudioFile, deskImageFile } from ${JSON.stringify(new URL('../lib/research/desk-audio.ts',import.meta.url).href)};`,
  'import { GET as getPosts } from "../../posts/route";':'const getPosts=async()=>{if(globalThis.__audio.expire)globalThis.__audio.member.accessExpiresAt=0;return Response.json(globalThis.__audio.posts)};'
 });
 test('upload endpoints reject cross-origin, non-owner, MP4, oversized bodies and missing setup',async()=>{

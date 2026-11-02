@@ -1,0 +1,5 @@
+{
+  "_note": "Settings for 'リゼルに聞く' (owner, Nov 2). dailyLimit: posts per member per day (the day changes at 0:00 Japan time). holdWords: a post containing any of these is held for the owner and not shown to other members. Edit and redeploy to change.",
+  "dailyLimit": 2,
+  "holdWords": ["ドル箱", "ゼウス", "詐欺", "情報商材"]
+}
