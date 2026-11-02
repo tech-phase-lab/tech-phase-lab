@@ -36,5 +36,5 @@ test("the screen has the past-issues list, one closed source fold, and an off-by
 });
 test("the weekly-draft notice setting is the owner's alone", () => {
   assert.match(read("app/research/notification-page-view.tsx"), /p\.owner && row\(/);
-  assert.match(read("app/api/research/notifications/route.ts"), /weeklyDraft\?: unknown\)\.weeklyDraft === true && !member\.isAdmin/);
+  assert.match(read("app/api/research/notifications/route.ts"), /weeklyDraft === true \&\& !member\.isAdmin/);
 });
