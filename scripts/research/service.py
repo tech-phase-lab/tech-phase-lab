@@ -3045,6 +3045,26 @@ class Handler(BaseHTTPRequestHandler):
             print(f"voice-inbox-error {type(error).__name__}", flush=True)
             self.send_text(500, "受信箱でエラーが起きました。")
 
+    def inbox_two_step(self, path):
+        """The shortcut's two small requests around the file itself, which goes straight to the private bucket."""
+        try:
+            length = int(self.headers.get("Content-Length", "0"))
+        except ValueError:
+            length = 0
+        if 0 < length <= 65536:
+            self.rfile.read(length)  # the shortcut may send an empty form; it is not used
+        sender = self.headers.get("X-Forwarded-For", "").split(",")[-1].strip() or self.client_address[0]
+        try:
+            with voice_inbox.connect(self.app.db_path) as db:
+                if path == "/inbox/start":
+                    status, message = voice_inbox.start(db, self.headers.get("Authorization", ""), sender)
+                else:
+                    status, message, _ = voice_inbox.finish(db, self.headers.get("Authorization", ""), sender)
+            self.send_text(status, message)
+        except Exception as error:
+            print(f"voice-inbox-error {type(error).__name__}", flush=True)
+            self.send_text(500, "受信箱でエラーが起きました。")
+
     def authorized(self):
         # A dedicated news reader must never inherit legacy token-free access.
         reader = os.environ.get("RESOLUTE_NEWS_READ_TOKEN", "")
@@ -3412,6 +3432,9 @@ class Handler(BaseHTTPRequestHandler):
         path = urlsplit(self.path).path
         if path == "/inbox/upload":
             self.inbox_upload()
+            return
+        if path in {"/inbox/start", "/inbox/finish"}:
+            self.inbox_two_step(path)
             return
         if path in {"/admin/weekly/draft", "/admin/weekly/publish", "/admin/weekly/delete", "/admin/weekly/settings"}:
             if not self.editor_authorized():

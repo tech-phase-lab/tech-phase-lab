@@ -200,5 +200,115 @@ class InboxTests(unittest.TestCase):
             server.shutdown(); server.server_close(); thread.join(timeout=2)
 
 
+class FakeBucket:
+    """The private bucket as the shortcut and the service see it: the phone puts bytes in, the service reads a slice."""
+    def __init__(self):
+        self.objects, self.deleted = {}, []
+
+    def size(self, key):
+        return len(self.objects[key]) if key in self.objects else None
+
+    def read(self, key, offset, count):
+        return self.objects[key][offset:offset + count]
+
+    def delete(self, key):
+        self.objects.pop(key, None); self.deleted.append(key)
+
+
+class TwoStepTests(unittest.TestCase):
+    """The platform's front door refuses request bodies over 64 KB, so the file goes to the bucket directly."""
+    def setUp(self):
+        self.temp = tempfile.TemporaryDirectory()
+        self.db = inbox.connect(Path(self.temp.name) / "i.sqlite")
+        self.key = inbox.issue_key(self.db)["key"]
+        self.auth = "Bearer " + self.key
+        self.bucket = FakeBucket()
+        inbox.LIMITER.__init__()
+        self.addCleanup(self.temp.cleanup)
+        self.addCleanup(self.db.close)
+        self.signed = []
+        self.sign = lambda method, key, expires, now=None, extra=None: self.signed.append((method, key)) or f"https://bucket.example/{key}?sig=1"
+
+    def begin(self, auth=None, sender="1.1.1.1", now=1000.0):
+        return inbox.start(self.db, self.auth if auth is None else auth, sender, now=now, bucket=self.bucket, url=self.sign)
+
+    def put_and_finish(self, content, sender="1.1.1.1", now=1010.0):
+        status, address = self.begin(now=now - 5)
+        self.assertEqual(status, 200)
+        key = address.split("/", 3)[3].split("?")[0]
+        self.bucket.objects[key] = content
+        return inbox.finish(self.db, self.auth, sender, now=now, bucket=self.bucket)
+
+    def test_start_gives_only_the_address_and_refuses_a_wrong_key(self):
+        status, address = self.begin()
+        self.assertEqual(status, 200)
+        self.assertTrue(address.startswith("https://bucket.example/inbox/") and address.count("\n") == 0, "plain address only")
+        self.assertEqual(self.signed[0][0], "PUT")
+        status, message = self.begin(auth="Bearer tpinbox_" + "z" * 43)
+        self.assertEqual((status, message), (401, "鍵が合いません。"))
+
+    def test_a_real_memo_becomes_a_new_inbox_item_with_a_time_title(self):
+        status, message, item_id = self.put_and_finish(mp4(seconds=42))
+        self.assertEqual((status, message), (200, "受信箱に届きました。"))
+        row = inbox.items(self.db)["items"][0]
+        self.assertEqual((row["id"], row["seconds"], row["isNew"]), (item_id, 42, True))
+        self.assertRegex(row["title"], r"^\d+月\d+日 \d+:\d\d の録音$")
+        self.assertEqual(self.db.execute("SELECT COUNT(*) FROM inbox_pending").fetchone()[0], 0)
+
+    def test_something_that_is_not_audio_is_removed_and_never_reaches_the_inbox(self):
+        status, message, _ = self.put_and_finish(b"hello world" * 100)
+        self.assertEqual((status, message), (400, "音声ファイルではありません。"))
+        self.assertEqual(inbox.items(self.db)["items"], [])
+        self.assertEqual(len(self.bucket.deleted), 1)
+        self.assertEqual(self.bucket.objects, {})
+
+    def test_too_big_is_refused_and_removed(self):
+        big = mp4(pad=1_200_000)
+        with patch.object(inbox, "settings", return_value={**inbox.settings(), "maxBytes": 1_000_000}):
+            status, message, _ = self.put_and_finish(big)
+        self.assertEqual(status, 413)
+        self.assertEqual(inbox.items(self.db)["items"], [])
+        self.assertEqual(self.bucket.objects, {})
+
+    def test_finishing_before_the_file_arrived_or_without_starting_says_so(self):
+        self.assertEqual(inbox.finish(self.db, self.auth, "1.1.1.1", now=1000.0, bucket=self.bucket)[0], 400)
+        self.begin()
+        status, message, _ = inbox.finish(self.db, self.auth, "1.1.1.1", now=1001.0, bucket=self.bucket)
+        self.assertEqual((status, message), (400, "音声がまだ届いていません。送信が終わってからもう一度。"))
+
+    def test_finish_needs_the_key_too_and_one_send_counts_once(self):
+        self.begin()
+        self.assertEqual(inbox.finish(self.db, "Bearer wrong", "1.1.1.1", now=1001.0, bucket=self.bucket)[0], 401)
+        for number in range(5):  # a minute allows several sends: start counts, finish does not
+            self.assertEqual(self.begin(now=2000.0 + number)[0], 200, number)
+
+    def test_an_upload_never_finished_is_cleaned_up_later(self):
+        _, address = self.begin(now=1000.0)
+        key = address.split("/", 3)[3].split("?")[0]
+        self.bucket.objects[key] = b"x" * 600
+        self.begin(now=1000.0 + inbox.PENDING_SECONDS + 5)
+        self.assertEqual(self.bucket.deleted, [key])
+
+    def test_the_bucket_slice_reader_signs_only_what_it_needs(self):
+        calls = []
+        def fake_urlopen(request, timeout=0):
+            calls.append((request.get_method(), request.headers))
+            class Response:
+                status = 206
+                headers = {"Content-Length": "5"}
+                def __enter__(self): return self
+                def __exit__(self, *args): return False
+                def read(self): return b"hello"
+            return Response()
+        env = {"DESK_MEDIA_R2_ACCOUNT_ID": "a" * 32, "DESK_MEDIA_R2_BUCKET": "bucket-x", "DESK_MEDIA_R2_ACCESS_KEY_ID": "id", "DESK_MEDIA_R2_SECRET_ACCESS_KEY": "secret"}
+        with patch.dict(os.environ, env):
+            body = inbox.Bucket()._call("GET", "inbox/a.audio", {"Range": "bytes=0-4"}, urlopen=fake_urlopen)[2]
+            url = inbox.signed_url("PUT", "inbox/a.audio", 1800)
+            played = inbox.file_url("inbox/a.audio", content_type="audio/mp4")
+        self.assertEqual(body, b"hello")
+        self.assertIn("X-Amz-SignedHeaders=host", url)
+        self.assertIn("response-content-type=audio%2Fmp4", played)
+
+
 if __name__ == "__main__":
     unittest.main()

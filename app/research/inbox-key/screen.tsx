@@ -5,7 +5,7 @@ import ResearchToolShell from "../research-tool-shell";
 import { useResearchLanguage } from "../use-research-language";
 import styles from "./inbox-key.module.css";
 
-type Status = { exists: boolean; createdAt: string | null; uploadUrl: string };
+type Status = { exists: boolean; createdAt: string | null; startUrl: string; finishUrl: string };
 const when = (iso: string) => new Intl.DateTimeFormat("ja-JP", { dateStyle: "medium", timeStyle: "short", hourCycle: "h23", timeZone: "Asia/Tokyo" }).format(new Date(iso));
 
 /** Make the inbox key: it is shown once, here, and never again. A new key replaces the old one at once. */
@@ -17,7 +17,7 @@ export default function InboxKeyScreen() {
     const controller = new AbortController();
     fetch("/api/research/desk-inbox/key", { cache: "no-store", signal: controller.signal }).then(async response => {
       const data = await response.json(); if (!response.ok || !data.ok) throw Error();
-      setStatus({ exists: data.exists, createdAt: data.createdAt, uploadUrl: data.uploadUrl }); setState("ready");
+      setStatus({ exists: data.exists, createdAt: data.createdAt, startUrl: data.startUrl, finishUrl: data.finishUrl }); setState("ready");
     }).catch(() => { if (!controller.signal.aborted) setState("error"); });
     return () => controller.abort();
   }, []);
@@ -28,7 +28,7 @@ export default function InboxKeyScreen() {
     try {
       const response = await fetch("/api/research/desk-inbox/key", { method: "POST", signal: AbortSignal.timeout(15_000) });
       const data = await response.json(); if (!response.ok || !data.ok) throw Error();
-      setKey(data.key); setStatus({ exists: true, createdAt: data.createdAt, uploadUrl: data.uploadUrl });
+      setKey(data.key); setStatus({ exists: true, createdAt: data.createdAt, startUrl: data.startUrl, finishUrl: data.finishUrl });
     } catch { setMessage("鍵を作れませんでした。時間をおいて、もう一度お試しください。"); }
     finally { setBusy(false); }
   }
@@ -48,16 +48,21 @@ export default function InboxKeyScreen() {
           <code>{key}</code>
           <button type="button" onClick={() => void copy("key", key)}>{copied === "key" ? "コピーしました" : "鍵をコピー"}</button>
         </div>}
-        <h2>送り先(ショートカットの「URL」)</h2>
-        <code>{status.uploadUrl}</code>
-        <button type="button" className={styles.plain} onClick={() => void copy("url", status.uploadUrl)}>{copied === "url" ? "コピーしました" : "送り先をコピー"}</button>
+        <h2>送り先(ショートカットの「URL」は2つ)</h2>
+        <p className={styles.note}>音声ファイルは大きいので、サイトを通さず保存先へ直接送ります。そのため、送り先が2つあります。</p>
+        <p className={styles.note}>① 送る準備(保存先の住所をもらう)</p>
+        <code>{status.startUrl}</code>
+        <button type="button" className={styles.plain} onClick={() => void copy("start", status.startUrl)}>{copied === "start" ? "コピーしました" : "①をコピー"}</button>
+        <p className={styles.note}>② 送り終わった知らせ(受信箱に入れる)</p>
+        <code>{status.finishUrl}</code>
+        <button type="button" className={styles.plain} onClick={() => void copy("finish", status.finishUrl)}>{copied === "finish" ? "コピーしました" : "②をコピー"}</button>
         <h2>ショートカットの作り方</h2>
         <ol>
           <li>共有シートで受け取る(ボイスメモの「共有」から)。</li>
-          <li>「URLの内容を取得」を足し、URLに上の送り先を入れる。</li>
-          <li>方法は「POST」、本文は「フォーム」にして、項目名「file」に共有された音声を入れる。</li>
-          <li>ヘッダーに <b>Authorization</b> を足し、値は <b>Bearer</b> と半角スペースのあとに鍵を続けて入れる。</li>
-          <li>最後に「通知を表示」を足し、取得した内容をそのまま出す(「受信箱に届きました。」などの返事が出ます)。</li>
+          <li>「URLの内容を取得」を足し、URLに①を入れる。方法は「POST」、ヘッダーに <b>Authorization</b> を足し、値は <b>Bearer</b> と半角スペースのあとに鍵を続ける。</li>
+          <li>もう1つ「URLの内容を取得」を足し、URLには、1つ前の「URLの内容」(保存先の住所)を入れる。方法は「PUT」、本文は「ファイル」にして、「ショートカットの入力」を入れる。</li>
+          <li>3つ目の「URLの内容を取得」を足し、URLに②を入れる。方法は「POST」、ヘッダーは1つ目と同じ。</li>
+          <li>最後に「通知を表示」を足し、3つ目の「URLの内容」を出す(「受信箱に届きました。」などの返事が出ます)。</li>
         </ol>
         <p className={styles.note}>作り直すと、古い鍵はすぐ使えなくなります。鍵そのものはサーバーに残さず、ハッシュだけを保存します。あとから見ることはできません。</p>
       </>}
