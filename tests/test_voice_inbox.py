@@ -95,7 +95,8 @@ class InboxTests(unittest.TestCase):
     def test_the_length_of_the_memo_is_read_and_a_title_comes_from_the_file_name_or_the_time(self):
         self.send("朝のメモ.m4a", mp4(seconds=42))
         self.send("", mp4(seconds=5))
-        rows = inbox.items(self.db)["items"]
+        # Two sends in the same instant tie on the time, so find each by its length rather than by position.
+        rows = sorted(inbox.items(self.db)["items"], key=lambda item: item["seconds"])
         self.assertEqual(rows[1]["title"], "朝のメモ")
         self.assertEqual(rows[1]["seconds"], 42)
         self.assertRegex(rows[0]["title"], r"^\d+月\d+日 \d+:\d\d の録音$")

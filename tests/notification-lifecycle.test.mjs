@@ -22,6 +22,7 @@ function harness(fetch, subscription=null) {
   if(id==='next/link')return {default:({children,...props})=>React.createElement('a',props,children)};
   if(id==='@/lib/research/member-recovery')return {waitForIdentity};
   if(id==='./notification-page-view')return {default:()=>null};
+  if(id==='./member-display-provider')return {useOwnerMode:()=>false};
   if(id.endsWith('.css'))return {default:{}};
   return require(id);
  },target,target.exports,window,document,navigator,{permission:'granted'},fetch,(fn,delay)=>{const id=++next;tasks.set(id,{fn,delay});return id;},id=>tasks.delete(id));

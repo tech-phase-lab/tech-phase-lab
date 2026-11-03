@@ -80,6 +80,9 @@ def connect(path):
         db.execute("ALTER TABLE push_devices ADD COLUMN access_until REAL")
     if 'weekly_notebook' not in columns:
         db.execute("ALTER TABLE push_devices ADD COLUMN weekly_notebook INTEGER NOT NULL DEFAULT 1")
+    if 'weekly_draft' not in columns:
+        # "週刊の下書きができた" notices: off until turned on; only the owner's screen offers the switch (owner, Nov 2).
+        db.execute("ALTER TABLE push_devices ADD COLUMN weekly_draft INTEGER NOT NULL DEFAULT 0")
     if 'note_posts' not in columns:
         # "リゼルのひとりごと" notices are off until the member turns them on (owner, Nov 2).
         db.execute("ALTER TABLE push_devices ADD COLUMN note_posts INTEGER NOT NULL DEFAULT 0")
@@ -97,9 +100,9 @@ def monitored_news_tickers():
 
 def validate_preferences(value):
     if not isinstance(value, dict) or not value or set(value) - {
-            'targets', 'earnings', 'news', 'newsTickers', 'weeklyNotebook', 'rizelNote'}:
+            'targets', 'earnings', 'news', 'newsTickers', 'weeklyNotebook', 'rizelNote', 'weeklyDraft'}:
         raise ValueError('invalid-preferences')
-    for field in ('targets', 'earnings', 'news', 'weeklyNotebook', 'rizelNote'):
+    for field in ('targets', 'earnings', 'news', 'weeklyNotebook', 'rizelNote', 'weeklyDraft'):
         if field in value and type(value[field]) is not bool:
             raise ValueError('invalid-preferences')
     if 'newsTickers' in value:
@@ -126,7 +129,7 @@ def preference_view(db, device):
     prefs = stored_preferences(db, device['id'])
     return {**(prefs or {'targets': True, 'earnings': True, 'news': True,
                         'newsTickers': list(monitored_news_tickers())}),
-            'weeklyNotebook': bool(device['weekly_notebook']), 'rizelNote': bool(device['note_posts'])}
+            'weeklyNotebook': bool(device['weekly_notebook']), 'rizelNote': bool(device['note_posts']), 'weeklyDraft': bool(device['weekly_draft'])}
 
 
 def notification_allowed(db, device_id, category, tickers=()):
@@ -152,7 +155,7 @@ def write_preferences(db, device, patch):
       ON CONFLICT(device_id) DO UPDATE SET targets=excluded.targets,earnings=excluded.earnings,
       news=excluded.news,news_tickers=excluded.news_tickers''',
       (device['id'], int(prefs['targets']), int(prefs['earnings']), int(prefs['news']), json.dumps(prefs['newsTickers'])))
-    db.execute('UPDATE push_devices SET weekly_notebook=?, note_posts=? WHERE id=?', (int(prefs['weeklyNotebook']), int(prefs['rizelNote']), device['id']))
+    db.execute('UPDATE push_devices SET weekly_notebook=?, note_posts=?, weekly_draft=? WHERE id=?', (int(prefs['weeklyNotebook']), int(prefs['rizelNote']), int(prefs['weeklyDraft']), device['id']))
     return prefs
 
 
@@ -757,6 +760,66 @@ def deliver_notes(db, posts, transport=send, now=None, wall_now=time.time, entit
             payload = {'title': 'RIZEL\u2019S DESK' if not ja else 'リゼルのひとりごと',
                        'body': 'リゼルのひとりごとが更新されました' if ja else "RIZEL\u2019s Notes were updated",
                        'tag': key, 'url': '/research/notes'}
+            try:
+                code = transport(json.loads(device['subscription']), payload)
+            except Exception:
+                code = 0
+            status = 'accepted' if 200 <= code < 300 else 'expired' if code in (404, 410) else 'uncertain'
+            with db:
+                db.execute('UPDATE push_deliveries SET status=? WHERE device_id=? AND event_key=?', (status, device['id'], key))
+                if status == 'expired':
+                    db.execute('DELETE FROM push_devices WHERE id=?', (device['id'],))
+                    db.execute('DELETE FROM push_device_preferences WHERE device_id=?', (device['id'],))
+            attempted += 1
+            accepted += status == 'accepted'
+    return {'status': 'ready', 'attempted': attempted, 'accepted': accepted}
+
+
+WEEKLY_DRAFT_WINDOW_SECONDS = 3 * 3600
+
+
+def deliver_weekly_drafts(db, drafts, transport=send, now=None, wall_now=time.time, entitlement=member_expiry):
+    """Tell the devices that turned it on that a draft of 週刊 Tech Phase PRO is ready to read (owner, Nov 2).
+
+    The notice carries no text. A draft is announced once per device, only in the first hours after it was made."""
+    if not configuration()['enabled']:
+        return {'status': 'disabled', 'attempted': 0}
+    now = wall_now() if now is None else now
+    fresh = []
+    for draft in drafts:
+        try:
+            made = datetime.fromisoformat(str(draft['createdAt']).replace('Z', '+00:00')).timestamp()
+            draft_id = draft['id']
+        except (KeyError, TypeError, ValueError, AttributeError):
+            continue
+        if isinstance(draft_id, str) and 0 <= now - made < WEEKLY_DRAFT_WINDOW_SECONDS:
+            fresh.append(draft_id)
+    attempted = accepted = 0
+    for draft_id in fresh:
+        key = f'weekly-draft-{draft_id}'
+        for device in db.execute('SELECT * FROM push_devices WHERE active=1 AND owner_id IS NOT NULL AND weekly_draft=1').fetchall():
+            if db.execute('SELECT 1 FROM push_deliveries WHERE device_id=? AND event_key=?', (device['id'], key)).fetchone():
+                continue
+            try:
+                until = entitlement(device['owner_id'])
+            except Exception:
+                until = 0
+            attempted_at = wall_now()
+            if not isinstance(until, (int, float)) or isinstance(until, bool) or not math.isfinite(until) or until <= attempted_at:
+                continue
+            current = db.execute('SELECT active,owner_id,weekly_draft FROM push_devices WHERE id=?', (device['id'],)).fetchone()
+            if not current or not current['active'] or current['owner_id'] != device['owner_id'] or not current['weekly_draft']:
+                continue
+            with db:
+                claim = db.execute("""INSERT OR IGNORE INTO push_deliveries
+                    (device_id,event_key,status,attempted_at,observed_at) VALUES(?,?,?,?,?)""",
+                    (device['id'], key, 'uncertain', attempted_at, now)).rowcount
+            if not claim:
+                continue
+            ja = device['language'] == 'ja'
+            payload = {'title': '週刊 Tech Phase PRO' if ja else 'Tech Phase PRO Weekly',
+                       'body': '週刊の下書きができました' if ja else 'A draft of the weekly issue is ready',
+                       'tag': key, 'url': '/research/weekly'}
             try:
                 code = transport(json.loads(device['subscription']), payload)
             except Exception:
