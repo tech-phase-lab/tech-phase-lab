@@ -1,7 +1,10 @@
 .wrap{position:fixed;inset:0;z-index:1300;display:flex;align-items:flex-end;justify-content:center}
 .backdrop.backdrop{position:absolute;inset:0;border:0;background:rgba(2,4,8,.78)}
 .sheet{position:relative;box-sizing:border-box;width:100%;max-width:640px;max-height:90dvh;overflow:auto;padding:12px 20px calc(22px + env(safe-area-inset-bottom));border:1px solid #2a3140;border-bottom:0;border-radius:28px 28px 0 0;background:#0b0e14;color:#eef2f6}
-.grip{display:block;width:44px;height:5px;margin:0 auto 18px;border-radius:3px;background:#2a3140}
+.grip{display:block;width:44px;height:5px;margin:0 auto;border-radius:3px;background:#2a3140}
+/* The top bar is a handle: drag it down to close. A tall touch area around the thin line so a thumb can find it. */
+.handle{display:block;margin:-12px -20px 6px;padding:12px 0 18px;touch-action:none;cursor:grab;-webkit-user-select:none;user-select:none}
+.sheet{transition:transform .18s ease}.sheet.dragging{transition:none}
 .sheet h2{display:flex;align-items:baseline;gap:12px;margin:0 0 10px;font-size:24px;font-weight:700}
 .sheet h2 small{font-size:15px;font-weight:400;color:#8e98a3}
 .row{display:flex;align-items:center;gap:14px;padding:14px 0;border-bottom:1px solid #1d2230}

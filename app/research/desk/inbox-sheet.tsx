@@ -14,6 +14,22 @@ export default function InboxSheet({ onPick, onClose }: { onPick: (file: File) =
   const [items, setItems] = useState<Item[] | null>(null), [enabled, setEnabled] = useState(true), [error, setError] = useState(""), [busy, setBusy] = useState(""), [playing, setPlaying] = useState("");
   const [renaming, setRenaming] = useState(""), [draft, setDraft] = useState("");
   const player = useRef<HTMLAudioElement>(null);
+  const sheet = useRef<HTMLDivElement>(null);
+  const drag = useRef<{ y: number; at: number; dy: number } | null>(null);
+  // Dragging the top bar down closes the sheet: past 90px, or a quick flick; otherwise it springs back.
+  const move = (event: React.PointerEvent) => {
+    if (!drag.current || !sheet.current) return;
+    drag.current.dy = Math.max(0, event.clientY - drag.current.y);
+    sheet.current.style.transform = `translateY(${drag.current.dy}px)`;
+  };
+  const release = (event: React.PointerEvent) => {
+    const gesture = drag.current; drag.current = null;
+    if (!gesture || !sheet.current) return;
+    event.currentTarget.releasePointerCapture?.(event.pointerId);
+    sheet.current.classList.remove(styles.dragging);
+    const fast = gesture.dy > 30 && performance.now() - gesture.at < 250;
+    if (gesture.dy > 90 || fast) onClose(); else sheet.current.style.transform = "";
+  };
   useEffect(() => {
     const controller = new AbortController();
     fetch("/api/research/desk-inbox", { cache: "no-store", signal: AbortSignal.any([controller.signal, AbortSignal.timeout(10000)]) }).then(async response => {
@@ -51,8 +67,10 @@ export default function InboxSheet({ onPick, onClose }: { onPick: (file: File) =
   }
   return <div className={styles.wrap} role="dialog" aria-modal="true" aria-label="受信箱">
     <button type="button" className={styles.backdrop} aria-label="閉じる" onClick={onClose} />
-    <div className={styles.sheet}>
-      <i className={styles.grip} aria-hidden="true" />
+    <div className={styles.sheet} ref={sheet}>
+      <div className={styles.handle} aria-hidden="true"
+        onPointerDown={event => { drag.current = { y: event.clientY, at: performance.now(), dy: 0 }; event.currentTarget.setPointerCapture?.(event.pointerId); sheet.current?.classList.add(styles.dragging); }}
+        onPointerMove={move} onPointerUp={release} onPointerCancel={release}><i className={styles.grip} /></div>
       <h2>受信箱<small>スマホから送った音声</small></h2>
       {items === null && !error && <p className={styles.note} role="status">読み込んでいます…</p>}
       {items?.length === 0 && <p className={styles.note} role="status">{enabled ? "まだ届いている音声はありません。" : "スマホから送るには、先に「受信箱の鍵」を作ってください。"}</p>}

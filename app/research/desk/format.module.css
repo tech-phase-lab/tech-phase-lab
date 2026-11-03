@@ -54,8 +54,8 @@
 .attachHead button{min-height:40px;padding:0 4px;border:0;background:none;color:#8e98a3;font:500 16px inherit;font-family:inherit;cursor:pointer}
 .audioUpload{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:0 0 12px}
 .audioUpload>*{grid-column:1/-1}
-.audioUpload .attachTile{grid-column:auto;grid-row:auto;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;height:98px;min-width:0;padding:8px 2px;border:1px solid #2a3140;border-radius:18px;background:#0e121a;color:#d3dbe6;font-size:clamp(11px,3.2vw,15px);white-space:nowrap;cursor:pointer}
-.audioUpload .attachTile svg{width:28px;height:28px;fill:none;stroke:#d8b36a;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.audioUpload .attachTile{grid-column:auto;grid-row:auto;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;height:72px;min-width:0;padding:6px 2px;border:1px solid #2a3140;border-radius:18px;background:#0e121a;color:#d3dbe6;font-size:clamp(11px,3.2vw,15px);white-space:nowrap;cursor:pointer}
+.audioUpload .attachTile svg{width:24px;height:24px;fill:none;stroke:#d8b36a;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
 .audioUpload .attachTile:disabled{opacity:.45;cursor:default}
 .audioUpload .recorder{display:contents}
 .audioReview{display:grid;gap:10px;padding:0;border:0;background:none}
