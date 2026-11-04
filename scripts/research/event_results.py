@@ -61,6 +61,10 @@ def read_figure(title, spec):
     for sign, verbs in (("+", UP), ("-", DOWN)):
         for match in re.finditer(rf"\b{verbs}\b(?:\s+(?:by|about|nearly|roughly|only|just|an? )?)?\s*(?:[+\-−]?\s*)?{FIGURE}", title, re.I):
             found.append((match.start(), sign, match))
+    # The figure may come first: "86,000 jobs added".
+    for sign, verbs in (("+", UP), ("-", DOWN)):
+        for match in re.finditer(rf"{FIGURE}\s+(?:new\s+)?jobs?\s+(?:were\s+|was\s+)?\b{verbs}\b", title, re.I):
+            found.append((match.start(), sign, match))
     # An explicit sign right before the figure ("ADP: private payrolls +42K") counts too.
     for match in re.finditer(rf"(?<![\w,.])(?P<sign>[+\-−])\s?{FIGURE}", title):
         found.append((match.start(), "-" if match["sign"] in "-−" else "+", match))
@@ -72,6 +76,21 @@ def read_figure(title, spec):
         if 100 <= value <= 1_000_000:
             return int(f"{sign}{value}")
     return None
+
+
+def read_release(title, outlet, spec):
+    """The figure in the issuer's own release title (ADP: "Private-Sector Employment Increased by 86,000 Jobs in October"),
+    only when it comes from the issuer's own distributor. None otherwise."""
+    rule = spec.get("release")
+    if not rule or outlet not in rule["outlets"]:
+        return None
+    match = re.match(rule["pattern"], title or "")
+    if not match:
+        return None
+    value = int(match["num"].replace(",", ""))
+    if not 100 <= value <= 1_000_000:
+        return None
+    return value if match["dir"].lower().startswith("incr") else -value
 
 
 def load_config(path=CONFIG_PATH):
@@ -140,7 +159,8 @@ def fetch(url):
 
 
 def parse_feed(body):
-    """(title, https link, UTC time) for each item of an RSS or Atom body; malformed items are skipped."""
+    """(title, https link, UTC time, outlet) for each item of an RSS or Atom body; malformed items are skipped.
+    A news-search feed names the outlet of each item in <source>; for other feeds the outlet is "" (the feed's own name is used)."""
     rows = []
     root = ET.fromstring(body)
     for item in root.iter():
@@ -156,8 +176,11 @@ def parse_feed(body):
             moment = moment.astimezone(timezone.utc)
         except (TypeError, ValueError):
             continue
+        outlet = (child["source"].text or "").strip() if "source" in child and child["source"].text else ""
+        if outlet and title.endswith(" - " + outlet):
+            title = title[:-len(outlet) - 3].rstrip()
         if title and link.startswith("https://"):
-            rows.append((title, link, moment))
+            rows.append((title, link, moment, outlet))
     return rows
 
 
@@ -168,15 +191,19 @@ def ingest(db, config, publisher, rows, now, group="politics"):
         start, end = parse_time(watch["from"]), parse_time(watch["until"])
         if not start <= now <= end or watch.get("feedGroup", "politics") != group:
             continue
-        for title, url, moment in rows:
+        for title, url, moment, outlet in rows:
             if not start <= moment <= end:
                 continue
             if "numeric" in watch:
-                figure = read_figure(title, watch["numeric"])
+                spec = watch["numeric"]
+                official = read_release(title, outlet, spec)
+                figure = official if official is not None else read_figure(title, spec)
                 if figure is not None:
+                    # The issuer's own release is recorded under one fixed name, so it counts once and stands alone.
+                    name = spec["release"]["label"] if official is not None else (outlet or publisher)
                     with db:
                         cursor = db.execute("INSERT OR IGNORE INTO event_observations VALUES(?,?,?,?,?,?,?)",
-                                            (watch["id"], f"figure:{figure}", publisher, url, title[:300], stamp(moment), stamp(now)))
+                                            (watch["id"], f"figure:{figure}", name, url, title[:300], stamp(moment), stamp(now)))
                     saved += cursor.rowcount
                 continue
             for claim in watch["claims"]:
@@ -250,7 +277,8 @@ def _evaluate_figure(db, watch, need, now, existing):
     by_figure = {}
     for row in rows:
         by_figure.setdefault(row["claim_key"], []).append(row)
-    solid = {key: group for key, group in by_figure.items() if len({r["publisher"] for r in group}) >= need}
+    label = watch["numeric"].get("release", {}).get("label")
+    solid = {key: group for key, group in by_figure.items() if len({r["publisher"] for r in group}) >= need or (label and any(r["publisher"] == label for r in group))}
     if len(solid) > 1:
         _store(db, watch["id"], "conflict", {"watch": watch["id"], "figures": sorted(solid)}, now)
         return

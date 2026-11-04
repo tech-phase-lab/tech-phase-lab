@@ -205,6 +205,52 @@ class FigureTests(Base):
         self.assertTrue(MARKETS and len({f["publisher"] for f in MARKETS}) == len(MARKETS), "each outlet is one feed, so one outlet can never count twice")
         self.assertFalse({f["publisher"] for f in MARKETS} & {f["publisher"] for f in CONFIG["feeds"] if f["group"] == "politics"}, "no outlet name is shared between the groups")
 
+    def test_real_headlines_from_the_night_of_the_release_are_read_the_weekly_figure_and_the_vague_ones_are_not(self):
+        spec = ADP["numeric"]
+        for title, figure in [("Private companies added 86,000 jobs in October, slightly higher than expected, ADP says", 86000),
+                              ("ADP National Employment Report: Private-Sector Employment Increased by 86,000 Jobs in October", 86000),
+                              ("ADP October employment report: 86,000 jobs added", 86000), ("ADP: private employers lost 33,000 jobs in October", -33000)]:
+            self.assertEqual(ev.read_figure(title, spec), figure, title)
+        for title in ["ADP estimates private payrolls fell by 11,250 per week in 4 weeks ended Oct. 25", "Strong Private Payrolls for October", "US private payrolls rise in October, ADP says"]:
+            self.assertIsNone(ev.read_figure(title, spec), title)
+
+    def test_a_news_search_feed_names_each_outlet_and_the_issuers_own_release_stands_alone(self):
+        def search(*items):
+            rows = "".join(f"<item><title>{t} - {o}</title><link>https://{o.replace(' ', '').lower()}.example/{i}</link><pubDate>{at(14, i)}</pubDate><source url='https://x'>{o}</source></item>" for i, (t, o) in enumerate(items))
+            return f"<?xml version='1.0'?><rss><channel>{rows}</channel></rss>".encode()
+        search_urls = {feed["url"] for feed in CONFIG["feeds"] if feed["publisher"].startswith("Google News ADP")}
+
+        def run(*items):
+            def transport(url):
+                if url in search_urls:
+                    return search(*items)
+                raise OSError("unreachable")
+            return ev.run_once(self.path, ADP_OPEN, CONFIG, transport)
+        run(("Private companies added 86,000 jobs in October, ADP says", "CNBC"))
+        self.assertEqual(self.view()[0], [], "one outlet is not enough")
+        run(("Private companies added 86,000 jobs in October, ADP says", "CNBC"), ("ADP October employment report: 86,000 jobs added", "Stock Titan"))
+        row = self.view()[0][0]
+        self.assertEqual(row["resultJa"], "民間の雇用者数 +86,000人（2社が同じ数字を報道）")
+        self.assertEqual({s["publisher"] for s in row["sources"]}, {"CNBC", "Stock Titan"})
+
+    def test_the_issuers_release_from_its_distributor_counts_alone_but_the_same_words_from_anyone_else_do_not(self):
+        title = "ADP National Employment Report: Private-Sector Employment Increased by 86,000 Jobs in October"
+
+        def run(outlet):
+            urls = {feed["url"] for feed in CONFIG["feeds"] if feed["publisher"] == "Google News ADP 2"}
+
+            def transport(url):
+                if url in urls:
+                    return f"<?xml version='1.0'?><rss><channel><item><title>{title} - {outlet}</title><link>https://example.com/r</link><pubDate>{at(14, 0)}</pubDate><source url='https://x'>{outlet}</source></item></channel></rss>".encode()
+                raise OSError("unreachable")
+            return ev.run_once(self.path, ADP_OPEN, CONFIG, transport)
+        run("Some Blog")
+        self.assertEqual(self.view()[0], [], "a copy on a blog is one outlet")
+        run("PR Newswire")
+        row = self.view()[0][0]
+        self.assertTrue(row["resultJa"].startswith("民間の雇用者数 +86,000人"))
+        self.assertEqual(row["sources"][0]["publisher"], "ADP（公式発表）")
+
 
 class HttpTests(Base):
     def test_the_owner_lists_results_and_feeds_and_can_withdraw_through_the_editor_token(self):

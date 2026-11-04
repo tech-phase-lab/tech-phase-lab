@@ -85,6 +85,8 @@ test("PCE schedules and actuals preserve official periods, Eastern DST and price
   assert.match(result.result.ja, /前月比\+0\.3%・前年比\+3\.4%/);
   assert.match(result.detail.ja, /前月比\+0\.2%・前年比\+3\.0%/);
   assert.equal(new Set(economicResults.map(event => event.id)).size, economicResults.length);
+  const adpResult = economicResults.find(event => event.id === "adp-2026-10");
+  assert.ok(adpResult && /\+86,000人/.test(adpResult.result.ja) && adpResult.sourceUrl.startsWith("https://www.prnewswire.com/") && adpResult.verifiedOn === "2026-11-04", "tonight's ADP result is on the list");
   // The midterms (Nov 3): a result row exists, it says who called it, names its source, and says certification comes later, and it carries no seat count.
   const midterm = economicResults.find(event => event.id === "us-midterm-2026-11-03");
   assert.ok(midterm && midterm.sourceUrl.startsWith("https://") && midterm.verifiedOn === "2026-11-04");
