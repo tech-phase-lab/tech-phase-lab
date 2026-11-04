@@ -13,10 +13,15 @@ export type State = {
   /** 最後に送った停止のお知らせ（同じ内容を何度も送らないため） */
   alert?: { message: string; at: string };
   /** 自動で公開したコメントのIDと公開日時（夜のまとめメール用。本文は保存せず、送るときに取り直す） */
-  published?: Record<string, string>;
+  published?: Record<string, string | { at: string; videoId: string }>;
   /** 最後にまとめメールを送った区切りの日時 */
   lastDigestAt?: string;
 };
+
+/** 公開記録の日時（以前は日時の文字列だけを保存していた） */
+export function publishedAt(value: string | { at: string }): string {
+  return typeof value === "string" ? value : value.at;
+}
 
 const RETENTION_MS = 30 * 24 * 60 * 60 * 1000;
 
@@ -42,7 +47,7 @@ export async function saveState(path: string, state: State): Promise<void> {
   );
   const publishedCutoff = Date.now() - 2 * 24 * 60 * 60 * 1000;
   const published = Object.fromEntries(
-    Object.entries(state.published ?? {}).filter(([, at]) => Date.parse(at) >= publishedCutoff),
+    Object.entries(state.published ?? {}).filter(([, v]) => Date.parse(publishedAt(v)) >= publishedCutoff),
   );
   await mkdir(dirname(path), { recursive: true });
   await writeFile(path, JSON.stringify({ ...state, notified, published }, null, 2));

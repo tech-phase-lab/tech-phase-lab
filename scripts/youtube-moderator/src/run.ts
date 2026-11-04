@@ -2,7 +2,7 @@ import { classifyComments, type Verdict } from "./classify.ts";
 import { isDryRun, loadConfig, loadNotifyConfig, stateFilePath, type Config } from "./config.ts";
 import { notify } from "./notify.ts";
 import { findNgWord } from "./rules.ts";
-import { loadState, saveState, type State } from "./state.ts";
+import { loadState, publishedAt, saveState, type State } from "./state.ts";
 import {
   fillVideoTitles,
   getAccessToken,
@@ -25,13 +25,21 @@ function truncate(text: string, max = 300): string {
   return oneLine.length > max ? `${oneLine.slice(0, max)}…` : oneLine;
 }
 
+/** 動画を開いてそのコメントの位置に飛べるリンク */
+function commentUrl(comment: HeldComment): string {
+  return comment.videoId ? `https://www.youtube.com/watch?v=${comment.videoId}&lc=${comment.id}` : "";
+}
+
 function formatItem(comment: HeldComment, verdict: Verdict): string {
   return [
     `■ ${comment.author}${comment.isReply ? "（返信）" : ""}`,
     `「${truncate(comment.text)}」`,
     `動画: ${comment.videoTitle || comment.videoId}`,
     `判定: ${LABEL[verdict.decision]}（${verdict.category}）${verdict.reason}`,
-  ].join("\n");
+    commentUrl(comment),
+  ]
+    .filter(Boolean)
+    .join("\n");
 }
 
 function section(title: string, items: [HeldComment, Verdict][]): string {
@@ -95,7 +103,7 @@ async function moderate(config: Config, state: State) {
         // 夜のまとめメールのために、自動で公開したコメントのIDだけ記録する
         const now = new Date().toISOString();
         state.published ??= {};
-        for (const [c] of grouped.publish) state.published[c.id] = now;
+        for (const [c] of grouped.publish) state.published[c.id] = { at: now, videoId: c.videoId };
         await saveState(config.stateFile, state);
       }
     }
@@ -205,20 +213,32 @@ async function sendDigestIfDue(config: Config, state: State) {
   const since = Date.parse(state.lastDigestAt);
   if (since >= cutoff.getTime()) return;
 
-  const ids = Object.entries(state.published ?? {})
-    .filter(([, at]) => Date.parse(at) > since && Date.parse(at) <= cutoff.getTime())
-    .map(([id]) => id);
+  const entries = Object.entries(state.published ?? {}).filter(([, v]) => {
+    const at = Date.parse(publishedAt(v));
+    return at > since && at <= cutoff.getTime();
+  });
+  const ids = entries.map(([id]) => id);
+  // comments.list は動画IDを返さないことがあるため、公開時に記録した動画IDで補う
+  const videoIds = new Map(entries.map(([id, v]) => [id, typeof v === "string" ? "" : v.videoId]));
 
   if (ids.length > 0) {
     const accessToken = await getAccessToken(config.youtube);
     const comments = await getComments(accessToken, ids);
+    for (const c of comments) c.videoId ||= videoIds.get(c.id) ?? "";
     await fillVideoTitles(accessToken, comments);
     if (comments.length > 0) {
       const text = [
         `🍭 今日自動で公開したコメント ${comments.length}件`,
         "気になるものがあれば YouTube Studio から削除してください。",
         ...comments.map((c) =>
-          [`■ ${c.author}${c.isReply ? "（返信）" : ""}`, `「${truncate(c.text, 500)}」`, `動画: ${c.videoTitle || c.videoId}`].join("\n"),
+          [
+            `■ ${c.author}${c.isReply ? "（返信）" : ""}`,
+            `「${truncate(c.text, 500)}」`,
+            `動画: ${c.videoTitle || c.videoId || "（不明）"}`,
+            commentUrl(c),
+          ]
+            .filter(Boolean)
+            .join("\n"),
         ),
         `YouTube Studio: https://studio.youtube.com/channel/${config.youtube.channelId}/comments`,
       ].join("\n\n");

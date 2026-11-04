@@ -142,13 +142,28 @@ export async function listHeldComments(accessToken: string, channelId: string): 
 /** コメントIDから本文などを取り直す（まとめメール用）。削除済みのコメントは返ってこない。 */
 export async function getComments(accessToken: string, ids: string[]): Promise<HeldComment[]> {
   const comments: HeldComment[] = [];
+  const threadOf = new Map<string, string>();
   for (let i = 0; i < ids.length; i += 50) {
     const params = new URLSearchParams({ part: "snippet", id: ids.slice(i, i + 50).join(","), textFormat: "plainText" });
     const response = await youtubeFetch(accessToken, `/comments?${params}`);
     const payload = (await response.json()) as { items?: (CommentResource & { snippet: { parentId?: string } })[] };
     for (const item of payload.items ?? []) {
       comments.push(toHeldComment(item, item.snippet.videoId ?? "", Boolean(item.snippet.parentId)));
+      threadOf.set(item.id, item.snippet.parentId ?? item.id);
     }
+  }
+
+  // comments.list は動画IDを返さないことがあるので、スレッドから取り直す
+  const missing = [...new Set(comments.filter((c) => !c.videoId).map((c) => threadOf.get(c.id)!))];
+  const videoOfThread = new Map<string, string>();
+  for (let i = 0; i < missing.length; i += 50) {
+    const params = new URLSearchParams({ part: "snippet", id: missing.slice(i, i + 50).join(",") });
+    const response = await youtubeFetch(accessToken, `/commentThreads?${params}`);
+    const payload = (await response.json()) as { items?: { id: string; snippet: { videoId?: string } }[] };
+    for (const thread of payload.items ?? []) videoOfThread.set(thread.id, thread.snippet.videoId ?? "");
+  }
+  for (const c of comments) {
+    if (!c.videoId) c.videoId = videoOfThread.get(threadOf.get(c.id)!) ?? "";
   }
   return comments;
 }
