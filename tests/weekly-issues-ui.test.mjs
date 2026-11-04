@@ -38,3 +38,10 @@ test("the weekly-draft notice setting is the owner's alone", () => {
   assert.match(read("app/research/notification-page-view.tsx"), /p\.owner && row\(/);
   assert.match(read("app/api/research/notifications/route.ts"), /weeklyDraft === true \&\& !member\.isAdmin/);
 });
+
+test("the owner can turn the weekly auto-draft on and try one now (Nov 4)", () => {
+  const screen = read("app/research/weekly/issues.tsx");
+  for (const text of ["毎週土曜に下書きを自動で作る", "今すぐ下書きを作る", "generateEnabled", "generateHour", "AIの設定がまだ終わっていません"]) assert.ok(screen.includes(text), text);
+  assert.match(read("app/api/research/weekly-issues/route.ts"), /generate: "\/admin\/weekly\/generate"/);
+  assert.ok(!/checked=\{generateEnabled \?\? true\}/.test(screen), "off unless the owner turns it on");
+});

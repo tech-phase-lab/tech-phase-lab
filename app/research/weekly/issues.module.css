@@ -67,3 +67,6 @@
 .owner button:disabled{opacity:.5;cursor:default}
 .owner .publish{border:0;background:linear-gradient(120deg,#efd899,#c9a257);color:#2a1f05;font-weight:700}
 .owner .danger{border-color:#5a2a2a;color:#ff9b9b}.owner .remove{min-height:36px;font-size:13px}
+.generate{display:grid;gap:12px;padding:14px;border:1px solid #2a3140;border-radius:16px;background:#0b0e14}
+.hour{display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:14px;color:#a99876}
+.hour select{min-height:40px;padding:0 10px;border:1px solid #2a3140;border-radius:10px;background:#090c12;color:#eef2f6;font:inherit;font-size:16px}
