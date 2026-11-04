@@ -60,6 +60,7 @@ import watch_earnings
 import mu_earnings_measurement
 import web_push
 import voice_inbox
+import event_results
 import weekly_generator
 import weekly_issues
 import release_watch
@@ -777,6 +778,7 @@ class AutomaticMonitor:
         self.watch_earnings_thread = threading.Thread(target=self.run_watch_earnings, name="watch-earnings", daemon=True)
         self.mu_measurement_thread = threading.Thread(target=self.run_mu_measurement, name="mu-earnings-measurement", daemon=True)
         self.weekly_thread = threading.Thread(target=self.run_weekly, name="weekly-auto-draft-clock", daemon=True)
+        self.event_results_thread = threading.Thread(target=self.run_event_results, name="event-results", daemon=True)
         self.news_thread = threading.Thread(target=self.run_stock_news, name="stock-news-intake", daemon=True)
         self.company_wire_thread = threading.Thread(target=self.run_company_wire, name="company-wire", daemon=True)
         self.company_wire_errors = {}
@@ -1023,6 +1025,19 @@ class AutomaticMonitor:
                 print("watch-earnings-unavailable", flush=True)
             self.stop_event.wait(5)
 
+    def run_event_results(self):
+        """Big events (an election): read the outlets' headline feeds while a watch is open. Idle (and silent) otherwise."""
+        while not self.stop_event.is_set():
+            wait = event_results.IDLE_SECONDS
+            try:
+                config = event_results.load_config()
+                if event_results.active(config):
+                    event_results.run_once(self.db_path, config=config)
+                    wait = event_results.POLL_SECONDS
+            except Exception as error:
+                print(f"event-results-unavailable {type(error).__name__}", flush=True)
+            self.stop_event.wait(wait)
+
     def run_weekly(self):
         """Once a minute: is it Saturday morning, and has the owner turned the weekly draft on? Off unless turned on."""
         while not self.stop_event.is_set():
@@ -1150,6 +1165,7 @@ class AutomaticMonitor:
         self.deep_analysis_thread.start()
         self.mu_measurement_thread.start()
         self.weekly_thread.start()
+        self.event_results_thread.start()
         self.watch_earnings_thread.start()
         self.push_thread.start()
 
@@ -1364,6 +1380,12 @@ class AutomaticMonitor:
             results = step("results", market_results.public_feed(db, earnings_hours=24 * 7))
             payload = step("bounded", news_history.bounded(pulse_titles.attach(db, {**drafts, **research,
                 "marketUpdates": market, "analystUpdates": analyst, "resultBriefs": results})))
+            try:
+                # Results of big non-numeric events (an election), each backed by at least two outlets.
+                with event_results.connect(self.db_path) as events_db:
+                    payload = {**payload, "eventResults": event_results.public_view(events_db)}
+            except Exception:
+                print("event-results-read-unavailable", flush=True)
             if original_preview and original_preview_enabled():
                 try:
                     return step("preview", pulse_titles.attach(
@@ -3251,6 +3273,16 @@ class Handler(BaseHTTPRequestHandler):
             except Exception:
                 self.send_json(503, {"ok": False, "error": "weekly-unavailable"})
             return
+        if path == "/admin/event-results":
+            if not self.editor_authorized():
+                self.send_json(401, {"ok": False, "error": "unauthorized"})
+                return
+            try:
+                with event_results.connect(self.app.db_path) as db:
+                    self.send_json(200, {"ok": True, **event_results.owner_view(db)})
+            except Exception:
+                self.send_json(503, {"ok": False, "error": "event-results-unavailable"})
+            return
         if path == "/admin/weekly":
             if not self.editor_authorized():
                 self.send_json(401, {"ok": False, "error": "unauthorized"})
@@ -3471,6 +3503,19 @@ class Handler(BaseHTTPRequestHandler):
             return
         if path in {"/inbox/start", "/inbox/finish"}:
             self.inbox_two_step(path)
+            return
+        if path == "/admin/event-results/withdraw":
+            if not self.editor_authorized():
+                self.send_json(401, {"ok": False, "error": "unauthorized"})
+                return
+            try:
+                payload = self.read_json()
+                with event_results.connect(self.app.db_path) as db:
+                    self.send_json(200, {"ok": True, **event_results.withdraw(db, payload)})
+            except ValueError as exc:
+                self.send_json(404 if str(exc) == "event-result-not-found" else 400, {"ok": False, "error": str(exc)})
+            except Exception:
+                self.send_json(503, {"ok": False, "error": "event-results-unavailable"})
             return
         if path == "/admin/weekly/generate":
             if not self.editor_authorized():
