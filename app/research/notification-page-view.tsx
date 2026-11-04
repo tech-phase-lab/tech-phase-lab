@@ -92,8 +92,8 @@ export default function NotificationPageView(p: PageViewProps) {
       {row(icons.news, t("銘柄のニュース", "Stock news"), t(`監視${monitored.length}銘柄のうち、選んだ銘柄だけ`, `Only the stocks you pick of the ${monitored.length} monitored`), prefs.news, v => p.onPrefs({ news: v }),
         <button type="button" className={styles.link} onClick={() => setSheet("news")}>{t(`銘柄を選ぶ（${news.length}銘柄を選択中） ›`, `Pick stocks (${news.length} selected) ›`)}</button>)}
       {row(icons.notebook, t("銘柄手帳のまとめ", "Stock Notebook recap"), t("日曜の夜に、今週の動きをお知らせ", "Sunday night: this week’s moves"), prefs.weeklyNotebook, v => p.onPrefs({ weeklyNotebook: v }))}
-      {row(icons.bell, t("ひとりごと", "RIZEL’s Notes"), t("リゼルが新しく書いたときに、お知らせ(本文は通知に出ません)", "When Rizel posts a new note (the text is never in the notice)"), prefs.rizelNote ?? false, v => p.onPrefs({ rizelNote: v }))}
-      {p.owner && row(icons.notebook, t("週刊の下書き(運営者のみ)", "Weekly drafts (owner only)"), t("週刊 Tech Phase PRO の下書きができたときに、お知らせ(本文は通知に出ません)", "When a weekly draft is ready (the text is never in the notice)"), prefs.weeklyDraft ?? false, v => p.onPrefs({ weeklyDraft: v }))}
+      {row(icons.bell, t("ひとりごと", "RIZEL’s Notes"), t("リゼルが新しく書いたときにお知らせ", "When Rizel posts a new note"), prefs.rizelNote ?? false, v => p.onPrefs({ rizelNote: v }))}
+      {p.owner && row(icons.notebook, t("週刊の下書き", "Weekly drafts"), t("下書きができたときにお知らせ", "When a draft is ready"), prefs.weeklyDraft ?? false, v => p.onPrefs({ weeklyDraft: v }))}
     </ul>
     {p.prefsMessage && <p className={styles.note} role="status">{p.prefsMessage}</p>}
     {p.prefsState === "unsupported" && <p className={styles.note} role="status">{t("届く内容の保存は、現在準備中です。", "Saving what you receive is not available yet.")}</p>}
