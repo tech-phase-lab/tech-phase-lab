@@ -354,11 +354,11 @@ export function selectDateOnlyEarnings(period: string, now: number) {
 
 // Confirmed official releases, separate from scheduled future events.
 export const economicResults = [{
-  // Election night, Nov 3 (U.S. Eastern). Only what the major outlets' headlines agree on is written; seat counts differed between sources, so no number is shown.
-  id: "us-midterm-2026-11-03", title: { ja: "米国中間選挙（11月3日）", en: "U.S. midterm elections (November 3)" },
+  // Voting was Nov 3 (U.S.); the calls came on the night of Nov 3 Eastern, i.e. the afternoon of Nov 4 in Japan. Seat counts differed between sources, so no number is shown.
+  id: "us-midterm-2026-11-03", title: { ja: "米国中間選挙（現地11月3日投票・日本時間4日に結果）", en: "U.S. midterm elections (voting Nov 3 local; results Nov 4 JST)" },
   sourceName: "CBS News・NBC News ほか(報道)", releasedAt: "2026-11-03T23:30:00-05:00",
-  result: { ja: "民主党が、下院・上院ともに多数を握る見通し（主要メディアの予測）", en: "Democrats projected to win control of both the House and the Senate (major outlets' projections)" },
-  detail: { ja: "11月3日の夜（米東部時間）に、主要メディアが予測を出しました。議席数は報道ごとに違い、まだ集計が続いています。確定は各州の公式集計を待つ必要があります。ここは公式の確定値ではなく、報道ベースの予測です。", en: "Major outlets issued projections on the evening of November 3 (U.S. Eastern). Seat counts differ between reports and counting continues. Final results depend on each state's official count; this is a projection from news reports, not a certified result." },
+  result: { ja: "民主党が下院・上院とも多数を獲得（主要メディアが当確を報道）", en: "Democrats win control of both the House and the Senate (called by major outlets)" },
+  detail: { ja: "CBS、NBC、ワシントン・ポストなど主要メディアが、現地11月3日の夜に当確を報じました。議席数は報道ごとに違い、集計は続いています。各州の公式な認定は数週間かかるため、最終の議席数は今後変わる可能性があります。", en: "CBS, NBC, The Washington Post and other major outlets called both chambers on the night of November 3 (U.S. local). Seat counts differ between reports and counting continues. States certify their results over the following weeks, so final seat counts may still change." },
   sourceUrl: "https://www.cbsnews.com/live-updates/election-day-2026-midterms/",
   verifiedOn: "2026-11-04",
 }, {
