@@ -328,6 +328,13 @@ export const dateOnlyEvents: DateOnlyCalendarEvent[] = [
     sourceUrl: "https://ir.kla.com/news-events/press-releases/detail/522/kla-announces-first-quarter-fiscal-year-2027-earnings-date", checkedOn: "2026-10-01",
     note: { ja: "米国市場終了後の公開予定です。公式発表に正確な公開時刻がないため、日付のみ掲載しています。", en: "Due after the U.S. market closes. Only the date is shown because the announcement does not give an exact publication time." },
   },
+  {
+    // Election Day is fixed by law: the Tuesday after the first Monday in November (2026: November 3).
+    id: "us-midterm-2026-11-03", kind: "economic", date: "2026-11-03", sourceTimezone: "America/New_York",
+    title: { ja: "米国中間選挙（投開票日）", en: "U.S. midterm elections (Election Day)" }, sourceName: "USA.gov",
+    sourceUrl: "https://www.usa.gov/election-day", checkedOn: "2026-11-04",
+    note: { ja: "連邦議会（下院の全議席と上院の一部）などの選挙日です。投票の締め切りと開票の時刻は州ごとに異なるため、日付のみ掲載しています。結果は日本時間の翌日以降に出そろいます。", en: "Election day for Congress (all House seats and part of the Senate) and other offices. Poll-closing and counting times differ by state, so only the date is shown." },
+  },
   ...["2026-12-09"].map((date): DateOnlyCalendarEvent => ({
     id: `fomc-${date}`, kind: "economic", date, sourceTimezone: "America/New_York",
     title: { ja: "FOMC会合 最終日", en: "FOMC meeting final day" }, sourceName: "Federal Reserve",
