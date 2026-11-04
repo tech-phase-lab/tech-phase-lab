@@ -375,6 +375,14 @@
       "titleJa": "AMD 決算説明会（2026年Q3）"
     },
     {
+      "id": "adp-2026-11-04",
+      "kind": "economic",
+      "indicator": "adp",
+      "phase": "release",
+      "at": "2026-11-04T13:15:00.000Z",
+      "titleJa": "ADP雇用統計（10月）"
+    },
+    {
       "id": "arm-fq2-2027-call-close",
       "kind": "earnings",
       "ticker": "ARM",
@@ -599,6 +607,14 @@
       "phase": "release",
       "at": "2026-11-25T13:30:00.000Z",
       "titleJa": "米国PCE物価指数（10月）"
+    },
+    {
+      "id": "adp-2026-12-02",
+      "kind": "economic",
+      "indicator": "adp",
+      "phase": "release",
+      "at": "2026-12-02T13:15:00.000Z",
+      "titleJa": "ADP雇用統計（11月）"
     },
     {
       "id": "jobs-2026-12-04",

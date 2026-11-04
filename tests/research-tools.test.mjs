@@ -52,13 +52,21 @@ test("today and upcoming keeps the employment release after its scheduled time",
 
 test("registered schedules are ordered, unique and linked to official sources", () => {
   assert.equal(new Set(calendarEvents.map((event) => event.id)).size, calendarEvents.length);
+  // ADP's employment report (Wednesday, 8:15 a.m. ET, two days before the BLS jobs report) is on the calendar (owner, Nov 4).
+  const adp = calendarEvents.filter((event) => event.id.startsWith("adp-"));
+  assert.deepEqual(adp.map((event) => event.startsAt), ["2026-11-04T08:15:00-05:00", "2026-12-02T08:15:00-05:00"]);
+  for (const event of adp) {
+    assert.equal(event.kind, "economic");
+    const jobs = calendarEvents.find((row) => row.id.startsWith("jobs-") && Date.parse(row.startsAt) > Date.parse(event.startsAt));
+    assert.equal(Math.round((Date.parse(jobs.startsAt) - Date.parse(event.startsAt)) / 86400000), 2, "two days before the BLS jobs report (08:30 vs 08:15 rounds to 2 days)");
+  }
   let previous = 0;
   for (const event of calendarEvents) {
     const timestamp = Date.parse(event.startsAt);
     assert.ok(Number.isFinite(timestamp) && timestamp >= previous);
     previous = timestamp;
     assert.ok(event.title.ja && event.title.en);
-    assert.ok(["www.bls.gov", "www.bea.gov", "investors.micron.com", "ir.netflix.net", "investor.asml.com", "investor.sandisk.com", "investor.tsmc.com", "investor.lamresearch.com", "ir.kla.com", "www.gevernova.com", "www.adobe.com", "news.microsoft.com", "www.bloomenergy.com", "www.sec.gov", "ir.amd.com", "www.arista.com", "newsroom.arm.com", "investor.lumentum.com", "investor.vistracorp.com", "newsroom.ibm.com", "s21.q4cdn.com", "s205.q4cdn.com", "www.seagate.com", "www.intc.com", "www.aboutamazon.com", "abc.xyz", "investor.apple.com", "investors.palantir.com", "ir.asteralabs.com", "investor.qualcomm.com", "ir.coherent.com", "investors.ionq.com", "investors.ao-inc.com", "iren.com", "investors.constellationenergy.com", "investors.coreweave.com", "ir.appliedmaterials.com", "nvidianews.nvidia.com", "nebius.com", "www.federalreserve.gov"].includes(new URL(event.sourceUrl).hostname));
+    assert.ok(["www.bls.gov", "www.bea.gov", "mediacenter.adp.com", "investors.micron.com", "ir.netflix.net", "investor.asml.com", "investor.sandisk.com", "investor.tsmc.com", "investor.lamresearch.com", "ir.kla.com", "www.gevernova.com", "www.adobe.com", "news.microsoft.com", "www.bloomenergy.com", "www.sec.gov", "ir.amd.com", "www.arista.com", "newsroom.arm.com", "investor.lumentum.com", "investor.vistracorp.com", "newsroom.ibm.com", "s21.q4cdn.com", "s205.q4cdn.com", "www.seagate.com", "www.intc.com", "www.aboutamazon.com", "abc.xyz", "investor.apple.com", "investors.palantir.com", "ir.asteralabs.com", "investor.qualcomm.com", "ir.coherent.com", "investors.ionq.com", "investors.ao-inc.com", "iren.com", "investors.constellationenergy.com", "investors.coreweave.com", "ir.appliedmaterials.com", "nvidianews.nvidia.com", "nebius.com", "www.federalreserve.gov"].includes(new URL(event.sourceUrl).hostname));
     if (event.sourceName === "BLS") {
       assert.equal(new Intl.DateTimeFormat("en-GB", { timeZone: event.sourceTimezone, hour: "2-digit", minute: "2-digit" }).format(new Date(event.startsAt)), "08:30");
     }
