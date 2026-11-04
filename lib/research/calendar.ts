@@ -54,6 +54,14 @@ export const calendarEvents: CalendarEvent[] = [
     note: { ja: "説明会の開始予定です。決算資料は説明会前に公開予定ですが、正確な公開時刻は公表されていません。", en: "Scheduled call start. The earnings release is due before the webcast; no exact publication time was announced." },
   },
   ...blsReleases.map(([type, startsAt]) => ({ id: `${type}-${startsAt.slice(0, 10)}`, kind: "economic" as const, title: labels[type], startsAt, sourceTimezone: "America/New_York", sourceName: "BLS", sourceUrl: blsUrl })),
+  // ADP National Employment Report (owner, Nov 4: it was missing from the indicator calendar). It comes on the Wednesday two days before the BLS jobs
+  // report, at 8:15 a.m. ET (Aug 5, Sep 2 and Sep 30 were confirmed on ADP's release pages). The two dates below follow that rhythm from the BLS dates above.
+  ...[["10", "2026-11-04T08:15:00-05:00"], ["11", "2026-12-02T08:15:00-05:00"]].map(([month, startsAt]) => ({
+    id: `adp-${startsAt.slice(0, 10)}`, kind: "economic" as const,
+    title: { ja: `ADP雇用統計（${month}月）`, en: `ADP employment report (${month === "10" ? "October" : "November"})` },
+    startsAt, sourceTimezone: "America/New_York", sourceName: "ADP", sourceUrl: "https://mediacenter.adp.com/",
+    note: { ja: "民間企業の雇用者数の変化です。BLSの雇用統計（金曜）の2日前、米東部時間8:15に発表されます。発表日は例年の並びに合わせています。", en: "Change in private-sector employment. It comes two days before the BLS jobs report, at 8:15 a.m. ET; the date follows ADP's usual rhythm." },
+  })),
   ...[
     ["2026-08", "2026-09-30T08:30:00-04:00"],
     ["2026-09", "2026-10-29T08:30:00-04:00"],
