@@ -77,6 +77,11 @@ test("PCE schedules and actuals preserve official periods, Eastern DST and price
   assert.match(result.result.ja, /前月比\+0\.3%・前年比\+3\.4%/);
   assert.match(result.detail.ja, /前月比\+0\.2%・前年比\+3\.0%/);
   assert.equal(new Set(economicResults.map(event => event.id)).size, economicResults.length);
+  // The midterms (Nov 3): a result row exists, it says "projection" and names its source, and it carries no seat count.
+  const midterm = economicResults.find(event => event.id === "us-midterm-2026-11-03");
+  assert.ok(midterm && midterm.sourceUrl.startsWith("https://") && midterm.verifiedOn === "2026-11-04");
+  assert.match(midterm.result.ja, /見通し.*予測/); assert.match(midterm.detail.ja, /報道ベースの予測/);
+  assert.doesNotMatch(midterm.result.ja + midterm.detail.ja, /\d+\s*議席|\d+\s*seats/);
 });
 
 test("Eastern month filters follow the displayed date across the Japan midnight boundary", () => {
