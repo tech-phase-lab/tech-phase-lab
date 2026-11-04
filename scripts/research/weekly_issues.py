@@ -197,6 +197,13 @@ def recent_drafts(db, hours=3):
     return [{"id": row["id"], "createdAt": row["created_at"]} for row in rows]
 
 
+def recent_published(db, hours=3):
+    """Issues published in the last hours, for the "new issue" phone notice (Nov 4)."""
+    since = (datetime.now(timezone.utc) - timedelta(hours=hours)).isoformat(timespec="milliseconds")
+    rows = db.execute("SELECT id,number,published_at FROM weekly_issues WHERE status='published' AND published_at>=? ORDER BY published_at DESC", (since,)).fetchall()
+    return [{"id": row["id"], "number": row["number"], "publishedAt": row["published_at"]} for row in rows]
+
+
 # ---- writing -----------------------------------------------------------------
 
 def _row(db, issue_id):

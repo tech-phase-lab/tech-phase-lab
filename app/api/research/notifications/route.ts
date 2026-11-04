@@ -1,3 +1,4 @@
+import { createHmac } from "node:crypto";
 import { getMembership } from "@/lib/membership/server";
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -56,6 +57,8 @@ export async function POST(request: Request) {
     if (body.preferences && typeof body.preferences === "object" && (body.preferences as { weeklyDraft?: unknown }).weeklyDraft === true && !member.isAdmin) return Response.json({ ok: false, error: "owner-required" }, { status: 403, headers });
     const result = await monitor(`/push/member/${body.action}`, {
       memberId: member.userId, accessExpiresAt: member.accessExpiresAt / 1000,
+      // The key the question board uses for this member, so "your question was answered" reaches its asker only.
+      questionOwner: createHmac("sha256", process.env.RESEARCH_MONITOR_TOKEN ?? "").update(`question:${member.userId}`).digest("hex"),
       subscription: body.subscription, tickers: body.tickers, allTargets: body.allTargets === true, language: body.language,
       ...(body.weeklyNotebook === undefined ? {} : { weeklyNotebook: body.weeklyNotebook !== false }),
       ...(body.preferences === undefined ? {} : { preferences: body.preferences }),

@@ -11,14 +11,14 @@ from datetime import datetime, timezone
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'scripts/research'))
 import web_push as push
-from test_web_push import subscription, event
+from test_web_push import subscription, event, awake
 
 
 class PreferenceTests(unittest.TestCase):
     def setUp(self):
         self.tmp = tempfile.TemporaryDirectory()
         self.path = Path(self.tmp.name) / 'test.sqlite'
-        self.db = push.connect(self.path)
+        self.db = awake(push.connect(self.path))
         self.now = datetime(2026, 9, 26, 14, 0, 2, tzinfo=timezone.utc).timestamp()
         self.payload = {'memberId': 'user_fixture', 'subscription': subscription(),
                         'accessExpiresAt': self.now + 60, 'allTargets': True}
@@ -57,7 +57,7 @@ class PreferenceTests(unittest.TestCase):
         self.db.execute('DROP TABLE push_device_preferences')
         self.db.commit()
         self.db.close()
-        self.db = push.connect(self.path)
+        self.db = awake(push.connect(self.path))
         self.assertEqual(len(self.deliver([event(), self.earnings()])), 2)
 
     def test_each_category_off_blocks_only_that_category_before_transport_and_ledger(self):
@@ -126,7 +126,7 @@ class PreferenceTests(unittest.TestCase):
         self.assertEqual(self.db.execute('SELECT count(*) FROM push_deliveries').fetchone()[0], 2)
         self.assertTrue(push.member_preferences(self.db, second, now=self.now)['preferences']['targets'])
         self.db.close()
-        self.db = push.connect(self.path)
+        self.db = awake(push.connect(self.path))
         push.register_member(self.db, self.payload, {'MU'}, self.now)
         self.assertFalse(self.read()['targets'])
         self.assertFalse(self.read()['weeklyNotebook'])
