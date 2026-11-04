@@ -9,7 +9,11 @@ publishes a result only when it is solid:
 - the same claim must come from at least two different outlets inside the watch's time window;
 - if both parties are reported as winning the same chamber, nothing is published (held as a conflict);
 - the Japanese and English wording is fixed text from the watch file. The model writes nothing and no number is shown;
-- the owner can withdraw a result, and a withdrawn result is never published again."""
+- the owner can withdraw a result, and a withdrawn result is never published again.
+
+A watch can also be numeric (ADP's private payrolls, Nov 4): the figure is read from headlines ("ADP: private employers added
+42,000 jobs") and published only when at least two different outlets give the very same signed figure. A figure that comes after
+a word of expectation ("expected", "forecast", "likely", ...) is never read, and a weekly or average figure is never read."""
 
 import json
 import re
@@ -38,12 +42,44 @@ HEDGE = re.compile(r"\b(?:could|might|may|can|would|if|whether|polls?|odds|chanc
                    r"worr\w*|favou?red|leans?|toss-?up|too close|yet to|not yet|no clear)\b", re.I)
 
 
+UP = r"(?:added|adds|add|rose|rise|rises|gained|gains|gain|grew|grow|grows|jumped|jump|jumps|climbed|climb|climbs|increased|increase|increases|hired|created|surged|surge|surges)"
+DOWN = r"(?:lost|loses|lose|shed|sheds|fell|fall|falls|dropped|drop|drops|slid|slide|slides|slipped|slip|slips|cut|cuts|declined|decline|declines|decreased|decrease|decreases|shrank|shrink|shrinks)"
+FIGURE = r"(?P<num>\d{1,3}(?:,\d{3})+|\d{3,7}|\d{1,3}(?=K\b))(?P<k>K)?\b"
+# Words of expectation anywhere before the figure, or a comparison word right before it ("vs 90,000", "from 133,000"), mean it is not the result.
+EXPECTING = re.compile(r"\b(?:expect\w*|forecast\w*|likely|estimate[sd]?|consensus|project\w*|seen|predict\w*|poll|survey|economists?|anticipat\w*|preview|ahead of)\b", re.I)
+COMPARING = re.compile(r"(?:\bvs\.?|\bversus|\bthan|\bfrom|\bprior|\bprevious\w*|\brevised?|\bto)\W*(?:\w+\W+){0,2}$", re.I)
+NOT_MONTHLY = re.compile(r"\b(?:week|weekly|pulse|average|averaged|four-week|4-week|per week|a week)\b", re.I)
+
+
+def read_figure(title, spec):
+    """The signed integer a headline states as the result (None when it is not a plain statement of the result)."""
+    if not isinstance(title, str) or len(title) > 300 or NOT_MONTHLY.search(title):
+        return None
+    if not all(re.search(rule, title, re.I) for rule in spec["must"]):
+        return None
+    found = []
+    for sign, verbs in (("+", UP), ("-", DOWN)):
+        for match in re.finditer(rf"\b{verbs}\b(?:\s+(?:by|about|nearly|roughly|only|just|an? )?)?\s*(?:[+\-−]?\s*)?{FIGURE}", title, re.I):
+            found.append((match.start(), sign, match))
+    # An explicit sign right before the figure ("ADP: private payrolls +42K") counts too.
+    for match in re.finditer(rf"(?<![\w,.])(?P<sign>[+\-−])\s?{FIGURE}", title):
+        found.append((match.start(), "-" if match["sign"] in "-−" else "+", match))
+    for _, sign, match in sorted(found, key=lambda item: item[0]):
+        before = title[:match.start()]
+        if EXPECTING.search(before) or COMPARING.search(before[-30:]):
+            continue
+        value = int(match["num"].replace(",", "")) * (1000 if match["k"] else 1)
+        if 100 <= value <= 1_000_000:
+            return int(f"{sign}{value}")
+    return None
+
+
 def load_config(path=CONFIG_PATH):
     value = json.loads(Path(path).read_text(encoding="utf-8"))
     if value.get("version") != 1 or not isinstance(value.get("feeds"), list) or not isinstance(value.get("watches"), list):
         raise ValueError("invalid-event-watches")
     for feed in value["feeds"]:
-        if urlsplit(feed["url"]).scheme != "https" or not feed.get("publisher"):
+        if urlsplit(feed["url"]).scheme != "https" or not feed.get("publisher") or not feed.get("group"):
             raise ValueError("invalid-event-feed")
     return value
 
@@ -125,15 +161,23 @@ def parse_feed(body):
     return rows
 
 
-def ingest(db, config, publisher, rows, now):
+def ingest(db, config, publisher, rows, now, group="politics"):
     """Keep the first headline each outlet gave for each claim, inside each open watch's window."""
     saved = 0
     for watch in config["watches"]:
         start, end = parse_time(watch["from"]), parse_time(watch["until"])
-        if not start <= now <= end:
+        if not start <= now <= end or watch.get("feedGroup", "politics") != group:
             continue
         for title, url, moment in rows:
             if not start <= moment <= end:
+                continue
+            if "numeric" in watch:
+                figure = read_figure(title, watch["numeric"])
+                if figure is not None:
+                    with db:
+                        cursor = db.execute("INSERT OR IGNORE INTO event_observations VALUES(?,?,?,?,?,?,?)",
+                                            (watch["id"], f"figure:{figure}", publisher, url, title[:300], stamp(moment), stamp(now)))
+                    saved += cursor.rowcount
                 continue
             for claim in watch["claims"]:
                 if reads_as_call(title, claim):
@@ -153,6 +197,9 @@ def evaluate(db, config, now):
         if existing and existing["state"] == "withdrawn":
             continue
         need = int(watch.get("requirePublishers", 2))
+        if "numeric" in watch:
+            _evaluate_figure(db, watch, need, now, existing)
+            continue
         confirmed, sources = {}, {}
         for claim in watch["claims"]:
             rows = db.execute("SELECT publisher,url,title,published_at FROM event_observations WHERE watch_id=? AND claim_key=? ORDER BY published_at",
@@ -197,6 +244,39 @@ def evaluate(db, config, now):
         _store(db, watch["id"], "published", payload, now, keep_time=existing is not None and existing["state"] == "published")
 
 
+def _evaluate_figure(db, watch, need, now, existing):
+    """One signed figure stated by at least `need` different outlets is published; two such figures that disagree are held."""
+    rows = db.execute("SELECT claim_key,publisher,url,title,published_at FROM event_observations WHERE watch_id=? ORDER BY published_at", (watch["id"],)).fetchall()
+    by_figure = {}
+    for row in rows:
+        by_figure.setdefault(row["claim_key"], []).append(row)
+    solid = {key: group for key, group in by_figure.items() if len({r["publisher"] for r in group}) >= need}
+    if len(solid) > 1:
+        _store(db, watch["id"], "conflict", {"watch": watch["id"], "figures": sorted(solid)}, now)
+        return
+    if not solid:
+        return
+    key, group = next(iter(solid.items()))
+    value = int(key.split(":", 1)[1])
+    publishers, links, seen = [], [], set()
+    for row in group:
+        if row["publisher"] not in seen:
+            seen.add(row["publisher"]); publishers.append(row["publisher"])
+            links.append({"publisher": row["publisher"], "title": row["title"], "url": row["url"]})
+    names = "・".join(publishers[:4]) + ("ほか" if len(publishers) > 4 else "")
+    shown = f"{value:+,}"
+    released = sorted(r["published_at"] for r in group)[need - 1]
+    payload = {
+        "id": watch["id"], "titleJa": watch["titleJa"], "titleEn": watch["titleEn"], "sourceName": names + "(報道)", "releasedAt": released,
+        "resultJa": watch["resultJa"].replace("{value}", shown) + f"（{len(publishers)}社が同じ数字を報道）",
+        "resultEn": watch["resultEn"].replace("{value}", shown) + f" (the same figure from {len(publishers)} outlets)",
+        "detailJa": f"{names}の見出しが、同じ数字を伝えました。" + watch.get("noteJa", ""),
+        "detailEn": f"Headlines from {', '.join(publishers[:4])}{' and others' if len(publishers) > 4 else ''} gave the same figure. " + watch.get("noteEn", ""),
+        "sourceUrl": links[0]["url"], "sources": links[:6], "verifiedOn": stamp(now)[:10],
+    }
+    _store(db, watch["id"], "published", payload, now, keep_time=existing is not None and existing["state"] == "published")
+
+
 def _store(db, event_id, state, payload, now, keep_time=False):
     with db:
         row = db.execute("SELECT published_at FROM event_results WHERE id=?", (event_id,)).fetchone()
@@ -214,11 +294,14 @@ def run_once(db_path, now=None, config=None, transport=None):
         return None
     transport = transport or fetch
     saved = 0
+    groups = {w.get("feedGroup", "politics") for w in config["watches"] if parse_time(w["from"]) <= now <= parse_time(w["until"])}
     with connect(db_path) as db:
         for feed in config["feeds"]:
+            if feed["group"] not in groups:
+                continue
             try:
                 rows = parse_feed(transport(feed["url"]))
-                saved += ingest(db, config, feed["publisher"], rows, now)
+                saved += ingest(db, config, feed["publisher"], rows, now, feed["group"])
                 state = (1, None, len(rows))
             except Exception as error:
                 state = (0, f"{type(error).__name__}:{str(error)[:60]}", 0)
