@@ -90,3 +90,11 @@ test("the inbox screens: rename in the list, the key page for the owner, the pro
   assert.match(python, /hashlib\.sha256\(key\.encode\(\)\)/);
   assert.doesNotMatch(python, /print\([^)]*key\b/, "the key is never printed");
 });
+
+test("the inbox closes by dragging its top bar down, and the four attach tiles are low (Nov 3)", () => {
+  const sheet = read("../app/research/desk/inbox-sheet.tsx");
+  for (const text of ["onPointerDown", "onPointerMove", "onPointerUp", "onPointerCancel", "gesture.dy > 90", "translateY"]) assert.ok(sheet.includes(text), text);
+  assert.match(read("../app/research/desk/inbox-sheet.module.css"), /\.handle\{[^}]*touch-action:none/);
+  const tile = read("../app/research/desk/format.module.css").match(/\.audioUpload \.attachTile\{[^}]*?height:(\d+)px/);
+  assert.ok(tile && Number(tile[1]) <= 76, "tiles are no taller than 76px");
+});

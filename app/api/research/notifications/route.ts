@@ -52,6 +52,8 @@ export async function POST(request: Request) {
     if (body.action !== "remove" && (member.plan !== "pro" || !Number.isFinite(member.accessExpiresAt) || member.accessExpiresAt <= Date.now())) {
       return Response.json({ ok: false, error: "pro-required" }, { status: 403, headers });
     }
+    // Weekly-draft notices are the owner's alone; a member's request for them is refused, never silently stored.
+    if (body.preferences && typeof body.preferences === "object" && (body.preferences as { weeklyDraft?: unknown }).weeklyDraft === true && !member.isAdmin) return Response.json({ ok: false, error: "owner-required" }, { status: 403, headers });
     const result = await monitor(`/push/member/${body.action}`, {
       memberId: member.userId, accessExpiresAt: member.accessExpiresAt / 1000,
       subscription: body.subscription, tickers: body.tickers, allTargets: body.allTargets === true, language: body.language,

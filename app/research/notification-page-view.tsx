@@ -7,7 +7,7 @@ import styles from "./notification-page.module.css";
 
 const monitored = providers.map(p => p.ticker);
 const tracked = earningsOnlyProviders.map(p => p.ticker);
-export type Preferences = { targets: boolean; earnings: boolean; news: boolean; newsTickers: string[]; weeklyNotebook: boolean; /** A new "リゼルのひとりごと" post; off until turned on. */ rizelNote: boolean };
+export type Preferences = { targets: boolean; earnings: boolean; news: boolean; newsTickers: string[]; weeklyNotebook: boolean; /** A new "リゼルのひとりごと" post; off until turned on. */ rizelNote: boolean; /** Owner only: a weekly issue draft is ready. */ weeklyDraft?: boolean };
 type PrefsState = "idle" | "loading" | "ready" | "error" | "unsupported";
 // Shown (and locked) until the server's own settings have been read.
 const placeholder: Preferences = { targets: true, earnings: true, news: true, newsTickers: monitored, weeklyNotebook: true, rizelNote: false };
@@ -23,7 +23,7 @@ const icons = {
 export type PageViewProps = {
   lang: Language; state: string; label: string; busy: boolean; starting: boolean; usable: boolean; hasSubscription: boolean;
   message: string; testSent: boolean; received: boolean;
-  prefs: Preferences | null; prefsState: PrefsState; prefsMessage: string; onPrefs: (patch: Partial<Preferences>) => void;
+  prefs: Preferences | null; prefsState: PrefsState; prefsMessage: string; owner?: boolean; onPrefs: (patch: Partial<Preferences>) => void;
   onToggle: () => void; onDisable: () => void; onTest: () => void; onRetry: () => void; onStatus: () => void; onReceived: () => void;
 };
 
@@ -93,6 +93,7 @@ export default function NotificationPageView(p: PageViewProps) {
         <button type="button" className={styles.link} onClick={() => setSheet("news")}>{t(`銘柄を選ぶ（${news.length}銘柄を選択中） ›`, `Pick stocks (${news.length} selected) ›`)}</button>)}
       {row(icons.notebook, t("銘柄手帳のまとめ", "Stock Notebook recap"), t("日曜の夜に、今週の動きをお知らせ", "Sunday night: this week’s moves"), prefs.weeklyNotebook, v => p.onPrefs({ weeklyNotebook: v }))}
       {row(icons.bell, t("ひとりごと", "RIZEL’s Notes"), t("リゼルが新しく書いたときに、お知らせ(本文は通知に出ません)", "When Rizel posts a new note (the text is never in the notice)"), prefs.rizelNote ?? false, v => p.onPrefs({ rizelNote: v }))}
+      {p.owner && row(icons.notebook, t("週刊の下書き(運営者のみ)", "Weekly drafts (owner only)"), t("週刊 Tech Phase PRO の下書きができたときに、お知らせ(本文は通知に出ません)", "When a weekly draft is ready (the text is never in the notice)"), prefs.weeklyDraft ?? false, v => p.onPrefs({ weeklyDraft: v }))}
     </ul>
     {p.prefsMessage && <p className={styles.note} role="status">{p.prefsMessage}</p>}
     {p.prefsState === "unsupported" && <p className={styles.note} role="status">{t("届く内容の保存は、現在準備中です。", "Saving what you receive is not available yet.")}</p>}
