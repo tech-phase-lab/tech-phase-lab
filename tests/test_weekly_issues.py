@@ -127,6 +127,20 @@ class WeeklyTests(unittest.TestCase):
                 self.assertEqual(call("/admin/weekly/settings", "editor-api-token", {"autoPublish": True})["settings"]["autoPublish"], True)
                 call("/admin/weekly/delete", "editor-api-token", {"id": made["id"]})
                 self.assertIsNone(call("/weekly/issues", "member-api-token")["issue"])
+                # "make one now": the editor only; refused while the model is not set up; otherwise it starts in the background.
+                with self.assertRaises(HTTPError) as denied:
+                    call("/admin/weekly/generate", "member-api-token", {})
+                self.assertEqual(denied.exception.code, 401)
+                with patch.object(service.weekly_generator, "configuration", return_value=None), self.assertRaises(HTTPError) as unset:
+                    call("/admin/weekly/generate", "editor-api-token", {})
+                self.assertEqual(unset.exception.code, 503)
+                started = threading.Event()
+                with patch.object(service.weekly_generator, "configuration", return_value=("k", "m")), \
+                     patch.object(service.weekly_generator, "generate_now", side_effect=lambda *args, **kwargs: started.set()):
+                    self.assertTrue(call("/admin/weekly/generate", "editor-api-token", {})["ok"])
+                    self.assertTrue(started.wait(5))
+                self.assertIn("running", call("/admin/weekly", "editor-api-token")["generation"])
+                self.assertTrue(call("/admin/weekly/settings", "editor-api-token", {"generateEnabled": True, "generateHour": 9})["settings"]["generateEnabled"])
         finally:
             server.shutdown(); server.server_close(); thread.join(timeout=2)
 

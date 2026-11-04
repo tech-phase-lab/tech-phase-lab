@@ -272,9 +272,9 @@ class ResearchServiceTests(unittest.TestCase):
                     })
             with patch.object(threading.Thread, 'start', start_worker):
                 app.start()
-            # 19 single workers (including the news refresher, strip titles, deep analysis and
-            # the release watch) plus one thread per parallel headline translator.
-            self.assertEqual(len(observed), 21 + app.translation_workers)
+            # 20 single workers (including the news refresher, strip titles, deep analysis, the release
+            # watch and the Saturday weekly-draft clock) plus one thread per parallel headline translator.
+            self.assertEqual(len(observed), 22 + app.translation_workers)
             self.assertTrue(all(observed))
 
     def test_release_watch_alerts_from_the_public_payload_and_reports_in_health(self):

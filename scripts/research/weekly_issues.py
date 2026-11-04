@@ -40,6 +40,14 @@ def connect(path):
         id INTEGER PRIMARY KEY CHECK(id=1), auto_publish INTEGER NOT NULL DEFAULT 0, next_number INTEGER NOT NULL DEFAULT 1);
       INSERT OR IGNORE INTO weekly_settings(id) VALUES(1);
     """)
+    # The weekly auto-draft (Nov 4): off until the owner turns it on; Saturday 08:00 Japan time unless changed.
+    have = {row[1] for row in db.execute("PRAGMA table_info(weekly_settings)")}
+    for column, definition in (("generate_enabled", "INTEGER NOT NULL DEFAULT 0"), ("generate_hour", "INTEGER NOT NULL DEFAULT 8"),
+                               ("last_generated_week", "TEXT"), ("attempt_week", "TEXT"), ("attempts", "INTEGER NOT NULL DEFAULT 0"),
+                               ("next_attempt_at", "REAL NOT NULL DEFAULT 0")):
+        if column not in have:
+            db.execute(f"ALTER TABLE weekly_settings ADD COLUMN {column} {definition}")
+    db.commit()
     return db
 
 
@@ -160,7 +168,8 @@ def _issue(row, owner=False):
 
 def settings(db):
     row = db.execute("SELECT * FROM weekly_settings WHERE id=1").fetchone()
-    return {"autoPublish": bool(row["auto_publish"]), "nextNumber": row["next_number"]}
+    return {"autoPublish": bool(row["auto_publish"]), "nextNumber": row["next_number"], "generateEnabled": bool(row["generate_enabled"]),
+            "generateHour": row["generate_hour"], "lastGenerated": row["last_generated_week"]}
 
 
 def member_issues(db, number=None, limit=6, before=None):
@@ -256,6 +265,15 @@ def save_settings(db, payload):
             if type(payload["autoPublish"]) is not bool:
                 raise ValueError("invalid-weekly-settings")
             db.execute("UPDATE weekly_settings SET auto_publish=? WHERE id=1", (int(payload["autoPublish"]),))
+        if "generateEnabled" in payload:
+            if type(payload["generateEnabled"]) is not bool:
+                raise ValueError("invalid-weekly-settings")
+            db.execute("UPDATE weekly_settings SET generate_enabled=? WHERE id=1", (int(payload["generateEnabled"]),))
+        if "generateHour" in payload:
+            hour = payload["generateHour"]
+            if type(hour) is not int or not 0 <= hour <= 23:
+                raise ValueError("invalid-weekly-settings")
+            db.execute("UPDATE weekly_settings SET generate_hour=? WHERE id=1", (hour,))
         if "nextNumber" in payload:
             number = payload["nextNumber"]
             highest = db.execute("SELECT COALESCE(MAX(number),0) FROM weekly_issues").fetchone()[0]
