@@ -100,6 +100,16 @@
       "publisher": "NPR Economy",
       "url": "https://feeds.npr.org/1017/rss.xml",
       "group": "markets"
+    },
+    {
+      "publisher": "Google News ADP 1",
+      "url": "https://news.google.com/rss/search?q=ADP+private+employers+jobs+when%3A2d&hl=en-US&gl=US&ceid=US%3Aen",
+      "group": "markets"
+    },
+    {
+      "publisher": "Google News ADP 2",
+      "url": "https://news.google.com/rss/search?q=%22ADP+National+Employment+Report%22+when%3A2d&hl=en-US&gl=US&ceid=US%3Aen",
+      "group": "markets"
     }
   ],
   "watches": [
@@ -175,12 +185,20 @@
         "must": [
           "\\bADP\\b",
           "\\b(?:private|jobs|payrolls?|employment|employers?|hiring|hired)\\b"
-        ]
+        ],
+        "release": {
+          "label": "ADP（公式発表）",
+          "outlets": [
+            "PR Newswire",
+            "ADP"
+          ],
+          "pattern": "^ADP National Employment Report: Private[- ]Sector Employment (?P<dir>Increased|Decreased) by (?P<num>[\\d,]+) Jobs in [A-Z][a-z]+"
+        }
       },
       "resultJa": "民間の雇用者数 {value}人",
       "resultEn": "Private employment {value}",
-      "noteJa": "ADPの発表そのものではなく、報道の見出しから読み取った数字です。ADPの公式発表で確認してください。",
-      "noteEn": "Read from news headlines, not from ADP's release itself; check ADP's official release."
+      "noteJa": "ADPの発表と報道の見出しから読み取った数字です。ADPの公式発表で確認してください。",
+      "noteEn": "Read from ADP's release and news headlines; check ADP's official release."
     }
   ]
 }

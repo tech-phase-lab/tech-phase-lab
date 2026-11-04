@@ -378,6 +378,14 @@ export const economicResults = [{
   sourceUrl: "https://www.federalreserve.gov/newsevents/pressreleases.htm",
   verifiedOn: "2026-10-29",
 }, {
+  // Confirmed on the night of Nov 4 (ADP's own release on PR Newswire, CNBC and others all give +86,000). The automatic reader replaces this row (same id) when it has the same figure from the sources.
+  id: "adp-2026-10", title: { ja: "ADP雇用統計（10月）", en: "ADP employment report (October)" },
+  sourceName: "ADP", releasedAt: "2026-11-04T08:15:00-05:00",
+  result: { ja: "民間の雇用者数 +86,000人", en: "Private-sector employment +86,000" },
+  detail: { ja: "ADPの発表（PR Newswire）で、10月の民間の雇用者数の変化は+86,000人でした。CNBCなどの報道も、同じ数字を伝えています。", en: "ADP's release (PR Newswire) shows private-sector employment up 86,000 in October; CNBC and other outlets report the same figure." },
+  sourceUrl: "https://www.prnewswire.com/news-releases/adp-national-employment-report-private-sector-employment-increased-by-86-000-jobs-in-october-302929216.html",
+  verifiedOn: "2026-11-04",
+}, {
   id: "jobs-2026-09", title: { ja: "米国雇用統計（9月）", en: "U.S. employment report (September 2026)" },
   sourceName: "BLS", releasedAt: "2026-10-02T08:30:00-04:00",
   result: { ja: "非農業部門雇用者数 +29,000人／失業率 4.2%", en: "Nonfarm payrolls +29,000; unemployment rate 4.2%" },
