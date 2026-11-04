@@ -1,0 +1,38 @@
+{
+  "version": 1,
+  "feeds": [
+    {"publisher": "The New York Times", "url": "https://rss.nytimes.com/services/xml/rss/nyt/Politics.xml"},
+    {"publisher": "BBC News", "url": "https://feeds.bbci.co.uk/news/world/us_and_canada/rss.xml"},
+    {"publisher": "NPR", "url": "https://feeds.npr.org/1014/rss.xml"},
+    {"publisher": "The Guardian", "url": "https://www.theguardian.com/us-news/us-politics/rss"},
+    {"publisher": "CBS News", "url": "https://www.cbsnews.com/latest/rss/politics"},
+    {"publisher": "ABC News", "url": "https://abcnews.go.com/abcnews/politicsheadlines"},
+    {"publisher": "POLITICO", "url": "https://rss.politico.com/politics-news.xml"},
+    {"publisher": "Fox News", "url": "https://moxie.foxnews.com/google-publisher/politics.xml"},
+    {"publisher": "CNN", "url": "https://rss.cnn.com/rss/cnn_allpolitics.rss"},
+    {"publisher": "The Washington Post", "url": "https://feeds.washingtonpost.com/rss/politics"}
+  ],
+  "watches": [
+    {
+      "id": "us-midterm-2026-11-03",
+      "kind": "election",
+      "titleJa": "米国中間選挙（現地11月3日投票・日本時間4日に結果）",
+      "titleEn": "U.S. midterm elections (voting Nov 3 local; results Nov 4 JST)",
+      "from": "2026-11-04T00:00:00Z",
+      "until": "2026-11-09T00:00:00Z",
+      "requirePublishers": 2,
+      "claims": [
+        {"key": "house-democrats", "party": "democrats", "chamber": "house", "ja": "民主党が下院で多数を獲得", "en": "Democrats win control of the House"},
+        {"key": "senate-democrats", "party": "democrats", "chamber": "senate", "ja": "民主党が上院で多数を獲得", "en": "Democrats win control of the Senate"},
+        {"key": "house-republicans", "party": "republicans", "chamber": "house", "ja": "共和党が下院で多数を維持", "en": "Republicans keep control of the House"},
+        {"key": "senate-republicans", "party": "republicans", "chamber": "senate", "ja": "共和党が上院で多数を維持", "en": "Republicans keep control of the Senate"}
+      ],
+      "combine": [
+        {"requires": ["house-democrats", "senate-democrats"], "ja": "民主党が下院・上院とも多数を獲得", "en": "Democrats win control of both the House and the Senate"},
+        {"requires": ["house-republicans", "senate-republicans"], "ja": "共和党が下院・上院とも多数を維持", "en": "Republicans keep control of both the House and the Senate"}
+      ],
+      "noteJa": "議席数は報道ごとに違い、集計は続いています。各州の公式な認定は数週間かかるため、最終の議席数は今後変わる可能性があります。",
+      "noteEn": "Seat counts differ between reports and counting continues. States certify their results over the following weeks, so final seat counts may still change."
+    }
+  ]
+}

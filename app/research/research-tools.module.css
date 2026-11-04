@@ -89,3 +89,6 @@
 .deskNav{margin:26px 0 24px;gap:0;border-bottom:1px solid #2a2f38}
 .deskNav a{padding:14px 4px;font-size:16px;border-bottom:2px solid transparent;margin-bottom:-1px}
 .deskNav a[aria-current=page]{color:#e7c982;border-color:#d8b36a;background:none}
+
+/* A long desk title (週刊 Tech Phase PRO) stays on one line on a phone. */
+.desk h1.compactTitle{font-size:clamp(22px,6.3vw,38px);letter-spacing:.02em;white-space:nowrap}
