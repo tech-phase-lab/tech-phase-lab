@@ -252,6 +252,55 @@ class FigureTests(Base):
         self.assertEqual(row["sources"][0]["publisher"], "ADP（公式発表）")
 
 
+class TallyTests(Base):
+    """Seat counts (owner, Nov 4: "only the progress, not the result"): a count is shown only when two different outlets give the same number."""
+    def test_a_count_is_read_only_as_a_current_tally_never_as_a_hedge_a_target_or_a_flip(self):
+        spec = ev.load_config()["watches"][0]
+        yes = [("Democrats now have 54 Senate seats, compared to Republicans' 44", {("democrats", "senate"): 54}),
+               ("Democrats hold 54 Senate seats to the GOP's 44 Senate seats", {("democrats", "senate"): 54, ("republicans", "senate"): 44}),
+               ("Senate: Democrats 54, Republicans 44 with two races uncalled", {("democrats", "senate"): 54, ("republicans", "senate"): 44}),
+               ("Democrats have won 226 House seats", {("democrats", "house"): 226}),
+               ("Democrats win 54 Senate seats while Republicans keep 44 Senate seats", {("democrats", "senate"): 54, ("republicans", "senate"): 44})]
+        no = ["Democrats on track to win at least 54 Senate seats", "Republicans need 3 more House seats", "Democrats flipped seven Republican-held Senate seats",
+              "Democrats could win 230 House seats, polls show", "Democrats win 5000 House seats", "Democrats have won 500 House seats"]
+        for title, expected in yes:
+            self.assertEqual(ev.read_tallies(title, spec), expected, title)
+        for title in no:
+            self.assertEqual(ev.read_tallies(title, spec), {}, title)
+
+    def run_news(self, *items, start=30, now=datetime(2026, 11, 4, 14, 0, tzinfo=timezone.utc)):
+        def search(entries):
+            rows = "".join(f"<item><title>{t} - {o}</title><link>https://{o.replace(' ', '').lower()}.example/{i}</link><pubDate>{at(13, start + i)}</pubDate><source url='https://x'>{o}</source></item>" for i, (t, o) in enumerate(entries))
+            return f"<?xml version='1.0'?><rss><channel>{rows}</channel></rss>".encode()
+        urls = {feed["url"] for feed in CONFIG["feeds"] if feed["publisher"] == "Google News Midterms"}
+
+        def transport(url):
+            if url in urls:
+                return search(items)
+            raise OSError("unreachable")
+        return ev.run_once(self.path, now, CONFIG, transport)
+
+    def test_the_senate_count_joins_the_result_when_two_outlets_agree_and_not_before(self):
+        calls = [("Democrats win the House", "CNN"), ("Democrats win the House", "CBS News")]
+        self.run_news(*calls, ("Democrats now have 54 Senate seats, compared to Republicans' 44", "CNN"))
+        self.assertEqual(self.view()[0][0]["resultJa"], "民主党が下院で多数を獲得（2社が当確を報道）", "one outlet's count is not shown")
+        self.run_news(*calls, ("Democrats now have 54 Senate seats, compared to Republicans' 44", "CNN"), ("Senate: Democrats 54, Republicans 44", "Yahoo News"))
+        row = self.view()[0][0]
+        # The Democrats' 54 was given by two outlets; the Republicans' 44 by one only, so it is left out.
+        self.assertEqual(row["resultJa"], "民主党が下院で多数を獲得（2社が当確を報道）（現時点の議席: 上院 民主党54議席）")
+        self.assertIn("議席数は、別々の2社以上が同じ数字を報じたものです", row["detailJa"])
+
+    def test_different_counts_from_different_outlets_show_nothing_and_a_later_agreed_count_replaces_an_earlier_one(self):
+        calls = [("Democrats win the House", "CNN"), ("Democrats win the House", "CBS News")]
+        self.run_news(*calls, ("Democrats have 54 Senate seats", "CNN"), ("Democrats have 53 Senate seats", "Yahoo News"))
+        self.assertNotIn("議席", self.view()[0][0]["resultJa"].split("当確を報道）")[-1])
+        self.run_news(*calls, ("Democrats have 54 Senate seats", "CNN"), ("Democrats have 54 Senate seats", "Yahoo News"))
+        self.assertIn("上院 民主党54議席", self.view()[0][0]["resultJa"])
+        self.run_news(*calls, ("Democrats have 55 Senate seats", "CNN"), ("Democrats have 55 Senate seats", "NPR"), start=50)
+        self.assertIn("上院 民主党55議席", self.view()[0][0]["resultJa"])
+        self.assertNotIn("54議席", self.view()[0][0]["resultJa"])
+
+
 class HttpTests(Base):
     def test_the_owner_lists_results_and_feeds_and_can_withdraw_through_the_editor_token(self):
         import os
