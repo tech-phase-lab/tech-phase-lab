@@ -136,8 +136,20 @@ function Draft({ draft, onDone }: { draft: Issue; onDone: (message: string) => v
   </details>;
 }
 
-function OwnerPanel({ drafts, autoPublish, onChanged, shown }: { drafts: Issue[]; autoPublish: boolean; onChanged: (message: string) => void; shown: Issue | null }) {
+type OwnerState = { drafts: Issue[]; autoPublish: boolean; generateEnabled: boolean; generateHour: number; lastGenerated: string | null; generation: { running: boolean; configured: boolean; lastOk: boolean | null; lastError: string } };
+
+function OwnerPanel({ owner, onChanged, shown, onWatch }: { owner: OwnerState; onChanged: (message: string) => void; shown: Issue | null; onWatch: () => void }) {
+  const { drafts, autoPublish, generateEnabled, generateHour, generation } = owner;
   const [busy, setBusy] = useState(false), [error, setError] = useState("");
+  const toggleGenerate = async () => { setBusy(true); const result = await send("settings", { generateEnabled: !generateEnabled }); setBusy(false); if (!result.ok) setError("切り替えられませんでした。"); else onChanged(!generateEnabled ? "毎週の自動作成をオンにしました" : "毎週の自動作成をオフにしました"); };
+  const changeHour = async (hour: number) => { setBusy(true); const result = await send("settings", { generateHour: hour }); setBusy(false); if (!result.ok) setError("時刻を変えられませんでした。"); else onChanged("作る時刻を変えました"); };
+  const makeNow = async () => {
+    setBusy(true); setError("");
+    const result = await send("generate", {});
+    setBusy(false);
+    if (!result.ok) { setError(result.data?.error === "weekly-not-configured" ? "AIの設定がまだ終わっていません(監視サービスの設定が必要です)。" : result.data?.error === "weekly-already-running" ? "いま作っています。しばらくお待ちください。" : "始められませんでした。"); return; }
+    onWatch();
+  };
   const toggle = async () => { setBusy(true); const result = await send("settings", { autoPublish: !autoPublish }); setBusy(false); if (!result.ok) setError("切り替えられませんでした。"); else onChanged(!autoPublish ? "確認なしで公開に切り替えました" : "公開前に確認する設定に戻しました"); };
   const remove = async () => {
     if (!shown || !window.confirm(`第${shown.number}号を消します。読者からも見えなくなります。よろしいですか?`)) return;
@@ -147,6 +159,13 @@ function OwnerPanel({ drafts, autoPublish, onChanged, shown }: { drafts: Issue[]
   return <section className={styles.owner} aria-label="運営者">
     <h2>運営者</h2>
     <label className={styles.switch}><input type="checkbox" role="switch" checked={autoPublish} disabled={busy} onChange={() => void toggle()} /><span>確認なしで自動公開</span><small>{autoPublish ? "オン: 作られた号はすぐ公開されます" : "オフ: 下書きを確認してから公開します"}</small></label>
+    <div className={styles.generate}>
+      <label className={styles.switch}><input type="checkbox" role="switch" checked={generateEnabled} disabled={busy} onChange={() => void toggleGenerate()} /><span>毎週土曜に下書きを自動で作る</span><small>{generateEnabled ? `オン: 毎週土曜の${generateHour}時(日本時間)に、下書きを1つ作ります` : "オフ: 自動では作りません"}</small></label>
+      <label className={styles.hour}><span>作る時刻(土曜・日本時間)</span><select value={generateHour} disabled={busy} onChange={event => void changeHour(Number(event.target.value))}>{Array.from({ length: 24 }, (_, hour) => <option key={hour} value={hour}>{hour}時</option>)}</select></label>
+      <button type="button" disabled={busy || generation.running || !generation.configured} onClick={() => void makeNow()}>{generation.running ? "作っています…(数分かかります)" : "今すぐ下書きを作る"}</button>
+      {!generation.configured && <p className={styles.empty}>AIの設定がまだ終わっていません。終わるまで、自動でも手動でも作れません。</p>}
+      {generation.lastOk === false && <p role="alert" className={styles.error}>前回は作れませんでした({generation.lastError || "原因不明"})。</p>}
+    </div>
     {drafts.length === 0 ? <p className={styles.empty}>確認待ちの下書きはありません。</p> : drafts.map(draft => <Draft key={draft.id} draft={draft} onDone={onChanged} />)}
     {shown && <button type="button" className={styles.danger} disabled={busy} onClick={() => void remove()}>この号(第{shown.number}号)を消す</button>}
     {error && <p role="alert" className={styles.error}>{error}</p>}
@@ -159,7 +178,7 @@ export default function WeeklyIssues() {
   const [state, setState] = useState<State>("loading");
   const [issue, setIssue] = useState<Issue | null>(null), [latest, setLatest] = useState<number | null>(null);
   const [list, setList] = useState<Listed[]>([]), [hasMore, setHasMore] = useState(false), [pick, setPick] = useState(false), [more, setMore] = useState(false);
-  const [owner, setOwner] = useState<{ drafts: Issue[]; autoPublish: boolean } | null>(null), [message, setMessage] = useState(""), [revision, setRevision] = useState(0);
+  const [owner, setOwner] = useState<OwnerState | null>(null), [message, setMessage] = useState(""), [revision, setRevision] = useState(0);
   const [number, setNumber] = useState<number | null>(null);
 
   useEffect(() => {
@@ -176,13 +195,20 @@ export default function WeeklyIssues() {
   }, [number, revision]);
   useEffect(() => {
     if (!ownerMode) return;
-    void fetch("/api/research/weekly-issues?view=owner", { cache: "no-store" }).then(response => (response.ok ? response.json() : null)).then(data => data && setOwner({ drafts: data.drafts, autoPublish: data.settings.autoPublish })).catch(() => undefined);
+    void fetch("/api/research/weekly-issues?view=owner", { cache: "no-store" }).then(response => (response.ok ? response.json() : null)).then(data => data && setOwner({ drafts: data.drafts, autoPublish: data.settings.autoPublish, generateEnabled: data.settings.generateEnabled === true, generateHour: data.settings.generateHour ?? 8, lastGenerated: data.settings.lastGenerated ?? null, generation: data.generation ?? { running: false, configured: false, lastOk: null, lastError: "" } })).catch(() => undefined);
   }, [ownerMode, revision]);
   const olderPage = async () => {
     const last = list[list.length - 1]; if (!last) return;
     const response = await fetch(`/api/research/weekly-issues?limit=6&before=${last.number}`, { cache: "no-store" });
     if (!response.ok) return;
     const data = await response.json(); setList(current => [...current, ...data.issues]); setHasMore(data.hasMore); setMore(true);
+  };
+  // After "make one now": look again every few seconds (the model takes a few minutes) until it has finished.
+  const watch = () => {
+    setMessage("下書きを作っています。できたら下の「確認待ち」に出ます(通知も届きます)。");
+    let rounds = 0;
+    const timer = window.setInterval(() => { rounds += 1; setRevision(value => value + 1); if (rounds >= 60) window.clearInterval(timer); }, 6000);
+    window.setTimeout(() => window.clearInterval(timer), 6 * 60 * 1000);
   };
   const changed = (text: string) => { setMessage(text); setNumber(null); setRevision(value => value + 1); };
   const ja = lang === "ja";
@@ -202,6 +228,6 @@ export default function WeeklyIssues() {
       {message && <p className={styles.ok} role="status">{message}</p>}
       {issue ? <IssueView issue={issue} /> : <p className={styles.empty}>まだ公開された号はありません。</p>}
     </>}
-    {ownerMode && owner && <OwnerPanel drafts={owner.drafts} autoPublish={owner.autoPublish} shown={issue?.number ? issue : null} onChanged={changed} />}
+    {ownerMode && owner && <OwnerPanel owner={owner} shown={issue?.number ? issue : null} onChanged={changed} onWatch={watch} />}
   </ResearchToolShell>;
 }

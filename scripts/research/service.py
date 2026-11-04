@@ -60,6 +60,7 @@ import watch_earnings
 import mu_earnings_measurement
 import web_push
 import voice_inbox
+import weekly_generator
 import weekly_issues
 import release_watch
 import original_preview_news
@@ -775,6 +776,7 @@ class AutomaticMonitor:
         self.deep_analysis_thread = threading.Thread(target=self.run_deep_analysis, name="deep-analysis", daemon=True)
         self.watch_earnings_thread = threading.Thread(target=self.run_watch_earnings, name="watch-earnings", daemon=True)
         self.mu_measurement_thread = threading.Thread(target=self.run_mu_measurement, name="mu-earnings-measurement", daemon=True)
+        self.weekly_thread = threading.Thread(target=self.run_weekly, name="weekly-auto-draft-clock", daemon=True)
         self.news_thread = threading.Thread(target=self.run_stock_news, name="stock-news-intake", daemon=True)
         self.company_wire_thread = threading.Thread(target=self.run_company_wire, name="company-wire", daemon=True)
         self.company_wire_errors = {}
@@ -1021,6 +1023,15 @@ class AutomaticMonitor:
                 print("watch-earnings-unavailable", flush=True)
             self.stop_event.wait(5)
 
+    def run_weekly(self):
+        """Once a minute: is it Saturday morning, and has the owner turned the weekly draft on? Off unless turned on."""
+        while not self.stop_event.is_set():
+            try:
+                self.weekly_auto_draft()
+            except Exception:
+                print("weekly-auto-draft-unavailable", flush=True)
+            self.stop_event.wait(60)
+
     def run_mu_measurement(self):
         while not self.stop_event.is_set():
             try:
@@ -1138,6 +1149,7 @@ class AutomaticMonitor:
         self.official_research_thread.start()
         self.deep_analysis_thread.start()
         self.mu_measurement_thread.start()
+        self.weekly_thread.start()
         self.watch_earnings_thread.start()
         self.push_thread.start()
 
@@ -1306,6 +1318,30 @@ class AutomaticMonitor:
                 if os.path.exists(path)))
         except OSError:
             return None
+
+    def weekly_auto_draft(self, force=False):
+        """Saturday's weekly draft (or the owner's "make one now"). The model call is slow, so it runs on its own thread and the loop goes on."""
+        if not force:
+            try:
+                with self.db_lock, weekly_issues.connect(self.db_path) as db:
+                    if not weekly_generator.due(db, time.time()):
+                        return False
+            except Exception:
+                return False
+        if weekly_generator.LOCK.locked():
+            return False
+
+        def work():
+            try:
+                news = weekly_generator.headlines(self.public_news(max_age=3600), time.time())
+            except Exception:
+                news = []
+            if force:
+                weekly_generator.generate_now(self.db_path, time.time(), news)
+            else:
+                weekly_generator.run_if_due(self.db_path, time.time(), news)
+        threading.Thread(target=work, name="weekly-auto-draft", daemon=True).start()
+        return True
 
     def compute_public_news(self, *, original_preview=False):
         steps = {}
@@ -3221,7 +3257,7 @@ class Handler(BaseHTTPRequestHandler):
                 return
             try:
                 with weekly_issues.connect(self.app.db_path) as db:
-                    self.send_json(200, {"ok": True, **weekly_issues.owner_view(db)})
+                    self.send_json(200, {"ok": True, **weekly_issues.owner_view(db), "generation": weekly_generator.status()})
             except Exception:
                 self.send_json(503, {"ok": False, "error": "weekly-unavailable"})
             return
@@ -3435,6 +3471,16 @@ class Handler(BaseHTTPRequestHandler):
             return
         if path in {"/inbox/start", "/inbox/finish"}:
             self.inbox_two_step(path)
+            return
+        if path == "/admin/weekly/generate":
+            if not self.editor_authorized():
+                self.send_json(401, {"ok": False, "error": "unauthorized"})
+                return
+            if not weekly_generator.configuration():
+                self.send_json(503, {"ok": False, "error": "weekly-not-configured"})
+                return
+            started = self.app.weekly_auto_draft(force=True)
+            self.send_json(202 if started else 409, {"ok": started, "error": None if started else "weekly-already-running"})
             return
         if path in {"/admin/weekly/draft", "/admin/weekly/publish", "/admin/weekly/delete", "/admin/weekly/settings"}:
             if not self.editor_authorized():

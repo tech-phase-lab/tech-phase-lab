@@ -3,7 +3,7 @@ export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
 const headers = { "Cache-Control": "private, no-store", Vary: "Cookie", "X-Content-Type-Options": "nosniff", "Referrer-Policy": "no-referrer" };
 const reply = (status: number, value: unknown) => Response.json(value, { status, headers });
-const ACTIONS: Record<string, string> = { draft: "/admin/weekly/draft", publish: "/admin/weekly/publish", delete: "/admin/weekly/delete", settings: "/admin/weekly/settings" };
+const ACTIONS: Record<string, string> = { draft: "/admin/weekly/draft", publish: "/admin/weekly/publish", delete: "/admin/weekly/delete", settings: "/admin/weekly/settings", generate: "/admin/weekly/generate" };
 
 /** 週刊 Tech Phase PRO. Members (PRO) read published issues; only the owner sees drafts and acts on them. Everything lives on the monitoring service. */
 function monitor(path: string, tokenName: "RESEARCH_MONITOR_TOKEN" | "RESEARCH_EDITOR_TOKEN") {
