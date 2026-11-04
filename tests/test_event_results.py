@@ -137,7 +137,73 @@ class ResultTests(Base):
         self.assertFalse(ev.active(CONFIG, datetime(2026, 12, 1, tzinfo=timezone.utc)))
         for watch in CONFIG["watches"]:
             self.assertGreaterEqual(watch["requirePublishers"], 2)
-            self.assertTrue(all(c["ja"] and c["en"] for c in watch["claims"]))
+            self.assertTrue(all(c["ja"] and c["en"] for c in watch.get("claims", [])))
+            self.assertTrue(watch.get("claims") or watch.get("numeric"), "a watch states what to look for")
+
+
+ADP = CONFIG["watches"][1]
+ADP_OPEN = datetime(2026, 11, 4, 14, 0, tzinfo=timezone.utc)
+MARKETS = [feed for feed in CONFIG["feeds"] if feed["group"] == "markets"]
+
+
+class FigureTests(Base):
+    """ADP's private payrolls (Nov 4): a figure is published only when two different outlets give the very same signed figure."""
+    def run_markets(self, headlines, now=ADP_OPEN):
+        urls = {feed["url"]: feed["publisher"] for feed in CONFIG["feeds"]}
+
+        def transport(url):
+            name = urls[url]
+            if name not in headlines:
+                raise OSError("unreachable")
+            return rss(*[(title, f"https://{name.replace(' ', '').lower()}.example/{i}", at(hour, minute)) for i, (title, hour, minute) in enumerate(headlines[name])])
+        return ev.run_once(self.path, now, CONFIG, transport)
+
+    def test_the_figure_is_read_only_from_a_plain_statement_of_the_result(self):
+        spec = ADP["numeric"]
+        yes = [("Private employers added 42,000 jobs in October, ADP says", 42000), ("ADP: Private payrolls fell by 32,000 in October", -32000), ("ADP private payrolls +42K in October", 42000),
+               ("ADP shows private employers shed 12,500 jobs", -12500), ("ADP: private employers cut 30K jobs in October", -30000),
+               ("Private employers added 42,000 jobs in October, below the 90,000 expected, ADP says", 42000), ("Private payrolls rose 38,000 vs 90,000 forecast, ADP reports", 38000),
+               ("ADP private payrolls rose 42,000, up from 10,000 revised in September", 42000), ("ADP: private payrolls rise by 42,000 in October", 42000),
+               ("ADP: private payrolls fall by 12,000 in October", -12000), ("Private employers lose 5,000 jobs in October, ADP says", -5000)]
+        no = ["Economists expect ADP to show private employers added 90,000 jobs", "ADP report preview: private payrolls likely rose by 40,000",
+              "ADP weekly: private employers added an average of 11,250 jobs a week", "ADP: hiring slowed in October", "ADP: jobs growth slows to 42,000 from 133,000",
+              "Private employers added 42,000 jobs in October", "x" * 400 + " ADP private employers added 42,000 jobs"]
+        for title, figure in yes:
+            self.assertEqual(ev.read_figure(title, spec), figure, title)
+        for title in no:
+            self.assertIsNone(ev.read_figure(title, spec), title)
+
+    def test_two_different_outlets_with_the_same_figure_publish_one_does_not(self):
+        self.run_markets({"CNBC": [("Private employers added 42,000 jobs in October, ADP says", 13, 20)]})
+        self.assertEqual(self.view()[0], [])
+        self.run_markets({"CNBC": [("Private employers added 42,000 jobs in October, ADP says", 13, 20)], "MarketWatch": [("ADP: private payrolls rise by 42,000 in October", 13, 25)]})
+        row = self.view()[0][0]
+        self.assertEqual(row["id"], "adp-2026-10")
+        self.assertEqual(row["resultJa"], "民間の雇用者数 +42,000人（2社が同じ数字を報道）")
+        self.assertEqual({s["publisher"] for s in row["sources"]}, {"CNBC", "MarketWatch"})
+        self.assertIn("ADPの公式発表で確認してください", row["detailJa"])
+        self.assertEqual(row["releasedAt"][:16], "2026-11-04T13:25")
+
+    def test_different_figures_from_different_outlets_never_publish_and_two_solid_but_different_figures_are_held(self):
+        self.run_markets({"CNBC": [("Private employers added 42,000 jobs, ADP says", 13, 20)], "MarketWatch": [("ADP: private payrolls rise by 41,000", 13, 25)]})
+        self.assertEqual(self.view()[0], [], "42,000 and 41,000 are not the same figure")
+        self.run_markets({"CNBC": [("Private employers added 42,000 jobs, ADP says", 13, 20)], "MarketWatch": [("ADP: private payrolls rise by 42,000", 13, 25)],
+                          "Yahoo Finance": [("ADP private employers shed 42,000 jobs", 13, 30)], "BBC News Business": [("ADP: private payrolls fall by 42,000", 13, 31)]})
+        public, owner = self.view()
+        self.assertEqual(public, [])
+        self.assertEqual(owner["results"][0]["state"], "conflict")
+
+    def test_the_two_groups_of_feeds_do_not_mix_and_a_headline_before_the_release_is_ignored(self):
+        self.run_markets({"CNBC": [("Private employers added 42,000 jobs, ADP says", 12, 0)], "MarketWatch": [("ADP: private payrolls rise by 42,000", 12, 5)]})
+        self.assertEqual(self.view()[0], [], "published before the release time")
+        # While both watches are open, a politics headline never counts for ADP and a markets headline never counts for the election.
+        self.run_markets({"CBS News": [("Democrats win the House", 13, 40)], "NPR": [("Democrats win the House", 13, 41)],
+                          "CNBC": [("Democrats win the House", 13, 40)], "MarketWatch": [("Democrats win the House", 13, 41)]})
+        public = self.view()[0]
+        self.assertEqual([row["id"] for row in public], ["us-midterm-2026-11-03"])
+        self.assertEqual({s["publisher"] for s in public[0]["sources"]}, {"CBS News", "NPR"})
+        self.assertTrue(MARKETS and len({f["publisher"] for f in MARKETS}) == len(MARKETS), "each outlet is one feed, so one outlet can never count twice")
+        self.assertFalse({f["publisher"] for f in MARKETS} & {f["publisher"] for f in CONFIG["feeds"] if f["group"] == "politics"}, "no outlet name is shared between the groups")
 
 
 class HttpTests(Base):
