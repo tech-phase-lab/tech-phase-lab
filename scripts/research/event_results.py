@@ -172,7 +172,12 @@ def parse_feed(body):
         link = (child["link"].text or "").strip() if "link" in child and child["link"].text else (child["link"].get("href", "") if "link" in child else "")
         when = next((child[key].text for key in ("pubDate", "published", "updated", "date") if key in child and child[key].text), "")
         try:
-            moment = parsedate_to_datetime(when) if "T" not in when else datetime.fromisoformat(when.replace("Z", "+00:00"))
+            # An Atom date is ISO 8601 ("2026-11-04T13:15:00Z"); an RSS date is RFC 822 ("Wed, 04 Nov 2026 13:15:00 GMT").
+            # (The letter T in "GMT" is not the ISO separator.)
+            iso = re.match(r"^\s*\d{4}-\d{2}-\d{2}T", when)
+            moment = datetime.fromisoformat(when.strip().replace("Z", "+00:00")) if iso else parsedate_to_datetime(when)
+            if moment.tzinfo is None:
+                moment = moment.replace(tzinfo=timezone.utc)
             moment = moment.astimezone(timezone.utc)
         except (TypeError, ValueError):
             continue
