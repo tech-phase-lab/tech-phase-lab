@@ -26,7 +26,7 @@ function Numbers({ part }: { part: Extract<Part, { type: "numbers" }> }) {
       return <article key={index} className={styles.card}>
         <h4>{card.label}</h4>
         {card.value !== null && <p className={styles.big}><b>{formatNumber(card.value)}</b>{card.unit && <small>{card.unit}</small>}</p>}
-        {card.outlook !== null && <p className={styles.outlook}><span>{card.value !== null ? "次四半期の見通し" : "見通し"}</span> <b>{formatNumber(card.outlook)}</b>{(card.outlookUnit || card.unit) && <small>{card.outlookUnit || card.unit}</small>}</p>}
+        {card.outlook !== null && <p className={styles.outlook}><span>{card.value !== null ? "次四半期の見通し" : "見通し"}</span> <b className={badge ? styles[`val_${badge.tone}`] : undefined}>{formatNumber(card.outlook)}</b>{(card.outlookUnit || card.unit) && <small>{card.outlookUnit || card.unit}</small>}</p>}
         {card.previous !== null && <p className={styles.previous}><span>前回</span> {formatNumber(card.previous)}{card.unit}</p>}
         {badge && <p className={`${styles.badge} ${styles[badge.tone]}`}><b>{badge.text}</b><span>{badge.caption}</span></p>}
         {card.range && <p className={styles.range}>{card.range}</p>}
@@ -212,7 +212,7 @@ export default function WeeklyIssues() {
   };
   const changed = (text: string) => { setMessage(text); setNumber(null); setRevision(value => value + 1); };
   const ja = lang === "ja";
-  return <ResearchToolShell desk lang={lang} setLang={setLang} title="週刊 Tech Phase PRO" description="">
+  return <ResearchToolShell desk compactTitle lang={lang} setLang={setLang} title="週刊 Tech Phase PRO" description="">
     {(state === "signed-out" || state === "pro-required") && <section className={styles.notice}><h2>PRO会員限定です</h2><p>PRO会員になると、週刊 Tech Phase PRO を読めます。</p><Link href="/research/account">{ja ? "ログイン・会員情報" : "Sign in / Membership"}</Link></section>}
     {state === "loading" && <p className={styles.empty}>読み込み中…</p>}
     {state === "error" && <p role="alert" className={styles.error}>いま読み込めません。少し待ってからもう一度開いてください。</p>}

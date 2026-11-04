@@ -45,3 +45,12 @@ test("the owner can turn the weekly auto-draft on and try one now (Nov 4)", () =
   assert.match(read("app/api/research/weekly-issues/route.ts"), /generate: "\/admin\/weekly\/generate"/);
   assert.ok(!/checked=\{generateEnabled \?\? true\}/.test(screen), "off unless the owner turns it on");
 });
+
+test("the weekly title stays on one line and the issue carries gold-brown frames, a rule after each heading and coloured outlooks (Nov 4)", () => {
+  assert.match(read("app/research/weekly/issues.tsx"), /<ResearchToolShell desk compactTitle /);
+  assert.match(read("app/research/research-tool-shell.tsx"), /compactTitle \? styles\.compactTitle/);
+  assert.match(read("app/research/research-tools.module.css"), /\.desk h1\.compactTitle\{[^}]*white-space:nowrap/);
+  const css = read("app/research/weekly/issues.module.css");
+  for (const text of ["border:1px solid #4a3d20", ".part h3::after", ".val_up", ".val_down"]) assert.ok(css.includes(text), text);
+  assert.ok(!/\.part\{[^}]*#2a3140/.test(css), "no blue-grey frame on a part");
+});
