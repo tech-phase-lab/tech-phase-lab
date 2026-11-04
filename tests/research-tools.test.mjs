@@ -194,8 +194,14 @@ test("FOMC: the October meeting has its clock time; the December meeting stays d
   assert.equal(timed.kind, "economic");
   const fomc = dateOnlyEvents.filter((event) => event.id.startsWith("fomc-"));
   assert.deepEqual(fomc.map((event) => event.date), ["2026-12-09"]);
+  // The U.S. midterm elections (Nov 3, 2026) are an economic-calendar date, shown by date only, until the New York day ends.
+  const midterm = dateOnlyEvents.find((event) => event.id === "us-midterm-2026-11-03");
+  assert.ok(midterm && midterm.kind === "economic" && midterm.date === "2026-11-03" && !("startsAt" in midterm));
+  assert.equal(new Date(`${midterm.date}T12:00:00Z`).getUTCDay(), 2, "Election Day is a Tuesday");
+  assert.equal(selectDateOnlyEvents(dateOnlyEvents, "economic", "upcoming", Date.parse("2026-11-04T00:42:00Z")).some((event) => event.id === midterm.id), true, "still shown on the evening of Nov 3 in New York (the morning of Nov 4 in Japan)");
+  assert.equal(selectDateOnlyEvents(dateOnlyEvents, "economic", "upcoming", Date.parse("2026-11-04T06:00:00Z")).some((event) => event.id === midterm.id), false, "gone once Nov 4 begins in New York");
   assert.ok(fomc.every((event) => event.kind === "economic" && !("startsAt" in event)));
-  assert.equal(selectDateOnlyEvents(dateOnlyEvents, "economic", "upcoming", Date.parse("2026-09-23T00:00:00Z")).length, 1);
+  assert.equal(selectDateOnlyEvents(dateOnlyEvents, "economic", "upcoming", Date.parse("2026-09-23T00:00:00Z")).length, 2);
   assert.equal(selectDateOnlyEvents(dateOnlyEvents, "earnings", "2026-10", 0).length, 1);
 });
 
