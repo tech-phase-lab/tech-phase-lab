@@ -354,6 +354,14 @@ export function selectDateOnlyEarnings(period: string, now: number) {
 
 // Confirmed official releases, separate from scheduled future events.
 export const economicResults = [{
+  // Voting was Nov 3 (U.S.); the calls came on the night of Nov 3 Eastern, i.e. the afternoon of Nov 4 in Japan. Seat counts differed between sources, so no number is shown.
+  id: "us-midterm-2026-11-03", title: { ja: "米国中間選挙（現地11月3日投票・日本時間4日に結果）", en: "U.S. midterm elections (voting Nov 3 local; results Nov 4 JST)" },
+  sourceName: "CBS News・NBC News ほか(報道)", releasedAt: "2026-11-03T23:30:00-05:00",
+  result: { ja: "民主党が下院・上院とも多数を獲得（主要メディアが当確を報道）", en: "Democrats win control of both the House and the Senate (called by major outlets)" },
+  detail: { ja: "CBS、NBC、ワシントン・ポストなど主要メディアが、現地11月3日の夜に当確を報じました。議席数は報道ごとに違い、集計は続いています。各州の公式な認定は数週間かかるため、最終の議席数は今後変わる可能性があります。", en: "CBS, NBC, The Washington Post and other major outlets called both chambers on the night of November 3 (U.S. local). Seat counts differ between reports and counting continues. States certify their results over the following weeks, so final seat counts may still change." },
+  sourceUrl: "https://www.cbsnews.com/live-updates/election-day-2026-midterms/",
+  verifiedOn: "2026-11-04",
+}, {
   id: "fomc-2026-10", title: { ja: "FOMC 政策金利の発表（10月会合）", en: "FOMC rate decision (October 2026)" },
   sourceName: "Federal Reserve", releasedAt: "2026-10-28T14:00:00-04:00",
   result: { ja: "政策金利を据え置き（誘導目標レンジ3.75〜4.00%）。採決は10対2", en: "Target range held at 3.75%-4.00%; vote 10-2" },

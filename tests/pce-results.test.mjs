@@ -37,7 +37,10 @@ test("automatic exact-period PCE revisions replace the saved result once and pre
   }
   const next = mergeEconomicResults([{ ...update, url: update.url.replace("august", "september"), publishedAt: "2026-10-29T12:30:00Z" }]);
   assert.equal(next.length, initial.length + 1);
-  assert.equal(next[0].id, "pce-2026-09");
+  // Newest first. A newer row of another kind (the Nov 3 midterms) may sit above it, so check the order rather than the first place.
+  const position = id => next.findIndex(item => item.id === id);
+  assert.ok(position("pce-2026-09") >= 0 && position("pce-2026-09") < position("fomc-2026-10"), "the new PCE result is above the older FOMC row");
+  assert.deepEqual(next.map(item => Date.parse(item.releasedAt)), next.map(item => Date.parse(item.releasedAt)).toSorted((a, b) => b - a), "the list is newest first");
 });
 
 test('employment sources collapse into one localized release and retain the verified official result', () => {
