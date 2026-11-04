@@ -48,6 +48,16 @@ class ShapeTests(unittest.TestCase):
         for title, party, chamber in no:
             self.assertFalse(ev.reads_as_call(title, claim(party, chamber)), title)
 
+    def test_every_date_form_real_feeds_use_is_read_including_GMT_and_Z(self):
+        forms = ["Wed, 04 Nov 2026 13:20:00 GMT", "Wed, 04 Nov 2026 13:20:00 +0000", "Wed, 04 Nov 2026 08:20:00 -0500", "Wed, 04 Nov 2026 13:20:00 UT"]
+        for form in forms:
+            rows = ev.parse_feed(rss(("Headline", "https://a.example/1", form)))
+            self.assertEqual(len(rows), 1, form)
+            self.assertEqual(rows[0][2].strftime("%Y-%m-%d %H:%M"), "2026-11-04 13:20", form)
+        atom = lambda stamp: f"<feed xmlns='http://www.w3.org/2005/Atom'><entry><title>H</title><link href='https://b.example/x'/><updated>{stamp}</updated></entry></feed>".encode()
+        for stamp in ["2026-11-04T13:20:00Z", "2026-11-04T13:20:00+00:00", "2026-11-04T22:20:00+09:00"]:
+            self.assertEqual(ev.parse_feed(atom(stamp))[0][2].strftime("%Y-%m-%d %H:%M"), "2026-11-04 13:20", stamp)
+
     def test_rss_and_atom_bodies_are_read_and_unsafe_ones_are_refused(self):
         rows = ev.parse_feed(rss(("Democrats win the House", "https://a.example/1", at(3)), ("bad link", "http://a.example/2", at(3)), ("no date", "https://a.example/3", "")))
         self.assertEqual([r[0] for r in rows], ["Democrats win the House"])
