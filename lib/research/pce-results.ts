@@ -1,11 +1,14 @@
 import { economicResults } from "./calendar";
 import type { ResultBrief } from "./market-results";
-import type { OfficialUpdate } from "./general-news";
+import type { EventResult, OfficialUpdate } from "./general-news";
 
 const months = ["january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december"];
 
-export function mergeEconomicResults(updates: OfficialUpdate[] = [], briefs: ResultBrief[] = []) {
+export function mergeEconomicResults(updates: OfficialUpdate[] = [], briefs: ResultBrief[] = [], events: EventResult[] = []) {
   const results = new Map(economicResults.map(event => [event.id, event]));
+  // Big events read automatically from at least two outlets; they replace a hand-written row of the same id.
+  for (const event of events) results.set(event.id, { id: event.id, title: { ja: event.titleJa, en: event.titleEn }, sourceName: event.sourceName, releasedAt: event.releasedAt,
+    result: { ja: event.resultJa, en: event.resultEn }, detail: { ja: event.detailJa, en: event.detailEn }, sourceUrl: event.sourceUrl, verifiedOn: event.verifiedOn });
   for (const item of updates) {
     const url = new URL(item.url);
     const match = /^\/news\/20\d{2}\/personal-income-and-outlays-([a-z]+)-(20\d{2})$/.exec(url.pathname);

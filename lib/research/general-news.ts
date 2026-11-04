@@ -20,7 +20,23 @@ export type OfficialNewsSource = { id: string; url: string; publisher: string; p
 export type OfficialNewsBrief = { version: 1; scope: "company" | "sector"; validFacts: number; pendingFacts: number };
 export type OfficialUpdate = CompactTitles & NewsBody & { brief?: OfficialNewsBrief; generalSource?: 1; newsCategory?: "policy" | "economic"; syndication?: Syndication; id: string; title: string; translationJa?: string; url: string; publisher: string; tickers: string[]; observedAt: string; publishedAt?: string; publishedOn?: string; researchId?: string; sources?: OfficialNewsSource[]; pendingResearch?: 1 };
 export type MarketUpdate = CompactTitles & MarketNewsDetail & { id: string; titleJa: string; titleEn: string; url: string; topic: "index-membership" | "government-bonds" | "crude-oil"; publishedAt: string; observedAt: string };
-export type GeneralNewsFeed = { ok: true; enabled: boolean; items: GeneralNewsItem[]; officialUpdates?: OfficialUpdate[]; marketUpdates?: MarketUpdate[]; analystUpdates?: AnalystUpdate[]; resultBriefs?: ResultBrief[]; officialHistory?: OfficialHistory; originalPreviewItems?: OriginalPreviewItem[]; originalPreviewWindow?: OriginalPreviewWindow };
+/** A big non-numeric event (an election) that at least two outlets reported; the wording is fixed text, never a number. */
+export type EventResult = { id: string; titleJa: string; titleEn: string; sourceName: string; releasedAt: string; resultJa: string; resultEn: string; detailJa: string; detailEn: string; sourceUrl: string; sources: { publisher: string; title: string; url: string }[]; verifiedOn: string };
+const eventText = (value: unknown, limit = 2000) => { if (typeof value !== "string" || !value.trim() || value.length > limit || value.includes("\0")) throw Error("Invalid event result"); return value; };
+const eventUrl = (value: unknown) => { const url = new URL(eventText(value, 2000)); if (url.protocol !== "https:" || url.username || url.password) throw Error("Invalid event result"); return url.href; };
+export function parseEventResults(value: unknown): EventResult[] {
+  if (!Array.isArray(value) || value.length > 20) throw Error("Invalid event results");
+  return value.map(raw => {
+    if (!raw || typeof raw !== "object") throw Error("Invalid event result");
+    const v = raw as Record<string, unknown>;
+    if (typeof v.id !== "string" || !/^[a-z0-9-]{3,80}$/.test(v.id) || typeof v.releasedAt !== "string" || !Number.isFinite(Date.parse(v.releasedAt)) || typeof v.verifiedOn !== "string" || !/^\d{4}-\d{2}-\d{2}$/.test(v.verifiedOn)) throw Error("Invalid event result");
+    if (!Array.isArray(v.sources) || v.sources.length < 2 || v.sources.length > 6) throw Error("Invalid event result");
+    return { id: v.id, titleJa: eventText(v.titleJa, 200), titleEn: eventText(v.titleEn, 200), sourceName: eventText(v.sourceName, 300), releasedAt: v.releasedAt,
+      resultJa: eventText(v.resultJa, 500), resultEn: eventText(v.resultEn, 500), detailJa: eventText(v.detailJa), detailEn: eventText(v.detailEn), sourceUrl: eventUrl(v.sourceUrl), verifiedOn: v.verifiedOn,
+      sources: v.sources.map(source => { const s = source as Record<string, unknown>; return { publisher: eventText(s?.publisher, 100), title: eventText(s?.title, 300), url: eventUrl(s?.url) }; }) };
+  });
+}
+export type GeneralNewsFeed = { ok: true; enabled: boolean; items: GeneralNewsItem[]; officialUpdates?: OfficialUpdate[]; marketUpdates?: MarketUpdate[]; analystUpdates?: AnalystUpdate[]; resultBriefs?: ResultBrief[]; eventResults?: EventResult[]; officialHistory?: OfficialHistory; originalPreviewItems?: OriginalPreviewItem[]; originalPreviewWindow?: OriginalPreviewWindow };
 const officialUpdateHosts = new Set(["nebius.com", "developer.nvidia.com", "x.com", "blogs.arista.com",
   "investor.marvell.com", "racks.vertiv.com", "pr.tsmc.com", "www.palantir.com", "www.bea.gov", "www.bls.gov"]);
 
@@ -107,7 +123,7 @@ export function availableNewsPayload(value: unknown): GeneralNewsFeed {
   const raw = value as Record<string, unknown>;
   const base = publicNewsPayload({ ok: raw.ok, enabled: raw.enabled, items: [], officialHistory: raw.officialHistory });
   const accepted: Record<string, unknown[]> = {};
-  for (const [key, limit] of [["resultBriefs", 20], ["officialUpdates", OFFICIAL_NEWS_HISTORY_LIMIT], ["marketUpdates", 20], ["analystUpdates", 30], ["items", 30], ["originalPreviewItems", ORIGINAL_PREVIEW_LIMIT]] as const) {
+  for (const [key, limit] of [["resultBriefs", 20], ["eventResults", 20], ["officialUpdates", OFFICIAL_NEWS_HISTORY_LIMIT], ["marketUpdates", 20], ["analystUpdates", 30], ["items", 30], ["originalPreviewItems", ORIGINAL_PREVIEW_LIMIT]] as const) {
     if (raw[key] === undefined && key !== "items") continue;
     const rows = raw[key];
     accepted[key] = [];
@@ -127,7 +143,7 @@ export function publicNewsPayload(value: unknown): GeneralNewsFeed {
   if (!value || typeof value !== "object") throw new Error("Invalid news feed");
   const payload = value as Record<string, unknown>;
   if (payload.ok !== true || typeof payload.enabled !== "boolean" || !Array.isArray(payload.items) || payload.items.length > 30) throw new Error("Invalid news feed");
-  const updates: { officialUpdates?: OfficialUpdate[]; marketUpdates?: MarketUpdate[]; analystUpdates?: AnalystUpdate[]; resultBriefs?: ResultBrief[]; officialHistory?: OfficialHistory } = {};
+  const updates: { officialUpdates?: OfficialUpdate[]; marketUpdates?: MarketUpdate[]; analystUpdates?: AnalystUpdate[]; resultBriefs?: ResultBrief[]; eventResults?: EventResult[]; officialHistory?: OfficialHistory } = {};
   if (payload.officialHistory && typeof payload.officialHistory === "object") {
     const h = payload.officialHistory as Record<string, unknown>;
     if (h.limit === OFFICIAL_NEWS_HISTORY_LIMIT
@@ -157,6 +173,8 @@ export function publicNewsPayload(value: unknown): GeneralNewsFeed {
     });
   }
   if (payload.resultBriefs !== undefined) updates.resultBriefs = parseResultBriefs(payload.resultBriefs);
+  // A malformed event result must never take the whole news feed down with it.
+  if (payload.eventResults !== undefined) { try { updates.eventResults = parseEventResults(payload.eventResults); } catch { updates.eventResults = []; } }
   if (payload.officialUpdates !== undefined) {
     if (!Array.isArray(payload.officialUpdates) || payload.officialUpdates.length > OFFICIAL_NEWS_HISTORY_LIMIT) throw Error("Invalid updates");
     const seenOfficialUrls = new Map<string, number>();
