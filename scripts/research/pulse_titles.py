@@ -21,12 +21,12 @@ import brief_generator
 import factual_validation
 import headline_translation
 
-# v2: shorter, so the line fits a phone screen next to the clock.
-POLICY_ID = 'pulse-title-v2'
+# v3 (Nov 4): the home band shows one still line of about 20 characters (22 at most); a longer line is not shown there.
+POLICY_ID = 'pulse-title-v3'
 INSTRUCTIONS = (
-    'Write a one-line headline for a narrow news ticker from the supplied published headline (titleJa and '
-    'titleEn of the same story). Return shortJa (at most 22 Japanese characters) and shortEn (at most 45 '
-    'characters) that tell a reader what happened: the subject, the action and, if it fits, the single most '
+    'Write a one-line headline for the home news band from the supplied published headline (titleJa and '
+    'titleEn of the same story). Return shortJa (about 20 Japanese characters, never more than 22) and shortEn (at most 45 '
+    'characters) that name the subject and the main point, so a reader knows what happened at a glance: the subject, the action and, if it fits, the single most '
     'important figure. You may drop secondary details, but never change a fact, number, direction, date or '
     'name, and keep any negation, plan, forecast, possibility or "reported" status. Write every number exactly '
     'as the headline does (no shortened years such as 07 for 2007, no new units) and every company or person '
@@ -38,9 +38,8 @@ FIELDS = ('shortJa', 'shortEn')
 OUTPUT_TOKENS = 2000
 BUDGET_SHARE = 0.2
 LEDGER_PREFIX = 'pulse:'
-# The strip shrinks a little and then slides slowly (Oct 16), so characters over the
-# 22-character target still read fine; rejecting them wasted a third of the strip-title calls.
-MAX_JA = 32
+# The band no longer slides or scrolls (Nov 4): a title over 22 characters would not be shown, so it is rejected and rewritten.
+MAX_JA = 22
 # A headline this short already fits a phone and needs no call.
 FITS_JA = 22
 MAX_EN = 64

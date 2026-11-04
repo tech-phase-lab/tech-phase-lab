@@ -57,6 +57,15 @@ class PulseTitleTests(unittest.TestCase):
         self.assertNotIn('pulseTitleJa', second)
         self.assertNotIn('pulseTitleJa', PAYLOAD['officialUpdates'][0])  # The input is never mutated.
 
+    def test_the_band_shows_one_still_line_so_a_title_over_22_characters_is_rejected(self):
+        self.assertEqual(pulse_titles.MAX_JA, 22)
+        ok = {'shortJa': 'オラクル、電力費3億ドル負担を計画', 'shortEn': GOOD['shortEn']}
+        self.assertEqual(pulse_titles.validate(ok, JA, EN)[0], ok['shortJa'])
+        long_ja = {'shortJa': 'オラクル、ウィスコンシン州住民向けに電力費3億ドル負担を計画', 'shortEn': GOOD['shortEn']}
+        with self.assertRaises(ValueError) as caught:
+            pulse_titles.validate(long_ja, JA, EN)
+        self.assertEqual(str(caught.exception), 'too-long')
+
     def test_changed_facts_or_dropped_status_are_rejected_and_retried(self):
         for bad, code in (({**GOOD, 'shortJa': 'オラクル、電力費30億ドル負担を計画'}, 'unsupported-number'),
                           ({**GOOD, 'shortJa': 'オラクル、電力費3億ドルを負担'}, 'changed-qualifier'),

@@ -6,44 +6,37 @@ import { pathToFileURL } from 'node:url';
 import ts from 'typescript';
 import React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
+import { bandItems, bandParts, bandTitle } from '../lib/research/news-band.ts';
 
 const require=createRequire(import.meta.url);
 let source=await readFile(new URL('../app/research/research-pulse.tsx',import.meta.url),'utf8');
 source=source.replace('import { newsSnapshot, serverNewsSnapshot, subscribeNews } from "@/lib/research/news-snapshot";',
   'const newsSnapshot = () => globalThis.__pulseTestSnapshot; const serverNewsSnapshot = newsSnapshot; const subscribeNews = () => () => {};');
-for (const name of ['news-pulse-items','news-time','news-pulse-headline','company-wire','wire-store','news-startup']) {
+source=source.replace('import { WATCH_TICKERS } from "@/lib/research/flash-rows";','const WATCH_TICKERS = new Set(["MU", "NVDA", "APH"]);');
+for (const name of ['news-pulse-items','news-time','news-band','company-wire','wire-store','news-startup']) {
   source=source.replace(`"@/lib/research/${name}"`,JSON.stringify(new URL(`../lib/research/${name}.ts`,import.meta.url).href));
 }
-// The strip waits for the first company-wire answer in the app; these tests start from the settled state.
 source=source.replace('const [wireSettled, setWireSettled] = useState(false);','const [wireSettled, setWireSettled] = useState(true);').replace('const [gaveUp, setGaveUp] = useState(false);','const [gaveUp, setGaveUp] = useState(true);');
-source=source.replace('import styles from "./research-pulse.module.css";', 'const styles={pulse:"pulse",headline:"headline",clipped:"clipped",clock:"clock",eastern:"eastern",fresh:"fresh",progress:"progress"};');
+source=source.replace('import styles from "./research-pulse.module.css";', 'const styles={pulse:"pulse",strip:"strip",item:"item",in:"in",out:"out",live:"live",hd:"hd",sym:"sym",tm:"tm",wave:"wave",flash:"flash",slot:"slot"};');
 let compiled=ts.transpileModule(source,{compilerOptions:{jsx:ts.JsxEmit.ReactJSX,module:ts.ModuleKind.ESNext}}).outputText;
 for(const name of ['react','react/jsx-runtime']) compiled=compiled.replaceAll(JSON.stringify(name),JSON.stringify(pathToFileURL(require.resolve(name)).href));
-const {default:ResearchPulse}=await import('data:text/javascript;base64,'+Buffer.from(compiled).toString('base64'));
+const {default:ResearchPulse,fitFontSize}=await import('data:text/javascript;base64,'+Buffer.from(compiled).toString('base64'));
 
-const item={id:'1244',generalSource:1,tickers:['MU'],publisher:'Reported company news',
-  url:'https://x.com/wallstengine/status/2106377353018626530',
-  title:'MU: Broker business and industry outlook',translationJa:'MU：証券会社による事業・業界見通し',
-  publishedAt:'2026-10-03T13:34:30.000Z',observedAt:'2026-10-03T13:34:43.668Z',
-  bodyJa:'JPMorganの見方として報じられた内容：メモリー供給は2028年まで逼迫が続くと見込む。\n\n長い記事本文。',
-  bodyEn:'Reported view of JPMorgan: Memory supply is expected to stay constrained through 2028.\n\nLong article body.'};
+const story=(id,ja,en='Headline',at='2026-10-03T13:34:30.000Z')=>({id,generalSource:1,tickers:['MU'],publisher:'Reported company news',url:`https://x.com/wallstengine/status/21063773530186${id}`,
+  title:en,translationJa:ja,publishedAt:at,observedAt:at,bodyJa:`${ja}\n\n長い記事本文。`,bodyEn:`${en}\n\nLong article body.`,pulseTitleJa:ja,pulseTitleEn:en});
 
-test('header has readable non-disclosure text and only a separate rotation button in JA and EN',()=>{
-  globalThis.__pulseTestSnapshot={data:{ok:true,enabled:false,items:[],officialUpdates:[item]},checkedAt:Date.parse(item.publishedAt)};
+test('the band is one still line: LIVE, the short headline and the time, with no pause button and no tags',()=>{
+  globalThis.__pulseTestSnapshot={data:{ok:true,enabled:false,items:[],officialUpdates:[story('1','MU、HBM需要で見通しを引き上げ','MU raises HBM outlook')]},checkedAt:Date.parse('2026-10-03T13:40:00Z')};
   for(const lang of ['ja','en']) {
     const html=renderToStaticMarkup(React.createElement(ResearchPulse,{lang}));
-    assert.match(html,/tabindex="0"/);
-    assert.equal((html.match(/<button/g)??[]).length,1);
-    assert.doesNotMatch(html,/aria-expanded|data-expanded|<details|長い記事本文|Long article body/);
-    assert.match(html,/class="headline( clipped)?"/);
-    assert.doesNotMatch(html,/>企業ニュース<|>Company news</);
-    assert.match(html,/class="clock"/);
-    // One clock per language: Japan time in Japanese, U.S. Eastern time in English; no "取得" prefix.
-    if(lang==='ja') { assert.match(html,/aria-label="10\/3 22:34"/); assert.doesNotMatch(html,/ ET|JST/); }
-    else { assert.match(html,/aria-label="10\/3 09:34"/); assert.doesNotMatch(html,/JST| ET/); }
-    assert.doesNotMatch(html,/取得|Found/);
-    assert.match(html,/2026-10-03T13:34:30.000Z/);
-    assert.match(html,/aria-label="(自動切替を停止|Pause rotation)"/);
+    assert.equal((html.match(/<button/g)??[]).length,0,'no pause button');
+    assert.match(html,/class="live">LIVE</);
+    assert.match(html,/class="hd"/);
+    assert.match(html,/class="wave"/);
+    assert.doesNotMatch(html,/class="marquee|class="scroll|aria-expanded|<details|長い記事本文|Long article body|NEW/);
+    if(lang==='ja') { assert.match(html,/<b class="sym">MU<\/b>、HBM需要で見通しを引き上げ/); assert.match(html,/>10\/3 22:34</); }
+    else assert.match(html,/>10\/3 09:34</);
+    assert.match(html,/dateTime="2026-10-03T13:34:30.000Z"|datetime="2026-10-03T13:34:30.000Z"/);
   }
 });
 
@@ -55,20 +48,42 @@ test('missing and failed feed snapshots render no stale or fabricated header new
   delete globalThis.__pulseTestSnapshot;
 });
 
-test('headline, clock and pause remain in a single row; only a full headline is clipped, never expanded',async()=>{
-  const css=await readFile(new URL('../app/research/research-pulse.module.css',import.meta.url),'utf8');
-  assert.match(css,/flex-wrap:nowrap/);
-  assert.match(css,/\.headline\{[^}]*white-space:nowrap/);
-  assert.match(css,/\.clock\{display:inline-flex;flex:none/);
-  // Phones keep the single row too.
-  assert.doesNotMatch(css,/flex-wrap:wrap/);
-  assert.match(css,/\.clipped\{text-overflow:ellipsis\}/);
-  assert.doesNotMatch(css,/\.headline\{[^}]*text-overflow|line-clamp|data-expanded/);
+test('a story without a short headline is left out and the band moves on; the same headline is never shown twice',()=>{
+  const items=[
+    {headlines:['アメリカの大手半導体メーカーが過去最高の売上高を発表しました本日'],title:'アメリカの大手半導体メーカーが過去最高の売上高を発表しました本日'},
+    {headlines:['企業ニュース'],title:'企業ニュース'},
+    {headlines:['APH、AI需要で通期見通しを引き上げ'],title:'長い見出しの全文がここにあります。'},
+    {headlines:['APH、AI需要で通期見通しを引き上げ。'],title:'x'},
+    {headlines:['MU、目標株価の引き上げ相次ぐ'],title:'y'},
+  ];
+  assert.deepEqual(bandItems(items,true).map(item=>item.band),['APH、AI需要で通期見通しを引き上げ','MU、目標株価の引き上げ相次ぐ']);
+  assert.equal(bandTitle(['十二345678901234567890123'],true),'', '23 characters is too long');
+  assert.equal(bandTitle(['あ'.repeat(21)+'い'],true).length,22);
+  assert.equal(bandTitle(['あ'.repeat(22)+'い'],true),'');
+  assert.equal(bandTitle(['米10年債利回り、再び急上昇。'],true),'米10年債利回り、再び急上昇','no final 。');
 });
 
-test('the strip opens on the headlines remembered on this device (only for a quick reload, 60 s) and replaces them when the live ones arrive',async()=>{
-  const raw=await readFile(new URL('../app/research/research-pulse.tsx',import.meta.url),'utf8');
-  assert.match(raw,/PULSE_CACHE_MS = 60_000/);
-  assert.match(raw,/const items = live\.length \? live : remembered;/);
-  assert.match(raw,/if \(live\.length\) writePulseCache\(lang, live\)/);
+test('stock symbols are bold monospace parts of the headline; other capitals are not',()=>{
+  assert.deepEqual(bandParts('APH、AI需要でMUも上昇',['APH','MU']).filter(part=>part.symbol).map(part=>part.text),['APH','MU']);
+});
+
+test('the headline starts at 14.5px, shrinks 0.5px at a time to 12.5px, and only then is cut',()=>{
+  assert.equal(fitFontSize(()=>true),14.5);
+  assert.equal(fitFontSize(size=>size<=13.5),13.5);
+  assert.equal(fitFontSize(size=>size<=12.5),12.5);
+  assert.equal(fitFontSize(()=>false),12.5);
+});
+
+test('the band follows the owner design in its stylesheet',async()=>{
+  const css=await readFile(new URL('../app/research/research-pulse.module.css',import.meta.url),'utf8');
+  assert.match(css,/\.strip\{[^}]*height:56px/);
+  assert.match(css,/\.live\{[^}]*background:#8ef0c4/);
+  assert.match(css,/\.hd\{[^}]*font-size:14\.5px[^}]*white-space:nowrap[^}]*text-overflow:ellipsis/);
+  assert.match(css,/\.tm\{[^}]*bottom:2px[^}]*10\.5px/);
+  assert.match(css,/\.in\{animation:rise \.45s cubic-bezier\(\.3,\.7,\.2,1\)/);
+  assert.match(css,/translateY\(16px\)/);
+  assert.match(css,/animation:wave 3\.6s linear infinite/);
+  assert.match(css,/35%\{opacity:1;height:2px/);
+  assert.match(css,/@media\(prefers-reduced-motion:reduce\)\{\.in,\.out\{animation:none\}\.wave,\.flash\{animation:none\}\}/);
+  assert.match(css,/\.pulse\{[^}]*margin:0 0 34px/, 'the band is 14px lower than before (20px to 34px)');
 });
