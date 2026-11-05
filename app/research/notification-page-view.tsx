@@ -3,6 +3,7 @@ import Link from "next/link";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { earningsOnlyProviders, providers } from "@/lib/research/intake";
 import type { Language } from "@/lib/research/data";
+import { SHOW_EVENT, installContext, isStandalone } from "@/lib/research/home-install";
 import styles from "./notification-page.module.css";
 
 const monitored = providers.map(p => p.ticker);
@@ -133,6 +134,7 @@ export default function NotificationPageView(p: PageViewProps) {
           <p className={styles.statusName}>{t("この端末の通知", "This device")}<span className={`${styles.tag} ${on ? styles.tagOn : ""}`} role="status"><i />{on ? t("オン", "On") : t("オフ", "Off")}</span></p>
           <p className={styles.statusText} role="status">{statusText}</p>
         </div>
+        {state === "unsupported" && installContext(navigator.userAgent, isStandalone(window)) !== "none" && <button type="button" className={styles.statusOn} onClick={() => window.dispatchEvent(new Event(SHOW_EVENT))}>{t("オンにする", "Turn on")}</button>}
         {p.usable && <button type="button" className={on ? styles.statusOff : styles.statusOn} disabled={p.busy || p.starting} onClick={p.onToggle}>{p.busy || p.starting ? t("設定中…", "Setting up…") : on ? t("オフにする", "Turn off") : t("オンにする", "Turn on")}</button>}
       </div>
       {(state === "unavailable" || state === "unknown") && <div className={styles.aux}><button type="button" disabled={p.busy} onClick={state === "unknown" ? p.onStatus : p.onRetry}>{t("もう一度確認する", "Check again")}</button></div>}

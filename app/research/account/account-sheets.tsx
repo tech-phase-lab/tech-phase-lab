@@ -3,6 +3,7 @@ import Link from "next/link";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { billingRequest, billingSummary, sandboxApproval } from "@/lib/membership/billing-client";
 import { INITIAL, TILES, tileBackground, tileById } from "./avatars";
+import ThemeTiles from "../theme-tiles";
 import styles from "./account.module.css";
 
 export type Mode = "live" | "sandbox";
@@ -121,5 +122,20 @@ export function NameSheet({ ja, current, onSave, onClose }: { ja: boolean; curre
     {error && <p className={styles.err} role="alert">{t("保存できませんでした。もう一度お試しください。", "Could not save. Please try again.")}</p>}
     <button type="button" className={`${styles.btn} ${styles.mbt}`} disabled={busy || !clean || clean === current} onClick={() => void save()}>{busy ? t("保存しています…", "Saving…") : t("保存", "Save")}</button>
     <button type="button" className={styles.sCancel} disabled={busy} onClick={onClose}>{t("キャンセル", "Cancel")}</button>
+  </Sheet>;
+}
+
+/** 気になるテーマ: the same tiles as the first question, changed here later (owner, Nov 5). Saved with the account. */
+export function ThemesSheet({ ja, current, onSave, onClose }: { ja: boolean; current: string[]; onSave: (items: string[]) => Promise<void>; onClose: () => void }) {
+  const [selected, setSelected] = useState<string[]>(current);
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState(false);
+  const t = (a: string, b: string) => ja ? a : b;
+  async function save() { setBusy(true); setError(false); try { await onSave(selected); onClose(); } catch { setBusy(false); setError(true); } }
+  return <Sheet title={t("気になるテーマ", "Themes you follow")} onClose={onClose} plain dismissible={!busy}>
+    <p className={styles.sBody}>{t("複数選べます。あとから変えられます。", "Pick as many as you like. You can change them later.")}</p>
+    <ThemeTiles selected={selected} onChange={setSelected} ja={ja} disabled={busy} />
+    {error && <p className={styles.err} role="alert">{t("保存できませんでした。もう一度お試しください。", "Could not save. Please try again.")}</p>}
+    <button type="button" className={`${styles.btn} ${styles.mbt}`} style={{ marginTop: 16 }} disabled={busy} onClick={() => void save()}>{busy ? t("保存しています…", "Saving…") : t("決定", "Done")}</button>
   </Sheet>;
 }
