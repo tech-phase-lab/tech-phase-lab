@@ -3,6 +3,7 @@ import Link from "next/link";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { earningsOnlyProviders, providers } from "@/lib/research/intake";
 import type { Language } from "@/lib/research/data";
+import { SHOW_EVENT, installContext, isStandalone } from "@/lib/research/home-install";
 import styles from "./notification-page.module.css";
 
 const monitored = providers.map(p => p.ticker);
@@ -14,16 +15,16 @@ export type Preferences = { targets: boolean; earnings: boolean; news: boolean; 
   /** おやすみモード: hours in Japan time. */ quiet: Quiet;
   /** A new "リゼルのひとりごと" post; off until turned on. */ rizelNote: boolean; /** Owner only: a weekly issue draft is ready. */ weeklyDraft?: boolean };
 type PrefsState = "idle" | "loading" | "ready" | "error" | "unsupported";
-// The nine indicators; the first six start on. FOMC, ISM, GDP, retail sales and jobless claims have no result reader yet ("soon").
+// The nine indicators; the first six start on. Only jobless claims has no result reader yet ("soon"): the Department of Labor blocks automated reading of its page.
 export const indicators: { key: string; ja: string; en: string; whenJa: string; whenEn: string; ready: boolean }[] = [
   { key: "jobs", ja: "雇用統計", en: "Jobs report", whenJa: "毎月第1金曜", whenEn: "First Friday monthly", ready: true },
   { key: "cpi", ja: "CPI（消費者物価）", en: "CPI", whenJa: "毎月", whenEn: "Monthly", ready: true },
   { key: "pce", ja: "PCE（個人消費支出）", en: "PCE", whenJa: "毎月", whenEn: "Monthly", ready: true },
-  { key: "fomc", ja: "FOMC（政策金利）", en: "FOMC", whenJa: "年8回", whenEn: "8 times a year", ready: false },
+  { key: "fomc", ja: "FOMC（政策金利）", en: "FOMC", whenJa: "年8回", whenEn: "8 times a year", ready: true },
   { key: "adp", ja: "ADP雇用統計", en: "ADP employment", whenJa: "毎月", whenEn: "Monthly", ready: true },
-  { key: "ism", ja: "ISM製造業景況指数", en: "ISM manufacturing", whenJa: "毎月初め", whenEn: "Start of month", ready: false },
-  { key: "gdp", ja: "GDP", en: "GDP", whenJa: "四半期ごと", whenEn: "Quarterly", ready: false },
-  { key: "retail", ja: "小売売上高", en: "Retail sales", whenJa: "毎月", whenEn: "Monthly", ready: false },
+  { key: "ism", ja: "ISM製造業景況指数", en: "ISM manufacturing", whenJa: "毎月初め", whenEn: "Start of month", ready: true },
+  { key: "gdp", ja: "GDP", en: "GDP", whenJa: "四半期ごと", whenEn: "Quarterly", ready: true },
+  { key: "retail", ja: "小売売上高", en: "Retail sales", whenJa: "毎月", whenEn: "Monthly", ready: true },
   { key: "claims", ja: "新規失業保険申請件数", en: "Jobless claims", whenJa: "毎週木曜", whenEn: "Every Thursday", ready: false },
 ];
 const defaultKinds = ["jobs", "cpi", "pce", "fomc", "adp", "ism"];
@@ -133,6 +134,7 @@ export default function NotificationPageView(p: PageViewProps) {
           <p className={styles.statusName}>{t("この端末の通知", "This device")}<span className={`${styles.tag} ${on ? styles.tagOn : ""}`} role="status"><i />{on ? t("オン", "On") : t("オフ", "Off")}</span></p>
           <p className={styles.statusText} role="status">{statusText}</p>
         </div>
+        {state === "unsupported" && installContext(navigator.userAgent, isStandalone(window)) !== "none" && <button type="button" className={styles.statusOn} onClick={() => window.dispatchEvent(new Event(SHOW_EVENT))}>{t("オンにする", "Turn on")}</button>}
         {p.usable && <button type="button" className={on ? styles.statusOff : styles.statusOn} disabled={p.busy || p.starting} onClick={p.onToggle}>{p.busy || p.starting ? t("設定中…", "Setting up…") : on ? t("オフにする", "Turn off") : t("オンにする", "Turn on")}</button>}
       </div>
       {(state === "unavailable" || state === "unknown") && <div className={styles.aux}><button type="button" disabled={p.busy} onClick={state === "unknown" ? p.onStatus : p.onRetry}>{t("もう一度確認する", "Check again")}</button></div>}

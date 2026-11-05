@@ -1,0 +1,10 @@
+{
+  "version": 1,
+  "fomcMeetings": ["2026-10-28", "2026-12-09", "2027-01-27", "2027-03-17", "2027-04-28", "2027-06-09", "2027-07-28", "2027-09-15", "2027-10-27", "2027-12-08"],
+  "notes": {
+    "fomcMeetings": "Final day of each meeting. 2026-12-09 is in the calendar; the 2027 dates are the Fed's tentative calendar (federalreserve.gov/monetarypolicy/fomccalendars.htm, checked 2026-11-05).",
+    "skipped": [
+      {"indicator": "claims", "reason": "dol.gov answers automated requests with HTTP 403 (bot block); the weekly claims table on oui.doleta.gov was weeks behind. Not worked around.", "checkedOn": "2026-11-05"}
+    ]
+  }
+}

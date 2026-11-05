@@ -116,7 +116,8 @@ class ResultTests(Base):
     def test_hedged_headlines_and_headlines_outside_the_window_never_count(self):
         self.run_feeds({"CBS News": [("Democrats could win the House, polls show", 3)], "NPR": [("Can Democrats win the House?", 3)], "BBC News": [("Democrats win Senate seat in Iowa", 3)]})
         self.assertEqual(self.view()[0], [])
-        before = datetime(2026, 11, 3, 12, 0, tzinfo=timezone.utc)
+        # Before every watch opens (the earliest is the October ISM watch, from Nov 2).
+        before = datetime(2026, 11, 1, 12, 0, tzinfo=timezone.utc)
         self.assertIsNone(self.run_feeds({"CBS News": [("Democrats win the House", 3)]}, now=before), "no watch is open yet")
         self.run_feeds({"CBS News": [("Democrats win the House", 3)], "NPR": [("Democrats win the House", 3)]}, now=datetime(2026, 11, 20, tzinfo=timezone.utc))
         self.assertEqual(self.view()[0], [])

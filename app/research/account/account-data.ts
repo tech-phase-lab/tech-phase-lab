@@ -1,7 +1,8 @@
+import { readFavoriteThemes, type FavoriteThemes } from "@/lib/research/favorite-themes";
 /** Browser side of the account APIs (docs/ACCOUNT-API-HANDOFF-2026-10-31.md). Nothing here guesses a value. */
 export type Profile = {
   displayName: string; email: string | null; plan: "free" | "pro" | "owner"; ownerAccess: boolean;
-  passwordEnabled: boolean; twoFactorEnabled: boolean; icon: string; iconEditable: boolean;
+  passwordEnabled: boolean; twoFactorEnabled: boolean; icon: string; iconEditable: boolean; themes: FavoriteThemes;
 };
 export type Contract = {
   accessPlan: "free" | "pro" | null; verification: "verified" | "pending" | "unavailable";
@@ -15,7 +16,8 @@ export function readProfile(value: unknown): Profile {
   const v = value as Partial<Profile> | null;
   if (!v || typeof v.displayName !== "string" || !["free", "pro", "owner"].includes(v.plan as string) || typeof v.icon !== "string" || typeof v.passwordEnabled !== "boolean" || typeof v.twoFactorEnabled !== "boolean") throw Error("profile");
   return { displayName: v.displayName, email: typeof v.email === "string" ? v.email : null, plan: v.plan as Profile["plan"], ownerAccess: v.ownerAccess === true,
-    passwordEnabled: v.passwordEnabled === true, twoFactorEnabled: v.twoFactorEnabled === true, icon: v.icon, iconEditable: v.iconEditable === true };
+    passwordEnabled: v.passwordEnabled === true, twoFactorEnabled: v.twoFactorEnabled === true, icon: v.icon, iconEditable: v.iconEditable === true,
+    themes: readFavoriteThemes((v as { themes?: unknown }).themes) };
 }
 export function readContract(value: unknown): Contract {
   const v = value as Partial<Contract> | null;
@@ -52,7 +54,7 @@ export function getJson(url: string, signal?: AbortSignal) {
   if (started) { early.delete(url); if (Date.now() - started.at < 10_000) return started.task; }
   return fetchJson(url, signal);
 }
-export async function patchProfile(body: { displayName?: string; icon?: string }) {
+export async function patchProfile(body: { displayName?: string; icon?: string; themes?: string[] }) {
   const response = await fetch("/api/research/account/profile", { method: "PATCH", credentials: "same-origin", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body), signal: AbortSignal.timeout(20_000) });
   if (!response.ok) throw Object.assign(Error("patch"), { status: response.status });
   return readProfile(await response.json());
