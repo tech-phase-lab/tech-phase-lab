@@ -152,7 +152,7 @@ export default function CompanyActivity({ ticker, lang }: { ticker: string; lang
       {!open && <span className={styles.peek}>{newest ? <>{newest.kind === "date" ? <time>{newest.at.slice(5).replace("-", "/")}</time> : <time>{clock(newest.at)}</time>}<span>{newest.title}</span></> : <span>{data ? (ja ? "現在の配信データ内に該当銘柄の記事はありません。" : "No matching articles in the current feed window.") : (ja ? "配信済み記事を読み込んでいます…" : "Loading published updates…")}</span>}</span>}
     </button></h2>
     <div id={bodyId} hidden={!open}>
-      {!full && <p className={styles.freeNote} role="note"><b>FREE</b>{ja ? "版　30分遅延・新着5件・見出しのみ" : " 30 min behind · latest 5 · headlines only"}<br /><Link href="/research#tech-phase-pro">{ja ? "PRO版は、リアルタイム＋要約付きです。" : "PRO: real-time, with summaries."}</Link></p>}
+      {!full && <p className={styles.freeNote} role="note"><b>FREE</b>{ja ? "版　30分遅延・新着5件" : " 30 min behind · latest 5"}<br /><Link href="/research#tech-phase-pro">{ja ? "PRO版は、リアルタイム・全件" : "PRO: real-time, every item"}</Link></p>}
       {failed && <p className={styles.problem} role="status">{ja ? "最新の配信状況を確認できません。" : "Unable to check the latest feed."}{data && (ja ? " 前回取得した記事を表示しています。" : " Showing previously loaded articles.")} <button onClick={() => setAttempt(value => value + 1)}>{ja ? "再試行" : "Retry"}</button></p>}
       {!data && !failed && <p className={styles.problem} role="status">{ja ? "配信済み記事を読み込んでいます…" : "Loading published updates…"}</p>}
       {data && !rows.length && <p className={styles.problem}>{ja ? "現在の配信データ内に該当銘柄の記事はありません。" : "No matching articles in the current feed window."}</p>}

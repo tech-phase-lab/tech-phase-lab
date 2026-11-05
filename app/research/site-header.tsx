@@ -279,7 +279,7 @@ function SiteMenu({ lang, member, ownerAccount, onClose, onRefresh, onPro }: { l
       </div>}
       <div className={styles.grp}>
         {heading(ja ? "ニュース" : "News")}
-        {item("/research/news", "alerts", ja ? "ハイテク速報" : "Tech Alerts", member ? <b className={styles.liveTag}>LIVE</b> : undefined, member ? undefined : (ja ? "30分遅れ · 見出しのみ · 直近5件" : "30 min delay · headlines only · latest 5"))}
+        {item("/research/news", "alerts", ja ? "ハイテク速報" : "Tech Alerts", member ? <b className={styles.liveTag}>LIVE</b> : undefined, member ? undefined : (ja ? "30分遅れ · 直近5件" : "30 min delay · latest 5"))}
         {item("/research/general-news", "news", ja ? "一般ニュース" : "General News")}
       </div>
       {member && <div className={styles.grp}>
