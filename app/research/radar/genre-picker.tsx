@@ -48,7 +48,7 @@ export default function GenrePicker({ lang, value, onChange }: { lang: "ja" | "e
         if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy) * 1.5) move(dx < 0 ? 1 : -1);
       }}>
       <div className={styles.top}>
-        <span className={styles.count}>GENRE · {index + 1} / {radarGenres.length}</span>
+        <span className={styles.count}>{ja ? "GENRE" : "CATEGORY"} · {index + 1} / {radarGenres.length}</span>
         <button ref={opener} type="button" className={styles.all} aria-haspopup="dialog" aria-expanded={open} onClick={() => setOpen(true)}>▦ {ja ? "一覧" : "All"}</button>
       </div>
       <div className={styles.row}>
