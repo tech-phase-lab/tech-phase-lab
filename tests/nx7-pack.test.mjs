@@ -92,7 +92,10 @@ test("the cancellation page: same-size buttons, the real renewal date, only real
   assert.match(screen, /monthDay\(contract\?\.accessExpiresAt \?\? contract\?\.nextBillingAt/);
   assert.doesNotMatch(screen, /1か月だけ休む|理由/);
   assert.match(screen, /お気に入りと通知の設定は残ります/);
+  assert.match(screen, /また使いたくなったら、PayPalから申し込めます/);
+  assert.doesNotMatch(screen, /そのまま再開/);
   assert.match(screen, /PROを再開する/);
+  assert.match(screen, /再開すると、その日から新しく1か月分が請求されます。いまの期間の残りは延長されません。/);
   assert.match(screen, /ホームへ戻る/);
   assert.match(read("../app/research/account/account-view.tsx"), /href="\/research\/account\/cancel"/);
 });
@@ -104,8 +107,9 @@ test("the day PRO ends is the real date in Japan time, and the loss list names o
   assert.equal(monthDay(null, true), null);
   assert.equal(monthDay("not a date", true), null);
   const names = PRO_ONLY_FEATURES.map(feature => feature.ja);
-  for (const expected of ["テーマランキング", "銘柄比較", "決算の深掘り", "PROのスマホ通知", "RIZEL'S DESK"]) assert.ok(names.includes(expected), expected);
+  for (const expected of ["テーマランキング", "監視22銘柄", "銘柄比較", "PROのスマホ通知", "RIZEL'S DESK"]) assert.ok(names.includes(expected), expected);
   assert.ok(!names.some(name => /資本マップ/.test(name)), "Capital Map is FREE");
+  assert.ok(!names.includes("決算の深掘り"), "the earnings summaries are read inside 監視22銘柄 (owner, Nov 5)");
 });
 
 test("FOMC, ISM, GDP and retail sales have result readers wired into the monitor and the notification list; only jobless claims is skipped", () => {

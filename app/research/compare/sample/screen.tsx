@@ -6,7 +6,7 @@ import { overallComparison } from "@/lib/research/comparison-scorecard";
 import DetailPanels from "../detail-panels";
 import ResearchToolShell from "../../research-tool-shell";
 import { useResearchLanguage } from "../../use-research-language";
-import { CompanyScoreCard, ScoreOverview } from "../comparison-visuals";
+import { CompanyScoreCard, ScoreHeadline, ScoreOverview, StatusOverlay } from "../comparison-visuals";
 import styles from "../styles.module.css";
 
 export default function SampleScreen({sample}:{sample:ComparisonResult}) {
@@ -14,7 +14,7 @@ export default function SampleScreen({sample}:{sample:ComparisonResult}) {
   const companies=sample.companies.slice(0,count),now=Date.parse(sample.generatedAt);
   const assessment=overallComparison(companies,lang,now);
   return <ResearchToolShell lang={lang} setLang={setLang} title={ja?"銘柄比較PRO":"Compare stocks PRO"} description="" showTools={false} showHeading={false}>
-    <div className={`${styles.results} ${styles.resultView}`}>
+    <div className={`${styles.results} ${styles.resultView} ${styles.screenWrap}`}>
       <div className={styles.sampleToolbar}>
       <Link href="/research/compare" className={styles.backToCompare}>{ja?"▶ 銘柄比較PROへ戻る":"▶ Back to Compare stocks PRO"}</Link>
       <div className={styles.scoreViewSwitch} role="group" aria-label={ja?"比較する社数":"Number of companies"}>
@@ -24,10 +24,13 @@ export default function SampleScreen({sample}:{sample:ComparisonResult}) {
       <section className={styles.conclusion}>
         <p className={styles.eyebrow}>{ja?"結果":"RESULTS"}</p>
         <h2>{assessment.title}</h2>
-        <p>{assessment.description}</p>
       </section>
-      <div className={styles.companyCards}>{companies.map((c,i)=><CompanyScoreCard colorIndex={i} key={c.ticker} company={c} lang={lang} now={now}/>)}</div>
+      <ScoreHeadline companies={companies} lang={lang} now={now}/>
+      <StatusOverlay companies={companies} lang={lang} now={now}/>
+      <section className={styles.explain}><p>{assessment.description}</p></section>
       <ScoreOverview companies={companies} lang={lang} now={now}/>
+      <h2 className={styles.companiesHeading}>{ja?"会社ごとの長所と短所":"Strengths and weaknesses by company"}</h2>
+      <div className={styles.companyCards}>{companies.map((c,i)=><CompanyScoreCard colorIndex={i} key={c.ticker} company={c} lang={lang} now={now}/>)}</div>
       <DetailPanels lang={lang}>
         {companies.map(c=><section key={c.ticker}><h3>{c.name}（{c.ticker}）</h3><ul>{c.preparedAnalysis?.items.map(item=><li key={item.id}><strong data-kind={item.kind}>{item.short[lang]}</strong><p>{item.detail[lang]}</p></li>)}</ul></section>)}
       </DetailPanels>

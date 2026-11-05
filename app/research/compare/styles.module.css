@@ -128,3 +128,138 @@
 .sampleToolbar .scoreViewSwitch{margin:0}
 .sampleToolbar .backToCompare{margin-bottom:0}
 @media(max-width:600px){.sampleToolbar .scoreViewSwitch button{padding:5px 10px;font-size:11px}.sampleToolbar{gap:6px}}
+
+/* ===== 銘柄比較PRO: gold on navy (owner, Nov 5) =====
+   Cards are navy (#16233a to #0e1522) with a #2a3652 edge; gold (#d9b56a) is used plainly; no brown. Text is never cut with "…": it wraps. */
+.screenWrap{padding-bottom:140px}
+.pageHead{margin:0 0 20px;padding-bottom:14px;border-bottom:1px solid #6b5a2e}
+.pageTitle{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.pageTitle h1{margin:0;font-size:30px;font-weight:700}
+.pageHead p{margin:10px 0 0;font-size:14px;color:#8c98ab}
+
+/* input */
+.pickCard{margin:0;padding:18px;border:1px solid #2a3652;border-radius:24px;background:linear-gradient(160deg,#16233a,#0e1522);box-shadow:none}
+.pickSlots{display:grid;gap:14px}
+.pickSlot{position:relative;display:grid;gap:8px;min-width:0}
+.pickLabel{font-size:13px;color:#d9b56a}
+.pickChosen,.pickInput{position:relative;display:flex;align-items:center;gap:12px;min-height:60px;border:1px solid #2a3652;border-radius:16px;background:#0b111c;min-width:0}
+.pickChosen{padding:0 12px 0 14px}
+.pickBar{flex:none;width:8px;height:28px;border-radius:4px}
+.pickText{display:grid;min-width:0;flex:1;line-height:1.35}
+.pickText b{font:700 16px var(--font-geist-mono),ui-monospace,monospace;color:#fff}
+.pickText span{font-size:13px;color:#8c98ab;overflow-wrap:anywhere}
+.pickRemove,.pickClear{display:grid;place-items:center;flex:none;width:34px;height:34px;padding:0;border:0;border-radius:50%;background:#1d2940;color:#aab6d3;font-size:18px;cursor:pointer}
+.pickInput{padding:0 10px 0 14px;border-style:dashed;border-color:#3a4a6b}
+.pickPlus{flex:none;color:#d9b56a;font-size:18px}
+.pickInput input{flex:1;min-width:0;height:56px;padding:0;border:0;background:transparent;color:#eef0f6;font-size:15px;outline:0}
+.pickInput input::placeholder{color:#7d8ca0}
+.pickInput:focus-within{border-color:#d9b56a}
+.pickRemove:focus-visible,.pickClear:focus-visible{outline:2px solid #d9b56a;outline-offset:2px}
+.pickOptions{display:grid;gap:4px;max-height:240px;overflow-y:auto;overscroll-behavior:contain;padding:6px;border:1px solid #2a3652;border-radius:14px;background:#0b111c}
+.pickOptions button{display:flex;align-items:baseline;flex-wrap:wrap;gap:4px 10px;min-height:44px;padding:8px 10px;border:0;border-radius:10px;background:transparent;color:#d6dbea;text-align:left;cursor:pointer}
+.pickOptions button[aria-selected="true"],.pickOptions button:hover{background:#1a2640}
+.pickOptions strong{font:700 14px var(--font-geist-mono),ui-monospace,monospace;color:#fff}
+.pickOptions span{font-size:13px;color:#8c98ab;overflow-wrap:anywhere}
+.pickSubmit{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-top:20px}
+.pickSubmit small{font-size:14px;color:#d6dbea;white-space:nowrap}
+.pickSubmit button{flex:1;max-width:240px;min-height:56px;padding:0 18px;border:0;border-radius:28px;background:linear-gradient(180deg,#e3c47e,#c79f4c);color:#2a1f08;font:700 15px "Noto Sans JP",system-ui,sans-serif;cursor:pointer}
+.pickSubmit button:disabled{opacity:.5;cursor:default}
+.pickSubmit button:focus-visible{outline:2px solid #fff;outline-offset:2px}
+.pickNote{margin:14px 0 0;font-size:12px;color:#7d8ca0}
+/* the ticker search is one closed line: ▶ ティッカー検索 */
+.tickerHelp{margin-top:16px;padding:0;border:1px solid #2a3652;border-radius:18px;background:linear-gradient(160deg,#16233a,#0e1522)}
+.tickerHelp>details>summary{display:flex;align-items:center;gap:10px;min-height:56px;padding:0 18px;color:#d6dbea;font-size:15px;cursor:pointer;list-style:none}
+.tickerHelp>details>summary::-webkit-details-marker{display:none}
+.tickerHelp>details>summary::before{content:"▶";color:#d9b56a;font-size:12px}
+.tickerHelp>details[open]>summary::before{content:"▼"}
+.tickerHelp>details>*:not(summary){margin-left:18px;margin-right:18px}
+.tickerHelp>details[open]{padding-bottom:16px}
+.trialLinks{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+.trialLinks .trialButton{margin:0;border:1px solid #2a3652;border-radius:12px;background:transparent;color:#9aa6bb;font-size:12px}
+
+/* result: headline scores */
+.headlineScores{margin:0}
+.scoreBoxes{display:grid;gap:12px}
+.scoreBox{min-width:0;padding:16px 16px 14px;border:1px solid #2a3652;border-radius:20px;background:linear-gradient(160deg,#16233a,#0e1522)}
+.scoreBox[data-leader="true"]{border-color:#d9b56a;box-shadow:0 0 0 1px #d9b56a55}
+.boxTicker{display:flex;align-items:center;gap:8px;margin:0;font:12px var(--font-geist-mono),ui-monospace,monospace;color:#aab6d3}
+.boxTicker i,.snapLegend i,.overlayLegend i,.companyHeading i{display:inline-block;flex:none;width:8px;height:8px;border-radius:50%}
+.boxName{margin:6px 0 0;font-size:15px;font-weight:700;overflow-wrap:anywhere}
+.boxScore{display:flex;align-items:baseline;gap:8px;margin:8px 0 0}
+.boxScore b{font:700 40px/1 var(--font-geist-mono),ui-monospace,monospace;color:#8c98ab}
+.scoreBox[data-leader="true"] .boxScore b{color:#d9b56a}
+.boxScore small{font:12px var(--font-geist-mono),ui-monospace,monospace;color:#6b7589}
+.winLine{margin:14px 0 0;font-size:14px;color:#d6dbea}
+.winLine b{font-family:var(--font-geist-mono),ui-monospace,monospace}
+
+/* result: status overlay, explanation */
+.overlayCard,.scoreOverview{padding:18px 16px;border:1px solid #2a3652;border-radius:22px;background:linear-gradient(160deg,#16233a,#0e1522)}
+.overlayHead,.scoreHeading{display:flex;align-items:baseline;justify-content:space-between;gap:10px}
+.overlayHead h2,.scoreHeading h2{margin:0;font-size:17px;font-weight:700}
+.overlayHead small,.scoreHeading small{font-size:11px;color:#7d8ca0}
+.overlayCard .statusChart svg{display:block;width:100%;max-width:340px;height:auto;margin:6px auto 0;aspect-ratio:1}
+.overlayLegend{display:flex;justify-content:center;gap:18px;margin-top:6px;font:12px var(--font-geist-mono),ui-monospace,monospace;color:#d6dbea}
+.overlayLegend span{display:inline-flex;align-items:center;gap:7px}
+.explain{padding:16px 18px;border:1px solid #2a3652;border-radius:16px;background:#101a2b;font-size:14px;line-height:1.85;color:#c3ccd8}
+.explain p{margin:0}
+.explain small{display:block;margin-top:10px;color:#7d8ca0}
+
+/* result: snapshot — both bars on tracks of the same width; only the higher score is strong */
+.snapLegend{display:grid;gap:14px;margin:14px 0 4px;padding-bottom:8px;border-bottom:1px solid #2a3652}
+.snapLegend span{display:inline-flex;align-items:center;gap:7px;font:700 12px var(--font-geist-mono),ui-monospace,monospace;color:#d6dbea;min-width:0}
+.snapRow{padding:14px 0 6px;border-bottom:1px solid #1d2940}
+.snapRow:last-of-type{border-bottom:0}
+.snapLabel{margin:0 0 8px;font-size:14px;color:#d9b56a}
+.snapCols{display:grid;gap:18px}
+.snapCell{min-width:0}
+.snapValue{display:flex;align-items:center;gap:10px}
+.scoreTrack{position:relative;flex:1;min-width:0;height:6px;border-radius:3px;background:#242f45;overflow:hidden}
+.scoreTrack i{display:block;height:100%;border-radius:3px;background:#59647c}
+.snapValue strong{flex:none;min-width:34px;text-align:right;font:700 15px var(--font-geist-mono),ui-monospace,monospace;color:#8c98ab}
+.snapCell .factorMetric{display:block;margin-top:6px;font-size:12px;line-height:1.5;color:#7d8ca0;text-align:left;overflow-wrap:anywhere}
+
+/* result: strengths and weaknesses by company */
+.companiesHeading{margin:26px 0 4px;font-size:20px;font-weight:700}
+.companyCards .scoreCard{padding:16px;border:1px solid #2a3652;border-radius:22px;background:linear-gradient(160deg,#16233a,#0e1522)}
+.companyHeading h3{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:0;font-size:17px;color:#eef0f6;letter-spacing:0}
+.companyHeading h3 small{font:12px var(--font-geist-mono),ui-monospace,monospace;color:#7d8ca0}
+.scoreCard .periodLine{margin:8px 0 0;font-size:11px;color:#6b7589}
+.companyProfile{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:12px;align-items:center;margin-top:14px}
+.traitBox{padding:12px;border:1px solid #243049;border-radius:12px;background:#0b111c;min-width:0}
+.traitBox h4{margin:0 0 8px;font-size:13px;font-weight:700;color:#d9b56a}
+.weaknessBox h4{color:#f0a98a}
+.traitBox ul{display:grid;gap:8px;margin:0;padding:0;list-style:none}
+.traitBox li{position:relative;padding-left:14px;font-size:13px;line-height:1.55;color:#d6dbea;white-space:normal;overflow:visible;text-overflow:clip;overflow-wrap:anywhere}
+.traitBox li::before{content:"·";position:absolute;left:3px;color:#8c98ab}
+.companyCards .traitBox p{margin:0;font-size:13px;color:#8c98ab}
+.companyStatus{min-width:0;padding:0;border:0}
+.companyStatus .statusChart svg{display:block;width:100%;height:auto;max-width:none;aspect-ratio:1}
+@media(max-width:380px){.companyProfile{grid-template-columns:1fr}}
+
+/* the two detail buttons */
+.detailButtons{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px}
+.detailButtons button{min-height:48px;padding:8px 10px;border:1px solid #6b5a2e;border-radius:14px;background:#171408;color:#e3c47e;font:13px "Noto Sans JP",system-ui,sans-serif;cursor:pointer;text-align:center;overflow-wrap:anywhere}
+.detailButtons button[aria-expanded="true"]{background:#2a2312}
+
+/* The old charcoal/champagne result palette above has the weight of ".results …"; the navy-and-gold palette takes it over here. */
+.results .conclusion{padding:6px 0 14px;border:0;border-bottom:1px solid #6b5a2e;border-radius:0;background:none;box-shadow:none}
+.results .conclusion h2{margin:6px 0 0;font-size:26px;line-height:1.4;color:#fff}
+.results .conclusion .eyebrow{margin:0;font-size:12px;letter-spacing:.04em;color:#d9b56a}
+.results .companyCards .scoreCard{background:linear-gradient(160deg,#16233a,#0e1522);border-color:#2a3652;box-shadow:none}
+.results .traitBox{border-color:#243049;background:#0b111c}
+.results .traitBox h4{color:#d9b56a}
+.results .weaknessBox{border-color:#243049;background:#0b111c}
+.results .weaknessBox h4{color:#f0a98a}
+.results .traitBox li{color:#d6dbea}
+.results .traitBox li:before{color:#8c98ab}
+.results .companyStatus{border:0}
+.results .snapshotNote,.results .factorMetric,.results .scoreHeading small,.results .periodLine{color:#7d8ca0}
+.results .scoreTrack{background:#242f45}
+.companyCards .companyHeading h3{color:#eef0f6;font-size:17px;letter-spacing:0}
+.scoreOverview,.scoreOverview[data-count="2"],.scoreOverview[data-count="3"],.overlayCard,.scoreBox,.explain,.companyCards .scoreCard{box-sizing:border-box;width:auto;max-width:none;justify-self:stretch}
+.companyCards{gap:14px}
+/* With three companies each box is narrower: a smaller score keeps "/ 10" on the same line. */
+.scoreBoxes[style*="repeat(3"] .boxScore{flex-wrap:nowrap;gap:4px}
+.scoreBoxes[style*="repeat(3"] .boxScore b{font-size:30px}
+.scoreBoxes[style*="repeat(3"] .boxName{font-size:13px}
+.scoreBoxes[style*="repeat(3"] .scoreBox{padding:14px 12px 12px}

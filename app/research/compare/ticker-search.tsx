@@ -27,7 +27,6 @@ export default function TickerSearch({ lang, selection, onSelect }: { lang: "ja"
   }, [query]);
 
   return <section className={styles.tickerHelp}>
-    <p className={styles.tickerHelpTitle}>{t("会社名・銘柄コードが分からない人へ", "Need help finding a company or ticker?")}</p>
     <details className={styles.tickerSearch}>
     <summary>{t("ティッカー検索", "Find a ticker")}</summary>
     <input id="comparison-ticker-search" type="search" aria-label={t("ティッカー検索", "Find a ticker")} value={query} autoComplete="off" spellCheck={false} placeholder={t("例：テスラ、Tesla、TSLA", "e.g. Tesla, TSLA, テスラ")} onChange={event => {
