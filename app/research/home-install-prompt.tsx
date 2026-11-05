@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { usePathname } from "next/navigation";
-import { CLOSED_KEY, SHOWN_KEY, SHOW_EVENT, installContext, isStandalone, popupKind, shouldShow, writeFlag, type PopupKind } from "@/lib/research/home-install";
+import { CLOSED_EVENT, CLOSED_KEY, POPUP_OPEN_ATTRIBUTE, SHOWN_KEY, SHOW_EVENT, installContext, isStandalone, popupKind, shouldShow, writeFlag, type PopupKind } from "@/lib/research/home-install";
 import { useMemberDisplay, useMemberSettled } from "./member-display-provider";
 import styles from "./home-install-prompt.module.css";
 
@@ -46,7 +46,12 @@ export default function HomeInstallPrompt() {
     const timer = setTimeout(() => { writeFlag(storage(), SHOWN_KEY); setKind(next); setCopied(""); setOpen(true); }, 600);
     return () => clearTimeout(timer);
   }, [signedIn, pathname, androidReady, open]);
-  const close = () => { writeFlag(storage(), CLOSED_KEY); setOpen(false); };
+  const close = () => { writeFlag(storage(), CLOSED_KEY); setOpen(false); window.dispatchEvent(new Event(CLOSED_EVENT)); };
+  useEffect(() => {
+    const root = document.documentElement;
+    if (open) root.setAttribute(POPUP_OPEN_ATTRIBUTE, "1"); else root.removeAttribute(POPUP_OPEN_ATTRIBUTE);
+    return () => root.removeAttribute(POPUP_OPEN_ATTRIBUTE);
+  }, [open]);
   useEffect(() => {
     if (!open) return;
     const key = (event: KeyboardEvent) => { if (event.key === "Escape") close(); };

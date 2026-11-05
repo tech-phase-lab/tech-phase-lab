@@ -1,0 +1,6 @@
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:0;padding:0;list-style:none}
+.tile{position:relative;display:flex;align-items:center;width:100%;min-height:78px;padding:0 18px;border:1px solid #1c2530;border-radius:16px;background:#0b0f16;color:#d6dbea;font:500 16px "Noto Sans JP",system-ui,sans-serif;text-align:left;cursor:pointer}
+.tile[aria-pressed="true"]{border-color:#5de0b0;background:#0f2a24;color:#fff}
+.tile:focus-visible{outline:2px solid #9ce2cc;outline-offset:2px}
+.tile svg{position:absolute;top:12px;right:14px}
+.tile:disabled{opacity:.5;cursor:default}

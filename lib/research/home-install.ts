@@ -26,6 +26,9 @@ export function popupKind(context: InstallContext, androidCanInstall: boolean): 
 export const SHOWN_KEY = "tech-phase:a2hs-shown:v1";
 export const CLOSED_KEY = "tech-phase:a2hs-closed:v1";
 export const SHOW_EVENT = "tech-phase:show-a2hs";
+/** The popup marks the page while it is open, and announces when it is closed, so the first question can follow it. */
+export const POPUP_OPEN_ATTRIBUTE = "data-home-install";
+export const CLOSED_EVENT = "tech-phase:a2hs-closed";
 
 export type Store = { getItem(key: string): string | null; setItem(key: string, value: string): void };
 export function readFlag(store: Store | null, key: string) {
