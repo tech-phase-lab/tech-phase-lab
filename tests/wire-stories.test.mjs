@@ -99,6 +99,13 @@ test('teasers, foreign-currency quotes, law-firm notices are dropped; press-rele
   assert.equal(cleanTitle('2026年10月25日｜ブルーム・エナジー、新契約を発表｜NYSE:BE｜プレスリリース'), 'ブルーム・エナジー、新契約を発表');
   assert.equal(cleanTitle('Bloom Energy signs deal | NYSE: BE | Press Release'), 'Bloom Energy signs deal');
   assert.equal(cleanTitle('Plain headline'), 'Plain headline');
+  // A translated outlet name on the end (owner, Nov 5).
+  assert.equal(cleanTitle('アリスタ・ネットワークス取締役マーク・テンプルトン、株式売却額829,255ドル 投資.com報'), 'アリスタ・ネットワークス取締役マーク・テンプルトン、株式売却額829,255ドル');
+  assert.equal(cleanTitle('エヌビディア、新製品を発表 - 投資.com報'), 'エヌビディア、新製品を発表');
+  assert.equal(cleanTitle('エヌビディア株が上昇 インベスティング.com'), 'エヌビディア株が上昇');
+  assert.equal(cleanTitle('エヌビディア、増配を発表 ロイター報'), 'エヌビディア、増配を発表');
+  assert.equal(cleanTitle('投資.comが新サービスを発表、エヌビディアは上昇'), '投資.comが新サービスを発表、エヌビディアは上昇', 'the name inside a headline stays');
+  assert.equal(cleanTitle('米ロイター報告書、エヌビディアに言及'), '米ロイター報告書、エヌビディアに言及', 'only a name at the very end');
 });
 
 test('lead-plaintiff notices and other companies\' earnings round-ups are dropped; "(NYSE:XX)" is trimmed (owner, Oct 27)', () => {

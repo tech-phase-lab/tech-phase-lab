@@ -60,7 +60,11 @@ export function cleanTitle(title: string) {
     .replace(/\s*[|｜]\s*(?:プレスリリース|Press Release)\s*$/, "").replace(/\s*[：:]\s*(?:レポート|報道|report)\s*$/i, "")
     // The wire service's name tacked on the end ("…で上昇（Investing.comより）") is not part of the headline (owner, Oct 28).
     .replace(/\s*[(（]\s*(?:Investing\.com|Reuters|Bloomberg|MarketWatch|Benzinga|Yahoo Finance|Seeking Alpha|The Motley Fool|TipRanks|Barron['’]?s|ロイター|ブルームバーグ|インベスティング[・･]?ドットコム|ヤフー[・･]?ファイナンス|マーケットウォッチ|ベンジンガ|シーキング[・･]?アルファ|モトリーフール|ティップランクス)\s*(?:より|による|報道|via)?\s*[)）]\s*$/i, "")
-    .replace(/\s*[-–—|｜]\s*(?:Investing\.com|Yahoo Finance|MarketWatch|Benzinga|Seeking Alpha|TipRanks)(?:\s*(?:Japan|日本))?\s*$/i, "").trim();
+    .replace(/\s*[-–—|｜]\s*(?:Investing\.com|Yahoo Finance|MarketWatch|Benzinga|Seeking Alpha|TipRanks)(?:\s*(?:Japan|日本))?\s*$/i, "")
+    // A translated outlet name left on the end ("…82万9,255ドル 投資.com報") is not part of the headline either (owner, Nov 5).
+    // Investing.com's name comes out as "投資.com"; other outlets are cut only with the "報" that marks the attribution.
+    .replace(/\s*[-–—|｜]?\s*(?:投資\.com|投資ドットコム|Investing\.com|インベスティング[・･.]?(?:ドット)?com)\s*(?:報|が報じた|の報道|報道|より)?\s*$/i, "")
+    .replace(/\s*[-–—|｜]?\s*(?:ロイター|ブルームバーグ|マーケットウォッチ|ベンジンガ|ヤフー[・･]?ファイナンス|シーキング[・･]?アルファ|モトリーフール|ティップランクス|バロンズ)\s*報\s*$/, "").trim();
 }
 export const isNotNews = (text: string) => NOT_NEWS.some(pattern => pattern.test(text));
 
