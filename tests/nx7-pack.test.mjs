@@ -1,8 +1,7 @@
 import assert from "node:assert/strict";
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import test from "node:test";
 import { installContext, popupKind, shouldShow, readFlag, SHOWN_KEY, CLOSED_KEY } from "../lib/research/home-install.ts";
-import { THEMES, THEME_IDS, toggleTheme, readFavoriteThemes } from "../lib/research/favorite-themes.ts";
 import { profileInput } from "../lib/account/profile.ts";
 import { monthDay } from "../lib/research/month-day.ts";
 import { PRO_ONLY_FEATURES } from "../lib/research/pro-features.ts";
@@ -57,29 +56,14 @@ test("the notification button asks for the popup again on an iPhone that has not
   assert.ok(faq.indexOf('id="add-to-home"') > 0 && faq.indexOf('id="add-to-home"') < faq.indexOf("{questions.map("), "drawn before the other questions");
 });
 
-test("the first question: ten themes plus 'not decided', several can be picked, and only known themes are saved", () => {
-  assert.equal(THEMES.length, 10);
-  assert.deepEqual(THEMES.map(theme => theme.ja).slice(0, 4), ["AI半導体", "データセンター", "光通信", "メモリ"]);
-  assert.deepEqual(toggleTheme([], "optical"), ["optical"]);
-  assert.deepEqual(toggleTheme(["optical"], "ai-semis"), ["ai-semis", "optical"], "kept in list order");
-  assert.deepEqual(toggleTheme(["optical", "memory"], "optical"), ["memory"]);
-  assert.deepEqual(toggleTheme(["memory"], "unknown"), ["memory"]);
-  assert.deepEqual(readFavoriteThemes(undefined), { asked: false, items: [] });
-  assert.deepEqual(readFavoriteThemes({ asked: true, items: ["memory", "bogus"] }), { asked: true, items: ["memory"] });
-  assert.deepEqual(readFavoriteThemes({ asked: false, items: ["memory"] }), { asked: false, items: [] });
-  assert.deepEqual(profileInput({ themes: ["optical", "ai-semis"] }, false), { themes: ["ai-semis", "optical"] });
-  assert.deepEqual(profileInput({ themes: [] }, false), { themes: [] });
-  for (const bad of [{ themes: "memory" }, { themes: ["bogus"] }, { themes: [1] }, { themes: [...THEME_IDS, "memory"] }]) assert.throws(() => profileInput(bad, false), /invalid-input/);
-});
-
-test("the first question can be skipped with 'あとで' or 'まだ決めていない', and has no stock question", () => {
-  const view = read("../app/research/first-question.tsx");
-  assert.match(view, />あとで</);
-  assert.match(view, /はじめる/);
-  assert.match(view, /通知は、ホームの通知設定からいつでも選べます/);
-  assert.match(read("../app/research/theme-tiles.tsx"), /まだ決めていない/);
-  assert.doesNotMatch(view, /銘柄を選/);
-  assert.match(read("../app/research/account/account-view.tsx"), /ThemesSheet/);
+test("the 'themes you follow' question is gone: no screen, no tiles, no saving (owner, Nov 5)", () => {
+  assert.equal(existsSync(new URL("../app/research/first-question.tsx", import.meta.url)), false);
+  assert.equal(existsSync(new URL("../app/research/theme-tiles.tsx", import.meta.url)), false);
+  assert.equal(existsSync(new URL("../lib/research/favorite-themes.ts", import.meta.url)), false);
+  assert.doesNotMatch(read("../app/research/layout.tsx"), /FirstQuestion/);
+  assert.doesNotMatch(read("../app/research/account/account-view.tsx"), /ThemesSheet|気になるテーマ/);
+  assert.doesNotMatch(read("../app/api/research/account/profile/route.ts"), /favoriteThemes|themes/);
+  assert.throws(() => profileInput({ themes: ["memory"] }, false), /invalid-input/);
 });
 
 test("the cancellation page: same-size buttons, the real renewal date, only real PRO features, no reason asked, no pause link", () => {

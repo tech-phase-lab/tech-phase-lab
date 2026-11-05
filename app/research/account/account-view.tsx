@@ -6,7 +6,7 @@ import { useCallback, useEffect, useState, useSyncExternalStore, type ReactNode 
 import { useIdentityRefresh } from "../identity-provider";
 import Crown from "./crown";
 import { INITIAL, tileBackground, tileById } from "./avatars";
-import { AvatarSheet, NameSheet, ThemesSheet, UpgradeSheet, type Mode } from "./account-sheets";
+import { AvatarSheet, NameSheet, UpgradeSheet, type Mode } from "./account-sheets";
 import { contractComplete, formatAmount, formatDay, maskEmail, getJson, patchProfile, readContract, readProfile, type Contract, type Profile } from "./account-data";
 import styles from "./account.module.css";
 
@@ -85,7 +85,7 @@ export default function AccountView({ ja, member, billingAvailable, upgradeFirst
   const [contract, setContract] = useState<ContractState>({ state: "loading" });
   const [resolute, setResolute] = useState<Resolute>({ state: "loading" });
   const [tick, setTick] = useState(0);
-  const [sheet, setSheet] = useState<"" | "upgrade" | "avatar" | "name" | "themes">(upgradeFirst && member.plan !== "pro" && !owner ? "upgrade" : "");
+  const [sheet, setSheet] = useState<"" | "upgrade" | "avatar" | "name">(upgradeFirst && member.plan !== "pro" && !owner ? "upgrade" : "");
 
   useEffect(() => {
     const controller = new AbortController();
@@ -170,7 +170,6 @@ export default function AccountView({ ja, member, billingAvailable, upgradeFirst
   const ownerPreviewNote = <p className={styles.previewBar}>{t("表示の確認中です。金額や日付は表示例です。ここでの操作は、実際の契約や権限には反映されません。", "Previewing the view. Amounts and dates are samples. Actions here change nothing real.")}</p>;
 
   async function saveAvatar(id: string) { setProfile({ state: "ok", value: await patchProfile({ icon: id }) }); }
-  async function saveThemes(items: string[]) { setProfile({ state: "ok", value: await patchProfile({ themes: items }) }); }
   async function saveName(name: string) { setProfile({ state: "ok", value: await patchProfile({ displayName: name }) }); }
 
   // Entry from the PRO introduction card: the confirmation sheet opens without the account screen behind it.
@@ -315,7 +314,6 @@ export default function AccountView({ ja, member, billingAvailable, upgradeFirst
     {security}
 
     {!owner && <>
-      {me && <><div className={styles.sl}>{t("気になるテーマ", "Themes")}</div><div className={styles.cd} style={{ marginTop: 0 }}>{row(I.doc, t("気になるテーマを選ぶ", "Choose themes"), { onClick: () => setSheet("themes"), value: <span className={styles.rv}>{me.themes.items.length ? t(`${me.themes.items.length}件`, `${me.themes.items.length}`) : t("未選択", "None")}</span> })}</div></>}
       <div className={styles.sl}>{t("サポート", "Support")}</div>
       <div className={styles.cd} style={{ marginTop: 0 }}>
         {row(I.doc, t("よくある質問・使い方", "FAQ & help"), { href: "/research/faq#add-to-home" })}
@@ -330,7 +328,6 @@ export default function AccountView({ ja, member, billingAvailable, upgradeFirst
     </>}
 
     {sheet === "upgrade" && <UpgradeSheet ja={ja} mode={mode} refresh={refresh} onClose={closePlain} />}
-    {sheet === "themes" && me && <ThemesSheet ja={ja} current={me.themes.items} onSave={saveThemes} onClose={closePlain} />}
     {sheet === "avatar" && me && <AvatarSheet ja={ja} initial={initial} current={tile ? tile.id : INITIAL} onSave={saveAvatar} onClose={closePlain} />}
     {sheet === "name" && me && <NameSheet ja={ja} current={display} onSave={saveName} onClose={closePlain} />}
   </div>;
