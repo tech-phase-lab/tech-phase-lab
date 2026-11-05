@@ -7,7 +7,7 @@ import { calendarEvents, dateOnlyEarnings } from "./calendar.ts";
  * several publishers, and the lists showed it five times. One story is one row, listing every company it
  * names; headlines that are not news about the company (community posts, "stocks to buy" lists, fund
  * trades) are left out. */
-export type WireStory = { id: string; tickers: string[]; title: string; url: string; publisher: string; origin: CompanyWireItem["origin"]; at: string };
+export type WireStory = { id: string; tickers: string[]; title: string; url: string; publisher: string; origin: CompanyWireItem["origin"]; at: string; /** One line of 22 characters or fewer for the news band (Japanese only, when made). */ short?: string };
 
 const NOT_NEWS = [
   /\$[^$\n]{1,80}\([A-Z.]{1,8}\.US\)\$/,                       // community posts: $NVIDIA (NVDA.US)$
@@ -130,6 +130,6 @@ function buildWireStories(wire: Record<string, CompanyWireItem[]>, lang: Languag
   }
   return clusters.map(({ tickers, best, first }) => ({
     id: best.item.id, tickers: [...tickers].sort(), title: best.title, url: best.item.url, publisher: best.item.publisher,
-    origin: best.item.origin, at: new Date(first).toISOString(),
+    origin: best.item.origin, at: new Date(first).toISOString(), short: ja ? best.item.shortJa ?? undefined : undefined,
   })).sort((a, b) => Date.parse(b.at) - Date.parse(a.at));
 }

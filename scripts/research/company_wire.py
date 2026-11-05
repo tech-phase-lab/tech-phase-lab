@@ -185,6 +185,7 @@ Use only names, tickers and Latin-script words that appear in the headline; writ
 Do not turn "a", "one" or "per share" into a digit (1株, 1社, 1カ所) unless the headline gives that number.
 Keep every number exactly as written (convert units only exactly, e.g. $1.2 billion = 12億ドル); never add, drop or round a figure.
 Keep negation and direction (rise/fall, beat/miss, raise/cut) exactly. When an item has previousRejection, that was why the last translation was rejected; avoid it.
+Also write shortJa: the same headline as one short Japanese line of at most 20 characters, for a one-line news band. Keep the subject (company or ticker) and the single most important fact; keep any number you use exactly as in titleJa; never add a fact or a number that titleJa does not have; no trailing punctuation; do not cut a sentence off mid-word.
 Also judge each headline (kind). "news" states a concrete fact about the company's business or its stock: results, guidance, a deal, order, investment, product, partnership, lawsuit, regulatory step, executive change, an analyst rating or price-target change, or a market move together with its stated cause.
 "not-news" is everything else, for example: investment advice or opinion ("should you buy", "which stock is better", "X vs Y", "a buying opportunity", "buy the dip"); comparisons and listicles; price predictions and forecasts; any headline that asks a question or starts with "Why" or "What" without giving the answer; teasers that hide their answer ("here is why"); what-if or past-returns pieces; human-interest, hiring, workplace, lifestyle, culture, entertainment or feature stories (for example a vocational graduate getting a job, an employee's life story, a TV programme); and promotional or community posts.
 Examples: "Why AMD, Micron, Sandisk and Nvidia stocks are falling in premarket today" = not-news. "Which AI memory stock is the better buy?" = not-news. "ASML has orders and pricing power, but what it lacks is time" (an editorial take with no concrete business fact) = not-news. "At 21 at SK hynix, at 27 a home in Seoul: a vocational school's comeback" = not-news. "Micron raises fiscal Q1 guidance on HBM demand" = news. "Nvidia shares fall 3% after tighter export curbs" = news. When a headline states a concrete business fact, use "news" even if it is minor.
@@ -194,6 +195,9 @@ Examples: "Why AMD, Micron, Sandisk and Nvidia stocks are falling in premarket t
 def schema_translation(db):
     db.execute('''CREATE TABLE IF NOT EXISTS company_wire_ja(
       key TEXT PRIMARY KEY, title_ja TEXT NOT NULL, model TEXT NOT NULL, created_at TEXT NOT NULL)''')
+    # Nov 5: a one-line (20 characters or fewer) Japanese headline for the news band.
+    if 'short_ja' not in {r[1] for r in db.execute('PRAGMA table_info(company_wire_ja)')}:
+        db.execute("ALTER TABLE company_wire_ja ADD COLUMN short_ja TEXT NOT NULL DEFAULT ''")
     db.execute('''CREATE TABLE IF NOT EXISTS company_wire_attempts(
       key TEXT PRIMARY KEY, attempts INTEGER NOT NULL, next_at REAL NOT NULL)''')
     db.execute('CREATE TABLE IF NOT EXISTS company_wire_calls(at REAL NOT NULL)')
@@ -284,6 +288,24 @@ def validated_translation(title_ja, title):
     return title_ja
 
 
+SHORT_MAX = 22
+
+
+def validated_short(short_ja, title_ja):
+    """The one-line band headline, or '' when it cannot be trusted (it is optional; the full headline is what matters).
+    It must be Japanese, short, a single line, and every number in it must already be in the checked Japanese headline."""
+    if not isinstance(short_ja, str):
+        return ''
+    short_ja = short_ja.strip().rstrip('。.')
+    if (not short_ja or len(short_ja) > SHORT_MAX or '\x00' in short_ja or re.search(r'[\r\n]', short_ja)
+            or not re.search(r'[぀-ヿ㐀-鿿]', short_ja)):
+        return ''
+    numbers = lambda text: set(re.findall(r'\d+(?:[.,]\d+)*', text.replace(',', '')))
+    if not numbers(short_ja) <= numbers(title_ja):
+        return ''
+    return short_ja
+
+
 def translate_once(path, transport=None, env=None, now_ts=None):
     """One batched model call for new headlines. Returns a short status word."""
     import os
@@ -315,11 +337,12 @@ def translate_once(path, transport=None, env=None, now_ts=None):
         'text': {'format': {'type': 'json_schema', 'name': 'company_wire_translation', 'strict': True, 'schema': {
             'type': 'object', 'additionalProperties': False, 'required': ['items'], 'properties': {'items': {
                 'type': 'array', 'items': {'type': 'object', 'additionalProperties': False,
-                                           'required': ['id', 'titleJa', 'kind'],
-                                           'properties': {'id': {'type': 'string'}, 'titleJa': {'type': 'string'},
+                                           'required': ['id', 'titleJa', 'shortJa', 'kind'],
+                                           'properties': {'id': {'type': 'string'}, 'titleJa': {'type': 'string'}, 'shortJa': {'type': 'string'},
                                                           'kind': {'type': 'string', 'enum': ['news', 'not-news']}}}}}}}},
     }
     translated = {}
+    shorts = {}
     reasons = {}
     skipped = set()
     outage = ''
@@ -338,6 +361,7 @@ def translate_once(path, transport=None, env=None, now_ts=None):
                 continue
             try:
                 translated[row['key']] = validated_translation(item.get('titleJa'), row['title'])
+                shorts[row['key']] = validated_short(item.get('shortJa'), translated[row['key']])
             except ValueError as error:
                 reasons[row['key']] = str(error)[:40] or 'invalid'
     except Exception as error:
@@ -349,8 +373,8 @@ def translate_once(path, transport=None, env=None, now_ts=None):
         schema_translation(db)
         for row in rows:
             if row['key'] in translated:
-                db.execute('INSERT OR IGNORE INTO company_wire_ja VALUES(?,?,?,?)',
-                           (row['key'], translated[row['key']], model, stamp))
+                db.execute('INSERT OR IGNORE INTO company_wire_ja(key,title_ja,model,created_at,short_ja) VALUES(?,?,?,?,?)',
+                           (row['key'], translated[row['key']], model, stamp, shorts.get(row['key'], '')))
             elif row['key'] in skipped:
                 db.execute("""INSERT INTO company_wire_attempts(key,attempts,next_at,reason) VALUES(?,?,?,'not-news') ON CONFLICT(key) DO UPDATE SET
                   attempts=excluded.attempts, next_at=excluded.next_at, reason='not-news'""", (row['key'], TRANSLATION_ATTEMPTS, now_ts))
@@ -369,7 +393,7 @@ def public_feed(db, now_ts=None):
     since = (datetime.fromtimestamp(now_ts, timezone.utc) - timedelta(hours=PUBLIC_HOURS)).isoformat()
     items = {}
     for ticker in roster():
-        rows = db.execute('''SELECT w.key, w.title, w.publisher, w.url, w.origin, w.published_at, j.title_ja
+        rows = db.execute('''SELECT w.key, w.title, w.publisher, w.url, w.origin, w.published_at, j.title_ja, j.short_ja
           FROM company_wire w LEFT JOIN company_wire_ja j USING(key) LEFT JOIN company_wire_attempts a USING(key)
           WHERE w.ticker=? AND w.published_at>=? AND COALESCE(a.reason,'')<>'not-news' ORDER BY w.published_at DESC LIMIT 120''',
                           (ticker, since)).fetchall()
@@ -381,7 +405,7 @@ def public_feed(db, now_ts=None):
         untranslated = [r for r in rows if not r['title_ja']][:PUBLIC_UNTRANSLATED]
         rows = sorted(translated + untranslated, key=lambda r: r['published_at'], reverse=True)
         if rows:
-            items[ticker] = [{'id': r['key'], 'titleEn': r['title'], 'titleJa': r['title_ja'],
+            items[ticker] = [{'id': r['key'], 'titleEn': r['title'], 'titleJa': r['title_ja'], 'shortJa': r['short_ja'] or None,
                               'publisher': r['publisher'], 'origin': r['origin'], 'url': r['url'],
                               'publishedAt': r['published_at']} for r in rows]
     return {'ok': True, 'items': items}

@@ -208,3 +208,14 @@ test('data-calendar teasers, company videos, teaser answers, Indian broker pages
   ]) assert.equal(isNotNews(title), false, title);
   assert.equal(cleanTitle('ルメンタム社長の袁武本が135万ドル超の自社株売却（インベスティング・ドットコム）'), 'ルメンタム社長の袁武本が135万ドル超の自社株売却');
 });
+
+test("the one-line Japanese headline rides along with the story and reaches the band first (owner, Nov 5)", async () => {
+  const { newsPulseItems } = await import("../lib/research/news-pulse-items.ts");
+  const { bandItems } = await import("../lib/research/news-band.ts");
+  const long = "マイクロン、労使紛争で45億ドルの台湾工場の作業を停止";
+  const item = (shortJa) => ({ id: "w1", titleEn: "Micron halts Taiwan fab", titleJa: long, shortJa, publisher: "Bloomberg", origin: "unknown", url: "https://example.com/a", publishedAt: new Date().toISOString() });
+  const at = Date.now();
+  const withShort = bandItems(newsPulseItems(undefined, "ja", at, { MU: [item("マイクロン、台湾工場を停止")] }, 10), true);
+  assert.deepEqual(withShort.map(x => x.band), ["マイクロン、台湾工場を停止"]);
+  assert.deepEqual(bandItems(newsPulseItems(undefined, "ja", at, { MU: [item(null)] }, 10), true), []);
+});
