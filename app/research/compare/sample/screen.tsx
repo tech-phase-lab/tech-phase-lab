@@ -6,7 +6,7 @@ import { overallComparison } from "@/lib/research/comparison-scorecard";
 import DetailPanels from "../detail-panels";
 import ResearchToolShell from "../../research-tool-shell";
 import { useResearchLanguage } from "../../use-research-language";
-import { CompanyScoreCard, ScoreHeadline, ScoreOverview, StatusOverlay } from "../comparison-visuals";
+import { CompanyScoreCard, LeadTitle, ScoreHeadline, ScoreOverview, StatusOverlay } from "../comparison-visuals";
 import styles from "../styles.module.css";
 
 export default function SampleScreen({sample}:{sample:ComparisonResult}) {
@@ -22,8 +22,7 @@ export default function SampleScreen({sample}:{sample:ComparisonResult}) {
       </div>
       </div>
       <section className={styles.conclusion}>
-        <p className={styles.eyebrow}>{ja?"結果":"RESULTS"}</p>
-        <h2>{assessment.title}</h2>
+        <h2><LeadTitle title={assessment.title} companies={companies}/></h2>
       </section>
       <ScoreHeadline companies={companies} lang={lang} now={now}/>
       <StatusOverlay companies={companies} lang={lang} now={now}/>

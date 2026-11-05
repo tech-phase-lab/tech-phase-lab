@@ -132,7 +132,7 @@ export function prepareTwelveComparison(snapshot: TwelveComparisonSnapshot,
   if (snapshot.revenueGrowthPct !== null && snapshot.revenueGrowthPct !== 0) {
     const n = snapshot.revenueGrowthPct, v = pct(n);
     items.push({ id: "revenue-growth", kind: n > 0 ? "strength" : "weakness",
-      short: { ja: `前年同期比売上 ${v}`, en: `Revenue YoY ${v}` },
+      short: { ja: `売上 前年比 ${v}`, en: `Revenue YoY ${v}` },
       detail: { ja: `${period}期の四半期売上高は前年同期比${v}。`, en: `Revenue for the quarter ended ${period} changed ${v} year over year.` } });
   }
   if (snapshot.operatingMarginPct !== null && (snapshot.operatingMarginPct >= 15 || snapshot.operatingMarginPct < 0)) {

@@ -68,8 +68,9 @@ test("each company card keeps its strengths, weaknesses and status; nothing is c
   const css = read("../app/research/compare/styles.module.css");
   const mine = css.slice(css.indexOf("/* ===== 銘柄比較PRO: gold on navy"));
   assert.doesNotMatch(mine, /text-overflow:ellipsis/);
-  assert.doesNotMatch(mine, /white-space:nowrap[^}]*\}\s*\.traitBox/);
-  assert.match(mine, /\.traitBox li\{[^}]*white-space:normal/);
+  // nx9: one item is one line (12px; 11px when long), never cut with "…".
+  assert.match(mine, /\.traitBox li\{[^}]*font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:clip/);
+  assert.match(mine, /\.traitBox li\[data-fit="small"\]\{font-size:11px\}/);
 });
 
 test("the palette is navy and gold: card gradient, edge, gold button, and 120px or more of room under the last button", () => {
@@ -101,4 +102,19 @@ test("the result is ordered: headline, scores, sentence, overlay, explanation, s
   assert.ok(order.every(index => index > 0), String(order));
   assert.deepEqual([...order].sort((a, b) => a - b), order);
   assert.match(read("../app/research/compare/sample/screen.tsx"), /<ScoreHeadline[\s\S]*<StatusOverlay[\s\S]*<ScoreOverview[\s\S]*<DetailPanels/);
+});
+
+test("nx9: input rings, radar layering and colours, headline colouring", () => {
+  const css = read("../app/research/compare/styles.module.css");
+  assert.match(css, /\.pickInput input:focus-visible\{outline:none/);
+  assert.match(css, /\.pickInput,\.pickChosen\{border:1px solid #26304a\}/);
+  assert.match(css, /\.pickInput:focus-within\{border-color:#d9b56a\}/);
+  assert.match(css, /\.companyProfile\{grid-template-columns:184px/);
+  const src = read("../app/research/compare/comparison-visuals.tsx");
+  assert.ok(src.indexOf('fillOpacity=".16"') < src.indexOf('stroke="#52628a"'));
+  assert.ok(src.indexOf('stroke="#52628a"') < src.indexOf('stroke="#3f4d70"'));
+  assert.ok(src.indexOf('stroke="#3f4d70"') < src.indexOf("strokeWidth=\"1.8\""));
+  assert.match(src, /fill="#a3abc4"/);
+  const html = renderToStaticMarkup(React.createElement(visuals.LeadTitle, { title: "総合評価はDEMO-Aが優位", companies: sample.companies }));
+  assert.match(html, /総合評価は<b[^>]*color:#f2c36b[^>]*>DEMO-A<\/b>が優位/);
 });
