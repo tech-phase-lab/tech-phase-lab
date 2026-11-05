@@ -1,6 +1,6 @@
 import config from "./pro-experience.json" with { type: "json" };
 
-/** PRO機能体験 (owner, Nov 5): seven features, each with a video, an image and text that the owner replaces in
+/** PRO機能体験 (owner, Nov 5): eight features (Tech Alerts is shown as a text-only difference below the list), each with a video, an image and text that the owner replaces in
  * pro-experience.json. A video or image left empty is not drawn; the text alone is shown. */
 export type ProFeature = {
   id: string; name: { ja: string; en: string }; summary: { ja: string; en: string };

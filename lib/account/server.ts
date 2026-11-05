@@ -6,7 +6,6 @@ import {liveTransportConfig} from '@/services/tech-phase-billing/live-transport.
 import {bounded} from '@/services/tech-phase-billing/transport.mjs';
 import {unknownContract} from '@/services/tech-phase-billing/account-view.mjs';
 import {selectedIcon} from './profile';
-import {readFavoriteThemes} from '@/lib/research/favorite-themes';
 export const accountHeaders={'Cache-Control':'private, no-store',Vary:'Cookie','X-Content-Type-Options':'nosniff'};
 export const reply=(value:unknown,status=200)=>Response.json(value,{status,headers:accountHeaders});
 export async function accountIdentity(){const {userId}=await auth();if(!userId)throw Error('sign-in');return userId;}
@@ -30,7 +29,6 @@ export async function readProfile(userId:string){
   plan:owner?'owner':member.plan,ownerAccess:member.status==='signed-in'&&member.ownerMode,
   passwordEnabled:user.passwordEnabled,twoFactorEnabled:user.twoFactorEnabled,
   icon:selectedIcon(user.privateMetadata.accountIcon,owner),iconEditable:!owner,
-  themes:readFavoriteThemes(user.privateMetadata.favoriteThemes),
   security:{url:'/research/account/security',provider:'clerk',canChangePassword:user.passwordEnabled,canDisableMfa:!owner}};
 }
 export function accountError(error:unknown){const code=error instanceof Error?error.message:'';return reply({error:['sign-in','owner-required','invalid-input','owner-icon-fixed'].includes(code)?code:'account-unavailable'},code==='sign-in'?401:code==='owner-required'||code==='owner-icon-fixed'?403:code==='invalid-input'?400:503);}
