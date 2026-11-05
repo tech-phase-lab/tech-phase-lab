@@ -110,6 +110,21 @@
       "publisher": "Google News ADP 2",
       "url": "https://news.google.com/rss/search?q=%22ADP+National+Employment+Report%22+when%3A2d&hl=en-US&gl=US&ceid=US%3Aen",
       "group": "markets"
+    },
+    {
+      "publisher": "Google News ISM 1",
+      "url": "https://news.google.com/rss/search?q=%22Manufacturing+PMI%22+ISM+when%3A2d&hl=en-US&gl=US&ceid=US%3Aen",
+      "group": "markets"
+    },
+    {
+      "publisher": "Google News ISM 2",
+      "url": "https://news.google.com/rss/search?q=ISM+manufacturing+PMI+when%3A2d&hl=en-US&gl=US&ceid=US%3Aen",
+      "group": "markets"
+    },
+    {
+      "publisher": "Google News ISM 3",
+      "url": "https://news.google.com/rss/search?q=%22Manufacturing+PMI%22+ISM+when%3A7d&hl=en-US&gl=US&ceid=US%3Aen",
+      "group": "markets"
     }
   ],
   "watches": [
@@ -199,6 +214,154 @@
       "resultEn": "Private employment {value}",
       "noteJa": "ADPの発表と報道の見出しから読み取った数字です。ADPの公式発表で確認してください。",
       "noteEn": "Read from ADP's release and news headlines; check ADP's official release."
+    },
+    {
+      "id": "ism-2026-11",
+      "kind": "indicator",
+      "feedGroup": "markets",
+      "titleJa": "ISM製造業景況指数（10月）",
+      "titleEn": "ISM manufacturing PMI (October)",
+      "from": "2026-11-02T14:55:00Z",
+      "until": "2026-11-09T00:00:00Z",
+      "requirePublishers": 2,
+      "numeric": {
+        "level": true,
+        "range": [
+          30,
+          75
+        ],
+        "must": [
+          "\\bISM\\b|Manufacturing PMI",
+          "manufactur"
+        ],
+        "mustNot": [
+          "non-?manufacturing",
+          "\\bservices\\b"
+        ],
+        "release": {
+          "label": "ISM（公式発表）",
+          "outlets": [
+            "PR Newswire",
+            "ISM"
+          ],
+          "pattern": "^Manufacturing PMI®? at (?P<num>\\d{2}\\.\\d)%"
+        }
+      },
+      "resultJa": "製造業景況指数 {value}（50が拡大と縮小の境目）",
+      "resultEn": "Manufacturing PMI {value} (50 separates expansion from contraction)",
+      "noteJa": "ISMの発表と報道の見出しから読み取った数字です。ISMの公式発表で確認してください。",
+      "noteEn": "Read from ISM's release and news headlines; check ISM's official release."
+    },
+    {
+      "id": "ism-2026-12",
+      "kind": "indicator",
+      "feedGroup": "markets",
+      "titleJa": "ISM製造業景況指数（11月）",
+      "titleEn": "ISM manufacturing PMI (November)",
+      "from": "2026-12-01T14:55:00Z",
+      "until": "2026-12-04T00:00:00Z",
+      "requirePublishers": 2,
+      "numeric": {
+        "level": true,
+        "range": [
+          30,
+          75
+        ],
+        "must": [
+          "\\bISM\\b|Manufacturing PMI",
+          "manufactur"
+        ],
+        "mustNot": [
+          "non-?manufacturing",
+          "\\bservices\\b"
+        ],
+        "release": {
+          "label": "ISM（公式発表）",
+          "outlets": [
+            "PR Newswire",
+            "ISM"
+          ],
+          "pattern": "^Manufacturing PMI®? at (?P<num>\\d{2}\\.\\d)%"
+        }
+      },
+      "resultJa": "製造業景況指数 {value}（50が拡大と縮小の境目）",
+      "resultEn": "Manufacturing PMI {value} (50 separates expansion from contraction)",
+      "noteJa": "ISMの発表と報道の見出しから読み取った数字です。ISMの公式発表で確認してください。",
+      "noteEn": "Read from ISM's release and news headlines; check ISM's official release."
+    },
+    {
+      "id": "ism-2027-01",
+      "kind": "indicator",
+      "feedGroup": "markets",
+      "titleJa": "ISM製造業景況指数（12月）",
+      "titleEn": "ISM manufacturing PMI (December)",
+      "from": "2027-01-04T14:55:00Z",
+      "until": "2027-01-07T00:00:00Z",
+      "requirePublishers": 2,
+      "numeric": {
+        "level": true,
+        "range": [
+          30,
+          75
+        ],
+        "must": [
+          "\\bISM\\b|Manufacturing PMI",
+          "manufactur"
+        ],
+        "mustNot": [
+          "non-?manufacturing",
+          "\\bservices\\b"
+        ],
+        "release": {
+          "label": "ISM（公式発表）",
+          "outlets": [
+            "PR Newswire",
+            "ISM"
+          ],
+          "pattern": "^Manufacturing PMI®? at (?P<num>\\d{2}\\.\\d)%"
+        }
+      },
+      "resultJa": "製造業景況指数 {value}（50が拡大と縮小の境目）",
+      "resultEn": "Manufacturing PMI {value} (50 separates expansion from contraction)",
+      "noteJa": "ISMの発表と報道の見出しから読み取った数字です。ISMの公式発表で確認してください。",
+      "noteEn": "Read from ISM's release and news headlines; check ISM's official release."
+    },
+    {
+      "id": "ism-2027-02",
+      "kind": "indicator",
+      "feedGroup": "markets",
+      "titleJa": "ISM製造業景況指数（1月）",
+      "titleEn": "ISM manufacturing PMI (January)",
+      "from": "2027-02-01T14:55:00Z",
+      "until": "2027-02-04T00:00:00Z",
+      "requirePublishers": 2,
+      "numeric": {
+        "level": true,
+        "range": [
+          30,
+          75
+        ],
+        "must": [
+          "\\bISM\\b|Manufacturing PMI",
+          "manufactur"
+        ],
+        "mustNot": [
+          "non-?manufacturing",
+          "\\bservices\\b"
+        ],
+        "release": {
+          "label": "ISM（公式発表）",
+          "outlets": [
+            "PR Newswire",
+            "ISM"
+          ],
+          "pattern": "^Manufacturing PMI®? at (?P<num>\\d{2}\\.\\d)%"
+        }
+      },
+      "resultJa": "製造業景況指数 {value}（50が拡大と縮小の境目）",
+      "resultEn": "Manufacturing PMI {value} (50 separates expansion from contraction)",
+      "noteJa": "ISMの発表と報道の見出しから読み取った数字です。ISMの公式発表で確認してください。",
+      "noteEn": "Read from ISM's release and news headlines; check ISM's official release."
     }
   ]
 }

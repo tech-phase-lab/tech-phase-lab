@@ -107,3 +107,18 @@ test("the day PRO ends is the real date in Japan time, and the loss list names o
   for (const expected of ["テーマランキング", "銘柄比較", "決算の深掘り", "PROのスマホ通知", "RIZEL'S DESK"]) assert.ok(names.includes(expected), expected);
   assert.ok(!names.some(name => /資本マップ/.test(name)), "Capital Map is FREE");
 });
+
+test("FOMC, ISM, GDP and retail sales have result readers wired into the monitor and the notification list; only jobless claims is skipped", () => {
+  const service = read("../scripts/research/service.py");
+  assert.match(service, /import indicator_results/);
+  assert.match(service, /indicator_results\.run_once\(self\.db_path\)/);
+  assert.match(service, /wait = min\(wait, indicator_results\.next_wait\(\)\)/);
+  const sources = JSON.parse(read("../scripts/research/indicator_sources.json"));
+  assert.equal(sources.notes.skipped[0].indicator, "claims");
+  assert.ok(sources.fomcMeetings.includes("2026-12-09"));
+  const watches = JSON.parse(read("../scripts/research/event_watches.json")).watches.map(watch => watch.id);
+  for (const id of ["ism-2026-11", "ism-2026-12", "ism-2027-01", "ism-2027-02"]) assert.ok(watches.includes(id), id);
+  const view = read("../app/research/notification-page-view.tsx");
+  for (const key of ["fomc", "ism", "gdp", "retail"]) assert.match(view, new RegExp(`key: "${key}"[^\\n]*ready: true`));
+  assert.match(view, /key: "claims"[^\n]*ready: false/);
+});

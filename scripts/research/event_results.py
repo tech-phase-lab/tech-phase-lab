@@ -13,7 +13,11 @@ publishes a result only when it is solid:
 
 A watch can also be numeric (ADP's private payrolls, Nov 4): the figure is read from headlines ("ADP: private employers added
 42,000 jobs") and published only when at least two different outlets give the very same signed figure. A figure that comes after
-a word of expectation ("expected", "forecast", "likely", ...) is never read, and a weekly or average figure is never read."""
+a word of expectation ("expected", "forecast", "likely", ...) is never read, and a weekly or average figure is never read.
+
+A numeric watch can also read a level with one decimal (ISM's manufacturing PMI, Nov 5; "level": true): "ISM manufacturing PMI comes in at 55.5"
+reads as 55.5, while a figure after "versus", "from", "above the" or a word of expectation is never read; the issuer's own release
+(PR Newswire) stands alone, anything else needs two different outlets."""
 
 import json
 import re
@@ -87,10 +91,36 @@ def read_release(title, outlet, spec):
     match = re.match(rule["pattern"], title or "")
     if not match:
         return None
+    if spec.get("level"):
+        value = float(match["num"])
+        return value if spec.get("range", [30, 75])[0] <= value <= spec.get("range", [30, 75])[1] else None
     value = int(match["num"].replace(",", ""))
     if not 100 <= value <= 1_000_000:
         return None
     return value if match["dir"].lower().startswith("incr") else -value
+
+
+LEVEL = r"(?<![\d.])(?P<num>\d{2}\.\d)(?![\d.])"
+# After these words a level is the thing compared against, not the result ("vs 54.5", "from 54.5", "above the 54.6 forecast"). "to" and "at" are not here: "rises to 55.5" is the result.
+LEVEL_COMPARING = re.compile(r"(?:\bvs\.?|\bversus|\bthan|\bfrom|\bprior|\bprevious\w*|\brevised?|\b(?:above|below|beating|missing|topping|exceeding)(?: the)?)\W*(?:\w+\W+){0,1}$", re.I)
+LEVEL_EXPECTED_AFTER = re.compile(r"\s*%?\s*(?:est\w*|forecasts?|expected|expectations?|consensus|projection)\b", re.I)
+
+
+def read_level(title, spec):
+    """The first level with one decimal a headline states as the result (None when it is not a plain statement of the result)."""
+    if not isinstance(title, str) or len(title) > 300:
+        return None
+    if not all(re.search(rule, title, re.I) for rule in spec["must"]) or any(re.search(rule, title, re.I) for rule in spec.get("mustNot", [])):
+        return None
+    low, high = spec.get("range", [30, 75])
+    for match in re.finditer(LEVEL, title):
+        before = title[:match.start()]
+        if EXPECTING.search(before) or LEVEL_COMPARING.search(before[-30:]) or LEVEL_EXPECTED_AFTER.match(title[match.end():]):
+            continue
+        value = float(match["num"])
+        if low <= value <= high:
+            return value
+    return None
 
 
 def load_config(path=CONFIG_PATH):
@@ -202,7 +232,7 @@ def ingest(db, config, publisher, rows, now, group="politics"):
             if "numeric" in watch:
                 spec = watch["numeric"]
                 official = read_release(title, outlet, spec)
-                figure = official if official is not None else read_figure(title, spec)
+                figure = official if official is not None else (read_level(title, spec) if spec.get("level") else read_figure(title, spec))
                 if figure is not None:
                     # The issuer's own release is recorded under one fixed name, so it counts once and stands alone.
                     name = spec["release"]["label"] if official is not None else (outlet or publisher)
@@ -290,15 +320,17 @@ def _evaluate_figure(db, watch, need, now, existing):
     if not solid:
         return
     key, group = next(iter(solid.items()))
-    value = int(key.split(":", 1)[1])
+    level = bool(watch["numeric"].get("level"))
+    value = float(key.split(":", 1)[1]) if level else int(key.split(":", 1)[1])
     publishers, links, seen = [], [], set()
     for row in group:
         if row["publisher"] not in seen:
             seen.add(row["publisher"]); publishers.append(row["publisher"])
             links.append({"publisher": row["publisher"], "title": row["title"], "url": row["url"]})
     names = "・".join(publishers[:4]) + ("ほか" if len(publishers) > 4 else "")
-    shown = f"{value:+,}"
-    released = sorted(r["published_at"] for r in group)[need - 1]
+    shown = f"{value:.1f}" if level else f"{value:+,}"
+    # The issuer's own release alone is enough, so the group can be smaller than `need`.
+    released = sorted(r["published_at"] for r in group)[min(need, len(group)) - 1]
     payload = {
         "id": watch["id"], "titleJa": watch["titleJa"], "titleEn": watch["titleEn"], "sourceName": names + "(報道)", "releasedAt": released,
         "resultJa": watch["resultJa"].replace("{value}", shown) + f"（{len(publishers)}社が同じ数字を報道）",

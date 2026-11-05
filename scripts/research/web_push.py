@@ -999,14 +999,18 @@ def deliver_answers(db, answers, **options):
 BLS_PATH = {'jobs': 'empsit', 'cpi': 'cpi'}
 MONTHS = ['january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november', 'december']
 NAMES = {'jobs': ('米国雇用統計', 'U.S. employment report'), 'cpi': ('米国CPI', 'U.S. CPI'), 'pce': ('米国PCE', 'U.S. PCE'),
-         'adp': ('ADP雇用統計', 'ADP employment report')}
+         'adp': ('ADP雇用統計', 'ADP employment report'), 'fomc': ('FOMC政策金利', 'FOMC rate decision'), 'ism': ('ISM製造業景況指数', 'ISM manufacturing PMI'),
+         'gdp': ('米国GDP', 'U.S. GDP'), 'retail': ('米国小売売上高', 'U.S. retail sales')}
+# Results read by event_results / indicator_results carry an id that starts with the indicator (Nov 5). Jobless claims have no reader.
+EVENT_KINDS = ('adp', 'fomc', 'ism', 'gdp', 'retail')
 
 
 def economic_items(updates, events):
     """Releases with a result already read by the site, as {kind, id, publishedAt, ja, en}.
 
     Read from the same places the economic calendar uses: BLS (jobs, CPI) and BEA (PCE) official releases, and the ADP
-    result read from outlets. FOMC, ISM, GDP, retail sales and jobless claims have no reader yet, so they cannot be sent."""
+    result read from outlets, FOMC, GDP and retail sales read from the official pages, and ISM from headlines. Jobless claims have no reader
+    (the Department of Labor blocks automated reading), so they cannot be sent."""
     items = []
     for update in updates or []:
         try:
@@ -1026,8 +1030,9 @@ def economic_items(updates, events):
         except (KeyError, TypeError, ValueError, AttributeError):
             continue
     for event in events or []:
-        if isinstance(event, dict) and str(event.get('id', '')).startswith('adp-') and event.get('releasedAt') and event.get('resultJa'):
-            items.append({'kind': 'adp', 'id': event['id'], 'publishedAt': event['releasedAt'], 'ja': str(event['resultJa']), 'en': str(event.get('resultEn', ''))})
+        kind = str(event.get('id', '')).split('-', 1)[0] if isinstance(event, dict) else ''
+        if kind in EVENT_KINDS and event.get('releasedAt') and event.get('resultJa'):
+            items.append({'kind': kind, 'id': event['id'], 'publishedAt': event['releasedAt'], 'ja': str(event['resultJa']), 'en': str(event.get('resultEn', ''))})
     return items
 
 
