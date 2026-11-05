@@ -37,6 +37,11 @@ test("an event result must be backed by two sources over https", () => {
   assert.throws(() => parseEventResults([event({ sourceUrl: "http://example.com/x" })]));
   assert.throws(() => parseEventResults([event({ id: "Bad Id" })]));
   assert.equal(parseEventResults([event()]).length, 1);
+  // A result read from an official page or the issuer's own release stands on one source (FOMC, GDP, retail sales, ADP, ISM).
+  for (const publisher of ["Federal Reserve", "BEA", "Census Bureau", "ADP（公式発表）", "ISM（公式発表）"])
+    assert.equal(parseEventResults([event({ sources: [{ ...event().sources[0], publisher }] })]).length, 1, publisher);
+  assert.throws(() => parseEventResults([event({ sources: [{ ...event().sources[0], publisher: "Some Blog" }] })]), "one unofficial source is not enough");
+  assert.throws(() => parseEventResults([event({ sources: [] })]));
 });
 
 test("withdrawing an automatic result is the owner's alone and goes through the editor token", () => {
@@ -45,4 +50,12 @@ test("withdrawing an automatic result is the owner's alone and goes through the 
   assert.match(readFileSync(new URL("../proxy.ts", import.meta.url), "utf8"), /\/api\/research\/event-results/);
   const panel = readFileSync(new URL("../app/research/calendar/economic-results-panel.tsx", import.meta.url), "utf8");
   assert.match(panel, /ownerMode && <button/);
+});
+
+test("a result read from one official page reaches the site, and one bad result never hides the good ones", () => {
+  const fomc = event({ id: "fomc-2026-10-28", sourceName: "FRB", sources: [{ publisher: "Federal Reserve", title: "Federal Reserve issues FOMC statement", url: "https://www.federalreserve.gov/newsevents/pressreleases/monetary20261028a.htm" }] });
+  const raw = { ok: true, enabled: true, items: [], eventResults: [{ id: "x" }, fomc, event()] };
+  const ids = buildPublicNews(raw).eventResults.map(item => item.id);
+  assert.deepEqual(ids, ["fomc-2026-10-28", "us-midterm-2026-11-03"]);
+  assert.equal(mergeEconomicResults([], [], [fomc]).find(row => row.id === "fomc-2026-10-28").sourceName, "FRB");
 });
