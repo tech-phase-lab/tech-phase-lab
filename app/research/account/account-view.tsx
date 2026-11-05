@@ -316,6 +316,7 @@ export default function AccountView({ ja, member, billingAvailable, upgradeFirst
     {!owner && <>
       <div className={styles.sl}>{t("サポート", "Support")}</div>
       <div className={styles.cd} style={{ marginTop: 0 }}>
+        {row(I.doc, t("よくある質問・使い方", "FAQ & help"), { href: "/research/faq#add-to-home" })}
         {row(I.mail, t("お問い合わせ", "Contact"), { href: "/research/faq" })}
         {row(I.doc, t("利用規約", "Terms"), { href: "/terms" })}
         {row(I.lock, t("プライバシーポリシー", "Privacy policy"), { href: "/privacy" })}

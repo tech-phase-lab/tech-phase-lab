@@ -1,0 +1,29 @@
+/* "Add to Home Screen" popup (owner, Nov 5): small and centred, the rest lightly dimmed. Motion follows the owner's sample. */
+.scrim{position:fixed;inset:0;z-index:120;display:flex;flex-direction:column;align-items:center;justify-content:center;background:rgba(2,4,8,.55);padding:12px}
+.box{width:330px;max-width:calc(100% - 24px)}
+.pop{border-radius:22px;background:linear-gradient(175deg,#16233a,#0e1522 70%);border:1px solid #2a3652;padding:18px 16px 14px;box-shadow:0 24px 60px rgba(0,0,0,.55);color:#eef0f6;animation:pop .45s cubic-bezier(.2,.9,.3,1.2) both}
+@keyframes pop{from{opacity:0;transform:scale(.9) translateY(12px)}to{opacity:1;transform:none}}
+.head{display:flex;align-items:center;gap:16px;padding-left:10px}
+.av{position:relative;width:60px;height:60px;flex:none}
+.rz{width:60px;height:60px;border-radius:50%;border:2px solid #5de0b0;display:block;object-fit:cover}
+.bd{position:absolute;right:-8px;bottom:-8px;width:28px;height:28px;border-radius:8px;border:2.5px solid #12203a;background:#12203a}
+/* The picture itself stays still; a thin mint ring spreads slowly around it. */
+.av i{position:absolute;inset:-5px;border-radius:50%;border:1.5px solid rgba(93,224,176,.5);animation:ring 2.6s ease-out infinite}
+.av i:nth-of-type(2){animation-delay:1.3s}
+@keyframes ring{from{transform:scale(.95);opacity:.9}to{transform:scale(1.35);opacity:0}}
+.title{margin:0;white-space:nowrap;font-size:15px;line-height:1.55;font-weight:700}
+.steps{margin:12px 0 0;padding:0;list-style:none}
+.step{display:flex;align-items:center;gap:10px;height:31px;font-size:13px;color:#d6dbea;opacity:0;animation:up .4s ease both}
+.step:nth-child(1){animation-delay:.25s}.step:nth-child(2){animation-delay:.4s}.step:nth-child(3){animation-delay:.55s}
+@keyframes up{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.step b{color:#fff}
+.n{display:flex;align-items:center;justify-content:center;flex:none;width:20px;height:20px;border-radius:50%;border:1px solid #2f4a43;color:#5de0b0;font:10.5px ui-monospace,monospace}
+.t{flex:1}
+.step svg{flex:none}
+.foot{display:flex;align-items:center;justify-content:center;gap:7px;margin-top:10px;padding-top:10px;border-top:1px solid #1d2740;font-size:11.5px;color:#f0b48a}
+.foot img{width:16px;height:16px;border-radius:4px}
+.footPlain{border:0;margin-top:0;padding-top:9px}
+.copy,.install{display:flex;align-items:center;justify-content:center;width:100%;height:40px;margin-top:10px;padding:0;border:0;border-radius:20px;background:linear-gradient(180deg,#6df0c0,#47d4a2);color:#06241a;font:700 14px "Noto Sans JP",system-ui,sans-serif;cursor:pointer}
+.x{display:flex;align-items:center;justify-content:center;width:34px;height:34px;margin:14px auto 0;padding:0;border:1.5px solid rgba(255,255,255,.6);border-radius:50%;background:transparent;color:#fff;cursor:pointer}
+.x:focus-visible,.copy:focus-visible,.install:focus-visible{outline:2px solid #9ce2cc;outline-offset:3px}
+@media(prefers-reduced-motion:reduce){.pop,.step,.av i{animation:none;opacity:1}.av i{display:none}}
