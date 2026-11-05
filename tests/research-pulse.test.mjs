@@ -87,3 +87,10 @@ test('the band follows the owner design in its stylesheet',async()=>{
   assert.match(css,/@media\(prefers-reduced-motion:reduce\)\{\.in,\.out\{animation:none\}\.wave,\.flash\{animation:none\}\}/);
   assert.match(css,/\.pulse\{[^}]*margin:0 0 34px/, 'the band is 14px lower than before (20px to 34px)');
 });
+
+test("the band looks through a wide pool, so long company headlines at the top cannot empty it (Nov 5)", async () => {
+  const source = await readFile(new URL("../app/research/research-pulse.tsx", import.meta.url), "utf8");
+  assert.match(source, /const PULSE_POOL = 400/);
+  assert.match(source, /newsPulseItems\(feed, lang, snapshot\.checkedAt, wire, PULSE_POOL\)/);
+  assert.match(source, /writePulseCache\(lang, bandItems\(live, ja, 8\)\)/);
+});

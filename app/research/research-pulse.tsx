@@ -11,6 +11,9 @@ import { pulseClock } from "@/lib/research/news-time";
 import { publishWire } from "@/lib/research/wire-store";
 import styles from "./research-pulse.module.css";
 const subscribe = (callback: () => void) => { const media = window.matchMedia("(prefers-reduced-motion: reduce)"); media.addEventListener("change", callback); return () => media.removeEventListener("change", callback); };
+/** Most company headlines are longer than the band allows, so the newest 40 stories can hold none that fit (Nov 5: the band went empty).
+ * The band looks through a wide pool and keeps the newest stories that have a short headline. */
+const PULSE_POOL = 400;
 /** One headline every five seconds (owner, Nov 4). */
 const ROTATE_MS = 5000;
 /** The headline starts at 14.5px and shrinks by 0.5px to 12.5px; only then is it cut with "…". */
@@ -103,11 +106,11 @@ export default function ResearchPulse({ lang }: { lang: Language }) {
     const grace = setTimeout(() => setWireSettled(true), 2_500);
     return () => { alive = false; clearTimeout(grace); };
   }, [checkedAt]);
-  const live = snapshot?.checkedAt && wireSettled ? newsPulseItems(feed, lang, snapshot.checkedAt, wire, 40) : [];
+  const live = snapshot?.checkedAt && wireSettled ? newsPulseItems(feed, lang, snapshot.checkedAt, wire, PULSE_POOL) : [];
   const [remembered, setRemembered] = useState<PulseItem[]>([]);
   useEffect(() => { setRemembered(readPulseCache(lang)); }, [lang]);
   const liveKey = live.map(item => item.id).join("|");
-  useEffect(() => { if (live.length) writePulseCache(lang, live); }, [lang, liveKey]); // eslint-disable-line react-hooks/exhaustive-deps
+  useEffect(() => { if (live.length) writePulseCache(lang, bandItems(live, ja, 8)); }, [lang, liveKey]); // eslint-disable-line react-hooks/exhaustive-deps
   // Only stories with a short headline are shown; the rest stay in the news list and the band moves on to the next.
   const items = bandItems(live.length ? live : remembered, ja);
   const first = items[0]?.id ?? "";
