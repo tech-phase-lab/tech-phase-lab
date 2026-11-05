@@ -12,6 +12,8 @@ import { observePageActivity } from "@/lib/research/page-activity";
 import { serverWireSnapshot, subscribeWire, wireSnapshot } from "@/lib/research/wire-store";
 import { WATCH_TICKERS } from "@/lib/research/flash-rows";
 import { wireStories } from "@/lib/research/wire-stories";
+import Link from "next/link";
+import { dayKey, dayLabel, pageWindow, withDayDividers } from "@/lib/research/news-day";
 import styles from "./general-news.module.css";
 
 import { takeNewsStartup } from "@/lib/research/news-startup";
@@ -20,6 +22,8 @@ import FeedPagination from "./feed-pagination";
 import TimelineRow from "./timeline-row";
 import NewsStory from "./news-story";
 import OriginalPreviewCard from "./original-preview-card";
+/** Stories on the home list: five pages of five. */
+const HOME_STORIES = 25;
 let snapshot: { data: GeneralNewsFeed; at: string; time: number } | null = null;
 const recent = () => snapshot && Date.now() - snapshot.time < 120_000 ? snapshot : null;
 let lastFailedAt = 0;
@@ -123,10 +127,10 @@ export default function GeneralNewsPanel({ lang, officialOnly = false, generalOn
     ...market.map(item => ({ kind: "market" as const, item, at: item.publishedAt })),
     ...(officialOnly || generalOnly ? [] : wireStories(wire, lang, WATCH_TICKERS).map(story => ({ kind: "wire" as const, story, at: story.at }))),
   ].sort((a, b) => Date.parse(b.at) - Date.parse(a.at));
-  const pages = Math.max(1, Math.ceil((updates.length + news.length) / 5));
-  const current = Math.min(page, pages), start = (current - 1) * 5;
-  const visibleUpdates = updates.slice(start, start + 5);
-  const visibleNews = news.slice(Math.max(0, start - updates.length), Math.max(0, start + 5 - updates.length));
+  // The home list shows five stories per page, five pages at most; the whole list is on the General News page (owner, Nov 5).
+  const { pages, current, start, end } = pageWindow(updates.length + news.length, page, generalOnly ? Infinity : HOME_STORIES);
+  const visibleUpdates = updates.slice(start, end);
+  const visibleNews = news.slice(Math.max(0, start - updates.length), Math.max(0, end - updates.length));
   const format = (value: string) => new Date(value).toLocaleString(lang === "ja" ? "ja-JP" : "en-US", { timeZone: "Asia/Tokyo", hour12: false }) + " JST";
   // A glowing dot only for what was published within the hour and found promptly (same rule as the top band).
   const receivedMs = receivedAt ? Date.parse(receivedAt) : 0;
@@ -144,23 +148,25 @@ export default function GeneralNewsPanel({ lang, officialOnly = false, generalOn
           ? " 取得範囲に上限があり、全件表示ではありません。"
           : " Acquisition scan is limited; this is not a complete history.")}</p>}
     {!!visibleUpdates.length && <section aria-label={lang === "ja" ? "ニュース速報" : "News updates"}>
-      <div className={styles.items}>{visibleUpdates.map(update => {
-        if (update.kind === "original-preview") return <OriginalPreviewCard key={update.item.id} item={update.item} lang={lang} />;
-        if (update.kind === "wire") {
-          const story = update.story;
-          return <article key={`wire-${story.id}`}><TimelineRow now={receivedMs} at={story.at} kind="time" fresh={isFresh(story.at, "published")}><NewsStory label={story.tickers.join(" · ")} title={story.title} lang={lang} jaLimit={36}
-            publication={`${lang === "ja" ? "発表" : "Published"} ${format(story.at)}`} /></TimelineRow></article>;
-        }
-        if (update.kind === "market") {
+      <div className={styles.items}>{withDayDividers(visibleUpdates.map(update => ({ update, dayKey: update.kind === "official" ? dayKey(update.publication.at, update.publication.kind === "date" ? "date" : "time") : dayKey(update.at, "time") }))).map(({ entry: { update }, divider }) => {
+        // One divider per day ("今日", "昨日", "11月3日"); each row then shows only its time (owner, Nov 5).
+        const rule = divider ? <div className={styles.dayRow} key={`day-${divider}-${update.kind === "wire" ? update.story.id : update.item.id}`}><span>{dayLabel(divider, receivedMs, lang === "ja")}</span></div> : null;
+        const row = (() => {
+          if (update.kind === "original-preview") return <OriginalPreviewCard key={update.item.id} item={update.item} lang={lang} />;
+          if (update.kind === "wire") {
+            const story = update.story;
+            return <article key={`wire-${story.id}`}><TimelineRow at={story.at} kind="time" fresh={isFresh(story.at, "published")}><NewsStory label={story.tickers.join(" · ")} title={story.title} lang={lang} publication="" /></TimelineRow></article>;
+          }
+          if (update.kind === "market") {
+            const item = update.item;
+            const display = marketNewsDisplay(item, lang);
+            return <article key={`market-${item.id}`}><TimelineRow at={item.publishedAt} kind="time" fresh={isFresh(item.publishedAt, "published", item.observedAt)}><NewsStory label={display.label} title={display.title} body={marketNewsBody(item, lang)} lang={lang} publication="" /></TimelineRow></article>;
+          }
           const item = update.item;
-          const display = marketNewsDisplay(item, lang);
-          return <article key={`market-${item.id}`}><TimelineRow now={receivedMs} at={item.publishedAt} kind="time" fresh={isFresh(item.publishedAt, "published", item.observedAt)}><NewsStory label={display.label} title={display.title} body={marketNewsBody(item, lang)} lang={lang}
-            publication={`${lang === "ja" ? "発表" : "Published"} ${format(item.publishedAt)}`} /></TimelineRow></article>;
-        }
-        const item = update.item;
-        const publication = update.publication, display = officialNewsDisplay(item, lang, data?.resultBriefs);
-        return <article key={item.id}><TimelineRow now={receivedMs} foundAt={item.observedAt} at={publication.at} kind={publication.kind === "date" ? "date" : "time"} fresh={isFresh(publication.at, publication.kind, item.observedAt)}><NewsStory label={display.label} title={display.title} body={display.body} fullBody={display.fullBody} concise={!item.brief && !item.newsCategory && !item.generalSource && !item.researchId} lang={lang}
-          publication={`${publication.dated === "observed" ? (lang === "ja" ? "取得" : "Found") : (lang === "ja" ? "発表" : "Published")} ${publication.kind === "date" ? `${publication.at} · ${lang === "ja" ? "取得" : "Found"} ${new Date(item.observedAt).toLocaleTimeString(lang === "ja" ? "ja-JP" : "en-US", { timeZone: "Asia/Tokyo", hour12: false, hour: "2-digit", minute: "2-digit" })} JST` : format(publication.at)}`} /></TimelineRow></article>; })}</div>
+          const publication = update.publication, display = officialNewsDisplay(item, lang, data?.resultBriefs);
+          return <article key={item.id}><TimelineRow at={publication.at} kind={publication.kind === "date" ? "date" : "time"} fresh={isFresh(publication.at, publication.kind, item.observedAt)}><NewsStory label={display.label} title={display.title} body={display.body} fullBody={display.fullBody} concise={!item.brief && !item.newsCategory && !item.generalSource && !item.researchId} lang={lang} publication="" /></TimelineRow></article>;
+        })();
+        return rule ? [rule, row] : row; })}</div>
     </section>}
     {officialOnly && !data?.officialUpdates?.length && <p role="status">{error ? (lang === "ja" ? "公式発表を取得できません。" : "Official updates unavailable.") : !data ? (lang === "ja" ? "読み込み中…" : "Loading…") : (lang === "ja" ? "現在、掲載中の公式発表はありません。" : "No official updates currently listed.")}</p>}
     {!officialOnly && (visibleNews.length > 0 || (!updates.length && (!data?.enabled || !news.length))) && <><div className={styles.head}>{!generalOnly && <h2 id="general-news-title">{lang === "ja" ? "一般ニュース" : "General news"}</h2>}<button type="button" onClick={() => setRefresh(value => value + 1)}>{lang === "ja" ? "更新" : "Refresh"}</button></div>
@@ -176,5 +182,6 @@ export default function GeneralNewsPanel({ lang, officialOnly = false, generalOn
     </>}
     </>}
     <FeedPagination page={current} pages={pages} ja={lang === "ja"} onChange={n => { setPage(n); panel.current?.scrollIntoView({ block: "start", behavior: "instant" }); }} />
+    {!generalOnly && <Link className={styles.seeAll} href="/research/general-news">{lang === "ja" ? "一般ニュースですべて見る" : "See all in General News"} <span aria-hidden="true">›</span></Link>}
   </section>;
 }
