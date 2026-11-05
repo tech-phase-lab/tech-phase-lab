@@ -49,6 +49,19 @@ test('the band changes every five seconds, holds while pressed, resumes on relea
   tree.props.onPointerUp();tree=render(owner,{lang:'ja'});
   assert.equal(runtime.timers.size,1,'resumes on release');
   tree.props.onPointerDown();tree=render(owner,{lang:'ja'});tree.props.onPointerLeave();tree=render(owner,{lang:'ja'});assert.equal(runtime.timers.size,1,'sliding the finger off also releases');
+  // A tap or a swipe skips the headline (owner, Nov 5).
+  const at=()=>shown(tree).band;
+  const before=at();
+  tree.props.onPointerDown({clientX:200});tree=render(owner,{lang:'ja'});tree.props.onPointerUp({clientX:202});tree=render(owner,{lang:'ja'});
+  assert.notEqual(at(),before,'a tap shows the next headline');
+  const afterTap=at();
+  tree.props.onPointerDown({clientX:200});tree=render(owner,{lang:'ja'});tree.props.onPointerUp({clientX:120});tree=render(owner,{lang:'ja'});
+  assert.notEqual(at(),afterTap,'a swipe left shows the next headline');
+  const afterLeft=at();
+  tree.props.onPointerDown({clientX:120});tree=render(owner,{lang:'ja'});tree.props.onPointerUp({clientX:200});tree=render(owner,{lang:'ja'});
+  assert.notEqual(at(),afterLeft,'a swipe right shows the one before');
+  tree.props.onPointerDown({clientX:200});tree=render(owner,{lang:'ja'});tree.props.onPointerUp({clientX:220});tree=render(owner,{lang:'ja'});
+  assert.equal(runtime.timers.size,1,'a short drag that is neither tap nor swipe only resumes');
   runtime.reduced=true;tree=render(owner,{lang:'ja'});assert.equal(runtime.timers.size,0);
   assert.equal(tree.props.children[1].props.className.includes('flash'),false);
   runtime.feed=null;assert.equal(render(owner,{lang:'ja'}),null);
