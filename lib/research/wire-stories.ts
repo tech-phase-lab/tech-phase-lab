@@ -60,6 +60,8 @@ export function cleanTitle(title: string) {
     .replace(/\s*[|｜]\s*(?:プレスリリース|Press Release)\s*$/, "").replace(/\s*[：:]\s*(?:レポート|報道|report)\s*$/i, "")
     // The wire service's name tacked on the end ("…で上昇（Investing.comより）") is not part of the headline (owner, Oct 28).
     .replace(/\s*[(（]\s*(?:Investing\.com|Reuters|Bloomberg|MarketWatch|Benzinga|Yahoo Finance|Seeking Alpha|The Motley Fool|TipRanks|Barron['’]?s|ロイター|ブルームバーグ|インベスティング[・･]?ドットコム|ヤフー[・･]?ファイナンス|マーケットウォッチ|ベンジンガ|シーキング[・･]?アルファ|モトリーフール|ティップランクス)\s*(?:より|による|報道|via)?\s*[)）]\s*$/i, "")
+    // "…の作業を停止：ブルームバーグ" - the outlet after a colon or dash is not part of the headline either (owner, Nov 5).
+    .replace(/\s*[：:\-–—|｜]\s*(?:ブルームバーグ|Bloomberg(?:\.com)?|ロイター|Reuters|ウォール[・･]?ストリート[・･]?ジャーナル|WSJ|CNBC|ブルームバーグ・ニュース)\s*(?:報道|より|による)?\s*$/i, "")
     .replace(/\s*[-–—|｜]\s*(?:Investing\.com|Yahoo Finance|MarketWatch|Benzinga|Seeking Alpha|TipRanks)(?:\s*(?:Japan|日本))?\s*$/i, "")
     // A translated outlet name left on the end ("…82万9,255ドル 投資.com報") is not part of the headline either (owner, Nov 5).
     // Investing.com's name comes out as "投資.com"; other outlets are cut only with the "報" that marks the attribution.

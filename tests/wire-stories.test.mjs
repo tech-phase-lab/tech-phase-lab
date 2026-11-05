@@ -101,6 +101,10 @@ test('teasers, foreign-currency quotes, law-firm notices are dropped; press-rele
   assert.equal(cleanTitle('Plain headline'), 'Plain headline');
   // A translated outlet name on the end (owner, Nov 5).
   assert.equal(cleanTitle('アリスタ・ネットワークス取締役マーク・テンプルトン、株式売却額829,255ドル 投資.com報'), 'アリスタ・ネットワークス取締役マーク・テンプルトン、株式売却額829,255ドル');
+  // The outlet after a colon or dash (owner, Nov 5).
+  assert.equal(cleanTitle('マイクロン、労使紛争で45億ドルの台湾工場の作業を停止：ブルームバーグ'), 'マイクロン、労使紛争で45億ドルの台湾工場の作業を停止');
+  assert.equal(cleanTitle('Micron halts Taiwan fab work over labor dispute: Bloomberg'), 'Micron halts Taiwan fab work over labor dispute');
+  assert.equal(cleanTitle('ブルームバーグが報じたニュースでMUが上昇'), 'ブルームバーグが報じたニュースでMUが上昇');
   assert.equal(cleanTitle('エヌビディア、新製品を発表 - 投資.com報'), 'エヌビディア、新製品を発表');
   assert.equal(cleanTitle('エヌビディア株が上昇 インベスティング.com'), 'エヌビディア株が上昇');
   assert.equal(cleanTitle('エヌビディア、増配を発表 ロイター報'), 'エヌビディア、増配を発表');
