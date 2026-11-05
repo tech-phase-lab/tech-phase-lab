@@ -110,3 +110,12 @@ test("FOMC, ISM, GDP and retail sales have result readers wired into the monitor
   for (const key of ["fomc", "ism", "gdp", "retail"]) assert.match(view, new RegExp(`key: "${key}"[^\\n]*ready: true`));
   assert.match(view, /key: "claims"[^\n]*ready: false/);
 });
+
+test("plan cards: 財務レーダー is on the PRO card, and 厳選ニュース moved to the FREE card (owner, Nov 5)", () => {
+  const cards = read("../app/research/plan-cards.tsx");
+  const free = cards.slice(cards.indexOf("const free"), cards.indexOf("const pro"));
+  const pro = cards.slice(cards.indexOf("const pro"), cards.indexOf("const groups"));
+  assert.match(free, /厳選ニュース/);
+  assert.doesNotMatch(pro, /厳選ニュース/);
+  assert.match(pro, /財務レーダー.*守る力と稼ぐ力を一望/);
+});

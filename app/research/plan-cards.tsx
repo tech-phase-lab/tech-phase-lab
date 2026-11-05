@@ -15,6 +15,7 @@ export default function PlanCards({ lang }: { lang: Language }) {
       [t("決算と経済指標の速報", "Earnings and economic flashes")],
       [t("米国市場の一般ニュース", "U.S. market news")],
       [t("ハイテク速報", "Tech Alerts"), t("30分遅れ・5件", "30 min delay · 5 items")],
+      [t("厳選ニュース", "Selected news"), t("細かな企業発表まで配信", "Down to the smaller company releases")],
     ] },
     { title: t("調べる", "Explore"), rows: [
       [t("米国株の銘柄検索", "U.S. stock search")],
@@ -35,12 +36,12 @@ export default function PlanCards({ lang }: { lang: Language }) {
       [t("連関マップ", "Relationship maps"), t("競合・提携・協業の関係を図解", "Rivals, partners and collaborators mapped")],
       [t("テーマランキング", "Theme Ranking"), t("いま強い分野がすぐ分かる", "See which themes are strong now")],
       [t("銘柄比較 PRO", "Compare PRO"), t("迷う2〜3銘柄を瞬時に見極める", "Weigh 2–3 stocks at a glance")],
+      [t("財務レーダー", "Financial Radar"), t("守る力と稼ぐ力を一望", "Strength and earning power at a glance")],
     ] },
     { title: t("すぐ知る", "Know first"), rows: [
       [t("ハイテク速報", "Tech Alerts"), t("リアルタイム・全件", "Real-time · every item")],
       [t("スマホ通知", "Mobile alerts"), t("目標株価・決算・指標・ニュース", "Price targets, earnings, data, news")],
       [t("監視22銘柄", "22 Tracked Stocks"), t("主要株の変化を見逃さない", "Keep up with the key stocks")],
-      [t("厳選ニュース", "Selected news"), t("細かな企業発表まで配信", "Down to the smaller company releases")],
     ] },
     { title: t("資産を管理", "Your portfolio"), rows: [
       [t("米国株の資産管理", "U.S. stock portfolio"), t("スクショで持ち株を登録", "Add holdings from a screenshot")],
