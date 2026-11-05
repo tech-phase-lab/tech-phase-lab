@@ -39,7 +39,7 @@ export default function NotebookScreen() {
       <span className={styles.ribbon} aria-hidden="true" />
       <p className={styles.eyebrow}>STOCK NOTEBOOK</p>
       <h1>{t("銘柄手帳", "Stock Notebook")}</h1>
-      <p className={styles.lead}>{t("ウォッチリストの銘柄の、今週の動きを一冊にまとめます。", "This week's moves for the stocks on your watchlist, in one book.")}</p>
+      <p className={styles.lead}>{t("ウォッチリストの銘柄の、今週の動きを一冊にまとめます。", "Your watchlist's weekly moves, all in one place.")}</p>
       {!ready ? <p role="status" className={styles.status}>{t("確認中…", "Checking…")}</p>
         : everything.length ? <>
           <div className={styles.controls}>

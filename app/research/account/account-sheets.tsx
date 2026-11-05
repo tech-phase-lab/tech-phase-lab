@@ -85,7 +85,7 @@ export function StopSheet({ ja, mode, until, onDone, onClose }: { ja: boolean; m
     <p className={styles.sBody}>{t("停止すると、次回の請求はありません。", "No further charges after you stop.")}{until && <><br />{t(`${until}まで、PROの機能を利用できます。`, `PRO stays available until ${until}.`)}</>}</p>
     {error && <p className={styles.err} role="alert">{t("停止できませんでした。契約の状態を確認して、もう一度お試しください。", "Could not stop renewal. Check your contract and try again.")}</p>}
     <button type="button" className={`${styles.btn} ${styles.gbt}`} disabled={busy} onClick={onClose}>{t("このまま続ける", "Keep renewing")}</button>
-    <button type="button" className={`${styles.btn} ${styles.stopBtn}`} style={{ marginTop: 12 }} disabled={busy} onClick={() => void stop()}>{busy ? t("停止しています…", "Stopping…") : t("自動更新を停止する", "Stop automatic renewal")}</button>
+    <button type="button" className={`${styles.btn} ${styles.stopBtn}`} style={{ marginTop: 12 }} disabled={busy} onClick={() => void stop()}>{busy ? t("停止しています…", "Stopping…") : t("自動更新を停止する", "Turn off auto-renewal")}</button>
   </Sheet>;
 }
 

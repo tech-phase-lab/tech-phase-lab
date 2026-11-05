@@ -68,7 +68,7 @@ export const verifiedChanges: VerifiedChange[] = [{
     { id: "operating-income", label: { ja: "GAAP営業利益", en: "GAAP operating income" }, previous: 1.476, current: 1.990, unit: "billion", change: { value: 34.824, unit: "percent" }, note: { ja: "会社発表の前四半期比は35%。", en: "AMD reports 35% quarter-on-quarter." } },
     { id: "net-income", label: { ja: "GAAP純利益", en: "GAAP net income" }, previous: 1.383, current: 2.297, unit: "billion", change: { value: 66.088, unit: "percent" }, note: { ja: "会社発表の前四半期比は66%。", en: "AMD reports 66% quarter-on-quarter." } },
   ],
-  reading: { ja: "売上は前四半期比約13%増、GAAP営業利益は約35%増でした。データセンター売上は$6.7Bで全社売上の58%を占めましたが、同じ表に前四半期値がないため比較カードには混ぜていません。", en: "Revenue rose about 13% quarter-on-quarter and GAAP operating income rose about 35%. Data Center revenue was $6.7B, or 58% of total revenue, but it is not mixed into the comparison cards because the same table does not provide its prior-quarter value." },
+  reading: { ja: "売上は前四半期比約13%増、GAAP営業利益は約35%増でした。データセンター売上は$6.7Bで全社売上の58%を占めましたが、同じ表に前四半期値がないため比較カードには混ぜていません。", en: "Revenue rose about 13% from the previous quarter, while GAAP operating income rose about 35%. Data Center revenue was $6.7B, or 58% of total revenue. It isn't included in the comparison cards because the same source table doesn't provide a prior-quarter figure." },
   unknown: { ja: "Q3見通しの達成可否、Heliosの立ち上がりが売上に寄与する時期、データセンター売上の製品別内訳は、この発表だけでは確定しません。", en: "This release does not establish whether Q3 guidance will be met, when the Helios ramp will contribute to revenue, or the product-level mix of Data Center revenue." },
   outlook: [
     { ja: "Q3売上見通し：約$13.0B ±$0.3B", en: "Q3 revenue outlook: approximately $13.0B ±$0.3B" },
@@ -125,7 +125,7 @@ export const verifiedChanges: VerifiedChange[] = [{
   outlookHeading: { ja: "会社の先行指標・見通し", en: "COMPANY LEADING INDICATORS / OUTLOOK" },
   outlook: [
     { ja: "6月末の売上バックログ：約$104B", en: "Revenue backlog at June 30: approximately $104B" },
-    { ja: "Q3初期の純増顧客コミットメント$25B超はバックログに未算入", en: "More than $25B of early-Q3 net new customer commitments is excluded from that backlog" },
+    { ja: "Q3初期の純増顧客コミットメント$25B超はバックログに未算入", en: "That backlog excludes more than $25B in net new customer commitments from early Q3" },
     { ja: "このSEC提出資料には数値ガイダンスを記載せず、同日の決算説明会で提供すると明記", en: "This SEC-filed release does not state numerical guidance; it says guidance would be provided on the same-day earnings call" },
   ],
 }, {
@@ -310,7 +310,7 @@ export const verifiedChanges: VerifiedChange[] = [{
     { id: "net-income", label: { ja: "純利益", en: "Net income" }, previous: 40.3459, current: 93.9226, unit: "krw-trillion", change: { value: 132.793, unit: "percent" }, note: { ja: "K-IFRS・連結。会社発表の前四半期比は133%。", en: "Consolidated K-IFRS. SK hynix reports 133% quarter-on-quarter." } },
   ],
   reading: { ja: "売上高は前四半期比約50.9%、営業利益は約61.0%増え、営業利益率は72%から76%へ上昇しました。会社はAIサーバー向けHBM・DRAM・eSSDなど高付加価値製品が寄与したと説明し、HBM4の量産出荷をQ2に開始しています。", en: "Revenue rose about 50.9% quarter-on-quarter, operating profit rose about 61.0%, and operating margin increased from 72% to 76%. The company attributes the result to high-value products including HBM, AI-server DRAM, and eSSD, and says HBM4 mass shipments began in Q2." },
-  unknown: { ja: "Q3以降も同じ価格上昇と利益率を維持できるか、顧客別のHBM売上構成、増産投資が将来の供給と利益率へ与える影響は、この発表だけでは確定しません。", en: "This release does not establish whether the same pricing and margins will persist beyond Q2, the HBM revenue mix by customer, or how capacity investments will affect future supply and profitability." },
+  unknown: { ja: "Q3以降も同じ価格上昇と利益率を維持できるか、顧客別のHBM売上構成、増産投資が将来の供給と利益率へ与える影響は、この発表だけでは確定しません。", en: "This release doesn't tell us whether pricing and margins will hold beyond Q2, how HBM revenue is split across customers, or how capacity investments will affect future supply and profitability." },
   outlookHeading: { ja: "会社が示した先行材料", en: "COMPANY LEADING INDICATORS" },
   outlook: [
     { ja: "主要顧客約10社と長期供給契約を締結", en: "Long-term supply agreements finalized with around 10 key customers" },

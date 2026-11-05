@@ -2,10 +2,10 @@
  * Equal-weighted: every member counts the same, so one large stock cannot decide a theme's rank. */
 export type GroupId = "tech" | "resources" | "finance" | "health" | "consumer" | "defensive";
 export const GROUPS: readonly { id: GroupId; ja: string; en: string }[] = [
-  { id: "tech", ja: "ハイテク", en: "High-tech" },
-  { id: "resources", ja: "資源・エネルギー", en: "Resources & energy" },
-  { id: "finance", ja: "金融", en: "Finance" },
-  { id: "health", ja: "ヘルスケア・バイオ", en: "Health & biotech" },
+  { id: "tech", ja: "ハイテク", en: "Technology" },
+  { id: "resources", ja: "資源・エネルギー", en: "Energy & natural resources" },
+  { id: "finance", ja: "金融", en: "Financials" },
+  { id: "health", ja: "ヘルスケア・バイオ", en: "Healthcare & biotech" },
   { id: "consumer", ja: "消費・小売", en: "Consumer & retail" },
   { id: "defensive", ja: "高配当・産業", en: "Dividend & industrials" },
 ];
@@ -14,8 +14,8 @@ export type ThemeDefinition = { id: string; group: GroupId; ja: string; en: stri
 export const THEMES: readonly ThemeDefinition[] = [
   { group: "tech", id: "ai-chips", ja: "AI半導体", en: "AI chips", tickers: ["NVDA", "AMD", "AVGO", "MRVL", "TSM", "ARM"] },
   { group: "tech", id: "memory", ja: "メモリ", en: "Memory", tickers: ["MU", "SNDK", "WDC", "STX"] },
-  { group: "tech", id: "chip-equipment", ja: "半導体製造装置", en: "Chip equipment", tickers: ["AMAT", "LRCX", "KLAC", "ASML", "TER"] },
-  { group: "tech", id: "optical", ja: "光・フォトニクス", en: "Optical & photonics", tickers: ["LITE", "COHR", "AAOI", "CIEN", "FN", "CRDO"] },
+  { group: "tech", id: "chip-equipment", ja: "半導体製造装置", en: "Chipmaking equipment", tickers: ["AMAT", "LRCX", "KLAC", "ASML", "TER"] },
+  { group: "tech", id: "optical", ja: "光・フォトニクス", en: "Optics & photonics", tickers: ["LITE", "COHR", "AAOI", "CIEN", "FN", "CRDO"] },
   { group: "tech", id: "networking", ja: "ネットワーキング", en: "Networking", tickers: ["ANET", "CSCO", "EXTR", "CALX", "ALAB"] },
   { group: "tech", id: "ai-cloud", ja: "AIクラウド", en: "AI cloud", tickers: ["NBIS", "CRWV", "IREN"] },
   { group: "tech", id: "data-centers", ja: "データセンター", en: "Data centers", tickers: ["EQIX", "DLR", "IRM", "APLD", "CORZ"] },
@@ -26,9 +26,9 @@ export const THEMES: readonly ThemeDefinition[] = [
   { group: "tech", id: "robotics", ja: "ロボティクス", en: "Robotics", tickers: ["ISRG", "SYM", "TER", "ROK", "SERV"] },
   { group: "tech", id: "drones", ja: "ドローン", en: "Drones", tickers: ["AVAV", "KTOS", "RCAT", "ONDS", "UMAC"] },
   { group: "tech", id: "space", ja: "宇宙", en: "Space", tickers: ["RKLB", "ASTS", "IRDM", "LUNR"] },
-  { group: "tech", id: "nuclear", ja: "原子力・SMR", en: "Nuclear & SMR", tickers: ["OKLO", "SMR", "NNE", "LEU", "CCJ"] },
-  { group: "tech", id: "crypto", ja: "暗号資産関連", en: "Crypto-linked", tickers: ["COIN", "MSTR", "MARA", "CLSK", "RIOT"] },
-  { group: "tech", id: "quantum", ja: "量子コンピューター", en: "Quantum", tickers: ["IONQ", "RGTI", "QBTS"] },
+  { group: "tech", id: "nuclear", ja: "原子力・SMR", en: "Nuclear power & small modular reactors", tickers: ["OKLO", "SMR", "NNE", "LEU", "CCJ"] },
+  { group: "tech", id: "crypto", ja: "暗号資産関連", en: "Crypto-related stocks", tickers: ["COIN", "MSTR", "MARA", "CLSK", "RIOT"] },
+  { group: "tech", id: "quantum", ja: "量子コンピューター", en: "Quantum computing", tickers: ["IONQ", "RGTI", "QBTS"] },
 
   // Resources & energy
   { group: "resources", id: "gold", ja: "金鉱山", en: "Gold miners", tickers: ["NEM", "AEM", "KGC", "AU", "HMY", "GFI"] },

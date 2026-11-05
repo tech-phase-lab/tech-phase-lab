@@ -12,35 +12,35 @@ export default function PlanCards({ lang }: { lang: Language }) {
   const t = (a: string, b: string) => ja ? a : b;
   const free: Group[] = [
     { title: t("ニュース", "News"), rows: [
-      [t("決算と経済指標の速報", "Earnings and economic flashes")],
+      [t("決算と経済指標の速報", "Earnings and economic updates")],
       [t("米国市場の一般ニュース", "U.S. market news")],
       [t("ハイテク速報", "Tech Alerts"), t("30分遅れ・5件", "30 min delay · 5 items")],
-      [t("厳選ニュース", "Selected news"), t("細かな企業発表まで配信", "Down to the smaller company releases")],
+      [t("厳選ニュース", "Selected news"), t("細かな企業発表まで配信", "Selected company updates, including smaller announcements")],
     ] },
     { title: t("調べる", "Explore"), rows: [
       [t("米国株の銘柄検索", "U.S. stock search")],
       [t("株価とチャートの確認", "Prices and charts")],
       [t("決算・経済指標カレンダー", "Earnings & economic calendar")],
       [t("指数・債券・為替のマーケット情報", "Indices, bonds and currencies")],
-      [t("資本マップ", "Capital Map"), t("企業・著名人の保有銘柄が分かる", "What companies and notable investors hold")],
+      [t("資本マップ", "Capital Map"), t("企業・著名人の保有銘柄が分かる", "See what companies and leading investors hold")],
     ] },
     { title: t("自分用", "For you"), rows: [
       [t("ウォッチリストの銘柄登録", "Your stock watchlist")],
-      [t("リサーチノート", "Research notes"), t("メモ・PDFで保存", "Save with notes or as PDF")],
-      [t("銘柄手帳", "Stock Notebook"), t("ウォッチ銘柄の動きをまとめて確認", "Your watchlist's moves in one place")],
+      [t("リサーチノート", "Research notes"), t("メモ・PDFで保存", "Save articles, add notes, and export PDFs")],
+      [t("銘柄手帳", "Stock Notebook"), t("ウォッチ銘柄の動きをまとめて確認", "Your watchlist's weekly moves, all in one place")],
     ] },
   ];
   const pro: Group[] = [
     { title: t("読み解く", "Understand"), rows: [
-      [t("決算リサーチ", "Earnings research"), t("一手先まで読む独自の分析", "Our own analysis, a step ahead")],
-      [t("連関マップ", "Relationship maps"), t("競合・提携・協業の関係を図解", "Rivals, partners and collaborators mapped")],
-      [t("テーマランキング", "Theme Ranking"), t("いま強い分野がすぐ分かる", "See which themes are strong now")],
-      [t("銘柄比較 PRO", "Compare PRO"), t("迷う2〜3銘柄を瞬時に見極める", "Weigh 2–3 stocks at a glance")],
+      [t("決算リサーチ", "Earnings research"), t("一手先まで読む独自の分析", "Original analysis to help you understand the results")],
+      [t("連関マップ", "Relationship maps"), t("競合・提携・協業の関係を図解", "See how companies compete and work together")],
+      [t("テーマランキング", "Theme Ranking"), t("いま強い分野がすぐ分かる", "See which themes are leading")],
+      [t("銘柄比較 PRO", "Compare PRO"), t("迷う2〜3銘柄を瞬時に見極める", "Compare 2–3 stocks side by side")],
       [t("財務レーダー", "Financial Radar"), t("守る力と稼ぐ力を一望", "Strength and earning power at a glance")],
     ] },
-    { title: t("すぐ知る", "Know first"), rows: [
-      [t("ハイテク速報", "Tech Alerts"), t("リアルタイム・全件", "Real-time · every item")],
-      [t("スマホ通知", "Mobile alerts"), t("目標株価・決算・指標・ニュース", "Price targets, earnings, data, news")],
+    { title: t("すぐ知る", "Stay up to date"), rows: [
+      [t("ハイテク速報", "Tech Alerts"), t("リアルタイム・全件", "Real-time access to all updates")],
+      [t("スマホ通知", "Mobile alerts"), t("目標株価・決算・指標・ニュース", "Price targets, earnings, economic data, and news")],
       [t("監視22銘柄", "22 Tracked Stocks"), t("主要株の変化を見逃さない", "Keep up with the key stocks")],
     ] },
     { title: t("資産を管理", "Your portfolio"), rows: [
@@ -49,7 +49,7 @@ export default function PlanCards({ lang }: { lang: Language }) {
     { title: t("会員だけの場", "Members only"), rows: [
       [t("週刊 Tech Phase PRO", "Tech Phase PRO Weekly"), t("1週間の変化と展望", "The week's shifts and outlook")],
       [t("リゼルのひとりごと", "RIZEL's Notes"), t("文章と音声で相場を語る", "Markets in words and audio")],
-      [t("リゼルに聞く", "Ask Rizel"), t("会員の疑問を厳選して深掘り", "Member questions, explored")],
+      [t("リゼルに聞く", "Ask Rizel"), t("会員の疑問を厳選して深掘り", "Answers to selected member questions")],
     ] },
   ];
   const groups = (list: Group[]) => list.map(group => <section key={group.title} className={styles.group}>
@@ -61,7 +61,7 @@ export default function PlanCards({ lang }: { lang: Language }) {
       <p className={styles.kicker}>TECH PHASE PRO</p>
       <p className={styles.price}>{t("¥2,980", "$20")}<small>{t(" / 月", " / month")}</small></p>
       <button type="button" className={styles.cta} disabled>{t("お申し込み準備中", "Coming soon")}</button>
-      <p className={styles.includes}>{t("無料プランのすべての機能に加えて", "Everything in Free, plus")}</p>
+      <p className={styles.includes}>{t("無料プランのすべての機能に加えて", "Everything in FREE, plus")}</p>
       {groups(pro)}
     </article>
     <article className={styles.freeCard}>

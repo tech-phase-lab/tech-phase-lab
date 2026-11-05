@@ -4,7 +4,7 @@ const groups: Record<string, string> = { MU: "memory", SKHY: "memory", SNDK: "na
 const cautions: Record<string, [string, string]> = {
   memory: ["メモリ価格と需給の循環、HBM構成比、設備投資を確認。好況期の利益だけで割安とは判断しません。", "Check memory pricing cycles, HBM mix and capex. Peak-cycle earnings do not establish value."],
   cloud: ["契約額・ARRと売上実績は別物です。稼働率、設備投資、資金調達と希薄化を確認します。", "Contracts and ARR are not realized revenue. Check utilization, capex, funding and dilution."],
-  compute: ["顧客の設備投資、輸出規制、競争と製品構成の変化を確認します。", "Check customer capex, export controls, competition and changes in product mix."],
+  compute: ["顧客の設備投資、輸出規制、競争と製品構成の変化を確認します。", "Watch customer capital spending, export controls, competition, and changes in the product mix."],
 };
 export const comparisonCatalog: ComparisonCompany[] = providers.map(p => {
   const peer = groups[p.ticker] || p.ticker;

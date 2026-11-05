@@ -69,11 +69,11 @@ export function comparisonMetric(c: Financials, id: ScoreId, lang: "ja"|"en", no
   const ja=lang==="ja";
   const providerMetric=c.twelveData ? twelveFactorMetric(c.twelveData,id,lang,now) : null;
   if(providerMetric)return providerMetric;
-  if(id==="growth" && finite(c.quarterRevenueGrowth)) return `${ja?"売上前年比":"Revenue YoY"} ${c.quarterRevenueGrowth>0?"+":""}${c.quarterRevenueGrowth.toFixed(1)}%`;
+  if(id==="growth" && finite(c.quarterRevenueGrowth)) return `${ja?"売上前年比":"Revenue growth (YoY)"} ${c.quarterRevenueGrowth>0?"+":""}${c.quarterRevenueGrowth.toFixed(1)}%`;
   if(id==="profitability" && finite(c.quarterOperatingMargin)) return `${ja?"営業利益率":"Operating margin"} ${c.quarterOperatingMargin.toFixed(1)}%`;
   if(id==="cash" && finite(c.quarterFcfMargin)) return `${ja?"簡易FCF率":"Simple FCF margin"} ${c.quarterFcfMargin.toFixed(1)}%`;
   if(id==="financial" && c.balance?.end===c.quarterRevenue?.end && finite(c.balance?.currentRatio)) return `${ja?"流動比率":"Current ratio"} ${c.balance.currentRatio.toFixed(2)}${ja?"倍":"×"}`;
-  return ja ? "必要データ未取得" : "Required data unavailable";
+  return ja ? "必要データ未取得" : "Data unavailable";
 }
 
 /** Missing factors must never improve the composite by being omitted. */
@@ -121,7 +121,7 @@ export function quarterlyTakeaway(companies: (Financials & {ticker:string})[], l
 export function overallComparison(companies: (Financials & {ticker:string})[],lang:"ja"|"en",now=Date.now()) {
   const ja=lang==="ja",ranked=companies.map(c=>({c,scores:comparisonScores(c,now),total:compositeScore(comparisonScores(c,now))}));
   if(!comparableQuarters(companies,now) || new Set(companies.map(c=>!!c.referenceEvaluation)).size>1 || ranked.some(r=>r.total===null))
-    return {title:ja?"総合評価に必要なデータが揃っていません":"Insufficient data for an overall assessment",description:ja?"取得できた項目は下のスナップショットで比較できます。欠損を0点に置き換えず、総合順位は保留します。":"Available factors remain comparable below. Missing values are not zero; an overall ranking is withheld."};
+    return {title:ja?"総合評価に必要なデータが揃っていません":"There isn't enough data for an overall score",description:ja?"取得できた項目は下のスナップショットで比較できます。欠損を0点に置き換えず、総合順位は保留します。":"You can still compare the available factors below. Missing values don't mean zero, so we haven't assigned an overall ranking."};
   ranked.sort((a,b)=>b.total!-a.total!);
   const best=ranked[0],next=ranked[1],gap=best.total!-next.total!;
   const totals=ranked.map(r=>`${r.c.ticker} ${r.total!.toFixed(1)}/10`).join(" · ");

@@ -30,6 +30,6 @@ export default function HomeHero({ lang }: { lang: Language }) {
       <span>{date}</span>
     </p>
     <h1 id="research-page-title" className={ja ? styles.ja : styles.en}>{ja ? <>米国株の変化を、<em>先読み</em>する。</> : <>Read US stocks <em>one move ahead</em>.</>}</h1>
-    <p className={styles.sub}>{ja ? "速報・決算・資金の流れをひとつの画面で" : "News, earnings and capital flows on one screen"}</p>
+    <p className={styles.sub}>{ja ? "速報・決算・資金の流れをひとつの画面で" : "News, earnings, and capital flows, all in one place."}</p>
   </header>;
 }

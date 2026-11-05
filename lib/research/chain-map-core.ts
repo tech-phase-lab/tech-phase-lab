@@ -24,7 +24,7 @@ const text = {
   down: { tag: ["納入", "Customer"], legend: ["納入・採用先", "Customers / adopters"], group: ["納入先・顧客(下流)", "Customers (downstream)"] },
   tie: { tag: ["提携・出資", "Partner"], legend: ["提携・出資・技術対応", "Partnerships, investment & technology support"], group: ["提携・出資・技術対応", "Partnerships, investment & technology support"] },
   rival: { tag: ["競合", "Competitor"], legend: ["競合", "Competitors"], group: ["競合", "Competitors"] },
-  far: { tag: ["2段先", "2 steps out"], legend: ["さらに先の関係", "Further links"], group: ["さらに先の関係", "Further links"] },
+  far: { tag: ["2段先", "Two connections away"], legend: ["さらに先の関係", "Related connections"], group: ["さらに先の関係", "Related connections"] },
 } as const;
 export type ChainTone = ChainKind | "far";
 export const chainText = (tone: ChainTone, part: "tag" | "legend" | "group", lang: "ja" | "en") => text[tone][part][lang === "ja" ? 0 : 1];

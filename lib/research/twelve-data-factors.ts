@@ -16,9 +16,9 @@ export type TwelveFactorEvidence = {
 };
 export const twelveFactorMethods: Record<string,Copy> = {
   financial:{ja:"財務健全性：流動比率2倍で5点、現金÷有利子負債1倍で5点。負債ゼロは明示された場合だけ扱います。",en:"Financial strength: up to 5 points at a 2× current ratio plus up to 5 at 1× cash/total debt. Missing debt is not zero."},
-  valuation:{ja:"割安性：予想PER 10倍＝9点、20倍＝7点、30倍＝5点、40倍＝3点、55倍以上＝0点の共通目盛り。同業順位や適正株価ではなく、循環的な利益のピークは調整していません。",en:"Valuation: a common forward P/E scale: 10× = 9, 20× = 7, 30× = 5, 40× = 3, 55× or more = 0. Not a peer ranking or fair value; peak-cycle earnings are not normalized."},
-  stability:{ja:"安定性：直近4四半期の営業黒字割合と営業利益率のばらつきから計算。株価の安定や将来の業績を保証する指標ではありません。",en:"Stability combines the share of profitable quarters and dispersion of operating margins over four consecutive quarters. It does not measure share-price stability or guarantee future results."},
-  momentum:{ja:"株価モメンタム：分割調整済み日足の約3か月騰落率。0%＝5点、+50%＝10点、−50%＝0点。配当を含まず、上昇余地の予測ではありません。",en:"Momentum: roughly three-month split-adjusted price return. 0% = 5, +50% = 10, −50% = 0. Excludes dividends and is not a forecast."},
+  valuation:{ja:"割安性：予想PER 10倍＝9点、20倍＝7点、30倍＝5点、40倍＝3点、55倍以上＝0点の共通目盛り。同業順位や適正株価ではなく、循環的な利益のピークは調整していません。",en:"Valuation: all companies use the same forward P/E scale. A P/E of 10× scores 9, 20× scores 7, 30× scores 5, 40× scores 3, and 55× or higher scores 0. This isn't a ranking against peers or an estimate of fair value. Earnings at the peak of a business cycle aren't adjusted to a normal level."},
+  stability:{ja:"安定性：直近4四半期の営業黒字割合と営業利益率のばらつきから計算。株価の安定や将来の業績を保証する指標ではありません。",en:"Stability combines how many of four consecutive quarters were profitable with how much operating margins varied across those quarters. It doesn't measure stock-price stability or guarantee future results."},
+  momentum:{ja:"株価モメンタム：分割調整済み日足の約3か月騰落率。0%＝5点、+50%＝10点、−50%＝0点。配当を含まず、上昇余地の予測ではありません。",en:"Momentum: the stock-price return over roughly three months, adjusted for stock splits. A 0% return scores 5, +50% scores 10, and −50% scores 0. Dividends aren't included, and this isn't a forecast."},
 };
 /** Extra endpoints are optional. Failure of one factor never discards usable quarterly results.
  * Timestamps belong to each actual request, not the time a cached record is displayed.

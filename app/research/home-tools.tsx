@@ -17,8 +17,8 @@ export default function HomeTools({ lang, onPro, onWatch }: { lang: Language; on
   const covered = locked && settled;
   return <>
     <nav className={styles.grid} aria-label={t("よく使う機能", "Quick tools")}>
-      <Link href="/research/calendar"><span className={styles.cardTop}><span className={styles.icon} aria-hidden="true">📅</span><strong>{t("決算・経済指標", "Earnings & Economy")}</strong></span><small>{t("今週の予定を確認", "This week")}</small></Link>
-      <Link href="/research/themes"><span className={styles.cardTop}><span className={styles.icon} aria-hidden="true">📊</span><strong className={styles.longTitle}>{t("テーマランキング", "Theme Ranking")}</strong></span><small>{t("強いジャンルを見極める", "Spot the strong themes")}</small></Link>
+      <Link href="/research/calendar"><span className={styles.cardTop}><span className={styles.icon} aria-hidden="true">📅</span><strong>{t("決算・経済指標", "Earnings & economic calendar")}</strong></span><small>{t("今週の予定を確認", "This week")}</small></Link>
+      <Link href="/research/themes"><span className={styles.cardTop}><span className={styles.icon} aria-hidden="true">📊</span><strong className={styles.longTitle}>{t("テーマランキング", "Theme Ranking")}</strong></span><small>{t("強いジャンルを見極める", "See which themes are leading")}</small></Link>
       <Link href="/research/capital-map"><span className={styles.cardTop}><span className={styles.icon} aria-hidden="true">🗺️</span><strong>{t("資本マップ", "Capital Map")}</strong></span><small>{t("運用会社・ETFの投資先", "Funds and ETFs")}</small></Link>
       <Link href="/research#monitored-companies" onClick={event => { if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return; event.preventDefault(); onWatch(); }}><span className={styles.cardTop}><span className={styles.icon} aria-hidden="true">🔭</span><strong>{t("監視22銘柄", "22 Tracked Stocks")}</strong></span><small>{t("厳選株をリアルタイムで", "Live, curated")}</small></Link>
     </nav>
@@ -27,7 +27,7 @@ export default function HomeTools({ lang, onPro, onWatch }: { lang: Language; on
       <Link href="/research/notes" className={styles.deskLead}><div><strong>{t("リゼルのひとりごと", "RIZEL’s Notes")}</strong><p>{t("数字の先にある、相場の着眼点。", "A perspective beyond the numbers.")}</p></div><span aria-hidden="true">→</span></Link>
       <div className={styles.deskPair}>
         <Link href="/research/qa"><strong>{t("リゼルに聞く", "Ask Rizel")}</strong><span className={styles.deskSmall}>{t("疑問から、理解を深める", "Questions worth exploring")}</span><span aria-hidden="true">→</span></Link>
-        <Link href="/research/weekly"><strong>{t("週刊PRO", "PRO Weekly")}</strong><span className={styles.deskSmall}>{t("一週間の変化と展望", "The week’s shifts & outlook")}</span><span aria-hidden="true">→</span></Link>
+        <Link href="/research/weekly"><strong>{t("週刊PRO", "PRO Weekly")}</strong><span className={styles.deskSmall}>{t("一週間の変化と展望", "What changed this week and what to watch next")}</span><span aria-hidden="true">→</span></Link>
       </div>
       {covered && <div className={styles.deskOverlay}>
         <div className={styles.overlayCaption}><span className={styles.overlayLabel}>TECH PHASE PRO</span><strong><span className={styles.overlayLock} aria-hidden="true">🔒</span>{t("PRO会員限定", "Exclusive to PRO")}</strong></div>

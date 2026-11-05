@@ -6,7 +6,7 @@ export const radarGenres = [
   { id: "semis", ja: "半導体", en: "Semiconductors", tickers: ["NVDA", "AMD", "INTC", "QCOM", "AMAT", "LRCX"] },
   { id: "memory", ja: "メモリ", en: "Memory", tickers: ["MU", "SNDK", "WDC", "STX", "RMBS", "P"] },
   { id: "network", ja: "通信", en: "Networking", tickers: ["ANET", "MRVL", "CRDO", "APH", "ALAB", "CSCO"] },
-  { id: "photonics", ja: "光・フォトニクス", en: "Optical & Photonics", tickers: ["AAOI", "COHR", "LITE", "CIEN", "GLW", "AVGO", "FN"] },
+  { id: "photonics", ja: "光・フォトニクス", en: "Optics & photonics", tickers: ["AAOI", "COHR", "LITE", "CIEN", "GLW", "AVGO", "FN"] },
   { id: "software", ja: "ソフトウェア", en: "Software", tickers: ["MSFT", "NOW", "CRM", "ADBE", "PLTR", "SNOW"] },
   { id: "power", ja: "電力・設備", en: "Power & Infrastructure", tickers: ["VST", "CEG", "GEV", "BE", "VRT", "ETN", "PWR", "OKLO"] },
   { id: "cyber", ja: "サイバーセキュリティ", en: "Cybersecurity", tickers: ["CRWD", "PANW", "ZS", "FTNT", "NET", "S", "OKTA"] },
@@ -30,12 +30,12 @@ export const xPosition = (ocfMargin: number) => (clamp(ocfMargin, X_MIN, X_MAX) 
 export const yPosition = (cover: number) => (Math.log2(clamp(cover, Y_MIN, Y_MAX)) - Math.log2(Y_MIN)) / (Math.log2(Y_MAX) - Math.log2(Y_MIN));
 export const isBeyond = (ocfMargin: number, cover: number) => ocfMargin < X_MIN || ocfMargin > X_MAX || cover < Y_MIN || cover > Y_MAX;
 /** The real value of a dot that was stopped at the edge, e.g. "◀ -180%" or "80% ▶" (and "▲ 44x" / "▼ 0.1x" for the other axis). */
-export function beyondText(ocfMargin: number, cover: number, noRevenue = false): string {
+export function beyondText(ocfMargin: number, cover: number, noRevenue = false, lang: "ja" | "en" = "ja"): string {
   const parts: string[] = [];
   const percent = `${Math.abs(ocfMargin) >= 100 ? ocfMargin.toFixed(0) : ocfMargin.toFixed(1)}%`;
-  if (noRevenue) parts.push("◀ 売上なし");
+  if (noRevenue) parts.push(lang === "ja" ? "◀ 売上なし" : "◀ No revenue");
   else if (ocfMargin < X_MIN) parts.push(`◀ ${percent}`); else if (ocfMargin > X_MAX) parts.push(`${percent} ▶`);
-  const times = cover >= 100 ? "100x超" : `${cover >= 10 ? cover.toFixed(0) : cover.toFixed(2)}x`;
+  const times = cover >= 100 ? (lang === "ja" ? "100x超" : "100x+") : `${cover >= 10 ? cover.toFixed(0) : cover.toFixed(2)}x`;
   if (cover > Y_MAX) parts.push(`▲ ${times}`); else if (cover < Y_MIN) parts.push(`▼ ${times}`);
   return parts.join(" ");
 }
@@ -45,6 +45,8 @@ export const beyondDirections = (ocfMargin: number, cover: number) => ({ left: o
 
 export type Zone = "solid" | "lever" | "guard" | "thin";
 export const zoneName: Record<Zone, string> = { solid: "盤石", lever: "借入で攻める", guard: "守りで耐える", thin: "余力が小さい" };
+export const zoneNameEn: Record<Zone, string> = { solid: "Solid", lever: "Debt-fueled", guard: "Defensive", thin: "Thin cushion" };
+export const zoneLabel = (zone: Zone, lang: "ja" | "en") => lang === "ja" ? zoneName[zone] : zoneNameEn[zone];
 /** Operating cash flow at or above 0% is "earning"; cash covering borrowings and leases at 1x or more is "protected". */
 export const zoneOf = (ocfMargin: number, cover: number): Zone => ocfMargin >= 0 ? (cover >= 1 ? "solid" : "lever") : (cover >= 1 ? "guard" : "thin");
 
@@ -120,12 +122,12 @@ export function arrow(now: number, before: number | undefined): "up" | "down" | 
 }
 
 /** When the previous earnings fall outside the chart, no dotted line is drawn; the value is written beside the name instead ("前回 49x"). */
-export function previousBeyondText(previous: { ocfMargin: number; cover: number } | null): string {
+export function previousBeyondText(previous: { ocfMargin: number; cover: number } | null, lang: "ja" | "en" = "ja"): string {
   if (!previous || !isBeyond(previous.ocfMargin, previous.cover)) return "";
   const parts: string[] = [];
   if (previous.ocfMargin < X_MIN || previous.ocfMargin > X_MAX) parts.push(`${Math.abs(previous.ocfMargin) >= 100 ? previous.ocfMargin.toFixed(0) : previous.ocfMargin.toFixed(1)}%`);
-  if (previous.cover < Y_MIN || previous.cover > Y_MAX) parts.push(previous.cover >= 100 ? "100x超" : `${previous.cover >= 10 ? previous.cover.toFixed(0) : previous.cover.toFixed(2)}x`);
-  return `前回 ${parts.join(" ")}`;
+  if (previous.cover < Y_MIN || previous.cover > Y_MAX) parts.push(previous.cover >= 100 ? (lang === "ja" ? "100x超" : "100x+") : `${previous.cover >= 10 ? previous.cover.toFixed(0) : previous.cover.toFixed(2)}x`);
+  return `${lang === "ja" ? "前回" : "Prev."} ${parts.join(" ")}`;
 }
 
 // ---- ticker labels: always beside their own dot, moved up or down (with a thin line back to the dot) when crowded ----

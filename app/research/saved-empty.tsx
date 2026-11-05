@@ -15,7 +15,7 @@ export default function SavedEmpty({ lang, onFind }: { lang: Language; onFind: (
           : <>The company will <mark className={styles.hl}>start the new fab early next quarter</mark>,<br />aiming to <span className={styles.ul}>raise capacity</span> and <span className={styles.bx}>capture demand</span>.</>}</p>
         <div className={styles.memo}>
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#d9b56a" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="m15 4 5 5M4 20l5-1L21 7a2 2 0 0 0-5-5L4 14v6Z" /></svg>
-          <span>{t("次の決算で、設備投資の額を確認する", "Check capital spending at the next earnings")}</span>
+          <span>{t("次の決算で、設備投資の額を確認する", "Check capital spending in the next earnings report.")}</span>
         </div>
         <ul className={styles.legend}>
           <li><i className={styles.swHl} />{t("蛍光ペン", "Highlight")}</li><li><i className={styles.swUl} />{t("下線", "Underline")}</li>
@@ -24,7 +24,7 @@ export default function SavedEmpty({ lang, onFind }: { lang: Language; onFind: (
       </div>
     </div>
     <h2>{t("気づきを残す、自分だけの一冊。", "A personal notebook for your insights.")}</h2>
-    <p className={styles.lead}>{t("何度でも立ち戻れる場所に。", "A place to return to, time and again.")}</p>
+    <p className={styles.lead}>{t("何度でも立ち戻れる場所に。", "Keep your research handy for your next review.")}</p>
     <button type="button" className={styles.find} onClick={onFind}>{t("保存する記事を調べる", "Find articles to save")}</button>
   </div>;
 }

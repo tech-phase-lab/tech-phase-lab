@@ -47,3 +47,17 @@ test("links: LP footer and home footer reach both pages; the menu no longer carr
   const home = read("../app/research/research-dashboard.tsx");
   assert.match(home, /<Link href="\/terms">/); assert.match(home, /<Link href="\/privacy">/);
 });
+
+test("the English terms and privacy policy follow the Japanese originals clause by clause (owner, Nov 6)", async () => {
+  const { parseLegal } = await import("../lib/legal/parse.ts");
+  for (const name of ["terms", "privacy"]) {
+    const ja = parseLegal((await import(`../lib/legal/${name}-ja.ts`)).default), en = parseLegal((await import(`../lib/legal/${name}-en.ts`)).default);
+    const shape = blocks => blocks.filter(block => block.kind !== "title").map(block => block.kind === "items" || block.kind === "bullets" ? `${block.kind}:${block.items.length}` : block.kind).join(",");
+    // The English adds one translation notice after the title; every other block matches in kind and count.
+    assert.equal(shape(en), "text," + shape(ja), name);
+    assert.equal(en.filter(block => block.kind === "heading").length, ja.filter(block => block.kind === "heading").length, name);
+  }
+  const terms = (await import("../lib/legal/terms-en.ts")).default;
+  for (const fact of ["2,980", "5,980", "3,980", "USD 39", "USD 29", "30 days", "one year"]) assert.ok(terms.includes(fact), fact);
+  assert.ok(terms.includes("the Japanese version prevails"));
+});

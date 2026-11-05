@@ -22,7 +22,7 @@ export const indicators: { key: string; ja: string; en: string; whenJa: string; 
   { key: "pce", ja: "PCE（個人消費支出）", en: "PCE", whenJa: "毎月", whenEn: "Monthly", ready: true },
   { key: "fomc", ja: "FOMC（政策金利）", en: "FOMC", whenJa: "年8回", whenEn: "8 times a year", ready: true },
   { key: "adp", ja: "ADP雇用統計", en: "ADP employment", whenJa: "毎月", whenEn: "Monthly", ready: true },
-  { key: "ism", ja: "ISM製造業景況指数", en: "ISM manufacturing", whenJa: "毎月初め", whenEn: "Start of month", ready: true },
+  { key: "ism", ja: "ISM製造業景況指数", en: "ISM manufacturing", whenJa: "毎月初め", whenEn: "Early each month", ready: true },
   { key: "gdp", ja: "GDP", en: "GDP", whenJa: "四半期ごと", whenEn: "Quarterly", ready: true },
   { key: "retail", ja: "小売売上高", en: "Retail sales", whenJa: "毎月", whenEn: "Monthly", ready: true },
   { key: "claims", ja: "新規失業保険申請件数", en: "Jobless claims", whenJa: "毎週木曜", whenEn: "Every Thursday", ready: false },
@@ -92,24 +92,24 @@ export default function NotificationPageView(p: PageViewProps) {
   const sw = (title: string, checked: boolean, onChange: (v: boolean) => void) =>
     <button type="button" role="switch" aria-checked={checked} aria-label={title} disabled={!editable} className={`${styles.switch} ${checked ? styles.switchOn : ""}`} onClick={() => onChange(!checked)} />;
   const sheets = <>
-    {sheet === "earnings" && <Sheet title={t("決算を通知する50社", "50 companies with earnings alerts")} sub={t("決算の結果が出たときに、お知らせします。", "You are notified when results are out.")} action={t("閉じる", "Close")} onClose={() => setSheet("")}>
+    {sheet === "earnings" && <Sheet title={t("決算を通知する50社", "50 companies with earnings alerts")} sub={t("決算の結果が出たときに、お知らせします。", "Get notified when earnings are released.")} action={t("閉じる", "Close")} onClose={() => setSheet("")}>
       <p className={styles.group}>{t(`監視 ${monitored.length}銘柄`, `MONITORED ${monitored.length}`)}</p>
       <ul className={styles.chips}>{monitored.map(x => <li key={x} className={styles.chip}>{x}</li>)}</ul>
       <p className={styles.group}>{t(`追跡 ${tracked.length}社`, `TRACKED ${tracked.length}`)}</p>
       <ul className={styles.chips}>{tracked.map(x => <li key={x} className={styles.chip}>{x}</li>)}</ul>
     </Sheet>}
-    {sheet === "news" && <Sheet title={t("ニュースを受け取る銘柄", "Stocks for news alerts")} sub={t("選んだ銘柄のニュースが、スマホに届きます。", "News for the stocks you pick reaches your phone.")} action={t("完了", "Done")} onClose={() => setSheet("")}>
+    {sheet === "news" && <Sheet title={t("ニュースを受け取る銘柄", "Stocks for news alerts")} sub={t("選んだ銘柄のニュースが、スマホに届きます。", "Get news alerts on your phone for the stocks you choose.")} action={t("完了", "Done")} onClose={() => setSheet("")}>
       <div className={styles.pickBar}><span>{t(`${news.length} / ${monitored.length}銘柄を選択中`, `${news.length} / ${monitored.length} selected`)}</span>
         {news.length === monitored.length ? <button type="button" disabled={!editable} className={styles.none} onClick={() => saveNews([])}>{t("すべて外す", "Clear all")}</button> : <button type="button" disabled={!editable} className={styles.all} onClick={() => saveNews(monitored)}>{t("すべて選ぶ", "Select all")}</button>}</div>
       <ul className={styles.chips}>{monitored.map(x => { const chosen = news.includes(x); return <li key={x}><button type="button" aria-pressed={chosen} disabled={!editable} className={`${styles.chip} ${chosen ? styles.chipOn : ""}`} style={{ width: "100%" }} onClick={() => saveNews(chosen ? news.filter(v => v !== x) : monitored.filter(v => v === x || news.includes(v)))}>{x}</button></li>; })}</ul>
     </Sheet>}
-    {sheet === "economic" && <Sheet title={t("経済指標を選ぶ", "Choose indicators")} sub={t("発表のあとに、結果を届けます。", "Results are sent after each release.")} action="×" onClose={() => setSheet("")}>
+    {sheet === "economic" && <Sheet title={t("経済指標を選ぶ", "Choose indicators")} sub={t("発表のあとに、結果を届けます。", "Get the results after each release.")} action="×" onClose={() => setSheet("")}>
       <ul className={styles.kinds}>{indicators.map(k => { const chosen = kinds.includes(k.key); return <li key={k.key} className={styles.kind}>
         <div><p className={styles.rowTitle}>{t(k.ja, k.en)}{!k.ready && <span className={styles.soon}>{t("準備中", "Soon")}</span>}</p><p className={styles.rowDesc}>{t(k.whenJa, k.whenEn)}</p></div>
         {sw(t(k.ja, k.en), chosen, v => p.onPrefs({ economicKinds: v ? indicators.map(x => x.key).filter(x => x === k.key || kinds.includes(x)) : kinds.filter(x => x !== k.key) }))}</li>; })}</ul>
       <p className={styles.foot}>{t("日本時間の発表の時刻に届きます。おやすみモード中は届きません。", "Sent at the release time in Japan. Nothing is sent during Do Not Disturb.")}</p>
     </Sheet>}
-    {sheet === "quiet" && <Sheet title={t("おやすみモード", "Do Not Disturb")} sub="" action="×" onClose={() => setSheet("")}>
+    {sheet === "quiet" && <Sheet title={t("おやすみモード", "Quiet hours")} sub="" action="×" onClose={() => setSheet("")}>
       <div className={styles.quietUse}><div><p className={styles.rowTitle}>{t("おやすみモードを使う", "Use Do Not Disturb")}</p><p className={styles.rowDesc}>{t("この時間は、通知を止めます。", "Notifications pause during these hours.")}</p></div>
         {sw(t("おやすみモードを使う", "Use Do Not Disturb"), draft.on, v => setDraft({ ...draft, on: v }))}</div>
       <div className={`${styles.pickers} ${draft.on ? "" : styles.rowsOff}`}>
@@ -125,7 +125,7 @@ export default function NotificationPageView(p: PageViewProps) {
   const more = (icon: ReactNode, title: string, value: string, open: () => void) =>
     <li><button type="button" className={styles.more} onClick={open}><span className={styles.icon}>{icon}</span><span className={styles.rowTitleBig}>{title}</span><span className={styles.value}>{value}</span><span className={styles.chev} aria-hidden="true">›</span></button></li>;
   const statusText = state === "unavailable" || state === "unknown" ? t("通知の状態を確認できませんでした。", "Could not check the notification status.")
-    : needsAccount || !p.usable ? p.label : on ? t("下で選んだお知らせが届きます。", "The alerts you pick below reach this device.") : t("オンにすると、下で選んだお知らせが届きます。", "Turn on to get the alerts you pick below.");
+    : needsAccount || !p.usable ? p.label : on ? t("下で選んだお知らせが届きます。", "The alerts you pick below reach this device.") : t("オンにすると、下で選んだお知らせが届きます。", "Turn on notifications, then choose which updates you'd like to receive.");
   return <div className={styles.page}>
     <div className={styles.status}>
       <div className={styles.statusRow}>
@@ -138,7 +138,7 @@ export default function NotificationPageView(p: PageViewProps) {
         {p.usable && <button type="button" className={on ? styles.statusOff : styles.statusOn} disabled={p.busy || p.starting} onClick={p.onToggle}>{p.busy || p.starting ? t("設定中…", "Setting up…") : on ? t("オフにする", "Turn off") : t("オンにする", "Turn on")}</button>}
       </div>
       {(state === "unavailable" || state === "unknown") && <div className={styles.aux}><button type="button" disabled={p.busy} onClick={state === "unknown" ? p.onStatus : p.onRetry}>{t("もう一度確認する", "Check again")}</button></div>}
-      {needsAccount && <div className={styles.aux}><Link href="/research/account">{t("ログイン・会員情報", "Sign in / Membership")}</Link></div>}
+      {needsAccount && <div className={styles.aux}><Link href="/research/account">{t("ログイン・会員情報", "Sign in or view plans")}</Link></div>}
       {!p.usable && p.hasSubscription && <div className={styles.aux}><button type="button" disabled={p.busy} onClick={p.onDisable}>{t("通知をオフにする", "Turn off notifications")}</button></div>}
       {state === "unsupported" && <p className={styles.note}>{t("iPhoneではSafariの共有メニューからホーム画面に追加し、そのアイコンから開いてください。", "On iPhone, add this site to your Home Screen using Safari’s Share menu, then open that icon.")}</p>}
       {state === "blocked" && <p className={styles.note}>{t("端末またはブラウザの設定で、Tech Phaseの通知を許可してください。", "Allow Tech Phase notifications in your device or browser settings.")}</p>}
@@ -150,14 +150,14 @@ export default function NotificationPageView(p: PageViewProps) {
       <p className={styles.section}>{t("銘柄", "STOCKS")}</p>
       <ul className={styles.rows}>
         {row(icons.target, t("目標株価の変更", "Price target changes"), t("主要AI株の多くが対象", "Most major AI stocks are covered"), prefs.targets, v => p.onPrefs({ targets: v }))}
-        {row(icons.earnings, t("決算の速報", "Earnings flashes"), t(`監視${monitored.length}銘柄と追跡${tracked.length}社、計${monitored.length + tracked.length}社を網羅`, `${monitored.length} monitored and ${tracked.length} tracked, ${monitored.length + tracked.length} in all`), prefs.earnings, v => p.onPrefs({ earnings: v }))}
-        {row(icons.news, t("監視株ニュース", "Watched-stock news"), t(`監視${monitored.length}銘柄のうち、選んだ銘柄だけ`, `Only the stocks you pick of the ${monitored.length} monitored`), prefs.news, v => p.onPrefs({ news: v }))}
+        {row(icons.earnings, t("決算の速報", "Earnings updates"), t(`監視${monitored.length}銘柄と追跡${tracked.length}社、計${monitored.length + tracked.length}社を網羅`, `${monitored.length} monitored and ${tracked.length} tracked, ${monitored.length + tracked.length} in all`), prefs.earnings, v => p.onPrefs({ earnings: v }))}
+        {row(icons.news, t("監視株ニュース", "News for selected stocks"), t(`監視${monitored.length}銘柄のうち、選んだ銘柄だけ`, `Only the stocks you pick of the ${monitored.length} monitored`), prefs.news, v => p.onPrefs({ news: v }))}
       </ul>
       <p className={styles.section}>{t("市場", "MARKET")}</p>
       <ul className={styles.rows}>
-        {row(icons.calendar, t("経済指標", "Economic indicators"), t("雇用統計やCPIなど、重要な指標すべて", "Jobs, CPI and the other key indicators"), prefs.economic, v => p.onPrefs({ economic: v }))}
-        {row(icons.notebook, t("銘柄手帳のまとめ", "Stock Notebook recap"), t("日曜の夜に、ウォッチリストの1週間を配信", "Sunday night: your watchlist’s week"), prefs.weeklyNotebook, v => p.onPrefs({ weeklyNotebook: v }))}
-        {row(icons.weekly, t("週刊PRO", "Weekly PRO"), t("毎週、新しい号が公開されたときにお知らせ", "When a new issue is published each week"), prefs.weeklyIssue, v => p.onPrefs({ weeklyIssue: v }))}
+        {row(icons.calendar, t("経済指標", "Economic indicators"), t("雇用統計やCPIなど、重要な指標すべて", "Jobs reports, CPI, and other key economic data"), prefs.economic, v => p.onPrefs({ economic: v }))}
+        {row(icons.notebook, t("銘柄手帳のまとめ", "Stock Notebook recap"), t("日曜の夜に、ウォッチリストの1週間を配信", "Your watchlist's weekly recap, every Sunday night"), prefs.weeklyNotebook, v => p.onPrefs({ weeklyNotebook: v }))}
+        {row(icons.weekly, t("週刊PRO", "PRO Weekly"), t("毎週、新しい号が公開されたときにお知らせ", "When a new issue is published each week"), prefs.weeklyIssue, v => p.onPrefs({ weeklyIssue: v }))}
       </ul>
       <p className={styles.section}>{t("リゼル", "RIZEL")}</p>
       <ul className={styles.rows}>
@@ -168,12 +168,12 @@ export default function NotificationPageView(p: PageViewProps) {
     {p.prefsMessage && <p className={styles.note} role="status">{p.prefsMessage}</p>}
     {p.prefsState === "unsupported" && <p className={styles.note} role="status">{t("届く内容の保存は、現在準備中です。", "Saving what you receive is not available yet.")}</p>}
     <section id="details" className={styles.details} aria-label={t("詳しい設定", "Details")}>
-      <h2 className={styles.detailsHead}>{t("詳しい設定", "Details")}<span>{t("対象や時間を細かく決められます", "Fine-tune what and when")}</span></h2>
+      <h2 className={styles.detailsHead}>{t("詳しい設定", "Details")}<span>{t("対象や時間を細かく決められます", "Choose what you get and when")}</span></h2>
       <ul className={`${styles.moreList} ${on ? "" : styles.rowsOff}`}>
         {more(icons.earnings, t("決算の対象", "Earnings coverage"), t(`${monitored.length + tracked.length}社`, `${monitored.length + tracked.length}`), () => setSheet("earnings"))}
-        {more(icons.news, t("監視株ニュース", "Watched-stock news"), t(`${news.length}銘柄`, `${news.length}`), () => setSheet("news"))}
-        {more(icons.calendar, t("経済指標の種類", "Indicator types"), t(`${kinds.length}件`, `${kinds.length}`), () => setSheet("economic"))}
-        {more(icons.moon, t("おやすみモード", "Do Not Disturb"), quietText, openQuiet)}
+        {more(icons.news, t("監視株ニュース", "News for selected stocks"), t(`${news.length}銘柄`, `${news.length}`), () => setSheet("news"))}
+        {more(icons.calendar, t("経済指標の種類", "Economic indicators"), t(`${kinds.length}件`, `${kinds.length}`), () => setSheet("economic"))}
+        {more(icons.moon, t("おやすみモード", "Quiet hours"), quietText, openQuiet)}
       </ul>
     </section>
     {p.owner && <><p className={styles.section}>{t("運営者だけ", "OWNER ONLY")}</p>

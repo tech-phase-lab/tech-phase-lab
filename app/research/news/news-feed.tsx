@@ -12,7 +12,7 @@ export default function NewsFeed({ lang, initialNews }: { lang: Language; initia
     <section id="home-news" className={styles.feed} aria-label={ja ? "ニュース" : "News"}>
       <p className={styles.eyebrow}>NEWS</p>
       <h2>{ja ? "ニュース・企業の動き" : "News & company updates"}</h2>
-      <div className={styles.tabs} role="group" aria-label={ja ? "表示するニュース" : "News filter"}>{(["all", "official"] as const).map(key => <button key={key} aria-pressed={key === view} onClick={() => setView(key)}>{key === "all" ? (ja ? "すべて" : "All") : (ja ? "公式発表" : "Official")}</button>)}</div>
+      <div className={styles.tabs} role="group" aria-label={ja ? "表示するニュース" : "News filter"}>{(["all", "official"] as const).map(key => <button key={key} aria-pressed={key === view} onClick={() => setView(key)}>{key === "all" ? (ja ? "すべて" : "All") : (ja ? "公式発表" : "Official releases")}</button>)}</div>
       <div className={styles.newsSection}><GeneralNewsPanel initialNews={initialNews} lang={lang} officialOnly={view === "official"} /></div>
     </section>
     <PriceTargetsPanel lang={lang} />

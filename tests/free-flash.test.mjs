@@ -36,6 +36,6 @@ test("the company page's monitor is the same FREE window, retitled so the name s
   assert.deepEqual(freeWindow(items, item => item.t, NOW).map(item => item.id), ["b", "c"]);
   const source = readFileSync(new URL("../app/research/companies/company-activity.tsx", import.meta.url), "utf8");
   assert.match(source, /const rows = full \? allRows : freeWindow\(allRows, rowInstant, clockNow\)/);
-  assert.match(source, /full \? \(ja \? 'リアルタイム監視' : 'Live monitor'\) : \(ja \? 'ニュース監視' : 'News monitor'\)/); // only PRO/owner read "real-time"
+  assert.match(source, /full \? \(ja \? 'リアルタイム監視' : 'Live news'\) : \(ja \? 'ニュース監視' : 'News monitor'\)/); // only PRO/owner read "real-time"
   assert.match(source, /\{full \? <a href=\{row\.wire\.url\}/); // no outbound link for FREE
 });
