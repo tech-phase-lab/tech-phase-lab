@@ -164,7 +164,7 @@ test('original lane never enters header ticker or changes verified card body and
   }
 });
 
-test('combined news pagination stays at five with 30 bounded original cards and clamped current page', () => {
+test('combined home news stays at five a page, five pages at most (25 stories), and a page past the end shows the last', () => {
   const rows = Array.from({ length: 30 }, (_, i) => ({ ...summarized, id: 'original-preview-' + i.toString(16).padStart(24, '0'),
     sourceUrl: `https://nebius.com/newsroom/test-${i}`, excerptOriginal: `Excerpt ${i}.`, titleEn: `Original excerpt ${i}.`,
     previewPublishedAt: `2026-10-04T09:02:${String(i).padStart(2, '0')}Z` }));
@@ -173,11 +173,13 @@ test('combined news pagination stays at five with 30 bounded original cards and 
   assert.equal((first.match(/<article/g) ?? []).length, 5);
   assert.ok(first.indexOf('Original excerpt 29.') < first.indexOf('Original excerpt 25.'));
   assert.doesNotMatch(first, /Original excerpt 24\./);
+  // Thirty-one stories exist, but the home list stops at 25 (owner, Nov 5); the rest are on the General News page.
   assert.equal((sixth.match(/<article/g) ?? []).length, 5);
-  assert.ok(sixth.includes('Original excerpt 0.'));
-  assert.equal((final.match(/<article/g) ?? []).length, 1);
-  assert.ok(final.includes(official.title));
-  assert.ok(final.includes('aria-current="page" aria-label="Page 7 of 7"'));
+  assert.ok(sixth.includes('Original excerpt 5.'));
+  assert.ok(!sixth.includes('Original excerpt 0.'));
+  assert.equal((final.match(/<article/g) ?? []).length, 5);
+  assert.ok(final.includes('aria-current="page" aria-label="Page 5 of 5"'));
+  assert.ok(first.includes('href="/research/general-news"'));
 });
 
 test('server default drops optional original lane and old protocol remains unchanged', () => {

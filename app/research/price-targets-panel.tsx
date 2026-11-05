@@ -13,7 +13,6 @@ import { publishPriceTargets } from "@/lib/research/price-target-snapshot";
 import FeedPagination from "./news/feed-pagination";
 import { useCalendarClock } from "./use-calendar-clock";
 import PriceTargetCard from "./price-target-card";
-import NotificationSettings from "./notification-settings";
 
 let snapshot: { items: Target[]; at: string; time: number } | null = null;
 const recent = () => snapshot && Date.now() - snapshot.time < 120_000 ? snapshot : null;
@@ -176,7 +175,6 @@ export default function PriceTargetsPanel({ lang }: { lang: Language }) {
     )}</div>}
     <FeedPagination page={current} pages={pages} ja={lang === "ja"} onChange={n => { setPage(n); panelRef.current?.scrollIntoView({ block: "start", behavior: "instant" }); }} />
     <div className={styles.footer}>
-      <NotificationSettings lang={lang} />
       <div className={styles.syncMeta}>
         {updatedAt && <p className={styles.updated}>{t("表示データの取得日時", "Data fetched at")}: <time dateTime={updatedAt} title={time(updatedAt)}>{time(updatedAt)}</time></p>}
         <span className={styles.refresh}>{delivery === "live" ? t("新着を自動表示", "Live updates") : delivery === "polling" ? t("再接続中…", "Reconnecting…") : t("接続中…", "Connecting…")}</span>
