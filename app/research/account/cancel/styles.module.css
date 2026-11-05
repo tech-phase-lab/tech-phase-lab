@@ -1,0 +1,25 @@
+.page{max-width:430px;margin:0 auto;padding:6px 0 80px;color:#eef0f6;font-family:"Noto Sans JP",system-ui,sans-serif}
+.back{display:inline-flex;align-items:center;gap:6px;padding:10px 0;color:#9aa6bb;font-size:14px;text-decoration:none}
+.title{margin:14px 0 18px;font-size:28px;font-weight:700}
+.until{display:flex;align-items:center;gap:14px;padding:16px;border:1px solid #1f5a44;border-radius:18px;background:#0b1f19}
+.mark{display:grid;place-items:center;flex:none;width:36px;height:36px;border-radius:50%;background:#12362b;color:#5de0b0}
+.until b{display:block;font-size:15.5px}
+.until span{display:block;margin-top:2px;font-size:12.5px;color:#7f9a90}
+.lead{margin:28px 0 4px;font-size:12px;color:#6b7589}
+.list{margin:0;padding:0;list-style:none}
+.list li{padding:14px 0;border-bottom:1px solid #151b25}
+.list b{display:block;font-size:15px}
+.list span{display:block;margin-top:3px;font-size:12.5px;color:#6b7589}
+.keep{margin:28px 0 20px;padding:16px;border-radius:16px;background:#0e1520;font-size:13px;line-height:1.7;color:#9aa6bb}
+.big{display:flex;align-items:center;justify-content:center;width:100%;height:62px;border-radius:31px;font:700 16px "Noto Sans JP",system-ui,sans-serif;text-decoration:none;cursor:pointer}
+.go{border:0;background:linear-gradient(180deg,#6df0c0,#47d4a2);color:#06241a}
+.stop{margin-top:14px;border:1px solid #2a3140;background:transparent;color:#eef0f6}
+.big:disabled{opacity:.55;cursor:default}
+.big:focus-visible,.back:focus-visible{outline:2px solid #9ce2cc;outline-offset:3px}
+.err{margin:14px 0 0;font-size:13px;color:#f0b48a}
+.doneMark{display:grid;place-items:center;width:74px;height:74px;margin:56px auto 0;border-radius:50%;background:#0f2a24;border:1px solid #1f5a44;color:#5de0b0}
+.doneTitle{margin:36px 0 0;text-align:center;font-size:23px;font-weight:700}
+.doneText{margin:22px 0 40px;text-align:center;font-size:14px;line-height:1.9;color:#9aa6bb}
+.outline{border:1px solid #5de0b0;background:transparent;color:#5de0b0}
+.plain{margin-top:14px;border:1px solid #2a3140;background:transparent;color:#d6dbea}
+.note{margin:12px 0 0;text-align:center;font-size:12px;color:#6b7589}

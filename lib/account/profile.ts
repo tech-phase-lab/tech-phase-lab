@@ -1,5 +1,5 @@
 export const accountIcons = ['initial','rocket','chart','diamond','crown','bolt','fire','moon','sun','wave','mountain','compass','shield','anchor','target','eagle','bull','bear','lion','dragon','robot','brain','telescope','coin'] as const;
-import {THEME_IDS} from '@/lib/research/favorite-themes';
+import {THEME_IDS} from '../research/favorite-themes.ts';
 export function profileInput(value: unknown, owner: boolean): {displayName?:string;icon?:string;themes?:string[]} {
  if (!value || typeof value !== 'object' || Array.isArray(value)) throw Error('invalid-input');
  const body=value as Record<string,unknown>, keys=Object.keys(body);
