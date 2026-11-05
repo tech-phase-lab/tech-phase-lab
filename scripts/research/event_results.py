@@ -78,6 +78,37 @@ def read_figure(title, spec):
     return None
 
 
+SEAT = r"(?P<n>\d{2,3})\s+(?P<chamber>House|Senate)\s+seats?"
+TALLY_HEDGE = re.compile(r"\b(?:at least|more than|over|up to|nearly|almost|around|about|roughly|could|might|may|would|if|projected to (?:win|hold|have)|on track|poised|expect\w*|forecast\w*|likely|polls?|odds|need\w*|must|to win)\b", re.I)
+
+
+def read_tallies(title, spec):
+    """{(party, chamber): seats} a headline states as the current count ("Democrats now have 54 Senate seats, Republicans 44").
+    A figure with "at least", "on track", "need" and the like is not a count, and nothing is read from a hedged headline."""
+    if not isinstance(title, str) or len(title) > 300 or TALLY_HEDGE.search(title):
+        return {}
+    found = {}
+    parties = spec["tallies"]["parties"]
+    for key, rule in parties.items():
+        for match in re.finditer(rf"\b{rule}\b(?:\W+\w+){{0,6}}?\W+{SEAT}", title, re.I):
+            # Another party's name between the party and the figure means the figure belongs to that one.
+            between = title[match.start():match.start("n")]
+            if any(re.search(rf"\b{other}\b", between[len(re.match(rf"\b{rule}\b", between, re.I).group(0)):], re.I) for okey, other in parties.items() if okey != key):
+                continue
+            chamber = match["chamber"].lower()
+            value = int(match["n"])
+            if (chamber == "house" and 1 <= value <= 435) or (chamber == "senate" and 1 <= value <= 100):
+                found.setdefault((key, chamber), value)
+    # "Senate: Democrats 54, Republicans 44" / "Democrats 54-44" style lines.
+    pair = re.search(r"\b(?P<chamber>House|Senate)\b\W+\s*(?P<a>Democrats?|Dems?)\W+\s*(?P<an>\d{2,3})\W+\s*(?P<b>Republicans?|GOP)\W+\s*(?P<bn>\d{2,3})\b", title, re.I)
+    if pair:
+        chamber = pair["chamber"].lower()
+        for key, value in (("democrats", int(pair["an"])), ("republicans", int(pair["bn"]))):
+            if (chamber == "house" and 1 <= value <= 435) or (chamber == "senate" and 1 <= value <= 100):
+                found.setdefault((key, chamber), value)
+    return found
+
+
 def read_release(title, outlet, spec):
     """The figure in the issuer's own release title (ADP: "Private-Sector Employment Increased by 86,000 Jobs in October"),
     only when it comes from the issuer's own distributor. None otherwise."""
@@ -211,11 +242,17 @@ def ingest(db, config, publisher, rows, now, group="politics"):
                                             (watch["id"], f"figure:{figure}", name, url, title[:300], stamp(moment), stamp(now)))
                     saved += cursor.rowcount
                 continue
+            if "tallies" in watch:
+                for (party, chamber), count in read_tallies(title, watch).items():
+                    with db:
+                        cursor = db.execute("INSERT OR IGNORE INTO event_observations VALUES(?,?,?,?,?,?,?)",
+                                            (watch["id"], f"tally:{party}:{chamber}:{count}", outlet or publisher, url, title[:300], stamp(moment), stamp(now)))
+                    saved += cursor.rowcount
             for claim in watch["claims"]:
                 if reads_as_call(title, claim):
                     with db:
                         cursor = db.execute("INSERT OR IGNORE INTO event_observations VALUES(?,?,?,?,?,?,?)",
-                                            (watch["id"], claim["key"], publisher, url, title[:300], stamp(moment), stamp(now)))
+                                            (watch["id"], claim["key"], outlet or publisher, url, title[:300], stamp(moment), stamp(now)))
                     saved += cursor.rowcount
     return saved
 
@@ -255,6 +292,7 @@ def evaluate(db, config, now):
         for claim in watch["claims"]:
             if claim["key"] in left:
                 ja.append(claim["ja"]); en.append(claim["en"])
+        counts = _tallies(db, watch, need)
         chosen = [row for key in confirmed for row in sources[key]]
         publishers, links, seen = [], [], set()
         for row in sorted(chosen, key=lambda r: r["published_at"]):
@@ -267,13 +305,48 @@ def evaluate(db, config, now):
         payload = {
             "id": watch["id"], "titleJa": watch["titleJa"], "titleEn": watch["titleEn"],
             "sourceName": names + "(報道)", "releasedAt": released,
-            "resultJa": "、".join(ja) + f"（{len(publishers)}社が当確を報道）",
-            "resultEn": "; ".join(en) + f" (called by {len(publishers)} outlets)",
-            "detailJa": f"{names}が報じました。" + watch.get("noteJa", ""),
-            "detailEn": f"Reported by {', '.join(publishers[:4])}{' and others' if len(publishers) > 4 else ''}. " + watch.get("noteEn", ""),
+            "resultJa": "、".join(ja) + f"（{len(publishers)}社が当確を報道）" + _tally_text(watch, counts, "ja"),
+            "resultEn": "; ".join(en) + f" (called by {len(publishers)} outlets)" + _tally_text(watch, counts, "en"),
+            "detailJa": f"{names}が報じました。" + ("議席数は、別々の2社以上が同じ数字を報じたものです。" if counts else "") + watch.get("noteJa", ""),
+            "detailEn": f"Reported by {', '.join(publishers[:4])}{' and others' if len(publishers) > 4 else ''}. " + ("Seat counts are figures that at least two different outlets gave. " if counts else "") + watch.get("noteEn", ""),
             "sourceUrl": links[0]["url"], "sources": links[:6], "verifiedOn": stamp(now)[:10],
         }
         _store(db, watch["id"], "published", payload, now, keep_time=existing is not None and existing["state"] == "published")
+
+
+def _tallies(db, watch, need):
+    """{(party, chamber): seats}: for each count, the figure that at least `need` different outlets gave, newest first."""
+    if "tallies" not in watch:
+        return {}
+    rows = db.execute("SELECT claim_key,publisher,published_at FROM event_observations WHERE watch_id=? AND claim_key LIKE 'tally:%' ORDER BY published_at", (watch["id"],)).fetchall()
+    best = {}
+    seen = {}
+    for row in rows:
+        _, party, chamber, count = row["claim_key"].split(":")
+        entries = seen.setdefault((party, chamber, int(count)), [])
+        if row["publisher"] not in {name for _, name in entries}:
+            entries.append((row["published_at"], row["publisher"]))
+    for (party, chamber, count), entries in seen.items():
+        if len(entries) >= need:
+            reached = entries[need - 1][0]
+            if (party, chamber) not in best or reached > best[(party, chamber)][0]:
+                best[(party, chamber)] = (reached, count)
+    return {key: value[1] for key, value in best.items()}
+
+
+def _tally_text(watch, counts, lang):
+    if not counts:
+        return ""
+    chambers = [("senate", "上院", "Senate"), ("house", "下院", "House")]
+    names = watch["tallies"]["partyJa" if lang == "ja" else "partyEn"]
+    parts = []
+    for chamber, ja, en in chambers:
+        line = [f"{names[party]}{counts[(party, chamber)]}" + ("議席" if lang == "ja" else "") for party in names if (party, chamber) in counts]
+        if line:
+            parts.append(f"{ja if lang == 'ja' else en} " + ("・" if lang == "ja" else ", ").join(line))
+    if not parts:
+        return ""
+    return ("（現時点の議席: " + "／".join(parts) + "）") if lang == "ja" else (" (seats so far: " + "; ".join(parts) + ")")
 
 
 def _evaluate_figure(db, watch, need, now, existing):

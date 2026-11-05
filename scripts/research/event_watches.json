@@ -110,6 +110,16 @@
       "publisher": "Google News ADP 2",
       "url": "https://news.google.com/rss/search?q=%22ADP+National+Employment+Report%22+when%3A2d&hl=en-US&gl=US&ceid=US%3Aen",
       "group": "markets"
+    },
+    {
+      "publisher": "Google News Midterms",
+      "url": "https://news.google.com/rss/search?q=midterm+results+Senate+House+seats+Democrats+Republicans+when%3A2d&hl=en-US&gl=US&ceid=US%3Aen",
+      "group": "politics"
+    },
+    {
+      "publisher": "Google News Congress",
+      "url": "https://news.google.com/rss/search?q=Democrats+win+House+Senate+control+when%3A2d&hl=en-US&gl=US&ceid=US%3Aen",
+      "group": "politics"
     }
   ],
   "watches": [
@@ -170,7 +180,21 @@
         }
       ],
       "noteJa": "議席数は報道ごとに違い、集計は続いています。各州の公式な認定は数週間かかるため、最終の議席数は今後変わる可能性があります。",
-      "noteEn": "Seat counts differ between reports and counting continues. States certify their results over the following weeks, so final seat counts may still change."
+      "noteEn": "Seat counts differ between reports and counting continues. States certify their results over the following weeks, so final seat counts may still change.",
+      "tallies": {
+        "parties": {
+          "democrats": "(?:democrats|dems|democratic party)",
+          "republicans": "(?:republicans|gop)"
+        },
+        "partyJa": {
+          "democrats": "民主党",
+          "republicans": "共和党"
+        },
+        "partyEn": {
+          "democrats": "Democrats",
+          "republicans": "Republicans"
+        }
+      }
     },
     {
       "id": "adp-2026-10",
