@@ -95,6 +95,7 @@ test("the cancellation page: same-size buttons, the real renewal date, only real
   assert.match(screen, /また使いたくなったら、PayPalから申し込めます/);
   assert.doesNotMatch(screen, /そのまま再開/);
   assert.match(screen, /PROを再開する/);
+  assert.match(screen, /再開すると、その日から新しく1か月分が請求されます。いまの期間の残りは延長されません。/);
   assert.match(screen, /ホームへ戻る/);
   assert.match(read("../app/research/account/account-view.tsx"), /href="\/research\/account\/cancel"/);
 });

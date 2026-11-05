@@ -55,6 +55,7 @@ export default function CancelScreen({ mode }: { mode: Mode }) {
         <div className={styles.doneMark}>{checkMark}</div>
         <h1 className={styles.doneTitle}>{t("解約を受け付けました", "Cancellation received")}</h1>
         <p className={styles.doneText}>{t(`${until}まではPROをお使いいただけます。`, `You can use PRO until ${until}.`)}<br />{t("また使いたくなったら、いつでも再開できます。", "You can come back whenever you like.")}</p>
+        <p className={styles.resumeNote}>{t("再開すると、その日から新しく1か月分が請求されます。いまの期間の残りは延長されません。", "If you resume, a new month is charged from that day. The rest of your current period is not extended.")}</p>
         <button type="button" className={`${styles.big} ${styles.outline}`} onClick={() => setResume(true)}>{t("PROを再開する", "Resume PRO")}</button>
         <Link className={`${styles.big} ${styles.plain}`} href="/research">{t("ホームへ戻る", "Back to home")}</Link>
       </> : <>
