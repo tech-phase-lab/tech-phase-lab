@@ -119,7 +119,7 @@ test("menu follows the owner's design: navy FREE, black-and-gold PRO, one struct
   assert.doesNotMatch(menu, /item\("\/research\/(themes|compare)"|item\("\/research#(rizels-desk|monitored-companies)"/);
   // The Tech Alerts note is FREE-only; members see a LIVE mark and no description.
   assert.match(menu, /member \? <b className=\{styles\.liveTag\}>LIVE<\/b> : undefined/);
-  assert.match(menu, /30分遅れ · 見出しのみ · 直近5件/);
+  assert.match(menu, /30分遅れ · 直近5件/);
   // No relationship-map row: it opens from stock search.
   assert.doesNotMatch(menu, /item\("[^"]*relationship/i);
   // One closing line of guide links and room under it.

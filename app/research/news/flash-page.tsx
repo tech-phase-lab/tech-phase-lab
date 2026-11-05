@@ -153,7 +153,7 @@ export default function FlashPage({ lang, onReady }: { lang: Language; onReady?:
         </div>
       </details>
     </div>
-    {!full && <p className={styles.freeNote} role="note"><b>FREE</b>{ja ? "版　30分遅延・新着5件・見出しのみ" : " 30 min behind · latest 5 · headlines only"}<br /><Link href="/research#tech-phase-pro">{ja ? "PRO版は、リアルタイム＋要約付きです。" : "PRO: real-time, with summaries."}</Link></p>}
+    {!full && <p className={styles.freeNote} role="note"><b>FREE</b>{ja ? "版　30分遅延・新着5件" : " 30 min behind · latest 5"}<br /><Link href="/research#tech-phase-pro">{ja ? "PRO版は、リアルタイム・全件" : "PRO: real-time, every item"}</Link></p>}
     <div ref={list} className={styles.panel}>
       {failed && <p className={timeline.problem} role="status">{ja ? "最新の配信状況を確認できません。" : "Unable to check the latest feed."}{feed && (ja ? " 前回取得した内容を表示しています。" : " Showing previously loaded items.")}</p>}
       {feed && !rows.length && <p className={timeline.problem}>{ja ? "現在、該当する速報はありません。" : "No matching alerts right now."}</p>}
