@@ -2,10 +2,10 @@
  * Equal-weighted: every member counts the same, so one large stock cannot decide a theme's rank. */
 export type GroupId = "tech" | "resources" | "finance" | "health" | "consumer" | "defensive";
 export const GROUPS: readonly { id: GroupId; ja: string; en: string }[] = [
-  { id: "tech", ja: "ハイテク", en: "High-tech" },
-  { id: "resources", ja: "資源・エネルギー", en: "Resources & energy" },
-  { id: "finance", ja: "金融", en: "Finance" },
-  { id: "health", ja: "ヘルスケア・バイオ", en: "Health & biotech" },
+  { id: "tech", ja: "ハイテク", en: "Technology" },
+  { id: "resources", ja: "資源・エネルギー", en: "Energy & natural resources" },
+  { id: "finance", ja: "金融", en: "Financials" },
+  { id: "health", ja: "ヘルスケア・バイオ", en: "Healthcare & biotech" },
   { id: "consumer", ja: "消費・小売", en: "Consumer & retail" },
   { id: "defensive", ja: "高配当・産業", en: "Dividend & industrials" },
 ];

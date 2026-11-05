@@ -162,9 +162,9 @@ export default function BillingScreen({mode="sandbox"}: {mode?: "sandbox" | "liv
       </fieldset>}
       {ready && sub && sub.state !== "creating" && <button type="button" disabled={busy} onClick={() => void act("reconcile")}>{t("支払いを確認", "Verify payment")}</button>}
       {ready && sub && ["active", "suspended"].includes(sub.state) && <fieldset disabled={busy}>
-        <legend>{t("自動更新を停止", "Stop automatic renewal")}</legend>
+        <legend>{t("自動更新を停止", "Turn off auto-renewal")}</legend>
         <label className={styles.check}><input type="checkbox" checked={confirmCancel === sub.id} onChange={e => setConfirmCancel(e.target.checked ? sub.id : null)} />{t("次回以降の自動更新を停止します。", "Stop future automatic renewals.")}</label>
-        <button type="button" disabled={confirmCancel !== sub.id || busy} onClick={() => void act("cancel")}>{mode === "live" ? t("自動更新を停止する", "Stop automatic renewal") : t("テスト契約を解約", "Cancel test subscription")}</button>
+        <button type="button" disabled={confirmCancel !== sub.id || busy} onClick={() => void act("cancel")}>{mode === "live" ? t("自動更新を停止する", "Turn off auto-renewal") : t("テスト契約を解約", "Cancel test subscription")}</button>
       </fieldset>}
       <Link href="/research/account">{t("マイアカウントへ戻る", "Back to my account")}</Link>
     </section>

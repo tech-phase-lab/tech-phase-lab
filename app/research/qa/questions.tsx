@@ -91,7 +91,7 @@ export default function Questions() {
     : (ja ? "PRO会員の質問から、リゼルが選んで回答します。すべてには答えられません。" : "Rizel answers selected questions from PRO members. We can't promise an answer to every question.");
   const rules = [
     ja ? "質問は、PRO会員全員に公開されます。" : "Questions are visible to all PRO members.",
-    ja ? "リゼルが選んだ質問にだけ、回答します。" : "RIZEL answers only the questions chosen.",
+    ja ? "リゼルが選んだ質問にだけ、回答します。" : "Rizel chooses which questions to answer.",
     ja ? `1日${limit ?? 2}件まで(日本時間の0時で切り替わります)。消しても、その日の残り件数は戻りません。` : `Up to ${limit ?? 2} a day (resets at 0:00 Japan time). Deleting a post does not give it back.`,
   ];
   return <ResearchToolShell desk lang={lang} setLang={setLang} title={ja ? "リゼルに聞く" : "Ask Rizel"} description={description}>
@@ -102,10 +102,10 @@ export default function Questions() {
         ? <section className={styles.askPanel} aria-busy={busy} aria-label={ja ? "リゼルに質問する" : "Ask Rizel"}>
           <header><h2>{ja ? "リゼルに質問する" : "Ask Rizel"}</h2><button type="button" className={styles.askClose} aria-label={ja ? "閉じる" : "Close"} disabled={busy} onClick={() => setOpen(false)}>×</button></header>
           <textarea autoFocus maxLength={MAX} value={body} aria-label={ja ? "質問" : "Question"} onChange={event => setBody(event.target.value)} />
-          <p className={styles.askChips}><span>{ja ? "全員に公開" : "Public to members"}</span><span>{ja ? "個人情報は書かない" : "No personal information"}</span>{left !== null && <span>{ja ? `今日あと ${left} 件` : `${left} left today`}</span>}</p>
+          <p className={styles.askChips}><span>{ja ? "全員に公開" : "Visible to all PRO members"}</span><span>{ja ? "個人情報は書かない" : "Don't include personal information"}</span>{left !== null && <span>{ja ? `今日あと ${left} 件` : `${left} left today`}</span>}</p>
           <div className={styles.askFoot}><span className={styles.askCount}>{body.length.toLocaleString()} / {MAX.toLocaleString()}<small>{ja ? `${MIN}文字から` : `${MIN}+ characters`}</small></span>
-            <button type="button" className={styles.askSend} disabled={state !== "ready" || busy || body.trim().length < MIN || left === 0} onClick={() => void submit()}>{busy ? (ja ? "送信中…" : "Posting…") : ja ? "投稿" : "Post"}</button></div>
-          <details className={styles.askRules}><summary>{ja ? "回答と投稿について" : "About answers and posting"}</summary>{rules.map(text => <p key={text}>{text}</p>)}</details>
+            <button type="button" className={styles.askSend} disabled={state !== "ready" || busy || body.trim().length < MIN || left === 0} onClick={() => void submit()}>{busy ? (ja ? "送信中…" : "Posting…") : ja ? "投稿" : "Post question"}</button></div>
+          <details className={styles.askRules}><summary>{ja ? "回答と投稿について" : "Posting limits and replies"}</summary>{rules.map(text => <p key={text}>{text}</p>)}</details>
         </section>
         : <button type="button" className={styles.askBar} disabled={state !== "ready" || left === 0} onClick={() => { setMessage(""); setOpen(true); }}>
           <span className={styles.askBarIcon}>{icons.pen}</span><b>{ja ? "リゼルに質問する" : "Ask Rizel"}</b>

@@ -43,7 +43,7 @@ test('measurements preserve signs and do not expose stale or failed-source data 
  assert.equal(comparisonMetric(company({quarterOperatingMargin:0}),'profitability','en',now),'Operating margin 0.0%');
  assert.equal(comparisonMetric(company({status:'unavailable'}),'growth','ja',now),'最新値未確認');
  assert.ok(comparisonScores(company({status:'unavailable'}),now).every(s=>s.value===null));
- assert.equal(comparisonMetric(company({balance:{end:'2025-12-31',currentRatio:2}}),'financial','en',now),'Required data unavailable');
+ assert.equal(comparisonMetric(company({balance:{end:'2025-12-31',currentRatio:2}}),'financial','en',now),'Data unavailable');
 });
 test('empty comparisons and different accounting bases cannot produce a winner',()=>{
  assert.doesNotMatch(quarterlyTakeaway([],'en',now),/leads|close/);

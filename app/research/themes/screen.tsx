@@ -99,7 +99,7 @@ export default function ThemeRankingScreen() {
           </details>
         </li>)}</ol>
       </>}
-      {state === "error" && <p role="alert" className={styles.note}>{t("データを取得できませんでした。しばらくしてからもう一度お試しください。", "The data could not be loaded. Please try again shortly.")}</p>}
+      {state === "error" && <p role="alert" className={styles.note}>{t("データを取得できませんでした。しばらくしてからもう一度お試しください。", "We couldn't load the data. Please try again in a moment.")}</p>}
       {((state === "ready" && data) || (state === "not-connected" && sample)) && shown && <>
         {sample ? <p role="status" className={styles.sample}><b>SAMPLE</b>{t("見た目の確認用の見本です。実際の株価ではありません（運営者のみに表示）。", "A look at the finished screen with made-up numbers — not real prices (owner only).")} <button type="button" onClick={() => setSample(false)}>{t("閉じる", "Close")}</button></p>
           : <p className={styles.meta}>{t(`${shown.asOf} 終値ベース・各テーマの構成銘柄の等ウェイト平均`, `Closing prices as of ${shown.asOf} · equal-weighted average of each theme's stocks`)}</p>}
