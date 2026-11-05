@@ -56,6 +56,12 @@ def member_expiry(owner):
         return 0
 
 
+# The nine indicators a member can switch (Nov 4); the first six start on, the last three off.
+ECON_KINDS = ('jobs', 'cpi', 'pce', 'fomc', 'adp', 'ism', 'gdp', 'retail', 'claims')
+ECON_DEFAULT_ON = ['jobs', 'cpi', 'pce', 'fomc', 'adp', 'ism']
+QUESTION_OWNER = re.compile(r'[a-f0-9]{64}')
+
+
 def connect(path):
     db = sqlite3.connect(path, timeout=10)
     db.row_factory = sqlite3.Row
@@ -86,6 +92,17 @@ def connect(path):
     if 'note_posts' not in columns:
         # "リゼルのひとりごと" notices are off until the member turns them on (owner, Nov 2).
         db.execute("ALTER TABLE push_devices ADD COLUMN note_posts INTEGER NOT NULL DEFAULT 0")
+    for column, definition in (
+            # Economic-indicator notices (Nov 4): on, for the six kinds the owner chose as the starting set.
+            ('econ', 'INTEGER NOT NULL DEFAULT 1'), ('econ_kinds', f"TEXT NOT NULL DEFAULT '{json.dumps(ECON_DEFAULT_ON)}'"),
+            # "週刊PRO" (a new issue is out) and "リゼルに聞く" (your question was answered): off until turned on.
+            ('weekly_issue', 'INTEGER NOT NULL DEFAULT 0'), ('answer_posts', 'INTEGER NOT NULL DEFAULT 0'),
+            # おやすみモード: on, 23:00 to 07:00 Japan time, unless changed.
+            ('quiet_on', 'INTEGER NOT NULL DEFAULT 1'), ('quiet_start', 'INTEGER NOT NULL DEFAULT 23'), ('quiet_end', 'INTEGER NOT NULL DEFAULT 7'),
+            # The key the question board uses for this member, sent by the website so a reply can be told to its asker only.
+            ('question_owner', 'TEXT')):
+        if column not in columns:
+            db.execute(f"ALTER TABLE push_devices ADD COLUMN {column} {definition}")
     db.execute('''CREATE TABLE IF NOT EXISTS push_device_preferences (
       device_id TEXT PRIMARY KEY, targets INTEGER NOT NULL, earnings INTEGER NOT NULL,
       news INTEGER NOT NULL, news_tickers TEXT NOT NULL)''')
@@ -99,10 +116,10 @@ def monitored_news_tickers():
 
 
 def validate_preferences(value):
-    if not isinstance(value, dict) or not value or set(value) - {
-            'targets', 'earnings', 'news', 'newsTickers', 'weeklyNotebook', 'rizelNote', 'weeklyDraft'}:
+    flags = ('targets', 'earnings', 'news', 'weeklyNotebook', 'rizelNote', 'weeklyDraft', 'economic', 'weeklyIssue', 'rizelAnswer')
+    if not isinstance(value, dict) or not value or set(value) - {*flags, 'newsTickers', 'economicKinds', 'quiet'}:
         raise ValueError('invalid-preferences')
-    for field in ('targets', 'earnings', 'news', 'weeklyNotebook', 'rizelNote', 'weeklyDraft'):
+    for field in flags:
         if field in value and type(value[field]) is not bool:
             raise ValueError('invalid-preferences')
     if 'newsTickers' in value:
@@ -111,7 +128,17 @@ def validate_preferences(value):
         if (not isinstance(tickers, list) or len(tickers) > len(allowed) or
                 any(not isinstance(t, str) or t not in allowed for t in tickers)):
             raise ValueError('invalid-preferences')
-    return {**value, **({'newsTickers': sorted(set(value['newsTickers']))} if 'newsTickers' in value else {})}
+    if 'economicKinds' in value:
+        kinds = value['economicKinds']
+        if not isinstance(kinds, list) or any(not isinstance(k, str) or k not in ECON_KINDS for k in kinds):
+            raise ValueError('invalid-preferences')
+    if 'quiet' in value:
+        quiet = value['quiet']
+        if (not isinstance(quiet, dict) or set(quiet) != {'on', 'start', 'end'} or type(quiet['on']) is not bool
+                or any(type(quiet[k]) is not int or not 0 <= quiet[k] <= 23 for k in ('start', 'end')) or quiet['start'] == quiet['end']):
+            raise ValueError('invalid-preferences')
+    return {**value, **({'newsTickers': sorted(set(value['newsTickers']))} if 'newsTickers' in value else {}),
+            **({'economicKinds': [k for k in ECON_KINDS if k in value['economicKinds']]} if 'economicKinds' in value else {})}
 
 
 def stored_preferences(db, device):
@@ -129,7 +156,31 @@ def preference_view(db, device):
     prefs = stored_preferences(db, device['id'])
     return {**(prefs or {'targets': True, 'earnings': True, 'news': True,
                         'newsTickers': list(monitored_news_tickers())}),
-            'weeklyNotebook': bool(device['weekly_notebook']), 'rizelNote': bool(device['note_posts']), 'weeklyDraft': bool(device['weekly_draft'])}
+            'weeklyNotebook': bool(device['weekly_notebook']), 'rizelNote': bool(device['note_posts']), 'weeklyDraft': bool(device['weekly_draft']),
+            'economic': bool(device['econ']), 'economicKinds': economic_kinds(device), 'weeklyIssue': bool(device['weekly_issue']),
+            'rizelAnswer': bool(device['answer_posts']),
+            'quiet': {'on': bool(device['quiet_on']), 'start': device['quiet_start'], 'end': device['quiet_end']}}
+
+
+def economic_kinds(device):
+    try:
+        kinds = json.loads(device['econ_kinds'])
+        return [k for k in ECON_KINDS if k in kinds]
+    except (TypeError, ValueError):
+        return list(ECON_DEFAULT_ON)
+
+
+def quiet_blocks(device, *moments):
+    """おやすみモード: true when the device is asleep now or was asleep when the news happened, so a notice held back
+    during the night is never delivered when the night ends. Hours are Japan time; 23 to 7 spans midnight."""
+    if not device['quiet_on']:
+        return False
+    start, end = device['quiet_start'], device['quiet_end']
+    for moment in moments:
+        hour = datetime.fromtimestamp(moment, JST).hour
+        if (start <= hour < end) if start < end else (hour >= start or hour < end):
+            return True
+    return False
 
 
 def notification_allowed(db, device_id, category, tickers=()):
@@ -155,8 +206,17 @@ def write_preferences(db, device, patch):
       ON CONFLICT(device_id) DO UPDATE SET targets=excluded.targets,earnings=excluded.earnings,
       news=excluded.news,news_tickers=excluded.news_tickers''',
       (device['id'], int(prefs['targets']), int(prefs['earnings']), int(prefs['news']), json.dumps(prefs['newsTickers'])))
-    db.execute('UPDATE push_devices SET weekly_notebook=?, note_posts=?, weekly_draft=? WHERE id=?', (int(prefs['weeklyNotebook']), int(prefs['rizelNote']), int(prefs['weeklyDraft']), device['id']))
+    db.execute('''UPDATE push_devices SET weekly_notebook=?, note_posts=?, weekly_draft=?, econ=?, econ_kinds=?, weekly_issue=?, answer_posts=?,
+      quiet_on=?, quiet_start=?, quiet_end=? WHERE id=?''', (int(prefs['weeklyNotebook']), int(prefs['rizelNote']), int(prefs['weeklyDraft']),
+      int(prefs['economic']), json.dumps(prefs['economicKinds']), int(prefs['weeklyIssue']), int(prefs['rizelAnswer']),
+      int(prefs['quiet']['on']), prefs['quiet']['start'], prefs['quiet']['end'], device['id']))
     return prefs
+
+
+def remember_question_owner(db, device_id, payload):
+    key = payload.get('questionOwner')
+    if isinstance(key, str) and QUESTION_OWNER.fullmatch(key):
+        db.execute('UPDATE push_devices SET question_owner=? WHERE id=?', (key, device_id))
 
 
 def member_preferences(db, payload, *, save=False, now=None):
@@ -172,7 +232,9 @@ def member_preferences(db, payload, *, save=False, now=None):
         device = db.execute('SELECT * FROM push_devices WHERE id=?', (device_id,)).fetchone()
         if not device or device['owner_id'] != owner or json.loads(device['subscription']) != sub:
             raise ValueError('not-owned')
+        remember_question_owner(db, device_id, payload)
         prefs = write_preferences(db, device, payload.get('preferences')) if save else preference_view(db, device)
+        device = db.execute('SELECT * FROM push_devices WHERE id=?', (device_id,)).fetchone()
     return {'preferences': prefs}
 
 
@@ -261,6 +323,7 @@ def register_member(db, payload, allowed, now=None):
           language=excluded.language,since=excluded.since,active=1,owner_id=excluded.owner_id,access_until=excluded.access_until,
           weekly_notebook=excluded.weekly_notebook""",
           (device,json.dumps(sub),json.dumps(sorted(set(tickers))),lang,now,owner,until,weekly))
+        remember_question_owner(db, device, payload)
         if 'preferences' in payload:
             current = db.execute('SELECT * FROM push_devices WHERE id=?', (device,)).fetchone()
             write_preferences(db, current, payload['preferences'])
@@ -573,6 +636,8 @@ def deliver(db, items, transport=send, now=None, monotonic_now=time.monotonic,
             # Late discoveries belong in history, never in a fresh-news push.
             if not 0 <= now - item['published'].timestamp() <= 900:
                 continue
+            if quiet_blocks(device, now, item['published'].timestamp()):
+                continue
             if ('*' not in watched and not watched.intersection(item.get('tickers') or [item['ticker']])) or observed <= device['since'] or not 0 <= now - observed <= 300:
                 continue
             key = event_key(item)
@@ -674,7 +739,7 @@ def deliver_weekly(db, transport=send, now=None, wall_now=time.time, entitlement
         return {'status': 'ready', 'attempted': 0, 'accepted': 0}
     attempted = accepted = 0
     for device in db.execute('SELECT * FROM push_devices WHERE active=1 AND owner_id IS NOT NULL AND weekly_notebook=1').fetchall():
-        if db.execute('SELECT 1 FROM push_deliveries WHERE device_id=? AND event_key=?', (device['id'], key)).fetchone():
+        if db.execute('SELECT 1 FROM push_deliveries WHERE device_id=? AND event_key=?', (device['id'], key)).fetchone() or quiet_blocks(device, now):
             continue
         try:
             until = entitlement(device['owner_id'])
@@ -733,12 +798,12 @@ def deliver_notes(db, posts, transport=send, now=None, wall_now=time.time, entit
         except (KeyError, TypeError, ValueError, AttributeError):
             continue
         if isinstance(post_id, str) and 0 <= now - published < NOTE_WINDOW_SECONDS:
-            fresh.append(post_id)
+            fresh.append((post_id, published))
     attempted = accepted = 0
-    for post_id in fresh:
+    for post_id, published in fresh:
         key = f'note-{post_id}'
         for device in db.execute('SELECT * FROM push_devices WHERE active=1 AND owner_id IS NOT NULL AND note_posts=1').fetchall():
-            if db.execute('SELECT 1 FROM push_deliveries WHERE device_id=? AND event_key=?', (device['id'], key)).fetchone():
+            if db.execute('SELECT 1 FROM push_deliveries WHERE device_id=? AND event_key=?', (device['id'], key)).fetchone() or quiet_blocks(device, now, published):
                 continue
             try:
                 until = entitlement(device['owner_id'])
@@ -793,12 +858,12 @@ def deliver_weekly_drafts(db, drafts, transport=send, now=None, wall_now=time.ti
         except (KeyError, TypeError, ValueError, AttributeError):
             continue
         if isinstance(draft_id, str) and 0 <= now - made < WEEKLY_DRAFT_WINDOW_SECONDS:
-            fresh.append(draft_id)
+            fresh.append((draft_id, made))
     attempted = accepted = 0
-    for draft_id in fresh:
+    for draft_id, made in fresh:
         key = f'weekly-draft-{draft_id}'
         for device in db.execute('SELECT * FROM push_devices WHERE active=1 AND owner_id IS NOT NULL AND weekly_draft=1').fetchall():
-            if db.execute('SELECT 1 FROM push_deliveries WHERE device_id=? AND event_key=?', (device['id'], key)).fetchone():
+            if db.execute('SELECT 1 FROM push_deliveries WHERE device_id=? AND event_key=?', (device['id'], key)).fetchone() or quiet_blocks(device, now, made):
                 continue
             try:
                 until = entitlement(device['owner_id'])
@@ -833,3 +898,155 @@ def deliver_weekly_drafts(db, drafts, transport=send, now=None, wall_now=time.ti
             attempted += 1
             accepted += status == 'accepted'
     return {'status': 'ready', 'attempted': attempted, 'accepted': accepted}
+
+
+def announce(db, key, select, args, payload_for, moments, *, accept=None, transport=send, now=None, wall_now=time.time, entitlement=member_expiry):
+    """Send one notice, once per device. `select` picks the devices that switched this kind on.
+
+    Same guarantees as the senders above: the claim is written before the network call, an ambiguous failure is never
+    retried, PRO is checked again, and a notice that fell in the device's おやすみモード (when it happened or now) is dropped, never held."""
+    now = wall_now() if now is None else now
+    attempted = accepted = 0
+    for device in db.execute(select, args).fetchall():
+        if db.execute('SELECT 1 FROM push_deliveries WHERE device_id=? AND event_key=?', (device['id'], key)).fetchone():
+            continue
+        if quiet_blocks(device, now, *moments) or (accept is not None and not accept(device)):
+            continue
+        try:
+            until = entitlement(device['owner_id'])
+        except Exception:
+            until = 0
+        attempted_at = wall_now()
+        if not isinstance(until, (int, float)) or isinstance(until, bool) or not math.isfinite(until) or until <= attempted_at:
+            continue
+        if not db.execute(select + ' AND id=?', (*args, device['id'])).fetchone():
+            continue
+        with db:
+            claim = db.execute("""INSERT OR IGNORE INTO push_deliveries
+                (device_id,event_key,status,attempted_at,observed_at) VALUES(?,?,?,?,?)""",
+                (device['id'], key, 'uncertain', attempted_at, now)).rowcount
+        if not claim:
+            continue
+        payload = {**payload_for(device['language'] == 'ja'), 'tag': key}
+        try:
+            code = transport(json.loads(device['subscription']), payload)
+        except Exception:
+            code = 0
+        status = 'accepted' if 200 <= code < 300 else 'expired' if code in (404, 410) else 'uncertain'
+        with db:
+            db.execute('UPDATE push_deliveries SET status=? WHERE device_id=? AND event_key=?', (status, device['id'], key))
+            if status == 'expired':
+                db.execute('DELETE FROM push_devices WHERE id=?', (device['id'],))
+                db.execute('DELETE FROM push_device_preferences WHERE device_id=?', (device['id'],))
+        attempted += 1
+        accepted += status == 'accepted'
+    return {'status': 'ready', 'attempted': attempted, 'accepted': accepted}
+
+
+MEMBERS = 'SELECT * FROM push_devices WHERE active=1 AND owner_id IS NOT NULL'
+ISSUE_WINDOW_SECONDS = 3 * 3600
+ANSWER_WINDOW_SECONDS = 3 * 3600
+ECONOMIC_WINDOW_SECONDS = 3600
+
+
+def _moment(value):
+    try:
+        return datetime.fromisoformat(str(value).replace('Z', '+00:00')).timestamp()
+    except (TypeError, ValueError, OverflowError, OSError):
+        return None
+
+
+def deliver_weekly_issues(db, issues, **options):
+    """A new issue of 週刊 Tech Phase PRO was published. `issues`: [{id, number, publishedAt}]."""
+    if not configuration()['enabled']:
+        return {'status': 'disabled', 'attempted': 0}
+    now = options.get('now') or options.get('wall_now', time.time)()
+    total = {'attempted': 0, 'accepted': 0}
+    for issue in issues:
+        made = _moment(issue.get('publishedAt')) if isinstance(issue, dict) else None
+        if made is None or not isinstance(issue.get('id'), str) or not 0 <= now - made < ISSUE_WINDOW_SECONDS:
+            continue
+        number = issue.get('number')
+        label = f'第{number}号' if isinstance(number, int) else ''
+        result = announce(db, f"weekly-issue-{issue['id']}", MEMBERS + ' AND weekly_issue=1', (),
+                          lambda ja: {'title': '週刊 Tech Phase PRO' if ja else 'Tech Phase PRO Weekly',
+                                      'body': f'{label}が公開されました' if ja and label else '新しい号が公開されました' if ja else 'A new issue is out',
+                                      'url': '/research/weekly'}, (made,), **options)
+        total = {k: total[k] + result.get(k, 0) for k in total}
+    return {'status': 'ready', **total}
+
+
+def deliver_answers(db, answers, **options):
+    """A question was answered. Only the member who asked is told: `answers` is [{id, ownerKey, answeredAt}], and a device is
+    matched by the question key the website stored for it. Nothing of the question or the answer is in the notice."""
+    if not configuration()['enabled']:
+        return {'status': 'disabled', 'attempted': 0}
+    now = options.get('now') or options.get('wall_now', time.time)()
+    total = {'attempted': 0, 'accepted': 0}
+    for answer in answers:
+        made = _moment(answer.get('answeredAt')) if isinstance(answer, dict) else None
+        owner = answer.get('ownerKey') if isinstance(answer, dict) else None
+        if made is None or not isinstance(answer.get('id'), str) or not isinstance(owner, str) or not QUESTION_OWNER.fullmatch(owner) or not 0 <= now - made < ANSWER_WINDOW_SECONDS:
+            continue
+        result = announce(db, f"answer-{answer['id']}", MEMBERS + ' AND answer_posts=1 AND question_owner=?', (owner,),
+                          lambda ja: {'title': 'リゼルに聞く' if ja else 'Ask Rizel',
+                                      'body': 'あなたの質問に回答がつきました' if ja else 'Your question has an answer',
+                                      'url': '/research/questions'}, (made,), **options)
+        total = {k: total[k] + result.get(k, 0) for k in total}
+    return {'status': 'ready', **total}
+
+
+BLS_PATH = {'jobs': 'empsit', 'cpi': 'cpi'}
+MONTHS = ['january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november', 'december']
+NAMES = {'jobs': ('米国雇用統計', 'U.S. employment report'), 'cpi': ('米国CPI', 'U.S. CPI'), 'pce': ('米国PCE', 'U.S. PCE'),
+         'adp': ('ADP雇用統計', 'ADP employment report')}
+
+
+def economic_items(updates, events):
+    """Releases with a result already read by the site, as {kind, id, publishedAt, ja, en}.
+
+    Read from the same places the economic calendar uses: BLS (jobs, CPI) and BEA (PCE) official releases, and the ADP
+    result read from outlets. FOMC, ISM, GDP, retail sales and jobless claims have no reader yet, so they cannot be sent."""
+    items = []
+    for update in updates or []:
+        try:
+            url = urlsplit(update['url'])
+            published = update.get('publishedAt')
+            ja = (update.get('translationJa') or '').strip()
+            if not published or not ja:
+                continue
+            if update.get('publisher') == 'BLS' and url.hostname == 'www.bls.gov':
+                kind = next((k for k, f in BLS_PATH.items() if re.fullmatch(rf'/news\.release/archives/{f}_\d{{8}}\.htm', url.path)), None)
+            elif update.get('publisher') == 'BEA' and url.hostname == 'www.bea.gov' and re.fullmatch(r'/news/20\d{2}/personal-income-and-outlays-[a-z]+-20\d{2}', url.path):
+                kind = 'pce'
+            else:
+                continue
+            if kind:
+                items.append({'kind': kind, 'id': f'{kind}-{url.path}', 'publishedAt': published, 'ja': ja, 'en': str(update.get('title', ''))})
+        except (KeyError, TypeError, ValueError, AttributeError):
+            continue
+    for event in events or []:
+        if isinstance(event, dict) and str(event.get('id', '')).startswith('adp-') and event.get('releasedAt') and event.get('resultJa'):
+            items.append({'kind': 'adp', 'id': event['id'], 'publishedAt': event['releasedAt'], 'ja': str(event['resultJa']), 'en': str(event.get('resultEn', ''))})
+    return items
+
+
+def deliver_economic(db, items, **options):
+    """After a release: the indicator's name and its result number, to the devices that switched that indicator on.
+
+    Nothing is sent before a release, and no comparison with the market forecast is included: the site has no forecast source."""
+    if not configuration()['enabled']:
+        return {'status': 'disabled', 'attempted': 0}
+    now = options.get('now') or options.get('wall_now', time.time)()
+    total = {'attempted': 0, 'accepted': 0}
+    for item in items:
+        made = _moment(item.get('publishedAt'))
+        kind = item.get('kind')
+        if made is None or kind not in NAMES or not 0 <= now - made < ECONOMIC_WINDOW_SECONDS:
+            continue
+        result = announce(db, f"economic-{item['id']}", MEMBERS + ' AND econ=1', (),
+                          lambda ja, item=item: {'title': NAMES[item['kind']][0 if ja else 1],
+                                                 'body': (item['ja'] if ja else item['en'] or item['ja'])[:140], 'url': '/research/calendar'},
+                          (made,), accept=lambda device, kind=kind: kind in economic_kinds(device), **options)
+        total = {k: total[k] + result.get(k, 0) for k in total}
+    return {'status': 'ready', **total}

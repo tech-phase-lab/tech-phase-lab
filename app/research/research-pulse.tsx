@@ -1,70 +1,54 @@
 "use client";
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
+import { WATCH_TICKERS } from "@/lib/research/flash-rows";
+import { bandItems, bandParts } from "@/lib/research/news-band";
 import type { Language } from "@/lib/research/data";
 import { newsSnapshot, serverNewsSnapshot, subscribeNews } from "@/lib/research/news-snapshot";
 import { takeWireStartup } from "@/lib/research/news-startup";
 import { newsPulseItems } from "@/lib/research/news-pulse-items";
-import { isGenericPulseLabel, pickPulseLine } from "@/lib/research/news-pulse-headline";
 import { parseCompanyWire, type CompanyWireItem } from "@/lib/research/company-wire";
 import { pulseClock } from "@/lib/research/news-time";
 import { publishWire } from "@/lib/research/wire-store";
 import styles from "./research-pulse.module.css";
 const subscribe = (callback: () => void) => { const media = window.matchMedia("(prefers-reduced-motion: reduce)"); media.addEventListener("change", callback); return () => media.removeEventListener("change", callback); };
-// The headline is 13.5px in the stylesheet; measuring at another size made some lines overflow and others look bigger (owner, Oct 16).
-const BASE_FONT_PX = 13.5;
-const MIN_FONT_PX = 12;
-/** A long headline slides at a readable pace (owner, Oct 16: too fast to read); a one-way slide takes 70% of the cycle. */
-const SCROLL_PX_PER_SECOND = 35;
-const scrollSeconds = (shift: number) => Math.max(6, shift / SCROLL_PX_PER_SECOND / 0.7);
-function FittedHeadline({ headlines, full, lang, label, onSlide }: { headlines: string[]; full: string; lang: Language; label: string; onSlide?: (milliseconds: number) => void }) {
+/** One headline every five seconds (owner, Nov 4). */
+const ROTATE_MS = 5000;
+/** The headline starts at 14.5px and shrinks by 0.5px to 12.5px; only then is it cut with "…". */
+const START_PX = 14.5;
+const MIN_PX = 12.5;
+const STEP_PX = 0.5;
+/** Largest size, from the start size down, at which the text fits its box; the minimum when none does. */
+export function fitFontSize(fits: (size: number) => boolean) {
+  let size = START_PX;
+  while (size > MIN_PX && !fits(size)) size -= STEP_PX;
+  return size;
+}
+
+type BandLine = { id: string; band: string; ticker: string; at: string; kind: string };
+function Line({ line, ja, leaving }: { line: BandLine; ja: boolean; leaving?: boolean }) {
   const element = useRef<HTMLSpanElement>(null);
-  const key = [full, ...headlines].join("\n");
-  const [selected, setSelected] = useState({ key: "", text: "", clipped: false, size: BASE_FONT_PX, shift: 0 });
-  // Until real font metrics are available, show the shortest informative
-  // headline (clipped by CSS if needed) rather than a bare category label.
-  const initial = headlines.findLast(value => !isGenericPulseLabel(value)) ?? (full || headlines.at(-1) || "");
-  const { text, clipped, size, shift } = selected.key === key ? selected : { text: initial, clipped: true, size: BASE_FONT_PX, shift: 0 };
-  useEffect(() => {
-    // The strip waits until the end of the headline has been on screen for a moment before it rotates.
-    onSlide?.(clipped && shift > 0 ? Math.round(scrollSeconds(shift) * 850 + 2000) : 0);
-  }, [clipped, shift, onSlide]);
   useEffect(() => {
     const target = element.current;
-    const context = document.createElement("canvas").getContext("2d");
-    if (!target || !context) return;
-    let active = true;
+    if (!target) return;
     let frame = 0;
-    const update = () => {
-      if (!active) return;
-      const font = getComputedStyle(target);
-      // Always measure at the base size so a shrunk line never changes the choice.
-      context.font = `${font.fontWeight} ${BASE_FONT_PX}px ${font.fontFamily}`;
-      const [title, ...choices] = key.split("\n");
-      const width = Math.max(0, target.clientWidth - 4);
-      const picked = pickPulseLine(choices, title, width, value => context.measureText(value).width);
-      // A line slightly too long is shown smaller instead of cut with "…".
-      const scaled = picked.clipped ? BASE_FONT_PX * width / Math.max(1, context.measureText(picked.text).width) : BASE_FONT_PX;
-      // Still too long at the smallest size: it slides to its end and back, again and again, in the
-      // same single row, so it never stops at its last words and never takes a second line (owner, Oct 15).
-      const next = scaled >= MIN_FONT_PX
-        ? { text: picked.text, clipped: false, size: Math.min(BASE_FONT_PX, Math.floor(scaled * 10) / 10), shift: 0 }
-        : { ...picked, size: MIN_FONT_PX, shift: Math.ceil(context.measureText(picked.text).width * MIN_FONT_PX / BASE_FONT_PX - width) };
-      setSelected(previous => previous.key === key && previous.text === next.text && previous.clipped === next.clipped && previous.size === next.size && previous.shift === next.shift ? previous : { key, ...next });
-    };
-    const request = () => {
-      if (!active || frame) return;
-      frame = requestAnimationFrame(() => { frame = 0; update(); });
-    };
+    const fit = () => { frame = 0; target.style.fontSize = `${fitFontSize(size => { target.style.fontSize = `${size}px`; return target.scrollWidth <= target.clientWidth; })}px`; };
+    const request = () => { if (!frame) frame = requestAnimationFrame(fit); };
+    fit();
     const observer = new ResizeObserver(request);
     observer.observe(target);
     void document.fonts.ready.then(request);
-    return () => { active = false; observer.disconnect(); if (frame) cancelAnimationFrame(frame); };
-  }, [key]);
-  return <span ref={element} className={clipped ? `${styles.headline} ${styles.clipped}` : styles.headline} lang={lang}
-    style={size < BASE_FONT_PX ? { fontSize: `${size}px` } : undefined}
-    title={clipped ? text : undefined} aria-label={`${label}: ${text}`}>
-    {clipped && shift > 0 ? <span className={styles.scroll} style={{ "--shift": `-${shift}px`, "--duration": `${scrollSeconds(shift).toFixed(1)}s` } as React.CSSProperties}>{text}</span> : text}
-  </span>;
+    return () => { observer.disconnect(); if (frame) cancelAnimationFrame(frame); };
+  }, [line.band]);
+  const symbols = [...line.ticker.split(/[\s·]+/), ...WATCH_TICKERS];
+  // Japan time in Japanese and U.S. Eastern time in English, as before.
+  const timestamp = pulseClock(line.at, line.kind, ja);
+  return <div className={`${styles.item} ${leaving ? styles.out : styles.in}`} aria-hidden={leaving || undefined}>
+    <span className={styles.live}>LIVE</span>
+    <span ref={element} className={styles.hd} lang={ja ? "ja" : "en"} title={line.band}>
+      {bandParts(line.band, symbols).map((part, index) => part.symbol ? <b key={index} className={styles.sym}>{part.text}</b> : part.text)}
+    </span>
+    <time className={styles.tm} dateTime={line.at} title={timestamp}>{timestamp}</time>
+  </div>;
 }
 
 type PulseItem = ReturnType<typeof newsPulseItems>[number];
@@ -88,11 +72,9 @@ export default function ResearchPulse({ lang }: { lang: Language }) {
   const feed = snapshot?.data;
   const reduced = useSyncExternalStore(subscribe, () => window.matchMedia("(prefers-reduced-motion: reduce)").matches, () => true);
   const [position, setPosition] = useState({first: "", index: 0});
-  const [paused, setPaused] = useState(false);
-  const [slideMs, setSlideMs] = useState(0);
-  const [interacting, setInteracting] = useState(false);
-  const touch = useRef<{x: number; y: number} | null>(null);
-  const suppressClick = useRef(false);
+  const [held, setHeld] = useState(false);
+  const [leaving, setLeaving] = useState<BandLine | null>(null);
+  const [flash, setFlash] = useState(0);
   const ja = lang === "ja";
   const [wire, setWire] = useState<Record<string, CompanyWireItem[]>>({});
   // Owner, Oct 25: the strip must not open on the news-only headline and then jump to a newer company headline,
@@ -121,39 +103,42 @@ export default function ResearchPulse({ lang }: { lang: Language }) {
     const grace = setTimeout(() => setWireSettled(true), 2_500);
     return () => { alive = false; clearTimeout(grace); };
   }, [checkedAt]);
-  const live = snapshot?.checkedAt && wireSettled ? newsPulseItems(feed, lang, snapshot.checkedAt, wire) : [];
+  const live = snapshot?.checkedAt && wireSettled ? newsPulseItems(feed, lang, snapshot.checkedAt, wire, 40) : [];
   const [remembered, setRemembered] = useState<PulseItem[]>([]);
   useEffect(() => { setRemembered(readPulseCache(lang)); }, [lang]);
   const liveKey = live.map(item => item.id).join("|");
   useEffect(() => { if (live.length) writePulseCache(lang, live); }, [lang, liveKey]); // eslint-disable-line react-hooks/exhaustive-deps
-  const items = live.length ? live : remembered;
+  // Only stories with a short headline are shown; the rest stay in the news list and the band moves on to the next.
+  const items = bandItems(live.length ? live : remembered, ja);
   const first = items[0]?.id ?? "";
-  const stopped = paused || interacting || reduced;
+  // Pressing the band holds the headline; letting go resumes. Reduced motion stops everything.
+  const stopped = held || reduced;
+  const current = items.length ? (position.first === first ? position.index : 0) % items.length : 0;
+  const item = items[current];
+  const previous = useRef<BandLine | null>(null);
+  const shownId = item?.id;
+  useEffect(() => {
+    const before = previous.current;
+    previous.current = item ?? null;
+    if (!before || !item || before.id === item.id || reduced) return;
+    setLeaving(before); setFlash(value => value + 1);
+    const timer = setTimeout(() => setLeaving(null), 500);
+    return () => clearTimeout(timer);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [shownId, reduced]);
   useEffect(() => {
     if (stopped || items.length < 2) return;
-    const timer = setInterval(() => { if (!document.hidden) setPosition(value => ({first, index: ((value.first === first ? value.index : 0) + 1) % items.length})); }, Math.max(8000, slideMs));
+    const timer = setInterval(() => { if (!document.hidden) setPosition(value => ({first, index: ((value.first === first ? value.index : 0) + 1) % items.length})); }, ROTATE_MS);
     return () => clearInterval(timer);
-  }, [stopped, items.length, first, slideMs]);
-  function move(direction: number) {
-    if (items.length < 2) return;
-    setPosition(value => ({first, index: ((value.first === first ? value.index : 0) + direction + items.length) % items.length}));
-  }
-  const item = items[(position.first === first ? position.index : 0) % items.length];
+  }, [stopped, items.length, first]);
   if (!item) return gaveUp ? null : <div className={styles.slot} aria-hidden="true" />;
-  // Japanese readers see Japan time; English readers see U.S. Eastern time.
-  const timestamp = pulseClock(item.at, item.kind, ja, "observedAt" in item ? item.observedAt : undefined);
-  return <section className={styles.pulse} aria-label={ja ? "新着ニュース" : "Latest news"} data-paused={stopped} tabIndex={0}
-    onTouchStart={event => { suppressClick.current = false; const point = event.touches[0]; touch.current = event.touches.length === 1 ? {x: point.clientX, y: point.clientY} : null; setInteracting(true); }}
-    onTouchEnd={event => { const start = touch.current; const end = event.changedTouches[0]; touch.current = null; setInteracting(false); if (!start || !end) return; const dx = end.clientX - start.x; const dy = end.clientY - start.y; if (Math.abs(dx) >= 40 && Math.abs(dx) > Math.abs(dy) * 1.5) { suppressClick.current = true; move(dx < 0 ? 1 : -1); } }}
-    onTouchCancel={() => { touch.current = null; setInteracting(false); }}
-    onClickCapture={event => { if (suppressClick.current) { event.preventDefault(); event.stopPropagation(); suppressClick.current = false; } }}
-    onKeyDown={event => { if (event.key === "ArrowLeft" || event.key === "ArrowRight") { event.preventDefault(); move(event.key === "ArrowRight" ? 1 : -1); } }}
-    onMouseEnter={() => setInteracting(true)} onMouseLeave={() => setInteracting(false)} onFocusCapture={() => setInteracting(true)} onBlurCapture={event => { if (!event.currentTarget.contains(event.relatedTarget)) setInteracting(false); }}>
-    <FittedHeadline key={item.id} headlines={item.headlines} full={item.title} lang={lang} label={item.ticker} onSlide={setSlideMs} />
-    <time className={styles.clock} dateTime={item.at} title={timestamp} aria-label={timestamp}>
-      {timestamp}
-    </time>
-    <button type="button" onClick={() => setPaused(value => !value)} disabled={reduced} aria-pressed={paused} aria-label={paused ? (ja ? "自動切替を再開" : "Resume rotation") : (ja ? "自動切替を停止" : "Pause rotation")}>{paused || reduced ? "▶" : "Ⅱ"}</button>
-    {!stopped && items.length > 1 && <i key={`${item.id}-progress`} className={styles.progress} aria-hidden="true" />}
+  const release = () => setHeld(false);
+  return <section className={styles.pulse} aria-label={ja ? "新着ニュース" : "Latest news"} data-paused={stopped}
+    onPointerDown={() => setHeld(true)} onPointerUp={release} onPointerCancel={release} onPointerLeave={release}>
+    <div className={styles.strip} aria-live="polite">
+      {leaving && <Line key={`out-${leaving.id}`} line={leaving} ja={ja} leaving />}
+      <Line key={item.id} line={item} ja={ja} />
+    </div>
+    <div key={flash} className={flash && !reduced ? `${styles.wave} ${styles.flash}` : styles.wave} aria-hidden="true" />
   </section>;
 }

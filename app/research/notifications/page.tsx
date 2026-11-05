@@ -10,7 +10,10 @@ export default function NotificationsPage() {
     <div className={styles.page} style={{ paddingBottom: 0 }}>
       <div className={styles.eyebrow}><span>NOTIFICATIONS</span><b>PRO</b></div>
       <h1 className={styles.title}>{ja ? "スマホ通知設定" : "Phone notifications"}</h1>
-      <p className={styles.sub}>{ja ? "大事な動きを、スマホにお知らせします。" : "Important moves, sent to your phone."}</p>
+      <div className={styles.subRow}>
+        <p className={styles.sub}>{ja ? "大事な動きを、スマホにお知らせします。" : "Important moves, sent to your phone."}</p>
+        <button type="button" className={styles.jump} onClick={() => document.getElementById("details")?.scrollIntoView({ behavior: "smooth", block: "start" })}>{ja ? "詳しい設定 ↓" : "Details ↓"}</button>
+      </div>
     </div>
     <NotificationSettings lang={lang} page />
   </ResearchToolShell>;

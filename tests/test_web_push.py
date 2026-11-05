@@ -15,6 +15,11 @@ import signals
 def b64(value):
     return base64.urlsafe_b64encode(value).decode().rstrip('=')
 
+def awake(db):
+    """These fixtures run at 23:00 Japan time, inside the default おやすみモード; the older tests are about delivery, so each new device starts awake."""
+    db.execute("CREATE TRIGGER IF NOT EXISTS test_awake AFTER INSERT ON push_devices BEGIN UPDATE push_devices SET quiet_on=0 WHERE id=NEW.id; END")
+    return db
+
 def subscription(host='fcm.googleapis.com'):
     return {'endpoint': f'https://{host}/push/test', 'keys': {'p256dh': b64(b'\x04' + b'k'*64), 'auth': b64(b'a'*16)}}
 
@@ -24,7 +29,7 @@ def event(ticker='MU', source='first'):
 
 class PushTests(unittest.TestCase):
     def setUp(self):
-        self.tmp=tempfile.TemporaryDirectory(); self.db=push.connect(Path(self.tmp.name)/'push.sqlite')
+        self.tmp=tempfile.TemporaryDirectory(); self.db=awake(push.connect(Path(self.tmp.name)/'push.sqlite'))
         self.now=datetime(2026,9,26,14,0,2,tzinfo=timezone.utc).timestamp()
         self.env=patch.dict(os.environ,{'WEB_PUSH_ALLOW_PILOT':'true','WEB_PUSH_ENABLED':'true','WEB_PUSH_PRIVATE_KEY':'test',
             'WEB_PUSH_PUBLIC_KEY':'test','WEB_PUSH_SUBJECT':'mailto:test@example.com'});self.env.start()

@@ -1087,11 +1087,35 @@ class AutomaticMonitor:
                 except Exception:
                     weekly_drafts = []
                     print("web-push-weekly-unavailable", flush=True)
+                try:
+                    with self.db_lock, weekly_issues.connect(self.db_path) as weekly_db:
+                        weekly_issue_list = weekly_issues.recent_published(weekly_db)
+                except Exception:
+                    weekly_issue_list = []
+                    print("web-push-issues-unavailable", flush=True)
+                try:
+                    with self.db_lock, questions.connect(self.db_path) as question_db:
+                        answered = questions.recent_answers(question_db)
+                except Exception:
+                    answered = []
+                    print("web-push-answers-unavailable", flush=True)
+                try:
+                    # Economic releases whose result the site has already read (BLS, BEA, and the ADP reader).
+                    with self.db_lock, stock_news.connect(self.db_path) as indicator_db:
+                        updates = signals.public_official_updates(indicator_db, reference=datetime.now(timezone.utc), limit=500, read_only=True)
+                    with self.db_lock, event_results.connect(self.db_path) as events_db:
+                        economic = web_push.economic_items(updates, event_results.public_view(events_db))
+                except Exception:
+                    economic = []
+                    print("web-push-economic-unavailable", flush=True)
                 with web_push.connect(self.db_path) as db:
                     result = web_push.deliver(db, items)
                     web_push.deliver_weekly(db)
                     web_push.deliver_notes(db, notes)
                     web_push.deliver_weekly_drafts(db, weekly_drafts)
+                    web_push.deliver_weekly_issues(db, weekly_issue_list)
+                    web_push.deliver_answers(db, answered)
+                    web_push.deliver_economic(db, economic)
                 with self.state_lock:
                     previous = self.state["webPush"]
                     self.state["webPush"] = {

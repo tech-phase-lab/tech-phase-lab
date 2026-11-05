@@ -261,6 +261,15 @@ def moderation_queue(db, view="pending", limit=50):
     return {"items": [_item(row, owner_view=True) for row in rows], "answers": answers, "counts": counts}
 
 
+def recent_answers(db, hours=3):
+    """Questions answered in the last hours, with the asker's key, for the "your question was answered" phone notice (Nov 4)."""
+    since = (datetime.now(timezone.utc) - timedelta(hours=hours)).isoformat(timespec="milliseconds")
+    rows = db.execute("""
+      SELECT q.id,q.owner_key,q.updated_at FROM member_questions q JOIN editorial_posts p ON p.id=q.answer_post_id
+      WHERE q.status='answered' AND q.deleted_at IS NULL AND p.status='published' AND q.updated_at>=? ORDER BY q.updated_at DESC""", (since,)).fetchall()
+    return [{"id": row["id"], "ownerKey": row["owner_key"], "answeredAt": row["updated_at"]} for row in rows]
+
+
 def review(db, payload):
     question_id = _question_id(payload.get("id"))
     decision = payload.get("decision")
