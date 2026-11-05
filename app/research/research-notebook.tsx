@@ -230,7 +230,7 @@ export default function ResearchNotebook({ lang, title, enabled, children, raw, 
           const matching = visible ? marks.filter(mark => mark.parts.every(part => blocks.get(part.block)?.slice(part.start, part.end) === part.quote)) : [];
           setEditing(false);
           setPdfPreview({ content: root.current.cloneNode(true) as HTMLElement, marks: matching, title, lang });
-        }}>{t("PDF保存", "Save PDF")}<svg className={styles.actionIcon} aria-hidden="true" viewBox="0 0 24 24"><path d="M12 4v11M7.5 11 12 15.5 16.5 11M5 20h14" /></svg></button>
+        }}>{t("PDF保存", "Save as PDF")}<svg className={styles.actionIcon} aria-hidden="true" viewBox="0 0 24 24"><path d="M12 4v11M7.5 11 12 15.5 16.5 11M5 20h14" /></svg></button>
         {marks.length > 0 && <details className={styles.moreActions}>
           <summary>{t("その他", "More")} <span aria-hidden="true">⋯</span></summary>
           <div>
@@ -250,17 +250,17 @@ export default function ResearchNotebook({ lang, title, enabled, children, raw, 
       }} onPointerUp={() => { toolPointer.current = false; }} onPointerCancel={() => { toolPointer.current = false; }}>
         <div className={styles.palette}>
           <div className={styles.colors} aria-label={t("書き込みの色", "Ink color")}>{(["red", "yellow", "blue"] as const).map(value => <button key={value} aria-label={{ red: t("赤", "Red"), yellow: t("黄", "Yellow"), blue: t("青", "Blue") }[value]} aria-pressed={color === value} style={{ "--ink": sheetInk[value] } as CSSProperties} onClick={() => { setColor(value); restoreSelection(); }}><span /></button>)}</div>
-          <button className={styles.picked} disabled={!selection.length} onClick={selectLine} title={t("タップすると、この1行全体を選びます", "Tap to select the whole line")}>{selection.length ? t(`選択中: ${selection.length}行`, `Selected: ${selection.length}`) : t("未選択", "Nothing selected")}</button>
+          <button className={styles.picked} disabled={!selection.length} onClick={selectLine} title={t("タップすると、この1行全体を選びます", "Select the whole line")}>{selection.length ? t(`選択中: ${selection.length}行`, `Selected: ${selection.length}`) : t("未選択", "Nothing selected")}</button>
           <button className={styles.done} onClick={() => { setEditing(false); setSelection([]); setDraft(null); setActiveMark(null); clearSelection(); }}>{t("完了", "Done")}</button>
         </div>
         <div className={styles.tools}>
           {(Object.keys(labels) as InkKind[]).map(kind => <button key={kind} disabled={!selection.length} aria-pressed={tool === kind} onClick={() => { setTool(kind); add(kind); }}><span className={styles.toolIcon} aria-hidden="true">{kind === "underline" ? <svg viewBox="0 0 24 24"><path d="M6 3v7a6 6 0 0 0 12 0V3M4 21h16" /></svg> : kind === "highlight" ? <svg viewBox="0 0 24 24"><path d="m8 16 8-12 5 4-9 11-4-3ZM8 16l-4 5h8M3 22h18" /></svg> : kind === "box" ? <svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2" /></svg> : <svg viewBox="0 0 24 24"><path d="M5 3h14v18H5zM8 8h8M8 12h8M8 16h5" /></svg>}</span><span>{labels[kind]}</span></button>)}
         </div>
         <div className={styles.utilities}>
-          <button disabled={!removable.length} onClick={() => { if (commit(selection.length ? eraseAnnotationRanges(marks, selection) : marks.filter(mark => mark.id !== activeMark))) { setActiveMark(null); clearSelection(); } }}>{selection.length ? t("選択部分を消す", "Erase marks") : t("この書き込みを削除", "Delete this mark")}</button>
+          <button disabled={!removable.length} onClick={() => { if (commit(selection.length ? eraseAnnotationRanges(marks, selection) : marks.filter(mark => mark.id !== activeMark))) { setActiveMark(null); clearSelection(); } }}>{selection.length ? t("選択部分を消す", "Erase marks") : t("この書き込みを削除", "Remove annotation")}</button>
           <button disabled={!history.length} onClick={() => { const previous = history.at(-1); if (!previous) return; const wrap = (items: Annotation[]) => ({ saved: [], notebooks: { "undo:ja": items } }); const merged = mergeSavedDocuments(wrap(previous.after), wrap(previous.before), wrap(marks)); if (!merged) { setError(t("別の端末で変更された書き込みは元に戻せません。", "Cannot undo an annotation changed on another device.")); return; } if (commit(merged.notebooks["undo:ja"] ?? [], true)) setHistory(history.slice(0, -1)); }}>{t("元に戻す", "Undo")}</button>
         </div>
-        <p className={styles.selected} title={selection.map(p => p.quote).join(" ").slice(0, 100)}>{t("本文をなぞると、1行ずつ選べます", "Drag over the text to pick a line at a time")}</p>
+        <p className={styles.selected} title={selection.map(p => p.quote).join(" ").slice(0, 100)}>{t("本文をなぞると、1行ずつ選べます", "Drag across the text to select one line at a time.")}</p>
         {draft && <form onSubmit={event => { event.preventDefault(); if (!draft.text.trim()) return; const next = draft.id && !draftConflict ? marks.map(mark => mark.id === draft.id ? { ...mark, note: draft.text.trim(), color } : mark) : [...marks, { id: crypto.randomUUID(), kind: "note" as const, color, parts: draft.parts, note: draft.text.trim() }]; if (next.length > maxAnnotations) { setError(t("1記事の書き込みは200件までです。", "Up to 200 annotations per article.")); return; } if (commit(next)) { setDraft(null); setEditing(false); setActiveMark(null); clearSelection(); } }}>
           {draftConflict && <p>{t("元のメモが更新されました。別のメモとして残せます。", "The original note changed. You can save this as a separate note.")}</p>}
           <textarea aria-label={t("自分のメモ", "My note")} placeholder={t("気づいたことを書き残す", "Write down your thoughts")} maxLength={1000} value={draft.text} onChange={event => setDraft({ ...draft, text: event.target.value })} />

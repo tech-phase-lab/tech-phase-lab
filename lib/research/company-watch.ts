@@ -3,7 +3,7 @@ import type { MuWatchCard } from './mu-watch';
 import { verifiedChanges, type VerifiedChangeMetric } from './verified-changes.ts';
 import extraEarnings from './watch-earnings.json' with { type: 'json' };
 const c=(ja:string,en:string):Copy=>({ja,en});
-export const watchTitles=[c('成長の中身','Growth drivers'),c('前回からの変化','What changed'),c('注意点','Risks to watch'),c('次に見るポイント','Next checkpoints')];
+export const watchTitles=[c('成長の中身','Growth drivers'),c('前回からの変化','What changed'),c('注意点','Risks to watch'),c('次に見るポイント','What to watch next')];
 export type WatchTile={label:Copy;value:Copy;note:Copy};
 export type WatchFacts={ticker:string;name:string;exchange:string;quoteTicker:string;period:string;releasedOn:string;periodEnd?:string;reviewedOn:string;sources:{url:string;title:string;location:string}[];tiles:WatchTile[]};
 export type CompanyWatchData=WatchFacts & {cards:MuWatchCard[]};

@@ -28,7 +28,7 @@ export default function DeepAnalysisPanel({ lang, ticker, kind }: { lang: Langua
   if (state.status === "locked") {
     return <section className={styles.panel} aria-label={title}><span className={styles.badge}>PRO</span><h3>{title}</h3>
       <p className={styles.locked}>{ja ? "決算や重要指標の発表直後に、背景・前回との比較・次に見るべき点を深掘りした分析をPRO会員向けに提供しています。" : "PRO members get an in-depth reading of each earnings release and key indicator right after it is published."}{" "}
-        <Link href="/research#tech-phase-pro">{ja ? "PROの案内を見る" : "See PRO"}</Link></p></section>;
+        <Link href="/research#tech-phase-pro">{ja ? "PROの案内を見る" : "Explore PRO"}</Link></p></section>;
   }
   const items = state.items.filter(item => item.kind === kind && (!ticker || item.subject === ticker)).slice(0, 3);
   if (!items.length) return null;

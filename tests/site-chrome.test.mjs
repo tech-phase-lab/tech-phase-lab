@@ -38,7 +38,7 @@ test("header label follows the plan in both languages; signed-out reads FREE", a
   // PRO members and the owner see the gold reload ring where FREE readers see the gold PRO button.
   assert.match(header, /const member = ownerAccount \|\| plan === "pro";/);
   assert.match(header, /className=\{`\$\{styles\.ring\}/);
-  assert.match(header, /aria-label=\{ja \? "PROを見る" : "See PRO"\}/);
+  assert.match(header, /aria-label=\{ja \? "PROを見る" : "Explore PRO"\}/);
   // Order on the right: JA/EN, plan button, menu.
   assert.ok(header.indexOf(">JA</button>") < header.indexOf("styles.ring") && header.indexOf("styles.pro}") < header.indexOf("aria-controls=\"site-menu\""));
   const css = read("app/research/site-header.module.css");
@@ -103,9 +103,9 @@ test("menu follows the owner's design: navy FREE, black-and-gold PRO, one struct
   const menu = read("app/research/site-header.tsx");
   for (const [ja, en] of [["PROで、もっと深く", "Go deeper with PRO"], ["案内を見る", "Learn more"], ["プランの管理", "Manage plan"],
     ["全機能をご利用中です", "All features unlocked"], ["再読み込み", "Refresh"], ["アカウント", "Account"], ["米国株のはじめ方", "US stock basics"],
-    ["よくある質問・使い方", "FAQ & help"], ["ニュース", "News"], ["リサーチ", "Research"], ["マイページ", "My page"], ["PRO機能", "PRO features"],
+    ["よくある質問・使い方", "FAQ & help"], ["ニュース", "News"], ["リサーチ", "Research"], ["マイページ", "My workspace"], ["PRO機能", "PRO features"],
     ["ハイテク速報", "Tech Alerts"], ["一般ニュース", "General News"], ["銘柄検索", "Stock Search"], ["マーケット", "Markets"],
-    ["決算・経済指標", "Earnings & Economy"], ["資本マップ", "Capital Map"], ["目標株価", "Price targets"],
+    ["決算・経済指標", "Earnings & economic calendar"], ["資本マップ", "Capital Map"], ["目標株価", "Price targets"],
     ["ウォッチリスト", "Watchlist"], ["銘柄手帳", "Stock Notebook"], ["リサーチノート", "Research notes"], ["スマホ通知", "Mobile alerts"],
     ["監視22銘柄", "22 Tracked Stocks"], ["テーマランキング", "Theme Ranking"], ["銘柄比較", "Compare"], ["連関マップ", "Relationship maps"]]) {
     assert.ok(menu.includes(`"${ja}" : "${en}"`) || menu.includes(`"${ja}", "${en}"`), ja);

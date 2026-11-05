@@ -126,7 +126,7 @@ test("genres after the reclassification", () => {
   const of = id => radarGenre(id).tickers;
   assert.deepEqual(radarGenres.map(genre => genre.id), ["ai-cloud", "semis", "memory", "network", "photonics", "software", "power", "cyber"]);
   assert.deepEqual(radarGenres.map(genre => genre.ja), ["AIクラウド", "半導体", "メモリ", "通信", "光・フォトニクス", "ソフトウェア", "電力・設備", "サイバーセキュリティ"]);
-  assert.deepEqual(radarGenres.map(genre => genre.en), ["AI Cloud", "Semiconductors", "Memory", "Networking", "Optical & Photonics", "Software", "Power & Infrastructure", "Cybersecurity"]);
+  assert.deepEqual(radarGenres.map(genre => genre.en), ["AI Cloud", "Semiconductors", "Memory", "Networking", "Optics & photonics", "Software", "Power & Infrastructure", "Cybersecurity"]);
   assert.deepEqual(of("semis"), ["NVDA", "AMD", "INTC", "QCOM", "AMAT", "LRCX"]);
   assert.deepEqual(of("memory"), ["MU", "SNDK", "WDC", "STX", "RMBS", "P"]); // P: Everpure (formerly Pure Storage, PSTG)
   assert.deepEqual(of("network"), ["ANET", "MRVL", "CRDO", "APH", "ALAB", "CSCO"]);

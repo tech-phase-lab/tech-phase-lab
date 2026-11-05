@@ -88,15 +88,15 @@ export default function Questions() {
 
   const description = ownerMode
     ? (ja ? "集まった質問です。回答する質問を選べます。" : "The questions that came in. Choose which to answer.")
-    : (ja ? "PRO会員の質問から、リゼルが選んで回答します。すべてには答えられません。" : "RIZEL picks questions from PRO members to answer. Not every question can be answered.");
+    : (ja ? "PRO会員の質問から、リゼルが選んで回答します。すべてには答えられません。" : "Rizel answers selected questions from PRO members. We can't promise an answer to every question.");
   const rules = [
     ja ? "質問は、PRO会員全員に公開されます。" : "Questions are visible to all PRO members.",
     ja ? "リゼルが選んだ質問にだけ、回答します。" : "RIZEL answers only the questions chosen.",
     ja ? `1日${limit ?? 2}件まで(日本時間の0時で切り替わります)。消しても、その日の残り件数は戻りません。` : `Up to ${limit ?? 2} a day (resets at 0:00 Japan time). Deleting a post does not give it back.`,
   ];
   return <ResearchToolShell desk lang={lang} setLang={setLang} title={ja ? "リゼルに聞く" : "Ask Rizel"} description={description}>
-    {(state === "signed-out" || state === "pro-required") && <section className={styles.askNotice}><h2>{ja ? "閲覧・投稿はPRO会員限定です" : "PRO membership required"}</h2><p>{ja ? "PRO会員になると質問の投稿と閲覧ができます。すべての質問への回答はお約束していません。" : "PRO members can post and read questions. Not every question will receive an answer."}</p><Link href="/research/account">{ja ? "ログイン・会員情報" : "Sign in / Membership"}</Link></section>}
-    {state === "error" && <p role="status">{ja ? "質問機能に接続できませんでした。時間をおいて再読み込みしてください。" : "Questions are temporarily unavailable. Please reload later."}</p>}
+    {(state === "signed-out" || state === "pro-required") && <section className={styles.askNotice}><h2>{ja ? "閲覧・投稿はPRO会員限定です" : "PRO membership required"}</h2><p>{ja ? "PRO会員になると質問の投稿と閲覧ができます。すべての質問への回答はお約束していません。" : "PRO members can post and read questions. Not every question will receive an answer."}</p><Link href="/research/account">{ja ? "ログイン・会員情報" : "Sign in or view plans"}</Link></section>}
+    {state === "error" && <p role="status">{ja ? "質問機能に接続できませんでした。時間をおいて再読み込みしてください。" : "We couldn't load the questions. Please try again later."}</p>}
     {(state === "ready" || state === "loading") && <>
       {!ownerMode && (open
         ? <section className={styles.askPanel} aria-busy={busy} aria-label={ja ? "リゼルに質問する" : "Ask Rizel"}>

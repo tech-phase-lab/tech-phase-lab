@@ -8,7 +8,7 @@ import styles from "./styles.module.css";
 const questions = [
   [
     "投資初心者でも利用できますか？",
-    "Can I use this as a beginner?",
+    "Is Tech Phase suitable for beginners?",
     "もちろん利用できます。「米国株のはじめ方」も用意していますので、基礎を確認しながらご利用ください。",
     "Absolutely. Our US stock basics guide can help you get started and learn as you go."
   ],
@@ -50,7 +50,7 @@ const questions = [
   ],
   [
     "監視する銘柄の追加や、取り上げてほしいテーマをリクエストできますか？",
-    "Can I request additions to the watch list or topics to cover?",
+    "Can I suggest stocks or topics for you to cover?",
     "はい。すべてのご要望にはお応えできませんが、同じ銘柄やテーマへのリクエストが多い場合は検討します。",
     "Yes. We can’t accommodate every request, but we’ll consider stocks and topics that many members ask for."
   ],
@@ -64,7 +64,7 @@ const questions = [
     "おすすめの銘柄や、買うべき銘柄を教えてもらえますか？",
     "Can you recommend a stock or tell me what to buy?",
     "投資助言に該当する恐れがあるためお答えしていません。",
-    "We don’t answer these requests because they could constitute investment advice."
+    "We can't recommend specific investments or tell you what to buy."
   ],
   [
     "これは投資助言ですか？",
@@ -77,11 +77,11 @@ const questions = [
 export default function Faq() {
   const [lang, setLang] = useResearchLanguage();
   const ja = lang === "ja";
-  return <ResearchToolShell lang={lang} setLang={setLang} title={ja ? "よくある質問・使い方" : "FAQ & help"} description={ja ? "利用方法、PRO会員、質問についてのご案内です。" : "Quick answers about getting started, PRO membership and questions."}>
+  return <ResearchToolShell lang={lang} setLang={setLang} title={ja ? "よくある質問・使い方" : "FAQ & help"} description={ja ? "利用方法、PRO会員、質問についてのご案内です。" : "Quick answers about getting started, PRO, and Ask Rizel."}>
     <nav className={styles.localNav} aria-label={ja ? "案内メニュー" : "Help menu"}><Link href="/research/learn">{ja ? "米国株のはじめ方" : "US stock basics"}</Link><span aria-current="page">{ja ? "よくある質問" : "FAQ"}</span></nav>
     <div className={styles.steps}>
       {/* First item (owner, Nov 5): how to add the app to the iPhone Home Screen. */}
-      <details className={styles.card} id="add-to-home" open><summary><span className={styles.number}>01</span><strong>{ja ? "ホーム画面に追加するには？" : "How do I add it to my Home Screen?"}</strong></summary>
+      <details className={styles.card} id="add-to-home" open><summary><span className={styles.number}>01</span><strong>{ja ? "ホーム画面に追加するには？" : "How do I add Tech Phase to my Home Screen?"}</strong></summary>
         <p>{ja ? <><b>iPhoneのSafari</b>で開いて、次の順に操作します。ChromeなどSafari以外では追加できません。</> : <>Open the site in <b>Safari on iPhone</b> and follow these steps. It cannot be added from Chrome or other browsers.</>}</p>
         <ol className={styles.addSteps}>
           <li>{ja ? <>画面の下の<b>共有</b>ボタンをタップ</> : <>Tap the <b>Share</b> button at the bottom</>}</li>

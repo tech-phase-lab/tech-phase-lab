@@ -53,7 +53,7 @@ export default function WeekMoves({ tickers, lang }: { tickers: string[]; lang: 
 
   if (!key) return null;
   return <section className={styles.week} aria-label={t("今週の値動き", "This week's moves")}>
-    {state === "loading" && !sample ? <p role="status" className={styles.note}>{t("株価を集計中…", "Tallying prices…")}</p>
+    {state === "loading" && !sample ? <p role="status" className={styles.note}>{t("株価を集計中…", "Loading weekly price changes…")}</p>
       : state === "sign-in" && !sample ? <p className={styles.note}>{t("ログインすると、今週の値動きが見られます。", "Sign in to see this week's moves.")}</p>
       : state === "error" && !sample ? <p role="alert" className={styles.note}>{t("株価を取得できませんでした", "Prices could not be loaded")}<button type="button" onClick={retry}>{t("再読み込み", "Reload")}</button></p>
       : state === "not-connected" && !sample ? <p className={styles.note}>{t("株価データの接続準備中です。", "Price data is being connected.")}

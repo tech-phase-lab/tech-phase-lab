@@ -53,6 +53,6 @@ export function GatedChainMap({ root, lang }: { root: string; lang: "ja" | "en" 
   return <>
     {"chain" in data ? <StockChainMap data={data.chain} lang={lang} /> : <ChainCompanyNetworkMap graph={data.graph} lang={lang} />}
     {/* Owner, Oct 25: the sample note sits right under the map it describes. */}
-    {root === FREE_SAMPLE_TICKER && !full && <p className={styles.badge}><b>{ja ? "無料サンプル" : "FREE SAMPLE"}</b>{ja ? "他の企業の連関マップはPRO会員限定です。" : "Maps of other companies are exclusive to PRO members."} <Link href="/research#tech-phase-pro">{ja ? "PROを見る" : "See PRO"}</Link></p>}
+    {root === FREE_SAMPLE_TICKER && !full && <p className={styles.badge}><b>{ja ? "無料サンプル" : "FREE SAMPLE"}</b>{ja ? "他の企業の連関マップはPRO会員限定です。" : "Explore other company maps with PRO."} <Link href="/research#tech-phase-pro">{ja ? "PROを見る" : "Explore PRO"}</Link></p>}
   </>;
 }

@@ -119,7 +119,7 @@ export default function SiteHeader({ lang, setLang, nav }: { lang: Language; set
                 <svg className={styles.ringTrack} viewBox="0 0 36 36" aria-hidden="true"><circle cx="18" cy="18" r="16" /></svg>
                 <RefreshIcon />
               </button></>
-          : <button type="button" className={styles.pro} aria-label={ja ? "PROを見る" : "See PRO"} aria-expanded={pro.open} onClick={() => pro.toggle()}>PRO</button>}
+          : <button type="button" className={styles.pro} aria-label={ja ? "PROを見る" : "Explore PRO"} aria-expanded={pro.open} onClick={() => pro.toggle()}>PRO</button>}
         <button type="button" className={`${styles.ico} ${styles.menuBtn}`} aria-label={ja ? "メニュー" : "Menu"} aria-expanded={menu} aria-controls="site-menu" onClick={() => { if (!menu) window.dispatchEvent(new Event("tech-phase:menu-open")); setMenu(value => !value); }}>
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" /></svg>
         </button>
@@ -279,7 +279,7 @@ function SiteMenu({ lang, member, ownerAccount, onClose, onRefresh, onPro }: { l
       </div>}
       <div className={styles.grp}>
         {heading(ja ? "ニュース" : "News")}
-        {item("/research/news", "alerts", ja ? "ハイテク速報" : "Tech Alerts", member ? <b className={styles.liveTag}>LIVE</b> : undefined, member ? undefined : (ja ? "30分遅れ · 直近5件" : "30 min delay · latest 5"))}
+        {item("/research/news", "alerts", ja ? "ハイテク速報" : "Tech Alerts", member ? <b className={styles.liveTag}>LIVE</b> : undefined, member ? undefined : (ja ? "30分遅れ · 直近5件" : "30-minute delay · latest 5 updates"))}
         {item("/research/general-news", "news", ja ? "一般ニュース" : "General News")}
       </div>
       {member && <div className={styles.grp}>
@@ -295,13 +295,13 @@ function SiteMenu({ lang, member, ownerAccount, onClose, onRefresh, onPro }: { l
         {heading(ja ? "リサーチ" : "Research")}
         {item("/research/stocks", "search", ja ? "銘柄検索" : "Stock Search")}
         {item("/research/market", "market", ja ? "マーケット" : "Markets")}
-        {item("/research/calendar", "calendar", ja ? "決算・経済指標" : "Earnings & Economy")}
+        {item("/research/calendar", "calendar", ja ? "決算・経済指標" : "Earnings & economic calendar")}
         {item("/research/capital-map", "pulse", ja ? "資本マップ" : "Capital Map")}
         {item("/research/radar", "radar", ja ? "財務レーダー" : "Financial Radar")}
         {item("/research/price-targets", "bars", ja ? "目標株価" : "Price targets")}
       </div>
       <div className={styles.grp}>
-        {heading(ja ? "マイページ" : "My page")}
+        {heading(ja ? "マイページ" : "My workspace")}
         {member ? <div className={styles.myGrid}>
           {my("/research/portfolio", "wallet", ja ? "資産管理" : "Portfolio")}
           {my("/research/watchlist", "star", ja ? "ウォッチリスト" : "Watchlist")}

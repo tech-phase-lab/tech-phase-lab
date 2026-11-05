@@ -213,7 +213,7 @@ export default function WeeklyIssues() {
   const changed = (text: string) => { setMessage(text); setNumber(null); setRevision(value => value + 1); };
   const ja = lang === "ja";
   return <ResearchToolShell desk compactTitle lang={lang} setLang={setLang} title="週刊 Tech Phase PRO" description="">
-    {(state === "signed-out" || state === "pro-required") && <section className={styles.notice}><h2>PRO会員限定です</h2><p>PRO会員になると、週刊 Tech Phase PRO を読めます。</p><Link href="/research/account">{ja ? "ログイン・会員情報" : "Sign in / Membership"}</Link></section>}
+    {(state === "signed-out" || state === "pro-required") && <section className={styles.notice}><h2>PRO会員限定です</h2><p>PRO会員になると、週刊 Tech Phase PRO を読めます。</p><Link href="/research/account">{ja ? "ログイン・会員情報" : "Sign in or view plans"}</Link></section>}
     {state === "loading" && <p className={styles.empty}>読み込み中…</p>}
     {state === "error" && <p role="alert" className={styles.error}>いま読み込めません。少し待ってからもう一度開いてください。</p>}
     {state === "ready" && <>

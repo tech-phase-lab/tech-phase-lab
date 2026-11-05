@@ -61,7 +61,7 @@ test('the map shows suppliers first, no range buttons, a card per company with s
     assert.equal((html.match(/<details/g) ?? []).length, 25);
     assert.ok(html.indexOf(lang === 'ja' ? '供給元(上流)' : 'Suppliers (upstream)') < html.indexOf('NVDA</b>'));
     assert.ok(html.includes(lang === 'ja' ? '22社 · 31の関係' : '22 companies · 31 relationships'));
-    assert.ok(html.includes(lang === 'ja' ? 'さらに先の関係' : 'Further links'));
+    assert.ok(html.includes(lang === 'ja' ? 'さらに先の関係' : 'Related connections'));
     assert.ok(html.includes(lang === 'ja' ? '出典・引用・発表日' : 'Sources, quotes &amp; dates'));
     assert.ok(html.includes(lang === 'ja' ? '報道' : 'Media report'));
     assert.equal((html.match(/id="chain-card-/g) ?? []).length, 22);
@@ -121,7 +121,7 @@ test('a map without suppliers, rivals or two-step links leaves those parts out, 
   assert.ok(html.indexOf('AIデータセンター・IT企業') > html.indexOf('BE</b>'));
   assert.ok(html.includes('7社 · 10の関係') && !html.includes('さらに先の関係') && !html.includes('競合は？'));
   const plain = renderToStaticMarkup(createElement(StockChainMap, { data: be, lang: 'en' }));
-  assert.ok(!plain.includes('Who competes with it?') && !plain.includes('Further links') && !plain.includes('Competitors'));
+  assert.ok(!plain.includes('Who competes with it?') && !plain.includes('Related connections') && !plain.includes('Competitors'));
   const metaHtml = renderToStaticMarkup(createElement(StockChainMap, { data: meta, lang: 'en' }));
   assert.ok(metaHtml.indexOf('Power') < metaHtml.indexOf('META</b>') && metaHtml.indexOf('META</b>') < metaHtml.indexOf('Glasses, social'));
   assert.ok(metaHtml.indexOf('AI &amp; device partners') < metaHtml.indexOf('META</b>'));

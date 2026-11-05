@@ -57,7 +57,7 @@ export default function EventCalendar() {
   const stamp = (value: string, zone: string) => new Intl.DateTimeFormat(lang === "ja" ? "ja-JP" : "en-US", { timeZone: zone, month: "short", day: "numeric", weekday: "short", hour: "2-digit", minute: "2-digit", hour12: false }).format(new Date(value));
   return <ResearchToolShell lang={lang} setLang={(value) => { setLang(value); setZoneOverride(null); setPeriod("all"); }} title={t("決算・経済指標カレンダー", "Earnings & economic calendar")} description={t("相場の転機を、見逃さない。", "Don’t miss the moments that move markets.")} freshness>
     <div className={calendarStyles.filters}>
-      <div role="group" aria-label={t("予定の種類", "Event category")}>{(["all", "earnings", "economic"] as const).map((value) => <button key={value} aria-pressed={kind === value} onClick={() => { setKind(value); setPeriod("all"); }}>{value === "all" ? t("すべて", "All") : value === "earnings" ? t("決算", "Earnings") : t("経済指標・FOMC", "Economy & FOMC")}</button>)}</div>
+      <div role="group" aria-label={t("予定の種類", "Event category")}>{(["all", "earnings", "economic"] as const).map((value) => <button key={value} aria-pressed={kind === value} onClick={() => { setKind(value); setPeriod("all"); }}>{value === "all" ? t("すべて", "All") : value === "earnings" ? t("決算", "Earnings") : t("経済指標・FOMC", "Economic data & Fed meetings")}</button>)}</div>
     </div>
     <div className={calendarStyles.viewSwitch} role="group" aria-label={t("表示内容", "Calendar view")}>
       <button aria-pressed={view === "upcoming"} onClick={() => { setView("upcoming"); setPeriod("all"); }}>{t("今後の予定", "Upcoming")}</button>

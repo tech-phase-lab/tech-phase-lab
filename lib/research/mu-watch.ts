@@ -9,7 +9,7 @@ export const muWatchFacts = {
   cloudOperatingMargin: { previous: 78, current: 76 },
   guidance: { revenueLow: 60000, revenueHigh: 63000, adjustedGrossMargin: 86.25 },
 };
-export const muWatchTitles = [c('成長の中身', 'Growth drivers'), c('前回からの変化', 'What changed'), c('注意点', 'Risks to watch'), c('次に見るポイント', 'Next checkpoints')];
+export const muWatchTitles = [c('成長の中身', 'Growth drivers'), c('前回からの変化', 'What changed'), c('注意点', 'Risks to watch'), c('次に見るポイント', 'What to watch next')];
 export type MuWatchCard = { title: Copy; headline: Copy; points: Copy[]; detail: Copy; sourceSection: string };
 const cards: MuWatchCard[] = [
   {title:muWatchTitles[0], headline:c('増収額の約半分がコア・データセンター部門', 'Core Data Center supplied about half the revenue increase'),

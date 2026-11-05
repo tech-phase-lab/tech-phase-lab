@@ -142,7 +142,7 @@ export function StockChainMap({ data, lang }: { data: ChainMapData; lang: "ja" |
   const rowsOf = (above: boolean) => data.rows.map((row, index) => ({ row, index })).filter(({ index }) => chainAbove(data, index) === above && data.companies.some(company => company.row === index))
     .map(({ row, index }) => <section className={styles.row} key={index}><h4>{ja ? row.ja : row.en}</h4><div className={styles.chips}>{rowChips(index)}</div></section>);
 
-  return <section className={styles.chain} aria-label={t("企業の連鎖マップ", "Company connection map")}>
+  return <section className={styles.chain} aria-label={t("企業の連鎖マップ", "Company relationships")}>
     {data.rivals.length > 0 && <div className={styles.rivals}>
       <h3><span>05</span>{t("競合は？", "Who competes with it?")}</h3>
       <div>{data.rivals.map(id => <span key={id}>{byId.get(id)?.ticker ?? id}</span>)}</div>
@@ -150,7 +150,7 @@ export function StockChainMap({ data, lang }: { data: ChainMapData; lang: "ja" |
     <h3 className={styles.mapHeading}><span>06</span>{t("どこと繋がる？", "Who does it work with?")}</h3>
     <div className={styles.card}>
       <div className={styles.head}>
-        <h3>{t("企業の連鎖マップ", "Company connection map")}</h3>
+        <h3>{t("企業の連鎖マップ", "Company relationships")}</h3>
         <div className={styles.id}><div><span className={styles.tk}>{root}</span><span className={styles.nm}>{ja ? data.root.name : (data.root.name_en ?? data.root.name)}</span></div>
           <span className={styles.cnt}>{ja ? `${counts.companies}社 · ${counts.relations}の関係` : `${counts.companies} companies · ${counts.relations} relationships`}</span></div>
         <div className={styles.legend}>{([...CHAIN_KINDS.filter(kind => data.companies.some(company => chainKinds(company).includes(kind))), ...(data.far.length > 0 ? ["far"] : [])] as ChainTone[]).map(tone => <span key={tone} data-tone={tone}><i />{chainText(tone, "legend", lang)}</span>)}</div>

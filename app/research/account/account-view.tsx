@@ -240,7 +240,7 @@ export default function AccountView({ ja, member, billingAvailable, upgradeFirst
   // ---- security / support
   const twoValue = <span className={`${styles.rv} ${twoFactor ? styles.rvOn : ""}`}>{twoFactor === null ? t("確認できません", "Unavailable") : twoFactor ? t("オン", "On") : t("オフ", "Off")}</span>;
   const security = <div className={styles.cd} style={{ marginTop: 0 }}>
-    {row(I.bell, t("スマホ通知の設定", "Phone notifications"), { href: "/research/notifications", pro: true })}
+    {row(I.bell, t("スマホ通知の設定", "Mobile notifications"), { href: "/research/notifications", pro: true })}
     {passwordRow && row(I.key, t("パスワードを変更", "Change password"), { href: "/research/account/security" })}
     {/* The owner's two-step verification is required for admin access: when it is on it is only shown (never offered to turn off);
         when it is off or cannot be read, the row opens the security page so it can be set up. */}

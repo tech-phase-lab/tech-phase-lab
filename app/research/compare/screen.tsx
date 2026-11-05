@@ -112,7 +112,7 @@ export default function ComparisonScreen() {
     <div className={styles.screenWrap}>
     {!result && <header className={styles.pageHead}><div className={styles.pageTitle}><h1>{t("銘柄比較", "Compare stocks")}</h1><ProTag /></div><p>{t("最大3社。数字の差から、投資判断の論点へ。", "Up to three companies. Go from numbers to the questions that matter.")}</p></header>}
     {membership === "loading" && <p role="status">{t("会員情報を確認中…", "Checking membership…")}</p>}
-    {membership === "free" && <section className={styles.lock}><span aria-hidden="true">🔒</span><h2>{t("比較・評価はPRO会員限定", "Comparison is exclusive to PRO")}</h2><p>{t("2〜3社を選び、結論・実績・成長性・注意点をまとめて確認できます。", "Choose two or three companies to explore the conclusion, performance, growth and caveats.")}</p><Link href="/research/account">{t("ログイン・会員情報", "Sign in / Membership")}</Link></section>}
+    {membership === "free" && <section className={styles.lock}><span aria-hidden="true">🔒</span><h2>{t("比較・評価はPRO会員限定", "Comparison is exclusive to PRO")}</h2><p>{t("2〜3社を選び、結論・実績・成長性・注意点をまとめて確認できます。", "Choose two or three companies to explore the conclusion, performance, growth and caveats.")}</p><Link href="/research/account">{t("ログイン・会員情報", "Sign in or view plans")}</Link></section>}
     {membership === "pro" && <>
       {!result && <>
       <section ref={picker} tabIndex={-1} className={styles.pickCard} aria-label={t("比較する銘柄", "Select companies")}>

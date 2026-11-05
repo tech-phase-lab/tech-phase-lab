@@ -39,7 +39,7 @@ export default function GenrePicker({ lang, value, onChange }: { lang: "ja" | "e
     return () => { document.body.style.overflow = keep; window.removeEventListener("keydown", key); button?.focus({ preventScroll: true }); };
   }, [open]);
   return <>
-    <section className={styles.card} aria-label={ja ? "ジャンル" : "Genre"}
+    <section className={styles.card} aria-label={ja ? "ジャンル" : "Category"}
       onTouchStart={event => { const point = event.touches[0]; touch.current = event.touches.length === 1 ? { x: point.clientX, y: point.clientY } : null; }}
       onTouchEnd={event => {
         const start = touch.current; touch.current = null;

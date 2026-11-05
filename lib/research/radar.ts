@@ -6,7 +6,7 @@ export const radarGenres = [
   { id: "semis", ja: "半導体", en: "Semiconductors", tickers: ["NVDA", "AMD", "INTC", "QCOM", "AMAT", "LRCX"] },
   { id: "memory", ja: "メモリ", en: "Memory", tickers: ["MU", "SNDK", "WDC", "STX", "RMBS", "P"] },
   { id: "network", ja: "通信", en: "Networking", tickers: ["ANET", "MRVL", "CRDO", "APH", "ALAB", "CSCO"] },
-  { id: "photonics", ja: "光・フォトニクス", en: "Optical & Photonics", tickers: ["AAOI", "COHR", "LITE", "CIEN", "GLW", "AVGO", "FN"] },
+  { id: "photonics", ja: "光・フォトニクス", en: "Optics & photonics", tickers: ["AAOI", "COHR", "LITE", "CIEN", "GLW", "AVGO", "FN"] },
   { id: "software", ja: "ソフトウェア", en: "Software", tickers: ["MSFT", "NOW", "CRM", "ADBE", "PLTR", "SNOW"] },
   { id: "power", ja: "電力・設備", en: "Power & Infrastructure", tickers: ["VST", "CEG", "GEV", "BE", "VRT", "ETN", "PWR", "OKLO"] },
   { id: "cyber", ja: "サイバーセキュリティ", en: "Cybersecurity", tickers: ["CRWD", "PANW", "ZS", "FTNT", "NET", "S", "OKTA"] },

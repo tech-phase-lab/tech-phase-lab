@@ -56,7 +56,7 @@ export default function HomeSidebar({ lang, tab, companyCount, savedCount, openV
   const research: Item[] = [
     ...(member ? [{ key: "desk", icon: icons.gem, label: "RIZEL'S DESK", href: "/research/notes", current: pathname === "/research/notes" }] : []),
     ...(member ? [{ key: "watch", icon: icons.watch, label: t("監視22銘柄", "22 Tracked Stocks"), onClick: () => openView?.("companies"), current: tab === "companies", badge: companyCount === undefined ? null : <em className={styles.count}>{companyCount}</em> }] : []),
-    { key: "metrics", icon: icons.calendar, label: t("決算・経済指標", "Earnings & Economy"), href: "/research/calendar", current: pathname === "/research/calendar" },
+    { key: "metrics", icon: icons.calendar, label: t("決算・経済指標", "Earnings & economic calendar"), href: "/research/calendar", current: pathname === "/research/calendar" },
     { key: "map", icon: icons.map, label: t("資本マップ", "Capital Map"), href: "/research/capital-map" },
     { key: "radar", icon: icons.radar, label: t("財務レーダー", "Financial Radar"), href: "/research/radar", current: pathname === "/research/radar" },
     ...(member ? [
