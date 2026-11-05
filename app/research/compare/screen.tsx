@@ -8,7 +8,7 @@ import { searchStocks } from "@/lib/research/stock-search";
 import { comparisonCatalog } from "@/lib/research/comparison-catalog";
 import type { ComparisonResult, Fact } from "@/lib/research/comparison";
 import styles from "./styles.module.css";
-import { CompanyScoreCard, ScoreHeadline, ScoreOverview, StatusOverlay } from "./comparison-visuals";
+import { CompanyScoreCard, LeadTitle, ScoreHeadline, ScoreOverview, StatusOverlay } from "./comparison-visuals";
 import ProTag from "../pro-experience/pro-tag";
 import TickerSearch from "./ticker-search";
 import { comparisonScores, overallComparison } from "@/lib/research/comparison-scorecard";
@@ -170,7 +170,7 @@ export default function ComparisonScreen() {
       {result && <div ref={conclusion} tabIndex={-1} className={`${styles.results} ${styles.resultView}`}>
         <button type="button" className={styles.backToCompare} onClick={()=>{setResult(null);requestAnimationFrame(()=>{picker.current?.scrollIntoView({block:"start",behavior:"instant"});picker.current?.focus({preventScroll:true});});}}>{t("▶ 銘柄比較PROへ戻る", "▶ Back to Compare stocks PRO")}</button>
         {(() => { const now = Date.parse(result.generatedAt), assessment = overallComparison(result.companies, lang, now); return <>
-        <section className={styles.conclusion} aria-label={t("結果", "Results")}><p className={styles.eyebrow}>{t("結果", "RESULTS")}</p><h2>{result.trial ? result.conclusion[lang] : assessment.title}</h2></section>
+        <section className={styles.conclusion} aria-label={t("結果", "Results")}><h2>{result.trial ? result.conclusion[lang] : <LeadTitle title={assessment.title} companies={result.companies}/>}</h2></section>
         <ScoreHeadline companies={result.companies} lang={lang} now={now}/>
         <StatusOverlay companies={result.companies} lang={lang} now={now}/>
         <section className={styles.explain}><p>{result.trial ? result.trial.description[lang] : assessment.description}</p>{result.reasons.length > 0 && <details><summary>{t("比較条件・注意点", "Comparison caveats")}</summary><ul>{result.reasons.map(r => <li key={r.en}>{r[lang]}</li>)}</ul></details>}<small>{result.trial && <>{t("保存データ · 自動更新なし", "Saved snapshot · not auto-updated")} · </>}{t("比較作成", "Compared at")}: {new Date(result.generatedAt).toLocaleString(ja ? "ja-JP" : "en-US", { timeZone: "Asia/Tokyo" })} JST</small></section>

@@ -263,3 +263,38 @@
 .scoreBoxes[style*="repeat(3"] .boxScore b{font-size:30px}
 .scoreBoxes[style*="repeat(3"] .boxName{font-size:13px}
 .scoreBoxes[style*="repeat(3"] .scoreBox{padding:14px 12px 12px}
+
+/* ===== nx9: seven small fixes (owner, Nov 5) ===== */
+/* 1 and 2: no mint ring on the input; gold border only when focused; thin solid #26304a lines (empty and chosen alike) */
+.pickInput,.pickChosen{border:1px solid #26304a}
+.pickInput input,.pickInput input:focus,.pickInput input:focus-visible{outline:none;box-shadow:none}
+.pickInput:focus-within{border-color:#d9b56a}
+/* 3: the first result screen fits one phone screen */
+.results{gap:12px}
+.results .conclusion{padding:0 0 2px;border:0}
+.results .conclusion h2{margin:0;font-size:21px;line-height:1.35}
+.leadTicker{font-family:var(--font-geist-mono),ui-monospace,monospace;font-weight:700}
+.scoreBox{padding:10px 12px}
+.boxName{margin:4px 0 0;font-size:14px;white-space:nowrap;overflow:hidden}
+.boxScore{margin:4px 0 0}
+.boxScore b{font-size:34px}
+.scoreBoxes[style*="repeat(3"] .boxName{font-size:12px}
+.scoreBoxes[style*="repeat(3"] .boxScore b{font-size:28px}
+.winLine{margin:8px 0 0}
+.overlayCard{padding:12px 14px}
+.overlayCard .statusChart svg{max-width:230px;margin-top:2px}
+.overlayLegend{margin-top:2px}
+.overlayCard .snapshotNote{display:none}
+.explain{padding:12px 14px;font-size:12.5px;line-height:1.8}
+.explain small{margin-top:6px}
+/* 5 and 6: left 184px of strengths and weaknesses (one line each), the figure on the right */
+.companyCards .scoreCard{padding:14px 12px}
+.companyProfile{grid-template-columns:184px minmax(0,1fr);gap:8px}
+.companyStatus .statusChart svg{max-width:160px;margin:0 auto}
+.traitBox{padding:10px}
+.traitBox li{padding-left:10px;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:clip;overflow-wrap:normal}
+.traitBox li[data-fit="small"]{font-size:11px}
+.traitBox li::before{left:0}
+.results .traitBox li{white-space:nowrap}
+.companyHeading h3{flex-wrap:nowrap}
+@media(max-width:340px){.companyProfile{grid-template-columns:1fr}}

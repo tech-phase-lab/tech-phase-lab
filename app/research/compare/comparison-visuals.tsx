@@ -10,10 +10,13 @@ function StatusChart({companies,lang,now,colorIndex=0}: {companies:ComparisonRes
   const labels=lang==="ja" ? ["財務", "収益", "割安", "安定", "株価", "成長", "資金"] : ["Finance", "Profit", "Value", "Stability", "Momentum", "Growth", "Cash"];
   const available=sets.some(scores=>scores.some(s=>s.value!==null));
   return <div className={styles.statusChart}>
-    <svg viewBox="0 0 300 300" role="img" aria-label={lang==="ja" ? "企業ステータス比較。未取得の項目は描画しません。" : "Company status comparison. Unavailable or unscored factors are not plotted."}>
-      {[2,4,6,8,10].map(level=><polygon key={level} points={factors.map((_,i)=>radarPoint(level,i,factors.length)).join(" ")} fill="none" stroke="#33415f" strokeOpacity=".7"/>)}
-      {factors.map((f,i)=>{const [x,y]=radarPoint(10,i,factors.length)!.split(","),angle=-Math.PI/2+i*2*Math.PI/factors.length;return <g key={f.id}><line x1="150" y1="150" x2={x} y2={y} stroke="#33415f" strokeOpacity=".6"/><text x={150+Math.cos(angle)*119} y={154+Math.sin(angle)*111} textAnchor="middle" fill="#aab6d3" fontSize="11">{labels[i]}</text></g>;})}
-      {sets.map((scores,cIndex)=>{const color=colorOf(cIndex,colorIndex),points=scores.map((s,i)=>radarPoint(s.value,i,scores.length));return <g key={companies[cIndex].ticker} fill={color} stroke={color}>{points.every(p=>p!==null) && <polygon points={points.join(" ")} fillOpacity=".14" strokeWidth="1.8"/>}{points.map((point,i)=>point!==null && points[(i+1)%points.length]!==null ? <line key={`edge-${i}`} x1={point.split(",")[0]} y1={point.split(",")[1]} x2={points[(i+1)%points.length]!.split(",")[0]} y2={points[(i+1)%points.length]!.split(",")[1]} strokeWidth="1.8"/> : null)}{points.map((point,i)=>point===null ? null : <circle key={scores[i].id} cx={point.split(",")[0]} cy={point.split(",")[1]} r="4" fillOpacity=".85" strokeWidth="1"><title>{`${companies[cIndex].ticker} ${scores[i].label[lang]}: ${scores[i].value}/10`}</title></circle>)}</g>;})}
+    <svg viewBox="8 30 284 240" role="img" aria-label={lang==="ja" ? "企業ステータス比較。未取得の項目は描画しません。" : "Company status comparison. Unavailable or unscored factors are not plotted."}>
+      {/* Order of drawing: the light fills first, then the scale lines over them, then each company's outline and dots on top. */}
+      {sets.map((scores,cIndex)=>{const points=scores.map((s,i)=>radarPoint(s.value,i,scores.length));return points.every(p=>p!==null) ? <polygon key={`fill-${companies[cIndex].ticker}`} points={points.join(" ")} fill={colorOf(cIndex,colorIndex)} fillOpacity=".16" stroke="none"/> : null;})}
+      {[2,4,6,8,10].map(level=><polygon key={level} points={factors.map((_,i)=>radarPoint(level,i,factors.length)).join(" ")} fill="none" stroke="#52628a" strokeWidth="1"/>)}
+      {factors.map((f,i)=>{const [x,y]=radarPoint(10,i,factors.length)!.split(","),angle=-Math.PI/2+i*2*Math.PI/factors.length;return <line key={`axis-${f.id}`} x1="150" y1="150" x2={x} y2={y} stroke="#3f4d70" strokeWidth="1"/>;})}
+      {factors.map((f,i)=>{const angle=-Math.PI/2+i*2*Math.PI/factors.length;return <text key={`label-${f.id}`} x={150+Math.cos(angle)*119} y={154+Math.sin(angle)*111} textAnchor="middle" fill="#a3abc4" fontSize={companies.length===1 ? 15 : 11}>{labels[i]}</text>;})}
+      {sets.map((scores,cIndex)=>{const color=colorOf(cIndex,colorIndex),points=scores.map((s,i)=>radarPoint(s.value,i,scores.length));return <g key={companies[cIndex].ticker} fill={color} stroke={color}>{points.map((point,i)=>point!==null && points[(i+1)%points.length]!==null ? <line key={`edge-${i}`} x1={point.split(",")[0]} y1={point.split(",")[1]} x2={points[(i+1)%points.length]!.split(",")[0]} y2={points[(i+1)%points.length]!.split(",")[1]} strokeWidth="1.8"/> : null)}{points.map((point,i)=>point===null ? null : <circle key={scores[i].id} cx={point.split(",")[0]} cy={point.split(",")[1]} r="4" fillOpacity=".85" strokeWidth="1"><title>{`${companies[cIndex].ticker} ${scores[i].label[lang]}: ${scores[i].value}/10`}</title></circle>)}</g>;})}
       {!available && <text x="150" y="154" textAnchor="middle" fill="#b2c2c7" fontSize="12">{lang==="ja" ? "データ未取得" : "Data unavailable"}</text>}
     </svg>
   </div>;
@@ -39,6 +42,13 @@ function ScoreHeadline({companies,lang,now}: {companies:ComparisonResult["compan
     </article>)}</div>
     {sentence && <p className={styles.winLine}><b style={{color:colorOf(leader)}}>{companies[leader].ticker}</b>{sentence}</p>}
   </section>;
+}
+/** "総合評価は○○が優位": only the company's code takes its colour and a bold monospace face. */
+function LeadTitle({title,companies}: {title:string;companies:ComparisonResult["companies"]}) {
+  const index=companies.findIndex(c=>title.includes(c.ticker));
+  if(index<0) return <>{title}</>;
+  const [before,...rest]=title.split(companies[index].ticker);
+  return <>{before}<b className={styles.leadTicker} style={{color:colorOf(index)}}>{companies[index].ticker}</b>{rest.join(companies[index].ticker)}</>;
 }
 /** One figure with every company drawn over each other, in each company's color. Unscored factors are not drawn. */
 function StatusOverlay({companies,lang,now}: {companies:ComparisonResult["companies"];lang:"ja"|"en";now:number}) {
@@ -66,23 +76,25 @@ function ScoreOverview({companies,lang,now}: {companies:ComparisonResult["compan
     <p className={styles.snapshotNote}>{ja ? "— 未取得・評価保留（0点ではありません）" : "— Unavailable or unscored, not zero"}</p>
   </section>;
 }
+/** One item stays on one line: 12px, or 11px when the sentence is too long for the 184px column (never cut with "…"). */
+const fitSize=(text:string)=>[...text].reduce((w,ch)=>w+(ch.charCodeAt(0)>0x2e80 ? 1 : 0.58),0)*12>146 ? "small" : "normal";
 function CompanyScoreCard({company:c,lang,now,colorIndex=0}: {company:ComparisonResult["companies"][number];lang:"ja"|"en";now:number;colorIndex?:number}) {
   const items=hasRecentQuarter(c,now) ? c.preparedAnalysis?.items ?? [] : [], ja=lang==="ja";
   const availability=comparisonAvailability(c,lang,now);
   const highlights={strengths:items.filter(i=>i.kind==="strength").slice(0,4).map(i=>i.short[lang]),weaknesses:items.filter(i=>i.kind==="weakness").slice(0,4).map(i=>i.short[lang])};
   return <article className={styles.scoreCard}>
-    <header className={styles.companyHeading}><h3 title={`${c.name}（${c.ticker}）`}><i style={{background:colorOf(colorIndex)}} aria-hidden="true"/><span>{c.name}</span><small>{c.ticker}</small></h3></header>
+    <header className={styles.companyHeading}><h3><i style={{background:colorOf(colorIndex)}} aria-hidden="true"/><span>{c.name}</span><small>{c.ticker}</small></h3></header>
     {c.quarterRevenue && <p className={styles.periodLine}>{c.referenceEvaluation ? `${ja ? "決算発表" : "Released"} ${c.referenceEvaluation.announced}${ja ? "（米国）" : " (US)"} · ` : ""}{ja ? "対象期間" : "Reporting period"} {c.quarterRevenue.start ? `${c.quarterRevenue.start} – ` : ""}{c.quarterRevenue.end}</p>}
     {availability && <p className={styles.periodLine}>{availability}</p>}
     <div className={styles.companyProfile}>
       <div className={styles.traitBoxes}>
         <section className={styles.traitBox} aria-label={ja ? "長所" : "Strengths"}>
           <h4>{ja ? "長所" : "Strengths"}</h4>
-          {highlights.strengths.length ? <ul>{highlights.strengths.map(item=><li key={item}>{item}</li>)}</ul> : <p>{availability ? "—" : ja ? "取得済みの数値では該当なし" : "None identified in available figures"}</p>}
+          {highlights.strengths.length ? <ul>{highlights.strengths.map(item=><li key={item} data-fit={fitSize(item)}>{item}</li>)}</ul> : <p>{availability ? "—" : ja ? "取得済みの数値では該当なし" : "None identified in available figures"}</p>}
         </section>
         <section className={`${styles.traitBox} ${styles.weaknessBox}`} aria-label={ja ? "短所" : "Weaknesses"}>
           <h4>{ja ? "短所" : "Weaknesses"}</h4>
-          {highlights.weaknesses.length ? <ul>{highlights.weaknesses.map(item=><li key={item}>{item}</li>)}</ul> : <p>{availability ? "—" : ja ? "取得済みの数値では該当なし" : "None identified in available figures"}</p>}
+          {highlights.weaknesses.length ? <ul>{highlights.weaknesses.map(item=><li key={item} data-fit={fitSize(item)}>{item}</li>)}</ul> : <p>{availability ? "—" : ja ? "取得済みの数値では該当なし" : "None identified in available figures"}</p>}
         </section>
       </div>
       <section className={styles.companyStatus} aria-label={ja ? `${c.name}のステータス` : `${c.name} status`}>
@@ -92,4 +104,4 @@ function CompanyScoreCard({company:c,lang,now,colorIndex=0}: {company:Comparison
   </article>;
 }
 
-export { CompanyScoreCard, ScoreOverview, ScoreHeadline, StatusOverlay };
+export { LeadTitle, CompanyScoreCard, ScoreOverview, ScoreHeadline, StatusOverlay };

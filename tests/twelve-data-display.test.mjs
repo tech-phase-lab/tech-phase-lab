@@ -92,7 +92,7 @@ test("the actual cards render seven-axis status, bars, provider metrics and comp
   for(const lang of ["ja","en"]){
     const card=renderToStaticMarkup(React.createElement(CompanyScoreCard,{company:companies[0],lang,now}));
     assert.equal((card.match(/<circle /g)||[]).length,7);
-    assert.match(card,/Example AAA（AAA）/);assert.doesNotMatch(card,/null|undefined/);
+    assert.match(card,/Example AAA<\/span><small>AAA/);assert.doesNotMatch(card,/null|undefined/);
     assert.ok((card.match(/<li /g)||[]).length<=8);
     const table=renderToStaticMarkup(React.createElement(ScoreOverview,{companies,lang,now}));
     assert.equal((table.match(/class="scoreTrack"/g)||[]).length,21);
