@@ -194,7 +194,7 @@ class TranslationTests(unittest.TestCase):
             for row in db.execute("SELECT key,title FROM company_wire WHERE title LIKE 'Credo headline number %'").fetchall():
                 number = int(row['title'].rsplit(' ', 1)[1])
                 if number > 20:  # only the oldest ten are translated
-                    db.execute('INSERT INTO company_wire_ja VALUES(?,?,?,?)', (row['key'], '日本語の見出し', 'm', self.now.isoformat()))
+                    db.execute('INSERT INTO company_wire_ja(key,title_ja,model,created_at) VALUES(?,?,?,?)', (row['key'], '日本語の見出し', 'm', self.now.isoformat()))
             db.commit()
             feed = company_wire.public_feed(db, now_ts=self.now.timestamp())
         shown = feed['items']['CRDO']
@@ -270,7 +270,7 @@ class TriageTests(unittest.TestCase):
             company_wire.store(db, rows, 'NVIDIA', seen_at=self.now)
             company_wire.schema_translation(db)
             key = db.execute('SELECT key FROM company_wire').fetchone()[0]
-            db.execute('INSERT INTO company_wire_ja VALUES(?,?,?,?)', (key, 'エヌビディアがNemotronを拡充', 'm', self.now.isoformat()))
+            db.execute('INSERT INTO company_wire_ja(key,title_ja,model,created_at) VALUES(?,?,?,?)', (key, 'エヌビディアがNemotronを拡充', 'm', self.now.isoformat()))
             db.commit()
         picked = self.headlines(('Nvidia expands Nemotron family with two new open models', 'Techzine'),
                                 ('Germany plans AI cooperation deal with Nvidia, Handelsblatt says', 'Reuters'))
