@@ -14,6 +14,9 @@ const subscribe = (callback: () => void) => { const media = window.matchMedia("(
 /** Most company headlines are longer than the band allows, so the newest 40 stories can hold none that fit (Nov 5: the band went empty).
  * The band looks through a wide pool and keeps the newest stories that have a short headline. */
 const PULSE_POOL = 400;
+/** A finger that moves at least this far sideways is a swipe; one that moves less than TAP_PX is a tap. */
+const SWIPE_PX = 36;
+const TAP_PX = 10;
 /** One headline every five seconds (owner, Nov 4). */
 const ROTATE_MS = 5000;
 /** The headline starts at 14.5px and shrinks by 0.5px to 12.5px; only then is it cut with "…". */
@@ -119,6 +122,7 @@ export default function ResearchPulse({ lang }: { lang: Language }) {
   const current = items.length ? (position.first === first ? position.index : 0) % items.length : 0;
   const item = items[current];
   const previous = useRef<BandLine | null>(null);
+  const pressX = useRef<number | null>(null);
   const shownId = item?.id;
   useEffect(() => {
     const before = previous.current;
@@ -136,8 +140,17 @@ export default function ResearchPulse({ lang }: { lang: Language }) {
   }, [stopped, items.length, first]);
   if (!item) return gaveUp ? null : <div className={styles.slot} aria-hidden="true" />;
   const release = () => setHeld(false);
+  // A tap, or a swipe left, shows the next headline; a swipe right shows the one before (owner, Nov 5).
+  const go = (step: number) => { if (items.length > 1) setPosition({ first, index: (current + step + items.length) % items.length }); };
+  const finish = (x: number) => {
+    const start = pressX.current; pressX.current = null; release();
+    if (start === null) return;
+    const moved = x - start;
+    if (Math.abs(moved) >= SWIPE_PX) go(moved < 0 ? 1 : -1); else if (Math.abs(moved) < TAP_PX) go(1);
+  };
   return <section className={styles.pulse} aria-label={ja ? "新着ニュース" : "Latest news"} data-paused={stopped}
-    onPointerDown={() => setHeld(true)} onPointerUp={release} onPointerCancel={release} onPointerLeave={release}>
+    onPointerDown={event => { pressX.current = event?.clientX ?? 0; setHeld(true); }} onPointerUp={event => finish(event?.clientX ?? 0)}
+    onPointerCancel={() => { pressX.current = null; release(); }} onPointerLeave={() => { pressX.current = null; release(); }}>
     <div className={styles.strip} aria-live="polite">
       {leaving && <Line key={`out-${leaving.id}`} line={leaving} ja={ja} leaving />}
       <Line key={item.id} line={item} ja={ja} />

@@ -57,9 +57,9 @@ test('a story without a short headline is left out and the band moves on; the sa
     {headlines:['MU、目標株価の引き上げ相次ぐ'],title:'y'},
   ];
   assert.deepEqual(bandItems(items,true).map(item=>item.band),['APH、AI需要で通期見通しを引き上げ','MU、目標株価の引き上げ相次ぐ']);
-  assert.equal(bandTitle(['十二345678901234567890123'],true),'', '23 characters is too long');
-  assert.equal(bandTitle(['あ'.repeat(21)+'い'],true).length,22);
-  assert.equal(bandTitle(['あ'.repeat(22)+'い'],true),'');
+  assert.equal(bandTitle(['十二34567890123456789012345'],true),'', '25 characters is too long');
+  assert.equal(bandTitle(['あ'.repeat(23)+'い'],true).length,24);
+  assert.equal(bandTitle(['あ'.repeat(24)+'い'],true),'');
   assert.equal(bandTitle(['米10年債利回り、再び急上昇。'],true),'米10年債利回り、再び急上昇','no final 。');
 });
 
