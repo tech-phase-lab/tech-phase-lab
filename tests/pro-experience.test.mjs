@@ -5,9 +5,10 @@ import { featureById, inLanguage, mediaUrl, nextFeature, proFeatures, readFeatur
 
 const read = path => readFileSync(new URL(path, import.meta.url), "utf8");
 
-test("seven features, in the owner's order, each with its own address", () => {
-  assert.deepEqual(proFeatures.map(feature => feature.name.ja), ["RIZEL'S DESK", "ハイテク速報", "監視22銘柄", "テーマランキング", "銘柄比較", "スマホ通知", "連関マップ"]);
-  assert.equal(new Set(proFeatures.map(feature => feature.id)).size, 7);
+test("eight features, in the owner's order, each with its own address; Tech Alerts is not one of them", () => {
+  assert.deepEqual(proFeatures.map(feature => feature.name.ja), ["RIZEL'S DESK", "監視22銘柄", "テーマランキング", "銘柄比較", "財務レーダー", "スマホ通知", "連関マップ", "米国株の資産管理"]);
+  assert.equal(new Set(proFeatures.map(feature => feature.id)).size, 8);
+  assert.equal(proFeatures.some(feature => /ハイテク速報|厳選ニュース/.test(feature.name.ja)), false);
   assert.equal(featureById("watch-22").summary.ja, "22銘柄の動きと、決算後のまとめを確認");
 });
 
@@ -23,7 +24,8 @@ test("the provisional text of the 22-stock page is the owner's sample; media sta
 
 test("the next feature follows the list and wraps from the last to the first", () => {
   assert.equal(nextFeature("watch-22").id, "theme-ranking");
-  assert.equal(nextFeature("relation-map").id, "rizels-desk");
+  assert.equal(nextFeature("relation-map").id, "us-portfolio");
+  assert.equal(nextFeature("us-portfolio").id, "rizels-desk");
   assert.equal(nextFeature("unknown"), undefined);
 });
 
@@ -64,4 +66,18 @@ test("the FREE menu has 「PRO機能体験」 with a gold-crown PRO tag; the pag
   const detail = read("../app/research/pro-experience/[id]/page.tsx");
   assert.doesNotMatch(detail, /getMembership|redirect|plan/);
   assert.match(detail, /generateStaticParams/);
+});
+
+test("below the list: 'そのほかのPROの違い' with the Tech Alerts difference in words only, and a compact row (owner, Nov 5)", () => {
+  const screen = read("../app/research/pro-experience/screen.tsx");
+  const css = read("../app/research/pro-experience/styles.module.css");
+  assert.match(screen, /そのほかのPROの違い/);
+  assert.match(screen, /30分遅れ・新着5件まで/);
+  assert.match(screen, /リアルタイム・件数の制限なし/);
+  assert.doesNotMatch(screen.slice(screen.indexOf("そのほかのPROの違い"), screen.indexOf("function FeatureVideo")), /<Link|href=/);
+  assert.match(css, /\.row\{[^}]*grid-template-columns:80px[^}]*padding:9px 0/);
+  assert.match(css, /\.thumb\{[^}]*width:80px;height:50px/);
+  assert.match(css, /\.others::after\{[^}]*height:1px/);
+  assert.match(css, /\.free\{[^}]*#6fe0b5/);
+  assert.match(css, /\.pro\{[^}]*#e3c47e/);
 });
