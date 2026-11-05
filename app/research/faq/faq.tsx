@@ -82,7 +82,7 @@ export default function Faq() {
     <div className={styles.steps}>
       {/* First item (owner, Nov 5): how to add the app to the iPhone Home Screen. */}
       <details className={styles.card} id="add-to-home" open><summary><span className={styles.number}>01</span><strong>{ja ? "ホーム画面に追加するには？" : "How do I add Tech Phase to my Home Screen?"}</strong></summary>
-        <p>{ja ? <><b>iPhoneのSafari</b>で開いて、次の順に操作します。ChromeなどSafari以外で開いている場合は、アドレスをコピーして、Safariに貼り付けて開いてください。</> : <>Open the site in <b>Safari on iPhone</b> and follow these steps. If you're using Chrome or another browser, copy the address and paste it into Safari first.</>}</p>
+        <p>{ja ? <><b>iPhoneのSafari</b>で開いて、次の順に操作します。ChromeなどSafari以外で開いている場合は、アドレスをコピーして、Safariに貼り付けて開いてください。</> : <>Open the site in <b>Safari on iPhone</b> and follow these steps. If you&apos;re using Chrome or another browser, copy the address and paste it into Safari first.</>}</p>
         <ol className={styles.addSteps}>
           <li>{ja ? <>画面の下の<b>共有</b>ボタンをタップ</> : <>Tap the <b>Share</b> button at the bottom</>}</li>
           <li>{ja ? <><b>ホーム画面に追加</b>をタップ</> : <>Tap <b>Add to Home Screen</b></>}</li>
