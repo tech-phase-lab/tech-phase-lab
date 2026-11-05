@@ -8,7 +8,8 @@ import { searchStocks } from "@/lib/research/stock-search";
 import { comparisonCatalog } from "@/lib/research/comparison-catalog";
 import type { ComparisonResult, Fact } from "@/lib/research/comparison";
 import styles from "./styles.module.css";
-import { CompanyScoreCard, ScoreOverview } from "./comparison-visuals";
+import { CompanyScoreCard, ScoreHeadline, ScoreOverview, StatusOverlay } from "./comparison-visuals";
+import ProTag from "../pro-experience/pro-tag";
 import TickerSearch from "./ticker-search";
 import { comparisonScores, overallComparison } from "@/lib/research/comparison-scorecard";
 import { comparisonChoices, enterChoice, moveChoice } from "@/lib/research/comparison-selection";
@@ -27,6 +28,8 @@ export default function ComparisonScreen() {
   const [activeTicker, setActiveTicker] = useState<string | null>(null);
   const [openSlot, setOpenSlot] = useState<number | null>(null);
   const [selection, setSelection] = useState<string[]>([]);
+  // The name of each chosen company, shown on its card (the ticker alone is what the comparison uses).
+  const [names, setNames] = useState<Record<string, string>>({});
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState(false);
   const [result, setResult] = useState<ComparisonResult | null>(null);
@@ -59,6 +62,7 @@ export default function ComparisonScreen() {
     if (selection.some((ticker, index) => index !== slot && ticker === company.ticker)) return;
     setActiveTicker(null);
     request.current?.abort(); setBusy(false); setError(false); setResult(null);
+    setNames(current => ({ ...current, [company.ticker]: company.name }));
     setSelection(current => { const next = [...current]; next[slot] = company.ticker; return next; });
     setQueries(current => current.map((q,index) => index === slot ? company.ticker : q)); setOpenSlot(null);
   }
@@ -104,20 +108,30 @@ export default function ComparisonScreen() {
     [t("営業リース負債 · 流動分", "Operating lease liability · current"), c => money(c.balance?.leaseCurrent ?? null, lang)],
     [t("営業リース負債 · 非流動分", "Operating lease liability · noncurrent"), c => money(c.balance?.leaseNoncurrent ?? null, lang)],
   ];
-  return <ResearchToolShell showTools={!result} showHeading={!result} lang={lang} setLang={setLang} title={t("銘柄比較PRO", "Compare stocks PRO")} description={t("最大3社。数字の差から、投資判断の論点へ。", "Up to three companies. Go from numbers to the questions that matter.")}>
-    {!result && <div className={styles.eyebrow}>TECH PHASE PRO <span>{t("開発プレビュー · 決算比較", "PREVIEW · FINANCIAL COMPARISON")}</span></div>}
+  return <ResearchToolShell showTools={!result} showHeading={false} lang={lang} setLang={setLang} title={t("銘柄比較PRO", "Compare stocks PRO")} description="">
+    <div className={styles.screenWrap}>
+    {!result && <header className={styles.pageHead}><div className={styles.pageTitle}><h1>{t("銘柄比較", "Compare stocks")}</h1><ProTag /></div><p>{t("最大3社。数字の差から、投資判断の論点へ。", "Up to three companies. Go from numbers to the questions that matter.")}</p></header>}
     {membership === "loading" && <p role="status">{t("会員情報を確認中…", "Checking membership…")}</p>}
     {membership === "free" && <section className={styles.lock}><span aria-hidden="true">🔒</span><h2>{t("比較・評価はPRO会員限定", "Comparison is exclusive to PRO")}</h2><p>{t("2〜3社を選び、結論・実績・成長性・注意点をまとめて確認できます。", "Choose two or three companies to explore the conclusion, performance, growth and caveats.")}</p><Link href="/research/account">{t("ログイン・会員情報", "Sign in / Membership")}</Link></section>}
     {membership === "pro" && <>
       {!result && <>
-      <section ref={picker} tabIndex={-1} className={styles.picker} aria-label={t("比較する銘柄", "Select companies")}>
-        <div className={styles.slots}>{[0,1,2].map(i => {
+      <section ref={picker} tabIndex={-1} className={styles.pickCard} aria-label={t("比較する銘柄", "Select companies")}>
+        <div className={styles.pickSlots}>{[0,1,2].map(i => {
           const choices = comparisonChoices(suggestions[i], selection, i);
           const expanded = openSlot === i && Boolean(queries[i].trim()) && choices.length > 0;
-          return <div key={i} className={styles.stockSlot}>
-            <label htmlFor={`stock-${i}`}>{i === 2 ? t("3社目（任意）", "Company 3 (optional)") : t(`${i+1}社目`, `Company ${i+1}`)}</label>
-            <div className={styles.stockInput}>
-              <input id={`stock-${i}`} name={`comparison-ticker-${i}`} autoCorrect="off" autoCapitalize="characters" spellCheck={false} role="combobox" aria-expanded={expanded} aria-autocomplete="list" aria-controls={expanded ? `stock-options-${i}` : undefined} aria-activedescendant={expanded && choices.some(c => c.ticker === activeTicker) ? `stock-option-${i}-${activeTicker}` : undefined} autoComplete="off" value={queries[i]} placeholder={t("会社名・銘柄コード", "Company or ticker")}
+          return <div key={i} className={styles.pickSlot}>
+            <label className={styles.pickLabel} htmlFor={selection[i] ? undefined : `stock-${i}`}>{i === 2 ? t("3社目（任意）", "Company 3 (optional)") : t(`${i+1}社目`, `Company ${i+1}`)}</label>
+            {selection[i] ? <div className={styles.pickChosen} data-slot={i}>
+              <i className={styles.pickBar} style={{ background: ["#f2c36b", "#8da2ff", "#c9a0ff"][i] }} aria-hidden="true" />
+              <span className={styles.pickText}><b>{selection[i]}</b><span>{names[selection[i]] ?? comparisonCatalog.find(company => company.ticker === selection[i])?.name ?? ""}</span></span>
+              <button type="button" className={styles.pickRemove} aria-label={t(`${i+1}社目をクリア`, `Clear Company ${i+1}`)} onClick={() => {
+                request.current?.abort(); setBusy(false); setError(false); setResult(null); setActiveTicker(null); setOpenSlot(null);
+                setQueries(current => current.map((q,index) => index === i ? "" : q));
+                setSelection(current => { const next = [...current]; next[i] = ""; return next; });
+              }}>×</button>
+            </div> :
+            <div className={styles.pickInput}>
+              <span className={styles.pickPlus} aria-hidden="true">＋</span><input id={`stock-${i}`} name={`comparison-ticker-${i}`} autoCorrect="off" autoCapitalize="characters" spellCheck={false} role="combobox" aria-expanded={expanded} aria-autocomplete="list" aria-controls={expanded ? `stock-options-${i}` : undefined} aria-activedescendant={expanded && choices.some(c => c.ticker === activeTicker) ? `stock-option-${i}-${activeTicker}` : undefined} autoComplete="off" value={queries[i]} placeholder={t("会社名・銘柄コードで追加", "Add by company name or ticker")}
                 onFocus={() => { setOpenSlot(i); setActiveTicker(null); }}
                 onBlur={() => setTimeout(() => setOpenSlot(current => current === i ? null : current), 150)}
                 onChange={event => {
@@ -134,29 +148,36 @@ export default function ComparisonScreen() {
                     event.preventDefault(); const match = enterChoice(choices, queries[i], activeTicker); if (match) selectCompany(i, match);
                   }
                 }} />
-              {queries[i] && <button type="button" className={styles.clearStock} aria-label={t(`${i+1}社目をクリア`, `Clear Company ${i+1}`)} onMouseDown={event => event.preventDefault()} onClick={() => {
+              {queries[i] && <button type="button" className={styles.pickClear} aria-label={t(`${i+1}社目をクリア`, `Clear Company ${i+1}`)} onMouseDown={event => event.preventDefault()} onClick={() => {
                 request.current?.abort(); setBusy(false); setError(false); setResult(null); setActiveTicker(null); setOpenSlot(null);
                 setQueries(current => current.map((q,index) => index === i ? "" : q));
                 setSelection(current => { const next = [...current]; next[i] = ""; return next; });
                 document.getElementById(`stock-${i}`)?.focus();
               }}>×</button>}
-            </div>
-            {expanded && <div id={`stock-options-${i}`} role="listbox" aria-label={t(`${i+1}社目の候補`, `Company ${i+1} suggestions`)} className={styles.options}>{choices.map(c => <button id={`stock-option-${i}-${c.ticker}`} type="button" role="option" aria-selected={activeTicker === c.ticker} key={c.ticker} ref={element => { if (activeTicker === c.ticker) element?.scrollIntoView({ block: "nearest" }); }} onMouseDown={event => event.preventDefault()} onClick={() => selectCompany(i,c)}><strong>{c.ticker}</strong><span>{c.name}</span></button>)}</div>}
+            </div>}
+            {expanded && <div id={`stock-options-${i}`} role="listbox" aria-label={t(`${i+1}社目の候補`, `Company ${i+1} suggestions`)} className={styles.pickOptions}>{choices.map(c => <button id={`stock-option-${i}-${c.ticker}`} type="button" role="option" aria-selected={activeTicker === c.ticker} key={c.ticker} ref={element => { if (activeTicker === c.ticker) element?.scrollIntoView({ block: "nearest" }); }} onMouseDown={event => event.preventDefault()} onClick={() => selectCompany(i,c)}><strong>{c.ticker}</strong><span>{c.name}</span></button>)}</div>}
           </div>;
         })}</div>
-        <div className={styles.submit}><small>{selection.filter(Boolean).length} / 3 {t("社を選択", "selected")}</small><button disabled={busy || !selection[0] || !selection[1]} onClick={() => void compare()}>{busy ? t("精査中…", "Analyzing…") : t("この銘柄を比較する", "Compare these stocks")}</button></div>
-        <p className={styles.note}>{t("SEC開示を比較。割安評価は株価データ接続後に対応。", "Compare SEC filings. Valuation awaits price data.")}</p>
+        <div className={styles.pickSubmit}><small>{selection.filter(Boolean).length} / 3 {t("社を選択", "selected")}</small><button disabled={busy || !selection[0] || !selection[1]} onClick={() => void compare()}>{busy ? t("精査中…", "Analyzing…") : t("この銘柄を比較する", "Compare these stocks")}</button></div>
+        <p className={styles.pickNote}>{t("SEC開示を比較。割安評価は株価データ接続後に対応。", "Compare SEC filings. Valuation awaits price data.")}</p>
       </section>
-      <Link href="/research/compare/sample" className={styles.trialButton}>{t("完成イメージを見る · サンプル", "Explore sample comparison")}</Link>
-      <button type="button" className={styles.trialButton} disabled={busy} onClick={()=>void compare(true)}>{t("MU・SNDK 保存データで試す · 10/4", "MU / SNDK saved snapshot · Oct 4")}</button>
       <TickerSearch lang={lang} selection={selection} onSelect={selectCompany} />
+      <div className={styles.trialLinks}><Link href="/research/compare/sample" className={styles.trialButton}>{t("完成イメージを見る · サンプル", "Explore sample comparison")}</Link>
+      <button type="button" className={styles.trialButton} disabled={busy} onClick={()=>void compare(true)}>{t("MU・SNDK 保存データで試す · 10/4", "MU / SNDK saved snapshot · Oct 4")}</button></div>
       </>}
       {busy && <div className={styles.loading} role="status"><span className={styles.spinner} aria-hidden="true"/><strong>{t("開示資料と比較条件を精査中…", "Checking filings and comparability…")}</strong><p>{t("期間・通貨・会計基準を確認しています。初回は時間がかかる場合があります。", "Checking periods, currencies and accounting bases. The first request may take longer.")}</p></div>}
       {error && <p role="alert">{t("比較結果を取得できませんでした。選択は残っています。もう一度お試しください。", "Could not retrieve the comparison. Your selection is saved; please try again.")}</p>}
       {result && <div ref={conclusion} tabIndex={-1} className={`${styles.results} ${styles.resultView}`}>
         <button type="button" className={styles.backToCompare} onClick={()=>{setResult(null);requestAnimationFrame(()=>{picker.current?.scrollIntoView({block:"start",behavior:"instant"});picker.current?.focus({preventScroll:true});});}}>{t("▶ 銘柄比較PROへ戻る", "▶ Back to Compare stocks PRO")}</button>
-        <section className={styles.conclusion} aria-label={t("結果", "Results")}><p className={styles.eyebrow}>{t("結果", "RESULTS")}</p><h2>{result.trial ? result.conclusion[lang] : overallComparison(result.companies,lang,Date.parse(result.generatedAt)).title}</h2><p>{result.trial ? result.trial.description[lang] : overallComparison(result.companies,lang,Date.parse(result.generatedAt)).description}</p>{result.reasons.length > 0 && <details><summary>{t("比較条件・注意点", "Comparison caveats")}</summary><ul>{result.reasons.map(r => <li key={r.en}>{r[lang]}</li>)}</ul></details>}<small>{result.trial && <>{t("保存データ · 自動更新なし", "Saved snapshot · not auto-updated")} · </>}{t("比較作成", "Compared at")}: {new Date(result.generatedAt).toLocaleString(ja ? "ja-JP" : "en-US", { timeZone: "Asia/Tokyo" })} JST</small></section>
-        <div className={styles.companyCards}>{result.companies.map((c,i)=><CompanyScoreCard colorIndex={i} key={c.ticker} company={c} lang={lang} now={Date.parse(result.generatedAt)}/>)}</div><ScoreOverview companies={result.companies} lang={lang} now={Date.parse(result.generatedAt)}/>
+        {(() => { const now = Date.parse(result.generatedAt), assessment = overallComparison(result.companies, lang, now); return <>
+        <section className={styles.conclusion} aria-label={t("結果", "Results")}><p className={styles.eyebrow}>{t("結果", "RESULTS")}</p><h2>{result.trial ? result.conclusion[lang] : assessment.title}</h2></section>
+        <ScoreHeadline companies={result.companies} lang={lang} now={now}/>
+        <StatusOverlay companies={result.companies} lang={lang} now={now}/>
+        <section className={styles.explain}><p>{result.trial ? result.trial.description[lang] : assessment.description}</p>{result.reasons.length > 0 && <details><summary>{t("比較条件・注意点", "Comparison caveats")}</summary><ul>{result.reasons.map(r => <li key={r.en}>{r[lang]}</li>)}</ul></details>}<small>{result.trial && <>{t("保存データ · 自動更新なし", "Saved snapshot · not auto-updated")} · </>}{t("比較作成", "Compared at")}: {new Date(result.generatedAt).toLocaleString(ja ? "ja-JP" : "en-US", { timeZone: "Asia/Tokyo" })} JST</small></section>
+        <ScoreOverview companies={result.companies} lang={lang} now={now}/>
+        <h2 className={styles.companiesHeading}>{t("会社ごとの長所と短所", "Strengths and weaknesses by company")}</h2>
+        <div className={styles.companyCards}>{result.companies.map((c,i)=><CompanyScoreCard colorIndex={i} key={c.ticker} company={c} lang={lang} now={now}/>)}</div>
+        </>; })()}
         <DetailPanels lang={lang} method={result.trial ? <div className={styles.scoreMethod}><p>{result.trial.notes[lang]}</p><p>{t("固定した実データを用いる検証です。自動更新・同業順位の採点ではありません。前受金や調整FCFの定義差は長所・短所の根拠に記載しています。", "This trial uses a fixed reviewed dataset, not an auto-updating feed or peer-percentile model. Prepayments and adjusted FCF differences are explained in the evidence.")}</p>{result.companies[0].referenceEvaluation?.factors.map(f=><p key={f.id}><strong>{comparisonScores(result.companies[0]).find(s=>s.id===f.id)?.label[lang]}</strong>：{f.method[lang]}</p>)}<div>{result.companies.map(c=><section key={c.ticker}><h3>{c.name}（{c.ticker}）</h3>{c.referenceEvaluation?.observations?.map(o=><p key={o.en}>{o[lang]}</p>)}</section>)}</div><ul>{result.companies[0].referenceEvaluation?.sources.map(source=><li key={source.url}><a href={source.url} target="_blank" rel="noreferrer">{source.label}</a></li>)}</ul></div> : undefined}>
           {result.companies.filter(c=>c.preparedAnalysis?.items.length).map(c=><section key={c.ticker}>
             <h3>{c.name}（{c.ticker}）</h3>
@@ -187,5 +208,6 @@ export default function ComparisonScreen() {
         </>}
       </div>}
     </>}
+    </div>
   </ResearchToolShell>;
 }

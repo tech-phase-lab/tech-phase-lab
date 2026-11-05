@@ -83,11 +83,11 @@ test("the actual cards render seven-axis status, bars, provider metrics and comp
   const scoreURL=new URL("../lib/research/comparison-scorecard.ts",import.meta.url).href;
   const reactURL=pathToFileURL(require.resolve("react")).href;
   const input=`import React from ${JSON.stringify(reactURL)};
-    import {comparisonScores,comparisonMetric,comparisonLeaders,comparisonAvailability,hasRecentQuarter,radarPoint} from ${JSON.stringify(scoreURL)};
-    const styles=new Proxy({}, {get:(_,key)=>String(key)});const companyColors=["#ddc38a","#9ed8c3","#a5badf"];
-    ${functions}\nexport {CompanyScoreCard,ScoreOverview};`;
+    import {comparisonScores,comparisonMetric,comparisonLeaders,comparisonAvailability,hasRecentQuarter,radarPoint,compositeScore} from ${JSON.stringify(scoreURL)};
+    const styles=new Proxy({}, {get:(_,key)=>String(key)});const companyColors=["#ddc38a","#9ed8c3","#a5badf"];const colorOf=(index,offset=0)=>companyColors[(index+offset)%companyColors.length];
+    ${functions}\nexport {CompanyScoreCard,ScoreOverview,ScoreHeadline,StatusOverlay};`;
   const compiled=await transform(input,{filename:"comparison-render-check.tsx",jsc:{parser:{syntax:"typescript",tsx:true},transform:{react:{runtime:"classic"}},target:"es2022"},module:{type:"es6"}});
-  const {CompanyScoreCard,ScoreOverview}=await import(`data:text/javascript;base64,${Buffer.from(compiled.code).toString("base64")}`);
+  const {CompanyScoreCard,ScoreOverview,ScoreHeadline,StatusOverlay}=await import(`data:text/javascript;base64,${Buffer.from(compiled.code).toString("base64")}`);
   const companies=["AAA","BBB","CCC"].map((ticker,i)=>({...buildTwelveFinancials(bundle(ticker,10+i*10),now),name:`Example ${ticker}`,peer:"example",caution:{ja:"",en:""}}));
   for(const lang of ["ja","en"]){
     const card=renderToStaticMarkup(React.createElement(CompanyScoreCard,{company:companies[0],lang,now}));

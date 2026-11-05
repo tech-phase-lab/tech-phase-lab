@@ -55,9 +55,9 @@ export default function CancelScreen({ mode }: { mode: Mode }) {
         <div className={styles.doneMark}>{checkMark}</div>
         <h1 className={styles.doneTitle}>{t("解約を受け付けました", "Cancellation received")}</h1>
         <p className={styles.doneText}>{t(`${until}まではPROをお使いいただけます。`, `You can use PRO until ${until}.`)}<br />{t("また使いたくなったら、いつでも再開できます。", "You can come back whenever you like.")}</p>
+        <p className={styles.resumeNote}>{t("再開すると、その日から新しく1か月分が請求されます。いまの期間の残りは延長されません。", "If you resume, a new month is charged from that day. The rest of your current period is not extended.")}</p>
         <button type="button" className={`${styles.big} ${styles.outline}`} onClick={() => setResume(true)}>{t("PROを再開する", "Resume PRO")}</button>
         <Link className={`${styles.big} ${styles.plain}`} href="/research">{t("ホームへ戻る", "Back to home")}</Link>
-        <p className={styles.note}>{t("再開すると、PayPalでもう一度、お申し込みの確認をします。", "Resuming asks you to confirm with PayPal again.")}</p>
       </> : <>
         <Link className={styles.back} href="/research/account">‹ {t("プランの管理", "Manage plan")}</Link>
         <h1 className={styles.title}>{t("解約の手続き", "Cancel membership")}</h1>
@@ -68,7 +68,7 @@ export default function CancelScreen({ mode }: { mode: Mode }) {
           {until && <div className={styles.until}><span className={styles.mark}>{checkMark}</span><div><b>{t(`${until}まではPROを使えます`, `PRO stays available until ${until}`)}</b><span>{t("今すぐ使えなくなることはありません", "You will not lose access right away")}</span></div></div>}
           <p className={styles.lead}>{t("解約すると使えなくなるもの", "What you lose when PRO ends")}</p>
           <ul className={styles.list}>{PRO_ONLY_FEATURES.map(feature => <li key={feature.ja}><b>{ja ? feature.ja : feature.en}</b><span>{ja ? feature.descriptionJa : feature.descriptionEn}</span></li>)}</ul>
-          <p className={styles.keep}>{t("お気に入りと通知の設定は残ります。戻ってきたときは、そのまま再開できます。", "Your favorites and notification settings stay. If you come back, you can pick up where you left off.")}</p>
+          <p className={styles.keep}>{t("お気に入りと通知の設定は残ります。", "Your favorites and notification settings stay.")}<br />{t("また使いたくなったら、PayPalから申し込めます。", "If you want PRO again, you can subscribe through PayPal.")}</p>
           {error && <p className={styles.err} role="alert">{t("解約できませんでした。契約の状態を確認して、もう一度お試しください。", "Could not cancel. Check your contract and try again.")}</p>}
           <Link className={`${styles.big} ${styles.go}`} href="/research/account">{t("PROを続ける", "Keep PRO")}</Link>
           <button type="button" className={`${styles.big} ${styles.stop}`} disabled={busy} onClick={() => void cancel()}>{busy ? t("手続きしています…", "Processing…") : t("解約する", "Cancel")}</button>
