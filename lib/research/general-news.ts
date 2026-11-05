@@ -24,13 +24,15 @@ export type MarketUpdate = CompactTitles & MarketNewsDetail & { id: string; titl
 export type EventResult = { id: string; titleJa: string; titleEn: string; sourceName: string; releasedAt: string; resultJa: string; resultEn: string; detailJa: string; detailEn: string; sourceUrl: string; sources: { publisher: string; title: string; url: string }[]; verifiedOn: string };
 const eventText = (value: unknown, limit = 2000) => { if (typeof value !== "string" || !value.trim() || value.length > limit || value.includes("\0")) throw Error("Invalid event result"); return value; };
 const eventUrl = (value: unknown) => { const url = new URL(eventText(value, 2000)); if (url.protocol !== "https:" || url.username || url.password) throw Error("Invalid event result"); return url.href; };
+/** A result read from an official page, or from the issuer's own release, stands on one source; every other result needs two outlets (owner, Nov 5). */
+const SINGLE_SOURCE_PUBLISHERS = new Set(["Federal Reserve", "BEA", "Census Bureau", "ADP（公式発表）", "ISM（公式発表）"]);
 export function parseEventResults(value: unknown): EventResult[] {
   if (!Array.isArray(value) || value.length > 20) throw Error("Invalid event results");
   return value.map(raw => {
     if (!raw || typeof raw !== "object") throw Error("Invalid event result");
     const v = raw as Record<string, unknown>;
     if (typeof v.id !== "string" || !/^[a-z0-9-]{3,80}$/.test(v.id) || typeof v.releasedAt !== "string" || !Number.isFinite(Date.parse(v.releasedAt)) || typeof v.verifiedOn !== "string" || !/^\d{4}-\d{2}-\d{2}$/.test(v.verifiedOn)) throw Error("Invalid event result");
-    if (!Array.isArray(v.sources) || v.sources.length < 2 || v.sources.length > 6) throw Error("Invalid event result");
+    if (!Array.isArray(v.sources) || v.sources.length < 1 || v.sources.length > 6 || (v.sources.length < 2 && !SINGLE_SOURCE_PUBLISHERS.has(String((v.sources[0] as Record<string, unknown> | null)?.publisher)))) throw Error("Invalid event result");
     return { id: v.id, titleJa: eventText(v.titleJa, 200), titleEn: eventText(v.titleEn, 200), sourceName: eventText(v.sourceName, 300), releasedAt: v.releasedAt,
       resultJa: eventText(v.resultJa, 500), resultEn: eventText(v.resultEn, 500), detailJa: eventText(v.detailJa), detailEn: eventText(v.detailEn), sourceUrl: eventUrl(v.sourceUrl), verifiedOn: v.verifiedOn,
       sources: v.sources.map(source => { const s = source as Record<string, unknown>; return { publisher: eventText(s?.publisher, 100), title: eventText(s?.title, 300), url: eventUrl(s?.url) }; }) };
@@ -174,7 +176,11 @@ export function publicNewsPayload(value: unknown): GeneralNewsFeed {
   }
   if (payload.resultBriefs !== undefined) updates.resultBriefs = parseResultBriefs(payload.resultBriefs);
   // A malformed event result must never take the whole news feed down with it.
-  if (payload.eventResults !== undefined) { try { updates.eventResults = parseEventResults(payload.eventResults); } catch { updates.eventResults = []; } }
+  // One bad result is left out on its own; it must not take the others down with it.
+  if (payload.eventResults !== undefined) {
+    updates.eventResults = Array.isArray(payload.eventResults) && payload.eventResults.length <= 20
+      ? payload.eventResults.flatMap(raw => { try { return parseEventResults([raw]); } catch { return []; } }) : [];
+  }
   if (payload.officialUpdates !== undefined) {
     if (!Array.isArray(payload.officialUpdates) || payload.officialUpdates.length > OFFICIAL_NEWS_HISTORY_LIMIT) throw Error("Invalid updates");
     const seenOfficialUrls = new Map<string, number>();
