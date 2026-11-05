@@ -82,20 +82,16 @@ function addsInformation(title: string, text: string): boolean {
  * Opened, the detail continues right after the headline and the date moves to
  * the end. A ``concise`` company story instead replaces its headline with the
  * full story text (cut at a sentence boundary) when opened (owner, Oct 7). */
-export default function NewsStory({ label, title, body, fullBody, publication, lang, concise = false, jaLimit = 60, capDetail = false }: {
-  label: string; title: string; body?: string; fullBody?: string; publication: string; lang: Language; concise?: boolean; jaLimit?: number; capDetail?: boolean;
+export default function NewsStory({ label, title, body, fullBody, publication, lang, concise = false, capDetail = false }: {
+  label: string; title: string; body?: string; fullBody?: string; publication: string; lang: Language; concise?: boolean; capDetail?: boolean;
 }) {
   // The alert page passes no label; an empty label must not leave a blank line above the opened text (owner, Oct 18).
   const tag = label ? <span className={styles.tickers}>{label}</span> : null;
   const bare = label ? "" : ` ${styles.noLabel}`;
-  // A headline with nothing more to add stays a plain line, unless it is long:
-  // then it shows two lines and the ＋ opens the whole text (owner, Oct 13; never four lines, Oct 17).
-  const headlineOnly = () => title.length <= (/[぀-ヿ㐀-鿿]/.test(title) ? jaLimit : 120)
-    ? <div className={styles.shortStory}>{tag}<span className={styles.headline} lang={lang}>{title}</span><span className={styles.note}>{publication}</span></div>
-    : <details className={`${styles.story} ${styles.replaces}${bare}`}>
-      <summary>{tag}<span className={`${styles.headline} ${styles.clamped} ${styles.closedOnly}`} lang={lang}>{title}</span><span className={`${styles.note} ${styles.closedOnly}`}>{publication}</span><span className={styles.expand} aria-hidden="true">＋</span><span className={styles.srOnly}>{lang === "ja" ? "詳細を開閉" : "Toggle details"}</span></summary>
-      <div className={styles.body} lang={lang} onClick={closeOnTap}>{title}<span className={styles.note}>{publication}</span></div>
-    </details>;
+  // A headline is always shown in full, however long: no line limit, no cut with "…", and no ＋ for the headline's sake (owner, Nov 5).
+  // A ＋ remains only where there is more to read (a summary).
+  const note = publication ? <span className={styles.note}>{publication}</span> : null;
+  const headlineOnly = () => <div className={styles.shortStory}>{tag}<span className={styles.headline} lang={lang}>{title}</span>{note}</div>;
   const detail = additionalNewsDetail([label, title, publication], body);
   if (!detail) return headlineOnly();
   // Opened, every story reads as one text: a body that already restates the
@@ -104,7 +100,7 @@ export default function NewsStory({ label, title, body, fullBody, publication, l
   const opened = withoutFiller(concise ? openedNewsText(fullBody?.trim() ? fullBody : `${title}\n\n${detail}`) : replaces ? openedNewsText(body!, capDetail ? undefined : Infinity) : capDetail ? openedNewsText(detail) : detail);
   if (!addsInformation(title, opened)) return headlineOnly();
   return <details className={replaces ? `${styles.story} ${styles.replaces}${bare}` : styles.story}>
-    <summary>{tag}<span className={replaces ? `${styles.headline} ${styles.closedOnly}` : styles.headline} lang={lang}>{title}</span><span className={`${styles.note} ${styles.closedOnly}`}>{publication}</span><span className={styles.expand} aria-hidden="true">＋</span><span className={styles.srOnly}>{lang === "ja" ? "詳細を開閉" : "Toggle details"}</span></summary>
-    <div className={styles.body} lang={lang} onClick={closeOnTap}>{opened}<span className={styles.note}>{publication}</span></div>
+    <summary>{tag}<span className={replaces ? `${styles.headline} ${styles.closedOnly}` : styles.headline} lang={lang}>{title}</span>{publication && <span className={`${styles.note} ${styles.closedOnly}`}>{publication}</span>}<span className={styles.expand} aria-hidden="true">＋</span><span className={styles.srOnly}>{lang === "ja" ? "詳細を開閉" : "Toggle details"}</span></summary>
+    <div className={styles.body} lang={lang} onClick={closeOnTap}>{opened}{note}</div>
   </details>;
 }

@@ -353,7 +353,9 @@ finally:
     `import { clockTime, officialTime } from ${JSON.stringify(new URL('../lib/research/news-time.ts',import.meta.url).href)};
 import { listedOfficialNews, listedOriginalPreviews } from ${JSON.stringify(new URL('../lib/research/home-today.ts',import.meta.url).href)};
 import { wireStories } from ${JSON.stringify(new URL('../lib/research/wire-stories.ts',import.meta.url).href)};
+import { dayKey, dayLabel, pageWindow, withDayDividers } from ${JSON.stringify(new URL('../lib/research/news-day.ts',import.meta.url).href)};
 const WATCH_TICKERS = [];
+const HOME_STORIES = 25;
 `
     +`export function visible(data,page,officialOnly=false,lang='en',generalOnly=false) { const wire = []; ${pageLogic}
 return {pages,current,visibleUpdates,visibleNews}; }`)).toString('base64'));
