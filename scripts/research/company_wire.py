@@ -185,7 +185,7 @@ Use only names, tickers and Latin-script words that appear in the headline; writ
 Do not turn "a", "one" or "per share" into a digit (1株, 1社, 1カ所) unless the headline gives that number.
 Keep every number exactly as written (convert units only exactly, e.g. $1.2 billion = 12億ドル); never add, drop or round a figure.
 Keep negation and direction (rise/fall, beat/miss, raise/cut) exactly. When an item has previousRejection, that was why the last translation was rejected; avoid it.
-Also write shortJa: the same headline as one short Japanese line of at most 20 characters, for a one-line news band. Keep the subject (company or ticker) and the single most important fact; keep any number you use exactly as in titleJa; never add a fact or a number that titleJa does not have; no trailing punctuation; do not cut a sentence off mid-word.
+Also write shortJa: the same headline as one short Japanese line of at most 22 characters, for a one-line news band. Keep the subject (company or ticker) and the single most important fact; keep any number you use exactly as in titleJa; never add a fact or a number that titleJa does not have; no trailing punctuation; do not cut a sentence off mid-word.
 Also judge each headline (kind). "news" states a concrete fact about the company's business or its stock: results, guidance, a deal, order, investment, product, partnership, lawsuit, regulatory step, executive change, an analyst rating or price-target change, or a market move together with its stated cause.
 "not-news" is everything else, for example: investment advice or opinion ("should you buy", "which stock is better", "X vs Y", "a buying opportunity", "buy the dip"); comparisons and listicles; price predictions and forecasts; any headline that asks a question or starts with "Why" or "What" without giving the answer; teasers that hide their answer ("here is why"); what-if or past-returns pieces; human-interest, hiring, workplace, lifestyle, culture, entertainment or feature stories (for example a vocational graduate getting a job, an employee's life story, a TV programme); and promotional or community posts.
 Examples: "Why AMD, Micron, Sandisk and Nvidia stocks are falling in premarket today" = not-news. "Which AI memory stock is the better buy?" = not-news. "ASML has orders and pricing power, but what it lacks is time" (an editorial take with no concrete business fact) = not-news. "At 21 at SK hynix, at 27 a home in Seoul: a vocational school's comeback" = not-news. "Micron raises fiscal Q1 guidance on HBM demand" = news. "Nvidia shares fall 3% after tighter export curbs" = news. When a headline states a concrete business fact, use "news" even if it is minor.
@@ -288,7 +288,7 @@ def validated_translation(title_ja, title):
     return title_ja
 
 
-SHORT_MAX = 22
+SHORT_MAX = 24
 
 
 def validated_short(short_ja, title_ja):

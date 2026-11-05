@@ -1,7 +1,7 @@
 import { isGenericPulseLabel } from "./news-pulse-headline.ts";
 
-/** The home news band shows one short headline per story: about 20 Japanese characters, 22 at most (owner, Nov 4). */
-export const BAND_MAX_JA = 22;
+/** The home news band shows one short headline per story: about 20 Japanese characters, 22 at most (owner, Nov 4); 24 since Nov 5 ("a little more": the 12.5px minimum size fits about 24 on a phone). */
+export const BAND_MAX_JA = 24;
 export const BAND_MAX_EN = 48;
 const JAPANESE = /[぀-ヿ㐀-鿿]/;
 
