@@ -1,6 +1,6 @@
 /** Per-company headlines from public wires: Japanese only once checked. */
 export type CompanyWireItem = {
-  id: string; titleEn: string; titleJa: string | null; publisher: string;
+  id: string; titleEn: string; titleJa: string | null; /** A one-line Japanese headline (22 characters or fewer) for the news band, when one was made. */ shortJa?: string | null; publisher: string;
   origin: "wire" | "third-party" | "unknown"; url: string; publishedAt: string;
 };
 export type CompanyWireFeed = { ok: true; items: Record<string, CompanyWireItem[]> };
@@ -26,7 +26,7 @@ export function parseCompanyWire(value: unknown): CompanyWireFeed {
       let url: URL;
       try { url = new URL(v.url as string); } catch { continue; }
       if (url.protocol !== "https:" || url.username || url.password) continue;
-      kept.push({ id: v.id as string, titleEn: v.titleEn as string, titleJa: v.titleJa as string | null, publisher: v.publisher as string,
+      kept.push({ id: v.id as string, titleEn: v.titleEn as string, titleJa: v.titleJa as string | null, shortJa: text(v.shortJa, 40) ? (v.shortJa as string) : null, publisher: v.publisher as string,
         origin: v.origin as CompanyWireItem["origin"], url: url.href, publishedAt: v.publishedAt as string });
     }
     if (kept.length) items[ticker] = kept;

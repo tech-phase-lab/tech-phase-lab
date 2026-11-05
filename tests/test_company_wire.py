@@ -105,6 +105,27 @@ class TranslationTests(unittest.TestCase):
         self.assertEqual(by_title['Credo Expands Portfolio'], 'Credoがポートフォリオを拡大')
         self.assertIsNone(by_title['Why Credo stock slid'])
 
+    def test_a_one_line_band_headline_is_kept_only_when_it_is_short_and_its_numbers_are_checked(self):
+        self.assertEqual(company_wire.validated_short('マイクロン、台湾工場の作業停止', 'マイクロン、労使紛争で45億ドルの台湾工場の作業を停止'), 'マイクロン、台湾工場の作業停止')
+        self.assertEqual(company_wire.validated_short('マイクロン、45億ドルの工場停止。', 'マイクロン、労使紛争で45億ドルの台湾工場の作業を停止'), 'マイクロン、45億ドルの工場停止')
+        # too long, a number the checked headline does not have, not Japanese, or more than one line: left empty
+        self.assertEqual(company_wire.validated_short('マイクロンが労使紛争を理由に台湾の新工場の作業を一時的に停止した', 'x'), '')
+        self.assertEqual(company_wire.validated_short('マイクロン、50億ドルの工場停止', 'マイクロン、45億ドルの工場停止'), '')
+        self.assertEqual(company_wire.validated_short('Micron halts fab', 'マイクロン'), '')
+        self.assertEqual(company_wire.validated_short('マイクロン\n工場停止', 'マイクロン工場停止'), '')
+
+    def test_the_band_headline_is_stored_and_published_beside_the_full_one(self):
+        def send(payload, key):
+            self.assertIn('shortJa', payload['text']['format']['schema']['properties']['items']['items']['required'])
+            items = self.json.loads(payload['input'])
+            out = [{'id': i['id'], 'titleJa': 'Credoがポートフォリオを拡大', 'shortJa': 'Credo、品ぞろえ拡大', 'kind': 'news'} for i in items]
+            return {'status': 'completed', 'output': [{'type': 'message', 'content': [
+                {'type': 'output_text', 'text': self.json.dumps({'items': out}, ensure_ascii=False)}]}]}
+        company_wire.translate_once(self.path, transport=send, env=self.env, now_ts=self.now.timestamp())
+        with company_wire.connect(self.path) as db:
+            feed = company_wire.public_feed(db, now_ts=self.now.timestamp())
+        self.assertIn('Credo、品ぞろえ拡大', {i['shortJa'] for i in feed['items']['CRDO']})
+
     def test_headline_the_model_calls_not_news_is_never_published_or_retried(self):
         seen = {}
 
@@ -173,7 +194,7 @@ class TranslationTests(unittest.TestCase):
             for row in db.execute("SELECT key,title FROM company_wire WHERE title LIKE 'Credo headline number %'").fetchall():
                 number = int(row['title'].rsplit(' ', 1)[1])
                 if number > 20:  # only the oldest ten are translated
-                    db.execute('INSERT INTO company_wire_ja VALUES(?,?,?,?)', (row['key'], '日本語の見出し', 'm', self.now.isoformat()))
+                    db.execute('INSERT INTO company_wire_ja(key,title_ja,model,created_at) VALUES(?,?,?,?)', (row['key'], '日本語の見出し', 'm', self.now.isoformat()))
             db.commit()
             feed = company_wire.public_feed(db, now_ts=self.now.timestamp())
         shown = feed['items']['CRDO']
@@ -249,7 +270,7 @@ class TriageTests(unittest.TestCase):
             company_wire.store(db, rows, 'NVIDIA', seen_at=self.now)
             company_wire.schema_translation(db)
             key = db.execute('SELECT key FROM company_wire').fetchone()[0]
-            db.execute('INSERT INTO company_wire_ja VALUES(?,?,?,?)', (key, 'エヌビディアがNemotronを拡充', 'm', self.now.isoformat()))
+            db.execute('INSERT INTO company_wire_ja(key,title_ja,model,created_at) VALUES(?,?,?,?)', (key, 'エヌビディアがNemotronを拡充', 'm', self.now.isoformat()))
             db.commit()
         picked = self.headlines(('Nvidia expands Nemotron family with two new open models', 'Techzine'),
                                 ('Germany plans AI cooperation deal with Nvidia, Handelsblatt says', 'Reuters'))

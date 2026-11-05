@@ -101,6 +101,10 @@ test('teasers, foreign-currency quotes, law-firm notices are dropped; press-rele
   assert.equal(cleanTitle('Plain headline'), 'Plain headline');
   // A translated outlet name on the end (owner, Nov 5).
   assert.equal(cleanTitle('アリスタ・ネットワークス取締役マーク・テンプルトン、株式売却額829,255ドル 投資.com報'), 'アリスタ・ネットワークス取締役マーク・テンプルトン、株式売却額829,255ドル');
+  // The outlet after a colon or dash (owner, Nov 5).
+  assert.equal(cleanTitle('マイクロン、労使紛争で45億ドルの台湾工場の作業を停止：ブルームバーグ'), 'マイクロン、労使紛争で45億ドルの台湾工場の作業を停止');
+  assert.equal(cleanTitle('Micron halts Taiwan fab work over labor dispute: Bloomberg'), 'Micron halts Taiwan fab work over labor dispute');
+  assert.equal(cleanTitle('ブルームバーグが報じたニュースでMUが上昇'), 'ブルームバーグが報じたニュースでMUが上昇');
   assert.equal(cleanTitle('エヌビディア、新製品を発表 - 投資.com報'), 'エヌビディア、新製品を発表');
   assert.equal(cleanTitle('エヌビディア株が上昇 インベスティング.com'), 'エヌビディア株が上昇');
   assert.equal(cleanTitle('エヌビディア、増配を発表 ロイター報'), 'エヌビディア、増配を発表');
@@ -203,4 +207,15 @@ test('data-calendar teasers, company videos, teaser answers, Indian broker pages
     'インテル、雇用を3割削減へ', 'Intel to cut jobs by 30%',
   ]) assert.equal(isNotNews(title), false, title);
   assert.equal(cleanTitle('ルメンタム社長の袁武本が135万ドル超の自社株売却（インベスティング・ドットコム）'), 'ルメンタム社長の袁武本が135万ドル超の自社株売却');
+});
+
+test("the one-line Japanese headline rides along with the story and reaches the band first (owner, Nov 5)", async () => {
+  const { newsPulseItems } = await import("../lib/research/news-pulse-items.ts");
+  const { bandItems } = await import("../lib/research/news-band.ts");
+  const long = "マイクロン、労使紛争で45億ドルの台湾工場の作業を停止";
+  const item = (shortJa) => ({ id: "w1", titleEn: "Micron halts Taiwan fab", titleJa: long, shortJa, publisher: "Bloomberg", origin: "unknown", url: "https://example.com/a", publishedAt: new Date().toISOString() });
+  const at = Date.now();
+  const withShort = bandItems(newsPulseItems(undefined, "ja", at, { MU: [item("マイクロン、台湾工場を停止")] }, 10), true);
+  assert.deepEqual(withShort.map(x => x.band), ["マイクロン、台湾工場を停止"]);
+  assert.deepEqual(bandItems(newsPulseItems(undefined, "ja", at, { MU: [item(null)] }, 10), true), []);
 });
