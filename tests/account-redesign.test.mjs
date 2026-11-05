@@ -158,7 +158,7 @@ test("the contract and RESOLUTE reads start once during hydration and are consum
   globalThis.window = {};
   globalThis.fetch = async url => { calls.push(String(url)); return new Response(JSON.stringify({ ok: true }), { status: 200, headers: { "content-type": "application/json" } }); };
   try {
-    const fresh = load("../app/research/account/account-data.ts");
+    const fresh = load("../app/research/account/account-data.ts", { "@/lib/research/favorite-themes": require("../lib/research/favorite-themes.ts") });
     fresh.prefetchAccountData(); fresh.prefetchAccountData(); fresh.prefetchAccountData();
     assert.deepEqual(calls, ["/api/research/account/contract", "/api/resolute/entitlements"], "started once, however often the screen renders");
     await fresh.getJson("/api/research/account/contract");
