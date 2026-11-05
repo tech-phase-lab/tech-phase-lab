@@ -10,7 +10,7 @@ import styles from "./styles.module.css";
 
 const playIcon = <svg width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><path d="M2 1l7 4-7 4z" fill="currentColor" /></svg>;
 
-/** The list (owner, Nov 5): seven features, a thumbnail on the left, the name and one line, and › on the right. */
+/** The list (owner, Nov 5; Nov 5 again): eight features, a thumbnail on the left, the name and one line, and › on the right. */
 export function ProExperienceList() {
   const [lang, setLang] = useResearchLanguage(), ja = lang === "ja";
   return <ResearchToolShell lang={lang} setLang={setLang} title={ja ? "PRO機能体験" : "PRO feature tour"} description="" showHeading={false} showTools={false}>
@@ -28,6 +28,13 @@ export function ProExperienceList() {
           <span><p className={styles.name}>{inLanguage(feature.name, lang)}</p><p className={styles.summary}>{inLanguage(feature.summary, lang)}</p></span>
           <span className={styles.chev} aria-hidden="true">›</span>
         </Link></li>)}</ul>
+      {/* Not a feature page: the one difference that is only a number, in words (owner, Nov 5). Nothing here opens a page. */}
+      <h2 className={styles.others}><span>{ja ? "そのほかのPROの違い" : "Other differences with PRO"}</span></h2>
+      <div className={styles.diff}>
+        <p className={styles.diffName}>{ja ? "ハイテク速報" : "Tech Alerts"}</p>
+        <p className={styles.diffLine}><b className={styles.free}>FREE</b><span>{ja ? "30分遅れ・新着5件まで" : "30 min delay · latest 5"}</span></p>
+        <p className={styles.diffLine}><b className={styles.pro}>PRO</b><span>{ja ? "リアルタイム・件数の制限なし" : "Real-time · no limit on items"}</span></p>
+      </div>
     </div>
   </ResearchToolShell>;
 }
