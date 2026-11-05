@@ -61,6 +61,7 @@ import mu_earnings_measurement
 import web_push
 import voice_inbox
 import event_results
+import indicator_results
 import weekly_generator
 import weekly_issues
 import release_watch
@@ -1026,7 +1027,8 @@ class AutomaticMonitor:
             self.stop_event.wait(5)
 
     def run_event_results(self):
-        """Big events (an election): read the outlets' headline feeds while a watch is open. Idle (and silent) otherwise."""
+        """Big events (an election) and indicators without a reader of their own (ADP, ISM, FOMC, GDP, retail sales).
+        Headline feeds are read while a watch is open; the three official pages (FRB, BEA, Census) on their own, faster around release times."""
         while not self.stop_event.is_set():
             wait = event_results.IDLE_SECONDS
             try:
@@ -1036,6 +1038,11 @@ class AutomaticMonitor:
                     wait = event_results.POLL_SECONDS
             except Exception as error:
                 print(f"event-results-unavailable {type(error).__name__}", flush=True)
+            try:
+                indicator_results.run_once(self.db_path)
+                wait = min(wait, indicator_results.next_wait())
+            except Exception as error:
+                print(f"indicator-results-unavailable {type(error).__name__}", flush=True)
             self.stop_event.wait(wait)
 
     def run_weekly(self):
