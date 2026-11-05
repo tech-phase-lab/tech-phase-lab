@@ -9,6 +9,5 @@ export async function PATCH(request:Request){try{
  const client=await clerkClient();
  if(value.displayName!==undefined)await client.users.updateUser(userId,{firstName:value.displayName,lastName:''});
  if(value.icon!==undefined)await client.users.updateUserMetadata(userId,{privateMetadata:{accountIcon:value.icon}});
- if(value.themes!==undefined)await client.users.updateUserMetadata(userId,{privateMetadata:{favoriteThemes:{asked:true,items:value.themes}}});
  return reply(await readProfile(userId));
 }catch(e){return accountError(e);}}
