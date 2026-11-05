@@ -19,15 +19,15 @@ type Listed = { number: number; date: string; headline: string };
 type State = "loading" | "ready" | "signed-out" | "pro-required" | "error";
 const two = (n: number) => String(n + 1).padStart(2, "0");
 
-function Numbers({ part }: { part: Extract<Part, { type: "numbers" }> }) {
+function Numbers({ part, ja }: { part: Extract<Part, { type: "numbers" }>; ja: boolean }) {
   return <>
     <div className={styles.cards}>{part.cards.map((card, index) => {
-      const badge = cardBadge(card);
+      const badge = cardBadge(card, ja ? "ja" : "en");
       return <article key={index} className={styles.card}>
         <h4>{card.label}</h4>
         {card.value !== null && <p className={styles.big}><b>{formatNumber(card.value)}</b>{card.unit && <small>{card.unit}</small>}</p>}
-        {card.outlook !== null && <p className={styles.outlook}><span>{card.value !== null ? "次四半期の見通し" : "見通し"}</span> <b className={badge ? styles[`val_${badge.tone}`] : undefined}>{formatNumber(card.outlook)}</b>{(card.outlookUnit || card.unit) && <small>{card.outlookUnit || card.unit}</small>}</p>}
-        {card.previous !== null && <p className={styles.previous}><span>前回</span> {formatNumber(card.previous)}{card.unit}</p>}
+        {card.outlook !== null && <p className={styles.outlook}><span>{card.value !== null ? (ja ? "次四半期の見通し" : "Next-quarter outlook") : (ja ? "見通し" : "Outlook")}</span> <b className={badge ? styles[`val_${badge.tone}`] : undefined}>{formatNumber(card.outlook)}</b>{(card.outlookUnit || card.unit) && <small>{card.outlookUnit || card.unit}</small>}</p>}
+        {card.previous !== null && <p className={styles.previous}><span>{ja ? "前回" : "Previous"}</span> {formatNumber(card.previous)}{card.unit}</p>}
         {badge && <p className={`${styles.badge} ${styles[badge.tone]}`}><b>{badge.text}</b><span>{badge.caption}</span></p>}
         {card.range && <p className={styles.range}>{card.range}</p>}
       </article>;
@@ -40,44 +40,45 @@ function Timeline({ part }: { part: Extract<Part, { type: "timeline" }> }) {
     <time>{point.when}</time><b>{point.event}</b>{point.comment && <p>{point.comment}</p>}
   </li>)}</ol>;
 }
-function Schedule({ part }: { part: Extract<Part, { type: "schedule" }> }) {
+function Schedule({ part, ja }: { part: Extract<Part, { type: "schedule" }>; ja: boolean }) {
   return <div className={styles.schedule}>{part.items.map((item, index) => {
-    const day = scheduleDate(item.date);
+    const day = scheduleDate(item.date, ja ? "ja" : "en");
     return <article key={index}><div className={styles.date}><small>{day.month}</small><b>{day.day}</b><span>{day.weekday}</span></div><div><h4>{item.name}</h4>{item.comment && <p>{item.comment}</p>}</div></article>;
   })}</div>;
 }
-function Chart({ part }: { part: Extract<Part, { type: "chart" }> }) {
+function Chart({ part, ja }: { part: Extract<Part, { type: "chart" }>; ja: boolean }) {
   const heights = barHeights(part.bars.map(bar => bar.value));
   return <figure className={styles.chart}>
     {part.title && <figcaption>{part.title}</figcaption>}
     <div className={styles.bars} style={{ gridTemplateColumns: `repeat(${Math.max(part.bars.length, 1)}, minmax(0, 1fr))` }}>{part.bars.map((bar, index) => <div key={index}>
       <span className={styles.barValue}>{formatNumber(bar.value)}</span><i style={{ height: `${heights[index]}%` }} /><em>{bar.label}</em>
     </div>)}</div>
-    {part.unit && <p className={styles.unit}>単位: {part.unit}</p>}
+    {part.unit && <p className={styles.unit}>{ja ? "単位" : "Unit"}: {part.unit}</p>}
     {part.note && <p className={styles.partNote}>{part.note}</p>}
   </figure>;
 }
-function Body({ part }: { part: Part }) {
+function Body({ part, ja }: { part: Part; ja: boolean }) {
   if (part.type === "text") return <p className={styles.text}>{part.body}</p>;
-  if (part.type === "numbers") return <Numbers part={part} />;
+  if (part.type === "numbers") return <Numbers part={part} ja={ja} />;
   if (part.type === "timeline") return <Timeline part={part} />;
-  if (part.type === "schedule") return <Schedule part={part} />;
-  if (part.type === "chart") return <Chart part={part} />;
+  if (part.type === "schedule") return <Schedule part={part} ja={ja} />;
+  if (part.type === "chart") return <Chart part={part} ja={ja} />;
   return null;
 }
 
-export function IssueView({ issue }: { issue: Issue }) {
+export function IssueView({ issue, lang = "ja" }: { issue: Issue; lang?: "ja" | "en" }) {
+  const ja = lang === "ja";
   const numbered = issue.parts.reduce<{ part: Part; label: string | null }[]>((all, part) => [...all, { part, label: part.type === "highlight" ? null : two(all.filter(item => item.label).length) }], []);
   return <article className={styles.issue}>
     <section className={styles.hitokoto}>
-      <small>今週のひとこと · {shortDate(issue.date)}</small>
+      <small>{ja ? "今週のひとこと" : "This week's note"} · {shortDate(issue.date)}</small>
       <h2>{issue.headline}</h2>
       <p>{issue.lead}</p>
     </section>
     {numbered.map(({ part, label }, index) => part.type === "highlight"
       ? <blockquote key={index} className={styles.highlight}>{part.text}</blockquote>
-      : <section key={index} className={styles.part}><h3><span>{label}</span>{part.heading}</h3><Body part={part} /></section>)}
-    {issue.sources.length > 0 && <details className={styles.sources}><summary>出典</summary><ul>{issue.sources.map((source, index) => <li key={index}><a href={source.url} target="_blank" rel="noopener noreferrer">{source.title}</a></li>)}</ul></details>}
+      : <section key={index} className={styles.part}><h3><span>{label}</span>{part.heading}</h3><Body part={part} ja={ja} /></section>)}
+    {issue.sources.length > 0 && <details className={styles.sources}><summary>{ja ? "出典" : "Sources"}</summary><ul>{issue.sources.map((source, index) => <li key={index}><a href={source.url} target="_blank" rel="noopener noreferrer">{source.title}</a></li>)}</ul></details>}
   </article>;
 }
 
@@ -212,21 +213,21 @@ export default function WeeklyIssues() {
   };
   const changed = (text: string) => { setMessage(text); setNumber(null); setRevision(value => value + 1); };
   const ja = lang === "ja";
-  return <ResearchToolShell desk compactTitle lang={lang} setLang={setLang} title="週刊 Tech Phase PRO" description="">
-    {(state === "signed-out" || state === "pro-required") && <section className={styles.notice}><h2>PRO会員限定です</h2><p>PRO会員になると、週刊 Tech Phase PRO を読めます。</p><Link href="/research/account">{ja ? "ログイン・会員情報" : "Sign in or view plans"}</Link></section>}
-    {state === "loading" && <p className={styles.empty}>読み込み中…</p>}
-    {state === "error" && <p role="alert" className={styles.error}>いま読み込めません。少し待ってからもう一度開いてください。</p>}
+  return <ResearchToolShell desk compactTitle lang={lang} setLang={setLang} title={ja ? "週刊 Tech Phase PRO" : "PRO Weekly"} description="">
+    {(state === "signed-out" || state === "pro-required") && <section className={styles.notice}><h2>{ja ? "PRO会員限定です" : "Available with PRO"}</h2><p>{ja ? "PRO会員になると、週刊 Tech Phase PRO を読めます。" : "PRO members can read PRO Weekly."}</p><Link href="/research/account">{ja ? "ログイン・会員情報" : "Sign in or view plans"}</Link></section>}
+    {state === "loading" && <p className={styles.empty}>{ja ? "読み込み中…" : "Loading…"}</p>}
+    {state === "error" && <p role="alert" className={styles.error}>{ja ? "いま読み込めません。少し待ってからもう一度開いてください。" : "We couldn't load this right now. Please try again in a moment."}</p>}
     {state === "ready" && <>
       <div className={styles.bar}>
-        {issue ? <button type="button" className={styles.picker} aria-expanded={pick} onClick={() => setPick(value => !value)}>第{issue.number}号 · {shortDate(issue.date)} <span aria-hidden="true">▼</span></button> : <span />}
+        {issue ? <button type="button" className={styles.picker} aria-expanded={pick} onClick={() => setPick(value => !value)}>{ja ? `第${issue.number}号` : `Issue ${issue.number}`} · {shortDate(issue.date)} <span aria-hidden="true">▼</span></button> : <span />}
       </div>
-      {pick && <section className={styles.past} aria-label="これまでの号">
-        <header><h2>これまでの号</h2><button type="button" aria-label="閉じる" onClick={() => setPick(false)}>✕</button></header>
-        <ul>{list.map(item => <li key={item.number}><button type="button" aria-current={issue?.number === item.number ? "true" : undefined} onClick={() => { setNumber(item.number); setPick(false); }}><b>第{item.number}号</b><span>{shortDate(item.date)}</span><em>{item.headline}</em>{item.number === latest && <i>最新</i>}</button></li>)}</ul>
-        {hasMore && <button type="button" className={styles.older} onClick={() => void olderPage()}>さらに前の号を見る{more ? "" : ""}</button>}
+      {pick && <section className={styles.past} aria-label={ja ? "これまでの号" : "Past issues"}>
+        <header><h2>{ja ? "これまでの号" : "Past issues"}</h2><button type="button" aria-label={ja ? "閉じる" : "Close"} onClick={() => setPick(false)}>✕</button></header>
+        <ul>{list.map(item => <li key={item.number}><button type="button" aria-current={issue?.number === item.number ? "true" : undefined} onClick={() => { setNumber(item.number); setPick(false); }}><b>{ja ? `第${item.number}号` : `Issue ${item.number}`}</b><span>{shortDate(item.date)}</span><em>{item.headline}</em>{item.number === latest && <i>{ja ? "最新" : "Latest"}</i>}</button></li>)}</ul>
+        {hasMore && <button type="button" className={styles.older} onClick={() => void olderPage()}>{ja ? "さらに前の号を見る" : "See older issues"}</button>}
       </section>}
       {message && <p className={styles.ok} role="status">{message}</p>}
-      {issue ? <IssueView issue={issue} /> : <p className={styles.empty}>まだ公開された号はありません。</p>}
+      {issue ? <IssueView issue={issue} lang={lang} /> : <p className={styles.empty}>{ja ? "まだ公開された号はありません。" : "No issues have been published yet."}</p>}
     </>}
     {ownerMode && owner && <OwnerPanel owner={owner} shown={issue?.number ? issue : null} onChanged={changed} onWatch={watch} />}
   </ResearchToolShell>;

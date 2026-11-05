@@ -152,7 +152,7 @@ function CapitalMapContent({ portfolios = emptyPortfolios, mode = "sample" }: { 
           </div>
           <div className={styles.metrics}>
             <div><small>{t("基準日", "AS OF")}{hasUpdate && <span className={styles.updateBadge} title={t("前回開いたときから保有データが更新されました", "Holdings updated since your last visit")}>NEW</span>}</small><strong>{selected.current.asOf}<span>{t("時点", "")}</span></strong></div>
-            <div><small>{t("保有銘柄数", "HOLDINGS")}</small><strong>{selected.current.holdings.length.toLocaleString()}<span>{t("銘柄", "holdings")}</span></strong></div>
+            <div><small>{t("保有銘柄数", "HOLDINGS")}</small><strong>{selected.current.holdings.length.toLocaleString()}<span>{t("銘柄", selected.current.holdings.length === 1 ? "holding" : "holdings")}</span></strong></div>
             <div><small>{t("上位5銘柄の構成比", "TOP 5 HOLDINGS · COMBINED WEIGHT")}</small><strong>{percent(top.slice(0, 5).reduce((sum, row) => sum + row.weight, 0))}</strong></div>
           </div>
           <div className={styles.portfolioBody}>
@@ -219,7 +219,7 @@ function CapitalMapContent({ portfolios = emptyPortfolios, mode = "sample" }: { 
           {(left?.name === "ACWI" || right?.name === "ACWI") && <p className={styles.comparisonScope}>{t("全世界株式は米国ETF「ACWI」の保有データです。国内投信の「オルカン」そのものではありません。", "Global stocks are represented by the U.S.-listed ACWI ETF, rather than a Japanese mutual fund.")}</p>}
           <p className={styles.footnote}>{left?.name} {t(`${left?.current.asOf}時点`, `As of ${left?.current.asOf}`)} · {right?.name} {t(`${right?.current.asOf}時点`, `As of ${right?.current.asOf}`)}</p>
           {!overlap ? <p className={styles.empty}>{t("異なるETFを選んでください。", "Choose two different ETFs.")}</p> : <>
-            <div className={styles.overlapResult}><div><small>{t("共通する銘柄", "Shared stocks")}</small><strong>{overlap.rows.length}<small>{t("銘柄", "stocks")}</small></strong></div><div><small>{t("同じ銘柄への配分が重なる割合", "Portfolio overlap")}</small><strong>{percent(overlap.percent)}</strong></div></div>
+            <div className={styles.overlapResult}><div><small>{t("共通する銘柄", "Shared stocks")}</small><strong>{overlap.rows.length}<small>{t("銘柄", overlap.rows.length === 1 ? "stock" : "stocks")}</small></strong></div><div><small>{t("同じ銘柄への配分が重なる割合", "Portfolio overlap")}</small><strong>{percent(overlap.percent)}</strong></div></div>
             <div className={styles.overlapBar}><span style={{ width: `${overlap.percent}%` }} /></div>
             {overlap.rows[0] && <p className={styles.overlapExample}>{t(`例えば${overlap.rows[0].ticker || overlap.rows[0].name}は、${left?.name}に${percent(overlap.rows[0].left)}、${right?.name}に${percent(overlap.rows[0].right)}。小さい方の${percent(overlap.rows[0].shared)}が共通する配分です。`, `For example, ${overlap.rows[0].ticker || overlap.rows[0].name} is ${percent(overlap.rows[0].left)} of ${left?.name} and ${percent(overlap.rows[0].right)} of ${right?.name}. The smaller weight, ${percent(overlap.rows[0].shared)}, is the shared allocation.`)}</p>}
             <div className={styles.sharedHead}><span>{t("両方に入っている銘柄", "Stocks held by both")}</span><span>{left?.name}</span><span>{right?.name}</span></div>

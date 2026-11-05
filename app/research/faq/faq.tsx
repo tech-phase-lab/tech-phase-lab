@@ -82,13 +82,13 @@ export default function Faq() {
     <div className={styles.steps}>
       {/* First item (owner, Nov 5): how to add the app to the iPhone Home Screen. */}
       <details className={styles.card} id="add-to-home" open><summary><span className={styles.number}>01</span><strong>{ja ? "ホーム画面に追加するには？" : "How do I add Tech Phase to my Home Screen?"}</strong></summary>
-        <p>{ja ? <><b>iPhoneのSafari</b>で開いて、次の順に操作します。ChromeなどSafari以外では追加できません。</> : <>Open the site in <b>Safari on iPhone</b> and follow these steps. It cannot be added from Chrome or other browsers.</>}</p>
+        <p>{ja ? <><b>iPhoneのSafari</b>で開いて、次の順に操作します。ChromeなどSafari以外で開いている場合は、アドレスをコピーして、Safariに貼り付けて開いてください。</> : <>Open the site in <b>Safari on iPhone</b> and follow these steps. If you're using Chrome or another browser, copy the address and paste it into Safari first.</>}</p>
         <ol className={styles.addSteps}>
           <li>{ja ? <>画面の下の<b>共有</b>ボタンをタップ</> : <>Tap the <b>Share</b> button at the bottom</>}</li>
           <li>{ja ? <><b>ホーム画面に追加</b>をタップ</> : <>Tap <b>Add to Home Screen</b></>}</li>
           <li>{ja ? <>右上の<b>追加</b>をタップして完了</> : <>Tap <b>Add</b> at the top right to finish</>}</li>
         </ol>
-        <p>{ja ? "追加したアイコンから開くと、通知の許可を聞かれます。" : "Open the app from the new icon and you will be asked to allow notifications."}</p>
+        <p>{ja ? "追加したアイコンから開いて、通知設定で通知をオンにできます。" : "Open the app from the new icon, then turn on notifications in the notification settings."}</p>
       </details>
       {questions.map(([questionJa, questionEn, answerJa, answerEn], index) => <details className={styles.card} key={questionJa}><summary><span className={styles.number}>{String(index + 2).padStart(2, "0")}</span><strong>{ja ? questionJa : questionEn}</strong></summary><p>{index === 4 ? (ja ? <>米国ハイテク株全般を取り扱っています。特に重点的に追っている銘柄は「<Link href="/research#monitored-companies">監視22銘柄リスト</Link>」で確認できます。</> : <>We cover US high-tech stocks broadly. For the companies we follow most closely, see our <Link href="/research#monitored-companies">22-stock watch list</Link>.</>) : ja ? answerJa : answerEn}</p></details>)}</div>
   </ResearchToolShell>;

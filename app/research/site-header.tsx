@@ -99,7 +99,7 @@ export default function SiteHeader({ lang, setLang, nav }: { lang: Language; set
       <div className={styles.tools}>
         <div className={styles.promo}>
           <button type="button" className={styles.proBtn} aria-label={ja ? "Tech Phase PROを見る" : "See Tech Phase PRO"} onClick={() => pro.toggle(true)}><span>Tech Phase PRO</span><b className={styles.proTag}>PRO</b></button>
-          <Link href="/resolute" className={styles.rzBtn} aria-label="RESOLUTE"><span aria-hidden="true">⚓</span>RESOLUTE</Link>
+          <Link href={ja ? "/resolute" : "/resolute?lang=en"} className={styles.rzBtn} aria-label="RESOLUTE"><span aria-hidden="true">⚓</span>RESOLUTE</Link>
         </div>
         <Link href="/research#research-main" className={`${styles.ico} ${styles.home}`} aria-label={ja ? "ホームへ" : "Home"} onClick={goHome}>
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11l8-7 8 7v8a1 1 0 0 1-1 1h-4v-6H9v6H5a1 1 0 0 1-1-1z" /></svg>
@@ -315,7 +315,7 @@ function SiteMenu({ lang, member, ownerAccount, onClose, onRefresh, onPro }: { l
           {item("/research#saved", "saved", ja ? "リサーチノート" : "Research notes")}
         </>}
       </div>
-      <Link href="/resolute" className={styles.resCard} onClick={event => navigate(event, "/resolute")}>
+      <Link href={ja ? "/resolute" : "/resolute?lang=en"} className={styles.resCard} onClick={event => navigate(event, ja ? "/resolute" : "/resolute?lang=en")}>
         <span className={styles.resEmblem} aria-hidden="true"><Icon name="anchor" /></span>
         <span className={styles.resText}><b>RESOLUTE</b><small>{ja ? "暴落に備える、自分だけのルール作り" : "Your own rules for a market crash"}</small></span>
         <Icon name="next" className={styles.resChev} />

@@ -17,10 +17,12 @@ export const ENGLISH_TITLES: Record<string, string> = {
   "/research/pro-experience": "PRO feature tour",
   "/research/notifications": "Notifications",
   "/research/news": "Tech Alerts",
+  "/terms": "Terms of Service",
+  "/privacy": "Privacy Policy",
 };
 /** The English title of a path ("/research/pro-experience/watch-22" falls back to its parent page), or "" when none is set. */
 export function englishTitle(pathname: string): string {
   const clean = pathname.replace(/\/+$/, "") || "/";
   const title = ENGLISH_TITLES[clean] ?? ENGLISH_TITLES[clean.replace(/\/[^/]+$/, "")];
-  return !title ? "" : title === "Tech Phase Research" ? title : `${title} | Tech Phase Research`;
+  return !title ? "" : title === "Tech Phase Research" ? title : `${title} | ${clean.startsWith("/research") ? "Tech Phase Research" : "Tech Phase"}`;
 }

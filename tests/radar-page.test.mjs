@@ -80,5 +80,5 @@ test("the browser tab title is English in the English view", async () => {
   assert.equal(englishTitle("/research/radar"), "Financial Radar | Tech Phase Research");
   assert.equal(englishTitle("/research/pro-experience/watch-22"), "PRO feature tour | Tech Phase Research");
   assert.equal(englishTitle("/research/unknown"), "Tech Phase Research");
-  assert.equal(englishTitle("/terms"), "");
+  assert.equal(englishTitle("/terms"), "Terms of Service | Tech Phase");
 });

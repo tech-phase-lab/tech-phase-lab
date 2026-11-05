@@ -232,9 +232,9 @@ export default function AccountView({ ja, member, billingAvailable, upgradeFirst
     {!preview && resolute.state === "unknown" && <p className={styles.note} role="status">{t("購入状況を確認できませんでした。", "Could not check your purchase.")} <button type="button" className={styles.link} onClick={recheck}>{t("再確認", "Check again")}</button></p>}
     {resolute.state === "bought" && !preview
       ? <>{resolute.alertsUntil && formatDay(resolute.alertsUntil, ja) && <div className={styles.kvs} style={{ marginTop: 6 }}><div className={styles.kv}><span>{t("通知サービスの有効期限", "Alerts valid until")}</span><b>{formatDay(resolute.alertsUntil, ja)}</b></div></div>}
-          <div className={styles.stack}><Link className={`${styles.btn} ${styles.abt}`} href="/resolute">{t("RESOLUTEを開く", "Open RESOLUTE")}</Link>
+          <div className={styles.stack}><Link className={`${styles.btn} ${styles.abt}`} href={ja ? "/resolute" : "/resolute?lang=en"}>{t("RESOLUTEを開く", "Open RESOLUTE")}</Link>
             <Link className={`${styles.btn} ${styles.abt} ${styles.abtO}`} style={{ height: 46, fontSize: 14 }} href="/resolute/settings">{t("通知サービスを更新", "Renew alerts")}</Link></div></>
-      : <Link className={`${styles.btn} ${styles.abt} ${styles.abtO}`} style={{ marginTop: 16 }} href="/resolute">{t("RESOLUTEを見る", "See RESOLUTE")}</Link>}
+      : <Link className={`${styles.btn} ${styles.abt} ${styles.abtO}`} style={{ marginTop: 16 }} href={ja ? "/resolute" : "/resolute?lang=en"}>{t("RESOLUTEを見る", "See RESOLUTE")}</Link>}
   </div>;
 
   // ---- security / support

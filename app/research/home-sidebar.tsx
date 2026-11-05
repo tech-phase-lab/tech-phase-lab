@@ -77,7 +77,7 @@ export default function HomeSidebar({ lang, tab, companyCount, savedCount, openV
     <div className={styles.group}><p className={styles.eyebrow}>RESEARCH</p>{research.map(row)}</div>
     <div className={styles.group}>
       {standalone ? <Link href={"/research" + researchViewHashes.pro} className={[styles.item, styles.proLine].join(" ")}>{icons.gem}<span>Tech Phase PRO</span></Link> : <button type="button" className={`${styles.item} ${styles.proLine} ${tab === "pro" ? styles.on : ""}`} aria-current={tab === "pro" ? "page" : undefined} onClick={() => openView?.("pro")}>{icons.gem}<span>Tech Phase PRO</span></button>}
-      <Link href="/resolute" className={`${styles.item} ${styles.rzLine}`}>{icons.anchor}<span>RESOLUTE</span></Link>
+      <Link href={ja ? "/resolute" : "/resolute?lang=en"} className={`${styles.item} ${styles.rzLine}`}>{icons.anchor}<span>RESOLUTE</span></Link>
     </div>
     <div className={styles.foot}>
       <div className={styles.group}>
