@@ -19,10 +19,11 @@ const sheets = load("../app/research/account/account-sheets.tsx", {
   "next/link": { default: ({ children, ...props }) => createElement("a", props, children) },
   "@/lib/membership/billing-client": { billingRequest: async () => { throw Error("not called"); }, sandboxApproval: () => "" },
   "./avatars": avatars,
+  "../theme-tiles": { default: () => null },
 });
 
-const data = load("../app/research/account/account-data.ts");
-const profileLib = load("../lib/account/profile.ts");
+const data = load("../app/research/account/account-data.ts", { "@/lib/research/favorite-themes": require("../lib/research/favorite-themes.ts") });
+const profileLib = load("../lib/account/profile.ts", { "../research/favorite-themes.ts": require("../lib/research/favorite-themes.ts") });
 
 test("icon ids are exactly the ones the profile API accepts (initial + 23)", () => {
   assert.deepEqual([avatars.INITIAL, ...avatars.TILES.map(tile => tile.id)], profileLib.accountIcons);
