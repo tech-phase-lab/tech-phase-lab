@@ -368,3 +368,8 @@
 .myIcon svg { width:18px; height:18px; fill:none; stroke:currentColor; stroke-width:1.7; stroke-linecap:round; stroke-linejoin:round; }
 .myName { min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
 @media (max-width:340px) { .myGrid { column-gap:10px; } .myItem { gap:8px; font-size:13px; } }
+
+/* The gold-crown PRO tag next to "PRO機能体験" in the FREE menu (owner, Nov 5). */
+.proTagMini { display:inline-flex; align-items:center; gap:4px; margin-left:auto; height:20px; padding:0 8px; border:1px solid #7a6330; border-radius:999px; background:#2a2312; color:#e3c47e; font-size:10px; font-weight:700; letter-spacing:.08em; }
+.proTagMini + .chev { margin-left:8px; }
+.proTagCrown { width:11px; height:11px; fill:none; stroke:currentColor; }
