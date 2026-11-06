@@ -33,6 +33,19 @@ class BlsJobsTests(unittest.TestCase):
         self.assertEqual(result["url"], "https://www.bls.gov/news.release/archives/empsit_10022026.htm")
         self.assertTrue(bls_empsit.is_release_url(result["url"]))
 
+    def test_average_hourly_earnings_are_added_when_stated_once_and_left_out_otherwise(self):
+        text = TEXT + ("In September, average hourly earnings for all employees on private nonfarm payrolls increased by 12 cents, or 0.3 percent, to $37.78. "
+                       "Over the past 12 months, average hourly earnings have increased by 3.8 percent.\n")
+        result = bls_empsit.parse_release(text)
+        self.assertEqual(result["title"], "U.S. September jobs report: nonfarm payrolls +29K / unemployment rate 4.2% / average hourly earnings +0.3% m/m (+3.8% y/y)")
+        self.assertEqual(result["translationJa"], "米国9月雇用統計：非農業部門雇用者数 +29,000人／失業率 4.2%／平均時給 前月比+0.3%（前年比+3.8%）")
+        monthly_only = TEXT + "In September, average hourly earnings for all employees on private nonfarm payrolls decreased by 4 cents, or 0.1 percent, to $37.00.\n"
+        self.assertIn("average hourly earnings -0.1% m/m", bls_empsit.parse_release(monthly_only)["title"])
+        self.assertNotIn("average hourly", bls_empsit.parse_release(TEXT)["title"])
+        conflicting = text + "Over the past 12 months, average hourly earnings have increased by 3.9 percent.\n"
+        self.assertNotIn("average hourly", bls_empsit.parse_release(conflicting)["title"])
+        self.assertEqual(bls_empsit.parse_release(conflicting)["translationJa"], "米国9月雇用統計：非農業部門雇用者数 +29,000人／失業率 4.2%")
+
     def test_other_wordings_and_a_decrease_are_read_and_signed(self):
         text = TEXT.replace("Both nonfarm payroll employment (+29,000) and the unemployment rate (4.2 percent) changed little in September",
                             "Total nonfarm payroll employment fell by 33,000 in September, and the unemployment rate changed little at 4.2 percent")
