@@ -29,7 +29,7 @@ export function mergeEconomicResults(updates: OfficialUpdate[] = [], briefs: Res
   // The CPI and PPI releases read straight from bls.gov (Oct 14/15): the official result takes the same place as BEA's PCE.
   const blsIndicators = [
     { key: "jobs", file: "empsit", label: "jobs report", title: { ja: (month: number) => `米国雇用統計（${month}月）`, en: (period: string) => `U.S. employment report (${period})` },
-      detail: { ja: "非農業部門雇用者数の増減と失業率をBLS公式発表から取得。市場予想との比較は含みません。", en: "Change in total nonfarm payroll employment and the unemployment rate from the official BLS release. No consensus comparison." } },
+      detail: { ja: "非農業部門雇用者数の増減・失業率・平均時給(前月比と前年比。取得できた場合)をBLS公式発表から取得。市場予想との比較は含みません。", en: "Change in total nonfarm payroll employment, the unemployment rate, and average hourly earnings (monthly and yearly change, when stated) from the official BLS release. No consensus comparison." } },
     { key: "cpi", file: "cpi", label: "CPI", title: { ja: (month: number) => `米国CPI（消費者物価指数）（${month}月）`, en: (period: string) => `U.S. Consumer Price Index (${period})` },
       detail: { ja: "総合とコアの前月比・前年比をBLS公式発表から取得。市場予想との比較は含みません。", en: "Headline and core monthly and annual changes from the official BLS release. No consensus comparison." } },
     { key: "ppi", file: "ppi", label: "PPI", title: { ja: (month: number) => `米国PPI（生産者物価指数）（${month}月）`, en: (period: string) => `U.S. Producer Price Index (${period})` },
