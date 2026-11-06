@@ -1022,6 +1022,7 @@ class AutomaticMonitor:
         while not self.stop_event.is_set():
             try:
                 watch_earnings.run_once(self.db_path)
+                watch_earnings.complete_dives(self.db_path)
             except Exception:
                 print("watch-earnings-unavailable", flush=True)
             self.stop_event.wait(5)
