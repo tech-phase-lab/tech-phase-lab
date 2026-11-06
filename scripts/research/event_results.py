@@ -82,6 +82,34 @@ def read_figure(title, spec):
     return None
 
 
+EXPECTED_VALUE = r"(?P<sign>[+\-−])?\s?(?P<num>\d{1,3}(?:,\d{3})+|\d{2,3}(?=\s?[Kk]\b)|\d{5,7})(?P<k>\s?[Kk])?\b"
+EXPECTED_WORD = r"(?:expected|exp\.?|estimates?|estimated|forecasts?|consensus|expectations?)"
+# "+165K vs +150K expected", "(exp. 150K)", "above the 150K consensus", "expected 150K", "consensus of 150,000".
+EXPECTED_AFTER = re.compile(rf"(?:\bvs\.?|\bversus|\bagainst|\bcompared (?:with|to)|\(|\babove|\bbelow|\bbeat|\bmiss\w*)\s*(?:the\s+)?{EXPECTED_VALUE}\s*\)?\s*{EXPECTED_WORD}\b", re.I)
+EXPECTED_BEFORE = re.compile(rf"\b{EXPECTED_WORD}(?:\s+(?:of|at|to be|for))?\s*[:]?\s*{EXPECTED_VALUE}", re.I)
+
+
+def read_expected(title, spec):
+    """The market expectation (consensus) a headline states next to a result, as a signed integer; None when it states none.
+    A forecast with no result beside it ("payrolls expected to add 150K") is a preview, not a comparison, and is not read."""
+    if not isinstance(title, str) or len(title) > 300 or NOT_MONTHLY.search(title):
+        return None
+    if not all(re.search(rule, title, re.I) for rule in spec["must"]) or any(re.search(rule, title, re.I) for rule in spec.get("mustNot", [])):
+        return None
+    for pattern in (EXPECTED_AFTER, EXPECTED_BEFORE):
+        match = pattern.search(title)
+        if not match:
+            continue
+        value = int(match["num"].replace(",", "")) * (1000 if match["k"] else 1)
+        # A result must stand elsewhere in the headline: a signed or "K" figure other than the expectation itself.
+        rest = (title[:match.start()] + " " + title[match.end():])
+        if not re.search(r"(?<![\w,.])[+\-−]?\s?\d{1,3}(?:,\d{3})+\b|[+\-−]\s?\d{2,3}\s?[Kk]\b|\b\d{2,3}\s?[Kk]\b", rest):
+            continue
+        if 10_000 <= value <= 1_000_000:
+            return value if match["sign"] not in ("-", "−") else -value
+    return None
+
+
 def read_release(title, outlet, spec):
     """The figure in the issuer's own release title (ADP: "Private-Sector Employment Increased by 86,000 Jobs in October"),
     only when it comes from the issuer's own distributor. None otherwise."""
@@ -232,7 +260,7 @@ def ingest(db, config, publisher, rows, now, group="politics"):
             if "numeric" in watch:
                 spec = watch["numeric"]
                 official = read_release(title, outlet, spec)
-                figure = official if official is not None else (read_level(title, spec) if spec.get("level") else read_figure(title, spec))
+                figure = official if official is not None else (read_expected(title, spec) if spec.get("expected") else read_level(title, spec) if spec.get("level") else read_figure(title, spec))
                 if figure is not None:
                     # The issuer's own release is recorded under one fixed name, so it counts once and stands alone.
                     name = spec["release"]["label"] if official is not None else (outlet or publisher)
@@ -251,6 +279,9 @@ def ingest(db, config, publisher, rows, now, group="politics"):
 
 
 # ---- deciding what is solid ---------------------------------------------------
+
+import seat_counts
+
 
 def evaluate(db, config, now):
     """Publish a claim once enough different outlets stated it; hold a conflict; never touch a withdrawn result."""
@@ -294,14 +325,20 @@ def evaluate(db, config, now):
         # The result time is when the need-th different outlet had said it.
         released = sorted(row["published_at"] for row in chosen)[max(0, need - 1)] if len(chosen) >= need else stamp(now)
         names = "・".join(publishers[:4]) + ("ほか" if len(publishers) > 4 else "")
+        # Seat counts (owner, Nov 6): kept beside the headline calls, each number checked against them first.
+        called = {claim["chamber"]: claim["party"] for claim in confirmed.values()}
+        seats_ja, seats_en = seat_counts.describe(seat_counts.stored(db, watch["id"]), called) if watch.get("seats") else ("", "")
+        seat_links = [{"publisher": "Wikipedia（AP通信の集計に基づく）", "title": title, "url": "https://en.wikipedia.org/wiki/" + title.replace(" ", "_")}
+                      for chamber, title in (("house", "2026 United States House of Representatives elections"), ("senate", "2026 United States Senate elections"))
+                      if seats_ja and chamber in seat_counts.stored(db, watch["id"])]
         payload = {
             "id": watch["id"], "titleJa": watch["titleJa"], "titleEn": watch["titleEn"],
             "sourceName": names + "(報道)", "releasedAt": released,
-            "resultJa": "、".join(ja) + f"（{len(publishers)}社が当確を報道）",
-            "resultEn": "; ".join(en) + f" (called by {len(publishers)} outlets)",
-            "detailJa": f"{names}が報じました。" + watch.get("noteJa", ""),
-            "detailEn": f"Reported by {', '.join(publishers[:4])}{' and others' if len(publishers) > 4 else ''}. " + watch.get("noteEn", ""),
-            "sourceUrl": links[0]["url"], "sources": links[:6], "verifiedOn": stamp(now)[:10],
+            "resultJa": "、".join(ja) + f"（{len(publishers)}社が当確を報道）" + (f"｜{seats_ja}" if seats_ja else ""),
+            "resultEn": "; ".join(en) + f" (called by {len(publishers)} outlets)" + (f" | {seats_en}" if seats_en else ""),
+            "detailJa": (f"議席数はWikipediaの選挙記事(AP通信の集計に基づく記載)から読んでいます。誰でも編集できる出どころなので、報道の当確と食い違うときは載せません。" if seats_ja else "") + f"{names}が報じました。" + watch.get("noteJa", ""),
+            "detailEn": ("Seat counts are read from the Wikipedia election articles, which follow the AP count. Anyone can edit them, so a count that disagrees with the outlets' calls is left out. " if seats_en else "") + f"Reported by {', '.join(publishers[:4])}{' and others' if len(publishers) > 4 else ''}. " + watch.get("noteEn", ""),
+            "sourceUrl": links[0]["url"], "sources": links[:6 - len(seat_links)] + seat_links, "verifiedOn": stamp(now)[:10],
         }
         _store(db, watch["id"], "published", payload, now, keep_time=existing is not None and existing["state"] == "published")
 
@@ -351,12 +388,13 @@ def _store(db, event_id, state, payload, now, keep_time=False):
                    (event_id, state, json.dumps(payload, ensure_ascii=False), first, stamp(now), first))
 
 
-def run_once(db_path, now=None, config=None, transport=None):
+def run_once(db_path, now=None, config=None, transport=None, seat_fetcher=None):
     """One pass: read each outlet's feed, save the calls, decide. Returns how many calls were newly saved."""
     now = now or datetime.now(timezone.utc)
     config = config or load_config()
     if not any(parse_time(w["from"]) <= now <= parse_time(w["until"]) for w in config["watches"]):
         return None
+    real_fetch = fetch
     transport = transport or fetch
     saved = 0
     groups = {w.get("feedGroup", "politics") for w in config["watches"] if parse_time(w["from"]) <= now <= parse_time(w["until"])}
@@ -373,6 +411,10 @@ def run_once(db_path, now=None, config=None, transport=None):
             with db:
                 db.execute("INSERT INTO event_feed_status VALUES(?,?,?,?,?) ON CONFLICT(publisher) DO UPDATE SET checked_at=excluded.checked_at,ok=excluded.ok,error=excluded.error,items=excluded.items",
                            (feed["publisher"], stamp(now), state[0], state[1], state[2]))
+        # Seat counts: from the network only in production (a test that injects feeds supplies its own seat reader or none).
+        for watch in config["watches"]:
+            if watch.get("seats") and parse_time(watch["from"]) <= now <= parse_time(watch["until"]) and (transport is real_fetch or seat_fetcher):
+                seat_counts.refresh(db, watch, now, seat_fetcher or seat_counts.fetch_wikitext)
         evaluate(db, config, now)
     return saved
 

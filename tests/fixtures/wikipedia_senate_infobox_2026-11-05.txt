@@ -1,0 +1,54 @@
+{{Infobox election
+| election_name = 2026 United States Senate elections
+| country = United States
+| flag_year = 1960
+| type = legislative
+| ongoing = no
+| previous_election = 2024 United States Senate elections
+| previous_year = 2024
+| election_date = November 3, 2026
+| next_election = 2028 United States Senate elections
+| next_year = ''2028''
+| previous_seat_election = 2020 United States Senate elections
+| previous_seat_year = 2020
+| next_seat_election = 2032 United States Senate elections
+| next_seat_year = ''2032''
+| seat_class = [[United States Senate Class 2|Class 2]]
+| seats_for_election = 35{{efn|33 Class 2 seats, as well as 2 Class 3 seats being determined in special elections}} of the 100 seats in the [[United States Senate]]
+| majority_seats = 51{{efn|Majority control in an evenly divided Senate is determined by the [[Vice President of the United States]], who has the power to break tied votes in their constitutional capacity as President of the Senate; accordingly, Senate control requires either 51 seats or 50 seats with control of the vice presidency.}}
+| image_size = x180px
+| 1blank = Seats up
+| 2blank = Races won
+| party1 = Democratic Party (United States)
+| image1 = File:Chuck Schumer official photo (3x4a).jpg
+| leader1 = [[Chuck Schumer]]
+| leader_since1 = January 3, 2017
+| leaders_seat1 = [[List of United States senators from New York|New York]]
+| seats_before1 = 45{{efn|name=Independents}}
+| seats1 = 
+| seats_after1 = '''52–54<!--Do not change this to "54–56"; these numbers are meant exclude the two independent senators (Sanders and King)-->'''{{efn|name=Independents}}{{efn|name=Uncalled|The winners of the [[2026 United States Senate election in Alaska|Alaska]] and [[2026 United States Senate election in Mississippi|Mississippi]] elections are yet to be called.}}
+| seat_change1 = {{increase}} 7–9{{efn|name=Uncalled}}
+| popular_vote1 = 
+| percentage1 = 
+| swing1 = 
+| 1data1 = 13
+| 2data1 = 
+| party2 = Republican Party (United States)
+| image2 = John Thune 117th Congress portrait cropped.jpg
+| leader2 = [[John Thune]]
+| leader_since2 = [[2024 Senate Republican Conference leadership election|January 3, 2025]]
+| leaders_seat2 = [[List of United States senators from South Dakota|South Dakota]]
+| seats_before2 = '''53'''
+| seats2 = 
+| seats_after2 = 44–46{{efn|name=Uncalled}}
+| seat_change2 = {{decrease}} 7–9{{efn|name=Uncalled}}
+| popular_vote2 = 
+| percentage2 = 
+| swing2 = 
+| 1data2 = 22
+| 2data2 = 
+| seat_change4 = {{steady}}
+| seats_after4 = 2
+| 1data4 = 0
+| 2data4 = 
+| map_image = {{2026 United States Senate elections imagemap}}

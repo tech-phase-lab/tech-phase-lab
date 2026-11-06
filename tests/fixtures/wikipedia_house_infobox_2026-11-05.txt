@@ -1,0 +1,46 @@
+{{Infobox election
+<!-- DO NOT INCLUDE NON-VOTING DELEGATES IN INFOBOX TOTALS -->| election_name = 2026 United States House of Representatives elections
+| country = United States
+| flag_year = 1960
+| type = legislative
+| previous_election = 2024 United States House of Representatives elections
+| previous_year = 2024
+| election_date = November 3, 2026
+| next_election = 2028 United States House of Representatives elections
+| next_year = ''2028''
+| seats_for_election = All 435 seats in the [[United States House of Representatives]]{{efn |As well as five of the six [[Delegate (United States Congress)|non-voting delegates]]}}
+| majority_seats = 218
+| declared = 94.3
+| last_update = 9:00 PM, November 5, 2026
+| time_zone = [[Eastern Standard Time|EST]]{{efn|Percentage of districts that have been called}}<ref>{{Cite web|url=https://apnews.com/projects/elections-2026/us-house-results/|title=2026 U.S. House Election Results|date=November 1, 2026|website=AP News}}</ref>
+| turnout = 124 million (~49%){{citation needed|date=November 2026}}
+| outgoing_members = 119th United States Congress#Representatives
+| elected_members = 120th United States Congress
+| image_size = x200px
+| party1 = Democratic Party (US)
+| image1 = Rep-Hakeem-Jeffries-Official-Portrait-1638x2048 (cropped).jpg
+| leader1 = [[Hakeem Jeffries]]
+| leader_since1 = January 3, 2023
+| leaders_seat1 = {{ushr|NY|8|T}}
+| last_election1 = 215 seats, 47.2%
+| seats_before1 = 214
+| seats1 = '''253'''<!-- Let's use AP instead of DDHQ as it is a more reputable and established source. Also, please update the time when updating this number. -->
+| swing1 = {{Increase}} 38–63
+| party2 = Republican Party (US)
+| image2 = Speaker Mike Johnson Official Portrait (cropped).jpg
+| leader2 = [[Mike Johnson]]
+| leader_since2 = October 25, 2023
+| leaders_seat2 = {{ushr|LA|4|T}}
+| last_election2 = 220 seats, 49.8%
+| seats_before2 = 218{{efn|Not including [[Kevin Kiley (politician)|Kevin Kiley]], who was elected as a Republican and left the Republican Party in 2026, but remained in the [[House Republican Caucus]].}}
+| seats2 = 157<!-- Let's use AP instead of DDHQ as it is a more reputable and established source. Also, please update the time when updating this number. -->
+| swing2 = {{Decrease}} 38–63
+| title = [[Speaker of the United States House of Representatives|Speaker]]
+| posttitle = [[Speaker of the United States House of Representatives|Speaker]] after election
+| before_election = [[Mike Johnson]]
+| before_party = Republican Party (United States)
+| after_election = [[2027 Speaker of the United States House of Representatives election|TBD]]
+| after_party = Democratic Party (United States)
+| map_image = [[File:US House 2026.svg|350px]]
+| map_alt = 
+| map_caption = {{legend0|#92C5DE|Democratic hold}}

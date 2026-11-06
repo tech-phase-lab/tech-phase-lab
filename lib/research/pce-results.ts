@@ -7,7 +7,8 @@ const months = ["january", "february", "march", "april", "may", "june", "july", 
 export function mergeEconomicResults(updates: OfficialUpdate[] = [], briefs: ResultBrief[] = [], events: EventResult[] = []) {
   const results = new Map(economicResults.map(event => [event.id, event]));
   // Big events read automatically from at least two outlets; they replace a hand-written row of the same id.
-  for (const event of events) results.set(event.id, { id: event.id, title: { ja: event.titleJa, en: event.titleEn }, sourceName: event.sourceName, releasedAt: event.releasedAt,
+  // An "expected-…" event is the market expectation read from headlines; it joins the official row below and is never a row of its own.
+  for (const event of events.filter(event => !event.id.startsWith("expected-"))) results.set(event.id, { id: event.id, title: { ja: event.titleJa, en: event.titleEn }, sourceName: event.sourceName, releasedAt: event.releasedAt,
     result: { ja: event.resultJa, en: event.resultEn }, detail: { ja: event.detailJa, en: event.detailEn }, sourceUrl: event.sourceUrl, verifiedOn: event.verifiedOn });
   for (const item of updates) {
     const url = new URL(item.url);
@@ -52,6 +53,14 @@ export function mergeEconomicResults(updates: OfficialUpdate[] = [], briefs: Res
       detail: indicator.detail,
       sourceUrl: item.url, verifiedOn: item.observedAt.slice(0, 10),
     });
+  }
+  // Owner, Nov 6: the market expectation (from at least two outlets' headlines) is added to the official result of the same report.
+  for (const expected of events.filter(event => event.id.startsWith("expected-"))) {
+    const row = results.get(expected.id.slice("expected-".length));
+    if (!row || row.result.ja.includes("市場予想")) continue;
+    results.set(row.id, { ...row,
+      result: { ja: `${row.result.ja}／${expected.resultJa.replace(/（\d+社が同じ数字を報道）$/, "").replace(/^市場予想 非農業部門雇用者数 /, "市場予想 ")}`, en: `${row.result.en} / ${expected.resultEn.replace(/ \(the same figure from \d+ outlets\)$/, "").replace(/^Consensus: nonfarm payrolls /, "consensus ")}` },
+      detail: { ja: row.detail.ja.replace("市場予想との比較は含みません。", "市場予想は、2社以上の報道の見出しが同じ数字を伝えたものです(公式の数字ではありません)。"), en: row.detail.en.replace("No consensus comparison is included.", "The consensus is the figure at least two outlets gave in their headlines (not an official figure).").replace("No consensus comparison.", "The consensus is the figure at least two outlets gave in their headlines (not an official figure).") } });
   }
   // One release per indicator/period. Verified official results take precedence;
   // incoming social posts must not add a second English-titled calendar row.

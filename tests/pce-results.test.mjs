@@ -162,3 +162,24 @@ test("a month-less PCE flash on the day of the verified BEA release adds no seco
   assert.equal(rows[0].title.ja, "米国PCE物価指数（9月）");
   assert.equal(mergeEconomicResults([], [brief]).filter(item => item.releasedAt.startsWith("2026-10-29")).length, 1);
 });
+
+test("the market expectation read from headlines joins the official jobs row and never becomes a row of its own (owner, Nov 6)", () => {
+  const jobsUpdate = {
+    id: "9100", title: "U.S. October jobs report: nonfarm payrolls +165K / unemployment rate 4.1% / average hourly earnings +0.3% m/m (+3.8% y/y)",
+    translationJa: "米国10月雇用統計：非農業部門雇用者数 +165,000人／失業率 4.1%／平均時給 前月比+0.3%（前年比+3.8%）",
+    url: "https://www.bls.gov/news.release/archives/empsit_11062026.htm", publisher: "BLS", tickers: [],
+    observedAt: "2026-11-06T13:31:00Z", publishedAt: "2026-11-06T13:30:00Z",
+  };
+  const expected = { id: "expected-jobs-2026-10", titleJa: "米国雇用統計の市場予想（10月）", titleEn: "U.S. jobs report consensus (October)", sourceName: "investingLive・Forex Factory(報道)",
+    releasedAt: "2026-11-06T13:31:00Z", resultJa: "市場予想 非農業部門雇用者数 +150,000人（2社が同じ数字を報道）", resultEn: "Consensus: nonfarm payrolls +150,000 (the same figure from 2 outlets)",
+    detailJa: "x", detailEn: "x", sourceUrl: "https://example.com/a", verifiedOn: "2026-11-06", sources: [{ publisher: "a", title: "t", url: "https://example.com/a" }, { publisher: "b", title: "t", url: "https://example.com/b" }] };
+  const merged = mergeEconomicResults([jobsUpdate], [], [expected]);
+  assert.equal(merged.some(row => row.id === "expected-jobs-2026-10"), false);
+  const row = merged.find(item => item.id === "jobs-2026-10");
+  assert.match(row.result.ja, /非農業部門雇用者数 \+165,000人.*平均時給 前月比\+0\.3%（前年比\+3\.8%）／市場予想 \+150,000人$/);
+  assert.match(row.result.en, /consensus \+150,000$/);
+  assert.match(row.detail.ja, /2社以上の報道の見出しが同じ数字を伝えたもの/);
+  assert.doesNotMatch(row.detail.ja, /市場予想との比較は含みません/);
+  // Without an expectation the row is unchanged.
+  assert.doesNotMatch(mergeEconomicResults([jobsUpdate], [], []).find(item => item.id === "jobs-2026-10").result.ja, /市場予想/);
+});
