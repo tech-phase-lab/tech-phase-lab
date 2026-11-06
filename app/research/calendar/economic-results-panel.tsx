@@ -1,5 +1,6 @@
 "use client";
 
+import { noBreakUnits } from "@/lib/research/no-break-units";
 import { useEffect, useState, type ReactNode } from "react";
 import type { ResultBrief } from "@/lib/research/market-results";
 import { calendarDateKey } from "@/lib/research/calendar";
@@ -67,7 +68,7 @@ export default function EconomicResultsPanel({ lang, zone, period, kind = "all",
   const earningsSection = !!earnings.length && <section className={styles.section} aria-label={ja ? "決算の結果" : "Earnings results"}>
     <h2>{ja ? "決算の結果" : "Earnings results"}</h2>
     <ResultList key={`${lang}:${zone}:${period}:${kind}`} lang={lang} rows={earnings.map(row => {
-      const label = <>{time(row.releasedAt)}<span className={calendarStyles.eventName}>{row.title[lang]}<small>{ja ? row.result.ja : row.result.en}</small></span></>;
+      const label = <>{time(row.releasedAt)}<span className={calendarStyles.eventName}>{ja ? noBreakUnits(row.title[lang]) : row.title[lang]}<small>{ja ? noBreakUnits(row.result.ja ?? "") : row.result.en}</small></span></>;
       const links = row.sources.filter(source => !source.url.startsWith("https://x.com/")).map(source => <a key={source.url} href={source.url} target="_blank" rel="noreferrer">{source.name} ↗</a>);
       const text = ja ? row.body.ja : row.body.en;
       // A row opens only when there is something more to read; "the company's

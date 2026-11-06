@@ -35,6 +35,26 @@ def is_release_url(url):
             and re.fullmatch(ARCHIVE, parsed.path) is not None)
 
 
+def _earnings(flat, month):
+    """Average hourly earnings of all employees on private nonfarm payrolls: the change from the month before and, when
+    BLS states it, from a year earlier (Nov 6: added to the headline facts). Optional: wording that is missing or
+    repeated with different numbers leaves it out rather than failing the report."""
+    up, down = "|".join(UP), "|".join(DOWN)
+    month_changes = set()
+    for verb, percent in re.findall(
+            rf"In {month}, average hourly earnings for all employees on private nonfarm payrolls ({up}|{down}) by [\d.]+ cents?, or (\d{{1,2}}\.\d) percent", flat, re.I):
+        month_changes.add(("" if verb.lower() in UP else "-") + percent)
+    flat_zero = re.findall(rf"In {month}, average hourly earnings for all employees on private nonfarm payrolls (?:were|was|changed little|were little changed)\b", flat, re.I)
+    year_changes = set()
+    for verb, percent in re.findall(
+            rf"Over the (?:past|last) 12 months, average hourly earnings (?:have )?({up}|{down}) by (\d{{1,2}}\.\d) percent", flat, re.I):
+        year_changes.add(("" if verb.lower() in UP else "-") + percent)
+    if len(month_changes) != 1 or len(year_changes) > 1 or flat_zero:
+        return None
+    sign = lambda value: value if value.startswith("-") else "+" + value
+    return {"month": sign(next(iter(month_changes))), "year": sign(next(iter(year_changes))) if year_changes else ""}
+
+
 def parse_release(text):
     """Fail closed if the period, release clock, payroll change or unemployment rate is unclear."""
     if not isinstance(text, str) or len(text) > 160_000:
@@ -74,6 +94,7 @@ def parse_release(text):
     rate = rates[0]
     if abs(change) > 3_000_000 or float(rate) > 30:
         raise ValueError("bls-jobs-measure-out-of-range")
+    earnings = _earnings(flat, month)
     thousands = f"{change / 1000:+.0f}K" if change % 1000 == 0 else f"{change:+,}"
     persons = f"{change:+,}"
     number = MONTHS.index(month) + 1
@@ -81,6 +102,10 @@ def parse_release(text):
         "publishedAt": released.isoformat(),
         "url": release_url(released),
         "period": f"{year}-{number:02d}",
-        "title": f"U.S. {month} jobs report: nonfarm payrolls {thousands} / unemployment rate {rate}%",
-        "translationJa": f"米国{number}月雇用統計：非農業部門雇用者数 {persons}人／失業率 {rate}%",
+        "title": f"U.S. {month} jobs report: nonfarm payrolls {thousands} / unemployment rate {rate}%" + (
+            f" / average hourly earnings {earnings['month']}% m/m ({earnings['year']}% y/y)" if earnings and earnings["year"] else
+            f" / average hourly earnings {earnings['month']}% m/m" if earnings else ""),
+        "translationJa": f"米国{number}月雇用統計：非農業部門雇用者数 {persons}人／失業率 {rate}%" + (
+            f"／平均時給 前月比{earnings['month']}%（前年比{earnings['year']}%）" if earnings and earnings["year"] else
+            f"／平均時給 前月比{earnings['month']}%" if earnings else ""),
     }

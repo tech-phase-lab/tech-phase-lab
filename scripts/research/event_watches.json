@@ -125,6 +125,16 @@
       "publisher": "Google News ISM 3",
       "url": "https://news.google.com/rss/search?q=%22Manufacturing+PMI%22+ISM+when%3A7d&hl=en-US&gl=US&ceid=US%3Aen",
       "group": "markets"
+    },
+    {
+      "publisher": "Google News NFP 1",
+      "url": "https://news.google.com/rss/search?q=nonfarm+payrolls+expected+when%3A2d&hl=en-US&gl=US&ceid=US%3Aen",
+      "group": "markets"
+    },
+    {
+      "publisher": "Google News NFP 2",
+      "url": "https://news.google.com/rss/search?q=%22jobs+report%22+payrolls+economists+expected+when%3A2d&hl=en-US&gl=US&ceid=US%3Aen",
+      "group": "markets"
     }
   ],
   "watches": [
@@ -185,7 +195,13 @@
         }
       ],
       "noteJa": "議席数は報道ごとに違い、集計は続いています。各州の公式な認定は数週間かかるため、最終の議席数は今後変わる可能性があります。",
-      "noteEn": "Seat counts differ between reports and counting continues. States certify their results over the following weeks, so final seat counts may still change."
+      "noteEn": "Seat counts differ between reports and counting continues. States certify their results over the following weeks, so final seat counts may still change.",
+      "seats": {
+        "pages": {
+          "house": "2026_United_States_House_of_Representatives_elections",
+          "senate": "2026_United_States_Senate_elections"
+        }
+      }
     },
     {
       "id": "adp-2026-10",
@@ -362,6 +378,114 @@
       "resultEn": "Manufacturing PMI {value} (50 separates expansion from contraction)",
       "noteJa": "ISMの発表と報道の見出しから読み取った数字です。ISMの公式発表で確認してください。",
       "noteEn": "Read from ISM's release and news headlines; check ISM's official release."
+    },
+    {
+      "id": "expected-jobs-2026-10",
+      "kind": "indicator",
+      "feedGroup": "markets",
+      "titleJa": "米国雇用統計の市場予想（10月）",
+      "titleEn": "U.S. jobs report consensus (October)",
+      "from": "2026-11-06T00:00:00Z",
+      "until": "2026-11-10T00:00:00Z",
+      "requirePublishers": 2,
+      "numeric": {
+        "expected": true,
+        "must": [
+          "\\b(?:non-?farm|NFP|payrolls?|jobs report)\\b"
+        ],
+        "mustNot": [
+          "\\bADP\\b",
+          "\\bprivate\\b",
+          "\\bJOLTS\\b",
+          "\\bopenings\\b",
+          "\\bclaims\\b"
+        ]
+      },
+      "resultJa": "市場予想 非農業部門雇用者数 {value}人",
+      "resultEn": "Consensus: nonfarm payrolls {value}",
+      "noteJa": "報道の見出しが伝えた市場予想です(公式の数字ではありません)。",
+      "noteEn": "The consensus as stated in news headlines (not an official figure)."
+    },
+    {
+      "id": "expected-jobs-2026-11",
+      "kind": "indicator",
+      "feedGroup": "markets",
+      "titleJa": "米国雇用統計の市場予想（11月）",
+      "titleEn": "U.S. jobs report consensus (November)",
+      "from": "2026-12-04T00:00:00Z",
+      "until": "2026-12-08T00:00:00Z",
+      "requirePublishers": 2,
+      "numeric": {
+        "expected": true,
+        "must": [
+          "\\b(?:non-?farm|NFP|payrolls?|jobs report)\\b"
+        ],
+        "mustNot": [
+          "\\bADP\\b",
+          "\\bprivate\\b",
+          "\\bJOLTS\\b",
+          "\\bopenings\\b",
+          "\\bclaims\\b"
+        ]
+      },
+      "resultJa": "市場予想 非農業部門雇用者数 {value}人",
+      "resultEn": "Consensus: nonfarm payrolls {value}",
+      "noteJa": "報道の見出しが伝えた市場予想です(公式の数字ではありません)。",
+      "noteEn": "The consensus as stated in news headlines (not an official figure)."
+    },
+    {
+      "id": "expected-jobs-2026-12",
+      "kind": "indicator",
+      "feedGroup": "markets",
+      "titleJa": "米国雇用統計の市場予想（12月）",
+      "titleEn": "U.S. jobs report consensus (December)",
+      "from": "2027-01-08T00:00:00Z",
+      "until": "2027-01-12T00:00:00Z",
+      "requirePublishers": 2,
+      "numeric": {
+        "expected": true,
+        "must": [
+          "\\b(?:non-?farm|NFP|payrolls?|jobs report)\\b"
+        ],
+        "mustNot": [
+          "\\bADP\\b",
+          "\\bprivate\\b",
+          "\\bJOLTS\\b",
+          "\\bopenings\\b",
+          "\\bclaims\\b"
+        ]
+      },
+      "resultJa": "市場予想 非農業部門雇用者数 {value}人",
+      "resultEn": "Consensus: nonfarm payrolls {value}",
+      "noteJa": "報道の見出しが伝えた市場予想です(公式の数字ではありません)。",
+      "noteEn": "The consensus as stated in news headlines (not an official figure)."
+    },
+    {
+      "id": "expected-jobs-2027-01",
+      "kind": "indicator",
+      "feedGroup": "markets",
+      "titleJa": "米国雇用統計の市場予想（1月）",
+      "titleEn": "U.S. jobs report consensus (January)",
+      "from": "2027-02-05T00:00:00Z",
+      "until": "2027-02-09T00:00:00Z",
+      "requirePublishers": 2,
+      "numeric": {
+        "expected": true,
+        "must": [
+          "\\b(?:non-?farm|NFP|payrolls?|jobs report)\\b"
+        ],
+        "mustNot": [
+          "\\bADP\\b",
+          "\\bprivate\\b",
+          "\\bJOLTS\\b",
+          "\\bopenings\\b",
+          "\\bclaims\\b"
+        ]
+      },
+      "resultJa": "市場予想 非農業部門雇用者数 {value}人",
+      "resultEn": "Consensus: nonfarm payrolls {value}",
+      "noteJa": "報道の見出しが伝えた市場予想です(公式の数字ではありません)。",
+      "noteEn": "The consensus as stated in news headlines (not an official figure)."
     }
   ]
 }
