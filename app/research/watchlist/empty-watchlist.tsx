@@ -24,7 +24,7 @@ export default function EmptyWatchlist({ lang, listName, disabled, onAdd }: { la
       <defs><linearGradient id="watchlist-sweep" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stopColor="#7ad8ab" stopOpacity="0" /><stop offset="1" stopColor="#7ad8ab" stopOpacity=".55" /></linearGradient></defs>
       <path d="M66 51l4.4 9.2 10.1 1.4-7.3 7.1 1.8 10.1L66 74l-9 4.8 1.8-10.1-7.3-7.1 10.1-1.4z" fill="#0b1712" stroke="#d9b56a" strokeWidth="1.6" strokeLinejoin="round" />
     </svg>
-    <h2>{ja ? "いつもの銘柄を、ひとつの画面に。" : "Your stocks, together."}</h2>
+    <h2>{ja ? "いつもの銘柄を、ひとつの画面に。" : "Your stocks, all in one place."}</h2>
     <p>{ja ? <>気になる銘柄を追加すると<br />価格と前日比がここに並びます</> : <>Add the stocks you follow and<br />prices and daily change will line up here</>}</p>
     <div className={styles.previewHead} aria-hidden="true"><span>PREVIEW</span><i /></div>
     <ul className={styles.sample} aria-hidden="true">

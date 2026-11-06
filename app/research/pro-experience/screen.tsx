@@ -32,7 +32,7 @@ export function ProExperienceList() {
       <h2 className={styles.others}><span>{ja ? "そのほかのPROの違い" : "Other differences with PRO"}</span></h2>
       <div className={styles.diff}>
         <p className={styles.diffName}>{ja ? "ハイテク速報" : "Tech Alerts"}</p>
-        <p className={styles.diffLine}><b className={styles.free}>FREE</b><span>{ja ? "30分遅れ・新着5件まで" : "30 min delay · latest 5"}</span></p>
+        <p className={styles.diffLine}><b className={styles.free}>FREE</b><span>{ja ? "30分遅れ・新着5件まで" : "30-minute delay · latest 5 updates"}</span></p>
         <p className={styles.diffLine}><b className={styles.pro}>PRO</b><span>{ja ? "リアルタイム・件数の制限なし" : "Real-time · no limit on items"}</span></p>
       </div>
     </div>

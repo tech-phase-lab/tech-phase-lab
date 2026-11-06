@@ -33,9 +33,9 @@ const themes: Record<string, SectorLabel> = {
   MU: label("メモリ", "Memory"),
   SKHY: label("メモリ", "Memory"),
   SNDK: label("メモリ", "Memory"),
-  AMAT: label("半導体製造装置", "Chip equipment"),
+  AMAT: label("半導体製造装置", "Chipmaking equipment"),
   IREN: label("AIクラウド", "AI cloud"),
-  ASML: label("半導体製造装置", "Chip equipment"),
+  ASML: label("半導体製造装置", "Chipmaking equipment"),
   TSM: label("半導体受託製造", "Chip foundry"),
 };
 

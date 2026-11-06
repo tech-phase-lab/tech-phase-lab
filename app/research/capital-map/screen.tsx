@@ -102,7 +102,7 @@ function CapitalMapContent({ portfolios = emptyPortfolios, mode = "sample" }: { 
   const knownTickers = new Set(allHolders.map(row => row.ticker));
   const holders = allHolders.filter(row => (!inputTickers.length || inputTickers.some(term => knownTickers.has(term) ? row.ticker === term : row.name.toUpperCase().includes(term))) && (!watchOnly || watched.has(row.ticker))).toSorted((a, b) => b.weight - a.weight);
   const searching = (inputTickers.length > 0 || watchOnly);
-  const labels = { new: t("新規保有", "New"), increased: t("保有増加", "Increased"), reduced: t("保有減少", "Reduced"), exited: t("保有解消", "Exited"), unchanged: t("株数変化なし", "Shares unchanged"), unknown: t("—", "—") };
+  const labels = { new: t("新規保有", "New"), increased: t("保有増加", "Increased"), reduced: t("保有減少", "Reduced"), exited: t("保有解消", "Exited"), unchanged: t("株数変化なし", "No change in shares held"), unknown: t("—", "—") };
   function choosePortfolio(id: string) { setActiveSlice(null); setSelectedId(id); setHoldingQuery(""); setRowLimit(50); setChangedOnly(false); setPositionGroup("current"); setSearchOpen(false); }
   function chooseView(value: View) { setView(value); choosePortfolio(portfolios.find(item => item.kind === value)?.id ?? ""); }
 
@@ -117,7 +117,7 @@ function CapitalMapContent({ portfolios = emptyPortfolios, mode = "sample" }: { 
     <div className={styles.page}>
       {detailId && hasData && <HoldingDetail portfolio={detailPortfolio} securityId={detailId} instrument={searchParams.get("instrument") ?? "stock"} baseline={detailBaseline} lang={lang} sample={!reported} onBack={backToList} />}
       <div hidden={Boolean(detailId) && hasData}>
-      <header className={styles.heading}><p className={styles.eyebrow}>TECH PHASE RESEARCH{!reported && hasData && <span className={styles.edition}>SAMPLE</span>}</p><div className={styles.titleRow}><h1>CAPITAL MAP</h1></div><p>{t("投資先から、資金の流れを知る。", "Follow the holdings. Understand the capital.")}</p></header>
+      <header className={styles.heading}><p className={styles.eyebrow}>TECH PHASE RESEARCH{!reported && hasData && <span className={styles.edition}>SAMPLE</span>}</p><div className={styles.titleRow}><h1>CAPITAL MAP</h1></div><p>{t("投資先から、資金の流れを知る。", "See who owns what.")}</p></header>
       {!hasData ? <section className={styles.preparing}>
         <h2>{t("世界の運用会社とETFの投資先をひと目で。", "Explore the portfolios behind managers and ETFs.")}</h2>
         <p>{t("保有銘柄と構成比、銘柄ごとの保有先、ETFの重複を確認できます。", "Explore holdings, portfolio weights, stock holders and ETF overlap.")}</p>
@@ -125,10 +125,10 @@ function CapitalMapContent({ portfolios = emptyPortfolios, mode = "sample" }: { 
       </section> : <>
         {!reported && <p className={styles.notice}>{t("架空データの表示サンプルです。", "Display sample using fictional data.")} <Link href="/research/capital-map">{t("実際の保有データを見る", "View reported holdings")} →</Link></p>}
         <div className={styles.navigationRow}><nav className={styles.tabs} aria-label={t("資本マップ", "Capital map")}>
-          <button aria-pressed={view === "manager"} onClick={() => chooseView("manager")}>{t("運用会社", "Managers")}</button>
+          <button aria-pressed={view === "manager"} onClick={() => chooseView("manager")}>{t("運用会社", "Fund managers")}</button>
           {portfolios.some(item => item.kind === "corporate") && <button aria-pressed={view === "corporate"} onClick={() => chooseView("corporate")}>{t("企業", "Companies")}</button>}
           {etfs.length > 0 && <button aria-pressed={view === "etf"} onClick={() => chooseView("etf")}>ETF</button>}
-        </nav><nav className={styles.tools} aria-label={t("資本マップのツール", "Capital map tools")}><button aria-pressed={view === "lookup"} onClick={() => chooseView("lookup")}>{t("銘柄から検索", "Stock search")}</button>{etfs.length >= 2 && <button aria-pressed={view === "overlap"} onClick={() => chooseView("overlap")}>{t("ETF比較", "ETF compare")}</button>}</nav></div>
+        </nav><nav className={styles.tools} aria-label={t("資本マップのツール", "Capital map tools")}><button aria-pressed={view === "lookup"} onClick={() => chooseView("lookup")}>{t("銘柄から検索", "Stock search")}</button>{etfs.length >= 2 && <button aria-pressed={view === "overlap"} onClick={() => chooseView("overlap")}>{t("ETF比較", "Compare ETFs")}</button>}</nav></div>
         {isPortfolio && <div className={styles.portfolioToolbar}>
           <label className={styles.portfolioSelect}>
             <select aria-label={t("表示する投資先", "Select portfolio")} value={selected?.id ?? ""} onChange={event => choosePortfolio(event.target.value)}>
@@ -137,13 +137,13 @@ function CapitalMapContent({ portfolios = emptyPortfolios, mode = "sample" }: { 
           </label>
         </div>}
         {view === "lookup" && <section className={styles.find} aria-labelledby="find-holders">
-          <h2 id="find-holders">{t("この銘柄を保有する運用会社・ETFを探す", "Find managers and ETFs holding your stock")}</h2>
+          <h2 id="find-holders">{t("この銘柄を保有する運用会社・ETFを探す", "See which fund managers and ETFs hold a stock")}</h2>
           <div className={styles.searchBar}><label><span>{t("調べたい銘柄", "Find a stock")}</span><input type="search" autoCapitalize="off" autoCorrect="off" spellCheck={false} value={query} maxLength={200} placeholder={t("例：エヌビディア、NVDA", "e.g. NVIDIA or NVDA")} onChange={event => { setQuery(event.target.value); setRowLimit(50); }} /></label></div>
           <div className={styles.lookupOptions}><label><input type="checkbox" checked={watchOnly} disabled={!editable} onChange={event => { setWatchOnly(event.target.checked); setRowLimit(50); }} />{t("ウォッチリストの銘柄に絞る", "Only stocks in my watchlists")}</label></div>
           {watchOnly && !watched.size && <p className={styles.empty}>{t("ウォッチリストに登録銘柄がありません。", "Your watchlists are empty.")}</p>}
           {searching && <><h3 className={styles.resultCount}>{t("検索結果", "Results")} <span>{holders.length}{t("件", " holders")}</span></h3>
             {holders.length > 0 && <div className={styles.holderHead}><span>{t("保有者", "Holder")}</span><span>{t("保有内の割合", "Portfolio weight")}</span><span>{t("保有評価額", "Holding value")}</span></div>}
-            <div className={styles.holderResults}>{holders.slice(0, rowLimit).map(row => <div className={styles.holderRow} key={`${row.portfolio.id}-${row.securityId}-${row.instrument}`}><div><small className={styles.holderKind}>{row.portfolio.kind === "etf" ? "ETF" : row.portfolio.kind === "corporate" ? t("企業", "Company") : t("運用会社", "Manager")}</small><button className={styles.holderLink} onClick={() => { setView(row.portfolio.kind); choosePortfolio(row.portfolio.id); }}>{row.portfolio.kind === "etf" ? fundLabel(row.portfolio) : row.portfolio.name} →</button><small>{row.ticker} · {t(`${row.portfolio.current.asOf}時点`, `As of ${row.portfolio.current.asOf}`)}</small></div><strong>{percent(row.weight)}</strong><span>{row.value > 0 ? money(row.value) : "—"}</span></div>)}</div>
+            <div className={styles.holderResults}>{holders.slice(0, rowLimit).map(row => <div className={styles.holderRow} key={`${row.portfolio.id}-${row.securityId}-${row.instrument}`}><div><small className={styles.holderKind}>{row.portfolio.kind === "etf" ? "ETFs" : row.portfolio.kind === "corporate" ? t("企業", "Company") : t("運用会社", "Manager")}</small><button className={styles.holderLink} onClick={() => { setView(row.portfolio.kind); choosePortfolio(row.portfolio.id); }}>{row.portfolio.kind === "etf" ? fundLabel(row.portfolio) : row.portfolio.name} →</button><small>{row.ticker} · {t(`${row.portfolio.current.asOf}時点`, `As of ${row.portfolio.current.asOf}`)}</small></div><strong>{percent(row.weight)}</strong><span>{row.value > 0 ? money(row.value) : "—"}</span></div>)}</div>
             {!holders.length && <p className={styles.empty}>{t("該当する保有者が見つかりません。企業名やティッカーを変えて検索してください。", "No holders found. Try another company name or ticker.")}</p>}{holders.length > rowLimit && <button className={styles.more} onClick={() => setRowLimit(value => value + 50)}>{t("さらに表示", "Show more")}</button>}</>}
         </section>}
         {selected && isPortfolio && <section className={styles.portfolio} aria-label={selected.name}>
@@ -152,8 +152,8 @@ function CapitalMapContent({ portfolios = emptyPortfolios, mode = "sample" }: { 
           </div>
           <div className={styles.metrics}>
             <div><small>{t("基準日", "AS OF")}{hasUpdate && <span className={styles.updateBadge} title={t("前回開いたときから保有データが更新されました", "Holdings updated since your last visit")}>NEW</span>}</small><strong>{selected.current.asOf}<span>{t("時点", "")}</span></strong></div>
-            <div><small>{t("保有銘柄数", "HOLDINGS")}</small><strong>{selected.current.holdings.length.toLocaleString()}<span>{t("銘柄", "holdings")}</span></strong></div>
-            <div><small>{t("上位5銘柄の構成比", "TOP 5 WEIGHT")}</small><strong>{percent(top.slice(0, 5).reduce((sum, row) => sum + row.weight, 0))}</strong></div>
+            <div><small>{t("保有銘柄数", "HOLDINGS")}</small><strong>{selected.current.holdings.length.toLocaleString()}<span>{t("銘柄", selected.current.holdings.length === 1 ? "holding" : "holdings")}</span></strong></div>
+            <div><small>{t("上位5銘柄の構成比", "TOP 5 HOLDINGS · COMBINED WEIGHT")}</small><strong>{percent(top.slice(0, 5).reduce((sum, row) => sum + row.weight, 0))}</strong></div>
           </div>
           <div className={styles.portfolioBody}>
             <div className={styles.chartPanel}>
@@ -181,8 +181,8 @@ function CapitalMapContent({ portfolios = emptyPortfolios, mode = "sample" }: { 
             {selected.previous && <button aria-pressed={positionGroup === "exited"} onClick={() => { setPositionGroup("exited"); setRowLimit(50); }}>{t("保有解消", "Exited")} <span>{exitedCount}</span></button>}
           </div><button className={styles.searchToggle} aria-label={t("保有一覧を検索", "Search holdings")} aria-expanded={searchOpen} aria-controls="holdings-search" onClick={() => { setSearchOpen(!searchOpen); setHoldingQuery(""); setRowLimit(50); }}><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" aria-hidden="true"><circle cx="10" cy="10" r="6"/><path d="m15 15 6 6"/></svg></button></div>
           {searchOpen && <div className={styles.listFilters} id="holdings-search"><input autoFocus type="search" aria-label={t("保有銘柄を絞り込む", "Filter holdings")} placeholder={t("銘柄名・ティッカー", "Company or ticker")} value={holdingQuery} onChange={event => { setHoldingQuery(event.target.value); setRowLimit(50); }} /></div>}
-          {selected.previous && <div className={styles.changeHead}><h3>{t("前期からの変化", "Changes since prior period")}<small><time dateTime={selected.previous.asOf}>{selected.previous.asOf}</time><span aria-hidden="true">→</span><time dateTime={selected.current.asOf}>{selected.current.asOf}</time></small></h3><label><input type="checkbox" checked={changedOnly} onChange={event => { setChangedOnly(event.target.checked); setRowLimit(50); }} />{selected.current.holdings.some(row => row.instrument === "bond") ? t("保有数量が変わった銘柄のみ", "Only changed positions") : t("株数が変わった銘柄のみ", "Only changed positions")}</label></div>}
-          <div className={styles.positionHead}><span>{t("企業名 / ティッカー", "Company / ticker")}</span><span>{t("構成比", "Weight")}</span><span>{t("保有評価額", "Value")}</span><span>{selected.kind === "etf" ? t("前回比", "Share change") : t("前期比", "Quarter change")}</span></div>
+          {selected.previous && <div className={styles.changeHead}><h3>{t("前期からの変化", "Changes since the previous quarter")}<small><time dateTime={selected.previous.asOf}>{selected.previous.asOf}</time><span aria-hidden="true">→</span><time dateTime={selected.current.asOf}>{selected.current.asOf}</time></small></h3><label><input type="checkbox" checked={changedOnly} onChange={event => { setChangedOnly(event.target.checked); setRowLimit(50); }} />{selected.current.holdings.some(row => row.instrument === "bond") ? t("保有数量が変わった銘柄のみ", "Show changed positions only") : t("株数が変わった銘柄のみ", "Show changed positions only")}</label></div>}
+          <div className={styles.positionHead}><span>{t("企業名 / ティッカー", "Company / ticker")}</span><span>{t("構成比", "Weight")}</span><span>{t("保有評価額", "Value")}</span><span>{selected.kind === "etf" ? t("前回比", "Change in shares held") : t("前期比", "Quarterly change in shares held")}</span></div>
           <div className={styles.holdings} data-holdings>{visibleRows.slice(0, rowLimit).map(row => {
             const colorIndex = top.findIndex(item => item.securityId === row.securityId && item.instrument === row.instrument);
             const detailParams = new URLSearchParams({ portfolio: selected.id, holding: row.securityId, instrument: row.instrument, baseline: baseline?.id ?? "unknown" });
@@ -199,7 +199,7 @@ function CapitalMapContent({ portfolios = emptyPortfolios, mode = "sample" }: { 
               <span className={styles.positionChange} data-change={row.change} title={row.change === "unknown" ? t("比較できる前回データがありません", "No comparable prior data") : `${row.shares.toLocaleString("en-US")} ${row.instrument === "bond" ? t("USD（元本）", "USD principal") : t("株", "shares")}`}><strong>{row.shareChangePercent === null ? labels[row.change] : signed(row.shareChangePercent)}</strong>{row.shareChangePercent !== null && <small>{labels[row.change]}</small>}</span>
             </a>;
           })}{!visibleRows.length && <p className={styles.empty}>{t("該当する銘柄がありません。", "No matching holdings.")}</p>}</div>
-          {!baseline && <p className={styles.missingHistory}>{t("前回比の「—」は比較データ未収録です。", "A dash in Share change means prior data is not yet included.")}</p>}
+          {!baseline && <p className={styles.missingHistory}>{t("前回比の「—」は比較データ未収録です。", "A dash means data for the previous period isn't available.")}</p>}
           {visibleRows.length > rowLimit && <button className={styles.more} onClick={() => setRowLimit(value => value + 50)}>{t("さらに表示", "Show more")} · {Math.min(rowLimit, visibleRows.length)} / {visibleRows.length}</button>}
             </div>
           </div>
@@ -214,20 +214,20 @@ function CapitalMapContent({ portfolios = emptyPortfolios, mode = "sample" }: { 
         </section>}
         {view === "overlap" && etfs.length >= 2 && <section className={styles.overlap} aria-labelledby="etf-overlap">
           <h2 id="etf-overlap">{t("一緒に持つと、投資先はどれだけ重なる？", "How much would your investments overlap?")}</h2>
-          <p className={styles.explainer}>{t("S&P500と全世界株式など、2つの投資先に共通する銘柄を比べられます。", "Compare the stocks shared by investments such as the S&P 500 and global equities.")}</p>
-          <div className={styles.compare}><label>{t("投資先 1", "Investment 1")}<select aria-label={t("比較するETF 1", "First ETF")} value={leftId} onChange={event => setLeftId(event.target.value)}>{etfs.map(item => <option key={item.id} value={item.id}>{fundLabel(item)}</option>)}</select></label><span>＋</span><label>{t("投資先 2", "Investment 2")}<select aria-label={t("比較するETF 2", "Second ETF")} value={rightId} onChange={event => setRightId(event.target.value)}>{etfs.map(item => <option key={item.id} value={item.id}>{fundLabel(item)}</option>)}</select></label></div>
-          {(left?.name === "ACWI" || right?.name === "ACWI") && <p className={styles.comparisonScope}>{t("全世界株式は米国ETF「ACWI」の保有データです。国内投信の「オルカン」そのものではありません。", "Global equities use the US-listed ACWI ETF, not a Japanese mutual fund.")}</p>}
+          <p className={styles.explainer}>{t("S&P500と全世界株式など、2つの投資先に共通する銘柄を比べられます。", "Compare the holdings of ETFs that track markets such as the S&P 500 and global stocks.")}</p>
+          <div className={styles.compare}><label>{t("投資先 1", "ETF 1")}<select aria-label={t("比較するETF 1", "First ETF")} value={leftId} onChange={event => setLeftId(event.target.value)}>{etfs.map(item => <option key={item.id} value={item.id}>{fundLabel(item)}</option>)}</select></label><span>＋</span><label>{t("投資先 2", "ETF 2")}<select aria-label={t("比較するETF 2", "Second ETF")} value={rightId} onChange={event => setRightId(event.target.value)}>{etfs.map(item => <option key={item.id} value={item.id}>{fundLabel(item)}</option>)}</select></label></div>
+          {(left?.name === "ACWI" || right?.name === "ACWI") && <p className={styles.comparisonScope}>{t("全世界株式は米国ETF「ACWI」の保有データです。国内投信の「オルカン」そのものではありません。", "Global stocks are represented by the U.S.-listed ACWI ETF, rather than a Japanese mutual fund.")}</p>}
           <p className={styles.footnote}>{left?.name} {t(`${left?.current.asOf}時点`, `As of ${left?.current.asOf}`)} · {right?.name} {t(`${right?.current.asOf}時点`, `As of ${right?.current.asOf}`)}</p>
           {!overlap ? <p className={styles.empty}>{t("異なるETFを選んでください。", "Choose two different ETFs.")}</p> : <>
-            <div className={styles.overlapResult}><div><small>{t("共通する銘柄", "Shared stocks")}</small><strong>{overlap.rows.length}<small>{t("銘柄", "stocks")}</small></strong></div><div><small>{t("同じ銘柄への配分が重なる割合", "Overlapping portfolio allocation")}</small><strong>{percent(overlap.percent)}</strong></div></div>
+            <div className={styles.overlapResult}><div><small>{t("共通する銘柄", "Shared stocks")}</small><strong>{overlap.rows.length}<small>{t("銘柄", overlap.rows.length === 1 ? "stock" : "stocks")}</small></strong></div><div><small>{t("同じ銘柄への配分が重なる割合", "Portfolio overlap")}</small><strong>{percent(overlap.percent)}</strong></div></div>
             <div className={styles.overlapBar}><span style={{ width: `${overlap.percent}%` }} /></div>
             {overlap.rows[0] && <p className={styles.overlapExample}>{t(`例えば${overlap.rows[0].ticker || overlap.rows[0].name}は、${left?.name}に${percent(overlap.rows[0].left)}、${right?.name}に${percent(overlap.rows[0].right)}。小さい方の${percent(overlap.rows[0].shared)}が共通する配分です。`, `For example, ${overlap.rows[0].ticker || overlap.rows[0].name} is ${percent(overlap.rows[0].left)} of ${left?.name} and ${percent(overlap.rows[0].right)} of ${right?.name}. The smaller weight, ${percent(overlap.rows[0].shared)}, is the shared allocation.`)}</p>}
             <div className={styles.sharedHead}><span>{t("両方に入っている銘柄", "Stocks held by both")}</span><span>{left?.name}</span><span>{right?.name}</span></div>
             <div className={styles.sharedRows}>{overlap.rows.map((row, index) => <div key={`${row.ticker}-${row.name}-${index}`}><div><strong>{row.ticker || row.name}</strong>{row.ticker && <small>{row.name}</small>}</div><span>{percent(row.left)}<i style={{ width: `${row.left}%` }} /></span><span>{percent(row.right)}<i style={{ width: `${row.right}%` }} /></span></div>)}</div>
-            <details className={styles.source}><summary>{t("計算方法", "Method")}</summary><p>{t("共通する株式ごとに小さい方の構成比を合計します。株式クラスが違う場合は別銘柄として扱います。現金・先物等は含みません。", "We sum the smaller weight for each shared equity. Different share classes are treated separately. Cash and futures are excluded.")}</p></details>
+            <details className={styles.source}><summary>{t("計算方法", "Method")}</summary><p>{t("共通する株式ごとに小さい方の構成比を合計します。株式クラスが違う場合は別銘柄として扱います。現金・先物等は含みません。", "For each stock held by both ETFs, we take the smaller portfolio weight and add these weights together. Different share classes are counted separately. Cash and futures are excluded.")}</p></details>
           </>}
         </section>}
-        <details className={styles.usage}><summary>{t("使い方", "How to use")}</summary><p>{t("NEWは前回開いたときから保有データが更新された場合に表示します。検索は収録対象の公開保有情報を参照します。", "NEW indicates holdings updated since your last visit in this browser. Search covers the public holdings included in Capital Map.")}</p></details>
+        <details className={styles.usage}><summary>{t("使い方", "How it works")}</summary><p>{t("NEWは前回開いたときから保有データが更新された場合に表示します。検索は収録対象の公開保有情報を参照します。", "NEW marks holdings updated since your last visit in this browser. Search includes only the publicly disclosed holdings available in Capital Map.")}</p></details>
       </>}
       </div>
     </div>

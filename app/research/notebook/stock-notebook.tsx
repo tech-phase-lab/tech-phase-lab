@@ -91,7 +91,7 @@ export default function StockNotebook({ tickers, lang, weeksBack }: { tickers: s
   const label = (kind: Kind) => kind === "earnings" ? t("決算", "Earnings") : kind === "targets" ? t("目標株価", "Target") : t("ニュース", "News");
 
   return <section className={styles.notebook} aria-label={t("ニュース・決算・目標株価", "News, earnings and targets")}>
-    {state === "loading" && <p role="status" className={styles.note}>{t("今週の動きを集計中…", "Tallying this week…")}</p>}
+    {state === "loading" && <p role="status" className={styles.note}>{t("今週の動きを集計中…", "Loading this week's updates…")}</p>}
     {state === "failed" && <p role="alert" className={styles.note}>{t("ニュースと決算を取得できませんでした。しばらくしてからもう一度お試しください。", "News and earnings could not be loaded. Please try again shortly.")}</p>}
     {notebook && <>
       <div className={styles.chips} role="group" aria-label={t("種類で絞り込み", "Filter")}>

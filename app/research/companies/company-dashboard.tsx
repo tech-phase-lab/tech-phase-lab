@@ -49,7 +49,7 @@ export default function CompanyDashboard({ profile, companies }: { profile: Comp
       <div className={styles.preview}><strong>{t("過去資料の比較版", "HISTORICAL REVIEW")}</strong><span>{t("収録資料の最終発表日", "Latest included release")}: {latestDate} · {t("自動更新なし", "No automatic updates")}</span></div>
       <header className={styles.companyHeading}>
         <div><p className={styles.eyebrow}>{profile.sector[lang]}</p><h1>{profile.ticker} <span>{profile.name}</span></h1><p className={styles.focus}>{profile.focus[lang]}</p></div>
-        <div className={styles.reviewed}><span>{t("資料照合日", "Source review")}</span><time dateTime={profile.reviewedOn}>{profile.reviewedOn}</time></div>
+        <div className={styles.reviewed}><span>{t("資料照合日", "Sources last reviewed")}</span><time dateTime={profile.reviewedOn}>{profile.reviewedOn}</time></div>
       </header>
 
       <nav className={styles.sectionNav} aria-label={t("ページ内の項目", "On this page")}>

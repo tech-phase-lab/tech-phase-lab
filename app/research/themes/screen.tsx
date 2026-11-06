@@ -63,7 +63,7 @@ export default function ThemeRankingScreen() {
   const widest = Math.max(1, ...rows.map(row => Math.abs(row.value)));
 
   return <ResearchToolShell lang={lang} setLang={setLang} title={t("テーマランキング", "Theme Ranking")}
-    description={t("米国株をテーマ（ジャンル）ごとに、値動きの強さで並べます。", "U.S. stocks grouped by theme and ranked by how strongly they are moving.")}>
+    description={t("米国株をテーマ（ジャンル）ごとに、値動きの強さで並べます。", "See how U.S. stock themes rank by performance.")}>
     <div className={styles.eyebrow}><span>TECH PHASE PRO</span><i aria-hidden="true" /><span>THEME RANKING</span></div>
 
     {plan === null && <p role="status" className={styles.note}>{t("会員情報を確認中…", "Checking membership…")}</p>}
@@ -71,13 +71,13 @@ export default function ThemeRankingScreen() {
     {plan === "free" && <section className={styles.lock} aria-labelledby="theme-lock">
       <svg className={styles.gem} viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l7 9-7 9-7-9z" /></svg>
       <h2 id="theme-lock">{t("テーマランキングはPRO会員限定です", "Theme Ranking is exclusive to PRO")}</h2>
-      <p>{t("AI半導体、メモリ、光・フォトニクスなどのハイテクをはじめ、資源・金融・ヘルスケアなど6ジャンルのテーマを、期間ごとの強さ順に確認できます。", "See themes across six genres — high-tech (AI chips, memory, optical & photonics…), resources, finance, health and more — ranked by strength over 1 day to 3 months.")}</p>
+      <p>{t("AI半導体、メモリ、光・フォトニクスなどのハイテクをはじめ、資源・金融・ヘルスケアなど6ジャンルのテーマを、期間ごとの強さ順に確認できます。", "Explore stock themes across six categories, from technology and resources to finance and healthcare. Compare their performance over periods from one day to three months.")}</p>
       <ol className={styles.teaser} aria-label={t("対象のテーマ", "Themes covered")}>{themesOf("tech").map(theme => <li key={theme.id}><span aria-hidden="true">◇</span>{ja ? theme.ja : theme.en}<b aria-hidden="true">••••</b></li>)}</ol>
       <Link className={styles.cta} href="/research#tech-phase-pro">{t("Tech Phase PROを見る", "See Tech Phase PRO")}</Link>
     </section>}
 
     {plan === "pro" && <section aria-label={t("テーマ別ランキング", "Theme ranking")}>
-      <div className={styles.groups} role="group" aria-label={t("ジャンル", "Genre")}>
+      <div className={styles.groups} role="group" aria-label={t("ジャンル", "Category")}>
         {GROUPS.map(item => <button key={item.id} type="button" aria-pressed={item.id === group} onClick={() => { setGroup(item.id); setSample(false); }}>{ja ? item.ja : item.en}</button>)}
       </div>
       <div className={styles.tabs} role="group" aria-label={t("期間", "Period")}>
@@ -99,7 +99,7 @@ export default function ThemeRankingScreen() {
           </details>
         </li>)}</ol>
       </>}
-      {state === "error" && <p role="alert" className={styles.note}>{t("データを取得できませんでした。しばらくしてからもう一度お試しください。", "The data could not be loaded. Please try again shortly.")}</p>}
+      {state === "error" && <p role="alert" className={styles.note}>{t("データを取得できませんでした。しばらくしてからもう一度お試しください。", "We couldn't load the data. Please try again in a moment.")}</p>}
       {((state === "ready" && data) || (state === "not-connected" && sample)) && shown && <>
         {sample ? <p role="status" className={styles.sample}><b>SAMPLE</b>{t("見た目の確認用の見本です。実際の株価ではありません（運営者のみに表示）。", "A look at the finished screen with made-up numbers — not real prices (owner only).")} <button type="button" onClick={() => setSample(false)}>{t("閉じる", "Close")}</button></p>
           : <p className={styles.meta}>{t(`${shown.asOf} 終値ベース・各テーマの構成銘柄の等ウェイト平均`, `Closing prices as of ${shown.asOf} · equal-weighted average of each theme's stocks`)}</p>}

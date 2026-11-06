@@ -88,7 +88,7 @@ function TradingViewPanels({ symbol, lang }: { symbol: string; lang: "ja" | "en"
       <button type="button" aria-busy={pending} disabled={pending} onClick={() => { const attempt = attempts[view] + 1; setReloading({ kind: view, attempt }); setAttempts((current) => ({ ...current, [view]: current[view] + 1 })); }}><span aria-hidden="true">▶</span>{pending ? (lang === "ja" ? "再読み込み中…" : "Reloading…") : lang === "ja" ? (view === "chart" ? "チャートを再読み込みする" : "株価・指標を再読み込みする") : "Reload market view"}</button>
     </div>
     <div className={`${styles.note} ${polish.note}`}>
-      <p>{lang === "ja" ? "TradingViewの15分遅延データです。" : "TradingView data delayed by 15 minutes."}<br />{lang === "ja" ? "Tech Phaseの速報判定には使用しません。" : "Not used for Tech Phase alert decisions."}</p>
+      <p>{lang === "ja" ? "TradingViewの15分遅延データです。" : "TradingView data delayed by 15 minutes."}<br />{lang === "ja" ? "Tech Phaseの速報判定には使用しません。" : "Tech Phase alerts don't use these quotes."}</p>
       <a href={`https://www.tradingview.com/symbols/${symbol.replace(":", "-").replace(".", "-")}/`} target="_blank" rel="noreferrer">{lang === "ja" ? "TradingViewで確認 ↗" : "Open in TradingView ↗"}</a>
     </div>
   </section>;

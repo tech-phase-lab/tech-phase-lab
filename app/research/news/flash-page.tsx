@@ -153,7 +153,7 @@ export default function FlashPage({ lang, onReady }: { lang: Language; onReady?:
         </div>
       </details>
     </div>
-    {!full && <p className={styles.freeNote} role="note"><b>FREE</b>{ja ? "版　30分遅延・新着5件" : " 30 min behind · latest 5"}<br /><Link href="/research#tech-phase-pro">{ja ? "PRO版は、リアルタイム・全件" : "PRO: real-time, every item"}</Link></p>}
+    {!full && <p className={styles.freeNote} role="note"><b>FREE</b>{ja ? "版　30分遅延・新着5件" : " 30 min behind · latest 5"}<br /><Link href="/research#tech-phase-pro">{ja ? "PRO版は、リアルタイム・全件" : "PRO: real-time access to all updates"}</Link></p>}
     <div ref={list} className={styles.panel}>
       {failed && <p className={timeline.problem} role="status">{ja ? "最新の配信状況を確認できません。" : "Unable to check the latest feed."}{feed && (ja ? " 前回取得した内容を表示しています。" : " Showing previously loaded items.")}</p>}
       {feed && !rows.length && <p className={timeline.problem}>{ja ? "現在、該当する速報はありません。" : "No matching alerts right now."}</p>}
@@ -165,6 +165,6 @@ export default function FlashPage({ lang, onReady }: { lang: Language; onReady?:
       })}</div>}
     </div>
     <FeedPagination page={current} pages={pages} ja={ja} onChange={next => { setPage(next); list.current?.scrollIntoView({ block: "start", behavior: "instant" }); }} />
-    <p className={timeline.fine}>{ja ? "監視22銘柄のニュースと、発表された決算を、新しい順に掲載しています。時刻は日本時間です。" : "News for the 22 tracked stocks and announced earnings, newest first. All times are JST."}</p>
+    <p className={timeline.fine}>{ja ? "監視22銘柄のニュースと、発表された決算を、新しい順に掲載しています。時刻は日本時間です。" : "News and earnings updates for the 22 stocks we track, newest first. All times are Japan Standard Time (JST)."}</p>
   </section>;
 }

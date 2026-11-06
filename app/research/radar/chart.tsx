@@ -1,6 +1,6 @@
 "use client";
 import { useMemo } from "react";
-import { X_TICKS, Y_TICKS, beyondDirections, beyondText, isBeyond, placeLabels, previousBeyondText, spreadEdgeDots, xPosition, yPosition, zoneName, zoneOf, type RadarDotFree, type RadarDotPro, type Zone } from "@/lib/research/radar";
+import { X_TICKS, Y_TICKS, beyondDirections, beyondText, isBeyond, placeLabels, previousBeyondText, spreadEdgeDots, xPosition, yPosition, zoneLabel, zoneOf, type RadarDotFree, type RadarDotPro, type Zone } from "@/lib/research/radar";
 import styles from "./radar.module.css";
 
 const W = 340, H = 316, L = 46, T = 10, R = 330, B = 282;
@@ -12,11 +12,12 @@ const TRAIL_MIN = 6; // a previous position closer than this on screen is not wo
 const px = (ocf: number, r = 0) => Math.min(R - r - 1, Math.max(L + r + 1, L + xPosition(ocf) * (R - L)));
 const py = (cover: number, r = 0) => Math.min(B - r - 1, Math.max(T + r + 1, B - yPosition(cover) * (B - T)));
 const isPro = (dot: RadarDotFree | RadarDotPro): dot is RadarDotPro => "previous" in dot;
-export const fmtCover = (n: number) => n >= 100 ? "100x超" : `${n.toFixed(2)}x`;
+export const fmtCover = (n: number, lang: "ja" | "en" = "ja") => n >= 100 ? (lang === "ja" ? "100x超" : "100x+") : `${n.toFixed(2)}x`;
 export const fmtPercent = (n: number) => `${Math.abs(n) >= 100 ? n.toFixed(0) : n.toFixed(1)}%`;
 const toneColor = (tone: RadarDotFree["tone"]) => tone === "up" ? GROW : tone === "down" ? SHRINK : PLAIN;
 
-export default function RadarChart({ dots, selected, onSelect }: { dots: (RadarDotFree | RadarDotPro)[]; selected: string | null; onSelect?: (ticker: string | null) => void }) {
+export default function RadarChart({ dots, selected, onSelect, lang = "ja" }: { dots: (RadarDotFree | RadarDotPro)[]; selected: string | null; onSelect?: (ticker: string | null) => void; lang?: "ja" | "en" }) {
+  const ja = lang === "ja";
   const x0 = L + xPosition(0) * (R - L), yMid = B - yPosition(1) * (B - T);
   // Where each dot is drawn: its exact place, except that dots stopped at an edge are nudged apart so that all stay visible.
   const where = useMemo(() => spreadEdgeDots(dots.map(dot => ({
@@ -33,33 +34,33 @@ export default function RadarChart({ dots, selected, onSelect }: { dots: (RadarD
     const specs: { zone: Zone; w: number; top: boolean; left: boolean }[] = [
       { zone: "guard", w: 60, top: true, left: true }, { zone: "solid", w: 24, top: true, left: false },
       { zone: "thin", w: 62, top: false, left: true }, { zone: "lever", w: 66, top: false, left: false },
-    ];
+    ].map(spec => ja ? spec : { ...spec, w: Math.round(zoneLabel(spec.zone as Zone, "en").length * 6.2 + 4) }) as { zone: Zone; w: number; top: boolean; left: boolean }[];
     return specs.map(spec => {
       const h = 13, ys = spec.top ? [T + 3, yMid - h - 3] : [B - 17, yMid + 3];
       const options = ys.flatMap(y => [{ x: spec.left ? L + 4 : R - 4 - spec.w, y, w: spec.w, h }, { x: spec.left ? x0 - 4 - spec.w : x0 + 4, y, w: spec.w, h }]);
       const box = options.reduce((best, option) => hits(option) < hits(best) ? option : best);
       return { ...spec, box };
     });
-  }, [dots, x0, yMid, where]);
+  }, [dots, x0, yMid, where, ja]);
   // PRO view: the long labels with numbers belong to the tapped company only; the others show just their name. FREE view is unchanged.
   const proView = !!onSelect;
-  const extras = useMemo(() => Object.fromEntries(dots.map(dot => [dot.ticker, isBeyond(dot.ocfMargin, dot.cover) && (!proView || dot.ticker === selected) ? beyondText(dot.ocfMargin, dot.cover, dot.noRevenue) : ""])), [dots, selected, proView]);
+  const extras = useMemo(() => Object.fromEntries(dots.map(dot => [dot.ticker, isBeyond(dot.ocfMargin, dot.cover) && (!proView || dot.ticker === selected) ? beyondText(dot.ocfMargin, dot.cover, dot.noRevenue, lang) : ""])), [dots, selected, proView, lang]);
   // A previous position outside the chart has no dotted line; its value is written beside the name.
-  const earlier = useMemo(() => Object.fromEntries(dots.map(dot => [dot.ticker, isPro(dot) && (!proView || dot.ticker === selected) ? previousBeyondText(dot.previous) : ""])), [dots, selected, proView]);
+  const earlier = useMemo(() => Object.fromEntries(dots.map(dot => [dot.ticker, isPro(dot) && (!proView || dot.ticker === selected) ? previousBeyondText(dot.previous, lang) : ""])), [dots, selected, proView, lang]);
   const labels = useMemo(() => placeLabels(dots.map(dot => {
     const r = RADIUS[dot.size], extra = extras[dot.ticker];
     return { id: dot.ticker, x: where[dot.ticker].x, y: where[dot.ticker].y, r, w: dot.ticker.length * 6.3 + 2 + (extra ? extra.length * 4.7 + 7 : 0) + (earlier[dot.ticker] ? earlier[dot.ticker].length * 5.2 + 7 : 0) };
   }), { left: L + 2, top: T + 2, right: R - 2, bottom: B - 2 }, 11, zoneLabels.map(label => label.box), selected), [dots, zoneLabels, extras, earlier, where, selected]);
   const selectedDot = dots.find(dot => dot.ticker === selected);
   return <>
-    <svg className={styles.svg} viewBox={`0 0 ${W} ${H}`} role="img" aria-label="横軸が稼ぐ力、縦軸が守る力の散布図" onClick={() => onSelect?.(null)}>
+    <svg className={styles.svg} viewBox={`0 0 ${W} ${H}`} role="img" aria-label={ja ? "横軸が稼ぐ力、縦軸が守る力の散布図" : "Scatter plot: cash generation on the horizontal axis, financial resilience on the vertical axis"} onClick={() => onSelect?.(null)}>
       <rect x={x0} y={T} width={R - x0} height={yMid - T} fill={ZONE_FILL.solid} />
       <rect x={x0} y={yMid} width={R - x0} height={B - yMid} fill={ZONE_FILL.lever} />
       <rect x={L} y={T} width={x0 - L} height={yMid - T} fill={ZONE_FILL.guard} />
       <rect x={L} y={yMid} width={x0 - L} height={B - yMid} fill={ZONE_FILL.thin} />
       {Y_TICKS.map(tick => <g key={tick}><line x1={L} x2={R} y1={py(tick)} y2={py(tick)} className={tick === 1 ? styles.base : styles.grid} /><text x={L - 6} y={py(tick) + 3} textAnchor="end" className={styles.tick}>{`${tick}x`}</text></g>)}
       {X_TICKS.map(tick => <g key={tick}><line x1={px(tick)} x2={px(tick)} y1={T} y2={B} className={tick === 0 ? styles.base : styles.grid} /><text x={px(tick)} y={B + 14} textAnchor="middle" className={styles.tick}>{`${tick}%`}</text></g>)}
-      {zoneLabels.map(label => <text key={label.zone} x={label.box.x} y={label.box.y + 10} className={styles.zone} fill={ZONE_INK[label.zone]}>{zoneName[label.zone]}</text>)}
+      {zoneLabels.map(label => <text key={label.zone} x={label.box.x} y={label.box.y + 10} className={styles.zone} fill={ZONE_INK[label.zone]}>{zoneLabel(label.zone, lang)}</text>)}
       {dots.map(dot => {
         if (!isPro(dot) || !dot.previous || isBeyond(dot.previous.ocfMargin, dot.previous.cover)) return null;
         const x1 = px(dot.previous.ocfMargin), y1 = py(dot.previous.cover), x2 = where[dot.ticker].x, y2 = where[dot.ticker].y;
@@ -93,10 +94,10 @@ export default function RadarChart({ dots, selected, onSelect }: { dots: (RadarD
       })}
     </svg>
     {selectedDot && isPro(selectedDot) && <p className={styles.picked} role="status">
-      <b>{selectedDot.ticker}</b><span>稼ぐ力 {selectedDot.noRevenue ? "売上なし" : fmtPercent(selectedDot.ocfMargin)}</span><span>守る力 {fmtCover(selectedDot.cover)}</span>
-      <span>売上の前年比 {selectedDot.growth === null ? "—" : `${selectedDot.growth > 0 ? "+" : ""}${selectedDot.growth.toFixed(0)}%`}</span><span>決算日 {selectedDot.asOf}</span>
-      {!selectedDot.noRevenue && <span>フリーキャッシュフロー率 {fmtPercent(selectedDot.fcfMargin)}</span>}
-      {selectedDot.review && !selectedDot.noRevenue && <span>要確認</span>}<i>{zoneName[zoneOf(selectedDot.ocfMargin, selectedDot.cover)]}</i>
+      <b>{selectedDot.ticker}</b><span>{ja ? "稼ぐ力" : "Cash generation"} {selectedDot.noRevenue ? (ja ? "売上なし" : "No revenue") : fmtPercent(selectedDot.ocfMargin)}</span><span>{ja ? "守る力" : "Resilience"} {fmtCover(selectedDot.cover, lang)}</span>
+      <span>{ja ? "売上の前年比" : "Revenue YoY"} {selectedDot.growth === null ? "—" : `${selectedDot.growth > 0 ? "+" : ""}${selectedDot.growth.toFixed(0)}%`}</span><span>{ja ? "決算日" : "Earnings date"} {selectedDot.asOf}</span>
+      {!selectedDot.noRevenue && <span>{ja ? "フリーキャッシュフロー率" : "Free cash flow margin"} {fmtPercent(selectedDot.fcfMargin)}</span>}
+      {selectedDot.review && !selectedDot.noRevenue && <span>{ja ? "要確認" : "Needs review"}</span>}<i>{zoneLabel(zoneOf(selectedDot.ocfMargin, selectedDot.cover), lang)}</i>
     </p>}
   </>;
 }

@@ -220,7 +220,7 @@ export default function AccountView({ ja, member, billingAvailable, upgradeFirst
             {stopped && <p className={styles.note}>{t("この日まで、PROの機能を利用できます。", "PRO stays available until this date.")}</p>}
             {mode && !preview && !loadingContract && <Link className={`${styles.btn} ${styles.gbtO} ${styles.btnS}`} style={{ marginTop: 14 }} href="/research/account/billing" prefetch={false}>{t("支払い方法・履歴を確認", "Payment method & history")} {I.ext}</Link>}
             {mode && !preview && activeContract && <Link className={styles.link} href="/research/account/cancel" prefetch={false}>{t("解約の手続きへ", "Cancel membership")}</Link>}
-            {preview && <button type="button" className={styles.link} disabled>{t("自動更新を停止する", "Stop automatic renewal")}</button>}
+            {preview && <button type="button" className={styles.link} disabled>{t("自動更新を停止する", "Turn off auto-renewal")}</button>}
           </>}
       </div>;
 
@@ -228,19 +228,19 @@ export default function AccountView({ ja, member, billingAvailable, upgradeFirst
   const resoluteCard = <div className={styles.res}>
     <div className={styles.resHead}><span className={styles.resIcon}>{I.anchor}</span><span className={styles.resName}>RESOLUTE</span>
       {resolute.state === "bought" && !preview && <span className={`${styles.pt} ${styles.ptOn}`}>{t("購入済み", "Purchased")}</span>}
-      <span className={styles.resSub}>{t("暴落の夜も、上昇の朝も、自分のルールに立ち戻るためのキット。", "A kit to return to your own rules, on crash nights and rally mornings.")}</span></div>
+      <span className={styles.resSub}>{t("暴落の夜も、上昇の朝も、自分のルールに立ち戻るためのキット。", "A toolkit to help you stick to your own rules through market drops and rallies.")}</span></div>
     {!preview && resolute.state === "unknown" && <p className={styles.note} role="status">{t("購入状況を確認できませんでした。", "Could not check your purchase.")} <button type="button" className={styles.link} onClick={recheck}>{t("再確認", "Check again")}</button></p>}
     {resolute.state === "bought" && !preview
       ? <>{resolute.alertsUntil && formatDay(resolute.alertsUntil, ja) && <div className={styles.kvs} style={{ marginTop: 6 }}><div className={styles.kv}><span>{t("通知サービスの有効期限", "Alerts valid until")}</span><b>{formatDay(resolute.alertsUntil, ja)}</b></div></div>}
-          <div className={styles.stack}><Link className={`${styles.btn} ${styles.abt}`} href="/resolute">{t("RESOLUTEを開く", "Open RESOLUTE")}</Link>
+          <div className={styles.stack}><Link className={`${styles.btn} ${styles.abt}`} href={ja ? "/resolute" : "/resolute?lang=en"}>{t("RESOLUTEを開く", "Open RESOLUTE")}</Link>
             <Link className={`${styles.btn} ${styles.abt} ${styles.abtO}`} style={{ height: 46, fontSize: 14 }} href="/resolute/settings">{t("通知サービスを更新", "Renew alerts")}</Link></div></>
-      : <Link className={`${styles.btn} ${styles.abt} ${styles.abtO}`} style={{ marginTop: 16 }} href="/resolute">{t("RESOLUTEを見る", "See RESOLUTE")}</Link>}
+      : <Link className={`${styles.btn} ${styles.abt} ${styles.abtO}`} style={{ marginTop: 16 }} href={ja ? "/resolute" : "/resolute?lang=en"}>{t("RESOLUTEを見る", "See RESOLUTE")}</Link>}
   </div>;
 
   // ---- security / support
   const twoValue = <span className={`${styles.rv} ${twoFactor ? styles.rvOn : ""}`}>{twoFactor === null ? t("確認できません", "Unavailable") : twoFactor ? t("オン", "On") : t("オフ", "Off")}</span>;
   const security = <div className={styles.cd} style={{ marginTop: 0 }}>
-    {row(I.bell, t("スマホ通知の設定", "Phone notifications"), { href: "/research/notifications", pro: true })}
+    {row(I.bell, t("スマホ通知の設定", "Mobile notifications"), { href: "/research/notifications", pro: true })}
     {passwordRow && row(I.key, t("パスワードを変更", "Change password"), { href: "/research/account/security" })}
     {/* The owner's two-step verification is required for admin access: when it is on it is only shown (never offered to turn off);
         when it is off or cannot be read, the row opens the security page so it can be set up. */}
@@ -255,7 +255,7 @@ export default function AccountView({ ja, member, billingAvailable, upgradeFirst
     <div className={styles.mode}><div className={styles.modeHead}>{t("表示モード", "View mode")}<span>VIEW AS</span></div>
       <div className={styles.seg} role="group" aria-label={t("表示モード", "View mode")}>{modes.map(([id, label]) => <button key={id} type="button" aria-pressed={viewAs === id} disabled={switching} onClick={() => void changeView(id)}>{label}</button>)}</div>
       {switchError && <p role="alert">{t("切り替えできませんでした。もう一度お試しください。", "Could not switch. Please try again.")}</p>}
-      <p className={styles.modeNote}>{t("会員の画面を、運営者のまま確認できます。", "Preview the member screens while staying the owner.")}</p></div>
+      <p className={styles.modeNote}>{t("会員の画面を、運営者のまま確認できます。", "Preview the member experience while signed in as the owner.")}</p></div>
     <div className={`${styles.cd} ${styles.ownerMenu}`} style={{ marginTop: 14 }}>
       {row(I.plus, t("会員・契約の確認", "Members & contracts"), { href: "/research/account/members", sub: t("会員の検索と、契約状況・利用期限の確認", "Search members; contracts and expiry") })}
       {row(I.feed, t("配信状況", "Delivery status"), { href: "/research/account/delivery", sub: t("ニュース取得とスマホ通知の送信状況", "News intake and phone-alert sending") })}

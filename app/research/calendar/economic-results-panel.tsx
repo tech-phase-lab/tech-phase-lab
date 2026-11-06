@@ -86,8 +86,8 @@ export default function EconomicResultsPanel({ lang, zone, period, kind = "all",
   </section>;
   if (kind === "earnings") return <>{earningsSection || null}</>;
   return <>{earningsSection || null}<DeepAnalysisPanel lang={lang} kind="indicator" />
-  <section className={styles.section} aria-label={ja ? "経済指標の結果" : "Economic results"}>
-    <h2>{ja ? "経済指標の結果" : "Economic results"}</h2>
+  <section className={styles.section} aria-label={ja ? "経済指標の結果" : "Economic releases"}>
+    <h2>{ja ? "経済指標の結果" : "Economic releases"}</h2>
     {failed && <p role="status" className={styles.description}>{ja ? "最新の結果を取得できません。保存済みの公式確認結果を表示しています。" : "Latest results are unavailable. Showing saved, verified results."}</p>}
     <ResultList key={`${lang}:${zone}:${period}:${kind}`} lang={lang} rows={results.map(event => <li key={event.id}><details>
       <summary><time dateTime={event.releasedAt}>{calendarDateKey(event.releasedAt, zone).slice(5).replace("-", "/")}<small>{new Intl.DateTimeFormat(ja ? "ja-JP" : "en-US", { timeZone: zone, hour: "2-digit", minute: "2-digit", hour12: false }).format(new Date(event.releasedAt))} {zoneLabel}</small></time><span className={calendarStyles.eventName}>{event.title[lang]}<small>{event.result[lang]}</small></span><span className={calendarStyles.expand} aria-hidden="true">＋</span></summary>

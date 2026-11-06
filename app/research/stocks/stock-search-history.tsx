@@ -37,11 +37,11 @@ export default function StockSearchHistory({ lang, history, onSelect, onClear }:
     return () => observer.disconnect();
   }, [history]);
   const overflow = limit < history.length;
-  return <section className={styles.root} aria-label={t("履歴", "History")}>
-    <div className={styles.heading}><strong>{t("履歴", "History")}</strong>{history.length > 0 && <button type="button" onClick={() => { setExpanded(false); onClear(); }}>{t("消去", "Clear")}</button>}</div>
+  return <section className={styles.root} aria-label={t("履歴", "Recent searches")}>
+    <div className={styles.heading}><strong>{t("履歴", "Recent searches")}</strong>{history.length > 0 && <button type="button" onClick={() => { setExpanded(false); onClear(); }}>{t("消去", "Clear")}</button>}</div>
     <div className={styles.row} ref={row}>
       {history.length ? <><ul id={listId} className={styles.list}>{history.map((ticker, index) => <li key={ticker} hidden={!expanded && index >= limit}><button type="button" className={styles.chip} onClick={() => onSelect(ticker)} aria-label={t(`${ticker}を再検索`, `Search ${ticker} again`)}>{ticker}</button></li>)}</ul>
-      {overflow && <button type="button" className={styles.toggle} aria-expanded={expanded} aria-controls={listId} aria-label={expanded ? t("履歴を折りたたむ", "Collapse history") : t("すべての履歴を表示", "Show all history")} onClick={() => setExpanded(!expanded)}>{expanded ? "▲" : "▼"}</button>}</> : <span className={styles.empty}>{t("まだ履歴はありません", "No history yet")}</span>}
+      {overflow && <button type="button" className={styles.toggle} aria-expanded={expanded} aria-controls={listId} aria-label={expanded ? t("履歴を折りたたむ", "Collapse history") : t("すべての履歴を表示", "Show all history")} onClick={() => setExpanded(!expanded)}>{expanded ? "▲" : "▼"}</button>}</> : <span className={styles.empty}>{t("まだ履歴はありません", "No recent searches")}</span>}
       <div ref={measure} className={styles.measure} aria-hidden="true">{history.map((ticker) => <span className={styles.chip} key={ticker}>{ticker}</span>)}</div>
     </div>
   </section>;
