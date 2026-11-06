@@ -3,7 +3,7 @@
 export const PRO_ONLY_FEATURES: { ja: string; descriptionJa: string; en: string; descriptionEn: string }[] = [
   { ja: "テーマランキング", descriptionJa: "いま強いジャンルをひと目で確認", en: "Theme Ranking", descriptionEn: "See which themes are strong right now" },
   // The earnings summaries are read inside this page, so they are not a separate item (owner, Nov 5).
-  { ja: "監視22銘柄", descriptionJa: "リゼルが見ている22銘柄の動きと、決算後のまとめ", en: "22 tracked stocks", descriptionEn: "The 22 stocks Rizel follows, with post-earnings summaries" },
+  { ja: "監視22銘柄", descriptionJa: "リゼルが見ている22銘柄の動き", en: "22 tracked stocks", descriptionEn: "The moves of the 22 stocks Rizel follows" },
   { ja: "銘柄比較", descriptionJa: "気になる銘柄を並べて比べる", en: "Stock comparison", descriptionEn: "Compare stocks side by side" },
   { ja: "ハイテク速報のリアルタイム配信", descriptionJa: "無料より30分早く、全件読めます", en: "Real-time Tech Alerts", descriptionEn: "30 minutes earlier than FREE, and every item" },
   { ja: "ウォッチリストの振り返り", descriptionJa: "週末に、登録銘柄の今週の変化をまとめて確認", en: "Watchlist weekly review", descriptionEn: "This week's changes for your stocks, every weekend" },
