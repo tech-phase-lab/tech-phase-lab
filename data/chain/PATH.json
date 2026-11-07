@@ -18,9 +18,15 @@
     {
       "ja": "業務ソフト・データの提携先",
       "en": "Business software & data partners"
+    },
+    {
+      "ja": "競合(10-Kに記載)",
+      "en": "Competitors (named in 10-Ks)"
     }
   ],
-  "rivals": [],
+  "rivals": [
+    "SSNC"
+  ],
   "companies": [
     {
       "id": "OpenAI",
@@ -308,6 +314,30 @@
           }
         }
       ]
+    },
+    {
+      "id": "SSNC",
+      "ticker": "SSNC",
+      "name": "SS&Cテクノロジーズ",
+      "sub": "金融ソフト",
+      "sub_en": "Financial software",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "自動化ソフトの競合としてユーアイパスを記載",
+          "text_en": "Names UiPath as an automation-software competitor",
+          "source": {
+            "label": "SS&C Technologies 10-K",
+            "label_en": "SS&C Technologies 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1402436/000119312526076745/ssnc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "SS&C competes with a range of technology providers including companies such as Microsoft, Pega, UiPath, Appian"
+          }
+        }
+      ],
+      "name_en": "SS&C Technologies"
     }
   ],
   "far": [],

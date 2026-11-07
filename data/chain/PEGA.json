@@ -299,6 +299,30 @@
         }
       ],
       "name_en": "Appian"
+    },
+    {
+      "id": "FICO",
+      "ticker": "FICO",
+      "name": "フェア・アイザック",
+      "sub": "信用スコア・分析",
+      "sub_en": "Credit scoring & analytics",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "銀行向け不正検知の競合としてペガシステムズを記載",
+          "text_en": "Names Pegasystems as a competitor in bank fraud solutions",
+          "source": {
+            "label": "Fair Isaac 10-K",
+            "label_en": "Fair Isaac 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/814547/000081454725000030/fico-20250930.htm",
+            "level": "official",
+            "date": "2025-11-07",
+            "quote": "we compete primarily with Nice Actimize, Experian, Pegasystems, BAE Systems Applied Intelligence, SAS, ACI Worldwide, IBM"
+          }
+        }
+      ],
+      "name_en": "Fair Isaac"
     }
   ],
   "far": [],

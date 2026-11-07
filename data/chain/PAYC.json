@@ -142,6 +142,19 @@
             "date": "2026-08-05",
             "quote": "Our competitors vary for each of our solutions and primarily include payroll and HR service and software providers, such as Automatic Data Processing, Inc., Dayforce, Inc., Paychex, Inc., Paycom Software, Inc., Ultimate Kronos Group and other local and regional providers."
           }
+        },
+        {
+          "type": "rival",
+          "text": "競合の給与・人事ソフト会社としてペイコムを記載",
+          "text_en": "Names Paycom among its payroll and HR competitors",
+          "source": {
+            "label": "Paylocity 10-K",
+            "label_en": "Paylocity 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1591698/000159169826000069/pcty-20260630.htm",
+            "level": "official",
+            "date": "2026-08-05",
+            "quote": "primarily include payroll and HR service and software providers, such as Automatic Data Processing, Inc., Dayforce, Inc., Paychex"
+          }
         }
       ]
     },

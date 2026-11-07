@@ -386,6 +386,54 @@
         }
       ],
       "name_en": "Alaska Air Group"
+    },
+    {
+      "id": "JOBY",
+      "ticker": "JOBY",
+      "name": "ジョビー・アビエーション",
+      "sub": "空飛ぶタクシー",
+      "sub_en": "Air taxis",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "提携先としてデルタ航空を記載",
+          "text_en": "Names Delta Air Lines as a partner",
+          "source": {
+            "label": "Joby Aviation 10-K",
+            "label_en": "Joby Aviation 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1819848/000181984826000160/joby-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "sector-leading relationships with partners such as Toyota, Uber, and Delta Air Lines"
+          }
+        }
+      ],
+      "name_en": "Joby Aviation"
+    },
+    {
+      "id": "SHAK",
+      "ticker": "SHAK",
+      "name": "シェイク・シャック",
+      "sub": "外食",
+      "sub_en": "Restaurants",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "機内食の提携が2025年に大きく拡大",
+          "text_en": "The partnership grew meaningfully in 2025, serving select Delta routes",
+          "source": {
+            "label": "Shake Shack 10-K",
+            "label_en": "Shake Shack 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1620533/000162053326000018/shak-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Our partnership with Delta Air Lines grew meaningfully in 2025"
+          }
+        }
+      ],
+      "name_en": "Shake Shack"
     }
   ],
   "far": [],

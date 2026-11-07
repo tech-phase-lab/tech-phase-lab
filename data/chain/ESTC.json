@@ -318,6 +318,19 @@
             "date": "2026-02-18",
             "quote": "• with respect to Log Management, we compete with Cisco Systems, Inc., and Elastic N.V."
           }
+        },
+        {
+          "type": "rival",
+          "text": "ログ管理の競合としてエラスティックを記載",
+          "text_en": "Names Elastic as a log-management competitor",
+          "source": {
+            "label": "Datadog 10-K",
+            "label_en": "Datadog 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1561550/000162828026008819/ddog-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "with respect to Log Management, we compete with Cisco Systems, Inc., and Elastic N.V."
+          }
         }
       ],
       "name_en": "Datadog"

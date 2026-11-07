@@ -213,6 +213,19 @@
             "date": "2026-02-13",
             "quote": "An additional set of competitors, including Aggreko plc, Generac Holdings Inc., Discovery Energy, LLC (Rehlko, formerly Kohler Energy), Baker Hughes Co., and others, are primarily packagers who source engines and/or other components from domestic and international suppliers"
           }
+        },
+        {
+          "type": "rival",
+          "text": "業務・産業用発電機の競合としてキャタピラーを記載",
+          "text_en": "Names Caterpillar as a competitor in C&I products",
+          "source": {
+            "label": "Generac 10-K",
+            "label_en": "Generac 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1474735/000143774926004568/gnrc20251231_10k.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "C&I products – Competitors include Caterpillar, Cummins, Rehlko (formerly known as Kohler Power), IGSA, MTU (Rolls Royce)"
+          }
         }
       ],
       "name_en": "Generac Holdings"

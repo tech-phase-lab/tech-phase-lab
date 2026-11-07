@@ -351,6 +351,54 @@
         }
       ],
       "name_en": "Celsius Holdings"
+    },
+    {
+      "id": "JSDA",
+      "ticker": "JSDA",
+      "name": "ジョーンズ・ソーダ",
+      "sub": "清涼飲料",
+      "sub_en": "Soft drinks",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主要な競合としてコカ・コーラを記載",
+          "text_en": "Names Coca-Cola as a significant competitor",
+          "source": {
+            "label": "Jones Soda 10-K",
+            "label_en": "Jones Soda 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1083522/000149315226014195/form10-k.htm",
+            "level": "official",
+            "date": "2026-03-31",
+            "quote": "Significant competitors include, but are not limited to, the Coca-Cola Company, PepsiCo, Inc., Nestlé S.A., Keurig Dr Pepper Inc., Danone S.A."
+          }
+        }
+      ],
+      "name_en": "Jones Soda"
+    },
+    {
+      "id": "COCO",
+      "ticker": "COCO",
+      "name": "ビタ・ココ",
+      "sub": "ココナッツウォーター",
+      "sub_en": "Coconut water",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "飲料大手の競合としてコカ・コーラを記載",
+          "text_en": "Names Coca-Cola among large beverage competitors",
+          "source": {
+            "label": "Vita Coco 10-K",
+            "label_en": "Vita Coco 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1482981/000148298126000022/coco-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "large beverage companies such as The Coca-Cola Company, PepsiCo, Inc., and Nestlé S.A."
+          }
+        }
+      ],
+      "name_en": "Vita Coco"
     }
   ],
   "far": [],

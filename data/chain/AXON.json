@@ -9,6 +9,10 @@
     {
       "ja": "提携・顧客",
       "en": "Partners & customers"
+    },
+    {
+      "ja": "競合(10-Kに記載)",
+      "en": "Competitors (named in 10-Ks)"
     }
   ],
   "rivals": [
@@ -271,6 +275,30 @@
         }
       ],
       "name_en": "Digital Ally"
+    },
+    {
+      "id": "BYRN",
+      "ticker": "BYRN",
+      "name": "バーナ・テクノロジーズ",
+      "sub": "非致死性護身用品",
+      "sub_en": "Less-lethal security",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "電気ショック装置の競合としてアクソン(TASER)を記載",
+          "text_en": "Names Axon (TASER) as a conductive-energy-device competitor",
+          "source": {
+            "label": "Byrna Technologies 10-K",
+            "label_en": "Byrna Technologies 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1354866/000143774926003206/byrn20251130_10k.htm",
+            "level": "official",
+            "date": "2026-02-05",
+            "quote": "conductive energy devices, including Axon Enterprise, Inc., which sells the TASER device"
+          }
+        }
+      ],
+      "name_en": "Byrna Technologies"
     }
   ],
   "far": [],
