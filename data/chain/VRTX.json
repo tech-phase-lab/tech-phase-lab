@@ -83,6 +83,19 @@
             "date": "2026-02-13",
             "quote": "In 2016, we entered into a collaboration with Moderna for the identification and development of mRNA therapeutics encoding CFTR for the treatment of CF."
           }
+        },
+        {
+          "type": "tie",
+          "text": "2016年7月に、嚢胞性線維症の戦略提携・ライセンス契約を締結",
+          "text_en": "Signed a strategic collaboration and license agreement on cystic fibrosis in July 2016",
+          "source": {
+            "label": "Moderna 10-K",
+            "label_en": "Moderna 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1682852/000168285226000033/mrna-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "Vertex—2016 Strategic Alliance in Cystic Fibrosis In July 2016, we entered into a Strategic Collaboration and License Agreement (Vertex Agreement) with Vertex Pharmaceuticals Incorporated"
+          }
         }
       ],
       "name_en": "Moderna"

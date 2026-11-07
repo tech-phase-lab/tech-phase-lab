@@ -81,6 +81,19 @@
             "date": "2026-02-10",
             "quote": "In September 2021, we entered into an exclusive worldwide collaboration and license agreement with Syndax Pharmaceuticals, Inc."
           }
+        },
+        {
+          "type": "tie",
+          "text": "axatilimabの開発・販売で、インサイトと共同",
+          "text_en": "Collaborates with Incyte to develop and commercialize axatilimab",
+          "source": {
+            "label": "Syndax Pharmaceuticals 10-K",
+            "label_en": "Syndax Pharmaceuticals 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1395937/000119312526076536/sndx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "the success of our collaboration with Incyte Corporation, or Incyte, to further develop and commercialize axatilimab"
+          }
         }
       ],
       "name_en": "Syndax Pharmaceuticals"
@@ -104,6 +117,19 @@
             "level": "official",
             "date": "2026-02-10",
             "quote": "Retifanlimab licensed from MacroGenics, Inc."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "PD-1抗体retifanlimabを、インサイトへライセンス(2017年)",
+          "text_en": "Licensed the PD-1 antibody retifanlimab to Incyte in 2017",
+          "source": {
+            "label": "MacroGenics 10-K",
+            "label_en": "MacroGenics 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1125345/000112534526000017/mgnx-20251231.htm",
+            "level": "official",
+            "date": "2026-03-09",
+            "quote": "we licensed retifanlimab, a mAb targeting PD-1, to Incyte Corporation (Incyte) under a global collaboration and license agreement"
           }
         }
       ],

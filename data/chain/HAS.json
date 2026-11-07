@@ -16,7 +16,8 @@
     }
   ],
   "rivals": [
-    "MAT"
+    "MAT",
+    "JAKK"
   ],
   "companies": [
     {
@@ -186,6 +187,30 @@
         }
       ],
       "name_en": "Mattel"
+    },
+    {
+      "id": "JAKK",
+      "ticker": "JAKK",
+      "name": "ジャックス・パシフィック",
+      "sub": "玩具",
+      "sub_en": "Toys",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "玩具業界で最も有力な競合としてハズブロを記載",
+          "text_en": "Names Hasbro as one of the two most dominant toy competitors",
+          "source": {
+            "label": "JAKKS Pacific 10-K",
+            "label_en": "JAKKS Pacific 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1009829/000118518526000723/jakk10k123125.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "compete directly against one or both of two of the toy industry’s most dominant companies, Mattel® and Hasbro®"
+          }
+        }
+      ],
+      "name_en": "JAKKS Pacific"
     }
   ],
   "far": [],

@@ -400,6 +400,30 @@
         }
       ],
       "name_en": "Treace Medical Concepts"
+    },
+    {
+      "id": "GMED",
+      "ticker": "GMED",
+      "name": "グローバス・メディカル",
+      "sub": "脊椎手術機器",
+      "sub_en": "Spine surgery devices",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主要な競合としてストライカーを記載",
+          "text_en": "Names Stryker as a significant competitor",
+          "source": {
+            "label": "Globus Medical 10-K",
+            "label_en": "Globus Medical 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1237831/000162828026011209/gmed-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "We believe that our significant competitors are Medtronic, DePuy Synthes, Stryker, Zimmer Biomet, and Smith + Nephew."
+          }
+        }
+      ],
+      "name_en": "Globus Medical"
     }
   ],
   "far": [],

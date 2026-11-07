@@ -453,6 +453,30 @@
         }
       ],
       "name_en": "Yelp"
+    },
+    {
+      "id": "FROG",
+      "ticker": "FROG",
+      "name": "ジェイフロッグ",
+      "sub": "ソフト開発基盤",
+      "sub_en": "Software supply chain",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "提携先でもあるが、一部機能で競合しうるクラウド事業者としてグーグルを記載",
+          "text_en": "Names Google Cloud as a partner that may also compete on some functionality",
+          "source": {
+            "label": "JFrog 10-K",
+            "label_en": "JFrog 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1800667/000119312526051382/frog-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "cloud providers, such as Amazon Web Services (“AWS”), Microsoft Azure (including Azure DevOps) and Alphabet Inc.’s Google Cloud, may compete with a subset of JFrog functionality"
+          }
+        }
+      ],
+      "name_en": "JFrog"
     }
   ],
   "far": [],

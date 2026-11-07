@@ -9,12 +9,17 @@
     {
       "ja": "提携・顧客",
       "en": "Partners & customers"
+    },
+    {
+      "ja": "競合(10-Kに記載)",
+      "en": "Competitors (named in 10-Ks)"
     }
   ],
   "rivals": [
     "FISV",
     "TOST",
-    "SHOP"
+    "SHOP",
+    "FOUR"
   ],
   "companies": [
     {
@@ -136,6 +141,30 @@
         }
       ],
       "name_en": "Block"
+    },
+    {
+      "id": "FOUR",
+      "ticker": "FOUR",
+      "name": "シフト4・ペイメンツ",
+      "sub": "決済処理",
+      "sub_en": "Payment processing",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "統合されていない決済処理会社の競合としてグローバル・ペイメンツを記載",
+          "text_en": "Names Global Payments among non-integrated payment-processor competitors",
+          "source": {
+            "label": "Shift4 Payments 10-K",
+            "label_en": "Shift4 Payments 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1794669/000179466926000010/four-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "non-integrated payment processors (such as Chase Paymentech, Elavon, Worldpay, Fiserv and Global Payments)"
+          }
+        }
+      ],
+      "name_en": "Shift4 Payments"
     }
   ],
   "far": [],

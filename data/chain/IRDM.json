@@ -237,6 +237,19 @@
             "date": "2026-02-12",
             "quote": "Other mobile satellite service providers include Globalstar, Inc., ORBCOMM Inc., portions of Viasat Inc.’s businesses (following its acquisition of Inmarsat Global Limited)."
           }
+        },
+        {
+          "type": "rival",
+          "text": "最大の競合の1社としてイリジウムを記載",
+          "text_en": "Names Iridium as one of its largest competitors",
+          "source": {
+            "label": "Globalstar 10-K",
+            "label_en": "Globalstar 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1366868/000136686826000012/gsat-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Our largest global competitors are Viasat, Iridium and ORBCOMM."
+          }
         }
       ],
       "name_en": "Globalstar"

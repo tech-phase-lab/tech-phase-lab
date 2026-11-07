@@ -9,6 +9,10 @@
     {
       "ja": "提携・顧客",
       "en": "Partners & customers"
+    },
+    {
+      "ja": "競合(10-Kに記載)",
+      "en": "Competitors (named in 10-Ks)"
     }
   ],
   "rivals": [
@@ -223,6 +227,30 @@
         }
       ],
       "name_en": "RPM International"
+    },
+    {
+      "id": "FGI",
+      "ticker": "FGI",
+      "name": "FGIインダストリーズ",
+      "sub": "水回り製品",
+      "sub_en": "Kitchen & bath products",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "競合の大手ブランドとしてマスコを記載",
+          "text_en": "Names Masco among large competing brands",
+          "source": {
+            "label": "FGI Industries 10-K",
+            "label_en": "FGI Industries 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1864943/000162828026024682/fgi-20251231.htm",
+            "level": "official",
+            "date": "2026-04-10",
+            "quote": "Our competitors include large national and international brands such as American Standard, Kohler, Masco (Delta)"
+          }
+        }
+      ],
+      "name_en": "FGI Industries"
     }
   ],
   "far": [],

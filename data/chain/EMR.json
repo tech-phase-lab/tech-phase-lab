@@ -18,7 +18,8 @@
   "rivals": [
     "ROK",
     "ABBNY",
-    "BKR"
+    "BKR",
+    "FLS"
   ],
   "companies": [
     {
@@ -190,6 +191,30 @@
         }
       ],
       "name_en": "Baker Hughes"
+    },
+    {
+      "id": "FLS",
+      "ticker": "FLS",
+      "name": "フローサーブ",
+      "sub": "バルブ・ポンプ",
+      "sub_en": "Valves & pumps",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "バルブ業界の大手競合としてエマソンを記載",
+          "text_en": "Names Emerson among the largest valve-industry competitors",
+          "source": {
+            "label": "Flowserve 10-K",
+            "label_en": "Flowserve 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/30625/000003062526000003/fls-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "Some of the largest valve industry competitors include Emerson Electric Co., Cameron International Corp."
+          }
+        }
+      ],
+      "name_en": "Flowserve"
     }
   ],
   "far": [],

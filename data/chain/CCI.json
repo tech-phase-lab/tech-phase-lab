@@ -132,6 +132,19 @@
             "date": "2026-02-23",
             "quote": "Some of our largest competitors are American Tower Corporation and SBA Communications Corporation."
           }
+        },
+        {
+          "type": "rival",
+          "text": "他の上場タワー会社の競合としてクラウン・キャッスルを記載",
+          "text_en": "Names Crown Castle among competing public tower companies",
+          "source": {
+            "label": "American Tower 10-K",
+            "label_en": "American Tower 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1053507/000105350726000035/amt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "We compete, both for new business and for the acquisition of assets, with other public tower companies, such as Crown Castle International Corp., SBA Communications Corporation"
+          }
         }
       ],
       "name_en": "American Tower"

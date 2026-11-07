@@ -158,6 +158,30 @@
         }
       ],
       "name_en": "CrossAmerica Partners"
+    },
+    {
+      "id": "PAA",
+      "ticker": "PAA",
+      "name": "プレインズ・オール・アメリカン・パイプライン",
+      "sub": "パイプライン",
+      "sub_en": "Pipelines",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ダイヤモンド・パイプラインを、バレロと50対50の合弁会社で保有",
+          "text_en": "Owns the Diamond Pipeline 50/50 with Valero",
+          "source": {
+            "label": "Plains All American Pipeline 10-K",
+            "label_en": "Plains All American Pipeline 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1581990/000158199026000012/pagp-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "We own a 50% interest in the entity that owns the Diamond Pipeline through a joint venture with Valero Energy Corporation"
+          }
+        }
+      ],
+      "name_en": "Plains All American Pipeline"
     }
   ],
   "far": [],

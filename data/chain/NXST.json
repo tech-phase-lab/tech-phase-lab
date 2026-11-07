@@ -162,6 +162,30 @@
         }
       ],
       "name_en": "Meta"
+    },
+    {
+      "id": "SSP",
+      "ticker": "SSP",
+      "name": "E.W.スクリップス",
+      "sub": "放送",
+      "sub_en": "Broadcasting",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年1月に、グレー・メディアなどと合弁会社を設立",
+          "text_en": "Formed a joint venture with Gray Media and Nexstar in January 2025",
+          "source": {
+            "label": "E.W. Scripps 10-K",
+            "label_en": "E.W. Scripps 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/832428/000083242826000010/ssp-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "In January 2025, we announced the formation of a joint venture with Gray Media, Nexstar Media Group, Inc."
+          }
+        }
+      ],
+      "name_en": "E.W. Scripps"
     }
   ],
   "far": [],
