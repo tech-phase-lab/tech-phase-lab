@@ -39,6 +39,19 @@
             "date": "2026-02-11",
             "quote": "With respect to our digital banking platform, we have several point solution competitors, including Candescent, Alkami Technology, CSI, Backbase and Lumin Digital in the online, consumer and SMB banking space and Finastra and Bottomline Technologies in the commercial banking space."
           }
+        },
+        {
+          "type": "rival",
+          "text": "競合としてアルカミを記載",
+          "text_en": "Names Alkami Technology as a competitor",
+          "source": {
+            "label": "Q2 Holdings 10-K",
+            "label_en": "Q2 Holdings 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1410384/000141038426000006/qtwo-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "we have several point solution competitors, including Candescent, Alkami Technology, CSI, Backbase and Lumin Digital"
+          }
         }
       ]
     },

@@ -217,6 +217,30 @@
         }
       ],
       "name_en": "Apple"
+    },
+    {
+      "id": "TCX",
+      "ticker": "TCX",
+      "name": "タウカウズ",
+      "sub": "ドメイン・通信",
+      "sub_en": "Domains & telecom",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "最大の顧客としてエコースターを記載(売上の約11.7%)",
+          "text_en": "EchoStar was its largest customer at 11.7% of revenue",
+          "source": {
+            "label": "Tucows 10-K",
+            "label_en": "Tucows 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/909494/000143774926008009/tcx20251231_10k.htm",
+            "level": "official",
+            "date": "2026-03-12",
+            "quote": "one customer, EchoStar, accounted for 11.7%, 10.7% and 10.7% of revenue"
+          }
+        }
+      ],
+      "name_en": "Tucows"
     }
   ],
   "far": [],

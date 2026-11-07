@@ -51,6 +51,19 @@
             "date": "2026-02-18",
             "quote": "PACCAR, Cummins, Daimler Trucks and EVE Energy have partnered to produce state-of-the-art commercial vehicle batteries in a 21-gigawatt hour (GWh) factory in Marshall County, Mississippi."
           }
+        },
+        {
+          "type": "up",
+          "text": "大型トラック用エンジンの主要顧客としてパッカーを記載",
+          "text_en": "Names PACCAR as a principal customer for its heavy-duty truck engines",
+          "source": {
+            "label": "Cummins 10-K",
+            "label_en": "Cummins 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/26172/000002617226000009/cmi-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "The principal customers of our heavy-duty truck engines include truck manufacturers such as PACCAR Inc."
+          }
         }
       ],
       "name_en": "Cummins"
@@ -198,6 +211,30 @@
         }
       ],
       "name_en": "EVE Energy"
+    },
+    {
+      "id": "CMT",
+      "ticker": "CMT",
+      "name": "コア・モールディング・テクノロジーズ",
+      "sub": "成形部品",
+      "sub_en": "Molded components",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "主要顧客5社の1社としてパッカーを記載",
+          "text_en": "Names PACCAR among its five major customers",
+          "source": {
+            "label": "Core Molding Technologies 10-K",
+            "label_en": "Core Molding Technologies 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1026655/000102665526000009/cmt-20251231.htm",
+            "level": "official",
+            "date": "2026-03-10",
+            "quote": "five major customers during the year ended December 31, 2025, BRP, International, PACCAR, Yamaha and Volvo"
+          }
+        }
+      ],
+      "name_en": "Core Molding Technologies"
     }
   ],
   "far": [],

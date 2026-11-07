@@ -9,6 +9,11 @@
     {
       "ja": "提携・顧客",
       "en": "Partners & customers"
+    },
+    {
+      "ja": "供給元(上流)",
+      "en": "Suppliers (upstream)",
+      "above": true
     }
   ],
   "rivals": [
@@ -233,6 +238,54 @@
         }
       ],
       "name_en": "Rite Aid"
+    },
+    {
+      "id": "MCK",
+      "ticker": "MCK",
+      "name": "マッケソン",
+      "sub": "医薬品卸",
+      "sub_en": "Pharma wholesaler",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "最大の顧客としてCVSを記載(2026年度売上の約24%)",
+          "text_en": "CVS is its largest customer at about 24% of fiscal 2026 revenue",
+          "source": {
+            "label": "McKesson 10-K",
+            "label_en": "McKesson 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/927653/000092765326000069/mck-20260331.htm",
+            "level": "official",
+            "date": "2026-05-08",
+            "quote": "Sales to our largest customer, CVS Health Corporation (“CVS”), accounted for approximately 24% of our total consolidated revenues in fiscal 2026."
+          }
+        }
+      ],
+      "name_en": "McKesson"
+    },
+    {
+      "id": "AMRX",
+      "ticker": "AMRX",
+      "name": "アムニール・ファーマシューティカルズ",
+      "sub": "ジェネリック医薬品",
+      "sub_en": "Generic drugs",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "最大顧客4社の1社としてCVSを記載",
+          "text_en": "One of its four largest customers",
+          "source": {
+            "label": "Amneal Pharmaceuticals 10-K",
+            "label_en": "Amneal Pharmaceuticals 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1723128/000172312826000011/amrx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "our four largest customers, Cencora, Inc., McKesson Drug Co., Cardinal Health, Inc., and CVS Health Corporation"
+          }
+        }
+      ],
+      "name_en": "Amneal Pharmaceuticals"
     }
   ],
   "far": [],

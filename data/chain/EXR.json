@@ -9,12 +9,17 @@
     {
       "ja": "提携・顧客",
       "en": "Partners & customers"
+    },
+    {
+      "ja": "競合(10-Kに記載)",
+      "en": "Competitors (named in 10-Ks)"
     }
   ],
   "rivals": [
     "CUBE",
     "NSA",
-    "PSA"
+    "PSA",
+    "UHAL"
   ],
   "companies": [
     {
@@ -36,6 +41,19 @@
             "level": "official",
             "date": "2026-02-20",
             "quote": "Our three primary competitors who are public self-storage REITs are CubeSmart, National Storage Affiliates and Public Storage."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "主要な競合の上場自己収納REITとして記載",
+          "text_en": "Names Extra Space Storage among key public self-storage REIT competitors",
+          "source": {
+            "label": "CubeSmart 10-K",
+            "label_en": "CubeSmart 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1298675/000129867526000010/cube-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Our key competitors include local and regional operators as well as other public self-storage REITs, including, but not limited to, Public Storage, Extra Space Storage Inc., and National Storage Affiliates Trust."
           }
         }
       ],
@@ -112,6 +130,30 @@
         }
       ],
       "name_en": "Prudential Financial"
+    },
+    {
+      "id": "UHAL",
+      "ticker": "UHAL",
+      "name": "Uホール",
+      "sub": "引越し・自己収納",
+      "sub_en": "Moving & self-storage",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "自己収納市場の最大の競合として記載",
+          "text_en": "Names Extra Space Storage as a largest self-storage competitor",
+          "source": {
+            "label": "U-Haul Holding 10-K",
+            "label_en": "U-Haul Holding 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/4457/000119312526241850/uhal-20260331.htm",
+            "level": "official",
+            "date": "2026-05-27",
+            "quote": "Our largest competitors in the self-storage market are Public Storage Inc., CubeSmart, and Extra Space Storage, Inc."
+          }
+        }
+      ],
+      "name_en": "U-Haul Holding"
     }
   ],
   "far": [],

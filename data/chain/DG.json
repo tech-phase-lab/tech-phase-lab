@@ -9,6 +9,11 @@
     {
       "ja": "提携・顧客",
       "en": "Partners & customers"
+    },
+    {
+      "ja": "供給元(上流)",
+      "en": "Suppliers (upstream)",
+      "above": true
     }
   ],
   "rivals": [
@@ -87,6 +92,30 @@
         }
       ],
       "name_en": "Dollar Tree"
+    },
+    {
+      "id": "WERN",
+      "ticker": "WERN",
+      "name": "ワーナー・エンタープライズ",
+      "sub": "トラック輸送",
+      "sub_en": "Trucking",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "最大顧客としてダラー・ジェネラルを記載(売上の11%)",
+          "text_en": "Dollar General is its largest customer at 11% of revenue",
+          "source": {
+            "label": "Werner Enterprises 10-K",
+            "label_en": "Werner Enterprises 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/793074/000079307426000071/wern-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Our largest customer, Dollar General, accounted for 11% of our total revenues in 2025."
+          }
+        }
+      ],
+      "name_en": "Werner Enterprises"
     }
   ],
   "far": [],

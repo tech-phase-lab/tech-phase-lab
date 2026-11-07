@@ -84,6 +84,19 @@
             "date": "2026-02-04",
             "quote": "The transaction positions the combined company to deliver fully integrated process, design and manufacturing capabilities by reshoring Silicon Labs’ manufacturing from external foundries, leveraging"
           }
+        },
+        {
+          "type": "rival",
+          "text": "競合としてTIを記載",
+          "text_en": "Names Texas Instruments as a competitor",
+          "source": {
+            "label": "Silicon Labs 10-K",
+            "label_en": "Silicon Labs 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1038074/000103807426000005/slab-20260103.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "We compete with Espressif, Infineon, MediaTek, Microchip, Nordic Semiconductor, NXP, Qualcomm, Renesas, STMicroelectronics, Synaptics, Telink, Texas Instruments and others."
+          }
         }
       ]
     },
@@ -233,6 +246,19 @@
             "date": "2026-08-27",
             "quote": "Our major competitors for our power ICs include Monolithic Power Systems, Inc., ON Semiconductor Corp., Richtek Technology Corp., Semtech Corporation, Texas Instruments Inc. and Vishay Intertechnology, Inc."
           }
+        },
+        {
+          "type": "rival",
+          "text": "パワーICの主要な競合としてTIを記載",
+          "text_en": "Names Texas Instruments as a major power-IC competitor",
+          "source": {
+            "label": "Alpha & Omega Semiconductor 10-K",
+            "label_en": "Alpha & Omega Semiconductor 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1387467/000162828026059261/aosl-20260630.htm",
+            "level": "official",
+            "date": "2026-08-27",
+            "quote": "Our major competitors for our power ICs include Monolithic Power Systems, Inc., ON Semiconductor Corp., Richtek Technology Corp., Semtech Corporation, Texas Instruments Inc."
+          }
         }
       ]
     },
@@ -278,6 +304,19 @@
             "level": "official",
             "date": "2026-02-27",
             "quote": "Our primary GaN competitors include Infineon Technologies AG, Power Integrations, Inc., Texas Instruments Incorporated, Innoscience (Suzhou) Semiconductor Co., Ltd., Renesas Electronics Corp., and Efficient Power Conversion Corporation (EPC)."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "GaNの主要な競合としてTIを記載",
+          "text_en": "Names Texas Instruments as a primary GaN competitor",
+          "source": {
+            "label": "Navitas Semiconductor 10-K",
+            "label_en": "Navitas Semiconductor 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1821769/000182176926000007/nvts-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Our primary GaN competitors include Infineon Technologies AG, Power Integrations, Inc., Texas Instruments Incorporated"
           }
         }
       ]
@@ -370,6 +409,19 @@
             "level": "official",
             "date": "2026-02-18",
             "quote": "In the memory interface chip market, we compete with international semiconductor companies, including but not limited to Monolithic Power Systems, Montage Technology, Renesas and Texas Instruments."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "メモリ・インターフェース・チップの競合としてTIを記載",
+          "text_en": "Names Texas Instruments as a memory-interface competitor",
+          "source": {
+            "label": "Rambus 10-K",
+            "label_en": "Rambus 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/917273/000119312526057101/rmbs-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "we compete with international semiconductor companies, including but not limited to Monolithic Power Systems, Montage Technology, Renesas and Texas Instruments."
           }
         }
       ]

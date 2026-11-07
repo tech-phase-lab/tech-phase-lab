@@ -137,6 +137,30 @@
         }
       ],
       "name_en": "Iconic IP Interests"
+    },
+    {
+      "id": "DIT",
+      "ticker": "DIT",
+      "name": "AMCONディストリビューティング",
+      "sub": "食品・たばこ卸",
+      "sub_en": "Convenience wholesale",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "主要な仕入先としてハーシーを記載する卸売会社",
+          "text_en": "Wholesaler that names Hershey among its principal suppliers",
+          "source": {
+            "label": "AMCON Distributing 10-K",
+            "label_en": "AMCON Distributing 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/928465/000110465925108504/dit-20250930x10k.htm",
+            "level": "official",
+            "date": "2025-11-07",
+            "quote": "Our principal suppliers include Altria, RJ Reynolds, ITG Brands, Hershey, Kellanova, Kraft Heinz, and Mars Wrigley, General Mills, Procter and Gamble, Ferrero"
+          }
+        }
+      ],
+      "name_en": "AMCON Distributing"
     }
   ],
   "far": [],

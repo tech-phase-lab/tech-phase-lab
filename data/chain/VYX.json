@@ -190,6 +190,30 @@
         }
       ],
       "name_en": "Toast"
+    },
+    {
+      "id": "DBD",
+      "ticker": "DBD",
+      "name": "ディーボルド・ニクスドルフ",
+      "sub": "ATM・店舗機器",
+      "sub_en": "ATMs & retail tech",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "競合としてNCRボイックスを記載",
+          "text_en": "Names NCR Voyix as a competitor",
+          "source": {
+            "label": "Diebold Nixdorf 10-K",
+            "label_en": "Diebold Nixdorf 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/28823/000002882326000008/dbd-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "The Company competes with NCR Voyix plus other technology firms such as Toshiba Corporation"
+          }
+        }
+      ],
+      "name_en": "Diebold Nixdorf"
     }
   ],
   "far": [],

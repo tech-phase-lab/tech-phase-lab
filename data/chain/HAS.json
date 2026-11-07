@@ -9,9 +9,15 @@
     {
       "ja": "提携・顧客",
       "en": "Partners & customers"
+    },
+    {
+      "ja": "競合(10-Kに記載)",
+      "en": "Competitors (named in 10-Ks)"
     }
   ],
-  "rivals": [],
+  "rivals": [
+    "MAT"
+  ],
   "companies": [
     {
       "id": "AMZN",
@@ -156,6 +162,30 @@
         }
       ],
       "name_en": "Merlin Entertainment"
+    },
+    {
+      "id": "MAT",
+      "ticker": "MAT",
+      "name": "マテル",
+      "sub": "玩具",
+      "sub_en": "Toys",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "北米の主要な競合としてハズブロを記載",
+          "text_en": "Names Hasbro as a large toy competitor in North America",
+          "source": {
+            "label": "Mattel 10-K",
+            "label_en": "Mattel 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/63276/000162828026010716/mat-20251231.htm",
+            "level": "official",
+            "date": "2026-02-23",
+            "quote": "The North America segment competes with several large toy companies, including Hasbro, LEGO, The Pokémon Company, and Spin Master"
+          }
+        }
+      ],
+      "name_en": "Mattel"
     }
   ],
   "far": [],

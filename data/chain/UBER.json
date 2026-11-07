@@ -292,6 +292,30 @@
           }
         }
       ]
+    },
+    {
+      "id": "LOCO",
+      "ticker": "LOCO",
+      "name": "エル・ポヨ・ロコ",
+      "sub": "外食",
+      "sub_en": "Restaurants",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "宅配の提携先としてウーバー(Uber Eats)を記載",
+          "text_en": "Names Uber Eats among its delivery partners",
+          "source": {
+            "label": "El Pollo Loco 10-K",
+            "label_en": "El Pollo Loco 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1606366/000160636626000017/loco-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-03-13",
+            "quote": "We currently have partnerships with DoorDash, Postmates, Uber Eats, and Grubhub."
+          }
+        }
+      ],
+      "name_en": "El Pollo Loco"
     }
   ],
   "far": [],

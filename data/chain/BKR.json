@@ -14,6 +14,10 @@
       "ja": "供給元",
       "en": "Suppliers",
       "above": true
+    },
+    {
+      "ja": "競合(10-Kに記載)",
+      "en": "Competitors (named in 10-Ks)"
     }
   ],
   "rivals": [
@@ -300,6 +304,30 @@
         }
       ],
       "name_en": "Emerson"
+    },
+    {
+      "id": "CAT",
+      "ticker": "CAT",
+      "name": "キャタピラー",
+      "sub": "建設・鉱山機械",
+      "sub_en": "Construction & mining machinery",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "パッケージ発電機の競合としてベーカー・ヒューズを記載",
+          "text_en": "Names Baker Hughes among its packager competitors",
+          "source": {
+            "label": "Caterpillar 10-K",
+            "label_en": "Caterpillar 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/18230/000001823026000008/cat-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "An additional set of competitors, including Aggreko plc, Generac Holdings Inc., Discovery Energy, LLC (Rehlko, formerly Kohler Energy), Baker Hughes Co."
+          }
+        }
+      ],
+      "name_en": "Caterpillar"
     }
   ],
   "far": [],

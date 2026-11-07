@@ -9,6 +9,11 @@
     {
       "ja": "提携・顧客",
       "en": "Partners & customers"
+    },
+    {
+      "ja": "供給元(上流)",
+      "en": "Suppliers (upstream)",
+      "above": true
     }
   ],
   "rivals": [],
@@ -156,6 +161,30 @@
         }
       ],
       "name_en": "The Williams Companies"
+    },
+    {
+      "id": "CTRI",
+      "ticker": "CTRI",
+      "name": "センチュリ・ホールディングス",
+      "sub": "電力・ガス設備工事",
+      "sub_en": "Utility infrastructure services",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "電力・ガス設備工事の顧客としてサザン・カンパニーを記載",
+          "text_en": "Names Southern Company among its utility-infrastructure customers",
+          "source": {
+            "label": "Centuri Holdings 10-K",
+            "label_en": "Centuri Holdings 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1981599/000198159926000020/ctri-20251228.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Our customers include American Electric Power, Enbridge, Entergy, Exelon, NiSource, National Grid, Sempra Energy and Southern Company, among others."
+          }
+        }
+      ],
+      "name_en": "Centuri Holdings"
     }
   ],
   "far": [],

@@ -214,6 +214,19 @@
             "date": "2026-02-18",
             "quote": "as well as emerging companies like Beta Bionics Inc."
           }
+        },
+        {
+          "type": "rival",
+          "text": "インスリンポンプの競合としてインスリットを記載",
+          "text_en": "Names Insulet as an insulin-pump competitor",
+          "source": {
+            "label": "Beta Bionics 10-K",
+            "label_en": "Beta Bionics 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1674632/000119312526067065/bbnx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "We primarily compete with a number of companies that manufacture and sell insulin pumps, such as Medtronic, Tandem, and Insulet."
+          }
         }
       ],
       "name_en": "Beta Bionics"

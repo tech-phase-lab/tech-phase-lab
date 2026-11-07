@@ -9,6 +9,10 @@
     {
       "ja": "提携・顧客",
       "en": "Partners & customers"
+    },
+    {
+      "ja": "競合(10-Kに記載)",
+      "en": "Competitors (named in 10-Ks)"
     }
   ],
   "rivals": [
@@ -235,6 +239,30 @@
         }
       ],
       "name_en": "Nippon Paint"
+    },
+    {
+      "id": "NGVT",
+      "ticker": "NGVT",
+      "name": "インジェビティ",
+      "sub": "特殊化学品",
+      "sub_en": "Specialty chemicals",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "道路標示の主要な競合としてPPGを記載",
+          "text_en": "Names PPG as a primary road-markings competitor",
+          "source": {
+            "label": "Ingevity 10-K",
+            "label_en": "Ingevity 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1653477/000165347726000014/ngvt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Our primary competitors in road markings are Sherwin-Williams Company, and PPG Industries Traffic Solutions."
+          }
+        }
+      ],
+      "name_en": "Ingevity"
     }
   ],
   "far": [],

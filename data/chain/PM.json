@@ -207,6 +207,30 @@
         }
       ],
       "name_en": "Universal Corporation"
+    },
+    {
+      "id": "PYX",
+      "ticker": "PYX",
+      "name": "ピクサス・インターナショナル",
+      "sub": "たばこ葉",
+      "sub_en": "Leaf tobacco",
+      "row": 2,
+      "relations": [
+        {
+          "type": "up",
+          "text": "最も重要な顧客の1社としてフィリップ モリスを記載",
+          "text_en": "Names Philip Morris International among its most significant customers",
+          "source": {
+            "label": "Pyxus International 10-K",
+            "label_en": "Pyxus International 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/939930/000093993026000017/pyx-20260331.htm",
+            "level": "official",
+            "date": "2026-06-04",
+            "quote": "certain of our most significant customers, including Philip Morris International Inc."
+          }
+        }
+      ],
+      "name_en": "Pyxus International"
     }
   ],
   "far": [],

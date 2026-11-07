@@ -14,9 +14,15 @@
     {
       "ja": "提携・顧客",
       "en": "Partners & customers"
+    },
+    {
+      "ja": "競合(10-Kに記載)",
+      "en": "Competitors (named in 10-Ks)"
     }
   ],
-  "rivals": [],
+  "rivals": [
+    "ADTN"
+  ],
   "companies": [
     {
       "id": "CHTR",
@@ -137,6 +143,30 @@
         }
       ],
       "name_en": "Plexus Services Corp."
+    },
+    {
+      "id": "ADTN",
+      "ticker": "ADTN",
+      "name": "アドトラン",
+      "sub": "通信機器",
+      "sub_en": "Telecom equipment",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "アクセス機器の主要な競合としてハーモニックを記載",
+          "text_en": "Names Harmonic as a key competitor in access and aggregation",
+          "source": {
+            "label": "ADTRAN 10-K",
+            "label_en": "ADTRAN 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/926282/000119312526073878/adtn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "key competitors include Nokia, Calix, Vecima, Harmonic and Microchip."
+          }
+        }
+      ],
+      "name_en": "ADTRAN"
     }
   ],
   "far": [],

@@ -316,6 +316,30 @@
         }
       ],
       "name_en": "Black Rifle Coffee Company"
+    },
+    {
+      "id": "CELH",
+      "ticker": "CELH",
+      "name": "セルシウス・ホールディングス",
+      "sub": "エナジードリンク",
+      "sub_en": "Energy drinks",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "機能性エナジードリンクの直接の競合としてキューリグ・ドクターペッパーを記載",
+          "text_en": "Names Keurig Dr Pepper as a direct competitor in functional energy drinks",
+          "source": {
+            "label": "Celsius Holdings 10-K",
+            "label_en": "Celsius Holdings 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1341766/000134176626000024/celh-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "Our direct competitors in the functional energy drink sector include but are not limited to Monster Beverage Corporation, Red Bull GmbH, The Coca-Cola Company, Pepsi, Keurig Dr Pepper Inc."
+          }
+        }
+      ],
+      "name_en": "Celsius Holdings"
     }
   ],
   "far": [],

@@ -183,6 +183,19 @@
             "date": "2026-02-18",
             "quote": "For marine products, Garmin believes that its principal competitors are Furuno, Johnson Outdoors, Navico 10 (Brunswick), and Raymarine (Teledyne)."
           }
+        },
+        {
+          "type": "rival",
+          "text": "電動トローリングモーターの主要な競合としてガーミンを記載",
+          "text_en": "Names Garmin as a primary electric-trolling-motor competitor",
+          "source": {
+            "label": "Johnson Outdoors 10-K",
+            "label_en": "Johnson Outdoors 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/788329/000114036125045348/jout-20251003.htm",
+            "level": "official",
+            "date": "2025-12-12",
+            "quote": "Minn Kota’s primary competitors in the electric trolling motors business are Lowrance, owned by Brunswick Corporation, Garmin and Power-Pole"
+          }
         }
       ],
       "name_en": "Johnson Outdoors"

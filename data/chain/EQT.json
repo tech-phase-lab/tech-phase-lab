@@ -9,6 +9,11 @@
     {
       "ja": "提携・顧客",
       "en": "Partners & customers"
+    },
+    {
+      "ja": "供給元(上流)",
+      "en": "Suppliers (upstream)",
+      "above": true
     }
   ],
   "rivals": [],
@@ -132,6 +137,30 @@
         }
       ],
       "name_en": "Williams Companies"
+    },
+    {
+      "id": "SND",
+      "ticker": "SND",
+      "name": "スマート・サンド",
+      "sub": "フラック砂",
+      "sub_en": "Frac sand",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "2024年売上の31.9%を占める最大顧客としてEQTを記載",
+          "text_en": "EQT was its largest customer at 31.9% of 2024 revenue",
+          "source": {
+            "label": "Smart Sand 10-K",
+            "label_en": "Smart Sand 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1529628/000152962826000006/snd-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "EQT Corporation, Encino Energy, and Liberty Oilfield Services accounted for 31.9%, 13.8% and 10.2%, respectively, of our total revenues"
+          }
+        }
+      ],
+      "name_en": "Smart Sand"
     }
   ],
   "far": [],

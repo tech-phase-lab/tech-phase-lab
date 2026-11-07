@@ -9,9 +9,15 @@
     {
       "ja": "提携・顧客",
       "en": "Partners & customers"
+    },
+    {
+      "ja": "競合(10-Kに記載)",
+      "en": "Competitors (named in 10-Ks)"
     }
   ],
-  "rivals": [],
+  "rivals": [
+    "CCI"
+  ],
   "companies": [
     {
       "id": "TMUS",
@@ -171,6 +177,30 @@
         }
       ],
       "name_en": "DISH Network (EchoStar)"
+    },
+    {
+      "id": "CCI",
+      "ticker": "CCI",
+      "name": "クラウン・キャッスル",
+      "sub": "通信タワー",
+      "sub_en": "Cell towers",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "最大の競合の1社としてアメリカン・タワーを記載",
+          "text_en": "Names American Tower as one of its largest competitors",
+          "source": {
+            "label": "Crown Castle 10-K",
+            "label_en": "Crown Castle 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1051470/000105147026000016/cci-20251231.htm",
+            "level": "official",
+            "date": "2026-02-23",
+            "quote": "Some of our largest competitors are American Tower Corporation and SBA Communications Corporation."
+          }
+        }
+      ],
+      "name_en": "Crown Castle"
     }
   ],
   "far": [],

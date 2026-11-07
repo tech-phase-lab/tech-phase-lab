@@ -110,6 +110,30 @@
         }
       ],
       "name_en": "Lundin Gold Inc."
+    },
+    {
+      "id": "SSRM",
+      "ticker": "SSRM",
+      "name": "SSRマイニング",
+      "sub": "金・銀鉱",
+      "sub_en": "Gold & silver mining",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2019年6月にニューモントからバッファロー・バレー鉱区を取得",
+          "text_en": "Bought the Buffalo Valley property from Newmont in June 2019",
+          "source": {
+            "label": "SSR Mining 10-K",
+            "label_en": "SSR Mining 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/921638/000092163826000035/ssrm-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "In June 2019, SSR Mining acquired the Buffalo Valley property from Newmont"
+          }
+        }
+      ],
+      "name_en": "SSR Mining"
     }
   ],
   "far": [],

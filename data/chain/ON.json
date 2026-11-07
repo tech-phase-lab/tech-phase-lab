@@ -354,6 +354,19 @@
             "date": "2026-08-27",
             "quote": "Our major competitors in power discretes include Infineon Technologies AG, ON Semiconductor Corp., STMicroelectronics N.V., Toshiba Corporation, Diodes Incorporated and Vishay Intertechnology, Inc."
           }
+        },
+        {
+          "type": "rival",
+          "text": "パワーICの主要な競合としてオンセミを記載",
+          "text_en": "Names onsemi as a major power-IC competitor",
+          "source": {
+            "label": "Alpha & Omega Semiconductor 10-K",
+            "label_en": "Alpha & Omega Semiconductor 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1387467/000162828026059261/aosl-20260630.htm",
+            "level": "official",
+            "date": "2026-08-27",
+            "quote": "Our major competitors for our power ICs include Monolithic Power Systems, Inc., ON Semiconductor Corp., Richtek Technology Corp., Semtech Corporation, Texas Instruments Inc."
+          }
         }
       ]
     }

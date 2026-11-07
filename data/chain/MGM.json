@@ -57,6 +57,19 @@
             "date": "2026-02-11",
             "quote": "We entered into an amended and restated master lease with VICI. See Note 11 for discussion of the lease."
           }
+        },
+        {
+          "type": "up",
+          "text": "施設の賃貸契約に加え、MGMとの間で複数の契約を結ぶ(施設の貸し手)",
+          "text_en": "Landlord that has lease and other agreements with MGM",
+          "source": {
+            "label": "VICI Properties 10-K",
+            "label_en": "VICI Properties 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1705696/000170569626000034/vici-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "To govern the ongoing relationship between us and Caesars and us and MGM, in addition to the applicable lease agreements, we have entered into various agreements with Caesars and MGM"
+          }
         }
       ],
       "name_en": "VICI Properties"
@@ -84,6 +97,30 @@
         }
       ],
       "name_en": "ORIX"
+    },
+    {
+      "id": "MYPS",
+      "ticker": "MYPS",
+      "name": "プレイスタジオ",
+      "sub": "モバイルゲーム",
+      "sub_en": "Mobile games",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ゲームのポイントを、MGMの宿泊・食事・ショー券と交換できる提携",
+          "text_en": "Players can exchange game points for MGM hotel rooms, meals and show tickets",
+          "source": {
+            "label": "PLAYSTUDIOS 10-K",
+            "label_en": "PLAYSTUDIOS 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1823878/000182387826000020/myps-20251231.htm",
+            "level": "official",
+            "date": "2026-03-16",
+            "quote": "through an agreement with MGM Resorts International, or MGM, our players are able to exchange loyalty points for, among other things, free hotel rooms, meals and show tickets"
+          }
+        }
+      ],
+      "name_en": "PLAYSTUDIOS"
     }
   ],
   "far": [],

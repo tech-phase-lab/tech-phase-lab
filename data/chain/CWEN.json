@@ -9,9 +9,15 @@
     {
       "ja": "提携・顧客",
       "en": "Partners & customers"
+    },
+    {
+      "ja": "競合(10-Kに記載)",
+      "en": "Competitors (named in 10-Ks)"
     }
   ],
-  "rivals": [],
+  "rivals": [
+    "AMRC"
+  ],
   "companies": [
     {
       "id": "SCE",
@@ -108,6 +114,30 @@
         }
       ],
       "name_en": "Connecticut Light & Power"
+    },
+    {
+      "id": "AMRC",
+      "ticker": "AMRC",
+      "name": "アメレスコ",
+      "sub": "エネルギー効率・再エネ",
+      "sub_en": "Energy efficiency & renewables",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "太陽光・蓄電池市場の主要な競合としてクリアウェイを記載",
+          "text_en": "Names Clearway as a principal competitor in solar PV and battery storage",
+          "source": {
+            "label": "Ameresco 10-K",
+            "label_en": "Ameresco 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1488139/000162828026013574/amrc_20251231x10-k.htm",
+            "level": "official",
+            "date": "2026-03-03",
+            "quote": "In the Solar PV and Battery Storage market our principal competitors include NextEra Energy, Inc., Engie SA, Invenergy, EDF Renewables, and Clearway Energy Group LLC."
+          }
+        }
+      ],
+      "name_en": "Ameresco"
     }
   ],
   "far": [],

@@ -23,7 +23,8 @@
   "rivals": [
     "PEP",
     "KDP",
-    "BUD"
+    "BUD",
+    "CELH"
   ],
   "companies": [
     {
@@ -326,6 +327,30 @@
         }
       ],
       "name_en": "Anheuser-Busch InBev"
+    },
+    {
+      "id": "CELH",
+      "ticker": "CELH",
+      "name": "セルシウス・ホールディングス",
+      "sub": "エナジードリンク",
+      "sub_en": "Energy drinks",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "機能性エナジードリンクの直接の競合としてコカ・コーラを記載",
+          "text_en": "Names Coca-Cola as a direct competitor in functional energy drinks",
+          "source": {
+            "label": "Celsius Holdings 10-K",
+            "label_en": "Celsius Holdings 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1341766/000134176626000024/celh-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "Our direct competitors in the functional energy drink sector include but are not limited to Monster Beverage Corporation, Red Bull GmbH, The Coca-Cola Company, Pepsi, Keurig Dr Pepper Inc."
+          }
+        }
+      ],
+      "name_en": "Celsius Holdings"
     }
   ],
   "far": [],

@@ -11,7 +11,9 @@
       "en": "Competitors"
     }
   ],
-  "rivals": [],
+  "rivals": [
+    "INSP"
+  ],
   "companies": [
     {
       "id": "PHILIPS",
@@ -156,6 +158,30 @@
         }
       ],
       "name_en": "React Health"
+    },
+    {
+      "id": "INSP",
+      "ticker": "INSP",
+      "name": "インスパイア・メディカル",
+      "sub": "睡眠時無呼吸の治療機器",
+      "sub_en": "Sleep apnea devices",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "PAP(陽圧呼吸)機器の競合としてレスメドを記載",
+          "text_en": "Names ResMed as a PAP competitor",
+          "source": {
+            "label": "Inspire Medical Systems 10-K",
+            "label_en": "Inspire Medical Systems 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1609550/000160955026000016/insp-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "Our specific PAP-related competitors include ResMed Inc., Philips BV, Fisher & Paykel Healthcare"
+          }
+        }
+      ],
+      "name_en": "Inspire Medical Systems"
     }
   ],
   "far": [],

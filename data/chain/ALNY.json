@@ -206,6 +206,30 @@
         }
       ],
       "name_en": "Arrowhead Pharmaceuticals"
+    },
+    {
+      "id": "ABUS",
+      "ticker": "ABUS",
+      "name": "アルブタス・バイオファーマ",
+      "sub": "バイオ医薬",
+      "sub_en": "Biopharma",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ライセンス契約を結ぶ相手としてアルナイラムを記載",
+          "text_en": "Names Alnylam as the licensor it depends on",
+          "source": {
+            "label": "Arbutus Biopharma 10-K",
+            "label_en": "Arbutus Biopharma 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1447028/000144702826000017/abus-20251231.htm",
+            "level": "official",
+            "date": "2026-03-23",
+            "quote": "We depend on our license agreement with Alnylam Pharmaceuticals, Inc."
+          }
+        }
+      ],
+      "name_en": "Arbutus Biopharma"
     }
   ],
   "far": [],

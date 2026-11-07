@@ -14,10 +14,15 @@
       "ja": "供給元",
       "en": "Suppliers",
       "above": true
+    },
+    {
+      "ja": "競合(10-Kに記載)",
+      "en": "Competitors (named in 10-Ks)"
     }
   ],
   "rivals": [
-    "ATR"
+    "ATR",
+    "HALO"
   ],
   "companies": [
     {
@@ -139,6 +144,30 @@
         }
       ],
       "name_en": "Phillips Medisize"
+    },
+    {
+      "id": "HALO",
+      "ticker": "HALO",
+      "name": "ハロザイム",
+      "sub": "薬物送達技術",
+      "sub_en": "Drug delivery",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "医療機器の設計・開発受託の競合としてウェストを記載",
+          "text_en": "Names West Pharmaceutical among its contract-device competitors",
+          "source": {
+            "label": "Halozyme 10-K",
+            "label_en": "Halozyme 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1159036/000115903626000024/halo-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "competitors also include third party contract medical device design and development companies such as Scandinavian Health Ltd., Ypsomed AG, West Pharmaceutical and Owen Mumford Ltd."
+          }
+        }
+      ],
+      "name_en": "Halozyme"
     }
   ],
   "far": [],

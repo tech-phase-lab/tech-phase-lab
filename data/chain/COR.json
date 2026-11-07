@@ -252,6 +252,30 @@
         }
       ],
       "name_en": "UPS Logistics"
+    },
+    {
+      "id": "AMRX",
+      "ticker": "AMRX",
+      "name": "アムニール・ファーマシューティカルズ",
+      "sub": "ジェネリック医薬品",
+      "sub_en": "Generic drugs",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "最大顧客4社の1社としてセンコラを記載",
+          "text_en": "One of its four largest customers",
+          "source": {
+            "label": "Amneal Pharmaceuticals 10-K",
+            "label_en": "Amneal Pharmaceuticals 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1723128/000172312826000011/amrx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "our four largest customers, Cencora, Inc., McKesson Drug Co., Cardinal Health, Inc., and CVS Health Corporation"
+          }
+        }
+      ],
+      "name_en": "Amneal Pharmaceuticals"
     }
   ],
   "far": [],

@@ -9,6 +9,11 @@
     {
       "ja": "提携・顧客",
       "en": "Partners & customers"
+    },
+    {
+      "ja": "供給元(上流)",
+      "en": "Suppliers (upstream)",
+      "above": true
     }
   ],
   "rivals": [],
@@ -132,6 +137,30 @@
         }
       ],
       "name_en": "Central Hudson Gas & Electric"
+    },
+    {
+      "id": "WLDN",
+      "ticker": "WLDN",
+      "name": "ウィルダン・グループ",
+      "sub": "エネルギー・インフラ工学",
+      "sub_en": "Energy & infrastructure engineering",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "2009年からの顧客としてコン・エジソンを記載",
+          "text_en": "Names Con Edison as a customer since 2009",
+          "source": {
+            "label": "Willdan Group 10-K",
+            "label_en": "Willdan Group 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1370450/000110465926020767/wldn-20260102x10k.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Consolidated Edison has been a customer of ours since 2009."
+          }
+        }
+      ],
+      "name_en": "Willdan Group"
     }
   ],
   "far": [],

@@ -9,6 +9,10 @@
     {
       "ja": "提携・顧客",
       "en": "Partners & customers"
+    },
+    {
+      "ja": "競合(10-Kに記載)",
+      "en": "Competitors (named in 10-Ks)"
     }
   ],
   "rivals": [
@@ -233,6 +237,54 @@
         }
       ],
       "name_en": "IHG Hotels & Resorts"
+    },
+    {
+      "id": "MCS",
+      "ticker": "MCS",
+      "name": "マーカス",
+      "sub": "映画館・ホテル",
+      "sub_en": "Theaters & hotels",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ホテルの競合としてマリオットを記載",
+          "text_en": "Names Marriott as a hotel competitor",
+          "source": {
+            "label": "Marcus Corporation 10-K",
+            "label_en": "Marcus Corporation 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/62234/000006223426000011/mcs-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Our hotels and resorts compete with the hotels and resorts operated and/or franchised by Hyatt Corporation, Marriott Corporation, Hilton Worldwide and others"
+          }
+        }
+      ],
+      "name_en": "Marcus Corporation"
+    },
+    {
+      "id": "HST",
+      "ticker": "HST",
+      "name": "ホスト・ホテルズ・アンド・リゾーツ",
+      "sub": "ホテルREIT",
+      "sub_en": "Hotel REIT",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "4施設の2回目の大規模改装を、マリオットと合意",
+          "text_en": "Agreed with Marriott on a second capital program at four properties",
+          "source": {
+            "label": "Host Hotels & Resorts 10-K",
+            "label_en": "Host Hotels & Resorts 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1070750/000107075026000054/hst-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "we also reached an agreement with Marriott International to complete a second transformational capital program at four properties over a four-year period"
+          }
+        }
+      ],
+      "name_en": "Host Hotels & Resorts"
     }
   ],
   "far": [],
