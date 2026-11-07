@@ -9,6 +9,11 @@
     {
       "ja": "提携・顧客",
       "en": "Partners & customers"
+    },
+    {
+      "ja": "供給元(上流)",
+      "en": "Suppliers (upstream)",
+      "above": true
     }
   ],
   "rivals": [],
@@ -84,6 +89,102 @@
         }
       ],
       "name_en": "Synchrony Bank"
+    },
+    {
+      "id": "WHR",
+      "ticker": "WHR",
+      "name": "ワールプール",
+      "sub": "家電",
+      "sub_en": "Home appliances",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "洗濯機・冷蔵庫・調理家電・食洗機をロウズへ供給する主要メーカー",
+          "text_en": "A major supplier of laundry, refrigeration, cooking and dishwasher appliances to Lowe’s",
+          "source": {
+            "label": "Whirlpool 10-K",
+            "label_en": "Whirlpool 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/106640/000010664026000009/whr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "Whirlpool is a major supplier of laundry, refrigeration, cooking and dishwasher home appliances to Lowe's, a North American retailer."
+          }
+        }
+      ],
+      "name_en": "Whirlpool"
+    },
+    {
+      "id": "HLMN",
+      "ticker": "HLMN",
+      "name": "ヒルマン・ソリューションズ",
+      "sub": "金物・留め具",
+      "sub_en": "Hardware",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "ロウズなどの大手小売に、金物・留め具などを販売",
+          "text_en": "Sells hardware and fasteners to national accounts such as Lowe’s",
+          "source": {
+            "label": "Hillman Solutions 10-K",
+            "label_en": "Hillman Solutions 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1822492/000182249226000019/hlmn-20251227.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "We sell our products to national accounts such as Home Depot, Lowe’s, Tractor Supply, Walmart, Menard’s, PETCO, and PetSmart."
+          }
+        }
+      ],
+      "name_en": "Hillman Solutions"
+    },
+    {
+      "id": "GFF",
+      "ticker": "GFF",
+      "name": "グリフォン",
+      "sub": "住宅資材・工具",
+      "sub_en": "Home & building products",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "子会社CPPの大口顧客としてロウズを記載",
+          "text_en": "Names Lowe’s as a significant customer of its CPP unit",
+          "source": {
+            "label": "Griffon 10-K",
+            "label_en": "Griffon 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/50725/000162828025053242/gff-20250930.htm",
+            "level": "official",
+            "date": "2025-11-19",
+            "quote": "Home Depot, Lowe's and Bunnings are significant customers of CPP."
+          }
+        }
+      ],
+      "name_en": "Griffon"
+    },
+    {
+      "id": "AWI",
+      "ticker": "AWI",
+      "name": "アームストロング・ワールド",
+      "sub": "天井材",
+      "sub_en": "Ceiling systems",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "最大級の流通顧客FBMを、ロウズが2025年10月に買収したと記載",
+          "text_en": "Notes that its large distributor customer FBM was acquired by Lowe’s in October 2025",
+          "source": {
+            "label": "Armstrong World Industries 10-K",
+            "label_en": "Armstrong World Industries 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/7431/000119312526065183/awi-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Foundation Building Materials, Inc., another one of our largest distributor customers, was acquired by Lowe's Companies, Inc."
+          }
+        }
+      ],
+      "name_en": "Armstrong World Industries"
     }
   ],
   "far": [],

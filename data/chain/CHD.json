@@ -9,6 +9,10 @@
     {
       "ja": "提携・顧客",
       "en": "Partners & customers"
+    },
+    {
+      "ja": "競合(10-Kに記載)",
+      "en": "Competitors (named in 10-Ks)"
     }
   ],
   "rivals": [
@@ -88,6 +92,19 @@
             "date": "2026-02-12",
             "quote": "Many of our competitors are large companies, including, among others, P&G, The Clorox Company, Colgate-Palmolive Company, S.C. Johnson & Son, Inc., Nestlé S.A., Haleon plc, Henkel, Reckitt Benckiser Group plc, LifeStyles Healthcare, Kenvue Inc., Pfizer Inc., Bayer AG"
           }
+        },
+        {
+          "type": "rival",
+          "text": "P&Gと競合する",
+          "text_en": "Competes with Procter & Gamble",
+          "source": {
+            "label": "Church & Dwight 10-K",
+            "label_en": "Church & Dwight 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/313927/000119312526048139/chd-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "Our competitors in the Consumer Domestic and Consumer International segments include, among others, Procter & Gamble Company (“P&G”), The Clorox Company, Colgate-Palmolive Company"
+          }
         }
       ],
       "name_en": "Procter & Gamble"
@@ -111,6 +128,19 @@
             "level": "official",
             "date": "2026-02-12",
             "quote": "Many of our competitors are large companies, including, among others, P&G, The Clorox Company, Colgate-Palmolive Company, S.C. Johnson & Son, Inc., Nestlé S.A., Haleon plc, Henkel, Reckitt Benckiser Group plc, LifeStyles Healthcare, Kenvue Inc., Pfizer Inc., Bayer AG"
+          }
+        },
+        {
+          "type": "rival",
+          "text": "クロロックスと競合する",
+          "text_en": "Competes with Clorox",
+          "source": {
+            "label": "Church & Dwight 10-K",
+            "label_en": "Church & Dwight 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/313927/000119312526048139/chd-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "Our competitors in the Consumer Domestic and Consumer International segments include, among others, Procter & Gamble Company (“P&G”), The Clorox Company, Colgate-Palmolive Company"
           }
         }
       ],
@@ -136,6 +166,19 @@
             "date": "2026-02-12",
             "quote": "Many of our competitors are large companies, including, among others, P&G, The Clorox Company, Colgate-Palmolive Company, S.C. Johnson & Son, Inc., Nestlé S.A., Haleon plc, Henkel, Reckitt Benckiser Group plc, LifeStyles Healthcare, Kenvue Inc., Pfizer Inc., Bayer AG"
           }
+        },
+        {
+          "type": "rival",
+          "text": "コルゲート・パーモリブと競合する",
+          "text_en": "Competes with Colgate-Palmolive",
+          "source": {
+            "label": "Church & Dwight 10-K",
+            "label_en": "Church & Dwight 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/313927/000119312526048139/chd-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "Our competitors in the Consumer Domestic and Consumer International segments include, among others, Procter & Gamble Company (“P&G”), The Clorox Company, Colgate-Palmolive Company"
+          }
         }
       ],
       "name_en": "Colgate-Palmolive"
@@ -159,6 +202,19 @@
             "level": "official",
             "date": "2026-02-12",
             "quote": "Many of our competitors are large companies, including, among others, P&G, The Clorox Company, Colgate-Palmolive Company, S.C. Johnson & Son, Inc., Nestlé S.A., Haleon plc, Henkel, Reckitt Benckiser Group plc, LifeStyles Healthcare, Kenvue Inc., Pfizer Inc., Bayer AG"
+          }
+        },
+        {
+          "type": "rival",
+          "text": "ケンビューが、10-Kでチャーチ・アンド・ドワイトを競合の1社として挙げている",
+          "text_en": "Kenvue names Church & Dwight as a competitor in its 10-K",
+          "source": {
+            "label": "Kenvue 10-K",
+            "label_en": "Kenvue 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1944048/000194404826000030/kvue-20251228.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "Church & Dwight, Colgate-Palmolive, Haleon, Kimberly-Clark, Procter & Gamble, and private-label brands"
           }
         }
       ],

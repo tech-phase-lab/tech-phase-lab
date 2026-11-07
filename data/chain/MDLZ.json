@@ -9,9 +9,15 @@
     {
       "ja": "提携・顧客",
       "en": "Partners & customers"
+    },
+    {
+      "ja": "競合(10-Kに記載)",
+      "en": "Competitors (named in 10-Ks)"
     }
   ],
-  "rivals": [],
+  "rivals": [
+    "PEP"
+  ],
   "companies": [
     {
       "id": "KHC",
@@ -108,6 +114,30 @@
         }
       ],
       "name_en": "JAB Holding Company"
+    },
+    {
+      "id": "PEP",
+      "ticker": "PEP",
+      "name": "ペプシコ",
+      "sub": "飲料・スナック",
+      "sub_en": "Beverages & snacks",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ペプシコが、10-Kでモンデリーズを競合の1社として挙げている",
+          "text_en": "PepsiCo names Mondelez as a competitor in its 10-K",
+          "source": {
+            "label": "PepsiCo 10-K",
+            "label_en": "PepsiCo 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/77476/000007747626000007/pep-20251227.htm",
+            "level": "official",
+            "date": "2026-02-03",
+            "quote": "Mondelēz International, Inc., Monster Beverage Corporation, Nestlé S.A."
+          }
+        }
+      ],
+      "name_en": "PepsiCo"
     }
   ],
   "far": [],

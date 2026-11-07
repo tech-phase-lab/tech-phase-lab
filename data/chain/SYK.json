@@ -9,6 +9,10 @@
     {
       "ja": "提携・顧客",
       "en": "Partners & customers"
+    },
+    {
+      "ja": "競合(10-Kに記載)",
+      "en": "Competitors (named in 10-Ks)"
     }
   ],
   "rivals": [
@@ -38,6 +42,19 @@
             "level": "official",
             "date": "2026-02-11",
             "quote": "the other four being Zimmer Biomet Holdings, Inc. (Zimmer), Medtronic plc (Medtronic), Johnson & Johnson MedTech (a subsidiary of Johnson & Johnson) and ConMed Linvatec, Inc. (a subsidiary of CONMED Corporation)"
+          }
+        },
+        {
+          "type": "rival",
+          "text": "ジンマー・バイオメットが、10-Kでストライカーを競合の1社として挙げている",
+          "text_en": "Zimmer Biomet names Stryker as a competitor in its 10-K",
+          "source": {
+            "label": "Zimmer Biomet 10-K",
+            "label_en": "Zimmer Biomet 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1136869/000119312526059853/zbh-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "our major competitors include Johnson & Johnson MedTech (formerly the DePuy Synthes Companies of Johnson & Johnson), Stryker Corporation and Smith & Nephew plc"
           }
         }
       ],

@@ -9,6 +9,11 @@
     {
       "ja": "提携・顧客",
       "en": "Partners & customers"
+    },
+    {
+      "ja": "供給元(上流)",
+      "en": "Suppliers (upstream)",
+      "above": true
     }
   ],
   "rivals": [],
@@ -108,6 +113,102 @@
         }
       ],
       "name_en": "Lithium Americas"
+    },
+    {
+      "id": "STRT",
+      "ticker": "STRT",
+      "name": "ストラテック・セキュリティ",
+      "sub": "自動車部品(鍵・ドア機構)",
+      "sub_en": "Auto parts (locks, latches)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "売上の27%がGM向け(2026年度の最大顧客)",
+          "text_en": "GM was its largest customer at 27% of fiscal 2026 sales",
+          "source": {
+            "label": "Strattec Security 10-K",
+            "label_en": "Strattec Security 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/933034/000119312526374333/strt-20260628.htm",
+            "level": "official",
+            "date": "2026-08-28",
+            "quote": "In fiscal 2026, our three largest customers, General Motors Company, Ford Motor Company and Stellantis, accounted for 27%, 21% and 16%, respectively, of our annual sales."
+          }
+        }
+      ],
+      "name_en": "Strattec Security"
+    },
+    {
+      "id": "LEA",
+      "ticker": "LEA",
+      "name": "リア",
+      "sub": "自動車シート・電装",
+      "sub_en": "Auto seating & electrical",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "シート部門の上位5顧客の1社としてGMを記載",
+          "text_en": "Lists GM among the top five customers of its Seating segment",
+          "source": {
+            "label": "Lear 10-K",
+            "label_en": "Lear 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/842162/000084216226000011/lear-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "The top five customers of our Seating segment are: General Motors, Mercedes-Benz, Stellantis, Volkswagen and BMW."
+          }
+        }
+      ],
+      "name_en": "Lear"
+    },
+    {
+      "id": "VC",
+      "ticker": "VC",
+      "name": "ビステオン",
+      "sub": "車載電装",
+      "sub_en": "Automotive electronics",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "最終顧客の自動車メーカーとしてGMを記載",
+          "text_en": "Lists GM among its ultimate vehicle-maker customers",
+          "source": {
+            "label": "Visteon 10-K",
+            "label_en": "Visteon 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1111335/000111133526000006/vc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "The Company's ultimate customers are global vehicle manufacturers including BMW, Ford, Geely, General Motors, Honda, Jaguar/Land Rover, Mahindra, Mazda, Mercedes-Benz, Mitsubishi, Nissan, Renault, Stellantis, Tata, Toyota, and Volkswagen."
+          }
+        }
+      ],
+      "name_en": "Visteon"
+    },
+    {
+      "id": "MBUU",
+      "ticker": "MBUU",
+      "name": "マリブ・ボーツ",
+      "sub": "レジャーボート",
+      "sub_en": "Recreational boats",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "ボートのエンジンブロックをGMから調達する供給契約(2026年まで)",
+          "text_en": "Buys engine blocks from GM under a supply agreement through 2026",
+          "source": {
+            "label": "Malibu Boats 10-K",
+            "label_en": "Malibu Boats 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1590976/000159097626000037/mbuu-20260630.htm",
+            "level": "official",
+            "date": "2026-08-27",
+            "quote": "We have an engine supply agreement with General Motors LLC (\"General Motors\") for the supply of engine blocks to use in our Malibu and Axis brand boats through calendar year 2026"
+          }
+        }
+      ],
+      "name_en": "Malibu Boats"
     }
   ],
   "far": [],

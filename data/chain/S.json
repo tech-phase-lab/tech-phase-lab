@@ -8,9 +8,18 @@
     {
       "ja": "連携先",
       "en": "Integrations"
+    },
+    {
+      "ja": "競合(10-Kに記載)",
+      "en": "Competitors (named in the 10-K)"
     }
   ],
-  "rivals": [],
+  "rivals": [
+    "CRWD",
+    "PANW",
+    "MSFT",
+    "CSCO"
+  ],
   "companies": [
     {
       "id": "AMZN",
@@ -87,6 +96,150 @@
         }
       ],
       "name_en": "Google"
+    },
+    {
+      "id": "CRWD",
+      "ticker": "CRWD",
+      "name": "クラウドストライク",
+      "sub": "エンドポイント保護",
+      "sub_en": "Endpoint security",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "エンドポイントセキュリティの競合として、10-Kに記載",
+          "text_en": "Named in the 10-K as an endpoint security competitor",
+          "source": {
+            "label": "SentinelOne 10-K",
+            "label_en": "SentinelOne 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1583708/000158370826000020/s-20260131.htm",
+            "level": "official",
+            "date": "2026-03-19",
+            "quote": "endpoint security providers, such as CrowdStrike Holdings, Inc. (CrowdStrike)"
+          }
+        }
+      ],
+      "name_en": "CrowdStrike"
+    },
+    {
+      "id": "AVGO",
+      "ticker": "AVGO",
+      "name": "ブロードコム",
+      "sub": "半導体・ソフト",
+      "sub_en": "Semis & software",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Carbon BlackとSymantec(いずれもブロードコム傘下)を競合として記載",
+          "text_en": "Names Carbon Black and Symantec, both within Broadcom, as competitors",
+          "source": {
+            "label": "SentinelOne 10-K",
+            "label_en": "SentinelOne 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1583708/000158370826000020/s-20260131.htm",
+            "level": "official",
+            "date": "2026-03-19",
+            "quote": "Carbon Black (within Broadcom, Inc.)"
+          }
+        }
+      ],
+      "name_en": "Broadcom"
+    },
+    {
+      "id": "MSFT",
+      "ticker": "MSFT",
+      "name": "マイクロソフト",
+      "sub": "ソフトウェア・クラウド",
+      "sub_en": "Software & cloud",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "従来型のウイルス対策を提供する競合として記載",
+          "text_en": "Named as a legacy antivirus competitor",
+          "source": {
+            "label": "SentinelOne 10-K",
+            "label_en": "SentinelOne 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1583708/000158370826000020/s-20260131.htm",
+            "level": "official",
+            "date": "2026-03-19",
+            "quote": "legacy antivirus providers such as Trellix (formerly McAfee Corp.), Symantec (a subsidiary of Broadcom, Inc.) (Symantec), and Microsoft Corporation (Microsoft)"
+          }
+        }
+      ],
+      "name_en": "Microsoft"
+    },
+    {
+      "id": "PANW",
+      "ticker": "PANW",
+      "name": "パロアルト・ネットワークス",
+      "sub": "ネットワークセキュリティ",
+      "sub_en": "Network security",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "総合的なネットワークセキュリティ製品の競合として記載",
+          "text_en": "Named as a general network security competitor",
+          "source": {
+            "label": "SentinelOne 10-K",
+            "label_en": "SentinelOne 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1583708/000158370826000020/s-20260131.htm",
+            "level": "official",
+            "date": "2026-03-19",
+            "quote": "providers of general network security products and services who offer a broad portfolio of solutions, such as Palo Alto Networks, Inc. (Palo Alto Networks)"
+          }
+        }
+      ],
+      "name_en": "Palo Alto Networks"
+    },
+    {
+      "id": "CSCO",
+      "ticker": "CSCO",
+      "name": "シスコシステムズ",
+      "sub": "ネットワーク機器",
+      "sub_en": "Networking",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "SIEM(ログ分析)の競合として記載。同社はSplunkを買収",
+          "text_en": "Named as a SIEM competitor; Cisco acquired Splunk",
+          "source": {
+            "label": "SentinelOne 10-K",
+            "label_en": "SentinelOne 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1583708/000158370826000020/s-20260131.htm",
+            "level": "official",
+            "date": "2026-03-19",
+            "quote": "SIEM providers such as Cisco Systems, Inc. (which acquired Splunk) and Elastic"
+          }
+        }
+      ],
+      "name_en": "Cisco Systems"
+    },
+    {
+      "id": "ESTC",
+      "ticker": "ESTC",
+      "name": "エラスティック",
+      "sub": "検索・ログ分析",
+      "sub_en": "Search & analytics",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "SIEM(ログ分析)の競合として記載",
+          "text_en": "Named as a SIEM competitor",
+          "source": {
+            "label": "SentinelOne 10-K",
+            "label_en": "SentinelOne 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1583708/000158370826000020/s-20260131.htm",
+            "level": "official",
+            "date": "2026-03-19",
+            "quote": "SIEM providers such as Cisco Systems, Inc. (which acquired Splunk) and Elastic"
+          }
+        }
+      ],
+      "name_en": "Elastic"
     }
   ],
   "far": [],

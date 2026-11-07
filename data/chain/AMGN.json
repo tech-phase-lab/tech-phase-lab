@@ -1,0 +1,437 @@
+{
+  "root": {
+    "ticker": "AMGN",
+    "name": "アムジェン",
+    "cik": 318154,
+    "name_en": "Amgen Inc."
+  },
+  "rows": [
+    {
+      "ja": "供給元(上流)",
+      "en": "Suppliers (upstream)",
+      "above": true
+    },
+    {
+      "ja": "卸売・流通",
+      "en": "Wholesale distribution"
+    },
+    {
+      "ja": "提携・共同開発",
+      "en": "Collaboration partners"
+    },
+    {
+      "ja": "競合(AMGNの資料に記載)",
+      "en": "Competitors (named in AMGN’s filing)"
+    }
+  ],
+  "rivals": [
+    "ABBV",
+    "LLY",
+    "NVS",
+    "REGN"
+  ],
+  "companies": [
+    {
+      "id": "MCK",
+      "ticker": "MCK",
+      "name": "マッケソン",
+      "name_en": "McKesson",
+      "sub": "医薬品卸",
+      "sub_en": "Pharma wholesaler",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "McKessonへの製品販売が、2023〜2025年の各年で全社売上の10%超",
+          "text_en": "Product sales to McKesson were each over 10% of total revenue in 2023, 2024 and 2025",
+          "source": {
+            "label": "Amgen 10-K(2025年度)",
+            "label_en": "Amgen 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/318154/000031815426000010/amgn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "McKesson Corporation, Cencora, Inc. and Cardinal Health, Inc., each individually accounted for more than 10% of total revenues"
+          }
+        }
+      ]
+    },
+    {
+      "id": "COR",
+      "ticker": "COR",
+      "name": "センコラ",
+      "name_en": "Cencora",
+      "sub": "医薬品卸",
+      "sub_en": "Pharma wholesaler",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Cencoraへの製品販売が、2023〜2025年の各年で全社売上の10%超",
+          "text_en": "Product sales to Cencora were each over 10% of total revenue in 2023, 2024 and 2025",
+          "source": {
+            "label": "Amgen 10-K(2025年度)",
+            "label_en": "Amgen 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/318154/000031815426000010/amgn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "McKesson Corporation, Cencora, Inc. and Cardinal Health, Inc., each individually accounted for more than 10% of total revenues"
+          }
+        }
+      ]
+    },
+    {
+      "id": "CAH",
+      "ticker": "CAH",
+      "name": "カーディナル・ヘルス",
+      "name_en": "Cardinal Health",
+      "sub": "医薬品卸",
+      "sub_en": "Pharma wholesaler",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Cardinal Healthへの製品販売が、2023〜2025年の各年で全社売上の10%超",
+          "text_en": "Product sales to Cardinal Health were each over 10% of total revenue in 2023, 2024 and 2025",
+          "source": {
+            "label": "Amgen 10-K(2025年度)",
+            "label_en": "Amgen 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/318154/000031815426000010/amgn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "McKesson Corporation, Cencora, Inc. and Cardinal Health, Inc., each individually accounted for more than 10% of total revenues"
+          }
+        }
+      ]
+    },
+    {
+      "id": "AZN",
+      "ticker": "AZN",
+      "name": "アストラゼネカ",
+      "name_en": "AstraZeneca",
+      "sub": "医薬品",
+      "sub_en": "Pharma",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "喘息治療薬TEZSPIREを共同で開発・販売。世界の費用と損益を折半",
+          "text_en": "Co-develops and co-commercializes the asthma drug TEZSPIRE; global costs, profits and losses are shared equally",
+          "source": {
+            "label": "Amgen 10-K(2025年度)",
+            "label_en": "Amgen 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/318154/000031815426000010/amgn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "We are in a collaboration with AstraZeneca for the development and commercialization of TEZSPIRE."
+          }
+        }
+      ]
+    },
+    {
+      "id": "UCB",
+      "ticker": "UCB",
+      "name": "UCB",
+      "name_en": "UCB",
+      "sub": "医薬品",
+      "sub_en": "Pharma",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "骨粗しょう症薬EVENITYを共同で開発・販売。欧州の大半の国ではUCBが販売を主導",
+          "text_en": "Co-develops and co-commercializes the osteoporosis drug EVENITY; UCB leads sales in most European countries",
+          "source": {
+            "label": "Amgen 10-K(2025年度)",
+            "label_en": "Amgen 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/318154/000031815426000010/amgn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "We are in a collaboration with UCB for the development and commercialization of EVENITY."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ONC",
+      "ticker": "ONC",
+      "name": "ビーワン・メディスンズ",
+      "name_en": "BeOne Medicines",
+      "sub": "がん治療薬(中国)",
+      "sub_en": "Oncology (China)",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2020年に約28億ドルで持分を取得。中国でのがん領域の拡大に向けた提携",
+          "text_en": "Bought an equity stake for about $2.8B in 2020 as part of a collaboration to expand in oncology in China",
+          "source": {
+            "label": "Amgen 10-K(2025年度)",
+            "label_en": "Amgen 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/318154/000031815426000010/amgn-20251231.htm",
+            "level": "official",
+            "date": "2020-01",
+            "quote": "In January 2020, we acquired an equity stake in BeOne for approximately $2.8 billion in cash as part of a collaboration agreement to expand our oncology presence in China."
+          }
+        },
+        {
+          "type": "down",
+          "text": "中国で販売される共同製品(XGEVA・BLINCYTO・KYPROLIS)をアムジェンが製造して供給",
+          "text_en": "Amgen manufactures and supplies the collaboration products (XGEVA, BLINCYTO, KYPROLIS) that BeOne sells in China",
+          "source": {
+            "label": "Amgen 10-K(2025年度)",
+            "label_en": "Amgen 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/318154/000031815426000010/amgn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "Amgen manufactures and supplies the collaboration products to BeOne."
+          }
+        }
+      ]
+    },
+    {
+      "id": "KYOWA",
+      "ticker": "Kyowa Kirin",
+      "name": "協和キリン",
+      "name_en": "Kyowa Kirin",
+      "sub": "医薬品",
+      "sub_en": "Pharma",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2026年1月にロカチニマブの共同開発契約を終了。世界での開発・販売は協和キリンが引き継ぐ",
+          "text_en": "In January 2026 the rocatinlimab collaboration was terminated; Kyowa Kirin takes over global development and sales",
+          "source": {
+            "label": "Amgen 10-K(2025年度)",
+            "label_en": "Amgen 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/318154/000031815426000010/amgn-20251231.htm",
+            "level": "official",
+            "date": "2026-01",
+            "quote": "In January 2026, we and Kyowa Kirin agreed to terminate the rocatinlimab collaboration agreement and to transition control of the global development and commercialization program to Kyowa Kirin"
+          }
+        }
+      ]
+    },
+    {
+      "id": "TAK",
+      "ticker": "TAK",
+      "name": "武田薬品工業",
+      "name_en": "Takeda",
+      "sub": "医薬品",
+      "sub_en": "Pharma",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "アジア太平洋で、アムジェンの製品を提携して販売する会社の1つ",
+          "text_en": "One of the companies with which Amgen sells its products in partnership in the Asia Pacific region",
+          "source": {
+            "label": "Amgen 10-K(2025年度)",
+            "label_en": "Amgen 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/318154/000031815426000010/amgn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "we also sell our products in partnership with other companies, including Astellas Pharma Inc., BeOne, Mitsubishi Tanabe Pharma Corporation, Takeda Pharmaceutical Co., Ltd. and Kyowa Kirin."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ASTELLAS",
+      "ticker": "Astellas",
+      "name": "アステラス製薬",
+      "name_en": "Astellas Pharma",
+      "sub": "医薬品",
+      "sub_en": "Pharma",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "アジア太平洋で、アムジェンの製品を提携して販売する会社の1つ",
+          "text_en": "One of the companies with which Amgen sells its products in partnership in the Asia Pacific region",
+          "source": {
+            "label": "Amgen 10-K(2025年度)",
+            "label_en": "Amgen 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/318154/000031815426000010/amgn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "we also sell our products in partnership with other companies, including Astellas Pharma Inc., BeOne, Mitsubishi Tanabe Pharma Corporation, Takeda Pharmaceutical Co., Ltd. and Kyowa Kirin."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ABBV",
+      "ticker": "ABBV",
+      "name": "アッヴィ",
+      "name_en": "AbbVie",
+      "sub": "医薬品",
+      "sub_en": "Pharma",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Otezla(乾癬治療薬)の競合品Skyrizi(アッヴィ)",
+          "text_en": "Skyrizi (AbbVie) competes with Otezla",
+          "source": {
+            "label": "Amgen 10-K(2025年度)",
+            "label_en": "Amgen 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/318154/000031815426000010/amgn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "Otezla U.S. & Europe Skyrizi ® AbbVie Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "LLY",
+      "ticker": "LLY",
+      "name": "イーライリリー",
+      "name_en": "Eli Lilly",
+      "sub": "医薬品",
+      "sub_en": "Pharma",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Otezlaの競合品Taltz(イーライリリー)",
+          "text_en": "Taltz (Eli Lilly) competes with Otezla",
+          "source": {
+            "label": "Amgen 10-K(2025年度)",
+            "label_en": "Amgen 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/318154/000031815426000010/amgn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "U.S. & Europe Taltz ® Eli Lilly and Company"
+          }
+        }
+      ]
+    },
+    {
+      "id": "NVS",
+      "ticker": "NVS",
+      "name": "ノバルティス",
+      "name_en": "Novartis",
+      "sub": "医薬品",
+      "sub_en": "Pharma",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Repatha(コレステロール薬)の競合品LEQVIO(ノバルティス)",
+          "text_en": "LEQVIO (Novartis) competes with Repatha",
+          "source": {
+            "label": "Amgen 10-K(2025年度)",
+            "label_en": "Amgen 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/318154/000031815426000010/amgn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "LEQVIO ® Novartis AG"
+          }
+        }
+      ]
+    },
+    {
+      "id": "REGN",
+      "ticker": "REGN",
+      "name": "リジェネロン",
+      "name_en": "Regeneron",
+      "sub": "バイオ医薬品",
+      "sub_en": "Biopharma",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Repathaの競合品PRALUENT(リジェネロン)",
+          "text_en": "PRALUENT (Regeneron) competes with Repatha",
+          "source": {
+            "label": "Amgen 10-K(2025年度)",
+            "label_en": "Amgen 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/318154/000031815426000010/amgn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "PRALUENT ® Regeneron Pharmaceuticals, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "PFE",
+      "ticker": "PFE",
+      "name": "ファイザー",
+      "name_en": "Pfizer",
+      "sub": "医薬品",
+      "sub_en": "Pharma",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "BLINCYTO(白血病薬)の競合品BESPONSA(ファイザー)",
+          "text_en": "BESPONSA (Pfizer) competes with BLINCYTO",
+          "source": {
+            "label": "Amgen 10-K(2025年度)",
+            "label_en": "Amgen 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/318154/000031815426000010/amgn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "BESPONSA ® Pfizer Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BMY",
+      "ticker": "BMY",
+      "name": "ブリストル・マイヤーズ スクイブ",
+      "name_en": "Bristol Myers Squibb",
+      "sub": "医薬品",
+      "sub_en": "Pharma",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Otezlaの競合品SOTYKTU(ブリストル・マイヤーズ スクイブ)",
+          "text_en": "SOTYKTU (Bristol Myers Squibb) competes with Otezla",
+          "source": {
+            "label": "Amgen 10-K(2025年度)",
+            "label_en": "Amgen 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/318154/000031815426000010/amgn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "SOTYKTU ® Bristol Myers Squibb Company"
+          }
+        }
+      ]
+    },
+    {
+      "id": "JNJ",
+      "ticker": "JNJ",
+      "name": "ジョンソン・エンド・ジョンソン",
+      "name_en": "Johnson & Johnson",
+      "sub": "医薬品",
+      "sub_en": "Pharma",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Otezlaの競合品Tremfya(ジョンソン・エンド・ジョンソン)",
+          "text_en": "Tremfya (Johnson & Johnson) competes with Otezla",
+          "source": {
+            "label": "Amgen 10-K(2025年度)",
+            "label_en": "Amgen 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/318154/000031815426000010/amgn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "Tremfya ® Johnson & Johnson Innovative Medicine"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

@@ -89,6 +89,30 @@
         }
       ],
       "name_en": "CCB Wealth Management"
+    },
+    {
+      "id": "CRCL",
+      "ticker": "CRCL",
+      "name": "サークル",
+      "sub": "ステーブルコイン",
+      "sub_en": "Stablecoins",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2022年4月にブラックロックと協業の覚書を結ぶ",
+          "text_en": "Signed an MOU with BlackRock in April 2022 to explore collaboration",
+          "source": {
+            "label": "Circle Internet Group 10-K",
+            "label_en": "Circle Internet Group 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1876042/000187604226000062/crcl-20251231.htm",
+            "level": "official",
+            "date": "2026-03-09",
+            "quote": "In April 2022, we entered into a memorandum of understanding with BlackRock"
+          }
+        }
+      ],
+      "name_en": "Circle Internet Group"
     }
   ],
   "far": [],

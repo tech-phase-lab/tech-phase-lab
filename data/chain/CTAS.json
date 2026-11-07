@@ -1,0 +1,139 @@
+{
+  "root": {
+    "ticker": "CTAS",
+    "name": "シンタス",
+    "cik": 723254,
+    "name_en": "Cintas Corporation"
+  },
+  "rows": [
+    {
+      "ja": "買収予定先",
+      "en": "Acquisition target"
+    },
+    {
+      "ja": "同業グループ(10-Kの株価比較に記載)",
+      "en": "Peer group (named in the 10-K’s stock performance comparison)"
+    }
+  ],
+  "rivals": [
+    "ABM",
+    "ARMK",
+    "ROL"
+  ],
+  "companies": [
+    {
+      "id": "UNF",
+      "ticker": "UNF",
+      "name": "ユニファースト",
+      "name_en": "UniFirst",
+      "sub": "ユニフォーム供給",
+      "sub_en": "Uniform rental",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2026年3月10日に合併契約を結び、ユニファーストの全株式を取得する(取引額は約55億ドル)",
+          "text_en": "On March 10, 2026, Cintas agreed to acquire all outstanding UniFirst shares in a deal valued at about $5.5 billion",
+          "source": {
+            "label": "Cintas 10-K(2026年5月期)",
+            "label_en": "Cintas 10-K (FY ended May 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/723254/000072325426000028/ctas-20260531.htm",
+            "level": "official",
+            "date": "2026-03-10",
+            "quote": "On March 10, 2026, the Company entered into a Merger Agreement pursuant to which the Company will acquire all outstanding shares of UniFirst common stock."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "株価の比較対象となる同業グループにも記載",
+          "text_en": "Also listed in the peer group used for stock performance comparison",
+          "source": {
+            "label": "Cintas 10-K(2026年5月期)",
+            "label_en": "Cintas 10-K (FY ended May 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/723254/000072325426000028/ctas-20260531.htm",
+            "level": "official",
+            "date": "2026-07-29",
+            "quote": "The companies included in the peer group are ABM Industries, Inc., Aramark, Rollins, Inc. and UniFirst Corporation."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ABM",
+      "ticker": "ABM",
+      "name": "ABMインダストリーズ",
+      "name_en": "ABM Industries",
+      "sub": "施設管理",
+      "sub_en": "Facility services",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "株価の比較対象となる同業グループABMインダストリーズを、10-Kに記載",
+          "text_en": "Listed in the 10-K as part of the peer group used for stock performance comparison: ABM Industries",
+          "source": {
+            "label": "Cintas 10-K(2026年5月期)",
+            "label_en": "Cintas 10-K (FY ended May 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/723254/000072325426000028/ctas-20260531.htm",
+            "level": "official",
+            "date": "2026-07-29",
+            "quote": "The companies included in the peer group are ABM Industries, Inc., Aramark, Rollins, Inc. and UniFirst Corporation."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ARMK",
+      "ticker": "ARMK",
+      "name": "アラマーク",
+      "name_en": "Aramark",
+      "sub": "給食・ユニフォーム",
+      "sub_en": "Food and uniform services",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "株価の比較対象となる同業グループアラマークを、10-Kに記載",
+          "text_en": "Listed in the 10-K as part of the peer group used for stock performance comparison: Aramark",
+          "source": {
+            "label": "Cintas 10-K(2026年5月期)",
+            "label_en": "Cintas 10-K (FY ended May 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/723254/000072325426000028/ctas-20260531.htm",
+            "level": "official",
+            "date": "2026-07-29",
+            "quote": "The companies included in the peer group are ABM Industries, Inc., Aramark, Rollins, Inc. and UniFirst Corporation."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ROL",
+      "ticker": "ROL",
+      "name": "ロリンズ",
+      "name_en": "Rollins",
+      "sub": "害虫駆除",
+      "sub_en": "Pest control",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "株価の比較対象となる同業グループロリンズを、10-Kに記載",
+          "text_en": "Listed in the 10-K as part of the peer group used for stock performance comparison: Rollins",
+          "source": {
+            "label": "Cintas 10-K(2026年5月期)",
+            "label_en": "Cintas 10-K (FY ended May 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/723254/000072325426000028/ctas-20260531.htm",
+            "level": "official",
+            "date": "2026-07-29",
+            "quote": "The companies included in the peer group are ABM Industries, Inc., Aramark, Rollins, Inc. and UniFirst Corporation."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
