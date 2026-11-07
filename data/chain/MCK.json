@@ -9,6 +9,11 @@
     {
       "ja": "提携・顧客",
       "en": "Partners & customers"
+    },
+    {
+      "ja": "供給元(上流)",
+      "en": "Suppliers (upstream)",
+      "above": true
     }
   ],
   "rivals": [
@@ -97,6 +102,19 @@
             "date": "2026-05-08",
             "quote": "Our primary competitors in distribution, wholesaling, and logistics are Cencora, Inc. and Cardinal Health, Inc."
           }
+        },
+        {
+          "type": "rival",
+          "text": "最大の競合としてマッケソンを記載",
+          "text_en": "Names McKesson as a largest competitor",
+          "source": {
+            "label": "Cencora 10-K",
+            "label_en": "Cencora 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1140859/000114085925000131/cor-20250930.htm",
+            "level": "official",
+            "date": "2025-11-25",
+            "quote": "Our largest competitors are McKesson Corporation (“McKesson”), Cardinal Health, Inc."
+          }
         }
       ],
       "name_en": "Cencora"
@@ -124,6 +142,54 @@
         }
       ],
       "name_en": "Cardinal Health"
+    },
+    {
+      "id": "AMRX",
+      "ticker": "AMRX",
+      "name": "アムニール・ファーマシューティカルズ",
+      "sub": "ジェネリック医薬品",
+      "sub_en": "Generic drugs",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "最大顧客4社の1社としてマッケソンを記載",
+          "text_en": "One of its four largest customers",
+          "source": {
+            "label": "Amneal Pharmaceuticals 10-K",
+            "label_en": "Amneal Pharmaceuticals 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1723128/000172312826000011/amrx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "our four largest customers, Cencora, Inc., McKesson Drug Co., Cardinal Health, Inc., and CVS Health Corporation"
+          }
+        }
+      ],
+      "name_en": "Amneal Pharmaceuticals"
+    },
+    {
+      "id": "JAZZ",
+      "ticker": "JAZZ",
+      "name": "ジャズ・ファーマシューティカルズ",
+      "sub": "医薬品",
+      "sub_en": "Pharma",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Defitelioを病院に販売する経路として、マッケソンの専門卸を記載",
+          "text_en": "Sells Defitelio to hospitals through McKesson’s specialty distributors",
+          "source": {
+            "label": "Jazz Pharmaceuticals 10-K",
+            "label_en": "Jazz Pharmaceuticals 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1232524/000123252426000013/jazz-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Defitelio is sold to hospital customers through subsidiary specialty distributors of McKesson."
+          }
+        }
+      ],
+      "name_en": "Jazz Pharmaceuticals"
     }
   ],
   "far": [],

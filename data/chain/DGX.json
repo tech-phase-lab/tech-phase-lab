@@ -134,6 +134,30 @@
         }
       ],
       "name_en": "CVS Health"
+    },
+    {
+      "id": "EXAS",
+      "ticker": "EXAS",
+      "name": "エグザクト・サイエンシズ",
+      "sub": "がん検査",
+      "sub_en": "Cancer screening",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "がん検査の採血のため、クエストと契約",
+          "text_en": "Contracted with Quest Diagnostics for blood collection for its Cancerguard test",
+          "source": {
+            "label": "Exact Sciences 10-K",
+            "label_en": "Exact Sciences 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1124140/000112414026000011/exas-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "we entered into an agreement with Quest Diagnostics to enable blood collection at"
+          }
+        }
+      ],
+      "name_en": "Exact Sciences"
     }
   ],
   "far": [],

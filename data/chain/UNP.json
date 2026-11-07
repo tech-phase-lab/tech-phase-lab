@@ -97,6 +97,30 @@
         }
       ],
       "name_en": "TTX Company"
+    },
+    {
+      "id": "CNR",
+      "ticker": "CNR",
+      "name": "コア・ナチュラル・リソーシズ",
+      "sub": "石炭",
+      "sub_en": "Coal",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "石炭の輸送にユニオン・パシフィックなどの鉄道を利用",
+          "text_en": "Ships its coal on railroads including Union Pacific",
+          "source": {
+            "label": "Core Natural Resources 10-K",
+            "label_en": "Core Natural Resources 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1710366/000171036626000007/cnr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "We ship all of the coal raw to our customers via the Burlington Northern Santa Fe and Union Pacific railroads."
+          }
+        }
+      ],
+      "name_en": "Core Natural Resources"
     }
   ],
   "far": [],

@@ -9,11 +9,16 @@
     {
       "ja": "提携・顧客",
       "en": "Partners & customers"
+    },
+    {
+      "ja": "競合(10-Kに記載)",
+      "en": "Competitors (named in 10-Ks)"
     }
   ],
   "rivals": [
     "MDT",
-    "ABT"
+    "ABT",
+    "AORT"
   ],
   "companies": [
     {
@@ -113,6 +118,30 @@
         }
       ],
       "name_en": "JenaValve Technology"
+    },
+    {
+      "id": "AORT",
+      "ticker": "AORT",
+      "name": "アーティビオン",
+      "sub": "心臓外科機器",
+      "sub_en": "Cardiac surgery devices",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "心臓弁の競合としてエドワーズを記載",
+          "text_en": "Names Edwards Lifesciences as a heart-valve competitor",
+          "source": {
+            "label": "Artivion 10-K",
+            "label_en": "Artivion 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/784199/000162828026009046/aort-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "We compete with bioprosthetic or mechanical valves from companies including Medtronic, Edwards Lifesciences, Corcym, and Abbott Laboratories."
+          }
+        }
+      ],
+      "name_en": "Artivion"
     }
   ],
   "far": [],

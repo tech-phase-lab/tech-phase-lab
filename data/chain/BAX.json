@@ -9,9 +9,15 @@
     {
       "ja": "提携・顧客",
       "en": "Partners & customers"
+    },
+    {
+      "ja": "競合(10-Kに記載)",
+      "en": "Competitors (named in 10-Ks)"
     }
   ],
-  "rivals": [],
+  "rivals": [
+    "ICUI"
+  ],
   "companies": [
     {
       "id": "CAH",
@@ -108,6 +114,30 @@
         }
       ],
       "name_en": "Carlyle Group"
+    },
+    {
+      "id": "ICUI",
+      "ticker": "ICUI",
+      "name": "ICUメディカル",
+      "sub": "輸液・医療機器",
+      "sub_en": "Infusion & medical devices",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "輸液製品の競合としてバクスターを記載",
+          "text_en": "Names Baxter as a competitor in infusion products",
+          "source": {
+            "label": "ICU Medical 10-K",
+            "label_en": "ICU Medical 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/883984/000088398426000008/icui-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "We compete with products and systems marketed by Becton Dickinson (\"BD\"), Baxter International (\"Baxter\")"
+          }
+        }
+      ],
+      "name_en": "ICU Medical"
     }
   ],
   "far": [],

@@ -10,6 +10,10 @@
       "ja": "供給元",
       "en": "Suppliers",
       "above": true
+    },
+    {
+      "ja": "提携・関係",
+      "en": "Partners & ties"
     }
   ],
   "rivals": [],
@@ -133,6 +137,54 @@
         }
       ],
       "name_en": "Sony"
+    },
+    {
+      "id": "TBCH",
+      "ticker": "TBCH",
+      "name": "ターטル・ビーチ",
+      "sub": "ゲーム用ヘッドセット",
+      "sub_en": "Gaming headsets",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "最大顧客3社の1社として記載(売上の14〜28%)",
+          "text_en": "One of its three largest customers, each 14%–28% of sales",
+          "source": {
+            "label": "Turtle Beach 10-K",
+            "label_en": "Turtle Beach 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1493761/000119312526104436/tbch-20251231.htm",
+            "level": "official",
+            "date": "2026-03-12",
+            "quote": "our three largest customers - Walmart, Amazon, and Best Buy - each accounted for between 14% to 28% of our consolidated gross sales"
+          }
+        }
+      ],
+      "name_en": "Turtle Beach"
+    },
+    {
+      "id": "LOVE",
+      "ticker": "LOVE",
+      "name": "ラブサック",
+      "sub": "家具",
+      "sub_en": "Furniture",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年6月にベスト・バイとの提携(店内売り場)を終了",
+          "text_en": "Ended its Best Buy shop-in-shop partnership in June 2025",
+          "source": {
+            "label": "Lovesac 10-K",
+            "label_en": "Lovesac 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1701758/000162828026022929/love-20260201.htm",
+            "level": "official",
+            "date": "2026-04-02",
+            "quote": "In June 2025, the Company discontinued its partnership with Best Buy, resulting in the closure of all remaining Best Buy shop-in-shop locations as of February 1, 2026."
+          }
+        }
+      ],
+      "name_en": "Lovesac"
     }
   ],
   "far": [],

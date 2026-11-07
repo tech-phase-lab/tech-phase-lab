@@ -163,6 +163,19 @@
             "date": "2026-02-11",
             "quote": "Our principal cruise competitors are Carnival Corporation & plc"
           }
+        },
+        {
+          "type": "rival",
+          "text": "主要なクルーズ競合としてロイヤル・カリビアンを記載",
+          "text_en": "Names Royal Caribbean as a principal cruise competitor",
+          "source": {
+            "label": "Carnival 10-K",
+            "label_en": "Carnival 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/815097/000081509726000007/ccl-20251130.htm",
+            "level": "official",
+            "date": "2026-01-27",
+            "quote": "we, along with our principal cruise competitors Royal Caribbean Group, Norwegian Cruise Line Holdings, Ltd."
+          }
         }
       ],
       "name_en": "Carnival Corporation & plc"

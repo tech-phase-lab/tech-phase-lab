@@ -73,6 +73,19 @@
             "date": "2026-02-18",
             "quote": "The market for accommodations covers a wide range of property types including alternative accommodations and companies like Airbnb and Vrbo (owned by Expedia) compete directly with our accommodations businesses"
           }
+        },
+        {
+          "type": "rival",
+          "text": "競合のオンライン旅行会社としてブッキング・ホールディングスを記載",
+          "text_en": "Names Booking Holdings among competing online travel agencies",
+          "source": {
+            "label": "Airbnb 10-K",
+            "label_en": "Airbnb 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1559720/000155972026000004/abnb-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "online travel agencies (“OTAs”), such as Booking Holdings (including the brand Booking.com), Expedia Group (including the brands Expedia and VRBO), Trip.com Group"
+          }
         }
       ],
       "name_en": "Airbnb"

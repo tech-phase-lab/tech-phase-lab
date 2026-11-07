@@ -9,6 +9,11 @@
     {
       "ja": "提携・顧客",
       "en": "Partners & customers"
+    },
+    {
+      "ja": "供給元(上流)",
+      "en": "Suppliers (upstream)",
+      "above": true
     }
   ],
   "rivals": [],
@@ -132,6 +137,30 @@
         }
       ],
       "name_en": "Singapore Refining Company"
+    },
+    {
+      "id": "HUN",
+      "ticker": "HUN",
+      "name": "ハンツマン",
+      "sub": "化学",
+      "sub_en": "Chemicals",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "アミン類の顧客としてシェブロンを記載",
+          "text_en": "Names Chevron among its amines customers",
+          "source": {
+            "label": "Huntsman 10-K",
+            "label_en": "Huntsman 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1307954/000143774926004524/hun20251231_10k.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "Our amines customers include Afton, Bayer, Chevron, DuPont, Evonik, Hipower, Infineum, Lubrizol, Quadra Chemicals and Univar."
+          }
+        }
+      ],
+      "name_en": "Huntsman"
     }
   ],
   "far": [],
