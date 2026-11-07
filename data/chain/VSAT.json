@@ -199,6 +199,30 @@
         }
       ],
       "name_en": "Gogo"
+    },
+    {
+      "id": "GSAT",
+      "ticker": "GSAT",
+      "name": "グローバルスター",
+      "sub": "衛星通信",
+      "sub_en": "Satellite communications",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "最大の競合の1社としてビアサットを記載",
+          "text_en": "Names Viasat as one of its largest competitors",
+          "source": {
+            "label": "Globalstar 10-K",
+            "label_en": "Globalstar 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1366868/000136686826000012/gsat-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Our largest global competitors are Viasat, Iridium and ORBCOMM."
+          }
+        }
+      ],
+      "name_en": "Globalstar"
     }
   ],
   "far": [],

@@ -234,6 +234,30 @@
         }
       ],
       "name_en": "BK Technologies"
+    },
+    {
+      "id": "SSTI",
+      "ticker": "SSTI",
+      "name": "サウンドシンキング",
+      "sub": "公共安全ソフト",
+      "sub_en": "Public-safety software",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "競合としてモトローラ・ソリューションズを記載",
+          "text_en": "Names Motorola Solutions as a competitor",
+          "source": {
+            "label": "SoundThinking 10-K",
+            "label_en": "SoundThinking 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1351636/000119312526132104/ssti-20251231.htm",
+            "level": "official",
+            "date": "2026-03-30",
+            "quote": "such as CentralSquare Technologies, Genetec, Inc., Mark 43 and Motorola Solutions, Inc."
+          }
+        }
+      ],
+      "name_en": "SoundThinking"
     }
   ],
   "far": [],

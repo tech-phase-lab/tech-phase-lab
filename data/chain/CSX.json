@@ -150,6 +150,30 @@
         }
       ],
       "name_en": "Conrail"
+    },
+    {
+      "id": "CP",
+      "ticker": "CP",
+      "name": "カナディアン・パシフィック・カンザスシティ",
+      "sub": "鉄道",
+      "sub_en": "Railroad",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "水素機関車の製造のため、CSXと合弁会社を設立",
+          "text_en": "Formed a joint venture with CSX to produce hydrogen locomotives",
+          "source": {
+            "label": "Canadian Pacific Kansas City 10-K",
+            "label_en": "Canadian Pacific Kansas City 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/16875/000119312526173665/d172022d10ka.htm",
+            "level": "official",
+            "date": "2026-04-23",
+            "quote": "formation of a joint venture with CSX Corporation (“CSX”) to produce hydrogen locomotives"
+          }
+        }
+      ],
+      "name_en": "Canadian Pacific Kansas City"
     }
   ],
   "far": [],

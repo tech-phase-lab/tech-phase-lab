@@ -331,6 +331,19 @@
             "date": "2025-12-18",
             "quote": "Our primary competitors in data center infrastructure are technology vendors, such as Dell Technologies Inc., Super Micro Computer, Inc., Cisco Systems, Inc., and Lenovo Group Ltd."
           }
+        },
+        {
+          "type": "rival",
+          "text": "主要な競合としてシスコを記載",
+          "text_en": "Names Cisco as a primary competitor",
+          "source": {
+            "label": "Hewlett Packard Enterprise 10-K",
+            "label_en": "Hewlett Packard Enterprise 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1645590/000164559025000130/hpe-20251031.htm",
+            "level": "official",
+            "date": "2025-12-18",
+            "quote": "Our primary competitors are other infrastructure and cloud management software technology vendors, such as Broadcom, Cisco Systems Inc., Dell Technologies Inc., IBM, NetApp Inc., Nutanix"
+          }
         }
       ],
       "name_en": "Hewlett Packard Enterprise"

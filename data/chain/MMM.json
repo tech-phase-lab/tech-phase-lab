@@ -17,7 +17,8 @@
   ],
   "rivals": [
     "APT",
-    "AMCR"
+    "AMCR",
+    "HUN"
   ],
   "companies": [
     {
@@ -200,6 +201,30 @@
         }
       ],
       "name_en": "Amcor"
+    },
+    {
+      "id": "HUN",
+      "ticker": "HUN",
+      "name": "ハンツマン",
+      "sub": "化学",
+      "sub_en": "Chemicals",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主要な競合として3Mを記載",
+          "text_en": "Names 3M as a major competitor",
+          "source": {
+            "label": "Huntsman 10-K",
+            "label_en": "Huntsman 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1307954/000143774926004524/hun20251231_10k.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "Our major competitors include 3M, Henkel and Sumitomo."
+          }
+        }
+      ],
+      "name_en": "Huntsman"
     }
   ],
   "far": [],

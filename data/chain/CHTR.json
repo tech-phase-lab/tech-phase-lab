@@ -151,6 +151,19 @@
             "date": "2026-01-30",
             "quote": "In 2025, we entered into an agreement with Comcast to expand distribution of Spectrum News to their video customers in California, Connecticut, northern New Jersey, Orlando and Tampa."
           }
+        },
+        {
+          "type": "tie",
+          "text": "ストリーミング基盤Xumoを、チャーターと合弁で運営",
+          "text_en": "Runs the streaming platform Xumo as a joint venture with Charter",
+          "source": {
+            "label": "Comcast 10-K",
+            "label_en": "Comcast 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1166691/000162828026004994/cmcsa-20251231.htm",
+            "level": "official",
+            "date": "2026-02-03",
+            "quote": "Xumo, our consolidated streaming platform joint venture with Charter Communications."
+          }
         }
       ],
       "name_en": "Comcast"

@@ -156,6 +156,30 @@
         }
       ],
       "name_en": "Shinsegae International"
+    },
+    {
+      "id": "MAC",
+      "ticker": "MAC",
+      "name": "メイスリッチ",
+      "sub": "商業施設REIT",
+      "sub_en": "Mall REIT",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ロサンゼルス・プレミアム・アウトレットを、サイモンと50対50で開発",
+          "text_en": "Develops Los Angeles Premium Outlets in a 50/50 joint venture with Simon",
+          "source": {
+            "label": "Macerich 10-K",
+            "label_en": "Macerich 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/912242/000091224226000016/mac-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "50 /50 joint venture with Simon Property Group, which was initially formed to develop Los Angeles Premium Outlets"
+          }
+        }
+      ],
+      "name_en": "Macerich"
     }
   ],
   "far": [],

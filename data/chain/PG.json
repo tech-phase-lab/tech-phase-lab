@@ -237,6 +237,30 @@
         }
       ],
       "name_en": "AMCON Distributing"
+    },
+    {
+      "id": "STCB",
+      "ticker": "STCB",
+      "name": "スターコ・ブランズ",
+      "sub": "日用品",
+      "sub_en": "Household products",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "競合としてP&Gを記載",
+          "text_en": "Names P&G as a competitor",
+          "source": {
+            "label": "Starco Brands 10-K",
+            "label_en": "Starco Brands 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1539850/000149315226016613/form10-k.htm",
+            "level": "official",
+            "date": "2026-04-14",
+            "quote": "These competitors include Johnson & Johnson, The Procter & Gamble Company, Unilever, Diageo"
+          }
+        }
+      ],
+      "name_en": "Starco Brands"
     }
   ],
   "far": [],

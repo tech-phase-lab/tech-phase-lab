@@ -60,6 +60,19 @@
             "date": "2026-07-29",
             "quote": "The companies included in the peer group are ABM Industries, Inc., Aramark, Rollins, Inc. and UniFirst Corporation."
           }
+        },
+        {
+          "type": "rival",
+          "text": "ユニフォームレンタルの主要な競合としてシンタスを記載",
+          "text_en": "Names Cintas as a principal uniform-rental competitor",
+          "source": {
+            "label": "UniFirst 10-K",
+            "label_en": "UniFirst 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/717954/000162828026067689/unf-20260829.htm",
+            "level": "official",
+            "date": "2026-10-28",
+            "quote": "Our principal competitors offering uniform rental programs include Cintas, Alsco, and Vestis Corporation."
+          }
         }
       ]
     },

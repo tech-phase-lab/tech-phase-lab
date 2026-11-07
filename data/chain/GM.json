@@ -209,6 +209,30 @@
         }
       ],
       "name_en": "Malibu Boats"
+    },
+    {
+      "id": "ASPN",
+      "ticker": "ASPN",
+      "name": "アスペン・エアロジェルズ",
+      "sub": "断熱材(EV電池向け)",
+      "sub_en": "Aerogel insulation (EV batteries)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "EV電池向け断熱材の顧客としてGMを記載",
+          "text_en": "Names GM among its EV-battery insulation customers",
+          "source": {
+            "label": "Aspen Aerogels 10-K",
+            "label_en": "Aspen Aerogels 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1145986/000119312526106453/aspn-20251231.htm",
+            "level": "official",
+            "date": "2026-03-13",
+            "quote": "These customers include General Motors LLC (GM), Scania, Automotive Cells Company"
+          }
+        }
+      ],
+      "name_en": "Aspen Aerogels"
     }
   ],
   "far": [],

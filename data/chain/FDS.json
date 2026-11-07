@@ -158,6 +158,19 @@
             "date": "2026-10-20",
             "quote": "most notably Bloomberg L.P., S&P, London Stock Exchange Group (\"LSEG\"), BlackRock, MSCI Inc., and Morningstar Inc., in addition to clients with in-house teams developing their own solutions"
           }
+        },
+        {
+          "type": "rival",
+          "text": "主要な競合としてファクトセットを記載",
+          "text_en": "Names FactSet as a key competitor",
+          "source": {
+            "label": "Morningstar 10-K",
+            "label_en": "Morningstar 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1289419/000128941926000013/morn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "Key competitors include Beauhurst, FactSet, MSCI, Preqin (a division of BlackRock), Refinitiv, S&P Global Market Intelligence"
+          }
         }
       ],
       "name_en": "Morningstar"

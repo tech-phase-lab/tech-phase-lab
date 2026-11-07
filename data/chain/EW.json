@@ -18,7 +18,8 @@
   "rivals": [
     "MDT",
     "ABT",
-    "AORT"
+    "AORT",
+    "MMSI"
   ],
   "companies": [
     {
@@ -142,6 +143,30 @@
         }
       ],
       "name_en": "Artivion"
+    },
+    {
+      "id": "MMSI",
+      "ticker": "MMSI",
+      "name": "メリット・メディカル・システムズ",
+      "sub": "心臓・血管インターベンション機器",
+      "sub_en": "Interventional devices",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "心臓インターベンションの主要な競合としてエドワーズを記載",
+          "text_en": "Names Edwards Lifesciences as a primary cardiac-intervention competitor",
+          "source": {
+            "label": "Merit Medical 10-K",
+            "label_en": "Merit Medical 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/856982/000085698226000008/mmsi-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Our primary competitors in our cardiac intervention market are BD, Teleflex, Medtronic, Abbott Laboratories, Terumo Corporation, Edwards Lifesciences Corporation"
+          }
+        }
+      ],
+      "name_en": "Merit Medical"
     }
   ],
   "far": [],
