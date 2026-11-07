@@ -110,6 +110,30 @@
         }
       ],
       "name_en": "National Petrochemical Industrial Company"
+    },
+    {
+      "id": "ATKR",
+      "ticker": "ATKR",
+      "name": "アトコア",
+      "sub": "電設資材",
+      "sub_en": "Electrical products",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "HDPE樹脂の主要な仕入先としてライオンデルバセルを記載",
+          "text_en": "Names LyondellBasell as a primary supplier of HDPE resin",
+          "source": {
+            "label": "Atkore 10-K",
+            "label_en": "Atkore 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1666138/000162828025054049/atkr-20250930.htm",
+            "level": "official",
+            "date": "2025-11-26",
+            "quote": "our primary suppliers of HDPE resin are LyondellBasell and Baystar"
+          }
+        }
+      ],
+      "name_en": "Atkore"
     }
   ],
   "far": [],

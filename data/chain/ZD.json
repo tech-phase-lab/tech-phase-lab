@@ -9,6 +9,10 @@
     {
       "ja": "提携・顧客",
       "en": "Partners & customers"
+    },
+    {
+      "ja": "競合(10-Kに記載)",
+      "en": "Competitors (named in 10-Ks)"
     }
   ],
   "rivals": [
@@ -162,6 +166,30 @@
         }
       ],
       "name_en": "Snap"
+    },
+    {
+      "id": "SST",
+      "ticker": "SST",
+      "name": "システム1",
+      "sub": "オンライン広告",
+      "sub_en": "Online advertising",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "競合のオンライン媒体としてジフ・デイビスを記載",
+          "text_en": "Names Ziff Davis as a competing online publisher",
+          "source": {
+            "label": "System1 10-K",
+            "label_en": "System1 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1805833/000180583326000014/sst-20251231.htm",
+            "level": "official",
+            "date": "2026-03-11",
+            "quote": "Our Products also compete with other premium online publishers, such as Ziff Davis, Inc."
+          }
+        }
+      ],
+      "name_en": "System1"
     }
   ],
   "far": [],

@@ -9,6 +9,11 @@
     {
       "ja": "提携・顧客",
       "en": "Partners & customers"
+    },
+    {
+      "ja": "供給元(上流)",
+      "en": "Suppliers (upstream)",
+      "above": true
     }
   ],
   "rivals": [
@@ -50,6 +55,19 @@
             "level": "official",
             "date": "2026-02-06",
             "quote": "We issue cards under cobrand arrangements with Delta and the Delta cobrand portfolio continued to represent approximately 13 percent of worldwide billed business and approximately 21 percent of worldwide Card Member loans as of December 31, 2025."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "提携カードによる収益源として、アメックスとの提携を記載",
+          "text_en": "Describes its American Express co-brand partnership as a revenue stream",
+          "source": {
+            "label": "Delta Air Lines 10-K",
+            "label_en": "Delta Air Lines 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/27904/000002790426000013/dal-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "Our partnership with American Express, which provides us a co-brand revenue stream tied to broader consumer spending."
           }
         }
       ],
@@ -259,6 +277,30 @@
         }
       ],
       "name_en": "PayPal"
+    },
+    {
+      "id": "GPGI",
+      "ticker": "GPGI",
+      "name": "GPGI(コンポセキュア)",
+      "sub": "金属カード製造",
+      "sub_en": "Metal payment cards",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "CompoSecure事業の2大顧客の1社としてアメックスを記載",
+          "text_en": "American Express is one of the two largest CompoSecure customers",
+          "source": {
+            "label": "GPGI (CompoSecure) 10-K",
+            "label_en": "GPGI (CompoSecure) 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1823144/000162828026017266/cmpo-20251231.htm",
+            "level": "official",
+            "date": "2026-03-12",
+            "quote": "The two largest customers of our CompoSecure business are JPMorgan Chase and American Express."
+          }
+        }
+      ],
+      "name_en": "GPGI (CompoSecure)"
     }
   ],
   "far": [],

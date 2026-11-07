@@ -14,9 +14,15 @@
       "ja": "供給元",
       "en": "Suppliers",
       "above": true
+    },
+    {
+      "ja": "競合(10-Kに記載)",
+      "en": "Competitors (named in 10-Ks)"
     }
   ],
-  "rivals": [],
+  "rivals": [
+    "CNXN"
+  ],
   "companies": [
     {
       "id": "AAPL",
@@ -246,6 +252,30 @@
         }
       ],
       "name_en": "Palo Alto Networks"
+    },
+    {
+      "id": "CNXN",
+      "ticker": "CNXN",
+      "name": "PCコネクション",
+      "sub": "ITソリューション販売",
+      "sub_en": "IT solutions reseller",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ITソリューション販売の競合としてCDWを記載",
+          "text_en": "Names CDW as an IT-solutions competitor",
+          "source": {
+            "label": "PC Connection 10-K",
+            "label_en": "PC Connection 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1050377/000110465926019108/cnxn-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "We compete with other national solutions providers of IT products, including CDW Corporation, SHI, and Insight Enterprises, Inc."
+          }
+        }
+      ],
+      "name_en": "PC Connection"
     }
   ],
   "far": [],

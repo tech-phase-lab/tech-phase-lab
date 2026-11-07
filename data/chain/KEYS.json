@@ -18,7 +18,8 @@
   "rivals": [
     "CDNS",
     "ANET",
-    "TER"
+    "TER",
+    "VIAV"
   ],
   "companies": [
     {
@@ -116,6 +117,19 @@
             "level": "official",
             "date": "2025-12-17",
             "quote": "of investments, partially offset by $399 million provided by the divestiture of Spirent’s high-speed ethernet, network security and channel emulation business lines to Viavi Solutions Inc. and $30 million provided by sale of investments."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "ネットワーク試験の競合としてキーサイトを記載",
+          "text_en": "Names Keysight as a network-test competitor",
+          "source": {
+            "label": "Viavi Solutions 10-K",
+            "label_en": "Viavi Solutions 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/912093/000162828026056765/viav-20260627.htm",
+            "level": "official",
+            "date": "2026-08-13",
+            "quote": "NSE competitors include Anritsu Corporation, EXFO Inc., Keysight Technologies Inc., NetScout Systems, Inc."
           }
         }
       ],

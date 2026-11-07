@@ -89,6 +89,19 @@
             "date": "2026-08-27",
             "quote": "Our major competitors for our power ICs include Monolithic Power Systems, Inc., ON Semiconductor Corp., Richtek Technology Corp., Semtech Corporation, Texas Instruments Inc. and Vishay Intertechnology, Inc."
           }
+        },
+        {
+          "type": "rival",
+          "text": "パワーICの主要な競合としてMPSを記載",
+          "text_en": "Names Monolithic Power Systems as a major power-IC competitor",
+          "source": {
+            "label": "Alpha & Omega Semiconductor 10-K",
+            "label_en": "Alpha & Omega Semiconductor 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1387467/000162828026059261/aosl-20260630.htm",
+            "level": "official",
+            "date": "2026-08-27",
+            "quote": "Our major competitors for our power ICs include Monolithic Power Systems, Inc., ON Semiconductor Corp., Richtek Technology Corp., Semtech Corporation, Texas Instruments Inc."
+          }
         }
       ],
       "name_en": "Alpha and Omega Semiconductor"
@@ -136,6 +149,19 @@
             "level": "official",
             "date": "2026-02-18",
             "quote": "In the memory interface chip market, we compete with international semiconductor companies, including but not limited to Monolithic Power Systems, Montage Technology, Renesas and Texas Instruments."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "メモリ・インターフェース・チップの競合としてMPSを記載",
+          "text_en": "Names Monolithic Power Systems as a memory-interface competitor",
+          "source": {
+            "label": "Rambus 10-K",
+            "label_en": "Rambus 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/917273/000119312526057101/rmbs-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "we compete with international semiconductor companies, including but not limited to Monolithic Power Systems, Montage Technology, Renesas and Texas Instruments."
           }
         }
       ],

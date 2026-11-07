@@ -9,6 +9,10 @@
     {
       "ja": "提携・顧客",
       "en": "Partners & customers"
+    },
+    {
+      "ja": "競合(10-Kに記載)",
+      "en": "Competitors (named in 10-Ks)"
     }
   ],
   "rivals": [
@@ -270,6 +274,30 @@
         }
       ],
       "name_en": "Global Payments"
+    },
+    {
+      "id": "FICO",
+      "ticker": "FICO",
+      "name": "フェア・アイザック",
+      "sub": "信用スコア・分析",
+      "sub_en": "Credit scoring & analytics",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "銀行向け不正検知の競合としてACIワールドワイドを記載",
+          "text_en": "Names ACI Worldwide as a competitor in bank fraud solutions",
+          "source": {
+            "label": "Fair Isaac 10-K",
+            "label_en": "Fair Isaac 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/814547/000081454725000030/fico-20250930.htm",
+            "level": "official",
+            "date": "2025-11-07",
+            "quote": "we compete primarily with Nice Actimize, Experian, Pegasystems, BAE Systems Applied Intelligence, SAS, ACI Worldwide, IBM"
+          }
+        }
+      ],
+      "name_en": "Fair Isaac"
     }
   ],
   "far": [],

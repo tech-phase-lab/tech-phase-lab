@@ -102,6 +102,54 @@
         }
       ],
       "name_en": "Google"
+    },
+    {
+      "id": "FCX",
+      "ticker": "FCX",
+      "name": "フリーポート・マクモラン",
+      "sub": "銅・金",
+      "sub_en": "Copper & gold",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "クライマックス鉱山は、エクセルとの長期契約で電力を調達",
+          "text_en": "Its Climax mine buys electricity from Xcel under long-term contracts",
+          "source": {
+            "label": "Freeport-McMoRan 10-K",
+            "label_en": "Freeport-McMoRan 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/831259/000083125926000012/fcx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "Climax operations receive electrical power through long-term contracts with Xcel Energy and natural gas supply with Spark Energy Gas (with Xcel Energy as the transporter)."
+          }
+        }
+      ],
+      "name_en": "Freeport-McMoRan"
+    },
+    {
+      "id": "XOS",
+      "ticker": "XOS",
+      "name": "ゾス",
+      "sub": "商用EVトラック",
+      "sub_en": "Commercial EV trucks",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "充電拠点(Hub)の顧客としてエクセルを記載",
+          "text_en": "Names Xcel Energy among its Hub customers",
+          "source": {
+            "label": "Xos 10-K",
+            "label_en": "Xos 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1819493/000181949326000008/xos-20251231.htm",
+            "level": "official",
+            "date": "2026-03-30",
+            "quote": "Additional Hub customers include Xcel Energy, Florida Power & Light, Duke Energy and RKU Distributing."
+          }
+        }
+      ],
+      "name_en": "Xos"
     }
   ],
   "far": [],

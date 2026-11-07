@@ -102,6 +102,30 @@
           }
         }
       ]
+    },
+    {
+      "id": "CTRI",
+      "ticker": "CTRI",
+      "name": "センチュリ・ホールディングス",
+      "sub": "電力・ガス設備工事",
+      "sub_en": "Utility infrastructure services",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "電力・ガス設備工事の顧客としてAEPを記載",
+          "text_en": "Names American Electric Power among its utility-infrastructure customers",
+          "source": {
+            "label": "Centuri Holdings 10-K",
+            "label_en": "Centuri Holdings 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1981599/000198159926000020/ctri-20251228.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Our customers include American Electric Power, Enbridge, Entergy, Exelon, NiSource, National Grid, Sempra Energy and Southern Company, among others."
+          }
+        }
+      ],
+      "name_en": "Centuri Holdings"
     }
   ],
   "far": [],

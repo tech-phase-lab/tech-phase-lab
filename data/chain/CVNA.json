@@ -83,6 +83,19 @@
             "date": "2026-02-18",
             "quote": "The Company previously entered into a floor plan facility with Ally to finance its vehicle inventory"
           }
+        },
+        {
+          "type": "up",
+          "text": "主な顧客の自動車小売としてカーバナを記載",
+          "text_en": "Names Carvana among its primary automotive-retailer customers",
+          "source": {
+            "label": "Ally Financial 10-K",
+            "label_en": "Ally Financial 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/40729/000004072926000005/ally-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Our primary customers are automotive dealers, which include OEM-franchised dealers, non-OEM-franchised dealers with a national presence, and automotive retailers, such as Carvana, CarMax, and EchoPark."
+          }
         }
       ],
       "name_en": "Ally Financial"
@@ -110,6 +123,30 @@
         }
       ],
       "name_en": "Citizens Bank, N.A."
+    },
+    {
+      "id": "ROOT",
+      "ticker": "ROOT",
+      "name": "ルート",
+      "sub": "ネット保険",
+      "sub_en": "Digital insurance",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "保険提供の戦略的提携先としてカーバナを記載",
+          "text_en": "Names Carvana as a strategic partner",
+          "source": {
+            "label": "Root, Inc. 10-K",
+            "label_en": "Root, Inc. 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1788882/000178888226000014/root-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "our partnership with Carvana Group, LLC, or Carvana"
+          }
+        }
+      ],
+      "name_en": "Root, Inc."
     }
   ],
   "far": [],

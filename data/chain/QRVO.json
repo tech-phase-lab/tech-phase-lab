@@ -338,6 +338,30 @@
         }
       ],
       "name_en": "Navitas Semiconductor"
+    },
+    {
+      "id": "GUER",
+      "ticker": "GUER",
+      "name": "ゲリラRF",
+      "sub": "RF半導体",
+      "sub_en": "RF semis",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主な競合としてコルボを記載",
+          "text_en": "Names Qorvo as a primary competitor",
+          "source": {
+            "label": "Guerrilla RF 10-K",
+            "label_en": "Guerrilla RF 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1832487/000143774926009848/guer20251231_10k.htm",
+            "level": "official",
+            "date": "2026-03-26",
+            "quote": "We compete primarily with Qorvo, Inc., NXP Semiconductors N.V., Skyworks Solutions, Inc., and MACOM Technology Solutions Inc."
+          }
+        }
+      ],
+      "name_en": "Guerrilla RF"
     }
   ],
   "far": [],

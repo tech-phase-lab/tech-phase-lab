@@ -70,6 +70,19 @@
             "date": "2026-02-24",
             "quote": "In 2025, we, WhiteWater, MPLX LP and Enbridge Inc., through the existing Matterhorn joint venture, announced the new approximately 450-mile, 48-inch Eiger Express Pipeline, designed to transport up to approximately 3.7 Bcf/d of natural gas from the Permian Basin to Katy, Texas."
           }
+        },
+        {
+          "type": "tie",
+          "text": "マターホーン・エクスプレス・パイプラインの合弁会社を、ワンオークなどと共同で運営",
+          "text_en": "Co-owns the MXP Parent JV for the Matterhorn Express Pipeline with ONEOK and others",
+          "source": {
+            "label": "Enbridge 10-K",
+            "label_en": "Enbridge 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/895728/000119312526049810/enb-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "The MXP Parent JV, a joint venture formed by Enbridge, WhiteWater Midstream, ONEOK, Inc and MPLX LP"
+          }
         }
       ],
       "name_en": "Enbridge"

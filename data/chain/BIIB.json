@@ -136,6 +136,19 @@
             "date": "2026-02-06",
             "quote": "We make royalty payments to Ionis on annual worldwide net sales of SPINRAZA"
           }
+        },
+        {
+          "type": "tie",
+          "text": "SPINRAZAの世界での販売を担う提携先としてバイオジェンを記載",
+          "text_en": "Names Biogen as its partner responsible for commercializing SPINRAZA worldwide",
+          "source": {
+            "label": "Ionis Pharmaceuticals 10-K",
+            "label_en": "Ionis Pharmaceuticals 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/874015/000087401526000115/form10k.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Our partner, Biogen, is responsible for commercializing SPINRAZA worldwide."
+          }
         }
       ],
       "name_en": "Ionis Pharmaceuticals"

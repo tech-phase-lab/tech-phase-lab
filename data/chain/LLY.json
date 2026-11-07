@@ -204,6 +204,30 @@
         }
       ],
       "name_en": "Cardinal Health, Inc."
+    },
+    {
+      "id": "INCY",
+      "ticker": "INCY",
+      "name": "インサイト",
+      "sub": "医薬品",
+      "sub_en": "Pharma",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "OLUMIANT(バリシチニブ)を、提携先のイーライリリーへライセンス",
+          "text_en": "Licenses OLUMIANT (baricitinib) to its collaborative partner Eli Lilly",
+          "source": {
+            "label": "Incyte 10-K",
+            "label_en": "Incyte 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/879169/000087916926000010/incy-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "OLUMIANT (baricitinib), which is licensed to our collaborative partner Eli Lilly and Company (“Lilly”)"
+          }
+        }
+      ],
+      "name_en": "Incyte"
     }
   ],
   "far": [],

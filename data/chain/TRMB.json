@@ -62,6 +62,19 @@
             "date": "2026-02-25",
             "quote": "We maintain a joint venture, PTx Trimble, with AGCO to develop the next generation of advanced electronic guidance and control products for agriculture."
           }
+        },
+        {
+          "type": "tie",
+          "text": "農業向け精密技術の合弁会社PTx Trimbleを共同運営",
+          "text_en": "Co-owns the PTx Trimble precision-agriculture joint venture",
+          "source": {
+            "label": "AGCO 10-K",
+            "label_en": "AGCO 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/880266/000088026626000010/agco-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "our joint venture, PTx Trimble"
+          }
         }
       ],
       "name_en": "AGCO"

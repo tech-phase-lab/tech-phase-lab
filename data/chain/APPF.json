@@ -93,6 +93,30 @@
           }
         }
       ]
+    },
+    {
+      "id": "Z",
+      "ticker": "Z",
+      "name": "ジロー・グループ",
+      "sub": "不動産ポータル",
+      "sub_en": "Real estate portal",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "戦略的提携先としてアップフォリオを記載",
+          "text_en": "Names AppFolio as a strategic partner",
+          "source": {
+            "label": "Zillow Group 10-K",
+            "label_en": "Zillow Group 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1617640/000161764026000015/z-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "strategic partnerships with AppFolio and Esusu"
+          }
+        }
+      ],
+      "name_en": "Zillow Group"
     }
   ],
   "far": [],

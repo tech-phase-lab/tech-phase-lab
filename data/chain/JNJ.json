@@ -16,7 +16,9 @@
     }
   ],
   "rivals": [
-    "ZBH"
+    "ZBH",
+    "APT",
+    "STCB"
   ],
   "companies": [
     {
@@ -138,6 +140,54 @@
         }
       ],
       "name_en": "Zimmer Biomet"
+    },
+    {
+      "id": "APT",
+      "ticker": "APT",
+      "name": "アルファ・プロ・テック",
+      "sub": "防護用品",
+      "sub_en": "Protective apparel",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "大手の競合としてジョンソン・エンド・ジョンソンを記載",
+          "text_en": "Names Johnson & Johnson among its large competitors",
+          "source": {
+            "label": "Alpha Pro Tech 10-K",
+            "label_en": "Alpha Pro Tech 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/884269/000143774926007797/apt20251231_10k.htm",
+            "level": "official",
+            "date": "2026-03-11",
+            "quote": "Other large competitors include 3M Company, Johnson & Johnson, White Knight Engineered Products (Precept Medical Products, Inc.), Cardinal Health, Inc."
+          }
+        }
+      ],
+      "name_en": "Alpha Pro Tech"
+    },
+    {
+      "id": "STCB",
+      "ticker": "STCB",
+      "name": "スターコ・ブランズ",
+      "sub": "日用品",
+      "sub_en": "Household products",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "競合としてジョンソン・エンド・ジョンソンを記載",
+          "text_en": "Names Johnson & Johnson as a competitor",
+          "source": {
+            "label": "Starco Brands 10-K",
+            "label_en": "Starco Brands 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1539850/000149315226016613/form10-k.htm",
+            "level": "official",
+            "date": "2026-04-14",
+            "quote": "These competitors include Johnson & Johnson, The Procter & Gamble Company, Unilever, Diageo"
+          }
+        }
+      ],
+      "name_en": "Starco Brands"
     }
   ],
   "far": [],

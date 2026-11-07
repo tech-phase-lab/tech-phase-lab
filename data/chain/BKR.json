@@ -14,6 +14,10 @@
       "ja": "供給元",
       "en": "Suppliers",
       "above": true
+    },
+    {
+      "ja": "競合(10-Kに記載)",
+      "en": "Competitors (named in 10-Ks)"
     }
   ],
   "rivals": [
@@ -104,6 +108,19 @@
             "level": "official",
             "date": "2026-02-05",
             "quote": "In June 2025, the Company announced the creation of a joint venture with a subsidiary of Cactus, Inc."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "ベーカー・ヒューズとの海外合弁会社を運営",
+          "text_en": "Runs an international joint venture with Baker Hughes",
+          "source": {
+            "label": "Cactus 10-K",
+            "label_en": "Cactus 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1699136/000162828026012377/whd-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Cactus International Joint Venture with Baker Hughes"
           }
         }
       ],
@@ -300,6 +317,54 @@
         }
       ],
       "name_en": "Emerson"
+    },
+    {
+      "id": "CAT",
+      "ticker": "CAT",
+      "name": "キャタピラー",
+      "sub": "建設・鉱山機械",
+      "sub_en": "Construction & mining machinery",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "パッケージ発電機の競合としてベーカー・ヒューズを記載",
+          "text_en": "Names Baker Hughes among its packager competitors",
+          "source": {
+            "label": "Caterpillar 10-K",
+            "label_en": "Caterpillar 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/18230/000001823026000008/cat-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "An additional set of competitors, including Aggreko plc, Generac Holdings Inc., Discovery Energy, LLC (Rehlko, formerly Kohler Energy), Baker Hughes Co."
+          }
+        }
+      ],
+      "name_en": "Caterpillar"
+    },
+    {
+      "id": "AI",
+      "ticker": "AI",
+      "name": "C3.ai",
+      "sub": "企業向けAI",
+      "sub_en": "Enterprise AI",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "複数年の戦略提携。石油・ガス分野でC3 AIを再販",
+          "text_en": "Multi-year strategic partnership; resells C3 AI software in oil and gas",
+          "source": {
+            "label": "C3.ai 10-K",
+            "label_en": "C3.ai 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1577526/000157752626000078/ai-20260430.htm",
+            "level": "official",
+            "date": "2026-06-24",
+            "quote": "C3 AI and Baker Hughes maintain a multi-year strategic partnership under which Baker Hughes serves as reseller of C3 AI software in the oil and gas industry"
+          }
+        }
+      ],
+      "name_en": "C3.ai"
     }
   ],
   "far": [],

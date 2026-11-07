@@ -140,6 +140,19 @@
             "date": "2026-02-25",
             "quote": "Providers of network and infrastructure security solutions, including DDoS protection and related services, such as Arbor Networks Inc, a subsidiary of NetScout Systems, Radware Ltd, and F5"
           }
+        },
+        {
+          "type": "rival",
+          "text": "DDoS対策の競合としてA10を記載",
+          "text_en": "Names A10 Networks as a DDoS-protection competitor",
+          "source": {
+            "label": "NetScout 10-K",
+            "label_en": "NetScout 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1078075/000107807526000050/ntct-20260331.htm",
+            "level": "official",
+            "date": "2026-05-14",
+            "quote": "broad range of vendors including Radware, Akamai, F5 Networks, A10 Networks, Fortinet, Fastly, Cloudflare"
+          }
         }
       ],
       "name_en": "NetScout Systems"

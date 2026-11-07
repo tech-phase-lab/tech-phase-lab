@@ -9,9 +9,15 @@
     {
       "ja": "提携・顧客",
       "en": "Partners & customers"
+    },
+    {
+      "ja": "競合(10-Kに記載)",
+      "en": "Competitors (named in 10-Ks)"
     }
   ],
-  "rivals": [],
+  "rivals": [
+    "EOLS"
+  ],
   "companies": [
     {
       "id": "JANSSEN",
@@ -252,6 +258,30 @@
         }
       ],
       "name_en": "Cencora, Inc."
+    },
+    {
+      "id": "EOLS",
+      "ticker": "EOLS",
+      "name": "エボラス",
+      "sub": "美容医療",
+      "sub_en": "Aesthetics",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "皮膚用フィラー市場の競合としてアッヴィを記載",
+          "text_en": "Names AbbVie as a competitor in the dermal filler market",
+          "source": {
+            "label": "Evolus 10-K",
+            "label_en": "Evolus 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1570562/000162828026014001/eols-20251231.htm",
+            "level": "official",
+            "date": "2026-03-03",
+            "quote": "Within the dermal filler market we will also face large, experienced competitors such as AbbVie and Galderma S.A."
+          }
+        }
+      ],
+      "name_en": "Evolus"
     }
   ],
   "far": [],

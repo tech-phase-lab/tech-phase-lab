@@ -25,7 +25,8 @@
     }
   ],
   "rivals": [
-    "HPE"
+    "HPE",
+    "IBM"
   ],
   "companies": [
     {
@@ -354,9 +355,70 @@
             "date": "2025-12-18",
             "quote": "Our primary competitors are other infrastructure and cloud management software technology vendors, such as Broadcom, Cisco Systems Inc., Dell Technologies Inc., IBM, NetApp Inc., Nutanix, and Pure Storage and public cloud vendors like Amazon Web Services, Google Cloud, and Microsoft Azure."
           }
+        },
+        {
+          "type": "rival",
+          "text": "主要な競合としてネットアップを記載",
+          "text_en": "Names NetApp as a primary competitor",
+          "source": {
+            "label": "Hewlett Packard Enterprise 10-K",
+            "label_en": "Hewlett Packard Enterprise 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1645590/000164559025000130/hpe-20251031.htm",
+            "level": "official",
+            "date": "2025-12-18",
+            "quote": "Our primary competitors are other infrastructure and cloud management software technology vendors, such as Broadcom, Cisco Systems Inc., Dell Technologies Inc., IBM, NetApp Inc., Nutanix"
+          }
         }
       ],
       "name_en": "Hewlett Packard Enterprise"
+    },
+    {
+      "id": "IBM",
+      "ticker": "IBM",
+      "name": "IBM",
+      "sub": "ITサービス・ハード",
+      "sub_en": "IT services & hardware",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ストレージなどの主要な競合としてネットアップを記載",
+          "text_en": "Names NetApp as a principal competitor",
+          "source": {
+            "label": "IBM 10-K",
+            "label_en": "IBM 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/51143/000005114326000010/ibm-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Our principal competitors include: Dell Technologies, Hewlett-Packard Enterprise (HPE), Intel, NetApp and Pure Storage"
+          }
+        }
+      ],
+      "name_en": "IBM"
+    },
+    {
+      "id": "TDC",
+      "ticker": "TDC",
+      "name": "テラデータ",
+      "sub": "データ分析",
+      "sub_en": "Data analytics",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "提携先としてネットアップを記載",
+          "text_en": "Names NetApp as a partner",
+          "source": {
+            "label": "Teradata 10-K",
+            "label_en": "Teradata 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/816761/000162828026012671/tdc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "These partnerships include NVIDIA, NetApp, and Dell."
+          }
+        }
+      ],
+      "name_en": "Teradata"
     }
   ],
   "far": [],

@@ -14,6 +14,10 @@
     {
       "ja": "提携・顧客",
       "en": "Partners & customers"
+    },
+    {
+      "ja": "競合(10-Kに記載)",
+      "en": "Competitors (named in 10-Ks)"
     }
   ],
   "rivals": [
@@ -188,6 +192,19 @@
             "date": "2025-11-25",
             "quote": "In application security, we compete with vendors that offer web application firewall, bot detection and mitigation, API protection, carrier-grade firewall, carrier-grade network address translation (\"NAT\"), SSL orchestration, access policy management, and DDoS mitigation including Akamai, Cisco, Cloudflare, Fortinet, Juniper Networks, Palo Alto, Radware, and Thales (Imperva)."
           }
+        },
+        {
+          "type": "rival",
+          "text": "競合としてF5を記載",
+          "text_en": "Names F5 as a competitor",
+          "source": {
+            "label": "Fortinet 10-K",
+            "label_en": "Fortinet 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1262039/000126203926000007/ftnt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Our competitors include companies such as Check Point, Cisco, CrowdStrike, F5 Networks, HPE, Huawei, Microsoft, Netskope, Palo Alto Networks, SonicWALL, Sophos, and Zscaler."
+          }
         }
       ],
       "name_en": "Fortinet"
@@ -313,6 +330,30 @@
         }
       ],
       "name_en": "Alphabet (Google Cloud)"
+    },
+    {
+      "id": "NTCT",
+      "ticker": "NTCT",
+      "name": "ネットスカウト",
+      "sub": "ネットワーク監視",
+      "sub_en": "Network monitoring",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "DDoS対策の競合としてF5を記載",
+          "text_en": "Names F5 as a DDoS-protection competitor",
+          "source": {
+            "label": "NetScout 10-K",
+            "label_en": "NetScout 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1078075/000107807526000050/ntct-20260331.htm",
+            "level": "official",
+            "date": "2026-05-14",
+            "quote": "broad range of vendors including Radware, Akamai, F5 Networks, A10 Networks, Fortinet, Fastly, Cloudflare"
+          }
+        }
+      ],
+      "name_en": "NetScout"
     }
   ],
   "far": [],

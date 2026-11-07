@@ -121,6 +121,19 @@
             "date": "2026-02-27",
             "quote": "our primary competitors for our site leasing activities are (1) large independent tower companies including American Tower Corporation and Crown Castle International"
           }
+        },
+        {
+          "type": "rival",
+          "text": "他の上場タワー会社の競合としてSBAを記載",
+          "text_en": "Names SBA among competing public tower companies",
+          "source": {
+            "label": "American Tower 10-K",
+            "label_en": "American Tower 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1053507/000105350726000035/amt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "We compete, both for new business and for the acquisition of assets, with other public tower companies, such as Crown Castle International Corp., SBA Communications Corporation"
+          }
         }
       ],
       "name_en": "American Tower"
@@ -144,6 +157,19 @@
             "level": "official",
             "date": "2026-02-27",
             "quote": "our primary competitors for our site leasing activities are (1) large independent tower companies including American Tower Corporation and Crown Castle International"
+          }
+        },
+        {
+          "type": "rival",
+          "text": "最大の競合の1社としてSBAを記載",
+          "text_en": "Names SBA as one of its largest competitors",
+          "source": {
+            "label": "Crown Castle 10-K",
+            "label_en": "Crown Castle 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1051470/000105147026000016/cci-20251231.htm",
+            "level": "official",
+            "date": "2026-02-23",
+            "quote": "Some of our largest competitors are American Tower Corporation and SBA Communications Corporation."
           }
         }
       ],

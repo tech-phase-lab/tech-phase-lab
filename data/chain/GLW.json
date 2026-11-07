@@ -308,6 +308,30 @@
         }
       ],
       "name_en": "Avantor"
+    },
+    {
+      "id": "OCC",
+      "ticker": "OCC",
+      "name": "オプティカル・ケーブル",
+      "sub": "光ファイバーケーブル",
+      "sub_en": "Fiber optic cable",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "光ファイバー・銅線製品の競合としてコーニングを記載",
+          "text_en": "Names Corning as a fiber and copper connectivity competitor",
+          "source": {
+            "label": "Optical Cable 10-K",
+            "label_en": "Optical Cable 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1000230/000143774925038228/occ20251031_10k.htm",
+            "level": "official",
+            "date": "2025-12-18",
+            "quote": "compete with products of large fiber optic and copper connectivity manufacturers such as CommScope Holding Company, Inc., Corning"
+          }
+        }
+      ],
+      "name_en": "Optical Cable"
     }
   ],
   "far": [],

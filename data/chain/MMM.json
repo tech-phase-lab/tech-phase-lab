@@ -9,9 +9,17 @@
     {
       "ja": "提携・顧客",
       "en": "Partners & customers"
+    },
+    {
+      "ja": "競合(10-Kに記載)",
+      "en": "Competitors (named in 10-Ks)"
     }
   ],
-  "rivals": [],
+  "rivals": [
+    "APT",
+    "AMCR",
+    "HUN"
+  ],
   "companies": [
     {
       "id": "SOLV",
@@ -121,6 +129,102 @@
         }
       ],
       "name_en": "Warner-Lambert"
+    },
+    {
+      "id": "APT",
+      "ticker": "APT",
+      "name": "アルファ・プロ・テック",
+      "sub": "防護用品",
+      "sub_en": "Protective apparel",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "大手の競合として3Mを記載",
+          "text_en": "Names 3M among its large competitors",
+          "source": {
+            "label": "Alpha Pro Tech 10-K",
+            "label_en": "Alpha Pro Tech 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/884269/000143774926007797/apt20251231_10k.htm",
+            "level": "official",
+            "date": "2026-03-11",
+            "quote": "Other large competitors include 3M Company, Johnson & Johnson, White Knight Engineered Products (Precept Medical Products, Inc.), Cardinal Health, Inc."
+          }
+        }
+      ],
+      "name_en": "Alpha Pro Tech"
+    },
+    {
+      "id": "MSEX",
+      "ticker": "MSEX",
+      "name": "ミドルセックス・ウォーター",
+      "sub": "水道",
+      "sub_en": "Water utility",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "3Mから和解金を受け取り(最終的に顧客へ返金)",
+          "text_en": "Received settlement payments from 3M, to be refunded to customers",
+          "source": {
+            "label": "Middlesex Water 10-K",
+            "label_en": "Middlesex Water 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/66004/000162828026009777/msex-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "the Company received settlement payments from 3M Company that will ultimately be refunded to customers"
+          }
+        }
+      ],
+      "name_en": "Middlesex Water"
+    },
+    {
+      "id": "AMCR",
+      "ticker": "AMCR",
+      "name": "アムコア",
+      "sub": "包装",
+      "sub_en": "Packaging",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "競合として3Mを記載",
+          "text_en": "Names 3M as a competitor",
+          "source": {
+            "label": "Amcor 10-K",
+            "label_en": "Amcor 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1748790/000174879026000022/amcr-20260630.htm",
+            "level": "official",
+            "date": "2026-08-14",
+            "quote": "Competitors include 3M, AptarGroup, Inc., Avery Dennison Corporation, Ball Corporation, Crown Holdings, Inc."
+          }
+        }
+      ],
+      "name_en": "Amcor"
+    },
+    {
+      "id": "HUN",
+      "ticker": "HUN",
+      "name": "ハンツマン",
+      "sub": "化学",
+      "sub_en": "Chemicals",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主要な競合として3Mを記載",
+          "text_en": "Names 3M as a major competitor",
+          "source": {
+            "label": "Huntsman 10-K",
+            "label_en": "Huntsman 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1307954/000143774926004524/hun20251231_10k.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "Our major competitors include 3M, Henkel and Sumitomo."
+          }
+        }
+      ],
+      "name_en": "Huntsman"
     }
   ],
   "far": [],

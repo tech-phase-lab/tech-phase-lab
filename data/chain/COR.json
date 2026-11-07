@@ -252,6 +252,54 @@
         }
       ],
       "name_en": "UPS Logistics"
+    },
+    {
+      "id": "AMRX",
+      "ticker": "AMRX",
+      "name": "アムニール・ファーマシューティカルズ",
+      "sub": "ジェネリック医薬品",
+      "sub_en": "Generic drugs",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "最大顧客4社の1社としてセンコラを記載",
+          "text_en": "One of its four largest customers",
+          "source": {
+            "label": "Amneal Pharmaceuticals 10-K",
+            "label_en": "Amneal Pharmaceuticals 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1723128/000172312826000011/amrx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "our four largest customers, Cencora, Inc., McKesson Drug Co., Cardinal Health, Inc., and CVS Health Corporation"
+          }
+        }
+      ],
+      "name_en": "Amneal Pharmaceuticals"
+    },
+    {
+      "id": "JAZZ",
+      "ticker": "JAZZ",
+      "name": "ジャズ・ファーマシューティカルズ",
+      "sub": "医薬品",
+      "sub_en": "Pharma",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "医薬品の販売経路として、センコラの専門卸を記載",
+          "text_en": "Names Cencora’s specialty distributors as a sales channel",
+          "source": {
+            "label": "Jazz Pharmaceuticals 10-K",
+            "label_en": "Jazz Pharmaceuticals 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1232524/000123252426000013/jazz-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Zepzelca, Rylaze, Ziihera and Vyxeos are sold to customers through subsidiary specialty distributors of McKesson, Cencora, and Cardinal."
+          }
+        }
+      ],
+      "name_en": "Jazz Pharmaceuticals"
     }
   ],
   "far": [],

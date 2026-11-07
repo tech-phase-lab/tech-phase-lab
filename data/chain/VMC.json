@@ -159,6 +159,19 @@
             "date": "2026-02-19",
             "quote": "As of December 31, 2025, other publicly traded companies among the ten largest U.S. aggregates producers include the following: • Arcosa, Inc. • Amrize • Cemex S.A.B. de C.V. • CRH plc • Heidelberg Materials AG • Knife River Corporation • Martin Marietta Materials, Inc."
           }
+        },
+        {
+          "type": "rival",
+          "text": "競合としてバルカン・マテリアルズを記載",
+          "text_en": "Names Vulcan Materials as a competitor",
+          "source": {
+            "label": "Knife River 10-K",
+            "label_en": "Knife River 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1955520/000195552026000003/knf-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "Heidelberg Materials, Martin Marietta Materials, Inc., Construction Partners, Inc., and Vulcan Materials Company."
+          }
         }
       ],
       "name_en": "Knife River Corporation"
@@ -186,6 +199,30 @@
         }
       ],
       "name_en": "Martin Marietta Materials, Inc."
+    },
+    {
+      "id": "FRPH",
+      "ticker": "FRPH",
+      "name": "FRPホールディングス",
+      "sub": "不動産・鉱区ロイヤルティ",
+      "sub_en": "Real estate & mining royalties",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "約4,280エーカーの土地を、バルカン・マテリアルズと共同で保有・開発(2006年)",
+          "text_en": "Jointly owns and develops about 4,280 acres with Vulcan Materials (2006)",
+          "source": {
+            "label": "FRP Holdings 10-K",
+            "label_en": "FRP Holdings 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/844059/000084405926000037/frph-20251231.htm",
+            "level": "official",
+            "date": "2026-04-15",
+            "quote": "a subsidiary of the Company entered into a joint venture agreement with Vulcan Materials Company to jointly own and develop approximately 4,280 acres"
+          }
+        }
+      ],
+      "name_en": "FRP Holdings"
     }
   ],
   "far": [],

@@ -198,6 +198,54 @@
         }
       ],
       "name_en": "Littelfuse"
+    },
+    {
+      "id": "CMI",
+      "ticker": "CMI",
+      "name": "カミンズ",
+      "sub": "エンジン",
+      "sub_en": "Engines",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "自動変速機の合弁会社を、イートンと運営(カミンズが議決権の過半)",
+          "text_en": "Runs an automated-transmission joint venture with Eaton (Cummins holds majority voting)",
+          "source": {
+            "label": "Cummins 10-K",
+            "label_en": "Cummins 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/26172/000002617226000009/cmi-20251231.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "Eaton Cummins Automated Transmission Technologies - We have a majority voting interest in ECJV"
+          }
+        }
+      ],
+      "name_en": "Cummins"
+    },
+    {
+      "id": "CHPT",
+      "ticker": "CHPT",
+      "name": "チャージポイント",
+      "sub": "EV充電",
+      "sub_en": "EV charging",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "EV充電の普及に向け、イートンと提携",
+          "text_en": "Partners with Eaton on large-scale EV charging adoption",
+          "source": {
+            "label": "ChargePoint 10-K",
+            "label_en": "ChargePoint 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1777393/000177739326000013/chpt-20260131.htm",
+            "level": "official",
+            "date": "2026-04-02",
+            "quote": "ChargePoint’s partnership with Eaton Corporation (“Eaton”)"
+          }
+        }
+      ],
+      "name_en": "ChargePoint"
     }
   ],
   "far": [],

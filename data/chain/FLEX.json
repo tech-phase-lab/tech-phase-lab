@@ -251,6 +251,30 @@
         }
       ],
       "name_en": "Sanmina"
+    },
+    {
+      "id": "TDC",
+      "ticker": "TDC",
+      "name": "テラデータ",
+      "sub": "データ分析",
+      "sub_en": "Data analytics",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "製品の組み立てをフレックスに委託",
+          "text_en": "Outsources product assembly to Flex",
+          "source": {
+            "label": "Teradata 10-K",
+            "label_en": "Teradata 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/816761/000162828026012671/tdc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Given our strategy to outsource product assembly activities to Flex"
+          }
+        }
+      ],
+      "name_en": "Teradata"
     }
   ],
   "far": [],

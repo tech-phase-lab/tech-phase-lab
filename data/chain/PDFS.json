@@ -113,6 +113,19 @@
             "date": "2026-02-24",
             "quote": "yield management and/or prediction systems, such as KLA Corporation (“KLA”), Onto Innovation, Inc. (“Onto”), and Synopsys, Inc. (“Synopsys”)"
           }
+        },
+        {
+          "type": "rival",
+          "text": "ソフトウェア製品の主要な競合としてPDFソリューションズを記載",
+          "text_en": "Names PDF Solutions as the primary competitor for its software",
+          "source": {
+            "label": "Onto Innovation 10-K",
+            "label_en": "Onto Innovation 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/704532/000119312526066937/onto-20260103.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "The primary competitor for our software products is PDF Solutions, Inc."
+          }
         }
       ],
       "name_en": "Onto Innovation"

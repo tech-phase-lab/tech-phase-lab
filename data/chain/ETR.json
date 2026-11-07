@@ -113,6 +113,54 @@
         }
       ],
       "name_en": "Meta Platforms"
+    },
+    {
+      "id": "CTRI",
+      "ticker": "CTRI",
+      "name": "センチュリ・ホールディングス",
+      "sub": "電力・ガス設備工事",
+      "sub_en": "Utility infrastructure services",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "電力・ガス設備工事の顧客としてエンタジーを記載",
+          "text_en": "Names Entergy among its utility-infrastructure customers",
+          "source": {
+            "label": "Centuri Holdings 10-K",
+            "label_en": "Centuri Holdings 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1981599/000198159926000020/ctri-20251228.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Our customers include American Electric Power, Enbridge, Entergy, Exelon, NiSource, National Grid, Sempra Energy and Southern Company, among others."
+          }
+        }
+      ],
+      "name_en": "Centuri Holdings"
+    },
+    {
+      "id": "HUT",
+      "ticker": "HUT",
+      "name": "ハット・エイト",
+      "sub": "ビットコイン採掘・データセンター",
+      "sub_en": "Bitcoin mining & data centers",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "施設向けの長期の電力容量を確保するため、エンタジー・ルイジアナと提携を深める",
+          "text_en": "Deepening its partnership with Entergy Louisiana to secure long-term capacity",
+          "source": {
+            "label": "Hut 8 10-K",
+            "label_en": "Hut 8 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1964789/000110465926019392/hut-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "We continued to deepen our partnership with Entergy Louisiana to secure scalable, long-term capacity for the campus"
+          }
+        }
+      ],
+      "name_en": "Hut 8"
     }
   ],
   "far": [],

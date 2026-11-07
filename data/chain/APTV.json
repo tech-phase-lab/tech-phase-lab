@@ -9,9 +9,15 @@
     {
       "ja": "提携・顧客",
       "en": "Partners & customers"
+    },
+    {
+      "ja": "競合(10-Kに記載)",
+      "en": "Competitors (named in 10-Ks)"
     }
   ],
-  "rivals": [],
+  "rivals": [
+    "LEA"
+  ],
   "companies": [
     {
       "id": "GM",
@@ -121,6 +127,30 @@
         }
       ],
       "name_en": "Hyundai Motor Group"
+    },
+    {
+      "id": "LEA",
+      "ticker": "LEA",
+      "name": "リア",
+      "sub": "自動車シート・電装",
+      "sub_en": "Auto seating & electrical",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "電装・コネクタ事業の主要な競合としてアプティブを記載",
+          "text_en": "Names Aptiv as a key competitor in electrical distribution and connection systems",
+          "source": {
+            "label": "Lear 10-K",
+            "label_en": "Lear 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/842162/000084216226000011/lear-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "Key competitors in electrical distribution and connection systems include Aptiv PLC, Leoni AG, Molex Incorporated (a subsidiary of Koch Industries Inc.), Sumitomo Corporation, TE Connectivity"
+          }
+        }
+      ],
+      "name_en": "Lear"
     }
   ],
   "far": [],

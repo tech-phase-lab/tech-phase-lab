@@ -204,6 +204,30 @@
         }
       ],
       "name_en": "Cardinal Health"
+    },
+    {
+      "id": "MGNX",
+      "ticker": "MGNX",
+      "name": "マクロジェニクス",
+      "sub": "バイオ医薬",
+      "sub_en": "Biopharma",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "提携先としてギリアドを記載",
+          "text_en": "Names Gilead as a collaboration partner",
+          "source": {
+            "label": "MacroGenics 10-K",
+            "label_en": "MacroGenics 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1125345/000112534526000017/mgnx-20251231.htm",
+            "level": "official",
+            "date": "2026-03-09",
+            "quote": "We are also collaborating with Gilead Sciences, Inc."
+          }
+        }
+      ],
+      "name_en": "MacroGenics"
     }
   ],
   "far": [],

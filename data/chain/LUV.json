@@ -14,12 +14,17 @@
     {
       "ja": "提携・顧客",
       "en": "Partners & customers"
+    },
+    {
+      "ja": "競合(10-Kに記載)",
+      "en": "Competitors (named in 10-Ks)"
     }
   ],
   "rivals": [
     "AAL",
     "DAL",
-    "UAL"
+    "UAL",
+    "ALK"
   ],
   "companies": [
     {
@@ -213,6 +218,30 @@
         }
       ],
       "name_en": "Sabre"
+    },
+    {
+      "id": "ALK",
+      "ticker": "ALK",
+      "name": "アラスカ・エア・グループ",
+      "sub": "航空",
+      "sub_en": "Airline",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ハワイと西海岸の主要な競合としてサウスウエストを記載",
+          "text_en": "Names Southwest as a significant competitor in Hawaii and on the West Coast",
+          "source": {
+            "label": "Alaska Air Group 10-K",
+            "label_en": "Alaska Air Group 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/766421/000076642126000010/alk-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "In addition to Delta, Southwest Airlines and United Airlines are significant competitors in the state of Hawai'i and on the West Coast."
+          }
+        }
+      ],
+      "name_en": "Alaska Air Group"
     }
   ],
   "far": [],

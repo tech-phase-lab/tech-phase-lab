@@ -18,7 +18,8 @@
   "rivals": [
     "NDAQ",
     "CBOE",
-    "CME"
+    "CME",
+    "MKTX"
   ],
   "companies": [
     {
@@ -166,6 +167,30 @@
         }
       ],
       "name_en": "CME Group"
+    },
+    {
+      "id": "MKTX",
+      "ticker": "MKTX",
+      "name": "マーケットアクセス",
+      "sub": "債券電子取引",
+      "sub_en": "Electronic bond trading",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "競合としてインターコンチネンタル取引所を記載",
+          "text_en": "Names Intercontinental Exchange as a competitor",
+          "source": {
+            "label": "MarketAxess 10-K",
+            "label_en": "MarketAxess 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1278021/000119312526067009/mktx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "We compete with Tradeweb (indirectly controlled by the London Stock Exchange), Bloomberg, Intercontinental Exchange"
+          }
+        }
+      ],
+      "name_en": "MarketAxess"
     }
   ],
   "far": [],

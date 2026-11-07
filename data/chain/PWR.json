@@ -9,9 +9,15 @@
     {
       "ja": "提携・顧客",
       "en": "Partners & customers"
+    },
+    {
+      "ja": "競合(10-Kに記載)",
+      "en": "Competitors (named in 10-Ks)"
     }
   ],
-  "rivals": [],
+  "rivals": [
+    "PRIM"
+  ],
   "companies": [
     {
       "id": "AEP",
@@ -228,6 +234,54 @@
         }
       ],
       "name_en": "LUMA Energy"
+    },
+    {
+      "id": "PRIM",
+      "ticker": "PRIM",
+      "name": "プリモリス・サービシズ",
+      "sub": "建設・インフラ工事",
+      "sub_en": "Construction & infrastructure",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "電力インフラ工事の競合としてクアンタ・サービシズを記載",
+          "text_en": "Names Quanta Services as a utilities-market competitor",
+          "source": {
+            "label": "Primoris Services 10-K",
+            "label_en": "Primoris Services 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1361538/000110465926018677/prim-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "competitors in our utilities markets include Quanta Services, Inc., Dycom Industries, MYR Group, and MasTec, Inc."
+          }
+        }
+      ],
+      "name_en": "Primoris Services"
+    },
+    {
+      "id": "CIFR",
+      "ticker": "CIFR",
+      "name": "サイファー・デジタル",
+      "sub": "ビットコイン採掘・データセンター",
+      "sub_en": "Bitcoin mining & data centers",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "重要な提携先としてクアンタ・サービシズを記載",
+          "text_en": "Names Quanta Services as a key partner",
+          "source": {
+            "label": "Cipher Digital 10-K",
+            "label_en": "Cipher Digital 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1819989/000181998926000009/cifr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "We have also secured a key partnership with Quanta Services, Inc."
+          }
+        }
+      ],
+      "name_en": "Cipher Digital"
     }
   ],
   "far": [],

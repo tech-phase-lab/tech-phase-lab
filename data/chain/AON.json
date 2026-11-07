@@ -60,6 +60,19 @@
             "date": "2026-02-13",
             "quote": "We compete with numerous other global insurance brokers and consulting companies, including, among others, Marsh McLennan, Willis Towers Watson, Arthur J Gallagher & Company, and Lockton Companies, Inc., as well as numerous other global, regional, and local firms in almost every area of our business."
           }
+        },
+        {
+          "type": "rival",
+          "text": "競合としてエーオンを記載",
+          "text_en": "Names Aon as a competitor",
+          "source": {
+            "label": "Willis Towers Watson 10-K",
+            "label_en": "Willis Towers Watson 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1140536/000119312526069307/wtw-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "We compete with companies such as Aon plc"
+          }
         }
       ],
       "name_en": "Willis Towers Watson"

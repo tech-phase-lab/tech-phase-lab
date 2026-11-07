@@ -9,11 +9,22 @@
     {
       "ja": "提携・顧客",
       "en": "Partners & customers"
+    },
+    {
+      "ja": "競合(10-Kに記載)",
+      "en": "Competitors (named in 10-Ks)"
+    },
+    {
+      "ja": "供給元(上流)",
+      "en": "Suppliers (upstream)",
+      "above": true
     }
   ],
   "rivals": [
     "DAN",
-    "BWA"
+    "BWA",
+    "HYLN",
+    "GNRC"
   ],
   "companies": [
     {
@@ -318,6 +329,102 @@
         }
       ],
       "name_en": "BorgWarner"
+    },
+    {
+      "id": "HYLN",
+      "ticker": "HYLN",
+      "name": "ハイリオン",
+      "sub": "発電機",
+      "sub_en": "Generators",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "発電機メーカーの主要な競合としてカミンズを記載",
+          "text_en": "Names Cummins as a key generator-maker competitor",
+          "source": {
+            "label": "Hyliion 10-K",
+            "label_en": "Hyliion 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1759631/000162828026011278/hyln-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Key generator manufacturing competitors include Cummins, Bloom Energy, Generac, Rehlko (formerly Kohler), Caterpillar"
+          }
+        }
+      ],
+      "name_en": "Hyliion"
+    },
+    {
+      "id": "ATMU",
+      "ticker": "ATMU",
+      "name": "アトマス・フィルトレーション",
+      "sub": "フィルター",
+      "sub_en": "Filtration",
+      "row": 2,
+      "relations": [
+        {
+          "type": "up",
+          "text": "主要な納入先のメーカーとしてカミンズを記載",
+          "text_en": "Names Cummins among the OEMs it supplies",
+          "source": {
+            "label": "Atmus Filtration 10-K",
+            "label_en": "Atmus Filtration 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1921963/000192196326000015/atmu-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "Atmus has a strong history as a supplier to leading OEMs, including Cummins, Daimler, Deere"
+          }
+        }
+      ],
+      "name_en": "Atmus Filtration"
+    },
+    {
+      "id": "BLBD",
+      "ticker": "BLBD",
+      "name": "ブルーバード",
+      "sub": "スクールバス",
+      "sub_en": "School buses",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "長年のエンジン供給元として記載。電動バスの開発も共同で実施",
+          "text_en": "Long-standing engine supplier; also partners on its electric bus development",
+          "source": {
+            "label": "Blue Bird 10-K",
+            "label_en": "Blue Bird 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1589526/000158952625000100/blbd-20250927.htm",
+            "level": "official",
+            "date": "2025-11-24",
+            "quote": "We have partnered with Cummins, one of our long-standing engine suppliers, to design and develop our electric vehicle offering."
+          }
+        }
+      ],
+      "name_en": "Blue Bird"
+    },
+    {
+      "id": "GNRC",
+      "ticker": "GNRC",
+      "name": "ジェネラック",
+      "sub": "発電機",
+      "sub_en": "Generators",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "業務・産業用発電機の競合としてカミンズを記載",
+          "text_en": "Names Cummins as a competitor in C&I products",
+          "source": {
+            "label": "Generac 10-K",
+            "label_en": "Generac 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1474735/000143774926004568/gnrc20251231_10k.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "C&I products – Competitors include Caterpillar, Cummins, Rehlko (formerly known as Kohler Power), IGSA, MTU (Rolls Royce)"
+          }
+        }
+      ],
+      "name_en": "Generac"
     }
   ],
   "far": [],

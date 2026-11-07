@@ -234,6 +234,19 @@
             "date": "2026-02-20",
             "quote": "We compete with large and small public companies, such as CrowdStrike, Palo Alto Networks, Rapid7, and Tenable Holdings, as well as privately held security providers including Invicti, Tanium, and Wiz (which has announced a pending acquisition by Google)."
           }
+        },
+        {
+          "type": "rival",
+          "text": "脆弱性管理の競合としてクオリスを記載",
+          "text_en": "Names Qualys as a vulnerability-management competitor",
+          "source": {
+            "label": "Tenable 10-K",
+            "label_en": "Tenable 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1660280/000166028026000005/tenb-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Our competitors include: vulnerability management and assessment vendors, including Qualys and Rapid7;"
+          }
         }
       ],
       "name_en": "Tenable"

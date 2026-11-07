@@ -314,6 +314,54 @@
         }
       ],
       "name_en": "Honeywell"
+    },
+    {
+      "id": "VOYG",
+      "ticker": "VOYG",
+      "name": "ボイジャー・テクノロジーズ",
+      "sub": "宇宙機器",
+      "sub_en": "Space systems",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "宇宙機器の競合としてロケット・ラボを記載",
+          "text_en": "Names Rocket Lab as a competitor",
+          "source": {
+            "label": "Voyager Technologies 10-K",
+            "label_en": "Voyager Technologies 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1788060/000162828026016543/voyg-20251231.htm",
+            "level": "official",
+            "date": "2026-03-10",
+            "quote": "competitors include Rocket Lab (through its space systems and components business), Redwire"
+          }
+        }
+      ],
+      "name_en": "Voyager Technologies"
+    },
+    {
+      "id": "MNTS",
+      "ticker": "MNTS",
+      "name": "モメンタス",
+      "sub": "宇宙輸送",
+      "sub_en": "Space transport",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "小型ロケット事業者の競合としてロケット・ラボを記載",
+          "text_en": "Names Rocket Lab as a small-launch competitor",
+          "source": {
+            "label": "Momentus 10-K",
+            "label_en": "Momentus 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1781162/000162828026022291/mnts-20251231.htm",
+            "level": "official",
+            "date": "2026-03-31",
+            "quote": "small launch vehicle providers such as Firefly and Rocket Lab"
+          }
+        }
+      ],
+      "name_en": "Momentus"
     }
   ],
   "far": [],

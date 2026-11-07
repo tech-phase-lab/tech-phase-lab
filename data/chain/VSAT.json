@@ -159,6 +159,19 @@
             "date": "2026-05-29",
             "quote": "other satellite-based services, such as the services offered by Amazon Leo, Anuvu, Gogo, Iridium, Panasonic Avionics Corporation, SES, SpaceX and Thales Group, among others."
           }
+        },
+        {
+          "type": "rival",
+          "text": "モバイル衛星サービスの主要な競合としてビアサットを記載",
+          "text_en": "Names Viasat as a principal mobile-satellite competitor",
+          "source": {
+            "label": "Iridium Communications 10-K",
+            "label_en": "Iridium Communications 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1418819/000141881926000009/irdm-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "our principal mobile satellite services competitors are Viasat, Globalstar, ORBCOMM, and Thuraya"
+          }
         }
       ],
       "name_en": "Iridium Communications"
@@ -186,6 +199,30 @@
         }
       ],
       "name_en": "Gogo"
+    },
+    {
+      "id": "GSAT",
+      "ticker": "GSAT",
+      "name": "グローバルスター",
+      "sub": "衛星通信",
+      "sub_en": "Satellite communications",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "最大の競合の1社としてビアサットを記載",
+          "text_en": "Names Viasat as one of its largest competitors",
+          "source": {
+            "label": "Globalstar 10-K",
+            "label_en": "Globalstar 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1366868/000136686826000012/gsat-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Our largest global competitors are Viasat, Iridium and ORBCOMM."
+          }
+        }
+      ],
+      "name_en": "Globalstar"
     }
   ],
   "far": [],

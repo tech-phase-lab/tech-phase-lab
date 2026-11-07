@@ -9,10 +9,16 @@
     {
       "ja": "提携・顧客",
       "en": "Partners & customers"
+    },
+    {
+      "ja": "競合(10-Kに記載)",
+      "en": "Competitors (named in 10-Ks)"
     }
   ],
   "rivals": [
-    "LH"
+    "LH",
+    "GH",
+    "NEO"
   ],
   "companies": [
     {
@@ -134,6 +140,78 @@
         }
       ],
       "name_en": "CVS Health"
+    },
+    {
+      "id": "EXAS",
+      "ticker": "EXAS",
+      "name": "エグザクト・サイエンシズ",
+      "sub": "がん検査",
+      "sub_en": "Cancer screening",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "がん検査の採血のため、クエストと契約",
+          "text_en": "Contracted with Quest Diagnostics for blood collection for its Cancerguard test",
+          "source": {
+            "label": "Exact Sciences 10-K",
+            "label_en": "Exact Sciences 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1124140/000112414026000011/exas-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "we entered into an agreement with Quest Diagnostics to enable blood collection at"
+          }
+        }
+      ],
+      "name_en": "Exact Sciences"
+    },
+    {
+      "id": "GH",
+      "ticker": "GH",
+      "name": "ガーダント・ヘルス",
+      "sub": "がん検査",
+      "sub_en": "Cancer diagnostics",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "微小残存病変の検査の競合としてクエストを記載",
+          "text_en": "Names Quest as a competitor in minimal residual disease testing",
+          "source": {
+            "label": "Guardant Health 10-K",
+            "label_en": "Guardant Health 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1576280/000157628026000013/gh-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Quest Diagnostics, Inc., among others, are our competitors in minimal residual disease detection."
+          }
+        }
+      ],
+      "name_en": "Guardant Health"
+    },
+    {
+      "id": "NEO",
+      "ticker": "NEO",
+      "name": "ネオジェノミクス",
+      "sub": "がん検査",
+      "sub_en": "Cancer testing",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ゲノム検査の競合としてクエストを記載",
+          "text_en": "Names Quest as a genomic-profiling competitor",
+          "source": {
+            "label": "NeoGenomics 10-K",
+            "label_en": "NeoGenomics 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1077183/000107718326000010/neo-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "laboratory companies such as Quest Diagnostics, Laboratory Corporation of America and ARUP"
+          }
+        }
+      ],
+      "name_en": "NeoGenomics"
     }
   ],
   "far": [],

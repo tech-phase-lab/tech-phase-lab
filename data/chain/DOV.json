@@ -207,6 +207,19 @@
             "date": "2026-02-13",
             "quote": "Pumps & Process Solutions IDEX Corporation, Ingersoll Rand, ITT, SPX Flow Inc. (Waukesha), Danaher Corporation (Pall)"
           }
+        },
+        {
+          "type": "rival",
+          "text": "主要な競合としてドーバーを記載",
+          "text_en": "Names Dover as a primary competitor",
+          "source": {
+            "label": "Ingersoll Rand 10-K",
+            "label_en": "Ingersoll Rand 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1699150/000162828026008617/iri-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "Our primary competitors include Dover, Graco, IDEX Corporation, KNF Neuberger, Netzsch, NOV, Sartorius"
+          }
         }
       ],
       "name_en": "Ingersoll Rand"

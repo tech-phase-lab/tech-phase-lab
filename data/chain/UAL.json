@@ -14,9 +14,15 @@
       "ja": "供給元",
       "en": "Suppliers",
       "above": true
+    },
+    {
+      "ja": "競合(10-Kに記載)",
+      "en": "Competitors (named in 10-Ks)"
     }
   ],
-  "rivals": [],
+  "rivals": [
+    "ALK"
+  ],
   "companies": [
     {
       "id": "JPM",
@@ -281,6 +287,54 @@
         }
       ],
       "name_en": "Rolls-Royce"
+    },
+    {
+      "id": "ALK",
+      "ticker": "ALK",
+      "name": "アラスカ・エア・グループ",
+      "sub": "航空",
+      "sub_en": "Airline",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ハワイと西海岸の主要な競合としてユナイテッドを記載",
+          "text_en": "Names United as a significant competitor in Hawaii and on the West Coast",
+          "source": {
+            "label": "Alaska Air Group 10-K",
+            "label_en": "Alaska Air Group 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/766421/000076642126000010/alk-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "In addition to Delta, Southwest Airlines and United Airlines are significant competitors in the state of Hawai'i and on the West Coast."
+          }
+        }
+      ],
+      "name_en": "Alaska Air Group"
+    },
+    {
+      "id": "JBLU",
+      "ticker": "JBLU",
+      "name": "ジェットブルー",
+      "sub": "航空",
+      "sub_en": "Airline",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年5月に、ユナイテッドとの提携「Blue Sky」を発表",
+          "text_en": "Announced the Blue Sky collaboration with United in May 2025",
+          "source": {
+            "label": "JetBlue Airways 10-K",
+            "label_en": "JetBlue Airways 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1158463/000115846326000007/jblu-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "In May 2025, we announced a collaboration with United Airlines, referred to as Blue Sky."
+          }
+        }
+      ],
+      "name_en": "JetBlue Airways"
     }
   ],
   "far": [],

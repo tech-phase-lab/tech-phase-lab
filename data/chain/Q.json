@@ -157,6 +157,19 @@
             "date": "2026-02-26",
             "quote": "Our most notable competitors are Entegris, Merck KGA, Resonac, Element Solutions and MKS Instruments."
           }
+        },
+        {
+          "type": "rival",
+          "text": "最も大きな競合としてクニティを記載",
+          "text_en": "Names Qnity as a most-significant competitor",
+          "source": {
+            "label": "Element Solutions 10-K",
+            "label_en": "Element Solutions 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1590714/000159071426000018/esi-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "our most significant competitors are MKS Instruments, Qnity Electronics, Inc., Henkel Corporation"
+          }
         }
       ],
       "name_en": "Element Solutions"

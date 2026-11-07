@@ -122,6 +122,19 @@
             "date": "2026-02-06",
             "quote": "Our Sustainability and Climate offerings compete with a range of companies that issue sustainability and climate data, ratings or research, including Sustainalytics Holding B.V. (a part of Morningstar, Inc.), Institutional Shareholder Services Inc. (majority owned by Deutsche Börse AG), S&P Global Inc., Refinitiv (a London Stock Exchange Group business) and Bloomberg."
           }
+        },
+        {
+          "type": "rival",
+          "text": "主要な競合としてMSCIを記載",
+          "text_en": "Names MSCI as a key competitor",
+          "source": {
+            "label": "Morningstar 10-K",
+            "label_en": "Morningstar 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1289419/000128941926000013/morn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "Key competitors include Beauhurst, FactSet, MSCI, Preqin (a division of BlackRock), Refinitiv, S&P Global Market Intelligence"
+          }
         }
       ],
       "name_en": "Morningstar"

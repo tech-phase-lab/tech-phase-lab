@@ -23,7 +23,8 @@
   "rivals": [
     "SNPS",
     "CEVA",
-    "KEYS"
+    "KEYS",
+    "RMBS"
   ],
   "companies": [
     {
@@ -45,6 +46,19 @@
             "level": "official",
             "date": "2026-02-19",
             "quote": "On September 6, 2023, Cadence acquired the serializer/deserializer (“SerDes”) and memory interface physical layer (“Memory”) IP business from Rambus Inc."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "シリコンIPの競合としてケイデンスを記載",
+          "text_en": "Names Cadence as a silicon-IP competitor",
+          "source": {
+            "label": "Rambus 10-K",
+            "label_en": "Rambus 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/917273/000119312526057101/rmbs-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "third-party IP suppliers, such as Cadence and Synopsys."
           }
         }
       ],
@@ -315,6 +329,30 @@
         }
       ],
       "name_en": "Keysight Technologies"
+    },
+    {
+      "id": "SVCO",
+      "ticker": "SVCO",
+      "name": "シルバコ・グループ",
+      "sub": "半導体設計ソフト",
+      "sub_en": "Chip design software",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年3月に、ケイデンスから事業資産を取得する契約を完了",
+          "text_en": "Completed an asset purchase from Cadence in March 2025",
+          "source": {
+            "label": "Silvaco 10-K",
+            "label_en": "Silvaco 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1943289/000162828026017378/svco-20251231.htm",
+            "level": "official",
+            "date": "2026-03-12",
+            "quote": "we consummated an asset purchase agreement with Cadence Design Systems, Inc."
+          }
+        }
+      ],
+      "name_en": "Silvaco"
     }
   ],
   "far": [],

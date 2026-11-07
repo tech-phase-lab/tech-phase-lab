@@ -180,6 +180,30 @@
         }
       ],
       "name_en": "Citgo Petroleum"
+    },
+    {
+      "id": "HESM",
+      "ticker": "HESM",
+      "name": "ヘス・ミッドストリーム",
+      "sub": "石油・ガス中流",
+      "sub_en": "Midstream",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "LM4合弁事業を、ターガと50対50で設立(2018年)",
+          "text_en": "Formed the LM4 joint venture with Targa, 50/50, in 2018",
+          "source": {
+            "label": "Hess Midstream 10-K",
+            "label_en": "Hess Midstream 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1789832/000119312526071592/hesm-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "we entered into a 50/50 joint venture with Targa Resources Corp."
+          }
+        }
+      ],
+      "name_en": "Hess Midstream"
     }
   ],
   "far": [],

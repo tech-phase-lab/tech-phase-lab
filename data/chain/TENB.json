@@ -146,6 +146,19 @@
             "date": "2026-02-20",
             "quote": "We compete with large and small public companies, such as CrowdStrike, Palo Alto Networks, Rapid7, and Tenable Holdings, as well as privately held security providers including Invicti, Tanium, and Wiz (which has announced a pending acquisition by Google)."
           }
+        },
+        {
+          "type": "rival",
+          "text": "競合としてテナブルを記載",
+          "text_en": "Names Tenable as a competitor",
+          "source": {
+            "label": "Qualys 10-K",
+            "label_en": "Qualys 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1107843/000110784326000008/qlys-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "We compete with large and small public companies, such as CrowdStrike, Palo Alto Networks, Rapid7, and Tenable Holdings"
+          }
         }
       ]
     },

@@ -132,6 +132,19 @@
             "date": "2026-02-27",
             "quote": "Our primary GaN competitors include Infineon Technologies AG, Power Integrations, Inc., Texas Instruments Incorporated, Innoscience (Suzhou) Semiconductor Co., Ltd., Renesas Electronics Corp., and Efficient Power Conversion Corporation (EPC)."
           }
+        },
+        {
+          "type": "rival",
+          "text": "GaNの主要な競合としてパワー・インテグレーションズを記載",
+          "text_en": "Names Power Integrations as a primary GaN competitor",
+          "source": {
+            "label": "Navitas Semiconductor 10-K",
+            "label_en": "Navitas Semiconductor 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1821769/000182176926000007/nvts-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Our primary GaN competitors include Infineon Technologies AG, Power Integrations, Inc., Texas Instruments Incorporated"
+          }
         }
       ],
       "name_en": "Navitas Semiconductor"

@@ -46,6 +46,19 @@
             "date": "2026-02-13",
             "quote": "The net profits and net losses incurred pursuant to the A&R JDCA with respect to CASGEVY are allocated 60% to us and 40% to CRISPR, subject to certain adjustments"
           }
+        },
+        {
+          "type": "tie",
+          "text": "主力のCASGEVYを、バーテックスと提携して開発",
+          "text_en": "Partners with Vertex on its lead program CASGEVY",
+          "source": {
+            "label": "CRISPR Therapeutics 10-K",
+            "label_en": "CRISPR Therapeutics 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1674416/000119312526048957/crsp-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "We have partnered with Vertex Pharmaceuticals Incorporated, or Vertex, on our lead program CASGEVY"
+          }
         }
       ],
       "name_en": "CRISPR Therapeutics"
@@ -69,6 +82,19 @@
             "level": "official",
             "date": "2026-02-13",
             "quote": "In 2016, we entered into a collaboration with Moderna for the identification and development of mRNA therapeutics encoding CFTR for the treatment of CF."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "2016年7月に、嚢胞性線維症の戦略提携・ライセンス契約を締結",
+          "text_en": "Signed a strategic collaboration and license agreement on cystic fibrosis in July 2016",
+          "source": {
+            "label": "Moderna 10-K",
+            "label_en": "Moderna 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1682852/000168285226000033/mrna-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "Vertex—2016 Strategic Alliance in Cystic Fibrosis In July 2016, we entered into a Strategic Collaboration and License Agreement (Vertex Agreement) with Vertex Pharmaceuticals Incorporated"
           }
         }
       ],

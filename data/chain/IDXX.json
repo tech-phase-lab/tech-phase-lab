@@ -23,7 +23,8 @@
   "rivals": [
     "ZTS",
     "NEOG",
-    "TMO"
+    "TMO",
+    "ZOM"
   ],
   "companies": [
     {
@@ -182,6 +183,30 @@
         }
       ],
       "name_en": "Neogen Corporation"
+    },
+    {
+      "id": "ZOM",
+      "ticker": "ZOM",
+      "name": "ゾメディカ",
+      "sub": "動物用診断",
+      "sub_en": "Veterinary diagnostics",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "動物用診断市場の主要な競合としてアイデックスを記載",
+          "text_en": "Names IDEXX as a principal veterinary-diagnostics competitor",
+          "source": {
+            "label": "Zomedica 10-K",
+            "label_en": "Zomedica 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1684144/000110465926028450/zom-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-03-16",
+            "quote": "Our principal competitors in the veterinary diagnostic market are IDEXX Laboratories, Inc."
+          }
+        }
+      ],
+      "name_en": "Zomedica"
     }
   ],
   "far": [],

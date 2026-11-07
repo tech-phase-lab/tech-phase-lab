@@ -14,6 +14,10 @@
     {
       "ja": "提携・顧客",
       "en": "Partners & customers"
+    },
+    {
+      "ja": "競合(10-Kに記載)",
+      "en": "Competitors (named in 10-Ks)"
     }
   ],
   "rivals": [
@@ -80,6 +84,19 @@
             "level": "official",
             "date": "2026-02-03",
             "quote": "In 2023, we entered into an agreement with T-Mobile to sell certain of our spectrum licenses."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "2023年9月に、コムキャストから周波数ライセンスを購入する契約を締結",
+          "text_en": "Signed a license purchase agreement with Comcast in September 2023",
+          "source": {
+            "label": "T-Mobile US 10-K",
+            "label_en": "T-Mobile US 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1283699/000128369926000010/tmus-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "we entered into a License Purchase Agreement with Comcast Corporation"
           }
         }
       ],
@@ -276,6 +293,30 @@
         }
       ],
       "name_en": "Netflix"
+    },
+    {
+      "id": "OOMA",
+      "ticker": "OOMA",
+      "name": "ウーマ",
+      "sub": "クラウド電話",
+      "sub_en": "Cloud telephony",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "競合の通信事業者としてコムキャストを記載",
+          "text_en": "Names Comcast among established communications competitors",
+          "source": {
+            "label": "Ooma 10-K",
+            "label_en": "Ooma 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1327688/000132768826000009/ooma-20260131.htm",
+            "level": "official",
+            "date": "2026-04-03",
+            "quote": "Established communications providers, such as Comcast Corporation, Verizon Communications Inc."
+          }
+        }
+      ],
+      "name_en": "Ooma"
     }
   ],
   "far": [],

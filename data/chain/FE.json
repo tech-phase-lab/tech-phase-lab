@@ -81,6 +81,19 @@
             "date": "2026-02-18",
             "quote": "On February 21, 2025, FET, DominionHV and Transource entered into the Valley Link Operating Agreement, which established the general framework for Valley Link and the Valley Link Subsidiaries to accept, design, develop, construct, own, operate and finance those transmission projects awarded by PJM to Valley Link."
           }
+        },
+        {
+          "type": "tie",
+          "text": "西バージニア州の送電会社PATH-WVを、ファーストエナジーとAEPが50%ずつ出資",
+          "text_en": "PATH-WV, a West Virginia transmission company, is owned 50% each by FirstEnergy and AEP",
+          "source": {
+            "label": "American Electric Power 10-K",
+            "label_en": "American Electric Power 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/4904/000000490426000013/aep-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "PATH West Virginia Transmission Company, LLC, a joint venture-owned 50% by FirstEnergy and 50% by AEP."
+          }
         }
       ],
       "name_en": "AEP (Transource)"
