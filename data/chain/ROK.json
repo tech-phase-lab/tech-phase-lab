@@ -13,7 +13,9 @@
   ],
   "rivals": [
     "EMR",
-    "HON"
+    "HON",
+    "SIEGY",
+    "ABBNY"
   ],
   "companies": [
     {
@@ -108,6 +110,19 @@
             "date": "2025-11-12",
             "quote": "Major competitors include Siemens AG, ABB Ltd, Schneider Electric SA, Emerson Electric Co., Mitsubishi Electric Corp., Honeywell International Inc., and Dassault Systemes."
           }
+        },
+        {
+          "type": "rival",
+          "text": "エマソンと競合する",
+          "text_en": "Competes with Emerson",
+          "source": {
+            "label": "Rockwell Automation 10-K",
+            "label_en": "Rockwell Automation 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1024478/000102447825000116/rok-20250930.htm",
+            "level": "official",
+            "date": "2025-11-12",
+            "quote": "Major competitors include Siemens AG, ABB Ltd, Schneider Electric SA, Emerson Electric Co., Mitsubishi Electric Corp., Honeywell International Inc."
+          }
         }
       ],
       "name_en": "Emerson Electric"
@@ -156,6 +171,19 @@
             "date": "2025-11-12",
             "quote": "Major competitors include Siemens AG, ABB Ltd, Schneider Electric SA, Emerson Electric Co., Mitsubishi Electric Corp., Honeywell International Inc., and Dassault Systemes."
           }
+        },
+        {
+          "type": "rival",
+          "text": "ハネウェルと競合する",
+          "text_en": "Competes with Honeywell",
+          "source": {
+            "label": "Rockwell Automation 10-K",
+            "label_en": "Rockwell Automation 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1024478/000102447825000116/rok-20250930.htm",
+            "level": "official",
+            "date": "2025-11-12",
+            "quote": "Major competitors include Siemens AG, ABB Ltd, Schneider Electric SA, Emerson Electric Co., Mitsubishi Electric Corp., Honeywell International Inc."
+          }
         }
       ],
       "name_en": "Honeywell International"
@@ -183,6 +211,78 @@
         }
       ],
       "name_en": "Dassault Systemes"
+    },
+    {
+      "id": "SIEGY",
+      "ticker": "SIEGY",
+      "name": "シーメンス",
+      "sub": "産業機器",
+      "sub_en": "Industrial",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "シーメンスと競合する",
+          "text_en": "Competes with Siemens",
+          "source": {
+            "label": "Rockwell Automation 10-K",
+            "label_en": "Rockwell Automation 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1024478/000102447825000116/rok-20250930.htm",
+            "level": "official",
+            "date": "2025-11-12",
+            "quote": "Major competitors include Siemens AG, ABB Ltd, Schneider Electric SA, Emerson Electric Co., Mitsubishi Electric Corp., Honeywell International Inc."
+          }
+        }
+      ],
+      "name_en": "Siemens"
+    },
+    {
+      "id": "ABBNY",
+      "ticker": "ABBNY",
+      "name": "ABB",
+      "sub": "電機・自動化",
+      "sub_en": "Electrical & automation",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ABBと競合する",
+          "text_en": "Competes with ABB",
+          "source": {
+            "label": "Rockwell Automation 10-K",
+            "label_en": "Rockwell Automation 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1024478/000102447825000116/rok-20250930.htm",
+            "level": "official",
+            "date": "2025-11-12",
+            "quote": "Major competitors include Siemens AG, ABB Ltd, Schneider Electric SA, Emerson Electric Co., Mitsubishi Electric Corp., Honeywell International Inc."
+          }
+        }
+      ],
+      "name_en": "ABB"
+    },
+    {
+      "id": "SBGSY",
+      "ticker": "SBGSY",
+      "name": "シュナイダーエレクトリック",
+      "sub": "電機・自動化",
+      "sub_en": "Electrical & automation",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "シュナイダーエレクトリックと競合する",
+          "text_en": "Competes with Schneider Electric",
+          "source": {
+            "label": "Rockwell Automation 10-K",
+            "label_en": "Rockwell Automation 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1024478/000102447825000116/rok-20250930.htm",
+            "level": "official",
+            "date": "2025-11-12",
+            "quote": "Major competitors include Siemens AG, ABB Ltd, Schneider Electric SA, Emerson Electric Co., Mitsubishi Electric Corp., Honeywell International Inc."
+          }
+        }
+      ],
+      "name_en": "Schneider Electric"
     }
   ],
   "far": [],

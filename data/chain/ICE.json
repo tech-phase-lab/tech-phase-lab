@@ -9,11 +9,16 @@
     {
       "ja": "提携・顧客",
       "en": "Partners & customers"
+    },
+    {
+      "ja": "競合(10-Kに記載)",
+      "en": "Competitors (named in 10-Ks)"
     }
   ],
   "rivals": [
     "NDAQ",
-    "CBOE"
+    "CBOE",
+    "CME"
   ],
   "companies": [
     {
@@ -35,6 +40,19 @@
             "level": "official",
             "date": "2026-02-05",
             "quote": "their principal U.S. competitors are Nasdaq, Inc., or Nasdaq, and Cboe Global Markets, Inc., or Cboe."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "ナスダックと競合する",
+          "text_en": "Competes with Nasdaq",
+          "source": {
+            "label": "Intercontinental Exchange 10-K",
+            "label_en": "Intercontinental Exchange 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1571949/000157194926000004/ice-20251231.htm",
+            "level": "official",
+            "date": "2026-02-05",
+            "quote": "Nasdaq, Inc., or Nasdaq, and Cboe Global Markets, Inc., or Cboe"
           }
         }
       ],
@@ -59,6 +77,19 @@
             "level": "official",
             "date": "2026-02-05",
             "quote": "their principal U.S. competitors are Nasdaq, Inc., or Nasdaq, and Cboe Global Markets, Inc., or Cboe."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "シーボー・グローバル・マーケッツと競合する",
+          "text_en": "Competes with Cboe Global Markets",
+          "source": {
+            "label": "Intercontinental Exchange 10-K",
+            "label_en": "Intercontinental Exchange 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1571949/000157194926000004/ice-20251231.htm",
+            "level": "official",
+            "date": "2026-02-05",
+            "quote": "Nasdaq, Inc., or Nasdaq, and Cboe Global Markets, Inc., or Cboe"
           }
         }
       ],
@@ -111,6 +142,30 @@
         }
       ],
       "name_en": "Bakkt"
+    },
+    {
+      "id": "CME",
+      "ticker": "CME",
+      "name": "CMEグループ",
+      "sub": "取引所",
+      "sub_en": "Exchange",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "CMEグループが、10-Kでインターコンチネンタル取引所を競合の1社として挙げている",
+          "text_en": "CME Group names Intercontinental Exchange as a competitor in its 10-K",
+          "source": {
+            "label": "CME Group 10-K",
+            "label_en": "CME Group 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1156375/000115637526000009/cme-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Our competitors include, among other entities, exchanges such as Intercontinental Exchange, Inc."
+          }
+        }
+      ],
+      "name_en": "CME Group"
     }
   ],
   "far": [],

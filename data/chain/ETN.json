@@ -21,7 +21,8 @@
     }
   ],
   "rivals": [
-    "VRT"
+    "VRT",
+    "ABBNY"
   ],
   "companies": [
     {
@@ -120,6 +121,30 @@
         }
       ],
       "name_en": "Vertiv"
+    },
+    {
+      "id": "ABBNY",
+      "ticker": "ABBNY",
+      "name": "ABB",
+      "sub": "電機・自動化",
+      "sub_en": "Electrical & automation",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ABBが、10-Kでイートンを競合の1社として挙げている",
+          "text_en": "ABB names Eaton as a competitor in its 10-K",
+          "source": {
+            "label": "ABB 10-K",
+            "label_en": "ABB 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1091587/000110465924026633/abb20231231.htm",
+            "level": "official",
+            "date": "2024-02-23",
+            "quote": "principal competitors vary by product group and include Atkore, Chint, Eaton, Hager, Hubbell, Legrand, LS Electric, Mitsubishi Electric, nVent, Panasonic, Schneider Electric, Siemens and Vertiv"
+          }
+        }
+      ],
+      "name_en": "ABB"
     }
   ],
   "far": [],

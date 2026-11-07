@@ -14,6 +14,10 @@
       "ja": "供給元",
       "en": "Suppliers",
       "above": true
+    },
+    {
+      "ja": "競合(10-Kに記載)",
+      "en": "Competitors (named in 10-Ks)"
     }
   ],
   "rivals": [
@@ -233,6 +237,19 @@
             "level": "official",
             "date": "2026-02-20",
             "quote": "Other significant competitors include, but are not limited to, Nestlé S.A., Keurig Dr Pepper Inc., Danone S.A., Suntory Beverage & Food Limited, Anheuser-Busch InBev, Kirin Holdings, Heineken N.V., Diageo plc and Red Bull GmbH."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "キューリグ・ドクターペッパーが、10-Kでコカ・コーラを競合の1社として挙げている",
+          "text_en": "Keurig Dr Pepper names Coca-Cola as a competitor in its 10-K",
+          "source": {
+            "label": "Keurig Dr Pepper 10-K",
+            "label_en": "Keurig Dr Pepper 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1418135/000141813526000016/kdp-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Our primary competitors include Coca-Cola, PepsiCo, Starbucks Corporation"
           }
         }
       ],

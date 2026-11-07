@@ -9,9 +9,15 @@
     {
       "ja": "提携・顧客",
       "en": "Partners & customers"
+    },
+    {
+      "ja": "競合(10-Kに記載)",
+      "en": "Competitors (named in 10-Ks)"
     }
   ],
-  "rivals": [],
+  "rivals": [
+    "BKR"
+  ],
   "companies": [
     {
       "id": "AKER",
@@ -84,6 +90,30 @@
         }
       ],
       "name_en": "Aker Carbon Capture"
+    },
+    {
+      "id": "BKR",
+      "ticker": "BKR",
+      "name": "ベーカー・ヒューズ",
+      "sub": "油田サービス",
+      "sub_en": "Oilfield services",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ベーカー・ヒューズが、10-KでSLBを競合の1社として挙げている",
+          "text_en": "Baker Hughes names SLB as a competitor in its 10-K",
+          "source": {
+            "label": "Baker Hughes 10-K",
+            "label_en": "Baker Hughes 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1701605/000170160526000007/bkr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-05",
+            "quote": "OFSE competitors include SLB, Halliburton, NOV, Weatherford, and TechnipFMC."
+          }
+        }
+      ],
+      "name_en": "Baker Hughes"
     }
   ],
   "far": [],

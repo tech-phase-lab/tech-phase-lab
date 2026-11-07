@@ -9,6 +9,10 @@
     {
       "ja": "提携・顧客",
       "en": "Partners & customers"
+    },
+    {
+      "ja": "競合(10-Kに記載)",
+      "en": "Competitors (named in 10-Ks)"
     }
   ],
   "rivals": [
@@ -35,6 +39,19 @@
             "level": "official",
             "date": "2026-07-20",
             "quote": "Domestic include other package delivery concerns, principally United Parcel Service, Inc. (“UPS”)"
+          }
+        },
+        {
+          "type": "rival",
+          "text": "UPSと競合する",
+          "text_en": "Competes with UPS",
+          "source": {
+            "label": "FedEx 10-K",
+            "label_en": "FedEx 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1048911/000104891126000105/fdx-20260531.htm",
+            "level": "official",
+            "date": "2026-07-20",
+            "quote": "Express International competitors are principally DHL, UPS"
           }
         }
       ],

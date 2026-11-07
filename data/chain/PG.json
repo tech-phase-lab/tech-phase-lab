@@ -9,9 +9,16 @@
     {
       "ja": "提携・顧客",
       "en": "Partners & customers"
+    },
+    {
+      "ja": "競合(10-Kに記載)",
+      "en": "Competitors (named in 10-Ks)"
     }
   ],
-  "rivals": [],
+  "rivals": [
+    "CHD",
+    "KVUE"
+  ],
   "companies": [
     {
       "id": "WMT",
@@ -84,6 +91,54 @@
         }
       ],
       "name_en": "Clorox"
+    },
+    {
+      "id": "CHD",
+      "ticker": "CHD",
+      "name": "チャーチ・アンド・ドワイト",
+      "sub": "日用品",
+      "sub_en": "Household products",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "チャーチ・アンド・ドワイトが、10-KでP&Gを競合の1社として挙げている",
+          "text_en": "Church & Dwight names Procter & Gamble as a competitor in its 10-K",
+          "source": {
+            "label": "Church & Dwight 10-K",
+            "label_en": "Church & Dwight 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/313927/000119312526048139/chd-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "Our competitors in the Consumer Domestic and Consumer International segments include, among others, Procter & Gamble Company (“P&G”), The Clorox Company, Colgate-Palmolive Company"
+          }
+        }
+      ],
+      "name_en": "Church & Dwight"
+    },
+    {
+      "id": "KVUE",
+      "ticker": "KVUE",
+      "name": "ケンビュー",
+      "sub": "消費者向けヘルスケア",
+      "sub_en": "Consumer health",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ケンビューが、10-KでP&Gを競合の1社として挙げている",
+          "text_en": "Kenvue names Procter & Gamble as a competitor in its 10-K",
+          "source": {
+            "label": "Kenvue 10-K",
+            "label_en": "Kenvue 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1944048/000194404826000030/kvue-20251228.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "Church & Dwight, Colgate-Palmolive, Haleon, Kimberly-Clark, Procter & Gamble, and private-label brands"
+          }
+        }
+      ],
+      "name_en": "Kenvue"
     }
   ],
   "far": [],

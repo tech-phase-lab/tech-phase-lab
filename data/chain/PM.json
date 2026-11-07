@@ -9,6 +9,10 @@
     {
       "ja": "提携・顧客",
       "en": "Partners & customers"
+    },
+    {
+      "ja": "競合(10-Kに記載)",
+      "en": "Competitors (named in 10-Ks)"
     }
   ],
   "rivals": [
@@ -49,6 +53,19 @@
             "date": "2026-02-06",
             "quote": "On October 20, 2022, PMI announced that it had reached an agreement with Altria Group, Inc., (\"Altria\") to end the companies' commercial relationship as of April 30, 2024, with respect to IQOS in the U.S."
           }
+        },
+        {
+          "type": "rival",
+          "text": "アルトリアと競合する",
+          "text_en": "Competes with Altria",
+          "source": {
+            "label": "Philip Morris International 10-K",
+            "label_en": "Philip Morris International 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1413329/000162828026005939/pm-20251231.htm",
+            "level": "official",
+            "date": "2026-02-06",
+            "quote": "Competitors in our industry include Altria Group, Inc., British American Tobacco plc, Japan Tobacco Inc., Imperial Brands plc"
+          }
         }
       ],
       "name_en": "Altria Group"
@@ -72,6 +89,19 @@
             "level": "official",
             "date": "2026-02-06",
             "quote": "Competitors in our industry include Altria Group, Inc., British American Tobacco plc, Japan Tobacco Inc., Imperial Brands plc, new market entrants, particularly with respect to innovative products, several regional and local tobacco companies and, in some instances, state-owned tobacco enterprises"
+          }
+        },
+        {
+          "type": "rival",
+          "text": "ブリティッシュ・アメリカン・タバコと競合する",
+          "text_en": "Competes with British American Tobacco",
+          "source": {
+            "label": "Philip Morris International 10-K",
+            "label_en": "Philip Morris International 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1413329/000162828026005939/pm-20251231.htm",
+            "level": "official",
+            "date": "2026-02-06",
+            "quote": "Competitors in our industry include Altria Group, Inc., British American Tobacco plc, Japan Tobacco Inc., Imperial Brands plc"
           }
         }
       ],

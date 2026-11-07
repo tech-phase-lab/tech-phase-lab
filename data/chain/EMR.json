@@ -9,9 +9,17 @@
     {
       "ja": "提携・顧客",
       "en": "Partners & customers"
+    },
+    {
+      "ja": "競合(10-Kに記載)",
+      "en": "Competitors (named in 10-Ks)"
     }
   ],
-  "rivals": [],
+  "rivals": [
+    "ROK",
+    "ABBNY",
+    "BKR"
+  ],
   "companies": [
     {
       "id": "BX",
@@ -97,6 +105,78 @@
         }
       ],
       "name_en": "Whirlpool"
+    },
+    {
+      "id": "ROK",
+      "ticker": "ROK",
+      "name": "ロックウェル・オートメーション",
+      "sub": "産業オートメーション",
+      "sub_en": "Industrial automation",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ロックウェル・オートメーションが、10-Kでエマソンを競合の1社として挙げている",
+          "text_en": "Rockwell Automation names Emerson as a competitor in its 10-K",
+          "source": {
+            "label": "Rockwell Automation 10-K",
+            "label_en": "Rockwell Automation 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1024478/000102447825000116/rok-20250930.htm",
+            "level": "official",
+            "date": "2025-11-12",
+            "quote": "Major competitors include Siemens AG, ABB Ltd, Schneider Electric SA, Emerson Electric Co., Mitsubishi Electric Corp., Honeywell International Inc."
+          }
+        }
+      ],
+      "name_en": "Rockwell Automation"
+    },
+    {
+      "id": "ABBNY",
+      "ticker": "ABBNY",
+      "name": "ABB",
+      "sub": "電機・自動化",
+      "sub_en": "Electrical & automation",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ABBが、10-Kでエマソンを競合の1社として挙げている",
+          "text_en": "ABB names Emerson as a competitor in its 10-K",
+          "source": {
+            "label": "ABB 10-K",
+            "label_en": "ABB 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1091587/000110465924026633/abb20231231.htm",
+            "level": "official",
+            "date": "2024-02-23",
+            "quote": "Competitors include: Emerson, Honeywell, Schneider Electric, Siemens"
+          }
+        }
+      ],
+      "name_en": "ABB"
+    },
+    {
+      "id": "BKR",
+      "ticker": "BKR",
+      "name": "ベーカー・ヒューズ",
+      "sub": "油田サービス",
+      "sub_en": "Oilfield services",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ベーカー・ヒューズが、10-Kでエマソンを競合の1社として挙げている",
+          "text_en": "Baker Hughes names Emerson as a competitor in its 10-K",
+          "source": {
+            "label": "Baker Hughes 10-K",
+            "label_en": "Baker Hughes 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1701605/000170160526000007/bkr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-05",
+            "quote": "IET main competitors include Siemens Energy, Solar (a Caterpillar company), Mitsubishi Heavy Industry, Sulzer, Flowserve, and Emerson."
+          }
+        }
+      ],
+      "name_en": "Baker Hughes"
     }
   ],
   "far": [],

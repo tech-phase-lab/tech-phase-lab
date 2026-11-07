@@ -9,9 +9,15 @@
     {
       "ja": "提携・顧客",
       "en": "Partners & customers"
+    },
+    {
+      "ja": "競合(10-Kに記載)",
+      "en": "Competitors (named in 10-Ks)"
     }
   ],
-  "rivals": [],
+  "rivals": [
+    "KVUE"
+  ],
   "companies": [
     {
       "id": "WMT",
@@ -80,6 +86,19 @@
             "level": "official",
             "date": "2026-02-12",
             "quote": "On November 2, 2025, we entered into an Agreement and Plan of Merger (the \"Merger Agreement\") to acquire the outstanding equity interests of Kenvue, Inc. (\"Kenvue\"), a global consumer health leader, for stock and cash consideration (the \"Kenvue Acquisition\")."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "ケンビューが、10-Kでキンバリークラークを競合の1社として挙げている",
+          "text_en": "Kenvue names Kimberly-Clark as a competitor in its 10-K",
+          "source": {
+            "label": "Kenvue 10-K",
+            "label_en": "Kenvue 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1944048/000194404826000030/kvue-20251228.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "Church & Dwight, Colgate-Palmolive, Haleon, Kimberly-Clark, Procter & Gamble, and private-label brands"
           }
         }
       ],

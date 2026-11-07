@@ -9,9 +9,15 @@
     {
       "ja": "提携・顧客",
       "en": "Partners & customers"
+    },
+    {
+      "ja": "競合(10-Kに記載)",
+      "en": "Competitors (named in 10-Ks)"
     }
   ],
-  "rivals": [],
+  "rivals": [
+    "KDP"
+  ],
   "companies": [
     {
       "id": "NESN",
@@ -121,6 +127,30 @@
         }
       ],
       "name_en": "Tata Starbucks Limited"
+    },
+    {
+      "id": "KDP",
+      "ticker": "KDP",
+      "name": "キューリグ・ドクターペッパー",
+      "sub": "飲料",
+      "sub_en": "Beverages",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "キューリグ・ドクターペッパーが、10-Kでスターバックスを競合の1社として挙げている",
+          "text_en": "Keurig Dr Pepper names Starbucks as a competitor in its 10-K",
+          "source": {
+            "label": "Keurig Dr Pepper 10-K",
+            "label_en": "Keurig Dr Pepper 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1418135/000141813526000016/kdp-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Our primary competitors include Coca-Cola, PepsiCo, Starbucks Corporation"
+          }
+        }
+      ],
+      "name_en": "Keurig Dr Pepper"
     }
   ],
   "far": [],
