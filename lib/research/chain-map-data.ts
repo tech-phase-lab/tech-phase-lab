@@ -13,6 +13,7 @@ import c_adp from "../../data/chain/ADP.json" with { type: "json" };
 import c_adsk from "../../data/chain/ADSK.json" with { type: "json" };
 import c_aehr from "../../data/chain/AEHR.json" with { type: "json" };
 import c_aeis from "../../data/chain/AEIS.json" with { type: "json" };
+import c_aep from "../../data/chain/AEP.json" with { type: "json" };
 import c_aes from "../../data/chain/AES.json" with { type: "json" };
 import c_afl from "../../data/chain/AFL.json" with { type: "json" };
 import c_agys from "../../data/chain/AGYS.json" with { type: "json" };
@@ -24,6 +25,7 @@ import c_alny from "../../data/chain/ALNY.json" with { type: "json" };
 import c_amat from "../../data/chain/AMAT.json" with { type: "json" };
 import c_amba from "../../data/chain/AMBA.json" with { type: "json" };
 import c_amd from "../../data/chain/AMD.json" with { type: "json" };
+import c_amgn from "../../data/chain/AMGN.json" with { type: "json" };
 import c_amkr from "../../data/chain/AMKR.json" with { type: "json" };
 import c_amt from "../../data/chain/AMT.json" with { type: "json" };
 import c_amzn from "../../data/chain/AMZN.json" with { type: "json" };
@@ -82,6 +84,7 @@ import c_calx from "../../data/chain/CALX.json" with { type: "json" };
 import c_camt from "../../data/chain/CAMT.json" with { type: "json" };
 import c_carg from "../../data/chain/CARG.json" with { type: "json" };
 import c_cat from "../../data/chain/CAT.json" with { type: "json" };
+import c_ccep from "../../data/chain/CCEP.json" with { type: "json" };
 import c_cci from "../../data/chain/CCI.json" with { type: "json" };
 import c_ccl from "../../data/chain/CCL.json" with { type: "json" };
 import c_ccoi from "../../data/chain/CCOI.json" with { type: "json" };
@@ -119,6 +122,7 @@ import c_crwd from "../../data/chain/CRWD.json" with { type: "json" };
 import c_crwv from "../../data/chain/CRWV.json" with { type: "json" };
 import c_csco from "../../data/chain/CSCO.json" with { type: "json" };
 import c_csx from "../../data/chain/CSX.json" with { type: "json" };
+import c_ctas from "../../data/chain/CTAS.json" with { type: "json" };
 import c_cts from "../../data/chain/CTS.json" with { type: "json" };
 import c_cvna from "../../data/chain/CVNA.json" with { type: "json" };
 import c_cvs from "../../data/chain/CVS.json" with { type: "json" };
@@ -522,6 +526,7 @@ const available: Record<string, ChainMapData> = {
   ADSK: c_adsk as ChainMapData,
   AEHR: c_aehr as ChainMapData,
   AEIS: c_aeis as ChainMapData,
+  AEP: c_aep as ChainMapData,
   AES: c_aes as ChainMapData,
   AFL: c_afl as ChainMapData,
   AGYS: c_agys as ChainMapData,
@@ -533,6 +538,7 @@ const available: Record<string, ChainMapData> = {
   AMAT: c_amat as ChainMapData,
   AMBA: c_amba as ChainMapData,
   AMD: c_amd as ChainMapData,
+  AMGN: c_amgn as ChainMapData,
   AMKR: c_amkr as ChainMapData,
   AMT: c_amt as ChainMapData,
   AMZN: c_amzn as ChainMapData,
@@ -591,6 +597,7 @@ const available: Record<string, ChainMapData> = {
   CAMT: c_camt as ChainMapData,
   CARG: c_carg as ChainMapData,
   CAT: c_cat as ChainMapData,
+  CCEP: c_ccep as ChainMapData,
   CCI: c_cci as ChainMapData,
   CCL: c_ccl as ChainMapData,
   CCOI: c_ccoi as ChainMapData,
@@ -628,6 +635,7 @@ const available: Record<string, ChainMapData> = {
   CRWV: c_crwv as ChainMapData,
   CSCO: c_csco as ChainMapData,
   CSX: c_csx as ChainMapData,
+  CTAS: c_ctas as ChainMapData,
   CTS: c_cts as ChainMapData,
   CVNA: c_cvna as ChainMapData,
   CVS: c_cvs as ChainMapData,

@@ -1,0 +1,88 @@
+{
+  "root": {
+    "ticker": "CCEP",
+    "name": "コカ・コーラ・ユーロパシフィック・パートナーズ",
+    "cik": 1650107,
+    "name_en": "Coca-Cola Europacific Partners plc"
+  },
+  "rows": [
+    {
+      "ja": "供給元(上流)",
+      "en": "Suppliers (upstream)",
+      "above": true
+    },
+    {
+      "ja": "提携・ブランド供給元",
+      "en": "Brand partners"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "KO",
+      "ticker": "KO",
+      "name": "コカ・コーラ",
+      "name_en": "The Coca-Cola Company",
+      "sub": "飲料ブランド",
+      "sub_en": "Beverage brands",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "コカ・コーラ社の製品を、域内で製造・販売・流通する権利を持つ主要ボトラー(ボトリング契約)",
+          "text_en": "A key bottler of Coca-Cola products, with bottling agreements to make, sell and distribute them in its territories",
+          "source": {
+            "label": "CCEP 年次報告書(2025年度)",
+            "label_en": "CCEP annual report (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1650107/000165010726000029/cce-20251231.htm",
+            "level": "official",
+            "date": "2026-03-13",
+            "quote": "The Group is a key bottler of TCCC products and has entered into bottling agreements with TCCC to make, sell and distribute products of TCCC within the Group’s territories."
+          }
+        },
+        {
+          "type": "up",
+          "text": "濃縮液の価格や支払条件などは、コカ・コーラ社が随時決める",
+          "text_en": "Prices, payment terms and other supply terms for concentrate are set by Coca-Cola from time to time",
+          "source": {
+            "label": "CCEP 年次報告書(2025年度)",
+            "label_en": "CCEP annual report (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1650107/000165010726000029/cce-20251231.htm",
+            "level": "official",
+            "date": "2026-03-13",
+            "quote": "Prices, terms of payment, and other terms and conditions of supply are determined from time to time by TCCC at its sole discretion."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MNST",
+      "ticker": "MNST",
+      "name": "モンスター・ビバレッジ",
+      "name_en": "Monster Beverage",
+      "sub": "エナジードリンク",
+      "sub_en": "Energy drinks",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "コカ・コーラ社以外で、製品を製造・販売・流通する相手の1社としてモンスターエナジーを明記",
+          "text_en": "Names Monster Energy as one of the franchisors, besides Coca-Cola, whose products it makes, sells and distributes",
+          "source": {
+            "label": "CCEP 年次報告書(2025年度)",
+            "label_en": "CCEP annual report (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1650107/000165010726000029/cce-20251231.htm",
+            "level": "official",
+            "date": "2026-03-13",
+            "quote": "primarily manufactures, sells and distributes the products of TCCC, as well as those of other franchisors, such as Monster Energy."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
