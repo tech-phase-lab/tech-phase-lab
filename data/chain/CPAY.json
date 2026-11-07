@@ -14,9 +14,16 @@
     {
       "ja": "提携・顧客",
       "en": "Partners & customers"
+    },
+    {
+      "ja": "競合(10-Kに記載)",
+      "en": "Competitors (named in 10-Ks)"
     }
   ],
-  "rivals": [],
+  "rivals": [
+    "WEX",
+    "RPAY"
+  ],
   "companies": [
     {
       "id": "MA",
@@ -102,6 +109,54 @@
         }
       ],
       "name_en": "Suhai Seguradora"
+    },
+    {
+      "id": "WEX",
+      "ticker": "WEX",
+      "name": "WEX",
+      "sub": "法人決済",
+      "sub_en": "Corporate payments",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "より専門的な同種の商品を持つ競合としてコーペイを記載",
+          "text_en": "Names Corpay as a competitor with similar, more specialized offerings",
+          "source": {
+            "label": "WEX 10-K",
+            "label_en": "WEX 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1309108/000130910826000010/wex-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "We also compete against similar, more specialized offerings from Corpay"
+          }
+        }
+      ],
+      "name_en": "WEX"
+    },
+    {
+      "id": "RPAY",
+      "ticker": "RPAY",
+      "name": "リペイ",
+      "sub": "決済処理",
+      "sub_en": "Payment processing",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "法人決済事業の主要な競合としてコーペイを記載",
+          "text_en": "Names Corpay as a primary competitor in business payments",
+          "source": {
+            "label": "Repay Holdings 10-K",
+            "label_en": "Repay Holdings 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1720592/000119312526098518/rpay-20251231.htm",
+            "level": "official",
+            "date": "2026-03-09",
+            "quote": "our primary competitors include AvidXchange, Edenred Pay (a division of Edenred), Corpay, Paya (a division of Nuvei Corporation) and Fortis"
+          }
+        }
+      ],
+      "name_en": "Repay Holdings"
     }
   ],
   "far": [],

@@ -108,6 +108,30 @@
         }
       ],
       "name_en": "Integra Healthcare Properties"
+    },
+    {
+      "id": "BKD",
+      "ticker": "BKD",
+      "name": "ブルックデール・シニアリビング",
+      "sub": "高齢者住宅",
+      "sub_en": "Senior living",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "ウェルタワーから借りていた高齢者住宅5か所(686戸)の買取契約を2024年9月に締結",
+          "text_en": "Agreed in September 2024 to buy five senior living communities (686 units) it leased from Welltower",
+          "source": {
+            "label": "Brookdale Senior Living 10-K",
+            "label_en": "Brookdale Senior Living 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1332349/000133234926000032/bkd-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "we entered into a definitive agreement to acquire five senior living communities (686 units) that were leased by us from Welltower Inc."
+          }
+        }
+      ],
+      "name_en": "Brookdale Senior Living"
     }
   ],
   "far": [],
