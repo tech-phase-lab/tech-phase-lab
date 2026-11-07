@@ -140,3 +140,84 @@ class WatchTests(unittest.TestCase):
             with patch.dict(os.environ,{'RESEARCH_API_TOKEN':configured}):handler.do_GET()
             self.assertEqual(results[-1][0],expected)
         self.assertEqual(results[-1][1]['snapshot']['period'],'FQ4 2026')
+
+
+class DiveTests(unittest.TestCase):
+    """決算の深掘り: the numbers come first, the wording after them (owner, Nov 6)."""
+    setUp = WatchTests.setUp
+    insert = WatchTests.insert
+
+    def test_numbers_are_stored_with_the_snapshot_and_the_summary_is_added_after(self):
+        self.insert(TABLE_BODY)
+        watch.run_once(self.path)
+        first = watch.feed(self.path)['snapshot']['dive']
+        self.assertIsNotNone(first['numbers'])
+        self.assertIsNone(first['summary'])           # "まとめ 準備中"
+        self.assertIsNone(first['summaryAt'])
+        self.assertEqual(watch.complete_dives(self.path), 1)
+        second = watch.feed(self.path)['snapshot']['dive']
+        self.assertIsNotNone(second['summary'])
+        self.assertTrue(second['summaryAt'])
+        self.assertEqual(watch.complete_dives(self.path), 0)  # nothing left to add; never rewritten
+        self.assertEqual(second['numbers']['revenue']['current'], 54229)
+        self.assertEqual(second['numbers']['guidance']['low'], 60000)
+        self.assertEqual(len(second['numbers']['segments']), 4)
+        self.assertIsNone(second['numbers']['epsEstimate'])  # no estimate has been read: the EPS card is not built
+
+    def test_only_the_cards_whose_figures_were_read_are_built(self):
+        self.insert(BODY)  # no segment table in this release layout
+        watch.run_once(self.path); watch.complete_dives(self.path)
+        dive = watch.feed(self.path)['snapshot']['dive']
+        self.assertIsNone(dive['numbers']['segments'])
+        self.assertNotIn('growth', dive['summary']['cards'])
+        self.assertIn('change', dive['summary']['cards'])
+        self.assertIn('next', dive['summary']['cards'])
+
+    def test_a_summary_that_cannot_be_built_stays_empty_with_the_reason(self):
+        import earnings_dive
+        self.insert(TABLE_BODY)
+        watch.run_once(self.path)
+        original = earnings_dive.summary
+        def broken(numbers): raise ValueError('dive-revenue-baseline-zero')
+        earnings_dive.summary = broken
+        try:
+            watch.complete_dives(self.path)
+        finally:
+            earnings_dive.summary = original
+        dive = watch.feed(self.path)['snapshot']['dive']
+        self.assertIsNone(dive['summary'])
+        self.assertEqual(dive['summaryReason'], 'dive-revenue-baseline-zero')
+        self.assertEqual(watch.complete_dives(self.path), 0)  # it waits for a person; it is not retried every five seconds
+
+
+class DiveWordingTests(unittest.TestCase):
+    METRICS = {'revenueMillionUSD': 54229, 'previousRevenueMillionUSD': 41456, 'adjustedGrossMarginPercent': 87.0, 'previousAdjustedGrossMarginPercent': 84.9,
+               'guidanceLowMillionUSD': 60000, 'guidanceHighMillionUSD': 63000, 'guidanceAdjustedGrossMarginPercent': 86.25,
+               'segments': {'cloud': {'revenueMillionUSD': 20000, 'previousRevenueMillionUSD': 17000, 'operatingMarginPercent': 76, 'previousOperatingMarginPercent': 78},
+                            'core': {'revenueMillionUSD': 18002, 'previousRevenueMillionUSD': 11524, 'operatingMarginPercent': 85, 'previousOperatingMarginPercent': 83}}}
+
+    def test_wording_follows_the_owners_template_and_uses_only_calculated_values(self):
+        import earnings_dive
+        s = earnings_dive.summary(earnings_dive.numbers(self.METRICS))
+        self.assertEqual(s['conclusion'][0]['ja'], '売上は前期から約3割増え、コア・データセンター部門が伸びを引っ張りました。')
+        self.assertEqual(s['conclusion'][1]['ja'], '一方で、次期の粗利益率の見通しは今回の実績を下回ります。')
+        growth = {x['key']: x['text']['ja'] for x in s['cards']['growth']['sections']}
+        self.assertIn('115.24億ドルから180.02億ドルへ、64.78億ドル増えました', growth['happened'])
+        self.assertIn('そのうちの約51%', growth['good'])
+        self.assertEqual(s['cards']['change']['headline']['ja'], '売上は前期比 +30.8%、粗利益率も上昇')
+        self.assertEqual(s['cards']['caution']['chips'][0]['text']['ja'], '部門営業利益率 −2pt')
+        self.assertIn('約10.6%の増加', s['cards']['next']['sections'][0]['text']['ja'])
+        self.assertEqual(s['cards']['change']['chips'][0]['text']['en'], 'Adj. gross margin 84.9% → 87%')
+
+    def test_no_card_for_a_missing_figure_and_no_selling_or_forecasting_words(self):
+        import json
+        import earnings_dive
+        bare = {'revenueMillionUSD': 100, 'previousRevenueMillionUSD': 80}
+        s = earnings_dive.summary(earnings_dive.numbers(bare))
+        self.assertEqual(set(s['cards']), {'change'})
+        text = json.dumps(earnings_dive.summary(earnings_dive.numbers(self.METRICS)), ensure_ascii=False)
+        for word in ('買い', '売り', 'おすすめ', '必ず', 'でしょう', 'buy', 'sell', 'will rise', 'guaranteed'):
+            self.assertNotIn(word, text, word)
+        with self.assertRaises(ValueError):
+            earnings_dive.summary(earnings_dive.numbers({'revenueMillionUSD': 100, 'previousRevenueMillionUSD': 0}))
+        self.assertIsNone(earnings_dive.numbers({'revenueMillionUSD': 100}))

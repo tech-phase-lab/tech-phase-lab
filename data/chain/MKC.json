@@ -9,6 +9,11 @@
     {
       "ja": "提携・顧客",
       "en": "Partners & customers"
+    },
+    {
+      "ja": "供給元(上流)",
+      "en": "Suppliers (upstream)",
+      "above": true
     }
   ],
   "rivals": [],
@@ -84,6 +89,30 @@
         }
       ],
       "name_en": "Grupo Herdez"
+    },
+    {
+      "id": "SLGN",
+      "ticker": "SLGN",
+      "name": "シルガン・ホールディングス",
+      "sub": "金属・プラ容器",
+      "sub_en": "Metal & plastic containers",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "特注容器事業の大口顧客としてマコーミックを記載",
+          "text_en": "Names McCormick among its largest custom-container customers",
+          "source": {
+            "label": "Silgan Holdings 10-K",
+            "label_en": "Silgan Holdings 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/849869/000162828026012202/slgn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Conagra Brands, Inc., General Mills, Inc., Kraft Heinz, Lactalis Canada Inc., Mars, Incorporated, McCormick & Company, Incorporated"
+          }
+        }
+      ],
+      "name_en": "Silgan Holdings"
     }
   ],
   "far": [],

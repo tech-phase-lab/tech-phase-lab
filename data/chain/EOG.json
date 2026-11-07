@@ -9,6 +9,11 @@
     {
       "ja": "提携・顧客",
       "en": "Partners & customers"
+    },
+    {
+      "ja": "供給元(上流)",
+      "en": "Suppliers (upstream)",
+      "above": true
     }
   ],
   "rivals": [],
@@ -108,6 +113,30 @@
         }
       ],
       "name_en": "Bapco Energies"
+    },
+    {
+      "id": "DTI",
+      "ticker": "DTI",
+      "name": "ドリリング・ツールズ・インターナショナル",
+      "sub": "掘削ツール",
+      "sub_en": "Drilling tools",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "顧客としてEOGを記載",
+          "text_en": "Names EOG among its customers",
+          "source": {
+            "label": "Drilling Tools International 10-K",
+            "label_en": "Drilling Tools International 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1884516/000119312526095973/dti-20251231.htm",
+            "level": "official",
+            "date": "2026-03-06",
+            "quote": "many of our customers, including Baker Hughes Company, EOG Resources Inc., Occidental Petroleum Corporation and SLB"
+          }
+        }
+      ],
+      "name_en": "Drilling Tools International"
     }
   ],
   "far": [],

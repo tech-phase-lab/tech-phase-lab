@@ -9,6 +9,10 @@
     {
       "ja": "提携・顧客",
       "en": "Partners & customers"
+    },
+    {
+      "ja": "競合(10-Kに記載)",
+      "en": "Competitors (named in 10-Ks)"
     }
   ],
   "rivals": [
@@ -97,6 +101,19 @@
             "level": "official",
             "date": "2026-02-12",
             "quote": "In the U.S., our cash equities markets 9 compete with exchanges operated by Cboe, ICE, MIAX, the TXSE Group , The Investors Exchange, MEMX and Long Term Stock Exchange."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "インターコンチネンタル取引所が、10-Kでナスダックを競合の1社として挙げている",
+          "text_en": "Intercontinental Exchange names Nasdaq as a competitor in its 10-K",
+          "source": {
+            "label": "Intercontinental Exchange 10-K",
+            "label_en": "Intercontinental Exchange 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1571949/000157194926000004/ice-20251231.htm",
+            "level": "official",
+            "date": "2026-02-05",
+            "quote": "Nasdaq, Inc., or Nasdaq, and Cboe Global Markets, Inc., or Cboe"
           }
         }
       ],

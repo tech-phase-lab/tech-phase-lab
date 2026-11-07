@@ -77,6 +77,19 @@
             "date": "2026-02-20",
             "quote": "Essential Health . Church & Dwight, Colgate-Palmolive, Haleon, Kimberly-Clark, Procter & Gamble, and private-label brands"
           }
+        },
+        {
+          "type": "rival",
+          "text": "キンバリークラークと競合する",
+          "text_en": "Competes with Kimberly-Clark",
+          "source": {
+            "label": "Kenvue 10-K",
+            "label_en": "Kenvue 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1944048/000194404826000030/kvue-20251228.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "Church & Dwight, Colgate-Palmolive, Haleon, Kimberly-Clark, Procter & Gamble, and private-label brands"
+          }
         }
       ],
       "name_en": "Kimberly-Clark"
@@ -101,6 +114,19 @@
             "date": "2026-02-20",
             "quote": "Self Care. Haleon, Procter & Gamble, Reckitt Benckiser Group, and private-label brands"
           }
+        },
+        {
+          "type": "rival",
+          "text": "P&Gと競合する",
+          "text_en": "Competes with Procter & Gamble",
+          "source": {
+            "label": "Kenvue 10-K",
+            "label_en": "Kenvue 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1944048/000194404826000030/kvue-20251228.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "Church & Dwight, Colgate-Palmolive, Haleon, Kimberly-Clark, Procter & Gamble, and private-label brands"
+          }
         }
       ],
       "name_en": "Procter & Gamble"
@@ -124,6 +150,19 @@
             "level": "official",
             "date": "2026-02-20",
             "quote": "Self Care. Haleon, Procter & Gamble, Reckitt Benckiser Group, and private-label brands"
+          }
+        },
+        {
+          "type": "rival",
+          "text": "ヘイリオンと競合する",
+          "text_en": "Competes with Haleon",
+          "source": {
+            "label": "Kenvue 10-K",
+            "label_en": "Kenvue 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1944048/000194404826000030/kvue-20251228.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "Church & Dwight, Colgate-Palmolive, Haleon, Kimberly-Clark, Procter & Gamble, and private-label brands"
           }
         }
       ],
@@ -221,6 +260,19 @@
             "date": "2026-02-20",
             "quote": "Essential Health . Church & Dwight, Colgate-Palmolive, Haleon, Kimberly-Clark, Procter & Gamble, and private-label brands"
           }
+        },
+        {
+          "type": "rival",
+          "text": "チャーチ・アンド・ドワイトと競合する",
+          "text_en": "Competes with Church & Dwight",
+          "source": {
+            "label": "Kenvue 10-K",
+            "label_en": "Kenvue 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1944048/000194404826000030/kvue-20251228.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "Church & Dwight, Colgate-Palmolive, Haleon, Kimberly-Clark, Procter & Gamble, and private-label brands"
+          }
         }
       ],
       "name_en": "Church & Dwight"
@@ -244,6 +296,19 @@
             "level": "official",
             "date": "2026-02-20",
             "quote": "Essential Health . Church & Dwight, Colgate-Palmolive, Haleon, Kimberly-Clark, Procter & Gamble, and private-label brands"
+          }
+        },
+        {
+          "type": "rival",
+          "text": "コルゲート・パーモリブと競合する",
+          "text_en": "Competes with Colgate-Palmolive",
+          "source": {
+            "label": "Kenvue 10-K",
+            "label_en": "Kenvue 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1944048/000194404826000030/kvue-20251228.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "Church & Dwight, Colgate-Palmolive, Haleon, Kimberly-Clark, Procter & Gamble, and private-label brands"
           }
         }
       ],

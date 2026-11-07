@@ -165,6 +165,19 @@
             "date": "2026-02-26",
             "quote": "Our competitors include, among other entities, exchanges such as Intercontinental Exchange, Inc. (ICE), Cboe Global Markets (Cboe), Euronext N.V., the Hong Kong Exchanges and Clearing Limited (HKEX), and Deutsche Börse AG."
           }
+        },
+        {
+          "type": "rival",
+          "text": "インターコンチネンタル取引所と競合する",
+          "text_en": "Competes with Intercontinental Exchange",
+          "source": {
+            "label": "CME Group 10-K",
+            "label_en": "CME Group 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1156375/000115637526000009/cme-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Our competitors include, among other entities, exchanges such as Intercontinental Exchange, Inc."
+          }
         }
       ],
       "name_en": "Intercontinental Exchange"

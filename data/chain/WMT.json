@@ -21,7 +21,8 @@
   ],
   "rivals": [
     "COST",
-    "ROKU"
+    "ROKU",
+    "DG"
   ],
   "companies": [
     {
@@ -306,6 +307,30 @@
         }
       ],
       "name_en": "Costco"
+    },
+    {
+      "id": "DG",
+      "ticker": "DG",
+      "name": "ダラー・ジェネラル",
+      "sub": "小売",
+      "sub_en": "Retail",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ダラー・ジェネラルが、10-Kでウォルマートを競合の1社として挙げている",
+          "text_en": "Dollar General names Walmart as a competitor in its 10-K",
+          "source": {
+            "label": "Dollar General 10-K",
+            "label_en": "Dollar General 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/29534/000110465926032325/dg-20260130x10k.htm",
+            "level": "official",
+            "date": "2026-03-20",
+            "quote": "Our primary direct competitors are Walmart, Family Dollar and Dollar Tree."
+          }
+        }
+      ],
+      "name_en": "Dollar General"
     }
   ],
   "far": [],

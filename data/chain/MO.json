@@ -9,10 +9,20 @@
     {
       "ja": "提携・顧客",
       "en": "Partners & customers"
+    },
+    {
+      "ja": "競合(10-Kに記載)",
+      "en": "Competitors (named in 10-Ks)"
+    },
+    {
+      "ja": "供給元(上流)",
+      "en": "Suppliers (upstream)",
+      "above": true
     }
   ],
   "rivals": [
-    "PM"
+    "PM",
+    "TPB"
   ],
   "companies": [
     {
@@ -58,6 +68,19 @@
             "level": "official",
             "date": "2026-02-25",
             "quote": "In April 2024, we assigned the exclusive U.S. commercialization rights to the IQOS Tobacco Heating System (“ IQOS System”) to Philip Morris International Inc. (“PMI”) pursuant to the terms of a purchase agreement entered into with PMI in October 2022"
+          }
+        },
+        {
+          "type": "rival",
+          "text": "フィリップ モリス インターナショナルが、10-Kでアルトリアを競合の1社として挙げている",
+          "text_en": "Philip Morris International names Altria as a competitor in its 10-K",
+          "source": {
+            "label": "Philip Morris International 10-K",
+            "label_en": "Philip Morris International 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1413329/000162828026005939/pm-20251231.htm",
+            "level": "official",
+            "date": "2026-02-06",
+            "quote": "Competitors in our industry include Altria Group, Inc., British American Tobacco plc, Japan Tobacco Inc., Imperial Brands plc"
           }
         }
       ],
@@ -110,6 +133,102 @@
         }
       ],
       "name_en": "Cronos Group"
+    },
+    {
+      "id": "DIT",
+      "ticker": "DIT",
+      "name": "AMCONディストリビューティング",
+      "sub": "食品・たばこ卸",
+      "sub_en": "Convenience wholesale",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "主要な仕入先としてアルトリアを記載する卸売会社",
+          "text_en": "Wholesaler that names Altria among its principal suppliers",
+          "source": {
+            "label": "AMCON Distributing 10-K",
+            "label_en": "AMCON Distributing 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/928465/000110465925108504/dit-20250930x10k.htm",
+            "level": "official",
+            "date": "2025-11-07",
+            "quote": "Our principal suppliers include Altria, RJ Reynolds, ITG Brands, Hershey, Kellanova, Kraft Heinz, and Mars Wrigley, General Mills, Procter and Gamble, Ferrero"
+          }
+        }
+      ],
+      "name_en": "AMCON Distributing"
+    },
+    {
+      "id": "UVV",
+      "ticker": "UVV",
+      "name": "ユニバーサル",
+      "sub": "たばこ葉",
+      "sub_en": "Leaf tobacco",
+      "row": 2,
+      "relations": [
+        {
+          "type": "up",
+          "text": "たばこ葉の最大顧客6社の1社としてアルトリアを記載",
+          "text_en": "Names Altria among its six largest leaf-tobacco customers",
+          "source": {
+            "label": "Universal Corporation 10-K",
+            "label_en": "Universal Corporation 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/102037/000162828026039511/uvv-20260331.htm",
+            "level": "official",
+            "date": "2026-06-01",
+            "quote": "The Company’s six largest customers are Altria Group, Inc., British American Tobacco plc, China Tobacco International, Inc., Imperial Brands plc, Japan Tobacco, Inc., and Philip Morris International Inc."
+          }
+        }
+      ],
+      "name_en": "Universal Corporation"
+    },
+    {
+      "id": "PFGC",
+      "ticker": "PFGC",
+      "name": "パフォーマンス・フード・グループ",
+      "sub": "外食・小売向け卸",
+      "sub_en": "Foodservice distribution",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "主要な仕入先としてアルトリアを記載する食品卸",
+          "text_en": "Foodservice distributor that names Altria as a significant supplier",
+          "source": {
+            "label": "Performance Food Group 10-K",
+            "label_en": "Performance Food Group 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1618673/000119312526346886/pfgc-20260627.htm",
+            "level": "official",
+            "date": "2026-08-12",
+            "quote": "The Company’s significant suppliers include Altria Group, Inc."
+          }
+        }
+      ],
+      "name_en": "Performance Food Group"
+    },
+    {
+      "id": "TPB",
+      "ticker": "TPB",
+      "name": "ターニング・ポイント・ブランズ",
+      "sub": "たばこ・喫煙具",
+      "sub_en": "Tobacco & smoking accessories",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "大手たばこの競合としてアルトリアを記載",
+          "text_en": "Names Altria among the “big tobacco” companies it competes against",
+          "source": {
+            "label": "Turning Point Brands 10-K",
+            "label_en": "Turning Point Brands 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1290677/000143774926006405/tpb20251231_10k.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "We compete against “big tobacco,” including Altria Group, Inc.;"
+          }
+        }
+      ],
+      "name_en": "Turning Point Brands"
     }
   ],
   "far": [],

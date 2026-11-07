@@ -9,6 +9,10 @@
     {
       "ja": "提携・顧客",
       "en": "Partners & customers"
+    },
+    {
+      "ja": "競合(10-Kに記載)",
+      "en": "Competitors (named in 10-Ks)"
     }
   ],
   "rivals": [
@@ -110,6 +114,32 @@
             "date": "2026-02-03",
             "quote": "Other beverage and convenient food competitors include, but are not limited to, The Campbell’s Company, Conagra Brands, Inc., Hormel Foods Corporation, Keurig Dr Pepper Inc., The Kraft Heinz Company, Link Snacks, Inc., Mars, Incorporated, Mondelēz International, Inc., Monster Beverage Corporation, Nestlé S.A., Primo Brands Corporation, Red Bull GmbH and Utz Brands, Inc."
           }
+        },
+        {
+          "type": "rival",
+          "text": "キューリグ・ドクターペッパーと競合する",
+          "text_en": "Competes with Keurig Dr Pepper",
+          "source": {
+            "label": "PepsiCo 10-K",
+            "label_en": "PepsiCo 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/77476/000007747626000007/pep-20251227.htm",
+            "level": "official",
+            "date": "2026-02-03",
+            "quote": "Other beverage and convenient food competitors include, but are not limited to, The Campbell’s Company, Conagra Brands, Inc., Hormel Foods Corporation, Keurig Dr Pepper Inc., The Kraft Heinz Company"
+          }
+        },
+        {
+          "type": "rival",
+          "text": "キューリグ・ドクターペッパーが、10-Kでペプシコを競合の1社として挙げている",
+          "text_en": "Keurig Dr Pepper names PepsiCo as a competitor in its 10-K",
+          "source": {
+            "label": "Keurig Dr Pepper 10-K",
+            "label_en": "Keurig Dr Pepper 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1418135/000141813526000016/kdp-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Our primary competitors include Coca-Cola, PepsiCo, Starbucks Corporation"
+          }
         }
       ],
       "name_en": "Keurig Dr Pepper"
@@ -133,6 +163,19 @@
             "level": "official",
             "date": "2026-02-03",
             "quote": "Other beverage and convenient food competitors include, but are not limited to, The Campbell’s Company, Conagra Brands, Inc., Hormel Foods Corporation, Keurig Dr Pepper Inc., The Kraft Heinz Company, Link Snacks, Inc., Mars, Incorporated, Mondelēz International, Inc., Monster Beverage Corporation, Nestlé S.A., Primo Brands Corporation, Red Bull GmbH and Utz Brands, Inc."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "モンデリーズと競合する",
+          "text_en": "Competes with Mondelez",
+          "source": {
+            "label": "PepsiCo 10-K",
+            "label_en": "PepsiCo 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/77476/000007747626000007/pep-20251227.htm",
+            "level": "official",
+            "date": "2026-02-03",
+            "quote": "Mondelēz International, Inc., Monster Beverage Corporation, Nestlé S.A."
           }
         }
       ],
@@ -158,6 +201,19 @@
             "date": "2026-02-03",
             "quote": "Other beverage and convenient food competitors include, but are not limited to, The Campbell’s Company, Conagra Brands, Inc., Hormel Foods Corporation, Keurig Dr Pepper Inc., The Kraft Heinz Company, Link Snacks, Inc., Mars, Incorporated, Mondelēz International, Inc., Monster Beverage Corporation, Nestlé S.A., Primo Brands Corporation, Red Bull GmbH and Utz Brands, Inc."
           }
+        },
+        {
+          "type": "rival",
+          "text": "モンスター・ビバレッジと競合する",
+          "text_en": "Competes with Monster Beverage",
+          "source": {
+            "label": "PepsiCo 10-K",
+            "label_en": "PepsiCo 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/77476/000007747626000007/pep-20251227.htm",
+            "level": "official",
+            "date": "2026-02-03",
+            "quote": "Mondelēz International, Inc., Monster Beverage Corporation, Nestlé S.A."
+          }
         }
       ],
       "name_en": "Monster Beverage"
@@ -182,9 +238,118 @@
             "date": "2026-02-03",
             "quote": "Other beverage and convenient food competitors include, but are not limited to, The Campbell’s Company, Conagra Brands, Inc., Hormel Foods Corporation, Keurig Dr Pepper Inc., The Kraft Heinz Company, Link Snacks, Inc., Mars, Incorporated, Mondelēz International, Inc., Monster Beverage Corporation, Nestlé S.A., Primo Brands Corporation, Red Bull GmbH and Utz Brands, Inc."
           }
+        },
+        {
+          "type": "rival",
+          "text": "クラフト・ハインツと競合する",
+          "text_en": "Competes with Kraft Heinz",
+          "source": {
+            "label": "PepsiCo 10-K",
+            "label_en": "PepsiCo 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/77476/000007747626000007/pep-20251227.htm",
+            "level": "official",
+            "date": "2026-02-03",
+            "quote": "Other beverage and convenient food competitors include, but are not limited to, The Campbell’s Company, Conagra Brands, Inc., Hormel Foods Corporation, Keurig Dr Pepper Inc., The Kraft Heinz Company"
+          }
         }
       ],
       "name_en": "Kraft Heinz"
+    },
+    {
+      "id": "CPB",
+      "ticker": "CPB",
+      "name": "キャンベル",
+      "sub": "加工食品",
+      "sub_en": "Packaged food",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "キャンベルと競合する",
+          "text_en": "Competes with Campbell’s",
+          "source": {
+            "label": "PepsiCo 10-K",
+            "label_en": "PepsiCo 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/77476/000007747626000007/pep-20251227.htm",
+            "level": "official",
+            "date": "2026-02-03",
+            "quote": "Other beverage and convenient food competitors include, but are not limited to, The Campbell’s Company, Conagra Brands, Inc., Hormel Foods Corporation, Keurig Dr Pepper Inc., The Kraft Heinz Company"
+          }
+        }
+      ],
+      "name_en": "Campbell’s"
+    },
+    {
+      "id": "CAG",
+      "ticker": "CAG",
+      "name": "コナグラ・ブランズ",
+      "sub": "加工食品",
+      "sub_en": "Packaged food",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "コナグラ・ブランズと競合する",
+          "text_en": "Competes with Conagra Brands",
+          "source": {
+            "label": "PepsiCo 10-K",
+            "label_en": "PepsiCo 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/77476/000007747626000007/pep-20251227.htm",
+            "level": "official",
+            "date": "2026-02-03",
+            "quote": "Other beverage and convenient food competitors include, but are not limited to, The Campbell’s Company, Conagra Brands, Inc., Hormel Foods Corporation, Keurig Dr Pepper Inc., The Kraft Heinz Company"
+          }
+        }
+      ],
+      "name_en": "Conagra Brands"
+    },
+    {
+      "id": "HRL",
+      "ticker": "HRL",
+      "name": "ホーメル・フーズ",
+      "sub": "食肉・食品",
+      "sub_en": "Meat & food",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ホーメル・フーズと競合する",
+          "text_en": "Competes with Hormel Foods",
+          "source": {
+            "label": "PepsiCo 10-K",
+            "label_en": "PepsiCo 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/77476/000007747626000007/pep-20251227.htm",
+            "level": "official",
+            "date": "2026-02-03",
+            "quote": "Other beverage and convenient food competitors include, but are not limited to, The Campbell’s Company, Conagra Brands, Inc., Hormel Foods Corporation, Keurig Dr Pepper Inc., The Kraft Heinz Company"
+          }
+        }
+      ],
+      "name_en": "Hormel Foods"
+    },
+    {
+      "id": "NSRGY",
+      "ticker": "NSRGY",
+      "name": "ネスレ",
+      "sub": "食品・飲料",
+      "sub_en": "Food & beverages",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ネスレと競合する",
+          "text_en": "Competes with Nestlé",
+          "source": {
+            "label": "PepsiCo 10-K",
+            "label_en": "PepsiCo 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/77476/000007747626000007/pep-20251227.htm",
+            "level": "official",
+            "date": "2026-02-03",
+            "quote": "Mondelēz International, Inc., Monster Beverage Corporation, Nestlé S.A."
+          }
+        }
+      ],
+      "name_en": "Nestlé"
     }
   ],
   "far": [],

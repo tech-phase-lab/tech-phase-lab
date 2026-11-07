@@ -1,0 +1,112 @@
+{
+  "root": {
+    "ticker": "AEP",
+    "name": "アメリカン・エレクトリック・パワー",
+    "cik": 4904,
+    "name_en": "American Electric Power Company, Inc."
+  },
+  "rows": [
+    {
+      "ja": "機器の供給元(上流)",
+      "en": "Equipment suppliers (upstream)",
+      "above": true
+    },
+    {
+      "ja": "送電事業の共同出資先",
+      "en": "Transmission joint-venture partners"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "BE",
+      "ticker": "BE",
+      "name": "ブルーム・エナジー",
+      "name_en": "Bloom Energy",
+      "sub": "燃料電池",
+      "sub_en": "Fuel cells",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "2024年10〜12月に、固体酸化物形燃料電池100MW分の購入契約をAEPの開発子会社が締結",
+          "text_en": "AEP’s development subsidiary signed a purchase agreement in Q4 2024 for 100 MW of solid oxide fuel cells",
+          "source": {
+            "label": "AEP 10-K(2025年度)",
+            "label_en": "AEP 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/4904/000000490426000013/aep-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "Devco executed a purchase agreement with Bloom Energy, acquiring 100 MWs of solid oxide fuel cells."
+          }
+        }
+      ]
+    },
+    {
+      "id": "D",
+      "ticker": "D",
+      "name": "ドミニオン・エナジー",
+      "name_en": "Dominion Energy",
+      "sub": "電力",
+      "sub_en": "Electric utility",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "送電会社バレーリンクを、ドミニオンの関連会社などと2024年に設立(AEPの持分31.14%)",
+          "text_en": "Valley Link transmission company was formed in 2024 with Dominion affiliates and others (AEP owns 31.14%)",
+          "source": {
+            "label": "AEP 10-K(2025年度)",
+            "label_en": "AEP 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/4904/000000490426000013/aep-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "Valley Link Transmission Company, LLC, a holding company formed by Transource Energy, affiliates of Dominion Energy and FirstEnergy in 2024, which is 31.14% owned by AEP."
+          }
+        }
+      ]
+    },
+    {
+      "id": "FE",
+      "ticker": "FE",
+      "name": "ファーストエナジー",
+      "name_en": "FirstEnergy",
+      "sub": "電力",
+      "sub_en": "Electric utility",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "送電会社バレーリンクをファーストエナジーの関連会社などと2024年に設立(AEPの持分31.14%)",
+          "text_en": "Valley Link transmission company was formed in 2024 with FirstEnergy affiliates and others (AEP owns 31.14%)",
+          "source": {
+            "label": "AEP 10-K(2025年度)",
+            "label_en": "AEP 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/4904/000000490426000013/aep-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "Valley Link Transmission Company, LLC, a holding company formed by Transource Energy, affiliates of Dominion Energy and FirstEnergy in 2024, which is 31.14% owned by AEP."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "西バージニア州の送電会社PATH-WVは、ファーストエナジーとAEPが50%ずつ出資",
+          "text_en": "PATH-WV, a West Virginia transmission company, is owned 50% by FirstEnergy and 50% by AEP",
+          "source": {
+            "label": "AEP 10-K(2025年度)",
+            "label_en": "AEP 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/4904/000000490426000013/aep-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "PATH West Virginia Transmission Company, LLC, a joint venture-owned 50% by FirstEnergy and 50% by AEP."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

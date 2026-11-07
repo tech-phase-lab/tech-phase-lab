@@ -11,7 +11,7 @@ export function useWatchEarnings(){
   let expiry:ReturnType<typeof setTimeout>|undefined;
   const poller=createNewsPoller<WatchEarningsFeed>({
    load:async signal=>{const r=await fetch('/api/research/watch-earnings',{cache:'no-store',signal});if(!r.ok)throw Error('Unavailable');const v=await r.json();if(v.ok!==true)throw Error('Invalid feed');return v;},
-   onSuccess:value=>{setFeed(value);setFailed(false);clearTimeout(expiry);if(value.accessExpiresAt>0)expiry=setTimeout(()=>setFeed(old=>old?{...old,snapshot:old.snapshot?{...old.snapshot,cards:null}:null}:old),Math.max(0,value.accessExpiresAt-Date.now()));},
+   onSuccess:value=>{setFeed(value);setFailed(false);clearTimeout(expiry);if(value.accessExpiresAt>0)expiry=setTimeout(()=>setFeed(old=>old?{...old,snapshot:old.snapshot?{...old.snapshot,cards:null,dive:null}:null,accessExpiresAt:0,history:undefined}:old),Math.max(0,value.accessExpiresAt-Date.now()));},
    onFailure:()=>{setFailed(true);},
   });
   poller.start(0);const stop=observePageActivity(()=>poller.resume(),()=>poller.pause());
@@ -21,5 +21,5 @@ export function useWatchEarnings(){
  useEffect(()=>{if(!revision)return;const frame=requestAnimationFrame(()=>setSeen(old=>old?.revision===revision?old:{revision,at:new Date().toISOString()}));return()=>cancelAnimationFrame(frame);},[revision]);
  // The bundled baseline is FQ4 2026. Older backfills must never replace it.
  const live=feed?.snapshot&&feed.snapshot.periodOrder>=2026*4+4?feed.snapshot:null;
- return {live,failed,status:feed?.status,observedAt:seen?.revision===live?.revision?seen?.at:null};
+ return {live,failed,status:feed?.status,observedAt:seen?.revision===live?.revision?seen?.at:null,unlocked:(feed?.accessExpiresAt??0)>0,history:feed?.history};
 }

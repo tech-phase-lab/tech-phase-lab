@@ -1,5 +1,6 @@
 import { getMembership } from '@/lib/membership/server';
 import { watchEarningsPayload } from '@/lib/research/watch-earnings';
+import { barsBefore, loadRevenueHistory } from '@/lib/research/earnings-history';
 export const runtime='nodejs';
 export const dynamic='force-dynamic';
 const headers={'Cache-Control':'private, no-store','Vary':'Cookie','X-Content-Type-Options':'nosniff'};
@@ -13,6 +14,13 @@ export async function GET(){
   const [response,member]=await Promise.all([fetch(url,{headers:{Authorization:`Bearer ${token}`},cache:'no-store',signal:AbortSignal.timeout(8000)}),getMembership().catch(()=>({status:'unavailable',plan:'free'}))]);
   if(!response.ok)throw Error('Unavailable');
   const body=await response.text();if(new TextEncoder().encode(body).length>100_000)throw Error('Oversized payload');
-  return Response.json(watchEarningsPayload(JSON.parse(body),member),{headers});
+  const payload=watchEarningsPayload(JSON.parse(body),member);
+  // The chart's earlier bars come from the SEC (PRO only); a failure just leaves the chart out.
+  const period=/^FQ([1-4]) (20\d{2})$/.exec(payload.snapshot?.period??'');
+  if(payload.accessExpiresAt>0&&payload.snapshot?.dive?.numbers&&period){
+   const history=barsBefore(await loadRevenueHistory(payload.snapshot.ticker),Number(period[2]),Number(period[1])).map(q=>({label:q.label,end:q.end,value:q.value}));
+   if(history.length>=3)return Response.json({...payload,history},{headers});
+  }
+  return Response.json(payload,{headers});
  }catch{return Response.json({ok:false},{status:503,headers});}
 }

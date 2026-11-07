@@ -9,6 +9,10 @@
     {
       "ja": "提携・顧客",
       "en": "Partners & customers"
+    },
+    {
+      "ja": "競合(10-Kに記載)",
+      "en": "Competitors (named in 10-Ks)"
     }
   ],
   "rivals": [
@@ -76,6 +80,19 @@
             "date": "2026-02-24",
             "quote": "In many countries outside the U.S., Canada, and Mexico, the manufacturing and distribution rights to many of our CSD brands, including our Dr Pepper trademark and formula, are owned by third parties, including, in certain cases, competitors such as Coca-Cola."
           }
+        },
+        {
+          "type": "rival",
+          "text": "コカ・コーラと競合する",
+          "text_en": "Competes with Coca-Cola",
+          "source": {
+            "label": "Keurig Dr Pepper 10-K",
+            "label_en": "Keurig Dr Pepper 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1418135/000141813526000016/kdp-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Our primary competitors include Coca-Cola, PepsiCo, Starbucks Corporation"
+          }
         }
       ],
       "name_en": "Coca-Cola"
@@ -99,6 +116,32 @@
             "level": "official",
             "date": "2026-02-24",
             "quote": "Our primary competitors include Coca-Cola, PepsiCo, Starbucks Corporation, The J.M. Smucker Company, The Kraft Heinz Company, and Nestlé S.A."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "ペプシコが、10-Kでキューリグ・ドクターペッパーを競合の1社として挙げている",
+          "text_en": "PepsiCo names Keurig Dr Pepper as a competitor in its 10-K",
+          "source": {
+            "label": "PepsiCo 10-K",
+            "label_en": "PepsiCo 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/77476/000007747626000007/pep-20251227.htm",
+            "level": "official",
+            "date": "2026-02-03",
+            "quote": "Other beverage and convenient food competitors include, but are not limited to, The Campbell’s Company, Conagra Brands, Inc., Hormel Foods Corporation, Keurig Dr Pepper Inc., The Kraft Heinz Company"
+          }
+        },
+        {
+          "type": "rival",
+          "text": "ペプシコと競合する",
+          "text_en": "Competes with PepsiCo",
+          "source": {
+            "label": "Keurig Dr Pepper 10-K",
+            "label_en": "Keurig Dr Pepper 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1418135/000141813526000016/kdp-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Our primary competitors include Coca-Cola, PepsiCo, Starbucks Corporation"
           }
         }
       ],
@@ -136,6 +179,19 @@
             "level": "official",
             "date": "2026-02-24",
             "quote": "Our primary competitors include Coca-Cola, PepsiCo, Starbucks Corporation, The J.M. Smucker Company, The Kraft Heinz Company, and Nestlé S.A."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "スターバックスと競合する",
+          "text_en": "Competes with Starbucks",
+          "source": {
+            "label": "Keurig Dr Pepper 10-K",
+            "label_en": "Keurig Dr Pepper 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1418135/000141813526000016/kdp-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "Our primary competitors include Coca-Cola, PepsiCo, Starbucks Corporation"
           }
         }
       ],

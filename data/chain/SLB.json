@@ -9,9 +9,21 @@
     {
       "ja": "提携・顧客",
       "en": "Partners & customers"
+    },
+    {
+      "ja": "競合(10-Kに記載)",
+      "en": "Competitors (named in 10-Ks)"
+    },
+    {
+      "ja": "供給元(上流)",
+      "en": "Suppliers (upstream)",
+      "above": true
     }
   ],
-  "rivals": [],
+  "rivals": [
+    "BKR",
+    "WFRD"
+  ],
   "companies": [
     {
       "id": "AKER",
@@ -84,6 +96,126 @@
         }
       ],
       "name_en": "Aker Carbon Capture"
+    },
+    {
+      "id": "BKR",
+      "ticker": "BKR",
+      "name": "ベーカー・ヒューズ",
+      "sub": "油田サービス",
+      "sub_en": "Oilfield services",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ベーカー・ヒューズが、10-KでSLBを競合の1社として挙げている",
+          "text_en": "Baker Hughes names SLB as a competitor in its 10-K",
+          "source": {
+            "label": "Baker Hughes 10-K",
+            "label_en": "Baker Hughes 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1701605/000170160526000007/bkr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-05",
+            "quote": "OFSE competitors include SLB, Halliburton, NOV, Weatherford, and TechnipFMC."
+          }
+        }
+      ],
+      "name_en": "Baker Hughes"
+    },
+    {
+      "id": "WFRD",
+      "ticker": "WFRD",
+      "name": "ウェザーフォード",
+      "sub": "油田サービス",
+      "sub_en": "Oilfield services",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主要な競合としてSLBを記載",
+          "text_en": "Names SLB as a principal competitor",
+          "source": {
+            "label": "Weatherford International 10-K",
+            "label_en": "Weatherford International 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1603923/000160392326000014/wfrd-20251231.htm",
+            "level": "official",
+            "date": "2026-02-04",
+            "quote": "Our principal competitors include SLB, Halliburton, Baker Hughes and Expro Group Holdings."
+          }
+        }
+      ],
+      "name_en": "Weatherford International"
+    },
+    {
+      "id": "ORA",
+      "ticker": "ORA",
+      "name": "オーマット・テクノロジーズ",
+      "sub": "地熱発電",
+      "sub_en": "Geothermal power",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "研究開発の取り組みとして、SLBおよびSageとの協業を記載",
+          "text_en": "Describes its R&D collaboration with SLB and Sage",
+          "source": {
+            "label": "Ormat Technologies 10-K",
+            "label_en": "Ormat Technologies 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1296445/000129644526000006/ora-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "including our collaboration with SLB and Sage"
+          }
+        }
+      ],
+      "name_en": "Ormat Technologies"
+    },
+    {
+      "id": "HLX",
+      "ticker": "HLX",
+      "name": "ヘリックス・エナジー・ソリューションズ",
+      "sub": "海洋油田サービス",
+      "sub_en": "Offshore well services",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "SLBと共同で、15K IRSとROAMを開発",
+          "text_en": "Jointly developed a 15K IRS and the ROAM with SLB",
+          "source": {
+            "label": "Helix Energy Solutions 10-K",
+            "label_en": "Helix Energy Solutions 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/866829/000086682926000008/hlx-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Through our collaboration, we and SLB jointly developed a 15K IRS and the ROAM."
+          }
+        }
+      ],
+      "name_en": "Helix Energy Solutions"
+    },
+    {
+      "id": "DTI",
+      "ticker": "DTI",
+      "name": "ドリリング・ツールズ・インターナショナル",
+      "sub": "掘削ツール",
+      "sub_en": "Drilling tools",
+      "row": 2,
+      "relations": [
+        {
+          "type": "up",
+          "text": "顧客としてSLBを記載",
+          "text_en": "Names SLB among its customers",
+          "source": {
+            "label": "Drilling Tools International 10-K",
+            "label_en": "Drilling Tools International 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1884516/000119312526095973/dti-20251231.htm",
+            "level": "official",
+            "date": "2026-03-06",
+            "quote": "many of our customers, including Baker Hughes Company, EOG Resources Inc., Occidental Petroleum Corporation and SLB"
+          }
+        }
+      ],
+      "name_en": "Drilling Tools International"
     }
   ],
   "far": [],

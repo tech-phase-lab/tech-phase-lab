@@ -46,6 +46,19 @@
             "date": "2026-02-25",
             "quote": "DGD is party to a raw material supply agreement with Darling under which Darling is obligated to offer to DGD a portion of its feedstock requirements at market pricing, but DGD is not obligated to purchase all or any part of its feedstock from Darling."
           }
+        },
+        {
+          "type": "tie",
+          "text": "再生燃料会社ダイヤモンド・グリーン・ディーゼルを、バレロと共同で運営",
+          "text_en": "Runs the renewable fuel producer Diamond Green Diesel in partnership with Valero",
+          "source": {
+            "label": "Darling Ingredients 10-K",
+            "label_en": "Darling Ingredients 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/916540/000091654026000008/dar-20260103.htm",
+            "level": "official",
+            "date": "2026-03-03",
+            "quote": "Darling is a partner with Valero Energy Corporation in Diamond Green Diesel, a renewable fuel producer"
+          }
         }
       ],
       "name_en": "Darling Ingredients Inc."
@@ -97,6 +110,54 @@
         }
       ],
       "name_en": "Explorer Pipeline"
+    },
+    {
+      "id": "SUN",
+      "ticker": "SUN",
+      "name": "サノコ",
+      "sub": "燃料卸売",
+      "sub_en": "Fuel distribution",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "最大の仕入先(ブランド燃料)の1社としてバレロを記載",
+          "text_en": "Names Valero among its largest branded fuel suppliers",
+          "source": {
+            "label": "Sunoco 10-K",
+            "label_en": "Sunoco 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/2089661/000208966126000016/sunc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Our largest branded fuel suppliers in terms of volume are Chevron, Exxon, Phillips 66 and Valero."
+          }
+        }
+      ],
+      "name_en": "Sunoco"
+    },
+    {
+      "id": "CAPL",
+      "ticker": "CAPL",
+      "name": "クロスアメリカ・パートナーズ",
+      "sub": "燃料卸売",
+      "sub_en": "Fuel distribution",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "バレロなどのブランド燃料を流通",
+          "text_en": "Distributes branded fuel from Valero and others",
+          "source": {
+            "label": "CrossAmerica Partners 10-K",
+            "label_en": "CrossAmerica Partners 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1538849/000119312526071870/capl-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "We distribute branded motor fuel under the Exxon, Mobil, BP, Shell, Marathon, Valero and Phillips 66 brands to our customers."
+          }
+        }
+      ],
+      "name_en": "CrossAmerica Partners"
     }
   ],
   "far": [],

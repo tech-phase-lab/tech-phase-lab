@@ -7,7 +7,8 @@ const months = ["january", "february", "march", "april", "may", "june", "july", 
 export function mergeEconomicResults(updates: OfficialUpdate[] = [], briefs: ResultBrief[] = [], events: EventResult[] = []) {
   const results = new Map(economicResults.map(event => [event.id, event]));
   // Big events read automatically from at least two outlets; they replace a hand-written row of the same id.
-  for (const event of events) results.set(event.id, { id: event.id, title: { ja: event.titleJa, en: event.titleEn }, sourceName: event.sourceName, releasedAt: event.releasedAt,
+  // An "expected-…" event is the market expectation read from headlines; it joins the official row below and is never a row of its own.
+  for (const event of events.filter(event => !event.id.startsWith("expected-"))) results.set(event.id, { id: event.id, title: { ja: event.titleJa, en: event.titleEn }, sourceName: event.sourceName, releasedAt: event.releasedAt,
     result: { ja: event.resultJa, en: event.resultEn }, detail: { ja: event.detailJa, en: event.detailEn }, sourceUrl: event.sourceUrl, verifiedOn: event.verifiedOn });
   for (const item of updates) {
     const url = new URL(item.url);
@@ -28,7 +29,7 @@ export function mergeEconomicResults(updates: OfficialUpdate[] = [], briefs: Res
   // The CPI and PPI releases read straight from bls.gov (Oct 14/15): the official result takes the same place as BEA's PCE.
   const blsIndicators = [
     { key: "jobs", file: "empsit", label: "jobs report", title: { ja: (month: number) => `米国雇用統計（${month}月）`, en: (period: string) => `U.S. employment report (${period})` },
-      detail: { ja: "非農業部門雇用者数の増減と失業率をBLS公式発表から取得。市場予想との比較は含みません。", en: "Change in total nonfarm payroll employment and the unemployment rate from the official BLS release. No consensus comparison." } },
+      detail: { ja: "非農業部門雇用者数の増減・失業率・平均時給(前月比と前年比。取得できた場合)をBLS公式発表から取得。市場予想との比較は含みません。", en: "Change in total nonfarm payroll employment, the unemployment rate, and average hourly earnings (monthly and yearly change, when stated) from the official BLS release. No consensus comparison." } },
     { key: "cpi", file: "cpi", label: "CPI", title: { ja: (month: number) => `米国CPI（消費者物価指数）（${month}月）`, en: (period: string) => `U.S. Consumer Price Index (${period})` },
       detail: { ja: "総合とコアの前月比・前年比をBLS公式発表から取得。市場予想との比較は含みません。", en: "Headline and core monthly and annual changes from the official BLS release. No consensus comparison." } },
     { key: "ppi", file: "ppi", label: "PPI", title: { ja: (month: number) => `米国PPI（生産者物価指数）（${month}月）`, en: (period: string) => `U.S. Producer Price Index (${period})` },
@@ -52,6 +53,14 @@ export function mergeEconomicResults(updates: OfficialUpdate[] = [], briefs: Res
       detail: indicator.detail,
       sourceUrl: item.url, verifiedOn: item.observedAt.slice(0, 10),
     });
+  }
+  // Owner, Nov 6: the market expectation (from at least two outlets' headlines) is added to the official result of the same report.
+  for (const expected of events.filter(event => event.id.startsWith("expected-"))) {
+    const row = results.get(expected.id.slice("expected-".length));
+    if (!row || row.result.ja.includes("市場予想")) continue;
+    results.set(row.id, { ...row,
+      result: { ja: `${row.result.ja}／${expected.resultJa.replace(/（\d+社が同じ数字を報道）$/, "").replace(/^市場予想 非農業部門雇用者数 /, "市場予想 ")}`, en: `${row.result.en} / ${expected.resultEn.replace(/ \(the same figure from \d+ outlets\)$/, "").replace(/^Consensus: nonfarm payrolls /, "consensus ")}` },
+      detail: { ja: row.detail.ja.replace("市場予想との比較は含みません。", "市場予想は、2社以上の報道の見出しが同じ数字を伝えたものです(公式の数字ではありません)。"), en: row.detail.en.replace("No consensus comparison is included.", "The consensus is the figure at least two outlets gave in their headlines (not an official figure).").replace("No consensus comparison.", "The consensus is the figure at least two outlets gave in their headlines (not an official figure).") } });
   }
   // One release per indicator/period. Verified official results take precedence;
   // incoming social posts must not add a second English-titled calendar row.

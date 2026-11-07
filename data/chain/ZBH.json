@@ -9,6 +9,10 @@
     {
       "ja": "提携・顧客",
       "en": "Partners & customers"
+    },
+    {
+      "ja": "競合(10-Kに記載)",
+      "en": "Competitors (named in 10-Ks)"
     }
   ],
   "rivals": [
@@ -37,6 +41,19 @@
             "date": "2026-02-20",
             "quote": "In the global markets for our knees, hips, and S.E.T. products, our major competitors include Johnson & Johnson MedTech (formerly the DePuy Synthes Companies of Johnson & Johnson), Stryker Corporation and Smith & Nephew plc"
           }
+        },
+        {
+          "type": "rival",
+          "text": "ジョンソン・エンド・ジョンソンと競合する",
+          "text_en": "Competes with Johnson & Johnson",
+          "source": {
+            "label": "Zimmer Biomet 10-K",
+            "label_en": "Zimmer Biomet 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1136869/000119312526059853/zbh-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "our major competitors include Johnson & Johnson MedTech (formerly the DePuy Synthes Companies of Johnson & Johnson), Stryker Corporation and Smith & Nephew plc"
+          }
         }
       ],
       "name_en": "Johnson & Johnson MedTech"
@@ -61,6 +78,19 @@
             "date": "2026-02-20",
             "quote": "In the global markets for our knees, hips, and S.E.T. products, our major competitors include Johnson & Johnson MedTech (formerly the DePuy Synthes Companies of Johnson & Johnson), Stryker Corporation and Smith & Nephew plc"
           }
+        },
+        {
+          "type": "rival",
+          "text": "ストライカーと競合する",
+          "text_en": "Competes with Stryker",
+          "source": {
+            "label": "Zimmer Biomet 10-K",
+            "label_en": "Zimmer Biomet 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1136869/000119312526059853/zbh-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "our major competitors include Johnson & Johnson MedTech (formerly the DePuy Synthes Companies of Johnson & Johnson), Stryker Corporation and Smith & Nephew plc"
+          }
         }
       ],
       "name_en": "Stryker"
@@ -84,6 +114,19 @@
             "level": "official",
             "date": "2026-02-20",
             "quote": "In the global markets for our knees, hips, and S.E.T. products, our major competitors include Johnson & Johnson MedTech (formerly the DePuy Synthes Companies of Johnson & Johnson), Stryker Corporation and Smith & Nephew plc"
+          }
+        },
+        {
+          "type": "rival",
+          "text": "スミス・アンド・ネフューと競合する",
+          "text_en": "Competes with Smith & Nephew",
+          "source": {
+            "label": "Zimmer Biomet 10-K",
+            "label_en": "Zimmer Biomet 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1136869/000119312526059853/zbh-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "our major competitors include Johnson & Johnson MedTech (formerly the DePuy Synthes Companies of Johnson & Johnson), Stryker Corporation and Smith & Nephew plc"
           }
         }
       ],

@@ -59,3 +59,10 @@ test("a result read from one official page reaches the site, and one bad result 
   assert.deepEqual(ids, ["fomc-2026-10-28", "us-midterm-2026-11-03"]);
   assert.equal(mergeEconomicResults([], [], [fomc]).find(row => row.id === "fomc-2026-10-28").sourceName, "FRB");
 });
+
+test("a number stays with its unit when the Japanese title wraps (owner, Nov 6)", async () => {
+  const { noBreakUnits } = await import("../lib/research/no-break-units.ts");
+  assert.equal(noBreakUnits("日本時間4日に結果"), "日本時間4⁠日に結果");
+  assert.equal(noBreakUnits("+165,000人／失業率 4.1%"), "+165,000⁠人／失業率 4.1⁠%");
+  assert.equal(noBreakUnits("English 4 days"), "English 4 days");
+});

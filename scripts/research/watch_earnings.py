@@ -11,8 +11,9 @@ import re
 import sqlite3
 import time
 from urllib.parse import urlsplit
+import earnings_dive
 
-VERSION = 'mu-watch-v3'
+VERSION = 'mu-watch-v4'
 NUMBER = r'([−-]?\d+(?:,\d{3})*(?:\.\d+)?)'
 
 
@@ -221,6 +222,8 @@ def run_once(path):
                 if released>datetime.now(timezone.utc).date(): raise ValueError('future-release')
                 payload=parse(row)
                 payload.update(presentation(payload))
+                # 決算の深掘り: the numbers go out with the snapshot; the wording is added right after (complete_dives).
+                payload['dive'] = {'numbers': earnings_dive.numbers(payload['metrics']), 'summary': None, 'summaryAt': None, 'summaryReason': None}
                 public=stamp()
                 payload.update(revision=key,sourceUrl=row['url'],releasedOn=row['published_on'],
                     detectedAt=row['detected_at'],bodyReadyAt=row['body_at'],preparedAt=started,publicAt=public,
@@ -233,6 +236,28 @@ def run_once(path):
                  json.dumps(payload,ensure_ascii=False) if payload else None,stamp()))
             changed+=1
         return 'updated' if changed else 'idle'
+
+
+def complete_dives(path):
+    """Add the wording to every stored version that has numbers but no summary yet. A version whose numbers cannot be
+    turned into a summary keeps summary=None and the reason, so the screen says "確認中" until a person fixes it."""
+    done = 0
+    with connect(path) as db:
+        schema(db)
+        for row in db.execute("SELECT revision,payload FROM watch_earnings_versions WHERE state='ready' AND payload IS NOT NULL").fetchall():
+            payload = json.loads(row['payload'])
+            dive = payload.get('dive')
+            if not dive or dive.get('summary') is not None or not dive.get('numbers') or dive.get('summaryReason'):
+                continue
+            try:
+                dive['summary'] = earnings_dive.summary(dive['numbers'])
+                dive['summaryAt'] = stamp()
+            except (ValueError, KeyError, TypeError, ArithmeticError) as exc:
+                dive['summaryReason'] = (str(exc) or type(exc).__name__)[:60]
+            with db:
+                db.execute('UPDATE watch_earnings_versions SET payload=? WHERE revision=?', (json.dumps(payload, ensure_ascii=False), row['revision']))
+            done += 1
+    return done
 
 
 def feed(path):

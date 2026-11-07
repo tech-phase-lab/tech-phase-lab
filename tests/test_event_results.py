@@ -301,3 +301,40 @@ class HttpTests(Base):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class ExpectationTests(unittest.TestCase):
+    """The market expectation (consensus) read next to a result in a headline (owner, Nov 6)."""
+    SPEC = {"expected": True, "must": [r"\b(?:non-?farm|NFP|payrolls?|jobs report)\b"], "mustNot": [r"\bADP\b", r"\bprivate\b"]}
+
+    def test_expectations_are_read_only_beside_a_result(self):
+        read = lambda title: ev.read_expected(title, self.SPEC)
+        self.assertEqual(read("US October nonfarm payrolls +165K vs +150K expected"), 150000)
+        self.assertEqual(read("US October jobs report: payrolls 165,000, unemployment 4.1% (exp. 150,000)"), 150000)
+        self.assertEqual(read("Payrolls rise 165K, above consensus 150K"), 150000)
+        self.assertEqual(read("Nonfarm payrolls beat expectations of 140K with 165K added"), 140000)
+        self.assertIsNone(read("Nonfarm payrolls expected to add 150K in October"))      # a preview, no result
+        self.assertIsNone(read("US October ADP employment +86K vs +65K expected"))       # ADP is another report
+        self.assertIsNone(read("Weekly payrolls +165K vs +150K expected"))
+        self.assertIsNone(read(None))
+
+    def test_two_outlets_with_the_same_expectation_publish_it_and_one_outlet_does_not(self):
+        import tempfile
+        config = {"version": 1, "feeds": [{"publisher": "A", "url": "https://a.example/rss", "group": "markets"}, {"publisher": "B", "url": "https://b.example/rss", "group": "markets"}],
+                  "watches": [{"id": "expected-jobs-2026-10", "kind": "indicator", "feedGroup": "markets", "titleJa": "予想", "titleEn": "Consensus",
+                               "from": "2026-11-06T00:00:00Z", "until": "2026-11-10T00:00:00Z", "requirePublishers": 2, "numeric": self.SPEC,
+                               "resultJa": "市場予想 非農業部門雇用者数 {value}人", "resultEn": "Consensus: nonfarm payrolls {value}", "noteJa": "n", "noteEn": "n"}]}
+        feed = lambda title: ("<rss><channel><item><title>%s</title><link>https://x.example/1</link><pubDate>Fri, 06 Nov 2026 13:31:00 +0000</pubDate></item></channel></rss>" % title).encode()
+        now = datetime(2026, 11, 6, 14, 0, tzinfo=timezone.utc)
+        with tempfile.TemporaryDirectory() as folder:
+            path = Path(folder) / "e.sqlite"
+            ev.run_once(path, now, config, transport=lambda url: feed("US October nonfarm payrolls +165K vs +150K expected") if "a.example" in url else feed("Payrolls +165K, expected +150K"))
+            with ev.connect(path) as db:
+                shown = ev.public_view(db)
+            self.assertEqual(len(shown), 1)
+            self.assertEqual(shown[0]["resultJa"], "市場予想 非農業部門雇用者数 +150,000人（2社が同じ数字を報道）")
+        with tempfile.TemporaryDirectory() as folder:
+            path = Path(folder) / "e.sqlite"
+            ev.run_once(path, now, config, transport=lambda url: feed("US October nonfarm payrolls +165K vs +150K expected") if "a.example" in url else feed("Payrolls +165K, expected +145K"))
+            with ev.connect(path) as db:
+                self.assertEqual(ev.public_view(db), [])
