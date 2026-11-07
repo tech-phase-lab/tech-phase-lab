@@ -9,9 +9,17 @@
     {
       "ja": "提携・顧客",
       "en": "Partners & customers"
+    },
+    {
+      "ja": "競合(10-Kに記載)",
+      "en": "Competitors (named in 10-Ks)"
     }
   ],
-  "rivals": [],
+  "rivals": [
+    "SFD",
+    "DAR",
+    "BYND"
+  ],
   "companies": [
     {
       "id": "WMT",
@@ -84,6 +92,102 @@
         }
       ],
       "name_en": "Holding Agro Industrial"
+    },
+    {
+      "id": "SFD",
+      "ticker": "SFD",
+      "name": "スミスフィールド・フーズ",
+      "sub": "豚肉加工",
+      "sub_en": "Pork processing",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "豚肉加工の競合としてタイソンを記載",
+          "text_en": "Names Tyson as a pork-processing competitor",
+          "source": {
+            "label": "Smithfield Foods 10-K",
+            "label_en": "Smithfield Foods 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/91388/000009138826000014/smf-20251228.htm",
+            "level": "official",
+            "date": "2026-03-24",
+            "quote": "Pork processing companies with which we compete include Tyson Foods, Triumph Foods, JBS USA, Prestage Farms and Seaboard."
+          }
+        }
+      ],
+      "name_en": "Smithfield Foods"
+    },
+    {
+      "id": "DAR",
+      "ticker": "DAR",
+      "name": "ダーリング・イングリーディエンツ",
+      "sub": "食品原料・再生燃料",
+      "sub_en": "Food ingredients & renewable fuels",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "事業全体の競合の例としてタイソンを記載",
+          "text_en": "Names Tyson as an example of a well-capitalized competitor",
+          "source": {
+            "label": "Darling Ingredients 10-K",
+            "label_en": "Darling Ingredients 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/916540/000091654026000008/dar-20260103.htm",
+            "level": "official",
+            "date": "2026-03-03",
+            "quote": "While we compete with a number of well capitalized companies across our business, such as Cargill, Inc., Tyson Foods, Inc."
+          }
+        }
+      ],
+      "name_en": "Darling Ingredients"
+    },
+    {
+      "id": "BYND",
+      "ticker": "BYND",
+      "name": "ビヨンド・ミート",
+      "sub": "植物由来食品",
+      "sub_en": "Plant-based foods",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "従来の食肉メーカーの競合としてタイソンを記載",
+          "text_en": "Names Tyson as a conventional animal-protein competitor",
+          "source": {
+            "label": "Beyond Meat 10-K",
+            "label_en": "Beyond Meat 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1655210/000165521026000022/bynd-20251231.htm",
+            "level": "official",
+            "date": "2026-04-09",
+            "quote": "We compete with conventional animal-protein companies such as Cargill, Hormel Foods, JBS, Perdue Foods and Tyson Foods"
+          }
+        }
+      ],
+      "name_en": "Beyond Meat"
+    },
+    {
+      "id": "LINE",
+      "ticker": "LINE",
+      "name": "リネージ",
+      "sub": "低温物流",
+      "sub_en": "Cold storage",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "タイソンから冷蔵倉庫4か所などを2億5600万ドルで取得",
+          "text_en": "Bought four cold storage warehouses and related assets from Tyson for $256 million",
+          "source": {
+            "label": "Lineage 10-K",
+            "label_en": "Lineage 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1868159/000186815926000012/line-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "we acquired four cold storage warehouses and other related assets from Tyson Foods for $256 million"
+          }
+        }
+      ],
+      "name_en": "Lineage"
     }
   ],
   "far": [],

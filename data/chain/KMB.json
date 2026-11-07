@@ -13,10 +13,16 @@
     {
       "ja": "競合(10-Kに記載)",
       "en": "Competitors (named in 10-Ks)"
+    },
+    {
+      "ja": "供給元(上流)",
+      "en": "Suppliers (upstream)",
+      "above": true
     }
   ],
   "rivals": [
-    "KVUE"
+    "KVUE",
+    "HNST"
   ],
   "companies": [
     {
@@ -103,6 +109,54 @@
         }
       ],
       "name_en": "Kenvue"
+    },
+    {
+      "id": "HNST",
+      "ticker": "HNST",
+      "name": "オネスト・カンパニー",
+      "sub": "ベビー・パーソナルケア",
+      "sub_en": "Baby & personal care",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "紙おむつの競合として、キンバリークラーク(ハギーズ)とP&Gを記載",
+          "text_en": "Names Kimberly-Clark (Huggies) and P&G as diaper competitors",
+          "source": {
+            "label": "Honest Company 10-K",
+            "label_en": "Honest Company 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1530979/000162828026011634/hnst-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Select competitors of our diapers include Kimberly-Clark Corporation (maker of Huggies diapers and Cottonelle wipes) and Procter & Gamble Company (maker of Pampers, Pampers Pure, Luvs and Charmin)."
+          }
+        }
+      ],
+      "name_en": "Honest Company"
+    },
+    {
+      "id": "GPK",
+      "ticker": "GPK",
+      "name": "グラフィック・パッケージング",
+      "sub": "紙パッケージ",
+      "sub_en": "Paperboard packaging",
+      "row": 2,
+      "relations": [
+        {
+          "type": "up",
+          "text": "紙パッケージの消費財顧客としてキンバリークラークを記載",
+          "text_en": "Names Kimberly-Clark among its consumer product customers",
+          "source": {
+            "label": "Graphic Packaging 10-K",
+            "label_en": "Graphic Packaging 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1408075/000140807526000009/gpk-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "Consumer product customers include The Kraft Heinz Company, General Mills, Inc., Nestlé USA, Inc., Mars, Inc., Ferrero Group and Kimberly-Clark Corporation, among others."
+          }
+        }
+      ],
+      "name_en": "Graphic Packaging"
     }
   ],
   "far": [],

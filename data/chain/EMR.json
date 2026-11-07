@@ -102,6 +102,19 @@
             "date": "2025-11-10",
             "quote": "On October 31, 2022, the Company completed the divestiture of its InSinkErator business, which manufactures food waste disposers, to Whirlpool Corporation for $3.0 billion."
           }
+        },
+        {
+          "type": "tie",
+          "text": "2022年にエマソンからInSinkErator事業を買収",
+          "text_en": "Acquired Emerson’s InSinkErator business in 2022",
+          "source": {
+            "label": "Whirlpool 10-K",
+            "label_en": "Whirlpool 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/106640/000010664026000009/whr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "acquired our InSinkErator business from Emerson Electric Co."
+          }
         }
       ],
       "name_en": "Whirlpool"

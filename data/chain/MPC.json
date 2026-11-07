@@ -84,6 +84,30 @@
         }
       ],
       "name_en": "Enbridge Inc."
+    },
+    {
+      "id": "CAPL",
+      "ticker": "CAPL",
+      "name": "クロスアメリカ・パートナーズ",
+      "sub": "燃料卸売",
+      "sub_en": "Fuel distribution",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "マラソンなどのブランド燃料を流通",
+          "text_en": "Distributes branded fuel from Marathon and others",
+          "source": {
+            "label": "CrossAmerica Partners 10-K",
+            "label_en": "CrossAmerica Partners 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1538849/000119312526071870/capl-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "We distribute branded motor fuel under the Exxon, Mobil, BP, Shell, Marathon, Valero and Phillips 66 brands to our customers."
+          }
+        }
+      ],
+      "name_en": "CrossAmerica Partners"
     }
   ],
   "far": [],

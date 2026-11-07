@@ -97,6 +97,54 @@
         }
       ],
       "name_en": "Apple"
+    },
+    {
+      "id": "RIOT",
+      "ticker": "RIOT",
+      "name": "ライオット・プラットフォームズ",
+      "sub": "ビットコイン採掘",
+      "sub_en": "Bitcoin mining",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "保有する暗号資産の保管先としてコインベースを利用",
+          "text_en": "Uses Coinbase to store its digital assets",
+          "source": {
+            "label": "Riot Platforms 10-K",
+            "label_en": "Riot Platforms 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1167419/000110465926022322/riot-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "NYDIG and Coinbase safely store our digital assets in segregated accounts"
+          }
+        }
+      ],
+      "name_en": "Riot Platforms"
+    },
+    {
+      "id": "CLSK",
+      "ticker": "CLSK",
+      "name": "クリーンスパーク",
+      "sub": "ビットコイン採掘",
+      "sub_en": "Bitcoin mining",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "保管サービスの契約をコインベースと結ぶ",
+          "text_en": "Has a custody agreement with Coinbase",
+          "source": {
+            "label": "CleanSpark 10-K",
+            "label_en": "CleanSpark 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/827876/000119312525297510/clsk-20250930.htm",
+            "level": "official",
+            "date": "2025-11-25",
+            "quote": "Our custody agreement with Coinbase provides that Coinbase will obtain and maintain at its sole expense insurance coverage"
+          }
+        }
+      ],
+      "name_en": "CleanSpark"
     }
   ],
   "far": [],

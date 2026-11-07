@@ -16,7 +16,8 @@
     }
   ],
   "rivals": [
-    "PEP"
+    "PEP",
+    "BYND"
   ],
   "companies": [
     {
@@ -138,6 +139,30 @@
         }
       ],
       "name_en": "PepsiCo"
+    },
+    {
+      "id": "BYND",
+      "ticker": "BYND",
+      "name": "ビヨンド・ミート",
+      "sub": "植物由来食品",
+      "sub_en": "Plant-based foods",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "従来の食肉メーカーの競合としてホーメルを記載",
+          "text_en": "Names Hormel as a conventional animal-protein competitor",
+          "source": {
+            "label": "Beyond Meat 10-K",
+            "label_en": "Beyond Meat 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1655210/000165521026000022/bynd-20251231.htm",
+            "level": "official",
+            "date": "2026-04-09",
+            "quote": "We compete with conventional animal-protein companies such as Cargill, Hormel Foods, JBS, Perdue Foods and Tyson Foods"
+          }
+        }
+      ],
+      "name_en": "Beyond Meat"
     }
   ],
   "far": [],

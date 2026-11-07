@@ -13,6 +13,11 @@
     {
       "ja": "競合(10-Kに記載)",
       "en": "Competitors (named in 10-Ks)"
+    },
+    {
+      "ja": "供給元(上流)",
+      "en": "Suppliers (upstream)",
+      "above": true
     }
   ],
   "rivals": [
@@ -114,6 +119,78 @@
         }
       ],
       "name_en": "PepsiCo"
+    },
+    {
+      "id": "GPK",
+      "ticker": "GPK",
+      "name": "グラフィック・パッケージング",
+      "sub": "紙パッケージ",
+      "sub_en": "Paperboard packaging",
+      "row": 2,
+      "relations": [
+        {
+          "type": "up",
+          "text": "紙パッケージの消費財顧客としてクラフト・ハインツを記載",
+          "text_en": "Names Kraft Heinz among its consumer product customers",
+          "source": {
+            "label": "Graphic Packaging 10-K",
+            "label_en": "Graphic Packaging 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1408075/000140807526000009/gpk-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "Consumer product customers include The Kraft Heinz Company, General Mills, Inc., Nestlé USA, Inc., Mars, Inc., Ferrero Group and Kimberly-Clark Corporation, among others."
+          }
+        }
+      ],
+      "name_en": "Graphic Packaging"
+    },
+    {
+      "id": "SLGN",
+      "ticker": "SLGN",
+      "name": "シルガン・ホールディングス",
+      "sub": "金属・プラ容器",
+      "sub_en": "Metal & plastic containers",
+      "row": 2,
+      "relations": [
+        {
+          "type": "up",
+          "text": "特注容器事業の大口顧客としてクラフト・ハインツを記載",
+          "text_en": "Names Kraft Heinz among its largest custom-container customers",
+          "source": {
+            "label": "Silgan Holdings 10-K",
+            "label_en": "Silgan Holdings 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/849869/000162828026012202/slgn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Conagra Brands, Inc., General Mills, Inc., Kraft Heinz, Lactalis Canada Inc., Mars, Incorporated, McCormick & Company, Incorporated"
+          }
+        }
+      ],
+      "name_en": "Silgan Holdings"
+    },
+    {
+      "id": "DIT",
+      "ticker": "DIT",
+      "name": "AMCONディストリビューティング",
+      "sub": "食品・たばこ卸",
+      "sub_en": "Convenience wholesale",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "主要な仕入先としてクラフト・ハインツを記載する卸売会社",
+          "text_en": "Wholesaler that names Kraft Heinz among its principal suppliers",
+          "source": {
+            "label": "AMCON Distributing 10-K",
+            "label_en": "AMCON Distributing 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/928465/000110465925108504/dit-20250930x10k.htm",
+            "level": "official",
+            "date": "2025-11-07",
+            "quote": "Our principal suppliers include Altria, RJ Reynolds, ITG Brands, Hershey, Kellanova, Kraft Heinz, and Mars Wrigley, General Mills, Procter and Gamble, Ferrero"
+          }
+        }
+      ],
+      "name_en": "AMCON Distributing"
     }
   ],
   "far": [],

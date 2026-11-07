@@ -13,6 +13,11 @@
     {
       "ja": "競合(10-Kに記載)",
       "en": "Competitors (named in 10-Ks)"
+    },
+    {
+      "ja": "供給元(上流)",
+      "en": "Suppliers (upstream)",
+      "above": true
     }
   ],
   "rivals": [
@@ -178,6 +183,30 @@
         }
       ],
       "name_en": "KT&G"
+    },
+    {
+      "id": "UVV",
+      "ticker": "UVV",
+      "name": "ユニバーサル",
+      "sub": "たばこ葉",
+      "sub_en": "Leaf tobacco",
+      "row": 2,
+      "relations": [
+        {
+          "type": "up",
+          "text": "たばこ葉の最大顧客6社の1社としてフィリップ モリスを記載",
+          "text_en": "Names Philip Morris International among its six largest customers",
+          "source": {
+            "label": "Universal Corporation 10-K",
+            "label_en": "Universal Corporation 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/102037/000162828026039511/uvv-20260331.htm",
+            "level": "official",
+            "date": "2026-06-01",
+            "quote": "The Company’s six largest customers are Altria Group, Inc., British American Tobacco plc, China Tobacco International, Inc., Imperial Brands plc, Japan Tobacco, Inc., and Philip Morris International Inc."
+          }
+        }
+      ],
+      "name_en": "Universal Corporation"
     }
   ],
   "far": [],

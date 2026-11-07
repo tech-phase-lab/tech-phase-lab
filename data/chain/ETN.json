@@ -18,11 +18,16 @@
     {
       "ja": "競合",
       "en": "Competitors"
+    },
+    {
+      "ja": "納入先・顧客(下流)",
+      "en": "Customers (downstream)"
     }
   ],
   "rivals": [
     "VRT",
-    "ABBNY"
+    "ABBNY",
+    "LFUS"
   ],
   "companies": [
     {
@@ -145,6 +150,54 @@
         }
       ],
       "name_en": "ABB"
+    },
+    {
+      "id": "PCAR",
+      "ticker": "PCAR",
+      "name": "パッカー",
+      "sub": "トラック",
+      "sub_en": "Trucks",
+      "row": 3,
+      "relations": [
+        {
+          "type": "down",
+          "text": "部品の安定調達のため、長期契約を結ぶ相手としてイートンを記載",
+          "text_en": "Names Eaton among suppliers under long-term supply-continuity agreements",
+          "source": {
+            "label": "PACCAR 10-K",
+            "label_en": "PACCAR 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/75362/000119312526057025/pcar-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "The Company has long-term agreements with Cummins, Eaton, ZF and Magna to provide for continuity of supply."
+          }
+        }
+      ],
+      "name_en": "PACCAR"
+    },
+    {
+      "id": "LFUS",
+      "ticker": "LFUS",
+      "name": "リテルヒューズ",
+      "sub": "回路保護部品",
+      "sub_en": "Circuit protection",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "電子部品事業の競合としてイートンを記載",
+          "text_en": "Names Eaton as a competitor in its Electronics segment",
+          "source": {
+            "label": "Littelfuse 10-K",
+            "label_en": "Littelfuse 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/889331/000162828026009585/lfus-20251227.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "the Company’s competitors include Eaton Corporation, Bourns Inc., TDK, ON Semiconductor Corporation, Infineon Technologies, STMicroelectronics NV, Semtech Corporation, and Vishay Intertechn"
+          }
+        }
+      ],
+      "name_en": "Littelfuse"
     }
   ],
   "far": [],

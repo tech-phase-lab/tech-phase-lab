@@ -17,7 +17,9 @@
   ],
   "rivals": [
     "CHD",
-    "KVUE"
+    "KVUE",
+    "EPC",
+    "HNST"
   ],
   "companies": [
     {
@@ -139,6 +141,102 @@
         }
       ],
       "name_en": "Kenvue"
+    },
+    {
+      "id": "EPC",
+      "ticker": "EPC",
+      "name": "エッジウェル・パーソナルケア",
+      "sub": "カミソリ・日用品",
+      "sub_en": "Razors & personal care",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "ジレット(P&G傘下)を、世界の替刃市場の主要な競合として記載",
+          "text_en": "Names P&G, owner of Gillette, as its principal wet-shave competitor",
+          "source": {
+            "label": "Edgewell Personal Care 10-K",
+            "label_en": "Edgewell Personal Care 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1096752/000162828025052765/epc-20250930.htm",
+            "level": "official",
+            "date": "2025-11-18",
+            "quote": "Our principal competitors in the global wet shave business are: The Procter & Gamble Company, which owns the Gillette brand and is the leading company in the global wet shave segment;"
+          }
+        }
+      ],
+      "name_en": "Edgewell Personal Care"
+    },
+    {
+      "id": "HNST",
+      "ticker": "HNST",
+      "name": "オネスト・カンパニー",
+      "sub": "ベビー・パーソナルケア",
+      "sub_en": "Baby & personal care",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "紙おむつの競合として、P&G(パンパース)とキンバリークラークを記載",
+          "text_en": "Names P&G (Pampers) and Kimberly-Clark as diaper competitors",
+          "source": {
+            "label": "Honest Company 10-K",
+            "label_en": "Honest Company 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1530979/000162828026011634/hnst-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Select competitors of our diapers include Kimberly-Clark Corporation (maker of Huggies diapers and Cottonelle wipes) and Procter & Gamble Company (maker of Pampers, Pampers Pure, Luvs and Charmin)."
+          }
+        }
+      ],
+      "name_en": "Honest Company"
+    },
+    {
+      "id": "COTY",
+      "ticker": "COTY",
+      "name": "コティ",
+      "sub": "化粧品・香水",
+      "sub_en": "Beauty & fragrance",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2016年10月にP&Gの美容事業を買収",
+          "text_en": "Acquired P&G’s beauty business in October 2016",
+          "source": {
+            "label": "Coty 10-K",
+            "label_en": "Coty 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1024305/000102430526000048/coty-20260630.htm",
+            "level": "official",
+            "date": "2026-08-20",
+            "quote": "the acquisition of the P&G Beauty Business in October 2016"
+          }
+        }
+      ],
+      "name_en": "Coty"
+    },
+    {
+      "id": "DIT",
+      "ticker": "DIT",
+      "name": "AMCONディストリビューティング",
+      "sub": "食品・たばこ卸",
+      "sub_en": "Convenience wholesale",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "主要な仕入先としてP&Gを記載する卸売会社",
+          "text_en": "Wholesaler that names P&G among its principal suppliers",
+          "source": {
+            "label": "AMCON Distributing 10-K",
+            "label_en": "AMCON Distributing 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/928465/000110465925108504/dit-20250930x10k.htm",
+            "level": "official",
+            "date": "2025-11-07",
+            "quote": "Our principal suppliers include Altria, RJ Reynolds, ITG Brands, Hershey, Kellanova, Kraft Heinz, and Mars Wrigley, General Mills, Procter and Gamble, Ferrero"
+          }
+        }
+      ],
+      "name_en": "AMCON Distributing"
     }
   ],
   "far": [],
