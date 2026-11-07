@@ -14,6 +14,10 @@
       "ja": "供給元(上流)",
       "en": "Suppliers (upstream)",
       "above": true
+    },
+    {
+      "ja": "競合(10-Kに記載)",
+      "en": "Competitors (named in 10-Ks)"
     }
   ],
   "rivals": [
@@ -238,6 +242,30 @@
         }
       ],
       "name_en": "Innovative Solutions & Support"
+    },
+    {
+      "id": "AVAV",
+      "ticker": "AVAV",
+      "name": "エアロバイロメント",
+      "sub": "ドローン・防衛",
+      "sub_en": "Drones & defense",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "宇宙・指向性エネルギー市場の競合としてボーイングを記載",
+          "text_en": "Names Boeing as a competitor in space and directed energy",
+          "source": {
+            "label": "AeroVironment 10-K",
+            "label_en": "AeroVironment 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1368622/000110465926078906/avav-20260430x10k.htm",
+            "level": "official",
+            "date": "2026-06-29",
+            "quote": "The space technology and directed energy market includes competitors such as The Boeing Company, Lockheed Martin Corporation, L3Harris Technologies, Inc., BAE Systems, Inc."
+          }
+        }
+      ],
+      "name_en": "AeroVironment"
     }
   ],
   "far": [],

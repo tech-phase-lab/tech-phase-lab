@@ -9,9 +9,15 @@
     {
       "ja": "提携・顧客",
       "en": "Partners & customers"
+    },
+    {
+      "ja": "競合(10-Kに記載)",
+      "en": "Competitors (named in 10-Ks)"
     }
   ],
-  "rivals": [],
+  "rivals": [
+    "RXT"
+  ],
   "companies": [
     {
       "id": "AMZN",
@@ -276,6 +282,54 @@
         }
       ],
       "name_en": "IBM"
+    },
+    {
+      "id": "DT",
+      "ticker": "DT",
+      "name": "ダイナトレース",
+      "sub": "監視ソフト",
+      "sub_en": "Observability software",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "提携する大手システム会社としてキンドリルを記載",
+          "text_en": "Names Kyndryl among its strategic systems-integrator partners",
+          "source": {
+            "label": "Dynatrace 10-K",
+            "label_en": "Dynatrace 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1773383/000177338326000019/dt-20260331.htm",
+            "level": "official",
+            "date": "2026-05-20",
+            "quote": "strategic GSIs, including Accenture, Atos, Deloitte, DXC, and Kyndryl"
+          }
+        }
+      ],
+      "name_en": "Dynatrace"
+    },
+    {
+      "id": "RXT",
+      "ticker": "RXT",
+      "name": "ラックスペース・テクノロジー",
+      "sub": "クラウドサービス",
+      "sub_en": "Cloud services",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "競合のシステム会社としてキンドリルを記載",
+          "text_en": "Names Kyndryl among competing systems integrators",
+          "source": {
+            "label": "Rackspace Technology 10-K",
+            "label_en": "Rackspace Technology 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1810019/000181001926000015/rxt-20251231.htm",
+            "level": "official",
+            "date": "2026-03-06",
+            "quote": "such as Accenture, Atos, Capgemini, Cognizant, Deloitte, DXC Technology and Kyndryl"
+          }
+        }
+      ],
+      "name_en": "Rackspace Technology"
     }
   ],
   "far": [],

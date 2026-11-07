@@ -14,7 +14,8 @@
   "rivals": [
     "PG",
     "COTY",
-    "UL"
+    "UL",
+    "EPC"
   ],
   "companies": [
     {
@@ -280,6 +281,30 @@
         }
       ],
       "name_en": "Puig Brands"
+    },
+    {
+      "id": "EPC",
+      "ticker": "EPC",
+      "name": "エッジウェル・パーソナルケア",
+      "sub": "カミソリ・日用品",
+      "sub_en": "Razors & personal care",
+      "row": 0,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "競合の大手としてエスティローダーを記載",
+          "text_en": "Names Estée Lauder among its large competitors",
+          "source": {
+            "label": "Edgewell Personal Care 10-K",
+            "label_en": "Edgewell Personal Care 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1096752/000162828025052765/epc-20250930.htm",
+            "level": "official",
+            "date": "2025-11-18",
+            "quote": "Our competitors in this market include large companies such as Kenvue, L’Oréal S.A., The Estee Lauder Companies, Inc."
+          }
+        }
+      ],
+      "name_en": "Edgewell Personal Care"
     }
   ],
   "far": [],

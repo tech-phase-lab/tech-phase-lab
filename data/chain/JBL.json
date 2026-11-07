@@ -271,6 +271,30 @@
         }
       ],
       "name_en": "Ultra Clean Holdings"
+    },
+    {
+      "id": "LIF",
+      "ticker": "LIF",
+      "name": "ライフ360",
+      "sub": "家族向け位置情報",
+      "sub_en": "Family safety app",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "2024年10月に製造委託契約を締結(初回3年、自動更新)",
+          "text_en": "Signed a manufacturing agreement in October 2024 (three-year initial term, auto-renewing)",
+          "source": {
+            "label": "Life360 10-K",
+            "label_en": "Life360 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1581760/000158176026000016/lifx-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "In October 2024, we entered into a new manufacturing agreement with Jabil for an initial term of three years"
+          }
+        }
+      ],
+      "name_en": "Life360"
     }
   ],
   "far": [],

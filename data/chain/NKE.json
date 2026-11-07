@@ -282,6 +282,30 @@
         }
       ],
       "name_en": "V.F."
+    },
+    {
+      "id": "LOOP",
+      "ticker": "LOOP",
+      "name": "ループ・インダストリーズ",
+      "sub": "再生ポリエステル",
+      "sub_en": "Recycled polyester",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年9月に、ナイキと複数年の購入契約を締結",
+          "text_en": "Signed a multi-year offtake agreement with Nike in September 2025",
+          "source": {
+            "label": "Loop Industries 10-K",
+            "label_en": "Loop Industries 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1504678/000143774926018576/loop20260228_10k.htm",
+            "level": "official",
+            "date": "2026-05-27",
+            "quote": "we entered into a multi-year offtake agreement with NIKE, Inc."
+          }
+        }
+      ],
+      "name_en": "Loop Industries"
     }
   ],
   "far": [],

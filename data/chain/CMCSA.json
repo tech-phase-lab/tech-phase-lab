@@ -81,6 +81,19 @@
             "date": "2026-02-03",
             "quote": "In 2023, we entered into an agreement with T-Mobile to sell certain of our spectrum licenses."
           }
+        },
+        {
+          "type": "tie",
+          "text": "2023年9月に、コムキャストから周波数ライセンスを購入する契約を締結",
+          "text_en": "Signed a license purchase agreement with Comcast in September 2023",
+          "source": {
+            "label": "T-Mobile US 10-K",
+            "label_en": "T-Mobile US 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1283699/000128369926000010/tmus-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "we entered into a License Purchase Agreement with Comcast Corporation"
+          }
         }
       ],
       "name_en": "T-Mobile US"

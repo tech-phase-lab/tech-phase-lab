@@ -265,6 +265,30 @@
         }
       ],
       "name_en": "Cardinal Health"
+    },
+    {
+      "id": "JANX",
+      "ticker": "JANX",
+      "name": "ジャナックス・セラピューティクス",
+      "sub": "がん免疫療法",
+      "sub_en": "Cancer immunotherapy",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2026年1月に、ブリストル・マイヤーズ スクイブと独占ライセンス・共同開発契約を締結",
+          "text_en": "Signed an exclusive license and collaboration agreement with Bristol Myers Squibb in January 2026",
+          "source": {
+            "label": "Janux Therapeutics 10-K",
+            "label_en": "Janux Therapeutics 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1817713/000119312526076918/janx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "In January 2026, we entered into an exclusive license and collaboration agreement with Bristol Myers Squibb"
+          }
+        }
+      ],
+      "name_en": "Janux Therapeutics"
     }
   ],
   "far": [],

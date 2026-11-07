@@ -403,6 +403,19 @@
             "date": "2026-02-18",
             "quote": "• with respect to APM, we compete with Cisco Systems, Inc., New Relic, Inc. and Dynatrace Software Inc."
           }
+        },
+        {
+          "type": "rival",
+          "text": "ログ管理の競合としてシスコを記載",
+          "text_en": "Names Cisco as a log-management competitor",
+          "source": {
+            "label": "Datadog 10-K",
+            "label_en": "Datadog 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1561550/000162828026008819/ddog-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "with respect to Log Management, we compete with Cisco Systems, Inc., and Elastic N.V."
+          }
         }
       ],
       "name_en": "Datadog"
@@ -574,6 +587,30 @@
         }
       ],
       "name_en": "RingCentral"
+    },
+    {
+      "id": "VSTA",
+      "ticker": "VSTA",
+      "name": "ビスタンス・ネットワークス",
+      "sub": "ネットワーク機器",
+      "sub_en": "Networking equipment",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "RUCKUS部門の競合としてシスコを記載",
+          "text_en": "Names Cisco as a RUCKUS-segment competitor",
+          "source": {
+            "label": "Vistance Networks 10-K",
+            "label_en": "Vistance Networks 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1517228/000119312526072523/visn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "RUCKUS segment – Cisco Systems, Inc., Extreme Networks, Inc., Hewlett Packard Enterprise Development LP"
+          }
+        }
+      ],
+      "name_en": "Vistance Networks"
     }
   ],
   "far": [],

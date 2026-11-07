@@ -269,6 +269,19 @@
             "date": "2026-02-18",
             "quote": "In the Silicon IP market, Rambus competes with the in-house design teams at our potential customers, as well as with third-party IP suppliers, such as Cadence and Synopsys."
           }
+        },
+        {
+          "type": "rival",
+          "text": "シリコンIPの競合としてシノプシスを記載",
+          "text_en": "Names Synopsys as a silicon-IP competitor",
+          "source": {
+            "label": "Rambus 10-K",
+            "label_en": "Rambus 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/917273/000119312526057101/rmbs-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "third-party IP suppliers, such as Cadence and Synopsys."
+          }
         }
       ],
       "name_en": "Rambus"

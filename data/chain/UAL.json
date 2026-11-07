@@ -311,6 +311,30 @@
         }
       ],
       "name_en": "Alaska Air Group"
+    },
+    {
+      "id": "JBLU",
+      "ticker": "JBLU",
+      "name": "ジェットブルー",
+      "sub": "航空",
+      "sub_en": "Airline",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年5月に、ユナイテッドとの提携「Blue Sky」を発表",
+          "text_en": "Announced the Blue Sky collaboration with United in May 2025",
+          "source": {
+            "label": "JetBlue Airways 10-K",
+            "label_en": "JetBlue Airways 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1158463/000115846326000007/jblu-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "In May 2025, we announced a collaboration with United Airlines, referred to as Blue Sky."
+          }
+        }
+      ],
+      "name_en": "JetBlue Airways"
     }
   ],
   "far": [],

@@ -484,6 +484,30 @@
           }
         }
       ]
+    },
+    {
+      "id": "AMBQ",
+      "ticker": "AMBQ",
+      "name": "アンビック・マイクロ",
+      "sub": "低消費電力チップ",
+      "sub_en": "Low-power chips",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "大手マイコンメーカーの競合としてTIを記載",
+          "text_en": "Names Texas Instruments among large MCU-vendor competitors",
+          "source": {
+            "label": "Ambiq Micro 10-K",
+            "label_en": "Ambiq Micro 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1500412/000119312526094004/ambq-20251231.htm",
+            "level": "official",
+            "date": "2026-03-05",
+            "quote": "we generally compete with large MCU vendors, such as Infineon, Microchip, NXP, Silicon Laboratories, STMicroelectronics, Texas Instruments, and others."
+          }
+        }
+      ],
+      "name_en": "Ambiq Micro"
     }
   ],
   "far": [],

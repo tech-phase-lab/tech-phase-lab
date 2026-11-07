@@ -17,9 +17,15 @@
     {
       "ja": "資金調達",
       "en": "Financing"
+    },
+    {
+      "ja": "競合(10-Kに記載)",
+      "en": "Competitors (named in 10-Ks)"
     }
   ],
-  "rivals": [],
+  "rivals": [
+    "NTCT"
+  ],
   "companies": [
     {
       "id": "Anthropic",
@@ -324,6 +330,30 @@
         }
       ],
       "name_en": "JPMorgan Chase"
+    },
+    {
+      "id": "NTCT",
+      "ticker": "NTCT",
+      "name": "ネットスカウト",
+      "sub": "ネットワーク監視",
+      "sub_en": "Network monitoring",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "DDoS対策の競合としてアカマイを記載",
+          "text_en": "Names Akamai as a DDoS-protection competitor",
+          "source": {
+            "label": "NetScout 10-K",
+            "label_en": "NetScout 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1078075/000107807526000050/ntct-20260331.htm",
+            "level": "official",
+            "date": "2026-05-14",
+            "quote": "broad range of vendors including Radware, Akamai, F5 Networks, A10 Networks, Fortinet, Fastly, Cloudflare"
+          }
+        }
+      ],
+      "name_en": "NetScout"
     }
   ],
   "far": [],

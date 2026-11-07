@@ -161,6 +161,19 @@
             "date": "2026-05-14",
             "quote": "our competitors include companies who provide network observability, application performance management, infrastructure performance management and other related solutions such as CA Technologies (a Broadcom Inc. business), Cisco Systems, Dynatrace, Datadog, ExtraHop, IBM, Infovista, Viavi, Gigamon, New Relic, Riverbed Technology, and SolarWinds."
           }
+        },
+        {
+          "type": "rival",
+          "text": "ネットワーク試験の競合としてネットスカウトを記載",
+          "text_en": "Names NetScout as a network-test competitor",
+          "source": {
+            "label": "Viavi Solutions 10-K",
+            "label_en": "Viavi Solutions 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/912093/000162828026056765/viav-20260627.htm",
+            "level": "official",
+            "date": "2026-08-13",
+            "quote": "NSE competitors include Anritsu Corporation, EXFO Inc., Keysight Technologies Inc., NetScout Systems, Inc."
+          }
         }
       ],
       "name_en": "Viavi Solutions"

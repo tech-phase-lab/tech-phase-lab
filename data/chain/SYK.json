@@ -13,6 +13,11 @@
     {
       "ja": "競合(10-Kに記載)",
       "en": "Competitors (named in 10-Ks)"
+    },
+    {
+      "ja": "供給元(上流)",
+      "en": "Suppliers (upstream)",
+      "above": true
     }
   ],
   "rivals": [
@@ -347,6 +352,54 @@
         }
       ],
       "name_en": "Penumbra"
+    },
+    {
+      "id": "UFPT",
+      "ticker": "UFPT",
+      "name": "UFPテクノロジーズ",
+      "sub": "医療機器部品",
+      "sub_en": "Medical device components",
+      "row": 2,
+      "relations": [
+        {
+          "type": "up",
+          "text": "売上の21.5%を占める大口顧客としてストライカーを記載",
+          "text_en": "Stryker was a major customer at 21.5% of net sales",
+          "source": {
+            "label": "UFP Technologies 10-K",
+            "label_en": "UFP Technologies 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/914156/000162828026012816/ufpt-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Two customers (Intuitive Surgical SARL and Stryker) comprised approximately 24.3% and 21.5%, respectively, of our net sales"
+          }
+        }
+      ],
+      "name_en": "UFP Technologies"
+    },
+    {
+      "id": "TMCI",
+      "ticker": "TMCI",
+      "name": "トリース・メディカル",
+      "sub": "足の外科機器",
+      "sub_en": "Foot surgery devices",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "競合としてストライカーを記載(外反母趾の手術製品)",
+          "text_en": "Names Stryker as a competitor in surgical bunion products",
+          "source": {
+            "label": "Treace Medical Concepts 10-K",
+            "label_en": "Treace Medical Concepts 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1630627/000119312526079167/tmci-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Some competitors, including Stryker Corporation, bundle their surgical bunion products with their broader unrelated product lines"
+          }
+        }
+      ],
+      "name_en": "Treace Medical Concepts"
     }
   ],
   "far": [],

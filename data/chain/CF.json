@@ -268,6 +268,19 @@
             "date": "2026-02-25",
             "quote": "Our primary competitors with North American operations include Nutrien Ltd., Koch Fertilizer LLC, LSB Industries, CVR Partners, LP and Yara International"
           }
+        },
+        {
+          "type": "rival",
+          "text": "窒素肥料の主要な国内競合としてCFインダストリーズを記載",
+          "text_en": "Names CF Industries as a major domestic nitrogen-fertilizer competitor",
+          "source": {
+            "label": "CVR Partners 10-K",
+            "label_en": "CVR Partners 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1425292/000142529226000011/cvi-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "our major domestic competitors in the nitrogen fertilizer business generally includes CF Industries Holdings, Inc."
+          }
         }
       ],
       "name_en": "CVR Partners, LP"

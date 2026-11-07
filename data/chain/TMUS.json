@@ -9,6 +9,10 @@
     {
       "ja": "提携・顧客",
       "en": "Partners & customers"
+    },
+    {
+      "ja": "競合(10-Kに記載)",
+      "en": "Competitors (named in 10-Ks)"
     }
   ],
   "rivals": [
@@ -86,6 +90,19 @@
             "level": "official",
             "date": "2026-02-11",
             "quote": "In addition, our wireless communications services competitors include numerous smaller and regional providers, including Charter Communications, Inc., Comcast Corporation, EchoStar Corporation (“EchoStar”), Cox Communications, Inc., and Altice USA, Inc., many of which offer no-contract, postpaid and prepaid service plans."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "2025年7月に、Tモバイルと複数年の契約を締結",
+          "text_en": "Entered a multi-year agreement with T-Mobile in July 2025",
+          "source": {
+            "label": "Charter Communications 10-K",
+            "label_en": "Charter Communications 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1091667/000109166726000017/chtr-20251231.htm",
+            "level": "official",
+            "date": "2026-01-30",
+            "quote": "in July 2025, we entered into a multi-year agreement with T-Mobile US, Inc."
           }
         }
       ],
@@ -271,6 +288,30 @@
         }
       ],
       "name_en": "Deutsche Telekom"
+    },
+    {
+      "id": "LILA",
+      "ticker": "LILA",
+      "name": "リバティ・ラテン・アメリカ",
+      "sub": "通信(中南米)",
+      "sub_en": "Telecom (Latin America)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "プエルトリコでの主な競合としてTモバイルを記載",
+          "text_en": "Names T-Mobile as a primary competitor in Puerto Rico",
+          "source": {
+            "label": "Liberty Latin America 10-K",
+            "label_en": "Liberty Latin America 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1712184/000171218426000023/lila-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "Liberty Puerto Rico primarily competes with T-Mobile US and América Móvil"
+          }
+        }
+      ],
+      "name_en": "Liberty Latin America"
     }
   ],
   "far": [],
