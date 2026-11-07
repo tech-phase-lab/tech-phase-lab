@@ -224,6 +224,19 @@
             "date": "2026-02-04",
             "quote": "We expect continued competition from our primary FPGA competitors such as Altera, Lattice Semiconductor Corporation and Microsemi Corporation, and from ASSP vendors such as Broadcom Corporation, Marvell Technology Group, Ltd., Analog Devices, Texas Instruments Incorporated, NXP Semiconductors N.V., Qualcomm Incorporated and NVIDIA."
           }
+        },
+        {
+          "type": "rival",
+          "text": "FPGAの主要な競合としてラティスを記載",
+          "text_en": "Names Lattice as a primary FPGA competitor",
+          "source": {
+            "label": "AMD 10-K",
+            "label_en": "AMD 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000018/amd-20251227.htm",
+            "level": "official",
+            "date": "2026-02-04",
+            "quote": "We expect continued competition from our primary FPGA competitors such as Altera, Lattice Semiconductor Corporation and Microsemi Corporation"
+          }
         }
       ]
     }

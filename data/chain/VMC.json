@@ -159,6 +159,19 @@
             "date": "2026-02-19",
             "quote": "As of December 31, 2025, other publicly traded companies among the ten largest U.S. aggregates producers include the following: • Arcosa, Inc. • Amrize • Cemex S.A.B. de C.V. • CRH plc • Heidelberg Materials AG • Knife River Corporation • Martin Marietta Materials, Inc."
           }
+        },
+        {
+          "type": "rival",
+          "text": "競合としてバルカン・マテリアルズを記載",
+          "text_en": "Names Vulcan Materials as a competitor",
+          "source": {
+            "label": "Knife River 10-K",
+            "label_en": "Knife River 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1955520/000195552026000003/knf-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "Heidelberg Materials, Martin Marietta Materials, Inc., Construction Partners, Inc., and Vulcan Materials Company."
+          }
         }
       ],
       "name_en": "Knife River Corporation"

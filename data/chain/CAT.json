@@ -9,6 +9,11 @@
     {
       "ja": "提携・顧客",
       "en": "Partners & customers"
+    },
+    {
+      "ja": "供給元(上流)",
+      "en": "Suppliers (upstream)",
+      "above": true
     }
   ],
   "rivals": [
@@ -307,6 +312,30 @@
         }
       ],
       "name_en": "Epiroc"
+    },
+    {
+      "id": "TWI",
+      "ticker": "TWI",
+      "name": "タイタン・インターナショナル",
+      "sub": "ホイール・タイヤ",
+      "sub_en": "Wheels & tires",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "顧客としてキャタピラーを記載",
+          "text_en": "Names Caterpillar among its customers",
+          "source": {
+            "label": "Titan International 10-K",
+            "label_en": "Titan International 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/899751/000089975126000007/twi-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Customers including AGCO Corporation, Caterpillar Inc., CNH Global N.V., Deere & Company, Hitachi, Ltd., Kubota Corporation, Liebherr, and Volvo"
+          }
+        }
+      ],
+      "name_en": "Titan International"
     }
   ],
   "far": [],

@@ -9,6 +9,11 @@
     {
       "ja": "提携・顧客",
       "en": "Partners & customers"
+    },
+    {
+      "ja": "供給元(上流)",
+      "en": "Suppliers (upstream)",
+      "above": true
     }
   ],
   "rivals": [
@@ -222,6 +227,30 @@
         }
       ],
       "name_en": "Benchmark Electronics"
+    },
+    {
+      "id": "OUST",
+      "ticker": "OUST",
+      "name": "オースター",
+      "sub": "ライダー(センサー)",
+      "sub_en": "Lidar sensors",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "量産の製造パートナーとしてファブリネットを記載",
+          "text_en": "Names Fabrinet as a key manufacturing partner",
+          "source": {
+            "label": "Ouster 10-K",
+            "label_en": "Ouster 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1816581/000162828026013313/oust-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "we have invested in relationships with key manufacturing partners Benchmark and Fabrinet"
+          }
+        }
+      ],
+      "name_en": "Ouster"
     }
   ],
   "far": [],

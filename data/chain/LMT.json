@@ -204,6 +204,30 @@
         }
       ],
       "name_en": "Sypris Solutions"
+    },
+    {
+      "id": "ISSC",
+      "ticker": "ISSC",
+      "name": "イノベイティブ・ソリューションズ&サポート",
+      "sub": "航空電子機器",
+      "sub_en": "Avionics",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "最大顧客としてロッキード・マーティンを記載(売上の36%)",
+          "text_en": "Lockheed Martin was its largest customer at 36% of revenue",
+          "source": {
+            "label": "Innovative Solutions & Support 10-K",
+            "label_en": "Innovative Solutions & Support 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/836690/000110465925123847/issc-20250930x10k.htm",
+            "level": "official",
+            "date": "2025-12-23",
+            "quote": "our three largest customers, Lockheed Martin, Pilatus, and Boeing accounted for 36%, 8% and 5% of total revenue, respectively"
+          }
+        }
+      ],
+      "name_en": "Innovative Solutions & Support"
     }
   ],
   "far": [],

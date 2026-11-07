@@ -111,6 +111,19 @@
             "date": "2026-02-10",
             "quote": "Fortune Brands Innovations, Inc.'s Moen, Rohl and Riobel brands"
           }
+        },
+        {
+          "type": "rival",
+          "text": "水栓などの主要な競合としてマスコを記載",
+          "text_en": "Names Masco as a chief competitor",
+          "source": {
+            "label": "Fortune Brands Innovations 10-K",
+            "label_en": "Fortune Brands Innovations 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1519751/000119312526063960/fbin-20251227.htm",
+            "level": "official",
+            "date": "2026-02-23",
+            "quote": "This segment’s chief competitors include Masco, Kohler, LIXIL Group, InSinkErator (owned by Whirlpool Corporation)"
+          }
         }
       ],
       "name_en": "Fortune Brands Innovations"

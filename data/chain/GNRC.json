@@ -9,6 +9,10 @@
     {
       "ja": "提携・顧客",
       "en": "Partners & customers"
+    },
+    {
+      "ja": "競合(10-Kに記載)",
+      "en": "Competitors (named in 10-Ks)"
     }
   ],
   "rivals": [
@@ -196,6 +200,19 @@
             "date": "2026-02-18",
             "quote": "C&I products – Competitors include Caterpillar, Cummins, Rehlko (formerly known as Kohler Power), IGSA, MTU (Rolls Royce), AKSA, MultiQuip, Wacker, Doosan, Atlas Copco, Himoinsa, Woodward, Planelec, and Co-map"
           }
+        },
+        {
+          "type": "rival",
+          "text": "パッケージ発電機の競合としてジェネラックを記載",
+          "text_en": "Names Generac among its packager competitors",
+          "source": {
+            "label": "Caterpillar 10-K",
+            "label_en": "Caterpillar 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/18230/000001823026000008/cat-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "An additional set of competitors, including Aggreko plc, Generac Holdings Inc., Discovery Energy, LLC (Rehlko, formerly Kohler Energy), Baker Hughes Co."
+          }
         }
       ],
       "name_en": "Caterpillar"
@@ -247,6 +264,30 @@
         }
       ],
       "name_en": "Wallbox N.V."
+    },
+    {
+      "id": "HYLN",
+      "ticker": "HYLN",
+      "name": "ハイリオン",
+      "sub": "発電機",
+      "sub_en": "Generators",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "発電機メーカーの主要な競合としてジェネラックを記載",
+          "text_en": "Names Generac as a key generator-maker competitor",
+          "source": {
+            "label": "Hyliion 10-K",
+            "label_en": "Hyliion 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1759631/000162828026011278/hyln-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "Key generator manufacturing competitors include Cummins, Bloom Energy, Generac, Rehlko (formerly Kohler), Caterpillar"
+          }
+        }
+      ],
+      "name_en": "Hyliion"
     }
   ],
   "far": [],

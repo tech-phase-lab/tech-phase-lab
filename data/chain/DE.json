@@ -129,6 +129,19 @@
             "date": "2025-12-18",
             "quote": "The competitive environment for the agriculture and turf operations includes some global competitors, such as AGCO Corporation, CLAAS KGaA mbH, CNH Industrial N.V., Kubota Tractor Corporation, and The Toro Company."
           }
+        },
+        {
+          "type": "rival",
+          "text": "世界の主要な競合としてディアを記載",
+          "text_en": "Names Deere as a principal worldwide competitor",
+          "source": {
+            "label": "AGCO 10-K",
+            "label_en": "AGCO 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/880266/000088026626000010/agco-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "Our two principal competitors on a worldwide basis are Deere & Company and CNH Industrial N.V."
+          }
         }
       ],
       "name_en": "AGCO"
@@ -252,6 +265,30 @@
         }
       ],
       "name_en": "Terex"
+    },
+    {
+      "id": "TWI",
+      "ticker": "TWI",
+      "name": "タイタン・インターナショナル",
+      "sub": "ホイール・タイヤ",
+      "sub_en": "Wheels & tires",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "顧客としてディアを記載",
+          "text_en": "Names Deere among its customers",
+          "source": {
+            "label": "Titan International 10-K",
+            "label_en": "Titan International 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/899751/000089975126000007/twi-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Customers including AGCO Corporation, Caterpillar Inc., CNH Global N.V., Deere & Company, Hitachi, Ltd., Kubota Corporation, Liebherr, and Volvo"
+          }
+        }
+      ],
+      "name_en": "Titan International"
     }
   ],
   "far": [],

@@ -247,6 +247,30 @@
         }
       ],
       "name_en": "Ericsson"
+    },
+    {
+      "id": "IDT",
+      "ticker": "IDT",
+      "name": "IDT",
+      "sub": "通信・決済サービス",
+      "sub_en": "Telecom & payments",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "UCaaSの主要な競合として8x8を記載",
+          "text_en": "Names 8x8 as a most-significant UCaaS competitor",
+          "source": {
+            "label": "IDT Corporation 10-K",
+            "label_en": "IDT Corporation 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1005731/000149315225016071/form10-k.htm",
+            "level": "official",
+            "date": "2025-09-29",
+            "quote": "net2phone’s most significant competitors in the UCaaS space include RingCentral, 8x8, Crexendo, Vonage, Dialpad and Nextiva."
+          }
+        }
+      ],
+      "name_en": "IDT Corporation"
     }
   ],
   "far": [],

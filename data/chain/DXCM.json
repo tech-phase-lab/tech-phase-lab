@@ -9,11 +9,16 @@
     {
       "ja": "提携・顧客",
       "en": "Partners & customers"
+    },
+    {
+      "ja": "競合(10-Kに記載)",
+      "en": "Competitors (named in 10-Ks)"
     }
   ],
   "rivals": [
     "ABT",
-    "MDT"
+    "MDT",
+    "SENS"
   ],
   "companies": [
     {
@@ -220,6 +225,30 @@
         }
       ],
       "name_en": "Garmin"
+    },
+    {
+      "id": "SENS",
+      "ticker": "SENS",
+      "name": "センセオニクス",
+      "sub": "血糖モニター",
+      "sub_en": "Glucose monitors",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "CGM(連続血糖測定)の競合としてデクスコムを記載",
+          "text_en": "Names Dexcom as a CGM competitor",
+          "source": {
+            "label": "Senseonics 10-K",
+            "label_en": "Senseonics 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1616543/000110465926022298/sens-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "manufacture CGM systems including Dexcom, Medtronic and Abbott"
+          }
+        }
+      ],
+      "name_en": "Senseonics"
     }
   ],
   "far": [],

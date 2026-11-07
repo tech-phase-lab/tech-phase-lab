@@ -329,6 +329,30 @@
         }
       ],
       "name_en": "ADTRAN"
+    },
+    {
+      "id": "TTMI",
+      "ticker": "TTMI",
+      "name": "TTMテクノロジーズ",
+      "sub": "プリント基板",
+      "sub_en": "Printed circuit boards",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "RF部品の主要な競合としてマイクロチップを記載",
+          "text_en": "Names Microchip as a principal RF-components competitor",
+          "source": {
+            "label": "TTM Technologies 10-K",
+            "label_en": "TTM Technologies 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1116942/000119312526051976/ttmi-20251229.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "Our principal competitors for our RF&S Components segment include Advanced Micro Devices, Inc., IDT Corporation, MACOM Technology Solutions Holdings, Inc., Microchip Technology Incorporated"
+          }
+        }
+      ],
+      "name_en": "TTM Technologies"
     }
   ],
   "far": [],

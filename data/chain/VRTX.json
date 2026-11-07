@@ -46,6 +46,19 @@
             "date": "2026-02-13",
             "quote": "The net profits and net losses incurred pursuant to the A&R JDCA with respect to CASGEVY are allocated 60% to us and 40% to CRISPR, subject to certain adjustments"
           }
+        },
+        {
+          "type": "tie",
+          "text": "主力のCASGEVYを、バーテックスと提携して開発",
+          "text_en": "Partners with Vertex on its lead program CASGEVY",
+          "source": {
+            "label": "CRISPR Therapeutics 10-K",
+            "label_en": "CRISPR Therapeutics 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1674416/000119312526048957/crsp-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "We have partnered with Vertex Pharmaceuticals Incorporated, or Vertex, on our lead program CASGEVY"
+          }
         }
       ],
       "name_en": "CRISPR Therapeutics"

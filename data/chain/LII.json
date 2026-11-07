@@ -210,6 +210,19 @@
             "date": "2026-02-17",
             "quote": "CSW Industrials, Inc.; Daikin Industries, Ltd. (Goodman, McQuay); and AAON, Inc."
           }
+        },
+        {
+          "type": "rival",
+          "text": "快適冷房製品の主要な競合としてレノックスを記載",
+          "text_en": "Names Lennox as a primary comfort-cooling competitor",
+          "source": {
+            "label": "AAON 10-K",
+            "label_en": "AAON 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/824142/000082414226000005/aaon-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "Competition The Company’s comfort cooling products primarily compete with Lennox (Lennox International, Inc.), Trane (Trane Technologies plc)"
+          }
         }
       ],
       "name_en": "AAON, Inc."

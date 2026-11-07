@@ -63,6 +63,19 @@
             "date": "2026-02-26",
             "quote": "We face competition from various technology services providers such as Accenture, Atos, Capgemini, Cognizant Technology Solutions, Deloitte Digital, DXC Technology, Endava, Genpact, GlobalLogic, Globant, Grid Dynamics, HCL Technologies, Infosys, Tata Consultancy Services, and Wipro, among others."
           }
+        },
+        {
+          "type": "rival",
+          "text": "直接の競合としてEPAMを記載",
+          "text_en": "Names EPAM as a direct competitor",
+          "source": {
+            "label": "Cognizant 10-K",
+            "label_en": "Cognizant 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1058290/000105829026000008/ctsh-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "Our direct competitors include, among others, Accenture, Atos, Capgemini, CGI, Deloitte Digital, DXC Technology, EPAM Systems, Genpact"
+          }
         }
       ],
       "name_en": "Cognizant Technology Solutions"

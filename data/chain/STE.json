@@ -231,6 +231,19 @@
             "date": "2026-05-29",
             "quote": "AST operates in a highly regulated industry and competes with Sterigenics, other smaller contract sterilization companies, other manufacturers of sterilization equipment and control systems, and manufacturers that sterilize products in-house."
           }
+        },
+        {
+          "type": "rival",
+          "text": "滅菌サービスの競合としてSTERISの事業部門を記載",
+          "text_en": "Names STERIS’s sterilization segment as a competitor",
+          "source": {
+            "label": "Sotera Health 10-K",
+            "label_en": "Sotera Health 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1822479/000182247926000015/shc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "We compete globally with Applied Sterilization Technologies, a segment of STERIS plc"
+          }
         }
       ],
       "name_en": "Sterigenics (Sotera Health)"

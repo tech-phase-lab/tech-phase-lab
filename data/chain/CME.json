@@ -93,6 +93,19 @@
             "date": "2026-02-26",
             "quote": "Through our joint venture with S&P Global, S&P Dow Jones Indices LLC, we have a long-term, ownership-linked, exclusive license to list futures and options based on the S&P 500 Index and certain other S&P indices."
           }
+        },
+        {
+          "type": "tie",
+          "text": "取引後サービスを統合する50対50の合弁会社を、CMEグループと運営していた",
+          "text_en": "Held a 50/50 post-trade services joint venture with CME Group",
+          "source": {
+            "label": "S&P Global 10-K",
+            "label_en": "S&P Global 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/64040/000006404026000013/spgi-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "50/50 joint venture arrangement with shared control with CME Group that combined each company’s post-trade services"
+          }
         }
       ],
       "name_en": "S&P Global"

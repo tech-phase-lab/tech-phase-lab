@@ -183,6 +183,19 @@
             "date": "2026-02-19",
             "quote": "In 2025, other publicly traded companies among the ten-largest U.S. aggregates producers included the following: • Amrize Ltd. • Arcosa, Inc. • CEMEX S.A.B. de C.V. • CRH plc • Heidelberg Materials AG • Holcim Ltd. • Knife River Corporation • Vulcan Materials Company"
           }
+        },
+        {
+          "type": "rival",
+          "text": "競合としてマーティン・マリエッタを記載",
+          "text_en": "Names Martin Marietta as a competitor",
+          "source": {
+            "label": "Knife River 10-K",
+            "label_en": "Knife River 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1955520/000195552026000003/knf-20251231.htm",
+            "level": "official",
+            "date": "2026-02-20",
+            "quote": "Heidelberg Materials, Martin Marietta Materials, Inc., Construction Partners, Inc., and Vulcan Materials Company."
+          }
         }
       ],
       "name_en": "Knife River"

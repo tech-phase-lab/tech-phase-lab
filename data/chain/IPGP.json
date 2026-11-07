@@ -220,6 +220,19 @@
             "date": "2026-02-23",
             "quote": "In the materials processing market, we compete with makers of fiber lasers and other lasers, such as Coherent, Inc., JPT Opto-Electronics Co. Ltd., Laserline GmbH, Lumentum Holdings Inc., Maxphotonics Co., Ltd., MKS Instruments, Inc., nLight, Inc., Trumpf GmbH + Co. KG and Wuhan Raycus Fiber Laser Technologies Co. Ltd., as well as other smaller competitors."
           }
+        },
+        {
+          "type": "rival",
+          "text": "ファイバーレーザーなどの競合としてIPGフォトニクスを記載",
+          "text_en": "Names IPG Photonics as a fiber-laser competitor",
+          "source": {
+            "label": "nLIGHT 10-K",
+            "label_en": "nLIGHT 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1124796/000112479626000012/lasr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "We compete with companies that offer semiconductor lasers, fiber lasers, fiber amplifiers and other laser products such as IPG Photonics, Coherent"
+          }
         }
       ],
       "name_en": "nLight"

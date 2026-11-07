@@ -9,6 +9,11 @@
     {
       "ja": "提携・顧客",
       "en": "Partners & customers"
+    },
+    {
+      "ja": "供給元(上流)",
+      "en": "Suppliers (upstream)",
+      "above": true
     }
   ],
   "rivals": [
@@ -61,6 +66,19 @@
             "level": "official",
             "date": "2026-02-20",
             "quote": "We are collaborating with Vertex on our CF candidate, mRNA-3692/VX-522, which is designed to treat the underlying cause of CF by enabling cells in the lungs to produce functional CFTR protein for the treatment of the over 5,000 patients who do not produce any modulator-responsive CFTR protein."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "嚢胞性線維症向けmRNA治療薬VX-522を、モデルナとの提携で開発",
+          "text_en": "Develops the CF mRNA therapeutic VX-522 through its collaboration with Moderna",
+          "source": {
+            "label": "Vertex Pharmaceuticals 10-K",
+            "label_en": "Vertex Pharmaceuticals 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/875320/000087532026000056/vrtx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "our mRNA therapeutic, VX-522, for treatment of CF through our collaboration with Moderna"
           }
         }
       ],
@@ -233,6 +251,30 @@
         }
       ],
       "name_en": "GSK"
+    },
+    {
+      "id": "PSNL",
+      "ticker": "PSNL",
+      "name": "パーソナリス",
+      "sub": "がんゲノム解析",
+      "sub_en": "Cancer genomics",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "売上の大部分を占める大口顧客の1社としてモデルナを記載",
+          "text_en": "Names Moderna as one of its two largest customers",
+          "source": {
+            "label": "Personalis 10-K",
+            "label_en": "Personalis 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1527753/000119312526076615/psnl-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "we currently derive a substantial portion of our revenue from two of our largest customers, Moderna and the VA MVP"
+          }
+        }
+      ],
+      "name_en": "Personalis"
     }
   ],
   "far": [],
