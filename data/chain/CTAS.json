@@ -13,12 +13,17 @@
     {
       "ja": "同業グループ(10-Kの株価比較に記載)",
       "en": "Peer group (named in the 10-K’s stock performance comparison)"
+    },
+    {
+      "ja": "競合(10-Kに記載)",
+      "en": "Competitors (named in 10-Ks)"
     }
   ],
   "rivals": [
     "ABM",
     "ARMK",
-    "ROL"
+    "ROL",
+    "VSTS"
   ],
   "companies": [
     {
@@ -129,6 +134,54 @@
           }
         }
       ]
+    },
+    {
+      "id": "VSTS",
+      "ticker": "VSTS",
+      "name": "ベスティス",
+      "sub": "ユニフォーム",
+      "sub_en": "Uniform rental",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "主要な競合としてシンタスを記載",
+          "text_en": "Names Cintas as a notable competitor of size",
+          "source": {
+            "label": "Vestis 10-K",
+            "label_en": "Vestis 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1967649/000162828025054597/vsts-20251003.htm",
+            "level": "official",
+            "date": "2025-12-02",
+            "quote": "Cintas Corporation and UniFirst Corporation are notable competitors of size, and we also have numerous local and regional competitors."
+          }
+        }
+      ],
+      "name_en": "Vestis"
+    },
+    {
+      "id": "ACU",
+      "ticker": "ACU",
+      "name": "アクメ・ユナイテッド",
+      "sub": "救急・安全用品",
+      "sub_en": "First aid & safety",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "救急・安全用品の主要な競合としてシンタスを記載",
+          "text_en": "Names Cintas as a major first-aid and safety competitor",
+          "source": {
+            "label": "Acme United 10-K",
+            "label_en": "Acme United 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/2098/000119312526102079/acu-20251231.htm",
+            "level": "official",
+            "date": "2026-03-11",
+            "quote": "The major competitors in the first aid and safety category are Honeywell and Cintas."
+          }
+        }
+      ],
+      "name_en": "Acme United"
     }
   ],
   "far": [],

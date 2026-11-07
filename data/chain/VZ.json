@@ -9,6 +9,15 @@
     {
       "ja": "提携・顧客",
       "en": "Partners & customers"
+    },
+    {
+      "ja": "競合(10-Kに記載)",
+      "en": "Competitors (named in 10-Ks)"
+    },
+    {
+      "ja": "供給元(上流)",
+      "en": "Suppliers (upstream)",
+      "above": true
     }
   ],
   "rivals": [
@@ -185,6 +194,54 @@
         }
       ],
       "name_en": "Tillman Global Holdings"
+    },
+    {
+      "id": "OPTU",
+      "ticker": "OPTU",
+      "name": "オプティマム・コミュニケーションズ",
+      "sub": "ケーブル・ブロードバンド",
+      "sub_en": "Cable & broadband",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "光ファイバーの主要な競合としてベライゾンを記載",
+          "text_en": "Names Verizon as a primary fiber competitor",
+          "source": {
+            "label": "Optimum Communications 10-K",
+            "label_en": "Optimum Communications 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1702780/000170278026000013/optu-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "Our primary fiber-based competitors include AT&T and Verizon Communications Inc.'s (\"Verizon\") Fios"
+          }
+        }
+      ],
+      "name_en": "Optimum Communications"
+    },
+    {
+      "id": "RBBN",
+      "ticker": "RBBN",
+      "name": "リボン・コミュニケーションズ",
+      "sub": "通信ソフト・機器",
+      "sub_en": "Telecom software & equipment",
+      "row": 2,
+      "relations": [
+        {
+          "type": "up",
+          "text": "最大の顧客としてベライゾンを記載(売上の約17%)",
+          "text_en": "Verizon was its largest customer at about 17% of revenue",
+          "source": {
+            "label": "Ribbon Communications 10-K",
+            "label_en": "Ribbon Communications 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1708055/000170805526000012/rbbn-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "One customer, Verizon, contributed approximately 17% of our revenue in the year ended December 31, 2025."
+          }
+        }
+      ],
+      "name_en": "Ribbon Communications"
     }
   ],
   "far": [],

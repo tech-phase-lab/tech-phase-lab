@@ -305,6 +305,30 @@
           }
         }
       ]
+    },
+    {
+      "id": "ADTN",
+      "ticker": "ADTN",
+      "name": "アドトラン",
+      "sub": "通信機器",
+      "sub_en": "Telecom equipment",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "アクセス機器の主要な競合としてマイクロチップを記載",
+          "text_en": "Names Microchip as a key competitor in access and aggregation",
+          "source": {
+            "label": "ADTRAN 10-K",
+            "label_en": "ADTRAN 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/926282/000119312526073878/adtn-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "key competitors include Nokia, Calix, Vecima, Harmonic and Microchip."
+          }
+        }
+      ],
+      "name_en": "ADTRAN"
     }
   ],
   "far": [],

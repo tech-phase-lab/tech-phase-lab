@@ -90,6 +90,19 @@
             "date": "2026-02-19",
             "quote": "major U.S. online automotive marketplaces, such as AutoTrader.com, CARFAX.com, Cars.com, and TrueCar.com"
           }
+        },
+        {
+          "type": "rival",
+          "text": "直接の競合としてカーガルーズを記載",
+          "text_en": "Names CarGurus as a direct competitor",
+          "source": {
+            "label": "Cars.com 10-K",
+            "label_en": "Cars.com 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1683606/000119312526076546/cars-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Our direct competitors are online automotive marketplaces, such as CarGurus, AutoTrader and TrueCar."
+          }
         }
       ],
       "name_en": "Cars.com"

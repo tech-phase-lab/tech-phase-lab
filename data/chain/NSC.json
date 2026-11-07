@@ -48,6 +48,19 @@
             "date": "2026-02-09",
             "quote": "Through a limited liability company, we and CSX jointly own Conrail, whose primary subsidiary is CRC. We have a 58 % economic and 50 % voting interest in the jointly-owned entity, and CSX has the remainder of the economic and voting interests."
           }
+        },
+        {
+          "type": "rival",
+          "text": "主な鉄道の競合としてノーフォーク・サザンを記載",
+          "text_en": "Names Norfolk Southern as its primary rail competitor",
+          "source": {
+            "label": "CSX 10-K",
+            "label_en": "CSX 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/277948/000027794826000006/csx-20251231.htm",
+            "level": "official",
+            "date": "2026-02-12",
+            "quote": "CSXT’s primary rail competitor is Norfolk Southern Railway"
+          }
         }
       ],
       "name_en": "CSX Corporation"

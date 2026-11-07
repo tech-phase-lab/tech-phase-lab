@@ -9,6 +9,11 @@
     {
       "ja": "提携・顧客",
       "en": "Partners & customers"
+    },
+    {
+      "ja": "供給元(上流)",
+      "en": "Suppliers (upstream)",
+      "above": true
     }
   ],
   "rivals": [
@@ -185,6 +190,30 @@
         }
       ],
       "name_en": "United Launch Alliance"
+    },
+    {
+      "id": "DCO",
+      "ticker": "DCO",
+      "name": "デュコモン",
+      "sub": "航空機部品",
+      "sub_en": "Aerospace parts",
+      "row": 1,
+      "relations": [
+        {
+          "type": "up",
+          "text": "最大顧客の1社としてボーイングを記載",
+          "text_en": "Names Boeing as one of its largest customers",
+          "source": {
+            "label": "Ducommun 10-K",
+            "label_en": "Ducommun 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/30305/000162828026011952/dco-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "one of our largest customers, The Boeing Company (“Boeing”)"
+          }
+        }
+      ],
+      "name_en": "Ducommun"
     }
   ],
   "far": [],

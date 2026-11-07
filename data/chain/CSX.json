@@ -62,6 +62,19 @@
             "date": "2026-02-12",
             "quote": "Through a limited liability company, CSX and Norfolk Southern Corporation (“NS”) jointly own Conrail. CSX has a 42 % economic interest and 50 % voting interest in the jointly-owned entity"
           }
+        },
+        {
+          "type": "rival",
+          "text": "主な鉄道の競合としてCSXを記載",
+          "text_en": "Names CSX as its primary rail competitor",
+          "source": {
+            "label": "Norfolk Southern 10-K",
+            "label_en": "Norfolk Southern 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/702165/000162828026006268/nsc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-09",
+            "quote": "Our primary rail competitor is CSX Corporation (CSX);"
+          }
         }
       ],
       "name_en": "Norfolk Southern"

@@ -156,6 +156,30 @@
         }
       ],
       "name_en": "Lexicon Pharmaceuticals"
+    },
+    {
+      "id": "TBPH",
+      "ticker": "TBPH",
+      "name": "セラバンス・バイオファーマ",
+      "sub": "バイオ医薬",
+      "sub_en": "Biopharma",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "COPD治療薬YUPELRIを、ビアトリスと共同で販売",
+          "text_en": "Co-commercializes the COPD drug YUPELRI with Viatris",
+          "source": {
+            "label": "Theravance Biopharma 10-K",
+            "label_en": "Theravance Biopharma 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1583107/000110465926033077/tbph-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-03-23",
+            "quote": "Through the combined commercialization efforts with our partner Viatris Inc., total YUPELRI net sales increased by 12% to $266.6 million in 2025 compared to 2024."
+          }
+        }
+      ],
+      "name_en": "Theravance Biopharma"
     }
   ],
   "far": [],

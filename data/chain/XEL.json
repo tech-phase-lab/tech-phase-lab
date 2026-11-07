@@ -126,6 +126,30 @@
         }
       ],
       "name_en": "Freeport-McMoRan"
+    },
+    {
+      "id": "XOS",
+      "ticker": "XOS",
+      "name": "ゾス",
+      "sub": "商用EVトラック",
+      "sub_en": "Commercial EV trucks",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "充電拠点(Hub)の顧客としてエクセルを記載",
+          "text_en": "Names Xcel Energy among its Hub customers",
+          "source": {
+            "label": "Xos 10-K",
+            "label_en": "Xos 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1819493/000181949326000008/xos-20251231.htm",
+            "level": "official",
+            "date": "2026-03-30",
+            "quote": "Additional Hub customers include Xcel Energy, Florida Power & Light, Duke Energy and RKU Distributing."
+          }
+        }
+      ],
+      "name_en": "Xos"
     }
   ],
   "far": [],

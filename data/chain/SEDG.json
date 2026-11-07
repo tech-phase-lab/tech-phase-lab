@@ -113,6 +113,19 @@
             "date": "2026-02-25",
             "quote": "In the North American residential market, we compete with manufacturers such as Tesla Inc. with traditional string-based solutions, as well as microinverter manufacturers such as Enphase Energy, Inc."
           }
+        },
+        {
+          "type": "rival",
+          "text": "インバーター市場の競合としてソーラーエッジを記載",
+          "text_en": "Names SolarEdge as an inverter-market competitor",
+          "source": {
+            "label": "Enphase Energy 10-K",
+            "label_en": "Enphase Energy 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1463101/000146310126000013/enph-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "Competitors in the inverter market include, among others, SolarEdge Technologies, Inc."
+          }
         }
       ],
       "name_en": "Enphase Energy"

@@ -161,6 +161,54 @@
         }
       ],
       "name_en": "Lio Ho Group"
+    },
+    {
+      "id": "STRT",
+      "ticker": "STRT",
+      "name": "ストラテック・セキュリティ",
+      "sub": "自動車部品(鍵・ドア機構)",
+      "sub_en": "Auto parts (locks, latches)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "売上の21%がフォード向け(2026年度の第2の顧客)",
+          "text_en": "Ford was its second-largest customer at 21% of fiscal 2026 sales",
+          "source": {
+            "label": "Strattec Security 10-K",
+            "label_en": "Strattec Security 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/933034/000119312526374333/strt-20260628.htm",
+            "level": "official",
+            "date": "2026-08-28",
+            "quote": "In fiscal 2026, our three largest customers, General Motors Company, Ford Motor Company and Stellantis, accounted for 27%, 21% and 16%, respectively, of our annual sales."
+          }
+        }
+      ],
+      "name_en": "Strattec Security"
+    },
+    {
+      "id": "DCH",
+      "ticker": "DCH",
+      "name": "ドーチ",
+      "sub": "自動車部品(駆動系)",
+      "sub_en": "Auto parts (driveline)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "ブロンコ・スポーツ、マーベリックなどの駆動系部品をフォードへ供給",
+          "text_en": "Supplies driveline products for Ford programs such as the Bronco Sport and Maverick",
+          "source": {
+            "label": "Dauch 10-K",
+            "label_en": "Dauch 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1062231/000106223126000020/dch-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "We are also a supplier to Ford Motor Company (Ford) for driveline system products on certain vehicle programs including the Bronco Sport, Maverick, Escape and Lincoln Nautilus"
+          }
+        }
+      ],
+      "name_en": "Dauch"
     }
   ],
   "far": [],

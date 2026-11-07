@@ -9,9 +9,15 @@
     {
       "ja": "提携・顧客",
       "en": "Partners & customers"
+    },
+    {
+      "ja": "競合(10-Kに記載)",
+      "en": "Competitors (named in 10-Ks)"
     }
   ],
-  "rivals": [],
+  "rivals": [
+    "OPTU"
+  ],
   "companies": [
     {
       "id": "TPG",
@@ -132,6 +138,30 @@
         }
       ],
       "name_en": "Lumen"
+    },
+    {
+      "id": "OPTU",
+      "ticker": "OPTU",
+      "name": "オプティマム・コミュニケーションズ",
+      "sub": "ケーブル・ブロードバンド",
+      "sub_en": "Cable & broadband",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "光ファイバーの主要な競合としてAT&Tを記載",
+          "text_en": "Names AT&T as a primary fiber competitor",
+          "source": {
+            "label": "Optimum Communications 10-K",
+            "label_en": "Optimum Communications 10-K",
+            "url": "https://www.sec.gov/Archives/edgar/data/1702780/000170278026000013/optu-20251231.htm",
+            "level": "official",
+            "date": "2026-02-13",
+            "quote": "Our primary fiber-based competitors include AT&T and Verizon Communications Inc.'s (\"Verizon\") Fios"
+          }
+        }
+      ],
+      "name_en": "Optimum Communications"
     }
   ],
   "far": [],
