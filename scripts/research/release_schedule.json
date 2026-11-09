@@ -601,6 +601,23 @@
       "titleJa": "NVIDIA 決算説明会（2027年度Q3）"
     },
     {
+      "id": "panw-fq1-2027-webcast-close",
+      "kind": "earnings",
+      "ticker": "PANW",
+      "phase": "release",
+      "at": "2026-11-18T21:00:00.000Z",
+      "titleJa": "Palo Alto Networks 決算（米国市場終了後）",
+      "approximate": true
+    },
+    {
+      "id": "panw-fq1-2027-webcast",
+      "kind": "earnings",
+      "ticker": "PANW",
+      "phase": "call",
+      "at": "2026-11-18T21:30:00.000Z",
+      "titleJa": "Palo Alto Networks 決算説明会（2027年度Q1）"
+    },
+    {
       "id": "pce-2026-10",
       "kind": "economic",
       "indicator": "pce",
@@ -609,12 +626,63 @@
       "titleJa": "米国PCE物価指数（10月）"
     },
     {
+      "id": "crwd-fq3-2027-call-close",
+      "kind": "earnings",
+      "ticker": "CRWD",
+      "phase": "release",
+      "at": "2026-12-01T21:00:00.000Z",
+      "titleJa": "CrowdStrike 決算（米国市場終了後）",
+      "approximate": true
+    },
+    {
+      "id": "mrvl-fq3-2027-call-close",
+      "kind": "earnings",
+      "ticker": "MRVL",
+      "phase": "release",
+      "at": "2026-12-01T21:00:00.000Z",
+      "titleJa": "Marvell 決算（米国市場終了後）",
+      "approximate": true
+    },
+    {
+      "id": "mrvl-fq3-2027-call",
+      "kind": "earnings",
+      "ticker": "MRVL",
+      "phase": "call",
+      "at": "2026-12-01T21:30:00.000Z",
+      "titleJa": "Marvell 決算説明会（2027年度Q3）"
+    },
+    {
+      "id": "crwd-fq3-2027-call",
+      "kind": "earnings",
+      "ticker": "CRWD",
+      "phase": "call",
+      "at": "2026-12-01T22:00:00.000Z",
+      "titleJa": "CrowdStrike 決算説明会（2027年度Q3）"
+    },
+    {
       "id": "adp-2026-12-02",
       "kind": "economic",
       "indicator": "adp",
       "phase": "release",
       "at": "2026-12-02T13:15:00.000Z",
       "titleJa": "ADP雇用統計（11月）"
+    },
+    {
+      "id": "snow-fq3-2027-call-close",
+      "kind": "earnings",
+      "ticker": "SNOW",
+      "phase": "release",
+      "at": "2026-12-02T21:00:00.000Z",
+      "titleJa": "Snowflake 決算（米国市場終了後）",
+      "approximate": true
+    },
+    {
+      "id": "snow-fq3-2027-call",
+      "kind": "earnings",
+      "ticker": "SNOW",
+      "phase": "call",
+      "at": "2026-12-02T22:00:00.000Z",
+      "titleJa": "Snowflake 決算説明会（2027年度Q3）"
     },
     {
       "id": "jobs-2026-12-04",

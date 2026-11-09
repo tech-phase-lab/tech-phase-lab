@@ -219,7 +219,11 @@ NOISE = re.compile(
     r'|\bZacks (?:Analyst Blog|Investment Ideas)\b|\bTake five\b|\blifetime access\b|\bfor one \$\d+ payment\b'
     r'|\bForecast\s+[—–-]\s+Price Target\b|\bPrediction for 20\d\d\b|\bBC-Most Active\b'
     r'|\$[^$\n]{1,80}\([A-Z.]{1,8}\.US\)\$|\b\d+ (?:Top |Best )?Stocks? to Buy\b|\bBetter AI Stock:|\bToo Late to Buy\b'
-    r'|\bETFs?\b.{0,50}\b(?:buy|buys|smartest|best)\b|\b(?:buy|buys)\b.{0,30}\bETFs?\b|\bhistory shows\b|\bDisney\b.{0,40}\bCharacter\.AI\b|\bhere.s why\b|\bthis is why\b|\bthe (?:real |main |simple |surprising )?reasons? (?:why|that|behind)\b|\bBuy Now and Hold\b|\bShould You Buy\b|\bDon.t miss\b|\bmissed out on\b.{0,60}\bstock', re.I)
+    r'|\bETFs?\b.{0,50}\b(?:buy|buys|smartest|best)\b|\b(?:buy|buys)\b.{0,30}\bETFs?\b|\bhistory shows\b|\bDisney\b.{0,40}\bCharacter\.AI\b|\bhere.s why\b|\bthis is why\b|\bthe (?:real |main |simple |surprising )?reasons? (?:why|that|behind)\b|\bBuy Now and Hold\b|\bShould You Buy\b|\bDon.t miss\b|\bmissed out on\b.{0,60}\bstock'
+    # Nov 9: opinion and how-to pieces that only mention the company, and a "(Upgrade)" suffix is an analyst blog's own rating call.
+    r'|\((?:Upgrade|Downgrade)\)\s*$|\b(?:\d+|three|four|five|six|seven|ten) (?:key|main|major|big) (?:points|takeaways|things|reasons|risks|catalysts)\b'
+    r'|\bshould (?:check out|review|take a look at|know about)\b|\bfor (?:long-term|retail|income|dividend) investors\b'
+    r'|\bfaces? (?:market )?(?:challenges|headwinds) (?:amid|as|following)\b', re.I)
 MAJOR = re.compile(r'reuters|bloomberg|cnbc|wall street journal|\bwsj\b|barron|financial times|marketwatch|associated press|'
                    r'the information|nikkei|investor.s business|seeking alpha|yahoo finance|benzinga|the verge|ars technica|tom.s hardware', re.I)
 STOPWORDS = frozenset('the and for with from that this its are was has have will into over after than more new how why what '
@@ -397,7 +401,7 @@ def public_feed(db, now_ts=None):
           FROM company_wire w LEFT JOIN company_wire_ja j USING(key) LEFT JOIN company_wire_attempts a USING(key)
           WHERE w.ticker=? AND w.published_at>=? AND COALESCE(a.reason,'')<>'not-news' ORDER BY w.published_at DESC LIMIT 120''',
                           (ticker, since)).fetchall()
-        rows = [r for r in rows if not truncated(r['title'])]
+        rows = [r for r in rows if not truncated(r['title']) and not NOISE.search(r['title'])]
         # Oct 16: the Japanese view shows only translated headlines, so a company whose newest ten were
         # all still untranslated (or rejected) looked stale. Keep the newest translated ones in their own
         # allowance, plus a few untranslated ones for the English view.
