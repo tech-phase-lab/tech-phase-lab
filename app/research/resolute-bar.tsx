@@ -69,14 +69,19 @@ export default function ResoluteBar() {
     const place = () => {
       const menu = document.querySelector<HTMLElement>("[data-tab]")?.parentElement;
       if (!menu) return;
-      const next = Math.round(window.innerHeight - menu.getBoundingClientRect().top + 8);
+      // Measured from the menu's own size and its CSS offset, not from where it happens to be drawn: while the page is pulled past
+      // its bottom edge (the rubber band) the menu is drawn higher, and a position-based measurement left the bar floating far
+      // above the menu with the notch in the wrong place (owner, Nov 8).
+      const style = getComputedStyle(menu);
+      const next = Math.round(style.position === "fixed" ? (parseFloat(style.bottom) || 0) + menu.offsetHeight + 8 : window.innerHeight - menu.getBoundingClientRect().top + 8);
       setLift(next);
       // The round notch is cut around the Search button where it really is: in a browser tab the menu is docked differently
       // and sits a few pixels off the middle, and a fixed notch left a dark sliver beside the button (owner, Oct 28).
+      // Both rectangles are read in the same frame, so a pulled-down page moves them together and the notch stays put.
       const orb = document.querySelector<HTMLElement>("[data-tab] [data-orb]")?.getBoundingClientRect(), self = bar.current;
       if (!orb || !self) return;
-      const top = window.innerHeight - next - self.offsetHeight;
-      setNotch({ x: Math.round((orb.left + orb.width / 2 - self.getBoundingClientRect().left) * 10) / 10, y: Math.round((orb.top + orb.height / 2 - top) * 10) / 10, r: Math.round(orb.width / 2 + 7) });
+      const own = self.getBoundingClientRect();
+      setNotch({ x: Math.round((orb.left + orb.width / 2 - own.left) * 10) / 10, y: Math.round((orb.top + orb.height / 2 - own.top) * 10) / 10, r: Math.round(orb.width / 2 + 7) });
     };
     place();
     // Coming back from another page (or the phone's browser bars sliding in and out) moves the bottom menu after the first
