@@ -225,9 +225,13 @@ class TriageTests(unittest.TestCase):
                       'If you only have $1,000, buy this one ETF and hold for 20 years',
                       'If the stock market crashes, history shows these 3 ETFs are the smartest buys',
                       'Disney to pay 66 Character.AI employees $60M a year - Alphabet (NASDAQ:GOOGL)',
-                      "35 analysts cover SpaceX. Here's why their targets have little to do with rockets"):
+                      "35 analysts cover SpaceX. Here's why their targets have little to do with rockets",
+                      "SanDisk: This Isn't Over (Upgrade)", 'Core Scientific: 3 Key Points For Long-Term Investors',
+                      'IT admins should check out new features recently added to Entra',
+                      'CoreWeave (CRWV) Faces Market Challenges Amid AI Sector Sell-Off'):
             self.assertTrue(company_wire.NOISE.search(title), title)
         self.assertFalse(company_wire.NOISE.search('Micron raises fiscal Q1 guidance on HBM demand'))
+        self.assertFalse(company_wire.NOISE.search('SanDisk upgraded by Morgan Stanley, target raised to $900'))
 
     def setUp(self):
         import tempfile, os

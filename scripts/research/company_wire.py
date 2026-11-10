@@ -188,7 +188,8 @@ Keep negation and direction (rise/fall, beat/miss, raise/cut) exactly. When an i
 Also write shortJa: the same headline as one short Japanese line of at most 22 characters, for a one-line news band. Keep the subject (company or ticker) and the single most important fact; keep any number you use exactly as in titleJa; never add a fact or a number that titleJa does not have; no trailing punctuation; do not cut a sentence off mid-word.
 Also judge each headline (kind). "news" states a concrete fact about the company's business or its stock: results, guidance, a deal, order, investment, product, partnership, lawsuit, regulatory step, executive change, an analyst rating or price-target change, or a market move together with its stated cause.
 "not-news" is everything else, for example: investment advice or opinion ("should you buy", "which stock is better", "X vs Y", "a buying opportunity", "buy the dip"); comparisons and listicles; price predictions and forecasts; any headline that asks a question or starts with "Why" or "What" without giving the answer; teasers that hide their answer ("here is why"); what-if or past-returns pieces; human-interest, hiring, workplace, lifestyle, culture, entertainment or feature stories (for example a vocational graduate getting a job, an employee's life story, a TV programme); and promotional or community posts.
-Examples: "Why AMD, Micron, Sandisk and Nvidia stocks are falling in premarket today" = not-news. "Which AI memory stock is the better buy?" = not-news. "ASML has orders and pricing power, but what it lacks is time" (an editorial take with no concrete business fact) = not-news. "At 21 at SK hynix, at 27 a home in Seoul: a vocational school's comeback" = not-news. "Micron raises fiscal Q1 guidance on HBM demand" = news. "Nvidia shares fall 3% after tighter export curbs" = news. When a headline states a concrete business fact, use "news" even if it is minor.
+Also "not-news" (owner, Nov 9: judge strictly; when in doubt, choose not-news): an analyst blog's or columnist's own view or rating call about the company ("This isn't over (Upgrade)", "Why we are bullish", "3 key points for long-term investors"); vague mood or sector commentary with no concrete figure or event ("faces market challenges amid the AI sell-off", "stocks slide as investors worry"); how-to, tips and usage advice ("IT admins should check out the new features"); a headline where the named company is only incidental to another company's story; and rehashed older news with nothing new.
+Examples: "Why AMD, Micron, Sandisk and Nvidia stocks are falling in premarket today" = not-news. "Which AI memory stock is the better buy?" = not-news. "ASML has orders and pricing power, but what it lacks is time" (an editorial take with no concrete business fact) = not-news. "At 21 at SK hynix, at 27 a home in Seoul: a vocational school's comeback" = not-news. "Sandisk: This isn't over (Upgrade)" = not-news. "CoreWeave faces market challenges amid AI sector sell-off" = not-news. "Core Scientific: 3 key points for long-term investors" = not-news. "IT admins should check out new features recently added to Entra" = not-news. "Micron raises fiscal Q1 guidance on HBM demand" = news. "Nvidia shares fall 3% after tighter export curbs" = news. When a headline states a concrete business fact, use "news" even if it is minor.
 """ + japanese_names.policy_line()
 
 
@@ -219,7 +220,11 @@ NOISE = re.compile(
     r'|\bZacks (?:Analyst Blog|Investment Ideas)\b|\bTake five\b|\blifetime access\b|\bfor one \$\d+ payment\b'
     r'|\bForecast\s+[—–-]\s+Price Target\b|\bPrediction for 20\d\d\b|\bBC-Most Active\b'
     r'|\$[^$\n]{1,80}\([A-Z.]{1,8}\.US\)\$|\b\d+ (?:Top |Best )?Stocks? to Buy\b|\bBetter AI Stock:|\bToo Late to Buy\b'
-    r'|\bETFs?\b.{0,50}\b(?:buy|buys|smartest|best)\b|\b(?:buy|buys)\b.{0,30}\bETFs?\b|\bhistory shows\b|\bDisney\b.{0,40}\bCharacter\.AI\b|\bhere.s why\b|\bthis is why\b|\bthe (?:real |main |simple |surprising )?reasons? (?:why|that|behind)\b|\bBuy Now and Hold\b|\bShould You Buy\b|\bDon.t miss\b|\bmissed out on\b.{0,60}\bstock', re.I)
+    r'|\bETFs?\b.{0,50}\b(?:buy|buys|smartest|best)\b|\b(?:buy|buys)\b.{0,30}\bETFs?\b|\bhistory shows\b|\bDisney\b.{0,40}\bCharacter\.AI\b|\bhere.s why\b|\bthis is why\b|\bthe (?:real |main |simple |surprising )?reasons? (?:why|that|behind)\b|\bBuy Now and Hold\b|\bShould You Buy\b|\bDon.t miss\b|\bmissed out on\b.{0,60}\bstock'
+    # Nov 9: opinion and how-to pieces that only mention the company, and a "(Upgrade)" suffix is an analyst blog's own rating call.
+    r'|\((?:Upgrade|Downgrade)\)\s*$|\b(?:\d+|three|four|five|six|seven|ten) (?:key|main|major|big) (?:points|takeaways|things|reasons|risks|catalysts)\b'
+    r'|\bshould (?:check out|review|take a look at|know about)\b|\bfor (?:long-term|retail|income|dividend) investors\b'
+    r'|\bfaces? (?:market )?(?:challenges|headwinds) (?:amid|as|following)\b', re.I)
 MAJOR = re.compile(r'reuters|bloomberg|cnbc|wall street journal|\bwsj\b|barron|financial times|marketwatch|associated press|'
                    r'the information|nikkei|investor.s business|seeking alpha|yahoo finance|benzinga|the verge|ars technica|tom.s hardware', re.I)
 STOPWORDS = frozenset('the and for with from that this its are was has have will into over after than more new how why what '
@@ -397,7 +402,7 @@ def public_feed(db, now_ts=None):
           FROM company_wire w LEFT JOIN company_wire_ja j USING(key) LEFT JOIN company_wire_attempts a USING(key)
           WHERE w.ticker=? AND w.published_at>=? AND COALESCE(a.reason,'')<>'not-news' ORDER BY w.published_at DESC LIMIT 120''',
                           (ticker, since)).fetchall()
-        rows = [r for r in rows if not truncated(r['title'])]
+        rows = [r for r in rows if not truncated(r['title']) and not NOISE.search(r['title'])]
         # Oct 16: the Japanese view shows only translated headlines, so a company whose newest ten were
         # all still untranslated (or rejected) looked stale. Keep the newest translated ones in their own
         # allowance, plus a few untranslated ones for the English view.
