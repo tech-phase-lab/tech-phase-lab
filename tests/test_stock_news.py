@@ -242,3 +242,80 @@ class ProbeTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class HomeBridgeTests(unittest.TestCase):
+    """Owner, Nov 10: the home news can run on the Stock News API through the existing company headline table."""
+    def setUp(self):
+        self.tmp = tempfile.TemporaryDirectory()
+        self.db = news.connect(Path(self.tmp.name) / "news.sqlite")
+        self.env = patch.dict(os.environ, {"STOCK_NEWS_ENABLED": "true", "STOCK_NEWS_API_KEY": "synthetic-key"})
+        self.env.start()
+
+    def tearDown(self):
+        self.env.stop(); self.db.close(); self.tmp.cleanup()
+
+    def row(self, index, tickers, date="Fri, 25 Sep 2026 16:00:00 -0400"):
+        return {"news_url": f"https://publisher.example/n/{index}", "title": f"Nvidia wins order {index}", "text": "Body.",
+                "source_name": "Reuters", "date": date, "tickers": tickers}
+
+    def next_poll(self):
+        with self.db:
+            news.put_state(self.db, "next_poll", "2000-01-01T00:00:00+00:00")
+
+    def wire_rows(self):
+        import company_wire
+        company_wire.schema(self.db)
+        return [dict(r) for r in self.db.execute("SELECT ticker, source, title, publisher, origin FROM company_wire ORDER BY ticker, title")]
+
+    def test_nothing_reaches_the_home_table_unless_switched_on(self):
+        news.poll(self.db, ["NVDA", "MU"], transport=lambda *_: [self.row(1, ["NVDA"])])
+        self.assertEqual(self.wire_rows(), [])
+
+    def test_switched_on_copies_watched_companies_only_and_once(self):
+        with patch.dict(os.environ, {"STOCK_NEWS_TO_HOME": "true"}):
+            rows = [self.row(1, ["NVDA", "MU"]), self.row(2, ["ZZZZ"])]
+            news.poll(self.db, ["NVDA", "MU", "ZZZZ"], transport=lambda *_: rows)
+            self.next_poll()
+            news.poll(self.db, ["NVDA", "MU", "ZZZZ"], transport=lambda *_: rows)
+        copied = self.wire_rows()
+        self.assertEqual([(r["ticker"], r["title"], r["source"], r["publisher"], r["origin"]) for r in copied],
+                         [("MU", "Nvidia wins order 1", "stocknews", "Reuters", "third-party"),
+                          ("NVDA", "Nvidia wins order 1", "stocknews", "Reuters", "third-party")])
+
+    def test_page_size_is_a_setting_and_paging_follows_it(self):
+        for value, expected in (("3", 3), ("0", 1), ("500", 100), ("x", 100)):
+            with patch.dict(os.environ, {"STOCK_NEWS_ITEMS": value}):
+                self.assertEqual(news.page_size(), expected)
+        pages, round_no = [], [0]
+        def transport(tickers, page, token):
+            pages.append(page)
+            # Every round brings new articles, so a full page (3) sends the reader on to the next page; a short page ends it.
+            return [self.row(round_no[0] * 100 + page * 10 + i, ["NVDA"]) for i in range(3 if page < 3 else 1)]
+        with patch.dict(os.environ, {"STOCK_NEWS_ITEMS": "3"}):
+            news.poll(self.db, ["NVDA"], transport=transport)          # the first fetch is a baseline: one page
+            round_no[0] = 1
+            self.next_poll()
+            result = news.poll(self.db, ["NVDA"], transport=transport)
+        self.assertEqual(pages, [1, 1, 2, 3])
+        self.assertEqual(result["calls"], 3)
+
+    def test_a_page_larger_than_the_setting_is_refused(self):
+        with patch.dict(os.environ, {"STOCK_NEWS_ITEMS": "2"}):
+            result = news.poll(self.db, ["NVDA"], transport=lambda *_: [self.row(i, ["NVDA"]) for i in range(3)])
+        self.assertEqual(result["status"], "error")
+
+    def test_delay_of_new_articles_is_summarised(self):
+        now = news.datetime(2026, 9, 25, 20, 10, tzinfo=news.timezone.utc)
+        items = [{"publishedAt": "2026-09-25T20:09:00+00:00"}, {"publishedAt": "2026-09-25T20:05:00+00:00"}, {"publishedAt": "2026-09-25T19:50:00+00:00"}]
+        self.assertEqual(news.delay_summary(items, now), {"count": 3, "minSeconds": 60, "medianSeconds": 300, "maxSeconds": 1200})
+        self.assertIsNone(news.delay_summary([], now))
+
+    def test_company_feeds_can_be_limited_to_stop_the_old_sources(self):
+        import company_wire
+        with patch.dict(os.environ, {}, clear=False):
+            os.environ.pop("COMPANY_WIRE_FEEDS", None)
+            self.assertEqual([name for name, _ in company_wire.feeds()], ["yahoo", "gnews"])
+        for value, expected in (("none", []), ("", []), ("gnews", ["gnews"]), ("yahoo, gnews", ["yahoo", "gnews"])):
+            with patch.dict(os.environ, {"COMPANY_WIRE_FEEDS": value}):
+                self.assertEqual([name for name, _ in company_wire.feeds()], expected)

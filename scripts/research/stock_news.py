@@ -120,8 +120,16 @@ class NoRedirect(HTTPRedirectHandler):
         raise ValueError("stock-news-redirect-blocked")
 
 
+def page_size():
+    """Articles per request. 100 is the provider's documented maximum, but a trial account refused 10 (Nov 10), so the size is a setting."""
+    try:
+        return min(100, max(1, int(os.environ.get("STOCK_NEWS_ITEMS", "100"))))
+    except ValueError:
+        return 100
+
+
 def request_page(tickers, page, token):
-    params = {"tickers": ",".join(tickers), "items": 100, "page": page, "token": token}
+    params = {"tickers": ",".join(tickers), "items": page_size(), "page": page, "token": token}
     request = Request(ENDPOINT + "?" + urlencode(params), headers={"Accept": "application/json"})
     # Never propagate exception text/URLs: the provider uses a query-string key.
     try:
@@ -132,7 +140,7 @@ def request_page(tickers, page, token):
         if len(body) > MAX_BYTES:
             raise ValueError("stock-news-response-limit")
         data = json.loads(body)
-        if not isinstance(data, dict) or not isinstance(data.get("data"), list) or len(data["data"]) > 100:
+        if not isinstance(data, dict) or not isinstance(data.get("data"), list) or len(data["data"]) > page_size():
             raise ValueError("stock-news-invalid-response")
         return data["data"]
     except HTTPError as exc:
@@ -260,6 +268,33 @@ def queue(db, limit=20):
             "publicationEnabled": news_drafts.publication_enabled()}
 
 
+
+def delay_summary(items, now):
+    """How long after publication the newly found articles reached us (the intake delay, not the display delay)."""
+    seconds = sorted(max(0, round((now - datetime.fromisoformat(item["publishedAt"])).total_seconds())) for item in items)
+    if not seconds:
+        return None
+    return {"count": len(seconds), "minSeconds": seconds[0], "medianSeconds": seconds[len(seconds) // 2], "maxSeconds": seconds[-1]}
+
+
+def mirror_to_wire(db, items):
+    """Home news (owner, Nov 10): with STOCK_NEWS_TO_HOME=true the intake also writes each watched company's articles into the company
+    headline table, so the existing translation, "is it news" judgement, one-line headline and home screens apply to them unchanged.
+    Off by default: the intake can be measured without touching what the site shows."""
+    if os.environ.get("STOCK_NEWS_TO_HOME", "").lower() != "true":
+        return 0
+    import company_wire
+    roster = set(company_wire.roster())
+    rows = [{"ticker": ticker, "source": "stocknews", "title": item["title"], "publisher": item["publisher"], "url": item["url"],
+             "published": datetime.fromisoformat(item["publishedAt"])}
+            for item in items for ticker in item["tickers"] if ticker in roster]
+    added = 0
+    company_wire.schema(db)
+    for ticker in sorted({row["ticker"] for row in rows}):
+        added += company_wire.store(db, [row for row in rows if row["ticker"] == ticker], company_wire.monitor.PROVIDERS[ticker]["name"])
+    return added
+
+
 def poll(db, tickers, *, transport=request_page):
     token = os.environ.get("STOCK_NEWS_API_KEY", "").strip()
     if os.environ.get("STOCK_NEWS_ENABLED", "").lower() != "true" or not token:
@@ -283,12 +318,14 @@ def poll(db, tickers, *, transport=request_page):
     known = {r[0] for r in db.execute("SELECT id FROM news_articles")}
     calls = added = changed = rejected = 0
     saturated = False
+    new_items = []
     try:
         for page in range(1, 6):
             reserve_call(db, stamp(), cap)
             calls += 1
             rows = transport(tickers, page, token)
-            if not isinstance(rows, list) or len(rows) > 100:
+            size = page_size()
+            if not isinstance(rows, list) or len(rows) > size:
                 raise ValueError("stock-news-invalid-response")
             items = []
             for row in rows:
@@ -301,9 +338,11 @@ def poll(db, tickers, *, transport=request_page):
             a, c = save_items(db, items, stamp())
             added += a
             changed += c
+            mirror_to_wire(db, items)
             overlap = any(item["id"] in known for item in items)
-            saturated = len(rows) == 100 and not overlap
-            if initial or len(rows) < 100 or overlap:
+            saturated = len(rows) == size and not overlap
+            new_items += [item for item in items if item["id"] not in known]
+            if initial or len(rows) < size or overlap:
                 break
         with db:
             put_state(db, "watch_key", watch_key)
@@ -312,6 +351,7 @@ def poll(db, tickers, *, transport=request_page):
             put_state(db, "next_poll", (datetime.fromisoformat(now)+timedelta(seconds=60)).isoformat())
         return {"status": "ok", "calls": calls, "added": added, "changed": changed,
                 "rejected": rejected, "initialBaseline": initial, "historyIncomplete": saturated,
+                "delay": delay_summary(new_items, datetime.now(timezone.utc)) if not initial else None,
                 "publicationEnabled": False}
     except Exception:
         # Persist only a fixed code; no secret-bearing URLs or provider bodies.

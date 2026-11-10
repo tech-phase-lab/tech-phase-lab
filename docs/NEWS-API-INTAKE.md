@@ -91,3 +91,21 @@ Business Wire's official feed-options page documents a legitimate headline RSS
 and licensed full-text feed route, but no usable endpoint was established here.
 PR Newswire's public RSS catalog is confirmed; live XML validation is outstanding.
 These two integrations remain blocked on obtaining/validating an authorized feed.
+
+## Home news on the Stock News API (owner, 2026-11-10)
+
+The home band and list read the company headline table (`company_wire`). With the settings below, the Stock News API intake writes
+its articles for the watched companies into that table, so the existing Japanese translation, the "is it news" judgement
+(`NOISE` and the model's `not-news`), the one-line band headline and the home screens apply to them unchanged. Nothing changes
+on the site until the settings are made; the monitor service in Railway needs them, and each change is the owner's decision.
+
+| Key | Value | Effect |
+| --- | --- | --- |
+| `STOCK_NEWS_ENABLED` | `true` | The intake runs (it already did; unchanged). |
+| `STOCK_NEWS_ITEMS` | `3` during the trial | Articles per request, 1 to 100 (default 100). A trial account refused 10 on 2026-11-10; the paid plan's size is still to be measured. The paging and the "history incomplete" flag follow it. |
+| `STOCK_NEWS_TO_HOME` | `true` | Also write the articles into the home headline table. Off by default, so the intake can be measured alone. |
+| `COMPANY_WIRE_FEEDS` | `none` | Stop reading the Yahoo / Google News feeds, so the home runs on the Stock News API alone. `gnews` or `yahoo` keeps one. Unset keeps both. |
+
+Old rows age out of the home within 24 hours. The intake result (`stockNewsIntake` in the monitor state) now carries `delay`:
+how long after publication the newly found articles reached the monitor (count, min, median, max, in seconds). That is the intake
+delay; the translation and display delay are separate. One request cannot measure the provider's delay, so run it for a day.

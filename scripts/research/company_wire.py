@@ -9,6 +9,7 @@ when its publisher is a press-release wire or the company itself, otherwise
 """
 import hashlib
 import json
+import os
 import re
 import sqlite3
 import urllib.request
@@ -33,6 +34,16 @@ WIRES = re.compile(r'business ?wire|globe ?newswire|pr ?newswire|accesswire|news
 QUERIES = {'GOOGL': 'Alphabet Google', 'SKHY': 'SK hynix', 'TSM': 'TSMC', 'ANET': 'Arista Networks',
            'BE': 'Bloom Energy', 'ARM': 'Arm Holdings', 'AMD': 'AMD chips', 'MU': 'Micron Technology',
            'CRDO': 'Credo Technology'}
+
+
+def feeds():
+    """The public headline feeds read for every company. COMPANY_WIRE_FEEDS (comma list of yahoo, gnews; "none" for neither) lets the home
+    news run on the Stock News API alone (owner, Nov 10); unset keeps both."""
+    chosen = os.environ.get('COMPANY_WIRE_FEEDS')
+    if chosen is None:
+        return FEEDS
+    names = {part.strip() for part in chosen.split(',')}
+    return tuple(feed for feed in FEEDS if feed[0] in names)
 
 
 def roster():
@@ -125,7 +136,7 @@ def poll_company(db, ticker, errors):
     """Read both feeds for one company; a failing feed is recorded, not raised."""
     name = monitor.PROVIDERS[ticker]['name']
     added = 0
-    for source, template in FEEDS:
+    for source, template in feeds():
         url = template.format(ticker=quote(ticker), query=quote(QUERIES.get(ticker, name)))
         try:
             added += store(db, parse(fetch_feed(url), source, ticker), name)
