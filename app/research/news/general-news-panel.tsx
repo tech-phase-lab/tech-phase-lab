@@ -10,8 +10,7 @@ import { clockTime, lateDetection, officialTime, recentPublication } from "@/lib
 import { createNewsPoller, NEWS_POLL_INTERVAL_MS } from "@/lib/research/news-poller";
 import { observePageActivity } from "@/lib/research/page-activity";
 import { serverWireSnapshot, subscribeWire, wireSnapshot } from "@/lib/research/wire-store";
-import { WATCH_TICKERS } from "@/lib/research/flash-rows";
-import { wireStories } from "@/lib/research/wire-stories";
+import { tickerLabel, wireStories } from "@/lib/research/wire-stories";
 import Link from "next/link";
 import { dayKey, dayLabel, pageWindow, withDayDividers } from "@/lib/research/news-day";
 import styles from "./general-news.module.css";
@@ -125,7 +124,7 @@ export default function GeneralNewsPanel({ lang, officialOnly = false, generalOn
     ...official.map(item => { const time = officialTime(item), shown = clockTime(time.at, time.kind, item.observedAt);
       return { kind: "official" as const, item, publication: { ...shown, dated: time.kind }, at: shown.kind === "date" ? `${shown.at}T00:00:00Z` : shown.at }; }),
     ...market.map(item => ({ kind: "market" as const, item, at: item.publishedAt })),
-    ...(officialOnly || generalOnly ? [] : wireStories(wire, lang, WATCH_TICKERS).map(story => ({ kind: "wire" as const, story, at: story.at }))),
+    ...(officialOnly || generalOnly ? [] : wireStories(wire, lang).map(story => ({ kind: "wire" as const, story, at: story.at }))),
   ].sort((a, b) => Date.parse(b.at) - Date.parse(a.at));
   // The home list shows five stories per page, five pages at most; the whole list is on the General News page (owner, Nov 5).
   const { pages, current, start, end } = pageWindow(updates.length + news.length, page, generalOnly ? Infinity : HOME_STORIES);
@@ -155,7 +154,7 @@ export default function GeneralNewsPanel({ lang, officialOnly = false, generalOn
           if (update.kind === "original-preview") return <OriginalPreviewCard key={update.item.id} item={update.item} lang={lang} />;
           if (update.kind === "wire") {
             const story = update.story;
-            return <article key={`wire-${story.id}`}><TimelineRow at={story.at} kind="time" fresh={isFresh(story.at, "published")}><NewsStory label={story.tickers.join(" · ")} title={story.title} lang={lang} publication="" /></TimelineRow></article>;
+            return <article key={`wire-${story.id}`}><TimelineRow at={story.at} kind="time" fresh={isFresh(story.at, "published")}><NewsStory label={story.tickers.map(ticker => tickerLabel(ticker, lang === "ja")).join(" · ")} title={story.title} lang={lang} publication="" /></TimelineRow></article>;
           }
           if (update.kind === "market") {
             const item = update.item;

@@ -68,6 +68,8 @@ export function cleanTitle(title: string) {
     .replace(/\s*[-–—|｜]?\s*(?:投資\.com|投資ドットコム|Investing\.com|インベスティング[・･.]?(?:ドット)?com)\s*(?:報|が報じた|の報道|報道|より)?\s*$/i, "")
     .replace(/\s*[-–—|｜]?\s*(?:ロイター|ブルームバーグ|マーケットウォッチ|ベンジンガ|ヤフー[・･]?ファイナンス|シーキング[・･]?アルファ|モトリーフール|ティップランクス|バロンズ)\s*報\s*$/, "").trim();
 }
+/** News filed by the market rather than by a company (the Stock News API's general market feed) is stored under MKT (owner, Nov 10). */
+export const tickerLabel = (ticker: string, ja: boolean) => ticker === "MKT" ? (ja ? "市場" : "Market") : ticker;
 export const isNotNews = (text: string) => NOT_NEWS.some(pattern => pattern.test(text));
 
 /** "X reports third-quarter results" read days after the release is an old story (owner, Oct 26: ASML, 12 days late).

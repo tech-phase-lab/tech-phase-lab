@@ -50,6 +50,9 @@ def roster():
     return [p['ticker'] for p in monitor.PROVIDERS.values() if p.get('scope') != 'earnings']
 
 
+WATCHED = frozenset(roster())
+
+
 def schema(db):
     db.execute('''CREATE TABLE IF NOT EXISTS company_wire(
       key TEXT PRIMARY KEY, ticker TEXT NOT NULL, source TEXT NOT NULL, title TEXT NOT NULL,
@@ -200,6 +203,7 @@ Also write shortJa: the same headline as one short Japanese line of at most 22 c
 Also judge each headline (kind). "news" states a concrete fact about the company's business or its stock: results, guidance, a deal, order, investment, product, partnership, lawsuit, regulatory step, executive change, an analyst rating or price-target change, or a market move together with its stated cause.
 "not-news" is everything else, for example: investment advice or opinion ("should you buy", "which stock is better", "X vs Y", "a buying opportunity", "buy the dip"); comparisons and listicles; price predictions and forecasts; any headline that asks a question or starts with "Why" or "What" without giving the answer; teasers that hide their answer ("here is why"); what-if or past-returns pieces; human-interest, hiring, workplace, lifestyle, culture, entertainment or feature stories (for example a vocational graduate getting a job, an employee's life story, a TV programme); and promotional or community posts.
 Also "not-news" (owner, Nov 9: judge strictly; when in doubt, choose not-news): an analyst blog's or columnist's own view or rating call about the company ("This isn't over (Upgrade)", "Why we are bullish", "3 key points for long-term investors"); vague mood or sector commentary with no concrete figure or event ("faces market challenges amid the AI sell-off", "stocks slide as investors worry"); how-to, tips and usage advice ("IT admins should check out the new features"); a headline where the named company is only incidental to another company's story; and rehashed older news with nothing new.
+Also judge relevance (owner, Nov 10). The site is about US high-tech stocks and what moves the market. Use "off-topic" for any headline outside both: relevant are (a) US high-tech companies and their sectors (semiconductors, AI, cloud, software, internet, devices, EVs, space, data centers, networking) and (b) market-moving macro news: stock indices, oil and energy prices, bond yields, interest rates and central banks, inflation and jobs data, politics and policy, tariffs, wars and geopolitics (for example the Strait of Hormuz), and statements by figures such as Trump or Musk that move stocks. Consumer goods, retail, banks and insurers (unless the story is about interest rates or markets), health and pharma, crypto, sports, entertainment, celebrity, local and lifestyle news are "off-topic". A headline can be both news and off-topic: choose "off-topic" then.
 Examples: "Why AMD, Micron, Sandisk and Nvidia stocks are falling in premarket today" = not-news. "Which AI memory stock is the better buy?" = not-news. "ASML has orders and pricing power, but what it lacks is time" (an editorial take with no concrete business fact) = not-news. "At 21 at SK hynix, at 27 a home in Seoul: a vocational school's comeback" = not-news. "Sandisk: This isn't over (Upgrade)" = not-news. "CoreWeave faces market challenges amid AI sector sell-off" = not-news. "Core Scientific: 3 key points for long-term investors" = not-news. "IT admins should check out new features recently added to Entra" = not-news. "Micron raises fiscal Q1 guidance on HBM demand" = news. "Nvidia shares fall 3% after tighter export curbs" = news. When a headline states a concrete business fact, use "news" even if it is minor.
 """ + japanese_names.policy_line()
 
@@ -254,10 +258,9 @@ def same_story(a, b):
 
 
 def priority(row):
-    """Lower is translated first: company/wire releases, then major publishers, then the rest."""
-    if row['origin'] == 'wire':
-        return 0
-    return 1 if MAJOR.search(row['publisher'] or '') else 2
+    """Lower is translated first: the watched companies, then the rest; within each, company/wire releases, major publishers, others."""
+    tier = 0 if row['origin'] == 'wire' else 1 if MAJOR.search(row['publisher'] or '') else 2
+    return tier if row['ticker'] in WATCHED else 3 + tier
 
 
 def pending_rows(db, now_ts, limit=TRANSLATION_BATCH):
@@ -355,12 +358,13 @@ def translate_once(path, transport=None, env=None, now_ts=None):
                 'type': 'array', 'items': {'type': 'object', 'additionalProperties': False,
                                            'required': ['id', 'titleJa', 'shortJa', 'kind'],
                                            'properties': {'id': {'type': 'string'}, 'titleJa': {'type': 'string'}, 'shortJa': {'type': 'string'},
-                                                          'kind': {'type': 'string', 'enum': ['news', 'not-news']}}}}}}}},
+                                                          'kind': {'type': 'string', 'enum': ['news', 'not-news', 'off-topic']}}}}}}}},
     }
     translated = {}
     shorts = {}
     reasons = {}
     skipped = set()
+    skip_reason = {}
     outage = ''
     try:
         response = transport(payload, key)
@@ -372,8 +376,9 @@ def translate_once(path, transport=None, env=None, now_ts=None):
             if row is None or row['key'] in translated or row['key'] in skipped:
                 continue
             # Oct 18: the model also says when a headline carries no fact; it is never published or retried.
-            if item.get('kind') == 'not-news':
+            if item.get('kind') in ('not-news', 'off-topic'):
                 skipped.add(row['key'])
+                skip_reason[row['key']] = item['kind']
                 continue
             try:
                 translated[row['key']] = validated_translation(item.get('titleJa'), row['title'])
@@ -392,8 +397,8 @@ def translate_once(path, transport=None, env=None, now_ts=None):
                 db.execute('INSERT OR IGNORE INTO company_wire_ja(key,title_ja,model,created_at,short_ja) VALUES(?,?,?,?,?)',
                            (row['key'], translated[row['key']], model, stamp, shorts.get(row['key'], '')))
             elif row['key'] in skipped:
-                db.execute("""INSERT INTO company_wire_attempts(key,attempts,next_at,reason) VALUES(?,?,?,'not-news') ON CONFLICT(key) DO UPDATE SET
-                  attempts=excluded.attempts, next_at=excluded.next_at, reason='not-news'""", (row['key'], TRANSLATION_ATTEMPTS, now_ts))
+                db.execute("""INSERT INTO company_wire_attempts(key,attempts,next_at,reason) VALUES(?,?,?,?) ON CONFLICT(key) DO UPDATE SET
+                  attempts=excluded.attempts, next_at=excluded.next_at, reason=excluded.reason""", (row['key'], TRANSLATION_ATTEMPTS, now_ts, skip_reason.get(row['key'], 'not-news')))
             else:
                 reason = outage or reasons.get(row['key'], 'not-returned')
                 db.execute('''INSERT INTO company_wire_attempts(key,attempts,next_at,reason) VALUES(?,1,?,?) ON CONFLICT(key) DO UPDATE SET
@@ -411,7 +416,7 @@ def public_feed(db, now_ts=None):
     for ticker in roster():
         rows = db.execute('''SELECT w.key, w.title, w.publisher, w.url, w.origin, w.published_at, j.title_ja, j.short_ja
           FROM company_wire w LEFT JOIN company_wire_ja j USING(key) LEFT JOIN company_wire_attempts a USING(key)
-          WHERE w.ticker=? AND w.published_at>=? AND COALESCE(a.reason,'')<>'not-news' ORDER BY w.published_at DESC LIMIT 120''',
+          WHERE w.ticker=? AND w.published_at>=? AND COALESCE(a.reason,'') NOT IN ('not-news','off-topic') ORDER BY w.published_at DESC LIMIT 120''',
                           (ticker, since)).fetchall()
         rows = [r for r in rows if not truncated(r['title']) and not NOISE.search(r['title'])]
         # Oct 16: the Japanese view shows only translated headlines, so a company whose newest ten were
@@ -424,4 +429,14 @@ def public_feed(db, now_ts=None):
             items[ticker] = [{'id': r['key'], 'titleEn': r['title'], 'titleJa': r['title_ja'], 'shortJa': r['short_ja'] or None,
                               'publisher': r['publisher'], 'origin': r['origin'], 'url': r['url'],
                               'publishedAt': r['published_at']} for r in rows]
+    # Owner, Nov 10: the home also carries high-tech companies beyond the watched ones and market news (filed under MKT), from the
+    # Stock News API. Only headlines that were translated, that is judged news and on topic, are shown for them.
+    extra = db.execute('''SELECT w.ticker, w.key, w.title, w.publisher, w.url, w.origin, w.published_at, j.title_ja, j.short_ja
+      FROM company_wire w JOIN company_wire_ja j USING(key) WHERE w.published_at>=? AND w.source='stocknews'
+      ORDER BY w.published_at DESC LIMIT 400''', (since,)).fetchall()
+    for r in extra:
+        if r['ticker'] in WATCHED or truncated(r['title']) or NOISE.search(r['title']) or len(items.get(r['ticker'], [])) >= PUBLIC_PER_COMPANY:
+            continue
+        items.setdefault(r['ticker'], []).append({'id': r['key'], 'titleEn': r['title'], 'titleJa': r['title_ja'], 'shortJa': r['short_ja'] or None,
+                                                 'publisher': r['publisher'], 'origin': r['origin'], 'url': r['url'], 'publishedAt': r['published_at']})
     return {'ok': True, 'items': items}

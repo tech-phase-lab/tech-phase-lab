@@ -57,6 +57,63 @@ class CompanyWireTests(unittest.TestCase):
         self.assertEqual(status['CRDO']['feedErrors'], ['yahoo:URLError'])
 
 
+
+class HomeScopeTests(unittest.TestCase):
+    """Owner, Nov 10: US high-tech beyond the watched companies plus market news; anything else is off-topic."""
+    def setUp(self):
+        import tempfile, os, json
+        self.json = json
+        self.dir = tempfile.TemporaryDirectory()
+        self.path = os.path.join(self.dir.name, 'db.sqlite')
+        self.now = datetime(2026, 11, 10, 4, 0, tzinfo=timezone.utc)
+        published = datetime(2026, 11, 10, 3, 0, tzinfo=timezone.utc)
+        def row(ticker, title, source='stocknews'):
+            return {'ticker': ticker, 'source': source, 'title': title, 'publisher': 'Reuters', 'url': 'https://news.example/' + title.replace(' ', '-'), 'published': published}
+        with company_wire.connect(self.path) as db:
+            company_wire.store(db, [row('AAPL', 'Apple unveils new chip'), row('MKT', 'Oil jumps on Hormuz tension'), row('KO', 'Coca-Cola launches a new flavour'),
+                                    row('NVDA', 'Nvidia wins order')], 'Name', seen_at=self.now)
+            company_wire.store(db, [row('XYZ', 'Yahoo only headline about XYZ', source='yahoo')], 'Name', seen_at=self.now)
+        self.env = {'OFFICIAL_HEADLINE_TRANSLATION_ENABLED': 'true', 'OPENAI_API_KEY': 'k' * 30, 'OFFICIAL_HEADLINE_TRANSLATION_MODEL': 'test-model'}
+
+    def tearDown(self):
+        self.dir.cleanup()
+
+    def translate(self, kinds):
+        seen = {}
+        def send(payload, key):
+            seen['policy'] = payload['instructions']; seen['enum'] = payload['text']['format']['schema']['properties']['items']['items']['properties']['kind']['enum']
+            items = self.json.loads(payload['input'])
+            seen['order'] = [i['title'] for i in items]
+            out = [{'id': i['id'], 'titleJa': '日本語の見出し', 'shortJa': '短い見出し', 'kind': kinds.get(i['title'], 'news')} for i in items]
+            return {'status': 'completed', 'output': [{'type': 'message', 'content': [{'type': 'output_text', 'text': self.json.dumps({'items': out}, ensure_ascii=False)}]}]}
+        company_wire.translate_once(self.path, transport=send, env=self.env, now_ts=self.now.timestamp())
+        return seen
+
+    def test_the_model_may_call_a_headline_off_topic_and_it_is_never_shown_or_retried(self):
+        seen = self.translate({'Coca-Cola launches a new flavour': 'off-topic'})
+        self.assertIn('off-topic', seen['enum'])
+        self.assertIn('Strait of Hormuz', seen['policy'])
+        with company_wire.connect(self.path) as db:
+            feed = company_wire.public_feed(db, now_ts=self.now.timestamp())
+            self.assertEqual(db.execute("SELECT reason FROM company_wire_attempts").fetchall()[0][0], 'off-topic')
+            self.assertEqual([r['title'] for r in company_wire.pending_rows(db, self.now.timestamp() + 99999)], [])
+        self.assertNotIn('KO', feed['items'])
+
+    def test_watched_companies_are_translated_first(self):
+        seen = self.translate({})
+        self.assertEqual(seen['order'][0], 'Nvidia wins order')
+
+    def test_unwatched_companies_and_market_news_are_shown_only_once_translated_and_only_from_the_stock_news_api(self):
+        with company_wire.connect(self.path) as db:
+            before = company_wire.public_feed(db, now_ts=self.now.timestamp())
+        self.assertEqual(sorted(before['items']), ['NVDA'])   # untranslated extras and Yahoo/Google rows are not shown
+        self.translate({})
+        with company_wire.connect(self.path) as db:
+            feed = company_wire.public_feed(db, now_ts=self.now.timestamp())
+        self.assertEqual(sorted(feed['items']), ['AAPL', 'KO', 'MKT', 'NVDA'])
+        self.assertNotIn('XYZ', feed['items'])
+
+
 if __name__ == '__main__':
     unittest.main()
 
