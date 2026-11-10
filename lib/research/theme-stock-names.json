@@ -299,6 +299,10 @@
   "en": "Elevance Health",
   "ja": "エレバンス・ヘルス"
  },
+ "EME": {
+  "en": "EMCOR Group",
+  "ja": "エメコア・グループ"
+ },
  "ENPH": {
   "en": "Enphase Energy",
   "ja": "エンフェーズ・エナジー"
@@ -547,6 +551,10 @@
   "en": "Medtronic",
   "ja": "メドトロニック"
  },
+ "MLM": {
+  "en": "Martin Marietta Materials",
+  "ja": "マーティン・マリエッタ・マテリアルズ"
+ },
  "MO": {
   "en": "Altria Group",
   "ja": "アルトリア・グループ"
@@ -647,6 +655,10 @@
   "en": "Ondas Holdings",
   "ja": "オンダス・ホールディングス"
  },
+ "ORCL": {
+  "en": "Oracle",
+  "ja": "オラクル"
+ },
  "OXY": {
   "en": "Occidental Chemical",
   "ja": "オキシデンタル・ケミカル"
@@ -690,6 +702,10 @@
  "PSA": {
   "en": "PSA",
   "ja": "PSA(カード鑑定会社)"
+ },
+ "PWR": {
+  "en": "Quanta Services",
+  "ja": "クアンタ・サービシズ"
  },
  "PYPL": {
   "en": "PayPal",
@@ -847,6 +863,10 @@
   "en": "UPS",
   "ja": "ユナイテッド・パーセル・サービス"
  },
+ "URI": {
+  "en": "United Rentals",
+  "ja": "ユナイテッド・レンタルズ"
+ },
  "V": {
   "en": "Visa",
   "ja": "ビザ"
@@ -854,6 +874,10 @@
  "VKTX": {
   "en": "Viking Therapeutics",
   "ja": "バイキング・セラピューティクス"
+ },
+ "VMC": {
+  "en": "Vulcan Materials",
+  "ja": "バルカン・マテリアルズ"
  },
  "VRT": {
   "en": "Vertiv",

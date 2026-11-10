@@ -116,7 +116,7 @@ test("the screen says the price feed is being connected instead of an error whil
 });
 
 test("every genre has themes, theme ids are unique across genres, and only known genres are accepted", () => {
-  assert.equal(GROUPS.length, 6);
+  assert.equal(GROUPS.length, 7);
   for (const group of GROUPS) { assert.ok(themesOf(group.id).length >= 4, group.id); assert.ok(group.ja && group.en); }
   assert.ok(THEMES.every(theme => GROUPS.some(group => group.id === theme.group)));
   assert.equal(new Set(THEMES.map(theme => theme.id)).size, THEMES.length);
@@ -125,7 +125,7 @@ test("every genre has themes, theme ids are unique across genres, and only known
   assert.equal(isGroupId(undefined), false);
   assert.equal(isGroupFilter("all"), true);   // the wheel's first item reads every genre
   assert.equal(isGroupFilter("gold"), false);
-  assert.deepEqual(GROUPS.map(group => group.ja), ["ハイテク", "資源・エネルギー", "金融", "ヘルスケア・バイオ", "消費・小売", "高配当"]);
+  assert.deepEqual(GROUPS.map(group => group.ja), ["ハイテク", "資源・エネルギー", "金融", "ヘルスケア・バイオ", "消費・小売", "高配当", "産業・防衛"]);
   const route = readFileSync(new URL("../app/api/research/themes/route.ts", import.meta.url), "utf8");
   assert.match(route, /isGroupFilter\(requested\)/);
 });
@@ -149,4 +149,16 @@ test("the genre wheel, the seven periods and the single up/down chart follow the
   assert.match(parts, /\/ widest \* 48/);                                    // a bar is |value| / the largest |value| * 48% of the width
   assert.match(parts, /rows\.filter\(row => shown\(row\.value\) < 0\)\.length/);   // 下落 M / 上昇 N are the counts of the moment; 0% counts as rising
   assert.doesNotMatch(screen, /数値は表示サンプルです/);
+});
+
+
+test("genres follow what the companies are (owner, Nov 10): Oracle is AI cloud and software, crypto is finance, nuclear is resources, dividend and industrials are apart", () => {
+  const inGroup = (ticker) => new Set(THEMES.filter(theme => theme.tickers.includes(ticker)).map(theme => theme.group));
+  assert.ok(themeById("ai-cloud").tickers.includes("ORCL") && themeById("software").tickers.includes("ORCL"));
+  assert.deepEqual([...inGroup("COIN")], ["finance"]);
+  assert.deepEqual([...inGroup("CCJ")], ["resources"]);
+  assert.deepEqual([...inGroup("LMT")], ["industrials"]);
+  assert.deepEqual([...inGroup("O")], ["defensive"]);
+  assert.equal(themeById("nuclear").ja, "原子力・ウラン");
+  assert.equal(themeById("crypto").ja, "暗号資産・ブロックチェーン");
 });

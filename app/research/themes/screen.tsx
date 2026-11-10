@@ -105,7 +105,7 @@ export default function ThemeRankingScreen() {
     {plan === "free" && <section className={styles.lock} aria-labelledby="theme-lock">
       <svg className={styles.gem} viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l7 9-7 9-7-9z" /></svg>
       <h2 id="theme-lock">{t("テーマランキングはPRO会員限定です", "Theme Ranking is exclusive to PRO")}</h2>
-      <p>{t("AI半導体、メモリ、光・フォトニクスなどのハイテクをはじめ、資源・金融・ヘルスケアなど6ジャンルのテーマを、期間ごとの強さ順に確認できます。", "Explore stock themes across six categories, from AI chips, memory and optics to resources, financials and healthcare, ranked by strength over each period.")}</p>
+      <p>{t("AI半導体、メモリ、光・フォトニクスなどのハイテクをはじめ、資源・金融・ヘルスケアなど7ジャンルのテーマを、期間ごとの強さ順に確認できます。", "Explore stock themes across seven categories, from AI chips, memory and optics to resources, financials and healthcare, ranked by strength over each period.")}</p>
       <ol className={styles.teaser} aria-label={t("対象のテーマ", "Themes covered")}>{themesOf("tech").map(theme => <li key={theme.id}><span aria-hidden="true">◇</span>{ja ? theme.ja : theme.en}<b aria-hidden="true">••••</b></li>)}</ol>
       <Link className={styles.cta} href="/research#tech-phase-pro">{t("Tech Phase PROを見る", "See Tech Phase PRO")}</Link>
     </section>}

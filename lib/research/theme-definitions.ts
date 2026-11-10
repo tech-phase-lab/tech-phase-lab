@@ -1,6 +1,6 @@
 /** Theme Ranking (PRO): the high-tech themes and their member stocks, edited here and nowhere else.
  * Equal-weighted: every member counts the same, so one large stock cannot decide a theme's rank. */
-export type GroupId = "tech" | "resources" | "finance" | "health" | "consumer" | "defensive";
+export type GroupId = "tech" | "resources" | "finance" | "health" | "consumer" | "defensive" | "industrials";
 export const GROUPS: readonly { id: GroupId; ja: string; en: string }[] = [
   { id: "tech", ja: "ハイテク", en: "Technology" },
   { id: "resources", ja: "資源・エネルギー", en: "Energy & natural resources" },
@@ -8,6 +8,7 @@ export const GROUPS: readonly { id: GroupId; ja: string; en: string }[] = [
   { id: "health", ja: "ヘルスケア・バイオ", en: "Healthcare & biotech" },
   { id: "consumer", ja: "消費・小売", en: "Consumer & retail" },
   { id: "defensive", ja: "高配当", en: "Dividend" },
+  { id: "industrials", ja: "産業・防衛", en: "Industrials & defense" },
 ];
 export type ThemeDefinition = { id: string; group: GroupId; ja: string; en: string; tickers: readonly string[] };
 
@@ -17,17 +18,15 @@ export const THEMES: readonly ThemeDefinition[] = [
   { group: "tech", id: "chip-equipment", ja: "半導体製造装置", en: "Chipmaking equipment", tickers: ["AMAT", "LRCX", "KLAC", "ASML", "TER"] },
   { group: "tech", id: "optical", ja: "光・フォトニクス", en: "Optics & photonics", tickers: ["LITE", "COHR", "AAOI", "CIEN", "FN", "CRDO"] },
   { group: "tech", id: "networking", ja: "ネットワーキング", en: "Networking", tickers: ["ANET", "CSCO", "EXTR", "CALX", "ALAB"] },
-  { group: "tech", id: "ai-cloud", ja: "AIクラウド", en: "AI cloud", tickers: ["NBIS", "CRWV", "IREN"] },
+  { group: "tech", id: "ai-cloud", ja: "AIクラウド", en: "AI cloud", tickers: ["ORCL", "NBIS", "CRWV", "IREN"] },
   { group: "tech", id: "data-centers", ja: "データセンター", en: "Data centers", tickers: ["EQIX", "DLR", "IRM", "APLD", "CORZ"] },
   { group: "tech", id: "ai-servers", ja: "AIサーバー", en: "AI servers", tickers: ["DELL", "SMCI", "HPE"] },
   { group: "tech", id: "power-cooling", ja: "電力・冷却", en: "Power & cooling", tickers: ["VRT", "GEV", "BE", "VST", "CEG"] },
-  { group: "tech", id: "software", ja: "ソフトウェア", en: "Software", tickers: ["MSFT", "CRM", "NOW", "ADBE", "PLTR"] },
+  { group: "tech", id: "software", ja: "ソフトウェア", en: "Software", tickers: ["MSFT", "ORCL", "CRM", "NOW", "ADBE", "PLTR"] },
   { group: "tech", id: "cybersecurity", ja: "サイバーセキュリティ", en: "Cybersecurity", tickers: ["CRWD", "PANW", "ZS", "FTNT", "OKTA"] },
   { group: "tech", id: "robotics", ja: "ロボティクス", en: "Robotics", tickers: ["ISRG", "SYM", "TER", "ROK"] },
   { group: "tech", id: "drones", ja: "ドローン", en: "Drones", tickers: ["AVAV", "KTOS", "RCAT", "ONDS"] },
   { group: "tech", id: "space", ja: "宇宙", en: "Space", tickers: ["RKLB", "ASTS", "IRDM", "LUNR"] },
-  { group: "tech", id: "nuclear", ja: "原子力・SMR", en: "Nuclear power & small modular reactors", tickers: ["OKLO", "SMR", "NNE", "LEU", "CCJ"] },
-  { group: "tech", id: "crypto", ja: "暗号資産関連", en: "Crypto-related stocks", tickers: ["COIN", "MSTR", "MARA", "CLSK", "RIOT"] },
   { group: "tech", id: "quantum", ja: "量子コンピューター", en: "Quantum computing", tickers: ["IONQ", "RGTI", "QBTS"] },
 
   // Resources & energy
@@ -37,6 +36,7 @@ export const THEMES: readonly ThemeDefinition[] = [
   { group: "resources", id: "oil-major", ja: "石油メジャー", en: "Oil majors", tickers: ["XOM", "CVX", "COP", "OXY", "EOG"] },
   { group: "resources", id: "oil-service", ja: "石油サービス", en: "Oilfield services", tickers: ["SLB", "HAL", "BKR"] },
   { group: "resources", id: "gas", ja: "天然ガス・LNG", en: "Natural gas & LNG", tickers: ["LNG", "EQT", "EXE", "AR", "CTRA"] },
+  { group: "resources", id: "nuclear", ja: "原子力・ウラン", en: "Nuclear power & uranium", tickers: ["OKLO", "SMR", "NNE", "LEU", "CCJ"] },
   { group: "resources", id: "solar", ja: "太陽光・再エネ", en: "Solar & renewables", tickers: ["FSLR", "ENPH", "NEE", "RUN", "SEDG"] },
   // Finance
   { group: "finance", id: "big-banks", ja: "大手銀行", en: "Big banks", tickers: ["JPM", "BAC", "C", "WFC", "GS", "MS"] },
@@ -44,6 +44,7 @@ export const THEMES: readonly ThemeDefinition[] = [
   { group: "finance", id: "payments", ja: "決済", en: "Payments", tickers: ["V", "MA", "PYPL", "AXP", "COF"] },
   { group: "finance", id: "insurance", ja: "保険", en: "Insurance", tickers: ["PGR", "TRV", "CB", "ALL", "AIG"] },
   { group: "finance", id: "asset-managers", ja: "資産運用・PE", en: "Asset managers & PE", tickers: ["BX", "KKR", "APO", "BLK", "ARES"] },
+  { group: "finance", id: "crypto", ja: "暗号資産・ブロックチェーン", en: "Crypto & blockchain", tickers: ["COIN", "MSTR", "MARA", "CLSK", "RIOT"] },
   { group: "finance", id: "exchanges", ja: "取引所", en: "Exchanges", tickers: ["ICE", "CME", "NDAQ", "CBOE"] },
   // Health & biotech
   { group: "health", id: "big-pharma", ja: "大手製薬", en: "Big pharma", tickers: ["LLY", "JNJ", "MRK", "PFE", "ABBV"] },
@@ -55,17 +56,18 @@ export const THEMES: readonly ThemeDefinition[] = [
   { group: "consumer", id: "retail", ja: "小売大手", en: "Big retail", tickers: ["WMT", "COST", "HD", "LOW", "TGT"] },
   { group: "consumer", id: "restaurants", ja: "外食", en: "Restaurants", tickers: ["MCD", "SBUX", "CMG", "YUM", "DPZ"] },
   { group: "consumer", id: "travel", ja: "旅行・宿泊", en: "Travel & lodging", tickers: ["BKNG", "ABNB", "MAR", "HLT", "EXPE"] },
-  { group: "consumer", id: "staples", ja: "日用品・食品", en: "Staples", tickers: ["PG", "KO", "PEP", "CL", "KMB"] },
   { group: "consumer", id: "autos", ja: "自動車", en: "Autos", tickers: ["TSLA", "GM", "F"] },
   { group: "consumer", id: "airlines", ja: "航空", en: "Airlines", tickers: ["DAL", "UAL", "AAL", "LUV"] },
   { group: "consumer", id: "apparel", ja: "アパレル・ブランド", en: "Apparel & brands", tickers: ["NKE", "LULU", "RL", "TPR"] },
-  // Dividend & industrials
+  // Dividend, then industrials & defense
+  { group: "defensive", id: "staples", ja: "日用品・食品", en: "Staples", tickers: ["PG", "KO", "PEP", "CL", "KMB"] },
   { group: "defensive", id: "utilities", ja: "公益", en: "Utilities", tickers: ["SO", "DUK", "NEE", "D", "AEP"] },
   { group: "defensive", id: "reits", ja: "REIT", en: "REITs", tickers: ["O", "PLD", "SPG", "AMT", "PSA"] },
   { group: "defensive", id: "telecom-tobacco", ja: "通信・タバコ", en: "Telecom & tobacco", tickers: ["T", "VZ", "MO", "PM"] },
-  { group: "defensive", id: "defense", ja: "防衛・航空宇宙", en: "Defense & aerospace", tickers: ["LMT", "RTX", "NOC", "GD", "LHX"] },
-  { group: "defensive", id: "rails-logistics", ja: "鉄道・物流", en: "Rails & logistics", tickers: ["UNP", "CSX", "NSC", "UPS", "FDX"] },
-  { group: "defensive", id: "machinery", ja: "重工業・機械", en: "Heavy industry & machinery", tickers: ["CAT", "DE", "HON", "GE", "ETN"] },
+  { group: "industrials", id: "defense", ja: "防衛・航空宇宙", en: "Defense & aerospace", tickers: ["LMT", "RTX", "NOC", "GD", "LHX"] },
+  { group: "industrials", id: "rails-logistics", ja: "鉄道・物流", en: "Rails & logistics", tickers: ["UNP", "CSX", "NSC", "UPS", "FDX"] },
+  { group: "industrials", id: "infrastructure", ja: "建設・インフラ", en: "Construction & infrastructure", tickers: ["PWR", "EME", "VMC", "MLM", "URI"] },
+  { group: "industrials", id: "machinery", ja: "重工業・機械", en: "Heavy industry & machinery", tickers: ["CAT", "DE", "HON", "GE", "ETN"] },
 ];
 
 export const themesOf = (group: GroupId) => THEMES.filter(theme => theme.group === group);
