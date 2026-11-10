@@ -221,6 +221,7 @@ class ProbeTests(unittest.TestCase):
                 raise HTTPError(request.full_url, 403, "x", {}, io.BytesIO(body.encode()))
             return transport
         for body, code in (("`secret-key-value` is not a valid API token.", "stock-news-http-403-invalid-key"),
+                           ('The "items" parameter is outside the allowed range.', "stock-news-http-403-items-range"),
                            ("Your plan does not include this", "stock-news-http-403-plan"),
                            ("Request limit exceeded", "stock-news-http-403-limit"), ("Forbidden", "stock-news-http-403")):
             with self.assertRaisesRegex(ValueError, "^" + code + "$") as caught:
