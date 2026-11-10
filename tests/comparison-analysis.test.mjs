@@ -42,7 +42,7 @@ test('actual cached financial loader prepares once per refresh and reuses saved 
  globalThis.__preparedComparison=state;
  let source=readFileSync(new URL('../lib/research/comparison-server.ts',import.meta.url),'utf8');
  source=source.replace(/^import .*;\n/gm,'');
- source='const {providers,catalog:comparisonCatalog,emptyFinancials,load:loadSecComparison,prepare:prepareComparisonAnalysis,read:currentComparisonAnalysis,cache:unstable_cache}=globalThis.__preparedComparison; const parseSecDirectory=()=>[];\n'+source;
+ source='const {providers,catalog:comparisonCatalog,emptyFinancials,load:loadSecComparison,prepare:prepareComparisonAnalysis,read:currentComparisonAnalysis,cache:unstable_cache}=globalThis.__preparedComparison; const parseSecDirectory=()=>[]; const loadTwelveComparison=async()=>null;\n'+source;
  try {
   const mod=await import('data:text/javascript;base64,'+Buffer.from(stripTypeScriptTypes(source)).toString('base64'));
   const a=await mod.loadComparisonFinancials('AAA'), b=await mod.loadComparisonFinancials('AAA');

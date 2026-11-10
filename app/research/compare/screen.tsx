@@ -159,11 +159,8 @@ export default function ComparisonScreen() {
           </div>;
         })}</div>
         <div className={styles.pickSubmit}><small>{selection.filter(Boolean).length} / 3 {t("社を選択", "selected")}</small><button disabled={busy || !selection[0] || !selection[1]} onClick={() => void compare()}>{busy ? t("精査中…", "Analyzing…") : t("この銘柄を比較する", "Compare these stocks")}</button></div>
-        <p className={styles.pickNote}>{t("SEC開示を比較。割安評価は株価データ接続後に対応。", "Compare SEC filings. Valuation awaits price data.")}</p>
       </section>
       <TickerSearch lang={lang} selection={selection} onSelect={selectCompany} />
-      <div className={styles.trialLinks}><Link href="/research/compare/sample" className={styles.trialButton}>{t("完成イメージを見る · サンプル", "View a sample comparison")}</Link>
-      <button type="button" className={styles.trialButton} disabled={busy} onClick={()=>void compare(true)}>{t("MU・SNDK 保存データで試す · 10/4", "MU / SNDK saved snapshot · Oct 4")}</button></div>
       </>}
       {busy && <div className={styles.loading} role="status"><span className={styles.spinner} aria-hidden="true"/><strong>{t("開示資料と比較条件を精査中…", "Checking filings and whether the figures can be compared…")}</strong><p>{t("期間・通貨・会計基準を確認しています。初回は時間がかかる場合があります。", "We're checking reporting periods, currencies, and accounting standards. Your first comparison may take a little longer.")}</p></div>}
       {error && <p role="alert">{t("比較結果を取得できませんでした。選択は残っています。もう一度お試しください。", "Could not retrieve the comparison. Your selection is saved; please try again.")}</p>}
