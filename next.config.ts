@@ -15,9 +15,15 @@ const cached = [
   ["/tech-phase-512.png", keepAWeek],
   ["/tech-phase-512-maskable.png", keepAWeek],
   ["/favicon.ico", keepAWeek],
+  ["/start/logo.png", keepAWeek],
+  ["/start/rizel.png", keepAWeek],
 ].map(([source, value]) => ({ source, headers: [{ key: "Cache-Control", value }] }));
 
 const nextConfig: NextConfig = {
+  // The sign-in-free start page for the LINE broadcast (owner, Nov 9): a single static file, opened at /start (Next.js also sends /start/ to it).
+  async rewrites() {
+    return { beforeFiles: [{ source: "/start", destination: "/start/index.html" }], afterFiles: [], fallback: [] };
+  },
   async headers() {
     return [...cached, ...["/research/account/:path*", "/resolute/checkout/:path*", "/api/research/member/:path*", "/api/research/billing/:path*", "/api/resolute/payments/:path*", "/api/resolute/live-payments/:path*"].map(source => ({
       source,

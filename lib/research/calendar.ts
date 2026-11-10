@@ -312,6 +312,31 @@ export const calendarEvents: CalendarEvent[] = [
     sourceUrl: "https://nebius.com/newsroom",
     note: { ja: "運営者が確認した日時です（日本時間21時ごろ）。Nebiusの公式発表が出たら、公式の時刻に更新します。", en: "Date and time confirmed by the owner (about 21:00 JST). It will be updated to the official time once Nebius announces it." },
   },
+  // Official date notices read on 2026-11-09 (owner: Marvell reports on Dec 1; look for other companies that can be added).
+  {
+    id: "panw-fq1-2027-webcast", afterClose: true, ticker: "PANW", kind: "earnings" as const, title: { ja: "Palo Alto Networks 決算説明会（2027年度Q1）", en: "Palo Alto Networks fiscal Q1 2027 earnings webcast" },
+    startsAt: "2026-11-18T13:30:00-08:00", sourceTimezone: "America/Los_Angeles", sourceName: "Palo Alto Networks (press release)",
+    sourceUrl: "https://www.paloaltonetworks.com/company/press/2026/palo-alto-networks-to-announce-fiscal-first-quarter-2027-financial-results-on-wednesday--november-18--2026",
+    note: { ja: "説明会の開始予定です。決算資料は同日の米国市場終了後に公開される予定です。", en: "Scheduled webcast start. Results are due after the U.S. market closes that day." },
+  },
+  {
+    id: "mrvl-fq3-2027-call", afterClose: true, ticker: "MRVL", kind: "earnings" as const, title: { ja: "Marvell 決算説明会（2027年度Q3）", en: "Marvell fiscal Q3 2027 earnings call" },
+    startsAt: "2026-12-01T13:30:00-08:00", sourceTimezone: "America/Los_Angeles", sourceName: "Marvell IR (press release)",
+    sourceUrl: "https://investor.marvell.com/news-events/press-releases/detail/1041/marvell-technology-inc-announces-conference-call-to-review-third-quarter-of-fiscal-year-2027-financial-results",
+    note: { ja: "説明会の開始予定です。決算資料は同日の米国市場終了後に公開予定ですが、正確な公開時刻は公表されていません。", en: "Scheduled call start. Results are due after the U.S. market closes that day, but no exact publication time was announced." },
+  },
+  {
+    id: "crwd-fq3-2027-call", afterClose: true, ticker: "CRWD", kind: "earnings" as const, title: { ja: "CrowdStrike 決算説明会（2027年度Q3）", en: "CrowdStrike fiscal Q3 2027 earnings call" },
+    startsAt: "2026-12-01T14:00:00-08:00", sourceTimezone: "America/Los_Angeles", sourceName: "CrowdStrike IR",
+    sourceUrl: "https://ir.crowdstrike.com/events/event-details/crowdstrike-fiscal-third-quarter-2027-results-conference-call",
+    note: { ja: "説明会の開始予定です。決算資料は同日の米国市場終了後に公開予定ですが、正確な公開時刻は公表されていません。", en: "Scheduled call start. Results are due after the U.S. market closes that day, but no exact publication time was announced." },
+  },
+  {
+    id: "snow-fq3-2027-call", afterClose: true, ticker: "SNOW", kind: "earnings" as const, title: { ja: "Snowflake 決算説明会（2027年度Q3）", en: "Snowflake fiscal Q3 2027 earnings call" },
+    startsAt: "2026-12-02T14:00:00-08:00", sourceTimezone: "America/Los_Angeles", sourceName: "Snowflake (press release)",
+    sourceUrl: "https://www.snowflake.com/en/news/press-releases/fy27-q3-earnings-date-announcement/",
+    note: { ja: "説明会の開始予定です。決算資料は同日の米国市場終了後に公開予定ですが、正確な公開時刻は公表されていません。", en: "Scheduled call start. Results are due after the U.S. market closes that day, but no exact publication time was announced." },
+  },
   {
     id: "fomc-2026-10-28", kind: "economic" as const, title: { ja: "FOMC 声明発表（会合最終日）", en: "FOMC statement (final day of meeting)" },
     startsAt: "2026-10-28T14:00:00-04:00", sourceTimezone: "America/New_York", sourceName: "Federal Reserve",

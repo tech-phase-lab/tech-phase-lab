@@ -344,6 +344,18 @@ def member_action(db, payload, action, transport=None, now=None):
     if action == 'remove':
         return remove(db, payload)
     eligible = bool(row['active'] and row['access_until'] and row['access_until'] > now)
+    if row['active'] and not eligible and action in ('status', 'test'):
+        # The expiry stored at sign-up is only a cache. The owner's access is one hour long and is renewed on every request, and a
+        # member's paid period is extended when they renew, so a lapsed cache is checked against the current membership before
+        # the device is reported as switched off (it was turning itself off an hour after being turned on).
+        try:
+            current = member_expiry(owner)
+        except Exception:
+            current = 0
+        if isinstance(current, (int, float)) and not isinstance(current, bool) and math.isfinite(current) and current > now:
+            with db:
+                db.execute('UPDATE push_devices SET access_until=? WHERE id=? AND active=1', (current, device))
+            eligible = True
     if action == 'status':
         return {'registered': eligible}
     if action != 'test' or not eligible:

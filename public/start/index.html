@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Tech Phase Research</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Shippori+Mincho+B1:wght@700;800&family=Space+Grotesk:wght@500;600;700&display=swap">
+<style>
+body{margin:0;background:#06070c}
+a{text-decoration:none}
+a:hover{filter:brightness(1.1)}
+@keyframes tpfade{0%{opacity:0}3%{opacity:1}16.67%{opacity:1}19.67%{opacity:0}100%{opacity:0}}
+.tp-s{opacity:0;animation:tpfade 27s infinite both}
+.tp-d1{animation-delay:0s}
+.tp-d2{animation-delay:4.5s}
+.tp-d3{animation-delay:9s}
+.tp-d4{animation-delay:13.5s}
+.tp-d5{animation-delay:18s}
+.tp-d6{animation-delay:22.5s}
+@keyframes tpglow{0%,100%{box-shadow:0 0 0 0 rgba(232,190,85,0.55)}50%{box-shadow:0 0 0 10px rgba(232,190,85,0)}}
+.tp-glow{animation:tpglow 2.4s ease-out infinite}
+@keyframes tpglowm{0%,100%{box-shadow:0 10px 36px rgba(61,219,176,0.45),0 0 0 0 rgba(61,219,176,0.55)}50%{box-shadow:0 10px 36px rgba(61,219,176,0.45),0 0 0 12px rgba(61,219,176,0)}}
+.tp-glowm{animation:tpglowm 2.2s ease-out infinite}
+@keyframes tpshine{0%{transform:translateX(-120%)}60%,100%{transform:translateX(220%)}}
+.tp-shine{animation:tpshine 3.6s ease-in-out infinite}
+@media (prefers-reduced-motion: reduce){.tp-s{animation:none}.tp-d1{opacity:1}.tp-glow{animation:none}.tp-glowm{animation:none}.tp-shine{animation:none}}
+</style>
+</head>
+<body>
+<div style="min-height: 100vh; background: radial-gradient(560px 440px at 0% 0%, rgba(232,190,85,0.24), rgba(232,190,85,0) 70%), radial-gradient(520px 440px at 100% 24%, rgba(232,190,85,0.16), rgba(232,190,85,0) 70%), radial-gradient(620px 520px at 50% 100%, rgba(232,190,85,0.12), rgba(232,190,85,0) 70%), #06070c; font-family: 'Noto Sans JP', sans-serif; color: #eef0f5">
+<div style="max-width: 440px; margin: 0 auto; box-sizing: border-box; padding: 40px 16px 56px; display: flex; flex-direction: column; gap: 40px">
+
+<section style="position: relative; display: flex; flex-direction: column; gap: 16px; padding-bottom: 150px">
+<svg viewBox="0 0 360 170" preserveAspectRatio="none" aria-hidden="true" style="position: absolute; left: -16px; right: -16px; bottom: 0; width: calc(100% + 32px); height: 170px">
+<defs>
+<linearGradient id="tpline" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#3ddbb0" stop-opacity="0.15"/><stop offset="0.55" stop-color="#3ddbb0"/><stop offset="1" stop-color="#f6d675"/></linearGradient>
+<linearGradient id="tparea" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3ddbb0" stop-opacity="0.22"/><stop offset="1" stop-color="#3ddbb0" stop-opacity="0"/></linearGradient>
+</defs>
+<path d="M0 150 C40 146 60 132 92 128 S140 112 172 104 S214 88 244 74 S300 40 352 14 L352 170 L0 170 Z" fill="url(#tparea)"/>
+<path d="M0 150 C40 146 60 132 92 128 S140 112 172 104 S214 88 244 74 S300 40 352 14" fill="none" stroke="url(#tpline)" stroke-width="3" stroke-linecap="round" vector-effect="non-scaling-stroke"/>
+</svg>
+<div style="position: absolute; right: 12px; bottom: 148px; width: 14px; height: 14px; border-radius: 50%; background: #f6d675; box-shadow: 0 0 18px 4px rgba(246,214,117,0.7)"></div>
+
+<div style="position: relative; display: flex; align-items: center; gap: 10px; font-size: 13px; font-weight: 700; letter-spacing: 0.14em; color: #3ddbb0"><span style="display: block; width: 28px; height: 2px; background: #3ddbb0"></span>投資家わたがし改め、リゼル始動</div>
+<div style="position: relative; display: flex; flex-direction: column; font-family: 'Space Grotesk', sans-serif; font-weight: 700; line-height: 1.05; letter-spacing: 0.04em">
+<span style="font-size: 44px; background: linear-gradient(180deg, #ffffff, #e6dcc0); -webkit-background-clip: text; background-clip: text; color: transparent">TECH PHASE</span>
+<span style="font-size: 44px; background: linear-gradient(90deg, #fff1b8, #e8be55 45%, #c8932a); -webkit-background-clip: text; background-clip: text; color: transparent">RESEARCH</span>
+</div>
+<h1 style="position: relative; margin: 0; font-family: 'Shippori Mincho B1', serif; font-size: 27px; line-height: 1.55; font-weight: 800; color: #ffffff">米国ハイテク株<br>特化型サイト作りました！</h1>
+<div style="position: relative; font-family: 'Shippori Mincho B1', serif; font-size: 26px; font-weight: 800; letter-spacing: 0.04em; background: linear-gradient(90deg, #fff1b8, #e8be55 50%, #d09a2c); -webkit-background-clip: text; background-clip: text; color: transparent">ゼロから再び頂点へ</div>
+</section>
+
+<div style="margin-left: 6px; border-left: 2px solid rgba(232,190,85,0.4); padding-left: 20px; display: flex; flex-direction: column; gap: 44px">
+
+<section style="position: relative; display: flex; flex-direction: column; gap: 16px">
+<div style="position: absolute; left: -28px; top: 3px; width: 14px; height: 14px; border-radius: 50%; background: #e8be55; box-shadow: 0 0 0 4px #06070c, 0 0 14px 2px rgba(232,190,85,0.7)"></div>
+<div style="display: flex; align-items: baseline; gap: 10px"><span style="font-family: 'Space Grotesk', sans-serif; font-size: 13px; font-weight: 700; color: #e8be55">STEP 1</span><span style="font-size: 14px; font-weight: 700; color: #d6d2c4; letter-spacing: 0.08em">SNSの登録</span></div>
+<div style="display: flex; align-items: flex-start; gap: 14px">
+<div style="flex: none; display: flex; flex-direction: column; align-items: center; gap: 6px">
+<img src="/start/rizel.png" alt="リゼル" style="width: 64px; height: 64px; box-sizing: border-box; border-radius: 50%; border: 3px solid #e8be55; object-fit: cover; display: block">
+<div style="font-size: 12px; font-weight: 700; color: #f6d675">リゼル</div>
+</div>
+<div class="tp-glow" style="position: relative; flex: 1; min-width: 0; box-sizing: border-box; padding: 14px 12px 14px 16px; border-radius: 18px; background: #fffaf0; color: #2a1d02; font-weight: 800">
+<div style="position: absolute; left: -7px; top: 22px; width: 14px; height: 14px; background: #fffaf0; transform: rotate(45deg)"></div>
+<div style="position: relative; font-size: clamp(12px, 3.3vw, 16px); line-height: 1.6; white-space: nowrap">全て新アカウントにしました。</div>
+<div style="position: relative; font-size: clamp(12px, 3.7vw, 19px); line-height: 1.5; margin-top: 2px; white-space: nowrap">登録・フォローお願いします！</div>
+</div>
+</div>
+
+<div style="display: flex; gap: 10px">
+<a href="#" aria-label="Xをフォロー" style="flex: 1; min-width: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; min-height: 132px; box-sizing: border-box; padding: 14px 6px; border-radius: 16px; background: #0f1017; border: 1px solid rgba(232,190,85,0.55); color: #eef0f5">
+<div style="width: 52px; height: 52px; border-radius: 12px; background: #000000; border: 1px solid #3a3a44; display: flex; align-items: center; justify-content: center"><svg width="26" height="26" viewBox="0 0 24 24" fill="#ffffff" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></div>
+<div style="font-size: 13px; font-weight: 700; color: #e6e2d4">X</div>
+<div style="font-size: 12px; font-weight: 800; padding: 5px 12px; border-radius: 999px; background: linear-gradient(135deg, #fbe28f, #e8be55); color: #2a1d02; white-space: nowrap">フォロー</div>
+</a>
+<a href="#" aria-label="Instagramをフォロー" style="flex: 1; min-width: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; min-height: 132px; box-sizing: border-box; padding: 14px 6px; border-radius: 16px; background: #0f1017; border: 1px solid rgba(232,190,85,0.55); color: #eef0f5">
+<div style="width: 52px; height: 52px; border-radius: 12px; background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285aeb 90%); display: flex; align-items: center; justify-content: center"><svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="1.9" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r="1" fill="#ffffff" stroke="none"/></svg></div>
+<div style="font-size: 13px; font-weight: 700; color: #e6e2d4">Instagram</div>
+<div style="font-size: 12px; font-weight: 800; padding: 5px 12px; border-radius: 999px; background: linear-gradient(135deg, #fbe28f, #e8be55); color: #2a1d02; white-space: nowrap">フォロー</div>
+</a>
+<a href="#" aria-label="YouTubeに登録" style="flex: 1; min-width: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; min-height: 132px; box-sizing: border-box; padding: 14px 6px; border-radius: 16px; background: #0f1017; border: 1px solid rgba(232,190,85,0.55); color: #eef0f5">
+<div style="height: 52px; display: flex; align-items: center"><svg width="68" height="48" viewBox="0 0 68 48" aria-hidden="true"><rect width="68" height="48" rx="14" fill="#ff0000"/><path d="M27 12.5v23l20-11.5z" fill="#ffffff"/></svg></div>
+<div style="font-size: 13px; font-weight: 700; color: #e6e2d4">YouTube</div>
+<div style="font-size: 12px; font-weight: 800; padding: 5px 12px; border-radius: 999px; background: linear-gradient(135deg, #fbe28f, #e8be55); color: #2a1d02; white-space: nowrap">登録</div>
+</a>
+</div>
+
+</section>
+
+<section style="position: relative; display: flex; flex-direction: column; gap: 14px">
+<div style="position: absolute; left: -28px; top: 3px; width: 14px; height: 14px; border-radius: 50%; background: #3ddbb0; box-shadow: 0 0 0 4px #06070c, 0 0 14px 2px rgba(61,219,176,0.7)"></div>
+<div style="display: flex; align-items: baseline; gap: 10px"><span style="font-family: 'Space Grotesk', sans-serif; font-size: 13px; font-weight: 700; color: #3ddbb0">STEP 2</span><span style="font-size: 14px; font-weight: 700; color: #d6d2c4; letter-spacing: 0.08em">公式サイトへ</span></div>
+
+<div style="padding: 1.5px; border-radius: 22px; background: linear-gradient(135deg, #fff1b8, rgba(232,190,85,0.55) 35%, rgba(61,219,176,0.5) 70%, #e8be55)">
+<div style="border-radius: 20.5px; background: #0b0c13; padding: 22px 18px; display: flex; flex-direction: column; gap: 20px">
+
+<div style="display: flex; align-items: center; gap: 14px">
+<img src="/start/logo.png" alt="Tech Phase Researchのロゴ" style="flex: none; width: 60px; height: 60px; border-radius: 14px; display: block">
+<div style="min-width: 0; display: flex; flex-direction: column; gap: 6px">
+<div style="font-family: 'Space Grotesk', sans-serif; font-size: 22px; font-weight: 700; color: #eef0f5">Tech Phase <span style="color: #e8be55">Research</span></div>
+<div style="font-family: 'Shippori Mincho B1', serif; font-size: 18px; line-height: 1.5; font-weight: 800; color: #ffffff"><span style="display: inline-block">米国株の変化を、</span><span style="display: inline-block">先読みする。</span></div>
+</div>
+</div>
+
+<div style="position: relative; height: 350px; border-radius: 14px; background: radial-gradient(240px 200px at 26% 60%, rgba(61,219,176,0.22), rgba(61,219,176,0) 70%), radial-gradient(260px 220px at 76% 58%, rgba(232,190,85,0.38), rgba(232,190,85,0) 70%), #090a11; border: 1px solid rgba(232,190,85,0.3); overflow: hidden">
+
+<div style="position: absolute; left: 12%; top: 20px; width: 130px; height: 270px; box-sizing: border-box; border-radius: 22px; border: 5px solid #2a4a6e; background: #0a1224; transform: rotate(-5deg); overflow: hidden; box-shadow: 0 0 26px rgba(61,219,176,0.28)">
+<div class="tp-s tp-d1" style="position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; text-align: center; padding: 4px"><div style="font-size: 13px; font-weight: 700; color: #3ddbb0; white-space: nowrap">ニュース</div><div style="font-size: 10px; color: #9aa8c4">実際の画面を入れます</div></div>
+<div class="tp-s tp-d2" style="position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; text-align: center; padding: 4px"><div style="font-size: 13px; font-weight: 700; color: #3ddbb0; white-space: nowrap">株価</div><div style="font-size: 10px; color: #9aa8c4">実際の画面を入れます</div></div>
+<div class="tp-s tp-d3" style="position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; text-align: center; padding: 4px"><div style="font-size: 13px; font-weight: 700; color: #3ddbb0; white-space: nowrap">決算</div><div style="font-size: 10px; color: #9aa8c4">実際の画面を入れます</div></div>
+<div class="tp-s tp-d4" style="position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; text-align: center; padding: 4px"><div style="font-size: 13px; font-weight: 700; color: #3ddbb0; white-space: nowrap">目標株価</div><div style="font-size: 10px; color: #9aa8c4">実際の画面を入れます</div></div>
+<div class="tp-s tp-d5" style="position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; text-align: center; padding: 4px"><div style="font-size: 13px; font-weight: 700; color: #3ddbb0; white-space: nowrap">資本マップ</div><div style="font-size: 10px; color: #9aa8c4">実際の画面を入れます</div></div>
+<div class="tp-s tp-d6" style="position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; text-align: center; padding: 4px"><div style="font-size: 13px; font-weight: 700; color: #3ddbb0; white-space: nowrap">リサーチノート</div><div style="font-size: 10px; color: #9aa8c4">実際の画面を入れます</div></div>
+</div>
+
+<div style="position: absolute; right: 12%; top: 36px; width: 130px; height: 270px; box-sizing: border-box; border-radius: 22px; border: 5px solid #d9a83a; background: #0a1224; transform: rotate(4deg); overflow: hidden; box-shadow: 0 0 38px rgba(232,190,85,0.6)">
+<div class="tp-s tp-d1" style="position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; text-align: center; padding: 4px"><div style="font-size: 13px; font-weight: 700; color: #f6d675; white-space: nowrap">テーマランキング</div><div style="font-size: 10px; color: #9aa8c4">実際の画面を入れます</div></div>
+<div class="tp-s tp-d2" style="position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; text-align: center; padding: 4px"><div style="font-size: 13px; font-weight: 700; color: #f6d675; white-space: nowrap">財務レーダー</div><div style="font-size: 10px; color: #9aa8c4">実際の画面を入れます</div></div>
+<div class="tp-s tp-d3" style="position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; text-align: center; padding: 4px"><div style="font-size: 13px; font-weight: 700; color: #f6d675; white-space: nowrap">監視22銘柄リスト</div><div style="font-size: 10px; color: #9aa8c4">実際の画面を入れます</div></div>
+<div class="tp-s tp-d4" style="position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; text-align: center; padding: 4px"><div style="font-size: 13px; font-weight: 700; color: #f6d675; white-space: nowrap">連関マップ</div><div style="font-size: 10px; color: #9aa8c4">実際の画面を入れます</div></div>
+<div class="tp-s tp-d5" style="position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; text-align: center; padding: 4px"><div style="font-size: 13px; font-weight: 700; color: #f6d675; white-space: nowrap">銘柄比較</div><div style="font-size: 10px; color: #9aa8c4">実際の画面を入れます</div></div>
+<div class="tp-s tp-d6" style="position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; text-align: center; padding: 4px"><div style="font-size: 13px; font-weight: 700; color: #f6d675; white-space: nowrap">ひとりごと</div><div style="font-size: 10px; color: #9aa8c4">実際の画面を入れます</div></div>
+</div>
+
+<div style="position: absolute; left: 12%; bottom: 10px; width: 130px; height: 18px">
+<div class="tp-s tp-d1" style="position: absolute; inset: 0; text-align: center; font-size: 12px; font-weight: 700; color: #3ddbb0; white-space: nowrap">ニュース</div>
+<div class="tp-s tp-d2" style="position: absolute; inset: 0; text-align: center; font-size: 12px; font-weight: 700; color: #3ddbb0; white-space: nowrap">株価</div>
+<div class="tp-s tp-d3" style="position: absolute; inset: 0; text-align: center; font-size: 12px; font-weight: 700; color: #3ddbb0; white-space: nowrap">決算</div>
+<div class="tp-s tp-d4" style="position: absolute; inset: 0; text-align: center; font-size: 12px; font-weight: 700; color: #3ddbb0; white-space: nowrap">目標株価</div>
+<div class="tp-s tp-d5" style="position: absolute; inset: 0; text-align: center; font-size: 12px; font-weight: 700; color: #3ddbb0; white-space: nowrap">資本マップ</div>
+<div class="tp-s tp-d6" style="position: absolute; inset: 0; text-align: center; font-size: 12px; font-weight: 700; color: #3ddbb0; white-space: nowrap">リサーチノート</div>
+</div>
+<div style="position: absolute; right: 12%; bottom: 10px; width: 130px; height: 18px">
+<div class="tp-s tp-d1" style="position: absolute; inset: 0; text-align: center; font-size: 12px; font-weight: 700; color: #f6d675; white-space: nowrap">テーマランキング</div>
+<div class="tp-s tp-d2" style="position: absolute; inset: 0; text-align: center; font-size: 12px; font-weight: 700; color: #f6d675; white-space: nowrap">財務レーダー</div>
+<div class="tp-s tp-d3" style="position: absolute; inset: 0; text-align: center; font-size: 12px; font-weight: 700; color: #f6d675; white-space: nowrap">監視22銘柄リスト</div>
+<div class="tp-s tp-d4" style="position: absolute; inset: 0; text-align: center; font-size: 12px; font-weight: 700; color: #f6d675; white-space: nowrap">連関マップ</div>
+<div class="tp-s tp-d5" style="position: absolute; inset: 0; text-align: center; font-size: 12px; font-weight: 700; color: #f6d675; white-space: nowrap">銘柄比較</div>
+<div class="tp-s tp-d6" style="position: absolute; inset: 0; text-align: center; font-size: 12px; font-weight: 700; color: #f6d675; white-space: nowrap">ひとりごと</div>
+</div>
+
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 12px">
+<div style="display: flex; gap: 14px; align-items: center; padding: 14px 16px; border-radius: 14px; background: rgba(61,219,176,0.07); border: 1px solid rgba(61,219,176,0.4)">
+<div style="flex: none; width: 64px; display: flex; flex-direction: column; align-items: center; gap: 4px">
+<div style="font-family: 'Space Grotesk', sans-serif; font-size: 18px; font-weight: 700; letter-spacing: 0.06em; color: #3ddbb0">FREE</div>
+<div style="font-size: 12px; font-weight: 700; color: #3ddbb0">無料</div>
+</div>
+<div style="min-width: 0; font-size: 14px; line-height: 1.75; color: #d9e3f3"><span style="display: inline-block">米国ニュース、</span><span style="display: inline-block">決算・経済指標、</span><span style="display: inline-block">目標株価、</span><span style="display: inline-block">銘柄検索など</span></div>
+</div>
+<div style="position: relative; overflow: hidden; display: flex; gap: 14px; align-items: center; padding: 18px 16px; border-radius: 14px; background: linear-gradient(135deg, rgba(246,214,117,0.30), rgba(232,190,85,0.08) 60%, rgba(232,190,85,0.16)); border: 1.5px solid #f0c95f; box-shadow: 0 0 34px rgba(232,190,85,0.30)">
+<div class="tp-shine" style="position: absolute; top: 0; bottom: 0; left: 0; width: 40%; background: linear-gradient(100deg, rgba(255,255,255,0), rgba(255,241,184,0.22), rgba(255,255,255,0)); pointer-events: none"></div>
+<div style="position: relative; flex: none; width: 64px; display: flex; flex-direction: column; align-items: center; gap: 4px">
+<div style="display: flex; align-items: center; gap: 4px; font-family: 'Space Grotesk', sans-serif; font-size: 20px; font-weight: 700; letter-spacing: 0.06em; color: #fff1b8"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 8l4.5 4L12 5l4.5 7L21 8l-2 11H5L3 8z"/></svg>PRO</div>
+<div style="font-size: 12px; font-weight: 700; color: #f6d675">月額制</div>
+</div>
+<div style="position: relative; min-width: 0; font-size: 14px; line-height: 1.75; font-weight: 500; color: #fbf1cf"><span style="display: inline-block">ハイテク速報、</span><span style="display: inline-block">テーマランキング、</span><span style="display: inline-block">財務レーダー、</span><span style="display: inline-block">リアルタイム監視、</span><span style="display: inline-block">銘柄比較、</span><span style="display: inline-block">スマホ通知など</span></div>
+</div>
+</div>
+
+<a href="https://techphase.app" class="tp-glowm" style="position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; gap: 12px; min-height: 68px; border-radius: 18px; background: linear-gradient(135deg, #7dfad6, #3ddbb0 55%, #22b78e); color: #032019; font-size: 20px; font-weight: 800">
+<div class="tp-shine" style="position: absolute; top: 0; bottom: 0; left: 0; width: 40%; background: linear-gradient(100deg, rgba(255,255,255,0), rgba(255,255,255,0.38), rgba(255,255,255,0)); pointer-events: none"></div>
+<span style="position: relative">Tech Phase を開く</span>
+<svg style="position: relative" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+</a>
+</div>
+</div>
+</section>
+
+</div>
+
+<footer style="display: flex; flex-direction: column; gap: 8px; padding-top: 20px; border-top: 1px solid rgba(232,190,85,0.3); font-size: 12px; line-height: 1.8; color: #9a9aa6">
+<div style="font-size: clamp(10px, 3vw, 12px); line-height: 1.8; white-space: nowrap">掲載する情報は特定の銘柄の売買を勧めるものではありません。<br>投資の判断はご自身でお願いします。</div>
+<div>運営：リゼル</div>
+</footer>
+
+</div>
+</div>
+</body>
+</html>

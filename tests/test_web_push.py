@@ -94,6 +94,24 @@ class PushTests(unittest.TestCase):
         push.revoke_member(self.db, payload)
         self.assertFalse(push.member_action(self.db, payload, 'status', now=self.now)['registered'])
 
+    def test_status_renews_a_lapsed_cache_from_the_current_membership(self):
+        payload = self.member_payload()
+        push.register_member(self.db, payload, {'MU'}, self.now - 10)
+        later = self.now + 3 * 3600
+        # The stored expiry has passed, but the member's access is still valid: the device stays on and the cache is renewed.
+        with patch.object(push, 'member_expiry', return_value=later + 3600):
+            self.assertTrue(push.member_action(self.db, payload, 'status', now=later)['registered'])
+        stored = self.db.execute('SELECT access_until FROM push_devices').fetchone()[0]
+        self.assertEqual(stored, later + 3600)
+        # Access that really ended (or cannot be checked) is still reported as off, and a revoked device is never revived.
+        for answer in (0, later - 1):
+            self.db.execute('UPDATE push_devices SET access_until=?', (self.now + 1,))
+            with patch.object(push, 'member_expiry', return_value=answer):
+                self.assertFalse(push.member_action(self.db, payload, 'status', now=later)['registered'])
+        push.revoke_member(self.db, payload)
+        with patch.object(push, 'member_expiry', return_value=later + 3600):
+            self.assertFalse(push.member_action(self.db, payload, 'status', now=later)['registered'])
+
     def test_member_delivery_rechecks_current_entitlement_and_preserves_dedup(self):
         push.register_member(self.db, self.member_payload(), {'MU'}, self.now-10)
         calls=[]
