@@ -141,6 +141,59 @@ def request_page(tickers, page, token):
         raise ValueError("stock-news-fetch-failed") from None
 
 
+PROBE_TICKERS = ("NVDA", "MU", "MSFT", "AMD", "TSM")
+
+
+def probe(*, transport=None, clock=time.monotonic, now=None):
+    """One request for the owner's connection check (Nov 9). It saves nothing, ignores STOCK_NEWS_ENABLED (the
+    automatic intake stays off) and never returns or logs the key or any provider text beyond five headlines."""
+    token = os.environ.get("STOCK_NEWS_API_KEY", "").strip()
+    if not token:
+        raise ValueError("stock-news-key-not-set")
+    params = {"tickers": ",".join(PROBE_TICKERS), "items": 10, "token": token}
+    request = Request(ENDPOINT + "?" + urlencode(params), headers={"Accept": "application/json"})
+    started = clock()
+    try:
+        if transport is not None:
+            data = transport(request)
+        else:
+            with build_opener(NoRedirect()).open(request, timeout=20) as response:
+                if response.headers.get_content_type() != "application/json":
+                    raise ValueError("stock-news-content-type")
+                body = response.read(MAX_BYTES + 1)
+            if len(body) > MAX_BYTES:
+                raise ValueError("stock-news-response-limit")
+            data = json.loads(body)
+    except HTTPError as exc:
+        raise ValueError(f"stock-news-http-{exc.code}") from None
+    except ValueError:
+        raise
+    except Exception:
+        raise ValueError("stock-news-fetch-failed") from None
+    elapsed = clock() - started
+    rows = data.get("data") if isinstance(data, dict) else None
+    if not isinstance(rows, list):
+        raise ValueError("stock-news-invalid-response")
+    now = datetime.now(timezone.utc) if now is None else now
+    samples, ages = [], []
+    for row in rows[:5]:
+        if not isinstance(row, dict):
+            continue
+        age = None
+        try:
+            age = round((now - parsedate_to_datetime(row.get("date", ""))).total_seconds() / 60)
+            ages.append(age)
+        except Exception:
+            pass
+        tags = row.get("tickers") if isinstance(row.get("tickers"), list) else []
+        samples.append({"title": str(row.get("title", ""))[:140], "publisher": str(row.get("source_name", ""))[:60],
+                        "tickers": [str(t)[:10] for t in tags][:6], "ageMinutes": age})
+    total_pages = data.get("total_pages")
+    return {"status": "ok", "responseSeconds": round(elapsed, 2), "articles": len(rows),
+            "totalPages": total_pages if isinstance(total_pages, int) else None, "samples": samples,
+            "newestAgeMinutes": min(ages) if ages else None, "tickers": list(PROBE_TICKERS)}
+
+
 def save_items(db, items, now):
     added = changed = 0
     with db:
