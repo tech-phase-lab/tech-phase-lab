@@ -5,7 +5,7 @@ import ResearchToolShell from '../research-tool-shell';
 import CompanySwitcher, {type CompanyOption} from './company-switcher';
 import type { WatchView } from '@/lib/research/company-watch';
 import type { Copy } from '@/lib/research/data';
-import CompactQuote from './compact-quote';
+import QuoteCard from '../price/quote-card';
 import CompanyActivity from './company-activity';
 import styles from './mu-watch.module.css';
 import ProTag from '../pro-experience/pro-tag';
@@ -14,7 +14,7 @@ export default function CompanyWatch({companies,watch,titles}:{companies:Company
  return <ResearchToolShell lang={lang} setLang={setLang} title={name} description="" showTools={false} showHeading={false}>
   <CompanySwitcher ticker={watch.ticker} companies={companies} lang={lang} compact/>
   <header className={styles.heading}><h1>{name}</h1></header>
-  <CompactQuote ticker={watch.ticker} quoteTicker={watch.quoteTicker} exchange={watch.exchange} lang={lang}/>
+  <QuoteCard ticker={watch.quoteTicker||watch.ticker} variant="gauge" from="watch" name={watch.name}/>
   <CompanyActivity key={watch.ticker} ticker={watch.ticker} lang={lang}/>
   <div className={styles.sectionTitle}><h2>{ja?'直近決算':'Latest earnings'}</h2><span>{watch.period}</span></div>
   <p className={styles.dates}>{ja?'決算発表':'Released'} {watch.releasedOn} <span>{watch.period}{watch.periodEnd?` · ${ja?'決算期末':'Period ended'} ${watch.periodEnd}`:''}</span></p>

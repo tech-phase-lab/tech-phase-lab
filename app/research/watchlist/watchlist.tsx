@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import Link from "next/link";
 import { useFavoriteLists } from "./use-favorite-lists";
 import { useWatchlistSelection } from "./use-watchlist-selection";
 import { watchlistSlots, sortFavorites, addFavoriteToList, favoriteListLimit, type FavoriteQuote } from "@/lib/research/favorite-lists";
@@ -9,10 +8,12 @@ import { useResearchLanguage } from "../use-research-language";
 import WatchlistFrame from "./watchlist-frame";
 import ResearchLoading from "../loading";
 import ResearchToolShell from "../research-tool-shell";
-import { TradingViewChart } from "../stocks/tradingview-chart";
+import { useRouter } from "next/navigation";
+import { useQuotes } from "../price/use-market";
+import { detailHref } from "../price/quote-card";
 import { favoriteIntradayChart } from "@/lib/research/watchlist-chart";
 import AreaChart from "./area-chart";
-import SwipeRow, { TrashIcon } from "./swipe-row";
+import SwipeRow from "./swipe-row";
 import { quoteForSession, type WatchlistSession } from "@/lib/research/watchlist-session";
 import { quoteFreshness, freshnessLabel, quoteTimeText } from "@/lib/research/watchlist-freshness";
 import { useQuoteClock } from "./use-quote-clock";
@@ -21,7 +22,6 @@ import ListWheel from "./list-wheel";
 import EmptyWatchlist from "./empty-watchlist";
 import { useWatchlistSectors } from "./use-watchlist-sectors";
 import { watchlistSector } from "@/lib/research/watchlist-sector";
-import { formatAlertPrice, upsertPriceAlert } from "@/lib/research/price-alert-settings";
 import styles from "./watchlist.module.css";
 
 type Company = { ticker: string; name: string; sector?: { ja: string; en: string }; exchange?: string };
@@ -42,12 +42,7 @@ function CurrentTime() {
 export default function Watchlist({ companies, quotes = {} }: { companies: Company[]; quotes?: Record<string, FavoriteQuote> }) {
   const [lang, setLang] = useResearchLanguage();
   const quoteNow = useQuoteClock();
-  const { lists, names, alerts = [], update, error, status, retry, discardPending, canImport, importLocal, editable, ready } = useFavoriteLists();
-  const [alertTicker, setAlertTicker] = useState("");
-  const [alertPrice, setAlertPrice] = useState("");
-  const [alertDirection, setAlertDirection] = useState<"above" | "below">("above");
-  const [alertCurrency, setAlertCurrency] = useState("USD");
-  const [alertError, setAlertError] = useState<"invalid" | "limit" | null>(null);
+  const { lists, names, update, error, status, retry, discardPending, canImport, importLocal, editable, ready } = useFavoriteLists();
   const [listId, setListId] = useWatchlistSelection();
   const slots = watchlistSlots(lists);
   const list = slots.find(item => item.id === listId) ?? slots[0];
@@ -66,6 +61,9 @@ export default function Watchlist({ companies, quotes = {} }: { companies: Compa
     });
     return saved && added;
   }
+  const { data: fetchedQuotes } = useQuotes(favorites.slice(0, 100), true);
+  const liveQuotes: Record<string, FavoriteQuote> = fetchedQuotes ?? {};
+  const router = useRouter();
   const [sessionView, setSessionView] = useState<WatchlistSession>("auto");
   const [revealed, setRevealed] = useState("");
   function remove(ticker: string) {
@@ -78,22 +76,7 @@ export default function Watchlist({ companies, quotes = {} }: { companies: Compa
   const [known, setKnown] = useState<Record<string, Company>>({});
   const [searching, setSearching] = useState(false);
   const [searchError, setSearchError] = useState(false);
-  const [selected, setSelected] = useState("");
   const searchInput = useRef<HTMLInputElement>(null);
-  const active = favorites.includes(selected) ? selected : "";
-  const company = companies.find(item => item.ticker === active) ?? known[active];
-  const needsName = Boolean(active && !company);
-  useEffect(() => {
-    if (!needsName) return;
-    const controller = new AbortController();
-    fetch(`/api/research/stocks?q=${encodeURIComponent(active)}&limit=24`, { signal: controller.signal })
-      .then(response => response.ok ? response.json() : null)
-      .then(data => {
-        const entry = data?.ok && data.results?.find((item: SearchEntry) => item.ticker === active);
-        if (entry && !controller.signal.aborted) setKnown(previous => ({ ...previous, [active]: fromEntry(entry) }));
-      }).catch(() => {});
-    return () => controller.abort();
-  }, [active, needsName]);
   useEffect(() => {
     const q = query.trim();
     setMatches([]);
@@ -119,15 +102,14 @@ export default function Watchlist({ companies, quotes = {} }: { companies: Compa
   const sessionLabels = { regular: t("取引中", "Market open"), pre: t("プレマーケット", "Pre-market"), post: t("時間外", "After-hours"), closed: t("前日比", "Daily change") };
   const displayedQuotes: Record<string, FavoriteQuote> = {};
   for (const ticker of favorites) {
-    const quote = quoteForSession(quotes[ticker], ticker, sessionView);
+    const quote = quoteForSession(liveQuotes[ticker] ?? quotes[ticker], ticker, sessionView);
     if (quote && quoteFreshness(quote, quoteNow) !== "invalid") displayedQuotes[ticker] = quote;
   }
   const hasStaleQuotes = Object.values(displayedQuotes).some(quote => quoteFreshness(quote, quoteNow) === "stale");
   const quoteSessions = [...new Set(Object.values(displayedQuotes).map(quote => quote.session))];
   const sharedSession = sessionView !== "auto" ? sessionView : quoteSessions.length === 1 ? quoteSessions[0] : null;
   const ordered = sortFavorites(favorites, displayedQuotes, sort);
-  const monitored = companies.some(item => item.ticker === active);
-  if (!ready && status === "loading") return <ResearchLoading />;
+    if (!ready && status === "loading") return <ResearchLoading />;
   return <WatchlistFrame lang={lang}><ResearchToolShell lang={lang} setLang={setLang} title={t("ウォッチリスト", "Watchlist")} description="" showHeading={false}>
     <div className={styles.page}>
       <header className={styles.heading}>
@@ -135,7 +117,7 @@ export default function Watchlist({ companies, quotes = {} }: { companies: Compa
         <div className={styles.listPicker}>
           <ListWheel triggerClass={styles.wheelTrigger} items={slots.map((item, index) => ({ id: item.id, label: item.name || t(`マイリスト${index + 1}`, `My list ${index + 1}`), count: item.tickers.length }))} value={list.id}
             title={t("リストを選ぶ", "Choose a list")} doneLabel={t("決定", "Done")} stocksLabel={count => t(`${count}銘柄`, `${count}`)}
-            onChange={id => { setListId(id); setSelected(""); setQuery(""); setListAction(null); setRevealed(""); }} />
+            onChange={id => { setListId(id); setQuery(""); setListAction(null); setRevealed(""); }} />
           <button disabled={!editable} className={styles.renameButton} onClick={() => { setListAction(listAction ? null : "rename"); setListName(list.name || t(`マイリスト${slots.indexOf(list) + 1}`, `My list ${slots.indexOf(list) + 1}`)); }} aria-label={t("リスト名を編集", "Edit list name")} aria-expanded={!!listAction}>
             <svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25ZM20.71 7.04a1 1 0 0 0 0-1.41l-2.34-2.34a1 1 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83Z" /></svg>
           </button>
@@ -184,9 +166,9 @@ export default function Watchlist({ companies, quotes = {} }: { companies: Compa
             const session = quote ? sessionLabels[quote.session] : "";
             const chart = quote ? favoriteIntradayChart(quote) : null;
             const direction = quote?.percentChange == null ? "flat" : quote.percentChange > 0 ? "up" : quote.percentChange < 0 ? "down" : "flat";
-            return <li key={ticker} className={styles.quoteRow} data-selected={ticker === active}>
+            return <li key={ticker} className={styles.quoteRow}>
               <SwipeRow key={`${list.id}:${ticker}`} open={revealed === ticker} onOpenChange={open => setRevealed(open ? ticker : "")} onRemove={() => remove(ticker)} disabled={!editable} removeLabel={t(`${ticker}をこのリストから削除`, `Remove ${ticker} from this list`)}>
-              <button className={styles.rowMain} aria-expanded={ticker === active} onClick={() => setSelected(active === ticker ? "" : ticker)}>
+              <button className={styles.rowMain} onClick={() => router.push(detailHref(ticker, "watchlist"))}>
                 <span className={styles.identity}><StockLogo ticker={ticker} /><span className={styles.company}><strong>{item?.name ?? names[ticker] ?? ticker}</strong><small>{ticker}</small>{sector && <span className={styles.sector} title={sectorSource}>{sector}</span>}</span></span>
                 <span className={styles.trend} data-direction={direction}>
                   <span className={styles.trendHeading}><small data-stale={freshness === "stale"}>{quoteLabel || (sharedSession ? "" : session)}</small><strong>{quote?.percentChange == null ? "—" : `${signed(quote.percentChange)}%`}</strong></span>
@@ -197,25 +179,6 @@ export default function Watchlist({ companies, quotes = {} }: { companies: Compa
               </SwipeRow>
 
 
-              {ticker === active && <section className={styles.detail} aria-label={t(`${ticker}の詳細`, `${ticker} details`)}>
-                <div className={styles.detailHeading}><h2>{item?.name ?? names[ticker] ?? ticker}</h2><div className={styles.detailActions}><Link href={monitored ? `/research/companies/${ticker}` : `/research/stocks?q=${encodeURIComponent(ticker)}`}>{t("銘柄情報", "Company")} →</Link><button disabled={!editable} className={styles.deleteButton} onClick={() => remove(ticker)} aria-label={t(`${ticker}をこのリストから削除`, `Remove ${ticker} from this list`)}><TrashIcon /></button></div></div>
-                {quote && <p className={styles.dataTime}>{t("データ時刻", "Data time")} <time dateTime={quote.asOf}>{new Date(quote.asOf).toLocaleString(lang === "ja" ? "ja-JP" : "en-GB", { timeZone: "Asia/Tokyo", month: "numeric", day: "numeric", hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: false })}</time> JST · {session}{quote.delayed ? t(" · 遅延", " · Delayed") : ""}</p>}
-                {freshness === "stale" && <p className={styles.dataTime}>{t("最新の価格を確認できていません。最終取得時点の価格とチャートです。", "The latest price is unconfirmed. Showing the last available price and chart.")}</p>}
-                {chart && <div className={styles.expandedChart} data-direction={direction}><AreaChart className={styles.largeChart} values={chart.values} reference={chart.reference} label={t("拡大した価格チャート", "Expanded price chart")} /><div className={styles.chartTimes}><span>{new Date(chart.start).toLocaleTimeString("en-GB", { timeZone: "America/New_York", hour: "2-digit", minute: "2-digit", hour12: false })}</span><span>{new Date(chart.end).toLocaleTimeString("en-GB", { timeZone: "America/New_York", hour: "2-digit", minute: "2-digit", hour12: false })} ET</span></div></div>}
-                <div className={styles.alertPanel}>
-                <div className={styles.alertHeading}><span>{t("価格通知", "Price alert")}</span>{alertTicker !== ticker && <button className={styles.alertButton} disabled={!editable} onClick={() => { const saved = alerts.find(a => a.ticker === ticker); setAlertTicker(ticker); setAlertError(null); setAlertPrice(saved ? String(saved.price) : ""); setAlertDirection(saved?.direction ?? "above"); setAlertCurrency(saved?.currency ?? quote?.currency ?? (ticker === "SKHY" ? "KRW" : "USD")); }}>{alerts.some(a => a.ticker === ticker) ? t("編集", "Edit") : t("設定する", "Set up")}</button>}</div>
-                <p className={styles.alertNote}>{t("設定のみ保存できます。通知配信は準備中です。", "You can save your settings, but alerts aren't being sent yet.")}</p>
-                {alertTicker === ticker && <form className={styles.alertForm} onSubmit={event => { event.preventDefault(); let validationError: "invalid" | "limit" | null = null; const saved = update(current => { const next = upsertPriceAlert(current.alerts ?? [], { ticker, price: Number(alertPrice), direction: alertDirection, currency: alertCurrency }); if (!next.ok) { validationError = next.error; return current; } return { ...current, alerts: next.alerts }; }); setAlertError(validationError); if (saved && !validationError) setAlertTicker(""); }}>
-                  <div className={styles.alertPriceGroup}><label className={styles.srOnly} htmlFor={`alert-price-${ticker}`}>{t("指定価格", "Target price")}</label><input id={`alert-price-${ticker}`} placeholder="0.00" inputMode="decimal" aria-label={t("指定価格", "Target price")} type="number" min="0.000001" max="1000000000" step="any" required value={alertPrice} onChange={e => { setAlertPrice(e.target.value); setAlertError(null); }} />
-                  <select aria-label={t("通貨", "Currency")} value={alertCurrency} onChange={e => setAlertCurrency(e.target.value)}><option>USD</option><option>KRW</option><option>JPY</option><option>CAD</option><option>EUR</option><option>GBP</option></select></div>
-                  <select className={styles.alertCondition} aria-label={t("通知条件", "Alert condition")} value={alertDirection} onChange={e => { const direction = e.target.value as "above" | "below"; const saved = alerts.find(a => a.ticker === ticker && a.direction === direction); setAlertDirection(direction); setAlertPrice(saved ? String(saved.price) : ""); setAlertCurrency(saved?.currency ?? quote?.currency ?? (ticker === "SKHY" ? "KRW" : "USD")); setAlertError(null); }}><option value="above">{t("以上になったら", "At or above")}</option><option value="below">{t("以下になったら", "At or below")}</option></select>
-                  <div className={styles.alertActions}><button className={styles.alertSave} type="submit" disabled={!editable}>{t("保存", "Save")}</button><button type="button" onClick={() => setAlertTicker("")}>{t("閉じる", "Close")}</button></div>
-                  {alertError && <p role="alert">{alertError === "limit" ? t("設定は100件までです。不要な設定を解除してください。", "Up to 100 settings. Remove an unused setting first.") : t("有効な価格を入力してください。", "Enter a valid price.")}</p>}
-                </form>}
-                {alerts.filter(a => a.ticker === ticker).map(a => <div className={styles.savedAlert} key={a.direction}><span>{formatAlertPrice(a.price, lang === "ja" ? "ja-JP" : "en-US")} {a.currency} {a.direction === "above" ? t("以上", "or higher") : t("以下", "or lower")}</span><button disabled={!editable} onClick={() => update(current => ({ ...current, alerts: (current.alerts ?? []).filter(v => !(v.ticker === ticker && v.direction === a.direction)) }))}>{t("解除", "Remove")}</button></div>)}
-                </div>
-                <TradingViewChart ticker={ticker} exchange={item?.exchange ?? ""} lang={lang} />
-              </section>}
             </li>;
           })}</ul>
           <div className={styles.attribution}>{Object.keys(displayedQuotes).length > 0 ? <>{t("提供：", "Data: ")}<a href="https://twelvedata.com" target="_blank" rel="noopener">Twelve Data</a></> : <span>{t("提供予定：Twelve Data", "Planned data provider: Twelve Data")}</span>}</div>
