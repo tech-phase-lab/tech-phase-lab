@@ -37,7 +37,15 @@ const errors: Record<string, string> = {
   "news-generation-budget-exhausted": "本日の生成予算上限に達しています。",
   "generation-failed": "AI生成に失敗しました。最新データを読み直し、再試行可能なら明示ボタンを使用してください。",
   "generation-not-configured": "AI生成は無効、または設定が未完了です。手動保存は利用できます。",
+  "stock-news-key-not-set": "監視サービスにキー(STOCK_NEWS_API_KEY)が登録されていません。",
+  "stock-news-probe-wait": "接続テストは1分に1回までです。少し待ってからもう一度押してください。",
+  "stock-news-fetch-failed": "Stock News APIに接続できませんでした(通信の失敗・時間切れ)。",
+  "stock-news-invalid-response": "Stock News APIの応答の形が想定と違います。",
+  "stock-news-content-type": "Stock News APIの応答がJSONではありません。",
 };
+type Probe = { status: string; responseSeconds: number; articles: number; totalPages: number | null; newestAgeMinutes: number | null; tickers: string[];
+  samples: { title: string; publisher: string; tickers: string[]; ageMinutes: number | null }[] };
+const probeError = (code: unknown) => typeof code === "string" && /^stock-news-http-\d{3}$/.test(code) ? `Stock News APIが ${code.slice(-3)} を返しました(キーが無効・プラン外・利用上限などの可能性)。` : null;
 const time = (value: string) => new Date(value).toLocaleString("ja-JP", { timeZone: "Asia/Tokyo", hour12: false }) + " JST";
 
 export default function NewsPanel({ token }: { token: string | null }) {
@@ -45,6 +53,9 @@ export default function NewsPanel({ token }: { token: string | null }) {
   const [busy, setBusy] = useState(false);
   const [message, setMessage] = useState("");
   const [version, setVersion] = useState(0);
+  const [probe, setProbe] = useState<Probe | null>(null);
+  const [probeMessage, setProbeMessage] = useState("");
+  const [probing, setProbing] = useState(false);
 
   async function request(query: string, body?: unknown) {
     const response = await fetch(`/api/research/${token === null ? "editor-owner" : "editor"}${query}`, {
@@ -54,8 +65,15 @@ export default function NewsPanel({ token }: { token: string | null }) {
     });
     const result = await response.json();
     if (token === null && (response.status === 401 || response.status === 403)) window.dispatchEvent(new Event("tech-phase:membership-changed"));
-    if (!response.ok || !result.ok) throw new Error(errors[result.error] ?? "処理結果を確認できません。再実行する前に一覧を読み直してください。");
+    if (!response.ok || !result.ok) throw new Error(probeError(result.error) ?? errors[result.error] ?? "処理結果を確認できません。再実行する前に一覧を読み直してください。");
     return result;
+  }
+  // Owner's one-time check (Nov 9): one request to the Stock News API from the monitor. It saves nothing and leaves the automatic intake off.
+  async function runProbe() {
+    setProbing(true); setProbe(null); setProbeMessage("");
+    try { setProbe(await request("", { action: "news-probe", payload: {} })); }
+    catch (error) { setProbeMessage(error instanceof Error ? error.message : "接続テストに失敗しました。"); }
+    finally { setProbing(false); }
   }
   async function load() {
     const result = await request("?kind=news&limit=50");
@@ -75,6 +93,16 @@ export default function NewsPanel({ token }: { token: string | null }) {
       <button type="button" disabled={busy || (token !== null && token.length < 24)} onClick={() => void run()}>{busy ? "処理中…" : "通常ニュースを読み込む"}</button></div>
     <p className={styles.note}>原文に照らして両言語の意味・数値・単位を確認してください。編集後は再承認が必要です。一覧の再読込で未保存の入力は破棄されます。</p>
     <p role="status" aria-live="polite">{message}</p>
+    <div className={styles.note}>
+      <button type="button" disabled={probing || busy || (token !== null && token.length < 24)} onClick={() => void runProbe()}>{probing ? "接続中…" : "Stock News API 接続テスト(1回だけ)"}</button>
+      <span> 押すと1回だけ接続します。記事は保存せず、自動取得は有効になりません。キーは表示されません。</span>
+      {probeMessage && <p role="status">{probeMessage}</p>}
+      {probe && <div role="status" aria-live="polite">
+        <p>応答あり · 応答時間 {probe.responseSeconds}秒 · 記事 {probe.articles}件(対象: {probe.tickers.join("・")}){probe.totalPages !== null ? ` · 総ページ数 ${probe.totalPages}` : ""}</p>
+        <p>いちばん新しい記事: {probe.newestAgeMinutes === null ? "日時を読めませんでした" : `${probe.newestAgeMinutes}分前`}(遅延の目安。1回の接続では正確に測れません)</p>
+        <ul>{probe.samples.map((sample, index) => <li key={index}>{sample.title}({sample.publisher} · {sample.tickers.join("・")} · {sample.ageMinutes === null ? "日時不明" : `${sample.ageMinutes}分前`})</li>)}</ul>
+      </div>}
+    </div>
     {data && <><p className={styles.note}>AI生成：{data.generationEnabled ? "設定有効" : "OFF"} · 公開配信：{data.publicationEnabled ? "ON（承認後に表示）" : "OFF（承認しても非公開）"}</p>
       {!data.items.length && <p>取得済みの通常ニュースはありません。</p>}
       <div className={styles.items}>{data.items.map(item => <NewsEditor key={`${version}:${item.id}`} item={item} busy={busy} generationEnabled={data.generationEnabled} run={run} />)}</div>

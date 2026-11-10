@@ -11,7 +11,7 @@ const headers = {
 };
 const reply = (status: number, value: unknown) => Response.json(value, { status, headers });
 const readKinds = new Set(["news", "signals", "official-research"]);
-const writeActions = new Set(["generate", "draft", "review", "news-generate", "news-retry", "news-draft", "news-review"]);
+const writeActions = new Set(["generate", "draft", "review", "news-generate", "news-retry", "news-draft", "news-review", "news-probe"]);
 
 /** Reuse the existing server-verified owner session. Do not issue another credential
  * or extend its lifetime. Annual reports and the separate post desk stay token-only. */

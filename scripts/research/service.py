@@ -1283,6 +1283,15 @@ class AutomaticMonitor:
         with company_wire.connect(self.db_path) as db:
             return company_wire.public_feed(db)
 
+    def stock_news_probe(self):
+        # One request at most once a minute, whoever asks; it never changes the automatic intake setting.
+        with self.state_lock:
+            last = self.state.get("stockNewsProbeAt", 0)
+            if time.time() - last < 60:
+                raise ValueError("stock-news-probe-wait")
+            self.state["stockNewsProbeAt"] = time.time()
+        return stock_news.probe()
+
     def stock_news_queue(self, limit=20):
         with stock_news.connect(self.db_path) as db:
             return stock_news.queue(db, limit)
@@ -3676,7 +3685,7 @@ class Handler(BaseHTTPRequestHandler):
             return
         if path not in {
             "/admin/posts/draft", "/admin/posts/review", "/admin/questions/review", "/admin/questions/answer",
-            "/admin/news/generate", "/admin/news/retry", "/admin/news/review", "/admin/news/draft",
+            "/admin/news/generate", "/admin/news/retry", "/admin/news/review", "/admin/news/draft", "/admin/news/probe",
             "/admin/briefs/generate", "/admin/briefs/draft", "/admin/briefs/review",
             "/admin/annual-briefs/draft", "/admin/annual-briefs/review",
         }:
@@ -3693,6 +3702,8 @@ class Handler(BaseHTTPRequestHandler):
                 result = self.app.review_question(payload)
             elif path in {"/admin/posts/draft", "/admin/posts/review"}:
                 result = self.app.save_post(payload, review=path.endswith("/review"))
+            elif path == "/admin/news/probe":
+                result = self.app.stock_news_probe()
             elif path == "/admin/news/generate":
                 result = self.app.generate_news_draft(payload)
             elif path == "/admin/news/retry":

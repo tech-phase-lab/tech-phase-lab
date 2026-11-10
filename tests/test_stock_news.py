@@ -186,5 +186,47 @@ class StockNewsTests(unittest.TestCase):
             thread.join(timeout=2)
 
 
+
+class ProbeTests(unittest.TestCase):
+    """The owner's one-time connection check: one request, nothing saved, the key never returned."""
+    def run_probe(self, transport, key="secret-key-value"):
+        with patch.dict(os.environ, {"STOCK_NEWS_API_KEY": key}, clear=False):
+            return news.probe(transport=transport, clock=iter([100.0, 100.8]).__next__,
+                              now=news.datetime(2026, 11, 9, 12, 10, tzinfo=news.timezone.utc))
+
+    def test_reports_latency_count_headlines_and_age_without_the_key(self):
+        seen = []
+        def transport(request):
+            seen.append(request.full_url)
+            return {"data": [{"title": "Nvidia wins order", "source_name": "Reuters", "tickers": ["NVDA"], "date": "Mon, 09 Nov 2026 07:00:00 -0500"},
+                             {"title": "Micron ships HBM4", "source_name": "CNBC", "tickers": ["MU"], "date": "Mon, 09 Nov 2026 06:50:00 -0500"}], "total_pages": 4}
+        result = self.run_probe(transport)
+        self.assertEqual((result["articles"], result["totalPages"], result["responseSeconds"], result["newestAgeMinutes"]), (2, 4, 0.8, 10))
+        self.assertEqual(result["samples"][0], {"title": "Nvidia wins order", "publisher": "Reuters", "tickers": ["NVDA"], "ageMinutes": 10})
+        self.assertEqual(len(seen), 1)
+        self.assertNotIn("secret-key-value", json.dumps(result))
+
+    def test_missing_key_and_provider_errors_give_fixed_codes_only(self):
+        with patch.dict(os.environ, {"STOCK_NEWS_API_KEY": ""}):
+            with self.assertRaisesRegex(ValueError, "^stock-news-key-not-set$"):
+                news.probe(transport=lambda request: self.fail("no request without a key"))
+        def forbidden(request):
+            raise HTTPError(request.full_url, 403, "secret-key-value in text", {}, None)
+        with self.assertRaisesRegex(ValueError, "^stock-news-http-403$") as caught:
+            self.run_probe(forbidden)
+        self.assertNotIn("secret-key-value", str(caught.exception))
+        with self.assertRaisesRegex(ValueError, "^stock-news-invalid-response$"):
+            self.run_probe(lambda request: {"nope": 1})
+
+    def test_probe_is_limited_to_one_request_a_minute_and_ignores_the_enable_flag(self):
+        app = service.AutomaticMonitor.__new__(service.AutomaticMonitor)
+        app.state_lock = threading.Lock(); app.state = {}
+        with patch.dict(os.environ, {"STOCK_NEWS_ENABLED": "false"}), patch.object(news, "probe", return_value={"status": "ok"}) as probe:
+            self.assertEqual(app.stock_news_probe(), {"status": "ok"})
+            with self.assertRaisesRegex(ValueError, "^stock-news-probe-wait$"):
+                app.stock_news_probe()
+        self.assertEqual(probe.call_count, 1)
+
+
 if __name__ == "__main__":
     unittest.main()
