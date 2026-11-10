@@ -3,8 +3,7 @@
 import { useEffect, useState } from "react";
 import ResearchToolShell from "../research-tool-shell";
 import { useResearchLanguage } from "../use-research-language";
-import IndexStrip from "./index-strip";
-import ThemeExplorer from "./themes";
+import MarketIndices from "../price/market-indices";
 import styles from "./market.module.css";
 
 type MacroQuote = { id: string; date?: string; value?: number; previous?: number; previousDate?: string; unavailable?: boolean };
@@ -46,36 +45,9 @@ function MacroCards({ ja }: { ja: boolean }) {
 
 export default function MarketPage() {
   const [lang, setLang] = useResearchLanguage();
-  const [section, setSection] = useState<"chart" | "themes" | "heatmap">("chart");
-  const [candles, setCandles] = useState(true);
-  const [symbol, setSymbol] = useState("FOREXCOM:SPXUSD");
   const ja = lang === "ja";
-  const groups = [
-    { name: ja ? "指数" : "Indices", options: [["FOREXCOM:SPXUSD", "S&P 500 · CFD"], ["FOREXCOM:NSXUSD", "Nasdaq 100 · CFD"], ["FOREXCOM:DJI", "Dow 30 · CFD"]] },
-    { name: ja ? "債券ETF" : "Bond ETFs", options: [["NASDAQ:SHY", "SHY · 1–3Y"], ["NASDAQ:IEF", "IEF · 7–10Y"], ["NASDAQ:TLT", "TLT · 20+Y"]] },
-    { name: ja ? "為替" : "Forex", options: [["FX:USDJPY", "USD / JPY"], ["FX:EURUSD", "EUR / USD"], ["FX:EURJPY", "EUR / JPY"]] },
-  ];
-  const selectedGroup = groups.find(group => group.options.some(([value]) => value === symbol))!;
   return <ResearchToolShell lang={lang} setLang={setLang} title={ja ? "マーケット" : "Markets"} description="" freshness>
-    <IndexStrip lang={lang} />
+    <MarketIndices />
     <MacroCards ja={ja} />
-    <div className={styles.sectionSwitch} role="group" aria-label={ja ? "マーケットの表示" : "Market view"}>
-      {groups.map(group => <button key={group.name} aria-pressed={section === "chart" && group === selectedGroup} onClick={() => { setSymbol(group.options[0][0]); setSection("chart"); }}>{group.name}</button>)}
-      <button aria-pressed={section === "themes"} onClick={() => setSection("themes")}>{ja ? "セクター別騰落率" : "Sector performance"}</button>
-      <button aria-pressed={section === "heatmap"} onClick={() => setSection("heatmap")}>{ja ? "ヒートマップ" : "Heatmap"}</button>
-    </div>
-    {section === "chart" ? <div>
-    <div className={styles.controls}>
-      <div className={styles.modes}><button aria-pressed={candles} onClick={() => setCandles(true)}>{ja ? "ローソク足" : "Candlesticks"}</button><button aria-pressed={!candles} onClick={() => setCandles(false)}>{ja ? "ライン" : "Line"}</button></div>
-      <select aria-label={ja ? "チャートの対象" : "Chart symbol"} value={symbol} onChange={event => setSymbol(event.target.value)}>
-        {selectedGroup.options.map(([value,label]) => <option key={value} value={value}>{label}</option>)}
-      </select>
-    </div>
-    <section className={styles.panel} aria-label={ja ? "市場の動き" : "Market overview"}>
-      <iframe key={`${lang}-${candles}-${symbol}`} src={`/research/market/widget?v=6&lang=${lang}&chart=1&style=${candles ? "candles" : "line"}&symbol=${encodeURIComponent(symbol)}`} title={ja ? "指数・債券ETF・為替のチャートと価格" : "Indices, bond ETFs and forex charts and quotes"} className={styles.widget} />
-    </section>
-
-    <p className={styles.note}>{ja ? "指数はCFD参考値、債券はETF価格です。ETFは遅延配信。" : "Indices are indicative CFDs; bonds show ETF prices with delayed quotes."}</p>
-    </div> : <ThemeExplorer lang={lang} view={section} />}
   </ResearchToolShell>;
 }

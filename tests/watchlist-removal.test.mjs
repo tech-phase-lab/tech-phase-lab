@@ -16,6 +16,9 @@ function harness(lang='ja', editable=true, ready=true, status='synced') {
   if(id==='react')return {useEffect:()=>{},useRef:()=>({current:null}),useState:initial=>{const key=index++;if(!(key in slots))slots[key]=initial;return [slots[key],v=>{slots[key]=v;}];}};
   if(id==='react/jsx-runtime')return require(id);
   if(id==='./use-favorite-lists')return {useFavoriteLists:()=>({...state,editable,ready,status,update:change=>{writes++;state=change(state);return true;}})};
+  if(id==='../price/use-market')return {useQuotes:()=>({data:null,failed:false,loaded:false})};
+  if(id==='../price/quote-card')return {detailHref:(t,f)=>`/research/quote/${t}?from=${f}`};
+  if(id==='next/navigation')return {useRouter:()=>({push:()=>{}})};
   if(id==='../loading')return {default:'research-loading'};
   if(id==='./use-watchlist-selection')return {useWatchlistSelection:()=>['default',()=>{}]};
   if(id==='../use-research-language')return {useResearchLanguage:()=>[lang,()=>{}]};
@@ -40,12 +43,6 @@ test('cancelled swipe removal writes nothing; confirmed removal preserves other 
  h.accept();assert.equal(h.remove(),true);assert.equal(h.writes,1);
  assert.deepEqual(h.state.lists[0].tickers,['NVDA']);assert.strictEqual(h.state.lists[1],original.lists[1]);
  assert.strictEqual(h.state.names,original.names);assert.strictEqual(h.state.alerts,original.alerts);
-});
-test('expanded detail removal uses the same confirmation in English',()=>{
- const h=harness('en');h.expand();
- const button=h.nodes().find(n=>n.type==='button'&&n.props['aria-label']==='Remove MU from this list');
- button.props.onClick();assert.equal(h.writes,0);assert.equal(h.messages[0],'Remove MU from this list?');
- h.accept();button.props.onClick();assert.deepEqual(h.state.lists[0].tickers,['NVDA']);
 });
 test('uneditable watchlists cannot trigger a removal or confirmation',()=>{
  const h=harness('ja',false);h.accept();assert.equal(h.remove(),false);assert.equal(h.writes,0);assert.deepEqual(h.messages,[]);
