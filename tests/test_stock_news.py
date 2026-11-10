@@ -215,6 +215,17 @@ class ProbeTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "^stock-news-http-403$") as caught:
             self.run_probe(forbidden)
         self.assertNotIn("secret-key-value", str(caught.exception))
+        import io
+        def reason(body):
+            def transport(request):
+                raise HTTPError(request.full_url, 403, "x", {}, io.BytesIO(body.encode()))
+            return transport
+        for body, code in (("`secret-key-value` is not a valid API token.", "stock-news-http-403-invalid-key"),
+                           ("Your plan does not include this", "stock-news-http-403-plan"),
+                           ("Request limit exceeded", "stock-news-http-403-limit"), ("Forbidden", "stock-news-http-403")):
+            with self.assertRaisesRegex(ValueError, "^" + code + "$") as caught:
+                self.run_probe(reason(body))
+            self.assertNotIn("secret-key-value", str(caught.exception))
         with self.assertRaisesRegex(ValueError, "^stock-news-invalid-response$"):
             self.run_probe(lambda request: {"nope": 1})
 
