@@ -5,6 +5,7 @@ import SiteHeader from "./site-header";
 import FreshnessNotice from "./freshness-notice";
 import { usePathname } from "next/navigation";
 import HomeSidebar from "./home-sidebar";
+import PageHeading from "./page-heading";
 import type { ReactNode } from "react";
 import type { Language } from "@/lib/research/data";
 import base from "./research.module.css";
@@ -18,8 +19,13 @@ export default function ResearchToolShell({ lang, setLang, title, description, c
     <div className={!desk && showTools ? styles.withSidebar : undefined}>
     {!desk && showTools && <aside className={styles.toolSidebar}><HomeSidebar lang={lang} tab={pathname === "/research/calendar" ? "metrics" : "home"} standalone pathname={pathname} /></aside>}
     <main id="tool-main" className={`${styles.main} ${desk ? styles.desk : ""}`}>
-      {desk && <div className={styles.deskSignature}><span>RIZEL’S DESK</span><small>TECH PHASE PRO</small></div>}
-      {showHeading && <><h1 className={compactTitle ? styles.compactTitle : undefined}>{title}</h1>{description && <p className={styles.description}>{description}</p>}</>}
+      {/* The common top of a page (owner, Nov 10): Japanese only; English keeps the earlier look. */}
+      {desk && lang === "ja" && showHeading
+        ? <PageHeading eyebrow="RIZEL'S DESK" title={title === "RIZEL’S DESK" ? "リゼルのひとりごと" : title} description={title === "RIZEL’S DESK" && !description ? "PRO会員だけに、本音を。" : description} />
+        : <>
+          {desk && <div className={styles.deskSignature}><span>RIZEL’S DESK</span><small>TECH PHASE PRO</small></div>}
+          {showHeading && <><h1 className={compactTitle ? styles.compactTitle : undefined}>{title}</h1>{description && <p className={styles.description}>{description}</p>}</>}
+        </>}
       {desk && <nav className={styles.deskNav} aria-label={lang === "ja" ? "RIZEL’S DESKメニュー" : "RIZEL’S DESK navigation"}>
         <Link href="/research/notes" aria-current={pathname === "/research/notes" ? "page" : undefined}>{lang === "ja" ? "ひとりごと" : "Notes"}</Link>
         <Link href="/research/qa" aria-current={pathname?.startsWith("/research/qa") ? "page" : undefined}>{lang === "ja" ? "リゼルに聞く" : "Ask Rizel"}</Link>

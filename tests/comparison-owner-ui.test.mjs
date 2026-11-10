@@ -17,7 +17,7 @@ new Function('require', 'module', 'exports', code)(id => {
   if (id === 'next/link') return { default: ({ children, ...props }) => React.createElement('a', props, children) };
   if (id.endsWith('.module.css')) return { default: {} };
   if (id === './comparison-visuals') return { CompanyScoreCard: () => null, ScoreHeadline: () => null, ScoreOverview: () => null, StatusOverlay: () => null };
-  if (id === './ticker-search' || id === './detail-panels' || id === '../pro-experience/pro-tag') return { default: () => null };
+  if (id === './ticker-search' || id === './detail-panels' || id === '../pro-experience/pro-tag' || id === '../page-heading') return { default: () => null };
   if (id.startsWith('@/lib/research/')) return require(`../lib/research/${id.split('/').at(-1)}.ts`);
   return require(id);
 }, loaded, loaded.exports);

@@ -7,6 +7,7 @@ import { Suspense, useEffect, useMemo, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import HoldingDetail from "./holding-detail";
 import { capitalRows, etfOverlap, type CapitalPortfolio } from "@/lib/research/capital-map";
+import PageHeading from "../page-heading";
 import ResearchToolShell from "../research-tool-shell";
 import { useResearchLanguage } from "../use-research-language";
 import { useStockFavorites } from "../use-stock-favorites";
@@ -117,7 +118,7 @@ function CapitalMapContent({ portfolios = emptyPortfolios, mode = "sample" }: { 
     <div className={styles.page}>
       {detailId && hasData && <HoldingDetail portfolio={detailPortfolio} securityId={detailId} instrument={searchParams.get("instrument") ?? "stock"} baseline={detailBaseline} lang={lang} sample={!reported} onBack={backToList} />}
       <div hidden={Boolean(detailId) && hasData}>
-      <header className={styles.heading}><p className={styles.eyebrow}>TECH PHASE RESEARCH{!reported && hasData && <span className={styles.edition}>SAMPLE</span>}</p><div className={styles.titleRow}><h1>CAPITAL MAP</h1></div><p>{t("投資先から、資金の流れを知る。", "See who owns what.")}</p></header>
+      {lang === "ja" ? <PageHeading eyebrow="CAPITAL MAP" title="資本マップ" description="投資先から、資金の流れを知る。" /> : <header className={styles.heading}><p className={styles.eyebrow}>TECH PHASE RESEARCH{!reported && hasData && <span className={styles.edition}>SAMPLE</span>}</p><div className={styles.titleRow}><h1>CAPITAL MAP</h1></div><p>{t("投資先から、資金の流れを知る。", "See who owns what.")}</p></header>}
       {!hasData ? <section className={styles.preparing}>
         <h2>{t("世界の運用会社とETFの投資先をひと目で。", "Explore the portfolios behind managers and ETFs.")}</h2>
         <p>{t("保有銘柄と構成比、銘柄ごとの保有先、ETFの重複を確認できます。", "Explore holdings, portfolio weights, stock holders and ETF overlap.")}</p>

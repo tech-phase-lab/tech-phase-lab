@@ -1,4 +1,5 @@
 'use client';
+import PageHeading from "../page-heading";
 import Link from 'next/link';
 import type { Language } from '@/lib/research/data';
 import base from '../research.module.css';
@@ -12,8 +13,9 @@ export default function CompanyDirectory({companies,lang}:{companies:DirectoryCo
  const groups=new Map<string,DirectoryCompany[]>();
  for(const company of companies){const key=company.sector[lang];groups.set(key,[...(groups.get(key)??[]),company]);}
  return <section id="monitored-companies" aria-labelledby="monitored-companies-title">
+  {ja&&<PageHeading eyebrow="COMPANY WATCH" title={`監視${companies.length}銘柄リスト`} description={`厳選した${companies.length}銘柄の動きを、ひと目で。`} titleId="monitored-companies-title"/>}
   <div className={base.directoryHead}>
-   <div><p className={base.eyebrow}>COMPANY WATCH</p><h1 id="monitored-companies-title">{ja?`監視${companies.length}銘柄リスト`:`${companies.length}-stock watch list`}</h1></div>
+   {!ja&&<div><p className={base.eyebrow}>COMPANY WATCH</p><h1 id="monitored-companies-title">{`${companies.length}-stock watch list`}</h1></div>}
    <div className={base.directoryLegend}>{freshCompanies>0&&<span className={styles.freshChip} role="status"><i className={styles.freshDot} aria-hidden="true"/>{ja?`新着あり ${freshCompanies}銘柄`:`${freshCompanies} with new items`}</span>}<span><i className={base.verifiedDot} aria-hidden="true"/>{ja?'決算リサーチを公開済み':'Earnings research available'}</span>{companies.some(c=>!c.verified)&&<span><i aria-hidden="true"/>{ja?'取得状況を公開':'Intake status'}</span>}</div>
   </div>
   {[{className:styles.desktop,columns:[['MU','NBIS'],['MRVL','LITE','PLTR'],['VRT','MSFT']]},{className:styles.mobile,columns:[['MU','LITE','PLTR'],['NBIS','MRVL','VRT','MSFT']]}].map(layout=><div key={layout.className} className={`${styles.groups} ${layout.className}`}>{layout.columns.map((anchors,index)=><div key={index}>{anchors.map(ticker=>{const entry=[...groups].find(([,members])=>members.some(company=>company.ticker===ticker));if(!entry)return null;const [sector,members]=entry;return <section key={sector}><h2>{sector}<span>{members.length}</span></h2><div className={styles.tiles}>{members.map(company=><Link key={company.ticker} href={`/research/companies/${company.ticker}`} aria-label={`${company.name}（${company.ticker}）${fresh.has(company.ticker)?(ja?' — 新着あり':' — new items'):''} — ${company.verified?(ja?'決算リサーチを公開済み':'Earnings research available'):(ja?'取得状況を公開':'Intake status')}`}>
