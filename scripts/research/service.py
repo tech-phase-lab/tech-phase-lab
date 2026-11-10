@@ -1239,17 +1239,24 @@ class AutomaticMonitor:
         tickers = os.environ.get("STOCK_NEWS_TICKERS", "").split(",")
         if tickers == [""]:
             tickers = sorted(set(self.tickers) | signals.X_EXTRA_TICKERS)
+        # Home news (owner, Nov 10): STOCK_NEWS_STREAMS="tech,market" reads the provider's all-ticker (technology sector) and general market
+        # feeds, each at its own pace, instead of the watch list.
+        streams = stock_news.stream_names()
         while not self.stop_event.is_set():
             try:
                 # Independent connection: no shared database lock across HTTP.
                 with stock_news.connect(self.db_path) as db:
-                    result = stock_news.poll(db, tickers)
+                    if streams:
+                        results = {name: stock_news.poll_stream(db, name) for name in streams}
+                        result = {"status": "ok" if all(r["status"] in ("ok", "waiting") for r in results.values()) else "error", "streams": results}
+                    else:
+                        result = stock_news.poll(db, tickers)
                 with self.state_lock:
                     self.state["stockNewsIntake"] = {**result, "checkedAt": utc_now()}
             except Exception:
                 with self.state_lock:
                     self.state["stockNewsIntake"] = {"status": "error", "error": "stock-news-worker-failed"}
-            self.stop_event.wait(60)
+            self.stop_event.wait(15 if streams else 60)
 
     def run_company_wire(self):
         # Read-only headline collection; set COMPANY_WIRE_ENABLED=false to stop it.
@@ -1283,14 +1290,17 @@ class AutomaticMonitor:
         with company_wire.connect(self.db_path) as db:
             return company_wire.public_feed(db)
 
-    def stock_news_probe(self):
-        # One request at most once a minute, whoever asks; it never changes the automatic intake setting.
+    def stock_news_probe(self, payload=None):
+        # One request at most once a minute per stream, whoever asks; it never changes the automatic intake setting.
+        stream = (payload or {}).get("stream") if isinstance(payload, dict) else None
+        if stream not in (None, "tech", "market"):
+            raise ValueError("stock-news-unknown-stream")
         with self.state_lock:
-            last = self.state.get("stockNewsProbeAt", 0)
+            last = self.state.get(f"stockNewsProbeAt:{stream}", 0)
             if time.time() - last < 60:
                 raise ValueError("stock-news-probe-wait")
-            self.state["stockNewsProbeAt"] = time.time()
-        return stock_news.probe()
+            self.state[f"stockNewsProbeAt:{stream}"] = time.time()
+        return stock_news.probe(stream)
 
     def stock_news_queue(self, limit=20):
         with stock_news.connect(self.db_path) as db:
@@ -3703,7 +3713,7 @@ class Handler(BaseHTTPRequestHandler):
             elif path in {"/admin/posts/draft", "/admin/posts/review"}:
                 result = self.app.save_post(payload, review=path.endswith("/review"))
             elif path == "/admin/news/probe":
-                result = self.app.stock_news_probe()
+                result = self.app.stock_news_probe(payload)
             elif path == "/admin/news/generate":
                 result = self.app.generate_news_draft(payload)
             elif path == "/admin/news/retry":

@@ -319,3 +319,83 @@ class HomeBridgeTests(unittest.TestCase):
         for value, expected in (("none", []), ("", []), ("gnews", ["gnews"]), ("yahoo, gnews", ["yahoo", "gnews"])):
             with patch.dict(os.environ, {"COMPANY_WIRE_FEEDS": value}):
                 self.assertEqual([name for name, _ in company_wire.feeds()], expected)
+
+
+class StreamProbeTests(unittest.TestCase):
+    def test_the_probe_can_check_each_home_stream_with_its_own_address_and_no_key_in_the_result(self):
+        seen = []
+        def transport(request):
+            seen.append(request.full_url)
+            return {"data": [{"title": "Oil jumps", "source_name": "Reuters", "date": "Mon, 09 Nov 2026 07:00:00 -0500"}], "total_pages": 2}
+        with patch.dict(os.environ, {"STOCK_NEWS_API_KEY": "secret-key-value"}):
+            tech = news.probe("tech", transport=transport)
+            market = news.probe("market", transport=transport)
+            with self.assertRaisesRegex(ValueError, "^stock-news-unknown-stream$"):
+                news.probe("bogus", transport=transport)
+        self.assertIn("/api/v1/category?", seen[0]); self.assertIn("section=alltickers", seen[0]); self.assertIn("sector=Technology", seen[0]); self.assertIn("items=3", seen[0])
+        self.assertIn("section=general", seen[1])
+        self.assertEqual((tech["stream"], market["stream"], tech["tickers"]), ("tech", "market", []))
+        self.assertNotIn("secret-key-value", json.dumps([tech, market]))
+
+
+class StreamTests(unittest.TestCase):
+    """The home news streams (owner, Nov 10): all-ticker technology news and general market news, each at its own pace."""
+    def setUp(self):
+        self.tmp = tempfile.TemporaryDirectory()
+        self.db = news.connect(Path(self.tmp.name) / "news.sqlite")
+        self.env = patch.dict(os.environ, {"STOCK_NEWS_ENABLED": "true", "STOCK_NEWS_API_KEY": "synthetic-key", "STOCK_NEWS_TO_HOME": "true",
+                                           "STOCK_NEWS_STREAMS": "tech,market", "STOCK_NEWS_ITEMS": "3"})
+        self.env.start()
+
+    def tearDown(self):
+        self.env.stop(); self.db.close(); self.tmp.cleanup()
+
+    def row(self, index, tickers=None, title="Chip maker wins order"):
+        row = {"news_url": f"https://publisher.example/s/{index}", "title": f"{title} {index}", "text": "Body.", "source_name": "Reuters",
+               "date": "Fri, 25 Sep 2026 16:00:00 -0400"}
+        if tickers is not None:
+            row["tickers"] = tickers
+        return row
+
+    def wire(self):
+        import company_wire
+        company_wire.schema(self.db)
+        return [(r["ticker"], r["title"], r["source"]) for r in self.db.execute("SELECT ticker, title, source FROM company_wire ORDER BY ticker, title")]
+
+    def test_stream_names_and_paces_are_settings(self):
+        self.assertEqual(news.stream_names(), ["tech", "market"])
+        with patch.dict(os.environ, {"STOCK_NEWS_STREAMS": "market,bogus,"}):
+            self.assertEqual(news.stream_names(), ["market"])
+        with patch.dict(os.environ, {"STOCK_NEWS_STREAMS": ""}):
+            self.assertEqual(news.stream_names(), [])
+        self.assertEqual((news.stream_seconds("tech"), news.stream_seconds("market")), (75, 300))
+        with patch.dict(os.environ, {"STOCK_NEWS_TECH_SECONDS": "10"}):
+            self.assertEqual(news.stream_seconds("tech"), 30)   # never faster than every 30 seconds
+
+    def test_tech_articles_are_filed_under_up_to_three_tickers_watched_first_and_market_under_mkt(self):
+        news.poll_stream(self.db, "tech", transport=lambda name, page, token: [self.row(1, ["AAPL", "ZZZ", "NVDA", "TSLA", "AMD"])])
+        news.poll_stream(self.db, "market", transport=lambda name, page, token: [self.row(2, None, "Oil jumps on Hormuz tension")])
+        self.assertEqual(self.wire(), [("AAPL", "Chip maker wins order 1", "stocknews"), ("AMD", "Chip maker wins order 1", "stocknews"),
+                                       ("MKT", "Oil jumps on Hormuz tension 2", "stocknews"), ("NVDA", "Chip maker wins order 1", "stocknews")])
+
+    def test_each_stream_waits_for_its_own_pace_and_the_first_fetch_is_one_page(self):
+        pages = []
+        def transport(name, page, token):
+            pages.append((name, page))
+            return [self.row(page * 10 + i, ["NVDA"]) for i in range(3)]
+        self.assertEqual(news.poll_stream(self.db, "tech", transport=transport)["status"], "ok")
+        self.assertEqual(news.poll_stream(self.db, "tech", transport=transport)["status"], "waiting")
+        self.assertEqual(news.poll_stream(self.db, "market", transport=transport)["status"], "ok")   # a different stream is not held up
+        self.assertEqual(pages, [("tech", 1), ("market", 1)])
+
+    def test_disabled_without_the_flag_or_for_unknown_streams(self):
+        with patch.dict(os.environ, {"STOCK_NEWS_ENABLED": "false"}):
+            self.assertEqual(news.poll_stream(self.db, "tech", transport=lambda *_: self.fail("network"))["status"], "disabled")
+        self.assertEqual(news.poll_stream(self.db, "bogus", transport=lambda *_: self.fail("network"))["status"], "disabled")
+
+    def test_an_error_is_a_fixed_code_and_backs_off(self):
+        def broken(name, page, token):
+            raise ValueError("stock-news-http-403")
+        result = news.poll_stream(self.db, "tech", transport=broken)
+        self.assertEqual((result["status"], result["error"]), ("error", "stock-news-intake-failed"))
+        self.assertEqual(news.poll_stream(self.db, "tech", transport=lambda *_: self.fail("backing off"))["status"], "waiting")
