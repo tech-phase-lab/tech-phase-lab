@@ -117,7 +117,7 @@ export async function POST(request: Request) {
     if (!text || new TextEncoder().encode(text).length > 64 * 1024) return response(400, { ok: false, error: "invalid-request-size" });
     let parsed: { action?: unknown; payload?: unknown };
     try { parsed = JSON.parse(text); } catch { return response(400, { ok: false, error: "invalid-json" }); }
-    if (!parsed || typeof parsed !== "object" || !["generate", "draft", "review", "annual-draft", "annual-review", "news-generate", "news-retry", "news-draft", "news-review", "post-draft", "post-review"].includes(String(parsed.action)) || !parsed.payload || typeof parsed.payload !== "object" || Array.isArray(parsed.payload)) {
+    if (!parsed || typeof parsed !== "object" || !["generate", "draft", "review", "annual-draft", "annual-review", "news-generate", "news-retry", "news-draft", "news-review", "news-probe", "post-draft", "post-review"].includes(String(parsed.action)) || !parsed.payload || typeof parsed.payload !== "object" || Array.isArray(parsed.payload)) {
       return response(400, { ok: false, error: "invalid-request" });
     }
     const paths: Record<string, string> = {
@@ -132,6 +132,7 @@ export async function POST(request: Request) {
       "news-retry": "/admin/news/retry",
       "news-draft": "/admin/news/draft",
       "news-review": "/admin/news/review",
+      "news-probe": "/admin/news/probe",
     };
     const path = paths[String(parsed.action)];
     return await relay(endpoint(path), {
