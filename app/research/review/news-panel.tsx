@@ -45,7 +45,11 @@ const errors: Record<string, string> = {
 };
 type Probe = { status: string; responseSeconds: number; articles: number; totalPages: number | null; newestAgeMinutes: number | null; tickers: string[];
   samples: { title: string; publisher: string; tickers: string[]; ageMinutes: number | null }[] };
-const probeError = (code: unknown) => typeof code === "string" && /^stock-news-http-\d{3}$/.test(code) ? `Stock News APIが ${code.slice(-3)} を返しました(キーが無効・プラン外・利用上限などの可能性)。` : null;
+const probeReasons: Record<string, string> = { "items-range": "取得件数(items)の指定が、このアカウントで許可されている範囲外と判定されました(許可される範囲は、Stock News APIの管理画面の「Recent API errors」の詳細で確認できます)", "invalid-key": "キーが無効と判定されました(貼り付け時の余計な文字・コピーミス・失効の可能性)", plan: "契約のプランでは利用できない内容と判定されました", limit: "利用上限に達していると判定されました" };
+const probeError = (code: unknown) => {
+  const match = typeof code === "string" ? /^stock-news-http-(\d{3})(?:-(invalid-key|plan|limit))?$/.exec(code) : null;
+  return match ? `Stock News APIが ${match[1]} を返しました。${match[2] ? probeReasons[match[2]] : "(キーが無効・プラン外・利用上限などの可能性。理由の分類はできませんでした)"}。` : null;
+};
 const time = (value: string) => new Date(value).toLocaleString("ja-JP", { timeZone: "Asia/Tokyo", hour12: false }) + " JST";
 
 export default function NewsPanel({ token }: { token: string | null }) {

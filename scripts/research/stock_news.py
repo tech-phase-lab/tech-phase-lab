@@ -150,7 +150,8 @@ def probe(*, transport=None, clock=time.monotonic, now=None):
     token = os.environ.get("STOCK_NEWS_API_KEY", "").strip()
     if not token:
         raise ValueError("stock-news-key-not-set")
-    params = {"tickers": ",".join(PROBE_TICKERS), "items": 10, "token": token}
+    # The provider rejected items=10 on this account ("outside the allowed range", Nov 10); 3 is its documented default size.
+    params = {"tickers": ",".join(PROBE_TICKERS), "items": 3, "token": token}
     request = Request(ENDPOINT + "?" + urlencode(params), headers={"Accept": "application/json"})
     started = clock()
     try:
@@ -165,7 +166,21 @@ def probe(*, transport=None, clock=time.monotonic, now=None):
                 raise ValueError("stock-news-response-limit")
             data = json.loads(body)
     except HTTPError as exc:
-        raise ValueError(f"stock-news-http-{exc.code}") from None
+        # The provider's message can quote the key, so it is never returned: only a fixed reason code is (Nov 10).
+        reason = ""
+        try:
+            text = exc.read(4096).decode("utf-8", "replace").lower().replace(token.lower(), "")
+            if "not a valid api token" in text or "invalid api token" in text or "invalid token" in text:
+                reason = "-invalid-key"
+            elif "items" in text and ("range" in text or "allowed" in text):
+                reason = "-items-range"
+            elif "plan" in text or "upgrade" in text or "subscription" in text or "not allowed" in text or "not available" in text:
+                reason = "-plan"
+            elif "limit" in text or "exceed" in text or "too many" in text or "quota" in text:
+                reason = "-limit"
+        except Exception:
+            reason = ""
+        raise ValueError(f"stock-news-http-{exc.code}{reason}") from None
     except ValueError:
         raise
     except Exception:
