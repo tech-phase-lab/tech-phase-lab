@@ -6,6 +6,7 @@ import { parseSecDirectory } from "./stock-directory";
 import { emptyFinancials } from "./comparison";
 import { prepareComparisonAnalysis, currentComparisonAnalysis } from "./comparison-analysis";
 import { loadSecComparison } from "./comparison-loader";
+import { loadTwelveComparison } from "./twelve-data-collector";
 export async function secText(url: string, limit: number) {
   const response = await fetch(url, { cache: "no-store", headers: { Accept: "application/json", "User-Agent": process.env.RESEARCH_USER_AGENT || "TechPhaseResearch/1.0 research-preview" }, signal: AbortSignal.timeout(12_000) });
   if (!response.ok || !response.body) throw Error("sec-unavailable");
@@ -30,7 +31,19 @@ export async function secCik(ticker: string): Promise<string | null> {
   return cik && /^\d{1,10}$/.test(cik) ? cik : null;
 }
 
+/** Twelve Data first (server-side only); what it cannot supply is filled from the SEC filing, and a company it cannot serve falls back to the SEC alone.
+ * A missing item stays "—": it is never scored as zero. */
 export async function loadComparisonFinancials(ticker: string) {
+  const twelve = await loadTwelveComparison(ticker);
+  if (!twelve) return loadSecFinancials(ticker);
+  const base = twelve.financials;
+  if (twelve.scores.find(score => score.id === "financial")?.value != null) return base;
+  const sec = await loadSecFinancials(ticker);
+  // Balance-sheet figures are only borrowed when they describe the same quarter as Twelve Data's.
+  return sec.status === "ready" && sec.balance && sec.balance.end === base.quarterRevenue?.end ? { ...base, balance: sec.balance } : base;
+}
+
+async function loadSecFinancials(ticker: string) {
   try {
     const provider = providers.find(p => p.ticker === ticker);
     let cik: string | undefined = provider?.supplementalSources?.find(s => "cik" in s && s.cik)?.cik;

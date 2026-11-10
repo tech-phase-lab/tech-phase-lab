@@ -121,3 +121,8 @@ test("sample and production summaries use complete seven-factor scores and groun
   const tied=[companies[0],{...companies[0],ticker:"TIE"}];
   assert.match(overallComparison(tied,"ja",now).title,/拮抗/);
 });
+
+test("comparison screen no longer offers the sample, saved-snapshot trial or the pre-connection note", async () => {
+  const screen = await readFile(new URL("../app/research/compare/screen.tsx", import.meta.url), "utf8");
+  assert.doesNotMatch(screen, /compare\/sample|完成イメージを見る|保存データで試す|株価データ接続後/);
+});
