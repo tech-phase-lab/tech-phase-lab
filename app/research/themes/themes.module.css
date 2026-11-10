@@ -1,46 +1,66 @@
-/* Theme Ranking (PRO): a gold-on-dark finish in the family of the PRO header and the comparison tool. */
-.eyebrow { display:flex; align-items:center; gap:10px; margin:14px 0 18px; font:600 10.5px var(--font-geist-mono),monospace; letter-spacing:.22em; color:#d9bd7c; }
-.eyebrow span:last-child { color:#8d98a6; letter-spacing:.18em; }
-.eyebrow i { width:34px; height:1px; background:linear-gradient(90deg,#d9bd7c,transparent); }
-
+/* Theme Ranking (PRO), redesigned Nov 10: genre wheel, seven periods, one up/down comparison chart. */
 .note { margin:18px 0; padding:14px 16px; border:1px solid #2d3948; border-radius:12px; background:#0f1822; color:#aab6c4; font-size:13.5px; line-height:1.7; }
-.meta { margin:14px 2px 12px; font-size:12px; color:#8d98a6; line-height:1.7; }
-.fine { margin:18px 2px 0; font-size:11.5px; color:#6f7b8a; }
+.fine { margin:14px 2px 0; font-size:12px; color:#8d98a6; line-height:1.8; }
+.fine p { margin:0 0 4px; }
 
-/* Period switch */
-.tabs { display:inline-grid; grid-auto-flow:column; gap:2px; padding:3px; border:1px solid #b8923f55; border-radius:999px; background:linear-gradient(120deg,#1d1a14,#101821); box-shadow:inset 0 1px 0 #ecd5a512; }
-.tabs button { min-height:36px; padding:0 18px; border:0; border-radius:999px; background:none; color:#aab6c4; font:600 13px inherit; letter-spacing:.04em; cursor:pointer; }
-.tabs button[aria-pressed="true"] { color:#241b07; background:linear-gradient(135deg,#fbeab8,#d4aa55 55%,#b8923f); box-shadow:0 2px 10px #d4aa5538; }
-.tabs button:focus-visible { outline:2px solid #ecd08e; outline-offset:2px; }
+/* Genre wheel */
+.wheelCard { position:relative; margin:0 0 12px; border:1px solid #26304a; border-radius:14px; background:#0b1019; }
+.wheel { display:flex; align-items:center; gap:4px; padding:7px 40px 7px 7px; overflow-x:auto; scroll-snap-type:x mandatory; scroll-padding-left:7px; overscroll-behavior-x:contain; scrollbar-width:none; -webkit-overflow-scrolling:touch; }
+.wheel::-webkit-scrollbar { display:none; }
+.wheel button { flex:none; scroll-snap-align:start; min-height:40px; padding:0 16px; border:1.5px solid transparent; border-radius:999px; background:none; color:#aab6c4; font:600 14px "Zen Kaku Gothic New","Hiragino Kaku Gothic ProN","Yu Gothic","Meiryo",sans-serif; letter-spacing:.02em; cursor:pointer; white-space:nowrap; }
+.wheel button[aria-pressed="true"] { border-color:#d9b56a; color:#f4dfa6; background:linear-gradient(120deg,#2a2314,#14100a); box-shadow:0 0 12px #d4aa5522; }
+.wheel button[data-far="1"] { opacity:.78; } .wheel button[data-far="2"] { opacity:.58; } .wheel button[data-far="3"] { opacity:.42; }
+.wheel button:focus-visible { outline:2px solid #ecd08e; outline-offset:2px; }
+.wheelEnd { flex:none; width:calc(100% - 140px); min-width:40px; }
+.hint { position:absolute; right:6px; top:50%; transform:translateY(-50%); width:30px; text-align:center; font:700 22px/1 sans-serif; letter-spacing:-.18em; color:#d9b56a; pointer-events:none; animation:hintSlide 2.2s ease-in-out infinite; }
+@keyframes hintSlide { 0%,100% { transform:translate(-3px,-50%); } 50% { transform:translate(4px,-50%); } }
+.switchProbe { position:absolute; width:1px; height:1px; opacity:0; pointer-events:none; }
 
-/* Ranking list */
-.list { list-style:none; margin:0; padding:0; display:grid; gap:10px; }
-.list > li { border:1px solid #2a3340; border-radius:14px; background:linear-gradient(135deg,#131c27,#0e151e); box-shadow:inset 0 1px 0 #ffffff06; overflow:hidden; }
-.list > li.podium { border-color:#b8923f66; background:linear-gradient(125deg,#241f15,#111a23 62%); box-shadow:inset 0 1px 0 #ecd5a518,0 10px 28px #0003; }
-.list summary { display:grid; grid-template-columns:44px minmax(0,1fr) auto; grid-template-areas:"rank name value" "bar bar bar"; align-items:center; column-gap:12px; row-gap:10px; padding:14px 16px; cursor:pointer; list-style:none; }
-.list summary::-webkit-details-marker { display:none; }
-.list summary:focus-visible { outline:2px solid #ecd08e; outline-offset:-2px; }
-.rank { grid-area:rank; display:grid; place-items:center; width:38px; height:38px; border-radius:50%; border:1px solid #3a4658; color:#c5ced9; font:700 16px var(--font-geist-mono),monospace; }
-.podium .rank { color:#241b07; border:0; background:linear-gradient(135deg,#fbeab8,#d4aa55 55%,#b8923f); box-shadow:0 0 14px #d4aa5547; }
-.name { grid-area:name; display:grid; gap:2px; min-width:0; }
-.name strong { font-size:16px; letter-spacing:.02em; color:#f2eee2; overflow-wrap:anywhere; }
-.podium .name strong { background:linear-gradient(90deg,#fbeab8,#d9bd7c); -webkit-background-clip:text; background-clip:text; color:transparent; }
-.name small { font-size:11.5px; color:#8d98a6; }
-.value { grid-area:value; font:700 18px var(--font-geist-mono),monospace; font-variant-numeric:tabular-nums; color:#c5ced9; }
-.bar { grid-area:bar; display:block; height:5px; border-radius:3px; background:#1a2430; overflow:hidden; }
-.bar i { display:block; height:100%; border-radius:3px; background:#5c6877; }
-.up { color:#5fe0a9; } .down { color:#ff8a7a; }
-.bar i.up { background:linear-gradient(90deg,#2f9f77,#5fe0a9); } .bar i.down { background:linear-gradient(90deg,#d4685a,#ff8a7a); }
+/* Period pills */
+.periods { display:grid; grid-template-columns:repeat(7,minmax(0,1fr)); gap:2px; margin:0 0 14px; padding:4px; border:1px solid #b8923f55; border-radius:999px; background:linear-gradient(120deg,#1d1a14,#101821); }
+.periods button { min-width:0; min-height:36px; padding:0 2px; border:0; border-radius:999px; background:none; color:#aab6c4; font:600 12px "Zen Kaku Gothic New","Hiragino Kaku Gothic ProN","Yu Gothic","Meiryo",sans-serif; cursor:pointer; white-space:nowrap; }
+.periods button[aria-pressed="true"] { color:#241b07; background:linear-gradient(135deg,#fbeab8,#d4aa55 55%,#b8923f); box-shadow:0 2px 10px #d4aa5538; }
+.periods button:focus-visible { outline:2px solid #ecd08e; outline-offset:2px; }
+@media (max-width:380px) { .periods button { font-size:11px; } }
 
-.detail { padding:2px 16px 16px 72px; border-top:1px solid #ffffff08; }
-.detail p { display:flex; flex-wrap:wrap; align-items:baseline; gap:6px 10px; margin:12px 0; font-size:12.5px; color:#8d98a6; }
-.detail p b { color:#e8e1cf; letter-spacing:.04em; }
-.detail em { font:600 13px var(--font-geist-mono),monospace; font-style:normal; font-variant-numeric:tabular-nums; color:#c5ced9; }
-.detail ul { list-style:none; margin:0; padding:0; display:grid; grid-template-columns:repeat(auto-fill,minmax(130px,1fr)); gap:6px 14px; }
-.detail li { display:flex; justify-content:space-between; gap:10px; padding:6px 0; border-bottom:1px solid #ffffff08; font-size:13px; }
-.detail li a { color:#d9bd7c; text-decoration:none; font-weight:600; letter-spacing:.04em; }
-.detail li a:hover { text-decoration:underline; }
-@media (max-width:600px) { .detail { padding-left:16px; } .list summary { padding:12px 12px; column-gap:10px; } .value { font-size:16px; } }
+/* The up/down comparison chart */
+.chart { margin:0 0 14px; border:1px solid #3a3320; border-radius:16px; background:#0b1019; overflow:hidden; box-shadow:0 12px 30px -18px #d4aa5540; }
+.scale { display:grid; grid-template-columns:1fr auto 1fr; align-items:center; padding:12px 16px; border-bottom:1px solid #1c2438; font:600 12.5px "Zen Kaku Gothic New","Hiragino Kaku Gothic ProN","Yu Gothic","Meiryo",sans-serif; }
+.scaleDown { color:#ff7b7b; } .scaleUp { color:#4fe3a6; text-align:right; } .scaleZero { color:#7e8aa3; font:600 12px "IBM Plex Mono","Geist Mono",monospace; }
+.chart ol { list-style:none; margin:0; padding:0; }
+.chart li + li { border-top:1px solid #1c2438; }
+.row { display:grid; grid-template-columns:auto minmax(0,1fr) auto; grid-template-areas:"rank who figure" "track track track"; align-items:start; column-gap:12px; row-gap:10px; padding:14px 16px 16px; color:inherit; text-decoration:none; }
+.row:hover { background:#0f1522; }
+.row:focus-visible { outline:2px solid #ecd08e; outline-offset:-2px; }
+.rankDot { grid-area:rank; display:grid; place-items:center; width:32px; height:32px; margin-top:2px; border:1.5px solid #8f7a46; border-radius:50%; color:#e8c46a; font:700 13px "IBM Plex Mono","Geist Mono",monospace; }
+.rankGold { border-color:transparent; color:#241b07; background:linear-gradient(135deg,#fbeab8,#d4aa55 55%,#b8923f); box-shadow:0 0 12px #d4aa5547; }
+.who { grid-area:who; display:flex; flex-wrap:wrap; align-items:center; gap:4px 8px; min-width:0; }
+.whoWide { grid-column:rank / who; }
+.who strong { color:#f2f0ea; font:700 16px/1.35 "Zen Kaku Gothic New","Hiragino Kaku Gothic ProN","Yu Gothic","Meiryo",sans-serif; overflow-wrap:anywhere; }
+.who .ticker { color:#f2c36b; font:700 16px/1.35 "IBM Plex Mono","Geist Mono",ui-monospace,monospace; letter-spacing:.02em; }
+.sub { color:#c5ced9; font:500 14px/1.35 "Zen Kaku Gothic New","Hiragino Kaku Gothic ProN","Yu Gothic","Meiryo",sans-serif; overflow-wrap:anywhere; }
+.tag { padding:2px 9px; border:1px solid #8f7a46; border-radius:7px; color:#e0bb69; font:500 12px/1.4 "Zen Kaku Gothic New","Hiragino Kaku Gothic ProN","Yu Gothic","Meiryo",sans-serif; font-style:normal; white-space:nowrap; }
+.figure { grid-area:figure; display:flex; align-items:center; gap:8px; margin-top:2px; font:700 17px/1.2 "IBM Plex Mono","Geist Mono",ui-monospace,monospace; font-variant-numeric:tabular-nums; white-space:nowrap; }
+.figure i { font-style:normal; font-size:14px; }
+.up { color:#4fe3a6; } .down { color:#ff7b7b; } .flat { color:#aab6c4; }
+.track { grid-area:track; position:relative; display:block; height:12px; border-radius:6px; background:#121a29; }
+.mid { position:absolute; left:50%; top:-3px; bottom:-3px; width:1px; background:#8f7a46; }
+.bar { position:absolute; top:0; bottom:0; display:block; border-radius:6px; min-width:4px; }
+.barUp { left:50%; background:linear-gradient(90deg,#2a9d78,#4fe3a6); box-shadow:0 0 12px #4fe3a633; }
+.barDown { right:50%; background:linear-gradient(270deg,#d85f5f,#ff7b7b); box-shadow:0 0 12px #ff7b7b2e; }
+
+/* Detail screen */
+.back { display:inline-flex; align-items:center; gap:8px; margin:4px 0 14px; color:#f4dfa6; font:600 15px "Zen Kaku Gothic New","Hiragino Kaku Gothic ProN","Yu Gothic","Meiryo",sans-serif; text-decoration:none; }
+.back:focus-visible { outline:2px solid #ecd08e; outline-offset:3px; }
+.themeCard { margin:0 0 14px; padding:18px 20px 20px; border:1px solid #6b5a2e; border-radius:20px; background:linear-gradient(160deg,#17140c,#0b1019 70%); }
+.themeCard .label { margin:0; font:600 11px "IBM Plex Mono","Geist Mono",monospace; letter-spacing:.24em; color:#7fd6b0; }
+.themeCard h2 { margin:6px 0 8px; font:900 30px/1.2 "Zen Kaku Gothic New","Hiragino Kaku Gothic ProN","Yu Gothic","Meiryo",sans-serif; color:#fff; overflow-wrap:anywhere; }
+.themeMeta { display:flex; align-items:center; gap:10px; color:#8d98a6; font-size:13px; }
+.themeBig { display:flex; flex-wrap:wrap; align-items:baseline; gap:6px 12px; margin-top:12px; }
+.themeBig strong { font:700 38px/1.1 "IBM Plex Mono","Geist Mono",ui-monospace,monospace; font-variant-numeric:tabular-nums; }
+.themeBig span { color:#a3aec0; font-size:13.5px; }
+.empty { margin:14px 0; color:#aab6c4; font-size:13.5px; line-height:1.7; }
+@media (prefers-reduced-motion:reduce) { .hint { animation:none; } }
 
 /* Free visitors: a gold lock with the list of themes but no numbers */
 .lock { position:relative; margin-top:6px; padding:28px 22px 26px; border:1px solid #b8923f66; border-radius:16px; text-align:center; background:radial-gradient(120% 90% at 50% 0%,#2b2417,#111a23 62%); box-shadow:inset 0 1px 0 #ecd5a51c,0 14px 36px #0004; }
@@ -61,9 +81,3 @@
 .sample b { margin-right:8px; padding:2px 8px; border-radius:999px; background:linear-gradient(135deg,#fbeab8,#b8923f); color:#241b07; font:700 10.5px var(--font-geist-mono),monospace; letter-spacing:.14em; }
 .sample button { margin-left:8px; padding:2px 10px; border:1px solid #b8923f77; border-radius:999px; background:none; color:#e8d3a0; font-size:12px; cursor:pointer; }
 
-/* Genre chips: a scrolling row above the period switch */
-.groups { display:flex; gap:8px; margin:0 -2px 14px; padding:2px; overflow-x:auto; overscroll-behavior-x:contain; scrollbar-width:none; }
-.groups::-webkit-scrollbar { display:none; }
-.groups button { flex:none; min-height:36px; padding:0 14px; border:1px solid #2d3948; border-radius:999px; background:#0f1822; color:#aab6c4; font:600 12.5px inherit; letter-spacing:.03em; cursor:pointer; white-space:nowrap; }
-.groups button[aria-pressed="true"] { border-color:#b8923f; color:#fbeab8; background:linear-gradient(120deg,#2a2314,#14100a); box-shadow:0 0 12px #d4aa5522; }
-.groups button:focus-visible { outline:2px solid #ecd08e; outline-offset:2px; }

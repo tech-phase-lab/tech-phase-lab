@@ -254,15 +254,12 @@ test("annual-filing Japanese briefs preserve multiple separately cited risks", (
 });
 
 test("stock search UI separates free identity data from licensed prices and news", async () => {
-  const [page, market, marketStyles, widget, styles, polish, chartStyles, chartPolish, route, editorRoute, dashboard, review, researchStyles, home, lab, directory] = await Promise.all([
+  const [page, market, marketStyles, styles, polish, route, editorRoute, dashboard, review, researchStyles, home, lab, directory] = await Promise.all([
     readFile(new URL("../app/research/stocks/stock-directory.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/research/stocks/market-workspace.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/research/stocks/market-workspace.module.css", import.meta.url), "utf8"),
-    readFile(new URL("../app/research/stocks/tradingview-chart.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/research/stocks/stocks.module.css", import.meta.url), "utf8"),
     readFile(new URL("../app/research/stocks/stock-polish.module.css", import.meta.url), "utf8"),
-    readFile(new URL("../app/research/stocks/tradingview-chart.module.css", import.meta.url), "utf8"),
-    readFile(new URL("../app/research/stocks/tradingview-polish.module.css", import.meta.url), "utf8"),
     readFile(new URL("../app/api/research/stocks/route.ts", import.meta.url), "utf8"),
     readFile(new URL("../app/api/research/editor/route.ts", import.meta.url), "utf8"),
     readFile(new URL("../app/research/research-dashboard.tsx", import.meta.url), "utf8"),
@@ -285,14 +282,12 @@ test("stock search UI separates free identity data from licensed prices and news
   assert.match(market, /\{favoriteControl\}/);
   assert.match(page, /favoriteControl=\{<FavoriteListPicker/);
   assert.match(page, /useStockFavorites\(\)/);
-  assert.match(market, /<TradingViewChart ticker=\{ticker\}/);
+  assert.match(market, /<QuoteCard ticker=\{ticker\} variant="dial" from="search"/);
   assert.doesNotMatch(market, /referenceOpen|<details/);
   assert.doesNotMatch(market, /api_key|secret_key|alpaca\.markets|twelvedata\.com/i);
   assert.match(marketStyles, /background:linear-gradient\(145deg,#101a24,#090f16 70%\)/);
   assert.doesNotMatch(marketStyles, /background:#fff/);
   assert.match(marketStyles, /@media\(max-width:520px\)/);
-  assert.match(widget, /TradingView data delayed by 15 minutes/);
-  assert.match(widget, /Tech Phaseの速報判定には使用しません/);
   assert.match(page, /evidenceIds\.map\(\(id\) => brief\.evidence\.find\(\(item\) => item\.id === id\)\)/);
   assert.match(page, /evidenceIds=\{brief.summaryEvidenceIds\}/);
   assert.match(page, /evidenceIds=\{brief.businessModelEvidenceIds\}/);
@@ -300,40 +295,6 @@ test("stock search UI separates free identity data from licensed prices and news
   assert.match(page, /businessRequest\.current \+= 1/);
   assert.match(page, /profileRequest\.current \+= 1/);
   assert.match(page, /SECは名簿の正確性・網羅性を保証していません/);
-  const widgetDocument = await readFile(new URL("../app/research/stocks/widget/route.ts", import.meta.url), "utf8");
-  assert.match(widgetDocument, /symbol-info/);
-  assert.match(widgetDocument, /advanced-chart/);
-  assert.match(widget, /12か月チャート/);
-  assert.match(widget, /view, setView/);
-  assert.match(widgetDocument, /range: "12M"/);
-  assert.doesNotMatch(widget, /key=\{`\$\{symbol\}:\$\{lang\}:\$\{view\}`\}/);
-  assert.match(widget, /TradingViewPanels key=\{`\$\{symbol\}:\$\{lang\}`\}/);
-  assert.match(widget, /<TradingViewEmbed kind="compact"/);
-  assert.match(widget, /chartOpened && <TradingViewEmbed kind="chart"/);
-  assert.match(widget, /inert=\{view !== "compact"\}/);
-  assert.match(widget, /チャートを再読み込み/);
-  assert.match(chartStyles, /\.panel\[data-active=false\]\{[^}]*width:100%;visibility:hidden/);
-  assert.match(widgetDocument, /ResizeObserver/);
-  assert.match(widget, /event.source !== frameRef.current\?\.contentWindow/);
-  assert.match(widget, /event.origin !== window.location.origin/);
-  assert.match(widget, /iframe key=\{src\}/);
-  assert.doesNotMatch(widget, /createElement\("script"\)|replaceChildren/);
-  assert.match(widget, /株価・指標を再読み込み/);
-  assert.doesNotMatch(widget, /hidden=\{failed\}/);
-  assert.match(widget, /setAttempts\(\(current\) => \(\{ \.\.\.current, \[view\]: current\[view\] \+ 1 \}\)\)/);
-  assert.match(widget, /attempt=\{attempts.compact\}/);
-  assert.match(widget, /attempt=\{attempts.chart\}/);
-  assert.doesNotMatch(widget, /表示が欠ける場合|Missing data\?/);
-  assert.match(widget, /aria-hidden="true">▶<\/span>/);
-  assert.match(widget, /株価・指標を再読み込みする/);
-  assert.match(widget, /TradingViewの15分遅延データです。/);
-  assert.match(widget, /<br \/>\{lang === "ja" \? "Tech Phaseの速報判定には使用しません。"/);
-  assert.match(chartStyles, /\.reloadControl button\{[^}]*border:0;[^}]*background:transparent/);
-  assert.equal((widget.match(/className=\{styles.reloadControl\}/g) ?? []).length, 1);
-  assert.match(chartStyles, /\.reloadControl\{grid-column:2;grid-row:2/);
-  assert.match(chartStyles, /@media\(max-width:650px\)\{[\s\S]*\.reloadControl\{grid-column:1 \/ -1;grid-row:4/);
-  assert.doesNotMatch(widget, /無料ウィジェットによる参考表示/);
-  assert.match(widget, /Tech Phaseの速報判定には使用しません/);
   assert.match(styles, /\.hero h1\{[^}]*font-weight:650/);
   assert.match(styles, /\.main \.search input:focus-visible\{outline:0\}/);
   assert.match(page, /米国株リサーチ/);
@@ -345,15 +306,7 @@ test("stock search UI separates free identity data from licensed prices and news
   assert.match(page, /sourceDrawer/);
   assert.match(polish, /\.mobileTitle\{display:block/);
   assert.match(polish, /\.resultButton/);
-  assert.doesNotMatch(widget, /COMPANY EVENTS|データ接続準備中/);
-  assert.doesNotMatch(widget, /viewportRef|quoteNavigation|横にスワイプ|scrollTo/);
-  assert.match(widgetDocument, /width: "100%"/);
-  assert.match(widgetDocument, /colorTheme: "dark"/);
-  assert.match(chartStyles, /\.compactEmbed\{min-height:220px\}/);
-  assert.doesNotMatch(chartStyles, /min-width:760px|quoteViewport|quoteNavigation/);
-  assert.doesNotMatch(chartStyles, /scaleY|scale\(|translateX|\.compactEmbed::after|height:122%/);
   assert.match(polish, /\.profileDetails/);
-  assert.match(chartPolish, /\.heading h2/);
   assert.match(route, /company_tickers_exchange\.json/);
   assert.match(route, /secJson\(directoryUrl, 86_400\)/);
   assert.match(route, /AbortSignal\.timeout\(8_000\)/);

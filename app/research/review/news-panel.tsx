@@ -42,8 +42,9 @@ const errors: Record<string, string> = {
   "stock-news-fetch-failed": "Stock News APIに接続できませんでした(通信の失敗・時間切れ)。",
   "stock-news-invalid-response": "Stock News APIの応答の形が想定と違います。",
   "stock-news-content-type": "Stock News APIの応答がJSONではありません。",
+  "stock-news-unknown-stream": "取得の種類が不明です。",
 };
-type Probe = { status: string; responseSeconds: number; articles: number; totalPages: number | null; newestAgeMinutes: number | null; tickers: string[];
+type Probe = { status: string; stream: string | null; responseSeconds: number; articles: number; totalPages: number | null; newestAgeMinutes: number | null; tickers: string[];
   samples: { title: string; publisher: string; tickers: string[]; ageMinutes: number | null }[] };
 const probeReasons: Record<string, string> = { "items-range": "取得件数(items)の指定が、このアカウントで許可されている範囲外と判定されました(許可される範囲は、Stock News APIの管理画面の「Recent API errors」の詳細で確認できます)", "invalid-key": "キーが無効と判定されました(貼り付け時の余計な文字・コピーミス・失効の可能性)", plan: "契約のプランでは利用できない内容と判定されました", limit: "利用上限に達していると判定されました" };
 const probeError = (code: unknown) => {
@@ -73,9 +74,9 @@ export default function NewsPanel({ token }: { token: string | null }) {
     return result;
   }
   // Owner's one-time check (Nov 9): one request to the Stock News API from the monitor. It saves nothing and leaves the automatic intake off.
-  async function runProbe() {
+  async function runProbe(stream?: "tech" | "market") {
     setProbing(true); setProbe(null); setProbeMessage("");
-    try { setProbe(await request("", { action: "news-probe", payload: {} })); }
+    try { setProbe(await request("", { action: "news-probe", payload: stream ? { stream } : {} })); }
     catch (error) { setProbeMessage(error instanceof Error ? error.message : "接続テストに失敗しました。"); }
     finally { setProbing(false); }
   }
@@ -99,10 +100,12 @@ export default function NewsPanel({ token }: { token: string | null }) {
     <p role="status" aria-live="polite">{message}</p>
     <div className={styles.note}>
       <button type="button" disabled={probing || busy || (token !== null && token.length < 24)} onClick={() => void runProbe()}>{probing ? "接続中…" : "Stock News API 接続テスト(1回だけ)"}</button>
+      <button type="button" disabled={probing || busy || (token !== null && token.length < 24)} onClick={() => void runProbe("tech")}>ハイテク全銘柄の取得テスト(1回だけ)</button>
+      <button type="button" disabled={probing || busy || (token !== null && token.length < 24)} onClick={() => void runProbe("market")}>市場ニュースの取得テスト(1回だけ)</button>
       <span> 押すと1回だけ接続します。記事は保存せず、自動取得は有効になりません。キーは表示されません。</span>
       {probeMessage && <p role="status">{probeMessage}</p>}
       {probe && <div role="status" aria-live="polite">
-        <p>応答あり · 応答時間 {probe.responseSeconds}秒 · 記事 {probe.articles}件(対象: {probe.tickers.join("・")}){probe.totalPages !== null ? ` · 総ページ数 ${probe.totalPages}` : ""}</p>
+        <p>応答あり · 応答時間 {probe.responseSeconds}秒 · 記事 {probe.articles}件{probe.tickers.length ? `(対象: ${probe.tickers.join("・")})` : probe.stream === "tech" ? "(ハイテク全銘柄)" : probe.stream === "market" ? "(市場ニュース)" : ""}{probe.totalPages !== null ? ` · 総ページ数 ${probe.totalPages}` : ""}</p>
         <p>いちばん新しい記事: {probe.newestAgeMinutes === null ? "日時を読めませんでした" : `${probe.newestAgeMinutes}分前`}(遅延の目安。1回の接続では正確に測れません)</p>
         <ul>{probe.samples.map((sample, index) => <li key={index}>{sample.title}({sample.publisher} · {sample.tickers.join("・")} · {sample.ageMinutes === null ? "日時不明" : `${sample.ageMinutes}分前`})</li>)}</ul>
       </div>}

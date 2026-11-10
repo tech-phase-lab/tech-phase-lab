@@ -91,3 +91,31 @@ Business Wire's official feed-options page documents a legitimate headline RSS
 and licensed full-text feed route, but no usable endpoint was established here.
 PR Newswire's public RSS catalog is confirmed; live XML validation is outstanding.
 These two integrations remain blocked on obtaining/validating an authorized feed.
+
+## Home news on the Stock News API (owner, 2026-11-10)
+
+Scope (owner): US high-tech news across all tickers, plus market news that moves stocks (indices, oil, bonds and rates, politics, wars and
+geopolitics such as the Strait of Hormuz, statements by Trump or Musk). Not a watch list. Everything else is dropped.
+
+How: the monitor reads two provider feeds, "tech" (all tickers, sector Technology) and "market" (general market news), each at
+its own pace (75 s and 300 s: about 44,500 calls a month, inside the plan's 50,000 and the 48,000 ceiling). Articles are written
+into the company headline table (`company_wire`): a "tech" article under up to three tickers it names (watched companies first), a
+"market" article under `MKT` (shown as 市場 / Market). The existing translation then judges each headline: `news` / `not-news`
+and, new, `off-topic` (outside the scope above), writes the Japanese and one-line headline, and only kept headlines reach the home
+band and list. Watched companies are translated first. Unwatched companies and market news are shown only once translated.
+The 22-company alert list (ハイテク速報) is unchanged.
+
+| Key | Value | Effect |
+| --- | --- | --- |
+| `STOCK_NEWS_ENABLED` | `true` | The intake runs. |
+| `STOCK_NEWS_STREAMS` | `tech,market` | Use the two home streams instead of the watch list (unset: the old watch-list intake). |
+| `STOCK_NEWS_ITEMS` | `3` during the trial | Articles per request, 1 to 100 (default 100). A trial account refused 10 on 2026-11-10. Paging follows it (at most three pages a round). |
+| `STOCK_NEWS_TO_HOME` | `true` | Also write the articles into the home headline table. Off by default, so the intake can be measured alone. |
+| `STOCK_NEWS_TECH_SECONDS`, `STOCK_NEWS_MARKET_SECONDS` | optional | Pace of each stream (never below 30 s). |
+| `COMPANY_WIRE_FEEDS` | `none` | Stop reading the Yahoo / Google News feeds, so the home runs on the Stock News API alone. `gnews` or `yahoo` keeps one. Unset keeps both. |
+
+The review page has buttons to test each feed once ("ハイテク全銘柄の取得テスト", "市場ニュースの取得テスト") before they are switched on.
+Old rows age out of the home within 24 hours. The intake result (`stockNewsIntake` in the monitor state) carries `delay` per stream:
+how long after publication newly found articles reached the monitor (count, min, median, max, in seconds). That is the intake delay;
+the translation and display delay are separate. One request cannot measure the provider's delay, so run it for a day.
+Translation volume is bounded by `COMPANY_WIRE_TRANSLATION_DAILY_LIMIT` (model calls a day, default 600).

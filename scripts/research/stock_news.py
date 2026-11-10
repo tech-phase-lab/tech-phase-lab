@@ -57,10 +57,12 @@ def normalize(row, tickers):
     if published.tzinfo is None:
         raise ValueError("news-date-without-timezone")
     tags = row.get("tickers")
+    if tickers is None and tags is None:
+        tags = []   # general market news carries no ticker list
     if not isinstance(tags, list) or not all(isinstance(t, str) for t in tags):
         raise ValueError("invalid-news-tickers")
-    matched = sorted(set(tags) & set(tickers))
-    if not matched:
+    matched = sorted(set(tags) if tickers is None else set(tags) & set(tickers))
+    if not matched and tickers is not None:
         return None
     item = {"url": url, "title": title.strip(), "text": text.strip(), "publisher": publisher.strip(),
             "tickers": matched, "publishedAt": published.astimezone(timezone.utc).isoformat()}
@@ -120,8 +122,16 @@ class NoRedirect(HTTPRedirectHandler):
         raise ValueError("stock-news-redirect-blocked")
 
 
+def page_size():
+    """Articles per request. 100 is the provider's documented maximum, but a trial account refused 10 (Nov 10), so the size is a setting."""
+    try:
+        return min(100, max(1, int(os.environ.get("STOCK_NEWS_ITEMS", "100"))))
+    except ValueError:
+        return 100
+
+
 def request_page(tickers, page, token):
-    params = {"tickers": ",".join(tickers), "items": 100, "page": page, "token": token}
+    params = {"tickers": ",".join(tickers), "items": page_size(), "page": page, "token": token}
     request = Request(ENDPOINT + "?" + urlencode(params), headers={"Accept": "application/json"})
     # Never propagate exception text/URLs: the provider uses a query-string key.
     try:
@@ -132,7 +142,7 @@ def request_page(tickers, page, token):
         if len(body) > MAX_BYTES:
             raise ValueError("stock-news-response-limit")
         data = json.loads(body)
-        if not isinstance(data, dict) or not isinstance(data.get("data"), list) or len(data["data"]) > 100:
+        if not isinstance(data, dict) or not isinstance(data.get("data"), list) or len(data["data"]) > page_size():
             raise ValueError("stock-news-invalid-response")
         return data["data"]
     except HTTPError as exc:
@@ -144,15 +154,21 @@ def request_page(tickers, page, token):
 PROBE_TICKERS = ("NVDA", "MU", "MSFT", "AMD", "TSM")
 
 
-def probe(*, transport=None, clock=time.monotonic, now=None):
+def probe(stream=None, *, transport=None, clock=time.monotonic, now=None):
     """One request for the owner's connection check (Nov 9). It saves nothing, ignores STOCK_NEWS_ENABLED (the
     automatic intake stays off) and never returns or logs the key or any provider text beyond five headlines."""
     token = os.environ.get("STOCK_NEWS_API_KEY", "").strip()
     if not token:
         raise ValueError("stock-news-key-not-set")
     # The provider rejected items=10 on this account ("outside the allowed range", Nov 10); 3 is its documented default size.
-    params = {"tickers": ",".join(PROBE_TICKERS), "items": 3, "token": token}
-    request = Request(ENDPOINT + "?" + urlencode(params), headers={"Accept": "application/json"})
+    if stream is not None and stream not in STREAMS:
+        raise ValueError("stock-news-unknown-stream")
+    if stream is None:
+        params = {"tickers": ",".join(PROBE_TICKERS), "items": 3, "token": token}
+        request = Request(ENDPOINT + "?" + urlencode(params), headers={"Accept": "application/json"})
+    else:   # the home news streams, so the all-ticker technology feed and the general market feed can be checked before they are switched on
+        params = {**STREAMS[stream]["params"], "items": 3, "token": token}
+        request = Request(BASE + STREAMS[stream]["path"] + "?" + urlencode(params), headers={"Accept": "application/json"})
     started = clock()
     try:
         if transport is not None:
@@ -206,7 +222,108 @@ def probe(*, transport=None, clock=time.monotonic, now=None):
     total_pages = data.get("total_pages")
     return {"status": "ok", "responseSeconds": round(elapsed, 2), "articles": len(rows),
             "totalPages": total_pages if isinstance(total_pages, int) else None, "samples": samples,
-            "newestAgeMinutes": min(ages) if ages else None, "tickers": list(PROBE_TICKERS)}
+            "newestAgeMinutes": min(ages) if ages else None, "tickers": list(PROBE_TICKERS) if stream is None else [], "stream": stream}
+
+
+
+BASE = "https://stocknewsapi.com"
+# Home news (owner, Nov 10): not a watch list but US high-tech news across all tickers, and the market news that moves stocks.
+# The provider's "all tickers" and "general market" feeds; the choice of what is shown is made later (see company_wire).
+# Calls: tech every 75 s is about 35,600 a month and market every 300 s about 8,900, inside the plan's 50,000 and the 48,000 ceiling.
+STREAMS = {
+    "tech": {"path": "/api/v1/category", "params": {"section": "alltickers", "sector": "Technology"}, "seconds": 75},
+    "market": {"path": "/api/v1/category", "params": {"section": "general"}, "seconds": 300},
+}
+
+
+def stream_names():
+    chosen = [part.strip() for part in os.environ.get("STOCK_NEWS_STREAMS", "").split(",") if part.strip()]
+    return [name for name in chosen if name in STREAMS]
+
+
+def stream_seconds(name):
+    try:
+        return max(30, int(os.environ.get(f"STOCK_NEWS_{name.upper()}_SECONDS", STREAMS[name]["seconds"])))
+    except ValueError:
+        return STREAMS[name]["seconds"]
+
+
+def request_stream(name, page, token):
+    params = {**STREAMS[name]["params"], "items": page_size(), "page": page, "token": token}
+    request = Request(BASE + STREAMS[name]["path"] + "?" + urlencode(params), headers={"Accept": "application/json"})
+    # Never propagate exception text/URLs: the provider uses a query-string key.
+    try:
+        with build_opener(NoRedirect()).open(request, timeout=20) as response:
+            if response.headers.get_content_type() != "application/json":
+                raise ValueError("stock-news-content-type")
+            body = response.read(MAX_BYTES + 1)
+        if len(body) > MAX_BYTES:
+            raise ValueError("stock-news-response-limit")
+        data = json.loads(body)
+        if not isinstance(data, dict) or not isinstance(data.get("data"), list) or len(data["data"]) > page_size():
+            raise ValueError("stock-news-invalid-response")
+        return data["data"]
+    except HTTPError as exc:
+        raise ValueError(f"stock-news-http-{exc.code}") from None
+    except Exception:
+        raise ValueError("stock-news-fetch-failed") from None
+
+
+def poll_stream(db, name, *, transport=request_stream):
+    """One stream of the home news: its own pace, at most three pages a round, shared monthly call ceiling."""
+    token = os.environ.get("STOCK_NEWS_API_KEY", "").strip()
+    if os.environ.get("STOCK_NEWS_ENABLED", "").lower() != "true" or not token or name not in STREAMS:
+        return {"status": "disabled", "calls": 0}
+    cap = int(os.environ.get("STOCK_NEWS_MONTHLY_CALL_LIMIT", "48000"))
+    if not 1 <= cap <= 50000:
+        raise ValueError("invalid-stock-news-call-limit")
+    now = stamp()
+    gate = f"next_poll:{name}"
+    with db:
+        db.execute("BEGIN IMMEDIATE")
+        next_at = state(db, gate)
+        if next_at and next_at > now:
+            return {"status": "waiting", "calls": 0}
+        put_state(db, gate, (datetime.fromisoformat(now) + timedelta(seconds=120)).isoformat())
+    initial = state(db, f"started:{name}") is None
+    known = {r[0] for r in db.execute("SELECT id FROM news_articles")}
+    calls = added = changed = rejected = 0
+    new_items = []
+    try:
+        for page in range(1, 4):
+            reserve_call(db, stamp(), cap)
+            calls += 1
+            rows = transport(name, page, token)
+            size = page_size()
+            if not isinstance(rows, list) or len(rows) > size:
+                raise ValueError("stock-news-invalid-response")
+            items = []
+            for row in rows:
+                try:
+                    item = normalize(row, None)
+                    if item:
+                        items.append(item)
+                except (ValueError, TypeError, AttributeError, OverflowError):
+                    rejected += 1
+            a, c = save_items(db, items, stamp())
+            added += a
+            changed += c
+            mirror_to_wire(db, items, name)
+            overlap = any(item["id"] in known for item in items)
+            new_items += [item for item in items if item["id"] not in known]
+            if initial or len(rows) < size or overlap:
+                break
+        with db:
+            put_state(db, f"started:{name}", "1")
+            put_state(db, f"last_success:{name}", stamp())
+            put_state(db, gate, (datetime.fromisoformat(now) + timedelta(seconds=stream_seconds(name))).isoformat())
+        return {"status": "ok", "stream": name, "calls": calls, "added": added, "changed": changed, "rejected": rejected,
+                "delay": delay_summary(new_items, datetime.now(timezone.utc)) if not initial else None}
+    except Exception:
+        # Persist only a fixed code; no secret-bearing URLs or provider bodies.
+        with db:
+            put_state(db, gate, (datetime.now(timezone.utc) + timedelta(minutes=5)).isoformat())
+        return {"status": "error", "stream": name, "calls": calls, "added": added, "error": "stock-news-intake-failed"}
 
 
 def save_items(db, items, now):
@@ -260,6 +377,42 @@ def queue(db, limit=20):
             "publicationEnabled": news_drafts.publication_enabled()}
 
 
+
+def delay_summary(items, now):
+    """How long after publication the newly found articles reached us (the intake delay, not the display delay)."""
+    seconds = sorted(max(0, round((now - datetime.fromisoformat(item["publishedAt"])).total_seconds())) for item in items)
+    if not seconds:
+        return None
+    return {"count": len(seconds), "minSeconds": seconds[0], "medianSeconds": seconds[len(seconds) // 2], "maxSeconds": seconds[-1]}
+
+
+def mirror_to_wire(db, items, stream=None):
+    """Home news (owner, Nov 10): with STOCK_NEWS_TO_HOME=true the intake also writes its articles into the company headline table,
+    so the existing translation, "is it news" judgement, one-line headline and home screens apply to them unchanged.
+    The watch-list intake copies the watched companies; the "tech" stream copies the tickers an article names (up to three, the
+    watched ones first); the "market" stream files its articles under MKT. Off by default, so the intake can be measured alone."""
+    if os.environ.get("STOCK_NEWS_TO_HOME", "").lower() != "true":
+        return 0
+    import company_wire
+    roster = set(company_wire.roster())
+    rows = []
+    for item in items:
+        if stream == "market":
+            tickers = ["MKT"]
+        elif stream == "tech":
+            tickers = sorted((t for t in item["tickers"] if re.fullmatch(r"[A-Z]{1,5}", t)), key=lambda t: (t not in roster, t))[:3]
+        else:
+            tickers = [t for t in item["tickers"] if t in roster]
+        rows += [{"ticker": ticker, "source": "stocknews", "title": item["title"], "publisher": item["publisher"], "url": item["url"],
+                  "published": datetime.fromisoformat(item["publishedAt"])} for ticker in tickers]
+    added = 0
+    company_wire.schema(db)
+    for ticker in sorted({row["ticker"] for row in rows}):
+        name = company_wire.monitor.PROVIDERS.get(ticker, {}).get("name", ticker)
+        added += company_wire.store(db, [row for row in rows if row["ticker"] == ticker], name)
+    return added
+
+
 def poll(db, tickers, *, transport=request_page):
     token = os.environ.get("STOCK_NEWS_API_KEY", "").strip()
     if os.environ.get("STOCK_NEWS_ENABLED", "").lower() != "true" or not token:
@@ -283,12 +436,14 @@ def poll(db, tickers, *, transport=request_page):
     known = {r[0] for r in db.execute("SELECT id FROM news_articles")}
     calls = added = changed = rejected = 0
     saturated = False
+    new_items = []
     try:
         for page in range(1, 6):
             reserve_call(db, stamp(), cap)
             calls += 1
             rows = transport(tickers, page, token)
-            if not isinstance(rows, list) or len(rows) > 100:
+            size = page_size()
+            if not isinstance(rows, list) or len(rows) > size:
                 raise ValueError("stock-news-invalid-response")
             items = []
             for row in rows:
@@ -301,9 +456,11 @@ def poll(db, tickers, *, transport=request_page):
             a, c = save_items(db, items, stamp())
             added += a
             changed += c
+            mirror_to_wire(db, items)
             overlap = any(item["id"] in known for item in items)
-            saturated = len(rows) == 100 and not overlap
-            if initial or len(rows) < 100 or overlap:
+            saturated = len(rows) == size and not overlap
+            new_items += [item for item in items if item["id"] not in known]
+            if initial or len(rows) < size or overlap:
                 break
         with db:
             put_state(db, "watch_key", watch_key)
@@ -312,6 +469,7 @@ def poll(db, tickers, *, transport=request_page):
             put_state(db, "next_poll", (datetime.fromisoformat(now)+timedelta(seconds=60)).isoformat())
         return {"status": "ok", "calls": calls, "added": added, "changed": changed,
                 "rejected": rejected, "initialBaseline": initial, "historyIncomplete": saturated,
+                "delay": delay_summary(new_items, datetime.now(timezone.utc)) if not initial else None,
                 "publicationEnabled": False}
     except Exception:
         # Persist only a fixed code; no secret-bearing URLs or provider bodies.

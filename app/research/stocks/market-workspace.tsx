@@ -3,7 +3,7 @@ import type { CompanyIntroduction } from "@/lib/research/company-introductions";
 import type { CompanyNetwork } from "@/lib/research/company-network";
 import { CompanyIntroductionPanel } from "./company-introduction";
 import { CompanyNetworkMap } from "./chain-map";
-import { TradingViewChart } from "./tradingview-chart";
+import QuoteCard from "../price/quote-card";
 import styles from "./market-workspace.module.css";
 
 type MarketWorkspaceProps = {
@@ -30,7 +30,7 @@ export function MarketWorkspace({ ticker, exchange, name, lang, favoriteControl,
     </header>
 
     <div className={styles.chartSlot}>
-      <TradingViewChart ticker={ticker} exchange={exchange} lang={lang} />
+      <QuoteCard ticker={ticker} variant="dial" from="search" name={name} />
     </div>
 
     {introduction && <CompanyIntroductionPanel introduction={introduction} network={network} lang={lang} />}

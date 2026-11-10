@@ -20,7 +20,6 @@ export default function BackToTop() {
   const visible = useSyncExternalStore(subscribe, snapshot, serverSnapshot);
   const ja = lang === "ja";
   const name = ja ? "ページの先頭へ戻る" : "Back to top";
-  if (pathname === "/research/stocks/widget") return null;
   function goToTop(event: MouseEvent<HTMLButtonElement>) {
     const smooth = typeof window.matchMedia === "function" && phone() && !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     window.scrollTo({ top: 0, behavior: smooth ? "smooth" : "instant" });

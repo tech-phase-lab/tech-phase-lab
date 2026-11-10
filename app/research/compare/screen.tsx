@@ -10,6 +10,7 @@ import type { ComparisonResult, Fact } from "@/lib/research/comparison";
 import styles from "./styles.module.css";
 import { CompanyScoreCard, LeadTitle, ScoreHeadline, ScoreOverview, StatusOverlay } from "./comparison-visuals";
 import ProTag from "../pro-experience/pro-tag";
+import PageHeading from "../page-heading";
 import TickerSearch from "./ticker-search";
 import { comparisonScores, overallComparison } from "@/lib/research/comparison-scorecard";
 import { comparisonChoices, enterChoice, moveChoice } from "@/lib/research/comparison-selection";
@@ -110,7 +111,7 @@ export default function ComparisonScreen() {
   ];
   return <ResearchToolShell showTools={!result} showHeading={false} lang={lang} setLang={setLang} title={t("銘柄比較PRO", "Compare stocks PRO")} description="">
     <div className={styles.screenWrap}>
-    {!result && <header className={styles.pageHead}><div className={styles.pageTitle}><h1>{t("銘柄比較", "Compare stocks")}</h1><ProTag /></div><p>{t("最大3社。数字の差から、投資判断の論点へ。", "Compare up to three companies and see what the numbers reveal.")}</p></header>}
+    {!result && (lang === "ja" ? <PageHeading eyebrow="COMPARE" title="銘柄比較" description="最大3社。数字の差から、投資判断の論点へ。" /> : <header className={styles.pageHead}><div className={styles.pageTitle}><h1>{t("銘柄比較", "Compare stocks")}</h1><ProTag /></div><p>{t("最大3社。数字の差から、投資判断の論点へ。", "Compare up to three companies and see what the numbers reveal.")}</p></header>)}
     {membership === "loading" && <p role="status">{t("会員情報を確認中…", "Checking membership…")}</p>}
     {membership === "free" && <section className={styles.lock}><span aria-hidden="true">🔒</span><h2>{t("比較・評価はPRO会員限定", "Comparison is exclusive to PRO")}</h2><p>{t("2〜3社を選び、結論・実績・成長性・注意点をまとめて確認できます。", "Choose two or three companies to explore the conclusion, performance, growth and caveats.")}</p><Link href="/research/account">{t("ログイン・会員情報", "Sign in or view plans")}</Link></section>}
     {membership === "pro" && <>
@@ -159,11 +160,8 @@ export default function ComparisonScreen() {
           </div>;
         })}</div>
         <div className={styles.pickSubmit}><small>{selection.filter(Boolean).length} / 3 {t("社を選択", "selected")}</small><button disabled={busy || !selection[0] || !selection[1]} onClick={() => void compare()}>{busy ? t("精査中…", "Analyzing…") : t("この銘柄を比較する", "Compare these stocks")}</button></div>
-        <p className={styles.pickNote}>{t("SEC開示を比較。割安評価は株価データ接続後に対応。", "Compare SEC filings. Valuation awaits price data.")}</p>
       </section>
       <TickerSearch lang={lang} selection={selection} onSelect={selectCompany} />
-      <div className={styles.trialLinks}><Link href="/research/compare/sample" className={styles.trialButton}>{t("完成イメージを見る · サンプル", "View a sample comparison")}</Link>
-      <button type="button" className={styles.trialButton} disabled={busy} onClick={()=>void compare(true)}>{t("MU・SNDK 保存データで試す · 10/4", "MU / SNDK saved snapshot · Oct 4")}</button></div>
       </>}
       {busy && <div className={styles.loading} role="status"><span className={styles.spinner} aria-hidden="true"/><strong>{t("開示資料と比較条件を精査中…", "Checking filings and whether the figures can be compared…")}</strong><p>{t("期間・通貨・会計基準を確認しています。初回は時間がかかる場合があります。", "We're checking reporting periods, currencies, and accounting standards. Your first comparison may take a little longer.")}</p></div>}
       {error && <p role="alert">{t("比較結果を取得できませんでした。選択は残っています。もう一度お試しください。", "Could not retrieve the comparison. Your selection is saved; please try again.")}</p>}

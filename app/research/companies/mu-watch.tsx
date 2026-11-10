@@ -5,7 +5,7 @@ import ResearchToolShell from '../research-tool-shell';
 import CompanySwitcher, {type CompanyOption} from './company-switcher';
 import type { Copy } from '@/lib/research/data';
 import type { MuWatchCard, muWatchFacts } from '@/lib/research/mu-watch';
-import CompactQuote from './compact-quote';
+import QuoteCard from '../price/quote-card';
 import CompanyActivity from './company-activity';
 import styles from './mu-watch.module.css';
 import {useWatchEarnings} from './use-watch-earnings';
@@ -19,7 +19,7 @@ export default function MuWatch({companies,cards,titles,facts,source}:Props){
  return <ResearchToolShell lang={lang} setLang={setLang} title="Micron（MU）" description="" showTools={false} showHeading={false}>
   <CompanySwitcher ticker="MU" companies={companies} lang={lang} compact/>
   <header className={styles.heading}><h1>Micron（MU）</h1></header>
-  <CompactQuote ticker="MU" exchange="NASDAQ" lang={lang}/>
+  <QuoteCard ticker="MU" variant="gauge" from="watch" name="Micron"/>
   <CompanyActivity ticker="MU" lang={lang}/>
   <div className={styles.sectionTitle}><h2>{ja?'直近決算':'Latest earnings'}</h2><span>{live?.period??'FQ4 2026'}</span></div>
   {live ? <p className={styles.dates}>{ja?'決算発表':'Released'} {live.releasedOn} <span>{live.period}</span></p> : <p className={styles.dates}>{ja?'決算発表':'Released'} {facts.releasedOn}{ja?'（米国）／10月1日（日本）':' (US)'} <span>FQ4 2026 · {ja?'決算期末':'Period ended'} {facts.periodEnd}</span></p>}

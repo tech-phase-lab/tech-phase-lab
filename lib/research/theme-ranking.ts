@@ -1,12 +1,13 @@
-import { THEMES, type ThemeDefinition } from "./theme-definitions.ts";
+import { THEMES, type GroupId, type ThemeDefinition } from "./theme-definitions.ts";
 
-export type Period = "1d" | "1w" | "1m" | "3m";
-export const PERIODS: readonly Period[] = ["1d", "1w", "1m", "3m"];
-/** Trading-day look-backs: yesterday, one week, one month, three months. */
-export const PERIOD_DAYS: Record<Period, number> = { "1d": 1, "1w": 5, "1m": 21, "3m": 63 };
+export type Period = "1d" | "1w" | "1m" | "3m" | "6m" | "ytd" | "1y";
+export const PERIODS: readonly Period[] = ["1d", "1w", "1m", "3m", "6m", "ytd", "1y"];
+/** Trading-day look-backs: yesterday, one week, one month, three months, six months, one year. "ytd" is measured from the last close of
+ * the previous calendar year (owner, Nov 10), so it has no fixed length here. */
+export const PERIOD_DAYS: Record<Exclude<Period, "ytd">, number> = { "1d": 1, "1w": 5, "1m": 21, "3m": 63, "6m": 126, "1y": 252 };
 
-/** One stock's daily closes, newest first, as the price source returns them. */
-export type CloseSeries = { ticker: string; closes: number[]; asOf: string };
+/** One stock's daily closes, newest first, as the price source returns them; `dates` (same order, YYYY-MM-DD) lets "ytd" find the year end. */
+export type CloseSeries = { ticker: string; closes: number[]; asOf: string; dates?: string[] };
 export type StockReturns = { ticker: string; returns: Partial<Record<Period, number>> };
 
 /** Percent change from the close `days` trading days back to the latest close; null when the history is too short. */
@@ -16,14 +17,27 @@ export function periodReturn(closes: readonly number[], days: number): number | 
   return Number.isFinite(latest) && Number.isFinite(base) && base > 0 ? (latest / base - 1) * 100 : null;
 }
 
+/** Percent change from the last close of the previous calendar year; null without that close in the history. */
+export function yearToDateReturn(closes: readonly number[], dates: readonly string[] | undefined): number | null {
+  if (!dates || dates.length !== closes.length || !closes.length) return null;
+  const year = dates[0].slice(0, 4);
+  const index = dates.findIndex(date => date.slice(0, 4) < year);
+  if (index <= 0) return null;
+  const latest = closes[0], base = closes[index];
+  return Number.isFinite(latest) && Number.isFinite(base) && base > 0 ? (latest / base - 1) * 100 : null;
+}
+
 export function stockReturns(series: CloseSeries): StockReturns {
   const returns: Partial<Record<Period, number>> = {};
-  for (const period of PERIODS) { const value = periodReturn(series.closes, PERIOD_DAYS[period]); if (value !== null) returns[period] = value; }
+  for (const period of PERIODS) {
+    const value = period === "ytd" ? yearToDateReturn(series.closes, series.dates) : periodReturn(series.closes, PERIOD_DAYS[period]);
+    if (value !== null) returns[period] = value;
+  }
   return { ticker: series.ticker, returns };
 }
 
 export type ThemeRow = {
-  id: string; ja: string; en: string; rank: number; value: number; covered: number; total: number;
+  id: string; group: GroupId; ja: string; en: string; rank: number; value: number; covered: number; total: number;
   leader: { ticker: string; value: number }; laggard: { ticker: string; value: number };
   members: { ticker: string; value: number | null }[];
 };
@@ -37,7 +51,7 @@ export function rankThemes(stocks: readonly StockReturns[], period: Period, them
     const priced = members.filter((member): member is { ticker: string; value: number } => member.value !== null);
     if (priced.length < MIN_COVERED) return [];
     const sorted = [...priced].sort((a, b) => b.value - a.value);
-    return [{ id: theme.id, ja: theme.ja, en: theme.en, rank: 0, value: priced.reduce((sum, member) => sum + member.value, 0) / priced.length,
+    return [{ id: theme.id, group: theme.group, ja: theme.ja, en: theme.en, rank: 0, value: priced.reduce((sum, member) => sum + member.value, 0) / priced.length,
       covered: priced.length, total: theme.tickers.length, leader: sorted[0], laggard: sorted.at(-1)!,
       members: [...members].sort((a, b) => (b.value ?? -Infinity) - (a.value ?? -Infinity)) }];
   });
@@ -56,5 +70,5 @@ export function themeRankingAccess(member: { status: string; plan: string; acces
 export function sampleStockReturns(tickers: readonly string[]): StockReturns[] {
   let seed = 20261025;
   const next = () => { seed = (seed * 16807) % 2147483647; return seed / 2147483647; };
-  return tickers.map(ticker => ({ ticker, returns: { "1d": (next() - 0.45) * 6, "1w": (next() - 0.4) * 14, "1m": (next() - 0.35) * 30, "3m": (next() - 0.3) * 55 } }));
+  return tickers.map(ticker => ({ ticker, returns: { "1d": (next() - 0.45) * 6, "1w": (next() - 0.4) * 14, "1m": (next() - 0.35) * 30, "3m": (next() - 0.3) * 55, "6m": (next() - 0.3) * 80, "ytd": (next() - 0.3) * 95, "1y": (next() - 0.25) * 130 } }));
 }
