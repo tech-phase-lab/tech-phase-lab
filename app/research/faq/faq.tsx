@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useEffect, useSyncExternalStore } from "react";
 import ResearchToolShell from "../research-tool-shell";
 import { useResearchLanguage } from "../use-research-language";
 import styles from "./styles.module.css";
@@ -77,11 +78,15 @@ const questions = [
 export default function Faq() {
   const [lang, setLang] = useResearchLanguage();
   const ja = lang === "ja";
+  // The Home Screen guide is for phones; on a computer it is left out (owner, Nov 10).
+  const phone = useSyncExternalStore(() => () => {}, () => /iPhone|iPad|Android/.test(navigator.userAgent), () => false);
+  // A link to #add-to-home (the account menu) arrives before the phone-only guide is drawn, so scroll to it once it is.
+  useEffect(() => { if (phone && window.location.hash === "#add-to-home") document.getElementById("add-to-home")?.scrollIntoView(); }, [phone]);
   return <ResearchToolShell lang={lang} setLang={setLang} title={ja ? "よくある質問・使い方" : "FAQ & help"} description={ja ? "利用方法、PRO会員、質問についてのご案内です。" : "Quick answers about getting started, PRO, and Ask Rizel."}>
     <nav className={styles.localNav} aria-label={ja ? "案内メニュー" : "Help menu"}><Link href="/research/learn">{ja ? "米国株のはじめ方" : "US stock basics"}</Link><span aria-current="page">{ja ? "よくある質問" : "FAQ"}</span></nav>
     <div className={styles.steps}>
       {/* First item (owner, Nov 5): how to add the app to the iPhone Home Screen. */}
-      <details className={styles.card} id="add-to-home" open><summary><span className={styles.number}>01</span><strong>{ja ? "ホーム画面に追加するには？" : "How do I add Tech Phase to my Home Screen?"}</strong></summary>
+      {phone && <details className={styles.card} id="add-to-home" open><summary><span className={styles.number}>01</span><strong>{ja ? "ホーム画面に追加するには？" : "How do I add Tech Phase to my Home Screen?"}</strong></summary>
         <p>{ja ? <><b>iPhoneのSafari</b>で開いて、次の順に操作します。ChromeなどSafari以外で開いている場合は、アドレスをコピーして、Safariに貼り付けて開いてください。</> : <>Open the site in <b>Safari on iPhone</b> and follow these steps. If you&apos;re using Chrome or another browser, copy the address and paste it into Safari first.</>}</p>
         <ol className={styles.addSteps}>
           <li>{ja ? <>画面の下の<b>共有</b>ボタンをタップ</> : <>Tap the <b>Share</b> button at the bottom</>}</li>
@@ -89,7 +94,7 @@ export default function Faq() {
           <li>{ja ? <>右上の<b>追加</b>をタップして完了</> : <>Tap <b>Add</b> at the top right to finish</>}</li>
         </ol>
         <p>{ja ? "追加したアイコンから開いて、通知設定で通知をオンにできます。" : "Open the app from the new icon, then turn on notifications in the notification settings."}</p>
-      </details>
-      {questions.map(([questionJa, questionEn, answerJa, answerEn], index) => <details className={styles.card} key={questionJa}><summary><span className={styles.number}>{String(index + 2).padStart(2, "0")}</span><strong>{ja ? questionJa : questionEn}</strong></summary><p>{index === 4 ? (ja ? <>米国ハイテク株全般を取り扱っています。特に重点的に追っている銘柄は「<Link href="/research#monitored-companies">監視22銘柄リスト</Link>」で確認できます。</> : <>We cover US high-tech stocks broadly. For the companies we follow most closely, see our <Link href="/research#monitored-companies">22-stock watch list</Link>.</>) : ja ? answerJa : answerEn}</p></details>)}</div>
+      </details>}
+      {questions.map(([questionJa, questionEn, answerJa, answerEn], index) => <details className={styles.card} key={questionJa}><summary><span className={styles.number}>{String(index + (phone ? 2 : 1)).padStart(2, "0")}</span><strong>{ja ? questionJa : questionEn}</strong></summary><p>{index === 4 ? (ja ? <>米国ハイテク株全般を取り扱っています。特に重点的に追っている銘柄は「<Link href="/research#monitored-companies">監視22銘柄リスト</Link>」で確認できます。</> : <>We cover US high-tech stocks broadly. For the companies we follow most closely, see our <Link href="/research#monitored-companies">22-stock watch list</Link>.</>) : ja ? answerJa : answerEn}</p></details>)}</div>
   </ResearchToolShell>;
 }

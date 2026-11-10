@@ -40,7 +40,8 @@ export default function HomeInstallPrompt() {
   // On the home screen, once, for a signed-in member.
   useEffect(() => {
     if (!signedIn || pathname !== "/research" || open) return;
-    const next = popupKind(context(), androidReady && !isStandalone(window));
+    // Chrome on a computer also offers its own install prompt; only an Android phone gets the one-tap popup (owner, Nov 10).
+    const next = popupKind(context(), androidReady && /Android/.test(navigator.userAgent) && !isStandalone(window));
     if (!shouldShow(next, storage())) return;
     // Opened a moment after the page settles, never inside the render pass.
     const timer = setTimeout(() => { writeFlag(storage(), SHOWN_KEY); setKind(next); setCopied(""); setOpen(true); }, 600);
