@@ -1,17 +1,80 @@
 "use client";
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import ResearchToolShell from "../research-tool-shell";
+import PageHeading from "../page-heading";
 import { useMemberDisplay, useMemberSettled, useOwnerAccount, useResearchOwner } from "../member-display-provider";
 import { useResearchLanguage } from "../use-research-language";
-import { GROUPS, themesOf, tickersOf, type GroupId } from "@/lib/research/theme-definitions";
-import { PERIODS, rankThemes, sampleStockReturns, type Period, type StockReturns } from "@/lib/research/theme-ranking";
+import { GROUPS, THEMES, groupOf, themesOf, tickersOf, type GroupFilter } from "@/lib/research/theme-definitions";
+import { rankThemes, sampleStockReturns } from "@/lib/research/theme-ranking";
+import { DivergingChart, PeriodPills, updateNote, usePeriod, useThemeData, type ThemeData } from "./parts";
 import styles from "./themes.module.css";
 
-type Data = { stocks: StockReturns[]; asOf: string; validUntil: number };
-type State = "loading" | "ready" | "not-connected" | "error";
-const signed = (value: number) => `${value > 0 ? "+" : value < 0 ? "−" : ""}${Math.abs(value).toFixed(2)}%`;
-const tone = (value: number | null) => value === null ? "" : value > 0 ? styles.up : value < 0 ? styles.down : "";
+const OPTIONS: { id: GroupFilter; ja: string; en: string }[] = [{ id: "all", ja: "すべて", en: "All" }, ...GROUPS];
+
+/** Vibration when the wheel settles on a new genre: Android through vibrate(); on iPhone Safari (no vibrate) a hidden switch input is
+ * clicked, which makes iOS 17.4+ tick. Neither is guaranteed, so a failure is silent. */
+function tick(probe: HTMLInputElement | null) {
+  try { if (typeof navigator.vibrate === "function") { navigator.vibrate(8); return; } } catch { /* not supported */ }
+  try { probe?.click(); } catch { /* not supported */ }
+}
+
+export function GenreWheel({ value, onChange, ja }: { value: GroupFilter; onChange: (group: GroupFilter) => void; ja: boolean }) {
+  const scroller = useRef<HTMLDivElement>(null);
+  const probe = useRef<HTMLInputElement>(null);
+  const programmatic = useRef(false);
+  const settle = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
+  const [atEnd, setAtEnd] = useState(false);
+  const index = OPTIONS.findIndex(option => option.id === value);
+
+  const measureEnd = useCallback(() => {
+    const element = scroller.current;
+    if (element) setAtEnd(element.scrollLeft + element.clientWidth >= element.scrollWidth - 3);
+  }, []);
+  useEffect(() => { measureEnd(); }, [measureEnd]);
+
+  const choose = (next: GroupFilter, fromScroll: boolean) => {
+    if (next !== value) { tick(probe.current); onChange(next); }
+    if (!fromScroll) {
+      const element = scroller.current, button = element?.querySelector<HTMLElement>(`[data-id="${next}"]`);
+      if (element && button) {
+        programmatic.current = true;
+        element.scrollTo({ left: button.offsetLeft - 7, behavior: "smooth" });
+        setTimeout(() => { programmatic.current = false; measureEnd(); }, 450);
+      }
+    }
+  };
+  const onScroll = () => {
+    measureEnd();
+    if (programmatic.current) return;
+    clearTimeout(settle.current);
+    // The item that has come to rest at the left edge becomes the chosen one.
+    settle.current = setTimeout(() => {
+      const element = scroller.current;
+      if (!element) return;
+      const left = element.scrollLeft + 7;
+      let best = OPTIONS[0].id, distance = Infinity;
+      for (const button of element.querySelectorAll<HTMLElement>("[data-id]")) {
+        const gap = Math.abs(button.offsetLeft - left);
+        if (gap < distance) { distance = gap; best = button.dataset.id as GroupFilter; }
+      }
+      choose(best, true);
+    }, 110);
+  };
+  useEffect(() => () => clearTimeout(settle.current), []);
+
+  return <div className={styles.wheelCard}>
+    <div ref={scroller} className={styles.wheel} role="group" aria-label={ja ? "ジャンル" : "Category"} onScroll={onScroll}>
+      {OPTIONS.map((option, position) => {
+        const gap = Math.min(3, Math.max(0, position - index));
+        return <button key={option.id} type="button" data-id={option.id} data-far={gap || undefined} aria-pressed={option.id === value} onClick={() => choose(option.id, false)}>{ja ? option.ja : option.en}</button>;
+      })}
+      <span className={styles.wheelEnd} aria-hidden="true" />
+    </div>
+    {!atEnd && <span className={styles.hint} aria-hidden="true">››</span>}
+    <input ref={probe} type="checkbox" {...{ switch: "" }} tabIndex={-1} aria-hidden="true" className={styles.switchProbe} />
+  </div>;
+}
 
 export default function ThemeRankingScreen() {
   const memberPlan = useMemberDisplay();
@@ -21,105 +84,50 @@ export default function ThemeRankingScreen() {
   const [lang, setLang] = useResearchLanguage();
   const ja = lang === "ja";
   const t = (a: string, b: string) => ja ? a : b;
-  const [period, setPeriod] = useState<Period>("1w");
-  const [group, setGroup] = useState<GroupId>("tech");
-  const groupThemes = useMemo(() => themesOf(group), [group]);
-  const [state, setState] = useState<State>("loading");
-  const [data, setData] = useState<Data | null>(null);
+  const [period, setPeriod] = usePeriod();
+  const [group, setGroup] = useState<GroupFilter>("all");
+  const { state, data } = useThemeData(group, plan);
   // Owner-only: look at the finished screen with clearly labelled sample numbers while the price feed is not connected.
   const ownerAccount = useOwnerAccount();
   const ownerRole = useResearchOwner();
   const owner = ownerAccount || ownerRole;
   const [sample, setSample] = useState(false);
-  const periodLabel: Record<Period, string> = { "1d": t("1日", "1D"), "1w": t("1週間", "1W"), "1m": t("1か月", "1M"), "3m": t("3か月", "3M") };
+  const themes = useMemo(() => group === "all" ? THEMES : themesOf(group), [group]);
+  const shown = useMemo<ThemeData | null>(() => sample ? { stocks: sampleStockReturns(group === "all" ? THEMES.flatMap(theme => theme.tickers) : tickersOf(group)), asOf: "SAMPLE", fetchedAt: 0, marketOpen: false, validUntil: 0 } : data, [sample, data, group]);
+  const rows = useMemo(() => shown ? rankThemes(shown.stocks, period, themes) : [], [shown, period, themes]);
 
-  useEffect(() => {
-    if (plan !== "pro") { setData(null); return; }
-    const controller = new AbortController();
-    setState("loading");
-    (async () => {
-      try {
-        const response = await fetch(`/api/research/themes?group=${group}`, { cache: "no-store", signal: AbortSignal.any([controller.signal, AbortSignal.timeout(20_000)]) });
-        const body = await response.json();
-        if (controller.signal.aborted) return;
-        if (response.status === 401 || response.status === 403) { setData(null); window.dispatchEvent(new Event("tech-phase:membership-changed")); return; }
-        if (body?.error === "not-connected") { setState("not-connected"); return; }
-        if (!response.ok || !body.ok || !Array.isArray(body.stocks)) throw Error();
-        setData({ stocks: body.stocks, asOf: body.asOf, validUntil: body.validUntil }); setState("ready");
-      } catch { if (!controller.signal.aborted) setState("error"); }
-    })();
-    return () => controller.abort();
-  }, [plan, group]);
-
-  // The access window can close while the page is open: drop the numbers then.
-  useEffect(() => {
-    if (!data?.validUntil) return;
-    const timer = setTimeout(() => setData(null), Math.max(0, Math.min(data.validUntil - Date.now(), 2147483647)));
-    return () => clearTimeout(timer);
-  }, [data]);
-
-  const shown = useMemo<Data | null>(() => sample ? { stocks: sampleStockReturns(tickersOf(group)), asOf: "SAMPLE", validUntil: 0 } : data, [sample, data]);
-  const rows = useMemo(() => shown ? rankThemes(shown.stocks, period, groupThemes) : [], [shown, period]);
-  const widest = Math.max(1, ...rows.map(row => Math.abs(row.value)));
-
-  return <ResearchToolShell lang={lang} setLang={setLang} title={t("テーマランキング", "Theme Ranking")}
-    description={t("米国株をテーマ（ジャンル）ごとに、値動きの強さで並べます。", "See how U.S. stock themes rank by performance.")}>
-    <div className={styles.eyebrow}><span>TECH PHASE PRO</span><i aria-hidden="true" /><span>THEME RANKING</span></div>
+  return <ResearchToolShell lang={lang} setLang={setLang} title={t("テーマランキング", "Theme Ranking")} showHeading={!ja}
+    description={t("米国株をジャンルごとに、値動きの強弱で並べます。", "See how U.S. stock themes rank by performance.")}>
+    {ja && <PageHeading eyebrow="THEME RANKING" title="テーマランキング" description="米国株をジャンルごとに、値動きの強弱で並べます。" />}
 
     {plan === null && <p role="status" className={styles.note}>{t("会員情報を確認中…", "Checking membership…")}</p>}
 
     {plan === "free" && <section className={styles.lock} aria-labelledby="theme-lock">
       <svg className={styles.gem} viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l7 9-7 9-7-9z" /></svg>
       <h2 id="theme-lock">{t("テーマランキングはPRO会員限定です", "Theme Ranking is exclusive to PRO")}</h2>
-      <p>{t("AI半導体、メモリ、光・フォトニクスなどのハイテクをはじめ、資源・金融・ヘルスケアなど6ジャンルのテーマを、期間ごとの強さ順に確認できます。", "Explore stock themes across six categories, from technology and resources to finance and healthcare. Compare their performance over periods from one day to three months.")}</p>
+      <p>{t("AI半導体、メモリ、光・フォトニクスなどのハイテクをはじめ、資源・金融・ヘルスケアなど6ジャンルのテーマを、期間ごとの強さ順に確認できます。", "Explore stock themes across six categories, from AI chips, memory and optics to resources, financials and healthcare, ranked by strength over each period.")}</p>
       <ol className={styles.teaser} aria-label={t("対象のテーマ", "Themes covered")}>{themesOf("tech").map(theme => <li key={theme.id}><span aria-hidden="true">◇</span>{ja ? theme.ja : theme.en}<b aria-hidden="true">••••</b></li>)}</ol>
       <Link className={styles.cta} href="/research#tech-phase-pro">{t("Tech Phase PROを見る", "See Tech Phase PRO")}</Link>
     </section>}
 
     {plan === "pro" && <section aria-label={t("テーマ別ランキング", "Theme ranking")}>
-      <div className={styles.groups} role="group" aria-label={t("ジャンル", "Category")}>
-        {GROUPS.map(item => <button key={item.id} type="button" aria-pressed={item.id === group} onClick={() => { setGroup(item.id); setSample(false); }}>{ja ? item.ja : item.en}</button>)}
-      </div>
-      <div className={styles.tabs} role="group" aria-label={t("期間", "Period")}>
-        {PERIODS.map(key => <button key={key} type="button" aria-pressed={key === period} onClick={() => setPeriod(key)}>{periodLabel[key]}</button>)}
-      </div>
-      {state === "loading" && <p role="status" className={styles.note}>{t("データを読み込み中…", "Loading data…")}</p>}
+      <GenreWheel value={group} onChange={next => { setGroup(next); setSample(false); }} ja={ja} />
+      <PeriodPills period={period} onChange={setPeriod} ja={ja} />
+      {state === "loading" && !sample && <p role="status" className={styles.note}>{t("データを読み込み中…", "Loading data…")}</p>}
       {state === "not-connected" && !sample && <>
-        <p role="status" className={styles.note}>{t("株価データの接続を準備中です。接続でき次第、順位と騰落率がここに入ります。それまでは、対象のテーマと銘柄を一覧で表示しています。", "The price data feed is being connected. Rankings and returns will fill in once it is; until then the themes and their stocks are listed.")}</p>
+        <p role="status" className={styles.note}>{t("株価データの接続を準備中です。接続でき次第、順位と騰落率がここに入ります。", "The price data is not connected yet. Ranks and returns will appear here once it is.")}</p>
         {owner && <button type="button" className={styles.sampleButton} onClick={() => setSample(true)}>{t("見本の数字で見た目を確認（運営者のみ・実際の株価ではありません）", "Preview with sample numbers (owner only · not real prices)")}</button>}
-        <ol className={styles.list}>{groupThemes.map(theme => <li key={theme.id}>
-          <details>
-            <summary>
-              <span className={styles.rank} aria-hidden="true">–</span>
-              <span className={styles.name}><strong>{ja ? theme.ja : theme.en}</strong><small>{t(`${theme.tickers.length}銘柄`, `${theme.tickers.length} stocks`)}</small></span>
-              <span className={styles.value}>—</span>
-              <span className={styles.bar} aria-hidden="true"><i style={{ width: "0%" }} /></span>
-            </summary>
-            <div className={styles.detail}><ul>{theme.tickers.map(ticker => <li key={ticker}><Link href={`/research/stocks?q=${encodeURIComponent(ticker)}`}>{ticker}</Link><em>—</em></li>)}</ul></div>
-          </details>
-        </li>)}</ol>
       </>}
-      {state === "error" && <p role="alert" className={styles.note}>{t("データを取得できませんでした。しばらくしてからもう一度お試しください。", "We couldn't load the data. Please try again in a moment.")}</p>}
-      {((state === "ready" && data) || (state === "not-connected" && sample)) && shown && <>
-        {sample ? <p role="status" className={styles.sample}><b>SAMPLE</b>{t("見た目の確認用の見本です。実際の株価ではありません（運営者のみに表示）。", "A look at the finished screen with made-up numbers — not real prices (owner only).")} <button type="button" onClick={() => setSample(false)}>{t("閉じる", "Close")}</button></p>
-          : <p className={styles.meta}>{t(`${shown.asOf} 終値ベース・各テーマの構成銘柄の等ウェイト平均`, `Closing prices as of ${shown.asOf} · equal-weighted average of each theme's stocks`)}</p>}
-        {!rows.length && <p className={styles.note}>{t("この期間のランキングを作れるだけのデータがありません。", "There is not enough data to rank this period.")}</p>}
-        <ol className={styles.list}>{rows.map(row => <li key={row.id} className={row.rank <= 3 ? styles.podium : undefined}>
-          <details>
-            <summary>
-              <span className={styles.rank} aria-label={t(`${row.rank}位`, `Rank ${row.rank}`)}>{row.rank}</span>
-              <span className={styles.name}><strong>{ja ? row.ja : row.en}</strong><small>{t(`構成 ${row.covered}/${row.total}銘柄`, `${row.covered}/${row.total} stocks`)}</small></span>
-              <span className={`${styles.value} ${tone(row.value)}`}>{signed(row.value)}</span>
-              <span className={styles.bar} aria-hidden="true"><i className={tone(row.value)} style={{ width: `${Math.max(3, Math.round(Math.abs(row.value) / widest * 100))}%` }} /></span>
-            </summary>
-            <div className={styles.detail}>
-              <p><span>{t("先頭", "Leader")}</span><b>{row.leader.ticker}</b><em className={tone(row.leader.value)}>{signed(row.leader.value)}</em>
-                <span>{t("後尾", "Laggard")}</span><b>{row.laggard.ticker}</b><em className={tone(row.laggard.value)}>{signed(row.laggard.value)}</em></p>
-              <ul>{row.members.map(member => <li key={member.ticker}><Link href={`/research/stocks?q=${encodeURIComponent(member.ticker)}`}>{member.ticker}</Link><em className={tone(member.value)}>{member.value === null ? "—" : signed(member.value)}</em></li>)}</ul>
-            </div>
-          </details>
-        </li>)}</ol>
-        <p className={styles.fine}>{t("情報の提供であり、投資の勧誘や助言ではありません。", "For information only. Not investment advice or a solicitation.")}</p>
+      {state === "error" && !sample && <p role="alert" className={styles.note}>{t("データを取得できませんでした。しばらくしてからもう一度お試しください。", "We couldn't load the data. Please try again in a moment.")}</p>}
+      {((state === "ready" && data) || sample) && shown && <>
+        {sample && <p role="status" className={styles.sample}><b>SAMPLE</b>{t("見た目の確認用の見本です。実際の株価ではありません（運営者のみに表示）。", "A look at the finished screen with made-up numbers — not real prices (owner only).")}<button type="button" onClick={() => setSample(false)}>{t("閉じる", "Close")}</button></p>}
+        {rows.length ? <DivergingChart ja={ja} rows={rows.map(row => ({ id: row.id, rank: row.rank, value: row.value, href: `/research/themes/${row.id}`, name: ja ? row.ja : row.en, tag: ja ? groupOf(row.group)?.ja : groupOf(row.group)?.en }))} />
+          : <p className={styles.empty}>{t("この期間のランキングを作れるだけのデータがありません。", "There is not enough data to rank this period.")}</p>}
+        <div className={styles.fine}>
+          <p>{t("強い順に、上から並びます。", "Ranked from the strongest, top to bottom.")}</p>
+          {!sample && <p>{updateNote(shown, ja)}</p>}
+          <p>{t("提供：Twelve Data", "Data: Twelve Data")}</p>
+        </div>
       </>}
     </section>}
   </ResearchToolShell>;

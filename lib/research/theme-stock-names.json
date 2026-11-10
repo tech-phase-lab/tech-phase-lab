@@ -1,0 +1,902 @@
+{
+ "AAL": {
+  "en": "American Airlines",
+  "ja": "アメリカン航空"
+ },
+ "AAOI": {
+  "en": "Applied Optoelectronics",
+  "ja": "アプライド・オプトエレクトロニクス"
+ },
+ "ABBV": {
+  "en": "AbbVie",
+  "ja": "アッヴィ"
+ },
+ "ABNB": {
+  "en": "Airbnb",
+  "ja": "エアビーアンドビー"
+ },
+ "ABT": {
+  "en": "Abbott Diabetes Care",
+  "ja": "アボット"
+ },
+ "ADBE": {
+  "en": "Adobe",
+  "ja": "アドビ"
+ },
+ "AEM": {
+  "en": "Agnico Eagle Mines",
+  "ja": "アグニコ・イーグル・マインズ"
+ },
+ "AEP": {
+  "en": "AEP (Transource)",
+  "ja": "アメリカン・エレクトリック・パワー(トランスソース)"
+ },
+ "AG": {
+  "en": "First Majestic Silver",
+  "ja": "ファースト・マジェスティック・シルバー"
+ },
+ "AIG": {
+  "en": "American International Group",
+  "ja": "アメリカン・インターナショナル・グループ"
+ },
+ "ALAB": {
+  "en": "Astera Labs",
+  "ja": "アステラ・ラボ"
+ },
+ "ALB": {
+  "en": "Albemarle",
+  "ja": "アルベマール"
+ },
+ "ALL": {
+  "en": "The Allstate Corporation",
+  "ja": "オールステート"
+ },
+ "AMAT": {
+  "en": "Applied Materials",
+  "ja": "アプライド マテリアルズ"
+ },
+ "AMD": {
+  "en": "AMD",
+  "ja": "AMD社"
+ },
+ "AMGN": {
+  "en": "Amgen",
+  "ja": "アムジェン"
+ },
+ "AMT": {
+  "en": "American Tower",
+  "ja": "アメリカン・タワー"
+ },
+ "ANET": {
+  "en": "Arista Networks",
+  "ja": "アリスタネットワークス"
+ },
+ "APLD": {
+  "en": "Applied Digital",
+  "ja": "アプライド・デジタル"
+ },
+ "APO": {
+  "en": "Apollo Global Management",
+  "ja": "アポロ・グローバル・マネジメント"
+ },
+ "AR": {
+  "en": "Antero Resources",
+  "ja": "アンテロ・リソーシズ"
+ },
+ "ARES": {
+  "en": "Ares Management",
+  "ja": "アレス・マネジメント"
+ },
+ "ARM": {
+  "en": "Arm Holdings",
+  "ja": "アーム・ホールディングス"
+ },
+ "ASML": {
+  "en": "ASML Holding",
+  "ja": "エーエスエムエル"
+ },
+ "ASTS": {
+  "en": "AST SpaceMobile",
+  "ja": "ASTスペースモバイル"
+ },
+ "AU": {
+  "en": "AngloGold Ashanti",
+  "ja": "アングロゴールド・アシャンティ"
+ },
+ "AVAV": {
+  "en": "AeroVironment",
+  "ja": "エアロバイロメント"
+ },
+ "AVGO": {
+  "en": "Broadcom",
+  "ja": "ブロードコム"
+ },
+ "AXP": {
+  "en": "American Express",
+  "ja": "アメリカン・エキスプレス"
+ },
+ "BAC": {
+  "en": "Bank of America",
+  "ja": "バンク・オブ・アメリカ"
+ },
+ "BE": {
+  "en": "Bloom Energy",
+  "ja": "ブルーム・エナジー"
+ },
+ "BIIB": {
+  "en": "Biogen",
+  "ja": "バイオジェン"
+ },
+ "BKNG": {
+  "en": "Booking Holdings",
+  "ja": "ブッキング・ホールディングス"
+ },
+ "BKR": {
+  "en": "Baker Hughes",
+  "ja": "ベーカー・ヒューズ"
+ },
+ "BLK": {
+  "en": "BlackRock",
+  "ja": "ブラックロック"
+ },
+ "BSX": {
+  "en": "Boston Scientific",
+  "ja": "ボストン・サイエンティフィック"
+ },
+ "BX": {
+  "en": "Blackstone",
+  "ja": "ブラックストーン"
+ },
+ "C": {
+  "en": "Citigroup",
+  "ja": "シティグループ"
+ },
+ "CALX": {
+  "en": "CALIX, INC",
+  "ja": "カリックス"
+ },
+ "CAT": {
+  "en": "Caterpillar Inc.",
+  "ja": "キャタピラー"
+ },
+ "CB": {
+  "en": "Chubb",
+  "ja": "チャブ"
+ },
+ "CBOE": {
+  "en": "Cboe Global Markets",
+  "ja": "シーボー・グローバル・マーケッツ"
+ },
+ "CCJ": {
+  "en": "Cameco",
+  "ja": "カメコ"
+ },
+ "CDE": {
+  "en": "Coeur Mining",
+  "ja": "コーア・マイニング"
+ },
+ "CEG": {
+  "en": "Constellation Energy",
+  "ja": "コンステレーション・エナジー"
+ },
+ "CFG": {
+  "en": "Citizens Bank, N.A.",
+  "ja": "シチズンズ・バンク"
+ },
+ "CI": {
+  "en": "Cigna",
+  "ja": "シグナ"
+ },
+ "CIEN": {
+  "en": "Ciena",
+  "ja": "シエナ"
+ },
+ "CL": {
+  "en": "Colgate-Palmolive",
+  "ja": "コルゲート・パルモリブ"
+ },
+ "CLSK": {
+  "en": "CleanSpark",
+  "ja": "クリーンスパーク"
+ },
+ "CME": {
+  "en": "CME Group",
+  "ja": "CMEグループ"
+ },
+ "CMG": {
+  "en": "Chipotle Mexican Grill",
+  "ja": "チポトレ・メキシカン・グリル"
+ },
+ "COF": {
+  "en": "Capital One Financial",
+  "ja": "キャピタル・ワン・ファイナンシャル"
+ },
+ "COHR": {
+  "en": "Coherent",
+  "ja": "コヒレント"
+ },
+ "COIN": {
+  "en": "Coinbase",
+  "ja": "コインベース"
+ },
+ "COP": {
+  "en": "ConocoPhillips",
+  "ja": "コノコフィリップス"
+ },
+ "CORZ": {
+  "en": "Core Scientific",
+  "ja": "コア・サイエンティフィック"
+ },
+ "COST": {
+  "en": "Costco",
+  "ja": "コストコ"
+ },
+ "CRDO": {
+  "en": "Credo Semiconductor",
+  "ja": "クレド・セミコンダクター"
+ },
+ "CRM": {
+  "en": "Salesforce",
+  "ja": "セールスフォース"
+ },
+ "CRWD": {
+  "en": "CrowdStrike",
+  "ja": "クラウドストライク"
+ },
+ "CRWV": {
+  "en": "CoreWeave",
+  "ja": "コアウィーブ"
+ },
+ "CSCO": {
+  "en": "Cisco Systems",
+  "ja": "シスコシステムズ"
+ },
+ "CSX": {
+  "en": "CSX Corporation",
+  "ja": "CSXコーポレーション"
+ },
+ "CTRA": {
+  "en": "Coterra Energy",
+  "ja": "コテラ・エナジー"
+ },
+ "CVS": {
+  "en": "CVS Health",
+  "ja": "CVSヘルス"
+ },
+ "CVX": {
+  "en": "Chevron",
+  "ja": "シェブロン"
+ },
+ "D": {
+  "en": "Dominion Energy",
+  "ja": "ドミニオン・エナジー"
+ },
+ "DAL": {
+  "en": "Delta Air Lines",
+  "ja": "デルタ航空"
+ },
+ "DE": {
+  "en": "Deere & Company",
+  "ja": "ディア"
+ },
+ "DELL": {
+  "en": "Dell",
+  "ja": "デル・テクノロジーズ"
+ },
+ "DLR": {
+  "en": "Digital Realty Trust",
+  "ja": "デジタル・リアルティ・トラスト"
+ },
+ "DPZ": {
+  "en": "Domino's Pizza",
+  "ja": "ドミノ・ピザ"
+ },
+ "DUK": {
+  "en": "Duke Energy",
+  "ja": "デューク・エナジー"
+ },
+ "ELV": {
+  "en": "Elevance Health",
+  "ja": "エレバンス・ヘルス"
+ },
+ "ENPH": {
+  "en": "Enphase Energy",
+  "ja": "エンフェーズ・エナジー"
+ },
+ "EOG": {
+  "en": "EOG Resources",
+  "ja": "EOGリソーシズ"
+ },
+ "EQIX": {
+  "en": "Equinix",
+  "ja": "エクイニクス"
+ },
+ "EQT": {
+  "en": "EQT Corporation",
+  "ja": "EQT"
+ },
+ "ETN": {
+  "en": "Eaton",
+  "ja": "イートン"
+ },
+ "EXE": {
+  "en": "Expand Energy",
+  "ja": "エクスパンド・エナジー"
+ },
+ "EXPE": {
+  "en": "Expedia Group",
+  "ja": "エクスペディア・グループ"
+ },
+ "EXTR": {
+  "en": "Extreme Networks",
+  "ja": "エクストリーム・ネットワークス"
+ },
+ "F": {
+  "en": "Ford Motor",
+  "ja": "フォード"
+ },
+ "FCX": {
+  "en": "Freeport-McMoRan",
+  "ja": "フリーポート・マクモラン"
+ },
+ "FDX": {
+  "en": "FedEx",
+  "ja": "フェデックス"
+ },
+ "FITB": {
+  "en": "Fifth Third Bancorp",
+  "ja": "フィフス・サード・バンコープ"
+ },
+ "FN": {
+  "en": "Fabrinet",
+  "ja": "ファブリネット"
+ },
+ "FSLR": {
+  "en": "First Solar",
+  "ja": "ファースト・ソーラー"
+ },
+ "FTNT": {
+  "en": "Fortinet",
+  "ja": "フォーティネット"
+ },
+ "GD": {
+  "en": "General Dynamics",
+  "ja": "ゼネラル・ダイナミクス"
+ },
+ "GE": {
+  "en": "GE Aerospace",
+  "ja": "GEエアロスペース"
+ },
+ "GEV": {
+  "en": "GE Vernova",
+  "ja": "GEベルノバ"
+ },
+ "GFI": {
+  "en": "Gold Fields",
+  "ja": "ゴールド・フィールズ"
+ },
+ "GILD": {
+  "en": "Gilead Sciences",
+  "ja": "ギリアド・サイエンシズ"
+ },
+ "GM": {
+  "en": "General Motors",
+  "ja": "ゼネラルモーターズ"
+ },
+ "GS": {
+  "en": "Goldman Sachs",
+  "ja": "ゴールドマン・サックス"
+ },
+ "HAL": {
+  "en": "Halliburton",
+  "ja": "ハリバートン"
+ },
+ "HBAN": {
+  "en": "Huntington Bancshares",
+  "ja": "ハンティントン・バンクシェアーズ"
+ },
+ "HD": {
+  "en": "The Home Depot",
+  "ja": "ホーム・デポ"
+ },
+ "HL": {
+  "en": "Hecla Mining",
+  "ja": "ヘクラ・マイニング"
+ },
+ "HLT": {
+  "en": "Hilton Worldwide",
+  "ja": "ヒルトン・ワールドワイド"
+ },
+ "HMY": {
+  "en": "Harmony Gold",
+  "ja": "ハーモニー・ゴールド"
+ },
+ "HON": {
+  "en": "Honeywell International",
+  "ja": "ハネウェル"
+ },
+ "HPE": {
+  "en": "Hewlett Packard Enterprise",
+  "ja": "ヒューレット・パッカード・エンタープライズ"
+ },
+ "HUM": {
+  "en": "Humana",
+  "ja": "ヒューマナ"
+ },
+ "ICE": {
+  "en": "Intercontinental Exchange",
+  "ja": "インターコンチネンタル取引所"
+ },
+ "IONQ": {
+  "en": "IonQ",
+  "ja": "アイオンキュー"
+ },
+ "IRDM": {
+  "en": "Iridium Communications",
+  "ja": "イリジウム・コミュニケーションズ"
+ },
+ "IREN": {
+  "en": "IREN",
+  "ja": "アイレン"
+ },
+ "IRM": {
+  "en": "Iron Mountain",
+  "ja": "アイアン・マウンテン"
+ },
+ "ISRG": {
+  "en": "Intuitive Surgical",
+  "ja": "インテュイティブ・サージカル"
+ },
+ "JNJ": {
+  "en": "Johnson & Johnson",
+  "ja": "ジョンソン・エンド・ジョンソン"
+ },
+ "JPM": {
+  "en": "JPMorgan Chase",
+  "ja": "JPモルガン・チェース"
+ },
+ "KEY": {
+  "en": "KeyCorp",
+  "ja": "キーコープ"
+ },
+ "KGC": {
+  "en": "Kinross Gold",
+  "ja": "キンロス・ゴールド"
+ },
+ "KKR": {
+  "en": "KKR & Co.",
+  "ja": "ケーケーアール"
+ },
+ "KLAC": {
+  "en": "KLA",
+  "ja": "ケーエルエー"
+ },
+ "KMB": {
+  "en": "Kimberly-Clark",
+  "ja": "キンバリークラーク"
+ },
+ "KO": {
+  "en": "Coca-Cola",
+  "ja": "コカ・コーラ"
+ },
+ "KTOS": {
+  "en": "Kratos Defense",
+  "ja": "クラトス・ディフェンス"
+ },
+ "LEU": {
+  "en": "Centrus Energy",
+  "ja": "セントラス・エナジー"
+ },
+ "LHX": {
+  "en": "L3Harris Technologies",
+  "ja": "L3ハリス・テクノロジーズ"
+ },
+ "LITE": {
+  "en": "Lumentum",
+  "ja": "ルメンタム"
+ },
+ "LLY": {
+  "en": "Eli Lilly and Company",
+  "ja": "イーライリリー"
+ },
+ "LMT": {
+  "en": "Lockheed Martin",
+  "ja": "ロッキード・マーチン"
+ },
+ "LNG": {
+  "en": "Cheniere Energy",
+  "ja": "シェニエール・エナジー"
+ },
+ "LOW": {
+  "en": "Lowe's",
+  "ja": "ロウズ"
+ },
+ "LRCX": {
+  "en": "Lam Research",
+  "ja": "ラムリサーチ"
+ },
+ "LULU": {
+  "en": "lululemon athletica",
+  "ja": "ルルレモン・アスレティカ"
+ },
+ "LUNR": {
+  "en": "Intuitive Machines",
+  "ja": "インテュイティブ・マシーンズ"
+ },
+ "LUV": {
+  "en": "Southwest Airlines",
+  "ja": "サウスウエスト航空"
+ },
+ "MA": {
+  "en": "Mastercard",
+  "ja": "マスターカード"
+ },
+ "MAR": {
+  "en": "Marriott International",
+  "ja": "マリオット・インターナショナル"
+ },
+ "MARA": {
+  "en": "MARA Holdings",
+  "ja": "マラ・ホールディングス"
+ },
+ "MCD": {
+  "en": "McDonald’s",
+  "ja": "マクドナルド"
+ },
+ "MDT": {
+  "en": "Medtronic",
+  "ja": "メドトロニック"
+ },
+ "MO": {
+  "en": "Altria Group",
+  "ja": "アルトリア・グループ"
+ },
+ "MP": {
+  "en": "MP Materials",
+  "ja": "MPマテリアルズ"
+ },
+ "MRK": {
+  "en": "Merck",
+  "ja": "メルク"
+ },
+ "MRNA": {
+  "en": "Moderna",
+  "ja": "モデルナ"
+ },
+ "MRVL": {
+  "en": "Marvell Technology",
+  "ja": "マーベル・テクノロジー"
+ },
+ "MS": {
+  "en": "Morgan Stanley",
+  "ja": "モルガン・スタンレー"
+ },
+ "MSFT": {
+  "en": "Microsoft",
+  "ja": "マイクロソフト"
+ },
+ "MSTR": {
+  "en": "Strategy Inc",
+  "ja": "ストラテジー"
+ },
+ "MTB": {
+  "en": "M&T Bank",
+  "ja": "M&Tバンク"
+ },
+ "MU": {
+  "en": "Micron Technology",
+  "ja": "マイクロン・テクノロジー"
+ },
+ "NBIS": {
+  "en": "Nebius Group",
+  "ja": "ネビウス・グループ"
+ },
+ "NDAQ": {
+  "en": "Nasdaq",
+  "ja": "ナスダック"
+ },
+ "NEE": {
+  "en": "NextEra Energy",
+  "ja": "ネクステラ・エナジー"
+ },
+ "NEM": {
+  "en": "Newmont Corporation",
+  "ja": "ニューモント"
+ },
+ "NKE": {
+  "en": "NIKE, Inc.",
+  "ja": "ナイキ"
+ },
+ "NNE": {
+  "en": "Nano Nuclear Energy",
+  "ja": "ナノ・ニュークリア・エナジー"
+ },
+ "NOC": {
+  "en": "Northrop Grumman",
+  "ja": "ノースロップ・グラマン"
+ },
+ "NOW": {
+  "en": "ServiceNow",
+  "ja": "サービスナウ"
+ },
+ "NSC": {
+  "en": "Norfolk Southern Corporation",
+  "ja": "ノーフォーク・サザン"
+ },
+ "NVDA": {
+  "en": "NVIDIA",
+  "ja": "エヌビディア"
+ },
+ "NVO": {
+  "en": "Novo Nordisk",
+  "ja": "ノボ ノルディスク"
+ },
+ "O": {
+  "en": "Realty Income",
+  "ja": "リアルティ・インカム"
+ },
+ "OKLO": {
+  "en": "Oklo",
+  "ja": "オクロ"
+ },
+ "OKTA": {
+  "en": "Okta",
+  "ja": "オクタ"
+ },
+ "ONDS": {
+  "en": "Ondas Holdings",
+  "ja": "オンダス・ホールディングス"
+ },
+ "OXY": {
+  "en": "Occidental Chemical",
+  "ja": "オキシデンタル・ケミカル"
+ },
+ "PAAS": {
+  "en": "Pan American Silver",
+  "ja": "パン・アメリカン・シルバー"
+ },
+ "PANW": {
+  "en": "Palo Alto Networks",
+  "ja": "パロアルトネットワークス"
+ },
+ "PEP": {
+  "en": "PepsiCo",
+  "ja": "ペプシコ"
+ },
+ "PFE": {
+  "en": "Pfizer",
+  "ja": "ファイザー"
+ },
+ "PG": {
+  "en": "Procter & Gamble",
+  "ja": "プロクター・アンド・ギャンブル"
+ },
+ "PGR": {
+  "en": "Progressive",
+  "ja": "プログレッシブ"
+ },
+ "PLD": {
+  "en": "Prologis",
+  "ja": "プロロジス"
+ },
+ "PLTR": {
+  "en": "Palantir Technologies",
+  "ja": "パランティア・テクノロジーズ"
+ },
+ "PM": {
+  "en": "Philip Morris International",
+  "ja": "フィリップ モリス インターナショナル"
+ },
+ "PSA": {
+  "en": "PSA",
+  "ja": "PSA(カード鑑定会社)"
+ },
+ "PYPL": {
+  "en": "PayPal",
+  "ja": "ペイパル"
+ },
+ "QBTS": {
+  "en": "D-Wave Quantum",
+  "ja": "ディーウェイブ・クアンタム"
+ },
+ "RCAT": {
+  "en": "Red Cat Holdings",
+  "ja": "レッドキャット・ホールディングス"
+ },
+ "REGN": {
+  "en": "Regeneron",
+  "ja": "リジェネロン"
+ },
+ "RF": {
+  "en": "Regions Financial",
+  "ja": "リージョンズ・ファイナンシャル"
+ },
+ "RGTI": {
+  "en": "Rigetti Computing",
+  "ja": "リゲッティ・コンピューティング"
+ },
+ "RIOT": {
+  "en": "Riot Platforms",
+  "ja": "ライオット・プラットフォームズ"
+ },
+ "RKLB": {
+  "en": "Rocket Lab",
+  "ja": "ロケット・ラボ"
+ },
+ "RL": {
+  "en": "Ralph Lauren",
+  "ja": "ラルフ ローレン"
+ },
+ "ROK": {
+  "en": "Rockwell Automation",
+  "ja": "ロックウェル・オートメーション"
+ },
+ "RTX": {
+  "en": "RTX",
+  "ja": "RTXコーポレーション"
+ },
+ "RUN": {
+  "en": "Sunrun",
+  "ja": "サンラン"
+ },
+ "SBUX": {
+  "en": "Starbucks",
+  "ja": "スターバックス"
+ },
+ "SCCO": {
+  "en": "Southern Copper",
+  "ja": "サザン・カッパー"
+ },
+ "SEDG": {
+  "en": "SolarEdge Technologies",
+  "ja": "ソーラーエッジ・テクノロジーズ"
+ },
+ "SERV": {
+  "en": "Serve Robotics",
+  "ja": "サーブ・ロボティクス"
+ },
+ "SKHY": {
+  "en": "SK hynix",
+  "ja": "SKハイニックス"
+ },
+ "SLB": {
+  "en": "SLB",
+  "ja": "SLB"
+ },
+ "SMCI": {
+  "en": "Super Micro Computer",
+  "ja": "スーパー・マイクロ・コンピューター"
+ },
+ "SMR": {
+  "en": "NuScale Power",
+  "ja": "ニュースケール・パワー"
+ },
+ "SNDK": {
+  "en": "SanDisk",
+  "ja": "サンディスク"
+ },
+ "SO": {
+  "en": "Southern Company",
+  "ja": "サザン・カンパニー"
+ },
+ "SPG": {
+  "en": "Simon Property Group",
+  "ja": "サイモン・プロパティー・グループ"
+ },
+ "STX": {
+  "en": "Seagate Technology",
+  "ja": "シーゲイト・テクノロジー"
+ },
+ "SYK": {
+  "en": "Stryker",
+  "ja": "ストライカー"
+ },
+ "SYM": {
+  "en": "Symbotic",
+  "ja": "シンボティック"
+ },
+ "T": {
+  "en": "AT&T",
+  "ja": "AT&T"
+ },
+ "TECK": {
+  "en": "Teck Resources Limited",
+  "ja": "テック・リソーシズ"
+ },
+ "TER": {
+  "en": "Teradyne",
+  "ja": "テラダイン"
+ },
+ "TGT": {
+  "en": "Target",
+  "ja": "ターゲット"
+ },
+ "TPR": {
+  "en": "Tapestry",
+  "ja": "タペストリー"
+ },
+ "TRV": {
+  "en": "Travelers Companies",
+  "ja": "トラベラーズ・カンパニーズ"
+ },
+ "TSLA": {
+  "en": "Tesla",
+  "ja": "テスラ"
+ },
+ "TSM": {
+  "en": "Taiwan Semiconductor Manufacturing",
+  "ja": "台湾積体電路製造"
+ },
+ "UAL": {
+  "en": "United Airlines",
+  "ja": "ユナイテッド航空"
+ },
+ "UMAC": {
+  "en": "Unusual Machines",
+  "ja": "アンユージュアル・マシーンズ"
+ },
+ "UNH": {
+  "en": "Optum",
+  "ja": "オプタム(ユナイテッドヘルス)"
+ },
+ "UNP": {
+  "en": "Union Pacific",
+  "ja": "ユニオン・パシフィック"
+ },
+ "UPS": {
+  "en": "UPS",
+  "ja": "ユナイテッド・パーセル・サービス"
+ },
+ "V": {
+  "en": "Visa",
+  "ja": "ビザ"
+ },
+ "VKTX": {
+  "en": "Viking Therapeutics",
+  "ja": "バイキング・セラピューティクス"
+ },
+ "VRT": {
+  "en": "Vertiv",
+  "ja": "バーティブ"
+ },
+ "VRTX": {
+  "en": "Vertex Pharmaceuticals",
+  "ja": "バーテックス・ファーマシューティカルズ"
+ },
+ "VST": {
+  "en": "Vistra",
+  "ja": "ビストラ"
+ },
+ "VZ": {
+  "en": "Verizon",
+  "ja": "ベライゾン"
+ },
+ "WDC": {
+  "en": "Western Digital",
+  "ja": "ウエスタンデジタル"
+ },
+ "WFC": {
+  "en": "Wells Fargo",
+  "ja": "ウェルズ・ファーゴ"
+ },
+ "WMT": {
+  "en": "Walmart",
+  "ja": "ウォルマート"
+ },
+ "WPM": {
+  "en": "Wheaton Precious Metals",
+  "ja": "ウィートン・プレシャス・メタルズ"
+ },
+ "XOM": {
+  "en": "ExxonMobil",
+  "ja": "エクソンモービル"
+ },
+ "YUM": {
+  "en": "Yum! Brands",
+  "ja": "ヤム・ブランズ"
+ },
+ "ZS": {
+  "en": "Zscaler",
+  "ja": "ゼットスケーラー"
+ }
+}

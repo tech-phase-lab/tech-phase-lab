@@ -10,6 +10,7 @@ import type { ComparisonResult, Fact } from "@/lib/research/comparison";
 import styles from "./styles.module.css";
 import { CompanyScoreCard, LeadTitle, ScoreHeadline, ScoreOverview, StatusOverlay } from "./comparison-visuals";
 import ProTag from "../pro-experience/pro-tag";
+import PageHeading from "../page-heading";
 import TickerSearch from "./ticker-search";
 import { comparisonScores, overallComparison } from "@/lib/research/comparison-scorecard";
 import { comparisonChoices, enterChoice, moveChoice } from "@/lib/research/comparison-selection";
@@ -110,7 +111,7 @@ export default function ComparisonScreen() {
   ];
   return <ResearchToolShell showTools={!result} showHeading={false} lang={lang} setLang={setLang} title={t("銘柄比較PRO", "Compare stocks PRO")} description="">
     <div className={styles.screenWrap}>
-    {!result && <header className={styles.pageHead}><div className={styles.pageTitle}><h1>{t("銘柄比較", "Compare stocks")}</h1><ProTag /></div><p>{t("最大3社。数字の差から、投資判断の論点へ。", "Compare up to three companies and see what the numbers reveal.")}</p></header>}
+    {!result && (lang === "ja" ? <PageHeading eyebrow="COMPARE" title="銘柄比較" description="最大3社。数字の差から、投資判断の論点へ。" /> : <header className={styles.pageHead}><div className={styles.pageTitle}><h1>{t("銘柄比較", "Compare stocks")}</h1><ProTag /></div><p>{t("最大3社。数字の差から、投資判断の論点へ。", "Compare up to three companies and see what the numbers reveal.")}</p></header>)}
     {membership === "loading" && <p role="status">{t("会員情報を確認中…", "Checking membership…")}</p>}
     {membership === "free" && <section className={styles.lock}><span aria-hidden="true">🔒</span><h2>{t("比較・評価はPRO会員限定", "Comparison is exclusive to PRO")}</h2><p>{t("2〜3社を選び、結論・実績・成長性・注意点をまとめて確認できます。", "Choose two or three companies to explore the conclusion, performance, growth and caveats.")}</p><Link href="/research/account">{t("ログイン・会員情報", "Sign in or view plans")}</Link></section>}
     {membership === "pro" && <>

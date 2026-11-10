@@ -7,13 +7,13 @@ export const GROUPS: readonly { id: GroupId; ja: string; en: string }[] = [
   { id: "finance", ja: "金融", en: "Financials" },
   { id: "health", ja: "ヘルスケア・バイオ", en: "Healthcare & biotech" },
   { id: "consumer", ja: "消費・小売", en: "Consumer & retail" },
-  { id: "defensive", ja: "高配当・産業", en: "Dividend & industrials" },
+  { id: "defensive", ja: "高配当", en: "Dividend" },
 ];
 export type ThemeDefinition = { id: string; group: GroupId; ja: string; en: string; tickers: readonly string[] };
 
 export const THEMES: readonly ThemeDefinition[] = [
   { group: "tech", id: "ai-chips", ja: "AI半導体", en: "AI chips", tickers: ["NVDA", "AMD", "AVGO", "MRVL", "TSM", "ARM"] },
-  { group: "tech", id: "memory", ja: "メモリ", en: "Memory", tickers: ["MU", "SNDK", "WDC", "STX"] },
+  { group: "tech", id: "memory", ja: "メモリ", en: "Memory", tickers: ["MU", "SKHY", "SNDK", "WDC", "STX"] },
   { group: "tech", id: "chip-equipment", ja: "半導体製造装置", en: "Chipmaking equipment", tickers: ["AMAT", "LRCX", "KLAC", "ASML", "TER"] },
   { group: "tech", id: "optical", ja: "光・フォトニクス", en: "Optics & photonics", tickers: ["LITE", "COHR", "AAOI", "CIEN", "FN", "CRDO"] },
   { group: "tech", id: "networking", ja: "ネットワーキング", en: "Networking", tickers: ["ANET", "CSCO", "EXTR", "CALX", "ALAB"] },
@@ -23,8 +23,8 @@ export const THEMES: readonly ThemeDefinition[] = [
   { group: "tech", id: "power-cooling", ja: "電力・冷却", en: "Power & cooling", tickers: ["VRT", "GEV", "BE", "VST", "CEG"] },
   { group: "tech", id: "software", ja: "ソフトウェア", en: "Software", tickers: ["MSFT", "CRM", "NOW", "ADBE", "PLTR"] },
   { group: "tech", id: "cybersecurity", ja: "サイバーセキュリティ", en: "Cybersecurity", tickers: ["CRWD", "PANW", "ZS", "FTNT", "OKTA"] },
-  { group: "tech", id: "robotics", ja: "ロボティクス", en: "Robotics", tickers: ["ISRG", "SYM", "TER", "ROK", "SERV"] },
-  { group: "tech", id: "drones", ja: "ドローン", en: "Drones", tickers: ["AVAV", "KTOS", "RCAT", "ONDS", "UMAC"] },
+  { group: "tech", id: "robotics", ja: "ロボティクス", en: "Robotics", tickers: ["ISRG", "SYM", "TER", "ROK"] },
+  { group: "tech", id: "drones", ja: "ドローン", en: "Drones", tickers: ["AVAV", "KTOS", "RCAT", "ONDS"] },
   { group: "tech", id: "space", ja: "宇宙", en: "Space", tickers: ["RKLB", "ASTS", "IRDM", "LUNR"] },
   { group: "tech", id: "nuclear", ja: "原子力・SMR", en: "Nuclear power & small modular reactors", tickers: ["OKLO", "SMR", "NNE", "LEU", "CCJ"] },
   { group: "tech", id: "crypto", ja: "暗号資産関連", en: "Crypto-related stocks", tickers: ["COIN", "MSTR", "MARA", "CLSK", "RIOT"] },
@@ -71,4 +71,9 @@ export const THEMES: readonly ThemeDefinition[] = [
 export const themesOf = (group: GroupId) => THEMES.filter(theme => theme.group === group);
 export const tickersOf = (group: GroupId): string[] => [...new Set(themesOf(group).flatMap(theme => theme.tickers))];
 export const THEME_TICKERS: readonly string[] = [...new Set(THEMES.flatMap(theme => theme.tickers))];
+/** The genre wheel: "all" first, then the six genres in this order. */
+export type GroupFilter = GroupId | "all";
+export const isGroupFilter = (value: unknown): value is GroupFilter => value === "all" || isGroupId(value);
+export const groupOf = (id: string) => GROUPS.find(group => group.id === id);
+export const themeById = (id: string) => THEMES.find(theme => theme.id === id);
 export const isGroupId = (value: unknown): value is GroupId => GROUPS.some(group => group.id === value);
