@@ -7,7 +7,7 @@ import type { BoardQuote } from "@/lib/research/market-data";
 import styles from "./board.module.css";
 
 type Kind = "fx2" | "fx4" | "usd" | "etf";
-type Entry = { id: string; ja: string; en: string; short: string; kind: Kind };
+type Entry = { id: string; ja: string; en: string; short: string; shortEn?: string; kind: Kind };
 const INDEX_ETFS: (Entry & { sub: { ja: string; en: string } })[] = [
   { id: "SPY", ja: "S&P500に連動", en: "S&P 500", short: "SPY", kind: "etf", sub: { ja: "S&P500に連動", en: "tracks S&P 500" } },
   { id: "QQQ", ja: "NASDAQ100に連動", en: "NASDAQ 100", short: "QQQ", kind: "etf", sub: { ja: "NASDAQ100に連動", en: "tracks NASDAQ 100" } },
@@ -15,21 +15,22 @@ const INDEX_ETFS: (Entry & { sub: { ja: string; en: string } })[] = [
 ];
 const CATEGORIES: { id: string; ja: string; en: string; items: Entry[] }[] = [
   { id: "fx", ja: "為替", en: "Forex", items: [
-    { id: "USD/JPY", ja: "ドル円", en: "USD/JPY", short: "ドル円", kind: "fx2" }, { id: "EUR/JPY", ja: "ユーロ円", en: "EUR/JPY", short: "ユーロ円", kind: "fx2" },
-    { id: "EUR/USD", ja: "ユーロドル", en: "EUR/USD", short: "ユーロドル", kind: "fx4" }, { id: "GBP/USD", ja: "ポンドドル", en: "GBP/USD", short: "ポンドドル", kind: "fx4" }] },
+    { id: "USD/JPY", ja: "ドル円", en: "USD/JPY", short: "ドル円", shortEn: "USD/JPY", kind: "fx2" }, { id: "EUR/JPY", ja: "ユーロ円", en: "EUR/JPY", short: "ユーロ円", shortEn: "EUR/JPY", kind: "fx2" },
+    { id: "EUR/USD", ja: "ユーロドル", en: "EUR/USD", short: "ユーロドル", shortEn: "EUR/USD", kind: "fx4" }, { id: "GBP/USD", ja: "ポンドドル", en: "GBP/USD", short: "ポンドドル", shortEn: "GBP/USD", kind: "fx4" }] },
   { id: "crypto", ja: "暗号資産", en: "Crypto", items: [
     { id: "BTC/USD", ja: "ビットコイン", en: "Bitcoin", short: "BTC", kind: "usd" }, { id: "ETH/USD", ja: "イーサリアム", en: "Ethereum", short: "ETH", kind: "usd" },
     { id: "SOL/USD", ja: "ソラナ", en: "Solana", short: "SOL", kind: "usd" }, { id: "XRP/USD", ja: "リップル", en: "XRP", short: "XRP", kind: "usd" }] },
   { id: "metal", ja: "金属", en: "Metals", items: [
-    { id: "XAU/USD", ja: "金", en: "Gold", short: "金", kind: "usd" }, { id: "XAG/USD", ja: "銀", en: "Silver", short: "銀", kind: "usd" },
-    { id: "XCU/USD", ja: "銅", en: "Copper", short: "銅", kind: "usd" }, { id: "XPT/USD", ja: "プラチナ", en: "Platinum", short: "プラチナ", kind: "usd" }] },
+    { id: "XAU/USD", ja: "金", en: "Gold", short: "金", shortEn: "Gold", kind: "usd" }, { id: "XAG/USD", ja: "銀", en: "Silver", short: "銀", shortEn: "Silver", kind: "usd" },
+    { id: "XCU/USD", ja: "銅", en: "Copper", short: "銅", shortEn: "Copper", kind: "usd" }, { id: "XPT/USD", ja: "プラチナ", en: "Platinum", short: "プラチナ", shortEn: "Platinum", kind: "usd" }] },
   { id: "bond", ja: "債券ETF", en: "Bond ETFs", items: [
-    { id: "SHY", ja: "SHY（1〜3年）", en: "SHY (1–3Y)", short: "SHY(1〜3年)", kind: "etf" }, { id: "IEF", ja: "IEF（7〜10年）", en: "IEF (7–10Y)", short: "IEF(7〜10年)", kind: "etf" },
-    { id: "TLT", ja: "TLT（20年超）", en: "TLT (20+Y)", short: "TLT(20年超)", kind: "etf" }] },
-  { id: "semi", ja: "半導体ETF", en: "Semiconductor ETFs", items: [
+    { id: "SHY", ja: "SHY（1〜3年）", en: "SHY (1–3Y)", short: "SHY(1〜3年)", shortEn: "SHY (1–3Y)", kind: "etf" }, { id: "IEF", ja: "IEF（7〜10年）", en: "IEF (7–10Y)", short: "IEF(7〜10年)", shortEn: "IEF (7–10Y)", kind: "etf" },
+    { id: "TLT", ja: "TLT（20年超）", en: "TLT (20+Y)", short: "TLT(20年超)", shortEn: "TLT (20+Y)", kind: "etf" }] },
+  { id: "semi", ja: "半導体ETF", en: "Semi ETFs", items: [
     { id: "SMH", ja: "SMH", en: "SMH", short: "SMH", kind: "etf" }, { id: "SOXX", ja: "SOXX", en: "SOXX", short: "SOXX", kind: "etf" }] },
 ];
 const ALL = [...INDEX_ETFS, ...CATEGORIES.flatMap(c => c.items)];
+const STORE = "tp-market-board";
 const RANGES: ChartRange[] = ["1d", "1w", "1m", "3m", "1y", "5y"];
 const RANGE_JA: Partial<Record<ChartRange, string>> = { "1d": "1日", "1w": "1週", "1m": "1ヵ月", "3m": "3ヵ月", "1y": "1年", "5y": "5年" };
 const RANGE_EN: Partial<Record<ChartRange, string>> = { "1d": "1D", "1w": "1W", "1m": "1M", "3m": "3M", "1y": "1Y", "5y": "5Y" };
@@ -71,23 +72,47 @@ export default function MarketBoard() {
   const [category, setCategory] = useState("fx");
   const [selected, setSelected] = useState("USD/JPY");
   const [range, setRange] = useState<ChartRange>("1m");
-  const [mode, setMode] = useState<"candles" | "line">("line");
+  const [mode, setMode] = useState<"candles" | "line">("candles");
   const [chart, setChart] = useState<{ key: string; bars: Bar[]; before: Bar[] }>({ key: "", bars: [], before: [] });
   const [active, setActive] = useState<Bar | null>(null);
+  // The last choices stay put (this browser only).
+  useEffect(() => {
+    try {
+      const saved = JSON.parse(localStorage.getItem(STORE) ?? "null") as { category?: string; selected?: string; range?: ChartRange; mode?: "candles" | "line" } | null;
+      if (!saved) return;
+      const cat = CATEGORIES.find(item => item.id === saved.category);
+      // Reads this browser's saved choices once after mount (reading them during render would not match the server's page).
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      if (cat && (saved.selected === undefined || cat.items.some(item => item.id === saved.selected) || INDEX_ETFS.some(item => item.id === saved.selected))) { setCategory(cat.id); if (saved.selected) setSelected(saved.selected); }
+      if (saved.range && RANGES.includes(saved.range)) setRange(saved.range);
+      if (saved.mode === "candles" || saved.mode === "line") setMode(saved.mode);
+    } catch { /* storage unavailable: the defaults stay */ }
+  }, []);
+  useEffect(() => { try { localStorage.setItem(STORE, JSON.stringify({ category, selected, range, mode })); } catch { /* ignore */ } }, [category, selected, range, mode]);
   const current = CATEGORIES.find(item => item.id === category)!;
   const indexQuotes = useBoard(INDEX_ETFS.map(item => item.id));
   const itemQuotes = useBoard(current.items.map(item => item.id));
   const entry = ALL.find(item => item.id === selected)!;
   const quote = indexQuotes?.[selected] ?? itemQuotes?.[selected];
   const key = `${selected}:${range}`;
+  const [reload, setReload] = useState(0);
   useEffect(() => {
     const controller = new AbortController();
-    fetch(`/api/research/market/chart?ticker=${encodeURIComponent(selected)}&range=${range}`, { signal: controller.signal })
-      .then(response => response.ok ? response.json() : null)
-      .then(body => { if (!controller.signal.aborted) setChart({ key, bars: body?.ok ? body.bars : [], before: body?.ok ? body.before ?? [] : [] }); })
-      .catch(() => { if (!controller.signal.aborted) setChart({ key, bars: [], before: [] }); });
+    const load = async () => {
+      for (let attempt = 0; attempt < 3; attempt++) { // a provider blink is retried quietly before an error is shown
+        try {
+          const response = await fetch(`/api/research/market/chart?ticker=${encodeURIComponent(selected)}&range=${range}`, { signal: controller.signal });
+          const body = response.ok ? await response.json() : null;
+          if (body?.ok && body.bars.length) { setChart({ key, bars: body.bars, before: body.before ?? [] }); return; }
+        } catch { if (controller.signal.aborted) return; }
+        if (attempt < 2) await new Promise(done => setTimeout(done, 1200));
+        if (controller.signal.aborted) return;
+      }
+      setChart({ key, bars: [], before: [] });
+    };
+    void load();
     return () => controller.abort();
-  }, [selected, range, key]);
+  }, [selected, range, key, reload]);
   const loading = chart.key !== key;
   const last = !loading && chart.bars.length ? chart.bars[chart.bars.length - 1] : null;
   const shownPrice = quote?.price ?? last?.close ?? null;
@@ -116,7 +141,7 @@ export default function MarketBoard() {
     <div className={styles.items} style={{ gridTemplateColumns: `repeat(${current.items.length},minmax(0,1fr))` }}>{current.items.map(item => {
       const q = itemQuotes?.[item.id], tn = toneOf(q?.percentChange ?? null);
       return <button type="button" key={item.id} className={styles.item} aria-pressed={selected === item.id} onClick={() => pick(item.id)}>
-        <span className={styles.itemName}>{item.short}</span><span className={styles.itemPrice}>{q ? formatPrice(q.price, item.kind) : "—"}</span>
+        <span className={styles.itemName}>{ja ? item.short : item.shortEn ?? item.short}</span><span className={styles.itemPrice}>{q ? formatPrice(q.price, item.kind) : "—"}</span>
         <span className={`${styles.itemChange} ${styles[tn]}`}>{q?.percentChange == null ? "" : signedPercent(q.percentChange)}</span></button>;
     })}</div>
     <section className={styles.panel} aria-label={ja ? entry.ja : entry.en}>
@@ -128,7 +153,7 @@ export default function MarketBoard() {
         <span><small>{t("始", "O")}</small>{num(bar.open)}</span><span><small>{t("高", "H")}</small>{num(bar.high)}</span><span><small>{t("安", "L")}</small>{num(bar.low)}</span><span><small>{t("終", "C")}</small>{num(bar.close)}</span>
         {hasVolume && bar.volume ? <span><small>{t("出来高", "Vol")}</small>{compact(bar.volume)}</span> : null}</div>}
       <div className={styles.chartBox}>{loading ? <p className={styles.note} role="status">{t("チャートを読み込み中…", "Loading the chart…")}</p>
-        : chart.bars.length < 2 ? <p className={styles.note} role="status">{t("この銘柄のチャートを取得できませんでした。", "The chart for this symbol could not be loaded.")}</p>
+        : chart.bars.length < 2 ? <p className={styles.note} role="status">{t("この銘柄のチャートを取得できませんでした。", "The chart for this symbol could not be loaded.")} <button type="button" className={styles.retry} onClick={() => { setChart({ key: "", bars: [], before: [] }); setReload(n => n + 1); }}>{t("もう一度読み込む", "Try again")}</button></p>
         : <PriceChart bars={chart.bars} before={chart.before} mode={mode} interval={interval} variant="board" ja={ja} maPeriods={[25, 75]} accent="#7fe3c0" lineColor="#7fe3c0" onActive={setActive} />}</div>
       <div className={styles.ranges} role="group" aria-label={t("チャートの期間", "Chart range")}>{RANGES.map(r => <button key={r} type="button" aria-pressed={range === r} onClick={() => setRange(r)}>{(ja ? RANGE_JA : RANGE_EN)[r]}</button>)}</div>
     </section>
