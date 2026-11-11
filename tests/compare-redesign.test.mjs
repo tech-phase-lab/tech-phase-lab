@@ -45,7 +45,7 @@ test("a factor with equal scores is not counted as won", () => {
 
 test("the status overlay draws every company in its own colour, and factors without a score are not drawn", () => {
   const html = renderToStaticMarkup(React.createElement(visuals.StatusOverlay, { companies: sample.companies, lang: "ja", now }));
-  for (const color of ["#f2c36b", "#8da2ff", "#c9a0ff"]) assert.ok(html.includes(`fill="${color}"`), color);
+  for (const color of ["#ffc247", "#4cc9f0", "#ff7ac6"]) assert.ok(html.includes(`fill="${color}"`), color);
   assert.equal((html.match(/<circle /g) ?? []).length, 21, "seven points for each of three companies");
   const missing = structuredClone(sample.companies.slice(0, 2));
   missing[0].twelveData.statistics = null; // no valuation score for the first company
@@ -81,14 +81,14 @@ test("the palette is navy and gold: card gradient, edge, gold button, and 120px 
   assert.match(mine, /\.screenWrap\{padding-bottom:(1[2-9]\d|[2-9]\d\d)px\}/);
   assert.match(mine, /#d9b56a/);
   assert.doesNotMatch(mine, /#[0-9a-f]{3,6}\b[^;{}]*brown/i);
-  for (const color of ["#f2c36b", "#8da2ff", "#c9a0ff"]) assert.ok(read("../app/research/compare/comparison-visuals.tsx").includes(color), color);
+  for (const color of ["#ffc247", "#4cc9f0", "#ff7ac6"]) assert.ok(read("../app/research/compare/comparison-visuals.tsx").includes(color), color);
 });
 
 test("the input screen: three headings, chosen companies as cards with a colour mark, ticker in bold, name, ×; ticker search is one closed line", () => {
   const screen = read("../app/research/compare/screen.tsx");
   for (const text of ["3社目（任意）", "会社名・銘柄コードで追加", "この銘柄を比較する", "社を選択"]) assert.ok(screen.includes(text), text);
   assert.match(screen, /styles\.pickChosen/);
-  assert.match(screen, /\["#f2c36b", "#8da2ff", "#c9a0ff"\]\[i\]/);
+  assert.match(screen, /\["#ffc247", "#4cc9f0", "#ff7ac6"\]\[i\]/);
   assert.match(screen, /styles\.pickRemove/);
   const search = read("../app/research/compare/ticker-search.tsx");
   assert.match(search, /<summary>\{t\("ティッカー検索", "Find a ticker"\)\}<\/summary>/);
@@ -116,5 +116,5 @@ test("nx9: input rings, radar layering and colours, headline colouring", () => {
   assert.ok(src.indexOf('stroke="#3f4d70"') < src.indexOf("strokeWidth=\"1.8\""));
   assert.match(src, /fill="#a3abc4"/);
   const html = renderToStaticMarkup(React.createElement(visuals.LeadTitle, { title: "総合評価はDEMO-Aが優位", companies: sample.companies }));
-  assert.match(html, /総合評価は<b[^>]*color:#f2c36b[^>]*>DEMO-A<\/b>が優位/);
+  assert.match(html, /総合評価は<b[^>]*color:#ffc247[^>]*>DEMO-A<\/b>が優位/);
 });

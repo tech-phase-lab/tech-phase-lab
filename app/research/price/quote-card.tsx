@@ -41,14 +41,27 @@ function Dial({ position, low, high, label }: { position: number | null; low: nu
 }
 export function Tile({ ticker }: { ticker: string }) { return <StockLogo ticker={ticker} className={styles.tile} />; }
 export function Status({ quote, ja }: { quote: CardQuote; ja: boolean }) {
-  const open = quote.session === "regular";
-  return <><span className={styles.dot} data-open={open} aria-hidden="true" /><span>{open ? (ja ? "取引中" : "Open") : (ja ? "取引終了" : "Closed")} ・ {jstClock(quote.asOf)} JST</span></>;
+  const open = quote.session === "regular", ext = !open ? quote.extended : undefined;
+  // Extended hours count as trading: the dot is green while a pre-market or after-hours price is current (within 20 minutes).
+  const live = !!ext && Date.now() - Date.parse(ext.asOf) <= 20 * 60_000;
+  const label = open ? (ja ? "取引中" : "Open") : live ? (ext!.session === "pre" ? (ja ? "プレマーケット" : "Pre-market") : (ja ? "時間外取引中" : "After-hours")) : (ja ? "取引終了" : "Closed");
+  return <><span className={styles.dot} data-open={open || live} aria-hidden="true" /><span>{label} ・ {jstClock(ext ? ext.asOf : quote.asOf)} JST</span></>;
 }
 export function Change({ quote, inline }: { quote: CardQuote; inline?: boolean }) {
   const tone = toneOf(quote.percentChange);
   const chip = <span className={styles.chip} data-tone={tone}>{tone === "up" ? "▲" : tone === "down" ? "▼" : "–"} {quote.percentChange === null ? "—" : signedPercent(quote.percentChange)}</span>;
   const amount = <span className={styles.amount} data-tone={tone}>{quote.change === null ? "" : signedMoney(quote.change, quote.currency)}</span>;
   return inline ? <div className={styles.movesInline}>{chip}{amount}</div> : <div className={styles.moves}>{chip}{amount}</div>;
+}
+/** Pre-market / after-hours price, shown under the regular change when the provider has one. */
+export function Extended({ quote, ja }: { quote: CardQuote; ja: boolean }) {
+  const ext = quote.extended;
+  if (!ext) return null;
+  const tone = toneOf(ext.percentChange);
+  return <div className={styles.extendedRow} data-tone={tone}>
+    <span>{ext.session === "pre" ? (ja ? "プレマーケット" : "Pre-market") : (ja ? "時間外" : "After-hours")}</span>
+    <b>{plain(ext.price)} {quote.currency}</b><span data-tone={tone}>{tone === "up" ? "▲" : tone === "down" ? "▼" : "–"} {signedPercent(ext.percentChange)}</span>
+  </div>;
 }
 export function Facts({ ticker, ja }: { ticker: string; ja: boolean }) {
   const facts = useFacts(ticker).data;
@@ -84,10 +97,12 @@ export default function QuoteCard({ ticker, variant, from, name }: { ticker: str
     {hide ? <div className={styles.hiddenStars} aria-label={ja ? "数字は非表示です" : "Numbers hidden"}>＊＊＊＊＊</div> : variant === "gauge" ? <>
       <div className={styles.mid}><span className={styles.price}>{plain(quote.price)}<small>{quote.currency}</small></span><Change quote={quote} /></div>
       <div className={styles.gauges}><Gauge ja={ja} label={ja ? "本日の値幅" : "Today's range"} low={quote.low ?? null} high={quote.high ?? null} price={quote.price} /><Gauge ja={ja} label={ja ? "52週の値幅" : "52-week range"} low={quote.week52Low ?? null} high={quote.week52High ?? null} price={quote.price} /></div>
+      <Extended quote={quote} ja={ja} />
       <Facts ticker={ticker} ja={ja} />
     </> : <>
       <div className={styles.mid}><div><span className={styles.price}>{plain(quote.price)}<small>{quote.currency}</small></span><Change quote={quote} inline /></div>
         <Dial position={rangePosition(quote.price, quote.week52Low ?? null, quote.week52High ?? null)} low={quote.week52Low ?? null} high={quote.week52High ?? null} label={ja ? "52週の位置" : "52-week position"} /></div>
+      <Extended quote={quote} ja={ja} />
       <Facts ticker={ticker} ja={ja} />
     </>}
   </section><p className={styles.credit}>{ja ? "提供：Twelve Data" : "Data: Twelve Data"}</p></>;

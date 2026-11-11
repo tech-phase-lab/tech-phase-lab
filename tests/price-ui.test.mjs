@@ -45,8 +45,8 @@ test("the market page shows the three indices and no sector or heat map", async 
   assert.match(page, /<MarketIndices \/>/);
   assert.doesNotMatch(page, /セクター別騰落率|ヒートマップ|Heatmap/);
   const indices = await read("lib/research/market-data.ts");
-  for (const symbol of ["DIA", "QQQ", "SPY"]) assert.match(indices, new RegExp(`"${symbol}"`));
-  assert.doesNotMatch(indices, /"(DJI|NDX|SPX)"/);
+  for (const symbol of ["DJI", "NDX", "SPX"]) assert.match(indices, new RegExp(`"${symbol}"`));
+  assert.match(indices, /s&p\\s\*500/i); assert.match(indices, /prepost: "true"/);
   assert.match(await read("app/api/research/market/quotes/route.ts"), /tickers\.length > 100/);
 });
 
@@ -63,7 +63,7 @@ test("a company's four statements calls run one company at a time and without a 
 test("the market page keeps its charts (indices, bond ETFs, forex) from Twelve Data", async () => {
   assert.match(await read("app/research/market/page.tsx"), /<MarketChart \/>/);
   const chart = await read("app/research/price/market-chart.tsx");
-  for (const symbol of ["SPY", "QQQ", "DIA", "SHY", "IEF", "TLT", "USD/JPY", "EUR/USD", "EUR/JPY"]) assert.ok(chart.includes(`"${symbol}"`), symbol);
+  for (const symbol of ["SPX", "NDX", "DJI", "SHY", "IEF", "TLT", "USD/JPY", "EUR/USD", "EUR/JPY"]) assert.ok(chart.includes(`"${symbol}"`), symbol);
 });
 test("the stock search card is not repeated above itself", async () => {
   assert.doesNotMatch(await read("app/research/stocks/market-workspace.tsx"), /TECH PHASE MARKET|styles\.company/);

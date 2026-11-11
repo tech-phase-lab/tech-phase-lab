@@ -59,3 +59,14 @@ test("the quote time is the last quote, not the opening bar", () => {
 test("the next earnings date is read from a period=next answer", () => {
   assert.equal(parseNextEarnings({ earnings: [{ date: "2026-12-17" }] }, "2026-11-11"), "2026-12-17");
 });
+
+test("pre-market and after-hours prices come with the quote (prepost) and are labelled by New York time", () => {
+  const after = parseQuote({ ...quote, is_market_open: false, extended_price: "716.20", extended_change: "0.79", extended_percent_change: "0.11", extended_timestamp: 1794027000 }, "MU");
+  assert.equal(after.extended.price, 716.2); assert.ok(Math.abs(after.extended.percentChange - 0.11) < 1e-9);
+  assert.equal(after.extended.session, "post");
+  const pre = parseQuote({ ...quote, extended_price: "700", extended_percent_change: "-1", extended_timestamp: 1794027000 - 18 * 3600 }, "MU");
+  assert.equal(pre.extended.session, "pre");
+  assert.equal(parseQuote(quote, "MU").extended, null);
+  assert.equal(toFavoriteQuote(after).extended.session, "post");
+  assert.equal(chartSpec("1d").interval, "5min"); assert.ok(chartSpec("1d").size >= 400);
+});

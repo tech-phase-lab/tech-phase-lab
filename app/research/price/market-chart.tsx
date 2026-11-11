@@ -6,7 +6,7 @@ import PriceChart from "./price-chart";
 import styles from "./detail.module.css";
 
 const GROUPS = [
-  { id: "index", ja: "指数", en: "Indices", items: [["SPY", "S&P 500（SPY）", "S&P 500 (SPY)"], ["QQQ", "NASDAQ 100（QQQ）", "NASDAQ 100 (QQQ)"], ["DIA", "NYダウ（DIA）", "Dow (DIA)"]] },
+  { id: "index", ja: "指数", en: "Indices", items: [["SPX", "S&P 500", "S&P 500"], ["NDX", "NASDAQ 100", "NASDAQ 100"], ["DJI", "NYダウ", "Dow"]] },
   { id: "bond", ja: "債券ETF", en: "Bond ETFs", items: [["SHY", "SHY ・ 1〜3年", "SHY · 1–3Y"], ["IEF", "IEF ・ 7〜10年", "IEF · 7–10Y"], ["TLT", "TLT ・ 20年超", "TLT · 20+Y"]] },
   { id: "fx", ja: "為替", en: "Forex", items: [["USD/JPY", "USD / JPY", "USD / JPY"], ["EUR/USD", "EUR / USD", "EUR / USD"], ["EUR/JPY", "EUR / JPY", "EUR / JPY"]] },
 ] as const;
@@ -19,7 +19,7 @@ export default function MarketChart() {
   const ja = lang === "ja";
   const [group, setGroup] = useState<(typeof GROUPS)[number]["id"]>("index");
   const current = GROUPS.find(item => item.id === group)!;
-  const [symbol, setSymbol] = useState<string>("SPY");
+  const [symbol, setSymbol] = useState<string>("SPX");
   const [range, setRange] = useState<ChartRange>("1m");
   const [mode, setMode] = useState<"candles" | "line">("candles");
   const [chart, setChart] = useState<{ key: string; bars: Bar[] }>({ key: "", bars: [] });
@@ -48,6 +48,6 @@ export default function MarketChart() {
     </div>
     <div className={styles.chartWrap}>{loading ? <div className={styles.chartEmpty} role="status">{ja ? "チャートを読み込み中…" : "Loading the chart…"}</div> : <PriceChart bars={chart.bars} mode={mode} intraday={range === "1d" || range === "1w"} ja={ja} />}</div>
     <div className={styles.ranges} role="group" aria-label={ja ? "チャートの期間" : "Chart range"}>{CHART_RANGES.map(r => <button key={r} type="button" aria-pressed={range === r} onClick={() => setRange(r)}>{ja ? RANGE_JA[r] : RANGE_EN[r]}</button>)}</div>
-    <p style={{ margin: 0, color: "#8f9bb0", fontSize: 12 }}>{ja ? "指数・債券はETFの価格です。提供：Twelve Data" : "Indices and bonds show ETF prices. Data: Twelve Data"}</p>
+    <p style={{ margin: 0, color: "#8f9bb0", fontSize: 12 }}>{ja ? "債券はETFの価格です。時間外を含みます。提供：Twelve Data" : "Bonds show ETF prices. Extended hours included. Data: Twelve Data"}</p>
   </section>;
 }
