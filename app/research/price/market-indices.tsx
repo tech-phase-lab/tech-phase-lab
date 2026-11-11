@@ -7,7 +7,7 @@ import type { IndexQuote } from "@/lib/research/market-data";
 import styles from "./price.module.css";
 
 function Spark({ values, tone }: { values: number[]; tone: string }) {
-  if (values.length < 2) return <div className={styles.spark} />;
+  if (values.length < 12) return <div className={styles.spark} aria-hidden="true" />; // too few points to draw an honest line: keep the space so the three columns stay level
   const low = Math.min(...values), high = Math.max(...values), span = high - low || 1;
   const points = values.map((v, i) => `${(i / (values.length - 1) * 200).toFixed(1)},${(76 - (v - low) / span * 66).toFixed(1)}`);
   const color = tone === "up" ? "#4fe3a6" : tone === "down" ? "#ff7b7b" : "#9aa6bb";
@@ -41,9 +41,10 @@ export default function MarketIndices() {
         <h3>{ja ? item.ja : item.en}</h3>
         <strong>{item.value.toLocaleString("en-US", { minimumFractionDigits: 1, maximumFractionDigits: 1 })}</strong>
         <span className={styles.chip} data-tone={tone}>{tone === "up" ? "▲" : tone === "down" ? "▼" : "–"} {item.percentChange === null ? "—" : signedPercent(item.percentChange)}</span>
-        {item.proxy && <span className={styles.proxy}>{ja ? `${item.proxy}（ETF）の値` : `via ${item.proxy} (ETF)`}</span>}
         <Spark values={item.line} tone={tone} />
       </div>;
     })}</div>}
-  </section><p className={styles.credit}>{ja ? "提供：Twelve Data" : "Data: Twelve Data"}</p></>;
+  </section>
+  {items?.some(item => item.proxy) && <p className={styles.proxy}>{items.filter(item => item.proxy).map(item => `${ja ? item.ja : item.en}＝${item.proxy}`).join(" ・ ")}{ja ? "（ETFの価格と騰落率）" : " (ETF price and change)"}</p>}
+  <p className={styles.credit}>{ja ? "提供：Twelve Data" : "Data: Twelve Data"}</p></>;
 }

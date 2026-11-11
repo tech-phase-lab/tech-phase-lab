@@ -23,7 +23,8 @@ export function parseQuote(raw: unknown, ticker: string): MarketQuote | null {
   const q = obj(raw);
   if (q.status === "error" || (typeof q.symbol === "string" && q.symbol.toUpperCase() !== ticker.toUpperCase())) return null;
   const price = n(q.close);
-  const seconds = n(q.timestamp);
+  // `timestamp` is the OPENING time of the day's bar; `last_quote_at` is the last quote (owner screenshot, Nov 11: "23:30 JST" after the close).
+  const seconds = n(q.last_quote_at) ?? n(q.timestamp);
   if (price === null || price <= 0) return null;
   const at = seconds !== null && seconds > 0 ? seconds * 1000 : Date.parse(`${String(q.datetime)}T20:00:00Z`);
   if (!Number.isFinite(at)) return null;
