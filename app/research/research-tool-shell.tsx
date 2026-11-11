@@ -11,7 +11,7 @@ import type { Language } from "@/lib/research/data";
 import base from "./research.module.css";
 import styles from "./research-tools.module.css";
 
-export default function ResearchToolShell({ lang, setLang, title, description, children, desk = false, compactTitle = false, showTools = true, showHeading = true, freshness = false }: { lang: Language; setLang: (lang: Language) => void; title: string; description: string; children: ReactNode; desk?: boolean; compactTitle?: boolean; showTools?: boolean; showHeading?: boolean; freshness?: boolean }) {
+export default function ResearchToolShell({ lang, setLang, title, description, children, desk = false, compactTitle = false, showTools = true, showHeading = true, freshness = false, eyebrow }: { lang: Language; setLang: (lang: Language) => void; title: string; description: string; children: ReactNode; desk?: boolean; compactTitle?: boolean; showTools?: boolean; showHeading?: boolean; freshness?: boolean; eyebrow?: string }) {
   const pathname = usePathname();
   return <div className={base.app} lang={lang}>
     <a className={base.skip} href="#tool-main">{lang === "ja" ? "本文へ移動" : "Skip to content"}</a>
@@ -24,7 +24,7 @@ export default function ResearchToolShell({ lang, setLang, title, description, c
         ? <PageHeading eyebrow="RIZEL'S DESK" title={title === "RIZEL’S DESK" ? "リゼルのひとりごと" : title} description={title === "RIZEL’S DESK" && !description ? "PRO会員だけに、本音を。" : description} />
         : <>
           {desk && <div className={styles.deskSignature}><span>RIZEL’S DESK</span><small>TECH PHASE PRO</small></div>}
-          {showHeading && <><h1 className={compactTitle ? styles.compactTitle : undefined}>{title}</h1>{description && <p className={styles.description}>{description}</p>}</>}
+          {showHeading && <>{eyebrow && <p className={styles.eyebrow}>{eyebrow}</p>}<h1 className={compactTitle ? styles.compactTitle : undefined}>{title}</h1>{description && <p className={styles.description}>{description}</p>}</>}
         </>}
       {desk && <nav className={styles.deskNav} aria-label={lang === "ja" ? "RIZEL’S DESKメニュー" : "RIZEL’S DESK navigation"}>
         <Link href="/research/notes" aria-current={pathname === "/research/notes" ? "page" : undefined}>{lang === "ja" ? "ひとりごと" : "Notes"}</Link>
