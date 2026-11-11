@@ -1,0 +1,397 @@
+{
+ "builtAt": "2026-11-11",
+ "note": "Equal-weighted baskets. Edit by running scripts/resolute/build-thermometer-rosters.mjs, not by hand.",
+ "nasdaq100": {
+  "source": "Nasdaq (api.nasdaq.com list-type/nasdaq100)",
+  "count": 100,
+  "tickers": [
+   "AAPL",
+   "ABNB",
+   "ADBE",
+   "ADI",
+   "ADP",
+   "ADSK",
+   "AEP",
+   "ALAB",
+   "ALNY",
+   "AMAT",
+   "AMD",
+   "AMGN",
+   "AMZN",
+   "APP",
+   "ARM",
+   "ASML",
+   "AVGO",
+   "AXON",
+   "BKNG",
+   "BKR",
+   "CCEP",
+   "CDNS",
+   "CEG",
+   "CMCSA",
+   "COST",
+   "CPRT",
+   "CRWD",
+   "CRWV",
+   "CSCO",
+   "CSX",
+   "CTAS",
+   "DASH",
+   "DDOG",
+   "DXCM",
+   "EXC",
+   "FANG",
+   "FAST",
+   "FER",
+   "FTNT",
+   "GEHC",
+   "GILD",
+   "GOOGL",
+   "HON",
+   "HONA",
+   "IDXX",
+   "INTC",
+   "INTU",
+   "ISRG",
+   "KDP",
+   "KLAC",
+   "LIN",
+   "LITE",
+   "LRCX",
+   "MAR",
+   "MCHP",
+   "MDLZ",
+   "MELI",
+   "META",
+   "MNST",
+   "MPWR",
+   "MRNA",
+   "MRVL",
+   "MSFT",
+   "MSTR",
+   "MU",
+   "NBIS",
+   "NFLX",
+   "NVDA",
+   "NXPI",
+   "ODFL",
+   "ORLY",
+   "PANW",
+   "PAYX",
+   "PCAR",
+   "PDD",
+   "PEP",
+   "PLTR",
+   "PYPL",
+   "QCOM",
+   "REGN",
+   "RKLB",
+   "ROP",
+   "ROST",
+   "SBUX",
+   "SHOP",
+   "SNDK",
+   "SNPS",
+   "SPCX",
+   "STX",
+   "TER",
+   "TMUS",
+   "TRI",
+   "TSLA",
+   "TTWO",
+   "TXN",
+   "VRTX",
+   "WDAY",
+   "WDC",
+   "WMT",
+   "XEL"
+  ]
+ },
+ "semiconductors": {
+  "source": "Nasdaq market caps of the candidate list",
+  "count": 40,
+  "tickers": [
+   "NVDA",
+   "TSM",
+   "AVGO",
+   "SKHY",
+   "AMD",
+   "MU",
+   "ASML",
+   "INTC",
+   "AMAT",
+   "LRCX",
+   "TXN",
+   "KLAC",
+   "ARM",
+   "ADI",
+   "QCOM",
+   "MRVL",
+   "ASX",
+   "MPWR",
+   "NXPI",
+   "STM",
+   "TER",
+   "UMC",
+   "ALAB",
+   "MCHP",
+   "ON",
+   "CRDO",
+   "GFS",
+   "CBRS",
+   "ENTG",
+   "MTSI",
+   "TSEM",
+   "LSCC",
+   "MKSI",
+   "SITM",
+   "SWKS",
+   "SMTC",
+   "NVMI",
+   "ONTO",
+   "AEIS",
+   "RMBS"
+  ],
+  "ranking": [
+   {
+    "symbol": "NVDA",
+    "marketCapBillion": 4067.97
+   },
+   {
+    "symbol": "TSM",
+    "marketCapBillion": 2056.97
+   },
+   {
+    "symbol": "AVGO",
+    "marketCapBillion": 1584.75
+   },
+   {
+    "symbol": "SKHY",
+    "marketCapBillion": 945.05
+   },
+   {
+    "symbol": "AMD",
+    "marketCapBillion": 844.99
+   },
+   {
+    "symbol": "MU",
+    "marketCapBillion": 820.41
+   },
+   {
+    "symbol": "ASML",
+    "marketCapBillion": 581.15
+   },
+   {
+    "symbol": "INTC",
+    "marketCapBillion": 308.96
+   },
+   {
+    "symbol": "AMAT",
+    "marketCapBillion": 295.64
+   },
+   {
+    "symbol": "LRCX",
+    "marketCapBillion": 277.8
+   },
+   {
+    "symbol": "TXN",
+    "marketCapBillion": 274.61
+   },
+   {
+    "symbol": "KLAC",
+    "marketCapBillion": 199.34
+   },
+   {
+    "symbol": "ARM",
+    "marketCapBillion": 193.12
+   },
+   {
+    "symbol": "ADI",
+    "marketCapBillion": 190.58
+   },
+   {
+    "symbol": "QCOM",
+    "marketCapBillion": 185.68
+   },
+   {
+    "symbol": "MRVL",
+    "marketCapBillion": 135.38
+   },
+   {
+    "symbol": "ASX",
+    "marketCapBillion": 79.02
+   },
+   {
+    "symbol": "MPWR",
+    "marketCapBillion": 66.21
+   },
+   {
+    "symbol": "NXPI",
+    "marketCapBillion": 65.93
+   },
+   {
+    "symbol": "STM",
+    "marketCapBillion": 39.88
+   },
+   {
+    "symbol": "TER",
+    "marketCapBillion": 38.31
+   },
+   {
+    "symbol": "UMC",
+    "marketCapBillion": 37.85
+   },
+   {
+    "symbol": "ALAB",
+    "marketCapBillion": 37.78
+   },
+   {
+    "symbol": "MCHP",
+    "marketCapBillion": 32.83
+   },
+   {
+    "symbol": "ON",
+    "marketCapBillion": 27.1
+   },
+   {
+    "symbol": "CRDO",
+    "marketCapBillion": 24.4
+   },
+   {
+    "symbol": "GFS",
+    "marketCapBillion": 22.64
+   },
+   {
+    "symbol": "CBRS",
+    "marketCapBillion": 22.25
+   },
+   {
+    "symbol": "ENTG",
+    "marketCapBillion": 21.17
+   },
+   {
+    "symbol": "MTSI",
+    "marketCapBillion": 17.3
+   },
+   {
+    "symbol": "TSEM",
+    "marketCapBillion": 16.68
+   },
+   {
+    "symbol": "LSCC",
+    "marketCapBillion": 15.82
+   },
+   {
+    "symbol": "MKSI",
+    "marketCapBillion": 14.43
+   },
+   {
+    "symbol": "SITM",
+    "marketCapBillion": 13.43
+   },
+   {
+    "symbol": "SWKS",
+    "marketCapBillion": 12.3
+   },
+   {
+    "symbol": "SMTC",
+    "marketCapBillion": 10.59
+   },
+   {
+    "symbol": "NVMI",
+    "marketCapBillion": 10.35
+   },
+   {
+    "symbol": "ONTO",
+    "marketCapBillion": 9.7
+   },
+   {
+    "symbol": "AEIS",
+    "marketCapBillion": 8.97
+   },
+   {
+    "symbol": "RMBS",
+    "marketCapBillion": 8.65
+   },
+   {
+    "symbol": "AMKR",
+    "marketCapBillion": 8.54
+   },
+   {
+    "symbol": "SLAB",
+    "marketCapBillion": 7.39
+   },
+   {
+    "symbol": "FORM",
+    "marketCapBillion": 6.71
+   },
+   {
+    "symbol": "CRUS",
+    "marketCapBillion": 5.99
+   },
+   {
+    "symbol": "ALGM",
+    "marketCapBillion": 5.73
+   },
+   {
+    "symbol": "MXL",
+    "marketCapBillion": 4.9
+   },
+   {
+    "symbol": "CAMT",
+    "marketCapBillion": 4.76
+   },
+   {
+    "symbol": "SYNA",
+    "marketCapBillion": 4.68
+   },
+   {
+    "symbol": "VSH",
+    "marketCapBillion": 4.11
+   },
+   {
+    "symbol": "DIOD",
+    "marketCapBillion": 3.96
+   },
+   {
+    "symbol": "KLIC",
+    "marketCapBillion": 3.65
+   },
+   {
+    "symbol": "ACLS",
+    "marketCapBillion": 3.3
+   },
+   {
+    "symbol": "AMBA",
+    "marketCapBillion": 2.66
+   },
+   {
+    "symbol": "POWI",
+    "marketCapBillion": 2.46
+   },
+   {
+    "symbol": "UCTT",
+    "marketCapBillion": 2.24
+   },
+   {
+    "symbol": "COHU",
+    "marketCapBillion": 2.06
+   },
+   {
+    "symbol": "PLAB",
+    "marketCapBillion": 1.66
+   },
+   {
+    "symbol": "WOLF",
+    "marketCapBillion": 1.4
+   },
+   {
+    "symbol": "ICHR",
+    "marketCapBillion": 1.33
+   }
+  ],
+  "withoutMarketCap": [
+   "QRVO"
+  ]
+ }
+}
