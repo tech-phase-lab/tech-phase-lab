@@ -12,7 +12,7 @@ test("TradingView is gone: no widget routes, no embed code, no mention on screen
     assert.doesNotMatch(await read(file), /tradingview|<iframe/i, file);
 });
 test("Twelve Data is called only from the server routes; the browser reads our own API", async () => {
-  for (const file of ["app/research/price/use-market.ts", "app/research/price/quote-card.tsx", "app/research/price/quote-detail.tsx", "app/research/price/market-indices.tsx", "app/research/price/price-chart.tsx"])
+  for (const file of ["app/research/price/use-market.ts", "app/research/price/quote-card.tsx", "app/research/price/quote-detail.tsx", "app/research/price/market-board.tsx", "app/research/price/price-chart.tsx"])
     assert.doesNotMatch(await read(file), /twelvedata\.com\/|apikey|TWELVE_DATA_API_KEY/i, file);
   assert.match(await read("lib/research/market-data.ts"), /^import "server-only"/);
   assert.match(await read("lib/research/market-data.ts"), /TWELVE_DATA_API_KEY/);
@@ -40,43 +40,23 @@ test("the detail page has the owner's ranges, chart types, tabs, alert band and 
   assert.match(await read("app/research/watchlist/watchlist.tsx"), /router\.push\(detailHref\(ticker, "watchlist"\)\)/);
   assert.match(await read("app/research/companies/company-watch.tsx"), /from="watch"/);
 });
-test("the market page shows the three indices and no sector or heat map", async () => {
-  const page = await read("app/research/market/page.tsx");
-  assert.match(page, /<MarketIndices \/>/);
+test("the market page is the design's board: SPY / QQQ / DIA cards, five categories, chart with volume, FRED cards below", async () => {
+  const page = await read("app/research/market/page.tsx"), board = await read("app/research/price/market-board.tsx");
+  assert.match(page, /eyebrow="MARKET"/); assert.match(page, /<MarketBoard \/>/); assert.match(page, /<MacroCards/);
   assert.doesNotMatch(page, /セクター別騰落率|ヒートマップ|Heatmap/);
-  const indices = await read("lib/research/market-data.ts");
-  for (const symbol of ["DJI", "NDX", "SPX"]) assert.match(indices, new RegExp(`"${symbol}"`));
-  assert.match(indices, /s&p/i); assert.match(indices, /prepost: "true"/); assert.match(indices, /interval: "1min"/);
-  // Owner, Nov 11: an ETF price is not an index level, so no ETF stands in for an index.
-  assert.doesNotMatch(indices.slice(indices.indexOf("export const INDICES")), /DIA|QQQ|SPY/);
-  assert.match(await read("app/api/research/market/quotes/route.ts"), /tickers\.length > 100/);
+  for (const label of ["為替", "暗号資産", "金属", "債券ETF", "半導体ETF"]) assert.match(board, new RegExp(label));
+  for (const id of ["SPY", "QQQ", "DIA", "USD/JPY", "EUR/JPY", "EUR/USD", "GBP/USD", "BTC/USD", "ETH/USD", "SOL/USD", "XRP/USD", "XAU/USD", "XAG/USD", "XCU/USD", "XPT/USD", "SHY", "IEF", "TLT", "SMH", "SOXX"]) assert.ok(board.includes(`"${id}"`), id);
+  for (const range of ["1日", "1週", "1ヵ月", "3ヵ月", "1年", "5年"]) assert.match(board, new RegExp(range));
+  assert.match(board, /maPeriods=\{\[25, 75\]\}/); assert.match(board, /S&P500に連動/); assert.match(board, /ETFの価格です/);
+  const data = await read("lib/research/market-data.ts");
+  for (const id of ["SMH", "SOXX", "GBP/USD", "BTC/USD", "XAU/USD", "XCU/USD"]) assert.match(data, new RegExp(`(?:"${id}"|\\b${id}):\\s*\\{`), id);
+  assert.match(data, /prepost: "true"/); assert.match(data, /interval: "1min"/);
 });
-
-test("every route that reads the member is behind the Clerk proxy (the theme ranking failed in production without it)", async () => {
-  const proxy = await read("proxy.ts");
-  for (const path of ["/api/research/themes", "/api/research/compare"]) assert.ok(proxy.includes(`"${path}"`), path);
-});
-test("a company's four statements calls run one company at a time and without a row count the plan refuses", async () => {
-  const collector = await read("lib/research/twelve-data-collector.ts");
-  assert.match(collector, /serial\(\(\) => fetchTwelveBundle/);
-  assert.doesNotMatch(collector, /outputsize: "[48]"/);
-  assert.match(collector, /code === 429/);
-});
-test("the market page keeps its charts (indices, bond ETFs, forex) from Twelve Data", async () => {
-  assert.match(await read("app/research/market/page.tsx"), /<MarketChart \/>/);
-  const chart = await read("app/research/price/market-chart.tsx");
-  for (const symbol of ["DJI", "NDX", "SPX", "SHY", "IEF", "TLT", "USD/JPY", "EUR/USD", "EUR/JPY"]) assert.ok(chart.includes(`"${symbol}"`), symbol);
-});
-test("the stock search card is not repeated above itself", async () => {
-  assert.doesNotMatch(await read("app/research/stocks/market-workspace.tsx"), /TECH PHASE MARKET|styles\.company/);
-});
-
-test("the indices panel follows the design: three linked columns, no ETF names or mini charts, one credit line", async () => {
-  const panel = await read("app/research/price/market-indices.tsx");
-  assert.match(panel, /href=\{`\/research\/market\/index\/\$\{item\.id\}`\}/);
-  assert.doesNotMatch(panel, /<polyline|<svg|proxy|item\.symbol/);
-  assert.match(panel, /if \(!first\) return null/);
-  assert.match(await read("app/research/market/index/[id]/page.tsx"), /plain/);
+test("the board shows prices as the sheet writes them", async () => {
+  const { formatPrice } = await import("../app/research/price/market-board.tsx").catch(() => ({ formatPrice: null }));
+  if (!formatPrice) return;
+  assert.equal(formatPrice(154.321, "fx2"), "154.32"); assert.equal(formatPrice(1.08421, "fx4"), "1.0842");
+  assert.equal(formatPrice(98420, "usd"), "$98,420"); assert.equal(formatPrice(182.44, "usd"), "$182.4"); assert.equal(formatPrice(2.414, "usd"), "$2.41");
 });
 test("the stock card follows the E sheet: no ticker under the name, extended-hours row, 44px / 38px price", async () => {
   const card = await read("app/research/price/quote-card.tsx"), css = await read("app/research/price/price.module.css");

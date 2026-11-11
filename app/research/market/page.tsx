@@ -3,8 +3,7 @@
 import { useEffect, useState } from "react";
 import ResearchToolShell from "../research-tool-shell";
 import { useResearchLanguage } from "../use-research-language";
-import MarketIndices from "../price/market-indices";
-import MarketChart from "../price/market-chart";
+import MarketBoard from "../price/market-board";
 import styles from "./market.module.css";
 
 type MacroQuote = { id: string; date?: string; value?: number; previous?: number; previousDate?: string; unavailable?: boolean };
@@ -47,9 +46,8 @@ function MacroCards({ ja }: { ja: boolean }) {
 export default function MarketPage() {
   const [lang, setLang] = useResearchLanguage();
   const ja = lang === "ja";
-  return <ResearchToolShell lang={lang} setLang={setLang} title={ja ? "マーケット" : "Markets"} description="" freshness>
-    <MarketIndices />
-    <MarketChart />
+  return <ResearchToolShell lang={lang} setLang={setLang} title={ja ? "マーケット" : "Markets"} description="" eyebrow="MARKET" freshness>
+    <MarketBoard />
     <MacroCards ja={ja} />
   </ResearchToolShell>;
 }
