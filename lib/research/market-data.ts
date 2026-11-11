@@ -1,7 +1,7 @@
 import "server-only";
 import { unstable_cache } from "next/cache";
 import { calendarEvents, dateOnlyEarnings } from "./calendar";
-import { chartSpec, nextEarningsFromSite, parseBars, parseNextEarnings, parseQuote, parseQuotes, parseStatistics, splitBars, type Bar, type ChartRange, type MarketFacts, type MarketQuote } from "./market-quote";
+import { easternToIso, chartSpec, nextEarningsFromSite, parseBars, parseNextEarnings, parseQuote, parseQuotes, parseStatistics, splitBars, type Bar, type ChartRange, type MarketFacts, type MarketQuote } from "./market-quote";
 
 /** Server-side Twelve Data reads for the price screens. The key (TWELVE_DATA_API_KEY) never leaves the server. */
 const BASE = () => process.env.TWELVE_DATA_BASE_URL || "https://api.twelvedata.com";
@@ -84,11 +84,11 @@ async function resolveMarket(id: string): Promise<{ symbol: string; extra: Varia
 }
 
 const barMemory = new Map<string, { at: number; all: Bar[] }>();
-/** The drawn bars of a range plus the bars before them (for the moving averages). Pre-market and after-hours bars are included for 1D / 1W. */
-export async function loadBarSet(ticker: string, range: ChartRange): Promise<{ bars: Bar[]; before: Bar[] }> {
+/** Every bar fetched for a range (the drawn ones and the ones before them). Pre-market and after-hours bars are included for 1D / 1W. */
+async function readAll(ticker: string, range: ChartRange): Promise<Bar[]> {
   const memoryKey = `${ticker}:${range}`, hit = barMemory.get(memoryKey);
   const spec = chartSpec(range), intraday = spec.interval === "5min" || spec.interval === "30min";
-  if (hit && hit.at + (intraday ? TTL : 5 * TTL) > Date.now()) return splitBars(hit.all, range);
+  if (hit && hit.at + (intraday ? TTL : 5 * TTL) > Date.now()) return hit.all;
   const entry = MARKET_SYMBOLS[ticker];
   const base = { interval: spec.interval, outputsize: String(spec.size), order: "desc", ...(intraday ? { prepost: "true" } : {}) };
   let raw: unknown;
@@ -98,13 +98,23 @@ export async function loadBarSet(ticker: string, range: ChartRange): Promise<{ b
   } else raw = await call("time_series", { symbol: ticker, ...base });
   const all = parseBars(raw);
   barMemory.set(memoryKey, { at: Date.now(), all });
-  return splitBars(all, range);
+  return all;
 }
+/** The drawn bars of a range plus the bars before them (for the moving averages). */
+export async function loadBarSet(ticker: string, range: ChartRange): Promise<{ bars: Bar[]; before: Bar[] }> { return splitBars(await readAll(ticker, range), range); }
 export async function loadBars(ticker: string, range: ChartRange): Promise<Bar[]> { return (await loadBarSet(ticker, range)).bars; }
-/** Intraday closes of several tickers for the watchlist sparklines (last session only). */
-export async function loadIntraday(tickers: string[]): Promise<Record<string, Bar[]>> {
+
+const easternDay = new Intl.DateTimeFormat("en-CA", { timeZone: "America/New_York", year: "numeric", month: "2-digit", day: "2-digit" });
+/** The 5-minute bars each watchlist row's chart needs: those of the day its price belongs to (the regular session's day, and the day of the pre-market /
+ * after-hours price when that is a different day: before the open, the new day has only a few pre-market bars). Owner, Nov 11: charts vanished at 5am ET. */
+export async function loadIntraday(quotes: MarketQuote[]): Promise<Record<string, Bar[]>> {
   const out: Record<string, Bar[]> = {};
-  await Promise.all(tickers.map(async t => { try { out[t] = await loadBars(t, "1d"); } catch { out[t] = []; } }));
+  await Promise.all(quotes.map(async q => {
+    try {
+      const days = new Set([easternDay.format(Date.parse(q.asOf)), ...(q.extended ? [easternDay.format(Date.parse(q.extended.asOf))] : [])]);
+      out[q.ticker] = (await readAll(q.ticker, "1d")).filter(bar => { const iso = easternToIso(bar.at); return iso !== "" && days.has(easternDay.format(Date.parse(iso))); });
+    } catch { out[q.ticker] = []; }
+  }));
   return out;
 }
 
