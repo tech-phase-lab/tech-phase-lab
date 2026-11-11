@@ -89,7 +89,8 @@ const day = (at: string) => at.slice(0, 10);
 export function trimBars(bars: Bar[], range: ChartRange, now = Date.now()): Bar[] {
   if (!bars.length) return bars;
   const last = bars[bars.length - 1], days = [...new Set(bars.map(b => day(b.at)))];
-  if (range === "1d") return bars.filter(b => day(b.at) === day(last.at));
+  // Before the market has traded much (pre-market, the first minutes), the day alone is a stub: show the previous session with it.
+  if (range === "1d") { const today = bars.filter(b => day(b.at) === day(last.at)); return today.length < 30 && days.length > 1 ? bars.filter(b => day(b.at) >= days[days.length - 2]) : today; }
   if (range === "1w") { const keep = new Set(days.slice(-5)); return bars.filter(b => keep.has(day(b.at))); }
   if (range === "ytd") return bars.filter(b => b.at.slice(0, 4) === last.at.slice(0, 4));
   const size = visibleSize(range, now);
@@ -131,11 +132,11 @@ export function easternToIso(text: string): string {
   return new Date(guess - offset).toISOString();
 }
 /** FavoriteQuote (the watchlist's own contract) from a quote and the same session's 5-minute closes. */
-export function toFavoriteQuote(q: MarketQuote, intraday: Bar[] = []): FavoriteQuote {
+export function toFavoriteQuote(q: MarketQuote, intraday: Bar[] = [], now = Date.now()): FavoriteQuote {
   const history = intraday.map(b => ({ at: easternToIso(b.at), price: b.close })).filter(p => Number.isFinite(Date.parse(p.at)));
   return { ticker: q.ticker, price: q.price, change: q.change, percentChange: q.percentChange, currency: q.currency, asOf: q.asOf,
     session: q.marketOpen ? "regular" : "closed", delayed: false, source: "twelve-data", ...(history.length > 1 ? { history } : {}),
-    ...(q.extended && q.extended.percentChange !== null ? { extended: { price: q.extended.price, percentChange: q.extended.percentChange, asOf: q.extended.asOf, session: q.extended.session } } : {}) };
+    ...(q.extended && q.extended.percentChange !== null ? { extended: { price: q.extended.price, percentChange: q.extended.percentChange, asOf: q.extended.asOf, session: q.extended.session, live: now - Date.parse(q.extended.asOf) <= 4 * 60_000 } } : {}) };
 }
 
 export type MarketFacts = { eps: number | null; marketCap: number | null; dividendYield: number | null; nextEarnings: string | null };

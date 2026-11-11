@@ -7,7 +7,7 @@ import { useResearchLanguage } from "../use-research-language";
 import { groupOf, themeById } from "@/lib/research/theme-definitions";
 import { rankThemes } from "@/lib/research/theme-ranking";
 import namesFile from "@/lib/research/theme-stock-names.json";
-import { DivergingChart, PeriodPills, arrow, signed, toneClass, updateNote, usePeriod, useThemeData } from "./parts";
+import { BasisLine, DivergingChart, PeriodPills, arrow, signed, toneClass, updateNote, usePeriod, useThemeData } from "./parts";
 import styles from "./themes.module.css";
 
 const names = namesFile as Record<string, { ja: string; en: string }>;
@@ -37,6 +37,7 @@ export default function ThemeDetailScreen({ id }: { id: string }) {
         {row && <div className={styles.themeBig}><strong className={toneClass(row.value)}>{arrow(row.value)} {signed(row.value)}</strong><span>{t(`テーマ内${row.covered}銘柄の平均`, `Average of ${row.covered} stocks`)}</span></div>}
       </section>
       <PeriodPills period={period} onChange={setPeriod} ja={ja} />
+      {state === "ready" && <BasisLine data={data} period={period} ja={ja} />}
       {state === "loading" && <p role="status" className={styles.note}>{t("データを読み込み中…", "Loading data…")}</p>}
       {state === "not-connected" && <p role="status" className={styles.note}>{t("株価データの接続を準備中です。", "The price data is not connected yet.")}</p>}
       {state === "error" && <p role="alert" className={styles.note}>{t("データを取得できませんでした。しばらくしてからもう一度お試しください。", "We couldn't load the data. Please try again in a moment.")}</p>}

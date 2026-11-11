@@ -39,7 +39,7 @@ function harness(t, initial='/research/stocks?q=VS') {
   t.after(()=>{Object.assign(globalThis,saved);});
   render();
   return {render,nodes,history,requests,stack,url:()=>stack[cursor].url,runSearch:async()=>{for(const [id,fn] of [...timers]){timers.delete(id);fn();}await answer(requests.at(-1),{ok:true,results:entries});},answer,
-    open:()=>{nodes().find(n=>n.type==='button'&&n.props.children?.[0]?.props?.children==='VST').props.onClick();render();}};
+    open:()=>{const rows=nodes().find(n=>Array.isArray(n.props?.results)&&n.props?.onSelect);rows.props.onSelect(rows.props.results.find(e=>e.ticker==='VST'));render();}};
 }
 test('detail Back restores matches, query and scroll; late profile responses cannot reopen it',async t=>{
  const h=harness(t);await h.runSearch();h.open();assert.match(h.url(),/stock=VST/);assert.equal(h.stack.length,2);

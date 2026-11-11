@@ -17,8 +17,10 @@ import base from "../research.module.css";
 import styles from "./stocks.module.css";
 import polish from "./stock-polish.module.css";
 import filingStyles from "./filings.module.css";
-import { FavoriteListPicker } from "./favorite-list-picker";
 import { MarketWorkspace } from "./market-workspace";
+import SearchRows from "./search-rows";
+import { WatchToast } from "../price/star-button";
+import searchStyles from "./search-redesign.module.css";
 import StockThemeDiscovery from "./stock-theme-discovery";
 import StockSearchHistory from "./stock-search-history";
 import { useStockHistory } from "./use-stock-history";
@@ -256,14 +258,16 @@ export default function StockDirectory() {
     <SiteHeader lang={lang} setLang={setLang} nav={<nav className={base.primaryNav} aria-label={t("メインメニュー", "Main navigation")}><Link href="/research/capital-map"><NavigationIcon name="changes" />{t("資本マップ", "CAPITAL MAP")}</Link><Link href="/research/stocks" aria-current="page"><NavigationIcon name="search" />{t("米国株を探す", "Find stocks")}</Link><Link href="/research#metrics"><NavigationIcon name="metrics" />{t("決算・指標", "Financials")}</Link></nav>} />
     <div className={shell.withSidebar}>
     <aside className={shell.toolSidebar}><HomeSidebar lang={lang} tab="home" standalone pathname="/research/stocks" /></aside>
+    <WatchToast />
     <main id="stock-search-main" className={`${styles.main} ${styles.sidebarMain}`}>
-      <div className={styles.topline}><Link href="/research/watchlist">☆ {t("ウォッチリスト", "Watchlist")}</Link></div>
-      <section className={styles.hero}>
-        <p>STOCK DISCOVERY</p>
-        <h1><span className={polish.desktopTitle}>{t("米国株を、すぐ調べる。", "Find a U.S. stock in seconds.")}</span><span className={polish.mobileTitle}>{t("米国株リサーチ", "Find and research U.S. stocks")}</span></h1>
-
-        <label className={`${styles.search} ${polish.searchBox}`}><span aria-hidden="true">⌕</span><input autoComplete="off" inputMode="search" value={query} onChange={(event) => { themeSelection.current = null; changeQuery(event.target.value); }} placeholder={t("例：NVDA、Micron、Palantir", "Try NVDA, Micron, or Palantir")} aria-label={t("米国株を検索", "Search U.S. stocks")} /></label>
-
+      <section className={searchStyles.hero}>
+        <p className={searchStyles.eyebrow}>STOCK DISCOVERY</p>
+        <h1 className={searchStyles.title}>{t("銘柄検索", "Stock search")}</h1>
+        <div className={searchStyles.bar}>
+          <span className={searchStyles.glass} aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" /><path d="m16 16 5 5" /></svg></span>
+          <input className={searchStyles.input} autoComplete="off" autoCapitalize="characters" spellCheck={false} inputMode="search" value={query} onChange={(event) => { themeSelection.current = null; changeQuery(event.target.value); }} placeholder={t("例  NVDA  NVIDIA", "e.g.  NVDA  NVIDIA")} aria-label={t("米国株を検索", "Search U.S. stocks")} />
+          {query && <button type="button" className={searchStyles.clear} aria-label={t("入力を消す", "Clear")} onClick={() => { themeSelection.current = null; changeQuery(""); }}><svg width="14" height="14" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" aria-hidden="true"><path d="M3 3l6 6M9 3l-6 6" /></svg></button>}
+        </div>
       </section>
 
       <StockSearchHistory lang={lang} history={history} onSelect={changeQuery} onClear={clearHistory} />
@@ -274,10 +278,10 @@ export default function StockDirectory() {
 
       {(query.trim() || errorMessage) && !directQuote && <div className={`${styles.layout} ${polish.resultLayout}`}>
         <section ref={resultsTarget} className={`${styles.results} ${polish.searchResults}`} aria-labelledby="results-title" aria-busy={loading}>
-          <div className={styles.sectionHeading}><h2 id="results-title">{t("検索結果", "Search results")}</h2><span aria-live="polite">{loading ? t("検索中…", "Searching…") : `${results.length}${t("件", results.length === 1 ? " result" : " results")}`}</span></div>
+          <div className={searchStyles.listHead}><h2 id="results-title" style={{ margin: 0, fontSize: 13, fontWeight: 400, color: "#8c98ab" }}>{t("検索結果", "Search results")}</h2><span aria-live="polite">{loading ? t("検索中…", "Searching…") : `${results.length}${t("件", results.length === 1 ? " result" : " results")}`}</span></div>
           {errorMessage && <div className={styles.error} role="alert"><strong>{t("取得経路を確認中", "Source unavailable")}</strong><p>{errorMessage}</p></div>}
           {!error && query.trim() && !loading && results.length === 0 && <div className={styles.empty}><strong>{t("該当銘柄が見つかりません", "No matching ticker")}</strong><p>{t("英語の企業名またはティッカーで検索してください。SEC名簿は全銘柄を保証するものではありません。", "Try an English company name or ticker. The SEC does not guarantee complete coverage.")}</p></div>}
-          <ol className={polish.compactResults}>{visibleResults.map((entry) => <li key={`${entry.ticker}:${entry.cik}:${entry.exchange}`}><button className={polish.resultButton} onClick={() => selectStock(entry)} aria-current={selectedResultKey === `${entry.ticker}:${entry.cik}:${entry.exchange}` ? "true" : undefined}><span className={styles.ticker}>{entry.ticker}</span><span className={styles.identity}><strong>{entry.name}</strong></span><span className={styles.exchange}>{exchangeLabel(entry.exchange)}{entry.tracked && <em>{t("監視中", "WATCHED")}</em>}</span><span className={polish.resultCta} aria-hidden="true">→</span></button></li>)}</ol>
+          <SearchRows results={visibleResults} lang={lang} onSelect={selectStock} />
           {asOf && <p className={styles.asOf}>{t("表示取得時刻", "Retrieved")}: <time dateTime={asOf}>{new Intl.DateTimeFormat(lang === "ja" ? "ja-JP" : "en-US", { timeZone: "Asia/Tokyo", dateStyle: "medium", timeStyle: "short" }).format(new Date(asOf))} JST</time></p>}
         </section>
 
@@ -286,8 +290,8 @@ export default function StockDirectory() {
       {(selectedResultKey || profileLoading || profile || directQuote) && <div ref={marketTarget} className={polish.marketTarget}>
         {selectedResultKey && !directQuote && <div className={polish.resultGuide}><button type="button" onClick={showSearchResults}>{t("← 検索結果に戻る", "← Back to results")}</button></div>}
         {profileLoading && <div className={polish.profileLoading} role="status"><span className={styles.loader} /><strong>{t("銘柄情報を読み込み中…", "Loading company…")}</strong></div>}
-        {directQuote && !profile && <MarketWorkspace key={`${directQuote.ticker}:${lang}`} {...directQuote} lang={lang} favoriteControl={<FavoriteListPicker ticker={directQuote.ticker} name={directQuote.name} lang={lang} favorites={favorites} />} />}
-        {profile && <MarketWorkspace key={`${profile.exchange}:${profile.ticker}`} ticker={profile.ticker} exchange={profile.exchange} name={profile.name} lang={lang} introduction={profile.introduction} network={profile.network} favoriteControl={<FavoriteListPicker ticker={profile.ticker} name={profile.name} lang={lang} favorites={favorites} />} />}
+        {directQuote && !profile && <MarketWorkspace key={`${directQuote.ticker}:${lang}`} {...directQuote} lang={lang} />}
+        {profile && <MarketWorkspace key={`${profile.exchange}:${profile.ticker}`} ticker={profile.ticker} exchange={profile.exchange} name={profile.name} lang={lang} introduction={profile.introduction} network={profile.network} />}
       </div>}
 
       {profile && !profile.introduction && briefStatus === "approved" && brief && <section className={filingStyles.brief} aria-labelledby="annual-brief-title">

@@ -16,12 +16,11 @@ type MarketWorkspaceProps = {
   introduction?: CompanyIntroduction | null;
 };
 
-export function MarketWorkspace({ ticker, name, lang, favoriteControl, introduction, network }: MarketWorkspaceProps) {
+export function MarketWorkspace({ ticker, name, lang, introduction, network }: MarketWorkspaceProps) {
   return <section className={styles.workspace} aria-label={`${name} ${ticker}`}>
-    {favoriteControl && <header className={styles.header} style={{ justifyContent: "flex-end" }}>{favoriteControl}</header>}
 
     <div className={styles.chartSlot}>
-      <QuoteCard ticker={ticker} variant="dial" from="search" name={name} />
+      <QuoteCard ticker={ticker} variant="dial" from="search" name={name} star />
     </div>
 
     {introduction && <CompanyIntroductionPanel introduction={introduction} network={network} lang={lang} />}

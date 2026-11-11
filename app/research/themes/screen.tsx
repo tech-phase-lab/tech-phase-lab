@@ -7,7 +7,7 @@ import { useMemberDisplay, useMemberSettled, useOwnerAccount, useResearchOwner }
 import { useResearchLanguage } from "../use-research-language";
 import { GROUPS, THEMES, groupOf, themesOf, tickersOf, type GroupFilter } from "@/lib/research/theme-definitions";
 import { rankThemes, sampleStockReturns } from "@/lib/research/theme-ranking";
-import { DivergingChart, PeriodPills, updateNote, usePeriod, useThemeData, type ThemeData } from "./parts";
+import { BasisLine, DivergingChart, PeriodPills, updateNote, usePeriod, useThemeData, type ThemeData } from "./parts";
 import styles from "./themes.module.css";
 
 const OPTIONS: { id: GroupFilter; ja: string; en: string }[] = [{ id: "all", ja: "すべて", en: "All" }, ...GROUPS];
@@ -113,6 +113,7 @@ export default function ThemeRankingScreen() {
     {plan === "pro" && <section aria-label={t("テーマ別ランキング", "Theme ranking")}>
       <GenreWheel value={group} onChange={next => { setGroup(next); setSample(false); }} ja={ja} />
       <PeriodPills period={period} onChange={setPeriod} ja={ja} />
+      {state === "ready" && <BasisLine data={data} period={period} ja={ja} />}
       {state === "loading" && !sample && <p role="status" className={styles.note}>{t("データを読み込み中…", "Loading data…")}</p>}
       {state === "not-connected" && !sample && <>
         <p role="status" className={styles.note}>{t("株価データの接続を準備中です。接続でき次第、順位と騰落率がここに入ります。", "The price data is not connected yet. Ranks and returns will appear here once it is.")}</p>

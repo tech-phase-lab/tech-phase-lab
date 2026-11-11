@@ -5,7 +5,8 @@ import ResearchToolShell from "../research-tool-shell";
 import { useResearchLanguage } from "../use-research-language";
 import { aggregate, replaceSource, statusOf, valueHoldings, weights, type Holding, type Quote, type Row } from "@/lib/portfolio/calc";
 import { BROKER_CHOICES, MANUAL, OTHER, typedBroker } from "@/lib/portfolio/brokers";
-import { parseStored, readHide, readRaw, subscribeStore, writeHide, writeHoldings } from "@/lib/portfolio/store";
+import { parseStored, readHide, readRaw, readSavedDay, subscribeStore, writeHide, writeHoldings } from "@/lib/portfolio/store";
+import { applySplits, today, type Applied } from "@/lib/portfolio/splits";
 import s from "./portfolio.module.css";
 
 type ReviewRow = { id: number; ticker: string; name?: string; shares: string; avg: string; fx?: number; added?: boolean };
@@ -73,6 +74,26 @@ export default function PortfolioScreen() {
   const [sheet, setSheet] = useState(false);
   const abort = useRef<AbortController | null>(null);
   const tickers = holdings.map(h => h.ticker).join(",");
+  // Stock splits (owner, Nov 11: APH split and the shares stayed at 100): once a day, splits that took effect after a lot was last checked are applied.
+  const [splitNote, setSplitNote] = useState<Applied[]>([]);
+  useEffect(() => {
+    try { const saved = JSON.parse(localStorage.getItem("tech-phase:portfolio:split-note") ?? "null"); if (saved && Date.now() - saved.at < 7 * 86400_000 && Array.isArray(saved.applied)) setSplitNote(saved.applied); } catch { /* optional */ }
+  }, []);
+  useEffect(() => {
+    if (!lots.length) return;
+    const day = today();
+    if (lots.every(lot => lot.checkedAt === day)) return;
+    const controller = new AbortController();
+    const list = [...new Set(lots.map(lot => lot.ticker))];
+    fetch(`/api/research/portfolio/splits?tickers=${encodeURIComponent(list.join(","))}`, { cache: "no-store", credentials: "same-origin", signal: controller.signal })
+      .then(response => response.ok ? response.json() : Promise.reject(new Error("splits")))
+      .then((data: { splits?: Record<string, { date: string; from: number; to: number }[]> }) => {
+        const { holdings: next, applied } = applySplits(lots, data.splits ?? {}, readSavedDay(raw) ?? day, day);
+        writeHoldings(next);
+        if (applied.length) { setSplitNote(applied); try { localStorage.setItem("tech-phase:portfolio:split-note", JSON.stringify({ at: Date.now(), applied })); } catch { /* optional */ } }
+      }).catch(() => { /* the lots stay unchecked and are tried again next time */ });
+    return () => controller.abort();
+  }, [lots, raw]);
 
   useEffect(() => {
     if (!tickers) return;
@@ -132,6 +153,7 @@ export default function PortfolioScreen() {
         </>
         : <>
           <Head sub={holdings.length > 0} />
+          {splitNote.length > 0 && holdings.length > 0 && <p role="status" className={s.splitNote}>{splitNote.map(item => `${item.ticker} ${item.from}→${item.to}の株式分割（${item.date.slice(5).replace("-", "/")}）`).join("、")}を、株数と平均取得に反映しました。</p>}
           {problem && <ErrorCard kind={problem} reason={reason} onManual={() => setManual(true)} pick={pick} onClose={() => setProblem(null)} />}
           {!problem && holdings.length === 0 && <Empty pick={pick} onManual={() => setManual(true)} onInfo={() => setSheet(true)} />}
           {holdings.length > 0 && <List rows={rows} totals={totals} shares={shares} hide={hide} market={market} marketError={marketError} onRetry={() => { setMarketError(false); setRetry(value => value + 1); }}

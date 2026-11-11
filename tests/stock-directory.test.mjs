@@ -279,8 +279,8 @@ test("stock search UI separates free identity data from licensed prices and news
   assert.match(page, /briefStatus === "approved" && brief/);
   assert.match(page, /<details className=\{polish.sourceDrawer\}/);
   assert.doesNotMatch(page, /stockFavorite|ニュース権利と分離/);
-  assert.match(market, /\{favoriteControl\}/);
-  assert.match(page, /favoriteControl=\{<FavoriteListPicker/);
+  assert.match(market, /<QuoteCard [^>]* star \/>/);
+  assert.doesNotMatch(page, /FavoriteListPicker ticker=/);
   assert.match(page, /useStockFavorites\(\)/);
   assert.match(market, /<QuoteCard ticker=\{ticker\} variant="dial" from="search"/);
   assert.doesNotMatch(market, /referenceOpen|<details/);
@@ -297,7 +297,7 @@ test("stock search UI separates free identity data from licensed prices and news
   assert.match(page, /SECは名簿の正確性・網羅性を保証していません/);
   assert.match(styles, /\.hero h1\{[^}]*font-weight:650/);
   assert.match(styles, /\.main \.search input:focus-visible\{outline:0\}/);
-  assert.match(page, /米国株リサーチ/);
+  assert.match(page, /銘柄検索/);
   assert.doesNotMatch(page, /銘柄を選ぶと株価と公式情報を表示します|SEARCH RESULTS/);
   assert.match(page, /useStockHistory/);
   assert.match(page, /検索結果に戻る/);

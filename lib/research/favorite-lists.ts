@@ -69,7 +69,7 @@ export type FavoriteQuote = {
   ticker: string; price: number; change: number | null; percentChange: number | null;
   currency: string; asOf: string; session: "regular" | "pre" | "post" | "closed";
   history?: { at: string; price: number }[];
-  extended?: { price: number; percentChange: number; asOf: string; session: "pre" | "post" };
+  extended?: { price: number; percentChange: number; asOf: string; session: "pre" | "post"; /** current within a few minutes when the server answered */ live?: boolean };
   delayed: boolean; source: "twelve-data";
 };
 export function usableFavoriteQuote(quote: FavoriteQuote | undefined, ticker: string): quote is FavoriteQuote {

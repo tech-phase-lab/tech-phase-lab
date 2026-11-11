@@ -28,6 +28,8 @@ export default function MarketIndices() {
     return () => { stopped = true; clearTimeout(timer); };
   }, []);
   const first = items?.[0];
+  // No panel unless real index values came back (an ETF price is not an index level): nothing is drawn while loading, or when none is served.
+  if (!first) return null;
   return <><section className={styles.indices} aria-label={ja ? "主要3指数" : "Three major indices"}>
     <div className={styles.marketState} role="status">{first ? <><span className={styles.dot} data-open={first.marketOpen} /><span>{ja ? (first.marketOpen ? "米国市場 取引中" : "米国市場 取引終了") : (first.marketOpen ? "U.S. market open" : "U.S. market closed")} ・ {clock(first.asOf)} JST</span></> : <span>{items === null && !failed ? (ja ? "指数を読み込み中…" : "Loading indices…") : (ja ? "指数を取得できませんでした" : "Indices unavailable")}</span>}</div>
     {items && <div className={styles.cols}>{items.map(item => {
@@ -39,5 +41,5 @@ export default function MarketIndices() {
         {ext && ext.percentChange !== null && <span className={`${styles.colExt} ${styles[toneOf(ext.percentChange)]}`}><small>{ja ? "時間外 " : "Ext. "}</small>{signedPercent(ext.percentChange)}</span>}
       </Link>;
     })}</div>}
-  </section><p className={styles.credit}>{ja ? "提供：Twelve Data ・ 指数に連動するETFの価格です。" : "Data: Twelve Data. Prices are of the ETFs that track the indices."}</p></>;
+  </section><p className={styles.credit}>{ja ? "提供：Twelve Data" : "Data: Twelve Data"}</p></>;
 }
