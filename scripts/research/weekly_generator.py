@@ -303,12 +303,28 @@ def _optional(text, quote):
     return "" if text in (None, "") else _check(text, quote)
 
 
-def compose(model_output, evidence, schedule):
+NEUTRAL_HEADLINE = "今週の決算と経済指標のまとめ"
+NEUTRAL_LEAD = "今週に結果が出た決算と経済指標を、数字と一緒にまとめました。"
+
+
+def _framing(text, quote, fallback, lenient, notes, name):
+    """The headline or the lead. A wrong NUMBER always stops the draft. Any other rejection (a negation the check reads differently, a name) stops it
+    too, unless `lenient`: then a plain fixed sentence is used and the owner is told (owner, Nov 11: 'changed-negation' blocked the whole issue)."""
+    try:
+        return _check(text, quote)
+    except ValueError as error:
+        if not lenient or "number" in str(error) or str(error) == "empty-copy":
+            raise
+        notes.append(f"{name}はAIの文が確認に通らなかったため、定型文にしています（{error}）")
+        return fallback
+
+
+def compose(model_output, evidence, schedule, lenient=False):
     """(headline, lead, parts, notes, used evidence ids). A part that fails any check is left out and noted."""
     everything = "\n".join(item["quote"] for item in evidence)
     notes = []
-    headline = _check(model_output.get("headline"), everything)
-    lead = _check(model_output.get("lead"), everything)
+    headline = _framing(model_output.get("headline"), everything, NEUTRAL_HEADLINE, lenient, notes, "見出し")
+    lead = _framing(model_output.get("lead"), everything, NEUTRAL_LEAD, lenient, notes, "導入文")
     parts, used = [], set()
     highlights = 0
     for raw in model_output.get("parts") or []:
@@ -421,7 +437,20 @@ def generate(db, now, news=(), transport=None, env=None):
     response = transport(payload, key)
     if response.get("status") != "completed":
         raise RuntimeError("weekly-incomplete")
-    headline, lead, parts, more, used = compose(json.loads(brief_generator.output_text(response)), evidence, schedule)
+    output = json.loads(brief_generator.output_text(response))
+    try:
+        headline, lead, parts, more, used = compose(output, evidence, schedule)
+    except ValueError as error:
+        if "number" in str(error) or str(error) == "empty-copy":
+            raise
+        # The headline or the lead was rejected for something other than a number: ask once more, saying which rule it broke, and if the
+        # second try fails too, use a plain fixed headline and lead rather than losing the whole issue.
+        retry = dict(payload, input=json.dumps({**json.loads(payload["input"]), "repair": {
+            "rejected": str(error), "rule": "見出しと導入文は、根拠の文にない否定（〜ない・〜せず・見送り など）や、根拠と逆の言い方を使わず、根拠にある事実だけを肯定の文で書く"}}, ensure_ascii=False))
+        second = transport(retry, key)
+        if second.get("status") != "completed":
+            raise RuntimeError("weekly-incomplete")
+        headline, lead, parts, more, used = compose(json.loads(brief_generator.output_text(second)), evidence, schedule, lenient=True)
     notes += more
     if not [part for part in parts if part["type"] != "schedule"]:
         raise RuntimeError("weekly-no-usable-part")
