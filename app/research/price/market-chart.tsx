@@ -1,53 +1,68 @@
 "use client";
 import { useEffect, useState } from "react";
 import { useResearchLanguage } from "../use-research-language";
-import { CHART_RANGES, type Bar, type ChartRange } from "@/lib/research/market-quote";
+import { rangeChange, signedPercent, type Bar, type ChartRange } from "@/lib/research/market-quote";
 import PriceChart from "./price-chart";
 import styles from "./detail.module.css";
 
 const GROUPS = [
-  { id: "index", ja: "指数", en: "Indices", items: [["SPX", "S&P 500", "S&P 500"], ["NDX", "NASDAQ 100", "NASDAQ 100"], ["DJI", "NYダウ", "Dow"]] },
+  { id: "index", ja: "指数", en: "Indices", items: [["DIA", "NYダウ", "Dow"], ["QQQ", "NASDAQ100", "NASDAQ 100"], ["SPY", "S&P500", "S&P 500"]] },
   { id: "bond", ja: "債券ETF", en: "Bond ETFs", items: [["SHY", "SHY ・ 1〜3年", "SHY · 1–3Y"], ["IEF", "IEF ・ 7〜10年", "IEF · 7–10Y"], ["TLT", "TLT ・ 20年超", "TLT · 20+Y"]] },
   { id: "fx", ja: "為替", en: "Forex", items: [["USD/JPY", "USD / JPY", "USD / JPY"], ["EUR/USD", "EUR / USD", "EUR / USD"], ["EUR/JPY", "EUR / JPY", "EUR / JPY"]] },
 ] as const;
-const RANGE_JA: Record<ChartRange, string> = { "1d": "1日", "1w": "1週", "1m": "1ヵ月", "3m": "3ヵ月", "6m": "6ヵ月", ytd: "年初来", "1y": "1年", "3y": "3年", "5y": "5年" };
-const RANGE_EN: Record<ChartRange, string> = { "1d": "1D", "1w": "1W", "1m": "1M", "3m": "3M", "6m": "6M", ytd: "YTD", "1y": "1Y", "3y": "3Y", "5y": "5Y" };
+const RANGES: ChartRange[] = ["1d", "1w", "1m", "3m", "1y", "5y"];
+const RANGE_JA: Partial<Record<ChartRange, string>> = { "1d": "1日", "1w": "1週", "1m": "1ヵ月", "3m": "3ヵ月", "1y": "1年", "5y": "5年" };
+const RANGE_EN: Partial<Record<ChartRange, string>> = { "1d": "1D", "1w": "1W", "1m": "1M", "3m": "3M", "1y": "1Y", "5y": "5Y" };
 
-/** The market page's charts (indices, bond ETFs, forex) from Twelve Data: the same candle / line chart as the stock detail page. */
+/** The market page's charts (indices through their ETFs, bond ETFs, forex) from Twelve Data: the design's G sheet. */
 export default function MarketChart() {
   const [lang] = useResearchLanguage();
   const ja = lang === "ja";
   const [group, setGroup] = useState<(typeof GROUPS)[number]["id"]>("index");
   const current = GROUPS.find(item => item.id === group)!;
-  const [symbol, setSymbol] = useState<string>("SPX");
+  const [symbol, setSymbol] = useState<string>("SPY");
   const [range, setRange] = useState<ChartRange>("1m");
-  const [mode, setMode] = useState<"candles" | "line">("candles");
-  const [chart, setChart] = useState<{ key: string; bars: Bar[] }>({ key: "", bars: [] });
+  const [mode, setMode] = useState<"candles" | "line">("line");
+  const [chart, setChart] = useState<{ key: string; bars: Bar[]; before: Bar[] }>({ key: "", bars: [], before: [] });
   const key = `${symbol}:${range}`;
   useEffect(() => {
     const controller = new AbortController();
     fetch(`/api/research/market/chart?ticker=${encodeURIComponent(symbol)}&range=${range}`, { signal: controller.signal })
       .then(response => response.ok ? response.json() : null)
-      .then(body => { if (!controller.signal.aborted) setChart({ key, bars: body?.ok ? body.bars : [] }); })
-      .catch(() => { if (!controller.signal.aborted) setChart({ key, bars: [] }); });
+      .then(body => { if (!controller.signal.aborted) setChart({ key, bars: body?.ok ? body.bars : [], before: body?.ok ? body.before ?? [] : [] }); })
+      .catch(() => { if (!controller.signal.aborted) setChart({ key, bars: [], before: [] }); });
     return () => controller.abort();
   }, [symbol, range, key]);
   const loading = chart.key !== key;
-  return <section aria-label={ja ? "チャート" : "Charts"} style={{ margin: "0 0 18px" }}>
-    <div className={styles.state} style={{ flexWrap: "wrap" }}>
-      <div className={styles.mode} role="group" aria-label={ja ? "チャートの対象" : "Chart group"}>
+  const label = current.items.find(([id]) => id === symbol);
+  const change = !loading && chart.bars.length ? rangeChange(chart.bars, null, range) : null;
+  const last = !loading && chart.bars.length ? chart.bars[chart.bars.length - 1].close : null;
+  const tone = change ? (change.percent >= 0 ? "up" : "down") : "flat";
+  const interval = range === "1d" || range === "1w" ? "intraday" : range === "5y" ? "weekly" : "daily";
+  return <section aria-label={ja ? "チャート" : "Charts"} className={styles.page} style={{ margin: "0 0 12px", gap: 14, paddingBottom: 0 }}>
+    <div className={styles.pad} style={{ display: "flex", flexWrap: "wrap", gap: 8, justifyContent: "space-between" }}>
+      <div className={styles.mode} role="group" aria-label={ja ? "チャートの対象" : "Chart group"} style={{ margin: 0 }}>
         {GROUPS.map(item => <button key={item.id} type="button" aria-pressed={group === item.id} onClick={() => { setGroup(item.id); setSymbol(item.items[0][0]); }}>{ja ? item.ja : item.en}</button>)}
       </div>
-      <div className={styles.mode} role="group" aria-label={ja ? "チャートの種類" : "Chart type"}>
+      <div className={styles.mode} role="group" aria-label={ja ? "チャートの種類" : "Chart type"} style={{ margin: 0 }}>
         <button type="button" aria-pressed={mode === "candles"} onClick={() => setMode("candles")}>{ja ? "ローソク足" : "Candles"}</button>
         <button type="button" aria-pressed={mode === "line"} onClick={() => setMode("line")}>{ja ? "ライン" : "Line"}</button>
       </div>
     </div>
-    <div className={styles.mode} role="group" aria-label={ja ? "銘柄" : "Symbol"} style={{ marginBottom: 10, display: "flex", overflowX: "auto" }}>
-      {current.items.map(([id, labelJa, labelEn]) => <button key={id} type="button" aria-pressed={symbol === id} onClick={() => setSymbol(id)} style={{ whiteSpace: "nowrap" }}>{ja ? labelJa : labelEn}</button>)}
+    <div className={styles.pad} style={{ display: "flex", gap: 8, overflowX: "auto" }}>
+      <div className={styles.mode} role="group" aria-label={ja ? "銘柄" : "Symbol"} style={{ margin: 0 }}>
+        {current.items.map(([id, labelJa, labelEn]) => <button key={id} type="button" aria-pressed={symbol === id} onClick={() => setSymbol(id)}>{ja ? labelJa : labelEn}</button>)}
+      </div>
     </div>
-    <div className={styles.chartWrap}>{loading ? <div className={styles.chartEmpty} role="status">{ja ? "チャートを読み込み中…" : "Loading the chart…"}</div> : <PriceChart bars={chart.bars} mode={mode} intraday={range === "1d" || range === "1w"} ja={ja} />}</div>
-    <div className={styles.ranges} role="group" aria-label={ja ? "チャートの期間" : "Chart range"}>{CHART_RANGES.map(r => <button key={r} type="button" aria-pressed={range === r} onClick={() => setRange(r)}>{ja ? RANGE_JA[r] : RANGE_EN[r]}</button>)}</div>
-    <p style={{ margin: 0, color: "#8f9bb0", fontSize: 12 }}>{ja ? "債券はETFの価格です。時間外を含みます。提供：Twelve Data" : "Bonds show ETF prices. Extended hours included. Data: Twelve Data"}</p>
+    <div className={styles.pad} style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12 }}>
+      <span style={{ fontSize: 17, fontWeight: 800 }}>{label ? (ja ? label[1] : label[2]) : symbol}</span>
+      <span style={{ display: "flex", alignItems: "baseline", gap: 10, fontFamily: '"IBM Plex Mono",ui-monospace,monospace' }}>
+        <span style={{ fontSize: 22, fontWeight: 700 }}>{last === null ? "—" : last.toFixed(symbol.includes("/") ? 3 : 2)}</span>
+        <span className={styles[tone]} style={{ fontSize: 13, fontWeight: 600 }}>{change ? `${change.percent >= 0 ? "▲" : "▼"} ${signedPercent(change.percent)}` : ""}</span>
+      </span>
+    </div>
+    {loading ? <div className={styles.pad}><p className={styles.error} style={{ padding: 0 }} role="status">{ja ? "チャートを読み込み中…" : "Loading the chart…"}</p></div> : <PriceChart bars={chart.bars} before={chart.before} mode={mode} interval={interval} variant="market" ja={ja} />}
+    <div className={styles.ranges} style={{ ["--cols" as string]: 6 }} role="group" aria-label={ja ? "チャートの期間" : "Chart range"}>{RANGES.map(r => <button key={r} type="button" aria-pressed={range === r} onClick={() => setRange(r)}>{(ja ? RANGE_JA : RANGE_EN)[r]}</button>)}</div>
+    <p className={styles.credit}>{ja ? "提供：Twelve Data ・ 指数・債券はETFの価格です。時間外を含みます。" : "Data: Twelve Data. Indices and bonds show ETF prices. Extended hours included."}</p>
   </section>;
 }

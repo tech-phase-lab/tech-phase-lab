@@ -61,9 +61,10 @@ export function normalizeTwelveComparison(ticker: string, income: unknown, cashF
   const end = String(latest.fiscal_date), quarter = Number(latest.quarter), year = Number(latest.year);
   const current = valid.filter(r => r.fiscal_date === end);
   if (current.some(r => Number(r.quarter) !== quarter || Number(r.year) !== year)) throw Error("twelve-conflicting-period");
-  const prior = valid.filter(r => Number(r.quarter) === quarter && Number(r.year) === year - 1
-    && Date.parse(end) - Date.parse(String(r.fiscal_date)) >= 350 * 86400000
-    && Date.parse(end) - Date.parse(String(r.fiscal_date)) <= 380 * 86400000);
+  // The same quarter a year earlier, found by its DATE (about 52 weeks before): the provider's quarter / year labels are not reliable for
+  // companies with odd fiscal years (Coherent's growth stayed empty in production, Nov 11).
+  const prior = valid.filter(r => Date.parse(end) - Date.parse(String(r.fiscal_date)) >= 340 * 86400000
+    && Date.parse(end) - Date.parse(String(r.fiscal_date)) <= 390 * 86400000);
   const warnings: string[] = [];
   if (current.length > 1) warnings.push("duplicate-income-period");
   let revenue = consistent(current, "sales");
@@ -76,7 +77,8 @@ export function normalizeTwelveComparison(ticker: string, income: unknown, cashF
     try {
       const cf = envelope(cashFlow, ticker, "cash_flow");
       if (cf.currency !== inc.currency) throw Error("currency-mismatch");
-      const rows = cf.rows.filter(r => r.fiscal_date === end && Number(r.quarter) === quarter && Number(r.year) === year);
+      // Matched by the period end; the quarter / year labels are only compared when the cash-flow rows carry them.
+      const rows = cf.rows.filter(r => r.fiscal_date === end && (r.quarter === undefined || Number(r.quarter) === quarter) && (r.year === undefined || Number(r.year) === year));
       operatingCashFlow = consistent(rows.map(r => object(r.operating_activities)), "operating_cash_flow");
       signedCapex = consistent(rows.map(r => object(r.investing_activities)), "capital_expenditures");
       if (rows.length === 0) warnings.push("matching-quarter-cash-flow-unavailable");

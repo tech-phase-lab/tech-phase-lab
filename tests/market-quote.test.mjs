@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { parseQuote, parseQuotes, parseBars, trimBars, chartSpec, easternToIso, toFavoriteQuote, parseStatistics, parseNextEarnings, money, signedMoney, signedPercent, compact, dateJa, rangePosition, rangeChange } from "../lib/research/market-quote.ts";
+import { movingAverages, splitBars, parseQuote, parseQuotes, parseBars, trimBars, chartSpec, easternToIso, toFavoriteQuote, parseStatistics, parseNextEarnings, money, signedMoney, signedPercent, compact, dateJa, rangePosition, rangeChange } from "../lib/research/market-quote.ts";
 
 const quote = { symbol: "MU", name: "Micron", exchange: "NASDAQ", currency: "USD", datetime: "2026-11-09", timestamp: 1794000000, close: "715.41", change: "-17.74", percent_change: "-2.42", previous_close: "733.15", open: "720", high: "731.80", low: "705.20", volume: "18200000", is_market_open: true, fifty_two_week: { low: "412.60", high: "784.10" } };
 test("a quote keeps the provider numbers and rejects a different symbol or a bad price", () => {
@@ -69,4 +69,15 @@ test("pre-market and after-hours prices come with the quote (prepost) and are la
   assert.equal(parseQuote(quote, "MU").extended, null);
   assert.equal(toFavoriteQuote(after).extended.session, "post");
   assert.equal(chartSpec("1d").interval, "5min"); assert.ok(chartSpec("1d").size >= 400);
+});
+
+test("moving averages use the bars fetched before the visible ones; the visible range keeps its own size", () => {
+  const all = Array.from({ length: 120 }, (_, i) => ({ at: `2026-0${1 + Math.floor(i / 28)}-${String(1 + i % 28).padStart(2, "0")}`, open: 1, high: 1, low: 1, close: i + 1, volume: 10 }));
+  const { bars, before } = splitBars(all, "1m", Date.parse("2026-11-10"));
+  assert.equal(bars.length, 23); assert.equal(before.length, 74);
+  const [short, mid, long] = movingAverages(before, bars, [5, 25, 75]);
+  assert.equal(short[short.length - 1], (116 + 117 + 118 + 119 + 120) / 5);
+  assert.ok(long.every(v => v !== null));
+  assert.equal(movingAverages([], bars.slice(0, 3), [5])[0][2], null);
+  assert.ok(mid[0] !== null);
 });
