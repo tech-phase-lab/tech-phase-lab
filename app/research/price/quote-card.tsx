@@ -5,6 +5,7 @@ import StockLogo from "../watchlist/stock-logo";
 import { useFacts, useNumbersHidden, useQuotes, shortName, type CardQuote } from "./use-market";
 import { compact, dateJa, plain, rangePosition, signedBoth, signedMoney, signedPercent } from "@/lib/research/market-quote";
 import { useResearchLanguage } from "../use-research-language";
+import StarButton from "./star-button";
 import styles from "./price.module.css";
 
 export type DetailOrigin = "watchlist" | "watch" | "search" | "market";
@@ -62,14 +63,15 @@ const eps = (value: number | null | undefined) => value == null ? "—" : value 
 
 /** The price card. `gauge` (today's range + 52-week range, eye button) is for the watched-22 pages; `dial` (position in the 52-week range, no eye
  * button) is for the stock search. Pressing the card opens the full detail page. Sizes follow the design's E sheet. */
-export default function QuoteCard({ ticker, variant, from, name }: { ticker: string; variant: "gauge" | "dial"; from: DetailOrigin; name?: string }) {
+export default function QuoteCard({ ticker, variant, from, name, star = false }: { ticker: string; variant: "gauge" | "dial"; from: DetailOrigin; name?: string; star?: boolean }) {
   const [lang] = useResearchLanguage();
   const ja = lang === "ja";
   const { data, failed, loaded } = useQuotes([ticker]);
   const facts = useFacts(ticker).data;
   const [hidden, setHidden] = useNumbersHidden();
   const quote = data?.[ticker];
-  const title = shortName(name ?? quote?.name ?? ticker);
+  // Watched-22 cards carry their own short English names; search results arrive with the SEC's upper-case registrant name, so the provider's name comes first there.
+  const title = shortName(variant === "dial" ? (quote?.name ?? name ?? ticker) : (name ?? quote?.name ?? ticker));
   const frame = variant === "gauge" ? styles.gaugeCard : styles.dialCard;
   if (!quote) return <><section className={`${styles.card} ${frame}`} aria-busy={!loaded}>
     <div className={styles.head}><Tile ticker={ticker} size={variant === "dial" ? "dial" : "gauge"} /><div className={styles.who}><h3 className={styles.name}>{title}</h3></div></div>
@@ -79,7 +81,7 @@ export default function QuoteCard({ ticker, variant, from, name }: { ticker: str
   const tone = toneOf(quote.percentChange);
   const arrow = tone === "up" ? "▲" : tone === "down" ? "▼" : "–";
   const open = <Link className={styles.open} href={detailHref(ticker, from)} aria-label={ja ? `${title}（${ticker}）の詳細を開く` : `Open ${title} (${ticker}) details`} />;
-  const eye = variant === "gauge" && <Eye hidden={hidden} onToggle={() => setHidden(!hidden)} label={hidden ? (ja ? "数字を表示する" : "Show numbers") : (ja ? "数字を隠す" : "Hide numbers")} />;
+  const eye = star ? <StarButton ticker={ticker} name={title} /> : variant === "gauge" && <Eye hidden={hidden} onToggle={() => setHidden(!hidden)} label={hidden ? (ja ? "数字を表示する" : "Show numbers") : (ja ? "数字を隠す" : "Hide numbers")} />;
   if (hide) return <><section className={`${styles.card} ${styles.hiddenCard}`} aria-label={`${title} ${ticker}`}>{open}
     <div className={styles.head}><Tile ticker={ticker} /><div className={styles.who}><h3 className={styles.name}>{title}</h3></div>{eye}</div>
     <span className={styles.stars} aria-label={ja ? "数字は非表示です" : "Numbers hidden"}>＊＊＊＊＊</span></section>
