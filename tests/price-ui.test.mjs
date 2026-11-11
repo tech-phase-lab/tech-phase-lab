@@ -6,7 +6,7 @@ import { existsSync } from "node:fs";
 const read = path => readFile(new URL(`../${path}`, import.meta.url), "utf8");
 
 test("TradingView is gone: no widget routes, no embed code, no mention on screen", async () => {
-  for (const gone of ["app/research/market/widget", "app/research/market/themes-widget", "app/research/stocks/widget", "app/research/stocks/tradingview-chart.tsx", "app/research/market/themes.tsx"])
+  for (const gone of ["app/research/market/widget", "app/research/market/ticker-widget", "app/research/market/themes-widget", "app/research/stocks/widget", "app/research/stocks/tradingview-chart.tsx", "app/research/market/themes.tsx"])
     assert.equal(existsSync(new URL(`../${gone}`, import.meta.url)), false, gone);
   for (const file of ["app/research/market/page.tsx", "app/research/watchlist/watchlist.tsx", "app/research/stocks/market-workspace.tsx", "app/research/price/quote-card.tsx", "app/research/price/quote-detail.tsx"])
     assert.doesNotMatch(await read(file), /tradingview|<iframe/i, file);
@@ -75,8 +75,7 @@ test("the indices panel follows the design: three linked columns, no ETF names o
   const panel = await read("app/research/price/market-indices.tsx");
   assert.match(panel, /href=\{`\/research\/market\/index\/\$\{item\.id\}`\}/);
   assert.doesNotMatch(panel, /<polyline|<svg|proxy|item\.symbol/);
-  assert.match(panel, /<IndexStrip lang=\{lang\} \/>/);
-  assert.match(await read("app/research/market/index-strip.tsx"), /CFD/);
+  assert.match(panel, /if \(!first\) return null/);
   assert.match(await read("app/research/market/index/[id]/page.tsx"), /plain/);
 });
 test("the stock card follows the E sheet: no ticker under the name, extended-hours row, 44px / 38px price", async () => {
