@@ -4,6 +4,8 @@ import { calendarEvents, dateOnlyEarnings } from "./calendar";
 import { easternToIso, chartSpec, nextEarningsFromSite, parseBars, parseNextEarnings, parseQuote, parseQuotes, parseStatistics, splitBars, type Bar, type ChartRange, type MarketFacts, type MarketQuote } from "./market-quote";
 
 /** Server-side Twelve Data reads for the price screens. The key (TWELVE_DATA_API_KEY) never leaves the server. */
+// The quote is asked with the default (daily) interval: with interval=1min the change, high, low, previous close and volume all describe the LAST MINUTE
+// (owner, Nov 11: SPY -0.007%, MU volume 2,238). prepost=true adds the pre-market / after-hours fields and a fresh last_quote_at.
 const BASE = () => process.env.TWELVE_DATA_BASE_URL || "https://api.twelvedata.com";
 export const marketDataConfigured = () => !!process.env.TWELVE_DATA_API_KEY;
 const TTL = 60_000;
@@ -35,7 +37,7 @@ export async function loadMarketQuotes(tickers: string[]): Promise<Record<string
     const group = stale.slice(i, i + 12), id = group.join(",");
     let job = pending.get(id);
     if (!job) {
-      job = call("quote", { symbol: id, interval: "1min", prepost: "true" }).then(raw => {
+      job = call("quote", { symbol: id, prepost: "true" }).then(raw => {
         const parsed = parseQuotes(raw, group);
         for (const t of group) quoteMemory.set(t, { at: Date.now(), quote: parsed[t] ?? null });
       }).finally(() => pending.delete(id));
@@ -78,7 +80,7 @@ async function resolveMarket(id: string): Promise<{ symbol: string; extra: Varia
   const attempt = async (variant: Variant): Promise<{ symbol: string; extra: Variant; quote: MarketQuote | null } | null> => {
     const { symbol = id, ...extra } = variant;
     try {
-      const quote = parseQuote(await call("quote", { symbol, ...extra, interval: "1min", prepost: "true" }), symbol);
+      const quote = parseQuote(await call("quote", { symbol, ...extra, prepost: "true" }), symbol);
       if (!quote) throw new Error("no quote");
       resolved.set(id, { variant, quote, at: Date.now() });
       return { symbol, extra, quote };

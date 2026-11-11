@@ -50,7 +50,7 @@ test("the market page is the design's board: SPY / QQQ / DIA cards, five categor
   assert.match(board, /maPeriods=\{\[25, 75\]\}/); assert.match(board, /S&P500に連動/); assert.match(board, /ETFの価格です/);
   const data = await read("lib/research/market-data.ts");
   for (const id of ["SMH", "SOXX", "GBP/USD", "BTC/USD", "XAU/USD", "XCU/USD"]) assert.match(data, new RegExp(`(?:"${id}"|\\b${id}):\\s*\\{`), id);
-  assert.match(data, /prepost: "true"/); assert.match(data, /interval: "1min"/);
+  assert.match(data, /prepost: "true"/); assert.doesNotMatch(data, /interval: "1min"/);
 });
 test("the board shows prices as the sheet writes them", async () => {
   const { formatPrice } = await import("../app/research/price/market-board.tsx").catch(() => ({ formatPrice: null }));
