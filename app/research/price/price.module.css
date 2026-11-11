@@ -63,3 +63,8 @@
 .col .chip{font-size:12px;padding:1px 8px;border-radius:999px}
 .spark{display:block;width:100%;aspect-ratio:96/34;height:auto;margin-top:4px}
 .proxy{margin:-4px 0 12px;color:#8c98ab;font-size:11px}
+
+.extendedRow{display:flex;align-items:baseline;flex-wrap:wrap;gap:4px 8px;margin-top:10px;color:#9aa6bb;font-size:12px}
+.extendedRow b{color:#eff2f6;font:600 13px "IBM Plex Mono",ui-monospace,monospace}
+.extendedRow span[data-tone="up"]{color:#4fe3a6}
+.extendedRow span[data-tone="down"]{color:#ff7b7b}

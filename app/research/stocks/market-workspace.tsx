@@ -16,18 +16,9 @@ type MarketWorkspaceProps = {
   introduction?: CompanyIntroduction | null;
 };
 
-export function MarketWorkspace({ ticker, exchange, name, lang, favoriteControl, introduction, network }: MarketWorkspaceProps) {
-  const exchangeLabel = exchange === "Nasdaq" ? "NASDAQ" : exchange.toUpperCase();
-
-  return <section className={styles.workspace} aria-labelledby="tech-phase-market-title">
-    <header className={styles.header}>
-      <div>
-        <p className={styles.eyebrow}>TECH PHASE MARKET</p>
-        <h2 id="tech-phase-market-title"><span>{ticker}</span><small>{exchangeLabel}</small></h2>
-        <p className={styles.company}>{name}</p>
-      </div>
-      {favoriteControl}
-    </header>
+export function MarketWorkspace({ ticker, name, lang, favoriteControl, introduction, network }: MarketWorkspaceProps) {
+  return <section className={styles.workspace} aria-label={`${name} ${ticker}`}>
+    {favoriteControl && <header className={styles.header} style={{ justifyContent: "flex-end" }}>{favoriteControl}</header>}
 
     <div className={styles.chartSlot}>
       <QuoteCard ticker={ticker} variant="dial" from="search" name={name} />

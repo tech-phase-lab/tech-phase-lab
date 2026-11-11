@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import ResearchToolShell from "../research-tool-shell";
 import { useResearchLanguage } from "../use-research-language";
 import MarketIndices from "../price/market-indices";
+import MarketChart from "../price/market-chart";
 import styles from "./market.module.css";
 
 type MacroQuote = { id: string; date?: string; value?: number; previous?: number; previousDate?: string; unavailable?: boolean };
@@ -48,6 +49,7 @@ export default function MarketPage() {
   const ja = lang === "ja";
   return <ResearchToolShell lang={lang} setLang={setLang} title={ja ? "マーケット" : "Markets"} description="" freshness>
     <MarketIndices />
+    <MarketChart />
     <MacroCards ja={ja} />
   </ResearchToolShell>;
 }

@@ -11,7 +11,7 @@ import { CompanyNetworkMap } from "../stocks/chain-map";
 import type { CompanyIntroduction } from "@/lib/research/company-introductions";
 import type { CompanyNetwork } from "@/lib/research/company-network";
 import { CHART_RANGES, compact, dateJa, plain, rangeChange, signedPercent, type Bar, type ChartRange } from "@/lib/research/market-quote";
-import { Change, Status, Tile, type DetailOrigin } from "./quote-card";
+import { Change, Extended, Status, Tile, type DetailOrigin } from "./quote-card";
 import { shortName, useFacts, useQuotes } from "./use-market";
 import PriceChart from "./price-chart";
 import styles from "./detail.module.css";
@@ -117,6 +117,7 @@ export default function QuoteDetail({ ticker, from }: { ticker: string; from: De
         {quote ? <>
           <div className={styles.price}>{plain(quote.price)}<small>{quote.currency}</small></div>
           <Change quote={quote} inline />
+          <Extended quote={quote} ja={ja} />
           <div className={styles.state}><span><Status quote={quote} ja={ja} />{t(" 更新", " updated")}</span>
             <div className={styles.mode} role="group" aria-label={t("チャートの種類", "Chart type")}><button type="button" aria-pressed={mode === "candles"} onClick={() => setMode("candles")}>{t("ローソク足", "Candles")}</button><button type="button" aria-pressed={mode === "line"} onClick={() => setMode("line")}>{t("ライン", "Line")}</button></div></div>
         </> : <p className={styles.error} role="status">{!loaded ? t("株価を読み込み中…", "Loading the price…") : failed ? t("株価を取得できませんでした。しばらくしてからもう一度お試しください。", "Could not load the price. Please try again shortly.") : ""}</p>}
