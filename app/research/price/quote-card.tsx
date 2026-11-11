@@ -1,4 +1,5 @@
 "use client";
+import { useState } from "react";
 import Link from "next/link";
 import StockLogo from "../watchlist/stock-logo";
 import { useFacts, useNumbersHidden, useQuotes, jstClock, shortName, type CardQuote } from "./use-market";
@@ -41,9 +42,10 @@ function Dial({ position, low, high, label }: { position: number | null; low: nu
 }
 export function Tile({ ticker }: { ticker: string }) { return <StockLogo ticker={ticker} className={styles.tile} />; }
 export function Status({ quote, ja }: { quote: CardQuote; ja: boolean }) {
+  const [now] = useState(() => Date.now());
   const open = quote.session === "regular", ext = !open ? quote.extended : undefined;
   // Extended hours count as trading: the dot is green while a pre-market or after-hours price is current (within 20 minutes).
-  const live = !!ext && Date.now() - Date.parse(ext.asOf) <= 20 * 60_000;
+  const live = !!ext && now - Date.parse(ext.asOf) <= 20 * 60_000;
   const label = open ? (ja ? "取引中" : "Open") : live ? (ext!.session === "pre" ? (ja ? "プレマーケット" : "Pre-market") : (ja ? "時間外取引中" : "After-hours")) : (ja ? "取引終了" : "Closed");
   return <><span className={styles.dot} data-open={open || live} aria-hidden="true" /><span>{label} ・ {jstClock(ext ? ext.asOf : quote.asOf)} JST</span></>;
 }
