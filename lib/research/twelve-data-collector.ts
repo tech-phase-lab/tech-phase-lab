@@ -16,9 +16,13 @@ async function call(path: string, params: Record<string, string>, key: string): 
     try {
       const response = await fetch(url, { cache: "no-store", signal: AbortSignal.timeout(12_000) });
       if (response.status === 429 && attempt === 0) { await new Promise(r => setTimeout(r, 1500)); continue; }
-      if (!response.ok) { console.warn(`twelve-data ${path} ${params.symbol} ${response.status}`); return null; }
-      const body = await response.json() as { status?: unknown; code?: unknown };
-      if (body?.status === "error") { console.warn(`twelve-data ${path} ${params.symbol} error ${String(body.code)}`); return null; }
+      const body = await response.json().catch(() => ({})) as { status?: unknown; code?: unknown; message?: unknown };
+      // The provider's own reason (never the key) goes to the log so a refused call can be told apart from a missing plan.
+      if (!response.ok || body?.status === "error") {
+        console.warn(`twelve-data ${path} ${params.symbol} ${response.status} ${String(body?.code ?? "")} ${String(body?.message ?? "").slice(0, 160)}`);
+        if (response.status === 400 && params.outputsize && attempt === 0) { delete params.outputsize; url.searchParams.delete("outputsize"); continue; }
+        return null;
+      }
       return body;
     } catch { console.warn(`twelve-data ${path} ${params.symbol} failed`); return null; }
   }

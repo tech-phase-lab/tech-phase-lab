@@ -21,5 +21,5 @@ export async function GET(request: Request) {
     // The entitlement may expire while the upstream data is being fetched.
     if (themeRankingAccess(member) !== 200) return Response.json({ ok: false, error: "pro-required" }, { status: 403, headers });
     return Response.json({ ok: true, group: requested, ...data, marketOpen: usMarketOpen(), validUntil: "accessExpiresAt" in member ? member.accessExpiresAt : 0 }, { headers });
-  } catch { return Response.json({ ok: false, error: "unavailable" }, { status: 503, headers }); }
+  } catch (error) { console.warn(`theme-ranking route: ${error instanceof Error ? error.message : "error"}`); return Response.json({ ok: false, error: "unavailable" }, { status: 503, headers }); }
 }

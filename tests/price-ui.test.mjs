@@ -45,6 +45,7 @@ test("the market page shows the three indices and no sector or heat map", async 
   assert.match(page, /<MarketIndices \/>/);
   assert.doesNotMatch(page, /セクター別騰落率|ヒートマップ|Heatmap/);
   const indices = await read("lib/research/market-data.ts");
-  for (const symbol of ["DJI", "NDX", "SPX", "DIA", "QQQ", "SPY"]) assert.match(indices, new RegExp(`"${symbol}"`));
+  for (const symbol of ["DIA", "QQQ", "SPY"]) assert.match(indices, new RegExp(`"${symbol}"`));
+  assert.doesNotMatch(indices, /"(DJI|NDX|SPX)"/);
   assert.match(await read("app/api/research/market/quotes/route.ts"), /tickers\.length > 100/);
 });

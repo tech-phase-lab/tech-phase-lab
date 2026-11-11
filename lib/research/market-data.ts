@@ -1,7 +1,7 @@
 import "server-only";
 import { unstable_cache } from "next/cache";
 import { calendarEvents, dateOnlyEarnings } from "./calendar";
-import { chartSpec, nextEarningsFromSite, parseBars, parseNextEarnings, parseQuotes, parseStatistics, trimBars, type Bar, type ChartRange, type MarketFacts, type MarketQuote } from "./market-quote";
+import { chartSpec, nextEarningsFromSite, parseBars, parseNextEarnings, parseQuote, parseQuotes, parseStatistics, trimBars, type Bar, type ChartRange, type MarketFacts, type MarketQuote } from "./market-quote";
 
 /** Server-side Twelve Data reads for the price screens. The key (TWELVE_DATA_API_KEY) never leaves the server. */
 const BASE = () => process.env.TWELVE_DATA_BASE_URL || "https://api.twelvedata.com";
@@ -18,7 +18,9 @@ async function call(path: string, params: Record<string, string>): Promise<unkno
     const response = await fetch(url, { cache: "no-store", signal: AbortSignal.timeout(12_000) });
     if (response.status === 429 && attempt < 2) { await new Promise(r => setTimeout(r, 4000 * (attempt + 1))); continue; }
     if (!response.ok) throw new Error(`twelve-data ${path} ${response.status}`);
-    return response.json();
+    const body = await response.json() as { status?: unknown; code?: unknown; message?: unknown };
+    if (body?.status === "error") throw new Error(`twelve-data ${path} ${String(body.code)} ${String(body.message).slice(0, 120)}`);
+    return body;
   }
   throw new Error(`twelve-data ${path} rate-limited`);
 }
@@ -47,12 +49,12 @@ export async function loadMarketQuotes(tickers: string[]): Promise<Record<string
 }
 
 const barMemory = new Map<string, { at: number; bars: Bar[] }>();
-export async function loadBars(ticker: string, range: ChartRange): Promise<Bar[]> {
-  const memoryKey = `${ticker}:${range}`, hit = barMemory.get(memoryKey);
+export async function loadBars(ticker: string, range: ChartRange, mic?: string): Promise<Bar[]> {
+  const memoryKey = `${ticker}${mic ? `@${mic}` : ""}:${range}`, hit = barMemory.get(memoryKey);
   const ttl = chartSpec(range).interval === "1day" || chartSpec(range).interval === "1week" ? 5 * TTL : TTL;
   if (hit && hit.at + ttl > Date.now()) return hit.bars;
   const { interval, size } = chartSpec(range);
-  const raw = await call("time_series", { symbol: ticker, interval, outputsize: String(size), order: "desc" });
+  const raw = await call("time_series", { symbol: ticker, interval, outputsize: String(size), order: "desc", ...(mic ? { mic_code: mic } : {}) });
   const bars = trimBars(parseBars(raw), range);
   barMemory.set(memoryKey, { at: Date.now(), bars });
   return bars;
@@ -65,7 +67,7 @@ export async function loadIntraday(tickers: string[]): Promise<Record<string, Ba
 }
 
 const facts = (ticker: string) => unstable_cache(async (): Promise<MarketFacts> => {
-  const [stats, earnings] = await Promise.allSettled([call("statistics", { symbol: ticker }), call("earnings", { symbol: ticker, outputsize: "6" })]);
+  const [stats, earnings] = await Promise.allSettled([call("statistics", { symbol: ticker }), call("earnings", { symbol: ticker, period: "next" })]);
   const parsed = stats.status === "fulfilled" ? parseStatistics(stats.value, ticker) : null;
   const today = new Date().toISOString().slice(0, 10);
   const own = nextEarningsFromSite(ticker, [...calendarEvents, ...dateOnlyEarnings], today);
@@ -78,23 +80,24 @@ export async function loadMarketFacts(ticker: string): Promise<MarketFacts> {
   try { return await facts(ticker); } catch { return { eps: null, marketCap: null, dividendYield: null, nextEarnings: nextEarningsFromSite(ticker, [...calendarEvents, ...dateOnlyEarnings], new Date().toISOString().slice(0, 10)) }; }
 }
 
+/** Owner, Nov 11: the index symbols (DJI / NDX / SPX) answered with other securities on this plan (a $21 and a $0.1 quote), so the
+ * panel reads the three ETFs that track them. The percentage is the ETF's and the column says so; never mix in an unchecked symbol. */
 export const INDICES = [
-  { id: "dow", symbol: "DJI", etf: "DIA", ja: "NYダウ", en: "Dow" },
-  { id: "nasdaq100", symbol: "NDX", etf: "QQQ", ja: "NASDAQ100", en: "NASDAQ 100" },
-  { id: "sp500", symbol: "SPX", etf: "SPY", ja: "S&P500", en: "S&P 500" },
+  { id: "dow", etf: "DIA", mic: "ARCX", ja: "NYダウ", en: "Dow" },
+  { id: "nasdaq100", etf: "QQQ", mic: "XNAS", ja: "NASDAQ100", en: "NASDAQ 100" },
+  { id: "sp500", etf: "SPY", mic: "ARCX", ja: "S&P500", en: "S&P 500" },
 ] as const;
-export type IndexQuote = { id: string; ja: string; en: string; value: number; percentChange: number | null; proxy: string | null; asOf: string; marketOpen: boolean; line: number[] };
-/** The three indices; a symbol the plan does not serve falls back to its ETF (the percentage then describes the ETF). */
+export type IndexQuote = { id: string; ja: string; en: string; value: number; percentChange: number | null; proxy: string; asOf: string; marketOpen: boolean; line: number[] };
 export const loadIndices = unstable_cache(async (): Promise<IndexQuote[]> => {
-  const direct = await loadMarketQuotes(INDICES.map(i => i.symbol)).catch(() => ({}) as Record<string, MarketQuote>);
-  const missing = INDICES.filter(i => !direct[i.symbol]);
-  const proxies = missing.length ? await loadMarketQuotes(missing.map(i => i.etf)).catch(() => ({}) as Record<string, MarketQuote>) : {};
+  // Each ETF is read on its own exchange: a bare "SPY" can answer with another listing (owner's design pack, Nov 11).
   const out: IndexQuote[] = [];
-  for (const index of INDICES) {
-    const proxy = !direct[index.symbol], q = direct[index.symbol] ?? proxies[index.etf];
-    if (!q) continue;
-    const bars = await loadBars(proxy ? index.etf : index.symbol, "1d").catch(() => []);
-    out.push({ id: index.id, ja: index.ja, en: index.en, value: q.price, percentChange: q.percentChange, proxy: proxy ? index.etf : null, asOf: q.asOf, marketOpen: q.marketOpen, line: bars.map(b => b.close) });
-  }
-  return out;
-}, ["market-indices-v1"], { revalidate: 60 });
+  await Promise.all(INDICES.map(async index => {
+    try {
+      const q = parseQuote(await call("quote", { symbol: index.etf, mic_code: index.mic }), index.etf);
+      if (!q) return;
+      const bars = await loadBars(index.etf, "1d", index.mic).catch(() => []);
+      out.push({ id: index.id, ja: index.ja, en: index.en, value: q.price, percentChange: q.percentChange, proxy: index.etf, asOf: q.asOf, marketOpen: q.marketOpen, line: bars.map(b => b.close) });
+    } catch (error) { console.warn(`market indices ${index.etf}: ${error instanceof Error ? error.message : "failed"}`); }
+  }));
+  return INDICES.flatMap(index => out.filter(item => item.id === index.id));
+}, ["market-indices-v3"], { revalidate: 60 });
