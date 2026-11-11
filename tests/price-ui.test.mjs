@@ -49,3 +49,22 @@ test("the market page shows the three indices and no sector or heat map", async 
   assert.doesNotMatch(indices, /"(DJI|NDX|SPX)"/);
   assert.match(await read("app/api/research/market/quotes/route.ts"), /tickers\.length > 100/);
 });
+
+test("every route that reads the member is behind the Clerk proxy (the theme ranking failed in production without it)", async () => {
+  const proxy = await read("proxy.ts");
+  for (const path of ["/api/research/themes", "/api/research/compare"]) assert.ok(proxy.includes(`"${path}"`), path);
+});
+test("a company's four statements calls run one company at a time and without a row count the plan refuses", async () => {
+  const collector = await read("lib/research/twelve-data-collector.ts");
+  assert.match(collector, /serial\(\(\) => fetchTwelveBundle/);
+  assert.doesNotMatch(collector, /outputsize: "[48]"/);
+  assert.match(collector, /code === 429/);
+});
+test("the market page keeps its charts (indices, bond ETFs, forex) from Twelve Data", async () => {
+  assert.match(await read("app/research/market/page.tsx"), /<MarketChart \/>/);
+  const chart = await read("app/research/price/market-chart.tsx");
+  for (const symbol of ["SPY", "QQQ", "DIA", "SHY", "IEF", "TLT", "USD/JPY", "EUR/USD", "EUR/JPY"]) assert.ok(chart.includes(`"${symbol}"`), symbol);
+});
+test("the stock search card is not repeated above itself", async () => {
+  assert.doesNotMatch(await read("app/research/stocks/market-workspace.tsx"), /TECH PHASE MARKET|styles\.company/);
+});

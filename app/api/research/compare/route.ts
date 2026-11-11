@@ -3,6 +3,7 @@ import { buildComparison, comparisonAccess, comparisonExpiresAt, validateCompari
 import { loadComparisonFinancials, resolveComparisonCompany } from "@/lib/research/comparison-server";
 import { buildReviewedTrial } from "@/lib/research/comparison-trial";
 export const dynamic = "force-dynamic";
+export const maxDuration = 120;
 const headers = { "Cache-Control": "private, no-store", Vary: "Cookie" };
 export async function GET(request: Request) {
   try {
