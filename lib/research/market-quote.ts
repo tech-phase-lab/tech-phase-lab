@@ -11,6 +11,8 @@ export type MarketQuote = {
   price: number; change: number | null; percentChange: number | null; previousClose: number | null;
   open: number | null; high: number | null; low: number | null; volume: number | null;
   week52Low: number | null; week52High: number | null; asOf: string; marketOpen: boolean;
+  /** Pre-market / after-hours price (prepost=true), when the provider has one. */
+  extended: { price: number; change: number | null; percentChange: number | null; asOf: string; session: "pre" | "post" } | null;
 };
 export type Bar = { at: string; open: number; high: number; low: number; close: number };
 export type ChartRange = "1d" | "1w" | "1m" | "3m" | "6m" | "ytd" | "1y" | "3y" | "5y";
@@ -18,6 +20,8 @@ export const CHART_RANGES: ChartRange[] = ["1d", "1w", "1m", "3m", "6m", "ytd", 
 export const isChartRange = (x: unknown): x is ChartRange => typeof x === "string" && (CHART_RANGES as string[]).includes(x);
 export const TICKER_RE = /^[A-Z][A-Z0-9.\-]{0,9}$/;
 
+const easternClock = new Intl.DateTimeFormat("en-US", { timeZone: "America/New_York", hourCycle: "h23", hour: "2-digit", minute: "2-digit" });
+function easternMinutes(ms: number): number { const parts = easternClock.formatToParts(new Date(ms)); const get = (t: string) => Number(parts.find(p => p.type === t)?.value ?? 0); return get("hour") * 60 + get("minute"); }
 /** One /quote answer for one symbol. Rejects an error body, a different symbol and non-positive prices. */
 export function parseQuote(raw: unknown, ticker: string): MarketQuote | null {
   const q = obj(raw);
@@ -29,13 +33,16 @@ export function parseQuote(raw: unknown, ticker: string): MarketQuote | null {
   const at = seconds !== null && seconds > 0 ? seconds * 1000 : Date.parse(`${String(q.datetime)}T20:00:00Z`);
   if (!Number.isFinite(at)) return null;
   const year = obj(q.fifty_two_week);
+  const extPrice = n(q.extended_price), extAt = n(q.extended_timestamp);
+  const extended = extPrice !== null && extPrice > 0 && extAt !== null && extAt > 0
+    ? { price: extPrice, change: n(q.extended_change), percentChange: n(q.extended_percent_change), asOf: new Date(extAt * 1000).toISOString(), session: easternMinutes(extAt * 1000) < 9 * 60 + 30 ? "pre" as const : "post" as const } : null;
   const positive = (x: unknown) => { const v = n(x); return v !== null && v > 0 ? v : null; };
   return {
     ticker, name: typeof q.name === "string" ? q.name : ticker, exchange: typeof q.exchange === "string" ? q.exchange : "",
     currency: typeof q.currency === "string" && /^[A-Z]{3}$/.test(q.currency) ? q.currency : "USD",
     price, change: n(q.change), percentChange: n(q.percent_change), previousClose: positive(q.previous_close),
     open: positive(q.open), high: positive(q.high), low: positive(q.low), volume: n(q.volume),
-    week52Low: positive(year.low), week52High: positive(year.high), asOf: new Date(at).toISOString(), marketOpen: q.is_market_open === true,
+    week52Low: positive(year.low), week52High: positive(year.high), asOf: new Date(at).toISOString(), marketOpen: q.is_market_open === true, extended,
   };
 }
 /** A multi-symbol /quote answer is keyed by symbol; a single-symbol answer is the quote itself. */
@@ -63,8 +70,8 @@ export function parseBars(raw: unknown): Bar[] {
 export function chartSpec(range: ChartRange, now = Date.now()): { interval: "5min" | "30min" | "1day" | "1week"; size: number } {
   const ytdDays = Math.min(260, Math.max(5, Math.ceil((now - Date.UTC(new Date(now).getUTCFullYear(), 0, 1)) / 86400000)));
   switch (range) {
-    case "1d": return { interval: "5min", size: 160 };   // two sessions, so a Monday morning still has data to trim
-    case "1w": return { interval: "30min", size: 140 };
+    case "1d": return { interval: "5min", size: 400 };   // two sessions with pre-market and after-hours (16 hours of 5-minute bars each)
+    case "1w": return { interval: "30min", size: 230 };
     case "1m": return { interval: "1day", size: 23 };
     case "3m": return { interval: "1day", size: 66 };
     case "6m": return { interval: "1day", size: 130 };
@@ -107,7 +114,8 @@ export function easternToIso(text: string): string {
 export function toFavoriteQuote(q: MarketQuote, intraday: Bar[] = []): FavoriteQuote {
   const history = intraday.map(b => ({ at: easternToIso(b.at), price: b.close })).filter(p => Number.isFinite(Date.parse(p.at)));
   return { ticker: q.ticker, price: q.price, change: q.change, percentChange: q.percentChange, currency: q.currency, asOf: q.asOf,
-    session: q.marketOpen ? "regular" : "closed", delayed: false, source: "twelve-data", ...(history.length > 1 ? { history } : {}) };
+    session: q.marketOpen ? "regular" : "closed", delayed: false, source: "twelve-data", ...(history.length > 1 ? { history } : {}),
+    ...(q.extended && q.extended.percentChange !== null ? { extended: { price: q.extended.price, percentChange: q.extended.percentChange, asOf: q.extended.asOf, session: q.extended.session } } : {}) };
 }
 
 export type MarketFacts = { eps: number | null; marketCap: number | null; dividendYield: number | null; nextEarnings: string | null };

@@ -41,6 +41,7 @@ export default function MarketIndices() {
         <h3>{ja ? item.ja : item.en}</h3>
         <strong>{item.value.toLocaleString("en-US", { minimumFractionDigits: 1, maximumFractionDigits: 1 })}</strong>
         <span className={styles.chip} data-tone={tone}>{tone === "up" ? "▲" : tone === "down" ? "▼" : "–"} {item.percentChange === null ? "—" : signedPercent(item.percentChange)}</span>
+        {item.extended && item.extended.percentChange !== null && <span className={styles.proxy}>{ja ? (item.extended.session === "pre" ? "プレ" : "時間外") : (item.extended.session === "pre" ? "Pre" : "After")} {signedPercent(item.extended.percentChange)}</span>}
         <Spark values={item.line} tone={tone} />
       </div>;
     })}</div>}

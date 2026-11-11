@@ -3,7 +3,7 @@ import type { ComparisonResult } from "@/lib/research/comparison";
 import { comparisonScores, comparisonMetric, comparisonLeaders, comparisonAvailability, hasRecentQuarter, radarPoint, compositeScore } from "@/lib/research/comparison-scorecard";
 import styles from "./styles.module.css";
 // The color of each company (owner, Nov 5): the first a yellowish gold, the second blue, the third a light purple.
-const companyColors = ["#f2c36b", "#8da2ff", "#c9a0ff"];
+const companyColors = ["#ffc247", "#4cc9f0", "#ff7ac6"];
 const colorOf = (index: number, offset = 0) => companyColors[(index + offset) % companyColors.length];
 function StatusChart({companies,lang,now,colorIndex=0}: {companies:ComparisonResult["companies"];lang:"ja"|"en";now:number;colorIndex?:number}) {
   const sets=companies.map(c=>comparisonScores(c,now)), factors=sets[0];
@@ -70,7 +70,7 @@ function ScoreOverview({companies,lang,now}: {companies:ComparisonResult["compan
       <div className={styles.snapCols} style={columns}>{companies.map((c,i)=>{const score=scoreSets[i][index];const winner=comparisonLeaders(companies,f.id,now)[i];
         // Both bars are drawn on tracks of the same width; only the higher score is coloured strongly.
         return <div key={c.ticker} className={styles.snapCell} data-winner={winner}>
-          <div className={styles.snapValue}><span className={styles.scoreTrack} aria-hidden="true">{score.value!==null && <i data-company={i} style={{width:`${score.value*10}%`,background:winner ? colorOf(i) : undefined}}/>}</span><strong style={winner ? {color:colorOf(i)} : undefined}>{score.value===null ? "—" : score.value.toFixed(1)}</strong></div>
+          <div className={styles.snapValue}><span className={styles.scoreTrack} aria-hidden="true">{score.value!==null && <i data-company={i} style={{width:`${score.value*10}%`,background:colorOf(i),opacity:winner ? 1 : .6}}/>}</span><strong style={winner ? {color:colorOf(i)} : undefined}>{score.value===null ? "—" : score.value.toFixed(1)}</strong></div>
           <small className={styles.factorMetric}>{comparisonMetric(c,score.id,lang,now)}</small></div>;})}</div>
     </div>)}
     <p className={styles.snapshotNote}>{ja ? "— 未取得・評価保留（0点ではありません）" : "— means data or a score isn't available. It doesn't mean zero."}</p>

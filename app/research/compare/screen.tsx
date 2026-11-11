@@ -123,7 +123,7 @@ export default function ComparisonScreen() {
           return <div key={i} className={styles.pickSlot}>
             <label className={styles.pickLabel} htmlFor={selection[i] ? undefined : `stock-${i}`}>{i === 2 ? t("3社目（任意）", "Company 3 (optional)") : t(`${i+1}社目`, `Company ${i+1}`)}</label>
             {selection[i] ? <div className={styles.pickChosen} data-slot={i}>
-              <i className={styles.pickBar} style={{ background: ["#f2c36b", "#8da2ff", "#c9a0ff"][i] }} aria-hidden="true" />
+              <i className={styles.pickBar} style={{ background: ["#ffc247", "#4cc9f0", "#ff7ac6"][i] }} aria-hidden="true" />
               <span className={styles.pickText}><b>{selection[i]}</b><span>{names[selection[i]] ?? comparisonCatalog.find(company => company.ticker === selection[i])?.name ?? ""}</span></span>
               <button type="button" className={styles.pickRemove} aria-label={t(`${i+1}社目をクリア`, `Clear Company ${i+1}`)} onClick={() => {
                 request.current?.abort(); setBusy(false); setError(false); setResult(null); setActiveTicker(null); setOpenSlot(null);
