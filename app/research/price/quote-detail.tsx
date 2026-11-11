@@ -152,7 +152,7 @@ export default function QuoteDetail({ ticker, from, title: fixedTitle, plain: ba
           <h2>{t("連関マップ", "Relationship map")}</h2>
           {profile === null ? <p className={styles.error} style={{ padding: 0 }} role="status">{t("読み込み中…", "Loading…")}</p> : profile.network && !profile.introduction ? <CompanyNetworkMap key={profile.network.root} graph={profile.network} lang={lang} /> : profile.network ? <p className={styles.error} style={{ padding: 0 }}>{t("連関マップは上の企業情報の中にあります。", "The relationship map is part of the company information above.")}</p> : <p className={styles.error} style={{ padding: 0 }}>{t("この銘柄の連関マップは準備中です。", "A relationship map is not available yet.")}</p>}
         </section></>}
-      <p className={styles.credit}>{bare ? t("提供：Twelve Data ・ 指数に連動するETFの価格です。", "Data: Twelve Data. Prices are of the ETF that tracks the index.") : t("提供：Twelve Data", "Data: Twelve Data")}</p>
+      <p className={styles.credit}>{t("提供：Twelve Data", "Data: Twelve Data")}</p>
       {alertOpen && <AlertSheet ticker={ticker} currency={quote?.currency ?? "USD"} ja={ja} onClose={() => setAlertOpen(false)} />}
     </div>
   </ResearchToolShell>;

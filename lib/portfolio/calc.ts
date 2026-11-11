@@ -9,6 +9,8 @@ export type Holding = {
   avgCostFx?: number;
   /** The broker this lot was read from (or 手入力). One lot per broker and ticker. */
   source?: string;
+  /** The day this lot was last checked against stock splits (YYYY-MM-DD). Splits after it are applied once, then this moves to today. */
+  checkedAt?: string;
 };
 export type Quote = { ticker: string; close: number; asOf: string };
 export type Breakdown = { source: string; shares: number };

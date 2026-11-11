@@ -1853,3 +1853,9 @@
 .savedMark { display:inline-flex; align-items:center; gap:8px; min-height:44px; padding:0; border:0; background:none; color:#9fe8c8; font:inherit; font-size:15px; font-weight:600; cursor:pointer; }
 .savedMark svg { width:18px; height:18px; }
 span.savedMark { cursor:default; }
+
+/* Owner, Nov 11: the saved count sits at the top right of the research-note header (left of the ribbon), not in a row of its own under the description. */
+.savedHeader { position:relative; }
+.savedHeader .savedCount { position:absolute; top:2px; right:44px; padding:5px 12px; gap:6px; }
+.savedHeader .savedCount strong { font-size:14px; }
+.savedHeader .savedCount span { font-size:12px; }

@@ -24,16 +24,25 @@ export function parseStored(raw: string): Holding[] {
       if (!(item.shares > 0) || !(item.avgCostUsd > 0) || !Number.isFinite(item.shares) || !Number.isFinite(item.avgCostUsd)) continue;
       out.push({ ticker: item.ticker, ...(typeof item.name === "string" ? { name: item.name.slice(0, 40) } : {}), shares: item.shares, avgCostUsd: item.avgCostUsd,
         ...(item.avgCostFx > 50 && item.avgCostFx < 400 ? { avgCostFx: item.avgCostFx } : {}),
+        ...(typeof item.checkedAt === "string" && /^\d{4}-\d{2}-\d{2}$/.test(item.checkedAt) ? { checkedAt: item.checkedAt } : {}),
         source: value.version === 2 && typeof item.source === "string" && item.source.trim() ? item.source.trim().slice(0, 20) : OTHER });
     }
     return out;
   } catch { return []; }
 }
 
-export function serialize(holdings: readonly Holding[]): string { return JSON.stringify({ version: 2, savedAt: new Date().toISOString(), holdings }); }
+/** When the list was last saved (YYYY-MM-DD), the baseline for lots that carry no check date of their own. */
+export function readSavedDay(raw: string): string | null {
+  try { const value = JSON.parse(raw); return typeof value?.savedAt === "string" && /^\d{4}-\d{2}-\d{2}/.test(value.savedAt) ? value.savedAt.slice(0, 10) : null; } catch { return null; }
+}
+/** A lot without a check date takes the previous save's day, so a split between that save and this one is still found later. */
+export function serialize(holdings: readonly Holding[], previousRaw = ""): string {
+  const now = new Date().toISOString(), before = readSavedDay(previousRaw) ?? now.slice(0, 10);
+  return JSON.stringify({ version: 2, savedAt: now, holdings: holdings.map(h => ({ ...h, checkedAt: h.checkedAt ?? before })) });
+}
 
 export function writeHoldings(holdings: readonly Holding[]) {
-  try { if (holdings.length) localStorage.setItem(STORE_KEY, serialize(holdings)); else localStorage.removeItem(STORE_KEY); } catch { /* storage may be blocked */ }
+  try { if (holdings.length) localStorage.setItem(STORE_KEY, serialize(holdings, readRaw())); else localStorage.removeItem(STORE_KEY); } catch { /* storage may be blocked */ }
   emit();
 }
 

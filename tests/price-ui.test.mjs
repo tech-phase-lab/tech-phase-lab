@@ -45,8 +45,10 @@ test("the market page shows the three indices and no sector or heat map", async 
   assert.match(page, /<MarketIndices \/>/);
   assert.doesNotMatch(page, /セクター別騰落率|ヒートマップ|Heatmap/);
   const indices = await read("lib/research/market-data.ts");
-  for (const symbol of ["DIA", "QQQ", "SPY"]) assert.match(indices, new RegExp(`"${symbol}"`));
-  assert.match(indices, /prepost: "true"/); assert.match(indices, /interval: "1min"/);
+  for (const symbol of ["DJI", "NDX", "SPX"]) assert.match(indices, new RegExp(`"${symbol}"`));
+  assert.match(indices, /s&p/i); assert.match(indices, /prepost: "true"/); assert.match(indices, /interval: "1min"/);
+  // Owner, Nov 11: an ETF price is not an index level, so no ETF stands in for an index.
+  assert.doesNotMatch(indices.slice(indices.indexOf("export const INDICES")), /DIA|QQQ|SPY/);
   assert.match(await read("app/api/research/market/quotes/route.ts"), /tickers\.length > 100/);
 });
 
@@ -63,7 +65,7 @@ test("a company's four statements calls run one company at a time and without a 
 test("the market page keeps its charts (indices, bond ETFs, forex) from Twelve Data", async () => {
   assert.match(await read("app/research/market/page.tsx"), /<MarketChart \/>/);
   const chart = await read("app/research/price/market-chart.tsx");
-  for (const symbol of ["DIA", "QQQ", "SPY", "SHY", "IEF", "TLT", "USD/JPY", "EUR/USD", "EUR/JPY"]) assert.ok(chart.includes(`"${symbol}"`), symbol);
+  for (const symbol of ["DJI", "NDX", "SPX", "SHY", "IEF", "TLT", "USD/JPY", "EUR/USD", "EUR/JPY"]) assert.ok(chart.includes(`"${symbol}"`), symbol);
 });
 test("the stock search card is not repeated above itself", async () => {
   assert.doesNotMatch(await read("app/research/stocks/market-workspace.tsx"), /TECH PHASE MARKET|styles\.company/);
@@ -73,7 +75,7 @@ test("the indices panel follows the design: three linked columns, no ETF names o
   const panel = await read("app/research/price/market-indices.tsx");
   assert.match(panel, /href=\{`\/research\/market\/index\/\$\{item\.id\}`\}/);
   assert.doesNotMatch(panel, /<polyline|<svg|proxy|item\.symbol/);
-  assert.match(panel, /指数に連動するETFの価格です。/);
+  assert.match(panel, /if \(!first\) return null/);
   assert.match(await read("app/research/market/index/[id]/page.tsx"), /plain/);
 });
 test("the stock card follows the E sheet: no ticker under the name, extended-hours row, 44px / 38px price", async () => {
@@ -88,4 +90,18 @@ test("the chart follows F / G: moving averages 5/25/75, volume bars, crosshair t
   assert.match(chart, /period: 5, color: "#f3d98b"/); assert.match(chart, /period: 25, color: "#8fb0ff"/); assert.match(chart, /period: 75, color: "#c3a6ff"/);
   assert.match(css, /aspect-ratio:390\/350/); assert.match(css, /aspect-ratio:390\/260/);
   assert.match(chart, /priceTag/); assert.match(chart, /dateTag/);
+});
+
+test("every API route that reads the member is behind the Clerk proxy", async () => {
+  const { readdir } = await import("node:fs/promises");
+  const proxy = await read("proxy.ts"), matcher = proxy.match(/matcher: \[(.*?)\] \}/s)[1], patterns = [...matcher.matchAll(/"([^"]+)"/g)].map(m => m[1]);
+  const covered = path => patterns.some(p => p.endsWith("/:path*") ? path === p.slice(0, -7) || path.startsWith(p.slice(0, -7) + "/") : p === path);
+  const walk = async dir => { const out = []; for (const entry of await readdir(new URL(`../${dir}`, import.meta.url), { withFileTypes: true })) { const path = `${dir}/${entry.name}`; if (entry.isDirectory()) out.push(...await walk(path)); else if (entry.name === "route.ts") out.push(path); } return out; };
+  const missing = [];
+  for (const file of await walk("app/api")) {
+    if (!/getMembership\(|currentUser|auth\(\)/.test(await read(file))) continue;
+    const route = "/" + file.slice(4, -"/route.ts".length).replace(/\[[^\]]+\]/g, "x");
+    if (!covered(route)) missing.push(route);
+  }
+  assert.deepEqual(missing, []);
 });

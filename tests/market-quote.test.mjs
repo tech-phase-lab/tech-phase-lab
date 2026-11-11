@@ -20,7 +20,10 @@ test("bars come back oldest-first and malformed rows are dropped", () => {
 });
 test("ranges: 1D keeps the last session, 1W the last five, YTD this year; 3Y and 5Y are weekly", () => {
   const intraday = ["2026-11-06 15:55:00", "2026-11-09 09:30:00", "2026-11-09 09:35:00"].map(at => ({ at, open: 1, high: 1, low: 1, close: 1 }));
-  assert.equal(trimBars(intraday, "1d").length, 2);
+  const session = (day, n) => Array.from({ length: n }, (_, i) => ({ at: `${day} ${String(9 + Math.floor(i / 12)).padStart(2, "0")}:${String((i % 12) * 5).padStart(2, "0")}:00`, open: 1, high: 1, low: 1, close: 1 }));
+  assert.equal(trimBars([...session("2026-11-06", 78), ...session("2026-11-09", 40)], "1d").length, 40);
+  // Before the market has traded much (pre-market), the new day alone is a stub: the previous session comes with it.
+  assert.equal(trimBars([...session("2026-11-06", 78), ...session("2026-11-09", 5)], "1d").length, 83);
   assert.equal(trimBars(intraday, "1w").length, 3);
   const year = [{ at: "2025-12-31", open: 1, high: 1, low: 1, close: 1 }, { at: "2026-01-02", open: 1, high: 1, low: 1, close: 1 }];
   assert.equal(trimBars(year, "ytd").length, 1);
@@ -80,4 +83,14 @@ test("moving averages use the bars fetched before the visible ones; the visible 
   assert.ok(long.every(v => v !== null));
   assert.equal(movingAverages([], bars.slice(0, 3), [5])[0][2], null);
   assert.ok(mid[0] !== null);
+});
+
+test("a pre-market price that is current replaces the close in the watchlist row, with its own move and path", async () => {
+  const { quoteForSession } = await import("../lib/research/watchlist-session.ts");
+  const base = toFavoriteQuote(parseQuote({ ...quote, is_market_open: false, extended_price: "722.80", extended_percent_change: "1.04", extended_timestamp: Math.floor(Date.now() / 1000) - 60 }, "MU"));
+  assert.equal(base.extended.live, true);
+  const row = quoteForSession(base, "MU", "auto");
+  assert.equal(row.price, 722.8); assert.equal(row.session, "post" === row.session ? "post" : row.session); assert.ok(Math.abs(row.change - (722.8 - 715.41)) < 1e-9);
+  const stale = toFavoriteQuote(parseQuote({ ...quote, is_market_open: false, extended_price: "722.80", extended_percent_change: "1.04", extended_timestamp: Math.floor(Date.now() / 1000) - 3600 }, "MU"));
+  assert.equal(quoteForSession(stale, "MU", "auto").price, 715.41);
 });

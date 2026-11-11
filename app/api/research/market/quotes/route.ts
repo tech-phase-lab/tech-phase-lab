@@ -11,7 +11,7 @@ export async function GET(request: Request) {
   if (!tickers.length || tickers.length > 100 || tickers.some(t => !TICKER_RE.test(t))) return Response.json({ ok: false, error: "bad-tickers" }, { status: 400, headers: { "Cache-Control": "no-store" } });
   try {
     const quotes = await loadMarketQuotes(tickers);
-    const history = params.get("history") === "1" ? await loadIntraday(Object.keys(quotes).slice(0, 30)) : {};
+    const history = params.get("history") === "1" ? await loadIntraday(Object.values(quotes).slice(0, 30)) : {};
     return Response.json({ ok: true, quotes: Object.fromEntries(Object.values(quotes).map(q => [q.ticker, { ...toFavoriteQuote(q, history[q.ticker]), name: q.name, exchange: q.exchange, open: q.open, high: q.high, low: q.low, previousClose: q.previousClose, volume: q.volume, week52Low: q.week52Low, week52High: q.week52High }])) }, { headers });
   } catch { return Response.json({ ok: false, error: "unavailable" }, { status: 503, headers: { "Cache-Control": "no-store" } }); }
 }

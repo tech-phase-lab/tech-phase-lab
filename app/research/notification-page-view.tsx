@@ -132,7 +132,7 @@ export default function NotificationPageView(p: PageViewProps) {
         <span className={`${styles.bell} ${on ? styles.bellOn : ""}`}>{icons.bell}</span>
         <div className={styles.statusBody}>
           <p className={styles.statusName}>{t("この端末の通知", "This device")}<span className={`${styles.tag} ${on ? styles.tagOn : ""}`} role="status"><i />{on ? t("オン", "On") : t("オフ", "Off")}</span></p>
-          <p className={styles.statusText} role="status">{statusText}</p>
+          <p className={styles.statusText} data-oneline={lang === "ja"} role="status">{statusText}</p>
         </div>
         {state === "unsupported" && installContext(navigator.userAgent, isStandalone(window)) !== "none" && <button type="button" className={styles.statusOn} onClick={() => window.dispatchEvent(new Event(SHOW_EVENT))}>{t("オンにする", "Turn on")}</button>}
         {p.usable && <button type="button" className={on ? styles.statusOff : styles.statusOn} disabled={p.busy || p.starting} onClick={p.onToggle}>{p.busy || p.starting ? t("設定中…", "Setting up…") : on ? t("オフにする", "Turn off") : t("オンにする", "Turn on")}</button>}
@@ -142,7 +142,7 @@ export default function NotificationPageView(p: PageViewProps) {
       {!p.usable && p.hasSubscription && <div className={styles.aux}><button type="button" disabled={p.busy} onClick={p.onDisable}>{t("通知をオフにする", "Turn off notifications")}</button></div>}
       {state === "unsupported" && <p className={styles.note}>{t("iPhoneではSafariの共有メニューからホーム画面に追加し、そのアイコンから開いてください。", "On iPhone, add this site to your Home Screen using Safari’s Share menu, then open that icon.")}</p>}
       {state === "blocked" && <p className={styles.note}>{t("端末またはブラウザの設定で、Tech Phaseの通知を許可してください。", "Allow Tech Phase notifications in your device or browser settings.")}</p>}
-      {on && <div className={styles.aux}><button type="button" disabled={p.busy} onClick={p.onTest}>{t("テスト通知を送る", "Send test notification")}</button>{p.testSent && !p.received && <button type="button" onClick={p.onReceived}>{t("届きました", "Received")}</button>}</div>}
+      {on && <div className={`${styles.aux} ${styles.testRow}`}><button type="button" disabled={p.busy} onClick={p.onTest}>{t("テスト通知を送る", "Send test notification")}</button>{p.testSent && !p.received && <button type="button" onClick={p.onReceived}>{t("届きました", "Received")}</button>}</div>}
       {p.message && <p className={styles.note} role="status">{p.message}</p>}
       {p.received && <p className={styles.note} role="status">{t("この端末で受信を確認しました。", "Receipt confirmed on this device.")}</p>}
     </div>

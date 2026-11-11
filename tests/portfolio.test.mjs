@@ -94,7 +94,7 @@ const src = path => readFile(new URL(path, import.meta.url), "utf8");
 
 test("stored holdings round-trip, and damaged or out-of-range data is dropped", () => {
   const holdings = [{ ticker: "NVDA", shares: 10, avgCostUsd: 100, avgCostFx: 150, source: "楽天証券" }];
-  assert.deepEqual(parseStored(serialize(holdings)), holdings);
+  assert.deepEqual(parseStored(serialize(holdings)).map(({ checkedAt, ...lot }) => { assert.match(checkedAt, /^\d{4}-\d{2}-\d{2}$/); return lot; }), holdings);
   assert.deepEqual(parseStored(""), []);
   assert.deepEqual(parseStored("{broken"), []);
   assert.deepEqual(parseStored(JSON.stringify({ version: 3, holdings })), []);

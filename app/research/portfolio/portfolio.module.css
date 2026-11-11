@@ -208,3 +208,5 @@
 .srcInput:focus{outline:none}
 .srcSheet .cta{position:relative;display:flex;align-items:center;justify-content:center;width:100%;min-height:56px;margin-top:14px;border:0;border-radius:18px;background:linear-gradient(120deg,#efd899,#c9a257);color:#2a1f05;font:700 17px inherit;font-family:inherit;cursor:pointer}
 .sheet.srcSheet h2 small{color:#8e9aab}
+
+.splitNote{margin:0 0 14px;padding:10px 14px;border:1px solid #6b5a2c;border-radius:12px;background:#171409;color:#e3c981;font-size:13px;line-height:1.6}

@@ -65,6 +65,16 @@ export function useThemeData(group: GroupFilter, plan: string | null, enabled = 
   return { state, data };
 }
 
+/** Which day the numbers are as of (owner, Nov 11: "no date, so I can't tell when this is"): the last close, with the period it is measured over. */
+export function BasisLine({ data, period, ja }: { data: ThemeData | null; period: Period; ja: boolean }) {
+  const m = data?.asOf.match(/^(\d{4})-(\d{2})-(\d{2})/);
+  if (!m) return null;
+  const day = new Date(Date.UTC(Number(m[1]), Number(m[2]) - 1, Number(m[3])));
+  const label = ja ? `${Number(m[2])}/${Number(m[3])}(${"日月火水木金土"[day.getUTCDay()]})` : day.toLocaleDateString("en-US", { month: "short", day: "numeric", weekday: "short", timeZone: "UTC" });
+  const unit = period === "1d" ? (ja ? "前営業日の終値からの騰落" : "change from the previous close") : (ja ? `${periodLabel(period, true)}の騰落` : `${periodLabel(period, false)} change`);
+  return <p className={styles.basis}>{ja ? <><b>{label}</b> の終値時点 ・ {unit}</> : <>As of the close on <b>{label}</b> · {unit}</>}</p>;
+}
+
 export function PeriodPills({ period, onChange, ja }: { period: Period; onChange: (period: Period) => void; ja: boolean }) {
   return <div className={styles.periods} role="group" aria-label={ja ? "期間" : "Period"}>
     {PERIODS.map(key => <button key={key} type="button" aria-pressed={key === period} onClick={() => onChange(key)}>{periodLabel(key, ja)}</button>)}
