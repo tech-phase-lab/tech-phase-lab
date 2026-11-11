@@ -1,7 +1,7 @@
 import "server-only";
 import { unstable_cache } from "next/cache";
 import { calendarEvents, dateOnlyEarnings } from "./calendar";
-import { chartSpec, nextEarningsFromSite, parseBars, parseNextEarnings, parseQuote, parseQuotes, parseStatistics, trimBars, type Bar, type ChartRange, type MarketFacts, type MarketQuote } from "./market-quote";
+import { chartSpec, nextEarningsFromSite, parseBars, parseNextEarnings, parseQuote, parseQuotes, parseStatistics, splitBars, type Bar, type ChartRange, type MarketFacts, type MarketQuote } from "./market-quote";
 
 /** Server-side Twelve Data reads for the price screens. The key (TWELVE_DATA_API_KEY) never leaves the server. */
 const BASE = () => process.env.TWELVE_DATA_BASE_URL || "https://api.twelvedata.com";
@@ -35,7 +35,7 @@ export async function loadMarketQuotes(tickers: string[]): Promise<Record<string
     const group = stale.slice(i, i + 12), id = group.join(",");
     let job = pending.get(id);
     if (!job) {
-      job = call("quote", { symbol: id, prepost: "true" }).then(raw => {
+      job = call("quote", { symbol: id, interval: "1min", prepost: "true" }).then(raw => {
         const parsed = parseQuotes(raw, group);
         for (const t of group) quoteMemory.set(t, { at: Date.now(), quote: parsed[t] ?? null });
       }).finally(() => pending.delete(id));
@@ -49,15 +49,11 @@ export async function loadMarketQuotes(tickers: string[]): Promise<Record<string
 }
 
 type Variant = Record<string, string>;
-/** What the market page charts besides stocks. Every entry lists the ways to ask the provider for it, tried in turn: an index symbol
- * such as SPX is also the ticker of an ordinary stock, so the quote's NAME is checked (`name`) before a way is trusted; an ETF can
- * trade on several venues. A symbol with no accepted way is simply not shown (and the reason goes to the log). */
+/** What the market page charts besides stocks. The indices are shown through the ETFs that track them (the plan does not serve the index symbols:
+ * SPX / NDX / DJI answer 404 in production, Nov 11). An ETF can trade on several venues, so each lists the exchanges to try in turn. */
 type Market = { variants: readonly Variant[]; name?: RegExp; fallback?: string };
 const etf = (...mics: string[]): Variant[] => [...mics.map(mic_code => ({ mic_code })), {}];
 export const MARKET_SYMBOLS: Record<string, Market> = {
-  SPX: { variants: [{ symbol: "SPX", type: "Index" }, { symbol: "SPX", exchange: "INDEX" }, { symbol: "SPX", type: "index" }, { symbol: "GSPC" }], name: /s&p\s*500/i, fallback: "SPY" },
-  NDX: { variants: [{ symbol: "NDX", type: "Index" }, { symbol: "NDX", exchange: "INDEX" }, { symbol: "NDX", type: "index" }], name: /nasdaq[\s-]*100/i, fallback: "QQQ" },
-  DJI: { variants: [{ symbol: "DJI", type: "Index" }, { symbol: "DJI", exchange: "INDEX" }, { symbol: "DJI", type: "index" }, { symbol: "DJIA" }], name: /dow\s*jones/i, fallback: "DIA" },
   SPY: { variants: etf("ARCX") }, QQQ: { variants: etf("XNMS", "XNGS", "XNAS") }, DIA: { variants: etf("ARCX") },
   SHY: { variants: etf("XNMS", "XNAS", "XNGS") }, IEF: { variants: etf("XNMS", "XNAS", "XNGS") }, TLT: { variants: etf("XNMS", "XNAS", "XNGS") },
   "USD/JPY": { variants: [{}] }, "EUR/USD": { variants: [{}] }, "EUR/JPY": { variants: [{}] },
@@ -75,7 +71,7 @@ async function resolveMarket(id: string): Promise<{ symbol: string; extra: Varia
   for (const variant of order) {
     const { symbol = id, ...extra } = variant;
     try {
-      const quote = parseQuote(await call("quote", { symbol, ...extra, prepost: "true" }), symbol);
+      const quote = parseQuote(await call("quote", { symbol, ...extra, interval: "1min", prepost: "true" }), symbol);
       if (!quote) throw new Error("no quote");
       if (entry.name && !entry.name.test(quote.name)) throw new Error(`other instrument "${quote.name}"`);
       resolved.set(id, { variant, at: Date.now() });
@@ -87,23 +83,24 @@ async function resolveMarket(id: string): Promise<{ symbol: string; extra: Varia
   throw new Error(`unresolved ${id}`);
 }
 
-const barMemory = new Map<string, { at: number; bars: Bar[] }>();
-export async function loadBars(ticker: string, range: ChartRange): Promise<Bar[]> {
+const barMemory = new Map<string, { at: number; all: Bar[] }>();
+/** The drawn bars of a range plus the bars before them (for the moving averages). Pre-market and after-hours bars are included for 1D / 1W. */
+export async function loadBarSet(ticker: string, range: ChartRange): Promise<{ bars: Bar[]; before: Bar[] }> {
   const memoryKey = `${ticker}:${range}`, hit = barMemory.get(memoryKey);
   const spec = chartSpec(range), intraday = spec.interval === "5min" || spec.interval === "30min";
-  if (hit && hit.at + (intraday ? TTL : 5 * TTL) > Date.now()) return hit.bars;
+  if (hit && hit.at + (intraday ? TTL : 5 * TTL) > Date.now()) return splitBars(hit.all, range);
   const entry = MARKET_SYMBOLS[ticker];
+  const base = { interval: spec.interval, outputsize: String(spec.size), order: "desc", ...(intraday ? { prepost: "true" } : {}) };
   let raw: unknown;
   if (entry) {
-    let target: { symbol: string; extra: Variant };
-    try { target = await resolveMarket(ticker); }
-    catch (error) { if (!entry.fallback) throw error; target = await resolveMarket(entry.fallback); }
-    raw = await call("time_series", { symbol: target.symbol, interval: spec.interval, outputsize: String(spec.size), order: "desc", ...target.extra, ...(intraday ? { prepost: "true" } : {}) });
-  } else raw = await call("time_series", { symbol: ticker, interval: spec.interval, outputsize: String(spec.size), order: "desc", ...(intraday ? { prepost: "true" } : {}) });
-  const bars = trimBars(parseBars(raw), range);
-  barMemory.set(memoryKey, { at: Date.now(), bars });
-  return bars;
+    const target = await resolveMarket(ticker);
+    raw = await call("time_series", { symbol: target.symbol, ...base, ...target.extra });
+  } else raw = await call("time_series", { symbol: ticker, ...base });
+  const all = parseBars(raw);
+  barMemory.set(memoryKey, { at: Date.now(), all });
+  return splitBars(all, range);
 }
+export async function loadBars(ticker: string, range: ChartRange): Promise<Bar[]> { return (await loadBarSet(ticker, range)).bars; }
 /** Intraday closes of several tickers for the watchlist sparklines (last session only). */
 export async function loadIntraday(tickers: string[]): Promise<Record<string, Bar[]>> {
   const out: Record<string, Bar[]> = {};
@@ -128,25 +125,19 @@ export async function loadMarketFacts(ticker: string): Promise<MarketFacts> {
 /** Owner, Nov 11: the index symbols (DJI / NDX / SPX) answered with other securities on this plan (a $21 and a $0.1 quote), so the
  * panel reads the three ETFs that track them. The percentage is the ETF's and the column says so; never mix in an unchecked symbol. */
 export const INDICES = [
-  { id: "dow", key: "DJI", ja: "NYダウ", en: "Dow" },
-  { id: "nasdaq100", key: "NDX", ja: "NASDAQ100", en: "NASDAQ 100" },
-  { id: "sp500", key: "SPX", ja: "S&P500", en: "S&P 500" },
+  { id: "dow", etf: "DIA", ja: "NYダウ", en: "Dow" },
+  { id: "nasdaq100", etf: "QQQ", ja: "NASDAQ100", en: "NASDAQ 100" },
+  { id: "sp500", etf: "SPY", ja: "S&P500", en: "S&P 500" },
 ] as const;
-export type IndexQuote = { id: string; ja: string; en: string; value: number; percentChange: number | null; proxy: string | null; asOf: string; marketOpen: boolean; line: number[]; extended: MarketQuote["extended"] };
-/** The real indices. Only when the provider will not serve an index does its ETF stand in, and the column then says so. */
+export type IndexQuote = { id: string; ja: string; en: string; symbol: string; value: number; percentChange: number | null; asOf: string; marketOpen: boolean; extended: MarketQuote["extended"] };
+/** The three indices, shown by the ETFs that track them (owner's design, Nov 11): the page says so in one line, never in the columns. */
 export const loadIndices = unstable_cache(async (): Promise<IndexQuote[]> => {
   const out: IndexQuote[] = [];
   await Promise.all(INDICES.map(async index => {
-    let id: string = index.key, proxy: string | null = null, found: { quote: MarketQuote | null } | null = null;
-    try { found = await resolveMarket(index.key); }
-    catch {
-      const fallback = MARKET_SYMBOLS[index.key].fallback;
-      if (fallback) { proxy = fallback; id = fallback; try { found = await resolveMarket(fallback); } catch { /* left out */ } }
-    }
-    const quote = found?.quote;
-    if (!quote) return;
-    const bars = await loadBars(id, "1d").catch(() => []);
-    out.push({ id: index.id, ja: index.ja, en: index.en, value: quote.price, percentChange: quote.percentChange, proxy, asOf: quote.asOf, marketOpen: quote.marketOpen, line: bars.map(b => b.close), extended: quote.extended });
+    try {
+      const { quote } = await resolveMarket(index.etf);
+      if (quote) out.push({ id: index.id, ja: index.ja, en: index.en, symbol: index.etf, value: quote.price, percentChange: quote.percentChange, asOf: quote.asOf, marketOpen: quote.marketOpen, extended: quote.extended });
+    } catch (error) { console.warn(`market indices ${index.etf}: ${error instanceof Error ? error.message : "failed"}`); }
   }));
   return INDICES.flatMap(index => out.filter(item => item.id === index.id));
-}, ["market-indices-v5"], { revalidate: 60 });
+}, ["market-indices-v6"], { revalidate: 60 });

@@ -1,20 +1,15 @@
 "use client";
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useResearchLanguage } from "../use-research-language";
-import { jstClock } from "./use-market";
 import { signedPercent } from "@/lib/research/market-quote";
 import type { IndexQuote } from "@/lib/research/market-data";
 import styles from "./price.module.css";
 
-function Spark({ values, tone }: { values: number[]; tone: string }) {
-  if (values.length < 12) return <div className={styles.spark} aria-hidden="true" />; // too few points to draw an honest line: keep the space so the three columns stay level
-  const low = Math.min(...values), high = Math.max(...values), span = high - low || 1;
-  const points = values.map((v, i) => `${(i / (values.length - 1) * 200).toFixed(1)},${(76 - (v - low) / span * 66).toFixed(1)}`);
-  const color = tone === "up" ? "#4fe3a6" : tone === "down" ? "#ff7b7b" : "#9aa6bb";
-  return <svg className={styles.spark} viewBox="0 0 200 80" preserveAspectRatio="none" aria-hidden="true">
-    <polygon points={`0,80 ${points.join(" ")} 200,80`} fill={color} opacity=".14" /><polyline points={points.join(" ")} fill="none" stroke={color} strokeWidth="2.2" vectorEffect="non-scaling-stroke" strokeLinejoin="round" /></svg>;
-}
-/** NY Dow / NASDAQ 100 / S&P 500 in one panel, from Twelve Data (an ETF stands in, and says so, for an index the plan does not serve). */
+const clock = (iso: string) => new Date(iso).toLocaleTimeString("en-GB", { timeZone: "Asia/Tokyo", hour: "2-digit", minute: "2-digit", hour12: false });
+const toneOf = (value: number | null) => value === null || value === 0 ? "flat" : value > 0 ? "up" : "down";
+/** NY Dow / NASDAQ 100 / S&P 500 in one frame, three columns (the design's D sheet). The prices are those of the ETFs that track them; the page says so
+ * once, below. Pressing a column opens that index's full-screen page. */
 export default function MarketIndices() {
   const [lang] = useResearchLanguage();
   const ja = lang === "ja";
@@ -34,18 +29,15 @@ export default function MarketIndices() {
   }, []);
   const first = items?.[0];
   return <><section className={styles.indices} aria-label={ja ? "主要3指数" : "Three major indices"}>
-    <div className={styles.status} role="status">{first ? <><span className={styles.dot} data-open={first.marketOpen} /><span>{ja ? (first.marketOpen ? "米国市場 取引中" : "米国市場 取引終了") : (first.marketOpen ? "U.S. market open" : "U.S. market closed")} ・ {jstClock(first.asOf)} JST</span></> : <span>{items === null && !failed ? (ja ? "指数を読み込み中…" : "Loading indices…") : (ja ? "指数を取得できませんでした" : "Indices unavailable")}</span>}</div>
+    <div className={styles.marketState} role="status">{first ? <><span className={styles.dot} data-open={first.marketOpen} /><span>{ja ? (first.marketOpen ? "米国市場 取引中" : "米国市場 取引終了") : (first.marketOpen ? "U.S. market open" : "U.S. market closed")} ・ {clock(first.asOf)} JST</span></> : <span>{items === null && !failed ? (ja ? "指数を読み込み中…" : "Loading indices…") : (ja ? "指数を取得できませんでした" : "Indices unavailable")}</span>}</div>
     {items && <div className={styles.cols}>{items.map(item => {
-      const tone = item.percentChange === null || item.percentChange === 0 ? "flat" : item.percentChange > 0 ? "up" : "down";
-      return <div className={styles.col} key={item.id}>
-        <h3>{ja ? item.ja : item.en}</h3>
-        <strong>{item.value.toLocaleString("en-US", { minimumFractionDigits: 1, maximumFractionDigits: 1 })}</strong>
-        <span className={styles.chip} data-tone={tone}>{tone === "up" ? "▲" : tone === "down" ? "▼" : "–"} {item.percentChange === null ? "—" : signedPercent(item.percentChange)}</span>
-        {item.extended && item.extended.percentChange !== null && <span className={styles.proxy}>{ja ? (item.extended.session === "pre" ? "プレ" : "時間外") : (item.extended.session === "pre" ? "Pre" : "After")} {signedPercent(item.extended.percentChange)}</span>}
-        <Spark values={item.line} tone={tone} />
-      </div>;
+      const tone = toneOf(item.percentChange), ext = item.extended;
+      return <Link className={styles.col} key={item.id} href={`/research/market/index/${item.id}`} aria-label={`${ja ? item.ja : item.en}`}>
+        <span className={styles.colName}>{ja ? item.ja : item.en}</span>
+        <span className={styles.colPrice}>{item.value.toFixed(1)}</span>
+        <span className={`${styles.colChip} ${styles[tone]}`}>{tone === "up" ? "▲" : tone === "down" ? "▼" : "–"} {item.percentChange === null ? "—" : signedPercent(item.percentChange)}</span>
+        {ext && ext.percentChange !== null && <span className={`${styles.colExt} ${styles[toneOf(ext.percentChange)]}`}><small>{ja ? "時間外 " : "Ext. "}</small>{signedPercent(ext.percentChange)}</span>}
+      </Link>;
     })}</div>}
-  </section>
-  {items?.some(item => item.proxy) && <p className={styles.proxy}>{items.filter(item => item.proxy).map(item => `${ja ? item.ja : item.en}＝${item.proxy}`).join(" ・ ")}{ja ? "（ETFの価格と騰落率）" : " (ETF price and change)"}</p>}
-  <p className={styles.credit}>{ja ? "提供：Twelve Data" : "Data: Twelve Data"}</p></>;
+  </section><p className={styles.credit}>{ja ? "提供：Twelve Data ・ 指数に連動するETFの価格です。" : "Data: Twelve Data. Prices are of the ETFs that track the indices."}</p></>;
 }

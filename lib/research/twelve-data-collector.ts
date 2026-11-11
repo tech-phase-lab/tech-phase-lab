@@ -1,6 +1,7 @@
 import "server-only";
 import { unstable_cache } from "next/cache";
 import { prepareTwelveComparisonForDisplay } from "./twelve-data-comparison-server";
+import { normalizeTwelveComparison } from "./twelve-data-comparison";
 import type { TwelveComparisonBundle } from "./twelve-data-financials";
 
 /** Server-side Twelve Data collector for the comparison screen. The key stays in TWELVE_DATA_API_KEY and never reaches the browser.
@@ -40,6 +41,14 @@ export async function fetchTwelveBundle(ticker: string, key: string): Promise<Tw
   ]);
   if (!income) return null;
   const at = new Date().toISOString();
+  // What did not come out of the answers goes to the log with the field names the provider used (never values), so a mismatch is visible at once.
+  try {
+    const snap = normalizeTwelveComparison(ticker, income, cashFlow);
+    if (snap.freeCashFlow === null || snap.revenueGrowthPct === null) {
+      const row = (cashFlow as { cash_flow?: Record<string, unknown>[] } | null)?.cash_flow?.[0];
+      console.warn(`twelve-data ${ticker} incomplete: ${snap.warnings.join(",")} growth=${snap.revenueGrowthPct === null ? "no" : "yes"} fcf=${snap.freeCashFlow === null ? "no" : "yes"} cashFlowKeys=${row ? Object.keys(row).join("|") : "none"} operating=${row && typeof row.operating_activities === "object" ? Object.keys(row.operating_activities as object).join("|") : "none"} investing=${row && typeof row.investing_activities === "object" ? Object.keys(row.investing_activities as object).join("|") : "none"}`);
+    }
+  } catch (error) { console.warn(`twelve-data ${ticker} unreadable: ${error instanceof Error ? error.message : "error"}`); }
   return { ticker, retrievedAt: at, income, cashFlow,
     ...(statistics ? { statistics: { payload: statistics, retrievedAt: at } } : {}),
     ...(series ? { series: { payload: series, adjust: "splits" as const, retrievedAt: at } } : {}) };
