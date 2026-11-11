@@ -1,5 +1,6 @@
 """週刊 Tech Phase PRO auto-draft: evidence, numbers built by the program, checks on the model's sentences, the weekly schedule."""
 import json
+from unittest import mock
 import sqlite3
 import sys
 import tempfile
@@ -136,6 +137,17 @@ class CollectTests(Base):
         self.assertTrue(any("CPI" in row["name"] for row in rows))
 
 
+REJECTED = "ブロードコム、出荷遅延を見込む"
+real_semantics = gen.factual_validation.validate_semantics
+
+
+def semantics_rejecting_the_headline(text, evidence):
+    # Stands in for the production rule that rejected a headline with "changed-negation" (owner, Nov 11).
+    if text == REJECTED:
+        raise ValueError("changed-negation")
+    return real_semantics(text, evidence)
+
+
 class GenerateTests(Base):
     def test_a_draft_is_made_with_numbers_built_by_the_program_and_it_is_marked_automatic(self):
         model = FakeModel(model_output())
@@ -169,6 +181,25 @@ class GenerateTests(Base):
     def test_the_headline_with_an_unsupported_number_stops_the_draft(self):
         with self.assertRaises(ValueError):
             gen.generate(self.db, SATURDAY, transport=FakeModel(model_output(headline="MUは売上高99億ドルでした")), env=ENV)
+
+    def test_a_headline_rejected_for_negation_is_asked_again_and_then_replaced_by_a_plain_one(self):
+        # Owner, Nov 11: "changed-negation" stopped the whole Saturday issue. A negation the check reads against the evidence is not a wrong number.
+        bad = model_output(headline=REJECTED)
+        with mock.patch.object(gen.factual_validation, "validate_semantics", semantics_rejecting_the_headline):
+            saved = gen.generate(self.db, SATURDAY, transport=FakeModel(bad), env=ENV)
+        self.assertEqual(saved["headline"], gen.NEUTRAL_HEADLINE)
+        self.assertTrue(any("見出し" in note for note in saved["notes"]))
+
+    def test_a_negation_rejection_is_asked_again_with_the_rule_and_the_second_answer_is_used(self):
+        calls = []
+        outputs = [model_output(headline=REJECTED), model_output()]
+        def model(payload, key):
+            calls.append(json.loads(payload["input"]))
+            return FakeModel(outputs[min(len(calls) - 1, 1)])(payload, key)
+        with mock.patch.object(gen.factual_validation, "validate_semantics", semantics_rejecting_the_headline):
+            saved = gen.generate(self.db, SATURDAY, transport=model, env=ENV)
+        self.assertEqual(len(calls), 2); self.assertIn("repair", calls[1]); self.assertNotIn("repair", calls[0])
+        self.assertNotEqual(saved["headline"], gen.NEUTRAL_HEADLINE)
 
     def test_a_bar_chart_needs_two_figures_in_the_same_unit(self):
         out = model_output()

@@ -1,0 +1,51 @@
+/* The market screen as the design draws it (Nov 11): mint, no gold except the corner brackets of the index card. Sizes are the sheet's. */
+.wrap{display:flex;flex-direction:column;gap:14px;margin:0 0 14px;color:#eef2f8;font-family:"Zen Kaku Gothic New","Hiragino Sans","Yu Gothic",sans-serif;text-transform:none;letter-spacing:0}
+.indices{position:relative;display:flex;flex-direction:column;border-radius:20px;border:1px solid rgba(217,180,106,.28);background:radial-gradient(120% 70% at 50% 0%,rgba(127,214,176,.10),rgba(127,214,176,0) 60%),linear-gradient(170deg,#111a28,#0b0f16 70%);overflow:hidden}
+.indices::before,.indices::after{content:"";position:absolute;top:-1px;width:26px;height:26px;pointer-events:none}
+.indices::before{left:-1px;border-top:2px solid #d9b46a;border-left:2px solid #d9b46a;border-top-left-radius:20px}
+.indices::after{right:-1px;border-top:2px solid #d9b46a;border-right:2px solid #d9b46a;border-top-right-radius:20px}
+.state{display:flex;align-items:center;justify-content:center;gap:6px;padding:12px 16px 8px;font-size:11px;color:#8c98ab}
+.dot{width:6px;height:6px;border-radius:50%;background:#8c98ab}
+.dot[data-open="true"]{background:#4fe3a6}
+.cols{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-top:1px solid rgba(127,227,192,.14)}
+.col{display:flex;flex-direction:column;align-items:center;gap:5px;padding:12px 4px 12px;border:0;border-bottom:2px solid transparent;background:transparent;color:inherit;cursor:pointer;font:inherit;min-width:0}
+.col+.col{border-left:1px solid rgba(127,227,192,.14)}
+.col[aria-pressed="true"]{border-bottom-color:#7fe3c0;background:rgba(127,227,192,.06)}
+.col:focus-visible{outline:2px solid #7fe3c0;outline-offset:-3px}
+.colName{font-size:13px;font-weight:700;white-space:nowrap}
+.colSub{font-size:10px;color:#8c98ab;white-space:nowrap}
+.colPrice{font:600 19px/1.1 "IBM Plex Mono",ui-monospace,monospace}
+.chip{display:inline-block;padding:3px 7px;border-radius:6px;border:1px solid;font:600 11.5px "IBM Plex Mono",ui-monospace,monospace;white-space:nowrap}
+.up{color:#4fe3a6}.down{color:#ff7b7b}.flat{color:#8c98ab}
+.chip.up{background:#4fe3a61f;border-color:#4fe3a666}
+.chip.down{background:#ff7b7b1f;border-color:#ff7b7b66}
+.chip.flat{background:#8c98ab1f;border-color:#8c98ab66}
+.colExt{font:400 10.5px "IBM Plex Mono",ui-monospace,monospace;white-space:nowrap}
+.colExt small{font:400 10.5px "Zen Kaku Gothic New",sans-serif;color:#8c98ab}
+.tabs{display:flex;gap:2px;padding:4px;border:1px solid rgba(127,227,192,.28);border-radius:999px;background:#0b1118;overflow-x:auto;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tabs button{flex:1 0 auto;min-height:34px;padding:0 11px;border:0;border-radius:999px;background:transparent;color:#a3aec0;font:500 13px "Zen Kaku Gothic New",sans-serif;cursor:pointer;white-space:nowrap}
+.tabs button[aria-pressed="true"]{background:#7fe3c0;color:#06231a;font-weight:700}
+.items{display:grid;gap:8px}
+.item{display:flex;flex-direction:column;align-items:flex-start;gap:3px;min-width:0;padding:9px 10px;border:1px solid rgba(127,227,192,.2);border-radius:12px;background:#0d151f;color:inherit;cursor:pointer;font:inherit;text-align:left}
+.item[aria-pressed="true"]{border-color:#7fe3c0;background:rgba(127,227,192,.10)}
+.item:focus-visible{outline:2px solid #7fe3c0;outline-offset:2px}
+.itemName{font-size:12px;font-weight:700;white-space:nowrap}
+.itemPrice{font:700 13.5px "IBM Plex Mono",ui-monospace,monospace;white-space:nowrap}
+.itemChange{font:600 11px "IBM Plex Mono",ui-monospace,monospace;white-space:nowrap}
+.panel{border:1px solid rgba(127,227,192,.3);border-radius:20px;background:radial-gradient(90% 60% at 20% 0%,rgba(127,227,192,.08),rgba(127,227,192,0) 60%),linear-gradient(180deg,#0e1a1b,#090f13);overflow:hidden}
+.panelHead{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:14px 14px 0}
+.panelName{margin:0;font-size:20px;font-weight:700;text-transform:none;letter-spacing:0}
+.mode{flex:none;display:flex;gap:2px;padding:3px;border-radius:999px;border:1px solid rgba(127,227,192,.3);background:#0b1118}
+.mode button{min-height:30px;padding:0 12px;border:0;border-radius:999px;background:transparent;color:#a3aec0;font:500 12.5px "Zen Kaku Gothic New",sans-serif;cursor:pointer;white-space:nowrap}
+.mode button[aria-pressed="true"]{background:#7fe3c0;color:#06231a;font-weight:700}
+.big{display:flex;align-items:center;gap:12px;padding:8px 14px 0}
+.bigPrice{font:700 32px/1.1 "IBM Plex Mono",ui-monospace,monospace;letter-spacing:-.01em}
+.ohlc{display:flex;flex-wrap:wrap;gap:2px 12px;padding:8px 14px 0;font:400 12px "IBM Plex Mono",ui-monospace,monospace;color:#c4ccd9}
+.ohlc small{font:400 12px "Zen Kaku Gothic New",sans-serif;color:#8c98ab;margin-right:3px}
+.chartBox{margin:8px 0 0;padding:0}
+.ranges{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));padding:0 8px 4px}
+.ranges button{min-height:38px;border:0;border-bottom:2px solid transparent;background:transparent;color:#a3aec0;font:500 12px "Zen Kaku Gothic New",sans-serif;cursor:pointer;white-space:nowrap}
+.ranges button[aria-pressed="true"]{border-bottom-color:#7fe3c0;color:#7fe3c0;font-weight:700}
+.note{margin:0;padding:10px 14px;color:#8c98ab;font-size:12px}
+.credit{margin:0;font-size:11.5px;line-height:1.6;color:#8c98ab}
