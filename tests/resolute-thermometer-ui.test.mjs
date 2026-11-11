@@ -38,8 +38,8 @@ test('actual gauge switches indices immediately, clears missing readings and iso
   for(const locale of ['ja','en']){
    state.values=[];state.review=null;
    let r=render(locale,snapshot());assert.match(r.html,/rotate\(72 150 150\)/);assert.match(r.html,/-12.5%/);assert.match(r.html,/\+3.2%/);
-   buttons(r.tree).find(b=>b.props.children==='SOX').props.onClick();
-   r=render(locale,snapshot());assert.match(r.html,/rotate\(-36 150 150\)/);assert.match(r.html,/aria-pressed="true">SOX/);
+   buttons(r.tree).find(b=>/40/.test(String(b.props.children))).props.onClick();
+   r=render(locale,snapshot());assert.match(r.html,/rotate\(-36 150 150\)/);assert.match(r.html,locale==='ja'?/aria-pressed="true">TP半導体40/:/aria-pressed="true">TP Semiconductor 40/);
    r=render(locale,{...snapshot(),sox:unavailable});assert.doesNotMatch(r.html,/rotate\(/);assert.doesNotMatch(r.html,/-12.5%/);
    state.review={scenario:'sample'};r=render(locale,snapshot());assert.match(r.html,locale==='ja'?/表示見本・実際の相場ではありません/:/Not actual market data/);assert.doesNotMatch(r.html,/-12.5%/);
    state.review={scenario:'live'};r=render(locale,undefined);assert.doesNotMatch(r.html,/rotate\(/);assert.doesNotMatch(r.html,/Not actual market data|表示見本・実際/);
@@ -54,7 +54,7 @@ test('actual gauge switches indices immediately, clears missing readings and iso
     const label=(locale==='ja'?['冷えている','やや冷え','平常','やや熱い','熱い']:['Cool','Slightly cool','Normal','Slightly hot','Hot'])[Math.min(4,Math.floor(score/20))];
     assert.ok(detail.includes(label));assert.ok(card.includes(label));
     assert.match(detail,/2026-10-23/);assert.match(card,/2026-10-23/);
-    assert.ok(card.includes(`left:${score}%`));assert.match(card,/NASDAQ100/);
+    assert.ok(card.includes(`left:${score}%`));assert.match(card,/TP大型株100/);
    }
    const value={...snapshot(),validUntil:1000};
    assert.equal(expireThermometerSnapshot(value,999),value);

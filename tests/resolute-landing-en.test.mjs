@@ -26,7 +26,7 @@ test("the English landing copy is the owner's wording, unchanged", () => {
     "[RESOLUTE] Your downside and upside alerts were triggered", "We checked January 14 closing prices in the U.S. market against your alert levels.",
     "NVDA closed at $118.40 (10.2% below your reference price)", "Downside alert triggered: −10%", "PLTR closed at $96.10 (41.5% above your reference price)", "Your upside alert level was reached",
     "A downside alert is your cue to pause and reread your rules. An upside alert is your cue to check whether one holding now makes up too much of your portfolio.",
-    "Warm", "NASDAQ100", "Cold", "Closing-price Alerts",
+    "Warm", "TP Large Cap 100", "Cold", "Closing-price Alerts",
     "When a stock’s closing price reaches a downside or upside level you’ve set, you get an email at your chosen morning delivery time (Japan Standard Time). No need to watch the market all day.",
     "Morning Note", "One short email the morning after an alert, to read with a rested mind.", "Shows how cool or hot the market is on a five-point scale. Helps you put market moves in perspective.",
     "See all →", "US Commerce Dept. plans wider limits on AI chip exports to China", "A major cloud provider scales back its data center spending plan", "A Moment to Breathe", "From RIZEL", "1:40",
