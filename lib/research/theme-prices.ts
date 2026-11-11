@@ -38,11 +38,12 @@ async function fetchChunk(symbols: string[], key: string): Promise<CloseSeries[]
   url.searchParams.set("apikey", key);
   // A per-minute credit limit answers 429; one patient retry keeps a busy minute from emptying the screen.
   for (let attempt = 0; ; attempt++) {
-    const response = await fetch(url, { cache: "no-store", signal: AbortSignal.timeout(25_000) });
+    const response = await fetch(url, { cache: "no-store", signal: AbortSignal.timeout(20_000) });
     if (response.status === 429 && attempt === 0) { await new Promise(resolve => setTimeout(resolve, 20_000)); continue; }
     if (!response.ok) throw new Error(`Twelve Data ${response.status}`);
     const body = await response.json();
     if (body && typeof body === "object" && (body as { code?: unknown }).code === 429 && attempt === 0) { await new Promise(resolve => setTimeout(resolve, 20_000)); continue; }
+    if (body && typeof body === "object" && (body as { status?: unknown }).status === "error") throw new Error(`Twelve Data ${String((body as { code?: unknown }).code)} ${String((body as { message?: unknown }).message).slice(0, 120)}`);
     return parseTimeSeries(body, symbols);
   }
 }
@@ -54,15 +55,25 @@ async function collectList(tickers: string[]): Promise<GroupReturns> {
   const key = process.env.TWELVE_DATA_API_KEY;
   if (!key) throw new Error("not-configured");
   const series: CloseSeries[] = [];
-  for (let i = 0; i < tickers.length; i += CHUNK) {
-    const chunk = tickers.slice(i, i + CHUNK);
-    try {
-      const got = await fetchChunk(chunk, key);
-      series.push(...got);
-      const missing = chunk.filter(ticker => !got.some(item => item.ticker === ticker));
-      if (missing.length) console.warn(`theme-ranking: no data for ${missing.join(",")}`);
-    } catch (error) { console.warn(`theme-ranking: chunk failed (${chunk.join(",")}): ${error instanceof Error ? error.message : "error"}`); }
-  }
+  // Chunks run side by side (a long genre read one chunk at a time ran past the 60-second limit on the first cold load) and the whole
+  // read stops waiting at 40 seconds, keeping what has come back (owner, Nov 11: the screen stayed on the error message).
+  const chunks: string[][] = [];
+  for (let i = 0; i < tickers.length; i += CHUNK) chunks.push(tickers.slice(i, i + CHUNK));
+  let next = 0, stop = false;
+  const worker = async () => {
+    while (!stop && next < chunks.length) {
+      const chunk = chunks[next++];
+      try {
+        const got = await fetchChunk(chunk, key);
+        series.push(...got);
+        const missing = chunk.filter(ticker => !got.some(item => item.ticker === ticker));
+        if (missing.length) console.warn(`theme-ranking: no data for ${missing.join(",")}`);
+      } catch (error) { console.warn(`theme-ranking: chunk failed (${chunk.join(",")}): ${error instanceof Error ? error.message : "error"}`); }
+    }
+  };
+  const deadline = new Promise<void>(resolve => setTimeout(() => { stop = true; resolve(); }, 40_000));
+  await Promise.race([Promise.all(Array.from({ length: Math.min(4, chunks.length) }, worker)), deadline]);
+  if (stop) console.warn(`theme-ranking: stopped waiting at 40s with ${series.length} series`);
   if (!series.length) throw new Error("no-data");
   return { stocks: series.map(stockReturns), asOf: series.map(item => item.asOf).sort().at(-1)!, fetchedAt: Date.now() };
 }

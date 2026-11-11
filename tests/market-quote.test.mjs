@@ -50,3 +50,12 @@ test("text formats follow the owner's design", () => {
   assert.equal(Math.round(rangePosition(79.2, 52.1, 131.8)), 34); assert.equal(rangePosition(1, null, 3), null);
   assert.ok(Math.abs(rangeChange([{ at: "a", open: 100, high: 1, low: 1, close: 107 }], null, "1m").percent - 7) < 1e-9);
 });
+
+test("the quote time is the last quote, not the opening bar", () => {
+  const q = parseQuote({ ...quote, timestamp: 1794000000, last_quote_at: 1794023400 }, "MU");
+  assert.equal(Date.parse(q.asOf), 1794023400 * 1000);
+  assert.equal(Date.parse(parseQuote({ ...quote, last_quote_at: undefined }, "MU").asOf), 1794000000 * 1000);
+});
+test("the next earnings date is read from a period=next answer", () => {
+  assert.equal(parseNextEarnings({ earnings: [{ date: "2026-12-17" }] }, "2026-11-11"), "2026-12-17");
+});
