@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useResearchLanguage } from "../use-research-language";
 import { signedPercent } from "@/lib/research/market-quote";
 import type { IndexQuote } from "@/lib/research/market-data";
+import IndexStrip from "../market/index-strip";
 import styles from "./price.module.css";
 
 const clock = (iso: string) => new Date(iso).toLocaleTimeString("en-GB", { timeZone: "Asia/Tokyo", hour: "2-digit", minute: "2-digit", hour12: false });
@@ -28,8 +29,9 @@ export default function MarketIndices() {
     return () => { stopped = true; clearTimeout(timer); };
   }, []);
   const first = items?.[0];
-  // No panel unless real index values came back (an ETF price is not an index level): nothing is drawn while loading, or when none is served.
-  if (!first) return null;
+  // Real index values from Twelve Data when the contract serves them; until then (owner, Nov 11) the three indices come from the TradingView
+  // reference quotes, labelled as such. An ETF price is never shown as an index level. Nothing is drawn while the first answer is awaited.
+  if (!first) return items === null && !failed ? null : <IndexStrip lang={lang} />;
   return <><section className={styles.indices} aria-label={ja ? "主要3指数" : "Three major indices"}>
     <div className={styles.marketState} role="status">{first ? <><span className={styles.dot} data-open={first.marketOpen} /><span>{ja ? (first.marketOpen ? "米国市場 取引中" : "米国市場 取引終了") : (first.marketOpen ? "U.S. market open" : "U.S. market closed")} ・ {clock(first.asOf)} JST</span></> : <span>{items === null && !failed ? (ja ? "指数を読み込み中…" : "Loading indices…") : (ja ? "指数を取得できませんでした" : "Indices unavailable")}</span>}</div>
     {items && <div className={styles.cols}>{items.map(item => {
