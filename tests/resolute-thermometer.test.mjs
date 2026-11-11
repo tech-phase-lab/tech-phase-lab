@@ -81,7 +81,7 @@ test('stock parser reports missing tickers instead of guessing',()=>{
 test('disabled collector makes zero calls; one failed ticker is logged and the run continues; credentials never appear',async()=>{
  let calls=0;const rosters={nasdaq100:tickersOf(12),semiconductors:tickersOf(11).map(t=>'S'+t)};
  const config={enabled:false,apiKey:'synthetic-secret',rosters};
- const fetcher=async(url,options)=>{calls++;assert.equal(url.origin,'https://api.twelvedata.com');assert.equal(options.redirect,'error');assert.equal(url.searchParams.get('end_date'),asOf);
+ const fetcher=async(url,options)=>{calls++;assert.equal(url.origin,'https://api.twelvedata.com');assert.equal(options.redirect,'error');assert.equal(url.searchParams.get('end_date'),new Date(Date.parse(asOf+'T00:00:00Z')+864e5).toISOString().slice(0,10));
   const tickers=url.searchParams.get('symbol').split(',');return Response.json(stockPayload(tickers,series(),tickers.filter(t=>t==='T3')));};
  assert.equal((await collectThermometer(config,asOf,fetcher)).nas100.reason,'not-configured');assert.equal(calls,0);
  const result=await collectThermometer({...config,enabled:true},asOf,fetcher);

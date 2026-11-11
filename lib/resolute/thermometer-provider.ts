@@ -7,6 +7,8 @@ export const THERMOMETER_ROSTERS: ThermometerRosters = { nasdaq100: rosters.nasd
 export type ThermometerProviderConfig = { enabled: boolean; apiKey?: string; rosters?: ThermometerRosters };
 type ProviderFailure = { status: 'unavailable'; reason: 'not-configured' | 'provider-error' | 'invalid-data' };
 const CHUNK = 10;
+/** Twelve Data treats a date-only end_date as exclusive, so ask for the day after the confirmed session. Later bars are dropped by the calculator. */
+function dayAfter(date: string): string { const next = new Date(`${date}T00:00:00Z`); next.setUTCDate(next.getUTCDate() + 1); return next.toISOString().slice(0, 10); }
 /** Parses a multi-symbol (or single-symbol) Twelve Data time_series reply into daily closes per ticker.
  * Tickers that the provider did not return, or returned with bad numbers, are reported as missing, never guessed.
  */
@@ -43,7 +45,7 @@ export async function collectThermometer(config: ThermometerProviderConfig, conf
     for (let i = 0; i < tickers.length; i += CHUNK) {
       const chunk = tickers.slice(i, i + CHUNK);
       const url = new URL('https://api.twelvedata.com/time_series');
-      for (const [key, value] of Object.entries({ symbol: chunk.join(','), interval: '1day', outputsize: '2900', adjust: 'splits', end_date: confirmedSession, apikey: config.apiKey! })) url.searchParams.set(key, value);
+      for (const [key, value] of Object.entries({ symbol: chunk.join(','), interval: '1day', outputsize: '2900', adjust: 'splits', end_date: dayAfter(confirmedSession), apikey: config.apiKey! })) url.searchParams.set(key, value);
       try {
         const response = await fetcher(url, { cache: 'no-store', redirect: 'error', signal: AbortSignal.timeout(30000) });
         if (!response.ok) { missing.push(...chunk); continue; }
