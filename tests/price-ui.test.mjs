@@ -45,8 +45,8 @@ test("the market page shows the three indices and no sector or heat map", async 
   assert.match(page, /<MarketIndices \/>/);
   assert.doesNotMatch(page, /セクター別騰落率|ヒートマップ|Heatmap/);
   const indices = await read("lib/research/market-data.ts");
-  for (const symbol of ["DJI", "NDX", "SPX"]) assert.match(indices, new RegExp(`"${symbol}"`));
-  assert.match(indices, /s&p\\s\*500/i); assert.match(indices, /prepost: "true"/);
+  for (const symbol of ["DIA", "QQQ", "SPY"]) assert.match(indices, new RegExp(`"${symbol}"`));
+  assert.match(indices, /prepost: "true"/); assert.match(indices, /interval: "1min"/);
   assert.match(await read("app/api/research/market/quotes/route.ts"), /tickers\.length > 100/);
 });
 
@@ -63,8 +63,29 @@ test("a company's four statements calls run one company at a time and without a 
 test("the market page keeps its charts (indices, bond ETFs, forex) from Twelve Data", async () => {
   assert.match(await read("app/research/market/page.tsx"), /<MarketChart \/>/);
   const chart = await read("app/research/price/market-chart.tsx");
-  for (const symbol of ["SPX", "NDX", "DJI", "SHY", "IEF", "TLT", "USD/JPY", "EUR/USD", "EUR/JPY"]) assert.ok(chart.includes(`"${symbol}"`), symbol);
+  for (const symbol of ["DIA", "QQQ", "SPY", "SHY", "IEF", "TLT", "USD/JPY", "EUR/USD", "EUR/JPY"]) assert.ok(chart.includes(`"${symbol}"`), symbol);
 });
 test("the stock search card is not repeated above itself", async () => {
   assert.doesNotMatch(await read("app/research/stocks/market-workspace.tsx"), /TECH PHASE MARKET|styles\.company/);
+});
+
+test("the indices panel follows the design: three linked columns, no ETF names or mini charts, one credit line", async () => {
+  const panel = await read("app/research/price/market-indices.tsx");
+  assert.match(panel, /href=\{`\/research\/market\/index\/\$\{item\.id\}`\}/);
+  assert.doesNotMatch(panel, /<polyline|<svg|proxy|item\.symbol/);
+  assert.match(panel, /指数に連動するETFの価格です。/);
+  assert.match(await read("app/research/market/index/[id]/page.tsx"), /plain/);
+});
+test("the stock card follows the E sheet: no ticker under the name, extended-hours row, 44px / 38px price", async () => {
+  const card = await read("app/research/price/quote-card.tsx"), css = await read("app/research/price/price.module.css");
+  assert.match(card, /priceText\.length >= 7 \? styles\.priceSmall/);
+  assert.match(card, /signedBoth/);
+  assert.doesNotMatch(card, /<b>\{ticker\}<\/b>/);
+  assert.match(css, /\.price\{font:700 44px/); assert.match(css, /\.priceSmall\{font-size:38px\}/); assert.match(css, /grid-template-columns:minmax\(0,1\.15fr\) minmax\(0,1fr\)/);
+});
+test("the chart follows F / G: moving averages 5/25/75, volume bars, crosshair tags, 390x350 and 390x260", async () => {
+  const chart = await read("app/research/price/price-chart.tsx"), css = await read("app/research/price/chart.module.css");
+  assert.match(chart, /period: 5, color: "#f3d98b"/); assert.match(chart, /period: 25, color: "#8fb0ff"/); assert.match(chart, /period: 75, color: "#c3a6ff"/);
+  assert.match(css, /aspect-ratio:390\/350/); assert.match(css, /aspect-ratio:390\/260/);
+  assert.match(chart, /priceTag/); assert.match(chart, /dateTag/);
 });

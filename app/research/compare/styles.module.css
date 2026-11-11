@@ -205,18 +205,18 @@
 .explain small{display:block;margin-top:10px;color:#7d8ca0}
 
 /* result: snapshot — both bars on tracks of the same width; only the higher score is strong */
-.snapLegend{display:grid;gap:14px;margin:14px 0 4px;padding-bottom:8px;border-bottom:1px solid #2a3652}
+.snapLegend{display:grid;gap:14px;margin:8px 0 2px;padding-bottom:6px;border-bottom:1px solid #2a3652}
 .snapLegend span{display:inline-flex;align-items:center;gap:7px;font:700 12px var(--font-geist-mono),ui-monospace,monospace;color:#d6dbea;min-width:0}
-.snapRow{padding:14px 0 6px;border-bottom:1px solid #1d2940}
+.snapRow{padding:8px 0 5px;border-bottom:1px solid #1d2940}
 .snapRow:last-of-type{border-bottom:0}
-.snapLabel{margin:0 0 8px;font-size:14px;color:#d9b56a}
+.snapLabel{margin:0 0 4px;font-size:13px;color:#d9b56a}
 .snapCols{display:grid;gap:18px}
 .snapCell{min-width:0}
 .snapValue{display:flex;align-items:center;gap:10px}
 .scoreTrack{position:relative;flex:1;min-width:0;height:6px;border-radius:3px;background:#242f45;overflow:hidden}
 .scoreTrack i{display:block;height:100%;border-radius:3px;background:#59647c}
-.snapValue strong{flex:none;min-width:34px;text-align:right;font:700 15px var(--font-geist-mono),ui-monospace,monospace;color:#8c98ab}
-.snapCell .factorMetric{display:block;margin-top:6px;font-size:12px;line-height:1.5;color:#7d8ca0;text-align:left;overflow-wrap:anywhere}
+.snapValue strong{flex:none;min-width:34px;text-align:right;font:700 14px var(--font-geist-mono),ui-monospace,monospace;color:#8c98ab}
+.snapCell .factorMetric{display:block;margin-top:3px;font-size:11.5px;line-height:1.35;color:#7d8ca0;text-align:left;overflow-wrap:anywhere}
 
 /* result: strengths and weaknesses by company */
 .companiesHeading{margin:26px 0 4px;font-size:20px;font-weight:700}

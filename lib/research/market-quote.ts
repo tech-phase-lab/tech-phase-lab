@@ -14,7 +14,7 @@ export type MarketQuote = {
   /** Pre-market / after-hours price (prepost=true), when the provider has one. */
   extended: { price: number; change: number | null; percentChange: number | null; asOf: string; session: "pre" | "post" } | null;
 };
-export type Bar = { at: string; open: number; high: number; low: number; close: number };
+export type Bar = { at: string; open: number; high: number; low: number; close: number; volume: number | null };
 export type ChartRange = "1d" | "1w" | "1m" | "3m" | "6m" | "ytd" | "1y" | "3y" | "5y";
 export const CHART_RANGES: ChartRange[] = ["1d", "1w", "1m", "3m", "6m", "ytd", "1y", "3y", "5y"];
 export const isChartRange = (x: unknown): x is ChartRange => typeof x === "string" && (CHART_RANGES as string[]).includes(x);
@@ -63,33 +63,53 @@ export function parseBars(raw: unknown): Bar[] {
   for (const item of body.values) {
     const r = obj(item), open = n(r.open), high = n(r.high), low = n(r.low), close = n(r.close);
     if (typeof r.datetime !== "string" || open === null || high === null || low === null || close === null || close <= 0) continue;
-    bars.push({ at: r.datetime, open, high, low, close });
+    bars.push({ at: r.datetime, open, high, low, close, volume: n(r.volume) });
   }
   return bars.sort((a, b) => a.at.localeCompare(b.at));
+}
+/** Extra bars fetched before the visible ones, so the 75-bar moving average is already complete at the left edge of the chart. */
+export const WARMUP = 74;
+/** How many bars of the range are drawn (null = decided by the calendar: the last session, the last five sessions, this year). */
+function visibleSize(range: ChartRange, now: number): number | null {
+  const ytdDays = Math.min(260, Math.max(5, Math.ceil((now - Date.UTC(new Date(now).getUTCFullYear(), 0, 1)) / 86400000)));
+  return { "1d": null, "1w": null, "1m": 23, "3m": 66, "6m": 130, ytd: null, "1y": 252, "3y": 156, "5y": 260 }[range] ?? ytdDays;
 }
 export function chartSpec(range: ChartRange, now = Date.now()): { interval: "5min" | "30min" | "1day" | "1week"; size: number } {
   const ytdDays = Math.min(260, Math.max(5, Math.ceil((now - Date.UTC(new Date(now).getUTCFullYear(), 0, 1)) / 86400000)));
   switch (range) {
-    case "1d": return { interval: "5min", size: 400 };   // two sessions with pre-market and after-hours (16 hours of 5-minute bars each)
-    case "1w": return { interval: "30min", size: 230 };
-    case "1m": return { interval: "1day", size: 23 };
-    case "3m": return { interval: "1day", size: 66 };
-    case "6m": return { interval: "1day", size: 130 };
-    case "ytd": return { interval: "1day", size: ytdDays };
-    case "1y": return { interval: "1day", size: 260 };
-    case "3y": return { interval: "1week", size: 160 };
-    default: return { interval: "1week", size: 270 };
+    case "1d": return { interval: "5min", size: 400 + WARMUP };   // two sessions with pre-market and after-hours (16 hours of 5-minute bars each)
+    case "1w": return { interval: "30min", size: 230 + WARMUP };
+    case "ytd": return { interval: "1day", size: ytdDays + WARMUP };
+    case "3y": case "5y": return { interval: "1week", size: (visibleSize(range, now) ?? 0) + WARMUP };
+    default: return { interval: "1day", size: (visibleSize(range, now) ?? 0) + WARMUP };
   }
 }
 const day = (at: string) => at.slice(0, 10);
-/** Keeps what the range means: the last session for 1D, the last five sessions for 1W, this calendar year for YTD. */
-export function trimBars(bars: Bar[], range: ChartRange): Bar[] {
+/** Keeps what the range means: the last session for 1D, the last five sessions for 1W, this calendar year for YTD, otherwise the last N bars. */
+export function trimBars(bars: Bar[], range: ChartRange, now = Date.now()): Bar[] {
   if (!bars.length) return bars;
   const last = bars[bars.length - 1], days = [...new Set(bars.map(b => day(b.at)))];
   if (range === "1d") return bars.filter(b => day(b.at) === day(last.at));
   if (range === "1w") { const keep = new Set(days.slice(-5)); return bars.filter(b => keep.has(day(b.at))); }
   if (range === "ytd") return bars.filter(b => b.at.slice(0, 4) === last.at.slice(0, 4));
-  return bars;
+  const size = visibleSize(range, now);
+  return size ? bars.slice(-size) : bars;
+}
+/** What is drawn, and the bars before it (for the moving averages). */
+export function splitBars(all: Bar[], range: ChartRange, now = Date.now()): { bars: Bar[]; before: Bar[] } {
+  const bars = trimBars(all, range, now);
+  return { bars, before: all.slice(0, all.length - bars.length).slice(-WARMUP) };
+}
+/** Simple moving averages of the close over the drawn bars, using the bars before them where needed (null where the history is too short). */
+export function movingAverages(before: Bar[], bars: Bar[], periods: readonly number[]): (number | null)[][] {
+  const closes = [...before, ...bars].map(b => b.close), offset = before.length;
+  return periods.map(period => bars.map((_, i) => {
+    const end = offset + i + 1;
+    if (end < period) return null;
+    let sum = 0;
+    for (let k = end - period; k < end; k++) sum += closes[k];
+    return sum / period;
+  }));
 }
 export function rangeChange(bars: Bar[], previousClose: number | null, range: ChartRange) {
   if (!bars.length) return null;
@@ -137,10 +157,12 @@ export function parseNextEarnings(raw: unknown, today: string): string | null {
 }
 
 /** "715.41 USD": one half-width space between the number and the currency. */
-export const money = (value: number, currency = "USD") => `${value.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} ${currency}`;
-export const signedMoney = (value: number, currency = "USD") => `${value < 0 ? "−" : "+"}${Math.abs(value).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })} ${currency}`;
+export const money = (value: number, currency = "USD") => `${value.toFixed(2)} ${currency}`;
+export const signedMoney = (value: number, currency = "USD") => `${value < 0 ? "−" : "+"}${Math.abs(value).toFixed(2)} ${currency}`;
+/** "+1.86 (+2.40%)": the amount and the percentage in one run, the way the cards show it. */
+export const signedBoth = (amount: number, percent: number) => `${amount < 0 ? "−" : "+"}${Math.abs(amount).toFixed(2)} (${percent < 0 ? "−" : "+"}${Math.abs(percent).toFixed(2)}%)`;
 export const signedPercent = (value: number) => `${value < 0 ? "−" : "+"}${Math.abs(value).toFixed(2)}%`;
-export const plain = (value: number) => value.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+export const plain = (value: number) => value.toFixed(2);
 export function compact(value: number): string {
   const abs = Math.abs(value);
   if (abs >= 1e11) return `${(value / 1e12).toFixed(2)}T`;

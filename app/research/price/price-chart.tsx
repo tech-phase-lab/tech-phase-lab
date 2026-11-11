@@ -1,44 +1,60 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
-import type { Bar } from "@/lib/research/market-quote";
-import { plain } from "@/lib/research/market-quote";
-import styles from "./detail.module.css";
+import { useRef, useState } from "react";
+import { movingAverages, plain, compact, type Bar } from "@/lib/research/market-quote";
+import styles from "./chart.module.css";
 
-const H = 300, PAD = { top: 56, bottom: 16, right: 50, left: 0 };
-const label = (at: string, intraday: boolean) => intraday ? `${at.slice(5, 10).replace("-", "/")} ${at.slice(11, 16)}` : at.slice(5, 10).replace("-", "/").replace(/^0/, "");
-/** Candlesticks (green up, red down) or a line, with a gold crosshair that reads the bar under a finger or the pointer. */
-export default function PriceChart({ bars, mode, intraday, ja }: { bars: Bar[]; mode: "candles" | "line"; intraday: boolean; ja: boolean }) {
+const W = 390, PR = 50;
+const UP = "#4fe3a6", DOWN = "#ff7b7b", GOLD = "#f3d98b";
+export const MA_STYLE = [{ period: 5, color: "#f3d98b", ja: "短期", en: "Short" }, { period: 25, color: "#8fb0ff", ja: "中期", en: "Mid" }, { period: 75, color: "#c3a6ff", ja: "長期", en: "Long" }] as const;
+const axis = (value: number) => Math.abs(value) >= 100 ? value.toFixed(0) : value.toFixed(2);
+
+/** The chart of the design's F and G sheets: candles (or an area line), volume bars, moving averages, thin grid, a gold crosshair with price
+ * and date tags on the axes. `detail` is 390×350 with volume; `market` is 390×260 without. Everything is drawn in a 390-wide frame that scales. */
+export default function PriceChart({ bars, before = [], mode, interval, variant = "detail", ja }: { bars: Bar[]; before?: Bar[]; mode: "candles" | "line"; interval: "intraday" | "daily" | "weekly"; variant?: "detail" | "market"; ja: boolean }) {
   const box = useRef<HTMLDivElement>(null);
-  const [width, setWidth] = useState(360);
-  const [pointer, setPointer] = useState<number | null>(null);
-  useEffect(() => {
-    const element = box.current;
-    if (!element) return;
-    const observer = new ResizeObserver(([entry]) => setWidth(Math.max(240, Math.round(entry.contentRect.width))));
-    observer.observe(element);
-    return () => observer.disconnect();
-  }, []);
-  if (bars.length < 2) return <div ref={box} className={styles.chartEmpty} role="status">{ja ? "チャートのデータがありません" : "No chart data"}</div>;
-  const low = Math.min(...bars.map(b => mode === "candles" ? b.low : b.close)), high = Math.max(...bars.map(b => mode === "candles" ? b.high : b.close));
-  const pad = (high - low || high * 0.02) * 0.08, top = high + pad, bottom = low - pad;
-  const plotW = width - PAD.left - PAD.right, plotH = H - PAD.top - PAD.bottom, step = plotW / bars.length;
-  const x = (i: number) => PAD.left + step * (i + 0.5), y = (v: number) => PAD.top + (top - v) / (top - bottom) * plotH;
-  const ticks = [0, 1, 2, 3].map(i => bottom + (top - bottom) * (i + 0.5) / 4);
-  const index = pointer === null ? null : Math.max(0, Math.min(bars.length - 1, Math.floor((pointer - PAD.left) / step)));
-  const active = index === null ? null : bars[index];
-  const move = (event: React.PointerEvent<SVGSVGElement>) => { const rect = event.currentTarget.getBoundingClientRect(); setPointer(event.clientX - rect.left); };
-  return <div ref={box} className={styles.chart}>
-    <svg width={width} height={H} role="img" aria-label={ja ? "株価チャート" : "Price chart"} onPointerMove={move} onPointerDown={move} onPointerLeave={() => setPointer(null)} onPointerCancel={() => setPointer(null)} style={{ touchAction: "pan-y" }}>
-      {ticks.map(t => <g key={t}><line x1={0} x2={width - PAD.right + 8} y1={y(t)} y2={y(t)} stroke="#243044" strokeDasharray="3 5" /><text x={width - PAD.right + 12} y={y(t) + 4} fill="#8f9bb0" fontSize="10.5" fontFamily="IBM Plex Mono, monospace">{Math.abs(t) >= 100 ? Math.round(t) : t.toFixed(2)}</text></g>)}
-      {mode === "candles" ? bars.map((b, i) => {
-        const up = b.close >= b.open, color = up ? "#4fe3a6" : "#ff7b7b", w = Math.max(1.5, Math.min(12, step * 0.66));
-        return <g key={b.at} stroke={color} fill={color}><line x1={x(i)} x2={x(i)} y1={y(b.high)} y2={y(b.low)} strokeWidth="1.5" /><rect x={x(i) - w / 2} y={Math.min(y(b.open), y(b.close))} width={w} height={Math.max(1.5, Math.abs(y(b.open) - y(b.close)))} /></g>;
-      }) : <><polygon points={`${x(0)},${H - PAD.bottom} ${bars.map((b, i) => `${x(i)},${y(b.close)}`).join(" ")} ${x(bars.length - 1)},${H - PAD.bottom}`} fill="#d9bd7c" opacity=".12" />
-        <polyline points={bars.map((b, i) => `${x(i)},${y(b.close)}`).join(" ")} fill="none" stroke="#e3c981" strokeWidth="2.4" strokeLinejoin="round" /></>}
-      {active && index !== null && <g>
-        <line x1={x(index)} x2={x(index)} y1={PAD.top - 6} y2={H - PAD.bottom} stroke="#e3c981" strokeDasharray="4 4" />
-        <g transform={`translate(${Math.max(40, Math.min(width - PAD.right - 40, x(index)))},6)`}><rect x={-40} width={80} height={38} rx={10} fill="#171409" stroke="#d9bd7c" /><text y={15} textAnchor="middle" fill="#a3aec0" fontSize="11" fontFamily="IBM Plex Mono, monospace">{label(active.at, intraday)}</text><text y={32} textAnchor="middle" fill="#f3d98b" fontSize="15" fontWeight="600" fontFamily="IBM Plex Mono, monospace">{plain(active.close)}</text></g>
-      </g>}
-    </svg>
+  const [cross, setCross] = useState<number | null>(null);
+  const H = variant === "detail" ? 350 : 260, PT = variant === "detail" ? 30 : 24, PB = variant === "detail" ? 250 : 232, VB = 324, VH = 52;
+  const withVolume = variant === "detail" && bars.some(b => (b.volume ?? 0) > 0);
+  const priceBottom = variant === "detail" ? PB : PB;
+  if (bars.length < 2) return <div className={`${styles.frame} ${variant === "detail" ? styles.detail : styles.market}`} role="status"><span className={styles.empty}>{ja ? "チャートのデータがありません" : "No chart data"}</span></div>;
+  const n = bars.length, lo0 = Math.min(...bars.map(b => mode === "candles" ? b.low : b.close)), hi0 = Math.max(...bars.map(b => mode === "candles" ? b.high : b.close));
+  const pad = (hi0 - lo0 || hi0 * 0.02) * (variant === "detail" ? 0.08 : 0.1), lo = lo0 - pad, hi = hi0 + pad, pw = W - PR, step = pw / n, bw = Math.max(1.2, Math.min(14, step * 0.62));
+  const X = (k: number) => step * (k + 0.5), Y = (v: number) => PT + (hi - v) / (hi - lo) * (priceBottom - PT);
+  const rising = bars[n - 1].close >= bars[0].close;
+  const grid = [0, 1, 2, 3].map(i => { const v = hi - (hi - lo) * (i + 0.5) / 4; return { y: Y(v), label: axis(v) }; });
+  const dateIdx = [0.1, 0.3, 0.5, 0.7, 0.9].map(f => Math.min(n - 1, Math.round(n * f)));
+  const label = (at: string) => interval === "intraday" ? (bars[0].at.slice(0, 10) === bars[n - 1].at.slice(0, 10) ? at.slice(11, 16) : `${Number(at.slice(5, 7))}/${Number(at.slice(8, 10))} ${at.slice(11, 16)}`)
+    : interval === "weekly" ? `${at.slice(2, 4)}/${Number(at.slice(5, 7))}` : `${Number(at.slice(5, 7))}/${Number(at.slice(8, 10))}`;
+  const vmax = Math.max(...bars.map(b => b.volume ?? 0), 1);
+  const ma = mode === "candles" ? movingAverages(before, bars, MA_STYLE.map(m => m.period)) : [];
+  const maPath = (series: (number | null)[]) => series.map((v, k) => v === null ? "" : `${k && series[k - 1] !== null ? "L" : "M"}${X(k).toFixed(1)} ${Y(v).toFixed(1)}`).join(" ");
+  const at = (event: React.PointerEvent) => { const rect = box.current!.getBoundingClientRect(); setCross(Math.max(0, Math.min(n - 1, Math.floor((event.clientX - rect.left) / rect.width * W / step)))); };
+  const active = cross === null ? null : bars[cross];
+  const line = bars.map((b, k) => `${k ? "L" : "M"}${X(k).toFixed(1)} ${Y(b.close).toFixed(1)}`).join(" ");
+  const color = rising ? UP : DOWN, gradientId = `area-${variant}`;
+  const lastMa = ma.map(series => { for (let k = series.length - 1; k >= 0; k--) if (series[k] !== null) return series[k]; return null; });
+  const volumeValue = active?.volume ?? bars[n - 1].volume;
+  return <div>
+    {mode === "candles" && <div className={styles.legend}>{MA_STYLE.map((m, i) => <span key={m.period} style={{ color: m.color }}><span className={styles.legendName}>{ja ? m.ja : m.en}</span> {lastMa[i] === null || lastMa[i] === undefined ? "—" : plain(lastMa[i]!)}</span>)}</div>}
+    <div ref={box} className={`${styles.frame} ${variant === "detail" ? styles.detail : styles.market}`} onPointerMove={at} onPointerDown={at} onPointerLeave={event => { if (event.pointerType === "mouse") setCross(null); }} style={{ touchAction: "pan-y" }}>
+      <svg viewBox={`0 0 ${W} ${H}`} aria-hidden="true">
+        <defs><linearGradient id={gradientId} x1="0" y1="0" x2="0" y2="1"><stop offset="0" stopColor={color} stopOpacity=".28" /><stop offset="1" stopColor={color} stopOpacity="0" /></linearGradient></defs>
+        <path d={dateIdx.map(k => `M${X(k).toFixed(1)} 8 V${withVolume ? VB : PB}`).join(" ")} stroke="rgba(217,180,106,.09)" strokeWidth="1" fill="none" />
+        <path d={grid.map(g => `M0 ${g.y.toFixed(1)} H${pw}`).join(" ")} stroke="rgba(217,180,106,.13)" strokeWidth="1" strokeDasharray="3 4" fill="none" />
+        {withVolume && <><line x1="0" y1="258" x2={pw} y2="258" stroke="rgba(217,180,106,.22)" strokeWidth="1" />
+          {bars.map((b, k) => { const up = b.close >= b.open, h = (b.volume ?? 0) / vmax * VH; return <rect key={b.at} x={X(k) - bw / 2} y={VB - h} width={bw} height={h} fill={up ? UP : DOWN} fillOpacity=".55" />; })}</>}
+        {mode === "candles" ? <>
+          {MA_STYLE.map((m, i) => <path key={m.period} d={maPath(ma[i])} fill="none" stroke={m.color} strokeWidth="1.4" strokeLinejoin="round" />)}
+          {bars.map((b, k) => { const up = b.close >= b.open, c = up ? UP : DOWN, yt = Y(Math.max(b.open, b.close)), yb = Math.max(Y(Math.min(b.open, b.close)), yt + 1.5);
+            return <g key={b.at}><path d={`M${X(k).toFixed(1)} ${Y(b.high).toFixed(1)} V${Y(b.low).toFixed(1)}`} stroke={c} strokeWidth="1.2" fill="none" /><rect x={X(k) - bw / 2} y={yt} width={bw} height={yb - yt} fill={c} /></g>; })}
+        </> : <><path d={`${line} L${X(n - 1).toFixed(1)} ${PB} L${X(0).toFixed(1)} ${PB} Z`} fill={`url(#${gradientId})`} /><path d={line} fill="none" stroke={color} strokeWidth="2" strokeLinejoin="round" strokeLinecap="round" /></>}
+        {active && cross !== null && <><line x1={X(cross)} y1="8" x2={X(cross)} y2={withVolume ? VB : PB} stroke={GOLD} strokeWidth="1.2" strokeOpacity=".9" /><line x1="0" y1={Y(active.close)} x2={pw} y2={Y(active.close)} stroke={GOLD} strokeWidth="1.2" strokeOpacity=".9" /><circle cx={X(cross)} cy={Y(active.close)} r="3.5" fill={GOLD} /></>}
+      </svg>
+      {grid.map(g => <span key={g.y} className={styles.axisLabel} style={{ top: `${g.y / H * 100}%` }}>{g.label}</span>)}
+      {withVolume && <span className={styles.volume} style={{ top: `${(VB - VH) / H * 100 - 1}%` }}><span className={styles.jp}>{ja ? "出来高" : "Vol"}</span> {volumeValue ? compact(volumeValue) : "—"}</span>}
+      {dateIdx.filter(k => cross === null || Math.abs(X(k) - X(cross)) > 42).map(k => <span key={k} className={styles.dateLabel} style={{ left: `${X(k) / W * 100}%` }}>{label(bars[k].at)}</span>)}
+      {active && cross !== null && <><span className={styles.priceTag} style={{ top: `${Y(active.close) / H * 100}%` }}>{axis(active.close)}</span>
+        <span className={styles.dateTag} style={{ left: `${X(cross) / W * 100}%` }}>{label(active.at)}</span></>}
+    </div>
   </div>;
 }
