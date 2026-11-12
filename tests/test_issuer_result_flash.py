@@ -31,6 +31,13 @@ class Parsers(unittest.TestCase):
         for name,(period,facts) in expected.items():
             parsed=flash.parse_nebius(fixture(f'nebius-results-{name}.txt'))
             self.assertEqual((parsed['period'],[(k,v) for k,v,_ in parsed['facts']]),(period,facts),name)
+    def test_nebius_q3_2026_pdf_with_garbled_text_publishes_only_the_clean_rows(self):
+        # The real Nov 12 release: extraction dropped the 'U' of USD and split digits in the net income row.
+        parsed=flash.parse_nebius(fixture('nebius-results-q326.txt'))
+        self.assertEqual(parsed['period'],'Q3 2026')
+        self.assertEqual(parsed['facts'],[('revenue','$980.8M','$146.1M'),('adjusted-ebitda','$465.8M','$-5.2M'),('adjusted-net-income','$90.9M','$-100.4M')])
+        # a garbled digit in the revenue row is refused (the stated +571% no longer matches)
+        with self.assertRaises(ValueError): flash.parse_nebius(fixture('nebius-results-q326.txt').replace('980.8','9 80.8',1).replace('Revenues 146.1 9 80.8','Revenues 146.1 580.8'))
     def test_coreweave_table_and_guidance(self):
         parsed=flash.parse_coreweave(fixture('coreweave-results-q326.txt'))
         self.assertEqual(parsed['period'],'Q3 2026')

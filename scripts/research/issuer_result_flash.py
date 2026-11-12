@@ -62,6 +62,17 @@ def signed(text):
     return -abs(value) if negative else value
 
 
+def consistent(prior, current, change):
+    """The table states the change in percent: it must agree with the two values (to the rounding of the printed figures).
+    A digit garbled by PDF text extraction ("(3 7 .5)", "9 80.8") then cannot become a published figure."""
+    if not change.endswith('%') or prior <= 0 or current < 0:
+        return  # n/m or a sign change: nothing to check
+    stated = Decimal(change[:-1].replace(',', ''))
+    actual = (current / prior - 1) * 100
+    if abs(actual - stated) > Decimal('1.5') + abs(actual) * Decimal('0.01'):
+        raise ValueError('change-mismatch')
+
+
 def money_millions(value):
     """Million-dollar figure -> '$582.3M' / '$3.661B' (exact; the value is never rounded)."""
     if abs(value) >= 1000:
@@ -91,13 +102,14 @@ def parse_nebius(text):
         raise ValueError('highlights-heading-missing')
     quarter, year = int(head[1]), int(head[2])
     window = t[head.end():head.end() + 5000]
-    if not re.search(r'In USD \$ millions', window, re.I):
+    if not re.search(r'In U?SD \$? ?millions', window, re.I):
         raise ValueError('units-unrecognized')
     first = re.search(r'(?<!Change )\b(' + str(year - 1) + r') (' + str(year) + r') Change\b(?: 20\d\d 20\d\d Change\b)?.{0,40}?\bRevenues? ('
-                      + NUM + ') (' + NUM + ') ' + CHANGE, window)
+                      + NUM + ') (' + NUM + ') (' + CHANGE + ')', window)
     if not first:
         raise ValueError('revenue-row-unrecognized')
     metrics = {'revenue': (signed(first[4]), signed(first[3]))}
+    consistent(metrics['revenue'][1], metrics['revenue'][0], first[5])
     block = window[first.start():first.start() + 1200]
     stop = block.find('Operating expenses')
     block = block[:stop] if stop > 0 else block
@@ -107,8 +119,12 @@ def parse_nebius(text):
         'adjusted-net-income': r'Adjusted net (?:income|loss)(?: / \((?:loss|income)\))?',
     }
     for key, label in rows.items():
-        found = re.findall(label + ' (' + NUM + ') (' + NUM + ') ' + CHANGE, block)
+        found = re.findall(label + ' (' + NUM + ') (' + NUM + ') (' + CHANGE + ')', block)
         if len(found) == 1:  # a repeated or missing row is ambiguous: leave it out
+            try:
+                consistent(signed(found[0][0]), signed(found[0][1]), found[0][2])
+            except ValueError:
+                continue  # a garbled digit in this row: leave the row out rather than publish it
             metrics[key] = (signed(found[0][1]), signed(found[0][0]))
     if metrics['revenue'][0] <= 0:
         raise ValueError('revenue-not-positive')
