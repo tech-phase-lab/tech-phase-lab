@@ -87,3 +87,14 @@ test('generated publication timestamp cannot replace the original clock',async()
  assert.equal(selections,0);assert.equal((await db.query('SELECT state FROM resolute_rizel_daily_runs')).rows[0].state,'failed');
  }finally{await db.close();}
 });
+
+test('a quiet day needs both lanes and a page that reaches back past the window',async()=>{
+ const {selectDailyCandidates}=await import('../services/resolute-api/rizel-daily-review.mjs');
+ const cov=(c)=>selectDailyCandidates({ok:true,enabled:true,items:[],officialUpdates:[],reportCoverage:c},now).diagnostics.coverageComplete;
+ const old='2026-10-12T00:00:00.000Z',recent='2026-10-14T20:00:00.000Z';
+ assert.equal(cov({configured:true,possiblyTruncated:false,marketLane:true}),true);
+ assert.equal(cov({configured:true,possiblyTruncated:true,oldestPublishedAt:old,marketLane:true}),true);
+ assert.equal(cov({configured:true,possiblyTruncated:true,oldestPublishedAt:recent,marketLane:true}),false);
+ assert.equal(cov({configured:true,possiblyTruncated:false,marketLane:false}),false);
+ assert.equal(cov(undefined),false);
+});

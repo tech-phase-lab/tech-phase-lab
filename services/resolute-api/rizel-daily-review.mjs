@@ -1,4 +1,4 @@
-import {inspectCandidateFeed,generate,isInDailyWindow} from './risk-job.mjs';
+import {inspectCandidateFeed,generate,isInDailyWindow,windowHours} from './risk-job.mjs';
 import {riskDate,parseRiskArticle} from '../../lib/resolute/risk.ts';
 import {selectArticleForReview} from './rizel-worker.mjs';
 
@@ -15,7 +15,9 @@ export function selectDailyCandidates(feed,now=new Date()){
  });
  diagnostics.overDailyLimit=Math.max(0,selected.length-3);selected.splice(3);
  // A quiet day may be claimed only when every configured lane was actually read.
- diagnostics.coverageComplete=diagnostics.reportConfigured===true&&!diagnostics.reportPossiblyTruncated;
+ // Complete = company AND market-wide lanes read, and a full page still reached back past the window start.
+ const reached=!diagnostics.reportPossiblyTruncated||(diagnostics.reportOldestPublishedAt!==null&&Date.parse(diagnostics.reportOldestPublishedAt)<=now.getTime()-windowHours(now)*3600000);
+ diagnostics.coverageComplete=diagnostics.reportConfigured===true&&diagnostics.reportMarketLane===true&&reached;
  return {selected,diagnostics};
 }
 
