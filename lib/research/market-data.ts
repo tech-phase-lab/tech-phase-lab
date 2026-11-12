@@ -70,7 +70,7 @@ export const isMarketChartSymbol = (symbol: string) => Object.hasOwn(MARKET_SYMB
 
 const resolved = new Map<string, { variant: Variant; quote: MarketQuote; at: number } | null>();
 const QUOTE_TTL = 60_000;
-/** The first way of asking that answers (the answer is kept a minute; a refusal five minutes, so a missing symbol does not burn credits every request). */
+/** The first way of asking that answers (the answer is kept a minute; a refusal twenty seconds). */
 async function resolveMarket(id: string): Promise<{ symbol: string; extra: Variant; quote: MarketQuote | null }> {
   const entry = MARKET_SYMBOLS[id];
   const hit = resolved.get(id);
@@ -97,7 +97,7 @@ async function resolveMarket(id: string): Promise<{ symbol: string; extra: Varia
     } catch (error) { tried.push(`symbol search: ${error instanceof Error ? error.message : "failed"}`); }
   }
   console.warn(`market symbol ${id} could not be resolved. ${tried.join(" | ")}`);
-  resolved.set(id, null); setTimeout(() => resolved.delete(id), 5 * 60_000);
+  resolved.set(id, null); setTimeout(() => resolved.delete(id), 20_000); // short: a rate-limit blip must not hide a symbol for minutes
   throw new Error(`unresolved ${id}`);
 }
 
@@ -109,14 +109,19 @@ async function readAll(ticker: string, range: ChartRange): Promise<Bar[]> {
   if (hit && hit.at + (intraday ? TTL : 5 * TTL) > Date.now()) return hit.all;
   const entry = MARKET_SYMBOLS[ticker];
   const base = { interval: spec.interval, outputsize: String(spec.size), order: "desc", ...(intraday ? { prepost: "true" } : {}) };
-  let raw: unknown;
-  if (entry) {
-    const target = await resolveMarket(ticker);
-    raw = await call("time_series", { symbol: target.symbol, ...base, ...target.extra });
-  } else raw = await call("time_series", { symbol: ticker, ...base });
-  const all = parseBars(raw);
-  barMemory.set(memoryKey, { at: Date.now(), all });
-  return all;
+  try {
+    let raw: unknown;
+    if (entry) {
+      const target = await resolveMarket(ticker);
+      raw = await call("time_series", { symbol: target.symbol, ...base, ...target.extra });
+    } else raw = await call("time_series", { symbol: ticker, ...base });
+    const all = parseBars(raw);
+    barMemory.set(memoryKey, { at: Date.now(), all });
+    return all;
+  } catch (error) {
+    if (hit && hit.all.length) return hit.all; // the provider blinked: show the last good bars instead of an empty chart
+    throw error;
+  }
 }
 /** The drawn bars of a range plus the bars before them (for the moving averages). */
 export async function loadBarSet(ticker: string, range: ChartRange): Promise<{ bars: Bar[]; before: Bar[] }> { return splitBars(await readAll(ticker, range), range); }
