@@ -1,5 +1,6 @@
 """Resource-limited PDF text extractor used by the research monitor."""
 from io import BytesIO
+import os
 import re
 import resource
 import sys
@@ -70,7 +71,12 @@ def extract(content):
     if len(reader.pages) > MAX_PAGES:
         raise PdfPageLimitError("page-limit")
     lines, extracted_chars = [], 0
-    for page in reader.pages:
+    # Optional: read only the first pages (a results release states its headline table on page 1; extracting the
+    # whole 8 MB file took ~7 s of CPU and timed out on a busy monitor, Nov 12). Unset means every page, as before.
+    first_pages = int(os.environ.get("PDF_EXTRACT_FIRST_PAGES", "0") or 0)
+    for number, page in enumerate(reader.pages):
+        if first_pages and number >= first_pages:
+            break
         page_text = page.extract_text() or ""
         for value in page_text.splitlines():
             normalized = normalize_line(value)
