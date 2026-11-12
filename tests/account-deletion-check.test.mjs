@@ -7,7 +7,7 @@ import {billingStore} from '../services/tech-phase-billing/store.mjs';
 import {liveBackend} from '../services/tech-phase-billing/live-transport.mjs';
 
 const user='user_Buyer';
-const row=(id='old')=>({id,user_id:user,paypal_id:'I-ABCDEFGH'+id,currency:'JPY',state:'cancelled',updated_at:'2026-10-01'});
+const row=(id='old')=>({id,user_id:user,paypal_id:'I-ABCDEFGH'+id,currency:'JPY',minor:2980,state:'cancelled',updated_at:'2026-10-01'});
 function fixture(rows=[row()],states=['CANCELLED']){
  return {plans:{JPY:'plan'},store:{deletionContracts:async()=>rows,summary:async()=>({proExpiresAt:'2026-11-30T00:00:00Z',reviewRequired:false})},
  paypal:{get:async id=>{const n=rows.findIndex(r=>r.paypal_id===id);return {id,custom_id:rows[n].id,plan_id:'plan',status:states[n]};}}};

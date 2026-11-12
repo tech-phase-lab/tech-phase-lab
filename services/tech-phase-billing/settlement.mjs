@@ -1,4 +1,4 @@
-import { offer } from './paypal.mjs';
+import { offer, planKey, periodOfMinor, MONTHS } from './paypal.mjs';
 const reject = () => { throw Error('SETTLEMENT_REVIEW_REQUIRED'); };
 export function amountMinor(money, currency) {
   if (money?.currency_code !== currency || typeof money.value !== 'string') return null;
@@ -18,9 +18,11 @@ export function monthlyBoundary(anchor, count) {
   date.setUTCDate(Math.min(day,last));
   return date.toISOString();
 }
+// The billing period (month/year) of a stored contract, from its stored price.
+export const localPeriod = local => periodOfMinor(local.currency, local.minor);
 export function assertSubscription(local, remote, plans) {
   if (!local?.paypal_id || remote?.id !== local.paypal_id || remote.custom_id !== local.id ||
-      remote.plan_id !== plans[local.currency] || (remote.quantity !== undefined && remote.quantity !== '1') ||
+      !plans[planKey(local.currency, localPeriod(local))] || remote.plan_id !== plans[planKey(local.currency, localPeriod(local))] || (remote.quantity !== undefined && remote.quantity !== '1') ||
       (remote.shipping_amount && amountMinor(remote.shipping_amount,local.currency) !== 0)) reject();
 }
 // Conservative automatic settlement: only the latest paid regular cycle with a
@@ -28,14 +30,16 @@ export function assertSubscription(local, remote, plans) {
 // Dates alone, cycle counts alone, approval and ACTIVE never grant access.
 export function verifiedPeriod(local, remote, transactions, plans, now = Date.now(), storedPeriod = null) {
   assertSubscription(local,remote,plans);
-  const q = offer(local.currency), info = remote.billing_info, cycles = info?.cycle_executions, cycle = cycles?.[0];
+  const period = localPeriod(local), months = MONTHS[period];
+  const q = offer(local.currency, period), info = remote.billing_info, cycles = info?.cycle_executions, cycle = cycles?.[0];
   if (!['ACTIVE','CANCELLED','SUSPENDED','EXPIRED'].includes(remote.status) || local.minor !== q.minor ||
       !Array.isArray(cycles) || cycles.length !== 1 || cycle.tenure_type !== 'REGULAR' || cycle.sequence !== 1 ||
       !Number.isInteger(cycle.cycles_completed) || cycle.cycles_completed < 1 ||
       info.failed_payments_count !== 0 || amountMinor(info.outstanding_balance,q.currency) !== 0 ||
       amountMinor(info.last_payment?.amount,q.currency) !== q.minor) reject();
-  const expectedStart = monthlyBoundary(remote.start_time,cycle.cycles_completed - 1);
-  const expectedEnd = monthlyBoundary(remote.start_time,cycle.cycles_completed);
+  // A yearly cycle is 12 calendar months from the original anchor (Feb 29 -> Feb 28 -> Feb 29).
+  const expectedStart = monthlyBoundary(remote.start_time,(cycle.cycles_completed - 1) * months);
+  const expectedEnd = monthlyBoundary(remote.start_time,cycle.cycles_completed * months);
   // PayPal can schedule the first renewal on the following UTC date (observed
   // in Sandbox). Bound that initial offset to less than 24 hours; retain the
   // existing strict renewal rule instead of extrapolating an unverified clock.

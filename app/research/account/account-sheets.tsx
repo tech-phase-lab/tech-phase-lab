@@ -26,8 +26,16 @@ function Sheet({ title, onClose, children, plain = false, dismissible = true }: 
   </div>;
 }
 
-/** A5 / A5b: the consent starts off, and "PayPalへ進む" stays dimmed until it is ticked. */
-export function UpgradeSheet({ ja, mode, blocked, refresh, onClose }: { ja: boolean; mode: Mode | null; blocked?: boolean; refresh: (force?: boolean) => Promise<void>; onClose: () => void }) {
+/** Start a checkout and go straight to PayPal. The server chooses the PayPal plan from currency and period; no plan id is sent. */
+export async function startCheckout(mode: Mode, refresh: (force?: boolean) => Promise<void>, currency: "JPY" | "USD", period: "month" | "year") {
+  await refresh(true);
+  const result = await billingRequest("create", { currency, period, acceptedTerms: mode === "live" ? "pro-live-v1" : "sandbox-v1" }, AbortSignal.timeout(20_000), mode);
+  window.location.assign(sandboxApproval(result.approvalUrl, mode));
+}
+const SHEET_PRICE = { JPY: { month: "¥2,980", year: "¥29,800" }, USD: { month: "$20", year: "$200" } } as const;
+
+/** Resume sheet (used after stopping renewal): the consent starts off, and "PayPalへ進む" stays dimmed until it is ticked. */
+export function UpgradeSheet({ ja, mode, blocked, refresh, onClose, currency = "JPY", period = "month" }: { ja: boolean; mode: Mode | null; blocked?: boolean; refresh: (force?: boolean) => Promise<void>; onClose: () => void; currency?: "JPY" | "USD"; period?: "month" | "year" }) {
   const [agreed, setAgreed] = useState(false);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
@@ -37,9 +45,7 @@ export function UpgradeSheet({ ja, mode, blocked, refresh, onClose }: { ja: bool
     if (!mode || busy || !agreed) return;
     setBusy(true); setError("");
     try {
-      await refresh(true);
-      const result = await billingRequest("create", { currency: "JPY", acceptedTerms: mode === "live" ? "pro-live-v1" : "sandbox-v1" }, AbortSignal.timeout(20_000), mode);
-      window.location.assign(sandboxApproval(result.approvalUrl, mode));
+      await startCheckout(mode, refresh, currency, period);
     } catch (e) {
       setBusy(false);
       setError(e instanceof Error && e.message === "existing-subscription" ? "existing" : "failed");
@@ -48,14 +54,14 @@ export function UpgradeSheet({ ja, mode, blocked, refresh, onClose }: { ja: bool
   return <Sheet title={t("PROにアップグレード", "Upgrade to PRO")} onClose={onClose} dismissible={!busy}>
     <div className={styles.sBox}>
       <div className={styles.kv}><span>{t("プラン", "Plan")}</span><b>Tech Phase PRO</b></div>
-      <div className={styles.kv}><span>{t("月額料金", "Monthly price")}</span><b>¥2,980</b></div>
-      <div className={styles.kv}><span>{t("更新", "Renewal")}</span><b>{t("毎月自動で更新", "Renews monthly")}</b></div>
+      <div className={styles.kv}><span>{t("料金", "Price")}</span><b>{SHEET_PRICE[currency][period]} / {period === "year" ? t("年", "year") : t("月", "month")}</b></div>
+      <div className={styles.kv}><span>{t("更新", "Renewal")}</span><b>{period === "year" ? t("毎年自動で更新", "Renews yearly") : t("毎月自動で更新", "Renews monthly")}</b></div>
       <div className={styles.kv}><span>{t("お支払い", "Payment")}</span><b>PayPal</b></div>
     </div>
     <label className={styles.check}>
       <input type="checkbox" checked={agreed} disabled={busy || closed} onChange={event => setAgreed(event.target.checked)} />
       <span className={styles.box}><i>{agreed && check}</i></span>
-      <span>{ja ? <><Link href="/terms">利用規約</Link>に同意し、毎月自動で更新されることを確認しました。</> : <>I agree to the <Link href="/terms">Terms</Link> and understand it renews monthly.</>}</span>
+      <span>{ja ? <><Link href="/terms">利用規約</Link>に同意し、{period === "year" ? "毎年" : "毎月"}自動で更新されることを確認しました。</> : <>I agree to the <Link href="/terms">Terms</Link> and understand it renews {period === "year" ? "yearly" : "monthly"}.</>}</span>
     </label>
     {closed && <p className={styles.err}>{t("お申し込みの受付は、現在停止中です。", "New subscriptions are closed right now.")}</p>}
     {error === "failed" && <p className={styles.err} role="alert">{t("お申し込みを開始できませんでした。時間をおいて、もう一度お試しください。", "Could not start checkout. Please try again shortly.")}</p>}

@@ -348,9 +348,10 @@ test("stock search UI separates free identity data from licensed prices and news
   assert.doesNotMatch(dashboard, /変化を追う/);
   assert.match(dashboard, /変化を読み、一歩先へ。/);
   const plans = await readFile(new URL("../app/research/plan-cards.tsx", import.meta.url), "utf8");
-  assert.match(plans, /お申し込み準備中/);
+  const offer = await readFile(new URL("../app/research/pro-offer-card.tsx", import.meta.url), "utf8");
+  assert.match(offer, /PayPalで申し込む/);
+  assert.doesNotMatch(plans + offer, /お申し込み準備中|NEW/);
   assert.match(plans, /厳選ニュース/);
-  assert.match(plans, /className=\{styles.cta\} disabled/);
   assert.match(dashboard, /Read the shifts. Think ahead./);
   assert.match(review, /根拠付きリサーチレビュー/);
   assert.match(review, /params\.set\("kind", "annual"\)/);

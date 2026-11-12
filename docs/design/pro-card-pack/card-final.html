@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PRO紹介カード 完成デザイン</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Noto+Serif+JP:wght@500;700&display=swap">
+<style>
+body{margin:0;background:#050607;font-family:'Noto Sans JP',system-ui,sans-serif;color:#ece8dc}
+.wrap{box-sizing:border-box;padding:40px 20px;display:flex;flex-direction:column;align-items:center}
+a{color:#a9a597}a:hover{color:#f6e2ae}
+.frame{width:100%;max-width:420px;padding:1.5px;border-radius:22px;background:linear-gradient(150deg,#f3dc9f 0%,#8a7440 38%,#3d3622 60%,#d9b25f 100%)}
+.card{position:relative;overflow:hidden;box-sizing:border-box;padding:24px 22px 26px;border-radius:21px;background:linear-gradient(165deg,#15130c 0%,#0b0c0d 100%)}
+.head{display:flex;align-items:center;gap:10px;margin-bottom:32px}
+.head span{font-size:14px;letter-spacing:.22em;color:#d9b25f}
+.tabs{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.tabs .g{display:flex;gap:18px}
+.tab{min-height:40px;padding:0 0 3px;background:none;border:none;border-bottom:2px solid transparent;font-family:inherit;font-size:14px;font-weight:700;color:#6f6c63;cursor:pointer}
+.tab[aria-pressed=true]{color:#f0d79a;border-bottom-color:#d9b25f}
+.yr{position:relative;display:inline-block}
+.bubble{position:absolute;bottom:calc(100% - 2px);right:-4px;pointer-events:none;white-space:nowrap;padding:2px 7px;border-radius:7px;background:#e3c07a;color:#140f03;font-size:10px;font-weight:700;letter-spacing:.02em}
+.bubble i{position:absolute;bottom:-3px;right:13px;width:7px;height:7px;background:#e3c07a;transform:rotate(45deg)}
+.price{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;margin-top:10px}
+.price .n{font-family:'Noto Serif JP',serif;font-size:48px;font-weight:700;line-height:1.1;color:#f0d79a}
+.price .u{font-size:14px;color:#a9a597}
+.price .o{font-size:14px;color:#8d8a7f;text-decoration:line-through double;text-decoration-thickness:1px}
+.pp{position:relative;overflow:hidden;box-sizing:border-box;width:100%;margin-top:18px;min-height:56px;border:none;border-radius:14px;background:linear-gradient(135deg,#f6e2ae 0%,#d9b25f 55%,#b8923f 100%);color:#1c1608;font-family:inherit;font-size:16px;font-weight:700;letter-spacing:.06em;cursor:pointer;box-shadow:0 6px 24px rgba(217,178,95,.25)}
+.pp:after{content:"";position:absolute;top:0;left:-60%;width:40%;height:100%;background:linear-gradient(100deg,rgba(255,255,255,0) 0%,rgba(255,255,255,.75) 50%,rgba(255,255,255,0) 100%);transform:skewX(-20deg);animation:shine 3.2s ease-in-out infinite}
+@keyframes shine{0%{left:-60%}45%{left:130%}100%{left:130%}}
+@media (prefers-reduced-motion:reduce){.pp:after{animation:none;display:none}}
+.lead{margin-top:22px;font-size:14px;color:#8d8a7f}
+.h{display:flex;align-items:center;gap:12px;margin:26px 0 14px;font-size:13px;letter-spacing:.28em;color:#d9b25f}
+.h i{flex:1;height:1px;background:linear-gradient(90deg,#6e5d33,rgba(110,93,51,0))}
+.f{display:flex;align-items:baseline;gap:10px;margin:0 0 13px;font-size:14px;line-height:1.6}
+.f:before{content:"";flex:none;width:8px;height:8px;border-radius:2px;background:#d9b25f;transform:translateY(-1px)}
+.f b{color:#fff;font-weight:700}
+.f span{color:#8d8a7f;padding-left:10px;border-left:1px solid #3a3a36}
+.note{width:100%;max-width:420px;margin-top:16px;padding:0 20px;box-sizing:border-box;font-size:11px;line-height:1.8;color:#6f6c63;text-align:center}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="frame"><div class="card">
+<div class="head">
+<svg width="26" height="22" viewBox="0 0 26 22" role="img" aria-label="PRO" fill="none" stroke="#d9b25f" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round"><path d="M3 18 L2 6 L8.5 11 L13 3 L17.5 11 L24 6 L23 18 Z"/><path d="M3.5 20.5 H22.5"/></svg>
+<span>TECH PHASE PRO</span>
+</div>
+<div class="tabs">
+<div class="g"><button class="tab" id="jpy" type="button">日本円</button><button class="tab" id="usd" type="button">米ドル</button></div>
+<div class="g"><button class="tab" id="mon" type="button">月額</button>
+<span class="yr"><span class="bubble">17%OFF<i></i></span><button class="tab" id="yr" type="button">年額</button></span></div>
+</div>
+<div class="price"><span class="n" id="n"></span><span class="u" id="u"></span><span class="o" id="o"></span></div>
+<button class="pp" type="button">PayPalで申し込む</button>
+<div class="lead">無料プランのすべての機能に加えて</div>
+<div class="h"><span>読み解く</span><i></i></div>
+<div class="f"><b>決算リサーチ</b><span>一手先まで読む独自の分析</span></div>
+<div class="f"><b>連関マップ</b><span>競合・提携・協業の関係を図解</span></div>
+<div class="f"><b>テーマランキング</b><span>いま強い分野がすぐ分かる</span></div>
+<div class="f"><b>銘柄比較 PRO</b><span>迷う2〜3銘柄を瞬時に見極める</span></div>
+<div class="f"><b>財務レーダー</b><span>守る力と稼ぐ力を一望</span></div>
+<div class="h"><span>すぐ知る</span><i></i></div>
+<div class="f"><b>ハイテク速報</b><span>リアルタイム・全件</span></div>
+<div class="f"><b>スマホ通知</b><span>目標株価・決算・指標・ニュース</span></div>
+<div class="f"><b>監視22銘柄</b><span>主要株の変化を見逃さない</span></div>
+<div class="h"><span>資産を管理</span><i></i></div>
+<div class="f"><b>米国株の資産管理</b><span>スクショで持ち株を登録</span></div>
+<div class="h"><span>会員だけの場</span><i></i></div>
+<div class="f"><b>週刊 Tech Phase PRO</b><span>1週間の変化と展望</span></div>
+<div class="f"><b>リゼルのひとりごと</b><span>文章と音声で相場を語る</span></div>
+<div class="f" style="margin-bottom:0"><b>リゼルに聞く</b><span>会員の疑問を厳選して深掘り</span></div>
+</div></div>
+<div class="note">PROプランは自動更新です。解約はマイアカウントからいつでも可能です。<br><a href="#terms">利用規約</a> ・ <a href="#tokushoho">特定商取引法に基づく表記</a></div>
+</div>
+<script>
+var cur='JPY',per='Y';
+var P={JPY:{M:['2,980円','/ 月(税込)'],Y:['29,800円','/ 年(税込)'],O:'35,760円'},USD:{M:['20ドル','/ 月'],Y:['200ドル','/ 年'],O:'240ドル'}};
+function draw(){var p=P[cur];document.getElementById('n').textContent=p[per][0];document.getElementById('u').textContent=p[per][1];
+var o=document.getElementById('o');o.textContent=per==='Y'?p.O:'';o.style.display=per==='Y'?'':'none';
+[['jpy',cur==='JPY'],['usd',cur==='USD'],['mon',per==='M'],['yr',per==='Y']].forEach(function(x){document.getElementById(x[0]).setAttribute('aria-pressed',x[1])})}
+document.getElementById('jpy').onclick=function(){cur='JPY';draw()};
+document.getElementById('usd').onclick=function(){cur='USD';draw()};
+document.getElementById('mon').onclick=function(){per='M';draw()};
+document.getElementById('yr').onclick=function(){per='Y';draw()};
+draw();
+</script>
+</body>
+</html>

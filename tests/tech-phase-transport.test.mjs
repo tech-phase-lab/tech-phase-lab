@@ -54,7 +54,7 @@ test('gateway verifies owner and origin then backend receives only trusted ident
   return backend(new Request(url,options));
  }});
  const r=await gateway(request('create',{currency:'JPY',acceptedTerms:'sandbox-v1'},{cookie:'private','x-tech-phase-user':'victim',authorization:'Bearer forged'}),'create');
- assert.equal(r.status,200);assert.deepEqual((await r.json()).args,[ownerId,'JPY','sandbox-v1']);
+ assert.equal(r.status,200);assert.deepEqual((await r.json()).args,[ownerId,'JPY','sandbox-v1','month']);
  user='other';assert.equal((await gateway(request('status'),'status')).status,403);
  user=null;assert.equal((await gateway(request('status'),'status')).status,401);user=ownerId;
  assert.equal((await gateway(request('create',{}, {origin:'https://evil.example'}),'create')).status,403);

@@ -1,5 +1,5 @@
 import { randomUUID } from 'node:crypto';
-import { offer } from './paypal.mjs';
+import { offer, periodOfMinor } from './paypal.mjs';
 // A pg Pool-compatible dependency. No process-global pool or fallback database.
 export function billingStore(pool, mode = 'sandbox') {
   if(!['sandbox','live'].includes(mode))throw Error('BILLING_DISABLED');
@@ -15,7 +15,7 @@ export function billingStore(pool, mode = 'sandbox') {
     async deletionContracts(userId) {
       // No state filter: a historical row must not conceal a still-live provider contract.
       // The extra row makes truncation detectable. This is not a deletion authority.
-      return (await pool.query(`SELECT id,user_id,paypal_id,currency,state,updated_at
+      return (await pool.query(`SELECT id,user_id,paypal_id,currency,minor,state,updated_at
         FROM ${S}.subscriptions WHERE user_id=$1 ORDER BY id LIMIT 21`,[userId])).rows;
     },
     async summary(userId, now = Date.now()) {
@@ -23,12 +23,12 @@ export function billingStore(pool, mode = 'sandbox') {
       // One statement gives access, selected contract and review state the same
       // database snapshot, even if a refund arrives while this request runs.
       const row=(await pool.query(`WITH selected AS (
-        SELECT id,currency,state FROM ${S}.subscriptions WHERE user_id=$1
+        SELECT id,currency,minor,state FROM ${S}.subscriptions WHERE user_id=$1
         ORDER BY (state NOT IN ('cancelled','expired')) DESC,created_at DESC,id DESC LIMIT 1
       ), access AS (
         SELECT max(period_end) AS until FROM ${S}.entitlement_periods
         WHERE user_id=$1 AND period_start <= $2 AND period_end > $2
-      ) SELECT s.id,s.currency,s.state,a.until,EXISTS (
+      ) SELECT s.id,s.currency,s.minor,s.state,a.until,EXISTS (
         SELECT 1 FROM selected chosen WHERE
           EXISTS (SELECT 1 FROM ${S}.review_holds h WHERE h.subscription_id=chosen.id) OR
           EXISTS (SELECT 1 FROM ${S}.payments p JOIN ${S}.adverse_transactions adverse USING(transaction_id)
@@ -36,11 +36,11 @@ export function billingStore(pool, mode = 'sandbox') {
       ) AS review_required FROM access a LEFT JOIN selected s ON true`,[userId,new Date(now)])).rows[0];
       const until=row.until ? new Date(row.until).toISOString() : null;
       return {environment:mode,plan:until ? 'pro' : 'free',proExpiresAt:until,
-        subscription:row.id ? {id:row.id,currency:row.currency,state:row.state} : null,
+        subscription:row.id ? {id:row.id,currency:row.currency,period:row.minor===undefined ? undefined : periodOfMinor(row.currency,row.minor),state:row.state} : null,
         reviewRequired:row.review_required === true};
     },
-    async reserve(userId, currency, termsVersion) {
-      const q = offer(currency);
+    async reserve(userId, currency, termsVersion, period = 'month') {
+      const q = offer(currency, period);
       if (typeof userId !== 'string' || !userId || userId.length > 128 ||
           typeof termsVersion !== 'string' || !termsVersion || termsVersion.length > 128) throw Error('INVALID_CHECKOUT');
       return transaction(async db => {
@@ -49,7 +49,7 @@ export function billingStore(pool, mode = 'sandbox') {
           VALUES ($1,$2,$3,$4,$5) ON CONFLICT (user_id) WHERE state NOT IN ('cancelled','expired') DO NOTHING`,
           [randomUUID(),userId,q.currency,q.minor,termsVersion]);
         const row = (await db.query(`SELECT * FROM ${S}.subscriptions WHERE user_id=$1 AND state NOT IN ('cancelled','expired')`,[userId])).rows[0];
-        if (!row || row.currency !== currency || row.terms_version !== termsVersion) throw Error('EXISTING_SUBSCRIPTION');
+        if (!row || row.currency !== currency || row.minor !== q.minor || row.terms_version !== termsVersion) throw Error('EXISTING_SUBSCRIPTION');
         return row;
       });
     },

@@ -17,7 +17,7 @@ export function sandboxReadiness(env) {
   if (!missing.some(key => key.startsWith('TECH_PHASE_PAYPAL_'))) {
     try {
       const config = sandboxConfig(env);
-      if (config.plans.JPY === config.plans.USD) problems.push('distinct-currency-plans-required');
+      if (new Set(Object.values(config.plans)).size !== Object.keys(config.plans).length) problems.push('distinct-currency-plans-required');
     } catch { problems.push('invalid-paypal-config'); }
   }
   if (!missing.includes('TECH_PHASE_BILLING_SANDBOX_DATABASE_URL')) {

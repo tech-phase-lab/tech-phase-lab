@@ -45,10 +45,12 @@ export function sandboxHandler({env,identity,ownerId,services}) {
       if(action==='status') return response(await (await services()).store.summary(userId));
       const body=await readBody(request,2048);
       const keys=action==='create'?['currency','acceptedTerms']:['id'];
-      if(Object.keys(body).length!==keys.length || keys.some(k=>!Object.hasOwn(body,k)) ||
+      // "period" (month|year) is optional; the server picks the PayPal plan from currency and period. No plan id is accepted.
+      const extra=action==='create' && Object.hasOwn(body,'period') ? 1 : 0;
+      if(Object.keys(body).length!==keys.length+extra || keys.some(k=>!Object.hasOwn(body,k)) || (extra && !['month','year'].includes(body.period)) ||
         (action==='create' ? !['JPY','USD'].includes(body.currency) || typeof body.acceptedTerms!=='string' : !uuid.test(body.id ?? ''))) return response({error:'input'},400);
       const svc=await services();
-      if(action==='create') return response(await svc.checkout.start(userId,body.currency,body.acceptedTerms));
+      if(action==='create') return response(await svc.checkout.start(userId,body.currency,body.acceptedTerms,body.period ?? 'month'));
       if(action==='cancel') return response(await svc.checkout.cancel(userId,body.id));
       return response(await svc.reconciliation.reconcile(userId,body.id));
     } catch(error) {
