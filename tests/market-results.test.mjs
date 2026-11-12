@@ -120,3 +120,19 @@ test('issuer-table flashes (ir-flash-) are accepted only for earnings from the i
     { ...base, facts:[{ ...base.facts[0], key:'made-up' }] },
   ]) assert.throws(() => parseResultBriefs([bad]));
 });
+
+test('issuer-table flashes keep the prior-year value as comparisons.yearAgo, and only when it has the same unit', () => {
+  const base = { id:'556', researchId:'ir-flash-556', kind:'earnings', ticker:'CRWV', period:'Q3 2026',
+    titleJa:'CRWV Q3 2026決算：売上高$3.661B', titleEn:'CRWV Q3 2026 earnings: Revenue $3.661B',
+    facts:[{key:'revenue',ja:'売上高',en:'Revenue',value:'$3.661B',comparisons:{yearAgo:'$1.365B'}},
+           {key:'net-income',ja:'純損益',en:'Net income / (loss)',value:'$-709M',comparisons:{yearAgo:'$-110B'}}],
+    url:'https://www.sec.gov/Archives/edgar/data/1769628/000176962826000461/coreweave3q26earningspress.htm', publisher:'CoreWeave IR (SEC 8-K)',
+    publishedAt:'2026-11-10T21:07:48.058+00:00', observedAt:'2026-11-10T21:07:48.058+00:00', publicAt:'2026-11-10T21:07:50.000+00:00',
+    processingMs:50, sourceToDetectionMs:null, detectionToPublicMs:2000 };
+  const [brief] = parseResultBriefs([base]);
+  assert.equal(brief.facts[0].comparisons?.yearAgo, '$1.365B');
+  assert.equal(brief.facts[1].comparisons, undefined);   // $-110B does not match the unit of $-709M: dropped, never guessed
+  // an X post can never carry it
+  const post = { ...base, id:'1', researchId:'x-result-1', url:'https://x.com/wallstengine/status/1' };
+  assert.equal(parseResultBriefs([post])[0].facts[0].comparisons, undefined);
+});
