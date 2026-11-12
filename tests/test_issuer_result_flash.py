@@ -188,4 +188,21 @@ class FirstPages(unittest.TestCase):
         self.assertIn('Second page',both)
         self.assertIn('first page',first); self.assertNotIn('Second page',first)
 
+class DirectFetch(unittest.TestCase):
+    def test_only_the_issuer_asset_host_is_downloaded_and_codes_name_the_failing_step(self):
+        for url in ('https://evil.example/a.pdf','http://assets.nebius.com/a.pdf','https://user@assets.nebius.com/a.pdf','https://nebius.com/a.pdf'):
+            with self.assertRaises(ValueError) as c: flash.direct_pdf(url)
+            self.assertEqual(str(c.exception),'host-not-allowed')
+        self.assertEqual(flash.failure_code(ValueError('fetch-empty')),'fetch-empty')
+        self.assertEqual(flash.failure_code(ValueError('PDF text extraction timed out')),'extract-timeout')
+        self.assertEqual(flash.failure_code(ValueError('Empty or oversized source')),'fetch-oversized')
+    def test_a_failing_letter_does_not_hide_the_release_pdfs_own_outcome(self):
+        def fetch(url,ticker):
+            if url==NB_PAGE: return ('<a href="%s">r</a><a href="%s">l</a>'%(PDF,LETTER)).encode(),'text/html'
+            if url==LETTER: raise ValueError('fetch-empty')
+            return b'%PDF-1.4 x','application/pdf'
+        with mock.patch.object(monitor,'extract_pdf_text',lambda c,first_pages=0:'a release page without the table, words words words words words'):
+            with self.assertRaises(ValueError) as c: flash.nebius_pdf_text(NB_PAGE,fetch)
+        self.assertEqual(str(c.exception),'no-heading')   # the first PDF's outcome, not the letter's 'fetch-empty'
+
 if __name__=='__main__': unittest.main()
