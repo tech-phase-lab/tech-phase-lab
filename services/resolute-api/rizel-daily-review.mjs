@@ -1,4 +1,4 @@
-import {inspectCandidateFeed,generate,isCurrentJstPublication} from './risk-job.mjs';
+import {inspectCandidateFeed,generate,isInDailyWindow} from './risk-job.mjs';
 import {riskDate,parseRiskArticle} from '../../lib/resolute/risk.ts';
 import {selectArticleForReview} from './rizel-worker.mjs';
 
@@ -9,11 +9,13 @@ export function selectDailyCandidates(feed,now=new Date()){
  const diagnostics={...intake.diagnostics,outsideDailyWindow:0,duplicateHeadline:0,overDailyLimit:0};
  const seen=new Set();
  const selected=intake.candidates.filter(c=>{
-  if(!isCurrentJstPublication(c.publishedAt,now)){diagnostics.outsideDailyWindow++;return false;}
+  if(!isInDailyWindow(c.publishedAt,now)){diagnostics.outsideDailyWindow++;return false;}
   if(seen.has(c.fingerprint)){diagnostics.duplicateHeadline++;return false;}
   seen.add(c.fingerprint);return true;
  });
  diagnostics.overDailyLimit=Math.max(0,selected.length-3);selected.splice(3);
+ // A quiet day may be claimed only when every configured lane was actually read.
+ diagnostics.coverageComplete=diagnostics.reportConfigured===true&&!diagnostics.reportPossiblyTruncated;
  return {selected,diagnostics};
 }
 
@@ -22,7 +24,7 @@ export function selectDailyCandidates(feed,now=new Date()){
  * Daily claims survive errors: retrying cannot silently repeat paid generation.
  */
 export async function prepareDailyReview({enabled=false,readFeed,selectionPool,budgetPool,apiKey,
- now=new Date(),summarize=generate,select=selectArticleForReview,fetcher=fetch}) {
+ publishPool,now=new Date(),summarize=generate,select=selectArticleForReview,fetcher=fetch}) {
  if(!enabled)return {state:'disabled'};
  const jst=new Date(now.getTime()+9*3600000);
  if([0,6].includes(jst.getUTCDay())||jst.getUTCHours()!==7)return {state:'outside-window'};
@@ -30,7 +32,7 @@ export async function prepareDailyReview({enabled=false,readFeed,selectionPool,b
  const claim=await selectionPool.query(`INSERT INTO public.resolute_rizel_daily_runs(day,state,started_at)
  VALUES($1,'processing',$2) ON CONFLICT DO NOTHING RETURNING day`,[day,now.toISOString()]);
  if(!claim.rows.length)return {state:'already-claimed',day};
- const refs=[];let stage='source',diagnostics;
+ const refs=[],articles=[];let stage='source',diagnostics;
  try{
   const intake=selectDailyCandidates(await readFeed(),now);
   diagnostics=intake.diagnostics;
@@ -46,17 +48,30 @@ export async function prepareDailyReview({enabled=false,readFeed,selectionPool,b
    // Model classification is not verified evidence for D's factual conditions.
    const result=await select({article,evidence:[],selectionPool,budgetPool,apiKey,now});
    if(result.publication!=='withheld'||result.state!=='selected')throw Error('SELECTION_UNAVAILABLE');
-   refs.push({articleId:result.articleId,articleRevision:result.articleRevision});
+   refs.push({articleId:result.articleId,articleRevision:result.articleRevision});articles.push(article);
    await selectionPool.query('UPDATE public.resolute_rizel_daily_runs SET selection_refs=$2 WHERE day=$1',[day,JSON.stringify(refs)]);
   }
   if(selected.length&&!refs.length)throw Error('NO_VERIFIED_OUTPUT');
   stage='readback';
+  // Publication stays gated (owner switch + approval variable); this only stores what the owner can preview.
+  const stored=articles.length?articles:(diagnostics.coverageComplete&&!selected.length?[]:null);
+  if(stored)await saveRiskDay(publishPool??budgetPool,day,stored,now);
   await selectionPool.query("UPDATE public.resolute_rizel_daily_runs SET state='ready',finished_at=$2 WHERE day=$1",[day,new Date().toISOString()]);
   const saved=(await selectionPool.query('SELECT state,candidate_count,selection_refs,publication FROM public.resolute_rizel_daily_runs WHERE day=$1',[day])).rows[0];
   if(saved?.state!=='ready'||saved.candidate_count!==selected.length||saved.publication!=='withheld'||!Array.isArray(saved.selection_refs)||saved.selection_refs.length!==refs.length||refs.some((ref,i)=>saved.selection_refs[i]?.articleId!==ref.articleId||saved.selection_refs[i]?.articleRevision!==ref.articleRevision))throw Error('READBACK_MISMATCH');
   return {state:refs.length?'ready':'no-candidates',day,count:refs.length,publication:'withheld',storageVerified:true,diagnostics};
  }catch{
   await selectionPool.query("UPDATE public.resolute_rizel_daily_runs SET state='failed',finished_at=$2 WHERE day=$1",[day,now.toISOString()]);
+  // A real failure is recorded so the app can say "couldn't update" (never "quiet day").
+  await saveRiskDay(publishPool??budgetPool,day,null,now).catch(()=>{});
   const error=new Error('PRIVATE_DAILY_REVIEW_FAILED');error.stage=stage;error.diagnostics=diagnostics;throw error;
  }
+}
+
+/** articles=null records a failed day; an empty array is a verified quiet day. Never overwrites a ready day. */
+export async function saveRiskDay(pool,day,articles,now=new Date()){
+ if(!pool)return;
+ const state=articles===null?'failed':'ready';
+ await pool.query(`INSERT INTO resolute.risk_days(day,state,articles,updated_at) VALUES($1,$2,$3,$4)
+  ON CONFLICT(day) DO UPDATE SET state=EXCLUDED.state,articles=EXCLUDED.articles,updated_at=EXCLUDED.updated_at WHERE resolute.risk_days.state<>'ready'`,[day,state,JSON.stringify(articles??[]),now.toISOString()]);
 }

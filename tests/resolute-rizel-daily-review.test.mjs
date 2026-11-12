@@ -9,7 +9,7 @@ const feed={ok:true,enabled:true,items:[{title:'AI semiconductor risk warning',u
 async function setup(){const db=new PGlite();await db.exec('CREATE ROLE resolute_rizel_writer');await db.exec(await readFile(new URL('../db/resolute/013_rizel_daily_review.sql',import.meta.url),'utf8'));return db;}
 test('private morning path claims once, passes no inferred evidence, and never writes a public feed',async()=>{
  const db=await setup();let calls=0,reads=0;
- const opts={enabled:true,now,selectionPool:db,budgetPool:{},readFeed:async()=>{reads++;return feed;},
+ const opts={enabled:true,now,selectionPool:db,budgetPool:{query:async()=>({rows:[]})},readFeed:async()=>{reads++;return feed;},
  summarize:async c=>({...RISK_VISUAL_FIXTURE.articles[0],id:c.id,url:c.url,publishedAt:c.publishedAt}),
  select:async x=>{calls++;assert.deepEqual(x.evidence,[]);return {state:'selected',publication:'withheld',articleId:x.article.id,articleRevision:'private-v1'};}};
  try{
@@ -75,7 +75,7 @@ test('missing or inconsistent saved result cannot be reported as verified',async
 test('delayed previous-JST-day arrivals are excluded before any model or selection call',async()=>{
  const db=await setup();let calls=0;
  try{
- const result=await prepareDailyReview({enabled:true,now,selectionPool:db,readFeed:async()=>({...feed,items:[{...feed.items[0],publishedAt:'2026-10-14T14:59:59Z',observedAt:now.toISOString()}]}),summarize:async()=>{calls++;throw Error('must not generate');}});
+ const result=await prepareDailyReview({enabled:true,now,selectionPool:db,readFeed:async()=>({...feed,items:[{...feed.items[0],publishedAt:'2026-10-12T14:59:59Z',observedAt:now.toISOString()}]}),summarize:async()=>{calls++;throw Error('must not generate');}});
  assert.equal(result.state,'no-candidates');assert.equal(calls,0);assert.equal(result.diagnostics.outsideDailyWindow,1);
  assert.equal((await db.query('SELECT candidate_count FROM resolute_rizel_daily_runs')).rows[0].candidate_count,0);
  }finally{await db.close();}
