@@ -585,6 +585,31 @@ def vapid_subject(value):
     return urlunsplit((parsed.scheme, parsed.netloc, '', '', ''))
 
 
+# Why an earnings flash did not reach a device (owner, Nov 12: NBIS was published and nobody was told, and nothing said why).
+# Counts since the process started, per reason; never the device, the member or the text.
+SKIPS = {}
+
+
+def skip(item, reason):
+    if item.get('kind') == 'earnings':
+        SKIPS[reason] = SKIPS.get(reason, 0) + 1
+
+
+def device_breakdown(db, now):
+    """Aggregate counts that explain which devices can receive an earnings flash. Counts only."""
+    row = db.execute('''SELECT COUNT(*) AS total,
+        sum(CASE WHEN owner_id IS NOT NULL AND owner_id<>'' THEN 1 ELSE 0 END) AS with_owner,
+        sum(CASE WHEN owner_id IS NOT NULL AND owner_id<>'' AND access_until>? THEN 1 ELSE 0 END) AS access_valid,
+        sum(CASE WHEN quiet_on=1 THEN 1 ELSE 0 END) AS quiet_on,
+        sum(CASE WHEN id IN (SELECT device_id FROM push_device_preferences WHERE earnings=0) THEN 1 ELSE 0 END) AS earnings_off,
+        sum(CASE WHEN id IN (SELECT device_id FROM push_device_preferences) THEN 1 ELSE 0 END) AS with_preferences,
+        max(since) AS newest_since
+      FROM push_devices WHERE active=1''', (now,)).fetchone()
+    return {'active': row['total'] or 0, 'withOwner': row['with_owner'] or 0, 'accessValid': row['access_valid'] or 0,
+            'quietOn': row['quiet_on'] or 0, 'earningsOff': row['earnings_off'] or 0, 'withPreferences': row['with_preferences'] or 0,
+            'newestRegistrationAt': datetime.fromtimestamp(row['newest_since'], timezone.utc).isoformat(timespec='seconds') if row['newest_since'] else None}
+
+
 def public_status(db, now=None):
     """Return bounded aggregate pilot state without endpoints, keys or payloads."""
     now = time.time() if now is None else float(now)
@@ -624,6 +649,8 @@ def public_status(db, now=None):
     last_attempt = row['last_attempt']
     return {
         'activeDevices': devices,
+        'deviceBreakdown': device_breakdown(db, now),
+        'earningsSkipsSinceStart': dict(SKIPS),
         'maxDevices': DEVICE_LIMIT,
         'attempted24Hours': row['attempted'] or 0,
         'accepted24Hours': row['accepted'] or 0,
@@ -652,25 +679,38 @@ def deliver(db, items, transport=send, now=None, monotonic_now=time.monotonic,
     attempted = accepted = uncertain = 0
     for device in db.execute('SELECT * FROM push_devices WHERE active=1').fetchall():
         if not device['owner_id'] and os.environ.get('WEB_PUSH_ALLOW_PILOT', '').lower() != 'true':
+            for raw_item in items:
+                skip(raw_item if isinstance(raw_item, dict) else {}, 'device-without-member')
             continue
         verified_until = None
         watched = set(json.loads(device['tickers']))
         for raw_item in items:
             item = normalize_event(raw_item)
             if item is None:
+                skip(raw_item if isinstance(raw_item, dict) else {}, 'invalid-item')
                 continue
             observed = item['observed_timestamp']
             # Late discoveries belong in history, never in a fresh-news push.
             if not 0 <= now - item['published'].timestamp() <= 900:
+                skip(item, 'published-not-fresh')
                 continue
             if quiet_blocks(device, now, item['published'].timestamp()):
+                skip(item, 'quiet-hours')
                 continue
-            if ('*' not in watched and not watched.intersection(item.get('tickers') or [item['ticker']])) or observed <= device['since'] or not 0 <= now - observed <= 300:
+            if '*' not in watched and not watched.intersection(item.get('tickers') or [item['ticker']]):
+                skip(item, 'ticker-not-watched')
+                continue
+            if observed <= device['since']:
+                skip(item, 'seen-before-registration')
+                continue
+            if not 0 <= now - observed <= 300:
+                skip(item, 'observed-not-fresh')
                 continue
             key = event_key(item)
             # Record each network attempt when it actually starts. Reusing the
             # batch timestamp understates queueing for later devices.
             if db.execute('SELECT 1 FROM push_deliveries WHERE device_id=? AND event_key=?', (device['id'], key)).fetchone():
+                skip(item, 'already-delivered')
                 continue
             if device['owner_id'] and verified_until is None:
                 try:
@@ -680,12 +720,14 @@ def deliver(db, items, transport=send, now=None, monotonic_now=time.monotonic,
             attempted_at = wall_now()
             if device['owner_id'] and (not isinstance(verified_until, (int, float)) or isinstance(verified_until, bool)
                     or not math.isfinite(verified_until) or verified_until <= attempted_at):
+                skip(item, 'membership-check-failed')
                 continue
             current = db.execute('SELECT active,owner_id FROM push_devices WHERE id=?', (device['id'],)).fetchone()
             if not current or not current['active'] or current['owner_id'] != device['owner_id']:
                 continue
             category = {'earnings': 'earnings', 'news': 'news'}.get(item.get('kind'), 'targets')
             if not notification_allowed(db, device['id'], category, item.get('tickers', ())):
+                skip(item, 'preference-off')
                 continue
             # Reserve before network; a restart cannot silently send it twice.
             with db:
