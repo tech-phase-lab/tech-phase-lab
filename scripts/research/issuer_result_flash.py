@@ -258,15 +258,19 @@ def candidates(db, reference):
         if (parts.scheme == 'https' and parts.hostname == 'nebius.com' and not parts.query
                 and NEBIUS_RESULTS_PATH.match(parts.path) and SOURCE_URL['NBIS'].match(row['url'])):
             yield row['ticker'], row['url'], row['detected'], None
-    for row in db.execute('''SELECT s.url,s.ticker,r.extracted_text AS body,
-          COALESCE(e.detected_at,r.observed_at) AS detected
-        FROM sources s JOIN source_revisions r ON r.url=s.url AND r.sha256=s.sha256
-        LEFT JOIN release_events e ON e.url=s.url
+    # Never filter on the revision text in SQL: the planner then scans every stored revision (a whole database of
+    # page text) every few seconds and starves the monitor (Nov 12). Pick the few recent CoreWeave sources first,
+    # then read only their current revision.
+    for row in db.execute('''SELECT s.url,s.ticker,s.sha256,COALESCE(e.detected_at,s.discovered_at) AS detected
+        FROM sources s LEFT JOIN release_events e ON e.url=s.url
         WHERE s.ticker='CRWV' AND s.status NOT IN ('held','rejected')
-          AND julianday(COALESCE(e.detected_at,r.observed_at))>=julianday(?)
-          AND r.extracted_text LIKE '%Financial Highlights%' ''', (cutoff,)):
-        if SOURCE_URL['CRWV'].match(row['url']):
-            yield row['ticker'], row['url'], row['detected'], row['body']
+          AND julianday(COALESCE(e.detected_at,s.discovered_at))>=julianday(?)''', (cutoff,)).fetchall():
+        if not SOURCE_URL['CRWV'].match(row['url']):
+            continue
+        revision = db.execute('SELECT extracted_text FROM source_revisions WHERE url=? AND sha256=?',
+                              (row['url'], row['sha256'])).fetchone()
+        if revision and 'Financial Highlights' in (revision['extracted_text'] or ''):
+            yield row['ticker'], row['url'], row['detected'], revision['extracted_text']
 
 
 def run_once(path, reference=None, fetch=None):
