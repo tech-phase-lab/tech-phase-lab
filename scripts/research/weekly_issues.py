@@ -80,9 +80,23 @@ def _list(value, field, limit):
     return value
 
 
+SECTIONS = ("summary", "earnings", "indicators", "market", "schedule")
+
+
 def _part(raw):
+    """One part, strictly. `section` (where it sits in the reading order) is optional so that issues saved before it existed still load."""
     if not isinstance(raw, dict):
         raise ValueError("invalid-weekly-part")
+    part = _part_body(raw)
+    section = raw.get("section")
+    if section is not None:
+        if section not in SECTIONS:
+            raise ValueError("invalid-weekly-section")
+        part["section"] = section
+    return part
+
+
+def _part_body(raw):
     kind = raw.get("type")
     if kind == "highlight":
         return {"type": "highlight", "text": _text(raw.get("text"), "highlight", 200)}
@@ -147,7 +161,7 @@ def validate(value):
         if not isinstance(url, str) or not re.fullmatch(r"https://[^\s]{1,990}", url):
             raise ValueError("invalid-weekly-source")
         sources.append({"title": _text(source.get("title"), "source", 180), "url": url})
-    notes = [_text(note, "note", 300) for note in _list(value.get("notes", []), "notes", 10)]
+    notes = [_text(note, "note", 300) for note in _list(value.get("notes", []), "notes", 30)]
     day = value.get("date") or today()
     try:
         day = Date.fromisoformat(day).isoformat()

@@ -44,6 +44,13 @@ class WeeklyTests(unittest.TestCase):
         self.assertIsNone(weekly.member_issues(self.db)["issue"])
         self.assertEqual(len(weekly.owner_view(self.db)["drafts"]), 1)
 
+    def test_a_part_keeps_its_reading_order_section_and_a_wrong_section_is_refused(self):
+        parts = [{"type": "text", "heading": "決算", "body": "本文。", "section": "earnings"}, {"type": "text", "heading": "古い号", "body": "本文。"}]
+        saved = weekly.save_draft(self.db, {**issue(), "parts": parts})["item"]
+        self.assertEqual([p.get("section") for p in saved["parts"]], ["earnings", None])
+        with self.assertRaises(ValueError):
+            weekly.save_draft(self.db, {**issue(), "parts": [{**parts[0], "section": "gossip"}]})
+
     def test_bad_data_is_refused_but_a_number_less_or_one_sided_card_is_fine(self):
         for bad in ({"headline": ""}, {"lead": "x" * 401}, {"date": "2026-13-40"}, {"sources": [{"title": "t", "url": "http://insecure.example"}]},
                     {"parts": [{"type": "magic", "heading": "x"}]}, {"parts": [{"type": "numbers", "heading": "x", "cards": [{"label": "a"}]}]},
