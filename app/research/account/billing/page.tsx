@@ -1,7 +1,7 @@
 import { sandboxMemberAllowed } from "@/services/tech-phase-billing/access.mjs";
 import { auth } from "@clerk/nextjs/server";
 import { notFound, redirect } from "next/navigation";
-import { OWNER_ACCOUNT_ID } from "@/lib/membership/entitlements";
+import { OWNER_ACCOUNT_ID, isOwnerAccount } from "@/lib/membership/entitlements";
 import {liveEnabled} from "@/services/tech-phase-billing/live-http.mjs";
 import BillingScreen from "./screen";
 
@@ -13,7 +13,7 @@ export default async function BillingPage({ searchParams }: { searchParams?: Pro
     // The pre-purchase screen for a legal review: owner only, no payment call, button disabled.
     const { userId } = await auth();
     if (!userId) redirect("/research/account");
-    if (userId !== OWNER_ACCOUNT_ID) notFound();
+    if (!isOwnerAccount(userId)) notFound(); // both owner accounts: the production one and the preview one
     return <BillingScreen mode="live" preview />;
   }
   if (!live && process.env.VERCEL_ENV !== "preview") notFound();
