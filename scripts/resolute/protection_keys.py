@@ -149,7 +149,8 @@ def main():
         elif args.command == 'seal':
             # Secret input is stdin, never an argument or environment dump.
             raw = sys.stdin.buffer.read(66)
-            if not re.fullmatch(rb'[0-9a-f]{64}\n?', raw):
+            # A Windows pipe ends the line with CRLF; accept it as well as LF.
+            if not re.fullmatch(rb'[0-9a-f]{64}(?:\r?\n)?', raw):
                 raise ValueError('invalid key input')
             cipher, receipt = seal(bytes.fromhex(raw.decode().strip()), args.recipient, args.identity)
             write_new(args.output, cipher)

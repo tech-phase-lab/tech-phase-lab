@@ -197,3 +197,27 @@ class LocalPreparationTests(unittest.TestCase):
             self.assertEqual(keys.main(), 1)
         self.assertEqual(out.getvalue(), '')
         self.assertEqual(err.getvalue(), 'RESOLUTE_KEY_ESCROW_FAILED\n')
+
+
+class SealStdinTests(unittest.TestCase):
+    """The seal command reads the key from stdin; a Windows pipe ends the line with CRLF, a Unix one with LF."""
+    def run_seal(self, data):
+        argv = ['protection_keys.py', 'seal', '--recipient', 'age1' + 'q' * 58, '--identity', 'id', '--output', 'out.age']
+        stdin = type('S', (), {'buffer': io.BytesIO(data)})()
+        with patch('sys.argv', argv), patch('sys.stdin', stdin), patch('sys.stdout', io.StringIO()), patch('sys.stderr', io.StringIO()), \
+                patch.object(keys, 'seal', return_value=(b'cipher', {'capsuleSha256': 'a' * 64, 'keyFingerprint': 'b' * 64})) as seal, \
+                patch.object(keys, 'write_new') as write:
+            status = keys.main()
+        return status, seal, write
+
+    def test_accepts_bare_lf_and_crlf_but_nothing_else(self):
+        key = b'ab' * 32
+        for data in (key, key + b'\n', key + b'\r\n'):
+            status, seal, write = self.run_seal(data)
+            self.assertEqual(status, 0, data)
+            seal.assert_called_once()
+            write.assert_called_once()
+        for data in (key + b'\r', key[:-1], key.upper(), b'\r\n' + key):
+            status, seal, write = self.run_seal(data)
+            self.assertEqual(status, 1, data)
+            seal.assert_not_called()
