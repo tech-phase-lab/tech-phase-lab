@@ -1434,7 +1434,7 @@ class AutomaticMonitor:
             research = step("research", official_research.news_projection(db, reference, official))
             market = step("market", x_market_news.public_feed(db))
             analyst = step("analyst", analyst_news.public_feed(db))
-            results = step("results", market_results.public_feed(db, earnings_hours=24 * 7))
+            results = step("results", market_results.public_feed(db, earnings_hours=24 * 7, floor=True))
             payload = step("bounded", news_history.bounded(pulse_titles.attach(db, {**drafts, **research,
                 "marketUpdates": market, "analystUpdates": analyst, "resultBriefs": results})))
             try:

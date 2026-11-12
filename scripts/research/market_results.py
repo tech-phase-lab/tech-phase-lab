@@ -578,7 +578,31 @@ def julianday_before(value, cutoff):
         return False
 
 
-def public_feed(db, reference=None, earnings_hours=24):
+MIN_DISPLAY_FACTS = 3
+
+
+def display_floor(items):
+    """What the site may show as an earnings result (owner, Nov 12: a result with one figure shown twice is worse than none).
+
+    - an earnings result needs at least MIN_DISPLAY_FACTS reported figures (guidance does not count as a result figure);
+    - a result read from an X post is dropped when the company's own release table has been read for the same quarter.
+    Flashes below the floor stay available to the phone alerts and the release watch, which use the unfiltered feed."""
+    issuer = {(i['ticker'], i.get('period')) for i in items if str(i.get('researchId', '')).startswith('ir-flash-')}
+    kept = []
+    for item in items:
+        if item.get('kind') != 'earnings':
+            kept.append(item)
+            continue
+        figures = [f for f in item.get('facts', []) if not str(f.get('key', '')).startswith('guidance-')]
+        if len(figures) < MIN_DISPLAY_FACTS:
+            continue
+        if str(item.get('researchId', '')).startswith('x-result-') and (item['ticker'], item.get('period')) in issuer:
+            continue
+        kept.append(item)
+    return kept
+
+
+def public_feed(db, reference=None, earnings_hours=24, *, floor=False):
     """Result flashes of the last 24 hours; earnings flashes stay for earnings_hours so the
     calendar's released-earnings list does not lose a company a day after it reported (owner, Oct 17)."""
     schema(db)
@@ -615,6 +639,8 @@ def public_feed(db, reference=None, earnings_hours=24):
     except Exception:
         pass  # the issuer-table flashes never take the X flashes down with them
     items = latest_source_posts(items)
+    if floor:
+        items = display_floor(items)
     epoch = datetime.min.replace(tzinfo=timezone.utc)
     import issuer_result_flash as flash
     items.sort(key=lambda item: flash.instant(item.get('publishedAt')) or epoch, reverse=True)
