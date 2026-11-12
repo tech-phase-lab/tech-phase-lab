@@ -92,5 +92,25 @@ test("the band looks through a wide pool, so long company headlines at the top c
   const source = await readFile(new URL("../app/research/research-pulse.tsx", import.meta.url), "utf8");
   assert.match(source, /const PULSE_POOL = 400/);
   assert.match(source, /newsPulseItems\(feed, lang, snapshot\.checkedAt, wire, PULSE_POOL\)/);
-  assert.match(source, /writePulseCache\(lang, bandItems\(live, ja, 8\)\)/);
+  assert.match(source, /writePulseCache\(lang, bandItems\(live, ja, 8, wide\)\)/);
+});
+
+test('a band headline that does not name its company gets the symbol in front; one that names it does not', async () => {
+  const { bandLead } = await import('../lib/research/news-band.ts');
+  const { japaneseNamesOf } = await import('../lib/research/stock-search.ts');
+  assert.equal(bandLead('NVDA', '警察と活動家が衝突', japaneseNamesOf), 'NVDA');
+  assert.equal(bandLead('NVDA', 'エヌビディアは強い四半期期待', japaneseNamesOf), '');
+  assert.equal(bandLead('MU · NVDA', 'MUが増産へ', japaneseNamesOf), 'NVDA');
+  assert.equal(bandLead('MKT', '原油が下落', japaneseNamesOf), '');
+  assert.equal(bandLead('AAA · BBB · CCC', '値上げを発表'), 'AAA BBB');
+  assert.equal(bandLead('NVDA', '警察と活動家が衝突'), 'NVDA');
+});
+
+test('on a wide screen the band prefers the fuller headline; on a phone it keeps the short one', async () => {
+  const { bandItems } = await import('../lib/research/news-band.ts');
+  const full = 'エヌビディア、次の四半期の売上高見通しが市場予想を上回る強い内容になると経営陣が説明';
+  const items = [{ id: 'a', title: full, headlines: ['エヌビディアは強い四半期期待'] }];
+  assert.equal(bandItems(items, true, 5, false)[0].band, 'エヌビディアは強い四半期期待');
+  assert.equal(bandItems(items, true, 5, true)[0].band, full);
+  assert.equal(bandItems([{ id: 'b', title: full + full, headlines: ['短い見出し'] }], true, 5, true)[0].band, '短い見出し');
 });
