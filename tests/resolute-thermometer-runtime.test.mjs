@@ -36,41 +36,39 @@ test('SQL persistence survives a new reader; new session hides old rows and erro
 test('worker stores partial failures once per session, never fetches on reads or while disabled',async()=>{
  const db=new PGlite();let calls=0,locks=0;
  const connection={query:async(sql,args)=>{if(sql.includes('pg_advisory_xact_lock')){locks++;return {rows:[]};}return db.query(sql,args);}};
- const cfg={enabled:true,apiKey:'private-fixture',instruments:{nas100:{symbol:'N',exchange:'X'},sox:{symbol:'S',exchange:'X'},vix:{symbol:'V',exchange:'X'}}};
+ const cfg={enabled:true,apiKey:'private-fixture',rosters:{nasdaq100:Array.from({length:12},(_,k)=>'N'+k),semiconductors:Array.from({length:11},(_,k)=>'S'+k)}};
  const fetcher=async()=>{calls++;return new Response('{}',{status:503});};
  try {
  await db.exec(await readFile('scripts/resolute/thermometer-schema.sql','utf8'));
  assert.equal((await refreshThermometer(connection,{...cfg,enabled:false},now,fetcher)).status,'disabled');assert.equal(calls,0);assert.equal(locks,0);
- assert.equal((await refreshThermometer(connection,cfg,now,fetcher)).status,'stored');assert.equal(calls,3);
- assert.equal((await refreshThermometer(connection,cfg,now,fetcher)).status,'already-attempted');assert.equal(calls,3);
- const row=await readThermometer(db,now);assert.equal(row.nas100.reason,'provider-error');assert.equal(calls,3);
+ assert.equal((await refreshThermometer(connection,cfg,now,fetcher)).status,'stored');assert.equal(calls,4);
+ assert.equal((await refreshThermometer(connection,cfg,now,fetcher)).status,'already-attempted');assert.equal(calls,4);
+ const row=await readThermometer(db,now);assert.equal(row.nas100.reason,'provider-error');assert.equal(calls,4);
  assert.doesNotMatch(JSON.stringify((await db.query('SELECT * FROM resolute_thermometer_snapshots')).rows),/private-fixture|apikey/);
- const previous=await refreshThermometer(connection,cfg,new Date('2026-10-23T21:00:00Z'),fetcher);assert.equal(previous.status,'already-attempted');assert.equal(calls,3);
+ const previous=await refreshThermometer(connection,cfg,new Date('2026-10-23T21:00:00Z'),fetcher);assert.equal(previous.status,'already-attempted');assert.equal(calls,4);
  }finally{await db.close();}
 });
 test('failed persistence rolls back and never reports success or leaks provider credentials',async()=>{
  const statements=[];
  const db={query:async(sql)=>{statements.push(sql);if(sql.startsWith('INSERT'))throw Error('secret-database-url');return {rows:[]};}};
- await assert.rejects(refreshThermometer(db,{enabled:true,apiKey:'private-fixture',instruments:{}},now,async()=>{throw Error('must not fetch');}),/^Error: thermometer-refresh-failed$/);
+ await assert.rejects(refreshThermometer(db,{enabled:true,apiKey:'private-fixture',rosters:{nasdaq100:[],semiconductors:[]}},now,async()=>{throw Error('must not fetch');}),/^Error: thermometer-refresh-failed$/);
  assert.equal(statements.at(-1),'ROLLBACK');
 });
 test('synthetic provider closes flow through calculation and durable SQL to independent display readings',async()=>{
  const db=new PGlite();
  const connection={query:(sql,args)=>sql.includes('pg_advisory_xact_lock')?Promise.resolve({rows:[]}):db.query(sql,args)};
- const config={enabled:true,apiKey:'synthetic-only',instruments:{nas100:{symbol:'N',exchange:'TEST'},sox:{symbol:'S',exchange:'TEST'},vix:{symbol:'V',exchange:'TEST'}}};
+ const config={enabled:true,apiKey:'synthetic-only',rosters:{nasdaq100:Array.from({length:12},(_,k)=>'N'+k),semiconductors:Array.from({length:11},(_,k)=>'S'+k)}};
  const values=[];
  for(let time=Date.parse('2013-01-01');time<=Date.parse('2026-10-26');time+=86400000){const date=new Date(time);if(![0,6].includes(date.getUTCDay()))values.push({datetime:date.toISOString().slice(0,10),close:'100'});}
  const fetcher=async(url)=>{
-  const symbol=url.searchParams.get('symbol');
-  if(symbol==='V')return new Response('{}',{status:503});
-  const bars=values.map(v=>({...v}));bars.at(-1).close=symbol==='S'?'50':'200';
-  return Response.json({status:'ok',meta:{symbol,exchange:'TEST',type:'Index',interval:'1day'},values:bars});
+  const tickers=url.searchParams.get('symbol').split(',');
+  return Response.json(Object.fromEntries(tickers.map(ticker=>{const bars=values.map(v=>({...v}));bars.at(-1).close=ticker.startsWith('S')?'50':'200';return [ticker,{status:'ok',values:bars}];})));
  };
  try {
   await db.exec(await readFile('scripts/resolute/thermometer-schema.sql','utf8'));
   assert.equal((await refreshThermometer(connection,config,now,fetcher)).status,'stored');
   const result=await readThermometer(db,now);
-  assert.equal(result.nas100.band,4);assert.equal(result.sox.band,0);assert.equal(result.vix.reason,'provider-error');
+  assert.equal(result.nas100.band,4);assert.equal(result.sox.band,0);assert.equal(result.vix.status,'unavailable');
   assert.equal(result.asOf,'2026-10-26');
  }finally{await db.close();}
 });

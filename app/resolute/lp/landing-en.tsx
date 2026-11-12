@@ -99,7 +99,7 @@ export default function LandingEn({ embedded = false }: { embedded?: boolean }) 
     <div className={s.group}>
      <p className={s.groupNo}>03 <b>Alert</b></p>
      <AlertSample locale="en" />
-     <div className={s.thermo} aria-hidden="true"><p className={s.thermoLab}>Market Gauge</p><p className={s.thermoWord}>Warm</p><p className={s.thermoIdx}>NASDAQ100</p><div className={s.track}><i style={{ left: "66%" }} /></div><p className={s.thermoEnds}><span>Cold</span><span>Hot</span></p></div>
+     <div className={s.thermo} aria-hidden="true"><p className={s.thermoLab}>Market Gauge</p><p className={s.thermoWord}>Warm</p><p className={s.thermoIdx}>TP Large Cap 100</p><div className={s.track}><i style={{ left: "66%" }} /></div><p className={s.thermoEnds}><span>Cold</span><span>Hot</span></p></div>
      <Feature title="Closing-price Alerts" text="When a stock’s closing price reaches a downside or upside level you’ve set, you get an email at your chosen morning delivery time (Japan Standard Time). No need to watch the market all day." />
      <Feature title="Morning Note" text="One short email the morning after an alert, to read with a rested mind." />
      <Feature title="Market Gauge" text="Shows how cool or hot the market is on a five-point scale. Helps you put market moves in perspective." />

@@ -45,11 +45,11 @@ export function MarketGauge({ locale, snapshot }: { locale: DiagnosisLocale; sna
     <section className={`${styles.card} ${styles.hero} ${styles.gaugeHero}`}>
       <span className={styles.eyebrow}>MARKET THERMOMETER</span>
       <div className={`${styles.tabs} ${gaugeStyles.indexSwitch}`} role="group" aria-label={t("対象指数", "Market index")}>
-        <button type="button" aria-pressed={index === "nas100"} onClick={() => setIndex("nas100")}>NASDAQ100</button>
-        <button type="button" aria-pressed={index === "sox"} onClick={() => setIndex("sox")}>SOX</button>
+        <button type="button" aria-pressed={index === "nas100"} onClick={() => setIndex("nas100")}>{t("TP大型株100", "TP Large Cap 100")}</button>
+        <button type="button" aria-pressed={index === "sox"} onClick={() => setIndex("sox")}>{t("TP半導体40", "TP Semiconductor 40")}</button>
       </div>
-      <p className={styles.muted}>{index === "nas100" ? "NASDAQ-100" : t("半導体指数", "Semiconductor index")}</p>
-      <svg className={styles.gauge} viewBox="0 0 300 170" role="img" aria-label={`${index === "nas100" ? "NASDAQ100" : "SOX"} · ${label}${sample ? t("・表示見本", " · Display sample") : ""}`}>
+      <p className={styles.muted}>{index === "nas100" ? t("大型株100銘柄の平均", "Average of 100 large-cap stocks") : t("半導体40銘柄の平均", "Average of 40 semiconductor stocks")}</p>
+      <svg className={styles.gauge} viewBox="0 0 300 170" role="img" aria-label={`${index === "nas100" ? t("TP大型株100", "TP Large Cap 100") : t("TP半導体40", "TP Semiconductor 40")} · ${label}${sample ? t("・表示見本", " · Display sample") : ""}`}>
         {colors.map((color, i) => <path key={color} d={segment(i)} fill={color} opacity={score !== undefined ? 1 : .28}/>)}
         {Array.from({length:21},(_,k)=>{const a=(180-k*9)*Math.PI/180,r=k%5===0?80:84;return <line key={k} x1={150+88*Math.cos(a)} y1={150-88*Math.sin(a)} x2={150+r*Math.cos(a)} y2={150-r*Math.sin(a)} stroke="#9aa8b8" strokeOpacity={k%5===0?.7:.35} strokeWidth={k%5===0?1.5:1}/>;})}
         <path d="M146.5 150 L150 52 L153.5 150 Z" fill="#f3dfae" opacity={score !== undefined ? 1 : 0} transform={score !== undefined ? `rotate(${score * 1.8 - 90} 150 150)` : undefined}/>
@@ -70,16 +70,18 @@ export function MarketGauge({ locale, snapshot }: { locale: DiagnosisLocale; sna
       <div><dt>{t("何を見ている？", "What do we measure?")}</dt><dd>{t("次の2つの指標から、いまの相場の位置を見ています。", "We use two measures to show where the market stands.")}</dd></div>
       <div><dt>{t("① 高値からどれくらい下がったか", "1. How far prices have fallen from their high")}</dt><dd>{t("直近252営業日（約1年）の最も高い終値から、現在の終値が何％下がったかを見ます。", "The percentage decline from the highest closing price in the last 252 trading sessions (about one year).")}</dd></div>
       <div><dt>{t("② 長期の平均からどれくらい離れているか", "2. How far prices are from their long-term average")}</dt><dd>{t("直近200営業日の終値の平均（200日移動平均）と比べ、現在の終値が何％高いか・低いかを見ます。", "How far the latest close is above or below the average closing price over the last 200 trading sessions (the 200-day moving average).")}</dd></div>
-      <div><dt>{t("過去何年と比べる？", "How much history do we compare?")}</dt><dd>{t("それぞれの指標を過去10年と比較します。2つを同じ重みでまとめ、過去の中でどの位置にあるかを5段階で示します。NASDAQ100とSOXは別々に計算します。", "Each measure is compared with the preceding 10 years. We combine their percentile ranks equally, rank the result again, and show its historical position in five bands. NASDAQ100 and SOX are calculated separately.")}</dd></div>
-      <div><dt>{t("SOXとは？", "What is SOX?")}</dt><dd>{t("半導体に関わる企業の株価をまとめた指数です。正式名称はPHLX Semiconductor Indexです。", "An index of semiconductor-related companies, formally called the PHLX Semiconductor Index.")}</dd></div>
+      <div><dt>{t("過去何年と比べる？", "How much history do we compare?")}</dt><dd>{t("それぞれの指標を過去10年と比較します。2つを同じ重みでまとめ、過去の中でどの位置にあるかを5段階で示します。TP大型株100とTP半導体40は別々に計算します。", "Each measure is compared with the preceding 10 years. We combine their percentile ranks equally, rank the result again, and show its historical position in five bands. TP Large Cap 100 and TP Semiconductor 40 are calculated separately.")}</dd></div>
+      <div><dt>{t("TP大型株100とは？", "What is TP Large Cap 100?")}</dt><dd>{t("米国の大型株100銘柄（NASDAQが公表する100銘柄）の株価を、同じ重みで平均した、Tech Phase独自の数値です。銘柄の見直しは年1〜2回です。", "Tech Phase's own figure: an equal-weighted average of 100 large U.S. stocks, the list Nasdaq publishes. The list is reviewed once or twice a year.")}</dd></div>
+      <div><dt>{t("TP半導体40とは？", "What is TP Semiconductor 40?")}</dt><dd>{t("米国上場の半導体関連企業のうち、時価総額が大きい40社の株価を、同じ重みで平均した、Tech Phase独自の数値です。銘柄は3・6・9・12月に見直します。", "Tech Phase's own figure: an equal-weighted average of the 40 largest U.S.-listed semiconductor companies by market cap. The list is reviewed in March, June, September and December.")}</dd></div>
       <div><dt>{t("更新のタイミング", "When it updates")}</dt><dd>{t("米国市場の終値が確定したあと、1日1回の更新を予定しています。", "We plan to update this once a day, after US closing prices are confirmed.")}</dd></div>
       <div><dt>{t("データの出どころ", "Data source")}</dt><dd>Twelve Data</dd></div>
     </dl></details>
     <section className={styles.card}>
-      <div className={styles.switchRow}><h2>{t("市場の警戒度", "Market caution")}</h2><span className={styles.eyebrow}>VIX</span></div>
+      <div className={styles.switchRow}><h2>{t("市場の警戒度", "Market caution")}</h2><span className={styles.eyebrow}>{t("TP恐怖指数", "TP Fear Index")}</span></div>
       <p className={styles.bigNumber}>{vix ? vix.level.toFixed(2) : "—"}</p>
       <p className={styles.muted}>{vix ? `${vix.asOf} · ${t("過去10年内の位置", "Position over the past 10 years")} ${vix.percentile.toFixed(0)} / 100` : t("確定したデータの取得後に表示します。", "Shown once confirmed data is available.")}</p>
       <p className={styles.muted}>{t("市場の不安の大きさを表します。数値が高いほど、不安が大きい状態です。", "A measure of market anxiety. Higher values indicate greater uncertainty.")}</p>
+      <p className={styles.muted}>{t("直近の値動きから計算", "Calculated from recent price movements")}</p>
       <p className={styles.disclaimer}>{t("温度の判定には含めません。", "Not included in the temperature score.")}</p>
     </section>
     <section className={styles.card}><h2>{t("4つの位置", "Four ways the market can look")}</h2><p className={styles.muted}>{t("マスを押すと、説明が出ます。", "Tap a box to see what it means.")}</p>

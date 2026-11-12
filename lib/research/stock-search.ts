@@ -26,6 +26,9 @@ const japaneseNames: Record<string, string[]> = {
   POET: ["ポエット", "ポエットテクノロジーズ", "ポエトテクノロジーズ"],
 };
 
+/** Common Japanese names of a tracked company (for matching a headline to its company). */
+export const japaneseNamesOf = (ticker: string): readonly string[] => japaneseNames[ticker] ?? [];
+
 function normalizedSearch(value: string) {
   return value.normalize("NFKC").replace(/[・･]/g, "")
     .replace(/[ぁ-ゖ]/g, char => String.fromCharCode(char.charCodeAt(0) + 0x60))

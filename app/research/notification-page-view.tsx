@@ -125,7 +125,7 @@ export default function NotificationPageView(p: PageViewProps) {
   const more = (icon: ReactNode, title: string, value: string, open: () => void) =>
     <li><button type="button" className={styles.more} onClick={open}><span className={styles.icon}>{icon}</span><span className={styles.rowTitleBig}>{title}</span><span className={styles.value}>{value}</span><span className={styles.chev} aria-hidden="true">›</span></button></li>;
   const statusText = state === "unavailable" || state === "unknown" ? t("通知の状態を確認できませんでした。", "Could not check the notification status.")
-    : needsAccount || !p.usable ? p.label : on ? t("下で選んだお知らせが届きます。", "The alerts you pick below reach this device.") : t("オンにすると、下で選んだお知らせが届きます。", "Turn on notifications, then choose which updates you'd like to receive.");
+    : needsAccount || !p.usable ? p.label : on ? t("選んだお知らせが届きます。", "The alerts you pick below reach this device.") : t("オンにすると、お知らせが届きます。", "Turn on notifications, then choose which updates you'd like to receive.");
   return <div className={styles.page}>
     <div className={styles.status}>
       <div className={styles.statusRow}>
@@ -142,9 +142,7 @@ export default function NotificationPageView(p: PageViewProps) {
       {!p.usable && p.hasSubscription && <div className={styles.aux}><button type="button" disabled={p.busy} onClick={p.onDisable}>{t("通知をオフにする", "Turn off notifications")}</button></div>}
       {state === "unsupported" && <p className={styles.note}>{t("iPhoneではSafariの共有メニューからホーム画面に追加し、そのアイコンから開いてください。", "On iPhone, add this site to your Home Screen using Safari’s Share menu, then open that icon.")}</p>}
       {state === "blocked" && <p className={styles.note}>{t("端末またはブラウザの設定で、Tech Phaseの通知を許可してください。", "Allow Tech Phase notifications in your device or browser settings.")}</p>}
-      {on && <div className={`${styles.aux} ${styles.testRow}`}><button type="button" disabled={p.busy} onClick={p.onTest}>{t("テスト通知を送る", "Send test notification")}</button>{p.testSent && !p.received && <button type="button" onClick={p.onReceived}>{t("届きました", "Received")}</button>}</div>}
-      {p.message && <p className={styles.note} role="status">{p.message}</p>}
-      {p.received && <p className={styles.note} role="status">{t("この端末で受信を確認しました。", "Receipt confirmed on this device.")}</p>}
+      {!on && p.message && <p className={styles.note} role="status">{p.message}</p>}
     </div>
     <div className={on ? "" : styles.rowsOff}>
       <p className={styles.section}>{t("銘柄", "STOCKS")}</p>
@@ -175,6 +173,12 @@ export default function NotificationPageView(p: PageViewProps) {
         {more(icons.calendar, t("経済指標の種類", "Economic indicators"), t(`${kinds.length}件`, `${kinds.length}`), () => setSheet("economic"))}
         {more(icons.moon, t("おやすみモード", "Quiet hours"), quietText, openQuiet)}
       </ul>
+      {on && <div className={styles.testBlock}>
+        <button type="button" className={styles.testButton} disabled={p.busy} onClick={p.onTest}><span>{t("テスト通知を送る", "Send test notification")}</span><span className={styles.value}>{t("動作の確認", "Check it works")}</span></button>
+        {p.testSent && !p.received && <button type="button" className={styles.testButton} onClick={p.onReceived}>{t("届きました", "Received")}</button>}
+        {p.message && <p className={styles.note} role="status">{p.message}</p>}
+        {p.received && <p className={styles.note} role="status">{t("この端末で受信を確認しました。", "Receipt confirmed on this device.")}</p>}
+      </div>}
     </section>
     {p.owner && <><p className={styles.section}>{t("運営者だけ", "OWNER ONLY")}</p>
       <ul className={`${styles.rows} ${on ? "" : styles.rowsOff}`}>{row(icons.pencil, t("週刊の下書き", "Weekly drafts"), t("下書きができたときにお知らせ", "When a draft is ready"), prefs.weeklyDraft ?? false, v => p.onPrefs({ weeklyDraft: v }))}</ul></>}

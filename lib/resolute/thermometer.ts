@@ -1,6 +1,6 @@
 /** RESOLUTE market gauge v1. Pure daily-close calculations, independent of provider/UI.
  * The caller supplies the last CONFIRMED US session (never today's unfinished bar).
- * NAS100 and SOX are calculated independently. VIX is not part of temperature.
+ * TP大型株100 (nas100) and TP半導体40 (sox) are calculated independently. The fear number (vix key) is not part of temperature.
  */
 export const THERMOMETER_VERSION = 'daily-close-v1';
 export type ThermometerIndex = 'nas100' | 'sox';

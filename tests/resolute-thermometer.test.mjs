@@ -1,7 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { calculateTemperature, calculateVixContext, percentile, temperatureBand } from '../lib/resolute/thermometer.ts';
-import { collectThermometer, parseIndexHistory } from '../lib/resolute/thermometer-provider.ts';
+import { collectThermometer, parseStockHistories } from '../lib/resolute/thermometer-provider.ts';
+import { equalWeightLevels, realizedVolatility } from '../lib/resolute/thermometer-basket.ts';
 function series() {
  const bars=[];
  for(let time=Date.parse('2013-01-01');time<=Date.parse('2026-10-23');time+=86400000){
@@ -11,8 +12,8 @@ function series() {
  return bars;
 }
 const asOf='2026-10-23';
-const instrument={symbol:'SYNTHETIC',exchange:'TEST'};
-const payload=(bars=series(),meta={})=>({status:'ok',meta:{...instrument,type:'Index',interval:'1day',...meta},values:bars.map(b=>({datetime:b.date,close:String(b.close)}))});
+const tickersOf=n=>Array.from({length:n},(_,k)=>'T'+k);
+const stockPayload=(tickers,bars=series(),drop=[])=>Object.fromEntries(tickers.map(t=>[t,drop.includes(t)?{status:'error',code:404,message:'not found'}:{status:'ok',values:bars.map(b=>({datetime:b.date,close:String(b.close)}))}]));
 test('flat history is neutral; current shocks move in the correct direction for both indices',()=>{
  const bars=series();const flat=calculateTemperature('nas100',bars,asOf);
  assert.equal(flat.status,'ready');assert.equal(flat.score,50);assert.equal(flat.band,2);
@@ -48,17 +49,44 @@ test('percentile ties and five boundaries are defined; VIX is separate and rises
  const bars=series();bars.at(-1).close=150;const result=calculateVixContext(bars,asOf);
  assert.equal(result.percentile,100);assert.equal(result.level,150);assert.equal(result.band,undefined);
 });
-test('parser refuses ETF, wrong symbol/exchange/interval, and invalid numbers instead of substituting them',()=>{
- assert.equal(parseIndexHistory(payload(),instrument).length,series().length);
- for(const meta of [{type:'ETF'},{type:'CFD'},{symbol:'OTHER'},{exchange:'OTHER'},{interval:'1min'}])assert.equal(parseIndexHistory(payload(undefined,meta),instrument),null);
- for(const close of ['',null,true,'0','NaN','Infinity']){const p=payload();p.values[0].close=close;assert.equal(parseIndexHistory(p,instrument),null);}
+test('equal-weight basket averages returns, lets new listings join later, and skips missing tickers',()=>{
+ const base=series().slice(-30);
+ const a=base.map((b,i)=>({date:b.date,close:100*1.01**i})),flat=base.map(b=>({date:b.date,close:50}));
+ const many={};for(let k=0;k<10;k++)many['A'+k]=a;many.FLAT=flat;
+ const levels=equalWeightLevels(many);
+ assert.equal(levels.length,30);assert.equal(levels[0].close,100);
+ // ten stocks +1%, one 0%: average daily return = 10/11 %
+ assert.ok(Math.abs(levels[1].close/levels[0].close-(1+0.1/11))<1e-12);
+ // a stock listed later contributes only from its second day
+ const late={...many,NEW:base.slice(10).map((b,i)=>({date:b.date,close:10*2**i}))};
+ const withNew=equalWeightLevels(late);
+ assert.ok(Math.abs(withNew[10].close/withNew[9].close-levels[10].close/levels[9].close)<1e-12);
+ assert.ok(withNew[11].close/withNew[10].close>levels[11].close/levels[10].close);
+ // too few tickers on a date means no basket point
+ assert.equal(equalWeightLevels({A:a,B:a}).length,0);
 });
-test('disabled collector makes zero calls; independent failures and credentials never appear in output',async()=>{
- let calls=0;const config={enabled:false,apiKey:'synthetic-secret',instruments:{nas100:instrument,sox:{symbol:'BAD',exchange:'TEST'},vix:instrument}};
- const fetcher=async(url,options)=>{calls++;assert.equal(url.origin,'https://api.twelvedata.com');assert.equal(options.redirect,'error');assert.equal(url.searchParams.get('end_date'),asOf);return Response.json(url.searchParams.get('symbol')==='BAD'?{status:'error',message:'synthetic-secret'}:payload());};
+test('realized volatility is 20-day annualised and rises with turbulence',()=>{
+ const calm=Array.from({length:60},(_,i)=>({date:new Date(Date.UTC(2026,0,1+i)).toISOString().slice(0,10),close:100}));
+ assert.equal(realizedVolatility(calm).length,0);
+ const alt=calm.map((b,i)=>({...b,close:100*(i%2?1.01:1)}));
+ const vol=realizedVolatility(alt);assert.equal(vol.length,60-20);
+ assert.ok(vol.at(-1).close>14&&vol.at(-1).close<18);
+});
+test('stock parser reports missing tickers instead of guessing',()=>{
+ const parsed=parseStockHistories(stockPayload(['A','B','C'],series().slice(-5),['B']),['A','B','C','D']);
+ assert.deepEqual(Object.keys(parsed.series),['A','C']);assert.deepEqual(parsed.missing,['B','D']);
+ const single=parseStockHistories({status:'ok',values:[{datetime:'2026-10-23',close:'0'}]},['A']);
+ assert.deepEqual(single.missing,['A']);
+});
+test('disabled collector makes zero calls; one failed ticker is logged and the run continues; credentials never appear',async()=>{
+ let calls=0;const rosters={nasdaq100:tickersOf(12),semiconductors:tickersOf(11).map(t=>'S'+t)};
+ const config={enabled:false,apiKey:'synthetic-secret',rosters};
+ const fetcher=async(url,options)=>{calls++;assert.equal(url.origin,'https://api.twelvedata.com');assert.equal(options.redirect,'error');assert.equal(url.searchParams.get('end_date'),new Date(Date.parse(asOf+'T00:00:00Z')+864e5).toISOString().slice(0,10));
+  const tickers=url.searchParams.get('symbol').split(',');return Response.json(stockPayload(tickers,series(),tickers.filter(t=>t==='T3')));};
  assert.equal((await collectThermometer(config,asOf,fetcher)).nas100.reason,'not-configured');assert.equal(calls,0);
  const result=await collectThermometer({...config,enabled:true},asOf,fetcher);
- assert.equal(calls,3);assert.equal(result.nas100.status,'ready');assert.equal(result.sox.reason,'invalid-data');assert.equal(result.vix.status,'ready');assert.ok(!JSON.stringify(result).includes('synthetic-secret'));assert.equal(result.nas100.values,undefined);
+ assert.equal(calls,4);assert.equal(result.nas100.status,'ready');assert.equal(result.sox.status,'ready');assert.equal(result.vix.status,'unavailable'); // flat synthetic prices have zero volatility, which is never shown as a reading
+ assert.deepEqual(result.missing,['T3']);assert.ok(!JSON.stringify(result).includes('synthetic-secret'));
  const failed=await collectThermometer({...config,enabled:true},asOf,async()=>{throw new Error('synthetic-secret');});
- assert.equal(failed.nas100.reason,'provider-error');assert.ok(!JSON.stringify(failed).includes('synthetic-secret'));
+ assert.equal(failed.nas100.reason,'provider-error');assert.equal(failed.sox.reason,'provider-error');assert.ok(!JSON.stringify(failed).includes('synthetic-secret'));
 });
