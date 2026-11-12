@@ -97,7 +97,7 @@ def parse_nebius(text):
                       + NUM + ') (' + NUM + ') ' + CHANGE, window)
     if not first:
         raise ValueError('revenue-row-unrecognized')
-    metrics = {'revenue': signed(first[4])}
+    metrics = {'revenue': (signed(first[4]), signed(first[3]))}
     block = window[first.start():first.start() + 1200]
     stop = block.find('Operating expenses')
     block = block[:stop] if stop > 0 else block
@@ -109,10 +109,10 @@ def parse_nebius(text):
     for key, label in rows.items():
         found = re.findall(label + ' (' + NUM + ') (' + NUM + ') ' + CHANGE, block)
         if len(found) == 1:  # a repeated or missing row is ambiguous: leave it out
-            metrics[key] = signed(found[0][1])
-    if metrics['revenue'] <= 0:
+            metrics[key] = (signed(found[0][1]), signed(found[0][0]))
+    if metrics['revenue'][0] <= 0:
         raise ValueError('revenue-not-positive')
-    facts = [(key, money_millions(metrics[key])) for key in ORDER if key in metrics]
+    facts = [(key, money_millions(metrics[key][0]), money_millions(metrics[key][1])) for key in ORDER if key in metrics]
     return {'period': f'Q{quarter} {year}', 'facts': facts}
 
 
@@ -142,24 +142,25 @@ def parse_coreweave(text):
     revenue = row('Revenue', gaap)
     if not revenue:
         raise ValueError('revenue-row-unrecognized')
-    metrics['revenue'] = signed(revenue[0])
+    metrics['revenue'] = (signed(revenue[0]), signed(revenue[1]))
     for key, label in (('operating-income', 'Operating income'), ('net-income', 'Net (?:loss|income)')):
         found = row(label, gaap)
         if found:
-            metrics[key] = signed(found[0])
+            metrics[key] = (signed(found[0]), signed(found[1]))
     eps = row('Diluted net (?:loss|income) per share', gaap)
     if eps:
-        metrics['eps'] = signed(eps[0])
+        metrics['eps'] = (signed(eps[0]), signed(eps[1]))
     adjusted = window[gaap_end:gaap_end + 1500] if gaap_end > 0 else ''
     found = row('Adjusted EBITDA', adjusted)
     if found:
-        metrics['adjusted-ebitda'] = signed(found[0])
-    if metrics['revenue'] <= 0:
+        metrics['adjusted-ebitda'] = (signed(found[0]), signed(found[1]))
+    if metrics['revenue'][0] <= 0:
         raise ValueError('revenue-not-positive')
-    facts = [(key, per_share(metrics[key]) if key == 'eps' else money_millions(metrics[key])) for key in ORDER if key in metrics]
+    fmt = lambda key, value: per_share(value) if key == 'eps' else money_millions(value)
+    facts = [(key, fmt(key, metrics[key][0]), fmt(key, metrics[key][1])) for key in ORDER if key in metrics]
     guidance = re.findall(r'full year ' + str(year) + r' revenue guidance to a range of \$(\d+(?:\.\d+)?) billion to \$(\d+(?:\.\d+)?) billion', t)
     if len(guidance) == 1 and Decimal(guidance[0][0]) < Decimal(guidance[0][1]):
-        facts.append(('guidance-revenue', f'${guidance[0][0]}B-${guidance[0][1]}B'))
+        facts.append(('guidance-revenue', f'${guidance[0][0]}B-${guidance[0][1]}B', None))
     return {'period': f'Q{quarter} {year}', 'facts': facts}
 
 
@@ -223,7 +224,9 @@ def stamp(value=None):
 def build(ticker, url, parsed, observed_at):
     key = hashlib.sha256('\0'.join([ticker, parsed['period'], url]).encode()).hexdigest()
     number = str(int(key[:12], 16))
-    facts = [{'key': k, 'ja': LABELS[k][0], 'en': LABELS[k][1], 'value': v} for k, v in parsed['facts']]
+    # comparisons.yearAgo is the same quarter one year earlier, read from the table's prior-year column (same format as value).
+    facts = [{'key': k, 'ja': LABELS[k][0], 'en': LABELS[k][1], 'value': v, **({'comparisons': {'yearAgo': y}} if y else {})}
+             for k, v, y in parsed['facts']]
     first = facts[:2]
     period = parsed['period']
     return key, {
