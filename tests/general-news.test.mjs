@@ -1,3 +1,4 @@
+import { routeImport } from "./support/route-source.mjs";
 import assert from "node:assert/strict";
 import test from "node:test";
 import { readFile } from "node:fs/promises";
@@ -5,13 +6,7 @@ import { stripTypeScriptTypes } from "node:module";
 import { availableNewsPayload, publicNewsPayload, boundedOfficialHistory } from "../lib/research/general-news.ts";
 
 const helper = new URL("../lib/research/general-news.ts", import.meta.url).href;
-const source = (await readFile(new URL("../app/api/research/news/route.ts", import.meta.url), "utf8"))
-  .replace('"@/lib/research/public-news-response"', JSON.stringify(new URL("../lib/research/public-news-response.ts", import.meta.url).href))
-  .replace('"@/lib/research/general-news"', JSON.stringify(helper))
-  .replace('"@/lib/research/official-result-events"', JSON.stringify(new URL("../lib/research/official-result-events.ts", import.meta.url).href))
-  .replace('"@/lib/research/result-news"', JSON.stringify(new URL("../lib/research/result-news.ts", import.meta.url).href))
-  .replace("'@/lib/research/mu-latest'", JSON.stringify(new URL("../lib/research/mu-latest.ts", import.meta.url).href));
-const { GET } = await import("data:text/javascript;base64," + Buffer.from(stripTypeScriptTypes(source)).toString("base64"));
+const { GET } = await routeImport("app/api/research/news/route.ts");
 const item = { id: "a".repeat(64), title: "Synthetic report", url: "https://publisher.example/report", publisher: "Publisher", tickers: ["MU"],
   publishedAt: "2026-09-28T00:00:00Z", observedAt: "2026-09-28T00:01:00Z", approvedAt: "2026-09-28T00:02:00Z",
   summaryJa: "これは合成テスト用の確認済みニュース要約です。", summaryEn: "This is a reviewed synthetic news summary.",
@@ -75,14 +70,14 @@ test("public route uses server credential and never caches failed or withdrawn n
     };
     const result = await GET();
     assert.equal(result.status, 200);
-    assert.equal(result.headers.get("Cache-Control"), "no-store");
+    assert.equal(result.headers.get("Cache-Control"), "private, no-store");
     assert.deepEqual((await result.json()).items, [item]);
     globalThis.fetch = async () => Response.json({ ok: true, enabled: false, items: [item] });
     assert.deepEqual((await (await GET()).json()).items, []);
     globalThis.fetch = async () => { throw new Error("private monitor detail"); };
     const failure = await GET();
     assert.equal(failure.status, 503);
-    assert.equal(failure.headers.get("Cache-Control"), "no-store");
+    assert.equal(failure.headers.get("Cache-Control"), "private, no-store");
     const safe = await failure.json();
     assert.equal(safe.ok, false);
     assert.deepEqual(safe.items, []);

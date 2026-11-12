@@ -12,6 +12,6 @@ test('price target GET starts even when IntersectionObserver never reports a vis
  cleanup();assert.equal(requests[0].options.signal.aborted,true);
 });
 test('the streamed home data includes the already fetched news snapshot',()=>{
- assert.match(read('app/research/page.tsx'),/news={live.news}/);
+ assert.match(read('app/research/page.tsx'),/news={null}/); // the public home HTML never embeds the full watched-company feed; the startup fetch carries the FREE/PRO-limited one
  assert.match(read('app/research/home-dashboard.tsx'),/initialNews={live.news}/);
 });

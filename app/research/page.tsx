@@ -24,7 +24,9 @@ async function LiveHomeData() {
     const issues = evidenceIssues({ ...event, metrics: [...event.metrics, ...(event.previous ?? [])] });
     if (issues.length) throw new Error(`Invalid research record ${event.id}: ${issues.join(", ")}`);
   }
-  return <LiveHomeUpdate events={currentEvents.map(publicEvent)} news={live.news} />;
+  // The news feed is not embedded in this public page: it carries the watched companies' stories in full, and FREE may see only the
+  // limited feed that /api/research/news returns after a server-side membership check (the page starts that request with the HTML).
+  return <LiveHomeUpdate events={currentEvents.map(publicEvent)} news={null} />;
 }
 
 export default function ResearchPage() {
