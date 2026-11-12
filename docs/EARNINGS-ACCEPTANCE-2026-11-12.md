@@ -25,3 +25,17 @@ dates. A company that does not pass is **not** sold as 決算の深掘り on the
 | 6 Daily reproduction | Backtest script exists and was run once by hand; not scheduled; no /health or operator view yet. |
 
 Companies currently passing criterion 2: CRWV only (NBIS pending the fix). All others: do not present as 決算深掘り.
+
+## Plan (owner decision 2026-11-12: no new paid contracts; production in about one month)
+Scope of data: the current subscriptions only (Twelve Data, Stock News API, OpenAI, Railway, Vercel, Cloudflare) and free public data (SEC EDGAR, company IR).
+"Absolutely fine" is shown by measurement, updated weekly to the owner: the 22-company pass/fail table, the daily automatic check, and measured results of real releases.
+
+| Week | Goal |
+|---|---|
+| 1 | NBIS, CRWV and AMAT fully: detection ≤10 s, ≥3 figures, phone alert reaches the owner's device; thin displays removed from production. |
+| 2 | Add parsers by market cap and nearest earnings date until half of the 22 pass. |
+| 3 | The remaining companies; SKHY and ORCL (no SEC route) through their official IR / wire routes. |
+| 4 | Full 22-company reproduction run, backup routes, anomaly alerts, operator one-screen view, earnings-call summary from the company's official documents (shareholder letter, prepared remarks) with quotations. |
+
+Call Q&A is added only from an official published transcript. No unlicensed transcripts, no paid transcription provider (owner withdrew that research).
+Delays are reported early with the reason and an alternative.
