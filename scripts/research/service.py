@@ -1979,6 +1979,7 @@ class AutomaticMonitor:
             state["signalIntake"]["xMarketNews"] = x_market_news.diagnostics(db)
             state["releaseWatch"] = release_watch.diagnostics(db, datetime.now(timezone.utc))
             state["signalIntake"]["analystNews"] = analyst_news.diagnostics(db)
+            state["signalIntake"]["issuerFlash"] = issuer_result_flash.diagnostics(db)
             state["signalIntake"]["businessNews"] = general_source_news.diagnostics(db,datetime.now(timezone.utc))
             state["signalIntake"]["headlineTranslation"] = (
                 headline_translation.diagnostics(db, env=os.environ)
