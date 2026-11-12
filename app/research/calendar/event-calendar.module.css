@@ -43,3 +43,8 @@
 .xPost button[aria-pressed="true"] { font-weight: 700; border-color: currentColor; }
 .xPost [role="group"] { display: flex; gap: 8px; }
 .xPost small { opacity: 0.75; }
+
+.reaction { display: grid; gap: 4px; margin-top: 12px; font-size: 0.9rem; }
+.reaction ul { margin: 0; padding-left: 1.2em; }
+.reaction p { margin: 0; }
+.reaction small { opacity: 0.75; }

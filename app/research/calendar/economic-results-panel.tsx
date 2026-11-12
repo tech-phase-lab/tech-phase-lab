@@ -14,6 +14,7 @@ import calendarStyles from "./event-calendar.module.css";
 import DeepAnalysisPanel from "../deep-analysis-panel";
 import { useOwnerMode } from "../member-display-provider";
 import XPostCopyButton from "./x-post-copy-button";
+import EarningsReaction from "./earnings-reaction";
 
 function ResultList({ rows, lang }: { rows: ReactNode[]; lang: "ja" | "en" }) {
   const [limit, setLimit] = useState(3);
@@ -79,7 +80,7 @@ export default function EconomicResultsPanel({ lang, zone, period, kind = "all",
         <summary>{label}<span className={calendarStyles.expand} aria-hidden="true">＋</span></summary>
         <div className={calendarStyles.eventDetails}>
           {!!row.facts.length && <ul className={calendarStyles.facts}>{row.facts.map(fact => <li key={fact.en}>{ja ? fact.ja : fact.en}</li>)}</ul>}
-          {row.kind === "flash" && (() => { const brief = briefs.find(b => b.kind === "earnings" && b.ticker === row.ticker && row.sources.some(source => source.url === b.url)); return brief ? <XPostCopyButton brief={brief} lang={lang} /> : null; })()}
+          {row.kind === "flash" && (() => { const brief = briefs.find(b => b.kind === "earnings" && b.ticker === row.ticker && row.sources.some(source => source.url === b.url)); return brief ? <><EarningsReaction ticker={brief.ticker} releasedAt={brief.publishedAt} /><XPostCopyButton brief={brief} lang={lang} /></> : null; })()}
           {row.kind === "flash" && <p>{ja ? "決算速報の投稿から数値を読み取りました。会社の決算資料で確認してください。" : "Figures read from a results flash post; confirm against the company release."}</p>}
           {!!text && <p>{text.length > 500 ? `${text.slice(0, 500).replace(/[^。.!?！？]*$/, "").trim() || text.slice(0, 500)}…` : text}</p>}
           {links}
