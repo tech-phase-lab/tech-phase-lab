@@ -192,18 +192,26 @@ def nebius_pdf_text(page_url, fetch):
         if link not in seen:
             seen.append(link)
     errors = 0
+    last_error = ''
     for link in seen[:MAX_PDF_CANDIDATES]:
         try:
             content, content_type = fetch(link, 'NBIS')
             if content_type != 'application/pdf':
                 continue
-            text = monitor.extract_pdf_text(content)
-        except Exception:
+            # The headline table is on the first pages; reading all of an 8 MB release timed out on a busy monitor.
+            text = monitor.extract_pdf_text(content, first_pages=3)
+        except Exception as exc:
             errors += 1
+            last_error = str(exc)
             continue
         if re.search(r'\bQ[1-4] 20\d\d financial highlights\b', clean(text), re.I):
             return text
-    raise ValueError('results-pdf-unavailable' if errors else 'results-pdf-not-linked-yet')
+    if not errors:
+        raise ValueError('results-pdf-not-linked-yet' if not seen else 'results-table-not-in-pdf')
+    # A short code for /health: which step failed (the first PDF of the release is the one that matters).
+    lowered = last_error.lower()
+    raise ValueError('pdf-timeout' if 'timed out' in lowered else 'pdf-oversized' if 'oversized' in lowered
+                     else 'pdf-no-text' if 'no extractable' in lowered else 'results-pdf-unavailable')
 
 
 PROFILES = {

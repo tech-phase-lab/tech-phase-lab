@@ -92,7 +92,7 @@ class Publication(unittest.TestCase):
         fetch.calls=calls
         return fetch
     def extract(self,table):
-        def extract(content):
+        def extract(content, first_pages=0):
             return table if PDF.encode() in content else 'Shareholder letter without the results table. '*5
         return extract
     def test_nebius_page_then_pdf_published_with_the_detection_clock(self):
@@ -171,5 +171,21 @@ class Diagnostics(Publication):
             flash.run_once(self.path,NOW,self.fetcher())
         with monitor.connect(self.path) as db: info=flash.diagnostics(db)
         self.assertEqual((info['published'],info['waiting'],info['latest'][0]['period']),(1,[],'Q3 2026'))
+
+class FirstPages(unittest.TestCase):
+    def test_only_the_first_pages_are_read_when_asked(self):
+        import io, importlib.util
+        from pypdf import PdfWriter, PdfReader
+        spec=importlib.util.spec_from_file_location('intake',Path(__file__).parent/'test_research_intake.py')
+        # reuse the dependency-free one-line PDF builder from the intake tests
+        text_pdf=__import__('test_research_intake').text_pdf
+        writer=PdfWriter()
+        for line in ('Q3 2026 financial highlights revenue first page words here','Second page words that must not be read when only one page is asked'):
+            for page in PdfReader(io.BytesIO(text_pdf(line))).pages: writer.add_page(page)
+        buffer=io.BytesIO(); writer.write(buffer)
+        both=monitor.extract_pdf_text(buffer.getvalue())
+        first=monitor.extract_pdf_text(buffer.getvalue(),first_pages=1)
+        self.assertIn('Second page',both)
+        self.assertIn('first page',first); self.assertNotIn('Second page',first)
 
 if __name__=='__main__': unittest.main()

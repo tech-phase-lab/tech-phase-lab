@@ -1373,13 +1373,15 @@ def extract_html_text(content, declared_encoding=None):
     return visible
 
 
-def extract_pdf_text(content):
-    """Extract PDF evidence in a resource-limited child process."""
+def extract_pdf_text(content, first_pages=0):
+    """Extract PDF evidence in a resource-limited child process (first_pages > 0: only those pages)."""
     timeout = environment_seconds("RESEARCH_PDF_EXTRACT_TIMEOUT_SECONDS", 20, 1, 30)
     child_environment = {
         "PATH": os.environ.get("PATH", ""),
         "PYTHONIOENCODING": "utf-8",
     }
+    if first_pages:
+        child_environment["PDF_EXTRACT_FIRST_PAGES"] = str(int(first_pages))
     try:
         completed = subprocess.run(
             [sys.executable, str(Path(__file__).with_name("pdf_extract.py"))],
