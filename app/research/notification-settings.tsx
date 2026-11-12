@@ -140,7 +140,7 @@ export default function NotificationSettings({ lang, initiallyOpen = false, page
           if (!await subscription.unsubscribe()) throw new Error(t("停止できませんでした。", "Could not stop notifications."));
           try { await request("remove", subscription); } catch { /* Browser endpoint has already been revoked. */ }
         }
-        setHasSubscription(false); setState("off"); setTestSent(false); setReceived(false); confirmed.current = null; setPrefs(null); setPrefsState("idle"); return;
+        wasOn.current = false; setHasSubscription(false); setState("off"); setTestSent(false); setReceived(false); confirmed.current = null; setPrefs(null); setPrefsState("idle"); return;
       }
       if (action === "enable") {
         const bytes = Uint8Array.from(atob(key.replace(/-/g, "+").replace(/_/g, "/")), c => c.charCodeAt(0));
@@ -198,6 +198,17 @@ export default function NotificationSettings({ lang, initiallyOpen = false, page
   useEffect(() => {
     if (state === "on" || state === "off") { try { localStorage.setItem(DEVICE_KEY, state); } catch { /* storage may be blocked */ } }
   }, [state]);
+  // iPhone's home-screen app sometimes drops the device's push registration on its own. If this device was on, the permission is still
+  // granted and the check now says off, register it again quietly (once per visit) instead of leaving it off until a person notices.
+  const wasOn = useRef<boolean | null>(null);
+  if (wasOn.current === null) wasOn.current = typeof window !== "undefined" && readDeviceState() === "on";
+  const healed = useRef(false);
+  useEffect(() => {
+    if (state !== "off" || !key || !wasOn.current || healed.current || busy || typeof Notification === "undefined" || Notification.permission !== "granted") return;
+    healed.current = true;
+    void run("enable").then(() => setMessage(""));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [state, key, busy]);
   // A press made before the check finished waits for it, then turns notifications on.
   useEffect(() => {
     if (!starting || state === "checking") return;
