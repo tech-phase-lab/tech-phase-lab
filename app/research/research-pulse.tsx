@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { WATCH_TICKERS } from "@/lib/research/flash-rows";
-import { bandItems, bandParts } from "@/lib/research/news-band";
+import { bandItems, bandLead, bandParts } from "@/lib/research/news-band";
 import type { Language } from "@/lib/research/data";
 import { newsSnapshot, serverNewsSnapshot, subscribeNews } from "@/lib/research/news-snapshot";
 import { takeWireStartup } from "@/lib/research/news-startup";
@@ -10,6 +10,7 @@ import { parseCompanyWire, type CompanyWireItem } from "@/lib/research/company-w
 import { pulseClock } from "@/lib/research/news-time";
 import { publishWire } from "@/lib/research/wire-store";
 import styles from "./research-pulse.module.css";
+const subscribeWide = (callback: () => void) => { const media = window.matchMedia("(min-width: 900px)"); media.addEventListener("change", callback); return () => media.removeEventListener("change", callback); };
 const subscribe = (callback: () => void) => { const media = window.matchMedia("(prefers-reduced-motion: reduce)"); media.addEventListener("change", callback); return () => media.removeEventListener("change", callback); };
 /** Most company headlines are longer than the band allows, so the newest 40 stories can hold none that fit (Nov 5: the band went empty).
  * The band looks through a wide pool and keeps the newest stories that have a short headline. */
@@ -46,11 +47,14 @@ function Line({ line, ja, leaving }: { line: BandLine; ja: boolean; leaving?: bo
     return () => { observer.disconnect(); if (frame) cancelAnimationFrame(frame); };
   }, [line.band]);
   const symbols = [...line.ticker.split(/[\s·]+/), ...WATCH_TICKERS];
+  // A headline that does not name its company gets the symbol in front (owner, Nov 12: "which company is this about?").
+  const lead = bandLead(line.ticker, line.band);
   // Japan time in Japanese and U.S. Eastern time in English, as before.
   const timestamp = pulseClock(line.at, line.kind, ja);
   return <div className={`${styles.item} ${leaving ? styles.out : styles.in}`} aria-hidden={leaving || undefined}>
     <span className={styles.live}>LIVE</span>
     <span ref={element} className={styles.hd} lang={ja ? "ja" : "en"} title={line.band}>
+      {lead ? <><b className={styles.sym}>{lead}</b>{" "}</> : null}
       {bandParts(line.band, symbols).map((part, index) => part.symbol ? <b key={index} className={styles.sym}>{part.text}</b> : part.text)}
     </span>
     <time className={styles.tm} dateTime={line.at} title={timestamp}>{timestamp}</time>
@@ -76,6 +80,7 @@ function writePulseCache(lang: Language, items: PulseItem[]) {
 export default function ResearchPulse({ lang }: { lang: Language }) {
   const snapshot = useSyncExternalStore(subscribeNews, newsSnapshot, serverNewsSnapshot);
   const feed = snapshot?.data;
+  const wide = useSyncExternalStore(subscribeWide, () => window.matchMedia("(min-width: 900px)").matches, () => false);
   const reduced = useSyncExternalStore(subscribe, () => window.matchMedia("(prefers-reduced-motion: reduce)").matches, () => true);
   const [position, setPosition] = useState({first: "", index: 0});
   const [held, setHeld] = useState(false);
@@ -113,9 +118,9 @@ export default function ResearchPulse({ lang }: { lang: Language }) {
   const [remembered, setRemembered] = useState<PulseItem[]>([]);
   useEffect(() => { setRemembered(readPulseCache(lang)); }, [lang]);
   const liveKey = live.map(item => item.id).join("|");
-  useEffect(() => { if (live.length) writePulseCache(lang, bandItems(live, ja, 8)); }, [lang, liveKey]); // eslint-disable-line react-hooks/exhaustive-deps
+  useEffect(() => { if (live.length) writePulseCache(lang, bandItems(live, ja, 8, wide)); }, [lang, liveKey, wide]); // eslint-disable-line react-hooks/exhaustive-deps
   // Only stories with a short headline are shown; the rest stay in the news list and the band moves on to the next.
-  const items = bandItems(live.length ? live : remembered, ja);
+  const items = bandItems(live.length ? live : remembered, ja, 5, wide);
   const first = items[0]?.id ?? "";
   // Pressing the band holds the headline; letting go resumes. Reduced motion stops everything.
   const stopped = held || reduced;
