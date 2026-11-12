@@ -37,3 +37,18 @@ test('consensus is used only for the matching report date and the same EPS basis
   assert.equal(pickConsensus(raw, '2026-12-30T13:00:00Z', -1.27), null); // no row for that date
   assert.equal(pickConsensus({ earnings: [{ date: '2026-11-12', eps_estimate: 1, eps_actual: null }] }, '2026-11-12T13:00:00Z', 1), null);
 });
+
+test('NBIS Q3 2026 (owner reference): capex outlook above the old range is a caution line, with the old range as the basis', () => {
+  const brief = { ticker: 'NBIS', period: '2026Q3', facts: [f('revenue', '売上高', '$980.8M', { yearAgo: '$146.1M' }), f('capex-guidance', '2026年設備投資見通し', '$27B', { priorGuidance: '$20B-$25B' })] };
+  const text = buildXPost(brief, null, 'short');
+  assert.match(text, /⭕️売上高9\.81億ドル（前年比\+571％）/);
+  assert.match(text, /⚠️2026年設備投資見通し270億ドル（従来予想200〜250億ドルを上回る）/);
+  assert.ok(text.indexOf('⭕️') < text.indexOf('⚠️'));
+});
+test('revenue guidance: raised is ⭕️, lowered is ❌, overlapping or unknown stays plain ✅ (no direction is invented)', () => {
+  const g = (value, prior) => buildXPost({ ticker: 'X', period: 'Q1', facts: [f('guidance-revenue', '通期売上予想', value, prior ? { priorGuidance: prior } : undefined)] }, null, 'short');
+  assert.match(g('$3.5B-$3.8B', '$3.0B-$3.4B'), /⭕️.*上方修正/);
+  assert.match(g('$2.0B-$2.4B', '$3.0B-$3.4B'), /❌.*下方修正/);
+  assert.match(g('$3.2B-$3.6B', '$3.0B-$3.4B'), /✅通期売上予想32〜36億ドル$/);
+  assert.match(g('$3.0B-$3.4B'), /✅通期売上予想30〜34億ドル$/);
+});

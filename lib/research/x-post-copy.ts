@@ -11,6 +11,12 @@ export function parseAmount(text: string): number | null {
   const n = Number(m[2].replaceAll(",", ""));
   return Number.isFinite(n) ? (m[1] ? -1 : 1) * n * (SCALE[m[3]] ?? 1) : null;
 }
+/** "$27B" -> {lo,hi}=27e9; "$20B-$25B" -> 20e9..25e9. Anything else: null. */
+function span(text: string): { lo: number; hi: number } | null {
+  const r = /^(\$[\d.,]+[BMK])\s*-\s*(\$[\d.,]+[BMK])$/.exec(text.trim());
+  if (r) { const lo = parseAmount(r[1]), hi = parseAmount(r[2]); return lo === null || hi === null || lo > hi ? null : { lo, hi }; }
+  const v = parseAmount(text); return v === null ? null : { lo: v, hi: v };
+}
 const trim = (n: number, digits = 2) => String(Number(n.toFixed(digits)));
 /** USD amount in the Japanese 億ドル notation: 3,661,000,000 -> "36.61億ドル" (1億ドル = 1e8). Under 1e7: plain dollars. */
 export function oku(usd: number): string {
@@ -34,10 +40,20 @@ function growth(value: number, previousText: string | undefined): { pct: number;
 const signed = (pct: number) => `${pct >= 0 ? "+" : "-"}${Math.abs(Math.round(pct)).toLocaleString("en-US")}％`;
 
 function line(fact: ResultFact, consensus: EpsConsensus | null, mode: XPostMode): { mark: Mark; text: string } | null {
-  const range = /^(\$[\d.,]+[BMK])\s*-\s*(\$[\d.,]+[BMK])$/.exec(fact.value.trim());
-  if (fact.key.startsWith("guidance-")) {
-    if (range) { const lo = parseAmount(range[1]), hi = parseAmount(range[2]); if (lo === null || hi === null) return null; return { mark: "✅", text: `${fact.ja}${trim(lo / 1e8)}〜${trim(hi / 1e8)}億ドル` }; }
-    const v = parseAmount(fact.value); return v === null ? null : { mark: "✅", text: `${fact.ja}${oku(v)}` };
+  if (fact.key.startsWith("guidance-") || fact.key === "capex-guidance") {
+    const now = span(fact.value);
+    if (!now) return null;
+    const text = `${fact.ja}${now.lo === now.hi ? oku(now.lo) : `${trim(now.lo / 1e8)}〜${trim(now.hi / 1e8)}億ドル`}`;
+    const priorText = (fact.comparisons as { priorGuidance?: string } | undefined)?.priorGuidance;
+    const prior = priorText ? span(priorText) : null;
+    const dir = prior ? (now.lo > prior.hi ? "up" : now.hi < prior.lo ? "down" : now.lo === prior.lo && now.hi === prior.hi ? "same" : "mixed") : null;
+    const priorWords = prior ? `${prior.lo === prior.hi ? oku(prior.lo) : `${trim(prior.lo / 1e8)}〜${trim(prior.hi / 1e8)}億ドル`}` : "";
+    if (!dir || dir === "mixed") return { mark: "✅", text };
+    const word = dir === "up" ? "上回る" : dir === "down" ? "下回る" : "据え置き";
+    const detail = dir === "same" ? `（従来予想${priorWords}から据え置き）` : `（従来予想${priorWords}を${word}）`;
+    // Capex above or below the old outlook is neither good nor bad by itself: caution. Revenue-type guidance has a direction.
+    if (fact.key === "capex-guidance") return { mark: dir === "same" ? "✅" : "⚠️", text: text + detail };
+    return { mark: dir === "up" ? "⭕️" : dir === "down" ? "❌" : "✅", text: text + (dir === "up" ? "（従来予想" + priorWords + "を上方修正）" : dir === "down" ? "（従来予想" + priorWords + "を下方修正）" : detail) };
   }
   const v = parseAmount(fact.value);
   if (v === null) return null;
@@ -64,7 +80,7 @@ function line(fact: ResultFact, consensus: EpsConsensus | null, mode: XPostMode)
 export function buildXPost(brief: Pick<ResultBrief, "ticker" | "period" | "facts">, consensus: EpsConsensus | null, mode: XPostMode): string | null {
   const rows = brief.facts.map(f => line(f, consensus, mode)).filter((r): r is { mark: Mark; text: string } => r !== null);
   if (!rows.length) return null;
-  const groups = (["⭕️", "❌", "・", "✅"] as Mark[]).map(mark => rows.filter(r => r.mark === mark).map(r => `${mark === "・" ? "・" : mark}${r.text}`)).filter(g => g.length);
+  const groups = (["⭕️", "❌", "⚠️", "・", "✅"] as Mark[]).map(mark => rows.filter(r => r.mark === mark).map(r => `${mark === "・" ? "・" : mark}${r.text}`)).filter(g => g.length);
   const body = groups.map(g => g.join("\n")).join("\n\n");
   const attribution = mode === "consensus" && consensus ? "\n\n予想の提供: Twelve Data" : "";
   return `${brief.ticker} ${brief.period} 決算速報\n\n${body}${attribution}`;
