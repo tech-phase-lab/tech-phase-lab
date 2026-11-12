@@ -1,3 +1,4 @@
+import { routeImport } from './support/route-source.mjs';
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { readFileSync } from 'node:fs';
@@ -65,9 +66,7 @@ function render(feed, lang = 'ja', officialOnly = false, page = 1) {
   return renderToStaticMarkup(React.createElement(Panel, { lang, officialOnly }));
 }
 const importSource = source => import('data:text/javascript;base64,' + Buffer.from(stripTypeScriptTypes(source)).toString('base64'));
-const routeSource = readFileSync(new URL('../app/api/research/news/route.ts', import.meta.url), 'utf8')
-  .replace('"@/lib/research/public-news-response"', JSON.stringify(new URL('../lib/research/public-news-response.ts', import.meta.url).href));
-const { GET } = await importSource(routeSource);
+const { GET } = await routeImport('app/api/research/news/route.ts');
 let homeSource = readFileSync(new URL('../lib/research/live-result-events.ts', import.meta.url), 'utf8').replace("import 'server-only';", '');
 for (const name of ['public-news-response', 'general-news', 'market-results', 'official-result-events']) {
   homeSource = homeSource.replaceAll(`'./${name}'`, JSON.stringify(new URL(`../lib/research/${name}.ts`, import.meta.url).href));
@@ -206,7 +205,7 @@ test('API and streamed HTML fail closed outside preview and opt in only on the e
       globalThis.fetch = async (url, init) => { requests.push(String(url)); assert.equal(init.headers.Authorization, 'Bearer synthetic-server-token'); return Response.json(wire([original, notice])); };
       const response = await GET(new Request('https://frontend.example.com/api/research/news?originalPreview=1'));
       const api = await response.json(), home = await loadLiveHomeNews();
-      assert.equal(response.status, 200); assert.equal(response.headers.get('Cache-Control'), 'no-store');
+      assert.equal(response.status, 200); assert.equal(response.headers.get('Cache-Control'), 'private, no-store');
       assert.deepEqual(requests, Array(2).fill(`https://monitor.example.com/news${env === 'preview' ? '?originalPreview=1' : ''}`));
       for (const data of [api, home.news.data]) assert.deepEqual(data.originalPreviewItems, env === 'preview' ? [original, notice] : undefined);
     }
