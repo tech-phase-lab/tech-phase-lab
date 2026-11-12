@@ -1,3 +1,4 @@
+import { routeImport } from './support/route-source.mjs';
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { readFile } from 'node:fs/promises';
@@ -90,12 +91,7 @@ test('analyst reporting stays in the news list but never enters the top strip', 
 });
 
 test('public news API carries accepted analyst reporting without reclassifying it as official', async () => {
-  let source = await readFile(new URL('../app/api/research/news/route.ts', import.meta.url), 'utf8');
-  for (const name of ['public-news-response', 'general-news', 'official-result-events', 'result-news', 'mu-latest']) {
-    source = source.replace(new RegExp(`["']@/lib/research/${name}["']`, 'g'),
-      JSON.stringify(new URL(`../lib/research/${name}.ts`, import.meta.url).href));
-  }
-  const { GET } = await import('data:text/javascript;base64,' + Buffer.from(stripTypeScriptTypes(source)).toString('base64'));
+  const { GET } = await routeImport('app/api/research/news/route.ts');
   const previous = { fetch: globalThis.fetch, url: process.env.RESEARCH_MONITOR_URL, token: process.env.RESEARCH_MONITOR_TOKEN };
   process.env.RESEARCH_MONITOR_URL = 'https://monitor.example.com';
   process.env.RESEARCH_MONITOR_TOKEN = 'synthetic-test-token';

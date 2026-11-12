@@ -30,12 +30,22 @@ class Parsers(unittest.TestCase):
                   'q325':('Q3 2025',[('revenue','$146.1M'),('net-income','$-119.6M'),('adjusted-ebitda','$-5.2M'),('adjusted-net-income','$-100.4M')])}
         for name,(period,facts) in expected.items():
             parsed=flash.parse_nebius(fixture(f'nebius-results-{name}.txt'))
-            self.assertEqual((parsed['period'],parsed['facts']),(period,facts),name)
+            self.assertEqual((parsed['period'],[(k,v) for k,v,_ in parsed['facts']]),(period,facts),name)
+    def test_nebius_q3_2026_pdf_with_garbled_text_publishes_only_the_clean_rows(self):
+        # The real Nov 12 release: extraction dropped the 'U' of USD and split digits in the net income row.
+        parsed=flash.parse_nebius(fixture('nebius-results-q326.txt'))
+        self.assertEqual(parsed['period'],'Q3 2026')
+        self.assertEqual(parsed['facts'],[('revenue','$980.8M','$146.1M'),('adjusted-ebitda','$465.8M','$-5.2M'),('adjusted-net-income','$90.9M','$-100.4M')])
+        # a garbled digit in the revenue row is refused (the stated +571% no longer matches)
+        with self.assertRaises(ValueError): flash.parse_nebius(fixture('nebius-results-q326.txt').replace('980.8','9 80.8',1).replace('Revenues 146.1 9 80.8','Revenues 146.1 580.8'))
     def test_coreweave_table_and_guidance(self):
         parsed=flash.parse_coreweave(fixture('coreweave-results-q326.txt'))
         self.assertEqual(parsed['period'],'Q3 2026')
-        self.assertEqual(parsed['facts'],[('revenue','$3.661B'),('eps','$-1.27'),('net-income','$-709M'),('operating-income','$207M'),
+        self.assertEqual([(k,v) for k,v,_ in parsed['facts']],[('revenue','$3.661B'),('eps','$-1.27'),('net-income','$-709M'),('operating-income','$207M'),
                                            ('adjusted-ebitda','$2.256B'),('guidance-revenue','$13.0B-$13.3B')])
+        # the prior-year column (Q3 2025), read from the same rows
+        self.assertEqual([(k,y) for k,_,y in parsed['facts']],[('revenue','$1.365B'),('eps','$-0.22'),('net-income','$-110M'),('operating-income','$52M'),
+                                           ('adjusted-ebitda','$838M'),('guidance-revenue',None)])
     def test_unknown_layouts_publish_nothing(self):
         text=fixture('nebius-results-q226.txt')
         for broken in (text.replace('Revenues','Net sales'),                        # revenue row renamed
@@ -50,7 +60,7 @@ class Parsers(unittest.TestCase):
     def test_a_repeated_row_is_left_out_not_guessed(self):
         text=fixture('nebius-results-q226.txt').replace('Adjusted net loss (91.5) (33.2) -64% (175.2) (133.5) -24%',
             'Adjusted net loss (91.5) (33.2) -64% (175.2) (133.5) -24%\nAdjusted net loss (1.0) (2.0) -64% (1.0) (2.0) -24%')
-        keys=[k for k,_ in flash.parse_nebius(text)['facts']]
+        keys=[f[0] for f in flash.parse_nebius(text)['facts']]
         self.assertNotIn('adjusted-net-income',keys); self.assertIn('revenue',keys)
     def test_only_the_nebius_results_page_is_a_candidate(self):
         ok=flash.NEBIUS_RESULTS_PATH.match
@@ -82,7 +92,7 @@ class Publication(unittest.TestCase):
         fetch.calls=calls
         return fetch
     def extract(self,table):
-        def extract(content):
+        def extract(content, first_pages=0):
             return table if PDF.encode() in content else 'Shareholder letter without the results table. '*5
         return extract
     def test_nebius_page_then_pdf_published_with_the_detection_clock(self):
@@ -95,7 +105,7 @@ class Publication(unittest.TestCase):
             [item]=flash.public_feed(db,'2026-11-05T00:00:00+00:00')
         self.assertEqual((item['ticker'],item['period'],item['kind'],item['url']),('NBIS','Q3 2026','earnings',NB_PAGE))
         self.assertEqual(item['researchId'],'ir-flash-'+item['id'])
-        self.assertEqual(item['facts'][0],{'key':'revenue','ja':'売上高','en':'Revenue','value':'$582.3M'})
+        self.assertEqual(item['facts'][0],{'key':'revenue','ja':'売上高','en':'Revenue','value':'$582.3M','comparisons':{'yearAgo':'$105.1M'}})
         self.assertEqual(item['publishedAt'],'2026-11-12T13:00:05.000+00:00')
         self.assertEqual(item['titleJa'],'NBIS Q3 2026決算：売上高$582.3M、純損益$-190.4M')
         self.assertIn('detectionToPublicMs',item)
@@ -161,5 +171,21 @@ class Diagnostics(Publication):
             flash.run_once(self.path,NOW,self.fetcher())
         with monitor.connect(self.path) as db: info=flash.diagnostics(db)
         self.assertEqual((info['published'],info['waiting'],info['latest'][0]['period']),(1,[],'Q3 2026'))
+
+class FirstPages(unittest.TestCase):
+    def test_only_the_first_pages_are_read_when_asked(self):
+        import io, importlib.util
+        from pypdf import PdfWriter, PdfReader
+        spec=importlib.util.spec_from_file_location('intake',Path(__file__).parent/'test_research_intake.py')
+        # reuse the dependency-free one-line PDF builder from the intake tests
+        text_pdf=__import__('test_research_intake').text_pdf
+        writer=PdfWriter()
+        for line in ('Q3 2026 financial highlights revenue first page words here','Second page words that must not be read when only one page is asked'):
+            for page in PdfReader(io.BytesIO(text_pdf(line))).pages: writer.add_page(page)
+        buffer=io.BytesIO(); writer.write(buffer)
+        both=monitor.extract_pdf_text(buffer.getvalue())
+        first=monitor.extract_pdf_text(buffer.getvalue(),first_pages=1)
+        self.assertIn('Second page',both)
+        self.assertIn('first page',first); self.assertNotIn('Second page',first)
 
 if __name__=='__main__': unittest.main()

@@ -1,10 +1,13 @@
 import { parseCompanyWire } from "@/lib/research/company-wire";
+import { buildPublicNews } from "@/lib/research/public-news-response";
+import { freeTechSelection, projectFreeWire } from "@/lib/research/tech-news-access";
+import { PRIVATE_HEADERS, readMonitor, viewerHasFullNews } from "@/lib/research/tech-news-server";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 export const maxDuration = 15;
 
-const headers = { "Cache-Control": "no-store", "X-Content-Type-Options": "nosniff" };
+const headers = PRIVATE_HEADERS;
 
 export async function GET() {
   try {
@@ -20,7 +23,12 @@ export async function GET() {
     if (!response.ok) throw new Error("Unavailable");
     const text = await response.text();
     if (new TextEncoder().encode(text).length > 400_000) throw new Error("Oversized response");
-    return Response.json(parseCompanyWire(JSON.parse(text)), { headers });
+    const wire = parseCompanyWire(JSON.parse(text));
+    if (await viewerHasFullNews()) return Response.json(wire, { headers });
+    // FREE: only the headlines inside the same 30-minute-delayed newest five that /api/research/news allows.
+    // The selection needs the news feed too; without it nothing is sent rather than everything.
+    const feed = buildPublicNews(await readMonitor("news", 500_000, 5_000));
+    return Response.json({ ok: true, items: projectFreeWire(wire.items, freeTechSelection(feed, wire.items)) }, { headers });
   } catch {
     return Response.json({ ok: false, items: {} }, { status: 503, headers });
   }

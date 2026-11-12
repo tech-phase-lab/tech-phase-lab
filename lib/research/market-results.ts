@@ -1,7 +1,7 @@
 import type { ResearchEvent } from './data';
 import { deduplicateResearchEvents } from './deduplicate-events.ts';
 
-export type ResultComparisons = { forecast?: string; previous?: string; previousRevisedFrom?: string };
+export type ResultComparisons = { forecast?: string; previous?: string; previousRevisedFrom?: string; yearAgo?: string };
 export type ResultFact = { key:string; ja:string; en:string; value:string; comparisons?:ResultComparisons };
 export type ResultBrief = {
   id:string; researchId:string; kind:'earnings'|'economic'; ticker:string; period:string;
@@ -49,6 +49,12 @@ export function parseResultBriefs(value: unknown): ResultBrief[] {
             && (/[BMK%]$/i.exec(value)?.[0].toUpperCase() ?? '') === unit) comparisons[key] = value;
         }
         if (!comparisons.previous) delete comparisons.previousRevisedFrom;
+      }
+      // Issuer-table flashes (ir-flash-) carry the same quarter one year earlier, read from the table's prior-year column.
+      if (kind === 'earnings' && researchId.startsWith('ir-flash-') && o.comparisons && typeof o.comparisons === 'object' && !Array.isArray(o.comparisons)) {
+        const year = (o.comparisons as Record<string, unknown>).yearAgo;
+        if (typeof year === 'string' && year.length <= 80 && /^(?:\$|€|NT\$|₩)?[-+]?\d+(?:\.\d+)?[BMKT%]?$/i.test(year)
+          && (/[BMKT%]$/i.exec(year)?.[0].toUpperCase() ?? '') === (/[BMKT%]$/i.exec(o.value as string)?.[0].toUpperCase() ?? '')) comparisons.yearAgo = year;
       }
       return {key:o.key as string,ja:o.ja as string,en:o.en as string,value:o.value as string,
         ...(Object.keys(comparisons).length ? {comparisons} : {})};

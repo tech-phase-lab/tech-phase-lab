@@ -9,6 +9,7 @@ export function resultFactText(fact: ResultFact, lang: "ja" | "en"): string {
   const ja = lang === "ja", comparisons = fact.comparisons;
   const detail = [];
   if (comparisons?.forecast) detail.push(`${ja ? "予想" : "Forecast"} ${comparisons.forecast}`);
+  if (comparisons?.yearAgo) detail.push(`${ja ? "前年同期" : "Year ago"} ${comparisons.yearAgo}`);
   if (comparisons?.previous) detail.push(`${ja ? "前回" : "Previous"} ${comparisons.previous}${comparisons.previousRevisedFrom
     ? ja ? `［${comparisons.previousRevisedFrom}から改定］` : ` [revised from ${comparisons.previousRevisedFrom}]` : ""}`);
   return `${fact[lang]}${ja ? "：" : ": "}${fact.value}${detail.length ? ja ? `（${detail.join("／")}）` : ` (${detail.join("; ")})` : ""}`;

@@ -138,8 +138,10 @@ export default function NotificationPageView(p: PageViewProps) {
         {p.usable && <button type="button" className={on ? styles.statusOff : styles.statusOn} disabled={p.busy || p.starting} onClick={p.onToggle}>{p.busy || p.starting ? t("設定中…", "Setting up…") : on ? t("オフにする", "Turn off") : t("オンにする", "Turn on")}</button>}
       </div>
       {(state === "unavailable" || state === "unknown") && <div className={styles.aux}><button type="button" disabled={p.busy} onClick={state === "unknown" ? p.onStatus : p.onRetry}>{t("もう一度確認する", "Check again")}</button></div>}
-      {needsAccount && <div className={styles.aux}><Link href="/research/account">{t("ログイン・会員情報", "Sign in or view plans")}</Link></div>}
-      {!p.usable && p.hasSubscription && <div className={styles.aux}><button type="button" disabled={p.busy} onClick={p.onDisable}>{t("通知をオフにする", "Turn off notifications")}</button></div>}
+      {(needsAccount || (!p.usable && p.hasSubscription)) && <div className={styles.aux}>
+        {needsAccount && <Link href="/research/account">{t("ログイン・会員情報", "Sign in or view plans")}</Link>}
+        {!p.usable && p.hasSubscription && <button type="button" disabled={p.busy} onClick={p.onDisable}>{t("通知をオフにする", "Turn off notifications")}</button>}
+      </div>}
       {state === "unsupported" && <p className={styles.note}>{t("iPhoneではSafariの共有メニューからホーム画面に追加し、そのアイコンから開いてください。", "On iPhone, add this site to your Home Screen using Safari’s Share menu, then open that icon.")}</p>}
       {state === "blocked" && <p className={styles.note}>{t("端末またはブラウザの設定で、Tech Phaseの通知を許可してください。", "Allow Tech Phase notifications in your device or browser settings.")}</p>}
       {!on && p.message && <p className={styles.note} role="status">{p.message}</p>}

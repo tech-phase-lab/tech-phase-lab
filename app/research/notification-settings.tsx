@@ -2,6 +2,7 @@
 import Link from "next/link";
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { waitForIdentity } from "@/lib/research/member-recovery";
+import { useIdentityRefresh } from "./identity-provider";
 import type { Language } from "@/lib/research/data";
 import styles from "./price-targets-panel.module.css";
 import { useOwnerMode } from "./member-display-provider";
@@ -12,6 +13,7 @@ const readDeviceState = () => { try { return localStorage.getItem(DEVICE_KEY) ??
 type State = "checking" | "off" | "on" | "unknown" | "blocked" | "unsupported" | "unavailable" | "sign-in" | "pro-required";
 export default function NotificationSettings({ lang, initiallyOpen = false, page = false }: { lang: Language; initiallyOpen?: boolean; page?: boolean }) {
   const ownerMode = useOwnerMode();
+  const refreshIdentity = useIdentityRefresh();
   const [open, setOpen] = useState(initiallyOpen || page);
   const [state, setState] = useState<State>("checking");
   const [hasSubscription, setHasSubscription] = useState(false);
@@ -65,8 +67,15 @@ export default function NotificationSettings({ lang, initiallyOpen = false, page
       clearTimeout(expiryTimer);
       setState("checking"); setKey(""); setTestSent(false); setReceived(false); setMessage("");
       try {
-        const response = await fetch("/api/research/notifications", { cache: "no-store", signal });
-        const config = await response.json();
+        let response = await fetch("/api/research/notifications", { cache: "no-store", signal });
+        let config = await response.json();
+        // Opening the app after a while: the sign-in cookie has lapsed and is renewed by the page a moment later. Renew it now and ask again
+        // once, so a signed-in member is not shown "sign in" (and "off") only because the page asked first.
+        if (config.reason === "sign-in") {
+          await waitForIdentity(refreshIdentity(true), signal);
+          response = await fetch("/api/research/notifications", { cache: "no-store", signal });
+          config = await response.json();
+        }
         if (!active()) return;
         // Resolve membership before device guidance so signed-out and Free users
         // are not asked to change permissions for a feature they cannot use yet.
@@ -85,7 +94,9 @@ export default function NotificationSettings({ lang, initiallyOpen = false, page
         if (Notification.permission === "denied") { setState("blocked"); return; }
         setKey(config.publicKey);
         if (subscription) {
-          const check = await fetch("/api/research/notifications", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ action: "status", subscription: subscription.toJSON() }), signal });
+          const ask = () => fetch("/api/research/notifications", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ action: "status", subscription: subscription.toJSON() }), signal });
+          let check = await ask();
+          if (check.status === 401) { await waitForIdentity(refreshIdentity(true), signal); check = await ask(); }
           const result = await check.json();
           if (active()) setState(check.status === 401 ? "sign-in" : check.status === 403 ? "pro-required" : check.ok && result.ok ? result.registered ? "on" : "off" : "unknown");
           if (active() && page && config.preferencesVersion === 1 && check.ok && result.ok && result.registered) await loadPreferences(subscription, signal, active);

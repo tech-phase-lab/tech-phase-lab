@@ -7,6 +7,7 @@ import { join, relative } from 'node:path';
 // (sign-in, membership, owner, or the monitor's token). A new route that does neither fails here, so a PRO feature cannot ship open by accident.
 const PUBLIC = {
   'research/macro': 'public FRED rates, no member data',
+  'research/earnings-consensus': 'public EPS consensus (Twelve Data display licence, attribution shown)',
   'research/market/board': 'public market quotes (Twelve Data display licence)',
   'research/market/chart': 'public market chart',
   'research/market/facts': 'public market facts',
@@ -20,11 +21,6 @@ const PUBLIC = {
   'research/freshness': 'public freshness stamps',
   'research/stocks': 'public stock directory',
   'resolute/receive': 'guest checkout receipt (switch-gated, origin-checked)',
-  // KNOWN OPEN, reported to the owner (legacy /lab page): unauthenticated, use our Alpaca key. Decide: gate or remove.
-  'flash': 'legacy /lab simulation, no data',
-  'market': 'legacy /lab: Alpaca quotes without sign-in',
-  'news-latest': 'legacy /lab: Alpaca news without sign-in',
-  'news-probe': 'legacy /lab: 30-second Alpaca websocket per request without sign-in',
 };
 const GUARD = /getMembership\w*\(|auth\(\)|currentUser|ownerIdentity|accountIdentity|riskProxy|handleLiveBilling|handleSandboxBilling|validSyncToken|createRecoveryCheck|requireOwner|isOwnerAccount|Bearer|getResoluteEntitlements|canUseTools|\.\.\.action|routes\./;
 function routes(dir) {

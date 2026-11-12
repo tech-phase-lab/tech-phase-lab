@@ -1,4 +1,7 @@
 import { buildPublicNews } from "@/lib/research/public-news-response";
+import { parseCompanyWire } from "@/lib/research/company-wire";
+import { freeTechSelection, projectFreeNews } from "@/lib/research/tech-news-access";
+import { PRIVATE_HEADERS, readMonitor, viewerHasFullNews } from "@/lib/research/tech-news-server";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -6,7 +9,7 @@ export const maxDuration = 15;
 
 export async function GET() {
   const startedAt = performance.now();
-  const headers = { "Cache-Control": "no-store", "X-Content-Type-Options": "nosniff" };
+  const headers = PRIVATE_HEADERS;
   try {
     const base = process.env.RESEARCH_MONITOR_URL;
     const token = process.env.RESEARCH_MONITOR_TOKEN;
@@ -23,7 +26,14 @@ export async function GET() {
     if (new TextEncoder().encode(text).length > 500_000) throw new Error("Oversized response");
     const upstreamMs = performance.now() - startedAt;
     const raw = JSON.parse(text);
-    const feed = buildPublicNews(raw, { allowOriginalPreview: process.env.VERCEL_ENV === "preview" });
+    const full = await viewerHasFullNews();
+    let feed = buildPublicNews(raw, { allowOriginalPreview: full && process.env.VERCEL_ENV === "preview" });
+    if (!full) {
+      // FREE: the watched companies' stories are limited here, before anything is sent (30 minutes behind, newest five, headlines only).
+      let wire = {};
+      try { wire = parseCompanyWire(await readMonitor("company-wire", 400_000, 2_500)).items; } catch { /* no wire: the other sources still limit themselves */ }
+      feed = projectFreeNews(feed, freeTechSelection(feed, wire));
+    }
     return Response.json(feed, { headers: { ...headers,
       "Server-Timing": `upstream;dur=${upstreamMs.toFixed(1)},total;dur=${(performance.now() - startedAt).toFixed(1)}`,
     } });
