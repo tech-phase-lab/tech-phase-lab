@@ -236,6 +236,8 @@ def build(ticker, url, parsed, observed_at):
 
 
 _attempts = {}
+# Last outcome per release (short codes only), so /health shows why a results table was not published.
+STATUS = {}
 
 
 def due(url, detected, now):
@@ -293,8 +295,11 @@ def run_once(path, reference=None, fetch=None):
             try:
                 text = body if body is not None else nebius_pdf_text(url, fetch)
                 parsed = PROFILES[ticker]['parse'](text)
-            except Exception:
+            except Exception as exc:
+                code = str(exc) if isinstance(exc, ValueError) and re.fullmatch(r'[a-z0-9-]{1,40}', str(exc)) else type(exc).__name__
+                STATUS[url] = {'ticker': ticker, 'state': 'unreadable', 'reason': code, 'at': stamp()}
                 continue
+            STATUS[url] = {'ticker': ticker, 'state': 'published', 'reason': None, 'at': stamp()}
             key, payload = build(ticker, url, parsed, stamp(observed))
             old = existing.get(key)
             if old and json.loads(old['payload'])['facts'] == payload['facts']:
@@ -323,3 +328,18 @@ def public_feed(db, cutoff):
         item['detectionToPublicMs'] = monitor.stored_latency_ms(row['observed_at'], row['published_at'])
         items.append(item)
     return items
+
+
+def diagnostics(db):
+    """Read-only summary for /health: what was found, what is waiting, and why nothing was published."""
+    stored = 0
+    latest = []
+    if db.execute("SELECT 1 FROM sqlite_master WHERE name='issuer_result_publications'").fetchone():
+        stored = db.execute('SELECT count(*) FROM issuer_result_publications').fetchone()[0]
+        latest = [{'ticker': r['ticker'], 'period': r['period'], 'observedAt': r['observed_at'], 'publicAt': r['published_at'],
+                   'detectionToPublicMs': monitor.stored_latency_ms(r['observed_at'], r['published_at'])}
+                  for r in db.execute('SELECT ticker,period,observed_at,published_at FROM issuer_result_publications '
+                                      'ORDER BY julianday(observed_at) DESC LIMIT 5')]
+    return {'status': 'running', 'published': stored, 'latest': latest,
+            'waiting': [{k: v[k] for k in ('ticker', 'state', 'reason', 'at')}
+                        for v in sorted(STATUS.values(), key=lambda v: v['at'], reverse=True)[:10] if v['state'] != 'published']}

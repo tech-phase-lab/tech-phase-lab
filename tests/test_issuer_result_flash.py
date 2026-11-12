@@ -146,4 +146,20 @@ class Publication(unittest.TestCase):
         self.assertEqual(flash.run_once(self.path,NOW,fetch),0)
         self.assertEqual(fetch.calls,[])
 
+class Diagnostics(Publication):
+    def test_health_shows_why_nothing_was_published_then_the_published_flash(self):
+        flash.STATUS.clear()
+        self.source(NB_PAGE,'NBIS')
+        with mock.patch.object(monitor,'extract_pdf_text',self.extract('')):
+            flash.run_once(self.path,NOW,self.fetcher(links=()))
+        with monitor.connect(self.path) as db: info=flash.diagnostics(db)
+        self.assertEqual([(w['ticker'],w['state'],w['reason']) for w in info['waiting']],[('NBIS','unreadable','results-pdf-not-linked-yet')])
+        self.assertEqual(info['published'],0)
+        flash._attempts.clear()
+        table=fixture('nebius-results-q226.txt').replace('Q2 2026','Q3 2026')
+        with mock.patch.object(monitor,'extract_pdf_text',self.extract(table)):
+            flash.run_once(self.path,NOW,self.fetcher())
+        with monitor.connect(self.path) as db: info=flash.diagnostics(db)
+        self.assertEqual((info['published'],info['waiting'],info['latest'][0]['period']),(1,[],'Q3 2026'))
+
 if __name__=='__main__': unittest.main()
