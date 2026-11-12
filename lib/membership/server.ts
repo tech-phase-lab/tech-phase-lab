@@ -15,11 +15,13 @@ export const getMembership = cache(async function getMembership() {
 });
 
 /** Internal server-to-server use only; callers must authenticate before selecting an ID. */
-export async function getMembershipForUser(userId: string, sessionClaims?: unknown) {
+export async function getMembershipForUser(userId: string, sessionClaims?: unknown, options: { monitorCheck?: boolean } = {}) {
   // Private metadata cannot be edited by the member. Never trust browser plan claims.
   const user = await (await clerkClient()).users.getUser(userId);
   const adminCandidate = resolveAdmin(userId, user.privateMetadata);
-  const adminMfaRequired = adminCandidate && process.env.TECH_PHASE_REQUIRE_ADMIN_MFA === "true" && !adminMfaAllowed(user.twoFactorEnabled, sessionClaims);
+  // `monitorCheck`: the push monitor asks without a browser session, so there are no sign-in claims that could show a second factor. A device
+  // can only be registered from a session that did show it, so the owner's later checks for that device do not ask for it again.
+  const adminMfaRequired = adminCandidate && !options.monitorCheck && process.env.TECH_PHASE_REQUIRE_ADMIN_MFA === "true" && !adminMfaAllowed(user.twoFactorEnabled, sessionClaims);
   const isAdmin = adminCandidate && !adminMfaRequired;
   const productionOwner = productionOwnerMode(userId, isAdmin, process.env.VERCEL_ENV);
   // Only the approved, MFA-verified production owner may use the existing self-preview.
