@@ -27,7 +27,8 @@ const MemberSettled = createContext(false);
 export function MemberDisplayProvider({ children, initial }: { children: ReactNode; initial?: InitialDisplay }) {
   const refreshIdentity = useIdentityRefresh();
   const [plan, setPlan] = useState<DisplayPlan>(initial?.plan ?? null);
-  const [owner, setOwner] = useState(initial?.owner ?? false);
+  // The owner's special access shows only while the owner is actually on PRO: previewing FREE must look exactly like FREE (owner, Nov 12).
+  const [owner, setOwner] = useState((initial?.owner ?? false) && initial?.plan === "pro");
   const [ownerMode, setOwnerMode] = useState(initial?.ownerMode ?? false);
   const [ownerAccount, setOwnerAccount] = useState(initial?.ownerAccount ?? false);
   // Owner, Oct 10: the app must not open on FREE before the check answers.
@@ -61,11 +62,11 @@ export function MemberDisplayProvider({ children, initial }: { children: ReactNo
         if (remembered && (!response.ok || member.status === "unavailable" || (member.status === "signed-out" && ++signedOutAnswers < 3))) { retrySoon(); return; }
         if (!response.ok || member.status === "unavailable") { setPlan(null); setOwner(false); setOwnerMode(false); setOwnerAccount(false); retrySoon(); return; }
         retries = 0; remembered = false; signedOutAnswers = 0;
-        setOwner(member.status === "signed-in" && member.isAdmin === true);
+        const pro = member.status === "signed-in" && member.plan === "pro" && Number.isFinite(member.accessExpiresAt) && member.accessExpiresAt > Date.now();
+        setOwner(member.status === "signed-in" && member.isAdmin === true && pro);
         setOwnerMode(member.status === "signed-in" && member.isAdmin === true && member.ownerMode === true);
         // Server-decided: only the approved owner account (never an admin role).
         setOwnerAccount(member.status === "signed-in" && member.ownerAccount === true);
-        const pro = member.status === "signed-in" && member.plan === "pro" && Number.isFinite(member.accessExpiresAt) && member.accessExpiresAt > Date.now();
         // A signed-out or restoring session is not a verified FREE membership.
         setPlan(member.status === "signed-in" ? (pro ? "pro" : "free") : null);
         // The owner account's live access window is only about an hour (and it may read as a member without a paid plan),
@@ -83,7 +84,7 @@ export function MemberDisplayProvider({ children, initial }: { children: ReactNo
     const hint = initial ? null : readHint();
     if (hint) {
       remembered = true;
-      setPlan(hint.plan); setOwner(hint.owner); setOwnerMode(hint.ownerMode); setOwnerAccount(hint.ownerAccount === true); setSettled(true);
+      setPlan(hint.plan); setOwner(hint.owner && hint.plan === "pro"); setOwnerMode(hint.ownerMode); setOwnerAccount(hint.ownerAccount === true); setSettled(true);
       if (hint.plan === "pro") expiry = setTimeout(() => { setPlan(null); void check(true); }, Math.max(0, Math.min(hint.accessExpiresAt - Date.now(), 2147483647)));
     }
     void check(); const timer = setInterval(periodic, 60_000);
