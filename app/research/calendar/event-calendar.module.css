@@ -36,3 +36,10 @@
 .waiting{height:240px;margin:14px 0;border-radius:10px;background:repeating-linear-gradient(180deg,#172a35 0 52px,transparent 52px 66px);animation:calendarWait 1.5s ease-in-out infinite}
 @keyframes calendarWait{50%{opacity:.55}}
 @media(prefers-reduced-motion:reduce){.waiting{animation:none}}
+
+.xPost { display: grid; gap: 8px; margin-top: 12px; }
+.xPost pre { margin: 0; padding: 10px 12px; white-space: pre-wrap; overflow-wrap: anywhere; font: inherit; font-size: 0.9rem; line-height: 1.6; border: 1px solid var(--line, #d8dee6); border-radius: 8px; }
+.xPost button { justify-self: start; min-height: 40px; padding: 0 14px; border-radius: 8px; border: 1px solid var(--line, #d8dee6); background: transparent; color: inherit; font: inherit; cursor: pointer; }
+.xPost button[aria-pressed="true"] { font-weight: 700; border-color: currentColor; }
+.xPost [role="group"] { display: flex; gap: 8px; }
+.xPost small { opacity: 0.75; }
