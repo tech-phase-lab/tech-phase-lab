@@ -60,6 +60,20 @@ class PushTests(unittest.TestCase):
         self.assertEqual(again['attempted'], 0)
         self.assertEqual(len(sent), 1)
 
+    def test_skip_reasons_and_device_breakdown_explain_a_missing_earnings_push(self):
+        # Nov 12: NBIS results were published and no phone was told, with no way to see why.
+        push.SKIPS.clear()
+        with patch.dict(os.environ, {'WEB_PUSH_ALLOW_PILOT': 'false'}):
+            push.register(self.db, {'subscription': subscription(), 'tickers': ['NBIS'], 'language': 'ja'}, {'NBIS'}, self.now - 10)
+            out = push.deliver(self.db, [self.result(ticker='NBIS')], lambda *a: 201, self.now, wall_now=lambda: self.now)
+        self.assertEqual(out['attempted'], 0)
+        self.assertEqual(out['earningsSkipsSinceStart'], {'device-without-member': 1})
+        self.assertEqual((out['deviceBreakdown']['active'], out['deviceBreakdown']['withOwner']), (1, 0))
+        push.SKIPS.clear()
+        push.deliver(self.db, [self.result(ticker='NBIS', published='2026-09-26T13:00:00+00:00')], lambda *a: 201, self.now, wall_now=lambda: self.now)
+        # pilot devices are allowed in this test environment: the late discovery is the reason now
+        self.assertEqual(push.SKIPS.get('published-not-fresh'), 1)
+
     def test_an_outlook_only_brief_is_not_announced_as_a_result(self):
         brief = {'kind': 'earnings', 'ticker': 'TSM', 'period': 'Q4 2026', 'titleJa': 'TSM Q4 2026 会社見通し：売上高$52.30B-$54.30B',
                  'titleEn': 'TSM Q4 2026 guidance', 'publishedAt': '2026-10-15T07:24:00Z', 'observedAt': '2026-10-15T07:25:00Z',
