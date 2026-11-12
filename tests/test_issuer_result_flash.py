@@ -38,6 +38,14 @@ class Parsers(unittest.TestCase):
         self.assertEqual(parsed['facts'],[('revenue','$980.8M','$146.1M'),('adjusted-ebitda','$465.8M','$-5.2M'),('adjusted-net-income','$90.9M','$-100.4M')])
         # a garbled digit in the revenue row is refused (the stated +571% no longer matches)
         with self.assertRaises(ValueError): flash.parse_nebius(fixture('nebius-results-q326.txt').replace('980.8','9 80.8',1).replace('Revenues 146.1 9 80.8','Revenues 146.1 580.8'))
+    def test_text_as_read_by_the_monitors_pypdf_610_gives_the_same_figures(self):
+        # Production runs pypdf 6.10.0, which splits words and numbers ("R e v enues 146 . 1 980 . 8"); local pypdf did not.
+        clean=flash.parse_nebius(fixture('nebius-results-q326.txt'),NB_PAGE)
+        split=flash.parse_nebius(fixture('nebius-results-q326-pypdf610.txt'),NB_PAGE)
+        self.assertEqual(split,clean)
+        self.assertEqual(split['facts'][0],('revenue','$980.8M','$146.1M'))
+        # the net income row has digits split from digits ("(3 7 . 5)"): never guessed, so it is absent
+        self.assertNotIn('net-income',[f[0] for f in split['facts']])
     def test_garbled_heading_still_parses_with_the_quarter_from_the_page_address(self):
         spaced=fixture('nebius-results-q326.txt').replace('Q3 2026 Financial Highlights','Q3 2 026 F inancial H ighlights')
         self.assertEqual(flash.parse_nebius(spaced)['period'],'Q3 2026')       # spaces inside the heading are tolerated
