@@ -13,8 +13,11 @@ const brief={id:'777',researchId:'x-result-777',kind:'earnings',ticker:'MU',peri
 test('automatic factual results make bilingual articles without premium leakage',()=>{
  const [event]=resultEvents(parseResultBriefs([{...brief,privateSource:'SECRET'}]));
  assert.deepEqual(evidenceIssues(event),[]);
- assert.equal(event.summary.ja,brief.titleJa);
- assert.equal(event.summary.en,brief.titleEn);
+ // The summary never repeats the figures (they are listed as facts, and the headline carries the first ones).
+ assert.equal(event.title.ja,brief.titleJa);
+ assert.equal(event.summary.ja,`${brief.ticker} ${brief.period}決算の主な数値です。`);
+ assert.equal(event.summary.en,`Key figures from ${brief.ticker}'s ${brief.period} results.`);
+ assert.ok(!event.summary.ja.includes('$')&&!event.change.ja.includes('$'));
  assert.deepEqual(publicEvent(event).interpretation,{ja:'',en:''});
  assert.equal(JSON.stringify(event).includes('SECRET'),false);
  for(const changes of [{url:'https://x.com/impostor/status/12345'},{facts:[{...brief.facts[0],value:'BUY NOW'}]},{researchId:'editor-secret'},{publicAt:'bad'}])assert.throws(()=>parseResultBriefs([{...brief,...changes}]));

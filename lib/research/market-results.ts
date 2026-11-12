@@ -70,7 +70,9 @@ export function resultEvents(briefs:ResultBrief[]): ResearchEvent[] {
     const facts=r.facts.map(f=>({text:copy(`${f.ja}：${f.value}`,`${f.en}: ${f.value}`),sourceIds:[r.researchId]}));
     return {id:r.researchId,ticker:r.ticker,company:r.ticker,category: ['MU','SKHY','SNDK','NVDA','AMD','ARM','TSM','ASML','AMAT','INTC','AEHR'].includes(r.ticker)?'memory':['NBIS','IREN','MSFT','AMZN','GOOGL','META','PLTR','APP'].includes(r.ticker)?'cloud':'other',kind:'earnings',
       earningsPeriod:r.period,publishedOn:new Date(r.publishedAt).toISOString().slice(0,10),reviewedOn:new Date(r.publicAt).toISOString().slice(0,10),
-      title:copy(r.titleJa,r.titleEn),summary:copy(r.titleJa,r.titleEn),change:copy(r.titleJa,r.titleEn),facts,
+      // The headline carries the first figures; the summary and the change line must not repeat them, because the figures are
+      // listed below (Nov 12: the same revenue appeared twice, once as a sentence and once as a fact).
+      title:copy(r.titleJa,r.titleEn),summary:copy(`${r.ticker} ${r.period}決算の主な数値です。`,`Key figures from ${r.ticker}'s ${r.period} results.`),change:copy(`${r.ticker} ${r.period}の決算が発表されました。`,`${r.ticker} reported ${r.period} results.`),facts,
       interpretation:r.facts.some(f=>f.key.startsWith('guidance-')) ? copy('実績と会社見通しを分けて掲載しています。','Reported results and company guidance are shown separately.') : r.researchId.startsWith('ir-flash-') ? copy('会社の決算発表の数値表から、数値をそのまま転記しています。','The figures are copied as published from the company\'s results table.') : copy('投稿に記載された決算実績を整理しています。','This note summarises the reported results in the source post.'),
       unknown:copy('速報に記載された数値を整理しています。市場予想は比較していません。','These are reported flash figures. Consensus is not compared.'),
       next:copy('会社の決算資料で実績と見通しを確認します。','Confirm the results and guidance against the company release.'),
