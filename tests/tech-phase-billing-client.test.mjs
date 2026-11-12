@@ -197,7 +197,7 @@ test('billing page gates preview and enrolled Sandbox identity before rendering 
  new Function('require','module','exports',compiled)(name=>{
   if(name==='@clerk/nextjs/server')return {auth:async()=>{authCalls++;return {userId:user};}};
   if(name==='next/navigation')return {notFound:()=>{throw Error('404');},redirect:path=>{throw Error('REDIRECT:'+path);}};
-  if(name==='@/lib/membership/entitlements')return {OWNER_ACCOUNT_ID:'owner'};
+  if(name==='@/lib/membership/entitlements')return {OWNER_ACCOUNT_ID:'owner',isOwnerAccount:id=>id==='owner'||id==='production-owner'};
   if(name==='@/services/tech-phase-billing/access.mjs')return {sandboxMemberAllowed};
   if(name==='@/services/tech-phase-billing/live-http.mjs')return {liveEnabled};
   if(name==='./screen')return {default:function Screen(){}};

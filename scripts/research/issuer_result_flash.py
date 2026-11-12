@@ -15,8 +15,11 @@ Nothing is guessed or written by a model:
 """
 import hashlib
 import json
+import os
 import re
 import time
+import urllib.error
+import urllib.request
 from datetime import datetime, timedelta, timezone
 from decimal import Decimal, InvalidOperation
 from urllib.parse import urlsplit
@@ -92,17 +95,35 @@ def clean(text):
 
 # ---- issuer layouts ----------------------------------------------------------------------------------------
 
-def parse_nebius(text):
-    """Nebius' results release (PDF): 'Q3 2026 financial highlights', table columns prior-year, current, change."""
+def period_from_url(url):
+    """'nebius-reports-third-quarter-2026-financial-results' -> (3, 2026); None when the slug says no quarter."""
+    match = re.search(r'(first|second|third|fourth)-quarter-(20\d\d)', url or '')
+    return (QUARTERS[match[1]], int(match[2])) if match else None
+
+
+def parse_nebius(text, url=None):
+    """Nebius' results release (PDF): 'Q3 2026 financial highlights', table columns prior-year, current, change.
+
+    PDF text extraction can split words and digits ("F inancial H ighlights", "In SD millions"), so the heading is matched
+    with its spaces removed, the quarter falls back to the one named in the page address, and the table is found by its own
+    units line. Each figure still has to come from a clean row whose stated change agrees with its two values."""
     t = clean(text)
     if 'nebius' not in t.lower():
         raise ValueError('issuer-identity-missing')
-    head = re.search(r'\bQ([1-4]) (20\d\d) financial highlights\b', t, re.I)
-    if not head:
+    despaced = re.sub(r'\s+', '', t)
+    head = re.search(r'Q([1-4])(20\d\d)financialhighlights', despaced, re.I)
+    period = (int(head[1]), int(head[2])) if head else period_from_url(url)
+    if not period:
         raise ValueError('highlights-heading-missing')
-    quarter, year = int(head[1]), int(head[2])
-    window = t[head.end():head.end() + 5000]
-    if not re.search(r'In U?SD \$? ?millions', window, re.I):
+    quarter, year = period
+    # The highlights table is the first "In USD $ millions" block that is followed by a Revenues row.
+    units = next((m for m in re.finditer(r'In\s+U?SD\s*\$?\s*millions', t, re.I)
+                  if re.search(r'\bRevenues?\b', t[m.end():m.end() + 900])), None)
+    if units:
+        window = t[units.start():units.start() + 5000]
+    elif re.search(r'\bU?SD\b', t) and re.search(r'\bmillions?\b', t, re.I):
+        window = t  # the extraction placed the units line away from the table: the year header below must still match
+    else:
         raise ValueError('units-unrecognized')
     first = re.search(r'(?<!Change )\b(' + str(year - 1) + r') (' + str(year) + r') Change\b(?: 20\d\d 20\d\d Change\b)?.{0,40}?\bRevenues? ('
                       + NUM + ') (' + NUM + ') (' + CHANGE + ')', window)
@@ -132,7 +153,7 @@ def parse_nebius(text):
     return {'period': f'Q{quarter} {year}', 'facts': facts}
 
 
-def parse_coreweave(text):
+def parse_coreweave(text, url=None):
     """CoreWeave's results release (8-K EX-99.1): 'Third Quarter 2026 Financial Highlights', columns current, prior."""
     t = clean(text)
     if 'coreweave' not in t.lower():
@@ -184,34 +205,78 @@ NEBIUS_RESULTS_PATH = re.compile(r'^/newsroom/(?=[a-z0-9-]*quarter)(?=[a-z0-9-]*
 PDF_LINK = re.compile(r'https://assets\.nebius\.com/assets/[0-9a-f-]{36}/[^"\\\s)<>]*?\.pdf', re.I)
 
 
-def nebius_pdf_text(page_url, fetch):
+PDF_MAX_BYTES = 20 * 1024 * 1024
+
+
+class _SameHostRedirect(urllib.request.HTTPRedirectHandler):
+    def redirect_request(self, req, fp, code, msg, headers, newurl):
+        target = urlsplit(newurl)
+        if target.scheme != 'https' or target.hostname != 'assets.nebius.com':
+            raise ValueError('redirect-off-host')
+        return super().redirect_request(req, fp, code, msg, headers, newurl)
+
+
+def direct_pdf(url, ticker=None):
+    """Plain bounded download of a results PDF from the issuer's asset host. No conditional requests and no shared fetch
+    cache: on Nov 12 the monitor's general fetch kept failing ('empty or oversized') for a PDF that downloads fine."""
+    parts = urlsplit(url)
+    if parts.scheme != 'https' or parts.hostname != 'assets.nebius.com' or parts.username or parts.password:
+        raise ValueError('host-not-allowed')
+    request = urllib.request.Request(url, headers={'User-Agent': os.environ.get('RESEARCH_USER_AGENT', 'TechPhaseResearch-SourceCheck/0.1'),
+                                                  'Accept': 'application/pdf'})
+    with urllib.request.build_opener(_SameHostRedirect()).open(request, timeout=20) as response:
+        content = response.read(PDF_MAX_BYTES + 1)
+    if not content:
+        raise ValueError('fetch-empty')
+    if len(content) > PDF_MAX_BYTES:
+        raise ValueError('fetch-too-large')
+    if not content.startswith(b'%PDF-'):
+        raise ValueError('fetch-not-pdf')
+    return content, 'application/pdf'
+
+
+def failure_code(exc):
+    text = str(exc).lower()
+    if isinstance(exc, ValueError) and re.fullmatch(r'(?:fetch|host|redirect)-[a-z-]{1,30}|host-not-allowed', str(exc)):
+        return str(exc)
+    if isinstance(exc, urllib.error.HTTPError):
+        return 'fetch-http-%d' % exc.code
+    if 'timed out' in text:
+        return 'extract-timeout' if 'extraction' in text else 'fetch-timeout'
+    if 'no extractable' in text:
+        return 'extract-no-text'
+    if 'oversized' in text:
+        return 'fetch-oversized'
+    return 'fetch-or-extract-error'
+
+
+def nebius_pdf_text(page_url, fetch, fetch_pdf=None):
     """Text of the results release PDF linked from the newsroom page (the page itself carries no numbers)."""
+    fetch_pdf = fetch_pdf or direct_pdf
     html, _ = fetch(page_url, 'NBIS')
     seen = []
     for link in PDF_LINK.findall(html.decode('utf-8', 'replace')):
         if link not in seen:
             seen.append(link)
-    errors = 0
-    last_error = ''
+    codes = []
     for link in seen[:MAX_PDF_CANDIDATES]:
         try:
-            content, content_type = fetch(link, 'NBIS')
+            content, content_type = fetch_pdf(link, 'NBIS')
             if content_type != 'application/pdf':
+                codes.append('not-pdf')
                 continue
             # The headline table is on the first pages; reading all of an 8 MB release timed out on a busy monitor.
             text = monitor.extract_pdf_text(content, first_pages=3)
         except Exception as exc:
-            errors += 1
-            last_error = str(exc)
+            codes.append(failure_code(exc))
             continue
-        if re.search(r'\bQ[1-4] 20\d\d financial highlights\b', clean(text), re.I):
+        if 'financialhighlights' in re.sub(r'\s+', '', text).lower():
             return text
-    if not errors:
-        raise ValueError('results-pdf-not-linked-yet' if not seen else 'results-table-not-in-pdf')
-    # A short code for /health: which step failed (the first PDF of the release is the one that matters).
-    lowered = last_error.lower()
-    raise ValueError('pdf-timeout' if 'timed out' in lowered else 'pdf-oversized' if 'oversized' in lowered
-                     else 'pdf-no-text' if 'no extractable' in lowered else 'results-pdf-unavailable')
+        codes.append('no-heading')
+    if not seen:
+        raise ValueError('results-pdf-not-linked-yet')
+    # /health shows the outcome of the first PDF (the release itself); a later letter's failure must not hide it.
+    raise ValueError(codes[0] if codes else 'results-table-not-in-pdf')
 
 
 PROFILES = {
@@ -302,7 +367,7 @@ def candidates(db, reference):
             yield row['ticker'], row['url'], row['detected'], revision['extracted_text']
 
 
-def run_once(path, reference=None, fetch=None):
+def run_once(path, reference=None, fetch=None, fetch_pdf=None):
     """Publish every unpublished (or corrected) results table found. Returns the number of changes."""
     reference = reference or datetime.now(timezone.utc)
     fetch = fetch or monitor.fetch
@@ -320,8 +385,8 @@ def run_once(path, reference=None, fetch=None):
                     continue
             started = time.monotonic()
             try:
-                text = body if body is not None else nebius_pdf_text(url, fetch)
-                parsed = PROFILES[ticker]['parse'](text)
+                text = body if body is not None else nebius_pdf_text(url, fetch, fetch_pdf or (fetch if fetch is not monitor.fetch else None))
+                parsed = PROFILES[ticker]['parse'](text, url)
             except Exception as exc:
                 code = str(exc) if isinstance(exc, ValueError) and re.fullmatch(r'[a-z0-9-]{1,40}', str(exc)) else type(exc).__name__
                 STATUS[url] = {'ticker': ticker, 'state': 'unreadable', 'reason': code, 'at': stamp()}
