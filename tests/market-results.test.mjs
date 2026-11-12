@@ -98,3 +98,25 @@ test('Trade The News result lines for TSMC keep net income, operating income, ma
  assert.equal(parsed.facts.length,5);
  assert.throws(()=>parseResultBriefs([{...brief,facts:[{key:'net-income',ja:'純利益',en:'Net income',value:'BUY NOW'}]}]));
 });
+
+test('issuer-table flashes (ir-flash-) are accepted only for earnings from the issuer newsroom or its SEC filing', () => {
+  const base = { id:'555', researchId:'ir-flash-555', kind:'earnings', ticker:'NBIS', period:'Q3 2026',
+    titleJa:'NBIS Q3 2026決算：売上高$582.3M', titleEn:'NBIS Q3 2026 earnings: Revenue $582.3M',
+    facts:[{key:'revenue',ja:'売上高',en:'Revenue',value:'$582.3M'},{key:'adjusted-ebitda',ja:'調整後EBITDA',en:'Adjusted EBITDA',value:'$236.2M'}],
+    url:'https://nebius.com/newsroom/nebius-reports-third-quarter-2026-financial-results', publisher:'Nebius IR',
+    publishedAt:'2026-11-12T13:00:05.000+00:00', observedAt:'2026-11-12T13:00:05.000+00:00', publicAt:'2026-11-12T13:00:20.000+00:00',
+    processingMs:900, sourceToDetectionMs:null, detectionToPublicMs:15000 };
+  assert.equal(parseResultBriefs([base])[0].researchId, 'ir-flash-555');
+  const sec = { ...base, ticker:'CRWV', url:'https://www.sec.gov/Archives/edgar/data/1769628/000176962826000461/coreweave3q26earningspress.htm' };
+  assert.equal(parseResultBriefs([sec])[0].ticker, 'CRWV');
+  for (const bad of [
+    { ...base, url:'https://nebius.com.evil.example/newsroom/x' },
+    { ...base, url:'https://nebius.com/newsroom/x?utm=1' },
+    { ...base, url:'https://example.com/newsroom/x' },
+    { ...base, url:'https://x.com/wallstengine/status/1' },
+    { ...base, kind:'economic' },
+    { ...base, researchId:'x-result-555' },
+    { ...base, researchId:'ir-flash-556' },
+    { ...base, facts:[{ ...base.facts[0], key:'made-up' }] },
+  ]) assert.throws(() => parseResultBriefs([bad]));
+});
