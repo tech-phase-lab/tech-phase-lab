@@ -1,12 +1,13 @@
 "use client";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { useClerk } from "@clerk/nextjs";
 import { useCallback, useEffect, useState, useSyncExternalStore, type ReactNode } from "react";
 import { useIdentityRefresh } from "../identity-provider";
 import Crown from "./crown";
 import { INITIAL, tileBackground, tileById } from "./avatars";
-import { AvatarSheet, NameSheet, UpgradeSheet, type Mode } from "./account-sheets";
+import { AvatarSheet, NameSheet, startCheckout, type Mode } from "./account-sheets";
+import ProOfferCard from "../pro-offer-card";
+import { ProFeatures } from "../plan-cards";
 import { contractComplete, formatAmount, formatDay, maskEmail, getJson, patchProfile, readContract, readProfile, type Contract, type Profile } from "./account-data";
 import styles from "./account.module.css";
 
@@ -46,9 +47,8 @@ const subscribeNudge = (notify: () => void) => { nudgeListeners.add(notify); ret
 const nudgeSnapshot = () => { try { return Number(localStorage.getItem(NUDGE_KEY)) > Date.now() ? "hidden" : "shown"; } catch { return "shown"; } };
 function closeNudge() { try { localStorage.setItem(NUDGE_KEY, String(Date.now() + 14 * 86_400_000)); } catch { /* optional */ } nudgeListeners.forEach(listener => listener()); }
 
-export default function AccountView({ ja, member, billingAvailable, upgradeFirst, onRecheck, initialProfile = null }: { ja: boolean; initialProfile?: unknown; member: Member; billingAvailable: boolean; upgradeFirst: boolean; onRecheck: () => void }) {
+export default function AccountView({ ja, member, billingAvailable, onRecheck, initialProfile = null }: { ja: boolean; initialProfile?: unknown; member: Member; billingAvailable: boolean; upgradeFirst: boolean; onRecheck: () => void }) {
   const t = (a: string, b: string) => ja ? a : b;
-  const router = useRouter();
   const clerk = useClerk();
   const refresh = useIdentityRefresh();
   const owner = member.isAdmin && (member.ownerMode || member.testing);
@@ -85,7 +85,8 @@ export default function AccountView({ ja, member, billingAvailable, upgradeFirst
   const [contract, setContract] = useState<ContractState>({ state: "loading" });
   const [resolute, setResolute] = useState<Resolute>({ state: "loading" });
   const [tick, setTick] = useState(0);
-  const [sheet, setSheet] = useState<"" | "upgrade" | "avatar" | "name">(upgradeFirst && member.plan !== "pro" && !owner ? "upgrade" : "");
+  const [sheet, setSheet] = useState<"" | "avatar" | "name">("");
+  const [checkout, setCheckout] = useState<{ busy: boolean; error: "" | "failed" | "existing" }>({ busy: false, error: "" });
 
   useEffect(() => {
     const controller = new AbortController();
@@ -162,19 +163,18 @@ export default function AccountView({ ja, member, billingAvailable, upgradeFirst
   const [patient, setPatient] = useState(false);
   useEffect(() => { const id = setTimeout(() => setPatient(true), 3000); return () => clearTimeout(id); }, []);
   const settled = patient || profile.state === "error" || (profile.state !== "loading" && (owner || (contract.state !== "loading" && resolute.state !== "loading")));
-  const closeSheet = useCallback(() => {
-    setSheet("");
-    if (upgradeFirst) router.replace("/research");
-  }, [upgradeFirst, router]);
   const closePlain = useCallback(() => setSheet(""), []);
   const ownerPreviewNote = <p className={styles.previewBar}>{t("表示の確認中です。金額や日付は表示例です。ここでの操作は、実際の契約や権限には反映されません。", "Previewing the view. Amounts and dates are samples. Actions here change nothing real.")}</p>;
 
   async function saveAvatar(id: string) { setProfile({ state: "ok", value: await patchProfile({ icon: id }) }); }
   async function saveName(name: string) { setProfile({ state: "ok", value: await patchProfile({ displayName: name }) }); }
 
-  // Entry from the PRO introduction card: the confirmation sheet opens without the account screen behind it.
-  if (upgradeFirst && sheet === "upgrade" && member.plan !== "pro" && !owner) {
-    return <UpgradeSheet ja={ja} mode={mode} refresh={refresh} onClose={closeSheet} />;
+  // The PRO card goes straight to PayPal (no confirmation sheet). The server picks the plan from currency and period.
+  async function subscribe(currency: "JPY" | "USD", period: "month" | "year") {
+    if (!mode || checkout.busy) return;
+    setCheckout({ busy: true, error: "" });
+    try { await startCheckout(mode, refresh, currency, period); }
+    catch (e) { setCheckout({ busy: false, error: e instanceof Error && e.message === "existing-subscription" ? "existing" : "failed" }); }
   }
 
   const row = (icon: ReactNode, label: ReactNode, opts: { href?: string; onClick?: () => void; value?: ReactNode; sub?: string; pro?: boolean; chevron?: boolean; className?: string; disabled?: boolean } = {}) => {
@@ -193,16 +193,16 @@ export default function AccountView({ ja, member, billingAvailable, upgradeFirst
 
   // ---- plan card
   const price = c?.amount && c.currency ? formatAmount(c.amount, c.currency) : null;
+  const period = c?.period === "year" ? "year" : "month"; // the contract's billing period; the amount above is per period
   const planCard = effective === "free"
-    ? <div className={`${styles.cd} ${styles.proFree}`} style={{ marginTop: 0 }}>
-        <div className={styles.proHead}><Crown size={36} /><span className={styles.proName} style={{ fontSize: 19, letterSpacing: ".04em" }}>Tech Phase PRO</span></div>
-        <div className={styles.price}><span className={styles.priceN}>¥2,980</span><span className={styles.priceU}>/ {t("月", "mo")}</span><span className={styles.priceR}>{t("毎月自動更新", "Renews monthly")}</span></div>
-        <ul className={styles.perks}>{[t("RIZEL'S DESK", "RIZEL'S DESK"), t("ハイテク速報をリアルタイムで", "Real-time Tech Alerts"), t("監視22銘柄リストとテーマランキング", "22-stock list and Theme Ranking"), t("銘柄比較・スマホ通知", "Compare and phone alerts"), t("米国株の資産管理", "U.S. stock portfolio")].map(text => <li key={text}>{I.tick}<span>{text}</span></li>)}</ul>
-        <button type="button" className={`${styles.btn} ${styles.gbt}`} style={{ marginTop: 18 }} disabled={!preview && (!mode || freeUnverified || contract.state === "loading")} onClick={() => setSheet("upgrade")}>{t("PROにアップグレード", "Upgrade to PRO")}</button>
-        {freeUnverified
-          ? <div className={styles.ctaNote} role="status">{t("契約の状態を確認できませんでした。", "Could not check your contract.")} <button type="button" className={styles.link} style={{ display: "inline", width: "auto", margin: 0, padding: "0 0 0 6px", color: "#e7c982" }} onClick={recheck}>{t("再確認", "Check again")}</button></div>
-          : <div className={styles.ctaNote}>{!mode && !preview ? t("お申し込みの受付は、現在停止中です。", "New subscriptions are closed right now.") : t("料金と規約を確認してから、PayPalへ進みます。", "Review the price and terms, then continue to PayPal.")}</div>}
-      </div>
+    ? <ProOfferCard ja={ja} busy={checkout.busy} disabled={!preview && (!mode || freeUnverified || contract.state === "loading")}
+        onSubscribe={preview ? () => undefined : (currency, period) => void subscribe(currency, period)}
+        notice={<>
+          {freeUnverified && <div className={styles.ctaNote} role="status">{t("契約の状態を確認できませんでした。", "Could not check your contract.")} <button type="button" className={styles.link} style={{ display: "inline", width: "auto", margin: 0, padding: "0 0 0 6px", color: "#e7c982" }} onClick={recheck}>{t("再確認", "Check again")}</button></div>}
+          {!freeUnverified && !mode && !preview && <div className={styles.ctaNote}>{t("お申し込みの受付は、現在停止中です。", "New subscriptions are closed right now.")}</div>}
+          {checkout.error === "failed" && <div className={styles.ctaNote} role="alert">{t("お申し込みを開始できませんでした。時間をおいて、もう一度お試しください。", "Could not start checkout. Please try again shortly.")}</div>}
+          {checkout.error === "existing" && <div className={styles.ctaNote} role="alert">{t("手続き中の契約があります。", "A checkout is already in progress.")} <Link href="/research/account/billing" prefetch={false} style={{ color: "#e7c982" }}>{t("手続きを再開する", "Resume")}</Link></div>}
+        </>}><ProFeatures ja={ja} /></ProOfferCard>
     : <div className={`${styles.cd} ${styles.cdGold} ${styles.pro}`} style={{ marginTop: 0, minHeight: loadingContract ? 285 : undefined }}>
         <div className={styles.proHead}><Crown size={46} /><div style={{ flex: 1, minWidth: 0 }}><div className={styles.proName}>Tech Phase PRO</div>
           <div className={styles.proTagRow}>{unknown ? <span className={`${styles.pt} ${styles.ptUnknown}`}>{t("確認できません", "Unavailable")}</span> : stopped ? stopTag : loadingContract ? <span className={`${styles.pt} ${styles.ptUnknown}`}>{t("確認中", "Checking")}</span> : <span className={`${styles.pt} ${styles.ptOn}`}><i />{t("利用中", "Active")}</span>}</div></div></div>
@@ -212,7 +212,7 @@ export default function AccountView({ ja, member, billingAvailable, upgradeFirst
           </>
           : <>
             {!loadingContract && <div className={styles.kvs}>
-              <div className={styles.kv}><span>{t("月額料金", "Monthly price")}</span><b>{preview ? "¥2,980" : price ?? "—"} {(preview || c?.currency) && <small>{preview ? "JPY" : c?.currency}</small>}</b></div>
+              <div className={styles.kv}><span>{t("料金", "Price")}</span><b>{preview ? t("¥29,800 / 年", "¥29,800 / year") : price ? `${price} / ${period === "year" ? t("年", "year") : t("月", "month")}` : "—"} {(preview || c?.currency) && <small>{preview ? "JPY" : c?.currency}</small>}</b></div>
               {preview && <div className={styles.kv}><span>{t("次回請求日", "Next billing date")}</span><b>{t("（表示例）", "(sample)")}</b></div>}
               {activeContract && <div className={styles.kv}><span>{t("次回請求日", "Next billing date")}</span><b>{formatDay(c?.nextBillingAt, ja)}</b></div>}
               {stopped && <div className={styles.kv}><span>{t("利用期限", "Access until")}</span><b>{accessUntil}</b></div>}
@@ -327,7 +327,6 @@ export default function AccountView({ ja, member, billingAvailable, upgradeFirst
     <div className={styles.foot}>Tech Phase Research</div>
     </>}
 
-    {sheet === "upgrade" && <UpgradeSheet ja={ja} mode={mode} refresh={refresh} onClose={closePlain} />}
     {sheet === "avatar" && me && <AvatarSheet ja={ja} initial={initial} current={tile ? tile.id : INITIAL} onSave={saveAvatar} onClose={closePlain} />}
     {sheet === "name" && me && <NameSheet ja={ja} current={display} onSave={saveName} onClose={closePlain} />}
   </div>;

@@ -1,5 +1,5 @@
 // Browser-facing protocol only; no provider credentials or membership writes.
-export type BillingSubscription = { id: string; currency: "JPY" | "USD"; state: string };
+export type BillingSubscription = { id: string; currency: "JPY" | "USD"; period?: "month" | "year"; state: string };
 export type BillingSummary = { environment: "sandbox" | "live"; plan: "free" | "pro"; proExpiresAt: string | null; subscription: BillingSubscription | null; reviewRequired?: boolean };
 const uuid = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 export function sandboxApproval(value: unknown, mode: "sandbox" | "live" = "sandbox"): string {

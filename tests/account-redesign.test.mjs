@@ -43,7 +43,9 @@ test("upgrade sheet: the consent starts off and the PayPal button is dimmed unti
   assert.match(html, /type="checkbox"/);
   assert.doesNotMatch(html, /checked=""/);
   assert.match(html, /<button[^>]*disabled=""[^>]*>PayPalへ進む<\/button>/);
-  assert.match(html, /月額料金/); assert.match(html, /¥2,980/); assert.match(html, /毎月自動で更新/);
+  assert.doesNotMatch(html, /月額料金/); assert.match(html, /料金/); assert.match(html, /¥2,980 \/ 月/); assert.match(html, /毎月自動で更新/);
+  const yearly = renderToStaticMarkup(createElement(sheets.UpgradeSheet, { ja: true, mode: "live", refresh: async () => {}, onClose: () => {}, currency: "USD", period: "year" }));
+  assert.match(yearly, /\$200 \/ 年/); assert.match(yearly, /毎年自動で更新/); assert.doesNotMatch(yearly, /毎月/);
 });
 
 test("with billing closed the upgrade sheet says so and cannot proceed", () => {
@@ -124,6 +126,7 @@ function renderAccount({owner=false,profile={state:'loading'},contract={state:'l
   '@clerk/nextjs':{useClerk:()=>({})},
   '../identity-provider':{useIdentityRefresh:()=>()=>{}},
   './crown':{default:()=>null},'./avatars':avatars,'./account-sheets':sheets,'./account-data':data,
+  '../pro-offer-card':{default:({children,notice})=>createElement('div',null,'PayPalで申し込む',notice,children)},'../plan-cards':{ProFeatures:()=>createElement('span',null,'米国株の資産管理')},
  });
  return renderToStaticMarkup(createElement(view.default,{ja:true,member:{status:'signed-in',plan:owner?'pro':'free',isAdmin:owner,ownerMode:owner,testing:false,canTest:false},billingAvailable:true,upgradeFirst:false,onRecheck:()=>{}}));
 }
@@ -194,7 +197,10 @@ test("the FREE view of the owner works like a FREE member's screen; the iPhone a
   assert.doesNotMatch(sheets, /preview\s*[=?]|setError\("preview"\)|if \(preview\)/); // no payment-blocking branch for the owner's FREE view
   const view = readFileSync(new URL("../app/research/account/account-view.tsx", import.meta.url), "utf8");
   assert.match(view, /disabled=\{!preview && \(!mode \|\| freeUnverified/);
-  assert.match(view, /<UpgradeSheet ja=\{ja\} mode=\{mode\} refresh=\{refresh\}/);
+  // The card goes straight to PayPal (no confirmation sheet); the server picks the plan from currency and period.
+  assert.doesNotMatch(view, /UpgradeSheet/);
+  assert.match(view, /startCheckout\(mode, refresh, currency, period\)/);
+  assert.doesNotMatch(view, /planId|plan_id/);
   const pull = readFileSync(new URL("../app/research/pull-to-refresh.tsx", import.meta.url), "utf8");
   assert.match(pull, /window\.scrollTo\(0, 1\)/);
   assert.match(pull, /if \(window\.scrollY > 0\) return;/);

@@ -10,6 +10,7 @@ const fixture = () => ({
   TECH_PHASE_BILLING_LIVE_SERVICE_URL: 'https://fixture.up.railway.app', TECH_PHASE_BILLING_LIVE_SERVICE_TOKEN: 'T'.repeat(43),
   TECH_PHASE_PAYPAL_LIVE_CLIENT_ID: 'SECRET_ID', TECH_PHASE_PAYPAL_LIVE_CLIENT_SECRET: 'SECRET_PAYPAL', TECH_PHASE_PAYPAL_LIVE_WEBHOOK_ID: 'SECRET_WEBHOOK',
   TECH_PHASE_PAYPAL_LIVE_PLAN_JPY: `P-${'A'.repeat(24)}`, TECH_PHASE_PAYPAL_LIVE_PLAN_USD: `P-${'B'.repeat(24)}`,
+  TECH_PHASE_PAYPAL_LIVE_PLAN_JPY_YEAR: `P-${'C'.repeat(24)}`, TECH_PHASE_PAYPAL_LIVE_PLAN_USD_YEAR: `P-${'D'.repeat(24)}`,
 });
 
 test('offline preflight checks each deployment role without claiming connection or launch readiness', () => {

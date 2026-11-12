@@ -1,4 +1,4 @@
-import {assertSubscription, amountMinor} from './settlement.mjs';
+import {assertSubscription, amountMinor, localPeriod} from './settlement.mjs';
 const date = value => typeof value === 'string' && Number.isFinite(Date.parse(value)) ? new Date(value).toISOString() : null;
 export const unknownContract = () => ({accessPlan:null,verification:'unavailable',status:null,autoRenew:null,amount:null,currency:null,nextBillingAt:null,accessExpiresAt:null,unavailableFields:['status','amount','nextBillingAt','accessExpiresAt']});
 /** Read-only projection. Never reconciles, creates, cancels or grants an entitlement. */
@@ -19,8 +19,9 @@ export async function accountContract({store,paypal,plans}, userId) {
  const amount=minor===null ? null : money.value;
  const nextBillingAt=active ? date(remote.billing_info?.next_billing_time) : null;
  const accessExpiresAt=date(summary.proExpiresAt);
+ // Billing period of this contract ('month' | 'year'), from its stored price; the amount above is per period.
  return {accessPlan:summary.plan,verification:status ? 'verified':'unavailable',status,autoRenew:active ? true : stopped||expired ? false:null,
-  amount,currency:local.currency,nextBillingAt,accessExpiresAt,
+  amount,currency:local.currency,period:localPeriod(local),nextBillingAt,accessExpiresAt,
   unavailableFields:[...(!status?['status']:[]),...(amount===null?['amount']:[]),...(active&&!nextBillingAt?['nextBillingAt']:[]),...(!accessExpiresAt&&status!=='none'?['accessExpiresAt']:[])],
   reason:summary.reviewRequired?'review-required':status?null:'provider-state-unconfirmed'};
 }

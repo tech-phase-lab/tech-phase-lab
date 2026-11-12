@@ -70,7 +70,7 @@ test('subscription summary survives reload, binds owner and excludes provider/in
  const row=await store.reserve('user_owner','JPY','sandbox-v1');
  await store.attach(row.user_id,row.id,sid);
  const summary=await store.summary(row.user_id);
- assert.deepEqual(summary.subscription,{id:row.id,currency:'JPY',state:'approval_pending'});
+ assert.deepEqual(summary.subscription,{id:row.id,currency:'JPY',period:'month',state:'approval_pending'});
  assert.equal(summary.plan,'free');
  assert.equal(summary.reviewRequired,false);
  await store.hold(row.user_id,row.id,'DISPUTED');
@@ -406,6 +406,6 @@ test('sandbox HTTP requires preview, owner identity, exact fields, origin and bo
  assert.equal((await handler(req('create',{currency:'JPY',acceptedTerms:'x'.repeat(3000)}),'create')).status,400);
  assert.equal((await handler(req('cancel',{id:'../other'}),'cancel')).status,400);
  const result=await handler(req('create',{currency:'JPY',acceptedTerms:'sandbox-v1'}),'create');
- assert.deepEqual((await result.json()).args,['user_owner','JPY','sandbox-v1']);
+ assert.deepEqual((await result.json()).args,['user_owner','JPY','sandbox-v1','month']);
  assert.equal((await handler(req('status'),'status')).headers.get('Cache-Control'),'private, no-store');
 });
