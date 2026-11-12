@@ -20,11 +20,6 @@ const PUBLIC = {
   'research/freshness': 'public freshness stamps',
   'research/stocks': 'public stock directory',
   'resolute/receive': 'guest checkout receipt (switch-gated, origin-checked)',
-  // KNOWN OPEN, reported to the owner (legacy /lab page): unauthenticated, use our Alpaca key. Decide: gate or remove.
-  'flash': 'legacy /lab simulation, no data',
-  'market': 'legacy /lab: Alpaca quotes without sign-in',
-  'news-latest': 'legacy /lab: Alpaca news without sign-in',
-  'news-probe': 'legacy /lab: 30-second Alpaca websocket per request without sign-in',
 };
 const GUARD = /getMembership\w*\(|auth\(\)|currentUser|ownerIdentity|accountIdentity|riskProxy|handleLiveBilling|handleSandboxBilling|validSyncToken|createRecoveryCheck|requireOwner|isOwnerAccount|Bearer|getResoluteEntitlements|canUseTools|\.\.\.action|routes\./;
 function routes(dir) {
