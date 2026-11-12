@@ -12,7 +12,7 @@ export async function riskRequest(request,userId,readEntitlements,pool=riskPool(
  const owner=new URL(request.url).pathname.endsWith('/owner');
  if(owner&&!isOwnerAccount(userId))return json({error:'FORBIDDEN'},403);
  if(!owner){if(request.method!=='GET')return json({error:'METHOD_NOT_ALLOWED'},405);const rights=await readEntitlements(userId);if(!rights.canReceiveNotifications)return json({error:'NOTIFICATION_ENTITLEMENT_REQUIRED'},403);return json(await publicRiskFeed(pool));}
- if(request.method==='GET'){const control=(await pool.query('SELECT * FROM resolute.risk_control WHERE id')).rows[0],health=(await pool.query('SELECT * FROM resolute.risk_health WHERE id')).rows[0];return json({control,health,feed:await publicRiskFeed(pool,true),quotes:(await pool.query('SELECT value,revision FROM resolute.risk_quotes ORDER BY id')).rows,budget:(await pool.query('SELECT reserved_usd FROM resolute.risk_budget WHERE month=$1',[riskDate().slice(0,7)])).rows[0]?.reserved_usd??0});}
+ if(request.method==='GET'){const control=(await pool.query('SELECT * FROM resolute.risk_control WHERE id')).rows[0],health=(await pool.query('SELECT * FROM resolute.risk_health WHERE id')).rows[0];return json({control,health,approved:process.env.RESOLUTE_RISK_PUBLISH_APPROVED==='true',feed:await publicRiskFeed(pool,true),quotes:(await pool.query('SELECT value,revision FROM resolute.risk_quotes ORDER BY id')).rows,budget:(await pool.query('SELECT reserved_usd FROM resolute.risk_budget WHERE month=$1',[riskDate().slice(0,7)])).rows[0]?.reserved_usd??0});}
  if(request.method!=='POST')return json({error:'METHOD_NOT_ALLOWED'},405);
  const v=await boundedJSON(request);
  if(v.action==='toggle'&&typeof v.enabled==='boolean'&&Number.isInteger(v.baseRevision)){if(v.enabled&&process.env.RESOLUTE_RISK_PUBLISH_APPROVED!=='true')return json({error:'RUBRIC_APPROVAL_REQUIRED'},409);const r=await pool.query('UPDATE resolute.risk_control SET enabled=$1,revision=revision+1,updated_at=now() WHERE id AND revision=$2 RETURNING revision',[v.enabled,v.baseRevision]);return json(r.rows[0]??{error:'CONFLICT'},r.rows.length?200:409);}
@@ -21,11 +21,16 @@ export async function riskRequest(request,userId,readEntitlements,pool=riskPool(
  if(v.action==='paste'){if(typeof v.text!=='string'||v.text.length<20||v.text.length>12000||typeof v.title!=='string'||v.title.length<1||v.title.length>200)throw Error('INVALID_INPUT');const u=new URL(v.url);if(u.protocol!=='https:'||u.username||u.password||u.href.length>2048)throw Error('INVALID_INPUT');const date=new Date(v.publishedAt);if(!Number.isFinite(date.getTime())||date.getTime()>Date.now()+300000||date.getTime()<Date.now()-7*86400000)throw Error('INVALID_INPUT');const id=hash(u.href);await pool.query(`INSERT INTO resolute.risk_candidates(id,url,title,body,published_at,source_kind,fingerprint,manual) VALUES($1,$2,$3,$4,$5,'sns',$6,true) ON CONFLICT(id) DO NOTHING`,[id,u.href,v.title,v.text,date.toISOString(),hash(v.title.normalize('NFKC').replace(/\s/g,''))]);return json({ok:true,id});}
  return json({error:'INVALID_INPUT'},400);
 }
+const PREPARING_MS=90*60000;
 export async function publicRiskFeed(pool,owner=false,now=new Date()){
  const enabled=(await pool.query('SELECT enabled FROM resolute.risk_control WHERE id')).rows[0]?.enabled;
- if(!owner&&(!enabled||process.env.RESOLUTE_RISK_PUBLISH_APPROVED!=='true'))return{state:'stopped',date:null,articles:[],quotes:[]};
+ // Before the owner approves the criteria nothing is public: say "preparing", never "failed".
+ if(!owner&&process.env.RESOLUTE_RISK_PUBLISH_APPROVED!=='true')return{state:'preparing',date:null,articles:[],quotes:[]};
+ if(!owner&&!enabled)return{state:'stopped',date:null,articles:[],quotes:[]};
  const day=latestRiskDate(now),row=(await pool.query('SELECT state,articles FROM resolute.risk_days WHERE day=$1',[day])).rows[0];
- if(!row||row.state!=='ready')return{state:'failed',date:day,articles:[],quotes:[]};
+ // A missing row inside the morning run window is still being prepared; later it is a real failure.
+ if(!row&&now.getTime()-Date.parse(day+'T07:00:00+09:00')<PREPARING_MS&&now.getTime()>=Date.parse(day+'T07:00:00+09:00'))return{state:'preparing',date:day,articles:[],quotes:[]};
+ if(!row||row.state!=='ready')return{state:row?.state==='processing'?'preparing':'failed',date:day,articles:[],quotes:[]};
  const hidden=new Set((await pool.query('SELECT article_id FROM resolute.risk_hidden')).rows.map(r=>r.article_id));
  const articles=row.articles.map(parseRiskArticle).filter(a=>!hidden.has(a.id));
  // An editor hiding every story is not proof that there was no relevant news.

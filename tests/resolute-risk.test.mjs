@@ -3,7 +3,9 @@ import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {PGlite} from '@electric-sql/pglite';
 import {riskStars,riskAction,parseRiskFeed,latestRiskDate} from '../lib/resolute/risk.ts';
-import {candidatesFromFeed,validateGeneration,collect,publish} from '../services/resolute-api/risk-job.mjs';
+import {candidatesFromFeed,validateGeneration,collect,publish,isInDailyWindow} from '../services/resolute-api/risk-job.mjs';
+import {saveRiskDay} from '../services/resolute-api/rizel-daily-review.mjs';
+import {RISK_POLICY} from '../lib/resolute/risk-policy.ts';
 import {riskRequest,publicRiskFeed,hash} from '../services/resolute-api/risk-store.mjs';
 import {OWNER_ACCOUNT_ID} from '../lib/membership/entitlements.ts';
 const now=new Date('2026-10-12T22:00:00Z');
@@ -23,7 +25,8 @@ test('risk store enforces notification ownership, owner identity, publication st
  assert.equal((await riskRequest(req(''),'user_paid',async()=>({canReceiveNotifications:false}),pool)).status,403);
  assert.equal((await riskRequest(req('/owner'),'user_other',async()=>({canReceiveNotifications:true}),pool)).status,403);
  assert.equal((await publicRiskFeed(pool,false,now)).state,'stopped');
- await db.exec('UPDATE resolute.risk_control SET enabled=true WHERE id');assert.equal((await publicRiskFeed(pool,false,now)).state,'failed');
+ await db.exec('UPDATE resolute.risk_control SET enabled=true WHERE id');assert.equal((await publicRiskFeed(pool,false,now)).state,'preparing');assert.equal((await publicRiskFeed(pool,false,new Date(now.getTime()+2*3600000))).state,'failed');
+ delete process.env.RESOLUTE_RISK_PUBLISH_APPROVED;assert.equal((await publicRiskFeed(pool,false,now)).state,'preparing');assert.equal((await publicRiskFeed(pool,false,new Date(now.getTime()+2*3600000))).state,'preparing');process.env.RESOLUTE_RISK_PUBLISH_APPROVED='true';
  await collect(pool,{ok:true,enabled:true,items:[],officialUpdates:[{...candidate,bodyEn:body},{...candidate,title:'AI previous-day warning',url:candidate.url+'/previous',publishedAt:'2026-10-12T14:59:59Z',bodyEn:body}]},now);
  assert.equal((await pool.query('SELECT count(*)::int AS count FROM resolute.risk_candidates')).rows[0].count,2);
  let calls=0;const model=async()=>{calls++;return article;};assert.equal(await publish(pool,now,model),'ready');assert.equal(await publish(pool,now,model),'already-claimed');assert.equal(calls,1);
@@ -85,4 +88,36 @@ test('a rebound headline does not hide concrete AI financing pressure in its bod
   'NVIDIA announced an AI product for enterprise customers with new networking features and improved efficiency.\nForward-looking statements: higher borrowing costs could delay AI investments.',
   'Higher borrowing costs could delay investment in a grocery store. This company sells food and has reported an improved business outlook.\nNVIDIA released an AI processor.'
  ])assert.equal(select('NVIDIA announces new products',text).length,0,text);
+});
+
+test('daily window reaches back to the previous morning run (Monday: over the weekend); date-only dates keep their date',()=>{
+ const tue=new Date('2026-10-12T22:00:00Z'); // Tue 07:00 JST
+ assert.equal(isInDailyWindow('2026-10-12T14:00:00Z',tue),true);   // previous US session
+ assert.equal(isInDailyWindow('2026-10-11T00:00:00Z',tue),false);  // too old
+ assert.equal(isInDailyWindow('2026-10-13T00:00:00Z',tue),false);  // future
+ assert.equal(isInDailyWindow('2026-10-12',tue),true);
+ assert.equal(isInDailyWindow('2026-10-09',tue),false);
+ const mon=new Date('2026-10-18T22:00:00Z'); // Mon 07:00 JST
+ assert.equal(isInDailyWindow('2026-10-16T05:00:00Z',mon),true);   // Friday
+ assert.equal(isInDailyWindow('2026-10-15T05:00:00Z',mon),false);
+});
+
+test('headlines about plunges, capex above expectations and supply delays are candidates; neutral ones are not',()=>{
+ const select=title=>candidatesFromFeed({ok:true,enabled:true,items:[{...candidate,title,bodyEn:body}]},now);
+ for(const title of ['NVIDIA plunges 9% as AI selloff deepens','Hyperscaler capex exceeds expectations, chip stocks slide','TSMC supply constraints delay AI chip shipments','エヌビディアが急落','半導体の供給制約が続く'])
+  assert.equal(select(title).length,1,title);
+ for(const title of ['NVIDIA launches new AI platform','NVIDIA hosts developer conference'])assert.equal(select(title).length,0,title);
+});
+
+test('risk days: quiet day is a ready empty list, failure is recorded, a ready day is never overwritten',async()=>{
+ const rows=new Map(),pool={async query(sql,args){const [day,state,json]=args;const old=rows.get(day);if(!old||old.state!=='ready')rows.set(day,{state,articles:JSON.parse(json)});return{rows:[]};}};
+ await saveRiskDay(pool,'2026-10-13',[],now);assert.deepEqual(rows.get('2026-10-13'),{state:'ready',articles:[]});
+ await saveRiskDay(pool,'2026-10-13',null,now);assert.equal(rows.get('2026-10-13').state,'ready');
+ await saveRiskDay(pool,'2026-10-14',null,now);assert.equal(rows.get('2026-10-14').state,'failed');
+});
+
+test('stopped vs preparing vs failed wording comes from the single policy',()=>{
+ assert.equal(parseRiskFeed({state:'preparing',date:null,articles:[],quotes:[]}).state,'preparing');
+ assert.equal(RISK_POLICY.status.preparing.ja,'準備中です');
+ assert.equal(riskAction(RISK_POLICY.reviewMinStars),'review');
 });

@@ -3,10 +3,11 @@ import {reserveAiSpend,serializeBudgetedRequest} from './ai-budget.mjs';
 import {pathToFileURL} from 'node:url';
 import {riskPool,hash,boundedJSON} from './risk-store.mjs';
 import {riskStars,parseRiskArticle,riskDate} from '../../lib/resolute/risk.ts';
+import {RISK_POLICY} from '../../lib/resolute/risk-policy.ts';
 const relevant=/\b(AI|semiconductor|NVIDIA|NVDA|AMD|TSMC|Micron|MU|ASML|AVGO|NBIS|HBM|chip|export controls?)\b|半導体|人工知能|輸出規制|エヌビディア|マイクロン/i;
 // Match complete English words, including explicit inflections. Substrings such
 // as Urban, bandwidth and cutting-edge must not become downside evidence.
-const negative=/\b(?:risks?|risky|falls?|falling|fell|fallen|cuts?|cutting(?![- ]edge)|delays?|delayed|delaying|halts?|halted|halting|bans?|banned|banning|restrict(?:s|ed|ing|ions?)?|loss(?:es)?|warn(?:s|ed|ing|ings)?|declin(?:e|es|ed|ing)|defaults?|defaulted|defaulting|lawsuits?|shortages?|downgrad(?:e|es|ed|ing))\b|不安|懸念|下落|引き下げ|引下げ|格下げ|遅延|停止|規制|損失|減益|警告|不足/i;
+const negative=/\b(?:risks?|risky|falls?|falling|fell|fallen|cuts?|cutting(?![- ]edge)|delays?|delayed|delaying|halts?|halted|halting|bans?|banned|banning|restrict(?:s|ed|ing|ions?)?|loss(?:es)?|warn(?:s|ed|ing|ings)?|declin(?:e|es|ed|ing)|defaults?|defaulted|defaulting|lawsuits?|shortages?|downgrad(?:e|es|ed|ing)|plung(?:e|es|ed|ing)|tumbl(?:e|es|ed|ing)|slump(?:s|ed|ing)?|slid(?:e|es|ing)?|sank|sinks?|sell-?offs?|crash(?:es|ed|ing)?|tank(?:s|ed|ing)?|drop(?:s|ped|ping)?|slash(?:es|ed|ing)?|slow(?:s|ed|ing|down)|miss(?:es|ed)?|shortfalls?|probes?|investigations?|bottlenecks?|disruptions?|postpone[sd]?|overruns?|supply (?:constraints?|crunch)|(?:above|exceed(?:s|ed)?|higher than|beat) (?:expectations?|estimates?|forecasts?)|capex (?:surge|jump|spike))\b|急落|暴落|急反落|下振れ|未達|供給制約|供給不足|調査|延期|見送り|懸念|下落|引き下げ|引下げ|格下げ|遅延|停止|規制|損失|減益|警告|不足/i;
 // Date-only intake is opt-in for private review. Keep the original date string;
 // bounds cover all UTC offsets rather than pretending the source published at midnight.
 export function publicationBounds(value){
@@ -25,6 +26,15 @@ export function isCurrentJstPublication(value,now=new Date()){
  const bounds=publicationBounds(value);
  return !!bounds&&bounds.earliest===bounds.latest&&bounds.latest<=now.getTime()
   &&riskDate(new Date(bounds.earliest))===riskDate(now);
+}
+/** Daily collection window: since the previous morning run (Monday reaches back over the weekend).
+ * A date-only source date is accepted when that calendar day falls inside the window; the date stays visible. */
+export function isInDailyWindow(value,now=new Date()){
+ const bounds=publicationBounds(value);if(!bounds)return false;
+ const jstDay=new Date(now.getTime()+9*3600000).getUTCDay(),hours=jstDay===1?RISK_POLICY.lookbackHours.monday:RISK_POLICY.lookbackHours.weekday;
+ const start=now.getTime()-hours*3600000;
+ if(value.length===10)return value>=riskDate(new Date(start))&&value<=riskDate(now);
+ return bounds.latest<=now.getTime()&&bounds.earliest>=start;
 }
 export function inspectCandidateFeed(feed,now=new Date(),{allowDateOnly=false}={}){
  if(!feed||feed.ok!==true||typeof feed.enabled!=='boolean'||!Array.isArray(feed.items)||feed.items.length>500)throw Error('SOURCE_UNAVAILABLE');

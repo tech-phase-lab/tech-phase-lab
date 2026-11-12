@@ -17,7 +17,7 @@ if(process.env.RESOLUTE_RIZEL_DAILY_REVIEW_ENABLED!=='true'){
   const readFeed=withReportReader(createNewsReader({origin:process.env.RESOLUTE_NEWS_ORIGIN,token:process.env.RESOLUTE_NEWS_READ_TOKEN}),createReportReader({enabled:process.env.RESOLUTE_REPORT_SOURCE_ENABLED==='true',token:process.env.RESOLUTE_REPORT_SOURCE_TOKEN,tickers:process.env.RESOLUTE_REPORT_SOURCE_TICKERS}));
   selectionPool=new Pool({...config,max:2});selectionPool.on('error',()=>{});budgetPool=riskPool();
   const result=await prepareDailyReview({enabled:true,selectionPool,budgetPool,apiKey:process.env.RESOLUTE_OPENAI_API_KEY,
-   readFeed});
+   readFeed,publishPool:budgetPool});
   console.log(JSON.stringify({event:'RIZEL_DAILY_REVIEW',...result}));
  }catch(error){console.error(JSON.stringify({event:'RIZEL_DAILY_REVIEW_FAILED',stage:['source','storage','generation','readback'].includes(error.stage)?error.stage:'configuration',diagnostics:error.diagnostics}));process.exitCode=1;}
  finally{await selectionPool?.end();await budgetPool?.end();}

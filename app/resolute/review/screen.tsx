@@ -86,8 +86,9 @@ function Workspace({draftSession,thermometerSnapshot}:{draftSession?:string;ther
    <p>{en?"Skip the quiz and preview any tool. Your saved rules are used when available. Otherwise, a fictional sample plan is loaded.":"30問に答えずに各画面を確認できます。保存済みのルールがあれば使い、なければ架空のサンプル計画で開きます"}</p>
    <p>{en?"Display tests only. These do not change real ratings, access or publication.":"表示確認専用です。実際の危険度・利用権・公開状態は変わりません。"}</p>
    <div className={controls.links} aria-label={en?"Preview state":"確認する状態"}>
-    {([['sample','ニュース見本','News sample'],['low','★1〜2の日','★1–2 day'],['medium','★3の日','★3 day'],['high','★4〜5の日','★4–5 day'],['expired','1年がすぎた後','After one year'],['failed','ニュース取得失敗','News unavailable'],['live','実際の接続状態','Live feed status']] as const).map(([value,ja,eng])=><button key={value} aria-pressed={scenario===value} onClick={()=>setScenario(value)}>{en?eng:ja}</button>)}
+    {([['sample','ニュース見本','News sample'],['low','★1〜2の日','★1–2 day'],['medium','★3の日','★3 day'],['high','★4〜5の日','★4–5 day'],['expired','1年がすぎた後','After one year'],['failed','ニュース取得失敗','News unavailable'],['preparing','公開前（準備中）','Before launch'],['live','実際の接続状態','Live feed status']] as const).map(([value,ja,eng])=><button key={value} aria-pressed={scenario===value} onClick={()=>setScenario(value)}>{en?eng:ja}</button>)}
    </div>
+   {scenario==='live'?<OwnerRiskStatus en={en}/>:null}
    <label><input type="checkbox" checked={showRizel} onChange={e=>{setShowRizel(e.target.checked);if(e.target.checked){if(scenario==='failed'||scenario==='expired')setScenario('sample');void openFeature('/resolute/news');}}}/>{en?'Show RIZEL’s comment (private preview only)':'RIZELの一言を表示（確認用のみ・非公開）'}</label>
    <div className={controls.links}>
     {([["/resolute/news",en?"News risk checker":"危険度チェッカーを見る"],["/resolute/wall",en?"Rules wallpaper":"お守りを見る"],["/resolute/notebook",en?"My rulebook":"一冊を見る"],["/resolute/tonight",en?"A moment to breathe":"今夜のひと息を見る"]] as [ReviewPath,string][]).map(([target,label])=>
@@ -106,4 +107,14 @@ function Workspace({draftSession,thermometerSnapshot}:{draftSession?:string;ther
    path === "/resolute/wall" ? <WallScreen/> : path === "/resolute/tonight" ? <TonightScreen/> : path === "/resolute/news" ? <NewsScreen/> : path === "/resolute/notebook" ? <NotebookScreen/> : path === "/resolute/thermometer" ? <ThermometerScreen snapshot={thermometerSnapshot}/> : null}
   {notificationsVisited?<div hidden={path!=="/resolute/alerts"&&path!=="/resolute/morning"}><NotificationScreen mode={path==="/resolute/morning"?"morning":"alerts"}/></div>:null}
  </ReviewContext.Provider>;
+}
+
+/** Owner-only: whether the real feed is public yet, and what today's stored list looks like. */
+function OwnerRiskStatus({en}:{en:boolean}){
+ const [info,setInfo]=useState<{approved:boolean;enabled:boolean;state:string;date:string|null;count:number}|null|false>(null);
+ useEffect(()=>{const c=new AbortController();void fetch('/api/resolute/risk/owner',{cache:'no-store',signal:c.signal}).then(async r=>{if(!r.ok)throw Error();const v=await r.json();if(!c.signal.aborted)setInfo({approved:v.approved===true,enabled:v.control?.enabled===true,state:String(v.feed?.state),date:v.feed?.date??null,count:Array.isArray(v.feed?.articles)?v.feed.articles.length:0});}).catch(()=>{if(!c.signal.aborted)setInfo(false);});return()=>c.abort();},[]);
+ if(info===null)return <p role="status">…</p>;
+ if(info===false)return <p role="status">{en?'Could not read the live status.':'実際の状態を読み込めませんでした'}</p>;
+ const open=info.approved&&info.enabled;
+ return <p role="status">{en?`Public: ${open?'ON':'OFF (customers see “Coming soon”)'} · Approval variable: ${info.approved?'set':'not set'} · Owner switch: ${info.enabled?'on':'off'} · Stored list (${info.date??'—'}): ${info.state}, ${info.count} stories. Only you see this preview.`:`公開：${open?'オン':'オフ（お客様には「準備中です」と出ます）'} ／ 承認の変数：${info.approved?'あり':'なし'} ／ オーナー用スイッチ：${info.enabled?'オン':'オフ'} ／ 保存済みの一覧（${info.date??'—'}）：${info.state}・${info.count}件。このプレビューはオーナーだけに見えます。`}</p>;
 }
