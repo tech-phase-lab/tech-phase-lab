@@ -176,7 +176,7 @@ class GenerateTests(Base):
         kinds = [p["type"] for p in saved["parts"]]
         self.assertNotIn("text", kinds)
         self.assertIn("numbers", kinds)
-        self.assertIn("数字が食い違った: 雇用統計は強め", saved["notes"])
+        self.assertIn("【要確認】「雇用統計は強め」は、数字が資料と合わないため載せていません。〔unsupported-number〕", saved["notes"])
 
     def test_the_headline_with_an_unsupported_number_stops_the_draft(self):
         with self.assertRaises(ValueError):
@@ -201,6 +201,37 @@ class GenerateTests(Base):
         self.assertEqual(len(calls), 2); self.assertIn("repair", calls[1]); self.assertNotIn("repair", calls[0])
         self.assertNotEqual(saved["headline"], gen.NEUTRAL_HEADLINE)
 
+    def test_the_body_is_reader_text_in_a_fixed_order_and_the_owner_lines_are_tagged_notes(self):
+        out = model_output()
+        out["takeaways"] = [{"text": "MUは増収で、見通しも強めでした。", "evidenceIds": ["E1"]},
+                            {"text": "雇用統計は予想を下回りました。", "evidenceIds": ["E2"]},
+                            {"text": "MUの売上高は99億ドルでした。", "evidenceIds": ["E1"]}]  # a wrong figure: left out, noted
+        out["parts"] = out["parts"][1:]  + [out["parts"][0]]  # the model put the indicator first and the earnings after
+        out["skipped"] = ["QCOMの決算数値は、論点を絞るため掲載を見送りました。"]
+        saved = gen.generate(self.db, SATURDAY, transport=FakeModel(out), env=ENV)
+        sections = [p["section"] for p in saved["parts"]]
+        self.assertEqual(sections[0], "summary"); self.assertEqual(sections[-1], "schedule")
+        self.assertEqual([s for s in sections if s not in ("summary", "schedule")], sorted((s for s in sections if s not in ("summary", "schedule")), key=("earnings", "indicators", "market").index))
+        self.assertLess(sections.index("earnings"), sections.index("indicators"))
+        summary = saved["parts"][0]
+        self.assertEqual(summary["heading"], "今週の主な結論")
+        self.assertEqual(summary["body"].split("\n"), ["・MUは増収で、見通しも強めでした。", "・雇用統計は予想を下回りました。"])
+        body_text = json.dumps(saved["parts"], ensure_ascii=False)
+        for leak in ("取れませんでした", "見送りました", "changed-", "unsupported-number", "AIの文が"):
+            self.assertNotIn(leak, body_text, "owner-only lines never reach the body")
+        self.assertTrue(all(line.startswith(("【要確認】", "【定型文】", "【取得なし】", "【AI省略】")) for line in saved["notes"]))
+        self.assertTrue(saved["notes"][0].startswith("【要確認】"), "lines that need the owner come first")
+        self.assertTrue(saved["notes"][-1].startswith("【AI省略】"))
+        self.assertTrue(any("〔unsupported-number〕" in line for line in saved["notes"]), "the error code lives in the memo")
+
+    def test_a_substituted_headline_is_marked_in_the_memo_with_its_code_and_notes_are_deduplicated_and_capped(self):
+        notes = [gen.note(gen.OMITTED, "x")] + [gen.note(gen.ATTENTION, f"n{i}") for i in range(40)] + [gen.note(gen.ATTENTION, "n1")]
+        done = gen.finish_notes(notes)
+        self.assertEqual(len(done), gen.MAX_NOTES)
+        self.assertEqual(len(set(done)), len(done))
+        self.assertTrue(done[0].startswith("【要確認】"))
+        self.assertEqual(gen.note(gen.SUBSTITUTED, "見出しは定型文にしています。", "changed-negation"), "【定型文】見出しは定型文にしています。〔changed-negation〕")
+
     def test_a_bar_chart_needs_two_figures_in_the_same_unit(self):
         out = model_output()
         out["parts"].append(part("chart", heading="比べる", title="売上と見通し", evidenceIds=["E1"],
@@ -220,8 +251,8 @@ class GenerateTests(Base):
         out["parts"] = [out["parts"][0]]
         out["skipped"] = ["雇用統計"]
         saved = gen.generate(self.db, SATURDAY, transport=FakeModel(out), env=ENV)
-        self.assertIn("ここは取れませんでした: 今週に結果が出た指標", saved["notes"])
-        self.assertIn("ここは取れませんでした: 雇用統計", saved["notes"])
+        self.assertIn(gen.note(gen.MISSING, "今週に結果が出た経済指標が、集まっていません。"), saved["notes"])
+        self.assertIn(gen.note(gen.OMITTED, "AIが載せなかった話題: 雇用統計"), saved["notes"])
         self.assertIn("numbers", [p["type"] for p in saved["parts"]])
 
     def test_nothing_to_write_from_means_no_draft_and_no_model_call(self):

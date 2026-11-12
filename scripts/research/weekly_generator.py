@@ -7,9 +7,13 @@ The rules that keep it honest:
 - The model writes sentences only. It never supplies a number: number cards and bar charts are built here from the checked
   figures, and the up/down badge is computed by the page from those figures.
 - Every figure that appears in a sentence must appear in the evidence that sentence cites (the same check the PRO deep
-  analysis uses). A part that fails is left out and the draft says so ("数字が食い違った").
-- Whatever cannot be gathered is skipped and written down ("ここは取れませんでした"); the rest is still made.
-- The result is always a draft. It is published at once only if the owner has turned automatic publication on."""
+  analysis uses). A part that fails is left out and the draft says so in the review memo.
+- Whatever cannot be gathered is skipped and written down in the review memo; the rest is still made.
+- The result is always a draft. It is published at once only if the owner has turned automatic publication on.
+
+The body of a draft is reader-facing text only, in a fixed reading order: main takeaways -> earnings -> indicators -> the wider
+market -> next week's schedule. Everything meant for the owner (failed checks, substituted sentences, missing material, topics
+the model left out) goes into `notes` as tagged lines (see `note`) and is shown apart from the body, as a review memo."""
 
 import json
 import os
@@ -48,7 +52,8 @@ POLICY = """あなたは「リゼル」として、週刊 Tech Phase PRO の1号
 - 部品(parts)は、その週に必要なものだけを選び、毎週同じ並びにしません。type は text / numbers / timeline / chart / highlight。
 - 数字がない週は、text と timeline だけの短い号でかまいません。
 - 次週の予定は別に作るので、parts には入れません。scheduleComments に、予定の id ごとに一言(数字なし)を書いてかまいません。
-- 資料で拾えなかった話題や、書けなかったことは skipped に短く書きます。
+- takeaways: 今週の主な結論を、3つまで、1文ずつ書きます。各文に、根拠にした evidenceIds を必ず付けます(数字のルールは同じです)。
+- 資料にあったのに載せなかった話題は、skipped に話題の名前だけを短く書きます(「〜を見送りました」「記載していません」のような、制作側の言い訳の文は書きません)。
 - recentIssues は、直近の号の見出しとひとことです。同じ書き出し・同じ締め・同じ言い回しを避けてください。
 
 【文体(リゼルの書き方)】
@@ -91,8 +96,10 @@ def response_schema():
                            "refs": {"type": "array", "items": ref}, "points": {"type": "array", "items": point}}}
     comment = {"type": "object", "additionalProperties": False, "required": ["id", "comment"],
                "properties": {"id": {"type": "string"}, "comment": {"type": "string"}}}
-    return {"type": "object", "additionalProperties": False, "required": ["headline", "lead", "parts", "scheduleComments", "skipped"],
+    return {"type": "object", "additionalProperties": False, "required": ["headline", "lead", "takeaways", "parts", "scheduleComments", "skipped"],
             "properties": {"headline": {"type": "string"}, "lead": {"type": "string"},
+                           "takeaways": {"type": "array", "maxItems": 3, "items": {"type": "object", "additionalProperties": False, "required": ["text", "evidenceIds"],
+                                                                                 "properties": {"text": {"type": "string"}, "evidenceIds": ids}}},
                            "parts": {"type": "array", "maxItems": 8, "items": part},
                            "scheduleComments": {"type": "array", "items": comment},
                            "skipped": {"type": "array", "items": {"type": "string"}}}}
@@ -303,6 +310,38 @@ def _optional(text, quote):
     return "" if text in (None, "") else _check(text, quote)
 
 
+# ---- the review memo (owner-facing lines, kept apart from the body) -----------
+
+ATTENTION, SUBSTITUTED, MISSING, OMITTED = "要確認", "定型文", "取得なし", "AI省略"
+NOTE_ORDER = (ATTENTION, SUBSTITUTED, MISSING, OMITTED)
+MAX_NOTES = 30
+KIND_NAMES = {"text": "文章", "numbers": "数字カード", "timeline": "年表", "chart": "棒グラフ", "highlight": "大きな一文"}
+
+
+def note(tag, text, code=""):
+    """'【tag】text〔code〕'. The page splits these three pieces again (lib/research/weekly-format.ts, groupNotes); the code (a validator error
+    name such as changed-negation) is for the owner's memo only and never reaches the body."""
+    return f"【{tag}】{text.strip()[:200]}" + (f"〔{str(code)[:60]}〕" if code else "")
+
+
+def finish_notes(notes):
+    """Without repeats, the ones that need the owner's action first, and never more than the draft can keep."""
+    unique = list(dict.fromkeys(notes))
+    rank = lambda line: next((i for i, tag in enumerate(NOTE_ORDER) if line.startswith(f"【{tag}】")), len(NOTE_ORDER))
+    return sorted(unique, key=rank)[:MAX_NOTES]
+
+
+SECTIONS = ("summary", "earnings", "indicators", "market", "schedule")
+
+
+def section_of(kind, ids, evidence):
+    """Reading order is decided here, not by the model: what a part cites says which section it belongs to."""
+    kinds = {item["kind"] for item in evidence if item["id"] in set(ids or ())}
+    results = bool(kinds & {"earnings", "note"})
+    indicators = "indicator" in kinds
+    return "earnings" if results and not indicators else "indicators" if indicators and not results else "market"
+
+
 NEUTRAL_HEADLINE = "今週の決算と経済指標のまとめ"
 NEUTRAL_LEAD = "今週に結果が出た決算と経済指標を、数字と一緒にまとめました。"
 
@@ -315,7 +354,7 @@ def _framing(text, quote, fallback, lenient, notes, name):
     except ValueError as error:
         if not lenient or "number" in str(error) or str(error) == "empty-copy":
             raise
-        notes.append(f"{name}はAIの文が確認に通らなかったため、定型文にしています（{error}）")
+        notes.append(note(SUBSTITUTED, f"{name}は、AIの文が事実確認に通らなかったため、定型文にしています。", error))
         return fallback
 
 
@@ -327,9 +366,20 @@ def compose(model_output, evidence, schedule, lenient=False):
     lead = _framing(model_output.get("lead"), everything, NEUTRAL_LEAD, lenient, notes, "導入文")
     parts, used = [], set()
     highlights = 0
+    known = {item["id"] for item in evidence}
+    takeaways = []
+    for raw in (model_output.get("takeaways") or [])[:3]:
+        text = raw.get("text") if isinstance(raw, dict) else None
+        ids = [i for i in (raw.get("evidenceIds") if isinstance(raw, dict) else None) or [] if i in known]
+        try:
+            if not ids:
+                raise ValueError("no-evidence")
+            takeaways.append((_check(text, _quote(evidence, ids)), ids))
+        except ValueError as error:
+            notes.append(note(ATTENTION, "「今週の主な結論」の1文は、事実確認に通らなかったため載せていません。", error))
     for raw in model_output.get("parts") or []:
         kind = raw.get("type")
-        name = raw.get("heading") or raw.get("text") or kind
+        name = raw.get("heading") or raw.get("text") or KIND_NAMES.get(kind, "部品")
         ids = [i for i in (raw.get("evidenceIds") or []) if i in {item["id"] for item in evidence}]
         quote = _quote(evidence, ids)
         try:
@@ -349,8 +399,8 @@ def compose(model_output, evidence, schedule, lenient=False):
                         points.append({"when": _check(point.get("when"), point_quote), "event": _check(point.get("event"), point_quote),
                                        "comment": _optional(point.get("comment"), point_quote), "tone": point.get("tone") if point.get("tone") in ("up", "down", "flat") else "flat"})
                         ids += [i for i in point_ids if i not in ids]
-                    except ValueError:
-                        notes.append(f"数字が食い違った: {name}の1項目")
+                    except ValueError as error:
+                        notes.append(note(ATTENTION, f"「{name}」の1項目は、事実確認に通らなかったため載せていません。", error))
                 if not points:
                     raise ValueError("no-points")
                 part = {"type": "timeline", "heading": _check(raw.get("heading"), quote), "points": points}
@@ -374,9 +424,11 @@ def compose(model_output, evidence, schedule, lenient=False):
             else:
                 continue
         except (ValueError, TypeError, KeyError) as error:
-            notes.append(("数字が食い違った: " if "number" in str(error) else "ここは取れませんでした: ") + str(name)[:40])
+            reason = "数字が資料と合わないため" if "number" in str(error) else "事実確認に通らなかった、または材料が足りなかったため"
+            notes.append(note(ATTENTION, f"「{str(name)[:40]}」は、{reason}載せていません。", error))
             continue
         used.update(ids)
+        part["section"] = section_of(kind, ids, evidence)
         parts.append(part)
     comments = {c.get("id"): c.get("comment") for c in model_output.get("scheduleComments") or [] if isinstance(c, dict)}
     items = []
@@ -388,11 +440,21 @@ def compose(model_output, evidence, schedule, lenient=False):
             except ValueError:
                 comment = ""
         items.append({"date": event["date"], "name": event["name"], "comment": comment[:200]})
+    # Reading order: takeaways -> earnings -> indicators -> the wider market (a stable sort keeps the model's order inside each section);
+    # a highlight sentence closes the body and sits under the section before it; next week's schedule is last.
+    order = {name: at for at, name in enumerate(SECTIONS)}
+    parts.sort(key=lambda part: (part["type"] == "highlight", order[part["section"]]))
+    for part in parts:
+        if part["type"] == "highlight":
+            part["section"] = next((other["section"] for other in reversed(parts) if other["type"] != "highlight"), "market")
+    if takeaways:
+        used.update(i for _, ids in takeaways for i in ids)
+        parts.insert(0, {"type": "text", "heading": "今週の主な結論", "body": "\n".join("・" + text for text, _ in takeaways), "section": "summary"})
     if items:
-        parts.append({"type": "schedule", "heading": "次の週の予定", "items": items})
-    for line in model_output.get("skipped") or []:
+        parts.append({"type": "schedule", "heading": "次の週の予定", "items": items, "section": "schedule"})
+    for line in (model_output.get("skipped") or [])[:5]:
         if isinstance(line, str) and line.strip():
-            notes.append("ここは取れませんでした: " + line.strip()[:80])
+            notes.append(note(OMITTED, "AIが載せなかった話題: " + line.strip()[:100]))
     return headline, lead, parts, notes, used
 
 
@@ -419,9 +481,9 @@ def generate(db, now, news=(), transport=None, env=None):
     schedule = upcoming(now)
     notes = []
     if not any(item["kind"] == "indicator" for item in evidence):
-        notes.append("ここは取れませんでした: 今週に結果が出た指標")
+        notes.append(note(MISSING, "今週に結果が出た経済指標が、集まっていません。"))
     if not any(item["kind"] == "earnings" or item["kind"] == "note" for item in evidence):
-        notes.append("ここは取れませんでした: 今週の決算")
+        notes.append(note(MISSING, "今週の決算が、集まっていません。"))
     if not evidence:
         raise RuntimeError("weekly-no-evidence")
     material = [{"id": item["id"], "type": item["kind"], "label": item["label"],
@@ -460,7 +522,7 @@ def generate(db, now, news=(), transport=None, env=None):
             seen.add(item["url"])
             sources.append({"title": item["label"][:120], "url": item["url"]})
     result = weekly_issues.save_draft(db, {"date": datetime.fromtimestamp(now, JST).date().isoformat(), "headline": headline[:120], "lead": lead[:400],
-                                           "parts": parts, "sources": sources[:20], "notes": notes[:20], "auto": True})
+                                           "parts": parts, "sources": sources[:20], "notes": finish_notes(notes), "auto": True})
     return result["item"]
 
 

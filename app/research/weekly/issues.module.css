@@ -60,7 +60,13 @@
 .owner h2{margin:0;font-size:17px;font-weight:500;color:#ecdcb0}
 .switch{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;align-items:center}.switch input{width:22px;height:22px}.switch small{grid-column:2;color:#8e98a3;line-height:1.6}
 .draft{border:1px solid #2a3140;border-radius:16px;padding:12px 14px;background:#0b0e14}.draft>summary{display:flex;flex-direction:column;gap:2px;cursor:pointer}.draft>summary b{overflow-wrap:anywhere}.draft>summary small{color:#a99876}
-.notes{margin:12px 0;padding:10px 12px 10px 28px;border-radius:12px;background:#2a2210;color:#f0dca0;font-size:14px;line-height:1.7}
+.memoLine,.memoLineOk,.fixedMark{margin:12px 0;padding:10px 12px;border-radius:12px;font-size:14px;line-height:1.7}
+.memoLine{background:#2a2210;color:#f0dca0;font-weight:600}.memoLineOk{background:#10261a;color:#9fdcb9}
+.fixedMark{margin-top:0;border:1px dashed #8f7851;color:#e7c982}
+.memo{margin:16px 0 0;padding:10px 14px;border:1px solid #4a3d20;border-radius:14px;background:#0b0e14}.memo>summary{cursor:pointer;color:#e7c982;font-size:14px}
+.memo section{margin-top:12px}.memo h4{margin:0 0 4px;font-size:13px;color:#a99876;font-weight:600}.memo ul{margin:0;padding-left:20px;font-size:14px;line-height:1.8;color:#d3dbe6}
+.memo code{margin-left:8px;padding:1px 6px;border-radius:6px;background:#1a1e28;color:#a9b3bd;font-size:12px;white-space:nowrap}
+.group{margin:8px 0 10px;padding-bottom:6px;border-bottom:1px solid #4a3d20;font-size:20px;font-weight:600;color:#f4e7c1}.slot{display:contents}.lines{white-space:pre-line}
 .field{display:grid;gap:4px;margin:10px 0}.field span{font-size:13px;color:#a99876}
 .field input,.field textarea{box-sizing:border-box;width:100%;padding:10px;border:1px solid #2a3140;border-radius:10px;background:#090c12;color:#eef2f6;font:inherit;font-size:16px}
 .editPart{margin:12px 0;padding:8px 12px;border:1px solid #2a3140;border-radius:14px}.editPart legend{padding:0 6px;font-size:13px;color:#d8b36a}.pair{border-top:1px solid #1d2230;margin-top:6px}

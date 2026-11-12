@@ -4,16 +4,19 @@ import Link from "next/link";
 import ResearchToolShell from "../research-tool-shell";
 import { useResearchLanguage } from "../use-research-language";
 import { useOwnerMode } from "../member-display-provider";
-import { barHeights, cardBadge, formatNumber, scheduleDate, shortDate, type WeeklyCard } from "@/lib/research/weekly-format";
+import { barHeights, cardBadge, formatNumber, groupNotes, scheduleDate, shortDate, type WeeklyCard } from "@/lib/research/weekly-format";
 import styles from "./issues.module.css";
 
-type Part =
+type Section = "summary" | "earnings" | "indicators" | "market" | "schedule";
+type Part = (
   | { type: "text"; heading: string; body: string }
   | { type: "numbers"; heading: string; cards: WeeklyCard[]; note: string }
   | { type: "timeline"; heading: string; points: { when: string; event: string; comment: string; tone: "up" | "down" | "flat" }[] }
   | { type: "schedule"; heading: string; items: { date: string; name: string; comment: string }[] }
   | { type: "chart"; heading: string; title: string; unit: string; bars: { label: string; value: number }[]; note: string }
-  | { type: "highlight"; text: string };
+  | { type: "highlight"; text: string }) & { section?: Section };
+// Group titles shown once, where a run of parts of that kind begins. The takeaways and the schedule carry their own headings.
+const SECTION_TITLES: Partial<Record<Section, [string, string]>> = { earnings: ["決算", "Earnings"], indicators: ["経済指標", "Economic indicators"], market: ["市場全体の流れ", "The wider market"] };
 export type Issue = { id: string; number: number | null; status: "draft" | "published"; date: string; headline: string; lead: string; parts: Part[]; sources: { title: string; url: string }[]; notes?: string[]; auto?: boolean };
 type Listed = { number: number; date: string; headline: string };
 type State = "loading" | "ready" | "signed-out" | "pro-required" | "error";
@@ -58,7 +61,7 @@ function Chart({ part, ja }: { part: Extract<Part, { type: "chart" }>; ja: boole
   </figure>;
 }
 function Body({ part, ja }: { part: Part; ja: boolean }) {
-  if (part.type === "text") return <p className={styles.text}>{part.body}</p>;
+  if (part.type === "text") return <p className={`${styles.text} ${styles.lines}`}>{part.body}</p>;
   if (part.type === "numbers") return <Numbers part={part} ja={ja} />;
   if (part.type === "timeline") return <Timeline part={part} />;
   if (part.type === "schedule") return <Schedule part={part} ja={ja} />;
@@ -75,9 +78,13 @@ export function IssueView({ issue, lang = "ja" }: { issue: Issue; lang?: "ja" | 
       <h2>{issue.headline}</h2>
       <p>{issue.lead}</p>
     </section>
-    {numbered.map(({ part, label }, index) => part.type === "highlight"
-      ? <blockquote key={index} className={styles.highlight}>{part.text}</blockquote>
-      : <section key={index} className={styles.part}><h3><span>{label}</span>{part.heading}</h3><Body part={part} ja={ja} /></section>)}
+    {numbered.map(({ part, label }, index) => {
+      const title = part.section && part.section !== numbered[index - 1]?.part.section ? SECTION_TITLES[part.section] : undefined;
+      const group = title && part.type !== "highlight" ? <h2 className={styles.group}>{title[ja ? 0 : 1]}</h2> : null;
+      return <div key={index} className={styles.slot}>{group}{part.type === "highlight"
+        ? <blockquote className={styles.highlight}>{part.text}</blockquote>
+        : <section className={styles.part}><h3><span>{label}</span>{part.heading}</h3><Body part={part} ja={ja} /></section>}</div>;
+    })}
     {issue.sources.length > 0 && <details className={styles.sources}><summary>{ja ? "出典" : "Sources"}</summary><ul>{issue.sources.map((source, index) => <li key={index}><a href={source.url} target="_blank" rel="noopener noreferrer">{source.title}</a></li>)}</ul></details>}
   </article>;
 }
@@ -104,9 +111,12 @@ function Draft({ draft, onDone }: { draft: Issue; onDone: (message: string) => v
     if (!result.ok) { setError("保存できませんでした。文字数や空欄を確認してください。"); return; }
     onDone(message);
   };
+  const memo = groupNotes(value.notes);
+  const todo = memo.counts.attention + memo.counts.substituted;
   return <details className={styles.draft}>
-    <summary><b>{value.headline}</b><small>下書き · {shortDate(value.date)}</small></summary>
-    {(value.notes ?? []).length > 0 && <ul className={styles.notes}>{value.notes!.map((note, index) => <li key={index}>{note}</li>)}</ul>}
+    <summary><b>{value.headline}</b><small>下書き · {shortDate(value.date)}{todo > 0 ? ` · 要対応 ${todo}件` : ""}</small></summary>
+    <p className={todo > 0 ? styles.memoLine : styles.memoLineOk} role="status">{memo.summary}{memo.total > 0 && <> — 詳しくは、いちばん下の「確認メモ」</>}</p>
+    {(memo.substituted.headline || memo.substituted.lead) && <p className={styles.fixedMark}>定型文: {[memo.substituted.headline && "見出し", memo.substituted.lead && "導入文"].filter(Boolean).join("・")}はAIの文ではなく、定型文です。書き直してください。</p>}
     <Field label="見出し(今回のひとこと)" value={value.headline} onChange={headline => setValue({ ...value, headline })} />
     <Field label="リード" value={value.lead} long onChange={lead => setValue({ ...value, lead })} />
     {value.parts.map((part, index) => <fieldset key={index} className={styles.editPart}>
@@ -128,6 +138,10 @@ function Draft({ draft, onDone }: { draft: Issue; onDone: (message: string) => v
       <button type="button" className={styles.remove} onClick={() => setValue({ ...value, parts: value.parts.filter((_, at) => at !== index) })}>この部分を外す</button>
     </fieldset>)}
     <IssueView issue={value} />
+    {memo.total > 0 && <details className={styles.memo}>
+      <summary>確認メモ({memo.total}件・読者には見えません)</summary>
+      {memo.groups.map(group => <section key={group.kind}><h4>{group.title}</h4><ul>{group.lines.map((line, index) => <li key={index}>{line.text}{line.code && <code>{line.code}</code>}</li>)}</ul></section>)}
+    </details>}
     {error && <p role="alert" className={styles.error}>{error}</p>}
     <div className={styles.actions}>
       <button type="button" disabled={busy} onClick={() => void run("draft", "下書きを保存しました")}>保存</button>
