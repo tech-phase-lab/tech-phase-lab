@@ -19,8 +19,14 @@ export function parseResultBriefs(value: unknown): ResultBrief[] {
     const field=(name:string,max=180) => {const v=r[name]; if(typeof v!=='string'||!v.trim()||v.length>max||v.includes('\0')) throw Error('Invalid result field'); return v;};
     const id=field('id',24), kind=field('kind',12), ticker=field('ticker',10), researchId=field('researchId',40);
     const url=new URL(field('url',250));
-    if(!/^\d+$/.test(id)||researchId!==`x-result-${id}`||!['earnings','economic'].includes(kind)||!/^([A-Z][A-Z0-9.-]{0,9})$/.test(ticker)
-      ||url.origin!=='https://x.com'||url.search||url.hash||!/^\/(tipranks|theflynews|wallstengine|fabymetal4|trade_the_news)\/status\/\d+$/i.test(url.pathname)) throw Error('Invalid result source');
+    // A flash is either a post of a known X account (x-result-) or the headline numbers copied from the issuer's own results
+    // table (ir-flash-, Nov 12): earnings only, and only from the issuer's newsroom or its SEC filing.
+    const post=researchId===`x-result-${id}`&&url.origin==='https://x.com'&&/^\/(tipranks|theflynews|wallstengine|fabymetal4|trade_the_news)\/status\/\d+$/i.test(url.pathname);
+    const issuer=researchId===`ir-flash-${id}`&&kind==='earnings'&&(
+      (url.origin==='https://nebius.com'&&/^\/newsroom\/[a-z0-9-]+$/.test(url.pathname))
+      ||(url.origin==='https://www.sec.gov'&&/^\/Archives\/edgar\/data\/\d+\/\d+\/[A-Za-z0-9_.-]+$/.test(url.pathname)));
+    if(!/^\d+$/.test(id)||!(post||issuer)||!['earnings','economic'].includes(kind)||!/^([A-Z][A-Z0-9.-]{0,9})$/.test(ticker)
+      ||url.search||url.hash||url.username||url.password) throw Error('Invalid result source');
     const date=(name:string)=>{const v=field(name,50);if(!/T.*(Z|[+-]\d\d:\d\d)$/.test(v)||!Number.isFinite(Date.parse(v)))throw Error('Invalid result date');return v;};
     if(!Array.isArray(r.facts)||!r.facts.length||r.facts.length>8)throw Error('Invalid result facts');
     const facts=r.facts.map(f=>{
@@ -29,7 +35,7 @@ export function parseResultBriefs(value: unknown): ResultBrief[] {
       for(const k of ['key','ja','en','value'])if(typeof o[k]!=='string'||!(o[k] as string).trim()||(o[k] as string).length>80)throw Error('Invalid fact');
       // Oct 11: U.S. inflation keeps its index, core and basis; ASML (€),
       // TSMC (NT$) and SK hynix (₩) keep the currency they reported in.
-      if(!/^(?:guidance-)?(?:revenue|eps|gross-margin|operating-cash-flow|net-income|operating-income|operating-margin|capex|actual|nonfarm-payrolls|unemployment-rate|hourly-earnings-mom|hourly-earnings-yoy)$|^(?:core-)?(?:cpi|ppi|pce)-(?:mom|yoy)$/.test(o.key as string)
+      if(!/^(?:guidance-)?(?:revenue|eps|gross-margin|operating-cash-flow|net-income|operating-income|operating-margin|adjusted-ebitda|adjusted-net-income|capex|actual|nonfarm-payrolls|unemployment-rate|hourly-earnings-mom|hourly-earnings-yoy)$|^(?:core-)?(?:cpi|ppi|pce)-(?:mom|yoy)$/.test(o.key as string)
         ||!/^(?:\$|€|NT\$|₩)?[-+]?\d+(?:\.\d+)?[BMKT%]?(?: ± (?:\$|€|NT\$|₩)?\d+(?:\.\d+)?[BMKT%]?|-(?:\$|€|NT\$|₩)?\d+(?:\.\d+)?[BMKT%]?)?$/i.test(o.value as string))throw Error('Invalid fact value');
       const comparisons: ResultComparisons = {};
       // Optional detail is isolated from the already validated actual. It is
@@ -59,10 +65,10 @@ export function resultEvents(briefs:ResultBrief[]): ResearchEvent[] {
     return {id:r.researchId,ticker:r.ticker,company:r.ticker,category: ['MU','SKHY','SNDK','NVDA','AMD','ARM','TSM','ASML','AMAT','INTC','AEHR'].includes(r.ticker)?'memory':['NBIS','IREN','MSFT','AMZN','GOOGL','META','PLTR','APP'].includes(r.ticker)?'cloud':'other',kind:'earnings',
       earningsPeriod:r.period,publishedOn:new Date(r.publishedAt).toISOString().slice(0,10),reviewedOn:new Date(r.publicAt).toISOString().slice(0,10),
       title:copy(r.titleJa,r.titleEn),summary:copy(r.titleJa,r.titleEn),change:copy(r.titleJa,r.titleEn),facts,
-      interpretation:r.facts.some(f=>f.key.startsWith('guidance-')) ? copy('実績と会社見通しを分けて掲載しています。','Reported results and company guidance are shown separately.') : copy('投稿に記載された決算実績を整理しています。','This note summarises the reported results in the source post.'),
+      interpretation:r.facts.some(f=>f.key.startsWith('guidance-')) ? copy('実績と会社見通しを分けて掲載しています。','Reported results and company guidance are shown separately.') : r.researchId.startsWith('ir-flash-') ? copy('会社の決算発表の数値表から、数値をそのまま転記しています。','The figures are copied as published from the company\'s results table.') : copy('投稿に記載された決算実績を整理しています。','This note summarises the reported results in the source post.'),
       unknown:copy('速報に記載された数値を整理しています。市場予想は比較していません。','These are reported flash figures. Consensus is not compared.'),
       next:copy('会社の決算資料で実績と見通しを確認します。','Confirm the results and guidance against the company release.'),
-      sources:[{id:r.researchId,url:r.url,title:r.period+' earnings',publisher:r.publisher,publishedOn:new Date(r.publishedAt).toISOString().slice(0,10),location:'Reported numbers in the source post'}],metrics:[]};
+      sources:[{id:r.researchId,url:r.url,title:r.period+' earnings',publisher:r.publisher,publishedOn:new Date(r.publishedAt).toISOString().slice(0,10),location:r.researchId.startsWith('ir-flash-')?'Headline results table of the company release':'Reported numbers in the source post'}],metrics:[]};
   });
   return deduplicateResearchEvents(events).map(event => {
     if (event.sources.length < 2) return event;

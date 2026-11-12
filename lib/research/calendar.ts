@@ -305,12 +305,12 @@ export const calendarEvents: CalendarEvent[] = [
     sourceUrl: "https://nvidianews.nvidia.com/news/nvidia-sets-conference-call-for-third-quarter-financial-results-6928873",
     note: { ja: "説明会の開始予定です。決算資料は同日の太平洋時間13:20ごろに公開される予定です。", en: "Scheduled call start. The results are due at about 1:20 p.m. PT that day." },
   },
-  // Date and time given by the owner (about 21:00 JST = 07:00 ET, before the U.S. open); Nebius's own notice was not yet public on 2026-10-31.
+  // Nebius's own notice (Oct 30, 2026): results on Thursday Nov 12 before the U.S. open, conference call at 8:00 a.m. ET (22:00 JST).
   {
     id: "nbis-q3-2026-call", ticker: "NBIS", kind: "earnings" as const, title: { ja: "Nebius 決算発表（2026年Q3）", en: "Nebius Q3 2026 results" },
-    startsAt: "2026-11-12T07:00:00-05:00", sourceTimezone: "America/New_York", sourceName: "Nebius IR",
-    sourceUrl: "https://nebius.com/newsroom",
-    note: { ja: "運営者が確認した日時です（日本時間21時ごろ）。Nebiusの公式発表が出たら、公式の時刻に更新します。", en: "Date and time confirmed by the owner (about 21:00 JST). It will be updated to the official time once Nebius announces it." },
+    startsAt: "2026-11-12T08:00:00-05:00", sourceTimezone: "America/New_York", sourceName: "Nebius IR",
+    sourceUrl: "https://nebius.com/newsroom/nebius-group-announces-date-of-third-quarter-2026-results-and-conference-call",
+    note: { ja: "Nebiusの公式発表（10月30日）です。決算は米国市場の開始前に発表され、説明会は東部時間の午前8時（日本時間22時）に始まります。", en: "From Nebius's announcement (Oct 30): results are released before the U.S. market opens, and the call starts at 8:00 a.m. ET (22:00 JST)." },
   },
   // Official date notices read on 2026-11-09 (owner: Marvell reports on Dec 1; look for other companies that can be added).
   {

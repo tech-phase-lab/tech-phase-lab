@@ -609,7 +609,16 @@ def public_feed(db, reference=None, earnings_hours=24):
         item['sourceToDetectionMs'] = monitor.stored_latency_ms(row['source_at'],row['observed_at'])
         item['detectionToPublicMs'] = monitor.stored_latency_ms(row['observed_at'],row['published_at'])
         items.append(item)
-    return latest_source_posts(items)[:20]
+    try:
+        import issuer_result_flash
+        items.extend(issuer_result_flash.public_feed(db, cutoff))
+    except Exception:
+        pass  # the issuer-table flashes never take the X flashes down with them
+    items = latest_source_posts(items)
+    epoch = datetime.min.replace(tzinfo=timezone.utc)
+    import issuer_result_flash as flash
+    items.sort(key=lambda item: flash.instant(item.get('publishedAt')) or epoch, reverse=True)
+    return items[:20]
 
 
 def diagnostics(db):

@@ -51,6 +51,7 @@ import x_stream_pilot
 import x_preflight_service
 import x_stream_trial_service
 import market_results
+import issuer_result_flash
 import official_research
 import deep_analysis
 import issuer_syndication
@@ -969,6 +970,11 @@ class AutomaticMonitor:
                 market_results.run_once(self.db_path, signals.SOURCES)
             except Exception:
                 print("result-publication-unavailable", flush=True)
+            try:
+                # Headline numbers copied from the issuer's own results table; no model, no wait (owner, Nov 12).
+                issuer_result_flash.run_once(self.db_path)
+            except Exception:
+                print("issuer-result-flash-unavailable", flush=True)
             if os.environ.get("OFFICIAL_HEADLINE_TRANSLATION_ENABLED") == "true":
                 try:
                     x_market_news.publish_direct_once(self.db_path)
@@ -1973,6 +1979,7 @@ class AutomaticMonitor:
             state["signalIntake"]["xMarketNews"] = x_market_news.diagnostics(db)
             state["releaseWatch"] = release_watch.diagnostics(db, datetime.now(timezone.utc))
             state["signalIntake"]["analystNews"] = analyst_news.diagnostics(db)
+            state["signalIntake"]["issuerFlash"] = issuer_result_flash.diagnostics(db)
             state["signalIntake"]["businessNews"] = general_source_news.diagnostics(db,datetime.now(timezone.utc))
             state["signalIntake"]["headlineTranslation"] = (
                 headline_translation.diagnostics(db, env=os.environ)
