@@ -95,6 +95,18 @@ def clean(text):
 
 # ---- issuer layouts ----------------------------------------------------------------------------------------
 
+def loose(label):
+    """A label as a pattern that tolerates the spaces some PDF text extractors insert inside words ("R e v enues")."""
+    return r'\s*'.join(re.escape(ch) for ch in label if not ch.isspace())
+
+
+def tidy_numbers(text):
+    """Close the gaps an extractor leaves around the decimal point and thousands comma ("146 . 1" -> "146.1", "1 , 962" -> "1,962").
+    Digits split from digits ("3 7 . 5") are NOT joined: that figure stays unreadable and its row is left out."""
+    text = re.sub(r'(?<=\d)\s+([.,])\s*(?=\d)', r'\1', text)
+    return re.sub(r'(?<=\d[.,])\s+(?=\d)', '', text)
+
+
 def period_from_url(url):
     """'nebius-reports-third-quarter-2026-financial-results' -> (3, 2026); None when the slug says no quarter."""
     match = re.search(r'(first|second|third|fourth)-quarter-(20\d\d)', url or '')
@@ -107,7 +119,7 @@ def parse_nebius(text, url=None):
     PDF text extraction can split words and digits ("F inancial H ighlights", "In SD millions"), so the heading is matched
     with its spaces removed, the quarter falls back to the one named in the page address, and the table is found by its own
     units line. Each figure still has to come from a clean row whose stated change agrees with its two values."""
-    t = clean(text)
+    t = tidy_numbers(clean(text))
     if 'nebius' not in t.lower():
         raise ValueError('issuer-identity-missing')
     despaced = re.sub(r'\s+', '', t)
@@ -125,7 +137,7 @@ def parse_nebius(text, url=None):
         window = t  # the extraction placed the units line away from the table: the year header below must still match
     else:
         raise ValueError('units-unrecognized')
-    first = re.search(r'(?<!Change )\b(' + str(year - 1) + r') (' + str(year) + r') Change\b(?: 20\d\d 20\d\d Change\b)?.{0,40}?\bRevenues? ('
+    first = re.search(r'(?<!Change )\b(' + str(year - 1) + r') (' + str(year) + r') Change\b(?: 20\d\d 20\d\d Change\b)?.{0,40}?(?<![A-Za-z])' + loose('Revenue') + r's? ('
                       + NUM + ') (' + NUM + ') (' + CHANGE + ')', window)
     if not first:
         raise ValueError('revenue-row-unrecognized')
@@ -134,10 +146,13 @@ def parse_nebius(text, url=None):
     block = window[first.start():first.start() + 1200]
     stop = block.find('Operating expenses')
     block = block[:stop] if stop > 0 else block
+    income_loss = r'(?:\s*/\s*\(\s*' + loose('loss') + r'\s*\))?'
     rows = {
-        'adjusted-ebitda': r'Adjusted EBITDA(?: / \(loss\))?',
-        'net-income': r'Net (?:income|loss)(?: / \((?:loss|income)\))? from continuing operations',
-        'adjusted-net-income': r'Adjusted net (?:income|loss)(?: / \((?:loss|income)\))?',
+        'adjusted-ebitda': loose('AdjustedEBITDA') + income_loss,
+        'net-income': loose('Net') + r'\s*(?:' + loose('income') + '|' + loose('loss') + r')(?:\s*/\s*\(\s*(?:' + loose('loss') + '|' + loose('income')
+                      + r')\s*\))?\s*' + loose('fromcontinuingoperations'),
+        'adjusted-net-income': loose('Adjustednet') + r'\s*(?:' + loose('income') + '|' + loose('loss') + r')(?:\s*/\s*\(\s*(?:' + loose('loss') + '|'
+                               + loose('income') + r')\s*\))?',
     }
     for key, label in rows.items():
         found = re.findall(label + ' (' + NUM + ') (' + NUM + ') (' + CHANGE + ')', block)
