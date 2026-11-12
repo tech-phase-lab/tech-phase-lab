@@ -15,6 +15,7 @@ import time
 from pathlib import Path
 from functools import lru_cache
 from urllib.parse import urlsplit, urlencode, urlunsplit
+from urllib.error import HTTPError
 from urllib.request import Request, build_opener, HTTPRedirectHandler
 
 DEVICE_LIMIT = 20
@@ -29,12 +30,18 @@ def configuration():
     return {'preferencesVersion': 1, 'memberAccessVersion': 1 if os.environ.get('WEB_PUSH_MEMBERSHIP_URL') else 0, 'enabled': enabled, 'publicKey': os.environ.get('WEB_PUSH_PUBLIC_KEY', '') if enabled else ''}
 
 
+def _membership_log(result, **detail):
+    """One line per failed membership check, so a device that keeps turning itself off can be explained. Never carries the token, the address or the member's id."""
+    print(json.dumps({'event': 'push-membership-check', 'result': result, **detail}), flush=True)
+
+
 def member_expiry(owner):
     """Fresh authoritative check. Errors and redirects fail closed; never log credentials."""
     base = os.environ.get('WEB_PUSH_MEMBERSHIP_URL', '')
     token = os.environ.get('RESEARCH_API_TOKEN', '')
     url = urlsplit(base)
     if url.scheme != 'https' or not url.hostname or url.username or url.password or url.fragment or not token:
+        _membership_log('not-configured', hasUrl=bool(base), hasToken=bool(token))
         return 0
     class NoRedirect(HTTPRedirectHandler):
         def redirect_request(self, *args, **kwargs):
@@ -48,11 +55,19 @@ def member_expiry(owner):
         with build_opener(NoRedirect).open(Request(target, headers=headers), timeout=8) as response:
             raw = response.read(4097)
             if len(raw) > 4096:
+                _membership_log('too-large')
                 return 0
             data = json.loads(raw)
         until = data.get('accessExpiresAt')
-        return until if data.get('ok') is True and data.get('pro') is True and isinstance(until, (int, float)) and not isinstance(until, bool) and math.isfinite(until) else 0
-    except Exception:
+        if data.get('ok') is True and data.get('pro') is True and isinstance(until, (int, float)) and not isinstance(until, bool) and math.isfinite(until):
+            return until
+        _membership_log('not-pro', ok=data.get('ok'), pro=data.get('pro'))
+        return 0
+    except HTTPError as error:
+        _membership_log('http-error', status=error.code, host=url.hostname)
+        return 0
+    except Exception as error:
+        _membership_log('error', kind=type(error).__name__, host=url.hostname)
         return 0
 
 
