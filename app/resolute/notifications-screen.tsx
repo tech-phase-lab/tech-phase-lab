@@ -46,12 +46,18 @@ function Notifications({locale,deny,mode}:{locale:DiagnosisLocale;deny:()=>void;
   void Promise.allSettled([requestNotificationSettings(undefined,c.signal),requestPlan(undefined,c.signal)]).then(([settings,planResult])=>{
    if(c.signal.aborted)return;
    if(settings.status==="fulfilled"){setSnapshot(settings.value);setDraft(settings.value.settings);setLocked(false);setMessage("");}
-   else {if(settings.reason instanceof NotificationClientError&&[401,403].includes(settings.reason.status)){denyRef.current();return;}setMessage("unavailable");setLocked(true);}
+   else {if(settings.reason instanceof NotificationClientError&&[401,403].includes(settings.reason.status)){denyRef.current();return;}setMessage(settings.reason instanceof NotificationClientError&&settings.reason.status===503?"preparing":"unavailable");setLocked(true);}
    if(planResult.status==="fulfilled"){setPlan(planResult.value.plan);setPlanState(planResult.value.plan?"ready":"empty");}
-   else {if(planResult.reason instanceof PlanClientError&&["signed-out","denied"].includes(planResult.reason.kind)){denyRef.current();return;}setPlanState("error");}
+   else {if(planResult.reason instanceof PlanClientError&&["signed-out","denied"].includes(planResult.reason.kind)){denyRef.current();return;}setPlanState(planResult.reason instanceof PlanClientError&&planResult.reason.kind==="unavailable"?"preparing":"error");}
    setLoading(false);
   });return()=>c.abort();
  },[attempt,requestPlan,requestNotificationSettings]);
+ // While saving is not switched on yet, check again quietly; the real screen appears by itself once it is.
+ useEffect(()=>{
+  if(loading||(message!=="preparing"&&planState!=="preparing"))return;
+  const timer=window.setTimeout(()=>setAttempt(v=>v+1),60000);
+  return()=>window.clearTimeout(timer);
+ },[loading,message,planState,attempt]);
  // Refresh rules after an edited diagnosis, without discarding unsaved settings.
  useEffect(()=>{
   if(reviewPath!=="/resolute/alerts"&&reviewPath!=="/resolute/morning")return;
@@ -74,7 +80,7 @@ function Notifications({locale,deny,mode}:{locale:DiagnosisLocale;deny:()=>void;
   finally{mutex.current=false;if(!c.signal.aborted)setBusy(false);}
  }
  useEffect(()=>()=>controllerRef.current?.abort(),[]);
- const messages:Record<string,string>={unavailable:t("通知設定を読み込めませんでした。まだ保存できません。","We couldn’t load your notification settings, so you can’t save changes yet."),invalid:t("銘柄と基準価格、上昇率を確認してください。","Check your stock symbols, reference prices and rise alert level."),saved:t("通知設定を保存しました。","Your notification settings are saved."),conflict:t("別の画面で設定が変わりました。保存済みの設定を読み込み、確認してください。","Your settings changed in another window. Load the saved settings and review them."),uncertain:t("保存を確認できませんでした。再送する前に、保存済みの設定を読み込んでください。","We couldn’t confirm the save. Load your saved settings before trying again.")};
+ const messages:Record<string,string>={preparing:t("通知の保存は、いま準備中です。準備ができたら、この画面が自動で使えるようになります。","Saving your notification settings isn’t switched on yet. This screen will start working by itself once it is."),unavailable:t("通知設定を読み込めませんでした。まだ保存できません。","We couldn’t load your notification settings, so you can’t save changes yet."),invalid:t("銘柄と基準価格、上昇率を確認してください。","Check your stock symbols, reference prices and rise alert level."),saved:t("通知設定を保存しました。","Your notification settings are saved."),conflict:t("別の画面で設定が変わりました。保存済みの設定を読み込み、確認してください。","Your settings changed in another window. Load the saved settings and review them."),uncertain:t("保存を確認できませんでした。再送する前に、保存済みの設定を読み込んでください。","We couldn’t confirm the save. Load your saved settings before trying again.")};
  const displayItems=draft.watchItems.length?draft.watchItems:[{symbol:"",referencePrice:0}];
  function changeItem(i:number,patch:Partial<NotificationSettings["watchItems"][number]>){update({watchItems:displayItems.map((x,k)=>k===i?{...x,...patch}:x)});}
  function conditionText(id:"q28"|"q29",extra:string[]){
@@ -112,7 +118,7 @@ function Notifications({locale,deny,mode}:{locale:DiagnosisLocale;deny:()=>void;
      {draft.watchItems.length<5?<button type="button" className={styles.addButton} onClick={()=>update({watchItems:[...draft.watchItems,{symbol:"",referencePrice:0}]})}>{t("＋ 銘柄を追加","＋ Add a stock")}</button>:null}
     </section>
     <section className={styles.card}><h2>{t("知らせるライン","Alert levels")}</h2><p className={styles.muted}>{t("あなたのルールの買い増しラインです","These are the purchase levels from your rules")}</p>
-     {lines.length?<div className={styles.lineChips}>{lines.map(l=><span key={l}>−{l}%</span>)}</div>:<p className={styles.muted}>{planState==="error"?t("保存済みのラインを読み込めませんでした。","Couldn’t load your saved levels."):t("買い増しラインはまだ設定されていません。","No purchase levels are set yet.")}</p>}
+     {lines.length?<div className={styles.lineChips}>{lines.map(l=><span key={l}>−{l}%</span>)}</div>:<p className={styles.muted}>{planState==="preparing"?t("保存したラインは、準備ができ次第、ここに自動で表示されます。","Your saved levels will appear here automatically once saving is switched on."):planState==="error"?t("保存済みのラインを読み込めませんでした。","Couldn’t load your saved levels."):t("買い増しラインはまだ設定されていません。","No purchase levels are set yet.")}</p>}
      <label className={styles.switchRow}><span>{t("上昇の目安も知らせる","Also alert me on a rise")}</span><input type="checkbox" role="switch" checked={draft.surgeCapPct!==null} onChange={e=>update({surgeCapPct:e.target.checked?50:null})}/></label>
      {draft.surgeCapPct!==null?<label className={styles.compactField}><span>{t("基準からの上昇率","Rise from reference price")}</span><span><NumberInput decimal value={draft.surgeCapPct} onValueChange={value=>update({surgeCapPct:Number(value)})}/> %</span></label>:null}
     </section>
@@ -124,9 +130,9 @@ function Notifications({locale,deny,mode}:{locale:DiagnosisLocale;deny:()=>void;
   </fieldset>
   {snapshot&&JSON.stringify(snapshot.settings)!==JSON.stringify(draft)?<p className={styles.status}>{t("変更はまだ保存していません。","You have unsaved changes.")}</p>:null}
   {message?<p role="status" className={message==="saved"?styles.status:styles.error}>{messages[message]}</p>:null}
-  {locked?<button className={styles.secondary} disabled={busy||loading} onClick={()=>{setLoading(true);setAttempt(v=>v+1);}}>{t("保存済みの設定を読み込む（現在の入力を置き換えます）","Load saved settings (replaces your current changes)")}</button>:null}
+  {locked&&message!=="preparing"?<button className={styles.secondary} disabled={busy||loading} onClick={()=>{setLoading(true);setAttempt(v=>v+1);}}>{t("保存済みの設定を読み込む（現在の入力を置き換えます）","Load saved settings (replaces your current changes)")}</button>:null}
   {isMorning?<>
-   {!draft.morningEnabled?<section className={`${styles.card} ${styles.hero}`}><p className={styles.muted}>{snapshot?t("通知を受け取らない設定です。","Notifications are turned off."):t("保存済みの設定はまだ確認できていません。","We haven’t been able to check your saved settings yet.")}</p></section>:<section className={`${styles.card} ${styles.hero}`}>
+   {!draft.morningEnabled?<section className={`${styles.card} ${styles.hero}`}><p className={styles.muted}>{snapshot?t("通知を受け取らない設定です。","Notifications are turned off."):message==="preparing"?t("準備中です。準備ができたら、ここで受け取りの設定ができます。","Not ready yet. You’ll be able to turn this on here once it is."):t("保存済みの設定はまだ確認できていません。","We haven’t been able to check your saved settings yet.")}</p></section>:<section className={`${styles.card} ${styles.hero}`}>
     <span className={styles.eyebrow}>GOOD MORNING</span>
     <p className={styles.morningQuestion}>{en?"Quick check-in on yesterday's alert.":<><span className={styles.phrase}>昨日のお知らせから</span><span className={styles.phrase}>一晩が経ちました</span></>}</p>
     <p className={styles.muted}>{en?"Pick whichever feels closest right now.":<><span className={styles.phrase}>今の気持ちに近いものを</span><span className={styles.phrase}>1つだけ選んでください</span></>}</p>

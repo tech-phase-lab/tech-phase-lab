@@ -9,6 +9,7 @@ import { parseNotificationSnapshot } from "./notification-settings.ts";
 import { parsePlanSnapshot } from "./plan-data.ts";
 import { notificationRuleKey } from "./notification-rule-key.ts";
 import { renderAlertMail, renderNextMorningMail, type RenderedMail } from "./mail-templates.ts";
+import { composeMorningNote, withMorningNote, withProviderCredit, type NoteFacts } from "./morning-note.ts";
 
 export type AlertReceipt={key:string;messageId:string;acceptedAt:string};
 export type AlertRecipient={ownerAccess?:OwnerAccess;userId:string;email:string;verified:boolean;preferencesConfigured:boolean;unsubscribed:boolean;locale:"ja"|"en"};
@@ -25,6 +26,8 @@ type Dependencies={
  recipient:(userId:string)=>Promise<AlertRecipient>;
  links:(userId:string)=>Promise<{planUrl:string;unsubscribeUrl:string;tonightUrl?:string;doneUrl?:string;skippedUrl?:string;unsureUrl?:string}>;
  publicOrigin:string;
+ /** Optional model hook returning strict JSON {"note":"..."}; validated, falls back to the fixed sentence. Not wired in production. */
+ generateNote?:(facts:NoteFacts,locale:"ja"|"en")=>Promise<string>;
 };
 function safeLinks(links:Awaited<ReturnType<Dependencies["links"]>>,origin:string) {
  const base=new URL(origin);
@@ -93,10 +96,11 @@ export function createAlertDelivery(pool:Pick<Pool,"connect">,deps:Dependencies)
    if(reservation.status!=="queued")return "review-required";
    if(mode==="reconcile")return "not-attempted";
    const task:QueuedNotification={key,kind,deliveryDateJst:row.date,settingsRevision:row.payload.settingsRevision,ruleKey:row.payload.ruleKey,acceptedAt:null};
-   let recipient:AlertRecipient|undefined,message:RenderedMail|undefined,receipt:AlertReceipt|null=null,attemptedAt:unknown;
+   let sourceItems:unknown,recipient:AlertRecipient|undefined,message:RenderedMail|undefined,receipt:AlertReceipt|null=null,attemptedAt:unknown;
    if(kind==="morning"){
-    const source=(await client.query("SELECT accepted_at FROM resolute.notification_outbox WHERE clerk_user_id=$1 AND idempotency_key=$2 AND kind='alerts'",[userId,row.payload.sourceAlertId])).rows[0];
+    const source=(await client.query("SELECT accepted_at,payload->'digest'->'payload'->'items' AS items FROM resolute.notification_outbox WHERE clerk_user_id=$1 AND idempotency_key=$2 AND kind='alerts'",[userId,row.payload.sourceAlertId])).rows[0];
     if(!source?.accepted_at||jstSlot(new Date(source.accepted_at.getTime()+86400000)).date!==row.date)return "suppressed";
+    sourceItems=source.items;
    }
    const result=await dispatchNotification(task,{
     deliveryEnabled:true,now:clock,
@@ -116,7 +120,7 @@ export function createAlertDelivery(pool:Pick<Pool,"connect">,deps:Dependencies)
      if(!recipient||!/^\S+@\S+\.\S+$/.test(recipient.email)||/[\r\n]/.test(recipient.email)||!["ja","en"].includes(recipient.locale))throw new Error("Invalid verified recipient");
      const digest=row.payload.digest as Digest;
      if(!digest||digest.clerkUserId!==userId||digest.idempotencyKey!==key)throw new Error("Digest identity mismatch");
-     message=renderAlertMail({locale:recipient.locale,date:digest.payload.date,items:digest.payload.items,...safeLinks(await deps.links(userId),deps.publicOrigin)});
+     message=withProviderCredit(renderAlertMail({locale:recipient.locale,date:digest.payload.date,items:digest.payload.items,...safeLinks(await deps.links(userId),deps.publicOrigin)}),recipient.locale);
      const claimed=await claimAlertReservation(client,userId,task,provider.name);
      if(claimed)attemptedAt=(await client.query("SELECT payload->'reservation'->>'attemptedAt' AS at FROM resolute.notification_outbox WHERE clerk_user_id=$1 AND idempotency_key=$2",[userId,key])).rows[0]?.at;
      return claimed;
@@ -126,7 +130,9 @@ export function createAlertDelivery(pool:Pick<Pool,"connect">,deps:Dependencies)
       if(!recipient)throw new Error("Recipient missing");
       const links=safeLinks(await deps.links(userId),deps.publicOrigin);
       if(!links.doneUrl||!links.skippedUrl||!links.unsureUrl)throw new Error("Morning links missing");
-      message=renderNextMorningMail({locale:recipient.locale,planUrl:links.planUrl,unsubscribeUrl:links.unsubscribeUrl,doneUrl:links.doneUrl,skippedUrl:links.skippedUrl,unsureUrl:links.unsureUrl});
+      // The one-liner uses only facts from the accepted alert; any failure falls back to a fixed short sentence.
+      const note=await composeMorningNote({events:sourceItems as NoteFacts,locale:recipient.locale,...(deps.generateNote?{generate:deps.generateNote}:{})});
+      message=withMorningNote(renderNextMorningMail({locale:recipient.locale,planUrl:links.planUrl,unsubscribeUrl:links.unsubscribeUrl,doneUrl:links.doneUrl,skippedUrl:links.skippedUrl,unsureUrl:links.unsureUrl}),note.text);
       const claim=await client.query(`UPDATE resolute.notification_outbox SET payload=jsonb_set(payload,'{reservation}',jsonb_build_object('version',1,'status','attempting','provider',$3::text,'attemptedAt',statement_timestamp()))
        WHERE clerk_user_id=$1 AND idempotency_key=$2 AND kind='morning' AND accepted_at IS NULL AND NOT(payload?'reservation') RETURNING payload->'reservation'->>'attemptedAt' AS at`,[userId,key,provider.name]);
       if(claim.rowCount!==1)throw new Error("Morning already claimed");attemptedAt=claim.rows[0].at;
