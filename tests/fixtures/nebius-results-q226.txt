@@ -1,0 +1,21 @@
+Nebius Group N.V. results release (excerpt)
+vestor-hub.
+Q2 2026 financial highlights
+Consolidated results (1), (2)
+In USD $ millions
+Three months ended June 30 Six months ended June 30
+2025 2026 Change 2025 2026 Change
+Revenues 105.1 582.3 454% 156.0 981.3 529%
+Adjusted EBITDA / (loss) (21.0) 236.2 n/m (74.7) 365.7 n/m
+Net income / (loss) from continuing operations 502.5 (190.4) n/m 398.2 430.8 8%
+Adjusted net loss (91.5) (33.2) -64% (175.2) (133.5) -24%
+(1) The following measures presented in this release are "non-GAAP financial measures": Adjusted EBITDA / (loss) and Adjusted net loss. Please see the
+section "Use of Non-GAAP Financial Measures" below for a discussion of how we define these measures, as well as reconciliations at the end of this
+release of each of these measures to the most directly comparable U.S. GAAP measures.
+(2) Results include consolidated financial results of: Nebius AI cloud, the core AI cloud business; Avride, an autonomous vehicle platform; and TripleTen,
+an edtech service. In Q2 2025 following the completion of a third-party investment transaction in Toloka, an AI development platform, Nebius ceased to
+hold majority voting power in Toloka and no longer includes Toloka's results in Nebius' consolidated financial statements and reports its stake as an equity
+method investment. Toloka's results for prior periods have been reclassified to discontinued operations.
+Operating expenses
+In USD $ millions
+Thr

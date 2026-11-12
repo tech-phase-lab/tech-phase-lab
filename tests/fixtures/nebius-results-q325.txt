@@ -1,0 +1,21 @@
+Nebius Group N.V. results release (excerpt)
+stor-hub.
+2
+Q3 2025 Financial Highlights
+Consolidated results (1), (2)
+In USD $ millions Three months ended September 30 Nine months ended September 30
+2024 2025 Change 2024 2025 Change
+Revenues 32.1 146.1 355% 56.3 302.1 437%
+Adjusted EBITDA / (loss) (45.9) (5.2) -89% (162.4) (79.9) -51%
+Net income / (loss) from continuing
+operations (43.6) (119.6) 174% (229.1) 278.6 -222%
+Adjusted net loss (39.7) (100.4) 153% (169.5) (273.7) 61%
+(1) The following measures presented in this release are “non-GAAP financial measures”: Adjusted EBITDA / (loss) and Adjusted net loss.
+Please see the section “Use of Non-GAAP Financial Measures” below for a discussion of how we define these measures, as well as
+reconciliations at the end of this release of each of these measures to the most directly comparable U.S. GAAP measures.
+(2) Results include consolidated financial results of: Nebius, the core AI infrastructure business; Avride, an autonomous vehicle platform; and
+TripleTen, an edtech service. In Q2 2025, following the completion of the investment transaction in Toloka, an AI development platform,
+Nebius ceased to hold majority voting power in Toloka and no longer include Toloka’s results in Nebius’s consolidated financial statements
+and reports its stake as equity method investment. Toloka’s results for prior periods were reclassified to discontinued operations.
+Operating expenses
+In USD $ millions Thr
