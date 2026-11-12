@@ -1,3 +1,4 @@
+import { existsSync } from "node:fs";
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
@@ -254,7 +255,7 @@ test("annual-filing Japanese briefs preserve multiple separately cited risks", (
 });
 
 test("stock search UI separates free identity data from licensed prices and news", async () => {
-  const [page, market, marketStyles, styles, polish, route, editorRoute, dashboard, review, researchStyles, home, lab, directory] = await Promise.all([
+  const [page, market, marketStyles, styles, polish, route, editorRoute, dashboard, review, researchStyles, home, directory] = await Promise.all([
     readFile(new URL("../app/research/stocks/stock-directory.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/research/stocks/market-workspace.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/research/stocks/market-workspace.module.css", import.meta.url), "utf8"),
@@ -266,13 +267,11 @@ test("stock search UI separates free identity data from licensed prices and news
     readFile(new URL("../app/research/review/review-dashboard.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/research/research.module.css", import.meta.url), "utf8"),
     readFile(new URL("../app/page.tsx", import.meta.url), "utf8"),
-    readFile(new URL("../app/lab/page.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/research/companies/company-directory.tsx", import.meta.url), "utf8"),
   ]);
   assert.match(home, /redirect\("\/research"\)/);
   assert.doesNotMatch(home, /LIVE INTELLIGENCE/);
-  assert.match(lab, /LIVE INTELLIGENCE/);
-  assert.match(lab, /Internal delivery and market-feed laboratory/);
+  assert.equal(existsSync(new URL("../app/lab/page.tsx", import.meta.url)), false); // the old /lab page and its Alpaca routes are gone
   assert.match(page, /メインメニュー/);
   assert.match(page, /資本マップ/);
   assert.match(page, /MarketWorkspace/);
