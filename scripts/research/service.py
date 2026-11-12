@@ -52,6 +52,7 @@ import x_preflight_service
 import x_stream_trial_service
 import market_results
 import issuer_result_flash
+import earnings_date_watch
 import official_research
 import deep_analysis
 import issuer_syndication
@@ -1980,6 +1981,7 @@ class AutomaticMonitor:
             state["releaseWatch"] = release_watch.diagnostics(db, datetime.now(timezone.utc))
             state["signalIntake"]["analystNews"] = analyst_news.diagnostics(db)
             state["signalIntake"]["issuerFlash"] = issuer_result_flash.diagnostics(db)
+            state["signalIntake"]["earningsDates"] = earnings_date_watch.diagnostics(db)
             state["signalIntake"]["businessNews"] = general_source_news.diagnostics(db,datetime.now(timezone.utc))
             state["signalIntake"]["headlineTranslation"] = (
                 headline_translation.diagnostics(db, env=os.environ)
