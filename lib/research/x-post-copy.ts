@@ -22,7 +22,9 @@ const dollars = (n: number) => `${trim(n)}ドル`;
 type Mark = "⭕️" | "❌" | "⚠️" | "・" | "✅";
 export type XPostMode = "short" | "consensus";
 
-/** Direction from a prior-year value, when the fact carries one (comparisons.previous). */
+/** The prior-year value as the issuer-flash facts carry it (comparisons.yearAgo; `previous` means the previous release, never a year-ago figure). */
+const yearAgoOf = (fact: ResultFact): string | undefined => (fact.comparisons as { yearAgo?: string } | undefined)?.yearAgo;
+/** Direction from a prior-year value, when the fact carries one. */
 function growth(value: number, previousText: string | undefined): { pct: number; up: boolean } | null {
   const prev = previousText ? parseAmount(previousText) : null;
   if (prev === null || prev === 0 || (value < 0) !== (prev < 0)) return null; // sign changes have no meaningful percentage
@@ -39,7 +41,7 @@ function line(fact: ResultFact, consensus: EpsConsensus | null, mode: XPostMode)
   }
   const v = parseAmount(fact.value);
   if (v === null) return null;
-  const g = growth(v, fact.comparisons?.previous);
+  const g = growth(v, yearAgoOf(fact));
   const yoy = g ? `前年比${signed(g.pct)}` : "";
   if (fact.key === "eps") {
     const withForecast = mode === "consensus" && consensus ? consensus : null;

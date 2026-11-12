@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { buildXPost, oku, parseAmount, pickConsensus } from '../lib/research/x-post-copy.ts';
 
 const f = (key, ja, value, comparisons) => ({ key, ja, en: key, value, ...(comparisons ? { comparisons } : {}) });
-const crwv = { ticker: 'CRWV', period: '2026Q3', facts: [f('revenue', '売上高', '$3.661B', { previous: '$1.365B' }), f('eps', 'EPS', '$-1.27'), f('net-income', '純利益', '$-709M'), f('guidance-revenue', '通期売上予想', '$13.0B-$13.3B')] };
+const crwv = { ticker: 'CRWV', period: '2026Q3', facts: [f('revenue', '売上高', '$3.661B', { yearAgo: '$1.365B' }), f('eps', 'EPS', '$-1.27'), f('net-income', '純利益', '$-709M'), f('guidance-revenue', '通期売上予想', '$13.0B-$13.3B')] };
 
 test('amounts are read exactly and written in 億ドル', () => {
   assert.equal(parseAmount('$3.661B'), 3.661e9); assert.equal(parseAmount('$-709M'), -7.09e8); assert.equal(parseAmount('n/a'), null);
@@ -12,6 +12,10 @@ test('amounts are read exactly and written in 億ドル', () => {
 test('short form follows the sample: ⭕ then ❌ then outlook, with YoY only when the prior value is known', () => {
   const text = buildXPost(crwv, null, 'short');
   assert.equal(text, 'CRWV 2026Q3 決算速報\n\n⭕️売上高36.61億ドル（前年比+168％）\n\n❌EPS-1.27ドル\n❌純損失7.09億ドル\n\n✅通期売上予想130〜133億ドル');
+});
+test('a previous-release value is never read as a year-ago value', () => {
+  const text = buildXPost({ ticker: 'X', period: 'Q1', facts: [f('revenue', '売上高', '$3.661B', { previous: '$1.365B' })] }, null, 'short');
+  assert.equal(text, 'X Q1 決算速報\n\n・売上高36.61億ドル');
 });
 test('a figure without a known direction is neutral, never praised', () => {
   const text = buildXPost({ ticker: 'NBIS', period: '2026Q3', facts: [f('revenue', '売上高', '$582.3M')] }, null, 'short');
