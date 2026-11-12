@@ -95,17 +95,35 @@ def clean(text):
 
 # ---- issuer layouts ----------------------------------------------------------------------------------------
 
-def parse_nebius(text):
-    """Nebius' results release (PDF): 'Q3 2026 financial highlights', table columns prior-year, current, change."""
+def period_from_url(url):
+    """'nebius-reports-third-quarter-2026-financial-results' -> (3, 2026); None when the slug says no quarter."""
+    match = re.search(r'(first|second|third|fourth)-quarter-(20\d\d)', url or '')
+    return (QUARTERS[match[1]], int(match[2])) if match else None
+
+
+def parse_nebius(text, url=None):
+    """Nebius' results release (PDF): 'Q3 2026 financial highlights', table columns prior-year, current, change.
+
+    PDF text extraction can split words and digits ("F inancial H ighlights", "In SD millions"), so the heading is matched
+    with its spaces removed, the quarter falls back to the one named in the page address, and the table is found by its own
+    units line. Each figure still has to come from a clean row whose stated change agrees with its two values."""
     t = clean(text)
     if 'nebius' not in t.lower():
         raise ValueError('issuer-identity-missing')
-    head = re.search(r'\bQ([1-4]) (20\d\d) financial highlights\b', t, re.I)
-    if not head:
+    despaced = re.sub(r'\s+', '', t)
+    head = re.search(r'Q([1-4])(20\d\d)financialhighlights', despaced, re.I)
+    period = (int(head[1]), int(head[2])) if head else period_from_url(url)
+    if not period:
         raise ValueError('highlights-heading-missing')
-    quarter, year = int(head[1]), int(head[2])
-    window = t[head.end():head.end() + 5000]
-    if not re.search(r'In U?SD \$? ?millions', window, re.I):
+    quarter, year = period
+    # The highlights table is the first "In USD $ millions" block that is followed by a Revenues row.
+    units = next((m for m in re.finditer(r'In\s+U?SD\s*\$?\s*millions', t, re.I)
+                  if re.search(r'\bRevenues?\b', t[m.end():m.end() + 900])), None)
+    if units:
+        window = t[units.start():units.start() + 5000]
+    elif re.search(r'\bU?SD\b', t) and re.search(r'\bmillions?\b', t, re.I):
+        window = t  # the extraction placed the units line away from the table: the year header below must still match
+    else:
         raise ValueError('units-unrecognized')
     first = re.search(r'(?<!Change )\b(' + str(year - 1) + r') (' + str(year) + r') Change\b(?: 20\d\d 20\d\d Change\b)?.{0,40}?\bRevenues? ('
                       + NUM + ') (' + NUM + ') (' + CHANGE + ')', window)
@@ -135,7 +153,7 @@ def parse_nebius(text):
     return {'period': f'Q{quarter} {year}', 'facts': facts}
 
 
-def parse_coreweave(text):
+def parse_coreweave(text, url=None):
     """CoreWeave's results release (8-K EX-99.1): 'Third Quarter 2026 Financial Highlights', columns current, prior."""
     t = clean(text)
     if 'coreweave' not in t.lower():
@@ -252,7 +270,7 @@ def nebius_pdf_text(page_url, fetch, fetch_pdf=None):
         except Exception as exc:
             codes.append(failure_code(exc))
             continue
-        if re.search(r'\bQ[1-4] 20\d\d financial highlights\b', clean(text), re.I):
+        if 'financialhighlights' in re.sub(r'\s+', '', text).lower():
             return text
         codes.append('no-heading')
     if not seen:
@@ -368,7 +386,7 @@ def run_once(path, reference=None, fetch=None, fetch_pdf=None):
             started = time.monotonic()
             try:
                 text = body if body is not None else nebius_pdf_text(url, fetch, fetch_pdf or (fetch if fetch is not monitor.fetch else None))
-                parsed = PROFILES[ticker]['parse'](text)
+                parsed = PROFILES[ticker]['parse'](text, url)
             except Exception as exc:
                 code = str(exc) if isinstance(exc, ValueError) and re.fullmatch(r'[a-z0-9-]{1,40}', str(exc)) else type(exc).__name__
                 STATUS[url] = {'ticker': ticker, 'state': 'unreadable', 'reason': code, 'at': stamp()}

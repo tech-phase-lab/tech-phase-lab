@@ -38,6 +38,16 @@ class Parsers(unittest.TestCase):
         self.assertEqual(parsed['facts'],[('revenue','$980.8M','$146.1M'),('adjusted-ebitda','$465.8M','$-5.2M'),('adjusted-net-income','$90.9M','$-100.4M')])
         # a garbled digit in the revenue row is refused (the stated +571% no longer matches)
         with self.assertRaises(ValueError): flash.parse_nebius(fixture('nebius-results-q326.txt').replace('980.8','9 80.8',1).replace('Revenues 146.1 9 80.8','Revenues 146.1 580.8'))
+    def test_garbled_heading_still_parses_with_the_quarter_from_the_page_address(self):
+        spaced=fixture('nebius-results-q326.txt').replace('Q3 2026 Financial Highlights','Q3 2 026 F inancial H ighlights')
+        self.assertEqual(flash.parse_nebius(spaced)['period'],'Q3 2026')       # spaces inside the heading are tolerated
+        text=fixture('nebius-results-q326.txt').replace('Q3 2026 Financial Highlights','Q3 2026 Financia1 Highlights')   # a damaged letter
+        parsed=flash.parse_nebius(text,NB_PAGE)
+        self.assertEqual((parsed['period'],parsed['facts'][0]),('Q3 2026',('revenue','$980.8M','$146.1M')))
+        # no heading and no quarter in the address: nothing is published
+        with self.assertRaises(ValueError): flash.parse_nebius(text,'https://nebius.com/newsroom/some-other-post')
+        # the quarter in the address must agree with the table's year columns
+        with self.assertRaises(ValueError): flash.parse_nebius(text,'https://nebius.com/newsroom/nebius-reports-third-quarter-2027-financial-results')
     def test_coreweave_table_and_guidance(self):
         parsed=flash.parse_coreweave(fixture('coreweave-results-q326.txt'))
         self.assertEqual(parsed['period'],'Q3 2026')
