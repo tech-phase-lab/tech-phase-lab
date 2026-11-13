@@ -12,7 +12,7 @@ function load(path, stubs = {}) {
   new Function('require', 'module', 'exports', out)(id => id.endsWith('.module.css') ? { default: new Proxy({}, { get: (_, key) => String(key) }) } : id in stubs ? stubs[id] : require(id), mod, mod.exports);
   return mod.exports;
 }
-const card = load('../app/research/pro-offer-card.tsx', { 'next/link': { default: ({ children, ...p }) => createElement('a', p, children) } });
+const card = load('../app/research/pro-offer-card.tsx', { 'next/link': { default: ({ children, ...p }) => createElement('a', p, children) }, './price-font': { priceFont: { variable: 'price-font' } } });
 const html = (ja, extra = {}) => renderToStaticMarkup(createElement(card.default, { ja, href: '/research/account?upgrade=1', ...extra }, createElement('i', null, 'features')));
 
 test('prices: JPY and USD, monthly and yearly, JA and EN, with the 12-month strike-through only for yearly', () => {
@@ -47,4 +47,11 @@ test('the FREE card shows 0円 / 月 with the same price classes as PRO; the not
   assert.match(src, /PRO renews automatically\. Cancel anytime from My Account\./);
   assert.match(src, /Terms.*Legal Notice/s);
   assert.doesNotMatch(readFileSync(new URL('../app/research/account/account-view.tsx', import.meta.url), 'utf8'), /料金と規約を確認してから/);
+});
+test('price figures use Noto Serif JP 700 on both cards, loaded lazily (not preloaded)', () => {
+  const css = readFileSync(new URL('../app/research/plan-cards.module.css', import.meta.url), 'utf8');
+  assert.match(css, /\.priceN \{ font-family:var\(--font-price-serif\),"Noto Serif JP"[^}]*font-size:48px; font-weight:700/);
+  const font = readFileSync(new URL('../app/research/price-font.ts', import.meta.url), 'utf8');
+  assert.match(font, /preload: false/);
+  for (const f of ['pro-offer-card.tsx', 'plan-cards.tsx']) assert.match(readFileSync(new URL('../app/research/' + f, import.meta.url), 'utf8'), /priceFont\.variable/);
 });

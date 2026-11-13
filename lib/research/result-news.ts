@@ -16,9 +16,11 @@ export function resultFactText(fact: ResultFact, lang: "ja" | "en"): string {
 }
 
 export function resultNewsUpdate(result: ResultBrief): OfficialUpdate {
+  // An "announced" line has no figures: it says so, and links the company's own page.
+  const announced = result.facts.length === 0;
   return {id:result.id,title:result.titleEn,translationJa:result.titleJa,
-    bodyJa:result.facts.map(f => resultFactText(f, "ja")).join("\n"),
-    bodyEn:result.facts.map(f => resultFactText(f, "en")).join("\n"),
+    bodyJa:announced ? "決算が発表されました。詳しい数字は、会社の発表から読み取り次第、掲載します。" : result.facts.map(f => resultFactText(f, "ja")).join("\n"),
+    bodyEn:announced ? "The company has published its results. Figures will follow once they are read from the release." : result.facts.map(f => resultFactText(f, "en")).join("\n"),
     url:result.url,publisher:result.publisher,tickers:[result.ticker],observedAt:result.observedAt,publishedAt:result.publishedAt,
     ...(result.kind === "earnings" ? {researchId:result.researchId} : {})};
 }

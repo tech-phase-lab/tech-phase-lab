@@ -49,8 +49,10 @@ LABELS = {
     'adjusted-ebitda': ('調整後EBITDA', 'Adjusted EBITDA'),
     'adjusted-net-income': ('調整後純損益', 'Adjusted net income / (loss)'),
     'guidance-revenue': ('通期見通し 売上高', 'Full-year guidance Revenue'),
+    'adjusted-eps': ('調整後EPS（希薄化後）', 'Adjusted diluted EPS'),
+    'gross-margin': ('粗利益率', 'Gross margin'),
 }
-ORDER = ['revenue', 'eps', 'net-income', 'operating-income', 'adjusted-ebitda', 'adjusted-net-income', 'guidance-revenue']
+ORDER = ['revenue', 'gross-margin', 'eps', 'adjusted-eps', 'net-income', 'operating-income', 'adjusted-ebitda', 'adjusted-net-income', 'guidance-revenue']
 
 
 def signed(text):
@@ -216,6 +218,61 @@ def parse_coreweave(text, url=None):
     return {'period': f'Q{quarter} {year}', 'facts': facts}
 
 
+def parse_nvidia(text, url=None):
+    """NVIDIA's results release (EX-99.1 or its newsroom page): "Q2 Fiscal 2027 Summary", GAAP and Non-GAAP tables whose columns are
+    this quarter, the previous quarter and the same quarter a year earlier, each row ending in its Q/Q and Y/Y change.
+    Every figure is checked against both stated changes, so a mis-read digit can never be published."""
+    t = clean(text)
+    if 'nvidia' not in t.lower():
+        raise ValueError('issuer-identity-missing')
+    head = re.search(r'Q([1-4]) Fiscal (20\d\d) Summary GAAP', t)
+    if not head:
+        raise ValueError('highlights-heading-missing')
+    quarter, year = int(head[1]), int(head[2])
+    cur, prev = f'Q{quarter} FY{year % 100:02d}', f'Q{quarter - 1 if quarter > 1 else 4} FY{(year if quarter > 1 else year - 1) % 100:02d}'
+    ago = f'Q{quarter} FY{(year - 1) % 100:02d}'
+    split = t.find('Non-GAAP', head.end())
+    if split < 0:
+        raise ValueError('non-gaap-table-missing')
+    gaap, non = t[head.end():split], t[split:split + 1800]
+    if not re.search(re.escape(f'{cur} {prev} {ago} Q/Q Y/Y'), gaap):
+        raise ValueError('columns-unrecognized')
+    amount = r'\$([\d,]+(?:\.\d+)?)'
+    change = r'(-?\d+) % (-?\d+) %'
+
+    def row(label, block, money=True):
+        found = re.findall(r'(?<![A-Za-z])' + label + ' ' + amount + ' ' + amount + ' ' + amount + ' ' + change, block)
+        if len(found) != 1:
+            return None
+        a, b, c, qq, yy = found[0]
+        values = [Decimal(x.replace(',', '')) for x in (a, b, c)]
+        # the stated Q/Q and Y/Y changes must agree with the three values (to the rounding of the printed figures)
+        for stated, ref in ((qq, values[1]), (yy, values[2])):
+            if ref <= 0 or abs((values[0] / ref - 1) * 100 - Decimal(stated)) > Decimal('1.5'):
+                return None
+        return values
+    revenue = row('Revenue', gaap)
+    if not revenue:
+        raise ValueError('revenue-row-unrecognized')
+    facts = [('revenue', money_millions(revenue[0]), money_millions(revenue[2]))]
+    margin = re.findall(r'Gross margin ([\d.]+) % ([\d.]+) % ([\d.]+) % (?:[\d.]+|—) (?:pts)? ?(?:[\d.]+|—) pts', gaap)
+    if len(margin) == 1 and abs((Decimal(margin[0][0]) - Decimal(margin[0][2])) - Decimal(re.search(r'Gross margin [\d.]+ % [\d.]+ % [\d.]+ % \S+ (?:pts )?([\d.]+) pts', gaap)[1])) <= Decimal('0.15'):
+        facts.append(('gross-margin', margin[0][0] + '%', margin[0][2] + '%'))
+    for key, label, block in (('eps', 'Diluted earnings per share', gaap), ('adjusted-eps', 'Diluted earnings per share', non),
+                              ('net-income', 'Net income', gaap), ('operating-income', 'Operating income', gaap)):
+        values = row(label, block)
+        if values:
+            money = per_share if key.endswith('eps') else money_millions
+            facts.append((key, money(values[0]), money(values[2])))
+    guidance = re.findall(r'Revenue is expected to be \$(\d+(?:\.\d+)?) billion, plus or minus (\d+(?:\.\d+)?)%', t)
+    if len(guidance) == 1:
+        facts.append(('guidance-revenue', f'${guidance[0][0]}B \u00b1 {guidance[0][1]}%', None,
+                      ('次四半期見通し 売上高', 'Next-quarter guidance Revenue')))
+    order = {k: n for n, k in enumerate(ORDER)}
+    facts.sort(key=lambda f: order[f[0]])
+    return {'period': f'Q{quarter} FY{year}', 'facts': facts}
+
+
 NEBIUS_RESULTS_PATH = re.compile(r'^/newsroom/(?=[a-z0-9-]*quarter)(?=[a-z0-9-]*financial-results)(?![a-z0-9-]*date)[a-z0-9-]+/?$')
 PDF_LINK = re.compile(r'https://assets\.nebius\.com/assets/[0-9a-f-]{36}/[^"\\\s)<>]*?\.pdf', re.I)
 
@@ -296,7 +353,8 @@ def nebius_pdf_text(page_url, fetch, fetch_pdf=None):
 
 PROFILES = {
     'NBIS': {'publisher': 'Nebius IR', 'parse': parse_nebius},
-    'CRWV': {'publisher': 'CoreWeave IR (SEC 8-K)', 'parse': parse_coreweave},
+    'CRWV': {'publisher': 'CoreWeave IR (SEC 8-K)', 'parse': parse_coreweave, 'marker': 'Financial Highlights'},
+    'NVDA': {'publisher': 'NVIDIA IR', 'parse': parse_nvidia, 'marker': 'Summary GAAP'},
 }
 SOURCE_URL = {
     'NBIS': re.compile(r'^https://nebius\.com/newsroom/[a-z0-9-]+$'),
@@ -329,8 +387,8 @@ def build(ticker, url, parsed, observed_at):
     key = hashlib.sha256('\0'.join([ticker, parsed['period'], url]).encode()).hexdigest()
     number = str(int(key[:12], 16))
     # comparisons.yearAgo is the same quarter one year earlier, read from the table's prior-year column (same format as value).
-    facts = [{'key': k, 'ja': LABELS[k][0], 'en': LABELS[k][1], 'value': v, **({'comparisons': {'yearAgo': y}} if y else {})}
-             for k, v, y in parsed['facts']]
+    facts = [{'key': f[0], 'ja': (f[3] if len(f) > 3 else LABELS[f[0]])[0], 'en': (f[3] if len(f) > 3 else LABELS[f[0]])[1], 'value': f[1],
+              **({'comparisons': {'yearAgo': f[2]}} if f[2] else {})} for f in parsed['facts']]
     first = facts[:2]
     period = parsed['period']
     return key, {
@@ -367,18 +425,23 @@ def candidates(db, reference):
         if (parts.scheme == 'https' and parts.hostname == 'nebius.com' and not parts.query
                 and NEBIUS_RESULTS_PATH.match(parts.path) and SOURCE_URL['NBIS'].match(row['url'])):
             yield row['ticker'], row['url'], row['detected'], None
-    # Never filter on the revision text in SQL: the planner then scans every stored revision (a whole database of
-    # page text) every few seconds and starves the monitor (Nov 12). Pick the few recent CoreWeave sources first,
-    # then read only their current revision.
-    for row in db.execute('''SELECT s.url,s.ticker,s.sha256,COALESCE(e.detected_at,s.discovered_at) AS detected
-        FROM sources s LEFT JOIN release_events e ON e.url=s.url
-        WHERE s.ticker='CRWV' AND s.status NOT IN ('held','rejected')
-          AND julianday(COALESCE(e.detected_at,s.discovered_at))>=julianday(?)''', (cutoff,)).fetchall():
-        if not SOURCE_URL['CRWV'].match(row['url']):
+    # Companies whose release table is read from the page text the monitor already stored (SEC exhibit or the company's own page).
+    # Never filter on the revision text in SQL: the planner then scans every stored revision (a whole database of page text)
+    # every few seconds and starves the monitor (Nov 12). Pick the few recent sources of these companies first, then read only
+    # their current revision.
+    markers = {t: p['marker'] for t, p in PROFILES.items() if p.get('marker')}
+    for row in db.execute('SELECT s.url,s.ticker,s.sha256,COALESCE(e.detected_at,s.discovered_at) AS detected '
+                          'FROM sources s LEFT JOIN release_events e ON e.url=s.url '
+                          "WHERE s.ticker IN (%s) AND s.status NOT IN ('held','rejected') "
+                          'AND julianday(COALESCE(e.detected_at,s.discovered_at))>=julianday(?)' % ','.join('?' for _ in markers),
+                          (*markers, cutoff)).fetchall():
+        parts = urlsplit(row['url'])
+        if (parts.scheme != 'https' or parts.query or parts.fragment or parts.username
+                or parts.hostname not in monitor.HOSTS.get(row['ticker'], set()) or len(row['url']) > 240):
             continue
         revision = db.execute('SELECT extracted_text FROM source_revisions WHERE url=? AND sha256=?',
                               (row['url'], row['sha256'])).fetchone()
-        if revision and 'Financial Highlights' in (revision['extracted_text'] or ''):
+        if revision and markers[row['ticker']] in (revision['extracted_text'] or ''):
             yield row['ticker'], row['url'], row['detected'], revision['extracted_text']
 
 

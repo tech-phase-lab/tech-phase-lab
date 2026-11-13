@@ -62,7 +62,7 @@ class PushTests(unittest.TestCase):
 
     def test_skip_reasons_and_device_breakdown_explain_a_missing_earnings_push(self):
         # Nov 12: NBIS results were published and no phone was told, with no way to see why.
-        push.SKIPS.clear()
+        push.SKIPS.clear(); push._LOGGED_SKIPS.clear()
         with patch.dict(os.environ, {'WEB_PUSH_ALLOW_PILOT': 'false'}):
             push.register(self.db, {'subscription': subscription(), 'tickers': ['NBIS'], 'language': 'ja'}, {'NBIS'}, self.now - 10)
             out = push.deliver(self.db, [self.result(ticker='NBIS')], lambda *a: 201, self.now, wall_now=lambda: self.now)
@@ -423,3 +423,29 @@ class PushTests(unittest.TestCase):
         push.register_member(self.db, {**self.member_payload(), 'accessExpiresAt': sunday + 3600}, {'MU'}, sunday - 5)
         push.deliver_weekly(self.db, transport, sunday, wall_now=lambda: sunday, entitlement=lambda owner: sunday - 1)
         self.assertEqual(sent, [])
+
+
+class RefusalReasonTests(unittest.TestCase):
+    def test_refusals_carry_a_safe_reason_and_unknown_text_never_leaks(self):
+        self.assertEqual(push.refusal_reason(ValueError('not-owned')), 'not-owned')
+        self.assertEqual(push.refusal_reason(ValueError('expired-membership')), 'expired-membership')
+        self.assertEqual(push.refusal_reason(ValueError('https://push.example/endpoint/secret')), 'invalid-registration')
+
+    def test_a_pro_member_whose_access_is_already_over_is_logged_not_silent(self):
+        import io, contextlib, json as _json
+        class Response:
+            def __init__(self, body): self.body = body
+            def __enter__(self): return self
+            def __exit__(self, *a): return False
+            def read(self, n): return self.body
+        past = _json.dumps({'ok': True, 'pro': True, 'accessExpiresAt': 1.0, 'environment': 'preview'}).encode()
+        class Opener:
+            def open(self, request, timeout): return Response(past)
+        out = io.StringIO()
+        with patch.dict(os.environ, {'WEB_PUSH_MEMBERSHIP_URL': 'https://example.com/m', 'RESEARCH_API_TOKEN': 't'}), \
+             patch.object(push, 'build_opener', lambda *a: Opener()), contextlib.redirect_stdout(out):
+            self.assertEqual(push.member_expiry('user_x'), 1.0)
+        self.assertIn('"result": "access-over"', out.getvalue())
+        self.assertEqual(push.MEMBERSHIP_STATE['result'], 'access-over')
+        self.assertNotIn('user_x', out.getvalue())
+        self.assertEqual(push.MEMBERSHIP_STATE['environment'], 'preview')   # the health field that shows a preview deployment answers

@@ -112,6 +112,16 @@ export default function NotificationSettings({ lang, initiallyOpen = false, page
     window.addEventListener("tech-phase:membership-changed", inspect);
     return () => { cancelled = true; requestController?.abort(); clearTimeout(expiryTimer); clearTimeout(resumeTimer); window.removeEventListener("focus", visible); window.removeEventListener("pageshow", visible); window.removeEventListener("online", visible); document.removeEventListener("visibilitychange", visible); window.removeEventListener("tech-phase:membership-changed", inspect); };
   }, [open, refresh]);
+  // The monitor's reason for refusing a request (a short code), in words; unknown codes keep the generic message.
+  function refusalMessage(code: unknown): string | null {
+    switch (code) {
+      case "not-owned": return t("この端末は、ログイン中のアカウントに登録されていません。通知をオフにして、オンにし直してください。", "This device is not registered to the account you are signed in with. Turn notifications off, then on again.");
+      case "expired-membership": return t("PRO会員の有効期限を確認できませんでした。ログインし直してから、もう一度お試しください。", "Your PRO access could not be confirmed. Sign in again and retry.");
+      case "not-registered": return t("この端末はまだ登録されていません。通知をオンにしてください。", "This device is not registered yet. Turn notifications on.");
+      case "disabled": return t("サーバー側で通知が止まっています。しばらくしてからお試しください。", "Notifications are paused on the server. Try again later.");
+      default: return null;
+    }
+  }
   async function request(action: string, subscription: PushSubscription) {
     const response = await fetch("/api/research/notifications", {
       method: "POST", headers: { "Content-Type": "application/json" },
@@ -120,7 +130,7 @@ export default function NotificationSettings({ lang, initiallyOpen = false, page
     });
     if (response.status === 401 || response.status === 403) { setState(response.status === 401 ? "sign-in" : "pro-required"); throw new Error(t("ログインとPRO会員の有効期限を確認してください。", "Check your sign-in and PRO membership.")); }
     const result = await response.json();
-    if (!response.ok || !result.ok) throw new Error(t("接続できませんでした。もう一度お試しください。", "Unable to connect. Please try again."));
+    if (!response.ok || !result.ok) throw new Error(refusalMessage(result?.error) ?? t("接続できませんでした。もう一度お試しください。", "Unable to connect. Please try again."));
     return result;
   }
   async function run(action: "enable" | "disable" | "status" | "test") {

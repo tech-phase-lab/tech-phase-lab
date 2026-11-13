@@ -14,9 +14,18 @@ async function monitor(path: string, body?: unknown) {
   const response = await fetch(url, { method: body ? "POST" : "GET", cache: "no-store",
     headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
     body: body ? JSON.stringify(body) : undefined, signal: AbortSignal.timeout(10_000) });
-  if (!response.ok) throw new Error("Unavailable");
+  if (!response.ok) {
+    // A refusal with a known reason is passed on, so the screen can say why (Nov 13: every refusal read "could not connect").
+    if (response.status === 400) {
+      const refusal = await response.json().catch(() => null) as { ok?: unknown; error?: unknown } | null;
+      if (refusal && refusal.ok === false && typeof refusal.error === "string" && REFUSALS.has(refusal.error)) return { ok: false, error: refusal.error };
+    }
+    throw new Error("Unavailable");
+  }
   return response.json();
 }
+const REFUSALS = new Set(["not-owned", "expired-membership", "not-registered", "disabled", "invalid-member", "invalid-subscription",
+  "subscription-mismatch", "device-owned-by-another-member", "member-device-limit", "invalid-preferences", "invalid-registration"]);
 export async function GET() {
   try {
     const member = await getMembership();

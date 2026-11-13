@@ -35,6 +35,20 @@ def _membership_log(result, **detail):
     print(json.dumps({'event': 'push-membership-check', 'result': result, **detail}), flush=True)
 
 
+# What the last membership check saw, for /health: no member, no host, no value.
+MEMBERSHIP_STATE = {'environment': None, 'result': None, 'at': None}
+
+
+def _remember_membership(result, environment=None):
+    MEMBERSHIP_STATE.update(result=result, at=datetime.now(timezone.utc).isoformat(timespec='seconds'),
+                            environment=environment if environment in {'production', 'preview', 'development'} else MEMBERSHIP_STATE['environment'])
+
+
+def membership_probe(owner):
+    """Ask the membership check about the production owner (read-only) so /health shows which deployment answers it."""
+    return member_expiry(owner)
+
+
 def member_expiry(owner):
     """Fresh authoritative check. Errors and redirects fail closed; never log credentials."""
     base = os.environ.get('WEB_PUSH_MEMBERSHIP_URL', '')
@@ -60,8 +74,13 @@ def member_expiry(owner):
             data = json.loads(raw)
         until = data.get('accessExpiresAt')
         if data.get('ok') is True and data.get('pro') is True and isinstance(until, (int, float)) and not isinstance(until, bool) and math.isfinite(until):
+            _remember_membership('access-over' if until <= time.time() else 'valid', data.get('environment'))
+            if until <= time.time():
+                # A pro member whose access is already over: nothing failed, yet nothing can be delivered. Say so (it was silent).
+                _membership_log('access-over', secondsAgo=round(time.time() - until))
             return until
-        _membership_log('not-pro', ok=data.get('ok'), pro=data.get('pro'))
+        _remember_membership('not-pro', data.get('environment'))
+        _membership_log('not-pro', ok=data.get('ok'), pro=data.get('pro'), environment=data.get('environment') if data.get('environment') in {'production', 'preview', 'development'} else None)
         return 0
     except HTTPError as error:
         _membership_log('http-error', status=error.code, host=url.hostname)
@@ -345,6 +364,16 @@ def register_member(db, payload, allowed, now=None):
     return {'registered': True}
 
 
+# Reasons a push request can be refused that are safe to show (no device, no member, no text from the provider).
+REFUSAL_REASONS = frozenset({'not-owned', 'expired-membership', 'not-registered', 'disabled', 'invalid-member', 'invalid-subscription',
+                             'subscription-mismatch', 'device-owned-by-another-member', 'member-device-limit', 'invalid-preferences'})
+
+
+def refusal_reason(exc):
+    reason = str(exc)
+    return reason if reason in REFUSAL_REASONS else 'invalid-registration'
+
+
 def member_action(db, payload, action, transport=None, now=None):
     owner = member_identity(payload)
     now = time.time() if now is None else now
@@ -467,6 +496,8 @@ def normalize_result(item):
     ticker = item.get('ticker')
     titles = {lang: item.get(key) for lang, key in (('ja', 'titleJa'), ('en', 'titleEn'))}
     quarter = re.search(r'Q([1-4])', str(item.get('period', '')))
+    if quarter is None and str(item.get('researchId', '')).startswith('ir-announce-'):
+        quarter = re.search(r'(0)', '0')  # "announced" line of a release whose title names no quarter: Q0, one alert per month
     facts = item.get('facts')
     # An outlook post is not a result: the result already went out, so the outlook adds no second alert.
     if isinstance(facts, list) and facts and all(isinstance(f, dict) and str(f.get('key', '')).startswith('guidance-') for f in facts):
@@ -590,9 +621,18 @@ def vapid_subject(value):
 SKIPS = {}
 
 
-def skip(item, reason):
+_LOGGED_SKIPS = set()
+QUIET_SKIP_REASONS = frozenset({'published-not-fresh', 'already-delivered', 'invalid-item'})
+
+
+def skip(item, reason, device=None):
     if item.get('kind') == 'earnings':
         SKIPS[reason] = SKIPS.get(reason, 0) + 1
+        # One line per reason and release in the service log, which (unlike the counters) survives a restart. No device or member.
+        key = (reason, item.get('ticker'), item.get('quarter'))
+        if reason not in QUIET_SKIP_REASONS and key not in _LOGGED_SKIPS and len(_LOGGED_SKIPS) < 500:
+            _LOGGED_SKIPS.add(key)
+            print(json.dumps({'event': 'push-skip', 'reason': reason, 'ticker': item.get('ticker'), 'quarter': item.get('quarter')}), flush=True)
 
 
 def device_breakdown(db, now):
@@ -651,6 +691,7 @@ def public_status(db, now=None):
         'activeDevices': devices,
         'deviceBreakdown': device_breakdown(db, now),
         'earningsSkipsSinceStart': dict(SKIPS),
+        'membershipCheck': dict(MEMBERSHIP_STATE),
         'maxDevices': DEVICE_LIMIT,
         'attempted24Hours': row['attempted'] or 0,
         'accepted24Hours': row['accepted'] or 0,

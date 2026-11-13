@@ -584,19 +584,26 @@ MIN_DISPLAY_FACTS = 3
 def display_floor(items):
     """What the site may show as an earnings result (owner, Nov 12: a result with one figure shown twice is worse than none).
 
+    - an "announced" line (ir-announce-, no figures) is kept until figures from the company's own release exist for that company;
     - an earnings result needs at least MIN_DISPLAY_FACTS reported figures (guidance does not count as a result figure);
-    - a result read from an X post is dropped when the company's own release table has been read for the same quarter.
+    - a result read from an X post is never shown on the site (it is not a primary source; owner, Nov 13). Until the company's own
+      release is read, the site shows nothing rather than a thin or second-hand result.
     Flashes below the floor stay available to the phone alerts and the release watch, which use the unfiltered feed."""
-    issuer = {(i['ticker'], i.get('period')) for i in items if str(i.get('researchId', '')).startswith('ir-flash-')}
+    flashed = {i['ticker'] for i in items if str(i.get('researchId', '')).startswith('ir-flash-') and i.get('kind') == 'earnings'}
     kept = []
     for item in items:
         if item.get('kind') != 'earnings':
             kept.append(item)
             continue
+        if str(item.get('researchId', '')).startswith('ir-announce-'):
+            # "announced" line (no figures): kept until the company's own figures are published, then replaced by them
+            if item['ticker'] not in flashed:
+                kept.append(item)
+            continue
         figures = [f for f in item.get('facts', []) if not str(f.get('key', '')).startswith('guidance-')]
         if len(figures) < MIN_DISPLAY_FACTS:
             continue
-        if str(item.get('researchId', '')).startswith('x-result-') and (item['ticker'], item.get('period')) in issuer:
+        if str(item.get('researchId', '')).startswith('x-result-'):
             continue
         kept.append(item)
     return kept
@@ -638,6 +645,11 @@ def public_feed(db, reference=None, earnings_hours=24, *, floor=False):
         items.extend(issuer_result_flash.public_feed(db, cutoff))
     except Exception:
         pass  # the issuer-table flashes never take the X flashes down with them
+    try:
+        import earnings_announce
+        items.extend(earnings_announce.public_feed(db, cutoff))
+    except Exception:
+        pass  # the announcement line is independent of every other source
     items = latest_source_posts(items)
     if floor:
         items = display_floor(items)

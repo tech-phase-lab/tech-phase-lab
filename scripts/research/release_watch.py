@@ -23,6 +23,9 @@ SCHEDULE_PATH = Path(__file__).with_name('release_schedule.json')
 # Clerk user id of the approved owner account (also in lib/membership); an
 # identifier, not a credential. Only this account's devices get alerts.
 OWNER_MEMBER_ID = 'user_3JulL4D07KtVl5Eg2zdY1iczKbC'
+# The owner has two accounts (lib/membership/entitlements.ts): the preview/test account above and the production owner account
+# (Nov 13: devices registered from the production site belong to the second one, so the alert found no device: ownerDevices 0).
+PRODUCTION_OWNER_MEMBER_ID = 'user_3LHR1K8f8zwyDcVzMg7ud6KB9Wb'
 BURST_BEFORE = timedelta(minutes=1)
 BURST_AFTER = timedelta(minutes=15)
 BURST_INTERVAL_SECONDS = 10
@@ -185,9 +188,12 @@ def owner_devices(db):
     columns = {row[1] for row in db.execute('PRAGMA table_info(push_devices)')}
     if 'owner_id' not in columns:
         return []
-    owner = os.environ.get('RESEARCH_OWNER_MEMBER_ID', OWNER_MEMBER_ID)
+    owners = {OWNER_MEMBER_ID, PRODUCTION_OWNER_MEMBER_ID}
+    configured = os.environ.get('RESEARCH_OWNER_MEMBER_ID', '').strip()
+    if configured:
+        owners.add(configured)
     return [row['subscription'] for row in db.execute(
-        'SELECT subscription FROM push_devices WHERE active=1 AND owner_id=?', (owner,))]
+        'SELECT subscription FROM push_devices WHERE active=1 AND owner_id IN (%s)' % ','.join('?' for _ in owners), tuple(sorted(owners)))]
 
 
 def delay_text(seconds):

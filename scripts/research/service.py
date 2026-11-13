@@ -52,6 +52,7 @@ import x_preflight_service
 import x_stream_trial_service
 import market_results
 import issuer_result_flash
+import earnings_announce
 import official_research
 import deep_analysis
 import issuer_syndication
@@ -971,6 +972,11 @@ class AutomaticMonitor:
             except Exception:
                 print("result-publication-unavailable", flush=True)
             try:
+                # First stage: a company's own results page exists -> one "announced" line with its link, before any figure.
+                earnings_announce.run_once(self.db_path)
+            except Exception:
+                print("earnings-announce-unavailable", flush=True)
+            try:
                 # Headline numbers copied from the issuer's own results table; no model, no wait (owner, Nov 12).
                 issuer_result_flash.run_once(self.db_path)
             except Exception:
@@ -1122,6 +1128,13 @@ class AutomaticMonitor:
                 except Exception:
                     economic = []
                     print("web-push-economic-unavailable", flush=True)
+                if time.monotonic() - getattr(self, "_membership_probe_at", -1e9) >= 600:
+                    # Which deployment answers the membership check (production or preview)? Read-only, every ten minutes.
+                    self._membership_probe_at = time.monotonic()
+                    try:
+                        web_push.membership_probe(release_watch.PRODUCTION_OWNER_MEMBER_ID)
+                    except Exception:
+                        pass
                 with web_push.connect(self.db_path) as db:
                     result = web_push.deliver(db, items)
                     web_push.deliver_weekly(db)
@@ -1980,6 +1993,7 @@ class AutomaticMonitor:
             state["releaseWatch"] = release_watch.diagnostics(db, datetime.now(timezone.utc))
             state["signalIntake"]["analystNews"] = analyst_news.diagnostics(db)
             state["signalIntake"]["issuerFlash"] = issuer_result_flash.diagnostics(db)
+            state["signalIntake"]["earningsAnnounce"] = earnings_announce.diagnostics(db)
             state["signalIntake"]["businessNews"] = general_source_news.diagnostics(db,datetime.now(timezone.utc))
             state["signalIntake"]["headlineTranslation"] = (
                 headline_translation.diagnostics(db, env=os.environ)
@@ -3695,8 +3709,11 @@ class Handler(BaseHTTPRequestHandler):
                     else:
                         result = web_push.register(db, payload, set(self.app.tickers) | signals.X_EXTRA_TICKERS)
                 self.send_json(200, {"ok": True, **result})
-            except ValueError:
-                self.send_json(400, {"ok": False, "error": "invalid-registration"})
+            except ValueError as exc:
+                reason = web_push.refusal_reason(exc)
+                # One line per refusal with the action and the reason only (never the device, the member or the provider's text).
+                print(json.dumps({"event": "push-action-refused", "action": path.rsplit("/", 1)[1], "reason": reason}), flush=True)
+                self.send_json(400, {"ok": False, "error": reason})
             except Exception:
                 self.send_json(503, {"ok": False})
             return

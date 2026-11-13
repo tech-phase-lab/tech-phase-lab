@@ -142,5 +142,16 @@ class ReleaseWatchTests(unittest.TestCase):
         self.assertIn('米国市場終了から2分05秒', published['body'])
 
 
+class OwnerAccountsTests(unittest.TestCase):
+    def test_devices_of_either_owner_account_receive_the_release_alerts(self):
+        import sqlite3
+        db = sqlite3.connect(':memory:')
+        db.row_factory = sqlite3.Row
+        db.execute('CREATE TABLE push_devices(id TEXT, subscription TEXT, active INTEGER, owner_id TEXT)')
+        for index, owner in enumerate([watch.OWNER_MEMBER_ID, watch.PRODUCTION_OWNER_MEMBER_ID, 'user_someone_else', None]):
+            db.execute('INSERT INTO push_devices VALUES(?,?,1,?)', (str(index), '{"endpoint":"e%d"}' % index, owner))
+        self.assertEqual(len(watch.owner_devices(db)), 2)
+
+
 if __name__ == '__main__':
     unittest.main()
