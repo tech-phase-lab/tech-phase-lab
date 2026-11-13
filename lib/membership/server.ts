@@ -26,10 +26,12 @@ export async function getMembershipForUser(userId: string, sessionClaims?: unkno
   const productionOwner = productionOwnerMode(userId, isAdmin, process.env.VERCEL_ENV);
   // Only the approved, MFA-verified production owner may use the existing self-preview.
   const testPlan = previewPlan(user.privateMetadata, isAdmin, productionOwner ? "preview" : process.env.VERCEL_ENV);
-  const ownerMode = (productionOwner && testPlan === null) || ownerPreviewMode(user.privateMetadata, isAdmin, process.env.VERCEL_ENV);
+  // Owner accounts may use every feature in every environment (owner, Nov 13), unless the owner is deliberately previewing a member
+  // plan (testPlan): then the previewed plan applies, as before. Operational access, not a subscription.
+  const ownerMode = (isOwnerAccount(userId) && isAdmin && testPlan === null) || ownerPreviewMode(user.privateMetadata, isAdmin, process.env.VERCEL_ENV);
   const test = user.privateMetadata.membershipPreview as Record<string, string> | undefined;
   // Owner access is operational access, not a paid subscription or payment receipt.
-  const live=productionOwner ? null : await liveMembership(process.env,userId);
+  const live=productionOwner || ownerMode ? null : await liveMembership(process.env,userId);
   const accessExpiresAt = live ? live.accessExpiresAt : ownerMode ? Date.now() + 3_600_000 : testPlan !== null ? Math.min(Date.parse(test?.proExpiresAt ?? ""), Date.parse(test?.testUntil ?? "")) : Date.parse(String(user.privateMetadata.proExpiresAt ?? ""));
   return { accessExpiresAt: Number.isFinite(accessExpiresAt) ? accessExpiresAt : 0, status: "signed-in", plan: live ? live.plan : ownerMode ? "pro" : testPlan ?? resolvePlan(user.privateMetadata), userId, isAdmin, ownerMode, adminMfaRequired,
     // Owner label: the approved account itself, unless it is previewing a member plan.
