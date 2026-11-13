@@ -53,6 +53,7 @@ import x_preflight_service
 import x_stream_trial_service
 import market_results
 import issuer_result_flash
+import dart_api
 import dart_watch
 import earnings_announce
 import official_research
@@ -979,6 +980,8 @@ class AutomaticMonitor:
     def run_results(self):
         # Numerical flashes must not wait for an LLM or require an API key.
         wake = self.publication_wakes["results"]
+        # Once at start, off the loop: read SK hynix's Oct 28 notice through OpenDART and keep only a code for /health (no key, no value).
+        threading.Thread(target=dart_api.self_check, name="dart-self-check", daemon=True).start()
         while not self.stop_event.is_set():
             wake.clear()
             try:
@@ -1004,6 +1007,11 @@ class AutomaticMonitor:
                 dart_watch.run_once(self.db_path)
             except Exception:
                 print("dart-watch-unavailable", flush=True)
+            try:
+                # The same results through OpenDART (needs OPENDART_API_KEY; no request at all without it): the notice, then its figures.
+                dart_api.run_once(self.db_path)
+            except Exception:
+                print("dart-api-unavailable", flush=True)
             try:
                 # Headline numbers copied from the issuer's own results table; no model, no wait (owner, Nov 12).
                 issuer_result_flash.run_once(self.db_path)
@@ -2027,6 +2035,7 @@ class AutomaticMonitor:
             state["signalIntake"]["analystNews"] = analyst_news.diagnostics(db)
             state["signalIntake"]["issuerFlash"] = issuer_result_flash.diagnostics(db)
             state["signalIntake"]["earningsAnnounce"] = earnings_announce.diagnostics(db)
+            state["signalIntake"]["dart"] = dart_api.diagnostics()
             state["signalIntake"]["businessNews"] = general_source_news.diagnostics(db,datetime.now(timezone.utc))
             state["signalIntake"]["headlineTranslation"] = (
                 headline_translation.diagnostics(db, env=os.environ)
