@@ -1,11 +1,11 @@
 # Earnings flash pass/fail (latest real release of each watch-list company)
 
-Generated 2026-11-13 09:32Z · PASS 20 / 22
+Generated 2026-11-13 09:32Z · PASS 21 / 22
 
 | Ticker | Verdict | Detection source | Figures | Reason |
 |---|---|---|---|---|
 | MU | PASS | SEC 8-K 2026-09-30T20:02Z | 4 | 4 figures, e.g. revenue $54.229B |
-| SKHY | FAIL | no route | 0 | no release text found |
+| SKHY | PASS | SEC 6-K 2026-10-28T10:01Z | 3 | 3 figures, e.g. revenue ₩104.615483T (preliminary; SEC route: SK hynix became an SEC filer with its ADR listing) |
 | SNDK | PASS | SEC 8-K 2026-10-29T20:13Z | 4 | 4 figures, e.g. revenue $11.031B |
 | NBIS | PASS | newsroom page | 3 | 3 figures, e.g. revenue $980.8M |
 | NVDA | PASS | SEC 8-K 2026-08-26T20:21Z | 6 | 6 figures, e.g. revenue $96.221B |

@@ -20,6 +20,7 @@ import time
 import urllib.request
 from datetime import datetime, timedelta, timezone
 
+import earnings_announce
 import monitor
 import issuer_result_flash as flash
 
@@ -54,9 +55,24 @@ def latest_results_filing(cik):
         items = data['items'][i] if i < len(data['items']) else ''
         if (form == '8-K' and '2.02' in items) or form == '6-K':
             exhibit = exhibit_text(cik, data['accessionNumber'][i])
+            if not exhibit and form == '6-K':
+                # SK hynix files its results table in the 6-K itself, with no exhibit (its other 6-Ks are dividends, buybacks...)
+                own = primary_text(cik, data['accessionNumber'][i], data['primaryDocument'][i] if i < len(data.get('primaryDocument', [])) else '')
+                exhibit = own if own and earnings_announce.PRELIMINARY_RESULTS.search(own) else None
             if exhibit and is_results_exhibit(exhibit):
                 return {'form': form, 'accepted': accepted.isoformat(), 'accession': data['accessionNumber'][i], 'text': exhibit}
     return None
+
+
+def primary_text(cik, accession, document):
+    """Text of a filing's own main document (a 6-K that carries its results directly)."""
+    if not re.fullmatch(r'[A-Za-z0-9][A-Za-z0-9._-]{0,200}', document or ''):
+        return None
+    try:
+        raw = get(f"https://www.sec.gov/Archives/edgar/data/{int(cik)}/{accession.replace('-', '')}/{document}", binary=True)
+        return ' '.join(monitor.extract_text(raw, 'text/html').split())
+    except Exception:
+        return None
 
 
 def exhibit_text(cik, accession):
