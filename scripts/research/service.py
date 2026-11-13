@@ -3695,8 +3695,11 @@ class Handler(BaseHTTPRequestHandler):
                     else:
                         result = web_push.register(db, payload, set(self.app.tickers) | signals.X_EXTRA_TICKERS)
                 self.send_json(200, {"ok": True, **result})
-            except ValueError:
-                self.send_json(400, {"ok": False, "error": "invalid-registration"})
+            except ValueError as exc:
+                reason = web_push.refusal_reason(exc)
+                # One line per refusal with the action and the reason only (never the device, the member or the provider's text).
+                print(json.dumps({"event": "push-action-refused", "action": path.rsplit("/", 1)[1], "reason": reason}), flush=True)
+                self.send_json(400, {"ok": False, "error": reason})
             except Exception:
                 self.send_json(503, {"ok": False})
             return

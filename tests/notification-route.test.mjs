@@ -56,3 +56,20 @@ test('preference reads and writes require current PRO, preserve partial patches 
   assert.deepEqual(calls[1].body.preferences,{newsTickers:[]});
  } finally {globalThis.fetch=saved.fetch;delete globalThis.__pushMember;for(const [key,value] of [['RESEARCH_MONITOR_URL',saved.url],['RESEARCH_MONITOR_TOKEN',saved.token]]){if(value===undefined)delete process.env[key];else process.env[key]=value;}}
 });
+
+test('a monitor refusal with a known reason reaches the screen; anything else stays a generic failure', async () => {
+ const saved={fetch:globalThis.fetch,url:process.env.RESEARCH_MONITOR_URL,token:process.env.RESEARCH_MONITOR_TOKEN};
+ process.env.RESEARCH_MONITOR_URL='https://monitor.example';process.env.RESEARCH_MONITOR_TOKEN='fixture';
+ const req=()=>new Request('https://example.test/api/research/notifications',{method:'POST',headers:{origin:'https://example.test','content-type':'application/json'},body:JSON.stringify({action:'test',subscription:{endpoint:'https://push.example/x'}})});
+ try {
+  globalThis.__pushMember={status:'signed-in',userId:'user_owner',plan:'pro',accessExpiresAt:Date.now()+60000};
+  for (const [status,body,expected] of [[400,{ok:false,error:'not-owned'},'not-owned'],[400,{ok:false,error:'expired-membership'},'expired-membership'],
+    [400,{ok:false,error:'https://push.example/secret'},undefined],[503,{ok:false,error:'not-owned'},undefined]]) {
+   globalThis.fetch=async()=>Response.json(body,{status});
+   const response=await POST(req());
+   const json=await response.json();
+   assert.equal(json.error,expected);
+   assert.equal(json.ok,false);
+  }
+ } finally {globalThis.fetch=saved.fetch;delete globalThis.__pushMember;for(const [key,value] of [['RESEARCH_MONITOR_URL',saved.url],['RESEARCH_MONITOR_TOKEN',saved.token]]){if(value===undefined)delete process.env[key];else process.env[key]=value;}}
+});

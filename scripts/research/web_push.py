@@ -60,6 +60,9 @@ def member_expiry(owner):
             data = json.loads(raw)
         until = data.get('accessExpiresAt')
         if data.get('ok') is True and data.get('pro') is True and isinstance(until, (int, float)) and not isinstance(until, bool) and math.isfinite(until):
+            if until <= time.time():
+                # A pro member whose access is already over: nothing failed, yet nothing can be delivered. Say so (it was silent).
+                _membership_log('access-over', secondsAgo=round(time.time() - until))
             return until
         _membership_log('not-pro', ok=data.get('ok'), pro=data.get('pro'))
         return 0
@@ -343,6 +346,16 @@ def register_member(db, payload, allowed, now=None):
             current = db.execute('SELECT * FROM push_devices WHERE id=?', (device,)).fetchone()
             write_preferences(db, current, payload['preferences'])
     return {'registered': True}
+
+
+# Reasons a push request can be refused that are safe to show (no device, no member, no text from the provider).
+REFUSAL_REASONS = frozenset({'not-owned', 'expired-membership', 'not-registered', 'disabled', 'invalid-member', 'invalid-subscription',
+                             'subscription-mismatch', 'device-owned-by-another-member', 'member-device-limit', 'invalid-preferences'})
+
+
+def refusal_reason(exc):
+    reason = str(exc)
+    return reason if reason in REFUSAL_REASONS else 'invalid-registration'
 
 
 def member_action(db, payload, action, transport=None, now=None):
