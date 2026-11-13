@@ -3535,15 +3535,16 @@ class IntakeTests(unittest.TestCase):
 
     def test_us_issuer_coverage_has_sec_filing_backup(self):
         # EDGAR is an independent, no-cost first-party disclosure route. SKHY
-        # is excluded because this U.S.-listed roster entry has no matching
-        # SEC ticker record; it remains monitored through its issuer newsroom.
+        # became an SEC filer with its Nasdaq ADR listing (CIK 0002120882, Form
+        # 6-K); its newsroom's terms forbid automated access, so EDGAR is now
+        # its only monitored route for results.
         self.assertEqual(len(m.PROVIDERS), 50)
         self.assertEqual(
             {ticker for ticker in m.PROVIDERS if not any(
                 source.get("format") == "sec-json"
                 for source in m.monitoring_sources(ticker)
             )},
-            {"SKHY"},
+            set(),
         )
         for ticker, provider in m.PROVIDERS.items():
             sec_sources = [

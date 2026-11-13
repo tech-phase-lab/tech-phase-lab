@@ -62,7 +62,8 @@ class SkhynixFeedRoutingTests(unittest.TestCase):
         self.path = Path(self.tmp.name) / 'offline.sqlite'
         self.db = official_research.connect(self.path); self.addCleanup(self.db.close)
         self.source = next(source for source in signals.SOURCES if source['id'] == 'skhynix-news')
-        config = patch.dict(self.source, {'officialUpdates': True, 'requireCurrentDocument': True,
+        config = patch.dict(self.source, {'automatedAccess': 'lifted-for-offline-test',   # the real source is never fetched; this runs offline
+                                          'officialUpdates': True, 'requireCurrentDocument': True,
                                           'publisherArticleCategories': deepcopy(POLICY)})
         config.start(); self.addCleanup(config.stop)
         self.now = TEST_NOW

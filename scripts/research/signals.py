@@ -80,6 +80,8 @@ class Redirects(HTTPRedirectHandler):
 
 
 def fetch(source, validators):
+    if source.get("automatedAccess") == "prohibited":  # the site's terms forbid robots (SK hynix Newsroom, Terms of Use): no request at all
+        raise ValueError("automated-access-prohibited")
     url = safe_url(source["url"], source)
     headers = {"User-Agent": source.get("userAgent", "TechPhaseResearch/0.1 (+source-monitor)"), "Accept-Encoding": "identity"}
     if source.get("contactUserAgent") is True:

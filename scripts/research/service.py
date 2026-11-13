@@ -53,6 +53,7 @@ import x_preflight_service
 import x_stream_trial_service
 import market_results
 import issuer_result_flash
+import dart_watch
 import earnings_announce
 import official_research
 import deep_analysis
@@ -998,6 +999,11 @@ class AutomaticMonitor:
                 earnings_announce.run_once(self.db_path)
             except Exception:
                 print("earnings-announce-unavailable", flush=True)
+            try:
+                # SK hynix's results notice on DART (public RSS, no key): the early "announced" line; only requests inside the results window.
+                dart_watch.run_once(self.db_path)
+            except Exception:
+                print("dart-watch-unavailable", flush=True)
             try:
                 # Headline numbers copied from the issuer's own results table; no model, no wait (owner, Nov 12).
                 issuer_result_flash.run_once(self.db_path)

@@ -65,7 +65,10 @@ class SkhynixServiceRoutingTests(unittest.TestCase):
         self.addCleanup(self.db.close)
         self.source = next(source for source in signals.SOURCES if source['id'] == 'skhynix-news')
         self.assertEqual(self.source['publisherArticleCategories'], POLICY)
-        original_source = deepcopy(self.source)
+        # The real source is marked automatedAccess=prohibited (the site's terms forbid robots) and is never fetched. These tests
+        # exercise the pipeline logic offline (the network is forbidden below), so only here is the marker lifted.
+        original_source = deepcopy(self.source)          # pristine, marker included: restored below
+        self.source['automatedAccess'] = 'lifted-for-offline-test'
         def restore_source():
             self.source.clear()
             self.source.update(original_source)
