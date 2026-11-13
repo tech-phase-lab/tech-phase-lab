@@ -94,3 +94,9 @@ test("reduced motion: the glow and the ring are switched off, only a brief colou
   assert.ok(/@keyframes glowUp/.test(css) && /@keyframes glowDown/.test(css));
   assert.ok(!/box-shadow/.test(css.slice(css.indexOf("@keyframes tintUp"))));
 });
+
+test("the pull-down lists names only (no 'daily / weekly' notes under them)", () => {
+  const board = readFileSync(new URL("../app/research/price/market-board.tsx", import.meta.url), "utf8");
+  assert.ok(!/jaNote|enNote/.test(board));
+  assert.ok(!/menuName small/.test(readFileSync(new URL("../app/research/price/board.module.css", import.meta.url), "utf8")));
+});

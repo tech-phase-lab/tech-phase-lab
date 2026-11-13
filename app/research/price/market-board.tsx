@@ -127,7 +127,7 @@ function MoreMenu({ period, onPick, ja }: { period: BoardPeriod; onPick: (period
     {open && <div className={styles.menu} role="menu" aria-label={ja ? "そのほかの足と期間" : "More intervals and ranges"}>
       <p className={styles.menuHead}>{ja ? "そのほかの足と期間" : "More intervals and ranges"}</p>
       {OTHER_PERIODS.map(p => <button key={p} type="button" role="menuitemradio" aria-checked={period === p} className={styles.menuItem} onClick={() => { onPick(p); setOpen(false); }}>
-        <span className={styles.menuName}>{name(p)}<small>{PERIOD_LABEL[p][ja ? "jaNote" : "enNote"]}</small></span><span className={styles.menuCheck} aria-hidden="true">{period === p ? "✓" : ""}</span></button>)}
+        <span className={styles.menuName}>{name(p)}</span><span className={styles.menuCheck} aria-hidden="true">{period === p ? "✓" : ""}</span></button>)}
     </div>}
   </div>;
 }
