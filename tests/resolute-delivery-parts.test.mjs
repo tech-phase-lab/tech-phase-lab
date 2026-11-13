@@ -115,4 +115,3 @@ test('queue runner can be limited to named accounts (owner-only test) and reject
  const r=spawnSync(process.execPath,['--experimental-strip-types','services/resolute-api/notification-queue.mjs'],{encoding:'utf8',env:{PATH:process.env.PATH,RESOLUTE_NOTIFICATION_QUEUE_ENABLED:'true',RESOLUTE_ENTITLEMENT_SOURCE:'live',TWELVE_DATA_API_KEY:'k',RESOLUTE_MAIL_CLERK_SECRET_KEY:'k',RESOLUTE_NOTIFICATION_QUEUE_ONLY_USER_IDS:'not-a-user',RESOLUTE_NOTIFICATION_QUEUE_DB_URL:'postgres://resolute_notification_queue:p@db.example/resolute?sslmode=verify-full'}});
  assert.deepEqual(JSON.parse(r.stdout),{error:'NOTIFICATION_QUEUE_UNAVAILABLE'});
 });
-
