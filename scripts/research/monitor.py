@@ -720,7 +720,15 @@ def is_verification_html(content):
     ))
 
 
+def automated_access_prohibited(ticker, url):
+    """A company whose site terms forbid robots (SK hynix Newsroom, Terms of Use, Mar 2025: "Use any robot, spider, or other automatic
+    device ... to access the Website for any purpose, including monitoring") is never fetched, by any path. SEC EDGAR stays allowed."""
+    return PROVIDERS.get(ticker, {}).get("automatedAccess") == "prohibited" and not is_sec_url(url)
+
+
 def fetch(url, ticker, validators=None, include_metadata=False):
+    if automated_access_prohibited(ticker, url):
+        raise ValueError("automated-access-prohibited")
     url = safe_url(url, ticker)
     cached = cached_fetch(url)
     conditional = dict(validators or {})

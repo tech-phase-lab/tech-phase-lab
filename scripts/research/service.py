@@ -1145,8 +1145,13 @@ class AutomaticMonitor:
                     # Economic releases whose result the site has already read (BLS, BEA, and the ADP reader).
                     with self.db_lock, stock_news.connect(self.db_path) as indicator_db:
                         updates = signals.public_official_updates(indicator_db, reference=datetime.now(timezone.utc), limit=500, read_only=True)
+                        try:
+                            route_errors = {row[0]: release_watch.persisted_error_code(row[1]) for row in indicator_db.execute(
+                                "SELECT id,error FROM signal_routes WHERE id='bls-ppi'")}
+                        except Exception:
+                            route_errors = {}
                     with self.db_lock, event_results.connect(self.db_path) as events_db:
-                        economic = web_push.economic_items(updates, event_results.public_view(events_db))
+                        economic = web_push.economic_items(updates, event_results.public_view(events_db), route_errors)
                 except Exception:
                     economic = []
                     print("web-push-economic-unavailable", flush=True)

@@ -43,6 +43,7 @@
     "ticker": "SKHY",
     "name": "SK hynix",
     "sector": "semiconductors",
+    "automatedAccess": "prohibited",
     "indexUrl": "https://news.skhynix.com/en/category/ir/",
     "format": "html",
     "allowedHosts": [
