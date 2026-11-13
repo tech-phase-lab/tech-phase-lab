@@ -1,0 +1,4 @@
+/* Broker name and NEW badge on one line: the name is cut with an ellipsis, the badge never wraps (owner, Nov 13). */
+.firmRow{display:flex;align-items:center;gap:8px;min-width:0}
+.firmName{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.firmRow.firmRow .badge{flex:none;margin:0;vertical-align:baseline}
