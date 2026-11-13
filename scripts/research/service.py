@@ -1122,6 +1122,13 @@ class AutomaticMonitor:
                 except Exception:
                     economic = []
                     print("web-push-economic-unavailable", flush=True)
+                if time.monotonic() - getattr(self, "_membership_probe_at", -1e9) >= 600:
+                    # Which deployment answers the membership check (production or preview)? Read-only, every ten minutes.
+                    self._membership_probe_at = time.monotonic()
+                    try:
+                        web_push.membership_probe(release_watch.PRODUCTION_OWNER_MEMBER_ID)
+                    except Exception:
+                        pass
                 with web_push.connect(self.db_path) as db:
                     result = web_push.deliver(db, items)
                     web_push.deliver_weekly(db)

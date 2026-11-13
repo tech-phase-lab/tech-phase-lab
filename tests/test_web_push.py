@@ -438,7 +438,7 @@ class RefusalReasonTests(unittest.TestCase):
             def __enter__(self): return self
             def __exit__(self, *a): return False
             def read(self, n): return self.body
-        past = _json.dumps({'ok': True, 'pro': True, 'accessExpiresAt': 1.0}).encode()
+        past = _json.dumps({'ok': True, 'pro': True, 'accessExpiresAt': 1.0, 'environment': 'preview'}).encode()
         class Opener:
             def open(self, request, timeout): return Response(past)
         out = io.StringIO()
@@ -446,4 +446,6 @@ class RefusalReasonTests(unittest.TestCase):
              patch.object(push, 'build_opener', lambda *a: Opener()), contextlib.redirect_stdout(out):
             self.assertEqual(push.member_expiry('user_x'), 1.0)
         self.assertIn('"result": "access-over"', out.getvalue())
+        self.assertEqual(push.MEMBERSHIP_STATE['result'], 'access-over')
         self.assertNotIn('user_x', out.getvalue())
+        self.assertEqual(push.MEMBERSHIP_STATE['environment'], 'preview')   # the health field that shows a preview deployment answers
