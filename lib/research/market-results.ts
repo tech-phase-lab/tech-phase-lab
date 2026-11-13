@@ -27,6 +27,8 @@ export function parseResultBriefs(value: unknown): ResultBrief[] {
     const hosts=new Set((providers as {ticker:string;allowedHosts:string[]}[]).find(p=>p.ticker===ticker)?.allowedHosts??[]);
     const announced=researchId===`ir-announce-${id}`&&kind==='earnings'&&url.protocol==='https:'&&hosts.has(url.hostname)&&!url.port;
     const issuer=announced||researchId===`ir-flash-${id}`&&kind==='earnings'&&(
+      // the company's own page (an official host configured for that company), e.g. NVIDIA's newsroom
+      (url.protocol==='https:'&&hosts.has(url.hostname)&&!url.port)||
       (url.origin==='https://nebius.com'&&/^\/newsroom\/[a-z0-9-]+$/.test(url.pathname))
       ||(url.origin==='https://www.sec.gov'&&/^\/Archives\/edgar\/data\/\d+\/\d+\/[A-Za-z0-9_.-]+$/.test(url.pathname)));
     if(!/^\d+$/.test(id)||!(post||issuer)||!['earnings','economic'].includes(kind)||!/^([A-Z][A-Z0-9.-]{0,9})$/.test(ticker)

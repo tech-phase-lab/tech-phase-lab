@@ -158,3 +158,15 @@ test('an "announced" line has no figures, only the company\'s own page, and cann
   // a flash or post still needs figures
   assert.throws(() => parseResultBriefs([{ ...base, url, researchId:'ir-flash-700' }]));
 });
+
+test('a figures flash may link the company\'s own official page, but not another host', () => {
+  const base = { id:'710', researchId:'ir-flash-710', kind:'earnings', ticker:'NVDA', period:'Q3 FY2027',
+    titleJa:'NVDA Q3 FY2027決算：売上高$108.0B', titleEn:'NVDA Q3 FY2027 earnings: Revenue $108.0B',
+    facts:[{key:'revenue',ja:'売上高',en:'Revenue',value:'$108.0B',comparisons:{yearAgo:'$57.0B'}},{key:'eps',ja:'EPS',en:'EPS',value:'$2.5'},{key:'net-income',ja:'純損益',en:'Net income',value:'$60B'}],
+    url:'https://nvidianews.nvidia.com/news/nvidia-announces-financial-results', publisher:'NVIDIA IR',
+    publishedAt:'2026-11-17T21:20:00.000+00:00', observedAt:'2026-11-17T21:20:00.000+00:00', publicAt:'2026-11-17T21:20:05.000+00:00',
+    processingMs:5, sourceToDetectionMs:null, detectionToPublicMs:5000 };
+  assert.equal(parseResultBriefs([base])[0].url, base.url);
+  for (const bad of [{url:'https://nvidianews.nvidia.com.evil.example/x'},{url:'http://nvidianews.nvidia.com/x'},{url:'https://nvidianews.nvidia.com:8443/x'},{url:'https://example.com/x'},{ticker:'NBIS'}])
+    assert.throws(() => parseResultBriefs([{...base,...bad}]));
+});
