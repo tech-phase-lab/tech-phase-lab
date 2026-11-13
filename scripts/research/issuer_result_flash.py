@@ -340,6 +340,8 @@ def parse_statement(text, cfg):
             rows[key] = statement_row(block, label[0], label[1])
         else:
             rows[key] = statement_row(block, label, n)
+    if cfg.get('swap'):  # the release prints the year-earlier column first: put this quarter first, the year-ago column second
+        rows = {k: ([v[1], v[0], *v[2:]] if v else v) for k, v in rows.items()}
     if not rows['revenue'] or rows['revenue'][0] <= 0 or not rows['revenue'][ago] > 0:
         raise ValueError('revenue-row-unrecognized')
     if cfg.get('growth'):
@@ -363,11 +365,17 @@ def parse_statement(text, cfg):
         return None not in (x, y, z) and abs((x - y) - z) <= cfg['tol']
     # a column is trusted only when every identity holds in both the current and the year-earlier column
     gross_ok = all(agrees('revenue', 'cost', 'gross', i) for i in (0, ago)) if rows.get('cost') else False
-    op_ok = gross_ok and all(agrees('gross', 'opex', 'operating', i) for i in (0, ago))
+    if cfg.get('op-direct'):  # no gross profit line: operating income = revenue - total operating costs
+        op_ok = all(agrees('revenue', 'cost', 'operating', i) for i in (0, ago))
+    else:
+        op_ok = gross_ok and all(agrees('gross', 'opex', 'operating', i) for i in (0, ago))
     if cfg.get('net-chain') == 'continuing':  # income before tax - tax + equity income = continuing income; + discontinued = net income
         net_ok = all(None not in (col('pretax', i), col('tax', i), col('equity', i), col('cont', i), col('disc', i), col('net', i))
                      and abs(col('pretax', i) - col('tax', i) + col('equity', i) - col('cont', i)) <= cfg['tol']
                      and abs(col('cont', i) + col('disc', i) - col('net', i)) <= cfg['tol'] for i in (0, ago))
+    elif cfg.get('net-chain') == 'additive':  # tax and equity-method activity are printed with their sign: pretax + tax + equity = net income
+        net_ok = all(None not in (col('pretax', i), col('tax', i), col('equity', i), col('net', i))
+                     and abs(col('pretax', i) + col('tax', i) + col('equity', i) - col('net', i)) <= cfg['tol'] for i in (0, ago))
     else:
         net_ok = all(agrees('pretax', 'tax', 'net', i) for i in (0, ago)) if rows.get('tax') is not None else False
     if net_ok and cfg['rows'].get('attrib'):  # net income attributable to common = net income - non-controlling interests
@@ -401,6 +409,21 @@ STATEMENT = {
                       'operating': 'Income from operations', 'pretax': 'Income before income taxes', 'tax': 'Provision for income taxes',
                       'net': 'Net income', 'eps': r'Earnings per share: Basic \$ [\d.]+ (?:\$ [\d.]+ ){3}Diluted',
                       'shares': (r'Weighted average number of shares: Basic \d+ \d+ \d+ \d+ Diluted', 3)}},
+    'GOOGL': {'identity': 'alphabet', 'heading': 'CONSOLIDATED STATEMENTS OF INCOME(In millions', 'units': 'in millions', 'scale': Decimal(1), 'tol': Decimal(1),
+              'columns': 4, 'swap': True, 'year-ago': 1, 'op-direct': True, 'growth': r'Consolidated Alphabet revenues increased (\d+)% to',
+              'period-re': r'Announces (First|Second|Third|Fourth) Quarter (20\d\d) Results', 'period': lambda q, y: f'Q{q} {y}',
+              'rows': {'revenue': 'Revenues', 'cost': 'Total costs and expenses', 'operating': 'Income from operations',
+                       'pretax': 'Income before income taxes', 'tax': 'Provision for income taxes', 'net': 'Net income',
+                       'nci': 'Preferred stock dividends', 'attrib': 'Net income available to common stockholders',
+                       'eps': 'Diluted net income per common share',
+                       'shares': 'Number of shares used in diluted net income per common share calculation'}},
+    'AMZN': {'identity': 'amazon', 'heading': 'Consolidated Statements of Operations(in millions', 'units': 'in millions', 'scale': Decimal(1), 'tol': Decimal(1),
+             'columns': 4, 'swap': True, 'year-ago': 1, 'op-direct': True, 'net-chain': 'additive', 'growth': r'\u2022Net sales increased (\d+)% to',
+             'period-re': r'ANNOUNCES (FIRST|SECOND|THIRD|FOURTH) QUARTER RESULTS.{0,700}?quarter ended [A-Z][a-z]+ \d{1,2}, (20\d\d)', 'period': lambda q, y: f'Q{q} {y}',
+             'rows': {'revenue': 'Total net sales', 'cost': 'Total operating expenses', 'operating': 'Operating income',
+                      'pretax': 'Income before income taxes', 'tax': 'Provision for income taxes',
+                      'equity': r'Equity-method investment activity, net of tax', 'net': 'Net income', 'eps': 'Diluted earnings per share',
+                      'shares': r'Weighted-average shares used in computation of earnings per share: Basic ' + AMT + ' ' + AMT + ' ' + AMT + ' ' + AMT + ' Diluted'}},
     'MSFT': {'identity': 'microsoft', 'heading': 'INCOME STATEMENTS (In millions', 'end': 'COMPREHENSIVE INCOME STATEMENTS', 'glue': True,
              'units': 'in millions', 'scale': Decimal(1), 'tol': Decimal(1), 'columns': 2, 'year-ago': 1, 'growth': r'Revenue was \$[\d.]+ billion and increased (\d+)%',
              'period-re': r'Announces (First|Second|Third|Fourth) Quarter Results.{0,300}?quarter ended [A-Z][a-z]+ \d{1,2}, (20\d\d)',
@@ -754,6 +777,8 @@ PROFILES = {
     'PLTR': {'publisher': 'Palantir IR (SEC 8-K)', 'parse': lambda t, u=None: parse_statement(t, STATEMENT['PLTR']), 'marker': STATEMENT['PLTR']['heading']},
     'SNDK': {'publisher': 'Sandisk IR (SEC 8-K)', 'parse': lambda t, u=None: parse_statement(t, STATEMENT['SNDK']), 'marker': STATEMENT['SNDK']['heading']},
     'AMAT': {'publisher': 'Applied Materials IR (SEC 8-K)', 'parse': lambda t, u=None: parse_statement(t, STATEMENT['AMAT']), 'marker': STATEMENT['AMAT']['heading']},
+    'GOOGL': {'publisher': 'Alphabet IR (SEC 8-K)', 'parse': lambda t, u=None: parse_statement(t, STATEMENT['GOOGL']), 'marker': STATEMENT['GOOGL']['heading']},
+    'AMZN': {'publisher': 'Amazon IR (SEC 8-K)', 'parse': lambda t, u=None: parse_statement(t, STATEMENT['AMZN']), 'marker': STATEMENT['AMZN']['heading']},
     'MSFT': {'publisher': 'Microsoft IR (SEC 8-K)', 'parse': lambda t, u=None: parse_statement(t, STATEMENT['MSFT']), 'marker': STATEMENT['MSFT']['heading']},
     'AMD': {'publisher': 'AMD IR (SEC 8-K)', 'parse': lambda t, u=None: parse_statement(t, STATEMENT['AMD']), 'marker': STATEMENT['AMD']['heading']},
     'MRVL': {'publisher': 'Marvell IR (SEC 8-K)', 'parse': lambda t, u=None: parse_statement(t, STATEMENT['MRVL']),
