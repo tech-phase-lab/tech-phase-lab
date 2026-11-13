@@ -1,4 +1,5 @@
 import type { ResearchEvent } from './data';
+import providers from './providers.json' with { type: 'json' };
 import { deduplicateResearchEvents } from './deduplicate-events.ts';
 
 export type ResultComparisons = { forecast?: string; previous?: string; previousRevisedFrom?: string; yearAgo?: string };
@@ -22,13 +23,16 @@ export function parseResultBriefs(value: unknown): ResultBrief[] {
     // A flash is either a post of a known X account (x-result-) or the headline numbers copied from the issuer's own results
     // table (ir-flash-, Nov 12): earnings only, and only from the issuer's newsroom or its SEC filing.
     const post=researchId===`x-result-${id}`&&url.origin==='https://x.com'&&/^\/(tipranks|theflynews|wallstengine|fabymetal4|trade_the_news)\/status\/\d+$/i.test(url.pathname);
-    const issuer=researchId===`ir-flash-${id}`&&kind==='earnings'&&(
+    // "announced" line (ir-announce-): the company's own results page exists; no figures, only its official link.
+    const hosts=new Set((providers as {ticker:string;allowedHosts:string[]}[]).find(p=>p.ticker===ticker)?.allowedHosts??[]);
+    const announced=researchId===`ir-announce-${id}`&&kind==='earnings'&&url.protocol==='https:'&&hosts.has(url.hostname)&&!url.port;
+    const issuer=announced||researchId===`ir-flash-${id}`&&kind==='earnings'&&(
       (url.origin==='https://nebius.com'&&/^\/newsroom\/[a-z0-9-]+$/.test(url.pathname))
       ||(url.origin==='https://www.sec.gov'&&/^\/Archives\/edgar\/data\/\d+\/\d+\/[A-Za-z0-9_.-]+$/.test(url.pathname)));
     if(!/^\d+$/.test(id)||!(post||issuer)||!['earnings','economic'].includes(kind)||!/^([A-Z][A-Z0-9.-]{0,9})$/.test(ticker)
       ||url.search||url.hash||url.username||url.password) throw Error('Invalid result source');
     const date=(name:string)=>{const v=field(name,50);if(!/T.*(Z|[+-]\d\d:\d\d)$/.test(v)||!Number.isFinite(Date.parse(v)))throw Error('Invalid result date');return v;};
-    if(!Array.isArray(r.facts)||!r.facts.length||r.facts.length>8)throw Error('Invalid result facts');
+    if(!Array.isArray(r.facts)||r.facts.length>8||(!r.facts.length&&!announced))throw Error('Invalid result facts');
     const facts=r.facts.map(f=>{
       if(!f||typeof f!=='object')throw Error('Invalid fact');
       const o=f as Record<string,unknown>;
@@ -65,7 +69,7 @@ export function parseResultBriefs(value: unknown): ResultBrief[] {
 }
 
 export function resultEvents(briefs:ResultBrief[]): ResearchEvent[] {
-  const events: ResearchEvent[] = briefs.filter(r=>r.kind==='earnings').toSorted((a,b)=>Date.parse(b.publishedAt)-Date.parse(a.publishedAt)||b.researchId.localeCompare(a.researchId)).map(r=>{
+  const events: ResearchEvent[] = briefs.filter(r=>r.kind==='earnings'&&r.facts.length>0).toSorted((a,b)=>Date.parse(b.publishedAt)-Date.parse(a.publishedAt)||b.researchId.localeCompare(a.researchId)).map(r=>{
     const copy=(ja:string,en:string)=>({ja,en});
     const facts=r.facts.map(f=>({text:copy(`${f.ja}：${f.value}`,`${f.en}: ${f.value}`),sourceIds:[r.researchId]}));
     return {id:r.researchId,ticker:r.ticker,company:r.ticker,category: ['MU','SKHY','SNDK','NVDA','AMD','ARM','TSM','ASML','AMAT','INTC','AEHR'].includes(r.ticker)?'memory':['NBIS','IREN','MSFT','AMZN','GOOGL','META','PLTR','APP'].includes(r.ticker)?'cloud':'other',kind:'earnings',

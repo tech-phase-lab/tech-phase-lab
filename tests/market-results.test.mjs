@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {parseResultBriefs,resultEvents} from '../lib/research/market-results.ts';
+import providers from '../lib/research/providers.json' with {type:'json'};
 import {publicNewsPayload} from '../lib/research/general-news.ts';
 import {publicEvent} from '../lib/research/access.ts';
 import {evidenceIssues} from '../lib/research/quality.ts';
@@ -138,4 +139,22 @@ test('issuer-table flashes keep the prior-year value as comparisons.yearAgo, and
   // an X post can never carry it
   const post = { ...base, id:'1', researchId:'x-result-1', url:'https://x.com/wallstengine/status/1' };
   assert.equal(parseResultBriefs([post])[0].facts[0].comparisons, undefined);
+});
+
+test('an "announced" line has no figures, only the company\'s own page, and cannot be forged', () => {
+  const base = { id:'700', researchId:'ir-announce-700', kind:'earnings', ticker:'NBIS', period:'Q3 2026',
+    titleJa:'NBIS 決算を発表しました', titleEn:'NBIS announced its results', facts:[],
+    url:'https://nebius.com/newsroom/example', publisher:'Nebius IR',
+    publishedAt:'2026-11-12T21:03:00.000+00:00', observedAt:'2026-11-12T21:03:00.000+00:00', publicAt:'2026-11-12T21:03:03.000+00:00',
+    processingMs:5, sourceToDetectionMs:null, detectionToPublicMs:3000 };
+  const hosts = providers.find(p => p.ticker === 'NBIS')?.allowedHosts ?? [];
+  const url = 'https://nebius.com/newsroom/example';
+  assert.ok(hosts.includes('nebius.com'));
+  const [brief] = parseResultBriefs([{ ...base, url }]);
+  assert.equal(brief.facts.length, 0);
+  assert.equal(resultEvents([brief]).length, 0);          // nothing to analyse
+  for (const bad of [{ url:'https://evil.example/x' }, { url:'http://nebius.com/x' }, { url:`${url}?a=1` }, { researchId:'ir-announce-701' }, { kind:'economic' }])
+    assert.throws(() => parseResultBriefs([{ ...base, url, ...bad }]));
+  // a flash or post still needs figures
+  assert.throws(() => parseResultBriefs([{ ...base, url, researchId:'ir-flash-700' }]));
 });
