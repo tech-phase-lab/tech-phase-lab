@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { movingAverages, splitBars, parseQuote, parseQuotes, parseBars, trimBars, chartSpec, easternToIso, toFavoriteQuote, parseStatistics, parseNextEarnings, money, signedMoney, signedPercent, compact, dateJa, rangePosition, rangeChange } from "../lib/research/market-quote.ts";
+import { movingAverages, splitBars, parseQuote, parseQuotes, parseBars, trimBars, chartSpec, easternToIso, splitExtendedBars, toFavoriteQuote, parseStatistics, parseNextEarnings, money, signedMoney, signedPercent, compact, dateJa, rangePosition, rangeChange } from "../lib/research/market-quote.ts";
 
 const quote = { symbol: "MU", name: "Micron", exchange: "NASDAQ", currency: "USD", datetime: "2026-11-09", timestamp: 1794000000, close: "715.41", change: "-17.74", percent_change: "-2.42", previous_close: "733.15", open: "720", high: "731.80", low: "705.20", volume: "18200000", is_market_open: true, fifty_two_week: { low: "412.60", high: "784.10" } };
 test("a quote keeps the provider numbers and rejects a different symbol or a bad price", () => {
@@ -93,4 +93,25 @@ test("a pre-market price that is current replaces the close in the watchlist row
   assert.equal(row.price, 722.8); assert.equal(row.session, "post" === row.session ? "post" : row.session); assert.ok(Math.abs(row.change - (722.8 - 715.41)) < 1e-9);
   const stale = toFavoriteQuote(parseQuote({ ...quote, is_market_open: false, extended_price: "722.80", extended_percent_change: "1.04", extended_timestamp: Math.floor(Date.now() / 1000) - 3600 }, "MU"));
   assert.equal(quoteForSession(stale, "MU", "auto").price, 715.41);
+});
+
+const bar = (at, close = 100) => ({ at, open: close, high: close + 1, low: close - 1, close, volume: 10 });
+test("extended-hours bars of the last day are split off; nothing is made up", () => {
+  const bars = [bar("2026-11-12 15:50:00"), bar("2026-11-12 16:05:00"), bar("2026-11-13 04:05:00"), bar("2026-11-13 09:30:00"), bar("2026-11-13 15:55:00"), bar("2026-11-13 16:00:00"), bar("2026-11-13 18:30:00")];
+  const { regular, extended } = splitExtendedBars(bars);
+  assert.deepEqual(extended.map(b => b.at), ["2026-11-13 16:00:00", "2026-11-13 18:30:00"]);
+  assert.equal(regular.length, 5);
+  const none = splitExtendedBars([bar("2026-11-13 09:30:00"), bar("2026-11-13 15:55:00")]);
+  assert.equal(none.extended.length, 0);
+  assert.equal(none.regular.length, 2);
+});
+test("pre-market bars of today split off from yesterday's after-hours bars", () => {
+  const { regular, extended } = splitExtendedBars([bar("2026-11-12 15:55:00"), bar("2026-11-12 17:00:00"), bar("2026-11-13 04:40:00"), bar("2026-11-13 05:10:00")]);
+  assert.deepEqual(extended.map(b => b.at), ["2026-11-13 04:40:00", "2026-11-13 05:10:00"]);
+  assert.equal(regular.length, 2);
+});
+test("a series made only of extended bars stays whole; an empty one stays empty", () => {
+  const only = [bar("2026-11-13 04:40:00"), bar("2026-11-13 05:10:00")];
+  assert.deepEqual(splitExtendedBars(only), { regular: only, extended: [] });
+  assert.deepEqual(splitExtendedBars([]), { regular: [], extended: [] });
 });
