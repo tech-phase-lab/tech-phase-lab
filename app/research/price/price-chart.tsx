@@ -112,6 +112,20 @@ function ChartBody({ bars, before = [], mode, interval, variant = "detail", ja, 
   const lastMa = ma.map(series => { for (let k = series.length - 1; k >= 0; k--) if (series[k] !== null) return series[k]; return null; });
   const volumeValue = active ? active.volume : defaultVolume !== undefined ? defaultVolume : bars[n - 1].volume;
   const extTone = !extended || extended.price === extended.close ? "#8c98ab" : extended.price > extended.close ? UP : DOWN;
+  // Band words ("Pre" on the first row, "After" on the second, so a narrow after-hours band never fights the pre-market band next to it): the latest bands first,
+  // a word that would overlap one already placed on its row is left out (dense charts).
+  const bandLabels = (() => {
+    const preWord = ja ? "プレ" : "Pre", afterWord = ja ? "アフター" : "After";
+    const items = [...runs.map(r => ({ x: step * r.from, w: step * (r.to - r.from + 1), pre: r.pre, text: r.pre ? preWord : afterWord })), ...(reserve && extended ? [{ x: step * n, w: pw - step * n, pre: extended.label === preWord, text: extended.label }] : [])].reverse();
+    const taken: [number, number][][] = [[], []], out: { key: string; center: number; row: number; text: string }[] = [];
+    for (const item of items) {
+      const half = item.text.length * (ja ? 5.5 : 3) + 3, row = item.pre ? 0 : 1, center = Math.max(half, Math.min(pw - half, item.x + item.w / 2));
+      if (taken[row].some(([from, to]) => center - half < to && center + half > from)) continue;
+      taken[row].push([center - half, center + half]);
+      out.push({ key: `${item.x}`, center, row, text: item.text });
+    }
+    return out;
+  })();
   const maAt = (i: number) => (board && cross !== null ? ma[i]?.[cross] : lastMa[i]) ?? null;
   const boardVolume = board && mode === "candles" && withVolume;
   return <div>
@@ -137,8 +151,7 @@ function ChartBody({ bars, before = [], mode, interval, variant = "detail", ja, 
       </svg>
       {grid.map(g => <span key={g.y} className={styles.axisLabel} style={{ top: `${g.y / H * 100}%` }}>{g.label}</span>)}
       {zoomed && <button type="button" className={styles.reset} onPointerDown={event => event.stopPropagation()} onClick={onReset}>{ja ? "全体" : "Reset"}</button>}
-      {[...runs.map(r => ({ x: step * r.from, w: step * (r.to - r.from + 1), text: r.pre ? (ja ? "プレ" : "Pre") : (ja ? "アフター" : "After") })), ...(reserve && extended ? [{ x: step * n, w: pw - step * n, text: extended.label }] : [])]
-        .filter(band => band.w >= band.text.length * 10 + 4).map(band => <span key={band.x} className={styles.extLabel} style={{ left: `${(band.x + band.w / 2) / W * 100}%`, top: `${12 / H * 100}%` }}>{band.text}</span>)}
+      {bandLabels.map(label => <span key={label.key} className={styles.extLabel} style={{ left: `${label.center / W * 100}%`, top: `${(12 + label.row * 14) / H * 100}%` }}>{label.text}</span>)}
       {extended && <span className={styles.priceTag} style={{ top: `${Y(extended.price) / H * 100}%`, background: extTone }} data-testid="ext-tag">{plain(extended.price)}</span>}
       {withVolume && !boardVolume && <span className={styles.volume} style={{ top: `${(VB - VH) / H * 100 - 1}%` }}><span className={styles.jp}>{ja ? "出来高" : "Vol"}</span> {volumeValue ? compact(volumeValue) : "—"}</span>}
       {dateIdx.filter(k => cross === null || Math.abs(X(k) - X(cross)) > 42).map(k => <span key={k} className={styles.dateLabel} style={{ left: `${X(k) / W * 100}%` }}>{label(bars[k].at)}</span>)}
