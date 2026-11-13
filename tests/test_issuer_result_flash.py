@@ -103,6 +103,17 @@ class Parsers(unittest.TestCase):
         # another company's release is not read with this layout; a changed heading is not guessed
         with self.assertRaises(ValueError): parse('MRVL',avgo)
         with self.assertRaises(ValueError): parse('CRDO',crdo.replace('Condensed Consolidated Statements of Operations','Condensed Statements',1))
+    def test_micron_checked_against_highlights_and_its_own_arithmetic(self):
+        text=fixture('micron-results-q4fy26.txt')
+        parsed=flash.parse_micron(text)
+        self.assertEqual(parsed['period'],'Q4 FY2026')
+        self.assertEqual([(f[0],f[1],f[2]) for f in parsed['facts']],[('revenue','$54.229B','$11.315B'),('eps','$32.87','$2.83'),
+            ('net-income','$37.701B','$3.201B'),('operating-income','$43.751B','$3.654B')])
+        with self.assertRaises(ValueError): flash.parse_micron(text.replace('Revenue $ 54,229','Revenue $ 55,229'))
+        keys=lambda x:[f[0] for f in flash.parse_micron(x)['facts']]
+        self.assertNotIn('operating-income',keys(text.replace('Operating income 43,751','Operating income 43,851')))
+        self.assertNotIn('net-income',keys(text.replace('Net income $ 37,701','Net income $ 37,801')))
+        with self.assertRaises(ValueError): flash.parse_micron(text.replace('Micron Technology','Other Company').replace('MICRON TECHNOLOGY','OTHER COMPANY'))
     def test_coreweave_table_and_guidance(self):
         parsed=flash.parse_coreweave(fixture('coreweave-results-q326.txt'))
         self.assertEqual(parsed['period'],'Q3 2026')

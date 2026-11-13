@@ -429,6 +429,55 @@ def parse_dell(text, url=None):
     return {'period': f'Q{quarter} FY{year}', 'facts': facts}
 
 
+def parse_micron(text, url=None):
+    """Micron's results release (8-K EX-99.1): 'Fiscal Q4 2026 Highlights' bullets in billions, then 'CONSOLIDATED STATEMENTS OF OPERATIONS'
+    in millions with columns this quarter, previous quarter, same quarter a year earlier, then the fiscal year to date.
+    Revenue and net income must agree with the highlights; operating income = gross margin - operating expenses; EPS = net income / diluted shares."""
+    t = clean(text)
+    if 'micron technology' not in t.lower():
+        raise ValueError('issuer-identity-missing')
+    head = re.findall(r'Fiscal Q([1-4]) (20\d\d) Highlights', t[:3000])
+    if len(head) != 1:
+        raise ValueError('highlights-heading-missing')
+    quarter, year = int(head[0][0]), int(head[0][1])
+    start = t.find('CONSOLIDATED STATEMENTS OF OPERATIONS')
+    if start < 0:
+        raise ValueError('statement-heading-missing')
+    block = t[start:start + 2400]
+    if 'in millions' not in block[:200].lower():
+        raise ValueError('units-unrecognized')
+    row = lambda label, n=5: statement_row(block, label, n)
+    revenue, cost, gross, op, net = row('Revenue'), row('Cost of goods sold'), row('Gross margin'), row('Operating income'), row('Net income')
+    if not revenue or revenue[0] <= 0 or revenue[2] <= 0:
+        raise ValueError('revenue-row-unrecognized')
+    bullet = re.findall(r'Revenue of \$(\d+(?:\.\d+)?) billion versus \$(\d+(?:\.\d+)?) billion for the prior quarter and \$(\d+(?:\.\d+)?) billion for the same period last year', t[:3000])
+    if len(bullet) != 1:
+        raise ValueError('highlights-revenue-missing')
+    for stated, printed in zip(bullet[0], revenue[:3]):  # the highlights are rounded to $0.01B
+        if abs(Decimal(stated) * 1000 - printed) > Decimal('5.5'):
+            raise ValueError('change-mismatch')
+    metrics = {'revenue': (revenue[0], revenue[2])}
+    expenses = [row('Research and development'), row('Selling, general, and administrative'), row(r'Other operating \(income\) expense, net')]
+    if gross and cost and all(abs(revenue[i] - cost[i] - gross[i]) <= 1 for i in (0, 2)) and op and all(expenses) \
+            and all(abs(gross[i] - sum(e[i] for e in expenses) - op[i]) <= 1 for i in (0, 2)):
+        metrics['operating-income'] = (op[0], op[2])
+    eps = statement_row(block, r'Earnings per share Basic (?:\$ [\d.]+ ){5}Diluted', 5)
+    shares = statement_row(block, r'Number of shares used in per share calculations Basic [\d,]+ (?:[\d,]+ ){4}Diluted', 5)
+    facts = []
+    net_ok = bool(net and eps and shares and all(shares[i] > 0 and abs(net[i] / shares[i] - eps[i]) <= Decimal('0.015') + abs(eps[i]) * Decimal('0.02') for i in (0, 2)))
+    stated_net = re.findall(r'(?<![-\w])GAAP net income of \$(\d+(?:\.\d+)?) billion, or \$(\d+(?:\.\d+)?) per diluted share', t[:3000])
+    if net_ok and stated_net and abs(Decimal(stated_net[0][0]) * 1000 - net[0]) <= Decimal('5.5') and Decimal(stated_net[0][1]) == eps[0]:
+        metrics['net-income'] = (net[0], net[2])
+    else:
+        net_ok = False
+    facts = [(key, money_millions(v[0]), money_millions(v[1])) for key, v in metrics.items()]
+    if net_ok:
+        facts.append(('eps', per_share(eps[0]), per_share(eps[2])))
+    order = {k: i for i, k in enumerate(ORDER)}
+    facts.sort(key=lambda f: order[f[0]])
+    return {'period': f'Q{quarter} FY{year}', 'facts': facts}
+
+
 NEBIUS_RESULTS_PATH = re.compile(r'^/newsroom/(?=[a-z0-9-]*quarter)(?=[a-z0-9-]*financial-results)(?![a-z0-9-]*date)[a-z0-9-]+/?$')
 PDF_LINK = re.compile(r'https://assets\.nebius\.com/assets/[0-9a-f-]{36}/[^"\\\s)<>]*?\.pdf', re.I)
 
@@ -512,6 +561,7 @@ PROFILES = {
     'CRWV': {'publisher': 'CoreWeave IR (SEC 8-K)', 'parse': parse_coreweave, 'marker': 'Financial Highlights'},
     'NVDA': {'publisher': 'NVIDIA IR', 'parse': parse_nvidia, 'marker': 'Summary GAAP'},
     'DELL': {'publisher': 'Dell Technologies IR (SEC 8-K)', 'parse': parse_dell, 'marker': 'Statements of Income and Related Financial Highlights'},
+    'MU': {'publisher': 'Micron IR (SEC 8-K)', 'parse': parse_micron, 'marker': 'CONSOLIDATED STATEMENTS OF OPERATIONS'},
     'MRVL': {'publisher': 'Marvell IR (SEC 8-K)', 'parse': lambda t, u=None: parse_statement(t, STATEMENT['MRVL']),
              'marker': STATEMENT['MRVL']['heading']},
     'CRDO': {'publisher': 'Credo IR (SEC 8-K)', 'parse': lambda t, u=None: parse_statement(t, STATEMENT['CRDO']),

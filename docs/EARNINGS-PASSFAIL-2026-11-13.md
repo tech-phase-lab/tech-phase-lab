@@ -1,10 +1,10 @@
 # Earnings flash pass/fail (latest real release of each watch-list company)
 
-Generated 2026-11-13 09:32Z · PASS 7 / 22
+Generated 2026-11-13 09:32Z · PASS 8 / 22
 
 | Ticker | Verdict | Detection source | Figures | Reason |
 |---|---|---|---|---|
-| MU | FAIL | SEC 8-K 2026-09-30T20:02Z | 0 | no parser for this company yet |
+| MU | PASS | SEC 8-K 2026-09-30T20:02Z | 4 | 4 figures, e.g. revenue $54.229B |
 | SKHY | FAIL | no route | 0 | no release text found |
 | SNDK | FAIL | SEC 8-K 2026-10-29T20:13Z | 0 | no parser for this company yet |
 | NBIS | PASS | newsroom page | 3 | 3 figures, e.g. revenue $980.8M |
@@ -25,7 +25,7 @@ Generated 2026-11-13 09:32Z · PASS 7 / 22
 | MSFT | FAIL | SEC 8-K 2026-10-28T20:04Z | 0 | no parser for this company yet |
 | AMZN | FAIL | SEC 8-K 2026-10-29T20:05Z | 0 | no parser for this company yet |
 | GOOGL | FAIL | SEC 8-K 2026-10-28T20:01Z | 0 | no parser for this company yet |
-| ORCL | FAIL | no route | 0 | no release text found |
+| ORCL | FAIL | no route | 0 | Oracle files no 8-K Item 2.02 and oracle.com refuses automated fetches (403): needs an IR/wire route |
 
 ## How this table is made
 `python3 scripts/research/earnings_backtest.py` (add `--json` for a machine-readable copy) takes each company's **latest real release** (SEC 8-K Item 2.02 or 6-K exhibit;
