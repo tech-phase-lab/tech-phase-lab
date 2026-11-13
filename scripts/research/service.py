@@ -1122,6 +1122,13 @@ class AutomaticMonitor:
                 except Exception:
                     economic = []
                     print("web-push-economic-unavailable", flush=True)
+                if time.monotonic() - getattr(self, "_membership_probe_at", -1e9) >= 600:
+                    # Which deployment answers the membership check (production or preview)? Read-only, every ten minutes.
+                    self._membership_probe_at = time.monotonic()
+                    try:
+                        web_push.membership_probe(release_watch.PRODUCTION_OWNER_MEMBER_ID)
+                    except Exception:
+                        pass
                 with web_push.connect(self.db_path) as db:
                     result = web_push.deliver(db, items)
                     web_push.deliver_weekly(db)
@@ -3695,8 +3702,11 @@ class Handler(BaseHTTPRequestHandler):
                     else:
                         result = web_push.register(db, payload, set(self.app.tickers) | signals.X_EXTRA_TICKERS)
                 self.send_json(200, {"ok": True, **result})
-            except ValueError:
-                self.send_json(400, {"ok": False, "error": "invalid-registration"})
+            except ValueError as exc:
+                reason = web_push.refusal_reason(exc)
+                # One line per refusal with the action and the reason only (never the device, the member or the provider's text).
+                print(json.dumps({"event": "push-action-refused", "action": path.rsplit("/", 1)[1], "reason": reason}), flush=True)
+                self.send_json(400, {"ok": False, "error": reason})
             except Exception:
                 self.send_json(503, {"ok": False})
             return
