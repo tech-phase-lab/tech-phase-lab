@@ -59,24 +59,24 @@ function plans(ja: boolean) {
   ];
   return { free, pro };
 }
-const groups = (list: Group[]) => list.map(group => <section key={group.title} className={styles.group}>
+const groups = (list: Group[], ja: boolean) => list.map(group => <section key={group.title} className={styles.group}>
     <h4><span>{group.title}</span></h4>
-    <ul>{group.rows.map(([name, note]) => <li key={name}><i aria-hidden="true" />{note ? <><b>{name}</b><em aria-hidden="true" /><span>{note}</span></> : <span className={styles.plain}>{name}</span>}</li>)}</ul>
+    <ul data-ja={ja}>{group.rows.map(([name, note]) => <li key={name}><i aria-hidden="true" />{note ? <><b>{name}</b><em aria-hidden="true" /><span>{note}</span></> : <span className={styles.plain}>{name}</span>}</li>)}</ul>
   </section>);
 /** The PRO feature list under the price (shared by the introduction card and the account card). */
-export function ProFeatures({ ja }: { ja: boolean }) { return <>{groups(plans(ja).pro)}</>; }
+export function ProFeatures({ ja }: { ja: boolean }) { return <>{groups(plans(ja).pro, ja)}</>; }
 export default function PlanCards({ lang }: { lang: Language }) {
   const ja = lang === "ja";
   const t = (a: string, b: string) => ja ? a : b;
   const { free, pro } = plans(ja);
   return <div className={styles.stack}>
-    <ProOfferCard ja={ja} href="/research/account?upgrade=1">{groups(pro)}</ProOfferCard>
+    <ProOfferCard ja={ja} href="/research/account?upgrade=1">{groups(pro, ja)}</ProOfferCard>
     <article className={`${styles.freeCard} ${priceFont.variable}`}>
       <div className={styles.head}><span>FREE</span></div>
       <div className={styles.tabsSpacer} aria-hidden="true" />
       <p className={styles.priceRow}><span className={styles.priceN}>{t("0円", "¥0")}</span><span className={styles.priceU}>{t("/ 月", "/ month")}</span></p>
       <h3>{t("米国株を調べる、深く知る。", "Explore US stocks in depth.")}</h3>
-      {groups(free)}
+      {groups(free, ja)}
     </article>
     <p className={styles.note}>{t("PROプランは自動更新です。解約はマイアカウントからいつでも可能です。", "PRO renews automatically. Cancel anytime from My Account.")}<br />
       <Link href="/terms">{t("利用規約", "Terms")}</Link> ・ <Link href={TOKUSHOHO_HREF}>{t("特定商取引法に基づく表記", "Legal Notice")}</Link></p>

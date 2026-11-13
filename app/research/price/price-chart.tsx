@@ -34,8 +34,10 @@ type ChartProps = {
   /** Pre-market / after-hours at the right end: the band's label, the latest extended price, the close it is compared with, and the extended bars the
    * provider returned (empty when it returned none: then only the band and the price tag are drawn). */
   extended?: { label: string; price: number; close: number; bars: Bar[] };
+  /** The volume shown while no bar is marked, when it is not the last bar's (the market board shows the session's volume). */
+  defaultVolume?: number | null;
   /** Called with the bar under the crosshair (or null), so a header can show its open / high / low / close / volume. */ onActive?: (bar: Bar | null) => void };
-function ChartBody({ bars, before = [], mode, interval, variant = "detail", ja, maPeriods, accent = GOLD, lineColor, extended, onActive, zoomed, onZoom, onReset }: ChartProps & { zoomed: boolean; onZoom: (ratio: number, center: number, shift?: number) => void; onReset: () => void }) {
+function ChartBody({ bars, before = [], mode, interval, variant = "detail", ja, maPeriods, accent = GOLD, lineColor, extended, defaultVolume, onActive, zoomed, onZoom, onReset }: ChartProps & { zoomed: boolean; onZoom: (ratio: number, center: number, shift?: number) => void; onReset: () => void }) {
   const box = useRef<HTMLDivElement>(null);
   const touches = useRef(new Map<number, number>()), pinch = useRef<{ gap: number; mid: number } | null>(null);
   const board = variant === "board";
@@ -94,7 +96,7 @@ function ChartBody({ bars, before = [], mode, interval, variant = "detail", ja, 
   const line = bars.map((b, k) => `${k ? "L" : "M"}${X(k).toFixed(1)} ${Y(b.close).toFixed(1)}`).join(" ");
   const color = lineColor ?? (rising ? UP : DOWN), gradientId = `area-${variant}`;
   const lastMa = ma.map(series => { for (let k = series.length - 1; k >= 0; k--) if (series[k] !== null) return series[k]; return null; });
-  const volumeValue = active?.volume ?? bars[n - 1].volume;
+  const volumeValue = active ? active.volume : defaultVolume !== undefined ? defaultVolume : bars[n - 1].volume;
   const extTone = !extended || extended.price === extended.close ? "#8c98ab" : extended.price > extended.close ? UP : DOWN;
   const maAt = (i: number) => (board && cross !== null ? ma[i]?.[cross] : lastMa[i]) ?? null;
   const boardVolume = board && mode === "candles" && withVolume;
