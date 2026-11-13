@@ -496,6 +496,67 @@ STATEMENT = {
 }
 
 
+ORACLE_QUARTER = {'august': (1, 1), 'november': (2, 1), 'february': (3, 0), 'may': (4, 0)}  # month -> (fiscal quarter, years after the calendar year)
+
+
+def parse_oracle(text, url=None):
+    """Oracle's results release (8-K EX-99.1): an income statement whose columns carry a '% of revenues' cell after each amount.
+    Revenue against the headline's own 'Total Revenues up 30%', operating income = revenue - total operating expenses, net income =
+    pretax income - tax, EPS = net income available to common / diluted shares. Rows that do not add up are dropped."""
+    t = clean(text)
+    if 'oracle' not in t.lower():
+        raise ValueError('issuer-identity-missing')
+    start = t.find('CONDENSED CONSOLIDATED STATEMENTS OF OPERATIONS')
+    if start < 0:
+        raise ValueError('statement-heading-missing')
+    block = t[start:start + 3200]
+    period = re.search(r'\(\$ in millions, except per share data\) Three Months Ended ([A-Z][a-z]+) \d{1,2}, % Increase', block[:300])
+    month = period[1].lower() if period else None
+    years = re.search(r'(20\d\d) % of Revenues (20\d\d) % of Revenues', block[:400])
+    if month not in ORACLE_QUARTER or not years or int(years[1]) - 1 != int(years[2]):
+        raise ValueError('period-unrecognized')
+    quarter, ahead = ORACLE_QUARTER[month]
+    fiscal_year = int(years[1]) + ahead
+    amount = r'\(?([\d,]+(?:\.\d+)?)\s?\)?'
+    pct = r'\(?\d+%\)?'
+
+    def pair(label, with_percent=True):
+        """(this year, last year) of a row printed '<label> [$] n [n%] [$] n [n%] ...'; exactly one such row."""
+        cell = r'(?:\$ )?' + amount + ((' ' + pct) if with_percent else '')
+        found = re.findall(r'(?<![A-Za-z])' + label + r' (?:\(\d\) )?' + cell + ' ' + cell + r'(?= |$)', block)
+        if len(found) != 1:
+            return None
+        return Decimal(found[0][0].replace(',', '')), Decimal(found[0][1].replace(',', ''))
+    revenue = pair('Total revenues')
+    if not revenue or revenue[1] <= 0:
+        raise ValueError('revenue-row-unrecognized')
+    growth = re.findall(r'Total Revenues up (\d+)% in USD', t[:2500])
+    if len(growth) != 1 or abs((revenue[0] / revenue[1] - 1) * 100 - Decimal(growth[0])) > Decimal('0.55'):
+        raise ValueError('change-mismatch')
+    expenses, operating = pair('Total operating expenses'), pair('OPERATING INCOME')
+    pretax, tax, net = pair('INCOME BEFORE INCOME TAXES'), pair('Provision for income taxes'), pair('NET INCOME')
+    metrics = {'revenue': revenue}
+    if expenses and operating and all(abs(revenue[i] - expenses[i] - operating[i]) <= Decimal(1) for i in (0, 1)):
+        metrics['operating-income'] = operating
+    if pretax and tax and net and all(abs(pretax[i] - tax[i] - net[i]) <= Decimal(1) for i in (0, 1)):
+        metrics['net-income'] = net
+    facts = [(key, money_millions(v[0]), money_millions(v[1])) for key, v in metrics.items()]
+    common = re.findall(r'NET INCOME AVAILABLE TO COMMON SHAREHOLDERS \$ ([\d,]+) \$ ([\d,]+)', block)
+    preferred = re.findall(r'Preferred stock dividends ([\d,]+) (?:[\d,]+|\u2014)', block)
+    eps = re.findall(r'EARNINGS PER SHARE ATTRIBUTABLE TO COMMON SHAREHOLDERS: Basic \$ [\d.]+ \$ [\d.]+ Diluted \$ ([\d.]+) \$ ([\d.]+)', block)
+    shares = re.findall(r'WEIGHTED AVERAGE COMMON SHARES OUTSTANDING: Basic [\d,]+ [\d,]+ Diluted ([\d,]+) ([\d,]+)', block)
+    if 'net-income' in metrics and len(common) == len(eps) == len(shares) == len(preferred) == 1:
+        income = [Decimal(x.replace(',', '')) for x in common[0]]
+        diluted = [Decimal(x.replace(',', '')) for x in shares[0]]
+        reported = [Decimal(x) for x in eps[0]]
+        if (abs(net[0] - Decimal(preferred[0].replace(',', '')) - income[0]) <= Decimal(1) and diluted[0] > 0 and diluted[1] > 0
+                and all(abs(income[i] / diluted[i] - reported[i]) <= Decimal('0.015') + reported[i] * Decimal('0.02') for i in (0, 1))):
+            facts.append(('eps', per_share(reported[0]), per_share(reported[1])))
+    order = {k: i for i, k in enumerate(ORDER)}
+    facts.sort(key=lambda f: order[f[0]])
+    return {'period': f'Q{quarter} FY{fiscal_year}', 'facts': facts}
+
+
 def parse_dell(text, url=None):
     """Dell's results release (8-K EX-99.1): 'Condensed Consolidated Statements of Income and Related Financial Highlights' with the
     columns this quarter, a year earlier, change (%), then six months. Every row is checked against its stated change."""
@@ -790,6 +851,7 @@ PROFILES = {
     'GOOGL': {'publisher': 'Alphabet IR (SEC 8-K)', 'parse': lambda t, u=None: parse_statement(t, STATEMENT['GOOGL']), 'marker': STATEMENT['GOOGL']['heading']},
     'AMZN': {'publisher': 'Amazon IR (SEC 8-K)', 'parse': lambda t, u=None: parse_statement(t, STATEMENT['AMZN']), 'marker': STATEMENT['AMZN']['heading']},
     'VRT': {'publisher': 'Vertiv IR (SEC 8-K)', 'parse': lambda t, u=None: parse_statement(t, STATEMENT['VRT']), 'marker': 'STATEMENTS OF EARNINGS (LOSS)'},
+    'ORCL': {'publisher': 'Oracle IR (SEC 8-K)', 'parse': parse_oracle, 'marker': 'CONDENSED CONSOLIDATED STATEMENTS OF OPERATIONS'},
     'MSFT': {'publisher': 'Microsoft IR (SEC 8-K)', 'parse': lambda t, u=None: parse_statement(t, STATEMENT['MSFT']), 'marker': STATEMENT['MSFT']['heading']},
     'AMD': {'publisher': 'AMD IR (SEC 8-K)', 'parse': lambda t, u=None: parse_statement(t, STATEMENT['AMD']), 'marker': STATEMENT['AMD']['heading']},
     'MRVL': {'publisher': 'Marvell IR (SEC 8-K)', 'parse': lambda t, u=None: parse_statement(t, STATEMENT['MRVL']),

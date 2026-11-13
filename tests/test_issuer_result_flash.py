@@ -207,6 +207,19 @@ class Parsers(unittest.TestCase):
         self.assertNotIn('operating-income',keys(text.replace('Amortization of intangibles 65.3','Amortization of intangibles 66.3')))
         self.assertNotIn('net-income',keys(text.replace('Net income (loss) $ 764.5','Net income (loss) $ 774.5')))
         self.assertNotIn('eps',keys(text.replace('Diluted $ 1.95','Diluted $ 2.95')))
+    def test_oracle_statement_with_percent_cells_checked_against_headline_and_arithmetic(self):
+        text=fixture('oracle-results-q1fy27.txt')
+        parsed=flash.PROFILES['ORCL']['parse'](text)
+        self.assertEqual(parsed['period'],'Q1 FY2027')
+        self.assertEqual([(f[0],f[1],f[2]) for f in parsed['facts']],[('revenue','$19.345B','$14.926B'),('eps','$1.56','$1.01'),('net-income','$4.76B','$2.927B'),('operating-income','$6.728B','$4.277B')])
+        keys=lambda x:[f[0] for f in flash.PROFILES['ORCL']['parse'](x)['facts']]
+        with self.assertRaises(ValueError): flash.PROFILES['ORCL']['parse'](text.replace('Total revenues 19,345','Total revenues 21,345'))
+        with self.assertRaises(ValueError): flash.PROFILES['ORCL']['parse'](text.replace('Total Revenues up 30%','Total Revenues up 40%'))
+        self.assertNotIn('operating-income',keys(text.replace('OPERATING INCOME 6,728','OPERATING INCOME 6,828')))
+        self.assertNotIn('net-income',keys(text.replace('NET INCOME $ 4,760','NET INCOME $ 4,860')))
+        self.assertNotIn('eps',keys(text.replace('Diluted $ 1.56','Diluted $ 1.96')))
+        self.assertNotIn('eps',keys(text.replace('Preferred stock dividends 81','Preferred stock dividends 181')))
+        with self.assertRaises(ValueError): flash.PROFILES['ORCL']['parse'](text.replace('Three Months Ended August 31','Three Months Ended July 31'))
     def test_coreweave_table_and_guidance(self):
         parsed=flash.parse_coreweave(fixture('coreweave-results-q326.txt'))
         self.assertEqual(parsed['period'],'Q3 2026')
