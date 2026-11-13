@@ -114,6 +114,27 @@ class Parsers(unittest.TestCase):
         self.assertNotIn('operating-income',keys(text.replace('Operating income 43,751','Operating income 43,851')))
         self.assertNotIn('net-income',keys(text.replace('Net income $ 37,701','Net income $ 37,801')))
         with self.assertRaises(ValueError): flash.parse_micron(text.replace('Micron Technology','Other Company').replace('MICRON TECHNOLOGY','OTHER COMPANY'))
+    def test_tsmc_table_checked_against_yoy_and_qoq_and_the_headline_margin(self):
+        text=fixture('tsmc-results-q326.txt')
+        parsed=flash.parse_tsmc(text)
+        self.assertEqual(parsed['period'],'Q3 2026')
+        self.assertEqual([(f[0],f[1],f[2]) for f in parsed['facts']],[('revenue','NT$1494.243B','NT$989.918B'),('gross-margin','66.4%',None),
+            ('eps','NT$29.43','NT$17.44'),('net-income','NT$763.064B','NT$452.302B'),('operating-income','NT$876.445B','NT$500.685B'),('guidance-revenue','$52.3B-$54.3B',None)])
+        with self.assertRaises(ValueError): flash.parse_tsmc(text.replace('Net sales 1,494,243 989,918 50.9','Net sales 1,494,243 989,918 59.9'))
+        keys=lambda x:[f[0] for f in flash.parse_tsmc(x)['facts']]
+        self.assertNotIn('net-income',keys(text.replace('Net income 763,064 452,302 68.7','Net income 763,064 452,302 69.7')))
+        self.assertNotIn('gross-margin',keys(text.replace('Gross margin for the quarter was 66.4%','Gross margin for the quarter was 64.4%')))
+        with self.assertRaises(ValueError): flash.parse_tsmc(text.replace('3Q26Amounta 3Q25Amount','3Q25Amounta 3Q26Amount'))
+    def test_asml_table_checked_against_the_headline(self):
+        text=fixture('asml-results-q326.txt')
+        parsed=flash.parse_asml(text)
+        self.assertEqual(parsed['period'],'Q3 2026')
+        self.assertEqual([(f[0],f[1]) for f in parsed['facts']],[('revenue','€11.662B'),('gross-margin','57.5%'),('eps','€12.95'),('net-income','€4.96B'),('guidance-revenue','€14.2B-€15.2B')])
+        with self.assertRaises(ValueError): flash.parse_asml(text.replace('Total net sales 9,326 11,662','Total net sales 9,326 12,662'))
+        keys=lambda x:[f[0] for f in flash.parse_asml(x)['facts']]
+        self.assertNotIn('net-income',keys(text.replace('Net income 2,918 4,960','Net income 2,918 4,560')))
+        self.assertNotIn('gross-margin',keys(text.replace('Gross profit 5,035 6,700','Gross profit 5,035 6,300')))
+        with self.assertRaises(ValueError): flash.parse_asml(text.replace('Q2 2026 Q3 2026','Q3 2026 Q2 2026',1))
     def test_coreweave_table_and_guidance(self):
         parsed=flash.parse_coreweave(fixture('coreweave-results-q326.txt'))
         self.assertEqual(parsed['period'],'Q3 2026')
@@ -167,6 +188,8 @@ class BodyCompanies(unittest.TestCase):
         cases=[('DELL','dell-results-q2fy27.txt','https://www.sec.gov/Archives/edgar/data/1571996/000157199626000039/exhibit991earnings8kq2fy27.htm','Q2 FY2027','$46.971B','Dell Technologies IR (SEC 8-K)'),
                ('MRVL','marvell-results-q2fy27.txt','https://www.sec.gov/Archives/edgar/data/1835632/000183563226000022/q227_8kx812026ex-991.htm','Q2 FY2027','$2.7393B','Marvell IR (SEC 8-K)'),
                ('CRDO','credo-results-q1fy27.txt','https://www.sec.gov/Archives/edgar/data/1807794/000162828026059795/credoq12027ex-991.htm','Q1 FY2027','$479.003M','Credo IR (SEC 8-K)'),
+               ('TSM','tsmc-results-q326.txt','https://www.sec.gov/Archives/edgar/data/1046179/000104617926000100/a3q26e_withguidancexfinal.htm','Q3 2026','NT$1494.243B','TSMC IR (SEC 6-K)'),
+               ('ASML','asml-results-q326.txt','https://www.sec.gov/Archives/edgar/data/937966/000093796626000040/pressreleasefinancialresul.htm','Q3 2026','€11.662B','ASML IR (SEC 6-K)'),
                ('AVGO','broadcom-results-q3fy26.txt','https://www.sec.gov/Archives/edgar/data/1730168/000173016826000076/avgo-08022026x8kxex99.htm','Q3 FY2026','$29.591B','Broadcom IR (SEC 8-K)')]
         for ticker,name,url,period,revenue,publisher in cases:
             with self.subTest(ticker):

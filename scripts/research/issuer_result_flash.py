@@ -478,6 +478,107 @@ def parse_micron(text, url=None):
     return {'period': f'Q{quarter} FY{year}', 'facts': facts}
 
 
+def prefixed(prefix, value, unit):
+    """'NT$' + 1494.243 + 'B' -> 'NT$1494.243B' (the printed figure, never rounded; the site's value format has no thousands comma)."""
+    return prefix + format(value.normalize(), 'f') + unit
+
+
+def parse_tsmc(text, url=None):
+    """TSMC's results release (6-K EX-99.1): a table in NT$ million with this quarter, the same quarter a year earlier (+YoY %) and the
+    previous quarter (+QoQ %). Every row is checked against both stated changes; gross margin against the table's own gross profit / net sales."""
+    t = clean(text)
+    if 'tsmc' not in t.lower():
+        raise ValueError('issuer-identity-missing')
+    head = re.findall(r'for the (first|second|third|fourth) quarter ended [A-Z][a-z]+ \d{1,2}, (20\d\d)', t[:1500])
+    if len(head) != 1:
+        raise ValueError('period-unrecognized')
+    quarter, year = QUARTERS[head[0][0]], int(head[0][1])
+    start = t.find('(Unit: NT$ million, except for EPS)')
+    if start < 0:
+        raise ValueError('table-heading-missing')
+    block = t[start:start + 1500]
+    yy = year % 100
+    prev = f'{quarter - 1}Q{yy:02d}' if quarter > 1 else f'4Q{(yy - 1) % 100:02d}'
+    header = rf'{quarter}Q{yy:02d}Amount\w? {quarter}Q{(yy - 1) % 100:02d}Amount YoY ?Inc\. \(Dec\.\) % {prev}Amount QoQ ?Inc\. \(Dec\.\) %'
+    if not re.search(header, block[:300]):
+        raise ValueError('columns-unrecognized')
+    num = r'([\d,]+(?:\.\d+)?)[a-z]?'
+
+    def row(label):
+        found = re.findall(r'(?<![A-Za-z])' + label + ' ' + ' '.join([num] * 5) + r'(?= |$)', block)
+        if len(found) != 1:
+            return None
+        cur, ago, yoy, prev, qoq = [Decimal(x.replace(',', '')) for x in found[0]]
+        # the stated YoY and QoQ changes must agree with the values (to the rounding of the printed figures)
+        for stated, ref in ((yoy, ago), (qoq, prev)):
+            if ref <= 0 or abs((cur / ref - 1) * 100 - stated) > Decimal('0.15'):
+                return None
+        return cur, ago
+    revenue = row('Net sales')
+    if not revenue:
+        raise ValueError('revenue-row-unrecognized')
+    facts = {'revenue': (prefixed('NT$', revenue[0] / 1000, 'B'), prefixed('NT$', revenue[1] / 1000, 'B'))}
+    gross = re.findall(r'Gross profit ([\d,]+) ', block)
+    margin = re.findall(r'Gross margin for the quarter was (\d+\.\d)%', t[:2500])
+    if len(gross) == 1 and len(margin) == 1 and row('Gross profit') and abs(Decimal(gross[0].replace(',', '')) / revenue[0] * 100 - Decimal(margin[0])) <= Decimal('0.06'):
+        facts['gross-margin'] = (margin[0] + '%', None)
+    for key, label in (('operating-income', 'Income from operations'), ('net-income', 'Net income')):
+        found = row(label)
+        if found:
+            facts[key] = (prefixed('NT$', found[0] / 1000, 'B'), prefixed('NT$', found[1] / 1000, 'B'))
+    eps = row(r'EPS \(NT\$\)')
+    if eps:
+        facts['eps'] = (prefixed('NT$', eps[0], ''), prefixed('NT$', eps[1], ''))
+    out = [(k, v[0], v[1]) for k, v in facts.items()]
+    guidance = re.findall(r'Revenue is expected to be between US\$(\d+(?:\.\d+)?) billion and US\$(\d+(?:\.\d+)?) billion', t[:3000])
+    if len(guidance) == 1 and Decimal(guidance[0][0]) < Decimal(guidance[0][1]):
+        out.append(('guidance-revenue', f'${guidance[0][0]}B-${guidance[0][1]}B', None, ('次四半期見通し 売上高', 'Next-quarter guidance Revenue')))
+    order = {k: i for i, k in enumerate(ORDER)}
+    out.sort(key=lambda f: order[f[0]])
+    return {'period': f'Q{quarter} {year}', 'facts': out}
+
+
+def parse_asml(text, url=None):
+    """ASML's results release (6-K EX-99.1): a small table in EUR million (previous quarter, this quarter) and the headline in billions.
+    Net sales and net income must agree with the headline; gross margin with gross profit / net sales."""
+    t = clean(text)
+    if 'asml' not in t.lower():
+        raise ValueError('issuer-identity-missing')
+    head = re.findall(r'ASML reports \u20ac([\d.]+) billion total net sales and \u20ac([\d.]+) billion net income in Q([1-4]) (20\d\d)', t[:600])
+    if len(head) != 1:
+        raise ValueError('highlights-heading-missing')
+    quarter, year = int(head[0][2]), int(head[0][3])
+    pq = f'Q{quarter - 1 if quarter > 1 else 4} {year if quarter > 1 else year - 1}'
+    start = t.find('(Figures in millions of euros unless otherwise indicated)')
+    if start < 0:
+        raise ValueError('table-heading-missing')
+    block = t[start:start + 900]
+    if f'{pq} Q{quarter} {year}' not in block[:200]:
+        raise ValueError('columns-unrecognized')
+    num = r'([\d,]+(?:\.\d+)?)'
+
+    def row(label):
+        found = re.findall(r'(?<![A-Za-z])' + label + ' ' + num + ' ' + num + r'(?= |$)', block)
+        return [Decimal(x.replace(',', '')) for x in found[0]] if len(found) == 1 else None
+    sales, profit, net, eps = row('Total net sales'), row('Gross profit'), row('Net income'), row(r'EPS \(basic; in euros\)')
+    if not sales or sales[1] <= 0 or abs(Decimal(head[0][0]) * 1000 - sales[1]) > Decimal(50):
+        raise ValueError('revenue-row-unrecognized')
+    facts = [('revenue', prefixed('\u20ac', sales[1] / 1000, 'B'), None)]
+    margin = row(r'Gross margin \(%\)')
+    if profit and margin and abs(profit[1] / sales[1] * 100 - margin[1]) <= Decimal('0.06') and abs(profit[0] / sales[0] * 100 - margin[0]) <= Decimal('0.06'):
+        facts.append(('gross-margin', format(margin[1].normalize(), 'f') + '%', None))
+    if net and abs(Decimal(head[0][1]) * 1000 - net[1]) <= Decimal(50):
+        facts.append(('net-income', prefixed('\u20ac', net[1] / 1000, 'B'), None))
+    if eps and net and eps[1] > 0:
+        facts.append(('eps', prefixed('\u20ac', eps[1], ''), None, ('EPS（基本）', 'Basic EPS')))
+    guidance = re.findall(r'We expect fourth-quarter \d{4} total net sales between \u20ac(\d+(?:\.\d+)?) billion and \u20ac(\d+(?:\.\d+)?) billion', t) if quarter == 3 else []
+    if len(guidance) == 1 and Decimal(guidance[0][0]) < Decimal(guidance[0][1]):
+        facts.append(('guidance-revenue', f'\u20ac{guidance[0][0]}B-\u20ac{guidance[0][1]}B', None, ('次四半期見通し 売上高', 'Next-quarter guidance Revenue')))
+    order = {k: i for i, k in enumerate(ORDER)}
+    facts.sort(key=lambda f: order[f[0]])
+    return {'period': f'Q{quarter} {year}', 'facts': facts}
+
+
 NEBIUS_RESULTS_PATH = re.compile(r'^/newsroom/(?=[a-z0-9-]*quarter)(?=[a-z0-9-]*financial-results)(?![a-z0-9-]*date)[a-z0-9-]+/?$')
 PDF_LINK = re.compile(r'https://assets\.nebius\.com/assets/[0-9a-f-]{36}/[^"\\\s)<>]*?\.pdf', re.I)
 
@@ -562,6 +663,8 @@ PROFILES = {
     'NVDA': {'publisher': 'NVIDIA IR', 'parse': parse_nvidia, 'marker': 'Summary GAAP'},
     'DELL': {'publisher': 'Dell Technologies IR (SEC 8-K)', 'parse': parse_dell, 'marker': 'Statements of Income and Related Financial Highlights'},
     'MU': {'publisher': 'Micron IR (SEC 8-K)', 'parse': parse_micron, 'marker': 'CONSOLIDATED STATEMENTS OF OPERATIONS'},
+    'TSM': {'publisher': 'TSMC IR (SEC 6-K)', 'parse': parse_tsmc, 'marker': '(Unit: NT$ million, except for EPS)'},
+    'ASML': {'publisher': 'ASML IR (SEC 6-K)', 'parse': parse_asml, 'marker': '(Figures in millions of euros unless otherwise indicated)'},
     'MRVL': {'publisher': 'Marvell IR (SEC 8-K)', 'parse': lambda t, u=None: parse_statement(t, STATEMENT['MRVL']),
              'marker': STATEMENT['MRVL']['heading']},
     'CRDO': {'publisher': 'Credo IR (SEC 8-K)', 'parse': lambda t, u=None: parse_statement(t, STATEMENT['CRDO']),
