@@ -43,6 +43,19 @@ def is_results_release(title):
                 and not release_watch.NOT_RELEASE.search(title) and not MEETING.search(title))
 
 
+# An SEC 8-K is titled "8-K · 8-K" (the filing index carries no headline), so a company whose results reach us only as a filing never
+# matched the title rule above (Applied Materials, Nov 12). Its Item 2.02 line is the company's own statement that results follow.
+RESULTS_ITEM = re.compile(r'\bItem\s+2\.02\b.{0,40}\bResults of Operations\b', re.I)
+
+
+def is_results_filing(db, row):
+    """An 8-K whose stored text (the page the monitor already fetched) declares Item 2.02. Reads one stored revision, only for 8-Ks."""
+    if row['sec_form'] != '8-K' or not row['sha256']:
+        return False
+    revision = db.execute('SELECT extracted_text FROM source_revisions WHERE url=? AND sha256=?', (row['url'], row['sha256'])).fetchone()
+    return bool(revision and RESULTS_ITEM.search((revision['extracted_text'] or '')[:8000]))
+
+
 def schema(db):
     db.execute('''CREATE TABLE IF NOT EXISTS earnings_announcements(
       key TEXT PRIMARY KEY, ticker TEXT NOT NULL, url TEXT NOT NULL, period TEXT NOT NULL,
@@ -71,12 +84,14 @@ def run_once(path, reference=None):
     with monitor.connect(path) as db:
         schema(db)
         started = time.monotonic()
-        rows = db.execute('''SELECT s.url,s.ticker,s.title,COALESCE(e.detected_at,s.discovered_at) AS detected
+        rows = db.execute('''SELECT s.url,s.ticker,s.title,s.sec_form,s.sha256,COALESCE(e.detected_at,s.discovered_at) AS detected
             FROM sources s LEFT JOIN release_events e ON e.url=s.url
             WHERE s.title IS NOT NULL AND s.status NOT IN ('held','rejected')
               AND julianday(COALESCE(e.detected_at,s.discovered_at))>=julianday(?)''', (cutoff,)).fetchall()
         for row in rows:
-            if row['ticker'] not in monitor.PROVIDERS or not is_results_release(row['title']) or not official(row['ticker'], row['url']):
+            if row['ticker'] not in monitor.PROVIDERS or not official(row['ticker'], row['url']):
+                continue
+            if not is_results_release(row['title']) and not is_results_filing(db, row):
                 continue
             observed = instant(row['detected'])
             if observed is None or observed > reference:
