@@ -340,6 +340,8 @@ def parse_statement(text, cfg):
             rows[key] = statement_row(block, label[0], label[1])
         else:
             rows[key] = statement_row(block, label, n)
+    if cfg.get('shares-divisor') and rows.get('shares'):  # share counts printed in single shares while the statement is in millions
+        rows['shares'] = [x / cfg['shares-divisor'] for x in rows['shares']]
     if cfg.get('swap'):  # the release prints the year-earlier column first: put this quarter first, the year-ago column second
         rows = {k: ([v[1], v[0], *v[2:]] if v else v) for k, v in rows.items()}
     if not rows['revenue'] or rows['revenue'][0] <= 0 or not rows['revenue'][ago] > 0:
@@ -402,6 +404,14 @@ def parse_statement(text, cfg):
 
 
 STATEMENT = {
+    'VRT': {'identity': 'vertiv', 'heading': 'STATEMENTS OF EARNINGS (LOSS)Vertiv Holdings Co(Dollars in millions', 'units': 'dollars in millions', 'scale': Decimal(1), 'tol': Decimal('0.15'),
+            'end': 'BALANCE SHEETS', 'shares-divisor': Decimal(1000000), 'columns': 4, 'year-ago': 1, 'op-direct': True, 'growth': r'Net sales of \$[\d,]+ million, (\d+)% higher than',
+            'period-re': r'Reports [A-Za-z ]*?(First|Second|Third|Fourth) Quarter (20\d\d) with', 'period': lambda q, y: f'Q{q} {y}',
+            'rows': {'revenue': 'Net sales', 'cost': ['Cost of sales', 'Selling, general and administrative expenses', 'Amortization of intangibles', 'Restructuring costs',
+                                                          r'Foreign currency \(gain\) loss, net', r'Other operating expense \(income\)'],
+                     'operating': r'Operating profit \(loss\)', 'pretax': r'Income \(loss\) before income taxes', 'tax': r'Income tax expense \(benefit\)',
+                     'net': r'Net income \(loss\)', 'eps': r'Earnings \(loss\) per share: Basic \$ [\d.]+ (?:\$ [\d.]+ ){3}Diluted',
+                     'shares': r'Weighted-average shares outstanding: Basic [\d,]+ (?:[\d,]+ ){3}Diluted'}},
     'AMAT': {'identity': 'applied materials', 'heading': 'CONSOLIDATED CONDENSED STATEMENTS OF OPERATIONS', 'end': 'CONSOLIDATED CONDENSED BALANCE SHEETS',
              'units': 'in millions', 'scale': Decimal(1), 'tol': Decimal(1), 'columns': 4, 'year-ago': 1, 'growth': r'Record quarterly revenue \$[\d.]+ billion, up (\d+) percent',
              'period-re': r'ANNOUNCES (FIRST|SECOND|THIRD|FOURTH) QUARTER (?:AND FISCAL YEAR )?(20\d\d) RESULTS', 'period': lambda q, y: f'Q{q} FY{y}',
@@ -484,6 +494,67 @@ STATEMENT = {
                      'cont': 'Income from continuing operations, net of tax', 'disc': r'Income \(loss\) from discontinued operations, net of tax',
                      'net': 'Net income', 'eps': 'Diluted earnings per share', 'shares': r'Shares used in per share calculation Basic [\d,]+ (?:[\d,]+ ){4}Diluted'}},
 }
+
+
+def parse_gev(text, url=None):
+    """GE Vernova's results release (8-K EX-99): the 'Total Company Results' summary table (this quarter, a year earlier, change, then nine months).
+    Revenue and diluted EPS against their stated Year-on-Year change, net income and adjusted EBITDA against the stated difference, and revenue against
+    the headline's own '$12.6B, +27%'. The release carries no full income statement, so there is no operating income."""
+    t = clean(text)
+    if 'ge vernova' not in t.lower():
+        raise ValueError('issuer-identity-missing')
+    period = re.findall(r'reports [a-z ]*?(first|second|third|fourth) quarter (20\d\d) financial performance', t[:1500], re.I)
+    if len(period) != 1:
+        raise ValueError('period-unrecognized')
+    quarter, year = QUARTERS[period[0][0].lower()], int(period[0][1])
+    start = t.find('Total Company Results')
+    if start < 0:
+        raise ValueError('summary-table-missing')
+    block = t[start:start + 2200]
+    if not re.search(r'\(Dollars in millions, except per share\) (20\d\d) (20\d\d) Year-on-Year', block[:300]):
+        raise ValueError('columns-unrecognized')
+    columns = re.search(r'\(Dollars in millions, except per share\) (20\d\d) (20\d\d) Year-on-Year', block)
+    if int(columns[1]) != year or int(columns[2]) != year - 1:
+        raise ValueError('columns-unrecognized')
+    amount = r'\$([\d,]+(?:\.\d+)?)'
+    pct = r'(-?\d+)%'
+
+    def row(label, third):
+        found = re.findall(r'(?<![A-Za-z])' + label + ' ' + amount + ' ' + amount + ' ' + third + r'(?= )', block)
+        if len(found) != 1:
+            return None
+        return [Decimal(x.replace(',', '')) for x in found[0]]
+
+    def change_ok(values, stated):  # whole-percent change printed next to the two values
+        return values[1] > 0 and abs((values[0] / values[1] - 1) * 100 - Decimal(stated)) <= Decimal('0.55')
+
+    def with_pct(label):
+        found = re.findall(r'(?<![A-Za-z])' + label + ' ' + amount + ' ' + amount + ' ' + pct + r'(?= )', block)
+        if len(found) != 1:
+            return None
+        values = [Decimal(found[0][0].replace(',', '')), Decimal(found[0][1].replace(',', ''))]
+        return values if change_ok(values, found[0][2]) else None
+
+    def with_diff(label):
+        values = row(label, amount)
+        return values[:2] if values and abs(values[0] - values[1] - values[2]) <= Decimal(1) else None
+    revenue = with_pct('Total revenues')
+    if not revenue:
+        raise ValueError('revenue-row-unrecognized')
+    headline = re.findall(r'Revenue of \$(\d+(?:\.\d+)?)B, \+(\d+)%', t[:3000])
+    if len(headline) != 1 or abs(Decimal(headline[0][0]) * 1000 - revenue[0]) > Decimal(55) or not change_ok(revenue, headline[0][1]):
+        raise ValueError('change-mismatch')
+    facts = [('revenue', money_millions(revenue[0]), money_millions(revenue[1]))]
+    eps = with_pct('Diluted EPS')
+    if eps:
+        facts.append(('eps', per_share(eps[0]), per_share(eps[1])))
+    for key, label in (('net-income', r'Net income \(loss\)'), ('adjusted-ebitda', 'Adjusted EBITDA')):
+        values = with_diff(label)
+        if values:
+            facts.append((key, money_millions(values[0]), money_millions(values[1])))
+    order = {k: i for i, k in enumerate(ORDER)}
+    facts.sort(key=lambda f: order[f[0]])
+    return {'period': f'Q{quarter} {year}', 'facts': facts}
 
 
 def parse_dell(text, url=None):
@@ -779,6 +850,8 @@ PROFILES = {
     'AMAT': {'publisher': 'Applied Materials IR (SEC 8-K)', 'parse': lambda t, u=None: parse_statement(t, STATEMENT['AMAT']), 'marker': STATEMENT['AMAT']['heading']},
     'GOOGL': {'publisher': 'Alphabet IR (SEC 8-K)', 'parse': lambda t, u=None: parse_statement(t, STATEMENT['GOOGL']), 'marker': STATEMENT['GOOGL']['heading']},
     'AMZN': {'publisher': 'Amazon IR (SEC 8-K)', 'parse': lambda t, u=None: parse_statement(t, STATEMENT['AMZN']), 'marker': STATEMENT['AMZN']['heading']},
+    'GEV': {'publisher': 'GE Vernova IR (SEC 8-K)', 'parse': parse_gev, 'marker': 'Total Company Results'},
+    'VRT': {'publisher': 'Vertiv IR (SEC 8-K)', 'parse': lambda t, u=None: parse_statement(t, STATEMENT['VRT']), 'marker': 'STATEMENTS OF EARNINGS (LOSS)'},
     'MSFT': {'publisher': 'Microsoft IR (SEC 8-K)', 'parse': lambda t, u=None: parse_statement(t, STATEMENT['MSFT']), 'marker': STATEMENT['MSFT']['heading']},
     'AMD': {'publisher': 'AMD IR (SEC 8-K)', 'parse': lambda t, u=None: parse_statement(t, STATEMENT['AMD']), 'marker': STATEMENT['AMD']['heading']},
     'MRVL': {'publisher': 'Marvell IR (SEC 8-K)', 'parse': lambda t, u=None: parse_statement(t, STATEMENT['MRVL']),

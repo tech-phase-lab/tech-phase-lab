@@ -37,6 +37,13 @@ def get(url, binary=False):
     return data if binary else data.decode('utf-8', 'replace')
 
 
+def is_results_exhibit(text):
+    """A results press release: 'results'/'earnings' and a period word near the top. Q1-Q4 counts ("Oracle Announces Q1 Results"): requiring
+    the word quarter/fiscal made Oracle look as if it published nothing (Nov 13)."""
+    head = text[:3000]
+    return bool(re.search(r'\b(?:results|earnings)\b', head, re.I) and re.search(r'\b(?:quarter|fiscal|full[- ]year|Q[1-4])\b', head, re.I))
+
+
 def latest_results_filing(cik):
     data = json.loads(get(f'https://data.sec.gov/submissions/CIK{cik}.json'))['filings']['recent']
     cutoff = datetime.now(timezone.utc) - LOOKBACK
@@ -47,8 +54,7 @@ def latest_results_filing(cik):
         items = data['items'][i] if i < len(data['items']) else ''
         if (form == '8-K' and '2.02' in items) or form == '6-K':
             exhibit = exhibit_text(cik, data['accessionNumber'][i])
-            if exhibit and re.search(r'\b(?:results|earnings)\b', exhibit[:3000], re.I) and \
-                    re.search(r'\b(?:quarter|fiscal|full[- ]year)\b', exhibit[:3000], re.I):
+            if exhibit and is_results_exhibit(exhibit):
                 return {'form': form, 'accepted': accepted.isoformat(), 'accession': data['accessionNumber'][i], 'text': exhibit}
     return None
 

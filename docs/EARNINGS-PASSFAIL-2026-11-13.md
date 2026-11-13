@@ -1,6 +1,6 @@
 # Earnings flash pass/fail (latest real release of each watch-list company)
 
-Generated 2026-11-13 09:32Z · PASS 17 / 22
+Generated 2026-11-13 09:32Z · PASS 19 / 22
 
 | Ticker | Verdict | Detection source | Figures | Reason |
 |---|---|---|---|---|
@@ -18,8 +18,8 @@ Generated 2026-11-13 09:32Z · PASS 17 / 22
 | ANET | PASS | SEC 8-K 2026-11-03T21:10Z | 4 | 4 figures, e.g. revenue $3.6576B |
 | CRDO | PASS | SEC 8-K 2026-09-01T20:08Z | 4 | 4 figures, e.g. revenue $479.003M |
 | CRWV | PASS | SEC 8-K 2026-11-10T21:05Z | 5 | 5 figures, e.g. revenue $3.661B |
-| VRT | FAIL | SEC 8-K 2026-10-28T10:02Z | 0 | no parser for this company yet |
-| GEV | FAIL | SEC 8-K 2026-10-28T10:16Z | 0 | no parser for this company yet |
+| VRT | PASS | SEC 8-K 2026-10-28T10:02Z | 4 | 4 figures, e.g. revenue $4.3128B |
+| GEV | PASS | SEC 8-K 2026-10-28T10:16Z | 4 | 4 figures, e.g. revenue $12.642B |
 | DELL | PASS | SEC 8-K 2026-09-01T20:10Z | 4 | 4 figures, e.g. revenue $46.971B |
 | PLTR | PASS | SEC 8-K 2026-11-02T21:06Z | 4 | 4 figures, e.g. revenue $2.313411B |
 | MSFT | PASS | SEC 8-K 2026-10-28T20:04Z | 4 | 4 figures, e.g. revenue $92.279B |

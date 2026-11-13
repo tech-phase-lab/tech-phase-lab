@@ -2,6 +2,7 @@ FROM python:3.12-slim
 WORKDIR /app
 # Same parser inputs as the monitor: its providers list and its pinned requirements (pypdf), so the check reads PDFs the way production does.
 COPY lib/research/providers.json lib/research/providers.json
+COPY lib/research/calendar-coverage.json lib/research/calendar-coverage.json
 COPY scripts/research/requirements.txt scripts/research/requirements.txt
 RUN pip install --no-cache-dir -r scripts/research/requirements.txt
 COPY scripts/research scripts/research

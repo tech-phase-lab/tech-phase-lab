@@ -4,7 +4,7 @@ What it does: once a day, for the 22 watch-list companies, it takes each company
 PDF), runs the same parser the monitor uses and prints **one line of JSON**:
 
 ```
-{"ok":true,"passed":7,"total":22,"failing":["MU","SKHY",...],"regressions":[],"generatedAt":"2026-11-14T22:30:04+00:00"}
+{"ok":true,"passed":7,"total":22,"failing":["MU","SKHY",...],"regressions":[],"gaps":[],"siteChecked":true,"generatedAt":"2026-11-14T22:30:04+00:00"}
 ```
 
 - `passed` / `total`: companies whose release was read with three or more figures that passed the cross-checks (the acceptance criterion).
@@ -15,6 +15,15 @@ PDF), runs the same parser the monitor uses and prints **one line of JSON**:
 
 Code: `scripts/research/earnings_selfcheck.py` (uses `earnings_backtest.check_company`); image: `services/earnings-selfcheck/Dockerfile` (same Python and the same
 pinned `pypdf` as the monitor, so the Nebius PDF is read the way production reads it). Without `EARNINGS_SELFCHECK=true` it prints `DISABLED` and exits 0.
+
+## Gap check (added Nov 13)
+
+The same run also looks for **gaps**: for every company the calendar covers (about 50, `lib/research/calendar-coverage.json`) it asks the SEC index for 8-K filings
+that list **Item 2.02** accepted in the last 48 hours and at least 10 minutes ago, then reads the **public** site (`GET https://techphase.app/api/research/news`,
+no login, no secret; override with `EARNINGS_SITE_URL`) and checks that an earnings result (figures or the "announced" line) for that ticker was published since.
+A company with the filing and no result on the site is listed in `gaps` and the run exits **1** (failed run in Railway). If the site cannot be read, `siteChecked`
+is false and the run also fails (nothing can be judged). 6-K filers (no item list on the SEC index) are not covered. The line gains `"gaps":[...],"siteChecked":true`.
+First live run (Nov 13, read-only, from the code of this change): `checked 49, gaps ["AMAT"]` — the very miss that prompted it.
 
 ## Steps (production-changing: needs the owner's approval, executed by the parent session)
 
