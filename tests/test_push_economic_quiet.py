@@ -164,7 +164,7 @@ class Economic(Base):
         push.deliver_economic(self.db, items, **self.options(released + 300))
         bodies = [m['body'] for m in self.sent]
         self.assertEqual(sorted(bodies), sorted([release['translationJa']] * 2), 'members and the owner get the BLS numbers; the X numbers are never used, and no warning is sent')
-        self.assertIn('総合 前月比+1.3%・前年比+6.3%／コア 前月比+0.5%・前年比+5.0%', bodies[0])
+        self.assertIn('総合 前月比+1.3%・前年比+6.3%／コア（食品・エネルギー・貿易サービス除く） 前月比+0.5%・前年比+5.0%', bodies[0])
         self.assertNotIn('6.5', ' '.join(bodies))
 
     def test_ppi_without_bls_numbers_is_still_announced_with_the_official_link_and_only_the_owner_is_warned(self):
