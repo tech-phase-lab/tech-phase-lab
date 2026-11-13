@@ -164,7 +164,7 @@ def matches(event, payload):
             found.append((public, ''))
         elif (event['kind'] == 'economic' and item.get('kind') == 'economic'
               and re.search(INDICATORS[event['indicator']], f"{item.get('titleEn', '')} {item.get('titleJa', '')}", re.I)):
-            found.append((public, str(item.get('titleJa') or '')))
+            found.append((public, ''))  # a result brief is read from posts: its numbers are never put in a notice
     for item in payload.get('officialUpdates') or []:
         published = instant(item.get('publishedAt') or item.get('observedAt'))
         public = instant(item.get('observedAt')) or published
@@ -178,7 +178,9 @@ def matches(event, payload):
               and (item.get('newsCategory') == 'economic'
                    # The exact BLS release, read straight from bls.gov (Oct 14).
                    or (item.get('publisher') == 'BLS' and str(item.get('url', '')).startswith('https://www.bls.gov/news.release/archives/')))):
-            found.append((max(public, published), str(item.get('translationJa') or '')))
+            # Only BLS's own release page may lend its numbers to a notice; a post that merely names the indicator never does.
+            official = item.get('publisher') == 'BLS' and str(item.get('url', '')).startswith('https://www.bls.gov/news.release/archives/')
+            found.append((max(public, published), str(item.get('translationJa') or '') if official else ''))
     return sorted(found, key=lambda entry: entry[0])
 
 
@@ -235,7 +237,8 @@ def check(db, payload, now, transport=None, events=None):
         recorded = {row[0] for row in db.execute(
             'SELECT kind FROM release_watch_alerts WHERE event_id=?', (event['id'],))}
         found = matches(event, payload)
-        public, result = found[0] if found else (None, '')
+        public = found[0][0] if found else None
+        result = next((text for _when, text in found if text), '')  # BLS's own text, even if a post was earlier
         due = window(event)[1]
         kind = delay = None
         if public and 'published' not in recorded:

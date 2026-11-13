@@ -5,6 +5,7 @@ pilot favors avoiding duplicate alerts; its ledger records uncertain delivery.
 """
 import base64
 from datetime import datetime, timedelta, timezone
+from zoneinfo import ZoneInfo
 import hashlib
 import json
 import math
@@ -1132,7 +1133,7 @@ NAMES = {'jobs': ('米国雇用統計', 'U.S. employment report'), 'cpi': ('米�
 EVENT_KINDS = ('adp', 'fomc', 'ism', 'gdp', 'retail')
 
 
-def economic_items(updates, events):
+def economic_items(updates, events, route_errors=None):
     """Releases with a result already read by the site, as {kind, id, publishedAt, ja, en}.
 
     Read from the same places the economic calendar uses: BLS (jobs, CPI) and BEA (PCE) official releases, and the ADP
@@ -1160,13 +1161,62 @@ def economic_items(updates, events):
         kind = str(event.get('id', '')).split('-', 1)[0] if isinstance(event, dict) else ''
         if kind in EVENT_KINDS and event.get('releasedAt') and event.get('resultJa'):
             items.append({'kind': kind, 'id': event['id'], 'publishedAt': event['releasedAt'], 'ja': str(event['resultJa']), 'en': str(event.get('resultEn', ''))})
-    return items
+    return items + ppi_announcements(updates, route_errors)
+
+
+PPI_PAGE = 'https://www.bls.gov/news.release/ppi.nr0.htm'
+# BLS gets this long to show the numbers before a PPI notice without them is sent (Nov 13).
+ANNOUNCE_GRACE_SECONDS = 120
+ET = ZoneInfo('America/New_York')
+PPI_TEXT = re.compile(r'\bPPI\b|生産者物価')
+PERCENT = re.compile(r'\d\s*[%％]')
+
+
+def ppi_announcements(updates, route_errors):
+    """The PPI came out but BLS's own page could not be read (Nov 13): a notice that carries NO number.
+
+    Only the fact is used from other sources (a post after the scheduled release time that names PPI with a figure):
+    never its numbers. One item per release day, carrying the reason code the owner is warned with."""
+    try:
+        import release_watch
+        schedule = [e for e in release_watch.load_schedule() if e.get('indicator') == 'ppi']
+    except Exception:
+        return []
+    found = {}
+    for update in updates or []:
+        try:
+            if update.get('publisher') in ('BLS', 'BEA') or not PPI_TEXT.search(f"{update.get('title', '')} {update.get('translationJa', '')}"):
+                continue
+            if not PERCENT.search(f"{update.get('title', '')} {update.get('translationJa', '')}"):
+                continue
+            published = datetime.fromisoformat(str(update['publishedAt']).replace('Z', '+00:00'))
+            if not any(e['at'] - timedelta(seconds=60) <= published <= e['at'] + timedelta(hours=6) for e in schedule):
+                continue
+            day = published.astimezone(ET).strftime('%m%d%Y')
+            if day not in found or published < found[day][0]:
+                found[day] = (published, update)
+        except (KeyError, TypeError, ValueError, AttributeError):
+            continue
+    code = (route_errors or {}).get('bls-ppi') or 'bls-ppi-not-read'
+    return [{'kind': 'ppi', 'id': f'ppi-notice-{day}', 'date': day, 'publishedAt': published.isoformat(), 'ja': '', 'en': '',
+             'announceOnly': True, 'reason': code} for day, (published, _u) in sorted(found.items())]
+
+
+def owner_ids():
+    import release_watch
+    owners = {release_watch.OWNER_MEMBER_ID, release_watch.PRODUCTION_OWNER_MEMBER_ID}
+    configured = os.environ.get('RESEARCH_OWNER_MEMBER_ID', '').strip()
+    if configured:
+        owners.add(configured)
+    return sorted(owners)
 
 
 def deliver_economic(db, items, **options):
     """After a release: the indicator's name and its result number, to the devices that switched that indicator on.
 
-    Nothing is sent before a release, and no comparison with the market forecast is included: the site has no forecast source."""
+    Nothing is sent before a release, and no comparison with the market forecast is included: the site has no forecast source.
+    A PPI whose numbers BLS's page did not give (`announceOnly`) is still announced, without any number and with the official
+    link, after a short grace; the owner's devices (never members) are then warned with the reason code."""
     if not configuration()['enabled']:
         return {'status': 'disabled', 'attempted': 0}
     now = options.get('now') or options.get('wall_now', time.time)()
@@ -1176,9 +1226,27 @@ def deliver_economic(db, items, **options):
         kind = item.get('kind')
         if made is None or kind not in NAMES or not 0 <= now - made < ECONOMIC_WINDOW_SECONDS:
             continue
-        result = announce(db, f"economic-{item['id']}", MEMBERS + ' AND econ=1', (),
-                          lambda ja, item=item: {'title': NAMES[item['kind']][0 if ja else 1],
-                                                 'body': (item['ja'] if ja else item['en'] or item['ja'])[:140], 'url': '/research/calendar'},
+        announce_only = bool(item.get('announceOnly'))
+        if announce_only:
+            if now - made < ANNOUNCE_GRACE_SECONDS or any(
+                    other.get('kind') == 'ppi' and not other.get('announceOnly') and str(other.get('id', '')).endswith(f"ppi_{item.get('date')}.htm") for other in items):
+                continue
+            payload_for = lambda ja, item=item: {
+                'title': NAMES['ppi'][0 if ja else 1],
+                'body': (f'米国PPIが発表されました。公式発表で結果をご確認ください（{PPI_PAGE}）' if ja
+                         else f'The U.S. PPI has been released. Check the official release for the result ({PPI_PAGE})'),
+                'url': '/research/calendar'}
+        else:
+            payload_for = lambda ja, item=item: {'title': NAMES[item['kind']][0 if ja else 1],
+                                                 'body': (item['ja'] if ja else item['en'] or item['ja'])[:140], 'url': '/research/calendar'}
+        result = announce(db, f"economic-{item['id']}", MEMBERS + ' AND econ=1', (), payload_for,
                           (made,), accept=lambda device, kind=kind: kind in economic_kinds(device), **options)
         total = {k: total[k] + result.get(k, 0) for k in total}
+        if announce_only:
+            owners = owner_ids()
+            announce(db, f"economic-warning-{item['id']}",
+                     f"SELECT * FROM push_devices WHERE active=1 AND owner_id IN ({','.join('?' for _ in owners)})", tuple(owners),
+                     lambda ja, item=item: {'title': '⚠ PPI 数字なしで送信' if ja else '⚠ PPI sent without numbers',
+                                            'body': f"理由：{item.get('reason')}" if ja else f"Reason: {item.get('reason')}", 'url': '/research/calendar'},
+                     (made,), **options)
     return {'status': 'ready', **total}
