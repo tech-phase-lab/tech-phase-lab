@@ -1,6 +1,6 @@
 # Earnings flash pass/fail (latest real release of each watch-list company)
 
-Generated 2026-11-13 09:32Z · PASS 15 / 22
+Generated 2026-11-13 09:32Z · PASS 17 / 22
 
 | Ticker | Verdict | Detection source | Figures | Reason |
 |---|---|---|---|---|
@@ -23,8 +23,8 @@ Generated 2026-11-13 09:32Z · PASS 15 / 22
 | DELL | PASS | SEC 8-K 2026-09-01T20:10Z | 4 | 4 figures, e.g. revenue $46.971B |
 | PLTR | PASS | SEC 8-K 2026-11-02T21:06Z | 4 | 4 figures, e.g. revenue $2.313411B |
 | MSFT | PASS | SEC 8-K 2026-10-28T20:04Z | 4 | 4 figures, e.g. revenue $92.279B |
-| AMZN | FAIL | SEC 8-K 2026-10-29T20:05Z | 0 | no parser for this company yet |
-| GOOGL | FAIL | SEC 8-K 2026-10-28T20:01Z | 0 | no parser for this company yet |
+| AMZN | PASS | SEC 8-K 2026-10-29T20:05Z | 4 | 4 figures, e.g. revenue $201.944B |
+| GOOGL | PASS | SEC 8-K 2026-10-28T20:01Z | 4 | 4 figures, e.g. revenue $127.577B |
 | ORCL | FAIL | no route | 0 | Oracle files no 8-K Item 2.02 and oracle.com refuses automated fetches (403): needs an IR/wire route |
 
 ## How this table is made
