@@ -2,6 +2,7 @@ import "server-only";
 import { unstable_cache } from "next/cache";
 import { calendarEvents, dateOnlyEarnings } from "./calendar";
 import { shapePeriod, periodSeries, isIntradayPeriod, type BoardPeriod } from "./market-board-periods.ts";
+import { FAST_REFRESH_BUDGET, creditWindow, fitsBudget, parseUsage, quotesToRead } from "./quote-refresh-gate.ts";
 import { easternToIso, chartSpec, nextEarningsFromSite, parseBars, parseNextEarnings, parseQuote, parseQuotes, parseStatistics, splitBars, type Bar, type ChartRange, type MarketFacts, type MarketQuote } from "./market-quote";
 
 /** Server-side Twelve Data reads for the price screens. The key (TWELVE_DATA_API_KEY) never leaves the server. */
@@ -18,6 +19,7 @@ async function call(path: string, params: Record<string, string>): Promise<unkno
   for (const [k, v] of Object.entries(params)) url.searchParams.set(k, v);
   url.searchParams.set("apikey", key);
   for (let attempt = 0; attempt < 3; attempt++) {
+    spent.record(creditCost(path, params));
     const response = await fetch(url, { cache: "no-store", signal: AbortSignal.timeout(12_000) });
     if (response.status === 429 && attempt < 2) { await new Promise(r => setTimeout(r, 4000 * (attempt + 1))); continue; }
     if (!response.ok) { const text = await response.text().catch(() => ""); throw new Error(`twelve-data ${path} ${response.status} ${text.replace(/apikey=[^&"\s]*/gi, "").slice(0, 140)}`); }
@@ -28,12 +30,43 @@ async function call(path: string, params: Record<string, string>): Promise<unkno
   throw new Error(`twelve-data ${path} rate-limited`);
 }
 
+// This process's spending (a floor for the minute's usage) and the provider's own meter, read at most every ten seconds (one credit a read).
+const spent = creditWindow();
+const creditCost = (path: string, params: Record<string, string>) => path === "statistics" ? 50 : path === "earnings" ? 20 : path === "quote" ? (params.symbol ?? "").split(",").length : 1;
+let usageMemo: { at: number; used: number | null; localAt: number } | null = null;
+async function minuteUsage(): Promise<number> {
+  if (!usageMemo || Date.now() - usageMemo.at >= 10_000) {
+    let used: number | null = null;
+    const key = process.env.TWELVE_DATA_API_KEY;
+    try {
+      spent.record(1);
+      const response = await fetch(`${BASE()}/api_usage?apikey=${encodeURIComponent(key ?? "")}`, { cache: "no-store", signal: AbortSignal.timeout(5_000) });
+      if (response.ok) used = parseUsage(await response.json().catch(() => null));
+    } catch { /* the local count stands in */ }
+    usageMemo = { at: Date.now(), used, localAt: spent.total() };
+  }
+  const local = spent.total();
+  return usageMemo.used === null ? local : Math.max(local, usageMemo.used + Math.max(0, local - usageMemo.localAt));
+}
+
 // One-minute memory cache per ticker (and in-flight sharing), so a busy minute costs each symbol one request.
+// `fast` (the watchlist and a stock's page): a quote older than 15 seconds is read again when the minute's usage leaves room for it (quote-refresh-gate.ts).
 const quoteMemory = new Map<string, { at: number; quote: MarketQuote | null }>();
 const pending = new Map<string, Promise<void>>();
-export async function loadMarketQuotes(tickers: string[]): Promise<Record<string, MarketQuote>> {
+export async function loadMarketQuotes(tickers: string[], options: { fast?: boolean } = {}): Promise<Record<string, MarketQuote>> {
+  return (await loadMarketQuotesWithRefresh(tickers, options)).quotes;
+}
+/** As loadMarketQuotes, and says whether the 15-second refresh was granted (`fast`), for the response header. */
+export async function loadMarketQuotesWithRefresh(tickers: string[], { fast = false }: { fast?: boolean } = {}): Promise<{ quotes: Record<string, MarketQuote>; fast: boolean }> {
   const wanted = [...new Set(tickers)];
-  const stale = wanted.filter(t => (quoteMemory.get(t)?.at ?? 0) + TTL < Date.now());
+  const now = Date.now();
+  const ages = Object.fromEntries(wanted.map(t => [t, now - (quoteMemory.get(t)?.at ?? -Infinity)]));
+  let plan = quotesToRead(ages, fast, () => true);
+  if (plan.read.length > quotesToRead(ages, false, () => false).read.length) {
+    const used = await minuteUsage();
+    plan = quotesToRead(ages, true, extra => fitsBudget(used, extra, FAST_REFRESH_BUDGET));
+  }
+  const stale = plan.read, granted = plan.fast;
   for (let i = 0; i < stale.length; i += 12) {
     const group = stale.slice(i, i + 12), id = group.join(",");
     let job = pending.get(id);
@@ -48,7 +81,7 @@ export async function loadMarketQuotes(tickers: string[]): Promise<Record<string
   }
   const out: Record<string, MarketQuote> = {};
   for (const t of wanted) { const hit = quoteMemory.get(t)?.quote; if (hit) out[t] = hit; }
-  return out;
+  return { quotes: out, fast: granted };
 }
 
 type Variant = Record<string, string>;

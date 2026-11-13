@@ -35,8 +35,9 @@ function usePolled<T>(url: string | null, pick: (body: Record<string, unknown>) 
 }
 const pickQuotes = (body: Record<string, unknown>) => body.quotes as Record<string, CardQuote>;
 const pickFacts = (body: Record<string, unknown>) => body.facts as MarketFacts;
-export const useQuotes = (tickers: string[], history = false) => usePolled<Record<string, CardQuote>>(
-  tickers.length ? `/api/research/market/quotes?tickers=${encodeURIComponent(tickers.join(","))}${history ? "&history=1" : ""}` : null, pickQuotes, 60_000);
+/** `fast` (the watchlist and a stock's page): asked every 15 seconds; the server reads the provider again only while the plan's minute leaves room. */
+export const useQuotes = (tickers: string[], history = false, fast = false) => usePolled<Record<string, CardQuote>>(
+  tickers.length ? `/api/research/market/quotes?tickers=${encodeURIComponent(tickers.join(","))}${history ? "&history=1" : ""}${fast ? "&fast=1" : ""}` : null, pickQuotes, fast ? 15_000 : 60_000);
 export const useFacts = (ticker: string) => usePolled<MarketFacts>(`/api/research/market/facts?ticker=${encodeURIComponent(ticker)}`, pickFacts, 6 * 3600_000);
 
 const key = "tech-phase:quote-numbers-hidden:v1", event = "tech-phase:quote-numbers-hidden";
