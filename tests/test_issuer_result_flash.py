@@ -196,6 +196,18 @@ class Parsers(unittest.TestCase):
         self.assertNotIn('operating-income',keys('AMZN',a.replace('Operating income 17,422 28,076','Operating income 17,422 28,176')))
         self.assertNotIn('net-income',keys('AMZN',a.replace('Net income $ 21,187 $ 20,685','Net income $ 21,187 $ 20,785')))
         self.assertNotIn('eps',keys('AMZN',a.replace('Diluted earnings per share $ 1.95 $ 1.89','Diluted earnings per share $ 1.95 $ 2.89')))
+    def test_ge_vernova_summary_table_checked_against_stated_changes_and_headline(self):
+        text=fixture('gevernova-results-q326.txt')
+        parsed=flash.PROFILES['GEV']['parse'](text)
+        self.assertEqual(parsed['period'],'Q3 2026')
+        self.assertEqual([(f[0],f[1],f[2]) for f in parsed['facts']],[('revenue','$12.642B','$9.969B'),('eps','$4.81','$1.64'),('net-income','$1.289B','$453M'),('adjusted-ebitda','$1.943B','$811M')])
+        keys=lambda x:[f[0] for f in flash.PROFILES['GEV']['parse'](x)['facts']]
+        with self.assertRaises(ValueError): flash.PROFILES['GEV']['parse'](text.replace('Total revenues $12,642','Total revenues $13,642'))
+        with self.assertRaises(ValueError): flash.PROFILES['GEV']['parse'](text.replace('Revenue of $12.6B, +27%','Revenue of $12.6B, +37%'))
+        self.assertNotIn('net-income',keys(text.replace('Net income (loss) $1,289 $453 $836','Net income (loss) $1,299 $453 $836')))
+        self.assertNotIn('eps',keys(text.replace('Diluted EPS $4.81 $1.64 193%','Diluted EPS $5.81 $1.64 193%')))
+        self.assertNotIn('adjusted-ebitda',keys(text.replace('Adjusted EBITDA $1,943 $811 $1,131','Adjusted EBITDA $1,953 $811 $1,131')))
+        with self.assertRaises(ValueError): flash.PROFILES['GEV']['parse'](text.replace('(Dollars in millions, except per share) 2026 2025','(Dollars in millions, except per share) 2025 2026',1))
     def test_vertiv_statement_with_operating_profit_checked_against_all_cost_lines(self):
         text=fixture('vertiv-results-q326.txt')
         parsed=flash.PROFILES['VRT']['parse'](text)
