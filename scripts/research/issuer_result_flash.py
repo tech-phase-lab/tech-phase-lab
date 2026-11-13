@@ -477,6 +477,67 @@ STATEMENT = {
 }
 
 
+def parse_gev(text, url=None):
+    """GE Vernova's results release (8-K EX-99): the 'Total Company Results' summary table (this quarter, a year earlier, change, then nine months).
+    Revenue and diluted EPS against their stated Year-on-Year change, net income and adjusted EBITDA against the stated difference, and revenue against
+    the headline's own '$12.6B, +27%'. The release carries no full income statement, so there is no operating income."""
+    t = clean(text)
+    if 'ge vernova' not in t.lower():
+        raise ValueError('issuer-identity-missing')
+    period = re.findall(r'reports [a-z ]*?(first|second|third|fourth) quarter (20\d\d) financial performance', t[:1500], re.I)
+    if len(period) != 1:
+        raise ValueError('period-unrecognized')
+    quarter, year = QUARTERS[period[0][0].lower()], int(period[0][1])
+    start = t.find('Total Company Results')
+    if start < 0:
+        raise ValueError('summary-table-missing')
+    block = t[start:start + 2200]
+    if not re.search(r'\(Dollars in millions, except per share\) (20\d\d) (20\d\d) Year-on-Year', block[:300]):
+        raise ValueError('columns-unrecognized')
+    columns = re.search(r'\(Dollars in millions, except per share\) (20\d\d) (20\d\d) Year-on-Year', block)
+    if int(columns[1]) != year or int(columns[2]) != year - 1:
+        raise ValueError('columns-unrecognized')
+    amount = r'\$([\d,]+(?:\.\d+)?)'
+    pct = r'(-?\d+)%'
+
+    def row(label, third):
+        found = re.findall(r'(?<![A-Za-z])' + label + ' ' + amount + ' ' + amount + ' ' + third + r'(?= )', block)
+        if len(found) != 1:
+            return None
+        return [Decimal(x.replace(',', '')) for x in found[0]]
+
+    def change_ok(values, stated):  # whole-percent change printed next to the two values
+        return values[1] > 0 and abs((values[0] / values[1] - 1) * 100 - Decimal(stated)) <= Decimal('0.55')
+
+    def with_pct(label):
+        found = re.findall(r'(?<![A-Za-z])' + label + ' ' + amount + ' ' + amount + ' ' + pct + r'(?= )', block)
+        if len(found) != 1:
+            return None
+        values = [Decimal(found[0][0].replace(',', '')), Decimal(found[0][1].replace(',', ''))]
+        return values if change_ok(values, found[0][2]) else None
+
+    def with_diff(label):
+        values = row(label, amount)
+        return values[:2] if values and abs(values[0] - values[1] - values[2]) <= Decimal(1) else None
+    revenue = with_pct('Total revenues')
+    if not revenue:
+        raise ValueError('revenue-row-unrecognized')
+    headline = re.findall(r'Revenue of \$(\d+(?:\.\d+)?)B, \+(\d+)%', t[:3000])
+    if len(headline) != 1 or abs(Decimal(headline[0][0]) * 1000 - revenue[0]) > Decimal(55) or not change_ok(revenue, headline[0][1]):
+        raise ValueError('change-mismatch')
+    facts = [('revenue', money_millions(revenue[0]), money_millions(revenue[1]))]
+    eps = with_pct('Diluted EPS')
+    if eps:
+        facts.append(('eps', per_share(eps[0]), per_share(eps[1])))
+    for key, label in (('net-income', r'Net income \(loss\)'), ('adjusted-ebitda', 'Adjusted EBITDA')):
+        values = with_diff(label)
+        if values:
+            facts.append((key, money_millions(values[0]), money_millions(values[1])))
+    order = {k: i for i, k in enumerate(ORDER)}
+    facts.sort(key=lambda f: order[f[0]])
+    return {'period': f'Q{quarter} {year}', 'facts': facts}
+
+
 def parse_dell(text, url=None):
     """Dell's results release (8-K EX-99.1): 'Condensed Consolidated Statements of Income and Related Financial Highlights' with the
     columns this quarter, a year earlier, change (%), then six months. Every row is checked against its stated change."""
@@ -769,6 +830,7 @@ PROFILES = {
     'SNDK': {'publisher': 'Sandisk IR (SEC 8-K)', 'parse': lambda t, u=None: parse_statement(t, STATEMENT['SNDK']), 'marker': STATEMENT['SNDK']['heading']},
     'GOOGL': {'publisher': 'Alphabet IR (SEC 8-K)', 'parse': lambda t, u=None: parse_statement(t, STATEMENT['GOOGL']), 'marker': STATEMENT['GOOGL']['heading']},
     'AMZN': {'publisher': 'Amazon IR (SEC 8-K)', 'parse': lambda t, u=None: parse_statement(t, STATEMENT['AMZN']), 'marker': STATEMENT['AMZN']['heading']},
+    'GEV': {'publisher': 'GE Vernova IR (SEC 8-K)', 'parse': parse_gev, 'marker': 'Total Company Results'},
     'MSFT': {'publisher': 'Microsoft IR (SEC 8-K)', 'parse': lambda t, u=None: parse_statement(t, STATEMENT['MSFT']), 'marker': STATEMENT['MSFT']['heading']},
     'AMD': {'publisher': 'AMD IR (SEC 8-K)', 'parse': lambda t, u=None: parse_statement(t, STATEMENT['AMD']), 'marker': STATEMENT['AMD']['heading']},
     'MRVL': {'publisher': 'Marvell IR (SEC 8-K)', 'parse': lambda t, u=None: parse_statement(t, STATEMENT['MRVL']),
