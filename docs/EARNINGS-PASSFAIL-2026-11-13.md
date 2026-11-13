@@ -1,6 +1,6 @@
 # Earnings flash pass/fail (latest real release of each watch-list company)
 
-Generated 2026-11-13 02:04Z · PASS 3 / 22
+Generated 2026-11-13 09:32Z · PASS 7 / 22
 
 | Ticker | Verdict | Detection source | Figures | Reason |
 |---|---|---|---|---|
@@ -10,17 +10,17 @@ Generated 2026-11-13 02:04Z · PASS 3 / 22
 | NBIS | PASS | newsroom page | 3 | 3 figures, e.g. revenue $980.8M |
 | NVDA | PASS | SEC 8-K 2026-08-26T20:21Z | 6 | 6 figures, e.g. revenue $96.221B |
 | AMD | FAIL | SEC 8-K 2026-11-03T21:16Z | 0 | no parser for this company yet |
-| AVGO | FAIL | SEC 8-K 2026-09-02T20:26Z | 0 | no parser for this company yet |
+| AVGO | PASS | SEC 8-K 2026-09-02T20:26Z | 4 | 4 figures, e.g. revenue $29.591B |
 | ARM | FAIL | SEC 6-K 2026-11-04T21:02Z | 0 | no parser for this company yet |
 | TSM | FAIL | SEC 6-K 2026-10-15T10:40Z | 0 | no parser for this company yet |
 | ASML | FAIL | SEC 6-K 2026-10-14T10:01Z | 0 | no parser for this company yet |
-| MRVL | FAIL | SEC 8-K 2026-08-27T20:05Z | 0 | no parser for this company yet |
+| MRVL | PASS | SEC 8-K 2026-08-27T20:05Z | 4 | 4 figures, e.g. revenue $2.7393B |
 | ANET | FAIL | SEC 8-K 2026-11-03T21:10Z | 0 | no parser for this company yet |
-| CRDO | FAIL | SEC 8-K 2026-09-01T20:08Z | 0 | no parser for this company yet |
+| CRDO | PASS | SEC 8-K 2026-09-01T20:08Z | 4 | 4 figures, e.g. revenue $479.003M |
 | CRWV | PASS | SEC 8-K 2026-11-10T21:05Z | 5 | 5 figures, e.g. revenue $3.661B |
 | VRT | FAIL | SEC 8-K 2026-10-28T10:02Z | 0 | no parser for this company yet |
 | GEV | FAIL | SEC 8-K 2026-10-28T10:16Z | 0 | no parser for this company yet |
-| DELL | FAIL | SEC 8-K 2026-09-01T20:10Z | 0 | no parser for this company yet |
+| DELL | PASS | SEC 8-K 2026-09-01T20:10Z | 4 | 4 figures, e.g. revenue $46.971B |
 | PLTR | FAIL | SEC 8-K 2026-11-02T21:06Z | 0 | no parser for this company yet |
 | MSFT | FAIL | SEC 8-K 2026-10-28T20:04Z | 0 | no parser for this company yet |
 | AMZN | FAIL | SEC 8-K 2026-10-29T20:05Z | 0 | no parser for this company yet |

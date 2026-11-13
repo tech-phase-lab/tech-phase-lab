@@ -69,6 +69,40 @@ class Parsers(unittest.TestCase):
         # one row with a wrong figure is left out while the others stay
         bad=fixture('nvidia-results-q2fy27.txt').replace('Net income $59,688 $58,321 $26,422 2 % 126 %','Net income $59,688 $58,321 $26,422 2 % 226 %',1)
         self.assertNotIn('net-income',[f[0] for f in flash.parse_nvidia(bad)['facts']])
+    def test_dell_table_rows_checked_against_their_stated_changes(self):
+        text=fixture('dell-results-q2fy27.txt')
+        parsed=flash.parse_dell(text)
+        self.assertEqual(parsed['period'],'Q2 FY2027')
+        self.assertEqual([(f[0],f[1],f[2]) for f in parsed['facts']],[('revenue','$46.971B','$29.776B'),('eps','$6.34','$1.70'),
+            ('net-income','$4.133B','$1.164B'),('operating-income','$5.385B','$1.773B'),('guidance-revenue','$192.0B',None)])
+        with self.assertRaises(ValueError): flash.parse_dell(text.replace('Total net revenue 46,971 29,776 58%','Total net revenue 46,971 29,776 38%',1))
+        with self.assertRaises(ValueError): flash.parse_dell(__import__('re').sub('(?i)dell technologies','Other Company',text))
+        bad=text.replace('Net income $ 4,133 $ 1,164 255%','Net income $ 4,133 $ 1,164 155%')
+        self.assertNotIn('net-income',[f[0] for f in flash.parse_dell(bad)['facts']])
+    def test_statement_companies_checked_against_headline_and_arithmetic(self):
+        expected={'MRVL':('marvell-results-q2fy27.txt','Q2 FY2027',[('revenue','$2.7393B','$2.0061B'),('eps','$0.33','$0.22'),('net-income','$308M','$194.8M'),('operating-income','$459.7M','$290.1M')]),
+                  'CRDO':('credo-results-q1fy27.txt','Q1 FY2027',[('revenue','$479.003M','$223.074M'),('eps','$0.67','$0.34'),('net-income','$129.425M','$63.399M'),('operating-income','$120.7M','$60.742M')]),
+                  'AVGO':('broadcom-results-q3fy26.txt','Q3 FY2026',[('revenue','$29.591B','$15.952B'),('eps','$2.68','$0.85'),('net-income','$13.088B','$4.14B'),('operating-income','$15.955B','$5.887B'),('guidance-revenue','$34.8B',None)])}
+        for ticker,(name,period,facts) in expected.items():
+            parsed=flash.PROFILES[ticker]['parse'](fixture(name))
+            self.assertEqual(parsed['period'],period,ticker)
+            self.assertEqual([(f[0],f[1],f[2]) for f in parsed['facts']],facts,ticker)
+    def test_statement_companies_refuse_or_drop_what_does_not_add_up(self):
+        mrvl,avgo,crdo=fixture('marvell-results-q2fy27.txt'),fixture('broadcom-results-q3fy26.txt'),fixture('credo-results-q1fy27.txt')
+        parse=lambda t,x: flash.PROFILES[t]['parse'](x)
+        # revenue that disagrees with the growth stated in the headline: nothing is published
+        with self.assertRaises(ValueError): parse('MRVL',mrvl.replace('Net revenue $ 2,739.3','Net revenue $ 2,839.3',1))
+        with self.assertRaises(ValueError): parse('AVGO',avgo.replace('up 86 percent','up 66 percent',1))
+        with self.assertRaises(ValueError): parse('CRDO',crdo.replace('Revenue $ 479,003','Revenue $ 479,903',1))
+        # a wrong operating income breaks gross profit - expenses: that row is dropped, the others stay
+        keys=lambda parsed:[f[0] for f in parsed['facts']]
+        self.assertNotIn('operating-income',keys(parse('MRVL',mrvl.replace('Operating income 459.7','Operating income 495.7',1))))
+        self.assertNotIn('net-income',keys(parse('AVGO',avgo.replace('Net income $ 13,088','Net income $ 13,188'))))
+        # EPS that does not match net income / diluted shares is dropped
+        self.assertNotIn('eps',keys(parse('CRDO',crdo.replace('Diluted $ 0.67','Diluted $ 0.76',1))))
+        # another company's release is not read with this layout; a changed heading is not guessed
+        with self.assertRaises(ValueError): parse('MRVL',avgo)
+        with self.assertRaises(ValueError): parse('CRDO',crdo.replace('Condensed Consolidated Statements of Operations','Condensed Statements',1))
     def test_coreweave_table_and_guidance(self):
         parsed=flash.parse_coreweave(fixture('coreweave-results-q326.txt'))
         self.assertEqual(parsed['period'],'Q3 2026')
@@ -117,6 +151,26 @@ class BodyCompanies(unittest.TestCase):
         self.assertEqual((item['ticker'],item['period'],item['publisher'],item['facts'][0]['value']),('NVDA','Q2 FY2027','NVIDIA IR','$96.221B'))
         self.assertEqual(item['facts'][0]['comparisons'],{'yearAgo':'$46.743B'})
         self.assertEqual(item['facts'][-1]['ja'],'次四半期見通し 売上高')
+
+    def test_statement_companies_figures_from_the_stored_release_text(self):
+        cases=[('DELL','dell-results-q2fy27.txt','https://www.sec.gov/Archives/edgar/data/1571996/000157199626000039/exhibit991earnings8kq2fy27.htm','Q2 FY2027','$46.971B','Dell Technologies IR (SEC 8-K)'),
+               ('MRVL','marvell-results-q2fy27.txt','https://www.sec.gov/Archives/edgar/data/1835632/000183563226000022/q227_8kx812026ex-991.htm','Q2 FY2027','$2.7393B','Marvell IR (SEC 8-K)'),
+               ('CRDO','credo-results-q1fy27.txt','https://www.sec.gov/Archives/edgar/data/1807794/000162828026059795/credoq12027ex-991.htm','Q1 FY2027','$479.003M','Credo IR (SEC 8-K)'),
+               ('AVGO','broadcom-results-q3fy26.txt','https://www.sec.gov/Archives/edgar/data/1730168/000173016826000076/avgo-08022026x8kxex99.htm','Q3 FY2026','$29.591B','Broadcom IR (SEC 8-K)')]
+        for ticker,name,url,period,revenue,publisher in cases:
+            with self.subTest(ticker):
+                tmp=tempfile.TemporaryDirectory();self.addCleanup(tmp.cleanup)
+                path=str(Path(tmp.name)/'db.sqlite')
+                with monitor.connect(path) as db: signals.schema(db)
+                body=fixture(name); sha=hashlib.sha256(body.encode()).hexdigest()
+                with monitor.connect(path) as db:
+                    db.execute('INSERT INTO sources(url,ticker,discovered_at,sha256) VALUES(?,?,?,?)',(url,ticker,'2026-11-12T21:00:10+00:00',sha))
+                    db.execute('INSERT INTO release_events(url,ticker,detected_at) VALUES(?,?,?)',(url,ticker,'2026-11-12T21:00:10+00:00'))
+                    db.execute('INSERT INTO source_revisions(url,sha256,observed_at,extracted_text,extracted_chars) VALUES(?,?,?,?,?)',(url,sha,'2026-11-12T21:00:11+00:00',body,len(body)))
+                self.assertEqual(flash.run_once(path,datetime(2026,11,12,21,1,tzinfo=timezone.utc)),1)
+                with monitor.connect(path) as db: [item]=flash.public_feed(db,'2026-11-05T00:00:00+00:00')
+                self.assertEqual((item['ticker'],item['period'],item['publisher'],item['facts'][0]['value']),(ticker,period,publisher,revenue))
+                self.assertGreaterEqual(len([f for f in item['facts'] if not f['key'].startswith('guidance-')]),3)
 
 class Publication(unittest.TestCase):
     def setUp(self):
