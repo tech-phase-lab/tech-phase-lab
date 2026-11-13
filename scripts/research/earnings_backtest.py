@@ -73,46 +73,73 @@ def exhibit_text(cik, accession):
     return None
 
 
-def main():
-    rows = []
-    for ticker in WATCH:
-        provider = monitor.PROVIDERS.get(ticker, {})
-        ciks = [s.get('cik') for s in provider.get('supplementalSources', []) if s.get('format') == 'sec-json']
-        row = {'ticker': ticker, 'routes': 1 + (1 if ciks else 0) if provider else 0}
-        if not ciks:
-            row.update(filing='no SEC route', exhibit='-', parser='-', hint='-')
-            rows.append(row)
-            continue
-        try:
+def check_company(ticker):
+    """One company's pass/fail against the acceptance criteria (docs/EARNINGS-ACCEPTANCE-2026-11-12.md), from its latest real release."""
+    provider = monitor.PROVIDERS.get(ticker, {})
+    ciks = [s.get('cik') for s in provider.get('supplementalSources', []) if s.get('format') == 'sec-json']
+    result = {'ticker': ticker, 'detection': 'no route', 'figures': 0, 'verdict': 'FAIL', 'reason': ''}
+    if not provider:
+        result['reason'] = 'company not configured in providers.json'
+        return result
+    profile = flash.PROFILES.get(ticker)
+    text, source = None, None
+    try:
+        if ticker == 'NBIS':
+            # Nebius' table is in the release PDF linked from its newsroom page, not in the SEC 6-K.
+            page = latest_nebius_results_page()
+            if page:
+                result['detection'] = 'newsroom page'
+                text, source = flash.nebius_pdf_text(page, monitor.fetch), page
+        elif ciks:
             filing = latest_results_filing(ciks[0])
-        except Exception as exc:
-            row.update(filing='error ' + type(exc).__name__, exhibit='-', parser='-', hint='-')
-            rows.append(row)
-            continue
-        if not filing:
-            row.update(filing='none in %d days' % LOOKBACK.days, exhibit='-', parser='-', hint='-')
-            rows.append(row)
-            continue
-        text = filing['text']
-        row['filing'] = f"{filing['form']} {filing['accepted'][:16]}Z"
-        row['exhibit'] = f'{len(text)} chars'
-        profile = flash.PROFILES.get(ticker)
-        if profile and ticker != 'NBIS':
-            try:
-                row['parser'] = ', '.join(f'{k} {v}' for k, v in profile['parse'](text)['facts'][:3])
-            except Exception as exc:
-                row['parser'] = 'FAILED: ' + str(exc)
-        else:
-            row['parser'] = 'none yet' if not profile else 'PDF route (see NBIS)'
-        row['hint'] = ('revenue row' if re.search(r'\bRevenues?\b[^.]{0,40}\$\s*[\d,.]+', text) else 'no revenue row') + \
-                      ('; quarter heading' if re.search(r'(?:First|Second|Third|Fourth) Quarter \d{4}|Q[1-4] \d{4}|Fiscal Q[1-4]', text, re.I) else '')
-        rows.append(row)
-    print('# Earnings flash backtest\n')
-    print('Generated', datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%MZ'), '\n')
-    print('| Ticker | Latest results filing (SEC) | Exhibit | Parser | Shape of text |')
+            if filing:
+                result['detection'] = f"SEC {filing['form']} {filing['accepted'][:16]}Z"
+                text, source = filing['text'], filing['accession']
+            else:
+                result['detection'] = 'none in %d days' % LOOKBACK.days
+    except Exception as exc:
+        result['reason'] = 'fetch error: ' + type(exc).__name__
+        return result
+    if text is None:
+        result['reason'] = result['reason'] or 'no release text found'
+        return result
+    if not profile:
+        result['reason'] = 'no parser for this company yet'
+        return result
+    try:
+        parsed = profile['parse'](text, source if ticker == 'NBIS' else None)
+    except Exception as exc:
+        result['reason'] = 'parser refused: ' + str(exc)
+        return result
+    reported = [f for f in parsed['facts'] if not f[0].startswith('guidance-')]
+    result['figures'] = len(reported)
+    result['period'] = parsed['period']
+    if len(reported) >= 3:
+        result.update(verdict='PASS', reason='%d figures, e.g. revenue %s' % (len(reported), reported[0][1]))
+    else:
+        result['reason'] = 'fewer than 3 reported figures'
+    return result
+
+
+def latest_nebius_results_page():
+    index = get('https://nebius.com/newsroom')
+    slugs = re.findall(r'/newsroom/(nebius-(?:group-)?(?:n-v-)?(?:reports|announces)-(?:first|second|third|fourth)-quarter[a-z0-9-]*financial-results)', index)
+    return 'https://nebius.com/newsroom/' + slugs[0] if slugs else None
+
+
+def main():
+    results = [check_company(t) for t in WATCH]
+    if '--json' in sys.argv:
+        print(json.dumps({'generatedAt': datetime.now(timezone.utc).isoformat(timespec='seconds'), 'companies': results}, ensure_ascii=False))
+        return 0
+    passed = sum(r['verdict'] == 'PASS' for r in results)
+    print('# Earnings flash pass/fail (latest real release of each watch-list company)\n')
+    print('Generated', datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%MZ'), f'· PASS {passed} / {len(results)}\n')
+    print('| Ticker | Verdict | Detection source | Figures | Reason |')
     print('|---|---|---|---|---|')
-    for r in rows:
-        print(f"| {r['ticker']} | {r['filing']} | {r['exhibit']} | {r['parser']} | {r['hint']} |")
+    for r in results:
+        print(f"| {r['ticker']} | {r['verdict']} | {r['detection']} | {r['figures']} | {r['reason']} |")
+    return 0
 
 
 if __name__ == '__main__':
