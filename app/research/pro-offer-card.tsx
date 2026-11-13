@@ -31,7 +31,7 @@ function remember(value: { currency: OfferCurrency | null; period: OfferPeriod |
 /**
  * The PRO introduction card (docs/design/pro-card-pack): JPY/USD and monthly/yearly switch on the card, price, a PayPal button
  * that goes straight to PayPal (no confirmation sheet), then the feature list (children). Gold is used on this card only.
- * First choice: yearly; USD when the reader browses in English (the site's only overseas signal), otherwise JPY.
+ * First choice: monthly (owner decision, Nov 13: the lower price shows first); USD when the reader browses in English (the site's only overseas signal), otherwise JPY.
  */
 export default function ProOfferCard({ ja, onSubscribe, href, busy = false, disabled = false, notice, children }: {
   ja: boolean; onSubscribe?: (currency: OfferCurrency, period: OfferPeriod) => void; href?: string; busy?: boolean; disabled?: boolean; notice?: ReactNode; children: ReactNode;
@@ -41,7 +41,7 @@ export default function ProOfferCard({ ja, onSubscribe, href, busy = false, disa
   const [pickedPeriod, setPeriod] = useState<OfferPeriod | null>(null);
   useEffect(() => { const saved = remembered(); const id = setTimeout(() => { if (saved.currency) setCurrency(saved.currency); if (saved.period) setPeriod(saved.period); }, 0); return () => clearTimeout(id); }, []);
   const currency: OfferCurrency = pickedCurrency ?? (ja ? "JPY" : "USD");
-  const period: OfferPeriod = pickedPeriod ?? "year";
+  const period: OfferPeriod = pickedPeriod ?? "month";
   const pick = (c: OfferCurrency | null, p: OfferPeriod | null) => { const nextC = c ?? pickedCurrency ?? currency, nextP = p ?? pickedPeriod ?? period; setCurrency(nextC); setPeriod(nextP); remember({ currency: nextC, period: nextP }); };
   const price = offerPrice(currency, period, ja);
   const tab = (active: boolean, label: string, onClick: () => void) => <button type="button" className={styles.tab} aria-pressed={active} onClick={onClick}>{label}</button>;

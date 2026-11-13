@@ -25,3 +25,22 @@ export function usMarketSession(at: Date): MarketSession | null {
   if (minutes >= close && minutes < (EARLY_CLOSE.has(date) ? 17 * 60 : 20 * 60)) return "post";
   return "closed";
 }
+
+/** What the market-board banner says: pre-market, regular trading, after-hours, or closed (weekends and holidays included).
+ * Decided on New York time, so daylight saving needs no fixed Tokyo hours. Outside the holiday calendar the weekday and the clock decide. */
+export type MarketPhase = "pre" | "regular" | "post" | "closed";
+export function marketPhase(at: Date): MarketPhase {
+  const known = usMarketSession(at);
+  if (known === "pre" || known === "regular" || known === "post") return known;
+  if (known !== null) return "closed";
+  const parts = Object.fromEntries(new Intl.DateTimeFormat("en-US", { timeZone: "America/New_York", weekday: "short", hour: "2-digit", minute: "2-digit", hourCycle: "h23" })
+    .formatToParts(at).map(part => [part.type, part.value]));
+  if (parts.weekday === "Sat" || parts.weekday === "Sun") return "closed";
+  const minutes = Number(parts.hour) * 60 + Number(parts.minute);
+  return minutes >= 570 && minutes < 960 ? "regular" : minutes >= 240 && minutes < 570 ? "pre" : minutes >= 960 && minutes < 1200 ? "post" : "closed";
+}
+/** "取引中 ・ 06:20 JST" parts: the state word (Japanese / English) and whether the mint point is lit. */
+export function marketBanner(phase: MarketPhase): { ja: string; en: string; lit: boolean } {
+  return phase === "pre" ? { ja: "プレ取引中", en: "Pre-market", lit: true } : phase === "regular" ? { ja: "取引中", en: "Open", lit: true }
+    : phase === "post" ? { ja: "アフター取引中", en: "After-hours", lit: true } : { ja: "取引終了", en: "Closed", lit: false };
+}

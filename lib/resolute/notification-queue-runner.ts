@@ -20,6 +20,8 @@ export function createNotificationQueueRunner(
     recipient: Recipient;
     closes: ReturnType<typeof createCloseProvider>;
     limit?: number;
+    /** 試験用の安全弁: 指定があれば、この本人IDだけを対象にする(他の会員の設定が有効でも候補を作らない)。 */
+    onlyUserIds?: string[];
   },
 ) {
   const now = options.now ?? (() => new Date());
@@ -35,8 +37,9 @@ export function createNotificationQueueRunner(
         await reader.query(
           `SELECT clerk_user_id FROM resolute.notification_settings
            WHERE settings->>'deliveryHourJst'=$1 AND (settings->>'alertsEnabled'='true' OR settings->>'morningEnabled'='true')
+           AND ($3::text[] IS NULL OR clerk_user_id = ANY($3::text[]))
            ORDER BY clerk_user_id LIMIT $2`,
-          [String(slot.hour), limit + 1],
+          [String(slot.hour), limit + 1, options.onlyUserIds?.length ? options.onlyUserIds : null],
         )
       ).rows;
     } finally {

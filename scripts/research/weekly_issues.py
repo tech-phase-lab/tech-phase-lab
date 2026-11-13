@@ -83,6 +83,10 @@ def _list(value, field, limit):
 SECTIONS = ("summary", "earnings", "indicators", "market", "schedule")
 
 
+def _bad(field):
+    raise ValueError(f"invalid-weekly-{field}")
+
+
 def _part(raw):
     """One part, strictly. `section` (where it sits in the reading order) is optional so that issues saved before it existed still load."""
     if not isinstance(raw, dict):
@@ -103,6 +107,10 @@ def _part_body(raw):
     part = {"type": kind, "heading": _text(raw.get("heading"), "heading", 80)}
     if kind == "text":
         part["body"] = _text(raw.get("body"), "body", 3000)
+        if raw.get("items") is not None:  # the takeaway cards: each sentence with the kind of material it rests on (picks its icon)
+            part["items"] = [{"text": _text(item.get("text") if isinstance(item, dict) else None, "item", 200),
+                              "kind": item.get("kind") if item.get("kind") in ("earnings", "indicators", "market") else _bad("item-kind")}
+                             for item in _list(raw.get("items"), "items", 3)]
     elif kind == "numbers":
         cards = []
         for card in _list(raw.get("cards"), "cards", 8):
@@ -119,6 +127,17 @@ def _part_body(raw):
             cards.append(item)
         part["cards"] = cards
         part["note"] = _text(raw.get("note"), "note", 600, False)
+        if raw.get("compare") is not None:  # result / forecast / previous bars, built by the program from checked figures
+            groups = []
+            for row in _list(raw.get("compare"), "compare", 8):
+                if not isinstance(row, dict):
+                    raise ValueError("invalid-weekly-compare")
+                values = [{"name": _text(v.get("name") if isinstance(v, dict) else None, "name", 8), "value": _number(v.get("value") if isinstance(v, dict) else None, "value", True)}
+                          for v in _list(row.get("values"), "values", 3)]
+                if len(values) < 2:
+                    raise ValueError("invalid-weekly-compare")
+                groups.append({"label": _text(row.get("label"), "label", 40), "unit": _text(row.get("unit"), "unit", 12, False), "values": values})
+            part["compare"] = groups
     elif kind == "timeline":
         points = []
         for point in _list(raw.get("points"), "points", 12):

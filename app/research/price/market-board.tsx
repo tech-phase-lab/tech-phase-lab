@@ -1,8 +1,9 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useResearchLanguage } from "../use-research-language";
 import PriceChart from "./price-chart";
-import { compact, signedPercent, type Bar, type ChartRange } from "@/lib/research/market-quote";
+import { compact, signedPercent, splitExtendedBars, type Bar, type ChartRange } from "@/lib/research/market-quote";
+import { marketBanner, marketPhase } from "@/lib/research/us-market-session";
 import type { BoardQuote } from "@/lib/research/market-data";
 import styles from "./board.module.css";
 
@@ -45,6 +46,18 @@ export function formatPrice(value: number, kind: Kind): string {
 }
 const toneOf = (value: number | null) => value === null || value === 0 ? "flat" : value > 0 ? "up" : "down";
 const clock = (iso: string) => new Date(iso).toLocaleTimeString("en-GB", { timeZone: "Asia/Tokyo", hour: "2-digit", minute: "2-digit", hour12: false });
+
+/** The current time, refreshed on every minute boundary (null until the page is on the screen, so the server page and the first paint agree). */
+function useMinute() {
+  const [now, setNow] = useState<number | null>(null);
+  useEffect(() => {
+    let timer: ReturnType<typeof setTimeout> | undefined;
+    const tick = () => { const at = Date.now(); setNow(at); timer = setTimeout(tick, 60_000 - (at % 60_000) + 50); };
+    timer = setTimeout(tick, 0);
+    return () => clearTimeout(timer);
+  }, []);
+  return now;
+}
 
 /** Reads quotes for the given ids now and every minute. A symbol the server cannot read is simply missing from the answer. */
 function useBoard(ids: string[]) {
@@ -92,7 +105,7 @@ export default function MarketBoard() {
   const current = CATEGORIES.find(item => item.id === category)!;
   const indexQuotes = useBoard(INDEX_ETFS.map(item => item.id));
   const itemQuotes = useBoard(current.items.map(item => item.id));
-  const entry = ALL.find(item => item.id === selected)!;
+  const entry = ALL.find(item => item.id === selected)!, index = INDEX_ETFS.find(item => item.id === selected);
   const quote = indexQuotes?.[selected] ?? itemQuotes?.[selected];
   const key = `${selected}:${range}`;
   const [reload, setReload] = useState(0);
@@ -114,19 +127,23 @@ export default function MarketBoard() {
     return () => controller.abort();
   }, [selected, range, key, reload]);
   const loading = chart.key !== key;
-  const last = !loading && chart.bars.length ? chart.bars[chart.bars.length - 1] : null;
+  // Pre-market / after-hours bars (when the provider returned some) are drawn apart from the regular ones, in their own band.
+  const ext = indexQuotes?.[selected]?.extended ?? itemQuotes?.[selected]?.extended ?? null;
+  const split = useMemo(() => ext && !loading ? splitExtendedBars(chart.bars) : { regular: chart.bars, extended: [] as Bar[] }, [ext, loading, chart.bars]);
+  const last = !loading && split.regular.length ? split.regular[split.regular.length - 1] : null;
+  const now = useMinute(), banner = marketBanner(marketPhase(new Date(now ?? 0)));
   const shownPrice = quote?.price ?? last?.close ?? null;
   const tone = toneOf(quote?.percentChange ?? null);
   const first = indexQuotes ? Object.values(indexQuotes)[0] : undefined;
   const interval = range === "1d" || range === "1w" ? "intraday" : range === "5y" ? "weekly" : "daily";
   const bar = active ?? last;
-  const hasVolume = !loading && chart.bars.some(b => (b.volume ?? 0) > 0);
+
   const t = (a: string, b: string) => ja ? a : b;
   const num = (value: number) => formatPrice(value, entry.kind).replace(/^\$/, "");
   const pick = (id: string) => { setSelected(id); setActive(null); };
   return <div className={styles.wrap}>
     <section className={styles.indices} aria-label={t("主要3指数に連動するETF", "ETFs tracking the three major indices")}>
-      <div className={styles.state} role="status">{first ? <><span className={styles.dot} data-open={first.marketOpen} /><span>{t(first.marketOpen ? "米国市場 取引中" : "米国市場 取引終了", first.marketOpen ? "U.S. market open" : "U.S. market closed")} ・ {clock(first.asOf)} JST</span></> : <span>{indexQuotes === null ? t("読み込み中…", "Loading…") : t("株価を取得できませんでした", "Prices unavailable")}</span>}</div>
+      <div className={styles.state} role="status">{first ? <><span className={styles.dot} data-open={banner.lit} /><span>{ja ? banner.ja : banner.en}{now === null ? "" : ` ・ ${clock(new Date(now).toISOString())} JST`}</span></> : <span>{indexQuotes === null ? t("読み込み中…", "Loading…") : t("株価を取得できませんでした", "Prices unavailable")}</span>}</div>
       <div className={styles.cols}>{INDEX_ETFS.map(item => {
         const q = indexQuotes?.[item.id], tn = toneOf(q?.percentChange ?? null), ext = q?.extended;
         return <button type="button" key={item.id} className={styles.col} aria-pressed={selected === item.id} onClick={() => { setSelected(item.id); setActive(null); }} aria-label={`${item.short} ${ja ? item.sub.ja : item.sub.en}`}>
@@ -145,16 +162,17 @@ export default function MarketBoard() {
         <span className={`${styles.itemChange} ${styles[tn]}`}>{q?.percentChange == null ? "" : signedPercent(q.percentChange)}</span></button>;
     })}</div>
     <section className={styles.panel} aria-label={ja ? entry.ja : entry.en}>
-      <div className={styles.panelHead}><h2 className={styles.panelName}>{ja ? entry.ja : entry.en}</h2>
+      <div className={styles.panelHead}>{index
+        ? <div className={styles.panelTitle}><h2 className={styles.panelName}>{index.short}</h2><span className={styles.panelSub}>{ja ? index.sub.ja : index.sub.en}</span></div>
+        : <h2 className={styles.panelName}>{ja ? entry.ja : entry.en}</h2>}
         <div className={styles.mode} role="group" aria-label={t("チャートの種類", "Chart type")}><button type="button" aria-pressed={mode === "candles"} onClick={() => setMode("candles")}>{t("ローソク足", "Candles")}</button><button type="button" aria-pressed={mode === "line"} onClick={() => setMode("line")}>{t("ライン", "Line")}</button></div></div>
       <div className={styles.big}><span className={styles.bigPrice}>{shownPrice === null ? "—" : formatPrice(shownPrice, entry.kind)}</span>
         {quote?.percentChange != null && <span className={`${styles.chip} ${styles[tone]}`} style={{ fontSize: 13 }}>{tone === "up" ? "▲" : tone === "down" ? "▼" : "–"} {signedPercent(quote.percentChange)}</span>}</div>
       {mode === "candles" && bar && <div className={styles.ohlc} aria-live="polite">
-        <span><small>{t("始", "O")}</small>{num(bar.open)}</span><span><small>{t("高", "H")}</small>{num(bar.high)}</span><span><small>{t("安", "L")}</small>{num(bar.low)}</span><span><small>{t("終", "C")}</small>{num(bar.close)}</span>
-        {hasVolume && bar.volume ? <span><small>{t("出来高", "Vol")}</small>{compact(bar.volume)}</span> : null}</div>}
+        <span><small>{t("始値", "Open")}</small><b>{num(bar.open)}</b></span><span><small>{t("高値", "High")}</small><b>{num(bar.high)}</b></span><span><small>{t("安値", "Low")}</small><b>{num(bar.low)}</b></span><span data-close="true"><small>{t("終値", "Close")}</small><b>{num(bar.close)}</b></span></div>}
       <div className={styles.chartBox}>{loading ? <p className={styles.note} role="status">{t("チャートを読み込み中…", "Loading the chart…")}</p>
-        : chart.bars.length < 2 ? <p className={styles.note} role="status">{t("この銘柄のチャートを取得できませんでした。", "The chart for this symbol could not be loaded.")} <button type="button" className={styles.retry} onClick={() => { setChart({ key: "", bars: [], before: [] }); setReload(n => n + 1); }}>{t("もう一度読み込む", "Try again")}</button></p>
-        : <PriceChart bars={chart.bars} before={chart.before} mode={mode} interval={interval} variant="board" ja={ja} maPeriods={[25, 75]} accent="#7fe3c0" lineColor="#7fe3c0" onActive={setActive} />}</div>
+        : split.regular.length < 2 ? <p className={styles.note} role="status">{t("この銘柄のチャートを取得できませんでした。", "The chart for this symbol could not be loaded.")} <button type="button" className={styles.retry} onClick={() => { setChart({ key: "", bars: [], before: [] }); setReload(n => n + 1); }}>{t("もう一度読み込む", "Try again")}</button></p>
+        : <PriceChart bars={split.regular} extended={ext ? { label: ext.session === "pre" ? t("プレ", "Pre") : t("アフター", "After"), price: ext.price, close: quote?.price ?? ext.price, bars: split.extended } : undefined} before={chart.before} mode={mode} interval={interval} variant="board" ja={ja} maPeriods={[25, 75]} accent="#7fe3c0" lineColor="#7fe3c0" onActive={setActive} />}</div>
       <div className={styles.ranges} role="group" aria-label={t("チャートの期間", "Chart range")}>{RANGES.map(r => <button key={r} type="button" aria-pressed={range === r} onClick={() => setRange(r)}>{(ja ? RANGE_JA : RANGE_EN)[r]}</button>)}</div>
     </section>
     <p className={styles.credit}>{t("提供：Twelve Data ・ SPY・QQQ・DIAと債券・半導体ETFはETFの価格です。上の3つを押すと、チャートがその銘柄に切り替わります。", "Data: Twelve Data. SPY, QQQ, DIA and the bond and semiconductor ETFs show ETF prices. Press one of the top three to chart it.")}</p>
