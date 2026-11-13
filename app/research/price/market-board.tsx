@@ -136,7 +136,9 @@ export default function MarketBoard() {
   const tone = toneOf(quote?.percentChange ?? null);
   const first = indexQuotes ? Object.values(indexQuotes)[0] : undefined;
   const interval = range === "1d" || range === "1w" ? "intraday" : range === "5y" ? "weekly" : "daily";
-  const bar = active ?? last;
+  // On the 1-day chart the panels and the volume are the regular session's (they agree with the price above); the crosshair switches them to the marked bar.
+  const day: Bar | null = range === "1d" && quote && quote.open != null && quote.high != null && quote.low != null ? { at: "session", open: quote.open, high: quote.high, low: quote.low, close: quote.price, volume: quote.volume } : null;
+  const bar = active ?? day ?? last;
 
   const t = (a: string, b: string) => ja ? a : b;
   const num = (value: number) => formatPrice(value, entry.kind).replace(/^\$/, "");
@@ -172,7 +174,7 @@ export default function MarketBoard() {
         <span><small>{t("始値", "Open")}</small><b>{num(bar.open)}</b></span><span><small>{t("高値", "High")}</small><b>{num(bar.high)}</b></span><span><small>{t("安値", "Low")}</small><b>{num(bar.low)}</b></span><span data-close="true"><small>{t("終値", "Close")}</small><b>{num(bar.close)}</b></span></div>}
       <div className={styles.chartBox}>{loading ? <p className={styles.note} role="status">{t("チャートを読み込み中…", "Loading the chart…")}</p>
         : split.regular.length < 2 ? <p className={styles.note} role="status">{t("この銘柄のチャートを取得できませんでした。", "The chart for this symbol could not be loaded.")} <button type="button" className={styles.retry} onClick={() => { setChart({ key: "", bars: [], before: [] }); setReload(n => n + 1); }}>{t("もう一度読み込む", "Try again")}</button></p>
-        : <PriceChart bars={split.regular} extended={ext ? { label: ext.session === "pre" ? t("プレ", "Pre") : t("アフター", "After"), price: ext.price, close: quote?.price ?? ext.price, bars: split.extended } : undefined} before={chart.before} mode={mode} interval={interval} variant="board" ja={ja} maPeriods={[25, 75]} accent="#7fe3c0" lineColor="#7fe3c0" onActive={setActive} />}</div>
+        : <PriceChart defaultVolume={day ? day.volume : undefined} bars={split.regular} extended={ext ? { label: ext.session === "pre" ? t("プレ", "Pre") : t("アフター", "After"), price: ext.price, close: quote?.price ?? ext.price, bars: split.extended } : undefined} before={chart.before} mode={mode} interval={interval} variant="board" ja={ja} maPeriods={[25, 75]} accent="#7fe3c0" lineColor="#7fe3c0" onActive={setActive} />}</div>
       <div className={styles.ranges} role="group" aria-label={t("チャートの期間", "Chart range")}>{RANGES.map(r => <button key={r} type="button" aria-pressed={range === r} onClick={() => setRange(r)}>{(ja ? RANGE_JA : RANGE_EN)[r]}</button>)}</div>
     </section>
     <p className={styles.credit}>{t("提供：Twelve Data ・ SPY・QQQ・DIAと債券・半導体ETFはETFの価格です。上の3つを押すと、チャートがその銘柄に切り替わります。", "Data: Twelve Data. SPY, QQQ, DIA and the bond and semiconductor ETFs show ETF prices. Press one of the top three to chart it.")}</p>
