@@ -55,15 +55,22 @@ SEC_HOSTS = {'www.sec.gov', 'data.sec.gov'}
 ITEM_202_TITLE = '8-K \u00b7 Item 2.02 Results of Operations'
 
 
+# A foreign private issuer files its results as a 6-K whose body is the regulator's table (SK hynix, SEC Form 6-K, Oct 28 2026).
+PRELIMINARY_RESULTS = re.compile(r'\bPreliminary Results of Operations\b.{0,700}?Current Period \((?:First|Second|Third|Fourth) quarter', re.I)
+
+
 def is_results_filing(db, row):
-    """An 8-K whose stored text is a results press release (or declares Item 2.02). Reads one stored revision, only for 8-Ks."""
+    """An 8-K whose stored text is a results press release (or declares Item 2.02), or a 6-K that carries a 'Preliminary Results of
+    Operations' table. Reads one stored revision, only for those two forms."""
     text = stored_text(db, row)
+    if row['sec_form'] == '6-K':
+        return bool(text and PRELIMINARY_RESULTS.search(text))
     return bool(text and (RESULTS_ITEM.search(text) or is_results_release(text[:600])))
 
 
 def stored_text(db, row):
-    """The first 8000 characters the monitor stored for an 8-K (its EX-99.1 press release), whitespace-normalised; '' if none."""
-    if row['sec_form'] != '8-K' or not row['sha256']:
+    """The first 8000 characters the monitor stored for an 8-K (its EX-99.1 press release) or a 6-K, whitespace-normalised; '' if none."""
+    if row['sec_form'] not in ('8-K', '6-K') or not row['sha256']:
         return ''
     revision = db.execute('SELECT extracted_text FROM source_revisions WHERE url=? AND sha256=?', (row['url'], row['sha256'])).fetchone()
     return ' '.join((revision['extracted_text'] or '')[:8000].split()) if revision else ''
@@ -129,7 +136,9 @@ def run_once(path, reference=None):
                 continue
             # A filing's title names no quarter; its press release does ("... Fourth Quarter and Fiscal Year 2026 Results"), and the phone alert
             # is one per company and quarter, so the line and the figures that follow share it.
-            period = period_of(row['title']) or period_of(stored_text(db, row)[:600]) or 'Latest'
+            text = stored_text(db, row)
+            table = PRELIMINARY_RESULTS.search(text)
+            period = period_of(row['title']) or period_of(text[table.start():table.end() + 120] if table else text[:600]) or 'Latest'
             key = hashlib.sha256('\0'.join([row['ticker'], row['url']]).encode()).hexdigest()
             with db:
                 added += db.execute('INSERT OR IGNORE INTO earnings_announcements VALUES(?,?,?,?,?,?,?)',

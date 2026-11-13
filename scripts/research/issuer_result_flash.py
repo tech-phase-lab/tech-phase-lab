@@ -616,6 +616,72 @@ def parse_gev(text, url=None):
     return {'period': f'Q{quarter} {year}', 'facts': facts}
 
 
+SKHYNIX_ROWS = (('revenue', 'Revenue'), ('operating-income', 'Operating Profit'),
+                ('pretax', 'Profit from Continuing Operations Before Income Tax'), ('net-income', r'Profit \(Loss\) for the Period'))
+
+
+def parse_skhynix(text, url=None):
+    """SK hynix's 'Preliminary Results of Operations' (SEC Form 6-K, the same table it files with the Korean regulator), in millions of won:
+    this quarter, the year to date, the previous quarter and the same quarter a year earlier, with the stated quarter-on-quarter and
+    year-on-year changes. A row is published only when both stated changes agree with the values; the periods must be the quarter, the
+    one before it and the same quarter a year earlier. Figures are preliminary and unaudited (the label says so). No EPS in the table."""
+    t = clean(text)
+    if 'sk hynix' not in t.lower():
+        raise ValueError('issuer-identity-missing')
+    start = t.find('Preliminary Results of Operations')
+    if start < 0:
+        raise ValueError('table-heading-missing')
+    block = t[start:start + 3600]
+    if 'in millions of Won' not in block[:600]:
+        raise ValueError('units-unrecognized')
+    periods = re.search(r'Current Period \((First|Second|Third|Fourth) quarter\(\d\) of (20\d\d)\) Previous Period \((First|Second|Third|Fourth) quarter\(\d\) of (20\d\d)\)'
+                        r'.{0,60}?Year-to-Year Comparison \((First|Second|Third|Fourth) quarter\(\d\) of (20\d\d)\)', block[:900])
+    if not periods:
+        raise ValueError('period-unrecognized')
+    quarter, year = QUARTERS[periods[1].lower()], int(periods[2])
+    before = (quarter - 1, year) if quarter > 1 else (4, year - 1)
+    if (QUARTERS[periods[3].lower()], int(periods[4])) != before or (QUARTERS[periods[5].lower()], int(periods[6])) != (quarter, year - 1):
+        raise ValueError('columns-unrecognized')
+    # each metric is its own run of the block, from its label to the next metric's label
+    starts = []
+    for key, label in SKHYNIX_ROWS + (('controlling', 'Attributable To: Controlling Interests'),):
+        found = list(re.finditer(label + r' Quarterly Results', block))
+        if len(found) != 1:
+            starts.append((key, None))
+        else:
+            starts.append((key, found[0].start()))
+    ends = [position for _, position in starts if position is not None] + [len(block)]
+    rows = {}
+    for key, position in starts:
+        if position is None:
+            continue
+        run = block[position:min([end for end in ends if end > position] or [len(block)])]
+        amounts = re.findall(r'(?<![\d,.])(\(?)(\d{1,3}(?:,\d{3})+)', run)
+        changes = re.findall(r'(?<![\d,])(\(?)(\d+\.\d)(?![\d,])', run)
+        if len(amounts) != 5 or len(changes) != 3:  # this quarter, YTD, previous quarter, year-ago quarter, year-ago YTD / q-o-q, y-o-y, y-o-y YTD
+            continue
+        value = [Decimal(n.replace(',', '')) * (-1 if bracket else 1) for bracket, n in amounts]
+        qoq, yoy = [Decimal(n) * (-1 if bracket else 1) for bracket, n in changes[:2]]
+        current, previous, ago = value[0], value[2], value[3]
+        if previous <= 0 or ago <= 0:
+            continue
+        if abs((current / previous - 1) * 100 - qoq) > Decimal('0.06') or abs((current / ago - 1) * 100 - yoy) > Decimal('0.06'):
+            continue
+        rows[key] = (current, ago)
+    if 'revenue' not in rows:
+        raise ValueError('revenue-row-unrecognized')
+
+    def won(value):  # millions of won -> trillions, the printed figure exactly (104,615,483 -> 104.615483)
+        return prefixed('\u20a9', value / 1000000, 'T')
+    names = {'revenue': ('売上高（暫定・兆ウォン）', 'Revenue (preliminary, KRW trillion)'),
+             'operating-income': ('営業利益（暫定・兆ウォン）', 'Operating profit (preliminary, KRW trillion)'),
+             'net-income': ('当期利益（暫定・兆ウォン）', 'Profit for the period (preliminary, KRW trillion)')}
+    facts = [(key, won(rows[key][0]), won(rows[key][1]), names[key]) for key in ('revenue', 'operating-income', 'net-income') if key in rows]
+    order = {k: i for i, k in enumerate(ORDER)}
+    facts.sort(key=lambda f: order[f[0]])
+    return {'period': f'Q{quarter} {year}', 'facts': facts}
+
+
 def parse_dell(text, url=None):
     """Dell's results release (8-K EX-99.1): 'Condensed Consolidated Statements of Income and Related Financial Highlights' with the
     columns this quarter, a year earlier, change (%), then six months. Every row is checked against its stated change."""
@@ -912,6 +978,7 @@ PROFILES = {
     'GEV': {'publisher': 'GE Vernova IR (SEC 8-K)', 'parse': parse_gev, 'marker': 'Total Company Results'},
     'VRT': {'publisher': 'Vertiv IR (SEC 8-K)', 'parse': lambda t, u=None: parse_statement(t, STATEMENT['VRT']), 'marker': 'STATEMENTS OF EARNINGS (LOSS)'},
     'ORCL': {'publisher': 'Oracle IR (SEC 8-K)', 'parse': parse_oracle, 'marker': 'CONDENSED CONSOLIDATED STATEMENTS OF OPERATIONS'},
+    'SKHY': {'publisher': 'SK hynix IR (SEC 6-K)', 'parse': parse_skhynix, 'marker': 'Preliminary Results of Operations'},
     'MSFT': {'publisher': 'Microsoft IR (SEC 8-K)', 'parse': lambda t, u=None: parse_statement(t, STATEMENT['MSFT']), 'marker': STATEMENT['MSFT']['heading']},
     'AMD': {'publisher': 'AMD IR (SEC 8-K)', 'parse': lambda t, u=None: parse_statement(t, STATEMENT['AMD']), 'marker': STATEMENT['AMD']['heading']},
     'MRVL': {'publisher': 'Marvell IR (SEC 8-K)', 'parse': lambda t, u=None: parse_statement(t, STATEMENT['MRVL']),
