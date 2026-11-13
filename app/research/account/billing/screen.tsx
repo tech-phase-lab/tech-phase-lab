@@ -143,7 +143,7 @@ export default function BillingScreen({mode="sandbox", preview=false}: {mode?: "
     creating: t("手続きを準備中", "Preparing checkout"), approval_pending: t("PayPalでの承認待ち", "Awaiting PayPal approval"),
     active: t("契約中", "Active subscription"), suspended: t("契約停止中", "Suspended"), cancelled: t("自動更新停止済み", "Renewal cancelled"), expired: t("契約終了", "Expired"),
   };
-  return <ResearchToolShell showTools={false} lang={lang} setLang={setLang} title={mode === "live" ? t("PROのお申し込み・契約管理", "PRO subscription") : t("PRO テスト購入", "PRO test checkout")} description="">
+  return <ResearchToolShell showTools={false} lang={lang} setLang={setLang} eyebrow="PRO MEMBERSHIP" title={mode === "live" ? t("PROのお申し込み・契約管理", "PRO subscription") : t("PRO テスト購入", "PRO test checkout")} description="">
     <section className={styles.card} aria-busy={busy}>
       <h2>{mode === "live" ? "Tech Phase PRO" : "PayPal Sandbox"}</h2>
       <p>{mode === "live" ? t("月額2,980円(20米ドル)または年額29,800円(200米ドル)で自動更新されます。PayPalで承認する前に、通貨・期間・金額をご確認ください。", "Renews automatically at JPY 2,980 or USD 20 per month, or JPY 29,800 or USD 200 per year. Check the currency, period and amount before approving on PayPal.") : t("運営者専用のテストです。実際の請求や本番のPRO会員状態への変更はありません。PayPalのSandbox購入者アカウントを使用してください。", "Owner-only test. No real charge or production PRO membership change. Use a PayPal Sandbox buyer account.")}</p>
