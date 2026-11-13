@@ -27,6 +27,7 @@ export function comparisonLeaders(companies: Financials[], id: ScoreId, now=Date
 /** Data availability is a service state, never a company's strength or weakness. */
 export function comparisonAvailability(c: Financials, lang: "ja"|"en", now=Date.now()): string | null {
   const ja=lang==="ja";
+  if(c.busy) return ja ? "混み合っています。しばらくしてからもう一度お試しください。" : "The data service is busy right now. Please try again in a few minutes.";
   if(c.status==="unavailable") return ja ? "決算データを取得できませんでした。" : "Financial data could not be retrieved.";
   if(c.status==="unsupported" || !c.quarterRevenue) return ja ? "比較に使える四半期データが未取得です。" : "Comparable quarterly data is unavailable.";
   if(!hasRecentQuarter(c,now)) return ja ? "最新の四半期データを確認できていません。" : "The latest quarterly figures have not been verified.";

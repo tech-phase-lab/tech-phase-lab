@@ -16,6 +16,8 @@ export type Financials = {
   referenceEvaluation?: import("./comparison-reference").ReferenceEvaluation;
   ticker: string; status: "ready" | "unavailable" | "unsupported"; retrievedAt: string;
   dataWarnings?: Copy[];
+  /** Set only for this answer (never cached): the provider was too busy this minute and no other source had the company. */
+  busy?: true;
   preparedAnalysis?: PreparedComparisonAnalysis;
   revenue: Fact | null; previousRevenue: Fact | null; operatingIncome: Fact | null;
   operatingCash: Fact | null; capex: Fact | null; cash: Fact | null;

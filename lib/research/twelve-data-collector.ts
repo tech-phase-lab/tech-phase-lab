@@ -94,3 +94,46 @@ export async function loadTwelveComparison(ticker: string) {
   try { return await shareInflight(running, ticker, () => cached(ticker)); }
   catch (error) { console.warn(`twelve-data comparison ${ticker}: ${error instanceof TwelveBusyError ? "busy (credits)" : error instanceof Error ? error.message : "failed"}`); return null; }
 }
+
+type Raw = { payload: unknown; retrievedAt: string };
+const runningSeries = new Map<string, Promise<Raw & { adjust: "splits" }>>();
+const runningStatistics = new Map<string, Promise<Raw>>();
+/** One credit; split-adjusted daily bars for the price-momentum factor. Shared by everyone for an hour; a failure is never cached. */
+const cachedSeries = unstable_cache(async (ticker: string) => {
+  const key = process.env.TWELVE_DATA_API_KEY;
+  if (!key) throw new Error("not-configured");
+  const payload = await call("time_series", { symbol: ticker, interval: "1day", outputsize: "100", adjust: "splits" }, key);
+  if (!payload) throw new Error("series-unavailable");
+  return { payload, adjust: "splits" as const, retrievedAt: new Date().toISOString() };
+}, ["twelve-market-series-v1"], { revalidate: 3600 });
+/** 50 credits; only the forward P/E is used from it. One shared read per company per 24 hours (the factors accept up to 36), and it waits for
+ * room in the minute's credits before it is sent. */
+const cachedStatistics = unstable_cache(async (ticker: string) => {
+  const key = process.env.TWELVE_DATA_API_KEY;
+  if (!key) throw new Error("not-configured");
+  const payload = await serial(async () => {
+    await waitForCredits({ readUsage: () => readUsage(key), sleep: pause, now: Date.now, cost: 50 });
+    try { return await call("statistics", { symbol: ticker }, key); } finally { usageMemo = null; }
+  });
+  if (!payload) throw new Error("statistics-unavailable");
+  return { payload, retrievedAt: new Date().toISOString() };
+}, ["twelve-market-statistics-v1"], { revalidate: 24 * 3600 });
+
+/** The provider's price-dependent inputs for a company whose financials come from the SEC. Either may be missing (busy minute, no plan,
+ * unknown symbol): the matching factor is then left out, nothing is invented. */
+export async function loadMarketInputs(ticker: string): Promise<{ series?: Raw & { adjust: "splits" }; statistics?: Raw }> {
+  if (!twelveComparisonConfigured()) return {};
+  const [series, statistics] = await Promise.allSettled([
+    shareInflight(runningSeries, ticker, () => cachedSeries(ticker)),
+    shareInflight(runningStatistics, ticker, () => cachedStatistics(ticker)),
+  ]);
+  for (const [name, result] of [["series", series], ["statistics", statistics]] as const) if (result.status === "rejected") console.warn(`twelve-data ${name} ${ticker}: ${result.reason instanceof TwelveBusyError ? "busy (credits)" : result.reason instanceof Error ? result.reason.message : "failed"}`);
+  return { ...(series.status === "fulfilled" ? { series: series.value } : {}), ...(statistics.status === "fulfilled" ? { statistics: statistics.value } : {}) };
+}
+
+/** Like loadTwelveComparison, but tells a busy minute apart from "no data", so the screen can say so. */
+export async function loadTwelveComparisonState(ticker: string): Promise<{ data: Awaited<ReturnType<typeof loadTwelveComparison>>; busy: boolean }> {
+  if (!twelveComparisonConfigured()) return { data: null, busy: false };
+  try { return { data: await shareInflight(running, ticker, () => cached(ticker)), busy: false }; }
+  catch (error) { const busy = error instanceof TwelveBusyError; console.warn(`twelve-data comparison ${ticker}: ${busy ? "busy (credits)" : error instanceof Error ? error.message : "failed"}`); return { data: null, busy }; }
+}

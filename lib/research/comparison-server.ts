@@ -6,7 +6,10 @@ import { parseSecDirectory } from "./stock-directory";
 import { emptyFinancials } from "./comparison";
 import { prepareComparisonAnalysis, currentComparisonAnalysis } from "./comparison-analysis";
 import { loadSecComparison } from "./comparison-loader";
-import { loadTwelveComparison } from "./twelve-data-collector";
+import { loadMarketInputs, loadTwelveComparisonState } from "./twelve-data-collector";
+import { buildSecMarketEvidence } from "./sec-market-evidence";
+import { appendMarketItems } from "./twelve-data-financials";
+import { hasRecentQuarter } from "./comparison-scorecard";
 export async function secText(url: string, limit: number) {
   const response = await fetch(url, { cache: "no-store", headers: { Accept: "application/json", "User-Agent": process.env.RESEARCH_USER_AGENT || "TechPhaseResearch/1.0 research-preview" }, signal: AbortSignal.timeout(12_000) });
   if (!response.ok || !response.body) throw Error("sec-unavailable");
@@ -31,14 +34,27 @@ export async function secCik(ticker: string): Promise<string | null> {
   return cik && /^\d{1,10}$/.test(cik) ? cik : null;
 }
 
-/** Twelve Data first (server-side only); what it cannot supply is filled from the SEC filing, and a company it cannot serve falls back to the SEC alone.
+/** The SEC filing first: it is free, instant for any listed company and newer than the provider's statements (a full quarter newer for
+ * 16 of 27 companies checked on Nov 13). The provider then supplies only what a filing cannot: the live price series and forward P/E for
+ * the market factors. A company the SEC cannot serve (foreign 20-F filers, missing quarter) falls back to the provider's statements.
  * A missing item stays "—": it is never scored as zero. */
 export async function loadComparisonFinancials(ticker: string) {
-  const twelve = await loadTwelveComparison(ticker);
-  if (!twelve) return loadSecFinancials(ticker);
+  const sec = await loadSecFinancials(ticker);
+  const now = Date.now();
+  if (sec.status === "ready" && hasRecentQuarter(sec, now)) {
+    const { series, statistics } = await loadMarketInputs(ticker);
+    const evidence = buildSecMarketEvidence(sec, series, statistics, now);
+    // No SEC-based market factor at all (no four quarters, no price series, no P/E): the saved analysis stays as prepared.
+    if (!evidence || !(evidence.margins.length === 4 || evidence.statistics || evidence.momentum)) return sec;
+    const withEvidence = { ...sec, twelveData: evidence };
+    const prepared = prepareComparisonAnalysis(withEvidence, now);
+    if (prepared) appendMarketItems(prepared, evidence, sec.quarterRevenue!.end, sec.quarterRevenue!.unit, now);
+    return { ...withEvidence, preparedAnalysis: prepared };
+  }
+  const { data: twelve, busy } = await loadTwelveComparisonState(ticker);
+  if (!twelve) return busy ? { ...sec, busy: true as const } : sec;
   const base = twelve.financials;
   if (twelve.scores.find(score => score.id === "financial")?.value != null) return base;
-  const sec = await loadSecFinancials(ticker);
   // Balance-sheet figures are only borrowed when they describe the same quarter as Twelve Data's.
   return sec.status === "ready" && sec.balance && sec.balance.end === base.quarterRevenue?.end ? { ...base, balance: sec.balance } : base;
 }
