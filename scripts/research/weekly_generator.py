@@ -48,11 +48,15 @@ POLICY = """あなたは「リゼル」として、週刊 Tech Phase PRO の1号
 - 単位と通貨を、資料のとおりに必ず付けます。前年比か前期比かも、資料に書いてあれば明記します。
 
 【何を書くか】
-- その週に市場を動かした指標、ハイテク・半導体の決算、市場全体の流れから、重要なものを3〜5個に絞ります。資料が足りない週は少なくてかまいません。
+- その週に市場を動かした指標、ハイテク・半導体の決算、市場全体の流れから、重要なものを4〜6個に絞ります。資料が足りない週は少なくてかまいません。
+- Tech Phase はハイテク・半導体株の投資サイトです。どの話題も、「ハイテク・半導体株にとって何を意味するか」まで書きます。事実(何が起きたか)→数字→見立て(ハイテク株への影響。「〜という見方です」「〜のかもしれません」)→次に見るもの、の順に深く掘ります。ただし資料にない理由や原因を事実として書きません。
+- 決算は、売上・EPSなどの結果と、会社見通し・予想との差を、資料にある数字で書きます。強い部分と弱い部分の両方を挙げます。
+- 資料に「計算」と書かれた行(例: 予想比、前回比、見通し比)は、プログラムが検証済みの数字から計算した値です。そのまま使ってかまいません。自分で計算はしません。
+- 指標や予定は、名前を具体的に書きます(例: 米CPI(消費者物価指数)、米PPI(生産者物価指数)、米雇用統計)。「物価の発表」のような曖昧な書き方はしません。
 - 部品(parts)は、その週に必要なものだけを選び、毎週同じ並びにしません。type は text / numbers / timeline / chart / highlight。
 - 数字がない週は、text と timeline だけの短い号でかまいません。
-- 次週の予定は別に作るので、parts には入れません。scheduleComments に、予定の id ごとに一言(数字なし)を書いてかまいません。
-- takeaways: 今週の主な結論を、3つまで、1文ずつ書きます。各文に、根拠にした evidenceIds を必ず付けます(数字のルールは同じです)。
+- 次週の予定は別に作るので、parts には入れません。scheduleComments に、予定の id ごとに一言(数字なし)を書いてかまいません。何を見る発表で、ハイテク株にとってなぜ大事かを書きます。
+- takeaways: 今週の主な結論を3つ、1文ずつ書きます。各文に、①資料にある具体的な数字(売上高、予想比など)を1つ以上入れ、②ハイテク・半導体株にとっての意味を見立てとして一言添えます(例: 「〜という見方です」)。各文に、根拠にした evidenceIds を必ず付けます(数字のルールは同じです)。来週の予定に触れる文は、type が schedule の資料のIDを付けます。
 - 資料にあったのに載せなかった話題は、skipped に話題の名前だけを短く書きます(「〜を見送りました」「記載していません」のような、制作側の言い訳の文は書きません)。
 - recentIssues は、直近の号の見出しとひとことです。同じ書き出し・同じ締め・同じ言い回しを避けてください。
 
@@ -138,6 +142,42 @@ def _fact_line(fact):
     return f"{fact.get('en', fact.get('key', ''))}: {fact.get('value', '')}" + (f" ({extra})" if extra else "")
 
 
+SIGN = lambda value: "+" if value > 0 else "-" if value < 0 else ""
+
+
+def derived_lines(facts):
+    """Differences the program computes from checked figures (result vs forecast, vs previous, vs company outlook), as lines of the evidence the
+    model may quote. The model never calculates: it copies these. Only figures in the same unit are compared; a percentage-point gap for %."""
+    lines = []
+    for fact in facts:
+        key = fact["key"]
+        if key.startswith("guidance-"):
+            continue
+        got = parse_value(fact["value"].split(" ± ")[0], key)
+        if not got:
+            continue
+        compared = fact.get("comparisons") or {}
+        refs = [("予想比", compared.get("forecast")), ("前回比", compared.get("previous"))]
+        guidance = next((f for f in facts if f["key"] == "guidance-" + key), None)
+        if guidance:
+            refs.append(("次期の会社見通しは今回の結果比", guidance["value"].split(" ± ")[0]))
+        parts = []
+        for name, text in refs:
+            other = parse_value(text, key) if text else None
+            if not other or other[1] != got[1]:
+                continue
+            if got[1] == "%":
+                gap = Decimal(str(got[0])) - Decimal(str(other[0]))
+                parts.append(f"{name.replace('比', '')}との差 {SIGN(gap)}{abs(gap).quantize(Decimal('0.01')).normalize():f}pt")
+            elif other[0]:
+                base, new = (got[0], other[0]) if name.startswith("次期") else (other[0], got[0])
+                pct = (Decimal(str(new)) - Decimal(str(base))) / abs(Decimal(str(base))) * 100
+                parts.append(f"{name} {SIGN(pct)}{abs(pct).quantize(Decimal('0.1'))}%")
+        if parts:
+            lines.append(f"計算 {fact.get('ja', key)}: " + "、".join(parts))
+    return lines
+
+
 def collect(db, now, news=()):
     """Evidence for the week: each entry has an id, a label, its checked facts, and the exact text the numbers are checked against."""
     start = datetime.fromtimestamp(now - WINDOW_DAYS * 86400, timezone.utc).isoformat()
@@ -153,7 +193,7 @@ def collect(db, now, news=()):
             try:
                 item = json.loads(row["payload"])
                 facts = [f for f in item["facts"] if isinstance(f, dict) and f.get("key") and f.get("value")]
-                quote = item["titleEn"] + "\n" + "\n".join(_fact_line(f) for f in facts)
+                quote = "\n".join([item["titleEn"], *[_fact_line(f) for f in facts], *derived_lines(facts)])
                 add("earnings" if item["kind"] == "earnings" else "indicator", item["titleJa"], item["url"], quote, facts,
                     ticker=item.get("ticker", "") if item["kind"] == "earnings" else "")
             except (KeyError, TypeError, ValueError):
@@ -505,15 +545,20 @@ def generate(db, now, news=(), transport=None, env=None):
     evidence = collect(db, now, news)
     schedule = upcoming(now)
     notes = []
+    gathered = len(evidence)
+    # Next week's schedule is evidence too, so a sentence may name the coming releases (米CPI, 米PPI, ...) and still be checked against the names.
+    for event in schedule:
+        quote = f"{event['name']} ({event['date']})"
+        evidence.append({"id": f"E{len(evidence) + 1}", "kind": "schedule", "label": event["name"], "url": "", "quote": quote, "facts": [], "text": quote, "ticker": ""})
     if not any(item["kind"] == "indicator" for item in evidence):
         notes.append(note(MISSING, "今週に結果が出た経済指標が、集まっていません。"))
     if not any(item["kind"] == "earnings" or item["kind"] == "note" for item in evidence):
         notes.append(note(MISSING, "今週の決算が、集まっていません。"))
-    if not evidence:
+    if not gathered:
         raise RuntimeError("weekly-no-evidence")
     material = [{"id": item["id"], "type": item["kind"], "label": item["label"],
                  "facts": [{"factKey": f["key"], "label": f.get("ja", f["key"]), "value": f["value"], "comparisons": f.get("comparisons") or {}} for f in item["facts"]],
-                 "text": item["text"][:1500]} for item in evidence]
+                 "calculated": derived_lines(item["facts"]), "text": item["text"][:1500]} for item in evidence]
     # The last few issues, so the opening and the closing are not the same every week.
     recent = [{"headline": row["headline"], "lead": row["lead"]} for row in db.execute(
         "SELECT headline,lead FROM weekly_issues WHERE status='published' ORDER BY number DESC LIMIT 3")]
