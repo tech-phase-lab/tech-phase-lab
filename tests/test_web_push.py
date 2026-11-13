@@ -62,7 +62,7 @@ class PushTests(unittest.TestCase):
 
     def test_skip_reasons_and_device_breakdown_explain_a_missing_earnings_push(self):
         # Nov 12: NBIS results were published and no phone was told, with no way to see why.
-        push.SKIPS.clear()
+        push.SKIPS.clear(); push._LOGGED_SKIPS.clear()
         with patch.dict(os.environ, {'WEB_PUSH_ALLOW_PILOT': 'false'}):
             push.register(self.db, {'subscription': subscription(), 'tickers': ['NBIS'], 'language': 'ja'}, {'NBIS'}, self.now - 10)
             out = push.deliver(self.db, [self.result(ticker='NBIS')], lambda *a: 201, self.now, wall_now=lambda: self.now)
