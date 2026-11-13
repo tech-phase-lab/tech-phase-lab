@@ -78,3 +78,23 @@
 .generate{display:grid;gap:12px;padding:14px;border:1px solid #2a3140;border-radius:16px;background:#0b0e14}
 .hour{display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:14px;color:#a99876}
 .hour select{min-height:40px;padding:0 10px;border:1px solid #2a3140;border-radius:10px;background:#090c12;color:#eef2f6;font:inherit;font-size:16px}
+/* Diagrams (Nov 13): takeaway cards, result/forecast/previous bars, the day strip. Same black-and-gold palette as the rest of the issue. */
+.takeaways{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.takeaways li{display:grid;grid-template-columns:44px minmax(0,1fr);gap:12px;align-items:start;padding:12px 14px;border:1px solid #4a3d20;border-radius:16px;background:linear-gradient(160deg,#16120a,#0b0e14)}
+.takeaways .icon{display:grid;place-items:center;width:44px;height:44px;border-radius:14px;background:#241b0a;color:#e7c982}
+.takeaways small{display:block;font-size:12px;letter-spacing:.06em;color:#a99876}
+.takeaways p{margin:2px 0 0;font-size:16px;line-height:1.7;color:#eef2f6;overflow-wrap:anywhere}
+.kind_indicators .icon{color:#7fc8f0;background:#0f1f2b}.kind_market .icon{color:#6fd39b;background:#10261a}
+.compare{display:grid;gap:12px;margin-top:14px}
+.compare figure{margin:0;padding:12px 14px;border:1px solid #4a3d20;border-radius:16px;background:#0b0e14}
+.compare figcaption{margin:0 0 8px;font-size:14px;color:#cfd6df;overflow-wrap:anywhere}
+.cmpRow{display:grid;grid-template-columns:40px minmax(0,1fr) auto;gap:8px;align-items:center;margin-top:6px;font-size:13px;color:#8e98a3}
+.cmpRow i{display:block;height:10px;min-width:4px;border-radius:999px;background:#4a5262}
+.cmpRow b{font:600 13px ui-monospace,monospace;color:#cfd6df;white-space:nowrap}
+.cmpMain{color:#f4e7c1}.cmpMain i{height:14px;background:linear-gradient(90deg,#c9a257,#f0dca0)}.cmpMain b{color:#f4e7c1}
+.strip{list-style:none;margin:0 0 14px;padding:4px 0 8px;display:flex;gap:0;overflow-x:auto;position:relative}
+.strip li{position:relative;flex:1 0 56px;display:grid;justify-items:center;gap:2px;padding-top:2px;text-align:center}
+.strip li::before{content:"";position:absolute;left:0;right:0;top:35px;height:2px;background:#5a4a26}
+.strip li:first-child::before{left:50%}.strip li:last-child::before{right:50%}
+.strip i{position:relative;display:grid;place-items:center;width:22px;height:22px;margin:4px 0;border-radius:50%;background:#d8b36a;color:#2a1f05;font:700 12px ui-monospace,monospace;font-style:normal;box-shadow:0 0 0 4px #0b0e14}
+.strip b{font:12px ui-monospace,monospace;color:#cfd6df;white-space:nowrap}.stripDay{font-size:12px;color:#a99876}

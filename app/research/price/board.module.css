@@ -41,8 +41,13 @@
 .mode button[aria-pressed="true"]{background:#7fe3c0;color:#06231a;font-weight:700}
 .big{display:flex;align-items:center;gap:12px;padding:8px 14px 0}
 .bigPrice{font:700 32px/1.1 "IBM Plex Mono",ui-monospace,monospace;letter-spacing:-.01em}
-.ohlc{display:flex;flex-wrap:wrap;gap:2px 12px;padding:8px 14px 0;font:400 12px "IBM Plex Mono",ui-monospace,monospace;color:#c4ccd9}
-.ohlc small{font:400 12px "Zen Kaku Gothic New",sans-serif;color:#8c98ab;margin-right:3px}
+.panelTitle{display:flex;flex-direction:column;gap:2px;min-width:0}
+.panelSub{font-size:11px;color:#8c98ab;white-space:nowrap}
+.ohlc{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;padding:10px 14px 0}
+.ohlc span{display:flex;flex-direction:column;gap:2px;min-width:0;padding:7px 8px;border:1px solid transparent;border-radius:8px;background:#13222a}
+.ohlc span[data-close="true"]{border-color:rgba(127,227,192,.45)}
+.ohlc small{font:400 11px "Zen Kaku Gothic New",sans-serif;color:#8c98ab}
+.ohlc b{font:500 14px "IBM Plex Mono",ui-monospace,monospace;color:#eef2f8;white-space:nowrap}
 .chartBox{margin:8px 0 0;padding:0}
 .ranges{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));padding:0 8px 4px}
 .ranges button{min-height:38px;border:0;border-bottom:2px solid transparent;background:transparent;color:#a3aec0;font:500 12px "Zen Kaku Gothic New",sans-serif;cursor:pointer;white-space:nowrap}
