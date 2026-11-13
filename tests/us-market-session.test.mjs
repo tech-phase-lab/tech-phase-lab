@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { marketBanner, marketPhase, usMarketSession } from "../lib/research/us-market-session.ts";
+import { bannerLine, marketBanner, marketPhase, usMarketSession } from "../lib/research/us-market-session.ts";
 
 const at = iso => usMarketSession(new Date(iso));
 
@@ -67,4 +67,14 @@ test("banner words and the point: lit for pre, regular and after-hours only", ()
   assert.deepEqual(marketBanner("regular"), { ja: "取引中", en: "Open", lit: true });
   assert.deepEqual(marketBanner("post"), { ja: "アフター取引中", en: "After-hours", lit: true });
   assert.deepEqual(marketBanner("closed"), { ja: "取引終了", en: "Closed", lit: false });
+});
+
+test("banner line: the state word and the time of the last successful read, to the second, in Japan time", () => {
+  const at = Date.parse("2026-11-12T21:20:35Z"); // 06:20:35 on Nov 13 in Tokyo
+  assert.equal(bannerLine("post", true, at), "アフター取引中 ・ 06:20:35 JST");
+  assert.equal(bannerLine("pre", true, at), "プレ取引中 ・ 06:20:35 JST");
+  assert.equal(bannerLine("regular", true, at), "取引中 ・ 06:20:35 JST");
+  assert.equal(bannerLine("closed", true, at), "取引終了 ・ 06:20:35 JST");
+  assert.equal(bannerLine("closed", false, at), "Closed ・ 06:20:35 JST");
+  assert.equal(bannerLine("regular", true, null), "取引中");
 });

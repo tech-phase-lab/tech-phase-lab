@@ -5,8 +5,10 @@ export const maxDuration = 30;
 export async function GET(request: Request) {
   if (!marketDataConfigured()) return Response.json({ ok: false, error: "not-configured" }, { status: 503 });
   const ids = [...new Set((new URL(request.url).searchParams.get("ids") ?? "").split(",").map(id => id.trim().toUpperCase()).filter(Boolean))];
-  if (!ids.length || ids.length > 24 || !ids.every(isMarketChartSymbol)) return Response.json({ ok: false, error: "bad-request" }, { status: 400 });
+  // `fast=1`: the index cards and the chart being looked at (a quote kept 15 seconds on the server, and in the shared cache for 10). A few symbols at most, so it cannot widen the use of the data plan.
+  const fast = new URL(request.url).searchParams.get("fast") === "1";
+  if (!ids.length || ids.length > (fast ? 4 : 24) || !ids.every(isMarketChartSymbol)) return Response.json({ ok: false, error: "bad-request" }, { status: 400 });
   try {
-    return Response.json({ ok: true, items: await loadBoard(ids) }, { headers: { "Cache-Control": "public, s-maxage=30, stale-while-revalidate=30" } });
+    return Response.json({ ok: true, items: await loadBoard(ids, fast) }, { headers: { "Cache-Control": fast ? "public, s-maxage=10, stale-while-revalidate=5" : "public, s-maxage=30, stale-while-revalidate=30" } });
   } catch { return Response.json({ ok: false, error: "unavailable" }, { status: 503 }); }
 }

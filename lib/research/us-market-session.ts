@@ -44,3 +44,10 @@ export function marketBanner(phase: MarketPhase): { ja: string; en: string; lit:
   return phase === "pre" ? { ja: "プレ取引中", en: "Pre-market", lit: true } : phase === "regular" ? { ja: "取引中", en: "Open", lit: true }
     : phase === "post" ? { ja: "アフター取引中", en: "After-hours", lit: true } : { ja: "取引終了", en: "Closed", lit: false };
 }
+/** "取引中 ・ 06:20:35 JST": the state word and the time (to the second, Japan time) of the last successful read; no time before the first one. */
+export function bannerLine(phase: MarketPhase, ja: boolean, fetchedAt: number | null): string {
+  const word = marketBanner(phase)[ja ? "ja" : "en"];
+  if (fetchedAt === null) return word;
+  const time = new Date(fetchedAt).toLocaleTimeString("en-GB", { timeZone: "Asia/Tokyo", hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: false });
+  return `${word} ・ ${time} JST`;
+}
