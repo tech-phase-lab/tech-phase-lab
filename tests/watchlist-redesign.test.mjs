@@ -9,7 +9,7 @@ const read = path => readFileSync(new URL(`../${path}`, import.meta.url), "utf8"
 function load(path, mocks) {
   const compiled = ts.transpileModule(read(path), { compilerOptions: { module: ts.ModuleKind.CommonJS, jsx: ts.JsxEmit.ReactJSX } }).outputText;
   const mod = { exports: {} };
-  new Function("require", "module", "exports", compiled)(id => id in mocks ? mocks[id] : id.endsWith(".css") ? { default: new Proxy({}, { get: (_, key) => String(key) }) } : require(id), mod, mod.exports);
+  new Function("require", "module", "exports", compiled)(id => id in mocks ? mocks[id] : id.endsWith(".css") ? { default: new Proxy({}, { get: (_, key) => String(key) }) } : /^(\.|@\/)/.test(id) ? { default: id } : require(id), mod, mod.exports);
   return mod.exports;
 }
 const nodes = tree => tree && typeof tree === "object" ? [tree, ...[].concat(tree.props?.children ?? []).flat(Infinity).flatMap(nodes)] : [];
@@ -66,4 +66,40 @@ test("the watchlist screen follows the Nov 13 design", () => {
   assert.match(css, /\.rate \{[^}]*font-size:12\.5px;/);
   assert.doesNotMatch(css.match(/\.rate[^{]*\{[^}]*\}/g).join(""), /background/);
   assert.match(css, /\.sessionTag \{[^}]*border:1px solid #3f6b5d;[^}]*font-size:9\.5px;/);
+});
+
+test("a list name saved longer than nine characters shows its first nine, with no ellipsis; editing shows it all", () => {
+  const lists = { lists: [{ id: "default", name: "十文字以上の長いリスト名です", tickers: ["MU"] }, { id: "my-list-2", name: "", tickers: [] }], names: {} };
+  let index = 0; const slots = [];
+  const mod = load("app/research/watchlist/watchlist.tsx", {
+    react: { useEffect: () => {}, useRef: () => ({ current: null }), useState: initial => { const key = index++; if (!(key in slots)) slots[key] = initial; return [slots[key], v => { slots[key] = typeof v === "function" ? v(slots[key]) : v; }]; } },
+    "react/jsx-runtime": require("react/jsx-runtime"),
+    "./use-favorite-lists": { useFavoriteLists: () => ({ ...lists, editable: true, ready: true, status: "guest", update: () => true }) },
+    "../price/use-market": { useQuotes: () => ({ data: null, failed: false, loaded: false }) },
+    "../price/quote-card": { detailHref: t => `/research/quote/${t}` },
+    "next/navigation": { useRouter: () => ({ push: () => {} }) },
+    "./use-watchlist-selection": { useWatchlistSelection: () => ["default", () => {}] },
+    "../use-research-language": { useResearchLanguage: () => ["ja", () => {}] },
+    "@/lib/research/favorite-lists": { watchlistSlots: l => l, sortFavorites: f => f, addFavoriteToList: c => c, favoriteListLimit: 100 },
+    "@/lib/research/watchlist-freshness": { quoteFreshness: () => "recent", freshnessLabel: () => "" },
+    "@/lib/research/watchlist-session": { quoteForSession: () => null },
+    "@/lib/research/watchlist-chart": { favoriteIntradayChart: () => null },
+    "./use-quote-clock": { useQuoteClock: () => Date.now() },
+    "./use-watchlist-sectors": { useWatchlistSectors: () => ({}) },
+    "@/lib/research/watchlist-sector": { watchlistSector: () => null },
+    "./watch-menu": { default: "watch-menu" }, "../price/flash-value": { default: "flash" }, "./watch-menu.module.css": {},
+  });
+  assert.equal(mod.shownListName("十文字以上の長いリスト名です"), "十文字以上の長いリ");
+  assert.equal(mod.shownListName("マイリスト1"), "マイリスト1");
+  const render = () => { index = 0; return nodes(mod.default({ companies: [] })); };
+  let tree = render();
+  const menu = tree.find(n => n.type === "watch-menu" && n.props.value === "default");
+  assert.equal(menu.props.options[0].label, "十文字以上の長いリ");
+  assert.ok(tree.some(n => n.type === "span" && n.props.children === "十文字以上の長いリ"));
+  assert.ok(!JSON.stringify(menu.props.options).includes("…"));
+  tree.find(n => n.type === "button" && n.props["aria-label"] === "リスト名を編集").props.onClick();
+  tree = render();
+  const input = tree.find(n => n.type === "input" && n.props["aria-label"] === "リスト名");
+  assert.equal(input.props.value, "十文字以上の長いリスト名です");
+  assert.equal(tree.find(n => n.type === "button" && n.props.type === "submit").props.disabled, true);
 });

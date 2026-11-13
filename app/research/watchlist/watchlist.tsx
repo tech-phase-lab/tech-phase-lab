@@ -30,6 +30,8 @@ type SearchEntry = { ticker: string; name: string; exchange: string };
 const fromEntry = (entry: SearchEntry): Company => ({ ticker: entry.ticker, name: entry.name, exchange: entry.exchange });
 /** List names are up to nine characters (owner, Nov 13). Names saved longer before are kept as they are (the parser allows 40). */
 const LIST_NAME_LIMIT = 9;
+/** The first nine characters (code points), with no ellipsis. */
+export const shownListName = (name: string) => Array.from(name).slice(0, LIST_NAME_LIMIT).join("");
 
 function CurrentTime() {
   const [now, setNow] = useState<Date | null>(null);
@@ -112,7 +114,10 @@ export default function Watchlist({ companies, quotes = {} }: { companies: Compa
   const sharedSession = sessionView !== "auto" ? sessionView : quoteSessions.length === 1 ? quoteSessions[0] : null;
   const stateLabels = { regular: t("取引中", "Market open"), pre: t("プレ", "Pre-market"), post: t("時間外", "After-hours"), closed: t("前日比", "Daily change") };
   const ordered = sortFavorites(favorites, displayedQuotes, sort);
-  const listLabel = (index: number) => slots[index]?.name || t(`マイリスト${index + 1}`, `My list ${index + 1}`);
+  const fullName = (index: number) => slots[index]?.name || t(`マイリスト${index + 1}`, `My list ${index + 1}`);
+  // Owner, Nov 13: names are nine characters at most and never end in "…". A name saved longer before is shown by its first nine
+  // characters (the saved name is not rewritten; the next save keeps it within nine).
+  const listLabel = (index: number) => shownListName(fullName(index));
   const currentName = listLabel(slots.indexOf(list));
   const nameLength = Array.from(listName).length;
   const sortOptions = [{ value: "saved", label: t("追加した順", "Date added") }, { value: "ticker", label: t("ティッカー順", "Ticker A–Z") }, { value: "gainers", label: t("上昇率順", "Top gainers") }, { value: "losers", label: t("下落率順", "Top losers") }];
@@ -128,7 +133,7 @@ export default function Watchlist({ companies, quotes = {} }: { companies: Compa
           <WatchMenu buttonClass={styles.listButton} menuClass={styles.listMenu} label={t(`リストを選ぶ（${currentName}）`, `Choose a list (${currentName})`)} value={list.id}
             options={slots.map((item, index) => ({ value: item.id, label: listLabel(index) }))}
             onChange={id => { setListId(id); setQuery(""); setListAction(null); setRevealed(""); }}><span className={styles.listName}>{currentName}</span></WatchMenu>
-          <button type="button" disabled={!editable} className={styles.renameButton} onClick={() => { setListAction(listAction ? null : "rename"); setListName(currentName); }} aria-label={t("リスト名を編集", "Edit list name")} aria-expanded={!!listAction}>
+          <button type="button" disabled={!editable} className={styles.renameButton} onClick={() => { setListAction(listAction ? null : "rename"); setListName(fullName(slots.indexOf(list))); }} aria-label={t("リスト名を編集", "Edit list name")} aria-expanded={!!listAction}>
             <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 20h9" /><path d="M16.5 3.5a2.1 2.1 0 013 3L7 19l-4 1 1-4z" /></svg>
           </button>
         </div>
