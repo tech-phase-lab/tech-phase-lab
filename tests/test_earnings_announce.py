@@ -62,4 +62,42 @@ class Publication(unittest.TestCase):
         self.assertEqual((event['ticker'],event['quarter']),('NBIS','Q3'))
         self.assertEqual(web_push.event_key(event),web_push.event_key(web_push.normalize_event({**flash,'titleJa':'NBIS Q3','titleEn':'NBIS Q3','publishedAt':line['publishedAt'],'observedAt':line['observedAt']})))
 
+class SecFiling(unittest.TestCase):
+    def setUp(self):
+        self.tmp=tempfile.TemporaryDirectory();self.addCleanup(self.tmp.cleanup)
+        self.path=str(Path(self.tmp.name)/'db.sqlite')
+        with monitor.connect(self.path) as db: signals.schema(db)
+    URL='https://www.sec.gov/Archives/edgar/data/6951/000162828026073360/amat-20261112.htm'
+    def filing(self,url,text,form='8-K',title='8-K · 8-K',ticker='AMAT',detected='2026-11-12T21:02:46+00:00'):
+        with monitor.connect(self.path) as db:
+            db.execute('INSERT OR REPLACE INTO sources(url,ticker,title,discovered_at,sha256,status,sec_form) VALUES(?,?,?,?,?,?,?)',(url,ticker,title,detected,'h','pending',form))
+            db.execute('INSERT OR REPLACE INTO release_events(url,ticker,detected_at) VALUES(?,?,?)',(url,ticker,detected))
+            if text is not None: db.execute('INSERT OR REPLACE INTO source_revisions(url,sha256,observed_at,extracted_text,extracted_chars) VALUES(?,?,?,?,?)',(url,'h',detected,text,len(text)))
+    def test_an_8k_that_declares_item_202_is_announced_with_its_filing_link(self):
+        self.filing(self.URL,'FORM 8-K Item 2.02 Results of Operations and Financial Condition. On November 12, 2026 Applied Materials issued a press release.')
+        self.filing('https://www.sec.gov/Archives/edgar/data/6951/000162828026067303/amat-20261026.htm','FORM 8-K Item 5.02 Departure of Directors')  # another item
+        self.filing('https://www.sec.gov/Archives/edgar/data/6951/000162828026067304/amat-20261026.htm',None)                                # text not stored yet
+        self.filing('https://www.sec.gov/Archives/edgar/data/6951/000162828026067305/amat-20261026.htm','Item 2.02 Results of Operations',form='6-K')  # not an 8-K
+        now=datetime(2026,11,12,21,3,0,tzinfo=timezone.utc)
+        self.assertEqual(announce.run_once(self.path,now),1)
+        self.assertEqual(announce.run_once(self.path,now),0)
+        with monitor.connect(self.path) as db: [item]=announce.public_feed(db,'2026-11-09T00:00:00+00:00')
+        self.assertEqual((item['ticker'],item['facts'],item['url'],item['titleJa']),('AMAT',[],self.URL,'AMAT 決算を発表しました'))
+    def test_the_filing_index_item_list_is_enough_without_the_text(self):
+        import json
+        recent={'form':['8-K','8-K','4'],'accessionNumber':['0001628280-26-073360','0001628280-26-067303','0001628280-26-000001'],
+                'primaryDocument':['amat-20261112.htm','amat-20261026.htm','x.xml'],'primaryDocDescription':['8-K','8-K','FORM 4'],'items':['2.02,9.01','8.01,9.01',''],
+                'filingDate':['2026-11-12','2026-10-26','2026-10-01'],'acceptanceDateTime':['2026-11-12T21:02:46.000Z','2026-10-26T20:34:29.000Z','2026-10-01T10:00:00.000Z']}
+        body=json.dumps({'cik':'0000006951','filings':{'recent':recent}})
+        source={'format':'sec-json','cik':'0000006951','forms':['8-K'],'limit':40}
+        links=monitor.sec_submission_links(body,'AMAT',source)
+        titles={url.rsplit('/',2)[-2]:d['title'] for url,d in links.items()}
+        self.assertEqual(titles['000162828026073360'],'8-K · Item 2.02 Results of Operations and Financial Condition')
+        self.assertEqual(titles['000162828026067303'],'8-K · 8-K')
+        self.assertTrue(announce.is_results_release(titles['000162828026073360']))
+        self.assertFalse(announce.is_results_release(titles['000162828026067303']))
+        self.filing(self.URL,None,title=titles['000162828026073360'])
+        now=datetime(2026,11,12,21,3,0,tzinfo=timezone.utc)
+        self.assertEqual(announce.run_once(self.path,now),1)
+
 if __name__=='__main__': unittest.main()
