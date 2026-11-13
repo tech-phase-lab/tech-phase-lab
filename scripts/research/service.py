@@ -52,6 +52,7 @@ import x_preflight_service
 import x_stream_trial_service
 import market_results
 import issuer_result_flash
+import earnings_announce
 import official_research
 import deep_analysis
 import issuer_syndication
@@ -970,6 +971,11 @@ class AutomaticMonitor:
                 market_results.run_once(self.db_path, signals.SOURCES)
             except Exception:
                 print("result-publication-unavailable", flush=True)
+            try:
+                # First stage: a company's own results page exists -> one "announced" line with its link, before any figure.
+                earnings_announce.run_once(self.db_path)
+            except Exception:
+                print("earnings-announce-unavailable", flush=True)
             try:
                 # Headline numbers copied from the issuer's own results table; no model, no wait (owner, Nov 12).
                 issuer_result_flash.run_once(self.db_path)
@@ -1980,6 +1986,7 @@ class AutomaticMonitor:
             state["releaseWatch"] = release_watch.diagnostics(db, datetime.now(timezone.utc))
             state["signalIntake"]["analystNews"] = analyst_news.diagnostics(db)
             state["signalIntake"]["issuerFlash"] = issuer_result_flash.diagnostics(db)
+            state["signalIntake"]["earningsAnnounce"] = earnings_announce.diagnostics(db)
             state["signalIntake"]["businessNews"] = general_source_news.diagnostics(db,datetime.now(timezone.utc))
             state["signalIntake"]["headlineTranslation"] = (
                 headline_translation.diagnostics(db, env=os.environ)

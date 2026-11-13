@@ -467,6 +467,8 @@ def normalize_result(item):
     ticker = item.get('ticker')
     titles = {lang: item.get(key) for lang, key in (('ja', 'titleJa'), ('en', 'titleEn'))}
     quarter = re.search(r'Q([1-4])', str(item.get('period', '')))
+    if quarter is None and str(item.get('researchId', '')).startswith('ir-announce-'):
+        quarter = re.search(r'(0)', '0')  # "announced" line of a release whose title names no quarter: Q0, one alert per month
     facts = item.get('facts')
     # An outlook post is not a result: the result already went out, so the outlook adds no second alert.
     if isinstance(facts, list) and facts and all(isinstance(f, dict) and str(f.get('key', '')).startswith('guidance-') for f in facts):
