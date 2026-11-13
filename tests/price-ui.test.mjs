@@ -46,7 +46,10 @@ test("the market page is the design's board: SPY / QQQ / DIA cards, five categor
   assert.doesNotMatch(page, /セクター別騰落率|ヒートマップ|Heatmap/);
   for (const label of ["為替", "暗号資産", "金属", "債券ETF", "半導体ETF"]) assert.match(board, new RegExp(label));
   for (const id of ["SPY", "QQQ", "DIA", "USD/JPY", "EUR/JPY", "EUR/USD", "GBP/USD", "BTC/USD", "ETH/USD", "SOL/USD", "XRP/USD", "XAU/USD", "XAG/USD", "XCU/USD", "XPT/USD", "SHY", "IEF", "TLT", "SMH", "SOXX"]) assert.ok(board.includes(`"${id}"`), id);
-  for (const range of ["1日", "1週", "1ヵ月", "3ヵ月", "1年", "5年"]) assert.match(board, new RegExp(range));
+  // The period buttons (owner, Nov 13): six always visible, four in the "その他" pull-down (labels and spans live in market-board-periods.ts, which has its own tests).
+  const periods = await read("lib/research/market-board-periods.ts");
+  for (const label of ["5分", "15分", "1日", "1ヶ月", "6ヶ月", "1年", "1時間", "3時間", "1週間", "5年"]) assert.ok(periods.includes(`ja: "${label}"`), label);
+  assert.match(board, /PRIMARY_PERIODS/); assert.match(board, /その他/); assert.match(board, /そのほかの足と期間/); assert.match(board, /DEFAULT_PERIOD/);
   assert.match(board, /maPeriods=\{\[25, 75\]\}/); assert.match(board, /S&P500に連動/); assert.match(board, /ETFの価格です/);
   const data = await read("lib/research/market-data.ts");
   for (const id of ["SMH", "SOXX", "GBP/USD", "BTC/USD", "XAU/USD", "XCU/USD"]) assert.match(data, new RegExp(`(?:"${id}"|\\b${id}):\\s*\\{`), id);
