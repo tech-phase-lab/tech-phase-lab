@@ -181,6 +181,9 @@ export async function loadPeriodSet(ticker: string, period: BoardPeriod): Promis
   return shapePeriod(period, await readSeries(ticker, series.interval, series.size, isIntradayPeriod(period) ? FAST_BAR_TTL : SLOW_BAR_TTL));
 }
 
+/** About five years of daily closes for a stock page's period change (1W … 5Y, YTD); kept 30 minutes (one credit a read). */
+export async function loadDailyCloses(ticker: string): Promise<Bar[]> { return readSeries(ticker, "1day", 1300, 30 * 60_000); }
+
 /** The drawn bars of a range plus the bars before them (for the moving averages). */
 export async function loadBarSet(ticker: string, range: ChartRange): Promise<{ bars: Bar[]; before: Bar[] }> { return splitBars(await readAll(ticker, range), range); }
 export async function loadBars(ticker: string, range: ChartRange): Promise<Bar[]> { return (await loadBarSet(ticker, range)).bars; }

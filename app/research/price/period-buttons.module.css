@@ -1,0 +1,10 @@
+/* The period buttons (owner, Nov 13): the market board's seven, evenly spaced; the chosen one mint (border #8fe3c0, background #12261d). */
+.row { position:relative;display:flex;align-items:center;justify-content:space-between;gap:4px;padding:0 16px; }
+.row .button { display:flex;align-items:center;gap:4px;height:32px;padding:0 7px;border:1px solid transparent;border-radius:8px;background:none;color:#9aa7b7;font:inherit;font-size:12px;font-weight:500;white-space:nowrap;cursor:pointer; }
+.row .button[aria-pressed=true] { border-color:#8fe3c0;background:#12261d;color:#8fe3c0;font-weight:700; }
+.row .button:focus-visible { outline:2px solid #8fe3c0;outline-offset:2px; }
+.menu { position:absolute;z-index:6;bottom:40px;right:16px;width:150px;box-sizing:border-box;padding:6px;display:flex;flex-direction:column;gap:2px;background:#162231;border:1px solid #33465b;border-radius:12px;box-shadow:0 14px 30px rgba(0,0,0,.6); }
+.menu .item { display:flex;align-items:center;justify-content:space-between;height:38px;padding:0 10px;border:0;border-radius:8px;background:transparent;color:#e3e9f0;font:inherit;font-size:14px;text-align:left;cursor:pointer; }
+.menu .item:hover { background:#1c2a3b; }
+.menu .item[aria-checked=true] { background:#12261d;color:#8fe3c0;font-weight:700; }
+@media (max-width:370px) { .row { padding:0 10px;gap:2px; } .row .button { padding:0 5px; } }

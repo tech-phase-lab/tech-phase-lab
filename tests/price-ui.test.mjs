@@ -30,8 +30,12 @@ test("the cards follow the design: eye button only on the gauge card, five stars
 test("the detail page has the owner's ranges, chart types, tabs, alert band and back label per origin", async () => {
   const detail = await read("app/research/price/quote-detail.tsx"), market = await read("lib/research/market-quote.ts");
   assert.match(market, /CHART_RANGES: ChartRange\[\] = \["1d", "1w", "1m", "3m", "6m", "ytd", "1y", "3y", "5y"\]/);
-  for (const label of ["1日", "1週", "1ヵ月", "3ヵ月", "6ヵ月", "年初来", "1年", "3年", "5年"]) assert.match(detail, new RegExp(label));
-  assert.match(detail, /useState<ChartRange>\("1m"\)/);
+  // Owner, Nov 13: the market board's periods (5分 … 1年, その他: 1時間 / 3時間 / 1週間 / 年初来 / 5年), 15分 first.
+  const buttons = await read("app/research/price/period-buttons.tsx");
+  assert.match(buttons, /DETAIL_OTHER_PERIODS: readonly DetailPeriod\[\] = \["1h", "3h", "1w", "ytd", "5y"\]/);
+  assert.match(buttons, /DETAIL_DEFAULT_PERIOD: DetailPeriod = "15m"/);
+  assert.match(buttons, /PRIMARY_PERIODS\.map/);
+  assert.match(detail, /useState<DetailPeriod>\(DETAIL_DEFAULT_PERIOD\)/);
   assert.match(detail, /useState<"candles" \| "line">\("candles"\)/);
   assert.match(detail, /ローソク足/); assert.match(detail, /ライン/);
   for (const label of ["株価", "企業情報", "連関マップ", "価格通知", "設定のみ保存できます。通知配信は準備中です。", "前日終値", "出来高"]) assert.match(detail, new RegExp(label));

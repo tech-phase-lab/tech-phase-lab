@@ -10,6 +10,7 @@ const PUBLIC = {
   'research/earnings-consensus': 'public EPS consensus (Twelve Data display licence, attribution shown)',
   'research/market/board': 'public market quotes (Twelve Data display licence)',
   'research/market/chart': 'public market chart',
+  'research/market/period-bases': 'public closes a stock page measures its period change from',
   'research/market/facts': 'public market facts',
   'research/market/quotes': 'public market quotes',
   'research/news/stream': 'change signal only, short-lived origin-bound ticket',
