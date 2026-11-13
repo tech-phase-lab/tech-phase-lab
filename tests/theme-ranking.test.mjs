@@ -74,7 +74,7 @@ test("access is PRO only, with an open access window", () => {
 test("the Twelve Data answer is parsed per symbol, newest first, skipping bad symbols", async () => {
   const source = readFileSync(new URL("../lib/research/theme-prices.ts", import.meta.url), "utf8")
     .replace('import "server-only";', "").replace('import { unstable_cache } from "next/cache";', "const unstable_cache = fn => fn;")
-    .replace(/import \{ GROUPS[^;]*;/, 'const GROUPS = [], tickersOf = () => [];').replace(/import \{ stockReturns[^;]*;/, "const stockReturns = x => x;");
+    .replace(/import \{ GROUPS[^;]*;/, 'const GROUPS = [], tickersOf = () => [];').replace(/import \{ stockReturns[^;]*;/, "const stockReturns = x => x;").replace(/import \{ createBatcher[^;]*;/, "const createBatcher = () => async () => null;");
   const { stripTypeScriptTypes } = await import("node:module");
   const { parseTimeSeries } = await import("data:text/javascript;base64," + Buffer.from(stripTypeScriptTypes(source)).toString("base64"));
   const payload = {
