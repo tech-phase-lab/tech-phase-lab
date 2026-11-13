@@ -72,6 +72,12 @@ A September 27 connector update truncated existing research files. Before any Gi
 
 # Product plans (owner decisions)
 
+- Earnings coverage (owner, 2026-11-12): collect earnings dates for every company in the High-tech Alerts
+  list (50 companies) and keep the calendar and result watch correct for them; build the Earnings Deep
+  Dive (決算の深掘り) for the 22 companies on the watch list. Dates are read from each company's own notice and
+  compared with the calendar (scripts/research/earnings_date_watch.py); a wrong or missing date must reach
+  the owner before the release, not after. A missed result is not acceptable.
+
 - Home news: once the Stock News API contract is in place, switch the home screen news
   (top LIVE band and the lower news list) to the Stock News API. The home screen is redesigned
   in mid-November; until then the current sources stay as they are.
