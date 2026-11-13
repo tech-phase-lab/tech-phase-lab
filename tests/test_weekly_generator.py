@@ -164,7 +164,8 @@ class GenerateTests(Base):
         self.assertEqual({s["url"] for s in saved["sources"]}, {MU["url"], JOBS["url"]})
         self.assertEqual(weekly.member_issues(self.db)["issues"], [], "a draft is never visible to members")
         sent = json.loads(model.calls[0]["input"])
-        self.assertEqual([e["id"] for e in sent["evidence"]], ["E1", "E2"])
+        self.assertEqual([e["id"] for e in sent["evidence"]][:2], ["E1", "E2"])
+        self.assertEqual({e["type"] for e in sent["evidence"][2:]}, {"schedule"}, "next week's releases are evidence the sentences may cite")
         self.assertEqual(sent["recentIssues"], [], "no earlier issue yet")
         self.assertIn("数字は、資料に書かれた値だけ", model.calls[0]["instructions"])
         self.assertIs(model.calls[0]["store"], False)
@@ -243,6 +244,39 @@ class GenerateTests(Base):
         self.assertEqual([v["name"] for v in jobs["compare"][1]["values"]], ["結果", "前回"], "no forecast for the unemployment rate: two bars")
         mixed = {"key": "x", "value": "29K", "comparisons": {"forecast": "4.2%"}}
         self.assertIsNone(gen.build_compare([{"id": "E1", "facts": [mixed], "ticker": ""}], {"evidenceId": "E1", "factKey": "x"}), "units differ: no bars")
+
+    def test_the_program_calculates_the_gaps_and_the_model_only_copies_them(self):
+        lines = gen.derived_lines(gen.collect(self.db, SATURDAY)[0]["facts"] + gen.collect(self.db, SATURDAY)[1]["facts"])
+        self.assertIn("計算 売上高: 次期の会社見通しは今回の結果比 +10.4%", lines)
+        self.assertIn("計算 非農業部門雇用者数: 予想比 -42.0%、前回比 -78.2%", lines)
+        self.assertIn("計算 失業率: 前回との差 +0.1pt", lines)
+        model = FakeModel(model_output())
+        gen.generate(self.db, SATURDAY, transport=model, env=ENV)
+        sent = json.loads(model.calls[0]["input"])
+        self.assertIn("計算 非農業部門雇用者数: 予想比 -42.0%、前回比 -78.2%", sent["evidence"][1]["calculated"])
+
+    def test_a_takeaway_with_a_calculated_figure_a_named_release_and_a_hedged_view_is_accepted_and_a_made_up_figure_is_not(self):
+        out = model_output()
+        out["takeaways"] = [
+            {"text": "MUの売上高は$11.32Bで、次期の会社見通しは今回の結果比で+10.4%でした。", "evidenceIds": ["E1"]},
+            {"text": "非農業部門雇用者数は予想比で-42.0%と弱く、金利低下への期待が出るという見方です。", "evidenceIds": ["E2"]},
+            {"text": "雇用統計は予想比で-60.0%でした。", "evidenceIds": ["E2"]}]
+        saved = gen.generate(self.db, SATURDAY, transport=FakeModel(out), env=ENV)
+        body = saved["parts"][0]["body"]
+        self.assertIn("+10.4%", body); self.assertIn("-42.0%", body); self.assertNotIn("-60.0%", body, "a figure the evidence does not have is left out")
+        self.assertTrue(any("〔unsupported-number〕" in n for n in saved["notes"]))
+
+    def test_a_takeaway_may_name_next_weeks_releases_and_the_policy_asks_for_figures_names_and_the_tech_view(self):
+        model = FakeModel(model_output())
+        gen.generate(self.db, SATURDAY, transport=model, env=ENV)
+        schedule = [e for e in json.loads(model.calls[0]["input"])["evidence"] if e["type"] == "schedule"]
+        ids = [e["id"] for e in schedule if "CPI" in e["label"] or "PPI" in e["label"]]
+        out = model_output()
+        out["takeaways"] = [{"text": "来週は米国CPI（消費者物価指数）と米国PPI（生産者物価指数）の発表が控えており、利下げ観測を左右するという見方です。", "evidenceIds": ids}]
+        saved = gen.generate(self.db, SATURDAY, transport=FakeModel(out), env=ENV)
+        self.assertIn("米国CPI（消費者物価指数）", saved["parts"][0]["body"])
+        for phrase in ("ハイテク・半導体株にとって何を意味するか", "具体的な数字", "米CPI(消費者物価指数)", "「物価の発表」のような曖昧な書き方はしません", "計算"):
+            self.assertIn(phrase, gen.POLICY)
 
     def test_each_takeaway_keeps_the_kind_of_material_it_rests_on_for_its_icon(self):
         out = model_output()
