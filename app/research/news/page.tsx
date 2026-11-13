@@ -13,7 +13,7 @@ export default function NewsPage() {
   return <>
     {!ready && <ResearchLoading />}
     <div hidden={!ready}>
-      <ResearchToolShell lang={lang} setLang={setLang} title={lang === "ja" ? "ハイテク速報" : "Tech Alerts"} description="" freshness>
+      <ResearchToolShell lang={lang} setLang={setLang} eyebrow="TECH ALERTS" title={lang === "ja" ? "ハイテク速報" : "Tech Alerts"} description="" freshness>
         <FlashPage lang={lang} onReady={() => setReady(true)} />
       </ResearchToolShell>
     </div>

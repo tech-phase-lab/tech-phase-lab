@@ -82,7 +82,7 @@ export default function Faq() {
   const phone = useSyncExternalStore(() => () => {}, () => /iPhone|iPad|Android/.test(navigator.userAgent), () => false);
   // A link to #add-to-home (the account menu) arrives before the phone-only guide is drawn, so scroll to it once it is.
   useEffect(() => { if (phone && window.location.hash === "#add-to-home") document.getElementById("add-to-home")?.scrollIntoView(); }, [phone]);
-  return <ResearchToolShell lang={lang} setLang={setLang} title={ja ? "よくある質問・使い方" : "FAQ & help"} description={ja ? "利用方法、PRO会員、質問についてのご案内です。" : "Quick answers about getting started, PRO, and Ask Rizel."}>
+  return <ResearchToolShell lang={lang} setLang={setLang} eyebrow="FAQ" title={ja ? "よくある質問・使い方" : "FAQ & help"} description={ja ? "利用方法、PRO会員、質問についてのご案内です。" : "Quick answers about getting started, PRO, and Ask Rizel."}>
     <nav className={styles.localNav} aria-label={ja ? "案内メニュー" : "Help menu"}><Link href="/research/learn">{ja ? "米国株のはじめ方" : "US stock basics"}</Link><span aria-current="page">{ja ? "よくある質問" : "FAQ"}</span></nav>
     <div className={styles.steps}>
       {/* First item (owner, Nov 5): how to add the app to the iPhone Home Screen. */}

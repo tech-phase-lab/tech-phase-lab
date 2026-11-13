@@ -5,9 +5,9 @@
 .page h1,.page h2,.page h3{margin:0}
 
 .page .head{padding:6px 2px 14px}
-.page .kicker{font:500 11px ui-monospace,"JetBrains Mono",monospace;letter-spacing:.32em;color:var(--gold-d);display:flex;align-items:center;gap:10px}
+.page .kicker{font-size:11px;font-weight:600;line-height:1.3;letter-spacing:.16em;color:#8e9aaa;display:flex;align-items:center;gap:10px}
 .page .pro{padding:3px 10px;border-radius:8px;background:linear-gradient(120deg,#f0dca0,#c9a257);color:#2a1f05;font-size:10.5px;letter-spacing:.14em;font-weight:700}
-.page .head h1{margin-top:8px;font-size:27px;line-height:1.3;font-weight:700;letter-spacing:.01em}
+.page .head h1{margin-top:2px;font-size:26px;line-height:1.25;font-weight:700;letter-spacing:0}
 .page .sub{margin-top:8px;font-size:13.5px;color:var(--mute);line-height:1.7}
 
 .page .cta{position:relative;display:flex;align-items:center;justify-content:center;gap:10px;min-height:56px;padding:0 22px;border:0;border-radius:18px;background:linear-gradient(120deg,#efd899,#c9a257);color:#2a1f05;font:700 17px inherit;font-family:inherit;cursor:pointer;box-shadow:0 10px 26px rgba(201,162,87,.22);text-decoration:none;white-space:nowrap}

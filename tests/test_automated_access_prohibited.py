@@ -7,6 +7,7 @@ from unittest import mock
 ROOT=Path(__file__).resolve().parents[1]
 sys.path.insert(0,str(ROOT/'scripts/research'))
 import monitor
+import signals
 
 class ProhibitedSite(unittest.TestCase):
     def test_only_sk_hynix_is_marked_and_nothing_else_changes(self):
@@ -22,5 +23,18 @@ class ProhibitedSite(unittest.TestCase):
         self.assertFalse(monitor.automated_access_prohibited('SKHY','https://www.sec.gov/Archives/edgar/data/2120882/x.htm'))
         for ticker in monitor.PROVIDERS:
             if ticker!='SKHY': self.assertFalse(monitor.automated_access_prohibited(ticker,'https://example.com/'),ticker)
+
+class NewsFeed(unittest.TestCase):
+    def test_the_sk_hynix_newsroom_feed_is_never_requested(self):
+        sources=json.loads((ROOT/'scripts/research/signal_sources.json').read_text())       # the file as shipped, whatever other tests do to signals.SOURCES
+        self.assertEqual([source['id'] for source in sources if source.get('automatedAccess')],['skhynix-news'])    # no other source is marked
+        source=next(source for source in sources if source['id']=='skhynix-news')
+        self.assertEqual(source['automatedAccess'],'prohibited')
+        with mock.patch.object(signals,'build_opener',side_effect=AssertionError('no network')) as network:
+            with self.assertRaisesRegex(ValueError,'automated-access-prohibited'): signals.fetch(source,{})
+            network.assert_not_called()
+        other={**source,'automatedAccess':None}
+        with mock.patch.object(signals,'build_opener',side_effect=RuntimeError('reached the network layer')):
+            with self.assertRaisesRegex(RuntimeError,'reached the network layer'): signals.fetch(other,{})     # without the marker the same source would go out
 
 if __name__=='__main__': unittest.main()
