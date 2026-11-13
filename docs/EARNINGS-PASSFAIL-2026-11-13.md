@@ -1,6 +1,6 @@
 # Earnings flash pass/fail (latest real release of each watch-list company)
 
-Generated 2026-11-13 09:32Z · PASS 8 / 22
+Generated 2026-11-13 09:32Z · PASS 10 / 22
 
 | Ticker | Verdict | Detection source | Figures | Reason |
 |---|---|---|---|---|
@@ -12,8 +12,8 @@ Generated 2026-11-13 09:32Z · PASS 8 / 22
 | AMD | FAIL | SEC 8-K 2026-11-03T21:16Z | 0 | no parser for this company yet |
 | AVGO | PASS | SEC 8-K 2026-09-02T20:26Z | 4 | 4 figures, e.g. revenue $29.591B |
 | ARM | FAIL | SEC 6-K 2026-11-04T21:02Z | 0 | no parser for this company yet |
-| TSM | FAIL | SEC 6-K 2026-10-15T10:40Z | 0 | no parser for this company yet |
-| ASML | FAIL | SEC 6-K 2026-10-14T10:01Z | 0 | no parser for this company yet |
+| TSM | PASS | SEC 6-K 2026-10-15T10:40Z | 5 | 5 figures, e.g. revenue NT$1494.243B |
+| ASML | PASS | SEC 6-K 2026-10-14T10:01Z | 4 | 4 figures, e.g. revenue €11.662B |
 | MRVL | PASS | SEC 8-K 2026-08-27T20:05Z | 4 | 4 figures, e.g. revenue $2.7393B |
 | ANET | FAIL | SEC 8-K 2026-11-03T21:10Z | 0 | no parser for this company yet |
 | CRDO | PASS | SEC 8-K 2026-09-01T20:08Z | 4 | 4 figures, e.g. revenue $479.003M |
