@@ -32,14 +32,15 @@
 8. 会員への配信開始（下の D）。**必ず親→オーナーの最終確認を挟む。**
 
 ## C. オーナー宛テストメール1通
-1. 前提: 設定API（`RESOLUTE_NOTIFICATION_API_ENABLED`）が有効で、オーナーのアカウントに保存済みの計画（買い増しライン）と通知設定がある。画面で、銘柄と基準価格（直近の終値の約1.5倍など、確実に最初のラインを超える値）、アラートON、届く時間を入れて保存。
+1. 前提（保存APIは切のまま）: オーナー用ジョブ `scripts/resolute/owner-test-seed.mjs`（一時サービス `services/resolute-owner-test-seed`）で、オーナーのアカウントだけにテスト用の計画（買い増しライン-10%/-20%）と通知設定（アラートON・翌朝のひとことON）を入れる。モードは `RESOLUTE_OWNER_TEST_SEED=on`。値は環境変数: `RESOLUTE_OWNER_TEST_SYMBOL`、`RESOLUTE_OWNER_TEST_REFERENCE_PRICE`（直近の終値の約1.5倍など、確実に最初のラインを超える値）、`RESOLUTE_OWNER_TEST_HOUR`（7〜10）。DB・保護ゲートウェイの変数は 6b（acceptance）と同じ（`RESOLUTE_PLAN_DB_URL`、`RESOLUTE_NOTIFICATION_DB_URL`、`RESOLUTE_PROTECTION_*`）。オーナーに計画か設定の行が既にあれば、上書きせず中止する。ほかのアカウントには触れない（ID入力が無い）。また、メール送信にはオーナーのアカウントの受信設定（言語）が Clerk に保存済みであること。
 2. cron の一時スケジュール: 届く時間（日本時間）の直前の分に、UTC で1回だけ（cron は UTC。例: 日本時間 8:00 の回に合わせて `55 22 * * *`）。または本スケジュール `0 0,1,22,23 * * *` のままでも、`ONLY_USER_IDS` により対象はオーナーのみ。
 3. 乾燥運転: `RESOLUTE_NOTIFICATION_QUEUE_ENABLED=true` だけ（送信フラグは未設定）→ 実行 → outbox に **オーナーの1行だけ**（`SELECT clerk_user_id, kind, delivery_date_jst, accepted_at FROM resolute.notification_outbox;`）。メールは出ない。
 4. 送信: `RESOLUTE_MAIL_DELIVERY_ENABLED=true` を足して次の回を実行。確認: `accepted_at` が入る／メール件名・本文／本文に「価格データ提供: Twelve Data」（日本語）または「Price data provided by Twelve Data」（英語）が入っている／停止リンクが https://techphase.app 上。
 5. 翌朝: 「翌朝のひとこと」をオンにしていれば、翌日の同じ時刻に1通（事実だけの定型文）。
-6. 戻し方: `RESOLUTE_MAIL_DELIVERY_ENABLED` と `RESOLUTE_NOTIFICATION_QUEUE_ENABLED` を削除（または false）→ スケジュールを元に戻す／cron を停止。cron は「無効＝終了コード0」なので、フラグ未設定のままでも Crashed にならない。
+6. 戻し方: まず `RESOLUTE_OWNER_TEST_SEED=off` で同じジョブを実行（両方の通知OFF・監視銘柄を空に・テスト用計画を削除。停止イベントも保護ゲートウェイに記録）。次に、 `RESOLUTE_MAIL_DELIVERY_ENABLED` と `RESOLUTE_NOTIFICATION_QUEUE_ENABLED` を削除（または false）→ スケジュールを元に戻す／cron を停止。cron は「無効＝終了コード0」なので、フラグ未設定のままでも Crashed にならない。
 
 ## D. 会員への配信を始める直前チェックリスト（オーナー確認用）
+- **前提: 保存API（`RESOLUTE_PLAN_API_ENABLED` / `RESOLUTE_NOTIFICATION_API_ENABLED`）の有効化。プライバシーポリシー確定後（オーナー決定）。** 会員が自分で通知設定を保存して初めて対象になる。保存APIが切のあいだは、会員は誰も対象にならない（C のテストはオーナー用ジョブで行う）。
 - 対象人数（読み取り）: `SELECT settings->>'deliveryHourJst' AS hour, count(*) FILTER (WHERE settings->>'alertsEnabled'='true') AS alerts_on, count(*) FILTER (WHERE settings->>'morningEnabled'='true') AS morning_on FROM resolute.notification_settings GROUP BY 1 ORDER BY 1;`（実際に届くのは、さらに「確認済みメール・購入済み・アラート利用権あり」の人だけ）
 - 既存の停止・失敗: `SELECT count(*) FROM resolute.notification_suppressions;` / outbox の `payload->'resendFailure'` の件数。
 - 1通の内容サンプル: `/resolute/notification-preview`（オーナー専用）で日英を目視。
