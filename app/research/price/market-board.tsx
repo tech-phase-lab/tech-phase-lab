@@ -137,7 +137,7 @@ export default function MarketBoard() {
   const first = indexQuotes ? Object.values(indexQuotes)[0] : undefined;
   const interval = range === "1d" || range === "1w" ? "intraday" : range === "5y" ? "weekly" : "daily";
   const bar = active ?? last;
-  
+
   const t = (a: string, b: string) => ja ? a : b;
   const num = (value: number) => formatPrice(value, entry.kind).replace(/^\$/, "");
   const pick = (id: string) => { setSelected(id); setActive(null); };
