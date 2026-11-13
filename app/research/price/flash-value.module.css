@@ -1,0 +1,6 @@
+/* A changed price: mint (up) or red (down), back to its own colour in about 1.3 seconds. */
+.up { animation: flashUp 1.3s ease-out 1; }
+.down { animation: flashDown 1.3s ease-out 1; }
+@keyframes flashUp { from { color: #5fe0aa; } }
+@keyframes flashDown { from { color: #ff7a7a; } }
+@media (prefers-reduced-motion: reduce) { .up, .down { animation: none; } }

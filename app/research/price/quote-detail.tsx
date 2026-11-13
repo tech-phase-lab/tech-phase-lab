@@ -14,6 +14,7 @@ import { CHART_RANGES, compact, dateJa, plain, rangeChange, rangePosition, signe
 import { Status, Tile, toneOf, type DetailOrigin } from "./quote-card";
 import { shortName, useFacts, useQuotes } from "./use-market";
 import PriceChart from "./price-chart";
+import FlashValue from "./flash-value";
 import styles from "./detail.module.css";
 
 const ORIGINS: Record<DetailOrigin, { ja: string; en: string; href: string }> = {
@@ -64,7 +65,7 @@ export default function QuoteDetail({ ticker, from, title: fixedTitle, plain: ba
   const router = useRouter();
   const ja = lang === "ja", t = (a: string, b: string) => ja ? a : b;
   const origin = ORIGINS[from];
-  const { data: quotes, loaded, failed } = useQuotes([ticker]);
+  const { data: quotes, loaded, failed } = useQuotes([ticker], false, true);
   const quote = quotes?.[ticker];
   const facts = useFacts(ticker).data;
   const [range, setRange] = useState<ChartRange>("1m");
@@ -121,7 +122,7 @@ export default function QuoteDetail({ ticker, from, title: fixedTitle, plain: ba
           <svg viewBox="0 0 24 24" fill={registered ? "currentColor" : "none"} stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round" aria-hidden="true"><path d="m12 3 2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9Z" /></svg>{registered ? t("登録済み", "Saved") : t("登録", "Save")}</button>}</div>
       <section id="price" style={{ display: "contents" }}>
         {quote ? <div className={styles.priceBlock}>
-          <div className={styles.priceLine}><span className={styles.price}>{plain(quote.price)}</span><span className={styles.usd}>{quote.currency}</span></div>
+          <div className={styles.priceLine}><FlashValue scope={ticker} value={quote.price} className={styles.price}>{plain(quote.price)}</FlashValue><span className={styles.usd}>{quote.currency}</span></div>
           <span className={`${styles.changeLine} ${styles[tone]}`}><span className={`${styles.chip} ${styles[tone]}`}>{arrow} {quote.percentChange === null ? "—" : signedPercent(quote.percentChange)}</span><span className={styles.amount}>{quote.change === null ? "" : signedMoney(quote.change, quote.currency)}</span></span>
           <div className={styles.stateRow}><span><Status quote={quote} ja={ja} update /></span>
             <span className={styles.mode} role="group" aria-label={t("チャートの種類", "Chart type")}><button type="button" aria-pressed={mode === "candles"} onClick={() => setMode("candles")}>{t("ローソク足", "Candles")}</button><button type="button" aria-pressed={mode === "line"} onClick={() => setMode("line")}>{t("ライン", "Line")}</button></span></div>
