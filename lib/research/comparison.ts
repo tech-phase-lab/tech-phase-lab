@@ -16,6 +16,8 @@ export type Financials = {
   referenceEvaluation?: import("./comparison-reference").ReferenceEvaluation;
   ticker: string; status: "ready" | "unavailable" | "unsupported"; retrievedAt: string;
   dataWarnings?: Copy[];
+  /** Set only for this answer (never cached): the provider was too busy this minute and no other source had the company. */
+  busy?: true;
   preparedAnalysis?: PreparedComparisonAnalysis;
   revenue: Fact | null; previousRevenue: Fact | null; operatingIncome: Fact | null;
   operatingCash: Fact | null; capex: Fact | null; cash: Fact | null;
@@ -24,6 +26,8 @@ export type Financials = {
   dilutedShares: Fact | null; previousDilutedShares: Fact | null; dilutedSharesGrowth: number | null;
   quarterRevenue: Fact | null; previousQuarterRevenue: Fact | null; quarterOperatingIncome: Fact | null;
   quarterRevenueGrowth: number | null; quarterOperatingMargin: number | null; quarterSourceUrl: string | null;
+  /** Operating margin of the last four consecutive quarters, newest first (a fourth quarter is fiscal year minus nine months). Null unless all four are present. */
+  quarterMargins?: { periodEnd: string; value: number }[] | null;
   quarterFcfMargin?: number | null; quarterStockCompensationRatio?: number | null; quarterDilutedSharesGrowth?: number | null;
   balance: BalanceSnapshot | null;
   sourceUrl: string | null;
@@ -140,6 +144,30 @@ export function extractFinancials(ticker: string, cik: string, payload: unknown,
   const quarterOperatingCash=quarterMetric("operatingCash"), quarterCapex=quarterMetric("capex"), quarterCompensation=quarterMetric("stockCompensation");
   const quarterShares = quarterRevenue ? unique(collect(basis,tags[basis].dilutedShares,false,"quarter",true).filter(f=>f.accession===quarterRevenue.accession && f.start===quarterRevenue.start && f.end===quarterRevenue.end && f.value>0)) : null;
   const previousQuarterShares = quarterShares && previousQuarterRevenue ? unique(collect(basis,[quarterShares.tag],false,"quarter",true).filter(f=>f.accession===quarterShares.accession && f.start===previousQuarterRevenue.start && f.end===previousQuarterRevenue.end && f.value>0)) : null;
+  // The last four standalone quarters' operating margins, for the stability factor. Each quarter needs both revenue and operating income;
+  // a quarter reported twice with different values, or a gap in the sequence, leaves the whole series empty.
+  function marginSeries(): { periodEnd: string; value: number }[] | null {
+    if (!quarterRevenue) return null;
+    const perEnd = (names: readonly string[]) => {
+      const out = new Map<string, number | null>();
+      const add = (f: Fact) => { const have = out.get(f.end); out.set(f.end, have === undefined || have === f.value ? f.value : null); };
+      const latestByEnd = new Map<string, (Fact & { filed: string })[]>();
+      for (const f of collect(basis, names, false, "quarter")) latestByEnd.set(f.end, [...(latestByEnd.get(f.end) ?? []), f as Fact & { filed: string }]);
+      for (const [, list] of latestByEnd) { const newest = list.map(f => f.filed).sort().at(-1); const same = list.filter(f => f.filed === newest && f.unit === revenue.unit); if (same.length) same.forEach(add); }
+      for (const annual of collect(basis, names, false, "annual").filter(f => f.unit === revenue.unit)) {
+        const q4 = fourth(annual.tag, annual);
+        if (q4 && !out.has(q4.end)) out.set(q4.end, q4.value);
+      }
+      return out;
+    };
+    const rev = perEnd(tags[basis].revenue), op = perEnd(tags[basis].operatingIncome);
+    const ends = [...rev.keys()].filter(end => end <= quarterRevenue.end && (rev.get(end) ?? 0) > 0 && typeof op.get(end) === "number").sort().reverse();
+    if (ends[0] !== quarterRevenue.end) return null;
+    const picked = [ends[0]];
+    for (const end of ends.slice(1)) { const gap = day(picked.at(-1)!) - day(end); if (gap >= 70 && gap <= 110) picked.push(end); if (picked.length === 4) break; }
+    return picked.length === 4 ? picked.map(end => ({ periodEnd: end, value: op.get(end)! / rev.get(end)! * 100 })) : null;
+  }
+  const quarterMargins = marginSeries();
   const filingUrl = (f: Fact) => `https://www.sec.gov/Archives/edgar/data/${Number(cik)}/${f.accession!.replaceAll("-", "")}/${f.accession}-index.htm`;
   // A single filing/date/currency for the entire balance snapshot. No fallback to older components.
   const balanceTags = basis === "us-gaap" ? ["CashAndCashEquivalentsAtCarryingValue", "AssetsCurrent", "LiabilitiesCurrent"] : ["CashAndCashEquivalents", "CurrentAssets", "CurrentLiabilities"];
@@ -163,7 +191,7 @@ export function extractFinancials(ticker: string, cik: string, payload: unknown,
   return { ...result, status: "ready", balance, revenue, previousRevenue, operatingIncome, operatingCash, capex, cash,
     stockCompensation, stockCompensationRatio: stockCompensation ? stockCompensation.value / revenue.value * 100 : null,
     dilutedShares, previousDilutedShares, dilutedSharesGrowth: dilutedShares && previousDilutedShares ? (dilutedShares.value / previousDilutedShares.value - 1) * 100 : null,
-    quarterRevenue, previousQuarterRevenue, quarterOperatingIncome,
+    quarterRevenue, previousQuarterRevenue, quarterOperatingIncome, quarterMargins,
     quarterRevenueGrowth: quarterRevenue && previousQuarterRevenue ? (quarterRevenue.value / previousQuarterRevenue.value - 1) * 100 : null,
     quarterOperatingMargin: quarterRevenue && quarterOperatingIncome ? quarterOperatingIncome.value / quarterRevenue.value * 100 : null,
     quarterSourceUrl: quarterRevenue ? filingUrl(quarterRevenue) : null,
