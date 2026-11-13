@@ -590,9 +590,18 @@ def vapid_subject(value):
 SKIPS = {}
 
 
-def skip(item, reason):
+_LOGGED_SKIPS = set()
+QUIET_SKIP_REASONS = frozenset({'published-not-fresh', 'already-delivered', 'invalid-item'})
+
+
+def skip(item, reason, device=None):
     if item.get('kind') == 'earnings':
         SKIPS[reason] = SKIPS.get(reason, 0) + 1
+        # One line per reason and release in the service log, which (unlike the counters) survives a restart. No device or member.
+        key = (reason, item.get('ticker'), item.get('quarter'))
+        if reason not in QUIET_SKIP_REASONS and key not in _LOGGED_SKIPS and len(_LOGGED_SKIPS) < 500:
+            _LOGGED_SKIPS.add(key)
+            print(json.dumps({'event': 'push-skip', 'reason': reason, 'ticker': item.get('ticker'), 'quarter': item.get('quarter')}), flush=True)
 
 
 def device_breakdown(db, now):

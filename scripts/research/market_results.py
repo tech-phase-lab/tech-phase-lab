@@ -585,9 +585,9 @@ def display_floor(items):
     """What the site may show as an earnings result (owner, Nov 12: a result with one figure shown twice is worse than none).
 
     - an earnings result needs at least MIN_DISPLAY_FACTS reported figures (guidance does not count as a result figure);
-    - a result read from an X post is dropped when the company's own release table has been read for the same quarter.
+    - a result read from an X post is never shown on the site (it is not a primary source; owner, Nov 13). Until the company's own
+      release is read, the site shows nothing rather than a thin or second-hand result.
     Flashes below the floor stay available to the phone alerts and the release watch, which use the unfiltered feed."""
-    issuer = {(i['ticker'], i.get('period')) for i in items if str(i.get('researchId', '')).startswith('ir-flash-')}
     kept = []
     for item in items:
         if item.get('kind') != 'earnings':
@@ -596,7 +596,7 @@ def display_floor(items):
         figures = [f for f in item.get('facts', []) if not str(f.get('key', '')).startswith('guidance-')]
         if len(figures) < MIN_DISPLAY_FACTS:
             continue
-        if str(item.get('researchId', '')).startswith('x-result-') and (item['ticker'], item.get('period')) in issuer:
+        if str(item.get('researchId', '')).startswith('x-result-'):
             continue
         kept.append(item)
     return kept

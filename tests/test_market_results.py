@@ -452,13 +452,11 @@ class DisplayFloorTests(unittest.TestCase):
         return {'kind': 'earnings', 'researchId': rid, 'ticker': ticker, 'period': period,
                 'facts': [{'key': k, 'ja': k, 'en': k, 'value': '$1M'} for k in keys]}
 
-    def test_a_result_needs_three_reported_figures_and_x_is_dropped_once_the_company_table_is_read(self):
-        one = self.brief('x-result-1', keys=('revenue',))
-        guidance_only = self.brief('x-result-2', ticker='TSM', keys=('revenue', 'guidance-revenue', 'guidance-eps'))
-        x = self.brief('x-result-3')
+    def test_a_result_needs_three_reported_figures_and_x_posts_are_never_shown(self):
+        one = self.brief('ir-flash-1', keys=('revenue',))
+        guidance_only = self.brief('ir-flash-2', ticker='TSM', keys=('revenue', 'guidance-revenue', 'guidance-eps'))
+        x = self.brief('x-result-3')                       # three figures, but read from an X post
         official = self.brief('ir-flash-4')
         other = {'kind': 'economic', 'researchId': 'x-result-5', 'ticker': 'ECON', 'period': 'CPI', 'facts': []}
         kept = results.display_floor([one, guidance_only, x, official, other])
         self.assertEqual([i['researchId'] for i in kept], ['ir-flash-4', 'x-result-5'])
-        # without the company's own table, a fuller X result may stay
-        self.assertEqual([i['researchId'] for i in results.display_floor([x])], ['x-result-3'])
