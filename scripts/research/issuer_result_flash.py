@@ -58,6 +58,8 @@ ORDER = ['revenue', 'gross-margin', 'eps', 'adjusted-eps', 'net-income', 'operat
 def signed(text):
     """'(190.4)' -> -190.4; '3,661' -> 3661. Raises ValueError for anything else."""
     text = text.strip()
+    if text == '\u2014':
+        return Decimal(0)  # a dash in a statement column means nil
     negative = text.startswith('(') and text.endswith(')')
     text = text.strip('()').replace(',', '').replace('−', '-')
     try:
@@ -278,7 +280,7 @@ def parse_nvidia(text, url=None):
     return {'period': f'Q{quarter} FY{year}', 'facts': facts}
 
 
-AMT = r'\(?[\d,]+(?:\.\d+)?\)?'
+AMT = r'(?:\(?[\d,]+(?:\.\d+)?\)?|\u2014)'
 HEADLINE_PERIOD = re.compile(r'\b(First|Second|Third|Fourth) Quarter (?:of )?Fiscal (?:Year )?(20\d\d)(?!\d)', re.I)
 
 
@@ -306,11 +308,20 @@ def parse_statement(text, cfg):
     t = clean(text)
     if cfg['identity'] not in t.lower():
         raise ValueError('issuer-identity-missing')
-    quarter, year = headline_period(t)
+    if cfg.get('period-re'):
+        found = re.findall(cfg['period-re'], t[:1500], re.I)
+        if len(found) != 1:
+            raise ValueError('period-unrecognized')
+        quarter, year = QUARTERS[found[0][0].lower()], int(found[0][1])
+    else:
+        quarter, year = headline_period(t)
     start = t.find(cfg['heading'])
     if start < 0:
         raise ValueError('statement-heading-missing')
     block = t[start:start + 3200]
+    later = re.search(r'(?i)consolidated (?:statements of (?:cash flows|financial position|comprehensive)|balance sheets)', block[60:])
+    if later:  # the next statement is not part of this one (its rows repeat labels such as "Net income")
+        block = block[:60 + later.start()]
     if cfg['units'] not in block[:400].lower():
         raise ValueError('units-unrecognized')
     n, ago, scale = cfg['columns'], cfg['year-ago'], cfg['scale']
@@ -319,13 +330,18 @@ def parse_statement(text, cfg):
         rows[key] = statement_row(block, label, n)
     if not rows['revenue'] or rows['revenue'][0] <= 0 or not rows['revenue'][ago] > 0:
         raise ValueError('revenue-row-unrecognized')
-    growth = re.findall(cfg['growth'], t[:2500])
-    if len(growth) != 1:
-        raise ValueError('revenue-growth-missing')
-    stated = Decimal(growth[0])  # the headline's own rounding: whole percent -> +-0.55, one decimal -> +-0.06
-    actual = (rows['revenue'][0] / rows['revenue'][ago] - 1) * 100
-    if abs(actual - stated) > (Decimal('0.06') if '.' in growth[0] else Decimal('0.55')):
-        raise ValueError('change-mismatch')
+    if cfg.get('growth'):
+        growth = re.findall(cfg['growth'], t[:2500])
+        if len(growth) != 1:
+            raise ValueError('revenue-growth-missing')
+        stated = Decimal(growth[0])  # the headline's own rounding: whole percent -> +-0.55, one decimal -> +-0.06
+        actual = (rows['revenue'][0] / rows['revenue'][ago] - 1) * 100
+        if abs(actual - stated) > (Decimal('0.06') if '.' in growth[0] else Decimal('0.55')):
+            raise ValueError('change-mismatch')
+    else:  # no stated growth: the headline's revenue (in billions, one decimal) must match this quarter's printed revenue
+        said = re.findall(cfg['headline'], t[:2500])
+        if len(said) != 1 or abs(Decimal(said[0]) * 1000 - rows['revenue'][0] * scale) > Decimal('55'):
+            raise ValueError('change-mismatch')
 
     def col(key, i):
         return rows[key][i] if rows.get(key) else None
@@ -336,7 +352,17 @@ def parse_statement(text, cfg):
     # a column is trusted only when every identity holds in both the current and the year-earlier column
     gross_ok = all(agrees('revenue', 'cost', 'gross', i) for i in (0, ago)) if rows.get('cost') else False
     op_ok = gross_ok and all(agrees('gross', 'opex', 'operating', i) for i in (0, ago))
-    net_ok = all(agrees('pretax', 'tax', 'net', i) for i in (0, ago)) if rows.get('tax') is not None else False
+    if cfg.get('net-chain') == 'continuing':  # income before tax - tax + equity income = continuing income; + discontinued = net income
+        net_ok = all(None not in (col('pretax', i), col('tax', i), col('equity', i), col('cont', i), col('disc', i), col('net', i))
+                     and abs(col('pretax', i) - col('tax', i) + col('equity', i) - col('cont', i)) <= cfg['tol']
+                     and abs(col('cont', i) + col('disc', i) - col('net', i)) <= cfg['tol'] for i in (0, ago))
+    else:
+        net_ok = all(agrees('pretax', 'tax', 'net', i) for i in (0, ago)) if rows.get('tax') is not None else False
+    if net_ok and cfg['rows'].get('attrib'):  # net income attributable to common = net income - non-controlling interests
+        net_ok = all(None not in (col('net', i), col('nci', i), col('attrib', i)) and abs(col('net', i) - col('nci', i) - col('attrib', i)) <= cfg['tol']
+                     for i in (0, ago))
+        if net_ok:
+            rows['net'] = rows['attrib']
     metrics = {'revenue': (rows['revenue'][0], rows['revenue'][ago])}
     if op_ok:
         metrics['operating-income'] = (rows['operating'][0], rows['operating'][ago])
@@ -375,6 +401,37 @@ STATEMENT = {
                       'operating': 'Operating income', 'pretax': 'Income before income taxes', 'tax': 'Provision for income taxes',
                       'net': 'Net income', 'eps': r'Net income per share: Basic \$ [\d.]+ (?:\$ [\d.]+ ){4}Diluted',
                       'shares': r'per share calculations: Basic ' + AMT + ' (?:' + AMT + ' ){4}Diluted'}},
+    'ANET': {'identity': 'arista', 'heading': 'Condensed Consolidated Income Statements', 'units': 'in millions', 'scale': Decimal(1),
+             'tol': Decimal('0.15'), 'columns': 4, 'year-ago': 1, 'growth': r'growing (\d+(?:\.\d+)?)%',
+             'period-re': r'Reports (First|Second|Third|Fourth) Quarter (20\d\d) Financial Results', 'period': lambda q, y: f'Q{q} {y}',
+             'rows': {'revenue': 'Total revenue', 'cost': 'Total cost of revenue', 'gross': 'Gross profit', 'opex': 'Total operating expenses',
+                      'operating': 'Income from operations', 'pretax': 'Income before income taxes', 'tax': 'Provision for income taxes',
+                      'net': 'Net income', 'eps': r'Net income per share: Basic (?:\$ [\d.]+ ){4}Diluted',
+                      'shares': r'computing net income per share: Basic ' + AMT + ' (?:' + AMT + ' ){3}Diluted'}},
+    'PLTR': {'identity': 'palantir', 'heading': 'Condensed Consolidated Statements of Operations', 'units': 'in thousands', 'scale': Decimal('0.001'),
+             'tol': Decimal(2), 'columns': 4, 'year-ago': 1, 'growth': r'and Revenue Growth of (\d+)% Y/Y',
+             'period-re': r'results for the (first|second|third|fourth) quarter ended [A-Z][a-z]+ \d{1,2}, (20\d\d)', 'period': lambda q, y: f'Q{q} {y}',
+             'rows': {'revenue': 'Revenue', 'cost': r'Cost of revenue \(1\)', 'gross': 'Gross profit', 'opex': 'Total operating expenses',
+                      'operating': 'Income from operations', 'pretax': 'Income before provision for income taxes', 'tax': 'Provision for income taxes',
+                      'net': 'Net income', 'nci': 'Less: Net income attributable to noncontrolling interests',
+                      'attrib': 'Net income attributable to common stockholders',
+                      'eps': 'Earnings per share attributable to common stockholders, diluted',
+                      'shares': r'common stock outstanding used in computing earnings per share attributable to common stockholders, diluted'}},
+    'SNDK': {'identity': 'sandisk', 'heading': 'CONDENSED CONSOLIDATED STATEMENTS OF OPERATIONS', 'units': 'in millions', 'scale': Decimal(1),
+             'tol': Decimal(1), 'columns': 2, 'year-ago': 1, 'headline': r'quarter revenue was \$(\d+(?:\.\d+)?) billion',
+             'period-re': r'Reports Fiscal (First|Second|Third|Fourth) Quarter (20\d\d) Financial Results', 'period': lambda q, y: f'Q{q} FY{y}',
+             'rows': {'revenue': 'Revenue, net', 'cost': 'Cost of revenue', 'gross': 'Gross profit', 'opex': 'Total operating expenses',
+                      'operating': 'Operating income', 'pretax': 'Income before taxes', 'tax': 'Income tax expense',
+                      'net': 'Net income', 'eps': r'Net income per common share: Basic \$ [\d.]+ \$ [\d.]+ Diluted',
+                      'shares': r'Weighted average shares outstanding: Basic \d+ Diluted'}},
+    'AMD': {'identity': 'advanced micro devices', 'heading': 'CONDENSED CONSOLIDATED STATEMENTS OF OPERATIONS', 'units': 'millions', 'scale': Decimal(1),
+            'tol': Decimal(1), 'columns': 5, 'year-ago': 2, 'headline': r'quarter revenue was \$(\d+(?:\.\d+)?) billion', 'net-chain': 'continuing',
+            'period-re': r'AMD Reports (First|Second|Third|Fourth) Quarter (20\d\d) Financial Results', 'period': lambda q, y: f'Q{q} {y}',
+            'rows': {'revenue': 'Net revenue', 'cost': 'Total cost of sales', 'gross': 'Gross profit', 'opex': 'Total operating expenses',
+                     'operating': 'Operating income', 'pretax': 'Income from continuing operations before income taxes and equity income',
+                     'tax': r'Income tax provision \(benefit\)', 'equity': 'Equity income in investee',
+                     'cont': 'Income from continuing operations, net of tax', 'disc': r'Income \(loss\) from discontinued operations, net of tax',
+                     'net': 'Net income', 'eps': 'Diluted earnings per share', 'shares': r'Shares used in per share calculation Basic [\d,]+ (?:[\d,]+ ){4}Diluted'}},
 }
 
 
@@ -665,6 +722,10 @@ PROFILES = {
     'MU': {'publisher': 'Micron IR (SEC 8-K)', 'parse': parse_micron, 'marker': 'CONSOLIDATED STATEMENTS OF OPERATIONS'},
     'TSM': {'publisher': 'TSMC IR (SEC 6-K)', 'parse': parse_tsmc, 'marker': '(Unit: NT$ million, except for EPS)'},
     'ASML': {'publisher': 'ASML IR (SEC 6-K)', 'parse': parse_asml, 'marker': '(Figures in millions of euros unless otherwise indicated)'},
+    'ANET': {'publisher': 'Arista IR (SEC 8-K)', 'parse': lambda t, u=None: parse_statement(t, STATEMENT['ANET']), 'marker': STATEMENT['ANET']['heading']},
+    'PLTR': {'publisher': 'Palantir IR (SEC 8-K)', 'parse': lambda t, u=None: parse_statement(t, STATEMENT['PLTR']), 'marker': STATEMENT['PLTR']['heading']},
+    'SNDK': {'publisher': 'Sandisk IR (SEC 8-K)', 'parse': lambda t, u=None: parse_statement(t, STATEMENT['SNDK']), 'marker': STATEMENT['SNDK']['heading']},
+    'AMD': {'publisher': 'AMD IR (SEC 8-K)', 'parse': lambda t, u=None: parse_statement(t, STATEMENT['AMD']), 'marker': STATEMENT['AMD']['heading']},
     'MRVL': {'publisher': 'Marvell IR (SEC 8-K)', 'parse': lambda t, u=None: parse_statement(t, STATEMENT['MRVL']),
              'marker': STATEMENT['MRVL']['heading']},
     'CRDO': {'publisher': 'Credo IR (SEC 8-K)', 'parse': lambda t, u=None: parse_statement(t, STATEMENT['CRDO']),

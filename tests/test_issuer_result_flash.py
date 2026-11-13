@@ -135,6 +135,27 @@ class Parsers(unittest.TestCase):
         self.assertNotIn('net-income',keys(text.replace('Net income 2,918 4,960','Net income 2,918 4,560')))
         self.assertNotIn('gross-margin',keys(text.replace('Gross profit 5,035 6,700','Gross profit 5,035 6,300')))
         with self.assertRaises(ValueError): flash.parse_asml(text.replace('Q2 2026 Q3 2026','Q3 2026 Q2 2026',1))
+    def test_more_statement_companies_checked_against_headline_and_arithmetic(self):
+        expected={'ANET':('arista-results-q326.txt','Q3 2026',[('revenue','$3.6576B','$2.3083B'),('eps','$1.22','$0.67'),('net-income','$1.5604B','$853M'),('operating-income','$1.6424B','$978.2M')]),
+                  'PLTR':('palantir-results-q326.txt','Q3 2026',[('revenue','$2.313411B','$1.181092B'),('eps','$0.44','$0.18'),('net-income','$1.128012B','$475.599M'),('operating-income','$1.084845B','$393.256M')]),
+                  'SNDK':('sandisk-results-q1fy27.txt','Q1 FY2027',[('revenue','$11.031B','$2.308B'),('eps','$52.60','$0.75'),('net-income','$8.101B','$112M'),('operating-income','$8.78B','$176M')]),
+                  'AMD':('amd-results-q326.txt','Q3 2026',[('revenue','$13.377B','$9.246B'),('eps','$1.46','$0.75'),('net-income','$2.428B','$1.243B'),('operating-income','$2.832B','$1.27B')])}
+        keys=lambda ticker,x:[f[0] for f in flash.PROFILES[ticker]['parse'](x)['facts']]
+        for ticker,(name,period,facts) in expected.items():
+            parsed=flash.PROFILES[ticker]['parse'](fixture(name))
+            self.assertEqual(parsed['period'],period,ticker)
+            self.assertEqual([(f[0],f[1],f[2]) for f in parsed['facts']],facts,ticker)
+        # revenue that disagrees with the headline is refused as a whole
+        with self.assertRaises(ValueError): flash.PROFILES['ANET']['parse'](fixture('arista-results-q326.txt').replace('Total revenue 3,657.6','Total revenue 3,757.6'))
+        with self.assertRaises(ValueError): flash.PROFILES['PLTR']['parse'](fixture('palantir-results-q326.txt').replace('Revenue $ 2,313,411','Revenue $ 2,413,411'))
+        with self.assertRaises(ValueError): flash.PROFILES['SNDK']['parse'](fixture('sandisk-results-q1fy27.txt').replace('Revenue, net $ 11,031','Revenue, net $ 12,031'))
+        with self.assertRaises(ValueError): flash.PROFILES['AMD']['parse'](fixture('amd-results-q326.txt').replace('Net revenue $ 13,377','Net revenue $ 14,377'))
+        # rows that do not add up are dropped
+        self.assertNotIn('operating-income',keys('AMD',fixture('amd-results-q326.txt').replace('Operating income 2,832','Operating income 2,932')))
+        self.assertNotIn('net-income',keys('AMD',fixture('amd-results-q326.txt').replace('Net income $ 2,428','Net income $ 2,528')))
+        self.assertNotIn('net-income',keys('PLTR',fixture('palantir-results-q326.txt').replace('$ 1,128,012','$ 1,138,012')))
+        self.assertNotIn('net-income',keys('SNDK',fixture('sandisk-results-q1fy27.txt').replace('Net income $ 8,101 $ 112 Net income per','Net income $ 8,201 $ 112 Net income per')))
+        self.assertNotIn('eps',keys('ANET',fixture('arista-results-q326.txt').replace('Diluted $ 1.22','Diluted $ 1.32')))
     def test_coreweave_table_and_guidance(self):
         parsed=flash.parse_coreweave(fixture('coreweave-results-q326.txt'))
         self.assertEqual(parsed['period'],'Q3 2026')
