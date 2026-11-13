@@ -336,6 +336,8 @@ def parse_statement(text, cfg):
         if isinstance(label, list):  # a subtotal the release does not print: the sum of its listed rows, every one of which must be read
             parts = [statement_row(block, one, n) for one in label]
             rows[key] = [sum(part[i] for part in parts) for i in range(n)] if all(parts) else None
+        elif isinstance(label, tuple):  # (label, columns): a row the release prints with fewer columns than the rest
+            rows[key] = statement_row(block, label[0], label[1])
         else:
             rows[key] = statement_row(block, label, n)
     if cfg.get('swap'):  # the release prints the year-earlier column first: put this quarter first, the year-ago column second
@@ -400,6 +402,13 @@ def parse_statement(text, cfg):
 
 
 STATEMENT = {
+    'AMAT': {'identity': 'applied materials', 'heading': 'CONSOLIDATED CONDENSED STATEMENTS OF OPERATIONS', 'end': 'CONSOLIDATED CONDENSED BALANCE SHEETS',
+             'units': 'in millions', 'scale': Decimal(1), 'tol': Decimal(1), 'columns': 4, 'year-ago': 1, 'growth': r'Record quarterly revenue \$[\d.]+ billion, up (\d+) percent',
+             'period-re': r'ANNOUNCES (FIRST|SECOND|THIRD|FOURTH) QUARTER (?:AND FISCAL YEAR )?(20\d\d) RESULTS', 'period': lambda q, y: f'Q{q} FY{y}',
+             'rows': {'revenue': 'Revenue', 'cost': 'Cost of products sold', 'gross': 'Gross profit', 'opex': 'Total operating expenses',
+                      'operating': 'Income from operations', 'pretax': 'Income before income taxes', 'tax': 'Provision for income taxes',
+                      'net': 'Net income', 'eps': r'Earnings per share: Basic \$ [\d.]+ (?:\$ [\d.]+ ){3}Diluted',
+                      'shares': (r'Weighted average number of shares: Basic \d+ \d+ \d+ \d+ Diluted', 3)}},
     'GOOGL': {'identity': 'alphabet', 'heading': 'CONSOLIDATED STATEMENTS OF INCOME(In millions', 'units': 'in millions', 'scale': Decimal(1), 'tol': Decimal(1),
               'columns': 4, 'swap': True, 'year-ago': 1, 'op-direct': True, 'growth': r'Consolidated Alphabet revenues increased (\d+)% to',
               'period-re': r'Announces (First|Second|Third|Fourth) Quarter (20\d\d) Results', 'period': lambda q, y: f'Q{q} {y}',
@@ -828,6 +837,7 @@ PROFILES = {
     'ANET': {'publisher': 'Arista IR (SEC 8-K)', 'parse': lambda t, u=None: parse_statement(t, STATEMENT['ANET']), 'marker': STATEMENT['ANET']['heading']},
     'PLTR': {'publisher': 'Palantir IR (SEC 8-K)', 'parse': lambda t, u=None: parse_statement(t, STATEMENT['PLTR']), 'marker': STATEMENT['PLTR']['heading']},
     'SNDK': {'publisher': 'Sandisk IR (SEC 8-K)', 'parse': lambda t, u=None: parse_statement(t, STATEMENT['SNDK']), 'marker': STATEMENT['SNDK']['heading']},
+    'AMAT': {'publisher': 'Applied Materials IR (SEC 8-K)', 'parse': lambda t, u=None: parse_statement(t, STATEMENT['AMAT']), 'marker': STATEMENT['AMAT']['heading']},
     'GOOGL': {'publisher': 'Alphabet IR (SEC 8-K)', 'parse': lambda t, u=None: parse_statement(t, STATEMENT['GOOGL']), 'marker': STATEMENT['GOOGL']['heading']},
     'AMZN': {'publisher': 'Amazon IR (SEC 8-K)', 'parse': lambda t, u=None: parse_statement(t, STATEMENT['AMZN']), 'marker': STATEMENT['AMZN']['heading']},
     'GEV': {'publisher': 'GE Vernova IR (SEC 8-K)', 'parse': parse_gev, 'marker': 'Total Company Results'},
