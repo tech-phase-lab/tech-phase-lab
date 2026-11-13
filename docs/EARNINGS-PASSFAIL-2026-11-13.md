@@ -1,6 +1,6 @@
 # Earnings flash pass/fail (latest real release of each watch-list company)
 
-Generated 2026-11-13 09:32Z · PASS 19 / 22
+Generated 2026-11-13 09:32Z · PASS 20 / 22
 
 | Ticker | Verdict | Detection source | Figures | Reason |
 |---|---|---|---|---|
@@ -25,7 +25,7 @@ Generated 2026-11-13 09:32Z · PASS 19 / 22
 | MSFT | PASS | SEC 8-K 2026-10-28T20:04Z | 4 | 4 figures, e.g. revenue $92.279B |
 | AMZN | PASS | SEC 8-K 2026-10-29T20:05Z | 4 | 4 figures, e.g. revenue $201.944B |
 | GOOGL | PASS | SEC 8-K 2026-10-28T20:01Z | 4 | 4 figures, e.g. revenue $127.577B |
-| ORCL | FAIL | no route | 0 | Oracle files no 8-K Item 2.02 and oracle.com refuses automated fetches (403): needs an IR/wire route |
+| ORCL | PASS | SEC 8-K 2026-09-10T20:16Z | 4 | 4 figures, e.g. revenue $19.345B (found via SEC: the earlier "no route" was the backtest rejecting the "Q1 Results" title) |
 
 ## How this table is made
 `python3 scripts/research/earnings_backtest.py` (add `--json` for a machine-readable copy) takes each company's **latest real release** (SEC 8-K Item 2.02 or 6-K exhibit;
