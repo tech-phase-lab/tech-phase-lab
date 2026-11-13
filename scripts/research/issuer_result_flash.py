@@ -322,12 +322,22 @@ def parse_statement(text, cfg):
     later = re.search(r'(?i)consolidated (?:statements of (?:cash flows|financial position|comprehensive)|balance sheets)', block[60:])
     if later:  # the next statement is not part of this one (its rows repeat labels such as "Net income")
         block = block[:60 + later.start()]
+    if cfg.get('end'):  # a later statement (comprehensive income...) repeats row labels such as "Net income"
+        stop = block.find(cfg['end'], 60)
+        if stop > 0:
+            block = block[:stop]
     if cfg['units'] not in block[:400].lower():
         raise ValueError('units-unrecognized')
+    if cfg.get('glue'):  # "$4.92" printed without a space after the dollar sign
+        block = re.sub(r'\$(?=\d)', '$ ', block)
     n, ago, scale = cfg['columns'], cfg['year-ago'], cfg['scale']
     rows = {}
     for key, label in cfg['rows'].items():
-        rows[key] = statement_row(block, label, n)
+        if isinstance(label, list):  # a subtotal the release does not print: the sum of its listed rows, every one of which must be read
+            parts = [statement_row(block, one, n) for one in label]
+            rows[key] = [sum(part[i] for part in parts) for i in range(n)] if all(parts) else None
+        else:
+            rows[key] = statement_row(block, label, n)
     if not rows['revenue'] or rows['revenue'][0] <= 0 or not rows['revenue'][ago] > 0:
         raise ValueError('revenue-row-unrecognized')
     if cfg.get('growth'):
@@ -382,6 +392,15 @@ def parse_statement(text, cfg):
 
 
 STATEMENT = {
+    'MSFT': {'identity': 'microsoft', 'heading': 'INCOME STATEMENTS (In millions', 'end': 'COMPREHENSIVE INCOME STATEMENTS', 'glue': True,
+             'units': 'in millions', 'scale': Decimal(1), 'tol': Decimal(1), 'columns': 2, 'year-ago': 1, 'growth': r'Revenue was \$[\d.]+ billion and increased (\d+)%',
+             'period-re': r'Announces (First|Second|Third|Fourth) Quarter Results.{0,300}?quarter ended [A-Z][a-z]+ \d{1,2}, (20\d\d)',
+             'period': lambda q, y: f'Q{q} FY{y + 1 if q <= 2 else y}',
+             'rows': {'revenue': 'Total revenue', 'cost': 'Total cost of revenue', 'gross': 'Gross margin',
+                      'opex': ['Research and development', 'Sales and marketing', 'General and administrative'],
+                      'operating': 'Operating income', 'pretax': 'Income before income taxes', 'tax': 'Provision for income taxes',
+                      'net': 'Net income', 'eps': r'Earnings per share: Basic (?:\$ [\d.]+ ){2}Diluted',
+                      'shares': r'Weighted average shares outstanding: Basic ' + AMT + ' ' + AMT + ' Diluted'}},
     'MRVL': {'identity': 'marvell', 'heading': 'Condensed Consolidated Statements of Operations', 'units': 'in millions', 'scale': Decimal(1),
              'tol': Decimal('0.15'), 'columns': 5, 'year-ago': 2, 'growth': r'grew by (\d+)% year-on-year', 'period': lambda q, y: f'Q{q} FY{y}',
              'rows': {'revenue': 'Net revenue', 'cost': 'Cost of goods sold', 'gross': 'Gross profit', 'opex': 'Total operating expenses',
@@ -725,6 +744,7 @@ PROFILES = {
     'ANET': {'publisher': 'Arista IR (SEC 8-K)', 'parse': lambda t, u=None: parse_statement(t, STATEMENT['ANET']), 'marker': STATEMENT['ANET']['heading']},
     'PLTR': {'publisher': 'Palantir IR (SEC 8-K)', 'parse': lambda t, u=None: parse_statement(t, STATEMENT['PLTR']), 'marker': STATEMENT['PLTR']['heading']},
     'SNDK': {'publisher': 'Sandisk IR (SEC 8-K)', 'parse': lambda t, u=None: parse_statement(t, STATEMENT['SNDK']), 'marker': STATEMENT['SNDK']['heading']},
+    'MSFT': {'publisher': 'Microsoft IR (SEC 8-K)', 'parse': lambda t, u=None: parse_statement(t, STATEMENT['MSFT']), 'marker': STATEMENT['MSFT']['heading']},
     'AMD': {'publisher': 'AMD IR (SEC 8-K)', 'parse': lambda t, u=None: parse_statement(t, STATEMENT['AMD']), 'marker': STATEMENT['AMD']['heading']},
     'MRVL': {'publisher': 'Marvell IR (SEC 8-K)', 'parse': lambda t, u=None: parse_statement(t, STATEMENT['MRVL']),
              'marker': STATEMENT['MRVL']['heading']},
