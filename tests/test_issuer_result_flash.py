@@ -168,6 +168,16 @@ class Parsers(unittest.TestCase):
         self.assertNotIn('eps',keys(text.replace('Diluted $4.92','Diluted $5.92')))
         # a missing component of the operating-expense sum withholds operating income rather than guessing
         self.assertNotIn('operating-income',keys(text.replace('Sales and marketing 5,716','Marketing 5,716')))
+    def test_applied_materials_statement_with_a_row_missing_its_dashes(self):
+        text=fixture('applied-materials-results-q426.txt')
+        parsed=flash.PROFILES['AMAT']['parse'](text)
+        self.assertEqual(parsed['period'],'Q4 FY2026')
+        self.assertEqual([(f[0],f[1],f[2]) for f in parsed['facts']],[('revenue','$10.409B','$6.8B'),('eps','$3.40','$2.38'),('net-income','$2.718B','$1.897B'),('operating-income','$3.658B','$1.712B')])
+        keys=lambda x:[f[0] for f in flash.PROFILES['AMAT']['parse'](x)['facts']]
+        with self.assertRaises(ValueError): flash.PROFILES['AMAT']['parse'](text.replace('Revenue $ 10,409 $ 6,800','Revenue $ 11,409 $ 6,800'))
+        self.assertNotIn('operating-income',keys(text.replace('Income from operations 3,658','Income from operations 3,758')))
+        self.assertNotIn('net-income',keys(text.replace('Net income $ 2,718','Net income $ 2,818')))
+        self.assertNotIn('eps',keys(text.replace('Diluted $ 3.40','Diluted $ 4.40')))
     def test_alphabet_and_amazon_statements_print_the_year_ago_column_first(self):
         expected={'GOOGL':('alphabet-results-q326.txt',[('revenue','$127.577B','$102.346B'),('eps','$2.12','$2.87'),('net-income','$26.17B','$34.979B'),('operating-income','$40.576B','$31.228B')]),
                   'AMZN':('amazon-results-q326.txt',[('revenue','$201.944B','$180.169B'),('eps','$1.89','$1.95'),('net-income','$20.685B','$21.187B'),('operating-income','$28.076B','$17.422B')])}
