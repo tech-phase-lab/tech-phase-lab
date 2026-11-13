@@ -2751,9 +2751,20 @@ class AutomaticMonitor:
                 self.backup_initial_complete.set()
             self.stop_event.wait(self.backup_interval)
 
+    def enforce_backup_retention(self):
+        """Delete leftover temporaries and the generations the volume cannot hold; the newest verified snapshot and the live database stay."""
+        try:
+            with self.db_lock:
+                result = persistence.enforce_retention(self.backup_dir, self.backup_retention, self.db_path)
+            if result["deleted"]:
+                print("backup-retention deleted=%d kept=%d freedBytes=%d" % (result["deleted"], result["kept"], result["freedBytes"]), flush=True)
+        except Exception as exc:
+            print(("backup-retention-failed " + type(exc).__name__ + " " + failure_detail(exc)).rstrip(), flush=True)
+
     def run_supervised(self):
         failures = 0
         while not self.stop_event.is_set():
+            self.enforce_backup_retention()      # before anything writes: a full volume must not keep the monitor down (Nov 13)
             try:
                 self.run()
                 return
