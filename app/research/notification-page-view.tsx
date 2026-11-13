@@ -15,10 +15,11 @@ export type Preferences = { targets: boolean; earnings: boolean; news: boolean; 
   /** おやすみモード: hours in Japan time. */ quiet: Quiet;
   /** A new "リゼルのひとりごと" post; off until turned on. */ rizelNote: boolean; /** Owner only: a weekly issue draft is ready. */ weeklyDraft?: boolean };
 type PrefsState = "idle" | "loading" | "ready" | "error" | "unsupported";
-// The nine indicators; the first six start on. Only jobless claims has no result reader yet ("soon"): the Department of Labor blocks automated reading of its page.
+// The ten indicators; the first seven start on. Only jobless claims has no result reader yet ("soon"): the Department of Labor blocks automated reading of its page.
 export const indicators: { key: string; ja: string; en: string; whenJa: string; whenEn: string; ready: boolean }[] = [
   { key: "jobs", ja: "雇用統計", en: "Jobs report", whenJa: "毎月第1金曜", whenEn: "First Friday monthly", ready: true },
   { key: "cpi", ja: "CPI（消費者物価）", en: "CPI", whenJa: "毎月", whenEn: "Monthly", ready: true },
+  { key: "ppi", ja: "PPI（生産者物価）", en: "PPI", whenJa: "毎月", whenEn: "Monthly", ready: true },
   { key: "pce", ja: "PCE（個人消費支出）", en: "PCE", whenJa: "毎月", whenEn: "Monthly", ready: true },
   { key: "fomc", ja: "FOMC（政策金利）", en: "FOMC", whenJa: "年8回", whenEn: "8 times a year", ready: true },
   { key: "adp", ja: "ADP雇用統計", en: "ADP employment", whenJa: "毎月", whenEn: "Monthly", ready: true },
@@ -27,7 +28,7 @@ export const indicators: { key: string; ja: string; en: string; whenJa: string; 
   { key: "retail", ja: "小売売上高", en: "Retail sales", whenJa: "毎月", whenEn: "Monthly", ready: true },
   { key: "claims", ja: "新規失業保険申請件数", en: "Jobless claims", whenJa: "毎週木曜", whenEn: "Every Thursday", ready: false },
 ];
-const defaultKinds = ["jobs", "cpi", "pce", "fomc", "adp", "ism"];
+const defaultKinds = ["jobs", "cpi", "ppi", "pce", "fomc", "adp", "ism"];
 const hour = (h: number) => `${String(h).padStart(2, "0")}:00`;
 // Shown (and locked) until the server's own settings have been read.
 const placeholder: Preferences = { targets: true, earnings: true, news: true, newsTickers: monitored, weeklyNotebook: true, economic: true, economicKinds: defaultKinds,

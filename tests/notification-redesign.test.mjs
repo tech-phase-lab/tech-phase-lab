@@ -14,10 +14,10 @@ test("the notification screen follows the Nov 4 design: on/off list up top, deta
   assert.match(read("../app/research/notifications/page.tsx"), /詳しい設定 ↓/);
 });
 
-test("the nine indicators start with six on, and the one without a result reader (jobless claims) is marked as coming", () => {
+test("the ten indicators start with seven on, and the one without a result reader (jobless claims) is marked as coming", () => {
   const view = read("../app/research/notification-page-view.tsx");
-  assert.match(view, /defaultKinds = \["jobs", "cpi", "pce", "fomc", "adp", "ism"\]/);
-  for (const key of ["jobs", "cpi", "pce", "fomc", "adp", "ism", "gdp", "retail", "claims"]) assert.ok(view.includes(`key: "${key}"`), key);
+  assert.match(view, /defaultKinds = \["jobs", "cpi", "ppi", "pce", "fomc", "adp", "ism"\]/);
+  for (const key of ["jobs", "cpi", "ppi", "pce", "fomc", "adp", "ism", "gdp", "retail", "claims"]) assert.ok(view.includes(`key: "${key}"`), key);
   assert.equal((view.match(/ready: false/g) ?? []).length, 1);
   assert.match(view, /key: "claims"[^\n]*ready: false/);
 });
