@@ -9,8 +9,8 @@ import styles from "./issues.module.css";
 
 type Section = "summary" | "earnings" | "indicators" | "market" | "schedule";
 type Part = (
-  | { type: "text"; heading: string; body: string }
-  | { type: "numbers"; heading: string; cards: WeeklyCard[]; note: string }
+  | { type: "text"; heading: string; body: string; items?: { text: string; kind: "earnings" | "indicators" | "market" }[] }
+  | { type: "numbers"; heading: string; cards: WeeklyCard[]; note: string; compare?: { label: string; unit: string; values: { name: string; value: number }[] }[] }
   | { type: "timeline"; heading: string; points: { when: string; event: string; comment: string; tone: "up" | "down" | "flat" }[] }
   | { type: "schedule"; heading: string; items: { date: string; name: string; comment: string }[] }
   | { type: "chart"; heading: string; title: string; unit: string; bars: { label: string; value: number }[]; note: string }
@@ -22,6 +22,32 @@ type Listed = { number: number; date: string; headline: string };
 type State = "loading" | "ready" | "signed-out" | "pro-required" | "error";
 const two = (n: number) => String(n + 1).padStart(2, "0");
 
+const KIND_LABEL = { earnings: ["決算", "Earnings"], indicators: ["経済指標", "Indicator"], market: ["市場", "Market"] } as const;
+function KindIcon({ kind }: { kind: "earnings" | "indicators" | "market" }) {
+  const common = { width: 22, height: 22, viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: 2, strokeLinecap: "round", strokeLinejoin: "round", "aria-hidden": true } as const;
+  if (kind === "earnings") return <svg {...common}><path d="M4 20V10M10 20V4M16 20v-7M22 20H2" /></svg>;
+  if (kind === "indicators") return <svg {...common}><path d="M4 18a8 8 0 1 1 16 0M12 18l4-6" /><circle cx="12" cy="18" r="1.2" /></svg>;
+  return <svg {...common}><path d="M3 17l6-6 4 4 8-8M15 7h6v6" /></svg>;
+}
+/** The takeaway cards: one short sentence each, with the icon of the material it rests on. Falls back to the plain lines when the owner has edited the text. */
+function Takeaways({ part, ja }: { part: Extract<Part, { type: "text" }>; ja: boolean }) {
+  const lines = part.body.split("\n").map(line => line.replace(/^・/, "").trim()).filter(Boolean);
+  const items = part.items && part.items.map(item => item.text).join("\n") === lines.join("\n") ? part.items : null;
+  if (!items) return <p className={styles.text}>{part.body}</p>;
+  return <ol className={styles.takeaways}>{items.map((item, index) => <li key={index} className={styles[`kind_${item.kind}`]}>
+    <span className={styles.icon}><KindIcon kind={item.kind} /></span><div><small>{KIND_LABEL[item.kind][ja ? 0 : 1]}</small><p>{item.text}</p></div>
+  </li>)}</ol>;
+}
+/** Result / forecast / previous as short horizontal bars, from zero, one scale per group (the group shares a unit by construction). */
+function Compare({ rows, ja }: { rows: NonNullable<Extract<Part, { type: "numbers" }>["compare"]>; ja: boolean }) {
+  return <div className={styles.compare} role="group" aria-label={ja ? "予想・前回との比較" : "Versus forecast and previous"}>{rows.map((row, index) => {
+    const top = Math.max(...row.values.map(v => Math.abs(v.value)), Number.MIN_VALUE);
+    return <figure key={index}><figcaption>{row.label}</figcaption>{row.values.map(v => <div key={v.name} className={`${styles.cmpRow} ${v.name === "結果" ? styles.cmpMain : ""}`}>
+      <span>{ja ? v.name : ({ 結果: "Result", 予想: "Forecast", 前回: "Previous" } as Record<string, string>)[v.name] ?? v.name}</span>
+      <i style={{ width: `${Math.max((Math.abs(v.value) / top) * 100, 2)}%` }} /><b>{formatNumber(v.value)}{row.unit}</b>
+    </div>)}</figure>;
+  })}</div>;
+}
 function Numbers({ part, ja }: { part: Extract<Part, { type: "numbers" }>; ja: boolean }) {
   return <>
     <div className={styles.cards}>{part.cards.map((card, index) => {
@@ -35,6 +61,7 @@ function Numbers({ part, ja }: { part: Extract<Part, { type: "numbers" }>; ja: b
         {card.range && <p className={styles.range}>{card.range}</p>}
       </article>;
     })}</div>
+    {part.compare && part.compare.length > 0 && <Compare rows={part.compare} ja={ja} />}
     {part.note && <p className={styles.partNote}>{part.note}</p>}
   </>;
 }
@@ -44,6 +71,15 @@ function Timeline({ part }: { part: Extract<Part, { type: "timeline" }> }) {
   </li>)}</ol>;
 }
 function Schedule({ part, ja }: { part: Extract<Part, { type: "schedule" }>; ja: boolean }) {
+  const days = part.items.reduce<{ date: string; count: number }[]>((all, item) => { const last = all[all.length - 1]; if (last?.date === item.date) last.count += 1; else all.push({ date: item.date, count: 1 }); return all; }, []);
+  return <>
+    <ol className={styles.strip} aria-label={ja ? "日付の流れ" : "Days at a glance"}>{days.map(day => { const label = scheduleDate(day.date, ja ? "ja" : "en"); return <li key={day.date}>
+      <span className={styles.stripDay}>{label.weekday}</span><i aria-hidden="true">{day.count > 1 ? day.count : ""}</i><b>{label.month} {label.day}</b>
+    </li>; })}</ol>
+    <ScheduleCards part={part} ja={ja} />
+  </>;
+}
+function ScheduleCards({ part, ja }: { part: Extract<Part, { type: "schedule" }>; ja: boolean }) {
   return <div className={styles.schedule}>{part.items.map((item, index) => {
     const day = scheduleDate(item.date, ja ? "ja" : "en");
     return <article key={index}><div className={styles.date}><small>{day.month}</small><b>{day.day}</b><span>{day.weekday}</span></div><div><h4>{item.name}</h4>{item.comment && <p>{item.comment}</p>}</div></article>;
@@ -61,7 +97,7 @@ function Chart({ part, ja }: { part: Extract<Part, { type: "chart" }>; ja: boole
   </figure>;
 }
 function Body({ part, ja }: { part: Part; ja: boolean }) {
-  if (part.type === "text") return <p className={`${styles.text} ${styles.lines}`}>{part.body}</p>;
+  if (part.type === "text") return part.section === "summary" && part.items ? <Takeaways part={part} ja={ja} /> : <p className={`${styles.text} ${styles.lines}`}>{part.body}</p>;
   if (part.type === "numbers") return <Numbers part={part} ja={ja} />;
   if (part.type === "timeline") return <Timeline part={part} />;
   if (part.type === "schedule") return <Schedule part={part} ja={ja} />;

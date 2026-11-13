@@ -292,6 +292,29 @@ def build_card(evidence, ref):
     return card
 
 
+COMPARE_NAMES = (("value", "結果"), ("forecast", "予想"), ("previous", "前回"))
+
+
+def build_compare(evidence, ref):
+    """One small bar group for the page (result / forecast / previous), from the checked figures only. None unless at least two of the three are
+    in the same unit: a bar chart across units would be a made-up picture."""
+    item, fact = _find_fact(evidence, ref)
+    if not fact:
+        return None
+    compared = fact.get("comparisons") or {}
+    raw = {"value": fact["value"].split(" ± ")[0], "forecast": compared.get("forecast"), "previous": compared.get("previous")}
+    parsed = {name: parse_value(text, fact["key"]) for name, text in raw.items() if text}
+    parsed = {name: got for name, got in parsed.items() if got}
+    if "value" not in parsed:
+        return None
+    unit = parsed["value"][1]
+    values = [{"name": label, "value": parsed[name][0]} for name, label in COMPARE_NAMES if name in parsed and parsed[name][1] == unit]
+    if len(values) < 2:
+        return None
+    label = (item["ticker"] + " " if item["ticker"] else "") + fact.get("ja", fact["key"])
+    return {"label": label[:40], "unit": unit[:12], "values": values}
+
+
 # ---- checking what the model wrote -------------------------------------------
 
 def _quote(evidence, ids):
@@ -374,7 +397,7 @@ def compose(model_output, evidence, schedule, lenient=False):
         try:
             if not ids:
                 raise ValueError("no-evidence")
-            takeaways.append((_check(text, _quote(evidence, ids)), ids))
+            takeaways.append((_check(text, _quote(evidence, ids)), ids, section_of("text", ids, evidence)))
         except ValueError as error:
             notes.append(note(ATTENTION, "「今週の主な結論」の1文は、事実確認に通らなかったため載せていません。", error))
     for raw in model_output.get("parts") or []:
@@ -410,7 +433,8 @@ def compose(model_output, evidence, schedule, lenient=False):
                     raise ValueError("no-figures")
                 ids += [ref["evidenceId"] for ref in raw.get("refs") or [] if ref.get("evidenceId") not in ids]
                 part = {"type": "numbers", "heading": _check(raw.get("heading"), _quote(evidence, ids)), "cards": cards[:8],
-                        "note": _optional(raw.get("note"), _quote(evidence, ids))}
+                        "note": _optional(raw.get("note"), _quote(evidence, ids)),
+                        "compare": [row for row in (build_compare(evidence, ref) for ref in raw.get("refs") or []) if row][:6]}
             elif kind == "chart":
                 built = [(ref, build_card(evidence, ref)) for ref in raw.get("refs") or []]
                 built = [(ref, card) for ref, card in built if card and card["value"] >= 0]
@@ -448,8 +472,9 @@ def compose(model_output, evidence, schedule, lenient=False):
         if part["type"] == "highlight":
             part["section"] = next((other["section"] for other in reversed(parts) if other["type"] != "highlight"), "market")
     if takeaways:
-        used.update(i for _, ids in takeaways for i in ids)
-        parts.insert(0, {"type": "text", "heading": "今週の主な結論", "body": "\n".join("・" + text for text, _ in takeaways), "section": "summary"})
+        used.update(i for _, ids, _ in takeaways for i in ids)
+        parts.insert(0, {"type": "text", "heading": "今週の主な結論", "body": "\n".join("・" + text for text, _, _ in takeaways), "section": "summary",
+                         "items": [{"text": text, "kind": kind} for text, _, kind in takeaways]})
     if items:
         parts.append({"type": "schedule", "heading": "次の週の予定", "items": items, "section": "schedule"})
     for line in (model_output.get("skipped") or [])[:5]:

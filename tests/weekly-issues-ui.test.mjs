@@ -81,3 +81,11 @@ test("the draft shows the memo apart from the issue and the issue groups its par
   assert.ok(!view.includes("notes"), "the reader's view never touches the owner's notes");
   assert.ok(screen.indexOf("<IssueView issue={value} />") < screen.indexOf("styles.memo}"), "the memo comes after the issue");
 });
+
+test("the issue draws its diagrams from checked data: takeaway icon cards, result/forecast/previous bars, a day strip (Nov 13)", () => {
+  const screen = read("app/research/weekly/issues.tsx"), css = read("app/research/weekly/issues.module.css");
+  for (const text of ["function Takeaways", "function Compare", "styles.strip", "KindIcon", "part.compare", "part.items"]) assert.ok(screen.includes(text), text);
+  for (const text of [".takeaways", ".compare", ".cmpMain", ".strip"]) assert.ok(css.includes(text), text);
+  assert.ok(!/https?:\/\/[^"']*(tradingview|chart)/i.test(screen), "no external chart service");
+  assert.ok(screen.includes("items.map(item => item.text).join") || screen.includes("part.items.map(item => item.text)"), "edited takeaway text falls back to plain lines");
+});
