@@ -10,7 +10,11 @@ import { CompanyIntroductionPanel } from "../stocks/company-introduction";
 import { CompanyNetworkMap } from "../stocks/chain-map";
 import type { CompanyIntroduction } from "@/lib/research/company-introductions";
 import type { CompanyNetwork } from "@/lib/research/company-network";
-import { CHART_RANGES, compact, dateJa, plain, rangeChange, rangePosition, signedMoney, signedPercent, type Bar, type ChartRange } from "@/lib/research/market-quote";
+import { compact, dateJa, plain, rangePosition, signedMoney, signedPercent, type Bar } from "@/lib/research/market-quote";
+import { isIntradayPeriod, periodInterval } from "@/lib/research/market-board-periods";
+import { isChangePeriod, type ChangePeriod, type PeriodBase } from "@/lib/research/period-change";
+import PeriodButtons, { DETAIL_DEFAULT_PERIOD, type DetailPeriod } from "./period-buttons";
+import PeriodChangeLine from "./period-change-line";
 import { Status, Tile, toneOf, type DetailOrigin } from "./quote-card";
 import { shortName, useFacts, useQuotes } from "./use-market";
 import PriceChart from "./price-chart";
@@ -22,10 +26,6 @@ const ORIGINS: Record<DetailOrigin, { ja: string; en: string; href: string }> = 
   watch: { ja: "監視22銘柄", en: "Watched 22", href: "/research/companies" },
   search: { ja: "銘柄検索", en: "Stock search", href: "/research/stocks" },
   market: { ja: "マーケット", en: "Markets", href: "/research/market" },
-};
-const RANGE_LABEL: Record<ChartRange, [string, string, string]> = {
-  "1d": ["1日", "1D", "1日の騰落"], "1w": ["1週", "1W", "1週の騰落"], "1m": ["1ヵ月", "1M", "1ヵ月の騰落"], "3m": ["3ヵ月", "3M", "3ヵ月の騰落"], "6m": ["6ヵ月", "6M", "6ヵ月の騰落"],
-  ytd: ["年初来", "YTD", "年初来の騰落"], "1y": ["1年", "1Y", "1年の騰落"], "3y": ["3年", "3Y", "3年の騰落"], "5y": ["5年", "5Y", "5年の騰落"],
 };
 type Profile = { introduction?: CompanyIntroduction | null; network?: CompanyNetwork | null; name?: string };
 
@@ -65,10 +65,11 @@ export default function QuoteDetail({ ticker, from, title: fixedTitle, plain: ba
   const router = useRouter();
   const ja = lang === "ja", t = (a: string, b: string) => ja ? a : b;
   const origin = ORIGINS[from];
-  const { data: quotes, loaded, failed } = useQuotes([ticker], false, true);
+  const { data: quotes, loaded, failed, at: receivedAt } = useQuotes([ticker], false, true);
   const quote = quotes?.[ticker];
   const facts = useFacts(ticker).data;
-  const [range, setRange] = useState<ChartRange>("1m");
+  const [range, setRange] = useState<DetailPeriod>(DETAIL_DEFAULT_PERIOD);
+  const [bases, setBases] = useState<{ ticker: string; today: string; bases: Partial<Record<ChangePeriod, PeriodBase>> } | null>(null);
   const [mode, setMode] = useState<"candles" | "line">("candles");
   const [chart, setChart] = useState<{ key: string; bars: Bar[] | null; before: Bar[] }>({ key: "", bars: null, before: [] });
   const [profile, setProfile] = useState<Profile | null>(null);
@@ -79,12 +80,19 @@ export default function QuoteDetail({ ticker, from, title: fixedTitle, plain: ba
   const key = `${ticker}:${range}`;
   useEffect(() => {
     const controller = new AbortController();
-    fetch(`/api/research/market/chart?ticker=${encodeURIComponent(ticker)}&range=${range}`, { signal: controller.signal })
+    fetch(`/api/research/market/chart?ticker=${encodeURIComponent(ticker)}&${range === "ytd" ? "range=ytd" : `period=${range}`}`, { signal: controller.signal })
       .then(response => response.ok ? response.json() : null)
       .then(body => { if (!controller.signal.aborted) setChart({ key, bars: body?.ok ? body.bars : [], before: body?.ok ? body.before ?? [] : [] }); })
       .catch(() => { if (!controller.signal.aborted) setChart({ key, bars: [], before: [] }); });
     return () => controller.abort();
   }, [ticker, range, key]);
+  // The closes the period's change is measured from; the live price is applied to them on every update.
+  useEffect(() => {
+    const controller = new AbortController();
+    fetch(`/api/research/market/period-bases?ticker=${encodeURIComponent(ticker)}`, { signal: controller.signal }).then(r => r.ok ? r.json() : null)
+      .then(body => { if (!controller.signal.aborted && body?.ok) setBases({ ticker, today: body.today, bases: body.bases ?? {} }); }).catch(() => { /* no line without a base */ });
+    return () => controller.abort();
+  }, [ticker]);
   useEffect(() => {
     if (bare) return;
     const controller = new AbortController();
@@ -100,15 +108,15 @@ export default function QuoteDetail({ ticker, from, title: fixedTitle, plain: ba
     return () => observer.disconnect();
   }, [profile, bare]);
   const bars = chart.key === key ? chart.bars : null;
-  const change = bars?.length && quote ? rangeChange(bars, quote.previousClose ?? null, range) : null;
   const title = fixedTitle ?? shortName(profile?.name ?? quote?.name ?? ticker);
   const toggleStar = () => {
     if (registered) { for (const list of favorites.lists) if (list.tickers.includes(ticker)) favorites.setMembership(list.id, ticker, false); }
     else favorites.toggle(ticker, quote?.name ?? ticker);
   };
   const tone = toneOf(quote?.percentChange ?? null), arrow = tone === "up" ? "▲" : tone === "down" ? "▼" : "–";
-  const interval = range === "1d" || range === "1w" ? "intraday" : range === "3y" || range === "5y" ? "weekly" : "daily";
-  const rangeTone = change ? (change.percent >= 0 ? "up" : "down") : "flat";
+  const interval = range === "ytd" ? "daily" : periodInterval(range);
+  const intraday = range !== "ytd" && isIntradayPeriod(range);
+  const periodBases = bases?.ticker === ticker ? bases : null;
   return <ResearchToolShell lang={lang} setLang={setLang} title={`${title}${bare ? "" : ` ${ticker}`}`} description="" showTools={false} showHeading={false}>
     <div className={styles.page}>
       <button type="button" className={styles.back} onClick={() => window.history.length > 1 ? router.back() : router.push(origin.href)}>
@@ -124,16 +132,16 @@ export default function QuoteDetail({ ticker, from, title: fixedTitle, plain: ba
         {quote ? <div className={styles.priceBlock}>
           <div className={styles.priceLine}><FlashValue scope={ticker} value={quote.price} className={styles.price}>{plain(quote.price)}</FlashValue><span className={styles.usd}>{quote.currency}</span></div>
           <span className={`${styles.changeLine} ${styles[tone]}`}><span className={`${styles.chip} ${styles[tone]}`}>{arrow} {quote.percentChange === null ? "—" : signedPercent(quote.percentChange)}</span><span className={styles.amount}>{quote.change === null ? "" : signedMoney(quote.change, quote.currency)}</span></span>
-          <div className={styles.stateRow}><span><Status quote={quote} ja={ja} update /></span>
+          <div className={styles.stateRow}><span><Status quote={quote} ja={ja} update updatedAt={receivedAt} /></span>
             <span className={styles.mode} role="group" aria-label={t("チャートの種類", "Chart type")}><button type="button" aria-pressed={mode === "candles"} onClick={() => setMode("candles")}>{t("ローソク足", "Candles")}</button><button type="button" aria-pressed={mode === "line"} onClick={() => setMode("line")}>{t("ライン", "Line")}</button></span></div>
         </div> : <p className={styles.error} role="status">{!loaded ? t("株価を読み込み中…", "Loading the price…") : failed ? t("株価を取得できませんでした。しばらくしてからもう一度お試しください。", "Could not load the price. Please try again shortly.") : ""}</p>}
         <div className={styles.chartBlock}>
-          {bars === null ? <div className={styles.pad}><p className={styles.error} style={{ padding: 0 }} role="status">{t("チャートを読み込み中…", "Loading the chart…")}</p></div> : <PriceChart bars={bars} before={chart.before} mode={mode} interval={interval} ja={ja} />}
-          <div className={styles.ranges} role="group" aria-label={t("チャートの期間", "Chart range")}>{CHART_RANGES.map(r => <button key={r} type="button" aria-pressed={range === r} onClick={() => setRange(r)}>{RANGE_LABEL[r][ja ? 0 : 1]}</button>)}</div>
+          {bars === null ? <div className={styles.pad}><p className={styles.error} style={{ padding: 0 }} role="status">{t("チャートを読み込み中…", "Loading the chart…")}</p></div> : <PriceChart bars={bars} before={chart.before} mode={mode} interval={interval} bands={intraday} jst={intraday} ja={ja} />}
+          <PeriodButtons period={range} onChange={setRange} ja={ja} />
+          {isChangePeriod(range) && periodBases && <PeriodChangeLine period={range} base={periodBases.bases[range]} price={quote?.price ?? null} today={periodBases.today} ja={ja} />}
         </div>
         <div className={styles.alert}><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M6 17h12l-1.5-2V10a4.5 4.5 0 0 0-9 0v5zM10 20a2 2 0 0 0 4 0" /></svg>{t("価格通知", "Price alert")}</span><button type="button" onClick={() => setAlertOpen(true)}>{t("設定する", "Set up")}</button></div>
         {quote && <dl className={styles.info}>
-          <div className={styles.row}><dt>{ja ? RANGE_LABEL[range][2] : `${RANGE_LABEL[range][1]} change`}</dt><dd className={styles[rangeTone]}>{change ? `${change.percent >= 0 ? "▲" : "▼"} ${signedPercent(change.percent)}` : "—"}</dd></div>
           <div className={styles.row}><dt>{t("前日終値", "Previous close")}</dt><dd>{quote.previousClose ? plain(quote.previousClose) : "—"}</dd></div>
           <div className={styles.rowGauge}><div className={styles.line}><span>{t("本日の値幅", "Today's range")}</span><span>{quote.low && quote.high ? `${plain(quote.low)} — ${plain(quote.high)}` : "—"}</span></div><GaugeBar low={quote.low ?? null} high={quote.high ?? null} price={quote.price} /></div>
           <div className={styles.rowGauge}><div className={styles.line}><span>{t("52週の値幅", "52-week range")}</span><span>{quote.week52Low && quote.week52High ? `${plain(quote.week52Low)} — ${plain(quote.week52High)}` : "—"}</span></div><GaugeBar low={quote.week52Low ?? null} high={quote.week52High ?? null} price={quote.price} /></div>

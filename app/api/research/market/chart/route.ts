@@ -5,9 +5,9 @@ export const dynamic = "force-dynamic";
 export const maxDuration = 30;
 export async function GET(request: Request) {
   const params = new URL(request.url).searchParams, ticker = (params.get("ticker") ?? "").toUpperCase(), range = params.get("range") ?? "1m", period = params.get("period");
-  // `period` is the market board's own period buttons (5m … 5y); `range` stays what the stock pages ask for.
+  // `period`: the period buttons (5m … 5y) of the market board and of a stock's page; `range` (ytd) for the stock page's year to date.
   if (period !== null) {
-    if (!isBoardPeriod(period) || !isMarketChartSymbol(ticker)) return Response.json({ ok: false, error: "bad-request" }, { status: 400 });
+    if (!isBoardPeriod(period) || !(TICKER_RE.test(ticker) || isMarketChartSymbol(ticker))) return Response.json({ ok: false, error: "bad-request" }, { status: 400 });
     if (!marketDataConfigured()) return Response.json({ ok: false, error: "not-configured" }, { status: 503 });
     try {
       const { bars, before } = await loadPeriodSet(ticker, period);
