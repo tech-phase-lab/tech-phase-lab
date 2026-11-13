@@ -33,7 +33,7 @@ export function mergeEconomicResults(updates: OfficialUpdate[] = [], briefs: Res
     { key: "cpi", file: "cpi", label: "CPI", title: { ja: (month: number) => `米国CPI（消費者物価指数）（${month}月）`, en: (period: string) => `U.S. Consumer Price Index (${period})` },
       detail: { ja: "総合とコアの前月比・前年比をBLS公式発表から取得。市場予想との比較は含みません。", en: "Headline and core monthly and annual changes from the official BLS release. No consensus comparison." } },
     { key: "ppi", file: "ppi", label: "PPI", title: { ja: (month: number) => `米国PPI（生産者物価指数）（${month}月）`, en: (period: string) => `U.S. Producer Price Index (${period})` },
-      detail: { ja: "最終需要の前月比・前年比と、食品・エネルギー・商業サービスを除くコアの変化をBLS公式発表から取得。市場予想との比較は含みません。", en: "Final demand and core (less foods, energy and trade services) monthly and annual changes from the official BLS release. No consensus comparison." } },
+      detail: { ja: "最終需要の前月比・前年比と、食品・エネルギー・貿易サービスを除くコアの変化をBLS公式発表から取得。市場予想との比較は含みません。", en: "Final demand and core (less foods, energy and trade services) monthly and annual changes from the official BLS release. No consensus comparison." } },
   ];
   for (const indicator of blsIndicators) for (const item of updates) {
     const url = new URL(item.url);
