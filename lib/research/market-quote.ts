@@ -186,3 +186,15 @@ export function nextEarningsFromSite(ticker: string, events: { ticker?: string; 
   const dates = events.filter(e => e.ticker === ticker).map(e => (e.date ?? e.startsAt ?? "").slice(0, 10)).filter(d => /^\d{4}-\d{2}-\d{2}$/.test(d) && d >= today).sort();
   return dates[0] ?? null;
 }
+
+/** Splits the bars the provider returned (pre-market and after-hours included) into the regular ones and the trailing extended-hours bars of the
+ * last day. A bar's `at` is New York time. Nothing is invented: with no extended bars the second list is empty. */
+export function splitExtendedBars(bars: Bar[]): { regular: Bar[]; extended: Bar[] } {
+  if (!bars.length) return { regular: bars, extended: [] };
+  const minutes = (b: Bar) => Number(b.at.slice(11, 13)) * 60 + Number(b.at.slice(14, 16));
+  const outside = (b: Bar) => { if (b.at.length < 16) return false; const m = minutes(b); return m < 9 * 60 + 30 || m >= 16 * 60; };
+  const lastDay = bars[bars.length - 1].at.slice(0, 10);
+  let cut = bars.length;
+  while (cut > 0 && bars[cut - 1].at.slice(0, 10) === lastDay && outside(bars[cut - 1])) cut--;
+  return cut === 0 ? { regular: bars, extended: [] } : { regular: bars.slice(0, cut), extended: bars.slice(cut) };
+}
