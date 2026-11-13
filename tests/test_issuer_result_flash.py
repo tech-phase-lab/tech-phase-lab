@@ -186,6 +186,17 @@ class Parsers(unittest.TestCase):
         self.assertNotIn('operating-income',keys('AMZN',a.replace('Operating income 17,422 28,076','Operating income 17,422 28,176')))
         self.assertNotIn('net-income',keys('AMZN',a.replace('Net income $ 21,187 $ 20,685','Net income $ 21,187 $ 20,785')))
         self.assertNotIn('eps',keys('AMZN',a.replace('Diluted earnings per share $ 1.95 $ 1.89','Diluted earnings per share $ 1.95 $ 2.89')))
+    def test_vertiv_statement_with_operating_profit_checked_against_all_cost_lines(self):
+        text=fixture('vertiv-results-q326.txt')
+        parsed=flash.PROFILES['VRT']['parse'](text)
+        self.assertEqual(parsed['period'],'Q3 2026')
+        self.assertEqual([(f[0],f[1],f[2]) for f in parsed['facts']],[('revenue','$4.3128B','$2.6758B'),('eps','$1.95','$1.02'),('net-income','$764.5M','$398.5M'),('operating-income','$983.8M','$516.7M')])
+        keys=lambda x:[f[0] for f in flash.PROFILES['VRT']['parse'](x)['facts']]
+        with self.assertRaises(ValueError): flash.PROFILES['VRT']['parse'](text.replace('Net sales 4,312.8','Net sales 4,712.8'))
+        self.assertNotIn('operating-income',keys(text.replace('Operating profit (loss) 983.8','Operating profit (loss) 993.8')))
+        self.assertNotIn('operating-income',keys(text.replace('Amortization of intangibles 65.3','Amortization of intangibles 66.3')))
+        self.assertNotIn('net-income',keys(text.replace('Net income (loss) $ 764.5','Net income (loss) $ 774.5')))
+        self.assertNotIn('eps',keys(text.replace('Diluted $ 1.95','Diluted $ 2.95')))
     def test_coreweave_table_and_guidance(self):
         parsed=flash.parse_coreweave(fixture('coreweave-results-q326.txt'))
         self.assertEqual(parsed['period'],'Q3 2026')
