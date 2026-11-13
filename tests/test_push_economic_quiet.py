@@ -46,7 +46,7 @@ class Defaults(Base):
     def test_new_settings_start_as_the_owner_decided(self):
         prefs = push.member_preferences(self.db, self.payload, now=self.now)['preferences']
         self.assertTrue(prefs['economic'])
-        self.assertEqual(prefs['economicKinds'], ['jobs', 'cpi', 'pce', 'fomc', 'adp', 'ism'])
+        self.assertEqual(prefs['economicKinds'], ['jobs', 'cpi', 'ppi', 'pce', 'fomc', 'adp', 'ism'])
         self.assertFalse(prefs['weeklyIssue']); self.assertFalse(prefs['rizelAnswer'])
         self.assertEqual(prefs['quiet'], {'on': True, 'start': 23, 'end': 7})
 
@@ -129,7 +129,26 @@ class Economic(Base):
             {'publisher': 'BLS', 'url': 'https://www.bls.gov/news.release/archives/ppi_11062026.htm', 'publishedAt': '2026-11-06T13:30:00+00:00', 'translationJa': 'x', 'title': 'T'},
         ]
         events = [{'id': 'adp-2026-10', 'releasedAt': '2026-11-04T13:15:00+00:00', 'resultJa': '民間の雇用者数 +86,000人', 'resultEn': 'Private employment +86,000'}, {'id': 'us-midterm-2026-11-03', 'releasedAt': '2026-11-04T05:00:00+00:00', 'resultJa': 'x'}]
-        self.assertEqual(sorted(i['kind'] for i in push.economic_items(updates, events)), ['adp', 'jobs', 'pce'])
+        self.assertEqual(sorted(i['kind'] for i in push.economic_items(updates, events)), ['adp', 'jobs', 'pce', 'ppi'])
+
+    def test_ppi_result_with_its_numbers_goes_to_members_who_have_it_on(self):
+        released = at(21, 30, 13)
+        ja = '米国10月PPI：総合 前月比+0.3%・前年比+2.7%／コア 前月比+0.1%・前年比+2.6%'
+        updates = [{'publisher': 'BLS', 'url': 'https://www.bls.gov/news.release/archives/ppi_11132026.htm', 'publishedAt': datetime.fromtimestamp(released, timezone.utc).isoformat(), 'translationJa': ja, 'title': 'U.S. October PPI'}]
+        items = push.economic_items(updates, [])
+        self.assertEqual([i['kind'] for i in items], ['ppi'])
+        push.deliver_economic(self.db, items, **self.options(released + 120))
+        self.assertEqual([(m['title'], m['body'], m['url']) for m in self.sent], [('米国PPI', ja, '/research/calendar')])
+        self.sent.clear()
+        self.save({'economicKinds': ['jobs']})
+        push.deliver_economic(self.db, [{**items[0], 'id': 'ppi-other'}], **self.options(released + 120))
+        self.assertEqual(self.sent, [], 'switched off for PPI')
+
+    def test_a_device_still_on_the_old_default_list_gets_ppi(self):
+        self.db.execute('UPDATE push_devices SET econ_kinds=?', ('["jobs", "cpi", "pce", "fomc", "adp", "ism"]',))
+        self.assertIn('ppi', push.economic_kinds(self.db.execute('SELECT * FROM push_devices').fetchone()))
+        self.db.execute('UPDATE push_devices SET econ_kinds=?', ('["jobs", "cpi"]',))
+        self.assertNotIn('ppi', push.economic_kinds(self.db.execute('SELECT * FROM push_devices').fetchone()))
 
     def test_fomc_ism_gdp_and_retail_results_are_announced_and_claims_never(self):
         base = {'releasedAt': '2026-12-09T19:00:00+00:00', 'resultJa': '政策金利を据え置き（3.50〜3.75%）', 'resultEn': 'Held'}

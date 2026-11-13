@@ -91,8 +91,9 @@ def member_expiry(owner):
 
 
 # The nine indicators a member can switch (Nov 4); the first six start on, the last three off.
-ECON_KINDS = ('jobs', 'cpi', 'pce', 'fomc', 'adp', 'ism', 'gdp', 'retail', 'claims')
-ECON_DEFAULT_ON = ['jobs', 'cpi', 'pce', 'fomc', 'adp', 'ism']
+ECON_KINDS = ('jobs', 'cpi', 'ppi', 'pce', 'fomc', 'adp', 'ism', 'gdp', 'retail', 'claims')
+ECON_DEFAULT_BEFORE_PPI = ['jobs', 'cpi', 'pce', 'fomc', 'adp', 'ism']
+ECON_DEFAULT_ON = ['jobs', 'cpi', 'ppi', 'pce', 'fomc', 'adp', 'ism']
 QUESTION_OWNER = re.compile(r'[a-f0-9]{64}')
 
 
@@ -199,6 +200,8 @@ def preference_view(db, device):
 def economic_kinds(device):
     try:
         kinds = json.loads(device['econ_kinds'])
+        if kinds == ECON_DEFAULT_BEFORE_PPI:
+            kinds = ECON_DEFAULT_ON  # Nov 13: a device that never changed the list also gets the PPI notice
         return [k for k in ECON_KINDS if k in kinds]
     except (TypeError, ValueError):
         return list(ECON_DEFAULT_ON)
@@ -1120,9 +1123,9 @@ def deliver_answers(db, answers, **options):
     return {'status': 'ready', **total}
 
 
-BLS_PATH = {'jobs': 'empsit', 'cpi': 'cpi'}
+BLS_PATH = {'jobs': 'empsit', 'cpi': 'cpi', 'ppi': 'ppi'}
 MONTHS = ['january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november', 'december']
-NAMES = {'jobs': ('米国雇用統計', 'U.S. employment report'), 'cpi': ('米国CPI', 'U.S. CPI'), 'pce': ('米国PCE', 'U.S. PCE'),
+NAMES = {'jobs': ('米国雇用統計', 'U.S. employment report'), 'cpi': ('米国CPI', 'U.S. CPI'), 'ppi': ('米国PPI', 'U.S. PPI'), 'pce': ('米国PCE', 'U.S. PCE'),
          'adp': ('ADP雇用統計', 'ADP employment report'), 'fomc': ('FOMC政策金利', 'FOMC rate decision'), 'ism': ('ISM製造業景況指数', 'ISM manufacturing PMI'),
          'gdp': ('米国GDP', 'U.S. GDP'), 'retail': ('米国小売売上高', 'U.S. retail sales')}
 # Results read by event_results / indicator_results carry an id that starts with the indicator (Nov 5). Jobless claims have no reader.

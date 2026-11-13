@@ -148,6 +148,12 @@ def active(now, events=None):
 
 def match(event, payload):
     """Earliest public item that reports this event's result, with its time."""
+    found = matches(event, payload)
+    return found[0][0] if found else None
+
+
+def matches(event, payload):
+    """[(public time, result text)] of the public items reporting this event's result, earliest first."""
     since = window(event)[0]
     found = []
     for item in payload.get('resultBriefs') or []:
@@ -155,10 +161,10 @@ def match(event, payload):
         if not public or not instant(item.get('publishedAt')) or instant(item['publishedAt']) < since:
             continue
         if event['kind'] == 'earnings' and item.get('kind') == 'earnings' and item.get('ticker') == event['ticker']:
-            found.append(public)
+            found.append((public, ''))
         elif (event['kind'] == 'economic' and item.get('kind') == 'economic'
               and re.search(INDICATORS[event['indicator']], f"{item.get('titleEn', '')} {item.get('titleJa', '')}", re.I)):
-            found.append(public)
+            found.append((public, str(item.get('titleJa') or '')))
     for item in payload.get('officialUpdates') or []:
         published = instant(item.get('publishedAt') or item.get('observedAt'))
         public = instant(item.get('observedAt')) or published
@@ -167,13 +173,13 @@ def match(event, payload):
         text = f"{item.get('title', '')} {item.get('translationJa', '')}"
         if (event['kind'] == 'earnings' and event['ticker'] in (item.get('tickers') or [])
                 and str(item.get('researchId', '')).startswith('ir-result-')):
-            found.append(max(public, published))
+            found.append((max(public, published), ''))
         elif (event['kind'] == 'economic' and re.search(INDICATORS[event['indicator']], text, re.I)
               and (item.get('newsCategory') == 'economic'
                    # The exact BLS release, read straight from bls.gov (Oct 14).
                    or (item.get('publisher') == 'BLS' and str(item.get('url', '')).startswith('https://www.bls.gov/news.release/archives/')))):
-            found.append(max(public, published))
-    return min(found) if found else None
+            found.append((max(public, published), str(item.get('translationJa') or '')))
+    return sorted(found, key=lambda entry: entry[0])
 
 
 def schema(db):
@@ -201,7 +207,7 @@ def delay_text(seconds):
     return f"{minutes}分{rest:02d}秒" if minutes else f"{rest}秒"
 
 
-def notification(event, kind, delay):
+def notification(event, kind, delay, result=''):
     if kind == 'missing':
         due = ('開始時刻' if event['phase'] == 'call' else '米国市場終了から10分' if event.get('approximate')
                else '予定時刻から3分')
@@ -210,7 +216,9 @@ def notification(event, kind, delay):
                 'tag': f"release-watch-missing-{event['id']}", 'url': '/research/calendar'}
     base = '米国市場終了' if event.get('approximate') else '予定時刻'
     timing = (f"{base}から{delay_text(delay)}" if delay >= 0 else f"{base}の{delay_text(-delay)}前")
-    return {'title': f"✅ 掲載：{event['titleJa']}", 'body': f"結果を掲載しました（{timing}）。",
+    # Nov 13: the number itself goes in the notice, so a tap on the phone is not needed to see what the result was.
+    body = f"{result.strip()[:120]}（{timing}）" if result and result.strip() else f"結果を掲載しました（{timing}）。"
+    return {'title': f"✅ 掲載：{event['titleJa']}", 'body': body,
             'tag': f"release-watch-published-{event['id']}", 'url': '/research/calendar'}
 
 
@@ -226,7 +234,8 @@ def check(db, payload, now, transport=None, events=None):
             continue
         recorded = {row[0] for row in db.execute(
             'SELECT kind FROM release_watch_alerts WHERE event_id=?', (event['id'],))}
-        public = match(event, payload)
+        found = matches(event, payload)
+        public, result = found[0] if found else (None, '')
         due = window(event)[1]
         kind = delay = None
         if public and 'published' not in recorded:
@@ -237,7 +246,7 @@ def check(db, payload, now, transport=None, events=None):
             continue
         delivered = 0
         if transport is not None:
-            message = notification(event, kind, delay)
+            message = notification(event, kind, delay, result)
             for subscription in owner_devices(db):
                 try:
                     code = transport(json.loads(subscription), message)

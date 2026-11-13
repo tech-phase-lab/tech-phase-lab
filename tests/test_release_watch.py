@@ -142,6 +142,13 @@ class ReleaseWatchTests(unittest.TestCase):
         self.assertIn('米国市場終了から2分05秒', published['body'])
 
 
+    def test_published_alert_carries_the_result_numbers(self):
+        note = watch.notification(CPI, 'published', 43, '米国10月PPI：総合 前月比+0.3%')
+        self.assertEqual(note['body'], '米国10月PPI：総合 前月比+0.3%（予定時刻から43秒）')
+        self.assertEqual(note['url'], '/research/calendar')
+        self.assertIn('結果を掲載しました', watch.notification(CPI, 'published', 43)['body'])
+
+
 class OwnerAccountsTests(unittest.TestCase):
     def test_devices_of_either_owner_account_receive_the_release_alerts(self):
         import sqlite3
