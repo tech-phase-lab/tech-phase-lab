@@ -38,9 +38,53 @@ def period_of(title):
 
 
 def is_results_release(title):
-    """Title of a company's results release (not a date notice, not a call invitation)."""
+    """Title of a company's results release (not a date notice, not a call invitation), or of an SEC 8-K that lists Item 2.02."""
+    if isinstance(title, str) and title.startswith(ITEM_202_TITLE):
+        return True
     return bool(isinstance(title, str) and RESULT.search(title) and (period_of(title) or FISCAL.search(title))
                 and not release_watch.NOT_RELEASE.search(title) and not MEETING.search(title))
+
+
+# An SEC 8-K is titled "8-K · 8-K" (the filing index carries no headline), so a company whose results reach us only as a filing never
+# matched the title rule above (Applied Materials, Nov 12). Two ways to recognise one:
+#  * the discovery title says Item 2.02 (the SEC index lists the 8-K's items; see monitor.sec_submission_links), or
+#  * the text the monitor stored for the filing. For an 8-K that is the EX-99.1 press release (not the cover page), so its first
+#    lines are judged like a title: "... Announces Fourth Quarter ... Results"; the cover's own Item 2.02 line also counts.
+RESULTS_ITEM = re.compile(r'\bItem\s+2\.02\b.{0,40}\bResults of Operations\b', re.I)
+SEC_HOSTS = {'www.sec.gov', 'data.sec.gov'}
+ITEM_202_TITLE = '8-K \u00b7 Item 2.02 Results of Operations'
+
+
+def is_results_filing(db, row):
+    """An 8-K whose stored text is a results press release (or declares Item 2.02). Reads one stored revision, only for 8-Ks."""
+    text = stored_text(db, row)
+    return bool(text and (RESULTS_ITEM.search(text) or is_results_release(text[:600])))
+
+
+def stored_text(db, row):
+    """The first 8000 characters the monitor stored for an 8-K (its EX-99.1 press release), whitespace-normalised; '' if none."""
+    if row['sec_form'] != '8-K' or not row['sha256']:
+        return ''
+    revision = db.execute('SELECT extracted_text FROM source_revisions WHERE url=? AND sha256=?', (row['url'], row['sha256'])).fetchone()
+    return ' '.join((revision['extracted_text'] or '')[:8000].split()) if revision else ''
+
+
+def filing_is_recent(row, reference):
+    """A filing counts only while the SEC's own acceptance time is inside the window (never the time we first stored it: the first
+    discovery of a company, or of an older filing, would otherwise announce years of past results as new)."""
+    accepted = instant(monitor.valid_sec_acceptance_datetime(row['sec_acceptance_datetime']))
+    return accepted is not None and reference - WINDOW <= accepted <= reference
+
+
+def is_announceable(db, row, reference):
+    """A company page with a results title (as before), or a recent SEC 8-K that is a results statement (Item 2.02 title or press release)."""
+    title = row['title']
+    from_filing_index = isinstance(title, str) and title.startswith(ITEM_202_TITLE)
+    if is_results_release(title) and not from_filing_index:
+        return True
+    if urlsplit(row['url']).hostname not in SEC_HOSTS or not filing_is_recent(row, reference):
+        return False
+    return from_filing_index or is_results_filing(db, row)
 
 
 def schema(db):
@@ -71,17 +115,21 @@ def run_once(path, reference=None):
     with monitor.connect(path) as db:
         schema(db)
         started = time.monotonic()
-        rows = db.execute('''SELECT s.url,s.ticker,s.title,COALESCE(e.detected_at,s.discovered_at) AS detected
+        rows = db.execute('''SELECT s.url,s.ticker,s.title,s.sec_form,s.sec_acceptance_datetime,s.sha256,COALESCE(e.detected_at,s.discovered_at) AS detected
             FROM sources s LEFT JOIN release_events e ON e.url=s.url
             WHERE s.title IS NOT NULL AND s.status NOT IN ('held','rejected')
               AND julianday(COALESCE(e.detected_at,s.discovered_at))>=julianday(?)''', (cutoff,)).fetchall()
         for row in rows:
-            if row['ticker'] not in monitor.PROVIDERS or not is_results_release(row['title']) or not official(row['ticker'], row['url']):
+            if row['ticker'] not in monitor.PROVIDERS or not official(row['ticker'], row['url']):
+                continue
+            if not is_announceable(db, row, reference):
                 continue
             observed = instant(row['detected'])
             if observed is None or observed > reference:
                 continue
-            period = period_of(row['title']) or 'Latest'
+            # A filing's title names no quarter; its press release does ("... Fourth Quarter and Fiscal Year 2026 Results"), and the phone alert
+            # is one per company and quarter, so the line and the figures that follow share it.
+            period = period_of(row['title']) or period_of(stored_text(db, row)[:600]) or 'Latest'
             key = hashlib.sha256('\0'.join([row['ticker'], row['url']]).encode()).hexdigest()
             with db:
                 added += db.execute('INSERT OR IGNORE INTO earnings_announcements VALUES(?,?,?,?,?,?,?)',
