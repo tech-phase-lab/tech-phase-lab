@@ -1,0 +1,7 @@
+/* Broker name and NEW badge on one line: the name is cut with an ellipsis, the badge never wraps (owner, Nov 13).
+   Tap the name to read all of it; tap again to fold it back. */
+.firmRow{display:flex;align-items:center;gap:8px;min-width:0}
+.firmName{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin:0;padding:0;border:0;background:none;color:inherit;font:inherit;text-align:left;cursor:pointer}
+.firmName[aria-expanded=true]{white-space:normal;overflow:visible;text-overflow:clip;overflow-wrap:anywhere}
+.firmName:focus-visible{outline:2px solid #5dffb4;outline-offset:2px;border-radius:3px}
+.firmRow.firmRow .badge{flex:none;margin:0;vertical-align:baseline}

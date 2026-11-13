@@ -1,11 +1,14 @@
+import { useState } from "react";
 import type { Language } from "@/lib/research/data";
 import type { PriceTarget } from "@/lib/research/price-targets";
 import { formatTargetTime } from "@/lib/research/price-target-time";
 import styles from "./price-targets-panel.module.css";
+import fit from "./price-target-card.module.css";
 
 /** One action, one publication time. Retained provenance is not a display row. */
 export default function PriceTargetCard({ item, lang, now }: { item: PriceTarget; lang: Language; now: number | null }) {
   const t = (ja: string, en: string) => lang === "ja" ? ja : en;
+  const [showFirm, setShowFirm] = useState(false);
   const number = (value: number) => value.toLocaleString("en-US", { maximumFractionDigits: 2 });
   // Owner, Oct 16: a full day of NEW made yesterday's and today's targets look alike; it now marks only the last three hours.
   const isNew = [item.publishedAt, item.observedAt].every(date => {
@@ -17,7 +20,8 @@ export default function PriceTargetCard({ item, lang, now }: { item: PriceTarget
   return <article className={`${styles.card} ${up ? styles.up : styles.down}`}>
     <span className={styles.ticker}>{item.ticker}</span>
     <div className={styles.body}>
-      <div className={styles.firm}>{item.firm}{isNew && <span className={styles.newBadge} aria-label={t("3時間以内の新着", "New within 3 hours")}>NEW</span>}</div>
+      {/* Owner, Nov 13: a long broker name pushed NEW onto its own line. The name now stays on one line (cut with …) and NEW sits right after it; tap the name to read all of it. */}
+      <div className={`${styles.firm} ${fit.firmRow}`}><button type="button" className={fit.firmName} title={item.firm} aria-expanded={showFirm} onClick={() => setShowFirm(value => !value)}>{item.firm}</button>{isNew && <span className={`${styles.newBadge} ${fit.badge}`} aria-label={t("3時間以内の新着", "New within 3 hours")}>NEW</span>}</div>
       <div className={styles.targetChange}><strong>${number(item.previous)} → ${number(item.latest)}</strong></div>
       <time className={styles.published} dateTime={item.publishedAt}>{formatTargetTime(item.publishedAt, lang)}</time>
     </div>
