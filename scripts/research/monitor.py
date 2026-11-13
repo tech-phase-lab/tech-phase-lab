@@ -1759,6 +1759,8 @@ def sec_submission_links(body, ticker, source):
         raise ValueError("Invalid SEC submissions structure")
     filing_dates = recent.get("filingDate", [])
     acceptance_times = recent.get("acceptanceDateTime", [])
+    filing_items = recent.get("items", [])
+    filing_items = filing_items if isinstance(filing_items, list) else []
     # Optional damaged clock columns do not discard otherwise valid filings.
     filing_dates = filing_dates if isinstance(filing_dates, list) else []
     acceptance_times = acceptance_times if isinstance(acceptance_times, list) else []
@@ -1787,8 +1789,13 @@ def sec_submission_links(body, ticker, source):
         if metadata is None:
             continue
         description = description if isinstance(description, str) else ""
+        # The SEC index lists the 8-K's items. Item 2.02 is the company's own results statement: say so in the title, so the
+        # announcement stage can act on the filing the moment it is listed (no wait for the filing's text to be fetched).
+        items = filing_items[index] if index < len(filing_items) else ""
+        declares_results = form == "8-K" and isinstance(items, str) and "2.02" in [part.strip() for part in items.split(",")]
+        label = "Item 2.02 Results of Operations and Financial Condition" if declares_results else (description or "Official filing")
         links[canonical] = {
-            "title": " ".join(f"{form} · {description or 'Official filing'}".split())[:300],
+            "title": " ".join(f"{form} · {label}".split())[:300],
             **metadata,
         }
         if len(links) >= limit:

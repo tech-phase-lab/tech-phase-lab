@@ -38,7 +38,9 @@ def period_of(title):
 
 
 def is_results_release(title):
-    """Title of a company's results release (not a date notice, not a call invitation)."""
+    """Title of a company's results release (not a date notice, not a call invitation), or of an SEC 8-K that lists Item 2.02."""
+    if isinstance(title, str) and title.startswith('8-K \u00b7 Item 2.02 Results of Operations'):
+        return True
     return bool(isinstance(title, str) and RESULT.search(title) and (period_of(title) or FISCAL.search(title))
                 and not release_watch.NOT_RELEASE.search(title) and not MEETING.search(title))
 

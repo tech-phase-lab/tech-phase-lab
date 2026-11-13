@@ -83,5 +83,21 @@ class SecFiling(unittest.TestCase):
         self.assertEqual(announce.run_once(self.path,now),0)
         with monitor.connect(self.path) as db: [item]=announce.public_feed(db,'2026-11-09T00:00:00+00:00')
         self.assertEqual((item['ticker'],item['facts'],item['url'],item['titleJa']),('AMAT',[],self.URL,'AMAT 決算を発表しました'))
+    def test_the_filing_index_item_list_is_enough_without_the_text(self):
+        import json
+        recent={'form':['8-K','8-K','4'],'accessionNumber':['0001628280-26-073360','0001628280-26-067303','0001628280-26-000001'],
+                'primaryDocument':['amat-20261112.htm','amat-20261026.htm','x.xml'],'primaryDocDescription':['8-K','8-K','FORM 4'],'items':['2.02,9.01','8.01,9.01',''],
+                'filingDate':['2026-11-12','2026-10-26','2026-10-01'],'acceptanceDateTime':['2026-11-12T21:02:46.000Z','2026-10-26T20:34:29.000Z','2026-10-01T10:00:00.000Z']}
+        body=json.dumps({'cik':'0000006951','filings':{'recent':recent}})
+        source={'format':'sec-json','cik':'0000006951','forms':['8-K'],'limit':40}
+        links=monitor.sec_submission_links(body,'AMAT',source)
+        titles={url.rsplit('/',2)[-2]:d['title'] for url,d in links.items()}
+        self.assertEqual(titles['000162828026073360'],'8-K · Item 2.02 Results of Operations and Financial Condition')
+        self.assertEqual(titles['000162828026067303'],'8-K · 8-K')
+        self.assertTrue(announce.is_results_release(titles['000162828026073360']))
+        self.assertFalse(announce.is_results_release(titles['000162828026067303']))
+        self.filing(self.URL,None,title=titles['000162828026073360'])
+        now=datetime(2026,11,12,21,3,0,tzinfo=timezone.utc)
+        self.assertEqual(announce.run_once(self.path,now),1)
 
 if __name__=='__main__': unittest.main()
