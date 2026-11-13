@@ -43,16 +43,35 @@
     "ticker": "SKHY",
     "name": "SK hynix",
     "sector": "semiconductors",
+    "automatedAccess": "prohibited",
     "indexUrl": "https://news.skhynix.com/en/category/ir/",
     "format": "html",
+    "supplementalSources": [
+      {
+        "url": "https://data.sec.gov/submissions/CIK0002120882.json",
+        "format": "sec-json",
+        "label": "SEC submissions 6-K",
+        "cik": "0002120882",
+        "forms": [
+          "6-K"
+        ],
+        "limit": 40
+      }
+    ],
     "allowedHosts": [
       "news.skhynix.com",
-      "www.skhynix.com"
+      "www.skhynix.com",
+      "data.sec.gov",
+      "www.sec.gov"
     ],
     "articleRules": [
       {
         "host": "news.skhynix.com",
         "pattern": "^/en/(?!contact-us/?$|terms-of-use/?$|feed/?$|heritage/?$)[^/]+/?$"
+      },
+      {
+        "host": "www.sec.gov",
+        "pattern": "^/Archives/edgar/data/2120882/.+"
       }
     ]
   },

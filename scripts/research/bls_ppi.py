@@ -68,9 +68,9 @@ def parse_release(text):
     headline_year = re.findall(
         rf"On an unadjusted basis, the index for final demand {VERB} {NUMBER} percent for the 12 months ended in {month}\b", flat)
     core_month = re.findall(
-        rf"Prices for {CORE} {VERB} {NUMBER} percent in {month}\b", flat)
+        rf"(?:Prices for|prices for|The index for|the index for) {CORE} {VERB} {NUMBER} percent in {month}\b", flat)
     core_year = re.findall(
-        rf"For the 12 months ended in {month}, the index for {CORE} {VERB} {NUMBER} percent", flat)
+        rf"For the 12 months ended in {month}, (?:the index for|The index for|prices for|Prices for) {CORE} {VERB} {NUMBER} percent", flat)
     # BLS repeats a sentence in its summary and detail; repeats must agree exactly.
     if not all(found and len(set(found)) == 1 for found in (headline_month, headline_year, core_month, core_year)):
         raise ValueError("bls-ppi-measures-missing-or-ambiguous")
@@ -88,5 +88,5 @@ def parse_release(text):
         "url": release_url(released),
         "period": f"{year}-{number:02d}",
         "title": f"U.S. {month} PPI: final demand {hm} MoM / {hy} YoY; core {cm} MoM / {cy} YoY",
-        "translationJa": f"米国{number}月PPI：総合 前月比{hm}・前年比{hy}／コア 前月比{cm}・前年比{cy}",
+        "translationJa": f"米国{number}月PPI：総合 前月比{hm}・前年比{hy}／コア（食品・エネルギー・貿易サービス除く） 前月比{cm}・前年比{cy}",
     }

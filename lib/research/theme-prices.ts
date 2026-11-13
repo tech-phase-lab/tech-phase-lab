@@ -1,6 +1,7 @@
 import "server-only";
 import { unstable_cache } from "next/cache";
 import { GROUPS, tickersOf, type GroupFilter, type GroupId } from "./theme-definitions.ts";
+import { createBatcher } from "../portfolio/quote-batcher.ts";
 import { stockReturns, type CloseSeries, type StockReturns } from "./theme-ranking.ts";
 
 /** Server-side Twelve Data collector for the Theme Ranking. The key lives only in the environment
@@ -44,7 +45,8 @@ async function fetchChunk(symbols: string[], key: string): Promise<CloseSeries[]
     const body = await response.json();
     if (body && typeof body === "object" && (body as { code?: unknown }).code === 429 && attempt === 0) { await new Promise(resolve => setTimeout(resolve, 20_000)); continue; }
     if (body && typeof body === "object" && (body as { status?: unknown }).status === "error") throw new Error(`Twelve Data ${String((body as { code?: unknown }).code)} ${String((body as { message?: unknown }).message).slice(0, 120)}`);
-    return parseTimeSeries(body, symbols);
+    // One symbol comes back unwrapped (no per-symbol key); wrap it so a lone ticker in a chunk is read like the others.
+    return parseTimeSeries(symbols.length === 1 && body && typeof body === "object" && "values" in body ? { [symbols[0]]: body } : body, symbols);
   }
 }
 
@@ -100,15 +102,22 @@ export async function loadThemeReturns(group: GroupFilter): Promise<GroupReturns
   return { stocks: [...byTicker.values()], asOf: done.map(item => item.asOf).sort().at(-1)!, fetchedAt: Math.min(...done.map(item => item.fetchedAt)) };
 }
 
-async function collectTickers(tickers: string[]): Promise<{ stocks: StockReturns[]; asOf: string }> {
+type OneReturns = { stock: StockReturns; asOf: string };
+const readMany = async (tickers: string[]): Promise<Map<string, OneReturns>> => {
   const key = process.env.TWELVE_DATA_API_KEY;
   if (!key) throw new Error("not-configured");
-  const series: CloseSeries[] = [];
-  for (let i = 0; i < tickers.length; i += CHUNK) series.push(...await fetchChunk(tickers.slice(i, i + CHUNK), key));
-  if (!series.length) throw new Error("no-data");
-  return { stocks: series.map(stockReturns), asOf: series.map(item => item.asOf).sort().at(-1)! };
-}
+  return new Map((await fetchChunk(tickers, key)).map(item => [item.ticker, { stock: stockReturns(item), asOf: item.asOf }]));
+};
+// Only tickers that missed the cache reach this; the ones that miss together go out as one request.
+const fetchReturns = createBatcher<OneReturns>(readMany, CHUNK);
+/** Ten-minute cache per ticker (a symbol with no data is cached as null), shared by every reader whatever else they hold. */
+const oneReturns = (ticker: string) =>
+  unstable_cache(async (): Promise<OneReturns | null> => fetchReturns(ticker), ["watchlist-week-returns-v2", ticker], { revalidate: 600 })();
 
-/** The same ten-minute cache for an arbitrary list of tickers (the 銘柄手帳 weekly moves); the key is the sorted list. */
-export const loadReturnsFor = (tickers: string[]) =>
-  unstable_cache(() => collectTickers(tickers), ["watchlist-week-returns-v1", tickers.join(",")], { revalidate: 600 })();
+/** The same ten-minute cache for an arbitrary list of tickers (the 銘柄手帳 weekly moves), kept per ticker so different lists share it. */
+export async function loadReturnsFor(tickers: string[]): Promise<{ stocks: StockReturns[]; asOf: string }> {
+  if (!process.env.TWELVE_DATA_API_KEY) throw new Error("not-configured");
+  const found = (await Promise.all([...new Set(tickers)].sort().map(oneReturns))).filter((item): item is OneReturns => !!item);
+  if (!found.length) throw new Error("no-data");
+  return { stocks: found.map(item => item.stock), asOf: found.map(item => item.asOf).sort().at(-1)! };
+}

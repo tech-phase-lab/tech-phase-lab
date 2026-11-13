@@ -29,9 +29,28 @@ class BlsPpiTests(unittest.TestCase):
         self.assertEqual(result["publishedAt"], "2026-10-15T08:30:00-04:00")
         self.assertEqual(result["period"], "2026-09")
         self.assertEqual(result["title"], "U.S. September PPI: final demand +1.3% MoM / +6.3% YoY; core +0.5% MoM / +5.0% YoY")
-        self.assertEqual(result["translationJa"], "米国9月PPI：総合 前月比+1.3%・前年比+6.3%／コア 前月比+0.5%・前年比+5.0%")
+        self.assertEqual(result["translationJa"], "米国9月PPI：総合 前月比+1.3%・前年比+6.3%／コア（食品・エネルギー・貿易サービス除く） 前月比+0.5%・前年比+5.0%")
         self.assertEqual(result["url"], "https://www.bls.gov/news.release/archives/ppi_10152026.htm")
         self.assertTrue(bls_ppi.is_release_url(result["url"]))
+
+    def test_nov_13_page_wording_is_read_and_the_four_numbers_are_not_swapped(self):
+        """Nov 13: BLS wrote the core sentences as "The index for final demand less foods, energy, and trade services rose ..."
+        and "..., prices for final demand less ... advanced ...", which the first reader missed (bls-ppi-measures-missing-or-ambiguous).
+        Sentences as quoted from the live page; headline +0.3% MoM / +6.5% YoY, core (trade services excluded) +0.5% / +4.9%."""
+        text = (TEXT.replace("October 15, 2026", "November 13, 2026").replace("Thursday", "Friday").replace("SEPTEMBER", "OCTOBER")
+                .replace("increased 1.3 percent in September", "increased 0.3 percent in October")
+                .replace("climbed 6.3 percent for the 12 months ended in September", "climbed 6.5 percent for the 12 months ended in October")
+                .replace("Prices for final demand less foods, energy, and trade services moved up 0.5 percent in September after increasing 0.3 percent in August. "
+                         "For the 12 months ended in September, the index for final demand less foods, energy, and trade services rose 5.0 percent.",
+                         "The index for final demand less foods, energy, and trade services rose 0.5 percent in October after increasing 0.3 percent in September. "
+                         "For the 12 months ended in October, prices for final demand less foods, energy, and trade services advanced 4.9 percent."))
+        result = bls_ppi.parse_release(text)
+        self.assertEqual(result["translationJa"], "米国10月PPI：総合 前月比+0.3%・前年比+6.5%／コア（食品・エネルギー・貿易サービス除く） 前月比+0.5%・前年比+4.9%")
+        self.assertEqual(result["title"], "U.S. October PPI: final demand +0.3% MoM / +6.5% YoY; core +0.5% MoM / +4.9% YoY")
+        self.assertEqual(result["url"], "https://www.bls.gov/news.release/archives/ppi_11132026.htm")
+        # Two different core sentences for the same measure stay a failure, never a pick.
+        with self.assertRaises(ValueError):
+            bls_ppi.parse_release(text + " Prices for final demand less foods, energy, and trade services rose 0.4 percent in October.")
 
     def test_a_decrease_is_signed_negative(self):
         result = bls_ppi.parse_release(TEXT.replace("final demand increased 1.3", "final demand decreased 1.3"))

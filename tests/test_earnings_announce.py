@@ -110,6 +110,28 @@ class SecFiling(unittest.TestCase):
                  'facts':[{'key':'revenue','ja':'売上高','en':'Revenue','value':'$10.409B'}],'publishedAt':'2026-11-12T21:03:00.000+00:00','observedAt':'2026-11-12T21:03:00.000+00:00'}
         keys=[web_push.event_key(web_push.normalize_result(item)) for item in (line,figures)]
         self.assertEqual(keys[0],keys[1])
+    def test_a_company_never_gets_more_than_two_alerts_a_month_and_one_never_covers_another(self):
+        def item(ticker,period,rid,at='2026-11-12T21:02:50.000+00:00'):
+            return {'kind':'earnings','ticker':ticker,'period':period,'researchId':rid,'titleJa':f'{ticker} 決算','titleEn':f'{ticker} earnings','facts':[],'publishedAt':at,'observedAt':at}
+        key=lambda x:web_push.event_key(web_push.normalize_result(x))
+        # the fast "announced" line has no quarter yet (Q0); the figures that follow name theirs
+        line=item('AMAT','Latest','ir-announce-1'); again=item('AMAT','Latest','ir-announce-2','2026-11-12T21:03:10.000+00:00')   # a second filing the same night
+        figures=item('AMAT','Q4 FY2026','ir-flash-1','2026-11-12T21:03:00.000+00:00'); later=item('AMAT','Q4 2026','ir-announce-3','2026-11-12T22:00:00.000+00:00')
+        self.assertEqual(len({key(x) for x in (line,again,figures,later)}),2)
+        self.assertEqual(key(line),key(again))
+        self.assertEqual(key(figures),key(later))
+        self.assertNotEqual(key(line),key(item('MSFT','Latest','ir-announce-1')))
+        self.assertNotEqual(key(figures),key(item('MSFT','Q4 FY2026','ir-flash-1')))
+    def test_a_6k_with_the_preliminary_results_table_is_announced_and_other_6ks_are_not(self):
+        table=(Path(__file__).parent/'fixtures/skhynix-prelim-q326.txt').read_text()
+        url='https://www.sec.gov/Archives/edgar/data/2120882/000119312526434994/d162547d6k.htm'
+        self.filing(url,table,accepted='2026-11-13T10:01:00.000Z',form='6-K',ticker='SKHY',title='6-K · FORM 6-K')
+        self.filing('https://www.sec.gov/Archives/edgar/data/2120882/000119312526435015/d236994d6k.htm','6-K SK hynix Inc. Resolution on Cash Dividend On October 28, 2026, the board of directors',
+                    accepted='2026-11-13T10:02:00.000Z',form='6-K',ticker='SKHY',title='6-K · FORM 6-K')
+        self.filing('https://www.sec.gov/Archives/edgar/data/2120882/000119312526400000/d111111d6k.htm',table,accepted='2026-07-29T10:01:00.000Z',form='6-K',ticker='SKHY',title='6-K · FORM 6-K')  # July's: history
+        self.assertEqual(announce.run_once(self.path,self.NOW),1)
+        [item]=self.feed()
+        self.assertEqual((item['ticker'],item['url'],item['period'],item['facts'],item['titleJa']),('SKHY',url,'Q3 2026',[],'SKHY 決算を発表しました'))
     def test_the_filing_index_item_list_is_enough_without_the_text_when_recent(self):
         import json
         recent={'form':['8-K','8-K','4'],'accessionNumber':['0001628280-26-073360','0001628280-26-067303','0001628280-26-000001'],

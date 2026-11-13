@@ -17,6 +17,7 @@ import signal
 import sqlite3
 import threading
 import time
+import traceback
 from urllib.parse import parse_qs, urlsplit
 
 import monitor
@@ -185,6 +186,27 @@ def log_publication_failure(lane, error):
     print(json.dumps({"lane": lane, "exceptionClass": exception_class,
                       "sqliteErrorCode": code, "sqliteErrorName": SQLITE_FAILURE_NAMES.get(code)},
                      separators=(",", ":")), flush=True)
+
+
+def failure_detail(error):
+    """Bounded, value-free detail for a log line: the operating-system error name (ENOSPC, EACCES...), the SQLite result-code name, and the
+    code location (file:line:function) where it was raised. Never the message, a path, a value or a class name supplied by data."""
+    parts = []
+    code = getattr(error, "errno", None) if isinstance(error, OSError) else None
+    if type(code) is int and code in errno.errorcode:
+        parts.append("errno=" + errno.errorcode[code])
+    if isinstance(error, sqlite3.Error):
+        try:
+            candidate = getattr(error, "sqlite_errorcode", None)
+        except Exception:
+            candidate = None
+        if type(candidate) is int and candidate in SQLITE_FAILURE_NAMES:
+            parts.append("sqlite=" + SQLITE_FAILURE_NAMES[candidate])
+    frames = traceback.extract_tb(error.__traceback__) if getattr(error, "__traceback__", None) else []
+    if frames:
+        last = frames[-1]
+        parts.append(f"at={Path(last.filename).name}:{int(last.lineno or 0)}:{re.sub(r'[^A-Za-z0-9_<>]', '', str(last.name))[:40]}")
+    return " ".join(parts)
 
 
 def utc_now():
@@ -1055,7 +1077,7 @@ class AutomaticMonitor:
                 indicator_results.run_once(self.db_path)
                 wait = min(wait, indicator_results.next_wait())
             except Exception as error:
-                print(f"indicator-results-unavailable {type(error).__name__}", flush=True)
+                print(f"indicator-results-unavailable {type(error).__name__} {failure_detail(error)}".rstrip(), flush=True)
             self.stop_event.wait(wait)
 
     def run_weekly(self):
@@ -1123,8 +1145,13 @@ class AutomaticMonitor:
                     # Economic releases whose result the site has already read (BLS, BEA, and the ADP reader).
                     with self.db_lock, stock_news.connect(self.db_path) as indicator_db:
                         updates = signals.public_official_updates(indicator_db, reference=datetime.now(timezone.utc), limit=500, read_only=True)
+                        try:
+                            route_errors = {row[0]: release_watch.persisted_error_code(row[1]) for row in indicator_db.execute(
+                                "SELECT id,error FROM signal_routes WHERE id='bls-ppi'")}
+                        except Exception:
+                            route_errors = {}
                     with self.db_lock, event_results.connect(self.db_path) as events_db:
-                        economic = web_push.economic_items(updates, event_results.public_view(events_db))
+                        economic = web_push.economic_items(updates, event_results.public_view(events_db), route_errors)
                 except Exception:
                     economic = []
                     print("web-push-economic-unavailable", flush=True)
@@ -1301,8 +1328,8 @@ class AutomaticMonitor:
             result = None
             try:
                 result = company_wire.translate_once(self.db_path)
-            except Exception:
-                print("company-wire-translation-failed", flush=True)
+            except Exception as error:
+                print(f"company-wire-translation-failed {type(error).__name__} {failure_detail(error)}".rstrip(), flush=True)
             self.stop_event.wait(3 if result == "done" else 20)
 
     def company_wire_feed(self):
@@ -2729,7 +2756,7 @@ class AutomaticMonitor:
                 with self.state_lock:
                     self.state["ready"] = False
                 # Exception messages can contain source data; log only type.
-                print("research-monitor-restarting " + type(exc).__name__, flush=True)
+                print(("research-monitor-restarting " + type(exc).__name__ + " " + failure_detail(exc)).rstrip(), flush=True)
                 self.stop_event.wait(min(30, 2 ** min(failures, 5)))
 
     def run(self):

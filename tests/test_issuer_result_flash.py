@@ -196,6 +196,57 @@ class Parsers(unittest.TestCase):
         self.assertNotIn('operating-income',keys('AMZN',a.replace('Operating income 17,422 28,076','Operating income 17,422 28,176')))
         self.assertNotIn('net-income',keys('AMZN',a.replace('Net income $ 21,187 $ 20,685','Net income $ 21,187 $ 20,785')))
         self.assertNotIn('eps',keys('AMZN',a.replace('Diluted earnings per share $ 1.95 $ 1.89','Diluted earnings per share $ 1.95 $ 2.89')))
+    def test_ge_vernova_summary_table_checked_against_stated_changes_and_headline(self):
+        text=fixture('gevernova-results-q326.txt')
+        parsed=flash.PROFILES['GEV']['parse'](text)
+        self.assertEqual(parsed['period'],'Q3 2026')
+        self.assertEqual([(f[0],f[1],f[2]) for f in parsed['facts']],[('revenue','$12.642B','$9.969B'),('eps','$4.81','$1.64'),('net-income','$1.289B','$453M'),('adjusted-ebitda','$1.943B','$811M')])
+        keys=lambda x:[f[0] for f in flash.PROFILES['GEV']['parse'](x)['facts']]
+        with self.assertRaises(ValueError): flash.PROFILES['GEV']['parse'](text.replace('Total revenues $12,642','Total revenues $13,642'))
+        with self.assertRaises(ValueError): flash.PROFILES['GEV']['parse'](text.replace('Revenue of $12.6B, +27%','Revenue of $12.6B, +37%'))
+        self.assertNotIn('net-income',keys(text.replace('Net income (loss) $1,289 $453 $836','Net income (loss) $1,299 $453 $836')))
+        self.assertNotIn('eps',keys(text.replace('Diluted EPS $4.81 $1.64 193%','Diluted EPS $5.81 $1.64 193%')))
+        self.assertNotIn('adjusted-ebitda',keys(text.replace('Adjusted EBITDA $1,943 $811 $1,131','Adjusted EBITDA $1,953 $811 $1,131')))
+        with self.assertRaises(ValueError): flash.PROFILES['GEV']['parse'](text.replace('(Dollars in millions, except per share) 2026 2025','(Dollars in millions, except per share) 2025 2026',1))
+    def test_vertiv_statement_with_operating_profit_checked_against_all_cost_lines(self):
+        text=fixture('vertiv-results-q326.txt')
+        parsed=flash.PROFILES['VRT']['parse'](text)
+        self.assertEqual(parsed['period'],'Q3 2026')
+        self.assertEqual([(f[0],f[1],f[2]) for f in parsed['facts']],[('revenue','$4.3128B','$2.6758B'),('eps','$1.95','$1.02'),('net-income','$764.5M','$398.5M'),('operating-income','$983.8M','$516.7M')])
+        keys=lambda x:[f[0] for f in flash.PROFILES['VRT']['parse'](x)['facts']]
+        with self.assertRaises(ValueError): flash.PROFILES['VRT']['parse'](text.replace('Net sales 4,312.8','Net sales 4,712.8'))
+        self.assertNotIn('operating-income',keys(text.replace('Operating profit (loss) 983.8','Operating profit (loss) 993.8')))
+        self.assertNotIn('operating-income',keys(text.replace('Amortization of intangibles 65.3','Amortization of intangibles 66.3')))
+        self.assertNotIn('net-income',keys(text.replace('Net income (loss) $ 764.5','Net income (loss) $ 774.5')))
+        self.assertNotIn('eps',keys(text.replace('Diluted $ 1.95','Diluted $ 2.95')))
+    def test_oracle_statement_with_percent_cells_checked_against_headline_and_arithmetic(self):
+        text=fixture('oracle-results-q1fy27.txt')
+        parsed=flash.PROFILES['ORCL']['parse'](text)
+        self.assertEqual(parsed['period'],'Q1 FY2027')
+        self.assertEqual([(f[0],f[1],f[2]) for f in parsed['facts']],[('revenue','$19.345B','$14.926B'),('eps','$1.56','$1.01'),('net-income','$4.76B','$2.927B'),('operating-income','$6.728B','$4.277B')])
+        keys=lambda x:[f[0] for f in flash.PROFILES['ORCL']['parse'](x)['facts']]
+        with self.assertRaises(ValueError): flash.PROFILES['ORCL']['parse'](text.replace('Total revenues 19,345','Total revenues 21,345'))
+        with self.assertRaises(ValueError): flash.PROFILES['ORCL']['parse'](text.replace('Total Revenues up 30%','Total Revenues up 40%'))
+        self.assertNotIn('operating-income',keys(text.replace('OPERATING INCOME 6,728','OPERATING INCOME 6,828')))
+        self.assertNotIn('net-income',keys(text.replace('NET INCOME $ 4,760','NET INCOME $ 4,860')))
+        self.assertNotIn('eps',keys(text.replace('Diluted $ 1.56','Diluted $ 1.96')))
+        self.assertNotIn('eps',keys(text.replace('Preferred stock dividends 81','Preferred stock dividends 181')))
+        with self.assertRaises(ValueError): flash.PROFILES['ORCL']['parse'](text.replace('Three Months Ended August 31','Three Months Ended July 31'))
+    def test_sk_hynix_preliminary_results_in_won_checked_against_stated_changes(self):
+        text=fixture('skhynix-prelim-q326.txt')
+        parsed=flash.PROFILES['SKHY']['parse'](text)
+        self.assertEqual(parsed['period'],'Q3 2026')
+        # millions of won -> trillions, digits exactly as printed (104,615,483 -> 104.615483); the label says preliminary and the unit
+        self.assertEqual([(f[0],f[1],f[2]) for f in parsed['facts']],[('revenue','₩104.615483T','₩24.448929T'),('net-income','₩39.775593T','₩12.597538T'),('operating-income','₩83.333818T','₩11.38339T')])
+        self.assertTrue(all('暫定' in f[3][0] and 'preliminary' in f[3][1] and '兆ウォン' in f[3][0] and 'KRW trillion' in f[3][1] for f in parsed['facts']))
+        keys=lambda x:[f[0] for f in flash.PROFILES['SKHY']['parse'](x)['facts']]
+        with self.assertRaises(ValueError): flash.PROFILES['SKHY']['parse'](text.replace('104,615,483 236,510,516','105,615,483 236,510,516'))   # revenue disagrees with its stated changes
+        self.assertEqual(keys(text.replace('83,333,818 181,486,709','84,333,818 181,486,709')),['revenue','net-income'])                         # operating profit dropped
+        self.assertEqual(keys(text.replace('39,775,593 174,044,095','38,775,593 174,044,095')),['revenue','operating-income'])                 # net profit dropped
+        self.assertEqual(keys(text.replace('(58.7 N.A. ) *','(57.0 N.A. ) *',1)),['revenue','net-income','operating-income'])                     # the pretax row is not published, so its change does not matter
+        with self.assertRaises(ValueError): flash.PROFILES['SKHY']['parse'](text.replace('Previous Period (Second quarter(2) of 2026)','Previous Period (First quarter(2) of 2026)'))
+        with self.assertRaises(ValueError): flash.PROFILES['SKHY']['parse'](text.replace('in millions of Won','in thousands of Won'))
+        with self.assertRaises(ValueError): flash.PROFILES['SKHY']['parse'](text.replace('Preliminary Results of Operations','Results of Operations'))
     def test_coreweave_table_and_guidance(self):
         parsed=flash.parse_coreweave(fixture('coreweave-results-q326.txt'))
         self.assertEqual(parsed['period'],'Q3 2026')

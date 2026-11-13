@@ -340,6 +340,8 @@ def parse_statement(text, cfg):
             rows[key] = statement_row(block, label[0], label[1])
         else:
             rows[key] = statement_row(block, label, n)
+    if cfg.get('shares-divisor') and rows.get('shares'):  # share counts printed in single shares while the statement is in millions
+        rows['shares'] = [x / cfg['shares-divisor'] for x in rows['shares']]
     if cfg.get('swap'):  # the release prints the year-earlier column first: put this quarter first, the year-ago column second
         rows = {k: ([v[1], v[0], *v[2:]] if v else v) for k, v in rows.items()}
     if not rows['revenue'] or rows['revenue'][0] <= 0 or not rows['revenue'][ago] > 0:
@@ -402,6 +404,14 @@ def parse_statement(text, cfg):
 
 
 STATEMENT = {
+    'VRT': {'identity': 'vertiv', 'heading': 'STATEMENTS OF EARNINGS (LOSS)Vertiv Holdings Co(Dollars in millions', 'units': 'dollars in millions', 'scale': Decimal(1), 'tol': Decimal('0.15'),
+            'end': 'BALANCE SHEETS', 'shares-divisor': Decimal(1000000), 'columns': 4, 'year-ago': 1, 'op-direct': True, 'growth': r'Net sales of \$[\d,]+ million, (\d+)% higher than',
+            'period-re': r'Reports [A-Za-z ]*?(First|Second|Third|Fourth) Quarter (20\d\d) with', 'period': lambda q, y: f'Q{q} {y}',
+            'rows': {'revenue': 'Net sales', 'cost': ['Cost of sales', 'Selling, general and administrative expenses', 'Amortization of intangibles', 'Restructuring costs',
+                                                          r'Foreign currency \(gain\) loss, net', r'Other operating expense \(income\)'],
+                     'operating': r'Operating profit \(loss\)', 'pretax': r'Income \(loss\) before income taxes', 'tax': r'Income tax expense \(benefit\)',
+                     'net': r'Net income \(loss\)', 'eps': r'Earnings \(loss\) per share: Basic \$ [\d.]+ (?:\$ [\d.]+ ){3}Diluted',
+                     'shares': r'Weighted-average shares outstanding: Basic [\d,]+ (?:[\d,]+ ){3}Diluted'}},
     'AMAT': {'identity': 'applied materials', 'heading': 'CONSOLIDATED CONDENSED STATEMENTS OF OPERATIONS', 'end': 'CONSOLIDATED CONDENSED BALANCE SHEETS',
              'units': 'in millions', 'scale': Decimal(1), 'tol': Decimal(1), 'columns': 4, 'year-ago': 1, 'growth': r'Record quarterly revenue \$[\d.]+ billion, up (\d+) percent',
              'period-re': r'ANNOUNCES (FIRST|SECOND|THIRD|FOURTH) QUARTER (?:AND FISCAL YEAR )?(20\d\d) RESULTS', 'period': lambda q, y: f'Q{q} FY{y}',
@@ -484,6 +494,192 @@ STATEMENT = {
                      'cont': 'Income from continuing operations, net of tax', 'disc': r'Income \(loss\) from discontinued operations, net of tax',
                      'net': 'Net income', 'eps': 'Diluted earnings per share', 'shares': r'Shares used in per share calculation Basic [\d,]+ (?:[\d,]+ ){4}Diluted'}},
 }
+
+
+ORACLE_QUARTER = {'august': (1, 1), 'november': (2, 1), 'february': (3, 0), 'may': (4, 0)}  # month -> (fiscal quarter, years after the calendar year)
+
+
+def parse_oracle(text, url=None):
+    """Oracle's results release (8-K EX-99.1): an income statement whose columns carry a '% of revenues' cell after each amount.
+    Revenue against the headline's own 'Total Revenues up 30%', operating income = revenue - total operating expenses, net income =
+    pretax income - tax, EPS = net income available to common / diluted shares. Rows that do not add up are dropped."""
+    t = clean(text)
+    if 'oracle' not in t.lower():
+        raise ValueError('issuer-identity-missing')
+    start = t.find('CONDENSED CONSOLIDATED STATEMENTS OF OPERATIONS')
+    if start < 0:
+        raise ValueError('statement-heading-missing')
+    block = t[start:start + 3200]
+    period = re.search(r'\(\$ in millions, except per share data\) Three Months Ended ([A-Z][a-z]+) \d{1,2}, % Increase', block[:300])
+    month = period[1].lower() if period else None
+    years = re.search(r'(20\d\d) % of Revenues (20\d\d) % of Revenues', block[:400])
+    if month not in ORACLE_QUARTER or not years or int(years[1]) - 1 != int(years[2]):
+        raise ValueError('period-unrecognized')
+    quarter, ahead = ORACLE_QUARTER[month]
+    fiscal_year = int(years[1]) + ahead
+    amount = r'\(?([\d,]+(?:\.\d+)?)\s?\)?'
+    pct = r'\(?\d+%\)?'
+
+    def pair(label, with_percent=True):
+        """(this year, last year) of a row printed '<label> [$] n [n%] [$] n [n%] ...'; exactly one such row."""
+        cell = r'(?:\$ )?' + amount + ((' ' + pct) if with_percent else '')
+        found = re.findall(r'(?<![A-Za-z])' + label + r' (?:\(\d\) )?' + cell + ' ' + cell + r'(?= |$)', block)
+        if len(found) != 1:
+            return None
+        return Decimal(found[0][0].replace(',', '')), Decimal(found[0][1].replace(',', ''))
+    revenue = pair('Total revenues')
+    if not revenue or revenue[1] <= 0:
+        raise ValueError('revenue-row-unrecognized')
+    growth = re.findall(r'Total Revenues up (\d+)% in USD', t[:2500])
+    if len(growth) != 1 or abs((revenue[0] / revenue[1] - 1) * 100 - Decimal(growth[0])) > Decimal('0.55'):
+        raise ValueError('change-mismatch')
+    expenses, operating = pair('Total operating expenses'), pair('OPERATING INCOME')
+    pretax, tax, net = pair('INCOME BEFORE INCOME TAXES'), pair('Provision for income taxes'), pair('NET INCOME')
+    metrics = {'revenue': revenue}
+    if expenses and operating and all(abs(revenue[i] - expenses[i] - operating[i]) <= Decimal(1) for i in (0, 1)):
+        metrics['operating-income'] = operating
+    if pretax and tax and net and all(abs(pretax[i] - tax[i] - net[i]) <= Decimal(1) for i in (0, 1)):
+        metrics['net-income'] = net
+    facts = [(key, money_millions(v[0]), money_millions(v[1])) for key, v in metrics.items()]
+    common = re.findall(r'NET INCOME AVAILABLE TO COMMON SHAREHOLDERS \$ ([\d,]+) \$ ([\d,]+)', block)
+    preferred = re.findall(r'Preferred stock dividends ([\d,]+) (?:[\d,]+|\u2014)', block)
+    eps = re.findall(r'EARNINGS PER SHARE ATTRIBUTABLE TO COMMON SHAREHOLDERS: Basic \$ [\d.]+ \$ [\d.]+ Diluted \$ ([\d.]+) \$ ([\d.]+)', block)
+    shares = re.findall(r'WEIGHTED AVERAGE COMMON SHARES OUTSTANDING: Basic [\d,]+ [\d,]+ Diluted ([\d,]+) ([\d,]+)', block)
+    if 'net-income' in metrics and len(common) == len(eps) == len(shares) == len(preferred) == 1:
+        income = [Decimal(x.replace(',', '')) for x in common[0]]
+        diluted = [Decimal(x.replace(',', '')) for x in shares[0]]
+        reported = [Decimal(x) for x in eps[0]]
+        if (abs(net[0] - Decimal(preferred[0].replace(',', '')) - income[0]) <= Decimal(1) and diluted[0] > 0 and diluted[1] > 0
+                and all(abs(income[i] / diluted[i] - reported[i]) <= Decimal('0.015') + reported[i] * Decimal('0.02') for i in (0, 1))):
+            facts.append(('eps', per_share(reported[0]), per_share(reported[1])))
+    order = {k: i for i, k in enumerate(ORDER)}
+    facts.sort(key=lambda f: order[f[0]])
+    return {'period': f'Q{quarter} FY{fiscal_year}', 'facts': facts}
+def parse_gev(text, url=None):
+    """GE Vernova's results release (8-K EX-99): the 'Total Company Results' summary table (this quarter, a year earlier, change, then nine months).
+    Revenue and diluted EPS against their stated Year-on-Year change, net income and adjusted EBITDA against the stated difference, and revenue against
+    the headline's own '$12.6B, +27%'. The release carries no full income statement, so there is no operating income."""
+    t = clean(text)
+    if 'ge vernova' not in t.lower():
+        raise ValueError('issuer-identity-missing')
+    period = re.findall(r'reports [a-z ]*?(first|second|third|fourth) quarter (20\d\d) financial performance', t[:1500], re.I)
+    if len(period) != 1:
+        raise ValueError('period-unrecognized')
+    quarter, year = QUARTERS[period[0][0].lower()], int(period[0][1])
+    start = t.find('Total Company Results')
+    if start < 0:
+        raise ValueError('summary-table-missing')
+    block = t[start:start + 2200]
+    if not re.search(r'\(Dollars in millions, except per share\) (20\d\d) (20\d\d) Year-on-Year', block[:300]):
+        raise ValueError('columns-unrecognized')
+    columns = re.search(r'\(Dollars in millions, except per share\) (20\d\d) (20\d\d) Year-on-Year', block)
+    if int(columns[1]) != year or int(columns[2]) != year - 1:
+        raise ValueError('columns-unrecognized')
+    amount = r'\$([\d,]+(?:\.\d+)?)'
+    pct = r'(-?\d+)%'
+
+    def row(label, third):
+        found = re.findall(r'(?<![A-Za-z])' + label + ' ' + amount + ' ' + amount + ' ' + third + r'(?= )', block)
+        if len(found) != 1:
+            return None
+        return [Decimal(x.replace(',', '')) for x in found[0]]
+
+    def change_ok(values, stated):  # whole-percent change printed next to the two values
+        return values[1] > 0 and abs((values[0] / values[1] - 1) * 100 - Decimal(stated)) <= Decimal('0.55')
+
+    def with_pct(label):
+        found = re.findall(r'(?<![A-Za-z])' + label + ' ' + amount + ' ' + amount + ' ' + pct + r'(?= )', block)
+        if len(found) != 1:
+            return None
+        values = [Decimal(found[0][0].replace(',', '')), Decimal(found[0][1].replace(',', ''))]
+        return values if change_ok(values, found[0][2]) else None
+
+    def with_diff(label):
+        values = row(label, amount)
+        return values[:2] if values and abs(values[0] - values[1] - values[2]) <= Decimal(1) else None
+    revenue = with_pct('Total revenues')
+    if not revenue:
+        raise ValueError('revenue-row-unrecognized')
+    headline = re.findall(r'Revenue of \$(\d+(?:\.\d+)?)B, \+(\d+)%', t[:3000])
+    if len(headline) != 1 or abs(Decimal(headline[0][0]) * 1000 - revenue[0]) > Decimal(55) or not change_ok(revenue, headline[0][1]):
+        raise ValueError('change-mismatch')
+    facts = [('revenue', money_millions(revenue[0]), money_millions(revenue[1]))]
+    eps = with_pct('Diluted EPS')
+    if eps:
+        facts.append(('eps', per_share(eps[0]), per_share(eps[1])))
+    for key, label in (('net-income', r'Net income \(loss\)'), ('adjusted-ebitda', 'Adjusted EBITDA')):
+        values = with_diff(label)
+        if values:
+            facts.append((key, money_millions(values[0]), money_millions(values[1])))
+    order = {k: i for i, k in enumerate(ORDER)}
+    facts.sort(key=lambda f: order[f[0]])
+    return {'period': f'Q{quarter} {year}', 'facts': facts}
+
+
+SKHYNIX_ROWS = (('revenue', 'Revenue'), ('operating-income', 'Operating Profit'),
+                ('pretax', 'Profit from Continuing Operations Before Income Tax'), ('net-income', r'Profit \(Loss\) for the Period'))
+
+
+def parse_skhynix(text, url=None):
+    """SK hynix's 'Preliminary Results of Operations' (SEC Form 6-K, the same table it files with the Korean regulator), in millions of won:
+    this quarter, the year to date, the previous quarter and the same quarter a year earlier, with the stated quarter-on-quarter and
+    year-on-year changes. A row is published only when both stated changes agree with the values; the periods must be the quarter, the
+    one before it and the same quarter a year earlier. Figures are preliminary and unaudited (the label says so). No EPS in the table."""
+    t = clean(text)
+    if 'sk hynix' not in t.lower():
+        raise ValueError('issuer-identity-missing')
+    start = t.find('Preliminary Results of Operations')
+    if start < 0:
+        raise ValueError('table-heading-missing')
+    block = t[start:start + 3600]
+    if 'in millions of Won' not in block[:600]:
+        raise ValueError('units-unrecognized')
+    periods = re.search(r'Current Period \((First|Second|Third|Fourth) quarter\(\d\) of (20\d\d)\) Previous Period \((First|Second|Third|Fourth) quarter\(\d\) of (20\d\d)\)'
+                        r'.{0,60}?Year-to-Year Comparison \((First|Second|Third|Fourth) quarter\(\d\) of (20\d\d)\)', block[:900])
+    if not periods:
+        raise ValueError('period-unrecognized')
+    quarter, year = QUARTERS[periods[1].lower()], int(periods[2])
+    before = (quarter - 1, year) if quarter > 1 else (4, year - 1)
+    if (QUARTERS[periods[3].lower()], int(periods[4])) != before or (QUARTERS[periods[5].lower()], int(periods[6])) != (quarter, year - 1):
+        raise ValueError('columns-unrecognized')
+    # each metric is its own run of the block, from its label to the next metric's label
+    starts = []
+    for key, label in SKHYNIX_ROWS + (('controlling', 'Attributable To: Controlling Interests'),):
+        found = list(re.finditer(label + r' Quarterly Results', block))
+        if len(found) != 1:
+            starts.append((key, None))
+        else:
+            starts.append((key, found[0].start()))
+    ends = [position for _, position in starts if position is not None] + [len(block)]
+    rows = {}
+    for key, position in starts:
+        if position is None:
+            continue
+        run = block[position:min([end for end in ends if end > position] or [len(block)])]
+        amounts = re.findall(r'(?<![\d,.])(\(?)(\d{1,3}(?:,\d{3})+)', run)
+        changes = re.findall(r'(?<![\d,])(\(?)(\d+\.\d)(?![\d,])', run)
+        if len(amounts) != 5 or len(changes) != 3:  # this quarter, YTD, previous quarter, year-ago quarter, year-ago YTD / q-o-q, y-o-y, y-o-y YTD
+            continue
+        value = [Decimal(n.replace(',', '')) * (-1 if bracket else 1) for bracket, n in amounts]
+        qoq, yoy = [Decimal(n) * (-1 if bracket else 1) for bracket, n in changes[:2]]
+        current, previous, ago = value[0], value[2], value[3]
+        if previous <= 0 or ago <= 0:
+            continue
+        if abs((current / previous - 1) * 100 - qoq) > Decimal('0.06') or abs((current / ago - 1) * 100 - yoy) > Decimal('0.06'):
+            continue
+        rows[key] = (current, ago)
+    if 'revenue' not in rows:
+        raise ValueError('revenue-row-unrecognized')
+
+    def won(value):  # millions of won -> trillions, the printed figure exactly (104,615,483 -> 104.615483)
+        return prefixed('\u20a9', value / 1000000, 'T')
+    names = {'revenue': ('売上高（暫定・兆ウォン）', 'Revenue (preliminary, KRW trillion)'),
+             'operating-income': ('営業利益（暫定・兆ウォン）', 'Operating profit (preliminary, KRW trillion)'),
+             'net-income': ('当期利益（暫定・兆ウォン）', 'Profit for the period (preliminary, KRW trillion)')}
+    facts = [(key, won(rows[key][0]), won(rows[key][1]), names[key]) for key in ('revenue', 'operating-income', 'net-income') if key in rows]
+    order = {k: i for i, k in enumerate(ORDER)}
+    facts.sort(key=lambda f: order[f[0]])
+    return {'period': f'Q{quarter} {year}', 'facts': facts}
 
 
 def parse_dell(text, url=None):
@@ -779,6 +975,10 @@ PROFILES = {
     'AMAT': {'publisher': 'Applied Materials IR (SEC 8-K)', 'parse': lambda t, u=None: parse_statement(t, STATEMENT['AMAT']), 'marker': STATEMENT['AMAT']['heading']},
     'GOOGL': {'publisher': 'Alphabet IR (SEC 8-K)', 'parse': lambda t, u=None: parse_statement(t, STATEMENT['GOOGL']), 'marker': STATEMENT['GOOGL']['heading']},
     'AMZN': {'publisher': 'Amazon IR (SEC 8-K)', 'parse': lambda t, u=None: parse_statement(t, STATEMENT['AMZN']), 'marker': STATEMENT['AMZN']['heading']},
+    'GEV': {'publisher': 'GE Vernova IR (SEC 8-K)', 'parse': parse_gev, 'marker': 'Total Company Results'},
+    'VRT': {'publisher': 'Vertiv IR (SEC 8-K)', 'parse': lambda t, u=None: parse_statement(t, STATEMENT['VRT']), 'marker': 'STATEMENTS OF EARNINGS (LOSS)'},
+    'ORCL': {'publisher': 'Oracle IR (SEC 8-K)', 'parse': parse_oracle, 'marker': 'CONDENSED CONSOLIDATED STATEMENTS OF OPERATIONS'},
+    'SKHY': {'publisher': 'SK hynix IR (SEC 6-K)', 'parse': parse_skhynix, 'marker': 'Preliminary Results of Operations'},
     'MSFT': {'publisher': 'Microsoft IR (SEC 8-K)', 'parse': lambda t, u=None: parse_statement(t, STATEMENT['MSFT']), 'marker': STATEMENT['MSFT']['heading']},
     'AMD': {'publisher': 'AMD IR (SEC 8-K)', 'parse': lambda t, u=None: parse_statement(t, STATEMENT['AMD']), 'marker': STATEMENT['AMD']['heading']},
     'MRVL': {'publisher': 'Marvell IR (SEC 8-K)', 'parse': lambda t, u=None: parse_statement(t, STATEMENT['MRVL']),

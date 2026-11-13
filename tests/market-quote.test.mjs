@@ -115,3 +115,17 @@ test("a series made only of extended bars stays whole; an empty one stays empty"
   assert.deepEqual(splitExtendedBars(only), { regular: only, extended: [] });
   assert.deepEqual(splitExtendedBars([]), { regular: [], extended: [] });
 });
+
+test("1D in the pre-market morning: dozens of pre-market bars are still a stub, so the previous session comes with them", () => {
+  const at = (d, m) => `${d} ${String(Math.floor(m / 60)).padStart(2, "0")}:${String(m % 60).padStart(2, "0")}:00`;
+  const prev = Array.from({ length: 78 }, (_, i) => bar(at("2026-11-12", 570 + i * 5)));
+  const pre = Array.from({ length: 31 }, (_, i) => bar(at("2026-11-13", 240 + i * 5))); // 04:00–06:30, all extended-hours
+  const kept = trimBars([...prev, ...pre], "1d");
+  assert.equal(kept.length, 109);
+  const { regular, extended } = splitExtendedBars(kept);
+  assert.equal(extended.length, 31);
+  assert.equal(regular.length, 78);
+  // With a real session today, today alone is shown again.
+  const open = Array.from({ length: 40 }, (_, i) => bar(at("2026-11-13", 570 + i * 5)));
+  assert.equal(trimBars([...prev, ...pre, ...open], "1d").length, 71);
+});

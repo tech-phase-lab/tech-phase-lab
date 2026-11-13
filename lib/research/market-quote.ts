@@ -85,12 +85,19 @@ export function chartSpec(range: ChartRange, now = Date.now()): { interval: "5mi
   }
 }
 const day = (at: string) => at.slice(0, 10);
+/** True for a bar outside the regular 9:30–16:00 session (pre-market or after-hours). `at` is New York time; a date-only `at` is never extended. */
+export function isExtendedBar(b: Bar): boolean {
+  if (b.at.length < 16) return false;
+  const m = Number(b.at.slice(11, 13)) * 60 + Number(b.at.slice(14, 16));
+  return m < 9 * 60 + 30 || m >= 16 * 60;
+}
 /** Keeps what the range means: the last session for 1D, the last five sessions for 1W, this calendar year for YTD, otherwise the last N bars. */
 export function trimBars(bars: Bar[], range: ChartRange, now = Date.now()): Bar[] {
   if (!bars.length) return bars;
   const last = bars[bars.length - 1], days = [...new Set(bars.map(b => day(b.at)))];
   // Before the market has traded much (pre-market, the first minutes), the day alone is a stub: show the previous session with it.
-  if (range === "1d") { const today = bars.filter(b => day(b.at) === day(last.at)); return today.length < 30 && days.length > 1 ? bars.filter(b => day(b.at) >= days[days.length - 2]) : today; }
+  // Only the regular-session bars count: a pre-market morning has dozens of extended bars and still no session to show.
+  if (range === "1d") { const today = bars.filter(b => day(b.at) === day(last.at)); return today.filter(b => !isExtendedBar(b)).length < 30 && days.length > 1 ? bars.filter(b => day(b.at) >= days[days.length - 2]) : today; }
   if (range === "1w") { const keep = new Set(days.slice(-5)); return bars.filter(b => keep.has(day(b.at))); }
   if (range === "ytd") return bars.filter(b => b.at.slice(0, 4) === last.at.slice(0, 4));
   const size = visibleSize(range, now);
@@ -191,10 +198,8 @@ export function nextEarningsFromSite(ticker: string, events: { ticker?: string; 
  * last day. A bar's `at` is New York time. Nothing is invented: with no extended bars the second list is empty. */
 export function splitExtendedBars(bars: Bar[]): { regular: Bar[]; extended: Bar[] } {
   if (!bars.length) return { regular: bars, extended: [] };
-  const minutes = (b: Bar) => Number(b.at.slice(11, 13)) * 60 + Number(b.at.slice(14, 16));
-  const outside = (b: Bar) => { if (b.at.length < 16) return false; const m = minutes(b); return m < 9 * 60 + 30 || m >= 16 * 60; };
   const lastDay = bars[bars.length - 1].at.slice(0, 10);
   let cut = bars.length;
-  while (cut > 0 && bars[cut - 1].at.slice(0, 10) === lastDay && outside(bars[cut - 1])) cut--;
+  while (cut > 0 && bars[cut - 1].at.slice(0, 10) === lastDay && isExtendedBar(bars[cut - 1])) cut--;
   return cut === 0 ? { regular: bars, extended: [] } : { regular: bars.slice(0, cut), extended: bars.slice(cut) };
 }

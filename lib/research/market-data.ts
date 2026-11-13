@@ -1,6 +1,7 @@
 import "server-only";
 import { unstable_cache } from "next/cache";
 import { calendarEvents, dateOnlyEarnings } from "./calendar";
+import { shapePeriod, periodSeries, isIntradayPeriod, type BoardPeriod } from "./market-board-periods.ts";
 import { easternToIso, chartSpec, nextEarningsFromSite, parseBars, parseNextEarnings, parseQuote, parseQuotes, parseStatistics, splitBars, type Bar, type ChartRange, type MarketFacts, type MarketQuote } from "./market-quote";
 
 /** Server-side Twelve Data reads for the price screens. The key (TWELVE_DATA_API_KEY) never leaves the server. */
@@ -71,11 +72,11 @@ export const isMarketChartSymbol = (symbol: string) => Object.hasOwn(MARKET_SYMB
 const resolved = new Map<string, { variant: Variant; quote: MarketQuote; at: number } | null>();
 const QUOTE_TTL = 60_000;
 /** The first way of asking that answers (the answer is kept a minute; a refusal twenty seconds). */
-async function resolveMarket(id: string): Promise<{ symbol: string; extra: Variant; quote: MarketQuote | null }> {
+async function resolveMarket(id: string, ttl = QUOTE_TTL): Promise<{ symbol: string; extra: Variant; quote: MarketQuote | null }> {
   const entry = MARKET_SYMBOLS[id];
   const hit = resolved.get(id);
   if (hit === null) throw new Error(`unresolved ${id}`);
-  if (hit && hit.at + QUOTE_TTL > Date.now()) { const { symbol = id, ...extra } = hit.variant; return { symbol, extra, quote: hit.quote }; }
+  if (hit && hit.at + ttl > Date.now()) { const { symbol = id, ...extra } = hit.variant; return { symbol, extra, quote: hit.quote }; }
   const tried: string[] = [];
   const attempt = async (variant: Variant): Promise<{ symbol: string; extra: Variant; quote: MarketQuote | null } | null> => {
     const { symbol = id, ...extra } = variant;
@@ -123,6 +124,30 @@ async function readAll(ticker: string, range: ChartRange): Promise<Bar[]> {
     throw error;
   }
 }
+/** Board charts keep their own memory, so the 15-second refresh of the 5 / 15 / 60 / 180-minute candles never touches the watchlist's (60 seconds).
+ * The daily and weekly series change by one candle a day: the candle body is kept 60 seconds, the live price comes from the quote. */
+const FAST_BAR_TTL = 15_000, SLOW_BAR_TTL = 60_000;
+const periodMemory = new Map<string, { at: number; all: Bar[] }>();
+async function readSeries(ticker: string, interval: string, size: number, ttl: number): Promise<Bar[]> {
+  const memoryKey = `${ticker}|${interval}|${size}`, hit = periodMemory.get(memoryKey);
+  if (hit && hit.at + ttl > Date.now()) return hit.all;
+  const base = { interval, outputsize: String(size), order: "desc", ...(interval === "5min" || interval === "15min" || interval === "30min" ? { prepost: "true" } : {}) };
+  try {
+    const target = MARKET_SYMBOLS[ticker] ? await resolveMarket(ticker) : null;
+    const all = parseBars(target ? await call("time_series", { symbol: target.symbol, ...base, ...target.extra }) : await call("time_series", { symbol: ticker, ...base }));
+    periodMemory.set(memoryKey, { at: Date.now(), all });
+    return all;
+  } catch (error) {
+    if (hit && hit.all.length) return hit.all; // the provider blinked: show the last good bars instead of an empty chart
+    throw error;
+  }
+}
+/** The bars of one board period (see market-board-periods.ts) and the bars before them. */
+export async function loadPeriodSet(ticker: string, period: BoardPeriod): Promise<{ bars: Bar[]; before: Bar[] }> {
+  const series = periodSeries(period);
+  return shapePeriod(period, await readSeries(ticker, series.interval, series.size, isIntradayPeriod(period) ? FAST_BAR_TTL : SLOW_BAR_TTL));
+}
+
 /** The drawn bars of a range plus the bars before them (for the moving averages). */
 export async function loadBarSet(ticker: string, range: ChartRange): Promise<{ bars: Bar[]; before: Bar[] }> { return splitBars(await readAll(ticker, range), range); }
 export async function loadBars(ticker: string, range: ChartRange): Promise<Bar[]> { return (await loadBarSet(ticker, range)).bars; }
@@ -159,11 +184,12 @@ export async function loadMarketFacts(ticker: string): Promise<MarketFacts> {
  * panel reads the three ETFs that track them. The percentage is the ETF's and the column says so; never mix in an unchecked symbol. */
 /** The price board: one quote per requested symbol (those that cannot be read are simply absent, and logged). */
 export type BoardQuote = { id: string; price: number; change: number | null; percentChange: number | null; currency: string; asOf: string; marketOpen: boolean; extended: MarketQuote["extended"]; high: number | null; low: number | null; open: number | null; volume: number | null };
-export async function loadBoard(ids: string[]): Promise<BoardQuote[]> {
+/** `fast` (the three index cards and the chart being looked at) keeps a quote 15 seconds; everything else on the board keeps it a minute, as before. */
+export async function loadBoard(ids: string[], fast = false): Promise<BoardQuote[]> {
   const out: BoardQuote[] = [];
   await Promise.all(ids.filter(isMarketChartSymbol).map(async id => {
     try {
-      const { quote } = await resolveMarket(id);
+      const { quote } = await resolveMarket(id, fast ? 15_000 : QUOTE_TTL);
       if (quote) out.push({ id, price: quote.price, change: quote.change, percentChange: quote.percentChange, currency: quote.currency, asOf: quote.asOf, marketOpen: quote.marketOpen, extended: quote.extended, high: quote.high, low: quote.low, open: quote.open, volume: quote.volume });
     } catch { /* logged by resolveMarket */ }
   }));

@@ -46,7 +46,7 @@ class Defaults(Base):
     def test_new_settings_start_as_the_owner_decided(self):
         prefs = push.member_preferences(self.db, self.payload, now=self.now)['preferences']
         self.assertTrue(prefs['economic'])
-        self.assertEqual(prefs['economicKinds'], ['jobs', 'cpi', 'pce', 'fomc', 'adp', 'ism'])
+        self.assertEqual(prefs['economicKinds'], ['jobs', 'cpi', 'ppi', 'pce', 'fomc', 'adp', 'ism'])
         self.assertFalse(prefs['weeklyIssue']); self.assertFalse(prefs['rizelAnswer'])
         self.assertEqual(prefs['quiet'], {'on': True, 'start': 23, 'end': 7})
 
@@ -129,7 +129,78 @@ class Economic(Base):
             {'publisher': 'BLS', 'url': 'https://www.bls.gov/news.release/archives/ppi_11062026.htm', 'publishedAt': '2026-11-06T13:30:00+00:00', 'translationJa': 'x', 'title': 'T'},
         ]
         events = [{'id': 'adp-2026-10', 'releasedAt': '2026-11-04T13:15:00+00:00', 'resultJa': '民間の雇用者数 +86,000人', 'resultEn': 'Private employment +86,000'}, {'id': 'us-midterm-2026-11-03', 'releasedAt': '2026-11-04T05:00:00+00:00', 'resultJa': 'x'}]
-        self.assertEqual(sorted(i['kind'] for i in push.economic_items(updates, events)), ['adp', 'jobs', 'pce'])
+        self.assertEqual(sorted(i['kind'] for i in push.economic_items(updates, events)), ['adp', 'jobs', 'pce', 'ppi'])
+
+    def test_ppi_result_with_its_numbers_goes_to_members_who_have_it_on(self):
+        released = at(21, 30, 13)
+        ja = '米国10月PPI：総合 前月比+0.3%・前年比+2.7%／コア 前月比+0.1%・前年比+2.6%'
+        updates = [{'publisher': 'BLS', 'url': 'https://www.bls.gov/news.release/archives/ppi_11132026.htm', 'publishedAt': datetime.fromtimestamp(released, timezone.utc).isoformat(), 'translationJa': ja, 'title': 'U.S. October PPI'}]
+        items = push.economic_items(updates, [])
+        self.assertEqual([i['kind'] for i in items], ['ppi'])
+        push.deliver_economic(self.db, items, **self.options(released + 120))
+        self.assertEqual([(m['title'], m['body'], m['url']) for m in self.sent], [('米国PPI', ja, '/research/calendar')])
+        self.sent.clear()
+        self.save({'economicKinds': ['jobs']})
+        push.deliver_economic(self.db, [{**items[0], 'id': 'ppi-other'}], **self.options(released + 120))
+        self.assertEqual(self.sent, [], 'switched off for PPI')
+
+    def register_owner(self):
+        import release_watch
+        payload = {**self.payload, 'memberId': release_watch.OWNER_MEMBER_ID, 'subscription': subscription('updates.push.services.mozilla.com'), 'questionOwner': 'b' * 64}
+        push.register_member(self.db, payload, {'MU'}, self.now - 10)
+
+    def x_post(self, published='2026-11-13T13:30:28+00:00', text='米国PPI：コア前月比 0.3%、コア前年比 5.0%、前月比 0.3%、前年比 6.5%'):
+        return {'publisher': 'Wall St Engine', 'url': 'https://x.com/wallstengine/status/1', 'publishedAt': published, 'translationJa': text, 'title': 'U.S. PPI'}
+
+    def test_ppi_numbers_come_only_from_the_bls_page_and_keep_headline_core_month_year_apart(self):
+        import bls_ppi
+        from test_bls_ppi import TEXT
+        release = bls_ppi.parse_release(TEXT.replace('October 15, 2026', 'November 13, 2026').replace('Thursday', 'Friday').replace('SEPTEMBER', 'OCTOBER').replace('in September', 'in October'))
+        update = {'publisher': 'BLS', 'url': release['url'], 'publishedAt': release['publishedAt'], 'translationJa': release['translationJa'], 'title': release['title']}
+        items = push.economic_items([update, self.x_post()], [])
+        self.assertEqual([(i['kind'], bool(i.get('announceOnly'))) for i in items], [('ppi', False), ('ppi', True)])
+        released = datetime.fromisoformat(release['publishedAt']).timestamp()
+        self.register_owner()
+        push.deliver_economic(self.db, items, **self.options(released + 300))
+        bodies = [m['body'] for m in self.sent]
+        self.assertEqual(sorted(bodies), sorted([release['translationJa']] * 2), 'members and the owner get the BLS numbers; the X numbers are never used, and no warning is sent')
+        self.assertIn('総合 前月比+1.3%・前年比+6.3%／コア（食品・エネルギー・貿易サービス除く） 前月比+0.5%・前年比+5.0%', bodies[0])
+        self.assertNotIn('6.5', ' '.join(bodies))
+
+    def test_ppi_without_bls_numbers_is_still_announced_with_the_official_link_and_only_the_owner_is_warned(self):
+        items = push.economic_items([self.x_post()], [], {'bls-ppi': 'bls-ppi-measures-missing-or-ambiguous'})
+        self.assertEqual([(i['kind'], i['announceOnly'], i['reason']) for i in items], [('ppi', True, 'bls-ppi-measures-missing-or-ambiguous')])
+        released = datetime.fromisoformat('2026-11-13T13:30:28+00:00').timestamp()
+        self.register_owner()
+        push.deliver_economic(self.db, items, **self.options(released + 60))
+        self.assertEqual(self.sent, [], 'BLS gets a short grace to show the numbers first')
+        push.deliver_economic(self.db, items, **self.options(released + 180))
+        member = [m for m in self.sent if m['title'] == '米国PPI']
+        warning = [m for m in self.sent if m['title'].startswith('⚠')]
+        self.assertEqual(len(member), 2, 'the member and the owner device both get the announcement')
+        for m in member:
+            self.assertEqual(m['body'], '米国PPIが発表されました。公式発表で結果をご確認ください（https://www.bls.gov/news.release/ppi.nr0.htm）')
+            self.assertNotRegex(m['body'], r'\d%|6\.5|5\.0')
+        self.assertEqual([m['body'] for m in warning], ['理由：bls-ppi-measures-missing-or-ambiguous'], 'one warning, to the owner device only')
+        self.sent.clear()
+        push.deliver_economic(self.db, items, **self.options(released + 240))
+        self.assertEqual(self.sent, [], 'never twice')
+
+    def test_a_ppi_notice_without_numbers_is_not_sent_once_bls_numbers_exist_and_not_for_a_post_before_the_release(self):
+        released = datetime.fromisoformat('2026-11-13T13:30:28+00:00').timestamp()
+        numbered = {'kind': 'ppi', 'id': 'ppi-/news.release/archives/ppi_11132026.htm', 'publishedAt': '2026-11-13T13:30:00+00:00', 'ja': '米国10月PPI：総合 前月比+0.3%・前年比+2.7%／コア 前月比+0.1%・前年比+2.6%', 'en': 'x'}
+        announced = push.economic_items([self.x_post()], [])[0]
+        push.deliver_economic(self.db, [announced, numbered], **self.options(released + 200))
+        self.assertEqual([m['body'] for m in self.sent], [numbered['ja']])
+        self.assertEqual(push.economic_items([self.x_post('2026-11-13T13:00:00+00:00')], []), [])
+        self.assertEqual(push.economic_items([self.x_post(text='PPI preview: expected soon')], []), [])
+        self.assertEqual(push.economic_items([self.x_post('2026-11-14T13:30:28+00:00')], []), [], 'a day with no scheduled PPI release')
+
+    def test_a_device_still_on_the_old_default_list_gets_ppi(self):
+        self.db.execute('UPDATE push_devices SET econ_kinds=?', ('["jobs", "cpi", "pce", "fomc", "adp", "ism"]',))
+        self.assertIn('ppi', push.economic_kinds(self.db.execute('SELECT * FROM push_devices').fetchone()))
+        self.db.execute('UPDATE push_devices SET econ_kinds=?', ('["jobs", "cpi"]',))
+        self.assertNotIn('ppi', push.economic_kinds(self.db.execute('SELECT * FROM push_devices').fetchone()))
 
     def test_fomc_ism_gdp_and_retail_results_are_announced_and_claims_never(self):
         base = {'releasedAt': '2026-12-09T19:00:00+00:00', 'resultJa': '政策金利を据え置き（3.50〜3.75%）', 'resultEn': 'Held'}

@@ -1,11 +1,11 @@
 # Earnings flash pass/fail (latest real release of each watch-list company)
 
-Generated 2026-11-13 09:32Z · PASS 17 / 22
+Generated 2026-11-13 09:32Z · PASS 21 / 22
 
 | Ticker | Verdict | Detection source | Figures | Reason |
 |---|---|---|---|---|
 | MU | PASS | SEC 8-K 2026-09-30T20:02Z | 4 | 4 figures, e.g. revenue $54.229B |
-| SKHY | FAIL | no route | 0 | no release text found |
+| SKHY | PASS | SEC 6-K 2026-10-28T10:01Z | 3 | 3 figures, e.g. revenue ₩104.615483T (preliminary; SEC route: SK hynix became an SEC filer with its ADR listing) |
 | SNDK | PASS | SEC 8-K 2026-10-29T20:13Z | 4 | 4 figures, e.g. revenue $11.031B |
 | NBIS | PASS | newsroom page | 3 | 3 figures, e.g. revenue $980.8M |
 | NVDA | PASS | SEC 8-K 2026-08-26T20:21Z | 6 | 6 figures, e.g. revenue $96.221B |
@@ -18,14 +18,14 @@ Generated 2026-11-13 09:32Z · PASS 17 / 22
 | ANET | PASS | SEC 8-K 2026-11-03T21:10Z | 4 | 4 figures, e.g. revenue $3.6576B |
 | CRDO | PASS | SEC 8-K 2026-09-01T20:08Z | 4 | 4 figures, e.g. revenue $479.003M |
 | CRWV | PASS | SEC 8-K 2026-11-10T21:05Z | 5 | 5 figures, e.g. revenue $3.661B |
-| VRT | FAIL | SEC 8-K 2026-10-28T10:02Z | 0 | no parser for this company yet |
-| GEV | FAIL | SEC 8-K 2026-10-28T10:16Z | 0 | no parser for this company yet |
+| VRT | PASS | SEC 8-K 2026-10-28T10:02Z | 4 | 4 figures, e.g. revenue $4.3128B |
+| GEV | PASS | SEC 8-K 2026-10-28T10:16Z | 4 | 4 figures, e.g. revenue $12.642B |
 | DELL | PASS | SEC 8-K 2026-09-01T20:10Z | 4 | 4 figures, e.g. revenue $46.971B |
 | PLTR | PASS | SEC 8-K 2026-11-02T21:06Z | 4 | 4 figures, e.g. revenue $2.313411B |
 | MSFT | PASS | SEC 8-K 2026-10-28T20:04Z | 4 | 4 figures, e.g. revenue $92.279B |
 | AMZN | PASS | SEC 8-K 2026-10-29T20:05Z | 4 | 4 figures, e.g. revenue $201.944B |
 | GOOGL | PASS | SEC 8-K 2026-10-28T20:01Z | 4 | 4 figures, e.g. revenue $127.577B |
-| ORCL | FAIL | no route | 0 | Oracle files no 8-K Item 2.02 and oracle.com refuses automated fetches (403): needs an IR/wire route |
+| ORCL | PASS | SEC 8-K 2026-09-10T20:16Z | 4 | 4 figures, e.g. revenue $19.345B (found via SEC: the earlier "no route" was the backtest rejecting the "Q1 Results" title) |
 
 ## How this table is made
 `python3 scripts/research/earnings_backtest.py` (add `--json` for a machine-readable copy) takes each company's **latest real release** (SEC 8-K Item 2.02 or 6-K exhibit;

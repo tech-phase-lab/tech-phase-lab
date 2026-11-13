@@ -92,6 +92,7 @@
   {
     "id": "skhynix-news",
     "name": "SK hynix Newsroom",
+    "automatedAccess": "prohibited",
     "kind": "publisher-update",
     "url": "https://news.skhynix.com/feed/",
     "format": "feed",

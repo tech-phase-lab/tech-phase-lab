@@ -142,6 +142,30 @@ class ReleaseWatchTests(unittest.TestCase):
         self.assertIn('米国市場終了から2分05秒', published['body'])
 
 
+    def test_published_alert_carries_the_result_numbers(self):
+        note = watch.notification(CPI, 'published', 43, '米国10月PPI：総合 前月比+0.3%')
+        self.assertEqual(note['body'], '米国10月PPI：総合 前月比+0.3%（予定時刻から43秒）')
+        self.assertEqual(note['url'], '/research/calendar')
+        self.assertIn('結果を掲載しました', watch.notification(CPI, 'published', 43)['body'])
+
+    def test_numbers_in_the_alert_come_only_from_the_bls_page_never_from_a_post(self):
+        ppi = {'id': 'ppi-x', 'kind': 'economic', 'indicator': 'ppi', 'phase': 'release', 'at': AT, 'titleJa': '米国PPI'}
+        post = {'publisher': 'Wall St Engine', 'url': 'https://x.com/wallstengine/status/1', 'newsCategory': 'economic', 'title': 'U.S. PPI',
+                'translationJa': '米国PPI：コア前月比 0.3%、前年比 6.5%', 'publishedAt': iso(AT + timedelta(seconds=30)), 'observedAt': iso(AT + timedelta(seconds=31))}
+        brief = {'kind': 'economic', 'titleJa': '米国PPI 前年比 6.5%', 'titleEn': 'PPI', 'publishedAt': iso(AT + timedelta(seconds=30)), 'publicAt': iso(AT + timedelta(seconds=31))}
+        official = {'publisher': 'BLS', 'url': 'https://www.bls.gov/news.release/archives/ppi_11132026.htm', 'title': 'U.S. October PPI', 'translationJa': '米国10月PPI：総合 前月比+0.3%',
+                    'publishedAt': iso(AT + timedelta(seconds=40)), 'observedAt': iso(AT + timedelta(seconds=41))}
+        for payload in ({'officialUpdates': [post]}, {'resultBriefs': [brief]}):
+            alerts = watch.check(self.db, payload, AT + timedelta(minutes=1), self.transport, [ppi])
+            self.assertEqual([a['kind'] for a in alerts], ['published'])
+            self.assertNotIn('6.5', self.sent[-1][1]['body'])
+            self.assertIn('結果を掲載しました', self.sent[-1][1]['body'])
+            self.db.execute('DELETE FROM release_watch_alerts')
+        watch.check(self.db, {'officialUpdates': [post, official]}, AT + timedelta(minutes=1), self.transport, [ppi])
+        self.assertIn('米国10月PPI：総合 前月比+0.3%', self.sent[-1][1]['body'])
+        self.assertNotIn('6.5', self.sent[-1][1]['body'])
+
+
 class OwnerAccountsTests(unittest.TestCase):
     def test_devices_of_either_owner_account_receive_the_release_alerts(self):
         import sqlite3
