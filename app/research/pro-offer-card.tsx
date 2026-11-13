@@ -2,6 +2,7 @@
 import Link from "next/link";
 import { useEffect, useState, type ReactNode } from "react";
 import styles from "./plan-cards.module.css";
+import { priceFont } from "./price-font";
 
 export type OfferCurrency = "JPY" | "USD";
 export type OfferPeriod = "month" | "year";
@@ -45,7 +46,7 @@ export default function ProOfferCard({ ja, onSubscribe, href, busy = false, disa
   const price = offerPrice(currency, period, ja);
   const tab = (active: boolean, label: string, onClick: () => void) => <button type="button" className={styles.tab} aria-pressed={active} onClick={onClick}>{label}</button>;
   const label = busy ? t("PayPalへ移動しています…", "Opening PayPal…") : t("PayPalで申し込む", "Subscribe with PayPal");
-  return <article className={styles.proCard}>
+  return <article className={`${styles.proCard} ${priceFont.variable}`}>
     <div className={styles.head}>
       <svg width="26" height="22" viewBox="0 0 26 22" fill="none" stroke="#d9b25f" strokeWidth="1.7" strokeLinejoin="round" strokeLinecap="round" aria-hidden="true"><path d="M3 18 L2 6 L8.5 11 L13 3 L17.5 11 L24 6 L23 18 Z" /><path d="M3.5 20.5 H22.5" /></svg>
       <span>TECH PHASE PRO</span>

@@ -3,6 +3,7 @@ import type { Language } from "@/lib/research/data";
 import Link from "next/link";
 import ProOfferCard from "./pro-offer-card";
 import styles from "./plan-cards.module.css";
+import { priceFont } from "./price-font";
 
 /** The only commercial-transactions page on the site today (RESOLUTE's footer link); a Tech Phase PRO page is pending. */
 export const TOKUSHOHO_HREF = "/resolute/legal/commerce";
@@ -70,7 +71,7 @@ export default function PlanCards({ lang }: { lang: Language }) {
   const { free, pro } = plans(ja);
   return <div className={styles.stack}>
     <ProOfferCard ja={ja} href="/research/account?upgrade=1">{groups(pro)}</ProOfferCard>
-    <article className={styles.freeCard}>
+    <article className={`${styles.freeCard} ${priceFont.variable}`}>
       <div className={styles.head}><span>FREE</span></div>
       <div className={styles.tabsSpacer} aria-hidden="true" />
       <p className={styles.priceRow}><span className={styles.priceN}>{t("0円", "¥0")}</span><span className={styles.priceU}>{t("/ 月", "/ month")}</span></p>

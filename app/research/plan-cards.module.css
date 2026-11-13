@@ -18,7 +18,7 @@
 .bubble i { position:absolute; bottom:-3px; right:13px; width:7px; height:7px; background:#e3c07a; transform:rotate(45deg); }
 /* One price block for both cards (PRO and FREE): same size, weight, line height, spacing and margins, so the numbers line up side by side. */
 .priceRow { display:flex; align-items:baseline; gap:8px; flex-wrap:wrap; margin:10px 0 0; min-height:calc(48px * 1.1); }
-.priceN { font-size:48px; font-weight:700; line-height:1.1; letter-spacing:0; }
+.priceN { font-family:var(--font-price-serif),"Noto Serif JP","Hiragino Mincho ProN","Yu Mincho",serif; font-size:48px; font-weight:700; line-height:1.1; letter-spacing:0; }
 .priceU { font-size:14px; font-weight:400; color:#a9a597; }
 .priceOld { font-size:14px; color:#8d8a7f; text-decoration:line-through double; text-decoration-thickness:1px; }
 .proCard .priceN { color:#f0d79a; }
