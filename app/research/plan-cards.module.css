@@ -17,10 +17,10 @@
 .bubble { position:absolute; bottom:calc(100% - 2px); right:-4px; pointer-events:none; white-space:nowrap; padding:2px 7px; border-radius:7px; background:#e3c07a; color:#140f03; font-size:10px; font-weight:700; letter-spacing:.02em; }
 .bubble i { position:absolute; bottom:-3px; right:13px; width:7px; height:7px; background:#e3c07a; transform:rotate(45deg); }
 /* One price block for both cards (PRO and FREE): same size, weight, line height, spacing and margins, so the numbers line up side by side. */
-.priceRow { display:flex; align-items:baseline; gap:8px; flex-wrap:wrap; margin:10px 0 0; min-height:calc(48px * 1.1); }
-.priceN { font-family:var(--font-price-serif),"Noto Serif JP","Hiragino Mincho ProN","Yu Mincho",serif; font-size:48px; font-weight:700; line-height:1.1; letter-spacing:0; }
-.priceU { font-size:14px; font-weight:400; color:#a9a597; }
-.priceOld { font-size:14px; color:#8d8a7f; text-decoration:line-through double; text-decoration-thickness:1px; }
+.priceRow { --price-size:clamp(30px,12.2cqw,48px); display:flex; align-items:baseline; flex-wrap:nowrap; gap:clamp(5px,1.6cqw,8px); margin:10px 0 0; min-height:calc(48px * 1.1); }
+.priceN { font-family:var(--font-price-serif),"Noto Serif JP","Hiragino Mincho ProN","Yu Mincho",serif; font-size:var(--price-size); font-weight:700; line-height:1.1; letter-spacing:0; white-space:nowrap; }
+.priceU { font-size:clamp(11px,3.3cqw,14px); font-weight:400; color:#a9a597; white-space:nowrap; }
+.priceOld { font-size:clamp(11px,3.3cqw,14px); color:#8d8a7f; text-decoration:line-through double; text-decoration-thickness:1px; white-space:nowrap; }
 .proCard .priceN { color:#f0d79a; }
 .freeCard .priceN { color:#eef2f8; }
 .freeCard .priceU { color:#8393ad; }
@@ -67,3 +67,6 @@
 .proCard .group li .plain { flex:1 1 auto; }
 .proCard .group li em { display:none; }
 .proCard .group li:has(em) span { padding-left:10px; border-left:1px solid #3a3a36; }
+
+/* FREE: the figure is a touch smaller than PRO's; the row keeps PRO's height so the cards still line up. */
+.freeCard .priceRow { --price-size:calc(clamp(30px,12.2cqw,48px) * .92); padding-top:calc(48px * .04); box-sizing:border-box; }

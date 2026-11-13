@@ -24,11 +24,11 @@ test('prices: JPY and USD, monthly and yearly, JA and EN, with the 12-month stri
   assert.deepEqual(p('JPY', 'year', false), { amount: '¥29,800', unit: '/ year (tax incl.)', twelveMonths: '¥35,760' });
   assert.deepEqual(p('USD', 'month', false), { amount: '$20', unit: '/ month', twelveMonths: null });
 });
-test('first render: yearly; JPY for Japanese, USD for English; the 17% bubble is not interactive', () => {
+test('first render: monthly (lowest price first); JPY for Japanese, USD for English; the 17% bubble is not interactive', () => {
   const ja = html(true), en = html(false);
-  assert.match(ja, /29,800円/); assert.match(ja, /35,760円/); assert.match(ja, /17%OFF/); assert.match(ja, /PayPalで申し込む/);
+  assert.match(ja, /2,980円/); assert.doesNotMatch(ja, /35,760円/); assert.match(ja, /17%OFF/); assert.match(ja, /PayPalで申し込む/);
   assert.match(ja, /無料プランのすべての機能に加えて/);
-  assert.match(en, /\$200/); assert.match(en, /17% OFF/); assert.match(en, /Subscribe with PayPal/); assert.match(en, /Everything in Free, plus/);
+  assert.match(en, /\$20</); assert.match(en, /17% OFF/); assert.match(en, /Subscribe with PayPal/); assert.match(en, /Everything in Free, plus/);
   assert.match(en, /JPY/); assert.match(en, /Monthly/); assert.match(en, /Yearly/);
   assert.doesNotMatch(ja, /自動更新|返金|NEW/); // no renewal/refund prose inside the card
   const css = readFileSync(new URL('../app/research/plan-cards.module.css', import.meta.url), 'utf8');
@@ -50,7 +50,10 @@ test('the FREE card shows 0円 / 月 with the same price classes as PRO; the not
 });
 test('price figures use Noto Serif JP 700 on both cards, loaded lazily (not preloaded)', () => {
   const css = readFileSync(new URL('../app/research/plan-cards.module.css', import.meta.url), 'utf8');
-  assert.match(css, /\.priceN \{ font-family:var\(--font-price-serif\),"Noto Serif JP"[^}]*font-size:48px; font-weight:700/);
+  assert.match(css, /\.priceN \{ font-family:var\(--font-price-serif\),"Noto Serif JP"[^}]*font-size:var\(--price-size\); font-weight:700/);
+  assert.match(css, /--price-size:clamp\(30px,12\.2cqw,48px\)/); // 48px on a wide card, smaller on a phone so the price row stays one line
+  assert.match(css, /\.priceRow \{[^}]*flex-wrap:nowrap/);
+  assert.match(css, /\.freeCard \.priceRow \{ --price-size:calc\(clamp\(30px,12\.2cqw,48px\) \* \.92\)/); // FREE is slightly smaller than PRO
   const font = readFileSync(new URL('../app/research/price-font.ts', import.meta.url), 'utf8');
   assert.match(font, /preload: false/);
   for (const f of ['pro-offer-card.tsx', 'plan-cards.tsx']) assert.match(readFileSync(new URL('../app/research/' + f, import.meta.url), 'utf8'), /priceFont\.variable/);
