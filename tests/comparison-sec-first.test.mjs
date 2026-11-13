@@ -70,3 +70,16 @@ test("a company the SEC cannot serve falls back to the provider's statements; bu
   result = await (await server({ loadSecComparison: unsupported, loadMarketInputs: async () => ({}), loadTwelveComparisonState: async () => ({ data: null, busy: false }) })).loadComparisonFinancials("ASML");
   assert.equal(result.busy, undefined);
 }));
+
+test("the provider's standardized statements compare with a filing under the same 100-day window as before; two different filing bases never rank", async () => {
+  const { comparableQuarters, comparisonLeaders } = await import("../lib/research/comparison-scorecard.ts");
+  const company = (ticker, end, basis, extra = {}) => ({ ...emptyFinancials(ticker, "unavailable", new Date(NOW).toISOString()), status: "ready", quarterSourceUrl: "https://example.test/", preparedAnalysis: { version: 1 },
+    quarterRevenue: { value: 100, unit: "USD", start: null, end, filed: null, accession: null, tag: "sales", basis }, quarterRevenueGrowth: 10, quarterOperatingMargin: 20, ...extra });
+  const sec = company("AMD", "2026-09-26", "us-gaap"), provider = company("ASML", "2026-06-30", "twelve-standardized"), old = company("MU", "2026-05-20", "twelve-standardized");
+  assert.equal(comparableQuarters([sec, provider], NOW), true);  // 88 days: ranks today (both from the provider) and still ranks
+  assert.equal(comparableQuarters([sec, old], NOW), false);      // 129 days: no ranking, as before
+  assert.equal(comparableQuarters([sec, company("TSM", "2026-09-30", "ifrs-full")], NOW), false); // two different filing bases still never rank
+  assert.equal(comparableQuarters([provider, company("TSM", "2026-09-30", "ifrs-full")], NOW), true); // provider-standardized beside a filing does
+  const worse = company("ASML", "2026-06-30", "twelve-standardized", { quarterRevenueGrowth: 0, quarterOperatingMargin: 5 });
+  assert.deepEqual(comparisonLeaders([sec, worse], "growth", NOW), [true, false]);
+});

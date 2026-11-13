@@ -14,7 +14,13 @@ export function comparableQuarters(companies: Financials[], now=Date.now()): boo
   if (companies.length < 2 || companies.some(c=>!hasRecentQuarter(c,now))) return false;
   const ends=companies.map(c=>Date.parse(c.quarterRevenue!.end));
   const bases=companies.map(c=>c.quarterRevenue!.basis);
-  return bases.every(Boolean) && new Set(bases).size===1 && Math.max(...ends)-Math.min(...ends)<=100*86400000;
+  if(!bases.every(Boolean)) return false;
+  const spread=Math.max(...ends)-Math.min(...ends);
+  // Quarter ends up to 100 days apart, as before. The provider's standardized statements compare with an SEC filing (a foreign filer beside a
+  // US one is ranked today); two different SEC accounting bases (US GAAP beside IFRS) still do not. Each company's source is shown beside its
+  // numbers. On the 22 monitored companies' 231 pairs this rule loses no ranking that exists today (docs/SEC-FIRST-COMPARISON-VALIDATION-2026-11-13.md).
+  const filingBases=new Set(bases.filter(b=>b!=="twelve-standardized"));
+  return filingBases.size<=1 && spread<=100*86400000;
 }
 export function comparisonLeaders(companies: Financials[], id: ScoreId, now=Date.now()): boolean[] {
   const none=companies.map(()=>false);

@@ -181,13 +181,14 @@ export default function ComparisonScreen() {
             <h3>{c.name}（{c.ticker}）</h3>
             <small>{t("決算期末", "Period ended")} {c.preparedAnalysis!.periodEnd}</small>
             <ul>{c.preparedAnalysis!.items.map(item=><li key={item.id}><strong data-kind={item.kind}>{item.short[lang]}</strong><p>{item.detail[lang]}</p></li>)}</ul>
-            <a href={c.preparedAnalysis!.sourceUrl} target="_blank" rel="noreferrer">{c.quarterSourceUrl === "https://twelvedata.com/" ? "Twelve Data" : t("決算資料", "Financial filing")}</a>
+            <a href={c.preparedAnalysis!.sourceUrl} target="_blank" rel="noreferrer">{c.quarterSourceUrl === "https://twelvedata.com/" ? "Twelve Data" : t("SEC提出書類", "SEC filing")}</a>
           </section>)}
         </DetailPanels>
 
         {!result.trial && <>
         <details className={styles.detailNumbers}><summary>{t("詳しい数値・出典を見る", "View detailed numbers and sources")}</summary><div className={styles.results}>
         <section className={styles.numbers}><h2>{t("直近の四半期を確認", "Recent quarterly performance")}</h2><p className={styles.note}>{t("取得した決算資料にある3か月実績です。各社の期間を明記します。未取得は — 。", "Results for each individual quarter, based on the filings retrieved. Reporting periods are shown below. — means data isn't available.")}</p><div className={styles.table} style={{ "--companies": result.companies.length } as React.CSSProperties} role="table" aria-label={t("四半期比較", "Quarterly comparison")}><div role="row" className={styles.tableHead}><span role="columnheader">{t("項目", "Metric")}</span>{result.companies.map(c => <strong role="columnheader" key={c.ticker}>{c.ticker}</strong>)}</div>{([
+          [t("出所", "Source"), c => c.quarterSourceUrl === "https://twelvedata.com/" ? "Twelve Data" : c.quarterRevenue?.derived ? t("SEC（第4四半期＝年度−9か月累計）", "SEC (Q4 = fiscal year − nine months)") : c.quarterRevenue ? t("SEC提出書類", "SEC filing") : "—"],
           [t("対象期間", "Period"), c => c.quarterRevenue ? `${c.quarterRevenue.start ? `${c.quarterRevenue.start} — ` : ""}${c.quarterRevenue.end}` : "—"],
           [t("四半期売上高", "Quarterly revenue"), c => money(c.quarterRevenue, lang)],
           [t("売上増減率 · 前年同期比", "Revenue change · YoY"), c => percent(c.quarterRevenueGrowth)],

@@ -41,6 +41,13 @@ export async function secCik(ticker: string): Promise<string | null> {
 export async function loadComparisonFinancials(ticker: string) {
   const sec = await loadSecFinancials(ticker);
   const now = Date.now();
+  // An IFRS filer (TSM, ...) keeps the provider's standardized statements, which compare with US GAAP companies as they do today; the SEC
+  // figures are used only if the provider cannot serve it.
+  const ifrs = sec.quarterRevenue?.basis === "ifrs-full";
+  if (ifrs) {
+    const { data: twelve } = await loadTwelveComparisonState(ticker);
+    if (twelve) return twelve.financials;
+  }
   if (sec.status === "ready" && hasRecentQuarter(sec, now)) {
     const { series, statistics } = await loadMarketInputs(ticker);
     const evidence = buildSecMarketEvidence(sec, series, statistics, now);
