@@ -35,7 +35,7 @@ export function parseResultBriefs(value: unknown): ResultBrief[] {
       for(const k of ['key','ja','en','value'])if(typeof o[k]!=='string'||!(o[k] as string).trim()||(o[k] as string).length>80)throw Error('Invalid fact');
       // Oct 11: U.S. inflation keeps its index, core and basis; ASML (€),
       // TSMC (NT$) and SK hynix (₩) keep the currency they reported in.
-      if(!/^(?:guidance-)?(?:revenue|eps|gross-margin|operating-cash-flow|net-income|operating-income|operating-margin|adjusted-ebitda|adjusted-net-income|capex|actual|nonfarm-payrolls|unemployment-rate|hourly-earnings-mom|hourly-earnings-yoy)$|^(?:core-)?(?:cpi|ppi|pce)-(?:mom|yoy)$/.test(o.key as string)
+      if(!/^(?:guidance-)?(?:revenue|eps|gross-margin|operating-cash-flow|net-income|operating-income|operating-margin|adjusted-ebitda|adjusted-net-income|adjusted-eps|capex|actual|nonfarm-payrolls|unemployment-rate|hourly-earnings-mom|hourly-earnings-yoy)$|^(?:core-)?(?:cpi|ppi|pce)-(?:mom|yoy)$/.test(o.key as string)
         ||!/^(?:\$|€|NT\$|₩)?[-+]?\d+(?:\.\d+)?[BMKT%]?(?: ± (?:\$|€|NT\$|₩)?\d+(?:\.\d+)?[BMKT%]?|-(?:\$|€|NT\$|₩)?\d+(?:\.\d+)?[BMKT%]?)?$/i.test(o.value as string))throw Error('Invalid fact value');
       const comparisons: ResultComparisons = {};
       // Optional detail is isolated from the already validated actual. It is

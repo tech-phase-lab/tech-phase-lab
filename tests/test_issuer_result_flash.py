@@ -56,6 +56,19 @@ class Parsers(unittest.TestCase):
         with self.assertRaises(ValueError): flash.parse_nebius(text,'https://nebius.com/newsroom/some-other-post')
         # the quarter in the address must agree with the table's year columns
         with self.assertRaises(ValueError): flash.parse_nebius(text,'https://nebius.com/newsroom/nebius-reports-third-quarter-2027-financial-results')
+    def test_nvidia_summary_tables_checked_against_both_stated_changes(self):
+        parsed=flash.parse_nvidia(fixture('nvidia-results-q2fy27.txt'))
+        self.assertEqual(parsed['period'],'Q2 FY2027')
+        self.assertEqual([(f[0],f[1],f[2]) for f in parsed['facts']],[
+            ('revenue','$96.221B','$46.743B'),('gross-margin','75.0%','72.4%'),('eps','$2.46','$1.08'),('adjusted-eps','$2.22','$1.01'),
+            ('net-income','$59.688B','$26.422B'),('operating-income','$63.734B','$28.44B'),('guidance-revenue','$108.0B ± 2%',None)])
+        # a mis-read digit disagrees with the stated Y/Y change: the revenue row is refused, so nothing is published
+        with self.assertRaises(ValueError): flash.parse_nvidia(fixture('nvidia-results-q2fy27.txt').replace('$96,221 $81,615 $46,743 18 % 106 %','$96,221 $81,615 $46,743 18 % 126 %',1))
+        # a changed column order is not guessed
+        with self.assertRaises(ValueError): flash.parse_nvidia(fixture('nvidia-results-q2fy27.txt').replace('Q2 FY27 Q1 FY27 Q2 FY26','Q1 FY27 Q2 FY27 Q2 FY26',1))
+        # one row with a wrong figure is left out while the others stay
+        bad=fixture('nvidia-results-q2fy27.txt').replace('Net income $59,688 $58,321 $26,422 2 % 126 %','Net income $59,688 $58,321 $26,422 2 % 226 %',1)
+        self.assertNotIn('net-income',[f[0] for f in flash.parse_nvidia(bad)['facts']])
     def test_coreweave_table_and_guidance(self):
         parsed=flash.parse_coreweave(fixture('coreweave-results-q326.txt'))
         self.assertEqual(parsed['period'],'Q3 2026')
@@ -86,6 +99,24 @@ class Parsers(unittest.TestCase):
         self.assertTrue(ok('/newsroom/nebius-group-n-v-announces-third-quarter-2024-financial-results'))
         self.assertFalse(ok('/newsroom/nebius-group-announces-date-of-third-quarter-2026-results-and-conference-call'))
         self.assertFalse(ok('/newsroom/nebius-secures-3-5-billion-financing-facility-with-citi'))
+
+class BodyCompanies(unittest.TestCase):
+    def test_nvidia_figures_from_the_stored_release_text(self):
+        tmp=tempfile.TemporaryDirectory();self.addCleanup(tmp.cleanup)
+        path=str(Path(tmp.name)/'db.sqlite')
+        with monitor.connect(path) as db: signals.schema(db)
+        url='https://www.sec.gov/Archives/edgar/data/1045810/000104581026000073/q2fy27pr.htm'
+        body=fixture('nvidia-results-q2fy27.txt'); sha=hashlib.sha256(body.encode()).hexdigest()
+        with monitor.connect(path) as db:
+            db.execute('INSERT INTO sources(url,ticker,discovered_at,sha256) VALUES(?,?,?,?)',(url,'NVDA','2026-11-12T21:00:10+00:00',sha))
+            db.execute('INSERT INTO release_events(url,ticker,detected_at) VALUES(?,?,?)',(url,'NVDA','2026-11-12T21:00:10+00:00'))
+            db.execute('INSERT INTO source_revisions(url,sha256,observed_at,extracted_text,extracted_chars) VALUES(?,?,?,?,?)',(url,sha,'2026-11-12T21:00:11+00:00',body,len(body)))
+            db.execute('INSERT INTO sources(url,ticker,discovered_at,sha256) VALUES(?,?,?,?)',('https://evil.example/q2fy27pr.htm','NVDA','2026-11-12T21:00:10+00:00','y'))
+        self.assertEqual(flash.run_once(path,datetime(2026,11,12,21,1,tzinfo=timezone.utc)),1)
+        with monitor.connect(path) as db: [item]=flash.public_feed(db,'2026-11-05T00:00:00+00:00')
+        self.assertEqual((item['ticker'],item['period'],item['publisher'],item['facts'][0]['value']),('NVDA','Q2 FY2027','NVIDIA IR','$96.221B'))
+        self.assertEqual(item['facts'][0]['comparisons'],{'yearAgo':'$46.743B'})
+        self.assertEqual(item['facts'][-1]['ja'],'次四半期見通し 売上高')
 
 class Publication(unittest.TestCase):
     def setUp(self):

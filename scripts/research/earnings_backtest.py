@@ -59,8 +59,12 @@ def exhibit_text(cik, accession):
         index = get(base + '/' + accession + '-index.html')
     except Exception:
         return None
-    for href in re.findall(r'href="(/Archives/edgar/data/[^"]+\.(?:htm|html))"', index):
-        if re.search(r'(?:ex|exhibit)[-_]?99', href, re.I) or re.search(r'press|earnings|results', href, re.I):
+    # The index table names each document's type: take the EX-99.1 row first (press release), then guess by file name.
+    typed = [m[1] for m in re.finditer(r'<tr[^>]*>(?:(?!</tr>).)*?href="(/Archives/edgar/data/[^"]+\.(?:htm|html))"(?:(?!</tr>).)*?>\s*EX-99\.1\s*<', index, re.S)]
+    guessed = [h for h in re.findall(r'href="(/Archives/edgar/data/[^"]+\.(?:htm|html))"', index)
+               if re.search(r'(?:ex|exhibit)[-_]?99', h, re.I) or re.search(r'press|earnings|results|pr\.htm', h, re.I)]
+    for href in [*typed, *guessed]:
+        if True:
             try:
                 content = get('https://www.sec.gov' + href, binary=True)
                 return ' '.join(monitor.extract_text(content, 'text/html').split())
