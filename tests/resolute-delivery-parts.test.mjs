@@ -92,7 +92,19 @@ test('queue and cron entry points are disabled by default and refuse a wrong rol
  let r=run('services/resolute-api/notification-queue.mjs',{});assert.equal(r.status,1);assert.deepEqual(JSON.parse(r.stdout),{enabled:false});
  r=run('services/resolute-api/notification-queue.mjs',{RESOLUTE_NOTIFICATION_QUEUE_ENABLED:'true',RESOLUTE_ENTITLEMENT_SOURCE:'live',TWELVE_DATA_API_KEY:'k',RESOLUTE_MAIL_CLERK_SECRET_KEY:'k',RESOLUTE_NOTIFICATION_QUEUE_DB_URL:'postgres://resolute_notification_writer:p@db.example/resolute?sslmode=verify-full'});
  assert.deepEqual(JSON.parse(r.stdout),{error:'NOTIFICATION_QUEUE_UNAVAILABLE'});
- r=run('services/resolute-notifications/run.mjs',{});assert.equal(r.status,1);
+ r=run('services/resolute-notifications/run.mjs',{});assert.equal(r.status,0); // disabled is not a failure for the scheduler
+ 
  assert.equal(r.stdout.trim().split('\n').length,2);
  for(const line of r.stdout.trim().split('\n'))assert.deepEqual(JSON.parse(line),{enabled:false});
+});
+test('cron entry: an enabled but broken step is still a failure (non-zero), a disabled one is not',()=>{
+ const run=env=>spawnSync(process.execPath,['--experimental-strip-types','services/resolute-notifications/run.mjs'],{encoding:'utf8',env:{PATH:process.env.PATH,...env}});
+ // queue enabled with no configuration: fails; mail worker disabled: reported as disabled
+ let r=run({RESOLUTE_NOTIFICATION_QUEUE_ENABLED:'true'});
+ assert.equal(r.status,1);assert.match(r.stdout,/NOTIFICATION_QUEUE_UNAVAILABLE/);assert.match(r.stdout,/"enabled":false/);
+ // mail worker enabled with missing prerequisites: fails even though the queue step is disabled
+ r=run({RESOLUTE_MAIL_DELIVERY_ENABLED:'true'});
+ assert.equal(r.status,1);assert.match(r.stdout,/MAIL_WORKER_UNAVAILABLE/);
+ // no secret or exception text leaks
+ assert.ok(!/postgres|secret|key/i.test(r.stdout+r.stderr));
 });
