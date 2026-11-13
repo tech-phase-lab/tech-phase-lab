@@ -232,6 +232,24 @@ class GenerateTests(Base):
         self.assertTrue(done[0].startswith("【要確認】"))
         self.assertEqual(gen.note(gen.SUBSTITUTED, "見出しは定型文にしています。", "changed-negation"), "【定型文】見出しは定型文にしています。〔changed-negation〕")
 
+    def test_the_numbers_part_carries_result_forecast_previous_bars_only_from_checked_figures_in_one_unit(self):
+        saved = gen.generate(self.db, SATURDAY, transport=FakeModel(model_output()), env=ENV)
+        self.assertEqual(next(p for p in saved["parts"] if p["type"] == "numbers")["compare"], [], "revenue and EPS have no forecast or previous in the evidence")
+        out = model_output()
+        out["parts"].append(part("numbers", heading="雇用統計の数字", evidenceIds=["E2"], refs=[{"evidenceId": "E2", "factKey": "nonfarm-payrolls"}, {"evidenceId": "E2", "factKey": "unemployment-rate"}]))
+        saved = gen.generate(self.db, SATURDAY, transport=FakeModel(out), env=ENV)
+        jobs = next(p for p in saved["parts"] if p["type"] == "numbers" and p["heading"] == "雇用統計の数字")
+        self.assertEqual(jobs["compare"][0], {"label": "非農業部門雇用者数", "unit": "人", "values": [{"name": "結果", "value": 29000.0}, {"name": "予想", "value": 50000.0}, {"name": "前回", "value": 133000.0}]})
+        self.assertEqual([v["name"] for v in jobs["compare"][1]["values"]], ["結果", "前回"], "no forecast for the unemployment rate: two bars")
+        mixed = {"key": "x", "value": "29K", "comparisons": {"forecast": "4.2%"}}
+        self.assertIsNone(gen.build_compare([{"id": "E1", "facts": [mixed], "ticker": ""}], {"evidenceId": "E1", "factKey": "x"}), "units differ: no bars")
+
+    def test_each_takeaway_keeps_the_kind_of_material_it_rests_on_for_its_icon(self):
+        out = model_output()
+        out["takeaways"] = [{"text": "MUは増収で、見通しも強めでした。", "evidenceIds": ["E1"]}, {"text": "雇用統計は予想を下回りました。", "evidenceIds": ["E2"]}]
+        saved = gen.generate(self.db, SATURDAY, transport=FakeModel(out), env=ENV)
+        self.assertEqual([i["kind"] for i in saved["parts"][0]["items"]], ["earnings", "indicators"])
+
     def test_a_bar_chart_needs_two_figures_in_the_same_unit(self):
         out = model_output()
         out["parts"].append(part("chart", heading="比べる", title="売上と見通し", evidenceIds=["E1"],
