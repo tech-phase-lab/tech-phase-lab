@@ -17,9 +17,13 @@ try{
   if(!env.TWELVE_DATA_API_KEY||!env.RESOLUTE_MAIL_CLERK_SECRET_KEY)throw Error('Provider configuration required');
   const config=resoluteDatabaseConfig(env.RESOLUTE_NOTIFICATION_QUEUE_DB_URL);
   if(new URL(config.connectionString).username!=='resolute_notification_queue')throw Error('Scoped queue role required');
+  // Test guard: while set, only these accounts get candidates (owner-only test mail). Unset = all enabled members.
+  const only=(env.RESOLUTE_NOTIFICATION_QUEUE_ONLY_USER_IDS??'').split(',').map(v=>v.trim()).filter(Boolean);
+  if(only.some(id=>!/^user_[A-Za-z0-9]{1,128}$/.test(id)))throw Error('Invalid test allowlist');
   pool=new Pool(config);pool.on('error',()=>{});
   const run=createNotificationQueueRunner(pool,{
    enabled:true,
+   ...(only.length?{onlyUserIds:only}:{}),
    recipient:createClerkNotificationRecipient(createClerkClient({secretKey:env.RESOLUTE_MAIL_CLERK_SECRET_KEY}),env.RESOLUTE_MAIL_PUBLIC_ORIGIN==='https://techphase.app'),
    closes:createCloseProvider({apiKey:env.TWELVE_DATA_API_KEY}),
   });

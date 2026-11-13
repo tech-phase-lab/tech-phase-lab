@@ -82,7 +82,7 @@ test('queue runner is off by default and selects only users of the current JST h
  const report=await createNotificationQueueRunner(f.pool,{enabled:true,now:()=>at('2026-11-12T22:00:00Z'),recipient:async()=>({locale:'ja',preferencesConfigured:true,verified:true,unsubscribed:false}),
   closes:async()=>({marketDate:'2026-11-12',closes:[]}),
   makeJob:resolve=>async id=>{jobs.push(id);await resolve(id,['NVDA']);if(id==='user_b')throw new Error('private');return id==='user_a'?[{kind:'alerts',status:'queued'}]:[];}})();
- assert.deepEqual(f.calls[0],['7',201]); // 22:00Z = 07:00 JST
+ assert.deepEqual(f.calls[0],['7',201,null]); // 22:00Z = 07:00 JST, no allowlist
  assert.deepEqual(jobs,['user_a','user_b','user_c']);
  assert.deepEqual([report.queued,report.errors,report.skipped,report.users],[1,1,1,3]);
  assert.equal(report.marketDate,'2026-11-12');assert.ok(!JSON.stringify(report).includes('private'));
@@ -108,3 +108,11 @@ test('cron entry: an enabled but broken step is still a failure (non-zero), a di
  // no secret or exception text leaks
  assert.ok(!/postgres|secret|key/i.test(r.stdout+r.stderr));
 });
+test('queue runner can be limited to named accounts (owner-only test) and rejects a bad allowlist at the entry point',async()=>{
+ const f=poolWith([{clerk_user_id:'user_owner'}]);
+ await createNotificationQueueRunner(f.pool,{enabled:true,now:()=>at('2026-11-12T22:00:00Z'),onlyUserIds:['user_owner'],recipient:async()=>assert.fail(),closes:async()=>assert.fail(),makeJob:()=>async()=>[]})();
+ assert.deepEqual(f.calls[0],['7',201,['user_owner']]);
+ const r=spawnSync(process.execPath,['--experimental-strip-types','services/resolute-api/notification-queue.mjs'],{encoding:'utf8',env:{PATH:process.env.PATH,RESOLUTE_NOTIFICATION_QUEUE_ENABLED:'true',RESOLUTE_ENTITLEMENT_SOURCE:'live',TWELVE_DATA_API_KEY:'k',RESOLUTE_MAIL_CLERK_SECRET_KEY:'k',RESOLUTE_NOTIFICATION_QUEUE_ONLY_USER_IDS:'not-a-user',RESOLUTE_NOTIFICATION_QUEUE_DB_URL:'postgres://resolute_notification_queue:p@db.example/resolute?sslmode=verify-full'}});
+ assert.deepEqual(JSON.parse(r.stdout),{error:'NOTIFICATION_QUEUE_UNAVAILABLE'});
+});
+
