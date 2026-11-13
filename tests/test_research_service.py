@@ -306,7 +306,24 @@ class ResearchServiceTests(unittest.TestCase):
                 app.run_supervised()
             self.assertEqual(len(calls), 2)
             waiting.assert_called_once_with(2)
-            logged.assert_called_once_with('research-monitor-restarting OperationalError', flush=True)
+            [(line,),kwargs]=logged.call_args
+            self.assertEqual(kwargs,{'flush':True})
+            self.assertRegex(line,r'^research-monitor-restarting OperationalError at=test_research_service\.py:\d+:run$')
+            self.assertNotIn('private detail',line)
+
+    def test_failure_detail_names_the_operating_system_error_and_the_place_never_the_message(self):
+        import errno
+        def raised(error):
+            try: raise error
+            except Exception as caught: return caught
+        full=raised(OSError(errno.ENOSPC,'/data/private/path: No space left on device'))
+        detail=service.failure_detail(full)
+        self.assertRegex(detail,r'^errno=ENOSPC at=test_research_service\.py:\d+:raised$')
+        self.assertNotIn('private',detail); self.assertNotIn('/data',detail)
+        io=raised(sqlite3.OperationalError('disk I/O error: secret'))
+        self.assertNotIn('secret',service.failure_detail(io))
+        self.assertEqual(service.failure_detail(raised(ValueError('x'))).split()[0].startswith('at='),True)
+        self.assertEqual(service.failure_detail(Exception('no traceback')),'')   # never raised: nothing to say
 
     def setUp(self):
         self.temp = tempfile.TemporaryDirectory()
