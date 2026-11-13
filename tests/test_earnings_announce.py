@@ -122,6 +122,16 @@ class SecFiling(unittest.TestCase):
         self.assertEqual(key(figures),key(later))
         self.assertNotEqual(key(line),key(item('MSFT','Latest','ir-announce-1')))
         self.assertNotEqual(key(figures),key(item('MSFT','Q4 FY2026','ir-flash-1')))
+    def test_a_6k_with_the_preliminary_results_table_is_announced_and_other_6ks_are_not(self):
+        table=(Path(__file__).parent/'fixtures/skhynix-prelim-q326.txt').read_text()
+        url='https://www.sec.gov/Archives/edgar/data/2120882/000119312526434994/d162547d6k.htm'
+        self.filing(url,table,accepted='2026-11-13T10:01:00.000Z',form='6-K',ticker='SKHY',title='6-K · FORM 6-K')
+        self.filing('https://www.sec.gov/Archives/edgar/data/2120882/000119312526435015/d236994d6k.htm','6-K SK hynix Inc. Resolution on Cash Dividend On October 28, 2026, the board of directors',
+                    accepted='2026-11-13T10:02:00.000Z',form='6-K',ticker='SKHY',title='6-K · FORM 6-K')
+        self.filing('https://www.sec.gov/Archives/edgar/data/2120882/000119312526400000/d111111d6k.htm',table,accepted='2026-07-29T10:01:00.000Z',form='6-K',ticker='SKHY',title='6-K · FORM 6-K')  # July's: history
+        self.assertEqual(announce.run_once(self.path,self.NOW),1)
+        [item]=self.feed()
+        self.assertEqual((item['ticker'],item['url'],item['period'],item['facts'],item['titleJa']),('SKHY',url,'Q3 2026',[],'SKHY 決算を発表しました'))
     def test_the_filing_index_item_list_is_enough_without_the_text_when_recent(self):
         import json
         recent={'form':['8-K','8-K','4'],'accessionNumber':['0001628280-26-073360','0001628280-26-067303','0001628280-26-000001'],

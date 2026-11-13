@@ -232,6 +232,21 @@ class Parsers(unittest.TestCase):
         self.assertNotIn('eps',keys(text.replace('Diluted $ 1.56','Diluted $ 1.96')))
         self.assertNotIn('eps',keys(text.replace('Preferred stock dividends 81','Preferred stock dividends 181')))
         with self.assertRaises(ValueError): flash.PROFILES['ORCL']['parse'](text.replace('Three Months Ended August 31','Three Months Ended July 31'))
+    def test_sk_hynix_preliminary_results_in_won_checked_against_stated_changes(self):
+        text=fixture('skhynix-prelim-q326.txt')
+        parsed=flash.PROFILES['SKHY']['parse'](text)
+        self.assertEqual(parsed['period'],'Q3 2026')
+        # millions of won -> trillions, digits exactly as printed (104,615,483 -> 104.615483); the label says preliminary and the unit
+        self.assertEqual([(f[0],f[1],f[2]) for f in parsed['facts']],[('revenue','₩104.615483T','₩24.448929T'),('net-income','₩39.775593T','₩12.597538T'),('operating-income','₩83.333818T','₩11.38339T')])
+        self.assertTrue(all('暫定' in f[3][0] and 'preliminary' in f[3][1] and '兆ウォン' in f[3][0] and 'KRW trillion' in f[3][1] for f in parsed['facts']))
+        keys=lambda x:[f[0] for f in flash.PROFILES['SKHY']['parse'](x)['facts']]
+        with self.assertRaises(ValueError): flash.PROFILES['SKHY']['parse'](text.replace('104,615,483 236,510,516','105,615,483 236,510,516'))   # revenue disagrees with its stated changes
+        self.assertEqual(keys(text.replace('83,333,818 181,486,709','84,333,818 181,486,709')),['revenue','net-income'])                         # operating profit dropped
+        self.assertEqual(keys(text.replace('39,775,593 174,044,095','38,775,593 174,044,095')),['revenue','operating-income'])                 # net profit dropped
+        self.assertEqual(keys(text.replace('(58.7 N.A. ) *','(57.0 N.A. ) *',1)),['revenue','net-income','operating-income'])                     # the pretax row is not published, so its change does not matter
+        with self.assertRaises(ValueError): flash.PROFILES['SKHY']['parse'](text.replace('Previous Period (Second quarter(2) of 2026)','Previous Period (First quarter(2) of 2026)'))
+        with self.assertRaises(ValueError): flash.PROFILES['SKHY']['parse'](text.replace('in millions of Won','in thousands of Won'))
+        with self.assertRaises(ValueError): flash.PROFILES['SKHY']['parse'](text.replace('Preliminary Results of Operations','Results of Operations'))
     def test_coreweave_table_and_guidance(self):
         parsed=flash.parse_coreweave(fixture('coreweave-results-q326.txt'))
         self.assertEqual(parsed['period'],'Q3 2026')
