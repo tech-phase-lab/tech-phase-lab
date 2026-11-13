@@ -70,6 +70,16 @@ A September 27 connector update truncated existing research files. Before any Gi
   same clock through `sitecustomize.py`. Run the Node suite through `npm test`, not bare
   `node --test`.
 
+# Done means verified on production (owner, 2026-11-13)
+
+- Never report work as done, or ask the owner to try something, before it has been checked against production (techphase.app,
+  the production Railway service) with a real request or log line. A green CI, a successful deploy or a preview result is not
+  proof. The same mistake (checking only the preview) happened more than once.
+- Preview deployments use a different Clerk instance and different variables than production. When a check, a membership
+  lookup, a webhook or a monitor setting points at a host, confirm that host is the production one (names only; never read secret values).
+- Finish the whole chain (merge, deploy, production check) before reporting; the owner has other work and wants one short
+  report when it is complete. Ask the owner only for what only the owner can do (approvals, taps on the owner's own device).
+
 # Product plans (owner decisions)
 
 - Operator access (owner, 2026-11-13): the owner's accounts (OWNER_ACCOUNT_ID, PRODUCTION_OWNER_ACCOUNT_ID in
