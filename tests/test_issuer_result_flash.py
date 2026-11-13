@@ -156,6 +156,18 @@ class Parsers(unittest.TestCase):
         self.assertNotIn('net-income',keys('PLTR',fixture('palantir-results-q326.txt').replace('$ 1,128,012','$ 1,138,012')))
         self.assertNotIn('net-income',keys('SNDK',fixture('sandisk-results-q1fy27.txt').replace('Net income $ 8,101 $ 112 Net income per','Net income $ 8,201 $ 112 Net income per')))
         self.assertNotIn('eps',keys('ANET',fixture('arista-results-q326.txt').replace('Diluted $ 1.22','Diluted $ 1.32')))
+    def test_microsoft_statement_checked_against_headline_and_arithmetic(self):
+        text=fixture('msft-results-q1fy27.txt')
+        parsed=flash.PROFILES['MSFT']['parse'](text)
+        self.assertEqual(parsed['period'],'Q1 FY2027')
+        self.assertEqual([(f[0],f[1],f[2]) for f in parsed['facts']],[('revenue','$92.279B','$77.673B'),('eps','$4.92','$3.72'),('net-income','$36.629B','$27.747B'),('operating-income','$45.915B','$37.961B')])
+        keys=lambda x:[f[0] for f in flash.PROFILES['MSFT']['parse'](x)['facts']]
+        with self.assertRaises(ValueError): flash.PROFILES['MSFT']['parse'](text.replace('Total revenue 92,279','Total revenue 98,279'))
+        self.assertNotIn('operating-income',keys(text.replace('Operating income 45,915','Operating income 46,915')))
+        self.assertNotIn('net-income',keys(text.replace('Net income $36,629 $27,747 Earnings','Net income $37,629 $27,747 Earnings')))
+        self.assertNotIn('eps',keys(text.replace('Diluted $4.92','Diluted $5.92')))
+        # a missing component of the operating-expense sum withholds operating income rather than guessing
+        self.assertNotIn('operating-income',keys(text.replace('Sales and marketing 5,716','Marketing 5,716')))
     def test_coreweave_table_and_guidance(self):
         parsed=flash.parse_coreweave(fixture('coreweave-results-q326.txt'))
         self.assertEqual(parsed['period'],'Q3 2026')
