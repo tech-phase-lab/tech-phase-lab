@@ -6,7 +6,7 @@ export type Profile = {
 export type Contract = {
   accessPlan: "free" | "pro" | null; verification: "verified" | "pending" | "unavailable";
   status: "active" | "renewal-stopped" | "none" | null; autoRenew: boolean | null;
-  amount: string | null; currency: "JPY" | "USD" | null; nextBillingAt: string | null; accessExpiresAt: string | null;
+  amount: string | null; currency: "JPY" | "USD" | null; period: "month" | "year" | null; nextBillingAt: string | null; accessExpiresAt: string | null;
   unavailableFields: string[];
 };
 
@@ -22,7 +22,7 @@ export function readContract(value: unknown): Contract {
   if (!v || !["verified", "pending", "unavailable"].includes(v.verification as string) || ![null, "active", "renewal-stopped", "none"].includes(v.status as never)) throw Error("contract");
   return { accessPlan: v.accessPlan === "free" || v.accessPlan === "pro" ? v.accessPlan : null, verification: v.verification as Contract["verification"], status: v.status ?? null,
     autoRenew: typeof v.autoRenew === "boolean" ? v.autoRenew : null, amount: typeof v.amount === "string" && v.amount ? v.amount : null,
-    currency: v.currency === "JPY" || v.currency === "USD" ? v.currency : null, nextBillingAt: isDate(v.nextBillingAt) ? (v.nextBillingAt as string) : null,
+    currency: v.currency === "JPY" || v.currency === "USD" ? v.currency : null, period: v.period === "month" || v.period === "year" ? v.period : null, nextBillingAt: isDate(v.nextBillingAt) ? (v.nextBillingAt as string) : null,
     accessExpiresAt: isDate(v.accessExpiresAt) ? (v.accessExpiresAt as string) : null, unavailableFields: Array.isArray(v.unavailableFields) ? v.unavailableFields.filter(x => typeof x === "string") : [] };
 }
 /** The contract card needs every value it prints. Anything missing means "could not check", never a guess. */

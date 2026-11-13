@@ -20,20 +20,40 @@ export function liveReturnUrl(value) {
 export function liveConfig(env) {
  if(env.TECH_PHASE_PAYPAL_ENV!=='live')fail('BILLING_DISABLED');
  for(const key of ['CLIENT_ID','CLIENT_SECRET','WEBHOOK_ID'])if(typeof env[`TECH_PHASE_PAYPAL_LIVE_${key}`]!=='string'||!env[`TECH_PHASE_PAYPAL_LIVE_${key}`].trim())fail('BILLING_DISABLED');
- const plans=Object.freeze({JPY:planId(env.TECH_PHASE_PAYPAL_LIVE_PLAN_JPY),USD:planId(env.TECH_PHASE_PAYPAL_LIVE_PLAN_USD)});
- if(plans.JPY===plans.USD)fail('INVALID_PLAN');
+ // Yearly plans are optional until configured: without them yearly checkout is refused, monthly is unaffected.
+ const plans=Object.freeze({JPY:planId(env.TECH_PHASE_PAYPAL_LIVE_PLAN_JPY),USD:planId(env.TECH_PHASE_PAYPAL_LIVE_PLAN_USD),
+  ...yearlyPlans(env.TECH_PHASE_PAYPAL_LIVE_PLAN_JPY_YEAR,env.TECH_PHASE_PAYPAL_LIVE_PLAN_USD_YEAR)});
+ assertDistinctPlans(plans);
  return Object.freeze({environment:'live',base:environments.live.base,returnUrl:liveReturnUrl(env.TECH_PHASE_BILLING_LIVE_ORIGIN),clientId:env.TECH_PHASE_PAYPAL_LIVE_CLIENT_ID,secret:env.TECH_PHASE_PAYPAL_LIVE_CLIENT_SECRET,webhookId:env.TECH_PHASE_PAYPAL_LIVE_WEBHOOK_ID,plans});
 }
 export const RETURN_URL = 'https://tech-phase-lab-git-codex-research-preview-chehon7144-5412.vercel.app/research/account/billing';
 export const OFFERS = Object.freeze({
-  JPY: Object.freeze({ currency: 'JPY', minor: 2980, value: '2980' }),
-  USD: Object.freeze({ currency: 'USD', minor: 2000, value: '20.00' }),
+  JPY: Object.freeze({ currency: 'JPY', minor: 2980, value: '2980', period: 'month' }),
+  USD: Object.freeze({ currency: 'USD', minor: 2000, value: '20.00', period: 'month' }),
+});
+// Yearly = 10 months' price (17% off 12 months). Selected by currency + period on the server only.
+export const YEARLY_OFFERS = Object.freeze({
+  JPY: Object.freeze({ currency: 'JPY', minor: 29800, value: '29800', period: 'year' }),
+  USD: Object.freeze({ currency: 'USD', minor: 20000, value: '200.00', period: 'year' }),
 });
 const fail = (code = 'PAYPAL_UNAVAILABLE') => { throw new Error(code); };
 class ProviderSubscriptionNotFound extends Error {
   constructor() { super('PAYPAL_SUBSCRIPTION_NOT_FOUND'); }
 }
 const matches = (value, pattern) => typeof value === 'string' && pattern.test(value);
+const yearlyPlans = (jpy, usd) => ({ ...(jpy === undefined || jpy === '' ? {} : { JPY_YEAR: planId(jpy) }),
+  ...(usd === undefined || usd === '' ? {} : { USD_YEAR: planId(usd) }) });
+const assertDistinctPlans = plans => { const ids = Object.values(plans); if (new Set(ids).size !== ids.length) fail('INVALID_PLAN'); };
+/** Key of a plan in the plans map: JPY / USD (monthly), JPY_YEAR / USD_YEAR (yearly). */
+export const planKey = (currency, period = 'month') => period === 'year' ? `${currency}_YEAR` : currency;
+export const MONTHS = Object.freeze({ month: 1, year: 12 });
+export const isPeriod = value => value === 'month' || value === 'year';
+/** The period of a stored contract follows from its price; no extra column is needed. */
+export function periodOfMinor(currency, minor) {
+  if (OFFERS[currency]?.minor === minor) return 'month';
+  if (YEARLY_OFFERS[currency]?.minor === minor) return 'year';
+  fail('INVALID_OFFER');
+}
 const planId = value => matches(value, /^P-[A-Z0-9]{24}$/) ? value : fail('INVALID_PLAN');
 const subscriptionId = value => matches(value, /^I-[A-Z0-9]{8,32}$/) ? value : fail('INVALID_SUBSCRIPTION');
 const requestId = value => matches(value, /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i) ? value : fail('INVALID_REQUEST_KEY');
@@ -44,10 +64,13 @@ export function sandboxConfig(env) {
   }
   return Object.freeze({ environment: 'sandbox', returnUrl: RETURN_URL, base: BASE, clientId: env.TECH_PHASE_PAYPAL_CLIENT_ID,
     secret: env.TECH_PHASE_PAYPAL_CLIENT_SECRET, webhookId: env.TECH_PHASE_PAYPAL_WEBHOOK_ID,
-    plans: Object.freeze({ JPY: planId(env.TECH_PHASE_PAYPAL_PLAN_JPY), USD: planId(env.TECH_PHASE_PAYPAL_PLAN_USD) }) });
+    plans: Object.freeze({ JPY: planId(env.TECH_PHASE_PAYPAL_PLAN_JPY), USD: planId(env.TECH_PHASE_PAYPAL_PLAN_USD),
+      ...yearlyPlans(env.TECH_PHASE_PAYPAL_PLAN_JPY_YEAR, env.TECH_PHASE_PAYPAL_PLAN_USD_YEAR) }) });
 }
-export function offer(currency) {
+export function offer(currency, period = 'month') {
   if (currency !== 'JPY' && currency !== 'USD') fail('INVALID_OFFER');
+  if (period === 'year') return YEARLY_OFFERS[currency];
+  if (period !== 'month') fail('INVALID_OFFER');
   return OFFERS[currency];
 }
 function moneyMatches(money, expected) {
@@ -55,12 +78,12 @@ function moneyMatches(money, expected) {
   const pattern = expected.currency === 'JPY' ? /^(0|[1-9]\d*)(\.0{1,2})?$/ : /^(0|[1-9]\d*)(\.\d{1,2})?$/;
   return pattern.test(money.value) && Number(money.value) === Number(expected.value);
 }
-export function assertPlan(plan, id, currency) {
-  const q = offer(currency), cycles = plan?.billing_cycles, cycle = cycles?.[0];
+export function assertPlan(plan, id, currency, period = 'month') {
+  const q = offer(currency, period), cycles = plan?.billing_cycles, cycle = cycles?.[0];
   // No trials, setup charges, volume pricing or additional tax. Refuse drift before checkout.
   if (plan?.id !== id || plan.status !== 'ACTIVE' || plan.quantity_supported === true ||
       !Array.isArray(cycles) || cycles.length !== 1 || cycle.tenure_type !== 'REGULAR' ||
-      cycle.sequence !== 1 || cycle.total_cycles !== 0 || cycle.frequency?.interval_unit !== 'MONTH' ||
+      cycle.sequence !== 1 || cycle.total_cycles !== 0 || cycle.frequency?.interval_unit !== (period === 'year' ? 'YEAR' : 'MONTH') ||
       cycle.frequency.interval_count !== 1 || !moneyMatches(cycle.pricing_scheme?.fixed_price, q) ||
       cycle.pricing_scheme?.pricing_model || cycle.pricing_scheme?.tiers?.length ||
       (plan.taxes && (!/^(0|0\.0+)$/.test(String(plan.taxes.percentage)) || plan.taxes.inclusive !== true)) ||
@@ -101,7 +124,7 @@ export function createPaypal(config, fetcher = fetch) {
   const returnUrl=mode==='live'?liveReturnUrl(new URL(config.returnUrl).origin):RETURN_URL;
   if(config.base!==profile.base||config.returnUrl!==returnUrl||!config.clientId||!config.secret||!config.webhookId)fail('BILLING_DISABLED');
   const base=profile.base,clientId=config.clientId,secret=config.secret,webhookId=config.webhookId;
-  const plans = { JPY: planId(config.plans?.JPY), USD: planId(config.plans?.USD) };
+  const plans = { JPY: planId(config.plans?.JPY), USD: planId(config.plans?.USD), ...yearlyPlans(config.plans?.JPY_YEAR, config.plans?.USD_YEAR) };
   let token, expires = 0, tokenRequest;
   async function authorize() {
     if (token && Date.now() < expires) return token;
@@ -139,14 +162,16 @@ export function createPaypal(config, fetcher = fetch) {
   }
   return {
     environment:mode,
-    async create({ id, currency }) {
-      requestId(id); const q = offer(currency);
-      assertPlan(await call(`/v1/billing/plans/${plans[currency]}`), plans[currency], currency);
-      const result = await call('/v1/billing/subscriptions', 'POST', { plan_id: plans[currency], custom_id: id,
+    async create({ id, currency, period = 'month' }) {
+      requestId(id); const q = offer(currency, period);
+      const plan = plans[planKey(currency, period)];
+      if (!plan) fail('INVALID_OFFER'); // The yearly plan is not configured on this deployment.
+      assertPlan(await call(`/v1/billing/plans/${plan}`), plan, currency, period);
+      const result = await call('/v1/billing/subscriptions', 'POST', { plan_id: plan, custom_id: id,
         plan: { billing_cycles: [{ sequence: 1, pricing_scheme: { fixed_price: { currency_code: q.currency, value: q.value } } }] },
         application_context: { brand_name: 'Tech Phase', shipping_preference: 'NO_SHIPPING', user_action: 'SUBSCRIBE_NOW',
           return_url: `${returnUrl}?billing=${id}`, cancel_url: `${returnUrl}?billing=${id}&cancel=1` } }, id);
-      if (!result || result.plan_id !== plans[currency] || result.custom_id !== id) fail();
+      if (!result || result.plan_id !== plan || result.custom_id !== id) fail();
       return { id: subscriptionId(result.id), approvalUrl: approvalUrl(result,mode) };
     },
     get: id => call(`/v1/billing/subscriptions/${subscriptionId(id)}`, 'GET', undefined, undefined, true),

@@ -4,7 +4,7 @@ import {accountContract} from '../services/tech-phase-billing/account-view.mjs';
 import {profileInput,selectedIcon,accountIcons} from '../lib/account/profile.ts';
 import {deliveryView} from '../lib/account/delivery.ts';
 import {liveHandler} from '../services/tech-phase-billing/live-http.mjs';
-const local={id:'local',paypal_id:'I-ABCDEFGH',currency:'JPY'};
+const local={id:'local',paypal_id:'I-ABCDEFGH',currency:'JPY',minor:2980};
 function fixture(){return {store:{summary:async()=>({plan:'pro',subscription:{id:'local'},proExpiresAt:'2026-11-30T00:00:00Z',reviewRequired:false}),get:async()=>local},plans:{JPY:'plan'},paypal:{getDetails:async()=>({id:local.paypal_id,custom_id:'local',plan_id:'plan',status:'ACTIVE',billing_info:{next_billing_time:'2026-11-30T00:00:00Z'},plan:{billing_cycles:[{tenure_type:'REGULAR',pricing_scheme:{fixed_price:{currency_code:'JPY',value:'2980'}}}]}})}};}
 test('account view uses provider amount/date and verified access, no checkout mutation',async()=>{
  const data=await accountContract(fixture(),'user_test');

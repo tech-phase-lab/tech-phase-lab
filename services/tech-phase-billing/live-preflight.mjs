@@ -7,7 +7,7 @@ export function livePreflight(env, role) {
   if (!['web', 'api', 'recovery'].includes(role)) throw Error('INVALID_PREFLIGHT_ROLE');
   const common = ['TECH_PHASE_PAYPAL_ENV', 'TECH_PHASE_BILLING_LIVE_ORIGIN'];
   const backend = ['TECH_PHASE_BILLING_RUNTIME', 'TECH_PHASE_BILLING_LIVE_BRANCH', 'RAILWAY_GIT_BRANCH',
-    'TECH_PHASE_BILLING_LIVE_DATABASE_URL', ...['CLIENT_ID', 'CLIENT_SECRET', 'WEBHOOK_ID', 'PLAN_JPY', 'PLAN_USD'].map(k => `TECH_PHASE_PAYPAL_LIVE_${k}`)];
+    'TECH_PHASE_BILLING_LIVE_DATABASE_URL', ...['CLIENT_ID', 'CLIENT_SECRET', 'WEBHOOK_ID', 'PLAN_JPY', 'PLAN_USD', 'PLAN_JPY_YEAR', 'PLAN_USD_YEAR'].map(k => `TECH_PHASE_PAYPAL_LIVE_${k}`)];
   const required = [...common, ...(role === 'web'
     ? ['VERCEL_ENV', 'TECH_PHASE_BILLING_LIVE_SERVICE_URL', 'TECH_PHASE_BILLING_LIVE_SERVICE_TOKEN']
     : [...backend, ...(role === 'api' ? ['TECH_PHASE_BILLING_LIVE_SERVICE_TOKEN'] : [])])];

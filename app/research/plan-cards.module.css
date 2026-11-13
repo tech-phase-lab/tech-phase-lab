@@ -2,16 +2,40 @@
 .stack { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:40px; max-width:1100px; margin:0 auto; }
 @media (max-width:760px) { .stack { grid-template-columns:minmax(0,1fr); gap:36px; } }
 .proCard, .freeCard { position:relative; container-type:inline-size; padding:24px 22px 26px; border-radius:22px; overflow:hidden; }
-.proCard { border:1px solid transparent; background:radial-gradient(70% 50% at 100% 0%,rgba(233,200,120,.16),transparent 70%) padding-box,linear-gradient(180deg,#0e0d0a,#050505) padding-box,linear-gradient(180deg,#f0d48c 0%,#6d5a2e 18%,#4a3d1f 70%,#6d5a2e 100%) border-box; box-shadow:0 14px 40px -20px rgba(0,0,0,.9),inset 0 1px 0 rgba(255,236,180,.25); }
+.proCard { border:1px solid transparent; background:linear-gradient(165deg,#15130c 0%,#0b0c0d 100%) padding-box,linear-gradient(150deg,#f3dc9f 0%,#8a7440 38%,#3d3622 60%,#d9b25f 100%) border-box; box-shadow:0 14px 40px -20px rgba(0,0,0,.9); }
 .freeCard { border:1px solid #243449; background:radial-gradient(80% 40% at 100% 0%,rgba(110,140,190,.14),transparent 70%),linear-gradient(180deg,#161d2b,#0f141e); }
 .kicker { margin:0; font-size:12px; letter-spacing:.2em; color:#7fe0c0; }
-.proCard .kicker { color:#d9b56a; }
-.price { margin:18px 0 14px; font-size:46px; font-weight:800; letter-spacing:-.02em; line-height:1.1; }
-.freeCard .price { color:#eef2f8; }
-.proCard .price { background:linear-gradient(180deg,#fff0c4 0%,#e3c274 45%,#a67c24 100%); -webkit-background-clip:text; background-clip:text; color:transparent; }
-.price small { font-size:14px; font-weight:400; letter-spacing:0; color:#8393ad; -webkit-text-fill-color:#8393ad; }
-.cta { width:100%; padding:15px; border:0; border-radius:14px; font:700 16px/1 inherit; color:#241a07; background:linear-gradient(135deg,#f6e3a8 0%,#d9b56a 45%,#b8913f 100%); box-shadow:inset 0 1px 0 rgba(255,255,255,.6),0 8px 22px -10px rgba(217,181,106,.7); opacity:1; cursor:default; }
-.includes { margin:18px 0 6px; font-size:13.5px; color:#a9a28a; }
+.head { display:flex; align-items:center; gap:10px; margin-bottom:32px; min-height:26px; }
+.tabsSpacer { height:40px; }
+.freeCard .head span { color:#7fe0c0; }
+.head span { font-size:14px; letter-spacing:.22em; color:#d9b25f; }
+.tabs { display:flex; justify-content:space-between; align-items:center; gap:12px; }
+.tabGroup { display:flex; gap:18px; }
+.tab { min-height:40px; padding:0 0 3px; background:none; border:none; border-bottom:2px solid transparent; font:inherit; font-size:14px; font-weight:700; color:#6f6c63; cursor:pointer; }
+.tab[aria-pressed="true"] { color:#f0d79a; border-bottom-color:#d9b25f; }
+.yearTab { position:relative; display:inline-block; }
+.bubble { position:absolute; bottom:calc(100% - 2px); right:-4px; pointer-events:none; white-space:nowrap; padding:2px 7px; border-radius:7px; background:#e3c07a; color:#140f03; font-size:10px; font-weight:700; letter-spacing:.02em; }
+.bubble i { position:absolute; bottom:-3px; right:13px; width:7px; height:7px; background:#e3c07a; transform:rotate(45deg); }
+/* One price block for both cards (PRO and FREE): same size, weight, line height, spacing and margins, so the numbers line up side by side. */
+.priceRow { display:flex; align-items:baseline; gap:8px; flex-wrap:wrap; margin:10px 0 0; min-height:calc(48px * 1.1); }
+.priceN { font-size:48px; font-weight:700; line-height:1.1; letter-spacing:0; }
+.priceU { font-size:14px; font-weight:400; color:#a9a597; }
+.priceOld { font-size:14px; color:#8d8a7f; text-decoration:line-through double; text-decoration-thickness:1px; }
+.proCard .priceN { color:#f0d79a; }
+.freeCard .priceN { color:#eef2f8; }
+.freeCard .priceU { color:#8393ad; }
+.paypal { position:relative; overflow:hidden; display:flex; align-items:center; justify-content:center; box-sizing:border-box; width:100%; margin-top:18px; min-height:56px; border:none; border-radius:14px; background:linear-gradient(135deg,#f6e2ae 0%,#d9b25f 55%,#b8923f 100%); color:#1c1608; font:inherit; font-size:16px; font-weight:700; letter-spacing:.06em; text-decoration:none; cursor:pointer; box-shadow:0 6px 24px rgba(217,178,95,.25); }
+.paypal:disabled { cursor:default; opacity:.55; }
+.paypal:not(:disabled)::after { content:""; position:absolute; top:0; left:-60%; width:40%; height:100%; background:linear-gradient(100deg,rgba(255,255,255,0) 0%,rgba(255,255,255,.75) 50%,rgba(255,255,255,0) 100%); transform:skewX(-20deg); animation:shine 3.2s ease-in-out infinite; pointer-events:none; }
+@keyframes shine { 0% { left:-60%; } 45% { left:130%; } 100% { left:130%; } }
+@media (prefers-reduced-motion:reduce) { .paypal::after { animation:none !important; display:none !important; } }
+.includes { margin:22px 0 0; font-size:14px; color:#8d8a7f; }
+.proCard .includes + .group { margin-top:26px; }
+.note { margin:16px auto 0; max-width:420px; padding:0 20px; box-sizing:border-box; font-size:11px; line-height:1.8; color:#6f6c63; text-align:center; grid-column:1 / -1; }
+.note a { color:#a9a597; text-decoration:underline; }
+.note a:hover { color:#f6e2ae; }
+.notice { margin:12px 0 0; font-size:12px; line-height:1.6; color:#c9c3b3; }
+.notice a { color:#f0d79a; }
 .freeCard h3 { margin:20px 0 4px; font-size:19px; font-weight:700; color:#f1f4f9; line-height:1.5; }
 .group { margin-top:18px; }
 .group h4 { display:flex; align-items:center; gap:10px; margin:0 0 8px; font-size:12px; font-weight:500; letter-spacing:.18em; }
@@ -28,3 +52,18 @@
 .group li em { flex:none; align-self:stretch; width:1px; margin:3px 2px; background:rgba(255,255,255,.18); }
 .group li span { overflow:hidden; text-overflow:clip; }
 .group li .plain { color:#d6dde8; }
+.proCard .group li { white-space:normal; align-items:baseline; gap:10px; font-size:14px; line-height:1.6; color:#8d8a7f; }
+.proCard .group ul { gap:13px; }
+.proCard .group li i { width:8px; height:8px; border-radius:2px; transform:translateY(-1px); }
+.proCard .group li em { align-self:auto; width:auto; height:1em; margin:0; }
+.proCard .group li span { overflow:visible; padding:0; }
+.proCard .group h4 { font-size:13px; letter-spacing:.28em; margin-bottom:14px; }
+.proCard .group { margin-top:26px; }
+
+/* Stacked (phone): the FREE card needs no spacer for the PRO card's switches. */
+@media (max-width:760px) { .tabsSpacer { display:none; } .freeCard .head { margin-bottom:12px; } }
+.proCard .group li b { flex:none; }
+.proCard .group li span { flex:1 1 0; min-width:0; }
+.proCard .group li .plain { flex:1 1 auto; }
+.proCard .group li em { display:none; }
+.proCard .group li:has(em) span { padding-left:10px; border-left:1px solid #3a3a36; }

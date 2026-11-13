@@ -1,16 +1,16 @@
-import { approvalUrl } from './paypal.mjs';
+import { approvalUrl, periodOfMinor } from './paypal.mjs';
 // Internal authenticated-service API, not a public HTTP handler. userId must come
 // from verified Clerk authentication. No return-page input can grant membership.
 export function checkoutService({ store, paypal, termsVersion, now = Date.now }) {
   return {
-    async start(userId, currency, acceptedTerms) {
+    async start(userId, currency, acceptedTerms, period = 'month') {
       if (!termsVersion || acceptedTerms !== termsVersion) throw Error('TERMS_REQUIRED');
-      let row = await store.reserve(userId, currency, termsVersion);
+      let row = await store.reserve(userId, currency, termsVersion, period);
       if (!row.paypal_id) {
         // PayPal retains create keys for 72h. Never blindly retry after that window.
         const age = now() - new Date(row.created_at).getTime();
         if (!Number.isFinite(age) || age < 0 || age >= 71 * 3600000) throw Error('RECONCILIATION_REQUIRED');
-        const remote = await paypal.create({ id: row.id, currency: row.currency });
+        const remote = await paypal.create({ id: row.id, currency: row.currency, period: periodOfMinor(row.currency, row.minor) });
         row = await store.attach(userId, row.id, remote.id);
         return { id: row.id, approvalUrl: remote.approvalUrl };
       }

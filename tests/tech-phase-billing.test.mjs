@@ -151,7 +151,7 @@ test('JPY and USD checkout reuse the durable key after provider response loss or
   assert.equal(pending[0].state,'creating');
   const resumed=await svc.start(user,currency,'sandbox-v1');
   assert.equal(resumed.id,pending[0].id);
-  assert.deepEqual(requests,[{id:resumed.id,currency},{id:resumed.id,currency}]);
+  assert.deepEqual(requests,[{id:resumed.id,currency,period:'month'},{id:resumed.id,currency,period:'month'}]);
   assert.equal(providerRows.size,1);assert.equal(attachCalls,failure==='local-attach'?2:1);
   const saved=(await db.query('SELECT * FROM tech_phase_billing_sandbox.subscriptions WHERE user_id=$1',[user])).rows;
   assert.equal(saved.length,1);assert.equal(saved[0].paypal_id,providerRows.get(resumed.id).id);

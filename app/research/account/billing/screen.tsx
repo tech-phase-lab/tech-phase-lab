@@ -29,6 +29,7 @@ export default function BillingScreen({mode="sandbox", preview=false}: {mode?: "
   const [error, setError] = useState("");
   const [notice, setNotice] = useState("");
   const [salesReady,setSalesReady]=useState(mode === "sandbox");
+  const [period, setPeriod] = useState<"month" | "year">("year");
   const locked = useRef(false);
   const lifetime = useRef<AbortController | null>(null);
   const automaticCheck = useRef<string | null>(null);
@@ -44,7 +45,7 @@ export default function BillingScreen({mode="sandbox", preview=false}: {mode?: "
     if (signal?.aborted) return;
     setSummary(next);
     setError("");
-    if (next.subscription) setCurrency(next.subscription.currency);
+    if (next.subscription) { setCurrency(next.subscription.currency); setPeriod(next.subscription.period === "year" ? "year" : "month"); }
     return next;
   }, [mode]);
   useEffect(() => {
@@ -86,7 +87,7 @@ export default function BillingScreen({mode="sandbox", preview=false}: {mode?: "
       if (action === "create") {
         if (preview) return; // the review screen never starts a payment
         if (!agreed || !ready || !salesReady) throw Error("billing-disabled");
-        const result = await billingRequest("create", { currency, acceptedTerms: mode === "live" ? "pro-live-v1" : "sandbox-v1" }, signal, mode);
+        const result = await billingRequest("create", { currency, period, acceptedTerms: mode === "live" ? "pro-live-v1" : "sandbox-v1" }, signal, mode);
         if (signal?.aborted) return;
         if (result.approvalUrl) { window.location.assign(sandboxApproval(result.approvalUrl, mode)); return; }
         setNotice("check-payment");
@@ -145,7 +146,7 @@ export default function BillingScreen({mode="sandbox", preview=false}: {mode?: "
   return <ResearchToolShell showTools={false} lang={lang} setLang={setLang} title={mode === "live" ? t("PROのお申し込み・契約管理", "PRO subscription") : t("PRO テスト購入", "PRO test checkout")} description="">
     <section className={styles.card} aria-busy={busy}>
       <h2>{mode === "live" ? "Tech Phase PRO" : "PayPal Sandbox"}</h2>
-      <p>{mode === "live" ? t("月額2,980円または20米ドルで毎月自動更新されます。PayPalで承認する前に、通貨と金額をご確認ください。", "Renews monthly at JPY 2,980 or USD 20. Check the currency and amount before approving on PayPal.") : t("運営者専用のテストです。実際の請求や本番のPRO会員状態への変更はありません。PayPalのSandbox購入者アカウントを使用してください。", "Owner-only test. No real charge or production PRO membership change. Use a PayPal Sandbox buyer account.")}</p>
+      <p>{mode === "live" ? t("月額2,980円(20米ドル)または年額29,800円(200米ドル)で自動更新されます。PayPalで承認する前に、通貨・期間・金額をご確認ください。", "Renews automatically at JPY 2,980 or USD 20 per month, or JPY 29,800 or USD 200 per year. Check the currency, period and amount before approving on PayPal.") : t("運営者専用のテストです。実際の請求や本番のPRO会員状態への変更はありません。PayPalのSandbox購入者アカウントを使用してください。", "Owner-only test. No real charge or production PRO membership change. Use a PayPal Sandbox buyer account.")}</p>
       {preview && <p role="status" style={{ border: "1px dashed currentColor", padding: "8px 10px", borderRadius: 8 }}>{t("確認用の表示です（購入はできません）。", "Review screen only (purchases are not possible here).")}</p>}
       {notice && !(notice === "verified" && summary?.reviewRequired) && <p role="status">{notices[notice]}</p>}
       {error && <p role={error === "identity-loading" ? "status" : "alert"}>{errorText}</p>}
@@ -158,9 +159,10 @@ export default function BillingScreen({mode="sandbox", preview=false}: {mode?: "
       <button type="button" disabled={busy || preview} onClick={() => void act("refresh")}>{busy ? t("確認中…", "Checking…") : t("契約状況を再確認", "Refresh subscription")}</button>
       {ready && !salesReady && <p role="status">{t("新規お申し込みの受付は停止中です。契約の確認と自動更新の停止は引き続き行えます。", "New subscriptions are closed. You can still manage your subscription and stop renewal.")}</p>}
       {ready && salesReady && summary && resumable && <fieldset disabled={busy}>
-        <legend>{t("月額プラン", "Monthly plan")}</legend>
-        <label>{t("通貨", "Currency")}<select value={currency} disabled={Boolean(open)} onChange={e => { setCurrency(e.target.value as "JPY" | "USD"); setAgreed(false); }}><option value="JPY">JPY 2,980 / {t("月", "month")}</option><option value="USD">USD 20 / {t("月", "month")}</option></select></label>
-        <label className={styles.check}><input type="checkbox" checked={agreed} onChange={e => setAgreed(e.target.checked)} />{mode === "live" ? t("選択した月額料金で毎月自動更新されることに同意します。自動更新はこの画面で停止できます。", "I agree to monthly renewal at the selected price. I can stop automatic renewal on this page.") : t("Sandbox内で毎月自動更新されるテスト契約に同意します。実際の請求はありません。", "I agree to a monthly recurring Sandbox test subscription. There is no real charge.")}</label>
+        <legend>{t("プラン", "Plan")}</legend>
+        <label>{t("期間", "Period")}<select value={period} disabled={Boolean(open)} onChange={e => { setPeriod(e.target.value as "month" | "year"); setAgreed(false); }}><option value="year">{t("年額", "Yearly")}</option><option value="month">{t("月額", "Monthly")}</option></select></label>
+        <label>{t("通貨", "Currency")}<select value={currency} disabled={Boolean(open)} onChange={e => { setCurrency(e.target.value as "JPY" | "USD"); setAgreed(false); }}><option value="JPY">JPY {period === "year" ? "29,800" : "2,980"} / {period === "year" ? t("年", "year") : t("月", "month")}</option><option value="USD">USD {period === "year" ? "200" : "20"} / {period === "year" ? t("年", "year") : t("月", "month")}</option></select></label>
+        <label className={styles.check}><input type="checkbox" checked={agreed} onChange={e => setAgreed(e.target.checked)} />{mode === "live" ? period === "year" ? t("選択した年額料金で毎年自動更新されることに同意します。自動更新はこの画面で停止できます。", "I agree to yearly renewal at the selected price. I can stop automatic renewal on this page.") : t("選択した月額料金で毎月自動更新されることに同意します。自動更新はこの画面で停止できます。", "I agree to monthly renewal at the selected price. I can stop automatic renewal on this page.") : t("Sandbox内で自動更新されるテスト契約に同意します。実際の請求はありません。", "I agree to a recurring Sandbox test subscription. There is no real charge.")}</label>
         <button type="button" disabled={!agreed || busy || preview} onClick={() => void act("create")}>{open ? t("PayPalで手続きを再開", "Resume on PayPal") : mode === "live" ? t("PayPalで申し込む", "Subscribe with PayPal") : t("PayPalでテスト購入", "Test checkout with PayPal")}</button>
       </fieldset>}
       {ready && sub && sub.state !== "creating" && <button type="button" disabled={busy} onClick={() => void act("reconcile")}>{t("支払いを確認", "Verify payment")}</button>}

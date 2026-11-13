@@ -36,3 +36,15 @@ test('full reporting pages expose truncation and unrelated tickers are not admit
  const full=await createReportReader({...options,fetcher:async()=>Response.json({data:Array(100).fill({...row,tickers:['AAPL']})})})();
  assert.equal(full.possiblyTruncated,true);assert.equal(full.returned,100);assert.deepEqual(full.items,[]);
 });
+
+test('market lane reads the general feed (no ticker list), merges, dedupes and fails closed as a whole',async()=>{
+ const seen=[];
+ const general={...row,title:'Nasdaq tumbles as yields surge',news_url:'https://publisher.example/market/1',tickers:undefined};
+ delete general.tickers;
+ const reader=createReportReader({...options,marketWide:true,fetcher:async url=>{seen.push(url.pathname+'?'+(url.searchParams.get('section')??''));return Response.json({data:url.pathname==='/api/v1/category'?[general,{...row,news_url:row.news_url}]:[row]});}});
+ const out=await reader();
+ assert.deepEqual(seen,['/api/v1?','/api/v1/category?general']);
+ assert.equal(out.items.length,2);assert.equal(out.marketLane,true);assert.equal(out.returned,3);
+ const failing=createReportReader({...options,marketWide:true,fetcher:async url=>url.pathname==='/api/v1/category'?Response.json({},{status:500}):Response.json({data:[row]})});
+ await assert.rejects(failing(),e=>e.message==='REPORT_SOURCE_UNAVAILABLE');
+});

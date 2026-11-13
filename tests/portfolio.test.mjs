@@ -147,7 +147,7 @@ test("the portfolio is PRO only: hidden from the FREE menu, redirected on the pa
     assert.match(route, /getMembership\(\)\)\.plan !== "pro"\) return json\(\{ error: "pro-only" \}, 403\)/, path);
   }
   assert.match(await src("../app/research/plan-cards.tsx"), /米国株の資産管理/);
-  assert.match(await src("../app/research/account/account-view.tsx"), /米国株の資産管理/);
+  assert.match(await src("../app/research/account/account-view.tsx"), /<ProFeatures ja=\{ja\} \/>/); // the account card lists the same PRO features
 });
 
 test("a real row with an unreadable number is kept as incomplete (to be typed in), not silently dropped", () => {

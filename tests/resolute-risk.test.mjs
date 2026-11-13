@@ -121,3 +121,10 @@ test('stopped vs preparing vs failed wording comes from the single policy',()=>{
  assert.equal(RISK_POLICY.status.preparing.ja,'準備中です');
  assert.equal(riskAction(RISK_POLICY.reviewMinStars),'review');
 });
+
+test('market-wide stress headlines become candidates even without AI/semiconductor words; neutral macro news does not',()=>{
+ const macro='Investors worried that the Federal Reserve may keep interest rates high for longer, pressuring technology stocks and equity valuations across the market for months.';
+ const select=(title,bodyEn=macro)=>candidatesFromFeed({ok:true,enabled:true,items:[{...candidate,title,bodyEn}]},now);
+ for(const title of ['Nasdaq tumbles as Treasury yields surge','Wall Street sell-off deepens on tariff fears','Fed signals rate hikes could return, stocks slide'])assert.equal(select(title).length,1,title);
+ for(const title of ['Fed holds rates steady as expected','Nasdaq hits record high','Local bakery opens new store'])assert.equal(select(title).length,0,title);
+});

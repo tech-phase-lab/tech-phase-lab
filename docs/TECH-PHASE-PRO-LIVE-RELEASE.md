@@ -137,3 +137,11 @@ webはWeb側の変数、apiは決済API側、recoveryは定期照合側の変数
 現在のコードはこのフラグが無効だと以前のmetadata判定に戻るため、古い権限が再び参照される可能性がある。
 また `LIVE_ENABLED=false` は会員の解約・照合APIも止める。全停止が必要な障害時は影響を判断して対応する。
 返金・異議のholdや台帳行を削除して復旧させない。未知の支払を推測して権限付与しない。
+
+## Yearly plans (added 2026-11-12)
+
+- New variables (Railway, backend `api` and `recovery` roles; values are the public PayPal plan ids from `docs/design/pro-card-pack/INSTRUCTIONS.md`):
+  `TECH_PHASE_PAYPAL_LIVE_PLAN_JPY_YEAR`, `TECH_PHASE_PAYPAL_LIVE_PLAN_USD_YEAR`. Sandbox: `TECH_PHASE_PAYPAL_PLAN_JPY_YEAR`, `TECH_PHASE_PAYPAL_PLAN_USD_YEAR`.
+  Without them yearly checkout is refused (monthly is unaffected); `live-preflight.mjs` lists them as required.
+- Database: apply `db/tech-phase/008_yearly_plans.sql` (widens the price and billing-window checks; idempotent; owner approval needed for live).
+- The period of a contract is derived from its stored price (JPY 2,980/29,800, USD 20/200); the client sends only `currency` and `period`, never a plan id.
