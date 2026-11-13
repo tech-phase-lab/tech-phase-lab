@@ -24,7 +24,7 @@ export default function ResearchToolShell({ lang, setLang, title, description, c
         ? <PageHeading eyebrow="RIZEL'S DESK" title={title === "RIZEL’S DESK" ? "リゼルのひとりごと" : title} description={title === "RIZEL’S DESK" && !description ? "PRO会員だけに、本音を。" : description} />
         : <>
           {desk && <div className={styles.deskSignature}><span>RIZEL’S DESK</span><small>TECH PHASE PRO</small></div>}
-          {showHeading && <>{eyebrow && <p className={styles.eyebrow}>{eyebrow}</p>}<h1 className={compactTitle ? styles.compactTitle : undefined}>{title}</h1>{description && <p className={styles.description}>{description}</p>}</>}
+          {showHeading && (eyebrow ? <PageHeading eyebrow={eyebrow} title={title} description={description} /> : <><h1 className={compactTitle ? styles.compactTitle : undefined}>{title}</h1>{description && <p className={styles.description}>{description}</p>}</>)}
         </>}
       {desk && <nav className={styles.deskNav} aria-label={lang === "ja" ? "RIZEL’S DESKメニュー" : "RIZEL’S DESK navigation"}>
         <Link href="/research/notes" aria-current={pathname === "/research/notes" ? "page" : undefined}>{lang === "ja" ? "ひとりごと" : "Notes"}</Link>
