@@ -76,7 +76,7 @@ def exhibit_text(cik, accession):
 def check_company(ticker):
     """One company's pass/fail against the acceptance criteria (docs/EARNINGS-ACCEPTANCE-2026-11-12.md), from its latest real release."""
     provider = monitor.PROVIDERS.get(ticker, {})
-    ciks = [s.get('cik') for s in provider.get('supplementalSources', []) if s.get('format') == 'sec-json']
+    ciks = [s.get('cik') for s in [*provider.get('supplementalSources', []), *provider.get('fallbackSources', [])] if s.get('format') == 'sec-json']
     result = {'ticker': ticker, 'detection': 'no route', 'figures': 0, 'verdict': 'FAIL', 'reason': ''}
     if not provider:
         result['reason'] = 'company not configured in providers.json'

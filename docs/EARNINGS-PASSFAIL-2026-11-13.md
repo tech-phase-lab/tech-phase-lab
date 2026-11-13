@@ -1,31 +1,31 @@
 # Earnings flash pass/fail (latest real release of each watch-list company)
 
-Generated 2026-11-13 09:32Z · PASS 7 / 22
+Generated 2026-11-13 09:32Z · PASS 14 / 22
 
 | Ticker | Verdict | Detection source | Figures | Reason |
 |---|---|---|---|---|
-| MU | FAIL | SEC 8-K 2026-09-30T20:02Z | 0 | no parser for this company yet |
+| MU | PASS | SEC 8-K 2026-09-30T20:02Z | 4 | 4 figures, e.g. revenue $54.229B |
 | SKHY | FAIL | no route | 0 | no release text found |
-| SNDK | FAIL | SEC 8-K 2026-10-29T20:13Z | 0 | no parser for this company yet |
+| SNDK | PASS | SEC 8-K 2026-10-29T20:13Z | 4 | 4 figures, e.g. revenue $11.031B |
 | NBIS | PASS | newsroom page | 3 | 3 figures, e.g. revenue $980.8M |
 | NVDA | PASS | SEC 8-K 2026-08-26T20:21Z | 6 | 6 figures, e.g. revenue $96.221B |
-| AMD | FAIL | SEC 8-K 2026-11-03T21:16Z | 0 | no parser for this company yet |
+| AMD | PASS | SEC 8-K 2026-11-03T21:16Z | 4 | 4 figures, e.g. revenue $13.377B |
 | AVGO | PASS | SEC 8-K 2026-09-02T20:26Z | 4 | 4 figures, e.g. revenue $29.591B |
 | ARM | FAIL | SEC 6-K 2026-11-04T21:02Z | 0 | no parser for this company yet |
-| TSM | FAIL | SEC 6-K 2026-10-15T10:40Z | 0 | no parser for this company yet |
-| ASML | FAIL | SEC 6-K 2026-10-14T10:01Z | 0 | no parser for this company yet |
+| TSM | PASS | SEC 6-K 2026-10-15T10:40Z | 5 | 5 figures, e.g. revenue NT$1494.243B |
+| ASML | PASS | SEC 6-K 2026-10-14T10:01Z | 4 | 4 figures, e.g. revenue €11.662B |
 | MRVL | PASS | SEC 8-K 2026-08-27T20:05Z | 4 | 4 figures, e.g. revenue $2.7393B |
-| ANET | FAIL | SEC 8-K 2026-11-03T21:10Z | 0 | no parser for this company yet |
+| ANET | PASS | SEC 8-K 2026-11-03T21:10Z | 4 | 4 figures, e.g. revenue $3.6576B |
 | CRDO | PASS | SEC 8-K 2026-09-01T20:08Z | 4 | 4 figures, e.g. revenue $479.003M |
 | CRWV | PASS | SEC 8-K 2026-11-10T21:05Z | 5 | 5 figures, e.g. revenue $3.661B |
 | VRT | FAIL | SEC 8-K 2026-10-28T10:02Z | 0 | no parser for this company yet |
 | GEV | FAIL | SEC 8-K 2026-10-28T10:16Z | 0 | no parser for this company yet |
 | DELL | PASS | SEC 8-K 2026-09-01T20:10Z | 4 | 4 figures, e.g. revenue $46.971B |
-| PLTR | FAIL | SEC 8-K 2026-11-02T21:06Z | 0 | no parser for this company yet |
+| PLTR | PASS | SEC 8-K 2026-11-02T21:06Z | 4 | 4 figures, e.g. revenue $2.313411B |
 | MSFT | FAIL | SEC 8-K 2026-10-28T20:04Z | 0 | no parser for this company yet |
 | AMZN | FAIL | SEC 8-K 2026-10-29T20:05Z | 0 | no parser for this company yet |
 | GOOGL | FAIL | SEC 8-K 2026-10-28T20:01Z | 0 | no parser for this company yet |
-| ORCL | FAIL | no route | 0 | no release text found |
+| ORCL | FAIL | no route | 0 | Oracle files no 8-K Item 2.02 and oracle.com refuses automated fetches (403): needs an IR/wire route |
 
 ## How this table is made
 `python3 scripts/research/earnings_backtest.py` (add `--json` for a machine-readable copy) takes each company's **latest real release** (SEC 8-K Item 2.02 or 6-K exhibit;
