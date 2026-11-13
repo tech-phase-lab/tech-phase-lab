@@ -74,6 +74,22 @@ class PushTests(unittest.TestCase):
         # pilot devices are allowed in this test environment: the late discovery is the reason now
         self.assertEqual(push.SKIPS.get('published-not-fresh'), 1)
 
+    def test_one_result_line_per_earnings_flash_with_counts_and_skip_reasons(self):
+        # Next earnings night: one line says company, quarter, how many devices were sent and why others were skipped.
+        import io, json
+        from contextlib import redirect_stdout
+        push.SKIPS.clear(); push._LOGGED_SKIPS.clear(); push.RELEASE_SKIPS.clear()
+        push.register(self.db, {'subscription': subscription(), 'tickers': ['TSM'], 'language': 'ja'}, {'TSM'}, self.now - 10)
+        out = io.StringIO()
+        with redirect_stdout(out):
+            push.deliver(self.db, [self.result(), self.result(ticker='MU', published='2026-09-26T13:00:00+00:00')], lambda *a: 201, self.now, wall_now=lambda: self.now)
+        lines = [json.loads(l) for l in out.getvalue().splitlines() if '"push-result"' in l]
+        self.assertEqual(len(lines), 1)
+        self.assertEqual((lines[0]['ticker'], lines[0]['sent'], lines[0]['accepted'], lines[0]['uncertain'], lines[0]['expired']), ('TSM', 1, 1, 0, 0))
+        self.assertTrue(lines[0]['quarter'])
+        self.assertNotIn('subscription', out.getvalue()); self.assertNotIn('endpoint', out.getvalue())
+        self.assertEqual(push.RELEASE_SKIPS[('MU', lines[0]['quarter'])], {'published-not-fresh': 1})
+
     def test_an_outlook_only_brief_is_not_announced_as_a_result(self):
         brief = {'kind': 'earnings', 'ticker': 'TSM', 'period': 'Q4 2026', 'titleJa': 'TSM Q4 2026 会社見通し：売上高$52.30B-$54.30B',
                  'titleEn': 'TSM Q4 2026 guidance', 'publishedAt': '2026-10-15T07:24:00Z', 'observedAt': '2026-10-15T07:25:00Z',

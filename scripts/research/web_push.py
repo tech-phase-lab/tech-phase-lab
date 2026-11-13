@@ -622,12 +622,16 @@ SKIPS = {}
 
 
 _LOGGED_SKIPS = set()
+RELEASE_SKIPS = {}  # (ticker, quarter) -> {reason: count} since start; only for the one-line push-result log
 QUIET_SKIP_REASONS = frozenset({'published-not-fresh', 'already-delivered', 'invalid-item'})
 
 
 def skip(item, reason, device=None):
     if item.get('kind') == 'earnings':
         SKIPS[reason] = SKIPS.get(reason, 0) + 1
+        if len(RELEASE_SKIPS) < 500 or (item.get('ticker'), item.get('quarter')) in RELEASE_SKIPS:
+            counts = RELEASE_SKIPS.setdefault((item.get('ticker'), item.get('quarter')), {})
+            counts[reason] = counts.get(reason, 0) + 1
         # One line per reason and release in the service log, which (unlike the counters) survives a restart. No device or member.
         key = (reason, item.get('ticker'), item.get('quarter'))
         if reason not in QUIET_SKIP_REASONS and key not in _LOGGED_SKIPS and len(_LOGGED_SKIPS) < 500:
@@ -718,6 +722,7 @@ def deliver(db, items, transport=send, now=None, monotonic_now=time.monotonic,
     now = wall_now() if now is None else now
     status_now = now
     attempted = accepted = uncertain = 0
+    sent = {}  # (ticker, quarter) -> {status: count} for earnings flashes attempted in this call
     for device in db.execute('SELECT * FROM push_devices WHERE active=1').fetchall():
         if not device['owner_id'] and os.environ.get('WEB_PUSH_ALLOW_PILOT', '').lower() != 'true':
             for raw_item in items:
@@ -814,8 +819,17 @@ def deliver(db, items, transport=send, now=None, monotonic_now=time.monotonic,
             attempted += 1
             accepted += status == 'accepted'
             uncertain += status == 'uncertain'
+            if item.get('kind') == 'earnings':
+                counts = sent.setdefault((item.get('ticker'), item.get('quarter')), {})
+                counts[status] = counts.get(status, 0) + 1
             if status == 'expired':
                 break
+    # One line per earnings flash attempted in this call: company, quarter, how many devices, and why others were skipped
+    # (counts since start). Never the device, member, endpoint or text. This is the line to read after an earnings night.
+    for (ticker, quarter), counts in sent.items():
+        print(json.dumps({'event': 'push-result', 'ticker': ticker, 'quarter': quarter, 'sent': sum(counts.values()),
+                          'accepted': counts.get('accepted', 0), 'uncertain': counts.get('uncertain', 0), 'expired': counts.get('expired', 0),
+                          'skips': dict(RELEASE_SKIPS.get((ticker, quarter), {}))}), flush=True)
     with db:
         db.execute('DELETE FROM push_deliveries WHERE attempted_at<?',
                    (now - DELIVERY_RETENTION_SECONDS,))
