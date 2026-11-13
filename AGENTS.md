@@ -72,6 +72,10 @@ A September 27 connector update truncated existing research files. Before any Gi
 
 # Product plans (owner decisions)
 
+- Operator access (owner, 2026-11-13): the owner's accounts (OWNER_ACCOUNT_ID, PRODUCTION_OWNER_ACCOUNT_ID in
+  lib/membership/entitlements.ts) must always be able to use every feature, including everything limited to PRO, in every
+  environment. When adding a feature or a new restriction, allow the owner explicitly and add a test for it.
+
 - Home news: once the Stock News API contract is in place, switch the home screen news
   (top LIVE band and the lower news list) to the Stock News API. The home screen is redesigned
   in mid-November; until then the current sources stay as they are.

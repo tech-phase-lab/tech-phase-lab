@@ -45,3 +45,32 @@ test('production owner gets operational PRO without buying; ordinary accounts st
   delete globalThis.__productionOwner;
  }
 });
+
+test('every owner account is PRO in every environment, except while it deliberately previews a member plan',async()=>{
+ let source=readFileSync(new URL('../lib/membership/server.ts',import.meta.url),'utf8')
+  .replace('import "server-only";','')
+  .replace('import {liveMembership} from "@/services/tech-phase-billing/live-membership.mjs";','const liveMembership=async()=>{globalThis.__productionOwner.calls++;return globalThis.__productionOwner.live;};')
+  .replace('import { cache } from "react";','const cache=fn=>fn;')
+  .replace('import { auth, clerkClient } from "@clerk/nextjs/server";','const auth=async()=>globalThis.__productionOwner.session;const clerkClient=async()=>({users:{getUser:async()=>globalThis.__productionOwner.user}});');
+ for(const name of ['entitlements','admin-mfa'])source=source.replace(`"./${name}"`,JSON.stringify(new URL(`../lib/membership/${name}.ts`,import.meta.url).href));
+ const {code}=await transform(source,{loader:'ts',format:'esm'});
+ const {getMembership}=await import('data:text/javascript;base64,'+Buffer.from(code).toString('base64'));
+ const keys=['CLERK_SECRET_KEY','NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY','TECH_PHASE_REQUIRE_ADMIN_MFA','VERCEL_ENV'];
+ const before=Object.fromEntries(keys.map(k=>[k,process.env[k]]));
+ try {
+  Object.assign(process.env,{CLERK_SECRET_KEY:'fixture',NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY:'fixture',TECH_PHASE_REQUIRE_ADMIN_MFA:'true'});
+  for (const environment of ['production','preview','development']) for (const owner of [OWNER_ACCOUNT_ID,PRODUCTION_OWNER_ACCOUNT_ID]) {
+   process.env.VERCEL_ENV=environment;
+   globalThis.__productionOwner={calls:0,live:{plan:'free',accessExpiresAt:0},session:{userId:owner,sessionClaims:{fva:[0,0]}},user:{twoFactorEnabled:true,privateMetadata:{}}};
+   const member=await getMembership();
+   assert.equal(member.plan,'pro',environment+' '+owner);assert.equal(member.ownerMode,true);assert.ok(member.accessExpiresAt>Date.now()+3000000);
+  }
+  // an ordinary admin is still not an owner
+  process.env.VERCEL_ENV='production';
+  globalThis.__productionOwner={calls:0,live:{plan:'free',accessExpiresAt:0},session:{userId:'user_other',sessionClaims:{fva:[0,0]}},user:{twoFactorEnabled:true,privateMetadata:{role:'admin'}}};
+  assert.equal((await getMembership()).ownerMode,false);
+ } finally {
+  for(const k of keys){if(before[k]===undefined)delete process.env[k];else process.env[k]=before[k];}
+  delete globalThis.__productionOwner;
+ }
+});
