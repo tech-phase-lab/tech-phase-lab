@@ -88,7 +88,12 @@ def money_millions(value):
 
 
 def per_share(value):
-    return '$' + format(value.normalize(), 'f')
+    text = format(value.normalize(), 'f')
+    if '.' not in text:
+        text += '.00'
+    elif len(text.split('.')[1]) < 2:
+        text += '0'  # cents are printed with two digits ($1.70, not $1.7)
+    return '$' + text
 
 
 def clean(text):
@@ -273,6 +278,157 @@ def parse_nvidia(text, url=None):
     return {'period': f'Q{quarter} FY{year}', 'facts': facts}
 
 
+AMT = r'\(?[\d,]+(?:\.\d+)?\)?'
+HEADLINE_PERIOD = re.compile(r'\b(First|Second|Third|Fourth) Quarter (?:of )?Fiscal (?:Year )?(20\d\d)(?!\d)', re.I)
+
+
+def headline_period(text):
+    """'... Second Quarter of Fiscal Year 2027 Financial Results' in the first lines of the release -> (2, 2027)."""
+    match = HEADLINE_PERIOD.search(text[:400])  # the title: later mentions are next-quarter guidance
+    if not match:
+        raise ValueError('period-unrecognized')
+    return QUARTERS[match[1].lower()], int(match[2])
+
+
+def statement_row(block, label, columns):
+    """One row of an income statement: label, then `columns` numbers (a '$' may precede each). Exactly one such row, or None."""
+    found = re.findall(r'(?<![A-Za-z])' + label + r'(?: \$)? ' + ' '.join(['(?:\\$ )?(' + AMT + ')'] * columns) + r'(?= |$)', block)
+    if len(found) != 1:
+        return None
+    return [signed(x) for x in found[0]]
+
+
+def parse_statement(text, cfg):
+    """Income-statement layout shared by Marvell, Credo and Broadcom: three or five numeric columns (this quarter, previous quarter,
+    same quarter a year earlier [, year-to-date columns]). Nothing is published unless the statement agrees with itself and the headline:
+    revenue against the stated year-over-year growth in the headline, gross profit = revenue - cost, operating income = gross profit -
+    operating expenses, net income = pretax income - tax, EPS = net income / diluted shares."""
+    t = clean(text)
+    if cfg['identity'] not in t.lower():
+        raise ValueError('issuer-identity-missing')
+    quarter, year = headline_period(t)
+    start = t.find(cfg['heading'])
+    if start < 0:
+        raise ValueError('statement-heading-missing')
+    block = t[start:start + 3200]
+    if cfg['units'] not in block[:400].lower():
+        raise ValueError('units-unrecognized')
+    n, ago, scale = cfg['columns'], cfg['year-ago'], cfg['scale']
+    rows = {}
+    for key, label in cfg['rows'].items():
+        rows[key] = statement_row(block, label, n)
+    if not rows['revenue'] or rows['revenue'][0] <= 0 or not rows['revenue'][ago] > 0:
+        raise ValueError('revenue-row-unrecognized')
+    growth = re.findall(cfg['growth'], t[:2500])
+    if len(growth) != 1:
+        raise ValueError('revenue-growth-missing')
+    stated = Decimal(growth[0])  # the headline's own rounding: whole percent -> +-0.55, one decimal -> +-0.06
+    actual = (rows['revenue'][0] / rows['revenue'][ago] - 1) * 100
+    if abs(actual - stated) > (Decimal('0.06') if '.' in growth[0] else Decimal('0.55')):
+        raise ValueError('change-mismatch')
+
+    def col(key, i):
+        return rows[key][i] if rows.get(key) else None
+
+    def agrees(a, b, c, i):  # a - b == c in column i, to the rounding of the printed figures
+        x, y, z = col(a, i), col(b, i), col(c, i)
+        return None not in (x, y, z) and abs((x - y) - z) <= cfg['tol']
+    # a column is trusted only when every identity holds in both the current and the year-earlier column
+    gross_ok = all(agrees('revenue', 'cost', 'gross', i) for i in (0, ago)) if rows.get('cost') else False
+    op_ok = gross_ok and all(agrees('gross', 'opex', 'operating', i) for i in (0, ago))
+    net_ok = all(agrees('pretax', 'tax', 'net', i) for i in (0, ago)) if rows.get('tax') is not None else False
+    metrics = {'revenue': (rows['revenue'][0], rows['revenue'][ago])}
+    if op_ok:
+        metrics['operating-income'] = (rows['operating'][0], rows['operating'][ago])
+    if net_ok:
+        metrics['net-income'] = (rows['net'][0], rows['net'][ago])
+    facts = [(key, money_millions(v[0] * scale), money_millions(v[1] * scale)) for key, v in metrics.items()]
+    eps, shares = rows.get('eps'), rows.get('shares')
+    if net_ok and eps and shares and shares[0] > 0 and abs(rows['net'][0] / shares[0] - eps[0]) <= Decimal('0.015') + abs(eps[0]) * Decimal('0.02') \
+            and shares[ago] > 0 and abs(rows['net'][ago] / shares[ago] - eps[ago]) <= Decimal('0.015') + abs(eps[ago]) * Decimal('0.02'):
+        facts.append(('eps', per_share(eps[0]), per_share(eps[ago])))
+    guidance = re.findall(cfg['guidance'], t[:3000]) if cfg.get('guidance') else []
+    if len(guidance) == 1:
+        facts.append(('guidance-revenue', '$' + guidance[0] + 'B', None, ('次四半期見通し 売上高', 'Next-quarter guidance Revenue')))
+    order = {k: i for i, k in enumerate(ORDER)}
+    facts.sort(key=lambda f: order[f[0]])
+    return {'period': cfg['period'](quarter, year), 'facts': facts}
+
+
+STATEMENT = {
+    'MRVL': {'identity': 'marvell', 'heading': 'Condensed Consolidated Statements of Operations', 'units': 'in millions', 'scale': Decimal(1),
+             'tol': Decimal('0.15'), 'columns': 5, 'year-ago': 2, 'growth': r'grew by (\d+)% year-on-year', 'period': lambda q, y: f'Q{q} FY{y}',
+             'rows': {'revenue': 'Net revenue', 'cost': 'Cost of goods sold', 'gross': 'Gross profit', 'opex': 'Total operating expenses',
+                      'operating': 'Operating income', 'pretax': 'Income before income taxes', 'tax': 'Provision for income taxes',
+                      'net': 'Net income', 'eps': 'Net income per share — diluted',
+                      'shares': r'preferred stock assuming conversion: Basic ' + AMT + ' (?:' + AMT + ' ){4}Diluted'}},
+    'CRDO': {'identity': 'credo', 'heading': 'Condensed Consolidated Statements of Operations', 'units': 'in thousands', 'scale': Decimal('0.001'),
+             'tol': Decimal(1), 'columns': 3, 'year-ago': 2, 'growth': r'quarter over quarter and (\d+(?:\.\d+)?)% year over year', 'period': lambda q, y: f'Q{q} FY{y}',
+             'rows': {'revenue': 'Revenue', 'cost': 'Cost of revenue', 'gross': 'Gross profit', 'opex': 'Total operating expenses',
+                      'operating': 'Operating income', 'pretax': 'Income before income taxes', 'tax': r'Provision \(benefit\) for income taxes',
+                      'net': 'Net income', 'eps': r'Net income per share: Basic \$ [\d.]+ (?:\$ [\d.]+ ){2}Diluted',
+                      'shares': r'computing net income per share: Basic ' + AMT + ' ' + AMT + ' ' + AMT + ' Diluted'}},
+    'AVGO': {'identity': 'broadcom', 'heading': 'CONDENSED CONSOLIDATED STATEMENTS OF OPERATIONS', 'units': 'in millions', 'scale': Decimal(1),
+             'tol': Decimal(1), 'columns': 5, 'year-ago': 2, 'growth': r'up (\d+) percent from the prior year period', 'period': lambda q, y: f'Q{q} FY{y}',
+             'guidance': r'revenue guidance of approximately \$(\d+(?:\.\d+)?) billion',
+             'rows': {'revenue': 'Net revenue', 'cost': 'Total cost of revenue', 'gross': 'Gross margin', 'opex': 'Total operating expenses',
+                      'operating': 'Operating income', 'pretax': 'Income before income taxes', 'tax': 'Provision for income taxes',
+                      'net': 'Net income', 'eps': r'Net income per share: Basic \$ [\d.]+ (?:\$ [\d.]+ ){4}Diluted',
+                      'shares': r'per share calculations: Basic ' + AMT + ' (?:' + AMT + ' ){4}Diluted'}},
+}
+
+
+def parse_dell(text, url=None):
+    """Dell's results release (8-K EX-99.1): 'Condensed Consolidated Statements of Income and Related Financial Highlights' with the
+    columns this quarter, a year earlier, change (%), then six months. Every row is checked against its stated change."""
+    t = clean(text)
+    if 'dell technologies' not in t.lower():
+        raise ValueError('issuer-identity-missing')
+    quarter, year = headline_period(t)
+    start = t.find('Statements of Income and Related Financial Highlights')
+    if start < 0:
+        raise ValueError('statement-heading-missing')
+    block = t[start:start + 3600]
+    if 'in millions' not in block[:200].lower():
+        raise ValueError('units-unrecognized')
+    pct = r'(\(?-?\d[\d,]*\)?%|—%)'
+
+    def row(label):
+        found = re.findall(r'(?<![A-Za-z])' + label + r' (?:\$ )?(' + AMT + r') (?:\$ )?(' + AMT + r') ' + pct, block)
+        if len(found) != 1:
+            return None
+        current, prior, change = signed(found[0][0]), signed(found[0][1]), found[0][2]
+        if change.startswith('('):
+            change = '-' + change.strip('()')
+        try:
+            consistent(prior, current, change)
+        except ValueError:
+            return None
+        return current, prior
+    revenue = row('Total net revenue')
+    if not revenue:
+        raise ValueError('revenue-row-unrecognized')
+    metrics = {'revenue': revenue}
+    for key, label in (('operating-income', 'Operating income'), ('net-income', 'Net income')):
+        found = row(label)
+        if found:
+            metrics[key] = found
+    eps = re.findall(r'Earnings per share: Basic \$ [\d.]+ \$ [\d.]+ \d+% \$ [\d.]+ \$ [\d.]+ \d+% Diluted \$ ([\d.]+) \$ ([\d.]+) (\d+)%', block)
+    facts = [(key, money_millions(v[0]), money_millions(v[1])) for key, v in metrics.items()]
+    if len(eps) == 1:
+        try:
+            consistent(Decimal(eps[0][1]), Decimal(eps[0][0]), eps[0][2] + '%')
+            facts.append(('eps', per_share(Decimal(eps[0][0])), per_share(Decimal(eps[0][1]))))
+        except (ValueError, InvalidOperation):
+            pass
+    guidance = re.findall(r'Full-year FY\d\d revenue guidance of \$(\d+(?:\.\d+)?) billion', t[:3000])
+    if len(guidance) == 1:
+        facts.append(('guidance-revenue', f'${guidance[0]}B', None))
+    order = {k: i for i, k in enumerate(ORDER)}
+    facts.sort(key=lambda f: order[f[0]])
+    return {'period': f'Q{quarter} FY{year}', 'facts': facts}
+
+
 NEBIUS_RESULTS_PATH = re.compile(r'^/newsroom/(?=[a-z0-9-]*quarter)(?=[a-z0-9-]*financial-results)(?![a-z0-9-]*date)[a-z0-9-]+/?$')
 PDF_LINK = re.compile(r'https://assets\.nebius\.com/assets/[0-9a-f-]{36}/[^"\\\s)<>]*?\.pdf', re.I)
 
@@ -355,6 +511,13 @@ PROFILES = {
     'NBIS': {'publisher': 'Nebius IR', 'parse': parse_nebius},
     'CRWV': {'publisher': 'CoreWeave IR (SEC 8-K)', 'parse': parse_coreweave, 'marker': 'Financial Highlights'},
     'NVDA': {'publisher': 'NVIDIA IR', 'parse': parse_nvidia, 'marker': 'Summary GAAP'},
+    'DELL': {'publisher': 'Dell Technologies IR (SEC 8-K)', 'parse': parse_dell, 'marker': 'Statements of Income and Related Financial Highlights'},
+    'MRVL': {'publisher': 'Marvell IR (SEC 8-K)', 'parse': lambda t, u=None: parse_statement(t, STATEMENT['MRVL']),
+             'marker': STATEMENT['MRVL']['heading']},
+    'CRDO': {'publisher': 'Credo IR (SEC 8-K)', 'parse': lambda t, u=None: parse_statement(t, STATEMENT['CRDO']),
+             'marker': STATEMENT['CRDO']['heading']},
+    'AVGO': {'publisher': 'Broadcom IR (SEC 8-K)', 'parse': lambda t, u=None: parse_statement(t, STATEMENT['AVGO']),
+             'marker': STATEMENT['AVGO']['heading']},
 }
 SOURCE_URL = {
     'NBIS': re.compile(r'^https://nebius\.com/newsroom/[a-z0-9-]+$'),
