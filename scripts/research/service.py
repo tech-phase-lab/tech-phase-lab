@@ -2890,6 +2890,7 @@ class AutomaticMonitor:
             try:
                 result, links, request_duration_ms = future.result()
             except Exception as exc:
+                monitor.discovery_failure_diagnostic(ticker, exc, "job")
                 request_duration_ms = max(0, round((time.monotonic() - cycle_started) * 1000))
                 result = {
                     "ticker": ticker, "status": "degraded", "route": "none",
