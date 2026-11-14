@@ -22,9 +22,10 @@ import monitor
 
 MAX_ATTEMPTS = 3
 # Bump when the prompt/check logic changes so analyses held under the old logic are tried again (attempts restart at 0).
-VERSION = 10
+VERSION = 11
 RETRY_SECONDS = 120
 DEFAULT_DAILY_LIMIT = 40
+EARNINGS_RESERVE = 12  # calls of the daily limit kept for earnings only (four analyses at three attempts each)
 MAX_DAILY_LIMIT = 200
 REQUEST_TIMEOUT_SECONDS = 180
 WINDOW = timedelta(days=3)
@@ -36,7 +37,7 @@ Return a headline and three to five analysis points, plus one point on what to w
 Each point explains meaning, not just restating: what drove the result, how it compares with the prior period, guidance or consensus when the source states them, and the risks or questions it raises.
 The headline and each point cite one to three evidence ids (evidenceIds); put a figure in a point only if it appears literally in one of the excerpts that point cites, so cite every excerpt that holds a figure you use.
 Numbers: use only figures that appear literally in the evidence excerpts the point cites, with the same units and signs. Never calculate, round, convert or infer a number (no growth rates you compute, no yen conversions). If a comparison needs a number the source does not give, describe it in words without a number.
-If previousAttemptRejected is present, the last attempt for this source was partly rejected by deterministic checks: unsupported-number:<kind>:<values> lists quantities your copy used that do not appear in the excerpts you cited (do not use them again; cite the excerpt that holds a figure or leave the figure out); changed-negation and changed-action-capacity mean a negated or capacity clause of the cited excerpt was restated without its negation or qualifier; evidence-missing means a cited id does not exist. Fix exactly those points.
+If previousAttemptRejected is present, the last attempt for this source was partly rejected by deterministic checks: unsupported-number:<kind>:<values> lists quantities your copy used that do not appear in the excerpts you cited (do not use them again; cite the excerpt that holds a figure or leave the figure out); changed-negation and changed-action-capacity mean a negated or capacity clause of the cited excerpt was restated without its negation or qualifier; evidence-missing means a cited id does not exist. Fix exactly those points. If alreadyAccepted is present, those points already passed every check and are kept: do not repeat them, and write new points on other aspects of the source (still three to five, each fully supported by the excerpts it cites).
 Write what the excerpts say, not what cannot be known: do not add negative statements of your own (できない、ではない、ない、not、cannot) unless the cited excerpt itself says so; express caution as something to watch (…かどうかを確認したい) instead. A figure you mention must be in an excerpt you cite, so cite the excerpt that holds it.
 Preserve negation, uncertainty and time: plans stay plans, guidance stays guidance.
 Length: every Japanese and every English text (headline, each point, the watch point) must be at most 500 characters; a longer text is rejected whole (copy-too-long), so split a long thought into two points or leave the detail out.
@@ -73,6 +74,7 @@ def schema(db):
         db.execute('ALTER TABLE deep_analyses ADD COLUMN version INTEGER NOT NULL DEFAULT 0')
     if 'detail' not in columns:
         db.execute('ALTER TABLE deep_analyses ADD COLUMN detail TEXT')
+    db.execute('CREATE TABLE IF NOT EXISTS deep_old_retries(source_ref TEXT PRIMARY KEY, marker TEXT NOT NULL, at REAL NOT NULL, outcome TEXT NOT NULL)')
     db.execute('''CREATE TABLE IF NOT EXISTS deep_analysis_calls(
       at REAL NOT NULL, source_ref TEXT NOT NULL, model TEXT NOT NULL, ok INTEGER NOT NULL)''')
 
@@ -91,7 +93,7 @@ def response_schema():
                            'watch': point}}
 
 
-def earnings_sources(db, reference):
+def earnings_sources(db, reference, excerpts=True):
     import official_research
     rows = []
     for row in official_research.candidates(db, reference, primary_only=True):
@@ -102,8 +104,26 @@ def earnings_sources(db, reference):
             continue
         rows.append({'ref': 'event:%s:%s' % (row['id'], row['sha']), 'kind': 'earnings', 'subject': row['ticker'],
                      'sha': row['sha'], 'title': row['title'], 'url': row['url'],
-                     'excerpts': official_research.evidence_excerpts(row['body'])})
+                     'observedAt': row.get('observed_at'),
+                     'excerpts': official_research.evidence_excerpts(row['body']) if excerpts else {}})
     return rows
+
+
+def stored_earnings_source(db, ref):
+    """The source of an old earnings analysis (ref event:<id>:<sha>) straight from the stored event and its revision, without the candidate
+    window (newest 100 events) that has long moved past it. Empty when the release is no longer stored."""
+    import official_research
+    parts = ref.split(':')
+    if len(parts) != 3 or parts[0] != 'event' or not parts[1].isdigit():
+        return []
+    # the event's own sha is a signal hash, not always the revision's: take the revision with that sha, else the one observed closest to the event
+    row = db.execute('''SELECT e.id,e.title,e.url,e.sha AS sha,s.ticker,r.extracted_text AS body FROM signal_events e
+      JOIN sources s ON s.url=e.url JOIN source_revisions r ON r.url=e.url WHERE e.id=? AND e.sha=?
+      ORDER BY (r.sha256=e.sha) DESC, abs(julianday(r.observed_at)-julianday(e.observed_at)) LIMIT 1''', (int(parts[1]), parts[2])).fetchone()
+    if row is None or not row['body']:
+        return []
+    return [{'ref': ref, 'kind': 'earnings', 'subject': row['ticker'], 'sha': row['sha'], 'title': row['title'], 'url': row['url'],
+             'observedAt': None, 'excerpts': official_research.evidence_excerpts(row['body'])}]
 
 
 def indicator_sources(db, reference):
@@ -133,22 +153,23 @@ SCALE_WORD = {'thousands': 'thousand', 'millions': 'million', 'billions': 'billi
 
 def table_scaled_figures(evidence, within=None):
     """Figures of a statement table printed in the unit its header declares ("In USD $ millions ... Revenues 146.1 980.8"), written out in that unit
-    ("980.8 million"). Only decimal or comma-grouped numbers within TABLE_WINDOW characters after one header are converted, never percentages or
-    plain integers (years, counts), and a header that declares different units for the same excerpt converts nothing. The result is appended to the
-    evidence for the number check only, so "$980.8 million" matches the source figure 980.8 of a USD-millions table; no other number is admitted.
-    `evidence` is the whole release (the unit header is often in an excerpt the point did not cite); with `within` (the cited excerpts) only figures
-    that literally appear there are returned, so a point still cannot use a figure from text it did not cite."""
+    ("980.8 million"). Only decimal or comma-grouped numbers within TABLE_WINDOW characters after a header (and before the next one) are converted,
+    never percentages or plain integers (years, counts). A release may declare several units (a statement "in millions", a segment table "in thousands"):
+    each table is read in its own unit, and a figure that the release prints under two different units is converted in neither (ambiguous).
+    The result is appended to the evidence for the number check only, so "$980.8 million" matches the source figure 980.8 of a USD-millions table;
+    no other number is admitted. `evidence` is the whole release (the unit header is often in an excerpt the point did not cite); with `within`
+    (the cited excerpts) only figures that literally appear there are returned, so a point still cannot use a figure from text it did not cite."""
     headers = [(m.start(), (m.group(1) or m.group(2)).lower()) for m in UNIT_HEADER.finditer(evidence)]
-    if not headers or len({scale for _, scale in headers}) != 1:
-        return ''
-    scale = SCALE_WORD[headers[0][1]]
-    figures = []
-    for index, (start, _) in enumerate(headers):
+    scales = {}
+    for index, (start, unit) in enumerate(headers):
         end = min(headers[index + 1][0] if index + 1 < len(headers) else len(evidence), start + TABLE_WINDOW)
-        figures += [m.group(1) for m in TABLE_FIGURE.finditer(evidence[start:end])]
+        for m in TABLE_FIGURE.finditer(evidence[start:end]):
+            scales.setdefault(m.group(1), set()).add(SCALE_WORD[unit])
+    figures = [(figure, next(iter(units))) for figure, units in scales.items() if len(units) == 1]
     if within is not None:
-        figures = [figure for figure in figures if re.search(r'(?<![\d.,])' + re.escape(figure) + r'(?![\d,]|\.\d)', within)]
-    return '; '.join('%s %s' % (figure, scale) for figure in dict.fromkeys(figures))
+        figures = [(figure, unit) for figure, unit in figures
+                   if re.search(r'(?<![\d.,])' + re.escape(figure) + r'(?![\d,]|\.\d)', within)]
+    return '; '.join('%s %s' % pair for pair in figures)
 
 
 def checked(item, quote, release=None):
@@ -159,7 +180,7 @@ def checked(item, quote, release=None):
             raise ValueError('invalid-copy')
         if len(text) > MAX_COPY_CHARS:
             raise ValueError('copy-too-long')
-        factual_validation.validate_numbers(text, quote + '\n' + table_scaled_figures(release or quote, within=quote))
+        factual_validation.validate_numbers(text, table_scaled_figures(release or quote, within=quote) + '\n' + quote)  # scaled figures first: an excerpt cut inside a "(" would turn text appended after it into a negative
         factual_validation.validate_semantics(text, quote)
     factual_validation.validate_pair(item['ja'], item['en'])
 
@@ -208,21 +229,28 @@ def cited_quote(item, excerpts):
     return '\n'.join(found) if found else None
 
 
-def bind(value, excerpts):
-    """Keep checked parts; at least two points and a headline must remain."""
+def bind(value, excerpts, carried=None):
+    """Keep checked parts; at least two points and a headline must remain. `carried` is what an earlier attempt already got through the checks
+    ({'headline', 'points'}): it is kept, so a retry only has to replace what was rejected (the checks themselves are the same for every piece)."""
     if not isinstance(value, dict):
         raise ValueError('invalid-note')
+    carried = carried or {}
     evidence = '\n'.join(excerpts.values())
     headline = value.get('headline')
-    if not isinstance(headline, dict):
-        raise ValueError('invalid-note')
-    # The headline is checked against the excerpts it cites (like every point), not against the whole release: a long release always
-    # contains some negated clause, which made the meaning checks fail a headline that never touched it.
+    headline_error = None
     try:
+        if not isinstance(headline, dict):
+            raise ValueError('invalid-note')
+        # The headline is checked against the excerpts it cites (like every point), not against the whole release: a long release always
+        # contains some negated clause, which made the meaning checks fail a headline that never touched it.
         checked(headline, cited_quote(headline, excerpts) or evidence, evidence)
+        headline = {'ja': headline['ja'], 'en': headline['en']}
     except (ValueError, TypeError, KeyError) as exc:
-        raise Unchecked(str(exc) if isinstance(exc, ValueError) else type(exc).__name__, {'headline': why(exc, evidence)})
-    points, rejected = [], {}
+        headline_error = exc
+        headline = None
+    points = [dict(p) for p in carried.get('points') or []]
+    carried_ja = {p['ja'] for p in points}
+    rejected = {}
     for point in value.get('points') or []:
         quote = cited_quote(point, excerpts) if isinstance(point, dict) else None
         if quote is None:
@@ -234,24 +262,36 @@ def bind(value, excerpts):
             reason = why(exc, evidence)
             rejected[reason] = rejected.get(reason, 0) + 1
             continue
-        points.append({'ja': point['ja'], 'en': point['en']})
+        if point['ja'] not in carried_ja and len(points) < 5:
+            points.append({'ja': point['ja'], 'en': point['en']})
+    headline = headline or carried.get('headline')
+    if headline is None:
+        exc = headline_error
+        raise Unchecked(str(exc) if isinstance(exc, ValueError) else type(exc).__name__,
+                        {'headline': why(exc, evidence), 'carry': {'version': VERSION, 'points': points}})
     if len(points) < 2:
-        raise Unchecked('too-few-checked-points', {'kept': len(points), 'rejected': rejected})
+        raise Unchecked('too-few-checked-points', {'kept': len(points), 'rejected': rejected,
+                                                   'carry': {'version': VERSION, 'headline': headline, 'points': points}})
     watch = value.get('watch')
     try:
         checked(watch, cited_quote(watch, excerpts) or evidence, evidence)
         watch = {'ja': watch['ja'], 'en': watch['en']}
     except (ValueError, TypeError, KeyError, AttributeError):
         watch = None
-    return {'headline': {'ja': headline['ja'], 'en': headline['en']}, 'points': points, 'watch': watch}
+    return {'headline': headline, 'points': points, 'watch': watch}
+
+
+def earnings_reserve(limit):
+    return min(EARNINGS_RESERVE, limit // 3)
 
 
 def used_today(db, now):
     return db.execute('SELECT count(*) FROM deep_analysis_calls WHERE at>=?', (now - 86400,)).fetchone()[0]
 
 
-def run_once(path, transport=None, env=None, now=None, reference=None):
-    """Analyse at most one due source. Returns 'idle', 'done' or 'retry'."""
+def run_once(path, transport=None, env=None, now=None, reference=None, only_ref=None):
+    """Analyse at most one due source. Returns 'idle', 'done' or 'retry'. `only_ref` is the one-off retry of an old hold: that source only,
+    one attempt (a failure goes straight back to held, now with its recorded reasons), and a result is dated to the release, not to today."""
     config = configuration(env)
     if not config:
         return 'idle'
@@ -263,11 +303,24 @@ def run_once(path, transport=None, env=None, now=None, reference=None):
     with connect(path) as db:
         if used_today(db, now) >= limit:
             return 'idle'
-        sources = earnings_sources(db, reference) + indicator_sources(db, reference)
+        # Earnings come first, and indicators (and the one-off old retry) may not use the last EARNINGS_RESERVE calls of the day:
+        # a day with many reports must never leave a tracked company without its analysis for lack of budget.
+        sources = earnings_sources(db, reference)
+        if only_ref is not None or used_today(db, now) < limit - earnings_reserve(limit):
+            sources += indicator_sources(db, reference)
+        if only_ref is not None:
+            sources = [row for row in sources if row['ref'] == only_ref]
+            if not sources:  # an old release has left the candidate window: rebuild it from the stored event and revision
+                sources = stored_earnings_source(db, only_ref)
         source = None
         for row in sources:
             saved = db.execute('SELECT * FROM deep_analyses WHERE source_ref=?', (row['ref'],)).fetchone()
-            if saved and saved['state'] == 'held' and saved['version'] < VERSION and saved['next_at'] <= now:
+            if only_ref is not None:
+                if saved is None or saved['state'] != 'held':
+                    continue
+                db.execute("UPDATE deep_analyses SET attempts=?,state='retry' WHERE source_ref=?", (MAX_ATTEMPTS - 1, row['ref']))
+                saved = None  # the one attempt: a failure is the last one and holds again with its reasons
+            elif saved and saved['state'] == 'held' and saved['version'] < VERSION and saved['next_at'] <= now:
                 db.execute("UPDATE deep_analyses SET attempts=0,state='retry' WHERE source_ref=?", (row['ref'],))
                 saved = None  # held under older logic: a fresh set of attempts
             if saved and (saved['state'] in ('done', 'held') or saved['next_at'] > now):
@@ -281,6 +334,11 @@ def run_once(path, transport=None, env=None, now=None, reference=None):
             previous = json.loads(prior['detail']) if prior and prior['detail'] else None
         except ValueError:
             previous = None
+        carried = previous.pop('carry', None) if isinstance(previous, dict) else None
+        if not isinstance(carried, dict) or carried.get('version') != VERSION:
+            carried = None  # accepted under other check logic: written again
+        if carried and carried.get('points'):
+            previous = {**(previous or {}), 'alreadyAccepted': [p['ja'] for p in carried['points']]}
         db.execute('''INSERT INTO deep_analyses(source_ref,kind,subject,source_sha,state,attempts,next_at,created_at,source_url,source_title)
           VALUES(?,?,?,?, 'running',0,?,?,?,?) ON CONFLICT(source_ref) DO UPDATE SET state='running',next_at=excluded.next_at,version=%d''' % VERSION,
                    (source['ref'], source['kind'], source['subject'], source['sha'], now + 600,
@@ -297,7 +355,7 @@ def run_once(path, transport=None, env=None, now=None, reference=None):
         response = transport(payload, key)
         if response.get('status') != 'completed':
             raise ValueError('incomplete')
-        note = bind(json.loads(brief_generator.output_text(response)), source['excerpts'])
+        note = bind(json.loads(brief_generator.output_text(response)), source['excerpts'], carried)
     except Exception as exc:
         reason = str(exc) if isinstance(exc, ValueError) else type(exc).__name__
         detail = json.dumps(exc.detail, ensure_ascii=False, sort_keys=True) if isinstance(exc, Unchecked) else None
@@ -308,9 +366,11 @@ def run_once(path, transport=None, env=None, now=None, reference=None):
         return 'retry'
     with connect(path) as db:
         db.execute('UPDATE deep_analysis_calls SET ok=1 WHERE source_ref=? AND at=?', (source['ref'], now))
+        published = datetime.now(timezone.utc).isoformat(timespec='seconds')
+        if only_ref is not None:  # an old release analysed late must not look like news of today
+            published = db.execute('SELECT created_at FROM deep_analyses WHERE source_ref=?', (source['ref'],)).fetchone()[0]
         db.execute('''UPDATE deep_analyses SET state='done',model=?,payload=?,failure=NULL,published_at=?
-          WHERE source_ref=?''', (model, json.dumps(note, ensure_ascii=False),
-                                  datetime.now(timezone.utc).isoformat(timespec='seconds'), source['ref']))
+          WHERE source_ref=?''', (model, json.dumps(note, ensure_ascii=False), published, source['ref']))
     return 'done'
 
 
@@ -342,9 +402,129 @@ def diagnostics(db, now=None):
       WHERE state IN ('held','retry') ORDER BY created_at DESC LIMIT 30'''):
         try:
             detail = json.loads(row['detail']) if row['detail'] else None
+            if isinstance(detail, dict):
+                detail.pop('carry', None)  # accepted analysis text stays out of /health
         except ValueError:
             detail = None
         pending.append({'subject': row['subject'], 'state': row['state'], 'attempts': row['attempts'],
                         'failure': row['failure'], 'detail': detail, 'createdAt': row['created_at']})
+    old_retry = dict(db.execute('SELECT outcome,count(*) FROM deep_old_retries WHERE marker=? GROUP BY outcome', (OLD_RETRY_MARKER,)).fetchall())
     return {'configured': configuration() is not None, 'callsLast24h': used_today(db, now), 'states': states,
-            'failures': failures, 'version': VERSION, 'notDone': pending}
+            'failures': failures, 'version': VERSION, 'notDone': pending, **({'oldRetry': old_retry} if old_retry else {})}
+
+
+OLD_RETRY_ENV = 'RESEARCH_DEEP_RETRY_OLD_HOLDS'
+OLD_RETRY_MARKER = 'old-holds-2026-11-14b'  # owner, Nov 14: the 14 held analyses are tried exactly once, with their reasons recorded
+
+
+def retry_old_holds(path, transport=None, env=None, now=None):
+    """One-off, flag-gated (RESEARCH_DEEP_RETRY_OLD_HOLDS=true): every analysis still held is attempted once more, newest first, one per call,
+    with the release's own date as the reference so the sources of that day are found again. A row whose source can no longer be rebuilt is
+    recorded as 'source-unavailable'. The outcome of each row is kept in deep_old_retries, so a restart never repeats it. Returns 'idle' when
+    the flag is off or nothing is left."""
+    env = os.environ if env is None else env
+    if str(env.get(OLD_RETRY_ENV, '')).strip().lower() != 'true' or configuration(env) is None:
+        return 'idle'
+    now = time.time() if now is None else now
+    with connect(path) as db:
+        limit = configuration(env)[2]
+        if used_today(db, now) >= limit - earnings_reserve(limit):
+            return 'idle'  # today's budget (less the part kept for earnings) is spent: wait, record nothing
+        row = db.execute("""SELECT source_ref,created_at FROM deep_analyses WHERE state='held'
+          AND source_ref NOT IN (SELECT source_ref FROM deep_old_retries WHERE marker=?) ORDER BY created_at DESC LIMIT 1""",
+                         (OLD_RETRY_MARKER,)).fetchone()
+    if row is None:
+        return 'idle'
+    try:
+        reference = datetime.fromisoformat(row['created_at']) + timedelta(hours=1)
+    except ValueError:
+        reference = None
+    outcome = 'source-unavailable'
+    if reference is not None:
+        outcome = run_once(path, transport, env, now=now, reference=reference, only_ref=row['source_ref'])
+        outcome = {'idle': 'source-unavailable', 'retry': 'rejected'}.get(outcome, outcome)
+    with connect(path) as db:
+        db.execute('INSERT OR REPLACE INTO deep_old_retries(source_ref,marker,at,outcome) VALUES(?,?,?,?)',
+                   (row['source_ref'], OLD_RETRY_MARKER, now, outcome))
+    return outcome
+
+
+OVERDUE_AFTER_SECONDS = 2 * 3600       # an earnings release without a finished analysis after this long is a critical incident
+OVERDUE_LOOKBACK_SECONDS = 72 * 3600   # older rows are history, never new alerts (enabling this must not replay old holds)
+INCIDENT_PREFIX = 'deep-analysis:'
+
+
+def first_check(row):
+    """The check that rejected the most points (text-free), or the failure name: what the owner needs in the alert."""
+    try:
+        detail = json.loads(row['detail']) if row['detail'] else None
+    except ValueError:
+        detail = None
+    rejected = (detail or {}).get('rejected') if isinstance(detail, dict) else None
+    if isinstance(rejected, dict) and rejected:
+        name = max(rejected, key=lambda key: (rejected[key], key))
+    elif isinstance(detail, dict) and detail.get('headline'):
+        name = 'headline.' + str(detail['headline'])
+    else:
+        name = row['failure'] or row['state']
+    return re.sub(r'[^A-Za-z0-9._-]+', '-', str(name)).strip('-')[:60] or 'unknown'
+
+
+def overdue(db, now=None, env=None):
+    """Earnings analyses of tracked companies still not done two hours after the release was first handled (newest first)."""
+    schema(db)
+    now = time.time() if now is None else now
+    late = []
+    for row in db.execute("SELECT subject,state,failure,detail,created_at FROM deep_analyses WHERE kind='earnings' AND state!='done' ORDER BY created_at DESC"):
+        try:
+            age = now - datetime.fromisoformat(row['created_at']).timestamp()
+        except ValueError:
+            continue
+        if OVERDUE_AFTER_SECONDS <= age <= OVERDUE_LOOKBACK_SECONDS:
+            late.append({'subject': row['subject'], 'check': first_check(row), 'state': row['state'], 'ageSeconds': int(age)})
+    late += never_attempted(db, now, env)
+    return late
+
+
+def never_attempted(db, now, env=None):
+    """Earnings releases of the research roster that were found but never got a deep-analysis row (budget spent, service stopped, source not
+    picked up): the same critical incident after two hours. Only where deep analysis is configured, so a service without it stays quiet."""
+    config = configuration(env)
+    if config is None:
+        return []
+    found = []
+    for source in earnings_sources(db, datetime.fromtimestamp(now, timezone.utc), excerpts=False):
+        if db.execute('SELECT 1 FROM deep_analyses WHERE source_ref=?', (source['ref'],)).fetchone():
+            continue
+        try:
+            observed = datetime.fromisoformat(str(source.get('observedAt')).replace('Z', '+00:00'))
+            if observed.tzinfo is None:
+                observed = observed.replace(tzinfo=timezone.utc)
+            age = now - observed.timestamp()
+        except ValueError:
+            continue
+        if OVERDUE_AFTER_SECONDS <= age <= OVERDUE_LOOKBACK_SECONDS:
+            check = 'daily-limit-reached' if used_today(db, now) >= config[2] else 'not-attempted'
+            found.append({'subject': source['subject'], 'check': check, 'state': 'none', 'ageSeconds': int(age)})
+    return found
+
+
+def sync_incident(db, now=None, env=None):
+    """One critical incident per late company (key deep-analysis:<TICKER>); it resolves when the analysis is done. The error code carries the
+    ticker and the check that rejected it, so the phone alert says which company and why."""
+    now = time.time() if now is None else now
+    at = datetime.fromtimestamp(now, timezone.utc).isoformat()
+    late = {}
+    for item in overdue(db, now, env):
+        late.setdefault(item['subject'], item)
+    for subject, item in late.items():
+        if re.fullmatch(r'[A-Za-z0-9.-]{1,12}', subject or ''):
+            monitor.record_operational_incident(db, INCIDENT_PREFIX + subject, 'deep-analysis', subject, 'critical',
+                                                'deep-analysis-overdue:%s:%s' % (subject, item['check']), seen_at=at)
+    schema_open = db.execute("SELECT incident_key FROM operational_incidents WHERE incident_key LIKE ? AND status!='resolved'",
+                             (INCIDENT_PREFIX + '%',)).fetchall()
+    for row in schema_open:
+        if row['incident_key'][len(INCIDENT_PREFIX):] not in late:
+            monitor.resolve_operational_incident(db, row['incident_key'], resolved_at=at)
+    return 'deep-analysis-overdue' if late else None
+

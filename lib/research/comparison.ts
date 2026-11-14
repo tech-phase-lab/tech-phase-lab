@@ -19,10 +19,15 @@ export type Financials = {
   twelveData?: import("./twelve-data-factors").TwelveFactorEvidence;
   /** Factors taken from the provider's statements for the same quarter because the filing left them empty (shown on the screen). */
   supplemented?: string[];
+  /** Set when the supplemented factors come from the provider's previous quarter (it had not added the newest one yet): its end date. */
+  supplementedFromQuarter?: string;
   /** False when the filing's own balance already scores financial strength: the provider's balance is then never used. */
   supplementedFinancialAllowed?: boolean;
   /** Set when a newer earnings release is out but its quarterly report is not yet filed: the figures are the previous quarter's, said on screen. */
   previousQuarterShown?: string;
+  /** True when the company never tags a capital-spending line (AirBnB, AppLovin: immaterial, folded into "other"), so free cash flow
+   *  is operating cash flow with capital spending counted as zero. Said on screen. */
+  capexNotReported?: boolean;
   /** "ps": this comparison scores valuation on price-to-sales for every company, because one of them has no forward P/E. Set per comparison. */
   valuationBasis?: import("./twelve-data-factors").ValuationBasis;
   referenceEvaluation?: import("./comparison-reference").ReferenceEvaluation;
@@ -93,7 +98,7 @@ function supplementFacts(usGaap: Record<string, unknown>): Record<string, unknow
   const index = (tags: string[]) => { const m = new Map<string, Map<string, RawFact>>(); for (const tag of tags) for (const [unit, values] of list(tag)) for (const f of values) { if (typeof f.val !== "number") continue; const u = m.get(unit) ?? new Map(); if (!u.has(key(f))) u.set(key(f), f); m.set(unit, u); } return m; };
   const add = (tag: string, unit: string, rows: RawFact[]) => { if (rows.length) facts[tag] = { units: { [unit]: rows } }; };
   const stated = index(["OperatingIncomeLoss"]);
-  const revenue = index(["RevenueFromContractWithCustomerExcludingAssessedTax", "RevenueFromContractWithCustomerIncludingAssessedTax", "Revenues", "SalesRevenueNet"]);
+  const revenue = index(["RevenueFromContractWithCustomerExcludingAssessedTax", "RevenueFromContractWithCustomerIncludingAssessedTax", "Revenues", "SalesRevenueNet", "RevenuesNetOfInterestExpense"]);
   const gross = index(["GrossProfit"]), opex = index(["OperatingExpenses"]), cost = index(["CostOfRevenue", "CostOfGoodsAndServicesSold"]), costs = index(["CostsAndExpenses"]);
   const pretax = index(PRETAX_TAGS);
   const derived: Record<string, RawFact[]> = {}, pre: Record<string, RawFact[]> = {};
@@ -118,7 +123,7 @@ function supplementFacts(usGaap: Record<string, unknown>): Record<string, unknow
   return facts;
 }
 const tags = {
-  "us-gaap": { revenue: ["RevenueFromContractWithCustomerExcludingAssessedTax", "RevenueFromContractWithCustomerIncludingAssessedTax", "Revenues", "SalesRevenueNet"], operatingIncome: ["OperatingIncomeLoss", DERIVED_OPERATING, DERIVED_PRETAX], operatingCash: ["NetCashProvidedByUsedInOperatingActivities"], capex: ["PaymentsToAcquirePropertyPlantAndEquipment", "PaymentsToAcquireOtherPropertyPlantAndEquipment", "PaymentsToAcquireProductiveAssets", "PaymentsToAcquireOtherProductiveAssets"], cash: ["CashAndCashEquivalentsAtCarryingValue"], stockCompensation: ["ShareBasedCompensation"], dilutedShares: ["WeightedAverageNumberOfDilutedSharesOutstanding"] },
+  "us-gaap": { revenue: ["RevenueFromContractWithCustomerExcludingAssessedTax", "RevenueFromContractWithCustomerIncludingAssessedTax", "Revenues", "SalesRevenueNet", "RevenuesNetOfInterestExpense"], operatingIncome: ["OperatingIncomeLoss", DERIVED_OPERATING, DERIVED_PRETAX], operatingCash: ["NetCashProvidedByUsedInOperatingActivities"], capex: ["PaymentsToAcquirePropertyPlantAndEquipment", "PaymentsToAcquireOtherPropertyPlantAndEquipment", "PaymentsToAcquireProductiveAssets", "PaymentsToAcquireOtherProductiveAssets"], cash: ["CashAndCashEquivalentsAtCarryingValue"], stockCompensation: ["ShareBasedCompensation"], dilutedShares: ["WeightedAverageNumberOfDilutedSharesOutstanding"] },
   "ifrs-full": { revenue: ["Revenue", "RevenueFromContractsWithCustomers"], operatingIncome: ["ProfitLossFromOperatingActivities"], operatingCash: ["CashFlowsFromUsedInOperatingActivities"], capex: ["PurchaseOfPropertyPlantAndEquipmentClassifiedAsInvestingActivities"], cash: ["CashAndCashEquivalents"], stockCompensation: [], dilutedShares: [] },
 } as const;
 /** Standard consolidated facts. Annual and standalone-quarter periods remain separate. */
@@ -147,7 +152,16 @@ export function extractFinancials(ticker: string, cik: string, payload: unknown,
   if (!latest) return result;
   // A verified reporting currency distinguishes native values from convenience
   // translations. Never fall back to an older year if the latest lacks it.
-  const sameDate = revenues.filter(f => f.end === latest.end && f.filed === latest.filed && (!reportingCurrency || f.unit === reportingCurrency));
+  // US GAAP "Revenues" (or, at banks and brokers, revenue net of interest expense) is the total line and contract revenue is a part of it
+  // (Walmart's membership income, GM Financial, lease revenue at Applied Digital and IREN, SoFi's and AmEx's interest income). When both
+  // are filed and the total is not below any part, the total is the revenue; a total below a part stays held.
+  const preferTotal = <T extends Fact>(rows: T[]): T[] => {
+    // "Revenues" is the total whenever it is filed (Ameriprise files both); net-of-interest revenue only where it is the sole total.
+    const totalTag = rows.some(f => f.tag === "Revenues") ? "Revenues" : "RevenuesNetOfInterestExpense";
+    const total = rows.filter(f => f.tag === totalTag), parts = rows.filter(f => f.tag !== "Revenues" && f.tag !== "RevenuesNetOfInterestExpense");
+    return total.length && total.length < rows.length && new Set(total.map(f => `${f.unit}/${f.value}`)).size === 1 && parts.every(f => f.unit === total[0].unit && f.value <= total[0].value) ? total : rows;
+  };
+  const sameDate = preferTotal(revenues.filter(f => f.end === latest.end && f.filed === latest.filed && (!reportingCurrency || f.unit === reportingCurrency)));
   const candidate = sameDate[0];
   if (!candidate) return result;
   // Ambiguous accounting basis or conflicting native values are still held.
@@ -165,7 +179,16 @@ export function extractFinancials(ticker: string, cik: string, payload: unknown,
   const operatingIncome = metric("operatingIncome"), operatingCash = metric("operatingCash"), cash = metric("cash");
   // Capital spending is tagged one of several ways (AAOI switched tags mid-year): the first tag the filing uses is taken, never a mix.
   const capexRaw = (() => { for (const tag of tags[basis].capex) { const values = collect(basis, [tag]).filter(samePeriod); if (values.length) return new Set(values.map(f => f.value)).size === 1 ? values[0] : null; } return null; })();
-  const capex = capexRaw && capexRaw.value >= 0 ? capexRaw : null;
+  // Some companies stopped tagging capital spending once it became immaterial (AirBnB since 2023, AppLovin since 2025: inside "other
+  // investing"). Only then — no capex tag in this annual report or any later 10-Q, the last capex they tagged under 1% of revenue,
+  // and the same annual report does tag its investing cash flow — is capital spending counted as zero.
+  const capexFacts = (["annual", "ytd", "quarter"] as const).flatMap(period => collect(basis, tags[basis].capex, false, period));
+  const lastCapex = [...capexFacts].sort((x, y) => y.filed.localeCompare(x.filed) || y.value - x.value)[0];
+  const capexEver = capexFacts.some(f => f.filed >= revenue.filed) || (!!lastCapex && lastCapex.value >= revenue.value * 0.01);
+  const investingTagged = basis === "us-gaap" && collect(basis, ["NetCashProvidedByUsedInInvestingActivities", "NetCashProvidedByUsedInInvestingActivitiesContinuingOperations"]).some(samePeriod);
+  const capexNotReported = !capexRaw && !capexEver && investingTagged;
+  const zeroCapex = (like: Fact | null): Fact | null => capexNotReported && like ? { ...like, value: 0, tag: "capex-not-reported" } : null;
+  const capex = capexRaw && capexRaw.value >= 0 ? capexRaw : zeroCapex(operatingCash);
   const stockCompensationRaw = metric("stockCompensation");
   const stockCompensation = stockCompensationRaw && stockCompensationRaw.value >= 0 ? stockCompensationRaw : null;
   const unique = (values: Fact[]) => values.length && new Set(values.map(f => `${f.start}/${f.end}/${f.value}/${f.unit}`)).size === 1 ? values[0] : null;
@@ -175,7 +198,8 @@ export function extractFinancials(ticker: string, cik: string, payload: unknown,
   // Only a directly reported standalone quarter AFTER the annual period. Never treat YTD as a quarter.
   const quarters = collect(basis, tags[basis].revenue, false, "quarter").filter(f => f.end > revenue.end && f.unit === revenue.unit && f.value > 0 && (!primaryRevenueTag || `${f.basis}:${f.tag}` === primaryRevenueTag)).sort((a,b) => b.end.localeCompare(a.end) || b.filed.localeCompare(a.filed));
   const latestQuarter = quarters[0];
-  let quarterRevenue = latestQuarter ? unique(quarters.filter(f => f.end === latestQuarter.end && f.filed === latestQuarter.filed)) : null;
+  const latestRows = latestQuarter ? quarters.filter(f => f.end === latestQuarter.end && f.filed === latestQuarter.filed) : [];
+  let quarterRevenue = latestQuarter ? unique(preferTotal(latestRows)) : null;
   // Right after a 10-K the fourth quarter has no filing of its own: it is the fiscal year minus the nine-month year-to-date of the same
   // year's third-quarter 10-Q (the same tag and unit, the YTD ending a quarter before the year end). Marked as derived; nothing is guessed.
   const fourth = (tag: string, wanted: Fact | null) => {
@@ -227,7 +251,7 @@ export function extractFinancials(ticker: string, cik: string, payload: unknown,
     }
     return null;
   }
-  const quarterOperatingCash=quarterCash("operatingCash"), quarterCapex=quarterCash("capex"), quarterCompensation=quarterMetric("stockCompensation");
+  const quarterOperatingCash=quarterCash("operatingCash"), quarterCapex=quarterCash("capex") ?? zeroCapex(quarterOperatingCash), quarterCompensation=quarterMetric("stockCompensation");
   const quarterShares = quarterRevenue ? unique(collect(basis,tags[basis].dilutedShares,false,"quarter",true).filter(f=>f.accession===quarterRevenue.accession && f.start===quarterRevenue.start && f.end===quarterRevenue.end && f.value>0)) : null;
   const previousQuarterShares = quarterShares && previousQuarterRevenue ? unique(collect(basis,[quarterShares.tag],false,"quarter",true).filter(f=>f.accession===quarterShares.accession && f.start===previousQuarterRevenue.start && f.end===previousQuarterRevenue.end && f.value>0)) : null;
   // The last four standalone quarters' operating margins, for the stability factor. Each quarter needs both revenue and operating income;
@@ -302,6 +326,13 @@ export function extractFinancials(ticker: string, cik: string, payload: unknown,
     if (convertibleCurrent !== null) return { value: convertibleCurrent + short, source: "convertible" };
     // No form found: debt-free only if the filing reports no borrowing, loan or notes figure of any kind (investments in debt securities aside).
     if (!currentAssets || !currentLiabilities || anchor.accession === null) return null;
+    // Debt tagged only by segment (GM: automotive and GM Financial, no consolidated line) leaves no borrowing tag at all. Large long-term
+    // liabilities then mean the debt is there but untagged, never "debt-free": over a quarter of assets is held as unknown.
+    const assets = m("Assets")?.value, equity = m("StockholdersEquityIncludingPortionAttributableToNoncontrollingInterest")?.value ?? m("StockholdersEquity")?.value;
+    const sides = m("LiabilitiesAndStockholdersEquity")?.value;
+    const liabilities = m("Liabilities")?.value ?? (sides !== undefined && equity !== undefined ? sides - equity : undefined);   // MNST files no total
+    const longTermLiabilities = m("LiabilitiesNoncurrent")?.value ?? (liabilities !== undefined ? liabilities - currentLiabilities.value : undefined);
+    if (!assets || longTermLiabilities === undefined || longTermLiabilities > assets * 0.25) return null;
     const borrowing = /Debt|Borrowing|NotesPayable|LoansPayable|SeniorNotes|LineOfCredit|CreditFacility/;
     const notBorrowing = /OtherThan|Securities|AvailableForSale|HeldToMaturity|Investment|Receivable|Allowance|Derivative|Hedg|Equity|Discount|Premium|IssuanceCost|Unamortized|Extinguishment|Interest|Repayment|Proceeds|Payments|Maturit|FairValue|Covenant|Percentage|Rate|Valuation|Forgiveness|Conversion/;
     const usGaap = obj(facts["us-gaap"]);
@@ -317,7 +348,7 @@ export function extractFinancials(ticker: string, cik: string, payload: unknown,
     shortBorrowings: balanceMetric("ShortTermBorrowings"), leaseCurrent: balanceMetric("OperatingLeaseLiabilityCurrent"), leaseNoncurrent: balanceMetric("OperatingLeaseLiabilityNoncurrent"),
     debtTotal: totalDebt(),
   };
-  return { ...result, status: "ready", balance, revenue, previousRevenue, operatingIncome, operatingCash, capex, cash,
+  return { ...result, status: "ready", ...(capexNotReported ? { capexNotReported: true } : {}), balance, revenue, previousRevenue, operatingIncome, operatingCash, capex, cash,
     stockCompensation, stockCompensationRatio: stockCompensation ? stockCompensation.value / revenue.value * 100 : null,
     dilutedShares, previousDilutedShares, dilutedSharesGrowth: dilutedShares && previousDilutedShares ? (dilutedShares.value / previousDilutedShares.value - 1) * 100 : null,
     quarterRevenue, previousQuarterRevenue, quarterOperatingIncome, quarterMargins, quarterRevenueTtm, quarterRevenueQoq,

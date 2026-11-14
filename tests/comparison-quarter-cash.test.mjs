@@ -8,7 +8,7 @@ import { freshEnough } from "../lib/research/fresh-enough.ts";
 const NOW = Date.parse("2026-11-14T03:00:00Z");
 const fact = (start, end, val, accn, filed, form = "10-Q") => ({ start, end, val, accn, filed, form });
 const Q1 = "0000000001-26-000001", Q2 = "0000000001-26-000002", Q3 = "0000000001-26-000003", FY = "0000000001-26-000000";
-function facts({ capexTag = "PaymentsToAcquireOtherPropertyPlantAndEquipment", q3Capex = true } = {}) {
+function facts({ capexTag = "PaymentsToAcquireOtherPropertyPlantAndEquipment", q3Capex = true, investing = false } = {}) {
   const usd = list => ({ units: { USD: list } });
   return { cik: 1, facts: { "us-gaap": {
     RevenueFromContractWithCustomerExcludingAssessedTax: usd([
@@ -22,10 +22,11 @@ function facts({ capexTag = "PaymentsToAcquireOtherPropertyPlantAndEquipment", q
       fact("2026-01-01", "2026-06-30", -70, Q2, "2026-08-06"),
       fact("2026-01-01", "2026-09-30", -76, Q3, "2026-11-05"),
     ]),
-    [capexTag]: usd([
+    ...(capexTag ? { [capexTag]: usd([
       fact("2026-01-01", "2026-06-30", 330, Q2, "2026-08-06"),
       ...(q3Capex ? [fact("2026-01-01", "2026-09-30", 700, Q3, "2026-11-05")] : []),
-    ]),
+    ]) } : {}),
+    ...(investing ? { NetCashProvidedByUsedInInvestingActivities: usd([fact("2025-01-01", "2025-12-31", -50, FY, "2026-02-20", "10-K")]) } : {}),
   } } };
 }
 
@@ -39,6 +40,24 @@ test("second/third quarter cash flow is this year-to-date minus the previous one
 test("a missing year-to-date figure leaves cash generation empty, never a guess", () => {
   const c = extractFinancials("AAOI", "1", facts({ q3Capex: false }), NOW);
   assert.equal(c.quarterFcfMargin, null);
+});
+
+test("a company that never tags capital spending counts it as zero, said on screen; otherwise nothing is guessed", () => {
+  const none = extractFinancials("ABNB", "1", facts({ capexTag: null, investing: true }), NOW);
+  assert.equal(none.capexNotReported, true);
+  assert.equal(none.quarterFcfMargin, -3);   // operating cash -6 on revenue 200, capital spending 0
+  // Without a tagged investing section the statement may simply be untagged: left empty.
+  const untagged = extractFinancials("ABNB", "1", facts({ capexTag: null }), NOW);
+  assert.equal(untagged.capexNotReported, undefined);
+  assert.equal(untagged.quarterFcfMargin, null);
+  // It stopped tagging an immaterial amount before this annual report: still zero. A material amount before: left empty.
+  const stopped = (val) => { const f = facts({ capexTag: null, investing: true }); f.facts["us-gaap"].PaymentsToAcquirePropertyPlantAndEquipment = { units: { USD: [fact("2024-01-01", "2024-12-31", val, "0000000001-25-000000", "2025-02-20", "10-K")] } }; return extractFinancials("APP", "1", f, NOW); };
+  assert.equal(stopped(3).quarterFcfMargin, -3);
+  assert.equal(stopped(30).quarterFcfMargin, null);
+  // A company that does tag capex, but not this quarter, is still left empty (never zero).
+  const missing = extractFinancials("AAOI", "1", facts({ q3Capex: false, investing: true }), NOW);
+  assert.equal(missing.capexNotReported, undefined);
+  assert.equal(missing.quarterFcfMargin, null);
 });
 
 test("the provider's stated free cash flow is used only when it has no capex line", () => {
@@ -97,7 +116,7 @@ test("financial strength reads debt in the form the filing uses; a filing with n
     const f = facts();
     const usd = list => ({ units: { USD: list } });
     const at = (val) => [{ end: "2026-09-30", val, accn: Q3, filed: "2026-11-05", form: "10-Q" }];
-    Object.assign(f.facts["us-gaap"], { CashAndCashEquivalentsAtCarryingValue: usd(at(50)), AssetsCurrent: usd(at(300)), LiabilitiesCurrent: usd(at(100)) });
+    Object.assign(f.facts["us-gaap"], { CashAndCashEquivalentsAtCarryingValue: usd(at(50)), AssetsCurrent: usd(at(300)), LiabilitiesCurrent: usd(at(100)), Assets: usd(at(1000)), Liabilities: usd(at(150)) });
     for (const [tag, val] of Object.entries(extra)) f.facts["us-gaap"][tag] = usd(at(val));
     return extractFinancials("AAOI", "1", f, NOW).balance.debtTotal;
   };
@@ -106,6 +125,14 @@ test("financial strength reads debt in the form the filing uses; a filing with n
   assert.deepEqual(withBalance({ ConvertibleDebtNoncurrent: 70 }), { value: 70, source: "convertible" });
   assert.deepEqual(withBalance({ AvailableForSaleSecuritiesDebtSecurities: 900 }), { value: 0, source: "none" });   // owning bonds is not borrowing
   assert.equal(withBalance({ LineOfCredit: 40 }), null);                                                       // borrowing we cannot add up: no score
+  // Debt tagged only by segment (GM) leaves no borrowing tag, but long-term liabilities over a quarter of assets are not "debt-free".
+  assert.equal(withBalance({ Liabilities: 600 }), null);
+  assert.equal(withBalance({ LiabilitiesNoncurrent: 300 }), null);
+  // No total-liabilities line (Monster): both sides minus equity, here 1000 - 850 = 150, so still debt-free.
+  const noTotal = () => { const f = facts(); const usd = list => ({ units: { USD: list } }); const at = val => [{ end: "2026-09-30", val, accn: Q3, filed: "2026-11-05", form: "10-Q" }];
+    Object.assign(f.facts["us-gaap"], { CashAndCashEquivalentsAtCarryingValue: usd(at(50)), AssetsCurrent: usd(at(300)), LiabilitiesCurrent: usd(at(100)), Assets: usd(at(1000)), LiabilitiesAndStockholdersEquity: usd(at(1000)), StockholdersEquity: usd(at(850)) });
+    return extractFinancials("MNST", "1", f, NOW).balance.debtTotal; };
+  assert.deepEqual(noTotal(), { value: 0, source: "none" });
 });
 
 test("operating income is worked out from the same filing's own lines; pre-tax only where no operating figure exists, and labelled as such", () => {
@@ -132,8 +159,19 @@ test("an empty factor is taken from the provider only for the same quarter, and 
   assert.equal(filled.quarterOperatingMargin, 12);              // the filing's figure stays
   assert.equal(filled.twelveData.margins.length, 4);
   assert.deepEqual(filled.supplemented.sort(), ["cash", "stability"].sort().concat(filled.supplemented.includes("financial") ? ["financial"] : []).sort());
-  const older = { ...provider, quarterRevenue: { ...provider.quarterRevenue, end: "2026-06-30" } };
-  assert.equal(fillFromProvider(sec, older, NOW), sec);           // another quarter: nothing borrowed
+  const older = { ...provider, quarterRevenue: { ...provider.quarterRevenue, end: "2026-03-31" } };
+  assert.equal(fillFromProvider(sec, older, NOW), sec);           // two quarters behind: nothing borrowed
+});
+
+test("a provider one quarter behind fills cash generation and market factors only, and the screen names its quarter (ConocoPhillips)", () => {
+  const sec = { ...company("A", 20, 4), quarterFcfMargin: null, quarterRevenueGrowth: null };
+  const lagging = { ...company("A", 20, 4), quarterFcfMargin: 23, quarterRevenueGrowth: 36 };
+  lagging.quarterRevenue = { ...lagging.quarterRevenue, end: "2026-06-30" };
+  const filled = fillFromProvider(sec, lagging, NOW);
+  assert.equal(filled.quarterFcfMargin, 23);
+  assert.equal(filled.quarterRevenueGrowth, null);                // growth never comes from another quarter
+  assert.equal(filled.supplementedFromQuarter, "2026-06-30");
+  assert.ok(filled.supplemented.includes("cash"));
 });
 
 test("banks: financial strength from cash against debt; growth against the previous quarter when there was no revenue a year earlier", () => {
@@ -142,4 +180,47 @@ test("banks: financial strength from cash against debt; growth against the previ
   const scores = Object.fromEntries(comparisonScores(bank, NOW).map(s => [s.id, s.value]));
   assert.equal(scores.financial, 5);          // 10 x min(50/100, 1)
   assert.equal(scores.growth, 6.2);           // 5 + 12/10
+});
+
+test("a quarter with two revenue lines uses the total line when no part is above it (Walmart, GM, Applied Digital, IREN)", () => {
+  const build = (total) => { const f = facts();
+    f.facts["us-gaap"].Revenues = { units: { USD: [fact("2026-07-01", "2026-09-30", total, Q3, "2026-11-05"), fact("2025-07-01", "2025-09-30", 110, Q3, "2026-11-05")] } };
+    return extractFinancials("IREN", "1", f, NOW); };
+  const c = build(228);
+  assert.equal(c.quarterRevenue.tag, "Revenues");
+  assert.equal(c.quarterRevenue.value, 228);
+  assert.equal(c.previousQuarterRevenue.value, 110);
+  assert.equal(build(190).quarterRevenue, null);   // a total below contract revenue (200) is a conflict, never a pick
+});
+
+
+test("a bank's revenue is its revenue net of interest expense, the only revenue line it files (JPMorgan, Goldman Sachs)", () => {
+  const f = facts();
+  const g = f.facts["us-gaap"];
+  g.RevenuesNetOfInterestExpense = g.RevenueFromContractWithCustomerExcludingAssessedTax;
+  delete g.RevenueFromContractWithCustomerExcludingAssessedTax;
+  const c = extractFinancials("JPM", "1", f, NOW);
+  assert.equal(c.revenue.tag, "RevenuesNetOfInterestExpense");
+  assert.equal(c.quarterRevenue.value, 200);
+});
+
+test("revenue net of interest expense is a total: it wins over the contract-revenue part (SoFi, American Express)", () => {
+  const f = facts();
+  const g = f.facts["us-gaap"];
+  g.RevenuesNetOfInterestExpense = { units: { USD: g.RevenueFromContractWithCustomerExcludingAssessedTax.units.USD.map(r => ({ ...r, val: r.val * 5 })) } };
+  const c = extractFinancials("SOFI", "1", f, NOW);
+  assert.equal(c.revenue.tag, "RevenuesNetOfInterestExpense");
+  assert.equal(c.revenue.value, 2000);
+  assert.equal(c.quarterRevenue.value, 1000);
+});
+
+test("a company filing both total revenue and net-of-interest revenue keeps total revenue (Ameriprise)", () => {
+  const f = facts();
+  const g = f.facts["us-gaap"];
+  g.Revenues = { units: { USD: g.RevenueFromContractWithCustomerExcludingAssessedTax.units.USD.map(r => ({ ...r, val: r.val * 3 })) } };
+  g.RevenuesNetOfInterestExpense = { units: { USD: g.RevenueFromContractWithCustomerExcludingAssessedTax.units.USD.map(r => ({ ...r, val: r.val * 2 })) } };
+  delete g.RevenueFromContractWithCustomerExcludingAssessedTax;
+  const c = extractFinancials("AMP", "1", f, NOW);
+  assert.equal(c.revenue.tag, "Revenues");
+  assert.equal(c.quarterRevenue.value, 600);
 });

@@ -1069,7 +1069,8 @@ class AutomaticMonitor:
         # PRO analysis by RESEARCH_DEEP_MODEL; idle unless configured.
         while not self.stop_event.is_set():
             try:
-                deep_analysis.run_once(self.db_path)
+                if deep_analysis.run_once(self.db_path) == 'idle':
+                    deep_analysis.retry_old_holds(self.db_path)  # flag-gated one-off; idle otherwise
             except Exception as exc:
                 log_publication_failure("deep-analysis-unavailable", exc)
             self.stop_event.wait(10)
@@ -1910,6 +1911,9 @@ class AutomaticMonitor:
             research_issue = official_research.sync_incident(db)
             if research_issue:
                 issues.append(research_issue)
+            deep_issue = deep_analysis.sync_incident(db)
+            if deep_issue:
+                issues.append(deep_issue)
         return issues
 
     def check_incident_watch_once(self):
