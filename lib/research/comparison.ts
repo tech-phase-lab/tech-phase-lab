@@ -187,7 +187,11 @@ export function extractFinancials(ticker: string, cik: string, payload: unknown,
   // Only a directly reported standalone quarter AFTER the annual period. Never treat YTD as a quarter.
   const quarters = collect(basis, tags[basis].revenue, false, "quarter").filter(f => f.end > revenue.end && f.unit === revenue.unit && f.value > 0 && (!primaryRevenueTag || `${f.basis}:${f.tag}` === primaryRevenueTag)).sort((a,b) => b.end.localeCompare(a.end) || b.filed.localeCompare(a.filed));
   const latestQuarter = quarters[0];
-  let quarterRevenue = latestQuarter ? unique(quarters.filter(f => f.end === latestQuarter.end && f.filed === latestQuarter.filed)) : null;
+  // A quarter can carry two revenue lines (Applied Digital: total Revenues and the narrower contract revenue). The annual figure's own tag
+  // decides, so the quarter is comparable with the year; only when that tag is absent must every tag agree.
+  const latestRows = latestQuarter ? quarters.filter(f => f.end === latestQuarter.end && f.filed === latestQuarter.filed) : [];
+  const sameTagRows = latestRows.filter(f => f.tag === revenue.tag);
+  let quarterRevenue = latestQuarter ? unique(sameTagRows.length ? sameTagRows : latestRows) : null;
   // Right after a 10-K the fourth quarter has no filing of its own: it is the fiscal year minus the nine-month year-to-date of the same
   // year's third-quarter 10-Q (the same tag and unit, the YTD ending a quarter before the year end). Marked as derived; nothing is guessed.
   const fourth = (tag: string, wanted: Fact | null) => {

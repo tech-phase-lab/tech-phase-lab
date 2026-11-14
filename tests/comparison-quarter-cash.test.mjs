@@ -162,3 +162,14 @@ test("banks: financial strength from cash against debt; growth against the previ
   assert.equal(scores.financial, 5);          // 10 x min(50/100, 1)
   assert.equal(scores.growth, 6.2);           // 5 + 12/10
 });
+
+test("a quarter with two revenue lines uses the annual figure's own line (Applied Digital: total revenue, not contract revenue)", () => {
+  const f = facts();
+  const rev = f.facts["us-gaap"].RevenueFromContractWithCustomerExcludingAssessedTax.units.USD;
+  f.facts["us-gaap"].Revenues = { units: { USD: rev.map(r => ({ ...r, val: r.start === "2026-07-01" ? 260 : r.val })) } };
+  f.facts["us-gaap"].RevenueFromContractWithCustomerExcludingAssessedTax.units.USD = rev.filter(r => r.form === "10-Q");
+  const c = extractFinancials("APLD", "1", f, NOW);
+  assert.equal(c.revenue.tag, "Revenues");
+  assert.equal(c.quarterRevenue.tag, "Revenues");
+  assert.equal(c.quarterRevenue.value, 260);
+});
