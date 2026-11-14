@@ -82,6 +82,7 @@ LEGACY_FULL_TICKERS = (
     "MRVL", "ANET", "CRDO", "CRWV", "VRT", "GEV", "DELL", "PLTR", "MSFT", "AMZN",
     "GOOGL", "ORCL",
 )
+DISCOVERY_OUTAGE_GRACE_SECONDS = 600  # a freshly started process has not polled every source yet
 PRIORITY_SEC_TICKERS = ("TSM", "MRVL", "ANET", "VRT", "PLTR")
 WEB_PUSH_POLL_SECONDS = 5
 WEB_PUSH_STALE_SECONDS = 30
@@ -1798,6 +1799,12 @@ class AutomaticMonitor:
             and "monitor-stale" not in issues
         ):
             issues.append("discovery-poll-stale")
+        outage = state.get("discoveryOutage") or {}
+        started_age = timestamp_age_seconds(state["startedAt"])
+        if state["ready"] and outage.get("allFailing") and started_age is not None and started_age >= DISCOVERY_OUTAGE_GRACE_SECONDS:
+            issues.append("discovery-all-sources-failing")
+        if monitor.user_agent_normalized():
+            issues.append("user-agent-normalized")
         state["health"] = {
             "status": "degraded" if issues else ("ready" if state["ready"] else "starting"),
             "issues": issues,
@@ -1824,6 +1831,7 @@ class AutomaticMonitor:
             state["discoveryRuns"] = monitor.discovery_poll_summary(
                 db, poll_overdue_after_seconds=self.monitor_stale_seconds
             )
+            state["discoveryOutage"] = monitor.discovery_outage_summary(db)
             state["bodyFetch"]["durable"] = monitor.body_fetch_batch_summary(
                 db, poll_overdue_after_seconds=max(360, self.body_interval * 2 + 60)
             )
@@ -1848,6 +1856,13 @@ class AutomaticMonitor:
                 )
             else:
                 monitor.resolve_operational_incident(db, "monitor:incident-watch")
+            if "discovery-all-sources-failing" in issues:
+                monitor.record_operational_incident(
+                    db, "discovery:all-sources", "official-discovery", "all-sources",
+                    "critical", "discovery-all-sources-failing"
+                )
+            else:
+                monitor.resolve_operational_incident(db, "discovery:all-sources")
             if "discovery-poll-stale" in issues:
                 monitor.record_operational_incident(
                     db, "discovery:worker", "official-discovery", "worker",
@@ -2038,6 +2053,7 @@ class AutomaticMonitor:
             state["discoveryRuns"] = monitor.discovery_poll_summary(
                 db, poll_overdue_after_seconds=self.monitor_stale_seconds
             )
+            state["discoveryOutage"] = monitor.discovery_outage_summary(db)
             state["prioritySourceRuns"] = monitor.priority_source_run_summary(db)
             state["bodyHostProbes"] = monitor.body_host_probe_summary(db)
             state["secEvidence"] = monitor.sec_evidence_summary(db, PRIORITY_SEC_TICKERS)
