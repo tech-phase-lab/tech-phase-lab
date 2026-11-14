@@ -8,7 +8,7 @@ import { freshEnough } from "../lib/research/fresh-enough.ts";
 const NOW = Date.parse("2026-11-14T03:00:00Z");
 const fact = (start, end, val, accn, filed, form = "10-Q") => ({ start, end, val, accn, filed, form });
 const Q1 = "0000000001-26-000001", Q2 = "0000000001-26-000002", Q3 = "0000000001-26-000003", FY = "0000000001-26-000000";
-function facts({ capexTag = "PaymentsToAcquireOtherPropertyPlantAndEquipment", q3Capex = true } = {}) {
+function facts({ capexTag = "PaymentsToAcquireOtherPropertyPlantAndEquipment", q3Capex = true, investing = false } = {}) {
   const usd = list => ({ units: { USD: list } });
   return { cik: 1, facts: { "us-gaap": {
     RevenueFromContractWithCustomerExcludingAssessedTax: usd([
@@ -22,10 +22,11 @@ function facts({ capexTag = "PaymentsToAcquireOtherPropertyPlantAndEquipment", q
       fact("2026-01-01", "2026-06-30", -70, Q2, "2026-08-06"),
       fact("2026-01-01", "2026-09-30", -76, Q3, "2026-11-05"),
     ]),
-    [capexTag]: usd([
+    ...(capexTag ? { [capexTag]: usd([
       fact("2026-01-01", "2026-06-30", 330, Q2, "2026-08-06"),
       ...(q3Capex ? [fact("2026-01-01", "2026-09-30", 700, Q3, "2026-11-05")] : []),
-    ]),
+    ]) } : {}),
+    ...(investing ? { NetCashProvidedByUsedInInvestingActivities: usd([fact("2025-01-01", "2025-12-31", -50, FY, "2026-02-20", "10-K")]) } : {}),
   } } };
 }
 
@@ -39,6 +40,24 @@ test("second/third quarter cash flow is this year-to-date minus the previous one
 test("a missing year-to-date figure leaves cash generation empty, never a guess", () => {
   const c = extractFinancials("AAOI", "1", facts({ q3Capex: false }), NOW);
   assert.equal(c.quarterFcfMargin, null);
+});
+
+test("a company that never tags capital spending counts it as zero, said on screen; otherwise nothing is guessed", () => {
+  const none = extractFinancials("ABNB", "1", facts({ capexTag: null, investing: true }), NOW);
+  assert.equal(none.capexNotReported, true);
+  assert.equal(none.quarterFcfMargin, -3);   // operating cash -6 on revenue 200, capital spending 0
+  // Without a tagged investing section the statement may simply be untagged: left empty.
+  const untagged = extractFinancials("ABNB", "1", facts({ capexTag: null }), NOW);
+  assert.equal(untagged.capexNotReported, undefined);
+  assert.equal(untagged.quarterFcfMargin, null);
+  // It stopped tagging an immaterial amount before this annual report: still zero. A material amount before: left empty.
+  const stopped = (val) => { const f = facts({ capexTag: null, investing: true }); f.facts["us-gaap"].PaymentsToAcquirePropertyPlantAndEquipment = { units: { USD: [fact("2024-01-01", "2024-12-31", val, "0000000001-25-000000", "2025-02-20", "10-K")] } }; return extractFinancials("APP", "1", f, NOW); };
+  assert.equal(stopped(3).quarterFcfMargin, -3);
+  assert.equal(stopped(30).quarterFcfMargin, null);
+  // A company that does tag capex, but not this quarter, is still left empty (never zero).
+  const missing = extractFinancials("AAOI", "1", facts({ q3Capex: false, investing: true }), NOW);
+  assert.equal(missing.capexNotReported, undefined);
+  assert.equal(missing.quarterFcfMargin, null);
 });
 
 test("the provider's stated free cash flow is used only when it has no capex line", () => {
@@ -142,4 +161,16 @@ test("banks: financial strength from cash against debt; growth against the previ
   const scores = Object.fromEntries(comparisonScores(bank, NOW).map(s => [s.id, s.value]));
   assert.equal(scores.financial, 5);          // 10 x min(50/100, 1)
   assert.equal(scores.growth, 6.2);           // 5 + 12/10
+});
+
+test("a quarter with two revenue lines uses the total only when contract plus lease revenue adds up to it (Applied Digital, IREN)", () => {
+  const build = (lease) => { const f = facts();
+    f.facts["us-gaap"].Revenues = { units: { USD: [fact("2026-07-01", "2026-09-30", 228, Q3, "2026-11-05"), fact("2025-07-01", "2025-09-30", 110, Q3, "2026-11-05")] } };
+    f.facts["us-gaap"].OperatingLeaseLeaseIncome = { units: { USD: [fact("2026-07-01", "2026-09-30", lease, Q3, "2026-11-05")] } };
+    return extractFinancials("IREN", "1", f, NOW); };
+  const c = build(28);
+  assert.equal(c.quarterRevenue.tag, "Revenues");
+  assert.equal(c.quarterRevenue.value, 228);
+  assert.equal(c.previousQuarterRevenue.value, 110);
+  assert.equal(build(20).quarterRevenue, null);   // 200 + 20 is not 228: a conflict, never a pick
 });
