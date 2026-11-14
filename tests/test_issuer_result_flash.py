@@ -1,3 +1,4 @@
+import re
 import hashlib
 import json
 from datetime import datetime, timezone
@@ -178,6 +179,31 @@ class Parsers(unittest.TestCase):
         self.assertNotIn('operating-income',keys(text.replace('Income from operations 3,658','Income from operations 3,758')))
         self.assertNotIn('net-income',keys(text.replace('Net income $ 2,718','Net income $ 2,818')))
         self.assertNotIn('eps',keys(text.replace('Diluted $ 3.40','Diluted $ 4.40')))
+    def test_security_and_software_statements_batch1(self):
+        # (fixture, period, facts, [(old, new, withheld key)]) -- every tamper must withhold that figure; a wrong revenue withholds everything
+        cases={
+         'PANW':('panw-results-q4fy26.txt','Q4 FY2026',[('revenue','$3.41B','$2.536B'),('eps','$-0.35','$0.36'),('net-income','$-282M','$254M'),('operating-income','$172M','$497M')],
+                 [('Operating income 172 497','Operating income 182 497','operating-income'),('Net income (loss) $ (282)','Net income (loss) $ (292)','net-income'),('per share, diluted $ (0.35)','per share, diluted $ (0.45)','eps')],'Total revenue 3,410 2,536','Total revenue 3,510 2,536'),
+         'CRWD':('crwd-results-q2fy27.txt','Q2 FY2027',[('revenue','$1.470897B','$1.168952B'),('eps','$0.01','$-0.07'),('net-income','$5.306M','$-70.153M'),('operating-income','$-33.232M','$-105.457M')],
+                 [('Loss from operations (33,232)','Loss from operations (34,232)','operating-income'),('attributable to CrowdStrike $ 5,306','attributable to CrowdStrike $ 6,306','net-income')],'Total revenue 1,470,897','Total revenue 1,570,897'),
+         'SNOW':('snow-results-q2fy27.txt','Q2 FY2027',[('revenue','$1.546793B','$1.144969B'),('eps','$-0.55','$-0.89'),('net-income','$-191.72M','$-298.017M'),('operating-income','$-262.967M','$-340.276M')],
+                 [('Operating loss (262,967)','Operating loss (272,967)','operating-income'),('Net loss (191,720)','Net loss (192,720)','net-income'),('basic and diluted $ (0.55)','basic and diluted $ (0.65)','eps')],'Revenue $ 1,546,793','Revenue $ 1,646,793'),
+         'CRM':('crm-results-q2fy27.txt','Q2 FY2027',[('revenue','$11.345B','$10.236B'),('eps','$4.29','$1.96'),('net-income','$3.526B','$1.887B'),('operating-income','$2.331B','$2.332B')],
+                [('Income from operations 2,331','Income from operations 2,431','operating-income'),('Net income $ 3,526','Net income $ 3,626','net-income'),('(3) $ 4.29','(3) $ 5.29','eps')],'Total revenues 11,345','Total revenues 12,345'),
+         'ADBE':('adbe-results-q3fy26.txt','Q3 FY2026',[('revenue','$6.76B','$5.988B'),('eps','$4.62','$4.18'),('net-income','$1.827B','$1.772B'),('operating-income','$2.354B','$2.173B')],
+                 [('Operating income 2,354','Operating income 2,454','operating-income'),('Net income $ 1,827','Net income $ 1,927','net-income'),('Diluted net income per share $ 4.62','Diluted net income per share $ 5.62','eps')],'Total revenue 6,760','Total revenue 7,760'),
+        }
+        for ticker,(name,period,facts,tampers,old_rev,new_rev) in cases.items():
+            text=fixture(name); parse=flash.PROFILES[ticker]['parse']
+            parsed=parse(text)
+            self.assertEqual(parsed['period'],period,ticker)
+            self.assertEqual([(f[0],f[1],f[2]) for f in parsed['facts']],facts,ticker)
+            for old,new,key in tampers:
+                self.assertIn(old,text,ticker)
+                self.assertNotIn(key,[f[0] for f in parse(text.replace(old,new))['facts']],(ticker,key))
+            self.assertIn(old_rev,text,ticker)
+            with self.assertRaises(ValueError): parse(text.replace(old_rev,new_rev))
+            with self.assertRaises(ValueError): parse(re.sub(flash.STATEMENT[ticker]['identity'],'someone else',text,flags=re.I))
     def test_alphabet_and_amazon_statements_print_the_year_ago_column_first(self):
         expected={'GOOGL':('alphabet-results-q326.txt',[('revenue','$127.577B','$102.346B'),('eps','$2.12','$2.87'),('net-income','$26.17B','$34.979B'),('operating-income','$40.576B','$31.228B')]),
                   'AMZN':('amazon-results-q326.txt',[('revenue','$201.944B','$180.169B'),('eps','$1.89','$1.95'),('net-income','$20.685B','$21.187B'),('operating-income','$28.076B','$17.422B')])}
