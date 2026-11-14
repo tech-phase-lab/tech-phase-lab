@@ -161,6 +161,21 @@ class DeepAnalysisTests(unittest.TestCase):
         self.assertIn('980.8 million', deep_analysis.table_scaled_figures('(in millions of U.S. dollars) Revenues 980.8'))
 
 
+    def test_a_table_figure_is_scaled_by_the_unit_header_of_an_excerpt_the_point_did_not_cite(self):
+        # Nov 14, NBIS v7 still held: the unit header ("(in millions of U.S. dollars)") sits in another excerpt than the cash-flow rows the point cites,
+        # and the cash-flow rows are further than the old 2500-character window from their header.
+        header = 'Unaudited Condensed Consolidated Statements of Cash Flows (in millions of U.S. dollars) Three months ended September 30 '
+        rows = 'Deferred revenue (3.8 ) 3,434.0 (0.7 ) 7,829.0 Proceeds from issuance of convertible notes 3,162.5 5,750.0 4,162.5 10,087.5'
+        release = header + 'x ' * 1500 + rows
+        quote = rows
+        deep_analysis.checked({'ja': '転換社債の発行収入は5,750百万ドル。', 'en': 'Convertible notes proceeds were $5,750 million.'}, quote, release)
+        for ja, en in [('転換社債の発行収入は5,750億ドル。', 'Convertible notes proceeds were $5,750 billion.'),   # wrong scale
+                       ('発行収入は5,751百万ドル。', 'Proceeds were $5,751 million.'),                              # not printed
+                       ('営業活動は4,231.1百万ドル。', 'Operating cash flow was $4,231.1 million.')]:            # printed elsewhere, not in the cited excerpt
+            with self.assertRaises(ValueError, msg=en):
+                deep_analysis.checked({'ja': ja, 'en': en}, quote, release + ' Net cash 4,231.1')
+
+
     def test_why_an_analysis_is_held_is_recorded_and_older_holds_are_tried_again(self):
         self.earnings()
         bad = json.loads(json.dumps(GOOD))
