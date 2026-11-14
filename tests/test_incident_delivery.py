@@ -1,3 +1,4 @@
+from datetime import datetime, timedelta, timezone
 import importlib.util
 from pathlib import Path
 import unittest
@@ -66,3 +67,49 @@ class IncidentDeliveryTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class OwnerPushTests(unittest.TestCase):
+    NOW = datetime(2026, 11, 14, 6, 0, tzinfo=timezone.utc)
+
+    def claim(self, severity="critical", transition="opened", minutes_ago=1):
+        at = (self.NOW - timedelta(minutes=minutes_ago)).isoformat()
+        return {"key": "discovery:all-sources", "transition": transition, "severity": severity,
+                "errorCode": "discovery-all-sources-failing", "occurredAt": at}
+
+    def test_web_push_mode_needs_web_push_and_an_explicit_cutover(self):
+        base = {"RESEARCH_INCIDENT_DELIVERY_ENABLED": "true", "RESEARCH_INCIDENT_DELIVERY_MODE": "web-push"}
+        with self.assertRaisesRegex(delivery.DeliveryUnavailable, "notification-web-push-disabled"):
+            delivery.configuration(base)
+        with self.assertRaisesRegex(delivery.DeliveryUnavailable, "notification-cutover-invalid"):
+            delivery.configuration({**base, "WEB_PUSH_ENABLED": "true"})
+        config = delivery.configuration({**base, "WEB_PUSH_ENABLED": "true", "RESEARCH_INCIDENT_DELIVERY_START_AT": "2026-11-14T05:00:00Z"})
+        self.assertEqual((config["mode"], config["enabled"]), ("web-push", True))
+        self.assertNotIn("token", config)
+
+    def test_a_recent_critical_incident_reaches_every_owner_device(self):
+        sent = []
+        reached = delivery.send_owner_push(self.claim(), ['{"endpoint":"a"}', '{"endpoint":"b"}'], lambda sub, msg: sent.append((sub, msg)) or 201, now=self.NOW)
+        self.assertEqual(reached, 2)
+        self.assertEqual(sent[0][1]["title"], "🚨 公式発表の巡回が全社失敗しています")
+        self.assertEqual(sent[0][1]["tag"], "incident-discovery:all-sources")
+
+    def test_warnings_and_stale_rows_are_consumed_without_a_push(self):
+        sent = []
+        sender = lambda sub, msg: sent.append(msg) or 201
+        self.assertEqual(delivery.send_owner_push(self.claim(severity="warning"), ['{}'], sender, now=self.NOW), 0)
+        self.assertEqual(delivery.send_owner_push(self.claim(minutes_ago=31), ['{}'], sender, now=self.NOW), 0)
+        self.assertEqual(sent, [])
+
+    def test_a_critical_incident_that_reaches_no_device_is_a_failure_to_retry(self):
+        with self.assertRaises(delivery.DeliveryFailed):
+            delivery.send_owner_push(self.claim(), [], lambda sub, msg: 201, now=self.NOW)
+        with self.assertRaises(delivery.DeliveryFailed):
+            delivery.send_owner_push(self.claim(), ['{}'], lambda sub, msg: 410, now=self.NOW)
+        with self.assertRaises(delivery.DeliveryFailed):
+            delivery.send_owner_push(self.claim(), ['{}'], lambda sub, msg: 1 / 0, now=self.NOW)
+
+    def test_resolution_says_recovered(self):
+        sent = []
+        delivery.send_owner_push(self.claim(transition="resolved"), ['{}'], lambda sub, msg: sent.append(msg) or 200, now=self.NOW)
+        self.assertEqual(sent[0]["title"], "✅ 復旧しました")
