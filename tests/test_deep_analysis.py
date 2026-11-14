@@ -94,6 +94,20 @@ class DeepAnalysisTests(unittest.TestCase):
             deep_analysis.bind(bad, excerpts)
         self.assertEqual(caught.exception.detail, {'kept': 0, 'rejected': {'evidence-missing': 1, 'unsupported-number': 2}})
 
+    def test_the_headline_is_checked_against_its_own_excerpts_and_negation_rejections_name_their_rule(self):
+        excerpts = {'0': 'Revenue was $3.41 billion in the quarter.', '1': 'The company did not raise guidance this quarter.',
+                    '2': 'Operating income was $172 million.'}
+        ok_point = {'ja': '営業利益は172 million ドル。', 'en': 'Operating income was $172 million.', 'evidenceIds': ['2']}
+        headline = {'ja': '売上高は3.41 billion ドル。', 'en': 'Revenue was $3.41 billion.', 'evidenceIds': ['0']}
+        note = {'headline': headline, 'points': [ok_point, ok_point], 'watch': None}
+        self.assertEqual(len(deep_analysis.bind(note, excerpts)['points']), 2)  # the release has a negated clause elsewhere: not this headline's evidence
+        flipped = {'ja': '会社は今四半期にガイダンスを引き上げた。', 'en': 'The company raised guidance this quarter.', 'evidenceIds': ['1']}
+        with self.assertRaises(deep_analysis.Unchecked) as caught:
+            deep_analysis.bind({'headline': headline, 'points': [flipped, flipped, ok_point], 'watch': None}, excerpts)
+        [reason] = caught.exception.detail['rejected']
+        self.assertTrue(reason.startswith('changed-negation:source-negated:'), reason)
+        self.assertEqual(caught.exception.detail['kept'], 1)
+
     def test_why_an_analysis_is_held_is_recorded_and_older_holds_are_tried_again(self):
         self.earnings()
         bad = json.loads(json.dumps(GOOD))
