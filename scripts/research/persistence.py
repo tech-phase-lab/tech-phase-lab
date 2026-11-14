@@ -166,7 +166,11 @@ def _write_manifest(path, value):
         temporary.unlink(missing_ok=True)   # a full disk used to leave an empty .json.tmp behind on every attempt (1,000+ files, Nov 13)
 
 
-TEMPORARY = re.compile(r"research-[0-9]{8}T[0-9]{6}\.[0-9]{6}Z\.(?:sqlite|json)\.tmp\Z")
+# Anything named after one of our snapshots' timestamps that is not that snapshot or its manifest is a leftover of an interrupted attempt:
+# *.sqlite.tmp, *.json.tmp, and SQLite's own sidecars of a half-written copy (*.sqlite.tmp-journal, -wal, -shm). Nov 13: after the first cleanup
+# ~1,000 files were still there, one per 30-second restart; their names did not match the two temporaries this used to know.
+STAMP = r"research-[0-9]{8}T[0-9]{6}\.[0-9]{6}Z"
+TEMPORARY = re.compile(STAMP + r"\.(?!(?:sqlite|json)\Z).+")
 # The share of the volume the retained snapshots (plus the live database) may use. A count alone (24) cannot work on a small volume:
 # 24 x a 27 MB database is more than a 500 MB volume (Nov 13: disk full, every write failed, the monitor restarted every 30 s).
 VOLUME_BUDGET = 0.45
