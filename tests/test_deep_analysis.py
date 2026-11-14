@@ -183,8 +183,26 @@ class DeepAnalysisTests(unittest.TestCase):
             deep_analysis.checked({'ja': '売上は増加した。', 'en': 'Revenue decreased.'}, excerpts['0'])
         except ValueError as exc:
             reason = deep_analysis.why(exc, excerpts['0'])
-        self.assertRegex(reason, r'^(?:invalid-copy|changed-direction)@\w+:\d+$')
+        self.assertRegex(reason, r'^(?:invalid-copy@\w+:\d+|changed-direction:\w+:(?:up|down)>(?:up|down)(?:\|(?:up|down))*)$')
         self.assertNotIn('Revenue', reason)
+
+    def test_a_copy_over_the_length_limit_is_rejected_with_its_own_reason_and_the_policy_states_the_limit(self):
+        # Nov 14, NBIS v9: invalid-copy@checked:157 x3 -- the format check (empty, or over 600 characters); the policy never told the model a limit.
+        self.assertIn('500 characters', deep_analysis.POLICY)
+        long = 'x' * (deep_analysis.MAX_COPY_CHARS + 1)
+        with self.assertRaises(ValueError) as caught:
+            deep_analysis.checked({'ja': long, 'en': 'Revenue rose.'}, 'Revenue rose.')
+        self.assertEqual(str(caught.exception), 'copy-too-long')
+        with self.assertRaises(ValueError) as caught:
+            deep_analysis.checked({'ja': ' ', 'en': 'Revenue rose.'}, 'Revenue rose.')
+        self.assertEqual(str(caught.exception), 'invalid-copy')
+
+    def test_a_direction_rejection_names_the_family_and_the_directions(self):
+        try:
+            deep_analysis.checked({'ja': '売上は減少した。', 'en': 'Revenue decreased.'}, 'Revenue increased to 980.8 in the quarter.')
+        except ValueError as exc:
+            reason = deep_analysis.why(exc, 'Revenue increased to 980.8 in the quarter.')
+        self.assertRegex(reason, r'^(?:changed-direction:\w+:(?:up|down)>(?:up|down)(?:\|(?:up|down))*|changed-direction@\w+:\d+|invalid-copy@\w+:\d+)')
 
     def test_why_an_analysis_is_held_is_recorded_and_older_holds_are_tried_again(self):
         self.earnings()

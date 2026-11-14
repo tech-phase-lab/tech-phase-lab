@@ -22,7 +22,7 @@ import monitor
 
 MAX_ATTEMPTS = 3
 # Bump when the prompt/check logic changes so analyses held under the old logic are tried again (attempts restart at 0).
-VERSION = 9
+VERSION = 10
 RETRY_SECONDS = 120
 DEFAULT_DAILY_LIMIT = 40
 MAX_DAILY_LIMIT = 200
@@ -39,6 +39,7 @@ Numbers: use only figures that appear literally in the evidence excerpts the poi
 If previousAttemptRejected is present, the last attempt for this source was partly rejected by deterministic checks: unsupported-number:<kind>:<values> lists quantities your copy used that do not appear in the excerpts you cited (do not use them again; cite the excerpt that holds a figure or leave the figure out); changed-negation and changed-action-capacity mean a negated or capacity clause of the cited excerpt was restated without its negation or qualifier; evidence-missing means a cited id does not exist. Fix exactly those points.
 Write what the excerpts say, not what cannot be known: do not add negative statements of your own (できない、ではない、ない、not、cannot) unless the cited excerpt itself says so; express caution as something to watch (…かどうかを確認したい) instead. A figure you mention must be in an excerpt you cite, so cite the excerpt that holds it.
 Preserve negation, uncertainty and time: plans stay plans, guidance stays guidance.
+Length: every Japanese and every English text (headline, each point, the watch point) must be at most 500 characters; a longer text is rejected whole (copy-too-long), so split a long thought into two points or leave the detail out.
 Each Japanese/English pair must carry the same figures. Japanese must read naturally for retail investors; keep company and product names as written."""
 
 
@@ -126,6 +127,7 @@ def indicator_sources(db, reference):
 UNIT_HEADER = re.compile(r'(?i)\bin\s+(?:usd\s*\$?\s*|us\$\s*|u\.s\.\s*\$?\s*|eur\s*\u20ac?\s*|\$\s*|\u20ac\s*)?(thousands|millions|billions)\b|\bin\s+(thousands|millions|billions)\s+of\s+(?:u\.s\.\s*dollars|us\s*dollars|dollars|euros)')
 TABLE_FIGURE = re.compile(r'(?<![\w.,$\u20ac])(\d{1,3}(?:,\d{3})+(?:\.\d+)?|\d+\.\d+)(?![\d.,%]|\s?%|\s?x\b)')
 TABLE_WINDOW = 6000
+MAX_COPY_CHARS = 600  # per language, per point; the policy asks for at most 500 so a long analysis is not rejected whole
 SCALE_WORD = {'thousands': 'thousand', 'millions': 'million', 'billions': 'billion'}
 
 
@@ -153,8 +155,10 @@ def checked(item, quote, release=None):
     """Copy that passes the number, meaning and pair checks against `quote`."""
     for lang in ('ja', 'en'):
         text = item.get(lang)
-        if not isinstance(text, str) or not text.strip() or len(text) > 600:
+        if not isinstance(text, str) or not text.strip():
             raise ValueError('invalid-copy')
+        if len(text) > MAX_COPY_CHARS:
+            raise ValueError('copy-too-long')
         factual_validation.validate_numbers(text, quote + '\n' + table_scaled_figures(release or quote, within=quote))
         factual_validation.validate_semantics(text, quote)
     factual_validation.validate_pair(item['ja'], item['en'])
@@ -177,6 +181,9 @@ def why(exc, everything=None):
             hits = [value.rstrip('%') in known for value in values]
             where = ':' + ('E' if all(hits) else 'A' if not any(hits) else 'M')
         return ('unsupported-number:%s:%s' % (miss.get('kind', '?'), '|'.join(values)))[:77 - len(where)] + where
+    if reason == 'changed-direction':
+        cue = factual_validation.LAST_DIRECTION_REJECTION[0] or {}
+        reason = 'changed-direction:%s:%s>%s' % (cue.get('family', '?'), cue.get('copy', '?'), '|'.join(cue.get('source') or []))
     if reason in ('invalid-copy', 'changed-direction', 'changed-metric-direction', 'changed-names', 'changed-meaning') and exc.__traceback__:
         # Which rule fired (function:line of the raise): the reason alone does not say which of the many checks that share it rejected the copy.
         frame = exc.__traceback__
