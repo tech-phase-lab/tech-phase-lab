@@ -19,7 +19,7 @@ export async function prepareTwelveComparisonPayload(ticker: string, income: unk
 
 // Called once by an ingestion job for its saved bundle, reused across all comparison pairs.
 const display = unstable_cache(async (bundle:TwelveComparisonBundle) => prepareTwelveDisplay(bundle),
-  ["twelve-comparison-display-v1"], {revalidate:86400});
+  ["twelve-comparison-display-v2"], {revalidate:86400});
 export async function prepareTwelveComparisonForDisplay(bundle:TwelveComparisonBundle) {
   const saved=await display(bundle);
   const now=Date.now();

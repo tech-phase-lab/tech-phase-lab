@@ -72,7 +72,7 @@ export function normalizeTwelveComparison(ticker: string, income: unknown, cashF
   const operatingIncome = consistent(current, "operating_income");
   const dilutedEps = consistent(current, "eps_diluted");
   const previousRevenue = new Set(prior.map(r => r.fiscal_date)).size === 1 ? consistent(prior, "sales") : null;
-  let operatingCashFlow: number | null = null, signedCapex: number | null = null;
+  let operatingCashFlow: number | null = null, signedCapex: number | null = null, statedFreeCashFlow: number | null = null;
   if (cashFlow !== null) {
     try {
       const cf = envelope(cashFlow, ticker, "cash_flow");
@@ -81,6 +81,8 @@ export function normalizeTwelveComparison(ticker: string, income: unknown, cashF
       const rows = cf.rows.filter(r => r.fiscal_date === end && (r.quarter === undefined || Number(r.quarter) === quarter) && (r.year === undefined || Number(r.year) === year));
       operatingCashFlow = consistent(rows.map(r => object(r.operating_activities)), "operating_cash_flow");
       signedCapex = consistent(rows.map(r => object(r.investing_activities)), "capital_expenditures");
+      // Some small companies have no capex line in the provider's data but a stated free cash flow (POET, Nov 14): that figure is used only then.
+      statedFreeCashFlow = consistent(rows, "free_cash_flow");
       if (rows.length === 0) warnings.push("matching-quarter-cash-flow-unavailable");
       if (rows.length > 1) warnings.push("duplicate-cash-flow-period");
       // Standard TD cash-flow capex is a signed outflow. A positive value needs review;
@@ -88,7 +90,7 @@ export function normalizeTwelveComparison(ticker: string, income: unknown, cashF
       if (signedCapex !== null && signedCapex > 0) { signedCapex = null; warnings.push("capex-sign-unverified"); }
     } catch { warnings.push("cash-flow-metadata-mismatch-or-unavailable"); }
   } else warnings.push("cash-flow-unavailable");
-  const sum = operatingCashFlow !== null && signedCapex !== null ? operatingCashFlow + signedCapex : null;
+  const sum = operatingCashFlow !== null && signedCapex !== null ? operatingCashFlow + signedCapex : signedCapex === null && !warnings.includes("capex-sign-unverified") && operatingCashFlow !== null && statedFreeCashFlow !== null && statedFreeCashFlow <= operatingCashFlow ? statedFreeCashFlow : null;
   const freeCashFlow = sum !== null && Number.isFinite(sum) ? sum : null;
   const growth = revenue !== null && previousRevenue !== null ? percent(revenue - previousRevenue, previousRevenue) : null;
   return { schema: 1, provider: "twelve-data", ticker, currency: inc.currency, retrievedAt: new Date(now).toISOString(),

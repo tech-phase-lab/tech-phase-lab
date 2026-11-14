@@ -4,7 +4,7 @@ import type { Copy } from "./data";
 export type ComparisonCompany = { ticker: string; name: string; peer: string; caution: Copy };
 export type Fact = { value: number; unit: string; start: string | null; end: string; filed: string | null; accession: string | null; tag: string; basis: string;
   /** Set when the figure is not a reported value but the fiscal year minus the nine-month year-to-date (a fourth quarter has no filing of its own). */
-  derived?: "fy-minus-9m" };
+  derived?: "fy-minus-9m" | "ytd-minus-prior-ytd" };
 export type BalanceSnapshot = {
   end: string; sourceUrl: string; filed: string | null;
   cash: Fact | null; currentAssets: Fact | null; currentLiabilities: Fact | null;
@@ -13,6 +13,8 @@ export type BalanceSnapshot = {
 };
 export type Financials = {
   twelveData?: import("./twelve-data-factors").TwelveFactorEvidence;
+  /** "ps": this comparison scores valuation on price-to-sales for every company, because one of them has no forward P/E. Set per comparison. */
+  valuationBasis?: import("./twelve-data-factors").ValuationBasis;
   referenceEvaluation?: import("./comparison-reference").ReferenceEvaluation;
   ticker: string; status: "ready" | "unavailable" | "unsupported"; retrievedAt: string;
   dataWarnings?: Copy[];
@@ -28,6 +30,8 @@ export type Financials = {
   quarterRevenueGrowth: number | null; quarterOperatingMargin: number | null; quarterSourceUrl: string | null;
   /** Operating margin of the last four consecutive quarters, newest first (a fourth quarter is fiscal year minus nine months). Null unless all four are present. */
   quarterMargins?: { periodEnd: string; value: number }[] | null;
+  /** Revenue of those same four consecutive quarters added up (for price-to-sales). Null unless all four are present. */
+  quarterRevenueTtm?: number | null;
   quarterFcfMargin?: number | null; quarterStockCompensationRatio?: number | null; quarterDilutedSharesGrowth?: number | null;
   balance: BalanceSnapshot | null;
   sourceUrl: string | null;
@@ -60,7 +64,7 @@ export function comparisonAccess(member: ComparisonMember, now = Date.now()): 20
 }
 
 const tags = {
-  "us-gaap": { revenue: ["RevenueFromContractWithCustomerExcludingAssessedTax", "RevenueFromContractWithCustomerIncludingAssessedTax", "Revenues", "SalesRevenueNet"], operatingIncome: ["OperatingIncomeLoss"], operatingCash: ["NetCashProvidedByUsedInOperatingActivities"], capex: ["PaymentsToAcquirePropertyPlantAndEquipment"], cash: ["CashAndCashEquivalentsAtCarryingValue"], stockCompensation: ["ShareBasedCompensation"], dilutedShares: ["WeightedAverageNumberOfDilutedSharesOutstanding"] },
+  "us-gaap": { revenue: ["RevenueFromContractWithCustomerExcludingAssessedTax", "RevenueFromContractWithCustomerIncludingAssessedTax", "Revenues", "SalesRevenueNet"], operatingIncome: ["OperatingIncomeLoss"], operatingCash: ["NetCashProvidedByUsedInOperatingActivities"], capex: ["PaymentsToAcquirePropertyPlantAndEquipment", "PaymentsToAcquireOtherPropertyPlantAndEquipment", "PaymentsToAcquireProductiveAssets"], cash: ["CashAndCashEquivalentsAtCarryingValue"], stockCompensation: ["ShareBasedCompensation"], dilutedShares: ["WeightedAverageNumberOfDilutedSharesOutstanding"] },
   "ifrs-full": { revenue: ["Revenue", "RevenueFromContractsWithCustomers"], operatingIncome: ["ProfitLossFromOperatingActivities"], operatingCash: ["CashFlowsFromUsedInOperatingActivities"], capex: ["PurchaseOfPropertyPlantAndEquipmentClassifiedAsInvestingActivities"], cash: ["CashAndCashEquivalents"], stockCompensation: [], dilutedShares: [] },
 } as const;
 /** Standard consolidated facts. Annual and standalone-quarter periods remain separate. */
@@ -69,15 +73,15 @@ export function extractFinancials(ticker: string, cik: string, payload: unknown,
   const root = obj(payload);
   if (Number(root.cik) !== Number(cik)) return result;
   const facts = obj(root.facts);
-  function collect(basis: keyof typeof tags, names: readonly string[], instant = false, period: "annual" | "quarter" | "ytd9" = "annual", shares = false): (Fact & {filed:string;accession:string})[] {
+  function collect(basis: keyof typeof tags, names: readonly string[], instant = false, period: "annual" | "quarter" | "ytd9" | "ytd" = "annual", shares = false): (Fact & {filed:string;accession:string})[] {
     return names.flatMap(tag => Object.entries(obj(obj(obj(facts[basis])[tag]).units)).flatMap(([unit, values]) => {
       if ((shares ? unit !== "shares" : !/^[A-Z]{3}$/.test(unit)) || !Array.isArray(values)) return [];
       return values.flatMap(raw => {
         const f = obj(raw);
-        if (typeof f.val !== "number" || !Number.isFinite(f.val) || typeof f.end !== "string" || typeof f.filed !== "string" || typeof f.accn !== "string" || !/^\d{10}-\d{2}-\d{6}$/.test(f.accn) || !(period === "quarter" ? ["10-Q", "10-Q/A", "6-K", "6-K/A", "8-K", "8-K/A"] : period === "ytd9" ? ["10-Q", "10-Q/A"] : ["10-K", "10-K/A", "20-F", "20-F/A", "40-F", "40-F/A"]).includes(String(f.form))) return [];
+        if (typeof f.val !== "number" || !Number.isFinite(f.val) || typeof f.end !== "string" || typeof f.filed !== "string" || typeof f.accn !== "string" || !/^\d{10}-\d{2}-\d{6}$/.test(f.accn) || !(period === "quarter" ? ["10-Q", "10-Q/A", "6-K", "6-K/A", "8-K", "8-K/A"] : period === "ytd9" || period === "ytd" ? ["10-Q", "10-Q/A"] : ["10-K", "10-K/A", "20-F", "20-F/A", "40-F", "40-F/A"]).includes(String(f.form))) return [];
         if (!Number.isFinite(day(f.end)) || !Number.isFinite(day(f.filed)) || day(f.filed) > now / 86400000 || day(f.end) > day(f.filed)) return [];
         const fact: Fact & {filed:string;accession:string} = { value: f.val, unit, start: typeof f.start === "string" ? f.start : null, end: f.end, filed: f.filed, accession: f.accn, tag, basis };
-        if (instant ? fact.start !== null : duration(fact) < (period === "quarter" ? 75 : period === "ytd9" ? 245 : 350) || duration(fact) > (period === "quarter" ? 105 : period === "ytd9" ? 290 : 380) || !Number.isFinite(duration(fact))) return [];
+        if (instant ? fact.start !== null : duration(fact) < (period === "quarter" ? 75 : period === "ytd9" ? 245 : period === "ytd" ? 160 : 350) || duration(fact) > (period === "quarter" ? 105 : period === "ytd9" || period === "ytd" ? 290 : 380) || !Number.isFinite(duration(fact))) return [];
         return [fact];
       });
     }));
@@ -103,7 +107,9 @@ export function extractFinancials(ticker: string, cik: string, payload: unknown,
   // Compare the prior year restated in the SAME filing/tag, not a stale pre-restatement filing.
   const prior = revenues.filter(f => f.tag === revenue.tag && f.basis === revenue.basis && f.unit === revenue.unit && f.accession === revenue.accession && day(revenue.end)-day(f.end) >= 350 && day(revenue.end)-day(f.end) <= 380 && Math.abs(duration(f)-duration(revenue)) <= 8);
   const previousRevenue = prior.length && new Set(prior.map(f => `${f.end}/${f.value}`)).size === 1 ? prior[0] : null;
-  const operatingIncome = metric("operatingIncome"), operatingCash = metric("operatingCash"), capexRaw = metric("capex"), cash = metric("cash");
+  const operatingIncome = metric("operatingIncome"), operatingCash = metric("operatingCash"), cash = metric("cash");
+  // Capital spending is tagged one of several ways (AAOI switched tags mid-year): the first tag the filing uses is taken, never a mix.
+  const capexRaw = (() => { for (const tag of tags[basis].capex) { const values = collect(basis, [tag]).filter(samePeriod); if (values.length) return new Set(values.map(f => f.value)).size === 1 ? values[0] : null; } return null; })();
   const capex = capexRaw && capexRaw.value >= 0 ? capexRaw : null;
   const stockCompensationRaw = metric("stockCompensation");
   const stockCompensation = stockCompensationRaw && stockCompensationRaw.value >= 0 ? stockCompensationRaw : null;
@@ -141,11 +147,37 @@ export function extractFinancials(ticker: string, cik: string, payload: unknown,
   const previousQuarterRevenue = derivedPrevious ?? (quarterRevenue && !derivedQuarter ? unique(collect(basis, [quarterRevenue.tag], false, "quarter").filter(f => f.accession === quarterRevenue.accession && f.unit === quarterRevenue.unit && day(quarterRevenue.end)-day(f.end) >= 350 && day(quarterRevenue.end)-day(f.end) <= 380 && Math.abs(duration(quarterRevenue)-duration(f)) <= 8 && f.value > 0)) : null);
   const quarterOperatingIncome = derivedQuarter ? derivedOperating : quarterRevenue ? unique(collect(basis, tags[basis].operatingIncome, false, "quarter").filter(f => f.accession === quarterRevenue.accession && f.unit === quarterRevenue.unit && f.start === quarterRevenue.start && f.end === quarterRevenue.end)) : null;
   const quarterMetric = (key: "operatingCash" | "capex" | "stockCompensation") => quarterRevenue ? unique(collect(basis,tags[basis][key],false,"quarter").filter(f => f.accession===quarterRevenue.accession && f.unit===quarterRevenue.unit && f.start===quarterRevenue.start && f.end===quarterRevenue.end)) : null;
-  const quarterOperatingCash=quarterMetric("operatingCash"), quarterCapex=quarterMetric("capex"), quarterCompensation=quarterMetric("stockCompensation");
+  // Cash-flow statements in a 10-Q are year-to-date only, so the second and third quarters had no cash figures (資金創出 stayed "—" for most
+  // companies, owner Nov 14). The quarter is then this filing's year-to-date minus the year-to-date through the previous quarter (same start,
+  // newest filing); a fourth quarter is the fiscal year minus nine months. Each tag is tried on its own, in order; tags are never mixed.
+  function quarterCash(key: "operatingCash" | "capex"): Fact | null {
+    if (!quarterRevenue || !quarterRevenue.start) return null;
+    for (const tag of tags[basis][key]) {
+      const direct = unique(collect(basis,[tag],false,"quarter").filter(f => f.accession===quarterRevenue.accession && f.unit===quarterRevenue.unit && f.start===quarterRevenue.start && f.end===quarterRevenue.end));
+      if (direct) return direct;
+      if (derivedQuarter) {
+        const annual = collect(basis,[tag]).filter(samePeriod);
+        const q = annual.length && new Set(annual.map(f => f.value)).size === 1 ? fourth(tag, annual[0]) : null;
+        if (q) return q;
+        continue;
+      }
+      const ytd = unique(collect(basis,[tag],false,"ytd").filter(f => f.accession===quarterRevenue.accession && f.unit===quarterRevenue.unit && f.end===quarterRevenue.end && !!f.start && f.start < quarterRevenue.start!));
+      if (!ytd) continue;
+      const previousEnd = new Date((day(quarterRevenue.start) - 1) * 86400000).toISOString().slice(0, 10);
+      const earlier = [...collect(basis,[tag],false,"quarter"), ...collect(basis,[tag],false,"ytd")].filter(f => f.unit===ytd.unit && f.start===ytd.start && f.end===previousEnd);
+      const newest = earlier.map(f => f.filed).sort().at(-1);
+      const prior = newest ? unique(earlier.filter(f => f.filed === newest)) : null;
+      if (!prior) continue;
+      return { ...ytd, value: ytd.value - prior.value, start: quarterRevenue.start, derived: "ytd-minus-prior-ytd" };
+    }
+    return null;
+  }
+  const quarterOperatingCash=quarterCash("operatingCash"), quarterCapex=quarterCash("capex"), quarterCompensation=quarterMetric("stockCompensation");
   const quarterShares = quarterRevenue ? unique(collect(basis,tags[basis].dilutedShares,false,"quarter",true).filter(f=>f.accession===quarterRevenue.accession && f.start===quarterRevenue.start && f.end===quarterRevenue.end && f.value>0)) : null;
   const previousQuarterShares = quarterShares && previousQuarterRevenue ? unique(collect(basis,[quarterShares.tag],false,"quarter",true).filter(f=>f.accession===quarterShares.accession && f.start===previousQuarterRevenue.start && f.end===previousQuarterRevenue.end && f.value>0)) : null;
   // The last four standalone quarters' operating margins, for the stability factor. Each quarter needs both revenue and operating income;
   // a quarter reported twice with different values, or a gap in the sequence, leaves the whole series empty.
+  let quarterRevenueTtm: number | null = null;
   function marginSeries(): { periodEnd: string; value: number }[] | null {
     if (!quarterRevenue) return null;
     const perEnd = (names: readonly string[]) => {
@@ -165,7 +197,9 @@ export function extractFinancials(ticker: string, cik: string, payload: unknown,
     if (ends[0] !== quarterRevenue.end) return null;
     const picked = [ends[0]];
     for (const end of ends.slice(1)) { const gap = day(picked.at(-1)!) - day(end); if (gap >= 70 && gap <= 110) picked.push(end); if (picked.length === 4) break; }
-    return picked.length === 4 ? picked.map(end => ({ periodEnd: end, value: op.get(end)! / rev.get(end)! * 100 })) : null;
+    if (picked.length !== 4) return null;
+    quarterRevenueTtm = picked.reduce((sum, end) => sum + rev.get(end)!, 0);
+    return picked.map(end => ({ periodEnd: end, value: op.get(end)! / rev.get(end)! * 100 }));
   }
   const quarterMargins = marginSeries();
   const filingUrl = (f: Fact) => `https://www.sec.gov/Archives/edgar/data/${Number(cik)}/${f.accession!.replaceAll("-", "")}/${f.accession}-index.htm`;
@@ -191,7 +225,7 @@ export function extractFinancials(ticker: string, cik: string, payload: unknown,
   return { ...result, status: "ready", balance, revenue, previousRevenue, operatingIncome, operatingCash, capex, cash,
     stockCompensation, stockCompensationRatio: stockCompensation ? stockCompensation.value / revenue.value * 100 : null,
     dilutedShares, previousDilutedShares, dilutedSharesGrowth: dilutedShares && previousDilutedShares ? (dilutedShares.value / previousDilutedShares.value - 1) * 100 : null,
-    quarterRevenue, previousQuarterRevenue, quarterOperatingIncome, quarterMargins,
+    quarterRevenue, previousQuarterRevenue, quarterOperatingIncome, quarterMargins, quarterRevenueTtm,
     quarterRevenueGrowth: quarterRevenue && previousQuarterRevenue ? (quarterRevenue.value / previousQuarterRevenue.value - 1) * 100 : null,
     quarterOperatingMargin: quarterRevenue && quarterOperatingIncome ? quarterOperatingIncome.value / quarterRevenue.value * 100 : null,
     quarterSourceUrl: quarterRevenue ? filingUrl(quarterRevenue) : null,

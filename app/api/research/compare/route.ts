@@ -1,6 +1,7 @@
 import { getMembership } from "@/lib/membership/server";
 import { buildComparison, comparisonAccess, comparisonExpiresAt, validateComparisonTickers } from "@/lib/research/comparison";
 import { loadComparisonFinancials, resolveComparisonCompany } from "@/lib/research/comparison-server";
+import { applyValuationBasis } from "@/lib/research/comparison-scorecard";
 import { buildReviewedTrial } from "@/lib/research/comparison-trial";
 export const dynamic = "force-dynamic";
 export const maxDuration = 120;
@@ -21,7 +22,7 @@ export async function GET(request: Request) {
     }
     const selected = await Promise.all(tickers.map(resolveComparisonCompany));
     if (selected.some(c => !c)) return Response.json({ ok: false, error: "unknown-company" }, { status: 400, headers });
-    const companies = await Promise.all(selected.map(async company => ({ ...company!, ...await loadComparisonFinancials(company!.ticker) })));
+    const companies = applyValuationBasis(await Promise.all(selected.map(async company => ({ ...company!, ...await loadComparisonFinancials(company!.ticker) }))));
     // The entitlement may expire while upstream data is being fetched.
     if (comparisonAccess(member) !== 200) return Response.json({ ok: false, error: "pro-required" }, { status: 403, headers });
     return Response.json({ ok: true, result: buildComparison(companies), validUntil: comparisonExpiresAt(member) }, { headers });

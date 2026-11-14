@@ -10,13 +10,15 @@ const validDate = (v:unknown):v is string => typeof v==="string" && /^\d{4}-\d{2
 export type TwelveFactorEvidence = {
   version: 1; periodEnd: string; retrievedAt: string;
   statistics: null | { retrievedAt:string; quarterEnd:string; forwardPE:number|null; trailingPE:number|null;
-    currentRatio:number|null; totalCash:number|null; totalDebt:number|null };
+    currentRatio:number|null; totalCash:number|null; totalDebt:number|null;
+    /** Market value ÷ trailing four quarters' revenue. Used for every company in a comparison when any of them has no forward P/E (a loss-maker). */
+    priceToSales?:number|null };
   margins: {periodEnd:string;value:number}[];
   momentum: null | {from:string;to:string;changePct:number};
 };
 export const twelveFactorMethods: Record<string,Copy> = {
   financial:{ja:"財務健全性：流動比率2倍で5点、現金÷有利子負債1倍で5点。負債ゼロは明示された場合だけ扱います。",en:"Financial strength: up to 5 points at a 2× current ratio plus up to 5 at 1× cash/total debt. Missing debt is not zero."},
-  valuation:{ja:"割安性：予想PER 10倍＝9点、20倍＝7点、30倍＝5点、40倍＝3点、55倍以上＝0点の共通目盛り。同業順位や適正株価ではなく、循環的な利益のピークは調整していません。",en:"Valuation: all companies use the same forward P/E scale. A P/E of 10× scores 9, 20× scores 7, 30× scores 5, 40× scores 3, and 55× or higher scores 0. This isn't a ranking against peers or an estimate of fair value. Earnings at the peak of a business cycle aren't adjusted to a normal level."},
+  valuation:{ja:"割安性：予想PER 10倍＝9点、20倍＝7点、30倍＝5点、40倍＝3点、55倍以上＝0点の共通目盛り。比較する会社のどれかが赤字などで予想PERを持たないときは、全社をPSR（時価総額÷直近4四半期の売上）でそろえて比べます：1倍＝9点、2倍＝7点、4倍＝5点、8倍＝3点、16倍＝1点、23倍以上＝0点。同業順位や適正株価ではなく、循環的な利益のピークは調整していません。",en:"Valuation: all companies use the same forward P/E scale. A P/E of 10× scores 9, 20× scores 7, 30× scores 5, 40× scores 3, and 55× or higher scores 0. When any company in the comparison has no forward P/E (for example, it is loss-making), every company is compared on price-to-sales instead (market value ÷ the last four quarters' revenue): 1× scores 9, 2× scores 7, 4× scores 5, 8× scores 3, 16× scores 1, and 23× or higher scores 0. This isn't a ranking against peers or an estimate of fair value. Earnings at the peak of a business cycle aren't adjusted to a normal level."},
   stability:{ja:"安定性：直近4四半期の営業黒字割合と営業利益率のばらつきから計算。株価の安定や将来の業績を保証する指標ではありません。",en:"Stability combines how many of four consecutive quarters were profitable with how much operating margins varied across those quarters. It doesn't measure stock-price stability or guarantee future results."},
   momentum:{ja:"株価モメンタム：分割調整済み日足の約3か月騰落率。0%＝5点、+50%＝10点、−50%＝0点。配当を含まず、上昇余地の予測ではありません。",en:"Momentum: the stock-price return over roughly three months, adjusted for stock splits. A 0% return scores 5, +50% scores 10, and −50% scores 0. Dividends aren't included, and this isn't a forecast."},
 };
@@ -36,7 +38,8 @@ export function normalizeTwelveFactors(snapshot:TwelveComparisonSnapshot, income
       const eps=n(obj(f.income_statement).diluted_eps_ttm);
       stats={retrievedAt:statistics.retrievedAt,quarterEnd:snapshot.periodEnd,
         forwardPE:positive(v.forward_pe), trailingPE:eps!==null && eps>0 ? positive(v.trailing_pe) : null,
-        currentRatio:nonnegative(b.current_ratio_mrq),totalCash:nonnegative(b.total_cash_mrq),totalDebt:nonnegative(b.total_debt_mrq)};
+        currentRatio:nonnegative(b.current_ratio_mrq),totalCash:nonnegative(b.total_cash_mrq),totalDebt:nonnegative(b.total_debt_mrq),
+        priceToSales:meta.currency===snapshot.currency ? positive(v.price_to_sales_ttm) : null};
     }
   }
   const root=obj(income), meta=obj(root.meta);
@@ -76,13 +79,15 @@ export function normalizeTwelveFactors(snapshot:TwelveComparisonSnapshot, income
   return {version:1,periodEnd:snapshot.periodEnd,retrievedAt:snapshot.retrievedAt,statistics:stats,margins,momentum};
 }
 /** Same factor values drive the radar, bars, winner highlights and saved copy. */
-export function twelveExtraFactors(e:TwelveFactorEvidence,now=Date.now()) {
+export type ValuationBasis = "pe" | "ps";
+const psScore = (ps:number) => clamp(9-2*Math.log2(ps));
+export function twelveExtraFactors(e:TwelveFactorEvidence,now=Date.now(),basis:ValuationBasis="pe") {
   const fresh=now-Date.parse(e.periodEnd)>=0 && now-Date.parse(e.periodEnd)<=180*day;
   const s=e.statistics;
   const stats=fresh && s && now-Date.parse(s.retrievedAt)>=0 && now-Date.parse(s.retrievedAt)<=36*3600000 ? s : null;
   const financial=stats && stats.currentRatio!==null && stats.totalCash!==null && stats.totalDebt!==null
     ? clamp(2.5*Math.min(stats.currentRatio,2)+5*(stats.totalDebt===0 ? 1 : Math.min(stats.totalCash/stats.totalDebt,1))) : null;
-  const valuation=stats?.forwardPE ? clamp(11-stats.forwardPE/5) : null;
+  const valuation=basis==="ps" ? (stats?.priceToSales ? psScore(stats.priceToSales) : null) : stats?.forwardPE ? clamp(11-stats.forwardPE/5) : null;
   let stability:number|null=null;
   if(fresh && e.margins.length===4) {
     const mean=e.margins.reduce((sum,m)=>sum+m.value,0)/4;
@@ -94,8 +99,9 @@ export function twelveExtraFactors(e:TwelveFactorEvidence,now=Date.now()) {
   const momentum=m && now-Date.parse(m.to)>=0 && now-Date.parse(m.to)<=7*day ? clamp(5+m.changePct/10) : null;
   return {financial,valuation,stability,momentum};
 }
-export function twelveFactorMetric(e:TwelveFactorEvidence,id:string,lang:"ja"|"en",now=Date.now()):string|null {
-  const scores=twelveExtraFactors(e,now),ja=lang==="ja";
+export function twelveFactorMetric(e:TwelveFactorEvidence,id:string,lang:"ja"|"en",now=Date.now(),basis:ValuationBasis="pe"):string|null {
+  const scores=twelveExtraFactors(e,now,basis),ja=lang==="ja";
+  if(id==="valuation" && basis==="ps" && scores.valuation!==null)return `PSR ${e.statistics!.priceToSales!.toFixed(1)}×`;
   if(id==="financial" && scores.financial!==null)return `${ja?"流動比率":"Current ratio"} ${e.statistics!.currentRatio!.toFixed(2)}×`;
   if(id==="valuation" && scores.valuation!==null)return `${ja?"予想PER":"Forward P/E"} ${e.statistics!.forwardPE!.toFixed(1)}×`;
   if(id==="stability" && scores.stability!==null)return `${ja?"営業黒字":"Profitable"} ${e.margins.filter(m=>m.value>0).length}/4${ja?"四半期":" quarters"}`;
