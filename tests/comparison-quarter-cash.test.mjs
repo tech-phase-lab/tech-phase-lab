@@ -50,6 +50,10 @@ test("a company that never tags capital spending counts it as zero, said on scre
   const untagged = extractFinancials("ABNB", "1", facts({ capexTag: null }), NOW);
   assert.equal(untagged.capexNotReported, undefined);
   assert.equal(untagged.quarterFcfMargin, null);
+  // It stopped tagging an immaterial amount before this annual report: still zero. A material amount before: left empty.
+  const stopped = (val) => { const f = facts({ capexTag: null, investing: true }); f.facts["us-gaap"].PaymentsToAcquirePropertyPlantAndEquipment = { units: { USD: [fact("2024-01-01", "2024-12-31", val, "0000000001-25-000000", "2025-02-20", "10-K")] } }; return extractFinancials("APP", "1", f, NOW); };
+  assert.equal(stopped(3).quarterFcfMargin, -3);
+  assert.equal(stopped(30).quarterFcfMargin, null);
   // A company that does tag capex, but not this quarter, is still left empty (never zero).
   const missing = extractFinancials("AAOI", "1", facts({ q3Capex: false, investing: true }), NOW);
   assert.equal(missing.capexNotReported, undefined);

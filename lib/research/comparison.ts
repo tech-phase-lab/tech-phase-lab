@@ -168,9 +168,12 @@ export function extractFinancials(ticker: string, cik: string, payload: unknown,
   const operatingIncome = metric("operatingIncome"), operatingCash = metric("operatingCash"), cash = metric("cash");
   // Capital spending is tagged one of several ways (AAOI switched tags mid-year): the first tag the filing uses is taken, never a mix.
   const capexRaw = (() => { for (const tag of tags[basis].capex) { const values = collect(basis, [tag]).filter(samePeriod); if (values.length) return new Set(values.map(f => f.value)).size === 1 ? values[0] : null; } return null; })();
-  // Some companies never tag capital spending (immaterial, inside "other investing"). Only then — no capex tag in any 10-K or 10-Q filed
-  // in the last three years, while the same filing does tag its investing cash flow — is capital spending counted as zero.
-  const capexEver = (["annual", "ytd", "quarter"] as const).some(period => collect(basis, tags[basis].capex, false, period).some(f => day(revenue.filed) - day(f.filed) <= 1100));
+  // Some companies stopped tagging capital spending once it became immaterial (AirBnB since 2023, AppLovin since 2025: inside "other
+  // investing"). Only then — no capex tag in this annual report or any later 10-Q, the last capex they tagged under 1% of revenue,
+  // and the same annual report does tag its investing cash flow — is capital spending counted as zero.
+  const capexFacts = (["annual", "ytd", "quarter"] as const).flatMap(period => collect(basis, tags[basis].capex, false, period));
+  const lastCapex = [...capexFacts].sort((x, y) => y.filed.localeCompare(x.filed) || y.value - x.value)[0];
+  const capexEver = capexFacts.some(f => f.filed >= revenue.filed) || (!!lastCapex && lastCapex.value >= revenue.value * 0.01);
   const investingTagged = basis === "us-gaap" && collect(basis, ["NetCashProvidedByUsedInInvestingActivities", "NetCashProvidedByUsedInInvestingActivitiesContinuingOperations"]).some(samePeriod);
   const capexNotReported = !capexRaw && !capexEver && investingTagged;
   const zeroCapex = (like: Fact | null): Fact | null => capexNotReported && like ? { ...like, value: 0, tag: "capex-not-reported" } : null;
