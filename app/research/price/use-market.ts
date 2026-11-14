@@ -7,7 +7,7 @@ export type CardQuote = FavoriteQuote & {
   name?: string; exchange?: string; open?: number | null; high?: number | null; low?: number | null; previousClose?: number | null; volume?: number | null;
   week52Low?: number | null; week52High?: number | null;
 };
-type State<T> = { data: T | null; failed: boolean; loaded: boolean };
+type State<T> = { data: T | null; failed: boolean; loaded: boolean; /** when the last good answer arrived (ms) */ at?: number | null };
 
 /** Reads a JSON endpoint now and again every `every` ms while the tab is visible. The server caches for about a minute. */
 function usePolled<T>(url: string | null, pick: (body: Record<string, unknown>) => T | null, every: number): State<T> {
@@ -22,7 +22,8 @@ function usePolled<T>(url: string | null, pick: (body: Record<string, unknown>) 
         const body = await response.json() as Record<string, unknown>;
         if (stopped) return;
         const data = response.ok && body.ok === true ? pick(body) : null;
-        setState(old => ({ url, data: data ?? (old.url === url ? old.data : null), failed: data === null, loaded: true }));
+        const at = Date.now();
+        setState(old => ({ url, data: data ?? (old.url === url ? old.data : null), failed: data === null, loaded: true, at: data ? at : old.url === url ? old.at : null }));
       } catch { if (!stopped) setState(old => ({ url, data: old.url === url ? old.data : null, failed: true, loaded: true })); }
       if (!stopped) timer = setTimeout(() => { if (document.visibilityState === "visible") void run(); else timer = setTimeout(run, every); }, every);
     };
@@ -35,8 +36,9 @@ function usePolled<T>(url: string | null, pick: (body: Record<string, unknown>) 
 }
 const pickQuotes = (body: Record<string, unknown>) => body.quotes as Record<string, CardQuote>;
 const pickFacts = (body: Record<string, unknown>) => body.facts as MarketFacts;
-export const useQuotes = (tickers: string[], history = false) => usePolled<Record<string, CardQuote>>(
-  tickers.length ? `/api/research/market/quotes?tickers=${encodeURIComponent(tickers.join(","))}${history ? "&history=1" : ""}` : null, pickQuotes, 60_000);
+/** `fast` (the watchlist and a stock's page): asked every 15 seconds; the server reads the provider again only while the plan's minute leaves room. */
+export const useQuotes = (tickers: string[], history = false, fast = false) => usePolled<Record<string, CardQuote>>(
+  tickers.length ? `/api/research/market/quotes?tickers=${encodeURIComponent(tickers.join(","))}${history ? "&history=1" : ""}${fast ? "&fast=1" : ""}` : null, pickQuotes, fast ? 15_000 : 60_000);
 export const useFacts = (ticker: string) => usePolled<MarketFacts>(`/api/research/market/facts?ticker=${encodeURIComponent(ticker)}`, pickFacts, 6 * 3600_000);
 
 const key = "tech-phase:quote-numbers-hidden:v1", event = "tech-phase:quote-numbers-hidden";

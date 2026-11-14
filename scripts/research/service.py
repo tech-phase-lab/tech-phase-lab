@@ -53,6 +53,8 @@ import x_preflight_service
 import x_stream_trial_service
 import market_results
 import issuer_result_flash
+import dart_api
+import dart_watch
 import earnings_announce
 import official_research
 import deep_analysis
@@ -978,6 +980,8 @@ class AutomaticMonitor:
     def run_results(self):
         # Numerical flashes must not wait for an LLM or require an API key.
         wake = self.publication_wakes["results"]
+        # Once at start, off the loop: read SK hynix's Oct 28 notice through OpenDART and keep only a code for /health (no key, no value).
+        threading.Thread(target=dart_api.self_check, name="dart-self-check", daemon=True).start()
         while not self.stop_event.is_set():
             wake.clear()
             try:
@@ -998,6 +1002,16 @@ class AutomaticMonitor:
                 earnings_announce.run_once(self.db_path)
             except Exception:
                 print("earnings-announce-unavailable", flush=True)
+            try:
+                # SK hynix's results notice on DART (public RSS, no key): the early "announced" line; only requests inside the results window.
+                dart_watch.run_once(self.db_path)
+            except Exception:
+                print("dart-watch-unavailable", flush=True)
+            try:
+                # The same results through OpenDART (needs OPENDART_API_KEY; no request at all without it): the notice, then its figures.
+                dart_api.run_once(self.db_path)
+            except Exception:
+                print("dart-api-unavailable", flush=True)
             try:
                 # Headline numbers copied from the issuer's own results table; no model, no wait (owner, Nov 12).
                 issuer_result_flash.run_once(self.db_path)
@@ -2021,6 +2035,7 @@ class AutomaticMonitor:
             state["signalIntake"]["analystNews"] = analyst_news.diagnostics(db)
             state["signalIntake"]["issuerFlash"] = issuer_result_flash.diagnostics(db)
             state["signalIntake"]["earningsAnnounce"] = earnings_announce.diagnostics(db)
+            state["signalIntake"]["dart"] = dart_api.diagnostics()
             state["signalIntake"]["businessNews"] = general_source_news.diagnostics(db,datetime.now(timezone.utc))
             state["signalIntake"]["headlineTranslation"] = (
                 headline_translation.diagnostics(db, env=os.environ)
@@ -2745,9 +2760,20 @@ class AutomaticMonitor:
                 self.backup_initial_complete.set()
             self.stop_event.wait(self.backup_interval)
 
+    def enforce_backup_retention(self):
+        """Delete leftover temporaries and the generations the volume cannot hold; the newest verified snapshot and the live database stay."""
+        try:
+            with self.db_lock:
+                result = persistence.enforce_retention(self.backup_dir, self.backup_retention, self.db_path)
+            if result["deleted"]:
+                print("backup-retention deleted=%d kept=%d freedBytes=%d" % (result["deleted"], result["kept"], result["freedBytes"]), flush=True)
+        except Exception as exc:
+            print(("backup-retention-failed " + type(exc).__name__ + " " + failure_detail(exc)).rstrip(), flush=True)
+
     def run_supervised(self):
         failures = 0
         while not self.stop_event.is_set():
+            self.enforce_backup_retention()      # before anything writes: a full volume must not keep the monitor down (Nov 13)
             try:
                 self.run()
                 return

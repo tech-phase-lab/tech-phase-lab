@@ -50,3 +50,17 @@ test("LITE: a 10-Q that tags revenue 'including assessed tax' is read as the qua
   assert.equal(f.previousQuarterRevenue.value, 533_800_000);
   assert.equal(f.quarterOperatingIncome.value, 359_800_000);
 });
+
+test("the last four quarters' operating margins (stability factor) include the derived fourth quarter and come out newest first", () => {
+  const f = extractFinancials("MU", "723125", facts("MU"), NOW);
+  const expected = [[ "2026-09-03", 43_751 / 54_229 ], ["2026-05-28", 33_318 / 41_456], ["2026-02-26", 16_135 / 23_860], ["2025-11-27", 6_136 / 13_643]];
+  assert.deepEqual(f.quarterMargins.map(m => m.periodEnd), expected.map(e => e[0]));
+  f.quarterMargins.forEach((m, i) => assert.ok(Math.abs(m.value - expected[i][1] * 100) < 1e-9));
+});
+
+test("a missing quarter (no operating income for one of the four) leaves the series empty rather than shorter", () => {
+  const data = facts("MU");
+  const op = data.facts["us-gaap"].OperatingIncomeLoss.units.USD;
+  data.facts["us-gaap"].OperatingIncomeLoss.units.USD = op.filter(x => !(x.end === "2026-02-26" && x.start === "2025-11-28"));
+  assert.equal(extractFinancials("MU", "723125", data, NOW).quarterMargins, null);
+});

@@ -24,9 +24,10 @@ export function Tile({ ticker, size = "gauge" }: { ticker: string; size?: "gauge
   return <StockLogo ticker={ticker} className={`${styles.tile} ${size === "dial" ? styles.tileDial : size === "detail" ? styles.tileDetail : ""}`} />;
 }
 /** "取引終了 ・ 06:00 JST" (a green point while the regular session is open). */
-export function Status({ quote, ja, update }: { quote: CardQuote; ja: boolean; update?: boolean }) {
+/** `updatedAt` (a stock page): the time this page last received the price, instead of the quote's own time. */
+export function Status({ quote, ja, update, updatedAt }: { quote: CardQuote; ja: boolean; update?: boolean; updatedAt?: number | null }) {
   const open = quote.session === "regular";
-  return <><span className={styles.dot} data-open={open} aria-hidden="true" /><span>{open ? (ja ? "取引中" : "Open") : (ja ? "取引終了" : "Closed")} ・ {clock(quote.asOf, false)} JST{update ? (ja ? " 更新" : " updated") : ""}</span></>;
+  return <><span className={styles.dot} data-open={open} aria-hidden="true" /><span>{open ? (ja ? "取引中" : "Open") : (ja ? "取引終了" : "Closed")} ・ {clock(updatedAt ? new Date(updatedAt).toISOString() : quote.asOf, false)} JST{update ? (ja ? " 更新" : " updated") : ""}</span></>;
 }
 /** The pre-market / after-hours line: the label, a pulsing point and the time of the latest extended quote, then its price and its move from the close. */
 export function Extended({ quote, ja }: { quote: CardQuote; ja: boolean }) {

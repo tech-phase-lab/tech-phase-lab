@@ -1,0 +1,8 @@
+.box { position:relative;display:flex;min-width:0; }
+.caret { flex:none; }
+.menu { position:absolute;top:calc(100% + 6px);left:0;z-index:20;width:150px;padding:4px;box-sizing:border-box;background:#141c27;border:1px solid #2c3a4a;border-radius:12px;box-shadow:0 12px 28px rgba(0,0,0,.55); }
+.menu .item { display:flex;align-items:center;justify-content:space-between;gap:8px;width:100%;height:38px;padding:0 10px;border:0;border-radius:8px;background:transparent;color:#e3e9f0;font:inherit;font-size:14px;text-align:left;white-space:nowrap;cursor:pointer; }
+.menu .item:hover { background:#1a2431; }
+.menu .item[aria-checked=true] { background:#16302a;color:#8fe3c0;font-weight:700; }
+.menu .item:focus-visible { outline:2px solid #8fe3c0;outline-offset:-2px; }
+.itemLabel { min-width:0;overflow:hidden;text-overflow:ellipsis; }

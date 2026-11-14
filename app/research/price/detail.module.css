@@ -27,9 +27,9 @@
 .stateRow>span:first-child{display:flex;align-items:center;gap:8px}
 .dot{width:7px;height:7px;border-radius:50%;background:#8c98ab;flex:none}
 .dot[data-open="true"]{background:#4fe3a6;box-shadow:0 0 8px #4fe3a6}
-.mode{flex:none;display:flex;gap:2px;padding:2px;margin:-6px 0;border-radius:999px;border:1px solid rgba(217,180,106,.3);background:#100e09}
+.mode{flex:none;display:flex;gap:2px;padding:3px;margin:-6px 0;border-radius:999px;border:1px solid #23303f;background:transparent}
 .mode button{min-height:26px;padding:0 10px;border:0;border-radius:999px;background:transparent;color:#b4bdcc;font:500 11.5px "Zen Kaku Gothic New",sans-serif;cursor:pointer;white-space:nowrap}
-.mode button[aria-pressed="true"]{background:linear-gradient(135deg,#f3d98b,#c9a14e);color:#1a1305;font-weight:700}
+.mode button[aria-pressed="true"]{background:#8fe3c0;color:#07120d;font-weight:700}
 .chartBlock{display:flex;flex-direction:column;gap:8px}
 .chartBlock>.pad{margin-bottom:0}
 .ranges{display:grid;grid-template-columns:repeat(var(--cols,9),minmax(0,1fr));padding:0 8px}

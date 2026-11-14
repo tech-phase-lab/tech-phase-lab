@@ -25,7 +25,7 @@ function StepIcon({ index }: { index: number }) {
 export default function Guide() {
   const [lang, setLang] = useResearchLanguage();
   const ja = lang === "ja";
-  return <ResearchToolShell lang={lang} setLang={setLang} title={ja ? "米国株のはじめ方" : "Getting started with US stocks"} description={ja ? "米国株を買うまでの流れを、図で紹介します。" : "A visual guide to buying your first US shares."}>
+  return <ResearchToolShell lang={lang} setLang={setLang} eyebrow="GETTING STARTED" title={ja ? "米国株のはじめ方" : "Getting started with US stocks"} description={ja ? "米国株を買うまでの流れを、図で紹介します。" : "A visual guide to buying your first US shares."}>
     <nav className={styles.localNav} aria-label={ja ? "学習メニュー" : "Learning menu"}><span aria-current="page">{ja ? "米国株のはじめ方" : "US stock basics"}</span><Link href="/research/faq">{ja ? "よくある質問" : "FAQ"}</Link></nav>
     <ol className={styles.flow} aria-label={ja ? "購入までの4ステップ" : "Four steps to buying shares"}>{steps.map(([titleJa,titleEn],i) => <li key={titleEn}><a href={`#step-${i+1}`}><span className={styles.flowIcon}><StepIcon index={i}/></span><small>0{i+1}</small><strong>{ja ? titleJa : titleEn}</strong></a></li>)}</ol>
     <div className={styles.steps}>{steps.map(([titleJa,titleEn,bodyJa,bodyEn],i) => <section id={`step-${i+1}`} key={titleEn} className={styles.step}>
