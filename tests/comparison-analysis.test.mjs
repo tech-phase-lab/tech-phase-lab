@@ -6,7 +6,8 @@ import { emptyFinancials } from '../lib/research/comparison.ts';
 import { prepareComparisonAnalysis, currentComparisonAnalysis, comparisonEvidenceRevision } from '../lib/research/comparison-analysis.ts';
 import { buildSecMarketEvidence } from '../lib/research/sec-market-evidence.ts';
 import { appendMarketItems } from '../lib/research/twelve-data-financials.ts';
-import { hasRecentQuarter } from '../lib/research/comparison-scorecard.ts';
+import { hasRecentQuarter, comparisonScores } from '../lib/research/comparison-scorecard.ts';
+import { fillFromProvider } from '../lib/research/comparison-fill.ts';
 const now=Date.parse('2026-10-04T01:00:00Z');
 const fact={value:120,unit:'USD',start:'2026-04-01',end:'2026-06-30',filed:'2026-08-01',accession:'0000000001-26-000002',tag:'Revenues',basis:'us-gaap'};
 const company=(extra={})=>({...emptyFinancials('AAA','unavailable',new Date(now).toISOString()),status:'ready',quarterRevenue:fact,previousQuarterRevenue:{...fact,value:100,start:'2025-04-01',end:'2025-06-30'},quarterOperatingIncome:{...fact,value:30,tag:'OperatingIncomeLoss'},quarterRevenueGrowth:20,quarterOperatingMargin:25,quarterSourceUrl:'https://www.sec.gov/Archives/edgar/data/1/000000000126000002/',...extra});
@@ -40,13 +41,13 @@ test('actual cached financial loader prepares once per refresh and reuses saved 
  const state={
   providers:[{ticker:'AAA',supplementalSources:[{cik:'1'}]}],catalog:[],emptyFinancials,
   load:async()=>{loads++;return current;},prepare:c=>{prepares++;return prepareComparisonAnalysis(c,now);},read:c=>currentComparisonAnalysis(c,now),
-  buildSecMarketEvidence,appendMarketItems,hasRecentQuarter,
+  buildSecMarketEvidence,appendMarketItems,hasRecentQuarter,comparisonScores,fillFromProvider,
   cache:fn=>async(...args)=>{const key=JSON.stringify(args);if(!cache.has(key))cache.set(key,await fn(...args));return structuredClone(cache.get(key));},
  };
  globalThis.__preparedComparison=state;
  let source=readFileSync(new URL('../lib/research/comparison-server.ts',import.meta.url),'utf8');
  source=source.replace(/^import .*;\n/gm,'');
- source='const {providers,catalog:comparisonCatalog,emptyFinancials,load:loadSecComparison,prepare:prepareComparisonAnalysis,read:currentComparisonAnalysis,cache:unstable_cache}=globalThis.__preparedComparison; const parseSecDirectory=()=>[]; const loadMarketInputs=async()=>({}); const loadTwelveComparisonState=async()=>({data:null,busy:false}); const {buildSecMarketEvidence,appendMarketItems,hasRecentQuarter}=globalThis.__preparedComparison;\n'+source;
+ source='const {providers,catalog:comparisonCatalog,emptyFinancials,load:loadSecComparison,prepare:prepareComparisonAnalysis,read:currentComparisonAnalysis,cache:unstable_cache}=globalThis.__preparedComparison; const parseSecDirectory=()=>[]; const freshEnough=cachedRead=>cachedRead(); const loadMarketInputs=async()=>({}); const loadTwelveComparisonState=async()=>({data:null,busy:false}); const {buildSecMarketEvidence,appendMarketItems,hasRecentQuarter,comparisonScores,fillFromProvider}=globalThis.__preparedComparison;\n'+source;
  try {
   const mod=await import('data:text/javascript;base64,'+Buffer.from(stripTypeScriptTypes(source)).toString('base64'));
   const a=await mod.loadComparisonFinancials('AAA'), b=await mod.loadComparisonFinancials('AAA');

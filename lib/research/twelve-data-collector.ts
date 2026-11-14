@@ -3,6 +3,8 @@ import { unstable_cache } from "next/cache";
 import { prepareTwelveComparisonForDisplay } from "./twelve-data-comparison-server";
 import { normalizeTwelveComparison } from "./twelve-data-comparison";
 import type { TwelveComparisonBundle } from "./twelve-data-financials";
+import { freshEnough } from "./fresh-enough";
+export { freshEnough };
 import { parseUsage, retryOnceIfLimited, shareInflight, TwelveBusyError, waitForCredits } from "./twelve-credit-gate";
 
 /** Server-side Twelve Data collector for the comparison screen. The key stays in TWELVE_DATA_API_KEY and never reaches the browser.
@@ -75,7 +77,7 @@ async function readUsage(key: string): Promise<number | null> {
 const running = new Map<string, Promise<Awaited<ReturnType<typeof prepareTwelveComparisonForDisplay>>>>();
 
 /** Six-hour cache per ticker, shared by every pairing (the factors accept statistics up to 36 hours old). A failure is never cached. */
-const cached = unstable_cache(async (ticker: string) => {
+async function readBundle(ticker: string) {
   const key = process.env.TWELVE_DATA_API_KEY;
   if (!key) throw new Error("not-configured");
   // One company at a time: its four calls cost about 250 credits, and two at once (plus a retry) went over the 610 per minute (owner, Nov 11).
@@ -86,7 +88,11 @@ const cached = unstable_cache(async (ticker: string) => {
   });
   if (!bundle) throw new Error("twelve-unavailable");
   return prepareTwelveComparisonForDisplay(bundle);
-}, ["twelve-comparison-collector-v1"], { revalidate: 6 * 3600 });
+}
+// v2: free cash flow from the provider's stated figure when it has no capex line (Nov 14).
+const cachedBundle = unstable_cache(readBundle, ["twelve-comparison-collector-v2"], { revalidate: 6 * 3600 });
+/** Older than twelve hours (a quiet spell): read again rather than show a stale quarter, price or P/E. */
+const cached = (ticker: string) => freshEnough(() => cachedBundle(ticker), () => readBundle(ticker), 12 * 3600_000, value => value.financials.retrievedAt);
 
 export async function loadTwelveComparison(ticker: string) {
   if (!twelveComparisonConfigured()) return null;
@@ -99,16 +105,17 @@ type Raw = { payload: unknown; retrievedAt: string };
 const runningSeries = new Map<string, Promise<Raw & { adjust: "splits" }>>();
 const runningStatistics = new Map<string, Promise<Raw>>();
 /** One credit; split-adjusted daily bars for the price-momentum factor. Shared by everyone for an hour; a failure is never cached. */
-const cachedSeries = unstable_cache(async (ticker: string) => {
+async function readSeries(ticker: string) {
   const key = process.env.TWELVE_DATA_API_KEY;
   if (!key) throw new Error("not-configured");
   const payload = await call("time_series", { symbol: ticker, interval: "1day", outputsize: "100", adjust: "splits" }, key);
   if (!payload) throw new Error("series-unavailable");
   return { payload, adjust: "splits" as const, retrievedAt: new Date().toISOString() };
-}, ["twelve-market-series-v1"], { revalidate: 3600 });
+}
+const cachedSeries = unstable_cache(readSeries, ["twelve-market-series-v1"], { revalidate: 3600 });
 /** 50 credits; only the forward P/E is used from it. One shared read per company per 24 hours (the factors accept up to 36), and it waits for
  * room in the minute's credits before it is sent. */
-const cachedStatistics = unstable_cache(async (ticker: string) => {
+async function readStatistics(ticker: string) {
   const key = process.env.TWELVE_DATA_API_KEY;
   if (!key) throw new Error("not-configured");
   const payload = await serial(async () => {
@@ -117,15 +124,18 @@ const cachedStatistics = unstable_cache(async (ticker: string) => {
   });
   if (!payload) throw new Error("statistics-unavailable");
   return { payload, retrievedAt: new Date().toISOString() };
-}, ["twelve-market-statistics-v1"], { revalidate: 24 * 3600 });
+}
+const cachedStatistics = unstable_cache(readStatistics, ["twelve-market-statistics-v1"], { revalidate: 24 * 3600 });
+
+
 
 /** The provider's price-dependent inputs for a company whose financials come from the SEC. Either may be missing (busy minute, no plan,
  * unknown symbol): the matching factor is then left out, nothing is invented. */
 export async function loadMarketInputs(ticker: string): Promise<{ series?: Raw & { adjust: "splits" }; statistics?: Raw }> {
   if (!twelveComparisonConfigured()) return {};
   const [series, statistics] = await Promise.allSettled([
-    shareInflight(runningSeries, ticker, () => cachedSeries(ticker)),
-    shareInflight(runningStatistics, ticker, () => cachedStatistics(ticker)),
+    shareInflight(runningSeries, ticker, () => freshEnough(() => cachedSeries(ticker), () => readSeries(ticker), 2 * 3600_000)),
+    shareInflight(runningStatistics, ticker, () => freshEnough(() => cachedStatistics(ticker), () => readStatistics(ticker), 30 * 3600_000)),
   ]);
   for (const [name, result] of [["series", series], ["statistics", statistics]] as const) if (result.status === "rejected") console.warn(`twelve-data ${name} ${ticker}: ${result.reason instanceof TwelveBusyError ? "busy (credits)" : result.reason instanceof Error ? result.reason.message : "failed"}`);
   return { ...(series.status === "fulfilled" ? { series: series.value } : {}), ...(statistics.status === "fulfilled" ? { statistics: statistics.value } : {}) };
