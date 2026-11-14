@@ -299,3 +299,8 @@
 .results .traitBox li{white-space:nowrap}
 .companyHeading h3{flex-wrap:nowrap}
 @media(max-width:340px){.companyProfile{grid-template-columns:1fr}}
+
+/* Company names are shown in full, never cut (AAOI's "Applied Optoelectronics" was clipped to "Applied Optoelectroni", owner Nov 14):
+   a long name wraps to a second line in a slightly smaller face; short names stay on one line as before. */
+.boxName{white-space:normal;overflow:visible;overflow-wrap:break-word;word-break:normal;font-size:13px;line-height:1.25}
+.scoreBoxes[style*="repeat(3"] .boxName{font-size:12px}

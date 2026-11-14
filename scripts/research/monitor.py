@@ -20,6 +20,7 @@ from urllib.error import HTTPError, URLError
 from urllib.request import HTTPRedirectHandler, Request, build_opener
 import threading
 import time
+import traceback
 
 ROOT = Path(__file__).resolve().parents[2]
 PROVIDERS = {p["ticker"]: p for p in json.loads((ROOT / "lib/research/providers.json").read_text())}
@@ -268,14 +269,31 @@ _SEC_REQUEST_WINDOW = SourceRequestWindow(limit=environment_seconds(
 SEC_CONTACT = re.compile(r"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}")
 
 
+def request_user_agent(default="TechPhaseResearch-SourceCheck/0.1"):
+    """The configured User-Agent made safe to send: any run of whitespace (a full-width space U+3000 pasted into the variable made every
+    request fail in http.client with a latin-1 encode error) becomes one space and every non-ASCII character is dropped. Empty -> default."""
+    value = os.environ.get("RESEARCH_USER_AGENT", "")
+    value = re.sub(r"\s+", " ", value)
+    value = " ".join("".join(ch for ch in value if " " <= ch <= "~").split())
+    return value or default
+
+
+def user_agent_normalized():
+    """True when the configured RESEARCH_USER_AGENT had to be repaired before sending (stray full-width space, control or non-ASCII
+    characters). Only this fact is reported, never the value."""
+    raw = os.environ.get("RESEARCH_USER_AGENT", "")
+    return bool(raw.strip()) and request_user_agent("") != raw.strip()
+
+
 def sec_user_agent():
     """SEC requires a declared User-Agent with a contact address.
 
     Requests without one are answered with 403 and can get the whole IP
     blocked, so they are never sent. The value is configuration, not code.
     """
-    value = os.environ.get("RESEARCH_USER_AGENT", "").strip()
-    if not value or "\r" in value or "\n" in value or not SEC_CONTACT.search(value):
+    raw = os.environ.get("RESEARCH_USER_AGENT", "")
+    value = request_user_agent("")
+    if not value or "\r" in raw or "\n" in raw or not SEC_CONTACT.search(value):
         raise ValueError("SEC user agent has no contact address")
     return value
 
@@ -341,7 +359,7 @@ class SecAccess:
             configured = False
         with self.lock:
             remaining = max(0.0, self.blocked_until - self.clock())
-            return {"userAgentConfigured": configured, "paused": remaining > 0,
+            return {"userAgentConfigured": configured, "userAgentNormalized": user_agent_normalized(), "paused": remaining > 0,
                     "pausedSeconds": round(remaining), "consecutiveFailures": self.failures,
                     "lastError": self.last_error, "pollSeconds": self.poll_seconds,
                     "maxRequestsPerSecond": _SEC_REQUEST_WINDOW.limit}
@@ -607,6 +625,31 @@ def source_error_code(exc):
     return "fetch-failed"
 
 
+_DIAGNOSED_FAILURES = set()
+_DIAGNOSTIC_LOCK = threading.Lock()
+
+
+def discovery_failure_diagnostic(ticker, exc, stage):
+    """One bounded stdout line (JSON) the first time each distinct failure appears in this process, so an all-sources outage can be
+    traced to its exception class and raising line without logging per request. URLs, e-mail addresses and token-like strings are masked."""
+    try:
+        frames = traceback.extract_tb(exc.__traceback__)
+        where = "%s:%s:%s" % (os.path.basename(frames[-1].filename), frames[-1].lineno, frames[-1].name) if frames else "unknown"
+        signature = (type(exc).__name__, where, stage)
+        with _DIAGNOSTIC_LOCK:
+            if signature in _DIAGNOSED_FAILURES or len(_DIAGNOSED_FAILURES) >= 40:
+                return
+            _DIAGNOSED_FAILURES.add(signature)
+        message = re.sub(r"https?://\S+", "<url>", str(exc))
+        message = re.sub(r"\S+@\S+", "<email>", message)
+        message = re.sub(r"[A-Za-z0-9_\-]{24,}", "<token>", message)
+        message = " ".join(message.split())[:80]
+        print(json.dumps({"event": "discovery-failure-diagnostic", "stage": stage, "ticker": ticker, "class": type(exc).__name__,
+                          "where": where, "code": source_error_code(exc), "message": message}, ensure_ascii=True), flush=True)
+    except Exception:  # a diagnostic must never add a failure of its own
+        return
+
+
 def persisted_source_error_code(value):
     """Normalize legacy child state to a fixed URL-free transport code."""
     if value is None or value == "":
@@ -741,8 +784,7 @@ def fetch(url, ticker, validators=None, include_metadata=False):
     if sec:
         SEC_ACCESS.check()
     headers = {
-        "User-Agent": sec_user_agent() if sec else os.environ.get(
-            "RESEARCH_USER_AGENT", "TechPhaseResearch-SourceCheck/0.1"),
+        "User-Agent": sec_user_agent() if sec else request_user_agent(),
         "Accept": ("text/html,application/pdf;q=0.9" if article_url(url, ticker)
                    else "application/json,application/rss+xml,application/atom+xml,text/html,application/pdf"),
     }
@@ -857,11 +899,12 @@ class Links(HTMLParser):
 
 
 class SecIndexExhibits(HTMLParser):
-    """Collect same-accession document links from rows typed exactly EX-99.1."""
+    """Collect same-accession document links from rows typed exactly EX-99.<number> (1 unless a company's provider says otherwise)."""
 
-    def __init__(self, base, ticker, directory):
+    def __init__(self, base, ticker, directory, number="1"):
         super().__init__(convert_charrefs=True)
         self.base, self.ticker, self.directory = base, ticker, directory
+        self.type_pattern = re.compile(r"EX(?:HIBIT)?[- .]*99[.\- ]?" + number, re.I)
         self.row_depth = self.cell_depth = 0
         self.row_urls, self.cell_text, self.urls = set(), [], set()
         self.row_is_exhibit = False
@@ -907,7 +950,7 @@ class SecIndexExhibits(HTMLParser):
             self.cell_depth -= 1
             if self.cell_depth == 0:
                 label = " ".join(" ".join(self.cell_text).split())
-                if re.fullmatch(r"EX(?:HIBIT)?[- .]*99[.\- ]?1", label, re.I):
+                if self.type_pattern.fullmatch(label):
                     self.row_is_exhibit = True
                 self.cell_text = []
             return
@@ -917,8 +960,17 @@ class SecIndexExhibits(HTMLParser):
                 self.urls.update(self.row_urls)
 
 
-def sec_exhibit_links(content, filing_url, ticker):
-    """Return explicit EX-99.1 links in the same immutable SEC filing directory.
+def sec_exhibit_numbers(ticker):
+    """The exhibit numbers to try, in order. Every company: EX-99.1 only (as always). A provider may list others ("secExhibits": ["2", "1"]:
+    Arm's results are in its shareholder letter, EX-99.2; its EX-99.1 is a two-line notice). The first number that has a link in the filing is used."""
+    listed = PROVIDERS.get(ticker, {}).get("secExhibits")
+    if isinstance(listed, list) and listed and all(item in ("1", "2", "3") for item in listed):
+        return list(dict.fromkeys(listed))
+    return ["1"]
+
+
+def sec_exhibit_links(content, filing_url, ticker, number="1"):
+    """Return explicit EX-99.<number> links (EX-99.1 by default) in the same immutable SEC filing directory.
 
     Filing HTML is untrusted input. The same-host and same-accession checks prevent
     it from turning article retrieval into a general-purpose URL fetcher.
@@ -940,12 +992,12 @@ def sec_exhibit_links(content, filing_url, ticker):
         filename = candidate.path.rsplit("/", 1)[-1]
         label = parser.labels.get(url, "")
         identity = re.sub(r"[^a-z0-9]", "", f"{filename} {label}".lower())
-        if not re.search(r"(?:exhibit|ex)99(?:01|1)(?:htm|html|pdf)?$", identity):
-            if not re.search(r"\b(?:exhibit\s*)?99[.\- ]?1\b", label, re.I):
+        if not re.search(r"(?:exhibit|ex)99(?:0" + number + "|" + number + r")(?:htm|html|pdf)?$", identity):
+            if not re.search(r"\b(?:exhibit\s*)?99[.\- ]?" + number + r"\b", label, re.I):
                 continue
-        score = 2 if re.search(r"\bEX(?:HIBIT)?[- .]*99[.\- ]?1\b", label, re.I) else 1
+        score = 2 if re.search(r"\bEX(?:HIBIT)?[- .]*99[.\- ]?" + number + r"\b", label, re.I) else 1
         candidates.append((score, url))
-    index_parser = SecIndexExhibits(filing_url, ticker, directory)
+    index_parser = SecIndexExhibits(filing_url, ticker, directory, number)
     index_parser.feed(markup)
     index_parser.close()
     candidates.extend((3, url) for url in index_parser.urls)
@@ -972,39 +1024,45 @@ def sec_filing_index_url(filing_url, ticker):
 
 
 def sec_exhibit_evidence(content, filing_url, ticker, transport):
-    """Fetch the first substantive EX-99.1 without leaving the filing directory."""
-    candidates = sec_exhibit_links(content, filing_url, ticker)
+    """Fetch the first substantive exhibit (EX-99.1; other numbers only where the company's provider lists them) without leaving the filing directory."""
     last_error = None
-    # The primary 8-K/6-K document can contain substantive filing text without
-    # linking its exhibits. The canonical same-accession index is authoritative
-    # for the exhibit Type column, so consult it whenever the primary document
-    # did not yield a safe candidate. Never broaden the lookup beyond the
-    # immutable filing directory derived below.
-    if not candidates:
-        index_url = sec_filing_index_url(filing_url, ticker)
-        if index_url and index_url != filing_url:
+    index = None   # the filing index is fetched at most once, whichever exhibit numbers are tried
+    for number in sec_exhibit_numbers(ticker):
+        candidates = sec_exhibit_links(content, filing_url, ticker, number)
+        # The primary 8-K/6-K document can contain substantive filing text without
+        # linking its exhibits. The canonical same-accession index is authoritative
+        # for the exhibit Type column, so consult it whenever the primary document
+        # did not yield a safe candidate. Never broaden the lookup beyond the
+        # immutable filing directory derived below.
+        if not candidates:
+            index_url = sec_filing_index_url(filing_url, ticker)
+            if index_url and index_url != filing_url:
+                if index is None:
+                    try:
+                        index_content, index_type = transport(index_url, ticker)
+                        if index_type != "text/html":
+                            raise ValueError("SEC filing index has unsupported content type")
+                        index = (index_content, index_url)
+                    except (HTTPError, URLError, TimeoutError, ValueError) as exc:
+                        index = False
+                        last_error = exc
+                if index:
+                    candidates = sec_exhibit_links(index[0], index[1], ticker, number)
+                    if not candidates:
+                        last_error = ValueError("SEC exhibit link not found in filing index")
+        for url in candidates:
             try:
-                index_content, index_type = transport(index_url, ticker)
-                if index_type != "text/html":
-                    raise ValueError("SEC filing index has unsupported content type")
-                candidates = sec_exhibit_links(index_content, index_url, ticker)
-                if not candidates:
-                    last_error = ValueError("SEC exhibit link not found in filing index")
+                exhibit, content_type = transport(url, ticker)
+                extracted = extract_text(exhibit, content_type)
+                meaningful = sum(character.isalnum() for character in extracted)
+                if len(extracted) < MIN_SEC_EXHIBIT_CHARS or meaningful < 80:
+                    raise ValueError("SEC exhibit has no extractable text")
+                return {
+                    "content": exhibit, "contentType": content_type,
+                    "extractedText": extracted, "url": url, "number": number,
+                }
             except (HTTPError, URLError, TimeoutError, ValueError) as exc:
                 last_error = exc
-    for url in candidates:
-        try:
-            exhibit, content_type = transport(url, ticker)
-            extracted = extract_text(exhibit, content_type)
-            meaningful = sum(character.isalnum() for character in extracted)
-            if len(extracted) < MIN_SEC_EXHIBIT_CHARS or meaningful < 80:
-                raise ValueError("SEC exhibit has no extractable text")
-            return {
-                "content": exhibit, "contentType": content_type,
-                "extractedText": extracted, "url": url,
-            }
-        except (HTTPError, URLError, TimeoutError, ValueError) as exc:
-            last_error = exc
     if last_error is not None:
         return {"error": last_error}
     return None
@@ -2337,6 +2395,26 @@ def discovery_poll_summary(db, reference=None, poll_overdue_after_seconds=60):
         ),
         "requestDurationMaxMs24Hours": totals["request_max"],
     }
+
+
+DISCOVERY_OUTAGE_WINDOW_SECONDS = 30 * 60
+DISCOVERY_OUTAGE_MIN_CHECKS = 50
+
+
+def discovery_outage_summary(db, reference=None, window_seconds=DISCOVERY_OUTAGE_WINDOW_SECONDS):
+    """Checks and failures of the official-source polling in the last window (default 30 minutes), without source identities."""
+    reference = reference or now()
+    reference_utc = datetime.fromisoformat(str(reference).replace("Z", "+00:00")).astimezone(timezone.utc)
+    start = (reference_utc - timedelta(seconds=window_seconds)).isoformat(timespec="milliseconds")
+    end = reference_utc.isoformat(timespec="milliseconds")
+    row = db.execute(f"""
+      SELECT COALESCE(sum(checks),0) AS checks, COALESCE(sum(degraded),0) AS degraded
+      FROM discovery_poll_batches
+      WHERE julianday(completed_at)>=julianday(?) AND julianday(completed_at)<=julianday(?)
+        AND {DISCOVERY_POLL_METRIC_WHERE}
+    """, (start, end)).fetchone()
+    return {"windowSeconds": window_seconds, "checks": row["checks"], "degraded": row["degraded"],
+            "allFailing": row["checks"] >= DISCOVERY_OUTAGE_MIN_CHECKS and row["degraded"] == row["checks"]}
 
 
 def record_priority_source_run(
@@ -3870,6 +3948,7 @@ def collect_discovery(ticker, transport=fetch, automatic=False, cached_sources=N
                         }
                 return source, discovered, chain_failures
             except Exception as exc:
+                discovery_failure_diagnostic(ticker, exc, "source")
                 chain_failures.append(source_error_code(exc))
         return None, {}, chain_failures
 
@@ -4143,7 +4222,7 @@ def sec_evidence_summary(db, tickers, reference=None):
             continue
         if row["error"] == "sec-exhibit-unavailable":
             state = "error"
-        elif row["evidence_kind"] == "sec-exhibit-99.1":
+        elif str(row["evidence_kind"]).startswith("sec-exhibit-99."):
             state = "exhibit"
         elif not row["sha256"]:
             state = "error" if row["error"] else "pending"
@@ -4934,8 +5013,8 @@ def collect_source(row, transport=fetch):
         if exhibit and "extractedText" in exhibit:
             extracted = exhibit["extractedText"]
             content_type = exhibit["contentType"]
-            evidence_url, evidence_kind = exhibit["url"], "sec-exhibit-99.1"
-            identity_content = content + b"\0SEC-EXHIBIT-99.1\0" + exhibit["content"]
+            evidence_url, evidence_kind = exhibit["url"], "sec-exhibit-99." + exhibit["number"]
+            identity_content = content + b"\0SEC-EXHIBIT-99." + exhibit["number"].encode() + b"\0" + exhibit["content"]
         elif exhibit and sum(character.isalnum() for character in extracted) < 80:
             raise ValueError("SEC exhibit evidence unavailable") from exhibit["error"]
     if not extracted.strip():

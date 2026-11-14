@@ -1,3 +1,4 @@
+import re
 import hashlib
 import json
 from datetime import datetime, timezone
@@ -178,6 +179,103 @@ class Parsers(unittest.TestCase):
         self.assertNotIn('operating-income',keys(text.replace('Income from operations 3,658','Income from operations 3,758')))
         self.assertNotIn('net-income',keys(text.replace('Net income $ 2,718','Net income $ 2,818')))
         self.assertNotIn('eps',keys(text.replace('Diluted $ 3.40','Diluted $ 4.40')))
+    def test_platform_and_device_statements_batch2(self):
+        cases={
+         'META':('meta-results-q326.txt','Q3 2026',[('revenue','$64.601B','$51.242B'),('eps','$3.83','$1.05'),('net-income','$9.86B','$2.709B'),('operating-income','$12.988B','$20.535B')],
+                 [('Income from operations 12,988','Income from operations 13,988','operating-income'),('Net income $ 9,860','Net income $ 9,960','net-income'),('Basic $ 3.86 $ 1.08 $ 20.64 $ 14.96 Diluted $ 3.83','Basic $ 3.86 $ 1.08 $ 20.64 $ 14.96 Diluted $ 4.83','eps')],'Revenue $ 64,601','Revenue $ 74,601'),
+         'NFLX':('nflx-results-q326.txt','Q3 2026',[('revenue','$12.874176B','$11.510307B'),('eps','$0.87','$0.59'),('net-income','$3.663927B','$2.546916B'),('operating-income','$4.4586B','$3.248247B')],
+                 [('Operating income 4,458,600','Operating income 4,558,600','operating-income'),('Net income $ 3,663,927','Net income $ 3,763,927','net-income'),('Basic $ 0.89 $ 0.81 $ 0.60 $ 2.95 $ 2.01 Diluted $ 0.87','Basic $ 0.89 $ 0.81 $ 0.60 $ 2.95 $ 2.01 Diluted $ 0.97','eps')],'Revenues $ 12,874,176','Revenues $ 13,874,176'),
+         'NOW':('now-results-q326.txt','Q3 2026',[('revenue','$4.106B','$3.407B'),('eps','$0.27','$0.48'),('net-income','$277M','$502M'),('operating-income','$385M','$572M')],
+                [('Income from operations 385','Income from operations 395','operating-income'),('Net income $ 277','Net income $ 287','net-income'),('diluted (2) $ 0.27','diluted (2) $ 0.37','eps')],'Total revenues 4,106','Total revenues 4,306'),
+         'INTC':('intc-results-q326.txt','Q3 2026',[('revenue','$16.513B','$13.653B'),('eps','$0.60','$0.90'),('net-income','$3.32B','$4.063B'),('operating-income','$2.522B','$683M')],
+                 [('Operating income (loss) 2,522','Operating income (loss) 2,622','operating-income'),('attributable to Intel $ 3,320','attributable to Intel $ 3,420','net-income')],'Net revenue $ 16,513','Net revenue $ 17,513'),
+         'AAPL':('aapl-results-q4fy26.txt','Q4 FY2026',[('revenue','$114.477B','$102.466B'),('eps','$2.10','$1.85'),('net-income','$30.711B','$27.466B'),('operating-income','$35.631B','$32.427B')],
+                 [('Operating income 35,631','Operating income 36,631','operating-income'),('Net income $ 30,711','Net income $ 31,711','net-income'),('Diluted $ 2.10','Diluted $ 3.10','eps')],'Total net sales (1) 114,477','Total net sales (1) 124,477'),
+        }
+        for ticker,(name,period,facts,tampers,old_rev,new_rev) in cases.items():
+            text=fixture(name); parse=flash.PROFILES[ticker]['parse']
+            parsed=parse(text)
+            self.assertEqual(parsed['period'],period,ticker)
+            self.assertEqual([(f[0],f[1],f[2]) for f in parsed['facts']],facts,ticker)
+            for old,new,key in tampers:
+                self.assertIn(old,text,ticker)
+                self.assertNotIn(key,[f[0] for f in parse(text.replace(old,new))['facts']],(ticker,key))
+            self.assertIn(old_rev,text,ticker)
+            with self.assertRaises(ValueError): parse(text.replace(old_rev,new_rev))
+            with self.assertRaises(ValueError): parse(re.sub(flash.STATEMENT[ticker]['identity'],'someone else',text,flags=re.I))
+    def test_security_and_software_statements_batch1(self):
+        # (fixture, period, facts, [(old, new, withheld key)]) -- every tamper must withhold that figure; a wrong revenue withholds everything
+        cases={
+         'PANW':('panw-results-q4fy26.txt','Q4 FY2026',[('revenue','$3.41B','$2.536B'),('eps','$-0.35','$0.36'),('net-income','$-282M','$254M'),('operating-income','$172M','$497M')],
+                 [('Operating income 172 497','Operating income 182 497','operating-income'),('Net income (loss) $ (282)','Net income (loss) $ (292)','net-income'),('per share, diluted $ (0.35)','per share, diluted $ (0.45)','eps')],'Total revenue 3,410 2,536','Total revenue 3,510 2,536'),
+         'CRWD':('crwd-results-q2fy27.txt','Q2 FY2027',[('revenue','$1.470897B','$1.168952B'),('eps','$0.01','$-0.07'),('net-income','$5.306M','$-70.153M'),('operating-income','$-33.232M','$-105.457M')],
+                 [('Loss from operations (33,232)','Loss from operations (34,232)','operating-income'),('attributable to CrowdStrike $ 5,306','attributable to CrowdStrike $ 6,306','net-income')],'Total revenue 1,470,897','Total revenue 1,570,897'),
+         'SNOW':('snow-results-q2fy27.txt','Q2 FY2027',[('revenue','$1.546793B','$1.144969B'),('eps','$-0.55','$-0.89'),('net-income','$-191.72M','$-298.017M'),('operating-income','$-262.967M','$-340.276M')],
+                 [('Operating loss (262,967)','Operating loss (272,967)','operating-income'),('Net loss (191,720)','Net loss (192,720)','net-income'),('basic and diluted $ (0.55)','basic and diluted $ (0.65)','eps')],'Revenue $ 1,546,793','Revenue $ 1,646,793'),
+         'CRM':('crm-results-q2fy27.txt','Q2 FY2027',[('revenue','$11.345B','$10.236B'),('eps','$4.29','$1.96'),('net-income','$3.526B','$1.887B'),('operating-income','$2.331B','$2.332B')],
+                [('Income from operations 2,331','Income from operations 2,431','operating-income'),('Net income $ 3,526','Net income $ 3,626','net-income'),('(3) $ 4.29','(3) $ 5.29','eps')],'Total revenues 11,345','Total revenues 12,345'),
+         'ADBE':('adbe-results-q3fy26.txt','Q3 FY2026',[('revenue','$6.76B','$5.988B'),('eps','$4.62','$4.18'),('net-income','$1.827B','$1.772B'),('operating-income','$2.354B','$2.173B')],
+                 [('Operating income 2,354','Operating income 2,454','operating-income'),('Net income $ 1,827','Net income $ 1,927','net-income'),('Diluted net income per share $ 4.62','Diluted net income per share $ 5.62','eps')],'Total revenue 6,760','Total revenue 7,760'),
+        }
+        for ticker,(name,period,facts,tampers,old_rev,new_rev) in cases.items():
+            text=fixture(name); parse=flash.PROFILES[ticker]['parse']
+            parsed=parse(text)
+            self.assertEqual(parsed['period'],period,ticker)
+            self.assertEqual([(f[0],f[1],f[2]) for f in parsed['facts']],facts,ticker)
+            for old,new,key in tampers:
+                self.assertIn(old,text,ticker)
+                self.assertNotIn(key,[f[0] for f in parse(text.replace(old,new))['facts']],(ticker,key))
+            self.assertIn(old_rev,text,ticker)
+            with self.assertRaises(ValueError): parse(text.replace(old_rev,new_rev))
+            with self.assertRaises(ValueError): parse(re.sub(flash.STATEMENT[ticker]['identity'],'someone else',text,flags=re.I))
+    def test_semiconductor_equipment_storage_and_power_statements_batch3(self):
+        cases={
+         'KLAC':('klac-results-q1fy27.txt','Q1 FY2027',[('revenue','$4.136015B','$3.209696B'),('eps','$1.18','$0.85'),('net-income','$1.548588B','$1.12104B')],
+                 [('Net income $ 1,548,588 $ 1,363,059 $ 1,121,040 Net income per share','Net income $ 1,648,588 $ 1,363,059 $ 1,121,040 Net income per share','net-income'),('Diluted $ 1.18','Diluted $ 1.28','eps')],'Total revenues 4,136,015','Total revenues 4,436,015'),
+         'LRCX':('lrcx-results-sep26.txt','Sep 2026 quarter',[('revenue','$8.219418B','$5.324173B'),('eps','$2.19','$1.24'),('net-income','$2.753138B','$1.56866B'),('operating-income','$3.283727B','$1.829088B')],
+                 [('Operating income 3,283,727','Operating income 3,383,727','operating-income'),('Net income $ 2,753,138','Net income $ 2,853,138','net-income'),('Diluted $ 2.19','Diluted $ 2.29','eps')],'Revenue $ 8,219,418','Revenue $ 9,219,418'),
+         'STX':('stx-results-q1fy27.txt','Q1 FY2027',[('revenue','$4.233B','$2.629B'),('eps','$7.59','$2.43'),('net-income','$1.761B','$549M'),('operating-income','$2.064B','$694M')],
+                [('Income from operations 2,064','Income from operations 2,164','operating-income'),('Net income $ 1,761','Net income $ 1,861','net-income'),('Diluted $ 7.59','Diluted $ 8.59','eps')],'Revenue $ 4,233','Revenue $ 5,233'),
+         'APH':('aph-results-q326.txt','Q3 2026',[('revenue','$10.2297B','$6.1944B'),('eps','$0.79','$0.49'),('net-income','$2.0343B','$1.2457B'),('operating-income','$3.0208B','$1.7023B')],
+                [('Operating income 3,020.8','Operating income 3,120.8','operating-income'),('Amphenol Corporation $ 2,034.3','Amphenol Corporation $ 2,134.3','net-income')],'Net sales $ 10,229.7','Net sales $ 11,229.7'),
+         'BE':('be-results-q326.txt','Q3 2026',[('revenue','$1.235837B','$519.048M'),('eps','$0.78','$-0.10'),('net-income','$250.271M','$-23.093M'),('operating-income','$225.449M','$7.846M')],
+               [('Income from operations 225,449','Income from operations 235,449','operating-income'),('common stockholders $ 250,271','common stockholders $ 260,271','net-income')],'Total revenue 1,235,837','Total revenue 1,335,837'),
+        }
+        for ticker,(name,period,facts,tampers,old_rev,new_rev) in cases.items():
+            text=fixture(name); parse=flash.PROFILES[ticker]['parse']
+            parsed=parse(text)
+            self.assertEqual(parsed['period'],period,ticker)
+            self.assertEqual([(f[0],f[1],f[2]) for f in parsed['facts']],facts,ticker)
+            for old,new,key in tampers:
+                self.assertIn(old,text,ticker)
+                self.assertNotIn(key,[f[0] for f in parse(text.replace(old,new))['facts']],(ticker,key))
+            self.assertIn(old_rev,text,ticker)
+            with self.assertRaises(ValueError): parse(text.replace(old_rev,new_rev))
+            with self.assertRaises(ValueError): parse(re.sub(flash.STATEMENT[ticker]['identity'],'someone else',text,flags=re.I))
+    def test_connectivity_optics_and_quantum_statements_batch4(self):
+        cases={
+         'ALAB':('alab-results-q326.txt','Q3 2026',[('revenue','$584.899M','$230.575M'),('eps','$0.99','$0.50'),('net-income','$182.944M','$91.114M'),('operating-income','$179.056M','$55.406M')],
+                 [('Operating income 179,056','Operating income 189,056','operating-income'),('Net income $ 182,944','Net income $ 192,944','net-income'),('Diluted $ 0.99','Diluted $ 1.99','eps')],'Revenue $ 584,899','Revenue $ 684,899'),
+         'LITE':('lite-results-q1fy27.txt','Q1 FY2027',[('revenue','$1.2626B','$533.8M'),('eps','$3.54','$0.05'),('net-income','$360.3M','$4.2M'),('operating-income','$359.8M','$6.7M')],
+                 [('Income from operations 359.8','Income from operations 369.8','operating-income'),('Net income $ 360.3','Net income $ 370.3','net-income'),('Diluted $ 3.54','Diluted $ 4.54','eps')],'Net revenue $ 1,262.6','Net revenue $ 1,362.6'),
+         'AAOI':('aaoi-results-q326.txt','Q3 2026',[('revenue','$269.875M','$118.63M'),('eps','$0.07','$-0.28'),('net-income','$6.3M','$-17.936M'),('operating-income','$-1.442M','$-18.187M')],
+                 [('Operating Loss (1,442 )','Operating Loss (1,542 )','operating-income'),('Net income (loss) $ 6,300','Net income (loss) $ 7,300','net-income'),('diluted $ 0.07','diluted $ 0.17','eps')],'Total Revenue 269,875','Total Revenue 279,875'),
+         'IONQ':('ionq-results-q326.txt','Q3 2026',[('revenue','$173.831M','$39.866M'),('net-income','$563.957M','$-1.054955B'),('operating-income','$-433.075M','$-168.813M')],
+                 [('Loss from operations (433,075 )','Loss from operations (443,075 )','operating-income'),('attributable to IonQ, Inc. $ 563,957','attributable to IonQ, Inc. $ 573,957','net-income')],'Revenue $ 173,831','Revenue $ 183,831'),
+         'SOFI':('sofi-results-q326.txt','Q3 2026',[('revenue','$1.385099B','$961.6M'),('eps','$0.18','$0.11'),('net-income','$240.989M','$139.392M')],
+                 [('Net income $ 240,989','Net income $ 250,989','net-income'),('diluted $ 0.18','diluted $ 0.28','eps')],'Total net revenue 1,385,099','Total net revenue 1,685,099'),
+        }
+        for ticker,(name,period,facts,tampers,old_rev,new_rev) in cases.items():
+            text=fixture(name); parse=flash.PROFILES[ticker]['parse']
+            parsed=parse(text)
+            self.assertEqual(parsed['period'],period,ticker)
+            self.assertEqual([(f[0],f[1],f[2]) for f in parsed['facts']],facts,ticker)
+            for old,new,key in tampers:
+                self.assertIn(old,text,ticker)
+                self.assertNotIn(key,[f[0] for f in parse(text.replace(old,new))['facts']],(ticker,key))
+            self.assertIn(old_rev,text,ticker)
+            with self.assertRaises(ValueError): parse(text.replace(old_rev,new_rev))
+            with self.assertRaises(ValueError): parse(re.sub(flash.STATEMENT[ticker]['identity'],'someone else',text,flags=re.I))
     def test_alphabet_and_amazon_statements_print_the_year_ago_column_first(self):
         expected={'GOOGL':('alphabet-results-q326.txt',[('revenue','$127.577B','$102.346B'),('eps','$2.12','$2.87'),('net-income','$26.17B','$34.979B'),('operating-income','$40.576B','$31.228B')]),
                   'AMZN':('amazon-results-q326.txt',[('revenue','$201.944B','$180.169B'),('eps','$1.89','$1.95'),('net-income','$20.685B','$21.187B'),('operating-income','$28.076B','$17.422B')])}

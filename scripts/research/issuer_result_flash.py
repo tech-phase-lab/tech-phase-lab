@@ -309,10 +309,16 @@ def parse_statement(text, cfg):
     if cfg['identity'] not in t.lower():
         raise ValueError('issuer-identity-missing')
     if cfg.get('period-re'):
-        found = re.findall(cfg['period-re'], t[:1500], re.I)
+        found = re.findall(cfg['period-re'], t[:cfg.get('window', 1500)], re.I)
         if len(found) != 1:
             raise ValueError('period-unrecognized')
-        quarter, year = QUARTERS[found[0][0].lower()], int(found[0][1])
+        first, second = (found[0], None) if isinstance(found[0], str) else (found[0][0], found[0][1] if len(found[0]) > 1 else None)
+        if cfg.get('year-first'):  # "fiscal 2026 fourth quarter": the year is printed before the quarter
+            first, second = second, first
+        if cfg.get('period-text'):  # a period named by its text (e.g. "quarter ended September 27, 2026"): the lambda gets the raw groups
+            quarter, year = first, int(second)
+        else:
+            quarter, year = (int(first) if first.isdigit() else QUARTERS[first.lower()]), (int(second) if second else None)
     else:
         quarter, year = headline_period(t)
     start = t.find(cfg['heading'])
@@ -328,6 +334,13 @@ def parse_statement(text, cfg):
             block = block[:stop]
     if cfg['units'] not in block[:400].lower():
         raise ValueError('units-unrecognized')
+    if cfg.get('year-re'):  # the quarter's year is read from the statement's own first column heading
+        dated = re.findall(cfg['year-re'], block[:600])
+        if len(dated) < 1 or year is not None and year != int(dated[0]):
+            raise ValueError('period-unrecognized')
+        year = int(dated[0])
+    if cfg.get('paren-space'):  # "(1,442 )" with a space before the closing bracket, and an en dash for nil
+        block = re.sub(r'\(([\d,.]+) \)', r'(\1)', block).replace(' \u2013 ', ' \u2014 ')
     if cfg.get('glue'):  # "$4.92" printed without a space after the dollar sign
         block = re.sub(r'\$(?=\d)', '$ ', block)
     n, ago, scale = cfg['columns'], cfg['year-ago'], cfg['scale']
@@ -347,7 +360,7 @@ def parse_statement(text, cfg):
     if not rows['revenue'] or rows['revenue'][0] <= 0 or not rows['revenue'][ago] > 0:
         raise ValueError('revenue-row-unrecognized')
     if cfg.get('growth'):
-        growth = re.findall(cfg['growth'], t[:2500])
+        growth = re.findall(cfg['growth'], t[:cfg.get('window', 2500)])
         if len(growth) != 1:
             raise ValueError('revenue-growth-missing')
         stated = Decimal(growth[0])  # the headline's own rounding: whole percent -> +-0.55, one decimal -> +-0.06
@@ -356,7 +369,7 @@ def parse_statement(text, cfg):
             raise ValueError('change-mismatch')
     else:  # no stated growth: the headline's revenue (in billions, one decimal) must match this quarter's printed revenue
         said = re.findall(cfg['headline'], t[:2500])
-        if len(said) != 1 or abs(Decimal(said[0]) * 1000 - rows['revenue'][0] * scale) > Decimal('55'):
+        if len(said) != 1 or abs(Decimal(said[0]) * cfg.get('headline-multiplier', 1000) - rows['revenue'][0] * scale) > cfg.get('headline-tol', Decimal('55')):
             raise ValueError('change-mismatch')
 
     def col(key, i):
@@ -367,7 +380,10 @@ def parse_statement(text, cfg):
         return None not in (x, y, z) and abs((x - y) - z) <= cfg['tol']
     # a column is trusted only when every identity holds in both the current and the year-earlier column
     gross_ok = all(agrees('revenue', 'cost', 'gross', i) for i in (0, ago)) if rows.get('cost') else False
-    if cfg.get('op-direct'):  # no gross profit line: operating income = revenue - total operating costs
+    if cfg.get('op-signed'):  # costs are printed as negatives: operating income = revenue + costs
+        op_ok = all(None not in (col('revenue', i), col('cost', i), col('operating', i)) and abs(col('revenue', i) + col('cost', i) - col('operating', i)) <= cfg['tol']
+                    for i in (0, ago))
+    elif cfg.get('op-direct'):  # no gross profit line: operating income = revenue - total operating costs
         op_ok = all(agrees('revenue', 'cost', 'operating', i) for i in (0, ago))
     else:
         op_ok = gross_ok and all(agrees('gross', 'opex', 'operating', i) for i in (0, ago))
@@ -376,12 +392,14 @@ def parse_statement(text, cfg):
                      and abs(col('pretax', i) - col('tax', i) + col('equity', i) - col('cont', i)) <= cfg['tol']
                      and abs(col('cont', i) + col('disc', i) - col('net', i)) <= cfg['tol'] for i in (0, ago))
     elif cfg.get('net-chain') == 'additive':  # tax and equity-method activity are printed with their sign: pretax + tax + equity = net income
-        net_ok = all(None not in (col('pretax', i), col('tax', i), col('equity', i), col('net', i))
-                     and abs(col('pretax', i) + col('tax', i) + col('equity', i) - col('net', i)) <= cfg['tol'] for i in (0, ago))
+        optional_equity = 'equity' not in cfg['rows']   # Arm has no equity-method line in this chain
+        net_ok = all(None not in (col('pretax', i), col('tax', i), col('net', i)) and (optional_equity or col('equity', i) is not None)
+                     and abs(col('pretax', i) + col('tax', i) + (0 if optional_equity else col('equity', i)) - col('net', i)) <= cfg['tol'] for i in (0, ago))
     else:
         net_ok = all(agrees('pretax', 'tax', 'net', i) for i in (0, ago)) if rows.get('tax') is not None else False
     if net_ok and cfg['rows'].get('attrib'):  # net income attributable to common = net income - non-controlling interests
-        net_ok = all(None not in (col('net', i), col('nci', i), col('attrib', i)) and abs(col('net', i) - col('nci', i) - col('attrib', i)) <= cfg['tol']
+        sign = 1 if cfg.get('nci-signed') else -1  # nci-signed: the release prints the deduction as a negative number
+        net_ok = all(None not in (col('net', i), col('nci', i), col('attrib', i)) and abs(col('net', i) + sign * col('nci', i) - col('attrib', i)) <= cfg['tol']
                      for i in (0, ago))
         if net_ok:
             rows['net'] = rows['attrib']
@@ -404,6 +422,152 @@ def parse_statement(text, cfg):
 
 
 STATEMENT = {
+    'SOFI': {'identity': 'sofi', 'heading': 'Condensed Consolidated Statements of Operations and Comprehensive Income(Unaudited)(In Thousands', 'end': 'Non-GAAP Financial Measures', 'units': 'in thousands',
+             'scale': Decimal('0.001'), 'tol': Decimal(1), 'columns': 4, 'year-ago': 1, 'net-chain': 'additive', 'headline': r'Record Net Revenue of \$([\d.]+) Billion',
+             'period-re': r'SoFi Reports (First|Second|Third|Fourth) Quarter (20\d\d) with', 'period': lambda q, y: f'Q{q} {y}',
+             'rows': {'revenue': 'Total net revenue', 'pretax': 'Income before income taxes', 'tax': 'Income tax expense', 'net': 'Net income',
+                      'eps': r'Earnings per share – diluted', 'shares': r'Weighted average common stock outstanding – diluted'}},
+    'IONQ': {'identity': 'ionq', 'heading': 'Condensed Consolidated Statements of Operations (unaudited) (in thousands', 'end': 'Condensed Consolidated Balance Sheets', 'units': 'in thousands', 'scale': Decimal('0.001'),
+             'tol': Decimal(1), 'columns': 4, 'year-ago': 1, 'paren-space': True, 'op-direct': True, 'net-chain': 'additive', 'shares-divisor': Decimal(1000),
+             'growth': r'Revenue of \$[\d.]+ Million, Up (\d+)% Year-over-Year',
+             'period-re': r'IonQ Announces [A-Za-z ]*?([1-4])Q(\d\d) Revenues', 'period': lambda q, y: f'Q{q} 20{y}',
+             'rows': {'revenue': 'Revenue', 'cost': 'Total operating costs and expenses', 'operating': 'Loss from operations', 'pretax': r'Income \(loss\) before income tax benefit \(expense\)',
+                      'tax': r'Income tax benefit \(expense\)', 'net': r'Net income \(loss\)', 'nci': r'Net income \(loss\) attributable to noncontrolling interests',
+                      'attrib': r'Net income \(loss\) attributable to IonQ, Inc\.',
+                      'eps': r'common stockholders Basic (?:\$ ' + AMT + r' ){4}Diluted', 'shares': r'common stockholders Basic ' + (AMT + ' ') * 4 + 'Diluted'}},
+    'ALAB': {'identity': 'astera labs', 'heading': 'CONDENSED CONSOLIDATED STATEMENTS OF OPERATIONS (Unaudited)(In thousands', 'end': 'CONDENSED CONSOLIDATED STATEMENTS OF CASH FLOWS', 'units': 'in thousands',
+             'scale': Decimal('0.001'), 'tol': Decimal(1), 'columns': 5, 'year-ago': 2, 'net-chain': 'additive',
+             'growth': r'Record quarterly revenue of \$[\d.]+ million, up \d+% QoQ and up (\d+)% year-over-year',
+             'period-re': r'Astera Labs Reports (First|Second|Third|Fourth) Quarter (20\d\d) Financial Results', 'period': lambda q, y: f'Q{q} {y}',
+             'rows': {'revenue': 'Revenue', 'cost': 'Cost of revenue', 'gross': 'Gross profit', 'opex': 'Total operating expenses', 'operating': 'Operating income',
+                      'pretax': 'Income before income taxes', 'tax': r'Income tax \(provision\) benefit', 'net': 'Net income',
+                      'eps': r'Net income per share: Basic \$ [\d.]+ (?:\$ [\d.]+ ){4}Diluted', 'shares': r'Weighted-average shares used in calculating net income per share: Basic [\d,]+ (?:[\d,]+ ){4}Diluted'}},
+    'LITE': {'identity': 'lumentum', 'heading': 'CONSOLIDATED STATEMENTS OF OPERATIONS(in millions', 'end': 'CONDENSED CONSOLIDATED BALANCE SHEETS', 'units': 'in millions',
+             'scale': Decimal(1), 'tol': Decimal('0.15'), 'columns': 2, 'year-ago': 1, 'headline': r'Net revenue of \$([\d.]+) billion',
+             'period-re': r'ANNOUNCES (FIRST|SECOND|THIRD|FOURTH) QUARTER OF FISCAL YEAR (20\d\d) FINANCIAL RESULTS', 'period': lambda q, y: f'Q{q} FY{y}',
+             'rows': {'revenue': 'Net revenue', 'cost': ['Cost of sales', 'Amortization of acquired developed intangibles'], 'gross': 'Gross profit',
+                      'opex': 'Total operating expenses', 'operating': 'Income from operations', 'pretax': 'Income before income taxes', 'tax': 'Income tax provision',
+                      'net': 'Net income', 'eps': r'Net income per share: Basic \$ [\d.]+ \$ [\d.]+ Diluted',
+                      'shares': r'Shares used to compute net income per share - common stock and preferred stock assuming conversion: Basic [\d.]+ [\d.]+ Diluted'}},
+    'AAOI': {'identity': 'applied optoelectronics', 'heading': 'Condensed Consolidated Statements of Operations (In thousands', 'end': 'Reconciliation', 'units': 'in thousands', 'scale': Decimal('0.001'),
+             'tol': Decimal(1), 'columns': 4, 'year-ago': 1, 'paren-space': True, 'net-chain': 'additive', 'headline': r'revenue was \$([\d.]+) million, compared with',
+             'headline-multiplier': 1, 'headline-tol': Decimal('0.1'),
+             'period-re': r'Applied Optoelectronics Reports (First|Second|Third|Fourth) Quarter (20\d\d) Results', 'period': lambda q, y: f'Q{q} {y}',
+             'rows': {'revenue': 'Total Revenue', 'cost': 'Total Cost of Goods Sold', 'gross': 'Total Gross Profit', 'opex': 'Total Operating Expenses', 'operating': 'Operating Loss',
+                      'pretax': r'Net income \(loss\) before Income Taxes', 'tax': 'Income Tax Expense', 'net': r'Net income \(loss\)',
+                      'eps': r'common stockholders basic (?:\$ ' + AMT + r' ){4}diluted', 'shares': r'common stockholders basic ' + (AMT + ' ') * 4 + 'diluted'}},
+    'BE': {'identity': 'bloom energy', 'heading': 'Condensed Consolidated Statements of Operations* (in thousands', 'end': 'Condensed Consolidated Statement of Cash Flows', 'units': 'in thousands',
+           'scale': Decimal('0.001'), 'tol': Decimal(1), 'columns': 3, 'year-ago': 2,
+           'growth': r'revenue of \$[\d,.]+ million, delivering (\d+\.\d)% year-over-year growth',
+           'period-re': r'Bloom Energy Reports [A-Za-z ]*?(First|Second|Third|Fourth) Quarter (20\d\d) Financial Results', 'period': lambda q, y: f'Q{q} {y}',
+           'rows': {'revenue': 'Total revenue', 'cost': 'Total cost of revenue', 'gross': 'Gross profit', 'opex': 'Total operating expenses', 'operating': 'Income from operations',
+                    'pretax': r'Profit \(loss\) before income taxes', 'tax': 'Income tax provision', 'net': r'Net profit \(loss\)',
+                    'nci': r'Less: Net \(loss\) income attributable to noncontrolling interest', 'attrib': r'Net income \(loss\) attributable to common stockholders',
+                    'eps': r'Net earnings \(loss\) per share available to common stockholders: Basic (?:\$ ' + AMT + ' ){3}Diluted',
+                    'shares': r'Weighted average shares used to compute net earnings \(loss\) per share available to common stockholders: Basic ' + (AMT + ' ') * 3 + 'Diluted'}},
+    'KLAC': {'identity': 'kla corporation', 'heading': 'Unaudited Statements of Operations Three Months Ended (In thousands', 'end': 'Statements of Cash Flows', 'units': 'in thousands',
+             'scale': Decimal('0.001'), 'tol': Decimal(1), 'columns': 3, 'year-ago': 2, 'year-first': True, 'headline': r'Total revenues were \$([\d.]+) billion',
+             'period-re': r'Reports Fiscal (20\d\d) (First|Second|Third|Fourth) Quarter Results', 'period': lambda q, y: f'Q{q} FY{y}',
+             'rows': {'revenue': 'Total revenues', 'pretax': 'Income before income taxes', 'tax': 'Provision for income taxes', 'net': 'Net income',
+                      'eps': r'Net income per share\(1\) Basic \$ [\d.]+ (?:\$ [\d.]+ ){2}Diluted', 'shares': r'Weighted-average number of shares\(1\): Basic [\d,]+ (?:[\d,]+ ){2}Diluted'}},
+    'LRCX': {'identity': 'lam research', 'heading': 'CONSOLIDATED STATEMENTS OF OPERATIONS(in thousands', 'end': 'CONDENSED CONSOLIDATED BALANCE SHEETS', 'units': 'in thousands',
+             'scale': Decimal('0.001'), 'tol': Decimal(1), 'columns': 3, 'year-ago': 2, 'net-chain': 'additive', 'headline': r'Revenue of \$([\d.]+) billion',
+             'period-re': r'today announced financial results for the quarter ended (March|June|September|December) \d{1,2}, (20\d\d)', 'period-text': True, 'period': lambda m, y: f'{m[:3]} {y} quarter',
+             'rows': {'revenue': 'Revenue', 'cost': 'Cost of goods sold', 'gross': 'Gross margin', 'opex': 'Total operating expenses', 'operating': 'Operating income',
+                      'pretax': 'Income before income taxes', 'tax': 'Income tax expense', 'net': 'Net income',
+                      'eps': r'Net income per share: Basic \$ [\d.]+ (?:\$ [\d.]+ ){2}Diluted', 'shares': r'Number of shares used in per share calculations: Basic [\d,]+ (?:[\d,]+ ){2}Diluted'}},
+    'STX': {'identity': 'seagate', 'heading': 'CONSOLIDATED STATEMENTS OF OPERATIONS(In millions', 'end': 'STATEMENTS OF CASH FLOWS', 'units': 'in millions', 'scale': Decimal(1), 'tol': Decimal(1),
+            'columns': 2, 'year-ago': 1, 'op-direct': True, 'headline': r'Highlights▪Revenue of \$([\d.]+) billion',
+            'period-re': r'REPORTS FISCAL (FIRST|SECOND|THIRD|FOURTH) QUARTER (20\d\d) FINANCIAL RESULTS', 'period': lambda q, y: f'Q{q} FY{y}',
+            'rows': {'revenue': 'Revenue', 'cost': 'Total operating expenses', 'operating': 'Income from operations', 'pretax': 'Income before income taxes',
+                     'tax': 'Provision for income taxes', 'net': 'Net income',
+                     'eps': r'Net income per share: Basic \$ [\d.]+ \$ [\d.]+ Diluted', 'shares': r'Number of shares used in per share calculations: Basic [\d,]+ [\d,]+ Diluted'}},
+    'APH': {'identity': 'amphenol', 'heading': 'CONDENSED CONSOLIDATED STATEMENTS OF INCOME (Unaudited) (dollars and shares in millions', 'units': 'dollars and shares in millions', 'scale': Decimal(1),
+            'tol': Decimal('0.15'), 'columns': 4, 'year-ago': 1, 'net-chain': 'additive', 'nci-signed': True,
+            'growth': r'Sales of \$[\d.]+ billion, up (\d+)% in U\.S\. dollars',
+            'period-re': r'AMPHENOL REPORTS [A-Z ]*?(FIRST|SECOND|THIRD|FOURTH) QUARTER (20\d\d) RESULTS', 'period': lambda q, y: f'Q{q} {y}',
+            'rows': {'revenue': 'Net sales', 'cost': r'Cost of sales(?: \(\d\))?', 'gross': 'Gross profit', 'opex': ['Acquisition-related expenses', 'Selling, general and administrative expenses'],
+                     'operating': 'Operating income', 'pretax': 'Income before income taxes', 'tax': r'Provision for income taxes(?: \(\d\))?', 'net': 'Net income',
+                     'nci': 'Less: Net income attributable to noncontrolling interests', 'attrib': r'Net income attributable to Amphenol Corporation',
+                     'eps': r'Net income attributable to Amphenol Corporation per common share — Diluted(?: \(\d\))?', 'shares': r'Weighted average common shares outstanding — Diluted'}},
+    'META': {'identity': 'meta platforms', 'heading': 'CONDENSED CONSOLIDATED STATEMENTS OF INCOME (In millions', 'end': 'CONDENSED CONSOLIDATED BALANCE SHEETS', 'units': 'in millions',
+             'scale': Decimal(1), 'tol': Decimal(1), 'columns': 4, 'year-ago': 1, 'op-direct': True, 'window': 6000,
+             'growth': r'Revenue was \$[\d.]+ billion, an increase of (\d+)% year-over-year',
+             'period-re': r'Meta Reports (First|Second|Third|Fourth) Quarter (20\d\d) Results', 'period': lambda q, y: f'Q{q} {y}',
+             'rows': {'revenue': 'Revenue', 'cost': 'Total costs and expenses', 'operating': 'Income from operations', 'pretax': 'Income before income taxes',
+                      'tax': 'Provision for income taxes', 'net': 'Net income', 'eps': r'Earnings per share: Basic \$ [\d.]+ (?:\$ [\d.]+ ){3}Diluted',
+                      'shares': r'Weighted-average shares used to compute earnings per share: Basic [\d,]+ (?:[\d,]+ ){3}Diluted'}},
+    'NFLX': {'identity': 'netflix', 'heading': 'Consolidated Statements of Operations (unaudited) (in thousands', 'end': 'Consolidated Balance Sheets', 'units': 'in thousands',
+             'scale': Decimal('0.001'), 'tol': Decimal(1), 'columns': 5, 'year-ago': 2, 'op-direct': True, 'net-chain': 'additive',
+             'growth': r'Q[1-4] revenue grew (\d+)% year over year',
+             'period-re': r'We delivered our Q([1-4]) forecast', 'year-re': r'Three Months Ended Nine Months Ended [A-Z][a-z]+ \d{1,2}, (20\d\d)', 'period': lambda q, y: f'Q{q} {y}',
+             'rows': {'revenue': 'Revenues', 'cost': ['Cost of revenues', 'Sales and marketing', 'Technology and development', 'General and administrative'],
+                      'operating': 'Operating income', 'pretax': 'Income before income taxes', 'tax': 'Provision for income taxes', 'net': 'Net income',
+                      'eps': r'Earnings per share\*: Basic \$ [\d.]+ (?:\$ [\d.]+ ){4}Diluted', 'shares': r'Weighted-average shares of common stock outstanding\*: Basic [\d,]+ (?:[\d,]+ ){4}Diluted'}},
+    'NOW': {'identity': 'servicenow', 'heading': 'Condensed Consolidated Statements of Operations(in millions', 'end': '(1)Includes stock-based', 'units': 'in millions', 'scale': Decimal(1),
+            'tol': Decimal(1), 'columns': 4, 'year-ago': 1, 'growth': r'Total revenues of \$[\d,]+ million in Q[1-4] \d{4}, representing (\d+(?:\.\d)?)% year-over-year growth',
+            'period-re': r'ServiceNow Reports (First|Second|Third|Fourth) Quarter (20\d\d) Financial Results', 'period': lambda q, y: f'Q{q} {y}',
+            'rows': {'revenue': 'Total revenues', 'cost': 'Total cost of revenues', 'gross': 'Gross profit', 'opex': 'Total operating expenses', 'operating': 'Income from operations',
+                     'pretax': 'Income before income taxes', 'tax': 'Provision for income taxes', 'net': 'Net income',
+                     'eps': r'Net income per share - diluted \(\d\)', 'shares': r'Weighted-average shares used to compute net income per share - diluted \(\d\)'}},
+    'INTC': {'identity': 'intel corporation', 'heading': 'Consolidated Condensed Statements of Operations and Other Information Three Months Ended (In Millions', 'end': 'Other information', 'units': 'in millions',
+             'scale': Decimal(1), 'tol': Decimal(1), 'columns': 2, 'year-ago': 1, 'growth': r'(?:First|Second|Third|Fourth)-quarter revenue was \$[\d.]+ billion, up (\d+)% year-over-year',
+             'period-re': r'Intel Reports (First|Second|Third|Fourth)-Quarter (20\d\d) Financial Results', 'period': lambda q, y: f'Q{q} {y}',
+             'rows': {'revenue': 'Net revenue', 'cost': 'Cost of sales', 'gross': 'Gross profit', 'opex': 'Operating expenses', 'operating': r'Operating income \(loss\)',
+                      'pretax': r'Income \(loss\) before taxes', 'tax': r'Provision for \(benefit from\) taxes', 'net': r'Net income \(loss\)',
+                      'nci': r'Less: net income \(loss\) attributable to non-controlling interests', 'attrib': r'Net income \(loss\) attributable to Intel',
+                      'eps': r'Earnings \(loss\) per share attributable to Intel—diluted1', 'shares': r'Weighted average shares of common stock outstanding: Basic [\d,]+ [\d,]+ Diluted'}},
+    'AAPL': {'identity': 'apple', 'heading': 'CONDENSED CONSOLIDATED STATEMENTS OF OPERATIONS (Unaudited)(In millions', 'end': '(1) Net sales by reportable segment', 'units': 'in millions',
+             'scale': Decimal(1), 'tol': Decimal(1), 'columns': 4, 'year-ago': 1, 'shares-divisor': Decimal(1000), 'year-first': True,
+             'growth': r'quarterly revenue of \$[\d.]+ billion, up (\d+) percent year over year',
+             'period-re': r'fiscal (20\d\d) (first|second|third|fourth) quarter ended', 'period': lambda q, y: f'Q{q} FY{y}',
+             'rows': {'revenue': r'Total net sales(?: \(1\))?', 'cost': 'Total cost of sales', 'gross': 'Gross margin', 'opex': 'Total operating expenses', 'operating': 'Operating income',
+                      'pretax': 'Income before provision for income taxes', 'tax': 'Provision for income taxes', 'net': 'Net income',
+                      'eps': r'Earnings per share: Basic \$ [\d.]+ (?:\$ [\d.]+ ){3}Diluted', 'shares': r'Shares used in computing earnings per share: Basic [\d,]+ (?:[\d,]+ ){3}Diluted'}},
+    'CRWD': {'identity': 'crowdstrike', 'heading': 'Condensed Consolidated Statements of Operations(in thousands', 'end': '_____', 'units': 'in thousands', 'scale': Decimal('0.001'),
+             'tol': Decimal(1), 'columns': 4, 'year-ago': 1, 'growth': r'Total revenue was \$[\d.]+ billion, a (\d+)% increase',
+             'period-re': r'Reports (First|Second|Third|Fourth) Quarter Fiscal Year (20\d\d) Financial Results', 'period': lambda q, y: f'Q{q} FY{y}',
+             'rows': {'revenue': 'Total revenue', 'cost': 'Total cost of revenue', 'gross': 'Gross profit', 'opex': 'Total operating expenses',
+                      'operating': 'Loss from operations', 'pretax': r'Income \(loss\) before provision for income taxes', 'tax': r'Provision \(benefit\) for income taxes',
+                      'net': r'Net income \(loss\)', 'nci': r'Net income \(loss\) attributable to non-controlling interest', 'attrib': r'Net income \(loss\) attributable to CrowdStrike',
+                      'eps': r'common stockholders: Basic (?:\$ ' + AMT + r' ){4}Diluted', 'shares': r'common stockholders: Basic ' + (AMT + ' ') * 4 + 'Diluted'}},
+    'SNOW': {'identity': 'snowflake', 'heading': 'Condensed Consolidated Statements of Operations(in thousands', 'units': 'in thousands', 'scale': Decimal('0.001'),
+             'tol': Decimal(1), 'columns': 4, 'year-ago': 1, 'growth': r'Revenue of \$[\d.]+ billion in the (?:first|second|third|fourth) quarter, representing (\d+)% year-over-year growth',
+             'period-re': r'Financial Results for the (First|Second|Third|Fourth) Quarter of Fiscal (20\d\d)', 'period': lambda q, y: f'Q{q} FY{y}',
+             'rows': {'revenue': 'Revenue', 'cost': 'Cost of revenue', 'gross': 'Gross profit', 'opex': 'Total operating expenses', 'operating': 'Operating loss',
+                      'pretax': 'Loss before income taxes', 'tax': 'Provision for income taxes', 'net': 'Net loss',
+                      'nci': 'Less: net income attributable to noncontrolling interest', 'attrib': r'Net loss attributable to Snowflake Inc\.',
+                      'eps': r'Net loss per share attributable to Snowflake Inc\. common stockholders—basic and diluted',
+                      'shares': r'Weighted-average shares used in computing net loss per share attributable to Snowflake Inc\. common stockholders—basic and diluted'}},
+    'CRM': {'identity': 'salesforce', 'heading': 'Condensed Consolidated Statements of Operations(in millions', 'end': 'Amounts include amortization', 'units': 'in millions', 'scale': Decimal(1), 'tol': Decimal(1),
+            'columns': 4, 'year-ago': 1, 'net-chain': 'additive', 'growth': r'Revenue of \$[\d.]+ billion, up (\d+)% Y/Y',
+            'period-re': r'Salesforce [A-Za-z ]*?(First|Second|Third|Fourth) Quarter Fiscal (20\d\d) Results', 'period': lambda q, y: f'Q{q} FY{y}',
+            'rows': {'revenue': 'Total revenues', 'cost': 'Total cost of revenues', 'gross': 'Gross profit', 'opex': 'Total operating expenses',
+                     'operating': 'Income from operations', 'pretax': 'Income before provision for income taxes', 'tax': 'Provision for income taxes',
+                     'net': 'Net income', 'eps': r'Diluted net income per share(?: \(\d\))?', 'shares': 'Shares used in computing diluted net income per share'}},
+    'ADBE': {'identity': 'adobe', 'heading': 'Condensed Consolidated Statements of Income (In millions', 'end': 'Condensed Consolidated Balance Sheets', 'units': 'in millions',
+             'scale': Decimal(1), 'tol': Decimal(1), 'columns': 4, 'year-ago': 1,
+             'growth': r'record revenue of \$[\d.]+ billion in its (?:first|second|third|fourth) quarter of FY\d{4}, which represents (\d+)% year-over-year growth',
+             'period-re': r'reported financial results for its (first|second|third|fourth) quarter FY(20\d\d)', 'period': lambda q, y: f'Q{q} FY{y}',
+             'rows': {'revenue': 'Total revenue', 'cost': 'Total cost of revenue', 'gross': 'Gross profit', 'opex': 'Total operating expenses',
+                      'operating': 'Operating income', 'pretax': 'Income before income taxes', 'tax': 'Provision for income taxes', 'net': 'Net income',
+                      'eps': 'Diluted net income per share', 'shares': 'Shares used to compute diluted net income per share'}},
+    'PANW': {'identity': 'palo alto networks', 'heading': 'Preliminary Condensed Consolidated Statements of Operations (In millions', 'end': 'Reconciliation of GAAP',
+             'units': 'in millions', 'scale': Decimal(1), 'tol': Decimal(1), 'columns': 4, 'year-ago': 1, 'window': 6000,
+             'growth': r'Total revenue for the fiscal (?:first|second|third|fourth) quarter \d{4} grew (\d+)% year over year to \$[\d.]+ billion',
+             'period-re': r'Reports Fiscal (First|Second|Third|Fourth) Quarter(?: and Fiscal Year)? (20\d\d) Financial Results', 'period': lambda q, y: f'Q{q} FY{y}',
+             'rows': {'revenue': 'Total revenue', 'cost': 'Total cost of revenue', 'gross': 'Total gross profit', 'opex': 'Total operating expenses',
+                      'operating': 'Operating income', 'pretax': r'Income \(loss\) before income taxes', 'tax': 'Provision for income taxes',
+                      'net': r'Net income \(loss\)', 'eps': r'Net income \(loss\) per share, diluted',
+                      'shares': r'Weighted-average shares used to compute net income \(loss\) per share, diluted'}},
+    'ARM': {'identity': 'arm holdings', 'heading': 'Condensed Consolidated Income Statements(in millions', 'end': 'Condensed Consolidated Balance Sheets', 'units': 'in millions',
+            'scale': Decimal(1), 'tol': Decimal(1), 'columns': 4, 'year-ago': 1, 'op-signed': True, 'net-chain': 'additive', 'window': 30000,
+            'growth': r'Total revenue increased (\d+)% year-over-year to \$[\d,]+ million',
+            'period-re': r'Q([1-4]) FYE(\d\d) Financial Overview', 'period': lambda q, y: f'Q{q} FYE{y:02d}',
+            'rows': {'revenue': 'Total revenue', 'cost': ['Cost of sales', 'Total operating expenses'], 'operating': r'Operating income \(loss\)',
+                     'pretax': r'Income \(loss\) before income taxes', 'tax': r'Income tax benefit \(expense\)', 'net': r'Net income \(loss\)',
+                     'eps': r'Net income \(loss\) per share attributable to ordinary shareholders Basic (?:\$ [\d.]+ ){4}Diluted',
+                     'shares': r'Weighted average ordinary shares outstanding Basic ' + AMT + ' ' + AMT + ' ' + AMT + ' ' + AMT + ' Diluted'}},
     'VRT': {'identity': 'vertiv', 'heading': 'STATEMENTS OF EARNINGS (LOSS)Vertiv Holdings Co(Dollars in millions', 'units': 'dollars in millions', 'scale': Decimal(1), 'tol': Decimal('0.15'),
             'end': 'BALANCE SHEETS', 'shares-divisor': Decimal(1000000), 'columns': 4, 'year-ago': 1, 'op-direct': True, 'growth': r'Net sales of \$[\d,]+ million, (\d+)% higher than',
             'period-re': r'Reports [A-Za-z ]*?(First|Second|Third|Fourth) Quarter (20\d\d) with', 'period': lambda q, y: f'Q{q} {y}',
@@ -904,7 +1068,7 @@ def direct_pdf(url, ticker=None):
     parts = urlsplit(url)
     if parts.scheme != 'https' or parts.hostname != 'assets.nebius.com' or parts.username or parts.password:
         raise ValueError('host-not-allowed')
-    request = urllib.request.Request(url, headers={'User-Agent': os.environ.get('RESEARCH_USER_AGENT', 'TechPhaseResearch-SourceCheck/0.1'),
+    request = urllib.request.Request(url, headers={'User-Agent': monitor.request_user_agent(),
                                                   'Accept': 'application/pdf'})
     with urllib.request.build_opener(_SameHostRedirect()).open(request, timeout=20) as response:
         content = response.read(PDF_MAX_BYTES + 1)
@@ -979,6 +1143,27 @@ PROFILES = {
     'VRT': {'publisher': 'Vertiv IR (SEC 8-K)', 'parse': lambda t, u=None: parse_statement(t, STATEMENT['VRT']), 'marker': 'STATEMENTS OF EARNINGS (LOSS)'},
     'ORCL': {'publisher': 'Oracle IR (SEC 8-K)', 'parse': parse_oracle, 'marker': 'CONDENSED CONSOLIDATED STATEMENTS OF OPERATIONS'},
     'SKHY': {'publisher': 'SK hynix IR (SEC 6-K)', 'parse': parse_skhynix, 'marker': 'Preliminary Results of Operations'},
+    'META': {'publisher': 'Meta Platforms IR (SEC 8-K)', 'parse': lambda t, u=None: parse_statement(t, STATEMENT['META']), 'marker': STATEMENT['META']['heading']},
+    'NFLX': {'publisher': 'Netflix IR (SEC 8-K)', 'parse': lambda t, u=None: parse_statement(t, STATEMENT['NFLX']), 'marker': STATEMENT['NFLX']['heading']},
+    'NOW': {'publisher': 'ServiceNow IR (SEC 8-K)', 'parse': lambda t, u=None: parse_statement(t, STATEMENT['NOW']), 'marker': STATEMENT['NOW']['heading']},
+    'INTC': {'publisher': 'Intel IR (SEC 8-K)', 'parse': lambda t, u=None: parse_statement(t, STATEMENT['INTC']), 'marker': STATEMENT['INTC']['heading']},
+    'AAPL': {'publisher': 'Apple IR (SEC 8-K)', 'parse': lambda t, u=None: parse_statement(t, STATEMENT['AAPL']), 'marker': STATEMENT['AAPL']['heading']},
+    'PANW': {'publisher': 'Palo Alto Networks IR (SEC 8-K)', 'parse': lambda t, u=None: parse_statement(t, STATEMENT['PANW']), 'marker': STATEMENT['PANW']['heading']},
+    'CRWD': {'publisher': 'CrowdStrike IR (SEC 8-K)', 'parse': lambda t, u=None: parse_statement(t, STATEMENT['CRWD']), 'marker': STATEMENT['CRWD']['heading']},
+    'SNOW': {'publisher': 'Snowflake IR (SEC 8-K)', 'parse': lambda t, u=None: parse_statement(t, STATEMENT['SNOW']), 'marker': STATEMENT['SNOW']['heading']},
+    'CRM': {'publisher': 'Salesforce IR (SEC 8-K)', 'parse': lambda t, u=None: parse_statement(t, STATEMENT['CRM']), 'marker': STATEMENT['CRM']['heading']},
+    'ADBE': {'publisher': 'Adobe IR (SEC 8-K)', 'parse': lambda t, u=None: parse_statement(t, STATEMENT['ADBE']), 'marker': STATEMENT['ADBE']['heading']},
+    'KLAC': {'publisher': 'KLA IR (SEC 8-K)', 'parse': lambda t, u=None: parse_statement(t, STATEMENT['KLAC']), 'marker': STATEMENT['KLAC']['heading']},
+    'LRCX': {'publisher': 'Lam Research IR (SEC 8-K)', 'parse': lambda t, u=None: parse_statement(t, STATEMENT['LRCX']), 'marker': STATEMENT['LRCX']['heading']},
+    'STX': {'publisher': 'Seagate IR (SEC 8-K)', 'parse': lambda t, u=None: parse_statement(t, STATEMENT['STX']), 'marker': STATEMENT['STX']['heading']},
+    'APH': {'publisher': 'Amphenol IR (SEC 8-K)', 'parse': lambda t, u=None: parse_statement(t, STATEMENT['APH']), 'marker': STATEMENT['APH']['heading']},
+    'BE': {'publisher': 'Bloom Energy IR (SEC 8-K)', 'parse': lambda t, u=None: parse_statement(t, STATEMENT['BE']), 'marker': STATEMENT['BE']['heading']},
+    'ALAB': {'publisher': 'Astera Labs IR (SEC 8-K)', 'parse': lambda t, u=None: parse_statement(t, STATEMENT['ALAB']), 'marker': STATEMENT['ALAB']['heading']},
+    'LITE': {'publisher': 'Lumentum IR (SEC 8-K)', 'parse': lambda t, u=None: parse_statement(t, STATEMENT['LITE']), 'marker': STATEMENT['LITE']['heading']},
+    'AAOI': {'publisher': 'Applied Optoelectronics IR (SEC 8-K)', 'parse': lambda t, u=None: parse_statement(t, STATEMENT['AAOI']), 'marker': STATEMENT['AAOI']['heading']},
+    'IONQ': {'publisher': 'IonQ IR (SEC 8-K)', 'parse': lambda t, u=None: parse_statement(t, STATEMENT['IONQ']), 'marker': STATEMENT['IONQ']['heading']},
+    'SOFI': {'publisher': 'SoFi IR (SEC 8-K)', 'parse': lambda t, u=None: parse_statement(t, STATEMENT['SOFI']), 'marker': STATEMENT['SOFI']['heading']},
+    'ARM': {'publisher': 'Arm IR (SEC 6-K)', 'parse': lambda t, u=None: parse_statement(t, STATEMENT['ARM']), 'marker': 'Condensed Consolidated Income Statements'},
     'MSFT': {'publisher': 'Microsoft IR (SEC 8-K)', 'parse': lambda t, u=None: parse_statement(t, STATEMENT['MSFT']), 'marker': STATEMENT['MSFT']['heading']},
     'AMD': {'publisher': 'AMD IR (SEC 8-K)', 'parse': lambda t, u=None: parse_statement(t, STATEMENT['AMD']), 'marker': STATEMENT['AMD']['heading']},
     'MRVL': {'publisher': 'Marvell IR (SEC 8-K)', 'parse': lambda t, u=None: parse_statement(t, STATEMENT['MRVL']),

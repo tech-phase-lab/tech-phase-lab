@@ -25,7 +25,11 @@ import monitor
 import issuer_result_flash as flash
 
 WATCH = ["MU", "SKHY", "SNDK", "NBIS", "NVDA", "AMD", "AVGO", "ARM", "TSM", "ASML", "MRVL", "ANET", "CRDO", "CRWV",
-         "VRT", "GEV", "DELL", "PLTR", "MSFT", "AMZN", "GOOGL", "ORCL"]
+         "VRT", "GEV", "DELL", "PLTR", "MSFT", "AMZN", "GOOGL", "ORCL",
+         "PANW", "CRWD", "SNOW", "CRM", "ADBE",
+         "META", "NFLX", "NOW", "INTC", "AAPL",
+         "KLAC", "LRCX", "STX", "APH", "BE",
+         "ALAB", "LITE", "AAOI", "IONQ", "SOFI"]
 UA = 'TechPhaseResearch research@example.com'  # SEC asks for a contact in the User-Agent; the monitor uses RESEARCH_SEC_USER_AGENT
 LOOKBACK = timedelta(days=130)
 
@@ -45,7 +49,7 @@ def is_results_exhibit(text):
     return bool(re.search(r'\b(?:results|earnings)\b', head, re.I) and re.search(r'\b(?:quarter|fiscal|full[- ]year|Q[1-4])\b', head, re.I))
 
 
-def latest_results_filing(cik):
+def latest_results_filing(cik, numbers=('1',)):
     data = json.loads(get(f'https://data.sec.gov/submissions/CIK{cik}.json'))['filings']['recent']
     cutoff = datetime.now(timezone.utc) - LOOKBACK
     for i, form in enumerate(data['form']):
@@ -54,7 +58,7 @@ def latest_results_filing(cik):
             break
         items = data['items'][i] if i < len(data['items']) else ''
         if (form == '8-K' and '2.02' in items) or form == '6-K':
-            exhibit = exhibit_text(cik, data['accessionNumber'][i])
+            exhibit = exhibit_text(cik, data['accessionNumber'][i], numbers)
             if not exhibit and form == '6-K':
                 # SK hynix files its results table in the 6-K itself, with no exhibit (its other 6-Ks are dividends, buybacks...)
                 own = primary_text(cik, data['accessionNumber'][i], data['primaryDocument'][i] if i < len(data.get('primaryDocument', [])) else '')
@@ -75,14 +79,16 @@ def primary_text(cik, accession, document):
         return None
 
 
-def exhibit_text(cik, accession):
+def exhibit_text(cik, accession, numbers=('1',)):
     base = f"https://www.sec.gov/Archives/edgar/data/{int(cik)}/{accession.replace('-', '')}"
     try:
         index = get(base + '/' + accession + '-index.html')
     except Exception:
         return None
     # The index table names each document's type: take the EX-99.1 row first (press release), then guess by file name.
-    typed = [m[1] for m in re.finditer(r'<tr[^>]*>(?:(?!</tr>).)*?href="(/Archives/edgar/data/[^"]+\.(?:htm|html))"(?:(?!</tr>).)*?>\s*EX-99\.1\s*<', index, re.S)]
+    # (the same exhibit numbers, in the same order, as the monitor reads for this company: providers.json "secExhibits", EX-99.1 by default)
+    typed = [m[1] for number in numbers
+             for m in re.finditer(r'<tr[^>]*>(?:(?!</tr>).)*?href="(/Archives/edgar/data/[^"]+\.(?:htm|html))"(?:(?!</tr>).)*?>\s*EX-99\.' + number + r'\s*<', index, re.S)]
     guessed = [h for h in re.findall(r'href="(/Archives/edgar/data/[^"]+\.(?:htm|html))"', index)
                if re.search(r'(?:ex|exhibit)[-_]?99', h, re.I) or re.search(r'press|earnings|results|pr\.htm', h, re.I)]
     for href in [*typed, *guessed]:
@@ -113,7 +119,7 @@ def check_company(ticker):
                 result['detection'] = 'newsroom page'
                 text, source = flash.nebius_pdf_text(page, monitor.fetch), page
         elif ciks:
-            filing = latest_results_filing(ciks[0])
+            filing = latest_results_filing(ciks[0], tuple(monitor.sec_exhibit_numbers(ticker)))
             if filing:
                 result['detection'] = f"SEC {filing['form']} {filing['accepted'][:16]}Z"
                 text, source = filing['text'], filing['accession']

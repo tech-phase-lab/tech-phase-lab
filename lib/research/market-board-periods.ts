@@ -1,4 +1,4 @@
-import { splitBars, WARMUP, type Bar } from "./market-quote.ts";
+import { easternToIso, splitBars, WARMUP, type Bar } from "./market-quote.ts";
 
 /** The market board's period buttons: the candle size and the span each one shows (owner, Nov 13). */
 export type BoardPeriod = "5m" | "15m" | "1h" | "3h" | "1d" | "1w" | "1m" | "6m" | "1y" | "5y";
@@ -40,7 +40,7 @@ export function periodSeries(period: BoardPeriod): Series {
 
 const minutesOf = (at: string) => Number(at.slice(11, 13)) * 60 + Number(at.slice(14, 16));
 /** Pre-market (before 9:30), regular (9:30–16:00) or after-hours (16:00 on), by the bar's New York time. */
-const segmentOf = (at: string) => at.length < 16 ? "regular" : minutesOf(at) < 570 ? "pre" : minutesOf(at) >= 960 ? "post" : "regular";
+export const segmentOf = (at: string): "pre" | "regular" | "post" => at.length < 16 ? "regular" : minutesOf(at) < 570 ? "pre" : minutesOf(at) >= 960 ? "post" : "regular";
 const stamp = (day: string, minutes: number) => `${day} ${String(Math.floor(minutes / 60)).padStart(2, "0")}:${String(minutes % 60).padStart(2, "0")}:00`;
 
 /** One bar from several: open of the first, highest high, lowest low, close of the last, summed volume (unknown when none of them knew it). */
@@ -85,4 +85,53 @@ export function shapePeriod(period: BoardPeriod, all: Bar[], now = Date.now()): 
     case "1w": return withBefore(all, lastN(all, 104));
     case "5y": return withBefore(all, lastN(all, 260));
   }
+}
+
+/** The market board's chart, owner Nov 14: a high or low 3% or more away from its own bar's open / close is a bad print (SPY 15-minute lows of 691–722 against
+ * closes near 750 came in the provider's data), so it is drawn cut back to the body; the vertical scale follows the cut bars. */
+export const WICK_LIMIT = 0.03;
+export function clampWick(bar: Bar, limit = WICK_LIMIT): Bar {
+  const top = Math.max(bar.open, bar.close), bottom = Math.min(bar.open, bar.close);
+  const high = bar.high >= top * (1 + limit) ? top : bar.high, low = bar.low <= bottom * (1 - limit) ? bottom : bar.low;
+  return high === bar.high && low === bar.low ? bar : { ...bar, high, low };
+}
+export const clampWicks = (bars: Bar[], limit = WICK_LIMIT): Bar[] => bars.map(bar => clampWick(bar, limit));
+
+/** The board's 15-minute chart: the latest trading day only (pre-market from 4:00, the session from 9:30, after-hours 16:00–20:00, New York time), which on a
+ * weekend or a holiday is the last day that traded. While the new day has only pre-market bars, the previous day is kept in front of them (no near-empty chart).
+ * The dropped bars move to `before`, so the moving averages run on. */
+export function latestTradingDay(bars: Bar[], before: Bar[] = []): { bars: Bar[]; before: Bar[] } {
+  if (!bars.length) return { bars, before };
+  const days = [...new Set(bars.map(b => b.at.slice(0, 10)))];
+  let keep = days.length - 1;
+  const today = bars.filter(b => b.at.slice(0, 10) === days[keep]);
+  if (keep > 0 && (today.length < 2 || today.every(b => segmentOf(b.at) === "pre"))) keep--;
+  const cut = bars.findIndex(b => b.at.slice(0, 10) >= days[keep]);
+  return { bars: bars.slice(cut), before: [...before, ...bars.slice(0, cut)].slice(-WARMUP) };
+}
+
+const SEGMENT_START = { pre: 240, regular: 570, post: 960 } as const;
+const jstClock = new Intl.DateTimeFormat("en-GB", { timeZone: "Asia/Tokyo", hour: "2-digit", minute: "2-digit", hourCycle: "h23" });
+/** Where each part of a day begins (pre-market, session, after-hours) and its nominal start in Japan time: 18:00 / 23:30 / 06:00 in winter, 17:00 / 22:30 / 05:00
+ * in summer (worked out from New York time). `previous` is the bar just before the first one, so a view that starts mid-part gets no tick there. */
+export function sessionTicks(bars: Bar[], previous?: Bar): { index: number; label: string }[] {
+  const out: { index: number; label: string }[] = [];
+  bars.forEach((bar, k) => {
+    if (bar.at.length < 16) return;
+    const prev = k ? bars[k - 1] : previous, segment = segmentOf(bar.at);
+    if (prev && prev.at.slice(0, 10) === bar.at.slice(0, 10) && segmentOf(prev.at) === segment) return;
+    const iso = easternToIso(stamp(bar.at.slice(0, 10), SEGMENT_START[segment]));
+    if (iso) out.push({ index: k, label: jstClock.format(new Date(iso)) });
+  });
+  return out;
+}
+
+/** The band of the extended hours under way: only while it is pre-market or after-hours now (`phase`), over the trailing bars of that part on the right
+ * (`from` = their first index; `from` = bars.length when none has come yet, so the chart keeps an empty stretch for it). Otherwise no band and no word. */
+export function liveBand(bars: Bar[], phase: string, ja: boolean): { from: number; label: string } | null {
+  if (phase !== "pre" && phase !== "post") return null;
+  const want = phase === "pre" ? "pre" : "post", lastDay = bars.length ? bars[bars.length - 1].at.slice(0, 10) : "";
+  let from = bars.length;
+  while (from > 0 && bars[from - 1].at.length >= 16 && bars[from - 1].at.slice(0, 10) === lastDay && segmentOf(bars[from - 1].at) === want) from--;
+  return { from, label: phase === "pre" ? (ja ? "プレ" : "Pre") : (ja ? "アフター" : "After") };
 }

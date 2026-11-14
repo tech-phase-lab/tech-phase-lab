@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { calendarDateKey, dateOnlyEvents, selectDateOnlyEvents, calendarEvents, selectCalendarEvents, type CalendarEvent } from "@/lib/research/calendar";
 import { useCalendarClock } from "../use-calendar-clock";
+import { shortCalendarTitle } from "@/lib/research/calendar-title";
 import coverage from "@/lib/research/calendar-coverage.json";
 import { useResearchLanguage } from "../use-research-language";
 import ResearchToolShell from "../research-tool-shell";
@@ -74,7 +75,7 @@ export default function EventCalendar() {
       <details>
         <summary>
           <time dateTime={event.startsAt}>{new Intl.DateTimeFormat(lang === "ja" ? "ja-JP" : "en-US", { timeZone: zone, month: "numeric", day: "numeric", weekday: "short" }).format(new Date(event.startsAt))}<small>{new Intl.DateTimeFormat(lang === "ja" ? "ja-JP" : "en-US", { timeZone: zone, hour: "2-digit", minute: "2-digit", hour12: false }).format(new Date(event.startsAt))} {zoneLabel(zone)}</small></time>
-          <span className={calendarStyles.eventName}>{event.title[lang]}{now !== null && Date.parse(event.startsAt) < now && <small>{t("予定時刻を経過", "Scheduled time passed")}</small>}</span>
+          <span className={calendarStyles.eventName}>{shortCalendarTitle(event, calendarEvents, lang)}{now !== null && Date.parse(event.startsAt) < now && <small>{t("予定時刻を経過", "Scheduled time passed")}</small>}</span>
           <span className={calendarStyles.expand} aria-hidden="true">＋</span>
         </summary>
         <div className={calendarStyles.eventDetails}>

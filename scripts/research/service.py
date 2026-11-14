@@ -82,6 +82,7 @@ LEGACY_FULL_TICKERS = (
     "MRVL", "ANET", "CRDO", "CRWV", "VRT", "GEV", "DELL", "PLTR", "MSFT", "AMZN",
     "GOOGL", "ORCL",
 )
+DISCOVERY_OUTAGE_GRACE_SECONDS = 600  # a freshly started process has not polled every source yet
 PRIORITY_SEC_TICKERS = ("TSM", "MRVL", "ANET", "VRT", "PLTR")
 WEB_PUSH_POLL_SECONDS = 5
 WEB_PUSH_STALE_SECONDS = 30
@@ -579,10 +580,27 @@ def backup_disk(path, database=None):
             pass
     try:
         files = [entry for entry in Path(path).iterdir() if entry.is_file() and not entry.is_symlink()]
-        result.update(backupBytes=sum(entry.stat().st_size for entry in files), backupFiles=len(files))
+        result.update(backupBytes=sum(entry.stat().st_size for entry in files), backupFiles=len(files),
+                      backupKinds=backup_kinds(files))
     except OSError:
         pass
     return result
+
+
+def backup_kinds(files):
+    """How many files of each shape the backup directory holds, with the timestamp replaced: {'research-STAMP.sqlite': 7, ...}. Shapes only, no
+    names, so /health can show what the files are when their count looks wrong (Nov 13: 1,013 files, no way to tell what they were). Names that are not
+    ours are reduced to 'other.<extension>'."""
+    kinds = {}
+    for entry in files:
+        match = re.fullmatch(r"research-[0-9]{8}T[0-9]{6}\.[0-9]{6}Z(\.[A-Za-z0-9._-]{1,30})?", entry.name)
+        if match:
+            shape = "research-STAMP" + (match[1] or "")
+        else:           # another name: only its extension, never the name
+            extension = re.fullmatch(r".*(\.[A-Za-z0-9]{1,10})", entry.name)
+            shape = "other" + (extension[1] if extension else "")
+        kinds[shape] = kinds.get(shape, 0) + 1
+    return dict(sorted(kinds.items(), key=lambda item: -item[1])[:8])
 
 
 class AutomaticMonitor:
@@ -1781,6 +1799,12 @@ class AutomaticMonitor:
             and "monitor-stale" not in issues
         ):
             issues.append("discovery-poll-stale")
+        outage = state.get("discoveryOutage") or {}
+        started_age = timestamp_age_seconds(state["startedAt"])
+        if state["ready"] and outage.get("allFailing") and started_age is not None and started_age >= DISCOVERY_OUTAGE_GRACE_SECONDS:
+            issues.append("discovery-all-sources-failing")
+        if monitor.user_agent_normalized():
+            issues.append("user-agent-normalized")
         state["health"] = {
             "status": "degraded" if issues else ("ready" if state["ready"] else "starting"),
             "issues": issues,
@@ -1807,6 +1831,7 @@ class AutomaticMonitor:
             state["discoveryRuns"] = monitor.discovery_poll_summary(
                 db, poll_overdue_after_seconds=self.monitor_stale_seconds
             )
+            state["discoveryOutage"] = monitor.discovery_outage_summary(db)
             state["bodyFetch"]["durable"] = monitor.body_fetch_batch_summary(
                 db, poll_overdue_after_seconds=max(360, self.body_interval * 2 + 60)
             )
@@ -1831,6 +1856,13 @@ class AutomaticMonitor:
                 )
             else:
                 monitor.resolve_operational_incident(db, "monitor:incident-watch")
+            if "discovery-all-sources-failing" in issues:
+                monitor.record_operational_incident(
+                    db, "discovery:all-sources", "official-discovery", "all-sources",
+                    "critical", "discovery-all-sources-failing"
+                )
+            else:
+                monitor.resolve_operational_incident(db, "discovery:all-sources")
             if "discovery-poll-stale" in issues:
                 monitor.record_operational_incident(
                     db, "discovery:worker", "official-discovery", "worker",
@@ -1927,7 +1959,12 @@ class AutomaticMonitor:
             return None
         error_code = None
         try:
-            transport(self.notification_config, claim)
+            if self.notification_config.get("mode") == "web-push":
+                with self.db_lock, monitor.connect(self.db_path) as db:
+                    devices = release_watch.owner_devices(db)
+                incident_delivery.send_owner_push(claim, devices, web_push.send)
+            else:
+                transport(self.notification_config, claim)
         except incident_delivery.DeliveryUnavailable:
             error_code = "notification-not-configured"
         except incident_delivery.DeliveryFailed:
@@ -2021,6 +2058,7 @@ class AutomaticMonitor:
             state["discoveryRuns"] = monitor.discovery_poll_summary(
                 db, poll_overdue_after_seconds=self.monitor_stale_seconds
             )
+            state["discoveryOutage"] = monitor.discovery_outage_summary(db)
             state["prioritySourceRuns"] = monitor.priority_source_run_summary(db)
             state["bodyHostProbes"] = monitor.body_host_probe_summary(db)
             state["secEvidence"] = monitor.sec_evidence_summary(db, PRIORITY_SEC_TICKERS)
@@ -2873,6 +2911,7 @@ class AutomaticMonitor:
             try:
                 result, links, request_duration_ms = future.result()
             except Exception as exc:
+                monitor.discovery_failure_diagnostic(ticker, exc, "job")
                 request_duration_ms = max(0, round((time.monotonic() - cycle_started) * 1000))
                 result = {
                     "ticker": ticker, "status": "degraded", "route": "none",

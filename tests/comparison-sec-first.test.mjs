@@ -7,6 +7,7 @@ import { prepareComparisonAnalysis, currentComparisonAnalysis } from "../lib/res
 import { buildSecMarketEvidence } from "../lib/research/sec-market-evidence.ts";
 import { appendMarketItems } from "../lib/research/twelve-data-financials.ts";
 import { hasRecentQuarter, comparisonAvailability, comparisonScores } from "../lib/research/comparison-scorecard.ts";
+import { fillFromProvider } from "../lib/research/comparison-fill.ts";
 
 const NOW = Date.parse("2026-11-13T12:00:00Z");
 const fixture = t => JSON.parse(readFileSync(new URL(`./fixtures/sec-companyfacts-${t}.json`, import.meta.url), "utf8"));
@@ -24,10 +25,13 @@ async function server(stubs) {
     .replace(/import \{ prepareComparisonAnalysis, currentComparisonAnalysis \}[^;]*;/, "const { prepareComparisonAnalysis, currentComparisonAnalysis } = globalThis.__t;")
     .replace(/import \{ loadSecComparison \}[^;]*;/, "const loadSecComparison = globalThis.__t.loadSecComparison;")
     .replace(/import \{ loadMarketInputs, loadTwelveComparisonState \}[^;]*;/, "const { loadMarketInputs, loadTwelveComparisonState } = globalThis.__t;")
+    .replace(/import \{ freshEnough \}[^;]*;/, "const freshEnough = (cachedRead) => cachedRead();")
     .replace(/import \{ buildSecMarketEvidence \}[^;]*;/, "const buildSecMarketEvidence = globalThis.__t.buildSecMarketEvidence;")
     .replace(/import \{ appendMarketItems \}[^;]*;/, "const appendMarketItems = globalThis.__t.appendMarketItems;")
-    .replace(/import \{ hasRecentQuarter \}[^;]*;/, "const hasRecentQuarter = globalThis.__t.hasRecentQuarter;");
-  globalThis.__t = { emptyFinancials, prepareComparisonAnalysis, currentComparisonAnalysis, buildSecMarketEvidence, appendMarketItems, hasRecentQuarter, ...stubs };
+    .replace(/import \{ comparisonScores, hasRecentQuarter \}[^;]*;/, "const { comparisonScores, hasRecentQuarter } = globalThis.__t;")
+    .replace(/import \{ fillFromProvider \}[^;]*;/, "const fillFromProvider = globalThis.__t.fillFromProvider;")
+    .replace(/import type \{ Financials \}[^;]*;/, "");
+  globalThis.__t = { emptyFinancials, prepareComparisonAnalysis, currentComparisonAnalysis, buildSecMarketEvidence, appendMarketItems, hasRecentQuarter, comparisonScores, fillFromProvider, ...stubs };
   return import("data:text/javascript;base64," + Buffer.from(stripTypeScriptTypes(text)).toString("base64") + `#${Math.random()}`);
 }
 const withClock = async fn => { const real = Date.now; Date.now = () => NOW; try { return await fn(); } finally { Date.now = real; } };
@@ -41,7 +45,8 @@ test("SEC first: a US filer is served from the filing; the provider is asked onl
     loadTwelveComparisonState: async () => { twelveStatements++; return { data: null, busy: false }; },
   });
   const c = await loadComparisonFinancials("MU");
-  assert.equal(twelveStatements, 0); assert.equal(marketAsked, 1);
+  // The provider's statements are read only when a factor is still empty after the filing (owner, Nov 14: fill every figure we can).
+  assert.equal(twelveStatements, comparisonScores(c, NOW).some(s => s.value === null) ? 1 : 0); assert.equal(marketAsked, 1);
   assert.equal(c.quarterRevenue.basis, "us-gaap"); assert.equal(c.quarterRevenue.end, "2026-09-03");
   assert.equal(c.twelveData.margins.length, 4);
   const scores = Object.fromEntries(comparisonScores(c, NOW).map(s => [s.id, s.value]));

@@ -1,6 +1,6 @@
 # Earnings flash pass/fail (latest real release of each watch-list company)
 
-Generated 2026-11-13 09:32Z · PASS 21 / 22
+Generated 2026-11-14 · PASS 42 / 42 (expansion to all 50 calendar companies in progress: batches 1-4 added; QCOM and IBM have no figure parser because their releases print no quarter revenue headline to check against; CEG, VST and COHR need a different statement layout; IREN (only sequential figures, no year-ago column) and TSLA (its 8-K exhibit is not an earnings release) are not covered. These show only "決算を発表しました" with the official link)
 
 | Ticker | Verdict | Detection source | Figures | Reason |
 |---|---|---|---|---|
@@ -11,7 +11,7 @@ Generated 2026-11-13 09:32Z · PASS 21 / 22
 | NVDA | PASS | SEC 8-K 2026-08-26T20:21Z | 6 | 6 figures, e.g. revenue $96.221B |
 | AMD | PASS | SEC 8-K 2026-11-03T21:16Z | 4 | 4 figures, e.g. revenue $13.377B |
 | AVGO | PASS | SEC 8-K 2026-09-02T20:26Z | 4 | 4 figures, e.g. revenue $29.591B |
-| ARM | FAIL | SEC 6-K 2026-11-04T21:02Z | 0 | no parser for this company yet |
+| ARM | PASS | SEC 6-K 2026-11-04T21:02Z | 4 | 4 figures, e.g. revenue $1.443B (read from the shareholder letter, EX-99.2) |
 | TSM | PASS | SEC 6-K 2026-10-15T10:40Z | 5 | 5 figures, e.g. revenue NT$1494.243B |
 | ASML | PASS | SEC 6-K 2026-10-14T10:01Z | 4 | 4 figures, e.g. revenue €11.662B |
 | MRVL | PASS | SEC 8-K 2026-08-27T20:05Z | 4 | 4 figures, e.g. revenue $2.7393B |
@@ -26,6 +26,26 @@ Generated 2026-11-13 09:32Z · PASS 21 / 22
 | AMZN | PASS | SEC 8-K 2026-10-29T20:05Z | 4 | 4 figures, e.g. revenue $201.944B |
 | GOOGL | PASS | SEC 8-K 2026-10-28T20:01Z | 4 | 4 figures, e.g. revenue $127.577B |
 | ORCL | PASS | SEC 8-K 2026-09-10T20:16Z | 4 | 4 figures, e.g. revenue $19.345B (found via SEC: the earlier "no route" was the backtest rejecting the "Q1 Results" title) |
+| META | PASS | SEC 8-K 2026-10-21T20:03Z | 4 | 4 figures, e.g. revenue $64.601B |
+| NFLX | PASS | SEC 8-K 2026-10-20T20:01Z | 4 | 4 figures, e.g. revenue $12.874176B |
+| NOW | PASS | SEC 8-K 2026-10-28T20:14Z | 4 | 4 figures, e.g. revenue $4.106B |
+| INTC | PASS | SEC 8-K 2026-10-29T20:08Z | 4 | 4 figures, e.g. revenue $16.513B |
+| AAPL | PASS | SEC 8-K 2026-11-02T21:30Z | 4 | 4 figures, e.g. revenue $114.477B |
+| PANW | PASS | SEC 8-K 2026-09-01T20:32Z | 4 | 4 figures, e.g. revenue $3.41B |
+| CRWD | PASS | SEC 8-K 2026-08-26T20:07Z | 4 | 4 figures, e.g. revenue $1.470897B |
+| SNOW | PASS | SEC 8-K 2026-09-02T20:08Z | 4 | 4 figures, e.g. revenue $1.546793B |
+| CRM | PASS | SEC 8-K 2026-08-26T20:03Z | 4 | 4 figures, e.g. revenue $11.345B |
+| ADBE | PASS | SEC 8-K 2026-09-10T20:06Z | 4 | 4 figures, e.g. revenue $6.76B |
+| KLAC | PASS | SEC 8-K 2026-10-28T20:07Z | 3 | 3 figures, e.g. revenue $4.136015B |
+| LRCX | PASS | SEC 8-K 2026-10-21T20:13Z | 4 | 4 figures, e.g. revenue $8.219418B |
+| STX | PASS | SEC 8-K 2026-10-27T20:12Z | 4 | 4 figures, e.g. revenue $4.233B |
+| APH | PASS | SEC 8-K 2026-10-28T13:42Z | 4 | 4 figures, e.g. revenue $10.2297B |
+| BE | PASS | SEC 8-K 2026-10-22T20:09Z | 4 | 4 figures, e.g. revenue $1.235837B |
+| ALAB | PASS | SEC 8-K 2026-11-03T21:09Z | 4 | 4 figures, e.g. revenue $584.899M |
+| LITE | PASS | SEC 8-K 2026-11-02T12:12Z | 4 | 4 figures, e.g. revenue $1.2626B |
+| AAOI | PASS | SEC 8-K 2026-11-05T21:10Z | 4 | 4 figures, e.g. revenue $269.875M |
+| IONQ | PASS | SEC 8-K 2026-11-05T21:07Z | 3 | 3 figures, e.g. revenue $173.831M |
+| SOFI | PASS | SEC 8-K 2026-10-27T11:02Z | 3 | 3 figures, e.g. revenue $1.385099B |
 
 ## How this table is made
 `python3 scripts/research/earnings_backtest.py` (add `--json` for a machine-readable copy) takes each company's **latest real release** (SEC 8-K Item 2.02 or 6-K exhibit;
