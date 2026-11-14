@@ -74,7 +74,8 @@ export function buildTwelveFinancials(bundle:TwelveComparisonBundle,now=Date.now
     previousQuarterRevenue:s.previousPeriodEnd ? fact(s.previousRevenue,"sales",s.previousPeriodEnd) : null,
     quarterOperatingIncome:fact(s.operatingIncome,"operating_income"),
     quarterRevenueGrowth:s.revenueGrowthPct,quarterRevenueQoq:sequentialGrowth(bundle.income,s.periodEnd,s.revenue),quarterOperatingMargin:s.operatingMarginPct,
-    quarterFcfMargin:s.freeCashFlowMarginPct,quarterSourceUrl:sourceUrl};
+    quarterFcfMargin:s.freeCashFlowMarginPct,quarterSourceUrl:sourceUrl,
+    ...(s.cashFlowPeriodEnd ? {supplemented:["cash"],supplementedFromQuarter:s.cashFlowPeriodEnd} : {})};
   const prepared=prepareComparisonAnalysis(result,now);
   if(prepared) {
     // The provider's quarter dates have no start dates; use explicit quarter-ended descriptions.

@@ -11,6 +11,8 @@ export type TwelveComparisonSnapshot = {
   fiscalYear: number; fiscalQuarter: number;
   revenue: number | null; previousRevenue: number | null; previousPeriodEnd: string | null; operatingIncome: number | null; dilutedEps: number | null;
   revenueGrowthPct: number | null; operatingMarginPct: number | null;
+  /** Present only when the cash figures are the previous quarter's (the provider had not added this quarter's cash flow yet). */
+  cashFlowPeriodEnd?: string;
   operatingCashFlow: number | null; signedCapex: number | null;
   freeCashFlow: number | null; freeCashFlowMarginPct: number | null;
   warnings: string[];
@@ -73,12 +75,23 @@ export function normalizeTwelveComparison(ticker: string, income: unknown, cashF
   const dilutedEps = consistent(current, "eps_diluted");
   const previousRevenue = new Set(prior.map(r => r.fiscal_date)).size === 1 ? consistent(prior, "sales") : null;
   let operatingCashFlow: number | null = null, signedCapex: number | null = null, statedFreeCashFlow: number | null = null;
+  // The quarter the cash figures belong to: this one, or the one before when the provider has not added this quarter's cash flow yet
+  // (ASML: income to June, cash flow to March). The margin is then taken on that quarter's own revenue, and the screen says so.
+  let cashFlowPeriodEnd: string | null = null, cashFlowRevenue: number | null = revenue;
   if (cashFlow !== null) {
     try {
       const cf = envelope(cashFlow, ticker, "cash_flow");
       if (cf.currency !== inc.currency) throw Error("currency-mismatch");
       // Matched by the period end; the quarter / year labels are only compared when the cash-flow rows carry them.
-      const rows = cf.rows.filter(r => r.fiscal_date === end && (r.quarter === undefined || Number(r.quarter) === quarter) && (r.year === undefined || Number(r.year) === year));
+      let rows = cf.rows.filter(r => r.fiscal_date === end && (r.quarter === undefined || Number(r.quarter) === quarter) && (r.year === undefined || Number(r.year) === year));
+      cashFlowPeriodEnd = end;
+      if (rows.length === 0) {
+        const gap = (r: Record<string, unknown>) => (Date.parse(end) - Date.parse(String(r.fiscal_date))) / 86400000;
+        const earlier = cf.rows.filter(r => gap(r) >= 75 && gap(r) <= 105);
+        const earlierEnd = new Set(earlier.map(r => String(r.fiscal_date)));
+        const earlierRevenue = earlierEnd.size === 1 ? consistent(valid.filter(r => earlierEnd.has(String(r.fiscal_date))), "sales") : null;
+        if (earlierEnd.size === 1 && earlierRevenue !== null && earlierRevenue > 0) { rows = earlier; cashFlowPeriodEnd = [...earlierEnd][0]; cashFlowRevenue = earlierRevenue; }
+      }
       operatingCashFlow = consistent(rows.map(r => object(r.operating_activities)), "operating_cash_flow");
       signedCapex = consistent(rows.map(r => object(r.investing_activities)), "capital_expenditures");
       // Some small companies have no capex line in the provider's data but a stated free cash flow (POET, Nov 14): that figure is used only then.
@@ -96,7 +109,8 @@ export function normalizeTwelveComparison(ticker: string, income: unknown, cashF
   return { schema: 1, provider: "twelve-data", ticker, currency: inc.currency, retrievedAt: new Date(now).toISOString(),
     periodEnd: end, releasedAt: null, fiscalYear: year, fiscalQuarter: quarter,
     revenue, previousRevenue, previousPeriodEnd: previousRevenue !== null ? String(prior[0].fiscal_date) : null, operatingIncome, dilutedEps, revenueGrowthPct: growth, operatingMarginPct: percent(operatingIncome, revenue),
-    operatingCashFlow, signedCapex, freeCashFlow, freeCashFlowMarginPct: percent(freeCashFlow, revenue), warnings };
+    operatingCashFlow, signedCapex, freeCashFlow, freeCashFlowMarginPct: percent(freeCashFlow, cashFlowRevenue),
+    ...(freeCashFlow !== null && cashFlowPeriodEnd !== null && cashFlowPeriodEnd !== end ? { cashFlowPeriodEnd } : {}), warnings };
 }
 
 /** Realized and forecast EPS are separate contracts: never substitute quarterly EPS for TTM EPS.

@@ -138,3 +138,15 @@ test("no year-ago quarter at the provider: growth is quarter-on-quarter, labelle
   const growth=comparisonScores(c,now).find(s=>s.id==="growth");
   assert.notEqual(growth.value,null);
 });
+
+test("cash flow one quarter behind the income statement: free cash flow on that quarter's own revenue, named on screen (ASML)",()=>{
+  const b=bundle();
+  b.cashFlow.cash_flow=[{fiscal_date:"2026-05-31",quarter:3,year:2026,operating_activities:{operating_cash_flow:36},investing_activities:{capital_expenditures:-12}}];
+  b.income.income_statement[1].sales=80;
+  const c=buildTwelveFinancials(b,now);
+  assert.equal(c.quarterFcfMargin,30);                 // (36 - 12) / 80
+  assert.equal(c.supplementedFromQuarter,"2026-05-31");
+  assert.deepEqual(c.supplemented,["cash"]);
+  b.cashFlow.cash_flow[0].fiscal_date="2026-02-28";     // two quarters behind: nothing
+  assert.equal(buildTwelveFinancials(b,now).quarterFcfMargin,null);
+});
