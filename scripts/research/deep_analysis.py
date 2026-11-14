@@ -73,6 +73,7 @@ def schema(db):
         db.execute('ALTER TABLE deep_analyses ADD COLUMN version INTEGER NOT NULL DEFAULT 0')
     if 'detail' not in columns:
         db.execute('ALTER TABLE deep_analyses ADD COLUMN detail TEXT')
+    db.execute('CREATE TABLE IF NOT EXISTS deep_old_retries(source_ref TEXT PRIMARY KEY, marker TEXT NOT NULL, at REAL NOT NULL, outcome TEXT NOT NULL)')
     db.execute('''CREATE TABLE IF NOT EXISTS deep_analysis_calls(
       at REAL NOT NULL, source_ref TEXT NOT NULL, model TEXT NOT NULL, ok INTEGER NOT NULL)''')
 
@@ -250,8 +251,9 @@ def used_today(db, now):
     return db.execute('SELECT count(*) FROM deep_analysis_calls WHERE at>=?', (now - 86400,)).fetchone()[0]
 
 
-def run_once(path, transport=None, env=None, now=None, reference=None):
-    """Analyse at most one due source. Returns 'idle', 'done' or 'retry'."""
+def run_once(path, transport=None, env=None, now=None, reference=None, only_ref=None):
+    """Analyse at most one due source. Returns 'idle', 'done' or 'retry'. `only_ref` is the one-off retry of an old hold: that source only,
+    one attempt (a failure goes straight back to held, now with its recorded reasons), and a result is dated to the release, not to today."""
     config = configuration(env)
     if not config:
         return 'idle'
@@ -264,10 +266,17 @@ def run_once(path, transport=None, env=None, now=None, reference=None):
         if used_today(db, now) >= limit:
             return 'idle'
         sources = earnings_sources(db, reference) + indicator_sources(db, reference)
+        if only_ref is not None:
+            sources = [row for row in sources if row['ref'] == only_ref]
         source = None
         for row in sources:
             saved = db.execute('SELECT * FROM deep_analyses WHERE source_ref=?', (row['ref'],)).fetchone()
-            if saved and saved['state'] == 'held' and saved['version'] < VERSION and saved['next_at'] <= now:
+            if only_ref is not None:
+                if saved is None or saved['state'] != 'held':
+                    continue
+                db.execute("UPDATE deep_analyses SET attempts=?,state='retry' WHERE source_ref=?", (MAX_ATTEMPTS - 1, row['ref']))
+                saved = None  # the one attempt: a failure is the last one and holds again with its reasons
+            elif saved and saved['state'] == 'held' and saved['version'] < VERSION and saved['next_at'] <= now:
                 db.execute("UPDATE deep_analyses SET attempts=0,state='retry' WHERE source_ref=?", (row['ref'],))
                 saved = None  # held under older logic: a fresh set of attempts
             if saved and (saved['state'] in ('done', 'held') or saved['next_at'] > now):
@@ -308,9 +317,11 @@ def run_once(path, transport=None, env=None, now=None, reference=None):
         return 'retry'
     with connect(path) as db:
         db.execute('UPDATE deep_analysis_calls SET ok=1 WHERE source_ref=? AND at=?', (source['ref'], now))
+        published = datetime.now(timezone.utc).isoformat(timespec='seconds')
+        if only_ref is not None:  # an old release analysed late must not look like news of today
+            published = db.execute('SELECT created_at FROM deep_analyses WHERE source_ref=?', (source['ref'],)).fetchone()[0]
         db.execute('''UPDATE deep_analyses SET state='done',model=?,payload=?,failure=NULL,published_at=?
-          WHERE source_ref=?''', (model, json.dumps(note, ensure_ascii=False),
-                                  datetime.now(timezone.utc).isoformat(timespec='seconds'), source['ref']))
+          WHERE source_ref=?''', (model, json.dumps(note, ensure_ascii=False), published, source['ref']))
     return 'done'
 
 
@@ -346,5 +357,41 @@ def diagnostics(db, now=None):
             detail = None
         pending.append({'subject': row['subject'], 'state': row['state'], 'attempts': row['attempts'],
                         'failure': row['failure'], 'detail': detail, 'createdAt': row['created_at']})
+    old_retry = dict(db.execute('SELECT outcome,count(*) FROM deep_old_retries WHERE marker=? GROUP BY outcome', (OLD_RETRY_MARKER,)).fetchall())
     return {'configured': configuration() is not None, 'callsLast24h': used_today(db, now), 'states': states,
-            'failures': failures, 'version': VERSION, 'notDone': pending}
+            'failures': failures, 'version': VERSION, 'notDone': pending, **({'oldRetry': old_retry} if old_retry else {})}
+
+
+OLD_RETRY_ENV = 'RESEARCH_DEEP_RETRY_OLD_HOLDS'
+OLD_RETRY_MARKER = 'old-holds-2026-11-14'  # owner, Nov 14: the 14 held analyses are tried exactly once, with their reasons recorded
+
+
+def retry_old_holds(path, transport=None, env=None, now=None):
+    """One-off, flag-gated (RESEARCH_DEEP_RETRY_OLD_HOLDS=true): every analysis still held is attempted once more, newest first, one per call,
+    with the release's own date as the reference so the sources of that day are found again. A row whose source can no longer be rebuilt is
+    recorded as 'source-unavailable'. The outcome of each row is kept in deep_old_retries, so a restart never repeats it. Returns 'idle' when
+    the flag is off or nothing is left."""
+    env = os.environ if env is None else env
+    if str(env.get(OLD_RETRY_ENV, '')).strip().lower() != 'true' or configuration(env) is None:
+        return 'idle'
+    now = time.time() if now is None else now
+    with connect(path) as db:
+        if used_today(db, now) >= configuration(env)[2]:
+            return 'idle'  # today's budget is spent: wait, record nothing
+        row = db.execute("""SELECT source_ref,created_at FROM deep_analyses WHERE state='held'
+          AND source_ref NOT IN (SELECT source_ref FROM deep_old_retries WHERE marker=?) ORDER BY created_at DESC LIMIT 1""",
+                         (OLD_RETRY_MARKER,)).fetchone()
+    if row is None:
+        return 'idle'
+    try:
+        reference = datetime.fromisoformat(row['created_at']) + timedelta(hours=1)
+    except ValueError:
+        reference = None
+    outcome = 'source-unavailable'
+    if reference is not None:
+        outcome = run_once(path, transport, env, now=now, reference=reference, only_ref=row['source_ref'])
+        outcome = {'idle': 'source-unavailable', 'retry': 'rejected'}.get(outcome, outcome)
+    with connect(path) as db:
+        db.execute('INSERT OR REPLACE INTO deep_old_retries(source_ref,marker,at,outcome) VALUES(?,?,?,?)',
+                   (row['source_ref'], OLD_RETRY_MARKER, now, outcome))
+    return outcome

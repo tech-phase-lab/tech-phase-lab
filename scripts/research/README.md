@@ -222,6 +222,7 @@ python3 scripts/research/persistence.py restore --backup /data/backups/research-
 - `RESEARCH_INCIDENT_DELIVERY_ENABLED`：障害通知の外部送信。既定false。trueだけでは送信されず、以下の開始時刻・URL・専用トークンも必須
 - `RESEARCH_INCIDENT_DELIVERY_START_AT`：通知を解禁するUTC時刻。この時刻より前の保留通知は再送せず、意図しない過去分の一括送信を防ぐ
 - `RESEARCH_INCIDENT_DELIVERY_MODE`：`web-push` にすると障害通知をWebhookではなくオーナーの端末へのWeb Push（決算・指標通知と同じ経路）で送る。`RESEARCH_INCIDENT_DELIVERY_ENABLED=true`・`WEB_PUSH_ENABLED=true`・`RESEARCH_INCIDENT_DELIVERY_START_AT` が必須でURL/トークンは不要。送るのは「開始時刻以降に発生し30分以内の critical の開始・復旧」だけ。warningと古い行は送らずに消化し、開始時刻より前の保留通知は今までどおり保留のまま（過去分の一括送信はしない）
+- `RESEARCH_DEEP_RETRY_OLD_HOLDS`：`true` にすると、深掘りで `held` のままの古い分析（発表から日がたち通常の再試行の対象外のもの）を、新しい順に1件ずつ「1回だけ」再試行する（オーナー承認 2026-11-14、1日の呼び出し上限の範囲内）。発表日を基準に出典を再構築し、再構築できないものは `source-unavailable` と記録する。結果は `/health` の `newsPipeline.deepAnalysis.oldRetry`（rejected / done / source-unavailable の件数）と、落ちた検査は `notDone[].detail` に出る。成功した分析の公開日は発表日にそろえ、今日のニュースには見せない。結果は `deep_old_retries` に残るので再起動しても繰り返さない。終わったら外してよい
 - `RESEARCH_INCIDENT_WEBHOOK_URL`：明示的に承認したHTTPS通知先。ローカル・プライベートIP・認証情報入りURLは拒否
 - `RESEARCH_INCIDENT_WEBHOOK_TOKEN`：通知専用の長いBearerトークン。監視API・編集APIとは分離する
 - `RESEARCH_INCIDENT_DELIVERY_INTERVAL_SECONDS`：通知キューの確認間隔。標準5秒
