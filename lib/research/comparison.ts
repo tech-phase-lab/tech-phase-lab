@@ -316,6 +316,9 @@ export function extractFinancials(ticker: string, cik: string, payload: unknown,
     if (noncurrent) return { value: noncurrent.value + short, source: "noncurrent" };
     const carrying = m("DebtInstrumentCarryingAmount");
     if (carrying) return { value: carrying.value + short, source: "carrying" };
+    // One line for all debt and finance leases, current maturities included (JPMorgan, ConocoPhillips, United Rentals).
+    const allDebt = m("LongTermDebtAndCapitalLeaseObligationsIncludingCurrentMaturities") ?? m("DebtAndCapitalLeaseObligations");
+    if (allDebt) return { value: allDebt.value + short, source: "total" };
     const leaseCombined = m("LongTermDebtAndCapitalLeaseObligations");   // noncurrent debt and finance leases, with its current part (APH, LRCX)
     if (leaseCombined) return { value: leaseCombined.value + (m("LongTermDebtAndCapitalLeaseObligationsCurrent")?.value ?? 0) + short, source: "total" };
     const combined = m("DebtLongtermAndShorttermCombinedAmount");
