@@ -152,11 +152,12 @@ export function extractFinancials(ticker: string, cik: string, payload: unknown,
   // translations. Never fall back to an older year if the latest lacks it.
   // US GAAP "Revenues" (or, at banks and brokers, revenue net of interest expense) is the total line and contract revenue is a part of it
   // (Walmart's membership income, GM Financial, lease revenue at Applied Digital and IREN, SoFi's and AmEx's interest income). When both
-  // are filed and the total is not below any part, the total is the revenue; a total below a part, or two totals that differ, stay held.
+  // are filed and the total is not below any part, the total is the revenue; a total below a part stays held.
   const preferTotal = <T extends Fact>(rows: T[]): T[] => {
-    const isTotal = (f: Fact) => f.tag === "Revenues" || f.tag === "RevenuesNetOfInterestExpense";
-    const total = rows.filter(isTotal), parts = rows.filter(f => !isTotal(f));
-    return total.length && parts.length && new Set(total.map(f => `${f.unit}/${f.value}`)).size === 1 && parts.every(f => f.unit === total[0].unit && f.value <= total[0].value) ? total : rows;
+    // "Revenues" is the total whenever it is filed (Ameriprise files both); net-of-interest revenue only where it is the sole total.
+    const totalTag = rows.some(f => f.tag === "Revenues") ? "Revenues" : "RevenuesNetOfInterestExpense";
+    const total = rows.filter(f => f.tag === totalTag), parts = rows.filter(f => f.tag !== "Revenues" && f.tag !== "RevenuesNetOfInterestExpense");
+    return total.length && total.length < rows.length && new Set(total.map(f => `${f.unit}/${f.value}`)).size === 1 && parts.every(f => f.unit === total[0].unit && f.value <= total[0].value) ? total : rows;
   };
   const sameDate = preferTotal(revenues.filter(f => f.end === latest.end && f.filed === latest.filed && (!reportingCurrency || f.unit === reportingCurrency)));
   const candidate = sameDate[0];

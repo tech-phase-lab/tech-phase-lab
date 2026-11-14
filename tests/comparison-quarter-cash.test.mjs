@@ -202,3 +202,14 @@ test("revenue net of interest expense is a total: it wins over the contract-reve
   assert.equal(c.revenue.value, 2000);
   assert.equal(c.quarterRevenue.value, 1000);
 });
+
+test("a company filing both total revenue and net-of-interest revenue keeps total revenue (Ameriprise)", () => {
+  const f = facts();
+  const g = f.facts["us-gaap"];
+  g.Revenues = { units: { USD: g.RevenueFromContractWithCustomerExcludingAssessedTax.units.USD.map(r => ({ ...r, val: r.val * 3 })) } };
+  g.RevenuesNetOfInterestExpense = { units: { USD: g.RevenueFromContractWithCustomerExcludingAssessedTax.units.USD.map(r => ({ ...r, val: r.val * 2 })) } };
+  delete g.RevenueFromContractWithCustomerExcludingAssessedTax;
+  const c = extractFinancials("AMP", "1", f, NOW);
+  assert.equal(c.revenue.tag, "Revenues");
+  assert.equal(c.quarterRevenue.value, 600);
+});
