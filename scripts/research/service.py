@@ -1910,6 +1910,9 @@ class AutomaticMonitor:
             research_issue = official_research.sync_incident(db)
             if research_issue:
                 issues.append(research_issue)
+            deep_issue = deep_analysis.sync_incident(db)
+            if deep_issue:
+                issues.append(deep_issue)
         return issues
 
     def check_incident_watch_once(self):

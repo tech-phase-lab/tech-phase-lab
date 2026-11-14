@@ -133,22 +133,23 @@ SCALE_WORD = {'thousands': 'thousand', 'millions': 'million', 'billions': 'billi
 
 def table_scaled_figures(evidence, within=None):
     """Figures of a statement table printed in the unit its header declares ("In USD $ millions ... Revenues 146.1 980.8"), written out in that unit
-    ("980.8 million"). Only decimal or comma-grouped numbers within TABLE_WINDOW characters after one header are converted, never percentages or
-    plain integers (years, counts), and a header that declares different units for the same excerpt converts nothing. The result is appended to the
-    evidence for the number check only, so "$980.8 million" matches the source figure 980.8 of a USD-millions table; no other number is admitted.
-    `evidence` is the whole release (the unit header is often in an excerpt the point did not cite); with `within` (the cited excerpts) only figures
-    that literally appear there are returned, so a point still cannot use a figure from text it did not cite."""
+    ("980.8 million"). Only decimal or comma-grouped numbers within TABLE_WINDOW characters after a header (and before the next one) are converted,
+    never percentages or plain integers (years, counts). A release may declare several units (a statement "in millions", a segment table "in thousands"):
+    each table is read in its own unit, and a figure that the release prints under two different units is converted in neither (ambiguous).
+    The result is appended to the evidence for the number check only, so "$980.8 million" matches the source figure 980.8 of a USD-millions table;
+    no other number is admitted. `evidence` is the whole release (the unit header is often in an excerpt the point did not cite); with `within`
+    (the cited excerpts) only figures that literally appear there are returned, so a point still cannot use a figure from text it did not cite."""
     headers = [(m.start(), (m.group(1) or m.group(2)).lower()) for m in UNIT_HEADER.finditer(evidence)]
-    if not headers or len({scale for _, scale in headers}) != 1:
-        return ''
-    scale = SCALE_WORD[headers[0][1]]
-    figures = []
-    for index, (start, _) in enumerate(headers):
+    scales = {}
+    for index, (start, unit) in enumerate(headers):
         end = min(headers[index + 1][0] if index + 1 < len(headers) else len(evidence), start + TABLE_WINDOW)
-        figures += [m.group(1) for m in TABLE_FIGURE.finditer(evidence[start:end])]
+        for m in TABLE_FIGURE.finditer(evidence[start:end]):
+            scales.setdefault(m.group(1), set()).add(SCALE_WORD[unit])
+    figures = [(figure, next(iter(units))) for figure, units in scales.items() if len(units) == 1]
     if within is not None:
-        figures = [figure for figure in figures if re.search(r'(?<![\d.,])' + re.escape(figure) + r'(?![\d,]|\.\d)', within)]
-    return '; '.join('%s %s' % (figure, scale) for figure in dict.fromkeys(figures))
+        figures = [(figure, unit) for figure, unit in figures
+                   if re.search(r'(?<![\d.,])' + re.escape(figure) + r'(?![\d,]|\.\d)', within)]
+    return '; '.join('%s %s' % pair for pair in figures)
 
 
 def checked(item, quote, release=None):
@@ -159,7 +160,7 @@ def checked(item, quote, release=None):
             raise ValueError('invalid-copy')
         if len(text) > MAX_COPY_CHARS:
             raise ValueError('copy-too-long')
-        factual_validation.validate_numbers(text, quote + '\n' + table_scaled_figures(release or quote, within=quote))
+        factual_validation.validate_numbers(text, table_scaled_figures(release or quote, within=quote) + '\n' + quote)  # scaled figures first: an excerpt cut inside a "(" would turn text appended after it into a negative
         factual_validation.validate_semantics(text, quote)
     factual_validation.validate_pair(item['ja'], item['en'])
 
@@ -348,3 +349,60 @@ def diagnostics(db, now=None):
                         'failure': row['failure'], 'detail': detail, 'createdAt': row['created_at']})
     return {'configured': configuration() is not None, 'callsLast24h': used_today(db, now), 'states': states,
             'failures': failures, 'version': VERSION, 'notDone': pending}
+
+
+OVERDUE_AFTER_SECONDS = 2 * 3600       # an earnings release without a finished analysis after this long is a critical incident
+OVERDUE_LOOKBACK_SECONDS = 72 * 3600   # older rows are history, never new alerts (enabling this must not replay old holds)
+INCIDENT_PREFIX = 'deep-analysis:'
+
+
+def first_check(row):
+    """The check that rejected the most points (text-free), or the failure name: what the owner needs in the alert."""
+    try:
+        detail = json.loads(row['detail']) if row['detail'] else None
+    except ValueError:
+        detail = None
+    rejected = (detail or {}).get('rejected') if isinstance(detail, dict) else None
+    if isinstance(rejected, dict) and rejected:
+        name = max(rejected, key=lambda key: (rejected[key], key))
+    elif isinstance(detail, dict) and detail.get('headline'):
+        name = 'headline.' + str(detail['headline'])
+    else:
+        name = row['failure'] or row['state']
+    return re.sub(r'[^A-Za-z0-9._-]+', '-', str(name)).strip('-')[:60] or 'unknown'
+
+
+def overdue(db, now=None):
+    """Earnings analyses of tracked companies still not done two hours after the release was first handled (newest first)."""
+    schema(db)
+    now = time.time() if now is None else now
+    late = []
+    for row in db.execute("SELECT subject,state,failure,detail,created_at FROM deep_analyses WHERE kind='earnings' AND state!='done' ORDER BY created_at DESC"):
+        try:
+            age = now - datetime.fromisoformat(row['created_at']).timestamp()
+        except ValueError:
+            continue
+        if OVERDUE_AFTER_SECONDS <= age <= OVERDUE_LOOKBACK_SECONDS:
+            late.append({'subject': row['subject'], 'check': first_check(row), 'state': row['state'], 'ageSeconds': int(age)})
+    return late
+
+
+def sync_incident(db, now=None):
+    """One critical incident per late company (key deep-analysis:<TICKER>); it resolves when the analysis is done. The error code carries the
+    ticker and the check that rejected it, so the phone alert says which company and why."""
+    now = time.time() if now is None else now
+    at = datetime.fromtimestamp(now, timezone.utc).isoformat()
+    late = {}
+    for item in overdue(db, now):
+        late.setdefault(item['subject'], item)
+    for subject, item in late.items():
+        if re.fullmatch(r'[A-Za-z0-9.-]{1,12}', subject or ''):
+            monitor.record_operational_incident(db, INCIDENT_PREFIX + subject, 'deep-analysis', subject, 'critical',
+                                                'deep-analysis-overdue:%s:%s' % (subject, item['check']), seen_at=at)
+    schema_open = db.execute("SELECT incident_key FROM operational_incidents WHERE incident_key LIKE ? AND status!='resolved'",
+                             (INCIDENT_PREFIX + '%',)).fetchall()
+    for row in schema_open:
+        if row['incident_key'][len(INCIDENT_PREFIX):] not in late:
+            monitor.resolve_operational_incident(db, row['incident_key'], resolved_at=at)
+    return 'deep-analysis-overdue' if late else None
+
