@@ -45,7 +45,7 @@ export function officialResultEvents(value: unknown): ResearchEvent[] {
       unknown: { ja: '売上や利益への影響は、今後の決算で確認します。', en: 'The effect on revenue and profit remains to be checked in subsequent earnings.' },
       next: { ja: '発表した内容の進捗を追います。', en: 'Follow the progress of the announced changes.' },
       sources: [{ id, url, title: str('sourceTitle', 500), publisher: `${ticker} IR`, publishedOn,
-        location: r.dateBasis === 'detection' ? '取得日 / Detection date; company announcement' : 'Company announcement' }],
+        location: r.dateBasis === 'detection' ? 'Detection date; company announcement' : 'Company announcement' }],
       metrics: [],
     };
   });
