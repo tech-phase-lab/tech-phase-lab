@@ -19,6 +19,15 @@ test('owner, Oct 9: a story without checked Japanese is left out of the Japanese
   assert.equal(shownInLanguage({ ...item, translationJa: 'エヌビディア、通期見通しを引き上げ' }, 'ja'), true);
 });
 
+test('owner, Nov 14: English text in the Japanese field is not a translation and never reaches a Japanese list', () => {
+  const english = { ...item, translationJa: 'Nvidia raises full-year guidance' };
+  assert.equal(shownInLanguage(english, 'ja'), false);
+  assert.equal(officialNewsDisplay(english, 'ja').pendingTranslation, true);
+  assert.equal(shownInLanguage(english, 'en'), true);
+  assert.equal(newsPulseItems(publicNewsPayload({ ok: true, enabled: true, items: [], officialUpdates: [english] }), 'ja').length, 0);
+  assert.equal(shownInLanguage({ ...item, translationJa: 'NVDA 見通し' }, 'ja'), true);
+});
+
 test('a validated translation replaces the original and the mark disappears', () => {
   const display = officialNewsDisplay({ ...item, translationJa: 'エヌビディア、通期見通しを引き上げ', bodyJa: 'エヌビディアは見通しを引き上げた。' }, 'ja');
   assert.equal(display.title, 'エヌビディア、通期見通しを引き上げ');

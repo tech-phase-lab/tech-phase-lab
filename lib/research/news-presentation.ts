@@ -5,6 +5,8 @@ import { inlineNewsComparisons } from './news-inline-comparisons.ts';
 import { officialHeadlineJa } from './official-news-ja.ts';
 import { additionalNewsDetail } from './news-detail.ts';
 
+const JAPANESE_CHARACTER = /[\u3040-\u30ff\u3400-\u9fff]/;
+
 /** Categories describe the story. Publisher identity remains source metadata. */
 export function officialNewsDisplay(item: OfficialUpdate, lang: Language, briefs: ResultBrief[] = []) {
   const ja = lang === 'ja';
@@ -17,7 +19,10 @@ export function officialNewsDisplay(item: OfficialUpdate, lang: Language, briefs
     : item.brief ? `${briefLabel}${item.tickers.length ? ' · ' + item.tickers.join(' · ') : ''} · ${ja ? '詳細は確認中' : 'Details awaiting review'}`
     : economic ? (ja ? '経済指標' : 'Economic indicators')
     : `${ja ? '企業ニュース' : 'Company news'}${item.tickers.length ? ' · ' + item.tickers.join(' · ') : ''}`;
-  const reviewedJa = ja ? officialHeadlineJa(item.url) ?? item.translationJa : undefined;
+  // Owner, Nov 14: an English headline never stands in for the Japanese one. A Japanese headline without a single Japanese character
+  // (English text carried in the Japanese field) counts as "not translated", so the story stays out of every Japanese list.
+  const candidateJa = ja ? officialHeadlineJa(item.url) ?? item.translationJa : undefined;
+  const reviewedJa = candidateJa && JAPANESE_CHARACTER.test(candidateJa) ? candidateJa : undefined;
   // Policy B (owner decision): when one language is not ready or was held by
   // validation, publish the available original now and mark it, rather than
   // hiding the story or showing a generic placeholder.

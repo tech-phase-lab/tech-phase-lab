@@ -308,6 +308,23 @@ class HeadlineTranslationTests(unittest.TestCase):
         limited = {**ENV, "OFFICIAL_HEADLINE_TRANSLATION_DAILY_LIMIT": "1"}
         self.assertEqual(translation.run_once(self.path, response, limited, now=NOW + 300, sources=[SOURCE]), "idle")
 
+    def test_a_retry_is_told_why_the_last_translation_was_rejected(self):
+        seen = []
+        def provider(payload, key):
+            seen.append(json.loads(payload["input"]))
+            return {"status": "completed", "output_text": json.dumps({"titleJa": "ネビウスは売上が45%増と発表"}, ensure_ascii=False), "usage": {}}
+        self.assertEqual(translation.run_once(self.path, provider, ENV, now=NOW, sources=[SOURCE]), "retry")
+        with translation.connect(self.path) as db:
+            job = db.execute("SELECT failure_kind,failure_detail FROM signal_headline_translation_jobs").fetchone()
+            self.assertEqual(job["failure_kind"], "unsupported-number")
+            self.assertTrue(job["failure_detail"].startswith("unsupported-number:value:45%"), job["failure_detail"])
+            db.execute("UPDATE signal_headline_translation_jobs SET next_at=0")
+        self.assertEqual(translation.run_once(self.path, provider, ENV, now=NOW + 1000, sources=[SOURCE]), "retry")
+        self.assertEqual(set(seen[0]), {"title"})
+        self.assertEqual(seen[1]["previousRejection"], "unsupported-number")
+        self.assertTrue(seen[1]["previousRejectionDetail"].startswith("unsupported-number:value:45%"))
+        self.assertNotIn("ネビウス", seen[1]["previousRejectionDetail"])  # no copy, only the rule and the quantities
+
     def test_a_translation_the_checks_keep_rejecting_stops_after_the_attempt_cap_and_is_never_critical(self):
         def failed(*_):
             raise RuntimeError("private provider response")
