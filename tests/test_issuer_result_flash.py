@@ -1,3 +1,4 @@
+import re
 import hashlib
 import json
 from datetime import datetime, timezone
@@ -178,6 +179,30 @@ class Parsers(unittest.TestCase):
         self.assertNotIn('operating-income',keys(text.replace('Income from operations 3,658','Income from operations 3,758')))
         self.assertNotIn('net-income',keys(text.replace('Net income $ 2,718','Net income $ 2,818')))
         self.assertNotIn('eps',keys(text.replace('Diluted $ 3.40','Diluted $ 4.40')))
+    def test_platform_and_device_statements_batch2(self):
+        cases={
+         'META':('meta-results-q326.txt','Q3 2026',[('revenue','$64.601B','$51.242B'),('eps','$3.83','$1.05'),('net-income','$9.86B','$2.709B'),('operating-income','$12.988B','$20.535B')],
+                 [('Income from operations 12,988','Income from operations 13,988','operating-income'),('Net income $ 9,860','Net income $ 9,960','net-income'),('Basic $ 3.86 $ 1.08 $ 20.64 $ 14.96 Diluted $ 3.83','Basic $ 3.86 $ 1.08 $ 20.64 $ 14.96 Diluted $ 4.83','eps')],'Revenue $ 64,601','Revenue $ 74,601'),
+         'NFLX':('nflx-results-q326.txt','Q3 2026',[('revenue','$12.874176B','$11.510307B'),('eps','$0.87','$0.59'),('net-income','$3.663927B','$2.546916B'),('operating-income','$4.4586B','$3.248247B')],
+                 [('Operating income 4,458,600','Operating income 4,558,600','operating-income'),('Net income $ 3,663,927','Net income $ 3,763,927','net-income'),('Basic $ 0.89 $ 0.81 $ 0.60 $ 2.95 $ 2.01 Diluted $ 0.87','Basic $ 0.89 $ 0.81 $ 0.60 $ 2.95 $ 2.01 Diluted $ 0.97','eps')],'Revenues $ 12,874,176','Revenues $ 13,874,176'),
+         'NOW':('now-results-q326.txt','Q3 2026',[('revenue','$4.106B','$3.407B'),('eps','$0.27','$0.48'),('net-income','$277M','$502M'),('operating-income','$385M','$572M')],
+                [('Income from operations 385','Income from operations 395','operating-income'),('Net income $ 277','Net income $ 287','net-income'),('diluted (2) $ 0.27','diluted (2) $ 0.37','eps')],'Total revenues 4,106','Total revenues 4,306'),
+         'INTC':('intc-results-q326.txt','Q3 2026',[('revenue','$16.513B','$13.653B'),('eps','$0.60','$0.90'),('net-income','$3.32B','$4.063B'),('operating-income','$2.522B','$683M')],
+                 [('Operating income (loss) 2,522','Operating income (loss) 2,622','operating-income'),('attributable to Intel $ 3,320','attributable to Intel $ 3,420','net-income')],'Net revenue $ 16,513','Net revenue $ 17,513'),
+         'AAPL':('aapl-results-q4fy26.txt','Q4 FY2026',[('revenue','$114.477B','$102.466B'),('eps','$2.10','$1.85'),('net-income','$30.711B','$27.466B'),('operating-income','$35.631B','$32.427B')],
+                 [('Operating income 35,631','Operating income 36,631','operating-income'),('Net income $ 30,711','Net income $ 31,711','net-income'),('Diluted $ 2.10','Diluted $ 3.10','eps')],'Total net sales (1) 114,477','Total net sales (1) 124,477'),
+        }
+        for ticker,(name,period,facts,tampers,old_rev,new_rev) in cases.items():
+            text=fixture(name); parse=flash.PROFILES[ticker]['parse']
+            parsed=parse(text)
+            self.assertEqual(parsed['period'],period,ticker)
+            self.assertEqual([(f[0],f[1],f[2]) for f in parsed['facts']],facts,ticker)
+            for old,new,key in tampers:
+                self.assertIn(old,text,ticker)
+                self.assertNotIn(key,[f[0] for f in parse(text.replace(old,new))['facts']],(ticker,key))
+            self.assertIn(old_rev,text,ticker)
+            with self.assertRaises(ValueError): parse(text.replace(old_rev,new_rev))
+            with self.assertRaises(ValueError): parse(re.sub(flash.STATEMENT[ticker]['identity'],'someone else',text,flags=re.I))
     def test_alphabet_and_amazon_statements_print_the_year_ago_column_first(self):
         expected={'GOOGL':('alphabet-results-q326.txt',[('revenue','$127.577B','$102.346B'),('eps','$2.12','$2.87'),('net-income','$26.17B','$34.979B'),('operating-income','$40.576B','$31.228B')]),
                   'AMZN':('amazon-results-q326.txt',[('revenue','$201.944B','$180.169B'),('eps','$1.89','$1.95'),('net-income','$20.685B','$21.187B'),('operating-income','$28.076B','$17.422B')])}

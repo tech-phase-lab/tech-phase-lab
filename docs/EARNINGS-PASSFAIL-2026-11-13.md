@@ -1,6 +1,6 @@
 # Earnings flash pass/fail (latest real release of each watch-list company)
 
-Generated 2026-11-13 09:32Z · PASS 22 / 22
+Generated 2026-11-13 09:32Z · PASS 27 / 27 (expansion to all 50 calendar companies in progress: batch 2 added; QCOM and IBM still have no figure parser because their releases print no quarter revenue headline to check against, so they show only "決算を発表しました" with the official link)
 
 | Ticker | Verdict | Detection source | Figures | Reason |
 |---|---|---|---|---|
@@ -26,6 +26,11 @@ Generated 2026-11-13 09:32Z · PASS 22 / 22
 | AMZN | PASS | SEC 8-K 2026-10-29T20:05Z | 4 | 4 figures, e.g. revenue $201.944B |
 | GOOGL | PASS | SEC 8-K 2026-10-28T20:01Z | 4 | 4 figures, e.g. revenue $127.577B |
 | ORCL | PASS | SEC 8-K 2026-09-10T20:16Z | 4 | 4 figures, e.g. revenue $19.345B (found via SEC: the earlier "no route" was the backtest rejecting the "Q1 Results" title) |
+| META | PASS | SEC 8-K 2026-10-21T20:03Z | 4 | 4 figures, e.g. revenue $64.601B |
+| NFLX | PASS | SEC 8-K 2026-10-20T20:01Z | 4 | 4 figures, e.g. revenue $12.874176B |
+| NOW | PASS | SEC 8-K 2026-10-28T20:14Z | 4 | 4 figures, e.g. revenue $4.106B |
+| INTC | PASS | SEC 8-K 2026-10-29T20:08Z | 4 | 4 figures, e.g. revenue $16.513B |
+| AAPL | PASS | SEC 8-K 2026-11-02T21:30Z | 4 | 4 figures, e.g. revenue $114.477B |
 
 ## How this table is made
 `python3 scripts/research/earnings_backtest.py` (add `--json` for a machine-readable copy) takes each company's **latest real release** (SEC 8-K Item 2.02 or 6-K exhibit;
