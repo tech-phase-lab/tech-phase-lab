@@ -13,10 +13,28 @@ export function sameQuarter(a: Financials, b: Financials | null | undefined): bo
 /** A filing-based company keeps every figure the filing gives; only a factor the filing leaves empty is taken from the provider's
  * statements for the SAME quarter (owner, Nov 14: "どの銘柄でも全ての数字を"). Nothing from another quarter is mixed in, nothing is invented,
  * and each borrowed factor is listed in `supplemented` so the screen can say so. */
+/** The provider is one quarter behind the filing (it often adds a new quarter weeks after the 10-Q: ConocoPhillips, Southern, Nov 14). */
+export function previousQuarter(a: Financials, b: Financials | null | undefined): boolean {
+  const x = a.quarterRevenue?.end, y = b?.quarterRevenue?.end;
+  return !!x && !!y && day(x) - day(y) >= 75 && day(x) - day(y) <= 105;
+}
+
 export function fillFromProvider(sec: Financials, provider: Financials | null | undefined, now = Date.now()): Financials {
-  if (!provider || provider.status !== "ready" || !sameQuarter(sec, provider)) return sec;
+  if (!provider || provider.status !== "ready") return sec;
+  // One quarter behind: only factors that do not compare this quarter with another (cash generation, the margin series, the balance,
+  // price) are taken, and the screen names the quarter they come from. Growth and profitability are never taken from another quarter.
+  const lagging = !sameQuarter(sec, provider) && previousQuarter(sec, provider);
+  if (!sameQuarter(sec, provider) && !lagging) return sec;
   const out: Financials = { ...sec };
   const supplemented = new Set(sec.supplemented ?? []);
+  const before = supplemented.size;
+  if (lagging) {
+    if (!finite(out.quarterFcfMargin) && finite(provider.quarterFcfMargin)) { out.quarterFcfMargin = provider.quarterFcfMargin; supplemented.add("cash"); }
+    fillMarket(out, provider, supplemented, now);
+    out.supplemented = [...supplemented];
+    if (supplemented.size > before) out.supplementedFromQuarter = provider.quarterRevenue!.end;
+    return out;
+  }
   if (!finite(out.quarterRevenueGrowth) && finite(provider.quarterRevenueGrowth)) {
     out.quarterRevenueGrowth = provider.quarterRevenueGrowth; out.previousQuarterRevenue = provider.previousQuarterRevenue; supplemented.add("growth");
   }
@@ -24,6 +42,12 @@ export function fillFromProvider(sec: Financials, provider: Financials | null | 
     out.quarterOperatingMargin = provider.quarterOperatingMargin; out.quarterOperatingIncome = provider.quarterOperatingIncome; supplemented.add("profitability");
   }
   if (!finite(out.quarterFcfMargin) && finite(provider.quarterFcfMargin)) { out.quarterFcfMargin = provider.quarterFcfMargin; supplemented.add("cash"); }
+  fillMarket(out, provider, supplemented, now);
+  out.supplemented = [...supplemented];
+  return out;
+}
+
+function fillMarket(out: Financials, provider: Financials, supplemented: Set<string>, now: number) {
   const mine = out.twelveData, theirs = provider.twelveData;
   if (mine && theirs) {
     let evidence = mine;
@@ -43,6 +67,4 @@ export function fillFromProvider(sec: Financials, provider: Financials | null | 
     }
     out.twelveData = evidence;
   } else if (!mine && theirs) { out.twelveData = theirs; supplemented.add("market"); }
-  out.supplemented = [...supplemented];
-  return out;
 }
