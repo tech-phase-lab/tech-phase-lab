@@ -17,6 +17,12 @@ export type BalanceSnapshot = {
 };
 export type Financials = {
   twelveData?: import("./twelve-data-factors").TwelveFactorEvidence;
+  /** Factors taken from the provider's statements for the same quarter because the filing left them empty (shown on the screen). */
+  supplemented?: string[];
+  /** False when the filing's own balance already scores financial strength: the provider's balance is then never used. */
+  supplementedFinancialAllowed?: boolean;
+  /** Set when a newer earnings release is out but its quarterly report is not yet filed: the figures are the previous quarter's, said on screen. */
+  previousQuarterShown?: string;
   /** "ps": this comparison scores valuation on price-to-sales for every company, because one of them has no forward P/E. Set per comparison. */
   valuationBasis?: import("./twelve-data-factors").ValuationBasis;
   referenceEvaluation?: import("./comparison-reference").ReferenceEvaluation;
@@ -36,6 +42,8 @@ export type Financials = {
   quarterMargins?: { periodEnd: string; value: number }[] | null;
   /** Revenue of those same four consecutive quarters added up (for price-to-sales). Null unless all four are present. */
   quarterRevenueTtm?: number | null;
+  /** Revenue growth against the quarter just before (%), for a company with no revenue a year earlier. */
+  quarterRevenueQoq?: number | null;
   quarterFcfMargin?: number | null; quarterStockCompensationRatio?: number | null; quarterDilutedSharesGrowth?: number | null;
   balance: BalanceSnapshot | null;
   sourceUrl: string | null;
@@ -219,7 +227,7 @@ export function extractFinancials(ticker: string, cik: string, payload: unknown,
   const previousQuarterShares = quarterShares && previousQuarterRevenue ? unique(collect(basis,[quarterShares.tag],false,"quarter",true).filter(f=>f.accession===quarterShares.accession && f.start===previousQuarterRevenue.start && f.end===previousQuarterRevenue.end && f.value>0)) : null;
   // The last four standalone quarters' operating margins, for the stability factor. Each quarter needs both revenue and operating income;
   // a quarter reported twice with different values, or a gap in the sequence, leaves the whole series empty.
-  let quarterRevenueTtm: number | null = null;
+  let quarterRevenueTtm: number | null = null, quarterRevenueQoq: number | null = null;
   function marginSeries(): { periodEnd: string; value: number }[] | null {
     if (!quarterRevenue) return null;
     const perEnd = (names: readonly string[]) => {
@@ -243,6 +251,7 @@ export function extractFinancials(ticker: string, cik: string, payload: unknown,
       const chain = [revenueEnds[0]];
       for (const end of revenueEnds.slice(1)) { const gap = day(chain.at(-1)!) - day(end); if (gap >= 70 && gap <= 110) chain.push(end); else if (gap > 110) break; if (chain.length === 4) break; }
       if (chain.length === 4) quarterRevenueTtm = chain.reduce((sum, end) => sum + rev.get(end)!, 0);
+      if (chain.length >= 2) quarterRevenueQoq = (rev.get(chain[0])! / rev.get(chain[1])! - 1) * 100;
     }
     const ends = [...rev.keys()].filter(end => end <= quarterRevenue.end && (rev.get(end) ?? 0) > 0 && typeof op.get(end) === "number").sort().reverse();
     if (ends[0] !== quarterRevenue.end) return null;
@@ -305,7 +314,7 @@ export function extractFinancials(ticker: string, cik: string, payload: unknown,
   return { ...result, status: "ready", balance, revenue, previousRevenue, operatingIncome, operatingCash, capex, cash,
     stockCompensation, stockCompensationRatio: stockCompensation ? stockCompensation.value / revenue.value * 100 : null,
     dilutedShares, previousDilutedShares, dilutedSharesGrowth: dilutedShares && previousDilutedShares ? (dilutedShares.value / previousDilutedShares.value - 1) * 100 : null,
-    quarterRevenue, previousQuarterRevenue, quarterOperatingIncome, quarterMargins, quarterRevenueTtm,
+    quarterRevenue, previousQuarterRevenue, quarterOperatingIncome, quarterMargins, quarterRevenueTtm, quarterRevenueQoq,
     quarterRevenueGrowth: quarterRevenue && previousQuarterRevenue ? (quarterRevenue.value / previousQuarterRevenue.value - 1) * 100 : null,
     quarterOperatingMargin: quarterRevenue && quarterOperatingIncome ? quarterOperatingIncome.value / quarterRevenue.value * 100 : null,
     quarterSourceUrl: quarterRevenue ? filingUrl(quarterRevenue) : null,

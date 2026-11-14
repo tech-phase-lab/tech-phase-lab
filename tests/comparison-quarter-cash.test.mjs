@@ -121,3 +121,25 @@ test("operating income is worked out from the same filing's own lines; pre-tax o
   assert.equal(pre.quarterOperatingMargin, 15);
   assert.equal(pre.quarterOperatingIncome.tag, "TechPhasePretaxIncome");
 });
+
+import { fillFromProvider } from "../lib/research/comparison-fill.ts";
+test("an empty factor is taken from the provider only for the same quarter, and listed; the filing's own figures are never replaced", () => {
+  const sec = { ...company("A", 20, 4), quarterFcfMargin: null, quarterOperatingMargin: 12 };
+  sec.twelveData = { ...sec.twelveData, margins: [] };
+  const provider = { ...company("A", 20, 4), quarterFcfMargin: 7, quarterOperatingMargin: 99 };
+  const filled = fillFromProvider(sec, provider, NOW);
+  assert.equal(filled.quarterFcfMargin, 7);
+  assert.equal(filled.quarterOperatingMargin, 12);              // the filing's figure stays
+  assert.equal(filled.twelveData.margins.length, 4);
+  assert.deepEqual(filled.supplemented.sort(), ["cash", "stability"].sort().concat(filled.supplemented.includes("financial") ? ["financial"] : []).sort());
+  const older = { ...provider, quarterRevenue: { ...provider.quarterRevenue, end: "2026-06-30" } };
+  assert.equal(fillFromProvider(sec, older, NOW), sec);           // another quarter: nothing borrowed
+});
+
+test("banks: financial strength from cash against debt; growth against the previous quarter when there was no revenue a year earlier", () => {
+  const bank = { ...company("B", 20, 4), twelveData: undefined, quarterRevenueGrowth: null, quarterRevenueQoq: 12,
+    balance: { end: "2026-09-30", currentRatio: null, cash: { value: 50 }, debtCurrent: null, debtNoncurrent: null, debtTotal: { value: 100, source: "total" } } };
+  const scores = Object.fromEntries(comparisonScores(bank, NOW).map(s => [s.id, s.value]));
+  assert.equal(scores.financial, 5);          // 10 x min(50/100, 1)
+  assert.equal(scores.growth, 6.2);           // 5 + 12/10
+});
