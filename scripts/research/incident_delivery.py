@@ -144,6 +144,14 @@ PUSH_TEXT = {
 
 
 def push_message(claim):
+    code = str(claim.get("errorCode") or "")
+    if code.startswith("deep-analysis-overdue:"):
+        # deep-analysis-overdue:<TICKER>:<check that rejected it>: the company and the reason, in the owner's language
+        _, ticker, check = (code.split(":", 2) + ["", ""])[:3]
+        if claim["transition"] != "resolved":
+            return {"title": "🚨 %sの決算の深掘りが2時間たっても完成していません" % (ticker or "?"),
+                    "body": "落ちた検査: %s。決算は発表済みで、深掘りだけが出ていません。監視の状態を確認してください。" % (check or "不明"),
+                    "tag": "incident-" + claim["key"], "url": "/research"}
     title, body = PUSH_TEXT.get(claim.get("errorCode"), ("監視で異常を検知しました", "詳しくは監視の状態を確認してください。"))
     if claim["transition"] == "resolved":
         return {"title": "✅ 復旧しました", "body": "監視の異常が解消しました。", "tag": "incident-" + claim["key"], "url": "/research"}

@@ -23,6 +23,9 @@ export type Financials = {
   supplementedFinancialAllowed?: boolean;
   /** Set when a newer earnings release is out but its quarterly report is not yet filed: the figures are the previous quarter's, said on screen. */
   previousQuarterShown?: string;
+  /** True when the company never tags a capital-spending line (AirBnB, AppLovin: immaterial, folded into "other"), so free cash flow
+   *  is operating cash flow with capital spending counted as zero. Said on screen. */
+  capexNotReported?: boolean;
   /** "ps": this comparison scores valuation on price-to-sales for every company, because one of them has no forward P/E. Set per comparison. */
   valuationBasis?: import("./twelve-data-factors").ValuationBasis;
   referenceEvaluation?: import("./comparison-reference").ReferenceEvaluation;
@@ -165,7 +168,16 @@ export function extractFinancials(ticker: string, cik: string, payload: unknown,
   const operatingIncome = metric("operatingIncome"), operatingCash = metric("operatingCash"), cash = metric("cash");
   // Capital spending is tagged one of several ways (AAOI switched tags mid-year): the first tag the filing uses is taken, never a mix.
   const capexRaw = (() => { for (const tag of tags[basis].capex) { const values = collect(basis, [tag]).filter(samePeriod); if (values.length) return new Set(values.map(f => f.value)).size === 1 ? values[0] : null; } return null; })();
-  const capex = capexRaw && capexRaw.value >= 0 ? capexRaw : null;
+  // Some companies stopped tagging capital spending once it became immaterial (AirBnB since 2023, AppLovin since 2025: inside "other
+  // investing"). Only then — no capex tag in this annual report or any later 10-Q, the last capex they tagged under 1% of revenue,
+  // and the same annual report does tag its investing cash flow — is capital spending counted as zero.
+  const capexFacts = (["annual", "ytd", "quarter"] as const).flatMap(period => collect(basis, tags[basis].capex, false, period));
+  const lastCapex = [...capexFacts].sort((x, y) => y.filed.localeCompare(x.filed) || y.value - x.value)[0];
+  const capexEver = capexFacts.some(f => f.filed >= revenue.filed) || (!!lastCapex && lastCapex.value >= revenue.value * 0.01);
+  const investingTagged = basis === "us-gaap" && collect(basis, ["NetCashProvidedByUsedInInvestingActivities", "NetCashProvidedByUsedInInvestingActivitiesContinuingOperations"]).some(samePeriod);
+  const capexNotReported = !capexRaw && !capexEver && investingTagged;
+  const zeroCapex = (like: Fact | null): Fact | null => capexNotReported && like ? { ...like, value: 0, tag: "capex-not-reported" } : null;
+  const capex = capexRaw && capexRaw.value >= 0 ? capexRaw : zeroCapex(operatingCash);
   const stockCompensationRaw = metric("stockCompensation");
   const stockCompensation = stockCompensationRaw && stockCompensationRaw.value >= 0 ? stockCompensationRaw : null;
   const unique = (values: Fact[]) => values.length && new Set(values.map(f => `${f.start}/${f.end}/${f.value}/${f.unit}`)).size === 1 ? values[0] : null;
@@ -175,7 +187,17 @@ export function extractFinancials(ticker: string, cik: string, payload: unknown,
   // Only a directly reported standalone quarter AFTER the annual period. Never treat YTD as a quarter.
   const quarters = collect(basis, tags[basis].revenue, false, "quarter").filter(f => f.end > revenue.end && f.unit === revenue.unit && f.value > 0 && (!primaryRevenueTag || `${f.basis}:${f.tag}` === primaryRevenueTag)).sort((a,b) => b.end.localeCompare(a.end) || b.filed.localeCompare(a.filed));
   const latestQuarter = quarters[0];
-  let quarterRevenue = latestQuarter ? unique(quarters.filter(f => f.end === latestQuarter.end && f.filed === latestQuarter.filed)) : null;
+  // A quarter can carry two revenue lines (Applied Digital, IREN: total "Revenues" and the narrower contract revenue). The total is taken
+  // only when the same filing shows it is exactly contract revenue plus lease or other non-contract revenue; any other disagreement
+  // between tags is a conflict and leaves the quarter empty.
+  const latestRows = latestQuarter ? quarters.filter(f => f.end === latestQuarter.end && f.filed === latestQuarter.filed) : [];
+  const reconciledTotal = (() => {
+    const total = unique(latestRows.filter(f => f.tag === "Revenues")), contract = unique(latestRows.filter(f => f.tag !== "Revenues"));
+    if (!total || !contract) return null;
+    const rest = collect(basis, ["RevenueNotFromContractWithCustomer", "OperatingLeaseLeaseIncome"], false, "quarter").filter(f => f.accession === total.accession && f.unit === total.unit && f.start === total.start && f.end === total.end);
+    return rest.some(f => Math.abs(contract.value + f.value - total.value) <= total.value * 0.001) ? total : null;
+  })();
+  let quarterRevenue = latestQuarter ? reconciledTotal ?? unique(latestRows) : null;
   // Right after a 10-K the fourth quarter has no filing of its own: it is the fiscal year minus the nine-month year-to-date of the same
   // year's third-quarter 10-Q (the same tag and unit, the YTD ending a quarter before the year end). Marked as derived; nothing is guessed.
   const fourth = (tag: string, wanted: Fact | null) => {
@@ -227,7 +249,7 @@ export function extractFinancials(ticker: string, cik: string, payload: unknown,
     }
     return null;
   }
-  const quarterOperatingCash=quarterCash("operatingCash"), quarterCapex=quarterCash("capex"), quarterCompensation=quarterMetric("stockCompensation");
+  const quarterOperatingCash=quarterCash("operatingCash"), quarterCapex=quarterCash("capex") ?? zeroCapex(quarterOperatingCash), quarterCompensation=quarterMetric("stockCompensation");
   const quarterShares = quarterRevenue ? unique(collect(basis,tags[basis].dilutedShares,false,"quarter",true).filter(f=>f.accession===quarterRevenue.accession && f.start===quarterRevenue.start && f.end===quarterRevenue.end && f.value>0)) : null;
   const previousQuarterShares = quarterShares && previousQuarterRevenue ? unique(collect(basis,[quarterShares.tag],false,"quarter",true).filter(f=>f.accession===quarterShares.accession && f.start===previousQuarterRevenue.start && f.end===previousQuarterRevenue.end && f.value>0)) : null;
   // The last four standalone quarters' operating margins, for the stability factor. Each quarter needs both revenue and operating income;
@@ -317,7 +339,7 @@ export function extractFinancials(ticker: string, cik: string, payload: unknown,
     shortBorrowings: balanceMetric("ShortTermBorrowings"), leaseCurrent: balanceMetric("OperatingLeaseLiabilityCurrent"), leaseNoncurrent: balanceMetric("OperatingLeaseLiabilityNoncurrent"),
     debtTotal: totalDebt(),
   };
-  return { ...result, status: "ready", balance, revenue, previousRevenue, operatingIncome, operatingCash, capex, cash,
+  return { ...result, status: "ready", ...(capexNotReported ? { capexNotReported: true } : {}), balance, revenue, previousRevenue, operatingIncome, operatingCash, capex, cash,
     stockCompensation, stockCompensationRatio: stockCompensation ? stockCompensation.value / revenue.value * 100 : null,
     dilutedShares, previousDilutedShares, dilutedSharesGrowth: dilutedShares && previousDilutedShares ? (dilutedShares.value / previousDilutedShares.value - 1) * 100 : null,
     quarterRevenue, previousQuarterRevenue, quarterOperatingIncome, quarterMargins, quarterRevenueTtm, quarterRevenueQoq,
