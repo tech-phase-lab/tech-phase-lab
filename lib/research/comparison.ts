@@ -10,6 +10,10 @@ export type BalanceSnapshot = {
   cash: Fact | null; currentAssets: Fact | null; currentLiabilities: Fact | null;
   currentRatio: number | null; debtCurrent: Fact | null; debtNoncurrent: Fact | null;
   shortBorrowings: Fact | null; leaseCurrent: Fact | null; leaseNoncurrent: Fact | null;
+  /** Interest-bearing debt at the same date from the same filing, however the company tags it (split current/noncurrent, one total, a carrying
+   * amount, convertible notes). "none": the filing has no borrowing or notes figure at all (a debt-free company such as CRDO or ALAB), shown as
+   * such. Null: tagged in a way that cannot be added up safely. Absent on older saved results. */
+  debtTotal?: { value: number; source: "split" | "total" | "noncurrent" | "carrying" | "convertible" | "none" } | null;
 };
 export type Financials = {
   twelveData?: import("./twelve-data-factors").TwelveFactorEvidence;
@@ -215,12 +219,36 @@ export function extractFinancials(ticker: string, cik: string, payload: unknown,
     return unique(collect(basis, [tag], true, balancePeriod).filter(f => f.end === anchor.end && f.accession === anchor.accession && f.unit === anchor.unit && f.value >= 0));
   }
   const currentAssets = balanceMetric("AssetsCurrent"), currentLiabilities = balanceMetric("LiabilitiesCurrent");
+  // Financial strength was "—" for most companies (MU, ALAB, CRDO, SNDK, BE, HIMS..., owner Nov 14) because only the split current/noncurrent
+  // long-term debt pair counted. The first complete form the filing uses is taken; forms are never mixed.
+  function totalDebt(): BalanceSnapshot["debtTotal"] {
+    if (basis !== "us-gaap") return null;
+    const m = balanceMetric, short = m("ShortTermBorrowings")?.value ?? 0;
+    const current = m("LongTermDebtCurrent"), noncurrent = m("LongTermDebtNoncurrent");
+    if (current && noncurrent) return { value: current.value + noncurrent.value, source: "split" };   // the same figure as before
+    const total = m("LongTermDebt");
+    if (total) return { value: total.value + short, source: "total" };
+    if (noncurrent) return { value: noncurrent.value + short, source: "noncurrent" };
+    const carrying = m("DebtInstrumentCarryingAmount");
+    if (carrying) return { value: carrying.value + short, source: "carrying" };
+    const convertible = m("ConvertibleDebtNoncurrent") ?? m("ConvertibleNotesPayable") ?? m("ConvertibleSeniorNotesPayable");
+    if (convertible) return { value: convertible.value + (m("ConvertibleDebtCurrent")?.value ?? m("ConvertibleNotesPayableCurrent")?.value ?? 0) + short, source: "convertible" };
+    // No form found: debt-free only if the filing reports no borrowing, loan or notes figure of any kind (investments in debt securities aside).
+    if (!currentAssets || !currentLiabilities || anchor.accession === null) return null;
+    const borrowing = /Debt|Borrowing|NotesPayable|LoansPayable|SeniorNotes|LineOfCredit|CreditFacility/;
+    const notBorrowing = /Securities|AvailableForSale|HeldToMaturity|Investment|Receivable|Allowance|Derivative|Hedg|Equity|Discount|Premium|IssuanceCost|Unamortized|Extinguishment|Interest|Repayment|Proceeds|Payments|Maturit|FairValue|Covenant|Percentage|Rate|Valuation|Forgiveness|Conversion/;
+    const usGaap = obj(facts["us-gaap"]);
+    const mentioned = Object.keys(usGaap).some(tag => borrowing.test(tag) && !notBorrowing.test(tag)
+      && Object.values(obj(obj(usGaap[tag]).units)).some(values => Array.isArray(values) && values.some(raw => obj(raw).accn === anchor.accession)));
+    return mentioned ? null : { value: 0, source: "none" };
+  }
   const balance: BalanceSnapshot = {
     end: anchor.end, filed: anchor.filed, sourceUrl: filingUrl(anchor),
     cash: balanceMetric("CashAndCashEquivalentsAtCarryingValue"), currentAssets, currentLiabilities,
     currentRatio: currentAssets && currentLiabilities && currentLiabilities.value > 0 ? currentAssets.value / currentLiabilities.value : null,
     debtCurrent: balanceMetric("LongTermDebtCurrent"), debtNoncurrent: balanceMetric("LongTermDebtNoncurrent"),
     shortBorrowings: balanceMetric("ShortTermBorrowings"), leaseCurrent: balanceMetric("OperatingLeaseLiabilityCurrent"), leaseNoncurrent: balanceMetric("OperatingLeaseLiabilityNoncurrent"),
+    debtTotal: totalDebt(),
   };
   return { ...result, status: "ready", balance, revenue, previousRevenue, operatingIncome, operatingCash, capex, cash,
     stockCompensation, stockCompensationRatio: stockCompensation ? stockCompensation.value / revenue.value * 100 : null,

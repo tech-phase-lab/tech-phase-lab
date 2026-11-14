@@ -24,6 +24,7 @@ async function server(stubs) {
     .replace(/import \{ prepareComparisonAnalysis, currentComparisonAnalysis \}[^;]*;/, "const { prepareComparisonAnalysis, currentComparisonAnalysis } = globalThis.__t;")
     .replace(/import \{ loadSecComparison \}[^;]*;/, "const loadSecComparison = globalThis.__t.loadSecComparison;")
     .replace(/import \{ loadMarketInputs, loadTwelveComparisonState \}[^;]*;/, "const { loadMarketInputs, loadTwelveComparisonState } = globalThis.__t;")
+    .replace(/import \{ freshEnough \}[^;]*;/, "const freshEnough = (cachedRead) => cachedRead();")
     .replace(/import \{ buildSecMarketEvidence \}[^;]*;/, "const buildSecMarketEvidence = globalThis.__t.buildSecMarketEvidence;")
     .replace(/import \{ appendMarketItems \}[^;]*;/, "const appendMarketItems = globalThis.__t.appendMarketItems;")
     .replace(/import \{ hasRecentQuarter \}[^;]*;/, "const hasRecentQuarter = globalThis.__t.hasRecentQuarter;");

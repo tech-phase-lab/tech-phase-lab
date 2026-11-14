@@ -91,3 +91,19 @@ test("valuation: forward P/E when every company has one; price-to-sales for all 
   const missing = applyValuationBasis([company("A", 20, 4), company("B", null, null)], NOW);
   assert.deepEqual(missing.map(valuation), [7, null]);              // no yardstick for everyone: left as before, never zero
 });
+
+test("financial strength reads debt in the form the filing uses; a filing with no borrowing figure at all is debt-free; unreadable stays empty", () => {
+  const withBalance = extra => {
+    const f = facts();
+    const usd = list => ({ units: { USD: list } });
+    const at = (val) => [{ end: "2026-09-30", val, accn: Q3, filed: "2026-11-05", form: "10-Q" }];
+    Object.assign(f.facts["us-gaap"], { CashAndCashEquivalentsAtCarryingValue: usd(at(50)), AssetsCurrent: usd(at(300)), LiabilitiesCurrent: usd(at(100)) });
+    for (const [tag, val] of Object.entries(extra)) f.facts["us-gaap"][tag] = usd(at(val));
+    return extractFinancials("AAOI", "1", f, NOW).balance.debtTotal;
+  };
+  assert.deepEqual(withBalance({ LongTermDebtCurrent: 10, LongTermDebtNoncurrent: 90 }), { value: 100, source: "split" });
+  assert.deepEqual(withBalance({ LongTermDebt: 80, ShortTermBorrowings: 5 }), { value: 85, source: "total" });
+  assert.deepEqual(withBalance({ ConvertibleDebtNoncurrent: 70 }), { value: 70, source: "convertible" });
+  assert.deepEqual(withBalance({ AvailableForSaleSecuritiesDebtSecurities: 900 }), { value: 0, source: "none" });   // owning bonds is not borrowing
+  assert.equal(withBalance({ LineOfCredit: 40 }), null);                                                       // borrowing we cannot add up: no score
+});
