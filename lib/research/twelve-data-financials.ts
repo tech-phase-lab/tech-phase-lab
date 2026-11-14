@@ -72,7 +72,7 @@ export function buildTwelveFinancials(bundle:TwelveComparisonBundle,now=Date.now
   const result:Financials={...emptyFinancials(bundle.ticker,"unavailable",bundle.retrievedAt),
     status:"ready",twelveData:evidence,quarterRevenue:fact(s.revenue,"sales"),
     previousQuarterRevenue:s.previousPeriodEnd ? fact(s.previousRevenue,"sales",s.previousPeriodEnd) : null,
-    quarterOperatingIncome:fact(s.operatingIncome,"operating_income"),
+    quarterOperatingIncome:fact(s.operatingIncome,s.operatingIncomeBasis==="pretax" ? "TechPhasePretaxIncome" : "operating_income"),
     quarterRevenueGrowth:s.revenueGrowthPct,quarterRevenueQoq:sequentialGrowth(bundle.income,s.periodEnd,s.revenue),quarterOperatingMargin:s.operatingMarginPct,
     quarterFcfMargin:s.freeCashFlowMarginPct,quarterSourceUrl:sourceUrl,
     ...(s.cashFlowPeriodEnd ? {supplemented:["cash"],supplementedFromQuarter:s.cashFlowPeriodEnd} : {})};

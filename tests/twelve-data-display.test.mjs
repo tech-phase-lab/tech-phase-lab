@@ -150,3 +150,16 @@ test("cash flow one quarter behind the income statement: free cash flow on that 
   b.cashFlow.cash_flow[0].fiscal_date="2026-02-28";     // two quarters behind: nothing
   assert.equal(buildTwelveFinancials(b,now).quarterFcfMargin,null);
 });
+
+test("a bank at the provider: pre-tax margin for profitability and stability, cash against debt for financial strength (HSBC)",()=>{
+  const b=bundle();
+  for(const r of b.income.income_statement){r.pretax_income=r.operating_income;r.operating_income=null;}
+  b.statistics.payload.statistics.financials.balance_sheet.current_ratio_mrq=null;
+  const c=buildTwelveFinancials(b,now);
+  assert.equal(c.quarterOperatingIncome.tag,"TechPhasePretaxIncome");
+  assert.equal(c.quarterOperatingMargin,20);
+  const s=Object.fromEntries(comparisonScores(c,now).map(x=>[x.id,x.value]));
+  assert.notEqual(s.profitability,null);
+  assert.notEqual(s.stability,null);
+  assert.equal(s.financial,10);                       // cash 100 against debt 50: capped at 1x
+});
