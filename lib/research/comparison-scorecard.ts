@@ -76,8 +76,11 @@ export function comparisonScores(c: Financials, now = Date.now()): ComparisonSco
 export function balanceDebt(c: Financials): number | null {
   const b=c.balance;
   if(!b) return null;
-  if(b.debtTotal!==undefined) return b.debtTotal ? b.debtTotal.value : null;
-  return b.debtCurrent && b.debtNoncurrent ? b.debtCurrent.value+b.debtNoncurrent.value : null;
+  const own=b.debtTotal!==undefined ? (b.debtTotal ? b.debtTotal.value : null) : b.debtCurrent && b.debtNoncurrent ? b.debtCurrent.value+b.debtNoncurrent.value : null;
+  if(own!==null) return own;
+  // Debt tagged in a company's own way (ORCL): the provider's total debt for the very same quarter end, never another quarter's.
+  const s=c.twelveData?.statistics;
+  return s && s.quarterEnd===b.end && s.totalDebt!==null && s.totalDebt!==undefined && s.totalCash===null ? s.totalDebt : null;
 }
 /** Display actual measurements beside the reference bars, including unscored factors. */
 export function comparisonMetric(c: Financials, id: ScoreId, lang: "ja"|"en", now=Date.now()): string {
