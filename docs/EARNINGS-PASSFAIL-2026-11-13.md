@@ -1,6 +1,6 @@
 # Earnings flash pass/fail (latest real release of each watch-list company)
 
-Generated 2026-11-14 · PASS 32 / 32 (expansion to all 50 calendar companies in progress: batches 1 and 2 added; QCOM and IBM have no figure parser because their releases print no quarter revenue headline to check against, so they show only "決算を発表しました" with the official link; the other companies are not yet done)
+Generated 2026-11-14 · PASS 37 / 37 (expansion to all 50 calendar companies in progress: batches 1-3 added; QCOM and IBM have no figure parser because their releases print no quarter revenue headline to check against; CEG, VST and COHR need a different statement layout (no year-ago column in the same table / preferred dividends); LITE, AAOI, ALAB, IONQ, IREN, SOFI, TSLA are still to do. These show only "決算を発表しました" with the official link)
 
 | Ticker | Verdict | Detection source | Figures | Reason |
 |---|---|---|---|---|
@@ -36,6 +36,11 @@ Generated 2026-11-14 · PASS 32 / 32 (expansion to all 50 calendar companies in 
 | SNOW | PASS | SEC 8-K 2026-09-02T20:08Z | 4 | 4 figures, e.g. revenue $1.546793B |
 | CRM | PASS | SEC 8-K 2026-08-26T20:03Z | 4 | 4 figures, e.g. revenue $11.345B |
 | ADBE | PASS | SEC 8-K 2026-09-10T20:06Z | 4 | 4 figures, e.g. revenue $6.76B |
+| KLAC | PASS | SEC 8-K 2026-10-28T20:07Z | 3 | 3 figures, e.g. revenue $4.136015B |
+| LRCX | PASS | SEC 8-K 2026-10-21T20:13Z | 4 | 4 figures, e.g. revenue $8.219418B |
+| STX | PASS | SEC 8-K 2026-10-27T20:12Z | 4 | 4 figures, e.g. revenue $4.233B |
+| APH | PASS | SEC 8-K 2026-10-28T13:42Z | 4 | 4 figures, e.g. revenue $10.2297B |
+| BE | PASS | SEC 8-K 2026-10-22T20:09Z | 4 | 4 figures, e.g. revenue $1.235837B |
 
 ## How this table is made
 `python3 scripts/research/earnings_backtest.py` (add `--json` for a machine-readable copy) takes each company's **latest real release** (SEC 8-K Item 2.02 or 6-K exhibit;

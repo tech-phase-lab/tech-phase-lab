@@ -315,7 +315,10 @@ def parse_statement(text, cfg):
         first, second = (found[0], None) if isinstance(found[0], str) else (found[0][0], found[0][1] if len(found[0]) > 1 else None)
         if cfg.get('year-first'):  # "fiscal 2026 fourth quarter": the year is printed before the quarter
             first, second = second, first
-        quarter, year = (int(first) if first.isdigit() else QUARTERS[first.lower()]), (int(second) if second else None)
+        if cfg.get('period-text'):  # a period named by its text (e.g. "quarter ended September 27, 2026"): the lambda gets the raw groups
+            quarter, year = first, int(second)
+        else:
+            quarter, year = (int(first) if first.isdigit() else QUARTERS[first.lower()]), (int(second) if second else None)
     else:
         quarter, year = headline_period(t)
     start = t.find(cfg['heading'])
@@ -393,7 +396,8 @@ def parse_statement(text, cfg):
     else:
         net_ok = all(agrees('pretax', 'tax', 'net', i) for i in (0, ago)) if rows.get('tax') is not None else False
     if net_ok and cfg['rows'].get('attrib'):  # net income attributable to common = net income - non-controlling interests
-        net_ok = all(None not in (col('net', i), col('nci', i), col('attrib', i)) and abs(col('net', i) - col('nci', i) - col('attrib', i)) <= cfg['tol']
+        sign = 1 if cfg.get('nci-signed') else -1  # nci-signed: the release prints the deduction as a negative number
+        net_ok = all(None not in (col('net', i), col('nci', i), col('attrib', i)) and abs(col('net', i) + sign * col('nci', i) - col('attrib', i)) <= cfg['tol']
                      for i in (0, ago))
         if net_ok:
             rows['net'] = rows['attrib']
@@ -416,6 +420,40 @@ def parse_statement(text, cfg):
 
 
 STATEMENT = {
+    'BE': {'identity': 'bloom energy', 'heading': 'Condensed Consolidated Statements of Operations* (in thousands', 'end': 'Condensed Consolidated Statement of Cash Flows', 'units': 'in thousands',
+           'scale': Decimal('0.001'), 'tol': Decimal(1), 'columns': 3, 'year-ago': 2,
+           'growth': r'revenue of \$[\d,.]+ million, delivering (\d+\.\d)% year-over-year growth',
+           'period-re': r'Bloom Energy Reports [A-Za-z ]*?(First|Second|Third|Fourth) Quarter (20\d\d) Financial Results', 'period': lambda q, y: f'Q{q} {y}',
+           'rows': {'revenue': 'Total revenue', 'cost': 'Total cost of revenue', 'gross': 'Gross profit', 'opex': 'Total operating expenses', 'operating': 'Income from operations',
+                    'pretax': r'Profit \(loss\) before income taxes', 'tax': 'Income tax provision', 'net': r'Net profit \(loss\)',
+                    'nci': r'Less: Net \(loss\) income attributable to noncontrolling interest', 'attrib': r'Net income \(loss\) attributable to common stockholders',
+                    'eps': r'Net earnings \(loss\) per share available to common stockholders: Basic (?:\$ ' + AMT + ' ){3}Diluted',
+                    'shares': r'Weighted average shares used to compute net earnings \(loss\) per share available to common stockholders: Basic ' + (AMT + ' ') * 3 + 'Diluted'}},
+    'KLAC': {'identity': 'kla corporation', 'heading': 'Unaudited Statements of Operations Three Months Ended (In thousands', 'end': 'Statements of Cash Flows', 'units': 'in thousands',
+             'scale': Decimal('0.001'), 'tol': Decimal(1), 'columns': 3, 'year-ago': 2, 'year-first': True, 'headline': r'Total revenues were \$([\d.]+) billion',
+             'period-re': r'Reports Fiscal (20\d\d) (First|Second|Third|Fourth) Quarter Results', 'period': lambda q, y: f'Q{q} FY{y}',
+             'rows': {'revenue': 'Total revenues', 'pretax': 'Income before income taxes', 'tax': 'Provision for income taxes', 'net': 'Net income',
+                      'eps': r'Net income per share\(1\) Basic \$ [\d.]+ (?:\$ [\d.]+ ){2}Diluted', 'shares': r'Weighted-average number of shares\(1\): Basic [\d,]+ (?:[\d,]+ ){2}Diluted'}},
+    'LRCX': {'identity': 'lam research', 'heading': 'CONSOLIDATED STATEMENTS OF OPERATIONS(in thousands', 'end': 'CONDENSED CONSOLIDATED BALANCE SHEETS', 'units': 'in thousands',
+             'scale': Decimal('0.001'), 'tol': Decimal(1), 'columns': 3, 'year-ago': 2, 'net-chain': 'additive', 'headline': r'Revenue of \$([\d.]+) billion',
+             'period-re': r'today announced financial results for the quarter ended (March|June|September|December) \d{1,2}, (20\d\d)', 'period-text': True, 'period': lambda m, y: f'{m[:3]} {y} quarter',
+             'rows': {'revenue': 'Revenue', 'cost': 'Cost of goods sold', 'gross': 'Gross margin', 'opex': 'Total operating expenses', 'operating': 'Operating income',
+                      'pretax': 'Income before income taxes', 'tax': 'Income tax expense', 'net': 'Net income',
+                      'eps': r'Net income per share: Basic \$ [\d.]+ (?:\$ [\d.]+ ){2}Diluted', 'shares': r'Number of shares used in per share calculations: Basic [\d,]+ (?:[\d,]+ ){2}Diluted'}},
+    'STX': {'identity': 'seagate', 'heading': 'CONSOLIDATED STATEMENTS OF OPERATIONS(In millions', 'end': 'STATEMENTS OF CASH FLOWS', 'units': 'in millions', 'scale': Decimal(1), 'tol': Decimal(1),
+            'columns': 2, 'year-ago': 1, 'op-direct': True, 'headline': r'Highlights▪Revenue of \$([\d.]+) billion',
+            'period-re': r'REPORTS FISCAL (FIRST|SECOND|THIRD|FOURTH) QUARTER (20\d\d) FINANCIAL RESULTS', 'period': lambda q, y: f'Q{q} FY{y}',
+            'rows': {'revenue': 'Revenue', 'cost': 'Total operating expenses', 'operating': 'Income from operations', 'pretax': 'Income before income taxes',
+                     'tax': 'Provision for income taxes', 'net': 'Net income',
+                     'eps': r'Net income per share: Basic \$ [\d.]+ \$ [\d.]+ Diluted', 'shares': r'Number of shares used in per share calculations: Basic [\d,]+ [\d,]+ Diluted'}},
+    'APH': {'identity': 'amphenol', 'heading': 'CONDENSED CONSOLIDATED STATEMENTS OF INCOME (Unaudited) (dollars and shares in millions', 'units': 'dollars and shares in millions', 'scale': Decimal(1),
+            'tol': Decimal('0.15'), 'columns': 4, 'year-ago': 1, 'net-chain': 'additive', 'nci-signed': True,
+            'growth': r'Sales of \$[\d.]+ billion, up (\d+)% in U\.S\. dollars',
+            'period-re': r'AMPHENOL REPORTS [A-Z ]*?(FIRST|SECOND|THIRD|FOURTH) QUARTER (20\d\d) RESULTS', 'period': lambda q, y: f'Q{q} {y}',
+            'rows': {'revenue': 'Net sales', 'cost': r'Cost of sales(?: \(\d\))?', 'gross': 'Gross profit', 'opex': ['Acquisition-related expenses', 'Selling, general and administrative expenses'],
+                     'operating': 'Operating income', 'pretax': 'Income before income taxes', 'tax': r'Provision for income taxes(?: \(\d\))?', 'net': 'Net income',
+                     'nci': 'Less: Net income attributable to noncontrolling interests', 'attrib': r'Net income attributable to Amphenol Corporation',
+                     'eps': r'Net income attributable to Amphenol Corporation per common share — Diluted(?: \(\d\))?', 'shares': r'Weighted average common shares outstanding — Diluted'}},
     'META': {'identity': 'meta platforms', 'heading': 'CONDENSED CONSOLIDATED STATEMENTS OF INCOME (In millions', 'end': 'CONDENSED CONSOLIDATED BALANCE SHEETS', 'units': 'in millions',
              'scale': Decimal(1), 'tol': Decimal(1), 'columns': 4, 'year-ago': 1, 'op-direct': True, 'window': 6000,
              'growth': r'Revenue was \$[\d.]+ billion, an increase of (\d+)% year-over-year',
@@ -1079,6 +1117,11 @@ PROFILES = {
     'SNOW': {'publisher': 'Snowflake IR (SEC 8-K)', 'parse': lambda t, u=None: parse_statement(t, STATEMENT['SNOW']), 'marker': STATEMENT['SNOW']['heading']},
     'CRM': {'publisher': 'Salesforce IR (SEC 8-K)', 'parse': lambda t, u=None: parse_statement(t, STATEMENT['CRM']), 'marker': STATEMENT['CRM']['heading']},
     'ADBE': {'publisher': 'Adobe IR (SEC 8-K)', 'parse': lambda t, u=None: parse_statement(t, STATEMENT['ADBE']), 'marker': STATEMENT['ADBE']['heading']},
+    'KLAC': {'publisher': 'KLA IR (SEC 8-K)', 'parse': lambda t, u=None: parse_statement(t, STATEMENT['KLAC']), 'marker': STATEMENT['KLAC']['heading']},
+    'LRCX': {'publisher': 'Lam Research IR (SEC 8-K)', 'parse': lambda t, u=None: parse_statement(t, STATEMENT['LRCX']), 'marker': STATEMENT['LRCX']['heading']},
+    'STX': {'publisher': 'Seagate IR (SEC 8-K)', 'parse': lambda t, u=None: parse_statement(t, STATEMENT['STX']), 'marker': STATEMENT['STX']['heading']},
+    'APH': {'publisher': 'Amphenol IR (SEC 8-K)', 'parse': lambda t, u=None: parse_statement(t, STATEMENT['APH']), 'marker': STATEMENT['APH']['heading']},
+    'BE': {'publisher': 'Bloom Energy IR (SEC 8-K)', 'parse': lambda t, u=None: parse_statement(t, STATEMENT['BE']), 'marker': STATEMENT['BE']['heading']},
     'ARM': {'publisher': 'Arm IR (SEC 6-K)', 'parse': lambda t, u=None: parse_statement(t, STATEMENT['ARM']), 'marker': 'Condensed Consolidated Income Statements'},
     'MSFT': {'publisher': 'Microsoft IR (SEC 8-K)', 'parse': lambda t, u=None: parse_statement(t, STATEMENT['MSFT']), 'marker': STATEMENT['MSFT']['heading']},
     'AMD': {'publisher': 'AMD IR (SEC 8-K)', 'parse': lambda t, u=None: parse_statement(t, STATEMENT['AMD']), 'marker': STATEMENT['AMD']['heading']},
