@@ -362,6 +362,31 @@ class OfficialResearchTests(unittest.TestCase):
         self.assertEqual(self.run_note(lambda *_:self.fail('before retry deadline')), 'idle')
         self.assertEqual(research.run_once(self.path,response,ENV,NOW.timestamp()+60), 'done')
 
+    def test_a_copy_that_keeps_failing_the_checks_stops_after_the_attempt_cap_without_an_incident(self):
+        import news_delivery_status as status
+        def fail(*args): raise ValueError('unsupported-number')
+        with research.connect(self.path) as db:  # seven rejected attempts already recorded
+            row = research.candidates(db, NOW)[0]
+            db.execute("INSERT INTO official_research_jobs(event_id,sha,attempts,next_at,lease,state,failure_kind) VALUES(?,?,?,0,'old','retry','unsupported-number')",
+                       (row['id'], row['sha'], status.EXHAUSTED_AFTER_ATTEMPTS - 1))
+        self.assertEqual(research.run_once(self.path, fail, ENV, NOW.timestamp()), 'exhausted')
+        clock = NOW.timestamp()
+        later = clock + 3600
+        self.assertEqual(research.run_once(self.path, lambda *_: self.fail('paid call after the cap'), ENV, later), 'idle')
+        with research.connect(self.path) as db:
+            job = db.execute('SELECT state,attempts,failure_kind FROM official_research_jobs').fetchone()
+            self.assertEqual((job['state'], job['attempts'], job['failure_kind']), ('exhausted', status.EXHAUSTED_AFTER_ATTEMPTS, 'unsupported-number'))
+            delivery = research.diagnostics(db)['delivery']
+            self.assertEqual((delivery['exhausted'], delivery['automaticPending'], delivery['automaticOverdue']), (1, 0, 0))
+            self.assertEqual(delivery['unpublished'], 1)
+            self.assertEqual(delivery['attemptFailureKinds'], {'unsupported-number': 1})
+            self.assertEqual([j['state'] for j in research.diagnostics(db)['notDone']], ['exhausted'])
+            self.assertIsNone(research.sync_incident(db, {}, NOW))
+            # a new release of the same source (new sha) starts again at attempt 1
+            db.execute("UPDATE official_research_jobs SET sha='older-revision'")
+            self.assertEqual(status.is_exhausted('retry', 8, 'provider-unavailable'), False)
+            self.assertEqual(status.is_exhausted('retry', 8, 'unsupported-number'), True)
+
     def test_numerical_worker_runs_even_when_translation_is_unconfigured(self):
         import service
         with patch.dict('os.environ',{},clear=True):app=service.AutomaticMonitor(self.path,Path(self.tmp.name)/'snapshot.json')

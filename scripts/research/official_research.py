@@ -754,6 +754,9 @@ def claim(db, reference, model, limit):
             expedited=False
             if job and job['state']=='done':
                 job=None  # Regenerate an invalid saved publication.
+            if (job and job['sha']==r['sha']
+                    and news_delivery_status.is_exhausted(job['state'],job['attempts'],job['failure_kind'])):
+                continue  # Exhausted: the original text stays; a new release (new sha) starts again.
             if job and job['sha']==r['sha'] and job['next_at']>now:
                 expedited=repair_candidate and content_repair.can_expedite(db,r,job)
                 if not expedited:
@@ -1123,9 +1126,11 @@ def run_once(path, transport=brief_generator.request_response, env=None, now=Non
             delay=max(headline_translation.retry_delay(job[0] if job else 1, reason, frequent=OFFICIAL_FREQUENT_RETRIES), min(getattr(exc, "retry_after_seconds", None) or 0, 604800))
             if earnings_release(row) and (job[0] if job else 1) <= EARNINGS_FAST_RETRIES:
                 delay=max(min(delay,EARNINGS_RETRY_SECONDS), min(getattr(exc, "retry_after_seconds", None) or 0, 604800))
-            db.execute("UPDATE official_research_jobs SET state='retry',next_at=?,failure_kind=? WHERE event_id=? AND lease=?",(now+delay,reason,row['id'],lease))
+            exhausted=bool(job and job[0]>=news_delivery_status.EXHAUSTED_AFTER_ATTEMPTS and reason in news_delivery_status.CONTENT_FAILURES)
+            db.execute("UPDATE official_research_jobs SET state=?,next_at=?,failure_kind=? WHERE event_id=? AND lease=?",
+                       ('exhausted' if exhausted else 'retry',now+delay,reason,row['id'],lease))
             db.execute("UPDATE signal_headline_translation_calls SET state='failed' WHERE lease=?",(lease,))
-        return 'retry'
+        return 'exhausted' if exhausted else 'retry'
     public_at=datetime.now(timezone.utc).isoformat(timespec='milliseconds')
     source_adapter=next((adapter for adapter in (macro_source_publication, attributed_policy_publication)
                          if isinstance(note,dict) and adapter.MARKER in note),None)
