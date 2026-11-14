@@ -123,6 +123,7 @@ test("financial strength reads debt in the form the filing uses; a filing with n
   assert.deepEqual(withBalance({ LongTermDebtCurrent: 10, LongTermDebtNoncurrent: 90 }), { value: 100, source: "split" });
   assert.deepEqual(withBalance({ LongTermDebt: 80, ShortTermBorrowings: 5 }), { value: 85, source: "total" });
   assert.deepEqual(withBalance({ ConvertibleDebtNoncurrent: 70 }), { value: 70, source: "convertible" });
+  assert.deepEqual(withBalance({ LongTermDebtAndCapitalLeaseObligationsIncludingCurrentMaturities: 460, ShortTermBorrowings: 71 }), { value: 531, source: "total" });   // JPMorgan
   assert.deepEqual(withBalance({ AvailableForSaleSecuritiesDebtSecurities: 900 }), { value: 0, source: "none" });   // owning bonds is not borrowing
   assert.equal(withBalance({ LineOfCredit: 40 }), null);                                                       // borrowing we cannot add up: no score
   // Debt tagged only by segment (GM) leaves no borrowing tag, but long-term liabilities over a quarter of assets are not "debt-free".
