@@ -22,7 +22,7 @@ import monitor
 
 MAX_ATTEMPTS = 3
 # Bump when the prompt/check logic changes so analyses held under the old logic are tried again (attempts restart at 0).
-VERSION = 7
+VERSION = 8
 RETRY_SECONDS = 120
 DEFAULT_DAILY_LIMIT = 40
 MAX_DAILY_LIMIT = 200
@@ -125,15 +125,17 @@ def indicator_sources(db, reference):
 
 UNIT_HEADER = re.compile(r'(?i)\bin\s+(?:usd\s*\$?\s*|us\$\s*|u\.s\.\s*\$?\s*|eur\s*\u20ac?\s*|\$\s*|\u20ac\s*)?(thousands|millions|billions)\b|\bin\s+(thousands|millions|billions)\s+of\s+(?:u\.s\.\s*dollars|us\s*dollars|dollars|euros)')
 TABLE_FIGURE = re.compile(r'(?<![\w.,$\u20ac])(\d{1,3}(?:,\d{3})+(?:\.\d+)?|\d+\.\d+)(?![\d.,%]|\s?%|\s?x\b)')
-TABLE_WINDOW = 2500
+TABLE_WINDOW = 6000
 SCALE_WORD = {'thousands': 'thousand', 'millions': 'million', 'billions': 'billion'}
 
 
-def table_scaled_figures(evidence):
+def table_scaled_figures(evidence, within=None):
     """Figures of a statement table printed in the unit its header declares ("In USD $ millions ... Revenues 146.1 980.8"), written out in that unit
     ("980.8 million"). Only decimal or comma-grouped numbers within TABLE_WINDOW characters after one header are converted, never percentages or
     plain integers (years, counts), and a header that declares different units for the same excerpt converts nothing. The result is appended to the
-    evidence for the number check only, so "$980.8 million" matches the source figure 980.8 of a USD-millions table; no other number is admitted."""
+    evidence for the number check only, so "$980.8 million" matches the source figure 980.8 of a USD-millions table; no other number is admitted.
+    `evidence` is the whole release (the unit header is often in an excerpt the point did not cite); with `within` (the cited excerpts) only figures
+    that literally appear there are returned, so a point still cannot use a figure from text it did not cite."""
     headers = [(m.start(), (m.group(1) or m.group(2)).lower()) for m in UNIT_HEADER.finditer(evidence)]
     if not headers or len({scale for _, scale in headers}) != 1:
         return ''
@@ -142,16 +144,18 @@ def table_scaled_figures(evidence):
     for index, (start, _) in enumerate(headers):
         end = min(headers[index + 1][0] if index + 1 < len(headers) else len(evidence), start + TABLE_WINDOW)
         figures += [m.group(1) for m in TABLE_FIGURE.finditer(evidence[start:end])]
+    if within is not None:
+        figures = [figure for figure in figures if re.search(r'(?<![\d.,])' + re.escape(figure) + r'(?![\d,]|\.\d)', within)]
     return '; '.join('%s %s' % (figure, scale) for figure in dict.fromkeys(figures))
 
 
-def checked(item, quote):
+def checked(item, quote, release=None):
     """Copy that passes the number, meaning and pair checks against `quote`."""
     for lang in ('ja', 'en'):
         text = item.get(lang)
         if not isinstance(text, str) or not text.strip() or len(text) > 600:
             raise ValueError('invalid-copy')
-        factual_validation.validate_numbers(text, quote + '\n' + table_scaled_figures(quote))
+        factual_validation.validate_numbers(text, quote + '\n' + table_scaled_figures(release or quote, within=quote))
         factual_validation.validate_semantics(text, quote)
     factual_validation.validate_pair(item['ja'], item['en'])
 
@@ -202,7 +206,7 @@ def bind(value, excerpts):
     # The headline is checked against the excerpts it cites (like every point), not against the whole release: a long release always
     # contains some negated clause, which made the meaning checks fail a headline that never touched it.
     try:
-        checked(headline, cited_quote(headline, excerpts) or evidence)
+        checked(headline, cited_quote(headline, excerpts) or evidence, evidence)
     except (ValueError, TypeError, KeyError) as exc:
         raise Unchecked(str(exc) if isinstance(exc, ValueError) else type(exc).__name__, {'headline': why(exc, evidence)})
     points, rejected = [], {}
@@ -212,7 +216,7 @@ def bind(value, excerpts):
             rejected['evidence-missing'] = rejected.get('evidence-missing', 0) + 1
             continue
         try:
-            checked(point, quote)
+            checked(point, quote, evidence)
         except (ValueError, TypeError, KeyError) as exc:
             reason = why(exc, evidence)
             rejected[reason] = rejected.get(reason, 0) + 1
@@ -222,7 +226,7 @@ def bind(value, excerpts):
         raise Unchecked('too-few-checked-points', {'kept': len(points), 'rejected': rejected})
     watch = value.get('watch')
     try:
-        checked(watch, cited_quote(watch, excerpts) or evidence)
+        checked(watch, cited_quote(watch, excerpts) or evidence, evidence)
         watch = {'ja': watch['ja'], 'en': watch['en']}
     except (ValueError, TypeError, KeyError, AttributeError):
         watch = None
