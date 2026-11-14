@@ -8,7 +8,7 @@ import { freshEnough } from "../lib/research/fresh-enough.ts";
 const NOW = Date.parse("2026-11-14T03:00:00Z");
 const fact = (start, end, val, accn, filed, form = "10-Q") => ({ start, end, val, accn, filed, form });
 const Q1 = "0000000001-26-000001", Q2 = "0000000001-26-000002", Q3 = "0000000001-26-000003", FY = "0000000001-26-000000";
-function facts({ capexTag = "PaymentsToAcquireOtherPropertyPlantAndEquipment", q3Capex = true } = {}) {
+function facts({ capexTag = "PaymentsToAcquireOtherPropertyPlantAndEquipment", q3Capex = true, investing = false } = {}) {
   const usd = list => ({ units: { USD: list } });
   return { cik: 1, facts: { "us-gaap": {
     RevenueFromContractWithCustomerExcludingAssessedTax: usd([
@@ -22,10 +22,11 @@ function facts({ capexTag = "PaymentsToAcquireOtherPropertyPlantAndEquipment", q
       fact("2026-01-01", "2026-06-30", -70, Q2, "2026-08-06"),
       fact("2026-01-01", "2026-09-30", -76, Q3, "2026-11-05"),
     ]),
-    [capexTag]: usd([
+    ...(capexTag ? { [capexTag]: usd([
       fact("2026-01-01", "2026-06-30", 330, Q2, "2026-08-06"),
       ...(q3Capex ? [fact("2026-01-01", "2026-09-30", 700, Q3, "2026-11-05")] : []),
-    ]),
+    ]) } : {}),
+    ...(investing ? { NetCashProvidedByUsedInInvestingActivities: usd([fact("2025-01-01", "2025-12-31", -50, FY, "2026-02-20", "10-K")]) } : {}),
   } } };
 }
 
@@ -39,6 +40,20 @@ test("second/third quarter cash flow is this year-to-date minus the previous one
 test("a missing year-to-date figure leaves cash generation empty, never a guess", () => {
   const c = extractFinancials("AAOI", "1", facts({ q3Capex: false }), NOW);
   assert.equal(c.quarterFcfMargin, null);
+});
+
+test("a company that never tags capital spending counts it as zero, said on screen; otherwise nothing is guessed", () => {
+  const none = extractFinancials("ABNB", "1", facts({ capexTag: null, investing: true }), NOW);
+  assert.equal(none.capexNotReported, true);
+  assert.equal(none.quarterFcfMargin, -3);   // operating cash -6 on revenue 200, capital spending 0
+  // Without a tagged investing section the statement may simply be untagged: left empty.
+  const untagged = extractFinancials("ABNB", "1", facts({ capexTag: null }), NOW);
+  assert.equal(untagged.capexNotReported, undefined);
+  assert.equal(untagged.quarterFcfMargin, null);
+  // A company that does tag capex, but not this quarter, is still left empty (never zero).
+  const missing = extractFinancials("AAOI", "1", facts({ q3Capex: false, investing: true }), NOW);
+  assert.equal(missing.capexNotReported, undefined);
+  assert.equal(missing.quarterFcfMargin, null);
 });
 
 test("the provider's stated free cash flow is used only when it has no capex line", () => {

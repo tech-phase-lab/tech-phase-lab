@@ -23,6 +23,9 @@ export type Financials = {
   supplementedFinancialAllowed?: boolean;
   /** Set when a newer earnings release is out but its quarterly report is not yet filed: the figures are the previous quarter's, said on screen. */
   previousQuarterShown?: string;
+  /** True when the company never tags a capital-spending line (AirBnB, AppLovin: immaterial, folded into "other"), so free cash flow
+   *  is operating cash flow with capital spending counted as zero. Said on screen. */
+  capexNotReported?: boolean;
   /** "ps": this comparison scores valuation on price-to-sales for every company, because one of them has no forward P/E. Set per comparison. */
   valuationBasis?: import("./twelve-data-factors").ValuationBasis;
   referenceEvaluation?: import("./comparison-reference").ReferenceEvaluation;
@@ -165,7 +168,13 @@ export function extractFinancials(ticker: string, cik: string, payload: unknown,
   const operatingIncome = metric("operatingIncome"), operatingCash = metric("operatingCash"), cash = metric("cash");
   // Capital spending is tagged one of several ways (AAOI switched tags mid-year): the first tag the filing uses is taken, never a mix.
   const capexRaw = (() => { for (const tag of tags[basis].capex) { const values = collect(basis, [tag]).filter(samePeriod); if (values.length) return new Set(values.map(f => f.value)).size === 1 ? values[0] : null; } return null; })();
-  const capex = capexRaw && capexRaw.value >= 0 ? capexRaw : null;
+  // Some companies never tag capital spending (immaterial, inside "other investing"). Only then — no capex tag in any 10-K or 10-Q filed
+  // in the last three years, while the same filing does tag its investing cash flow — is capital spending counted as zero.
+  const capexEver = (["annual", "ytd", "quarter"] as const).some(period => collect(basis, tags[basis].capex, false, period).some(f => day(revenue.filed) - day(f.filed) <= 1100));
+  const investingTagged = basis === "us-gaap" && collect(basis, ["NetCashProvidedByUsedInInvestingActivities", "NetCashProvidedByUsedInInvestingActivitiesContinuingOperations"]).some(samePeriod);
+  const capexNotReported = !capexRaw && !capexEver && investingTagged;
+  const zeroCapex = (like: Fact | null): Fact | null => capexNotReported && like ? { ...like, value: 0, tag: "capex-not-reported" } : null;
+  const capex = capexRaw && capexRaw.value >= 0 ? capexRaw : zeroCapex(operatingCash);
   const stockCompensationRaw = metric("stockCompensation");
   const stockCompensation = stockCompensationRaw && stockCompensationRaw.value >= 0 ? stockCompensationRaw : null;
   const unique = (values: Fact[]) => values.length && new Set(values.map(f => `${f.start}/${f.end}/${f.value}/${f.unit}`)).size === 1 ? values[0] : null;
@@ -227,7 +236,7 @@ export function extractFinancials(ticker: string, cik: string, payload: unknown,
     }
     return null;
   }
-  const quarterOperatingCash=quarterCash("operatingCash"), quarterCapex=quarterCash("capex"), quarterCompensation=quarterMetric("stockCompensation");
+  const quarterOperatingCash=quarterCash("operatingCash"), quarterCapex=quarterCash("capex") ?? zeroCapex(quarterOperatingCash), quarterCompensation=quarterMetric("stockCompensation");
   const quarterShares = quarterRevenue ? unique(collect(basis,tags[basis].dilutedShares,false,"quarter",true).filter(f=>f.accession===quarterRevenue.accession && f.start===quarterRevenue.start && f.end===quarterRevenue.end && f.value>0)) : null;
   const previousQuarterShares = quarterShares && previousQuarterRevenue ? unique(collect(basis,[quarterShares.tag],false,"quarter",true).filter(f=>f.accession===quarterShares.accession && f.start===previousQuarterRevenue.start && f.end===previousQuarterRevenue.end && f.value>0)) : null;
   // The last four standalone quarters' operating margins, for the stability factor. Each quarter needs both revenue and operating income;
@@ -317,7 +326,7 @@ export function extractFinancials(ticker: string, cik: string, payload: unknown,
     shortBorrowings: balanceMetric("ShortTermBorrowings"), leaseCurrent: balanceMetric("OperatingLeaseLiabilityCurrent"), leaseNoncurrent: balanceMetric("OperatingLeaseLiabilityNoncurrent"),
     debtTotal: totalDebt(),
   };
-  return { ...result, status: "ready", balance, revenue, previousRevenue, operatingIncome, operatingCash, capex, cash,
+  return { ...result, status: "ready", ...(capexNotReported ? { capexNotReported: true } : {}), balance, revenue, previousRevenue, operatingIncome, operatingCash, capex, cash,
     stockCompensation, stockCompensationRatio: stockCompensation ? stockCompensation.value / revenue.value * 100 : null,
     dilutedShares, previousDilutedShares, dilutedSharesGrowth: dilutedShares && previousDilutedShares ? (dilutedShares.value / previousDilutedShares.value - 1) * 100 : null,
     quarterRevenue, previousQuarterRevenue, quarterOperatingIncome, quarterMargins, quarterRevenueTtm, quarterRevenueQoq,
