@@ -1,6 +1,6 @@
 # Earnings flash pass/fail (latest real release of each watch-list company)
 
-Generated 2026-11-13 09:32Z · PASS 27 / 27 (expansion to all 50 calendar companies in progress: batch 1 added; the other 23 still have no figure parser and show only "決算を発表しました" with the official link)
+Generated 2026-11-14 · PASS 32 / 32 (expansion to all 50 calendar companies in progress: batches 1 and 2 added; QCOM and IBM have no figure parser because their releases print no quarter revenue headline to check against, so they show only "決算を発表しました" with the official link; the other companies are not yet done)
 
 | Ticker | Verdict | Detection source | Figures | Reason |
 |---|---|---|---|---|
@@ -26,6 +26,11 @@ Generated 2026-11-13 09:32Z · PASS 27 / 27 (expansion to all 50 calendar compan
 | AMZN | PASS | SEC 8-K 2026-10-29T20:05Z | 4 | 4 figures, e.g. revenue $201.944B |
 | GOOGL | PASS | SEC 8-K 2026-10-28T20:01Z | 4 | 4 figures, e.g. revenue $127.577B |
 | ORCL | PASS | SEC 8-K 2026-09-10T20:16Z | 4 | 4 figures, e.g. revenue $19.345B (found via SEC: the earlier "no route" was the backtest rejecting the "Q1 Results" title) |
+| META | PASS | SEC 8-K 2026-10-21T20:03Z | 4 | 4 figures, e.g. revenue $64.601B |
+| NFLX | PASS | SEC 8-K 2026-10-20T20:01Z | 4 | 4 figures, e.g. revenue $12.874176B |
+| NOW | PASS | SEC 8-K 2026-10-28T20:14Z | 4 | 4 figures, e.g. revenue $4.106B |
+| INTC | PASS | SEC 8-K 2026-10-29T20:08Z | 4 | 4 figures, e.g. revenue $16.513B |
+| AAPL | PASS | SEC 8-K 2026-11-02T21:30Z | 4 | 4 figures, e.g. revenue $114.477B |
 | PANW | PASS | SEC 8-K 2026-09-01T20:32Z | 4 | 4 figures, e.g. revenue $3.41B |
 | CRWD | PASS | SEC 8-K 2026-08-26T20:07Z | 4 | 4 figures, e.g. revenue $1.470897B |
 | SNOW | PASS | SEC 8-K 2026-09-02T20:08Z | 4 | 4 figures, e.g. revenue $1.546793B |
