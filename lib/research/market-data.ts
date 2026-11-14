@@ -136,19 +136,25 @@ async function resolveMarket(id: string, ttl = QUOTE_TTL): Promise<{ symbol: str
 }
 
 const barMemory = new Map<string, { at: number; all: Bar[] }>();
+/** Pre-market / after-hours bars exist only for U.S. stocks and ETFs. For a currency pair, crypto or metal (board ids "USD/JPY", "BTC/USD", "XCU/USD"…) the provider
+ * refuses intraday series that ask for them ("Pre/post data is available only for 1min interval"), which left the board's 5- and 15-minute charts
+ * empty for every non-stock symbol (owner, Nov 14). Those symbols trade around the clock and are asked without it. */
+export function intradayParams(symbol: string, interval: string): { prepost?: "true" } {
+  return (interval === "5min" || interval === "15min" || interval === "30min") && !symbol.includes("/") ? { prepost: "true" } : {};
+}
 /** Every bar fetched for a range (the drawn ones and the ones before them). Pre-market and after-hours bars are included for 1D / 1W. */
 async function readAll(ticker: string, range: ChartRange): Promise<Bar[]> {
   const memoryKey = `${ticker}:${range}`, hit = barMemory.get(memoryKey);
   const spec = chartSpec(range), intraday = spec.interval === "5min" || spec.interval === "30min";
   if (hit && hit.at + (intraday ? TTL : 5 * TTL) > Date.now()) return hit.all;
   const entry = MARKET_SYMBOLS[ticker];
-  const base = { interval: spec.interval, outputsize: String(spec.size), order: "desc", ...(intraday ? { prepost: "true" } : {}) };
+  const base = { interval: spec.interval, outputsize: String(spec.size), order: "desc" };
   try {
     let raw: unknown;
     if (entry) {
       const target = await resolveMarket(ticker);
-      raw = await call("time_series", { symbol: target.symbol, ...base, ...target.extra });
-    } else raw = await call("time_series", { symbol: ticker, ...base });
+      raw = await call("time_series", { symbol: target.symbol, ...base, ...(intraday ? intradayParams(ticker, spec.interval) : {}), ...target.extra });
+    } else raw = await call("time_series", { symbol: ticker, ...base, ...(intraday ? intradayParams(ticker, spec.interval) : {}) });
     const all = parseBars(raw);
     barMemory.set(memoryKey, { at: Date.now(), all });
     return all;
@@ -164,10 +170,11 @@ const periodMemory = new Map<string, { at: number; all: Bar[] }>();
 async function readSeries(ticker: string, interval: string, size: number, ttl: number): Promise<Bar[]> {
   const memoryKey = `${ticker}|${interval}|${size}`, hit = periodMemory.get(memoryKey);
   if (hit && hit.at + ttl > Date.now()) return hit.all;
-  const base = { interval, outputsize: String(size), order: "desc", ...(interval === "5min" || interval === "15min" || interval === "30min" ? { prepost: "true" } : {}) };
+  const base = { interval, outputsize: String(size), order: "desc" };
   try {
     const target = MARKET_SYMBOLS[ticker] ? await resolveMarket(ticker) : null;
-    const all = parseBars(target ? await call("time_series", { symbol: target.symbol, ...base, ...target.extra }) : await call("time_series", { symbol: ticker, ...base }));
+    const all = parseBars(target ? await call("time_series", { symbol: target.symbol, ...base, ...intradayParams(ticker, interval), ...target.extra })
+      : await call("time_series", { symbol: ticker, ...base, ...intradayParams(ticker, interval) }));
     periodMemory.set(memoryKey, { at: Date.now(), all });
     return all;
   } catch (error) {
