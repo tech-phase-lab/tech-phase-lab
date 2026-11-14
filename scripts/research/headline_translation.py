@@ -11,6 +11,7 @@ import compact_headlines
 import factual_validation
 import japanese_names
 import monitor
+import news_delivery_status
 import signals
 
 POLICY = """Translate the supplied company headline into natural Japanese in titleJa.
@@ -32,6 +33,17 @@ VALIDATION_FAILURES = frozenset({
 VALIDATION_RETRY_SECONDS = (15, 120)
 VALIDATION_DAILY_RETRY_SECONDS = 86400
 VALIDATION_FREQUENT_RETRY_SECONDS = 6 * 3600
+
+
+# After this many attempts for the same source revision whose last failure was a rejected translation (never a provider outage, timeout or rate limit),
+# the item stops costing paid calls and stays on the English original (owner, Nov 14: cost first). A changed source revision starts a new job.
+EXHAUSTED_AFTER_ATTEMPTS = 5
+CONTENT_FAILURES = news_delivery_status.CONTENT_FAILURES | {'invalid-translation'}
+
+
+def is_exhausted(job):
+    return bool(job and (job['state'] == 'exhausted' or (
+        job['state'] in {'retry', 'stale'} and job['attempts'] >= EXHAUSTED_AFTER_ATTEMPTS and job['failure_kind'] in CONTENT_FAILURES)))
 
 
 def retry_delay(attempts, kind=None, frequent=0):
@@ -208,6 +220,17 @@ def diagnostics(db, env=None, now=None, sources=signals.SOURCES):
             if not official_release_bridge.is_current(db, row, reference=reference, require_fresh_category=True):
                 counts['awaitingSourceRefresh'] += 1
                 continue
+        job = db.execute('''SELECT attempts,next_at,state,failure_kind
+          FROM signal_headline_translation_jobs WHERE source_id=? AND url=? AND sha=?''',
+                         (row["source_id"], row["url"], row["sha"])).fetchone()
+        if is_exhausted(job):
+            counts["exhausted"] += 1  # original text stays; no more paid calls, not an overdue item
+            if len(pending_items) < 10:
+                pending_items.append({"source": row["source_id"], "observedAt": row["observed_at"], "state": "exhausted",
+                                      "attempts": job["attempts"], "failure": job["failure_kind"]})
+            kind = job['failure_kind']
+            failure_kinds[kind] = failure_kinds.get(kind, 0) + 1
+            continue
         counts["pending"] += 1
         try:
             observed = datetime.fromisoformat(str(row["observed_at"]).replace("Z", "+00:00"))
@@ -217,9 +240,6 @@ def diagnostics(db, env=None, now=None, sources=signals.SOURCES):
                     oldest_pending = observed
         except (TypeError, ValueError, OverflowError):
             pass
-        job = db.execute('''SELECT attempts,next_at,state,failure_kind
-          FROM signal_headline_translation_jobs WHERE source_id=? AND url=? AND sha=?''',
-                         (row["source_id"], row["url"], row["sha"])).fetchone()
         if len(pending_items) < 10:  # which source is stuck and why: no title, URL or text
             pending_items.append({"source": row["source_id"], "observedAt": row["observed_at"],
                                   "state": job["state"] if job else "queued", "attempts": job["attempts"] if job else 0,
@@ -278,20 +298,20 @@ def sync_incident(db, env=None, now=None):
     """Detect a stalled publication queue even when no visitor opens the site."""
     now = time.time() if now is None else now
     state = diagnostics(db, env=env, now=now)
-    code = None
+    code, severity = None, 'critical'
     if state['pending'] and state['status'] != 'disabled':
         if state['status'] != 'enabled':
             code = 'headline-translation-configuration'
-        elif state['exhausted']:
-            code = 'headline-translation-exhausted'
         elif state['calls24Hours']['total'] >= state['dailyLimit']:
             code = 'headline-translation-budget'
         elif state['oldestPendingAt'] and now - datetime.fromisoformat(state['oldestPendingAt']).timestamp() >= 300:
             code = 'headline-translation-overdue'
+    if code is None and state['exhausted'] and state['status'] == 'enabled':
+        code, severity = 'headline-translation-exhausted', 'warning'  # waiting for a new revision: visible, never critical
     at = datetime.fromtimestamp(now, timezone.utc).isoformat()
     if code:
         monitor.record_operational_incident(db, 'publication:headlines', 'publication',
-                                           'headlines', 'critical', code, seen_at=at)
+                                           'headlines', severity, code, seen_at=at)
     else:
         monitor.resolve_operational_incident(db, 'publication:headlines', resolved_at=at)
     return code
@@ -369,6 +389,8 @@ def claim(db, sources, limit, model, now):
             job = db.execute('''SELECT * FROM signal_headline_translation_jobs
               WHERE source_id=? AND url=? AND sha=?''',
                              (row["source_id"], row["url"], row["sha"])).fetchone()
+            if is_exhausted(job):
+                continue  # Exhausted: the English original stays; a new revision (new sha) starts again.
             if job and job["state"] == "done" and existing:
                 job=None
             if job and (job["state"] == "done"
