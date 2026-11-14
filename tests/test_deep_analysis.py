@@ -11,7 +11,7 @@ EARNINGS = 'Nebius Reports Third Quarter 2026 Financial Results'
 
 
 def point(ja, en, evidence='0'):
-    return {'ja': ja, 'en': en, 'evidenceId': evidence}
+    return {'ja': ja, 'en': en, 'evidenceIds': [evidence]}
 
 
 GOOD = {'headline': {'ja': 'Nebius、Inferize買収で推論基盤を強化', 'en': 'Nebius strengthens its inference stack with Inferize'},
@@ -75,6 +75,43 @@ class DeepAnalysisTests(unittest.TestCase):
             self.assertEqual(self.run_deep(reply(bad), now=base.NOW.timestamp() + attempt * 1000), 'retry')
         self.assertEqual(self.run_deep(lambda *_: self.fail('held'), now=base.NOW.timestamp() + 5000), 'idle')
         self.assertEqual(self.items(), [])
+
+    def test_a_point_may_cite_several_excerpts_but_a_figure_must_be_in_one_of_them(self):
+        excerpts = {'0': 'Revenue was $3.41 billion in the quarter.', '1': 'Operating income was $172 million.', '2': 'Unrelated background text.'}
+        headline = {'ja': '売上高は34億1,000万ドル。', 'en': 'Revenue was $3.41 billion.'}
+        both = {'ja': '売上高は3.41 billion ドル、営業利益は172 million ドルだった。', 'en': 'Revenue was $3.41 billion and operating income was $172 million.', 'evidenceIds': ['0', '1']}
+        only_first = {'ja': '営業利益は172 million ドルだった。', 'en': 'Operating income was $172 million.', 'evidenceIds': ['0']}
+        unknown = {'ja': '売上高は3.41 billion ドル。', 'en': 'Revenue was $3.41 billion.', 'evidenceIds': ['9']}
+        note = {'headline': {'ja': 'Revenue was $3.41 billion', 'en': 'Revenue was $3.41 billion'}, 'points': [both, only_first, unknown, both], 'watch': None}
+        try:
+            deep_analysis.bind(note, excerpts)
+        except deep_analysis.Unchecked as exc:  # pragma: no cover - only if the checks reject both citations
+            self.fail(exc.detail)
+        kept = deep_analysis.bind(note, excerpts)
+        self.assertEqual(len(kept['points']), 2)  # the point citing only the revenue excerpt may not use the operating-income figure
+        bad = {'headline': note['headline'], 'points': [only_first, unknown, only_first], 'watch': None}
+        with self.assertRaises(deep_analysis.Unchecked) as caught:
+            deep_analysis.bind(bad, excerpts)
+        self.assertEqual(caught.exception.detail, {'kept': 0, 'rejected': {'evidence-missing': 1, 'unsupported-number': 2}})
+
+    def test_why_an_analysis_is_held_is_recorded_and_older_holds_are_tried_again(self):
+        self.earnings()
+        bad = json.loads(json.dumps(GOOD))
+        bad['points'] = [point('売上は45%増。', 'Revenue rose 45%.')] * 3
+        for attempt in range(3):
+            self.assertEqual(self.run_deep(reply(bad), now=base.NOW.timestamp() + attempt * 1000), 'retry')
+        with deep_analysis.connect(self.path) as db:
+            report = deep_analysis.diagnostics(db, now=base.NOW.timestamp() + 5000)
+        [held] = report['notDone']
+        self.assertEqual((held['subject'], held['state'], held['failure']), ('NBIS', 'held', 'too-few-checked-points'))
+        self.assertEqual(held['detail'], {'kept': 0, 'rejected': {'unsupported-number': 3}})
+        self.assertEqual(report['version'], deep_analysis.VERSION)
+        self.assertEqual(self.run_deep(lambda *_: self.fail('held'), now=base.NOW.timestamp() + 5000), 'idle')
+        with deep_analysis.connect(self.path) as db:  # held by an older version of the checks
+            db.execute('UPDATE deep_analyses SET version=0')
+        self.assertEqual(self.run_deep(reply(GOOD), now=base.NOW.timestamp() + 6000), 'done')
+        [item] = self.items()
+        self.assertEqual(len(item['points']), 3)
 
     def test_earnings_only_companies_get_no_deep_analysis(self):
         self.earnings()
