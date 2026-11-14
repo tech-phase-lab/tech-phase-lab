@@ -161,6 +161,49 @@ class DeepAnalysisTests(unittest.TestCase):
         self.assertIn('980.8 million', deep_analysis.table_scaled_figures('(in millions of U.S. dollars) Revenues 980.8'))
 
 
+    def test_a_table_figure_is_scaled_by_the_unit_header_of_an_excerpt_the_point_did_not_cite(self):
+        # Nov 14, NBIS v7 still held: the unit header ("(in millions of U.S. dollars)") sits in another excerpt than the cash-flow rows the point cites,
+        # and the cash-flow rows are further than the old 2500-character window from their header.
+        header = 'Unaudited Condensed Consolidated Statements of Cash Flows (in millions of U.S. dollars) Three months ended September 30 '
+        rows = 'Deferred revenue (3.8 ) 3,434.0 (0.7 ) 7,829.0 Proceeds from issuance of convertible notes 3,162.5 5,750.0 4,162.5 10,087.5'
+        release = header + 'x ' * 1500 + rows
+        quote = rows
+        deep_analysis.checked({'ja': '転換社債の発行収入は5,750百万ドル。', 'en': 'Convertible notes proceeds were $5,750 million.'}, quote, release)
+        for ja, en in [('転換社債の発行収入は5,750億ドル。', 'Convertible notes proceeds were $5,750 billion.'),   # wrong scale
+                       ('発行収入は5,751百万ドル。', 'Proceeds were $5,751 million.'),                              # not printed
+                       ('営業活動は4,231.1百万ドル。', 'Operating cash flow was $4,231.1 million.')]:            # printed elsewhere, not in the cited excerpt
+            with self.assertRaises(ValueError, msg=en):
+                deep_analysis.checked({'ja': ja, 'en': en}, quote, release + ' Net cash 4,231.1')
+
+
+    def test_a_rule_based_rejection_names_the_check_that_fired(self):
+        # Nov 14, NBIS: "invalid-copy" x3 came from one of a dozen checks that raise it; the reason now carries function:line (no text).
+        excerpts = {'0': 'Revenue increased to 980.8 in the quarter.'}
+        try:
+            deep_analysis.checked({'ja': '売上は増加した。', 'en': 'Revenue decreased.'}, excerpts['0'])
+        except ValueError as exc:
+            reason = deep_analysis.why(exc, excerpts['0'])
+        self.assertRegex(reason, r'^(?:invalid-copy@\w+:\d+|changed-direction:\w+:(?:up|down)>(?:up|down)(?:\|(?:up|down))*)$')
+        self.assertNotIn('Revenue', reason)
+
+    def test_a_copy_over_the_length_limit_is_rejected_with_its_own_reason_and_the_policy_states_the_limit(self):
+        # Nov 14, NBIS v9: invalid-copy@checked:157 x3 -- the format check (empty, or over 600 characters); the policy never told the model a limit.
+        self.assertIn('500 characters', deep_analysis.POLICY)
+        long = 'x' * (deep_analysis.MAX_COPY_CHARS + 1)
+        with self.assertRaises(ValueError) as caught:
+            deep_analysis.checked({'ja': long, 'en': 'Revenue rose.'}, 'Revenue rose.')
+        self.assertEqual(str(caught.exception), 'copy-too-long')
+        with self.assertRaises(ValueError) as caught:
+            deep_analysis.checked({'ja': ' ', 'en': 'Revenue rose.'}, 'Revenue rose.')
+        self.assertEqual(str(caught.exception), 'invalid-copy')
+
+    def test_a_direction_rejection_names_the_family_and_the_directions(self):
+        try:
+            deep_analysis.checked({'ja': '売上は減少した。', 'en': 'Revenue decreased.'}, 'Revenue increased to 980.8 in the quarter.')
+        except ValueError as exc:
+            reason = deep_analysis.why(exc, 'Revenue increased to 980.8 in the quarter.')
+        self.assertRegex(reason, r'^(?:changed-direction:\w+:(?:up|down)>(?:up|down)(?:\|(?:up|down))*|changed-direction@\w+:\d+|invalid-copy@\w+:\d+)')
+
     def test_why_an_analysis_is_held_is_recorded_and_older_holds_are_tried_again(self):
         self.earnings()
         bad = json.loads(json.dumps(GOOD))
