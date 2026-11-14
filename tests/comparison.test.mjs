@@ -74,6 +74,7 @@ test('actual API rejects non-PRO before fetching data, validates selection, and 
  const {readFileSync}=await import('node:fs');const {stripTypeScriptTypes}=await import('node:module');
  globalThis.__comparisonTest={member:{status:'signed-out',plan:'free'},calls:0,catalog:[company('AAA'),company('BBB'),company('CCC')],buildReviewedTrial,buildComparison,comparisonAccess,comparisonExpiresAt,validateComparisonTickers,load:async ticker=>{globalThis.__comparisonTest.calls++;return parse(payload());}};
  const source=readFileSync(new URL('../app/api/research/compare/route.ts',import.meta.url),'utf8')
+  .replace('import { applyValuationBasis } from "@/lib/research/comparison-scorecard";','const applyValuationBasis=companies=>companies;')
   .replace('import { buildReviewedTrial } from "@/lib/research/comparison-trial";','const {buildReviewedTrial}=globalThis.__comparisonTest;')
   .replace('import { getMembership } from "@/lib/membership/server";','const getMembership=async()=>globalThis.__comparisonTest.member;')
   .replace('import { comparisonCatalog } from "@/lib/research/comparison-catalog";','const comparisonCatalog=globalThis.__comparisonTest.catalog;')

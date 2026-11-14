@@ -1,4 +1,4 @@
-import { twelveExtraFactors, twelveFactorMetric } from "./twelve-data-factors.ts";
+import { twelveExtraFactors, twelveFactorMetric, twelveFactorMethods } from "./twelve-data-factors.ts";
 import type { Financials } from "./comparison.ts";
 export type ScoreId = "valuation" | "growth" | "profitability" | "financial" | "cash" | "stability" | "momentum";
 export type ComparisonScore = { id: ScoreId; label: {ja:string;en:string}; value: number | null };
@@ -46,15 +46,19 @@ export function comparisonAvailability(c: Financials, lang: "ja"|"en", now=Date.
  */
 export function comparisonScores(c: Financials, now = Date.now()): ComparisonScore[] {
   const recent = hasRecentQuarter(c, now);
-  const growth = recent && finite(c.quarterRevenueGrowth) ? clamp(5+c.quarterRevenueGrowth/10) : null;
+  // No revenue a year earlier (a new product line, ACHR): growth against the previous quarter, labelled as such.
+  const growth = recent && finite(c.quarterRevenueGrowth) ? clamp(5+c.quarterRevenueGrowth/10) : recent && finite(c.quarterRevenueQoq) ? clamp(5+c.quarterRevenueQoq/10) : null;
   const profitability = recent && finite(c.quarterOperatingMargin) ? clamp(c.quarterOperatingMargin/5) : null;
   const balance=c.balance;
   // Financial strength needs a current balance plus debt disclosures. Missing
   // debt is unknown, never zero; an annual snapshot cannot fill this score.
-  const financial = recent && balance && balance.end===c.quarterRevenue?.end && finite(balance.currentRatio) && balance.cash && balance.debtCurrent && balance.debtNoncurrent
-    ? clamp(5*Math.min(balance.currentRatio,2)/2 + 5*Math.min(balance.cash.value/Math.max(balance.debtCurrent.value+balance.debtNoncurrent.value,1),1)) : null;
+  const debt = balanceDebt(c);
+  const balanced = recent && balance && balance.end===c.quarterRevenue?.end && balance.cash && debt!==null;
+  // Banks and brokers have no current assets or liabilities: cash against debt alone, on the full ten-point scale, labelled as such.
+  const financial = balanced && finite(balance!.currentRatio) ? clamp(5*Math.min(balance!.currentRatio,2)/2 + 5*Math.min(balance!.cash!.value/Math.max(debt!,1),1))
+    : balanced ? clamp(10*Math.min(balance!.cash!.value/Math.max(debt!,1),1)) : null;
   const cash = recent && finite(c.quarterFcfMargin) ? clamp(5+c.quarterFcfMargin/5) : null;
-  const extra=c.twelveData ? twelveExtraFactors(c.twelveData,now) : null;
+  const extra=c.twelveData ? twelveExtraFactors(c.twelveData,now,c.valuationBasis) : null;
   const scores: ComparisonScore[] = [
     {id:"financial",label:{ja:"財務健全性",en:"Financial strength"},value:recent ? extra?.financial ?? financial : null},
     {id:"profitability",label:{ja:"収益性",en:"Profitability"},value:profitability},
@@ -68,21 +72,53 @@ export function comparisonScores(c: Financials, now = Date.now()): ComparisonSco
   return scores;
 }
 
+/** Interest-bearing debt from the filing's balance, in whatever complete form it was reported; null when unknown (never zero by default). */
+export function balanceDebt(c: Financials): number | null {
+  const b=c.balance;
+  if(!b) return null;
+  const own=b.debtTotal!==undefined ? (b.debtTotal ? b.debtTotal.value : null) : b.debtCurrent && b.debtNoncurrent ? b.debtCurrent.value+b.debtNoncurrent.value : null;
+  if(own!==null) return own;
+  // Debt tagged in a company's own way (ORCL): the provider's total debt for the very same quarter end, never another quarter's.
+  const s=c.twelveData?.statistics;
+  return s && s.quarterEnd===b.end && s.totalDebt!==null && s.totalDebt!==undefined && s.totalCash===null ? s.totalDebt : null;
+}
 /** Display actual measurements beside the reference bars, including unscored factors. */
 export function comparisonMetric(c: Financials, id: ScoreId, lang: "ja"|"en", now=Date.now()): string {
-  if(!hasRecentQuarter(c,now) && !(id==="momentum" && c.twelveData && twelveExtraFactors(c.twelveData,now).momentum!==null)) return lang==="ja" ? "最新値未確認" : "Latest value unverified";
+  if(!hasRecentQuarter(c,now) && !(id==="momentum" && c.twelveData && twelveExtraFactors(c.twelveData,now,c.valuationBasis).momentum!==null)) return lang==="ja" ? "最新値未確認" : "Latest value unverified";
   const reference=c.referenceEvaluation?.factors.find(f=>f.id===id);
   if(reference) return reference.metric[lang];
   const ja=lang==="ja";
-  const providerMetric=c.twelveData ? twelveFactorMetric(c.twelveData,id,lang,now) : null;
+  const providerMetric=c.twelveData ? twelveFactorMetric(c.twelveData,id,lang,now,c.valuationBasis) : null;
   if(providerMetric)return providerMetric;
   if(id==="growth" && finite(c.quarterRevenueGrowth)) return `${ja?"売上前年比":"Revenue growth (YoY)"} ${c.quarterRevenueGrowth>0?"+":""}${c.quarterRevenueGrowth.toFixed(1)}%`;
-  if(id==="profitability" && finite(c.quarterOperatingMargin)) return `${ja?"営業利益率":"Operating margin"} ${c.quarterOperatingMargin.toFixed(1)}%`;
+  if(id==="growth" && finite(c.quarterRevenueQoq)) return `${ja?"売上前四半期比":"Revenue growth (QoQ)"} ${c.quarterRevenueQoq>0?"+":""}${c.quarterRevenueQoq.toFixed(1)}%`;
+  if(id==="profitability" && finite(c.quarterOperatingMargin)) return `${c.quarterOperatingIncome?.tag==="TechPhasePretaxIncome" ? (ja?"税引前利益率":"Pre-tax margin") : (ja?"営業利益率":"Operating margin")} ${c.quarterOperatingMargin.toFixed(1)}%`;
   if(id==="cash" && finite(c.quarterFcfMargin)) return `${ja?"簡易FCF率":"Simple FCF margin"} ${c.quarterFcfMargin.toFixed(1)}%`;
-  if(id==="financial" && c.balance?.end===c.quarterRevenue?.end && finite(c.balance?.currentRatio)) return `${ja?"流動比率":"Current ratio"} ${c.balance.currentRatio.toFixed(2)}${ja?"倍":"×"}`;
+  if(id==="financial" && c.balance?.end===c.quarterRevenue?.end && !finite(c.balance?.currentRatio) && c.balance?.cash && balanceDebt(c)!==null) {
+    const debt=balanceDebt(c)!;
+    return debt===0 ? (ja?"借入なし":"No borrowings") : `${ja?"現金÷有利子負債":"Cash ÷ debt"} ${(c.balance.cash.value/debt).toFixed(2)}${ja?"倍":"×"}`;
+  }
+  if(id==="financial" && c.balance?.end===c.quarterRevenue?.end && finite(c.balance?.currentRatio)) return `${ja?"流動比率":"Current ratio"} ${c.balance.currentRatio.toFixed(2)}${ja?"倍":"×"}${c.balance.debtTotal?.source==="none" ? (ja?"・借入なし":" · no borrowings") : ""}`;
   return ja ? "必要データ未取得" : "Data unavailable";
 }
 
+/** Valuation needs one yardstick for the whole comparison. Forward P/E as before when every company has one; when any company has none (a
+ * loss-maker such as AAOI or POET, Nov 14) and every company has price-to-sales, all of them are scored on price-to-sales, so the factor and
+ * the overall ranking are no longer empty. Otherwise nothing changes. The valuation bullet is rewritten to the same yardstick. */
+export function applyValuationBasis<T extends Financials>(companies: T[], now=Date.now()): T[] {
+  if(companies.length<2 || companies.some(c=>!!c.referenceEvaluation || !c.twelveData || !hasRecentQuarter(c,now))) return companies;
+  if(companies.every(c=>twelveExtraFactors(c.twelveData!,now,"pe").valuation!==null)) return companies;
+  if(!companies.every(c=>twelveExtraFactors(c.twelveData!,now,"ps").valuation!==null)) return companies;
+  return companies.map(c=>{
+    const value=twelveExtraFactors(c.twelveData!,now,"ps").valuation!;
+    const prepared=c.preparedAnalysis ? {...c.preparedAnalysis,items:c.preparedAnalysis.items.filter(item=>item.id!=="valuation")} : c.preparedAnalysis;
+    if(prepared && (value<=3 || value>=7)) {
+      const ja=twelveFactorMetric(c.twelveData!,"valuation","ja",now,"ps")!,en=twelveFactorMetric(c.twelveData!,"valuation","en",now,"ps")!;
+      prepared.items.push({id:"valuation",kind:value>=7?"strength":"weakness",short:{ja,en},detail:twelveFactorMethods.valuation});
+    }
+    return {...c,valuationBasis:"ps" as const,preparedAnalysis:prepared};
+  });
+}
 /** Missing factors must never improve the composite by being omitted. */
 export function compositeScore(scores: ComparisonScore[]): number | null {
   if (!scores.length || scores.some(s => s.value === null)) return null;
