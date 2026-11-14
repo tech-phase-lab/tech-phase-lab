@@ -45,7 +45,9 @@ class NewsDeliveryStatusTests(unittest.TestCase):
 
     def test_held_overdue_incident_persists_until_valid_reviewed_publication(self):
         with research.connect(self.path) as db:
-            self.assertEqual(research.sync_incident(db,{},fixture.PUBLIC),'official-research-overdue')
+            # Owner, Nov 14: a hold that waits for a person stays visible as a warning, never a critical.
+            self.assertEqual(research.sync_incident(db,{},fixture.PUBLIC),'official-research-review-overdue')
+            self.assertEqual(db.execute("SELECT severity,last_error_code FROM operational_incidents WHERE incident_key='publication:official-research'").fetchone()[:],('warning','official-research-review-overdue'))
             self.assertEqual(db.execute('SELECT state FROM official_research_jobs').fetchone()[0],'review')
             self.assertTrue(recovery.publish(db,fixture.PUBLIC,fixture.MODEL,clock=lambda:fixture.PUBLIC))
             state=self.status(db)['delivery']
@@ -105,7 +107,7 @@ class NewsDeliveryStatusTests(unittest.TestCase):
             calls=[tuple(r) for r in db.execute('SELECT * FROM signal_headline_translation_calls')]
             job=[tuple(r) for r in db.execute('SELECT * FROM official_research_jobs')]
             self.assertIsNone(research.claim(db,reference,primary_fixture.ENV['OFFICIAL_HEADLINE_TRANSLATION_MODEL'],200))
-            self.assertEqual(research.sync_incident(db,{},reference),'official-research-overdue')
+            self.assertEqual(research.sync_incident(db,{},reference),'official-research-review-overdue')
             self.assertEqual([tuple(r) for r in db.execute('SELECT * FROM signal_headline_translation_calls')],calls)
             self.assertEqual([tuple(r) for r in db.execute('SELECT * FROM official_research_jobs')],job)
             saved=db.execute('SELECT payload FROM official_research_publications').fetchone()[0]

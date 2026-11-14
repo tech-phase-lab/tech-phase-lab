@@ -1,5 +1,6 @@
 "use client";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { quarterOf } from "@/lib/research/radar-period";
 import ResearchToolShell from "../research-tool-shell";
 import { useResearchLanguage } from "../use-research-language";
 import { arrow, radarGenres, zoneLabel, zoneOf, xPosition, yPosition, type RadarDotPro, type RadarGenreId, type RadarPayload } from "@/lib/research/radar";
@@ -8,8 +9,7 @@ import GenrePicker from "./genre-picker";
 import styles from "./radar.module.css";
 
 const growthText = (g: number | null, ja: boolean) => { const label = ja ? "売上" : "Revenue"; return g === null ? `${label} —` : Math.abs(g) < 0.5 ? `${label} ±0%` : `${label} ${g > 0 ? "+" : "−"}${Math.abs(g).toFixed(0)}%`; };
-const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-const monthOf = (date: string | null, ja: boolean) => { const m = date ? /^(\d{4})-(\d{2})/.exec(date) : null; return m ? (ja ? `${m[1]}年${Number(m[2])}月時点` : `as of ${MONTHS[Number(m[2]) - 1]} ${m[1]}`) : ""; };
+
 const Arrow = ({ kind, ja }: { kind: "up" | "down" | null; ja: boolean }) => kind ? <i className={kind === "up" ? styles.up : styles.down} aria-label={kind === "up" ? (ja ? "前回より上昇" : "Up from the previous report") : (ja ? "前回より低下" : "Down from the previous report")}>{kind === "up" ? "↑" : "↓"}</i> : null;
 
 type Payloads = Partial<Record<RadarGenreId, RadarPayload>>;
@@ -67,7 +67,7 @@ export default function RadarScreen({ initial }: { initial: RadarPayload | null 
             </ul>
           </section>
           {pro ? <section className={styles.ranking}>
-            <header><h2>{t("体力ランキング", "Financial strength ranking")}</h2><small>{t("最新の決算", "Latest earnings")}{t(" ・ ", " · ")}{monthOf(pro.asOf, ja)}</small></header>
+            <header><h2>{t("体力ランキング", "Financial strength ranking")}</h2><small>{ja ? `最新の決算（${quarterOf(pro.asOf, true)}）・決算ごとに自動更新` : `Latest results (${quarterOf(pro.asOf, false)}) · updated with each report`}</small></header>
             <p className={styles.order}>{t("並び順:稼ぐ力と守る力の点数の平均。グラフの右上ほど上位です", "Ranked by the average of the cash-generation and resilience scores. The closer to the upper right, the higher the rank.")}</p>
             {ranked.map(dot => <RankCard key={dot.ticker} dot={dot} lang={lang} />)}
             {review.length > 0 && <h3 className={styles.reviewHead}>{t("要確認(順位外)", "Needs review (not ranked)")}</h3>}
