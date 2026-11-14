@@ -96,7 +96,10 @@ test('consolidated income statement identifies total revenue instead of rejectin
  const p=inlineFinancialFacts(bloomHtml,'1664703',f);
  assert.equal(p.primaryRevenueTag,'us-gaap:Revenues');
  p.facts['us-gaap'].RevenueFromContractWithCustomerExcludingAssessedTax={units:{USD:[{val:2001614000,start:'2025-01-01',end:'2025-12-31',filed:f.filed,accn:f.accession,form:f.form}]}};
- assert.equal(extractFinancials('BE','1664703',p,now).status,'unsupported');
+ // Without the statement's own line, the total still wins because contract revenue is not above it; a total below a part is held.
+ assert.equal(extractFinancials('BE','1664703',p,now).revenue.value,2023994000);
+ const below=structuredClone(p);below.facts['us-gaap'].RevenueFromContractWithCustomerExcludingAssessedTax.units.USD[0].val=2100000000;
+ assert.equal(extractFinancials('BE','1664703',below,now).status,'unsupported');
  const r=extractFinancials('BE','1664703',p,now,undefined,p.primaryRevenueTag);
  assert.equal(r.status,'ready');assert.equal(r.revenue.value,2023994000);assert.equal(r.operatingIncome.value,72802000);
  assert.equal(inlineFinancialFacts(bloomHtml.replaceAll('Net loss per share','Measure').replaceAll('basic and diluted','unavailable'),'1664703',f).primaryRevenueTag,undefined);

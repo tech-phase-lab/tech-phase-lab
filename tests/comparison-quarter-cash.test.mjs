@@ -116,7 +116,7 @@ test("financial strength reads debt in the form the filing uses; a filing with n
     const f = facts();
     const usd = list => ({ units: { USD: list } });
     const at = (val) => [{ end: "2026-09-30", val, accn: Q3, filed: "2026-11-05", form: "10-Q" }];
-    Object.assign(f.facts["us-gaap"], { CashAndCashEquivalentsAtCarryingValue: usd(at(50)), AssetsCurrent: usd(at(300)), LiabilitiesCurrent: usd(at(100)) });
+    Object.assign(f.facts["us-gaap"], { CashAndCashEquivalentsAtCarryingValue: usd(at(50)), AssetsCurrent: usd(at(300)), LiabilitiesCurrent: usd(at(100)), Assets: usd(at(1000)), Liabilities: usd(at(150)) });
     for (const [tag, val] of Object.entries(extra)) f.facts["us-gaap"][tag] = usd(at(val));
     return extractFinancials("AAOI", "1", f, NOW).balance.debtTotal;
   };
@@ -125,6 +125,14 @@ test("financial strength reads debt in the form the filing uses; a filing with n
   assert.deepEqual(withBalance({ ConvertibleDebtNoncurrent: 70 }), { value: 70, source: "convertible" });
   assert.deepEqual(withBalance({ AvailableForSaleSecuritiesDebtSecurities: 900 }), { value: 0, source: "none" });   // owning bonds is not borrowing
   assert.equal(withBalance({ LineOfCredit: 40 }), null);                                                       // borrowing we cannot add up: no score
+  // Debt tagged only by segment (GM) leaves no borrowing tag, but long-term liabilities over a quarter of assets are not "debt-free".
+  assert.equal(withBalance({ Liabilities: 600 }), null);
+  assert.equal(withBalance({ LiabilitiesNoncurrent: 300 }), null);
+  // No total-liabilities line (Monster): both sides minus equity, here 1000 - 850 = 150, so still debt-free.
+  const noTotal = () => { const f = facts(); const usd = list => ({ units: { USD: list } }); const at = val => [{ end: "2026-09-30", val, accn: Q3, filed: "2026-11-05", form: "10-Q" }];
+    Object.assign(f.facts["us-gaap"], { CashAndCashEquivalentsAtCarryingValue: usd(at(50)), AssetsCurrent: usd(at(300)), LiabilitiesCurrent: usd(at(100)), Assets: usd(at(1000)), LiabilitiesAndStockholdersEquity: usd(at(1000)), StockholdersEquity: usd(at(850)) });
+    return extractFinancials("MNST", "1", f, NOW).balance.debtTotal; };
+  assert.deepEqual(noTotal(), { value: 0, source: "none" });
 });
 
 test("operating income is worked out from the same filing's own lines; pre-tax only where no operating figure exists, and labelled as such", () => {
@@ -163,14 +171,45 @@ test("banks: financial strength from cash against debt; growth against the previ
   assert.equal(scores.growth, 6.2);           // 5 + 12/10
 });
 
-test("a quarter with two revenue lines uses the total only when contract plus lease revenue adds up to it (Applied Digital, IREN)", () => {
-  const build = (lease) => { const f = facts();
-    f.facts["us-gaap"].Revenues = { units: { USD: [fact("2026-07-01", "2026-09-30", 228, Q3, "2026-11-05"), fact("2025-07-01", "2025-09-30", 110, Q3, "2026-11-05")] } };
-    f.facts["us-gaap"].OperatingLeaseLeaseIncome = { units: { USD: [fact("2026-07-01", "2026-09-30", lease, Q3, "2026-11-05")] } };
+test("a quarter with two revenue lines uses the total line when no part is above it (Walmart, GM, Applied Digital, IREN)", () => {
+  const build = (total) => { const f = facts();
+    f.facts["us-gaap"].Revenues = { units: { USD: [fact("2026-07-01", "2026-09-30", total, Q3, "2026-11-05"), fact("2025-07-01", "2025-09-30", 110, Q3, "2026-11-05")] } };
     return extractFinancials("IREN", "1", f, NOW); };
-  const c = build(28);
+  const c = build(228);
   assert.equal(c.quarterRevenue.tag, "Revenues");
   assert.equal(c.quarterRevenue.value, 228);
   assert.equal(c.previousQuarterRevenue.value, 110);
-  assert.equal(build(20).quarterRevenue, null);   // 200 + 20 is not 228: a conflict, never a pick
+  assert.equal(build(190).quarterRevenue, null);   // a total below contract revenue (200) is a conflict, never a pick
+});
+
+
+test("a bank's revenue is its revenue net of interest expense, the only revenue line it files (JPMorgan, Goldman Sachs)", () => {
+  const f = facts();
+  const g = f.facts["us-gaap"];
+  g.RevenuesNetOfInterestExpense = g.RevenueFromContractWithCustomerExcludingAssessedTax;
+  delete g.RevenueFromContractWithCustomerExcludingAssessedTax;
+  const c = extractFinancials("JPM", "1", f, NOW);
+  assert.equal(c.revenue.tag, "RevenuesNetOfInterestExpense");
+  assert.equal(c.quarterRevenue.value, 200);
+});
+
+test("revenue net of interest expense is a total: it wins over the contract-revenue part (SoFi, American Express)", () => {
+  const f = facts();
+  const g = f.facts["us-gaap"];
+  g.RevenuesNetOfInterestExpense = { units: { USD: g.RevenueFromContractWithCustomerExcludingAssessedTax.units.USD.map(r => ({ ...r, val: r.val * 5 })) } };
+  const c = extractFinancials("SOFI", "1", f, NOW);
+  assert.equal(c.revenue.tag, "RevenuesNetOfInterestExpense");
+  assert.equal(c.revenue.value, 2000);
+  assert.equal(c.quarterRevenue.value, 1000);
+});
+
+test("a company filing both total revenue and net-of-interest revenue keeps total revenue (Ameriprise)", () => {
+  const f = facts();
+  const g = f.facts["us-gaap"];
+  g.Revenues = { units: { USD: g.RevenueFromContractWithCustomerExcludingAssessedTax.units.USD.map(r => ({ ...r, val: r.val * 3 })) } };
+  g.RevenuesNetOfInterestExpense = { units: { USD: g.RevenueFromContractWithCustomerExcludingAssessedTax.units.USD.map(r => ({ ...r, val: r.val * 2 })) } };
+  delete g.RevenueFromContractWithCustomerExcludingAssessedTax;
+  const c = extractFinancials("AMP", "1", f, NOW);
+  assert.equal(c.revenue.tag, "Revenues");
+  assert.equal(c.quarterRevenue.value, 600);
 });
