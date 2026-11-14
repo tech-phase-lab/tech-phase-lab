@@ -1,10 +1,10 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useResearchLanguage } from "../use-research-language";
 import PriceChart from "./price-chart";
-import { isExtendedBar, signedPercent, type Bar } from "@/lib/research/market-quote";
+import { signedPercent, type Bar } from "@/lib/research/market-quote";
 import { bannerLine, marketBanner, marketPhase } from "@/lib/research/us-market-session";
-import { DEFAULT_PERIOD, OTHER_PERIODS, PERIOD_LABEL, PRIMARY_PERIODS, isBoardPeriod, isIntradayPeriod, periodInterval, type BoardPeriod } from "@/lib/research/market-board-periods";
+import { DEFAULT_PERIOD, OTHER_PERIODS, PERIOD_LABEL, PRIMARY_PERIODS, clampWicks, isBoardPeriod, isIntradayPeriod, latestTradingDay, periodInterval, type BoardPeriod } from "@/lib/research/market-board-periods";
 import { nextFlash, startFlash } from "@/lib/research/value-flash";
 import type { BoardQuote } from "@/lib/research/market-data";
 import styles from "./board.module.css";
@@ -44,7 +44,7 @@ export function formatPrice(value: number, kind: Kind): string {
   const a = Math.abs(value);
   return `$${a >= 1000 ? Math.round(value).toLocaleString("en-US") : a >= 100 ? value.toFixed(1) : value.toFixed(2)}`;
 }
-const toneOf = (value: number | null) => value === null || value === 0 ? "flat" : value > 0 ? "up" : "down";
+const toneOf = (value: number | null): "up" | "down" | "flat" => value === null || value === 0 ? "flat" : value > 0 ? "up" : "down";
 
 /** The current time, refreshed on every minute boundary (null until the page is on the screen, so the server page and the first paint agree). */
 function useMinute() {
@@ -186,7 +186,12 @@ export default function MarketBoard() {
     return () => { stop(); controller.abort(); };
   }, [selected, period, key, reload, intraday]);
   const loading = chart.key !== key;
-  const ext = quote?.extended ?? null;
+  // What is drawn (owner, Nov 14): the 15-minute chart shows the latest trading day only; intraday bad prints (a high / low 3% or more off the bar's body) are cut back.
+  // Kept per series, so a zoomed chart is not reset on every render.
+  const drawn = useMemo(() => {
+    const set = period === "15m" ? latestTradingDay(chart.bars, chart.before) : chart;
+    return intraday ? { bars: clampWicks(set.bars), before: set.before } : set;
+  }, [chart, period, intraday]);
   const last = !loading && chart.bars.length ? chart.bars[chart.bars.length - 1] : null;
   const now = useMinute();
   const phase = marketPhase(new Date(now ?? 0)), banner = marketBanner(phase);
@@ -197,12 +202,11 @@ export default function MarketBoard() {
   // the crosshair switches them to the marked bar. The longer periods show the candle itself.
   const day: Bar | null = intraday && quote && quote.open != null && quote.high != null && quote.low != null ? { at: "session", open: quote.open, high: quote.high, low: quote.low, close: quote.price, volume: quote.volume } : null;
   const bar = active ?? day ?? last;
-  // The band and the price tag of pre-market / after-hours: bands only on the intraday candles; the tag on every period. No extended bars in the data: the band alone.
-  const trailingExtended = chart.bars.length > 0 && isExtendedBar(chart.bars[chart.bars.length - 1]);
-  const extended = ext ? { label: ext.session === "pre" ? (ja ? "プレ" : "Pre") : (ja ? "アフター" : "After"), price: ext.price, close: quote?.price ?? ext.price, reserve: intraday && !trailingExtended } : undefined;
 
   const t = (a: string, b: string) => ja ? a : b;
   const num = (value: number) => formatPrice(value, entry.kind).replace(/^\$/, "");
+  // The price tag on the right shows the big price above (owner, Nov 14); the mint band and its one word only while it is pre-market or after-hours now (intraday charts).
+  const tag = shownPrice === null ? undefined : { price: shownPrice, text: num(shownPrice), tone };
   const pick = (id: string) => { setSelected(id); setActive(null); };
   const name = (p: BoardPeriod) => PERIOD_LABEL[p][ja ? "ja" : "en"];
   return <div className={styles.wrap}>
@@ -236,7 +240,7 @@ export default function MarketBoard() {
         <span><small>{t("始値", "Open")}</small><b>{num(bar.open)}</b></span><span><small>{t("高値", "High")}</small><b>{num(bar.high)}</b></span><span><small>{t("安値", "Low")}</small><b>{num(bar.low)}</b></span><span data-close="true"><small>{t("終値", "Close")}</small><b>{num(bar.close)}</b></span></div>}
       <div className={styles.chartBox}>{loading ? <p className={styles.note} role="status">{t("チャートを読み込み中…", "Loading the chart…")}</p>
         : chart.bars.length < 2 ? <p className={styles.note} role="status">{t("この銘柄のチャートを取得できませんでした。", "The chart for this symbol could not be loaded.")} <button type="button" className={styles.retry} onClick={() => { setChart({ key: "", bars: [], before: [] }); setReload(n => n + 1); }}>{t("もう一度読み込む", "Try again")}</button></p>
-        : <PriceChart defaultVolume={day ? day.volume : undefined} bars={chart.bars} bands={intraday} jst={intraday} extended={extended} before={chart.before} mode={mode} interval={periodInterval(period)} variant="board" ja={ja} maPeriods={[25, 75]} accent="#7fe3c0" lineColor="#7fe3c0" onActive={setActive} />}</div>
+        : <PriceChart defaultVolume={day ? day.volume : undefined} bars={drawn.bars} jst={intraday} tag={tag} live={intraday ? { phase } : undefined} sessionTicks={period === "15m"} before={drawn.before} mode={mode} interval={periodInterval(period)} variant="board" ja={ja} maPeriods={[25, 75]} accent="#7fe3c0" lineColor="#7fe3c0" onActive={setActive} />}</div>
       <div className={styles.ranges} role="group" aria-label={t("チャートの期間", "Chart range")}>{PRIMARY_PERIODS.map(p => <button key={p} type="button" aria-pressed={period === p} onClick={() => setPeriod(p)}>{name(p)}</button>)}
         <MoreMenu period={period} onPick={setPeriod} ja={ja} /></div>
     </section>
