@@ -85,7 +85,7 @@ export function comparisonMetric(c: Financials, id: ScoreId, lang: "ja"|"en", no
   const providerMetric=c.twelveData ? twelveFactorMetric(c.twelveData,id,lang,now,c.valuationBasis) : null;
   if(providerMetric)return providerMetric;
   if(id==="growth" && finite(c.quarterRevenueGrowth)) return `${ja?"売上前年比":"Revenue growth (YoY)"} ${c.quarterRevenueGrowth>0?"+":""}${c.quarterRevenueGrowth.toFixed(1)}%`;
-  if(id==="profitability" && finite(c.quarterOperatingMargin)) return `${ja?"営業利益率":"Operating margin"} ${c.quarterOperatingMargin.toFixed(1)}%`;
+  if(id==="profitability" && finite(c.quarterOperatingMargin)) return `${c.quarterOperatingIncome?.tag==="TechPhasePretaxIncome" ? (ja?"税引前利益率":"Pre-tax margin") : (ja?"営業利益率":"Operating margin")} ${c.quarterOperatingMargin.toFixed(1)}%`;
   if(id==="cash" && finite(c.quarterFcfMargin)) return `${ja?"簡易FCF率":"Simple FCF margin"} ${c.quarterFcfMargin.toFixed(1)}%`;
   if(id==="financial" && c.balance?.end===c.quarterRevenue?.end && finite(c.balance?.currentRatio)) return `${ja?"流動比率":"Current ratio"} ${c.balance.currentRatio.toFixed(2)}${ja?"倍":"×"}${c.balance.debtTotal?.source==="none" ? (ja?"・借入なし":" · no borrowings") : ""}`;
   return ja ? "必要データ未取得" : "Data unavailable";

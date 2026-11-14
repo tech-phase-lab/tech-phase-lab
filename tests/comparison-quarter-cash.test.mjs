@@ -107,3 +107,17 @@ test("financial strength reads debt in the form the filing uses; a filing with n
   assert.deepEqual(withBalance({ AvailableForSaleSecuritiesDebtSecurities: 900 }), { value: 0, source: "none" });   // owning bonds is not borrowing
   assert.equal(withBalance({ LineOfCredit: 40 }), null);                                                       // borrowing we cannot add up: no score
 });
+
+test("operating income is worked out from the same filing's own lines; pre-tax only where no operating figure exists, and labelled as such", () => {
+  const base = () => { const f = facts(); delete f.facts["us-gaap"].OperatingIncomeLoss; return f; };
+  const usd = list => ({ units: { USD: list } });
+  const q = val => [fact("2026-07-01", "2026-09-30", val, Q3, "2026-11-05")];
+  let f = base(); Object.assign(f.facts["us-gaap"], { GrossProfit: usd(q(80)), OperatingExpenses: usd(q(50)) });
+  assert.equal(extractFinancials("AAOI", "1", f, NOW).quarterOperatingMargin, 15);          // (80 - 50) / 200
+  f = base(); Object.assign(f.facts["us-gaap"], { CostsAndExpenses: usd(q(190)) });
+  assert.equal(extractFinancials("AAOI", "1", f, NOW).quarterOperatingMargin, 5);           // (200 - 190) / 200
+  f = base(); Object.assign(f.facts["us-gaap"], { IncomeLossFromContinuingOperationsBeforeIncomeTaxesExtraordinaryItemsNoncontrollingInterest: usd(q(30)) });
+  const pre = extractFinancials("AAOI", "1", f, NOW);
+  assert.equal(pre.quarterOperatingMargin, 15);
+  assert.equal(pre.quarterOperatingIncome.tag, "TechPhasePretaxIncome");
+});

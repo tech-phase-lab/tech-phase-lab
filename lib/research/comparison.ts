@@ -67,8 +67,45 @@ export function comparisonAccess(member: ComparisonMember, now = Date.now()): 20
   return member.plan === "pro" && Number.isFinite(member.accessExpiresAt) && member.accessExpiresAt! > now ? 200 : 403;
 }
 
+/** Operating income worked out from the same filing's own lines, for a company that tags no OperatingIncomeLoss (COHR, ASTS, HOOD...). */
+export const DERIVED_OPERATING = "TechPhaseDerivedOperatingIncome";
+/** Pre-tax income, only for a company with no operating line at all (IBM, KLAC); shown as a pre-tax margin, never as an operating margin. */
+export const DERIVED_PRETAX = "TechPhasePretaxIncome";
+const PRETAX_TAGS = ["IncomeLossFromContinuingOperationsBeforeIncomeTaxesExtraordinaryItemsNoncontrollingInterest", "IncomeLossFromContinuingOperationsBeforeIncomeTaxesMinorityInterestAndIncomeLossFromEquityMethodInvestments"];
+type RawFact = { val: number; end: string; start?: string; accn: string; filed: string; form: string };
+/** Adds figures the scorecard needs that a filing states in another form, period by period and filing by filing, never across filings:
+ *  - operating income: gross profit − operating expenses; revenue − cost of revenue − operating expenses; revenue − total costs and expenses;
+ *    revenue − operating expenses (only when the filing shows no cost-of-revenue line); last, pre-tax income under its own tag;
+ *  - cash: cash including restricted cash, when the plain cash line is not tagged (GEV).
+ * Only USD (or the filing's single currency) duration facts with a start; nothing is added where the stated tag exists. */
+function supplementFacts(usGaap: Record<string, unknown>): Record<string, unknown> {
+  const facts = { ...usGaap };
+  const list = (tag: string): [string, RawFact[]][] => Object.entries(obj(obj(facts[tag]).units)).flatMap(([unit, values]) => Array.isArray(values) ? [[unit, values as RawFact[]]] : []);
+  const key = (f: RawFact) => `${f.accn}|${f.start ?? ""}|${f.end}`;
+  const index = (tags: string[]) => { const m = new Map<string, Map<string, RawFact>>(); for (const tag of tags) for (const [unit, values] of list(tag)) for (const f of values) { if (typeof f.val !== "number") continue; const u = m.get(unit) ?? new Map(); if (!u.has(key(f))) u.set(key(f), f); m.set(unit, u); } return m; };
+  const add = (tag: string, unit: string, rows: RawFact[]) => { if (rows.length) facts[tag] = { units: { [unit]: rows } }; };
+  const stated = index(["OperatingIncomeLoss"]);
+  const revenue = index(["RevenueFromContractWithCustomerExcludingAssessedTax", "RevenueFromContractWithCustomerIncludingAssessedTax", "Revenues", "SalesRevenueNet"]);
+  const gross = index(["GrossProfit"]), opex = index(["OperatingExpenses"]), cost = index(["CostOfRevenue", "CostOfGoodsAndServicesSold"]), costs = index(["CostsAndExpenses"]);
+  const pretax = index(PRETAX_TAGS);
+  const derived: Record<string, RawFact[]> = {}, pre: Record<string, RawFact[]> = {};
+  for (const [unit, rows] of revenue) for (const [k, r] of rows) {
+    if (!r.start || stated.get(unit)?.has(k)) continue;
+    const g = gross.get(unit)?.get(k), o = opex.get(unit)?.get(k), c = cost.get(unit)?.get(k), t = costs.get(unit)?.get(k);
+    const value = g && o ? g.val - o.val : c && o ? r.val - c.val - o.val : t ? r.val - t.val : o && !c && !g ? r.val - o.val : null;
+    if (value !== null && Number.isFinite(value)) { (derived[unit] ??= []).push({ ...r, val: value }); continue; }
+    const p = pretax.get(unit)?.get(k);
+    if (p) (pre[unit] ??= []).push({ ...r, val: p.val });
+  }
+  for (const [unit, rows] of Object.entries(derived)) add(DERIVED_OPERATING, unit, rows);
+  // Pre-tax income only fills a period with no operating figure of any kind (KLAC stopped tagging one); the stability series never mixes the two.
+  for (const [unit, rows] of Object.entries(pre)) add(DERIVED_PRETAX, unit, rows);
+  if (!facts.CashAndCashEquivalentsAtCarryingValue && facts.CashCashEquivalentsRestrictedCashAndRestrictedCashEquivalents)
+    facts.CashAndCashEquivalentsAtCarryingValue = facts.CashCashEquivalentsRestrictedCashAndRestrictedCashEquivalents;
+  return facts;
+}
 const tags = {
-  "us-gaap": { revenue: ["RevenueFromContractWithCustomerExcludingAssessedTax", "RevenueFromContractWithCustomerIncludingAssessedTax", "Revenues", "SalesRevenueNet"], operatingIncome: ["OperatingIncomeLoss"], operatingCash: ["NetCashProvidedByUsedInOperatingActivities"], capex: ["PaymentsToAcquirePropertyPlantAndEquipment", "PaymentsToAcquireOtherPropertyPlantAndEquipment", "PaymentsToAcquireProductiveAssets"], cash: ["CashAndCashEquivalentsAtCarryingValue"], stockCompensation: ["ShareBasedCompensation"], dilutedShares: ["WeightedAverageNumberOfDilutedSharesOutstanding"] },
+  "us-gaap": { revenue: ["RevenueFromContractWithCustomerExcludingAssessedTax", "RevenueFromContractWithCustomerIncludingAssessedTax", "Revenues", "SalesRevenueNet"], operatingIncome: ["OperatingIncomeLoss", DERIVED_OPERATING, DERIVED_PRETAX], operatingCash: ["NetCashProvidedByUsedInOperatingActivities"], capex: ["PaymentsToAcquirePropertyPlantAndEquipment", "PaymentsToAcquireOtherPropertyPlantAndEquipment", "PaymentsToAcquireProductiveAssets"], cash: ["CashAndCashEquivalentsAtCarryingValue"], stockCompensation: ["ShareBasedCompensation"], dilutedShares: ["WeightedAverageNumberOfDilutedSharesOutstanding"] },
   "ifrs-full": { revenue: ["Revenue", "RevenueFromContractsWithCustomers"], operatingIncome: ["ProfitLossFromOperatingActivities"], operatingCash: ["CashFlowsFromUsedInOperatingActivities"], capex: ["PurchaseOfPropertyPlantAndEquipmentClassifiedAsInvestingActivities"], cash: ["CashAndCashEquivalents"], stockCompensation: [], dilutedShares: [] },
 } as const;
 /** Standard consolidated facts. Annual and standalone-quarter periods remain separate. */
@@ -76,7 +113,8 @@ export function extractFinancials(ticker: string, cik: string, payload: unknown,
   const result = emptyFinancials(ticker, "unsupported", new Date(now).toISOString());
   const root = obj(payload);
   if (Number(root.cik) !== Number(cik)) return result;
-  const facts = obj(root.facts);
+  const rawFacts = obj(root.facts);
+  const facts: Record<string, unknown> = { ...rawFacts, "us-gaap": supplementFacts(obj(rawFacts["us-gaap"])) };
   function collect(basis: keyof typeof tags, names: readonly string[], instant = false, period: "annual" | "quarter" | "ytd9" | "ytd" = "annual", shares = false): (Fact & {filed:string;accession:string})[] {
     return names.flatMap(tag => Object.entries(obj(obj(obj(facts[basis])[tag]).units)).flatMap(([unit, values]) => {
       if ((shares ? unit !== "shares" : !/^[A-Z]{3}$/.test(unit)) || !Array.isArray(values)) return [];
@@ -196,13 +234,21 @@ export function extractFinancials(ticker: string, cik: string, payload: unknown,
       }
       return out;
     };
-    const rev = perEnd(tags[basis].revenue), op = perEnd(tags[basis].operatingIncome);
+    // The revenue tag of the latest quarter only (BE tags two revenue lines that differ slightly), and one kind of profit line: operating, or pre-tax.
+    const pretaxOnly = quarterOperatingIncome?.tag === DERIVED_PRETAX;
+    const rev = perEnd([quarterRevenue.tag]), op = perEnd(pretaxOnly ? [DERIVED_PRETAX] : tags[basis].operatingIncome.filter(tag => tag !== DERIVED_PRETAX));
+    // Revenue of four consecutive quarters for price-to-sales: needs revenue only, so a company without an operating line still has it.
+    const revenueEnds = [...rev.keys()].filter(end => end <= quarterRevenue.end && (rev.get(end) ?? 0) > 0).sort().reverse();
+    if (revenueEnds[0] === quarterRevenue.end) {
+      const chain = [revenueEnds[0]];
+      for (const end of revenueEnds.slice(1)) { const gap = day(chain.at(-1)!) - day(end); if (gap >= 70 && gap <= 110) chain.push(end); else if (gap > 110) break; if (chain.length === 4) break; }
+      if (chain.length === 4) quarterRevenueTtm = chain.reduce((sum, end) => sum + rev.get(end)!, 0);
+    }
     const ends = [...rev.keys()].filter(end => end <= quarterRevenue.end && (rev.get(end) ?? 0) > 0 && typeof op.get(end) === "number").sort().reverse();
     if (ends[0] !== quarterRevenue.end) return null;
     const picked = [ends[0]];
     for (const end of ends.slice(1)) { const gap = day(picked.at(-1)!) - day(end); if (gap >= 70 && gap <= 110) picked.push(end); if (picked.length === 4) break; }
     if (picked.length !== 4) return null;
-    quarterRevenueTtm = picked.reduce((sum, end) => sum + rev.get(end)!, 0);
     return picked.map(end => ({ periodEnd: end, value: op.get(end)! / rev.get(end)! * 100 }));
   }
   const quarterMargins = marginSeries();
@@ -231,8 +277,14 @@ export function extractFinancials(ticker: string, cik: string, payload: unknown,
     if (noncurrent) return { value: noncurrent.value + short, source: "noncurrent" };
     const carrying = m("DebtInstrumentCarryingAmount");
     if (carrying) return { value: carrying.value + short, source: "carrying" };
-    const convertible = m("ConvertibleDebtNoncurrent") ?? m("ConvertibleNotesPayable") ?? m("ConvertibleSeniorNotesPayable");
-    if (convertible) return { value: convertible.value + (m("ConvertibleDebtCurrent")?.value ?? m("ConvertibleNotesPayableCurrent")?.value ?? 0) + short, source: "convertible" };
+    const leaseCombined = m("LongTermDebtAndCapitalLeaseObligations");   // noncurrent debt and finance leases, with its current part (APH, LRCX)
+    if (leaseCombined) return { value: leaseCombined.value + (m("LongTermDebtAndCapitalLeaseObligationsCurrent")?.value ?? 0) + short, source: "total" };
+    const combined = m("DebtLongtermAndShorttermCombinedAmount");
+    if (combined) return { value: combined.value, source: "total" };
+    const convertibleCurrent = m("ConvertibleDebtCurrent")?.value ?? m("ConvertibleNotesPayableCurrent")?.value ?? null;
+    const convertible = m("ConvertibleDebtNoncurrent") ?? m("ConvertibleNotesPayable") ?? m("ConvertibleSeniorNotesPayable") ?? m("ConvertibleLongTermNotesPayable");
+    if (convertible) return { value: convertible.value + (convertibleCurrent ?? 0) + short, source: "convertible" };
+    if (convertibleCurrent !== null) return { value: convertibleCurrent + short, source: "convertible" };
     // No form found: debt-free only if the filing reports no borrowing, loan or notes figure of any kind (investments in debt securities aside).
     if (!currentAssets || !currentLiabilities || anchor.accession === null) return null;
     const borrowing = /Debt|Borrowing|NotesPayable|LoansPayable|SeniorNotes|LineOfCredit|CreditFacility/;
