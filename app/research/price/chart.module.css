@@ -13,3 +13,5 @@
 .dateTag{position:absolute;bottom:3px;transform:translateX(-50%);padding:3px 7px;background:#f3d98b;color:#1a1305;font:700 11px "IBM Plex Mono",ui-monospace,monospace;border-radius:3px;pointer-events:none;white-space:nowrap}
 .reset{position:absolute;top:6px;left:8px;z-index:2;padding:3px 10px;border:1px solid rgba(217,180,106,.5);border-radius:999px;background:rgba(10,14,20,.85);color:#f3d98b;font:500 11.5px "Zen Kaku Gothic New",sans-serif;cursor:pointer}
 .extLabel{position:absolute;transform:translateX(-50%);font:500 10px "Zen Kaku Gothic New",sans-serif;color:#7fe3c0;opacity:.85;pointer-events:none;white-space:nowrap}
+.sessionLabel{position:absolute;bottom:6px;font:10.5px "IBM Plex Mono",ui-monospace,monospace;color:#8c98ab;pointer-events:none;white-space:nowrap}
+.liveLabel{position:absolute;transform:translateY(-50%);font:500 10px "Zen Kaku Gothic New",sans-serif;color:#8ea8a0;pointer-events:none;white-space:nowrap}
