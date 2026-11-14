@@ -187,11 +187,17 @@ export function extractFinancials(ticker: string, cik: string, payload: unknown,
   // Only a directly reported standalone quarter AFTER the annual period. Never treat YTD as a quarter.
   const quarters = collect(basis, tags[basis].revenue, false, "quarter").filter(f => f.end > revenue.end && f.unit === revenue.unit && f.value > 0 && (!primaryRevenueTag || `${f.basis}:${f.tag}` === primaryRevenueTag)).sort((a,b) => b.end.localeCompare(a.end) || b.filed.localeCompare(a.filed));
   const latestQuarter = quarters[0];
-  // A quarter can carry two revenue lines (Applied Digital: total Revenues and the narrower contract revenue). The annual figure's own tag
-  // decides, so the quarter is comparable with the year; only when that tag is absent must every tag agree.
+  // A quarter can carry two revenue lines (Applied Digital, IREN: total "Revenues" and the narrower contract revenue). The total is taken
+  // only when the same filing shows it is exactly contract revenue plus lease or other non-contract revenue; any other disagreement
+  // between tags is a conflict and leaves the quarter empty.
   const latestRows = latestQuarter ? quarters.filter(f => f.end === latestQuarter.end && f.filed === latestQuarter.filed) : [];
-  const sameTagRows = latestRows.filter(f => f.tag === revenue.tag);
-  let quarterRevenue = latestQuarter ? unique(sameTagRows.length ? sameTagRows : latestRows) : null;
+  const reconciledTotal = (() => {
+    const total = unique(latestRows.filter(f => f.tag === "Revenues")), contract = unique(latestRows.filter(f => f.tag !== "Revenues"));
+    if (!total || !contract) return null;
+    const rest = collect(basis, ["RevenueNotFromContractWithCustomer", "OperatingLeaseLeaseIncome"], false, "quarter").filter(f => f.accession === total.accession && f.unit === total.unit && f.start === total.start && f.end === total.end);
+    return rest.some(f => Math.abs(contract.value + f.value - total.value) <= total.value * 0.001) ? total : null;
+  })();
+  let quarterRevenue = latestQuarter ? reconciledTotal ?? unique(latestRows) : null;
   // Right after a 10-K the fourth quarter has no filing of its own: it is the fiscal year minus the nine-month year-to-date of the same
   // year's third-quarter 10-Q (the same tag and unit, the YTD ending a quarter before the year end). Marked as derived; nothing is guessed.
   const fourth = (tag: string, wanted: Fact | null) => {
