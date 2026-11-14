@@ -12,6 +12,8 @@ test("capital map portraits are small local files, with their credit and licence
     // Shown at 64 px: a few kilobytes, not the full-size photograph.
     const { size } = await stat(new URL(`../public${url}`, import.meta.url));
     assert.ok(size > 1000 && size < 40_000, `${key}: ${size} bytes`);
-    assert.ok(credit && license && /^https:\/\/commons\.wikimedia\.org\//.test(source), key);
+    // A Commons photo keeps its licence; a photo the owner supplied (Nov 14) says so and links the company page it belongs to.
+    if (credit === "運営者提供") assert.ok(profile.portrait.sourceLabel && /^https:\/\//.test(source), key);
+    else assert.ok(credit && license && /^https:\/\/commons\.wikimedia\.org\//.test(source), key);
   }
 });
