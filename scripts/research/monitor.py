@@ -20,6 +20,7 @@ from urllib.error import HTTPError, URLError
 from urllib.request import HTTPRedirectHandler, Request, build_opener
 import threading
 import time
+import traceback
 
 ROOT = Path(__file__).resolve().parents[2]
 PROVIDERS = {p["ticker"]: p for p in json.loads((ROOT / "lib/research/providers.json").read_text())}
@@ -268,14 +269,24 @@ _SEC_REQUEST_WINDOW = SourceRequestWindow(limit=environment_seconds(
 SEC_CONTACT = re.compile(r"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}")
 
 
+def request_user_agent(default="TechPhaseResearch-SourceCheck/0.1"):
+    """The configured User-Agent made safe to send: any run of whitespace (a full-width space U+3000 pasted into the variable made every
+    request fail in http.client with a latin-1 encode error) becomes one space and every non-ASCII character is dropped. Empty -> default."""
+    value = os.environ.get("RESEARCH_USER_AGENT", "")
+    value = re.sub(r"\s+", " ", value)
+    value = " ".join("".join(ch for ch in value if " " <= ch <= "~").split())
+    return value or default
+
+
 def sec_user_agent():
     """SEC requires a declared User-Agent with a contact address.
 
     Requests without one are answered with 403 and can get the whole IP
     blocked, so they are never sent. The value is configuration, not code.
     """
-    value = os.environ.get("RESEARCH_USER_AGENT", "").strip()
-    if not value or "\r" in value or "\n" in value or not SEC_CONTACT.search(value):
+    raw = os.environ.get("RESEARCH_USER_AGENT", "")
+    value = request_user_agent("")
+    if not value or "\r" in raw or "\n" in raw or not SEC_CONTACT.search(value):
         raise ValueError("SEC user agent has no contact address")
     return value
 
@@ -607,6 +618,31 @@ def source_error_code(exc):
     return "fetch-failed"
 
 
+_DIAGNOSED_FAILURES = set()
+_DIAGNOSTIC_LOCK = threading.Lock()
+
+
+def discovery_failure_diagnostic(ticker, exc, stage):
+    """One bounded stdout line (JSON) the first time each distinct failure appears in this process, so an all-sources outage can be
+    traced to its exception class and raising line without logging per request. URLs, e-mail addresses and token-like strings are masked."""
+    try:
+        frames = traceback.extract_tb(exc.__traceback__)
+        where = "%s:%s:%s" % (os.path.basename(frames[-1].filename), frames[-1].lineno, frames[-1].name) if frames else "unknown"
+        signature = (type(exc).__name__, where, stage)
+        with _DIAGNOSTIC_LOCK:
+            if signature in _DIAGNOSED_FAILURES or len(_DIAGNOSED_FAILURES) >= 40:
+                return
+            _DIAGNOSED_FAILURES.add(signature)
+        message = re.sub(r"https?://\S+", "<url>", str(exc))
+        message = re.sub(r"\S+@\S+", "<email>", message)
+        message = re.sub(r"[A-Za-z0-9_\-]{24,}", "<token>", message)
+        message = " ".join(message.split())[:80]
+        print(json.dumps({"event": "discovery-failure-diagnostic", "stage": stage, "ticker": ticker, "class": type(exc).__name__,
+                          "where": where, "code": source_error_code(exc), "message": message}, ensure_ascii=True), flush=True)
+    except Exception:  # a diagnostic must never add a failure of its own
+        return
+
+
 def persisted_source_error_code(value):
     """Normalize legacy child state to a fixed URL-free transport code."""
     if value is None or value == "":
@@ -741,8 +777,7 @@ def fetch(url, ticker, validators=None, include_metadata=False):
     if sec:
         SEC_ACCESS.check()
     headers = {
-        "User-Agent": sec_user_agent() if sec else os.environ.get(
-            "RESEARCH_USER_AGENT", "TechPhaseResearch-SourceCheck/0.1"),
+        "User-Agent": sec_user_agent() if sec else request_user_agent(),
         "Accept": ("text/html,application/pdf;q=0.9" if article_url(url, ticker)
                    else "application/json,application/rss+xml,application/atom+xml,text/html,application/pdf"),
     }
@@ -3886,6 +3921,7 @@ def collect_discovery(ticker, transport=fetch, automatic=False, cached_sources=N
                         }
                 return source, discovered, chain_failures
             except Exception as exc:
+                discovery_failure_diagnostic(ticker, exc, "source")
                 chain_failures.append(source_error_code(exc))
         return None, {}, chain_failures
 

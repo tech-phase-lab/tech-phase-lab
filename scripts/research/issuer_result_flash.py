@@ -952,7 +952,7 @@ def direct_pdf(url, ticker=None):
     parts = urlsplit(url)
     if parts.scheme != 'https' or parts.hostname != 'assets.nebius.com' or parts.username or parts.password:
         raise ValueError('host-not-allowed')
-    request = urllib.request.Request(url, headers={'User-Agent': os.environ.get('RESEARCH_USER_AGENT', 'TechPhaseResearch-SourceCheck/0.1'),
+    request = urllib.request.Request(url, headers={'User-Agent': monitor.request_user_agent(),
                                                   'Accept': 'application/pdf'})
     with urllib.request.build_opener(_SameHostRedirect()).open(request, timeout=20) as response:
         content = response.read(PDF_MAX_BYTES + 1)
