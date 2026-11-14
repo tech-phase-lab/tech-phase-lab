@@ -54,4 +54,4 @@ passed the parser's own consistency checks (stated changes agree with the values
 FAIL is not a verdict on the company's data: it means this site cannot yet publish that company's figures, so the site shows only
 "決算を発表しました" with the official link for it. Adding a company = a parser in `issuer_result_flash.PROFILES` with fixtures from this run.
 Run it before each earnings season, after any company or source change, and daily (a Railway cron job needs the owner's approval).
-Note: the monitor runs pypdf 6.10.0, which splits words and numbers inside PDFs; this script may run a newer pypdf, so a PASS for the Nebius PDF here is not proof for production.
+Note: pypdf 6.10-6.12 split words and numbers inside PDFs ("980 . 8"); the monitor was pinned to 6.10.0 until Nov 14 and now pins 6.14.0, which reads the same Nebius PDF as "980.8". Text stored from a PDF before the upgrade keeps the old spacing until the source is fetched again.
