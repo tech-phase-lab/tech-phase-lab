@@ -108,12 +108,17 @@ function supplementFacts(usGaap: Record<string, unknown>): Record<string, unknow
   for (const [unit, rows] of Object.entries(derived)) add(DERIVED_OPERATING, unit, rows);
   // Pre-tax income only fills a period with no operating figure of any kind (KLAC stopped tagging one); the stability series never mixes the two.
   for (const [unit, rows] of Object.entries(pre)) add(DERIVED_PRETAX, unit, rows);
-  if (!facts.CashAndCashEquivalentsAtCarryingValue && facts.CashCashEquivalentsRestrictedCashAndRestrictedCashEquivalents)
-    facts.CashAndCashEquivalentsAtCarryingValue = facts.CashCashEquivalentsRestrictedCashAndRestrictedCashEquivalents;
+  // Cash: a filing that states only cash including restricted cash for a date (SBUX, GILD; PCAR's variant also counts held-for-sale units) has
+  // that figure used for that date and filing; a date with the plain cash line keeps it.
+  const plain = index(["CashAndCashEquivalentsAtCarryingValue"]);
+  const broad = index(["CashCashEquivalentsRestrictedCashAndRestrictedCashEquivalents", "CashCashEquivalentsRestrictedCashAndRestrictedCashEquivalentsIncludingDisposalGroupAndDiscontinuedOperations"]);
+  const cashRows: Record<string, RawFact[]> = Object.fromEntries([...plain].map(([unit, rows]) => [unit, [...rows.values()]]));
+  for (const [unit, rows] of broad) for (const [k, f] of rows) if (!f.start && !plain.get(unit)?.has(k)) (cashRows[unit] ??= []).push(f);
+  if (Object.values(cashRows).some(rows => rows.length)) facts.CashAndCashEquivalentsAtCarryingValue = { units: cashRows };
   return facts;
 }
 const tags = {
-  "us-gaap": { revenue: ["RevenueFromContractWithCustomerExcludingAssessedTax", "RevenueFromContractWithCustomerIncludingAssessedTax", "Revenues", "SalesRevenueNet"], operatingIncome: ["OperatingIncomeLoss", DERIVED_OPERATING, DERIVED_PRETAX], operatingCash: ["NetCashProvidedByUsedInOperatingActivities"], capex: ["PaymentsToAcquirePropertyPlantAndEquipment", "PaymentsToAcquireOtherPropertyPlantAndEquipment", "PaymentsToAcquireProductiveAssets"], cash: ["CashAndCashEquivalentsAtCarryingValue"], stockCompensation: ["ShareBasedCompensation"], dilutedShares: ["WeightedAverageNumberOfDilutedSharesOutstanding"] },
+  "us-gaap": { revenue: ["RevenueFromContractWithCustomerExcludingAssessedTax", "RevenueFromContractWithCustomerIncludingAssessedTax", "Revenues", "SalesRevenueNet"], operatingIncome: ["OperatingIncomeLoss", DERIVED_OPERATING, DERIVED_PRETAX], operatingCash: ["NetCashProvidedByUsedInOperatingActivities"], capex: ["PaymentsToAcquirePropertyPlantAndEquipment", "PaymentsToAcquireOtherPropertyPlantAndEquipment", "PaymentsToAcquireProductiveAssets", "PaymentsToAcquireOtherProductiveAssets"], cash: ["CashAndCashEquivalentsAtCarryingValue"], stockCompensation: ["ShareBasedCompensation"], dilutedShares: ["WeightedAverageNumberOfDilutedSharesOutstanding"] },
   "ifrs-full": { revenue: ["Revenue", "RevenueFromContractsWithCustomers"], operatingIncome: ["ProfitLossFromOperatingActivities"], operatingCash: ["CashFlowsFromUsedInOperatingActivities"], capex: ["PurchaseOfPropertyPlantAndEquipmentClassifiedAsInvestingActivities"], cash: ["CashAndCashEquivalents"], stockCompensation: [], dilutedShares: [] },
 } as const;
 /** Standard consolidated facts. Annual and standalone-quarter periods remain separate. */
