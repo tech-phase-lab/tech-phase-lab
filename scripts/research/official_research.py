@@ -1306,7 +1306,11 @@ def diagnostics(db):
     delivery=delivery_diagnostics(db,reference,rows,{row['id'] for row,_,_ in publications})
     return {'published':published,'pending':max(0,pending),'delivery':delivery,
             'latest':[{k:x[k] for k in ('id','ticker','observedAt','bodyReadyAt','generationStartedAt','publicAt','generationMs','detectionToPublicMs')} for x in items[:5]],
-            'jobs':[dict(r) for r in db.execute('SELECT event_id,state,attempts,failure_kind FROM official_research_jobs ORDER BY event_id DESC LIMIT 5')]}
+            'jobs':[dict(r) for r in db.execute('SELECT event_id,state,attempts,failure_kind FROM official_research_jobs ORDER BY event_id DESC LIMIT 5')],
+            # Why the unpublished ones are stuck: the company (source id), job state, attempts and the failure kind; no title, text or URL.
+            'notDone':[dict(r) for r in db.execute('''SELECT e.source_id AS source,j.state,j.attempts,j.failure_kind AS failure
+              FROM official_research_jobs j LEFT JOIN signal_events e ON e.id=j.event_id WHERE j.state!='done'
+              ORDER BY j.event_id DESC LIMIT 20''')]}
 
 
 def sync_incident(db, env=None, reference=None):

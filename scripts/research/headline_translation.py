@@ -188,6 +188,7 @@ def diagnostics(db, env=None, now=None, sources=signals.SOURCES):
     oldest_pending = None
     next_retry = None
     failure_kinds = {}
+    pending_items = []
     for item in signals.public_official_updates(db, sources=sources, reference=reference, limit=500, include_bodies=False):
         row = db.execute("SELECT * FROM signal_events WHERE id=?", (item["id"],)).fetchone()
         if not row or re.fullmatch(r"https?://\S+", row["title"].strip(), re.I):
@@ -219,6 +220,10 @@ def diagnostics(db, env=None, now=None, sources=signals.SOURCES):
         job = db.execute('''SELECT attempts,next_at,state,failure_kind
           FROM signal_headline_translation_jobs WHERE source_id=? AND url=? AND sha=?''',
                          (row["source_id"], row["url"], row["sha"])).fetchone()
+        if len(pending_items) < 10:  # which source is stuck and why: no title, URL or text
+            pending_items.append({"source": row["source_id"], "observedAt": row["observed_at"],
+                                  "state": job["state"] if job else "queued", "attempts": job["attempts"] if job else 0,
+                                  "failure": job["failure_kind"] if job else None})
         if not job:
             continue
         if job['failure_kind'] in {'output-token-limit', 'incomplete', 'invalid-translation', 'unsupported-number', 'changed-amount-relation', 'changed-execution-period', 'changed-action-capacity', 'invalid-copy', 'invalid-json', 'provider-unavailable', 'provider-rate-limit', 'provider-auth', 'provider-timeout'} | factual_validation.MEANING_FAILURES:
@@ -264,6 +269,7 @@ def diagnostics(db, env=None, now=None, sources=signals.SOURCES):
         "nextRetryAt": next_retry.isoformat() if next_retry else None,
         "calls24Hours": calls,
         **({"failureKinds": failure_kinds} if failure_kinds else {}),
+        **({"pendingItems": pending_items} if pending_items else {}),
     }
 
 

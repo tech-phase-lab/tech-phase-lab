@@ -38,6 +38,20 @@ class OfficialResearchTests(unittest.TestCase):
     def feed(self):
         with research.connect(self.path) as db:return research.feed(db,NOW)
     def run_note(self,transport=response):return research.run_once(self.path,transport,ENV,NOW.timestamp())
+    def test_diagnostics_list_unpublished_jobs_with_source_state_and_failure_only(self):
+        bad = json.loads(json.dumps(NOTE))
+        bad['title']['ja'] = '売上は45%増'
+        bad['title']['en'] = 'Revenue rose 45%'
+        failing = lambda *args: {'status': 'completed', 'output': [{'type': 'message', 'content': [{'type': 'output_text', 'text': json.dumps(bad, ensure_ascii=False)}]}]}
+        self.run_note(failing)
+        with research.connect(self.path) as db:
+            report = research.diagnostics(db)
+        [job] = report['notDone']
+        self.assertEqual(set(job), {'source', 'state', 'attempts', 'failure'})
+        self.assertIn(job['state'], {'retry', 'review'})
+        self.assertTrue(job['failure'])
+        self.assertNotIn('Nebius', json.dumps(report['notDone']))
+        self.run_note(response)  # a later good attempt may publish; whatever is still not done stays listed without text
     def test_request_headline_reuse_preserves_publication_and_withdrawal_checks(self):
         self.assertEqual(self.run_note(), 'done')
         with research.connect(self.path) as db:
