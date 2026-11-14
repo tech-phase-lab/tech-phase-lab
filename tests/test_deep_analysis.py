@@ -207,6 +207,36 @@ class DeepAnalysisTests(unittest.TestCase):
         self.assertRegex(reason, r'^(?:changed-direction:\w+:(?:up|down)>(?:up|down)(?:\|(?:up|down))*|changed-direction@\w+:\d+|invalid-copy@\w+:\d+)')
 
 
+    def test_old_holds_are_retried_once_when_the_flag_is_on_and_a_good_result_is_dated_to_the_release(self):
+        # Owner, Nov 14: the 14 held analyses get exactly one more attempt, with their reasons recorded.
+        self.earnings()
+        bad = json.loads(json.dumps(GOOD))
+        bad['points'] = [point('売上は45%増。', 'Revenue rose 45%.')] * 3
+        for attempt in range(3):
+            self.run_deep(reply(bad), now=base.NOW.timestamp() + attempt * 1000)
+        later = base.NOW.timestamp() + 90000
+        on = {**ENV, deep_analysis.OLD_RETRY_ENV: 'true'}
+        self.assertEqual(deep_analysis.retry_old_holds(self.path, reply(GOOD), ENV, now=later), 'idle')  # flag off
+        with research.connect(self.path) as db:
+            self.assertEqual(db.execute("SELECT state FROM deep_analyses").fetchone()[0], 'held')
+            created = db.execute("SELECT created_at FROM deep_analyses").fetchone()[0]
+        self.assertEqual(deep_analysis.retry_old_holds(self.path, reply(bad), on, now=later), 'rejected')  # one attempt, held again with reasons
+        with research.connect(self.path) as db:
+            row = db.execute("SELECT state,attempts,detail FROM deep_analyses").fetchone()
+            self.assertEqual((row[0], row[1]), ('held', deep_analysis.MAX_ATTEMPTS))
+            self.assertIn('unsupported-number', row[2])
+            self.assertEqual(deep_analysis.diagnostics(db, now=later)['oldRetry'], {'rejected': 1})
+        self.assertEqual(deep_analysis.retry_old_holds(self.path, reply(GOOD), on, now=later + 10), 'idle')  # once: never repeated
+        with research.connect(self.path) as db:
+            db.execute("DELETE FROM deep_old_retries")
+        self.assertEqual(deep_analysis.retry_old_holds(self.path, reply(GOOD), on, now=later + 20), 'done')
+        with research.connect(self.path) as db:
+            row = db.execute("SELECT state,published_at,created_at FROM deep_analyses").fetchone()
+            self.assertEqual((row[0], row[1]), ('done', created))  # dated to the release, not to today
+            db.execute("UPDATE deep_analyses SET state='held',source_ref='event:999:gone'")
+            db.execute("DELETE FROM deep_old_retries")
+        self.assertEqual(deep_analysis.retry_old_holds(self.path, reply(GOOD), on, now=later + 30), 'source-unavailable')
+
     def test_an_earnings_analysis_not_done_after_two_hours_is_a_critical_incident_naming_company_and_check(self):
         # Nov 14, NBIS: held for 44 hours and nobody noticed. Two hours after the release is a critical alert with the ticker and the check.
         self.earnings()
