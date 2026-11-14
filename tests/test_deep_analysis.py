@@ -157,7 +157,9 @@ class DeepAnalysisTests(unittest.TestCase):
             with self.assertRaises(ValueError, msg=en):
                 deep_analysis.checked({'ja': ja, 'en': en}, table)
         self.assertEqual(deep_analysis.table_scaled_figures('Revenues 146.1 980.8'), '')  # no declared unit: nothing is converted
-        self.assertEqual(deep_analysis.table_scaled_figures('In millions A 1.5 In thousands B 2.5'), '')  # mixed units: nothing is converted
+        # several units in one release: each table in its own unit; a figure printed under two units is ambiguous and converted in neither
+        self.assertEqual(deep_analysis.table_scaled_figures('In millions A 1.5 In thousands B 2.5'), '1.5 million; 2.5 thousand')
+        self.assertEqual(deep_analysis.table_scaled_figures('In millions A 1.5 In thousands B 1.5'), '')
         self.assertIn('980.8 million', deep_analysis.table_scaled_figures('(in millions of U.S. dollars) Revenues 980.8'))
 
 
@@ -203,6 +205,33 @@ class DeepAnalysisTests(unittest.TestCase):
         except ValueError as exc:
             reason = deep_analysis.why(exc, 'Revenue increased to 980.8 in the quarter.')
         self.assertRegex(reason, r'^(?:changed-direction:\w+:(?:up|down)>(?:up|down)(?:\|(?:up|down))*|changed-direction@\w+:\d+|invalid-copy@\w+:\d+)')
+
+
+    def test_an_earnings_analysis_not_done_after_two_hours_is_a_critical_incident_naming_company_and_check(self):
+        # Nov 14, NBIS: held for 44 hours and nobody noticed. Two hours after the release is a critical alert with the ticker and the check.
+        self.earnings()
+        bad = json.loads(json.dumps(GOOD))
+        bad['points'] = [point('売上は45%増。', 'Revenue rose 45%.')] * 3
+        start = base.NOW.timestamp()
+        self.assertEqual(self.run_deep(reply(bad), now=start), 'retry')
+        key = deep_analysis.INCIDENT_PREFIX + 'NBIS'
+        with research.connect(self.path) as db:
+            self.assertEqual(deep_analysis.sync_incident(db, start + 3600), None)  # one hour: not yet
+            self.assertIsNone(db.execute('SELECT 1 FROM operational_incidents WHERE incident_key=?', (key,)).fetchone())
+            self.assertEqual(deep_analysis.sync_incident(db, start + 7300), 'deep-analysis-overdue')
+            row = db.execute('SELECT severity,status,last_error_code FROM operational_incidents WHERE incident_key=?', (key,)).fetchone()
+            self.assertEqual((row[0], row[1]), ('critical', 'open'))
+            self.assertEqual(row[2], 'deep-analysis-overdue:NBIS:unsupported-number-value-45-A')
+            self.assertEqual(db.execute('SELECT count(*) FROM incident_notification_outbox WHERE incident_key=?', (key,)).fetchone()[0], 1)
+            deep_analysis.sync_incident(db, start + 7400)  # still late: one alert, not one per pass
+            self.assertEqual(db.execute('SELECT count(*) FROM incident_notification_outbox WHERE incident_key=?', (key,)).fetchone()[0], 1)
+            db.execute("UPDATE deep_analyses SET state='done'")
+            self.assertIsNone(deep_analysis.sync_incident(db, start + 7500))
+            self.assertEqual(db.execute('SELECT status FROM operational_incidents WHERE incident_key=?', (key,)).fetchone()[0], 'resolved')
+            db.execute("UPDATE deep_analyses SET state='held'")
+            self.assertIsNone(deep_analysis.sync_incident(db, start + 80 * 3600))  # history older than three days is never alerted again
+            db.execute("UPDATE deep_analyses SET kind='indicator'")
+            self.assertEqual(deep_analysis.overdue(db, start + 7300), [])  # only earnings releases
 
     def test_why_an_analysis_is_held_is_recorded_and_older_holds_are_tried_again(self):
         self.earnings()
