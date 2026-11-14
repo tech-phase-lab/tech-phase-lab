@@ -92,7 +92,7 @@ class DeepAnalysisTests(unittest.TestCase):
         bad = {'headline': note['headline'], 'points': [only_first, unknown, only_first], 'watch': None}
         with self.assertRaises(deep_analysis.Unchecked) as caught:
             deep_analysis.bind(bad, excerpts)
-        self.assertEqual(caught.exception.detail, {'kept': 0, 'rejected': {'evidence-missing': 1, 'unsupported-number': 2}})
+        self.assertEqual(caught.exception.detail, {'kept': 0, 'rejected': {'evidence-missing': 1, 'unsupported-number:value:172000000': 2}})
 
     def test_the_headline_is_checked_against_its_own_excerpts_and_negation_rejections_name_their_rule(self):
         excerpts = {'0': 'Revenue was $3.41 billion in the quarter.', '1': 'The company did not raise guidance this quarter.',
@@ -108,6 +108,15 @@ class DeepAnalysisTests(unittest.TestCase):
         self.assertTrue(reason.startswith('changed-negation:source-negated:'), reason)
         self.assertEqual(caught.exception.detail['kept'], 1)
 
+    def test_a_rejected_headline_holds_the_analysis_and_records_why(self):
+        excerpts = {'0': 'Revenue was $3.41 billion in the quarter.', '1': 'Operating income was $172 million.'}
+        point = {'ja': '売上高は3.41 billion ドル。', 'en': 'Revenue was $3.41 billion.', 'evidenceIds': ['0']}
+        bad_headline = {'ja': '売上高は45%増。', 'en': 'Revenue rose 45%.', 'evidenceIds': ['0']}
+        with self.assertRaises(deep_analysis.Unchecked) as caught:
+            deep_analysis.bind({'headline': bad_headline, 'points': [point, point], 'watch': None}, excerpts)
+        self.assertEqual(str(caught.exception), 'unsupported-number')
+        self.assertEqual(caught.exception.detail, {'headline': 'unsupported-number:value:45%'})
+
     def test_why_an_analysis_is_held_is_recorded_and_older_holds_are_tried_again(self):
         self.earnings()
         bad = json.loads(json.dumps(GOOD))
@@ -118,7 +127,7 @@ class DeepAnalysisTests(unittest.TestCase):
             report = deep_analysis.diagnostics(db, now=base.NOW.timestamp() + 5000)
         [held] = report['notDone']
         self.assertEqual((held['subject'], held['state'], held['failure']), ('NBIS', 'held', 'too-few-checked-points'))
-        self.assertEqual(held['detail'], {'kept': 0, 'rejected': {'unsupported-number': 3}})
+        self.assertEqual(held['detail'], {'kept': 0, 'rejected': {'unsupported-number:value:45%': 3}})
         self.assertEqual(report['version'], deep_analysis.VERSION)
         self.assertEqual(self.run_deep(lambda *_: self.fail('held'), now=base.NOW.timestamp() + 5000), 'idle')
         with deep_analysis.connect(self.path) as db:  # held by an older version of the checks

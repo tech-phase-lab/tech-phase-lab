@@ -21,7 +21,7 @@ import monitor
 
 MAX_ATTEMPTS = 3
 # Bump when the prompt/check logic changes so analyses held under the old logic are tried again (attempts restart at 0).
-VERSION = 3
+VERSION = 4
 RETRY_SECONDS = 120
 DEFAULT_DAILY_LIMIT = 40
 MAX_DAILY_LIMIT = 200
@@ -131,6 +131,19 @@ def checked(item, quote):
     factual_validation.validate_pair(item['ja'], item['en'])
 
 
+def why(exc):
+    """A short, text-free reason for a rejected part: the rule that fired and, for numbers, the unsupported quantities the copy used
+    (e.g. unsupported-number:value:45%|12). Never the copy or the source text."""
+    reason = str(exc) if isinstance(exc, ValueError) else type(exc).__name__
+    if reason == 'changed-negation':
+        cue = factual_validation.LAST_NEGATION_REJECTION[0] or {}
+        reason = 'changed-negation:%s:%s' % (cue.get('rule', '?'), '|'.join(cue.get('sourceCues') or cue.get('copyCues') or []))
+    elif reason == 'unsupported-number':
+        miss = factual_validation.LAST_NUMBER_REJECTION[0] or {}
+        reason = 'unsupported-number:%s:%s' % (miss.get('kind', '?'), '|'.join(str(v) for v in (miss.get('values') or [])[:4]))
+    return reason[:80]
+
+
 class Unchecked(ValueError):
     """The analysis is held; `detail` counts why each rejected part failed (no text, no numbers)."""
 
@@ -156,7 +169,10 @@ def bind(value, excerpts):
         raise ValueError('invalid-note')
     # The headline is checked against the excerpts it cites (like every point), not against the whole release: a long release always
     # contains some negated clause, which made the meaning checks fail a headline that never touched it.
-    checked(headline, cited_quote(headline, excerpts) or evidence)
+    try:
+        checked(headline, cited_quote(headline, excerpts) or evidence)
+    except (ValueError, TypeError, KeyError) as exc:
+        raise Unchecked(str(exc) if isinstance(exc, ValueError) else type(exc).__name__, {'headline': why(exc)})
     points, rejected = [], {}
     for point in value.get('points') or []:
         quote = cited_quote(point, excerpts) if isinstance(point, dict) else None
@@ -166,11 +182,7 @@ def bind(value, excerpts):
         try:
             checked(point, quote)
         except (ValueError, TypeError, KeyError) as exc:
-            reason = str(exc) if isinstance(exc, ValueError) else type(exc).__name__
-            if reason == 'changed-negation':  # which rule fired and the short cue words (diagnostics only; no copy, no numbers)
-                cue = factual_validation.LAST_NEGATION_REJECTION[0] or {}
-                reason = 'changed-negation:%s:%s' % (cue.get('rule', '?'), '|'.join(cue.get('sourceCues') or cue.get('copyCues') or []))
-            reason = reason[:80]
+            reason = why(exc)
             rejected[reason] = rejected.get(reason, 0) + 1
             continue
         points.append({'ja': point['ja'], 'en': point['en']})
