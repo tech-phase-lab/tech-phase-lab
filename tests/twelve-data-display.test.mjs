@@ -126,3 +126,15 @@ test("comparison screen no longer offers the sample, saved-snapshot trial or the
   const screen = await readFile(new URL("../app/research/compare/screen.tsx", import.meta.url), "utf8");
   assert.doesNotMatch(screen, /compare\/sample|完成イメージを見る|保存データで試す|株価データ接続後/);
 });
+
+test("no year-ago quarter at the provider: growth is quarter-on-quarter, labelled so (On, SK hynix)",()=>{
+  const b=bundle();
+  const rows=b.income.income_statement;
+  rows[1].sales=100;                         // the quarter before: 120 vs 100
+  rows[4].sales=null;                        // the year-ago quarter is empty at the provider
+  const c=buildTwelveFinancials(b,now);
+  assert.equal(c.quarterRevenueGrowth,null);
+  assert.ok(Math.abs(c.quarterRevenueQoq-20)<1e-9);
+  const growth=comparisonScores(c,now).find(s=>s.id==="growth");
+  assert.notEqual(growth.value,null);
+});
