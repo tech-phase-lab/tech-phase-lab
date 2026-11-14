@@ -269,14 +269,24 @@ _SEC_REQUEST_WINDOW = SourceRequestWindow(limit=environment_seconds(
 SEC_CONTACT = re.compile(r"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}")
 
 
+def request_user_agent(default="TechPhaseResearch-SourceCheck/0.1"):
+    """The configured User-Agent made safe to send: any run of whitespace (a full-width space U+3000 pasted into the variable made every
+    request fail in http.client with a latin-1 encode error) becomes one space and every non-ASCII character is dropped. Empty -> default."""
+    value = os.environ.get("RESEARCH_USER_AGENT", "")
+    value = re.sub(r"\s+", " ", value)
+    value = " ".join("".join(ch for ch in value if " " <= ch <= "~").split())
+    return value or default
+
+
 def sec_user_agent():
     """SEC requires a declared User-Agent with a contact address.
 
     Requests without one are answered with 403 and can get the whole IP
     blocked, so they are never sent. The value is configuration, not code.
     """
-    value = os.environ.get("RESEARCH_USER_AGENT", "").strip()
-    if not value or "\r" in value or "\n" in value or not SEC_CONTACT.search(value):
+    raw = os.environ.get("RESEARCH_USER_AGENT", "")
+    value = request_user_agent("")
+    if not value or "\r" in raw or "\n" in raw or not SEC_CONTACT.search(value):
         raise ValueError("SEC user agent has no contact address")
     return value
 
@@ -767,8 +777,7 @@ def fetch(url, ticker, validators=None, include_metadata=False):
     if sec:
         SEC_ACCESS.check()
     headers = {
-        "User-Agent": sec_user_agent() if sec else os.environ.get(
-            "RESEARCH_USER_AGENT", "TechPhaseResearch-SourceCheck/0.1"),
+        "User-Agent": sec_user_agent() if sec else request_user_agent(),
         "Accept": ("text/html,application/pdf;q=0.9" if article_url(url, ticker)
                    else "application/json,application/rss+xml,application/atom+xml,text/html,application/pdf"),
     }
