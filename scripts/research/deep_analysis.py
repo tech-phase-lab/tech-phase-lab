@@ -21,7 +21,7 @@ import monitor
 
 MAX_ATTEMPTS = 3
 # Bump when the prompt/check logic changes so analyses held under the old logic are tried again (attempts restart at 0).
-VERSION = 4
+VERSION = 5
 RETRY_SECONDS = 120
 DEFAULT_DAILY_LIMIT = 40
 MAX_DAILY_LIMIT = 200
@@ -35,6 +35,7 @@ Return a headline and three to five analysis points, plus one point on what to w
 Each point explains meaning, not just restating: what drove the result, how it compares with the prior period, guidance or consensus when the source states them, and the risks or questions it raises.
 The headline and each point cite one to three evidence ids (evidenceIds); put a figure in a point only if it appears literally in one of the excerpts that point cites, so cite every excerpt that holds a figure you use.
 Numbers: use only figures that appear literally in the evidence excerpts the point cites, with the same units and signs. Never calculate, round, convert or infer a number (no growth rates you compute, no yen conversions). If a comparison needs a number the source does not give, describe it in words without a number.
+If previousAttemptRejected is present, the last attempt for this source was partly rejected by deterministic checks: unsupported-number:<kind>:<values> lists quantities your copy used that do not appear in the excerpts you cited (do not use them again; cite the excerpt that holds a figure or leave the figure out); changed-negation and changed-action-capacity mean a negated or capacity clause of the cited excerpt was restated without its negation or qualifier; evidence-missing means a cited id does not exist. Fix exactly those points.
 Preserve negation, uncertainty and time: plans stay plans, guidance stays guidance.
 Each Japanese/English pair must carry the same figures. Japanese must read naturally for retail investors; keep company and product names as written."""
 
@@ -227,6 +228,11 @@ def run_once(path, transport=None, env=None, now=None, reference=None):
             break
         if source is None:
             return 'idle'
+        prior = db.execute('SELECT detail FROM deep_analyses WHERE source_ref=?', (source['ref'],)).fetchone()
+        try:
+            previous = json.loads(prior['detail']) if prior and prior['detail'] else None
+        except ValueError:
+            previous = None
         db.execute('''INSERT INTO deep_analyses(source_ref,kind,subject,source_sha,state,attempts,next_at,created_at,source_url,source_title)
           VALUES(?,?,?,?, 'running',0,?,?,?,?) ON CONFLICT(source_ref) DO UPDATE SET state='running',next_at=excluded.next_at,version=%d''' % VERSION,
                    (source['ref'], source['kind'], source['subject'], source['sha'], now + 600,
@@ -236,7 +242,8 @@ def run_once(path, transport=None, env=None, now=None, reference=None):
         attempts = db.execute('SELECT attempts FROM deep_analyses WHERE source_ref=?', (source['ref'],)).fetchone()[0]
     payload = {'model': model, 'store': False, 'max_output_tokens': 4000, 'instructions': POLICY,
                'input': json.dumps({'kind': source['kind'], 'subject': source['subject'], 'title': source['title'],
-                                    'evidenceExcerpts': source['excerpts']}, ensure_ascii=False),
+                                    'evidenceExcerpts': source['excerpts'],
+                                    **({'previousAttemptRejected': previous} if previous else {})}, ensure_ascii=False),
                'text': {'format': {'type': 'json_schema', 'name': 'deep_analysis', 'strict': True, 'schema': response_schema()}}}
     try:
         response = transport(payload, key)

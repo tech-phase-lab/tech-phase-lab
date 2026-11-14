@@ -117,6 +117,19 @@ class DeepAnalysisTests(unittest.TestCase):
         self.assertEqual(str(caught.exception), 'unsupported-number')
         self.assertEqual(caught.exception.detail, {'headline': 'unsupported-number:value:45%'})
 
+    def test_a_retry_tells_the_model_why_the_last_attempt_was_rejected(self):
+        self.earnings()
+        bad = json.loads(json.dumps(GOOD))
+        bad['points'] = [point('売上は45%増。', 'Revenue rose 45%.')] * 3
+        inputs = []
+        def transport(payload, key):
+            inputs.append(json.loads(payload['input']))
+            return reply(bad)(payload, key)
+        self.assertEqual(self.run_deep(transport), 'retry')
+        self.assertEqual(self.run_deep(transport, now=base.NOW.timestamp() + 1000), 'retry')
+        self.assertNotIn('previousAttemptRejected', inputs[0])
+        self.assertEqual(inputs[1]['previousAttemptRejected'], {'kept': 0, 'rejected': {'unsupported-number:value:45%': 3}})
+
     def test_why_an_analysis_is_held_is_recorded_and_older_holds_are_tried_again(self):
         self.earnings()
         bad = json.loads(json.dumps(GOOD))
