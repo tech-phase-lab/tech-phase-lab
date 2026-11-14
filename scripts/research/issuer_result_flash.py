@@ -339,6 +339,8 @@ def parse_statement(text, cfg):
         if len(dated) < 1 or year is not None and year != int(dated[0]):
             raise ValueError('period-unrecognized')
         year = int(dated[0])
+    if cfg.get('paren-space'):  # "(1,442 )" with a space before the closing bracket, and an en dash for nil
+        block = re.sub(r'\(([\d,.]+) \)', r'(\1)', block).replace(' \u2013 ', ' \u2014 ')
     if cfg.get('glue'):  # "$4.92" printed without a space after the dollar sign
         block = re.sub(r'\$(?=\d)', '$ ', block)
     n, ago, scale = cfg['columns'], cfg['year-ago'], cfg['scale']
@@ -367,7 +369,7 @@ def parse_statement(text, cfg):
             raise ValueError('change-mismatch')
     else:  # no stated growth: the headline's revenue (in billions, one decimal) must match this quarter's printed revenue
         said = re.findall(cfg['headline'], t[:2500])
-        if len(said) != 1 or abs(Decimal(said[0]) * 1000 - rows['revenue'][0] * scale) > Decimal('55'):
+        if len(said) != 1 or abs(Decimal(said[0]) * cfg.get('headline-multiplier', 1000) - rows['revenue'][0] * scale) > cfg.get('headline-tol', Decimal('55')):
             raise ValueError('change-mismatch')
 
     def col(key, i):
@@ -420,6 +422,35 @@ def parse_statement(text, cfg):
 
 
 STATEMENT = {
+    'IONQ': {'identity': 'ionq', 'heading': 'Condensed Consolidated Statements of Operations (unaudited) (in thousands', 'end': 'Condensed Consolidated Balance Sheets', 'units': 'in thousands', 'scale': Decimal('0.001'),
+             'tol': Decimal(1), 'columns': 4, 'year-ago': 1, 'paren-space': True, 'op-direct': True, 'net-chain': 'additive', 'shares-divisor': Decimal(1000),
+             'growth': r'Revenue of \$[\d.]+ Million, Up (\d+)% Year-over-Year',
+             'period-re': r'IonQ Announces [A-Za-z ]*?([1-4])Q(\d\d) Revenues', 'period': lambda q, y: f'Q{q} 20{y}',
+             'rows': {'revenue': 'Revenue', 'cost': 'Total operating costs and expenses', 'operating': 'Loss from operations', 'pretax': r'Income \(loss\) before income tax benefit \(expense\)',
+                      'tax': r'Income tax benefit \(expense\)', 'net': r'Net income \(loss\)', 'nci': r'Net income \(loss\) attributable to noncontrolling interests',
+                      'attrib': r'Net income \(loss\) attributable to IonQ, Inc\.',
+                      'eps': r'common stockholders Basic (?:\$ ' + AMT + r' ){4}Diluted', 'shares': r'common stockholders Basic ' + (AMT + ' ') * 4 + 'Diluted'}},
+    'ALAB': {'identity': 'astera labs', 'heading': 'CONDENSED CONSOLIDATED STATEMENTS OF OPERATIONS (Unaudited)(In thousands', 'end': 'CONDENSED CONSOLIDATED STATEMENTS OF CASH FLOWS', 'units': 'in thousands',
+             'scale': Decimal('0.001'), 'tol': Decimal(1), 'columns': 5, 'year-ago': 2, 'net-chain': 'additive',
+             'growth': r'Record quarterly revenue of \$[\d.]+ million, up \d+% QoQ and up (\d+)% year-over-year',
+             'period-re': r'Astera Labs Reports (First|Second|Third|Fourth) Quarter (20\d\d) Financial Results', 'period': lambda q, y: f'Q{q} {y}',
+             'rows': {'revenue': 'Revenue', 'cost': 'Cost of revenue', 'gross': 'Gross profit', 'opex': 'Total operating expenses', 'operating': 'Operating income',
+                      'pretax': 'Income before income taxes', 'tax': r'Income tax \(provision\) benefit', 'net': 'Net income',
+                      'eps': r'Net income per share: Basic \$ [\d.]+ (?:\$ [\d.]+ ){4}Diluted', 'shares': r'Weighted-average shares used in calculating net income per share: Basic [\d,]+ (?:[\d,]+ ){4}Diluted'}},
+    'LITE': {'identity': 'lumentum', 'heading': 'CONSOLIDATED STATEMENTS OF OPERATIONS(in millions', 'end': 'CONDENSED CONSOLIDATED BALANCE SHEETS', 'units': 'in millions',
+             'scale': Decimal(1), 'tol': Decimal('0.15'), 'columns': 2, 'year-ago': 1, 'headline': r'Net revenue of \$([\d.]+) billion',
+             'period-re': r'ANNOUNCES (FIRST|SECOND|THIRD|FOURTH) QUARTER OF FISCAL YEAR (20\d\d) FINANCIAL RESULTS', 'period': lambda q, y: f'Q{q} FY{y}',
+             'rows': {'revenue': 'Net revenue', 'cost': ['Cost of sales', 'Amortization of acquired developed intangibles'], 'gross': 'Gross profit',
+                      'opex': 'Total operating expenses', 'operating': 'Income from operations', 'pretax': 'Income before income taxes', 'tax': 'Income tax provision',
+                      'net': 'Net income', 'eps': r'Net income per share: Basic \$ [\d.]+ \$ [\d.]+ Diluted',
+                      'shares': r'Shares used to compute net income per share - common stock and preferred stock assuming conversion: Basic [\d.]+ [\d.]+ Diluted'}},
+    'AAOI': {'identity': 'applied optoelectronics', 'heading': 'Condensed Consolidated Statements of Operations (In thousands', 'end': 'Reconciliation', 'units': 'in thousands', 'scale': Decimal('0.001'),
+             'tol': Decimal(1), 'columns': 4, 'year-ago': 1, 'paren-space': True, 'net-chain': 'additive', 'headline': r'revenue was \$([\d.]+) million, compared with',
+             'headline-multiplier': 1, 'headline-tol': Decimal('0.1'),
+             'period-re': r'Applied Optoelectronics Reports (First|Second|Third|Fourth) Quarter (20\d\d) Results', 'period': lambda q, y: f'Q{q} {y}',
+             'rows': {'revenue': 'Total Revenue', 'cost': 'Total Cost of Goods Sold', 'gross': 'Total Gross Profit', 'opex': 'Total Operating Expenses', 'operating': 'Operating Loss',
+                      'pretax': r'Net income \(loss\) before Income Taxes', 'tax': 'Income Tax Expense', 'net': r'Net income \(loss\)',
+                      'eps': r'common stockholders basic (?:\$ ' + AMT + r' ){4}diluted', 'shares': r'common stockholders basic ' + (AMT + ' ') * 4 + 'diluted'}},
     'BE': {'identity': 'bloom energy', 'heading': 'Condensed Consolidated Statements of Operations* (in thousands', 'end': 'Condensed Consolidated Statement of Cash Flows', 'units': 'in thousands',
            'scale': Decimal('0.001'), 'tol': Decimal(1), 'columns': 3, 'year-ago': 2,
            'growth': r'revenue of \$[\d,.]+ million, delivering (\d+\.\d)% year-over-year growth',
@@ -1122,6 +1153,10 @@ PROFILES = {
     'STX': {'publisher': 'Seagate IR (SEC 8-K)', 'parse': lambda t, u=None: parse_statement(t, STATEMENT['STX']), 'marker': STATEMENT['STX']['heading']},
     'APH': {'publisher': 'Amphenol IR (SEC 8-K)', 'parse': lambda t, u=None: parse_statement(t, STATEMENT['APH']), 'marker': STATEMENT['APH']['heading']},
     'BE': {'publisher': 'Bloom Energy IR (SEC 8-K)', 'parse': lambda t, u=None: parse_statement(t, STATEMENT['BE']), 'marker': STATEMENT['BE']['heading']},
+    'ALAB': {'publisher': 'Astera Labs IR (SEC 8-K)', 'parse': lambda t, u=None: parse_statement(t, STATEMENT['ALAB']), 'marker': STATEMENT['ALAB']['heading']},
+    'LITE': {'publisher': 'Lumentum IR (SEC 8-K)', 'parse': lambda t, u=None: parse_statement(t, STATEMENT['LITE']), 'marker': STATEMENT['LITE']['heading']},
+    'AAOI': {'publisher': 'Applied Optoelectronics IR (SEC 8-K)', 'parse': lambda t, u=None: parse_statement(t, STATEMENT['AAOI']), 'marker': STATEMENT['AAOI']['heading']},
+    'IONQ': {'publisher': 'IonQ IR (SEC 8-K)', 'parse': lambda t, u=None: parse_statement(t, STATEMENT['IONQ']), 'marker': STATEMENT['IONQ']['heading']},
     'ARM': {'publisher': 'Arm IR (SEC 6-K)', 'parse': lambda t, u=None: parse_statement(t, STATEMENT['ARM']), 'marker': 'Condensed Consolidated Income Statements'},
     'MSFT': {'publisher': 'Microsoft IR (SEC 8-K)', 'parse': lambda t, u=None: parse_statement(t, STATEMENT['MSFT']), 'marker': STATEMENT['MSFT']['heading']},
     'AMD': {'publisher': 'AMD IR (SEC 8-K)', 'parse': lambda t, u=None: parse_statement(t, STATEMENT['AMD']), 'marker': STATEMENT['AMD']['heading']},

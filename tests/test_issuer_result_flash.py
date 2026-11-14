@@ -252,6 +252,28 @@ class Parsers(unittest.TestCase):
             self.assertIn(old_rev,text,ticker)
             with self.assertRaises(ValueError): parse(text.replace(old_rev,new_rev))
             with self.assertRaises(ValueError): parse(re.sub(flash.STATEMENT[ticker]['identity'],'someone else',text,flags=re.I))
+    def test_connectivity_optics_and_quantum_statements_batch4(self):
+        cases={
+         'ALAB':('alab-results-q326.txt','Q3 2026',[('revenue','$584.899M','$230.575M'),('eps','$0.99','$0.50'),('net-income','$182.944M','$91.114M'),('operating-income','$179.056M','$55.406M')],
+                 [('Operating income 179,056','Operating income 189,056','operating-income'),('Net income $ 182,944','Net income $ 192,944','net-income'),('Diluted $ 0.99','Diluted $ 1.99','eps')],'Revenue $ 584,899','Revenue $ 684,899'),
+         'LITE':('lite-results-q1fy27.txt','Q1 FY2027',[('revenue','$1.2626B','$533.8M'),('eps','$3.54','$0.05'),('net-income','$360.3M','$4.2M'),('operating-income','$359.8M','$6.7M')],
+                 [('Income from operations 359.8','Income from operations 369.8','operating-income'),('Net income $ 360.3','Net income $ 370.3','net-income'),('Diluted $ 3.54','Diluted $ 4.54','eps')],'Net revenue $ 1,262.6','Net revenue $ 1,362.6'),
+         'AAOI':('aaoi-results-q326.txt','Q3 2026',[('revenue','$269.875M','$118.63M'),('eps','$0.07','$-0.28'),('net-income','$6.3M','$-17.936M'),('operating-income','$-1.442M','$-18.187M')],
+                 [('Operating Loss (1,442 )','Operating Loss (1,542 )','operating-income'),('Net income (loss) $ 6,300','Net income (loss) $ 7,300','net-income'),('diluted $ 0.07','diluted $ 0.17','eps')],'Total Revenue 269,875','Total Revenue 279,875'),
+         'IONQ':('ionq-results-q326.txt','Q3 2026',[('revenue','$173.831M','$39.866M'),('net-income','$563.957M','$-1.054955B'),('operating-income','$-433.075M','$-168.813M')],
+                 [('Loss from operations (433,075 )','Loss from operations (443,075 )','operating-income'),('attributable to IonQ, Inc. $ 563,957','attributable to IonQ, Inc. $ 573,957','net-income')],'Revenue $ 173,831','Revenue $ 183,831'),
+        }
+        for ticker,(name,period,facts,tampers,old_rev,new_rev) in cases.items():
+            text=fixture(name); parse=flash.PROFILES[ticker]['parse']
+            parsed=parse(text)
+            self.assertEqual(parsed['period'],period,ticker)
+            self.assertEqual([(f[0],f[1],f[2]) for f in parsed['facts']],facts,ticker)
+            for old,new,key in tampers:
+                self.assertIn(old,text,ticker)
+                self.assertNotIn(key,[f[0] for f in parse(text.replace(old,new))['facts']],(ticker,key))
+            self.assertIn(old_rev,text,ticker)
+            with self.assertRaises(ValueError): parse(text.replace(old_rev,new_rev))
+            with self.assertRaises(ValueError): parse(re.sub(flash.STATEMENT[ticker]['identity'],'someone else',text,flags=re.I))
     def test_alphabet_and_amazon_statements_print_the_year_ago_column_first(self):
         expected={'GOOGL':('alphabet-results-q326.txt',[('revenue','$127.577B','$102.346B'),('eps','$2.12','$2.87'),('net-income','$26.17B','$34.979B'),('operating-income','$40.576B','$31.228B')]),
                   'AMZN':('amazon-results-q326.txt',[('revenue','$201.944B','$180.169B'),('eps','$1.89','$1.95'),('net-income','$20.685B','$21.187B'),('operating-income','$28.076B','$17.422B')])}
