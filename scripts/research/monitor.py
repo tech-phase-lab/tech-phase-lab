@@ -278,6 +278,13 @@ def request_user_agent(default="TechPhaseResearch-SourceCheck/0.1"):
     return value or default
 
 
+def user_agent_normalized():
+    """True when the configured RESEARCH_USER_AGENT had to be repaired before sending (stray full-width space, control or non-ASCII
+    characters). Only this fact is reported, never the value."""
+    raw = os.environ.get("RESEARCH_USER_AGENT", "")
+    return bool(raw.strip()) and request_user_agent("") != raw.strip()
+
+
 def sec_user_agent():
     """SEC requires a declared User-Agent with a contact address.
 
@@ -352,7 +359,7 @@ class SecAccess:
             configured = False
         with self.lock:
             remaining = max(0.0, self.blocked_until - self.clock())
-            return {"userAgentConfigured": configured, "paused": remaining > 0,
+            return {"userAgentConfigured": configured, "userAgentNormalized": user_agent_normalized(), "paused": remaining > 0,
                     "pausedSeconds": round(remaining), "consecutiveFailures": self.failures,
                     "lastError": self.last_error, "pollSeconds": self.poll_seconds,
                     "maxRequestsPerSecond": _SEC_REQUEST_WINDOW.limit}
@@ -2388,6 +2395,26 @@ def discovery_poll_summary(db, reference=None, poll_overdue_after_seconds=60):
         ),
         "requestDurationMaxMs24Hours": totals["request_max"],
     }
+
+
+DISCOVERY_OUTAGE_WINDOW_SECONDS = 30 * 60
+DISCOVERY_OUTAGE_MIN_CHECKS = 50
+
+
+def discovery_outage_summary(db, reference=None, window_seconds=DISCOVERY_OUTAGE_WINDOW_SECONDS):
+    """Checks and failures of the official-source polling in the last window (default 30 minutes), without source identities."""
+    reference = reference or now()
+    reference_utc = datetime.fromisoformat(str(reference).replace("Z", "+00:00")).astimezone(timezone.utc)
+    start = (reference_utc - timedelta(seconds=window_seconds)).isoformat(timespec="milliseconds")
+    end = reference_utc.isoformat(timespec="milliseconds")
+    row = db.execute(f"""
+      SELECT COALESCE(sum(checks),0) AS checks, COALESCE(sum(degraded),0) AS degraded
+      FROM discovery_poll_batches
+      WHERE julianday(completed_at)>=julianday(?) AND julianday(completed_at)<=julianday(?)
+        AND {DISCOVERY_POLL_METRIC_WHERE}
+    """, (start, end)).fetchone()
+    return {"windowSeconds": window_seconds, "checks": row["checks"], "degraded": row["degraded"],
+            "allFailing": row["checks"] >= DISCOVERY_OUTAGE_MIN_CHECKS and row["degraded"] == row["checks"]}
 
 
 def record_priority_source_run(

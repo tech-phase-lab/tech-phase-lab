@@ -1086,6 +1086,63 @@ class ResearchServiceTests(unittest.TestCase):
         self.assertIn("monitor-stale", stale_monitor["health"]["issues"])
         self.assertNotIn("body-fetch-stale", stale_monitor["health"]["issues"])
 
+    def outage_app(self, started_minutes_ago):
+        app = service.AutomaticMonitor(self.db_path, self.snapshot_path)
+        recent = service.utc_now()
+        app.state.update({"ready": True, "lastCycleAt": recent,
+                          "startedAt": (datetime.now(timezone.utc) - timedelta(minutes=started_minutes_ago)).isoformat(timespec="milliseconds")})
+        app.state["backup"].update({"healthy": True, "lastSuccessAt": recent})
+        app.state["incidentWatch"]["healthy"] = True
+        return app
+
+    def record_batch(self, minutes_ago, checks, degraded):
+        completed = datetime.now(timezone.utc) - timedelta(minutes=minutes_ago)
+        with monitor.connect(self.db_path) as db:
+            monitor.record_discovery_poll_batch(
+                db, (completed - timedelta(seconds=1)).isoformat(timespec="milliseconds"),
+                completed.isoformat(timespec="milliseconds"), 1000, checks, degraded, 0, (25,) * checks)
+            monitor.record_body_fetch_poll(db, service.utc_now(), 0)
+
+    def incident(self, key):
+        with monitor.connect(self.db_path) as db:
+            row = db.execute("SELECT status,severity,last_error_code AS code FROM operational_incidents WHERE incident_key=?", (key,)).fetchone()
+            return dict(row) if row else None
+
+    def test_every_source_failing_for_thirty_minutes_opens_a_critical_incident_and_recovers(self):
+        self.record_batch(5, 30, 30)
+        self.record_batch(20, 30, 30)
+        app = self.outage_app(started_minutes_ago=60)
+        state = app.public_state()
+        self.assertIn("discovery-all-sources-failing", state["health"]["issues"])
+        self.assertEqual(state["discoveryOutage"]["checks"], 60)
+        app.sync_health_incidents()
+        self.assertEqual(self.incident("discovery:all-sources"), {"status": "open", "severity": "critical", "code": "discovery-all-sources-failing"})
+        self.record_batch(1, 10, 0)  # one source works again
+        self.assertNotIn("discovery-all-sources-failing", app.public_state()["health"]["issues"])
+        app.sync_health_incidents()
+        self.assertEqual(self.incident("discovery:all-sources")["status"], "resolved")
+
+    def test_outage_is_not_reported_for_a_fresh_process_few_checks_or_old_batches(self):
+        self.record_batch(5, 60, 60)
+        self.assertNotIn("discovery-all-sources-failing", self.outage_app(started_minutes_ago=3).public_state()["health"]["issues"])
+        self.assertEqual(self.incident("discovery:all-sources"), None)
+
+    def test_a_small_or_old_all_failing_window_is_not_an_outage(self):
+        self.record_batch(5, 20, 20)       # fewer than 50 checks
+        self.record_batch(45, 100, 100)    # outside the 30 minute window
+        self.assertNotIn("discovery-all-sources-failing", self.outage_app(started_minutes_ago=60).public_state()["health"]["issues"])
+
+    def test_a_repaired_user_agent_is_reported_without_its_value(self):
+        app = self.outage_app(started_minutes_ago=60)
+        self.record_batch(1, 5, 0)
+        with patch.dict(os.environ, {"RESEARCH_USER_AGENT": "TechPhaseResearch\u3000research@example.com"}):
+            state = app.public_state()
+            self.assertIn("user-agent-normalized", state["health"]["issues"])
+            self.assertTrue(state["secAccess"]["userAgentNormalized"])
+            self.assertNotIn("research@example.com", json.dumps(state))
+        with patch.dict(os.environ, {"RESEARCH_USER_AGENT": "TechPhaseResearch research@example.com"}):
+            self.assertNotIn("user-agent-normalized", app.public_state()["health"]["issues"])
+
     def test_stale_discovery_poll_records_and_resolves_an_incident(self):
         completed = datetime.now(timezone.utc) - timedelta(minutes=10)
         started = completed - timedelta(seconds=1)
