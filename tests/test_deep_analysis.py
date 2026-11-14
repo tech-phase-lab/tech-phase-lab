@@ -1,5 +1,6 @@
 """Owner, Oct 11: PRO deep analysis by a higher-tier model, numbers checked."""
 import json
+from datetime import timedelta
 import unittest
 from datetime import datetime, timezone
 
@@ -237,6 +238,21 @@ class DeepAnalysisTests(unittest.TestCase):
             db.execute("UPDATE deep_analyses SET state='held',source_ref='event:999:gone'")
             db.execute("DELETE FROM deep_old_retries")
         self.assertEqual(deep_analysis.retry_old_holds(self.path, reply(GOOD), on, now=later + 30), 'source-unavailable')
+
+    def test_an_old_hold_whose_release_left_the_candidate_window_is_rebuilt_from_the_stored_event(self):
+        # Nov 14 staging: 12 of 14 old holds came back source-unavailable because the newest-100 window had moved past them.
+        self.earnings()
+        bad = json.loads(json.dumps(GOOD))
+        bad['points'] = [point('売上は45%増。', 'Revenue rose 45%.')] * 3
+        for attempt in range(3):
+            self.run_deep(reply(bad), now=base.NOW.timestamp() + attempt * 1000)
+        with research.connect(self.path) as db:
+            ref = db.execute("SELECT source_ref FROM deep_analyses").fetchone()[0]
+        far = base.NOW + timedelta(days=60)  # outside the 7-day candidate lookback
+        self.assertEqual(deep_analysis.run_once(self.path, reply(GOOD), ENV, now=far.timestamp(), reference=far, only_ref=ref), 'done')
+        with research.connect(self.path) as db:
+            self.assertEqual(deep_analysis.stored_earnings_source(db, 'event:999:gone'), [])
+            self.assertEqual(deep_analysis.stored_earnings_source(db, 'flash:1'), [])
 
     def test_an_earnings_analysis_not_done_after_two_hours_is_a_critical_incident_naming_company_and_check(self):
         # Nov 14, NBIS: held for 44 hours and nobody noticed. Two hours after the release is a critical alert with the ticker and the check.
