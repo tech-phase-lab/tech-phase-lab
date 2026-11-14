@@ -92,7 +92,7 @@ class DeepAnalysisTests(unittest.TestCase):
         bad = {'headline': note['headline'], 'points': [only_first, unknown, only_first], 'watch': None}
         with self.assertRaises(deep_analysis.Unchecked) as caught:
             deep_analysis.bind(bad, excerpts)
-        self.assertEqual(caught.exception.detail, {'kept': 0, 'rejected': {'evidence-missing': 1, 'unsupported-number:value:172000000': 2}})
+        self.assertEqual(caught.exception.detail, {'kept': 0, 'rejected': {'evidence-missing': 1, 'unsupported-number:value:172000000:E': 2}})
 
     def test_the_headline_is_checked_against_its_own_excerpts_and_negation_rejections_name_their_rule(self):
         excerpts = {'0': 'Revenue was $3.41 billion in the quarter.', '1': 'The company did not raise guidance this quarter.',
@@ -115,7 +115,7 @@ class DeepAnalysisTests(unittest.TestCase):
         with self.assertRaises(deep_analysis.Unchecked) as caught:
             deep_analysis.bind({'headline': bad_headline, 'points': [point, point], 'watch': None}, excerpts)
         self.assertEqual(str(caught.exception), 'unsupported-number')
-        self.assertEqual(caught.exception.detail, {'headline': 'unsupported-number:value:45%'})
+        self.assertEqual(caught.exception.detail, {'headline': 'unsupported-number:value:45%:A'})
 
     def test_a_retry_tells_the_model_why_the_last_attempt_was_rejected(self):
         self.earnings()
@@ -128,7 +128,19 @@ class DeepAnalysisTests(unittest.TestCase):
         self.assertEqual(self.run_deep(transport), 'retry')
         self.assertEqual(self.run_deep(transport, now=base.NOW.timestamp() + 1000), 'retry')
         self.assertNotIn('previousAttemptRejected', inputs[0])
-        self.assertEqual(inputs[1]['previousAttemptRejected'], {'kept': 0, 'rejected': {'unsupported-number:value:45%': 3}})
+        self.assertEqual(inputs[1]['previousAttemptRejected'], {'kept': 0, 'rejected': {'unsupported-number:value:45%:A': 3}})
+
+    def test_unsupported_figures_are_tagged_as_cited_elsewhere_absent_or_mixed(self):
+        excerpts = {'0': 'Revenue was $3.41 billion in the quarter.', '1': 'Operating income was $172 million.'}
+        def reason(text_en, text_ja):
+            point = {'ja': text_ja, 'en': text_en, 'evidenceIds': ['0']}
+            with self.assertRaises(deep_analysis.Unchecked) as caught:
+                deep_analysis.bind({'headline': {'ja': '売上高は3.41 billion ドル。', 'en': 'Revenue was $3.41 billion.', 'evidenceIds': ['0']}, 'points': [point, point], 'watch': None}, excerpts)
+            [key] = caught.exception.detail['rejected']
+            return key
+        self.assertTrue(reason('Operating income was $172 million.', '営業利益は172 million ドル。').endswith(':E'))  # in the release, not in the cited excerpt
+        self.assertTrue(reason('Revenue rose 45%.', '売上は45%増。').endswith(':A'))  # nowhere in the release: calculated or invented
+        self.assertTrue(reason('Revenue was $3.41 billion and costs rose 45%.', '売上高は3.41 billion ドル、費用は45%増。').endswith(':A'))
 
     def test_why_an_analysis_is_held_is_recorded_and_older_holds_are_tried_again(self):
         self.earnings()
@@ -140,7 +152,7 @@ class DeepAnalysisTests(unittest.TestCase):
             report = deep_analysis.diagnostics(db, now=base.NOW.timestamp() + 5000)
         [held] = report['notDone']
         self.assertEqual((held['subject'], held['state'], held['failure']), ('NBIS', 'held', 'too-few-checked-points'))
-        self.assertEqual(held['detail'], {'kept': 0, 'rejected': {'unsupported-number:value:45%': 3}})
+        self.assertEqual(held['detail'], {'kept': 0, 'rejected': {'unsupported-number:value:45%:A': 3}})
         self.assertEqual(report['version'], deep_analysis.VERSION)
         self.assertEqual(self.run_deep(lambda *_: self.fail('held'), now=base.NOW.timestamp() + 5000), 'idle')
         with deep_analysis.connect(self.path) as db:  # held by an older version of the checks

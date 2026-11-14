@@ -21,7 +21,7 @@ import monitor
 
 MAX_ATTEMPTS = 3
 # Bump when the prompt/check logic changes so analyses held under the old logic are tried again (attempts restart at 0).
-VERSION = 5
+VERSION = 6
 RETRY_SECONDS = 120
 DEFAULT_DAILY_LIMIT = 40
 MAX_DAILY_LIMIT = 200
@@ -36,6 +36,7 @@ Each point explains meaning, not just restating: what drove the result, how it c
 The headline and each point cite one to three evidence ids (evidenceIds); put a figure in a point only if it appears literally in one of the excerpts that point cites, so cite every excerpt that holds a figure you use.
 Numbers: use only figures that appear literally in the evidence excerpts the point cites, with the same units and signs. Never calculate, round, convert or infer a number (no growth rates you compute, no yen conversions). If a comparison needs a number the source does not give, describe it in words without a number.
 If previousAttemptRejected is present, the last attempt for this source was partly rejected by deterministic checks: unsupported-number:<kind>:<values> lists quantities your copy used that do not appear in the excerpts you cited (do not use them again; cite the excerpt that holds a figure or leave the figure out); changed-negation and changed-action-capacity mean a negated or capacity clause of the cited excerpt was restated without its negation or qualifier; evidence-missing means a cited id does not exist. Fix exactly those points.
+Write what the excerpts say, not what cannot be known: do not add negative statements of your own (できない、ではない、ない、not、cannot) unless the cited excerpt itself says so; express caution as something to watch (…かどうかを確認したい) instead. A figure you mention must be in an excerpt you cite, so cite the excerpt that holds it.
 Preserve negation, uncertainty and time: plans stay plans, guidance stays guidance.
 Each Japanese/English pair must carry the same figures. Japanese must read naturally for retail investors; keep company and product names as written."""
 
@@ -132,16 +133,23 @@ def checked(item, quote):
     factual_validation.validate_pair(item['ja'], item['en'])
 
 
-def why(exc):
+def why(exc, everything=None):
     """A short, text-free reason for a rejected part: the rule that fired and, for numbers, the unsupported quantities the copy used
-    (e.g. unsupported-number:value:45%|12). Never the copy or the source text."""
+    (e.g. unsupported-number:value:45%|12:A). The last letter says whether those quantities appear elsewhere in the release (E: the point
+    cited the wrong excerpt), nowhere in it (A: the model calculated or invented them) or both (M). Never the copy or the source text."""
     reason = str(exc) if isinstance(exc, ValueError) else type(exc).__name__
     if reason == 'changed-negation':
         cue = factual_validation.LAST_NEGATION_REJECTION[0] or {}
         reason = 'changed-negation:%s:%s' % (cue.get('rule', '?'), '|'.join(cue.get('sourceCues') or cue.get('copyCues') or []))
     elif reason == 'unsupported-number':
         miss = factual_validation.LAST_NUMBER_REJECTION[0] or {}
-        reason = 'unsupported-number:%s:%s' % (miss.get('kind', '?'), '|'.join(str(v) for v in (miss.get('values') or [])[:4]))
+        values = [str(v) for v in (miss.get('values') or [])[:4]]
+        where = ''
+        if everything is not None and miss.get('kind') == 'value' and values:
+            known = {str(v) for v, _ in factual_validation.numeric_values(everything)}
+            hits = [value.rstrip('%') in known for value in values]
+            where = ':' + ('E' if all(hits) else 'A' if not any(hits) else 'M')
+        return ('unsupported-number:%s:%s' % (miss.get('kind', '?'), '|'.join(values)))[:77 - len(where)] + where
     return reason[:80]
 
 
@@ -173,7 +181,7 @@ def bind(value, excerpts):
     try:
         checked(headline, cited_quote(headline, excerpts) or evidence)
     except (ValueError, TypeError, KeyError) as exc:
-        raise Unchecked(str(exc) if isinstance(exc, ValueError) else type(exc).__name__, {'headline': why(exc)})
+        raise Unchecked(str(exc) if isinstance(exc, ValueError) else type(exc).__name__, {'headline': why(exc, evidence)})
     points, rejected = [], {}
     for point in value.get('points') or []:
         quote = cited_quote(point, excerpts) if isinstance(point, dict) else None
@@ -183,7 +191,7 @@ def bind(value, excerpts):
         try:
             checked(point, quote)
         except (ValueError, TypeError, KeyError) as exc:
-            reason = why(exc)
+            reason = why(exc, evidence)
             rejected[reason] = rejected.get(reason, 0) + 1
             continue
         points.append({'ja': point['ja'], 'en': point['en']})
