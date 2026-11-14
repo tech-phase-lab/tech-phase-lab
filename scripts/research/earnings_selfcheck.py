@@ -38,7 +38,7 @@ def main():
     if os.environ.get('EARNINGS_SELFCHECK') != 'true':
         print('DISABLED: set EARNINGS_SELFCHECK=true to run the earnings self-check')
         return 0
-    agent = os.environ.get('RESEARCH_USER_AGENT', '').strip()
+    agent = backtest.monitor.research_user_agent()
     if agent:
         backtest.UA = agent
     summary = run()

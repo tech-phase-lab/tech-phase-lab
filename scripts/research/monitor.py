@@ -21,6 +21,7 @@ from urllib.request import HTTPRedirectHandler, Request, build_opener
 import threading
 import time
 import traceback
+import unicodedata
 
 ROOT = Path(__file__).resolve().parents[2]
 PROVIDERS = {p["ticker"]: p for p in json.loads((ROOT / "lib/research/providers.json").read_text())}
@@ -269,14 +270,39 @@ _SEC_REQUEST_WINDOW = SourceRequestWindow(limit=environment_seconds(
 SEC_CONTACT = re.compile(r"[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}")
 
 
+def research_user_agent(default=""):
+    """RESEARCH_USER_AGENT made safe to send as an HTTP header.
+
+    A full-width space (U+3000) typed with a Japanese input method made every
+    request fail before it left the process ('latin-1' codec can't encode),
+    and all 50 companies stopped being checked for about a day (Nov 13-14).
+    Full-width characters become their ASCII forms, anything else outside
+    printable ASCII is dropped, and runs of spaces collapse to one.
+    """
+    raw = os.environ.get("RESEARCH_USER_AGENT", "")
+    if "\r" in raw or "\n" in raw:
+        return default   # a line break is never repaired: it could inject a second header
+    value = unicodedata.normalize("NFKC", raw)
+    value = "".join(ch for ch in value if " " <= ch <= "~")
+    value = " ".join(value.split())
+    return value or default
+
+
+def research_user_agent_normalized():
+    """True when the configured value had to be changed to be sendable (shown on /health; the value itself never is)."""
+    raw = os.environ.get("RESEARCH_USER_AGENT", "")
+    return bool(raw.strip()) and research_user_agent() != raw.strip()
+
+
 def sec_user_agent():
     """SEC requires a declared User-Agent with a contact address.
 
     Requests without one are answered with 403 and can get the whole IP
     blocked, so they are never sent. The value is configuration, not code.
     """
-    value = os.environ.get("RESEARCH_USER_AGENT", "").strip()
-    if not value or "\r" in value or "\n" in value or not SEC_CONTACT.search(value):
+    raw = os.environ.get("RESEARCH_USER_AGENT", "")
+    value = research_user_agent()
+    if not value or "\r" in raw or "\n" in raw or "\r" in value or "\n" in value or not SEC_CONTACT.search(value):
         raise ValueError("SEC user agent has no contact address")
     return value
 
@@ -342,7 +368,7 @@ class SecAccess:
             configured = False
         with self.lock:
             remaining = max(0.0, self.blocked_until - self.clock())
-            return {"userAgentConfigured": configured, "paused": remaining > 0,
+            return {"userAgentConfigured": configured, "userAgentNormalized": research_user_agent_normalized(), "paused": remaining > 0,
                     "pausedSeconds": round(remaining), "consecutiveFailures": self.failures,
                     "lastError": self.last_error, "pollSeconds": self.poll_seconds,
                     "maxRequestsPerSecond": _SEC_REQUEST_WINDOW.limit}
@@ -767,8 +793,7 @@ def fetch(url, ticker, validators=None, include_metadata=False):
     if sec:
         SEC_ACCESS.check()
     headers = {
-        "User-Agent": sec_user_agent() if sec else os.environ.get(
-            "RESEARCH_USER_AGENT", "TechPhaseResearch-SourceCheck/0.1"),
+        "User-Agent": sec_user_agent() if sec else research_user_agent("TechPhaseResearch-SourceCheck/0.1"),
         "Accept": ("text/html,application/pdf;q=0.9" if article_url(url, ticker)
                    else "application/json,application/rss+xml,application/atom+xml,text/html,application/pdf"),
     }
