@@ -20,6 +20,7 @@ from urllib.error import HTTPError, URLError
 from urllib.request import HTTPRedirectHandler, Request, build_opener
 import threading
 import time
+import traceback
 
 ROOT = Path(__file__).resolve().parents[2]
 PROVIDERS = {p["ticker"]: p for p in json.loads((ROOT / "lib/research/providers.json").read_text())}
@@ -605,6 +606,31 @@ def source_error_code(exc):
                 return code
         return "invalid-source-response"
     return "fetch-failed"
+
+
+_DIAGNOSED_FAILURES = set()
+_DIAGNOSTIC_LOCK = threading.Lock()
+
+
+def discovery_failure_diagnostic(ticker, exc, stage):
+    """One bounded stdout line (JSON) the first time each distinct failure appears in this process, so an all-sources outage can be
+    traced to its exception class and raising line without logging per request. URLs, e-mail addresses and token-like strings are masked."""
+    try:
+        frames = traceback.extract_tb(exc.__traceback__)
+        where = "%s:%s:%s" % (os.path.basename(frames[-1].filename), frames[-1].lineno, frames[-1].name) if frames else "unknown"
+        signature = (type(exc).__name__, where, stage)
+        with _DIAGNOSTIC_LOCK:
+            if signature in _DIAGNOSED_FAILURES or len(_DIAGNOSED_FAILURES) >= 40:
+                return
+            _DIAGNOSED_FAILURES.add(signature)
+        message = re.sub(r"https?://\S+", "<url>", str(exc))
+        message = re.sub(r"\S+@\S+", "<email>", message)
+        message = re.sub(r"[A-Za-z0-9_\-]{24,}", "<token>", message)
+        message = " ".join(message.split())[:80]
+        print(json.dumps({"event": "discovery-failure-diagnostic", "stage": stage, "ticker": ticker, "class": type(exc).__name__,
+                          "where": where, "code": source_error_code(exc), "message": message}, ensure_ascii=True), flush=True)
+    except Exception:  # a diagnostic must never add a failure of its own
+        return
 
 
 def persisted_source_error_code(value):
@@ -3886,6 +3912,7 @@ def collect_discovery(ticker, transport=fetch, automatic=False, cached_sources=N
                         }
                 return source, discovered, chain_failures
             except Exception as exc:
+                discovery_failure_diagnostic(ticker, exc, "source")
                 chain_failures.append(source_error_code(exc))
         return None, {}, chain_failures
 
