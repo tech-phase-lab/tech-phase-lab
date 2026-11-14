@@ -159,8 +159,19 @@ test("an empty factor is taken from the provider only for the same quarter, and 
   assert.equal(filled.quarterOperatingMargin, 12);              // the filing's figure stays
   assert.equal(filled.twelveData.margins.length, 4);
   assert.deepEqual(filled.supplemented.sort(), ["cash", "stability"].sort().concat(filled.supplemented.includes("financial") ? ["financial"] : []).sort());
-  const older = { ...provider, quarterRevenue: { ...provider.quarterRevenue, end: "2026-06-30" } };
-  assert.equal(fillFromProvider(sec, older, NOW), sec);           // another quarter: nothing borrowed
+  const older = { ...provider, quarterRevenue: { ...provider.quarterRevenue, end: "2026-03-31" } };
+  assert.equal(fillFromProvider(sec, older, NOW), sec);           // two quarters behind: nothing borrowed
+});
+
+test("a provider one quarter behind fills cash generation and market factors only, and the screen names its quarter (ConocoPhillips)", () => {
+  const sec = { ...company("A", 20, 4), quarterFcfMargin: null, quarterRevenueGrowth: null };
+  const lagging = { ...company("A", 20, 4), quarterFcfMargin: 23, quarterRevenueGrowth: 36 };
+  lagging.quarterRevenue = { ...lagging.quarterRevenue, end: "2026-06-30" };
+  const filled = fillFromProvider(sec, lagging, NOW);
+  assert.equal(filled.quarterFcfMargin, 23);
+  assert.equal(filled.quarterRevenueGrowth, null);                // growth never comes from another quarter
+  assert.equal(filled.supplementedFromQuarter, "2026-06-30");
+  assert.ok(filled.supplemented.includes("cash"));
 });
 
 test("banks: financial strength from cash against debt; growth against the previous quarter when there was no revenue a year earlier", () => {

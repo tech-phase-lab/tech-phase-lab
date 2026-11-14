@@ -1,6 +1,7 @@
 """Owner, Oct 11: PRO deep analysis by a higher-tier model, numbers checked."""
 import json
 import unittest
+from datetime import datetime, timezone
 
 import test_official_research as base
 from test_official_research import QUOTES, research
@@ -301,6 +302,37 @@ class DeepAnalysisTests(unittest.TestCase):
             return reply(first)(payload, key)
         self.run_deep(transport, now=base.NOW.timestamp() + 1000)
         self.assertNotIn('alreadyAccepted', inputs[0]['previousAttemptRejected'])
+
+    def test_a_release_that_never_got_an_analysis_row_is_a_critical_incident_after_two_hours(self):
+        # Owner, Nov 14: a release found but never attempted (daily budget spent, service stopped) must alert like a failed one.
+        self.earnings()
+        observed = datetime.fromisoformat(deep_analysis.earnings_sources(deep_analysis.connect(self.path), base.NOW)[0]['observedAt'].replace('Z', '+00:00'))
+        start = observed.timestamp()
+        key = deep_analysis.INCIDENT_PREFIX + 'NBIS'
+        with research.connect(self.path) as db:
+            self.assertIsNone(deep_analysis.sync_incident(db, start + 3600, ENV))  # one hour: not yet
+            self.assertIsNone(deep_analysis.sync_incident(db, start + 7300, {}))  # deep analysis not configured: stays quiet
+            self.assertEqual(deep_analysis.sync_incident(db, start + 7300, ENV), 'deep-analysis-overdue')
+            self.assertEqual(db.execute('SELECT severity,last_error_code FROM operational_incidents WHERE incident_key=?', (key,)).fetchone()[:],
+                             ('critical', 'deep-analysis-overdue:NBIS:not-attempted'))
+            db.executemany('INSERT INTO deep_analysis_calls VALUES(?,?,?,0)', [(start + 7000 + i, 'x', 'm') for i in range(40)])
+            self.assertEqual(deep_analysis.overdue(db, start + 7300, ENV)[0]['check'], 'daily-limit-reached')
+            deep_analysis.schema(db)
+            db.execute("DELETE FROM deep_analysis_calls")
+        with research.connect(self.path) as db:
+            db.execute("INSERT INTO deep_analyses(source_ref,kind,subject,source_sha,state,attempts,next_at,created_at) SELECT 'event:'||id||':'||sha,'earnings','NBIS',sha,'done',1,0,? FROM signal_events", (datetime.fromtimestamp(start + 7400, timezone.utc).isoformat(),))
+            self.assertIsNone(deep_analysis.sync_incident(db, start + 7500, ENV))  # an analysis exists: resolved
+            self.assertEqual(db.execute('SELECT status FROM operational_incidents WHERE incident_key=?', (key,)).fetchone()[0], 'resolved')
+
+    def test_the_last_calls_of_the_day_are_kept_for_earnings(self):
+        self.earnings()
+        start = base.NOW.timestamp()
+        with research.connect(self.path) as db:
+            deep_analysis.schema(db)
+            db.executemany('INSERT INTO deep_analysis_calls VALUES(?,?,?,0)', [(start - 100 + i, 'x', 'm') for i in range(35)])
+        self.assertEqual(deep_analysis.earnings_reserve(40), 12)
+        self.assertEqual(self.run_deep(reply(GOOD)), 'done')  # 35 of 40 used: earnings still run
+        self.assertEqual(deep_analysis.earnings_reserve(3), 1)
 
     def test_why_an_analysis_is_held_is_recorded_and_older_holds_are_tried_again(self):
         self.earnings()

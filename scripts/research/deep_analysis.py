@@ -25,6 +25,7 @@ MAX_ATTEMPTS = 3
 VERSION = 11
 RETRY_SECONDS = 120
 DEFAULT_DAILY_LIMIT = 40
+EARNINGS_RESERVE = 12  # calls of the daily limit kept for earnings only (four analyses at three attempts each)
 MAX_DAILY_LIMIT = 200
 REQUEST_TIMEOUT_SECONDS = 180
 WINDOW = timedelta(days=3)
@@ -92,7 +93,7 @@ def response_schema():
                            'watch': point}}
 
 
-def earnings_sources(db, reference):
+def earnings_sources(db, reference, excerpts=True):
     import official_research
     rows = []
     for row in official_research.candidates(db, reference, primary_only=True):
@@ -103,7 +104,8 @@ def earnings_sources(db, reference):
             continue
         rows.append({'ref': 'event:%s:%s' % (row['id'], row['sha']), 'kind': 'earnings', 'subject': row['ticker'],
                      'sha': row['sha'], 'title': row['title'], 'url': row['url'],
-                     'excerpts': official_research.evidence_excerpts(row['body'])})
+                     'observedAt': row.get('observed_at'),
+                     'excerpts': official_research.evidence_excerpts(row['body']) if excerpts else {}})
     return rows
 
 
@@ -262,6 +264,10 @@ def bind(value, excerpts, carried=None):
     return {'headline': headline, 'points': points, 'watch': watch}
 
 
+def earnings_reserve(limit):
+    return min(EARNINGS_RESERVE, limit // 3)
+
+
 def used_today(db, now):
     return db.execute('SELECT count(*) FROM deep_analysis_calls WHERE at>=?', (now - 86400,)).fetchone()[0]
 
@@ -280,7 +286,11 @@ def run_once(path, transport=None, env=None, now=None, reference=None, only_ref=
     with connect(path) as db:
         if used_today(db, now) >= limit:
             return 'idle'
-        sources = earnings_sources(db, reference) + indicator_sources(db, reference)
+        # Earnings come first, and indicators (and the one-off old retry) may not use the last EARNINGS_RESERVE calls of the day:
+        # a day with many reports must never leave a tracked company without its analysis for lack of budget.
+        sources = earnings_sources(db, reference)
+        if only_ref is not None or used_today(db, now) < limit - earnings_reserve(limit):
+            sources += indicator_sources(db, reference)
         if only_ref is not None:
             sources = [row for row in sources if row['ref'] == only_ref]
         source = None
@@ -398,8 +408,9 @@ def retry_old_holds(path, transport=None, env=None, now=None):
         return 'idle'
     now = time.time() if now is None else now
     with connect(path) as db:
-        if used_today(db, now) >= configuration(env)[2]:
-            return 'idle'  # today's budget is spent: wait, record nothing
+        limit = configuration(env)[2]
+        if used_today(db, now) >= limit - earnings_reserve(limit):
+            return 'idle'  # today's budget (less the part kept for earnings) is spent: wait, record nothing
         row = db.execute("""SELECT source_ref,created_at FROM deep_analyses WHERE state='held'
           AND source_ref NOT IN (SELECT source_ref FROM deep_old_retries WHERE marker=?) ORDER BY created_at DESC LIMIT 1""",
                          (OLD_RETRY_MARKER,)).fetchone()
@@ -440,7 +451,7 @@ def first_check(row):
     return re.sub(r'[^A-Za-z0-9._-]+', '-', str(name)).strip('-')[:60] or 'unknown'
 
 
-def overdue(db, now=None):
+def overdue(db, now=None, env=None):
     """Earnings analyses of tracked companies still not done two hours after the release was first handled (newest first)."""
     schema(db)
     now = time.time() if now is None else now
@@ -452,16 +463,40 @@ def overdue(db, now=None):
             continue
         if OVERDUE_AFTER_SECONDS <= age <= OVERDUE_LOOKBACK_SECONDS:
             late.append({'subject': row['subject'], 'check': first_check(row), 'state': row['state'], 'ageSeconds': int(age)})
+    late += never_attempted(db, now, env)
     return late
 
 
-def sync_incident(db, now=None):
+def never_attempted(db, now, env=None):
+    """Earnings releases of the research roster that were found but never got a deep-analysis row (budget spent, service stopped, source not
+    picked up): the same critical incident after two hours. Only where deep analysis is configured, so a service without it stays quiet."""
+    config = configuration(env)
+    if config is None:
+        return []
+    found = []
+    for source in earnings_sources(db, datetime.fromtimestamp(now, timezone.utc), excerpts=False):
+        if db.execute('SELECT 1 FROM deep_analyses WHERE source_ref=?', (source['ref'],)).fetchone():
+            continue
+        try:
+            observed = datetime.fromisoformat(str(source.get('observedAt')).replace('Z', '+00:00'))
+            if observed.tzinfo is None:
+                observed = observed.replace(tzinfo=timezone.utc)
+            age = now - observed.timestamp()
+        except ValueError:
+            continue
+        if OVERDUE_AFTER_SECONDS <= age <= OVERDUE_LOOKBACK_SECONDS:
+            check = 'daily-limit-reached' if used_today(db, now) >= config[2] else 'not-attempted'
+            found.append({'subject': source['subject'], 'check': check, 'state': 'none', 'ageSeconds': int(age)})
+    return found
+
+
+def sync_incident(db, now=None, env=None):
     """One critical incident per late company (key deep-analysis:<TICKER>); it resolves when the analysis is done. The error code carries the
     ticker and the check that rejected it, so the phone alert says which company and why."""
     now = time.time() if now is None else now
     at = datetime.fromtimestamp(now, timezone.utc).isoformat()
     late = {}
-    for item in overdue(db, now):
+    for item in overdue(db, now, env):
         late.setdefault(item['subject'], item)
     for subject, item in late.items():
         if re.fullmatch(r'[A-Za-z0-9.-]{1,12}', subject or ''):
