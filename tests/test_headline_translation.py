@@ -326,6 +326,9 @@ class HeadlineTranslationTests(unittest.TestCase):
             "nextRetryAt": "2027-01-01T00:17:40+00:00",
             "calls24Hours": {"total": 1, "failed": 1, "completed": 0, "stale": 0},
             "failureKinds": {"provider-unavailable": 1},
+            # Nov 14: which source is stuck and why (a configured source id, state, attempts, failure code): no title, URL or text.
+            "pendingItems": [{"source": "nebius-blog", "observedAt": "2027-01-01T00:15:10+00:00", "state": "retry",
+                              "attempts": 1, "failure": "provider-unavailable"}],
         })
         serialized = json.dumps(summary)
         self.assertNotIn("http", serialized.lower())
