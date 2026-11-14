@@ -29,7 +29,7 @@ WATCH = ["MU", "SKHY", "SNDK", "NBIS", "NVDA", "AMD", "AVGO", "ARM", "TSM", "ASM
          "PANW", "CRWD", "SNOW", "CRM", "ADBE",
          "META", "NFLX", "NOW", "INTC", "AAPL",
          "KLAC", "LRCX", "STX", "APH", "BE",
-         "ALAB", "LITE", "AAOI", "IONQ"]
+         "ALAB", "LITE", "AAOI", "IONQ", "SOFI"]
 UA = 'TechPhaseResearch research@example.com'  # SEC asks for a contact in the User-Agent; the monitor uses RESEARCH_SEC_USER_AGENT
 LOOKBACK = timedelta(days=130)
 

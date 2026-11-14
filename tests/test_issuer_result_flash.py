@@ -262,6 +262,8 @@ class Parsers(unittest.TestCase):
                  [('Operating Loss (1,442 )','Operating Loss (1,542 )','operating-income'),('Net income (loss) $ 6,300','Net income (loss) $ 7,300','net-income'),('diluted $ 0.07','diluted $ 0.17','eps')],'Total Revenue 269,875','Total Revenue 279,875'),
          'IONQ':('ionq-results-q326.txt','Q3 2026',[('revenue','$173.831M','$39.866M'),('net-income','$563.957M','$-1.054955B'),('operating-income','$-433.075M','$-168.813M')],
                  [('Loss from operations (433,075 )','Loss from operations (443,075 )','operating-income'),('attributable to IonQ, Inc. $ 563,957','attributable to IonQ, Inc. $ 573,957','net-income')],'Revenue $ 173,831','Revenue $ 183,831'),
+         'SOFI':('sofi-results-q326.txt','Q3 2026',[('revenue','$1.385099B','$961.6M'),('eps','$0.18','$0.11'),('net-income','$240.989M','$139.392M')],
+                 [('Net income $ 240,989','Net income $ 250,989','net-income'),('diluted $ 0.18','diluted $ 0.28','eps')],'Total net revenue 1,385,099','Total net revenue 1,685,099'),
         }
         for ticker,(name,period,facts,tampers,old_rev,new_rev) in cases.items():
             text=fixture(name); parse=flash.PROFILES[ticker]['parse']

@@ -422,6 +422,11 @@ def parse_statement(text, cfg):
 
 
 STATEMENT = {
+    'SOFI': {'identity': 'sofi', 'heading': 'Condensed Consolidated Statements of Operations and Comprehensive Income(Unaudited)(In Thousands', 'end': 'Non-GAAP Financial Measures', 'units': 'in thousands',
+             'scale': Decimal('0.001'), 'tol': Decimal(1), 'columns': 4, 'year-ago': 1, 'net-chain': 'additive', 'headline': r'Record Net Revenue of \$([\d.]+) Billion',
+             'period-re': r'SoFi Reports (First|Second|Third|Fourth) Quarter (20\d\d) with', 'period': lambda q, y: f'Q{q} {y}',
+             'rows': {'revenue': 'Total net revenue', 'pretax': 'Income before income taxes', 'tax': 'Income tax expense', 'net': 'Net income',
+                      'eps': r'Earnings per share – diluted', 'shares': r'Weighted average common stock outstanding – diluted'}},
     'IONQ': {'identity': 'ionq', 'heading': 'Condensed Consolidated Statements of Operations (unaudited) (in thousands', 'end': 'Condensed Consolidated Balance Sheets', 'units': 'in thousands', 'scale': Decimal('0.001'),
              'tol': Decimal(1), 'columns': 4, 'year-ago': 1, 'paren-space': True, 'op-direct': True, 'net-chain': 'additive', 'shares-divisor': Decimal(1000),
              'growth': r'Revenue of \$[\d.]+ Million, Up (\d+)% Year-over-Year',
@@ -1157,6 +1162,7 @@ PROFILES = {
     'LITE': {'publisher': 'Lumentum IR (SEC 8-K)', 'parse': lambda t, u=None: parse_statement(t, STATEMENT['LITE']), 'marker': STATEMENT['LITE']['heading']},
     'AAOI': {'publisher': 'Applied Optoelectronics IR (SEC 8-K)', 'parse': lambda t, u=None: parse_statement(t, STATEMENT['AAOI']), 'marker': STATEMENT['AAOI']['heading']},
     'IONQ': {'publisher': 'IonQ IR (SEC 8-K)', 'parse': lambda t, u=None: parse_statement(t, STATEMENT['IONQ']), 'marker': STATEMENT['IONQ']['heading']},
+    'SOFI': {'publisher': 'SoFi IR (SEC 8-K)', 'parse': lambda t, u=None: parse_statement(t, STATEMENT['SOFI']), 'marker': STATEMENT['SOFI']['heading']},
     'ARM': {'publisher': 'Arm IR (SEC 6-K)', 'parse': lambda t, u=None: parse_statement(t, STATEMENT['ARM']), 'marker': 'Condensed Consolidated Income Statements'},
     'MSFT': {'publisher': 'Microsoft IR (SEC 8-K)', 'parse': lambda t, u=None: parse_statement(t, STATEMENT['MSFT']), 'marker': STATEMENT['MSFT']['heading']},
     'AMD': {'publisher': 'AMD IR (SEC 8-K)', 'parse': lambda t, u=None: parse_statement(t, STATEMENT['AMD']), 'marker': STATEMENT['AMD']['heading']},
