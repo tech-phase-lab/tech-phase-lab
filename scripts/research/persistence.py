@@ -158,20 +158,108 @@ def recover_latest_backup(backup_dir, max_age_seconds, *, now=None):
 
 def _write_manifest(path, value):
     temporary = path.with_name(path.name + ".tmp")
-    temporary.write_text(json.dumps(value, ensure_ascii=False, indent=2) + "\n")
-    temporary.chmod(0o600)
-    os.replace(temporary, path)
+    try:
+        temporary.write_text(json.dumps(value, ensure_ascii=False, indent=2) + "\n")
+        temporary.chmod(0o600)
+        os.replace(temporary, path)
+    finally:
+        temporary.unlink(missing_ok=True)   # a full disk used to leave an empty .json.tmp behind on every attempt (1,000+ files, Nov 13)
+
+
+TEMPORARY = re.compile(r"research-[0-9]{8}T[0-9]{6}\.[0-9]{6}Z\.(?:sqlite|json)\.tmp\Z")
+# The share of the volume the retained snapshots (plus the live database) may use. A count alone (24) cannot work on a small volume:
+# 24 x a 27 MB database is more than a 500 MB volume (Nov 13: disk full, every write failed, the monitor restarted every 30 s).
+VOLUME_BUDGET = 0.45
+MIN_KEPT = 2
+
+
+def retention_plan(backup_dir, retain, database_bytes=0, volume_bytes=None, *, reserve=False):
+    """What to keep and what to delete. Pure: reads names, manifests and sizes, deletes nothing.
+
+    Keeps the newest `retain` snapshots that have a valid manifest, but no more than fit in VOLUME_BUDGET of the volume after the live database
+    (always at least MIN_KEPT; one fewer when `reserve` makes room for the snapshot about to be written). Deletes: leftover temporaries, a
+    snapshot without a valid manifest and a manifest without its snapshot (only while a valid snapshot exists), and the valid snapshots
+    beyond that number. Files with any other name are never touched."""
+    backup_dir = Path(backup_dir)
+    now = datetime.now(timezone.utc)
+    valid, orphans, delete_files = [], [], []
+    names = {}
+    for entry in backup_dir.iterdir():
+        if entry.is_symlink() or not entry.is_file():
+            continue
+        names[entry.name] = entry
+    for name, entry in names.items():
+        if TEMPORARY.fullmatch(name):
+            delete_files.append(entry)
+        elif BACKUP_NAME.fullmatch(name):
+            try:
+                _read_manifest(entry, now)
+                valid.append(entry)
+            except (OSError, ValueError):
+                orphans.append(entry)
+    valid.sort(key=lambda path: path.name, reverse=True)
+    size = valid[0].stat().st_size if valid else 0
+    keep = max(1, int(retain))
+    if volume_bytes and size:
+        fit = int((volume_bytes * VOLUME_BUDGET - database_bytes) // size)
+        keep = min(keep, max(MIN_KEPT, fit))
+    if reserve:
+        keep = max(1, keep - 1)
+    kept, dropped = valid[:keep], valid[keep:]
+    if valid:
+        delete_files.extend(orphans)
+        for name, entry in names.items():
+            if name.endswith(".json") and BACKUP_NAME.fullmatch(name[:-5] + ".sqlite") and name[:-5] + ".sqlite" not in names:
+                delete_files.append(entry)
+    for old in dropped:
+        delete_files.extend([old, old.with_suffix(".json")])
+    return {"kept": kept, "delete": [path for path in delete_files if path.exists()], "validSnapshots": len(valid)}
+
+
+def enforce_retention(backup_dir, retain, database_path=None, *, reserve=False):
+    """Apply retention_plan. The kept generations are verified first: if none of them passes the full check (manifest digest and SQLite
+    integrity) no snapshot is deleted at all (only leftover temporaries), so the last good backup can never be removed on a guess.
+    Returns counts only."""
+    backup_dir = Path(backup_dir)
+    if not backup_dir.is_dir() or backup_dir.is_symlink():
+        return {"deleted": 0, "kept": 0, "freedBytes": 0}
+    database_bytes = 0
+    if database_path is not None:
+        for suffix in ("", "-wal", "-shm"):
+            candidate = Path(str(database_path) + suffix)
+            if candidate.is_file():
+                database_bytes += candidate.stat().st_size
+    try:
+        volume = shutil.disk_usage(backup_dir).total
+    except OSError:
+        volume = None
+    plan = retention_plan(backup_dir, retain, database_bytes, volume, reserve=reserve)
+    verified = False
+    for snapshot in plan["kept"]:
+        try:
+            verify_backup(snapshot)
+            verified = True
+            break
+        except (OSError, ValueError):
+            continue
+    deleting = plan["delete"] if verified else [path for path in plan["delete"] if TEMPORARY.fullmatch(path.name)]
+    kept_paths = {path for snapshot in plan["kept"] for path in (snapshot, snapshot.with_suffix(".json"))}
+    freed = deleted = 0
+    for path in deleting:
+        if path in kept_paths or path.is_symlink():
+            continue
+        try:
+            freed += path.stat().st_size
+            path.unlink(missing_ok=True)
+            deleted += 1
+        except OSError:
+            continue
+    return {"deleted": deleted, "kept": len(plan["kept"]) if verified else plan["validSnapshots"], "freedBytes": freed}
 
 
 def _prune(backup_dir, retain):
-    backups = sorted(
-        (path for path in backup_dir.glob("research-*.sqlite") if path.is_file() and not path.is_symlink()),
-        reverse=True,
-    )
-    for old in backups[retain:]:
-        old.unlink(missing_ok=True)
-        old.with_suffix(".json").unlink(missing_ok=True)
-    return min(len(backups), retain)
+    """Kept for compatibility: the size-aware retention."""
+    return enforce_retention(backup_dir, retain)["kept"]
 
 
 def create_backup(database_path, backup_dir, retain=24):
@@ -182,15 +270,11 @@ def create_backup(database_path, backup_dir, retain=24):
         raise ValueError("database-file-unavailable")
     backup_dir.mkdir(parents=True, exist_ok=True)
     backup_dir.chmod(0o700)
-    # Leftover temporaries from interrupted attempts only waste space.
-    for leftover in backup_dir.glob("research-*.sqlite.tmp"):
-        if leftover.is_file() and not leftover.is_symlink():
-            leftover.unlink(missing_ok=True)
-    # Pruning only after success deadlocked on a full volume (staging, Oct 8):
-    # every attempt failed with "disk full" and old snapshots were never
-    # removed. When the new copy cannot fit, keep retain-1 old snapshots first.
+    # Leftover temporaries and generations beyond what the volume can hold go first (Nov 13: 24 x 27 MB did not fit a 500 MB volume).
+    # When the new copy still cannot fit, make room for it by keeping one generation fewer.
+    enforce_retention(backup_dir, retain, database_path)
     if shutil.disk_usage(backup_dir).free < database_path.stat().st_size * 1.1 + 16 * 1024 * 1024:
-        _prune(backup_dir, retain - 1)
+        enforce_retention(backup_dir, retain, database_path, reserve=True)
     stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S.%fZ")
     final = backup_dir / f"research-{stamp}.sqlite"
     temporary = final.with_name(final.name + ".tmp")
@@ -210,7 +294,7 @@ def create_backup(database_path, backup_dir, retain=24):
             "bytes": checked["bytes"], "sha256": checked["sha256"], "integrity": "ok",
         }
         _write_manifest(final.with_suffix(".json"), manifest)
-        count = _prune(backup_dir, retain)
+        count = enforce_retention(backup_dir, retain, database_path)["kept"]
         return {**manifest, "backupCount": count}
     finally:
         temporary.unlink(missing_ok=True)
