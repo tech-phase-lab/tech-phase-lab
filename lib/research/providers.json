@@ -306,6 +306,10 @@
     "ticker": "ARM",
     "name": "Arm",
     "sector": "semiconductors",
+    "secExhibits": [
+      "2",
+      "1"
+    ],
     "indexUrl": "https://newsroom.arm.com/news/feed/",
     "format": "rss",
     "allowedHosts": [

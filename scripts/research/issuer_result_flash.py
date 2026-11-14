@@ -309,10 +309,10 @@ def parse_statement(text, cfg):
     if cfg['identity'] not in t.lower():
         raise ValueError('issuer-identity-missing')
     if cfg.get('period-re'):
-        found = re.findall(cfg['period-re'], t[:1500], re.I)
+        found = re.findall(cfg['period-re'], t[:cfg.get('window', 1500)], re.I)
         if len(found) != 1:
             raise ValueError('period-unrecognized')
-        quarter, year = QUARTERS[found[0][0].lower()], int(found[0][1])
+        quarter, year = (int(found[0][0]) if found[0][0].isdigit() else QUARTERS[found[0][0].lower()]), int(found[0][1])
     else:
         quarter, year = headline_period(t)
     start = t.find(cfg['heading'])
@@ -347,7 +347,7 @@ def parse_statement(text, cfg):
     if not rows['revenue'] or rows['revenue'][0] <= 0 or not rows['revenue'][ago] > 0:
         raise ValueError('revenue-row-unrecognized')
     if cfg.get('growth'):
-        growth = re.findall(cfg['growth'], t[:2500])
+        growth = re.findall(cfg['growth'], t[:cfg.get('window', 2500)])
         if len(growth) != 1:
             raise ValueError('revenue-growth-missing')
         stated = Decimal(growth[0])  # the headline's own rounding: whole percent -> +-0.55, one decimal -> +-0.06
@@ -367,7 +367,10 @@ def parse_statement(text, cfg):
         return None not in (x, y, z) and abs((x - y) - z) <= cfg['tol']
     # a column is trusted only when every identity holds in both the current and the year-earlier column
     gross_ok = all(agrees('revenue', 'cost', 'gross', i) for i in (0, ago)) if rows.get('cost') else False
-    if cfg.get('op-direct'):  # no gross profit line: operating income = revenue - total operating costs
+    if cfg.get('op-signed'):  # costs are printed as negatives: operating income = revenue + costs
+        op_ok = all(None not in (col('revenue', i), col('cost', i), col('operating', i)) and abs(col('revenue', i) + col('cost', i) - col('operating', i)) <= cfg['tol']
+                    for i in (0, ago))
+    elif cfg.get('op-direct'):  # no gross profit line: operating income = revenue - total operating costs
         op_ok = all(agrees('revenue', 'cost', 'operating', i) for i in (0, ago))
     else:
         op_ok = gross_ok and all(agrees('gross', 'opex', 'operating', i) for i in (0, ago))
@@ -376,8 +379,9 @@ def parse_statement(text, cfg):
                      and abs(col('pretax', i) - col('tax', i) + col('equity', i) - col('cont', i)) <= cfg['tol']
                      and abs(col('cont', i) + col('disc', i) - col('net', i)) <= cfg['tol'] for i in (0, ago))
     elif cfg.get('net-chain') == 'additive':  # tax and equity-method activity are printed with their sign: pretax + tax + equity = net income
-        net_ok = all(None not in (col('pretax', i), col('tax', i), col('equity', i), col('net', i))
-                     and abs(col('pretax', i) + col('tax', i) + col('equity', i) - col('net', i)) <= cfg['tol'] for i in (0, ago))
+        optional_equity = 'equity' not in cfg['rows']   # Arm has no equity-method line in this chain
+        net_ok = all(None not in (col('pretax', i), col('tax', i), col('net', i)) and (optional_equity or col('equity', i) is not None)
+                     and abs(col('pretax', i) + col('tax', i) + (0 if optional_equity else col('equity', i)) - col('net', i)) <= cfg['tol'] for i in (0, ago))
     else:
         net_ok = all(agrees('pretax', 'tax', 'net', i) for i in (0, ago)) if rows.get('tax') is not None else False
     if net_ok and cfg['rows'].get('attrib'):  # net income attributable to common = net income - non-controlling interests
@@ -404,6 +408,14 @@ def parse_statement(text, cfg):
 
 
 STATEMENT = {
+    'ARM': {'identity': 'arm holdings', 'heading': 'Condensed Consolidated Income Statements(in millions', 'end': 'Condensed Consolidated Balance Sheets', 'units': 'in millions',
+            'scale': Decimal(1), 'tol': Decimal(1), 'columns': 4, 'year-ago': 1, 'op-signed': True, 'net-chain': 'additive', 'window': 30000,
+            'growth': r'Total revenue increased (\d+)% year-over-year to \$[\d,]+ million',
+            'period-re': r'Q([1-4]) FYE(\d\d) Financial Overview', 'period': lambda q, y: f'Q{q} FYE{y:02d}',
+            'rows': {'revenue': 'Total revenue', 'cost': ['Cost of sales', 'Total operating expenses'], 'operating': r'Operating income \(loss\)',
+                     'pretax': r'Income \(loss\) before income taxes', 'tax': r'Income tax benefit \(expense\)', 'net': r'Net income \(loss\)',
+                     'eps': r'Net income \(loss\) per share attributable to ordinary shareholders Basic (?:\$ [\d.]+ ){4}Diluted',
+                     'shares': r'Weighted average ordinary shares outstanding Basic ' + AMT + ' ' + AMT + ' ' + AMT + ' ' + AMT + ' Diluted'}},
     'VRT': {'identity': 'vertiv', 'heading': 'STATEMENTS OF EARNINGS (LOSS)Vertiv Holdings Co(Dollars in millions', 'units': 'dollars in millions', 'scale': Decimal(1), 'tol': Decimal('0.15'),
             'end': 'BALANCE SHEETS', 'shares-divisor': Decimal(1000000), 'columns': 4, 'year-ago': 1, 'op-direct': True, 'growth': r'Net sales of \$[\d,]+ million, (\d+)% higher than',
             'period-re': r'Reports [A-Za-z ]*?(First|Second|Third|Fourth) Quarter (20\d\d) with', 'period': lambda q, y: f'Q{q} {y}',
@@ -979,6 +991,7 @@ PROFILES = {
     'VRT': {'publisher': 'Vertiv IR (SEC 8-K)', 'parse': lambda t, u=None: parse_statement(t, STATEMENT['VRT']), 'marker': 'STATEMENTS OF EARNINGS (LOSS)'},
     'ORCL': {'publisher': 'Oracle IR (SEC 8-K)', 'parse': parse_oracle, 'marker': 'CONDENSED CONSOLIDATED STATEMENTS OF OPERATIONS'},
     'SKHY': {'publisher': 'SK hynix IR (SEC 6-K)', 'parse': parse_skhynix, 'marker': 'Preliminary Results of Operations'},
+    'ARM': {'publisher': 'Arm IR (SEC 6-K)', 'parse': lambda t, u=None: parse_statement(t, STATEMENT['ARM']), 'marker': 'Condensed Consolidated Income Statements'},
     'MSFT': {'publisher': 'Microsoft IR (SEC 8-K)', 'parse': lambda t, u=None: parse_statement(t, STATEMENT['MSFT']), 'marker': STATEMENT['MSFT']['heading']},
     'AMD': {'publisher': 'AMD IR (SEC 8-K)', 'parse': lambda t, u=None: parse_statement(t, STATEMENT['AMD']), 'marker': STATEMENT['AMD']['heading']},
     'MRVL': {'publisher': 'Marvell IR (SEC 8-K)', 'parse': lambda t, u=None: parse_statement(t, STATEMENT['MRVL']),
