@@ -6,7 +6,7 @@ import { parseSecDirectory } from "./stock-directory";
 import { emptyFinancials } from "./comparison";
 import { prepareComparisonAnalysis, currentComparisonAnalysis } from "./comparison-analysis";
 import { loadSecComparison } from "./comparison-loader";
-import { loadMarketInputs, loadTwelveComparisonState } from "./twelve-data-collector";
+import { freshEnough, loadMarketInputs, loadTwelveComparisonState } from "./twelve-data-collector";
 import { buildSecMarketEvidence } from "./sec-market-evidence";
 import { appendMarketItems } from "./twelve-data-financials";
 import { hasRecentQuarter } from "./comparison-scorecard";
@@ -23,10 +23,14 @@ export async function secText(url: string, limit: number) {
 }
 async function secJson(url: string, limit: number) { return JSON.parse(await secText(url,limit)) as unknown; }
 const directory = unstable_cache(async () => parseSecDirectory(await secJson("https://www.sec.gov/files/company_tickers_exchange.json", 2_000_000)), ["comparison-sec-directory-v1"], { revalidate: 86400 });
-const financials = unstable_cache(async (ticker: string, cik: string) => {
+async function readFinancials(ticker: string, cik: string) {
   const data = await loadSecComparison(ticker,cik,secText);
   return { ...data, preparedAnalysis: prepareComparisonAnalysis(data) };
-}, ["comparison-financials-v6-prepared-analysis"], { revalidate: 300 });
+}
+// v7: second- and third-quarter cash flow from the year-to-date figures (Nov 14).
+const cachedFinancials = unstable_cache(readFinancials, ["comparison-financials-v7-quarter-cash"], { revalidate: 300 });
+/** Results matter most right after they are filed: an entry older than 15 minutes is read again from the SEC now, not served stale. */
+const financials = (ticker: string, cik: string) => freshEnough(() => cachedFinancials(ticker, cik), () => readFinancials(ticker, cik), 15 * 60_000);
 /** The SEC identifier of a listed company, from the provider list or the SEC's own directory. */
 export async function secCik(ticker: string): Promise<string | null> {
   const provider = providers.find(p => p.ticker === ticker);
