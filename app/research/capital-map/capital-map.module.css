@@ -273,9 +273,10 @@
   .positionTabs button { font-size:.8rem; }
 }
 
-/* Keep the five navigation controls together at phone widths. */
+/* Keep the five navigation controls on one line at phone widths when they fit;
+   longer labels (English) move the tools to a second line instead of overflowing the page. */
 @media(max-width:600px) {
-  .navigationRow { flex-wrap:nowrap; gap:8px; }
+  .navigationRow { flex-wrap:wrap; gap:0 8px; }
   .tabs { flex-shrink:0; gap:14px; overflow:visible; }
   .page .tabs button { font-size:.72rem; padding:12px 3px; min-width:34px; white-space:nowrap; }
   .tools { flex-shrink:0; gap:5px; padding:5px 0; }
