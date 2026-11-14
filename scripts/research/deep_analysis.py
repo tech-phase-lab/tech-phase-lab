@@ -22,7 +22,7 @@ import monitor
 
 MAX_ATTEMPTS = 3
 # Bump when the prompt/check logic changes so analyses held under the old logic are tried again (attempts restart at 0).
-VERSION = 8
+VERSION = 9
 RETRY_SECONDS = 120
 DEFAULT_DAILY_LIMIT = 40
 MAX_DAILY_LIMIT = 200
@@ -177,6 +177,12 @@ def why(exc, everything=None):
             hits = [value.rstrip('%') in known for value in values]
             where = ':' + ('E' if all(hits) else 'A' if not any(hits) else 'M')
         return ('unsupported-number:%s:%s' % (miss.get('kind', '?'), '|'.join(values)))[:77 - len(where)] + where
+    if reason in ('invalid-copy', 'changed-direction', 'changed-metric-direction', 'changed-names', 'changed-meaning') and exc.__traceback__:
+        # Which rule fired (function:line of the raise): the reason alone does not say which of the many checks that share it rejected the copy.
+        frame = exc.__traceback__
+        while frame.tb_next:
+            frame = frame.tb_next
+        reason = '%s@%s:%d' % (reason, frame.tb_frame.f_code.co_name, frame.tb_lineno)
     return reason[:80]
 
 

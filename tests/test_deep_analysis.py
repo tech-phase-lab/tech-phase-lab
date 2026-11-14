@@ -176,6 +176,16 @@ class DeepAnalysisTests(unittest.TestCase):
                 deep_analysis.checked({'ja': ja, 'en': en}, quote, release + ' Net cash 4,231.1')
 
 
+    def test_a_rule_based_rejection_names_the_check_that_fired(self):
+        # Nov 14, NBIS: "invalid-copy" x3 came from one of a dozen checks that raise it; the reason now carries function:line (no text).
+        excerpts = {'0': 'Revenue increased to 980.8 in the quarter.'}
+        try:
+            deep_analysis.checked({'ja': '売上は増加した。', 'en': 'Revenue decreased.'}, excerpts['0'])
+        except ValueError as exc:
+            reason = deep_analysis.why(exc, excerpts['0'])
+        self.assertRegex(reason, r'^(?:invalid-copy|changed-direction)@\w+:\d+$')
+        self.assertNotIn('Revenue', reason)
+
     def test_why_an_analysis_is_held_is_recorded_and_older_holds_are_tried_again(self):
         self.earnings()
         bad = json.loads(json.dumps(GOOD))
