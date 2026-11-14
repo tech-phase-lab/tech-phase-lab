@@ -19,6 +19,8 @@ export type Financials = {
   twelveData?: import("./twelve-data-factors").TwelveFactorEvidence;
   /** Factors taken from the provider's statements for the same quarter because the filing left them empty (shown on the screen). */
   supplemented?: string[];
+  /** Set when the supplemented factors come from the provider's previous quarter (it had not added the newest one yet): its end date. */
+  supplementedFromQuarter?: string;
   /** False when the filing's own balance already scores financial strength: the provider's balance is then never used. */
   supplementedFinancialAllowed?: boolean;
   /** Set when a newer earnings release is out but its quarterly report is not yet filed: the figures are the previous quarter's, said on screen. */
