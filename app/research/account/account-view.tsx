@@ -270,7 +270,7 @@ export default function AccountView({ ja, member, billingAvailable, onRecheck, i
     {profile.state === "loading" && <div className={styles.skel} style={{ marginTop: 20, height: owner ? 84 : 191 }} aria-busy="true" />}
     {profile.state === "ok" && <div className={`${styles.cd} ${owner ? styles.ownerHero : ""}`}>
       <div className={styles.hero}>{avatar}
-        <div className={styles.who}><div className={styles.name}>{owner ? "リゼル" : display}</div><div className={styles.mail}>{shownEmail}</div></div>
+        <div className={styles.who}><div className={styles.name}>{owner ? t("リゼル", "Rizel") : display}</div><div className={styles.mail}>{shownEmail}</div></div>
         <span className={`${styles.pt} ${owner && !preview ? styles.ptOwner : effective === "pro" ? styles.ptPro : styles.ptFree}`}>{owner && !preview ? "OWNER" : effective === "pro" ? "PRO" : "FREE"}</span></div>
       {(!owner || preview) && <div className={`${styles.grp} ${styles.cdIn}`}>
         {preview ? <>{row(I.user, t("表示名を変更", "Change display name"))}{row(I.mail, t("メールアドレスを変更", "Change email"))}</>

@@ -75,6 +75,6 @@ test("banner line: the state word and the time of the last successful read, to t
   assert.equal(bannerLine("pre", true, at), "プレ取引中 ・ 06:20:35 JST");
   assert.equal(bannerLine("regular", true, at), "取引中 ・ 06:20:35 JST");
   assert.equal(bannerLine("closed", true, at), "取引終了 ・ 06:20:35 JST");
-  assert.equal(bannerLine("closed", false, at), "Closed ・ 06:20:35 JST");
+  assert.equal(bannerLine("closed", false, at), "Closed · 06:20:35 JST");
   assert.equal(bannerLine("regular", true, null), "取引中");
 });

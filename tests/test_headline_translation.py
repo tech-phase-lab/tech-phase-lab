@@ -308,6 +308,41 @@ class HeadlineTranslationTests(unittest.TestCase):
         limited = {**ENV, "OFFICIAL_HEADLINE_TRANSLATION_DAILY_LIMIT": "1"}
         self.assertEqual(translation.run_once(self.path, response, limited, now=NOW + 300, sources=[SOURCE]), "idle")
 
+    def test_a_retry_is_told_why_the_last_translation_was_rejected(self):
+        seen = []
+        def provider(payload, key):
+            seen.append(json.loads(payload["input"]))
+            return {"status": "completed", "output_text": json.dumps({"titleJa": "ネビウスは売上が45%増と発表"}, ensure_ascii=False), "usage": {}}
+        self.assertEqual(translation.run_once(self.path, provider, ENV, now=NOW, sources=[SOURCE]), "retry")
+        with translation.connect(self.path) as db:
+            job = db.execute("SELECT failure_kind,failure_detail FROM signal_headline_translation_jobs").fetchone()
+            self.assertEqual(job["failure_kind"], "unsupported-number")
+            self.assertTrue(job["failure_detail"].startswith("unsupported-number:value:45%"), job["failure_detail"])
+            db.execute("UPDATE signal_headline_translation_jobs SET next_at=0")
+        self.assertEqual(translation.run_once(self.path, provider, ENV, now=NOW + 1000, sources=[SOURCE]), "retry")
+        self.assertEqual(set(seen[0]), {"title"})
+        self.assertEqual(seen[1]["previousRejection"], "unsupported-number")
+        self.assertTrue(seen[1]["previousRejectionDetail"].startswith("unsupported-number:value:45%"))
+        self.assertNotIn("ネビウス", seen[1]["previousRejectionDetail"])  # no copy, only the rule and the quantities
+
+    def test_a_translation_the_checks_keep_rejecting_stops_after_the_attempt_cap_and_is_never_critical(self):
+        def failed(*_):
+            raise RuntimeError("private provider response")
+        self.assertEqual(translation.run_once(self.path, failed, ENV, now=NOW, sources=[SOURCE]), "retry")
+        with translation.connect(self.path) as db:
+            db.execute("UPDATE signal_headline_translation_jobs SET attempts=?,failure_kind='unsupported-number',next_at=0",
+                       (translation.EXHAUSTED_AFTER_ATTEMPTS,))
+            state = translation.diagnostics(db, env=ENV, now=NOW + 100000, sources=[SOURCE])
+            self.assertEqual((state["pending"], state["exhausted"], state["retrying"]), (0, 1, 0))
+            self.assertEqual(state["pendingItems"][0]["state"], "exhausted")
+            self.assertEqual(translation.sync_incident(db, ENV, NOW + 100000), "headline-translation-exhausted")
+            self.assertEqual(db.execute("SELECT severity FROM operational_incidents WHERE incident_key='publication:headlines'").fetchone()[0], "warning")
+        self.assertEqual(translation.run_once(self.path, lambda *_: self.fail("paid call after the cap"), ENV, now=NOW + 100000, sources=[SOURCE]), "idle")
+        with translation.connect(self.path) as db:  # a provider failure at the same attempt count is not exhausted
+            db.execute("UPDATE signal_headline_translation_jobs SET failure_kind='provider-unavailable',state='retry'")
+            state = translation.diagnostics(db, env=ENV, now=NOW + 100000, sources=[SOURCE])
+            self.assertEqual((state["pending"], state["exhausted"]), (1, 0))
+
     def test_diagnostics_are_aggregate_bounded_and_show_retry_recovery_state(self):
         def failed(*_):
             raise RuntimeError("private provider response")
@@ -326,6 +361,9 @@ class HeadlineTranslationTests(unittest.TestCase):
             "nextRetryAt": "2027-01-01T00:17:40+00:00",
             "calls24Hours": {"total": 1, "failed": 1, "completed": 0, "stale": 0},
             "failureKinds": {"provider-unavailable": 1},
+            # Nov 14: which source is stuck and why (a configured source id, state, attempts, failure code): no title, URL or text.
+            "pendingItems": [{"source": "nebius-blog", "observedAt": "2027-01-01T00:15:10+00:00", "state": "retry",
+                              "attempts": 1, "failure": "provider-unavailable"}],
         })
         serialized = json.dumps(summary)
         self.assertNotIn("http", serialized.lower())

@@ -92,7 +92,74 @@ class DeepAnalysisTests(unittest.TestCase):
         bad = {'headline': note['headline'], 'points': [only_first, unknown, only_first], 'watch': None}
         with self.assertRaises(deep_analysis.Unchecked) as caught:
             deep_analysis.bind(bad, excerpts)
-        self.assertEqual(caught.exception.detail, {'kept': 0, 'rejected': {'evidence-missing': 1, 'unsupported-number': 2}})
+        self.assertEqual(caught.exception.detail, {'kept': 0, 'rejected': {'evidence-missing': 1, 'unsupported-number:value:172000000:E': 2}})
+
+    def test_the_headline_is_checked_against_its_own_excerpts_and_negation_rejections_name_their_rule(self):
+        excerpts = {'0': 'Revenue was $3.41 billion in the quarter.', '1': 'The company did not raise guidance this quarter.',
+                    '2': 'Operating income was $172 million.'}
+        ok_point = {'ja': '営業利益は172 million ドル。', 'en': 'Operating income was $172 million.', 'evidenceIds': ['2']}
+        headline = {'ja': '売上高は3.41 billion ドル。', 'en': 'Revenue was $3.41 billion.', 'evidenceIds': ['0']}
+        note = {'headline': headline, 'points': [ok_point, ok_point], 'watch': None}
+        self.assertEqual(len(deep_analysis.bind(note, excerpts)['points']), 2)  # the release has a negated clause elsewhere: not this headline's evidence
+        flipped = {'ja': '会社は今四半期にガイダンスを引き上げた。', 'en': 'The company raised guidance this quarter.', 'evidenceIds': ['1']}
+        with self.assertRaises(deep_analysis.Unchecked) as caught:
+            deep_analysis.bind({'headline': headline, 'points': [flipped, flipped, ok_point], 'watch': None}, excerpts)
+        [reason] = caught.exception.detail['rejected']
+        self.assertTrue(reason.startswith('changed-negation:source-negated:'), reason)
+        self.assertEqual(caught.exception.detail['kept'], 1)
+
+    def test_a_rejected_headline_holds_the_analysis_and_records_why(self):
+        excerpts = {'0': 'Revenue was $3.41 billion in the quarter.', '1': 'Operating income was $172 million.'}
+        point = {'ja': '売上高は3.41 billion ドル。', 'en': 'Revenue was $3.41 billion.', 'evidenceIds': ['0']}
+        bad_headline = {'ja': '売上高は45%増。', 'en': 'Revenue rose 45%.', 'evidenceIds': ['0']}
+        with self.assertRaises(deep_analysis.Unchecked) as caught:
+            deep_analysis.bind({'headline': bad_headline, 'points': [point, point], 'watch': None}, excerpts)
+        self.assertEqual(str(caught.exception), 'unsupported-number')
+        self.assertEqual(caught.exception.detail, {'headline': 'unsupported-number:value:45%:A'})
+
+    def test_a_retry_tells_the_model_why_the_last_attempt_was_rejected(self):
+        self.earnings()
+        bad = json.loads(json.dumps(GOOD))
+        bad['points'] = [point('売上は45%増。', 'Revenue rose 45%.')] * 3
+        inputs = []
+        def transport(payload, key):
+            inputs.append(json.loads(payload['input']))
+            return reply(bad)(payload, key)
+        self.assertEqual(self.run_deep(transport), 'retry')
+        self.assertEqual(self.run_deep(transport, now=base.NOW.timestamp() + 1000), 'retry')
+        self.assertNotIn('previousAttemptRejected', inputs[0])
+        self.assertEqual(inputs[1]['previousAttemptRejected'], {'kept': 0, 'rejected': {'unsupported-number:value:45%:A': 3}})
+
+    def test_unsupported_figures_are_tagged_as_cited_elsewhere_absent_or_mixed(self):
+        excerpts = {'0': 'Revenue was $3.41 billion in the quarter.', '1': 'Operating income was $172 million.'}
+        def reason(text_en, text_ja):
+            point = {'ja': text_ja, 'en': text_en, 'evidenceIds': ['0']}
+            with self.assertRaises(deep_analysis.Unchecked) as caught:
+                deep_analysis.bind({'headline': {'ja': '売上高は3.41 billion ドル。', 'en': 'Revenue was $3.41 billion.', 'evidenceIds': ['0']}, 'points': [point, point], 'watch': None}, excerpts)
+            [key] = caught.exception.detail['rejected']
+            return key
+        self.assertTrue(reason('Operating income was $172 million.', '営業利益は172 million ドル。').endswith(':E'))  # in the release, not in the cited excerpt
+        self.assertTrue(reason('Revenue rose 45%.', '売上は45%増。').endswith(':A'))  # nowhere in the release: calculated or invented
+        self.assertTrue(reason('Revenue was $3.41 billion and costs rose 45%.', '売上高は3.41 billion ドル、費用は45%増。').endswith(':A'))
+
+    def test_a_statement_table_figure_may_be_written_in_the_unit_its_header_declares(self):
+        # Nov 14, NBIS: "In USD $ millions ... Revenues 146.1 980.8" -- the model wrote "$980.8 million" and the check saw 980800000 vs 980.8
+        table = ('Q3 2026 Financial Highlights Consolidated results In USD $ millions Three months ended September 30 2025 2026 Change '
+                 'Revenues 146.1 980.8 571 % Adjusted EBITDA / (loss) (5.2 ) 465.8 n/m Total assets 1,962.1 2026')
+        def ok(ja, en):
+            deep_analysis.checked({'ja': ja, 'en': en}, table)
+        ok('売上高は980.8百万ドルだった。', 'Revenue was $980.8 million.')
+        ok('調整後EBITDAは465.8百万ドル。', 'Adjusted EBITDA was $465.8 million.')
+        for ja, en in [('売上高は9.8億ドル。', 'Revenue was $980.8 billion.'),          # wrong scale
+                       ('売上高は9億8,000万ドル。', 'Revenue was $980.0 million.'),      # a figure the table does not print
+                       ('売上は2,026百万ドル。', 'Revenue was $2,026 million.'),         # a year is not a table amount
+                       ('売上は57.1百万ドル。', 'Revenue was $57.1 million.')]:          # a percentage is not an amount
+            with self.assertRaises(ValueError, msg=en):
+                deep_analysis.checked({'ja': ja, 'en': en}, table)
+        self.assertEqual(deep_analysis.table_scaled_figures('Revenues 146.1 980.8'), '')  # no declared unit: nothing is converted
+        self.assertEqual(deep_analysis.table_scaled_figures('In millions A 1.5 In thousands B 2.5'), '')  # mixed units: nothing is converted
+        self.assertIn('980.8 million', deep_analysis.table_scaled_figures('(in millions of U.S. dollars) Revenues 980.8'))
+
 
     def test_why_an_analysis_is_held_is_recorded_and_older_holds_are_tried_again(self):
         self.earnings()
@@ -104,7 +171,7 @@ class DeepAnalysisTests(unittest.TestCase):
             report = deep_analysis.diagnostics(db, now=base.NOW.timestamp() + 5000)
         [held] = report['notDone']
         self.assertEqual((held['subject'], held['state'], held['failure']), ('NBIS', 'held', 'too-few-checked-points'))
-        self.assertEqual(held['detail'], {'kept': 0, 'rejected': {'unsupported-number': 3}})
+        self.assertEqual(held['detail'], {'kept': 0, 'rejected': {'unsupported-number:value:45%:A': 3}})
         self.assertEqual(report['version'], deep_analysis.VERSION)
         self.assertEqual(self.run_deep(lambda *_: self.fail('held'), now=base.NOW.timestamp() + 5000), 'idle')
         with deep_analysis.connect(self.path) as db:  # held by an older version of the checks

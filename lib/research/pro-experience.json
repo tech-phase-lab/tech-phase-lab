@@ -74,7 +74,7 @@
       "nameJa": "財務レーダー",
       "nameEn": "Financial Radar",
       "summaryJa": "守る力と稼ぐ力で立ち位置を見る",
-      "summaryEn": "",
+      "summaryEn": "See where a stock stands on financial strength and earning power.",
       "thumbnailUrl": "",
       "videoUrl": "",
       "videoLabel": "",
@@ -82,7 +82,7 @@
       "imageCaptionJa": "画面の例",
       "imageCaptionEn": "Example screen",
       "textBeforeImageJa": "守る力と稼ぐ力で立ち位置を見る",
-      "textBeforeImageEn": "",
+      "textBeforeImageEn": "See where a stock stands on financial strength and earning power.",
       "textAfterImageJa": "",
       "textAfterImageEn": ""
     },
@@ -125,7 +125,7 @@
       "nameJa": "米国株の資産管理",
       "nameEn": "US stock portfolio",
       "summaryJa": "スクショで持ち株を登録",
-      "summaryEn": "",
+      "summaryEn": "Add your holdings from a screenshot.",
       "thumbnailUrl": "",
       "videoUrl": "",
       "videoLabel": "",
@@ -133,7 +133,7 @@
       "imageCaptionJa": "画面の例",
       "imageCaptionEn": "Example screen",
       "textBeforeImageJa": "スクショで持ち株を登録",
-      "textBeforeImageEn": "",
+      "textBeforeImageEn": "Add your holdings from a screenshot.",
       "textAfterImageJa": "",
       "textAfterImageEn": ""
     }

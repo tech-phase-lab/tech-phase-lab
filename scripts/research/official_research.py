@@ -754,6 +754,9 @@ def claim(db, reference, model, limit):
             expedited=False
             if job and job['state']=='done':
                 job=None  # Regenerate an invalid saved publication.
+            if (job and job['sha']==r['sha']
+                    and news_delivery_status.is_exhausted(job['state'],job['attempts'],job['failure_kind'])):
+                continue  # Exhausted: the original text stays; a new release (new sha) starts again.
             if job and job['sha']==r['sha'] and job['next_at']>now:
                 expedited=repair_candidate and content_repair.can_expedite(db,r,job)
                 if not expedited:
@@ -1123,9 +1126,11 @@ def run_once(path, transport=brief_generator.request_response, env=None, now=Non
             delay=max(headline_translation.retry_delay(job[0] if job else 1, reason, frequent=OFFICIAL_FREQUENT_RETRIES), min(getattr(exc, "retry_after_seconds", None) or 0, 604800))
             if earnings_release(row) and (job[0] if job else 1) <= EARNINGS_FAST_RETRIES:
                 delay=max(min(delay,EARNINGS_RETRY_SECONDS), min(getattr(exc, "retry_after_seconds", None) or 0, 604800))
-            db.execute("UPDATE official_research_jobs SET state='retry',next_at=?,failure_kind=? WHERE event_id=? AND lease=?",(now+delay,reason,row['id'],lease))
+            exhausted=bool(job and job[0]>=news_delivery_status.EXHAUSTED_AFTER_ATTEMPTS and reason in news_delivery_status.CONTENT_FAILURES)
+            db.execute("UPDATE official_research_jobs SET state=?,next_at=?,failure_kind=? WHERE event_id=? AND lease=?",
+                       ('exhausted' if exhausted else 'retry',now+delay,reason,row['id'],lease))
             db.execute("UPDATE signal_headline_translation_calls SET state='failed' WHERE lease=?",(lease,))
-        return 'retry'
+        return 'exhausted' if exhausted else 'retry'
     public_at=datetime.now(timezone.utc).isoformat(timespec='milliseconds')
     source_adapter=next((adapter for adapter in (macro_source_publication, attributed_policy_publication)
                          if isinstance(note,dict) and adapter.MARKER in note),None)
@@ -1306,7 +1311,11 @@ def diagnostics(db):
     delivery=delivery_diagnostics(db,reference,rows,{row['id'] for row,_,_ in publications})
     return {'published':published,'pending':max(0,pending),'delivery':delivery,
             'latest':[{k:x[k] for k in ('id','ticker','observedAt','bodyReadyAt','generationStartedAt','publicAt','generationMs','detectionToPublicMs')} for x in items[:5]],
-            'jobs':[dict(r) for r in db.execute('SELECT event_id,state,attempts,failure_kind FROM official_research_jobs ORDER BY event_id DESC LIMIT 5')]}
+            'jobs':[dict(r) for r in db.execute('SELECT event_id,state,attempts,failure_kind FROM official_research_jobs ORDER BY event_id DESC LIMIT 5')],
+            # Why the unpublished ones are stuck: the company (source id), job state, attempts and the failure kind; no title, text or URL.
+            'notDone':[dict(r) for r in db.execute('''SELECT e.source_id AS source,j.state,j.attempts,j.failure_kind AS failure
+              FROM official_research_jobs j LEFT JOIN signal_events e ON e.id=j.event_id WHERE j.state!='done'
+              ORDER BY j.event_id DESC LIMIT 20''')]}
 
 
 def sync_incident(db, env=None, reference=None):
@@ -1317,10 +1326,17 @@ def sync_incident(db, env=None, reference=None):
     delivery=delivery_diagnostics(db,reference,rows,published)
     config=headline_translation.configuration(os.environ if env is None else env,now=reference.timestamp())
     # A terminal review needs human attention, not another paid attempt. Keep
-    # its overdue delivery visible even when the automatic queue becomes empty.
-    code='official-research-overdue' if delivery['reviewOverdue'] or (delivery['automaticOverdue'] and config is not None) else None
+    # its overdue delivery visible (as a warning) even when the automatic queue becomes empty.
+    # Owner, Nov 14: only an item the automatic queue is still working on is an outage (critical). Items waiting for a person (held reviews) and items
+    # that reached the attempt cap stay on the original text and are counted in /health; they are a warning, never a critical that stays red for weeks.
+    if delivery['automaticOverdue'] and config is not None:
+        code,severity='official-research-overdue','critical'
+    elif delivery['reviewOverdue']:
+        code,severity='official-research-review-overdue','warning'
+    else:
+        code=severity=None
     if code:
-        monitor.record_operational_incident(db,'publication:official-research','publication','official-research','critical',code,seen_at=reference.isoformat())
+        monitor.record_operational_incident(db,'publication:official-research','publication','official-research',severity,code,seen_at=reference.isoformat())
     else:
         monitor.resolve_operational_incident(db,'publication:official-research',resolved_at=reference.isoformat())
     return code

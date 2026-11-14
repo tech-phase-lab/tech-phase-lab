@@ -169,7 +169,7 @@ export default function Watchlist({ companies, quotes = {} }: { companies: Compa
         <div className={styles.toolbar}>
           <WatchMenu buttonClass={styles.textButton} label={t("並び順", "Sort order")} value={sort} options={sortOptions} onChange={setSort}>{sortOptions.find(option => option.value === sort)?.label}</WatchMenu>
           <WatchMenu buttonClass={styles.textButton} menuClass={styles.viewMenu} label={t("取引時間帯の表示", "Market session view")} value={sessionView} options={viewOptions} onChange={value => { setSessionView(value as WatchlistSession); setRevealed(""); }}>{t("表示", "View")} {viewOptions.find(option => option.value === sessionView)?.label}</WatchMenu>
-          <span className={styles.marketState}><i aria-hidden="true" />{sharedSession ? stateLabels[sharedSession] : t("現在", "Now")} ・ <CurrentTime /> JST</span>
+          <span className={styles.marketState}><i aria-hidden="true" />{sharedSession ? stateLabels[sharedSession] : t("現在", "Now")}{t(" ・ ", " · ")}<CurrentTime /> JST</span>
         </div>
         <ul className={styles.quoteRows} data-watchlist-rows>{ordered.map(ticker => {
           const item = companies.find(entry => entry.ticker === ticker) ?? known[ticker];

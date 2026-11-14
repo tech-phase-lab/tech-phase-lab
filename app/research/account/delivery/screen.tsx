@@ -8,9 +8,9 @@ type Delivery = {
   news: { lastFetchedAt: string | null; fetchedCount: number | null; failedCount: number | null; verification: string; lastPollCompletedAt: string | null };
   push: { lastSentAt: string | null; successCount: number | null; failureCount: number | null; lastAttemptAt: string | null; uncertainCount: number | null; expiredCount: number | null };
 };
-const stamp = (iso: string | null | undefined) => {
+const stamp = (iso: string | null | undefined, ja: boolean) => {
   const ms = iso ? Date.parse(iso) : NaN;
-  return Number.isFinite(ms) ? new Intl.DateTimeFormat("ja-JP", { timeZone: "Asia/Tokyo", year: "numeric", month: "long", day: "numeric", hour: "2-digit", minute: "2-digit", hour12: false }).format(ms) : null;
+  return Number.isFinite(ms) ? new Intl.DateTimeFormat(ja ? "ja-JP" : "en-US", { timeZone: "Asia/Tokyo", year: "numeric", month: ja ? "long" : "short", day: "numeric", hour: "2-digit", minute: "2-digit", hour12: false }).format(ms) : null;
 };
 
 function DeliveryView({ ja }: { ja: boolean }) {
@@ -26,7 +26,7 @@ function DeliveryView({ ja }: { ja: boolean }) {
   }, [attempt]);
   const unknown = t("確認できません", "Unavailable");
   // A value the server could not supply is never drawn as 0.
-  const date = (iso: string | null | undefined) => data ? stamp(iso) ?? unknown : unknown;
+  const date = (iso: string | null | undefined) => data ? stamp(iso, ja) ?? unknown : unknown;
   const count = (n: number | null | undefined) => typeof n === "number" ? t(`${n}件`, `${n}`) : "—";
   const newsOk = data?.news.verification === "verified";
   const row = (label: string, value: string, key: string) => <div className={styles.kv} key={key}><span>{label}</span><b>{value}</b></div>;
@@ -61,5 +61,5 @@ function DeliveryView({ ja }: { ja: boolean }) {
   </>;
 }
 export default function DeliveryScreen() {
-  return <OwnerGate kicker="DELIVERY" title="配信状況">{ja => <DeliveryView ja={ja} />}</OwnerGate>;
+  return <OwnerGate kicker="DELIVERY" title={{ ja: "配信状況", en: "Delivery status" }}>{ja => <DeliveryView ja={ja} />}</OwnerGate>;
 }

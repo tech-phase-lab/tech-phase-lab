@@ -80,7 +80,7 @@ export default function EconomicResultsPanel({ lang, zone, period, kind = "all",
         <summary>{label}<span className={calendarStyles.expand} aria-hidden="true">＋</span></summary>
         <div className={calendarStyles.eventDetails}>
           {!!row.facts.length && <ul className={calendarStyles.facts}>{row.facts.map(fact => <li key={fact.en}>{ja ? fact.ja : fact.en}</li>)}</ul>}
-          {row.kind === "flash" && (() => { const brief = briefs.find(b => b.kind === "earnings" && b.ticker === row.ticker && row.sources.some(source => source.url === b.url)); return brief ? <><EarningsReaction ticker={brief.ticker} releasedAt={brief.publishedAt} /><XPostCopyButton brief={brief} lang={lang} /></> : null; })()}
+          {row.kind === "flash" && (() => { const brief = briefs.find(b => b.kind === "earnings" && b.ticker === row.ticker && row.sources.some(source => source.url === b.url)); return brief ? <><EarningsReaction ticker={brief.ticker} releasedAt={brief.publishedAt} lang={lang} /><XPostCopyButton brief={brief} lang={lang} /></> : null; })()}
           {row.kind === "flash" && <p>{ja ? "決算速報の投稿から数値を読み取りました。会社の決算資料で確認してください。" : "Figures read from a results flash post; confirm against the company release."}</p>}
           {!!text && <p>{text.length > 500 ? `${text.slice(0, 500).replace(/[^。.!?！？]*$/, "").trim() || text.slice(0, 500)}…` : text}</p>}
           {links}
@@ -99,7 +99,7 @@ export default function EconomicResultsPanel({ lang, zone, period, kind = "all",
         const auto = events.find(item => item.id === event.id);
         // An automatic result shows every outlet that reported it; the owner can take it down.
         if (auto) return <>{auto.sources.map(source => <a key={source.url} href={source.url} target="_blank" rel="noreferrer">{source.publisher} ↗</a>)}{ownerMode && <button type="button" onClick={() => { if (window.confirm(ja ? "この結果を取り下げます。もう自動では載りません。よろしいですか?" : "Withdraw this result? It will not be published again.")) void fetch("/api/research/event-results", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ id: auto.id }) }).then(response => { if (response.ok) setEvents(current => current.filter(item => item.id !== auto.id)); }); }}>{ja ? "この結果を取り下げる" : "Withdraw this result"}</button>}</>;
-        return !event.sourceUrl.startsWith("https://x.com/") ? <a href={event.sourceUrl} target="_blank" rel="noreferrer">{event.sourceName} ↗</a> : null;
+        return !event.sourceUrl.startsWith("https://x.com/") ? <a href={event.sourceUrl} target="_blank" rel="noreferrer">{!ja && "sourceNameEn" in event && typeof event.sourceNameEn === "string" ? event.sourceNameEn : event.sourceName} ↗</a> : null;
       })()}</div>
     </details></li>)} />
   </section></>;

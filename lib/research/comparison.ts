@@ -108,12 +108,17 @@ function supplementFacts(usGaap: Record<string, unknown>): Record<string, unknow
   for (const [unit, rows] of Object.entries(derived)) add(DERIVED_OPERATING, unit, rows);
   // Pre-tax income only fills a period with no operating figure of any kind (KLAC stopped tagging one); the stability series never mixes the two.
   for (const [unit, rows] of Object.entries(pre)) add(DERIVED_PRETAX, unit, rows);
-  if (!facts.CashAndCashEquivalentsAtCarryingValue && facts.CashCashEquivalentsRestrictedCashAndRestrictedCashEquivalents)
-    facts.CashAndCashEquivalentsAtCarryingValue = facts.CashCashEquivalentsRestrictedCashAndRestrictedCashEquivalents;
+  // Cash: a filing that states only cash including restricted cash for a date (SBUX, GILD; PCAR's variant also counts held-for-sale units) has
+  // that figure used for that date and filing; a date with the plain cash line keeps it.
+  const plain = index(["CashAndCashEquivalentsAtCarryingValue"]);
+  const broad = index(["CashCashEquivalentsRestrictedCashAndRestrictedCashEquivalents", "CashCashEquivalentsRestrictedCashAndRestrictedCashEquivalentsIncludingDisposalGroupAndDiscontinuedOperations"]);
+  const cashRows: Record<string, RawFact[]> = Object.fromEntries([...plain].map(([unit, rows]) => [unit, [...rows.values()]]));
+  for (const [unit, rows] of broad) for (const [k, f] of rows) if (!f.start && !plain.get(unit)?.has(k)) (cashRows[unit] ??= []).push(f);
+  if (Object.values(cashRows).some(rows => rows.length)) facts.CashAndCashEquivalentsAtCarryingValue = { units: cashRows };
   return facts;
 }
 const tags = {
-  "us-gaap": { revenue: ["RevenueFromContractWithCustomerExcludingAssessedTax", "RevenueFromContractWithCustomerIncludingAssessedTax", "Revenues", "SalesRevenueNet"], operatingIncome: ["OperatingIncomeLoss", DERIVED_OPERATING, DERIVED_PRETAX], operatingCash: ["NetCashProvidedByUsedInOperatingActivities"], capex: ["PaymentsToAcquirePropertyPlantAndEquipment", "PaymentsToAcquireOtherPropertyPlantAndEquipment", "PaymentsToAcquireProductiveAssets"], cash: ["CashAndCashEquivalentsAtCarryingValue"], stockCompensation: ["ShareBasedCompensation"], dilutedShares: ["WeightedAverageNumberOfDilutedSharesOutstanding"] },
+  "us-gaap": { revenue: ["RevenueFromContractWithCustomerExcludingAssessedTax", "RevenueFromContractWithCustomerIncludingAssessedTax", "Revenues", "SalesRevenueNet"], operatingIncome: ["OperatingIncomeLoss", DERIVED_OPERATING, DERIVED_PRETAX], operatingCash: ["NetCashProvidedByUsedInOperatingActivities"], capex: ["PaymentsToAcquirePropertyPlantAndEquipment", "PaymentsToAcquireOtherPropertyPlantAndEquipment", "PaymentsToAcquireProductiveAssets", "PaymentsToAcquireOtherProductiveAssets"], cash: ["CashAndCashEquivalentsAtCarryingValue"], stockCompensation: ["ShareBasedCompensation"], dilutedShares: ["WeightedAverageNumberOfDilutedSharesOutstanding"] },
   "ifrs-full": { revenue: ["Revenue", "RevenueFromContractsWithCustomers"], operatingIncome: ["ProfitLossFromOperatingActivities"], operatingCash: ["CashFlowsFromUsedInOperatingActivities"], capex: ["PurchaseOfPropertyPlantAndEquipmentClassifiedAsInvestingActivities"], cash: ["CashAndCashEquivalents"], stockCompensation: [], dilutedShares: [] },
 } as const;
 /** Standard consolidated facts. Annual and standalone-quarter periods remain separate. */
@@ -175,7 +180,7 @@ export function extractFinancials(ticker: string, cik: string, payload: unknown,
   // year's third-quarter 10-Q (the same tag and unit, the YTD ending a quarter before the year end). Marked as derived; nothing is guessed.
   const fourth = (tag: string, wanted: Fact | null) => {
     if (!wanted) return null;
-    const ytd = collect(basis, [tag], false, "ytd9").filter(f => f.unit === wanted.unit && f.start === wanted.start && day(wanted.end) - day(f.end) >= 75 && day(wanted.end) - day(f.end) <= 105);
+    const ytd = collect(basis, [tag], false, "ytd9").filter(f => f.unit === wanted.unit && f.start === wanted.start && day(wanted.end) - day(f.end) >= 75 && day(wanted.end) - day(f.end) <= 120);
     const best = ytd.sort((a, b) => b.filed.localeCompare(a.filed))[0];
     const same = best ? ytd.filter(f => f.filed === best.filed && f.end === best.end) : [];
     if (!best || new Set(same.map(f => f.value)).size !== 1) return null;
@@ -245,18 +250,19 @@ export function extractFinancials(ticker: string, cik: string, payload: unknown,
     // The revenue tag of the latest quarter only (BE tags two revenue lines that differ slightly), and one kind of profit line: operating, or pre-tax.
     const pretaxOnly = quarterOperatingIncome?.tag === DERIVED_PRETAX;
     const rev = perEnd([quarterRevenue.tag]), op = perEnd(pretaxOnly ? [DERIVED_PRETAX] : tags[basis].operatingIncome.filter(tag => tag !== DERIVED_PRETAX));
+    // Quarters may be 12 or 16 weeks long (PEP: a 16-week fourth quarter, about 112 days), so consecutive quarter ends are 70 to 120 days apart.
     // Revenue of four consecutive quarters for price-to-sales: needs revenue only, so a company without an operating line still has it.
     const revenueEnds = [...rev.keys()].filter(end => end <= quarterRevenue.end && (rev.get(end) ?? 0) > 0).sort().reverse();
     if (revenueEnds[0] === quarterRevenue.end) {
       const chain = [revenueEnds[0]];
-      for (const end of revenueEnds.slice(1)) { const gap = day(chain.at(-1)!) - day(end); if (gap >= 70 && gap <= 110) chain.push(end); else if (gap > 110) break; if (chain.length === 4) break; }
+      for (const end of revenueEnds.slice(1)) { const gap = day(chain.at(-1)!) - day(end); if (gap >= 70 && gap <= 120) chain.push(end); else if (gap > 120) break; if (chain.length === 4) break; }
       if (chain.length === 4) quarterRevenueTtm = chain.reduce((sum, end) => sum + rev.get(end)!, 0);
       if (chain.length >= 2) quarterRevenueQoq = (rev.get(chain[0])! / rev.get(chain[1])! - 1) * 100;
     }
     const ends = [...rev.keys()].filter(end => end <= quarterRevenue.end && (rev.get(end) ?? 0) > 0 && typeof op.get(end) === "number").sort().reverse();
     if (ends[0] !== quarterRevenue.end) return null;
     const picked = [ends[0]];
-    for (const end of ends.slice(1)) { const gap = day(picked.at(-1)!) - day(end); if (gap >= 70 && gap <= 110) picked.push(end); if (picked.length === 4) break; }
+    for (const end of ends.slice(1)) { const gap = day(picked.at(-1)!) - day(end); if (gap >= 70 && gap <= 120) picked.push(end); if (picked.length === 4) break; }
     if (picked.length !== 4) return null;
     return picked.map(end => ({ periodEnd: end, value: op.get(end)! / rev.get(end)! * 100 }));
   }
@@ -297,7 +303,7 @@ export function extractFinancials(ticker: string, cik: string, payload: unknown,
     // No form found: debt-free only if the filing reports no borrowing, loan or notes figure of any kind (investments in debt securities aside).
     if (!currentAssets || !currentLiabilities || anchor.accession === null) return null;
     const borrowing = /Debt|Borrowing|NotesPayable|LoansPayable|SeniorNotes|LineOfCredit|CreditFacility/;
-    const notBorrowing = /Securities|AvailableForSale|HeldToMaturity|Investment|Receivable|Allowance|Derivative|Hedg|Equity|Discount|Premium|IssuanceCost|Unamortized|Extinguishment|Interest|Repayment|Proceeds|Payments|Maturit|FairValue|Covenant|Percentage|Rate|Valuation|Forgiveness|Conversion/;
+    const notBorrowing = /OtherThan|Securities|AvailableForSale|HeldToMaturity|Investment|Receivable|Allowance|Derivative|Hedg|Equity|Discount|Premium|IssuanceCost|Unamortized|Extinguishment|Interest|Repayment|Proceeds|Payments|Maturit|FairValue|Covenant|Percentage|Rate|Valuation|Forgiveness|Conversion/;
     const usGaap = obj(facts["us-gaap"]);
     const mentioned = Object.keys(usGaap).some(tag => borrowing.test(tag) && !notBorrowing.test(tag)
       && Object.values(obj(obj(usGaap[tag]).units)).some(values => Array.isArray(values) && values.some(raw => obj(raw).accn === anchor.accession)));
