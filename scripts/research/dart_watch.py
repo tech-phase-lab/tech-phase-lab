@@ -66,7 +66,10 @@ def notice_links(body):
         parts = urlsplit(link)
         if parts.scheme not in ('http', 'https') or parts.hostname != 'dart.fss.or.kr' or parts.username or parts.password or parts.port not in (None, 80, 443):
             continue
-        found.append((title[:200], 'https://dart.fss.or.kr' + parts.path + ('?' + parts.query if parts.query else '')))
+        number = re.search(r'(?:^|&)rcpNo=(\d{14})(?:&|$)', parts.query)
+        # one canonical address per notice (the same one the OpenDART path records), so the RSS and the API make one line
+        found.append((title[:200], 'https://dart.fss.or.kr/dsaf001/main.do?rcpNo=' + number[1] if number
+                      else 'https://dart.fss.or.kr' + parts.path + ('?' + parts.query if parts.query else '')))
     return found
 
 

@@ -17,6 +17,7 @@ def rss(*items):
     body=''.join(f'<item><title>{t}</title><link>{l}</link></item>' for t,l in items)
     return f'<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"><channel><title>DART</title>{body}</channel></rss>'.encode()
 NOTICE=('SK하이닉스 - 영업(잠정)실적(공정공시)','https://dart.fss.or.kr/api/link.jsp?rcpNo=20261028000123')
+CANON='https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261028000123'
 
 class Links(unittest.TestCase):
     def test_only_sk_hynix_results_notices_with_dart_links(self):
@@ -24,7 +25,7 @@ class Links(unittest.TestCase):
                  ('삼성전자 - 영업(잠정)실적(공정공시)','https://dart.fss.or.kr/api/link.jsp?rcpNo=20261028000125'),           # another company
                  ('SK하이닉스 - 영업(잠정)실적(공정공시)','https://evil.example/api/link.jsp?rcpNo=1'),                      # not DART
                  ('SK hynix - 영업(잠정)실적(공정공시)','http://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261028000126'))      # http -> https
-        self.assertEqual(dart.notice_links(body),[(NOTICE[0],NOTICE[1]),('SK hynix - 영업(잠정)실적(공정공시)','https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261028000126')])
+        self.assertEqual(dart.notice_links(body),[(NOTICE[0],CANON),('SK hynix - 영업(잠정)실적(공정공시)','https://dart.fss.or.kr/dsaf001/main.do?rcpNo=20261028000126')])
     def test_hostile_or_broken_bodies_give_nothing(self):
         for body in (b'',b'not xml',b'<!DOCTYPE x [<!ENTITY a "b">]><rss/>',rss(NOTICE)+b'x'*dart.MAX_BYTES,None):
             self.assertEqual(dart.notice_links(body),[])
@@ -46,7 +47,7 @@ class Watch(unittest.TestCase):
         dart._last['at']=0.0
         self.assertEqual(dart.run_once(self.path,now,reader,EVENTS),0)    # the same notice is not added twice
         with monitor.connect(self.path) as db: [item]=announce.public_feed(db,'2026-10-01T00:00:00+00:00')
-        self.assertEqual((item['ticker'],item['url'],item['facts'],item['titleJa'],item['period']),('SKHY',NOTICE[1],[],'SKHY 決算を発表しました','Latest'))
+        self.assertEqual((item['ticker'],item['url'],item['facts'],item['titleJa'],item['period']),('SKHY',CANON,[],'SKHY 決算を発表しました','Latest'))
     def test_polling_is_paced_and_a_failure_changes_nothing(self):
         reader=mock.Mock(return_value=rss())
         now=AT+timedelta(minutes=1)
