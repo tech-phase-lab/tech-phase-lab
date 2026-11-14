@@ -46,7 +46,8 @@ export function normalizeTwelveFactors(snapshot:TwelveComparisonSnapshot, income
   let margins:TwelveFactorEvidence["margins"]=[];
   if(meta.symbol===snapshot.ticker && meta.currency===snapshot.currency && meta.period==="Quarterly" && Array.isArray(root.income_statement)) {
     const byDate=new Map<string,(number|null)[]>();
-    for(const raw of root.income_statement){const r=obj(raw),revenue=n(r.sales),profit=n(r.operating_income);
+    const profitField=snapshot.operatingIncomeBasis==="pretax" ? "pretax_income" : "operating_income";
+    for(const raw of root.income_statement){const r=obj(raw),revenue=n(r.sales),profit=n(r[profitField]);
       if(!validDate(r.fiscal_date) || r.fiscal_date>snapshot.periodEnd)continue;
       const margin=revenue!==null && revenue>0 && profit!==null ? profit/revenue*100 : null;
       const list=byDate.get(r.fiscal_date)??[];list.push(margin!==null && Number.isFinite(margin)?margin:null);byDate.set(r.fiscal_date,list);
@@ -85,8 +86,10 @@ export function twelveExtraFactors(e:TwelveFactorEvidence,now=Date.now(),basis:V
   const fresh=now-Date.parse(e.periodEnd)>=0 && now-Date.parse(e.periodEnd)<=180*day;
   const s=e.statistics;
   const stats=fresh && s && now-Date.parse(s.retrievedAt)>=0 && now-Date.parse(s.retrievedAt)<=36*3600000 ? s : null;
-  const financial=stats && stats.currentRatio!==null && stats.totalCash!==null && stats.totalDebt!==null
-    ? clamp(2.5*Math.min(stats.currentRatio,2)+5*(stats.totalDebt===0 ? 1 : Math.min(stats.totalCash/stats.totalDebt,1))) : null;
+  // Banks have no current ratio (HSBC, MUFG): cash against debt alone on the full ten-point scale, as for US banks from their filings.
+  const financial=stats && stats.totalCash!==null && stats.totalDebt!==null
+    ? stats.currentRatio!==null ? clamp(2.5*Math.min(stats.currentRatio,2)+5*(stats.totalDebt===0 ? 1 : Math.min(stats.totalCash/stats.totalDebt,1)))
+      : clamp(10*(stats.totalDebt===0 ? 1 : Math.min(stats.totalCash/stats.totalDebt,1))) : null;
   const valuation=basis==="ps" ? (stats?.priceToSales ? psScore(stats.priceToSales) : null) : stats?.forwardPE ? clamp(11-stats.forwardPE/5) : null;
   let stability:number|null=null;
   if(fresh && e.margins.length===4) {
@@ -102,7 +105,8 @@ export function twelveExtraFactors(e:TwelveFactorEvidence,now=Date.now(),basis:V
 export function twelveFactorMetric(e:TwelveFactorEvidence,id:string,lang:"ja"|"en",now=Date.now(),basis:ValuationBasis="pe"):string|null {
   const scores=twelveExtraFactors(e,now,basis),ja=lang==="ja";
   if(id==="valuation" && basis==="ps" && scores.valuation!==null)return `PSR ${e.statistics!.priceToSales!.toFixed(1)}×`;
-  if(id==="financial" && scores.financial!==null)return `${ja?"流動比率":"Current ratio"} ${e.statistics!.currentRatio!.toFixed(2)}×`;
+  if(id==="financial" && scores.financial!==null)return e.statistics!.currentRatio!==null ? `${ja?"流動比率":"Current ratio"} ${e.statistics!.currentRatio!.toFixed(2)}×`
+    : e.statistics!.totalDebt===0 ? (ja?"借入なし":"No borrowings") : `${ja?"現金÷有利子負債":"Cash ÷ debt"} ${(e.statistics!.totalCash!/e.statistics!.totalDebt!).toFixed(2)}${ja?"倍":"×"}`;
   if(id==="valuation" && scores.valuation!==null)return `${ja?"予想PER":"Forward P/E"} ${e.statistics!.forwardPE!.toFixed(1)}×`;
   if(id==="stability" && scores.stability!==null)return `${ja?"営業黒字":"Profitable"} ${e.margins.filter(m=>m.value>0).length}/4${ja?"四半期":" quarters"}`;
   if(id==="momentum" && scores.momentum!==null){const n=e.momentum!.changePct;return `${ja?"約3か月":"~3 months"} ${n>0?"+":""}${n.toFixed(1)}%`;}

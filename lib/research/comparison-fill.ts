@@ -54,7 +54,7 @@ function fillMarket(out: Financials, provider: Financials, supplemented: Set<str
     if (mine.margins.length !== 4 && theirs.margins.length === 4) { evidence = { ...evidence, margins: theirs.margins }; supplemented.add("stability"); }
     // Financial strength from the provider's balance only when the filing's own balance gives no score.
     const s = theirs.statistics;
-    if (out.supplementedFinancialAllowed !== false && s && s.currentRatio !== null && s.totalCash !== null && s.totalDebt !== null
+    if (out.supplementedFinancialAllowed !== false && s && s.totalCash !== null && s.totalDebt !== null
       && twelveExtraFactors({ ...theirs }, now).financial !== null) {
       evidence = { ...evidence, statistics: { ...(evidence.statistics ?? { retrievedAt: s.retrievedAt, quarterEnd: s.quarterEnd, forwardPE: null, trailingPE: null, priceToSales: null }),
         currentRatio: s.currentRatio, totalCash: s.totalCash, totalDebt: s.totalDebt } };
