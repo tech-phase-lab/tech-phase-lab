@@ -150,11 +150,12 @@ export function extractFinancials(ticker: string, cik: string, payload: unknown,
   if (!latest) return result;
   // A verified reporting currency distinguishes native values from convenience
   // translations. Never fall back to an older year if the latest lacks it.
-  // US GAAP "Revenues" is the total line and contract revenue is a part of it (Walmart's membership income, GM Financial, lease revenue
-  // at Applied Digital and IREN). When both are filed and the total is not below any part, the total is the revenue; a total below a
-  // part is a conflict and stays held.
+  // US GAAP "Revenues" (or, at banks and brokers, revenue net of interest expense) is the total line and contract revenue is a part of it
+  // (Walmart's membership income, GM Financial, lease revenue at Applied Digital and IREN, SoFi's and AmEx's interest income). When both
+  // are filed and the total is not below any part, the total is the revenue; a total below a part, or two totals that differ, stay held.
   const preferTotal = <T extends Fact>(rows: T[]): T[] => {
-    const total = rows.filter(f => f.tag === "Revenues"), parts = rows.filter(f => f.tag !== "Revenues");
+    const isTotal = (f: Fact) => f.tag === "Revenues" || f.tag === "RevenuesNetOfInterestExpense";
+    const total = rows.filter(isTotal), parts = rows.filter(f => !isTotal(f));
     return total.length && parts.length && new Set(total.map(f => `${f.unit}/${f.value}`)).size === 1 && parts.every(f => f.unit === total[0].unit && f.value <= total[0].value) ? total : rows;
   };
   const sameDate = preferTotal(revenues.filter(f => f.end === latest.end && f.filed === latest.filed && (!reportingCurrency || f.unit === reportingCurrency)));
@@ -324,7 +325,9 @@ export function extractFinancials(ticker: string, cik: string, payload: unknown,
     if (!currentAssets || !currentLiabilities || anchor.accession === null) return null;
     // Debt tagged only by segment (GM: automotive and GM Financial, no consolidated line) leaves no borrowing tag at all. Large long-term
     // liabilities then mean the debt is there but untagged, never "debt-free": over a quarter of assets is held as unknown.
-    const assets = m("Assets")?.value, liabilities = m("Liabilities")?.value;
+    const assets = m("Assets")?.value, equity = m("StockholdersEquityIncludingPortionAttributableToNoncontrollingInterest")?.value ?? m("StockholdersEquity")?.value;
+    const sides = m("LiabilitiesAndStockholdersEquity")?.value;
+    const liabilities = m("Liabilities")?.value ?? (sides !== undefined && equity !== undefined ? sides - equity : undefined);   // MNST files no total
     const longTermLiabilities = m("LiabilitiesNoncurrent")?.value ?? (liabilities !== undefined ? liabilities - currentLiabilities.value : undefined);
     if (!assets || longTermLiabilities === undefined || longTermLiabilities > assets * 0.25) return null;
     const borrowing = /Debt|Borrowing|NotesPayable|LoansPayable|SeniorNotes|LineOfCredit|CreditFacility/;

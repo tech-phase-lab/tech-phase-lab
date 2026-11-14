@@ -128,6 +128,11 @@ test("financial strength reads debt in the form the filing uses; a filing with n
   // Debt tagged only by segment (GM) leaves no borrowing tag, but long-term liabilities over a quarter of assets are not "debt-free".
   assert.equal(withBalance({ Liabilities: 600 }), null);
   assert.equal(withBalance({ LiabilitiesNoncurrent: 300 }), null);
+  // No total-liabilities line (Monster): both sides minus equity, here 1000 - 850 = 150, so still debt-free.
+  const noTotal = () => { const f = facts(); const usd = list => ({ units: { USD: list } }); const at = val => [{ end: "2026-09-30", val, accn: Q3, filed: "2026-11-05", form: "10-Q" }];
+    Object.assign(f.facts["us-gaap"], { CashAndCashEquivalentsAtCarryingValue: usd(at(50)), AssetsCurrent: usd(at(300)), LiabilitiesCurrent: usd(at(100)), Assets: usd(at(1000)), LiabilitiesAndStockholdersEquity: usd(at(1000)), StockholdersEquity: usd(at(850)) });
+    return extractFinancials("MNST", "1", f, NOW).balance.debtTotal; };
+  assert.deepEqual(noTotal(), { value: 0, source: "none" });
 });
 
 test("operating income is worked out from the same filing's own lines; pre-tax only where no operating figure exists, and labelled as such", () => {
@@ -186,4 +191,14 @@ test("a bank's revenue is its revenue net of interest expense, the only revenue 
   const c = extractFinancials("JPM", "1", f, NOW);
   assert.equal(c.revenue.tag, "RevenuesNetOfInterestExpense");
   assert.equal(c.quarterRevenue.value, 200);
+});
+
+test("revenue net of interest expense is a total: it wins over the contract-revenue part (SoFi, American Express)", () => {
+  const f = facts();
+  const g = f.facts["us-gaap"];
+  g.RevenuesNetOfInterestExpense = { units: { USD: g.RevenueFromContractWithCustomerExcludingAssessedTax.units.USD.map(r => ({ ...r, val: r.val * 5 })) } };
+  const c = extractFinancials("SOFI", "1", f, NOW);
+  assert.equal(c.revenue.tag, "RevenuesNetOfInterestExpense");
+  assert.equal(c.revenue.value, 2000);
+  assert.equal(c.quarterRevenue.value, 1000);
 });
