@@ -61,6 +61,29 @@ class Retention(unittest.TestCase):
         names=snapshot_names(self.dir)
         with self.volume(1): persistence.enforce_retention(self.dir,24)
         self.assertEqual(snapshot_names(self.dir),names)
+    def test_sqlite_sidecars_of_interrupted_copies_are_leftovers_too(self):
+        # Nov 13, second look: ~1,000 files remained after the first cleanup, one per 30-second restart, with names the cleanup did not know
+        for i in range(200):
+            stamp=f'research-20261101T000000.{i:06d}Z'
+            for suffix in ('.sqlite.tmp-journal','.sqlite.tmp-wal','.sqlite.tmp-shm','.sqlite-journal','.sqlite.tmp'):
+                (self.dir/(stamp+suffix)).write_text('partial')
+        (self.dir/'research-notes.sqlite-journal').write_text('not ours')                        # no timestamp: never touched
+        before=snapshot_names(self.dir)
+        with self.volume(500): result=persistence.enforce_retention(self.dir,24)
+        self.assertEqual(sorted(p.name for p in self.dir.iterdir() if 'T000000' in p.name),[])
+        self.assertTrue((self.dir/'research-notes.sqlite-journal').exists())
+        self.assertEqual([n for n in snapshot_names(self.dir) if n.startswith('research-2026111')],[n for n in before if n.startswith('research-2026111')][-15:])   # all 15 real snapshots stay
+        self.assertGreaterEqual(result['deleted'],1000)
+        for name in before[-2:]: persistence.verify_backup(self.dir/name)
+    def test_the_health_report_names_the_shapes_of_the_files_without_names(self):
+        (self.dir/'research-20261101T000000.000001Z.sqlite.tmp-journal').write_text('x')
+        (self.dir/'weird name \u3042.bin').write_text('x')
+        report=service.backup_disk(self.dir,self.db)
+        self.assertEqual(report['backupKinds']['research-STAMP.sqlite'],15)
+        self.assertEqual(report['backupKinds']['research-STAMP.sqlite.tmp-journal'],1)
+        self.assertTrue(all(isinstance(k,str) and len(k)<=60 for k in report['backupKinds']))
+        self.assertEqual(report['backupKinds']['other.bin'],1)                                      # a name that is not ours shows only its extension
+        self.assertNotIn('weird',' '.join(report['backupKinds']))
     def test_a_full_disk_leaves_no_manifest_temporary(self):
         target=self.dir/'research-20260102T000000.000000Z.json'
         with mock.patch.object(Path,'write_text',side_effect=OSError(errno.ENOSPC,'no space')):

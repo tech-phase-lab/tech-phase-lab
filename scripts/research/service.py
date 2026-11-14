@@ -578,10 +578,27 @@ def backup_disk(path, database=None):
             pass
     try:
         files = [entry for entry in Path(path).iterdir() if entry.is_file() and not entry.is_symlink()]
-        result.update(backupBytes=sum(entry.stat().st_size for entry in files), backupFiles=len(files))
+        result.update(backupBytes=sum(entry.stat().st_size for entry in files), backupFiles=len(files),
+                      backupKinds=backup_kinds(files))
     except OSError:
         pass
     return result
+
+
+def backup_kinds(files):
+    """How many files of each shape the backup directory holds, with the timestamp replaced: {'research-STAMP.sqlite': 7, ...}. Shapes only, no
+    names, so /health can show what the files are when their count looks wrong (Nov 13: 1,013 files, no way to tell what they were). Names that are not
+    ours are reduced to 'other.<extension>'."""
+    kinds = {}
+    for entry in files:
+        match = re.fullmatch(r"research-[0-9]{8}T[0-9]{6}\.[0-9]{6}Z(\.[A-Za-z0-9._-]{1,30})?", entry.name)
+        if match:
+            shape = "research-STAMP" + (match[1] or "")
+        else:           # another name: only its extension, never the name
+            extension = re.fullmatch(r".*(\.[A-Za-z0-9]{1,10})", entry.name)
+            shape = "other" + (extension[1] if extension else "")
+        kinds[shape] = kinds.get(shape, 0) + 1
+    return dict(sorted(kinds.items(), key=lambda item: -item[1])[:8])
 
 
 class AutomaticMonitor:
