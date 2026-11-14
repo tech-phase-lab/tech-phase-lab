@@ -1326,10 +1326,17 @@ def sync_incident(db, env=None, reference=None):
     delivery=delivery_diagnostics(db,reference,rows,published)
     config=headline_translation.configuration(os.environ if env is None else env,now=reference.timestamp())
     # A terminal review needs human attention, not another paid attempt. Keep
-    # its overdue delivery visible even when the automatic queue becomes empty.
-    code='official-research-overdue' if delivery['reviewOverdue'] or (delivery['automaticOverdue'] and config is not None) else None
+    # its overdue delivery visible (as a warning) even when the automatic queue becomes empty.
+    # Owner, Nov 14: only an item the automatic queue is still working on is an outage (critical). Items waiting for a person (held reviews) and items
+    # that reached the attempt cap stay on the original text and are counted in /health; they are a warning, never a critical that stays red for weeks.
+    if delivery['automaticOverdue'] and config is not None:
+        code,severity='official-research-overdue','critical'
+    elif delivery['reviewOverdue']:
+        code,severity='official-research-review-overdue','warning'
+    else:
+        code=severity=None
     if code:
-        monitor.record_operational_incident(db,'publication:official-research','publication','official-research','critical',code,seen_at=reference.isoformat())
+        monitor.record_operational_incident(db,'publication:official-research','publication','official-research',severity,code,seen_at=reference.isoformat())
     else:
         monitor.resolve_operational_incident(db,'publication:official-research',resolved_at=reference.isoformat())
     return code
