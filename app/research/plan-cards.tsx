@@ -79,6 +79,6 @@ export default function PlanCards({ lang }: { lang: Language }) {
       {groups(free, ja)}
     </article>
     <p className={styles.note}>{t("PROプランは自動更新です。解約はマイアカウントからいつでも可能です。", "PRO renews automatically. Cancel anytime from My Account.")}<br />
-      <Link href="/terms">{t("利用規約", "Terms")}</Link> ・ <Link href={TOKUSHOHO_HREF}>{t("特定商取引法に基づく表記", "Legal Notice")}</Link></p>
+      <Link href="/terms">{t("利用規約", "Terms")}</Link>{t(" ・ ", " · ")}<Link href={TOKUSHOHO_HREF}>{t("特定商取引法に基づく表記", "Legal Notice")}</Link></p>
   </div>;
 }

@@ -38,7 +38,7 @@ test("the popup follows the design: no 'わかりました' button, × below the
   const view = read("../app/research/home-install-prompt.tsx");
   const css = read("../app/research/home-install-prompt.module.css");
   assert.doesNotMatch(view, /わかりました/);
-  assert.match(view, /aria-label="閉じる"/);
+  assert.match(view, /aria-label=\{ja \? "閉じる" : "Close"\}/);
   assert.match(view, /共有<\/b>ボタンをタップ/);
   assert.match(view, /アドレスをコピー/);
   assert.match(view, /Safari以外のブラウザでは追加できません/);

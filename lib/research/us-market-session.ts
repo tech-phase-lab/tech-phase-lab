@@ -49,5 +49,5 @@ export function bannerLine(phase: MarketPhase, ja: boolean, fetchedAt: number | 
   const word = marketBanner(phase)[ja ? "ja" : "en"];
   if (fetchedAt === null) return word;
   const time = new Date(fetchedAt).toLocaleTimeString("en-GB", { timeZone: "Asia/Tokyo", hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: false });
-  return `${word} ・ ${time} JST`;
+  return `${word}${ja ? " ・ " : " · "}${time} JST`;
 }

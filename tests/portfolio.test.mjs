@@ -170,7 +170,7 @@ test("the screen follows the design: black and gold, the states, and the hide ru
   assert.match(screen, /hide \? MASK : `\$\{sign\(totals\.gainUsd\)\}/);
   assert.doesNotMatch(screen, /hide \? MASK : usd\(row/, "the cards are never masked");
   // The honest progress: the price step is shown as waiting, not as running.
-  assert.match(screen, /data-state="wait"><i \/>終値と為替を取得します/);
+  assert.match(screen, /data-state="wait"><i \/>\{ja \? <>終値と為替を取得します/);
   const css = await src("../app/research/portfolio/portfolio.module.css");
   assert.match(css, /--gold:#e7c982/);
   assert.match(css, /prefers-reduced-motion/);

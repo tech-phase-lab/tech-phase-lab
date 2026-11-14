@@ -8,9 +8,10 @@ import styles from "./account.module.css";
 const back = <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#e7c982" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7" /></svg>;
 
 /** Owner-only pages: the shell, the back link, and a check that the signed-in member is the owner. */
-export default function OwnerGate({ kicker, title, children }: { kicker: string; title: string; children: (ja: boolean) => ReactNode }) {
+export default function OwnerGate({ kicker, title, children }: { kicker: string; title: { ja: string; en: string }; children: (ja: boolean) => ReactNode }) {
   const [lang, setLang] = useResearchLanguage();
   const ja = lang === "ja";
+  const heading = ja ? title.ja : title.en;
   const [state, setState] = useState<"checking" | "owner" | "denied" | "error">("checking");
   useEffect(() => {
     const controller = new AbortController();
@@ -19,11 +20,11 @@ export default function OwnerGate({ kicker, title, children }: { kicker: string;
       .catch(() => { if (!controller.signal.aborted) setState("error"); });
     return () => controller.abort();
   }, []);
-  return <ResearchToolShell showTools={false} showHeading={false} lang={lang} setLang={setLang} title={title} description="">
+  return <ResearchToolShell showTools={false} showHeading={false} lang={lang} setLang={setLang} title={heading} description="">
     <div className={styles.page}>
       <Link className={styles.back} href="/research/account">{back}{ja ? "運営者メニュー" : "Owner menu"}</Link>
       <div className={`${styles.kick} ${styles.kickGold}`} style={{ marginTop: 10 }}>{kicker}</div>
-      <h1 className={styles.h1}>{title}</h1>
+      <h1 className={styles.h1}>{heading}</h1>
       {state === "checking" && <div className={styles.skel} style={{ marginTop: 20 }} aria-busy="true" />}
       {state === "denied" && <p className={styles.note} style={{ marginTop: 20 }}>{ja ? "この画面は運営者だけが開けます。" : "Only the owner can open this page."}</p>}
       {state === "error" && <p className={styles.note} style={{ marginTop: 20 }}>{ja ? "運営者の確認ができませんでした。時間をおいて、もう一度お試しください。" : "Could not verify the owner. Try again shortly."}</p>}

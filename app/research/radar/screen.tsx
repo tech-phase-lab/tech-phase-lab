@@ -67,7 +67,7 @@ export default function RadarScreen({ initial }: { initial: RadarPayload | null 
             </ul>
           </section>
           {pro ? <section className={styles.ranking}>
-            <header><h2>{t("体力ランキング", "Financial strength ranking")}</h2><small>{t("最新の決算", "Latest earnings")} ・ {monthOf(pro.asOf, ja)}</small></header>
+            <header><h2>{t("体力ランキング", "Financial strength ranking")}</h2><small>{t("最新の決算", "Latest earnings")}{t(" ・ ", " · ")}{monthOf(pro.asOf, ja)}</small></header>
             <p className={styles.order}>{t("並び順:稼ぐ力と守る力の点数の平均。グラフの右上ほど上位です", "Ranked by the average of the cash-generation and resilience scores. The closer to the upper right, the higher the rank.")}</p>
             {ranked.map(dot => <RankCard key={dot.ticker} dot={dot} lang={lang} />)}
             {review.length > 0 && <h3 className={styles.reviewHead}>{t("要確認(順位外)", "Needs review (not ranked)")}</h3>}

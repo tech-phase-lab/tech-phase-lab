@@ -90,5 +90,5 @@ function Members({ ja }: { ja: boolean }) {
   </>;
 }
 export default function MembersScreen() {
-  return <OwnerGate kicker="MEMBERS" title="会員・契約">{ja => <Members ja={ja} />}</OwnerGate>;
+  return <OwnerGate kicker="MEMBERS" title={{ ja: "会員・契約", en: "Members & contracts" }}>{ja => <Members ja={ja} />}</OwnerGate>;
 }

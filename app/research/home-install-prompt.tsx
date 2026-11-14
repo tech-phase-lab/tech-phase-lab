@@ -3,6 +3,7 @@ import { useEffect, useRef, useState, type ReactNode } from "react";
 import { usePathname } from "next/navigation";
 import { CLOSED_EVENT, CLOSED_KEY, POPUP_OPEN_ATTRIBUTE, SHOWN_KEY, SHOW_EVENT, installContext, isStandalone, popupKind, shouldShow, writeFlag, type PopupKind } from "@/lib/research/home-install";
 import { useMemberDisplay, useMemberSettled } from "./member-display-provider";
+import { useResearchLanguage } from "./use-research-language";
 import styles from "./home-install-prompt.module.css";
 
 type InstallEvent = Event & { prompt: () => Promise<void>; userChoice: Promise<{ outcome: string }> };
@@ -18,6 +19,8 @@ export default function HomeInstallPrompt() {
   const pathname = usePathname();
   const plan = useMemberDisplay();
   const settled = useMemberSettled();
+  const [lang] = useResearchLanguage();
+  const ja = lang === "ja";
   const [kind, setKind] = useState<PopupKind>("none");
   const [open, setOpen] = useState(false);
   const [copied, setCopied] = useState<"" | "done" | "failed">("");
@@ -69,7 +72,7 @@ export default function HomeInstallPrompt() {
     try { await event.prompt(); await event.userChoice; } catch { /* the browser decides */ }
     install.current = null; close();
   }
-  return <div className={styles.scrim} role="dialog" aria-modal="true" aria-label="ホーム画面に追加">
+  return <div className={styles.scrim} role="dialog" aria-modal="true" aria-label={ja ? "ホーム画面に追加" : "Add to Home Screen"}>
     <div className={styles.box}>
       <div className={styles.pop}>
         <div className={styles.head}>
@@ -79,23 +82,23 @@ export default function HomeInstallPrompt() {
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img className={styles.bd} src="/tech-phase-192.png" alt="" width={28} height={28} />
           </div>
-          <h2 className={styles.title}>Tech Phaseのアプリを<br />ホーム画面に追加しよう!!</h2>
+          <h2 className={styles.title}>{ja ? <>Tech Phaseのアプリを<br />ホーム画面に追加しよう!!</> : <>Add the Tech Phase app<br />to your Home Screen!</>}</h2>
         </div>
-        {kind === "android" ? <button type="button" className={styles.install} onClick={() => void addAndroid()}>ホーム画面に追加</button> : <>
+        {kind === "android" ? <button type="button" className={styles.install} onClick={() => void addAndroid()}>{ja ? "ホーム画面に追加" : "Add to Home Screen"}</button> : <>
           <ol className={styles.steps}>
-            <li className={styles.step}><span className={styles.n}>1</span><span className={styles.t}>画面下の<b>共有</b>ボタンをタップ</span>{share}</li>
-            <li className={styles.step}><span className={styles.n}>2</span><span className={styles.t}><b>ホーム画面に追加</b>を選ぶ</span>{plus}</li>
-            <li className={styles.step}><span className={styles.n}>3</span><span className={styles.t}>右上の<b>追加</b>をタップ</span>{done}</li>
+            <li className={styles.step}><span className={styles.n}>1</span><span className={styles.t}>{ja ? <>画面下の<b>共有</b>ボタンをタップ</> : <>Tap the <b>Share</b> button at the bottom</>}</span>{share}</li>
+            <li className={styles.step}><span className={styles.n}>2</span><span className={styles.t}>{ja ? <><b>ホーム画面に追加</b>を選ぶ</> : <>Choose <b>Add to Home Screen</b></>}</span>{plus}</li>
+            <li className={styles.step}><span className={styles.n}>3</span><span className={styles.t}>{ja ? <>右上の<b>追加</b>をタップ</> : <>Tap <b>Add</b> at the top right</>}</span>{done}</li>
           </ol>
           {kind === "ios-safari"
-            ? <div className={styles.foot}>{/* eslint-disable-next-line @next/next/no-img-element */}<img src="/a2hs/safari.png" alt="" width={16} height={16} />Safari以外のブラウザでは追加できません</div>
+            ? <div className={styles.foot}>{/* eslint-disable-next-line @next/next/no-img-element */}<img src="/a2hs/safari.png" alt="" width={16} height={16} />{ja ? "Safari以外のブラウザでは追加できません" : "Only Safari can add it to the Home Screen"}</div>
             : <>
-              <button type="button" className={styles.copy} onClick={() => void copy()}>{copied === "done" ? "コピーしました" : copied === "failed" ? "コピーできませんでした" : "アドレスをコピー"}</button>
-              <div className={`${styles.foot} ${styles.footPlain}`}>{/* eslint-disable-next-line @next/next/no-img-element */}<img src="/a2hs/safari.png" alt="" width={16} height={16} />Safariに貼り付けて開いてください</div>
+              <button type="button" className={styles.copy} onClick={() => void copy()}>{copied === "done" ? (ja ? "コピーしました" : "Copied") : copied === "failed" ? (ja ? "コピーできませんでした" : "Could not copy") : (ja ? "アドレスをコピー" : "Copy address")}</button>
+              <div className={`${styles.foot} ${styles.footPlain}`}>{/* eslint-disable-next-line @next/next/no-img-element */}<img src="/a2hs/safari.png" alt="" width={16} height={16} />{ja ? "Safariに貼り付けて開いてください" : "Paste it into Safari to open"}</div>
             </>}
         </>}
       </div>
-      <button type="button" className={styles.x} aria-label="閉じる" onClick={close}><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2" strokeLinecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" /></svg></button>
+      <button type="button" className={styles.x} aria-label={ja ? "閉じる" : "Close"} onClick={close}><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2" strokeLinecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" /></svg></button>
     </div>
   </div>;
 }
