@@ -2222,8 +2222,63 @@ def connect(path):
             "ALTER TABLE annual_filing_review_history ADD COLUMN draft_validation_sha256 TEXT"
         )
     queue_invalid_article_evidence(db)
+    queue_split_pdf_evidence(db)
     db.commit()
     return db
+
+
+SPLIT_PDF_NUMBER = re.compile(r"\d \. \d|\d , \d{3}\b")
+SPLIT_PDF_MIN_MATCHES = 3
+SPLIT_PDF_MIN_PYPDF = (6, 14, 0)
+
+
+def installed_pypdf_version():
+    try:
+        import pypdf
+        return tuple(int(part) for part in re.findall(r"\d+", pypdf.__version__)[:3])
+    except Exception:
+        return (0, 0, 0)
+
+
+def queue_split_pdf_evidence(db, environ=None, version=None):
+    """Queue one ordinary re-fetch of every stored PDF text whose numbers were split ("980 . 8", "1 , 962. 1") by pypdf 6.10-6.12.
+
+    Owner-approved one-off repair (Nov 14), off unless RESEARCH_REFETCH_SPLIT_PDFS=true and only with a pypdf that keeps numbers whole (>= 6.14.0),
+    so a re-fetch cannot store the same split text again. It touches only PDF source rows that are successful (no error, never held or rejected):
+    the next fetch time and the HTTP validators are cleared (a 304 would keep the old text); nothing else changes, no error or host backoff is
+    cleared, and the existing bounded body scheduler stays the only fetch entry point. A re-fetched, repaired text changes the revision, so
+    deep analysis, official research and headline translation regenerate from it. Runs once per pypdf version (marker table), logs one line.
+    """
+    environ = os.environ if environ is None else environ
+    if str(environ.get("RESEARCH_REFETCH_SPLIT_PDFS", "")).strip().lower() not in {"1", "true", "yes"}:
+        return 0
+    version = version or installed_pypdf_version()
+    if version < SPLIT_PDF_MIN_PYPDF:
+        return 0
+    db.execute("""CREATE TABLE IF NOT EXISTS split_pdf_requeue_runs(
+      pypdf_version TEXT PRIMARY KEY, ran_at TEXT NOT NULL, queued INTEGER NOT NULL, skipped_with_error INTEGER NOT NULL)""")
+    label = ".".join(str(part) for part in version)
+    if db.execute("SELECT 1 FROM split_pdf_requeue_runs WHERE pypdf_version=?", (label,)).fetchone():
+        return 0
+    db.execute("""CREATE TABLE IF NOT EXISTS split_pdf_rechecks(
+      url TEXT NOT NULL, sha256 TEXT NOT NULL, queued_at TEXT NOT NULL, previous_next_fetch_at TEXT, PRIMARY KEY(url,sha256))""")
+    queued = skipped = 0
+    for row in db.execute("""SELECT url,sha256,next_fetch_at,error,extracted_text FROM sources
+      WHERE source_mode='remote' AND sha256 IS NOT NULL AND content_type='application/pdf'
+        AND status NOT IN ('held','rejected') AND extracted_text IS NOT NULL""").fetchall():
+        if len(SPLIT_PDF_NUMBER.findall(row["extracted_text"])) < SPLIT_PDF_MIN_MATCHES:
+            continue
+        if row["error"] is not None:
+            skipped += 1  # a failing source keeps its backoff; its next successful fetch is read with the repaired extractor
+            continue
+        inserted = db.execute("INSERT OR IGNORE INTO split_pdf_rechecks VALUES(?,?,?,?)", (row["url"], row["sha256"], now(), row["next_fetch_at"]))
+        if inserted.rowcount:
+            db.execute("UPDATE sources SET next_fetch_at=NULL,response_etag=NULL,response_last_modified=NULL WHERE url=? AND sha256=? AND error IS NULL",
+                       (row["url"], row["sha256"]))
+            queued += 1
+    db.execute("INSERT INTO split_pdf_requeue_runs VALUES(?,?,?,?)", (label, now(), queued, skipped))
+    print(json.dumps({"event": "split-pdf-requeue", "pypdf": label, "queued": queued, "skippedWithError": skipped}), flush=True)
+    return queued
 
 
 def queue_invalid_article_evidence(db):
