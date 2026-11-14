@@ -94,7 +94,7 @@ class DeepAnalysisTests(unittest.TestCase):
         bad = {'headline': note['headline'], 'points': [only_first, unknown, only_first], 'watch': None}
         with self.assertRaises(deep_analysis.Unchecked) as caught:
             deep_analysis.bind(bad, excerpts)
-        self.assertEqual(caught.exception.detail, {'kept': 0, 'rejected': {'evidence-missing': 1, 'unsupported-number:value:172000000:E': 2}})
+        self.assertEqual({k: v for k, v in caught.exception.detail.items() if k != 'carry'}, {'kept': 0, 'rejected': {'evidence-missing': 1, 'unsupported-number:value:172000000:E': 2}})
 
     def test_the_headline_is_checked_against_its_own_excerpts_and_negation_rejections_name_their_rule(self):
         excerpts = {'0': 'Revenue was $3.41 billion in the quarter.', '1': 'The company did not raise guidance this quarter.',
@@ -117,7 +117,7 @@ class DeepAnalysisTests(unittest.TestCase):
         with self.assertRaises(deep_analysis.Unchecked) as caught:
             deep_analysis.bind({'headline': bad_headline, 'points': [point, point], 'watch': None}, excerpts)
         self.assertEqual(str(caught.exception), 'unsupported-number')
-        self.assertEqual(caught.exception.detail, {'headline': 'unsupported-number:value:45%:A'})
+        self.assertEqual(caught.exception.detail['headline'], 'unsupported-number:value:45%:A')
 
     def test_a_retry_tells_the_model_why_the_last_attempt_was_rejected(self):
         self.earnings()
@@ -279,6 +279,45 @@ class DeepAnalysisTests(unittest.TestCase):
             self.assertIsNone(deep_analysis.sync_incident(db, start + 80 * 3600))  # history older than three days is never alerted again
             db.execute("UPDATE deep_analyses SET kind='indicator'")
             self.assertEqual(deep_analysis.overdue(db, start + 7300), [])  # only earnings releases
+
+    def test_a_retry_replaces_only_the_rejected_points_and_keeps_the_ones_that_passed(self):
+        # Owner, Nov 14: a release must get published; points that passed every check are carried, only the rejected ones are rewritten.
+        self.earnings()
+        first = json.loads(json.dumps(GOOD))
+        first['points'] = [GOOD['points'][0], point('売上は45%増。', 'Revenue rose 45%.'), point('利益は45%増。', 'Profit rose 45%.')]
+        self.assertEqual(self.run_deep(reply(first)), 'retry')  # headline + one point passed: below the two-point minimum
+        with research.connect(self.path) as db:
+            detail = json.loads(db.execute('SELECT detail FROM deep_analyses').fetchone()[0])
+            self.assertEqual(detail['carry']['points'], [{'ja': GOOD['points'][0]['ja'], 'en': GOOD['points'][0]['en']}])
+            self.assertEqual(deep_analysis.diagnostics(db, now=base.NOW.timestamp())['notDone'][0]['detail'].get('carry'), None)  # not in /health
+        inputs = []
+        def transport(payload, key):
+            inputs.append(json.loads(payload['input']))
+            second = json.loads(json.dumps(GOOD))
+            second['headline'] = point('売上は45%増。', 'Revenue rose 45%.')  # even a rejected headline is replaced by the carried one
+            second['points'] = [GOOD['points'][0], GOOD['points'][1], GOOD['points'][2]]  # a repeat of a carried point is not added twice
+            return reply(second)(payload, key)
+        self.assertEqual(self.run_deep(transport, now=base.NOW.timestamp() + 1000), 'done')
+        self.assertEqual(inputs[0]['previousAttemptRejected']['alreadyAccepted'], [GOOD['points'][0]['ja']])
+        [item] = self.items()
+        self.assertEqual([p['ja'] for p in item['points']], [p['ja'] for p in GOOD['points']])
+        self.assertEqual(item['headline']['ja'], GOOD['headline']['ja'])  # the carried, checked headline
+
+    def test_carried_points_from_other_check_logic_are_not_reused(self):
+        self.earnings()
+        first = json.loads(json.dumps(GOOD))
+        first['points'] = [GOOD['points'][0], point('売上は45%増。', 'Revenue rose 45%.'), point('利益は45%増。', 'Profit rose 45%.')]
+        self.run_deep(reply(first))
+        with research.connect(self.path) as db:
+            detail = json.loads(db.execute('SELECT detail FROM deep_analyses').fetchone()[0])
+            detail['carry']['version'] = deep_analysis.VERSION - 1
+            db.execute('UPDATE deep_analyses SET detail=?', (json.dumps(detail),))
+        inputs = []
+        def transport(payload, key):
+            inputs.append(json.loads(payload['input']))
+            return reply(first)(payload, key)
+        self.run_deep(transport, now=base.NOW.timestamp() + 1000)
+        self.assertNotIn('alreadyAccepted', inputs[0]['previousAttemptRejected'])
 
     def test_a_release_that_never_got_an_analysis_row_is_a_critical_incident_after_two_hours(self):
         # Owner, Nov 14: a release found but never attempted (daily budget spent, service stopped) must alert like a failed one.
