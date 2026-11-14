@@ -284,8 +284,9 @@ def sec_user_agent():
     Requests without one are answered with 403 and can get the whole IP
     blocked, so they are never sent. The value is configuration, not code.
     """
+    raw = os.environ.get("RESEARCH_USER_AGENT", "")
     value = request_user_agent("")
-    if not value or not SEC_CONTACT.search(value):
+    if not value or "\r" in raw or "\n" in raw or not SEC_CONTACT.search(value):
         raise ValueError("SEC user agent has no contact address")
     return value
 
