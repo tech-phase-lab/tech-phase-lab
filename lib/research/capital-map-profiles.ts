@@ -10,16 +10,19 @@ export const capitalProfiles: Record<string, CapitalProfile> = {
     person: ["ピーター・ティール", "Peter Thiel"], role: ["関連運用会社：Thiel Macro", "Associated manager: Thiel Macro"],
     description: ["Thiel MacroのSEC開示に基づく保有情報。個人資産全体を示すものではありません。", "Holdings disclosed by Thiel Macro, not a complete personal portfolio."],
     source: "https://www.sec.gov/Archives/edgar/data/1810747/000182912625005082/simplifyexchange_485apos.htm", checkedOn: "2026-10-25",
+    portrait: { url: "/capital-map/thiel.webp", source: "https://commons.wikimedia.org/wiki/File:Peter_Thiel_by_Gage_Skidmore.jpg", credit: "Gage Skidmore", license: "CC BY-SA 3.0", licenseUrl: "https://creativecommons.org/licenses/by-sa/3.0/" },
   },
   soros: {
     person: ["ジョージ・ソロス", "George Soros"], role: ["創業者", "Founder"],
     description: ["Soros Fund Managementの開示保有。創業者個人の売買を示すものではありません。", "Disclosed holdings of Soros Fund Management, not the founder’s personal trades."],
     source: "https://sorosfundmgmt.com/about/", checkedOn: "2026-10-25",
+    portrait: { url: "/capital-map/soros.webp", source: "https://commons.wikimedia.org/wiki/File:George_Soros_-_May_31,_2017.jpg", credit: "Aris Oikonomou - European Commission", license: "CC BY 4.0", licenseUrl: "https://creativecommons.org/licenses/by/4.0/" },
   },
   ark: {
     person: ["キャシー・ウッド", "Cathie Wood"], role: ["創業者", "Founder"],
     description: ["ARK Investment Management全体の13F開示。ARKK単独の保有情報ではありません。", "ARK Investment Management’s aggregate 13F holdings, not ARKK alone."],
     source: "https://www.ark-invest.com/board-of-directors", checkedOn: "2026-10-25",
+    portrait: { url: "/capital-map/ark.webp", source: "https://commons.wikimedia.org/wiki/File:Cathie_Wood_ARK_Invest_Photo.jpg", credit: "Caroline Wood", license: "CC BY-SA 4.0", licenseUrl: "https://creativecommons.org/licenses/by-sa/4.0/" },
   },
   jpmorgan: {
     person: ["JPモルガン・チェース", "JPMorgan Chase"], role: ["13F提出運用会社", "13F reporting manager"],
@@ -80,5 +83,5 @@ export const capitalProfiles: Record<string, CapitalProfile> = {
   coatue: { person: ["フィリップ・ラフォン", "Philippe Laffont"], role: ["創業者・ポートフォリオマネジャー", "Founder & Portfolio Manager"], description: ["テック企業を中心に投資する運用会社。", "An investment firm focused on tech."], source: "https://www.coatue.com/ctek/why-ctek" },
   tiger: { person: ["チェイス・コールマン", "Chase Coleman"], role: ["創業者", "Founder"], description: ["世界の成長企業に長期投資する運用会社。", "A long-term investor in growth companies."], source: "https://www.tigerglobal.com/chase-coleman" },
   viking: { person: ["アンドレアス・ハルヴォルセン", "Andreas Halvorsen"], role: ["共同創業者・CEO", "Co-Founder & CEO"], description: ["企業調査をもとに世界へ投資する運用会社。", "A research-driven global investor."], source: "https://vikingglobal.com/our-team/" },
-  fundsmith: { person: ["テリー・スミス", "Terry Smith"], role: ["創業者", "Founder"], description: ["質の高い企業を選び、長期保有する運用会社。", "Investing in quality for the long term."], source: "https://www.fundsmith.co.uk/sef/about-us/" },
+  fundsmith: { person: ["テリー・スミス", "Terry Smith"], role: ["創業者", "Founder"], description: ["質の高い企業を選び、長期保有する運用会社。", "Investing in quality for the long term."], source: "https://www.fundsmith.co.uk/sef/about-us/", portrait: { url: "/capital-map/fundsmith.webp", source: "https://commons.wikimedia.org/wiki/File:Terry_Smith_MNZM_investiture.jpg", credit: "New Zealand Government, Office of the Governor-General", license: "CC BY 4.0", licenseUrl: "https://creativecommons.org/licenses/by/4.0/" } },
 };
