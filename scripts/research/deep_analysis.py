@@ -109,6 +109,23 @@ def earnings_sources(db, reference, excerpts=True):
     return rows
 
 
+def stored_earnings_source(db, ref):
+    """The source of an old earnings analysis (ref event:<id>:<sha>) straight from the stored event and its revision, without the candidate
+    window (newest 100 events) that has long moved past it. Empty when the release is no longer stored."""
+    import official_research
+    parts = ref.split(':')
+    if len(parts) != 3 or parts[0] != 'event' or not parts[1].isdigit():
+        return []
+    # the event's own sha is a signal hash, not always the revision's: take the revision with that sha, else the one observed closest to the event
+    row = db.execute('''SELECT e.id,e.title,e.url,e.sha AS sha,s.ticker,r.extracted_text AS body FROM signal_events e
+      JOIN sources s ON s.url=e.url JOIN source_revisions r ON r.url=e.url WHERE e.id=? AND e.sha=?
+      ORDER BY (r.sha256=e.sha) DESC, abs(julianday(r.observed_at)-julianday(e.observed_at)) LIMIT 1''', (int(parts[1]), parts[2])).fetchone()
+    if row is None or not row['body']:
+        return []
+    return [{'ref': ref, 'kind': 'earnings', 'subject': row['ticker'], 'sha': row['sha'], 'title': row['title'], 'url': row['url'],
+             'observedAt': None, 'excerpts': official_research.evidence_excerpts(row['body'])}]
+
+
 def indicator_sources(db, reference):
     import market_results
     rows = []
@@ -293,6 +310,8 @@ def run_once(path, transport=None, env=None, now=None, reference=None, only_ref=
             sources += indicator_sources(db, reference)
         if only_ref is not None:
             sources = [row for row in sources if row['ref'] == only_ref]
+            if not sources:  # an old release has left the candidate window: rebuild it from the stored event and revision
+                sources = stored_earnings_source(db, only_ref)
         source = None
         for row in sources:
             saved = db.execute('SELECT * FROM deep_analyses WHERE source_ref=?', (row['ref'],)).fetchone()
@@ -395,7 +414,7 @@ def diagnostics(db, now=None):
 
 
 OLD_RETRY_ENV = 'RESEARCH_DEEP_RETRY_OLD_HOLDS'
-OLD_RETRY_MARKER = 'old-holds-2026-11-14'  # owner, Nov 14: the 14 held analyses are tried exactly once, with their reasons recorded
+OLD_RETRY_MARKER = 'old-holds-2026-11-14b'  # owner, Nov 14: the 14 held analyses are tried exactly once, with their reasons recorded
 
 
 def retry_old_holds(path, transport=None, env=None, now=None):
