@@ -228,6 +228,30 @@ class Parsers(unittest.TestCase):
             self.assertIn(old_rev,text,ticker)
             with self.assertRaises(ValueError): parse(text.replace(old_rev,new_rev))
             with self.assertRaises(ValueError): parse(re.sub(flash.STATEMENT[ticker]['identity'],'someone else',text,flags=re.I))
+    def test_semiconductor_equipment_storage_and_power_statements_batch3(self):
+        cases={
+         'KLAC':('klac-results-q1fy27.txt','Q1 FY2027',[('revenue','$4.136015B','$3.209696B'),('eps','$1.18','$0.85'),('net-income','$1.548588B','$1.12104B')],
+                 [('Net income $ 1,548,588 $ 1,363,059 $ 1,121,040 Net income per share','Net income $ 1,648,588 $ 1,363,059 $ 1,121,040 Net income per share','net-income'),('Diluted $ 1.18','Diluted $ 1.28','eps')],'Total revenues 4,136,015','Total revenues 4,436,015'),
+         'LRCX':('lrcx-results-sep26.txt','Sep 2026 quarter',[('revenue','$8.219418B','$5.324173B'),('eps','$2.19','$1.24'),('net-income','$2.753138B','$1.56866B'),('operating-income','$3.283727B','$1.829088B')],
+                 [('Operating income 3,283,727','Operating income 3,383,727','operating-income'),('Net income $ 2,753,138','Net income $ 2,853,138','net-income'),('Diluted $ 2.19','Diluted $ 2.29','eps')],'Revenue $ 8,219,418','Revenue $ 9,219,418'),
+         'STX':('stx-results-q1fy27.txt','Q1 FY2027',[('revenue','$4.233B','$2.629B'),('eps','$7.59','$2.43'),('net-income','$1.761B','$549M'),('operating-income','$2.064B','$694M')],
+                [('Income from operations 2,064','Income from operations 2,164','operating-income'),('Net income $ 1,761','Net income $ 1,861','net-income'),('Diluted $ 7.59','Diluted $ 8.59','eps')],'Revenue $ 4,233','Revenue $ 5,233'),
+         'APH':('aph-results-q326.txt','Q3 2026',[('revenue','$10.2297B','$6.1944B'),('eps','$0.79','$0.49'),('net-income','$2.0343B','$1.2457B'),('operating-income','$3.0208B','$1.7023B')],
+                [('Operating income 3,020.8','Operating income 3,120.8','operating-income'),('Amphenol Corporation $ 2,034.3','Amphenol Corporation $ 2,134.3','net-income')],'Net sales $ 10,229.7','Net sales $ 11,229.7'),
+         'BE':('be-results-q326.txt','Q3 2026',[('revenue','$1.235837B','$519.048M'),('eps','$0.78','$-0.10'),('net-income','$250.271M','$-23.093M'),('operating-income','$225.449M','$7.846M')],
+               [('Income from operations 225,449','Income from operations 235,449','operating-income'),('common stockholders $ 250,271','common stockholders $ 260,271','net-income')],'Total revenue 1,235,837','Total revenue 1,335,837'),
+        }
+        for ticker,(name,period,facts,tampers,old_rev,new_rev) in cases.items():
+            text=fixture(name); parse=flash.PROFILES[ticker]['parse']
+            parsed=parse(text)
+            self.assertEqual(parsed['period'],period,ticker)
+            self.assertEqual([(f[0],f[1],f[2]) for f in parsed['facts']],facts,ticker)
+            for old,new,key in tampers:
+                self.assertIn(old,text,ticker)
+                self.assertNotIn(key,[f[0] for f in parse(text.replace(old,new))['facts']],(ticker,key))
+            self.assertIn(old_rev,text,ticker)
+            with self.assertRaises(ValueError): parse(text.replace(old_rev,new_rev))
+            with self.assertRaises(ValueError): parse(re.sub(flash.STATEMENT[ticker]['identity'],'someone else',text,flags=re.I))
     def test_alphabet_and_amazon_statements_print_the_year_ago_column_first(self):
         expected={'GOOGL':('alphabet-results-q326.txt',[('revenue','$127.577B','$102.346B'),('eps','$2.12','$2.87'),('net-income','$26.17B','$34.979B'),('operating-income','$40.576B','$31.228B')]),
                   'AMZN':('amazon-results-q326.txt',[('revenue','$201.944B','$180.169B'),('eps','$1.89','$1.95'),('net-income','$20.685B','$21.187B'),('operating-income','$28.076B','$17.422B')])}

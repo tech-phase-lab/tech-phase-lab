@@ -27,7 +27,8 @@ import issuer_result_flash as flash
 WATCH = ["MU", "SKHY", "SNDK", "NBIS", "NVDA", "AMD", "AVGO", "ARM", "TSM", "ASML", "MRVL", "ANET", "CRDO", "CRWV",
          "VRT", "GEV", "DELL", "PLTR", "MSFT", "AMZN", "GOOGL", "ORCL",
          "PANW", "CRWD", "SNOW", "CRM", "ADBE",
-         "META", "NFLX", "NOW", "INTC", "AAPL"]
+         "META", "NFLX", "NOW", "INTC", "AAPL",
+         "KLAC", "LRCX", "STX", "APH", "BE"]
 UA = 'TechPhaseResearch research@example.com'  # SEC asks for a contact in the User-Agent; the monitor uses RESEARCH_SEC_USER_AGENT
 LOOKBACK = timedelta(days=130)
 
