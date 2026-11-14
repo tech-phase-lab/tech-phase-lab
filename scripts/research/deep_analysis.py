@@ -22,7 +22,7 @@ import monitor
 
 MAX_ATTEMPTS = 3
 # Bump when the prompt/check logic changes so analyses held under the old logic are tried again (attempts restart at 0).
-VERSION = 10
+VERSION = 11
 RETRY_SECONDS = 120
 DEFAULT_DAILY_LIMIT = 40
 MAX_DAILY_LIMIT = 200
@@ -36,7 +36,7 @@ Return a headline and three to five analysis points, plus one point on what to w
 Each point explains meaning, not just restating: what drove the result, how it compares with the prior period, guidance or consensus when the source states them, and the risks or questions it raises.
 The headline and each point cite one to three evidence ids (evidenceIds); put a figure in a point only if it appears literally in one of the excerpts that point cites, so cite every excerpt that holds a figure you use.
 Numbers: use only figures that appear literally in the evidence excerpts the point cites, with the same units and signs. Never calculate, round, convert or infer a number (no growth rates you compute, no yen conversions). If a comparison needs a number the source does not give, describe it in words without a number.
-If previousAttemptRejected is present, the last attempt for this source was partly rejected by deterministic checks: unsupported-number:<kind>:<values> lists quantities your copy used that do not appear in the excerpts you cited (do not use them again; cite the excerpt that holds a figure or leave the figure out); changed-negation and changed-action-capacity mean a negated or capacity clause of the cited excerpt was restated without its negation or qualifier; evidence-missing means a cited id does not exist. Fix exactly those points.
+If previousAttemptRejected is present, the last attempt for this source was partly rejected by deterministic checks: unsupported-number:<kind>:<values> lists quantities your copy used that do not appear in the excerpts you cited (do not use them again; cite the excerpt that holds a figure or leave the figure out); changed-negation and changed-action-capacity mean a negated or capacity clause of the cited excerpt was restated without its negation or qualifier; evidence-missing means a cited id does not exist. Fix exactly those points. If alreadyAccepted is present, those points already passed every check and are kept: do not repeat them, and write new points on other aspects of the source (still three to five, each fully supported by the excerpts it cites).
 Write what the excerpts say, not what cannot be known: do not add negative statements of your own (できない、ではない、ない、not、cannot) unless the cited excerpt itself says so; express caution as something to watch (…かどうかを確認したい) instead. A figure you mention must be in an excerpt you cite, so cite the excerpt that holds it.
 Preserve negation, uncertainty and time: plans stay plans, guidance stays guidance.
 Length: every Japanese and every English text (headline, each point, the watch point) must be at most 500 characters; a longer text is rejected whole (copy-too-long), so split a long thought into two points or leave the detail out.
@@ -210,21 +210,28 @@ def cited_quote(item, excerpts):
     return '\n'.join(found) if found else None
 
 
-def bind(value, excerpts):
-    """Keep checked parts; at least two points and a headline must remain."""
+def bind(value, excerpts, carried=None):
+    """Keep checked parts; at least two points and a headline must remain. `carried` is what an earlier attempt already got through the checks
+    ({'headline', 'points'}): it is kept, so a retry only has to replace what was rejected (the checks themselves are the same for every piece)."""
     if not isinstance(value, dict):
         raise ValueError('invalid-note')
+    carried = carried or {}
     evidence = '\n'.join(excerpts.values())
     headline = value.get('headline')
-    if not isinstance(headline, dict):
-        raise ValueError('invalid-note')
-    # The headline is checked against the excerpts it cites (like every point), not against the whole release: a long release always
-    # contains some negated clause, which made the meaning checks fail a headline that never touched it.
+    headline_error = None
     try:
+        if not isinstance(headline, dict):
+            raise ValueError('invalid-note')
+        # The headline is checked against the excerpts it cites (like every point), not against the whole release: a long release always
+        # contains some negated clause, which made the meaning checks fail a headline that never touched it.
         checked(headline, cited_quote(headline, excerpts) or evidence, evidence)
+        headline = {'ja': headline['ja'], 'en': headline['en']}
     except (ValueError, TypeError, KeyError) as exc:
-        raise Unchecked(str(exc) if isinstance(exc, ValueError) else type(exc).__name__, {'headline': why(exc, evidence)})
-    points, rejected = [], {}
+        headline_error = exc
+        headline = None
+    points = [dict(p) for p in carried.get('points') or []]
+    carried_ja = {p['ja'] for p in points}
+    rejected = {}
     for point in value.get('points') or []:
         quote = cited_quote(point, excerpts) if isinstance(point, dict) else None
         if quote is None:
@@ -236,16 +243,23 @@ def bind(value, excerpts):
             reason = why(exc, evidence)
             rejected[reason] = rejected.get(reason, 0) + 1
             continue
-        points.append({'ja': point['ja'], 'en': point['en']})
+        if point['ja'] not in carried_ja and len(points) < 5:
+            points.append({'ja': point['ja'], 'en': point['en']})
+    headline = headline or carried.get('headline')
+    if headline is None:
+        exc = headline_error
+        raise Unchecked(str(exc) if isinstance(exc, ValueError) else type(exc).__name__,
+                        {'headline': why(exc, evidence), 'carry': {'version': VERSION, 'points': points}})
     if len(points) < 2:
-        raise Unchecked('too-few-checked-points', {'kept': len(points), 'rejected': rejected})
+        raise Unchecked('too-few-checked-points', {'kept': len(points), 'rejected': rejected,
+                                                   'carry': {'version': VERSION, 'headline': headline, 'points': points}})
     watch = value.get('watch')
     try:
         checked(watch, cited_quote(watch, excerpts) or evidence, evidence)
         watch = {'ja': watch['ja'], 'en': watch['en']}
     except (ValueError, TypeError, KeyError, AttributeError):
         watch = None
-    return {'headline': {'ja': headline['ja'], 'en': headline['en']}, 'points': points, 'watch': watch}
+    return {'headline': headline, 'points': points, 'watch': watch}
 
 
 def used_today(db, now):
@@ -291,6 +305,11 @@ def run_once(path, transport=None, env=None, now=None, reference=None, only_ref=
             previous = json.loads(prior['detail']) if prior and prior['detail'] else None
         except ValueError:
             previous = None
+        carried = previous.pop('carry', None) if isinstance(previous, dict) else None
+        if not isinstance(carried, dict) or carried.get('version') != VERSION:
+            carried = None  # accepted under other check logic: written again
+        if carried and carried.get('points'):
+            previous = {**(previous or {}), 'alreadyAccepted': [p['ja'] for p in carried['points']]}
         db.execute('''INSERT INTO deep_analyses(source_ref,kind,subject,source_sha,state,attempts,next_at,created_at,source_url,source_title)
           VALUES(?,?,?,?, 'running',0,?,?,?,?) ON CONFLICT(source_ref) DO UPDATE SET state='running',next_at=excluded.next_at,version=%d''' % VERSION,
                    (source['ref'], source['kind'], source['subject'], source['sha'], now + 600,
@@ -307,7 +326,7 @@ def run_once(path, transport=None, env=None, now=None, reference=None, only_ref=
         response = transport(payload, key)
         if response.get('status') != 'completed':
             raise ValueError('incomplete')
-        note = bind(json.loads(brief_generator.output_text(response)), source['excerpts'])
+        note = bind(json.loads(brief_generator.output_text(response)), source['excerpts'], carried)
     except Exception as exc:
         reason = str(exc) if isinstance(exc, ValueError) else type(exc).__name__
         detail = json.dumps(exc.detail, ensure_ascii=False, sort_keys=True) if isinstance(exc, Unchecked) else None
@@ -354,6 +373,8 @@ def diagnostics(db, now=None):
       WHERE state IN ('held','retry') ORDER BY created_at DESC LIMIT 30'''):
         try:
             detail = json.loads(row['detail']) if row['detail'] else None
+            if isinstance(detail, dict):
+                detail.pop('carry', None)  # accepted analysis text stays out of /health
         except ValueError:
             detail = None
         pending.append({'subject': row['subject'], 'state': row['state'], 'attempts': row['attempts'],
