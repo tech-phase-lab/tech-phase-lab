@@ -142,6 +142,25 @@ class DeepAnalysisTests(unittest.TestCase):
         self.assertTrue(reason('Revenue rose 45%.', '売上は45%増。').endswith(':A'))  # nowhere in the release: calculated or invented
         self.assertTrue(reason('Revenue was $3.41 billion and costs rose 45%.', '売上高は3.41 billion ドル、費用は45%増。').endswith(':A'))
 
+    def test_a_statement_table_figure_may_be_written_in_the_unit_its_header_declares(self):
+        # Nov 14, NBIS: "In USD $ millions ... Revenues 146.1 980.8" -- the model wrote "$980.8 million" and the check saw 980800000 vs 980.8
+        table = ('Q3 2026 Financial Highlights Consolidated results In USD $ millions Three months ended September 30 2025 2026 Change '
+                 'Revenues 146.1 980.8 571 % Adjusted EBITDA / (loss) (5.2 ) 465.8 n/m Total assets 1,962.1 2026')
+        def ok(ja, en):
+            deep_analysis.checked({'ja': ja, 'en': en}, table)
+        ok('売上高は980.8百万ドルだった。', 'Revenue was $980.8 million.')
+        ok('調整後EBITDAは465.8百万ドル。', 'Adjusted EBITDA was $465.8 million.')
+        for ja, en in [('売上高は9.8億ドル。', 'Revenue was $980.8 billion.'),          # wrong scale
+                       ('売上高は9億8,000万ドル。', 'Revenue was $980.0 million.'),      # a figure the table does not print
+                       ('売上は2,026百万ドル。', 'Revenue was $2,026 million.'),         # a year is not a table amount
+                       ('売上は57.1百万ドル。', 'Revenue was $57.1 million.')]:          # a percentage is not an amount
+            with self.assertRaises(ValueError, msg=en):
+                deep_analysis.checked({'ja': ja, 'en': en}, table)
+        self.assertEqual(deep_analysis.table_scaled_figures('Revenues 146.1 980.8'), '')  # no declared unit: nothing is converted
+        self.assertEqual(deep_analysis.table_scaled_figures('In millions A 1.5 In thousands B 2.5'), '')  # mixed units: nothing is converted
+        self.assertIn('980.8 million', deep_analysis.table_scaled_figures('(in millions of U.S. dollars) Revenues 980.8'))
+
+
     def test_why_an_analysis_is_held_is_recorded_and_older_holds_are_tried_again(self):
         self.earnings()
         bad = json.loads(json.dumps(GOOD))

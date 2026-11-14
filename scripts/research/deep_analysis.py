@@ -12,6 +12,7 @@ from datetime import datetime, timedelta, timezone
 import hashlib
 import json
 import os
+import re
 import sqlite3
 import time
 
@@ -21,7 +22,7 @@ import monitor
 
 MAX_ATTEMPTS = 3
 # Bump when the prompt/check logic changes so analyses held under the old logic are tried again (attempts restart at 0).
-VERSION = 6
+VERSION = 7
 RETRY_SECONDS = 120
 DEFAULT_DAILY_LIMIT = 40
 MAX_DAILY_LIMIT = 200
@@ -122,13 +123,35 @@ def indicator_sources(db, reference):
     return rows
 
 
+UNIT_HEADER = re.compile(r'(?i)\bin\s+(?:usd\s*\$?\s*|us\$\s*|u\.s\.\s*\$?\s*|eur\s*\u20ac?\s*|\$\s*|\u20ac\s*)?(thousands|millions|billions)\b|\bin\s+(thousands|millions|billions)\s+of\s+(?:u\.s\.\s*dollars|us\s*dollars|dollars|euros)')
+TABLE_FIGURE = re.compile(r'(?<![\w.,$\u20ac])(\d{1,3}(?:,\d{3})+(?:\.\d+)?|\d+\.\d+)(?![\d.,%]|\s?%|\s?x\b)')
+TABLE_WINDOW = 2500
+SCALE_WORD = {'thousands': 'thousand', 'millions': 'million', 'billions': 'billion'}
+
+
+def table_scaled_figures(evidence):
+    """Figures of a statement table printed in the unit its header declares ("In USD $ millions ... Revenues 146.1 980.8"), written out in that unit
+    ("980.8 million"). Only decimal or comma-grouped numbers within TABLE_WINDOW characters after one header are converted, never percentages or
+    plain integers (years, counts), and a header that declares different units for the same excerpt converts nothing. The result is appended to the
+    evidence for the number check only, so "$980.8 million" matches the source figure 980.8 of a USD-millions table; no other number is admitted."""
+    headers = [(m.start(), (m.group(1) or m.group(2)).lower()) for m in UNIT_HEADER.finditer(evidence)]
+    if not headers or len({scale for _, scale in headers}) != 1:
+        return ''
+    scale = SCALE_WORD[headers[0][1]]
+    figures = []
+    for index, (start, _) in enumerate(headers):
+        end = min(headers[index + 1][0] if index + 1 < len(headers) else len(evidence), start + TABLE_WINDOW)
+        figures += [m.group(1) for m in TABLE_FIGURE.finditer(evidence[start:end])]
+    return '; '.join('%s %s' % (figure, scale) for figure in dict.fromkeys(figures))
+
+
 def checked(item, quote):
     """Copy that passes the number, meaning and pair checks against `quote`."""
     for lang in ('ja', 'en'):
         text = item.get(lang)
         if not isinstance(text, str) or not text.strip() or len(text) > 600:
             raise ValueError('invalid-copy')
-        factual_validation.validate_numbers(text, quote)
+        factual_validation.validate_numbers(text, quote + '\n' + table_scaled_figures(quote))
         factual_validation.validate_semantics(text, quote)
     factual_validation.validate_pair(item['ja'], item['en'])
 
