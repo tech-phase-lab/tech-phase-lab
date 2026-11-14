@@ -110,9 +110,11 @@ const readMany = async (tickers: string[]): Promise<Map<string, OneReturns>> => 
 };
 // Only tickers that missed the cache reach this; the ones that miss together go out as one request.
 const fetchReturns = createBatcher<OneReturns>(readMany, CHUNK);
-/** Ten-minute cache per ticker (a symbol with no data is cached as null), shared by every reader whatever else they hold. */
+/** Per-ticker cache (a symbol with no data is cached as null), shared by every reader whatever else they hold: ten minutes while the
+ * market is open, an hour once it is closed (the daily closes do not change), so a quiet weekend does not keep spending credits and a busy
+ * minute does not make the 銘柄手帳 wait (owner, Nov 14: about 30 seconds). */
 const oneReturns = (ticker: string) =>
-  unstable_cache(async (): Promise<OneReturns | null> => fetchReturns(ticker), ["watchlist-week-returns-v2", ticker], { revalidate: 600 })();
+  unstable_cache(async (): Promise<OneReturns | null> => fetchReturns(ticker), ["watchlist-week-returns-v2", ticker], { revalidate: usMarketOpen() ? 600 : 3600 })();
 
 /** The same ten-minute cache for an arbitrary list of tickers (the 銘柄手帳 weekly moves), kept per ticker so different lists share it. */
 export async function loadReturnsFor(tickers: string[]): Promise<{ stocks: StockReturns[]; asOf: string }> {
