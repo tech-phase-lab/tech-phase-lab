@@ -66,6 +66,12 @@ def configuration(environ=None):
     requested = _enabled(environ.get("RESEARCH_INCIDENT_DELIVERY_ENABLED"))
     if not requested:
         return {"requested": False, "configured": False, "enabled": False}
+    if str(environ.get("RESEARCH_INCIDENT_DELIVERY_MODE", "")).strip().lower() == "web-push":
+        # The owner's own phones through the site's Web Push (the route earnings and PPI alerts already use): no URL or bearer token.
+        if str(environ.get("WEB_PUSH_ENABLED", "")).lower() != "true":
+            raise DeliveryUnavailable("notification-web-push-disabled")
+        return {"requested": True, "configured": True, "enabled": True, "mode": "web-push",
+                "startAt": _cutover(environ.get("RESEARCH_INCIDENT_DELIVERY_START_AT"))}
     token = str(environ.get("RESEARCH_INCIDENT_WEBHOOK_TOKEN", ""))
     if not 32 <= len(token) <= 512 or "\r" in token or "\n" in token:
         raise DeliveryUnavailable("notification-token-invalid")
@@ -125,3 +131,43 @@ def authorized_token(config, supplied):
     """Small helper for future adapters without logging either secret."""
     expected = config.get("token", "")
     return bool(expected) and hmac.compare_digest(str(supplied), expected)
+
+
+PUSH_MAX_AGE_SECONDS = 30 * 60
+PUSH_TEXT = {
+    "discovery-all-sources-failing": ("公式発表の巡回が全社失敗しています", "決算・指標の検知が止まっている可能性があります。"),
+    "monitor-stale": ("監視が止まっています", "巡回サイクルが更新されていません。"),
+    "backup-failed": ("バックアップに失敗しました", "データのバックアップが取れていません。"),
+    "backup-overdue": ("バックアップが遅れています", "データのバックアップが期限を過ぎています。"),
+    "incident-watch-failed": ("障害見張りが失敗しました", "監視の見張り自体が動いていません。"),
+}
+
+
+def push_message(claim):
+    title, body = PUSH_TEXT.get(claim.get("errorCode"), ("監視で異常を検知しました", "詳しくは監視の状態を確認してください。"))
+    if claim["transition"] == "resolved":
+        return {"title": "✅ 復旧しました", "body": "監視の異常が解消しました。", "tag": "incident-" + claim["key"], "url": "/research"}
+    return {"title": "🚨 " + title, "body": body, "tag": "incident-" + claim["key"], "url": "/research"}
+
+
+def send_owner_push(claim, devices, sender, now=None):
+    """Send one incident transition to the owner's devices. Only CRITICAL transitions that happened in the last 30 minutes are sent;
+    anything else (warnings, old rows) is consumed without a push, so enabling this can never replay the history. Returns the number
+    of devices reached; raises DeliveryFailed when a critical transition reached none."""
+    if claim.get("severity") != "critical":
+        return 0
+    occurred = datetime.fromisoformat(str(claim["occurredAt"]).replace("Z", "+00:00"))
+    current = now or datetime.now(timezone.utc)
+    if occurred.tzinfo is None or (current - occurred).total_seconds() > PUSH_MAX_AGE_SECONDS:
+        return 0
+    message = push_message(claim)
+    reached = 0
+    for subscription in devices:
+        try:
+            code = sender(json.loads(subscription), message)
+        except Exception:
+            code = 0  # never log endpoints, keys or provider responses
+        reached += 200 <= code < 300
+    if not reached:
+        raise DeliveryFailed("notification-delivery-failed")
+    return reached

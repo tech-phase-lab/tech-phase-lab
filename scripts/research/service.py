@@ -1959,7 +1959,12 @@ class AutomaticMonitor:
             return None
         error_code = None
         try:
-            transport(self.notification_config, claim)
+            if self.notification_config.get("mode") == "web-push":
+                with self.db_lock, monitor.connect(self.db_path) as db:
+                    devices = release_watch.owner_devices(db)
+                incident_delivery.send_owner_push(claim, devices, web_push.send)
+            else:
+                transport(self.notification_config, claim)
         except incident_delivery.DeliveryUnavailable:
             error_code = "notification-not-configured"
         except incident_delivery.DeliveryFailed:

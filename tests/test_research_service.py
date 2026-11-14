@@ -3126,6 +3126,30 @@ class ResearchServiceTests(unittest.TestCase):
         self.assertEqual(state["incidents"]["heldNotifications"], 1)
         self.assertEqual(state["incidents"]["deliveredNotifications"], 1)
 
+    def test_web_push_mode_sends_only_new_critical_incidents_and_never_replays_held_history(self):
+        cutover = datetime.now(timezone.utc) - timedelta(minutes=5)
+        environment = {
+            "RESEARCH_INCIDENT_DELIVERY_ENABLED": "true", "RESEARCH_INCIDENT_DELIVERY_MODE": "web-push", "WEB_PUSH_ENABLED": "true",
+            "RESEARCH_INCIDENT_DELIVERY_START_AT": cutover.isoformat(),
+        }
+        old = (cutover - timedelta(hours=1)).isoformat()
+        new = datetime.now(timezone.utc).isoformat()
+        with monitor.connect(self.db_path) as db:
+            for index in range(20):  # a backlog like production's thousands of held rows
+                monitor.record_operational_incident(db, f"source:OLD{index}", "official-source", f"OLD{index}", "critical", "timeout", old)
+            monitor.record_operational_incident(db, "source:WARN", "official-source", "WARN", "warning", "timeout", new)
+            monitor.record_operational_incident(db, "discovery:all-sources", "official-discovery", "all-sources", "critical", "discovery-all-sources-failing", new)
+        pushed = []
+        with patch.dict("os.environ", environment, clear=False), \
+                patch.object(service.release_watch, "owner_devices", return_value=['{"endpoint":"phone"}']), \
+                patch.object(service.web_push, "send", side_effect=lambda sub, msg: pushed.append(msg) or 201):
+            app = service.AutomaticMonitor(self.db_path, self.snapshot_path)
+            outcomes = [app.process_incident_notification() for _ in range(5)]
+        self.assertEqual(outcomes[:2], ["delivered", "delivered"])  # the warning is consumed silently, the critical one is pushed
+        self.assertEqual([m["title"] for m in pushed], ["🚨 公式発表の巡回が全社失敗しています"])
+        self.assertEqual(outcomes[2:], [None, None, None])
+        self.assertEqual(app.public_state()["incidents"]["heldNotifications"], 20)
+
     def test_invalid_notification_configuration_never_attempts_delivery(self):
         environment = {
             "RESEARCH_INCIDENT_DELIVERY_ENABLED": "true",
