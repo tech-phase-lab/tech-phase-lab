@@ -209,6 +209,41 @@ class DeepAnalysisTests(unittest.TestCase):
         self.assertRegex(reason, r'^(?:changed-direction:\w+:(?:up|down)>(?:up|down)(?:\|(?:up|down))*|changed-direction@\w+:\d+|invalid-copy@\w+:\d+)')
 
 
+    def test_a_retry_row_that_left_the_window_is_retried_once_and_rejected_copy_is_logged_for_the_owner(self):
+        # Nov 15: ARM stayed in 'retry' after its release left the 3-day window, so neither path ever attempted it again.
+        import contextlib, io
+        self.earnings()
+        bad = json.loads(json.dumps(GOOD))
+        bad['points'] = [point('売上は45%増。', 'Revenue rose 45%.')] * 3
+        for attempt in range(2):
+            self.run_deep(reply(bad), now=base.NOW.timestamp() + attempt * 1000)
+        with research.connect(self.path) as db:
+            row = db.execute("SELECT state,attempts FROM deep_analyses").fetchone()
+            self.assertEqual((row[0], row[1]), ('retry', 2))
+        on = {**ENV, deep_analysis.OLD_RETRY_ENV: 'true'}
+        inside = base.NOW.timestamp() + 90000
+        self.assertEqual(deep_analysis.retry_old_holds(self.path, reply(GOOD), on, now=inside), 'idle')  # still inside the window: left to the normal run
+        outside = base.NOW.timestamp() + 5 * 86400
+        out = io.StringIO()
+        with contextlib.redirect_stdout(out):
+            self.assertEqual(deep_analysis.retry_old_holds(self.path, reply(bad), on, now=outside), 'rejected')
+        lines = [json.loads(line) for line in out.getvalue().splitlines() if line.startswith('{')]
+        self.assertTrue(lines)
+        self.assertEqual({line['event'] for line in lines}, {'deep-analysis-rejected-copy'})
+        self.assertEqual(lines[0]['part'], 'point')
+        self.assertIn('unsupported-number', lines[0]['reason'])
+        self.assertIn('45%', lines[0]['ja'])
+        self.assertTrue(lines[0]['quote'])
+        with research.connect(self.path) as db:
+            self.assertEqual(db.execute("SELECT state FROM deep_analyses").fetchone()[0], 'held')
+        self.assertEqual(deep_analysis.retry_old_holds(self.path, reply(GOOD), on, now=outside + 10), 'idle')  # once per marker
+        with research.connect(self.path) as db:
+            db.execute("DELETE FROM deep_old_retries")
+            db.execute("UPDATE deep_analyses SET state='retry',attempts=2")
+        self.assertEqual(deep_analysis.retry_old_holds(self.path, reply(GOOD), on, now=outside + 20), 'done')
+        with research.connect(self.path) as db:
+            self.assertEqual(db.execute("SELECT state FROM deep_analyses").fetchone()[0], 'done')
+
     def test_old_holds_are_retried_once_when_the_flag_is_on_and_a_good_result_is_dated_to_the_release(self):
         # Owner, Nov 14: the 14 held analyses get exactly one more attempt, with their reasons recorded.
         self.earnings()
