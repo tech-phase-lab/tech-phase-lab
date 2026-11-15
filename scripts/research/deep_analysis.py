@@ -1,6 +1,6 @@
 """PRO deep analysis of earnings releases and U.S. indicators (owner, Oct 11).
 
-A higher-tier model (RESEARCH_DEEP_MODEL, e.g. gpt-6-astra) writes the
+A higher-tier model (RESEARCH_DEEP_MODEL, whatever the service is configured with; the weekly draft uses it too) writes the
 reading: drivers, comparison with the prior period, guidance and consensus,
 and what to watch next. It never supplies a number: every figure in the copy
 must appear literally in the source excerpt it cites, and Japanese/English

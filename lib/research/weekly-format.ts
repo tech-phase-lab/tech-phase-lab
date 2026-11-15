@@ -78,3 +78,18 @@ export function groupNotes(notes: readonly string[] | undefined): Memo {
   const summary = lines.length === 0 ? "確認メモはありません。" : todo === 0 ? `確認メモ ${lines.length}件(要対応はありません)` : `要対応 ${todo}件(確認メモ 計${lines.length}件)`;
   return { groups, counts, total: lines.length, substituted, summary };
 }
+
+/** The owner's draft list (owner, Nov 15: drafts piled up and the page needed a long scroll). The newest draft of each issue date that is
+ * still ahead of the latest published issue stays as a card ("current", newest date first); every other draft (an earlier draft of the same
+ * date, or one dated on or before the latest published issue) is "older" and folded away. Pure, so it is tested without a browser. */
+export type DraftStamp = { id: string; date: string; createdAt?: string; updatedAt?: string };
+export function arrangeDrafts<T extends DraftStamp>(drafts: readonly T[], latestPublished: string | null): { current: T[]; older: T[] } {
+  const made = (draft: T) => draft.createdAt ?? draft.updatedAt ?? "";
+  const sorted = [...drafts].sort((a, b) => b.date.localeCompare(a.date) || made(b).localeCompare(made(a)));
+  const current: T[] = [], older: T[] = [], seen = new Set<string>();
+  for (const draft of sorted) {
+    if ((latestPublished && draft.date <= latestPublished) || seen.has(draft.date)) older.push(draft);
+    else { seen.add(draft.date); current.push(draft); }
+  }
+  return { current, older };
+}
