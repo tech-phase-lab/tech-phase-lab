@@ -1,11 +1,11 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import { movingAverages, plain, compact, easternToIso, type Bar } from "@/lib/research/market-quote";
-import { liveBand, sessionTicks } from "@/lib/research/market-board-periods";
+import { liveBand, sessionTicks, volumeBars } from "@/lib/research/market-board-periods";
 import styles from "./chart.module.css";
 
 const W = 390, PR = 50;
-const UP = "#4fe3a6", DOWN = "#ff7b7b", GOLD = "#f3d98b";
+const UP = "#4fe3a6", DOWN = "#ff7b7b", GOLD = "#f3d98b", MUTED = "#8c98ab";
 export const MA_STYLE = [{ period: 5, color: "#f3d98b", ja: "短期", en: "Short" }, { period: 25, color: "#8fb0ff", ja: "中期", en: "Mid" }, { period: 75, color: "#c3a6ff", ja: "長期", en: "Long" }] as const;
 const jstParts = new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Tokyo", year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit", hourCycle: "h23" });
 /** A bar's New York time ("2026-11-12 15:55:00") as Japan time in the same shape; unchanged when it is not a datetime. */
@@ -89,7 +89,7 @@ function ChartBody({ bars, before = [], mode, interval, variant = "detail", ja, 
   const local = (at: string) => jst && interval === "intraday" ? jstText(at) : at;
   const label = (raw: string) => { const at = local(raw); return interval === "intraday" ? (local(bars[0].at).slice(0, 10) === local(bars[n - 1].at).slice(0, 10) ? at.slice(11, 16) : `${Number(at.slice(5, 7))}/${Number(at.slice(8, 10))} ${at.slice(11, 16)}`)
     : interval === "weekly" ? `${at.slice(2, 4)}/${Number(at.slice(5, 7))}` : `${Number(at.slice(5, 7))}/${Number(at.slice(8, 10))}`; };
-  const vmax = Math.max(...bars.map(b => b.volume ?? 0), 1);
+  const volumes = withVolume ? volumeBars(bars, VH) : [];
   const styleOf = MA_STYLE.filter(m => !maPeriods || maPeriods.includes(m.period));
   const ma = mode === "candles" ? movingAverages(before, bars, styleOf.map(m => m.period)) : [];
   const maPath = (series: (number | null)[]) => series.map((v, k) => v === null ? "" : `${k && series[k - 1] !== null ? "L" : "M"}${X(k).toFixed(1)} ${Y(v).toFixed(1)}`).join(" ");
@@ -131,7 +131,9 @@ function ChartBody({ bars, before = [], mode, interval, variant = "detail", ja, 
         <path d={[...dateIdx.map(k => X(k)), ...(ticks ?? []).map(tick => step * tick.index)].map(x => `M${x.toFixed(1)} 8 V${withVolume ? VB : priceBottom}`).join(" ")} stroke="rgba(217,180,106,.09)" strokeWidth="1" fill="none" />
         <path d={grid.map(g => `M0 ${g.y.toFixed(1)} H${pw}`).join(" ")} stroke="rgba(217,180,106,.13)" strokeWidth="1" strokeDasharray="3 4" fill="none" />
         {withVolume && <><line x1="0" y1={SEP} x2={pw} y2={SEP} stroke="rgba(217,180,106,.22)" strokeWidth="1" />
-          {bars.map((b, k) => { const up = b.close >= b.open, h = (b.volume ?? 0) / vmax * VH; return <rect key={b.at} x={X(k) - bw / 2} y={VB - h} width={bw} height={h} fill={up ? UP : DOWN} fillOpacity=".55" />; })}</>}
+          {/* One row under the whole chart (owner, Nov 15): a faint baseline across the full width, pre-market / after-hours volume muted. */}
+          <line x1="0" y1={VB - 0.5} x2={pw} y2={VB - 0.5} stroke="#8c98ab" strokeOpacity=".5" strokeWidth="1" data-testid="volume-baseline" />
+          {bars.map((b, k) => { const { height: h, extended } = volumes[k], up = b.close >= b.open; return h > 0 && <rect key={b.at} x={X(k) - bw / 2} y={VB - h} width={bw} height={h} fill={extended ? MUTED : up ? UP : DOWN} fillOpacity={extended ? ".6" : ".55"} data-extended={extended ? "" : undefined} />; })}</>}
         {band && <rect x={bandX} y="0" width={Math.max(0, pw - bandX)} height={withVolume ? VB : priceBottom} fill="#8fe3c0" fillOpacity="0.06" data-testid="live-band" />}
         {tag && <line x1={X(n - 1)} y1={Y(tag.price)} x2={pw} y2={Y(tag.price)} stroke={tagColor} strokeWidth="1" strokeDasharray="2 3" strokeOpacity=".8" />}
         {mode === "candles" ? <>
