@@ -25,6 +25,7 @@ async function server(stubs) {
     .replace(/import \{ prepareComparisonAnalysis, currentComparisonAnalysis \}[^;]*;/, "const { prepareComparisonAnalysis, currentComparisonAnalysis } = globalThis.__t;")
     .replace(/import \{ loadSecComparison \}[^;]*;/, "const loadSecComparison = globalThis.__t.loadSecComparison;")
     .replace(/import \{ loadMarketInputs, loadTwelveComparisonState \}[^;]*;/, "const { loadMarketInputs, loadTwelveComparisonState } = globalThis.__t;")
+    .replace(/import \{ scheduleFill \}[^;]*;/, "const scheduleFill = (...a) => globalThis.__t.scheduleFill?.(...a);")
     .replace(/import \{ freshEnough \}[^;]*;/, "const freshEnough = (cachedRead) => cachedRead();")
     .replace(/import \{ buildSecMarketEvidence \}[^;]*;/, "const buildSecMarketEvidence = globalThis.__t.buildSecMarketEvidence;")
     .replace(/import \{ appendMarketItems \}[^;]*;/, "const appendMarketItems = globalThis.__t.appendMarketItems;")
@@ -68,12 +69,21 @@ test("a company the SEC cannot serve falls back to the provider's statements; bu
   const unsupported = async () => emptyFinancials("ASML", "unsupported");
   let result = await (await server({ loadSecComparison: unsupported, loadMarketInputs: async () => ({}), loadTwelveComparisonState: async () => ({ data: { financials: twelveFinancials, scores: [{ id: "financial", value: 5 }] }, busy: false }) })).loadComparisonFinancials("ASML");
   assert.equal(result.quarterRevenue.basis, "twelve-standardized");
-  result = await (await server({ loadSecComparison: unsupported, loadMarketInputs: async () => ({}), loadTwelveComparisonState: async () => ({ data: null, busy: true }) })).loadComparisonFinancials("ASML");
-  assert.equal(result.busy, true);
-  assert.match(comparisonAvailability(result, "ja", NOW), /混み合っています/);
-  assert.match(comparisonAvailability(result, "en", NOW), /busy/);
-  result = await (await server({ loadSecComparison: unsupported, loadMarketInputs: async () => ({}), loadTwelveComparisonState: async () => ({ data: null, busy: false }) })).loadComparisonFinancials("ASML");
+  // Nothing stored yet (Nov 15): the answer comes at once without "busy", and the statements are asked for in the background, never waited for.
+  const fills = [];
+  result = await (await server({ loadSecComparison: unsupported, loadMarketInputs: async () => ({}), loadTwelveComparisonState: async () => ({ data: null, busy: false }), scheduleFill: (t, w) => fills.push([t, { ...w }]) })).loadComparisonFinancials("ASML");
   assert.equal(result.busy, undefined);
+  assert.doesNotMatch(comparisonAvailability(result, "ja", NOW), /混み合っています/);
+  assert.deepEqual(fills, [["ASML", { statistics: true, statements: true }]]);
+}));
+
+test("a US filer with every figure from its filing asks the background only for statistics, never for 200-credit statements", () => withClock(async () => {
+  const fills = [];
+  const { loadComparisonFinancials } = await server({ loadSecComparison: async () => mu(), loadMarketInputs: async () => ({ series, statistics }),
+    loadTwelveComparisonState: async () => ({ data: null, busy: false }), scheduleFill: (t, w) => fills.push([t, { ...w }]) });
+  const c = await loadComparisonFinancials("MU");
+  const missingStatementFactor = comparisonScores(c, NOW).some(s => ["growth", "profitability", "cash", "financial", "stability"].includes(s.id) && s.value === null);
+  assert.deepEqual(fills, [["MU", { statistics: true, statements: missingStatementFactor }]]);
 }));
 
 test("the provider's standardized statements compare with a filing under the same 100-day window as before; two different filing bases never rank", async () => {
