@@ -5,7 +5,7 @@ import { bandItems, bandLead, bandParts } from "@/lib/research/news-band";
 import type { Language } from "@/lib/research/data";
 import { newsSnapshot, serverNewsSnapshot, subscribeNews } from "@/lib/research/news-snapshot";
 import { takeWireStartup } from "@/lib/research/news-startup";
-import { newsPulseItems } from "@/lib/research/news-pulse-items";
+import { homePulseItems, type newsPulseItems } from "@/lib/research/news-pulse-items";
 import { parseCompanyWire, type CompanyWireItem } from "@/lib/research/company-wire";
 import { pulseClock } from "@/lib/research/news-time";
 import { publishWire } from "@/lib/research/wire-store";
@@ -114,7 +114,8 @@ export default function ResearchPulse({ lang }: { lang: Language }) {
     const grace = setTimeout(() => setWireSettled(true), 2_500);
     return () => { alive = false; clearTimeout(grace); };
   }, [checkedAt]);
-  const live = snapshot?.checkedAt && wireSettled ? newsPulseItems(feed, lang, snapshot.checkedAt, wire, PULSE_POOL) : [];
+  // Stock News API stories only (owner, Nov 15); the previous items only while none of them can be shown yet.
+  const live = snapshot?.checkedAt && wireSettled ? homePulseItems(feed, lang, snapshot.checkedAt, wire, PULSE_POOL, pool => bandItems(pool, ja, 1, wide).length > 0) : [];
   const [remembered, setRemembered] = useState<PulseItem[]>([]);
   useEffect(() => { setRemembered(readPulseCache(lang)); }, [lang]);
   const liveKey = live.map(item => item.id).join("|");

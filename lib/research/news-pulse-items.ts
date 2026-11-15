@@ -8,6 +8,7 @@ import { NEWS_MAX_AGE_MS, clockTime, officialTime } from "./news-time.ts";
 import type { CompanyWireItem } from "./company-wire.ts";
 import { tickerLabel, wireStories } from "./wire-stories.ts";
 import { officialPulseHeadlines, marketPulseHeadlines, generalPulseHeadlines } from "./news-pulse-headline.ts";
+import { stockNewsWire } from "./home-stock-news.ts";
 
 const JAPANESE = /[\u3040-\u30ff\u3400-\u9fff]/;
 
@@ -61,6 +62,15 @@ export function newsPulseItems(feed: GeneralNewsFeed | undefined, lang: Language
     // with old items or none (owner, Oct 9: the 21:44 story never reached it).
     .filter(item => now === undefined || freshPulseItems([item], now).length > 0)
     .sort((a, b) => shownAt(b) - shownAt(a)).slice(0, limit);
+}
+
+/** The home band (owner, Nov 15): the Stock News API stories only. While none of them can be shown yet (right after the intake is
+ * switched on, or before their Japanese headlines are written), the band keeps its previous items rather than going empty.
+ * `shows` says whether a list would put anything on the band (the band also needs a short enough headline). */
+export function homePulseItems(feed: GeneralNewsFeed | undefined, lang: Language, now?: number, wire: Record<string, CompanyWireItem[]> = {}, limit = 5,
+  shows: (items: ReturnType<typeof newsPulseItems>) => boolean = items => items.length > 0) {
+  const stock = newsPulseItems(undefined, lang, now, stockNewsWire(wire), limit);
+  return shows(stock) ? stock : newsPulseItems(feed, lang, now, wire, limit);
 }
 
 /** The instant the strip shows for an item (a date-only release seen the same
