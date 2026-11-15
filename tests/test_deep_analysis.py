@@ -662,6 +662,19 @@ class DeepAnalysisTests(unittest.TestCase):
         self.assertNotIn('tiny', json.dumps(report))
 
 
+    def test_an_analysis_made_weeks_after_a_release_does_not_cover_it(self):
+        # Dell, Nov 15: a held analysis of an old page dated Sep 24 must not keep the Sep 1 release from being made.
+        released = base.NOW - timedelta(days=10)
+        self.stored_release(at=released)
+        with deep_analysis.connect(self.path) as db:
+            db.execute("INSERT INTO deep_analyses(source_ref,kind,subject,source_sha,state,created_at,source_url) VALUES('old','earnings','CRWV','x','held',?,?)",
+                       ((released + timedelta(days=21)).isoformat(), 'https://elsewhere.example/old'))
+            self.assertEqual(len(deep_analysis.stored_release_sources(db, base.NOW, False, since=base.NOW - timedelta(days=30))), 1)
+            db.execute("UPDATE deep_analyses SET created_at=?", ((released + timedelta(hours=1)).isoformat(),))
+            deep_analysis.STORED_CACHE.clear()
+            self.assertEqual(deep_analysis.stored_release_sources(db, base.NOW, False, since=base.NOW - timedelta(days=30)), [])
+
+
 class IndicatorAnalysisTests(unittest.TestCase):
     setUp = base.OfficialResearchTests.setUp
 

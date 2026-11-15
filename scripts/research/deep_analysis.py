@@ -348,8 +348,8 @@ def stored_release_sources(db, reference, excerpts=True, skip=(), since=None, ti
         if source_verdict(row['ticker'], text, detected) != 'ok':
             continue
         # one analysis per release: a company with an analysis created within two days of this release, or this page analysed before, is covered
-        covered = db.execute("SELECT 1 FROM deep_analyses WHERE kind='earnings' AND subject=? AND (source_url=? OR created_at>=?) LIMIT 1",
-                             (row['ticker'], row['url'], (detected - timedelta(days=2)).isoformat())).fetchone()
+        covered = db.execute("SELECT 1 FROM deep_analyses WHERE kind='earnings' AND subject=? AND (source_url=? OR (created_at>=? AND created_at<=?)) LIMIT 1",
+                             (row['ticker'], row['url'], (detected - timedelta(days=2)).isoformat(), (detected + timedelta(days=2)).isoformat())).fetchone()
         if covered and not db.execute('SELECT 1 FROM deep_analyses WHERE source_ref=?', (stored_ref(row['url'], row['sha256']),)).fetchone():
             continue
         item = {'ref': stored_ref(row['url'], row['sha256']), 'kind': 'earnings', 'subject': row['ticker'], 'sha': row['sha256'],
