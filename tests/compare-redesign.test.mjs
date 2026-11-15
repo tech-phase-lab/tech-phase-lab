@@ -62,15 +62,65 @@ test("the snapshot gives each company a bar of the same width track; only the hi
   assert.match(html, /未取得・評価保留（0点ではありません）/);
 });
 
-test("each company card keeps its strengths, weaknesses and status; nothing is cut with an ellipsis", () => {
+test("each company card keeps its strengths, weaknesses and status; every item is exactly one line", () => {
   const html = renderToStaticMarkup(React.createElement(visuals.CompanyScoreCard, { company: sample.companies[0], lang: "ja", now, colorIndex: 0 }));
   assert.match(text(html), /Atlas Demo/); assert.match(text(html), /長所/); assert.match(text(html), /短所/);
   const css = read("../app/research/compare/styles.module.css");
   const mine = css.slice(css.indexOf("/* ===== 銘柄比較PRO: gold on navy"));
-  assert.doesNotMatch(mine, /text-overflow:ellipsis/);
-  // nx9: one item is one line (12px; 11px when long), never cut with "…".
-  assert.match(mine, /\.traitBox li\{[^}]*font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:clip/);
+  // nx9: 12px; 11px when long. Owner, Nov 15 「ここは1行固定」: the last rule keeps each item (and the empty case) on one line, ending in "…" if needed.
   assert.match(mine, /\.traitBox li\[data-fit="small"\]\{font-size:11px\}/);
+  const polish = css.slice(css.indexOf("/* ===== Owner, Nov 15: compare polish"));
+  assert.match(polish, /\.traitBox li,\.results \.traitBox li,\.companyCards \.traitBox p\{white-space:nowrap;overflow:hidden;text-overflow:ellipsis/);
+});
+
+test("Nov 15: strengths and weaknesses use short one-line forms, and the empty case is 「該当なし」", () => {
+  const empty = structuredClone(sample.companies[0]); empty.preparedAnalysis.items = [];
+  for (const [lang, word] of [["ja", "該当なし"], ["en", "None"]]) {
+    const html = renderToStaticMarkup(React.createElement(visuals.CompanyScoreCard, { company: empty, lang, now, colorIndex: 0 }));
+    assert.equal((text(html).match(new RegExp(word, "g")) ?? []).length, 2, lang);
+    assert.doesNotMatch(text(html), /取得済みの数値では該当なし|None identified/);
+  }
+  // Saved analyses with the old long form are shown short; new analyses are written short at the source.
+  assert.equal(visuals.compactTrait("営業赤字（利益率 -3509.7%）"), "営業赤字 -3509.7%");
+  assert.equal(visuals.compactTrait("Operating loss (-3509.7% margin)"), "Operating loss -3509.7%");
+  const loss = structuredClone(sample.companies[0]);
+  loss.preparedAnalysis.items = [{ id: "operating-margin", kind: "weakness", short: { ja: "営業赤字（利益率 -3509.7%）", en: "Operating loss (-3509.7% margin)" }, detail: { ja: "", en: "" } }];
+  const html = renderToStaticMarkup(React.createElement(visuals.CompanyScoreCard, { company: loss, lang: "ja", now, colorIndex: 0 }));
+  assert.match(html, /<li title="営業赤字 -3509.7%" data-fit="normal">営業赤字 -3509.7%<\/li>/);
+  for (const file of ["../lib/research/comparison-analysis.ts", "../lib/research/comparison-scorecard.ts"]) assert.doesNotMatch(read(file), /営業赤字（利益率|Operating loss \(/, file);
+  // Every bullet the generators can write fits the 184px column at 360px (12px type, 11px when long: at most about 13 full-width characters).
+  const width = item => [...item].reduce((w, ch) => w + (ch.charCodeAt(0) > 0x2e80 ? 1 : 0.58), 0);
+  for (const item of ["営業赤字 -3509.7%", "売上減少 -43.5%", "営業利益率 40.2→34.5%", "有利子負債が現金を上回る", "約3か月の株価 -12.3%", "平均株式数 +12.5%", "簡易FCF率 -120.4%", "メモリ価格下落で減益リスク", "営業黒字 1/4四半期"]) {
+    assert.ok(width(item) * 11 <= 154, item);
+  }
+});
+
+test("Nov 15: equal score heights, no factor-count line under the cards, and a larger one-line headline", () => {
+  const css = read("../app/research/compare/styles.module.css");
+  const polish = css.slice(css.indexOf("/* ===== Owner, Nov 15: compare polish"));
+  assert.match(polish, /\.scoreBox\{display:flex;flex-direction:column\}/);
+  assert.match(polish, /\.boxName\{min-height:calc\(2em \* 1\.25\)\}/);
+  assert.match(polish, /\.boxScore\{margin-top:auto/);
+  assert.match(polish, /\.results \.conclusion h2\{font-size:24px\}/);
+  const companies = structuredClone(sample.companies.slice(0, 2));
+  companies[0].name = "ELI LILLY & Co"; companies[1].name = "Arbutus Biopharma Corp with a very long registered company name";
+  const html = renderToStaticMarkup(React.createElement(visuals.ScoreHeadline, { companies, lang: "ja", now }));
+  assert.doesNotMatch(text(html), /全社にそろう|項目の平均です/);
+  assert.doesNotMatch(read("../app/research/compare/comparison-visuals.tsx"), /全社にそろう/);
+  // The yardstick is kept in the 「比較条件・注意点」 disclosure.
+  assert.match(read("../app/research/compare/screen.tsx"), /<summary>\{t\("比較条件・注意点", "Comparison caveats"\)\}<\/summary><ul>\{!result\.trial && assessment\.note && <li>\{assessment\.note\}<\/li>\}/);
+});
+
+test("Nov 15: the ticker search box never overflows the card on phones", () => {
+  const css = read("../app/research/compare/styles.module.css");
+  const polish = css.slice(css.indexOf("/* ===== Owner, Nov 15: compare polish"));
+  // The old 18px side margins on a 100%-wide input made it 36px wider than the card; the inset is now padding on the details element.
+  assert.match(polish, /\.tickerHelp>details\{box-sizing:border-box;width:100%;max-width:100%;min-width:0;padding-inline:18px\}/);
+  assert.match(polish, /\.tickerHelp>details>\*:not\(summary\)\{margin-left:0;margin-right:0;max-width:100%;min-width:0;box-sizing:border-box\}/);
+  assert.match(polish, /\.tickerHelp \.tickerSearch input\{width:100%;max-width:100%;min-width:0;inline-size:100%;box-sizing:border-box\}/);
+  assert.match(polish, /\.tickerHelp\{box-sizing:border-box;width:100%;max-width:100%;min-width:0\}/);
+  // Nothing after the fix brings the side margins back.
+  assert.doesNotMatch(polish.slice(polish.indexOf(".tickerHelp .tickerSearch input")), /\.tickerHelp>details>\*:not\(summary\)\{margin-left:18px/);
 });
 
 test("the palette is navy and gold: card gradient, edge, gold button, and 120px or more of room under the last button", () => {

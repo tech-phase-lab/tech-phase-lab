@@ -112,15 +112,25 @@ test("sample and production summaries use complete seven-factor scores and groun
   assert.ok(companies[2].preparedAnalysis.items.some(i=>i.id==="momentum" && i.kind==="weakness"));
   for(const count of [2,3])for(const lang of ["ja","en"]){
     const result=overallComparison(companies.slice(0,count),lang,now);
-    assert.match(result.title,/DEMO-A/);assert.match(result.description,/38.0→32.0/);
+    assert.match(result.title,/DEMO-A/);
+    // Owner, Nov 15: the scores are shown above, so the sentence names the leader and why in plain words, with one caution, and repeats no score.
+    assert.match(result.description,lang==="ja" ? /^DEMO-Aは.+で(大きく)?上回ります。DEMO-[BC]は.+が強みですが、.+。$/ : /^DEMO-A is (well )?ahead in .+\. DEMO-[BC] is stronger in .+, but .+\.$/);
+    assert.doesNotMatch(result.description,/\/10|全社にそろう|every company has|総合点を押し上げ/);
   }
+  assert.equal(overallComparison(companies.slice(0,2),"ja",now).description,"DEMO-Aは財務の余力と資金を生む力で大きく上回ります。DEMO-Bは株価の勢いが強みですが、簡易FCFがマイナスです（売上比 -6.0%）。");
+  // When the runner-up has no strength of its own, the one caution is the leader's weakness (here its margin decline).
+  const low={...companies[0],ticker:"LOW",quarterRevenueGrowth:companies[0].quarterRevenueGrowth-40,preparedAnalysis:{...companies[0].preparedAnalysis,items:[]}};
+  assert.match(overallComparison([companies[0],low],"ja",now).description,/^DEMO-Aは成長性で大きく上回ります。ただし、DEMO-Aは営業利益率が38\.0%から32\.0%に下がっています。$/);
+  assert.match(overallComparison([companies[0],low],"en",now).description,/^DEMO-A is well ahead in growth\. However, DEMO-A's operating margin fell from 38\.0% to 32\.0%\.$/);
   const later=currentComparisonAnalysis(companies[1],now+48*3600000);
   assert.ok(!later.items.some(i=>i.id==="debt-cash"));
   const missing=structuredClone(companies);missing[1].twelveData.statistics=null;
   // Owner, Nov 15: a missing factor no longer blocks the overall view; the factors every company has are averaged and the count is said.
   const partial=overallComparison(missing,"ja",now);
   assert.doesNotMatch(partial.title,/揃っていません/);
-  assert.match(partial.description,/全社にそろう\d項目で比較/);
+  // The yardstick moves to the caveats list; the sentence itself does not repeat it.
+  assert.match(partial.note,/^総合点は、全社にそろう\d項目の平均です。$/);
+  assert.doesNotMatch(partial.description,/全社にそろう/);
   const bare=structuredClone(companies);for(const c of bare){c.twelveData=undefined;c.quarterFcfMargin=null;c.balance=undefined;}
   assert.match(overallComparison(bare,"ja",now).title,/揃っていません/, "fewer than three common factors: still no ranking");
   const tied=[companies[0],{...companies[0],ticker:"TIE"}];

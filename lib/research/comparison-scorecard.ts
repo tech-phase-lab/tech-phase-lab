@@ -162,7 +162,7 @@ export function quarterlyHighlights(c: Financials, lang: "ja"|"en", now=Date.now
   if(valid("growth") && c.quarterRevenueGrowth!>0) strengths.push(lang==="ja" ? `売上成長 +${c.quarterRevenueGrowth!.toFixed(1)}%` : `Revenue growth +${c.quarterRevenueGrowth!.toFixed(1)}%`);
   if(valid("growth") && c.quarterRevenueGrowth!<0) weaknesses.push(lang==="ja" ? `売上減少 ${c.quarterRevenueGrowth!.toFixed(1)}%` : `Revenue decline ${c.quarterRevenueGrowth!.toFixed(1)}%`);
   if(valid("profitability") && c.quarterOperatingMargin!>=15) strengths.push(lang==="ja" ? `営業利益率 ${c.quarterOperatingMargin!.toFixed(1)}%` : `Operating margin ${c.quarterOperatingMargin!.toFixed(1)}%`);
-  if(valid("profitability") && c.quarterOperatingMargin!<0) weaknesses.push(lang==="ja" ? `営業赤字（利益率 ${c.quarterOperatingMargin!.toFixed(1)}%）` : `Operating loss (${c.quarterOperatingMargin!.toFixed(1)}% margin)`);
+  if(valid("profitability") && c.quarterOperatingMargin!<0) weaknesses.push(lang==="ja" ? `営業赤字 ${c.quarterOperatingMargin!.toFixed(1)}%` : `Operating loss ${c.quarterOperatingMargin!.toFixed(1)}%`);
   if(valid("growth") && finite(c.quarterDilutedSharesGrowth) && c.quarterDilutedSharesGrowth>5) weaknesses.push(lang==="ja" ? `平均株式数 +${c.quarterDilutedSharesGrowth!.toFixed(1)}%` : `Average shares +${c.quarterDilutedSharesGrowth!.toFixed(1)}%`);
   if(valid("cash") && c.quarterFcfMargin!<0) weaknesses.push(lang==="ja" ? "四半期の簡易FCFがマイナス" : "Negative quarterly simple FCF");
   return {strengths,weaknesses};
@@ -184,21 +184,59 @@ export function quarterlyTakeaway(companies: (Financials & {ticker:string})[], l
   return lang==="ja" ? `${parts.join("、")}が上回っています。` : `${parts.join("; ")}.`;
 }
 
-/** Equal-weight seven-factor summary; incomplete or incompatible evidence cannot produce a winner. */
-export function overallComparison(companies: (Financials & {ticker:string})[],lang:"ja"|"en",now=Date.now()) {
+// Plain words for each factor in the summary sentence (owner, Nov 15: "読みやすく、簡潔に").
+const factorWords: Record<ScoreId,{ja:string;en:string}> = {
+  financial:{ja:"財務の余力",en:"financial strength"}, profitability:{ja:"収益性",en:"profitability"}, valuation:{ja:"割安さ",en:"valuation"},
+  stability:{ja:"安定性",en:"stability"}, momentum:{ja:"株価の勢い",en:"price momentum"}, growth:{ja:"成長性",en:"growth"}, cash:{ja:"資金を生む力",en:"cash generation"},
+};
+type AnalysisItem = NonNullable<Financials["preparedAnalysis"]>["items"][number];
+/** One weakness bullet as a plain clause ("売上が43.5%減っています"), using only the figures in the bullet itself. */
+export function cautionClause(item: AnalysisItem, lang: "ja"|"en"): string {
+  const ja=lang==="ja", text=item.short[lang], numbers=[...text.matchAll(/[-+]?\d[\d,]*(?:\.\d+)?/g)].map(m=>m[0].replace(/^\+/,""));
+  const abs=(n:string|undefined)=>n?.replace(/^-/,"");
+  if(item.id==="revenue-growth" && numbers[0]) return ja ? `売上が${abs(numbers[0])}%減っています` : `its revenue fell ${abs(numbers[0])}%`;
+  if(item.id==="margin-decline" && numbers.length>=2) return ja ? `営業利益率が${numbers[0]}%から${numbers[1]}%に下がっています` : `its operating margin fell from ${numbers[0]}% to ${numbers[1]}%`;
+  if(item.id==="operating-margin" && numbers[0] && /税引前|Pre-tax/.test(text)) return ja ? `税引前で赤字です（利益率 ${numbers[0]}%）` : `its pre-tax margin was ${numbers[0]}%`;
+  if(item.id==="operating-margin" && numbers[0]) return ja ? `営業赤字です（営業利益率 ${numbers[0]}%）` : `its operating margin was ${numbers[0]}%`;
+  if(item.id==="momentum" && numbers.length) return ja ? `株価が約3か月で${abs(numbers.at(-1))}%下がっています` : `its share price fell ${abs(numbers.at(-1))}% over about three months`;
+  if(item.id==="share-count" && numbers[0]) return ja ? `平均株式数が${abs(numbers[0])}%増えています` : `its average share count rose ${abs(numbers[0])}%`;
+  if(item.id==="debt-cash") return ja ? "有利子負債が現金を上回っています" : "its debt exceeds its cash";
+  if(item.id==="cash-generation" && numbers[0]) return ja ? `簡易FCFがマイナスです（売上比 ${numbers[0]}%）` : `its simple free cash flow is negative (${numbers[0]}% of revenue)`;
+  return ja ? `${text}には注意が必要です` : `watch ${text}`;
+}
+const joinWords=(words:string[],ja:boolean)=>ja ? words.join("と") : words.join(" and ");
+/** Equal-weight summary on the factors every company has. The scores are shown above it, so the sentence says who leads and why in plain words,
+ * then one caution at most. Incomplete or incompatible evidence cannot produce a winner. `note` is the yardstick, for the caveats list. */
+export function overallComparison(companies: (Financials & {ticker:string})[],lang:"ja"|"en",now=Date.now()): {title:string;description:string;note?:string} {
   const ja=lang==="ja",common=commonTotals(companies,now);
   const ranked=companies.map((c,i)=>({c,scores:comparisonScores(c,now).filter(s=>common.ids.includes(s.id)),total:common.totals[i]}));
   if(new Set(companies.map(c=>!!c.referenceEvaluation)).size>1 || ranked.some(r=>r.total===null))
     return {title:ja?"総合評価に必要なデータが揃っていません":"There isn't enough data for an overall score",description:ja?"3社に共通する項目が3つ未満のため、総合順位は出していません。":"Fewer than three factors are available for every company, so no overall ranking is given."};
-  const count=common.ids.length, partial=count<7;
-  const basis=partial ? (ja?`（全社にそろう${count}項目で比較）`:` (on the ${count} factors every company has)`) : "";
+  const count=common.ids.length;
+  const note=count<7 ? (ja?`総合点は、全社にそろう${count}項目の平均です。`:`Overall scores average the ${count} factors every company has.`) : undefined;
   const periods=comparableQuarters(companies,now) ? "" : (ja?"決算期間が異なる会社を含みます。":"Reporting periods differ. ");
   ranked.sort((a,b)=>b.total!-a.total!);
   const best=ranked[0],next=ranked[1],gap=best.total!-next.total!;
-  const totals=ranked.map(r=>`${r.c.ticker} ${r.total!.toFixed(1)}/10`).join(" · ");
-  if(gap<0.3)return {title:ja?"総合評価は拮抗":"Overall assessment is close",description:ja?`${totals}${basis}。${periods}平均の差は0.3点未満で、明確な優位はありません。`:`${totals}${basis}. ${periods}The averages differ by less than 0.3 points, with no clear leader.`};
-  const advantages=best.scores.map(s=>({...s,gap:s.value!-Math.max(...ranked.slice(1).map(r=>r.scores.find(f=>f.id===s.id)!.value!))})).filter(s=>s.gap>0).sort((a,b)=>b.gap-a.gap).slice(0,2).map(s=>s.label[lang]);
-  const weak=best.c.preparedAnalysis?.items.find(i=>i.kind==="weakness")?.short[lang];
-  const reason=advantages.length ? (ja?`${advantages.join("・")}の強さが総合点を押し上げています。`:`Strength in ${advantages.join(" and ")} supports the overall lead.`) : (ja?"全体のバランスで上回ります。":"It leads on the balance of the factors.");
-  return {title:ja?`総合評価は${best.c.ticker}が優位`:`${best.c.ticker} leads overall`,description:ja?`${totals}${basis}。${periods}${reason}${weak?`ただし、${weak}には注意が必要です。`:""}`:`${totals}${basis}. ${periods}${reason}${weak?` Key caution: ${weak}.`:""}`};
+  const value=(r:typeof best,id:ScoreId)=>r.scores.find(s=>s.id===id)!.value!;
+  // The factors where `r` is ahead of every company in `others`, largest lead first.
+  const edges=(r:typeof best,others:typeof ranked)=>r.scores.map(s=>({id:s.id,lead:s.value!-Math.max(...others.map(o=>value(o,s.id)))}))
+    .filter(s=>s.lead>0).sort((a,b)=>b.lead-a.lead).slice(0,2);
+  const words=(list:{id:ScoreId}[])=>joinWords(list.map(s=>factorWords[s.id][lang]),ja);
+  const weakness=(r:typeof best)=>r.c.preparedAnalysis?.items.find(i=>i.kind==="weakness");
+  if(gap<0.3) {
+    const a=edges(best,[next]),b=edges(next,[best]);
+    const split=a.length && b.length ? (ja?`${best.c.ticker}は${words(a.slice(0,1))}、${next.c.ticker}は${words(b.slice(0,1))}で上回ります。`:`${best.c.ticker} is ahead in ${words(a.slice(0,1))}, ${next.c.ticker} in ${words(b.slice(0,1))}.`) : "";
+    return {title:ja?"総合評価は拮抗":"Overall assessment is close",description:ja?`${periods}総合点の差は0.3点未満で、はっきりした優劣はありません。${split}`:`${periods}The overall scores are within 0.3 points, so there is no clear leader. ${split}`.trim(),note};
+  }
+  const lead=edges(best,ranked.slice(1));
+  const strongly=lead.length>0 && Math.min(...lead.map(s=>s.lead))>=3;
+  const first=lead.length ? (ja?`${best.c.ticker}は${words(lead)}で${strongly?"大きく":""}上回ります。`:`${best.c.ticker} is ${strongly?"well ":""}ahead in ${words(lead)}.`)
+    : (ja?`${best.c.ticker}は項目全体のバランスで上回ります。`:`${best.c.ticker} leads on the balance of the factors.`);
+  // The runner-up: its own strength against the leader, and its weakness as the one caution; otherwise the leader's weakness.
+  const counter=edges(next,[best]).slice(0,1), nextWeak=weakness(next), bestWeak=weakness(best);
+  let second="";
+  if(counter.length && nextWeak) second=ja?`${next.c.ticker}は${words(counter)}が強みですが、${cautionClause(nextWeak,lang)}。`:`${next.c.ticker} is stronger in ${words(counter)}, but ${cautionClause(nextWeak,lang)}.`;
+  else if(bestWeak) second=ja?`ただし、${best.c.ticker}は${cautionClause(bestWeak,lang)}。`:`However, ${cautionClause(bestWeak,lang).replace(/^its /,`${best.c.ticker}'s `).replace(/^watch /,`watch ${best.c.ticker}'s `)}.`;
+  else if(counter.length) second=ja?`${next.c.ticker}は${words(counter)}で上回ります。`:`${next.c.ticker} is ahead in ${words(counter)}.`;
+  return {title:ja?`総合評価は${best.c.ticker}が優位`:`${best.c.ticker} leads overall`,description:ja?`${periods}${first}${second}`:`${periods}${first} ${second}`.trim(),note};
 }
