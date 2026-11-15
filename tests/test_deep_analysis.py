@@ -640,6 +640,26 @@ class DeepAnalysisTests(unittest.TestCase):
             self.assertEqual(db.execute("SELECT state,failure FROM deep_analyses").fetchone()[:], ('held', 'interrupted'))
 
 
+    def test_rejected_copy_is_kept_in_the_database_never_in_health_and_can_be_rechecked_without_a_call(self):
+        self.earnings()
+        bad = json.loads(json.dumps(GOOD))
+        bad['points'] = bad['points'] + [point('売上は45%増。', 'Revenue rose 45%.')]
+        import contextlib, io
+        with contextlib.redirect_stdout(io.StringIO()):
+            self.assertEqual(self.run_deep(reply(bad)), 'done')
+        with deep_analysis.connect(self.path) as db:
+            rows = db.execute("SELECT subject,part,reason,ja,quote FROM deep_rejected_copy").fetchall()
+            self.assertEqual(len(rows), 1)
+            self.assertEqual((rows[0]['part'], rows[0]['ja']), ('point', '売上は45%増。'))
+            self.assertTrue(rows[0]['quote'] and rows[0]['reason'].startswith('unsupported-number'))
+            self.assertNotIn('45%', json.dumps(deep_analysis.diagnostics(db, now=base.NOW.timestamp())))  # never in /health
+            old = db.execute("SELECT at FROM deep_rejected_copy").fetchone()[0]
+        self.assertEqual(deep_analysis.recheck_rejected(self.path), [])  # still rejected under today's checks; nothing is called
+        deep_analysis.save_rejected(self.path, {'ref': 'x', 'subject': 'AMD'}, 'point', 'r', {'ja': 'a', 'en': 'b'}, 'q', now=old + 61 * 86400)
+        with deep_analysis.connect(self.path) as db:
+            self.assertEqual(db.execute("SELECT count(*) FROM deep_rejected_copy").fetchone()[0], 1)  # the 61-day-old record went
+
+
 class IndicatorAnalysisTests(unittest.TestCase):
     setUp = base.OfficialResearchTests.setUp
 
