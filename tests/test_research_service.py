@@ -293,6 +293,17 @@ class ResearchServiceTests(unittest.TestCase):
             state = app.public_state()
         self.assertEqual(state['releaseWatch']['recentAlerts'][0]['event'], 'cpi-2026-10-14')
 
+    def test_health_shows_the_japanese_news_translation_watch_and_the_incident_watch_runs_it(self):
+        # Owner, Nov 15: a stalled translator must never silently empty the Japanese home.
+        with tempfile.TemporaryDirectory() as folder:
+            app = service.AutomaticMonitor(Path(folder) / 'db.sqlite', Path(folder) / 'snapshot.json')
+            block = app.public_state()['companyWireTranslation']
+            self.assertEqual(block['pending'], {'count': 0, 'oldestMinutes': None})
+            self.assertEqual((block['calls24h'], block['budgetReached']), (0, False))
+            self.assertEqual(block['alerts'], [])
+            self.assertTrue(app.check_incident_watch_once())
+            self.assertIsNotNone(app.company_wire_watch_at)
+
     def test_monitor_recovers_after_an_unexpected_worker_exception(self):
         with tempfile.TemporaryDirectory() as folder:
             app = service.AutomaticMonitor(Path(folder) / 'db.sqlite', Path(folder) / 'snapshot.json')

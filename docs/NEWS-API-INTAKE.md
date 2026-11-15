@@ -118,4 +118,8 @@ The review page has buttons to test each feed once ("ハイテク全銘柄の取
 Old rows age out of the home within 24 hours. The intake result (`stockNewsIntake` in the monitor state) carries `delay` per stream:
 how long after publication newly found articles reached the monitor (count, min, median, max, in seconds). That is the intake delay;
 the translation and display delay are separate. One request cannot measure the provider's delay, so run it for a day.
-Translation volume is bounded by `COMPANY_WIRE_TRANSLATION_DAILY_LIMIT` (model calls a day, default 600).
+Translation volume is bounded by `COMPANY_WIRE_TRANSLATION_DAILY_LIMIT` (model calls in any 24 hours, default 6000; see the
+calculation in `scripts/research/company_wire.py`). `/health` shows `companyWireTranslation` (waiting stories, call count against the
+limit, last result, last translation, last Stock News success per stream), and the incident watch sends a critical phone alert when the
+budget is reached, every call fails for 15 minutes, Stock News stories wait more than 20 minutes for 30 minutes while new ones arrive,
+or the 'tech' stream has had no successful poll for 30 minutes.

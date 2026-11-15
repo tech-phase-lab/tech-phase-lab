@@ -650,6 +650,9 @@ class AutomaticMonitor:
         self.x_stream_requested = x_stream_runtime.requested()
         self.x_stream_status = {"mode": "waiting"} if self.x_stream_requested else None
         self.priority_completion_latency_ms = None
+        # Owner, Nov 15: the translation watch's clocks start at this service start, so a restart never alerts for older history.
+        self.started_ts = time.time()
+        self.company_wire_watch_at = None
         self.priority_metrics_interval = positive_int(
             "RESEARCH_PRIORITY_METRICS_INTERVAL_SECONDS", 300, 30
         )
@@ -1358,12 +1361,15 @@ class AutomaticMonitor:
         if os.environ.get("COMPANY_WIRE_ENABLED", "true").lower() == "false":
             return
         while not self.stop_event.is_set():
-            result = None
+            wait = 20
             try:
-                result = company_wire.translate_once(self.db_path)
+                # run_once records every result (and turns an unexpected error into a code) for the translation watch.
+                result, wait = company_wire.run_once(self.db_path)
+                if company_wire.failing(result):
+                    print(f"company-wire-translation-failed {company_wire.result_code(result)}", flush=True)
             except Exception as error:
                 print(f"company-wire-translation-failed {type(error).__name__} {failure_detail(error)}".rstrip(), flush=True)
-            self.stop_event.wait(3 if result == "done" else 20)
+            self.stop_event.wait(wait)
 
     def company_wire_feed(self):
         with company_wire.connect(self.db_path) as db:
@@ -1914,6 +1920,10 @@ class AutomaticMonitor:
             deep_issue = deep_analysis.sync_incident(db)
             if deep_issue:
                 issues.append(deep_issue)
+            # Owner, Nov 15: the Japanese home news must never empty silently. Checked once a minute (the alerts count in minutes).
+            if self.company_wire_watch_at is None or time.monotonic() - self.company_wire_watch_at >= 60:
+                self.company_wire_watch_at = time.monotonic()
+                issues.extend(company_wire.sync_incident(db, env=os.environ, started_ts=self.started_ts))
         return issues
 
     def check_incident_watch_once(self):
@@ -2086,6 +2096,10 @@ class AutomaticMonitor:
             state["signalIntake"]["officialResearch"] = official_research.diagnostics(db)
             state["signalIntake"]["issuerSyndication"] = issuer_syndication.diagnostics(db)
             state["signalIntake"]["issuerBusinessNews"] = issuer_business_news.diagnostics(db,datetime.now(timezone.utc))
+            try:
+                state["companyWireTranslation"] = company_wire.translation_health(db, env=os.environ)
+            except Exception:
+                state["companyWireTranslation"] = {"error": "company-wire-translation-unavailable"}
             state["incidents"] = monitor.operational_incident_summary(
                 db, delivery_enabled=self.notification_enabled
             )
