@@ -1,10 +1,10 @@
 "use client";
 
-import { useRef } from "react";
+import { useLayoutEffect, useRef, useState } from "react";
 import type { Language } from "@/lib/research/data";
 import type { CompanyWireItem } from "@/lib/research/company-wire";
 import type { GeneralNewsFeed } from "@/lib/research/general-news";
-import { topicCards, topicImpact, type TopicImpact } from "@/lib/research/topics";
+import { summaryMayOverflow, summaryToggle, topicCards, topicCredit, topicImpact, type TopicImpact } from "@/lib/research/topics";
 import { dayKey, dayLabel, pageWindow, withDayDividers } from "@/lib/research/news-day";
 import FeedPagination from "./feed-pagination";
 import styles from "./general-news.module.css";
@@ -12,8 +12,33 @@ import styles from "./general-news.module.css";
 const clock = new Intl.DateTimeFormat("ja-JP", { timeZone: "Asia/Tokyo", hour: "2-digit", minute: "2-digit", hour12: false });
 const IMPACT_CLASS: Record<TopicImpact, string> = { positive: "topicPositive", negative: "topicNegative", neutral: "topicNeutral" };
 
-/** 注目トピック (owner, Nov 15): the Stock News API stories as cards, newest first, with a divider per day. Every card is open:
- * ticker and impact, the time, the full headline, its summary when one exists, and the publisher with a link to the article.
+/** A card's summary in three lines; a longer one gets a 「＋」 that opens the full text (「−」 closes it). Until the browser has measured
+ * the text, the length decides whether the button is shown (summaryMayOverflow), so the first paint already has it. */
+function TopicSummary({ text, lang }: { text: string; lang: Language }) {
+  const ja = lang === "ja";
+  const ref = useRef<HTMLParagraphElement>(null);
+  const [open, setOpen] = useState(false);
+  const [overflow, setOverflow] = useState(() => summaryMayOverflow(text, ja));
+  useLayoutEffect(() => {
+    const element = ref.current;
+    if (!element || open) return;
+    const measure = () => setOverflow(element.scrollHeight > element.clientHeight + 1);
+    measure();
+    if (typeof ResizeObserver === "undefined") return;
+    const observer = new ResizeObserver(measure);
+    observer.observe(element);
+    return () => observer.disconnect();
+  }, [text, open]);
+  const toggle = summaryToggle(open, ja);
+  return <div className={styles.topicSummaryRow}>
+    <p ref={ref} className={`${styles.topicSummary}${open ? "" : ` ${styles.topicClamped}`}`} lang={lang}>{text}</p>
+    {(overflow || open) && <button type="button" className={styles.topicMore} aria-expanded={open} aria-label={toggle.label} onClick={() => setOpen(!open)}>{toggle.text}</button>}
+  </div>;
+}
+
+/** 注目トピック (owner, Nov 15): the Stock News API stories as cards, newest first, with a divider per day. Each card: ticker and impact,
+ * the time, the full headline as the link to the article (new tab), its summary in up to three lines with 「＋」, and the publisher in
+ * small type. The same story from several publishers is one card (topicCards). One credit line closes the list.
  * No business-impact text or confidence (the provider gives only a short summary), and no gold: FREE members see this page too. */
 export default function TopicsList({ lang, data, wire, wireReady, error, receivedAt, page, onPage }: {
   lang: Language; data: GeneralNewsFeed | null; wire: Record<string, CompanyWireItem[]>; wireReady: boolean; error: boolean;
@@ -41,15 +66,13 @@ export default function TopicsList({ lang, data, wire, wireReady, error, receive
             <span className={styles.topicTags}>{card.tickers && <span className={styles.topicTicker}>{card.tickers}</span>}<span className={styles.topicImpact}>{impactText(card.impact)}</span></span>
             <time dateTime={card.at}>{clock.format(new Date(card.at))}</time>
           </div>
-          <h3 className={styles.topicTitle} lang={lang}>{card.title}</h3>
-          {card.summary && <p className={styles.topicSummary} lang={lang}>{card.summary}</p>}
-          <div className={styles.topicSource}>
-            <span>{card.publisher}</span>
-            <a href={card.url} target="_blank" rel="noopener noreferrer">{ja ? "元記事を読む" : "Read the article"} <span aria-hidden="true">↗</span></a>
-          </div>
+          <h3 className={styles.topicTitle} lang={lang}><a href={card.url} target="_blank" rel="noopener noreferrer">{card.title}</a></h3>
+          {card.summary && <TopicSummary text={card.summary} lang={lang} />}
+          <p className={styles.topicPublisher}>{card.publisher}</p>
         </article>;
         return rule ? [rule, row] : row;
       })}</div>}
     <FeedPagination page={current} pages={pages} ja={ja} onChange={n => { onPage(n); top.current?.scrollIntoView({ block: "start", behavior: "instant" }); }} />
+    {cards.length > 0 && <p className={styles.topicCredit}>{topicCredit(ja)}</p>}
   </section>;
 }

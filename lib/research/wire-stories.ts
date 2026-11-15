@@ -114,12 +114,25 @@ export function wireStories(wire: Record<string, CompanyWireItem[]>, lang: Langu
   return stories;
 }
 
-function buildWireStories(wire: Record<string, CompanyWireItem[]>, lang: Language, watched?: ReadonlySet<string>): WireStory[] {
+/** One company headline that may be shown: its ticker, the row and its title in the page's language (cleaned), oldest first.
+ * Headlines that are not news, or stale results, are left out. Shared by the story grouping below and the topics page. */
+export type StoryCandidate = { ticker: string; item: CompanyWireItem; title: string };
+export function storyCandidates(wire: Record<string, CompanyWireItem[]>, lang: Language, watched?: ReadonlySet<string>): StoryCandidate[] {
   const ja = lang === "ja";
-  const items = Object.entries(wire).flatMap(([ticker, list]) => watched && !watched.has(ticker) ? [] : list.flatMap(item => {
+  return Object.entries(wire).flatMap(([ticker, list]) => watched && !watched.has(ticker) ? [] : list.flatMap(item => {
     const title = ja ? (item.titleJa && tidyJapanese(cleanTitle(item.titleJa))) : cleanTitle(item.titleEn);
     return title && !isNotNews(item.titleEn) && !isNotNews(title) && !staleResults(ticker, item.titleEn, item.publishedAt) && !staleResults(ticker, title, item.publishedAt) ? [{ ticker, item, title }] : [];
   })).sort((a, b) => Date.parse(a.item.publishedAt) - Date.parse(b.item.publishedAt));
+}
+/** The grouping rule of the stories: the same headline, or English headlines sharing half their words, within 24 hours. */
+export const storyKey = normalized;
+export const storyWords = words;
+export const similarStory = similar;
+export const STORY_WINDOW_MS = WINDOW_MS;
+
+function buildWireStories(wire: Record<string, CompanyWireItem[]>, lang: Language, watched?: ReadonlySet<string>): WireStory[] {
+  const ja = lang === "ja";
+  const items = storyCandidates(wire, lang, watched);
   type Cluster = { key: string; words: Set<string>; first: number; tickers: string[]; best: (typeof items)[number] };
   const clusters: Cluster[] = [];
   for (const entry of items) {
