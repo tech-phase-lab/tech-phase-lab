@@ -171,17 +171,17 @@ SENTIMENTS = ('positive', 'negative', 'neutral')
 SUMMARY_EN_MAX = 1000   # characters of the provider's article text kept (and sent to the model) as the English summary
 
 
-def summary_text(value):
-    """The provider's article text as a one-paragraph English summary: whitespace collapsed, NUL removed, at most SUMMARY_EN_MAX
+def summary_text(value, limit=SUMMARY_EN_MAX):
+    """The provider's article text as a one-paragraph English summary: whitespace collapsed, NUL removed, at most ``limit``
     characters (cut at the last sentence end, else the last word, with an ellipsis). '' for anything that is not text."""
     if not isinstance(value, str):
         return ''
     text = re.sub(r'\s+', ' ', value.replace('\x00', '')).strip()
-    if len(text) <= SUMMARY_EN_MAX:
+    if len(text) <= limit:
         return text
-    cut = text[:SUMMARY_EN_MAX]
+    cut = text[:limit]
     end = max(cut.rfind('. '), cut.rfind('! '), cut.rfind('? '))
-    if end >= SUMMARY_EN_MAX // 2:
+    if end >= limit // 2:
         return cut[:end + 1]
     return (cut[:cut.rfind(' ')].rstrip(' ,;:') if ' ' in cut else cut[:-1]) + '…'
 
@@ -345,7 +345,6 @@ Use only names, tickers and Latin-script words that appear in the headline; writ
 Do not turn "a", "one" or "per share" into a digit (1株, 1社, 1カ所) unless the headline gives that number.
 Keep every number exactly as written (convert units only exactly, e.g. $1.2 billion = 12億ドル); never add, drop or round a figure.
 Keep negation and direction (rise/fall, beat/miss, raise/cut) exactly. When an item has previousRejection, that was why the last translation was rejected; avoid it.
-Also write summaryJa. When an item has text (the article's short English summary), translate that text into natural Japanese of at most 120 characters (one to three sentences), using only facts stated in text or the headline: keep every number exactly as written, keep names, negation and direction, add no analysis, opinion or fact of your own, and leave out anything you cannot keep exactly. When an item has no text, or you judge it not-news or off-topic, summaryJa is "".
 Also write shortJa: the same headline as one short Japanese line of at most 22 characters, for a one-line news band. Keep the subject (company or ticker) and the single most important fact; keep any number you use exactly as in titleJa; never add a fact or a number that titleJa does not have; no trailing punctuation; do not cut a sentence off mid-word.
 Also judge each headline (kind). "news" states a concrete fact about the company's business or its stock: results, guidance, a deal, order, investment, product, partnership, lawsuit, regulatory step, executive change, an analyst rating or price-target change, or a market move together with its stated cause.
 "not-news" is everything else, for example: investment advice or opinion ("should you buy", "which stock is better", "X vs Y", "a buying opportunity", "buy the dip"); comparisons and listicles; price predictions and forecasts; any headline that asks a question or starts with "Why" or "What" without giving the answer; teasers that hide their answer ("here is why"); what-if or past-returns pieces; human-interest, hiring, workplace, lifestyle, culture, entertainment or feature stories (for example a vocational graduate getting a job, an employee's life story, a TV programme); and promotional or community posts.
@@ -527,7 +526,8 @@ def candidates(db, now_ts):
         if any(r['source'] == 'stocknews' for r in copies):
             best['source'] = 'stocknews'
         # The English summary of any copy (only Stock News API copies carry one), so it is translated with the headline.
-        best['summary_en'] = next((r['summary_en'] for r in copies if r['summary_en']), '')
+        best['summary_en'] = next((r['summary_en'] for r in copies if r['summary_en'] and r['source'] == 'stocknews'
+                                   and stock_news_publisher_kept(r['publisher'])), '')
         entries.append(best)
     # A story already translated for the same company needs no second copy.
     done = {}
@@ -617,6 +617,44 @@ def validated_short(short_ja, title_ja):
 
 
 SUMMARY_JA_MAX = 300
+# Owner, Nov 16 (要約は月200円まで): appended to POLICY, and summaryJa added to the schema, only in a call whose batch holds an article
+# that gets a summary; a headline-only call is exactly the call it was before.
+SUMMARY_POLICY = ('Also write summaryJa. When an item has text, translate it into natural Japanese of at most 100 characters, one or two '
+                  'sentences, using only facts in text or the headline: keep numbers exactly, keep names, negation and direction, add '
+                  'nothing of your own, and leave out what you cannot keep exactly. Without text, or for not-news or off-topic, summaryJa is "".\n')
+SUMMARY_SEND_MAX = 500          # characters of English text sent to the model per article (the page still shows up to SUMMARY_EN_MAX)
+DEFAULT_SUMMARY_DAILY_LIMIT = 100
+# gpt-4.1-mini prices, USD per 1M tokens (owner, Nov 16), and how the summary share of a call is estimated from what was sent.
+PRICE_PER_MILLION = {'input': 0.4, 'cachedInput': 0.1, 'output': 1.6}
+SUMMARY_POLICY_TOKENS = 90      # SUMMARY_POLICY and the schema field, per call that carries them
+SUMMARY_ITEM_TOKENS = 10        # the "text" / "summaryJa" keys and quotes, per summary, each way
+EN_CHARS_PER_TOKEN = 4.0
+JA_TOKENS_PER_CHAR = 1.2        # conservative for Japanese in gpt-4.1's tokenizer
+
+
+def summary_daily_limit(env):
+    """COMPANY_WIRE_SUMMARY_DAILY_LIMIT: summaries requested per Japan-time day (default 100; 0 turns summaries off). A malformed
+    value falls back to the default."""
+    try:
+        value = int(str(env.get('COMPANY_WIRE_SUMMARY_DAILY_LIMIT', DEFAULT_SUMMARY_DAILY_LIMIT)).strip())
+    except (TypeError, ValueError):
+        return DEFAULT_SUMMARY_DAILY_LIMIT
+    return value if value >= 0 else DEFAULT_SUMMARY_DAILY_LIMIT
+
+
+def daily_count(db, name, ts):
+    row = db.execute('SELECT count FROM company_wire_daily WHERE day=? AND name=?', (day_of(ts), name)).fetchone()
+    return row[0] if row else 0
+
+
+def summary_cost(counts):
+    """Estimated tokens and USD of the day's summaries from its counters (uncached input price, so an upper estimate)."""
+    requested = counts.get('summaryRequested', 0)
+    tokens_in = round(counts.get('summaryInputChars', 0) / EN_CHARS_PER_TOKEN + requested * SUMMARY_ITEM_TOKENS
+                      + counts.get('summaryCalls', 0) * SUMMARY_POLICY_TOKENS)
+    tokens_out = round(counts.get('summaryOutputChars', 0) * JA_TOKENS_PER_CHAR + requested * SUMMARY_ITEM_TOKENS)
+    usd = (tokens_in * PRICE_PER_MILLION['input'] + tokens_out * PRICE_PER_MILLION['output']) / 1_000_000
+    return {'inputTokens': tokens_in, 'outputTokens': tokens_out, 'usd': round(usd, 4)}
 JAPANESE = re.compile(r'[぀-ヿ㐀-鿿]')
 
 
@@ -641,7 +679,7 @@ def validated_summary(summary_ja, text, title):
     return summary_ja
 
 
-SUMMARY_OUTPUT_TOKENS = 320   # the output allowance added per article that carries English text (120 Japanese characters and the JSON)
+SUMMARY_OUTPUT_TOKENS = 160   # the output allowance added per summary requested (100 Japanese characters and the JSON)
 
 
 def usage_tokens(response):
@@ -667,6 +705,7 @@ def translate_once(path, transport=None, env=None, now_ts=None, report=None):
         return 'disabled'
     key, model, _ = config
     limit = daily_limit(os.environ if env is None else env)
+    summary_limit = summary_daily_limit(os.environ if env is None else env)
     with connect(path) as db:
         schema_translation(db)
         prefilter(db, now_ts)
@@ -683,6 +722,19 @@ def translate_once(path, transport=None, env=None, now_ts=None, report=None):
         marks = ','.join('?' for _ in rows)
         retried = db.execute(f'SELECT COUNT(*) FROM company_wire_article_attempts WHERE article IN ({marks})',
                              [r['article'] for r in rows]).fetchone()[0]
+        # Owner, Nov 16: at most COMPANY_WIRE_SUMMARY_DAILY_LIMIT summaries are requested per Japan-time day, the batch's first
+        # (Stock News, newest) articles with text first; past the cap the headline is translated alone and never gets a summary.
+        room = max(0, summary_limit - daily_count(db, 'summaryRequested', now_ts))
+        for r in rows:
+            r['send_text'] = summary_text(r['summary_en'], SUMMARY_SEND_MAX) if r['summary_en'] and room > 0 else ''
+            room -= bool(r['send_text'])
+        asked = [r for r in rows if r['send_text']]
+        if asked:
+            bump(db, 'summaryRequested', len(asked), now_ts)
+            bump(db, 'summaryCalls', 1, now_ts)
+            bump(db, 'summaryInputChars', sum(len(r['send_text']) for r in asked), now_ts)
+        skipped_by_cap = sum(1 for r in rows if r['summary_en'] and not r['send_text'])
+        bump(db, 'summaryOverCap', skipped_by_cap, now_ts)
         db.execute('INSERT INTO company_wire_calls VALUES(?)', (now_ts,))
         bump(db, 'calls', 1, now_ts)
         bump(db, 'sent', len(rows), now_ts)
@@ -696,24 +748,26 @@ def translate_once(path, transport=None, env=None, now_ts=None, report=None):
             bump_max(db, 'waitMaxSeconds', max(waits), now_ts)
         db.commit()
     by_id = {str(i): r for i, r in enumerate(rows)}
-    with_text = sum(1 for r in rows if r['summary_en'])
+    with_text = sum(1 for r in rows if r['send_text'])
+    fields = {'id': {'type': 'string'}, 'titleJa': {'type': 'string'}, 'shortJa': {'type': 'string'},
+              **({'summaryJa': {'type': 'string'}} if with_text else {}),
+              'kind': {'type': 'string', 'enum': ['news', 'not-news', 'off-topic']}}
     payload = {
-        'model': model, 'store': False, 'max_output_tokens': 4000 + SUMMARY_OUTPUT_TOKENS * with_text, 'instructions': POLICY,
-        'input': json.dumps([{'id': i, 'title': r['title'], **({'text': r['summary_en']} if r['summary_en'] else {}),
+        'model': model, 'store': False, 'max_output_tokens': 4000 + SUMMARY_OUTPUT_TOKENS * with_text,
+        'instructions': POLICY + SUMMARY_POLICY if with_text else POLICY,
+        'input': json.dumps([{'id': i, 'title': r['title'], **({'text': r['send_text']} if r['send_text'] else {}),
                               **({'previousRejection': earlier[r['article']]} if r['article'] in earlier else {})}
                              for i, r in by_id.items()], ensure_ascii=False),
         'text': {'format': {'type': 'json_schema', 'name': 'company_wire_translation', 'strict': True, 'schema': {
             'type': 'object', 'additionalProperties': False, 'required': ['items'], 'properties': {'items': {
                 'type': 'array', 'items': {'type': 'object', 'additionalProperties': False,
-                                           'required': ['id', 'titleJa', 'shortJa', 'summaryJa', 'kind'],
-                                           'properties': {'id': {'type': 'string'}, 'titleJa': {'type': 'string'}, 'shortJa': {'type': 'string'},
-                                                          'summaryJa': {'type': 'string'},
-                                                          'kind': {'type': 'string', 'enum': ['news', 'not-news', 'off-topic']}}}}}}}},
+                                           'required': list(fields), 'properties': fields}}}}}},
     }
     translated = {}
     shorts = {}
     summaries = {}
     tokens = (0, 0)
+    summary_chars = 0
     reasons = {}
     skipped = set()
     skip_reason = {}
@@ -728,6 +782,8 @@ def translate_once(path, transport=None, env=None, now_ts=None, report=None):
             row = by_id.get(item.get('id'))
             if row is None or row['article'] in translated or row['article'] in skipped:
                 continue
+            if row['send_text'] and isinstance(item.get('summaryJa'), str):
+                summary_chars += len(item['summaryJa'])
             # Oct 18: the model also says when a headline carries no fact; it is never published or retried.
             if item.get('kind') in ('not-news', 'off-topic'):
                 skipped.add(row['article'])
@@ -736,7 +792,7 @@ def translate_once(path, transport=None, env=None, now_ts=None, report=None):
             try:
                 translated[row['article']] = validated_translation(item.get('titleJa'), row['title'])
                 shorts[row['article']] = validated_short(item.get('shortJa'), translated[row['article']])
-                summaries[row['article']] = validated_summary(item.get('summaryJa'), row['summary_en'], row['title'])
+                summaries[row['article']] = validated_summary(item.get('summaryJa'), row['send_text'], row['title'])
             except ValueError as error:
                 reasons[row['article']] = str(error)[:40] or 'invalid'
     except Exception as error:
@@ -761,11 +817,12 @@ def translate_once(path, transport=None, env=None, now_ts=None, report=None):
         bump(db, 'notNews', len(skipped), now_ts)
         bump(db, 'rejected', len(rows) - len(translated) - len(skipped), now_ts)
         # Owner, Nov 15: summaries ride in the same call; how many were kept or dropped, and the tokens the calls used.
-        offered = [row['article'] for row in rows if row['summary_en'] and row['article'] in translated]
+        offered = [row['article'] for row in rows if row['send_text'] and row['article'] in translated]
         bump(db, 'summaries', sum(1 for a in offered if summaries.get(a)), now_ts)
         bump(db, 'summaryRejected', sum(1 for a in offered if not summaries.get(a)), now_ts)
         bump(db, 'inputTokens', tokens[0], now_ts)
         bump(db, 'outputTokens', tokens[1], now_ts)
+        bump(db, 'summaryOutputChars', summary_chars, now_ts)
     return 'done' if translated or skipped else (outage or 'retry')
 
 
@@ -1070,17 +1127,18 @@ def translation_health(db, now_ts=None, env=None):
         'stockNewsIntake': {'enabled': intake_enabled(env),
                             'streams': {name: {'lastSuccessAt': at} for name, at in sorted(intake_successes(db).items())}},
         'alerts': sorted(alerts),
-        'daily': daily_counts(db, now_ts),
+        'daily': daily_counts(db, now_ts, env),
     }
 
 
 DAILY_FIELDS = (('articlesArrived', 'articles'), ('translated', 'translated'), ('calls', 'calls'), ('retries', 'retries'),
                 ('headlinesSent', 'sent'), ('judgedNotNews', 'notNews'), ('notAccepted', 'rejected'), ('prefiltered', 'prefiltered'),
-                ('summariesTranslated', 'summaries'), ('summariesNotAccepted', 'summaryRejected'),
+                ('summariesRequested', 'summaryRequested'), ('summariesTranslated', 'summaries'), ('summariesNotAccepted', 'summaryRejected'),
+                ('summariesOverCap', 'summaryOverCap'),
                 ('inputTokens', 'inputTokens'), ('outputTokens', 'outputTokens'))
 
 
-def daily_counts(db, now_ts):
+def daily_counts(db, now_ts, env=None):
     """Owner, Nov 15: per day (Japan time, kept in the database so a restart does not reset it), today and yesterday:
     articlesArrived (new articles, each counted once whatever tickers or feeds it came under; by first feed in articlesBySource),
     translated (articles whose Japanese was accepted), calls (model calls), retries (headlines sent again after a rejected or
@@ -1088,6 +1146,8 @@ def daily_counts(db, now_ts):
     shown, never retried), notAccepted (rejected by the checks or lost to a failed call; retried up to three attempts),
     prefiltered (owner, Nov 16: articles the site would hide anyway, never sent), summariesTranslated / summariesNotAccepted
     (owner, Nov 15: Japanese summaries of translated articles that carried English text, kept or dropped by the checks),
+    summariesRequested / summariesOverCap (owner, Nov 16: summaries asked for, and articles with text translated without one because
+    the day's COMPANY_WIRE_SUMMARY_DAILY_LIMIT was reached), summaryDailyLimit, summaryEstimate (tokens and USD of the summaries),
     inputTokens / outputTokens (the tokens the model reported for the day's calls), and how long articles waited between arrival and
     their first call: maxWaitMinutes and averageWaitMinutes (None before the day's first call)."""
     out = {'timezone': 'Asia/Tokyo'}
@@ -1098,6 +1158,9 @@ def daily_counts(db, now_ts):
         out[label] = {'date': day, **{field: counts.get(name, 0) for field, name in DAILY_FIELDS},
                       'maxWaitMinutes': round(counts.get('waitMaxSeconds', 0) / 60, 1) if waited else None,
                       'averageWaitMinutes': round(counts.get('waitSeconds', 0) / waited / 60, 1) if waited else None,
+                      # Owner, Nov 16: the summary cap and the estimated cost of the day's summaries (gpt-4.1-mini prices).
+                      'summaryDailyLimit': summary_daily_limit(os.environ if env is None else env),
+                      'summaryEstimate': {**summary_cost(counts), 'pricesPerMillionUsd': PRICE_PER_MILLION},
                       'articlesBySource': {name.split(':', 1)[1]: n for name, n in sorted(counts.items()) if name.startswith('articles:')},
                       # Owner, Nov 15: new Stock News API articles per publisher, taken or dropped (see KEEP_PUBLISHERS).
                       'stockNewsPublishers': {kind: {name.split(':', 1)[1]: n for name, n in sorted(counts.items(), key=lambda c: (-c[1], c[0]))

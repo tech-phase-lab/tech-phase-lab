@@ -74,11 +74,72 @@ class SummaryTests(unittest.TestCase):
         props = payload['text']['format']['schema']['properties']['items']['items']
         self.assertIn('summaryJa', props['required'])
         self.assertEqual(props['properties']['summaryJa'], {'type': 'string'})
-        self.assertIn('summaryJa', payload['instructions'])
+        self.assertEqual(payload['instructions'], company_wire.POLICY + company_wire.SUMMARY_POLICY)
+        self.assertIn('at most 100 characters, one or two sentences', payload['instructions'])
         self.assertEqual(payload['max_output_tokens'], 4000 + company_wire.SUMMARY_OUTPUT_TOKENS, 'room for the one article with text')
         sent = {item['title']: item for item in json.loads(payload['input'])}
         self.assertEqual(sent[TITLE]['text'], TEXT)
         self.assertNotIn('text', sent['Nvidia signs a supply deal with Foxconn'])
+
+    def test_a_headline_only_call_carries_no_summary_instructions_or_field(self):
+        self.store(summary='')
+        seen = []
+        self.assertEqual(self.run_round(answering(seen)), ['done'])
+        payload = seen[0]
+        self.assertEqual(payload['instructions'], company_wire.POLICY)
+        self.assertNotIn('summaryJa', payload['instructions'])
+        props = payload['text']['format']['schema']['properties']['items']['items']
+        self.assertNotIn('summaryJa', props['properties'])
+        self.assertEqual(props['required'], ['id', 'titleJa', 'shortJa', 'kind'])
+        self.assertEqual(payload['max_output_tokens'], 4000)
+        self.assertEqual(self.today()['summariesRequested'], 0)
+
+    def test_the_daily_summary_cap_translates_the_rest_without_a_summary(self):
+        for ticker, title in (('META', TITLE), ('NVDA', 'Nvidia fined $887 million by Italian regulator'), ('AMD', 'AMD fined $887 million by Italian regulator')):
+            self.store(ticker, title=title)
+        seen = []
+        result = company_wire.run_round(self.path, transport=answering(seen), env={**ENV, 'COMPANY_WIRE_SUMMARY_DAILY_LIMIT': '2'},
+                                        now_ts=self.now.timestamp())
+        self.assertEqual(result, ['done'])
+        sent = json.loads(seen[0]['input'])
+        self.assertEqual(sum('text' in item for item in sent), 2, 'only two summaries are requested')
+        self.assertEqual(seen[0]['max_output_tokens'], 4000 + 2 * company_wire.SUMMARY_OUTPUT_TOKENS)
+        feed = self.feed()
+        self.assertTrue(all(feed[t][0]['titleJa'] == TITLE_JA for t in ('META', 'NVDA', 'AMD')), 'every headline is translated')
+        with company_wire.connect(self.path) as db:
+            today = company_wire.daily_counts(db, self.now.timestamp(), {**ENV, 'COMPANY_WIRE_SUMMARY_DAILY_LIMIT': '2'})['today']
+        self.assertEqual((today['summariesRequested'], today['summariesOverCap'], today['summaryDailyLimit']), (2, 1, 2))
+        # The cap is reached: the next call of the day carries no summary instructions at all.
+        self.store('ORCL', title='Oracle fined $887 million by Italian regulator')
+        company_wire.run_round(self.path, transport=answering(seen), env={**ENV, 'COMPANY_WIRE_SUMMARY_DAILY_LIMIT': '2'}, now_ts=self.now.timestamp() + 600)
+        self.assertEqual(seen[-1]['instructions'], company_wire.POLICY)
+        self.assertNotIn('text', json.loads(seen[-1]['input'])[0])
+
+    def test_summary_limit_setting(self):
+        self.assertEqual(company_wire.summary_daily_limit({}), 100)
+        self.assertEqual(company_wire.summary_daily_limit({'COMPANY_WIRE_SUMMARY_DAILY_LIMIT': '0'}), 0)
+        self.assertEqual(company_wire.summary_daily_limit({'COMPANY_WIRE_SUMMARY_DAILY_LIMIT': 'abc'}), 100)
+        self.assertEqual(company_wire.summary_daily_limit({'COMPANY_WIRE_SUMMARY_DAILY_LIMIT': '-5'}), 100)
+        self.store()
+        seen = []
+        company_wire.run_round(self.path, transport=answering(seen), env={**ENV, 'COMPANY_WIRE_SUMMARY_DAILY_LIMIT': '0'}, now_ts=self.now.timestamp())
+        self.assertEqual(seen[0]['instructions'], company_wire.POLICY, '0 turns summaries off')
+
+    def test_the_english_text_sent_is_bounded(self):
+        long = ('Meta was fined by the regulator in Italy. ' * 30).strip()
+        self.store(summary=long)
+        seen = []
+        self.run_round(answering(seen, summary=''))
+        text = json.loads(seen[0]['input'])[0]['text']
+        self.assertLessEqual(len(text), company_wire.SUMMARY_SEND_MAX)
+        self.assertEqual(self.today()['summaryEstimate']['inputTokens'],
+                         round(len(text) / 4 + company_wire.SUMMARY_ITEM_TOKENS + company_wire.SUMMARY_POLICY_TOKENS))
+
+    def test_the_estimate_prices_the_days_summaries(self):
+        self.assertEqual(company_wire.PRICE_PER_MILLION, {'input': 0.4, 'cachedInput': 0.1, 'output': 1.6})
+        cost = company_wire.summary_cost({'summaryRequested': 100, 'summaryCalls': 100, 'summaryInputChars': 50000, 'summaryOutputChars': 10000})
+        self.assertEqual((cost['inputTokens'], cost['outputTokens']), (12500 + 1000 + 9000, 12000 + 1000))
+        self.assertAlmostEqual(cost['usd'], (22500 * 0.4 + 13000 * 1.6) / 1e6, places=4)
 
     def test_a_checked_summary_is_stored_per_article_and_shown_in_both_languages(self):
         self.store()
@@ -94,6 +155,8 @@ class SummaryTests(unittest.TestCase):
         today = self.today()
         self.assertEqual((today['summariesTranslated'], today['summariesNotAccepted']), (1, 0))
         self.assertEqual((today['inputTokens'], today['outputTokens']), (1200, 340))
+        self.assertEqual(today['summariesRequested'], 1)
+        self.assertGreater(today['summaryEstimate']['usd'], 0)
 
     def test_a_summary_failing_the_checks_keeps_the_headline_and_shows_no_japanese_summary(self):
         for bad in ('メタは12億ドルの制裁金を科された。',        # a number not in the English text
