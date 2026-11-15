@@ -783,6 +783,17 @@ class DeepAnalysisTests(unittest.TestCase):
         self.assertEqual(deep_analysis.release_date('https://x/y/page', 'no date', stored), stored)
 
 
+    def test_the_roster_shows_a_later_correct_analysis_over_an_old_wrong_page_hold(self):
+        now = base.NOW.timestamp()
+        with deep_analysis.connect(self.path) as db:
+            for ref, state, created, published in (('wrong', 'held', (base.NOW - timedelta(days=10)).isoformat(), None),
+                                                   ('right', 'done', (base.NOW - timedelta(days=40)).isoformat(), (base.NOW - timedelta(days=40)).isoformat())):
+                db.execute("INSERT INTO deep_analyses(source_ref,kind,subject,source_sha,state,created_at,published_at) VALUES(?,?,?,?,?,?,?)",
+                           (ref, 'earnings', 'DELL', 'x', state, created, published))
+            roster = {row['ticker']: row for row in deep_analysis.roster_status(db, now)}
+        self.assertEqual(roster['DELL']['deepState'], 'done')
+
+
 class IndicatorAnalysisTests(unittest.TestCase):
     setUp = base.OfficialResearchTests.setUp
 
