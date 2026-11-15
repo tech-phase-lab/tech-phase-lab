@@ -546,6 +546,23 @@ class DeepAnalysisTests(unittest.TestCase):
         self.assertEqual(len(items), 1)
 
 
+    def test_one_release_carried_by_several_pages_shows_once_and_is_not_analysed_again(self):
+        with deep_analysis.connect(self.path) as db:
+            for ref, at, url in (('event:1:a', '2026-11-30T21:03:00+00:00', 'https://www.sec.gov/arm-8k.htm'),
+                                 ('event:2:b', '2026-11-30T21:06:00+00:00', 'https://newsroom.arm.com/long-title'),
+                                 ('event:3:c', '2026-11-30T21:09:00+00:00', 'https://newsroom.arm.com/short')):
+                db.execute("INSERT INTO deep_analyses(source_ref,kind,subject,source_sha,state,created_at,published_at,source_url,payload) VALUES(?,?,?,?,?,?,?,?,?)",
+                           (ref, 'earnings', 'ARM', 'x', 'done', at, at, url, json.dumps(GOOD)))
+            later = '2026-12-20T00:00:00+00:00'  # the next quarter is a different release and shows too
+            db.execute("INSERT INTO deep_analyses(source_ref,kind,subject,source_sha,state,created_at,published_at,source_url,payload) VALUES(?,?,?,?,?,?,?,?,?)",
+                       ('event:9:z', 'earnings', 'ARM', 'x', 'done', later, later, 'https://newsroom.arm.com/q3', json.dumps(GOOD)))
+            items = deep_analysis.member_view(db, reference=datetime(2026, 12, 21, tzinfo=timezone.utc))
+            self.assertEqual(len(items), 2)
+            row = {'subject': 'ARM', 'url': 'https://example.com/fourth-page', 'observedAt': '2026-11-30T21:30:00+00:00'}
+            self.assertTrue(deep_analysis.same_release_done(db, row, base.NOW))
+            self.assertFalse(deep_analysis.same_release_done(db, {**row, 'observedAt': '2026-12-10T00:00:00+00:00'}, base.NOW))
+
+
 class IndicatorAnalysisTests(unittest.TestCase):
     setUp = base.OfficialResearchTests.setUp
 
