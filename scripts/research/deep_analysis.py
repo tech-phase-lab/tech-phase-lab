@@ -82,6 +82,10 @@ def schema(db):
         db.execute('ALTER TABLE deep_analyses ADD COLUMN version INTEGER NOT NULL DEFAULT 0')
     if 'detail' not in columns:
         db.execute('ALTER TABLE deep_analyses ADD COLUMN detail TEXT')
+    db.execute('''CREATE TABLE IF NOT EXISTS deep_rejected_copy(
+      id INTEGER PRIMARY KEY, source_ref TEXT NOT NULL, subject TEXT NOT NULL, at REAL NOT NULL, part TEXT NOT NULL, reason TEXT NOT NULL,
+      ja TEXT, en TEXT, quote TEXT, evidence_ids TEXT)''')
+    db.execute('CREATE INDEX IF NOT EXISTS deep_rejected_copy_ref ON deep_rejected_copy(source_ref)')
     db.execute('CREATE TABLE IF NOT EXISTS deep_old_retries(source_ref TEXT PRIMARY KEY, marker TEXT NOT NULL, at REAL NOT NULL, outcome TEXT NOT NULL)')
     db.execute('''CREATE TABLE IF NOT EXISTS deep_analysis_calls(
       at REAL NOT NULL, source_ref TEXT NOT NULL, model TEXT NOT NULL, ok INTEGER NOT NULL)''')
@@ -628,6 +632,39 @@ def log_rejected(source, kind, reason, item, quote):
                       'ja': str(item.get('ja'))[:600], 'en': str(item.get('en'))[:600], 'quote': (quote or '')[:2000]}, ensure_ascii=False), flush=True)
 
 
+REJECTED_KEEP_DAYS = 60
+
+
+def save_rejected(path, source, kind, reason, item, quote, now=None):
+    """Keep the rejected copy and the excerpt it cited (owner, Nov 15) so a later, finer check can look at it again without a new model call.
+    Database only: never in /health. Never raises (keeping the record must not break the analysis). Records older than REJECTED_KEEP_DAYS go."""
+    try:
+        item = item if isinstance(item, dict) else {}
+        now = time.time() if now is None else now
+        with connect(path) as db:
+            db.execute('INSERT INTO deep_rejected_copy(source_ref,subject,at,part,reason,ja,en,quote,evidence_ids) VALUES(?,?,?,?,?,?,?,?,?)',
+                       (source['ref'], source['subject'], now, kind, str(reason)[:120], str(item.get('ja'))[:1000], str(item.get('en'))[:1000],
+                        (quote or '')[:6000], json.dumps(item.get('evidenceIds')) if isinstance(item.get('evidenceIds'), list) else None))
+            db.execute('DELETE FROM deep_rejected_copy WHERE at<?', (now - REJECTED_KEEP_DAYS * 86400,))
+    except Exception:
+        return False
+    return True
+
+
+def recheck_rejected(path, source_ref=None):
+    """The stored rejected points that pass today's checks (no model call): [(subject, source_ref, ja, en)]. For the owner to review; it changes nothing."""
+    passed = []
+    with connect(path) as db:
+        rows = db.execute("SELECT * FROM deep_rejected_copy WHERE part='point' AND (? IS NULL OR source_ref=?) ORDER BY id", (source_ref, source_ref)).fetchall()
+    for row in rows:
+        try:
+            checked({'ja': row['ja'], 'en': row['en']}, row['quote'] or '')
+        except (ValueError, TypeError, KeyError):
+            continue
+        passed.append((row['subject'], row['source_ref'], row['ja'], row['en']))
+    return passed
+
+
 def earnings_reserve(limit):
     return min(EARNINGS_RESERVE, limit // 3)
 
@@ -728,7 +765,7 @@ def run_once(path, transport=None, env=None, now=None, reference=None, only_ref=
             raise ValueError('incomplete')
         received = True
         note = bind(json.loads(brief_generator.output_text(response)), source['excerpts'],
-                    diagnose=lambda kind, reason, item, quote: log_rejected(source, kind, reason, item, quote))  # every rejection, no extra call; Railway log only
+                    diagnose=lambda kind, reason, item, quote: (log_rejected(source, kind, reason, item, quote), save_rejected(path, source, kind, reason, item, quote)))  # every rejection, no extra call: Railway log and the database, never /health
     except Exception as exc:
         reason = str(exc) if isinstance(exc, ValueError) else type(exc).__name__
         detail = json.dumps(exc.detail, ensure_ascii=False, sort_keys=True) if isinstance(exc, Unchecked) else None
