@@ -640,6 +640,28 @@ class DeepAnalysisTests(unittest.TestCase):
             self.assertEqual(db.execute("SELECT state,failure FROM deep_analyses").fetchone()[:], ('held', 'interrupted'))
 
 
+    def test_an_old_release_stored_under_a_new_date_is_not_taken_for_the_latest_quarter(self):
+        old = 'Exhibit 99.1\nDell Technologies Delivers First Quarter Fiscal 2025 Financial Results\nROUND ROCK, Texas \u2014 May 30, 2024\n' + base.BODY
+        self.stored_release(ticker='DELL', url='https://www.sec.gov/Archives/edgar/data/1571996/x/ex991.htm', text=old + '\nStatements of Income and Related Financial Highlights')
+        with deep_analysis.connect(self.path) as db:
+            self.assertEqual(deep_analysis.stored_release_sources(db, base.NOW, False, since=base.NOW - timedelta(days=30)), [])
+            reasons = deep_analysis.source_reasons(db, 'DELL', base.NOW)
+        self.assertEqual(reasons['verdicts'], {'stale-period': 1})
+        current = old.replace('2024', '2026').replace('2025', '2027')
+        self.stored_release(ticker='DELL', url='https://www.sec.gov/Archives/edgar/data/1571996/x/ex991.htm', text=current + '\nStatements of Income and Related Financial Highlights')
+        with deep_analysis.connect(self.path) as db:
+            self.assertEqual(len(deep_analysis.stored_release_sources(db, base.NOW, False, since=base.NOW - timedelta(days=30))), 1)
+        self.assertFalse(deep_analysis.stale_release('Results\nJanuary 15, 2027 ... December 2026', datetime(2027, 1, 20, tzinfo=timezone.utc)))
+
+    def test_health_says_why_a_roster_company_has_no_analysis(self):
+        self.stored_release(ticker='GEV', url='https://www.sec.gov/Archives/edgar/data/1996810/x/ex991.htm', text='tiny')
+        with deep_analysis.connect(self.path) as db:
+            report = deep_analysis.diagnostics(db, now=base.NOW.timestamp())
+        gev = {row['ticker']: row for row in report['roster']}['GEV']
+        self.assertEqual(gev['storedPages']['verdicts'], {'length': 1})
+        self.assertNotIn('tiny', json.dumps(report))
+
+
 class IndicatorAnalysisTests(unittest.TestCase):
     setUp = base.OfficialResearchTests.setUp
 
