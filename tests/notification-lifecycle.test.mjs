@@ -6,11 +6,12 @@ import React from 'react';
 import {renderToStaticMarkup} from 'react-dom/server';
 import ts from 'typescript';
 import {waitForIdentity} from '../lib/research/member-recovery.ts';
+import * as preferencesLoad from '../lib/research/preferences-load.ts';
 const require=createRequire(import.meta.url);
 const flush=()=>new Promise(resolve=>setImmediate(resolve));
 const pending=()=>{let resolve;const promise=new Promise(done=>{resolve=done;});return {promise,resolve};};
-function harness(fetch, subscription=null) {
- const states=[],refs=[],effects=[],tasks=new Map();let index=0,refIndex=0,mounted=false,next=0,cleanup=[];
+function harness(fetch, subscription=null, props={}) {
+ let view=null;const states=[],refs=[],effects=[],tasks=new Map();let index=0,refIndex=0,mounted=false,next=0,cleanup=[];
  const window=Object.assign(new EventTarget(),{PushManager:function(){},Notification:function(){}});
  const document=Object.assign(new EventTarget(),{visibilityState:'visible'});
  const registration={active:true,pushManager:{getSubscription:async()=>subscription}};
@@ -21,19 +22,23 @@ function harness(fetch, subscription=null) {
   if(id==='react')return {...React,useSyncExternalStore(_subscribe,_snapshot,server){return server();},useState(initial){const i=index++;if(!(i in states))states[i]=initial;return [states[i],v=>{states[i]=typeof v==='function'?v(states[i]):v;}];},useRef(initial){const i=refIndex++;return refs[i]??(refs[i]={current:initial});},useEffect(effect){if(!mounted)effects.push(effect);}};
   if(id==='next/link')return {default:({children,...props})=>React.createElement('a',props,children)};
   if(id==='@/lib/research/member-recovery')return {waitForIdentity};
-  if(id==='./notification-page-view')return {default:()=>null};
+  if(id==='@/lib/research/preferences-load')return preferencesLoad;
+  if(id==='./notification-page-view')return {default:p=>{view=p;return null;}};
   if(id==='./member-display-provider')return {useOwnerMode:()=>false};
   if(id==='./identity-provider')return {useIdentityRefresh:()=>async()=>{}};
   if(id.endsWith('.css'))return {default:{}};
   return require(id);
  },target,target.exports,window,document,navigator,{permission:'granted'},fetch,(fn,delay)=>{const id=++next;tasks.set(id,{fn,delay});return id;},id=>tasks.delete(id));
  return {
-  render(){index=0;refIndex=0;return renderToStaticMarkup(React.createElement(target.exports.default,{lang:'en',initiallyOpen:true}));},
-  click(label){index=0;refIndex=0;const tree=target.exports.default({lang:'en',initiallyOpen:true});let found;function walk(node){if(!node||typeof node!=='object')return;if(node.type==='button'&&node.props.children===label)found=node;React.Children.forEach(node.props?.children,walk);}walk(tree);assert.ok(found);found.props.onClick();},
+  render(){index=0;refIndex=0;return renderToStaticMarkup(React.createElement(target.exports.default,{lang:'en',initiallyOpen:true,...props}));},
+  click(label){index=0;refIndex=0;const tree=target.exports.default({lang:'en',initiallyOpen:true,...props});let found;function walk(node){if(!node||typeof node!=='object')return;if(node.type==='button'&&node.props.children===label)found=node;React.Children.forEach(node.props?.children,walk);}walk(tree);assert.ok(found);found.props.onClick();},
   mount(){cleanup=effects.map(fn=>fn());mounted=true;},
   stop(){for(const fn of cleanup)fn?.();},
   change(){window.dispatchEvent(new Event('tech-phase:membership-changed'));},
   resume(){for(const name of ['focus','pageshow','online'])window.dispatchEvent(new Event(name));document.dispatchEvent(new Event('visibilitychange'));},
+  hide(){document.visibilityState='hidden';document.dispatchEvent(new Event('visibilitychange'));},
+  show(){document.visibilityState='visible';},
+  view(){index=0;refIndex=0;renderToStaticMarkup(React.createElement(target.exports.default,{lang:'en',initiallyOpen:true,...props}));return view;},
   delays(){return [...tasks.values()].map(t=>t.delay);},
   async timer(delay){const entry=[...tasks].find(([,t])=>delay===undefined||t.delay===delay);assert.ok(entry);tasks.delete(entry[0]);entry[1].fn();await flush();},
  };
@@ -75,4 +80,65 @@ test('turning off a device supersedes an older inspection and cannot be undone b
  const sub={toJSON:()=>({endpoint:'test'}),unsubscribe:()=>unsubscribed.promise};
  const panel=harness(async(_url,options)=>options.method==='POST'?Response.json({ok:true,registered:true}):++reads===1?config():late.promise,sub);
  try {panel.render();panel.mount();await flush();assert.match(panel.render(),/This device: on/);panel.resume();await panel.timer(0);panel.click('Turn off on this device');await flush();unsubscribed.resolve(true);await flush();assert.match(panel.render(),/This device: off/);late.resolve(config());await flush();assert.match(panel.render(),/This device: off/);assert.doesNotMatch(panel.render(),/This device: on/);}finally{panel.stop();}
+});
+
+// Nov 15: the notifications page said "could not load your settings" on the owner's iPhone although the device was registered and
+// a test notice arrived. A read the browser cuts off must not show that error; only a real server failure does, after quiet retries.
+const pageConfig=()=>Response.json({enabled:true,publicKey:'test',validUntil:Date.now()+60000,preferencesVersion:1});
+const savedPrefs={priceTargets:true};
+function pagePanel(preferences){
+ const sub={toJSON:()=>({endpoint:'test'})};let reads=0;
+ const panel=harness(async(_url,options={})=>{
+  if(options.method!=='POST')return pageConfig();
+  const {action}=JSON.parse(options.body);
+  if(action==='status')return Response.json({ok:true,registered:true});
+  if(action==='preferences')return preferences(++reads,options);
+  throw new Error('unexpected '+action);
+ },sub,{page:true});
+ return {panel,reads:()=>reads};
+}
+test('a preferences read cut off while the iPhone app is in the background waits quietly and reads again when shown',async t=>{
+ t.mock.method(console,'info',()=>{});
+ let panel;const harnessed=pagePanel(n=>{if(n===1){panel.hide();return Promise.reject(new TypeError('Load failed'));}return Response.json({ok:true,preferences:savedPrefs});});
+ panel=harnessed.panel;
+ try {
+  panel.render();panel.mount();await flush();
+  assert.equal(harnessed.reads(),1);
+  assert.notEqual(panel.view().prefsState,'error');assert.equal(panel.view().prefsMessage,'');
+  panel.show();panel.resume();await panel.timer(0);await flush();
+  assert.equal(harnessed.reads(),2);assert.equal(panel.view().prefsState,'ready');assert.deepEqual(panel.view().prefs,savedPrefs);
+ } finally {panel.stop();}
+});
+test('an AbortError the page did not ask for (iOS stopping the request) is retried quietly instead of shown',async t=>{
+ t.mock.method(console,'info',()=>{});
+ const {panel,reads}=pagePanel(n=>n===1?Promise.reject(new DOMException('The operation was aborted.','AbortError')):Response.json({ok:true,preferences:savedPrefs}));
+ try {
+  panel.render();panel.mount();await flush();
+  assert.equal(panel.view().prefsState,'loading');assert.equal(panel.view().prefsMessage,'');
+  await panel.timer(1500);await flush();
+  assert.equal(reads(),2);assert.equal(panel.view().prefsState,'ready');
+ } finally {panel.stop();}
+});
+test('our own cancellation (a newer check) never shows the error',async t=>{
+ t.mock.method(console,'info',()=>{});
+ const {panel}=pagePanel((n,options)=>n===1?new Promise((_,reject)=>options.signal.addEventListener('abort',()=>reject(options.signal.reason))):Response.json({ok:true,preferences:savedPrefs}));
+ try {panel.render();panel.mount();await flush();panel.resume();await panel.timer(0);await flush();assert.equal(panel.view().prefsMessage,'');assert.equal(panel.view().prefsState,'ready');} finally {panel.stop();}
+});
+test('a real server failure is retried twice quietly, then shown and logged with a reason code only',async t=>{
+ t.mock.method(console,'info',()=>{});const warn=t.mock.method(console,'warn',()=>{});
+ const {panel,reads}=pagePanel(()=>Response.json({ok:false},{status:503}));
+ try {
+  panel.render();panel.mount();await flush();
+  assert.equal(panel.view().prefsMessage,'');await panel.timer(1500);await flush();
+  assert.equal(panel.view().prefsMessage,'');await panel.timer(4000);await flush();
+  assert.equal(reads(),3);assert.equal(panel.view().prefsState,'error');assert.match(panel.view().prefsMessage,/Could not load your settings/);
+  assert.deepEqual(warn.mock.calls.map(c=>c.arguments),[['[notifications] preferences load failed: http-503']]);
+ } finally {panel.stop();}
+});
+test('a lapsed sign-in is renewed once before reading again; a named refusal is shown at once',async t=>{
+ t.mock.method(console,'info',()=>{});t.mock.method(console,'warn',()=>{});
+ const renewed=pagePanel(n=>n===1?Response.json({ok:false,error:'sign-in'},{status:401}):Response.json({ok:true,preferences:savedPrefs}));
+ try {renewed.panel.render();renewed.panel.mount();await flush();await flush();assert.equal(renewed.reads(),2);assert.equal(renewed.panel.view().prefsState,'ready');} finally {renewed.panel.stop();}
+ const refused=pagePanel(()=>Response.json({ok:false,error:'not-registered'}));
+ try {refused.panel.render();refused.panel.mount();await flush();assert.equal(refused.reads(),1);assert.equal(refused.panel.view().prefsState,'error');} finally {refused.panel.stop();}
 });
