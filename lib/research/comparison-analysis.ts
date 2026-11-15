@@ -38,7 +38,7 @@ export function prepareComparisonAnalysis(c: Financials, now=Date.now()): Prepar
   if(valid("profitability") && c.quarterOperatingIncome && c.quarterOperatingMargin!==null && (c.quarterOperatingMargin>=15 || c.quarterOperatingMargin<0)) {
     const margin=c.quarterOperatingMargin, pct=`${margin.toFixed(1)}%`;
     add("operating-margin",margin<0?"weakness":"strength",
-      copy(margin<0?`営業赤字（利益率 ${pct}）`:`営業利益率 ${pct}`,margin<0?`Operating loss (${pct} margin)`:`Operating margin ${pct}`),
+      copy(margin<0?`営業赤字 ${pct}`:`営業利益率 ${pct}`,margin<0?`Operating loss ${pct}`:`Operating margin ${pct}`),
       copy(`四半期の営業損益は${amount(c.quarterOperatingIncome.value,c.quarterOperatingIncome.unit)}。売上高に対する割合は${pct}。`,
         `Quarterly operating income was ${amount(c.quarterOperatingIncome.value,c.quarterOperatingIncome.unit)}, representing ${pct} of revenue.`));
   }

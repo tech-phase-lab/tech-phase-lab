@@ -42,7 +42,6 @@ function ScoreHeadline({companies,lang,now}: {companies:ComparisonResult["compan
       <p className={styles.boxName}>{c.name}</p>
       <p className={styles.boxScore}><b>{totals[i]===null ? "—" : totals[i]!.toFixed(1)}</b><small>/ 10</small></p>
     </article>)}</div>
-    {common.ids.length>=3 && common.ids.length<7 && <p className={styles.periodLine}>{ja ? `総合点は、全社にそろう${common.ids.length}項目の平均です。` : `Overall scores average the ${common.ids.length} factors every company has.`}</p>}
     {sentence && <p className={styles.winLine}><b style={{color:colorOf(leader)}}>{companies[leader].ticker}</b>{sentence}</p>}
   </section>;
 }
@@ -79,12 +78,15 @@ function ScoreOverview({companies,lang,now}: {companies:ComparisonResult["compan
     <p className={styles.snapshotNote}>{ja ? "— 未取得・評価保留（0点ではありません）" : "— means data or a score isn't available. It doesn't mean zero."}</p>
   </section>;
 }
-/** One item stays on one line: 12px, or 11px when the sentence is too long for the 184px column (never cut with "…"). */
+/** Bullets saved before Nov 15 used long forms; they are shown in the short form that fits one line at 360px. */
+export const compactTrait=(text:string)=>text.replace(/^営業赤字（利益率 (.+)）$/,"営業赤字 $1").replace(/^Operating loss \((.+) margin\)$/,"Operating loss $1")
+  .replace(/^~3-month price return /,"3-month price ");
+/** One item is one line (owner, Nov 15: 「ここは1行固定」): 12px, or 11px when long for the 184px column; anything longer ends in "…". */
 const fitSize=(text:string)=>[...text].reduce((w,ch)=>w+(ch.charCodeAt(0)>0x2e80 ? 1 : 0.58),0)*12>146 ? "small" : "normal";
 function CompanyScoreCard({company:c,lang,now,colorIndex=0}: {company:ComparisonResult["companies"][number];lang:"ja"|"en";now:number;colorIndex?:number}) {
   const items=hasRecentQuarter(c,now) ? c.preparedAnalysis?.items ?? [] : [], ja=lang==="ja";
   const availability=comparisonAvailability(c,lang,now);
-  const highlights={strengths:items.filter(i=>i.kind==="strength").slice(0,4).map(i=>i.short[lang]),weaknesses:items.filter(i=>i.kind==="weakness").slice(0,4).map(i=>i.short[lang])};
+  const highlights={strengths:items.filter(i=>i.kind==="strength").slice(0,4).map(i=>compactTrait(i.short[lang])),weaknesses:items.filter(i=>i.kind==="weakness").slice(0,4).map(i=>compactTrait(i.short[lang]))};
   return <article className={styles.scoreCard}>
     <header className={styles.companyHeading}><h3><i style={{background:colorOf(colorIndex)}} aria-hidden="true"/><span>{c.name}</span><small>{c.ticker}</small></h3></header>
     {c.quarterRevenue && <p className={styles.periodLine}>{c.referenceEvaluation ? `${ja ? "決算発表" : "Released"} ${c.referenceEvaluation.announced}${ja ? "（米国）" : " (US)"} · ` : ""}{ja ? "対象期間" : "Reporting period"} {c.quarterRevenue.start ? `${c.quarterRevenue.start} – ` : ""}{c.quarterRevenue.end}</p>}
@@ -96,11 +98,11 @@ function CompanyScoreCard({company:c,lang,now,colorIndex=0}: {company:Comparison
       <div className={styles.traitBoxes}>
         <section className={styles.traitBox} aria-label={ja ? "長所" : "Strengths"}>
           <h4>{ja ? "長所" : "Strengths"}</h4>
-          {highlights.strengths.length ? <ul>{highlights.strengths.map(item=><li key={item} data-fit={fitSize(item)}>{item}</li>)}</ul> : <p>{availability ? "—" : ja ? "取得済みの数値では該当なし" : "None identified from the available data"}</p>}
+          {highlights.strengths.length ? <ul>{highlights.strengths.map(item=><li key={item} title={item} data-fit={fitSize(item)}>{item}</li>)}</ul> : <p>{availability ? "—" : ja ? "該当なし" : "None"}</p>}
         </section>
         <section className={`${styles.traitBox} ${styles.weaknessBox}`} aria-label={ja ? "短所" : "Weaknesses"}>
           <h4>{ja ? "短所" : "Weaknesses"}</h4>
-          {highlights.weaknesses.length ? <ul>{highlights.weaknesses.map(item=><li key={item} data-fit={fitSize(item)}>{item}</li>)}</ul> : <p>{availability ? "—" : ja ? "取得済みの数値では該当なし" : "None identified from the available data"}</p>}
+          {highlights.weaknesses.length ? <ul>{highlights.weaknesses.map(item=><li key={item} title={item} data-fit={fitSize(item)}>{item}</li>)}</ul> : <p>{availability ? "—" : ja ? "該当なし" : "None"}</p>}
         </section>
       </div>
       <section className={styles.companyStatus} aria-label={ja ? `${c.name}のステータス` : `${c.name} status`}>

@@ -39,7 +39,7 @@ export function appendMarketItems(prepared:NonNullable<Financials["preparedAnaly
     }
     if(extras.momentum!==null && evidence.momentum!.changePct<0) {
       const pct=evidence.momentum!.changePct.toFixed(1);
-      addRisk("momentum",`約3か月の株価 ${pct}%`,`~3-month price return ${pct}%`,
+      addRisk("momentum",`約3か月の株価 ${pct}%`,`3-month price ${pct}%`,
         `${evidence.momentum!.from}〜${evidence.momentum!.to}の分割調整済み株価が${pct}%。将来の下落を予測するものではありません。`,
         `Split-adjusted price return from ${evidence.momentum!.from} to ${evidence.momentum!.to} was ${pct}%. This does not predict future declines.`);
     }

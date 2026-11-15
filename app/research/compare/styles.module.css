@@ -307,3 +307,22 @@
 /* Owner, Nov 15: every factor row the same height, whatever the length of each company's measure (one or two lines). */
 .results .snapCell .factorMetric{min-height:calc(2em * 1.35);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .loadingNote{line-height:1.8}
+
+/* ===== Owner, Nov 15: compare polish ===== */
+/* The ticker search box stayed inside the card on phones only in name: width 100% plus the 18px side margins pushed it out. The inset is the
+   details' own padding now, so every child is exactly as wide as the card's inner width at 360, 390 and 430px. */
+.tickerHelp{box-sizing:border-box;width:100%;max-width:100%;min-width:0}
+.tickerHelp>details{box-sizing:border-box;width:100%;max-width:100%;min-width:0;padding-inline:18px}
+.tickerHelp>details>summary{margin-inline:-18px}
+.tickerHelp>details>*:not(summary){margin-left:0;margin-right:0;max-width:100%;min-width:0;box-sizing:border-box}
+.tickerHelp .tickerSearch input{width:100%;max-width:100%;min-width:0;inline-size:100%;box-sizing:border-box}
+/* The score sits at the same height in every card: two lines are kept for the name (a long name still shows in full) and the score is
+   pinned to the bottom of boxes that the grid makes equally tall. */
+.scoreBoxes{align-items:stretch}
+.scoreBox{display:flex;flex-direction:column}
+.boxName{min-height:calc(2em * 1.25)}
+.boxScore{margin-top:auto;padding-top:4px}
+/* The headline one step larger; one line at 360px for a ticker of up to five letters. */
+.results .conclusion h2{font-size:24px}
+/* Strengths and weaknesses: each item is exactly one line ("ここは1行固定"); text too long for the column ends in "…". */
+.traitBox li,.results .traitBox li,.companyCards .traitBox p{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;overflow-wrap:normal}

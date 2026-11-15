@@ -1,4 +1,5 @@
 import japaneseDirectory from "./japanese-company-names.json" with { type: "json" };
+import { kanaNameMatches } from "./kana-fuzzy.ts";
 
 // Match public Japanese names by SEC issuer ID, never by a guessed ticker.
 const namesByCik: Record<string, string[]> = japaneseDirectory.namesByCik;
@@ -41,12 +42,17 @@ export function searchStocks<T extends { ticker: string; name: string; tracked?:
   const q = normalizedSearch(query).slice(0, 80);
   if (!q) return [];
   const terms = q.split(/\s+/);
+  // A kana query also finds companies whose English name sounds the same (アービュータス → Arbutus), ranked after every spelled match.
+  const sounds = kanaNameMatches(entries, query);
   return entries.flatMap(entry => {
     const ticker = normalizedSearch(entry.ticker);
     const name = normalizedSearch(entry.name);
     const aliases = [...(japaneseNames[entry.ticker] ?? []), ...(entry.cik ? namesByCik[String(entry.cik)] ?? [] : [])].map(normalizedSearch);
     const fields = [ticker, name, ...aliases];
-    if (!terms.every(term => fields.some(field => field.includes(term)))) return [];
+    if (!terms.every(term => fields.some(field => field.includes(term)))) {
+      const distance = sounds.get(entry);
+      return distance === undefined ? [] : [{ entry, score: 60 + distance }];
+    }
     const score = ticker === q ? 0 : aliases.includes(q) ? 5 : ticker.startsWith(q) ? 10 : name.startsWith(q) || aliases.some(alias => alias.startsWith(q)) ? 20 : name.includes(q) || aliases.some(alias => alias.includes(q)) ? 30 : ticker.includes(q) ? 40 : 50;
     return [{ entry, score }];
   }).toSorted((a, b) => a.score - b.score || Number(Boolean(b.entry.tracked)) - Number(Boolean(a.entry.tracked)) || a.entry.ticker.localeCompare(b.entry.ticker))
