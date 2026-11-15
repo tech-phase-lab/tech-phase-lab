@@ -1078,7 +1078,8 @@ class AutomaticMonitor:
         while not self.stop_event.is_set():
             try:
                 if deep_analysis.run_once(self.db_path) == 'idle':
-                    deep_analysis.retry_old_holds(self.db_path)  # flag-gated one-off; idle otherwise
+                    if deep_analysis.retry_old_holds(self.db_path) == 'idle':  # flag-gated one-off; idle otherwise
+                        deep_analysis.backfill_roster(self.db_path)  # flag-gated one-off (roster releases without an analysis)
             except Exception as exc:
                 log_publication_failure("deep-analysis-unavailable", exc)
             self.stop_event.wait(10)
