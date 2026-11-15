@@ -118,8 +118,41 @@ The review page has buttons to test each feed once ("ハイテク全銘柄の取
 Old rows age out of the home within 24 hours. The intake result (`stockNewsIntake` in the monitor state) carries `delay` per stream:
 how long after publication newly found articles reached the monitor (count, min, median, max, in seconds). That is the intake delay;
 the translation and display delay are separate. One request cannot measure the provider's delay, so run it for a day.
-Translation volume is bounded by `COMPANY_WIRE_TRANSLATION_DAILY_LIMIT` (model calls in any 24 hours, default 6000; see the
+Translation volume is bounded by `COMPANY_WIRE_TRANSLATION_DAILY_LIMIT` (model calls in any 24 hours, default 400; see the
 calculation in `scripts/research/company_wire.py`). `/health` shows `companyWireTranslation` (waiting stories, call count against the
 limit, last result, last translation, last Stock News success per stream), and the incident watch sends a critical phone alert when the
 budget is reached, every call fails for 15 minutes, Stock News stories wait more than 20 minutes for 30 minutes while new ones arrive,
 or the 'tech' stream has had no successful poll for 30 minutes.
+
+## Translating each article once (owner, 2026-11-15)
+
+- **One article, one translation.** Each headline row now carries `article`, a ticker-independent identity (sha256 of the
+  normalized headline: case and punctuation ignored). The Japanese headline, the one-line headline and the attempt record are stored
+  per article (`company_wire_article_ja`, `company_wire_article_attempts`) and shared by every row of it, so a Stock News article
+  filed under three tickers, or the same headline from Yahoo / Google News, is sent to the model once. Rows and their public `id`
+  (the per-ticker key) are unchanged, so `/company-wire` keeps its per-ticker shape. On the first start the earlier per-ticker
+  translations and attempts (`company_wire_ja`, `company_wire_attempts`, now no longer written but kept for a rollback) are
+  carried over to their articles, so nothing already translated, judged not news or given up on is sent again.
+- **Translate right after each intake round, without waiting.** A Stock News poll round that wrote new rows, or one full pass over
+  the roster's Yahoo / Google News feeds that stored something, wakes the translator, which sends everything then waiting in calls of
+  at most 30 (back to back while a call is full; at most 20 calls a round). The 20-second wait from #578 is gone. No call is made
+  when nothing is waiting. With no intake round for ten minutes the translator still looks for retries that came due.
+- **Retries unchanged.** A rejected headline is retried at most three attempts, ten minutes apart; due retries ride along in the
+  next call.
+- **Daily counts.** `companyWireTranslation.daily` on `/health` shows today and yesterday (Japan time, `Asia/Tokyo`; stored in the
+  `company_wire_daily` table so a restart does not reset them, kept 30 days): `articlesArrived` (new articles, each once whatever
+  tickers or feeds it came under; `articlesBySource` by the feed that brought it first), `translated` (articles whose Japanese was
+  accepted), `calls` (model calls), `retries` (headlines sent again after a rejected or failed attempt), `headlinesSent`,
+  `judgedNotNews` and `notAccepted`, and `stockNewsPublishers` (new Stock News API articles per publisher, `kept` / `dropped`).
+- The daily limit stays 400 (owner). Calls are about one per intake round that brought at least one new article (the 'tech' stream
+  is read every 75 s, the 'market' stream every 300 s, the roster feeds about every 2 to 3 minutes per pass), plus one per 30 articles
+  of backlog. On a busy day this can still reach 400; the daily counts show how the calls were spent.
+
+## Stock News API publishers (owner, 2026-11-15)
+
+Only news organisations' reporting, and the companies' own releases through the press-release wires, are taken from the Stock News
+API into the home table (`company_wire.KEEP_PUBLISHERS`); opinion, analysis, stock-picking and promotion outlets
+(`DROP_PUBLISHERS`: Seeking Alpha, The Motley Fool, Zacks, InvestorPlace, Benzinga and others) are not, so they are never translated or
+shown. A publisher in neither list is dropped, and appears under `stockNewsPublishers.dropped` on `/health`, so a news organisation
+that should be kept can be added. Rows already stored from a dropped publisher are neither translated nor shown. The intake queue
+(`news_articles`, `/admin/news`) still keeps every article. `STOCK_NEWS_PUBLISHER_FILTER=false` takes every publisher again.

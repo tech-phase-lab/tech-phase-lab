@@ -303,7 +303,7 @@ def poll_stream(db, name, *, transport=request_stream):
         put_state(db, gate, (datetime.fromisoformat(now) + timedelta(seconds=120)).isoformat())
     initial = state(db, f"started:{name}") is None
     known = {r[0] for r in db.execute("SELECT id FROM news_articles")}
-    calls = added = changed = rejected = 0
+    calls = added = changed = rejected = mirrored = 0
     new_items = []
     try:
         for page in range(1, 4):
@@ -324,7 +324,7 @@ def poll_stream(db, name, *, transport=request_stream):
             a, c = save_items(db, items, stamp())
             added += a
             changed += c
-            mirror_to_wire(db, items, name)
+            mirrored += mirror_to_wire(db, items, name, known)
             overlap = any(item["id"] in known for item in items)
             new_items += [item for item in items if item["id"] not in known]
             if initial or len(rows) < size or overlap:
@@ -333,13 +333,14 @@ def poll_stream(db, name, *, transport=request_stream):
             put_state(db, f"started:{name}", "1")
             put_state(db, f"last_success:{name}", stamp())
             put_state(db, gate, (datetime.fromisoformat(now) + timedelta(seconds=stream_seconds(name))).isoformat())
-        return {"status": "ok", "stream": name, "calls": calls, "added": added, "changed": changed, "rejected": rejected,
+        # "mirrored": headline rows newly written for the home, so the translator runs right after this round (owner, Nov 15).
+        return {"status": "ok", "stream": name, "calls": calls, "added": added, "changed": changed, "rejected": rejected, "mirrored": mirrored,
                 "delay": delay_summary(new_items, datetime.now(timezone.utc)) if not initial else None}
     except Exception:
         # Persist only a fixed code; no secret-bearing URLs or provider bodies.
         with db:
             put_state(db, gate, (datetime.now(timezone.utc) + timedelta(minutes=5)).isoformat())
-        return {"status": "error", "stream": name, "calls": calls, "added": added, "error": "stock-news-intake-failed"}
+        return {"status": "error", "stream": name, "calls": calls, "added": added, "mirrored": mirrored, "error": "stock-news-intake-failed"}
 
 
 def save_items(db, items, now):
@@ -402,17 +403,27 @@ def delay_summary(items, now):
     return {"count": len(seconds), "minSeconds": seconds[0], "medianSeconds": seconds[len(seconds) // 2], "maxSeconds": seconds[-1]}
 
 
-def mirror_to_wire(db, items, stream=None):
+def mirror_to_wire(db, items, stream=None, known=None):
     """Home news (owner, Nov 10): with STOCK_NEWS_TO_HOME=true the intake also writes its articles into the company headline table,
     so the existing translation, "is it news" judgement, one-line headline and home screens apply to them unchanged.
     The watch-list intake copies the watched companies; the "tech" stream copies the tickers an article names (up to three, the
-    watched ones first); the "market" stream files its articles under MKT. Off by default, so the intake can be measured alone."""
+    watched ones first); the "market" stream files its articles under MKT. Off by default, so the intake can be measured alone.
+    Owner, Nov 15: only articles from the kept publishers (company_wire.KEEP_PUBLISHERS: news organisations and the press-release
+    wires) are written, so opinion and analysis outlets are never translated or shown. Articles not in ``known`` (the article ids
+    stored before this round) are counted per publisher, kept or dropped, for the day's counts on /health."""
     if os.environ.get("STOCK_NEWS_TO_HOME", "").lower() != "true":
         return 0
     import company_wire
     roster = set(company_wire.roster())
     rows = []
+    company_wire.schema(db)
     for item in items:
+        kept = company_wire.stock_news_publisher_kept(item["publisher"])
+        if known is not None and item["id"] not in known:
+            company_wire.bump(db, ("publisher-kept:" if kept else "publisher-dropped:") + company_wire.publisher_counter(item["publisher"]),
+                              1, datetime.now(timezone.utc).timestamp())
+        if not kept:
+            continue
         if stream == "market":
             tickers = ["MKT"]
         elif stream == "tech":
@@ -422,10 +433,10 @@ def mirror_to_wire(db, items, stream=None):
         rows += [{"ticker": ticker, "source": "stocknews", "title": item["title"], "publisher": item["publisher"], "url": item["url"],
                   "published": datetime.fromisoformat(item["publishedAt"]), "sentiment": item.get("sentiment")} for ticker in tickers]
     added = 0
-    company_wire.schema(db)
     for ticker in sorted({row["ticker"] for row in rows}):
         name = company_wire.monitor.PROVIDERS.get(ticker, {}).get("name", ticker)
         added += company_wire.store(db, [row for row in rows if row["ticker"] == ticker], name)
+    db.commit()
     return added
 
 
@@ -450,7 +461,7 @@ def poll(db, tickers, *, transport=request_page):
     watch_key = hashlib.sha256(",".join(tickers).encode()).hexdigest()
     initial = state(db, "watch_key") != watch_key
     known = {r[0] for r in db.execute("SELECT id FROM news_articles")}
-    calls = added = changed = rejected = 0
+    calls = added = changed = rejected = mirrored = 0
     saturated = False
     new_items = []
     try:
@@ -472,7 +483,7 @@ def poll(db, tickers, *, transport=request_page):
             a, c = save_items(db, items, stamp())
             added += a
             changed += c
-            mirror_to_wire(db, items)
+            mirrored += mirror_to_wire(db, items, known=known)
             overlap = any(item["id"] in known for item in items)
             saturated = len(rows) == size and not overlap
             new_items += [item for item in items if item["id"] not in known]
@@ -483,7 +494,7 @@ def poll(db, tickers, *, transport=request_page):
             put_state(db, "last_success", stamp())
             put_state(db, "last_error", "")
             put_state(db, "next_poll", (datetime.fromisoformat(now)+timedelta(seconds=60)).isoformat())
-        return {"status": "ok", "calls": calls, "added": added, "changed": changed,
+        return {"status": "ok", "calls": calls, "added": added, "changed": changed, "mirrored": mirrored,
                 "rejected": rejected, "initialBaseline": initial, "historyIncomplete": saturated,
                 "delay": delay_summary(new_items, datetime.now(timezone.utc)) if not initial else None,
                 "publicationEnabled": False}

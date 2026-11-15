@@ -423,8 +423,8 @@ class SentimentTests(unittest.TestCase):
 
     def test_sentiment_reaches_the_home_table_and_its_public_feed(self):
         import company_wire
-        rows = [{**article(1), "title": "Micron wins a big memory order", "sentiment": "Negative", "tickers": ["MU"]},
-                {**article(2), "title": "Oil jumps on Hormuz tension", "tickers": None, "sentiment": "Neutral"}]
+        rows = [{**article(1), "source_name": "Reuters", "title": "Micron wins a big memory order", "sentiment": "Negative", "tickers": ["MU"]},
+                {**article(2), "source_name": "CNBC", "title": "Oil jumps on Hormuz tension", "tickers": None, "sentiment": "Neutral"}]
         news.poll_stream(self.db, "tech", transport=lambda *_: rows[:1])
         news.poll_stream(self.db, "market", transport=lambda *_: rows[1:])
         stored = dict(self.db.execute("SELECT title, sentiment FROM company_wire").fetchall())

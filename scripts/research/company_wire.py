@@ -60,8 +60,41 @@ def schema(db):
       published_at TEXT NOT NULL, first_seen_at TEXT NOT NULL)''')
     db.execute('CREATE INDEX IF NOT EXISTS company_wire_ticker ON company_wire(ticker, published_at)')
     # Owner, Nov 15: the Stock News API's own sentiment (positive / negative / neutral) for the topics page; empty for other feeds.
-    if 'sentiment' not in {r[1] for r in db.execute('PRAGMA table_info(company_wire)')}:
+    columns = {r[1] for r in db.execute('PRAGMA table_info(company_wire)')}
+    if 'sentiment' not in columns:
         db.execute("ALTER TABLE company_wire ADD COLUMN sentiment TEXT NOT NULL DEFAULT ''")
+    # Owner, Nov 15 (翻訳の無駄を減らす): one article is translated once, whatever tickers or feeds it arrives under. ``article`` is
+    # the ticker-independent identity (the normalized headline); the Japanese is stored per article and shared by every row of it.
+    if 'article' not in columns:
+        db.execute("ALTER TABLE company_wire ADD COLUMN article TEXT NOT NULL DEFAULT ''")
+    db.execute('CREATE INDEX IF NOT EXISTS company_wire_article ON company_wire(article)')
+    missing = db.execute("SELECT key, title FROM company_wire WHERE article=''").fetchall()
+    if missing:
+        db.executemany('UPDATE company_wire SET article=? WHERE key=?', [(article_id(r[1]), r[0]) for r in missing])
+        db.commit()
+    # Per-day counts (Japan time) for the status page: articles arrived, headlines sent and translated, model calls, retries.
+    db.execute('CREATE TABLE IF NOT EXISTS company_wire_daily(day TEXT NOT NULL, name TEXT NOT NULL, count INTEGER NOT NULL, PRIMARY KEY(day, name))')
+
+
+def article_id(title):
+    """The article's identity across tickers and feeds: the headline, case and punctuation ignored."""
+    base = normalized(title) or title.strip()
+    return hashlib.sha256(f'article|{base}'.encode()).hexdigest()[:32]
+
+
+JST = timezone(timedelta(hours=9))
+DAILY_KEEP_DAYS = 30
+
+
+def day_of(ts):
+    return datetime.fromtimestamp(float(ts), JST).date().isoformat()
+
+
+def bump(db, name, count, ts):
+    """Add ``count`` to today's (Japan time) counter ``name``. The caller commits."""
+    if count:
+        db.execute('''INSERT INTO company_wire_daily(day, name, count) VALUES(?,?,?)
+                      ON CONFLICT(day, name) DO UPDATE SET count=count+excluded.count''', (day_of(ts), name, int(count)))
 
 
 def connect(path):
@@ -126,21 +159,89 @@ def origin(row, name):
 
 SENTIMENTS = ('positive', 'negative', 'neutral')
 
+# ---- Stock News API publishers (owner, Nov 15: 注目トピックに流れる記事を絞る) ----
+# Only news organisations' reporting (and companies' own releases through the press-release wires) is taken from the Stock News
+# API; opinion, analysis, stock-picking and promotion outlets are not written into the home table, so they are never translated
+# or shown. Names are the provider's source_name values (its documented source list, Nov 15), compared without case, spaces,
+# punctuation or a "(video)" / "(articles)" suffix. A publisher not listed is dropped: new names in this feed have mostly been
+# investing blogs and aggregators, and the drop is visible per publisher on /health (companyWireTranslation.daily), so a news
+# organisation that should be kept can be added here.
+KEEP_PUBLISHERS = (
+    # news organisations
+    'Reuters', 'Bloomberg Markets and Finance', 'Bloomberg Technology', 'Bloomberg', 'CNBC', 'CNBC Television', 'CNBC International TV',
+    'Wall Street Journal', 'Financial Times', 'Associated Press', 'AP News', 'New York Times', 'CNN', 'CNN Business', 'Fox Business',
+    'Barrons', 'Market Watch', 'Business Insider', 'The Guardian', 'Skynews', 'New York Post', 'Cheddar Videos', 'Huffington Post',
+    'Deadline', 'Kitco',
+    # technology and business trade press
+    'TechCrunch', 'The Verge', 'Engadget', 'CNET', 'VentureBeat', 'GeekWire', 'Fast Company', 'Digital Trends', 'TechXplore',
+    'PYMNTS.com', 'FreightWaves',
+    # the companies' own announcements (press-release wires)
+    'Business Wire', 'PR Newswire', 'Globe News Wire', 'GlobeNewswire', 'ACCESS Newswire', 'Accesswire', 'Newsfile Corp',
+)
+DROP_PUBLISHERS = (
+    # opinion, analysis and stock picking
+    'Seeking Alpha', 'The Motley Fool', 'Zacks Investment Research', 'Investor Place', 'InvestorPlace', 'Benzinga', '24/7 Wall Street',
+    'Forbes', 'The Street', 'TheStreet', 'Investors Business Daily', 'Morningstar Inc.', 'GuruFocus', 'Schaeffers Research',
+    'See It Market', 'The Dog of Wall Street', 'Discount The Obvious', 'Kiplinger', 'Investopedia', 'Millennial Money', 'Invezz',
+    'Finbold', 'FXEmpire', 'MarketBeat', 'InsiderTrades', 'ETF Trends', 'ETF.com', 'Stock Market.com', 'Penny Stocks',
+    'Marijuana Stocks', 'Green Stock News', 'After Earnings', 'Schwab Network', 'Yahoo Finance', 'Pulse2', 'Proactive Investors',
+    'The Financial News', 'TipRanks', 'Investing.com', 'Insider Monkey',
+    # paid promotion
+    'Mcap MediaWire',
+)
+
+
+def publisher_key(name):
+    return re.sub(r'[^a-z0-9]+', '', re.sub(r'\((?:video|articles)\)', '', str(name or '').lower()))
+
+
+KEEP_KEYS = frozenset(publisher_key(n) for n in KEEP_PUBLISHERS)
+DROP_KEYS = frozenset(publisher_key(n) for n in DROP_PUBLISHERS)
+
+
+def stock_news_publisher_kept(publisher):
+    """True for a Stock News API publisher whose articles are taken (see KEEP_PUBLISHERS); unknown publishers are dropped.
+    STOCK_NEWS_PUBLISHER_FILTER=false takes every publisher (the earlier behaviour)."""
+    if os.environ.get('STOCK_NEWS_PUBLISHER_FILTER', 'true').lower() == 'false':
+        return True
+    return publisher_key(publisher) in KEEP_KEYS
+
+
+def publisher_counter(publisher):
+    """The counter name part for a publisher: its listed spelling when known, else the provider's name (bounded)."""
+    key = publisher_key(publisher)
+    for name in KEEP_PUBLISHERS + DROP_PUBLISHERS:
+        if publisher_key(name) == key:
+            return name
+    return re.sub(r'[^\w .&/-]+', '', str(publisher or ''))[:40].strip() or 'unknown'
+
+
+def dropped_publisher(row):
+    """A Stock News API row from a publisher that is no longer taken (rows stored before Nov 15 are neither translated nor shown)."""
+    return row['source'] == 'stocknews' and not stock_news_publisher_kept(row['publisher'])
+
 
 def store(db, rows, name, seen_at=None):
-    """Insert unseen headlines; return how many were new."""
-    seen_at = (seen_at or now()).isoformat()
+    """Insert unseen headlines; return how many were new. An article seen for the first time (under any ticker or feed) is counted
+    in the day's arrivals."""
+    seen = seen_at or now()
+    seen_at = seen.isoformat()
     added = 0
     for row in rows:
         key = hashlib.sha256(f"{row['ticker']}|{normalized(row['title'])}".encode()).hexdigest()[:32]
+        article = article_id(row['title'])
         feeling = row.get('sentiment') if row.get('sentiment') in SENTIMENTS else ''
+        known = db.execute('SELECT 1 FROM company_wire WHERE article=? LIMIT 1', (article,)).fetchone() is not None
         cursor = db.execute('''INSERT OR IGNORE INTO company_wire(key, ticker, source, title, publisher, url, origin, published_at,
-                            first_seen_at, sentiment) VALUES(?,?,?,?,?,?,?,?,?,?)''',
+                            first_seen_at, sentiment, article) VALUES(?,?,?,?,?,?,?,?,?,?,?)''',
                             (key, row['ticker'], row['source'], row['title'], row['publisher'], row['url'],
-                             origin(row, name), row['published'].isoformat(), seen_at, feeling))
+                             origin(row, name), row['published'].isoformat(), seen_at, feeling, article))
         if not cursor.rowcount and feeling:
             # A story saved before its sentiment was kept gets it the next time the provider sends it.
             db.execute("UPDATE company_wire SET sentiment=? WHERE key=? AND sentiment=''", (feeling, key))
+        if cursor.rowcount and not known:
+            bump(db, 'articles', 1, seen.timestamp())
+            bump(db, 'articles:' + re.sub(r'[^a-z0-9-]', '', str(row['source']).lower())[:20], 1, seen.timestamp())
         added += cursor.rowcount
     db.commit()
     return added
@@ -163,6 +264,7 @@ def poll_company(db, ticker, errors):
 def prune(db):
     cutoff = (now() - timedelta(days=KEEP_DAYS)).isoformat()
     db.execute('DELETE FROM company_wire WHERE first_seen_at < ?', (cutoff,))
+    db.execute('DELETE FROM company_wire_daily WHERE day < ?', (day_of((now() - timedelta(days=DAILY_KEEP_DAYS)).timestamp()),))
     db.commit()
 
 
@@ -175,7 +277,7 @@ def status(db, errors):
     for ticker in roster():
         rows = db.execute('SELECT origin, published_at, first_seen_at FROM company_wire WHERE ticker=? AND published_at>=?',
                           (ticker, day)).fetchall()
-        translated = db.execute('''SELECT COUNT(*) FROM company_wire w JOIN company_wire_ja j USING(key)
+        translated = db.execute('''SELECT COUNT(*) FROM company_wire w JOIN company_wire_article_ja j ON j.article=w.article
           WHERE w.ticker=? AND w.published_at>=?''', (ticker, day)).fetchone()[0]
         wire = [r for r in rows if r['origin'] == 'wire']
         newest = max((r['published_at'] for r in rows), default=None)
@@ -187,10 +289,13 @@ def status(db, errors):
                        'feedErrors': sorted(f'{s}:{e}' for (t, s), e in errors.items() if t == ticker)}
     # Headlines still waiting, and those given up on after the last attempt, by the reason of the latest rejection.
     since = day
-    waiting = db.execute('''SELECT COUNT(*) FROM company_wire w LEFT JOIN company_wire_ja j USING(key) LEFT JOIN company_wire_attempts a USING(key)
-      WHERE j.key IS NULL AND w.published_at>=? AND (a.key IS NULL OR a.attempts<?)''', (since, TRANSLATION_ATTEMPTS)).fetchone()[0]
-    gave_up = {r[0] or 'unknown': r[1] for r in db.execute('''SELECT a.reason, COUNT(*) FROM company_wire w JOIN company_wire_attempts a USING(key)
-      LEFT JOIN company_wire_ja j USING(key) WHERE j.key IS NULL AND w.published_at>=? AND a.attempts>=? GROUP BY a.reason''', (since, TRANSLATION_ATTEMPTS))}
+    # Counted per article (one article filed under several tickers is one headline to translate).
+    waiting = db.execute('''SELECT COUNT(DISTINCT w.article) FROM company_wire w LEFT JOIN company_wire_article_ja j ON j.article=w.article
+      LEFT JOIN company_wire_article_attempts a ON a.article=w.article
+      WHERE j.article IS NULL AND w.published_at>=? AND (a.article IS NULL OR a.attempts<?)''', (since, TRANSLATION_ATTEMPTS)).fetchone()[0]
+    gave_up = {r[0] or 'unknown': r[1] for r in db.execute('''SELECT a.reason, COUNT(DISTINCT w.article) FROM company_wire w
+      JOIN company_wire_article_attempts a ON a.article=w.article LEFT JOIN company_wire_article_ja j ON j.article=w.article
+      WHERE j.article IS NULL AND w.published_at>=? AND a.attempts>=? GROUP BY a.reason''', (since, TRANSLATION_ATTEMPTS))}
     calls = db.execute('SELECT COUNT(*) FROM company_wire_calls WHERE at>=?', (current.timestamp() - 86400,)).fetchone()[0]
     out['_translation'] = {'waiting24h': waiting, 'gaveUpByReason24h': gave_up, 'modelCalls24h': calls}
     return out
@@ -231,6 +336,29 @@ def schema_translation(db):
     # Oct 15: why a headline was not translated, so a silent drop can be told from a model outage.
     if 'reason' not in {r[1] for r in db.execute('PRAGMA table_info(company_wire_attempts)')}:
         db.execute("ALTER TABLE company_wire_attempts ADD COLUMN reason TEXT NOT NULL DEFAULT ''")
+    # Owner, Nov 15: the Japanese headline and the attempt record belong to the article, not to one ticker's copy of it. The two
+    # tables above (keyed by ticker + headline) are no longer written; they are kept so an older release could still read them.
+    db.execute('''CREATE TABLE IF NOT EXISTS company_wire_article_ja(
+      article TEXT PRIMARY KEY, title_ja TEXT NOT NULL, short_ja TEXT NOT NULL DEFAULT '', model TEXT NOT NULL, created_at TEXT NOT NULL)''')
+    db.execute('''CREATE TABLE IF NOT EXISTS company_wire_article_attempts(
+      article TEXT PRIMARY KEY, attempts INTEGER NOT NULL, next_at REAL NOT NULL, reason TEXT NOT NULL DEFAULT '')''')
+    schema_watch(db)
+    if db.execute("SELECT 1 FROM company_wire_watch WHERE key='article_migration'").fetchone() is None:
+        migrate_to_articles(db)
+
+
+def migrate_to_articles(db):
+    """Once: carry every translation and attempt made per ticker over to its article, so nothing already translated (or judged not
+    news, or given up on) is sent to the model again. The oldest translation of an article wins; for attempts, the most advanced."""
+    schema(db)
+    with db:
+        db.execute('''INSERT OR IGNORE INTO company_wire_article_ja(article, title_ja, short_ja, model, created_at)
+          SELECT w.article, j.title_ja, j.short_ja, j.model, j.created_at FROM company_wire_ja j JOIN company_wire w USING(key)
+          WHERE w.article<>'' ORDER BY j.created_at''')
+        db.execute('''INSERT OR IGNORE INTO company_wire_article_attempts(article, attempts, next_at, reason)
+          SELECT w.article, a.attempts, a.next_at, a.reason FROM company_wire_attempts a JOIN company_wire w USING(key)
+          WHERE w.article<>'' ORDER BY a.attempts DESC, a.next_at DESC''')
+        db.execute("INSERT OR IGNORE INTO company_wire_watch(key, value) VALUES('article_migration', '1')")
 
 
 def truncated(title):
@@ -283,33 +411,50 @@ def pending_rows(db, now_ts, limit=TRANSLATION_BATCH):
 
 
 def candidates(db, now_ts):
-    """Every headline the translator would take now, in the order it takes them (pending_rows is the first batch of these)."""
+    """Every article the translator would take now, in the order it takes them (pending_rows is the first batch of these).
+    One entry per article (owner, Nov 15): the copies of a headline filed under several tickers or read from several feeds are one
+    entry, carried by its best row; ``tickers`` lists every ticker it is filed under, ``source`` is 'stocknews' when any copy came
+    from the Stock News API, and ``first_seen_at`` is the earliest copy's."""
     since = (datetime.fromtimestamp(now_ts, timezone.utc) - timedelta(hours=PUBLIC_HOURS)).isoformat()
-    rows = db.execute('''SELECT w.key, w.title, w.ticker, w.origin, w.publisher, w.published_at, w.source, w.first_seen_at FROM company_wire w
-      LEFT JOIN company_wire_ja j USING(key) LEFT JOIN company_wire_attempts a USING(key)
-      WHERE j.key IS NULL AND w.published_at>=? AND (a.key IS NULL OR (a.attempts<? AND a.next_at<=?))
-      ORDER BY w.published_at DESC LIMIT 400''', (since, TRANSLATION_ATTEMPTS, now_ts)).fetchall()
-    rows = [r for r in rows if not truncated(r['title']) and not NOISE.search(r['title'])]
+    rows = db.execute('''SELECT w.key, w.article, w.title, w.ticker, w.origin, w.publisher, w.published_at, w.source, w.first_seen_at
+      FROM company_wire w LEFT JOIN company_wire_article_ja j ON j.article=w.article
+      LEFT JOIN company_wire_article_attempts a ON a.article=w.article
+      WHERE j.article IS NULL AND w.published_at>=? AND (a.article IS NULL OR (a.attempts<? AND a.next_at<=?))
+      ORDER BY w.published_at DESC LIMIT 1200''', (since, TRANSLATION_ATTEMPTS, now_ts)).fetchall()
+    rows = [r for r in rows if not truncated(r['title']) and not NOISE.search(r['title']) and not dropped_publisher(r)]
+    order = lambda r: (priority(r), -datetime.fromisoformat(r['published_at']).timestamp())
+    articles = {}
+    for r in rows:
+        articles.setdefault(r['article'], []).append(r)
+    entries = []
+    for copies in articles.values():
+        best = dict(min(copies, key=order))
+        best['tickers'] = sorted({r['ticker'] for r in copies})
+        best['first_seen_at'] = min(r['first_seen_at'] for r in copies)
+        if any(r['source'] == 'stocknews' for r in copies):
+            best['source'] = 'stocknews'
+        entries.append(best)
     # A story already translated for the same company needs no second copy.
     done = {}
-    for r in db.execute('''SELECT w.ticker, w.title FROM company_wire w JOIN company_wire_ja j USING(key)
+    for r in db.execute('''SELECT w.ticker, w.title FROM company_wire w JOIN company_wire_article_ja j ON j.article=w.article
                          WHERE w.published_at>=?''', (since,)):
         done.setdefault(r['ticker'], []).append(story_words(r['title']))
     chosen, taken = [], {}
-    # Best publisher first; within a tier, the newest first.
-    for r in sorted(rows, key=lambda r: (priority(r), -datetime.fromisoformat(r['published_at']).timestamp())):
+    # Best publisher first; within a tier, the newest first. An article is taken while any of its tickers still lacks the story.
+    for r in sorted(entries, key=order):
         words = story_words(r['title'])
-        known = done.get(r['ticker'], []) + taken.get(r['ticker'], [])
-        if any(same_story(words, other) for other in known):
+        if all(any(same_story(words, other) for other in done.get(t, []) + taken.get(t, [])) for t in r['tickers']):
             continue
-        taken.setdefault(r['ticker'], []).append(words)
+        for t in r['tickers']:
+            taken.setdefault(t, []).append(words)
         chosen.append(r)
     return chosen
 
 
-def previous_reasons(db, keys):
-    marks = ','.join('?' for _ in keys)
-    return {r[0]: r[1] for r in db.execute(f'SELECT key, reason FROM company_wire_attempts WHERE reason<>\'\' AND key IN ({marks})', list(keys))} if keys else {}
+def previous_reasons(db, articles):
+    marks = ','.join('?' for _ in articles)
+    return {r[0]: r[1] for r in db.execute(
+        f"SELECT article, reason FROM company_wire_article_attempts WHERE reason<>'' AND article IN ({marks})", list(articles))} if articles else {}
 
 
 def validated_translation(title_ja, title):
@@ -344,7 +489,7 @@ def validated_short(short_ja, title_ja):
 
 
 def translate_once(path, transport=None, env=None, now_ts=None, report=None):
-    """One batched model call for new headlines. Returns a short status word ('done', 'idle', 'budget', 'disabled', 'retry' when
+    """One batched model call for new headlines, at most 30 articles, each article once whatever tickers it is filed under. Returns a short status word ('done', 'idle', 'budget', 'disabled', 'retry' when
     every headline of the batch was rejected, or 'model-<Error>' when the model call itself failed). ``report`` (a dict) receives
     the batch size, so the worker only hurries back when a full batch shows a backlog."""
     import os
@@ -367,13 +512,19 @@ def translate_once(path, transport=None, env=None, now_ts=None, report=None):
             return 'idle'
         if report is not None:
             report['batch'] = len(rows)
+        earlier = previous_reasons(db, [r['article'] for r in rows])
+        marks = ','.join('?' for _ in rows)
+        retried = db.execute(f'SELECT COUNT(*) FROM company_wire_article_attempts WHERE article IN ({marks})',
+                             [r['article'] for r in rows]).fetchone()[0]
         db.execute('INSERT INTO company_wire_calls VALUES(?)', (now_ts,))
+        bump(db, 'calls', 1, now_ts)
+        bump(db, 'sent', len(rows), now_ts)
+        bump(db, 'retries', retried, now_ts)
         db.commit()
-        earlier = previous_reasons(db, [r['key'] for r in rows])
     by_id = {str(i): r for i, r in enumerate(rows)}
     payload = {
         'model': model, 'store': False, 'max_output_tokens': 4000, 'instructions': POLICY,
-        'input': json.dumps([{'id': i, 'title': r['title'], **({'previousRejection': earlier[r['key']]} if r['key'] in earlier else {})}
+        'input': json.dumps([{'id': i, 'title': r['title'], **({'previousRejection': earlier[r['article']]} if r['article'] in earlier else {})}
                              for i, r in by_id.items()], ensure_ascii=False),
         'text': {'format': {'type': 'json_schema', 'name': 'company_wire_translation', 'strict': True, 'schema': {
             'type': 'object', 'additionalProperties': False, 'required': ['items'], 'properties': {'items': {
@@ -395,18 +546,18 @@ def translate_once(path, transport=None, env=None, now_ts=None, report=None):
         result = json.loads(brief_generator.output_text(response))
         for item in result['items']:
             row = by_id.get(item.get('id'))
-            if row is None or row['key'] in translated or row['key'] in skipped:
+            if row is None or row['article'] in translated or row['article'] in skipped:
                 continue
             # Oct 18: the model also says when a headline carries no fact; it is never published or retried.
             if item.get('kind') in ('not-news', 'off-topic'):
-                skipped.add(row['key'])
-                skip_reason[row['key']] = item['kind']
+                skipped.add(row['article'])
+                skip_reason[row['article']] = item['kind']
                 continue
             try:
-                translated[row['key']] = validated_translation(item.get('titleJa'), row['title'])
-                shorts[row['key']] = validated_short(item.get('shortJa'), translated[row['key']])
+                translated[row['article']] = validated_translation(item.get('titleJa'), row['title'])
+                shorts[row['article']] = validated_short(item.get('shortJa'), translated[row['article']])
             except ValueError as error:
-                reasons[row['key']] = str(error)[:40] or 'invalid'
+                reasons[row['article']] = str(error)[:40] or 'invalid'
     except Exception as error:
         translated = {}
         skipped = set()
@@ -415,16 +566,19 @@ def translate_once(path, transport=None, env=None, now_ts=None, report=None):
     with connect(path) as db, db:
         schema_translation(db)
         for row in rows:
-            if row['key'] in translated:
-                db.execute('INSERT OR IGNORE INTO company_wire_ja(key,title_ja,model,created_at,short_ja) VALUES(?,?,?,?,?)',
-                           (row['key'], translated[row['key']], model, stamp, shorts.get(row['key'], '')))
-            elif row['key'] in skipped:
-                db.execute("""INSERT INTO company_wire_attempts(key,attempts,next_at,reason) VALUES(?,?,?,?) ON CONFLICT(key) DO UPDATE SET
-                  attempts=excluded.attempts, next_at=excluded.next_at, reason=excluded.reason""", (row['key'], TRANSLATION_ATTEMPTS, now_ts, skip_reason.get(row['key'], 'not-news')))
+            if row['article'] in translated:
+                db.execute('INSERT OR IGNORE INTO company_wire_article_ja(article,title_ja,model,created_at,short_ja) VALUES(?,?,?,?,?)',
+                           (row['article'], translated[row['article']], model, stamp, shorts.get(row['article'], '')))
+            elif row['article'] in skipped:
+                db.execute("""INSERT INTO company_wire_article_attempts(article,attempts,next_at,reason) VALUES(?,?,?,?) ON CONFLICT(article) DO UPDATE SET
+                  attempts=excluded.attempts, next_at=excluded.next_at, reason=excluded.reason""", (row['article'], TRANSLATION_ATTEMPTS, now_ts, skip_reason.get(row['article'], 'not-news')))
             else:
-                reason = outage or reasons.get(row['key'], 'not-returned')
-                db.execute('''INSERT INTO company_wire_attempts(key,attempts,next_at,reason) VALUES(?,1,?,?) ON CONFLICT(key) DO UPDATE SET
-                  attempts=attempts+1, next_at=excluded.next_at, reason=excluded.reason''', (row['key'], now_ts + TRANSLATION_RETRY_SECONDS, reason))
+                reason = outage or reasons.get(row['article'], 'not-returned')
+                db.execute('''INSERT INTO company_wire_article_attempts(article,attempts,next_at,reason) VALUES(?,1,?,?) ON CONFLICT(article) DO UPDATE SET
+                  attempts=attempts+1, next_at=excluded.next_at, reason=excluded.reason''', (row['article'], now_ts + TRANSLATION_RETRY_SECONDS, reason))
+        bump(db, 'translated', len(translated), now_ts)
+        bump(db, 'notNews', len(skipped), now_ts)
+        bump(db, 'rejected', len(rows) - len(translated) - len(skipped), now_ts)
     return 'done' if translated or skipped else (outage or 'retry')
 
 
@@ -437,10 +591,11 @@ def public_feed(db, now_ts=None):
     items = {}
     for ticker in roster():
         rows = db.execute('''SELECT w.key, w.source, w.title, w.publisher, w.url, w.origin, w.published_at, w.sentiment, j.title_ja, j.short_ja
-          FROM company_wire w LEFT JOIN company_wire_ja j USING(key) LEFT JOIN company_wire_attempts a USING(key)
+          FROM company_wire w LEFT JOIN company_wire_article_ja j ON j.article=w.article
+          LEFT JOIN company_wire_article_attempts a ON a.article=w.article
           WHERE w.ticker=? AND w.published_at>=? AND COALESCE(a.reason,'') NOT IN ('not-news','off-topic') ORDER BY w.published_at DESC LIMIT 120''',
                           (ticker, since)).fetchall()
-        rows = [r for r in rows if not truncated(r['title']) and not NOISE.search(r['title'])]
+        rows = [r for r in rows if not truncated(r['title']) and not NOISE.search(r['title']) and not dropped_publisher(r)]
         # Oct 16: the Japanese view shows only translated headlines, so a company whose newest ten were
         # all still untranslated (or rejected) looked stale. Keep the newest translated ones in their own
         # allowance, plus a few untranslated ones for the English view.
@@ -454,11 +609,11 @@ def public_feed(db, now_ts=None):
                               'publishedAt': r['published_at'], 'source': r['source'], **sentiment_field(r)} for r in rows]
     # Owner, Nov 10: the home also carries high-tech companies beyond the watched ones and market news (filed under MKT), from the
     # Stock News API. Only headlines that were translated, that is judged news and on topic, are shown for them.
-    extra = db.execute('''SELECT w.ticker, w.key, w.title, w.publisher, w.url, w.origin, w.published_at, w.sentiment, j.title_ja, j.short_ja
-      FROM company_wire w JOIN company_wire_ja j USING(key) WHERE w.published_at>=? AND w.source='stocknews'
+    extra = db.execute('''SELECT w.ticker, w.key, w.source, w.title, w.publisher, w.url, w.origin, w.published_at, w.sentiment, j.title_ja, j.short_ja
+      FROM company_wire w JOIN company_wire_article_ja j ON j.article=w.article WHERE w.published_at>=? AND w.source='stocknews'
       ORDER BY w.published_at DESC LIMIT 400''', (since,)).fetchall()
     for r in extra:
-        if r['ticker'] in WATCHED or truncated(r['title']) or NOISE.search(r['title']) or len(items.get(r['ticker'], [])) >= PUBLIC_PER_COMPANY:
+        if r['ticker'] in WATCHED or dropped_publisher(r) or truncated(r['title']) or NOISE.search(r['title']) or len(items.get(r['ticker'], [])) >= PUBLIC_PER_COMPANY:
             continue
         items.setdefault(r['ticker'], []).append({'id': r['key'], 'titleEn': r['title'], 'titleJa': r['title_ja'], 'shortJa': r['short_ja'] or None,
                                                  'publisher': r['publisher'], 'origin': r['origin'], 'url': r['url'], 'publishedAt': r['published_at'],
@@ -476,13 +631,16 @@ def sentiment_field(row):
 # The worker records each result; the incident watch turns a budget stop, a stall, repeated failures or a stopped intake into one
 # critical incident each (the owner's phone), resolved when it recovers.
 #
-# Daily call budget: one model call carries up to 30 headlines, but a call is made whenever new headlines are waiting, so on a normal
-# day most calls carry only the few headlines that arrived since the last one (the tech stream alone brings new stories on most of
-# its 1,152 polls a day, so the old 600 ran out around midday). The worker waits 20 s after any call that was not a full batch
-# (3 s only after a full one), so there are at most 86,400 / 20 = 4,320 such calls a day, plus one call per 30 headlines of backlog:
-# about 7,500 headlines a day at the very most (Stock News tech and market streams plus the Yahoo and Google News feeds) add 250,
-# and retries of rejected headlines ride in the same calls. The busiest possible day is about 4,600 calls; 6,000 leaves 30% headroom.
-DEFAULT_DAILY_LIMIT = 6000
+# Daily call budget (owner, Nov 15: 1日400回のまま). The translator runs right after every intake round that stored something
+# (a Stock News API poll, or one pass over the roster's Yahoo / Google News feeds) and sends everything then waiting, each article
+# once, in calls of at most 30; it never waits for headlines to pile up, and makes no call when nothing is waiting. Rejected
+# headlines are retried (at most three attempts, ten minutes apart) in the next such call, or after ten quiet minutes. So the
+# number of calls is about the number of intake rounds that brought at least one new article, plus one call per 30 articles
+# of backlog. COMPANY_WIRE_TRANSLATION_DAILY_LIMIT (default 400) caps model calls in any 24 hours; reaching it is a critical
+# alert, and the per-day counts on /health (companyWireTranslation.daily) show how the calls were spent.
+DEFAULT_DAILY_LIMIT = 400
+ROUND_MAX_CALLS = 20          # consecutive calls in one round at most (600 articles); the rest wait for the next round
+RETRY_WAKE_SECONDS = 600      # with no intake round, the translator still looks for due retries every ten minutes
 QUIET_RESULTS = ('done', 'idle', 'budget', 'disabled')
 WATCH_PREFIX = 'company-wire:'
 INTAKE_KEY = 'stock-news:intake-tech'
@@ -548,8 +706,8 @@ def record_result(db, result, now_ts):
 
 
 def run_once(path, transport=None, env=None, now_ts=None):
-    """One worker step: translate, record the result (an unexpected error becomes 'worker-<Error>') and return (result, seconds to
-    wait). The worker hurries back only after a full batch, so trickling headlines cost at most one call per 20 seconds."""
+    """One worker step: translate one batch, record the result (an unexpected error becomes 'worker-<Error>') and return
+    (result, number of articles in the batch; 0 when no call was made)."""
     import time
     now_ts = time.time() if now_ts is None else now_ts
     report = {}
@@ -562,7 +720,21 @@ def run_once(path, transport=None, env=None, now_ts=None):
             record_result(db, result, now_ts)
     except Exception:
         pass  # the translation itself must not stop because its bookkeeping failed
-    return result, 3 if result == 'done' and report.get('batch', 0) >= TRANSLATION_BATCH else 20
+    return result, report.get('batch', 0)
+
+
+def run_round(path, transport=None, env=None, now_ts=None, clock=None):
+    """Owner, Nov 15 (まとめて訳す・待たない): translate everything waiting now, right after an intake round. One call takes up to 30
+    articles; while a call was full, the next follows at once. Nothing waiting means no call. Returns the results, in order."""
+    import time
+    clock = clock or time.time
+    results = []
+    for _ in range(ROUND_MAX_CALLS):
+        result, batch = run_once(path, transport=transport, env=env, now_ts=clock() if now_ts is None else now_ts)
+        results.append(result)
+        if batch < TRANSLATION_BATCH or result not in ('done', 'retry'):
+            break
+    return results
 
 
 def iso(ts):
@@ -597,8 +769,8 @@ def translation_health(db, now_ts=None, env=None):
     since = (datetime.fromtimestamp(now_ts, timezone.utc) - timedelta(hours=PUBLIC_HOURS)).isoformat()
     pending = [r for r in candidates(db, now_ts) if r['source'] == 'stocknews']
     ages = [now_ts - datetime.fromisoformat(r['first_seen_at']).timestamp() for r in pending]
-    waiting = db.execute('''SELECT COUNT(*) FROM company_wire w JOIN company_wire_attempts a USING(key) LEFT JOIN company_wire_ja j USING(key)
-      WHERE j.key IS NULL AND w.source='stocknews' AND w.published_at>=? AND a.attempts<? AND a.next_at>?''',
+    waiting = db.execute('''SELECT COUNT(DISTINCT w.article) FROM company_wire w JOIN company_wire_article_attempts a ON a.article=w.article
+      LEFT JOIN company_wire_article_ja j ON j.article=w.article WHERE j.article IS NULL AND w.source='stocknews' AND w.published_at>=? AND a.attempts<? AND a.next_at>?''',
                          (since, TRANSLATION_ATTEMPTS, now_ts)).fetchone()[0]
     recent = datetime.fromtimestamp(now_ts - STALL_SECONDS, timezone.utc).isoformat()
     arriving = db.execute("SELECT COUNT(*) FROM company_wire WHERE source='stocknews' AND first_seen_at>=?", (recent,)).fetchone()[0]
@@ -615,14 +787,37 @@ def translation_health(db, now_ts=None, env=None):
         'waitingRetry': waiting,
         'newStockNews30m': arriving,
         'calls24h': calls, 'dailyLimit': limit, 'budgetReached': calls >= limit,
-        'lastSuccessAt': db.execute('SELECT MAX(created_at) FROM company_wire_ja').fetchone()[0],
+        'lastSuccessAt': db.execute('SELECT MAX(created_at) FROM company_wire_article_ja').fetchone()[0],
         'lastResult': state.get('last_result'), 'lastResultAt': iso(state.get('last_result_at')),
         'failingSince': iso(state.get('failing_since')), 'lastFailure': state.get('last_failure'),
         'stalledSince': iso(state.get('stalled_since')),
         'stockNewsIntake': {'enabled': intake_enabled(env),
                             'streams': {name: {'lastSuccessAt': at} for name, at in sorted(intake_successes(db).items())}},
         'alerts': sorted(alerts),
+        'daily': daily_counts(db, now_ts),
     }
+
+
+DAILY_FIELDS = (('articlesArrived', 'articles'), ('translated', 'translated'), ('calls', 'calls'), ('retries', 'retries'),
+                ('headlinesSent', 'sent'), ('judgedNotNews', 'notNews'), ('notAccepted', 'rejected'))
+
+
+def daily_counts(db, now_ts):
+    """Owner, Nov 15: per day (Japan time, kept in the database so a restart does not reset it), today and yesterday:
+    articlesArrived (new articles, each counted once whatever tickers or feeds it came under; by first feed in articlesBySource),
+    translated (articles whose Japanese was accepted), calls (model calls), retries (headlines sent again after a rejected or
+    failed attempt), headlinesSent (articles sent in all calls, retries included), judgedNotNews (not news or off topic: never
+    shown, never retried) and notAccepted (rejected by the checks or lost to a failed call; retried up to three attempts)."""
+    out = {'timezone': 'Asia/Tokyo'}
+    for label, ts in (('today', now_ts), ('yesterday', now_ts - 86400)):
+        day = day_of(ts)
+        counts = {r[0]: r[1] for r in db.execute('SELECT name, count FROM company_wire_daily WHERE day=?', (day,))}
+        out[label] = {'date': day, **{field: counts.get(name, 0) for field, name in DAILY_FIELDS},
+                      'articlesBySource': {name.split(':', 1)[1]: n for name, n in sorted(counts.items()) if name.startswith('articles:')},
+                      # Owner, Nov 15: new Stock News API articles per publisher, taken or dropped (see KEEP_PUBLISHERS).
+                      'stockNewsPublishers': {kind: {name.split(':', 1)[1]: n for name, n in sorted(counts.items(), key=lambda c: (-c[1], c[0]))
+                                                     if name.startswith('publisher-%s:' % kind)} for kind in ('kept', 'dropped')}}
+    return out
 
 
 def open_incident(db, key):

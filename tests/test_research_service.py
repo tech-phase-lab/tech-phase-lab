@@ -300,6 +300,7 @@ class ResearchServiceTests(unittest.TestCase):
             block = app.public_state()['companyWireTranslation']
             self.assertEqual(block['pending'], {'count': 0, 'oldestMinutes': None})
             self.assertEqual((block['calls24h'], block['budgetReached']), (0, False))
+            self.assertEqual((block['daily']['timezone'], block['daily']['today']['calls']), ('Asia/Tokyo', 0))
             self.assertEqual(block['alerts'], [])
             self.assertTrue(app.check_incident_watch_once())
             self.assertIsNotNone(app.company_wire_watch_at)
