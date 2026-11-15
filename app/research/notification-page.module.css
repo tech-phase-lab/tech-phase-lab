@@ -93,3 +93,10 @@ button.chipOn { border-color:var(--gold); background:linear-gradient(90deg,var(-
 .testBlock { display:flex; flex-direction:column; gap:8px; margin-top:10px; }
 .testButton { display:flex; align-items:center; justify-content:space-between; gap:10px; width:100%; min-height:44px; padding:0 14px; border:1px solid #2a3647; border-radius:12px; background:transparent; color:#c3cfdc; font:inherit; font-size:13.5px; cursor:pointer; text-align:left; }
 .testButton:disabled { opacity:.5; cursor:not-allowed; }
+/* Owner account only: the steps the latest notice went through on this device (Nov 15). */
+.diagnostic { margin:18px 0 0; padding:10px 12px; border:1px solid #2a3343; border-radius:12px; font-size:12px; color:#c3ccd8; min-width:0; }
+.diagnostic summary { cursor:pointer; font-size:12.5px; color:#d9b56a; }
+.diagnosticList { margin:10px 0 0; display:grid; gap:4px; }
+.diagnosticList div { display:flex; justify-content:space-between; gap:10px; min-width:0; }
+.diagnosticList dt { flex:1 1 auto; min-width:0; color:#8b97a8; }
+.diagnosticList dd { margin:0; flex:0 1 auto; min-width:0; text-align:right; overflow-wrap:anywhere; font-variant-numeric:tabular-nums; }

@@ -36,7 +36,7 @@ function cacheStorage(log) {
   } };
 }
 
-function worker(windows = [], { listed = true } = {}) {
+function worker(windows = [], { listed = true, noList = false } = {}) {
   const listeners = {}, shown = [], log = [];
   const caches = cacheStorage(log);
   let ids = 0;
@@ -48,7 +48,7 @@ function worker(windows = [], { listed = true } = {}) {
     skipWaiting: () => log.push(["skipWaiting"]),
     registration: {
       showNotification: (title, options) => { shown.push({ title, options }); return Promise.resolve(); },
-      getNotifications: async () => listed ? shown.map(({ options }) => ({ data: options.data })) : [],
+      getNotifications: noList ? undefined : async () => listed ? shown.map(({ options }) => ({ data: options.data })) : [],
     },
     clients: {
       matchAll: async options => { assert.equal(JSON.stringify(options), JSON.stringify({ type: "window", includeUncontrolled: true })); return windows.map(([url, options]) => windowClient(url, options, log)); },
@@ -162,7 +162,7 @@ test("the focused window is tried first; other sites and non-research pages are 
 
 test("a new worker takes over at once so installed phones get this version", async () => {
   const w = worker();
-  assert.match(source, /const VERSION = "2026-11-15-pending-open"/);
+  assert.match(source, /const VERSION = "2026-11-15-inapp-banner"/);
   w.listeners.install({});
   let waiting;
   w.listeners.activate({ waitUntil: p => { waiting = p; } });
@@ -177,7 +177,8 @@ test("a tap is written down before the worker tries to move the app, with the no
   const before = Date.now();
   await w.click({ url: "/research/notifications", id: "abc-123" });
   assert.deepEqual(w.log.slice(0, 2), [["store", "/research-sw/pending-open"], ["forget", "/research-sw/delivered"]]);
-  assert.deepEqual(w.log[2], ["navigate", `${ORIGIN}/research/notifications`]);
+  assert.deepEqual(w.log[2], ["store", "/research-sw/diagnostic"]);
+  assert.deepEqual(w.log[3], ["navigate", `${ORIGIN}/research/notifications`]);
   const pending = await w.record("/research-sw/pending-open");
   assert.equal(pending.id, "abc-123"); assert.equal(pending.url, "/research/notifications");
   assert.ok(pending.at >= before && pending.at <= Date.now());
@@ -203,7 +204,7 @@ test("a shown notice is written down with an id, its tag and whether the phone l
   const shown = await w.push({ title: "t", body: "b", url: "/research/notifications", tag: "tech-phase-test" });
   assert.deepEqual(JSON.parse(JSON.stringify(shown.options.data)), { url: "/research/notifications", id: "id-1" });
   const delivered = await w.record("/research-sw/delivered");
-  assert.deepEqual({ ...delivered, at: 0 }, { id: "id-1", url: "/research/notifications", tag: "tech-phase-test", at: 0, listed: true });
+  assert.deepEqual({ ...delivered, at: 0 }, { id: "id-1", url: "/research/notifications", tag: "tech-phase-test", title: "t", at: 0, listed: true });
   assert.deepEqual(w.log.filter(([kind]) => kind === "message"), [["message", `${ORIGIN}/research`, "/research/notifications"]]);
   const unlisted = worker([], { listed: false });
   await unlisted.push({ title: "t", body: "b" });
@@ -222,4 +223,40 @@ test("the app can ask the worker for the written tap (also when not controlled) 
   assert.equal(await w.record("/research-sw/pending-open"), null);
   await w.ask({ type: "pending-clear", id: "<bad>" });
   await w.ask(null);
+});
+
+// Nov 15, after #597: the owner's tap on an iPhone app already open did nothing, and nothing said which step failed. The worker notes
+// the steps it saw for the latest notice (times, yes/no answers, VERSION, the random id: never the title or the page).
+test("the worker notes the push, the notice shown and whether the phone lists it, and gives the title to the app's banner", async () => {
+  const w = worker([[`${ORIGIN}/research`, { answer: false }]]);
+  const before = Date.now();
+  await w.push({ title: "Tech Phase · テスト通知", body: "b", url: "/research/notifications", tag: "tech-phase-test" });
+  const diag = await w.record("/research-sw/diagnostic");
+  assert.deepEqual(Object.keys(diag).sort(), ["id", "listApi", "listed", "push", "shown", "v"]);
+  assert.equal(diag.v, "2026-11-15-inapp-banner"); assert.equal(diag.id, "id-1");
+  assert.ok(diag.push >= before && diag.shown >= diag.push && diag.shown <= Date.now());
+  assert.equal(diag.listApi, true); assert.equal(diag.listed, true);
+  assert.equal(JSON.stringify(diag).includes("テスト"), false); assert.equal(JSON.stringify(diag).includes("/research"), false);
+  assert.equal((await w.record("/research-sw/delivered")).title, "Tech Phase · テスト通知");
+  const unlisted = worker([], { noList: true });
+  await unlisted.push({ title: "t", body: "b" });
+  const none = await unlisted.record("/research-sw/diagnostic");
+  assert.equal(none.listApi, false); assert.equal(none.listed, null);
+  assert.equal((await unlisted.record("/research-sw/delivered")).listed, false);
+});
+
+test("a tap the worker hears of is added to the notice's step record, and the app can read the record", async () => {
+  const w = worker();
+  await w.push({ title: "t", body: "b", url: "/research/news" });
+  const before = Date.now();
+  await w.click({ url: "/research/news", id: "id-1" });
+  const diag = await w.record("/research-sw/diagnostic");
+  assert.equal(diag.id, "id-1"); assert.ok(diag.push && diag.shown && diag.click >= before);
+  const answer = await w.ask({ type: "pending-query" });
+  assert.deepEqual(answer.diag, diag);
+  assert.equal(answer.version, "2026-11-15-inapp-banner");
+  // A tap on an older notice starts a record of its own.
+  await w.click({ url: "/research/news", id: "old-1" });
+  const other = await w.record("/research-sw/diagnostic");
+  assert.deepEqual(Object.keys(other).sort(), ["click", "id", "v"]); assert.equal(other.id, "old-1");
 });
