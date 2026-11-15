@@ -38,6 +38,12 @@ class LlmCostTests(unittest.TestCase):
         self.assertIsNone(llm_cost.cost_usd('unpriced-model', 10000, 0, 1000, table))
         self.assertIsNone(llm_cost.cost_usd('gpt-6-astra', None, None, None, table))
         self.assertEqual(llm_cost.prices({llm_cost.PRICES_ENV: 'not json'}), {})
+        self.assertEqual(llm_cost.prices_status({})[1], 'missing')
+        self.assertEqual(llm_cost.prices_status({llm_cost.PRICES_ENV: 'not json'})[1], 'invalid')
+        self.assertEqual(llm_cost.prices_status({llm_cost.PRICES_ENV: '[1]'})[1], 'invalid')
+        self.assertEqual(llm_cost.prices_status({llm_cost.PRICES_ENV: PRICES})[1], 'ok')
+        mixed = json.dumps({'a': {'input': 1, 'output': 2}, 'b': {'input': 'x'}})
+        self.assertEqual(llm_cost.prices_status({llm_cost.PRICES_ENV: mixed})[1], 'partial')
         self.assertEqual(llm_cost.prices({llm_cost.PRICES_ENV: json.dumps({'m': {'input': -1, 'output': 1}})}), {})
 
     def test_a_deep_analysis_call_is_counted_with_its_tokens_and_shows_in_health(self):
@@ -54,6 +60,13 @@ class LlmCostTests(unittest.TestCase):
             self.assertEqual(deep_analysis.diagnostics(db, now=now)['cost']['lanes']['deep-analysis']['calls'], 1)
             report = json.dumps(deep_analysis.diagnostics(db, now=now), ensure_ascii=False)
             self.assertNotIn(GOOD['points'][0]['ja'], report)  # health shows counts and money, never text
+
+    def test_health_shows_whether_the_price_variable_was_read_with_model_names_only(self):
+        with research.connect(self.path) as db:
+            today = llm_cost.today(db, base.NOW.timestamp(), {llm_cost.PRICES_ENV: PRICES})
+            self.assertEqual((today['priceVariable'], today['pricedModels']), ('ok', ['gpt-6-astra']))
+            self.assertNotIn('2.0', json.dumps(today))  # names, never the prices
+            self.assertEqual(llm_cost.today(db, base.NOW.timestamp(), {})['priceVariable'], 'missing')
 
     def test_a_model_without_a_price_is_unknown_not_free(self):
         self.earnings()

@@ -25,23 +25,33 @@ def schema(db):
       output_tokens INTEGER, chars_before INTEGER, chars_sent INTEGER)''')
 
 
+def prices_status(env=None):
+    """({model: (input, cachedInput, output)}, status): USD per million tokens from the environment. status is 'missing' (variable not set),
+    'ok', 'partial' (some entries malformed and ignored) or 'invalid' (not a JSON object)."""
+    env = os.environ if env is None else env
+    text = (env.get(PRICES_ENV) or '').strip()
+    if not text:
+        return {}, 'missing'
+    try:
+        raw = json.loads(text)
+    except ValueError:
+        return {}, 'invalid'
+    if not isinstance(raw, dict):
+        return {}, 'invalid'
+    found = {}
+    for model, row in raw.items():
+        try:
+            value = (float(row['input']), float(row.get('cachedInput', row['input'])), float(row['output']))
+        except (KeyError, TypeError, ValueError, AttributeError):
+            continue
+        if all(item >= 0 for item in value):
+            found[str(model)] = value
+    return found, ('ok' if found and len(found) == len(raw) else 'partial' if found else 'invalid')
+
+
 def prices(env=None):
     """{model: (input, cachedInput, output)} in USD per million tokens, from the environment; malformed entries are ignored."""
-    env = os.environ if env is None else env
-    try:
-        raw = json.loads(env.get(PRICES_ENV) or '{}')
-    except ValueError:
-        return {}
-    found = {}
-    if isinstance(raw, dict):
-        for model, row in raw.items():
-            try:
-                value = (float(row['input']), float(row.get('cachedInput', row['input'])), float(row['output']))
-            except (KeyError, TypeError, ValueError, AttributeError):
-                continue
-            if all(item >= 0 for item in value):
-                found[str(model)] = value
-    return found
+    return prices_status(env)[0]
 
 
 def usage_of(response):
@@ -92,7 +102,7 @@ def today(db, now=None, env=None):
     """Today's (JST) paid calls, tokens and estimated cost, by lane; what the owner needs in /health. Text-free."""
     schema(db)
     now = time.time() if now is None else now
-    price_table = prices(env)
+    price_table, price_status = prices_status(env)
     lanes, unpriced, total, unknown_calls = {}, set(), 0.0, 0
     removed_chars = sent_chars = 0
     for lane_name, model, input_tokens, cached_tokens, output_tokens, chars_before, chars_sent in db.execute(
@@ -118,7 +128,8 @@ def today(db, now=None, env=None):
     for lane in lanes.values():
         lane['estimatedUsd'] = round(lane['estimatedUsd'], 4)
     return {'estimatedUsd': round(total, 4), 'warningAtUsd': DAILY_WARNING_USD, 'overWarning': total > DAILY_WARNING_USD,
-            'unknownCostCalls': unknown_calls, 'unpricedModels': sorted(unpriced), 'lanes': lanes,
+            'unknownCostCalls': unknown_calls, 'unpricedModels': sorted(unpriced),
+            'priceVariable': price_status, 'pricedModels': sorted(price_table), 'lanes': lanes,
             'sourceCharsRemoved': removed_chars, 'sourceCharsSent': sent_chars}
 
 
