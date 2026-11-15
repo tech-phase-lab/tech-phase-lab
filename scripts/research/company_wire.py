@@ -414,7 +414,7 @@ def public_feed(db, now_ts=None):
     since = (datetime.fromtimestamp(now_ts, timezone.utc) - timedelta(hours=PUBLIC_HOURS)).isoformat()
     items = {}
     for ticker in roster():
-        rows = db.execute('''SELECT w.key, w.title, w.publisher, w.url, w.origin, w.published_at, j.title_ja, j.short_ja
+        rows = db.execute('''SELECT w.key, w.source, w.title, w.publisher, w.url, w.origin, w.published_at, j.title_ja, j.short_ja
           FROM company_wire w LEFT JOIN company_wire_ja j USING(key) LEFT JOIN company_wire_attempts a USING(key)
           WHERE w.ticker=? AND w.published_at>=? AND COALESCE(a.reason,'') NOT IN ('not-news','off-topic') ORDER BY w.published_at DESC LIMIT 120''',
                           (ticker, since)).fetchall()
@@ -426,9 +426,10 @@ def public_feed(db, now_ts=None):
         untranslated = [r for r in rows if not r['title_ja']][:PUBLIC_UNTRANSLATED]
         rows = sorted(translated + untranslated, key=lambda r: r['published_at'], reverse=True)
         if rows:
+            # Owner, Nov 15: the home shows the Stock News API stories, so each row says where it came from ("stocknews", "yahoo", "gnews").
             items[ticker] = [{'id': r['key'], 'titleEn': r['title'], 'titleJa': r['title_ja'], 'shortJa': r['short_ja'] or None,
                               'publisher': r['publisher'], 'origin': r['origin'], 'url': r['url'],
-                              'publishedAt': r['published_at']} for r in rows]
+                              'publishedAt': r['published_at'], 'source': r['source']} for r in rows]
     # Owner, Nov 10: the home also carries high-tech companies beyond the watched ones and market news (filed under MKT), from the
     # Stock News API. Only headlines that were translated, that is judged news and on topic, are shown for them.
     extra = db.execute('''SELECT w.ticker, w.key, w.title, w.publisher, w.url, w.origin, w.published_at, j.title_ja, j.short_ja
@@ -438,5 +439,6 @@ def public_feed(db, now_ts=None):
         if r['ticker'] in WATCHED or truncated(r['title']) or NOISE.search(r['title']) or len(items.get(r['ticker'], [])) >= PUBLIC_PER_COMPANY:
             continue
         items.setdefault(r['ticker'], []).append({'id': r['key'], 'titleEn': r['title'], 'titleJa': r['title_ja'], 'shortJa': r['short_ja'] or None,
-                                                 'publisher': r['publisher'], 'origin': r['origin'], 'url': r['url'], 'publishedAt': r['published_at']})
+                                                 'publisher': r['publisher'], 'origin': r['origin'], 'url': r['url'], 'publishedAt': r['published_at'],
+                                                 'source': 'stocknews'})
     return {'ok': True, 'items': items}

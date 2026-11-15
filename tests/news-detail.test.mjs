@@ -356,6 +356,7 @@ import { wireStories } from ${JSON.stringify(new URL('../lib/research/wire-stori
 import { dayKey, dayLabel, pageWindow, withDayDividers } from ${JSON.stringify(new URL('../lib/research/news-day.ts',import.meta.url).href)};
 const WATCH_TICKERS = [];
 const HOME_STORIES = 25;
+const stockOnly = false, stockStories = [];
 `
     +`export function visible(data,page,officialOnly=false,lang='en',generalOnly=false) { const wire = []; ${pageLogic}
 return {pages,current,visibleUpdates,visibleNews}; }`)).toString('base64'));
