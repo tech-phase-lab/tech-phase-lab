@@ -198,7 +198,8 @@ class TranslationTests(unittest.TestCase):
             feed = company_wire.public_feed(db, now_ts=self.now.timestamp())
         by_title = {i['titleEn']: i['titleJa'] for i in feed['items']['CRDO']}
         self.assertEqual(by_title['Credo Expands Portfolio'], 'Credoがポートフォリオを拡大')
-        self.assertIsNone(by_title['Why Credo stock slid'])
+        # Owner, Nov 16: a "Why ..." headline is hidden by the site anyway, so it is no longer sent or shown (prefilter).
+        self.assertNotIn('Why Credo stock slid', by_title)
 
     def test_a_one_line_band_headline_is_kept_only_when_it_is_short_and_its_numbers_are_checked(self):
         self.assertEqual(company_wire.validated_short('マイクロン、台湾工場の作業停止', 'マイクロン、労使紛争で45億ドルの台湾工場の作業を停止'), 'マイクロン、台湾工場の作業停止')
@@ -228,7 +229,7 @@ class TranslationTests(unittest.TestCase):
             seen['schema'] = payload['text']['format']['schema']['properties']['items']['items']
             seen['policy'] = payload['instructions']
             items = self.json.loads(payload['input'])
-            out = [{'id': i['id'], 'titleJa': 'Credoがポートフォリオを拡大', 'kind': 'not-news' if i['title'] == 'Why Credo stock slid' else 'news'}
+            out = [{'id': i['id'], 'titleJa': 'Credoがポートフォリオを拡大', 'kind': 'not-news' if i['title'] == 'Credo Expands Portfolio' else 'news'}
                    for i in items]
             return {'status': 'completed', 'output': [{'type': 'message', 'content': [
                 {'type': 'output_text', 'text': self.json.dumps({'items': out}, ensure_ascii=False)}]}]}
@@ -239,12 +240,13 @@ class TranslationTests(unittest.TestCase):
         self.assertIn('Why', seen['policy'])
         with company_wire.connect(self.path) as db:
             feed = company_wire.public_feed(db, now_ts=self.now.timestamp())
-            titles = {i['titleEn']: i['titleJa'] for i in feed['items']['CRDO']}
-            self.assertEqual(titles['Credo Expands Portfolio'], 'Credoがポートフォリオを拡大')
+            titles = {i['titleEn']: i['titleJa'] for i in feed['items'].get('CRDO', [])}
+            self.assertNotIn('Credo Expands Portfolio', titles)
             self.assertNotIn('Why Credo stock slid', titles)
             self.assertEqual([r['title'] for r in company_wire.pending_rows(db, self.now.timestamp() + 99999)], [])
             reasons = db.execute("SELECT reason FROM company_wire_article_attempts").fetchall()
-        self.assertEqual([r[0] for r in reasons], ['not-news'])
+        # The "Why ..." and the cut-off headline never reached the model (prefilter); the model judged the other one.
+        self.assertEqual(sorted(r[0] for r in reasons), ['not-news', 'prefilter', 'prefilter'])
 
     def test_rejected_headline_is_retried_later_and_given_up_after_three(self):
         send = self.transport({})
@@ -301,6 +303,9 @@ class TranslationTests(unittest.TestCase):
         self.assertEqual(company_wire.translate_once(self.path, transport=self.transport({}), env={}, now_ts=self.now.timestamp()), 'disabled')
         env = {**self.env, 'COMPANY_WIRE_TRANSLATION_DAILY_LIMIT': '1'}
         company_wire.translate_once(self.path, transport=self.transport({}), env=env, now_ts=self.now.timestamp())
+        with company_wire.connect(self.path) as db:
+            company_wire.store(db, [{'ticker': 'CRDO', 'source': 'yahoo', 'title': 'Credo wins a new order', 'publisher': '',
+                                     'url': 'https://news.example/n', 'published': self.now}], 'Credo', seen_at=self.now)
         self.assertEqual(company_wire.translate_once(self.path, transport=self.transport({}), env=env, now_ts=self.now.timestamp() + 1), 'budget')
 
 

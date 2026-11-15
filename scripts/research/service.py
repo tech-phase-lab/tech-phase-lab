@@ -1384,19 +1384,28 @@ class AutomaticMonitor:
         if os.environ.get("COMPANY_WIRE_ENABLED", "true").lower() == "false":
             return
         # Owner, Nov 15 (まとめて訳す・待たない): translate right after every intake round that stored something, everything then
-        # waiting in calls of at most 30, each article once; with no round for ten minutes, still look for due retries.
+        # waiting in calls of at most 30, each article once. Owner, Nov 16 (呼び出しを1日に均す): a call needs a token of the
+        # pacing bucket; headlines left queued without one are sent when the next token arrives, with or without a new intake
+        # (company_wire.next_wake), and due retries are looked for at the latest every ten minutes.
         while not self.stop_event.is_set():
             self.company_wire_arrived.clear()
+            pause = company_wire.RETRY_WAKE_SECONDS
             try:
                 # run_once (inside run_round) records every result (and turns an unexpected error into a code) for the translation watch.
-                for result in company_wire.run_round(self.db_path):
+                results = company_wire.run_round(self.db_path)
+                for result in results:
                     if company_wire.failing(result):
                         print(f"company-wire-translation-failed {company_wire.result_code(result)}", flush=True)
+                if "disabled" not in results:
+                    pause = company_wire.next_wake(self.db_path) - time.time() + 0.5
+                    # A failing step is not repeated at once (the failed headlines wait for their retry time anyway).
+                    pause = max(pause, 60 if any(company_wire.failing(result) for result in results) else 1)
             except Exception as error:
                 print(f"company-wire-translation-failed {type(error).__name__} {failure_detail(error)}".rstrip(), flush=True)
-            deadline = time.monotonic() + company_wire.RETRY_WAKE_SECONDS
+                pause = 60
+            deadline = time.monotonic() + min(pause, company_wire.RETRY_WAKE_SECONDS)
             while not self.stop_event.is_set() and time.monotonic() < deadline:
-                if self.company_wire_arrived.wait(5):
+                if self.company_wire_arrived.wait(min(5, max(0.1, deadline - time.monotonic()))):
                     break
 
     def company_wire_feed(self):
