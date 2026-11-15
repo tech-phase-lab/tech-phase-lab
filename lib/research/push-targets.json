@@ -1,0 +1,16 @@
+{
+  "comment": "Pages a phone-notification tap may open. public/research-sw.js keeps the same list (a test checks they match); every push payload url sent from scripts/research must be one of these, optionally with a #fragment.",
+  "openable": [
+    "/research",
+    "/research/calendar",
+    "/research/news",
+    "/research/notebook",
+    "/research/notes",
+    "/research/notifications",
+    "/research/price-targets",
+    "/research/qa",
+    "/research/questions",
+    "/research/weekly"
+  ],
+  "fragment": "^#[a-z0-9-]{1,40}$"
+}
