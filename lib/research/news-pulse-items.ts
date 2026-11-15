@@ -69,8 +69,9 @@ export function newsPulseItems(feed: GeneralNewsFeed | undefined, lang: Language
  * `shows` says whether a list would put anything on the band (the band also needs a short enough headline). */
 export function homePulseItems(feed: GeneralNewsFeed | undefined, lang: Language, now?: number, wire: Record<string, CompanyWireItem[]> = {}, limit = 5,
   shows: (items: ReturnType<typeof newsPulseItems>) => boolean = items => items.length > 0) {
-  const stock = newsPulseItems(undefined, lang, now, stockNewsWire(wire), limit);
-  return shows(stock) ? stock : newsPulseItems(feed, lang, now, wire, limit);
+  // Owner, Nov 15: the home band carries the Stock News API stories only, never the Tech Alerts (ハイテク速報) items, not even as a fallback.
+  void feed; void shows;
+  return newsPulseItems(undefined, lang, now, stockNewsWire(wire), limit);
 }
 
 /** The instant the strip shows for an item (a date-only release seen the same

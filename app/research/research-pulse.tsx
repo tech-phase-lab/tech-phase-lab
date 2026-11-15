@@ -64,7 +64,7 @@ function Line({ line, ja, leaving }: { line: BandLine; ja: boolean; leaving?: bo
 type PulseItem = ReturnType<typeof newsPulseItems>[number];
 // Owner, Oct 25: opening on an empty strip and then showing it reads worse than opening on the headlines seen last
 // time and letting them change, so the strip remembers its latest headlines on this device (display only).
-const PULSE_CACHE_KEY = "tech-phase:pulse-items:v1";
+const PULSE_CACHE_KEY = "tech-phase:pulse-items:v2"; // v2: Stock News API stories only (a saved v1 band may hold Tech Alerts items)
 // Remembered headlines are shown only for a quick reload (owner, Oct 28: after a few hours they flashed old news before the new).
 const PULSE_CACHE_MS = 60_000;
 function readPulseCache(lang: Language): PulseItem[] {

@@ -129,10 +129,10 @@ export default function GeneralNewsPanel({ lang, officialOnly = false, generalOn
   }, [refresh, initialNews]);
   // An item with no time stated by its source is not listed: showing the time
   // it was found would pass a guess off as the publication time (owner, Oct 10).
-  // The home list shows the Stock News API stories only (owner, Nov 15). Until one of them is available (right after the intake is
-  // switched on, or before its Japanese headline is written) the list keeps its previous items rather than going empty.
-  const stockStories = stockNews && !officialOnly && !generalOnly ? homeStockStories(wire, lang) : [];
-  const stockOnly = stockStories.length > 0;
+  // The home list shows the Stock News API stories only (owner, Nov 15): never the Tech Alerts (ハイテク速報) items, which are another
+  // outlet, not even while no Stock News story is available yet.
+  const stockOnly = stockNews && !officialOnly && !generalOnly;
+  const stockStories = stockOnly ? homeStockStories(wire, lang) : [];
   const official = listedOfficialNews(data, lang);
   const news = officialOnly || stockOnly ? [] : [...data?.items ?? []].sort((a, b) => Date.parse(b.publishedAt) - Date.parse(a.publishedAt));
   const market = officialOnly || generalOnly || stockOnly ? [] : data?.marketUpdates ?? [];
