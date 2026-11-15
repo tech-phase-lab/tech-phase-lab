@@ -492,6 +492,11 @@ def compose(model_output, evidence, schedule, lenient=False):
         try:
             if kind == "text":
                 part = {"type": "text", "heading": _check(raw.get("heading"), quote), "body": _check(raw.get("body"), quote)}
+                # The companies a text is about (from the results it cites): the page shows their photos side by side (owner, Nov 15).
+                tickers = list(dict.fromkeys(item["ticker"] for item in evidence if item["id"] in ids and item["kind"] in ("earnings", "analysis")
+                                             and re.fullmatch(r"[A-Z]{1,6}", item.get("ticker") or "")))
+                if tickers:
+                    part["tickers"] = tickers[:2]
             elif kind == "highlight":
                 if highlights:
                     continue
