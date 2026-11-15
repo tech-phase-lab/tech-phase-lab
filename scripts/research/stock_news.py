@@ -183,7 +183,7 @@ def probe(stream=None, *, transport=None, clock=time.monotonic, now=None):
         params = {"tickers": ",".join(PROBE_TICKERS), "items": 3, "token": token}
         request = Request(ENDPOINT + "?" + urlencode(params), headers={"Accept": "application/json"})
     else:   # the home news streams, so the all-ticker technology feed and the general market feed can be checked before they are switched on
-        params = {**STREAMS[stream]["params"], "items": 3, "token": token}
+        params = {**stream_params(stream), "items": 3, "token": token}
         request = Request(BASE + STREAMS[stream]["path"] + "?" + urlencode(params), headers={"Accept": "application/json"})
     started = clock()
     try:
@@ -245,11 +245,58 @@ def probe(stream=None, *, transport=None, clock=time.monotonic, now=None):
 BASE = "https://stocknewsapi.com"
 # Home news (owner, Nov 10): not a watch list but US high-tech news across all tickers, and the market news that moves stocks.
 # The provider's "all tickers" and "general market" feeds; the choice of what is shown is made later (see company_wire).
-# Calls: tech every 75 s is about 35,600 a month and market every 300 s about 8,900, inside the plan's 50,000 and the 48,000 ceiling.
+# Owner, Nov 15 (取り込みを広げる): a third stream, "tickers", names the companies explicitly on the Company Ticker News endpoint
+# (/api/v1?tickers=...): the 22 watched companies, the first 22 of the earnings watch list and the big tech companies outside the
+# provider's Technology sector (Amazon, Alphabet, Meta, Netflix, Tesla), which the "tech" stream never sees.
+# Calls (plan 50,000 a month, hard ceiling STOCK_NEWS_MONTHLY_CALL_LIMIT 48,000), in a 31-day month of 2,678,400 seconds:
+#   tech every 120 s = 22,320   tickers every 240 s = 11,160   market every 360 s = 7,440   one page each: 40,920 (30 days: 39,600).
+# Extra pages (at most three a round) are taken only while the month's calls stay under an even pace to MONTHLY_TARGET (44,000), so
+# the busy-feed worst case cannot carry the month past 44,000; the 48,000 ceiling still stops every call.
 STREAMS = {
-    "tech": {"path": "/api/v1/category", "params": {"section": "alltickers", "sector": "Technology"}, "seconds": 75},
-    "market": {"path": "/api/v1/category", "params": {"section": "general"}, "seconds": 300},
+    "tech": {"path": "/api/v1/category", "params": {"section": "alltickers", "sector": "Technology"}, "seconds": 120},
+    "tickers": {"path": "/api/v1", "params": {}, "seconds": 240},
+    "market": {"path": "/api/v1/category", "params": {"section": "general"}, "seconds": 360},
 }
+MONTHLY_TARGET = 44000
+# Big tech outside the provider's Technology sector (owner, Nov 15). ANT (Anthropic) is not added by default: it has no listing yet
+# and the provider's handling of an unknown ticker is unverified; STOCK_NEWS_EXTRA_TICKERS=ANT adds it once a probe shows it works.
+BIG_TECH = ("GOOGL", "GOOG", "META", "AMZN", "NFLX", "TSLA")
+# The first 22 of the earnings watch list (earnings_backtest.WATCH) that are not on the watched roster; a test keeps them in step.
+EARNINGS_WATCH_EXTRA = ("DELL", "AMZN", "ORCL")
+MAX_TICKERS = 50   # symbols in one Company Ticker News request (see docs/NEWS-API-INTAKE.md)
+
+
+def stream_tickers():
+    """The symbols the "tickers" stream names: the watched roster, the rest of the first 22 of the earnings watch list, BIG_TECH and
+    STOCK_NEWS_EXTRA_TICKERS (comma list), in that order without repeats, at most MAX_TICKERS."""
+    import company_wire
+    extra = [t.strip().upper() for t in os.environ.get("STOCK_NEWS_EXTRA_TICKERS", "").split(",")]
+    chosen = []
+    for ticker in [*company_wire.roster(), *EARNINGS_WATCH_EXTRA, *BIG_TECH, *extra]:
+        if re.fullmatch(r"[A-Z][A-Z0-9.-]{0,9}", ticker) and ticker not in chosen:
+            chosen.append(ticker)
+    return chosen[:MAX_TICKERS]
+
+
+def stream_params(name):
+    params = dict(STREAMS[name]["params"])
+    if name == "tickers":
+        params["tickers"] = ",".join(stream_tickers())
+    return params
+
+
+def monthly_calls(db, now):
+    return db.execute("SELECT COUNT(*) FROM news_api_calls WHERE at>=?", (now[:7] + "-01",)).fetchone()[0]
+
+
+def extra_page_allowed(db, now, target=None):
+    """A second or third page only while this month's calls are under an even pace to ``target`` (owner, Nov 15)."""
+    target = MONTHLY_TARGET if target is None else target
+    moment = datetime.fromisoformat(now)
+    start = moment.replace(day=1, hour=0, minute=0, second=0, microsecond=0)
+    end = (start + timedelta(days=32)).replace(day=1)
+    pace = target * (moment - start).total_seconds() / (end - start).total_seconds()
+    return monthly_calls(db, now) < pace
 
 
 def stream_names():
@@ -265,7 +312,7 @@ def stream_seconds(name):
 
 
 def request_stream(name, page, token):
-    params = {**STREAMS[name]["params"], "items": page_size(), "page": page, "token": token}
+    params = {**stream_params(name), "items": page_size(), "page": page, "token": token}
     request = Request(BASE + STREAMS[name]["path"] + "?" + urlencode(params), headers={"Accept": "application/json"})
     # Never propagate exception text/URLs: the provider uses a query-string key.
     try:
@@ -286,7 +333,8 @@ def request_stream(name, page, token):
 
 
 def poll_stream(db, name, *, transport=request_stream):
-    """One stream of the home news: its own pace, at most three pages a round, shared monthly call ceiling."""
+    """One stream of the home news: its own pace, at most three pages a round (the extra pages only under the month's even pace to
+    MONTHLY_TARGET), shared monthly call ceiling. The "tickers" stream keeps only the symbols it asked for."""
     token = os.environ.get("STOCK_NEWS_API_KEY", "").strip()
     if os.environ.get("STOCK_NEWS_ENABLED", "").lower() != "true" or not token or name not in STREAMS:
         return {"status": "disabled", "calls": 0}
@@ -306,7 +354,10 @@ def poll_stream(db, name, *, transport=request_stream):
     calls = added = changed = rejected = mirrored = 0
     new_items = []
     try:
+        named = stream_tickers() if name == "tickers" else None
         for page in range(1, 4):
+            if page > 1 and not extra_page_allowed(db, stamp()):
+                break
             reserve_call(db, stamp(), cap)
             calls += 1
             rows = transport(name, page, token)
@@ -316,7 +367,7 @@ def poll_stream(db, name, *, transport=request_stream):
             items = []
             for row in rows:
                 try:
-                    item = normalize(row, None)
+                    item = normalize(row, named)
                     if item:
                         items.append(item)
                 except (ValueError, TypeError, AttributeError, OverflowError):
@@ -406,8 +457,8 @@ def delay_summary(items, now):
 def mirror_to_wire(db, items, stream=None, known=None):
     """Home news (owner, Nov 10): with STOCK_NEWS_TO_HOME=true the intake also writes its articles into the company headline table,
     so the existing translation, "is it news" judgement, one-line headline and home screens apply to them unchanged.
-    The watch-list intake copies the watched companies; the "tech" stream copies the tickers an article names (up to three, the
-    watched ones first); the "market" stream files its articles under MKT. Off by default, so the intake can be measured alone.
+    The watch-list intake copies the watched companies; the "tech" and "tickers" streams copy the tickers an article names (up to
+    three, the watched ones first; "tickers" only among the symbols it asked for); the "market" stream files its articles under MKT. Off by default, so the intake can be measured alone.
     Owner, Nov 15: only articles from the kept publishers (company_wire.KEEP_PUBLISHERS: news organisations and the press-release
     wires) are written, so opinion and analysis outlets are never translated or shown. Articles not in ``known`` (the article ids
     stored before this round) are counted per publisher, kept or dropped, for the day's counts on /health."""
@@ -420,13 +471,15 @@ def mirror_to_wire(db, items, stream=None, known=None):
     for item in items:
         kept = company_wire.stock_news_publisher_kept(item["publisher"])
         if known is not None and item["id"] not in known:
-            company_wire.bump(db, ("publisher-kept:" if kept else "publisher-dropped:") + company_wire.publisher_counter(item["publisher"]),
-                              1, datetime.now(timezone.utc).timestamp())
+            at = datetime.now(timezone.utc).timestamp()
+            company_wire.bump(db, ("publisher-kept:" if kept else "publisher-dropped:") + company_wire.publisher_counter(item["publisher"]), 1, at)
+            # Owner, Nov 15: the same count per stream (the stream that found the article first), for stockNewsStreams on /health.
+            company_wire.bump(db, ("stream-kept:" if kept else "stream-dropped:") + (stream or "watch"), 1, at)
         if not kept:
             continue
         if stream == "market":
             tickers = ["MKT"]
-        elif stream == "tech":
+        elif stream in ("tech", "tickers"):
             tickers = sorted((t for t in item["tickers"] if re.fullmatch(r"[A-Z]{1,5}", t)), key=lambda t: (t not in roster, t))[:3]
         else:
             tickers = [t for t in item["tickers"] if t in roster]
