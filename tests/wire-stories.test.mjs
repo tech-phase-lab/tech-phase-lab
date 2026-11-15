@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { wireStories, isNotNews, staleResults, cleanTitle } from '../lib/research/wire-stories.ts';
+import { wireStories, isNotNews, lawFirmSolicitation, staleResults, cleanTitle } from '../lib/research/wire-stories.ts';
 
 const item = (id, titleEn, titleJa, publishedAt, origin = 'third-party') => ({ id, titleEn, titleJa, publisher: 'P', origin, url: `https://example.com/${id}`, publishedAt });
 const WATCHED = new Set(['MU', 'SNDK', 'NVDA', 'CRWV']);
@@ -218,4 +218,23 @@ test("the one-line Japanese headline rides along with the story and reaches the 
   const withShort = bandItems(newsPulseItems(undefined, "ja", at, { MU: [item("マイクロン、台湾工場を停止")] }, 10), true);
   assert.deepEqual(withShort.map(x => x.band), ["マイクロン、台湾工場を停止"]);
   assert.deepEqual(bandItems(newsPulseItems(undefined, "ja", at, { MU: [item(null)] }, 10), true), []);
+});
+
+test("a law firm's shareholder-investigation solicitation is dropped whatever the firm; lawsuit news is kept (owner, Nov 15)", () => {
+  // 注目トピック showed this Business Wire ad from a firm the old list did not name.
+  for (const title of ["GIL T投資家にSBS法律事務所とジラット衛星ネットワーク詐欺調査参加の機会",
+    "GILT Investors Have Opportunity to Join Gilat Satellite Networks Ltd. Fraud Investigation with SBS Law Firm",
+    "Gilat Satellite Networks (GILT) Investors Encouraged to Contact SBS About Securities Fraud Investigation",
+    "Kirby McInerney LLP Reminds Investors of Class Action Against Super Micro", "Levi & Korsinsky Announces Investigation on Behalf of Intel Shareholders",
+    "Halper Sadeh LLC Encourages ARM Shareholders to Contact the Firm", "Securities Class Action Deadline Approaching for QBTS investors",
+    "The Gross Law Firm Notifies Shareholders of Arista Networks", "Bragar Eagel & Squire Is Investigating Claims",
+    "スーパー・マイクロの株主に集団訴訟への参加を呼びかけ", "クオンタム投資家、集団訴訟の締め切り迫る"]) {
+    assert.equal(lawFirmSolicitation(title), true, title);
+    assert.equal(isNotNews(title), true, title);
+  }
+  for (const title of ["SEC sues Nikola founder Trevor Milton for securities fraud", "Intel shareholders sue after 29% drop",
+    "Intel shareholders file class action lawsuit after 29% drop", "SEC opens securities fraud investigation into Super Micro",
+    "Musk urges Tesla shareholders to vote for pay package", "Apple faces class action over Siri recordings", "Nvidia sees opportunity to lead AI market",
+    "Gilat Satellite Networks wins $50 million defense contract", "米SEC、ニコラ創業者を証券詐欺で提訴", "インテル株主が集団訴訟を提起、株価29%下落後"])
+    assert.equal(lawFirmSolicitation(title), false, title);
 });

@@ -9,6 +9,35 @@ import { calendarEvents, dateOnlyEarnings } from "./calendar.ts";
  * trades) are left out. */
 export type WireStory = { id: string; tickers: string[]; title: string; url: string; publisher: string; origin: CompanyWireItem["origin"]; at: string; /** One line of 22 characters or fewer for the news band (Japanese only, when made). */ short?: string; /** The Stock News API's sentiment, when known (topics page). */ sentiment?: CompanyWireItem["sentiment"] };
 
+/** A law firm advertising a shareholder investigation or class action is not news, whatever the firm (owner, Nov 15: 注目トピック showed
+ * 「GILT投資家にSBS法律事務所と…詐欺調査参加の機会」). Caught by the firm's name or by the solicitation wording, in English or Japanese;
+ * news about a lawsuit itself ("SEC sues …", "Intel shareholders sue after 29% drop") is kept. The same patterns are
+ * LAW_FIRM_SOLICITATION in scripts/research/company_wire.py, which drops such headlines before translation; keep the two in step. */
+export const LAW_FIRM_SOLICITATION = new RegExp([
+  String.raw`\b(?:Rosen Law|Pomerantz|Faruqi|Bragar,? Eagel|Levi (?:&|and) Korsinsky|Bronstein,? Gewirtz|Glancy,? Prongay|Kessler,? Topaz|Robbins Geller`,
+  String.raw`|Robbins LLP|Schall Law|Gross Law|Portnoy Law|Kirby McInerney|Howard G\. Smith|Frank R\. Cruz|Bernstein Liebhard|Bernstein Litowitz|Hagens Berman`,
+  String.raw`|Block (?:&|and) Leviton|Johnson Fistel|Holzer (?:&|and) Holzer|Edelson Lechtzin|Halper Sadeh|Ademi (?:Firm|LLP|& O)|Monteverde (?:&|and) Associates`,
+  String.raw`|Brodsky (?:&|and) Smith|Rigrodsky|Wohl (?:&|and) Fruchter|Kahn,? Swick|Lieff Cabraser|Labaton|Saxena White|Scott\+Scott|Berger Montague`,
+  String.raw`|Bleichmar,? Fonti|Lowey Dannenberg|Wolf Haldenstein|Kaskela|Khang (?:&|and) Khang|Grabar Law|Squitieri|DJS Law|SBS (?:Law|Legal))\b`,
+  String.raw`|\bwith (?:the )?SBS\b|\b(?:law firm|law offices?)\b.{0,120}\b(?:investors?|shareholders?|stockholders?|investigation|class action)\b`,
+  String.raw`|\b(?:investors?|shareholders?|stockholders?|investigation|class action)\b.{0,120}\b(?:law firm|law offices?)\b`,
+  String.raw`|\b(?:investors?|shareholders?|stockholders?)\b.{0,100}\b(?:encouraged|urged|reminded|opportunity|have until)\b.{0,40}\bto (?:contact|join|participate|inquire|discuss|learn more|secure|seek)\b`,
+  String.raw`|\b(?:encourages?|urges?|reminds?)\b.{0,60}\b(?:investors|shareholders|stockholders)\b.{0,40}\bto (?:contact|join|participate|inquire|discuss|secure counsel|seek)\b`,
+  String.raw`|\b(?:encourages?|urges?|reminds?) (?:shareholders|investors|stockholders)\b|\bsecure counsel\b`,
+  String.raw`|\bopportunity to (?:join|lead|participate in)\b.{0,80}\b(?:investigation|lawsuit|class action|litigation)\b`,
+  String.raw`|\b(?:join|participate in)\b.{0,80}\b(?:fraud investigation|securities (?:class action|lawsuit|litigation|fraud)|class action)\b`,
+  String.raw`|\binvestigat(?:ion|ions|es|ing)\b.{0,60}\bon behalf of\b.{0,40}\b(?:investors|shareholders|stockholders)\b`,
+  String.raw`|\b(?:class action|lawsuit|lead plaintiff|securities (?:suit|litigation))\b.{0,100}\bdeadline\b|\bdeadline\b.{0,100}\b(?:class action|lawsuit|lead plaintiff)\b`,
+  String.raw`|\b(?:deadline|investor|shareholder|stockholder) alert\b|\blead plaintiff\b|\bclass period\b`,
+  String.raw`|\b(?:investors?|shareholders?|stockholders?) (?:who|that) (?:lost|suffered|incurred)\b|\b(?:have you|did you) (?:lose|lost|suffer)\b`,
+  String.raw`|\b(?:investors?|shareholders?) with (?:substantial |significant )?losses\b`,
+  String.raw`|法律事務所|弁護士事務所|ロー・?ファーム|ブロンスタイン|ローゼン法律|ポメランツ|株主に対し.{0,20}(?:調査|問い合わせ)`,
+  String.raw`|(?:調査|集団訴訟|訴訟)(?:へ|に)?の?参加|(?:投資家|株主)(?:に|へ)(?:対し(?:て)?)?.{0,20}(?:呼びかけ|呼び掛け|参加を促|連絡を促|問い合わせを)`,
+  String.raw`|集団訴訟.{0,30}(?:期限|締め?切|参加|呼びかけ|原告募集|主導)|(?:期限|締め?切り?).{0,20}集団訴訟|株主向け警告|リード原告|主任原告`,
+  String.raw`|損失を(?:被った|出した|抱えた|受けた)(?:投資家|株主)`,
+].join(""), "i");
+export const lawFirmSolicitation = (text: string) => LAW_FIRM_SOLICITATION.test(text);
+
 const NOT_NEWS = [
   /\$[^$\n]{1,80}\([A-Z.]{1,8}\.US\)\$/,                       // community posts: $NVIDIA (NVDA.US)$
   /\bNet ETF (?:Buying|Selling)\b|\bETFs? Are (?:Buying|Selling)\b|^Lobbying Update\b/i,
@@ -30,8 +59,7 @@ const NOT_NEWS = [
   /\bweek in review\b|\bweekly (?:news )?(?:roundup|digest|recap|wrap)\b|\bthis week(?:['’]s)? (?:top|key|main|biggest|major)\b|\bwhat happened this week\b|今週の(?:主な)?(?:動向|ニュース|まとめ)|週間(?:まとめ|ニュース|動向)/i, // weekly digests read as a teaser for a longer piece
   /\bwhat (?:it|this|that) means for\b|\bwhat (?:it|this) (?:could )?mean(?:s)? for (?:investors|the stock)\b|(?:株|社|銘柄)?(?:にとっての意味|に与える影響とは|が意味すること|は何を意味|にとって何を意味)\s*$/i, // teasers: the answer is in an article we do not carry (owner, Oct 26)
   /(?:\b(?:EUR|GBP|CHF)\s?\d[\d.,]*|\d[\d.,]*\s?(?:EUR|GBP|CHF)\b|(?:ユーロ|ポンド)\s?\d[\d.,]*).{0,12}(?:で取引|\btrad)|\btrad\w*\b.{0,24}\b(?:EUR|GBP|CHF)\s?\d/i, // a foreign-currency quote, not news
-  /\b(?:Bronstein,? Gewirtz|Rosen Law|Pomerantz|Levi & Korsinsky|Faruqi|Glancy Prongay|Schall Law|Gross Law|Kessler Topaz|Johnson Fistel|Block & Leviton)\b|ブロンスタイン|ローゼン法律|ポメランツ|株主に対し.{0,20}(?:調査|問い合わせ)|\b(?:encourages?|urges?|reminds?) (?:shareholders|investors)\b|\binvestors? who (?:lost|suffered)\b/i, // law-firm solicitations (owner, Oct 26)
-  /\bshareholder alert\b|\blead plaintiff\b|\bclass action\b.{0,60}\b(?:deadline|lawsuit|filed)\b|株主向け警告|リード原告|集団訴訟.{0,20}(?:期限|締切)/i, // law-firm lead-plaintiff notices (owner, Oct 27)
+  LAW_FIRM_SOLICITATION, // law-firm solicitations (owner, Oct 26; any firm or wording, Nov 15)
   /\b(?:tracking|following|eyeing)\b.{0,50}\bearnings\b|決算を追う|ウォール街が(?:ラリー|反発|続伸|下落|急落)|\bWall Street (?:rallies|rally mode|slides|falls|climbs|stabili[sz]es)\b/i, // other companies' earnings round-ups and market-wide wraps
   /\bearnings preview\b|\b(?:Q[1-4]|quarter(?:ly)?) (?:earnings )?preview\b|\bwhat to (?:expect|watch)\b|\bwhat (?:investors )?should (?:you )?expect\b|\bkey things to watch\b|\b(?:set|slated|scheduled) to (?:report|release|announce)\b.{0,60}\btomorrow\b|\b(?:reports?|releases?) (?:Q[1-4]|\w+ quarter) (?:results|earnings) tomorrow\b|決算[：:].{0,30}(?:注目点|注目すべき点|何を期待|期待すべき|予想される)|決算.{0,40}(?:注目点|注目すべき点|期待すべきか|予想される内容)\s*$|が明日.{0,24}(?:決算|結果)を?発表|決算(?:報告)?プレビュー|^注目の決算[：:]/i, // earnings previews and "what to expect" teasers (owner, Oct 27)
   /^\s*How\s+\S|(?:方法|やり方)(?:とは)?[。！?？]?\s*$/i, // "How X did Y" explainers ("…した方法"), not news (owner, Oct 28)

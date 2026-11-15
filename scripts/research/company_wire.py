@@ -431,6 +431,38 @@ def truncated(title):
     return title.rstrip().endswith(('...', '…'))
 
 
+# Owner, Nov 15 (注目トピック showed 「GILT投資家にSBS法律事務所と…詐欺調査参加の機会」): a law firm advertising a shareholder
+# investigation or class action is not news, whatever the firm. Caught by the firm's name or by the solicitation wording; news
+# about a lawsuit itself ("SEC sues …", "Intel shareholders sue after 29% drop", "Apple faces class action over …") is kept.
+# The same patterns are in LAW_FIRM_SOLICITATION in lib/research/wire-stories.ts; keep the two in step.
+LAW_FIRM_SOLICITATION_EN = (
+    r'\b(?:Rosen Law|Pomerantz|Faruqi|Bragar,? Eagel|Levi (?:&|and) Korsinsky|Bronstein,? Gewirtz|Glancy,? Prongay|Kessler,? Topaz|Robbins Geller'
+    r'|Robbins LLP|Schall Law|Gross Law|Portnoy Law|Kirby McInerney|Howard G\. Smith|Frank R\. Cruz|Bernstein Liebhard|Bernstein Litowitz|Hagens Berman'
+    r'|Block (?:&|and) Leviton|Johnson Fistel|Holzer (?:&|and) Holzer|Edelson Lechtzin|Halper Sadeh|Ademi (?:Firm|LLP|& O)|Monteverde (?:&|and) Associates'
+    r'|Brodsky (?:&|and) Smith|Rigrodsky|Wohl (?:&|and) Fruchter|Kahn,? Swick|Lieff Cabraser|Labaton|Saxena White|Scott\+Scott|Berger Montague'
+    r'|Bleichmar,? Fonti|Lowey Dannenberg|Wolf Haldenstein|Kaskela|Khang (?:&|and) Khang|Grabar Law|Squitieri|DJS Law|SBS (?:Law|Legal))\b'
+    r'|\bwith (?:the )?SBS\b|\b(?:law firm|law offices?)\b.{0,120}\b(?:investors?|shareholders?|stockholders?|investigation|class action)\b'
+    r'|\b(?:investors?|shareholders?|stockholders?|investigation|class action)\b.{0,120}\b(?:law firm|law offices?)\b'
+    r'|\b(?:investors?|shareholders?|stockholders?)\b.{0,100}\b(?:encouraged|urged|reminded|opportunity|have until)\b.{0,40}\bto (?:contact|join|participate|inquire|discuss|learn more|secure|seek)\b'
+    r'|\b(?:encourages?|urges?|reminds?)\b.{0,60}\b(?:investors|shareholders|stockholders)\b.{0,40}\bto (?:contact|join|participate|inquire|discuss|secure counsel|seek)\b'
+    r'|\b(?:encourages?|urges?|reminds?) (?:shareholders|investors|stockholders)\b|\bsecure counsel\b'
+    r'|\bopportunity to (?:join|lead|participate in)\b.{0,80}\b(?:investigation|lawsuit|class action|litigation)\b'
+    r'|\b(?:join|participate in)\b.{0,80}\b(?:fraud investigation|securities (?:class action|lawsuit|litigation|fraud)|class action)\b'
+    r'|\binvestigat(?:ion|ions|es|ing)\b.{0,60}\bon behalf of\b.{0,40}\b(?:investors|shareholders|stockholders)\b'
+    r'|\b(?:class action|lawsuit|lead plaintiff|securities (?:suit|litigation))\b.{0,100}\bdeadline\b|\bdeadline\b.{0,100}\b(?:class action|lawsuit|lead plaintiff)\b'
+    r'|\b(?:deadline|investor|shareholder|stockholder) alert\b|\blead plaintiff\b|\bclass period\b'
+    r'|\b(?:investors?|shareholders?|stockholders?) (?:who|that) (?:lost|suffered|incurred)\b|\b(?:have you|did you) (?:lose|lost|suffer)\b'
+    r'|\b(?:investors?|shareholders?) with (?:substantial |significant )?losses\b'
+)
+LAW_FIRM_SOLICITATION_JA = (
+    r'法律事務所|弁護士事務所|ロー・?ファーム|ブロンスタイン|ローゼン法律|ポメランツ|株主に対し.{0,20}(?:調査|問い合わせ)'
+    r'|(?:調査|集団訴訟|訴訟)(?:へ|に)?の?参加|(?:投資家|株主)(?:に|へ)(?:対し(?:て)?)?.{0,20}(?:呼びかけ|呼び掛け|参加を促|連絡を促|問い合わせを)'
+    r'|集団訴訟.{0,30}(?:期限|締め?切|参加|呼びかけ|原告募集|主導)|(?:期限|締め?切り?).{0,20}集団訴訟|株主向け警告|リード原告|主任原告'
+    r'|損失を(?:被った|出した|抱えた|受けた)(?:投資家|株主)'
+)
+LAW_FIRM_SOLICITATION = re.compile(LAW_FIRM_SOLICITATION_EN + '|' + LAW_FIRM_SOLICITATION_JA, re.I)
+
+
 # Oct 16: the feeds carry about 2,000 headlines a day for the 22 stocks, far more than can be translated,
 # and the same story arrives from five publishers. The translator takes one headline per story, from the
 # most reliable publisher first, and skips headlines that are not news about the company.
@@ -446,9 +478,8 @@ NOISE = re.compile(
     r'|\bshould (?:check out|review|take a look at|know about)\b|\bfor (?:long-term|retail|income|dividend) investors\b'
     r'|\bfaces? (?:market )?(?:challenges|headwinds) (?:amid|as|following)\b'
     # Nov 15 (Stock News API on the home): law firms soliciting shareholders for class actions are advertisements, not news.
-    r'|\b(?:class action|securities fraud|securities litigation)\b.{0,80}\b(?:lawsuit|investigation|deadline|filed|lead plaintiff|investors?|shareholders?)\b'
-    r'|\b(?:investors?|shareholders?)\b.{0,80}\b(?:class action|securities fraud)\b|\blead plaintiff\b|\b(?:Rosen|Pomerantz|Faruqi|Bragar Eagel|Levi & Korsinsky|Bronstein|Glancy|Kessler Topaz|Robbins Geller|Schall|Gross Law|Portnoy|Kirby McInerney|Howard G\. Smith|Bernstein Liebhard|Hagens Berman|Block & Leviton|Johnson Fistel|Holzer)\b'
-    r'|\b(?:Deadline|Investor) Alert\b|\bINVESTOR ALERT\b', re.I)
+    # Owner, Nov 15 (注目トピック): one pattern for those, LAW_FIRM_SOLICITATION, shared with NOT_NEWS in lib/research/wire-stories.ts.
+    r'|' + LAW_FIRM_SOLICITATION_EN, re.I)
 # Owner, Nov 16 (訳す前に落とす): the English-title patterns of NOT_NEWS in lib/research/wire-stories.ts. The site already hides a
 # headline whose English title matches one of them (wireStories: isNotNews(titleEn)), so sending it to the model only spent a call.
 # Only patterns that read English titles are ported, and only the conservative ones: the "Wall Street rallies / following earnings",
@@ -471,9 +502,7 @@ NOT_NEWS_EN = tuple(re.compile(pattern, flags) for pattern, flags in (
     (r'\bweek in review\b|\bweekly (?:news )?(?:roundup|digest|recap|wrap)\b|\bthis week(?:[\'’]s)? (?:top|key|main|biggest|major)\b|\bwhat happened this week\b', re.I),
     (r'\bwhat (?:it|this|that) means for\b|\bwhat (?:it|this) (?:could )?mean(?:s)? for (?:investors|the stock)\b', re.I),
     (r'(?:\b(?:EUR|GBP|CHF)\s?\d[\d.,]*|\d[\d.,]*\s?(?:EUR|GBP|CHF)\b).{0,12}\btrad|\btrad\w*\b.{0,24}\b(?:EUR|GBP|CHF)\s?\d', re.I),
-    (r'\b(?:Bronstein,? Gewirtz|Rosen Law|Pomerantz|Levi & Korsinsky|Faruqi|Glancy Prongay|Schall Law|Gross Law|Kessler Topaz|Johnson Fistel|Block & Leviton)\b'
-     r'|\b(?:encourages?|urges?|reminds?) (?:shareholders|investors)\b|\binvestors? who (?:lost|suffered)\b', re.I),
-    (r'\bshareholder alert\b|\blead plaintiff\b|\bclass action\b.{0,60}\b(?:deadline|lawsuit|filed)\b', re.I),
+    (LAW_FIRM_SOLICITATION_EN, re.I),
     (r'\bearnings preview\b|\b(?:Q[1-4]|quarter(?:ly)?) (?:earnings )?preview\b|\bwhat to (?:expect|watch)\b|\bwhat (?:investors )?should (?:you )?expect\b'
      r'|\bkey things to watch\b|\b(?:set|slated|scheduled) to (?:report|release|announce)\b.{0,60}\btomorrow\b'
      r'|\b(?:reports?|releases?) (?:Q[1-4]|\w+ quarter) (?:results|earnings) tomorrow\b', re.I),
@@ -872,7 +901,7 @@ def public_feed(db, now_ts=None):
           LEFT JOIN company_wire_article_attempts a ON a.article=w.article
           WHERE w.ticker=? AND w.published_at>=? AND COALESCE(a.reason,'') NOT IN ('not-news','off-topic') ORDER BY w.published_at DESC LIMIT 120''',
                           (ticker, since)).fetchall()
-        rows = [r for r in rows if not locally_rejected(r)]
+        rows = [r for r in rows if not locally_rejected(r) and not LAW_FIRM_SOLICITATION.search(r['title_ja'] or '')]
         # Oct 16: the Japanese view shows only translated headlines, so a company whose newest ten were
         # all still untranslated (or rejected) looked stale. Keep the newest translated ones in their own
         # allowance, plus a few untranslated ones for the English view.
@@ -891,7 +920,7 @@ def public_feed(db, now_ts=None):
       FROM company_wire w JOIN company_wire_article_ja j ON j.article=w.article WHERE w.published_at>=? AND w.source='stocknews'
       ORDER BY w.published_at DESC LIMIT 400''', (since,)).fetchall()
     for r in extra:
-        if r['ticker'] in WATCHED or locally_rejected(r) or len(items.get(r['ticker'], [])) >= PUBLIC_PER_COMPANY:
+        if r['ticker'] in WATCHED or locally_rejected(r) or LAW_FIRM_SOLICITATION.search(r['title_ja'] or '') or len(items.get(r['ticker'], [])) >= PUBLIC_PER_COMPANY:
             continue
         items.setdefault(r['ticker'], []).append({'id': r['key'], 'titleEn': r['title'], 'titleJa': r['title_ja'], 'shortJa': r['short_ja'] or None,
                                                  'publisher': r['publisher'], 'origin': r['origin'], 'url': r['url'], 'publishedAt': r['published_at'],

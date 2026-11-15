@@ -99,6 +99,18 @@ class HomeScopeTests(unittest.TestCase):
             self.assertEqual([r['title'] for r in company_wire.pending_rows(db, self.now.timestamp() + 99999)], [])
         self.assertNotIn('KO', feed['items'])
 
+    def test_a_law_firm_solicitation_is_not_shown_even_when_only_its_japanese_title_gives_it_away(self):
+        """Owner, Nov 15: 「GIL T投資家にSBS法律事務所と…詐欺調査参加の機会」 was on 注目トピック."""
+        with company_wire.connect(self.path) as db:
+            db.execute("UPDATE company_wire SET ticker='GILT', title='Gilat Satellite Networks news for holders' WHERE title='Apple unveils new chip'")
+        self.translate({})
+        with company_wire.connect(self.path) as db:
+            db.execute("UPDATE company_wire_article_ja SET title_ja='GIL T投資家にSBS法律事務所とジラット衛星ネットワーク詐欺調査参加の機会' "
+                       "WHERE article=(SELECT article FROM company_wire WHERE ticker='GILT')")
+            feed = company_wire.public_feed(db, now_ts=self.now.timestamp())
+        self.assertNotIn('GILT', feed['items'])
+        self.assertIn('MKT', feed['items'])
+
     def test_watched_companies_are_translated_first(self):
         seen = self.translate({})
         self.assertEqual(seen['order'][0], 'Nvidia wins order')
@@ -393,3 +405,40 @@ class LawFirmSolicitationTests(unittest.TestCase):
                 "Micron raises guidance on HBM demand"]
         self.assertTrue(all(company_wire.NOISE.search(t) for t in ads))
         self.assertFalse(any(company_wire.NOISE.search(t) for t in news))
+
+    # Owner, Nov 15 (注目トピック): a Business Wire ad from a firm the old list did not name, 「GILT投資家にSBS法律事務所と…詐欺調査参加の機会」.
+    ADS = ("GILT Investors Have Opportunity to Join Gilat Satellite Networks Ltd. Fraud Investigation with SBS Law Firm",
+           "Gilat Satellite Networks (GILT) Investors Encouraged to Contact SBS About Securities Fraud Investigation",
+           "GILT INVESTORS: Opportunity to Join Gilat Satellite Networks Fraud Investigation",
+           "Kirby McInerney LLP Reminds Investors of Class Action Against Super Micro",
+           "Levi & Korsinsky Announces Investigation on Behalf of Intel Shareholders",
+           "Lost money on Nvidia? Investors who lost money should contact Frank R. Cruz",
+           "Halper Sadeh LLC Encourages ARM Shareholders to Contact the Firm",
+           "Securities Class Action Deadline Approaching for QBTS investors",
+           "The Gross Law Firm Notifies Shareholders of Arista Networks",
+           "Robbins Geller Rudman & Dowd LLP Announces that Super Micro Investors with Substantial Losses Have Opportunity to Lead Class Action",
+           "Monteverde & Associates Is Investigating the Merger", "Bragar Eagel & Squire Is Investigating Claims", "Ademi Firm investigates Marvell board")
+    ADS_JA = ("GIL T投資家にSBS法律事務所とジラット衛星ネットワーク詐欺調査参加の機会", "スーパー・マイクロの株主に集団訴訟への参加を呼びかけ",
+              "クオンタム投資家、集団訴訟の締め切り迫る", "損失を被った投資家は連絡を")
+    # News about a lawsuit itself, filed by a regulator or a named party, stays.
+    NEWS = ("SEC sues Nikola founder Trevor Milton for securities fraud", "Intel shareholders sue after 29% drop",
+            "Intel shareholders file class action lawsuit after 29% drop", "SEC opens securities fraud investigation into Super Micro",
+            "Musk urges Tesla shareholders to vote for pay package", "Apple faces class action over Siri recordings",
+            "Nvidia sees opportunity to lead AI market", "Nvidia invites investors to join Q3 earnings webcast", "SoftBank lost money on WeWork bet",
+            "Germany joins EU antitrust investigation into Microsoft", "Gilat Satellite Networks wins $50 million defense contract",
+            "SBS and Samsung sign broadcasting deal")
+    NEWS_JA = ("米SEC、ニコラ創業者を証券詐欺で提訴", "インテル株主が集団訴訟を提起、株価29%下落後", "司法省がスーパー・マイクロの調査を開始")
+
+    def test_any_firm_or_solicitation_wording_is_hidden_before_translation_and_lawsuit_news_is_kept(self):
+        self.assertEqual([t for t in self.ADS if not company_wire.hidden_title(t)], [])
+        self.assertEqual([t for t in self.ADS + self.ADS_JA if not company_wire.LAW_FIRM_SOLICITATION.search(t)], [])
+        self.assertEqual([t for t in self.NEWS if company_wire.hidden_title(t)], [])
+        self.assertEqual([t for t in self.NEWS + self.NEWS_JA if company_wire.LAW_FIRM_SOLICITATION.search(t)], [])
+        self.assertTrue(company_wire.locally_rejected({'title': self.ADS[0], 'publisher': 'Business Wire', 'source': 'stocknews'}))
+
+    def test_the_patterns_match_lib_research_wire_stories(self):
+        import os, re
+        ts = open(os.path.join(os.path.dirname(__file__), '..', 'lib', 'research', 'wire-stories.ts'), encoding='utf-8').read()
+        block = re.search(r'export const LAW_FIRM_SOLICITATION = new RegExp\(\[(.*?)\]\.join', ts, re.S).group(1)
+        self.assertEqual(''.join(re.findall(r'String\.raw`([^`]*)`', block)),
+                         company_wire.LAW_FIRM_SOLICITATION_EN + '|' + company_wire.LAW_FIRM_SOLICITATION_JA)
