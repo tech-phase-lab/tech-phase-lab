@@ -456,6 +456,35 @@ def member_view(db, reference=None, limit=30):
     return items
 
 
+ROSTER = ['MU', 'SKHY', 'SNDK', 'NBIS', 'NVDA', 'AMD', 'AVGO', 'ARM', 'TSM', 'ASML', 'MRVL', 'ANET', 'CRDO', 'CRWV', 'VRT', 'GEV', 'DELL', 'PLTR',
+          'MSFT', 'AMZN', 'GOOGL', 'ORCL']  # the 22 companies the owner follows (earnings_backtest.WATCH, first 22)
+
+
+def roster_status(db, now):
+    """Per company: the latest scheduled results release, the state of its deep analysis, the next scheduled release. Names, states and dates only."""
+    import release_watch
+    when = datetime.fromtimestamp(now, timezone.utc)
+    releases = {}
+    for event in release_watch.load_schedule():
+        if event['kind'] == 'earnings' and event['phase'] == 'release':
+            releases.setdefault(event['ticker'], []).append(event['at'])
+    rows = []
+    for ticker in ROSTER:
+        past = max((at for at in releases.get(ticker, []) if at <= when), default=None)
+        future = min((at for at in releases.get(ticker, []) if at > when), default=None)
+        row = db.execute("SELECT state,published_at,created_at FROM deep_analyses WHERE kind='earnings' AND subject=? ORDER BY created_at DESC LIMIT 1",
+                         (ticker,)).fetchone()
+        item = {'ticker': ticker, 'lastReleaseAt': past.isoformat() if past else None,
+                'deepState': row['state'] if row is not None else 'none',
+                'deepPublishedAt': row['published_at'] if row is not None and row['state'] == 'done' else None,
+                'deepCreatedAt': row['created_at'] if row is not None else None,
+                'nextReleaseAt': future.isoformat() if future else None}
+        # the analysis belongs to the latest scheduled release only when it was created after that release (a day of slack)
+        item['forLatestRelease'] = bool(row is not None and past is not None and row['created_at'] >= (past - timedelta(days=1)).isoformat())
+        rows.append(item)
+    return rows
+
+
 def diagnostics(db, now=None):
     schema(db)
     now = time.time() if now is None else now
@@ -474,8 +503,14 @@ def diagnostics(db, now=None):
         pending.append({'subject': row['subject'], 'state': row['state'], 'attempts': row['attempts'],
                         'failure': row['failure'], 'detail': detail, 'createdAt': row['created_at']})
     old_retry = dict(db.execute('SELECT outcome,count(*) FROM deep_old_retries WHERE marker=? GROUP BY outcome', (OLD_RETRY_MARKER,)).fetchall())
+    published = [{'subject': row['subject'], 'kind': row['kind'], 'publishedAt': row['published_at']} for row in db.execute(
+        "SELECT subject,kind,published_at FROM deep_analyses WHERE state='done' ORDER BY published_at DESC LIMIT 60")]
+    try:
+        roster = roster_status(db, now)
+    except Exception:
+        roster = []
     return {'configured': configuration() is not None, 'callsLast24h': used_today(db, now), 'states': states,
-            'failures': failures, 'version': VERSION, 'notDone': pending, 'cost': cost, **({'oldRetry': old_retry} if old_retry else {})}
+            'failures': failures, 'version': VERSION, 'notDone': pending, 'published': published, 'roster': roster, 'cost': cost, **({'oldRetry': old_retry} if old_retry else {})}
 
 
 OLD_RETRY_ENV = 'RESEARCH_DEEP_RETRY_OLD_HOLDS'
