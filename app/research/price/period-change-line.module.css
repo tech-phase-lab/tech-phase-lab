@@ -1,9 +1,9 @@
-.wrap { --tone:95,224,170;display:flex;flex-direction:column;align-items:center;gap:7px;margin-top:-6px;padding:0 16px; }
+/* 20px below the period buttons: the chart block's 8px gap + 12px. */
+.wrap { --tone:95,224,170;display:flex;flex-direction:column;align-items:center;gap:7px;margin-top:12px;padding:0 16px; }
 .wrap[data-tone=down] { --tone:255,122,122; }
 .line { display:flex;align-items:baseline;justify-content:center;flex-wrap:wrap;gap:2px 8px;margin:0;font-size:13px;font-variant-numeric:tabular-nums; }
 .label { color:#9aa7b7; }
 .value { font-family:"JetBrains Mono","IBM Plex Mono",ui-monospace,monospace;font-size:15px;font-weight:700;color:rgb(var(--tone));text-shadow:0 0 10px rgba(var(--tone),.45);white-space:nowrap; }
-.base { font-size:11px;color:#6f7c8c;white-space:nowrap; }
 /* The glowing line: 72% wide, 2px, transparent at both ends; its glow is the same gradient, 8px and blurred (no box-shadow). */
 .glow { position:relative;width:72%;height:2px;animation:breathe 2.4s ease-in-out infinite; }
 .glow i { position:absolute;left:0;right:0;background:linear-gradient(90deg,rgba(var(--tone),0),rgba(var(--tone),1) 50%,rgba(var(--tone),0)); }

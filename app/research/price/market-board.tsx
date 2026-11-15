@@ -2,9 +2,11 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useResearchLanguage } from "../use-research-language";
 import PriceChart from "./price-chart";
+import { useMinute } from "./use-minute";
+import { useChartStore } from "./use-chart-store";
 import { signedPercent, type Bar } from "@/lib/research/market-quote";
 import { bannerLine, closedDayClose, closedDayLine, marketBanner, marketPhase } from "@/lib/research/us-market-session";
-import { DEFAULT_PERIOD, OTHER_PERIODS, PERIOD_LABEL, PRIMARY_PERIODS, clampWicks, isBoardPeriod, isIntradayPeriod, latestTradingDay, periodInterval, type BoardPeriod } from "@/lib/research/market-board-periods";
+import { DEFAULT_PERIOD, OTHER_PERIODS, PERIOD_LABEL, PRIMARY_PERIODS, drawnSeries, isBoardPeriod, isIntradayPeriod, periodInterval, type BoardPeriod } from "@/lib/research/market-board-periods";
 import { nextFlash, startFlash } from "@/lib/research/value-flash";
 import type { BoardQuote } from "@/lib/research/market-data";
 import styles from "./board.module.css";
@@ -45,18 +47,6 @@ export function formatPrice(value: number, kind: Kind): string {
   return `$${a >= 1000 ? Math.round(value).toLocaleString("en-US") : a >= 100 ? value.toFixed(1) : value.toFixed(2)}`;
 }
 const toneOf = (value: number | null): "up" | "down" | "flat" => value === null || value === 0 ? "flat" : value > 0 ? "up" : "down";
-
-/** The current time, refreshed on every minute boundary (null until the page is on the screen, so the server page and the first paint agree). */
-function useMinute() {
-  const [now, setNow] = useState<number | null>(null);
-  useEffect(() => {
-    let timer: ReturnType<typeof setTimeout> | undefined;
-    const tick = () => { const at = Date.now(); setNow(at); timer = setTimeout(tick, 60_000 - (at % 60_000) + 50); };
-    timer = setTimeout(tick, 0);
-    return () => clearTimeout(timer);
-  }, []);
-  return now;
-}
 
 /** Runs `task` now and then every `every` ms, but only while the tab is visible: a hidden tab asks for nothing, and asks again the moment it is shown. */
 function startPolling(task: () => Promise<void>, every: number): () => void {
@@ -139,7 +129,6 @@ export default function MarketBoard() {
   const [selected, setSelected] = useState("USD/JPY");
   const [period, setPeriod] = useState<BoardPeriod>(DEFAULT_PERIOD);
   const [mode, setMode] = useState<"candles" | "line">("candles");
-  const [chart, setChart] = useState<{ key: string; bars: Bar[]; before: Bar[] }>({ key: "", bars: [], before: [] });
   const [active, setActive] = useState<Bar | null>(null);
   // The last choices stay put (this browser only). The first time: 15 minutes.
   useEffect(() => {
@@ -167,8 +156,12 @@ export default function MarketBoard() {
   const key = `${selected}:${period}`;
   const [reload, setReload] = useState(0);
   const intraday = isIntradayPeriod(period);
+  // Every series read is kept while the page is open (owner, Nov 15): a period picked again shows at once (and goes on refreshing), and while a new period
+  // is on its way the chart of the same symbol stays on the screen with a small spinner at its top right.
+  const store = useChartStore(key);
+  const { put, fresh } = store;
   useEffect(() => {
-    let have = false, controller = new AbortController();
+    let have = fresh(key), controller = new AbortController();
     const stop = startPolling(async () => {
       controller = new AbortController();
       // The first read retries a provider blink quietly before an error is shown; a refresh keeps what is on the screen when it fails.
@@ -176,23 +169,23 @@ export default function MarketBoard() {
         try {
           const response = await fetch(`/api/research/market/chart?ticker=${encodeURIComponent(selected)}&period=${period}`, { signal: controller.signal, cache: "no-store" });
           const body = response.ok ? await response.json() : null;
-          if (body?.ok && body.bars.length) { have = true; setChart({ key, bars: body.bars, before: body.before ?? [] }); return; }
+          if (body?.ok && body.bars.length) { have = true; put(key, { bars: body.bars, before: body.before ?? [] }); return; }
         } catch { if (controller.signal.aborted) return; }
         if (attempt < 2 && !have) await new Promise(done => setTimeout(done, 1200));
         if (controller.signal.aborted) return;
       }
-      if (!have) setChart({ key, bars: [], before: [] });
+      if (!have) put(key, { bars: [], before: [], failed: true });
     }, intraday ? FAST_MS : SLOW_MS);
     return () => { stop(); controller.abort(); };
-  }, [selected, period, key, reload, intraday]);
-  const loading = chart.key !== key;
+  }, [selected, period, key, reload, intraday, put, fresh]);
+  const loading = store.shown === null;
+  const chart = store.shown ?? { bars: [], before: [] };
+  // Until a new period comes, the chart on the screen is drawn with its own period's rules.
+  const shownPeriod = (store.shownKey ? store.shownKey.slice(store.shownKey.lastIndexOf(":") + 1) : period) as BoardPeriod, shownIntraday = isIntradayPeriod(shownPeriod);
   // What is drawn (owner, Nov 14): the 15-minute chart shows the latest trading day only; intraday bad prints (a high / low 3% or more off the bar's body) are cut back.
   // Kept per series, so a zoomed chart is not reset on every render.
-  const drawn = useMemo(() => {
-    const set = period === "15m" ? latestTradingDay(chart.bars, chart.before) : chart;
-    return intraday ? { bars: clampWicks(set.bars), before: set.before } : set;
-  }, [chart, period, intraday]);
-  const last = !loading && chart.bars.length ? chart.bars[chart.bars.length - 1] : null;
+  const drawn = useMemo(() => drawnSeries(shownPeriod, store.shown ?? { bars: [], before: [] }), [store.shown, shownPeriod]);
+  const last = !store.busy && chart.bars.length ? chart.bars[chart.bars.length - 1] : null;
   const now = useMinute();
   const phase = marketPhase(new Date(now ?? 0)), banner = marketBanner(phase);
   // Weekends and NYSE holidays (until the next pre-market): "休場 ・ 米国 11/13(金) の終値", a grey point, and no after-hours line under the cards (owner, Nov 15).
@@ -242,8 +235,8 @@ export default function MarketBoard() {
       {mode === "candles" && bar && <div className={styles.ohlc} aria-live="polite">
         <span><small>{t("始値", "Open")}</small><b>{num(bar.open)}</b></span><span><small>{t("高値", "High")}</small><b>{num(bar.high)}</b></span><span><small>{t("安値", "Low")}</small><b>{num(bar.low)}</b></span><span data-close="true"><small>{t("終値", "Close")}</small><b>{num(bar.close)}</b></span></div>}
       <div className={styles.chartBox}>{loading ? <p className={styles.note} role="status">{t("チャートを読み込み中…", "Loading the chart…")}</p>
-        : chart.bars.length < 2 ? <p className={styles.note} role="status">{t("この銘柄のチャートを取得できませんでした。", "The chart for this symbol could not be loaded.")} <button type="button" className={styles.retry} onClick={() => { setChart({ key: "", bars: [], before: [] }); setReload(n => n + 1); }}>{t("もう一度読み込む", "Try again")}</button></p>
-        : <PriceChart defaultVolume={day ? day.volume : undefined} bars={drawn.bars} jst={intraday} tag={tag} live={intraday ? { phase } : undefined} sessionTicks={period === "15m"} before={drawn.before} mode={mode} interval={periodInterval(period)} variant="board" ja={ja} maPeriods={[25, 75]} accent="#7fe3c0" lineColor="#7fe3c0" onActive={setActive} />}</div>
+        : chart.bars.length < 2 ? <p className={styles.note} role="status">{t("この銘柄のチャートを取得できませんでした。", "The chart for this symbol could not be loaded.")} <button type="button" className={styles.retry} onClick={() => { store.drop(key); setReload(n => n + 1); }}>{t("もう一度読み込む", "Try again")}</button></p>
+        : <PriceChart defaultVolume={day ? day.volume : undefined} bars={drawn.bars} jst={shownIntraday} tag={tag} live={shownIntraday ? { phase } : undefined} sessionTicks={shownPeriod === "15m"} busy={store.busy} before={drawn.before} mode={mode} interval={periodInterval(shownPeriod)} variant="board" ja={ja} maPeriods={[25, 75]} accent="#7fe3c0" lineColor="#7fe3c0" onActive={setActive} />}</div>
       <div className={styles.ranges} role="group" aria-label={t("チャートの期間", "Chart range")}>{PRIMARY_PERIODS.map(p => <button key={p} type="button" aria-pressed={period === p} onClick={() => setPeriod(p)}>{name(p)}</button>)}
         <MoreMenu period={period} onPick={setPeriod} ja={ja} /></div>
     </section>
