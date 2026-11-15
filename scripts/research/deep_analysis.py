@@ -562,6 +562,14 @@ def run_once(path, transport=None, env=None, now=None, reference=None, only_ref=
         source = None
         for row in sources:
             saved = db.execute('SELECT * FROM deep_analyses WHERE source_ref=?', (row['ref'],)).fetchone()
+            if saved is not None and saved['state'] == 'running' and saved['next_at'] <= now:
+                # a call that never came back (the service restarted mid-call): resumed once (that call is the last, see below); a second
+                # interruption, or more attempts than allowed, makes it final and loud instead of looping every ten minutes
+                if saved['attempts'] >= (MAX_ATTEMPTS if only_ref is None else 2):
+                    db.execute("UPDATE deep_analyses SET state='held',failure='interrupted' WHERE source_ref=?", (row['ref'],))
+                    continue
+                db.execute("UPDATE deep_analyses SET state='retry' WHERE source_ref=?", (row['ref'],))
+                saved = db.execute('SELECT * FROM deep_analyses WHERE source_ref=?', (row['ref'],)).fetchone()
             if only_ref is not None and fresh and saved is None:
                 pass  # first and only attempt at a release that never had a row (roster backfill)
             elif only_ref is not None:
@@ -769,8 +777,10 @@ def backfill_roster(path, transport=None, env=None, now=None):
         for item in sorted(stored_release_sources(db, reference, False, since=reference - BACKFILL_LOOKBACK),
                            key=lambda row: row['observedAt'], reverse=True):
             done = db.execute('SELECT 1 FROM deep_old_retries WHERE source_ref=? AND marker=?', (item['ref'], BACKFILL_MARKER)).fetchone()
-            saved = db.execute('SELECT state FROM deep_analyses WHERE source_ref=?', (item['ref'],)).fetchone()
-            if not done and (saved is None or saved['state'] == 'retry'):
+            saved = db.execute('SELECT state,next_at FROM deep_analyses WHERE source_ref=?', (item['ref'],)).fetchone()
+            if saved is not None and saved['state'] == 'running' and saved['next_at'] > now:
+                continue  # a call is in flight right now: leave it
+            if not done and (saved is None or saved['state'] in ('retry', 'running')):
                 pending = item
                 break
     if pending is None:

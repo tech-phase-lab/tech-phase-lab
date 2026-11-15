@@ -615,6 +615,31 @@ class DeepAnalysisTests(unittest.TestCase):
         self.assertNotIn('Revenue rose 45%', json.dumps(deep_analysis.diagnostics(deep_analysis.connect(self.path))))  # never in /health
 
 
+    def test_a_call_interrupted_by_a_restart_is_resumed_once_not_forever(self):
+        released = base.NOW - timedelta(days=10)
+        self.stored_release(at=released)
+        on = {**ENV, deep_analysis.BACKFILL_ENV: 'true'}
+        now = base.NOW.timestamp()
+        with deep_analysis.connect(self.path) as db:
+            item = deep_analysis.stored_release_sources(db, base.NOW, False, since=base.NOW - timedelta(days=30))[0]
+            db.execute("INSERT INTO deep_analyses(source_ref,kind,subject,source_sha,state,attempts,next_at,created_at,source_url,source_title,version) "
+                       "VALUES(?,?,?,?,'running',1,?,?,?,?,?)", (item['ref'], 'earnings', 'CRWV', item['sha'], now + 300, released.isoformat(), item['url'], item['title'],
+                                                                 deep_analysis.VERSION))
+        self.assertEqual(deep_analysis.backfill_roster(self.path, lambda *_: self.fail('still in flight'), on, now=now), 'idle')  # not stale yet
+        calls = []
+        def transport(payload, key):
+            calls.append(1)
+            return reply(GOOD)(payload, key)
+        self.assertEqual(deep_analysis.backfill_roster(self.path, transport, on, now=now + 1000), 'done')  # stale: resumed once
+        self.assertEqual(len(calls), 1)
+        with research.connect(self.path) as db:
+            db.execute("UPDATE deep_analyses SET state='running',attempts=2,next_at=?", (now + 1100,))
+            db.execute("DELETE FROM deep_old_retries")
+        self.assertEqual(deep_analysis.backfill_roster(self.path, lambda *_: self.fail('no third call'), on, now=now + 2000), 'source-unavailable')
+        with research.connect(self.path) as db:
+            self.assertEqual(db.execute("SELECT state,failure FROM deep_analyses").fetchone()[:], ('held', 'interrupted'))
+
+
 class IndicatorAnalysisTests(unittest.TestCase):
     setUp = base.OfficialResearchTests.setUp
 
