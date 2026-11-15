@@ -8,7 +8,6 @@ import { NEWS_MAX_AGE_MS, clockTime, officialTime } from "./news-time.ts";
 import type { CompanyWireItem } from "./company-wire.ts";
 import { tickerLabel, wireStories } from "./wire-stories.ts";
 import { officialPulseHeadlines, marketPulseHeadlines, generalPulseHeadlines } from "./news-pulse-headline.ts";
-import { stockNewsWire } from "./home-stock-news.ts";
 
 const JAPANESE = /[\u3040-\u30ff\u3400-\u9fff]/;
 
@@ -69,9 +68,10 @@ export function newsPulseItems(feed: GeneralNewsFeed | undefined, lang: Language
  * `shows` says whether a list would put anything on the band (the band also needs a short enough headline). */
 export function homePulseItems(feed: GeneralNewsFeed | undefined, lang: Language, now?: number, wire: Record<string, CompanyWireItem[]> = {}, limit = 5,
   shows: (items: ReturnType<typeof newsPulseItems>) => boolean = items => items.length > 0) {
-  // Owner, Nov 15: the home band carries the Stock News API stories only, never the Tech Alerts (ハイテク速報) items, not even as a fallback.
-  void feed; void shows;
-  return newsPulseItems(undefined, lang, now, stockNewsWire(wire), limit);
+  // Owner, Nov 15 (latest): the LIVE band carries the Tech Alerts (ハイテク速報) items only; the Stock News API stories (Top Topics) and the
+  // other company headlines are not on the band.
+  void wire; void shows;
+  return newsPulseItems(feed, lang, now, {}, limit);
 }
 
 /** The instant the strip shows for an item (a date-only release seen the same

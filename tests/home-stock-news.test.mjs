@@ -39,18 +39,13 @@ test("only Stock News API rows reach the home list, market news included; the Ja
   assert.deepEqual(homeStockStories({}, "ja"), []);
 });
 
-test("the top band shows the Stock News API stories only, never a Tech Alerts item, never English on the Japanese page", () => {
-  const ja = homePulseItems(feed, "ja", now, wire(), 5);
-  assert.deepEqual(ja.map(item => item.id), ["wire-s1", "wire-m1"]);
-  assert.ok(ja.every(item => /[぀-ヿ㐀-鿿]/.test(item.title)));
-  assert.equal(ja.find(item => item.id === "wire-m1").ticker, "市場");
-  assert.deepEqual(homePulseItems(feed, "en", now, wire(), 5).map(item => item.id), ["wire-s2", "wire-s1", "wire-m1"]);
-});
-
-test("the band never shows Tech Alerts items, not even when no Stock News API story is available yet (owner, Nov 15)", () => {
-  const older = parseCompanyWire({ ok: true, items: { NVDA: [row("y1", "Nvidia ships a new rack system", "エヌビディアが新ラックを出荷", "yahoo", 5)] } }).items;
-  assert.deepEqual(homePulseItems(feed, "ja", now, older, 5).map(item => item.id), [], "no Stock News API rows yet: nothing, never the flash items");
-  assert.deepEqual(homePulseItems(feed, "ja", now, {}, 5).map(item => item.id), []);
+test("the LIVE band carries the Tech Alerts items only, never a Stock News API story or another company headline (owner, Nov 15)", () => {
+  for (const lang of ["ja", "en"]) {
+    const ids = homePulseItems(feed, lang, now, wire(), 5).map(item => item.id);
+    assert.ok(ids.length > 0, "the Tech Alerts items are shown");
+    assert.ok(ids.every(id => !id.startsWith("wire-")), "no company-wire row on the band");
+    assert.deepEqual(ids, homePulseItems(feed, lang, now, {}, 5).map(item => item.id), "the same band with or without the wire");
+  }
 });
 
 test("the home list asks for the Stock News API stories; the Top Topics page and the official tab keep their own lists", () => {
