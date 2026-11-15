@@ -709,7 +709,7 @@ class DeepAnalysisTests(unittest.TestCase):
             self.assertEqual(deep_analysis.stored_release_sources(db, base.NOW, False, since=base.NOW - timedelta(days=30)), [])
             reasons = deep_analysis.source_reasons(db, 'DELL', base.NOW)
         self.assertEqual(reasons['verdicts'], {'stale-period': 1})
-        current = old.replace('2024', '2026').replace('2025', '2027')
+        current = old.replace('May 30, 2024', (base.NOW - timedelta(days=5)).strftime('%B %d, %Y').replace(' 0', ' ')).replace('2025', '2027')
         self.stored_release(ticker='DELL', url='https://www.sec.gov/Archives/edgar/data/1571996/x/ex991.htm', text=current + '\nStatements of Income and Related Financial Highlights')
         with deep_analysis.connect(self.path) as db:
             self.assertEqual(len(deep_analysis.stored_release_sources(db, base.NOW, False, since=base.NOW - timedelta(days=30))), 1)
@@ -736,6 +736,32 @@ class DeepAnalysisTests(unittest.TestCase):
             db.execute("UPDATE deep_analyses SET created_at=?", ((released + timedelta(hours=1)).isoformat(),))
             deep_analysis.STORED_CACHE.clear()
             self.assertEqual(deep_analysis.stored_release_sources(db, base.NOW, False, since=base.NOW - timedelta(days=30)), [])
+
+
+    def test_the_newest_release_by_its_own_date_is_taken_not_the_newest_by_the_day_it_was_stored(self):
+        # Nov 15: AVGO's, DELL's and ORCL's old SEC filings were all stored on Sep 24, so "newest stored" was arbitrary.
+        stored = base.NOW - timedelta(days=30)
+        pages = (('https://www.sec.gov/Archives/edgar/data/1571996/000157199624000050/dell-20240530.htm', 'May 30, 2024'),
+                 ('https://www.sec.gov/Archives/edgar/data/1571996/000157199626000100/dell-20260901.htm', 'September 1, 2026'),
+                 ('https://www.sec.gov/Archives/edgar/data/1571996/000157199625000096/dell-20250828.htm', 'August 28, 2025'))
+        with research.connect(self.path) as db:
+            db.execute("DELETE FROM source_revisions"); db.execute("DELETE FROM release_events"); db.execute("DELETE FROM sources")
+            for index, (url, day) in enumerate(pages):
+                text = 'Dell Technologies Delivers Results\nROUND ROCK, Texas \u2014 %s\n' % day + base.BODY + '\nStatements of Income and Related Financial Highlights'
+                db.execute('INSERT INTO sources(url,ticker,title,published_on,discovered_at,sha256) VALUES(?,?,?,?,?,?)', (url, 'DELL', 'x', '2026-09-01', stored.isoformat(), 'rev%d' % index))
+                db.execute('INSERT INTO source_revisions(url,sha256,observed_at,extracted_text,extracted_chars) VALUES(?,?,?,?,?)', (url, 'rev%d' % index, stored.isoformat(), text, len(text)))
+        with deep_analysis.connect(self.path) as db:
+            found = deep_analysis.stored_release_sources(db, base.NOW, False, since=base.NOW - timedelta(days=120))
+            self.assertEqual([item['url'][-17:] for item in found], ['dell-20260901.htm'])
+            self.assertTrue(found[0]['observedAt'].startswith('2026-09-01'))
+            # once that newest release is covered, an older one is never taken in its place
+            db.execute("INSERT INTO deep_analyses(source_ref,kind,subject,source_sha,state,created_at,source_url) VALUES('x','earnings','DELL','s','done',?,?)",
+                       ('2026-09-01T22:00:00+00:00', 'https://elsewhere.example/dell'))
+            deep_analysis.STORED_CACHE.clear()
+            self.assertEqual(deep_analysis.stored_release_sources(db, base.NOW, False, since=base.NOW - timedelta(days=120)), [])
+        self.assertEqual(deep_analysis.release_date('https://x/y/avgo-20260902.htm', '', stored).date().isoformat(), '2026-09-02')
+        self.assertEqual(deep_analysis.release_date('https://x/y/page', 'ROUND ROCK \u2014 May 30, 2024 ...', stored).date().isoformat(), '2024-05-30')
+        self.assertEqual(deep_analysis.release_date('https://x/y/page', 'no date', stored), stored)
 
 
 class IndicatorAnalysisTests(unittest.TestCase):
