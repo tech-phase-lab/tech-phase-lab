@@ -84,7 +84,8 @@ def retry_after_seconds(error, now_at=None):
     return min(seconds, MAX_RETRY_AFTER_SECONDS)
 
 
-def request_response(payload, api_key, timeout=35):
+def request_response(payload, api_key, timeout=35, attempts=3):
+    """POST one Responses request. `attempts` bounds the tries on a timeout or a retryable status; 1 sends it once (the weekly draft, for cost)."""
     body = json.dumps(payload, ensure_ascii=False, separators=(",", ":")).encode()
     request = Request(RESPONSES_URL, data=body, method="POST", headers={
         "Authorization": "Bearer " + api_key,
@@ -92,7 +93,8 @@ def request_response(payload, api_key, timeout=35):
         "User-Agent": "TechPhaseResearch/1.0",
     })
     last_error = None
-    for attempt in range(3):
+    attempts = max(1, min(int(attempts), 3))
+    for attempt in range(attempts):
         try:
             with urlopen(request, timeout=timeout) as response:
                 raw = response.read(MAX_RESPONSE_BYTES + 1)
@@ -113,7 +115,7 @@ def request_response(payload, api_key, timeout=35):
                 ) from exc
         except (URLError, TimeoutError, json.JSONDecodeError) as exc:
             last_error = exc
-        if attempt < 2:
+        if attempt < attempts - 1:
             time.sleep(2 ** attempt)
     raise GenerationFailed("generation-request-failed") from last_error
 

@@ -4,7 +4,7 @@ import Link from "next/link";
 import ResearchToolShell from "../research-tool-shell";
 import { useResearchLanguage } from "../use-research-language";
 import { useOwnerMode } from "../member-display-provider";
-import { barHeights, cardBadge, formatNumber, groupNotes, scheduleDate, shortDate, type WeeklyCard } from "@/lib/research/weekly-format";
+import { arrangeDrafts, barHeights, cardBadge, formatNumber, groupNotes, scheduleDate, shortDate, type WeeklyCard } from "@/lib/research/weekly-format";
 import { companyPhotos } from "@/lib/research/company-photos";
 import styles from "./issues.module.css";
 
@@ -18,7 +18,7 @@ type Part = (
   | { type: "highlight"; text: string }) & { section?: Section };
 // Group titles shown once, where a run of parts of that kind begins. The takeaways and the schedule carry their own headings.
 const SECTION_TITLES: Partial<Record<Section, [string, string]>> = { earnings: ["決算", "Earnings"], indicators: ["経済指標", "Economic indicators"], market: ["市場全体の流れ", "The wider market"] };
-export type Issue = { id: string; number: number | null; status: "draft" | "published"; date: string; headline: string; lead: string; parts: Part[]; sources: { title: string; url: string }[]; notes?: string[]; auto?: boolean };
+export type Issue = { id: string; number: number | null; status: "draft" | "published"; date: string; headline: string; lead: string; parts: Part[]; sources: { title: string; url: string }[]; notes?: string[]; auto?: boolean; createdAt?: string; updatedAt?: string };
 type Listed = { number: number; date: string; headline: string };
 type State = "loading" | "ready" | "signed-out" | "pro-required" | "error";
 const two = (n: number) => String(n + 1).padStart(2, "0");
@@ -146,7 +146,7 @@ const send = async (action: string, payload: unknown) => {
 function Field({ label, value, onChange, long = false }: { label: string; value: string; onChange: (value: string) => void; long?: boolean }) {
   return <label className={styles.field}><span>{label}</span>{long ? <textarea value={value} rows={4} onChange={event => onChange(event.target.value)} /> : <input value={value} onChange={event => onChange(event.target.value)} />}</label>;
 }
-function Draft({ draft, onDone }: { draft: Issue; onDone: (message: string) => void }) {
+function Draft({ draft, onDone, onPreview }: { draft: Issue; onDone: (message: string) => void; onPreview: (issue: Issue) => void }) {
   const [value, setValue] = useState<Issue>(draft), [busy, setBusy] = useState(false), [error, setError] = useState("");
   const setPart = (index: number, next: Partial<Part>) => setValue(current => ({ ...current, parts: current.parts.map((part, at) => (at === index ? { ...part, ...next } as Part : part)) }));
   const body = () => ({ id: value.id, date: value.date, headline: value.headline, lead: value.lead, parts: value.parts, sources: value.sources, notes: value.notes ?? [] });
@@ -194,6 +194,7 @@ function Draft({ draft, onDone }: { draft: Issue; onDone: (message: string) => v
     <div className={styles.actions}>
       <button type="button" disabled={busy} onClick={() => void run("draft", "下書きを保存しました")}>保存</button>
       <button type="button" disabled={busy} className={styles.publish} onClick={() => void run("publish", "公開しました")}>公開</button>
+      <button type="button" disabled={busy} onClick={() => onPreview(value)}>上で読者の見え方を確認</button>
       <button type="button" disabled={busy} className={styles.danger} onClick={() => void run("delete", "消しました")}>消す</button>
     </div>
   </details>;
@@ -201,12 +202,30 @@ function Draft({ draft, onDone }: { draft: Issue; onDone: (message: string) => v
 
 type OwnerState = { drafts: Issue[]; autoPublish: boolean; generateEnabled: boolean; generateHour: number; lastGenerated: string | null; generation: { running: boolean; configured: boolean; lastOk: boolean | null; lastError: string } };
 
-function OwnerPanel({ owner, onChanged, shown, onWatch }: { owner: OwnerState; onChanged: (message: string) => void; shown: Issue | null; onWatch: () => void }) {
+/** One folded line per old draft (superseded by a newer draft of the same date, or dated on or before the latest published issue). */
+function OldDraft({ draft, onChanged }: { draft: Issue; onChanged: (message: string) => void }) {
+  const [busy, setBusy] = useState(false), [error, setError] = useState("");
+  const remove = async () => {
+    if (!window.confirm(`${shortDate(draft.date)}の古い下書き「${draft.headline}」を消します。よろしいですか?`)) return;
+    setBusy(true); setError("");
+    const result = await send("delete", { id: draft.id });
+    setBusy(false);
+    if (!result.ok) setError("消せませんでした。"); else onChanged("古い下書きを消しました");
+  };
+  return <li><span><b>{draft.headline}</b><small>{shortDate(draft.date)}{draft.createdAt ? ` · ${draft.createdAt.slice(5, 16).replace("-", "/").replace("T", " ")}作成` : ""}</small></span>
+    <button type="button" className={styles.danger} disabled={busy} onClick={() => void remove()}>削除</button>
+    {error && <p role="alert" className={styles.error}>{error}</p>}</li>;
+}
+
+function OwnerPanel({ owner, onChanged, shown, onWatch, latestPublished, onPreview }: { owner: OwnerState; onChanged: (message: string) => void; shown: Issue | null; onWatch: () => void; latestPublished: string | null; onPreview: (issue: Issue) => void }) {
   const { drafts, autoPublish, generateEnabled, generateHour, generation } = owner;
   const [busy, setBusy] = useState(false), [error, setError] = useState("");
+  const { current, older } = arrangeDrafts(drafts, latestPublished);
   const toggleGenerate = async () => { setBusy(true); const result = await send("settings", { generateEnabled: !generateEnabled }); setBusy(false); if (!result.ok) setError("切り替えられませんでした。"); else onChanged(!generateEnabled ? "毎週の自動作成をオンにしました" : "毎週の自動作成をオフにしました"); };
   const changeHour = async (hour: number) => { setBusy(true); const result = await send("settings", { generateHour: hour }); setBusy(false); if (!result.ok) setError("時刻を変えられませんでした。"); else onChanged("作る時刻を変えました"); };
+  // Owner, Nov 15 (cost): the Saturday run is the only automatic one; another draft costs one more AI request, so it is asked first.
   const makeNow = async () => {
+    if (!window.confirm("AIに下書きをもう1つ作らせます。AIの利用料金(1回分)がかかります。よろしいですか?")) return;
     setBusy(true); setError("");
     const result = await send("generate", {});
     setBusy(false);
@@ -219,8 +238,16 @@ function OwnerPanel({ owner, onChanged, shown, onWatch }: { owner: OwnerState; o
     setBusy(true); const result = await send("delete", { id: shown.id }); setBusy(false);
     if (!result.ok) setError("消せませんでした。"); else onChanged("消しました");
   };
+  // Owner, Nov 15: the issue is read at the top; below it, the drafts to review (the newest per date only), the old ones folded, then the settings.
   return <section className={styles.owner} aria-label="運営者">
-    <h2>運営者</h2>
+    <h2>運営者 · 下書きの管理</h2>
+    <h3 className={styles.ownerHeading}>確認待ちの下書き</h3>
+    {current.length === 0 ? <p className={styles.empty}>確認待ちの下書きはありません。</p> : current.map(draft => <Draft key={draft.id} draft={draft} onDone={onChanged} onPreview={onPreview} />)}
+    {older.length > 0 && <details className={styles.oldDrafts}>
+      <summary>過去の下書き（{older.length}件）</summary>
+      <ul>{older.map(draft => <OldDraft key={draft.id} draft={draft} onChanged={onChanged} />)}</ul>
+    </details>}
+    <h3 className={styles.ownerHeading}>設定</h3>
     <label className={styles.switch}><input type="checkbox" role="switch" checked={autoPublish} disabled={busy} onChange={() => void toggle()} /><span>確認なしで自動公開</span><small>{autoPublish ? "オン: 作られた号はすぐ公開されます" : "オフ: 下書きを確認してから公開します"}</small></label>
     <div className={styles.generate}>
       <label className={styles.switch}><input type="checkbox" role="switch" checked={generateEnabled} disabled={busy} onChange={() => void toggleGenerate()} /><span>毎週土曜に下書きを自動で作る</span><small>{generateEnabled ? `オン: 毎週土曜の${generateHour}時(日本時間)に、下書きを1つ作ります` : "オフ: 自動では作りません"}</small></label>
@@ -229,7 +256,6 @@ function OwnerPanel({ owner, onChanged, shown, onWatch }: { owner: OwnerState; o
       {!generation.configured && <p className={styles.empty}>AIの設定がまだ終わっていません。終わるまで、自動でも手動でも作れません。</p>}
       {generation.lastOk === false && <p role="alert" className={styles.error}>前回は作れませんでした({generation.lastError || "原因不明"})。</p>}
     </div>
-    {drafts.length === 0 ? <p className={styles.empty}>確認待ちの下書きはありません。</p> : drafts.map(draft => <Draft key={draft.id} draft={draft} onDone={onChanged} />)}
     {shown && <button type="button" className={styles.danger} disabled={busy} onClick={() => void remove()}>この号(第{shown.number}号)を消す</button>}
     {error && <p role="alert" className={styles.error}>{error}</p>}
   </section>;
@@ -242,7 +268,7 @@ export default function WeeklyIssues() {
   const [issue, setIssue] = useState<Issue | null>(null), [latest, setLatest] = useState<number | null>(null);
   const [list, setList] = useState<Listed[]>([]), [hasMore, setHasMore] = useState(false), [pick, setPick] = useState(false), [more, setMore] = useState(false);
   const [owner, setOwner] = useState<OwnerState | null>(null), [message, setMessage] = useState(""), [revision, setRevision] = useState(0);
-  const [number, setNumber] = useState<number | null>(null);
+  const [number, setNumber] = useState<number | null>(null), [preview, setPreview] = useState<Issue | null>(null);
 
   useEffect(() => {
     let live = true;
@@ -273,8 +299,13 @@ export default function WeeklyIssues() {
     const timer = window.setInterval(() => { rounds += 1; setRevision(value => value + 1); if (rounds >= 60) window.clearInterval(timer); }, 6000);
     window.setTimeout(() => window.clearInterval(timer), 6 * 60 * 1000);
   };
-  const changed = (text: string) => { setMessage(text); setNumber(null); setRevision(value => value + 1); };
+  const changed = (text: string) => { setMessage(text); setNumber(null); setPreview(null); setRevision(value => value + 1); };
   const ja = lang === "ja";
+  // The owner reads the issue at the top as readers will see it: the draft picked for review, else the published issue, else (nothing published
+  // yet) the newest draft to review. Members never see a draft.
+  const latestPublished = list.find(item => item.number === latest)?.date ?? (issue && issue.number === latest ? issue.date : null);
+  const reviewing = ownerMode && owner ? preview ?? (issue ? null : arrangeDrafts(owner.drafts, latestPublished).current[0] ?? null) : null;
+  const showPreview = (draft: Issue) => { setPreview(draft); window.scrollTo({ top: 0, behavior: "smooth" }); };
   return <ResearchToolShell desk compactTitle lang={lang} setLang={setLang} title={ja ? "週刊 Tech Phase PRO" : "PRO Weekly"} description="">
     {(state === "signed-out" || state === "pro-required") && <section className={styles.notice}><h2>{ja ? "PRO会員限定です" : "Available with PRO"}</h2><p>{ja ? "PRO会員になると、週刊 Tech Phase PRO を読めます。" : "PRO members can read PRO Weekly."}</p><Link href="/research/account">{ja ? "ログイン・会員情報" : "Sign in or view plans"}</Link></section>}
     {state === "loading" && <p className={styles.empty}>{ja ? "読み込み中…" : "Loading…"}</p>}
@@ -285,12 +316,13 @@ export default function WeeklyIssues() {
       </div>
       {pick && <section className={styles.past} aria-label={ja ? "これまでの号" : "Past issues"}>
         <header><h2>{ja ? "これまでの号" : "Past issues"}</h2><button type="button" aria-label={ja ? "閉じる" : "Close"} onClick={() => setPick(false)}>✕</button></header>
-        <ul>{list.map(item => <li key={item.number}><button type="button" aria-current={issue?.number === item.number ? "true" : undefined} onClick={() => { setNumber(item.number); setPick(false); }}><b>{ja ? `第${item.number}号` : `Issue ${item.number}`}</b><span>{shortDate(item.date)}</span><em>{item.headline}</em>{item.number === latest && <i>{ja ? "最新" : "Latest"}</i>}</button></li>)}</ul>
+        <ul>{list.map(item => <li key={item.number}><button type="button" aria-current={issue?.number === item.number ? "true" : undefined} onClick={() => { setNumber(item.number); setPreview(null); setPick(false); }}><b>{ja ? `第${item.number}号` : `Issue ${item.number}`}</b><span>{shortDate(item.date)}</span><em>{item.headline}</em>{item.number === latest && <i>{ja ? "最新" : "Latest"}</i>}</button></li>)}</ul>
         {hasMore && <button type="button" className={styles.older} onClick={() => void olderPage()}>{ja ? "さらに前の号を見る" : "See older issues"}</button>}
       </section>}
       {message && <p className={styles.ok} role="status">{message}</p>}
-      {issue ? <IssueView issue={issue} lang={lang} /> : <p className={styles.empty}>{ja ? "まだ公開された号はありません。" : "No issues have been published yet."}</p>}
+      {reviewing && <div className={styles.previewBar} role="status"><p><b>下書きの確認表示</b>{shortDate(reviewing.date)} · 読者にはまだ見えません</p>{preview && <button type="button" onClick={() => setPreview(null)}>{issue ? "公開中の号に戻す" : "閉じる"}</button>}</div>}
+      {reviewing ? <IssueView issue={reviewing} lang={lang} /> : issue ? <IssueView issue={issue} lang={lang} /> : <p className={styles.empty}>{ja ? "まだ公開された号はありません。" : "No issues have been published yet."}</p>}
     </>}
-    {ownerMode && owner && <OwnerPanel owner={owner} shown={issue?.number ? issue : null} onChanged={changed} onWatch={watch} />}
+    {ownerMode && owner && <OwnerPanel owner={owner} shown={issue?.number ? issue : null} onChanged={changed} onWatch={watch} latestPublished={latestPublished} onPreview={showPreview} />}
   </ResearchToolShell>;
 }
