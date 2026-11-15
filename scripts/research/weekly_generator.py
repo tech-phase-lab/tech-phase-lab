@@ -10,6 +10,10 @@ The rules that keep it honest:
   analysis uses). A part that fails is left out and the draft says so in the review memo.
 - Whatever cannot be gathered is skipped and written down in the review memo; the rest is still made.
 - The result is always a draft. It is published at once only if the owner has turned automatic publication on.
+- Cost (owner, Nov 15): the model is called ONCE per weekly draft. The Saturday run tries once a week and never again that week, a request is
+  sent once (no transport retry), and a sentence that fails a check is dropped or replaced here, never sent back to the model. Making another
+  draft is the owner's own button. The fixed POLICY and schema lead every request (same text each week) so the provider's prompt cache applies,
+  and a company that already has a PRO deep analysis this week is described to the model by that analysis, not by the long official note.
 
 The body of a draft is reader-facing text only, in a fixed reading order: main takeaways -> earnings -> indicators -> the wider
 market -> next week's schedule. Everything meant for the owner (failed checks, substituted sentences, missing material, topics
@@ -33,7 +37,7 @@ JST = ZoneInfo("Asia/Tokyo")
 SCHEDULE_PATH = Path(__file__).with_name("release_schedule.json")
 WINDOW_DAYS = 7
 OUTLOOK_DAYS = 9
-MAX_ATTEMPTS = 3
+MAX_ATTEMPTS = 1  # owner, Nov 15 (cost): one automatic try per week; a failed Saturday is made again only by the owner's button
 RETRY_SECONDS = 1800
 LOCK = threading.Lock()
 
@@ -82,6 +86,9 @@ POLICY = """あなたは「リゼル」として、週刊 Tech Phase PRO の1号
 - text は heading と body。timeline は heading と points(when, event, comment, tone)。tone は上げ=up、下げ=down、どちらでもない=flat。
 - highlight は、大きく出す1文だけ(text)。使うのは1つまで。
 - 使わない項目は null か空の配列にしてください。"""
+
+
+PROMPT_CACHE_KEY = "techphase-weekly-issue"
 
 
 def _nullable(kind):
@@ -202,13 +209,15 @@ def collect(db, now, news=()):
             except (KeyError, TypeError, ValueError):
                 continue
     if _table(db, "official_research_publications") and _table(db, "signal_events"):
-        for row in db.execute("""SELECT p.payload, e.url FROM official_research_publications p JOIN signal_events e ON e.id=p.event_id
-                                 WHERE julianday(p.public_at)>=julianday(?) ORDER BY julianday(p.public_at)""", (start,)):
+        has_tickers = any(column["name"] == "tickers_json" for column in db.execute("PRAGMA table_info(signal_events)"))
+        for row in db.execute(f"""SELECT p.payload, e.url, {'e.tickers_json' if has_tickers else "'[]'"} AS tickers FROM official_research_publications p
+                                  JOIN signal_events e ON e.id=p.event_id WHERE julianday(p.public_at)>=julianday(?) ORDER BY julianday(p.public_at)""", (start,)):
             try:
                 note = json.loads(row["payload"])
                 ja = "\n".join([note["summary"]["ja"], *[f["ja"] for f in note["facts"]]])
                 en = "\n".join([note["title"]["en"], note["summary"]["en"], *[f["en"] for f in note["facts"]]])
-                add("note", note["title"]["ja"], row["url"], en, text=ja)
+                tickers = [t for t in json.loads(row["tickers"] or "[]") if isinstance(t, str)]
+                add("note", note["title"]["ja"], row["url"], en, text=ja, ticker=tickers[0] if tickers else "")
             except (KeyError, TypeError, ValueError):
                 continue
     # The week's PRO deep analyses (owner, Nov 15: "ありきたりな情報だと弱い"): each point already passed the figure checks against the release, so
@@ -228,6 +237,12 @@ def collect(db, now, news=()):
                     ticker=row["subject"] if row["kind"] == "earnings" else "")
             except (KeyError, TypeError, ValueError):
                 continue
+    # Reuse what is already written (owner, Nov 15: cost): a company with a deep analysis this week is described to the model by that analysis.
+    # Its official note stays evidence (the checks still read its exact words, and a sentence may still cite it), but its text is not sent again.
+    analysed = {item["ticker"] for item in evidence if item["kind"] == "analysis" and item["ticker"]}
+    for item in evidence:
+        if item["kind"] == "note" and item["ticker"] in analysed:
+            item["covered"] = True
     for item in news:
         title = str(item.get("title") or "").strip()
         url = str(item.get("url") or "")
@@ -428,16 +443,106 @@ def section_of(kind, ids, evidence):
 NEUTRAL_HEADLINE = "今週の決算と経済指標のまとめ"
 NEUTRAL_LEAD = "今週に結果が出た決算と経済指標を、数字と一緒にまとめました。"
 
+# Owner, Nov 15: every draft carried the same fixed headline. The cause: the headline and the lead were checked against the whole week's
+# evidence joined into one text, and the "the source is negated, so the copy must keep the negation" rule (factual_validation.validate_negation)
+# fires for ANY Japanese copy as soon as one sentence anywhere in that text has a negation ("did not change its outlook", 「〜ません」) and some
+# Japanese is present (next week's schedule always is). An affirmative, conclusion-style headline therefore failed with changed-negation almost
+# every week, the retry asked for an affirmative sentence again, and the lenient pass fell back to NEUTRAL_HEADLINE. That rule is meant for a
+# translation of one source; for a summary it now reads only the negated sentences the headline could be restating (see negated_scope).
+# The number check is unchanged: it still reads all the evidence, and a figure the evidence does not have still stops the draft.
+SENTENCE_SPLIT = re.compile(r"(?<=[.!?])\s+|[。！？\n]+")
+LATIN_NAME = re.compile(r"[A-Za-z][A-Za-z0-9&.'-]*[A-Za-z0-9]")
 
-def _framing(text, quote, fallback, lenient, notes, name):
-    """The headline or the lead. A wrong NUMBER always stops the draft. Any other rejection (a negation the check reads differently, a name) stops it
-    too, unless `lenient`: then a plain fixed sentence is used and the owner is told (owner, Nov 11: 'changed-negation' blocked the whole issue)."""
+
+def _metrics(text):
+    return {name for name, english, japanese in factual_validation.DIRECTION_METRICS if re.search(f"(?:{english})|(?:{japanese})", text, re.I)}
+
+
+def _names(text):
+    return {word.lower().rstrip(".") for word in LATIN_NAME.findall(text)} - factual_validation.NAME_ALLOWANCE
+
+
+def negated_scope(text, evidence):
+    """The negated sentences of the evidence that a headline or lead could be restating: about a company or indicator the copy names (its ticker,
+    or a Latin-script name both share) AND whose negated clause is about a metric the copy also talks about (revenue, margin, outlook...). A headline that restates one of
+    them without its negation is still rejected; a negation somewhere else in the week is not a reason to reject it."""
+    named = _names(text)
+    stated = _metrics(text)
+    if not stated:
+        return ""
+    lines = []
+    for item in evidence:
+        # What the whole item is about: its ticker and the names in its title (an official note carries no ticker, but "MUの公式発表" does).
+        about = ({(item.get("ticker") or "").lower()} | _names(item.get("label") or "")) & named
+        for sentence in SENTENCE_SPLIT.split(item["quote"]):
+            sentence = sentence.strip()
+            if not sentence or not factual_validation.negated(sentence):
+                continue
+            if not (about or (_names(sentence) & named)):
+                continue
+            # The negated clause itself must be about a metric the copy states ("revenue rose, but it is not yet profitable" is not about revenue).
+            for clause in re.split(factual_validation.CLAUSE_BOUNDARY, sentence, flags=re.I):
+                if clause and factual_validation.negated(clause) and _metrics(clause) & stated:
+                    lines.append(sentence)
+                    break
+    return "\n".join(lines)
+
+
+def _check_framing(text, evidence, quote):
+    if not isinstance(text, str) or not text.strip():
+        raise ValueError("empty-copy")
+    factual_validation.validate_numbers(text, quote)
+    factual_validation.validate_semantics(text, quote, negated_scope=negated_scope(text, evidence))
+    return text.strip()
+
+
+INDICATOR_NAMES = (("core-cpi", "米CPI"), ("cpi", "米CPI"), ("core-ppi", "米PPI"), ("ppi", "米PPI"), ("core-pce", "米PCE"), ("pce", "米PCE"),
+                   ("nonfarm", "米雇用統計"), ("unemployment", "米雇用統計"), ("hourly-earnings", "米雇用統計"))
+
+
+def _indicator_name(item):
+    keys = [fact.get("key", "") for fact in item.get("facts") or []]
+    for prefix, name in INDICATOR_NAMES:
+        if any(key.startswith(prefix) for key in keys):
+            return name
+    name = re.sub(r"[（(][^）)]*[）)]", "", item["label"].split("：")[0]).strip()
+    return name if name and len(name) <= 16 and not re.search(r"[0-9０-９]", name) else ""
+
+
+def fallback_headline(evidence, date=""):
+    """A plain headline built here from the checked evidence, used when the model's headline cannot be used: the issue date and the week's top one
+    or two subjects (the company with the most material, the first indicator), never a figure. So even a fallback differs from week to week,
+    e.g. 「11/14号：NBIS決算と米CPI」."""
+    count = {}
+    for item in evidence:
+        ticker = item.get("ticker") or ""
+        if item["kind"] in ("earnings", "analysis") and re.fullmatch(r"[A-Z][A-Z.]{0,5}", ticker):
+            count[ticker] = count.get(ticker, 0) + 1
+    companies = [f"{ticker}決算" for ticker in sorted(count, key=lambda t: -count[t])]
+    indicators = list(dict.fromkeys(name for name in (_indicator_name(item) for item in evidence if item["kind"] == "indicator") if name))
+    subjects = (companies[:1] + indicators[:1]) if companies and indicators else (companies or indicators)[:2]
     try:
-        return _check(text, quote)
+        day = datetime.fromisoformat(date).date()
+        prefix = f"{day.month}/{day.day}号："
+    except (TypeError, ValueError):
+        prefix = ""
+    return prefix + ("と".join(subjects) if subjects else NEUTRAL_HEADLINE)
+
+
+def _framing(text, evidence, quote, fallback, lenient, notes, name):
+    """The headline or the lead. Any rejection raises, unless `lenient` (what generate uses: one model call, no second round): then the sentence is
+    replaced by a plain one built here and the owner is told; a wrong NUMBER is never published either way (owner, Nov 11 and Nov 15)."""
+    try:
+        return _check_framing(text, evidence, quote)
     except ValueError as error:
-        if not lenient or "number" in str(error) or str(error) == "empty-copy":
+        if not lenient:
             raise
-        notes.append(note(SUBSTITUTED, f"{name}は、AIの文が事実確認に通らなかったため、定型文にしています。", error))
+        # Owner, Nov 15 (cost): the model is not asked again. A wrong NUMBER still never reaches readers: the sentence is replaced and the owner
+        # is asked to look (要確認); any other rejection is a plain substitution (定型文).
+        if "number" in str(error):
+            notes.append(note(ATTENTION, f"{name}は、数字が資料と合わないため、AIの文を使わず定型文にしています。", error))
+        else:
+            notes.append(note(SUBSTITUTED, f"{name}は、AIの文が事実確認に通らなかったため、定型文にしています。", error))
         return fallback
 
 
@@ -465,12 +570,12 @@ def auto_figures(evidence, limit=4):
     return parts
 
 
-def compose(model_output, evidence, schedule, lenient=False):
+def compose(model_output, evidence, schedule, lenient=False, date=""):
     """(headline, lead, parts, notes, used evidence ids). A part that fails any check is left out and noted."""
     everything = "\n".join(item["quote"] for item in evidence)
     notes = []
-    headline = _framing(model_output.get("headline"), everything, NEUTRAL_HEADLINE, lenient, notes, "見出し")
-    lead = _framing(model_output.get("lead"), everything, NEUTRAL_LEAD, lenient, notes, "導入文")
+    headline = _framing(model_output.get("headline"), evidence, everything, fallback_headline(evidence, date), lenient, notes, "見出し")
+    lead = _framing(model_output.get("lead"), evidence, everything, NEUTRAL_LEAD, lenient, notes, "導入文")
     parts, used = [], set()
     highlights = 0
     known = {item["id"] for item in evidence}
@@ -597,7 +702,8 @@ def generate(db, now, news=(), transport=None, env=None):
     if not config:
         raise RuntimeError("weekly-not-configured")
     key, model = config
-    transport = transport or (lambda payload, api_key: brief_generator.request_response(payload, api_key, timeout=240))
+    # One request, never repeated by the transport either (a timed-out request may still be billed).
+    transport = transport or (lambda payload, api_key: brief_generator.request_response(payload, api_key, timeout=240, attempts=1))
     evidence = collect(db, now, news)
     schedule = upcoming(now)
     notes = []
@@ -614,31 +720,25 @@ def generate(db, now, news=(), transport=None, env=None):
         raise RuntimeError("weekly-no-evidence")
     material = [{"id": item["id"], "type": item["kind"], "label": item["label"],
                  "facts": [{"factKey": f["key"], "label": f.get("ja", f["key"]), "value": f["value"], "comparisons": f.get("comparisons") or {}} for f in item["facts"]],
-                 "calculated": derived_lines(item["facts"]), "text": item["text"][:1500]} for item in evidence]
+                 "calculated": derived_lines(item["facts"]), "text": "" if item.get("covered") else item["text"][:1500],
+                 **({"seeAnalysisOf": item["ticker"]} if item.get("covered") else {})} for item in evidence]
     # The last few issues, so the opening and the closing are not the same every week.
     recent = [{"headline": row["headline"], "lead": row["lead"]} for row in db.execute(
         "SELECT headline,lead FROM weekly_issues WHERE status='published' ORDER BY number DESC LIMIT 3")]
-    payload = {"model": model, "store": False, "max_output_tokens": 8000, "instructions": POLICY,
-               "input": json.dumps({"weekEnding": datetime.fromtimestamp(now, JST).date().isoformat(), "evidence": material, "recentIssues": recent,
-                                    "schedule": [{"id": e["id"], "date": e["date"], "name": e["name"]} for e in schedule]}, ensure_ascii=False),
-               "text": {"format": {"type": "json_schema", "name": "weekly_issue", "strict": True, "schema": response_schema()}}}
+    # The fixed parts first and identical every week (instructions, then the output schema), the week's material last, so the provider's
+    # prompt cache can reuse the shared prefix (owner, Nov 15: cost). The cache key groups the weekly requests together.
+    payload = {"model": model, "instructions": POLICY,
+               "text": {"format": {"type": "json_schema", "name": "weekly_issue", "strict": True, "schema": response_schema()}},
+               "prompt_cache_key": PROMPT_CACHE_KEY, "store": False, "max_output_tokens": 8000,
+               "input": json.dumps({"weekEnding": datetime.fromtimestamp(now, JST).date().isoformat(), "schedule": [{"id": e["id"], "date": e["date"], "name": e["name"]} for e in schedule],
+                                    "recentIssues": recent, "evidence": material}, ensure_ascii=False)}
     response = transport(payload, key)
     if response.get("status") != "completed":
         raise RuntimeError("weekly-incomplete")
     output = json.loads(brief_generator.output_text(response))
-    try:
-        headline, lead, parts, more, used = compose(output, evidence, schedule)
-    except ValueError as error:
-        if "number" in str(error) or str(error) == "empty-copy":
-            raise
-        # The headline or the lead was rejected for something other than a number: ask once more, saying which rule it broke, and if the
-        # second try fails too, use a plain fixed headline and lead rather than losing the whole issue.
-        retry = dict(payload, input=json.dumps({**json.loads(payload["input"]), "repair": {
-            "rejected": str(error), "rule": "見出しと導入文は、根拠の文にない否定（〜ない・〜せず・見送り など）や、根拠と逆の言い方を使わず、根拠にある事実だけを肯定の文で書く"}}, ensure_ascii=False))
-        second = transport(retry, key)
-        if second.get("status") != "completed":
-            raise RuntimeError("weekly-incomplete")
-        headline, lead, parts, more, used = compose(json.loads(brief_generator.output_text(second)), evidence, schedule, lenient=True)
+    issue_date = datetime.fromtimestamp(now, JST).date().isoformat()
+    # The only model call of this draft. What fails a check is dropped (a part) or replaced (the headline, the lead) and noted for the owner.
+    headline, lead, parts, more, used = compose(output, evidence, schedule, lenient=True, date=issue_date)
     notes += more
     if not [part for part in parts if part["type"] != "schedule"]:
         raise RuntimeError("weekly-no-usable-part")
@@ -647,13 +747,14 @@ def generate(db, now, news=(), transport=None, env=None):
         if item["id"] in used and item["url"] not in seen and item["url"].startswith("https://"):
             seen.add(item["url"])
             sources.append({"title": item["label"][:120], "url": item["url"]})
-    result = weekly_issues.save_draft(db, {"date": datetime.fromtimestamp(now, JST).date().isoformat(), "headline": headline[:120], "lead": lead[:400],
+    result = weekly_issues.save_draft(db, {"date": issue_date, "headline": headline[:120], "lead": lead[:400],
                                            "parts": parts, "sources": sources[:20], "notes": finish_notes(notes), "auto": True})
     return result["item"]
 
 
 def run_if_due(db_path, now=None, news=(), transport=None, env=None):
-    """The poll loop calls this. Returns 'idle', 'done' or 'retry'. Never raises."""
+    """The poll loop calls this. Returns 'idle', 'done' or 'failed'. Never raises. One try per week (MAX_ATTEMPTS): a failure is not retried, and
+    no spending cap ever delays or skips the Saturday run (owner, Nov 15)."""
     now = time.time() if now is None else now
     if not LOCK.acquire(blocking=False):
         return "idle"
@@ -670,7 +771,7 @@ def run_if_due(db_path, now=None, news=(), transport=None, env=None):
                 generate(db, now, news, transport, env)
             except Exception as error:
                 print(f"weekly-generate-failed attempt={attempts} reason={type(error).__name__}:{str(error)[:60]}", flush=True)
-                return "retry"
+                return "failed"
             with db:
                 db.execute("UPDATE weekly_settings SET last_generated_week=? WHERE id=1", (week,))
             return "done"
