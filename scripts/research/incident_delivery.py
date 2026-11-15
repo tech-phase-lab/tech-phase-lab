@@ -181,8 +181,8 @@ def news_message(claim, code):
         return {"title": "✅ 日本語ニュースの翻訳が復旧しました", "body": "新着がまた日本語のホームに出ます。", "tag": tag, "url": "/research"}
     detail = code.split(":", 1)[1] if ":" in code else ""
     if code.startswith("company-wire-translation-budget"):
-        return {"title": "🚨 日本語ニュースの翻訳が回数の上限で30分以上待っています",
-                "body": "翻訳の呼び出し（1日%s回まで・均等配分）が足りず、新着が30分以上日本語のホームに出ていません。COMPANY_WIRE_TRANSLATION_DAILY_LIMIT を確認してください。" % (detail or "?"),
+        return {"title": "🚨 日本語ニュースの翻訳が回数の上限で90分以上待っています",
+                "body": "翻訳の呼び出し（1日%s回まで・均等配分）が足りず、新着が90分以上日本語のホームに出ていない状態が1時間続いています。COMPANY_WIRE_TRANSLATION_DAILY_LIMIT を確認してください。" % (detail or "?"),
                 "tag": tag, "url": "/research"}
     if code.startswith("company-wire-translation-failing"):
         cause = TRANSLATION_CAUSE.get(detail) or "エラー %s" % (detail or "不明")

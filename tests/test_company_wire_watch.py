@@ -110,23 +110,67 @@ class TranslationWatchTests(unittest.TestCase):
         self.assertEqual(calls, [2, 30, 5])
         self.assertEqual(company_wire.run_once(self.path, transport=counting, env=ENV, now_ts=self.start + 63), ('idle', 0))
 
-    def test_budget_reached_is_one_critical_alert_only_once_headlines_wait_30_minutes_and_resolves_when_calls_leave_the_window(self):
-        env = {**ENV, 'COMPANY_WIRE_TRANSLATION_DAILY_LIMIT': '2'}
+    def paced_queue(self, env):
+        """A limit of 2: a burst of 1, one more call per day. Three headlines arrive; one is translated, two wait."""
         results = []
         for k in range(3):
             self.arrive(self.start + k * MIN)
             results.append(company_wire.run_once(self.path, transport=answer, env=env, now_ts=self.start + k * MIN + 1)[0])
-        self.assertEqual(results, ['done', 'paced', 'paced'])  # a limit of 2: a burst of 1, one more call per day
-        # Owner, Nov 16: an empty bucket alone is no alert; the waiting headlines have waited only a few minutes.
-        self.assertEqual(self.sync(self.start + 3 * MIN, env), [])
-        self.assertEqual(self.sync(self.start + 32 * MIN, env), ['company-wire-translation-budget:2'])
-        self.sync(self.start + 34 * MIN, env)
+        self.assertEqual(results, ['done', 'paced', 'paced'])
+
+    def test_budget_alert_needs_a_90_minute_wait_held_for_an_hour_and_its_recovery_waits_30_minutes(self):
+        # Owner, Nov 16 night: the 30-minute alert flapped (alert / 復旧 pairs) while headlines waited about 20 minutes on average.
+        env = {**ENV, 'COMPANY_WIRE_TRANSLATION_DAILY_LIMIT': '2'}
+        self.paced_queue(env)
+        # An empty bucket and a wait of 30 or 90 minutes alone are no alert; the oldest unsent headline (minute 1) waits 90
+        # minutes from 1:31, and the alert opens once that has lasted an hour.
+        for k in range(0, 151, 5):
+            self.assertEqual(self.sync(self.start + k * MIN, env), [], k)
+        self.assertEqual(self.incident('company-wire:translation-budget'), (None, 0))
+        self.assertEqual(self.sync(self.start + 155 * MIN, env), ['company-wire-translation-budget:2'])
+        self.sync(self.start + 160 * MIN, env)
         self.assertEqual(self.incident('company-wire:translation-budget'), (('open', 'company-wire-translation-budget:2'), 1))
-        # Still open while the headline waits, even at a moment a token is free; it resolves once the waiting headline is sent.
+        # Still open while the headline waits, even at a moment a token is free.
         self.assertEqual(self.sync(self.start + 86400 + 2 * MIN, env), ['company-wire-translation-budget:2'])
         self.assertEqual(company_wire.run_once(self.path, transport=answer, env=env, now_ts=self.start + 86400 + 2 * MIN)[0], 'done')
-        self.assertEqual(self.sync(self.start + 86400 + 3 * MIN, env), [])
+        # The wait is gone, but the 復旧 notice waits until it has stayed gone for 30 minutes.
+        self.assertEqual(self.sync(self.start + 86400 + 3 * MIN, env), ['company-wire-translation-budget:2'])
+        self.assertEqual(self.sync(self.start + 86400 + 20 * MIN, env), ['company-wire-translation-budget:2'])
+        self.assertEqual(self.incident('company-wire:translation-budget')[1], 1)
+        self.assertEqual(self.sync(self.start + 86400 + 33 * MIN, env), [])
         self.assertEqual(self.incident('company-wire:translation-budget'), (('resolved', 'company-wire-translation-budget:2'), 2))
+
+    def test_a_long_wait_that_clears_within_the_hour_sends_nothing_at_all(self):
+        env = {**ENV, 'COMPANY_WIRE_TRANSLATION_DAILY_LIMIT': '2'}
+        self.paced_queue(env)
+        for k in range(0, 141, 5):
+            self.assertEqual(self.sync(self.start + k * MIN, env), [])
+        # The waiting headlines are sent at 2:21, 50 minutes into the long wait (a raised limit gives the call).
+        self.assertEqual(company_wire.run_once(self.path, transport=answer, env=ENV, now_ts=self.start + 141 * MIN)[0], 'done')
+        for k in range(142, 300, 5):
+            self.assertEqual(self.sync(self.start + k * MIN, env), [])
+        # No alert was sent, so no 復旧 notice either.
+        self.assertEqual(self.incident('company-wire:translation-budget'), (None, 0))
+
+    def test_paced_waits_under_90_minutes_with_new_arrivals_raise_neither_the_budget_nor_the_stall_alert(self):
+        # The overnight pattern: steady arrivals, every headline translated in turn by the pacing after 20 to 60 minutes.
+        env = {**ENV, 'COMPANY_WIRE_TRANSLATION_DAILY_LIMIT': '2'}
+        self.paced_queue(env)
+        for k in range(5, 86, 5):
+            self.arrive(self.start + k * MIN)
+            self.assertEqual(self.sync(self.start + k * MIN + 2, env), [], k)
+        with monitor.connect(self.path) as db:
+            self.assertEqual(db.execute('SELECT COUNT(*) FROM operational_incidents').fetchone()[0], 0)
+
+    def test_the_budget_alert_is_sent_at_most_once_every_6_hours(self):
+        env = {**ENV, 'COMPANY_WIRE_TRANSLATION_DAILY_LIMIT': '2'}
+        self.paced_queue(env)
+        with monitor.connect(self.path) as db, db:  # an alert was sent (and recovered from) an hour before the start
+            company_wire.put_watch(db, {'budget_alerted_at': self.start - 3600})
+        for k in range(0, 5 * 60, 5):  # the long wait has lasted the hour from 2:31, but the last alert was under 6 hours ago
+            self.assertEqual(self.sync(self.start + k * MIN, env), [], k)
+        self.assertEqual(self.sync(self.start + 5 * 3600 + MIN, env), ['company-wire-translation-budget:2'])
+        self.assertEqual(self.incident('company-wire:translation-budget'), (('open', 'company-wire-translation-budget:2'), 1))
 
     def test_failures_for_15_minutes_alert_once_and_a_translated_batch_resolves(self):
         for k in range(0, 17, 2):
@@ -203,7 +247,7 @@ class TranslationWatchTests(unittest.TestCase):
         def claim(key, category, code, transition='opened'):
             return {'key': key, 'category': category, 'errorCode': code, 'transition': transition}
         budget = incident_delivery.push_message(claim('company-wire:translation-budget', 'company-wire', 'company-wire-translation-budget:6000'))
-        self.assertEqual(budget['title'], '🚨 日本語ニュースの翻訳が回数の上限で30分以上待っています')
+        self.assertEqual(budget['title'], '🚨 日本語ニュースの翻訳が回数の上限で90分以上待っています')
         self.assertIn('6000回', budget['body'])
         failing = incident_delivery.push_message(claim('company-wire:translation-failing', 'company-wire', 'company-wire-translation-failing:model-TimeoutError'))
         self.assertEqual(failing['title'], '🚨 日本語ニュースの翻訳が15分失敗し続けています')
