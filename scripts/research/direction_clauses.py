@@ -168,7 +168,12 @@ def en_claims(text, source):
         if not dirs:
             continue
         if len(dirs) != 1:
-            # one clause with both directions ("up in A, down in B"): split on the commas and judge each part
+            # one clause with both directions: when a figure is attached to its own direction word ("Gaming fell 40% on lower ...") that pair
+            # is the claim; otherwise ("up in A, down in B") split on the commas and judge each part
+            single = _clause_claim(clause, source)
+            if single is not None and all(v != 'unknown' for v, _ in single):
+                results.extend(single)
+                continue
             parts = [p for p in re.split(r',', clause) if _direction(p)]
             if len(parts) < 2 or any(len(_direction(p)) != 1 for p in parts):
                 return None
@@ -176,43 +181,49 @@ def en_claims(text, source):
                 got = _clause_claim(part, source)
                 if got is None:
                     return None
-                results.append(got)
+                results.extend(got)
             continue
         got = _clause_claim(clause, source)
         if got is None:
             return None
-        results.append(got)
+        results.extend(got)
     return results
 
 
 def _clause_claim(clause, source):
-    (direction,) = _direction(clause)
-    moved = _from_to(clause, direction, source)
-    if moved is not None:
-        return moved, direction
+    dirs = _direction(clause)
+    direction = next(iter(dirs)) if len(dirs) == 1 else None
+    if direction is not None:
+        moved = _from_to(clause, direction, source)
+        if moved is not None:
+            return [(moved, direction)]
     pairs = list(re.finditer(r'\b(?:' + UP_WORDS + '|' + DOWN_WORDS + r')\s+(?:by\s+|about\s+|roughly\s+)?[$€£¥]?(\d[\d,]*(?:\.\d+)?)\s*(?P<pct>%|percent)?', clause, re.I))
     if not pairs:
         pairs = list(re.finditer(r'(\d[\d,]*(?:\.\d+)?)\s*(?P<pct>%|percent)\s*(?:' + UP_WORDS + '|' + DOWN_WORDS + r')\b', clause, re.I))
     if pairs:
-        verdicts, start = [], 0
+        out, start = [], 0
         for m in pairs:
             word = re.search(UP_WORDS + '|' + DOWN_WORDS, m.group(0), re.I)
-            wdirs = {_word_direction(word.group(0))} - {None} if word else set()
-            if len(wdirs) != 1 or not m.group('pct'):
-                return 'unknown', direction
+            wdir = _word_direction(word.group(0)) if word else None
             labels = _labels(clause[start:m.start()] if m.start() > start else clause[:m.start()])
             start = m.end()
-            if not labels:
-                return 'unknown', direction
-            verdicts.append(_numeric_claim(labels, next(iter(wdirs)), m.group(1), source))
-        if 'contradicted' in verdicts:
-            return 'contradicted', direction
-        return ('verified' if all(v == 'verified' for v in verdicts) else 'unknown'), direction
+            if wdir is None:
+                return [('unknown', direction or 'up')]
+            if not m.group('pct') or not labels:
+                out.append(('unknown', wdir))
+                continue
+            out.append((_numeric_claim(labels, wdir, m.group(1), source), wdir))
+        return out
+    if direction is None:
+        return None
     word = re.search(r'\b(?:' + UP_WORDS + '|' + DOWN_WORDS + r')\b', clause, re.I)
     labels = _labels(clause[:word.start()]) if word else []
-    if not labels:
-        return 'unknown', direction
-    return _word_claim(labels, direction, source), direction
+    got = _word_claim(labels, direction, source) if labels else 'unknown'
+    if got == 'unknown' and direction in _direction(source):
+        # an interpretive clause with no figure ("... a key issue for Client growth"): it makes no claim about one item that could be matched,
+        # so it is held to what the original rule already required of it: the source states that direction and not only the other one
+        return [('verified', direction)]
+    return [(got, direction)]
 
 
 def ja_directions(text):
@@ -227,6 +238,27 @@ def ja_directions(text):
     return out
 
 
+JA_UP = r'(?:増加|増|上昇|拡大|伸び|成長)'
+JA_DOWN = r'(?:減少|減|低下|下落|縮小|悪化)'
+
+
+def ja_number_directions(text):
+    """{(figure, direction)} for every Japanese "7%増" / "40%減" style statement."""
+    found = set()
+    for m in re.finditer(r'(\d[\d,]*(?:\.\d+)?)\s*[%％]\s*(?:の)?(' + JA_UP + '|' + JA_DOWN + ')', text):
+        found.add((m.group(1), 'up' if re.fullmatch(JA_UP, m.group(2)) else 'down'))
+    return found
+
+
+def en_number_directions(text):
+    found = set()
+    for m in re.finditer(r'\b(' + UP_WORDS + '|' + DOWN_WORDS + r')\s+(?:by\s+|about\s+|roughly\s+)?[$€£¥]?(\d[\d,]*(?:\.\d+)?)\s*(?:%|percent)', text, re.I):
+        found.add((m.group(2), _word_direction(m.group(1))))
+    for m in re.finditer(r'(\d[\d,]*(?:\.\d+)?)\s*(?:%|percent)\s*(' + UP_WORDS + '|' + DOWN_WORDS + r')\b', text, re.I):
+        found.add((m.group(1), _word_direction(m.group(2))))
+    return found
+
+
 def verdict(ja, en, source):
     """'verified' | 'contradicted' | 'unknown' for one bilingual copy against the source it cites."""
     claims = en_claims(en, source)
@@ -236,6 +268,10 @@ def verdict(ja, en, source):
     japanese = ja_directions(ja)
     if any(v == 'contradicted' for v, _ in claims):
         return 'contradicted'
+    en_figures = en_number_directions(en)
+    for figure, direction in ja_number_directions(ja):
+        if (figure, direction) not in en_figures and any(f == figure and d != direction for f, d in en_figures):
+            return 'contradicted'  # the same figure, the opposite direction, in the other language
     if japanese is None:
         return 'unknown'
     if len(japanese) == len(english) and japanese != english:

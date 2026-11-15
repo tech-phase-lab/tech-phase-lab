@@ -687,6 +687,22 @@ class DeepAnalysisTests(unittest.TestCase):
                        'Client segment revenue was $2.9 billion, up 7% year-over-year.')
 
 
+    def test_the_real_amd_copy_rejected_on_nov_15_passes_against_its_quote_and_its_swaps_do_not(self):
+        quote = ('Client and Gaming segment revenue was $3.7 billion, down 8% year-over-year. Client business revenue was $2.9 billion, up 7% year-over-year, '
+                 'driven by sales of AMD Ryzen mobile processors. Gaming business revenue was $773 million, down 40% year-over-year, due to lower semi-custom '
+                 'and graphics revenue.\nEmbedded segment revenue was $1.1 billion, up 29% year-over-year, led by growth in aerospace and defense, automotive.')
+        ja = ('ClientはAMD Ryzen mobile processorsに支えられ前年同期比7%増だったが、Gamingはセミカスタムとグラフィックスの減収で40%減となった。'
+              '一方、Embeddedは航空宇宙・防衛、自動車など幅広い用途で29%増。AI以外の事業は回復の濃淡が大きく、Gamingの動向がClientの成長をどこまで相殺するかが焦点となる。')
+        en = ('Client grew 7% year over year on AMD Ryzen mobile processors, but Gaming fell 40% on lower semi-custom and graphics revenue. Embedded grew 29% '
+              'across markets including aerospace and defense and automotive. Recovery outside AI remains uneven, making the extent to which Gaming offsets '
+              'Client growth a key issue.')
+        self.mixed(ja, en, quote)
+        for bad_ja, bad_en in ((ja.replace('40%減', '40%増'), en), (ja, en.replace('Gaming fell 40%', 'Gaming grew 40%')),
+                               (ja.replace('7%増', '7%減'), en.replace('Client grew 7%', 'Client fell 7%'))):
+            with self.assertRaises(ValueError):
+                self.mixed(bad_ja, bad_en, quote)
+
+
 class IndicatorAnalysisTests(unittest.TestCase):
     setUp = base.OfficialResearchTests.setUp
 
