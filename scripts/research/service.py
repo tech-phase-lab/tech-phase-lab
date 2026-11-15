@@ -832,6 +832,8 @@ class AutomaticMonitor:
         self.news_thread = threading.Thread(target=self.run_stock_news, name="stock-news-intake", daemon=True)
         self.company_wire_thread = threading.Thread(target=self.run_company_wire, name="company-wire", daemon=True)
         self.company_wire_errors = {}
+        # Set by an intake round that stored new headlines; the translator runs right after it (owner, Nov 15: 待たない).
+        self.company_wire_arrived = threading.Event()
         self.company_wire_translation_thread = threading.Thread(target=self.run_company_wire_translation, name="company-wire-translation", daemon=True)
 
     def run_x_preflight(self):
@@ -1349,6 +1351,8 @@ class AutomaticMonitor:
                         result = stock_news.poll(db, tickers)
                 with self.state_lock:
                     self.state["stockNewsIntake"] = {**result, "checkedAt": utc_now()}
+                if result.get("mirrored") or any(r.get("mirrored") for r in result.get("streams", {}).values()):
+                    self.company_wire_arrived.set()
             except Exception:
                 with self.state_lock:
                     self.state["stockNewsIntake"] = {"status": "error", "error": "stock-news-worker-failed"}
@@ -1360,30 +1364,40 @@ class AutomaticMonitor:
             return
         tickers = company_wire.roster()
         index = 0
+        added = 0
         while not self.stop_event.is_set():
             try:
                 with company_wire.connect(self.db_path) as db:
-                    company_wire.poll_company(db, tickers[index % len(tickers)], self.company_wire_errors)
+                    added += company_wire.poll_company(db, tickers[index % len(tickers)], self.company_wire_errors)
                     if index % len(tickers) == 0:
                         company_wire.prune(db)
             except Exception:
                 print("company-wire-failed", flush=True)
             index += 1
+            # One intake round is one pass over the roster; what it brought is translated right after it.
+            if index % len(tickers) == 0 and added:
+                self.company_wire_arrived.set()
+                added = 0
             self.stop_event.wait(6)
 
     def run_company_wire_translation(self):
         if os.environ.get("COMPANY_WIRE_ENABLED", "true").lower() == "false":
             return
+        # Owner, Nov 15 (まとめて訳す・待たない): translate right after every intake round that stored something, everything then
+        # waiting in calls of at most 30, each article once; with no round for ten minutes, still look for due retries.
         while not self.stop_event.is_set():
-            wait = 20
+            self.company_wire_arrived.clear()
             try:
-                # run_once records every result (and turns an unexpected error into a code) for the translation watch.
-                result, wait = company_wire.run_once(self.db_path)
-                if company_wire.failing(result):
-                    print(f"company-wire-translation-failed {company_wire.result_code(result)}", flush=True)
+                # run_once (inside run_round) records every result (and turns an unexpected error into a code) for the translation watch.
+                for result in company_wire.run_round(self.db_path):
+                    if company_wire.failing(result):
+                        print(f"company-wire-translation-failed {company_wire.result_code(result)}", flush=True)
             except Exception as error:
                 print(f"company-wire-translation-failed {type(error).__name__} {failure_detail(error)}".rstrip(), flush=True)
-            self.stop_event.wait(wait)
+            deadline = time.monotonic() + company_wire.RETRY_WAKE_SECONDS
+            while not self.stop_event.is_set() and time.monotonic() < deadline:
+                if self.company_wire_arrived.wait(5):
+                    break
 
     def company_wire_feed(self):
         with company_wire.connect(self.db_path) as db:

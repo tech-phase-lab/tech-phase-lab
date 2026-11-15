@@ -74,7 +74,7 @@ class TranslationWatchTests(unittest.TestCase):
         state = self.health(self.start + 30 * MIN, INTAKE)
         self.assertEqual(state['pending'], {'count': 1, 'oldestMinutes': 3})
         self.assertEqual(state['waitingRetry'], 2)
-        self.assertEqual((state['calls24h'], state['dailyLimit'], state['budgetReached']), (1, 6000, False))
+        self.assertEqual((state['calls24h'], state['dailyLimit'], state['budgetReached']), (1, 400, False))
         self.assertEqual(state['lastResult'], 'model-TimeoutError')
         self.assertIsNone(state['lastSuccessAt'])
         self.assertEqual(state['stockNewsIntake'], {'enabled': True, 'streams': {'tech': {'lastSuccessAt': '2026-11-15T03:20:00.000+00:00'}}})
@@ -88,18 +88,27 @@ class TranslationWatchTests(unittest.TestCase):
         self.assertNotIn('k' * 30, text)
         self.assertNotIn('x' * 20, text)
 
-    def test_the_default_budget_is_6000_calls_and_a_typo_never_stops_translation(self):
-        self.assertEqual(company_wire.daily_limit({}), 6000)
-        self.assertEqual(company_wire.daily_limit({'COMPANY_WIRE_TRANSLATION_DAILY_LIMIT': 'abc'}), 6000)
+    def test_the_default_budget_is_400_calls_and_a_typo_never_stops_translation(self):
+        # Owner, Nov 15: 上限は1日400回のまま.
+        self.assertEqual(company_wire.daily_limit({}), 400)
+        self.assertEqual(company_wire.daily_limit({'COMPANY_WIRE_TRANSLATION_DAILY_LIMIT': 'abc'}), 400)
         self.assertEqual(company_wire.daily_limit({'COMPANY_WIRE_TRANSLATION_DAILY_LIMIT': ' 800 '}), 800)
 
-    def test_a_trickle_waits_20_seconds_and_only_a_full_batch_hurries_back(self):
+    def test_a_round_translates_everything_waiting_at_once_in_calls_of_30_and_calls_nothing_when_idle(self):
+        # Owner, Nov 15 (まとめて訳す・待たない): no waiting for headlines to pile up; one call per 30; no call when nothing waits.
+        calls = []
+        def counting(payload, key):
+            calls.append(len(json.loads(payload['input'])))
+            return answer(payload, key)
         self.arrive(self.start, 2)
-        self.assertEqual(company_wire.run_once(self.path, transport=answer, env=ENV, now_ts=self.start + 1), ('done', 20))
+        self.assertEqual(company_wire.run_round(self.path, transport=counting, env=ENV, now_ts=self.start + 1), ['done'])
+        self.assertEqual(calls, [2])
         self.arrive(self.start + 60, company_wire.TRANSLATION_BATCH + 5)
-        self.assertEqual(company_wire.run_once(self.path, transport=answer, env=ENV, now_ts=self.start + 61), ('done', 3))
-        self.assertEqual(company_wire.run_once(self.path, transport=answer, env=ENV, now_ts=self.start + 64), ('done', 20))
-        self.assertEqual(company_wire.run_once(self.path, transport=answer, env=ENV, now_ts=self.start + 84), ('idle', 20))
+        self.assertEqual(company_wire.run_round(self.path, transport=counting, env=ENV, now_ts=self.start + 61), ['done', 'done'])
+        self.assertEqual(calls, [2, 30, 5])
+        self.assertEqual(company_wire.run_round(self.path, transport=counting, env=ENV, now_ts=self.start + 62), ['idle'])
+        self.assertEqual(calls, [2, 30, 5])
+        self.assertEqual(company_wire.run_once(self.path, transport=counting, env=ENV, now_ts=self.start + 63), ('idle', 0))
 
     def test_budget_reached_is_one_critical_alert_that_resolves_when_calls_leave_the_window(self):
         env = {**ENV, 'COMPANY_WIRE_TRANSLATION_DAILY_LIMIT': '2'}

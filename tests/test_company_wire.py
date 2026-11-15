@@ -95,7 +95,7 @@ class HomeScopeTests(unittest.TestCase):
         self.assertIn('Strait of Hormuz', seen['policy'])
         with company_wire.connect(self.path) as db:
             feed = company_wire.public_feed(db, now_ts=self.now.timestamp())
-            self.assertEqual(db.execute("SELECT reason FROM company_wire_attempts").fetchall()[0][0], 'off-topic')
+            self.assertEqual(db.execute("SELECT reason FROM company_wire_article_attempts").fetchall()[0][0], 'off-topic')
             self.assertEqual([r['title'] for r in company_wire.pending_rows(db, self.now.timestamp() + 99999)], [])
         self.assertNotIn('KO', feed['items'])
 
@@ -243,7 +243,7 @@ class TranslationTests(unittest.TestCase):
             self.assertEqual(titles['Credo Expands Portfolio'], 'Credoがポートフォリオを拡大')
             self.assertNotIn('Why Credo stock slid', titles)
             self.assertEqual([r['title'] for r in company_wire.pending_rows(db, self.now.timestamp() + 99999)], [])
-            reasons = db.execute("SELECT reason FROM company_wire_attempts").fetchall()
+            reasons = db.execute("SELECT reason FROM company_wire_article_attempts").fetchall()
         self.assertEqual([r[0] for r in reasons], ['not-news'])
 
     def test_rejected_headline_is_retried_later_and_given_up_after_three(self):
@@ -251,7 +251,7 @@ class TranslationTests(unittest.TestCase):
         for n in range(4):
             company_wire.translate_once(self.path, transport=send, env=self.env, now_ts=self.now.timestamp() + n * 700)
         with company_wire.connect(self.path) as db:
-            attempts = {r['key']: r['attempts'] for r in db.execute('SELECT * FROM company_wire_attempts')}
+            attempts = {r['article']: r['attempts'] for r in db.execute('SELECT * FROM company_wire_article_attempts')}
         self.assertTrue(attempts and max(attempts.values()) == 3)
 
     def test_the_reason_a_headline_was_not_translated_is_reported_without_titles(self):
@@ -265,7 +265,7 @@ class TranslationTests(unittest.TestCase):
             from unittest.mock import patch
             with patch.object(company_wire, 'now', lambda: self.now + timedelta(hours=2)):
                 status = company_wire.status(db, {})
-            reasons = {r['reason'] for r in db.execute('SELECT * FROM company_wire_attempts')}
+            reasons = {r['reason'] for r in db.execute('SELECT * FROM company_wire_article_attempts')}
         self.assertIn('invalid-translation', reasons)
         self.assertTrue(status['_translation']['gaveUpByReason24h'])
         self.assertNotIn('Why Credo', repr(status))
@@ -286,10 +286,10 @@ class TranslationTests(unittest.TestCase):
         with company_wire.connect(self.path) as db:
             company_wire.store(db, rows, 'Credo', seen_at=self.now)
             company_wire.schema_translation(db)
-            for row in db.execute("SELECT key,title FROM company_wire WHERE title LIKE 'Credo headline number %'").fetchall():
+            for row in db.execute("SELECT article,title FROM company_wire WHERE title LIKE 'Credo headline number %'").fetchall():
                 number = int(row['title'].rsplit(' ', 1)[1])
                 if number > 20:  # only the oldest ten are translated
-                    db.execute('INSERT INTO company_wire_ja(key,title_ja,model,created_at) VALUES(?,?,?,?)', (row['key'], '日本語の見出し', 'm', self.now.isoformat()))
+                    db.execute('INSERT INTO company_wire_article_ja(article,title_ja,model,created_at) VALUES(?,?,?,?)', (row['article'], '日本語の見出し', 'm', self.now.isoformat()))
             db.commit()
             feed = company_wire.public_feed(db, now_ts=self.now.timestamp())
         shown = feed['items']['CRDO']
@@ -368,8 +368,8 @@ class TriageTests(unittest.TestCase):
                      'url': 'https://news.example/a', 'published': self.now - timedelta(minutes=30)}]
             company_wire.store(db, rows, 'NVIDIA', seen_at=self.now)
             company_wire.schema_translation(db)
-            key = db.execute('SELECT key FROM company_wire').fetchone()[0]
-            db.execute('INSERT INTO company_wire_ja(key,title_ja,model,created_at) VALUES(?,?,?,?)', (key, 'エヌビディアがNemotronを拡充', 'm', self.now.isoformat()))
+            key = db.execute('SELECT article FROM company_wire').fetchone()[0]
+            db.execute('INSERT INTO company_wire_article_ja(article,title_ja,model,created_at) VALUES(?,?,?,?)', (key, 'エヌビディアがNemotronを拡充', 'm', self.now.isoformat()))
             db.commit()
         picked = self.headlines(('Nvidia expands Nemotron family with two new open models', 'Techzine'),
                                 ('Germany plans AI cooperation deal with Nvidia, Handelsblatt says', 'Reuters'))
