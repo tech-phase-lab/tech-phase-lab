@@ -6,7 +6,7 @@ import { overallComparison } from "@/lib/research/comparison-scorecard";
 import DetailPanels from "../detail-panels";
 import ResearchToolShell from "../../research-tool-shell";
 import { useResearchLanguage } from "../../use-research-language";
-import { CompanyScoreCard, LeadTitle, ScoreHeadline, ScoreOverview, StatusOverlay } from "../comparison-visuals";
+import { CompanyScoreCard, ScoreHeadline, VerdictHeading, ScoreOverview, StatusOverlay } from "../comparison-visuals";
 import styles from "../styles.module.css";
 
 export default function SampleScreen({sample}:{sample:ComparisonResult}) {
@@ -16,14 +16,12 @@ export default function SampleScreen({sample}:{sample:ComparisonResult}) {
   return <ResearchToolShell lang={lang} setLang={setLang} title={ja?"銘柄比較PRO":"Compare stocks PRO"} description="" showTools={false} showHeading={false}>
     <div className={`${styles.results} ${styles.resultView} ${styles.screenWrap}`}>
       <div className={styles.sampleToolbar}>
-      <Link href="/research/compare" className={styles.backToCompare}>{ja?"▶ 銘柄比較PROへ戻る":"▶ Back to Compare stocks PRO"}</Link>
+      <Link href="/research/compare" className={styles.backToCompare}><span className={styles.backChevron} aria-hidden="true">‹</span>{ja?"銘柄比較PROへ戻る":"Back to Compare stocks PRO"}</Link>
       <div className={styles.scoreViewSwitch} role="group" aria-label={ja?"比較する社数":"Number of companies"}>
         {[2,3].map(n=><button key={n} type="button" aria-pressed={count===n} onClick={()=>setCount(n)}>{ja?`${n}社で比較`:`Compare ${n}`}</button>)}
       </div>
       </div>
-      <section className={styles.conclusion}>
-        <h2><LeadTitle title={assessment.title} companies={companies}/></h2>
-      </section>
+      <VerdictHeading title={assessment.title} leader={assessment.leader} companies={companies} lang={lang} now={now}/>
       <ScoreHeadline companies={companies} lang={lang} now={now}/>
       <StatusOverlay companies={companies} lang={lang} now={now}/>
       <section className={styles.explain}><p>{assessment.description}</p></section>

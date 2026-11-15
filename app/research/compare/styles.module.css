@@ -190,8 +190,6 @@
 .boxScore b{font:700 40px/1 var(--font-geist-mono),ui-monospace,monospace;color:#8c98ab}
 .scoreBox[data-leader="true"] .boxScore b{color:#d9b56a}
 .boxScore small{font:12px var(--font-geist-mono),ui-monospace,monospace;color:#6b7589}
-.winLine{margin:14px 0 0;font-size:14px;color:#d6dbea}
-.winLine b{font-family:var(--font-geist-mono),ui-monospace,monospace}
 
 /* result: status overlay, explanation */
 .overlayCard,.scoreOverview{padding:18px 16px;border:1px solid #2a3652;border-radius:22px;background:linear-gradient(160deg,#16233a,#0e1522)}
@@ -281,7 +279,6 @@
 .boxScore b{font-size:34px}
 .scoreBoxes[style*="repeat(3"] .boxName{font-size:12px}
 .scoreBoxes[style*="repeat(3"] .boxScore b{font-size:28px}
-.winLine{margin:8px 0 0}
 .overlayCard{padding:12px 14px}
 .overlayCard .statusChart svg{max-width:230px;margin-top:2px}
 .overlayLegend{margin-top:2px}
@@ -322,7 +319,24 @@
 .scoreBox{display:flex;flex-direction:column}
 .boxName{min-height:calc(2em * 1.25)}
 .boxScore{margin-top:auto;padding-top:4px}
-/* The headline one step larger; one line at 360px for a ticker of up to five letters. */
-.results .conclusion h2{font-size:24px}
 /* Strengths and weaknesses: each item is exactly one line ("ここは1行固定"); text too long for the column ends in "…". */
 .traitBox li,.results .traitBox li,.companyCards .traitBox p{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;overflow-wrap:normal}
+
+/* ===== Owner, Nov 15: the verdict above the score cards (design pack 01-verdict) ===== */
+/* The back link: 「‹ 銘柄比較PROへ戻る」 in plain grey; the tap area reaches 6px above and below without moving the 12px gap to the heading. */
+.results .backToCompare{display:inline-flex;align-items:center;gap:4px;min-height:0;padding:6px 0;margin:-6px 0;font-size:12.5px;font-weight:400;line-height:1.4;color:#7d8a9a}
+.results .backToCompare:hover{color:#c6d0dc}
+.sampleToolbar .backToCompare{margin:-6px 0}
+.backChevron{font-size:15px;line-height:1}
+/* 「総合評価」 label, 「LLY が優位」, the gold bar and 「6項目中4項目で上回りました」, 4px apart; 12px from the back link and from the cards. */
+.results .conclusion{display:flex;flex-direction:column;align-items:flex-start;gap:4px;margin:0;padding:0;border:0}
+.results .conclusion .verdictLabel{margin:0;font-size:11px;font-weight:700;letter-spacing:.18em;line-height:1.4;color:#e2c27a}
+.results .conclusion .verdictTitle{margin:0;font-size:34px;font-weight:900;line-height:1.15;color:#f1f4f8;overflow-wrap:anywhere}
+.results .conclusion .verdictTitle .leadTicker{font-family:inherit;font-weight:inherit}
+/* No winner and a long sentence (not enough data, a saved trial result): the same block, the title one size down so it does not run to many lines. */
+.results .conclusion[data-verdict="long"] .verdictTitle{font-size:22px;line-height:1.35;font-weight:800}
+.verdictBar{display:block;width:56px;height:3px;border-radius:2px;background:#e2c27a;box-shadow:0 0 10px #e2c27ab3}
+.results .conclusion .verdictSub{margin:0;font-size:13px;line-height:1.5;color:#c6d0dc}
+/* The sample's toolbar: the back link sits on the toolbar's bottom edge so it is 12px from the label too; when the 2/3 switch does not fit
+   beside it (English at 360px) the switch wraps above it, never between it and the heading. */
+.sampleToolbar{flex-wrap:wrap-reverse;align-items:flex-start}
