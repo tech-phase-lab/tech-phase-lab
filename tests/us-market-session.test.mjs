@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { bannerLine, marketBanner, marketPhase, usMarketSession } from "../lib/research/us-market-session.ts";
+import { bannerLine, closedDayClose, closedDayLine, marketBanner, marketPhase, usMarketSession } from "../lib/research/us-market-session.ts";
 
 const at = iso => usMarketSession(new Date(iso));
 
@@ -77,4 +77,46 @@ test("banner line: the state word and the time of the last successful read, to t
   assert.equal(bannerLine("closed", true, at), "取引終了 ・ 06:20:35 JST");
   assert.equal(bannerLine("closed", false, at), "Closed · 06:20:35 JST");
   assert.equal(bannerLine("regular", true, null), "取引中");
+});
+
+const closed = iso => closedDayClose(new Date(iso));
+
+test("closed day: Saturday and Sunday show Friday's close, until Monday's pre-market starts", () => {
+  const friday = { month: 11, day: 13, weekday: 5 };
+  assert.deepEqual(closed("2026-11-14T05:00:00Z"), friday);   // Sat 00:00 EST = Sat 14:00 JST
+  assert.deepEqual(closed("2026-11-14T15:00:00Z"), friday);   // Saturday midday
+  assert.deepEqual(closed("2026-11-15T23:00:00Z"), friday);   // Sunday evening
+  assert.deepEqual(closed("2026-11-16T08:59:00Z"), friday);   // Mon 03:59 EST
+  assert.equal(closed("2026-11-16T09:00:00Z"), null);         // Mon 04:00 EST: pre-market, the usual banner again
+  assert.equal(closed("2026-11-16T15:00:00Z"), null);         // Monday regular hours
+});
+
+test("closed day: a weekday evening after the after-hours session keeps the usual banner", () => {
+  assert.equal(closed("2026-11-14T01:30:00Z"), null); // Fri 20:30 EST, after the after-hours session
+  assert.equal(closed("2026-11-14T04:59:00Z"), null); // Fri 23:59 EST
+  assert.equal(closed("2026-11-18T07:00:00Z"), null); // Wed 02:00 EST, before the pre-market
+  assert.equal(closed("2026-11-19T02:00:00Z"), null); // Wed 21:00 EST
+});
+
+test("closed day: an NYSE holiday shows the previous trading day's close, the day after until 04:00 too", () => {
+  const wednesday = { month: 11, day: 25, weekday: 3 };
+  assert.deepEqual(closed("2026-11-26T05:00:00Z"), wednesday); // Thanksgiving 00:00 EST
+  assert.deepEqual(closed("2026-11-26T15:00:00Z"), wednesday); // Thanksgiving midday
+  assert.deepEqual(closed("2026-11-27T08:30:00Z"), wednesday); // Fri 03:30 EST
+  assert.equal(closed("2026-11-27T09:00:00Z"), null);          // Fri 04:00 EST: pre-market of the early-close day
+  assert.deepEqual(closed("2026-11-28T15:00:00Z"), { month: 11, day: 27, weekday: 5 }); // the Saturday after: the early-close Friday
+  assert.deepEqual(closed("2027-01-18T15:00:00Z"), { month: 1, day: 15, weekday: 5 });  // MLK Day after a weekend
+  assert.deepEqual(closed("2027-01-02T15:00:00Z"), { month: 12, day: 31, weekday: 4 }); // across the year end
+  assert.deepEqual(closed("2026-04-05T15:00:00Z"), { month: 4, day: 2, weekday: 4 });   // Sunday after Good Friday
+});
+
+test("closed day: outside the holiday calendar only weekends count", () => {
+  assert.deepEqual(closed("2028-10-14T14:00:00Z"), { month: 10, day: 13, weekday: 5 });
+  assert.equal(closed("2028-10-13T14:00:00Z"), null);
+});
+
+test("closed-day line: the trading day of the close shown, in Japanese and English, with no read time", () => {
+  assert.equal(closedDayLine({ month: 11, day: 13, weekday: 5 }, true), "休場 ・ 米国 11/13(金) の終値");
+  assert.equal(closedDayLine({ month: 11, day: 13, weekday: 5 }, false), "Closed · U.S. close of Fri 11/13");
+  assert.equal(closedDayLine({ month: 11, day: 25, weekday: 3 }, true), "休場 ・ 米国 11/25(水) の終値");
 });
