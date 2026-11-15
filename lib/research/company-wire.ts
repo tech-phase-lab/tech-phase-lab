@@ -2,6 +2,7 @@
 export type CompanyWireItem = {
   id: string; titleEn: string; titleJa: string | null; /** A one-line Japanese headline (22 characters or fewer) for the news band, when one was made. */ shortJa?: string | null; publisher: string;
   origin: "wire" | "third-party" | "unknown"; url: string; publishedAt: string;
+  /** Where the monitor got the row: "stocknews" (the Stock News API), "yahoo", "gnews". Absent from an older monitor. */ source?: string;
 };
 export type CompanyWireFeed = { ok: true; items: Record<string, CompanyWireItem[]> };
 
@@ -27,7 +28,8 @@ export function parseCompanyWire(value: unknown): CompanyWireFeed {
       try { url = new URL(v.url as string); } catch { continue; }
       if (url.protocol !== "https:" || url.username || url.password) continue;
       kept.push({ id: v.id as string, titleEn: v.titleEn as string, titleJa: v.titleJa as string | null, shortJa: text(v.shortJa, 40) ? (v.shortJa as string) : null, publisher: v.publisher as string,
-        origin: v.origin as CompanyWireItem["origin"], url: url.href, publishedAt: v.publishedAt as string });
+        origin: v.origin as CompanyWireItem["origin"], url: url.href, publishedAt: v.publishedAt as string,
+        ...(typeof v.source === "string" && /^[a-z0-9-]{1,24}$/.test(v.source) ? { source: v.source } : {}) });
     }
     if (kept.length) items[ticker] = kept;
   }

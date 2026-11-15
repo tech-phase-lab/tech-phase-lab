@@ -11,6 +11,7 @@ import { createNewsPoller, NEWS_POLL_INTERVAL_MS } from "@/lib/research/news-pol
 import { observePageActivity } from "@/lib/research/page-activity";
 import { serverWireSnapshot, subscribeWire, wireSnapshot } from "@/lib/research/wire-store";
 import { tickerLabel, wireStories } from "@/lib/research/wire-stories";
+import { homeStockStories } from "@/lib/research/home-stock-news";
 import Link from "next/link";
 import { dayKey, dayLabel, pageWindow, withDayDividers } from "@/lib/research/news-day";
 import styles from "./general-news.module.css";
@@ -53,7 +54,7 @@ export function warmNews() {
   })();
 }
 
-export default function GeneralNewsPanel({ lang, officialOnly = false, generalOnly = false, initialNews }: { lang: Language; officialOnly?: boolean; generalOnly?: boolean; initialNews?: InitialNewsSnapshot | null }) {
+export default function GeneralNewsPanel({ lang, officialOnly = false, generalOnly = false, stockNews = false, initialNews }: { lang: Language; officialOnly?: boolean; generalOnly?: boolean; /** The home list: Stock News API stories (owner, Nov 15). */ stockNews?: boolean; initialNews?: InitialNewsSnapshot | null }) {
   const [fetchedData, setData] = useState<GeneralNewsFeed | null>(() => initialSnapshot(initialNews)?.data ?? null);
   const [failed, setError] = useState(false);
   const [refresh, setRefresh] = useState(0);
@@ -111,20 +112,24 @@ export default function GeneralNewsPanel({ lang, officialOnly = false, generalOn
   }, [refresh, initialNews]);
   // An item with no time stated by its source is not listed: showing the time
   // it was found would pass a guess off as the publication time (owner, Oct 10).
+  // The home list shows the Stock News API stories only (owner, Nov 15). Until one of them is available (right after the intake is
+  // switched on, or before its Japanese headline is written) the list keeps its previous items rather than going empty.
+  const stockStories = stockNews && !officialOnly && !generalOnly ? homeStockStories(wire, lang) : [];
+  const stockOnly = stockStories.length > 0;
   const official = listedOfficialNews(data, lang);
-  const news = officialOnly ? [] : [...data?.items ?? []].sort((a, b) => Date.parse(b.publishedAt) - Date.parse(a.publishedAt));
-  const market = officialOnly || generalOnly ? [] : data?.marketUpdates ?? [];
+  const news = officialOnly || stockOnly ? [] : [...data?.items ?? []].sort((a, b) => Date.parse(b.publishedAt) - Date.parse(a.publishedAt));
+  const market = officialOnly || generalOnly || stockOnly ? [] : data?.marketUpdates ?? [];
   // Analyst ratings and target changes live on the price target page only (owner, Oct 7).
   // Test publications appear only once they have a checked bilingual summary;
   // untranslated originals and metadata-only notices are not listed.
-  const originalPreview = officialOnly || generalOnly ? [] : listedOriginalPreviews(data);
+  const originalPreview = officialOnly || generalOnly || stockOnly ? [] : listedOriginalPreviews(data);
   const updates = generalOnly ? [] : [
     ...originalPreview.map(item => ({ kind: "original-preview" as const, item, at: item.previewPublishedAt })),
     // Sort by the time the card shows, so the list reads newest first (owner, Oct 9).
-    ...official.map(item => { const time = officialTime(item), shown = clockTime(time.at, time.kind, item.observedAt);
+    ...(stockOnly ? [] : official).map(item => { const time = officialTime(item), shown = clockTime(time.at, time.kind, item.observedAt);
       return { kind: "official" as const, item, publication: { ...shown, dated: time.kind }, at: shown.kind === "date" ? `${shown.at}T00:00:00Z` : shown.at }; }),
     ...market.map(item => ({ kind: "market" as const, item, at: item.publishedAt })),
-    ...(officialOnly || generalOnly ? [] : wireStories(wire, lang).map(story => ({ kind: "wire" as const, story, at: story.at }))),
+    ...(officialOnly || generalOnly ? [] : (stockOnly ? stockStories : wireStories(wire, lang)).map(story => ({ kind: "wire" as const, story, at: story.at }))),
   ].sort((a, b) => Date.parse(b.at) - Date.parse(a.at));
   // The home list shows five stories per page, five pages at most; the whole list is on the General News page (owner, Nov 5).
   const { pages, current, start, end } = pageWindow(updates.length + news.length, page, generalOnly ? Infinity : HOME_STORIES);

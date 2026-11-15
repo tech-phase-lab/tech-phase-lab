@@ -113,6 +113,19 @@ class HomeScopeTests(unittest.TestCase):
         self.assertEqual(sorted(feed['items']), ['AAPL', 'KO', 'MKT', 'NVDA'])
         self.assertNotIn('XYZ', feed['items'])
 
+    def test_each_public_row_says_where_it_came_from_so_the_home_can_show_the_stock_news_api_stories(self):
+        with company_wire.connect(self.path) as db:
+            company_wire.store(db, [{'ticker': 'NVDA', 'source': 'yahoo', 'title': 'Nvidia ships a new rack', 'publisher': 'Yahoo',
+                                     'url': 'https://news.example/yahoo-nvda', 'published': datetime(2026, 11, 10, 2, 0, tzinfo=timezone.utc)}], 'Name', seen_at=self.now)
+        self.translate({})
+        with company_wire.connect(self.path) as db:
+            feed = company_wire.public_feed(db, now_ts=self.now.timestamp())
+        sources = {row['titleEn']: row['source'] for rows in feed['items'].values() for row in rows}
+        self.assertEqual(sources['Nvidia wins order'], 'stocknews')
+        self.assertEqual(sources['Nvidia ships a new rack'], 'yahoo')
+        self.assertEqual(sources['Oil jumps on Hormuz tension'], 'stocknews')
+        self.assertEqual(sources['Apple unveils new chip'], 'stocknews')
+
 
 if __name__ == '__main__':
     unittest.main()
