@@ -206,12 +206,14 @@ export function cautionClause(item: AnalysisItem, lang: "ja"|"en"): string {
 }
 const joinWords=(words:string[],ja:boolean)=>ja ? words.join("と") : words.join(" and ");
 /** Equal-weight summary on the factors every company has. The scores are shown above it, so the sentence says who leads and why in plain words,
- * then one caution at most. Incomplete or incompatible evidence cannot produce a winner. `note` is the yardstick, for the caveats list. */
-export function overallComparison(companies: (Financials & {ticker:string})[],lang:"ja"|"en",now=Date.now()): {title:string;description:string;note?:string} {
+ * then one caution at most. Incomplete or incompatible evidence cannot produce a winner. `note` is the yardstick, for the caveats list.
+ * The title is the big verdict under the small 「総合評価」/"Overall" label (owner, Nov 15), so it no longer starts with 「総合評価は」;
+ * `leader` is the winner's ticker, set only when there is one. */
+export function overallComparison(companies: (Financials & {ticker:string})[],lang:"ja"|"en",now=Date.now()): {title:string;description:string;note?:string;leader?:string} {
   const ja=lang==="ja",common=commonTotals(companies,now);
   const ranked=companies.map((c,i)=>({c,scores:comparisonScores(c,now).filter(s=>common.ids.includes(s.id)),total:common.totals[i]}));
   if(new Set(companies.map(c=>!!c.referenceEvaluation)).size>1 || ranked.some(r=>r.total===null))
-    return {title:ja?"総合評価に必要なデータが揃っていません":"There isn't enough data for an overall score",description:ja?"3社に共通する項目が3つ未満のため、総合順位は出していません。":"Fewer than three factors are available for every company, so no overall ranking is given."};
+    return {title:ja?"必要なデータが揃っていません":"There isn't enough data for an overall score",description:ja?"3社に共通する項目が3つ未満のため、総合順位は出していません。":"Fewer than three factors are available for every company, so no overall ranking is given."};
   const count=common.ids.length;
   const note=count<7 ? (ja?`総合点は、全社にそろう${count}項目の平均です。`:`Overall scores average the ${count} factors every company has.`) : undefined;
   const periods=comparableQuarters(companies,now) ? "" : (ja?"決算期間が異なる会社を含みます。":"Reporting periods differ. ");
@@ -226,7 +228,7 @@ export function overallComparison(companies: (Financials & {ticker:string})[],la
   if(gap<0.3) {
     const a=edges(best,[next]),b=edges(next,[best]);
     const split=a.length && b.length ? (ja?`${best.c.ticker}は${words(a.slice(0,1))}、${next.c.ticker}は${words(b.slice(0,1))}で上回ります。`:`${best.c.ticker} is ahead in ${words(a.slice(0,1))}, ${next.c.ticker} in ${words(b.slice(0,1))}.`) : "";
-    return {title:ja?"総合評価は拮抗":"Overall assessment is close",description:ja?`${periods}総合点の差は0.3点未満で、はっきりした優劣はありません。${split}`:`${periods}The overall scores are within 0.3 points, so there is no clear leader. ${split}`.trim(),note};
+    return {title:ja?"拮抗":"Too close to call",description:ja?`${periods}総合点の差は0.3点未満で、はっきりした優劣はありません。${split}`:`${periods}The overall scores are within 0.3 points, so there is no clear leader. ${split}`.trim(),note};
   }
   const lead=edges(best,ranked.slice(1));
   const strongly=lead.length>0 && Math.min(...lead.map(s=>s.lead))>=3;
@@ -238,5 +240,5 @@ export function overallComparison(companies: (Financials & {ticker:string})[],la
   if(counter.length && nextWeak) second=ja?`${next.c.ticker}は${words(counter)}が強みですが、${cautionClause(nextWeak,lang)}。`:`${next.c.ticker} is stronger in ${words(counter)}, but ${cautionClause(nextWeak,lang)}.`;
   else if(bestWeak) second=ja?`ただし、${best.c.ticker}は${cautionClause(bestWeak,lang)}。`:`However, ${cautionClause(bestWeak,lang).replace(/^its /,`${best.c.ticker}'s `).replace(/^watch /,`watch ${best.c.ticker}'s `)}.`;
   else if(counter.length) second=ja?`${next.c.ticker}は${words(counter)}で上回ります。`:`${next.c.ticker} is ahead in ${words(counter)}.`;
-  return {title:ja?`総合評価は${best.c.ticker}が優位`:`${best.c.ticker} leads overall`,description:ja?`${periods}${first}${second}`:`${periods}${first} ${second}`.trim(),note};
+  return {title:ja?`${best.c.ticker} が優位`:`${best.c.ticker} leads`,leader:best.c.ticker,description:ja?`${periods}${first}${second}`:`${periods}${first} ${second}`.trim(),note};
 }

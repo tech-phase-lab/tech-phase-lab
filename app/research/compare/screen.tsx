@@ -8,7 +8,7 @@ import { searchStocks } from "@/lib/research/stock-search";
 import { comparisonCatalog } from "@/lib/research/comparison-catalog";
 import type { ComparisonResult, Fact } from "@/lib/research/comparison";
 import styles from "./styles.module.css";
-import { CompanyScoreCard, LeadTitle, ScoreHeadline, ScoreOverview, StatusOverlay } from "./comparison-visuals";
+import { CompanyScoreCard, ScoreHeadline, VerdictHeading, ScoreOverview, StatusOverlay } from "./comparison-visuals";
 import ProTag from "../pro-experience/pro-tag";
 import PageHeading from "../page-heading";
 import TickerSearch from "./ticker-search";
@@ -166,9 +166,9 @@ export default function ComparisonScreen() {
       {busy && <div className={styles.loading} role="status"><span className={styles.spinner} aria-hidden="true"/><strong>{t("開示資料と比較条件を精査中…", "Checking filings and whether the figures can be compared…")}</strong><p className={styles.loadingNote}>{t("精査に最大1分ほど時間を要することがあります。", "This can take up to about a minute.")}<br />{t("期間・通貨・会計基準を確認しています。", "We're checking reporting periods, currencies, and accounting standards.")}</p></div>}
       {error && <p role="alert">{t("比較結果を取得できませんでした。選択は残っています。もう一度お試しください。", "Could not retrieve the comparison. Your selection is saved; please try again.")}</p>}
       {result && <div ref={conclusion} tabIndex={-1} className={`${styles.results} ${styles.resultView}`}>
-        <button type="button" className={styles.backToCompare} onClick={()=>{setResult(null);requestAnimationFrame(()=>{picker.current?.scrollIntoView({block:"start",behavior:"instant"});picker.current?.focus({preventScroll:true});});}}>{t("▶ 銘柄比較PROへ戻る", "▶ Back to Compare stocks PRO")}</button>
+        <button type="button" className={styles.backToCompare} onClick={()=>{setResult(null);requestAnimationFrame(()=>{picker.current?.scrollIntoView({block:"start",behavior:"instant"});picker.current?.focus({preventScroll:true});});}}><span className={styles.backChevron} aria-hidden="true">‹</span>{t("銘柄比較PROへ戻る", "Back to Compare stocks PRO")}</button>
         {(() => { const now = Date.parse(result.generatedAt), assessment = overallComparison(result.companies, lang, now); return <>
-        <section className={styles.conclusion} aria-label={t("結果", "Results")}><h2>{result.trial ? result.conclusion[lang] : <LeadTitle title={assessment.title} companies={result.companies}/>}</h2></section>
+        <VerdictHeading title={result.trial ? result.conclusion[lang] : assessment.title} leader={result.trial ? undefined : assessment.leader} companies={result.companies} lang={lang} now={now}/>
         <ScoreHeadline companies={result.companies} lang={lang} now={now}/>
         <StatusOverlay companies={result.companies} lang={lang} now={now}/>
         <section className={styles.explain}><p>{result.trial ? result.trial.description[lang] : assessment.description}</p>{(result.reasons.length > 0 || (!result.trial && assessment.note)) && <details><summary>{t("比較条件・注意点", "Comparison caveats")}</summary><ul>{!result.trial && assessment.note && <li>{assessment.note}</li>}{result.reasons.map(r => <li key={r.en}>{r[lang]}</li>)}</ul></details>}<small>{result.trial && <>{t("保存データ · 自動更新なし", "Saved comparison · not automatically updated")} · </>}{t("比較作成", "Compared at")}: {new Date(result.generatedAt).toLocaleString(ja ? "ja-JP" : "en-US", { timeZone: "Asia/Tokyo" })} JST</small></section>

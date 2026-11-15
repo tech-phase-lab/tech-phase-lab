@@ -23,34 +23,46 @@ function StatusChart({companies,lang,now,colorIndex=0}: {companies:ComparisonRes
     </svg>
   </div>;
 }
-/** The overall score of each company, large; the higher one's frame is gold. Below them one sentence counts the factors each won (ties are not counted). */
+/** The factors every company has a score for, and for each company how many of them it is strictly the highest on (ties are not counted). */
+function factorWins(companies:ComparisonResult["companies"],now:number) {
+  const sets=companies.map(c=>comparisonScores(c,now));
+  const factors=sets[0].map((_,index)=>sets.map(scores=>scores[index].value)).filter(values=>values.every(value=>value!==null)) as number[][];
+  return {count:factors.length,wins:companies.map((_,i)=>factors.filter(values=>values[i]>Math.max(...values.filter((_,j)=>j!==i))).length)};
+}
+/** The overall score of each company, large; the higher one's frame is gold. */
 function ScoreHeadline({companies,lang,now}: {companies:ComparisonResult["companies"];lang:"ja"|"en";now:number}) {
-  const ja=lang==="ja", sets=companies.map(c=>comparisonScores(c,now)), common=commonTotals(companies,now), totals=common.totals;
+  const ja=lang==="ja", totals=commonTotals(companies,now).totals;
   const known=totals.filter((total): total is number => total!==null), best=known.length ? Math.max(...known) : null;
   const leads=totals.map(total=>best!==null && total===best && known.some(other=>other<best));
-  // Factors that every company has a score for; of those, the ones where one company is strictly the highest.
-  const factors=sets[0].map((_,index)=>sets.map(scores=>scores[index].value)).filter(values=>values.every(value=>value!==null)) as number[][];
-  const wins=companies.map((_,i)=>factors.filter(values=>values[i]>Math.max(...values.filter((_,j)=>j!==i))).length);
-  const mostWins=Math.max(...wins);
-  const byTotal=leads.indexOf(true), byWins=wins.filter(w=>w===mostWins).length===1 ? wins.indexOf(mostWins) : -1;
-  const leader=byTotal>=0 ? byTotal : byWins;
-  const sentence=leader>=0 && factors.length>0 && wins[leader]>0
-    ? (ja ? `が${factors.length}項目中${wins[leader]}項目で${companies.length>2 ? "最も高い点でした" : "上回りました"}` : ` scored ${companies.length>2 ? "the highest" : "higher"} in ${wins[leader]} of ${factors.length} factors`) : null;
   return <section className={styles.headlineScores} aria-label={ja ? "総合評価の点数" : "Overall scores"}>
     <div className={styles.scoreBoxes} style={{gridTemplateColumns:`repeat(${companies.length},minmax(0,1fr))`}}>{companies.map((c,i)=><article key={c.ticker} className={styles.scoreBox} data-leader={leads[i]}>
       <p className={styles.boxTicker}><i style={{background:colorOf(i)}} aria-hidden="true"/>{c.ticker}</p>
       <p className={styles.boxName}>{c.name}</p>
       <p className={styles.boxScore}><b>{totals[i]===null ? "—" : totals[i]!.toFixed(1)}</b><small>/ 10</small></p>
     </article>)}</div>
-    {sentence && <p className={styles.winLine}><b style={{color:colorOf(leader)}}>{companies[leader].ticker}</b>{sentence}</p>}
   </section>;
 }
-/** "総合評価は○○が優位": only the company's code takes its colour and a bold monospace face. */
-function LeadTitle({title,companies}: {title:string;companies:ComparisonResult["companies"]}) {
-  const index=companies.findIndex(c=>title.includes(c.ticker));
-  if(index<0) return <>{title}</>;
-  const [before,...rest]=title.split(companies[index].ticker);
-  return <>{before}<b className={styles.leadTicker} style={{color:colorOf(index)}}>{companies[index].ticker}</b>{rest.join(companies[index].ticker)}</>;
+/** Rough width of a text in em: a Japanese character is one em, any other about 0.58. */
+const textWidth=(text:string)=>[...text].reduce((w,ch)=>w+(ch.charCodeAt(0)>0x2e80 ? 1 : 0.58),0);
+/** The verdict above the score cards (owner, Nov 15): the small gold 「総合評価」 label, the big 「LLY が優位」 with only the winner's code in its
+ * colour and glow, a short gold bar, then the count of factors won (「6項目中4項目で上回りました」, the code not repeated). With no winner (a close
+ * result) the count names the company that won the most factors; without enough data, or for a saved trial result, the title is shown alone. */
+function VerdictHeading({title,leader,companies,lang,now}: {title:string;leader?:string;companies:ComparisonResult["companies"];lang:"ja"|"en";now:number}) {
+  const ja=lang==="ja", index=leader ? companies.findIndex(c=>c.ticker===leader) : -1;
+  const {count,wins}=factorWins(companies,now), most=Math.max(...wins);
+  // The winner of the verdict; with no verdict, the one company that won the most factors, if there is one.
+  const counted=index>=0 ? index : wins.filter(w=>w===most).length===1 ? wins.indexOf(most) : -1;
+  const many=companies.length>2, won=counted>=0 ? wins[counted] : 0;
+  const tail=ja ? `${count}項目中${won}項目で${many ? "最も高い点でした" : "上回りました"}` : `${many ? "Highest" : "Ahead"} on ${won} of ${count} factors`;
+  const sub=counted>=0 && count>0 && won>0 ? (index>=0 ? tail : ja ? `${companies[counted].ticker}が${tail}` : `${companies[counted].ticker}: ${tail.replace(/^./,ch=>ch.toLowerCase())}`) : null;
+  const color=index>=0 ? colorOf(index) : "";
+  const parts=index>=0 ? title.split(leader!) : [title];
+  return <section className={styles.conclusion} aria-label={ja ? "総合評価" : "Overall"} data-verdict={index>=0 ? "leader" : textWidth(title)*34>320 ? "long" : "short"}>
+    <p className={styles.verdictLabel}>{ja ? "総合評価" : "Overall"}</p>
+    <h2 className={styles.verdictTitle}>{index>=0 ? <>{parts[0]}<span className={styles.leadTicker} style={{color,textShadow:`0 0 16px ${color}8c`}}>{leader}</span>{parts.slice(1).join(leader!)}</> : title}</h2>
+    <span className={styles.verdictBar} aria-hidden="true"/>
+    {sub && <p className={styles.verdictSub}>{sub}</p>}
+  </section>;
 }
 /** One figure with every company drawn over each other, in each company's color. Unscored factors are not drawn. */
 function StatusOverlay({companies,lang,now}: {companies:ComparisonResult["companies"];lang:"ja"|"en";now:number}) {
@@ -82,7 +94,7 @@ function ScoreOverview({companies,lang,now}: {companies:ComparisonResult["compan
 export const compactTrait=(text:string)=>text.replace(/^営業赤字（利益率 (.+)）$/,"営業赤字 $1").replace(/^Operating loss \((.+) margin\)$/,"Operating loss $1")
   .replace(/^~3-month price return /,"3-month price ");
 /** One item is one line (owner, Nov 15: 「ここは1行固定」): 12px, or 11px when long for the 184px column; anything longer ends in "…". */
-const fitSize=(text:string)=>[...text].reduce((w,ch)=>w+(ch.charCodeAt(0)>0x2e80 ? 1 : 0.58),0)*12>146 ? "small" : "normal";
+const fitSize=(text:string)=>textWidth(text)*12>146 ? "small" : "normal";
 function CompanyScoreCard({company:c,lang,now,colorIndex=0}: {company:ComparisonResult["companies"][number];lang:"ja"|"en";now:number;colorIndex?:number}) {
   const items=hasRecentQuarter(c,now) ? c.preparedAnalysis?.items ?? [] : [], ja=lang==="ja";
   const availability=comparisonAvailability(c,lang,now);
@@ -112,4 +124,4 @@ function CompanyScoreCard({company:c,lang,now,colorIndex=0}: {company:Comparison
   </article>;
 }
 
-export { LeadTitle, CompanyScoreCard, ScoreOverview, ScoreHeadline, StatusOverlay };
+export { VerdictHeading, CompanyScoreCard, ScoreOverview, ScoreHeadline, StatusOverlay };
