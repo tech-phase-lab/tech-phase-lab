@@ -163,7 +163,7 @@ export default function ComparisonScreen() {
       </section>
       <TickerSearch lang={lang} selection={selection} onSelect={selectCompany} />
       </>}
-      {busy && <div className={styles.loading} role="status"><span className={styles.spinner} aria-hidden="true"/><strong>{t("開示資料と比較条件を精査中…", "Checking filings and whether the figures can be compared…")}</strong><p>{t("期間・通貨・会計基準を確認しています。初回は時間がかかる場合があります。", "We're checking reporting periods, currencies, and accounting standards. Your first comparison may take a little longer.")}</p></div>}
+      {busy && <div className={styles.loading} role="status"><span className={styles.spinner} aria-hidden="true"/><strong>{t("開示資料と比較条件を精査中…", "Checking filings and whether the figures can be compared…")}</strong><p className={styles.loadingNote}>{t("精査に最大1分ほど時間を要することがあります。", "This can take up to about a minute.")}<br />{t("期間・通貨・会計基準を確認しています。", "We're checking reporting periods, currencies, and accounting standards.")}</p></div>}
       {error && <p role="alert">{t("比較結果を取得できませんでした。選択は残っています。もう一度お試しください。", "Could not retrieve the comparison. Your selection is saved; please try again.")}</p>}
       {result && <div ref={conclusion} tabIndex={-1} className={`${styles.results} ${styles.resultView}`}>
         <button type="button" className={styles.backToCompare} onClick={()=>{setResult(null);requestAnimationFrame(()=>{picker.current?.scrollIntoView({block:"start",behavior:"instant"});picker.current?.focus({preventScroll:true});});}}>{t("▶ 銘柄比較PROへ戻る", "▶ Back to Compare stocks PRO")}</button>

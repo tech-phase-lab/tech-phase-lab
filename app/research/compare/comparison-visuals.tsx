@@ -1,6 +1,6 @@
 "use client";
 import type { ComparisonResult } from "@/lib/research/comparison";
-import { comparisonScores, comparisonMetric, comparisonLeaders, comparisonAvailability, hasRecentQuarter, radarPoint, compositeScore } from "@/lib/research/comparison-scorecard";
+import { comparisonScores, comparisonMetric, comparisonLeaders, comparisonAvailability, hasRecentQuarter, radarPoint, commonTotals } from "@/lib/research/comparison-scorecard";
 import styles from "./styles.module.css";
 // The color of each company (owner, Nov 5): the first a yellowish gold, the second blue, the third a light purple.
 const companyColors = ["#ffc247", "#4cc9f0", "#ff7ac6"];
@@ -25,7 +25,7 @@ function StatusChart({companies,lang,now,colorIndex=0}: {companies:ComparisonRes
 }
 /** The overall score of each company, large; the higher one's frame is gold. Below them one sentence counts the factors each won (ties are not counted). */
 function ScoreHeadline({companies,lang,now}: {companies:ComparisonResult["companies"];lang:"ja"|"en";now:number}) {
-  const ja=lang==="ja", sets=companies.map(c=>comparisonScores(c,now)), totals=sets.map(scores=>compositeScore(scores));
+  const ja=lang==="ja", sets=companies.map(c=>comparisonScores(c,now)), common=commonTotals(companies,now), totals=common.totals;
   const known=totals.filter((total): total is number => total!==null), best=known.length ? Math.max(...known) : null;
   const leads=totals.map(total=>best!==null && total===best && known.some(other=>other<best));
   // Factors that every company has a score for; of those, the ones where one company is strictly the highest.
@@ -42,6 +42,7 @@ function ScoreHeadline({companies,lang,now}: {companies:ComparisonResult["compan
       <p className={styles.boxName}>{c.name}</p>
       <p className={styles.boxScore}><b>{totals[i]===null ? "—" : totals[i]!.toFixed(1)}</b><small>/ 10</small></p>
     </article>)}</div>
+    {common.ids.length>=3 && common.ids.length<7 && <p className={styles.periodLine}>{ja ? `総合点は、全社にそろう${common.ids.length}項目の平均です。` : `Overall scores average the ${common.ids.length} factors every company has.`}</p>}
     {sentence && <p className={styles.winLine}><b style={{color:colorOf(leader)}}>{companies[leader].ticker}</b>{sentence}</p>}
   </section>;
 }
