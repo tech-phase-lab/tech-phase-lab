@@ -26,6 +26,7 @@ from pathlib import Path
 from zoneinfo import ZoneInfo
 
 import brief_generator
+import llm_cost
 import factual_validation
 import weekly_issues
 
@@ -623,6 +624,7 @@ def generate(db, now, news=(), transport=None, env=None):
                                     "schedule": [{"id": e["id"], "date": e["date"], "name": e["name"]} for e in schedule]}, ensure_ascii=False),
                "text": {"format": {"type": "json_schema", "name": "weekly_issue", "strict": True, "schema": response_schema()}}}
     response = transport(payload, key)
+    llm_cost.record(db, "weekly", "weekly:%s" % datetime.fromtimestamp(now, JST).date().isoformat(), model, response, now=now)
     if response.get("status") != "completed":
         raise RuntimeError("weekly-incomplete")
     output = json.loads(brief_generator.output_text(response))
@@ -636,6 +638,7 @@ def generate(db, now, news=(), transport=None, env=None):
         retry = dict(payload, input=json.dumps({**json.loads(payload["input"]), "repair": {
             "rejected": str(error), "rule": "見出しと導入文は、根拠の文にない否定（〜ない・〜せず・見送り など）や、根拠と逆の言い方を使わず、根拠にある事実だけを肯定の文で書く"}}, ensure_ascii=False))
         second = transport(retry, key)
+        llm_cost.record(db, "weekly", "weekly-repair:%s" % datetime.fromtimestamp(now, JST).date().isoformat(), model, second, now=now)
         if second.get("status") != "completed":
             raise RuntimeError("weekly-incomplete")
         headline, lead, parts, more, used = compose(json.loads(brief_generator.output_text(second)), evidence, schedule, lenient=True)

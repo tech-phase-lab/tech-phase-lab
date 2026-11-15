@@ -69,14 +69,27 @@ class DeepAnalysisTests(unittest.TestCase):
         self.assertNotIn('45', json.dumps(analysis, ensure_ascii=False))
         self.assertEqual(len(item['points']), 2)
 
-    def test_retries_stop_after_three_failed_attempts(self):
+    def test_a_rejected_analysis_is_held_after_one_call_but_a_call_that_returned_nothing_may_be_repeated(self):
+        # Owner, Nov 15: one paid call per release. A reply the checks rejected is final; a timeout returned nothing to check.
         self.earnings()
         bad = json.loads(json.dumps(GOOD))
         bad['points'] = [point('売上は45%増。', 'Revenue rose 45%.')] * 3
-        for attempt in range(3):
-            self.assertEqual(self.run_deep(reply(bad), now=base.NOW.timestamp() + attempt * 1000), 'retry')
-        self.assertEqual(self.run_deep(lambda *_: self.fail('held'), now=base.NOW.timestamp() + 5000), 'idle')
+        calls = []
+        def counting(payload, key):
+            calls.append(1)
+            return reply(bad)(payload, key)
+        self.assertEqual(self.run_deep(counting), 'retry')
+        self.assertEqual(self.run_deep(counting, now=base.NOW.timestamp() + 1000), 'idle')
+        self.assertEqual(self.run_deep(counting, now=base.NOW.timestamp() + 5000), 'idle')
+        self.assertEqual(len(calls), 1)
         self.assertEqual(self.items(), [])
+        with research.connect(self.path) as db:
+            db.execute('DELETE FROM deep_analyses')
+        def timeout(payload, key):
+            raise TimeoutError('no answer')
+        for attempt in range(3):
+            self.assertEqual(self.run_deep(timeout, now=base.NOW.timestamp() + 10000 + attempt * 1000), 'retry')
+        self.assertEqual(self.run_deep(lambda *_: self.fail('held'), now=base.NOW.timestamp() + 20000), 'idle')
 
     def test_a_point_may_cite_several_excerpts_but_a_figure_must_be_in_one_of_them(self):
         excerpts = {'0': 'Revenue was $3.41 billion in the quarter.', '1': 'Operating income was $172 million.', '2': 'Unrelated background text.'}
@@ -90,7 +103,7 @@ class DeepAnalysisTests(unittest.TestCase):
         except deep_analysis.Unchecked as exc:  # pragma: no cover - only if the checks reject both citations
             self.fail(exc.detail)
         kept = deep_analysis.bind(note, excerpts)
-        self.assertEqual(len(kept['points']), 2)  # the point citing only the revenue excerpt may not use the operating-income figure
+        self.assertEqual(len(kept['points']), 1)  # the point citing only the revenue excerpt may not use the operating-income figure; the repeat is not added twice
         bad = {'headline': note['headline'], 'points': [only_first, unknown, only_first], 'watch': None}
         with self.assertRaises(deep_analysis.Unchecked) as caught:
             deep_analysis.bind(bad, excerpts)
@@ -101,36 +114,47 @@ class DeepAnalysisTests(unittest.TestCase):
                     '2': 'Operating income was $172 million.'}
         ok_point = {'ja': '営業利益は172 million ドル。', 'en': 'Operating income was $172 million.', 'evidenceIds': ['2']}
         headline = {'ja': '売上高は3.41 billion ドル。', 'en': 'Revenue was $3.41 billion.', 'evidenceIds': ['0']}
-        note = {'headline': headline, 'points': [ok_point, ok_point], 'watch': None}
-        self.assertEqual(len(deep_analysis.bind(note, excerpts)['points']), 2)  # the release has a negated clause elsewhere: not this headline's evidence
+        note = {'headline': headline, 'points': [ok_point], 'watch': None}
+        self.assertEqual(len(deep_analysis.bind(note, excerpts)['points']), 1)  # the release has a negated clause elsewhere: not this headline's evidence
         flipped = {'ja': '会社は今四半期にガイダンスを引き上げた。', 'en': 'The company raised guidance this quarter.', 'evidenceIds': ['1']}
         with self.assertRaises(deep_analysis.Unchecked) as caught:
-            deep_analysis.bind({'headline': headline, 'points': [flipped, flipped, ok_point], 'watch': None}, excerpts)
+            deep_analysis.bind({'headline': headline, 'points': [flipped, flipped], 'watch': None}, excerpts)
         [reason] = caught.exception.detail['rejected']
         self.assertTrue(reason.startswith('changed-negation:source-negated:'), reason)
-        self.assertEqual(caught.exception.detail['kept'], 1)
+        self.assertEqual(caught.exception.detail['kept'], 0)
+        kept = deep_analysis.bind({'headline': headline, 'points': [flipped, ok_point], 'watch': None}, excerpts)  # one passed point is published
+        self.assertEqual([p['ja'] for p in kept['points']], [ok_point['ja']])
 
-    def test_a_rejected_headline_holds_the_analysis_and_records_why(self):
+    def test_a_rejected_headline_gets_a_fixed_one_so_a_passed_point_is_published_and_no_point_holds_with_the_reason(self):
         excerpts = {'0': 'Revenue was $3.41 billion in the quarter.', '1': 'Operating income was $172 million.'}
         point = {'ja': '売上高は3.41 billion ドル。', 'en': 'Revenue was $3.41 billion.', 'evidenceIds': ['0']}
         bad_headline = {'ja': '売上高は45%増。', 'en': 'Revenue rose 45%.', 'evidenceIds': ['0']}
+        kept = deep_analysis.bind({'headline': bad_headline, 'points': [point], 'watch': None}, excerpts)
+        self.assertEqual(kept['headline'], {'ja': 'この決算の要点', 'en': 'Key points of this release'})
+        self.assertEqual(len(kept['points']), 1)
+        bad_point = {'ja': '売上高は45%増。', 'en': 'Revenue rose 45%.', 'evidenceIds': ['0']}
         with self.assertRaises(deep_analysis.Unchecked) as caught:
-            deep_analysis.bind({'headline': bad_headline, 'points': [point, point], 'watch': None}, excerpts)
-        self.assertEqual(str(caught.exception), 'unsupported-number')
+            deep_analysis.bind({'headline': bad_headline, 'points': [bad_point], 'watch': None}, excerpts)
+        self.assertEqual(str(caught.exception), 'no-checked-points')
         self.assertEqual(caught.exception.detail['headline'], 'unsupported-number:value:45%:A')
 
-    def test_a_retry_tells_the_model_why_the_last_attempt_was_rejected(self):
+    def test_the_request_has_no_retry_feedback_and_keeps_the_fixed_part_first_for_the_prompt_cache(self):
         self.earnings()
-        bad = json.loads(json.dumps(GOOD))
-        bad['points'] = [point('売上は45%増。', 'Revenue rose 45%.')] * 3
-        inputs = []
+        seen = []
         def transport(payload, key):
-            inputs.append(json.loads(payload['input']))
-            return reply(bad)(payload, key)
-        self.assertEqual(self.run_deep(transport), 'retry')
-        self.assertEqual(self.run_deep(transport, now=base.NOW.timestamp() + 1000), 'retry')
-        self.assertNotIn('previousAttemptRejected', inputs[0])
-        self.assertEqual(inputs[1]['previousAttemptRejected'], {'kept': 0, 'rejected': {'unsupported-number:value:45%:A': 3}})
+            seen.append(payload)
+            return reply(GOOD)(payload, key)
+        self.assertEqual(self.run_deep(transport), 'done')
+        [payload] = seen
+        self.assertNotIn('previousAttemptRejected', payload['input'])
+        self.assertNotIn('previousAttemptRejected', deep_analysis.POLICY)
+        self.assertNotIn('alreadyAccepted', deep_analysis.POLICY)
+        keys = list(payload)
+        self.assertLess(keys.index('instructions'), keys.index('input'))
+        self.assertLess(keys.index('prompt_cache_key'), keys.index('input'))
+        self.assertEqual(keys[-1], 'input')  # what differs per release comes last
+        self.assertEqual(payload['prompt_cache_key'], 'tech-phase-deep-analysis-v%d' % deep_analysis.VERSION)
+        self.assertEqual(payload['instructions'], deep_analysis.POLICY)
 
     def test_unsupported_figures_are_tagged_as_cited_elsewhere_absent_or_mixed(self):
         excerpts = {'0': 'Revenue was $3.41 billion in the quarter.', '1': 'Operating income was $172 million.'}
@@ -215,8 +239,10 @@ class DeepAnalysisTests(unittest.TestCase):
         self.earnings()
         bad = json.loads(json.dumps(GOOD))
         bad['points'] = [point('売上は45%増。', 'Revenue rose 45%.')] * 3
+        def timeout(payload, key):
+            raise TimeoutError('no answer')
         for attempt in range(2):
-            self.run_deep(reply(bad), now=base.NOW.timestamp() + attempt * 1000)
+            self.run_deep(timeout, now=base.NOW.timestamp() + attempt * 1000)
         with research.connect(self.path) as db:
             row = db.execute("SELECT state,attempts FROM deep_analyses").fetchone()
             self.assertEqual((row[0], row[1]), ('retry', 2))
@@ -298,9 +324,8 @@ class DeepAnalysisTests(unittest.TestCase):
         self.assertEqual(self.run_deep(reply(bad), now=start), 'retry')
         key = deep_analysis.INCIDENT_PREFIX + 'NBIS'
         with research.connect(self.path) as db:
-            self.assertEqual(deep_analysis.sync_incident(db, start + 3600), None)  # one hour: not yet
-            self.assertIsNone(db.execute('SELECT 1 FROM operational_incidents WHERE incident_key=?', (key,)).fetchone())
-            self.assertEqual(deep_analysis.sync_incident(db, start + 7300), 'deep-analysis-overdue')
+            # The checks rejected every point and the call is not repeated (owner, Nov 15): the alert is immediate, not two hours later.
+            self.assertEqual(deep_analysis.sync_incident(db, start + 60), 'deep-analysis-overdue')
             row = db.execute('SELECT severity,status,last_error_code FROM operational_incidents WHERE incident_key=?', (key,)).fetchone()
             self.assertEqual((row[0], row[1]), ('critical', 'open'))
             self.assertEqual(row[2], 'deep-analysis-overdue:NBIS:unsupported-number-value-45-A')
@@ -315,44 +340,63 @@ class DeepAnalysisTests(unittest.TestCase):
             db.execute("UPDATE deep_analyses SET kind='indicator'")
             self.assertEqual(deep_analysis.overdue(db, start + 7300), [])  # only earnings releases
 
-    def test_a_retry_replaces_only_the_rejected_points_and_keeps_the_ones_that_passed(self):
-        # Owner, Nov 14: a release must get published; points that passed every check are carried, only the rejected ones are rewritten.
+    def test_a_call_that_returned_nothing_is_a_critical_incident_only_after_two_hours(self):
         self.earnings()
-        first = json.loads(json.dumps(GOOD))
-        first['points'] = [GOOD['points'][0], point('売上は45%増。', 'Revenue rose 45%.'), point('利益は45%増。', 'Profit rose 45%.')]
-        self.assertEqual(self.run_deep(reply(first)), 'retry')  # headline + one point passed: below the two-point minimum
+        start = base.NOW.timestamp()
+        def timeout(payload, key):
+            raise TimeoutError('no answer')
+        self.assertEqual(self.run_deep(timeout, now=start), 'retry')
+        key = deep_analysis.INCIDENT_PREFIX + 'NBIS'
         with research.connect(self.path) as db:
-            detail = json.loads(db.execute('SELECT detail FROM deep_analyses').fetchone()[0])
-            self.assertEqual(detail['carry']['points'], [{'ja': GOOD['points'][0]['ja'], 'en': GOOD['points'][0]['en']}])
-            self.assertEqual(deep_analysis.diagnostics(db, now=base.NOW.timestamp())['notDone'][0]['detail'].get('carry'), None)  # not in /health
-        inputs = []
-        def transport(payload, key):
-            inputs.append(json.loads(payload['input']))
-            second = json.loads(json.dumps(GOOD))
-            second['headline'] = point('売上は45%増。', 'Revenue rose 45%.')  # even a rejected headline is replaced by the carried one
-            second['points'] = [GOOD['points'][0], GOOD['points'][1], GOOD['points'][2]]  # a repeat of a carried point is not added twice
-            return reply(second)(payload, key)
-        self.assertEqual(self.run_deep(transport, now=base.NOW.timestamp() + 1000), 'done')
-        self.assertEqual(inputs[0]['previousAttemptRejected']['alreadyAccepted'], [GOOD['points'][0]['ja']])
-        [item] = self.items()
-        self.assertEqual([p['ja'] for p in item['points']], [p['ja'] for p in GOOD['points']])
-        self.assertEqual(item['headline']['ja'], GOOD['headline']['ja'])  # the carried, checked headline
+            self.assertIsNone(deep_analysis.sync_incident(db, start + 3600))  # one hour: its repeat is still due
+            self.assertIsNone(db.execute('SELECT 1 FROM operational_incidents WHERE incident_key=?', (key,)).fetchone())
+            self.assertEqual(deep_analysis.sync_incident(db, start + 7300), 'deep-analysis-overdue')
 
-    def test_carried_points_from_other_check_logic_are_not_reused(self):
+    def test_only_boilerplate_is_removed_from_what_is_sent_and_the_amount_is_recorded(self):
+        # Owner, Nov 15: shorter input, same content. Results, outlook, segments, comments, table cells and unit headers all stay.
+        body = '\n'.join([
+            'NEWS RELEASE Contact Jane Doe Investor Relations ir@example.com',
+            'Example Corp Reports Third Quarter 2026 Financial Results',
+            'Revenue was $980.8 million, up 355% year over year, led by the Cloud segment.',
+            '"We are scaling faster than demand," said the chief executive.',
+            'The company expects fourth-quarter revenue of $1.1 billion to $1.2 billion.',
+            'Cautionary Statement',
+            'This press release contains forward-looking statements. Actual results may differ materially because of risks and uncertainties. We undertake no obligation to update any forward-looking statement.',
+            'Forward-looking guidance for the segment is unchanged and growth continues across the Cloud business without any stated range.',
+            'Condensed Consolidated Statements of Operations',
+            'Condensed Consolidated Statements of Operations',
+            '(in thousands)', 'Net income', '6,108', '2,824', '7',
+            'Media: +1 212 555 0123',
+            '© 2026 Example Corp. All rights reserved.',
+            'Example is a registered trademark of Example Corp.'])
+        trimmed, trim = deep_analysis.trim_release(body)
+        for kept in ('Revenue was $980.8 million', 'scaling faster than demand', 'expects fourth-quarter revenue of $1.1 billion',
+                     'Forward-looking guidance for the segment is unchanged', '(in thousands)', 'Net income', '6,108', '2,824', '2,824\n7'):
+            self.assertIn(kept, trimmed)
+        self.assertEqual(trimmed.count('Condensed Consolidated Statements of Operations'), 1)  # a repeated heading, once
+        for gone in ('ir@example.com', 'Cautionary Statement', 'undertake no obligation', '212 555', 'All rights reserved', 'registered trademark'):
+            self.assertNotIn(gone, trimmed)
+        self.assertEqual(trim['before'], len(body))
+        self.assertEqual(trim['after'], len(trimmed))
+        self.assertGreater(trim['removedChars'], 250)
+        self.assertEqual(trim['estTokensRemoved'], trim['removedChars'] // 4)
+        self.assertEqual(deep_analysis.trim_release('Revenue was $5 million.\nNet income was 2.')[0], 'Revenue was $5 million.\nNet income was 2.')
+
+    def test_points_that_pass_are_published_and_the_rejected_ones_are_left_out_with_one_call(self):
+        # Owner, Nov 15: no second call; one passed point is enough, the rest is dropped.
         self.earnings()
         first = json.loads(json.dumps(GOOD))
         first['points'] = [GOOD['points'][0], point('売上は45%増。', 'Revenue rose 45%.'), point('利益は45%増。', 'Profit rose 45%.')]
-        self.run_deep(reply(first))
-        with research.connect(self.path) as db:
-            detail = json.loads(db.execute('SELECT detail FROM deep_analyses').fetchone()[0])
-            detail['carry']['version'] = deep_analysis.VERSION - 1
-            db.execute('UPDATE deep_analyses SET detail=?', (json.dumps(detail),))
-        inputs = []
+        calls = []
         def transport(payload, key):
-            inputs.append(json.loads(payload['input']))
+            calls.append(1)
             return reply(first)(payload, key)
-        self.run_deep(transport, now=base.NOW.timestamp() + 1000)
-        self.assertNotIn('alreadyAccepted', inputs[0]['previousAttemptRejected'])
+        self.assertEqual(self.run_deep(transport), 'done')
+        [item] = self.items()
+        self.assertEqual([p['ja'] for p in item['points']], [GOOD['points'][0]['ja']])
+        self.assertEqual(item['headline']['ja'], GOOD['headline']['ja'])
+        self.assertEqual(self.run_deep(transport, now=base.NOW.timestamp() + 1000), 'idle')
+        self.assertEqual(len(calls), 1)
 
     def test_a_release_that_never_got_an_analysis_row_is_a_critical_incident_after_two_hours(self):
         # Owner, Nov 14: a release found but never attempted (daily budget spent, service stopped) must alert like a failed one.
@@ -389,12 +433,11 @@ class DeepAnalysisTests(unittest.TestCase):
         self.earnings()
         bad = json.loads(json.dumps(GOOD))
         bad['points'] = [point('売上は45%増。', 'Revenue rose 45%.')] * 3
-        for attempt in range(3):
-            self.assertEqual(self.run_deep(reply(bad), now=base.NOW.timestamp() + attempt * 1000), 'retry')
+        self.assertEqual(self.run_deep(reply(bad)), 'retry')
         with deep_analysis.connect(self.path) as db:
             report = deep_analysis.diagnostics(db, now=base.NOW.timestamp() + 5000)
         [held] = report['notDone']
-        self.assertEqual((held['subject'], held['state'], held['failure']), ('NBIS', 'held', 'too-few-checked-points'))
+        self.assertEqual((held['subject'], held['state'], held['failure']), ('NBIS', 'held', 'no-checked-points'))
         self.assertEqual(held['detail'], {'kept': 0, 'rejected': {'unsupported-number:value:45%:A': 3}})
         self.assertEqual(report['version'], deep_analysis.VERSION)
         self.assertEqual(self.run_deep(lambda *_: self.fail('held'), now=base.NOW.timestamp() + 5000), 'idle')
