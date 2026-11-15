@@ -479,7 +479,7 @@ def diagnostics(db, now=None):
 
 
 OLD_RETRY_ENV = 'RESEARCH_DEEP_RETRY_OLD_HOLDS'
-OLD_RETRY_MARKER = 'old-holds-2026-11-14c'  # owner, Nov 15: every held analysis, and a retry row that left the 3-day window, gets one more attempt
+OLD_RETRY_MARKER = 'old-holds-2026-11-15d'  # owner, Nov 15: one more attempt for every held analysis (ARM: a scale word glued to Japanese text was misread)
 
 
 def retry_old_holds(path, transport=None, env=None, now=None):

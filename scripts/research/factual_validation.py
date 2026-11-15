@@ -14,7 +14,7 @@ from token_pricing import token_denominators, validate_token_prices
 QUANTITY_PATTERN = re.compile(
     r'(?<![\d.,])(?P<before>[+＋\-−]?)\s*(?:[$€£¥]\s*)?'
     r'(?P<after>[+＋\-−]?)\s*(?P<number>\d+(?:,\d{3})*(?:\.\d+)?)\s*(?:[-‑]\s*)?'
-    r'(?P<unit>thousand\b|million\b|billion\b|trillion\b|percent\b|パーセント|[KMBT](?![A-Za-z])|[%％]|百万|千万|十億|百億|千億|千|万|億|兆)',
+    r'(?P<unit>thousand(?![A-Za-z])|million(?![A-Za-z])|billion(?![A-Za-z])|trillion(?![A-Za-z])|percent(?![A-Za-z])|パーセント|[KMBT](?![A-Za-z])|[%％]|百万|千万|十億|百億|千億|千|万|億|兆)',
     re.I,
 )
 UNIT_SCALE = { 'k': 1000, 'thousand': 1000, '千': 1000,
