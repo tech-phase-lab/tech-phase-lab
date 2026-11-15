@@ -106,7 +106,7 @@ test("valuation: forward P/E when every company has one; price-to-sales for all 
   assert.deepEqual(mixed.map(valuation), [5, 3]);                   // both on PSR: 4x -> 5, 8x -> 3
   assert.ok(mixed.every(c => c.valuationBasis === "ps"));
   assert.ok(!mixed[0].preparedAnalysis.items.some(i => i.short.ja.includes("予想PER")));   // the bullet follows the yardstick
-  assert.notEqual(overallComparison(mixed, "ja", NOW).title, "総合評価に必要なデータが揃っていません");
+  assert.notEqual(overallComparison(mixed, "ja", NOW).title, "必要なデータが揃っていません");
   const missing = applyValuationBasis([company("A", 20, 4), company("B", null, null)], NOW);
   assert.deepEqual(missing.map(valuation), [7, null]);              // no yardstick for everyone: left as before, never zero
 });

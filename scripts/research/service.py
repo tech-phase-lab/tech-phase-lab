@@ -65,6 +65,7 @@ import official_research_detail
 import watch_earnings
 import mu_earnings_measurement
 import comparison_warm
+import radar_refresh
 import web_push
 import voice_inbox
 import event_results
@@ -786,6 +787,12 @@ class AutomaticMonitor:
                 "pollOverdueAfterSeconds": WEB_PUSH_STALE_SECONDS,
                 "pollOverdue": False,
             },
+            # The Financial Radar's twice-daily refresh (radar_refresh.py): counts and times only, never the URL or secret.
+            "radarRefresh": {
+                "status": "waiting" if radar_refresh.config() else "off",
+                "slotsJst": [f"{h:02d}:{m:02d}" for h, m in radar_refresh.SLOTS_JST],
+                "slot": None, "refreshed": None, "failed": None, "checkedAt": None, "nextAt": None,
+            },
             "companies": {},
         }
         self.publication_wakes = {name: threading.Event() for name in (
@@ -828,6 +835,7 @@ class AutomaticMonitor:
         self.watch_earnings_thread = threading.Thread(target=self.run_watch_earnings, name="watch-earnings", daemon=True)
         self.mu_measurement_thread = threading.Thread(target=self.run_mu_measurement, name="mu-earnings-measurement", daemon=True)
         self.comparison_warm_thread = threading.Thread(target=self.run_comparison_warm, name="comparison-warm-clock", daemon=True)
+        self.radar_refresh_thread = threading.Thread(target=self.run_radar_refresh, name="radar-refresh-clock", daemon=True)
         self.weekly_thread = threading.Thread(target=self.run_weekly, name="weekly-auto-draft-clock", daemon=True)
         self.event_results_thread = threading.Thread(target=self.run_event_results, name="event-results", daemon=True)
         self.news_thread = threading.Thread(target=self.run_stock_news, name="stock-news-intake", daemon=True)
@@ -1078,7 +1086,8 @@ class AutomaticMonitor:
         while not self.stop_event.is_set():
             try:
                 if deep_analysis.run_once(self.db_path) == 'idle':
-                    deep_analysis.retry_old_holds(self.db_path)  # flag-gated one-off; idle otherwise
+                    if deep_analysis.retry_old_holds(self.db_path) == 'idle':  # flag-gated one-off; idle otherwise
+                        deep_analysis.backfill_roster(self.db_path)  # flag-gated one-off (roster releases without an analysis)
             except Exception as exc:
                 log_publication_failure("deep-analysis-unavailable", exc)
             self.stop_event.wait(10)
@@ -1147,6 +1156,27 @@ class AutomaticMonitor:
             with self.state_lock:
                 self.state["comparisonWarm"] = {**result, "checkedAt": utc_now()}
             self.stop_event.wait(comparison_warm.seconds_to_next_minute(time.time()))
+
+    def run_radar_refresh(self, now=lambda: datetime.now(timezone.utc)):
+        # The Financial Radar: every company calculated again at 08:00 and 22:30 JST (off unless the comparison warm settings are set).
+        if not radar_refresh.config():
+            return
+        schedule = radar_refresh.Schedule()
+        while not self.stop_event.is_set():
+            slot = schedule.due(now())
+            wait = 60
+            if slot:
+                result = radar_refresh.run_once(should_stop=self.stop_event.is_set)
+                schedule.record(slot, result)
+                with self.state_lock:
+                    self.state["radarRefresh"] = {**self.state["radarRefresh"], "refreshed": None, "failed": None, "failures": [],
+                                                  **result, "slot": radar_refresh.iso(slot), "checkedAt": utc_now()}
+                if schedule.done_slot != slot:
+                    wait = radar_refresh.RETRY_AFTER
+                print(f"radar-refresh {result.get('status')} refreshed={result.get('refreshed')} failed={result.get('failed')}", flush=True)
+            with self.state_lock:
+                self.state["radarRefresh"]["nextAt"] = radar_refresh.iso(radar_refresh.next_slot(now()))
+            self.stop_event.wait(wait)
 
     def run_web_push(self):
         if not self.web_push_enabled:
@@ -1294,6 +1324,7 @@ class AutomaticMonitor:
         self.deep_analysis_thread.start()
         self.mu_measurement_thread.start()
         self.comparison_warm_thread.start()
+        self.radar_refresh_thread.start()
         self.weekly_thread.start()
         self.event_results_thread.start()
         self.watch_earnings_thread.start()
@@ -1328,6 +1359,7 @@ class AutomaticMonitor:
         self.deep_analysis_thread.join(timeout=45)
         self.mu_measurement_thread.join(timeout=45)
         self.comparison_warm_thread.join(timeout=60)
+        self.radar_refresh_thread.join(timeout=90)
         self.watch_earnings_thread.join(timeout=10)
         self.push_thread.join(timeout=15)
 

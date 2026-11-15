@@ -5,11 +5,18 @@ import { secCik, secText } from "./comparison-server";
 import { REVIEW_ABOVE, formerGenres, radarGenre, radarGenres, type RadarGenreId } from "./radar";
 import { factsFromRow, isStale, readRows, saveRow, storeConfig, toRow } from "./radar-store";
 
+const readNow = async (cik: string): Promise<RadarFacts> =>
+  radarFacts(JSON.parse(await secText(`https://data.sec.gov/api/xbrl/companyfacts/CIK${cik.padStart(10, "0")}.json`, 25_000_000)));
 // Read again every half hour, so a new earnings report or filing shows up on its own; the previous earnings
 // come from the same filing history, so there is nothing separate to store.
-const read = unstable_cache(async (cik: string): Promise<RadarFacts> =>
-  radarFacts(JSON.parse(await secText(`https://data.sec.gov/api/xbrl/companyfacts/CIK${cik.padStart(10, "0")}.json`, 25_000_000))),
-["radar-facts-v1"], { revalidate: 1800 });
+const read = unstable_cache(readNow, ["radar-facts-v1"], { revalidate: 1800 });
+
+/** The daily refresh (app/api/research/radar/refresh): straight from the SEC, never the half-hour cache, so a filing of the last
+ * half hour is included. Throws when the SEC cannot be read (the caller then keeps the stored value). */
+export async function loadRadarFactsFresh(ticker: string): Promise<RadarFacts> {
+  const cik = await secCik(ticker);
+  return cik ? readNow(cik) : { latest: null, previous: null, reason: "unsupported" };
+}
 
 export async function loadRadarFacts(ticker: string): Promise<RadarFacts> {
   try {

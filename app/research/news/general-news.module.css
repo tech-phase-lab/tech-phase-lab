@@ -80,8 +80,13 @@
 .topicMeta time{flex:none;font-family:var(--font-geist-mono),"JetBrains Mono",monospace;color:#8e9aaa}
 .topicTitle{margin:0;font-size:15.5px;font-weight:700;line-height:1.5;color:#f1f4f8;overflow-wrap:anywhere}
 .topicSummary{margin:0;font-size:12.5px;line-height:1.7;color:#aab6c4;white-space:pre-wrap;overflow-wrap:anywhere}
-.topicSource{display:flex;justify-content:space-between;align-items:center;gap:12px;padding-top:8px;border-top:1px solid #1c2633;font-size:11.5px;line-height:1.5;color:#8e9aaa}
-.topicSource>span{min-width:0;overflow-wrap:anywhere}
-.topicSource a{flex:none;color:#8fe3c0;text-decoration:none}
-.topicSource a:hover{text-decoration:underline;text-underline-offset:3px}
-.topicSource a:focus-visible{outline:2px solid #8fe3c0;outline-offset:3px;border-radius:4px}
+.topicTitle a{color:inherit;text-decoration:none}
+.topicTitle a:hover{text-decoration:underline;text-decoration-color:#4d5b6c;text-decoration-thickness:1px;text-underline-offset:4px}
+.topicTitle a:focus-visible{outline:2px solid #8fe3c0;outline-offset:3px;border-radius:4px}
+/* The summary: three lines, the rest behind 「＋」 (owner, Nov 15). Only the summary is clamped; headlines are never cut. */
+.topicSummaryRow{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:end;gap:8px;min-width:0}
+.topicClamped{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:3;line-clamp:3;overflow:hidden}
+.topicMore{flex:none;display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;padding:0;border:1px solid #2a3646;border-radius:8px;background:transparent;color:#8fe3c0;font-size:15px;line-height:1;cursor:pointer}
+.topicMore:focus-visible{outline:2px solid #8fe3c0;outline-offset:2px}
+.topicPublisher{margin:0;font-size:11px;line-height:1.5;color:#8e9aaa;overflow-wrap:anywhere}
+.topicCredit{margin:0;font-size:11px;line-height:1.5;color:#8e9aaa;text-align:right}

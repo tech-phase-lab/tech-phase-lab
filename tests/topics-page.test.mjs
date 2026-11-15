@@ -6,7 +6,7 @@ import React from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import ts from "typescript";
 import { parseCompanyWire } from "../lib/research/company-wire.ts";
-import { impactOf, topicCards, topicImpact } from "../lib/research/topics.ts";
+import { impactOf, publisherRank, sameTopic, summaryMayOverflow, summaryToggle, topicCards, topicCredit, topicImpact } from "../lib/research/topics.ts";
 
 // Owner, Nov 15: 一般ニュース becomes 注目トピック, a list of open cards of the Stock News API stories.
 const require = createRequire(import.meta.url);
@@ -91,14 +91,18 @@ test("the page: TOPICS / 注目トピック, an automatic-update line, open card
   const html = renderToStaticMarkup(React.createElement(Topics, { lang: "ja", data: feed, wire: wire(), wireReady: true, error: false,
     receivedAt: new Date(now).toISOString(), page: 1, onPage: () => {} }));
   assert.match(html, /自動で更新中/);
-  assert.doesNotMatch(html, /<button|更新<\/button>|＋|<details|日英の内容を確認|画面取得|確信度|事業への影響/);
+  assert.doesNotMatch(html, /<button|更新<\/button>|＋|<details|日英の内容を確認|画面取得|確信度|事業への影響/, "a short summary has no 「＋」");
   assert.deepEqual([...html.matchAll(/<h2 class="topicDay">([^<]+)<\/h2>/g)].map(match => match[1]), ["今日", "昨日"]);
   assert.equal((html.match(/<article /g) ?? []).length, 4);
   assert.match(html, /<time dateTime="[^"]+">11:30<\/time>/, "the time alone, in Japan time");
   assert.match(html, /<span class="topicTicker">MU<\/span><span class="topicImpact">● 中立<\/span>/);
   assert.match(html, /class="topicCard topicNegative"/);
-  assert.match(html, /<p class="topicSummary" lang="ja">次世代メモリHBM4/);
-  assert.match(html, /<span>Bloomberg<\/span><a href="https:\/\/news\.example\/s1" target="_blank" rel="noopener noreferrer">元記事を読む <span aria-hidden="true">↗<\/span><\/a>/);
+  assert.match(html, /<p class="topicSummary topicClamped" lang="ja">次世代メモリHBM4[^<]*<\/p><\/div>/);
+  assert.match(html, /<h3 class="topicTitle" lang="ja"><a href="https:\/\/news\.example\/s1" target="_blank" rel="noopener noreferrer">マイクロン、HBM4の出荷を前倒し<\/a><\/h3>/, "the headline is the link");
+  assert.match(html, /<p class="topicPublisher">Bloomberg<\/p>/);
+  assert.doesNotMatch(html, /元記事を読む|Read the article|↗/, "no per-card link row");
+  assert.equal((html.match(/<a /g) ?? []).length, 4, "one link per card: its headline");
+  assert.match(html, /<\/div><p class="topicCredit">提供：Stock News API<\/p><\/section>$/, "one credit line at the bottom");
   const empty = renderToStaticMarkup(React.createElement(Topics, { lang: "ja", data: { ok: true, enabled: false, items: [] }, wire: {}, wireReady: true, error: false, receivedAt: null, page: 1, onPage: () => {} }));
   assert.match(empty, /現在、掲載中のトピックはありません。/);
 });
@@ -110,9 +114,11 @@ test("the cards follow the owner's colours and sizes, with no gold", () => {
     /\.topicPositive\{--topic-tone:#5fe0aa\}/, /\.topicNegative\{--topic-tone:#ff7a7a\}/, /\.topicNeutral\{--topic-tone:#9aa7b7\}/,
     /\.topicList\{[^}]*gap:10px/, /\.topicTitle\{[^}]*font-size:15\.5px;font-weight:700/, /\.topicSummary\{[^}]*font-size:12\.5px;[^}]*color:#aab6c4/,
     /\.topicLive\{[^}]*font-size:12px;[^}]*color:#8e9aaa/, /\.topicLive span\{[^}]*background:#8fe3c0/, /\.topicTicker\{[^}]*font-weight:700;color:#8fe3c0/,
-    /\.topicSource a\{[^}]*color:#8fe3c0/]) assert.match(topics, rule);
+    /\.topicMore\{[^}]*color:#8fe3c0/, /\.topicPublisher\{[^}]*font-size:11px/]) assert.match(topics, rule);
   assert.doesNotMatch(topics, /#d0ae65|#dcc58e|gold|#c9a|#e6c|#f5d/i);
-  assert.doesNotMatch(topics, /line-clamp|text-overflow:ellipsis/, "headlines are never cut");
+  assert.doesNotMatch(topics, /text-overflow:ellipsis|\.topicSource/);
+  assert.doesNotMatch(topics.match(/\.topicTitle\{[^}]*\}/)[0], /line-clamp|overflow:hidden/, "headlines are never cut");
+  assert.match(topics, /\.topicClamped\{[^}]*-webkit-line-clamp:3/, "only the summary is clamped, to three lines");
 });
 
 test("the name 注目トピック is used everywhere the page is named", () => {
@@ -123,4 +129,89 @@ test("the name 注目トピック is used everywhere the page is named", () => {
   for (const file of ["../app/research/home-sidebar.tsx", "../app/research/site-header.tsx", "../app/research/plan-cards.tsx", "../app/research/news/general-news-panel.tsx", "../app/research/general-news/page.tsx"]) {
     assert.doesNotMatch(read(file), /一般ニュース|General News|GENERAL NEWS/, file);
   }
+});
+
+// Owner, Nov 15 (注目トピックの要約・重複・リンク).
+const summaryJa = "イタリアの競争当局は、メタがWhatsAppでAIチャットボットの競合を締め出したとして8億8700万ユーロの制裁金を科した。メタは不服を申し立てる方針を示した。";
+const summaryEn = "Italy's antitrust authority fined Meta 887 million euros, saying it shut rival AI chatbots out of WhatsApp. Meta said it would appeal.";
+const meta = (id, titleEn, titleJa, publisher, minutes, extra = {}) => ({ ...row(id, titleEn, titleJa, { publisher, minutes }), ...extra });
+
+test("the feed carries the Stock News article summary in English and, beside a Japanese headline, in checked Japanese", () => {
+  const items = parseCompanyWire({ ok: true, items: { META: [
+    meta("m1", "Meta fined $887 million by Italian antitrust regulator", "メタ、伊競争当局から8億8700万ドルの制裁金", "Reuters", 20, { summaryEn, summaryJa }),
+    meta("m2", "Meta item without Japanese", null, "Reuters", 30, { summaryEn, summaryJa }),
+    meta("m3", "Meta item with a bad summary", "メタの記事", "Reuters", 40, { summaryEn: "x".repeat(1201), summaryJa: "English only" }),
+    meta("m4", "Meta item with odd fields", "メタの記事2", "Reuters", 50, { summaryEn: 5, summaryJa: "あ".repeat(301) }),
+    meta("m5", "Meta item with NUL", "メタの記事3", "Reuters", 60, { summaryEn: "a\0b", summaryJa: "  " }),
+  ] } }).items.META;
+  assert.deepEqual(items.map(item => [item.summaryEn ?? null, item.summaryJa ?? null]), [[summaryEn, summaryJa], [summaryEn, null], [null, null], [null, null], [null, null]]);
+  assert.equal(items.length, 5, "a bad summary never drops the headline");
+});
+
+test("a card shows the summary under the headline: Japanese on the Japanese page, English on the English page; headline-only rows show none", () => {
+  const items = { META: [meta("m1", "Meta fined $887 million by Italian antitrust regulator", "メタ、伊競争当局から8億8700万ドルの制裁金", "Reuters", 20, { summaryEn, summaryJa })],
+    NVDA: [meta("n1", "Nvidia signs a supply deal with Foxconn", "エヌビディア、フォックスコンと供給契約", "Reuters", 25, { summaryEn: "Nvidia signed a deal." })] };
+  const wireItems = parseCompanyWire({ ok: true, items }).items;
+  const ja = topicCards(null, wireItems, "ja"), en = topicCards(null, wireItems, "en");
+  assert.equal(ja[0].summary, summaryJa);
+  assert.equal(en[0].summary, summaryEn);
+  assert.equal(ja[1].summary, undefined, "no Japanese summary: the Japanese card shows the headline only");
+  assert.equal(en[1].summary, "Nvidia signed a deal.");
+  assert.equal(topicCards(null, wire(), "ja").every(card => card.summary === undefined), true);
+});
+
+test("the same story from different publishers is one card, the most reputable publisher's, listing every company", () => {
+  const items = parseCompanyWire({ ok: true, items: {
+    META: [meta("m1", "Italy fines Meta 887 mln euros over WhatsApp AI chatbots", "イタリア、メタに8億8700万ユーロの制裁金", "Business Insider", 50),
+      meta("m2", "Meta fined $887 million by Italian antitrust regulator", "メタ、伊競争当局から制裁金8億8700万", "Reuters", 40, { summaryEn, summaryJa }),
+      meta("m3", "Meta launches a new Llama model for business", "メタ、企業向けの新Llamaモデルを発表", "TechCrunch", 30)],
+    GOOGL: [meta("g1", "Italy fines Google over Android Auto access", "イタリア、グーグルに制裁金", "Reuters", 45)],
+  } }).items;
+  const ja = topicCards(null, items, "ja");
+  assert.deepEqual(ja.map(card => card.id), ["wire-m3", "wire-g1", "wire-m2"], "the Italian fine is listed once; Google's own fine stays separate");
+  const fine = ja.find(card => card.id === "wire-m2");
+  assert.equal(fine.publisher, "Reuters");
+  assert.equal(fine.summary, summaryJa);
+  assert.equal(fine.at, iso(50), "the story is dated when it first appeared");
+  assert.equal(topicCards(null, items, "en").length, 3);
+  // A story more than 24 hours apart is a new card.
+  const later = parseCompanyWire({ ok: true, items: { META: [meta("a", "Meta fined $887 million by Italian antitrust regulator", "メタに制裁金8億8700万", "Reuters", 26 * 60),
+    meta("b", "Italy fines Meta 887 mln euros over WhatsApp AI chatbots", "メタに8億8700万ユーロ", "CNBC", 10)] } }).items;
+  assert.equal(topicCards(null, later, "ja").length, 2);
+});
+
+test("the same-story rule and the publisher order", () => {
+  assert.equal(sameTopic("Italy fines Meta 887 mln euros over WhatsApp AI chatbots", "Meta fined $887 million by Italian antitrust regulator"), true);
+  assert.equal(sameTopic("Nvidia shares rise after earnings beat", "Nvidia shares fall after earnings miss"), false);
+  assert.equal(sameTopic("Meta launches a new Llama model", "Meta fined $887 million in Italy"), false);
+  assert.ok(publisherRank("Reuters") < publisherRank("Business Wire"));
+  assert.ok(publisherRank("Business Wire") < publisherRank("CNBC"));
+  assert.ok(publisherRank("CNBC") < publisherRank("TechCrunch"));
+  assert.ok(publisherRank("TechCrunch") < publisherRank("Some Blog"));
+});
+
+test("a long summary is clamped to three lines with 「＋」 (「−」 when open); a short one has no button", () => {
+  assert.equal(summaryMayOverflow("あ".repeat(66), true), false);
+  assert.equal(summaryMayOverflow("あ".repeat(67), true), true);
+  assert.equal(summaryMayOverflow("a".repeat(144), false), false);
+  assert.equal(summaryMayOverflow("a".repeat(145), false), true);
+  assert.deepEqual(summaryToggle(false, true), { text: "＋", label: "要約をすべて表示" });
+  assert.deepEqual(summaryToggle(true, true), { text: "−", label: "要約を閉じる" });
+  assert.deepEqual(summaryToggle(false, false), { text: "＋", label: "Show the full summary" });
+  assert.equal(topicCredit(true), "提供：Stock News API");
+  assert.equal(topicCredit(false), "Source: Stock News API");
+  const Topics = loadTopics();
+  const long = "要約".repeat(60);
+  const items = parseCompanyWire({ ok: true, items: { META: [meta("m1", "Meta fined $887 million by Italian antitrust regulator", "メタ、伊当局から8億8700万ドルの制裁金", "Reuters", 20, { summaryEn, summaryJa: long })] } }).items;
+  const render = lang => renderToStaticMarkup(React.createElement(Topics, { lang, data: null, wire: items, wireReady: true, error: false,
+    receivedAt: new Date(now).toISOString(), page: 1, onPage: () => {} }));
+  const html = render("ja");
+  assert.match(html, new RegExp(`<p class="topicSummary topicClamped" lang="ja">${long}</p><button type="button" class="topicMore" aria-expanded="false" aria-label="要約をすべて表示">＋</button>`));
+  const en = render("en");
+  assert.match(en, /<p class="topicSummary topicClamped" lang="en">Italy&#x27;s antitrust authority fined Meta/);
+  assert.match(en, /<p class="topicCredit">Source: Stock News API<\/p>/);
+  assert.doesNotMatch(en, /Read the article|元記事/);
+  const source = read("../app/research/news/topics-list.tsx");
+  assert.match(source, /setOpen\(!open\)/, "the button opens and closes the summary");
+  assert.match(source, /scrollHeight > element\.clientHeight/, "the browser measures whether the text is cut");
 });

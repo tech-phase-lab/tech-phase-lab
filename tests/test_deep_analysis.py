@@ -7,6 +7,8 @@ from datetime import datetime, timezone
 import test_official_research as base
 from test_official_research import QUOTES, research
 import deep_analysis
+import release_watch
+from unittest.mock import patch
 
 ENV = {'OPENAI_API_KEY': 'sk-test-' + 'x' * 30, 'RESEARCH_DEEP_MODEL': 'gpt-6-astra'}
 EARNINGS = 'Nebius Reports Third Quarter 2026 Financial Results'
@@ -29,7 +31,15 @@ def reply(note):
 
 
 class DeepAnalysisTests(unittest.TestCase):
-    setUp = base.OfficialResearchTests.setUp
+    def setUp(self):
+        base.OfficialResearchTests.setUp(self)
+        # the real calendar must not date releases against the test clock
+        patcher = patch.object(release_watch, 'load_schedule', return_value=[])
+        patcher.start()
+        self.addCleanup(patcher.stop)
+        patcher = patch.object(deep_analysis, 'OLD_RETRY_SUBJECTS', ('NBIS',))  # the one-off retry is for named subjects only
+        patcher.start()
+        self.addCleanup(patcher.stop)
 
     def earnings(self):
         with research.connect(self.path) as db:
@@ -447,12 +457,14 @@ class DeepAnalysisTests(unittest.TestCase):
         [item] = self.items()
         self.assertEqual(len(item['points']), 3)
 
-    def test_earnings_only_companies_get_no_deep_analysis(self):
+    def test_earnings_only_companies_outside_the_roster_get_no_deep_analysis_but_roster_ones_do(self):
+        # Owner, Nov 15: the 22 roster companies (DELL, AMZN, ORCL are earnings-scope) always get one; others keep the old rule.
         self.earnings()
-        from unittest.mock import patch
         providers = deep_analysis.monitor.PROVIDERS
         with patch.dict(providers, {'NBIS': {**providers['NBIS'], 'scope': 'earnings'}}):
-            self.assertEqual(self.run_deep(lambda *_: self.fail('earnings-only')), 'idle')
+            with patch.object(deep_analysis, 'ROSTER', [t for t in deep_analysis.ROSTER if t != 'NBIS']):
+                self.assertEqual(self.run_deep(lambda *_: self.fail('earnings-only')), 'idle')
+            self.assertEqual(self.run_deep(reply(GOOD)), 'done')
 
     def test_other_news_and_missing_configuration_never_call_the_model(self):
         self.assertEqual(self.run_deep(lambda *_: self.fail('not earnings')), 'idle')
@@ -460,6 +472,172 @@ class DeepAnalysisTests(unittest.TestCase):
         self.assertEqual(deep_analysis.run_once(self.path, lambda *_: self.fail('unconfigured'),
                                                 {'OPENAI_API_KEY': ENV['OPENAI_API_KEY']}, now=base.NOW.timestamp(),
                                                 reference=base.NOW), 'idle')
+
+
+    # Owner, Nov 15: every roster company's earnings deep analysis is published.
+    def stored_release(self, ticker='CRWV', url='https://www.sec.gov/Archives/edgar/data/1769628/x/ex991.htm', at=None, text=None):
+        at = (at or base.NOW).isoformat()
+        text = text or (base.BODY + '\nFinancial Highlights')
+        with research.connect(self.path) as db:
+            db.execute("DELETE FROM source_revisions"); db.execute("DELETE FROM release_events"); db.execute("DELETE FROM sources")
+            db.execute('INSERT INTO sources(url,ticker,title,published_on,discovered_at,sha256) VALUES(?,?,?,?,?,?)', (url, ticker, 'x', '2026-11-10', at, 'rev1'))
+            db.execute('INSERT INTO source_revisions(url,sha256,observed_at,extracted_text,extracted_chars) VALUES(?,?,?,?,?)', (url, 'rev1', at, text, len(text)))
+
+    def test_a_roster_release_known_only_from_a_stored_sec_page_still_gets_one_analysis(self):
+        self.stored_release()
+        self.assertEqual(self.run_deep(reply(GOOD)), 'done')
+        [item] = self.items()
+        self.assertEqual(item['subject'], 'CRWV')
+        self.assertEqual(self.run_deep(reply(GOOD), now=base.NOW.timestamp() + 5), 'idle')  # one analysis per release
+
+    def test_earnings_only_roster_companies_are_no_longer_left_out(self):
+        for ticker in ('DELL', 'AMZN', 'ORCL'):
+            with research.connect(self.path) as db:
+                db.execute("UPDATE sources SET ticker=?", (ticker,))
+                db.execute("UPDATE release_events SET ticker=?", (ticker,))
+                db.execute("UPDATE signal_events SET source_id='primary-ir-%s'" % ticker.lower()) if db.execute("SELECT 1 FROM sqlite_master WHERE name='signal_events'").fetchone() else None
+        self.earnings()
+        with research.connect(self.path) as db:
+            subjects = {row['subject'] for row in deep_analysis.earnings_sources(db, base.NOW)}
+        self.assertTrue(subjects <= set(deep_analysis.ROSTER))
+
+    def test_backfill_makes_one_analysis_per_company_dated_to_its_release_and_never_repeats(self):
+        released = base.NOW - timedelta(days=20)
+        self.stored_release(at=released)
+        on = {**ENV, deep_analysis.BACKFILL_ENV: 'true'}
+        now = base.NOW.timestamp()
+        self.assertEqual(deep_analysis.backfill_roster(self.path, reply(GOOD), ENV, now=now), 'idle')  # flag off
+        self.assertEqual(deep_analysis.backfill_roster(self.path, reply(GOOD), on, now=now), 'done')
+        with research.connect(self.path) as db:
+            row = db.execute("SELECT subject,state,published_at,created_at FROM deep_analyses").fetchone()
+            self.assertEqual((row['subject'], row['state']), ('CRWV', 'done'))
+            self.assertTrue(row['published_at'].startswith((released + timedelta(hours=1)).isoformat()[:13]))  # the release's date, not today
+            self.assertEqual(db.execute("SELECT count(*) FROM deep_analysis_calls").fetchone()[0], 1)
+        self.assertEqual(deep_analysis.backfill_roster(self.path, reply(GOOD), on, now=now + 10), 'idle')
+
+    def test_backfill_skips_a_company_that_already_has_an_analysis_of_that_release(self):
+        self.earnings()
+        self.assertEqual(self.run_deep(reply(GOOD)), 'done')
+        on = {**ENV, deep_analysis.BACKFILL_ENV: 'true'}
+        self.assertEqual(deep_analysis.backfill_roster(self.path, reply(GOOD), on, now=base.NOW.timestamp() + 10), 'idle')
+
+    def test_a_roster_company_without_an_analysis_is_a_critical_incident_from_the_next_morning_in_japan(self):
+        released = datetime(2026, 11, 17, 21, 0, tzinfo=timezone.utc)  # NVDA after the US close: 06:00 JST on the 18th
+        before_morning = (datetime(2026, 11, 17, 23, 30, tzinfo=timezone.utc)).timestamp()   # 08:30 JST
+        morning = datetime(2026, 11, 18, 0, 5, tzinfo=timezone.utc).timestamp()               # 09:05 JST
+        events = [{'kind': 'earnings', 'ticker': 'NVDA', 'phase': 'release', 'at': released},
+                  {'kind': 'earnings', 'ticker': 'NVDA', 'phase': 'call', 'at': released + timedelta(hours=1)}]
+        patcher = patch.object(release_watch, 'load_schedule', return_value=events)
+        patcher.start()
+        self.addCleanup(patcher.stop)
+        with deep_analysis.connect(self.path) as db:
+            self.assertEqual([i for i in deep_analysis.roster_silent(db, before_morning, ENV) if i['subject'] == 'NVDA'], [])
+            late = [i for i in deep_analysis.roster_silent(db, morning, ENV) if i['subject'] == 'NVDA']
+            self.assertEqual(len(late), 1)
+            self.assertEqual(late[0]['check'], 'roster-no-analysis-none')
+            db.execute("INSERT INTO deep_analyses(source_ref,kind,subject,source_sha,state,created_at,published_at) VALUES('r','earnings','NVDA','x','done',?,?)",
+                       (released.isoformat(), released.isoformat()))
+            self.assertEqual([i for i in deep_analysis.roster_silent(db, morning, ENV) if i['subject'] == 'NVDA'], [])
+            self.assertIn('deep-analysis-overdue', deep_analysis.sync_incident(db, morning, ENV) or 'deep-analysis-overdue')
+
+    def test_the_same_release_analysed_twice_shows_once_to_readers(self):
+        with deep_analysis.connect(self.path) as db:
+            for ref, at in (('event:1:a', '2026-11-04T01:00:00+00:00'), ('event:2:b', '2026-11-04T02:00:00+00:00')):
+                db.execute("INSERT INTO deep_analyses(source_ref,kind,subject,source_sha,state,created_at,published_at,source_url,payload) VALUES(?,?,?,?,?,?,?,?,?)",
+                           (ref, 'earnings', 'ARM', 'x', 'done', at, at, 'https://example.com/arm', json.dumps(GOOD)))
+            items = deep_analysis.member_view(db, reference=datetime(2026, 11, 15, tzinfo=timezone.utc))
+        self.assertEqual(len(items), 1)
+
+
+    def test_one_release_carried_by_several_pages_shows_once_and_is_not_analysed_again(self):
+        with deep_analysis.connect(self.path) as db:
+            for ref, at, url in (('event:1:a', '2026-11-30T21:03:00+00:00', 'https://www.sec.gov/arm-8k.htm'),
+                                 ('event:2:b', '2026-11-30T21:06:00+00:00', 'https://newsroom.arm.com/long-title'),
+                                 ('event:3:c', '2026-11-30T21:09:00+00:00', 'https://newsroom.arm.com/short')):
+                db.execute("INSERT INTO deep_analyses(source_ref,kind,subject,source_sha,state,created_at,published_at,source_url,payload) VALUES(?,?,?,?,?,?,?,?,?)",
+                           (ref, 'earnings', 'ARM', 'x', 'done', at, at, url, json.dumps(GOOD)))
+            later = '2026-12-20T00:00:00+00:00'  # the next quarter is a different release and shows too
+            db.execute("INSERT INTO deep_analyses(source_ref,kind,subject,source_sha,state,created_at,published_at,source_url,payload) VALUES(?,?,?,?,?,?,?,?,?)",
+                       ('event:9:z', 'earnings', 'ARM', 'x', 'done', later, later, 'https://newsroom.arm.com/q3', json.dumps(GOOD)))
+            items = deep_analysis.member_view(db, reference=datetime(2026, 12, 21, tzinfo=timezone.utc))
+            self.assertEqual(len(items), 2)
+            row = {'subject': 'ARM', 'url': 'https://example.com/fourth-page', 'observedAt': '2026-11-30T21:30:00+00:00'}
+            self.assertTrue(deep_analysis.same_release_done(db, row, base.NOW))
+            self.assertFalse(deep_analysis.same_release_done(db, {**row, 'observedAt': '2026-12-10T00:00:00+00:00'}, base.NOW))
+
+
+    def test_the_old_retry_touches_only_its_named_subjects_never_a_new_hold(self):
+        self.earnings()
+        bad = json.loads(json.dumps(GOOD))
+        bad['points'] = [point('売上は45%増。', 'Revenue rose 45%.')] * 3
+        self.run_deep(reply(bad))
+        with research.connect(self.path) as db:
+            self.assertEqual(db.execute("SELECT state,attempts FROM deep_analyses").fetchone()[:], ('held', 1))  # one call, final
+            db.execute("UPDATE deep_analyses SET subject='ARM'")
+        on = {**ENV, deep_analysis.OLD_RETRY_ENV: 'true'}
+        self.assertEqual(deep_analysis.retry_old_holds(self.path, lambda *_: self.fail('no re-call of a rejected analysis'), on,
+                                                       now=base.NOW.timestamp() + 90000), 'idle')
+
+    def test_computed_figures_come_from_the_results_table_and_a_point_may_cite_them(self):
+        import issuer_result_flash as flash
+        facts = [('revenue', '\u20a9104.615T', '\u20a933.3T', ('売上高', 'Revenue (preliminary, KRW trillion)')),
+                 ('operating-income', '\u20a960.5T', '\u20a910.6T', ('営業利益', 'Operating profit (preliminary, KRW trillion)'))]
+        parse = lambda text, url=None: {'period': 'Q3 2026', 'facts': facts}
+        with patch.dict(flash.PROFILES, {'SKHY': {**flash.PROFILES['SKHY'], 'parse': parse}}):
+            text = deep_analysis.derived_figures('SKHY', 'https://x', 'ignored')
+        self.assertIn('Computed by the service', text)
+        self.assertIn('change year over year: up 214.2%', text)           # 104.615 / 33.3 - 1
+        self.assertIn('Operating margin: 57.8% of revenue; a year earlier 31.8% of revenue', text)
+        self.assertEqual(deep_analysis.derived_figures('NOPROFILE', 'https://x', 'ignored'), '')
+        excerpts = {'0': 'The company reported results for the quarter.', '1': text}
+        note = {'headline': {'ja': 'SK hynixの営業利益率が改善', 'en': 'SK hynix operating margin improves', 'evidenceIds': ['1']},
+                'points': [{'ja': '営業利益率は57.8%となり、前年同期の31.8%から上昇した。', 'en': 'Operating margin was 57.8% of revenue, up from 31.8% a year earlier.',
+                            'evidenceIds': ['1']}],
+                'watch': {'ja': '次の四半期の営業利益率を確認したい。', 'en': 'Watch the operating margin next quarter.', 'evidenceIds': ['0']}}
+        self.assertEqual(len(deep_analysis.bind(note, excerpts)['points']), 1)
+
+
+    def test_every_rejected_piece_is_logged_with_its_quote_without_a_second_call(self):
+        import contextlib, io
+        self.earnings()
+        bad = json.loads(json.dumps(GOOD))
+        bad['points'] = bad['points'] + [point('売上は45%増。', 'Revenue rose 45%.')]
+        calls = []
+        def transport(payload, key):
+            calls.append(1)
+            return reply(bad)(payload, key)
+        out = io.StringIO()
+        with contextlib.redirect_stdout(out):
+            self.assertEqual(self.run_deep(transport), 'done')
+        self.assertEqual(len(calls), 1)
+        lines = [json.loads(line) for line in out.getvalue().splitlines() if 'deep-analysis-rejected-copy' in line]
+        self.assertTrue(lines and lines[0]['quote'] and lines[0]['reason'])
+        self.assertNotIn('Revenue rose 45%', json.dumps(deep_analysis.diagnostics(deep_analysis.connect(self.path))))  # never in /health
+
+
+    def test_a_call_interrupted_by_a_restart_is_resumed_once_not_forever(self):
+        released = base.NOW - timedelta(days=10)
+        self.stored_release(at=released)
+        on = {**ENV, deep_analysis.BACKFILL_ENV: 'true'}
+        now = base.NOW.timestamp()
+        with deep_analysis.connect(self.path) as db:
+            item = deep_analysis.stored_release_sources(db, base.NOW, False, since=base.NOW - timedelta(days=30))[0]
+            db.execute("INSERT INTO deep_analyses(source_ref,kind,subject,source_sha,state,attempts,next_at,created_at,source_url,source_title,version) "
+                       "VALUES(?,?,?,?,'running',1,?,?,?,?,?)", (item['ref'], 'earnings', 'CRWV', item['sha'], now + 300, released.isoformat(), item['url'], item['title'],
+                                                                 deep_analysis.VERSION))
+        self.assertEqual(deep_analysis.backfill_roster(self.path, lambda *_: self.fail('still in flight'), on, now=now), 'idle')  # not stale yet
+        calls = []
+        def transport(payload, key):
+            calls.append(1)
+            return reply(GOOD)(payload, key)
+        self.assertEqual(deep_analysis.backfill_roster(self.path, transport, on, now=now + 1000), 'done')  # stale: resumed once
+        self.assertEqual(len(calls), 1)
+        with research.connect(self.path) as db:
+            db.execute("UPDATE deep_analyses SET state='running',attempts=2,next_at=?", (now + 1100,))
+            db.execute("DELETE FROM deep_old_retries")
+        self.assertEqual(deep_analysis.backfill_roster(self.path, lambda *_: self.fail('no third call'), on, now=now + 2000), 'source-unavailable')
+        with research.connect(self.path) as db:
+            self.assertEqual(db.execute("SELECT state,failure FROM deep_analyses").fetchone()[:], ('held', 'interrupted'))
 
 
 class IndicatorAnalysisTests(unittest.TestCase):
@@ -501,6 +679,7 @@ class IndicatorAnalysisTests(unittest.TestCase):
         self.assertEqual(roster['AMD']['deepState'], 'held')
         self.assertEqual(roster['MU']['deepState'], 'none')
         self.assertNotIn('SECRET', json.dumps(report))
+
 
 
 if __name__ == '__main__':

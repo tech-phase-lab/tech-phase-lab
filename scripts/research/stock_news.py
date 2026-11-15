@@ -431,7 +431,8 @@ def mirror_to_wire(db, items, stream=None, known=None):
         else:
             tickers = [t for t in item["tickers"] if t in roster]
         rows += [{"ticker": ticker, "source": "stocknews", "title": item["title"], "publisher": item["publisher"], "url": item["url"],
-                  "published": datetime.fromisoformat(item["publishedAt"]), "sentiment": item.get("sentiment")} for ticker in tickers]
+                  "published": datetime.fromisoformat(item["publishedAt"]), "sentiment": item.get("sentiment"),
+                  "summary": item.get("text", "")} for ticker in tickers]
     added = 0
     for ticker in sorted({row["ticker"] for row in rows}):
         name = company_wire.monitor.PROVIDERS.get(ticker, {}).get("name", ticker)

@@ -19,6 +19,7 @@ let source = read("../app/research/compare/comparison-visuals.tsx")
 const compiled = await transform(`import React from ${JSON.stringify(pathToFileURL(require.resolve("react")).href)};\n${source}`, { filename: "v.tsx", jsc: { parser: { syntax: "typescript", tsx: true }, transform: { react: { runtime: "classic" } }, target: "es2022" }, module: { type: "es6" } });
 const visuals = await import(`data:text/javascript;base64,${Buffer.from(compiled.code).toString("base64")}`);
 const { buildComparisonSample } = await import("../lib/research/comparison-sample.ts");
+const { overallComparison } = await import("../lib/research/comparison-scorecard.ts");
 const sample = buildComparisonSample(), now = Date.parse(sample.generatedAt);
 const text = html => html.replace(/<[^>]+>/g, "");
 
@@ -27,8 +28,11 @@ test("two companies: the big scores are shown, the higher one's frame is gold, a
   assert.match(html, /<b>8\.3<\/b>/); assert.match(html, /<b>6\.0<\/b>/);
   assert.equal((html.match(/data-leader="true"/g) ?? []).length, 1);
   assert.match(html.split('data-leader="true"')[0].split("<article").at(-1), /^ class="scoreBox"/, "the first card is the leader");
-  assert.match(text(html), /DEMO-Aが7項目中5項目で上回りました/);
-  assert.match(text(renderToStaticMarkup(React.createElement(visuals.ScoreHeadline, { companies: sample.companies.slice(0, 2), lang: "en", now }))), /DEMO-A scored higher in 5 of 7 factors/);
+  // The factor count moved up into the verdict (owner, Nov 15); nothing is written under the cards.
+  assert.doesNotMatch(text(html), /項目で上回りました/);
+  const verdict = lang => renderToStaticMarkup(React.createElement(visuals.VerdictHeading, { ...overallComparison(sample.companies.slice(0, 2), lang, now), companies: sample.companies.slice(0, 2), lang, now }));
+  assert.equal(text(verdict("ja")), "総合評価DEMO-A が優位7項目中5項目で上回りました");
+  assert.equal(text(verdict("en")), "OverallDEMO-A leadsAhead on 5 of 7 factors");
 });
 
 test("a factor with equal scores is not counted as won", () => {
@@ -37,9 +41,11 @@ test("a factor with equal scores is not counted as won", () => {
   const twin = { ...a, ticker: "TWIN", name: "Twin" };
   const html = renderToStaticMarkup(React.createElement(visuals.ScoreHeadline, { companies: [a, twin], lang: "ja", now }));
   assert.doesNotMatch(html, /data-leader="true"/);
-  assert.doesNotMatch(text(html), /項目で上回りました/);
+  const tie = renderToStaticMarkup(React.createElement(visuals.VerdictHeading, { ...overallComparison([a, twin], "ja", now), companies: [a, twin], lang: "ja", now }));
+  assert.equal(text(tie), "総合評価拮抗", "a close result: the same label and bar, no winner colour, no count");
+  assert.match(tie, /data-verdict="short"/); assert.doesNotMatch(tie, /text-shadow/);
   // Against a company that ties on some factors, only the strictly higher ones count (5 of the 7, as the scores say).
-  const wins = a && b ? text(renderToStaticMarkup(React.createElement(visuals.ScoreHeadline, { companies: [a, b], lang: "ja", now }))).match(/7項目中(\d)項目/)[1] : "";
+  const wins = text(renderToStaticMarkup(React.createElement(visuals.VerdictHeading, { ...overallComparison([a, b], "ja", now), companies: [a, b], lang: "ja", now }))).match(/7項目中(\d)項目/)[1];
   assert.equal(wins, "5");
 });
 
@@ -95,13 +101,12 @@ test("Nov 15: strengths and weaknesses use short one-line forms, and the empty c
   }
 });
 
-test("Nov 15: equal score heights, no factor-count line under the cards, and a larger one-line headline", () => {
+test("Nov 15: equal score heights and no factor-count line under the cards", () => {
   const css = read("../app/research/compare/styles.module.css");
   const polish = css.slice(css.indexOf("/* ===== Owner, Nov 15: compare polish"));
   assert.match(polish, /\.scoreBox\{display:flex;flex-direction:column\}/);
   assert.match(polish, /\.boxName\{min-height:calc\(2em \* 1\.25\)\}/);
   assert.match(polish, /\.boxScore\{margin-top:auto/);
-  assert.match(polish, /\.results \.conclusion h2\{font-size:24px\}/);
   const companies = structuredClone(sample.companies.slice(0, 2));
   companies[0].name = "ELI LILLY & Co"; companies[1].name = "Arbutus Biopharma Corp with a very long registered company name";
   const html = renderToStaticMarkup(React.createElement(visuals.ScoreHeadline, { companies, lang: "ja", now }));
@@ -148,10 +153,10 @@ test("the input screen: three headings, chosen companies as cards with a colour 
 
 test("the result is ordered: headline, scores, sentence, overlay, explanation, snapshot, then companies, then the two detail buttons", () => {
   const screen = read("../app/research/compare/screen.tsx");
-  const order = ["<ScoreHeadline", "<StatusOverlay", "styles.explain", "<ScoreOverview", "styles.companiesHeading", "<DetailPanels"].map(marker => screen.indexOf(marker));
+  const order = ["<VerdictHeading", "<ScoreHeadline", "<StatusOverlay", "styles.explain", "<ScoreOverview", "styles.companiesHeading", "<DetailPanels"].map(marker => screen.indexOf(marker));
   assert.ok(order.every(index => index > 0), String(order));
   assert.deepEqual([...order].sort((a, b) => a - b), order);
-  assert.match(read("../app/research/compare/sample/screen.tsx"), /<ScoreHeadline[\s\S]*<StatusOverlay[\s\S]*<ScoreOverview[\s\S]*<DetailPanels/);
+  assert.match(read("../app/research/compare/sample/screen.tsx"), /<VerdictHeading[\s\S]*<ScoreHeadline[\s\S]*<StatusOverlay[\s\S]*<ScoreOverview[\s\S]*<DetailPanels/);
 });
 
 test("nx9: input rings, radar layering and colours, headline colouring", () => {
@@ -165,6 +170,35 @@ test("nx9: input rings, radar layering and colours, headline colouring", () => {
   assert.ok(src.indexOf('stroke="#52628a"') < src.indexOf('stroke="#3f4d70"'));
   assert.ok(src.indexOf('stroke="#3f4d70"') < src.indexOf("strokeWidth=\"1.8\""));
   assert.match(src, /fill="#a3abc4"/);
-  const html = renderToStaticMarkup(React.createElement(visuals.LeadTitle, { title: "総合評価はDEMO-Aが優位", companies: sample.companies }));
-  assert.match(html, /総合評価は<b[^>]*color:#ffc247[^>]*>DEMO-A<\/b>が優位/);
+});
+
+test("Nov 15 verdict pack: 「総合評価」 label, the winner's code alone in its colour and glow, the gold bar, then the count", () => {
+  for (const count of [2, 3]) {
+    const companies = sample.companies.slice(0, count), assessment = overallComparison(companies, "ja", now);
+    assert.equal(assessment.title, "DEMO-A が優位"); assert.equal(assessment.leader, "DEMO-A");
+    const html = renderToStaticMarkup(React.createElement(visuals.VerdictHeading, { ...assessment, companies, lang: "ja", now }));
+    const order = ["verdictLabel", "verdictTitle", "verdictBar", "verdictSub"].map(name => html.indexOf(`class="${name}"`));
+    assert.ok(order.every(i => i > 0)); assert.deepEqual([...order].sort((x, y) => x - y), order);
+    assert.match(html, /<p class="verdictLabel">総合評価<\/p>/);
+    assert.match(html, /<h2 class="verdictTitle"><span class="leadTicker" style="color:#ffc247;text-shadow:0 0 16px #ffc2478c">DEMO-A<\/span> が優位<\/h2>/);
+    assert.doesNotMatch(html.slice(html.indexOf("verdictSub")), /DEMO-A|color:/, "the count line does not repeat or colour the code");
+    assert.match(text(html), count === 3 ? /7項目中\d項目で最も高い点でした$/ : /7項目中5項目で上回りました$/);
+  }
+  // The second company wins: its own series colour.
+  const swapped = [sample.companies[1], sample.companies[0]];
+  assert.match(renderToStaticMarkup(React.createElement(visuals.VerdictHeading, { ...overallComparison(swapped, "en", now), companies: swapped, lang: "en", now })), /<p class="verdictLabel">Overall<\/p><h2 class="verdictTitle"><span class="leadTicker" style="color:#4cc9f0;text-shadow:0 0 16px #4cc9f08c">DEMO-A<\/span> leads<\/h2>/);
+  // Not enough data: the label stays and the long sentence is one size down.
+  const none = renderToStaticMarkup(React.createElement(visuals.VerdictHeading, { title: "必要なデータが揃っていません", companies: sample.companies.slice(0, 2), lang: "ja", now }));
+  assert.match(none, /data-verdict="long"/);
+  const css = read("../app/research/compare/styles.module.css"), pack = css.slice(css.indexOf("/* ===== Owner, Nov 15: the verdict"));
+  assert.match(pack, /\.results \.backToCompare\{[^}]*font-size:12\.5px;font-weight:400;[^}]*color:#7d8a9a\}/);
+  assert.match(pack, /\.results \.conclusion\{display:flex;flex-direction:column;align-items:flex-start;gap:4px;/);
+  assert.match(pack, /\.verdictLabel\{margin:0;font-size:11px;font-weight:700;letter-spacing:\.18em;[^}]*color:#e2c27a\}/);
+  assert.match(pack, /\.verdictTitle\{margin:0;font-size:34px;font-weight:900;line-height:1\.15;/);
+  assert.match(pack, /\.verdictBar\{display:block;width:56px;height:3px;[^}]*background:#e2c27a;box-shadow:0 0 10px #e2c27ab3\}/);
+  assert.match(pack, /\.verdictSub\{margin:0;font-size:13px;[^}]*color:#c6d0dc\}/);
+  for (const file of ["../app/research/compare/screen.tsx", "../app/research/compare/sample/screen.tsx"]) {
+    const screen = read(file);
+    assert.doesNotMatch(screen, /▶/); assert.match(screen, /<span className=\{styles\.backChevron\} aria-hidden="true">‹<\/span>/);
+  }
 });
