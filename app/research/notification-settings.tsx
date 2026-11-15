@@ -2,6 +2,7 @@
 import Link from "next/link";
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { waitForIdentity } from "@/lib/research/member-recovery";
+import { preferencesFailure, preferencesNextStep, PREFERENCES_RETRY_MS, type PreferencesFailure } from "@/lib/research/preferences-load";
 import { useIdentityRefresh } from "./identity-provider";
 import type { Language } from "@/lib/research/data";
 import styles from "./price-targets-panel.module.css";
@@ -38,17 +39,42 @@ export default function NotificationSettings({ lang, initiallyOpen = false, page
   const saveQueue = useRef<Promise<void>>(Promise.resolve());
   const saving = useRef(0);
   const t = (ja: string, en: string) => lang === "ja" ? ja : en;
-  async function loadPreferences(subscription: PushSubscription, signal: AbortSignal, active: () => boolean) {
+  // Nov 15: the iPhone app showed "could not load your settings" although the device was registered and a test notice arrived.
+  // A read the browser cut off (app sent to the background, a request stopped by iOS) or one we cancelled ourselves is not a failure:
+  // it waits quietly and the page's own check reads again when the app is shown. A server failure gets bounded quiet retries, a lapsed
+  // sign-in is renewed once, and only then is the error shown. Each failure is logged as a short code with nothing personal in it.
+  async function loadPreferences(subscription: PushSubscription, signal: AbortSignal, active: () => boolean, attempt = 0): Promise<void> {
     // Wait for any save in flight so an older read cannot replace a newer choice.
     if (saving.current) return;
     setPrefsState(current => current === "ready" ? current : "loading");
+    const hidden = () => typeof document !== "undefined" && document.visibilityState === "hidden";
+    let failure: PreferencesFailure;
     try {
       const response = await fetch("/api/research/notifications", { method: "POST", credentials: "same-origin", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ action: "preferences", subscription: subscription.toJSON() }), signal });
-      const result = await response.json();
+      const result = await response.json().catch(() => null);
       if (!active() || saving.current) return;
-      if (!response.ok || !result.ok || !result.preferences) throw new Error("preferences");
-      confirmed.current = result.preferences; setPrefs(result.preferences); setPrefsState("ready"); setPrefsMessage("");
-    } catch { if (active()) { setPrefsState("error"); setPrefsMessage(t("設定を読み込めませんでした。再読み込みしてください。", "Could not load your settings. Reload to try again.")); } }
+      if (response.ok && result?.ok && result.preferences) { confirmed.current = result.preferences; setPrefs(result.preferences); setPrefsState("ready"); setPrefsMessage(""); return; }
+      failure = preferencesFailure({ status: response.status, body: result, aborted: false, hidden: hidden(), online: navigator.onLine !== false });
+    } catch (error) {
+      failure = preferencesFailure({ error, aborted: signal.aborted, timedOut: (signal.reason as { name?: unknown } | undefined)?.name === "TimeoutError", hidden: hidden(), online: navigator.onLine !== false });
+    }
+    if (!active() || saving.current) return;
+    const step = preferencesNextStep(failure, attempt, hidden());
+    if (step === "show") console.warn(`[notifications] preferences load failed: ${failure}`);
+    else console.info(`[notifications] preferences load ${step}: ${failure}`);
+    if (step === "wait") return;
+    if (step === "renew" || step === "retry") {
+      try {
+        if (step === "renew") await waitForIdentity(refreshIdentity(true), signal);
+        else await new Promise<void>((resolve, reject) => {
+          const timer = setTimeout(resolve, PREFERENCES_RETRY_MS[Math.min(attempt, PREFERENCES_RETRY_MS.length - 1)]);
+          signal.addEventListener("abort", () => { clearTimeout(timer); reject(signal.reason); }, { once: true });
+        });
+      } catch { return; }
+      if (!active()) return;
+      return loadPreferences(subscription, signal, active, attempt + 1);
+    }
+    setPrefsState("error"); setPrefsMessage(t("設定を読み込めませんでした。再読み込みしてください。", "Could not load your settings. Reload to try again."));
   }
   useEffect(() => {
     if (!open) return;
