@@ -367,6 +367,17 @@ class DepthAndFiguresTests(Base):
         self.assertTrue(jobs["compare"], "result / forecast / previous bars for the indicator")
         self.assertEqual([v["name"] for v in jobs["compare"][0]["values"]], ["結果", "予想", "前回"])
 
+    def test_a_text_about_companies_carries_their_tickers_for_the_photos(self):
+        out = model_output()
+        out["parts"].append(part("text", heading="MUはどうか?", body="MUは売上高$11.32Bでした。", evidenceIds=["E1"]))
+        saved = gen.generate(self.db, SATURDAY, transport=FakeModel(out), env=ENV)
+        about = next(p for p in saved["parts"] if p.get("heading") == "MUはどうか?")
+        self.assertEqual(about["tickers"], ["MU"])
+        jobs = next(p for p in saved["parts"] if p.get("heading") == "雇用統計は弱め")
+        self.assertNotIn("tickers", jobs, "an indicator text names no company")
+        with self.assertRaises(ValueError):
+            weekly.validate({**saved, "parts": [{**about, "tickers": ["mu; drop"]}]})
+
     def test_figures_the_model_chose_are_not_doubled(self):
         saved = gen.generate(self.db, SATURDAY, transport=FakeModel(model_output()), env=ENV)
         headings = [p["heading"] for p in saved["parts"] if p["type"] == "numbers"]

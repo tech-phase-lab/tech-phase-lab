@@ -53,6 +53,8 @@ POLICY = """あなたは「リゼル」として、週刊 Tech Phase PRO の1号
 - 決算は、売上・EPSなどの結果と、会社見通し・予想との差を、資料にある数字で書きます。強い部分と弱い部分の両方を挙げます。
 - 資料に「計算」と書かれた行(例: 予想比、前回比、見通し比)は、プログラムが検証済みの数字から計算した値です。そのまま使ってかまいません。自分で計算はしません。
 - 指標や予定は、名前を具体的に書きます(例: 米CPI(消費者物価指数)、米PPI(生産者物価指数)、米雇用統計)。「物価の発表」のような曖昧な書き方はしません。
+- text と numbers の heading は、話題の名前ではなく、結論か問いかけにします(例: 「NBISの決算は、良い数字と悪い数字がはっきり分かれました」「TSMとASMLはどうか?」)。読者が見出しだけを追っても、その週の流れが分かるようにします。
+- 同じテーマの2社(例: TSMとASML、MUとSNDK)は、並べて比べると読みやすくなります。同じ text の中で、それぞれの強い点・弱い点を1〜2文ずつ書きます。
 - 部品(parts)は、その週に必要なものだけを選び、毎週同じ並びにしません。type は text / numbers / timeline / chart / highlight。
 - 数字がない週は、text と timeline だけの短い号でかまいません。
 - 次週の予定は別に作るので、parts には入れません。scheduleComments に、予定の id ごとに一言(数字なし)を書いてかまいません。何を見る発表で、ハイテク株にとってなぜ大事かを書きます。
@@ -490,6 +492,11 @@ def compose(model_output, evidence, schedule, lenient=False):
         try:
             if kind == "text":
                 part = {"type": "text", "heading": _check(raw.get("heading"), quote), "body": _check(raw.get("body"), quote)}
+                # The companies a text is about (from the results it cites): the page shows their photos side by side (owner, Nov 15).
+                tickers = list(dict.fromkeys(item["ticker"] for item in evidence if item["id"] in ids and item["kind"] in ("earnings", "analysis")
+                                             and re.fullmatch(r"[A-Z]{1,6}", item.get("ticker") or "")))
+                if tickers:
+                    part["tickers"] = tickers[:2]
             elif kind == "highlight":
                 if highlights:
                     continue

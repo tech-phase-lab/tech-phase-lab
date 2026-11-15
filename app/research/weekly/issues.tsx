@@ -5,11 +5,12 @@ import ResearchToolShell from "../research-tool-shell";
 import { useResearchLanguage } from "../use-research-language";
 import { useOwnerMode } from "../member-display-provider";
 import { barHeights, cardBadge, formatNumber, groupNotes, scheduleDate, shortDate, type WeeklyCard } from "@/lib/research/weekly-format";
+import { companyPhotos } from "@/lib/research/company-photos";
 import styles from "./issues.module.css";
 
 type Section = "summary" | "earnings" | "indicators" | "market" | "schedule";
 type Part = (
-  | { type: "text"; heading: string; body: string; items?: { text: string; kind: "earnings" | "indicators" | "market" }[] }
+  | { type: "text"; heading: string; body: string; items?: { text: string; kind: "earnings" | "indicators" | "market" }[]; tickers?: string[] }
   | { type: "numbers"; heading: string; cards: WeeklyCard[]; note: string; compare?: { label: string; unit: string; values: { name: string; value: number }[] }[] }
   | { type: "timeline"; heading: string; points: { when: string; event: string; comment: string; tone: "up" | "down" | "flat" }[] }
   | { type: "schedule"; heading: string; items: { date: string; name: string; comment: string }[] }
@@ -96,8 +97,19 @@ function Chart({ part, ja }: { part: Extract<Part, { type: "chart" }>; ja: boole
     {part.note && <p className={styles.partNote}>{part.note}</p>}
   </figure>;
 }
+/** The companies a text is about, side by side: free-license photos only, each credited with its author and license (owner, Nov 15). */
+function Photos({ tickers, ja }: { tickers?: string[]; ja: boolean }) {
+  const shown = (tickers ?? []).map(ticker => ({ ticker, photo: companyPhotos[ticker] })).filter(item => item.photo);
+  if (!shown.length) return null;
+  return <div className={styles.photos} data-count={shown.length}>{shown.map(({ ticker, photo }) => <figure key={ticker}>
+    {/* eslint-disable-next-line @next/next/no-img-element -- small static files with fixed credits; no image optimisation needed */}
+    <img src={photo.url} alt={ja ? photo.caption.ja : photo.caption.en} loading="lazy" decoding="async" />
+    <figcaption><b>{ticker}</b><span>{ja ? photo.caption.ja : photo.caption.en}</span>
+      <small>{ja ? "写真" : "Photo"}: <a href={photo.source} target="_blank" rel="noreferrer">{photo.credit}</a> / {photo.licenseUrl ? <a href={photo.licenseUrl} target="_blank" rel="noreferrer">{photo.license}</a> : photo.license}{photo.modified ? (ja ? "（一部を切り抜き）" : " (cropped)") : ""}</small></figcaption>
+  </figure>)}</div>;
+}
 function Body({ part, ja }: { part: Part; ja: boolean }) {
-  if (part.type === "text") return part.section === "summary" && part.items ? <Takeaways part={part} ja={ja} /> : <p className={`${styles.text} ${styles.lines}`}>{part.body}</p>;
+  if (part.type === "text") return part.section === "summary" && part.items ? <Takeaways part={part} ja={ja} /> : <><Photos tickers={part.tickers} ja={ja} /><p className={`${styles.text} ${styles.lines}`}>{part.body}</p></>;
   if (part.type === "numbers") return <Numbers part={part} ja={ja} />;
   if (part.type === "timeline") return <Timeline part={part} />;
   if (part.type === "schedule") return <Schedule part={part} ja={ja} />;
