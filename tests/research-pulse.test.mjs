@@ -25,18 +25,11 @@ const {default:ResearchPulse,fitFontSize}=await import('data:text/javascript;bas
 const story=(id,ja,en='Headline',at='2026-10-03T13:34:30.000Z')=>({id,generalSource:1,tickers:['MU'],publisher:'Reported company news',url:`https://x.com/wallstengine/status/21063773530186${id}`,
   title:en,translationJa:ja,publishedAt:at,observedAt:at,bodyJa:`${ja}\n\n長い記事本文。`,bodyEn:`${en}\n\nLong article body.`,pulseTitleJa:ja,pulseTitleEn:en});
 
-test('the band is one still line: LIVE, the short headline and the time, with no pause button and no tags',()=>{
+test('the band never carries Tech Alerts items (owner, Nov 15): with only flash items it renders nothing',()=>{
   globalThis.__pulseTestSnapshot={data:{ok:true,enabled:false,items:[],officialUpdates:[story('1','MU、HBM需要で見通しを引き上げ','MU raises HBM outlook')]},checkedAt:Date.parse('2026-10-03T13:40:00Z')};
   for(const lang of ['ja','en']) {
     const html=renderToStaticMarkup(React.createElement(ResearchPulse,{lang}));
-    assert.equal((html.match(/<button/g)??[]).length,0,'no pause button');
-    assert.match(html,/class="live">LIVE</);
-    assert.match(html,/class="hd"/);
-    assert.match(html,/class="wave"/);
-    assert.doesNotMatch(html,/class="marquee|class="scroll|aria-expanded|<details|長い記事本文|Long article body|NEW/);
-    if(lang==='ja') { assert.match(html,/<b class="sym">MU<\/b>、HBM需要で見通しを引き上げ/); assert.match(html,/>10\/3 22:34</); }
-    else assert.match(html,/>10\/3 09:34</);
-    assert.match(html,/dateTime="2026-10-03T13:34:30.000Z"|datetime="2026-10-03T13:34:30.000Z"/);
+    assert.doesNotMatch(html,/HBM需要で見通しを引き上げ|MU raises HBM outlook/);
   }
 });
 

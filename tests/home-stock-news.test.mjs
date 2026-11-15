@@ -47,19 +47,17 @@ test("the top band shows the Stock News API stories only, never a Tech Alerts it
   assert.deepEqual(homePulseItems(feed, "en", now, wire(), 5).map(item => item.id), ["wire-s2", "wire-s1", "wire-m1"]);
 });
 
-test("until a Stock News API story can be shown, the band keeps its previous items rather than going empty", () => {
+test("the band never shows Tech Alerts items, not even when no Stock News API story is available yet (owner, Nov 15)", () => {
   const older = parseCompanyWire({ ok: true, items: { NVDA: [row("y1", "Nvidia ships a new rack system", "エヌビディアが新ラックを出荷", "yahoo", 5)] } }).items;
-  assert.deepEqual(homePulseItems(feed, "ja", now, older, 5).map(item => item.id), ["official-o1", "wire-y1"], "no Stock News API rows yet");
-  assert.deepEqual(homePulseItems(feed, "ja", now, {}, 5).map(item => item.id), ["official-o1"], "an older monitor without the source field");
-  // Stock News API rows exist but none can go on the band (no Japanese headline yet, or none short enough).
-  assert.deepEqual(homePulseItems(feed, "ja", now, wire(), 5, () => false).map(item => item.id), ["official-o1", "wire-y1", "wire-s1", "wire-m1"]);
+  assert.deepEqual(homePulseItems(feed, "ja", now, older, 5).map(item => item.id), [], "no Stock News API rows yet: nothing, never the flash items");
+  assert.deepEqual(homePulseItems(feed, "ja", now, {}, 5).map(item => item.id), []);
 });
 
 test("the home list asks for the Stock News API stories; the Top Topics page and the official tab keep their own lists", () => {
   const panel = read("../app/research/news/general-news-panel.tsx");
   assert.match(read("../app/research/news/news-feed.tsx"), /<GeneralNewsPanel [^>]*officialOnly=\{view === "official"\} stockNews \/>/);
-  assert.match(panel, /const stockStories = stockNews && !officialOnly && !generalOnly \? homeStockStories\(wire, lang\) : \[\];/);
-  assert.match(panel, /const stockOnly = stockStories\.length > 0;/);
+  assert.match(panel, /const stockOnly = stockNews && !officialOnly && !generalOnly;/);
+  assert.match(panel, /const stockStories = stockOnly \? homeStockStories\(wire, lang\) : \[\];/);
   assert.match(panel, /\.\.\.\(stockOnly \? \[\] : official\)\.map\(/);
   assert.match(panel, /const news = officialOnly \|\| stockOnly \? \[\] :/);
   assert.match(panel, /const market = officialOnly \|\| generalOnly \|\| stockOnly \? \[\] :/);

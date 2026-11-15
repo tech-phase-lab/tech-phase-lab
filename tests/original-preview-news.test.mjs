@@ -232,13 +232,14 @@ test('optional original bytes give way before unchanged verified history and pre
 });
 
 
-test('ordinary default home and dedicated news flow show summarized test cards and hide untranslated ones', () => {
+test('the home news list shows Stock News API stories only, so test cards never reach it; untranslated ones never show anywhere', () => {
   const pending = { ...original, id: 'original-preview-' + 'b'.repeat(24), sourceUrl: 'https://nebius.com/newsroom/pending-test',
     excerptOriginal: 'An untranslated pending excerpt.' };
   const feed = availableNewsPayload(wire([summarized, pending]));
   const NewsFeed = loadComponent('news-feed');
   const html = renderToStaticMarkup(React.createElement(NewsFeed, { lang: 'ja', initialNews: { data: feed, checkedAt: Date.now() } }));
-  assert.ok(html.includes(summaryFields.titleJa));
+  // Owner, Nov 15: the home list carries the Stock News API stories only; test publications stay on the news page (FlashPage).
+  assert.ok(!html.includes(summaryFields.titleJa));
   assert.ok(!html.includes(pending.excerptOriginal));
   assert.doesNotMatch(html, /hidden=""/);
   const page = readFileSync(new URL('../app/research/news/page.tsx', import.meta.url), 'utf8');
