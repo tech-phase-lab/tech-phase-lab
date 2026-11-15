@@ -70,6 +70,15 @@ export async function prepareDailyReview({enabled=false,readFeed,selectionPool,b
  }
 }
 
+/** The worker's log line and exit code for a failed run. When the source read failed only after every retry ran out (the
+ * research monitor restarting or deploying at 07:01 JST), the day is already recorded as failed ("couldn't update", never a quiet
+ * day) and the job exits 0 instead of crashing; any other failure still exits 1. ``stats`` comes from withSourceRetry. */
+export function dailyReviewFailure(error,stats){
+ const attempts=stats?.attempts?{sourceAttempts:stats.attempts}:{};
+ if(error?.stage==='source'&&stats?.exhausted===true)return {exitCode:0,line:{event:'RIZEL_DAILY_REVIEW',state:'source-unavailable-after-retries',...attempts}};
+ return {exitCode:1,line:{event:'RIZEL_DAILY_REVIEW_FAILED',stage:['source','storage','generation','readback'].includes(error?.stage)?error.stage:'configuration',diagnostics:error?.diagnostics,...attempts}};
+}
+
 /** articles=null records a failed day; an empty array is a verified quiet day. Never overwrites a ready day. */
 export async function saveRiskDay(pool,day,articles,now=new Date()){
  if(!pool)return;

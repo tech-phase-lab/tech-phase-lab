@@ -927,10 +927,18 @@ def sentiment_field(row):
 # With a token the call is made at once (real time); without one the headlines stay queued and the service wakes when the next
 # token arrives (next_wake), with or without a new intake. The bucket is replayed from the call times stored in company_wire_calls,
 # so a restart does not grant a fresh burst. The per-day counts on /health (companyWireTranslation.daily) show how calls were spent
-# and how long headlines waited; the budget alert fires only when headlines wait longer than BUDGET_WAIT_SECONDS.
+# and how long headlines waited; the budget alert fires only on a long, sustained wait (BUDGET_ALERT_WAIT_SECONDS below).
 DEFAULT_DAILY_LIMIT = 400
 BUCKET_CAPACITY = 12          # calls that can be made back to back after a quiet spell
-BUDGET_WAIT_SECONDS = 30 * 60  # the budget alert: headlines held back by the pacing for longer than this
+BUDGET_WAIT_SECONDS = 30 * 60  # headlines held back by the pacing this long: the stall alert (b) is not raised (pacing is the cause)
+# The budget alert itself is quiet (owner, Nov 16 night: the 30-minute version flapped opened/復旧 several times while the average
+# wait was about 20 minutes and translation never stopped). It opens only when the oldest unsent headline has waited
+# BUDGET_ALERT_WAIT_SECONDS, continuously for BUDGET_SUSTAIN_SECONDS, while no call may be made; at most once per
+# BUDGET_REPEAT_SECONDS; and its 復旧 notice is sent only for an alert that was opened, after BUDGET_CLEAR_SECONDS without a long wait.
+BUDGET_ALERT_WAIT_SECONDS = 90 * 60
+BUDGET_SUSTAIN_SECONDS = 60 * 60
+BUDGET_REPEAT_SECONDS = 6 * 3600
+BUDGET_CLEAR_SECONDS = 30 * 60
 ROUND_MAX_CALLS = 20          # consecutive calls in one round at most (600 articles); the rest wait for the next round
 RETRY_WAKE_SECONDS = 600      # with no intake round, the translator still looks for due retries every ten minutes
 QUIET_RESULTS = ('done', 'idle', 'budget', 'paced', 'disabled')
@@ -1219,14 +1227,47 @@ def sync_incident(db, now_ts=None, env=None, started_ts=None):
     at = iso(now_ts)
     active = {}
 
-    # (a) The call pacing holds headlines back too long (owner, Nov 16): headlines have waited more than 30 minutes while no call
-    # may be made (no token, or the 24-hour ceiling). An empty bucket alone is the normal pacing and is no alert.
-    # Once open it stays open while they still wait, even at a moment a token is free (no repeated phone alert).
+    # (a) The call pacing holds headlines back too long (owner, Nov 16; quiet version, see BUDGET_ALERT_WAIT_SECONDS): the oldest
+    # unsent headline has waited 90 minutes, continuously for an hour, and no call may be made now (no token, or the 24-hour
+    # ceiling). An empty bucket alone is the normal pacing and is no alert. Once open it stays open until the long wait has been
+    # gone for 30 minutes, and it is not opened again within 6 hours of the last alert (no repeated phone alert).
+    budget_key = WATCH_PREFIX + 'translation-budget'
+    budget_open = open_incident(db, budget_key)
     held = health['pacing']['nextTokenAt']
-    held_back = (held is None or datetime.fromisoformat(held).timestamp() > now_ts or health['budgetReached']
-                 or open_incident(db, WATCH_PREFIX + 'translation-budget'))
-    if health['enabled'] and held_back and (health['queue']['oldestWaitMinutes'] or 0) * 60 >= BUDGET_WAIT_SECONDS:
-        active['translation-budget'] = 'company-wire-translation-budget:%d' % health['dailyLimit']
+    held_back = (held is None or datetime.fromisoformat(held).timestamp() > now_ts or health['budgetReached'] or budget_open)
+    waited = (health['queue']['oldestWaitMinutes'] or 0) * 60
+    paced = health['enabled'] and held_back and waited >= BUDGET_WAIT_SECONDS  # the pacing explains a wait: no stall alert
+    long_wait = health['enabled'] and waited >= BUDGET_ALERT_WAIT_SECONDS
+    budget_code = 'company-wire-translation-budget:%d' % health['dailyLimit']
+    budget_state, budget_drop = {}, []
+    if long_wait:
+        since = float(state.get('budget_since') or now_ts)
+        budget_state['budget_since'] = since if since >= floor else now_ts
+        budget_drop.append('budget_clear_since')
+    else:
+        budget_drop.append('budget_since')
+    if not budget_open:
+        budget_drop.append('budget_clear_since')
+    if budget_open:
+        if long_wait:
+            active['translation-budget'] = budget_code
+        else:
+            clear_since = float(state.get('budget_clear_since') or now_ts)
+            if now_ts - clear_since >= BUDGET_CLEAR_SECONDS:
+                monitor.resolve_operational_incident(db, budget_key, resolved_at=at)
+                budget_drop.append('budget_clear_since')
+            else:
+                budget_state['budget_clear_since'] = clear_since
+                active['translation-budget'] = budget_code
+    elif long_wait and held_back and now_ts - budget_state['budget_since'] >= BUDGET_SUSTAIN_SECONDS:
+        last_alert = float(state.get('budget_alerted_at') or float('-inf'))
+        if now_ts - last_alert >= BUDGET_REPEAT_SECONDS:
+            if monitor.record_operational_incident(db, budget_key, 'company-wire', 'translation-budget', 'critical', budget_code,
+                                                   seen_at=at) == 'opened':
+                budget_state['budget_alerted_at'] = now_ts
+            active['translation-budget'] = budget_code
+    with db:
+        put_watch(db, budget_state, drop=[key for key in budget_drop if key not in budget_state])
 
     # (c) Every call failed (model error, worker error or every headline rejected) for 15 minutes.
     if state.get('failing_since'):
@@ -1237,7 +1278,8 @@ def sync_incident(db, now_ts=None, env=None, started_ts=None):
             active['translation-failing'] = 'company-wire-translation-failing:' + (state.get('last_failure') or 'unknown')
 
     # (b) A Stock News story waits more than 20 minutes for its Japanese headline, for 30 minutes, while new ones keep arriving.
-    # Not raised on top of (a) or (c), which already name the cause.
+    # Not raised on top of (a) or (c), which already name the cause, nor while the pacing holds headlines back 30 minutes (the
+    # condition that raised (a) before it was made quiet), so the quieter budget alert never turns into a stall alert instead.
     stalled = (health['pending']['oldestMinutes'] or 0) * 60 >= STALL_ROW_SECONDS and health['newStockNews30m'] > 0
     if stalled:
         since = float(state.get('stalled_since') or now_ts)
@@ -1245,14 +1287,14 @@ def sync_incident(db, now_ts=None, env=None, started_ts=None):
             since = now_ts
         with db:
             put_watch(db, {'stalled_since': since})
-        if now_ts - since >= STALL_SECONDS and not active:
+        if now_ts - since >= STALL_SECONDS and not active and not paced:
             active['translation-stalled'] = 'company-wire-translation-stalled:' + (
                 'disabled' if not health['enabled'] else state.get('last_result') or 'no-worker')
     elif state.get('stalled_since'):
         with db:
             put_watch(db, {}, drop=('stalled_since',))
 
-    for subject in ('translation-budget', 'translation-failing', 'translation-stalled'):
+    for subject in ('translation-failing', 'translation-stalled'):
         if subject in active:
             monitor.record_operational_incident(db, WATCH_PREFIX + subject, 'company-wire', subject, 'critical', active[subject], seen_at=at)
         else:
