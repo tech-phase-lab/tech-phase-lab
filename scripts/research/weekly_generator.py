@@ -30,6 +30,7 @@ from pathlib import Path
 from zoneinfo import ZoneInfo
 
 import brief_generator
+import llm_cost
 import factual_validation
 import weekly_issues
 
@@ -733,6 +734,7 @@ def generate(db, now, news=(), transport=None, env=None):
                "input": json.dumps({"weekEnding": datetime.fromtimestamp(now, JST).date().isoformat(), "schedule": [{"id": e["id"], "date": e["date"], "name": e["name"]} for e in schedule],
                                     "recentIssues": recent, "evidence": material}, ensure_ascii=False)}
     response = transport(payload, key)
+    llm_cost.record(db, "weekly", "weekly:%s" % datetime.fromtimestamp(now, JST).date().isoformat(), model, response, now=now)
     if response.get("status") != "completed":
         raise RuntimeError("weekly-incomplete")
     output = json.loads(brief_generator.output_text(response))
