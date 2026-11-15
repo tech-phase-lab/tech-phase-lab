@@ -27,18 +27,21 @@ source=source.replace('import { newsSnapshot, serverNewsSnapshot, subscribeNews 
 source=source.replace('import { WATCH_TICKERS } from "@/lib/research/flash-rows";','const WATCH_TICKERS = new Set(["NVDA"]);');
 for(const name of ['news-pulse-items','news-time','news-band','company-wire','wire-store','news-startup'])source=source.replace(`"@/lib/research/${name}"`,JSON.stringify(new URL(`../lib/research/${name}.ts`,import.meta.url).href));
 source=source.replace('const [wireSettled, setWireSettled] = useState(false);','const [wireSettled, setWireSettled] = useState(true);').replace('const [gaveUp, setGaveUp] = useState(false);','const [gaveUp, setGaveUp] = useState(true);');
+// The band carries the Stock News API stories only (owner, Nov 15): the harness hands the component its company-wire rows directly.
+source=source.replace('const [wire, setWire] = useState<Record<string, CompanyWireItem[]>>({});','const [wire, setWire] = useState<Record<string, CompanyWireItem[]>>(runtime.wire ?? {});');
 source=source.replace('import styles from "./research-pulse.module.css";','const styles={pulse:"pulse",strip:"strip",item:"item",in:"in",out:"out",live:"live",hd:"hd",sym:"sym",tm:"tm",wave:"wave",flash:"flash",slot:"slot"};');
 const compiled=ts.transpileModule(source,{compilerOptions:{jsx:ts.JsxEmit.ReactJSX,module:ts.ModuleKind.ESNext}}).outputText.replace('"react/jsx-runtime"',JSON.stringify(pathToFileURL(require.resolve('react/jsx-runtime')).href));
 const {default:ResearchPulse}=await import('data:text/javascript;base64,'+Buffer.from(compiled).toString('base64'));
 function context(){return {cursor:0,slots:[],effects:[]};}
 function render(owner,props){active=owner;owner.cursor=0;owner.effects=[];const tree=ResearchPulse(props);owner.effects.forEach(run=>run());return tree;}
-const news=(id,at,ja)=>({id,publisher:'Issuer',tickers:['NVDA'],url:`https://developer.nvidia.com/blog/test-${id}`,title:`NVDA headline ${id}`,translationJa:ja,pulseTitleJa:ja,publishedAt:at,observedAt:at});
+const story=(id,at,ja,short=ja)=>({id,titleEn:`NVDA headline ${id}`,titleJa:ja,shortJa:short,publisher:'Reuters',origin:'third-party',url:`https://example.com/news/${id}`,publishedAt:at,source:'stocknews'});
+const feedAt={checkedAt:Date.parse('2026-10-04T10:00:00Z'),data:{ok:true,enabled:false,items:[]}};
 const shown=tree=>tree.props.children[0].props.children.find(child=>child&&child.props?.line&&!child.props.leaving).props.line;
 function reset(){runtime.timers.clear();runtime.delays=[];runtime.reduced=false;}
 
 test('the band changes every five seconds, holds while pressed, resumes on release, and stops entirely with reduced motion',()=>{
   reset();const owner=context();
-  runtime.feed={checkedAt:Date.parse('2026-10-04T10:00:00Z'),data:{ok:true,enabled:false,items:[],officialUpdates:[news('a','2026-10-03T23:15:00Z','NVDA、新製品を発表'),news('b','2026-10-03T22:15:00Z','NVDA、増配を発表')]}};
+  runtime.feed=feedAt;runtime.wire={NVDA:[story('a','2026-10-03T23:15:00Z','NVDA、新製品を発表'),story('b','2026-10-03T22:15:00Z','NVDA、増配を発表')]};
   let tree=render(owner,{lang:'ja'});
   assert.deepEqual(runtime.delays,[5000]);assert.equal(runtime.timers.size,1);
   const first=shown(tree).id;
@@ -69,7 +72,7 @@ test('the band changes every five seconds, holds while pressed, resumes on relea
 
 test('a story with no short headline is skipped without stopping the band',()=>{
   reset();const owner=context();
-  runtime.feed={checkedAt:Date.parse('2026-10-04T10:00:00Z'),data:{ok:true,enabled:false,items:[],officialUpdates:[news('a','2026-10-03T23:15:00Z','アメリカの大手半導体メーカーが過去最高の売上高を発表しました本日'),news('b','2026-10-03T22:15:00Z','NVDA、増配を発表')]}};
+  runtime.feed=feedAt;runtime.wire={NVDA:[story('a','2026-10-03T23:15:00Z','アメリカの大手半導体メーカーが過去最高の売上高を発表しました本日',null),story('b','2026-10-03T22:15:00Z','NVDA、増配を発表')]};
   const tree=render(owner,{lang:'ja'});
   assert.equal(shown(tree).band,'NVDA、増配を発表');
   assert.equal(runtime.timers.size,0,'one story: nothing to rotate to');
