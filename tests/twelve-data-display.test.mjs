@@ -117,7 +117,12 @@ test("sample and production summaries use complete seven-factor scores and groun
   const later=currentComparisonAnalysis(companies[1],now+48*3600000);
   assert.ok(!later.items.some(i=>i.id==="debt-cash"));
   const missing=structuredClone(companies);missing[1].twelveData.statistics=null;
-  assert.match(overallComparison(missing,"ja",now).title,/揃っていません/);
+  // Owner, Nov 15: a missing factor no longer blocks the overall view; the factors every company has are averaged and the count is said.
+  const partial=overallComparison(missing,"ja",now);
+  assert.doesNotMatch(partial.title,/揃っていません/);
+  assert.match(partial.description,/全社にそろう\d項目で比較/);
+  const bare=structuredClone(companies);for(const c of bare){c.twelveData=undefined;c.quarterFcfMargin=null;c.balance=undefined;}
+  assert.match(overallComparison(bare,"ja",now).title,/揃っていません/, "fewer than three common factors: still no ranking");
   const tied=[companies[0],{...companies[0],ticker:"TIE"}];
   assert.match(overallComparison(tied,"ja",now).title,/拮抗/);
 });

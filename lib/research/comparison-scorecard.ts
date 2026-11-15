@@ -139,6 +139,15 @@ export function compositeScore(scores: ComparisonScore[]): number | null {
   if (!scores.length || scores.some(s => s.value === null)) return null;
   return Math.round(scores.reduce((sum,s) => sum + s.value!,0)/scores.length*10)/10;
 }
+/** The overall score on the factors every company in the comparison has (owner, Nov 15: "総合評価に必要なデータが揃っていません" made the
+ *  comparison useless). A factor one company lacks is left out for all of them, so the totals stay on one yardstick; at least three factors
+ *  are needed. `ids` says which factors were used. */
+export function commonTotals(companies: Financials[], now=Date.now()): { ids: ScoreId[]; totals: (number|null)[] } {
+  const sets=companies.map(c=>comparisonScores(c,now));
+  const ids=(sets[0] ?? []).map(s=>s.id).filter(id=>sets.every(scores=>scores.find(s=>s.id===id)?.value!=null));
+  if(ids.length<3) return { ids, totals: companies.map(()=>null) };
+  return { ids, totals: sets.map(scores=>compositeScore(scores.filter(s=>ids.includes(s.id)))) };
+}
 /** Null factors have no point, rather than a misleading zero at the center. */
 export function radarPoint(value: number | null, index: number, count: number): string | null {
   if (value === null || !finite(value) || value < 0 || value > 10 || count < 3) return null;
@@ -177,15 +186,19 @@ export function quarterlyTakeaway(companies: (Financials & {ticker:string})[], l
 
 /** Equal-weight seven-factor summary; incomplete or incompatible evidence cannot produce a winner. */
 export function overallComparison(companies: (Financials & {ticker:string})[],lang:"ja"|"en",now=Date.now()) {
-  const ja=lang==="ja",ranked=companies.map(c=>({c,scores:comparisonScores(c,now),total:compositeScore(comparisonScores(c,now))}));
-  if(!comparableQuarters(companies,now) || new Set(companies.map(c=>!!c.referenceEvaluation)).size>1 || ranked.some(r=>r.total===null))
-    return {title:ja?"総合評価に必要なデータが揃っていません":"There isn't enough data for an overall score",description:ja?"取得できた項目は下のスナップショットで比較できます。欠損を0点に置き換えず、総合順位は保留します。":"You can still compare the available factors below. Missing values don't mean zero, so we haven't assigned an overall ranking."};
+  const ja=lang==="ja",common=commonTotals(companies,now);
+  const ranked=companies.map((c,i)=>({c,scores:comparisonScores(c,now).filter(s=>common.ids.includes(s.id)),total:common.totals[i]}));
+  if(new Set(companies.map(c=>!!c.referenceEvaluation)).size>1 || ranked.some(r=>r.total===null))
+    return {title:ja?"総合評価に必要なデータが揃っていません":"There isn't enough data for an overall score",description:ja?"3社に共通する項目が3つ未満のため、総合順位は出していません。":"Fewer than three factors are available for every company, so no overall ranking is given."};
+  const count=common.ids.length, partial=count<7;
+  const basis=partial ? (ja?`（全社にそろう${count}項目で比較）`:` (on the ${count} factors every company has)`) : "";
+  const periods=comparableQuarters(companies,now) ? "" : (ja?"決算期間が異なる会社を含みます。":"Reporting periods differ. ");
   ranked.sort((a,b)=>b.total!-a.total!);
   const best=ranked[0],next=ranked[1],gap=best.total!-next.total!;
   const totals=ranked.map(r=>`${r.c.ticker} ${r.total!.toFixed(1)}/10`).join(" · ");
-  if(gap<0.3)return {title:ja?"総合評価は拮抗":"Overall assessment is close",description:ja?`${totals}。7項目平均の差は0.3点未満で、明確な優位はありません。`:`${totals}. The seven-factor averages differ by less than 0.3 points, with no clear leader.`};
+  if(gap<0.3)return {title:ja?"総合評価は拮抗":"Overall assessment is close",description:ja?`${totals}${basis}。${periods}平均の差は0.3点未満で、明確な優位はありません。`:`${totals}${basis}. ${periods}The averages differ by less than 0.3 points, with no clear leader.`};
   const advantages=best.scores.map(s=>({...s,gap:s.value!-Math.max(...ranked.slice(1).map(r=>r.scores.find(f=>f.id===s.id)!.value!))})).filter(s=>s.gap>0).sort((a,b)=>b.gap-a.gap).slice(0,2).map(s=>s.label[lang]);
   const weak=best.c.preparedAnalysis?.items.find(i=>i.kind==="weakness")?.short[lang];
-  const reason=advantages.length ? (ja?`${advantages.join("・")}の強さが総合点を押し上げています。`:`Strength in ${advantages.join(" and ")} supports the overall lead.`) : (ja?"7項目全体のバランスで上回ります。":"It leads on the balance of all seven factors.");
-  return {title:ja?`総合評価は${best.c.ticker}が優位`:`${best.c.ticker} leads overall`,description:ja?`${totals}。${reason}${weak?`ただし、${weak}には注意が必要です。`:""}`:`${totals}. ${reason}${weak?` Key caution: ${weak}.`:""}`};
+  const reason=advantages.length ? (ja?`${advantages.join("・")}の強さが総合点を押し上げています。`:`Strength in ${advantages.join(" and ")} supports the overall lead.`) : (ja?"全体のバランスで上回ります。":"It leads on the balance of the factors.");
+  return {title:ja?`総合評価は${best.c.ticker}が優位`:`${best.c.ticker} leads overall`,description:ja?`${totals}${basis}。${periods}${reason}${weak?`ただし、${weak}には注意が必要です。`:""}`:`${totals}${basis}. ${periods}${reason}${weak?` Key caution: ${weak}.`:""}`};
 }
