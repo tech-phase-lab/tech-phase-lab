@@ -453,6 +453,21 @@ def used_today(db, now):
     return db.execute('SELECT count(*) FROM deep_analysis_calls WHERE at>=?', (now - 86400,)).fetchone()[0]
 
 
+def same_release_done(db, row, reference):
+    """An earnings release is analysed once, however many pages carry it (newsroom, IR page, SEC 8-K) and however often its pages are revised:
+    the same page, or any analysis of the company finished within two days of this release, already covers it."""
+    if db.execute("SELECT 1 FROM deep_analyses WHERE kind='earnings' AND subject=? AND source_url=? AND state='done'", (row['subject'], row['url'])).fetchone():
+        return True
+    try:
+        seen = datetime.fromisoformat(str(row.get('observedAt')).replace('Z', '+00:00'))
+        if seen.tzinfo is None:
+            seen = seen.replace(tzinfo=timezone.utc)
+    except ValueError:
+        seen = reference
+    return bool(db.execute("SELECT 1 FROM deep_analyses WHERE kind='earnings' AND subject=? AND state='done' AND created_at>=? AND created_at<=?",
+                           (row['subject'], (seen - timedelta(days=2)).isoformat(), (seen + timedelta(days=2)).isoformat())).fetchone())
+
+
 def run_once(path, transport=None, env=None, now=None, reference=None, only_ref=None, fresh=False):
     """Analyse at most one due source. Returns 'idle', 'done' or 'retry'. `only_ref` is the one-off retry of an old hold: that source only,
     one attempt (a failure goes straight back to held, now with its recorded reasons), and a result is dated to the release, not to today."""
@@ -491,10 +506,8 @@ def run_once(path, transport=None, env=None, now=None, reference=None, only_ref=
                 saved = None  # held under older logic: a fresh set of attempts
             if saved and (saved['state'] in ('done', 'held') or saved['next_at'] > now):
                 continue
-            if saved is None and row['kind'] == 'earnings' and db.execute(
-                    "SELECT 1 FROM deep_analyses WHERE kind='earnings' AND subject=? AND source_url=? AND state='done'",
-                    (row['subject'], row['url'])).fetchone():
-                continue  # the same page was already analysed under another event/revision: one analysis per release, never a repeat
+            if saved is None and row['kind'] == 'earnings' and same_release_done(db, row, reference):
+                continue  # the same release was already analysed (another event, revision or page of it): one analysis per release, never a repeat
             source = row
             break
         if source is None:
@@ -550,14 +563,18 @@ def member_view(db, reference=None, limit=30):
     reference = reference or datetime.now(timezone.utc)
     cutoff = (reference - timedelta(days=45)).isoformat()
     items = []
-    seen = set()
+    shown = []
     for row in db.execute('''SELECT * FROM deep_analyses WHERE state='done' AND published_at>=?
       ORDER BY published_at DESC''', (cutoff,)):
         if len(items) >= limit:
             break
-        if row['kind'] == 'earnings' and (row['subject'], row['source_url']) in seen:
-            continue  # the same release analysed under another event or revision shows once (newest)
-        seen.add((row['subject'], row['source_url']))
+        if row['kind'] == 'earnings':
+            published = row['published_at'] or ''
+            if any(subject == row['subject'] and abs((datetime.fromisoformat(published) - at).total_seconds()) < 2 * 86400
+                   for subject, at in shown if published):
+                continue  # one release analysed under several events, pages or revisions shows once (the newest)
+            if published:
+                shown.append((row['subject'], datetime.fromisoformat(published)))
         try:
             note = json.loads(row['payload'])
         except (TypeError, ValueError):
