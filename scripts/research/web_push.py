@@ -96,6 +96,7 @@ ECON_KINDS = ('jobs', 'cpi', 'ppi', 'pce', 'fomc', 'adp', 'ism', 'gdp', 'retail'
 ECON_DEFAULT_BEFORE_PPI = ['jobs', 'cpi', 'pce', 'fomc', 'adp', 'ism']
 ECON_DEFAULT_ON = ['jobs', 'cpi', 'ppi', 'pce', 'fomc', 'adp', 'ism']
 QUESTION_OWNER = re.compile(r'[a-f0-9]{64}')
+QUESTION_ID = re.compile(r'q-[a-f0-9]{32}')
 
 
 def connect(path):
@@ -799,9 +800,10 @@ def deliver(db, items, transport=send, now=None, monotonic_now=time.monotonic,
                 payload = {'title': f"{' · '.join(item['tickers'][:3])} · " + ('ニュース' if ja else 'News'),
                            'body': item['texts']['ja' if ja else 'en'], 'tag': key, 'url': '/research/news'}
             else:
+                # Nov 15: a price-target notice opens the price-target page (it opened the dashboard's #what-changed view).
                 payload = {'title': f"{item['ticker']} · " + ('目標株価の変更' if ja else 'Price target update'),
                            'body': f"{item['firm']}: ${item['previous']:g} → ${item['latest']:g}",
-                           'tag': key, 'url': '/research#what-changed'}
+                           'tag': key, 'url': '/research/price-targets'}
             provider_started = monotonic_now()
             try:
                 code = transport(json.loads(device['subscription']), payload)
@@ -1116,10 +1118,12 @@ def deliver_answers(db, answers, **options):
         owner = answer.get('ownerKey') if isinstance(answer, dict) else None
         if made is None or not isinstance(answer.get('id'), str) or not isinstance(owner, str) or not QUESTION_OWNER.fullmatch(owner) or not 0 <= now - made < ANSWER_WINDOW_SECONDS:
             continue
+        # Nov 15: the asker's page is リゼルに聞く (/research/qa), scrolled to the question; /research/questions is the owner's inbox.
+        url = '/research/qa#' + answer['id'] if QUESTION_ID.fullmatch(answer['id']) else '/research/qa'
         result = announce(db, f"answer-{answer['id']}", MEMBERS + ' AND answer_posts=1 AND question_owner=?', (owner,),
-                          lambda ja: {'title': 'リゼルに聞く' if ja else 'Ask Rizel',
-                                      'body': 'あなたの質問に回答がつきました' if ja else 'Your question has an answer',
-                                      'url': '/research/questions'}, (made,), **options)
+                          lambda ja, url=url: {'title': 'リゼルに聞く' if ja else 'Ask Rizel',
+                                               'body': 'あなたの質問に回答がつきました' if ja else 'Your question has an answer',
+                                               'url': url}, (made,), **options)
         total = {k: total[k] + result.get(k, 0) for k in total}
     return {'status': 'ready', **total}
 
