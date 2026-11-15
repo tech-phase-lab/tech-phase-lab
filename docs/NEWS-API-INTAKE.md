@@ -118,8 +118,72 @@ The review page has buttons to test each feed once ("ハイテク全銘柄の取
 Old rows age out of the home within 24 hours. The intake result (`stockNewsIntake` in the monitor state) carries `delay` per stream:
 how long after publication newly found articles reached the monitor (count, min, median, max, in seconds). That is the intake delay;
 the translation and display delay are separate. One request cannot measure the provider's delay, so run it for a day.
-Translation volume is bounded by `COMPANY_WIRE_TRANSLATION_DAILY_LIMIT` (model calls in any 24 hours, default 6000; see the
+Translation volume is bounded by `COMPANY_WIRE_TRANSLATION_DAILY_LIMIT` (model calls in any 24 hours, default 400; see the
 calculation in `scripts/research/company_wire.py`). `/health` shows `companyWireTranslation` (waiting stories, call count against the
-limit, last result, last translation, last Stock News success per stream), and the incident watch sends a critical phone alert when the
-budget is reached, every call fails for 15 minutes, Stock News stories wait more than 20 minutes for 30 minutes while new ones arrive,
+limit, last result, last translation, last Stock News success per stream), and the incident watch sends a critical phone alert when
+headlines wait 30 minutes on the budget (pacing below), every call fails for 15 minutes, Stock News stories wait more than 20 minutes for 30 minutes while new ones arrive,
 or the 'tech' stream has had no successful poll for 30 minutes.
+
+## Translating each article once (owner, 2026-11-15)
+
+- **One article, one translation.** Each headline row now carries `article`, a ticker-independent identity (sha256 of the
+  normalized headline: case and punctuation ignored). The Japanese headline, the one-line headline and the attempt record are stored
+  per article (`company_wire_article_ja`, `company_wire_article_attempts`) and shared by every row of it, so a Stock News article
+  filed under three tickers, or the same headline from Yahoo / Google News, is sent to the model once. Rows and their public `id`
+  (the per-ticker key) are unchanged, so `/company-wire` keeps its per-ticker shape. On the first start the earlier per-ticker
+  translations and attempts (`company_wire_ja`, `company_wire_attempts`, now no longer written but kept for a rollback) are
+  carried over to their articles, so nothing already translated, judged not news or given up on is sent again.
+- **Translate right after each intake round, without waiting.** A Stock News poll round that wrote new rows, or one full pass over
+  the roster's Yahoo / Google News feeds that stored something, wakes the translator, which sends everything then waiting in calls of
+  at most 30 (back to back while a call is full; at most 20 calls a round). The 20-second wait from #578 is gone. No call is made
+  when nothing is waiting. With no intake round for ten minutes the translator still looks for retries that came due.
+- **Retries unchanged.** A rejected headline is retried at most three attempts, ten minutes apart; due retries ride along in the
+  next call.
+- **Daily counts.** `companyWireTranslation.daily` on `/health` shows today and yesterday (Japan time, `Asia/Tokyo`; stored in the
+  `company_wire_daily` table so a restart does not reset them, kept 30 days): `articlesArrived` (new articles, each once whatever
+  tickers or feeds it came under; `articlesBySource` by the feed that brought it first), `translated` (articles whose Japanese was
+  accepted), `calls` (model calls), `retries` (headlines sent again after a rejected or failed attempt), `headlinesSent`,
+  `judgedNotNews` and `notAccepted`, and `stockNewsPublishers` (new Stock News API articles per publisher, `kept` / `dropped`).
+- The daily limit stays 400 (owner). Calls are about one per intake round that brought at least one new article (the 'tech' stream
+  is read every 75 s, the 'market' stream every 300 s, the roster feeds about every 2 to 3 minutes per pass), plus one per 30 articles
+  of backlog, paced by the token bucket below (Nov 16); the daily counts show how the calls were spent.
+
+## Filtering before translating and pacing calls (owner, 2026-11-16)
+
+- **Filter before translating.** About half of the headlines sent to the model came back not news, off topic or rejected (Sunday
+  Nov 15: 402 of about 740). Before a headline is queued, every cheap local check the site applies anyway is run on it:
+  `truncated()`, the monitor's `NOISE` regex, the Stock News publisher filter, and `NOT_NEWS_EN`, a Python port of the patterns of
+  `NOT_NEWS` in `lib/research/wire-stories.ts` that read English titles (questions, "Why ..." and "here's why" teasers, "stocks to
+  buy" lists, earnings previews and call transcripts, law-firm solicitations, bare SEC form notices, movers round-ups, weekly
+  digests and the like). Only the conservative ones are ported: the "Wall Street rallies / following earnings", exchange-code, PC
+  how-to, data-calendar and company-video patterns stay with the model, because a real news headline can match them. An article whose
+  every copy fails these checks is marked in `company_wire_article_attempts` with the reason `prefilter` and is never sent; it is
+  counted in the day's `prefiltered`. `/company-wire` hides these titles by the same checks, which the site's `wireStories` already
+  hid, so nothing the site showed changes.
+- **Pacing (token bucket).** `COMPANY_WIRE_TRANSLATION_DAILY_LIMIT` (default 400) stays a hard ceiling on model calls in any 24
+  hours. Instead of calling until the ceiling and then stopping for hours, a call needs a token from a bucket of 12 (a burst after a
+  quiet spell) refilled at the limit less the burst per 24 hours (400: 388 a day, one token every 222.7 s, about 3.7 minutes), so a
+  burst plus a day of refills is never more than the limit and a busy day is paced evenly rather than pausing at the ceiling. With a
+  token, new headlines are sent at once (up to 30 per call, several calls while tokens last, Stock News first, newest first; due
+  retries ride along). Without one they stay queued, and the translator wakes when the next token arrives (`next_wake`), with or
+  without a new intake. The bucket is replayed from the call times in `company_wire_calls`, so a restart or deploy grants no fresh
+  burst, and the rolling 24-hour count is checked as well.
+- **Health.** `companyWireTranslation.pacing` shows `tokensAvailable`, `tokens`, `capacity`, `secondsPerToken` and `nextTokenAt`;
+  `queue` shows the articles waiting now (`count`, `new` never sent yet) and `oldestWaitMinutes` of the oldest never-sent one.
+  `daily.today` / `daily.yesterday` add `prefiltered`, `maxWaitMinutes` and `averageWaitMinutes` (arrival to first call).
+- **Alert.** The budget alert (`company-wire-translation-budget`) no longer fires because the bucket is empty or the ceiling is
+  reached; it fires when a never-sent headline has waited 30 minutes while no call may be made, and stays open until it is sent.
+  The failure, stall and intake alerts are unchanged.
+- **Estimate** (simulation with the intake paces above: 'tech' every 75 s, 'market' every 300 s, one roster pass about every 132 s,
+  70 % of articles in the US session). Quiet day (about 500 articles after the prefilter): about 320 calls, typical wait under half a
+  minute, at most about 3.7 minutes. Busy weekday (about 2,000 articles): 388 calls, typical wait about 1.8 minutes, at most about
+  3.7 minutes; even at 3,400 articles a day the wait stays under 4 minutes, since one call carries up to 30 articles.
+
+## Stock News API publishers (owner, 2026-11-15)
+
+Only news organisations' reporting, and the companies' own releases through the press-release wires, are taken from the Stock News
+API into the home table (`company_wire.KEEP_PUBLISHERS`); opinion, analysis, stock-picking and promotion outlets
+(`DROP_PUBLISHERS`: Seeking Alpha, The Motley Fool, Zacks, InvestorPlace, Benzinga and others) are not, so they are never translated or
+shown. A publisher in neither list is dropped, and appears under `stockNewsPublishers.dropped` on `/health`, so a news organisation
+that should be kept can be added. Rows already stored from a dropped publisher are neither translated nor shown. The intake queue
+(`news_articles`, `/admin/news`) still keeps every article. `STOCK_NEWS_PUBLISHER_FILTER=false` takes every publisher again.

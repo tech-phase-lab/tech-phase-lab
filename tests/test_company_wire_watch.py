@@ -74,7 +74,7 @@ class TranslationWatchTests(unittest.TestCase):
         state = self.health(self.start + 30 * MIN, INTAKE)
         self.assertEqual(state['pending'], {'count': 1, 'oldestMinutes': 3})
         self.assertEqual(state['waitingRetry'], 2)
-        self.assertEqual((state['calls24h'], state['dailyLimit'], state['budgetReached']), (1, 6000, False))
+        self.assertEqual((state['calls24h'], state['dailyLimit'], state['budgetReached']), (1, 400, False))
         self.assertEqual(state['lastResult'], 'model-TimeoutError')
         self.assertIsNone(state['lastSuccessAt'])
         self.assertEqual(state['stockNewsIntake'], {'enabled': True, 'streams': {'tech': {'lastSuccessAt': '2026-11-15T03:20:00.000+00:00'}}})
@@ -88,28 +88,44 @@ class TranslationWatchTests(unittest.TestCase):
         self.assertNotIn('k' * 30, text)
         self.assertNotIn('x' * 20, text)
 
-    def test_the_default_budget_is_6000_calls_and_a_typo_never_stops_translation(self):
-        self.assertEqual(company_wire.daily_limit({}), 6000)
-        self.assertEqual(company_wire.daily_limit({'COMPANY_WIRE_TRANSLATION_DAILY_LIMIT': 'abc'}), 6000)
+    def test_the_default_budget_is_400_calls_and_a_typo_never_stops_translation(self):
+        # Owner, Nov 15: 上限は1日400回のまま.
+        self.assertEqual(company_wire.daily_limit({}), 400)
+        self.assertEqual(company_wire.daily_limit({'COMPANY_WIRE_TRANSLATION_DAILY_LIMIT': 'abc'}), 400)
         self.assertEqual(company_wire.daily_limit({'COMPANY_WIRE_TRANSLATION_DAILY_LIMIT': ' 800 '}), 800)
 
-    def test_a_trickle_waits_20_seconds_and_only_a_full_batch_hurries_back(self):
+    def test_a_round_translates_everything_waiting_at_once_in_calls_of_30_and_calls_nothing_when_idle(self):
+        # Owner, Nov 15 (まとめて訳す・待たない): no waiting for headlines to pile up; one call per 30; no call when nothing waits.
+        calls = []
+        def counting(payload, key):
+            calls.append(len(json.loads(payload['input'])))
+            return answer(payload, key)
         self.arrive(self.start, 2)
-        self.assertEqual(company_wire.run_once(self.path, transport=answer, env=ENV, now_ts=self.start + 1), ('done', 20))
+        self.assertEqual(company_wire.run_round(self.path, transport=counting, env=ENV, now_ts=self.start + 1), ['done'])
+        self.assertEqual(calls, [2])
         self.arrive(self.start + 60, company_wire.TRANSLATION_BATCH + 5)
-        self.assertEqual(company_wire.run_once(self.path, transport=answer, env=ENV, now_ts=self.start + 61), ('done', 3))
-        self.assertEqual(company_wire.run_once(self.path, transport=answer, env=ENV, now_ts=self.start + 64), ('done', 20))
-        self.assertEqual(company_wire.run_once(self.path, transport=answer, env=ENV, now_ts=self.start + 84), ('idle', 20))
+        self.assertEqual(company_wire.run_round(self.path, transport=counting, env=ENV, now_ts=self.start + 61), ['done', 'done'])
+        self.assertEqual(calls, [2, 30, 5])
+        self.assertEqual(company_wire.run_round(self.path, transport=counting, env=ENV, now_ts=self.start + 62), ['idle'])
+        self.assertEqual(calls, [2, 30, 5])
+        self.assertEqual(company_wire.run_once(self.path, transport=counting, env=ENV, now_ts=self.start + 63), ('idle', 0))
 
-    def test_budget_reached_is_one_critical_alert_that_resolves_when_calls_leave_the_window(self):
+    def test_budget_reached_is_one_critical_alert_only_once_headlines_wait_30_minutes_and_resolves_when_calls_leave_the_window(self):
         env = {**ENV, 'COMPANY_WIRE_TRANSLATION_DAILY_LIMIT': '2'}
+        results = []
         for k in range(3):
             self.arrive(self.start + k * MIN)
-            company_wire.run_once(self.path, transport=answer, env=env, now_ts=self.start + k * MIN + 1)
-        self.assertEqual(self.sync(self.start + 3 * MIN, env), ['company-wire-translation-budget:2'])
-        self.sync(self.start + 4 * MIN, env)
+            results.append(company_wire.run_once(self.path, transport=answer, env=env, now_ts=self.start + k * MIN + 1)[0])
+        self.assertEqual(results, ['done', 'paced', 'paced'])  # a limit of 2: a burst of 1, one more call per day
+        # Owner, Nov 16: an empty bucket alone is no alert; the waiting headlines have waited only a few minutes.
+        self.assertEqual(self.sync(self.start + 3 * MIN, env), [])
+        self.assertEqual(self.sync(self.start + 32 * MIN, env), ['company-wire-translation-budget:2'])
+        self.sync(self.start + 34 * MIN, env)
         self.assertEqual(self.incident('company-wire:translation-budget'), (('open', 'company-wire-translation-budget:2'), 1))
-        self.assertEqual(self.sync(self.start + 86400 + 2 * MIN, env), [])
+        # Still open while the headline waits, even at a moment a token is free; it resolves once the waiting headline is sent.
+        self.assertEqual(self.sync(self.start + 86400 + 2 * MIN, env), ['company-wire-translation-budget:2'])
+        self.assertEqual(company_wire.run_once(self.path, transport=answer, env=env, now_ts=self.start + 86400 + 2 * MIN)[0], 'done')
+        self.assertEqual(self.sync(self.start + 86400 + 3 * MIN, env), [])
         self.assertEqual(self.incident('company-wire:translation-budget'), (('resolved', 'company-wire-translation-budget:2'), 2))
 
     def test_failures_for_15_minutes_alert_once_and_a_translated_batch_resolves(self):
@@ -187,7 +203,7 @@ class TranslationWatchTests(unittest.TestCase):
         def claim(key, category, code, transition='opened'):
             return {'key': key, 'category': category, 'errorCode': code, 'transition': transition}
         budget = incident_delivery.push_message(claim('company-wire:translation-budget', 'company-wire', 'company-wire-translation-budget:6000'))
-        self.assertEqual(budget['title'], '🚨 日本語ニュースの翻訳が1日の上限に達しました')
+        self.assertEqual(budget['title'], '🚨 日本語ニュースの翻訳が回数の上限で30分以上待っています')
         self.assertIn('6000回', budget['body'])
         failing = incident_delivery.push_message(claim('company-wire:translation-failing', 'company-wire', 'company-wire-translation-failing:model-TimeoutError'))
         self.assertEqual(failing['title'], '🚨 日本語ニュースの翻訳が15分失敗し続けています')

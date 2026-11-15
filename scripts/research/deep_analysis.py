@@ -229,9 +229,10 @@ def cited_quote(item, excerpts):
     return '\n'.join(found) if found else None
 
 
-def bind(value, excerpts, carried=None):
+def bind(value, excerpts, carried=None, diagnose=None):
     """Keep checked parts; at least two points and a headline must remain. `carried` is what an earlier attempt already got through the checks
-    ({'headline', 'points'}): it is kept, so a retry only has to replace what was rejected (the checks themselves are the same for every piece)."""
+    ({'headline', 'points'}): it is kept, so a retry only has to replace what was rejected (the checks themselves are the same for every piece).
+    `diagnose(kind, reason, item, quote)` is called for every rejected piece (the one-off old retry logs them; the checks are not touched)."""
     if not isinstance(value, dict):
         raise ValueError('invalid-note')
     carried = carried or {}
@@ -247,6 +248,8 @@ def bind(value, excerpts, carried=None):
         headline = {'ja': headline['ja'], 'en': headline['en']}
     except (ValueError, TypeError, KeyError) as exc:
         headline_error = exc
+        if diagnose:
+            diagnose('headline', why(exc, evidence), headline, cited_quote(headline, excerpts) if isinstance(headline, dict) else None)
         headline = None
     points = [dict(p) for p in carried.get('points') or []]
     carried_ja = {p['ja'] for p in points}
@@ -261,6 +264,8 @@ def bind(value, excerpts, carried=None):
         except (ValueError, TypeError, KeyError) as exc:
             reason = why(exc, evidence)
             rejected[reason] = rejected.get(reason, 0) + 1
+            if diagnose:
+                diagnose('point', reason, point, quote)
             continue
         if point['ja'] not in carried_ja and len(points) < 5:
             points.append({'ja': point['ja'], 'en': point['en']})
@@ -279,6 +284,14 @@ def bind(value, excerpts, carried=None):
     except (ValueError, TypeError, KeyError, AttributeError):
         watch = None
     return {'headline': headline, 'points': points, 'watch': watch}
+
+
+def log_rejected(source, kind, reason, item, quote):
+    """One log line (Railway only, never /health) per piece the checks rejected in the one-off old retry: the copy and the excerpt it cited,
+    both derived from a public release, so the owner can tell a mistaken check from a mistaken sentence."""
+    item = item if isinstance(item, dict) else {}
+    print(json.dumps({'event': 'deep-analysis-rejected-copy', 'ticker': source['subject'], 'ref': source['ref'], 'part': kind, 'reason': reason,
+                      'ja': str(item.get('ja'))[:600], 'en': str(item.get('en'))[:600], 'quote': (quote or '')[:2000]}, ensure_ascii=False), flush=True)
 
 
 def earnings_reserve(limit):
@@ -316,7 +329,7 @@ def run_once(path, transport=None, env=None, now=None, reference=None, only_ref=
         for row in sources:
             saved = db.execute('SELECT * FROM deep_analyses WHERE source_ref=?', (row['ref'],)).fetchone()
             if only_ref is not None:
-                if saved is None or saved['state'] != 'held':
+                if saved is None or saved['state'] not in ('held', 'retry'):
                     continue
                 db.execute("UPDATE deep_analyses SET attempts=?,state='retry' WHERE source_ref=?", (MAX_ATTEMPTS - 1, row['ref']))
                 saved = None  # the one attempt: a failure is the last one and holds again with its reasons
@@ -355,7 +368,8 @@ def run_once(path, transport=None, env=None, now=None, reference=None, only_ref=
         response = transport(payload, key)
         if response.get('status') != 'completed':
             raise ValueError('incomplete')
-        note = bind(json.loads(brief_generator.output_text(response)), source['excerpts'], carried)
+        note = bind(json.loads(brief_generator.output_text(response)), source['excerpts'], carried,
+                    diagnose=(lambda kind, reason, item, quote: log_rejected(source, kind, reason, item, quote)) if only_ref is not None else None)
     except Exception as exc:
         reason = str(exc) if isinstance(exc, ValueError) else type(exc).__name__
         detail = json.dumps(exc.detail, ensure_ascii=False, sort_keys=True) if isinstance(exc, Unchecked) else None
@@ -414,7 +428,7 @@ def diagnostics(db, now=None):
 
 
 OLD_RETRY_ENV = 'RESEARCH_DEEP_RETRY_OLD_HOLDS'
-OLD_RETRY_MARKER = 'old-holds-2026-11-14b'  # owner, Nov 14: the 14 held analyses are tried exactly once, with their reasons recorded
+OLD_RETRY_MARKER = 'old-holds-2026-11-14c'  # owner, Nov 15: every held analysis, and a retry row that left the 3-day window, gets one more attempt
 
 
 def retry_old_holds(path, transport=None, env=None, now=None):
@@ -430,9 +444,11 @@ def retry_old_holds(path, transport=None, env=None, now=None):
         limit = configuration(env)[2]
         if used_today(db, now) >= limit - earnings_reserve(limit):
             return 'idle'  # today's budget (less the part kept for earnings) is spent: wait, record nothing
-        row = db.execute("""SELECT source_ref,created_at FROM deep_analyses WHERE state='held'
+        # held rows, and rows still in 'retry' whose release has left the candidate window (nothing else will ever attempt them)
+        left_window = (datetime.fromtimestamp(now, timezone.utc) - WINDOW).isoformat()
+        row = db.execute("""SELECT source_ref,created_at FROM deep_analyses WHERE (state='held' OR (state='retry' AND created_at<?))
           AND source_ref NOT IN (SELECT source_ref FROM deep_old_retries WHERE marker=?) ORDER BY created_at DESC LIMIT 1""",
-                         (OLD_RETRY_MARKER,)).fetchone()
+                         (left_window, OLD_RETRY_MARKER)).fetchone()
     if row is None:
         return 'idle'
     try:

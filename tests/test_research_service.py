@@ -274,8 +274,8 @@ class ResearchServiceTests(unittest.TestCase):
                 app.start()
             # 21 single workers (including the news refresher, strip titles, deep analysis, the release
             # watch, the Saturday weekly-draft clock and the big-event results reader) plus one thread per
-            # parallel headline translator.
-            self.assertEqual(len(observed), 23 + app.translation_workers)
+            # parallel headline translator, and the stock comparison's once-a-minute refresh clock.
+            self.assertEqual(len(observed), 24 + app.translation_workers)
             self.assertTrue(all(observed))
 
     def test_release_watch_alerts_from_the_public_payload_and_reports_in_health(self):
@@ -300,6 +300,7 @@ class ResearchServiceTests(unittest.TestCase):
             block = app.public_state()['companyWireTranslation']
             self.assertEqual(block['pending'], {'count': 0, 'oldestMinutes': None})
             self.assertEqual((block['calls24h'], block['budgetReached']), (0, False))
+            self.assertEqual((block['daily']['timezone'], block['daily']['today']['calls']), ('Asia/Tokyo', 0))
             self.assertEqual(block['alerts'], [])
             self.assertTrue(app.check_incident_watch_once())
             self.assertIsNotNone(app.company_wire_watch_at)

@@ -50,6 +50,8 @@ export type Financials = {
   /** Revenue growth against the quarter just before (%), for a company with no revenue a year earlier. */
   quarterRevenueQoq?: number | null;
   quarterFcfMargin?: number | null; quarterStockCompensationRatio?: number | null; quarterDilutedSharesGrowth?: number | null;
+  /** Diluted weighted-average shares of that same quarter (for price-to-sales from the filing when the provider's statistics are not cached). */
+  quarterDilutedShares?: number | null;
   balance: BalanceSnapshot | null;
   sourceUrl: string | null;
 };
@@ -361,6 +363,8 @@ export function extractFinancials(ticker: string, cik: string, payload: unknown,
     quarterFcfMargin: quarterRevenue && quarterOperatingCash && quarterCapex && quarterCapex.value>=0 ? (quarterOperatingCash.value-quarterCapex.value)/quarterRevenue.value*100 : null,
     quarterStockCompensationRatio: quarterRevenue && quarterCompensation && quarterCompensation.value>=0 ? quarterCompensation.value/quarterRevenue.value*100 : null,
     quarterDilutedSharesGrowth: quarterShares && previousQuarterShares ? (quarterShares.value/previousQuarterShares.value-1)*100 : null,
+    // A fourth quarter has no quarterly share count in the annual report: the year's diluted average from that same report stands in.
+    quarterDilutedShares: quarterShares ? quarterShares.value : quarterRevenue && dilutedShares && dilutedShares.end === quarterRevenue.end ? dilutedShares.value : null,
     revenueGrowth: previousRevenue ? (revenue.value / previousRevenue.value - 1) * 100 : null,
     operatingMargin: operatingIncome ? operatingIncome.value / revenue.value * 100 : null,
     fcfMargin: operatingCash && capex ? (operatingCash.value-capex.value) / revenue.value * 100 : null,

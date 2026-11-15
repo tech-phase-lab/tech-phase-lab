@@ -63,6 +63,7 @@ import official_research_diagnostics
 import official_research_detail
 import watch_earnings
 import mu_earnings_measurement
+import comparison_warm
 import web_push
 import voice_inbox
 import event_results
@@ -825,11 +826,14 @@ class AutomaticMonitor:
         self.deep_analysis_thread = threading.Thread(target=self.run_deep_analysis, name="deep-analysis", daemon=True)
         self.watch_earnings_thread = threading.Thread(target=self.run_watch_earnings, name="watch-earnings", daemon=True)
         self.mu_measurement_thread = threading.Thread(target=self.run_mu_measurement, name="mu-earnings-measurement", daemon=True)
+        self.comparison_warm_thread = threading.Thread(target=self.run_comparison_warm, name="comparison-warm-clock", daemon=True)
         self.weekly_thread = threading.Thread(target=self.run_weekly, name="weekly-auto-draft-clock", daemon=True)
         self.event_results_thread = threading.Thread(target=self.run_event_results, name="event-results", daemon=True)
         self.news_thread = threading.Thread(target=self.run_stock_news, name="stock-news-intake", daemon=True)
         self.company_wire_thread = threading.Thread(target=self.run_company_wire, name="company-wire", daemon=True)
         self.company_wire_errors = {}
+        # Set by an intake round that stored new headlines; the translator runs right after it (owner, Nov 15: 待たない).
+        self.company_wire_arrived = threading.Event()
         self.company_wire_translation_thread = threading.Thread(target=self.run_company_wire_translation, name="company-wire-translation", daemon=True)
 
     def run_x_preflight(self):
@@ -1133,6 +1137,16 @@ class AutomaticMonitor:
                 print("mu-measurement-unavailable", flush=True)
             self.stop_event.wait(5)
 
+    def run_comparison_warm(self):
+        # The stock comparison's provider refresh: one call to the site per minute (off unless COMPARISON_WARM_URL and _SECRET are set).
+        if not comparison_warm.config():
+            return
+        while not self.stop_event.is_set():
+            result = comparison_warm.run_once()
+            with self.state_lock:
+                self.state["comparisonWarm"] = {**result, "checkedAt": utc_now()}
+            self.stop_event.wait(comparison_warm.seconds_to_next_minute(time.time()))
+
     def run_web_push(self):
         if not self.web_push_enabled:
             return
@@ -1278,6 +1292,7 @@ class AutomaticMonitor:
         self.official_research_thread.start()
         self.deep_analysis_thread.start()
         self.mu_measurement_thread.start()
+        self.comparison_warm_thread.start()
         self.weekly_thread.start()
         self.event_results_thread.start()
         self.watch_earnings_thread.start()
@@ -1311,6 +1326,7 @@ class AutomaticMonitor:
         self.official_research_thread.join(timeout=45)
         self.deep_analysis_thread.join(timeout=45)
         self.mu_measurement_thread.join(timeout=45)
+        self.comparison_warm_thread.join(timeout=60)
         self.watch_earnings_thread.join(timeout=10)
         self.push_thread.join(timeout=15)
 
@@ -1335,6 +1351,8 @@ class AutomaticMonitor:
                         result = stock_news.poll(db, tickers)
                 with self.state_lock:
                     self.state["stockNewsIntake"] = {**result, "checkedAt": utc_now()}
+                if result.get("mirrored") or any(r.get("mirrored") for r in result.get("streams", {}).values()):
+                    self.company_wire_arrived.set()
             except Exception:
                 with self.state_lock:
                     self.state["stockNewsIntake"] = {"status": "error", "error": "stock-news-worker-failed"}
@@ -1346,30 +1364,49 @@ class AutomaticMonitor:
             return
         tickers = company_wire.roster()
         index = 0
+        added = 0
         while not self.stop_event.is_set():
             try:
                 with company_wire.connect(self.db_path) as db:
-                    company_wire.poll_company(db, tickers[index % len(tickers)], self.company_wire_errors)
+                    added += company_wire.poll_company(db, tickers[index % len(tickers)], self.company_wire_errors)
                     if index % len(tickers) == 0:
                         company_wire.prune(db)
             except Exception:
                 print("company-wire-failed", flush=True)
             index += 1
+            # One intake round is one pass over the roster; what it brought is translated right after it.
+            if index % len(tickers) == 0 and added:
+                self.company_wire_arrived.set()
+                added = 0
             self.stop_event.wait(6)
 
     def run_company_wire_translation(self):
         if os.environ.get("COMPANY_WIRE_ENABLED", "true").lower() == "false":
             return
+        # Owner, Nov 15 (まとめて訳す・待たない): translate right after every intake round that stored something, everything then
+        # waiting in calls of at most 30, each article once. Owner, Nov 16 (呼び出しを1日に均す): a call needs a token of the
+        # pacing bucket; headlines left queued without one are sent when the next token arrives, with or without a new intake
+        # (company_wire.next_wake), and due retries are looked for at the latest every ten minutes.
         while not self.stop_event.is_set():
-            wait = 20
+            self.company_wire_arrived.clear()
+            pause = company_wire.RETRY_WAKE_SECONDS
             try:
-                # run_once records every result (and turns an unexpected error into a code) for the translation watch.
-                result, wait = company_wire.run_once(self.db_path)
-                if company_wire.failing(result):
-                    print(f"company-wire-translation-failed {company_wire.result_code(result)}", flush=True)
+                # run_once (inside run_round) records every result (and turns an unexpected error into a code) for the translation watch.
+                results = company_wire.run_round(self.db_path)
+                for result in results:
+                    if company_wire.failing(result):
+                        print(f"company-wire-translation-failed {company_wire.result_code(result)}", flush=True)
+                if "disabled" not in results:
+                    pause = company_wire.next_wake(self.db_path) - time.time() + 0.5
+                    # A failing step is not repeated at once (the failed headlines wait for their retry time anyway).
+                    pause = max(pause, 60 if any(company_wire.failing(result) for result in results) else 1)
             except Exception as error:
                 print(f"company-wire-translation-failed {type(error).__name__} {failure_detail(error)}".rstrip(), flush=True)
-            self.stop_event.wait(wait)
+                pause = 60
+            deadline = time.monotonic() + min(pause, company_wire.RETRY_WAKE_SECONDS)
+            while not self.stop_event.is_set() and time.monotonic() < deadline:
+                if self.company_wire_arrived.wait(min(5, max(0.1, deadline - time.monotonic()))):
+                    break
 
     def company_wire_feed(self):
         with company_wire.connect(self.db_path) as db:
