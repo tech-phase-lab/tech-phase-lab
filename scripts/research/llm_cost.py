@@ -68,11 +68,16 @@ def cost_usd(model, input_tokens, cached_tokens, output_tokens, price_table):
 def record(db, lane, ref, model, response, now=None, chars_before=None, chars_sent=None):
     """Write one call. Never raises: counting must not be able to break the work it counts."""
     try:
+        # Python opens a transaction at the first write; a caller that starts its own (BEGIN) afterwards would fail with "cannot start a
+        # transaction within a transaction". So: close what this call opened, and leave a transaction the caller already had alone.
+        caller_had_one = db.in_transaction
         schema(db)
         input_tokens, cached_tokens, output_tokens = usage_of(response)
         db.execute('INSERT INTO llm_usage VALUES(?,?,?,?,?,?,?,?,?)',
                    (time.time() if now is None else now, lane, str(ref)[:200], model, input_tokens, cached_tokens, output_tokens,
                     chars_before, chars_sent))
+        if not caller_had_one:
+            db.commit()
     except Exception:
         return False
     return True

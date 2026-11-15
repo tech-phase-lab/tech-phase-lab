@@ -90,5 +90,18 @@ class LlmCostTests(unittest.TestCase):
             self.assertEqual(llm_cost.today(db, datetime.now(timezone.utc).timestamp(), {})['unknownCostCalls'], 1)
 
 
+    def test_counting_leaves_no_open_transaction_for_the_caller_that_writes_next(self):
+        # The weekly draft counted its call and then started its own BEGIN: "cannot start a transaction within a transaction".
+        with research.connect(self.path) as db:
+            self.assertTrue(llm_cost.record(db, 'weekly', 'weekly:x', 'm', {'status': 'completed'}))
+            self.assertFalse(db.in_transaction)
+            db.execute('BEGIN IMMEDIATE')
+            db.execute('ROLLBACK')
+            db.execute('BEGIN')
+            self.assertTrue(llm_cost.record(db, 'weekly', 'weekly:y', 'm', {'status': 'completed'}))
+            self.assertTrue(db.in_transaction)  # the caller's own transaction is left to the caller
+            db.execute('ROLLBACK')
+
+
 if __name__ == '__main__':
     unittest.main()
