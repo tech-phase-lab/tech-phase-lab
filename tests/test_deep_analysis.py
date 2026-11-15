@@ -485,5 +485,23 @@ class IndicatorAnalysisTests(unittest.TestCase):
         self.assertNotIn('3.5', json.dumps(item, ensure_ascii=False))
 
 
+    def test_health_lists_published_names_and_the_roster_without_any_text(self):
+        now = base.NOW.timestamp()
+        with deep_analysis.connect(self.path) as db:
+            for ref, kind, subject, state, created in (('a', 'earnings', 'NVDA', 'done', '2026-10-20T00:00:00+00:00'),
+                                                       ('b', 'indicator', 'U.S. PCE', 'done', '2026-10-21T00:00:00+00:00'),
+                                                       ('c', 'earnings', 'AMD', 'held', '2026-10-22T00:00:00+00:00')):
+                db.execute("INSERT INTO deep_analyses(source_ref,kind,subject,source_sha,state,created_at,published_at,payload) VALUES(?,?,?,?,?,?,?,?)",
+                           (ref, kind, subject, 'x', state, created, created if state == 'done' else None, '{"headline":{"ja":"SECRET","en":"SECRET"}}'))
+            report = deep_analysis.diagnostics(db, now=now)
+        self.assertEqual({(i['subject'], i['kind']) for i in report['published']}, {('NVDA', 'earnings'), ('U.S. PCE', 'indicator')})
+        roster = {row['ticker']: row for row in report['roster']}
+        self.assertEqual(len(roster), 22)
+        self.assertEqual(roster['NVDA']['deepState'], 'done')
+        self.assertEqual(roster['AMD']['deepState'], 'held')
+        self.assertEqual(roster['MU']['deepState'], 'none')
+        self.assertNotIn('SECRET', json.dumps(report))
+
+
 if __name__ == '__main__':
     unittest.main()
