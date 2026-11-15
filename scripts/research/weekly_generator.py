@@ -53,10 +53,13 @@ POLICY = """あなたは「リゼル」として、週刊 Tech Phase PRO の1号
 - 決算は、売上・EPSなどの結果と、会社見通し・予想との差を、資料にある数字で書きます。強い部分と弱い部分の両方を挙げます。
 - 資料に「計算」と書かれた行(例: 予想比、前回比、見通し比)は、プログラムが検証済みの数字から計算した値です。そのまま使ってかまいません。自分で計算はしません。
 - 指標や予定は、名前を具体的に書きます(例: 米CPI(消費者物価指数)、米PPI(生産者物価指数)、米雇用統計)。「物価の発表」のような曖昧な書き方はしません。
+- text と numbers の heading は、話題の名前ではなく、結論か問いかけにします(例: 「NBISの決算は、良い数字と悪い数字がはっきり分かれました」「TSMとASMLはどうか?」)。読者が見出しだけを追っても、その週の流れが分かるようにします。
+- 同じテーマの2社(例: TSMとASML、MUとSNDK)は、並べて比べると読みやすくなります。同じ text の中で、それぞれの強い点・弱い点を1〜2文ずつ書きます。
 - 部品(parts)は、その週に必要なものだけを選び、毎週同じ並びにしません。type は text / numbers / timeline / chart / highlight。
 - 数字がない週は、text と timeline だけの短い号でかまいません。
 - 次週の予定は別に作るので、parts には入れません。scheduleComments に、予定の id ごとに一言(数字なし)を書いてかまいません。何を見る発表で、ハイテク株にとってなぜ大事かを書きます。
 - takeaways: 今週の主な結論を3つ、1文ずつ書きます。各文に、①資料にある具体的な数字(売上高、予想比など)を1つ以上入れ、②ハイテク・半導体株にとっての意味を見立てとして一言添えます(例: 「〜という見方です」)。各文に、根拠にした evidenceIds を必ず付けます(数字のルールは同じです)。来週の予定に触れる文は、type が schedule の資料のIDを付けます。
+- type が analysis の資料は、決算資料を読み込んだ深掘り分析です(各文は数字の検査に通っています)。決算の話題では、売上やEPSの結果だけで終わらせず、analysis にある「何が伸びたか・何が弱いか・会社が何を見通しているか・次に何を確かめるか」まで書いてください。PRO会員向けなので、ニュースの見出しを言い換えただけの文は書きません。
 - 資料にあったのに載せなかった話題は、skipped に話題の名前だけを短く書きます(「〜を見送りました」「記載していません」のような、制作側の言い訳の文は書きません)。
 - recentIssues は、直近の号の見出しとひとことです。同じ書き出し・同じ締め・同じ言い回しを避けてください。
 
@@ -206,6 +209,23 @@ def collect(db, now, news=()):
                 ja = "\n".join([note["summary"]["ja"], *[f["ja"] for f in note["facts"]]])
                 en = "\n".join([note["title"]["en"], note["summary"]["en"], *[f["en"] for f in note["facts"]]])
                 add("note", note["title"]["ja"], row["url"], en, text=ja)
+            except (KeyError, TypeError, ValueError):
+                continue
+    # The week's PRO deep analyses (owner, Nov 15: "ありきたりな情報だと弱い"): each point already passed the figure checks against the release, so
+    # its own wording is the quote a weekly sentence is checked against. They give the model what drove the quarter, not only the headline figures.
+    if _table(db, "deep_analyses"):
+        for row in db.execute("SELECT kind,subject,payload,source_url,source_title FROM deep_analyses WHERE state='done' AND published_at IS NOT NULL "
+                              "AND julianday(published_at)>=julianday(?) ORDER BY julianday(published_at)", (start,)):
+            try:
+                note_ = json.loads(row["payload"])
+                pieces = [note_["headline"], *(note_.get("points") or []), *([note_["watch"]] if note_.get("watch") else [])]
+                ja = "\n".join(p["ja"] for p in pieces if isinstance(p, dict) and p.get("ja"))
+                en = "\n".join(p["en"] for p in pieces if isinstance(p, dict) and p.get("en"))
+                if not ja:
+                    continue
+                url = row["source_url"] or ""
+                add("analysis", f"{row['subject']}: {note_['headline']['ja']}"[:120], url if url.startswith("https://") else "", en + "\n" + ja, text=ja,
+                    ticker=row["subject"] if row["kind"] == "earnings" else "")
             except (KeyError, TypeError, ValueError):
                 continue
     for item in news:
@@ -400,7 +420,7 @@ SECTIONS = ("summary", "earnings", "indicators", "market", "schedule")
 def section_of(kind, ids, evidence):
     """Reading order is decided here, not by the model: what a part cites says which section it belongs to."""
     kinds = {item["kind"] for item in evidence if item["id"] in set(ids or ())}
-    results = bool(kinds & {"earnings", "note"})
+    results = bool(kinds & {"earnings", "note", "analysis"})
     indicators = "indicator" in kinds
     return "earnings" if results and not indicators else "indicators" if indicators and not results else "market"
 
@@ -419,6 +439,30 @@ def _framing(text, quote, fallback, lenient, notes, name):
             raise
         notes.append(note(SUBSTITUTED, f"{name}は、AIの文が事実確認に通らなかったため、定型文にしています。", error))
         return fallback
+
+
+FIGURE_KEYS = ("revenue", "eps", "net-revenue", "total-revenue", "data-center-revenue", "gross-margin", "operating-margin")
+
+
+def auto_figures(evidence, limit=4):
+    """Figures the issue always carries (owner, Nov 15: "図がないね"), built from the checked figures only, never from the model: for each company
+    result of the week (up to `limit`), its main figures as cards with result / forecast / previous bars; then the indicators' results."""
+    def refs_of(item):
+        keys = [f["key"] for f in item["facts"]]
+        chosen = [k for k in FIGURE_KEYS if k in keys] or [k for k in keys if not k.startswith("guidance-")][:2]
+        return [{"evidenceId": item["id"], "factKey": k} for k in chosen[:3]]
+    parts = []
+    for kind, heading in (("earnings", "決算の数字"), ("indicator", "経済指標の数字")):
+        refs = [ref for item in evidence if item["kind"] == kind and item["facts"] for ref in refs_of(item)]
+        refs = refs[: limit * 2]
+        cards = [card for card in (build_card(evidence, ref) for ref in refs) if card]
+        if not cards:
+            continue
+        ids = list(dict.fromkeys(ref["evidenceId"] for ref in refs))
+        parts.append({"type": "numbers", "heading": heading, "cards": cards[:8], "note": "",
+                      "compare": [row for row in (build_compare(evidence, ref) for ref in refs) if row][:6],
+                      "section": section_of("numbers", ids, evidence), "ids": ids})
+    return parts
 
 
 def compose(model_output, evidence, schedule, lenient=False):
@@ -448,6 +492,11 @@ def compose(model_output, evidence, schedule, lenient=False):
         try:
             if kind == "text":
                 part = {"type": "text", "heading": _check(raw.get("heading"), quote), "body": _check(raw.get("body"), quote)}
+                # The companies a text is about (from the results it cites): the page shows their photos side by side (owner, Nov 15).
+                tickers = list(dict.fromkeys(item["ticker"] for item in evidence if item["id"] in ids and item["kind"] in ("earnings", "analysis")
+                                             and re.fullmatch(r"[A-Z]{1,6}", item.get("ticker") or "")))
+                if tickers:
+                    part["tickers"] = tickers[:2]
             elif kind == "highlight":
                 if highlights:
                     continue
@@ -494,6 +543,13 @@ def compose(model_output, evidence, schedule, lenient=False):
         used.update(ids)
         part["section"] = section_of(kind, ids, evidence)
         parts.append(part)
+    # Figures are never left to the model's choice: when it chose none for a section, the checked figures are added as cards and bars.
+    shown = {part["section"] for part in parts if part["type"] in ("numbers", "chart")}
+    for part in auto_figures(evidence):
+        ids = part.pop("ids")
+        if part["section"] not in shown:
+            used.update(ids)
+            parts.append(part)
     comments = {c.get("id"): c.get("comment") for c in model_output.get("scheduleComments") or [] if isinstance(c, dict)}
     items = []
     for event in schedule:

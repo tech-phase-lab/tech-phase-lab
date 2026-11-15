@@ -94,6 +94,14 @@ class OwnerPushTests(unittest.TestCase):
         self.assertEqual(sent[0][1]["title"], "🚨 公式発表の巡回が全社失敗しています")
         self.assertEqual(sent[0][1]["tag"], "incident-discovery:all-sources")
 
+    def test_a_late_deep_analysis_names_the_company_and_the_check_in_japanese(self):
+        claim = {**self.claim(), "key": "deep-analysis:NBIS", "errorCode": "deep-analysis-overdue:NBIS:copy-too-long"}
+        message = delivery.push_message(claim)
+        self.assertEqual(message["title"], "🚨 NBISの決算の深掘りが2時間たっても完成していません")
+        self.assertIn("copy-too-long", message["body"])
+        self.assertEqual(message["tag"], "incident-deep-analysis:NBIS")
+        self.assertEqual(delivery.push_message({**claim, "transition": "resolved"})["title"], "✅ 復旧しました")
+
     def test_warnings_and_stale_rows_are_consumed_without_a_push(self):
         sent = []
         sender = lambda sub, msg: sent.append(msg) or 201

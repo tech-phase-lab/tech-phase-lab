@@ -122,7 +122,7 @@ test('no quarter invented from cumulative, old, future or conflicting reports',(
  a.push(entry(20,'2025-04-01','2025-06-30',{form:'10-Q',filed:'2025-08-01'}));assert.equal(parse(p).quarterRevenue,null);
  a.push(entry(50,'2026-07-01','2026-09-30',{form:'10-Q',filed:'2026-11-01'}));assert.equal(parse(p).quarterRevenue,null);
  a.push(entry(50,'2026-04-01','2026-06-30',{form:'10-Q',filed:'2026-08-01'}));
- f.Revenues={units:{USD:[entry(51,'2026-04-01','2026-06-30',{form:'10-Q',filed:'2026-08-01'})]}};assert.equal(parse(p).quarterRevenue,null);
+ f.Revenues={units:{USD:[entry(49,'2026-04-01','2026-06-30',{form:'10-Q',filed:'2026-08-01'})]}};assert.equal(parse(p).quarterRevenue,null);   // a total below its part
 });
 test('share compensation and diluted shares retain units, period and split-restated same-filing provenance',()=>{
  const p=payload(),f=p.facts['us-gaap'];f.ShareBasedCompensation={units:{USD:[entry(12)]}};

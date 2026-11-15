@@ -127,8 +127,10 @@ export function parseSecDirectory(payload: unknown): StockDirectoryEntry[] {
     const cik = Number(row[indexes.cik]);
     const name = safeText(row[indexes.name], 180);
     const ticker = normalizeTicker(String(row[indexes.ticker] ?? ""));
-    const exchange = safeText(row[indexes.exchange], 40);
-    if (!Number.isSafeInteger(cik) || cik <= 0 || !name || !ticker || !exchange) continue;
+    // A company with a ticker but no exchange yet is about to list (Anthropic "ANT" after its S-1, Nov 2026): kept and searchable, shown
+    // as "IPO" until the SEC directory names its exchange.
+    const exchange = safeText(row[indexes.exchange], 40) || "IPO";
+    if (!Number.isSafeInteger(cik) || cik <= 0 || !name || !ticker) continue;
     const key = `${ticker}:${cik}:${exchange}`;
     if (seen.has(key)) continue;
     seen.add(key);

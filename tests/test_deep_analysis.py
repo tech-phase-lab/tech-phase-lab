@@ -1,6 +1,8 @@
 """Owner, Oct 11: PRO deep analysis by a higher-tier model, numbers checked."""
 import json
+from datetime import timedelta
 import unittest
+from datetime import datetime, timezone
 
 import test_official_research as base
 from test_official_research import QUOTES, research
@@ -92,7 +94,7 @@ class DeepAnalysisTests(unittest.TestCase):
         bad = {'headline': note['headline'], 'points': [only_first, unknown, only_first], 'watch': None}
         with self.assertRaises(deep_analysis.Unchecked) as caught:
             deep_analysis.bind(bad, excerpts)
-        self.assertEqual(caught.exception.detail, {'kept': 0, 'rejected': {'evidence-missing': 1, 'unsupported-number:value:172000000:E': 2}})
+        self.assertEqual({k: v for k, v in caught.exception.detail.items() if k != 'carry'}, {'kept': 0, 'rejected': {'evidence-missing': 1, 'unsupported-number:value:172000000:E': 2}})
 
     def test_the_headline_is_checked_against_its_own_excerpts_and_negation_rejections_name_their_rule(self):
         excerpts = {'0': 'Revenue was $3.41 billion in the quarter.', '1': 'The company did not raise guidance this quarter.',
@@ -115,7 +117,7 @@ class DeepAnalysisTests(unittest.TestCase):
         with self.assertRaises(deep_analysis.Unchecked) as caught:
             deep_analysis.bind({'headline': bad_headline, 'points': [point, point], 'watch': None}, excerpts)
         self.assertEqual(str(caught.exception), 'unsupported-number')
-        self.assertEqual(caught.exception.detail, {'headline': 'unsupported-number:value:45%:A'})
+        self.assertEqual(caught.exception.detail['headline'], 'unsupported-number:value:45%:A')
 
     def test_a_retry_tells_the_model_why_the_last_attempt_was_rejected(self):
         self.earnings()
@@ -157,7 +159,9 @@ class DeepAnalysisTests(unittest.TestCase):
             with self.assertRaises(ValueError, msg=en):
                 deep_analysis.checked({'ja': ja, 'en': en}, table)
         self.assertEqual(deep_analysis.table_scaled_figures('Revenues 146.1 980.8'), '')  # no declared unit: nothing is converted
-        self.assertEqual(deep_analysis.table_scaled_figures('In millions A 1.5 In thousands B 2.5'), '')  # mixed units: nothing is converted
+        # several units in one release: each table in its own unit; a figure printed under two units is ambiguous and converted in neither
+        self.assertEqual(deep_analysis.table_scaled_figures('In millions A 1.5 In thousands B 2.5'), '1.5 million; 2.5 thousand')
+        self.assertEqual(deep_analysis.table_scaled_figures('In millions A 1.5 In thousands B 1.5'), '')
         self.assertIn('980.8 million', deep_analysis.table_scaled_figures('(in millions of U.S. dollars) Revenues 980.8'))
 
 
@@ -203,6 +207,148 @@ class DeepAnalysisTests(unittest.TestCase):
         except ValueError as exc:
             reason = deep_analysis.why(exc, 'Revenue increased to 980.8 in the quarter.')
         self.assertRegex(reason, r'^(?:changed-direction:\w+:(?:up|down)>(?:up|down)(?:\|(?:up|down))*|changed-direction@\w+:\d+|invalid-copy@\w+:\d+)')
+
+
+    def test_old_holds_are_retried_once_when_the_flag_is_on_and_a_good_result_is_dated_to_the_release(self):
+        # Owner, Nov 14: the 14 held analyses get exactly one more attempt, with their reasons recorded.
+        self.earnings()
+        bad = json.loads(json.dumps(GOOD))
+        bad['points'] = [point('売上は45%増。', 'Revenue rose 45%.')] * 3
+        for attempt in range(3):
+            self.run_deep(reply(bad), now=base.NOW.timestamp() + attempt * 1000)
+        later = base.NOW.timestamp() + 90000
+        on = {**ENV, deep_analysis.OLD_RETRY_ENV: 'true'}
+        self.assertEqual(deep_analysis.retry_old_holds(self.path, reply(GOOD), ENV, now=later), 'idle')  # flag off
+        with research.connect(self.path) as db:
+            self.assertEqual(db.execute("SELECT state FROM deep_analyses").fetchone()[0], 'held')
+            created = db.execute("SELECT created_at FROM deep_analyses").fetchone()[0]
+        self.assertEqual(deep_analysis.retry_old_holds(self.path, reply(bad), on, now=later), 'rejected')  # one attempt, held again with reasons
+        with research.connect(self.path) as db:
+            row = db.execute("SELECT state,attempts,detail FROM deep_analyses").fetchone()
+            self.assertEqual((row[0], row[1]), ('held', deep_analysis.MAX_ATTEMPTS))
+            self.assertIn('unsupported-number', row[2])
+            self.assertEqual(deep_analysis.diagnostics(db, now=later)['oldRetry'], {'rejected': 1})
+        self.assertEqual(deep_analysis.retry_old_holds(self.path, reply(GOOD), on, now=later + 10), 'idle')  # once: never repeated
+        with research.connect(self.path) as db:
+            db.execute("DELETE FROM deep_old_retries")
+        self.assertEqual(deep_analysis.retry_old_holds(self.path, reply(GOOD), on, now=later + 20), 'done')
+        with research.connect(self.path) as db:
+            row = db.execute("SELECT state,published_at,created_at FROM deep_analyses").fetchone()
+            self.assertEqual((row[0], row[1]), ('done', created))  # dated to the release, not to today
+            db.execute("UPDATE deep_analyses SET state='held',source_ref='event:999:gone'")
+            db.execute("DELETE FROM deep_old_retries")
+        self.assertEqual(deep_analysis.retry_old_holds(self.path, reply(GOOD), on, now=later + 30), 'source-unavailable')
+
+    def test_an_old_hold_whose_release_left_the_candidate_window_is_rebuilt_from_the_stored_event(self):
+        # Nov 14 staging: 12 of 14 old holds came back source-unavailable because the newest-100 window had moved past them.
+        self.earnings()
+        bad = json.loads(json.dumps(GOOD))
+        bad['points'] = [point('売上は45%増。', 'Revenue rose 45%.')] * 3
+        for attempt in range(3):
+            self.run_deep(reply(bad), now=base.NOW.timestamp() + attempt * 1000)
+        with research.connect(self.path) as db:
+            ref = db.execute("SELECT source_ref FROM deep_analyses").fetchone()[0]
+        far = base.NOW + timedelta(days=60)  # outside the 7-day candidate lookback
+        self.assertEqual(deep_analysis.run_once(self.path, reply(GOOD), ENV, now=far.timestamp(), reference=far, only_ref=ref), 'done')
+        with research.connect(self.path) as db:
+            self.assertEqual(deep_analysis.stored_earnings_source(db, 'event:999:gone'), [])
+            self.assertEqual(deep_analysis.stored_earnings_source(db, 'flash:1'), [])
+
+    def test_an_earnings_analysis_not_done_after_two_hours_is_a_critical_incident_naming_company_and_check(self):
+        # Nov 14, NBIS: held for 44 hours and nobody noticed. Two hours after the release is a critical alert with the ticker and the check.
+        self.earnings()
+        bad = json.loads(json.dumps(GOOD))
+        bad['points'] = [point('売上は45%増。', 'Revenue rose 45%.')] * 3
+        start = base.NOW.timestamp()
+        self.assertEqual(self.run_deep(reply(bad), now=start), 'retry')
+        key = deep_analysis.INCIDENT_PREFIX + 'NBIS'
+        with research.connect(self.path) as db:
+            self.assertEqual(deep_analysis.sync_incident(db, start + 3600), None)  # one hour: not yet
+            self.assertIsNone(db.execute('SELECT 1 FROM operational_incidents WHERE incident_key=?', (key,)).fetchone())
+            self.assertEqual(deep_analysis.sync_incident(db, start + 7300), 'deep-analysis-overdue')
+            row = db.execute('SELECT severity,status,last_error_code FROM operational_incidents WHERE incident_key=?', (key,)).fetchone()
+            self.assertEqual((row[0], row[1]), ('critical', 'open'))
+            self.assertEqual(row[2], 'deep-analysis-overdue:NBIS:unsupported-number-value-45-A')
+            self.assertEqual(db.execute('SELECT count(*) FROM incident_notification_outbox WHERE incident_key=?', (key,)).fetchone()[0], 1)
+            deep_analysis.sync_incident(db, start + 7400)  # still late: one alert, not one per pass
+            self.assertEqual(db.execute('SELECT count(*) FROM incident_notification_outbox WHERE incident_key=?', (key,)).fetchone()[0], 1)
+            db.execute("UPDATE deep_analyses SET state='done'")
+            self.assertIsNone(deep_analysis.sync_incident(db, start + 7500))
+            self.assertEqual(db.execute('SELECT status FROM operational_incidents WHERE incident_key=?', (key,)).fetchone()[0], 'resolved')
+            db.execute("UPDATE deep_analyses SET state='held'")
+            self.assertIsNone(deep_analysis.sync_incident(db, start + 80 * 3600))  # history older than three days is never alerted again
+            db.execute("UPDATE deep_analyses SET kind='indicator'")
+            self.assertEqual(deep_analysis.overdue(db, start + 7300), [])  # only earnings releases
+
+    def test_a_retry_replaces_only_the_rejected_points_and_keeps_the_ones_that_passed(self):
+        # Owner, Nov 14: a release must get published; points that passed every check are carried, only the rejected ones are rewritten.
+        self.earnings()
+        first = json.loads(json.dumps(GOOD))
+        first['points'] = [GOOD['points'][0], point('売上は45%増。', 'Revenue rose 45%.'), point('利益は45%増。', 'Profit rose 45%.')]
+        self.assertEqual(self.run_deep(reply(first)), 'retry')  # headline + one point passed: below the two-point minimum
+        with research.connect(self.path) as db:
+            detail = json.loads(db.execute('SELECT detail FROM deep_analyses').fetchone()[0])
+            self.assertEqual(detail['carry']['points'], [{'ja': GOOD['points'][0]['ja'], 'en': GOOD['points'][0]['en']}])
+            self.assertEqual(deep_analysis.diagnostics(db, now=base.NOW.timestamp())['notDone'][0]['detail'].get('carry'), None)  # not in /health
+        inputs = []
+        def transport(payload, key):
+            inputs.append(json.loads(payload['input']))
+            second = json.loads(json.dumps(GOOD))
+            second['headline'] = point('売上は45%増。', 'Revenue rose 45%.')  # even a rejected headline is replaced by the carried one
+            second['points'] = [GOOD['points'][0], GOOD['points'][1], GOOD['points'][2]]  # a repeat of a carried point is not added twice
+            return reply(second)(payload, key)
+        self.assertEqual(self.run_deep(transport, now=base.NOW.timestamp() + 1000), 'done')
+        self.assertEqual(inputs[0]['previousAttemptRejected']['alreadyAccepted'], [GOOD['points'][0]['ja']])
+        [item] = self.items()
+        self.assertEqual([p['ja'] for p in item['points']], [p['ja'] for p in GOOD['points']])
+        self.assertEqual(item['headline']['ja'], GOOD['headline']['ja'])  # the carried, checked headline
+
+    def test_carried_points_from_other_check_logic_are_not_reused(self):
+        self.earnings()
+        first = json.loads(json.dumps(GOOD))
+        first['points'] = [GOOD['points'][0], point('売上は45%増。', 'Revenue rose 45%.'), point('利益は45%増。', 'Profit rose 45%.')]
+        self.run_deep(reply(first))
+        with research.connect(self.path) as db:
+            detail = json.loads(db.execute('SELECT detail FROM deep_analyses').fetchone()[0])
+            detail['carry']['version'] = deep_analysis.VERSION - 1
+            db.execute('UPDATE deep_analyses SET detail=?', (json.dumps(detail),))
+        inputs = []
+        def transport(payload, key):
+            inputs.append(json.loads(payload['input']))
+            return reply(first)(payload, key)
+        self.run_deep(transport, now=base.NOW.timestamp() + 1000)
+        self.assertNotIn('alreadyAccepted', inputs[0]['previousAttemptRejected'])
+
+    def test_a_release_that_never_got_an_analysis_row_is_a_critical_incident_after_two_hours(self):
+        # Owner, Nov 14: a release found but never attempted (daily budget spent, service stopped) must alert like a failed one.
+        self.earnings()
+        observed = datetime.fromisoformat(deep_analysis.earnings_sources(deep_analysis.connect(self.path), base.NOW)[0]['observedAt'].replace('Z', '+00:00'))
+        start = observed.timestamp()
+        key = deep_analysis.INCIDENT_PREFIX + 'NBIS'
+        with research.connect(self.path) as db:
+            self.assertIsNone(deep_analysis.sync_incident(db, start + 3600, ENV))  # one hour: not yet
+            self.assertIsNone(deep_analysis.sync_incident(db, start + 7300, {}))  # deep analysis not configured: stays quiet
+            self.assertEqual(deep_analysis.sync_incident(db, start + 7300, ENV), 'deep-analysis-overdue')
+            self.assertEqual(db.execute('SELECT severity,last_error_code FROM operational_incidents WHERE incident_key=?', (key,)).fetchone()[:],
+                             ('critical', 'deep-analysis-overdue:NBIS:not-attempted'))
+            db.executemany('INSERT INTO deep_analysis_calls VALUES(?,?,?,0)', [(start + 7000 + i, 'x', 'm') for i in range(40)])
+            self.assertEqual(deep_analysis.overdue(db, start + 7300, ENV)[0]['check'], 'daily-limit-reached')
+            deep_analysis.schema(db)
+            db.execute("DELETE FROM deep_analysis_calls")
+        with research.connect(self.path) as db:
+            db.execute("INSERT INTO deep_analyses(source_ref,kind,subject,source_sha,state,attempts,next_at,created_at) SELECT 'event:'||id||':'||sha,'earnings','NBIS',sha,'done',1,0,? FROM signal_events", (datetime.fromtimestamp(start + 7400, timezone.utc).isoformat(),))
+            self.assertIsNone(deep_analysis.sync_incident(db, start + 7500, ENV))  # an analysis exists: resolved
+            self.assertEqual(db.execute('SELECT status FROM operational_incidents WHERE incident_key=?', (key,)).fetchone()[0], 'resolved')
+
+    def test_the_last_calls_of_the_day_are_kept_for_earnings(self):
+        self.earnings()
+        start = base.NOW.timestamp()
+        with research.connect(self.path) as db:
+            deep_analysis.schema(db)
+            db.executemany('INSERT INTO deep_analysis_calls VALUES(?,?,?,0)', [(start - 100 + i, 'x', 'm') for i in range(35)])
+        self.assertEqual(deep_analysis.earnings_reserve(40), 12)
+        self.assertEqual(self.run_deep(reply(GOOD)), 'done')  # 35 of 40 used: earnings still run
+        self.assertEqual(deep_analysis.earnings_reserve(3), 1)
 
     def test_why_an_analysis_is_held_is_recorded_and_older_holds_are_tried_again(self):
         self.earnings()

@@ -27,6 +27,16 @@ test("directory search ranks exact ticker before company-name matches", () => {
   assert.equal(searchDirectory(entries, "").length, 0);
 });
 
+test("a company about to list (ticker, no exchange yet) is searchable in English and Japanese, shown as IPO", () => {
+  const p = payload();
+  p.data.push([2130357, "Anthropic, PBC", "ANT", null], [2130358, "No Ticker Co", "", null]);
+  const entries = parseSecDirectory(p);
+  const ant = entries.find((entry) => entry.ticker === "ANT");
+  assert.equal(ant?.exchange, "IPO");
+  assert.equal(entries.some((entry) => entry.name === "No Ticker Co"), false);
+  for (const query of ["ANT", "anthropic", "アンソロピック", "あんそろぴっく", "アンスロピック"]) assert.equal(searchDirectory(entries, query)[0]?.ticker, "ANT", query);
+});
+
 test("profile parsing keeps only bounded SEC identity fields and official links", () => {
   const entry = parseSecDirectory(payload()).find((item) => item.ticker === "NVDA");
   const profile = parseSecProfile(entry, { cik: 1045810, entityType: "operating", sic: "3674", sicDescription: "Semiconductors & Related Devices", fiscalYearEnd: "0125", stateOfIncorporation: "DE", formerNames: [{ name: "Old Name", from: "1990", to: "1999" }] });

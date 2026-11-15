@@ -99,7 +99,22 @@ export function comparisonMetric(c: Financials, id: ScoreId, lang: "ja"|"en", no
     return debt===0 ? (ja?"借入なし":"No borrowings") : `${ja?"現金÷有利子負債":"Cash ÷ debt"} ${(c.balance.cash.value/debt).toFixed(2)}${ja?"倍":"×"}`;
   }
   if(id==="financial" && c.balance?.end===c.quarterRevenue?.end && finite(c.balance?.currentRatio)) return `${ja?"流動比率":"Current ratio"} ${c.balance.currentRatio.toFixed(2)}${ja?"倍":"×"}${c.balance.debtTotal?.source==="none" ? (ja?"・借入なし":" · no borrowings") : ""}`;
-  return ja ? "必要データ未取得" : "Data unavailable";
+  return missingReason(c,id,ja);
+}
+
+/** Why a factor has no score, in a few words (owner, Nov 14: a "—" should say why, not just that data is missing). */
+function missingReason(c: Financials, id: ScoreId, ja: boolean): string {
+  const r=(jaText:string,en:string)=>ja?jaText:en;
+  const noRevenue=!c.quarterRevenue || c.quarterRevenue.value<=0;
+  if(noRevenue && (id==="growth"||id==="profitability"||id==="cash"||id==="stability")) return r("売上がまだ無い会社です","No revenue yet");
+  if(id==="growth") return r("前年同期の売上が未開示","Year-ago revenue not available");
+  if(id==="profitability") return r("営業利益の記載なし","No operating income reported");
+  if(id==="cash") return r("キャッシュフロー未開示","Cash flow not available");
+  if(id==="stability") return r("4四半期分の利益率がそろいません","Four quarters of margins not available");
+  if(id==="financial") return r("借入の記載を読み取れません","Debt figures not readable");
+  if(id==="valuation") return r("予想PER・PSRが未取得","No forward P/E or P/S");
+  if(id==="momentum") return r("株価の履歴が不足（上場直後など）","Not enough price history");
+  return r("必要データ未取得","Data unavailable");
 }
 
 /** Valuation needs one yardstick for the whole comparison. Forward P/E as before when every company has one; when any company has none (a

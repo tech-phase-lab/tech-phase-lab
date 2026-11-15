@@ -11,6 +11,10 @@ export type TwelveComparisonSnapshot = {
   fiscalYear: number; fiscalQuarter: number;
   revenue: number | null; previousRevenue: number | null; previousPeriodEnd: string | null; operatingIncome: number | null; dilutedEps: number | null;
   revenueGrowthPct: number | null; operatingMarginPct: number | null;
+  /** Present only when the cash figures are the previous quarter's (the provider had not added this quarter's cash flow yet). */
+  cashFlowPeriodEnd?: string;
+  /** "pretax" when the provider states no operating income and pre-tax income stands in (banks). */
+  operatingIncomeBasis?: "pretax";
   operatingCashFlow: number | null; signedCapex: number | null;
   freeCashFlow: number | null; freeCashFlowMarginPct: number | null;
   warnings: string[];
@@ -69,16 +73,31 @@ export function normalizeTwelveComparison(ticker: string, income: unknown, cashF
   if (current.length > 1) warnings.push("duplicate-income-period");
   let revenue = consistent(current, "sales");
   if (revenue !== null && revenue < 0) { revenue = null; warnings.push("negative-revenue"); }
-  const operatingIncome = consistent(current, "operating_income");
+  // A bank states no operating income (HSBC, MUFG): pre-tax income is used instead, for this quarter and the margin series alike, and
+  // the screen labels it as the pre-tax margin.
+  const statedOperating = consistent(current, "operating_income");
+  const pretax = statedOperating === null ? consistent(current, "pretax_income") : null;
+  const operatingIncome = statedOperating ?? pretax;
   const dilutedEps = consistent(current, "eps_diluted");
   const previousRevenue = new Set(prior.map(r => r.fiscal_date)).size === 1 ? consistent(prior, "sales") : null;
   let operatingCashFlow: number | null = null, signedCapex: number | null = null, statedFreeCashFlow: number | null = null;
+  // The quarter the cash figures belong to: this one, or the one before when the provider has not added this quarter's cash flow yet
+  // (ASML: income to June, cash flow to March). The margin is then taken on that quarter's own revenue, and the screen says so.
+  let cashFlowPeriodEnd: string | null = null, cashFlowRevenue: number | null = revenue;
   if (cashFlow !== null) {
     try {
       const cf = envelope(cashFlow, ticker, "cash_flow");
       if (cf.currency !== inc.currency) throw Error("currency-mismatch");
       // Matched by the period end; the quarter / year labels are only compared when the cash-flow rows carry them.
-      const rows = cf.rows.filter(r => r.fiscal_date === end && (r.quarter === undefined || Number(r.quarter) === quarter) && (r.year === undefined || Number(r.year) === year));
+      let rows = cf.rows.filter(r => r.fiscal_date === end && (r.quarter === undefined || Number(r.quarter) === quarter) && (r.year === undefined || Number(r.year) === year));
+      cashFlowPeriodEnd = end;
+      if (rows.length === 0) {
+        const gap = (r: Record<string, unknown>) => (Date.parse(end) - Date.parse(String(r.fiscal_date))) / 86400000;
+        const earlier = cf.rows.filter(r => gap(r) >= 75 && gap(r) <= 105);
+        const earlierEnd = new Set(earlier.map(r => String(r.fiscal_date)));
+        const earlierRevenue = earlierEnd.size === 1 ? consistent(valid.filter(r => earlierEnd.has(String(r.fiscal_date))), "sales") : null;
+        if (earlierEnd.size === 1 && earlierRevenue !== null && earlierRevenue > 0) { rows = earlier; cashFlowPeriodEnd = [...earlierEnd][0]; cashFlowRevenue = earlierRevenue; }
+      }
       operatingCashFlow = consistent(rows.map(r => object(r.operating_activities)), "operating_cash_flow");
       signedCapex = consistent(rows.map(r => object(r.investing_activities)), "capital_expenditures");
       // Some small companies have no capex line in the provider's data but a stated free cash flow (POET, Nov 14): that figure is used only then.
@@ -95,8 +114,10 @@ export function normalizeTwelveComparison(ticker: string, income: unknown, cashF
   const growth = revenue !== null && previousRevenue !== null ? percent(revenue - previousRevenue, previousRevenue) : null;
   return { schema: 1, provider: "twelve-data", ticker, currency: inc.currency, retrievedAt: new Date(now).toISOString(),
     periodEnd: end, releasedAt: null, fiscalYear: year, fiscalQuarter: quarter,
+    ...(pretax !== null ? { operatingIncomeBasis: "pretax" as const } : {}),
     revenue, previousRevenue, previousPeriodEnd: previousRevenue !== null ? String(prior[0].fiscal_date) : null, operatingIncome, dilutedEps, revenueGrowthPct: growth, operatingMarginPct: percent(operatingIncome, revenue),
-    operatingCashFlow, signedCapex, freeCashFlow, freeCashFlowMarginPct: percent(freeCashFlow, revenue), warnings };
+    operatingCashFlow, signedCapex, freeCashFlow, freeCashFlowMarginPct: percent(freeCashFlow, cashFlowRevenue),
+    ...(freeCashFlow !== null && cashFlowPeriodEnd !== null && cashFlowPeriodEnd !== end ? { cashFlowPeriodEnd } : {}), warnings };
 }
 
 /** Realized and forecast EPS are separate contracts: never substitute quarterly EPS for TTM EPS.
@@ -140,10 +161,11 @@ export function prepareTwelveComparison(snapshot: TwelveComparisonSnapshot,
       detail: { ja: `${period}期の四半期売上高は前年同期比${v}。`, en: `Revenue for the quarter ended ${period} changed ${v} year over year.` } });
   }
   if (snapshot.operatingMarginPct !== null && (snapshot.operatingMarginPct >= 15 || snapshot.operatingMarginPct < 0)) {
-    const n = snapshot.operatingMarginPct, v = `${n.toFixed(1)}%`;
+    const n = snapshot.operatingMarginPct, v = `${n.toFixed(1)}%`, pre = snapshot.operatingIncomeBasis === "pretax";
     items.push({ id: "operating-margin", kind: n < 0 ? "weakness" : "strength",
-      short: { ja: `営業利益率 ${v}`, en: `Operating margin ${v}` },
-      detail: { ja: `${period}期の四半期営業利益率は${v}。`, en: `Operating margin for the quarter ended ${period} was ${v}.` } });
+      short: pre ? { ja: `税引前利益率 ${v}`, en: `Pre-tax margin ${v}` } : { ja: `営業利益率 ${v}`, en: `Operating margin ${v}` },
+      detail: pre ? { ja: `${period}期の四半期税引前利益率は${v}。`, en: `Pre-tax margin for the quarter ended ${period} was ${v}.` }
+        : { ja: `${period}期の四半期営業利益率は${v}。`, en: `Operating margin for the quarter ended ${period} was ${v}.` } });
   }
   if (snapshot.freeCashFlowMarginPct !== null && snapshot.freeCashFlowMarginPct !== 0) {
     const n = snapshot.freeCashFlowMarginPct, v = `${n.toFixed(1)}%`;

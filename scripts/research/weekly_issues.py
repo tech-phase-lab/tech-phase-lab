@@ -107,6 +107,11 @@ def _part_body(raw):
     part = {"type": kind, "heading": _text(raw.get("heading"), "heading", 80)}
     if kind == "text":
         part["body"] = _text(raw.get("body"), "body", 3000)
+        if raw.get("tickers") is not None:  # the companies the text is about; the page shows their photos
+            tickers = _list(raw.get("tickers"), "tickers", 2)
+            if not all(isinstance(t, str) and re.fullmatch(r"[A-Z]{1,6}", t) for t in tickers):
+                raise ValueError("invalid-weekly-tickers")
+            part["tickers"] = tickers
         if raw.get("items") is not None:  # the takeaway cards: each sentence with the kind of material it rests on (picks its icon)
             part["items"] = [{"text": _text(item.get("text") if isinstance(item, dict) else None, "item", 200),
                               "kind": item.get("kind") if item.get("kind") in ("earnings", "indicators", "market") else _bad("item-kind")}

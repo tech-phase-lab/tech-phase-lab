@@ -47,6 +47,20 @@ export function appendMarketItems(prepared:NonNullable<Financials["preparedAnaly
 /** Production response shape, consumed by the existing radar/bars/cards without a redesign.
  * Does not send requests or mutate provider data. No forged SEC accession or release date.
  */
+/** Revenue against the quarter just before, for when the provider has no year-ago quarter (On, SK hynix: their year-ago sales are null).
+ *  The scorecard uses it only when year-on-year growth is missing, and labels it as quarter-on-quarter. */
+function sequentialGrowth(income:unknown,periodEnd:string|null,revenue:number|null):number|null {
+  if(!periodEnd || revenue===null || !income || typeof income!=="object") return null;
+  const rows=(income as {income_statement?:unknown}).income_statement;
+  if(!Array.isArray(rows)) return null;
+  const end=Date.parse(periodEnd);
+  const prior=rows.filter((r):r is {fiscal_date:string;sales:number}=>!!r && typeof r==="object" && typeof (r as {fiscal_date?:unknown}).fiscal_date==="string"
+    && typeof (r as {sales?:unknown}).sales==="number" && (r as {sales:number}).sales>0)
+    .filter(r=>{const gap=(end-Date.parse(r.fiscal_date))/86400000; return gap>=75 && gap<=105;});
+  if(prior.length!==1 || revenue<=0) return null;
+  return (revenue/prior[0].sales-1)*100;
+}
+
 export function buildTwelveFinancials(bundle:TwelveComparisonBundle,now=Date.now()):Financials {
   const retrieved=Date.parse(bundle.retrievedAt);
   if(!Number.isFinite(retrieved) || retrieved>now)throw Error("invalid-twelve-retrieval-time");
@@ -58,9 +72,10 @@ export function buildTwelveFinancials(bundle:TwelveComparisonBundle,now=Date.now
   const result:Financials={...emptyFinancials(bundle.ticker,"unavailable",bundle.retrievedAt),
     status:"ready",twelveData:evidence,quarterRevenue:fact(s.revenue,"sales"),
     previousQuarterRevenue:s.previousPeriodEnd ? fact(s.previousRevenue,"sales",s.previousPeriodEnd) : null,
-    quarterOperatingIncome:fact(s.operatingIncome,"operating_income"),
-    quarterRevenueGrowth:s.revenueGrowthPct,quarterOperatingMargin:s.operatingMarginPct,
-    quarterFcfMargin:s.freeCashFlowMarginPct,quarterSourceUrl:sourceUrl};
+    quarterOperatingIncome:fact(s.operatingIncome,s.operatingIncomeBasis==="pretax" ? "TechPhasePretaxIncome" : "operating_income"),
+    quarterRevenueGrowth:s.revenueGrowthPct,quarterRevenueQoq:sequentialGrowth(bundle.income,s.periodEnd,s.revenue),quarterOperatingMargin:s.operatingMarginPct,
+    quarterFcfMargin:s.freeCashFlowMarginPct,quarterSourceUrl:sourceUrl,
+    ...(s.cashFlowPeriodEnd ? {supplemented:["cash"],supplementedFromQuarter:s.cashFlowPeriodEnd} : {})};
   const prepared=prepareComparisonAnalysis(result,now);
   if(prepared) {
     // The provider's quarter dates have no start dates; use explicit quarter-ended descriptions.
