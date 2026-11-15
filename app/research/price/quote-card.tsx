@@ -1,5 +1,4 @@
 "use client";
-import { useState } from "react";
 import Link from "next/link";
 import StockLogo from "../watchlist/stock-logo";
 import { useFacts, useNumbersHidden, useQuotes, shortName, type CardQuote } from "./use-market";
@@ -10,7 +9,7 @@ import styles from "./price.module.css";
 
 export type DetailOrigin = "watchlist" | "watch" | "search" | "market";
 export const detailHref = (ticker: string, from: DetailOrigin) => `/research/quote/${encodeURIComponent(ticker)}?from=${from}`;
-export const toneOf = (value: number | null) => value === null || value === 0 ? "flat" : value > 0 ? "up" : "down";
+export const toneOf = (value: number | null): "up" | "down" | "flat" => value === null || value === 0 ? "flat" : value > 0 ? "up" : "down";
 const clock = (iso: string, seconds: boolean) => new Date(iso).toLocaleTimeString("en-GB", { timeZone: "Asia/Tokyo", hour: "2-digit", minute: "2-digit", ...(seconds ? { second: "2-digit" } : {}), hour12: false });
 
 export function Eye({ hidden, onToggle, label }: { hidden: boolean; onToggle: () => void; label: string }) {

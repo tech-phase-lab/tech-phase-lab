@@ -110,6 +110,14 @@ export function latestTradingDay(bars: Bar[], before: Bar[] = []): { bars: Bar[]
   return { bars: bars.slice(cut), before: [...before, ...bars.slice(0, cut)].slice(-WARMUP) };
 }
 
+/** What a chart draws of a period's series, shared by the market board and the stock pages (owner, Nov 14 / Nov 15): the 15-minute chart is the latest
+ * trading day only, and on every intraday chart (5 minutes to 3 hours) the bad prints are cut back to the bar's body. Daily, weekly and year-to-date
+ * series are drawn as they come (the same object, so a zoomed chart keeps its view). */
+export function drawnSeries<T extends { bars: Bar[]; before: Bar[] }>(period: BoardPeriod | "ytd", series: T): { bars: Bar[]; before: Bar[] } {
+  const set = period === "15m" ? latestTradingDay(series.bars, series.before) : series;
+  return period !== "ytd" && isIntradayPeriod(period) ? { bars: clampWicks(set.bars), before: set.before } : set;
+}
+
 const SEGMENT_START = { pre: 240, regular: 570, post: 960 } as const;
 const jstClock = new Intl.DateTimeFormat("en-GB", { timeZone: "Asia/Tokyo", hour: "2-digit", minute: "2-digit", hourCycle: "h23" });
 /** Where each part of a day begins (pre-market, session, after-hours) and its nominal start in Japan time: 18:00 / 23:30 / 06:00 in winter, 17:00 / 22:30 / 05:00

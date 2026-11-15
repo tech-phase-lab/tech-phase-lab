@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import ResearchToolShell from "../research-tool-shell";
 import { useResearchLanguage } from "../use-research-language";
@@ -10,14 +10,17 @@ import { CompanyIntroductionPanel } from "../stocks/company-introduction";
 import { CompanyNetworkMap } from "../stocks/chain-map";
 import type { CompanyIntroduction } from "@/lib/research/company-introductions";
 import type { CompanyNetwork } from "@/lib/research/company-network";
-import { compact, dateJa, plain, rangePosition, signedMoney, signedPercent, type Bar } from "@/lib/research/market-quote";
-import { isIntradayPeriod, periodInterval } from "@/lib/research/market-board-periods";
+import { compact, dateJa, plain, rangePosition, signedMoney, signedPercent } from "@/lib/research/market-quote";
+import { drawnSeries, isIntradayPeriod, periodInterval } from "@/lib/research/market-board-periods";
+import { marketPhase } from "@/lib/research/us-market-session";
 import { isChangePeriod, type ChangePeriod, type PeriodBase } from "@/lib/research/period-change";
 import PeriodButtons, { DETAIL_DEFAULT_PERIOD, type DetailPeriod } from "./period-buttons";
 import PeriodChangeLine from "./period-change-line";
 import { Status, Tile, toneOf, type DetailOrigin } from "./quote-card";
 import { shortName, useFacts, useQuotes } from "./use-market";
 import PriceChart from "./price-chart";
+import { useMinute } from "./use-minute";
+import { useChartStore } from "./use-chart-store";
 import FlashValue from "./flash-value";
 import styles from "./detail.module.css";
 
@@ -71,21 +74,28 @@ export default function QuoteDetail({ ticker, from, title: fixedTitle, plain: ba
   const [range, setRange] = useState<DetailPeriod>(DETAIL_DEFAULT_PERIOD);
   const [bases, setBases] = useState<{ ticker: string; today: string; bases: Partial<Record<ChangePeriod, PeriodBase>> } | null>(null);
   const [mode, setMode] = useState<"candles" | "line">("candles");
-  const [chart, setChart] = useState<{ key: string; bars: Bar[] | null; before: Bar[] }>({ key: "", bars: null, before: [] });
   const [profile, setProfile] = useState<Profile | null>(null);
   const [alertOpen, setAlertOpen] = useState(false);
   const [tab, setTab] = useState<"price" | "company" | "map">("price");
   const favorites = useStockFavorites();
   const registered = favorites.lists.some(list => list.tickers.includes(ticker));
   const key = `${ticker}:${range}`;
+  // Each period's series is kept while the page is open (owner, Nov 15): a period read once comes back at once, and while a new one is on its way the chart
+  // on the screen stays, with a small spinner at its top right. A read is not cut off by another switch, so it is kept for when that period is picked again.
+  const store = useChartStore(key);
+  const { put, fresh } = store;
+  const reads = useRef(new Map<string, AbortController>());
   useEffect(() => {
+    if (fresh(key) || reads.current.has(key)) return;
     const controller = new AbortController();
+    reads.current.set(key, controller);
     fetch(`/api/research/market/chart?ticker=${encodeURIComponent(ticker)}&${range === "ytd" ? "range=ytd" : `period=${range}`}`, { signal: controller.signal })
       .then(response => response.ok ? response.json() : null)
-      .then(body => { if (!controller.signal.aborted) setChart({ key, bars: body?.ok ? body.bars : [], before: body?.ok ? body.before ?? [] : [] }); })
-      .catch(() => { if (!controller.signal.aborted) setChart({ key, bars: [], before: [] }); });
-    return () => controller.abort();
-  }, [ticker, range, key]);
+      .then(body => { if (!controller.signal.aborted) put(key, body?.ok ? { bars: body.bars, before: body.before ?? [] } : { bars: [], before: [], failed: true }); })
+      .catch(() => { if (!controller.signal.aborted) put(key, { bars: [], before: [], failed: true }); })
+      .finally(() => { reads.current.delete(key); });
+  }, [ticker, range, key, put, fresh]);
+  useEffect(() => { const running = reads.current; return () => { running.forEach(controller => controller.abort()); running.clear(); }; }, []);
   // The closes the period's change is measured from; the live price is applied to them on every update.
   useEffect(() => {
     const controller = new AbortController();
@@ -107,16 +117,23 @@ export default function QuoteDetail({ ticker, from, title: fixedTitle, plain: ba
     ids.forEach(id => { const el = document.getElementById(id); if (el) observer.observe(el); });
     return () => observer.disconnect();
   }, [profile, bare]);
-  const bars = chart.key === key ? chart.bars : null;
+  // The same chart rules as the market board (owner, Nov 15): the 15-minute chart is the latest trading day only, bad prints are cut back on the intraday
+  // charts, the mint band and its one word only while it is pre-market / after-hours now, and the price tag on the right is the big price above.
+  // Until a new period's series comes, the one on the screen is drawn with its own period's rules.
+  const shownRange = (store.shownKey ? store.shownKey.slice(store.shownKey.lastIndexOf(":") + 1) : range) as DetailPeriod;
+  const drawn = useMemo(() => store.shown === null ? null : drawnSeries(shownRange, store.shown), [store.shown, shownRange]);
+  const now = useMinute();
+  const phase = marketPhase(new Date(now ?? 0));
   const title = fixedTitle ?? shortName(profile?.name ?? quote?.name ?? ticker);
   const toggleStar = () => {
     if (registered) { for (const list of favorites.lists) if (list.tickers.includes(ticker)) favorites.setMembership(list.id, ticker, false); }
     else favorites.toggle(ticker, quote?.name ?? ticker);
   };
   const tone = toneOf(quote?.percentChange ?? null), arrow = tone === "up" ? "▲" : tone === "down" ? "▼" : "–";
-  const interval = range === "ytd" ? "daily" : periodInterval(range);
-  const intraday = range !== "ytd" && isIntradayPeriod(range);
+  const interval = shownRange === "ytd" ? "daily" : periodInterval(shownRange);
+  const intraday = shownRange !== "ytd" && isIntradayPeriod(shownRange);
   const periodBases = bases?.ticker === ticker ? bases : null;
+  const tag = quote ? { price: quote.price, text: plain(quote.price), tone } : undefined;
   return <ResearchToolShell lang={lang} setLang={setLang} title={`${title}${bare ? "" : ` ${ticker}`}`} description="" showTools={false} showHeading={false}>
     <div className={styles.page}>
       <button type="button" className={styles.back} onClick={() => window.history.length > 1 ? router.back() : router.push(origin.href)}>
@@ -136,7 +153,7 @@ export default function QuoteDetail({ ticker, from, title: fixedTitle, plain: ba
             <span className={styles.mode} role="group" aria-label={t("チャートの種類", "Chart type")}><button type="button" aria-pressed={mode === "candles"} onClick={() => setMode("candles")}>{t("ローソク足", "Candles")}</button><button type="button" aria-pressed={mode === "line"} onClick={() => setMode("line")}>{t("ライン", "Line")}</button></span></div>
         </div> : <p className={styles.error} role="status">{!loaded ? t("株価を読み込み中…", "Loading the price…") : failed ? t("株価を取得できませんでした。しばらくしてからもう一度お試しください。", "Could not load the price. Please try again shortly.") : ""}</p>}
         <div className={styles.chartBlock}>
-          {bars === null ? <div className={styles.pad}><p className={styles.error} style={{ padding: 0 }} role="status">{t("チャートを読み込み中…", "Loading the chart…")}</p></div> : <PriceChart bars={bars} before={chart.before} mode={mode} interval={interval} bands={intraday} jst={intraday} ja={ja} />}
+          {drawn === null ? <div className={styles.pad}><p className={styles.error} style={{ padding: 0 }} role="status">{t("チャートを読み込み中…", "Loading the chart…")}</p></div> : <PriceChart bars={drawn.bars} before={drawn.before} mode={mode} interval={interval} jst={intraday} tag={tag} live={intraday && now !== null ? { phase } : undefined} sessionTicks={shownRange === "15m"} busy={store.busy} ja={ja} />}
           <PeriodButtons period={range} onChange={setRange} ja={ja} />
           {isChangePeriod(range) && periodBases && <PeriodChangeLine period={range} base={periodBases.bases[range]} price={quote?.price ?? null} today={periodBases.today} ja={ja} />}
         </div>
