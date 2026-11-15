@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import type { Language } from "@/lib/research/data";
 import { availableNewsPayload, type GeneralNewsFeed } from "@/lib/research/general-news";
-import { parseCompanyWire, type CompanyWireItem } from "@/lib/research/company-wire";
+import { companyWireDelay, parseCompanyWire, type CompanyWireItem } from "@/lib/research/company-wire";
 import { flashRows, WATCH_TICKERS, type FlashRow } from "@/lib/research/flash-rows";
 import { freeFlashRows } from "@/lib/research/free-flash";
 import Link from "next/link";
@@ -52,6 +52,7 @@ export default function FlashPage({ lang, onReady }: { lang: Language; onReady?:
   const [checkedAt, setCheckedAt] = useState(0);
   // The page is shown once the company headlines have answered (or a short grace period passed), so they do not slide in on top afterwards.
   const [wireSettled, setWireSettled] = useState(false);
+  const [wireLoaded, setWireLoaded] = useState(false);
   const [unread, setUnread] = useState<ReadonlySet<string>>(new Set());
   const [view, setView] = useState<"all" | "earnings">("all");
   const [page, setPage] = useState(1);
@@ -101,22 +102,34 @@ export default function FlashPage({ lang, onReady }: { lang: Language; onReady?:
   }, [lang]);
   useEffect(() => {
     // Wire headlines are a lower-trust lane: a failure here never affects the rest.
-    let alive = true, timer: ReturnType<typeof setInterval> | undefined;
+    // Until the first list arrives, a failed try is repeated within seconds, not a minute later (owner, Nov 15).
+    let alive = true, active = true, busy = false, loaded = false, failures = 0;
+    let timer: ReturnType<typeof setTimeout> | undefined;
     const load = async () => {
       try {
         const response = await fetch("/api/research/company-wire", { cache: "no-store" });
-        if (!response.ok) return;
+        if (!response.ok) return false;
         const items = parseCompanyWire(await response.json()).items;
-        if (!alive) return;
+        if (!alive) return false;
         markFresh(wireTracker.current(Object.values(items).flat().map(item => ({ id: `wire:${item.id}`, at: item.publishedAt }))).map(row => row.id));
-        setWire(items); setCheckedAt(Date.now());
-      } catch { /* keep the previous list */ }
+        setWire(items); setWireLoaded(true); setCheckedAt(Date.now());
+        return true;
+      } catch { return false; /* keep the previous list */ }
       finally { if (alive) setWireSettled(true); }
     };
+    const run = async () => {
+      if (busy) return;
+      busy = true; clearTimeout(timer); timer = undefined;
+      const ok = await load();
+      busy = false;
+      if (!alive) return;
+      if (ok) { loaded = true; failures = 0; } else if (!loaded) failures += 1;
+      if (active) timer = setTimeout(run, companyWireDelay(loaded, failures));
+    };
     const grace = setTimeout(() => setWireSettled(true), 2_500);
-    const stop = observePageActivity(() => { void load(); timer ??= setInterval(load, 60_000); }, () => { clearInterval(timer); timer = undefined; });
-    void load(); timer = setInterval(load, 60_000);
-    return () => { alive = false; clearTimeout(grace); clearInterval(timer); stop(); };
+    const stop = observePageActivity(() => { active = true; void run(); }, () => { active = false; clearTimeout(timer); timer = undefined; });
+    void run();
+    return () => { alive = false; clearTimeout(grace); clearTimeout(timer); stop(); };
   }, []);
 
   // The page shell shows the shared branded loader until the first feed (or its failure) is known (owner, Oct 20).
@@ -156,6 +169,8 @@ export default function FlashPage({ lang, onReady }: { lang: Language; onReady?:
     {!full && <p className={styles.freeNote} role="note"><b>FREE</b>{ja ? "版　30分遅延・新着5件" : " 30 min behind · latest 5"}<br /><Link href="/research#tech-phase-pro">{ja ? "PRO版は、リアルタイム・全件" : "PRO: real-time access to all updates"}</Link></p>}
     <div ref={list} className={styles.panel}>
       {failed && <p className={timeline.problem} role="status">{ja ? "最新の配信状況を確認できません。" : "Unable to check the latest feed."}{feed && (ja ? " 前回取得した内容を表示しています。" : " Showing previously loaded items.")}</p>}
+      {/* Company headlines still on the way: one quiet line, so the page never looks like earnings only (owner, Nov 15). */}
+      {wireSettled && !wireLoaded && view === "all" && <p className={timeline.fine} role="status">{ja ? "ニュースを読み込んでいます" : "Loading news…"}</p>}
       {feed && !rows.length && <p className={timeline.problem}>{ja ? "現在、該当する速報はありません。" : "No matching alerts right now."}</p>}
       {!!shown.length && <div className={timeline.timeline}>{shown.flatMap((row, index) => {
         const key = dayKey(row);

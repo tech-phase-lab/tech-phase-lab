@@ -39,3 +39,15 @@ export function parseCompanyWire(value: unknown): CompanyWireFeed {
   }
   return { ok: true, items };
 }
+
+/** Company headlines refresh once a minute after they have loaded. Until the
+ * first load succeeds, a failed try is repeated soon (3 s, 6 s, 12 s, 24 s,
+ * then every 30 s) so the 速報 page never sits on earnings rows only. */
+export const COMPANY_WIRE_REFRESH_MS = 60_000;
+export const COMPANY_WIRE_RETRY_BASE_MS = 3_000;
+export const COMPANY_WIRE_RETRY_CAP_MS = 30_000;
+
+export function companyWireDelay(loaded: boolean, failures: number) {
+  if (loaded || failures <= 0) return COMPANY_WIRE_REFRESH_MS;
+  return Math.min(COMPANY_WIRE_RETRY_CAP_MS, COMPANY_WIRE_RETRY_BASE_MS * 2 ** Math.min(failures - 1, 10));
+}
