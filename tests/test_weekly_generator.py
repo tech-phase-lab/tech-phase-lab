@@ -331,6 +331,49 @@ class GenerateTests(Base):
         json.dumps(gen.response_schema())
 
 
+class DepthAndFiguresTests(Base):
+    """Owner, Nov 15: the draft had no figure and read like the news; PRO readers need more than that."""
+
+    def test_the_weeks_deep_analyses_are_evidence_and_count_as_earnings(self):
+        self.db.executescript("""CREATE TABLE IF NOT EXISTS deep_analyses(source_ref TEXT PRIMARY KEY, kind TEXT NOT NULL, subject TEXT NOT NULL,
+          source_sha TEXT NOT NULL, state TEXT NOT NULL, attempts INTEGER NOT NULL DEFAULT 0, next_at REAL NOT NULL DEFAULT 0, model TEXT, payload TEXT,
+          failure TEXT, created_at TEXT NOT NULL, published_at TEXT, source_url TEXT, source_title TEXT)""")
+        note = {"headline": {"ja": "MUはHBMの比率が上がりました", "en": "HBM mix rose at MU"},
+                "points": [{"ja": "データセンター向けが売上高$11.32Bをけん引しました。", "en": "Data center drove revenue of $11.32B."},
+                           {"ja": "粗利益率の見通しを確認したいところです。", "en": "Gross margin guidance is worth checking."}], "watch": None}
+        for ref, state, at in (("a", "done", "2026-11-06T00:00:00+00:00"), ("b", "held", "2026-11-06T00:00:00+00:00"), ("c", "done", "2026-10-01T00:00:00+00:00")):
+            self.db.execute("INSERT INTO deep_analyses(source_ref,kind,subject,source_sha,state,payload,created_at,published_at,source_url) VALUES(?,?,?,?,?,?,?,?,?)",
+                            (ref, "earnings", "MU", "s", state, json.dumps(note, ensure_ascii=False), at, at, "https://investors.micron.com/x"))
+        self.db.commit()
+        evidence = gen.collect(self.db, SATURDAY)
+        analyses = [item for item in evidence if item["kind"] == "analysis"]
+        self.assertEqual(len(analyses), 1, "only this week's published analyses")
+        self.assertIn("$11.32B", analyses[0]["quote"])
+        self.assertEqual(analyses[0]["ticker"], "MU")
+        self.assertEqual(gen.section_of("text", [analyses[0]["id"]], evidence), "earnings")
+        model = FakeModel(model_output())
+        gen.generate(self.db, SATURDAY, transport=model, env=ENV)
+        self.assertIn("analysis", {e["type"] for e in json.loads(model.calls[0]["input"])["evidence"]})
+        self.assertIn("type が analysis の資料は", model.calls[0]["instructions"])
+
+    def test_figures_are_added_by_the_program_when_the_model_chose_none(self):
+        out = model_output()
+        out["parts"] = [p for p in out["parts"] if p["type"] != "numbers"]
+        saved = gen.generate(self.db, SATURDAY, transport=FakeModel(out), env=ENV)
+        numbers = [p for p in saved["parts"] if p["type"] == "numbers"]
+        self.assertEqual([p["heading"] for p in numbers], ["決算の数字", "経済指標の数字"])
+        self.assertEqual(numbers[0]["cards"][0]["label"], "MU 売上高")
+        jobs = numbers[1]
+        self.assertTrue(jobs["compare"], "result / forecast / previous bars for the indicator")
+        self.assertEqual([v["name"] for v in jobs["compare"][0]["values"]], ["結果", "予想", "前回"])
+
+    def test_figures_the_model_chose_are_not_doubled(self):
+        saved = gen.generate(self.db, SATURDAY, transport=FakeModel(model_output()), env=ENV)
+        headings = [p["heading"] for p in saved["parts"] if p["type"] == "numbers"]
+        self.assertEqual(headings.count("決算の数字"), 0, "the model's own earnings figures stay; none added for that section")
+        self.assertIn("経済指標の数字", headings)
+
+
 class RecentTests(Base):
     def test_the_model_is_shown_the_last_published_issues_to_avoid_the_same_opening(self):
         for number in range(1, 5):
