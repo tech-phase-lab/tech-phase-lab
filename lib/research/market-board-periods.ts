@@ -143,3 +143,19 @@ export function liveBand(bars: Bar[], phase: string, ja: boolean): { from: numbe
   while (from > 0 && bars[from - 1].at.length >= 16 && bars[from - 1].at.slice(0, 10) === lastDay && segmentOf(bars[from - 1].at) === want) from--;
   return { from, label: phase === "pre" ? (ja ? "プレ" : "Pre") : (ja ? "アフター" : "After") };
 }
+
+/** The lowest drawn height (in the chart's 390-wide frame) of a bar that has any volume, so a pre-market / after-hours bar stays visible next to the session. */
+export const VOLUME_FLOOR = 1.5;
+/** The volume row of a chart, one entry per bar (owner, Nov 15: the row must run under the whole chart, not only under the session).
+ * The provider's pre-market / after-hours 15-minute bars do carry volume, but a few hundred shares at most against the session's millions
+ * (MSFT, Nov 9: 0–358 shares a bar before 9:30, 0–260 after 16:00, 0.25–10 million in the session), so on a linear scale they were 0px tall.
+ * Heights stay true to the provider's figures (nothing is made up: a bar with no volume has no height); a bar with some volume is at least
+ * VOLUME_FLOOR tall, and pre-market / after-hours bars are marked `extended` so they are drawn muted. The chart also draws a faint baseline
+ * across the full width, so stretches of zero volume still read as one row. */
+export function volumeBars(bars: Bar[], height: number): { height: number; extended: boolean }[] {
+  const max = Math.max(1, ...bars.map(bar => bar.volume ?? 0));
+  return bars.map(bar => {
+    const volume = bar.volume ?? 0;
+    return { height: volume > 0 ? Math.max(VOLUME_FLOOR, volume / max * height) : 0, extended: segmentOf(bar.at) !== "regular" };
+  });
+}
