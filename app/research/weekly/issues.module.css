@@ -112,3 +112,15 @@
   .takeaways .icon svg{width:16px;height:16px}
   .takeaways p{font-size:15.5px;line-height:1.75}
 }
+/* Number cards on phones (owner, Nov 15, after a ChatGPT layout): two columns of open figures, a small grey label over a large number, the
+   change in colour under it, instead of one boxed card per row. */
+@media (max-width:600px){
+  .cards{grid-template-columns:repeat(2,minmax(0,1fr));gap:20px 14px}
+  .card{padding:0;border:0;border-radius:0;background:none}
+  .card h4{margin:0 0 6px;font-size:13px;line-height:1.5;color:#9aa4b0}
+  .big b{font-size:26px}
+  .big small{font-size:12px}
+  .outlook{font-size:12px}.outlook b{font-size:16px}
+  .badge{padding:3px 9px;font-size:12px}.badge b{font-size:13px}
+  .range{font-size:11px}
+}
