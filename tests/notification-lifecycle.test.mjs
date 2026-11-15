@@ -24,7 +24,8 @@ function harness(fetch, subscription=null, props={}) {
   if(id==='@/lib/research/member-recovery')return {waitForIdentity};
   if(id==='@/lib/research/preferences-load')return preferencesLoad;
   if(id==='./notification-page-view')return {default:p=>{view=p;return null;}};
-  if(id==='./member-display-provider')return {useOwnerMode:()=>false};
+  if(id==='./member-display-provider')return {useOwnerMode:()=>false,useOwnerAccount:()=>props.ownerAccount===true};
+  if(id==='./push-diagnostic-panel')return {default:()=>null};
   if(id==='./identity-provider')return {useIdentityRefresh:()=>async()=>{}};
   if(id.endsWith('.css'))return {default:{}};
   return require(id);
@@ -141,4 +142,13 @@ test('a lapsed sign-in is renewed once before reading again; a named refusal is 
  try {renewed.panel.render();renewed.panel.mount();await flush();await flush();assert.equal(renewed.reads(),2);assert.equal(renewed.panel.view().prefsState,'ready');} finally {renewed.panel.stop();}
  const refused=pagePanel(()=>Response.json({ok:false,error:'not-registered'}));
  try {refused.panel.render();refused.panel.mount();await flush();assert.equal(refused.reads(),1);assert.equal(refused.panel.view().prefsState,'error');} finally {refused.panel.stop();}
+});
+
+test('Nov 15: the notification step record (通知の動作の記録) reaches the settings page for the owner account only', () => {
+ for (const ownerAccount of [true, false]) {
+  const view = harness(async () => Response.json({}), null, { page: true, ownerAccount }).view();
+  assert.equal(Boolean(view.diagnostic), ownerAccount, String(ownerAccount));
+ }
+ const settings = readFileSync(new URL('../app/research/notification-settings.tsx', import.meta.url), 'utf8');
+ assert.match(settings, /diagnostic=\{ownerAccount \? <PushDiagnosticPanel lang=\{lang\} \/> : null\}/);
 });

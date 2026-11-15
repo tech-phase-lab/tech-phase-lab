@@ -1,6 +1,6 @@
 /* Push only: no fetch handler and no cached private/API responses. */
-// Version 2026-11-15 (iPhone: remember the tapped notice's page): changing this file is what makes installed phones pick up the new worker.
-const VERSION = "2026-11-15-pending-open";
+// Version 2026-11-15 (iPhone: in-app banner for a new notice, step record): changing this file is what makes installed phones pick up the new worker.
+const VERSION = "2026-11-15-inapp-banner";
 // Where a notification tap may go (Nov 13: every tap used to open the price-target page, whatever the notice was about).
 // Only a same-origin path on this list is opened; anything else falls back to /research.
 // Keep in step with lib/research/push-targets.json (tests/research-sw-click-target.test.mjs checks they match).
@@ -16,11 +16,14 @@ const ACK_TIMEOUT_MS = 1500;
 // Nov 15 (iPhone home-screen app): navigate(), a message to a suspended page and openWindow() may each return without the app
 // moving, and a tap on an app that is already open may not reach this worker at all (WebKit bugs 252544, 259212, 263687, 282935).
 // So the tap is written down FIRST and the app reads it when it is shown again (lib/research/push-open.ts). The latest notice shown
-// is written down too, for an app that is never told about the tap. Only a page path, an id, a tag and a time are kept: never a
-// response, a member or a key. Keep these names in step with lib/research/push-open.ts.
+// is written down too (with its title), so an app that is never told about the tap shows an in-app banner for it. Only a page path,
+// an id, a tag, the title and a time are kept: never a response, a member or a key. Keep these names in step with lib/research/push-open.ts.
 const STORE = "tech-phase-push-open";
 const PENDING_KEY = "/research-sw/pending-open";
 const DELIVERED_KEY = "/research-sw/delivered";
+// Nov 15: the steps this worker saw for the latest notice (times, yes/no answers, VERSION and the notice's random id only, never its
+// title or page), so the owner's app can say which step failed (lib/research/push-diagnostic.ts).
+const DIAG_KEY = "/research-sw/diagnostic";
 const ID = /^[A-Za-z0-9-]{1,64}$/;
 function destination(value) {
   if (value === undefined || value === null) return LEGACY_TARGET;
@@ -76,13 +79,23 @@ async function deliver(payload) {
   const url = destination(payload.url);
   const id = noticeId();
   const tag = String(payload.tag || "tech-phase").slice(0, 100);
-  await self.registration.showNotification(payload.title.slice(0, 100), {
+  const title = payload.title.slice(0, 100);
+  const diag = { v: VERSION, id, push: Date.now() };
+  await remember(DIAG_KEY, diag);
+  await self.registration.showNotification(title, {
     body: payload.body.slice(0, 300), tag, renotify: false, data: { url, id },
   });
-  // Only when this phone lists shown notices may the app take a notice that vanished for a tap the worker was never told about.
-  let listed = false;
-  try { listed = (await self.registration.getNotifications({ tag })).some(notice => notice.data?.id === id); } catch { listed = false; }
-  const record = { id, url, tag, at: Date.now(), listed };
+  diag.shown = Date.now();
+  // Whether this phone lists shown notices. Kept for the step record only: a notice gone from the list is no longer taken for a tap
+  // (a notice swiped away would have opened its page too); the app shows an in-app banner instead.
+  let listed = null;
+  if (typeof self.registration.getNotifications === "function") {
+    try { listed = (await self.registration.getNotifications({ tag })).some(notice => notice.data?.id === id); } catch { listed = null; }
+  }
+  diag.listApi = listed !== null; diag.listed = listed;
+  await remember(DIAG_KEY, diag);
+  // The title stays on this device, for the app's banner (「新しい通知：…」) when the app is shown within 2 minutes.
+  const record = { id, url, tag, title, at: Date.now(), listed: listed === true };
   await remember(DELIVERED_KEY, record);
   for (const client of await researchClients()) { try { client.postMessage({ type: "delivered", ...record, version: VERSION }); } catch { /* page gone */ } }
 }
@@ -131,6 +144,8 @@ async function tapped(notification) {
   // Write the tap down before anything else: on iOS each step below can return without the app having moved.
   await remember(PENDING_KEY, { id, url: path, at: Date.now() });
   await forget(DELIVERED_KEY);
+  const diag = await recall(DIAG_KEY);
+  await remember(DIAG_KEY, diag && diag.id === id ? { ...diag, click: Date.now() } : { v: VERSION, id, click: Date.now() });
   try { await openTarget(path, id); } catch { /* the app reads the written tap when it is shown */ }
 }
 self.addEventListener("notificationclick", (event) => {
@@ -145,8 +160,8 @@ self.addEventListener("message", (event) => {
   const port = event.ports?.[0];
   if (data.type === "pending-query" && port) {
     event.waitUntil((async () => {
-      const [pending, delivered] = await Promise.all([recall(PENDING_KEY), recall(DELIVERED_KEY)]);
-      try { port.postMessage({ type: "pending", pending, delivered, version: VERSION }); } catch { /* page gone */ }
+      const [pending, delivered, diag] = await Promise.all([recall(PENDING_KEY), recall(DELIVERED_KEY), recall(DIAG_KEY)]);
+      try { port.postMessage({ type: "pending", pending, delivered, diag, version: VERSION }); } catch { /* page gone */ }
     })());
   } else if (data.type === "pending-clear" && typeof data.id === "string" && ID.test(data.id)) {
     event.waitUntil(Promise.all([forget(PENDING_KEY, data.id), forget(DELIVERED_KEY, data.id)]));

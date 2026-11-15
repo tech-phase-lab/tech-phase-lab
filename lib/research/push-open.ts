@@ -8,6 +8,7 @@ const FRAGMENT = new RegExp(targets.fragment);
 export const PUSH_OPEN_STORE = "tech-phase-push-open";
 export const PENDING_OPEN_KEY = "/research-sw/pending-open";
 export const DELIVERED_KEY = "/research-sw/delivered";
+export const DIAG_KEY = "/research-sw/diagnostic";
 /** A tap written down longer ago than this is not opened any more: the person has moved on. */
 export const PENDING_OPEN_MAX_AGE_MS = 120_000;
 const ID = /^[A-Za-z0-9-]{1,64}$/;
@@ -54,48 +55,79 @@ export function handlePushOpenMessage(event: MessageLike, location: { origin: st
 }
 
 /** A tap (or a shown notice) the worker wrote down, when it is well formed, on the list and recent. */
-export type PushRecord = { id: string; path: string; at: number; tag: string; listed: boolean };
+export type PushRecord = { id: string; path: string; at: number; tag: string; title: string };
 export function pushRecord(value: unknown, now: number): PushRecord | null {
   if (!value || typeof value !== "object") return null;
-  const { id, url, at, tag, listed } = value as { id?: unknown; url?: unknown; at?: unknown; tag?: unknown; listed?: unknown };
+  const { id, url, at, tag, title } = value as { id?: unknown; url?: unknown; at?: unknown; tag?: unknown; title?: unknown };
   if (typeof id !== "string" || !ID.test(id) || typeof at !== "number" || !Number.isFinite(at)) return null;
   // A little room for a clock that moved between the worker's write and this read; never older than the limit.
   if (now - at > PENDING_OPEN_MAX_AGE_MS || at - now > 10_000) return null;
   const path = pushOpenPath({ type: "open", url });
   if (!path) return null;
-  return { id, path, at, tag: typeof tag === "string" ? tag.slice(0, 100) : "", listed: listed === true };
+  return { id, path, at, tag: typeof tag === "string" ? tag.slice(0, 100) : "",
+    title: typeof title === "string" ? title.replace(/[\u0000-\u001f\u007f]+/g, " ").trim().slice(0, 100) : "" };
 }
+
+/** The in-app banner for a notice that arrived a moment ago: 「新しい通知：<title>」 with 開く and ✕. */
+export type PushBanner = { id: string; path: string; title: string };
+/** How long the banner stays before it hides itself. */
+export const PUSH_BANNER_MS = 15_000;
 
 /** Where the app reads what the worker wrote down. Every method may fail; a failure is the same as "nothing written". */
 export type PushOpenSources = {
-  /** The worker's records: asked of the worker first, then read from Cache Storage. */
-  read: () => Promise<{ pending?: unknown; delivered?: unknown } | null>;
-  /** Forget one record (the worker and the store), so it is opened once. */
+  /** The worker's records: asked of the worker first, then read from Cache Storage. `source` says which answered. */
+  read: () => Promise<{ pending?: unknown; delivered?: unknown; diag?: unknown; source?: "worker" | "store" } | null>;
+  /** Forget one record (the worker and the store), so it is opened or shown once. */
   clear: (id: string) => Promise<void>;
-  /** Ids of the notices with this tag still shown on the device, or null when the device cannot say. */
+  /** Ids of the notices with this tag still shown on the device, or null when the device cannot say (step record only). */
   shown: (tag: string) => Promise<string[] | null>;
+};
+/** The step record (lib/research/push-diagnostic.ts); optional, so the opener works without it. */
+export type PushOpenDiagnostics = {
+  fromWorker: (value: unknown) => void;
+  note: (patch: Record<string, unknown>, id?: string) => void;
 };
 export type PushOpenerOptions = {
   sources: PushOpenSources;
   location: () => { origin: string; pathname: string; hash: string };
   navigation: PushOpenNavigation;
+  /** Show (a notice) or hide (null) the in-app banner. */
+  banner?: (notice: PushBanner | null) => void;
+  diagnostics?: PushOpenDiagnostics;
   now?: () => number;
 };
 
-/** Nov 15 (iPhone home-screen app): a tap must open its page however the app learns of it — the worker's message, the tap the
- * worker wrote down (read when the app is shown again), or, when iOS never tells the worker about the tap, the notice having gone
- * from the device. Each tap is opened once, whichever way arrives first. */
-export function createPushOpener({ sources, location, navigation, now = Date.now }: PushOpenerOptions) {
+/** Nov 15 (iPhone home-screen app): a tap must open its page however the app learns of it — the worker's message or the tap the
+ * worker wrote down (read when the app is shown again). iOS may never tell the worker about a tap on an app that is already open
+ * (WebKit 282935; the owner's iPhone stayed on the home page after #597), so a notice that arrived while the app is shown, or within
+ * 2 minutes before it is shown again, also gets an in-app banner with an 開く button. A notice that has gone from the phone's list is
+ * no longer taken for a tap (a notice swiped away would have opened its page too). Each notice is opened or shown once. */
+export function createPushOpener({ sources, location, navigation, banner = () => {}, diagnostics, now = Date.now }: PushOpenerOptions) {
   const handled = new Set<string>();
   let delivered: PushRecord | null = null;
+  let showing: PushRecord | null = null;
   let checking: Promise<string | null> | null = null;
-  const forget = (id: string) => { void sources.clear(id).catch(() => { /* written down again only by a new tap */ }); };
-  function open(record: PushRecord) {
+  const note = (patch: Record<string, unknown>, id?: string) => { try { diagnostics?.note(patch, id); } catch { /* the record is best effort */ } };
+  const forget = (id: string) => { void sources.clear(id).catch(() => { /* written down again only by a new notice */ }); };
+  function hide(id?: string) {
+    if (!showing || (id !== undefined && showing.id !== id)) return;
+    showing = null;
+    banner(null);
+  }
+  function show(record: PushRecord) {
+    if (handled.has(record.id) || showing?.id === record.id) return;
+    showing = record;
+    note({ banner: now() }, record.id);
+    banner({ id: record.id, path: record.path, title: record.title });
+  }
+  function open(record: PushRecord, via: "pending" | "banner") {
     if (handled.has(record.id)) return null;
     handled.add(record.id);
     if (delivered?.id === record.id) delivered = null;
+    hide(record.id);
     forget(record.id);
     openPushPath(record.path, location(), navigation);
+    note({ navigated: now(), via }, record.id);
     return record.path;
   }
   function message(event: MessageLike): string | null {
@@ -104,24 +136,27 @@ export function createPushOpener({ sources, location, navigation, now = Date.now
     const data = event.data as { type?: unknown; id?: unknown } | null;
     if (data && typeof data === "object" && data.type === "delivered") {
       const record = pushRecord(data, now());
-      if (record && !handled.has(record.id) && (!delivered || record.at >= delivered.at)) delivered = record;
+      if (record && !handled.has(record.id) && (!delivered || record.at >= delivered.at)) { delivered = record; show(record); }
       return null;
     }
     const path = pushOpenPath(data);
     if (!path) return null;
     const id = typeof data?.id === "string" && ID.test(data.id) ? data.id : null;
     const fresh = !id || !handled.has(id);
-    if (id) { handled.add(id); if (delivered?.id === id) delivered = null; forget(id); }
-    if (fresh) openPushPath(path, here, navigation);
+    if (id) { handled.add(id); if (delivered?.id === id) delivered = null; hide(id); forget(id); }
+    if (fresh) { openPushPath(path, here, navigation); if (id) note({ navigated: now(), via: "worker-message" }, id); }
     try { event.ports?.[0]?.postMessage({ type: "opened" }); } catch { /* the worker stopped waiting; the page has moved anyway */ }
     return fresh ? path : null;
   }
   async function run(): Promise<string | null> {
     const at = now();
     const stored = await sources.read().catch(() => null);
+    if (stored?.diag) { try { diagnostics?.fromWorker(stored.diag); } catch { /* best effort */ } }
+    note(stored?.source === "worker" ? { query: at } : stored?.source === "store" ? { queryTimeout: at, store: at } : { queryTimeout: at });
     const pending = pushRecord(stored?.pending, at);
     if (pending) {
-      if (!handled.has(pending.id)) return open(pending);
+      note({ pending: at }, pending.id);
+      if (!handled.has(pending.id)) return open(pending, "pending");
       forget(pending.id);
     } else {
       const old = stored?.pending as { id?: unknown } | null | undefined;
@@ -129,22 +164,38 @@ export function createPushOpener({ sources, location, navigation, now = Date.now
     }
     const written = pushRecord(stored?.delivered, at);
     if (written && !handled.has(written.id) && (!delivered || written.at > delivered.at)) delivered = written;
-    if (delivered && !pushRecord({ ...delivered, url: delivered.path }, at)) delivered = null;
+    if (delivered && !pushRecord({ ...delivered, url: delivered.path }, at)) { if (showing?.id === delivered.id) hide(); delivered = null; }
     const candidate = delivered;
-    // Only a notice the device listed when it was shown, and lists no more, counts as tapped.
-    if (!candidate || !candidate.listed || handled.has(candidate.id)) return null;
+    if (!candidate || handled.has(candidate.id)) return null;
+    // For the step record only: whether the phone still lists the notice when the app is shown (it is never taken for a tap).
     const ids = await sources.shown(candidate.tag).catch(() => null);
-    if (!ids || ids.includes(candidate.id) || delivered?.id !== candidate.id) return null;
-    return open(candidate);
+    note({ stillListed: ids ? ids.includes(candidate.id) : null }, candidate.id);
+    if (delivered?.id === candidate.id) show(candidate);
+    return null;
   }
-  /** Look for a tap to open. Calls made while a look is running share it. */
+  /** Look for a tap to open (or a new notice to show). Calls made while a look is running share it. */
   function check(): Promise<string | null> {
     if (!checking) checking = run().finally(() => { checking = null; });
     return checking;
   }
-  /** Whether a recent notice is still being watched for a tap (the listener keeps looking while the app is shown). */
-  function watching() { return Boolean(delivered && !handled.has(delivered.id) && delivered.listed && now() - delivered.at <= PENDING_OPEN_MAX_AGE_MS); }
-  return { message, check, watching };
+  /** 開く on the banner: go to the notice's page. */
+  function openBanner(): string | null {
+    if (!showing) return null;
+    const record = showing;
+    note({ bannerOpen: now() }, record.id);
+    return open(record, "banner");
+  }
+  /** ✕ (or the 15-second timer): hide the banner and do not show this notice again. */
+  function dismissBanner(reason: "close" | "timeout" = "close") {
+    if (!showing) return;
+    const record = showing;
+    handled.add(record.id);
+    if (delivered?.id === record.id) delivered = null;
+    note(reason === "close" ? { bannerClose: now() } : { bannerTimeout: now() }, record.id);
+    forget(record.id);
+    hide(record.id);
+  }
+  return { message, check, openBanner, dismissBanner, banner: () => showing && { id: showing.id, path: showing.path, title: showing.title } };
 }
 
 type WorkerLike = { postMessage: (message: unknown, transfer: Transferable[]) => void };
@@ -167,15 +218,16 @@ export function browserPushOpenSources(container: ContainerLike, caches: CachesL
     if (!caches) return null;
     const store = await caches.open(PUSH_OPEN_STORE);
     const read = async (name: string) => { const found = await store.match(key(name)); return found ? await found.json().catch(() => null) : null; };
-    return { pending: await read(PENDING_OPEN_KEY), delivered: await read(DELIVERED_KEY) };
+    return { pending: await read(PENDING_OPEN_KEY), delivered: await read(DELIVERED_KEY), diag: await read(DIAG_KEY), source: "store" as const };
   }
-  async function fromWorker(): Promise<{ pending?: unknown; delivered?: unknown } | null> {
+  type Read = { pending?: unknown; delivered?: unknown; diag?: unknown; source: "worker" | "store" };
+  async function fromWorker(): Promise<Read | null> {
     const target = await worker();
     if (!target) return null;
     return new Promise(resolve => {
       const { port1, port2 } = channel();
       let settled = false;
-      const finish = (value: { pending?: unknown; delivered?: unknown } | null) => {
+      const finish = (value: Read | null) => {
         if (settled) return;
         settled = true; port1.onmessage = null;
         try { port1.close?.(); } catch { /* already closed */ }
@@ -183,8 +235,8 @@ export function browserPushOpenSources(container: ContainerLike, caches: CachesL
       };
       timeout(() => finish(null), PENDING_QUERY_TIMEOUT_MS);
       port1.onmessage = event => {
-        const data = event.data as { type?: unknown; pending?: unknown; delivered?: unknown } | null;
-        if (data?.type === "pending") finish({ pending: data.pending, delivered: data.delivered });
+        const data = event.data as { type?: unknown; pending?: unknown; delivered?: unknown; diag?: unknown } | null;
+        if (data?.type === "pending") finish({ pending: data.pending, delivered: data.delivered, diag: data.diag, source: "worker" });
       };
       try { target.postMessage({ type: "pending-query" }, [port2]); } catch { finish(null); }
     });
