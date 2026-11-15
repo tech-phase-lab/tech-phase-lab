@@ -68,6 +68,10 @@ def schema(db):
     if 'article' not in columns:
         db.execute("ALTER TABLE company_wire ADD COLUMN article TEXT NOT NULL DEFAULT ''")
     db.execute('CREATE INDEX IF NOT EXISTS company_wire_article ON company_wire(article)')
+    # Owner, Nov 15 (注目トピックの要約): the Stock News API article's short English text (its ``text`` field), shown under the headline
+    # on the topics page and translated in the same model call as the headline. Empty for other feeds.
+    if 'summary_en' not in columns:
+        db.execute("ALTER TABLE company_wire ADD COLUMN summary_en TEXT NOT NULL DEFAULT ''")
     missing = db.execute("SELECT key, title FROM company_wire WHERE article=''").fetchall()
     if missing:
         db.executemany('UPDATE company_wire SET article=? WHERE key=?', [(article_id(r[1]), r[0]) for r in missing])
@@ -164,6 +168,22 @@ def origin(row, name):
 
 
 SENTIMENTS = ('positive', 'negative', 'neutral')
+SUMMARY_EN_MAX = 1000   # characters of the provider's article text kept (and sent to the model) as the English summary
+
+
+def summary_text(value):
+    """The provider's article text as a one-paragraph English summary: whitespace collapsed, NUL removed, at most SUMMARY_EN_MAX
+    characters (cut at the last sentence end, else the last word, with an ellipsis). '' for anything that is not text."""
+    if not isinstance(value, str):
+        return ''
+    text = re.sub(r'\s+', ' ', value.replace('\x00', '')).strip()
+    if len(text) <= SUMMARY_EN_MAX:
+        return text
+    cut = text[:SUMMARY_EN_MAX]
+    end = max(cut.rfind('. '), cut.rfind('! '), cut.rfind('? '))
+    if end >= SUMMARY_EN_MAX // 2:
+        return cut[:end + 1]
+    return (cut[:cut.rfind(' ')].rstrip(' ,;:') if ' ' in cut else cut[:-1]) + '…'
 
 # ---- Stock News API publishers (owner, Nov 15: 注目トピックに流れる記事を絞る) ----
 # Only news organisations' reporting (and companies' own releases through the press-release wires) is taken from the Stock News
@@ -237,14 +257,18 @@ def store(db, rows, name, seen_at=None):
         key = hashlib.sha256(f"{row['ticker']}|{normalized(row['title'])}".encode()).hexdigest()[:32]
         article = article_id(row['title'])
         feeling = row.get('sentiment') if row.get('sentiment') in SENTIMENTS else ''
+        summary = summary_text(row.get('summary')) if row['source'] == 'stocknews' else ''
         known = db.execute('SELECT 1 FROM company_wire WHERE article=? LIMIT 1', (article,)).fetchone() is not None
         cursor = db.execute('''INSERT OR IGNORE INTO company_wire(key, ticker, source, title, publisher, url, origin, published_at,
-                            first_seen_at, sentiment, article) VALUES(?,?,?,?,?,?,?,?,?,?,?)''',
+                            first_seen_at, sentiment, article, summary_en) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)''',
                             (key, row['ticker'], row['source'], row['title'], row['publisher'], row['url'],
-                             origin(row, name), row['published'].isoformat(), seen_at, feeling, article))
+                             origin(row, name), row['published'].isoformat(), seen_at, feeling, article, summary))
         if not cursor.rowcount and feeling:
             # A story saved before its sentiment was kept gets it the next time the provider sends it.
             db.execute("UPDATE company_wire SET sentiment=? WHERE key=? AND sentiment=''", (feeling, key))
+        if not cursor.rowcount and summary:
+            # Likewise its English summary (rows stored before Nov 15 have none).
+            db.execute("UPDATE company_wire SET summary_en=? WHERE key=? AND summary_en=''", (summary, key))
         if cursor.rowcount and not known:
             bump(db, 'articles', 1, seen.timestamp())
             bump(db, 'articles:' + re.sub(r'[^a-z0-9-]', '', str(row['source']).lower())[:20], 1, seen.timestamp())
@@ -321,6 +345,7 @@ Use only names, tickers and Latin-script words that appear in the headline; writ
 Do not turn "a", "one" or "per share" into a digit (1株, 1社, 1カ所) unless the headline gives that number.
 Keep every number exactly as written (convert units only exactly, e.g. $1.2 billion = 12億ドル); never add, drop or round a figure.
 Keep negation and direction (rise/fall, beat/miss, raise/cut) exactly. When an item has previousRejection, that was why the last translation was rejected; avoid it.
+Also write summaryJa. When an item has text (the article's short English summary), translate that text into natural Japanese of at most 120 characters (one to three sentences), using only facts stated in text or the headline: keep every number exactly as written, keep names, negation and direction, add no analysis, opinion or fact of your own, and leave out anything you cannot keep exactly. When an item has no text, or you judge it not-news or off-topic, summaryJa is "".
 Also write shortJa: the same headline as one short Japanese line of at most 22 characters, for a one-line news band. Keep the subject (company or ticker) and the single most important fact; keep any number you use exactly as in titleJa; never add a fact or a number that titleJa does not have; no trailing punctuation; do not cut a sentence off mid-word.
 Also judge each headline (kind). "news" states a concrete fact about the company's business or its stock: results, guidance, a deal, order, investment, product, partnership, lawsuit, regulatory step, executive change, an analyst rating or price-target change, or a market move together with its stated cause.
 "not-news" is everything else, for example: investment advice or opinion ("should you buy", "which stock is better", "X vs Y", "a buying opportunity", "buy the dip"); comparisons and listicles; price predictions and forecasts; any headline that asks a question or starts with "Why" or "What" without giving the answer; teasers that hide their answer ("here is why"); what-if or past-returns pieces; human-interest, hiring, workplace, lifestyle, culture, entertainment or feature stories (for example a vocational graduate getting a job, an employee's life story, a TV programme); and promotional or community posts.
@@ -348,6 +373,10 @@ def schema_translation(db):
       article TEXT PRIMARY KEY, title_ja TEXT NOT NULL, short_ja TEXT NOT NULL DEFAULT '', model TEXT NOT NULL, created_at TEXT NOT NULL)''')
     db.execute('''CREATE TABLE IF NOT EXISTS company_wire_article_attempts(
       article TEXT PRIMARY KEY, attempts INTEGER NOT NULL, next_at REAL NOT NULL, reason TEXT NOT NULL DEFAULT '')''')
+    # Owner, Nov 15 (注目トピックの要約): the checked Japanese summary, written in the same call as the headline; '' when the article
+    # had no English text or the summary failed its checks (the headline is kept either way).
+    if 'summary_ja' not in {r[1] for r in db.execute('PRAGMA table_info(company_wire_article_ja)')}:
+        db.execute("ALTER TABLE company_wire_article_ja ADD COLUMN summary_ja TEXT NOT NULL DEFAULT ''")
     schema_watch(db)
     if db.execute("SELECT 1 FROM company_wire_watch WHERE key='article_migration'").fetchone() is None:
         migrate_to_articles(db)
@@ -480,7 +509,7 @@ def candidates(db, now_ts):
     entry, carried by its best row; ``tickers`` lists every ticker it is filed under, ``source`` is 'stocknews' when any copy came
     from the Stock News API, and ``first_seen_at`` is the earliest copy's."""
     since = (datetime.fromtimestamp(now_ts, timezone.utc) - timedelta(hours=PUBLIC_HOURS)).isoformat()
-    rows = db.execute('''SELECT w.key, w.article, w.title, w.ticker, w.origin, w.publisher, w.published_at, w.source, w.first_seen_at
+    rows = db.execute('''SELECT w.key, w.article, w.title, w.ticker, w.origin, w.publisher, w.published_at, w.source, w.first_seen_at, w.summary_en
       FROM company_wire w LEFT JOIN company_wire_article_ja j ON j.article=w.article
       LEFT JOIN company_wire_article_attempts a ON a.article=w.article
       WHERE j.article IS NULL AND w.published_at>=? AND (a.article IS NULL OR (a.attempts<? AND a.next_at<=?))
@@ -497,6 +526,8 @@ def candidates(db, now_ts):
         best['first_seen_at'] = min(r['first_seen_at'] for r in copies)
         if any(r['source'] == 'stocknews' for r in copies):
             best['source'] = 'stocknews'
+        # The English summary of any copy (only Stock News API copies carry one), so it is translated with the headline.
+        best['summary_en'] = next((r['summary_en'] for r in copies if r['summary_en']), '')
         entries.append(best)
     # A story already translated for the same company needs no second copy.
     done = {}
@@ -585,6 +616,42 @@ def validated_short(short_ja, title_ja):
     return short_ja
 
 
+SUMMARY_JA_MAX = 300
+JAPANESE = re.compile(r'[぀-ヿ㐀-鿿]')
+
+
+def validated_summary(summary_ja, text, title):
+    """The Japanese summary, or '' when there is no English text or it fails the same checks as the headline (numbers, meaning,
+    acquisition status and names must all be supported by the English text and headline). It is optional: a failed summary never
+    rejects the headline."""
+    if not text or not isinstance(summary_ja, str):
+        return ''
+    summary_ja = re.sub(r'[ \t]*\n+[ \t]*', '', summary_ja).strip()
+    if not summary_ja or len(summary_ja) > SUMMARY_JA_MAX or '\x00' in summary_ja or not JAPANESE.search(summary_ja):
+        return ''
+    import factual_validation
+    evidence = title + '\n' + text
+    try:
+        factual_validation.validate_numbers(summary_ja, evidence)
+        factual_validation.validate_semantics(summary_ja, evidence)
+        factual_validation.validate_acquisition(summary_ja, evidence, 'ja')
+        factual_validation.validate_names(summary_ja, evidence)
+    except ValueError:
+        return ''
+    return summary_ja
+
+
+SUMMARY_OUTPUT_TOKENS = 320   # the output allowance added per article that carries English text (120 Japanese characters and the JSON)
+
+
+def usage_tokens(response):
+    """(input, output) tokens the model reported for a call; 0 for anything missing or malformed."""
+    usage = response.get('usage') if isinstance(response, dict) else None
+    usage = usage if isinstance(usage, dict) else {}
+    value = lambda key: usage[key] if isinstance(usage.get(key), int) and not isinstance(usage.get(key), bool) and usage[key] >= 0 else 0
+    return value('input_tokens'), value('output_tokens')
+
+
 def translate_once(path, transport=None, env=None, now_ts=None, report=None):
     """One batched model call for new headlines, at most 30 articles, each article once whatever tickers it is filed under. Returns a short status word ('done', 'idle', 'budget', 'disabled', 'retry' when
     every headline of the batch was rejected, or 'model-<Error>' when the model call itself failed). ``report`` (a dict) receives
@@ -629,25 +696,31 @@ def translate_once(path, transport=None, env=None, now_ts=None, report=None):
             bump_max(db, 'waitMaxSeconds', max(waits), now_ts)
         db.commit()
     by_id = {str(i): r for i, r in enumerate(rows)}
+    with_text = sum(1 for r in rows if r['summary_en'])
     payload = {
-        'model': model, 'store': False, 'max_output_tokens': 4000, 'instructions': POLICY,
-        'input': json.dumps([{'id': i, 'title': r['title'], **({'previousRejection': earlier[r['article']]} if r['article'] in earlier else {})}
+        'model': model, 'store': False, 'max_output_tokens': 4000 + SUMMARY_OUTPUT_TOKENS * with_text, 'instructions': POLICY,
+        'input': json.dumps([{'id': i, 'title': r['title'], **({'text': r['summary_en']} if r['summary_en'] else {}),
+                              **({'previousRejection': earlier[r['article']]} if r['article'] in earlier else {})}
                              for i, r in by_id.items()], ensure_ascii=False),
         'text': {'format': {'type': 'json_schema', 'name': 'company_wire_translation', 'strict': True, 'schema': {
             'type': 'object', 'additionalProperties': False, 'required': ['items'], 'properties': {'items': {
                 'type': 'array', 'items': {'type': 'object', 'additionalProperties': False,
-                                           'required': ['id', 'titleJa', 'shortJa', 'kind'],
+                                           'required': ['id', 'titleJa', 'shortJa', 'summaryJa', 'kind'],
                                            'properties': {'id': {'type': 'string'}, 'titleJa': {'type': 'string'}, 'shortJa': {'type': 'string'},
+                                                          'summaryJa': {'type': 'string'},
                                                           'kind': {'type': 'string', 'enum': ['news', 'not-news', 'off-topic']}}}}}}}},
     }
     translated = {}
     shorts = {}
+    summaries = {}
+    tokens = (0, 0)
     reasons = {}
     skipped = set()
     skip_reason = {}
     outage = ''
     try:
         response = transport(payload, key)
+        tokens = usage_tokens(response)
         if response.get('status') != 'completed':
             raise ValueError('incomplete')
         result = json.loads(brief_generator.output_text(response))
@@ -663,6 +736,7 @@ def translate_once(path, transport=None, env=None, now_ts=None, report=None):
             try:
                 translated[row['article']] = validated_translation(item.get('titleJa'), row['title'])
                 shorts[row['article']] = validated_short(item.get('shortJa'), translated[row['article']])
+                summaries[row['article']] = validated_summary(item.get('summaryJa'), row['summary_en'], row['title'])
             except ValueError as error:
                 reasons[row['article']] = str(error)[:40] or 'invalid'
     except Exception as error:
@@ -674,8 +748,8 @@ def translate_once(path, transport=None, env=None, now_ts=None, report=None):
         schema_translation(db)
         for row in rows:
             if row['article'] in translated:
-                db.execute('INSERT OR IGNORE INTO company_wire_article_ja(article,title_ja,model,created_at,short_ja) VALUES(?,?,?,?,?)',
-                           (row['article'], translated[row['article']], model, stamp, shorts.get(row['article'], '')))
+                db.execute('INSERT OR IGNORE INTO company_wire_article_ja(article,title_ja,model,created_at,short_ja,summary_ja) VALUES(?,?,?,?,?,?)',
+                           (row['article'], translated[row['article']], model, stamp, shorts.get(row['article'], ''), summaries.get(row['article'], '')))
             elif row['article'] in skipped:
                 db.execute("""INSERT INTO company_wire_article_attempts(article,attempts,next_at,reason) VALUES(?,?,?,?) ON CONFLICT(article) DO UPDATE SET
                   attempts=excluded.attempts, next_at=excluded.next_at, reason=excluded.reason""", (row['article'], TRANSLATION_ATTEMPTS, now_ts, skip_reason.get(row['article'], 'not-news')))
@@ -686,6 +760,12 @@ def translate_once(path, transport=None, env=None, now_ts=None, report=None):
         bump(db, 'translated', len(translated), now_ts)
         bump(db, 'notNews', len(skipped), now_ts)
         bump(db, 'rejected', len(rows) - len(translated) - len(skipped), now_ts)
+        # Owner, Nov 15: summaries ride in the same call; how many were kept or dropped, and the tokens the calls used.
+        offered = [row['article'] for row in rows if row['summary_en'] and row['article'] in translated]
+        bump(db, 'summaries', sum(1 for a in offered if summaries.get(a)), now_ts)
+        bump(db, 'summaryRejected', sum(1 for a in offered if not summaries.get(a)), now_ts)
+        bump(db, 'inputTokens', tokens[0], now_ts)
+        bump(db, 'outputTokens', tokens[1], now_ts)
     return 'done' if translated or skipped else (outage or 'retry')
 
 
@@ -697,7 +777,8 @@ def public_feed(db, now_ts=None):
     since = (datetime.fromtimestamp(now_ts, timezone.utc) - timedelta(hours=PUBLIC_HOURS)).isoformat()
     items = {}
     for ticker in roster():
-        rows = db.execute('''SELECT w.key, w.source, w.title, w.publisher, w.url, w.origin, w.published_at, w.sentiment, j.title_ja, j.short_ja
+        rows = db.execute('''SELECT w.key, w.source, w.title, w.publisher, w.url, w.origin, w.published_at, w.sentiment, w.summary_en,
+          j.title_ja, j.short_ja, j.summary_ja
           FROM company_wire w LEFT JOIN company_wire_article_ja j ON j.article=w.article
           LEFT JOIN company_wire_article_attempts a ON a.article=w.article
           WHERE w.ticker=? AND w.published_at>=? AND COALESCE(a.reason,'') NOT IN ('not-news','off-topic') ORDER BY w.published_at DESC LIMIT 120''',
@@ -713,10 +794,11 @@ def public_feed(db, now_ts=None):
             # Owner, Nov 15: the home shows the Stock News API stories, so each row says where it came from ("stocknews", "yahoo", "gnews").
             items[ticker] = [{'id': r['key'], 'titleEn': r['title'], 'titleJa': r['title_ja'], 'shortJa': r['short_ja'] or None,
                               'publisher': r['publisher'], 'origin': r['origin'], 'url': r['url'],
-                              'publishedAt': r['published_at'], 'source': r['source'], **sentiment_field(r)} for r in rows]
+                              'publishedAt': r['published_at'], 'source': r['source'], **sentiment_field(r), **summary_fields(r)} for r in rows]
     # Owner, Nov 10: the home also carries high-tech companies beyond the watched ones and market news (filed under MKT), from the
     # Stock News API. Only headlines that were translated, that is judged news and on topic, are shown for them.
-    extra = db.execute('''SELECT w.ticker, w.key, w.source, w.title, w.publisher, w.url, w.origin, w.published_at, w.sentiment, j.title_ja, j.short_ja
+    extra = db.execute('''SELECT w.ticker, w.key, w.source, w.title, w.publisher, w.url, w.origin, w.published_at, w.sentiment, w.summary_en,
+      j.title_ja, j.short_ja, j.summary_ja
       FROM company_wire w JOIN company_wire_article_ja j ON j.article=w.article WHERE w.published_at>=? AND w.source='stocknews'
       ORDER BY w.published_at DESC LIMIT 400''', (since,)).fetchall()
     for r in extra:
@@ -724,8 +806,16 @@ def public_feed(db, now_ts=None):
             continue
         items.setdefault(r['ticker'], []).append({'id': r['key'], 'titleEn': r['title'], 'titleJa': r['title_ja'], 'shortJa': r['short_ja'] or None,
                                                  'publisher': r['publisher'], 'origin': r['origin'], 'url': r['url'], 'publishedAt': r['published_at'],
-                                                 'source': 'stocknews', **sentiment_field(r)})
+                                                 'source': 'stocknews', **sentiment_field(r), **summary_fields(r)})
     return {'ok': True, 'items': items}
+
+
+def summary_fields(row):
+    """Owner, Nov 15 (注目トピックの要約): a Stock News API row's English summary (summaryEn) and its checked Japanese (summaryJa, only
+    beside a Japanese headline). Other rows carry neither."""
+    if row['source'] != 'stocknews' or not row['summary_en']:
+        return {}
+    return {'summaryEn': row['summary_en'], **({'summaryJa': row['summary_ja']} if row['title_ja'] and row['summary_ja'] else {})}
 
 
 def sentiment_field(row):
@@ -985,7 +1075,9 @@ def translation_health(db, now_ts=None, env=None):
 
 
 DAILY_FIELDS = (('articlesArrived', 'articles'), ('translated', 'translated'), ('calls', 'calls'), ('retries', 'retries'),
-                ('headlinesSent', 'sent'), ('judgedNotNews', 'notNews'), ('notAccepted', 'rejected'), ('prefiltered', 'prefiltered'))
+                ('headlinesSent', 'sent'), ('judgedNotNews', 'notNews'), ('notAccepted', 'rejected'), ('prefiltered', 'prefiltered'),
+                ('summariesTranslated', 'summaries'), ('summariesNotAccepted', 'summaryRejected'),
+                ('inputTokens', 'inputTokens'), ('outputTokens', 'outputTokens'))
 
 
 def daily_counts(db, now_ts):
@@ -994,7 +1086,9 @@ def daily_counts(db, now_ts):
     translated (articles whose Japanese was accepted), calls (model calls), retries (headlines sent again after a rejected or
     failed attempt), headlinesSent (articles sent in all calls, retries included), judgedNotNews (not news or off topic: never
     shown, never retried), notAccepted (rejected by the checks or lost to a failed call; retried up to three attempts),
-    prefiltered (owner, Nov 16: articles the site would hide anyway, never sent), and how long articles waited between arrival and
+    prefiltered (owner, Nov 16: articles the site would hide anyway, never sent), summariesTranslated / summariesNotAccepted
+    (owner, Nov 15: Japanese summaries of translated articles that carried English text, kept or dropped by the checks),
+    inputTokens / outputTokens (the tokens the model reported for the day's calls), and how long articles waited between arrival and
     their first call: maxWaitMinutes and averageWaitMinutes (None before the day's first call)."""
     out = {'timezone': 'Asia/Tokyo'}
     for label, ts in (('today', now_ts), ('yesterday', now_ts - 86400)):

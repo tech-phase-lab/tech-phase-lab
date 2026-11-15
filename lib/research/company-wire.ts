@@ -4,6 +4,9 @@ export type CompanyWireItem = {
   origin: "wire" | "third-party" | "unknown"; url: string; publishedAt: string;
   /** Where the monitor got the row: "stocknews" (the Stock News API), "yahoo", "gnews". Absent from an older monitor. */ source?: string;
   /** The Stock News API's own sentiment for the story (owner, Nov 15: the topics page's プラス / マイナス / 中立). Absent when unknown. */ sentiment?: WireSentiment;
+  /** Owner, Nov 15 (注目トピックの要約): the Stock News API article's short English text, and its checked Japanese translation (only beside
+   * a Japanese headline). Absent for other feeds, for articles without text, and when the Japanese failed its checks. */
+  summaryEn?: string; summaryJa?: string;
 };
 export type WireSentiment = "positive" | "negative" | "neutral";
 const SENTIMENTS: readonly string[] = ["positive", "negative", "neutral"];
@@ -11,6 +14,9 @@ export type CompanyWireFeed = { ok: true; items: Record<string, CompanyWireItem[
 
 const TICKER = /^[A-Z]{1,5}$/;
 const text = (value: unknown, max: number) => typeof value === "string" && !!value.trim() && value.length <= max && !value.includes("\0");
+/** The monitor keeps at most 1,000 characters of English text and 300 of Japanese; anything longer or malformed is dropped (the headline stays). */
+export const SUMMARY_EN_MAX = 1200, SUMMARY_JA_MAX = 300;
+const JAPANESE = /[぀-ヿ㐀-鿿]/;
 
 /** Rejected rows are dropped one by one; nothing malformed reaches the page. */
 export function parseCompanyWire(value: unknown): CompanyWireFeed {
@@ -33,7 +39,9 @@ export function parseCompanyWire(value: unknown): CompanyWireFeed {
       kept.push({ id: v.id as string, titleEn: v.titleEn as string, titleJa: v.titleJa as string | null, shortJa: text(v.shortJa, 40) ? (v.shortJa as string) : null, publisher: v.publisher as string,
         origin: v.origin as CompanyWireItem["origin"], url: url.href, publishedAt: v.publishedAt as string,
         ...(typeof v.source === "string" && /^[a-z0-9-]{1,24}$/.test(v.source) ? { source: v.source } : {}),
-        ...(typeof v.sentiment === "string" && SENTIMENTS.includes(v.sentiment) ? { sentiment: v.sentiment as WireSentiment } : {}) });
+        ...(typeof v.sentiment === "string" && SENTIMENTS.includes(v.sentiment) ? { sentiment: v.sentiment as WireSentiment } : {}),
+        ...(text(v.summaryEn, SUMMARY_EN_MAX) ? { summaryEn: (v.summaryEn as string).trim() } : {}),
+        ...(v.titleJa !== null && text(v.summaryJa, SUMMARY_JA_MAX) && JAPANESE.test(v.summaryJa as string) ? { summaryJa: (v.summaryJa as string).trim() } : {}) });
     }
     if (kept.length) items[ticker] = kept;
   }
