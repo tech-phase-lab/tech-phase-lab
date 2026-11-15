@@ -702,6 +702,40 @@ class DeepAnalysisTests(unittest.TestCase):
             with self.assertRaises(ValueError):
                 self.mixed(bad_ja, bad_en, quote)
 
+    def test_an_old_release_stored_under_a_new_date_is_not_taken_for_the_latest_quarter(self):
+        old = 'Exhibit 99.1\nDell Technologies Delivers First Quarter Fiscal 2025 Financial Results\nROUND ROCK, Texas \u2014 May 30, 2024\n' + base.BODY
+        self.stored_release(ticker='DELL', url='https://www.sec.gov/Archives/edgar/data/1571996/x/ex991.htm', text=old + '\nStatements of Income and Related Financial Highlights')
+        with deep_analysis.connect(self.path) as db:
+            self.assertEqual(deep_analysis.stored_release_sources(db, base.NOW, False, since=base.NOW - timedelta(days=30)), [])
+            reasons = deep_analysis.source_reasons(db, 'DELL', base.NOW)
+        self.assertEqual(reasons['verdicts'], {'stale-period': 1})
+        current = old.replace('2024', '2026').replace('2025', '2027')
+        self.stored_release(ticker='DELL', url='https://www.sec.gov/Archives/edgar/data/1571996/x/ex991.htm', text=current + '\nStatements of Income and Related Financial Highlights')
+        with deep_analysis.connect(self.path) as db:
+            self.assertEqual(len(deep_analysis.stored_release_sources(db, base.NOW, False, since=base.NOW - timedelta(days=30))), 1)
+        self.assertFalse(deep_analysis.stale_release('Results\nJanuary 15, 2027 ... December 2026', datetime(2027, 1, 20, tzinfo=timezone.utc)))
+
+    def test_health_says_why_a_roster_company_has_no_analysis(self):
+        self.stored_release(ticker='GEV', url='https://www.sec.gov/Archives/edgar/data/1996810/x/ex991.htm', text='tiny')
+        with deep_analysis.connect(self.path) as db:
+            report = deep_analysis.diagnostics(db, now=base.NOW.timestamp())
+        gev = {row['ticker']: row for row in report['roster']}['GEV']
+        self.assertEqual(gev['storedPages']['verdicts'], {'length': 1})
+        self.assertNotIn('tiny', json.dumps(report))
+
+
+    def test_an_analysis_made_weeks_after_a_release_does_not_cover_it(self):
+        # Dell, Nov 15: a held analysis of an old page dated Sep 24 must not keep the Sep 1 release from being made.
+        released = base.NOW - timedelta(days=10)
+        self.stored_release(at=released)
+        with deep_analysis.connect(self.path) as db:
+            db.execute("INSERT INTO deep_analyses(source_ref,kind,subject,source_sha,state,created_at,source_url) VALUES('old','earnings','CRWV','x','held',?,?)",
+                       ((released + timedelta(days=21)).isoformat(), 'https://elsewhere.example/old'))
+            self.assertEqual(len(deep_analysis.stored_release_sources(db, base.NOW, False, since=base.NOW - timedelta(days=30))), 1)
+            db.execute("UPDATE deep_analyses SET created_at=?", ((released + timedelta(hours=1)).isoformat(),))
+            deep_analysis.STORED_CACHE.clear()
+            self.assertEqual(deep_analysis.stored_release_sources(db, base.NOW, False, since=base.NOW - timedelta(days=30)), [])
+
 
 class IndicatorAnalysisTests(unittest.TestCase):
     setUp = base.OfficialResearchTests.setUp

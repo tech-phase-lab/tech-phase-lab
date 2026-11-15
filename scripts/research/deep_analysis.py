@@ -254,6 +254,64 @@ def release_text_ok(ticker, text):
     return bool(release_watch.EARNINGS_TITLE.search(head) and not release_watch.NOT_RELEASE.search(head[:200]) and RELEASE_HEAD.search(head))
 
 
+def stale_release(text, detected):
+    """A page whose own text carries only years before the one it was found in is an old release stored under a new date (Dell, Nov 15: a May 2024
+    results page discovered in Sep 2026): never the latest quarter. A release found in January or February may carry only the year before."""
+    years = [int(year) for year in re.findall(r'(?<!\d)(20\d\d)(?!\d)', (text or '')[:3000])]
+    if not years:
+        return False
+    newest = max(years)
+    return newest < detected.year and not (detected.month <= 2 and newest == detected.year - 1)
+
+
+def source_verdict(ticker, text, detected):
+    """'ok' or the short reason a stored page is not taken as the company's latest results release."""
+    if not text:
+        return 'no-text'
+    if not 1200 <= len(text) <= 160000:
+        return 'length'
+    if not release_text_ok(ticker, text):
+        return 'not-results'
+    return 'stale-period' if stale_release(text, detected) else 'ok'
+
+
+def source_reasons(db, ticker, reference, days=120):
+    """For one roster company: how its stored pages of the last `days` days fare (counts by verdict, plus how many pages exist at all and the
+    newest detection date). Names and counts only; this is what /health shows for a company without an analysis."""
+    counts, newest = {}, None
+    since = (reference - timedelta(days=days)).isoformat()
+    for row in db.execute('SELECT s.url,s.sha256,s.status,COALESCE(e.detected_at,s.discovered_at) AS detected FROM sources s '
+                          'LEFT JOIN release_events e ON e.url=s.url WHERE s.ticker=? AND julianday(COALESCE(e.detected_at,s.discovered_at))>=julianday(?) '
+                          'ORDER BY julianday(COALESCE(e.detected_at,s.discovered_at)) DESC LIMIT 60', (ticker, since)).fetchall():
+        try:
+            detected = datetime.fromisoformat(str(row['detected']).replace('Z', '+00:00'))
+            if detected.tzinfo is None:
+                detected = detected.replace(tzinfo=timezone.utc)
+        except ValueError:
+            continue
+        newest = newest or detected.date().isoformat()
+        if row['status'] in ('held', 'rejected'):
+            verdict = 'status-' + row['status']
+        else:
+            revision = db.execute('SELECT extracted_text FROM source_revisions WHERE url=? AND sha256=?', (row['url'], row['sha256'])).fetchone()
+            verdict = source_verdict(ticker, revision['extracted_text'] if revision else None, detected)
+        counts[verdict] = counts.get(verdict, 0) + 1
+    return {'pages': sum(counts.values()), 'newestDetected': newest, 'verdicts': counts}
+
+
+REASONS_CACHE = {}
+
+
+def cached_reasons(db, ticker, now):
+    """source_reasons for /health, recomputed at most every five minutes (the health check calls often and this reads stored page texts)."""
+    key = (db.execute('PRAGMA database_list').fetchone()[2], ticker)
+    hit = REASONS_CACHE.get(key)
+    if hit is None or now - hit[0] > 300:
+        hit = (now, source_reasons(db, ticker, datetime.fromtimestamp(now, timezone.utc)))
+        REASONS_CACHE[key] = hit
+    return hit[1]
+
+
 def stored_release_sources(db, reference, excerpts=True, skip=(), since=None, tickers=None):
     """Results releases of the roster companies read from the pages the monitor stored (SEC exhibits, company pages), for companies whose IR
     feed event did not yield one (CoreWeave, Palantir and Arista never reached deep analysis through the feed). Ref source:<url hash>:<revision>.
@@ -288,11 +346,11 @@ def stored_release_sources(db, reference, excerpts=True, skip=(), since=None, ti
             continue
         revision = db.execute('SELECT extracted_text FROM source_revisions WHERE url=? AND sha256=?', (row['url'], row['sha256'])).fetchone()
         text = revision['extracted_text'] if revision else None
-        if not release_text_ok(row['ticker'], text):
+        if source_verdict(row['ticker'], text, detected) != 'ok':
             continue
         # one analysis per release: a company with an analysis created within two days of this release, or this page analysed before, is covered
-        covered = db.execute("SELECT 1 FROM deep_analyses WHERE kind='earnings' AND subject=? AND (source_url=? OR created_at>=?) LIMIT 1",
-                             (row['ticker'], row['url'], (detected - timedelta(days=2)).isoformat())).fetchone()
+        covered = db.execute("SELECT 1 FROM deep_analyses WHERE kind='earnings' AND subject=? AND (source_url=? OR (created_at>=? AND created_at<=?)) LIMIT 1",
+                             (row['ticker'], row['url'], (detected - timedelta(days=2)).isoformat(), (detected + timedelta(days=2)).isoformat())).fetchone()
         if covered and not db.execute('SELECT 1 FROM deep_analyses WHERE source_ref=?', (stored_ref(row['url'], row['sha256']),)).fetchone():
             continue
         item = {'ref': stored_ref(row['url'], row['sha256']), 'kind': 'earnings', 'subject': row['ticker'], 'sha': row['sha256'],
@@ -718,6 +776,9 @@ def diagnostics(db, now=None):
         "SELECT subject,kind,published_at,source_url,source_ref FROM deep_analyses WHERE state='done' ORDER BY published_at DESC LIMIT 60")]
     try:
         roster = roster_status(db, now)
+        for item in roster:
+            if item['deepState'] != 'done':
+                item['storedPages'] = cached_reasons(db, item['ticker'], now)
     except Exception:
         roster = []
     return {'configured': configuration() is not None, 'callsLast24h': used_today(db, now), 'states': states,

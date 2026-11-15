@@ -368,7 +368,7 @@ class StreamTests(unittest.TestCase):
             self.assertEqual(news.stream_names(), ["market"])
         with patch.dict(os.environ, {"STOCK_NEWS_STREAMS": ""}):
             self.assertEqual(news.stream_names(), [])
-        self.assertEqual((news.stream_seconds("tech"), news.stream_seconds("market")), (75, 300))
+        self.assertEqual((news.stream_seconds("tech"), news.stream_seconds("tickers"), news.stream_seconds("market")), (120, 240, 360))
         with patch.dict(os.environ, {"STOCK_NEWS_TECH_SECONDS": "10"}):
             self.assertEqual(news.stream_seconds("tech"), 30)   # never faster than every 30 seconds
 
