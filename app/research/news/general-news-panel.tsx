@@ -9,7 +9,8 @@ import { marketNewsBody, marketNewsDisplay } from "@/lib/research/market-news-di
 import { clockTime, lateDetection, officialTime, recentPublication } from "@/lib/research/news-time";
 import { createNewsPoller, NEWS_POLL_INTERVAL_MS } from "@/lib/research/news-poller";
 import { observePageActivity } from "@/lib/research/page-activity";
-import { serverWireSnapshot, subscribeWire, wireSnapshot } from "@/lib/research/wire-store";
+import { publishWire, serverWireSnapshot, subscribeWire, wireSnapshot } from "@/lib/research/wire-store";
+import { parseCompanyWire } from "@/lib/research/company-wire";
 import { tickerLabel, wireStories } from "@/lib/research/wire-stories";
 import { homeStockStories } from "@/lib/research/home-stock-news";
 import Link from "next/link";
@@ -22,6 +23,7 @@ import FeedPagination from "./feed-pagination";
 import TimelineRow from "./timeline-row";
 import NewsStory from "./news-story";
 import OriginalPreviewCard from "./original-preview-card";
+import TopicsList from "./topics-list";
 /** Stories on the home list: five pages of five. */
 const HOME_STORIES = 25;
 let snapshot: { data: GeneralNewsFeed; at: string; time: number } | null = null;
@@ -70,6 +72,21 @@ export default function GeneralNewsPanel({ lang, officialOnly = false, generalOn
   const [page, setPage] = useState(1);
   // Company headlines join the list, as they do on 速報 and in the top strip (owner, Oct 17: this list alone did not move).
   const wire = useSyncExternalStore(subscribeWire, wireSnapshot, serverWireSnapshot);
+  // 注目トピック (owner, Nov 15): the page has no top band to fetch the company headlines, so it asks for them itself, each time the
+  // news feed is checked (about every five seconds), the way the home band does.
+  const [wireAt, setWireAt] = useState<string | null>(null);
+  useEffect(() => {
+    if (!generalOnly) return;
+    let alive = true;
+    void (async () => {
+      try {
+        const response = await fetch("/api/research/company-wire", { cache: "no-store", signal: AbortSignal.timeout(10_000) });
+        if (response.ok) { const items = parseCompanyWire(await response.json()).items; if (alive) publishWire(items); }
+      } catch { /* keep the previous list */ }
+      finally { if (alive) setWireAt(new Date().toISOString()); }
+    })();
+    return () => { alive = false; };
+  }, [generalOnly, receivedAt]);
   useEffect(() => {
     const cached = refresh === 0 ? initialSnapshot(initialNews) : null;
     if (cached) {
@@ -112,10 +129,10 @@ export default function GeneralNewsPanel({ lang, officialOnly = false, generalOn
   }, [refresh, initialNews]);
   // An item with no time stated by its source is not listed: showing the time
   // it was found would pass a guess off as the publication time (owner, Oct 10).
-  // The home list shows the Stock News API stories only (owner, Nov 15). Until one of them is available (right after the intake is
-  // switched on, or before its Japanese headline is written) the list keeps its previous items rather than going empty.
-  const stockStories = stockNews && !officialOnly && !generalOnly ? homeStockStories(wire, lang) : [];
-  const stockOnly = stockStories.length > 0;
+  // The home list shows the Stock News API stories only (owner, Nov 15): never the Tech Alerts (ハイテク速報) items, which are another
+  // outlet, not even while no Stock News story is available yet.
+  const stockOnly = stockNews && !officialOnly && !generalOnly;
+  const stockStories = stockOnly ? homeStockStories(wire, lang) : [];
   const official = listedOfficialNews(data, lang);
   const news = officialOnly || stockOnly ? [] : [...data?.items ?? []].sort((a, b) => Date.parse(b.publishedAt) - Date.parse(a.publishedAt));
   const market = officialOnly || generalOnly || stockOnly ? [] : data?.marketUpdates ?? [];
@@ -131,7 +148,7 @@ export default function GeneralNewsPanel({ lang, officialOnly = false, generalOn
     ...market.map(item => ({ kind: "market" as const, item, at: item.publishedAt })),
     ...(officialOnly || generalOnly ? [] : (stockOnly ? stockStories : wireStories(wire, lang)).map(story => ({ kind: "wire" as const, story, at: story.at }))),
   ].sort((a, b) => Date.parse(b.at) - Date.parse(a.at));
-  // The home list shows five stories per page, five pages at most; the whole list is on the General News page (owner, Nov 5).
+  // The home list shows five stories per page, five pages at most; the whole list is on the Top Topics page (owner, Nov 5).
   const { pages, current, start, end } = pageWindow(updates.length + news.length, page, generalOnly ? Infinity : HOME_STORIES);
   const visibleUpdates = updates.slice(start, end);
   const visibleNews = news.slice(Math.max(0, start - updates.length), Math.max(0, end - updates.length));
@@ -143,6 +160,7 @@ export default function GeneralNewsPanel({ lang, officialOnly = false, generalOn
     ? { positive: "プラス", negative: "マイナス", mixed: "両面", neutral: "中立", uncertain: "不明" }
     : { positive: "Positive", negative: "Negative", mixed: "Mixed", neutral: "Neutral", uncertain: "Uncertain" };
   const confidenceLabels = lang === "ja" ? { high: "高", medium: "中", low: "低" } : { high: "High", medium: "Medium", low: "Low" };
+  if (generalOnly) return <TopicsList lang={lang} data={data} wire={wire} wireReady={!!wireAt} error={error} receivedAt={receivedAt ?? wireAt} page={page} onPage={setPage} />;
   return <section ref={panel} className={styles.panel} aria-label={lang === "ja" ? "ニュース一覧" : "News list"}>
     {!officialOnly && !!originalPreview.length && data?.originalPreviewWindow && <p className={styles.note}>{lang === "ja"
       ? "原文テスト掲載: 直近7日・最大30件。"
@@ -173,8 +191,8 @@ export default function GeneralNewsPanel({ lang, officialOnly = false, generalOn
         return rule ? [rule, row] : row; })}</div>
     </section>}
     {officialOnly && !data?.officialUpdates?.length && <p role="status">{error ? (lang === "ja" ? "公式発表を取得できません。" : "Official updates unavailable.") : !data ? (lang === "ja" ? "読み込み中…" : "Loading…") : (lang === "ja" ? "現在、掲載中の公式発表はありません。" : "No official updates currently listed.")}</p>}
-    {!officialOnly && (visibleNews.length > 0 || (!updates.length && (!data?.enabled || !news.length))) && <><div className={styles.head}>{!generalOnly && <h2 id="general-news-title">{lang === "ja" ? "一般ニュース" : "General news"}</h2>}<button type="button" onClick={() => setRefresh(value => value + 1)}>{lang === "ja" ? "更新" : "Refresh"}</button></div>
-    {error ? <p role="status">{lang === "ja" ? "ニュースを取得できません。しばらくしてから更新してください。" : "News is unavailable. Please refresh shortly."}</p> : !data ? <div className={styles.placeholder} aria-busy="true" aria-label={lang === "ja" ? "ニュースを取得中" : "Fetching news"} /> : !data.enabled ? <p>{lang === "ja" ? "一般ニュースの配信は準備中です。" : "General news is coming soon."}</p> : <>
+    {!officialOnly && (visibleNews.length > 0 || (!updates.length && (!data?.enabled || !news.length))) && <><div className={styles.head}>{!generalOnly && <h2 id="general-news-title">{lang === "ja" ? "注目トピック" : "Top Topics"}</h2>}<button type="button" onClick={() => setRefresh(value => value + 1)}>{lang === "ja" ? "更新" : "Refresh"}</button></div>
+    {error ? <p role="status">{lang === "ja" ? "ニュースを取得できません。しばらくしてから更新してください。" : "News is unavailable. Please refresh shortly."}</p> : !data ? <div className={styles.placeholder} aria-busy="true" aria-label={lang === "ja" ? "ニュースを取得中" : "Fetching news"} /> : !data.enabled ? <p>{lang === "ja" ? "注目トピックの配信は準備中です。" : "Top Topics are coming soon."}</p> : <>
       <p className={styles.note}>{lang === "ja" ? "日英の内容を確認した記事を掲載しています。" : "Articles are published after review of both language versions."}</p>
       {!data.items.length && <p>{lang === "ja" ? "現在、公開中の記事はありません。" : "No articles are currently published."}</p>}
       <div className={styles.items}>{visibleNews.map(item => <article key={item.id}><details className={styles.story}>
@@ -186,6 +204,6 @@ export default function GeneralNewsPanel({ lang, officialOnly = false, generalOn
     </>}
     </>}
     <FeedPagination page={current} pages={pages} ja={lang === "ja"} onChange={n => { setPage(n); panel.current?.scrollIntoView({ block: "start", behavior: "instant" }); }} />
-    {!generalOnly && <Link className={styles.seeAll} href="/research/general-news">{lang === "ja" ? "一般ニュースですべて見る" : "See all news"} <span aria-hidden="true">›</span></Link>}
+    {!generalOnly && <Link className={styles.seeAll} href="/research/general-news">{lang === "ja" ? "注目トピックですべて見る" : "See all in Top Topics"} <span aria-hidden="true">›</span></Link>}
   </section>;
 }

@@ -51,3 +51,30 @@ export function bannerLine(phase: MarketPhase, ja: boolean, fetchedAt: number | 
   const time = new Date(fetchedAt).toLocaleTimeString("en-GB", { timeZone: "Asia/Tokyo", hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: false });
   return `${word}${ja ? " ・ " : " · "}${time} JST`;
 }
+
+/** The U.S. trading day whose close the board shows while the market is shut for the day (owner, Nov 15): from 00:00 New York time on a Saturday,
+ * a Sunday or an NYSE holiday until the next trading day's pre-market starts at 04:00 (so Monday 00:00–04:00 still reads as closed).
+ * null otherwise, including a weekday evening after the after-hours session, which keeps the usual banner. Outside the holiday calendar only weekends count. */
+export type ClosedDay = { month: number; day: number; weekday: number };
+const DAY_MS = 86_400_000;
+const WEEKDAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+function newYorkDay(at: Date): { date: string; weekday: number; minutes: number } {
+  const parts = Object.fromEntries(new Intl.DateTimeFormat("en-US", { timeZone: "America/New_York", year: "numeric", month: "2-digit", day: "2-digit", weekday: "short", hour: "2-digit", minute: "2-digit", hourCycle: "h23" })
+    .formatToParts(at).map(part => [part.type, part.value]));
+  return { date: `${parts.year}-${parts.month}-${parts.day}`, weekday: WEEKDAYS.indexOf(parts.weekday), minutes: Number(parts.hour) * 60 + Number(parts.minute) };
+}
+/** A New York calendar date ("2026-11-13", read as UTC noon so steps of a day never slip) is a trading day: a weekday that is not a listed holiday. */
+const tradingDate = (noon: number) => { const d = new Date(noon), weekday = d.getUTCDay(); return weekday !== 0 && weekday !== 6 && !HOLIDAYS.has(d.toISOString().slice(0, 10)); };
+export function closedDayClose(at: Date): ClosedDay | null {
+  const now = newYorkDay(at), noon = Date.parse(`${now.date}T12:00:00Z`);
+  if (tradingDate(noon) && (now.minutes >= 4 * 60 || tradingDate(noon - DAY_MS))) return null;
+  let day = noon - DAY_MS;
+  while (!tradingDate(day)) day -= DAY_MS;
+  const d = new Date(day);
+  return { month: d.getUTCMonth() + 1, day: d.getUTCDate(), weekday: d.getUTCDay() };
+}
+/** "休場 ・ 米国 11/13(金) の終値" / "Closed · U.S. close of Fri 11/13": no read time while the market is shut for the day. */
+export function closedDayLine(close: ClosedDay, ja: boolean): string {
+  const date = `${close.month}/${close.day}`;
+  return ja ? `休場 ・ 米国 ${date}(${"日月火水木金土"[close.weekday]}) の終値` : `Closed · U.S. close of ${WEEKDAYS[close.weekday]} ${date}`;
+}

@@ -68,7 +68,23 @@ def normalize(row, tickers):
             "tickers": matched, "publishedAt": published.astimezone(timezone.utc).isoformat()}
     item["id"] = hashlib.sha256(url.encode()).hexdigest()
     item["revision"] = hashlib.sha256(json.dumps(item, sort_keys=True, ensure_ascii=False).encode()).hexdigest()
+    # Owner, Nov 15: the topics page marks each story プラス / マイナス / 中立 from the provider's own sentiment. It is kept out of the
+    # revision, so a story saved before this change is not treated as corrected (which would drop its reviewed draft).
+    feeling = sentiment(row.get("sentiment"))
+    if feeling:
+        item["sentiment"] = feeling
     return item
+
+
+SENTIMENTS = {"positive", "negative", "neutral"}
+
+
+def sentiment(value):
+    """The provider's Positive / Negative / Neutral as a lower-case word, or None for anything else."""
+    if not isinstance(value, str):
+        return None
+    value = value.strip().lower()
+    return value if value in SENTIMENTS else None
 
 
 def connect(path):
@@ -404,7 +420,7 @@ def mirror_to_wire(db, items, stream=None):
         else:
             tickers = [t for t in item["tickers"] if t in roster]
         rows += [{"ticker": ticker, "source": "stocknews", "title": item["title"], "publisher": item["publisher"], "url": item["url"],
-                  "published": datetime.fromisoformat(item["publishedAt"])} for ticker in tickers]
+                  "published": datetime.fromisoformat(item["publishedAt"]), "sentiment": item.get("sentiment")} for ticker in tickers]
     added = 0
     company_wire.schema(db)
     for ticker in sorted({row["ticker"] for row in rows}):

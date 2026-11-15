@@ -3,7 +3,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { useResearchLanguage } from "../use-research-language";
 import PriceChart from "./price-chart";
 import { signedPercent, type Bar } from "@/lib/research/market-quote";
-import { bannerLine, marketBanner, marketPhase } from "@/lib/research/us-market-session";
+import { bannerLine, closedDayClose, closedDayLine, marketBanner, marketPhase } from "@/lib/research/us-market-session";
 import { DEFAULT_PERIOD, OTHER_PERIODS, PERIOD_LABEL, PRIMARY_PERIODS, clampWicks, isBoardPeriod, isIntradayPeriod, latestTradingDay, periodInterval, type BoardPeriod } from "@/lib/research/market-board-periods";
 import { nextFlash, startFlash } from "@/lib/research/value-flash";
 import type { BoardQuote } from "@/lib/research/market-data";
@@ -195,6 +195,8 @@ export default function MarketBoard() {
   const last = !loading && chart.bars.length ? chart.bars[chart.bars.length - 1] : null;
   const now = useMinute();
   const phase = marketPhase(new Date(now ?? 0)), banner = marketBanner(phase);
+  // Weekends and NYSE holidays (until the next pre-market): "休場 ・ 米国 11/13(金) の終値", a grey point, and no after-hours line under the cards (owner, Nov 15).
+  const closedDay = now === null ? null : closedDayClose(new Date(now));
   const shownPrice = quote?.price ?? last?.close ?? null;
   const tone = toneOf(quote?.percentChange ?? null);
   const first = indexQuotes ? Object.values(indexQuotes)[0] : undefined;
@@ -211,14 +213,15 @@ export default function MarketBoard() {
   const name = (p: BoardPeriod) => PERIOD_LABEL[p][ja ? "ja" : "en"];
   return <div className={styles.wrap}>
     <section className={styles.indices} aria-label={t("主要3指数に連動するETF", "ETFs tracking the three major indices")}>
-      <div className={styles.state} role="status">{first ? <><span key={board.at} className={styles.dot} data-open={banner.lit} data-pulse={banner.lit ? "1" : undefined} /><span>{bannerLine(phase, ja, board.at)}</span></> : <span>{indexQuotes === null ? t("読み込み中…", "Loading…") : t("株価を取得できませんでした", "Prices unavailable")}</span>}</div>
+      <div className={styles.state} role="status">{first ? closedDay ? <><span className={styles.dot} data-closed="true" /><span>{closedDayLine(closedDay, ja)}</span></>
+        : <><span key={board.at} className={styles.dot} data-open={banner.lit} data-pulse={banner.lit ? "1" : undefined} /><span>{bannerLine(phase, ja, board.at)}</span></> : <span>{indexQuotes === null ? t("読み込み中…", "Loading…") : t("株価を取得できませんでした", "Prices unavailable")}</span>}</div>
       <div className={styles.cols}>{INDEX_ETFS.map(item => {
         const q = indexQuotes?.[item.id], tn = toneOf(q?.percentChange ?? null), itemExt = q?.extended;
         return <button type="button" key={item.id} className={styles.col} aria-pressed={selected === item.id} onClick={() => { setSelected(item.id); setActive(null); }} aria-label={`${item.short} ${ja ? item.sub.ja : item.sub.en}`}>
           <span className={styles.colName}>{item.short}</span><span className={styles.colSub}>{ja ? item.sub.ja : item.sub.en}</span>
           <span className={styles.colPrice}>{q ? q.price.toFixed(1) : "—"}</span>
           <span className={`${styles.chip} ${styles[tn]}`}>{q?.percentChange == null ? "—" : `${tn === "up" ? "▲" : tn === "down" ? "▼" : "–"} ${signedPercent(q.percentChange)}`}</span>
-          {itemExt && itemExt.percentChange !== null && <ExtLine id={item.id} ext={itemExt} label={t("時間外 ", "Ext. ")} />}
+          {!closedDay && itemExt && itemExt.percentChange !== null && <ExtLine id={item.id} ext={itemExt} label={t("時間外 ", "Ext. ")} />}
         </button>;
       })}</div>
     </section>

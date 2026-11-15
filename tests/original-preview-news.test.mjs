@@ -172,7 +172,7 @@ test('combined home news stays at five a page, five pages at most (25 stories), 
   assert.equal((first.match(/<article/g) ?? []).length, 5);
   assert.ok(first.indexOf('Original excerpt 29.') < first.indexOf('Original excerpt 25.'));
   assert.doesNotMatch(first, /Original excerpt 24\./);
-  // Thirty-one stories exist, but the home list stops at 25 (owner, Nov 5); the rest are on the General News page.
+  // Thirty-one stories exist, but the home list stops at 25 (owner, Nov 5); the rest are on the Top Topics page.
   assert.equal((sixth.match(/<article/g) ?? []).length, 5);
   assert.ok(sixth.includes('Original excerpt 5.'));
   assert.ok(!sixth.includes('Original excerpt 0.'));
@@ -232,13 +232,14 @@ test('optional original bytes give way before unchanged verified history and pre
 });
 
 
-test('ordinary default home and dedicated news flow show summarized test cards and hide untranslated ones', () => {
+test('the home news list shows Stock News API stories only, so test cards never reach it; untranslated ones never show anywhere', () => {
   const pending = { ...original, id: 'original-preview-' + 'b'.repeat(24), sourceUrl: 'https://nebius.com/newsroom/pending-test',
     excerptOriginal: 'An untranslated pending excerpt.' };
   const feed = availableNewsPayload(wire([summarized, pending]));
   const NewsFeed = loadComponent('news-feed');
   const html = renderToStaticMarkup(React.createElement(NewsFeed, { lang: 'ja', initialNews: { data: feed, checkedAt: Date.now() } }));
-  assert.ok(html.includes(summaryFields.titleJa));
+  // Owner, Nov 15: the home list carries the Stock News API stories only; test publications stay on the news page (FlashPage).
+  assert.ok(!html.includes(summaryFields.titleJa));
   assert.ok(!html.includes(pending.excerptOriginal));
   assert.doesNotMatch(html, /hidden=""/);
   const page = readFileSync(new URL('../app/research/news/page.tsx', import.meta.url), 'utf8');

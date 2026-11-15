@@ -18,7 +18,7 @@ function plans(ja: boolean) {
   const free: Group[] = [
     { title: t("ニュース", "News"), rows: [
       [t("決算と経済指標の速報", "Earnings and economic updates")],
-      [t("米国市場の一般ニュース", "U.S. market news")],
+      [t("米国市場の注目トピック", "Top topics in the U.S. market")],
       [t("ハイテク速報", "Tech Alerts"), t("30分遅れ・5件", "30 min delay · 5 items")],
       [t("厳選ニュース", "Selected news"), t("細かな企業発表まで配信", "Selected company updates, including smaller announcements")],
     ] },

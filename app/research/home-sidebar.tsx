@@ -50,7 +50,7 @@ export default function HomeSidebar({ lang, tab, companyCount, savedCount, openV
     { key: "watchlist", icon: icons.star, label: t("ウォッチリスト", "Watchlist"), href: "/research/watchlist" },
     { key: "notebook", icon: icons.saved, label: t("銘柄手帳", "Stock Notebook"), href: "/research/notebook" },
     { key: "market", icon: icons.market, label: t("マーケット", "Markets"), href: "/research/market" },
-    { key: "news", icon: icons.news, label: t("一般ニュース", "General News"), href: "/research/general-news" },
+    { key: "news", icon: icons.news, label: t("注目トピック", "Top Topics"), href: "/research/general-news" },
     { key: "targets", icon: icons.target, label: t("目標株価", "Price targets"), href: "/research/price-targets" },
   ];
   const research: Item[] = [

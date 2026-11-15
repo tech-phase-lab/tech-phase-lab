@@ -59,6 +59,9 @@ def schema(db):
       publisher TEXT NOT NULL, url TEXT NOT NULL, origin TEXT NOT NULL,
       published_at TEXT NOT NULL, first_seen_at TEXT NOT NULL)''')
     db.execute('CREATE INDEX IF NOT EXISTS company_wire_ticker ON company_wire(ticker, published_at)')
+    # Owner, Nov 15: the Stock News API's own sentiment (positive / negative / neutral) for the topics page; empty for other feeds.
+    if 'sentiment' not in {r[1] for r in db.execute('PRAGMA table_info(company_wire)')}:
+        db.execute("ALTER TABLE company_wire ADD COLUMN sentiment TEXT NOT NULL DEFAULT ''")
 
 
 def connect(path):
@@ -121,15 +124,23 @@ def origin(row, name):
     return 'third-party'
 
 
+SENTIMENTS = ('positive', 'negative', 'neutral')
+
+
 def store(db, rows, name, seen_at=None):
     """Insert unseen headlines; return how many were new."""
     seen_at = (seen_at or now()).isoformat()
     added = 0
     for row in rows:
         key = hashlib.sha256(f"{row['ticker']}|{normalized(row['title'])}".encode()).hexdigest()[:32]
-        cursor = db.execute('INSERT OR IGNORE INTO company_wire VALUES(?,?,?,?,?,?,?,?,?)',
+        feeling = row.get('sentiment') if row.get('sentiment') in SENTIMENTS else ''
+        cursor = db.execute('''INSERT OR IGNORE INTO company_wire(key, ticker, source, title, publisher, url, origin, published_at,
+                            first_seen_at, sentiment) VALUES(?,?,?,?,?,?,?,?,?,?)''',
                             (key, row['ticker'], row['source'], row['title'], row['publisher'], row['url'],
-                             origin(row, name), row['published'].isoformat(), seen_at))
+                             origin(row, name), row['published'].isoformat(), seen_at, feeling))
+        if not cursor.rowcount and feeling:
+            # A story saved before its sentiment was kept gets it the next time the provider sends it.
+            db.execute("UPDATE company_wire SET sentiment=? WHERE key=? AND sentiment=''", (feeling, key))
         added += cursor.rowcount
     db.commit()
     return added
@@ -239,7 +250,11 @@ NOISE = re.compile(
     # Nov 9: opinion and how-to pieces that only mention the company, and a "(Upgrade)" suffix is an analyst blog's own rating call.
     r'|\((?:Upgrade|Downgrade)\)\s*$|\b(?:\d+|three|four|five|six|seven|ten) (?:key|main|major|big) (?:points|takeaways|things|reasons|risks|catalysts)\b'
     r'|\bshould (?:check out|review|take a look at|know about)\b|\bfor (?:long-term|retail|income|dividend) investors\b'
-    r'|\bfaces? (?:market )?(?:challenges|headwinds) (?:amid|as|following)\b', re.I)
+    r'|\bfaces? (?:market )?(?:challenges|headwinds) (?:amid|as|following)\b'
+    # Nov 15 (Stock News API on the home): law firms soliciting shareholders for class actions are advertisements, not news.
+    r'|\b(?:class action|securities fraud|securities litigation)\b.{0,80}\b(?:lawsuit|investigation|deadline|filed|lead plaintiff|investors?|shareholders?)\b'
+    r'|\b(?:investors?|shareholders?)\b.{0,80}\b(?:class action|securities fraud)\b|\blead plaintiff\b|\b(?:Rosen|Pomerantz|Faruqi|Bragar Eagel|Levi & Korsinsky|Bronstein|Glancy|Kessler Topaz|Robbins Geller|Schall|Gross Law|Portnoy|Kirby McInerney|Howard G\. Smith|Bernstein Liebhard|Hagens Berman|Block & Leviton|Johnson Fistel|Holzer)\b'
+    r'|\b(?:Deadline|Investor) Alert\b|\bINVESTOR ALERT\b', re.I)
 MAJOR = re.compile(r'reuters|bloomberg|cnbc|wall street journal|\bwsj\b|barron|financial times|marketwatch|associated press|'
                    r'the information|nikkei|investor.s business|seeking alpha|yahoo finance|benzinga|the verge|ars technica|tom.s hardware', re.I)
 STOPWORDS = frozenset('the and for with from that this its are was has have will into over after than more new how why what '
@@ -264,8 +279,13 @@ def priority(row):
 
 
 def pending_rows(db, now_ts, limit=TRANSLATION_BATCH):
+    return candidates(db, now_ts)[:limit]
+
+
+def candidates(db, now_ts):
+    """Every headline the translator would take now, in the order it takes them (pending_rows is the first batch of these)."""
     since = (datetime.fromtimestamp(now_ts, timezone.utc) - timedelta(hours=PUBLIC_HOURS)).isoformat()
-    rows = db.execute('''SELECT w.key, w.title, w.ticker, w.origin, w.publisher, w.published_at FROM company_wire w
+    rows = db.execute('''SELECT w.key, w.title, w.ticker, w.origin, w.publisher, w.published_at, w.source, w.first_seen_at FROM company_wire w
       LEFT JOIN company_wire_ja j USING(key) LEFT JOIN company_wire_attempts a USING(key)
       WHERE j.key IS NULL AND w.published_at>=? AND (a.key IS NULL OR (a.attempts<? AND a.next_at<=?))
       ORDER BY w.published_at DESC LIMIT 400''', (since, TRANSLATION_ATTEMPTS, now_ts)).fetchall()
@@ -284,8 +304,6 @@ def pending_rows(db, now_ts, limit=TRANSLATION_BATCH):
             continue
         taken.setdefault(r['ticker'], []).append(words)
         chosen.append(r)
-        if len(chosen) >= limit:
-            break
     return chosen
 
 
@@ -325,8 +343,10 @@ def validated_short(short_ja, title_ja):
     return short_ja
 
 
-def translate_once(path, transport=None, env=None, now_ts=None):
-    """One batched model call for new headlines. Returns a short status word."""
+def translate_once(path, transport=None, env=None, now_ts=None, report=None):
+    """One batched model call for new headlines. Returns a short status word ('done', 'idle', 'budget', 'disabled', 'retry' when
+    every headline of the batch was rejected, or 'model-<Error>' when the model call itself failed). ``report`` (a dict) receives
+    the batch size, so the worker only hurries back when a full batch shows a backlog."""
     import os
     import time
     import brief_generator
@@ -337,7 +357,7 @@ def translate_once(path, transport=None, env=None, now_ts=None):
     if config is None:
         return 'disabled'
     key, model, _ = config
-    limit = int((os.environ if env is None else env).get('COMPANY_WIRE_TRANSLATION_DAILY_LIMIT', '600'))
+    limit = daily_limit(os.environ if env is None else env)
     with connect(path) as db:
         schema_translation(db)
         if db.execute('SELECT COUNT(*) FROM company_wire_calls WHERE at>=?', (now_ts - 86400,)).fetchone()[0] >= limit:
@@ -345,6 +365,8 @@ def translate_once(path, transport=None, env=None, now_ts=None):
         rows = pending_rows(db, now_ts)
         if not rows:
             return 'idle'
+        if report is not None:
+            report['batch'] = len(rows)
         db.execute('INSERT INTO company_wire_calls VALUES(?)', (now_ts,))
         db.commit()
         earlier = previous_reasons(db, [r['key'] for r in rows])
@@ -403,7 +425,7 @@ def translate_once(path, transport=None, env=None, now_ts=None):
                 reason = outage or reasons.get(row['key'], 'not-returned')
                 db.execute('''INSERT INTO company_wire_attempts(key,attempts,next_at,reason) VALUES(?,1,?,?) ON CONFLICT(key) DO UPDATE SET
                   attempts=attempts+1, next_at=excluded.next_at, reason=excluded.reason''', (row['key'], now_ts + TRANSLATION_RETRY_SECONDS, reason))
-    return 'done' if translated or skipped else 'retry'
+    return 'done' if translated or skipped else (outage or 'retry')
 
 
 def public_feed(db, now_ts=None):
@@ -414,7 +436,7 @@ def public_feed(db, now_ts=None):
     since = (datetime.fromtimestamp(now_ts, timezone.utc) - timedelta(hours=PUBLIC_HOURS)).isoformat()
     items = {}
     for ticker in roster():
-        rows = db.execute('''SELECT w.key, w.source, w.title, w.publisher, w.url, w.origin, w.published_at, j.title_ja, j.short_ja
+        rows = db.execute('''SELECT w.key, w.source, w.title, w.publisher, w.url, w.origin, w.published_at, w.sentiment, j.title_ja, j.short_ja
           FROM company_wire w LEFT JOIN company_wire_ja j USING(key) LEFT JOIN company_wire_attempts a USING(key)
           WHERE w.ticker=? AND w.published_at>=? AND COALESCE(a.reason,'') NOT IN ('not-news','off-topic') ORDER BY w.published_at DESC LIMIT 120''',
                           (ticker, since)).fetchall()
@@ -429,10 +451,10 @@ def public_feed(db, now_ts=None):
             # Owner, Nov 15: the home shows the Stock News API stories, so each row says where it came from ("stocknews", "yahoo", "gnews").
             items[ticker] = [{'id': r['key'], 'titleEn': r['title'], 'titleJa': r['title_ja'], 'shortJa': r['short_ja'] or None,
                               'publisher': r['publisher'], 'origin': r['origin'], 'url': r['url'],
-                              'publishedAt': r['published_at'], 'source': r['source']} for r in rows]
+                              'publishedAt': r['published_at'], 'source': r['source'], **sentiment_field(r)} for r in rows]
     # Owner, Nov 10: the home also carries high-tech companies beyond the watched ones and market news (filed under MKT), from the
     # Stock News API. Only headlines that were translated, that is judged news and on topic, are shown for them.
-    extra = db.execute('''SELECT w.ticker, w.key, w.title, w.publisher, w.url, w.origin, w.published_at, j.title_ja, j.short_ja
+    extra = db.execute('''SELECT w.ticker, w.key, w.title, w.publisher, w.url, w.origin, w.published_at, w.sentiment, j.title_ja, j.short_ja
       FROM company_wire w JOIN company_wire_ja j USING(key) WHERE w.published_at>=? AND w.source='stocknews'
       ORDER BY w.published_at DESC LIMIT 400''', (since,)).fetchall()
     for r in extra:
@@ -440,5 +462,231 @@ def public_feed(db, now_ts=None):
             continue
         items.setdefault(r['ticker'], []).append({'id': r['key'], 'titleEn': r['title'], 'titleJa': r['title_ja'], 'shortJa': r['short_ja'] or None,
                                                  'publisher': r['publisher'], 'origin': r['origin'], 'url': r['url'], 'publishedAt': r['published_at'],
-                                                 'source': 'stocknews'})
+                                                 'source': 'stocknews', **sentiment_field(r)})
     return {'ok': True, 'items': items}
+
+
+def sentiment_field(row):
+    """The Stock News API's sentiment, only when the row carries one (owner, Nov 15: the topics page's プラス / マイナス / 中立)."""
+    return {'sentiment': row['sentiment']} if row['sentiment'] in SENTIMENTS else {}
+
+
+# ---- Translation watch (owner, Nov 15: "翻訳が止まるとか初歩的なミスは絶対にやめてください") ----
+# The Japanese home shows only Stock News API stories whose Japanese headline was written here, so a stalled translator empties it.
+# The worker records each result; the incident watch turns a budget stop, a stall, repeated failures or a stopped intake into one
+# critical incident each (the owner's phone), resolved when it recovers.
+#
+# Daily call budget: one model call carries up to 30 headlines, but a call is made whenever new headlines are waiting, so on a normal
+# day most calls carry only the few headlines that arrived since the last one (the tech stream alone brings new stories on most of
+# its 1,152 polls a day, so the old 600 ran out around midday). The worker waits 20 s after any call that was not a full batch
+# (3 s only after a full one), so there are at most 86,400 / 20 = 4,320 such calls a day, plus one call per 30 headlines of backlog:
+# about 7,500 headlines a day at the very most (Stock News tech and market streams plus the Yahoo and Google News feeds) add 250,
+# and retries of rejected headlines ride in the same calls. The busiest possible day is about 4,600 calls; 6,000 leaves 30% headroom.
+DEFAULT_DAILY_LIMIT = 6000
+QUIET_RESULTS = ('done', 'idle', 'budget', 'disabled')
+WATCH_PREFIX = 'company-wire:'
+INTAKE_KEY = 'stock-news:intake-tech'
+STALL_ROW_SECONDS = 20 * 60      # a Stock News story still without Japanese 20 minutes after it arrived ...
+STALL_SECONDS = 30 * 60          # ... for 30 minutes while new stories keep arriving
+FAILING_SECONDS = 15 * 60        # every call failed for 15 minutes (no batch translated)
+FAILING_CLEAR_SECONDS = 60 * 60  # an open failure alert closes after an hour with no failure at all
+INTAKE_SECONDS = 30 * 60         # no successful 'tech' poll for 30 minutes while the intake is on
+
+
+def daily_limit(env):
+    """COMPANY_WIRE_TRANSLATION_DAILY_LIMIT, or the default when unset or not a whole number (a typo must never stop translation)."""
+    try:
+        value = int(str(env.get('COMPANY_WIRE_TRANSLATION_DAILY_LIMIT', DEFAULT_DAILY_LIMIT)).strip())
+    except (TypeError, ValueError):
+        return DEFAULT_DAILY_LIMIT
+    return value if value >= 0 else DEFAULT_DAILY_LIMIT
+
+
+def schema_watch(db):
+    db.execute('CREATE TABLE IF NOT EXISTS company_wire_watch(key TEXT PRIMARY KEY, value TEXT NOT NULL)')
+
+
+def watch_state(db):
+    schema_watch(db)
+    return {r[0]: r[1] for r in db.execute('SELECT key, value FROM company_wire_watch')}
+
+
+def put_watch(db, values, drop=()):
+    for key, value in values.items():
+        db.execute('INSERT INTO company_wire_watch VALUES(?,?) ON CONFLICT(key) DO UPDATE SET value=excluded.value', (key, str(value)))
+    for key in drop:
+        db.execute('DELETE FROM company_wire_watch WHERE key=?', (key,))
+
+
+def failing(result):
+    return result not in QUIET_RESULTS
+
+
+def result_code(result):
+    """A short fixed code for a result (no exception text)."""
+    code = re.sub(r'[^A-Za-z0-9._-]+', '-', str(result or 'unknown'))[:40].strip('-') or 'unknown'
+    return 'all-rejected' if code == 'retry' else code
+
+
+def record_result(db, result, now_ts):
+    """Remember the worker's latest result. A failure clock starts at the first failure after the last translated batch and stops
+    at the next one; a failure more than 15 minutes after the previous one starts a new clock (an old failure is not carried over)."""
+    state = watch_state(db)
+    values = {'last_result': result_code(result), 'last_result_at': now_ts}
+    drop = ()
+    if result == 'done':
+        values['last_done_at'] = now_ts
+        drop = ('failing_since', 'last_failure_at', 'last_failure')
+    elif failing(result):
+        since = float(state.get('failing_since') or 0)
+        last = float(state.get('last_failure_at') or 0)
+        if not since or now_ts - last > FAILING_SECONDS:
+            since = now_ts
+        values.update(failing_since=since, last_failure_at=now_ts, last_failure=result_code(result))
+    with db:
+        put_watch(db, values, drop)
+
+
+def run_once(path, transport=None, env=None, now_ts=None):
+    """One worker step: translate, record the result (an unexpected error becomes 'worker-<Error>') and return (result, seconds to
+    wait). The worker hurries back only after a full batch, so trickling headlines cost at most one call per 20 seconds."""
+    import time
+    now_ts = time.time() if now_ts is None else now_ts
+    report = {}
+    try:
+        result = translate_once(path, transport=transport, env=env, now_ts=now_ts, report=report)
+    except Exception as error:
+        result = 'worker-' + type(error).__name__[:30]
+    try:
+        with connect(path) as db:
+            record_result(db, result, now_ts)
+    except Exception:
+        pass  # the translation itself must not stop because its bookkeeping failed
+    return result, 3 if result == 'done' and report.get('batch', 0) >= TRANSLATION_BATCH else 20
+
+
+def iso(ts):
+    return datetime.fromtimestamp(float(ts), timezone.utc).isoformat() if ts not in (None, '') else None
+
+
+def table_exists(db, name):
+    return db.execute("SELECT 1 FROM sqlite_master WHERE type='table' AND name=?", (name,)).fetchone() is not None
+
+
+def intake_enabled(env):
+    streams = [part.strip() for part in str(env.get('STOCK_NEWS_STREAMS', '')).split(',')]
+    return (str(env.get('STOCK_NEWS_ENABLED', '')).lower() == 'true' and bool(str(env.get('STOCK_NEWS_API_KEY', '')).strip())
+            and 'tech' in streams)
+
+
+def intake_successes(db):
+    if not table_exists(db, 'news_intake_state'):
+        return {}
+    return {r[0].split(':', 1)[1]: r[1] for r in db.execute("SELECT key, value FROM news_intake_state WHERE key LIKE 'last_success:%'")}
+
+
+def translation_health(db, now_ts=None, env=None):
+    """The /health block: counts, ages and times only (no headline text, keys or secrets)."""
+    import time
+    import headline_translation
+    now_ts = time.time() if now_ts is None else now_ts
+    env = os.environ if env is None else env
+    schema(db)
+    schema_translation(db)
+    state = watch_state(db)
+    since = (datetime.fromtimestamp(now_ts, timezone.utc) - timedelta(hours=PUBLIC_HOURS)).isoformat()
+    pending = [r for r in candidates(db, now_ts) if r['source'] == 'stocknews']
+    ages = [now_ts - datetime.fromisoformat(r['first_seen_at']).timestamp() for r in pending]
+    waiting = db.execute('''SELECT COUNT(*) FROM company_wire w JOIN company_wire_attempts a USING(key) LEFT JOIN company_wire_ja j USING(key)
+      WHERE j.key IS NULL AND w.source='stocknews' AND w.published_at>=? AND a.attempts<? AND a.next_at>?''',
+                         (since, TRANSLATION_ATTEMPTS, now_ts)).fetchone()[0]
+    recent = datetime.fromtimestamp(now_ts - STALL_SECONDS, timezone.utc).isoformat()
+    arriving = db.execute("SELECT COUNT(*) FROM company_wire WHERE source='stocknews' AND first_seen_at>=?", (recent,)).fetchone()[0]
+    calls = db.execute('SELECT COUNT(*) FROM company_wire_calls WHERE at>=?', (now_ts - 86400,)).fetchone()[0]
+    limit = daily_limit(env)
+    enabled = str(env.get('COMPANY_WIRE_ENABLED', 'true')).lower() != 'false' and headline_translation.configuration(env) is not None
+    alerts = []
+    if table_exists(db, 'operational_incidents'):
+        alerts = [r[0] for r in db.execute("SELECT incident_key FROM operational_incidents WHERE status='open' AND (incident_key LIKE ? OR incident_key=?)",
+                                           (WATCH_PREFIX + '%', INTAKE_KEY))]
+    return {
+        'enabled': enabled,
+        'pending': {'count': len(pending), 'oldestMinutes': round(max(ages) / 60) if ages else None},
+        'waitingRetry': waiting,
+        'newStockNews30m': arriving,
+        'calls24h': calls, 'dailyLimit': limit, 'budgetReached': calls >= limit,
+        'lastSuccessAt': db.execute('SELECT MAX(created_at) FROM company_wire_ja').fetchone()[0],
+        'lastResult': state.get('last_result'), 'lastResultAt': iso(state.get('last_result_at')),
+        'failingSince': iso(state.get('failing_since')), 'lastFailure': state.get('last_failure'),
+        'stalledSince': iso(state.get('stalled_since')),
+        'stockNewsIntake': {'enabled': intake_enabled(env),
+                            'streams': {name: {'lastSuccessAt': at} for name, at in sorted(intake_successes(db).items())}},
+        'alerts': sorted(alerts),
+    }
+
+
+def open_incident(db, key):
+    return db.execute("SELECT 1 FROM operational_incidents WHERE incident_key=? AND status='open'", (key,)).fetchone() is not None
+
+
+def sync_incident(db, now_ts=None, env=None, started_ts=None):
+    """Open, keep or resolve the four critical incidents. Every clock starts no earlier than ``started_ts`` (the service start), so a
+    restart never alerts for what happened before it; an open incident is never opened again (no repeated phone alert)."""
+    import time
+    now_ts = time.time() if now_ts is None else now_ts
+    env = os.environ if env is None else env
+    floor = float(started_ts) if started_ts is not None else float('-inf')
+    health = translation_health(db, now_ts, env)
+    state = watch_state(db)
+    at = iso(now_ts)
+    active = {}
+
+    # (a) The day's call budget is used up: new headlines wait until calls fall out of the 24-hour window.
+    if health['enabled'] and health['budgetReached']:
+        active['translation-budget'] = 'company-wire-translation-budget:%d' % health['dailyLimit']
+
+    # (c) Every call failed (model error, worker error or every headline rejected) for 15 minutes.
+    if state.get('failing_since'):
+        since = max(float(state['failing_since']), floor)
+        last = float(state.get('last_failure_at') or 0)
+        window = FAILING_CLEAR_SECONDS if open_incident(db, WATCH_PREFIX + 'translation-failing') else FAILING_SECONDS
+        if now_ts - since >= FAILING_SECONDS and now_ts - last <= window:
+            active['translation-failing'] = 'company-wire-translation-failing:' + (state.get('last_failure') or 'unknown')
+
+    # (b) A Stock News story waits more than 20 minutes for its Japanese headline, for 30 minutes, while new ones keep arriving.
+    # Not raised on top of (a) or (c), which already name the cause.
+    stalled = (health['pending']['oldestMinutes'] or 0) * 60 >= STALL_ROW_SECONDS and health['newStockNews30m'] > 0
+    if stalled:
+        since = float(state.get('stalled_since') or now_ts)
+        if since < floor:
+            since = now_ts
+        with db:
+            put_watch(db, {'stalled_since': since})
+        if now_ts - since >= STALL_SECONDS and not active:
+            active['translation-stalled'] = 'company-wire-translation-stalled:' + (
+                'disabled' if not health['enabled'] else state.get('last_result') or 'no-worker')
+    elif state.get('stalled_since'):
+        with db:
+            put_watch(db, {}, drop=('stalled_since',))
+
+    for subject in ('translation-budget', 'translation-failing', 'translation-stalled'):
+        if subject in active:
+            monitor.record_operational_incident(db, WATCH_PREFIX + subject, 'company-wire', subject, 'critical', active[subject], seen_at=at)
+        else:
+            monitor.resolve_operational_incident(db, WATCH_PREFIX + subject, resolved_at=at)
+
+    # (d) The Stock News intake has had no successful 'tech' poll for 30 minutes while it is switched on.
+    if health['stockNewsIntake']['enabled']:
+        last = health['stockNewsIntake']['streams'].get('tech', {}).get('lastSuccessAt')
+        try:
+            last_ts = datetime.fromisoformat(last).timestamp() if last else float('-inf')
+        except ValueError:
+            last_ts = float('-inf')
+        since = max(last_ts, floor)
+        if since != float('-inf') and now_ts - since >= INTAKE_SECONDS:
+            active['intake'] = 'stock-news-intake-stale:tech'
+    if 'intake' in active:
+        monitor.record_operational_incident(db, INTAKE_KEY, 'stock-news', 'tech', 'critical', active['intake'], seen_at=at)
+    else:
+        monitor.resolve_operational_incident(db, INTAKE_KEY, resolved_at=at)
+    return sorted(active.values())

@@ -304,3 +304,6 @@
    a long name wraps to a second line in a slightly smaller face; short names stay on one line as before. */
 .boxName{white-space:normal;overflow:visible;overflow-wrap:break-word;word-break:normal;font-size:13px;line-height:1.25}
 .scoreBoxes[style*="repeat(3"] .boxName{font-size:12px}
+/* Owner, Nov 15: every factor row the same height, whatever the length of each company's measure (one or two lines). */
+.results .snapCell .factorMetric{min-height:calc(2em * 1.35);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.loadingNote{line-height:1.8}

@@ -399,3 +399,37 @@ class StreamTests(unittest.TestCase):
         result = news.poll_stream(self.db, "tech", transport=broken)
         self.assertEqual((result["status"], result["error"]), ("error", "stock-news-intake-failed"))
         self.assertEqual(news.poll_stream(self.db, "tech", transport=lambda *_: self.fail("backing off"))["status"], "waiting")
+
+
+class SentimentTests(unittest.TestCase):
+    """Owner, Nov 15: the topics page marks each Stock News API story with the provider's own sentiment."""
+    def setUp(self):
+        self.tmp = tempfile.TemporaryDirectory()
+        self.db = news.connect(Path(self.tmp.name) / "news.sqlite")
+        self.env = patch.dict(os.environ, {"STOCK_NEWS_ENABLED": "true", "STOCK_NEWS_API_KEY": "synthetic-key", "STOCK_NEWS_TO_HOME": "true"})
+        self.env.start()
+
+    def tearDown(self):
+        self.env.stop(); self.db.close(); self.tmp.cleanup()
+
+    def test_sentiment_is_read_without_changing_the_revision(self):
+        plain = news.normalize(article(), ["MU"])
+        positive = news.normalize({**article(), "sentiment": "Positive"}, ["MU"])
+        self.assertEqual(positive["sentiment"], "positive")
+        self.assertEqual(positive["revision"], plain["revision"], "a saved story is not treated as corrected")
+        self.assertEqual(news.normalize({**article(), "sentiment": " negative "}, ["MU"])["sentiment"], "negative")
+        for odd in ("Bullish", "", None, 3, ["Positive"]):
+            self.assertNotIn("sentiment", news.normalize({**article(), "sentiment": odd}, ["MU"]))
+
+    def test_sentiment_reaches_the_home_table_and_its_public_feed(self):
+        import company_wire
+        rows = [{**article(1), "title": "Micron wins a big memory order", "sentiment": "Negative", "tickers": ["MU"]},
+                {**article(2), "title": "Oil jumps on Hormuz tension", "tickers": None, "sentiment": "Neutral"}]
+        news.poll_stream(self.db, "tech", transport=lambda *_: rows[:1])
+        news.poll_stream(self.db, "market", transport=lambda *_: rows[1:])
+        stored = dict(self.db.execute("SELECT title, sentiment FROM company_wire").fetchall())
+        self.assertEqual(stored, {"Micron wins a big memory order": "negative", "Oil jumps on Hormuz tension": "neutral"})
+        rows = [dict(r) for r in self.db.execute("SELECT key, ticker, sentiment FROM company_wire")]
+        self.assertEqual(sorted((r["ticker"], r["sentiment"]) for r in rows), [("MKT", "neutral"), ("MU", "negative")])
+        self.assertEqual(company_wire.sentiment_field({"sentiment": "negative"}), {"sentiment": "negative"})
+        self.assertEqual(company_wire.sentiment_field({"sentiment": ""}), {})
