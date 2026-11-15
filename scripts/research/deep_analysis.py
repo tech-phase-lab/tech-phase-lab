@@ -825,8 +825,12 @@ def roster_status(db, now):
     for ticker in ROSTER:
         past = max((at for at in releases.get(ticker, []) if at <= when), default=None)
         future = min((at for at in releases.get(ticker, []) if at > when), default=None)
-        row = db.execute("SELECT state,published_at,created_at FROM deep_analyses WHERE kind='earnings' AND subject=? ORDER BY created_at DESC LIMIT 1",
-                         (ticker,)).fetchone()
+        # the newest finished analysis of the last 120 days, else the newest row: an old wrong-page hold (Dell: a 2024 page dated Sep 24) must not
+        # hide a later, correct analysis of an earlier release date
+        recent = (when - timedelta(days=120)).isoformat()
+        row = db.execute("SELECT state,published_at,created_at FROM deep_analyses WHERE kind='earnings' AND subject=? AND state='done' AND created_at>=? "
+                         "ORDER BY created_at DESC LIMIT 1", (ticker, recent)).fetchone() or db.execute(
+            "SELECT state,published_at,created_at FROM deep_analyses WHERE kind='earnings' AND subject=? ORDER BY created_at DESC LIMIT 1", (ticker,)).fetchone()
         item = {'ticker': ticker, 'lastReleaseAt': past.isoformat() if past else None,
                 'deepState': row['state'] if row is not None else 'none',
                 'deepPublishedAt': row['published_at'] if row is not None and row['state'] == 'done' else None,
