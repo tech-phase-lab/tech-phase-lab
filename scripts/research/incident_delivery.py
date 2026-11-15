@@ -177,24 +177,24 @@ def news_message(claim, code):
     tag = "incident-" + claim["key"]
     if claim["transition"] == "resolved":
         if category == "stock-news":
-            return {"title": "✅ Stock News API の取り込みが復旧しました", "body": "ホームのニュースがまた更新されます。", "tag": tag, "url": "/"}
-        return {"title": "✅ 日本語ニュースの翻訳が復旧しました", "body": "新着がまた日本語のホームに出ます。", "tag": tag, "url": "/"}
+            return {"title": "✅ Stock News API の取り込みが復旧しました", "body": "ホームのニュースがまた更新されます。", "tag": tag, "url": "/research"}
+        return {"title": "✅ 日本語ニュースの翻訳が復旧しました", "body": "新着がまた日本語のホームに出ます。", "tag": tag, "url": "/research"}
     detail = code.split(":", 1)[1] if ":" in code else ""
     if code.startswith("company-wire-translation-budget"):
         return {"title": "🚨 日本語ニュースの翻訳が回数の上限で30分以上待っています",
                 "body": "翻訳の呼び出し（1日%s回まで・均等配分）が足りず、新着が30分以上日本語のホームに出ていません。COMPANY_WIRE_TRANSLATION_DAILY_LIMIT を確認してください。" % (detail or "?"),
-                "tag": tag, "url": "/"}
+                "tag": tag, "url": "/research"}
     if code.startswith("company-wire-translation-failing"):
         cause = TRANSLATION_CAUSE.get(detail) or "エラー %s" % (detail or "不明")
         return {"title": "🚨 日本語ニュースの翻訳が15分失敗し続けています",
-                "body": "原因: %s。新着が日本語のホームに出ません。" % cause, "tag": tag, "url": "/"}
+                "body": "原因: %s。新着が日本語のホームに出ません。" % cause, "tag": tag, "url": "/research"}
     if code.startswith("company-wire-translation-stalled"):
         cause = TRANSLATION_CAUSE.get(detail) or "最後の結果 %s" % (detail or "不明")
         return {"title": "🚨 日本語ニュースの翻訳が止まっています",
-                "body": "20分以上前に届いたニュースが30分間訳されないまま新着だけが増えています。原因: %s。" % cause, "tag": tag, "url": "/"}
+                "body": "20分以上前に届いたニュースが30分間訳されないまま新着だけが増えています。原因: %s。" % cause, "tag": tag, "url": "/research"}
     if code.startswith("stock-news-intake-stale"):
         return {"title": "🚨 Stock News API の取り込みが30分止まっています",
-                "body": "テック記事の取得に30分成功していません。ホームのニュースが更新されません。", "tag": tag, "url": "/"}
+                "body": "テック記事の取得に30分成功していません。ホームのニュースが更新されません。", "tag": tag, "url": "/research"}
     return None
 
 
