@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
-import { clampWick, clampWicks, drawnSeries, latestTradingDay, liveBand, sessionTicks } from "../lib/research/market-board-periods.ts";
+import { clampWick, clampWicks, drawnSeries, latestTradingDay, liveBand, sessionTicks, volumeBars, VOLUME_FLOOR } from "../lib/research/market-board-periods.ts";
 
 const bar = (at, open, high, low, close) => ({ at, open, high, low, close, volume: 100 });
 /** One New York day of 15-minute bars from 4:00 to 19:45 (64 bars). */
@@ -152,4 +152,29 @@ test("the change line under the period buttons: 20px below them, no arrow, no ba
   assert.match(line, /\{sign\}\{Math\.abs\(percent\)\.toFixed\(2\)\}%/);
   assert.match(line, /`\$\{NAMES\[period\]\[0\]\}の騰落率`/);
   assert.match(line, /`\$\{NAMES\[period\]\[1\]\} change`/);
+});
+
+test("the volume row runs under the whole chart: pre-market / after-hours volume drawn (muted), never made up (owner, Nov 15)", () => {
+  // Production /api/research/market/chart?ticker=MSFT&period=15m, Nov 15: the provider's own extended-hours volume next to the session's.
+  const v = (at, volume, open = 540, close = 541) => ({ at: `2026-11-09 ${at}:00`, open, high: 542, low: 539, close, volume });
+  const bars = [v("04:00", 0), v("08:45", 358), v("09:15", 167), v("09:30", 2780884), v("12:45", 9940346, 545, 544), v("15:45", 1758724), v("16:00", 260), v("17:00", 0), v("19:00", 2), { ...v("19:30", null) }];
+  const rows = volumeBars(bars, 52);
+  assert.equal(rows.length, bars.length);
+  assert.deepEqual(rows.map(r => r.extended), [true, true, true, false, false, false, true, true, true, true]);
+  // The session keeps its linear scale; the biggest bar fills the row.
+  assert.equal(rows[4].height, 52);
+  assert.ok(Math.abs(rows[3].height - 2780884 / 9940346 * 52) < 1e-9);
+  // A few hundred shares against millions would be 0px tall: it is drawn at the floor instead, so the row is continuous.
+  for (const k of [1, 2, 6, 8]) assert.equal(rows[k].height, VOLUME_FLOOR);
+  // No volume (0 or unknown) is no bar: nothing is invented.
+  for (const k of [0, 7, 9]) assert.equal(rows[k].height, 0);
+  // Daily bars (a date only) are never "extended".
+  assert.deepEqual(volumeBars([{ at: "2026-11-09", open: 1, high: 1, low: 1, close: 1, volume: 5 }], 52), [{ height: 52, extended: false }]);
+  // The chart: a faint baseline across the full width, extended-hours bars in the muted grey, session bars green / red as before.
+  const chart = readFileSync(new URL("../app/research/price/price-chart.tsx", import.meta.url), "utf8");
+  assert.match(chart, /const volumes = withVolume \? volumeBars\(bars, VH\) : \[\];/);
+  assert.match(chart, /<line x1="0" y1=\{VB - 0\.5\} x2=\{pw\} y2=\{VB - 0\.5\}[^>]*data-testid="volume-baseline"/);
+  assert.match(chart, /fill=\{extended \? MUTED : up \? UP : DOWN\}/);
+  assert.match(chart, /MUTED = "#8c98ab"/);
+  assert.doesNotMatch(chart, /vmax/);
 });

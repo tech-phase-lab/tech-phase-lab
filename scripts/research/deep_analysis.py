@@ -1,6 +1,6 @@
 """PRO deep analysis of earnings releases and U.S. indicators (owner, Oct 11).
 
-A higher-tier model (RESEARCH_DEEP_MODEL, e.g. gpt-6-astra) writes the
+A higher-tier model (RESEARCH_DEEP_MODEL, whatever the service is configured with; the weekly draft uses it too) writes the
 reading: drivers, comparison with the prior period, guidance and consensus,
 and what to watch next. It never supplies a number: every figure in the copy
 must appear literally in the source excerpt it cites, and Japanese/English
@@ -18,14 +18,17 @@ import time
 
 import brief_generator
 import factual_validation
+import llm_cost
 import monitor
 
+# One paid call per release (owner, Nov 15): an analysis the checks rejected is never asked for again. MAX_ATTEMPTS only bounds the
+# calls that came back with nothing to check (timeout, provider error, incomplete reply).
 MAX_ATTEMPTS = 3
 # Bump when the prompt/check logic changes so analyses held under the old logic are tried again (attempts restart at 0).
-VERSION = 11
+VERSION = 12
 RETRY_SECONDS = 120
 DEFAULT_DAILY_LIMIT = 40
-EARNINGS_RESERVE = 12  # calls of the daily limit kept for earnings only (four analyses at three attempts each)
+EARNINGS_RESERVE = 12  # calls of the daily limit kept for earnings only (one call per release since Nov 15: room for a heavy earnings day)
 MAX_DAILY_LIMIT = 200
 REQUEST_TIMEOUT_SECONDS = 180
 WINDOW = timedelta(days=3)
@@ -37,7 +40,7 @@ Return a headline and three to five analysis points, plus one point on what to w
 Each point explains meaning, not just restating: what drove the result, how it compares with the prior period, guidance or consensus when the source states them, and the risks or questions it raises.
 The headline and each point cite one to three evidence ids (evidenceIds); put a figure in a point only if it appears literally in one of the excerpts that point cites, so cite every excerpt that holds a figure you use.
 Numbers: use only figures that appear literally in the evidence excerpts the point cites, with the same units and signs. Never calculate, round, convert or infer a number (no growth rates you compute, no yen conversions). If a comparison needs a number the source does not give, describe it in words without a number.
-If previousAttemptRejected is present, the last attempt for this source was partly rejected by deterministic checks: unsupported-number:<kind>:<values> lists quantities your copy used that do not appear in the excerpts you cited (do not use them again; cite the excerpt that holds a figure or leave the figure out); changed-negation and changed-action-capacity mean a negated or capacity clause of the cited excerpt was restated without its negation or qualifier; evidence-missing means a cited id does not exist. Fix exactly those points. If alreadyAccepted is present, those points already passed every check and are kept: do not repeat them, and write new points on other aspects of the source (still three to five, each fully supported by the excerpts it cites).
+You get one attempt: every point is checked by deterministic rules and a point that fails is dropped, so write each point to pass on its own. Keep one idea per point and do not mix increases and decreases of different items in one sentence (put them in separate points). A claim about a trend or a comparison must cite the excerpt that states it, and a figure must be in an excerpt you cite. Write an amount exactly as the source does and put a space or punctuation between an English unit word and the Japanese text that follows it. A negated or capacity clause of the source (cannot, able to, not expected) must keep its negation or qualifier.
 Write what the excerpts say, not what cannot be known: do not add negative statements of your own (できない、ではない、ない、not、cannot) unless the cited excerpt itself says so; express caution as something to watch (…かどうかを確認したい) instead. A figure you mention must be in an excerpt you cite, so cite the excerpt that holds it.
 Preserve negation, uncertainty and time: plans stay plans, guidance stays guidance.
 Length: every Japanese and every English text (headline, each point, the watch point) must be at most 500 characters; a longer text is rejected whole (copy-too-long), so split a long thought into two points or leave the detail out.
@@ -93,6 +96,54 @@ def response_schema():
                            'watch': point}}
 
 
+# Boilerplate of a release that carries no analysis (owner, Nov 15: send less, but never thin the content: results, outlook, segments and
+# management comments all stay). A line is dropped only when it matches one of these AND holds no currency/percent figure and no outlook word.
+BOILERPLATE = tuple(re.compile(pattern, re.I) for pattern in (
+    r'forward[- ]looking statements?.{0,400}(?:risks?|uncertaint|safe harbor|securities litigation|actual results|no obligation)',
+    r'(?:safe harbor|private securities litigation reform act)',
+    r'^\s*(?:cautionary (?:note|statement)s?(?: regarding forward[- ]looking statements?)?|forward[- ]looking statements?|safe harbor(?: statement)?|disclaimer|legal notice)\s*:?\s*$',
+    r'(?:undertake|undertakes|assume|assumes) no (?:obligation|duty) to (?:update|revise|publicly)',
+    r'^\s*table of contents\s*$',
+    r'\.{5,}\s*\d+\s*$',
+    r'^\s*(?:investor relations|media|press|analyst|ir|public relations)\s*(?:contacts?|inquiries)?\s*:?\s*$',
+    r'^\s*(?:contacts?|for more information|media contacts?|investor contacts?)\s*:?\s*$',
+    r'[\w.+-]+@[\w-]+(?:\.[\w-]+)+',
+    r'(?:^|\s)\(?\+?\d{1,2}[ .-]?\(?\d{3}\)?[ .-]\d{3}[ .-]\d{4}\b',
+    r'^\s*(?:©|copyright\b|\(c\))',
+    r'all rights reserved',
+    r'(?:is|are) (?:a )?(?:registered )?trademarks? of',
+))
+TABLE_HEADING = re.compile(r'(?:three|six|nine|twelve) months ended|\(unaudited\)|condensed consolidated|statements? of (?:operations|income|earnings|cash flows)|balance sheets?', re.I)
+KEEP_LINE = re.compile(r'[$€£¥]\s*\d|\d\s*(?:%|percent|million|billion|trillion)|\b(?:outlook|guidance|expects?|forecast|quarter|revenue|margin)\b', re.I)
+
+
+def trim_release(body):
+    """The release without its boilerplate lines, plus what was removed: {'before', 'after', 'removedLines', 'removedChars', 'estTokensRemoved'}.
+    Table cells, unit headers and every line with a figure or an outlook word are kept (a scaled figure needs its unit header); a table
+    heading that only repeats the line just above it is dropped."""
+    lines = body.split('\n')
+    kept, removed, previous = [], 0, None
+    for line in lines:
+        text = line.strip()
+        drop = False
+        if text and text == previous and TABLE_HEADING.search(text):
+            drop = True  # the same table heading twice in a row
+        elif text and not KEEP_LINE.search(text) and any(pattern.search(line) for pattern in BOILERPLATE):
+            drop = True
+        elif text and len(text) > 200 and re.search(r'forward[- ]looking statements?', line, re.I) and re.search(
+                r'(?:risks?|uncertaint)', line, re.I) and not re.search(r'[$€£¥]\s*\d|\d\s*(?:%|percent|million|billion)', line, re.I):
+            drop = True  # a long forward-looking-statements paragraph with no figure in it
+        if drop:
+            removed += len(line) + 1
+            continue
+        kept.append(line)
+        if text:
+            previous = text
+    trimmed = '\n'.join(kept)
+    return trimmed, {'before': len(body), 'after': len(trimmed), 'removedLines': len(lines) - len(kept), 'removedChars': removed,
+                     'estTokensRemoved': removed // 4}
+
+
 def earnings_sources(db, reference, excerpts=True):
     import official_research
     rows = []
@@ -104,8 +155,12 @@ def earnings_sources(db, reference, excerpts=True):
             continue
         rows.append({'ref': 'event:%s:%s' % (row['id'], row['sha']), 'kind': 'earnings', 'subject': row['ticker'],
                      'sha': row['sha'], 'title': row['title'], 'url': row['url'],
-                     'observedAt': row.get('observed_at'),
-                     'excerpts': official_research.evidence_excerpts(row['body']) if excerpts else {}})
+                     'observedAt': row.get('observed_at')})
+        if excerpts:
+            trimmed, trim = trim_release(row['body'])
+            rows[-1].update({'excerpts': official_research.evidence_excerpts(trimmed), 'trim': trim})
+        else:
+            rows[-1]['excerpts'] = {}
     return rows
 
 
@@ -122,8 +177,9 @@ def stored_earnings_source(db, ref):
       ORDER BY (r.sha256=e.sha) DESC, abs(julianday(r.observed_at)-julianday(e.observed_at)) LIMIT 1''', (int(parts[1]), parts[2])).fetchone()
     if row is None or not row['body']:
         return []
+    trimmed, trim = trim_release(row['body'])
     return [{'ref': ref, 'kind': 'earnings', 'subject': row['ticker'], 'sha': row['sha'], 'title': row['title'], 'url': row['url'],
-             'observedAt': None, 'excerpts': official_research.evidence_excerpts(row['body'])}]
+             'observedAt': None, 'excerpts': official_research.evidence_excerpts(trimmed), 'trim': trim}]
 
 
 def indicator_sources(db, reference):
@@ -229,13 +285,12 @@ def cited_quote(item, excerpts):
     return '\n'.join(found) if found else None
 
 
-def bind(value, excerpts, carried=None, diagnose=None):
-    """Keep checked parts; at least two points and a headline must remain. `carried` is what an earlier attempt already got through the checks
-    ({'headline', 'points'}): it is kept, so a retry only has to replace what was rejected (the checks themselves are the same for every piece).
+def bind(value, excerpts, diagnose=None):
+    """Keep the points that pass every check and publish those: one passed point is enough (owner, Nov 15), none holds the analysis.
+    A headline that fails is replaced by a fixed, number-free one, so a good point is never lost to its headline.
     `diagnose(kind, reason, item, quote)` is called for every rejected piece (the one-off old retry logs them; the checks are not touched)."""
     if not isinstance(value, dict):
         raise ValueError('invalid-note')
-    carried = carried or {}
     evidence = '\n'.join(excerpts.values())
     headline = value.get('headline')
     headline_error = None
@@ -251,8 +306,7 @@ def bind(value, excerpts, carried=None, diagnose=None):
         if diagnose:
             diagnose('headline', why(exc, evidence), headline, cited_quote(headline, excerpts) if isinstance(headline, dict) else None)
         headline = None
-    points = [dict(p) for p in carried.get('points') or []]
-    carried_ja = {p['ja'] for p in points}
+    points = []
     rejected = {}
     for point in value.get('points') or []:
         quote = cited_quote(point, excerpts) if isinstance(point, dict) else None
@@ -267,16 +321,13 @@ def bind(value, excerpts, carried=None, diagnose=None):
             if diagnose:
                 diagnose('point', reason, point, quote)
             continue
-        if point['ja'] not in carried_ja and len(points) < 5:
+        if len(points) < 5 and point['ja'] not in {p['ja'] for p in points}:
             points.append({'ja': point['ja'], 'en': point['en']})
-    headline = headline or carried.get('headline')
+    if not points:
+        raise Unchecked('no-checked-points', {'kept': 0, 'rejected': rejected, **(
+            {'headline': why(headline_error, evidence)} if headline_error is not None else {})})
     if headline is None:
-        exc = headline_error
-        raise Unchecked(str(exc) if isinstance(exc, ValueError) else type(exc).__name__,
-                        {'headline': why(exc, evidence), 'carry': {'version': VERSION, 'points': points}})
-    if len(points) < 2:
-        raise Unchecked('too-few-checked-points', {'kept': len(points), 'rejected': rejected,
-                                                   'carry': {'version': VERSION, 'headline': headline, 'points': points}})
+        headline = {'ja': 'この決算の要点', 'en': 'Key points of this release'}  # fixed, no figure, no claim
     watch = value.get('watch')
     try:
         checked(watch, cited_quote(watch, excerpts) or evidence, evidence)
@@ -342,39 +393,38 @@ def run_once(path, transport=None, env=None, now=None, reference=None, only_ref=
             break
         if source is None:
             return 'idle'
-        prior = db.execute('SELECT detail FROM deep_analyses WHERE source_ref=?', (source['ref'],)).fetchone()
-        try:
-            previous = json.loads(prior['detail']) if prior and prior['detail'] else None
-        except ValueError:
-            previous = None
-        carried = previous.pop('carry', None) if isinstance(previous, dict) else None
-        if not isinstance(carried, dict) or carried.get('version') != VERSION:
-            carried = None  # accepted under other check logic: written again
-        if carried and carried.get('points'):
-            previous = {**(previous or {}), 'alreadyAccepted': [p['ja'] for p in carried['points']]}
-        db.execute('''INSERT INTO deep_analyses(source_ref,kind,subject,source_sha,state,attempts,next_at,created_at,source_url,source_title)
-          VALUES(?,?,?,?, 'running',0,?,?,?,?) ON CONFLICT(source_ref) DO UPDATE SET state='running',next_at=excluded.next_at,version=%d''' % VERSION,
+        db.execute('''INSERT INTO deep_analyses(source_ref,kind,subject,source_sha,state,attempts,next_at,created_at,source_url,source_title,version)
+          VALUES(?,?,?,?, 'running',0,?,?,?,?,%d) ON CONFLICT(source_ref) DO UPDATE SET state='running',next_at=excluded.next_at,version=%d''' % (VERSION, VERSION),
                    (source['ref'], source['kind'], source['subject'], source['sha'], now + 600,
                     reference.isoformat(), source['url'], source['title']))
         db.execute('UPDATE deep_analyses SET attempts=attempts+1 WHERE source_ref=?', (source['ref'],))
         db.execute('INSERT INTO deep_analysis_calls VALUES(?,?,?,0)', (now, source['ref'], model))
         attempts = db.execute('SELECT attempts FROM deep_analyses WHERE source_ref=?', (source['ref'],)).fetchone()[0]
+    # The fixed part comes first and never changes between calls (instructions, then the cache key), so the provider's prompt cache can
+    # serve it; everything that differs per release is in `input`, last.
     payload = {'model': model, 'store': False, 'max_output_tokens': 4000, 'instructions': POLICY,
+               'prompt_cache_key': 'tech-phase-deep-analysis-v%d' % VERSION,
+               'text': {'format': {'type': 'json_schema', 'name': 'deep_analysis', 'strict': True, 'schema': response_schema()}},
                'input': json.dumps({'kind': source['kind'], 'subject': source['subject'], 'title': source['title'],
-                                    'evidenceExcerpts': source['excerpts'],
-                                    **({'previousAttemptRejected': previous} if previous else {})}, ensure_ascii=False),
-               'text': {'format': {'type': 'json_schema', 'name': 'deep_analysis', 'strict': True, 'schema': response_schema()}}}
+                                    'evidenceExcerpts': source['excerpts']}, ensure_ascii=False)}
+    trim = source.get('trim') or {}
+    received = False
     try:
         response = transport(payload, key)
+        with connect(path) as db:  # counted as soon as the provider answers, whatever the checks then decide
+            llm_cost.record(db, 'deep-analysis', source['ref'], model, response, now=now,
+                            chars_before=trim.get('before'), chars_sent=trim.get('after'))
         if response.get('status') != 'completed':
             raise ValueError('incomplete')
-        note = bind(json.loads(brief_generator.output_text(response)), source['excerpts'], carried,
+        received = True
+        note = bind(json.loads(brief_generator.output_text(response)), source['excerpts'],
                     diagnose=(lambda kind, reason, item, quote: log_rejected(source, kind, reason, item, quote)) if only_ref is not None else None)
     except Exception as exc:
         reason = str(exc) if isinstance(exc, ValueError) else type(exc).__name__
         detail = json.dumps(exc.detail, ensure_ascii=False, sort_keys=True) if isinstance(exc, Unchecked) else None
         with connect(path) as db:
-            state = 'held' if attempts >= MAX_ATTEMPTS else 'retry'
+            # A reply the checks rejected is final (one call per release); only a call that returned nothing to check may be repeated.
+            state = 'held' if received or attempts >= MAX_ATTEMPTS else 'retry'
             db.execute('UPDATE deep_analyses SET state=?,next_at=?,failure=?,detail=? WHERE source_ref=?',
                        (state, now + RETRY_SECONDS, reason[:80], detail, source['ref']))
         return 'retry'
@@ -412,6 +462,7 @@ def diagnostics(db, now=None):
     states = dict(db.execute('SELECT state,count(*) FROM deep_analyses GROUP BY state').fetchall())
     failures = dict(db.execute("SELECT failure,count(*) FROM deep_analyses WHERE failure IS NOT NULL GROUP BY failure").fetchall())
     pending = []
+    cost = llm_cost.today(db, now)
     for row in db.execute('''SELECT subject,source_title,state,attempts,failure,detail,created_at FROM deep_analyses
       WHERE state IN ('held','retry') ORDER BY created_at DESC LIMIT 30'''):
         try:
@@ -424,11 +475,11 @@ def diagnostics(db, now=None):
                         'failure': row['failure'], 'detail': detail, 'createdAt': row['created_at']})
     old_retry = dict(db.execute('SELECT outcome,count(*) FROM deep_old_retries WHERE marker=? GROUP BY outcome', (OLD_RETRY_MARKER,)).fetchall())
     return {'configured': configuration() is not None, 'callsLast24h': used_today(db, now), 'states': states,
-            'failures': failures, 'version': VERSION, 'notDone': pending, **({'oldRetry': old_retry} if old_retry else {})}
+            'failures': failures, 'version': VERSION, 'notDone': pending, 'cost': cost, **({'oldRetry': old_retry} if old_retry else {})}
 
 
 OLD_RETRY_ENV = 'RESEARCH_DEEP_RETRY_OLD_HOLDS'
-OLD_RETRY_MARKER = 'old-holds-2026-11-14c'  # owner, Nov 15: every held analysis, and a retry row that left the 3-day window, gets one more attempt
+OLD_RETRY_MARKER = 'old-holds-2026-11-15d'  # owner, Nov 15: one more attempt for every held analysis (ARM: a scale word glued to Japanese text was misread)
 
 
 def retry_old_holds(path, transport=None, env=None, now=None):
@@ -496,7 +547,9 @@ def overdue(db, now=None, env=None):
             age = now - datetime.fromisoformat(row['created_at']).timestamp()
         except ValueError:
             continue
-        if OVERDUE_AFTER_SECONDS <= age <= OVERDUE_LOOKBACK_SECONDS:
+        # An analysis the checks rejected is final (one call per release, none of its points passed): the owner hears at once, not after two hours.
+        threshold = 0 if row['state'] == 'held' else OVERDUE_AFTER_SECONDS
+        if threshold <= age <= OVERDUE_LOOKBACK_SECONDS:
             late.append({'subject': row['subject'], 'check': first_check(row), 'state': row['state'], 'ageSeconds': int(age)})
     late += never_attempted(db, now, env)
     return late

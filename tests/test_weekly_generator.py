@@ -141,11 +141,11 @@ REJECTED = "ブロードコム、出荷遅延を見込む"
 real_semantics = gen.factual_validation.validate_semantics
 
 
-def semantics_rejecting_the_headline(text, evidence):
+def semantics_rejecting_the_headline(text, evidence, **options):
     # Stands in for the production rule that rejected a headline with "changed-negation" (owner, Nov 11).
     if text == REJECTED:
         raise ValueError("changed-negation")
-    return real_semantics(text, evidence)
+    return real_semantics(text, evidence, **options)
 
 
 class GenerateTests(Base):
@@ -179,28 +179,34 @@ class GenerateTests(Base):
         self.assertIn("numbers", kinds)
         self.assertIn("【要確認】「雇用統計は強め」は、数字が資料と合わないため載せていません。〔unsupported-number〕", saved["notes"])
 
-    def test_the_headline_with_an_unsupported_number_stops_the_draft(self):
+    def test_a_headline_with_an_unsupported_number_is_never_published_and_the_model_is_not_asked_again(self):
+        # Owner, Nov 15 (cost): one model call; a wrong number is replaced here and flagged for the owner, the rest of the issue is kept.
+        model = FakeModel(model_output(headline="MUは売上高99億ドルでした"))
+        saved = gen.generate(self.db, SATURDAY, transport=model, env=ENV)
+        self.assertEqual(len(model.calls), 1)
+        self.assertNotIn("99", saved["headline"])
+        self.assertEqual(saved["headline"], "11/7号：MU決算と米雇用統計")
+        self.assertIn("【要確認】見出しは、数字が資料と合わないため、AIの文を使わず定型文にしています。〔unsupported-number〕", saved["notes"])
+        self.assertTrue(any(p["type"] == "numbers" for p in saved["parts"]), "the rest of the issue is kept")
         with self.assertRaises(ValueError):
-            gen.generate(self.db, SATURDAY, transport=FakeModel(model_output(headline="MUは売上高99億ドルでした")), env=ENV)
+            gen.compose(model_output(headline="MUは売上高99億ドルでした"), gen.collect(self.db, SATURDAY), [])
 
     def test_a_headline_rejected_for_negation_is_asked_again_and_then_replaced_by_a_plain_one(self):
         # Owner, Nov 11: "changed-negation" stopped the whole Saturday issue. A negation the check reads against the evidence is not a wrong number.
         bad = model_output(headline=REJECTED)
         with mock.patch.object(gen.factual_validation, "validate_semantics", semantics_rejecting_the_headline):
             saved = gen.generate(self.db, SATURDAY, transport=FakeModel(bad), env=ENV)
-        self.assertEqual(saved["headline"], gen.NEUTRAL_HEADLINE)
+        self.assertEqual(saved["headline"], "11/7号：MU決算と米雇用統計", "the fallback is built from the week, not one fixed line")
         self.assertTrue(any("見出し" in note for note in saved["notes"]))
 
-    def test_a_negation_rejection_is_asked_again_with_the_rule_and_the_second_answer_is_used(self):
-        calls = []
-        outputs = [model_output(headline=REJECTED), model_output()]
-        def model(payload, key):
-            calls.append(json.loads(payload["input"]))
-            return FakeModel(outputs[min(len(calls) - 1, 1)])(payload, key)
+    def test_a_rejected_headline_is_not_sent_back_to_the_model(self):
+        # Owner, Nov 15 (cost): no second round. The draft is made from the one answer.
+        model = FakeModel(model_output(headline=REJECTED))
         with mock.patch.object(gen.factual_validation, "validate_semantics", semantics_rejecting_the_headline):
             saved = gen.generate(self.db, SATURDAY, transport=model, env=ENV)
-        self.assertEqual(len(calls), 2); self.assertIn("repair", calls[1]); self.assertNotIn("repair", calls[0])
-        self.assertNotEqual(saved["headline"], gen.NEUTRAL_HEADLINE)
+        self.assertEqual(len(model.calls), 1)
+        self.assertNotIn("repair", json.loads(model.calls[0]["input"]))
+        self.assertEqual(saved["lead"], model_output()["lead"], "the lead that passed is kept")
 
     def test_the_body_is_reader_text_in_a_fixed_order_and_the_owner_lines_are_tagged_notes(self):
         out = model_output()
@@ -397,26 +403,147 @@ class RecentTests(Base):
         self.assertEqual([r["headline"] for r in sent["recentIssues"]], ["号4の見出し", "号3の見出し", "号2の見出し"])
 
 
-class RunTests(Base):
-    def test_the_poll_loop_makes_one_draft_a_week_and_retries_a_failure_a_few_times(self):
-        weekly.save_settings(self.db, {"generateEnabled": True}); self.db.commit()
-        failing = lambda payload, key: (_ for _ in ()).throw(RuntimeError("boom"))
-        self.assertEqual(gen.run_if_due(self.path, SATURDAY, transport=failing, env=ENV), "retry")
-        self.assertEqual(gen.run_if_due(self.path, SATURDAY + 60, transport=failing, env=ENV), "idle", "waits before trying again")
+class HeadlineTests(Base):
+    """Owner, Nov 15: every draft was titled 「今週の決算と経済指標のまとめ」. A negated sentence anywhere in the week (here an official note saying the
+    company did not change its buyback plan) made every affirmative Japanese headline fail with changed-negation, so the fixed line was used."""
+
+    def add_note(self, en, ja="会社は自社株買いの計画を変えていません。"):
+        self.db.execute("INSERT INTO signal_events(id,url) VALUES(7,'https://example.com/note')")
+        payload = {"title": {"ja": "MUの公式発表", "en": "Micron update"}, "summary": {"ja": ja, "en": en}, "facts": []}
+        self.db.execute("INSERT INTO official_research_publications(event_id,sha,body_sha,payload,evidence,started_at,public_at,generation_ms) VALUES(7,'s','b',?,'[]',?,?,0)",
+                        (json.dumps(payload, ensure_ascii=False), "2026-11-06T00:00:00+00:00", "2026-11-06T00:00:00+00:00"))
+        self.db.commit()
+
+    def test_a_conclusion_style_headline_is_kept_although_another_sentence_of_the_week_is_negated(self):
+        self.add_note("Micron did not change its buyback plan.")
+        everything = "\n".join(item["quote"] for item in gen.collect(self.db, SATURDAY))
+        # Before the fix: the same headline failed against the whole week joined together.
+        with self.assertRaises(ValueError):
+            gen.factual_validation.validate_semantics("MUは増収で、AI向けメモリの強さが続いています", everything + "\n米CPI")
+        headline = "MUは増収で、AI向けメモリの強さが続いています"
+        saved = gen.generate(self.db, SATURDAY, transport=FakeModel(model_output(headline=headline)), env=ENV)
+        self.assertEqual(saved["headline"], headline)
+        self.assertFalse(any(line.startswith("【定型文】") for line in saved["notes"]))
+
+    def test_a_headline_that_drops_the_negation_of_what_it_restates_is_still_rejected(self):
+        self.add_note("Micron did not raise its revenue guidance.", ja="会社は売上見通しを引き上げませんでした。")
+        evidence = gen.collect(self.db, SATURDAY)
+        everything = "\n".join(item["quote"] for item in evidence)
+        with self.assertRaises(ValueError) as caught:
+            gen._check_framing("MUは売上見通しを引き上げました", evidence, everything)
+        self.assertEqual(str(caught.exception), "changed-negation")
+        self.assertEqual(gen._check_framing("MUは売上見通しを据え置き、引き上げませんでした", evidence, everything), "MUは売上見通しを据え置き、引き上げませんでした")
+        # A clause about something else in the same sentence does not count: profit is not what this headline is about.
+        self.assertEqual(gen.negated_scope("MUは増収でした", [{"kind": "analysis", "ticker": "MU", "quote": "MUは増収でしたが、利益は黒字化していません。"}]), "")
+
+    def test_a_wrong_number_in_the_headline_is_still_caught(self):
+        self.add_note("Micron did not change its buyback plan.")
+        saved = gen.generate(self.db, SATURDAY, transport=FakeModel(model_output(headline="MUは売上高99億ドルで増収")), env=ENV)
+        self.assertNotIn("99", saved["headline"])
+        self.assertTrue(any(line.startswith("【要確認】見出し") and "unsupported-number" in line for line in saved["notes"]))
+        evidence = gen.collect(self.db, SATURDAY)
+        with self.assertRaises(ValueError):
+            gen._check_framing("MUの売上高は$12.0Bでした", evidence, "\n".join(item["quote"] for item in evidence))
+
+    def test_the_fallback_is_built_from_the_weeks_subjects_and_never_carries_a_figure(self):
+        evidence = gen.collect(self.db, SATURDAY)
+        self.assertEqual(gen.fallback_headline(evidence, "2026-11-07"), "11/7号：MU決算と米雇用統計")
+        cpi = {"kind": "indicator", "ticker": "", "label": "米国CPI（10月）：前年比 3.0%", "quote": "", "facts": [{"key": "cpi-yoy"}]}
+        nbis = [{"kind": kind, "ticker": "NBIS", "label": "NBIS", "quote": "", "facts": []} for kind in ("earnings", "analysis")]
+        week2 = [{"kind": "earnings", "ticker": "AMAT", "label": "AMAT", "quote": "", "facts": []}, *nbis, cpi]
+        self.assertEqual(gen.fallback_headline(week2, "2026-11-14"), "11/14号：NBIS決算と米CPI", "the company with the most material first")
+        self.assertEqual(gen.fallback_headline([cpi], "2026-11-14"), "11/14号：米CPI")
+        self.assertEqual(gen.fallback_headline([{"kind": "indicator", "ticker": "", "label": "失業率：結果 4.2%", "quote": "", "facts": [{"key": "actual"}]}], ""), "失業率")
+        self.assertEqual(gen.fallback_headline([], "2026-11-14"), "11/14号：" + gen.NEUTRAL_HEADLINE)
+        self.assertNotEqual(gen.fallback_headline(evidence, "2026-11-07"), gen.fallback_headline(week2, "2026-11-14"))
+        for line in (gen.fallback_headline(evidence, "2026-11-07"), gen.fallback_headline(week2, "2026-11-14")):
+            self.assertNotRegex(line.split("号：", 1)[1], r"\d", "no figure after the date")
+
+
+class CostTests(Base):
+    """Owner, Nov 15: one model call per draft, the fixed parts first for the prompt cache, deep analyses reused, any configured model."""
+
+    def test_the_fixed_instructions_and_schema_lead_every_request_and_are_the_same_each_week(self):
+        first, second = FakeModel(model_output()), FakeModel(model_output())
+        gen.generate(self.db, SATURDAY, transport=first, env=ENV)
+        publish_flash(self.db, 11, {**MU, "ticker": "AMD", "url": "https://x.com/tipranks/status/11"}, "2026-11-12T21:30:00+00:00"); self.db.commit()
+        gen.generate(self.db, SATURDAY + 7 * 86400, transport=second, env=ENV)
+        a, b = first.calls[0], second.calls[0]
+        self.assertEqual(list(a)[:3], ["model", "instructions", "text"], "fixed parts first, the week's material last")
+        self.assertEqual(list(a)[-1], "input")
+        self.assertEqual((a["instructions"], a["text"]), (b["instructions"], b["text"]))
+        self.assertEqual(a["prompt_cache_key"], gen.PROMPT_CACHE_KEY)
+        self.assertEqual(list(json.loads(a["input"]))[-1], "evidence", "the long, changing part is at the very end")
+
+    def test_the_request_is_sent_once_by_the_transport_too(self):
+        answer = {"status": "completed", "output_text": json.dumps(model_output(), ensure_ascii=False)}
+        with mock.patch.object(gen.brief_generator, "request_response", return_value=answer) as sent:
+            gen.generate(self.db, SATURDAY, env=ENV)
+        self.assertEqual(sent.call_count, 1)
+        self.assertEqual(sent.call_args.kwargs.get("attempts"), 1)
+
+    def test_a_company_with_a_deep_analysis_is_described_by_it_not_by_the_long_note(self):
+        self.db.executescript("""DROP TABLE signal_events; CREATE TABLE signal_events(id INTEGER PRIMARY KEY, url TEXT, tickers_json TEXT);
+          CREATE TABLE deep_analyses(kind TEXT, subject TEXT, payload TEXT, source_url TEXT, source_title TEXT, state TEXT, published_at TEXT);""")
+        self.db.execute("INSERT INTO signal_events(id,url,tickers_json) VALUES(7,'https://example.com/mu',?)", ('["MU"]',))
+        self.db.execute("INSERT INTO signal_events(id,url,tickers_json) VALUES(8,'https://example.com/amd',?)", ('["AMD"]',))
+        long_ja = "長い公式発表の本文。" * 100
+        for event_id, title in ((7, "MUの公式発表"), (8, "AMDの公式発表")):
+            payload = {"title": {"ja": title, "en": title}, "summary": {"ja": long_ja, "en": "Long official note."}, "facts": []}
+            self.db.execute("INSERT INTO official_research_publications(event_id,sha,body_sha,payload,evidence,started_at,public_at,generation_ms) VALUES(?,'s','b',?,'[]',?,?,0)",
+                            (event_id, json.dumps(payload, ensure_ascii=False), "2026-11-06T00:00:00+00:00", "2026-11-06T00:00:00+00:00"))
+        analysis = {"headline": {"ja": "MUはHBMが伸びました", "en": "MU HBM grew"}, "points": [{"ja": "HBMの売上が伸びました。", "en": "HBM revenue grew."}]}
+        self.db.execute("INSERT INTO deep_analyses VALUES('earnings','MU',?,'https://example.com/mu-ir','MU','done','2026-11-06T01:00:00+00:00')", (json.dumps(analysis, ensure_ascii=False),))
+        self.db.commit()
         model = FakeModel(model_output())
-        self.assertEqual(gen.run_if_due(self.path, SATURDAY + gen.RETRY_SECONDS + 1, transport=model, env=ENV), "done")
+        gen.generate(self.db, SATURDAY, transport=model, env=ENV)
+        sent = {e["label"]: e for e in json.loads(model.calls[0]["input"])["evidence"]}
+        self.assertEqual(sent["MUの公式発表"]["text"], "", "MU's long note is not sent again")
+        self.assertEqual(sent["MUの公式発表"]["seeAnalysisOf"], "MU")
+        self.assertIn("HBM", next(e["text"] for e in sent.values() if e["type"] == "analysis"))
+        self.assertTrue(sent["AMDの公式発表"]["text"], "a company without an analysis keeps its note")
+        quotes = [item for item in gen.collect(self.db, SATURDAY) if item["label"] == "MUの公式発表"]
+        self.assertTrue(quotes and quotes[0]["quote"], "the note is still evidence the checks read")
+
+    def test_any_configured_model_is_used_as_is(self):
+        model = FakeModel(model_output())
+        gen.generate(self.db, SATURDAY, transport=model, env={"OPENAI_API_KEY": ENV["OPENAI_API_KEY"], "RESEARCH_DEEP_MODEL": "gpt-5.6-terra"})
+        self.assertEqual(model.calls[0]["model"], "gpt-5.6-terra", "no WEEKLY_MODEL: the deep-analysis model is used")
+        self.assertEqual(gen.configuration({"OPENAI_API_KEY": ENV["OPENAI_API_KEY"], "RESEARCH_DEEP_MODEL": "gpt-5.6-terra", "WEEKLY_MODEL": "other-1"})[1], "other-1")
+
+
+class RunTests(Base):
+    def test_the_poll_loop_makes_one_draft_a_week(self):
+        weekly.save_settings(self.db, {"generateEnabled": True}); self.db.commit()
+        model = FakeModel(model_output())
+        self.assertEqual(gen.run_if_due(self.path, SATURDAY, transport=model, env=ENV), "done")
         self.assertEqual(gen.run_if_due(self.path, SATURDAY + 4000, transport=model, env=ENV), "idle", "once a week")
         self.assertEqual(len(model.calls), 1)
         with weekly.connect(self.path) as db:
             self.assertEqual(len(weekly.owner_view(db)["drafts"]), 1)
             self.assertEqual(weekly.settings(db)["lastGenerated"], gen.week_key(SATURDAY))
 
-    def test_it_gives_up_after_three_failures_in_a_week(self):
+    def test_a_failed_saturday_is_not_tried_again_automatically(self):
+        # Owner, Nov 15 (cost): one automatic try a week; after a failure only the owner's button makes another draft.
         weekly.save_settings(self.db, {"generateEnabled": True}); self.db.commit()
-        failing = lambda payload, key: (_ for _ in ()).throw(RuntimeError("boom"))
-        for attempt in range(3):
-            self.assertEqual(gen.run_if_due(self.path, SATURDAY + attempt * (gen.RETRY_SECONDS + 5), transport=failing, env=ENV), "retry")
-        self.assertEqual(gen.run_if_due(self.path, SATURDAY + 4 * (gen.RETRY_SECONDS + 5), transport=FakeModel(model_output()), env=ENV), "idle")
+        calls = []
+        def failing(payload, key):
+            calls.append(1); raise RuntimeError("boom")
+        self.assertEqual(gen.run_if_due(self.path, SATURDAY, transport=failing, env=ENV), "failed")
+        later = FakeModel(model_output())
+        for hours in (1, 3, 10):
+            self.assertEqual(gen.run_if_due(self.path, SATURDAY + hours * 3600, transport=later, env=ENV), "idle")
+        self.assertEqual((len(calls), len(later.calls)), (1, 0))
+        self.assertTrue(gen.generate_now(self.path, SATURDAY + 7200, transport=later, env=ENV), "the owner's button still works")
+        self.assertEqual(len(later.calls), 1)
+        publish_flash(self.db, 12, {**MU, "ticker": "AMD", "url": "https://x.com/tipranks/status/12"}, "2026-11-12T21:30:00+00:00"); self.db.commit()
+        self.assertEqual(gen.run_if_due(self.path, SATURDAY + 7 * 86400, transport=later, env=ENV), "done", "next Saturday runs again")
+
+    def test_the_saturday_run_has_no_spending_gate(self):
+        # Owner, Nov 15: the issue is always made at the scheduled time; no budget may delay or skip it.
+        source = Path(gen.__file__).read_text()
+        run = source[source.index("def due("):source.index("# ---- what the week gave us")]
+        self.assertNotRegex(run, r"(?i)budget|spend|cost|cap\b")
 
     def test_when_the_owner_turned_on_automatic_publication_the_draft_is_published_at_once(self):
         weekly.save_settings(self.db, {"generateEnabled": True, "autoPublish": True}); self.db.commit()

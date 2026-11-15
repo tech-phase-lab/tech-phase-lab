@@ -14,7 +14,7 @@ from token_pricing import token_denominators, validate_token_prices
 QUANTITY_PATTERN = re.compile(
     r'(?<![\d.,])(?P<before>[+＋\-−]?)\s*(?:[$€£¥]\s*)?'
     r'(?P<after>[+＋\-−]?)\s*(?P<number>\d+(?:,\d{3})*(?:\.\d+)?)\s*(?:[-‑]\s*)?'
-    r'(?P<unit>thousand\b|million\b|billion\b|trillion\b|percent\b|パーセント|[KMBT](?![A-Za-z])|[%％]|百万|千万|十億|百億|千億|千|万|億|兆)',
+    r'(?P<unit>thousand(?![A-Za-z])|million(?![A-Za-z])|billion(?![A-Za-z])|trillion(?![A-Za-z])|percent(?![A-Za-z])|パーセント|[KMBT](?![A-Za-z])|[%％]|百万|千万|十億|百億|千億|千|万|億|兆)',
     re.I,
 )
 UNIT_SCALE = { 'k': 1000, 'thousand': 1000, '千': 1000,
@@ -751,9 +751,15 @@ def _cues(pattern, text):
     return sorted({match.group(0)[:16] for match in re.finditer(pattern, re.sub(WHETHER_OR_NOT, ' ', text, flags=re.I), re.I)})[:4]
 
 
-def validate_negation(text, evidence):
-    """A negated source keeps a negation; an affirmative source gains none."""
-    if negated(evidence) and not negated(text, broad=True) and _covers_negated_source(text, evidence):
+def validate_negation(text, evidence, negated_scope=None):
+    """A negated source keeps a negation; an affirmative source gains none.
+
+    negated_scope: for copy that sums up many sources at once (the weekly issue's headline and lead), the part of the
+    evidence the copy could be restating. The "source is negated" rule then reads only that part: one negated sentence
+    anywhere in a week of material is not a reason to reject a headline about something else (Nov 15). The "copy adds
+    a negation" rule still reads the whole evidence. None (the default) keeps the rule on the whole evidence."""
+    scope = evidence if negated_scope is None else negated_scope
+    if negated(scope) and not negated(text, broad=True) and _covers_negated_source(text, scope):
         LAST_NEGATION_REJECTION[0] = {'rule': 'source-negated', 'sourceCues': _cues(NEGATION_EN + '|' + NEGATION_JA, evidence)}
         raise ValueError('changed-negation')
     if negated(text) and not negated(evidence, broad=True):
@@ -839,17 +845,20 @@ def validate_names(ja, en):
         raise ValueError('changed-names')
 
 
-def validate_meaning(text, evidence):
+def validate_meaning(text, evidence, negated_scope=None):
     validate_directions(text, evidence)
     validate_metric_directions(text, evidence)
-    validate_negation(text, evidence)
+    validate_negation(text, evidence, negated_scope=negated_scope)
 
 
-def validate_semantics(text, evidence):
+def validate_semantics(text, evidence, negated_scope=None):
     validate_execution_and_capacity(text, evidence)
     validate_amount_relations(text, evidence)
     validate_comparison_baselines(text, evidence)
-    validate_meaning(text, evidence)
+    if negated_scope is None:
+        validate_meaning(text, evidence)
+    else:
+        validate_meaning(text, evidence, negated_scope=negated_scope)
     if re.search(r'idle GPU tax', evidence, re.I) and re.search(r'課税|税金|税負担', text):
         raise ValueError('invalid-copy')  # Resource overhead metaphor, not taxation.
     future_integration = r'\bwill (?:integrate|work\b[^.!?]{0,240}\bintegration)\b'

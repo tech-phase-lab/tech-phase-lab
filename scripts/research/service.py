@@ -58,6 +58,7 @@ import dart_watch
 import earnings_announce
 import official_research
 import deep_analysis
+import llm_cost
 import issuer_syndication
 import official_research_diagnostics
 import official_research_detail
@@ -1957,6 +1958,9 @@ class AutomaticMonitor:
             deep_issue = deep_analysis.sync_incident(db)
             if deep_issue:
                 issues.append(deep_issue)
+            cost_issue = llm_cost.sync_incident(db)  # a warning only: counting the cost never stops or delays a publication
+            if cost_issue:
+                issues.append(cost_issue)
             # Owner, Nov 15: the Japanese home news must never empty silently. Checked once a minute (the alerts count in minutes).
             if self.company_wire_watch_at is None or time.monotonic() - self.company_wire_watch_at >= 60:
                 self.company_wire_watch_at = time.monotonic()
