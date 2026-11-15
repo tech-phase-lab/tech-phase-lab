@@ -253,9 +253,34 @@ def release_text_ok(ticker, text):
     return bool(release_watch.EARNINGS_TITLE.search(head) and not release_watch.NOT_RELEASE.search(head[:200]) and RELEASE_HEAD.search(head))
 
 
-def stale_release(text, detected):
-    """A page whose own text carries only years before the one it was found in is an old release stored under a new date (Dell, Nov 15: a May 2024
-    results page discovered in Sep 2026): never the latest quarter. A release found in January or February may carry only the year before."""
+MONTHS = {name: number for number, name in enumerate(
+    ('january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november', 'december'), 1)}
+URL_DATE = re.compile(r'(?<!\d)(20\d\d)(0[1-9]|1[0-2])(0[1-9]|[12]\d|3[01])(?!\d)')
+TEXT_DATE = re.compile(r'\b(January|February|March|April|May|June|July|August|September|October|November|December)\s+(\d{1,2}),?\s+(20\d\d)\b')
+
+
+def release_date(url, head, detected):
+    """The date a stored page's release is dated, not the date the monitor found it (Nov 15: years of old SEC filings were all stored on Sep 24, so
+    "the newest page" by discovery date was an arbitrary one, and Dell's May 2024 results page was taken for its latest quarter). From the file
+    name of an SEC document (avgo-20260902.htm), else the first "Month D, YYYY" in the page's opening, else the discovery date."""
+    segment = str(url).split('?')[0].rsplit('/', 1)[-1]
+    found = URL_DATE.search(segment)
+    try:
+        if found:
+            return datetime(int(found[1]), int(found[2]), int(found[3]), 12, tzinfo=timezone.utc)
+        found = TEXT_DATE.search((head or '')[:2500])
+        if found:
+            return datetime(int(found[3]), MONTHS[found[1].lower()], int(found[2]), 12, tzinfo=timezone.utc)
+    except ValueError:
+        pass
+    return detected
+
+
+def stale_release(text, detected, released=None, oldest=None):
+    """An old release stored under a new date: its release date is before `oldest`, or its own text carries only years before the one it was
+    found in (a January or February release may carry only the year before)."""
+    if released is not None and oldest is not None and released < oldest:
+        return True
     years = [int(year) for year in re.findall(r'(?<!\d)(20\d\d)(?!\d)', (text or '')[:3000])]
     if not years:
         return False
@@ -263,7 +288,7 @@ def stale_release(text, detected):
     return newest < detected.year and not (detected.month <= 2 and newest == detected.year - 1)
 
 
-def source_verdict(ticker, text, detected):
+def source_verdict(ticker, text, detected, released=None, oldest=None):
     """'ok' or the short reason a stored page is not taken as the company's latest results release."""
     if not text:
         return 'no-text'
@@ -271,7 +296,7 @@ def source_verdict(ticker, text, detected):
         return 'length'
     if not release_text_ok(ticker, text):
         return 'not-results'
-    return 'stale-period' if stale_release(text, detected) else 'ok'
+    return 'stale-period' if stale_release(text, detected, released, oldest) else 'ok'
 
 
 def source_reasons(db, ticker, reference, days=120, max_pages=400, max_reads=80):
@@ -280,7 +305,8 @@ def source_reasons(db, ticker, reference, days=120, max_pages=400, max_reads=80)
     only pages of a plausible size are read (at most `max_reads`). Names, counts and addresses only; never page text."""
     counts, samples, newest, reads = {}, {}, None, 0
     since = (reference - timedelta(days=days)).isoformat()
-    for row in db.execute('SELECT s.url,s.sha256,s.status,r.extracted_chars AS chars,COALESCE(e.detected_at,s.discovered_at) AS detected FROM sources s '
+    oldest = reference - timedelta(days=days + 2)
+    for row in db.execute('SELECT s.url,s.sha256,s.status,r.extracted_chars AS chars,substr(r.extracted_text,1,3000) AS head,COALESCE(e.detected_at,s.discovered_at) AS detected FROM sources s '
                           'LEFT JOIN release_events e ON e.url=s.url LEFT JOIN source_revisions r ON r.url=s.url AND r.sha256=s.sha256 '
                           'WHERE s.ticker=? AND julianday(COALESCE(e.detected_at,s.discovered_at))>=julianday(?) '
                           'ORDER BY julianday(COALESCE(e.detected_at,s.discovered_at)) DESC LIMIT ?', (ticker, since, max_pages)).fetchall():
@@ -292,6 +318,7 @@ def source_reasons(db, ticker, reference, days=120, max_pages=400, max_reads=80)
             continue
         newest = newest or detected.date().isoformat()
         chars = row['chars']
+        released = release_date(row['url'], row['head'], detected)
         if row['status'] in ('held', 'rejected'):
             verdict = 'status-' + row['status']
         elif chars is None:
@@ -305,10 +332,10 @@ def source_reasons(db, ticker, reference, days=120, max_pages=400, max_reads=80)
         else:
             reads += 1
             revision = db.execute('SELECT extracted_text FROM source_revisions WHERE url=? AND sha256=?', (row['url'], row['sha256'])).fetchone()
-            verdict = source_verdict(ticker, revision['extracted_text'] if revision else None, detected)
+            verdict = source_verdict(ticker, revision['extracted_text'] if revision else None, detected, released, oldest)
         counts[verdict] = counts.get(verdict, 0) + 1
         if len(samples.setdefault(verdict, [])) < 3:
-            samples[verdict].append({'address': re.sub(r'^https?://', '', str(row['url']).split('?')[0])[:110], 'chars': chars, 'detected': detected.date().isoformat()})
+            samples[verdict].append({'address': re.sub(r'^https?://', '', str(row['url']).split('?')[0])[:110], 'chars': chars, 'detected': detected.date().isoformat(), 'released': released.date().isoformat()})
     return {'pages': sum(counts.values()), 'newestDetected': newest, 'verdicts': counts, 'samples': samples}
 
 
@@ -342,41 +369,48 @@ def stored_release_sources(db, reference, excerpts=True, skip=(), since=None, ti
     wanted = [t for t in (tickers or ROSTER) if t not in skip]
     if not wanted:
         return found
-    for row in db.execute('SELECT s.url,s.ticker,s.sha256,COALESCE(e.detected_at,s.discovered_at) AS detected FROM sources s '
-                          'LEFT JOIN release_events e ON e.url=s.url '
+    oldest = since - timedelta(days=2)
+    candidates = []
+    for row in db.execute('SELECT s.url,s.ticker,s.sha256,substr(r.extracted_text,1,3000) AS head,COALESCE(e.detected_at,s.discovered_at) AS detected FROM sources s '
+                          'LEFT JOIN release_events e ON e.url=s.url LEFT JOIN source_revisions r ON r.url=s.url AND r.sha256=s.sha256 '
                           "WHERE s.ticker IN (%s) AND s.status NOT IN ('held','rejected') AND julianday(COALESCE(e.detected_at,s.discovered_at))>=julianday(?) "
-                          'ORDER BY julianday(COALESCE(e.detected_at,s.discovered_at)) DESC' % ','.join('?' for _ in wanted),
+                          'ORDER BY julianday(COALESCE(e.detected_at,s.discovered_at)) DESC LIMIT 2000' % ','.join('?' for _ in wanted),
                           (*wanted, since.isoformat())).fetchall():
-        if row['ticker'] not in wanted:
-            continue
         try:
             detected = datetime.fromisoformat(str(row['detected']).replace('Z', '+00:00'))
             if detected.tzinfo is None:
                 detected = detected.replace(tzinfo=timezone.utc)
         except ValueError:
             continue
-        if detected > reference or row['url'][:8] != 'https://':
+        if row['url'][:8] != 'https://':
+            continue
+        released = release_date(row['url'], row['head'], detected)
+        if released > reference:
+            continue
+        candidates.append((released, detected, row))
+    candidates.sort(key=lambda item: item[0], reverse=True)  # the newest RELEASE of each company first, whatever day the monitor stored it
+    for released, detected, row in candidates:
+        if row['ticker'] not in wanted:
             continue
         revision = db.execute('SELECT extracted_text FROM source_revisions WHERE url=? AND sha256=?', (row['url'], row['sha256'])).fetchone()
         text = revision['extracted_text'] if revision else None
-        if source_verdict(row['ticker'], text, detected) != 'ok':
+        if source_verdict(row['ticker'], text, detected, released, oldest) != 'ok':
             continue
+        ticker = row['ticker']
+        wanted = [t for t in wanted if t != ticker]  # the newest release of each company only: if it is already covered, never fall back to an older one
+        skip = {*skip, ticker}
         # one analysis per release: a company with an analysis created within two days of this release, or this page analysed before, is covered
         covered = db.execute("SELECT 1 FROM deep_analyses WHERE kind='earnings' AND subject=? AND (source_url=? OR (created_at>=? AND created_at<=?)) LIMIT 1",
-                             (row['ticker'], row['url'], (detected - timedelta(days=2)).isoformat(), (detected + timedelta(days=2)).isoformat())).fetchone()
+                             (row['ticker'], row['url'], (released - timedelta(days=2)).isoformat(), (released + timedelta(days=2)).isoformat())).fetchone()
         if covered and not db.execute('SELECT 1 FROM deep_analyses WHERE source_ref=?', (stored_ref(row['url'], row['sha256']),)).fetchone():
             continue
         item = {'ref': stored_ref(row['url'], row['sha256']), 'kind': 'earnings', 'subject': row['ticker'], 'sha': row['sha256'],
-                'title': release_title(row['ticker'], text), 'url': row['url'], 'observedAt': detected.isoformat(), 'excerpts': {}}
+                'title': release_title(row['ticker'], text), 'url': row['url'], 'observedAt': released.isoformat(), 'excerpts': {}}
         if excerpts:
             trimmed, trim = trim_release(text)
             item.update({'excerpts': official_research.evidence_excerpts(trimmed), 'trim': trim})
             with_derived(item, text)
         found.append(item)
-        skip = {*skip, row['ticker']}
-        wanted = [t for t in wanted if t != row['ticker']]  # the newest release of each company only
-        if not wanted:
-            break
     if cache_key is not None:
         if len(STORED_CACHE) > 20:
             STORED_CACHE.clear()
