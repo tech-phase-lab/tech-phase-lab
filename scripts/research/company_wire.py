@@ -97,6 +97,12 @@ def bump(db, name, count, ts):
                       ON CONFLICT(day, name) DO UPDATE SET count=count+excluded.count''', (day_of(ts), name, int(count)))
 
 
+def bump_max(db, name, value, ts):
+    """Raise today's (Japan time) counter ``name`` to ``value`` when it is larger. The caller commits."""
+    db.execute('''INSERT INTO company_wire_daily(day, name, count) VALUES(?,?,?)
+                  ON CONFLICT(day, name) DO UPDATE SET count=MAX(count, excluded.count)''', (day_of(ts), name, int(value)))
+
+
 def connect(path):
     db = sqlite3.connect(path, timeout=30)
     db.row_factory = sqlite3.Row
@@ -383,6 +389,64 @@ NOISE = re.compile(
     r'|\b(?:class action|securities fraud|securities litigation)\b.{0,80}\b(?:lawsuit|investigation|deadline|filed|lead plaintiff|investors?|shareholders?)\b'
     r'|\b(?:investors?|shareholders?)\b.{0,80}\b(?:class action|securities fraud)\b|\blead plaintiff\b|\b(?:Rosen|Pomerantz|Faruqi|Bragar Eagel|Levi & Korsinsky|Bronstein|Glancy|Kessler Topaz|Robbins Geller|Schall|Gross Law|Portnoy|Kirby McInerney|Howard G\. Smith|Bernstein Liebhard|Hagens Berman|Block & Leviton|Johnson Fistel|Holzer)\b'
     r'|\b(?:Deadline|Investor) Alert\b|\bINVESTOR ALERT\b', re.I)
+# Owner, Nov 16 (訳す前に落とす): the English-title patterns of NOT_NEWS in lib/research/wire-stories.ts. The site already hides a
+# headline whose English title matches one of them (wireStories: isNotNews(titleEn)), so sending it to the model only spent a call.
+# Only patterns that read English titles are ported, and only the conservative ones: the "Wall Street rallies / following earnings",
+# exchange-code, PC how-to, data-calendar and company-video patterns are left to the model, because a real news headline can match.
+NOT_NEWS_EN = tuple(re.compile(pattern, flags) for pattern, flags in (
+    (r'\$[^$\n]{1,80}\([A-Z.]{1,8}\.US\)\$', 0),
+    (r'\bNet ETF (?:Buying|Selling)\b|\bETFs? Are (?:Buying|Selling)\b|^Lobbying Update\b', re.I),
+    (r'\b(?:ETF|Trust|Fund)\b.{0,60}\b(?:Buys|Sells|Bought|Sold)\b.{0,60}\bon\b', re.I),
+    (r'\bZacks (?:Analyst Blog|Investment Ideas)\b|\bTake five\b|\blifetime access\b|\bfor one \$\d+ payment\b|\bBC-Most Active\b', re.I),
+    (r'\bForecast\s+[—–-]\s+Price Target\b|\bPrediction for 20\d\d\b', re.I),
+    (r'\b\d+ (?:Top |Best )?(?:AI |Tech |Dividend |Growth )?Stocks? (?:to Buy|You Can)\b|\bBest .{0,24}Stocks? to Buy\b|\bBetter (?:AI |Tech )?Stock:'
+     r'|\bToo Late to Buy\b|\bBuy Now and Hold\b|\bShould You Buy\b|\bDon.t miss\b', re.I),
+    (r'\bETFs?\b.{0,50}\b(?:buy|buys|smartest|best)\b|\b(?:buy|buys)\b.{0,30}\bETFs?\b|\b(?:if|when) (?:you|the stock market).{0,40}(?:\$1,?000\b|\bcrash|\bplunge)'
+     r'|\bhistory shows\b', re.I),
+    (r'\bDisney\b.{0,40}\bCharacter\.AI\b', re.I),
+    (r'\bhere.s why\b|\bthis is why\b|\bthe (?:real |main |simple |surprising )?reasons? (?:why|that|behind)\b|\b(?:and )?why\b.{0,80}\b(?:reasons?)\b', re.I),
+    (r'[？?]\s*$', 0),
+    (r'^why\b', re.I),
+    (r'\bbuying opportunit(?:y|ies)\b|\bbuy the dip\b|\btime to buy\b', re.I),
+    (r'\bweek in review\b|\bweekly (?:news )?(?:roundup|digest|recap|wrap)\b|\bthis week(?:[\'’]s)? (?:top|key|main|biggest|major)\b|\bwhat happened this week\b', re.I),
+    (r'\bwhat (?:it|this|that) means for\b|\bwhat (?:it|this) (?:could )?mean(?:s)? for (?:investors|the stock)\b', re.I),
+    (r'(?:\b(?:EUR|GBP|CHF)\s?\d[\d.,]*|\d[\d.,]*\s?(?:EUR|GBP|CHF)\b).{0,12}\btrad|\btrad\w*\b.{0,24}\b(?:EUR|GBP|CHF)\s?\d', re.I),
+    (r'\b(?:Bronstein,? Gewirtz|Rosen Law|Pomerantz|Levi & Korsinsky|Faruqi|Glancy Prongay|Schall Law|Gross Law|Kessler Topaz|Johnson Fistel|Block & Leviton)\b'
+     r'|\b(?:encourages?|urges?|reminds?) (?:shareholders|investors)\b|\binvestors? who (?:lost|suffered)\b', re.I),
+    (r'\bshareholder alert\b|\blead plaintiff\b|\bclass action\b.{0,60}\b(?:deadline|lawsuit|filed)\b', re.I),
+    (r'\bearnings preview\b|\b(?:Q[1-4]|quarter(?:ly)?) (?:earnings )?preview\b|\bwhat to (?:expect|watch)\b|\bwhat (?:investors )?should (?:you )?expect\b'
+     r'|\bkey things to watch\b|\b(?:set|slated|scheduled) to (?:report|release|announce)\b.{0,60}\btomorrow\b'
+     r'|\b(?:reports?|releases?) (?:Q[1-4]|\w+ quarter) (?:results|earnings) tomorrow\b', re.I),
+    (r'^\s*How\s+\S', re.I),
+    (r'\bCVE-\d{4}-\d{4,}\b|\bCVSS\s?\d', re.I),
+    (r'(?:^|\s)(?:Form|Filing)\s+(?:6-K|8-K|10-Q|10-K|20-F|40-F)(?:/A)?\b', re.I),
+    (r'\bweekend trading\b|\bin (?:after|pre)-?(?:hours|market) trading\b.{0,20}\b(?:euros?|yen|pounds?)\b|\btrades? (?:at|for) [\d.,]+ (?:euros?|yen|pounds?)\b', re.I),
+    (r'\bearnings call transcript\b|\bwhat\b.{0,60}\b(?:said|says|told)\b.{0,40}\b(?:earnings call|conference call)\b'
+     r'|\b(?:Q[1-4]|(?:first|second|third|fourth) quarter) (?:20\d\d )?earnings call (?:highlights|takeaways)\b', re.I),
+    (r'\b(?:biggest|big|top) (?:stock )?(?:movers|moves)\b|\bstocks? (?:making|that made)\b.{0,30}\b(?:moves?|midday|premarket)\b'
+     r'|\b(?:midday|pre-?market|after-?hours) movers\b', re.I),
+    (r'(?:\bTotal (?:Assets|Liabilities)|\bShareholders.? Equity)\s*[–—-]\s*\S', re.I),
+    (r'\bSymantec (?:Protection|Threat|Security) (?:Bulletin|Intelligence|Report|Research)|\bProtection Bulletin\b', re.I),
+    (r'\b(?:only|one) (?:big |key |real )?question\b.{0,40}\b(?:investors?|unanswered|remains)\b|\b(?:doesn.t|does not|fail(?:s|ed)? to) answer\b.{0,40}\bquestion\b', re.I),
+    (r'\bwhat\b.{0,60}\b(?:both|each|they|he|she)\b.{0,30}\b(?:said|says|told)\b|^\s*what\b.{0,60}\b(?:said|says|told)\b', re.I),
+    (r'\[\s*20\d\d\s*\]\s*$', 0),
+    (r'\bthe (?:true|real) (?:answer|story)\b', re.I),
+    (r'\b(?:IDBI Capital|Motilal Oswal|ICICI Securities|Kotak Securities|Axis Securities|Nirmal Bang|Anand Rathi|HDFC Securities|Sharekhan|Emkay Global'
+     r'|Prabhudas Lilladher|Navin Fluorine|GE Vernova T&D India)\b|\bcheck (?:out )?(?:the )?(?:revised|updated) target price\b', re.I),
+    (r'(?:^|\s)#[A-Za-z0-9_]{3,}\s*$', 0),
+))
+
+
+def hidden_title(title):
+    """True for a headline the site never shows: cut off, noise (NOISE) or not news by the site's own English patterns (NOT_NEWS_EN)."""
+    return truncated(title) or bool(NOISE.search(title)) or any(pattern.search(title) for pattern in NOT_NEWS_EN)
+
+
+def locally_rejected(row):
+    """A row that is never sent to the model: its title is hidden by the site anyway, or its Stock News publisher is not taken."""
+    return hidden_title(row['title']) or dropped_publisher(row)
+
+
 MAJOR = re.compile(r'reuters|bloomberg|cnbc|wall street journal|\bwsj\b|barron|financial times|marketwatch|associated press|'
                    r'the information|nikkei|investor.s business|seeking alpha|yahoo finance|benzinga|the verge|ars technica|tom.s hardware', re.I)
 STOPWORDS = frozenset('the and for with from that this its are was has have will into over after than more new how why what '
@@ -421,7 +485,7 @@ def candidates(db, now_ts):
       LEFT JOIN company_wire_article_attempts a ON a.article=w.article
       WHERE j.article IS NULL AND w.published_at>=? AND (a.article IS NULL OR (a.attempts<? AND a.next_at<=?))
       ORDER BY w.published_at DESC LIMIT 1200''', (since, TRANSLATION_ATTEMPTS, now_ts)).fetchall()
-    rows = [r for r in rows if not truncated(r['title']) and not NOISE.search(r['title']) and not dropped_publisher(r)]
+    rows = [r for r in rows if not locally_rejected(r)]
     order = lambda r: (priority(r), -datetime.fromisoformat(r['published_at']).timestamp())
     articles = {}
     for r in rows:
@@ -448,13 +512,46 @@ def candidates(db, now_ts):
         for t in r['tickers']:
             taken.setdefault(t, []).append(words)
         chosen.append(r)
+    # Owner, Nov 16: the batch takes Stock News stories (the home's) first, then the newest first.
+    chosen.sort(key=lambda r: (r['source'] != 'stocknews', -datetime.fromisoformat(r['published_at']).timestamp()))
     return chosen
+
+
+def prefilter(db, now_ts):
+    """Owner, Nov 16 (訳す前に落とす): mark every new article whose every copy is rejected by the local checks (locally_rejected) with
+    the reason 'prefilter', so it is never sent to the model, and count it in the day's ``prefiltered``. Returns how many were marked.
+    It changes nothing on the site: public_feed hides these titles by the same checks."""
+    since = (datetime.fromtimestamp(now_ts, timezone.utc) - timedelta(hours=PUBLIC_HOURS)).isoformat()
+    rows = db.execute('''SELECT w.article, w.title, w.source, w.publisher FROM company_wire w
+      LEFT JOIN company_wire_article_ja j ON j.article=w.article LEFT JOIN company_wire_article_attempts a ON a.article=w.article
+      WHERE j.article IS NULL AND a.article IS NULL AND w.published_at>=?''', (since,)).fetchall()
+    verdict = {}
+    for r in rows:
+        verdict[r['article']] = verdict.get(r['article'], True) and locally_rejected(r)
+    marked = [article for article, rejected in verdict.items() if rejected]
+    if marked:
+        db.executemany("INSERT OR IGNORE INTO company_wire_article_attempts(article, attempts, next_at, reason) VALUES(?,?,?,'prefilter')",
+                       [(article, TRANSLATION_ATTEMPTS, now_ts) for article in marked])
+        bump(db, 'prefiltered', len(marked), now_ts)
+        db.commit()
+    return len(marked)
 
 
 def previous_reasons(db, articles):
     marks = ','.join('?' for _ in articles)
     return {r[0]: r[1] for r in db.execute(
         f"SELECT article, reason FROM company_wire_article_attempts WHERE reason<>'' AND article IN ({marks})", list(articles))} if articles else {}
+
+
+def previous_attempts(db, articles):
+    """The articles among ``articles`` that have been sent (or marked) before."""
+    found = set()
+    articles = list(articles)
+    for start in range(0, len(articles), 500):
+        part = articles[start:start + 500]
+        marks = ','.join('?' for _ in part)
+        found |= {r[0] for r in db.execute(f'SELECT article FROM company_wire_article_attempts WHERE article IN ({marks})', part)}
+    return found
 
 
 def validated_translation(title_ja, title):
@@ -505,11 +602,14 @@ def translate_once(path, transport=None, env=None, now_ts=None, report=None):
     limit = daily_limit(os.environ if env is None else env)
     with connect(path) as db:
         schema_translation(db)
-        if db.execute('SELECT COUNT(*) FROM company_wire_calls WHERE at>=?', (now_ts - 86400,)).fetchone()[0] >= limit:
-            return 'budget'
+        prefilter(db, now_ts)
         rows = pending_rows(db, now_ts)
         if not rows:
             return 'idle'
+        # Owner, Nov 16 (呼び出しを1日に均す): a call needs a token from the bucket and room under the rolling 24-hour ceiling.
+        pace = pacer(db, now_ts, limit)
+        if not pace['allowed']:
+            return 'budget' if pace['ceilingReached'] else 'paced'
         if report is not None:
             report['batch'] = len(rows)
         earlier = previous_reasons(db, [r['article'] for r in rows])
@@ -520,6 +620,13 @@ def translate_once(path, transport=None, env=None, now_ts=None, report=None):
         bump(db, 'calls', 1, now_ts)
         bump(db, 'sent', len(rows), now_ts)
         bump(db, 'retries', retried, now_ts)
+        # How long each article waited for its first call (arrival to sending), for the day's maxWaitMinutes / averageWaitMinutes.
+        firsts = {r['article'] for r in rows} - previous_attempts(db, [r['article'] for r in rows])
+        waits = [max(0, int(now_ts - datetime.fromisoformat(r['first_seen_at']).timestamp())) for r in rows if r['article'] in firsts]
+        if waits:
+            bump(db, 'waitCount', len(waits), now_ts)
+            bump(db, 'waitSeconds', sum(waits), now_ts)
+            bump_max(db, 'waitMaxSeconds', max(waits), now_ts)
         db.commit()
     by_id = {str(i): r for i, r in enumerate(rows)}
     payload = {
@@ -595,7 +702,7 @@ def public_feed(db, now_ts=None):
           LEFT JOIN company_wire_article_attempts a ON a.article=w.article
           WHERE w.ticker=? AND w.published_at>=? AND COALESCE(a.reason,'') NOT IN ('not-news','off-topic') ORDER BY w.published_at DESC LIMIT 120''',
                           (ticker, since)).fetchall()
-        rows = [r for r in rows if not truncated(r['title']) and not NOISE.search(r['title']) and not dropped_publisher(r)]
+        rows = [r for r in rows if not locally_rejected(r)]
         # Oct 16: the Japanese view shows only translated headlines, so a company whose newest ten were
         # all still untranslated (or rejected) looked stale. Keep the newest translated ones in their own
         # allowance, plus a few untranslated ones for the English view.
@@ -613,7 +720,7 @@ def public_feed(db, now_ts=None):
       FROM company_wire w JOIN company_wire_article_ja j ON j.article=w.article WHERE w.published_at>=? AND w.source='stocknews'
       ORDER BY w.published_at DESC LIMIT 400''', (since,)).fetchall()
     for r in extra:
-        if r['ticker'] in WATCHED or dropped_publisher(r) or truncated(r['title']) or NOISE.search(r['title']) or len(items.get(r['ticker'], [])) >= PUBLIC_PER_COMPANY:
+        if r['ticker'] in WATCHED or locally_rejected(r) or len(items.get(r['ticker'], [])) >= PUBLIC_PER_COMPANY:
             continue
         items.setdefault(r['ticker'], []).append({'id': r['key'], 'titleEn': r['title'], 'titleJa': r['title_ja'], 'shortJa': r['short_ja'] or None,
                                                  'publisher': r['publisher'], 'origin': r['origin'], 'url': r['url'], 'publishedAt': r['published_at'],
@@ -631,17 +738,23 @@ def sentiment_field(row):
 # The worker records each result; the incident watch turns a budget stop, a stall, repeated failures or a stopped intake into one
 # critical incident each (the owner's phone), resolved when it recovers.
 #
-# Daily call budget (owner, Nov 15: 1日400回のまま). The translator runs right after every intake round that stored something
-# (a Stock News API poll, or one pass over the roster's Yahoo / Google News feeds) and sends everything then waiting, each article
-# once, in calls of at most 30; it never waits for headlines to pile up, and makes no call when nothing is waiting. Rejected
-# headlines are retried (at most three attempts, ten minutes apart) in the next such call, or after ten quiet minutes. So the
-# number of calls is about the number of intake rounds that brought at least one new article, plus one call per 30 articles
-# of backlog. COMPANY_WIRE_TRANSLATION_DAILY_LIMIT (default 400) caps model calls in any 24 hours; reaching it is a critical
-# alert, and the per-day counts on /health (companyWireTranslation.daily) show how the calls were spent.
+# Daily call budget (owner, Nov 15: 1日400回のまま) and pacing (owner, Nov 16: 呼び出しを1日に均す). The translator runs right
+# after every intake round that stored something (a Stock News API poll, or one pass over the roster's Yahoo / Google News feeds).
+# Headlines the site would hide anyway are marked first and never sent (prefilter). The rest are sent, each article once, in calls
+# of at most 30, newest first (Stock News first), with due retries (at most three attempts, ten minutes apart) riding along.
+# A call needs a token from a bucket of BUCKET_CAPACITY (a burst of 12) refilled at COMPANY_WIRE_TRANSLATION_DAILY_LIMIT less the
+# burst per 24 hours (400: 388, one every 3.7 minutes; see bucket_size), and room under the limit counted over the rolling 24
+# hours, which is never exceeded.
+# With a token the call is made at once (real time); without one the headlines stay queued and the service wakes when the next
+# token arrives (next_wake), with or without a new intake. The bucket is replayed from the call times stored in company_wire_calls,
+# so a restart does not grant a fresh burst. The per-day counts on /health (companyWireTranslation.daily) show how calls were spent
+# and how long headlines waited; the budget alert fires only when headlines wait longer than BUDGET_WAIT_SECONDS.
 DEFAULT_DAILY_LIMIT = 400
+BUCKET_CAPACITY = 12          # calls that can be made back to back after a quiet spell
+BUDGET_WAIT_SECONDS = 30 * 60  # the budget alert: headlines held back by the pacing for longer than this
 ROUND_MAX_CALLS = 20          # consecutive calls in one round at most (600 articles); the rest wait for the next round
 RETRY_WAKE_SECONDS = 600      # with no intake round, the translator still looks for due retries every ten minutes
-QUIET_RESULTS = ('done', 'idle', 'budget', 'disabled')
+QUIET_RESULTS = ('done', 'idle', 'budget', 'paced', 'disabled')
 WATCH_PREFIX = 'company-wire:'
 INTAKE_KEY = 'stock-news:intake-tech'
 STALL_ROW_SECONDS = 20 * 60      # a Stock News story still without Japanese 20 minutes after it arrived ...
@@ -658,6 +771,69 @@ def daily_limit(env):
     except (TypeError, ValueError):
         return DEFAULT_DAILY_LIMIT
     return value if value >= 0 else DEFAULT_DAILY_LIMIT
+
+
+def bucket_size(limit):
+    """(capacity, tokens per second) for a daily limit. The refill is (limit - capacity) per 24 hours, so the bucket alone can never
+    allow more than ``limit`` calls in any 24 hours (a burst plus a day of refills): the ceiling is then only a safety net, and a
+    busy day is paced evenly instead of hitting the ceiling and pausing for the burst's worth of time. 400 a day: a burst of 12,
+    then one call every 3.7 minutes (388 per 24 hours)."""
+    capacity = min(BUCKET_CAPACITY, max(1, limit // 4))
+    refill = limit - capacity if limit > capacity else limit
+    return capacity, refill / 86400.0
+
+
+def pacer(db, now_ts, limit):
+    """The call pacing at ``now_ts``: ``tokens`` in the bucket, ``calls24h`` against ``limit``, ``ceilingReached``, ``nextAt``
+    (when the next call may be made: now when ``allowed``; None when the limit is 0) and ``allowed``. The bucket starts full at
+    a refill time before the last 24 hours and is replayed over the stored call times, so it is the same after a restart."""
+    if limit <= 0:
+        calls = db.execute('SELECT COUNT(*) FROM company_wire_calls WHERE at>=?', (now_ts - 86400,)).fetchone()[0]
+        return {'tokens': 0.0, 'capacity': 0, 'calls24h': calls, 'ceilingReached': True, 'nextAt': None, 'allowed': False}
+    capacity, rate = bucket_size(limit)
+    # The replay starts full one refill time before the 24-hour window, so calls just outside the window still count.
+    history = [r[0] for r in db.execute('SELECT at FROM company_wire_calls WHERE at>=? ORDER BY at', (now_ts - 86400 - capacity / rate,))]
+    times = [at for at in history if at >= now_ts - 86400]
+    calls = len(times)
+    tokens, previous = float(capacity), None
+    for at in history:
+        if at > now_ts:
+            break
+        if previous is not None:
+            tokens = min(capacity, tokens + (at - previous) * rate)
+        # Calls made before the pacing existed (a deploy over the old release) can exceed the bucket; that is not carried as debt.
+        tokens = max(tokens - 1, 0.0)
+        previous = at
+    if previous is not None:
+        tokens = min(capacity, tokens + (now_ts - previous) * rate)
+    token_at = now_ts if tokens >= 1 - 1e-9 else now_ts + (1 - tokens) / rate
+    ceiling = calls >= limit
+    # Under the ceiling once enough of the oldest calls have left the 24-hour window.
+    ceiling_at = times[calls - limit] + 86400 + 0.001 if ceiling else now_ts
+    next_at = max(token_at, ceiling_at)
+    return {'tokens': round(tokens, 3), 'capacity': capacity, 'calls24h': calls, 'ceilingReached': ceiling,
+            'nextAt': next_at, 'allowed': next_at <= now_ts}
+
+
+def next_wake(path, env=None, now_ts=None):
+    """When the translator should look again without a new intake: when the next token arrives while headlines are queued, when
+    the next retry falls due, and in any case after RETRY_WAKE_SECONDS. Returns a timestamp."""
+    import time
+    now_ts = time.time() if now_ts is None else now_ts
+    wake = now_ts + RETRY_WAKE_SECONDS
+    with connect(path) as db:
+        schema_translation(db)
+        if candidates(db, now_ts):
+            at = pacer(db, now_ts, daily_limit(os.environ if env is None else env))['nextAt']
+            if at is not None:
+                wake = min(wake, at)
+        since = (datetime.fromtimestamp(now_ts, timezone.utc) - timedelta(hours=PUBLIC_HOURS)).isoformat()
+        retry = db.execute('''SELECT MIN(a.next_at) FROM company_wire_article_attempts a JOIN company_wire w ON w.article=a.article
+          LEFT JOIN company_wire_article_ja j ON j.article=a.article WHERE j.article IS NULL AND a.attempts<? AND a.next_at>? AND w.published_at>=?''',
+                           (TRANSLATION_ATTEMPTS, now_ts, since)).fetchone()[0]
+        if retry is not None:
+            wake = min(wake, retry)
+    return wake
 
 
 def schema_watch(db):
@@ -767,15 +943,20 @@ def translation_health(db, now_ts=None, env=None):
     schema_translation(db)
     state = watch_state(db)
     since = (datetime.fromtimestamp(now_ts, timezone.utc) - timedelta(hours=PUBLIC_HOURS)).isoformat()
-    pending = [r for r in candidates(db, now_ts) if r['source'] == 'stocknews']
+    queued = candidates(db, now_ts)
+    pending = [r for r in queued if r['source'] == 'stocknews']
     ages = [now_ts - datetime.fromisoformat(r['first_seen_at']).timestamp() for r in pending]
+    # The queue wait counts articles not yet sent at all (a retry waits by design between its attempts).
+    tried = previous_attempts(db, [r['article'] for r in queued])
+    queue_ages = [now_ts - datetime.fromisoformat(r['first_seen_at']).timestamp() for r in queued if r['article'] not in tried]
     waiting = db.execute('''SELECT COUNT(DISTINCT w.article) FROM company_wire w JOIN company_wire_article_attempts a ON a.article=w.article
       LEFT JOIN company_wire_article_ja j ON j.article=w.article WHERE j.article IS NULL AND w.source='stocknews' AND w.published_at>=? AND a.attempts<? AND a.next_at>?''',
                          (since, TRANSLATION_ATTEMPTS, now_ts)).fetchone()[0]
     recent = datetime.fromtimestamp(now_ts - STALL_SECONDS, timezone.utc).isoformat()
     arriving = db.execute("SELECT COUNT(*) FROM company_wire WHERE source='stocknews' AND first_seen_at>=?", (recent,)).fetchone()[0]
-    calls = db.execute('SELECT COUNT(*) FROM company_wire_calls WHERE at>=?', (now_ts - 86400,)).fetchone()[0]
     limit = daily_limit(env)
+    pace = pacer(db, now_ts, limit)
+    calls = pace['calls24h']
     enabled = str(env.get('COMPANY_WIRE_ENABLED', 'true')).lower() != 'false' and headline_translation.configuration(env) is not None
     alerts = []
     if table_exists(db, 'operational_incidents'):
@@ -787,6 +968,11 @@ def translation_health(db, now_ts=None, env=None):
         'waitingRetry': waiting,
         'newStockNews30m': arriving,
         'calls24h': calls, 'dailyLimit': limit, 'budgetReached': calls >= limit,
+        # Owner, Nov 16: the call pacing (tokens now, when the next one arrives) and how long the oldest queued headline has waited.
+        'pacing': {'tokensAvailable': int(pace['tokens']), 'tokens': pace['tokens'], 'capacity': pace['capacity'],
+                   'secondsPerToken': round(1 / bucket_size(limit)[1], 1) if limit > 0 else None,
+                   'nextTokenAt': iso(pace['nextAt']) if pace['nextAt'] is not None else None},
+        'queue': {'count': len(queued), 'new': len(queue_ages), 'oldestWaitMinutes': round(max(queue_ages) / 60, 1) if queue_ages else None},
         'lastSuccessAt': db.execute('SELECT MAX(created_at) FROM company_wire_article_ja').fetchone()[0],
         'lastResult': state.get('last_result'), 'lastResultAt': iso(state.get('last_result_at')),
         'failingSince': iso(state.get('failing_since')), 'lastFailure': state.get('last_failure'),
@@ -799,7 +985,7 @@ def translation_health(db, now_ts=None, env=None):
 
 
 DAILY_FIELDS = (('articlesArrived', 'articles'), ('translated', 'translated'), ('calls', 'calls'), ('retries', 'retries'),
-                ('headlinesSent', 'sent'), ('judgedNotNews', 'notNews'), ('notAccepted', 'rejected'))
+                ('headlinesSent', 'sent'), ('judgedNotNews', 'notNews'), ('notAccepted', 'rejected'), ('prefiltered', 'prefiltered'))
 
 
 def daily_counts(db, now_ts):
@@ -807,12 +993,17 @@ def daily_counts(db, now_ts):
     articlesArrived (new articles, each counted once whatever tickers or feeds it came under; by first feed in articlesBySource),
     translated (articles whose Japanese was accepted), calls (model calls), retries (headlines sent again after a rejected or
     failed attempt), headlinesSent (articles sent in all calls, retries included), judgedNotNews (not news or off topic: never
-    shown, never retried) and notAccepted (rejected by the checks or lost to a failed call; retried up to three attempts)."""
+    shown, never retried), notAccepted (rejected by the checks or lost to a failed call; retried up to three attempts),
+    prefiltered (owner, Nov 16: articles the site would hide anyway, never sent), and how long articles waited between arrival and
+    their first call: maxWaitMinutes and averageWaitMinutes (None before the day's first call)."""
     out = {'timezone': 'Asia/Tokyo'}
     for label, ts in (('today', now_ts), ('yesterday', now_ts - 86400)):
         day = day_of(ts)
         counts = {r[0]: r[1] for r in db.execute('SELECT name, count FROM company_wire_daily WHERE day=?', (day,))}
+        waited = counts.get('waitCount', 0)
         out[label] = {'date': day, **{field: counts.get(name, 0) for field, name in DAILY_FIELDS},
+                      'maxWaitMinutes': round(counts.get('waitMaxSeconds', 0) / 60, 1) if waited else None,
+                      'averageWaitMinutes': round(counts.get('waitSeconds', 0) / waited / 60, 1) if waited else None,
                       'articlesBySource': {name.split(':', 1)[1]: n for name, n in sorted(counts.items()) if name.startswith('articles:')},
                       # Owner, Nov 15: new Stock News API articles per publisher, taken or dropped (see KEEP_PUBLISHERS).
                       'stockNewsPublishers': {kind: {name.split(':', 1)[1]: n for name, n in sorted(counts.items(), key=lambda c: (-c[1], c[0]))
@@ -836,8 +1027,13 @@ def sync_incident(db, now_ts=None, env=None, started_ts=None):
     at = iso(now_ts)
     active = {}
 
-    # (a) The day's call budget is used up: new headlines wait until calls fall out of the 24-hour window.
-    if health['enabled'] and health['budgetReached']:
+    # (a) The call pacing holds headlines back too long (owner, Nov 16): headlines have waited more than 30 minutes while no call
+    # may be made (no token, or the 24-hour ceiling). An empty bucket alone is the normal pacing and is no alert.
+    # Once open it stays open while they still wait, even at a moment a token is free (no repeated phone alert).
+    held = health['pacing']['nextTokenAt']
+    held_back = (held is None or datetime.fromisoformat(held).timestamp() > now_ts or health['budgetReached']
+                 or open_incident(db, WATCH_PREFIX + 'translation-budget'))
+    if health['enabled'] and held_back and (health['queue']['oldestWaitMinutes'] or 0) * 60 >= BUDGET_WAIT_SECONDS:
         active['translation-budget'] = 'company-wire-translation-budget:%d' % health['dailyLimit']
 
     # (c) Every call failed (model error, worker error or every headline rejected) for 15 minutes.

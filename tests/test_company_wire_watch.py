@@ -110,15 +110,22 @@ class TranslationWatchTests(unittest.TestCase):
         self.assertEqual(calls, [2, 30, 5])
         self.assertEqual(company_wire.run_once(self.path, transport=counting, env=ENV, now_ts=self.start + 63), ('idle', 0))
 
-    def test_budget_reached_is_one_critical_alert_that_resolves_when_calls_leave_the_window(self):
+    def test_budget_reached_is_one_critical_alert_only_once_headlines_wait_30_minutes_and_resolves_when_calls_leave_the_window(self):
         env = {**ENV, 'COMPANY_WIRE_TRANSLATION_DAILY_LIMIT': '2'}
+        results = []
         for k in range(3):
             self.arrive(self.start + k * MIN)
-            company_wire.run_once(self.path, transport=answer, env=env, now_ts=self.start + k * MIN + 1)
-        self.assertEqual(self.sync(self.start + 3 * MIN, env), ['company-wire-translation-budget:2'])
-        self.sync(self.start + 4 * MIN, env)
+            results.append(company_wire.run_once(self.path, transport=answer, env=env, now_ts=self.start + k * MIN + 1)[0])
+        self.assertEqual(results, ['done', 'paced', 'paced'])  # a limit of 2: a burst of 1, one more call per day
+        # Owner, Nov 16: an empty bucket alone is no alert; the waiting headlines have waited only a few minutes.
+        self.assertEqual(self.sync(self.start + 3 * MIN, env), [])
+        self.assertEqual(self.sync(self.start + 32 * MIN, env), ['company-wire-translation-budget:2'])
+        self.sync(self.start + 34 * MIN, env)
         self.assertEqual(self.incident('company-wire:translation-budget'), (('open', 'company-wire-translation-budget:2'), 1))
-        self.assertEqual(self.sync(self.start + 86400 + 2 * MIN, env), [])
+        # Still open while the headline waits, even at a moment a token is free; it resolves once the waiting headline is sent.
+        self.assertEqual(self.sync(self.start + 86400 + 2 * MIN, env), ['company-wire-translation-budget:2'])
+        self.assertEqual(company_wire.run_once(self.path, transport=answer, env=env, now_ts=self.start + 86400 + 2 * MIN)[0], 'done')
+        self.assertEqual(self.sync(self.start + 86400 + 3 * MIN, env), [])
         self.assertEqual(self.incident('company-wire:translation-budget'), (('resolved', 'company-wire-translation-budget:2'), 2))
 
     def test_failures_for_15_minutes_alert_once_and_a_translated_batch_resolves(self):
@@ -196,7 +203,7 @@ class TranslationWatchTests(unittest.TestCase):
         def claim(key, category, code, transition='opened'):
             return {'key': key, 'category': category, 'errorCode': code, 'transition': transition}
         budget = incident_delivery.push_message(claim('company-wire:translation-budget', 'company-wire', 'company-wire-translation-budget:6000'))
-        self.assertEqual(budget['title'], '🚨 日本語ニュースの翻訳が1日の上限に達しました')
+        self.assertEqual(budget['title'], '🚨 日本語ニュースの翻訳が回数の上限で30分以上待っています')
         self.assertIn('6000回', budget['body'])
         failing = incident_delivery.push_message(claim('company-wire:translation-failing', 'company-wire', 'company-wire-translation-failing:model-TimeoutError'))
         self.assertEqual(failing['title'], '🚨 日本語ニュースの翻訳が15分失敗し続けています')
