@@ -32,6 +32,9 @@ EARNINGS_RESERVE = 12  # calls of the daily limit kept for earnings only (one ca
 MAX_DAILY_LIMIT = 200
 REQUEST_TIMEOUT_SECONDS = 180
 WINDOW = timedelta(days=3)
+ROSTER = ['MU', 'SKHY', 'SNDK', 'NBIS', 'NVDA', 'AMD', 'AVGO', 'ARM', 'TSM', 'ASML', 'MRVL', 'ANET', 'CRDO', 'CRWV', 'VRT', 'GEV', 'DELL', 'PLTR',
+          'MSFT', 'AMZN', 'GOOGL', 'ORCL']  # the 22 companies the owner follows (earnings_backtest.WATCH, first 22)
+
 
 POLICY = """You are a senior analyst at a Japanese research service for U.S. technology stocks.
 Write a deep, specific reading of the supplied source for PRO members, in natural Japanese and parallel English.
@@ -151,7 +154,7 @@ def earnings_sources(db, reference, excerpts=True):
         if not official_research.earnings_release(row):
             continue
         # Deep analysis is for the research roster; earnings-only companies get results only.
-        if monitor.PROVIDERS.get(row['ticker'], {}).get('scope') == 'earnings':
+        if row['ticker'] not in ROSTER and monitor.PROVIDERS.get(row['ticker'], {}).get('scope') == 'earnings':
             continue
         rows.append({'ref': 'event:%s:%s' % (row['id'], row['sha']), 'kind': 'earnings', 'subject': row['ticker'],
                      'sha': row['sha'], 'title': row['title'], 'url': row['url'],
@@ -161,7 +164,96 @@ def earnings_sources(db, reference, excerpts=True):
             rows[-1].update({'excerpts': official_research.evidence_excerpts(trimmed), 'trim': trim})
         else:
             rows[-1]['excerpts'] = {}
+    rows += stored_release_sources(db, reference, excerpts, {row['subject'] for row in rows})
     return rows
+
+
+STORED_CACHE = {}
+RELEASE_HEAD = re.compile(r'results|earnings|quarter|fiscal', re.I)
+
+
+def release_text_ok(ticker, text):
+    """A stored page is a results release when it carries the company's own results-table marker (the parser's anchor), else when its opening
+    reads like a results announcement. Never a date or call invitation."""
+    import issuer_result_flash as flash
+    import release_watch
+    if not 1200 <= len(text or '') <= 160000:
+        return False
+    marker = flash.PROFILES.get(ticker, {}).get('marker')
+    head = text[:600]
+    if marker and marker in text:
+        return True
+    return bool(release_watch.EARNINGS_TITLE.search(head) and not release_watch.NOT_RELEASE.search(head[:200]) and RELEASE_HEAD.search(head))
+
+
+def stored_release_sources(db, reference, excerpts=True, skip=(), since=None, tickers=None):
+    """Results releases of the roster companies read from the pages the monitor stored (SEC exhibits, company pages), for companies whose IR
+    feed event did not yield one (CoreWeave, Palantir and Arista never reached deep analysis through the feed). Ref source:<url hash>:<revision>.
+    `skip` holds tickers already served by a feed source in this pass. Never a release another analysis of the company already covers."""
+    import official_research
+    cache_key = None
+    if since is None and tickers is None:
+        # every 10 s this runs for the whole roster: reading stored page texts that often would starve the monitor, so recent answers are reused
+        cache_key = (db.execute('PRAGMA database_list').fetchone()[2], excerpts, tuple(sorted(skip)), int(reference.timestamp() // 300))
+        hit = STORED_CACHE.get(cache_key)
+        if hit is not None:
+            return [dict(item) for item in hit]
+    since = since or (reference - WINDOW)
+    found = []
+    wanted = [t for t in (tickers or ROSTER) if t not in skip]
+    if not wanted:
+        return found
+    for row in db.execute('SELECT s.url,s.ticker,s.sha256,COALESCE(e.detected_at,s.discovered_at) AS detected FROM sources s '
+                          'LEFT JOIN release_events e ON e.url=s.url '
+                          "WHERE s.ticker IN (%s) AND s.status NOT IN ('held','rejected') AND julianday(COALESCE(e.detected_at,s.discovered_at))>=julianday(?) "
+                          'ORDER BY julianday(COALESCE(e.detected_at,s.discovered_at)) DESC' % ','.join('?' for _ in wanted),
+                          (*wanted, since.isoformat())).fetchall():
+        if row['ticker'] not in wanted:
+            continue
+        try:
+            detected = datetime.fromisoformat(str(row['detected']).replace('Z', '+00:00'))
+            if detected.tzinfo is None:
+                detected = detected.replace(tzinfo=timezone.utc)
+        except ValueError:
+            continue
+        if detected > reference or row['url'][:8] != 'https://':
+            continue
+        revision = db.execute('SELECT extracted_text FROM source_revisions WHERE url=? AND sha256=?', (row['url'], row['sha256'])).fetchone()
+        text = revision['extracted_text'] if revision else None
+        if not release_text_ok(row['ticker'], text):
+            continue
+        # one analysis per release: a company with an analysis created within two days of this release, or this page analysed before, is covered
+        covered = db.execute("SELECT 1 FROM deep_analyses WHERE kind='earnings' AND subject=? AND (source_url=? OR created_at>=?) LIMIT 1",
+                             (row['ticker'], row['url'], (detected - timedelta(days=2)).isoformat())).fetchone()
+        if covered and not db.execute('SELECT 1 FROM deep_analyses WHERE source_ref=?', (stored_ref(row['url'], row['sha256']),)).fetchone():
+            continue
+        item = {'ref': stored_ref(row['url'], row['sha256']), 'kind': 'earnings', 'subject': row['ticker'], 'sha': row['sha256'],
+                'title': release_title(row['ticker'], text), 'url': row['url'], 'observedAt': detected.isoformat(), 'excerpts': {}}
+        if excerpts:
+            trimmed, trim = trim_release(text)
+            item.update({'excerpts': official_research.evidence_excerpts(trimmed), 'trim': trim})
+        found.append(item)
+        skip = {*skip, row['ticker']}
+        wanted = [t for t in wanted if t != row['ticker']]  # the newest release of each company only
+        if not wanted:
+            break
+    if cache_key is not None:
+        if len(STORED_CACHE) > 20:
+            STORED_CACHE.clear()
+        STORED_CACHE[cache_key] = [dict(item) for item in found]
+    return found
+
+
+def stored_ref(url, sha):
+    return 'source:%s:%s' % (hashlib.sha256(url.encode()).hexdigest()[:16], sha)
+
+
+def release_title(ticker, text):
+    for line in (text or '').splitlines():
+        line = line.strip()
+        if 15 <= len(line) <= 200 and re.search(r'results|earnings|quarter', line, re.I):
+            return line
+    return '%s results release' % ticker
 
 
 def stored_earnings_source(db, ref):
@@ -169,6 +261,14 @@ def stored_earnings_source(db, ref):
     window (newest 100 events) that has long moved past it. Empty when the release is no longer stored."""
     import official_research
     parts = ref.split(':')
+    if len(parts) == 3 and parts[0] == 'source':
+        for row in db.execute('SELECT s.url,s.ticker,r.extracted_text AS body,COALESCE(e.detected_at,s.discovered_at) AS detected FROM sources s '
+                              'JOIN source_revisions r ON r.url=s.url AND r.sha256=? LEFT JOIN release_events e ON e.url=s.url', (parts[2],)).fetchall():
+            if stored_ref(row['url'], parts[2]) == ref and release_text_ok(row['ticker'], row['body']):
+                trimmed, trim = trim_release(row['body'])
+                return [{'ref': ref, 'kind': 'earnings', 'subject': row['ticker'], 'sha': parts[2], 'title': release_title(row['ticker'], row['body']),
+                         'url': row['url'], 'observedAt': row['detected'], 'excerpts': official_research.evidence_excerpts(trimmed), 'trim': trim}]
+        return []
     if len(parts) != 3 or parts[0] != 'event' or not parts[1].isdigit():
         return []
     # the event's own sha is a signal hash, not always the revision's: take the revision with that sha, else the one observed closest to the event
@@ -353,7 +453,7 @@ def used_today(db, now):
     return db.execute('SELECT count(*) FROM deep_analysis_calls WHERE at>=?', (now - 86400,)).fetchone()[0]
 
 
-def run_once(path, transport=None, env=None, now=None, reference=None, only_ref=None):
+def run_once(path, transport=None, env=None, now=None, reference=None, only_ref=None, fresh=False):
     """Analyse at most one due source. Returns 'idle', 'done' or 'retry'. `only_ref` is the one-off retry of an old hold: that source only,
     one attempt (a failure goes straight back to held, now with its recorded reasons), and a result is dated to the release, not to today."""
     config = configuration(env)
@@ -379,7 +479,9 @@ def run_once(path, transport=None, env=None, now=None, reference=None, only_ref=
         source = None
         for row in sources:
             saved = db.execute('SELECT * FROM deep_analyses WHERE source_ref=?', (row['ref'],)).fetchone()
-            if only_ref is not None:
+            if only_ref is not None and fresh and saved is None:
+                pass  # first and only attempt at a release that never had a row (roster backfill)
+            elif only_ref is not None:
                 if saved is None or saved['state'] not in ('held', 'retry'):
                     continue
                 db.execute("UPDATE deep_analyses SET attempts=?,state='retry' WHERE source_ref=?", (MAX_ATTEMPTS - 1, row['ref']))
@@ -389,6 +491,10 @@ def run_once(path, transport=None, env=None, now=None, reference=None, only_ref=
                 saved = None  # held under older logic: a fresh set of attempts
             if saved and (saved['state'] in ('done', 'held') or saved['next_at'] > now):
                 continue
+            if saved is None and row['kind'] == 'earnings' and db.execute(
+                    "SELECT 1 FROM deep_analyses WHERE kind='earnings' AND subject=? AND source_url=? AND state='done'",
+                    (row['subject'], row['url'])).fetchone():
+                continue  # the same page was already analysed under another event/revision: one analysis per release, never a repeat
             source = row
             break
         if source is None:
@@ -444,8 +550,14 @@ def member_view(db, reference=None, limit=30):
     reference = reference or datetime.now(timezone.utc)
     cutoff = (reference - timedelta(days=45)).isoformat()
     items = []
+    seen = set()
     for row in db.execute('''SELECT * FROM deep_analyses WHERE state='done' AND published_at>=?
-      ORDER BY published_at DESC LIMIT ?''', (cutoff, limit)):
+      ORDER BY published_at DESC''', (cutoff,)):
+        if len(items) >= limit:
+            break
+        if row['kind'] == 'earnings' and (row['subject'], row['source_url']) in seen:
+            continue  # the same release analysed under another event or revision shows once (newest)
+        seen.add((row['subject'], row['source_url']))
         try:
             note = json.loads(row['payload'])
         except (TypeError, ValueError):
@@ -456,17 +568,13 @@ def member_view(db, reference=None, limit=30):
     return items
 
 
-ROSTER = ['MU', 'SKHY', 'SNDK', 'NBIS', 'NVDA', 'AMD', 'AVGO', 'ARM', 'TSM', 'ASML', 'MRVL', 'ANET', 'CRDO', 'CRWV', 'VRT', 'GEV', 'DELL', 'PLTR',
-          'MSFT', 'AMZN', 'GOOGL', 'ORCL']  # the 22 companies the owner follows (earnings_backtest.WATCH, first 22)
-
-
 def roster_status(db, now):
     """Per company: the latest scheduled results release, the state of its deep analysis, the next scheduled release. Names, states and dates only."""
     import release_watch
     when = datetime.fromtimestamp(now, timezone.utc)
     releases = {}
     for event in release_watch.load_schedule():
-        if event['kind'] == 'earnings' and event['phase'] == 'release':
+        if event['kind'] == 'earnings':  # the release or its call: either dates the quarter
             releases.setdefault(event['ticker'], []).append(event['at'])
     rows = []
     for ticker in ROSTER:
@@ -503,8 +611,9 @@ def diagnostics(db, now=None):
         pending.append({'subject': row['subject'], 'state': row['state'], 'attempts': row['attempts'],
                         'failure': row['failure'], 'detail': detail, 'createdAt': row['created_at']})
     old_retry = dict(db.execute('SELECT outcome,count(*) FROM deep_old_retries WHERE marker=? GROUP BY outcome', (OLD_RETRY_MARKER,)).fetchall())
-    published = [{'subject': row['subject'], 'kind': row['kind'], 'publishedAt': row['published_at']} for row in db.execute(
-        "SELECT subject,kind,published_at FROM deep_analyses WHERE state='done' ORDER BY published_at DESC LIMIT 60")]
+    published = [{'subject': row['subject'], 'kind': row['kind'], 'publishedAt': row['published_at'], 'sourceUrl': row['source_url'],
+                  'ref': row['source_ref'][:12] + '…' + row['source_ref'][-8:]} for row in db.execute(
+        "SELECT subject,kind,published_at,source_url,source_ref FROM deep_analyses WHERE state='done' ORDER BY published_at DESC LIMIT 60")]
     try:
         roster = roster_status(db, now)
     except Exception:
@@ -551,6 +660,49 @@ def retry_old_holds(path, transport=None, env=None, now=None):
     return outcome
 
 
+BACKFILL_ENV = 'RESEARCH_DEEP_BACKFILL_ROSTER'
+BACKFILL_MARKER = 'roster-backfill-2026-11-15'
+BACKFILL_LOOKBACK = timedelta(days=120)
+
+
+def backfill_roster(path, transport=None, env=None, now=None):
+    """One-off, flag-gated (RESEARCH_DEEP_BACKFILL_ROSTER=true): for every roster company whose latest stored results release has no deep
+    analysis, make it once (owner, Nov 15: every roster earnings deep analysis is published). One call per company, newest first, one per pass,
+    dated to the release. The outcome is kept in deep_old_retries under BACKFILL_MARKER, so a restart never repeats it. Returns 'idle' when the
+    flag is off or nothing is left."""
+    env = os.environ if env is None else env
+    if str(env.get(BACKFILL_ENV, '')).strip().lower() != 'true' or configuration(env) is None:
+        return 'idle'
+    now = time.time() if now is None else now
+    reference = datetime.fromtimestamp(now, timezone.utc)
+    with connect(path) as db:
+        limit = configuration(env)[2]
+        if used_today(db, now) >= limit - earnings_reserve(limit):
+            return 'idle'
+        pending = None
+        for item in sorted(stored_release_sources(db, reference, False, since=reference - BACKFILL_LOOKBACK),
+                           key=lambda row: row['observedAt'], reverse=True):
+            done = db.execute('SELECT 1 FROM deep_old_retries WHERE source_ref=? AND marker=?', (item['ref'], BACKFILL_MARKER)).fetchone()
+            saved = db.execute('SELECT state FROM deep_analyses WHERE source_ref=?', (item['ref'],)).fetchone()
+            if not done and (saved is None or saved['state'] == 'retry'):
+                pending = item
+                break
+    if pending is None:
+        return 'idle'
+    try:
+        release_at = datetime.fromisoformat(pending['observedAt']) + timedelta(hours=1)
+    except ValueError:
+        release_at = reference
+    outcome = run_once(path, transport, env, now=now, reference=release_at, only_ref=pending['ref'], fresh=True)
+    outcome = {'idle': 'source-unavailable', 'retry': 'rejected'}.get(outcome, outcome)
+    with connect(path) as db:
+        saved = db.execute('SELECT state,attempts FROM deep_analyses WHERE source_ref=?', (pending['ref'],)).fetchone()
+        if outcome == 'rejected' and saved is not None and saved['state'] == 'retry' and saved['attempts'] < MAX_ATTEMPTS:
+            return outcome  # the call returned nothing (timeout, provider error): leave it open for another go
+        db.execute('INSERT OR REPLACE INTO deep_old_retries(source_ref,marker,at,outcome) VALUES(?,?,?,?)', (pending['ref'], BACKFILL_MARKER, now, outcome))
+    return outcome
+
+
 OVERDUE_AFTER_SECONDS = 2 * 3600       # an earnings release without a finished analysis after this long is a critical incident
 OVERDUE_LOOKBACK_SECONDS = 72 * 3600   # older rows are history, never new alerts (enabling this must not replay old holds)
 INCIDENT_PREFIX = 'deep-analysis:'
@@ -587,7 +739,51 @@ def overdue(db, now=None, env=None):
         if threshold <= age <= OVERDUE_LOOKBACK_SECONDS:
             late.append({'subject': row['subject'], 'check': first_check(row), 'state': row['state'], 'ageSeconds': int(age)})
     late += never_attempted(db, now, env)
+    late += roster_silent(db, now, env)
     return late
+
+
+JST = timezone(timedelta(hours=9))
+
+
+def roster_silent(db, now, env=None):
+    """A roster company released results (calendar, a stored results release or its published results table) and still has no finished analysis
+    by the next morning in Japan (09:00 JST after the release plus three hours): critical, whatever the reason (never picked up, budget,
+    service down). Owner, Nov 15: no roster earnings deep analysis may go missing."""
+    if configuration(env) is None:
+        return []
+    import release_watch
+    when = datetime.fromtimestamp(now, timezone.utc)
+    stamps = {}
+    for event in release_watch.load_schedule():
+        if event['kind'] == 'earnings' and event['ticker'] in ROSTER and event['at'] <= when:
+            stamps.setdefault(event['ticker'], []).append(event['at'])
+    for row in db.execute("SELECT ticker,observed_at FROM issuer_result_publications") if db.execute(
+            "SELECT 1 FROM sqlite_master WHERE name='issuer_result_publications'").fetchone() else []:
+        try:
+            at = datetime.fromisoformat(str(row['observed_at']).replace('Z', '+00:00'))
+        except ValueError:
+            continue
+        if row['ticker'] in ROSTER and at <= when:
+            stamps.setdefault(row['ticker'], []).append(at if at.tzinfo else at.replace(tzinfo=timezone.utc))
+    found = []
+    for ticker, times in stamps.items():
+        latest = max(times)
+        released = min(t for t in times if latest - t <= timedelta(hours=6))  # the release, not its call an hour later
+        morning = (released + timedelta(hours=3)).astimezone(JST)
+        morning = morning.replace(hour=9, minute=0, second=0, microsecond=0)
+        if morning < (released + timedelta(hours=3)).astimezone(JST):
+            morning += timedelta(days=1)
+        age = (when - released).total_seconds()
+        if when < morning or age > OVERDUE_LOOKBACK_SECONDS:
+            continue
+        if db.execute("SELECT 1 FROM deep_analyses WHERE kind='earnings' AND subject=? AND state='done' AND created_at>=?",
+                      (ticker, (released - timedelta(days=1)).isoformat())).fetchone():
+            continue
+        failing = db.execute("SELECT state FROM deep_analyses WHERE kind='earnings' AND subject=? AND created_at>=? ORDER BY created_at DESC LIMIT 1",
+                             (ticker, (released - timedelta(days=1)).isoformat())).fetchone()
+        found.append({'subject': ticker, 'check': 'roster-no-analysis-' + (failing['state'] if failing else 'none'), 'state': 'none', 'ageSeconds': int(age)})
+    return found
 
 
 def never_attempted(db, now, env=None):
