@@ -60,6 +60,23 @@ class FactualValidationTests(unittest.TestCase):
             validation.validate_semantics('専門家より20％多い結果。既知より50％多い排出。',
                                           '20% more results than experts; 50% more emissions than experts.')
 
+    def test_english_scale_word_glued_to_japanese_text_is_read_at_its_scale(self):
+        # Nov 15 (ARM): "$773 millionとなり" was read as a bare 773 because the Japanese character after "million" is a word character.
+        source = 'Licensing and other revenue of $773 million, up 50%. Royalty revenue reached $670 million. Up to $2 billion over two years. Revenue rose to $1.44 billion.'
+        for text in ('ライセンス売上高が50%増の$773 millionとなり、成長を牽引した。', 'ロイヤルティ売上高は$670 millionとなった。',
+                     '最大$2 billionの売上高を見込む。', '総売上高は$1.44 billionに達した。', 'ライセンスは$773 million。'):
+            with self.subTest(text=text):
+                validation.validate_numbers(text, source)
+        self.assertEqual(validation.numeric_values('$773 millionとなり'), [(validation.Decimal(773000000), 'number')])
+
+    def test_scale_word_fix_still_rejects_changed_numbers_and_longer_words(self):
+        source = 'Licensing and other revenue of $773 million, up 50%.'
+        for wrong in ('ライセンス売上高は$800 millionとなり', 'ライセンス売上高は$773 millionsとなり', 'ライセンス売上高は$773 thousandとなり',
+                      'ライセンス売上高は$773 billionとなり', 'ライセンス売上高は773となり'):
+            with self.subTest(wrong=wrong):
+                with self.assertRaises(ValueError):
+                    validation.validate_numbers(wrong, source)
+
     def test_megawatt_per_unit_basis_matches_explicit_japanese_denominator(self):
         source = 'Each megawatt costs roughly $60 million.'
         for ja in ('1メガワットあたり約6000万ドル', '1MW当たり約6,000万ドル',
