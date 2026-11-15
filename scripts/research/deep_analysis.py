@@ -18,6 +18,7 @@ import sqlite3
 import time
 
 import brief_generator
+import direction_clauses
 import factual_validation
 import llm_cost
 import monitor
@@ -469,7 +470,9 @@ def table_scaled_figures(evidence, within=None):
 
 
 def checked(item, quote, release=None):
-    """Copy that passes the number, meaning and pair checks against `quote`."""
+    """Copy that passes the number, meaning and pair checks against `quote`. The direction rules (an increase and a decrease in one copy, a
+    direction the quote does not state in words) are replaced by the clause-by-clause check of direction_clauses when it can match every
+    direction to the quote; where it contradicts the quote the copy is rejected, where it cannot tell the original rules apply unchanged."""
     for lang in ('ja', 'en'):
         text = item.get(lang)
         if not isinstance(text, str) or not text.strip():
@@ -477,8 +480,14 @@ def checked(item, quote, release=None):
         if len(text) > MAX_COPY_CHARS:
             raise ValueError('copy-too-long')
         factual_validation.validate_numbers(text, table_scaled_figures(release or quote, within=quote) + '\n' + quote)  # scaled figures first: an excerpt cut inside a "(" would turn text appended after it into a negative
-        factual_validation.validate_semantics(text, quote)
-    factual_validation.validate_pair(item['ja'], item['en'])
+    outcome = direction_clauses.verdict(item['ja'], item['en'], quote)
+    if outcome == 'contradicted':
+        factual_validation.LAST_DIRECTION_REJECTION[0] = {'family': 'clause', 'copy': 'down', 'source': ['up']}  # a clause-level mismatch (the direction text is only a label here)
+        raise ValueError('changed-direction')
+    exact = outcome != 'verified'
+    for lang in ('ja', 'en'):
+        factual_validation.validate_semantics(item[lang], quote, directions=exact)
+    factual_validation.validate_pair(item['ja'], item['en'], polarity=exact)
 
 
 def why(exc, everything=None):
