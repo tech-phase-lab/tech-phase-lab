@@ -52,10 +52,11 @@ test("a rate-limited answer is retried once after the pause, never twice", async
   assert.equal(await retryOnceIfLimited(async () => { attempts++; return { limited: false, value: "fine" }; }, c.sleep), "fine"); assert.equal(attempts, 1);
 });
 
-test("the collector uses the gate before reading, inside the queue, and shares in-flight reads", () => {
+test("a user's request never calls the expensive endpoints and never waits for credits (Nov 15 redesign)", () => {
   const source = readFileSync(new URL("../lib/research/twelve-data-collector.ts", import.meta.url), "utf8");
-  assert.match(source, /serial\(async \(\) => \{\s*await waitForCredits/);
-  assert.match(source, /shareInflight\(running, ticker/);
-  assert.match(source, /retryOnceIfLimited/);
-  assert.doesNotMatch(source, /attempt < 2/);
+  // Statistics and statements come only from the shared store; the collector itself sends no request and has no waiting gate.
+  assert.doesNotMatch(source, /income_statement|cash_flow|"statistics"|waitForCredits|retryOnceIfLimited|serial\(|fetch\(/);
+  assert.match(source, /cachedStatements\(ticker\)/); assert.match(source, /cachedStatistics\(ticker\)/);
+  const store = readFileSync(new URL("../lib/research/twelve-store.ts", import.meta.url), "utf8");
+  assert.doesNotMatch(store, /waitForCredits|retryOnceIfLimited|sleep|setTimeout/);
 });

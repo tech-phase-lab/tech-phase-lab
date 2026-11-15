@@ -33,11 +33,30 @@ export function buildSecMarketEvidence(c: Financials, series?: Raw & { adjust: "
     const financials = obj(obj(root.statistics).financials), debt = twelveNumber(obj(financials.balance_sheet).total_debt_mrq);
     if (usable && financials.most_recent_quarter === q.end && debt !== null && debt >= 0) totalDebt = debt;
   }
+  let stamp = forwardPE !== null || priceToSales !== null || totalDebt !== null ? statistics?.retrievedAt ?? null : null;
+  // No usable cached statistics (they are refreshed in the background, never on a user's request): price-to-sales from the filing itself,
+  // the last daily close times the quarter's diluted weighted-average shares over the same four quarters' revenue. US GAAP filers only (a
+  // foreign filer's shares are ordinary shares, not the listed ADS), and only in the series' own currency.
+  if (priceToSales === null && series && q.basis === "us-gaap" && c.quarterDilutedShares && c.quarterDilutedShares > 0 && c.quarterRevenueTtm && c.quarterRevenueTtm > 0) {
+    const close = lastClose(series, c.ticker, q.unit, now);
+    if (close !== null) { priceToSales = close * c.quarterDilutedShares / c.quarterRevenueTtm; stamp ??= series.retrievedAt; }
+  }
   return {
     ...base,
     margins: c.quarterMargins ?? [],
-    statistics: (forwardPE !== null || priceToSales !== null || totalDebt !== null) && statistics
-      ? { retrievedAt: statistics.retrievedAt, quarterEnd: q.end, forwardPE, trailingPE: null, currentRatio: null, totalCash: null, totalDebt, priceToSales }
+    statistics: stamp !== null
+      ? { retrievedAt: stamp, quarterEnd: q.end, forwardPE, trailingPE: null, currentRatio: null, totalCash: null, totalDebt, priceToSales }
       : null,
   };
+}
+
+/** The newest completed daily close of a split-adjusted series for this symbol and currency, no older than a week. */
+export function lastClose(series: Raw & { adjust: "splits" }, ticker: string, currency: string, now = Date.now()): number | null {
+  const root = obj(series.payload), meta = obj(root.meta), at = Date.parse(series.retrievedAt);
+  if (root.status === "error" || meta.symbol !== ticker || meta.currency !== currency || meta.interval !== "1day" || !Number.isFinite(at) || at > now || !Array.isArray(root.values)) return null;
+  const today = new Date(at).toISOString().slice(0, 10);
+  const bars = root.values.map(obj).filter(row => typeof row.datetime === "string" && /^\d{4}-\d{2}-\d{2}$/.test(row.datetime) && row.datetime < today)
+    .sort((a, b) => String(b.datetime).localeCompare(String(a.datetime)));
+  const close = bars.length ? twelveNumber(bars[0].close) : null;
+  return close !== null && close > 0 && now - Date.parse(String(bars[0].datetime)) <= 7 * 86400000 ? close : null;
 }

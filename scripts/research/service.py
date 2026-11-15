@@ -63,6 +63,7 @@ import official_research_diagnostics
 import official_research_detail
 import watch_earnings
 import mu_earnings_measurement
+import comparison_warm
 import web_push
 import voice_inbox
 import event_results
@@ -822,6 +823,7 @@ class AutomaticMonitor:
         self.deep_analysis_thread = threading.Thread(target=self.run_deep_analysis, name="deep-analysis", daemon=True)
         self.watch_earnings_thread = threading.Thread(target=self.run_watch_earnings, name="watch-earnings", daemon=True)
         self.mu_measurement_thread = threading.Thread(target=self.run_mu_measurement, name="mu-earnings-measurement", daemon=True)
+        self.comparison_warm_thread = threading.Thread(target=self.run_comparison_warm, name="comparison-warm-clock", daemon=True)
         self.weekly_thread = threading.Thread(target=self.run_weekly, name="weekly-auto-draft-clock", daemon=True)
         self.event_results_thread = threading.Thread(target=self.run_event_results, name="event-results", daemon=True)
         self.news_thread = threading.Thread(target=self.run_stock_news, name="stock-news-intake", daemon=True)
@@ -1130,6 +1132,16 @@ class AutomaticMonitor:
                 print("mu-measurement-unavailable", flush=True)
             self.stop_event.wait(5)
 
+    def run_comparison_warm(self):
+        # The stock comparison's provider refresh: one call to the site per minute (off unless COMPARISON_WARM_URL and _SECRET are set).
+        if not comparison_warm.config():
+            return
+        while not self.stop_event.is_set():
+            result = comparison_warm.run_once()
+            with self.state_lock:
+                self.state["comparisonWarm"] = {**result, "checkedAt": utc_now()}
+            self.stop_event.wait(comparison_warm.seconds_to_next_minute(time.time()))
+
     def run_web_push(self):
         if not self.web_push_enabled:
             return
@@ -1275,6 +1287,7 @@ class AutomaticMonitor:
         self.official_research_thread.start()
         self.deep_analysis_thread.start()
         self.mu_measurement_thread.start()
+        self.comparison_warm_thread.start()
         self.weekly_thread.start()
         self.event_results_thread.start()
         self.watch_earnings_thread.start()
@@ -1308,6 +1321,7 @@ class AutomaticMonitor:
         self.official_research_thread.join(timeout=45)
         self.deep_analysis_thread.join(timeout=45)
         self.mu_measurement_thread.join(timeout=45)
+        self.comparison_warm_thread.join(timeout=60)
         self.watch_earnings_thread.join(timeout=10)
         self.push_thread.join(timeout=15)
 
