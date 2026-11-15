@@ -1,0 +1,126 @@
+import test from "node:test";
+import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
+import { createRequire } from "node:module";
+import React from "react";
+import { renderToStaticMarkup } from "react-dom/server";
+import ts from "typescript";
+import { parseCompanyWire } from "../lib/research/company-wire.ts";
+import { impactOf, topicCards, topicImpact } from "../lib/research/topics.ts";
+
+// Owner, Nov 15: 一般ニュース becomes 注目トピック, a list of open cards of the Stock News API stories.
+const require = createRequire(import.meta.url);
+const read = path => readFileSync(new URL(path, import.meta.url), "utf8");
+const now = Date.parse("2026-11-15T03:00:00Z"); // 12:00 on Nov 15, Japan time
+const iso = minutes => new Date(now - minutes * 60_000).toISOString();
+const row = (id, titleEn, titleJa, { source = "stocknews", minutes = 10, sentiment, publisher = "Reuters", url = `https://news.example/${id}` } = {}) => ({
+  id, titleEn, titleJa, shortJa: null, publisher, origin: "third-party", url, publishedAt: iso(minutes), source, ...(sentiment ? { sentiment } : {}) });
+const wire = () => parseCompanyWire({ ok: true, items: {
+  MU: [row("s1", "Micron moves HBM4 shipments forward", "マイクロン、HBM4の量産出荷を前倒しと発表", { sentiment: "positive", minutes: 30 })],
+  SNDK: [row("s2", "Sandisk cuts data center SSD prices", "サンディスク、データセンター向けSSDの価格を引き下げ", { sentiment: "negative", minutes: 60 })],
+  AMD: [row("s3", "AMD sets the date for its new AI accelerator", "AMD、新しいAIアクセラレーターの発表日を公表", { minutes: 24 * 60 + 30 })],
+  MKT: [row("s4", "Oil jumps on Hormuz tension", "ホルムズ緊張で原油が急騰", { sentiment: "neutral", minutes: 90 })],
+  NVDA: [row("y1", "Nvidia ships a new rack system", "エヌビディアが新ラックを出荷", { source: "yahoo", minutes: 5, sentiment: "positive" }),
+    row("s5", "Nvidia signs a new Taiwan contract", null, { minutes: 15 })],
+} }).items;
+const draft = { id: "d1", title: "Micron moves HBM4 shipments forward", url: "https://news.example/s1", publisher: "Bloomberg", tickers: ["MU"],
+  publishedAt: iso(30), observedAt: iso(29), approvedAt: iso(20), summaryJa: "次世代メモリHBM4の出荷開始を当初計画より1四半期早める。", summaryEn: "Shipments of HBM4 start a quarter early.",
+  shortTitleJa: "マイクロン、HBM4の出荷を前倒し", shortTitleEn: "Micron brings HBM4 forward", impactJa: "影響", impactEn: "Impact", impactLabel: "mixed", confidence: "high" };
+const feed = { ok: true, enabled: true, items: [draft] };
+
+test("the Stock News API sentiment is read from the company headline feed; anything else is left out", () => {
+  const items = wire();
+  assert.equal(items.MU[0].sentiment, "positive");
+  assert.equal(items.SNDK[0].sentiment, "negative");
+  assert.equal("sentiment" in items.AMD[0], false);
+  const odd = parseCompanyWire({ ok: true, items: { MU: [{ ...row("x", "Micron item", "マイクロンの記事"), sentiment: "Bullish" }, { ...row("z", "Micron other", null), sentiment: 1 }] } }).items;
+  assert.deepEqual(odd.MU.map(item => "sentiment" in item), [false, false]);
+});
+
+test("impact: the reviewed impactLabel first, then the Stock News API sentiment; mixed, neutral and unknown read 中立", () => {
+  assert.equal(impactOf("positive", "negative"), "positive");
+  assert.equal(impactOf("mixed", "positive"), "neutral");
+  assert.equal(impactOf("uncertain"), "neutral");
+  assert.equal(impactOf(undefined, "negative"), "negative");
+  assert.equal(impactOf(undefined, undefined), "neutral");
+  assert.deepEqual(["positive", "negative", "neutral"].map(value => topicImpact(value, true)), ["▲ プラス", "▼ マイナス", "● 中立"]);
+  assert.deepEqual(["positive", "negative", "neutral"].map(value => topicImpact(value, false)), ["▲ Positive", "▼ Negative", "● Neutral"]);
+});
+
+test("the cards are the Stock News API stories, newest first, each with a publisher and an article link; no English on the Japanese page", () => {
+  const ja = topicCards(null, wire(), "ja");
+  assert.deepEqual(ja.map(card => card.id), ["wire-s1", "wire-s2", "wire-s4", "wire-s3"], "the Yahoo row and the untranslated Nvidia story are not listed");
+  assert.ok(ja.every(card => /[぀-ヿ㐀-鿿]/.test(card.title) && card.publisher && card.url.startsWith("https://")));
+  assert.deepEqual(ja.map(card => card.impact), ["positive", "negative", "neutral", "neutral"]);
+  assert.equal(ja.find(card => card.id === "wire-s4").tickers, "市場");
+  assert.equal(ja[0].summary, undefined, "a headline-only story has no summary");
+  assert.deepEqual(topicCards(null, wire(), "en").map(card => card.id), ["wire-s5", "wire-s1", "wire-s2", "wire-s4", "wire-s3"]);
+});
+
+test("a reviewed article shows its checked summary and impactLabel, and the same article is listed once", () => {
+  const ja = topicCards(feed, wire(), "ja");
+  assert.deepEqual(ja.map(card => card.id), ["news-d1", "wire-s2", "wire-s4", "wire-s3"]);
+  assert.deepEqual({ ...ja[0] }, { id: "news-d1", tickers: "MU", impact: "neutral", at: draft.publishedAt, title: draft.shortTitleJa,
+    summary: draft.summaryJa, publisher: "Bloomberg", url: "https://news.example/s1" });
+  assert.equal(topicCards(feed, wire(), "en")[1].summary, draft.summaryEn);
+  // Publication switched off: only the company headline stories.
+  assert.deepEqual(topicCards({ ...feed, enabled: false }, wire(), "ja")[0].id, "wire-s1");
+  // A reviewed article without a short headline uses its summary as the headline, and does not repeat it below.
+  const plain = topicCards({ ...feed, items: [{ ...draft, shortTitleJa: undefined, shortTitleEn: undefined }] }, {}, "ja")[0];
+  assert.equal(plain.title, draft.summaryJa);
+  assert.equal(plain.summary, undefined);
+});
+
+function loadTopics(file = "../app/research/news/topics-list.tsx") {
+  const output = ts.transpileModule(read(file), { compilerOptions: { jsx: ts.JsxEmit.ReactJSX, module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022 } }).outputText;
+  const loaded = { exports: {} };
+  const styles = new Proxy({}, { get: (_, name) => String(name) });
+  new Function("require", "module", "exports", output)(name => {
+    if (name.endsWith(".module.css")) return { default: styles };
+    if (name.startsWith("@/lib/research/")) return require(`../lib/research/${name.slice("@/lib/research/".length)}.ts`);
+    if (name.startsWith("./")) return { default: loadTopics(`../app/research/news/${name.slice(2)}.tsx`) };
+    return require(name);
+  }, loaded, loaded.exports);
+  return loaded.exports.default;
+}
+
+test("the page: TOPICS / 注目トピック, an automatic-update line, open cards with day dividers, and no refresh button or notes", () => {
+  const page = read("../app/research/general-news/page.tsx");
+  assert.match(page, /eyebrow="TOPICS" title=\{lang === "ja" \? "注目トピック" : "Top Topics"\}/);
+  const Topics = loadTopics();
+  const html = renderToStaticMarkup(React.createElement(Topics, { lang: "ja", data: feed, wire: wire(), wireReady: true, error: false,
+    receivedAt: new Date(now).toISOString(), page: 1, onPage: () => {} }));
+  assert.match(html, /自動で更新中/);
+  assert.doesNotMatch(html, /<button|更新<\/button>|＋|<details|日英の内容を確認|画面取得|確信度|事業への影響/);
+  assert.deepEqual([...html.matchAll(/<h2 class="topicDay">([^<]+)<\/h2>/g)].map(match => match[1]), ["今日", "昨日"]);
+  assert.equal((html.match(/<article /g) ?? []).length, 4);
+  assert.match(html, /<time dateTime="[^"]+">11:30<\/time>/, "the time alone, in Japan time");
+  assert.match(html, /<span class="topicTicker">MU<\/span><span class="topicImpact">● 中立<\/span>/);
+  assert.match(html, /class="topicCard topicNegative"/);
+  assert.match(html, /<p class="topicSummary" lang="ja">次世代メモリHBM4/);
+  assert.match(html, /<span>Bloomberg<\/span><a href="https:\/\/news\.example\/s1" target="_blank" rel="noopener noreferrer">元記事を読む <span aria-hidden="true">↗<\/span><\/a>/);
+  const empty = renderToStaticMarkup(React.createElement(Topics, { lang: "ja", data: { ok: true, enabled: false, items: [] }, wire: {}, wireReady: true, error: false, receivedAt: null, page: 1, onPage: () => {} }));
+  assert.match(empty, /現在、掲載中のトピックはありません。/);
+});
+
+test("the cards follow the owner's colours and sizes, with no gold", () => {
+  const css = read("../app/research/news/general-news.module.css");
+  const topics = css.slice(css.indexOf("/* 注目トピック")).replace(/\/\*[\s\S]*?\*\//g, "");
+  for (const rule of [/\.topicCard\{[^}]*border-radius:12px;background:#111822;border:1px solid #1c2633/, /\.topicCard::before\{[^}]*width:3px/,
+    /\.topicPositive\{--topic-tone:#5fe0aa\}/, /\.topicNegative\{--topic-tone:#ff7a7a\}/, /\.topicNeutral\{--topic-tone:#9aa7b7\}/,
+    /\.topicList\{[^}]*gap:10px/, /\.topicTitle\{[^}]*font-size:15\.5px;font-weight:700/, /\.topicSummary\{[^}]*font-size:12\.5px;[^}]*color:#aab6c4/,
+    /\.topicLive\{[^}]*font-size:12px;[^}]*color:#8e9aaa/, /\.topicLive span\{[^}]*background:#8fe3c0/, /\.topicTicker\{[^}]*font-weight:700;color:#8fe3c0/,
+    /\.topicSource a\{[^}]*color:#8fe3c0/]) assert.match(topics, rule);
+  assert.doesNotMatch(topics, /#d0ae65|#dcc58e|gold|#c9a|#e6c|#f5d/i);
+  assert.doesNotMatch(topics, /line-clamp|text-overflow:ellipsis/, "headlines are never cut");
+});
+
+test("the name 注目トピック is used everywhere the page is named", () => {
+  assert.match(read("../app/research/home-sidebar.tsx"), /label: t\("注目トピック", "Top Topics"\), href: "\/research\/general-news"/);
+  assert.match(read("../app/research/site-header.tsx"), /item\("\/research\/general-news", "news", ja \? "注目トピック" : "Top Topics"\)/);
+  assert.match(read("../app/research/plan-cards.tsx"), /\[t\("米国市場の注目トピック", "Top topics in the U.S. market"\)\]/);
+  assert.match(read("../app/research/news/general-news-panel.tsx"), /注目トピックですべて見る/);
+  for (const file of ["../app/research/home-sidebar.tsx", "../app/research/site-header.tsx", "../app/research/plan-cards.tsx", "../app/research/news/general-news-panel.tsx", "../app/research/general-news/page.tsx"]) {
+    assert.doesNotMatch(read(file), /一般ニュース|General News|GENERAL NEWS/, file);
+  }
+});

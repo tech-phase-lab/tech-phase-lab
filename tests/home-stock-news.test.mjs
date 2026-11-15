@@ -55,7 +55,7 @@ test("until a Stock News API story can be shown, the band keeps its previous ite
   assert.deepEqual(homePulseItems(feed, "ja", now, wire(), 5, () => false).map(item => item.id), ["official-o1", "wire-y1", "wire-s1", "wire-m1"]);
 });
 
-test("the home list asks for the Stock News API stories; the General News page and the official tab are unchanged", () => {
+test("the home list asks for the Stock News API stories; the Top Topics page and the official tab keep their own lists", () => {
   const panel = read("../app/research/news/general-news-panel.tsx");
   assert.match(read("../app/research/news/news-feed.tsx"), /<GeneralNewsPanel [^>]*officialOnly=\{view === "official"\} stockNews \/>/);
   assert.match(panel, /const stockStories = stockNews && !officialOnly && !generalOnly \? homeStockStories\(wire, lang\) : \[\];/);

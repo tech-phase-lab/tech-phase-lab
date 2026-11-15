@@ -3,7 +3,10 @@ export type CompanyWireItem = {
   id: string; titleEn: string; titleJa: string | null; /** A one-line Japanese headline (22 characters or fewer) for the news band, when one was made. */ shortJa?: string | null; publisher: string;
   origin: "wire" | "third-party" | "unknown"; url: string; publishedAt: string;
   /** Where the monitor got the row: "stocknews" (the Stock News API), "yahoo", "gnews". Absent from an older monitor. */ source?: string;
+  /** The Stock News API's own sentiment for the story (owner, Nov 15: the topics page's プラス / マイナス / 中立). Absent when unknown. */ sentiment?: WireSentiment;
 };
+export type WireSentiment = "positive" | "negative" | "neutral";
+const SENTIMENTS: readonly string[] = ["positive", "negative", "neutral"];
 export type CompanyWireFeed = { ok: true; items: Record<string, CompanyWireItem[]> };
 
 const TICKER = /^[A-Z]{1,5}$/;
@@ -29,7 +32,8 @@ export function parseCompanyWire(value: unknown): CompanyWireFeed {
       if (url.protocol !== "https:" || url.username || url.password) continue;
       kept.push({ id: v.id as string, titleEn: v.titleEn as string, titleJa: v.titleJa as string | null, shortJa: text(v.shortJa, 40) ? (v.shortJa as string) : null, publisher: v.publisher as string,
         origin: v.origin as CompanyWireItem["origin"], url: url.href, publishedAt: v.publishedAt as string,
-        ...(typeof v.source === "string" && /^[a-z0-9-]{1,24}$/.test(v.source) ? { source: v.source } : {}) });
+        ...(typeof v.source === "string" && /^[a-z0-9-]{1,24}$/.test(v.source) ? { source: v.source } : {}),
+        ...(typeof v.sentiment === "string" && SENTIMENTS.includes(v.sentiment) ? { sentiment: v.sentiment as WireSentiment } : {}) });
     }
     if (kept.length) items[ticker] = kept;
   }

@@ -104,7 +104,7 @@ test("menu follows the owner's design: navy FREE, black-and-gold PRO, one struct
   for (const [ja, en] of [["PROで、もっと深く", "Go deeper with PRO"], ["案内を見る", "Learn more"], ["プランの管理", "Manage plan"],
     ["全機能をご利用中です", "All features unlocked"], ["再読み込み", "Refresh"], ["アカウント", "Account"], ["米国株のはじめ方", "US stock basics"],
     ["よくある質問・使い方", "FAQ & help"], ["ニュース", "News"], ["リサーチ", "Research"], ["マイページ", "My workspace"], ["PRO機能", "PRO features"],
-    ["ハイテク速報", "Tech Alerts"], ["一般ニュース", "General News"], ["銘柄検索", "Stock Search"], ["マーケット", "Markets"],
+    ["ハイテク速報", "Tech Alerts"], ["注目トピック", "Top Topics"], ["銘柄検索", "Stock Search"], ["マーケット", "Markets"],
     ["決算・経済指標", "Earnings & economic calendar"], ["資本マップ", "Capital Map"], ["目標株価", "Price targets"],
     ["ウォッチリスト", "Watchlist"], ["銘柄手帳", "Stock Notebook"], ["リサーチノート", "Research notes"], ["スマホ通知", "Mobile alerts"],
     ["監視22銘柄", "22 Tracked Stocks"], ["テーマランキング", "Theme Ranking"], ["銘柄比較", "Compare"], ["連関マップ", "Relationship maps"]]) {
