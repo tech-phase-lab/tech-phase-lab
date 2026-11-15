@@ -640,6 +640,53 @@ class DeepAnalysisTests(unittest.TestCase):
             self.assertEqual(db.execute("SELECT state,failure FROM deep_analyses").fetchone()[:], ('held', 'interrupted'))
 
 
+    # Owner decision B (Nov 15): mixed ups and downs are checked clause by clause against the source, not rejected wholesale.
+    CRDO_SOURCE = ('Credo Reconciliations\nGAAP gross margin\n64.5%\n68.2%\n67.4%\nNon-GAAP gross margin\n68.0%\n68.3%\n67.6%\n'
+                   'Revenue was $X, up 20% from the prior quarter as revenue increased.')
+    DELL_SOURCE = ('(in millions, except per share amounts and percentages; unaudited)\nNet revenue\n$\n22,244\n$\n20,922\n6%\nOperating income\n$\n920\n$\n1,069\n(14)%\nTotal cost of net revenue\n17,438\n15,904\n10%\n'
+                   'Gross margin\n4,806\n5,018\n(4)%\nOperating expenses\nServices\n3,672\n3,529\n4%\n'
+                   'Operating income was $920 million, down 14% and non-GAAP operating income down 8% year over year.')
+    AMD_SOURCE = ('Client segment revenue was $2.9 billion, up 7% year-over-year. Gaming segment revenue was $0.7 billion, down 40% year-over-year. '
+                  'Embedded segment revenue was $0.9 billion, up 29% year-over-year.')
+
+    def mixed(self, ja, en, source):
+        return deep_analysis.checked({'ja': ja, 'en': en}, source)
+
+    def test_mixed_directions_that_match_the_source_clause_by_clause_pass(self):
+        self.mixed('GAAP粗利益率は 64.5%で、前四半期の 68.2%から低下した。売上が拡大する局面でも粗利率の回復力が焦点となる。',
+                   'GAAP gross margin was 64.5%, down from 68.2% in the prior quarter. Gross margin recovery is a focal point even as revenue expands.',
+                   self.CRDO_SOURCE)
+        self.mixed('売上原価は10%増、粗利益は4%減となり、GAAP営業利益は14%減だった。',
+                   'Cost of net revenue increased 10% and gross margin declined 4%, while GAAP operating income was down 14%.',
+                   self.DELL_SOURCE)
+        self.mixed('Clientは7%増、Gamingは40%減、Embeddedは29%増となった。',
+                   'Client segment revenue was up 7%, Gaming was down 40% and Embedded was up 29%.', self.AMD_SOURCE)
+
+    def test_one_direction_swapped_in_either_language_is_always_rejected(self):
+        cases = (
+            ('GAAP粗利益率は 64.5%で、前四半期の 68.2%から上昇した。売上が拡大する局面でも粗利率の回復力が焦点となる。',
+             'GAAP gross margin was 64.5%, up from 68.2% in the prior quarter. Gross margin recovery is a focal point even as revenue expands.', self.CRDO_SOURCE),
+            ('売上原価は10%減、粗利益は4%減となり、GAAP営業利益は14%減だった。',
+             'Cost of net revenue decreased 10% and gross margin declined 4%, while GAAP operating income was down 14%.', self.DELL_SOURCE),
+            ('売上原価は10%増、粗利益は4%増となり、GAAP営業利益は14%減だった。',
+             'Cost of net revenue increased 10% and gross margin declined 4%, while GAAP operating income was down 14%.', self.DELL_SOURCE),
+            ('Clientは7%増、Gamingは40%増、Embeddedは29%増となった。',
+             'Client segment revenue was up 7%, Gaming was down 40% and Embedded was up 29%.', self.AMD_SOURCE),
+            ('Clientは7%増、Gamingは40%減、Embeddedは29%増となった。',
+             'Client segment revenue was up 7%, Gaming was up 40% and Embedded was up 29%.', self.AMD_SOURCE),
+            ('Clientは7%減、Gamingは40%減、Embeddedは29%増となった。',
+             'Client segment revenue was down 7%, Gaming was down 40% and Embedded was up 29%.', self.AMD_SOURCE),
+        )
+        for ja, en, source in cases:
+            with self.assertRaises(ValueError, msg=en):
+                self.mixed(ja, en, source)
+
+    def test_a_clause_the_source_does_not_show_still_falls_back_to_the_old_rules(self):
+        with self.assertRaises(ValueError):  # Gaming is not in this source at all: unknown, so the mixed-direction rule applies as before
+            self.mixed('Clientは7%増、Gamingは40%減。', 'Client segment revenue was up 7%, Gaming was down 40%.',
+                       'Client segment revenue was $2.9 billion, up 7% year-over-year.')
+
+
 class IndicatorAnalysisTests(unittest.TestCase):
     setUp = base.OfficialResearchTests.setUp
 

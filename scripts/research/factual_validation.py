@@ -845,20 +845,21 @@ def validate_names(ja, en):
         raise ValueError('changed-names')
 
 
-def validate_meaning(text, evidence, negated_scope=None):
-    validate_directions(text, evidence)
-    validate_metric_directions(text, evidence)
+def validate_meaning(text, evidence, negated_scope=None, directions=True):
+    if directions:  # False only where the clause-by-clause check (direction_clauses) has matched every direction to the source
+        validate_directions(text, evidence)
+        validate_metric_directions(text, evidence)
     validate_negation(text, evidence, negated_scope=negated_scope)
 
 
-def validate_semantics(text, evidence, negated_scope=None):
+def validate_semantics(text, evidence, negated_scope=None, directions=True):
     validate_execution_and_capacity(text, evidence)
     validate_amount_relations(text, evidence)
     validate_comparison_baselines(text, evidence)
     if negated_scope is None:
-        validate_meaning(text, evidence)
+        validate_meaning(text, evidence, directions=directions)
     else:
-        validate_meaning(text, evidence, negated_scope=negated_scope)
+        validate_meaning(text, evidence, negated_scope=negated_scope, directions=directions)
     if re.search(r'idle GPU tax', evidence, re.I) and re.search(r'課税|税金|税負担', text):
         raise ValueError('invalid-copy')  # Resource overhead metaphor, not taxation.
     future_integration = r'\bwill (?:integrate|work\b[^.!?]{0,240}\bintegration)\b'
@@ -867,14 +868,14 @@ def validate_semantics(text, evidence, negated_scope=None):
             and not re.search(ongoing_integration, evidence, re.I)
             and re.search(ongoing_integration + r'|統合(?:を進めている|中|した|済み|を完了)', text, re.I)):
         raise ValueError('invalid-copy')
-    for positive, negative in WIDE_SEMANTIC_POLARITIES:
+    for positive, negative in (WIDE_SEMANTIC_POLARITIES if directions else ()):
         if re.search(positive,text,re.I) and re.search(negative,evidence,re.I) and not re.search(positive,evidence,re.I):
             raise ValueError('invalid-copy')
         if re.search(negative,text,re.I) and re.search(positive,evidence,re.I) and not re.search(negative,evidence,re.I):
             raise ValueError('invalid-copy')
 
 
-def validate_pair(ja, en, exact_counts=True):
+def validate_pair(ja, en, exact_counts=True, polarity=True):
     """Bilingual agreement. exact_counts=False is for multi-sentence detail,
     where one language may repeat a year or figure the other states once;
     every number must still appear on both sides."""
@@ -905,12 +906,12 @@ def validate_pair(ja, en, exact_counts=True):
         en_achieved = re.search(r'\b(?:' + past + r')\b', en, re.I)
         if (en_goal and ja_achieved) or (ja_goal and en_achieved and not en_goal):
             raise ValueError('invalid-copy')
-    for positive, negative in SEMANTIC_POLARITIES:
+    for positive, negative in (SEMANTIC_POLARITIES if polarity else ()):
         if ((re.search(positive,ja,re.I) and re.search(negative,en,re.I))
                 or (re.search(negative,ja,re.I) and re.search(positive,en,re.I))):
             raise ValueError('invalid-copy')
-    validate_meaning(ja, en)
-    validate_meaning(en, ja)
+    validate_meaning(ja, en, directions=polarity)
+    validate_meaning(en, ja, directions=polarity)
     validate_names(ja, en)
 
 
