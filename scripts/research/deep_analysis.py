@@ -274,14 +274,16 @@ def source_verdict(ticker, text, detected):
     return 'stale-period' if stale_release(text, detected) else 'ok'
 
 
-def source_reasons(db, ticker, reference, days=120):
-    """For one roster company: how its stored pages of the last `days` days fare (counts by verdict, plus how many pages exist at all and the
-    newest detection date). Names and counts only; this is what /health shows for a company without an analysis."""
-    counts, newest = {}, None
+def source_reasons(db, ticker, reference, days=120, max_pages=400, max_reads=80):
+    """For one roster company: how its stored pages of the last `days` days fare (counts by verdict, the newest detection date) and up to three
+    sample pages per verdict (public address without query, size in characters, date). Page sizes come from the stored revision's own count, so
+    only pages of a plausible size are read (at most `max_reads`). Names, counts and addresses only; never page text."""
+    counts, samples, newest, reads = {}, {}, None, 0
     since = (reference - timedelta(days=days)).isoformat()
-    for row in db.execute('SELECT s.url,s.sha256,s.status,COALESCE(e.detected_at,s.discovered_at) AS detected FROM sources s '
-                          'LEFT JOIN release_events e ON e.url=s.url WHERE s.ticker=? AND julianday(COALESCE(e.detected_at,s.discovered_at))>=julianday(?) '
-                          'ORDER BY julianday(COALESCE(e.detected_at,s.discovered_at)) DESC LIMIT 60', (ticker, since)).fetchall():
+    for row in db.execute('SELECT s.url,s.sha256,s.status,r.extracted_chars AS chars,COALESCE(e.detected_at,s.discovered_at) AS detected FROM sources s '
+                          'LEFT JOIN release_events e ON e.url=s.url LEFT JOIN source_revisions r ON r.url=s.url AND r.sha256=s.sha256 '
+                          'WHERE s.ticker=? AND julianday(COALESCE(e.detected_at,s.discovered_at))>=julianday(?) '
+                          'ORDER BY julianday(COALESCE(e.detected_at,s.discovered_at)) DESC LIMIT ?', (ticker, since, max_pages)).fetchall():
         try:
             detected = datetime.fromisoformat(str(row['detected']).replace('Z', '+00:00'))
             if detected.tzinfo is None:
@@ -289,13 +291,25 @@ def source_reasons(db, ticker, reference, days=120):
         except ValueError:
             continue
         newest = newest or detected.date().isoformat()
+        chars = row['chars']
         if row['status'] in ('held', 'rejected'):
             verdict = 'status-' + row['status']
+        elif chars is None:
+            verdict = 'no-text'
+        elif chars < 1200:
+            verdict = 'short'
+        elif chars > 160000:
+            verdict = 'long'
+        elif reads >= max_reads:
+            verdict = 'unread'
         else:
+            reads += 1
             revision = db.execute('SELECT extracted_text FROM source_revisions WHERE url=? AND sha256=?', (row['url'], row['sha256'])).fetchone()
             verdict = source_verdict(ticker, revision['extracted_text'] if revision else None, detected)
         counts[verdict] = counts.get(verdict, 0) + 1
-    return {'pages': sum(counts.values()), 'newestDetected': newest, 'verdicts': counts}
+        if len(samples.setdefault(verdict, [])) < 3:
+            samples[verdict].append({'address': re.sub(r'^https?://', '', str(row['url']).split('?')[0])[:110], 'chars': chars, 'detected': detected.date().isoformat()})
+    return {'pages': sum(counts.values()), 'newestDetected': newest, 'verdicts': counts, 'samples': samples}
 
 
 REASONS_CACHE = {}
