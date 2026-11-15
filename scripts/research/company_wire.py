@@ -59,6 +59,9 @@ def schema(db):
       publisher TEXT NOT NULL, url TEXT NOT NULL, origin TEXT NOT NULL,
       published_at TEXT NOT NULL, first_seen_at TEXT NOT NULL)''')
     db.execute('CREATE INDEX IF NOT EXISTS company_wire_ticker ON company_wire(ticker, published_at)')
+    # Owner, Nov 15: the Stock News API's own sentiment (positive / negative / neutral) for the topics page; empty for other feeds.
+    if 'sentiment' not in {r[1] for r in db.execute('PRAGMA table_info(company_wire)')}:
+        db.execute("ALTER TABLE company_wire ADD COLUMN sentiment TEXT NOT NULL DEFAULT ''")
 
 
 def connect(path):
@@ -121,15 +124,23 @@ def origin(row, name):
     return 'third-party'
 
 
+SENTIMENTS = ('positive', 'negative', 'neutral')
+
+
 def store(db, rows, name, seen_at=None):
     """Insert unseen headlines; return how many were new."""
     seen_at = (seen_at or now()).isoformat()
     added = 0
     for row in rows:
         key = hashlib.sha256(f"{row['ticker']}|{normalized(row['title'])}".encode()).hexdigest()[:32]
-        cursor = db.execute('INSERT OR IGNORE INTO company_wire VALUES(?,?,?,?,?,?,?,?,?)',
+        feeling = row.get('sentiment') if row.get('sentiment') in SENTIMENTS else ''
+        cursor = db.execute('''INSERT OR IGNORE INTO company_wire(key, ticker, source, title, publisher, url, origin, published_at,
+                            first_seen_at, sentiment) VALUES(?,?,?,?,?,?,?,?,?,?)''',
                             (key, row['ticker'], row['source'], row['title'], row['publisher'], row['url'],
-                             origin(row, name), row['published'].isoformat(), seen_at))
+                             origin(row, name), row['published'].isoformat(), seen_at, feeling))
+        if not cursor.rowcount and feeling:
+            # A story saved before its sentiment was kept gets it the next time the provider sends it.
+            db.execute("UPDATE company_wire SET sentiment=? WHERE key=? AND sentiment=''", (feeling, key))
         added += cursor.rowcount
     db.commit()
     return added
@@ -418,7 +429,7 @@ def public_feed(db, now_ts=None):
     since = (datetime.fromtimestamp(now_ts, timezone.utc) - timedelta(hours=PUBLIC_HOURS)).isoformat()
     items = {}
     for ticker in roster():
-        rows = db.execute('''SELECT w.key, w.source, w.title, w.publisher, w.url, w.origin, w.published_at, j.title_ja, j.short_ja
+        rows = db.execute('''SELECT w.key, w.source, w.title, w.publisher, w.url, w.origin, w.published_at, w.sentiment, j.title_ja, j.short_ja
           FROM company_wire w LEFT JOIN company_wire_ja j USING(key) LEFT JOIN company_wire_attempts a USING(key)
           WHERE w.ticker=? AND w.published_at>=? AND COALESCE(a.reason,'') NOT IN ('not-news','off-topic') ORDER BY w.published_at DESC LIMIT 120''',
                           (ticker, since)).fetchall()
@@ -433,10 +444,10 @@ def public_feed(db, now_ts=None):
             # Owner, Nov 15: the home shows the Stock News API stories, so each row says where it came from ("stocknews", "yahoo", "gnews").
             items[ticker] = [{'id': r['key'], 'titleEn': r['title'], 'titleJa': r['title_ja'], 'shortJa': r['short_ja'] or None,
                               'publisher': r['publisher'], 'origin': r['origin'], 'url': r['url'],
-                              'publishedAt': r['published_at'], 'source': r['source']} for r in rows]
+                              'publishedAt': r['published_at'], 'source': r['source'], **sentiment_field(r)} for r in rows]
     # Owner, Nov 10: the home also carries high-tech companies beyond the watched ones and market news (filed under MKT), from the
     # Stock News API. Only headlines that were translated, that is judged news and on topic, are shown for them.
-    extra = db.execute('''SELECT w.ticker, w.key, w.title, w.publisher, w.url, w.origin, w.published_at, j.title_ja, j.short_ja
+    extra = db.execute('''SELECT w.ticker, w.key, w.title, w.publisher, w.url, w.origin, w.published_at, w.sentiment, j.title_ja, j.short_ja
       FROM company_wire w JOIN company_wire_ja j USING(key) WHERE w.published_at>=? AND w.source='stocknews'
       ORDER BY w.published_at DESC LIMIT 400''', (since,)).fetchall()
     for r in extra:
@@ -444,5 +455,10 @@ def public_feed(db, now_ts=None):
             continue
         items.setdefault(r['ticker'], []).append({'id': r['key'], 'titleEn': r['title'], 'titleJa': r['title_ja'], 'shortJa': r['short_ja'] or None,
                                                  'publisher': r['publisher'], 'origin': r['origin'], 'url': r['url'], 'publishedAt': r['published_at'],
-                                                 'source': 'stocknews'})
+                                                 'source': 'stocknews', **sentiment_field(r)})
     return {'ok': True, 'items': items}
+
+
+def sentiment_field(row):
+    """The Stock News API's sentiment, only when the row carries one (owner, Nov 15: the topics page's プラス / マイナス / 中立)."""
+    return {'sentiment': row['sentiment']} if row['sentiment'] in SENTIMENTS else {}

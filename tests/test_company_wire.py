@@ -126,6 +126,31 @@ class HomeScopeTests(unittest.TestCase):
         self.assertEqual(sources['Oil jumps on Hormuz tension'], 'stocknews')
         self.assertEqual(sources['Apple unveils new chip'], 'stocknews')
 
+    def test_the_stock_news_sentiment_is_kept_and_sent_only_when_known(self):
+        """Owner, Nov 15: the topics page shows プラス / マイナス / 中立 from the provider's sentiment."""
+        published = datetime(2026, 11, 10, 3, 30, tzinfo=timezone.utc)
+        def row(title, url, sentiment):
+            return {'ticker': 'NVDA', 'source': 'stocknews', 'title': title, 'publisher': 'Reuters', 'url': url, 'published': published, 'sentiment': sentiment}
+        with company_wire.connect(self.path) as db:
+            company_wire.store(db, [row('Nvidia raises its outlook', 'https://news.example/up', 'positive'),
+                                    row('Nvidia faces a new export rule', 'https://news.example/rule', 'bullish')], 'Name', seen_at=self.now)
+            # A story saved before its sentiment was kept gets it when the provider sends it again; a known one is not overwritten.
+            company_wire.store(db, [row('Nvidia wins order', 'https://news.example/x', 'negative'),
+                                    row('Nvidia raises its outlook', 'https://news.example/up', 'negative')], 'Name', seen_at=self.now)
+            feed = company_wire.public_feed(db, now_ts=self.now.timestamp())
+        found = {r['titleEn']: r.get('sentiment') for r in feed['items']['NVDA']}
+        self.assertEqual(found, {'Nvidia raises its outlook': 'positive', 'Nvidia faces a new export rule': None, 'Nvidia wins order': 'negative'})
+        self.assertNotIn('sentiment', next(r for r in feed['items']['NVDA'] if r['titleEn'] == 'Nvidia faces a new export rule'))
+
+    def test_an_older_table_gains_the_sentiment_column(self):
+        old = self.path + '.old'
+        with sqlite3.connect(old) as db:
+            db.execute('''CREATE TABLE company_wire(key TEXT PRIMARY KEY, ticker TEXT NOT NULL, source TEXT NOT NULL, title TEXT NOT NULL,
+              publisher TEXT NOT NULL, url TEXT NOT NULL, origin TEXT NOT NULL, published_at TEXT NOT NULL, first_seen_at TEXT NOT NULL)''')
+            db.execute("INSERT INTO company_wire VALUES('k','NVDA','yahoo','Old','','https://x.example','unknown','2026-11-10T03:00:00+00:00','2026-11-10T03:00:00+00:00')")
+        with company_wire.connect(old) as db:
+            self.assertEqual(db.execute('SELECT sentiment FROM company_wire').fetchone()[0], '')
+
 
 if __name__ == '__main__':
     unittest.main()

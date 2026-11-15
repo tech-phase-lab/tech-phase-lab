@@ -172,7 +172,7 @@ test('combined home news stays at five a page, five pages at most (25 stories), 
   assert.equal((first.match(/<article/g) ?? []).length, 5);
   assert.ok(first.indexOf('Original excerpt 29.') < first.indexOf('Original excerpt 25.'));
   assert.doesNotMatch(first, /Original excerpt 24\./);
-  // Thirty-one stories exist, but the home list stops at 25 (owner, Nov 5); the rest are on the General News page.
+  // Thirty-one stories exist, but the home list stops at 25 (owner, Nov 5); the rest are on the Top Topics page.
   assert.equal((sixth.match(/<article/g) ?? []).length, 5);
   assert.ok(sixth.includes('Original excerpt 5.'));
   assert.ok(!sixth.includes('Original excerpt 0.'));

@@ -7,7 +7,7 @@ import { formatTargetTime } from "../lib/research/price-target-time.ts";
 const read = path => readFileSync(new URL(path, import.meta.url), "utf8");
 const now = Date.parse("2026-11-05T03:00:00Z"); // 12:00 on Nov 5, Japan time
 
-test("the home list is five stories a page, five pages at most; the General News page has no cap", () => {
+test("the home list is five stories a page, five pages at most; the Top Topics page has no cap", () => {
   assert.deepEqual(pageWindow(80, 1, 25), { total: 25, pages: 5, current: 1, start: 0, end: 5 });
   assert.deepEqual(pageWindow(80, 5, 25), { total: 25, pages: 5, current: 5, start: 20, end: 25 });
   assert.equal(pageWindow(80, 9, 25).current, 5, "a page past the end falls back to the last");
@@ -55,7 +55,7 @@ test("the list has one time on the left, no 発表 line, no seconds, and a butto
   assert.doesNotMatch(panel, /\$\{lang === "ja" \? "発表"/);
   assert.match(panel, /publication=""/);
   assert.match(panel, /href="\/research\/general-news"/);
-  assert.match(panel, /一般ニュースですべて見る/);
+  assert.match(panel, /注目トピックですべて見る/);
   assert.match(panel, /const HOME_STORIES = 25/);
   const row = read("../app/research/news/timeline-row.tsx");
   assert.doesNotMatch(row, /second/);
