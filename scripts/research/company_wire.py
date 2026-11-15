@@ -217,8 +217,35 @@ DROP_PUBLISHERS = (
 )
 
 
+# Owner, Nov 15 (取り込みを広げる): the provider names one outlet several ways ("WSJ" was dropped while "Wall Street Journal" was kept).
+# Each alias is compared like a listed name (no case, spaces, punctuation, leading "The" or "(video)" suffix) and stands for it.
+PUBLISHER_ALIASES = {
+    'WSJ': 'Wall Street Journal', 'The Wall Street Journal': 'Wall Street Journal', 'Wall Street Journal (WSJ)': 'Wall Street Journal',
+    'FT': 'Financial Times', 'The Financial Times': 'Financial Times', 'FT.com': 'Financial Times',
+    'AP': 'Associated Press', 'The Associated Press': 'Associated Press',
+    "Barron's": 'Barrons', 'Barrons.com': 'Barrons',
+    'MarketWatch': 'Market Watch',
+    'NYT': 'New York Times', 'NY Times': 'New York Times',
+    'Reuters.com': 'Reuters', 'Thomson Reuters': 'Reuters',
+    'CNBC TV': 'CNBC Television',
+}
+# Every Bloomberg outlet (Bloomberg News, Bloomberg Television, Bloomberg Business, ...) except its opinion column.
+BLOOMBERG = re.compile(r'^bloomberg(?!opinion)')
+
+
+def plain_publisher_key(name):
+    """A publisher name without case, spaces, punctuation, a leading "The" or a "(video)" / "(articles)" suffix."""
+    name = re.sub(r'\((?:video|articles)\)', '', str(name or '').lower())
+    return re.sub(r'[^a-z0-9]+', '', re.sub(r'^\W*the\s+', '', name))
+
+
+ALIAS_KEYS = {plain_publisher_key(alias): plain_publisher_key(name) for alias, name in PUBLISHER_ALIASES.items()}
+
+
 def publisher_key(name):
-    return re.sub(r'[^a-z0-9]+', '', re.sub(r'\((?:video|articles)\)', '', str(name or '').lower()))
+    """The outlet a publisher name stands for: aliases resolved, every Bloomberg outlet one key."""
+    key = plain_publisher_key(name)
+    return 'bloomberg' if BLOOMBERG.match(key) else ALIAS_KEYS.get(key, key)
 
 
 KEEP_KEYS = frozenset(publisher_key(n) for n in KEEP_PUBLISHERS)
@@ -235,10 +262,15 @@ def stock_news_publisher_kept(publisher):
 
 def publisher_counter(publisher):
     """The counter name part for a publisher: its listed spelling when known, else the provider's name (bounded)."""
-    key = publisher_key(publisher)
+    plain = plain_publisher_key(publisher)
     for name in KEEP_PUBLISHERS + DROP_PUBLISHERS:
-        if publisher_key(name) == key:
+        if plain_publisher_key(name) == plain:
             return name
+    for alias, name in PUBLISHER_ALIASES.items():
+        if plain_publisher_key(alias) == plain:
+            return name
+    if BLOOMBERG.match(plain):
+        return 'Bloomberg'
     return re.sub(r'[^\w .&/-]+', '', str(publisher or ''))[:40].strip() or 'unknown'
 
 
@@ -1164,7 +1196,10 @@ def daily_counts(db, now_ts, env=None):
                       'articlesBySource': {name.split(':', 1)[1]: n for name, n in sorted(counts.items()) if name.startswith('articles:')},
                       # Owner, Nov 15: new Stock News API articles per publisher, taken or dropped (see KEEP_PUBLISHERS).
                       'stockNewsPublishers': {kind: {name.split(':', 1)[1]: n for name, n in sorted(counts.items(), key=lambda c: (-c[1], c[0]))
-                                                     if name.startswith('publisher-%s:' % kind)} for kind in ('kept', 'dropped')}}
+                                                     if name.startswith('publisher-%s:' % kind)} for kind in ('kept', 'dropped')},
+                      # Owner, Nov 15 (取り込みを広げる): the same new articles per stream (tech / tickers / market), taken or dropped.
+                      'stockNewsStreams': {stream: {kind: counts.get('stream-%s:%s' % (kind, stream), 0) for kind in ('kept', 'dropped')}
+                                           for stream in sorted({name.split(':', 1)[1] for name in counts if name.startswith('stream-')})}}
     return out
 
 
