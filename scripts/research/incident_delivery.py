@@ -152,10 +152,50 @@ def push_message(claim):
             return {"title": "🚨 %sの決算の深掘りが2時間たっても完成していません" % (ticker or "?"),
                     "body": "落ちた検査: %s。決算は発表済みで、深掘りだけが出ていません。監視の状態を確認してください。" % (check or "不明"),
                     "tag": "incident-" + claim["key"], "url": "/research"}
-    title, body = PUSH_TEXT.get(claim.get("errorCode"), ("監視で異常を検知しました", "詳しくは監視の状態を確認してください。"))
+    news = news_message(claim, code)
+    if news:
+        return news
+    title, body = PUSH_TEXT.get(claim.get("errorCode"),("監視で異常を検知しました", "詳しくは監視の状態を確認してください。"))
     if claim["transition"] == "resolved":
         return {"title": "✅ 復旧しました", "body": "監視の異常が解消しました。", "tag": "incident-" + claim["key"], "url": "/research"}
     return {"title": "🚨 " + title, "body": body, "tag": "incident-" + claim["key"], "url": "/research"}
+
+
+TRANSLATION_CAUSE = {
+    "disabled": "翻訳が無効になっています（設定）",
+    "idle": "翻訳が新着を拾っていません",
+    "no-worker": "翻訳の処理が動いていません",
+    "all-rejected": "訳文がすべて検査で落ちています",
+}
+
+
+def news_message(claim, code):
+    """Home news (owner, Nov 15): the Japanese home shows only translated Stock News API stories, so each stop names its cause."""
+    category = claim.get("category")
+    if category not in ("company-wire", "stock-news"):
+        return None
+    tag = "incident-" + claim["key"]
+    if claim["transition"] == "resolved":
+        if category == "stock-news":
+            return {"title": "✅ Stock News API の取り込みが復旧しました", "body": "ホームのニュースがまた更新されます。", "tag": tag, "url": "/"}
+        return {"title": "✅ 日本語ニュースの翻訳が復旧しました", "body": "新着がまた日本語のホームに出ます。", "tag": tag, "url": "/"}
+    detail = code.split(":", 1)[1] if ":" in code else ""
+    if code.startswith("company-wire-translation-budget"):
+        return {"title": "🚨 日本語ニュースの翻訳が1日の上限に達しました",
+                "body": "24時間の翻訳回数が上限（%s回）に達し、新着が日本語のホームに出ません。COMPANY_WIRE_TRANSLATION_DAILY_LIMIT を確認してください。" % (detail or "?"),
+                "tag": tag, "url": "/"}
+    if code.startswith("company-wire-translation-failing"):
+        cause = TRANSLATION_CAUSE.get(detail) or "エラー %s" % (detail or "不明")
+        return {"title": "🚨 日本語ニュースの翻訳が15分失敗し続けています",
+                "body": "原因: %s。新着が日本語のホームに出ません。" % cause, "tag": tag, "url": "/"}
+    if code.startswith("company-wire-translation-stalled"):
+        cause = TRANSLATION_CAUSE.get(detail) or "最後の結果 %s" % (detail or "不明")
+        return {"title": "🚨 日本語ニュースの翻訳が止まっています",
+                "body": "20分以上前に届いたニュースが30分間訳されないまま新着だけが増えています。原因: %s。" % cause, "tag": tag, "url": "/"}
+    if code.startswith("stock-news-intake-stale"):
+        return {"title": "🚨 Stock News API の取り込みが30分止まっています",
+                "body": "テック記事の取得に30分成功していません。ホームのニュースが更新されません。", "tag": tag, "url": "/"}
+    return None
 
 
 def send_owner_push(claim, devices, sender, now=None):
