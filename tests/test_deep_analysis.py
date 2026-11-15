@@ -658,7 +658,8 @@ class DeepAnalysisTests(unittest.TestCase):
         with deep_analysis.connect(self.path) as db:
             report = deep_analysis.diagnostics(db, now=base.NOW.timestamp())
         gev = {row['ticker']: row for row in report['roster']}['GEV']
-        self.assertEqual(gev['storedPages']['verdicts'], {'length': 1})
+        self.assertEqual(gev['storedPages']['verdicts'], {'short': 1})
+        self.assertEqual(gev['storedPages']['samples']['short'][0]['address'], 'www.sec.gov/Archives/edgar/data/1996810/x/ex991.htm')
         self.assertNotIn('tiny', json.dumps(report))
 
 
