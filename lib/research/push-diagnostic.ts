@@ -167,4 +167,3 @@ export function pushDiagnosticRows(record: PushDiagnostic, lang: "ja" | "en"): P
   ];
   return rows.filter((row): row is [string, string] => row[1] !== undefined).map(([label, value]) => ({ label, value }));
 }
-
