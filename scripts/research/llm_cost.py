@@ -93,7 +93,8 @@ def today(db, now=None, env=None):
     for lane_name, model, input_tokens, cached_tokens, output_tokens, chars_before, chars_sent in db.execute(
             'SELECT lane,model,input_tokens,cached_tokens,output_tokens,chars_before,chars_sent FROM llm_usage WHERE at>=? AND at<?',
             (day_start(now), day_start(now) + 86400)).fetchall():
-        lane = lanes.setdefault(lane_name, {'calls': 0, 'inputTokens': 0, 'cachedTokens': 0, 'outputTokens': 0, 'estimatedUsd': 0.0})
+        lane = lanes.setdefault(lane_name, {'calls': 0, 'models': {}, 'inputTokens': 0, 'cachedTokens': 0, 'outputTokens': 0, 'estimatedUsd': 0.0})
+        lane['models'][model] = lane['models'].get(model, 0) + 1
         lane['calls'] += 1
         lane['inputTokens'] += input_tokens or 0
         lane['cachedTokens'] += cached_tokens or 0

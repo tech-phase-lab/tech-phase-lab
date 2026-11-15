@@ -47,7 +47,7 @@ class LlmCostTests(unittest.TestCase):
         self.assertEqual(deep_analysis.run_once(self.path, answering(GOOD, 10000, 6000, 1000), env, now=now, reference=base.NOW), 'done')
         with deep_analysis.connect(self.path) as db:
             today = llm_cost.today(db, now, env)
-            self.assertEqual(today['lanes']['deep-analysis'], {'calls': 1, 'inputTokens': 10000, 'cachedTokens': 6000, 'outputTokens': 1000,
+            self.assertEqual(today['lanes']['deep-analysis'], {'calls': 1, 'models': {'gpt-6-astra': 1}, 'inputTokens': 10000, 'cachedTokens': 6000, 'outputTokens': 1000,
                                                               'estimatedUsd': 0.021})
             self.assertEqual((today['estimatedUsd'], today['overWarning'], today['unknownCostCalls']), (0.021, False, 0))
             self.assertGreater(today['sourceCharsSent'], 0)
