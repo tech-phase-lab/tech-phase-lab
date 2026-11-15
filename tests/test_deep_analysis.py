@@ -37,6 +37,9 @@ class DeepAnalysisTests(unittest.TestCase):
         patcher = patch.object(release_watch, 'load_schedule', return_value=[])
         patcher.start()
         self.addCleanup(patcher.stop)
+        patcher = patch.object(deep_analysis, 'OLD_RETRY_SUBJECTS', ('NBIS',))  # the one-off retry is for named subjects only
+        patcher.start()
+        self.addCleanup(patcher.stop)
 
     def earnings(self):
         with research.connect(self.path) as db:
@@ -561,6 +564,37 @@ class DeepAnalysisTests(unittest.TestCase):
             row = {'subject': 'ARM', 'url': 'https://example.com/fourth-page', 'observedAt': '2026-11-30T21:30:00+00:00'}
             self.assertTrue(deep_analysis.same_release_done(db, row, base.NOW))
             self.assertFalse(deep_analysis.same_release_done(db, {**row, 'observedAt': '2026-12-10T00:00:00+00:00'}, base.NOW))
+
+
+    def test_the_old_retry_touches_only_its_named_subjects_never_a_new_hold(self):
+        self.earnings()
+        bad = json.loads(json.dumps(GOOD))
+        bad['points'] = [point('売上は45%増。', 'Revenue rose 45%.')] * 3
+        self.run_deep(reply(bad))
+        with research.connect(self.path) as db:
+            self.assertEqual(db.execute("SELECT state,attempts FROM deep_analyses").fetchone()[:], ('held', 1))  # one call, final
+            db.execute("UPDATE deep_analyses SET subject='ARM'")
+        on = {**ENV, deep_analysis.OLD_RETRY_ENV: 'true'}
+        self.assertEqual(deep_analysis.retry_old_holds(self.path, lambda *_: self.fail('no re-call of a rejected analysis'), on,
+                                                       now=base.NOW.timestamp() + 90000), 'idle')
+
+    def test_computed_figures_come_from_the_results_table_and_a_point_may_cite_them(self):
+        import issuer_result_flash as flash
+        facts = [('revenue', '\u20a9104.615T', '\u20a933.3T', ('売上高', 'Revenue (preliminary, KRW trillion)')),
+                 ('operating-income', '\u20a960.5T', '\u20a910.6T', ('営業利益', 'Operating profit (preliminary, KRW trillion)'))]
+        parse = lambda text, url=None: {'period': 'Q3 2026', 'facts': facts}
+        with patch.dict(flash.PROFILES, {'SKHY': {**flash.PROFILES['SKHY'], 'parse': parse}}):
+            text = deep_analysis.derived_figures('SKHY', 'https://x', 'ignored')
+        self.assertIn('Computed by the service', text)
+        self.assertIn('change year over year: up 214.2%', text)           # 104.615 / 33.3 - 1
+        self.assertIn('Operating margin: 57.8% of revenue; a year earlier 31.8% of revenue', text)
+        self.assertEqual(deep_analysis.derived_figures('NOPROFILE', 'https://x', 'ignored'), '')
+        excerpts = {'0': 'The company reported results for the quarter.', '1': text}
+        note = {'headline': {'ja': 'SK hynixの営業利益率が改善', 'en': 'SK hynix operating margin improves', 'evidenceIds': ['1']},
+                'points': [{'ja': '営業利益率は57.8%となり、前年同期の31.8%から上昇した。', 'en': 'Operating margin was 57.8% of revenue, up from 31.8% a year earlier.',
+                            'evidenceIds': ['1']}],
+                'watch': {'ja': '次の四半期の営業利益率を確認したい。', 'en': 'Watch the operating margin next quarter.', 'evidenceIds': ['0']}}
+        self.assertEqual(len(deep_analysis.bind(note, excerpts)['points']), 1)
 
 
 class IndicatorAnalysisTests(unittest.TestCase):
