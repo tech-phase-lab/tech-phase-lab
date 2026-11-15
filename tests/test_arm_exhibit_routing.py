@@ -10,6 +10,7 @@ ROOT=Path(__file__).resolve().parents[1]
 PRIMARY=b'<html><body><p>FORM 6-K REPORT OF FOREIGN PRIVATE ISSUER. Furnished exhibits follow.</p></body></html>'
 BOTH=b'<table><tr><td>1</td><td><a href="exhibit991.htm">exhibit991.htm</a></td><td>EX-99.1</td></tr><tr><td>2</td><td><a href="exhibit992.htm">exhibit992.htm</a></td><td>EX-99.2</td></tr></table>'
 ONLY1=b'<table><tr><td>1</td><td><a href="exhibit991.htm">exhibit991.htm</a></td><td>EX-99.1</td></tr></table>'
+PLAIN=b'<table><tr><td>1</td><td>8-K</td><td><a href="gev-20261028.htm">gev-20261028.htm</a></td><td>8-K</td></tr><tr><td>2</td><td><a href="exhibit991.htm">gevpressrelease3q26.htm</a></td><td>EX-99</td></tr></table>'
 LETTER=('<main><p>Dear Shareholder, Arm delivered a record second quarter, reflecting strong execution. '+'Revenue reached 1.44 billion, up 27 percent year over year. '*8+'</p></main>').encode()
 NOTICE=('<main><p>Arm Holdings plc reports results for the second quarter; the shareholder letter is available on the investor site. '+'More details are in the letter. '*3+'</p></main>').encode()
 
@@ -40,6 +41,13 @@ class Routing(unittest.TestCase):
         self.assertEqual((result['url'],result['number']),(directory+'exhibit992.htm','2'))
         self.assertIn('Dear Shareholder',result['extractedText'])
         self.assertEqual(requested,['0001973239-26-000141-index.html','exhibit992.htm'])                  # the filing index once, then one exhibit: the same two requests as for any company
+    def test_a_results_release_filed_as_a_plain_ex_99_is_read_as_exhibit_1(self):
+        # GE Vernova (Oct 28): its press release is the index's "EX-99" row, not "EX-99.1"; the 8-K itself is a cover page.
+        result,requested,directory=run('MRVL',PLAIN)
+        self.assertEqual((result['url'],result['number']),(directory+'exhibit991.htm','1'))
+        self.assertEqual(requested,['0001973239-26-000141-index.html','exhibit991.htm'])
+        idx=f'https://www.sec.gov/Archives/edgar/data/{cik_of("MRVL")}/000197323926000141/0001973239-26-000141-index.html'
+        self.assertEqual(monitor.sec_exhibit_links(PLAIN,idx,'MRVL','2'),[])                                # a plain EX-99 is never taken for exhibit 2
     def test_arm_falls_back_to_exhibit_1_when_a_filing_has_no_exhibit_2(self):
         result,requested,directory=run('ARM',ONLY1)
         self.assertEqual((result['url'],result['number']),(directory+'exhibit991.htm','1'))

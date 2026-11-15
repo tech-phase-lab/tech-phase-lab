@@ -904,7 +904,8 @@ class SecIndexExhibits(HTMLParser):
     def __init__(self, base, ticker, directory, number="1"):
         super().__init__(convert_charrefs=True)
         self.base, self.ticker, self.directory = base, ticker, directory
-        self.type_pattern = re.compile(r"EX(?:HIBIT)?[- .]*99[.\- ]?" + number, re.I)
+        # GE Vernova files its results release as a plain "EX-99" (no ".1"): where the number asked for is 1, a bare EX-99 is that exhibit
+        self.type_pattern = re.compile(r"EX(?:HIBIT)?[- .]*99(?:[.\- ]?1)?" if number == "1" else r"EX(?:HIBIT)?[- .]*99[.\- ]?" + number, re.I)
         self.row_depth = self.cell_depth = 0
         self.row_urls, self.cell_text, self.urls = set(), [], set()
         self.row_is_exhibit = False
