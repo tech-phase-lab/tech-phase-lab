@@ -239,7 +239,11 @@ NOISE = re.compile(
     # Nov 9: opinion and how-to pieces that only mention the company, and a "(Upgrade)" suffix is an analyst blog's own rating call.
     r'|\((?:Upgrade|Downgrade)\)\s*$|\b(?:\d+|three|four|five|six|seven|ten) (?:key|main|major|big) (?:points|takeaways|things|reasons|risks|catalysts)\b'
     r'|\bshould (?:check out|review|take a look at|know about)\b|\bfor (?:long-term|retail|income|dividend) investors\b'
-    r'|\bfaces? (?:market )?(?:challenges|headwinds) (?:amid|as|following)\b', re.I)
+    r'|\bfaces? (?:market )?(?:challenges|headwinds) (?:amid|as|following)\b'
+    # Nov 15 (Stock News API on the home): law firms soliciting shareholders for class actions are advertisements, not news.
+    r'|\b(?:class action|securities fraud|securities litigation)\b.{0,80}\b(?:lawsuit|investigation|deadline|filed|lead plaintiff|investors?|shareholders?)\b'
+    r'|\b(?:investors?|shareholders?)\b.{0,80}\b(?:class action|securities fraud)\b|\blead plaintiff\b|\b(?:Rosen|Pomerantz|Faruqi|Bragar Eagel|Levi & Korsinsky|Bronstein|Glancy|Kessler Topaz|Robbins Geller|Schall|Gross Law|Portnoy|Kirby McInerney|Howard G\. Smith|Bernstein Liebhard|Hagens Berman|Block & Leviton|Johnson Fistel|Holzer)\b'
+    r'|\b(?:Deadline|Investor) Alert\b|\bINVESTOR ALERT\b', re.I)
 MAJOR = re.compile(r'reuters|bloomberg|cnbc|wall street journal|\bwsj\b|barron|financial times|marketwatch|associated press|'
                    r'the information|nikkei|investor.s business|seeking alpha|yahoo finance|benzinga|the verge|ars technica|tom.s hardware', re.I)
 STOPWORDS = frozenset('the and for with from that this its are was has have will into over after than more new how why what '

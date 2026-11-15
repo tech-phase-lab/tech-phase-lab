@@ -349,3 +349,17 @@ class TriageTests(unittest.TestCase):
         picked = self.headlines(('Nvidia expands Nemotron family with two new open models', 'Techzine'),
                                 ('Germany plans AI cooperation deal with Nvidia, Handelsblatt says', 'Reuters'))
         self.assertEqual(picked, ['Germany plans AI cooperation deal with Nvidia, Handelsblatt says'])
+
+
+class LawFirmSolicitationTests(unittest.TestCase):
+    """Nov 15: law firms soliciting shareholders for class actions flooded the home band once the Stock News API was on."""
+
+    def test_solicitations_are_noise_and_real_lawsuit_news_is_not(self):
+        ads = ["Rosen Law Firm Urges D-Wave Quantum Inc. Shareholders to Secure Counsel Before Important Deadline in Securities Class Action - QBTS",
+               "QBTS DEADLINE ALERT: Faruqi & Faruqi, LLP Investigates Claims on Behalf of Investors of D-Wave Quantum",
+               "INTC INVESTORS: Opportunity to Lead Intel Corporation Securities Fraud Lawsuit with the Schall Law Firm"]
+        news = ["Apple settles class action over iPhone batteries for $500 million",
+                "Nvidia faces lawsuit from patent holder over GPU design",
+                "Micron raises guidance on HBM demand"]
+        self.assertTrue(all(company_wire.NOISE.search(t) for t in ads))
+        self.assertFalse(any(company_wire.NOISE.search(t) for t in news))
