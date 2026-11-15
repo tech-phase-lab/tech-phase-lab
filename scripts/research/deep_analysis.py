@@ -506,7 +506,7 @@ def bind(value, excerpts, diagnose=None):
 
 
 def log_rejected(source, kind, reason, item, quote):
-    """One log line (Railway only, never /health) per piece the checks rejected in the one-off old retry: the copy and the excerpt it cited,
+    """One log line (Railway only, never /health) per piece the checks rejected on every analysis (no extra call): the copy and the excerpt it cited,
     both derived from a public release, so the owner can tell a mistaken check from a mistaken sentence."""
     item = item if isinstance(item, dict) else {}
     print(json.dumps({'event': 'deep-analysis-rejected-copy', 'ticker': source['subject'], 'ref': source['ref'], 'part': kind, 'reason': reason,
@@ -605,7 +605,7 @@ def run_once(path, transport=None, env=None, now=None, reference=None, only_ref=
             raise ValueError('incomplete')
         received = True
         note = bind(json.loads(brief_generator.output_text(response)), source['excerpts'],
-                    diagnose=(lambda kind, reason, item, quote: log_rejected(source, kind, reason, item, quote)) if only_ref is not None else None)
+                    diagnose=lambda kind, reason, item, quote: log_rejected(source, kind, reason, item, quote))  # every rejection, no extra call; Railway log only
     except Exception as exc:
         reason = str(exc) if isinstance(exc, ValueError) else type(exc).__name__
         detail = json.dumps(exc.detail, ensure_ascii=False, sort_keys=True) if isinstance(exc, Unchecked) else None

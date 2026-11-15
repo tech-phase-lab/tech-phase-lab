@@ -597,6 +597,24 @@ class DeepAnalysisTests(unittest.TestCase):
         self.assertEqual(len(deep_analysis.bind(note, excerpts)['points']), 1)
 
 
+    def test_every_rejected_piece_is_logged_with_its_quote_without_a_second_call(self):
+        import contextlib, io
+        self.earnings()
+        bad = json.loads(json.dumps(GOOD))
+        bad['points'] = bad['points'] + [point('売上は45%増。', 'Revenue rose 45%.')]
+        calls = []
+        def transport(payload, key):
+            calls.append(1)
+            return reply(bad)(payload, key)
+        out = io.StringIO()
+        with contextlib.redirect_stdout(out):
+            self.assertEqual(self.run_deep(transport), 'done')
+        self.assertEqual(len(calls), 1)
+        lines = [json.loads(line) for line in out.getvalue().splitlines() if 'deep-analysis-rejected-copy' in line]
+        self.assertTrue(lines and lines[0]['quote'] and lines[0]['reason'])
+        self.assertNotIn('Revenue rose 45%', json.dumps(deep_analysis.diagnostics(deep_analysis.connect(self.path))))  # never in /health
+
+
 class IndicatorAnalysisTests(unittest.TestCase):
     setUp = base.OfficialResearchTests.setUp
 
