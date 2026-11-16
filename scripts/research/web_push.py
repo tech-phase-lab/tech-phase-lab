@@ -4,6 +4,7 @@ No delivery until configured. Ambiguous network failures are NOT retried: this
 pilot favors avoiding duplicate alerts; its ledger records uncertain delivery.
 """
 import base64
+from collections import deque
 from datetime import datetime, timedelta, timezone
 from zoneinfo import ZoneInfo
 import hashlib
@@ -12,6 +13,7 @@ import math
 import os
 import re
 import sqlite3
+import threading
 import time
 from pathlib import Path
 from functools import lru_cache
@@ -267,7 +269,11 @@ def member_preferences(db, payload, *, save=False, now=None):
     sub = validate_subscription(payload.get('subscription'))
     device_id = hashlib.sha256(sub['endpoint'].encode()).hexdigest()
     with db:
-        db.execute('BEGIN IMMEDIATE' if save else 'BEGIN')
+        # Nov 16: always IMMEDIATE. A read also writes (the question-board key below), and a deferred BEGIN that reads first and then
+        # writes fails at once with "database is locked" (SQLITE_BUSY_SNAPSHOT in WAL mode, which the busy timeout never waits out)
+        # whenever another connection commits in between: a second check of the same page, the push sender or any monitor worker.
+        # That was the 503 the settings page showed as 「設定を読み込めませんでした」. IMMEDIATE takes the write lock first and waits for it.
+        db.execute('BEGIN IMMEDIATE')
         device = db.execute('SELECT * FROM push_devices WHERE id=?', (device_id,)).fetchone()
         if not device or device['owner_id'] != owner or json.loads(device['subscription']) != sub:
             raise ValueError('not-owned')
@@ -594,6 +600,71 @@ def event_key(item):
     return hashlib.sha256(json.dumps(facts).encode()).hexdigest()
 
 
+def is_busy(exc):
+    """True for SQLite's "database is locked" / "busy": another connection held the lock, so the same request may be tried again."""
+    if not isinstance(exc, sqlite3.OperationalError):
+        return False
+    text = str(exc).lower()
+    return 'locked' in text or 'busy' in text
+
+
+# Nov 16 (owner's iPhone: a test notice after 「通知の仕組みを入れ直す」 never arrived and nothing said why): the last sends, newest last,
+# for the owner's panel and one log line each. Only a short hash of the device id, the push service's host name, the HTTP status the
+# push service answered, the page the notice opens, the duration and the exception class are kept: never an endpoint, a key, the text,
+# a member or the push service's response body. Process memory only (a restart starts empty; the log lines stay).
+SEND_LOG_SIZE = 10
+SEND_LOG = deque(maxlen=SEND_LOG_SIZE)
+SEND_LOG_LOCK = threading.Lock()
+SEND_PAGE = re.compile(r'/research(/[a-z-]{1,40})?(#[a-z0-9-]{1,40})?')
+SEND_FAILURE_KINDS = frozenset({'ImportError', 'ModuleNotFoundError', 'TypeError', 'ValueError', 'KeyError', 'ConnectionError',
+                                'ConnectTimeout', 'ReadTimeout', 'Timeout', 'SSLError', 'WebPushException'})
+
+
+def device_ref(device_id):
+    """The first 12 characters of a device id (itself a SHA-256 of the endpoint): enough to tell devices apart, nothing to reach one."""
+    return str(device_id)[:12]
+
+
+def record_send(subscription, payload, status, duration_ms=None, failure=None, wall_now=time.time):
+    endpoint = subscription.get('endpoint', '') if isinstance(subscription, dict) else ''
+    device_id = hashlib.sha256(str(endpoint).encode()).hexdigest()
+    try:
+        host = urlsplit(str(endpoint)).hostname or '?'
+    except ValueError:
+        host = '?'
+    if host not in {'fcm.googleapis.com', 'updates.push.services.mozilla.com', 'web.push.apple.com'}:
+        host = 'other'
+    payload = payload if isinstance(payload, dict) else {}
+    page = payload.get('url')
+    status = status if isinstance(status, int) and not isinstance(status, bool) and 0 <= status <= 999 else 0
+    entry = {'at': round(wall_now(), 3), 'device': device_ref(device_id), 'host': host, 'status': status,
+             'kind': 'test' if payload.get('tag') == 'tech-phase-test' else 'notice',
+             'page': page if isinstance(page, str) and SEND_PAGE.fullmatch(page) else None,
+             'ms': round(duration_ms) if isinstance(duration_ms, (int, float)) and math.isfinite(duration_ms) and duration_ms >= 0 else None,
+             'failure': failure if failure in SEND_FAILURE_KINDS else ('other' if failure else None),
+             # Every sender removes the device when the push service answers 404 or 410 (the subscription is gone for good).
+             'gone': status in (404, 410)}
+    with SEND_LOG_LOCK:
+        SEND_LOG.append({**entry, '_device_id': device_id})
+    print(json.dumps({'event': 'push-send', **entry}), flush=True)
+    return entry
+
+
+def send_log(db):
+    """The last sends, newest first, each with whether its device is still registered now (False: it was removed)."""
+    with SEND_LOG_LOCK:
+        entries = list(SEND_LOG)
+    items = []
+    for entry in reversed(entries):
+        try:
+            row = db.execute('SELECT active FROM push_devices WHERE id=?', (entry['_device_id'],)).fetchone()
+            registered = bool(row and row['active'])
+        except sqlite3.Error:
+            registered = None
+        items.append({k: v for k, v in entry.items() if not k.startswith('_')} | {'registered': registered})
+    return items
+
+
 def send(subscription, payload):
     import requests
     from pywebpush import webpush, WebPushException
@@ -601,15 +672,23 @@ def send(subscription, payload):
         def request(self, method, url, **kwargs):
             kwargs['allow_redirects'] = False
             return super().request(method, url, **kwargs)
+    started = time.monotonic()
     try:
         with NoRedirectSession() as session:
             response = webpush(subscription_info=subscription, data=json.dumps(payload, ensure_ascii=False),
                 vapid_private_key=os.environ['WEB_PUSH_PRIVATE_KEY'],
                 vapid_claims={'sub': vapid_subject(os.environ['WEB_PUSH_SUBJECT'])},
                 ttl=300, timeout=10, requests_session=session, headers={'Urgency': 'high'})
-        return response.status_code
+        code = response.status_code
     except WebPushException as exc:
-        return exc.response.status_code if exc.response is not None else 0
+        code = exc.response.status_code if exc.response is not None else 0
+        record_send(subscription, payload, code, (time.monotonic() - started) * 1000, None if code else 'WebPushException')
+        return code
+    except Exception as exc:
+        record_send(subscription, payload, 0, (time.monotonic() - started) * 1000, type(exc).__name__)
+        raise
+    record_send(subscription, payload, code, (time.monotonic() - started) * 1000)
+    return code
 
 
 def vapid_subject(value):

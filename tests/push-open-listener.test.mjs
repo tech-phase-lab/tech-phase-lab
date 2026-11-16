@@ -1,7 +1,8 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import fs from "node:fs";
-import { browserPushOpenSources, createPushOpener, handlePushOpenMessage, pushOpenPath, pushRecord, PUSH_BANNER_MS, PUSH_OPENABLE, PENDING_OPEN_MAX_AGE_MS } from "../lib/research/push-open.ts";
+import { browserPushOpenSources, createPushOpener, handlePushOpenMessage, pushOpenPath, pushRecord, PUSH_BANNER_MS, PUSH_OPENABLE, PENDING_OPEN_MAX_AGE_MS,
+  PUSH_BANNER_LISTED_MS, PUSH_BANNER_RECENT_MS, PUSH_TAP_GAP_MS } from "../lib/research/push-open.ts";
 import targets from "../lib/research/push-targets.json" with { type: "json" };
 
 const here = { origin: "https://techphase.app", pathname: "/research/compare", hash: "" };
@@ -152,16 +153,85 @@ test("a notice that arrives while the app is shown puts up the banner at once; �
   assert.ok(notes.some(([patch, id]) => id === "n-1" && patch.bannerOpen === NOW));
 });
 
-test("the app coming to the front within 2 minutes of a notice shows the banner from the worker's record; never after", async () => {
+test("the app coming to the front within 30 minutes of a notice shows the banner from the worker's record; not after unless still listed", async () => {
   const recent = opener({ delivered: notice() });
   assert.equal(await recent.o.check(), null);
   assert.deepEqual(recent.banners, [{ id: "n-1", path: "/research/notifications", title: "Tech Phase · テスト通知" }]);
   await recent.o.check();
   assert.equal(recent.banners.length, 1, "a second look does not put it up again");
   assert.deepEqual(recent.moves, []);
-  const old = opener({ delivered: notice({ at: NOW - PENDING_OPEN_MAX_AGE_MS - 1 }) });
+  // Nov 16: the owner opened the app more than 2 minutes after the 10:03 test notice and saw no banner.
+  const later = opener({ delivered: notice({ at: NOW - PENDING_OPEN_MAX_AGE_MS - 1 }), shown: [] });
+  await later.o.check();
+  assert.equal(later.banners.length, 1, "2 minutes later: still shown");
+  const edge = opener({ delivered: notice({ at: NOW - PUSH_BANNER_RECENT_MS }), shown: null });
+  await edge.o.check();
+  assert.equal(edge.banners.length, 1, "30 minutes: still shown");
+  const old = opener({ delivered: notice({ at: NOW - PUSH_BANNER_RECENT_MS - 1 }), shown: [] });
   await old.o.check();
-  assert.deepEqual(old.banners, []);
+  assert.deepEqual(old.banners, [], "older and gone from the list: not shown");
+  const unknown = opener({ delivered: notice({ at: NOW - PUSH_BANNER_RECENT_MS - 1 }), shown: null });
+  await unknown.o.check();
+  assert.deepEqual(unknown.banners, [], "older and the phone cannot say: not shown");
+  assert.equal(PUSH_BANNER_RECENT_MS, 30 * 60_000);
+});
+
+test("a notice the phone still lists gets the banner whatever its age, up to a day", async () => {
+  const listed = opener({ delivered: notice({ at: NOW - 5 * 3600_000 }), shown: ["n-1"] });
+  await listed.o.check();
+  assert.equal(listed.banners.length, 1);
+  assert.deepEqual(listed.moves, []);
+  const stale = opener({ delivered: notice({ at: NOW - PUSH_BANNER_LISTED_MS - 1 }), shown: ["n-1"] });
+  await stale.o.check();
+  assert.deepEqual(stale.banners, []);
+  const other = opener({ delivered: notice({ at: NOW - 5 * 3600_000 }), shown: ["n-2"] });
+  await other.o.check();
+  assert.deepEqual(other.banners, [], "another notice in the list does not count");
+});
+
+test("a notice seen listed, gone when the app comes up within 10 s of it, is taken as a tap and opens its page once", async () => {
+  const { o, moves, banners, notes, cleared } = opener({ delivered: notice({ at: NOW - 6_000, listed: true }), shown: [] });
+  o.foreground(NOW - 1_000);
+  assert.equal(await o.check(), "/research/notifications");
+  assert.deepEqual(moves, [["push", "/research/notifications"]]);
+  assert.deepEqual(banners, []);
+  assert.deepEqual(cleared, ["n-1"]);
+  assert.ok(notes.some(([patch, id]) => id === "n-1" && patch.via === "gone-after-tap"));
+  assert.equal(await o.check(), null);
+  assert.equal(moves.length, 1);
+});
+
+test("a swiped-away notice never moves the app: any doubt gives the banner instead", async () => {
+  const cases = {
+    "the app came up more than 10 s after the notice": { delivered: notice({ at: NOW - PUSH_TAP_GAP_MS - 2_000, listed: true }), foreground: NOW - 1_000 },
+    "the app was already in front when it arrived": { delivered: notice({ at: NOW - 3_000, listed: true }), foreground: NOW - 60_000 },
+    "the app never came to the front": { delivered: notice({ at: NOW - 3_000, listed: true }), foreground: null },
+    "the worker could not see the list after showing it": { delivered: notice({ at: NOW - 3_000, listed: false }), foreground: NOW - 1_000 },
+    "the worker's record has no listing": { delivered: notice({ at: NOW - 3_000 }), foreground: NOW - 1_000 },
+  };
+  for (const [name, { delivered, foreground }] of Object.entries(cases)) {
+    const { o, moves, banners } = opener({ delivered, shown: [] });
+    if (foreground !== null) o.foreground(foreground);
+    assert.equal(await o.check(), null, name);
+    assert.deepEqual(moves, [], name);
+    assert.equal(banners.length, 1, name);
+  }
+  // Still listed, or the phone cannot say: never a tap either.
+  for (const shown of [["n-1"], null]) {
+    const { o, moves, banners } = opener({ delivered: notice({ at: NOW - 3_000, listed: true }), shown });
+    o.foreground(NOW - 1_000);
+    await o.check();
+    assert.deepEqual(moves, []);
+    assert.equal(banners.length, 1);
+  }
+  assert.equal(PUSH_TAP_GAP_MS, 10_000);
+});
+
+test("the worker's listing survives the record check; old taps keep the 2-minute limit", () => {
+  assert.equal(pushRecord({ id: "a", url: "/research", at: NOW, listed: true }, NOW).listed, true);
+  assert.equal(pushRecord({ id: "a", url: "/research", at: NOW, listed: "yes" }, NOW).listed, false);
+  assert.equal(pushRecord({ id: "a", url: "/research", at: NOW - PENDING_OPEN_MAX_AGE_MS - 1 }, NOW), null);
+  assert.equal(pushRecord({ id: "a", url: "/research", at: NOW - PENDING_OPEN_MAX_AGE_MS - 1 }, NOW, PUSH_BANNER_RECENT_MS).id, "a");
 });
 
 test("✕ and the 15-second timer hide the banner for good and forget the notice; nothing moves", async () => {

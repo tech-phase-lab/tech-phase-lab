@@ -11,6 +11,15 @@ export const DELIVERED_KEY = "/research-sw/delivered";
 export const DIAG_KEY = "/research-sw/diagnostic";
 /** A tap written down longer ago than this is not opened any more: the person has moved on. */
 export const PENDING_OPEN_MAX_AGE_MS = 120_000;
+/** Nov 16: the owner's test notice arrived at 10:03 but the app came to the front more than 2 minutes later, so no banner was shown.
+ * The latest notice not yet opened or dismissed now gets the banner when the app is shown within 30 minutes of it, */
+export const PUSH_BANNER_RECENT_MS = 30 * 60_000;
+/** or at any time up to a day while the phone still lists it (it has been neither tapped nor swiped away). */
+export const PUSH_BANNER_LISTED_MS = 24 * 3600_000;
+/** A notice the worker saw listed right after showing it, gone from the list when the app comes to the front at most this long after
+ * it arrived, was tapped: the tap brought the app up (WebKit 282935 never tells the worker). Swiping it away and opening the app within
+ * these seconds is the only way to be wrong, so only that case moves the app; any other notice gone from the list gets the banner. */
+export const PUSH_TAP_GAP_MS = 10_000;
 const ID = /^[A-Za-z0-9-]{1,64}$/;
 
 /** The page a service-worker "open" message asks for, or null when the message is anything else or names a page off the list. */
@@ -55,17 +64,18 @@ export function handlePushOpenMessage(event: MessageLike, location: { origin: st
 }
 
 /** A tap (or a shown notice) the worker wrote down, when it is well formed, on the list and recent. */
-export type PushRecord = { id: string; path: string; at: number; tag: string; title: string };
-export function pushRecord(value: unknown, now: number): PushRecord | null {
+/** listed: the worker found the notice in the phone's list right after showing it. */
+export type PushRecord = { id: string; path: string; at: number; tag: string; title: string; listed: boolean };
+export function pushRecord(value: unknown, now: number, maxAge = PENDING_OPEN_MAX_AGE_MS): PushRecord | null {
   if (!value || typeof value !== "object") return null;
-  const { id, url, at, tag, title } = value as { id?: unknown; url?: unknown; at?: unknown; tag?: unknown; title?: unknown };
+  const { id, url, at, tag, title, listed } = value as { id?: unknown; url?: unknown; at?: unknown; tag?: unknown; title?: unknown; listed?: unknown };
   if (typeof id !== "string" || !ID.test(id) || typeof at !== "number" || !Number.isFinite(at)) return null;
   // A little room for a clock that moved between the worker's write and this read; never older than the limit.
-  if (now - at > PENDING_OPEN_MAX_AGE_MS || at - now > 10_000) return null;
+  if (now - at > maxAge || at - now > 10_000) return null;
   const path = pushOpenPath({ type: "open", url });
   if (!path) return null;
   return { id, path, at, tag: typeof tag === "string" ? tag.slice(0, 100) : "",
-    title: typeof title === "string" ? title.replace(/[\u0000-\u001f\u007f]+/g, " ").trim().slice(0, 100) : "" };
+    title: typeof title === "string" ? title.replace(/[\u0000-\u001f\u007f]+/g, " ").trim().slice(0, 100) : "", listed: listed === true };
 }
 
 /** The in-app banner for a notice that arrived a moment ago: 「新しい通知：<title>」 with 開く and ✕. */
@@ -100,13 +110,17 @@ export type PushOpenerOptions = {
 /** Nov 15 (iPhone home-screen app): a tap must open its page however the app learns of it — the worker's message or the tap the
  * worker wrote down (read when the app is shown again). iOS may never tell the worker about a tap on an app that is already open
  * (WebKit 282935; the owner's iPhone stayed on the home page after #597), so a notice that arrived while the app is shown, or within
- * 2 minutes before it is shown again, also gets an in-app banner with an 開く button. A notice that has gone from the phone's list is
- * no longer taken for a tap (a notice swiped away would have opened its page too). Each notice is opened or shown once. */
+ * 30 minutes before it is shown again (or still in the phone's list, up to a day), also gets an in-app banner with an 開く button.
+ * A notice gone from the phone's list is taken for a tap only when the worker saw it listed and the app came to the front at most
+ * 10 seconds after it arrived (PUSH_TAP_GAP_MS); otherwise it gets the banner, so a swiped-away notice does not move the app by itself.
+ * Each notice is opened or shown once. */
 export function createPushOpener({ sources, location, navigation, banner = () => {}, diagnostics, now = Date.now }: PushOpenerOptions) {
   const handled = new Set<string>();
   let delivered: PushRecord | null = null;
   let showing: PushRecord | null = null;
   let checking: Promise<string | null> | null = null;
+  // When the app last came to the front (from the background, or launched); the listener says so.
+  let foregroundAt: number | null = null;
   const note = (patch: Record<string, unknown>, id?: string) => { try { diagnostics?.note(patch, id); } catch { /* the record is best effort */ } };
   const forget = (id: string) => { void sources.clear(id).catch(() => { /* written down again only by a new notice */ }); };
   function hide(id?: string) {
@@ -120,7 +134,7 @@ export function createPushOpener({ sources, location, navigation, banner = () =>
     note({ banner: now() }, record.id);
     banner({ id: record.id, path: record.path, title: record.title });
   }
-  function open(record: PushRecord, via: "pending" | "banner") {
+  function open(record: PushRecord, via: "pending" | "banner" | "gone-after-tap") {
     if (handled.has(record.id)) return null;
     handled.add(record.id);
     if (delivered?.id === record.id) delivered = null;
@@ -162,15 +176,20 @@ export function createPushOpener({ sources, location, navigation, banner = () =>
       const old = stored?.pending as { id?: unknown } | null | undefined;
       if (old && typeof old.id === "string" && ID.test(old.id)) forget(old.id); // too old or off the list: never opened
     }
-    const written = pushRecord(stored?.delivered, at);
+    const written = pushRecord(stored?.delivered, at, PUSH_BANNER_LISTED_MS);
     if (written && !handled.has(written.id) && (!delivered || written.at > delivered.at)) delivered = written;
-    if (delivered && !pushRecord({ ...delivered, url: delivered.path }, at)) { if (showing?.id === delivered.id) hide(); delivered = null; }
+    if (delivered && !pushRecord({ ...delivered, url: delivered.path }, at, PUSH_BANNER_LISTED_MS)) { if (showing?.id === delivered.id) hide(); delivered = null; }
     const candidate = delivered;
     if (!candidate || handled.has(candidate.id)) return null;
-    // For the step record only: whether the phone still lists the notice when the app is shown (it is never taken for a tap).
     const ids = await sources.shown(candidate.tag).catch(() => null);
-    note({ stillListed: ids ? ids.includes(candidate.id) : null }, candidate.id);
-    if (delivered?.id === candidate.id) show(candidate);
+    const listed = ids ? ids.includes(candidate.id) : null;
+    note({ stillListed: listed }, candidate.id);
+    if (delivered?.id !== candidate.id || handled.has(candidate.id)) return null;
+    // Gone from the list, seen listed by the worker when shown, and the app came to the front within 10 seconds of the notice: a tap.
+    if (listed === false && candidate.listed && foregroundAt !== null && foregroundAt >= candidate.at && foregroundAt - candidate.at <= PUSH_TAP_GAP_MS) {
+      return open(candidate, "gone-after-tap");
+    }
+    if (listed === true || at - candidate.at <= PUSH_BANNER_RECENT_MS) show(candidate);
     return null;
   }
   /** Look for a tap to open (or a new notice to show). Calls made while a look is running share it. */
@@ -195,7 +214,9 @@ export function createPushOpener({ sources, location, navigation, banner = () =>
     forget(record.id);
     hide(record.id);
   }
-  return { message, check, openBanner, dismissBanner, banner: () => showing && { id: showing.id, path: showing.path, title: showing.title } };
+  /** The app came to the front (or was launched) at this time; the listener calls it before the looks that follow. */
+  function foreground(at: number = now()) { foregroundAt = at; }
+  return { message, check, openBanner, dismissBanner, foreground, banner:() => showing && { id: showing.id, path: showing.path, title: showing.title } };
 }
 
 type WorkerLike = { postMessage: (message: unknown, transfer: Transferable[]) => void };
