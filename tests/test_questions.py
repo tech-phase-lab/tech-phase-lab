@@ -194,6 +194,67 @@ class QuestionTests(unittest.TestCase):
             with self.assertRaises(ValueError):
                 questions.submit(self.db, payload)
 
+    def test_owner_posts_skip_the_daily_limit_only_with_the_route_flag(self):
+        # Owner, Nov 16: the owner writes several sample questions; members keep the limit.
+        payload = {"ownerKey": OWNER_A, "audience": "pro-board"}
+        for i in range(5):
+            result = questions.submit(self.db, {**payload, "requestId": "q-" + format(i, "032x"), "body": f"{i}番目の、運営者が書くサンプル質問です。"}, owner_post=True)
+            self.assertIsNone(result["left"], "no day count for the owner")
+        # A payload field is never the flag; without the route flag the cap applies to the same key.
+        for forged in ({"ownerPost": True}, {"owner_post": True}, {"ownerMode": True}):
+            with self.assertRaisesRegex(ValueError, "question-daily-limit"):
+                questions.submit(self.db, {**payload, **forged, "body": "フラグなしでは上限が効くはずの質問です。"})
+        for truthy in ("1", 1, "true"):
+            with self.assertRaisesRegex(ValueError, "question-daily-limit"):
+                questions.submit(self.db, {**payload, "body": "真偽値以外のフラグでは上限が効く質問です。"}, owner_post=truthy)
+        # Other members: still two a day.
+        member = {"ownerKey": OWNER_B, "audience": "pro-board"}
+        for i in range(2):
+            questions.submit(self.db, {**member, "body": f"{i}番目の、会員が書く普通の質問です。"})
+        with self.assertRaisesRegex(ValueError, "question-daily-limit"):
+            questions.submit(self.db, {**member, "body": "会員の3件目は書けないはずの質問です。"})
+        # The owner's posts look like any member's to other members, and the owner can answer them.
+        board = questions.board_queue(self.db, OWNER_B)
+        owner_items = [item for item in board["items"] if item["isMine"] is False]
+        self.assertEqual(len(owner_items), 5)
+        self.assertNotIn(OWNER_A, json.dumps(board))
+        self.assertTrue(all("held" not in item for item in board["items"]))
+        sample = "q-" + format(0, "032x")
+        questions.answer(self.db, {"id": sample, "body": "サンプルの回答です。"})
+        answered = next(item for item in questions.board_queue(self.db, OWNER_B, page=1)["items"] if item["id"] == sample)
+        self.assertEqual(answered["status"], "answered")
+        self.assertEqual(answered["answer"]["bodyJa"], "サンプルの回答です。")
+        self.assertIsNone(questions.board_queue(self.db, OWNER_A, owner_view=True)["left"])
+        self.assertEqual(questions.board_queue(self.db, OWNER_B)["left"], 0)
+
+    def test_http_owner_flag_is_read_only_from_the_authenticated_route_header(self):
+        import service
+        app = object.__new__(service.AutomaticMonitor); app.db_path = self.path
+        server = service.ThreadingHTTPServer(("127.0.0.1", 0), service.Handler); server.app = app
+        thread = threading.Thread(target=server.serve_forever, daemon=True); thread.start()
+        base = f"http://127.0.0.1:{server.server_port}"
+        def post(payload, token="member-api-token", flag=False):
+            headers = {"Authorization": "Bearer " + token, "Content-Type": "application/json"}
+            if flag:
+                headers["X-Question-Owner-Post"] = "1"
+            with urlopen(Request(base + "/questions", data=json.dumps(payload).encode(), headers=headers), timeout=2) as response:
+                return json.load(response)
+        try:
+            with patch.dict(os.environ, {"RESEARCH_API_TOKEN": "member-api-token", "RESEARCH_EDITOR_TOKEN": "editor-api-token"}, clear=False):
+                for i in range(4):
+                    self.assertIsNone(post({"ownerKey": OWNER_A, "audience": "pro-board", "body": f"{i}番目の、HTTP経由のサンプル質問です。"}, flag=True)["left"])
+                with self.assertRaises(HTTPError) as denied:
+                    post({"ownerKey": OWNER_A, "audience": "pro-board", "body": "トークンなしではフラグも無効な質問です。"}, token="wrong-token", flag=True)
+                self.assertEqual(denied.exception.code, 401)
+                for i in range(2):
+                    post({"ownerKey": OWNER_B, "audience": "pro-board", "ownerPost": True, "body": f"{i}番目の、HTTP経由の会員の質問です。"})
+                with self.assertRaises(HTTPError) as limited:
+                    post({"ownerKey": OWNER_B, "audience": "pro-board", "ownerPost": True, "body": "本文のフラグでは上限を越えられない質問です。"})
+                self.assertEqual(limited.exception.code, 400)
+                self.assertEqual(json.load(limited.exception)["error"], "question-daily-limit")
+        finally:
+            server.shutdown(); server.server_close(); thread.join(timeout=2)
+
     def test_http_routes_separate_member_and_editor_credentials(self):
         import service
         app = object.__new__(service.AutomaticMonitor); app.db_path = self.path
