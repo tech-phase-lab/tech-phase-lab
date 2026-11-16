@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { browserPushOpenSources, createPushOpener, PUSH_BANNER_MS, type PushBanner } from "@/lib/research/push-open";
 import { createPushDiagnostics, PUSH_DIAG_EVENT, pushDiagnosticSignature, recentPushDiagnostic, type PushDiagnostic } from "@/lib/research/push-diagnostic";
 import { refreshPushWorker, type ContainerLike } from "@/lib/research/push-sw-facts";
-import { browserPushServerNotices } from "@/lib/research/push-server-notice";
+import { browserPushServerNotices, createVisiblePoller } from "@/lib/research/push-server-notice";
 import { useOwnerAccount } from "./member-display-provider";
 import { useResearchLanguage } from "./use-research-language";
 import styles from "./push-open-banner.module.css";
@@ -28,6 +28,9 @@ const storage = () => { try { return window.localStorage; } catch { return null;
  * the app also asks the server for the newest notice it sent this device (lib/research/push-server-notice.ts) on launch, pageshow,
  * focus and whenever it becomes visible: came to the front within 15 seconds of the send, its page opens; otherwise the same banner.
  * This works for every signed-in member with notifications on, without the worker.
+ * Owner, Nov 16: while the app stays open and visible it asks again every 20 seconds (paused while hidden), so a notice iOS did not
+ * show while the app was in front still gets the banner. The banner is for real notices only, never the test notice
+ * (lib/research/push-open.ts); a tap on the test notice still opens its page.
  * Also checks for a newer worker, and keeps the step record (sent to the server log for the owner's account only). */
 export default function PushOpenListener() {
   const router = useRouter();
@@ -85,7 +88,10 @@ export default function PushOpenListener() {
     // Nov 16: when the app comes to the front (or is launched), so a notice that vanished from the phone's list just before can be
     // told apart from one swiped away earlier (lib/research/push-open.ts, PUSH_TAP_GAP_MS).
     let away = true;
+    // Every 20 seconds while visible (PUSH_SERVER_POLL_MS); look() starts it on each return to the front and pauses it when hidden.
+    const poller = createVisiblePoller({ visible: shown, tick: () => { void opener.check(); } });
     function look() {
+      poller.sync();
       if (!shown()) { away = true; clearTimeout(hideTimer); return; }
       if (away) { away = false; opener.foreground(Date.now()); }
       // focus, pageshow and visibilitychange arrive together on resume: one series of looks is enough.
@@ -109,6 +115,7 @@ export default function PushOpenListener() {
       window.removeEventListener("pageshow", look);
       window.removeEventListener("focus", look);
       document.removeEventListener("visibilitychange", look);
+      poller.stop();
       for (const id of timers) clearTimeout(id);
       clearTimeout(hideTimer);
       clearTimeout(sendTimer);

@@ -1,13 +1,21 @@
-import { createHmac } from "node:crypto";
+import { createHash, createHmac } from "node:crypto";
 import { getMembership } from "@/lib/membership/server";
 import { isOwnerAccount } from "@/lib/membership/entitlements";
 import { cleanPushDiagnostic, createPushDiagnosticLimiter, pushDiagnosticLine } from "@/lib/research/push-diagnostic";
 import { cleanPushSendLog } from "@/lib/research/push-send-log";
-import { cleanPushServerNotice, PUSH_NOTICE_ACTIONS } from "@/lib/research/push-server-notice";
+import { cleanPushServerNotice, PUSH_NOTICE_ACTIONS, PUSH_NOTICE_DEVICE_LIMIT, PUSH_NOTICE_MEMBER_LIMIT, PUSH_NOTICE_WINDOW_MS }
+  from "@/lib/research/push-server-notice";
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 const headers = { "Cache-Control": "private, no-store", Vary: "Cookie" };
 const diagnosticAllowed = createPushDiagnosticLimiter();
+// Nov 16: the app asks recent-notice every 20 seconds while it is open; these keep one device (or one member) from asking much more.
+const noticeDeviceAllowed = createPushDiagnosticLimiter(PUSH_NOTICE_DEVICE_LIMIT, PUSH_NOTICE_WINDOW_MS);
+const noticeMemberAllowed = createPushDiagnosticLimiter(PUSH_NOTICE_MEMBER_LIMIT, PUSH_NOTICE_WINDOW_MS);
+function deviceKey(memberId: string, subscription: unknown) {
+  const endpoint = subscription && typeof subscription === "object" ? (subscription as { endpoint?: unknown }).endpoint : undefined;
+  return createHash("sha256").update(`${memberId}\n${typeof endpoint === "string" ? endpoint.slice(0, 2048) : ""}`).digest("hex");
+}
 
 async function monitor(path: string, body?: unknown) {
   const base = process.env.RESEARCH_MONITOR_URL;
@@ -84,6 +92,10 @@ export async function POST(request: Request) {
     // own banner without the service worker. Any signed-in member, FREE or PRO: it only reads or closes a notice this device was already
     // sent, and the monitor answers only for the member's own registered subscription. Only the cleaned notice reaches the page.
     if ((PUSH_NOTICE_ACTIONS as readonly string[]).includes(body?.action)) {
+      const at = Date.now();
+      if (!noticeMemberAllowed(member.userId, at) || !noticeDeviceAllowed(deviceKey(member.userId, body.subscription), at)) {
+        return Response.json({ ok: false, error: "rate-limited" }, { status: 429, headers });
+      }
       const result = await monitor(`/push/member/${body.action}`, { memberId: member.userId, subscription: body.subscription,
         ...(body.action === "notice-opened" || body.action === "notice-dismissed" ? { noticeId: typeof body.noticeId === "string" ? body.noticeId : "" } : {}) });
       if (result?.ok === false) return Response.json(result, { headers });
