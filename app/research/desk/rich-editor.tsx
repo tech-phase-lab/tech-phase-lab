@@ -99,9 +99,18 @@ const clip = <svg className={styles.clip} viewBox="0 0 24 24" aria-hidden="true"
 // Selection updates render only the toolbar, never the editable surface.
 function EditorToolbar({ editor, disabled, label }: { editor: Editor | null; disabled: boolean; label: string }) {
   const active = useEditorState({ editor, selector: ({ editor: current }) => ({ bold: current?.isActive("bold") ?? false, red: current?.isActive("textStyle", { color: "#ff8888" }) ?? false, highlight: current?.isActive("highlight") ?? false }) });
+  // A long-press selection on the iPhone can collapse when a tool is tapped (the tap reaches the page before the
+  // click). The range is read when the finger touches the tool and put back before formatting (owner, Nov 16).
+  const pressed = useRef<{ from: number; to: number } | null>(null);
+  function keep() {
+    const selection = editor?.state.selection;
+    pressed.current = selection && !selection.empty ? { from: selection.from, to: selection.to } : null;
+  }
   function format(command: "bold" | "red" | "highlight" | "clear") {
     if (!editor || disabled) return;
+    const range = pressed.current; pressed.current = null;
     const chain = editor.chain().focus();
+    if (editor.state.selection.empty && range && range.to <= editor.state.doc.content.size) chain.setTextSelection(range);
     if (command === "bold") chain.toggleBold().run();
     if (command === "red") { if (editor.isActive("textStyle", { color: "#ff8888" })) chain.unsetColor().run(); else chain.setColor("#ff8888").run(); }
     if (command === "highlight") chain.toggleHighlight().run();
@@ -109,7 +118,7 @@ function EditorToolbar({ editor, disabled, label }: { editor: Editor | null; dis
   }
   function selectText() { editor?.chain().focus().selectAll().run(); }
   return (
-    <div className={styles.toolbar} role="group" aria-label={`${label}の文字装飾`}>
+    <div className={styles.toolbar} role="group" aria-label={`${label}の文字装飾`} onPointerDownCapture={keep}>
       <button type="button" aria-label="太字" aria-pressed={active?.bold ?? false} disabled={disabled} onMouseDown={e => e.preventDefault()} onClick={() => format("bold")} title="太字"><strong>B</strong></button>
       <button type="button" className={styles.redTool} aria-label="赤文字" aria-pressed={active?.red ?? false} disabled={disabled} onMouseDown={e => e.preventDefault()} onClick={() => format("red")}><i aria-hidden="true" />赤</button>
       <button type="button" aria-label="黄色マーカー" aria-pressed={active?.highlight ?? false} disabled={disabled} onMouseDown={e => e.preventDefault()} onClick={() => format("highlight")}><span className={styles.markTool}>マーカー</span></button>

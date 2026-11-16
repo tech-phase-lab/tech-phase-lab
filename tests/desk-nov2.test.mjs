@@ -5,12 +5,12 @@ import { isFresh } from "../app/research/desk/use-minute.ts";
 import { deskImageFile, validImageUpload, isJpeg, maxDeskImageBytes } from "../lib/research/desk-audio.ts";
 const read = path => readFile(new URL(path, import.meta.url), "utf8");
 
-test("a post is NEW for the first 60 minutes only", () => {
-  const at = "2026-11-02T01:00:00Z", minute = Date.parse(at) / 60_000;
-  assert.equal(isFresh(minute + 10, at), true);
-  assert.equal(isFresh(minute + 59, at), true);
-  assert.equal(isFresh(minute + 60, at), false);
-  assert.equal(isFresh(minute + 600, at), false);
+test("a post is NEW for the first 30 minutes only (owner, Nov 16)", () => {
+  const at = "2026-11-02T01:00:00Z", start = Date.parse(at), minute = 60_000;
+  assert.equal(isFresh(start + 10 * minute, at), true);
+  assert.equal(isFresh(start + 30 * minute - 1, at), true);
+  assert.equal(isFresh(start + 30 * minute, at), false);
+  assert.equal(isFresh(start + 600 * minute, at), false);
   assert.equal(isFresh(0, at), false, "the server's clock is 0, so nothing is NEW before the browser takes over");
 });
 
@@ -70,7 +70,7 @@ test("the post box has the four attachment tiles, the 添付 button, the count a
 test("the owner's page header, timeline and NEW tag follow the design", async () => {
   const columns = await read("../app/research/columns/columns.tsx");
   assert.match(columns, /PRO会員だけに、本音を。/);
-  assert.match(columns, /isFresh\(minute, item\.publishedAt!\)/);
+  assert.match(columns, /fresh=\{item\.id === newNote\}/);
   const css = await read("../app/research/columns/styles.module.css");
   assert.match(css, /\.newTag/);
   assert.match(css, /\.article\.note:last-of-type::before\{display:none\}/);
