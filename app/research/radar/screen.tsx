@@ -87,7 +87,8 @@ export default function RadarScreen({ initial }: { initial: RadarPayload | null 
   </ResearchToolShell>;
 }
 
-function RankCard({ dot, lang }: { dot: RadarDotPro; lang: "ja" | "en" }) {
+/** One stock's card in the ranking (also shown by the PRO feature tour's fixed sample). */
+export function RankCard({ dot, lang }: { dot: RadarDotPro; lang: "ja" | "en" }) {
   const ja = lang === "ja";
   const zone = zoneOf(dot.ocfMargin, dot.cover);
   const g = dot.growth;

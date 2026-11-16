@@ -6,9 +6,10 @@ import base from '../research.module.css';
 import styles from './company-directory.module.css';
 import { useFreshCompanies } from './use-fresh-companies';
 export type DirectoryCompany = {ticker:string;name:string;sector:{ja:string;en:string};verified:boolean};
-export default function CompanyDirectory({companies,lang}:{companies:DirectoryCompany[];lang:Language}) {
+/** `onOpen` (the PRO feature tour's fixed sample): the tiles stay on the page and report the tap; no feed is read and no page is linked. */
+export default function CompanyDirectory({companies,lang,onOpen}:{companies:DirectoryCompany[];lang:Language;onOpen?:(ticker:string)=>void}) {
  const ja=lang==='ja';
- const fresh=useFreshCompanies(lang);
+ const fresh=useFreshCompanies(lang,!onOpen);
  const freshCompanies=companies.filter(company=>fresh.has(company.ticker)).length;
  const groups=new Map<string,DirectoryCompany[]>();
  for(const company of companies){const key=company.sector[lang];groups.set(key,[...(groups.get(key)??[]),company]);}
@@ -18,9 +19,12 @@ export default function CompanyDirectory({companies,lang}:{companies:DirectoryCo
    {!ja&&<div><p className={base.eyebrow}>COMPANY WATCH</p><h1 id="monitored-companies-title">{`${companies.length}-stock watch list`}</h1></div>}
    <div className={base.directoryLegend}>{freshCompanies>0&&<span className={styles.freshChip} role="status"><i className={styles.freshDot} aria-hidden="true"/>{ja?`新着あり ${freshCompanies}銘柄`:`${freshCompanies} with new items`}</span>}<span><i className={base.verifiedDot} aria-hidden="true"/>{ja?'決算リサーチを公開済み':'Earnings research available'}</span>{companies.some(c=>!c.verified)&&<span><i aria-hidden="true"/>{ja?'取得状況を公開':'Intake status'}</span>}</div>
   </div>
-  {[{className:styles.desktop,columns:[['MU','NBIS'],['MRVL','LITE','PLTR'],['VRT','MSFT']]},{className:styles.mobile,columns:[['MU','LITE','PLTR'],['NBIS','MRVL','VRT','MSFT']]}].map(layout=><div key={layout.className} className={`${styles.groups} ${layout.className}`}>{layout.columns.map((anchors,index)=><div key={index}>{anchors.map(ticker=>{const entry=[...groups].find(([,members])=>members.some(company=>company.ticker===ticker));if(!entry)return null;const [sector,members]=entry;return <section key={sector}><h2>{sector}<span>{members.length}</span></h2><div className={styles.tiles}>{members.map(company=><Link key={company.ticker} href={`/research/companies/${company.ticker}`} aria-label={`${company.name}（${company.ticker}）${fresh.has(company.ticker)?(ja?' — 新着あり':' — new items'):''} — ${company.verified?(ja?'決算リサーチを公開済み':'Earnings research available'):(ja?'取得状況を公開':'Intake status')}`}>
+  {[{className:styles.desktop,columns:[['MU','NBIS'],['MRVL','LITE','PLTR'],['VRT','MSFT']]},{className:styles.mobile,columns:[['MU','LITE','PLTR'],['NBIS','MRVL','VRT','MSFT']]}].map(layout=><div key={layout.className} className={`${styles.groups} ${layout.className}`}>{layout.columns.map((anchors,index)=><div key={index}>{anchors.map(ticker=>{const entry=[...groups].find(([,members])=>members.some(company=>company.ticker===ticker));if(!entry)return null;const [sector,members]=entry;return <section key={sector}><h2>{sector}<span>{members.length}</span></h2><div className={styles.tiles}>{members.map(company=>{const label=`${company.name}（${company.ticker}）${fresh.has(company.ticker)?(ja?' — 新着あり':' — new items'):''} — ${company.verified?(ja?'決算リサーチを公開済み':'Earnings research available'):(ja?'取得状況を公開':'Intake status')}`;const content=<>
    <strong>{company.ticker}{fresh.has(company.ticker)?<span className={styles.freshTag}>{ja?`新着 ${fresh.get(company.ticker)}`:`New ${fresh.get(company.ticker)}`}<i className={styles.freshDot} aria-hidden="true"/></span>:<i className={company.verified?styles.verified:undefined} aria-hidden="true"/>}</strong><span>{company.name}</span>
-  </Link>)}</div></section>;})}</div>)}</div>)}
+  </>;return onOpen
+   // An anchor with no address keeps the tile's look (.tiles a) but cannot leave the page.
+   ?<a key={company.ticker} role="button" tabIndex={0} aria-label={label} onClick={()=>onOpen(company.ticker)} onKeyDown={event=>{if(event.key==='Enter'||event.key===' '){event.preventDefault();onOpen(company.ticker);}}}>{content}</a>
+   :<Link key={company.ticker} href={`/research/companies/${company.ticker}`} aria-label={label}>{content}</Link>;})}</div></section>;})}</div>)}</div>)}
   <details className={base.directoryInfo}><summary>{ja?'掲載状況について':'About coverage'}</summary><p>{ja?'緑の印は数値を照合したリサーチがある銘柄です。速報配信や全資料の分析完了を示すものではありません。':'Green marks indicate source-checked research, not live delivery or complete analysis of every release.'}</p></details>
  </section>;
 }
