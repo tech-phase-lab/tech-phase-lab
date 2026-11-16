@@ -40,15 +40,22 @@
 .pickNo{display:inline-grid;place-items:center;flex:none;width:18px;height:18px;border-radius:50%;background:#ffc247;color:#0b111c;font:800 11px/1 var(--font-geist-mono),ui-monospace,monospace}
 .pickNo[data-slot="1"]{background:#4cc9f0}
 .pickRule{margin:8px 0 0;font-size:12px;color:#7d8a9a}
+/* The chips answer a finger at once: no double-tap wait, no grey flash, no text selection or callout on a long press. */
+.pills .pill{touch-action:manipulation;-webkit-tap-highlight-color:transparent;-webkit-touch-callout:none;user-select:none;-webkit-user-select:none}
+.pickPro{margin:4px 0 0;font-size:12.5px;line-height:1.5;color:#8fe3c0}
 
-/* 22 tracked stocks: the list is a compact row of tickers; NVDA and AMD open their deep dive, the others say 「PROで見られます」. */
-.tickers{display:grid;grid-template-columns:repeat(auto-fill,minmax(62px,1fr));gap:5px}
-/* Two classes: the shell's `.app button{font:inherit}` (one class + one element) outranked a lone `.ticker`, so the chips took the 16px body
- * font and GOOGL ran past its border at 360px (owner's check, Nov 16). */
-.tickers .ticker{min-width:0;height:28px;padding:0 2px;overflow:hidden;border:1px solid #1f2a3a;border-radius:8px;background:#0f1620;color:#6f7d8e;font-family:var(--font-geist-mono,ui-monospace),ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px;font-weight:600;line-height:1;letter-spacing:0;white-space:nowrap;cursor:pointer}
-.ticker[data-open]{border-color:#2c3a4a;color:#c6d0dc}
-.ticker[aria-pressed="true"]{border-color:#8fe3c0;background:#12261d;color:#8fe3c0}
-.ticker:focus-visible{outline:2px solid #8fe3c0;outline-offset:2px}
+/* 22 tracked stocks (owner's mockups 01/02, Nov 16): only NVDA and AMD are buttons (side by side, half width each, 44px); the other 20
+ * are plain grey text in a list that 「一覧 ▾」 opens. Two classes so the shell's `.app button{font:inherit}` does not win. */
+.watch{gap:10px}
+.watch .pickLabel{margin:0}
+.diveChoice{display:flex;gap:8px}
+.diveChoice .diveChip{flex:1 1 0;min-width:0;height:44px;padding:0;border:1px solid #2c3a4a;border-radius:12px;background:#111822;color:#c6d0dc;font-family:var(--font-geist-mono,ui-monospace),ui-monospace,SFMono-Regular,Menlo,monospace;font-size:15px;font-weight:700;line-height:1;cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+.diveChoice .diveChip[aria-pressed="true"]{border:1.5px solid #8fe3c0;background:#12261d;color:#8fe3c0}
+.diveChip:focus-visible,.listToggle:focus-visible{outline:2px solid #8fe3c0;outline-offset:2px}
+.allRow{display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:12.5px;line-height:1.5;color:#9aa7b7}
+.allRow .listToggle{flex:none;margin:-8px -8px -8px 0;padding:8px;border:0;background:none;color:#8fe3c0;font-size:12.5px;font-family:inherit;line-height:1.5;cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+.otherList{display:flex;flex-wrap:wrap;gap:6px 12px;margin:0;padding:10px 12px;border-radius:10px;background:#0f151d;list-style:none}
+.otherList li{font-family:var(--font-geist-mono,ui-monospace),ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;line-height:1.4;color:#7d8a9a}
 .dive{min-width:0;margin-top:2px;padding-top:4px;border-top:1px solid #1f2a3a}
 .dive>section{margin-top:14px}
 

@@ -1,5 +1,5 @@
 "use client";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState, type MouseEvent } from "react";
 import Link from "next/link";
 import ResearchToolShell from "../research-tool-shell";
 import { useResearchLanguage } from "../use-research-language";
@@ -20,7 +20,7 @@ export function ProExperienceList() {
   const [lang, setLang] = useResearchLanguage(), ja = lang === "ja";
   return <ResearchToolShell lang={lang} setLang={setLang} title={ja ? "PRO機能体験" : "PRO feature tour"} description="" showHeading={false} showTools={false}>
     <div className={styles.page}>
-      <Link className={styles.back} href="/research">‹ {ja ? "メニュー" : "Menu"}</Link>
+      {/* No 「‹ メニュー」 link here (owner, Nov 16): it only went home, and a second tap on a feature page's back link landed on it. */}
       <p className={styles.eyebrow}>PRO PREVIEW</p>
       <h1 className={styles.listTitle}>{ja ? "PRO機能体験" : "PRO feature tour"}</h1>
       <p className={styles.lead}>{ja ? "PROの機能を、サンプルで実際に触って試せます。" : "Try PRO features hands-on with samples."}</p>
@@ -61,8 +61,37 @@ function FeatureVideo({ feature, ja }: { feature: ProFeature; ja: boolean }) {
   </div>;
 }
 
+export const LIST_HREF = "/research/pro-experience";
+/** How long the back link stays locked if the navigation never completes (it normally unmounts first). */
+export const BACK_LOCK_MS = 4000;
+
+/** 「‹ PRO機能体験に戻る」 (owner, Nov 16): small grey text, no button chrome. Mint only while the finger is on it; the tap area reaches 8px past
+ * the text on every side (::after) without changing the look. After the first tap it takes no more taps until the list has opened, so a
+ * second tap cannot start a second navigation. The list is prefetched, so the switch is immediate. A short buzz only where the browser
+ * supports it (Android; iPhone Safari has no vibration for web pages). */
+export function BackToList({ ja }: { ja: boolean }) {
+  const [pressed, setPressed] = useState(false);
+  const [leaving, setLeaving] = useState(false);
+  const locked = useRef(false);
+  const timer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
+  useEffect(() => () => clearTimeout(timer.current), []);
+  const go = (event: MouseEvent<HTMLAnchorElement>) => {
+    if (locked.current) { event.preventDefault(); return; }
+    if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+    locked.current = true;
+    setLeaving(true);
+    setPressed(false);
+    try { if (typeof navigator.vibrate === "function") navigator.vibrate(10); } catch { /* not supported */ }
+    timer.current = setTimeout(() => { locked.current = false; setLeaving(false); }, BACK_LOCK_MS);
+  };
+  return <Link className={styles.back} href={LIST_HREF} prefetch onClick={go} aria-disabled={leaving || undefined} data-pressed={pressed || undefined}
+    onPointerDown={() => { if (!locked.current) setPressed(true); }} onPointerUp={() => setPressed(false)} onPointerCancel={() => setPressed(false)} onPointerLeave={() => setPressed(false)}>
+    ‹ {ja ? "PRO機能体験に戻る" : "Back to PRO feature tour"}
+  </Link>;
+}
+
 /** One feature: its sample (or, for phone notifications, the video), text, image, text, then "PROではじめる" (only for people who are not PRO)
- * and the next feature. FREE visitors read this page, so its frame and text carry no gold (owner, Nov 16). */
+ * and the next feature. FREE visitors read this page, so its frame and text carry no gold (owner, Nov 16); only 「PROではじめる」 is gold. */
 export function ProExperienceDetail({ id }: { id: string }) {
   const [lang, setLang] = useResearchLanguage(), ja = lang === "ja";
   const plan = useMemberDisplay(), settled = useMemberSettled(), owner = useOwnerAccount(), ownerRole = useResearchOwner();
@@ -75,7 +104,7 @@ export function ProExperienceDetail({ id }: { id: string }) {
   const before = inLanguage(feature.textBeforeImage, lang), after = inLanguage(feature.textAfterImage, lang), caption = inLanguage(feature.imageCaption, lang);
   return <ResearchToolShell lang={lang} setLang={setLang} title={inLanguage(feature.name, lang)} description="" showHeading={false} showTools={false}>
     <div className={styles.page}>
-      <Link className={styles.back} href="/research/pro-experience">‹ {ja ? "PRO機能体験" : "PRO feature tour"}</Link>
+      <BackToList ja={ja} />
       <div className={styles.titleRow}><h1 className={styles.title}>{inLanguage(feature.name, lang)}</h1><ProTag tone="plain" /></div>
       {/* A feature with a sample shows the sample, never a video: the samples read only saved files (no request for real data). */}
       {sample ? <FeatureSample feature={sample} lang={lang} /> : feature.videoUrl && <FeatureVideo feature={feature} ja={ja} />}
