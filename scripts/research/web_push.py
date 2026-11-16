@@ -12,6 +12,7 @@ import json
 import math
 import os
 import re
+import secrets
 import sqlite3
 import threading
 import time
@@ -145,7 +146,134 @@ def connect(path):
     db.execute('''CREATE TABLE IF NOT EXISTS push_device_preferences (
       device_id TEXT PRIMARY KEY, targets INTEGER NOT NULL, earnings INTEGER NOT NULL,
       news INTEGER NOT NULL, news_tickers TEXT NOT NULL)''')
+    notice_schema(db)
     return db
+
+
+# Nov 16 (owner's iPhone, 15:31 and 15:33 JST): Apple answered 201 for two test notices, yet the worker wrote nothing down and a tap
+# left the app on the home page (WebKit never delivers notificationclick there). So every notice the push service accepted is also
+# written here, per device: a random id, a kind, the page it opens, the short title shown and when it was sent. The app asks for the
+# newest one when it comes to the front (POST /api/research/notifications {action:"recent-notice"}) and shows its own banner, or opens
+# the page when the app came up right after the send (a tap). Never an endpoint, a key, the body, a member or a provider response.
+NOTICE_RETENTION_SECONDS = 7 * 86400
+# A notice is offered to the app for this long after it was sent (the same 30 minutes as the worker's banner, PUSH_BANNER_RECENT_MS).
+NOTICE_RECENT_SECONDS = 30 * 60
+NOTICE_ID = re.compile(r'[a-f0-9]{32}')
+NOTICE_KIND = re.compile(r'[a-z-]{1,40}')
+
+
+def notice_schema(db):
+    db.execute('''CREATE TABLE IF NOT EXISTS push_notices (
+      id TEXT PRIMARY KEY, device_id TEXT NOT NULL, kind TEXT NOT NULL, page TEXT NOT NULL, title TEXT NOT NULL,
+      sent_at REAL NOT NULL, opened_at REAL, dismissed_at REAL)''')
+    db.execute('CREATE INDEX IF NOT EXISTS push_notices_device ON push_notices(device_id, sent_at)')
+
+
+def notice_kind(payload, page):
+    if payload.get('tag') == 'tech-phase-test':
+        return 'test'
+    name = page.split('#', 1)[0].rsplit('/', 1)[-1]
+    return name if name != 'research' and NOTICE_KIND.fullmatch(name) else 'research'
+
+
+def remember_notice(db, subscription, payload, code, now=None):
+    """Write down a notice the push service accepted (2xx) for this device; returns its id, or None when nothing was written.
+    Never raises: a notice that was sent must not be reported as failed because this note could not be written."""
+    if not isinstance(code, int) or isinstance(code, bool) or not 200 <= code < 300 or not isinstance(payload, dict):
+        return None
+    try:
+        endpoint = subscription.get('endpoint') if isinstance(subscription, dict) else None
+        if not isinstance(endpoint, str) or not endpoint:
+            return None
+        device = hashlib.sha256(endpoint.encode()).hexdigest()
+        page = payload.get('url')
+        page = page if isinstance(page, str) and SEND_PAGE.fullmatch(page) else '/research'
+        title = payload.get('title')
+        # The same short title the worker shows (public/research-sw.js: the first 100 characters), without control characters.
+        title = re.sub(r'[\x00-\x1f\x7f]+', ' ', title).strip()[:100] if isinstance(title, str) else ''
+        if not title:
+            return None
+        now = time.time() if now is None else now
+        notice = secrets.token_hex(16)
+        with db:
+            notice_schema(db)
+            db.execute('INSERT INTO push_notices (id,device_id,kind,page,title,sent_at) VALUES(?,?,?,?,?,?)',
+                       (notice, device, notice_kind(payload, page), page, title, now))
+            db.execute('DELETE FROM push_notices WHERE sent_at<?', (now - NOTICE_RETENTION_SECONDS,))
+        return notice
+    except Exception as exc:
+        print(json.dumps({'event': 'push-notice-not-recorded', 'error': type(exc).__name__}), flush=True)
+        return None
+
+
+def noting(db, transport, now=None):
+    """The same transport, writing each accepted notice down for its device (remember_notice)."""
+    def send_and_note(subscription, payload):
+        code = transport(subscription, payload)
+        remember_notice(db, subscription, payload, code, now)
+        return code
+    return send_and_note
+
+
+def notice_view(row, now):
+    if row is None:
+        return None
+    state = 'opened' if row['opened_at'] is not None else 'dismissed' if row['dismissed_at'] is not None else 'new'
+    return {'id': row['id'], 'kind': row['kind'], 'page': row['page'], 'title': row['title'], 'sentAt': row['sent_at'],
+            # How long ago it was sent, by this server's clock, so the app can place it on its own clock.
+            'ageMs': max(0, round((now - row['sent_at']) * 1000)), 'state': state,
+            'openedAt': row['opened_at'], 'dismissedAt': row['dismissed_at']}
+
+
+def recent_notice(db, device, now):
+    """The newest notice for this device sent within NOTICE_RECENT_SECONDS that was neither opened nor dismissed, or None."""
+    notice_schema(db)
+    newest = db.execute('''SELECT * FROM push_notices WHERE device_id=? AND sent_at>=? AND sent_at<=?
+      ORDER BY sent_at DESC, rowid DESC LIMIT 1''', (device, now - NOTICE_RECENT_SECONDS, now + 60)).fetchone()
+    if newest is None or newest['opened_at'] is not None or newest['dismissed_at'] is not None:
+        return None
+    return notice_view(newest, now)
+
+
+def latest_notice(db, device, now):
+    """The newest notice for this device within the retention period, whatever its state (the owner's panel)."""
+    notice_schema(db)
+    return notice_view(db.execute('SELECT * FROM push_notices WHERE device_id=? ORDER BY sent_at DESC, rowid DESC LIMIT 1',
+                                  (device,)).fetchone(), now)
+
+
+def mark_notice(db, device, notice, state, now):
+    if not isinstance(notice, str) or not NOTICE_ID.fullmatch(notice):
+        raise ValueError('invalid-notice')
+    column = {'opened': 'opened_at', 'dismissed': 'dismissed_at'}[state]
+    notice_schema(db)
+    with db:
+        # Only this device's own notice, and only once: a notice already opened or dismissed keeps its first answer.
+        changed = db.execute(f'UPDATE push_notices SET {column}=? WHERE id=? AND device_id=? AND opened_at IS NULL AND dismissed_at IS NULL',
+                             (now, notice, device)).rowcount
+    return {'marked': bool(changed)}
+
+
+NOTICE_ACTIONS = ('recent-notice', 'notice-opened', 'notice-dismissed', 'notice-status')
+
+
+def notice_action(db, payload, action, now=None):
+    """The member's own current device only (the subscription must match the one stored for this member); no PRO check, since it
+    only reads or closes notices this device was already sent."""
+    owner = member_identity(payload)
+    now = time.time() if now is None else now
+    sub = validate_subscription(payload.get('subscription'))
+    device = hashlib.sha256(sub['endpoint'].encode()).hexdigest()
+    row = db.execute('SELECT owner_id,subscription FROM push_devices WHERE id=?', (device,)).fetchone()
+    if not row or row['owner_id'] != owner or json.loads(row['subscription']) != sub:
+        if action in ('recent-notice', 'notice-status'):
+            return {'notice': None, 'registered': False}
+        raise ValueError('not-owned')
+    if action == 'recent-notice':
+        return {'notice': recent_notice(db, device, now), 'registered': True}
+    if action == 'notice-status':
+        return {'notice': latest_notice(db, device, now), 'registered': True}
+    return mark_notice(db, device, payload.get('noticeId'), 'opened' if action == 'notice-opened' else 'dismissed', now)
 
 
 @lru_cache(maxsize=1)
@@ -377,7 +505,8 @@ def register_member(db, payload, allowed, now=None):
 
 # Reasons a push request can be refused that are safe to show (no device, no member, no text from the provider).
 REFUSAL_REASONS = frozenset({'not-owned', 'expired-membership', 'not-registered', 'disabled', 'invalid-member', 'invalid-subscription',
-                             'subscription-mismatch', 'device-owned-by-another-member', 'member-device-limit', 'invalid-preferences'})
+                             'subscription-mismatch', 'device-owned-by-another-member', 'member-device-limit', 'invalid-preferences',
+                             'invalid-notice'})
 
 
 def refusal_reason(exc):
@@ -386,6 +515,8 @@ def refusal_reason(exc):
 
 
 def member_action(db, payload, action, transport=None, now=None):
+    if action in NOTICE_ACTIONS:
+        return notice_action(db, payload, action, now)
     owner = member_identity(payload)
     now = time.time() if now is None else now
     sub = validate_subscription(payload.get('subscription'))
@@ -434,6 +565,8 @@ def remove(db, payload):
         db.execute('DELETE FROM push_devices WHERE id=?', (device,))
         db.execute('DELETE FROM push_deliveries WHERE device_id=?', (device,))
         db.execute('DELETE FROM push_device_preferences WHERE device_id=?', (device,))
+        notice_schema(db)
+        db.execute('DELETE FROM push_notices WHERE device_id=?', (device,))
     return {'registered': False}
 
 
@@ -470,6 +603,7 @@ def test_notification(db, payload, transport=None, now=None):
     failure_kind = None
     try:
         code = (transport or send)(subscription, message)
+        remember_notice(db, subscription, message, code, now)
     except Exception as exc:
         code = 0
         failure_kind = type(exc).__name__ if type(exc).__name__ in {
@@ -886,7 +1020,7 @@ def deliver(db, items, transport=send, now=None, monotonic_now=time.monotonic,
                            'tag': key, 'url': '/research/price-targets'}
             provider_started = monotonic_now()
             try:
-                code = transport(json.loads(device['subscription']), payload)
+                code = noting(db, transport, attempted_at)(json.loads(device['subscription']), payload)
             except Exception:
                 code = 0  # Never log endpoint, keys, provider response, or payload.
             provider_finished = monotonic_now()
@@ -972,7 +1106,7 @@ def deliver_weekly(db, transport=send, now=None, wall_now=time.time, entitlement
                    'body': '今週のウォッチリストの動きをまとめました。' if ja else "This week's watchlist moves are ready.",
                    'tag': key, 'url': '/research/notebook'}
         try:
-            code = transport(json.loads(device['subscription']), payload)
+            code = noting(db, transport, attempted_at)(json.loads(device['subscription']), payload)
         except Exception:
             code = 0
         status = 'accepted' if 200 <= code < 300 else 'expired' if code in (404, 410) else 'uncertain'
@@ -1036,7 +1170,7 @@ def deliver_notes(db, posts, transport=send, now=None, wall_now=time.time, entit
                        'body': 'リゼルのひとりごとが更新されました' if ja else "RIZEL\u2019s Notes were updated",
                        'tag': key, 'url': '/research/notes'}
             try:
-                code = transport(json.loads(device['subscription']), payload)
+                code = noting(db, transport, attempted_at)(json.loads(device['subscription']), payload)
             except Exception:
                 code = 0
             status = 'accepted' if 200 <= code < 300 else 'expired' if code in (404, 410) else 'uncertain'
@@ -1096,7 +1230,7 @@ def deliver_weekly_drafts(db, drafts, transport=send, now=None, wall_now=time.ti
                        'body': '週刊の下書きができました' if ja else 'A draft of the weekly issue is ready',
                        'tag': key, 'url': '/research/weekly'}
             try:
-                code = transport(json.loads(device['subscription']), payload)
+                code = noting(db, transport, attempted_at)(json.loads(device['subscription']), payload)
             except Exception:
                 code = 0
             status = 'accepted' if 200 <= code < 300 else 'expired' if code in (404, 410) else 'uncertain'
@@ -1139,7 +1273,7 @@ def announce(db, key, select, args, payload_for, moments, *, accept=None, transp
             continue
         payload = {**payload_for(device['language'] == 'ja'), 'tag': key}
         try:
-            code = transport(json.loads(device['subscription']), payload)
+            code = noting(db, transport, attempted_at)(json.loads(device['subscription']), payload)
         except Exception:
             code = 0
         status = 'accepted' if 200 <= code < 300 else 'expired' if code in (404, 410) else 'uncertain'

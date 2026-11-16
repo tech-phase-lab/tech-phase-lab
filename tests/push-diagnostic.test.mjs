@@ -9,6 +9,7 @@ import { cleanPushDiagnostic, createPushDiagnosticLimiter, createPushDiagnostics
   readPushDiagnostic, recentPushDiagnostic, PUSH_DIAG_STORAGE_KEY } from "../lib/research/push-diagnostic.ts";
 import { pushSwFactRows, readPushSwFacts, reinstallMessage } from "../lib/research/push-sw-facts.ts";
 import { cleanPushSendLog, pushDeviceRef, pushSendRows, pushSendStatusText } from "../lib/research/push-send-log.ts";
+import { cleanPushServerNotice, pushServerNoticeRows } from "../lib/research/push-server-notice.ts";
 
 const require = createRequire(import.meta.url);
 const NOW = Date.now();
@@ -105,6 +106,7 @@ test("the panel is collapsed under 「通知の動作の記録」 and says when 
       if (id === "@/lib/research/push-diagnostic") return { cleanPushDiagnostic, pushDiagnosticRows, PUSH_DIAG_EVENT: "e", PUSH_DIAG_STORAGE_KEY };
       if (id === "@/lib/research/push-sw-facts") return { pushSwFactRows, readPushSwFacts, reinstallMessage };
       if (id === "@/lib/research/push-send-log") return { cleanPushSendLog, pushDeviceRef, pushSendRows };
+      if (id === "@/lib/research/push-server-notice") return { cleanPushServerNotice, pushServerNoticeRows };
       if (id.endsWith(".css")) return { default: new Proxy({}, { get: (_, key) => String(key) }) };
       return require(id);
     }, target, target.exports);
@@ -117,6 +119,7 @@ test("the panel is collapsed under 「通知の動作の記録」 and says when 
   assert.match(empty, /まだ記録がありません/);
   // Nov 16: the server's last sends are read after the first paint too.
   assert.match(empty, /サーバーからの送信（直近10件・新しい順）/);
+  assert.match(empty, /サーバーの記録（この端末への最新の通知・アプリ内バナー用）<\/p><p class="note">読み取り中…<\/p>/);
   // The live facts are read in the browser after the first paint; the reinstall button is only there when the page gives it.
   assert.match(empty, /この端末の状態（いま読み取った値）<\/p><p class="note">読み取り中…<\/p>/);
   assert.doesNotMatch(empty, /通知の仕組みを入れ直す/);

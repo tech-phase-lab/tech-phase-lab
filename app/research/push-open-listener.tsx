@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { browserPushOpenSources, createPushOpener, PUSH_BANNER_MS, type PushBanner } from "@/lib/research/push-open";
 import { createPushDiagnostics, PUSH_DIAG_EVENT, pushDiagnosticSignature, recentPushDiagnostic, type PushDiagnostic } from "@/lib/research/push-diagnostic";
 import { refreshPushWorker, type ContainerLike } from "@/lib/research/push-sw-facts";
+import { browserPushServerNotices } from "@/lib/research/push-server-notice";
 import { useOwnerAccount } from "./member-display-provider";
 import { useResearchLanguage } from "./use-research-language";
 import styles from "./push-open-banner.module.css";
@@ -23,6 +24,10 @@ const storage = () => { try { return window.localStorage; } catch { return null;
  * (WebKit 282935), a notice that arrived while the app is shown, or within 30 minutes before it comes back to the front (or that the
  * phone still lists, up to a day), gets a banner at
  * the top: 「新しい通知：<title>」 with 開く and ✕, hidden after 15 seconds. Mounted in the research layout, so on every /research page.
+ * Nov 16: the worker's records proved unreliable on iOS (Apple accepted the owner's test notices, the worker wrote nothing down), so
+ * the app also asks the server for the newest notice it sent this device (lib/research/push-server-notice.ts) on launch, pageshow,
+ * focus and whenever it becomes visible: came to the front within 15 seconds of the send, its page opens; otherwise the same banner.
+ * This works for every signed-in member with notifications on, without the worker.
  * Also checks for a newer worker, and keeps the step record (sent to the server log for the owner's account only). */
 export default function PushOpenListener() {
   const router = useRouter();
@@ -65,6 +70,7 @@ export default function PushOpenListener() {
       navigation: { push: href => router.push(href), setHash: hash => { window.location.hash = hash; } },
       banner: notice => { setBanner(notice); if (notice) timeBanner(); else clearTimeout(hideTimer); },
       diagnostics,
+      server: browserPushServerNotices(async () => (await container.getRegistration("/research"))?.pushManager?.getSubscription()),
     });
     actions.current = { open: () => { opener.openBanner(); }, dismiss: () => opener.dismissBanner("close") };
     const timers = new Set<ReturnType<typeof setTimeout>>();

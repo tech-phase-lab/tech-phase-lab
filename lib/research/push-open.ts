@@ -1,4 +1,5 @@
 import targets from "./push-targets.json" with { type: "json" };
+import { PUSH_SERVER_LOOK_MS, serverNoticeAction, serverNoticeRecord, type PushServerNotices } from "./push-server-notice.ts";
 
 /** Pages a notification tap may open (the same list as public/research-sw.js). */
 export const PUSH_OPENABLE: ReadonlySet<string> = new Set(targets.openable);
@@ -104,8 +105,12 @@ export type PushOpenerOptions = {
   /** Show (a notice) or hide (null) the in-app banner. */
   banner?: (notice: PushBanner | null) => void;
   diagnostics?: PushOpenDiagnostics;
+  /** Nov 16: the notices the server sent this device (lib/research/push-server-notice.ts). Works on its own when the worker says nothing. */
+  server?: PushServerNotices;
   now?: () => number;
 };
+/** The same notice seen by both the worker and the server: same page and title, sent within a few minutes of each other. */
+const SAME_NOTICE_MS = 5 * 60_000;
 
 /** Nov 15 (iPhone home-screen app): a tap must open its page however the app learns of it — the worker's message or the tap the
  * worker wrote down (read when the app is shown again). iOS may never tell the worker about a tap on an app that is already open
@@ -114,8 +119,13 @@ export type PushOpenerOptions = {
  * A notice gone from the phone's list is taken for a tap only when the worker saw it listed and the app came to the front at most
  * 10 seconds after it arrived (PUSH_TAP_GAP_MS); otherwise it gets the banner, so a swiped-away notice does not move the app by itself.
  * Each notice is opened or shown once. */
-export function createPushOpener({ sources, location, navigation, banner = () => {}, diagnostics, now = Date.now }: PushOpenerOptions) {
+export function createPushOpener({ sources, location, navigation, banner = () => {}, diagnostics, server, now = Date.now }: PushOpenerOptions) {
   const handled = new Set<string>();
+  // Ids of notices the server reported (they are marked opened or dismissed on the server, not in the worker's store).
+  const fromServer = new Set<string>();
+  let latestServer: PushRecord | null = null;
+  let serverAskedAt: number | null = null;
+  let serverDue = true;
   let delivered: PushRecord | null = null;
   let showing: PushRecord | null = null;
   let checking: Promise<string | null> | null = null;
@@ -123,6 +133,29 @@ export function createPushOpener({ sources, location, navigation, banner = () =>
   let foregroundAt: number | null = null;
   const note = (patch: Record<string, unknown>, id?: string) => { try { diagnostics?.note(patch, id); } catch { /* the record is best effort */ } };
   const forget = (id: string) => { void sources.clear(id).catch(() => { /* written down again only by a new notice */ }); };
+  const same = (a: PushRecord, b: PushRecord) => a.path === b.path && a.title === b.title && Math.abs(a.at - b.at) <= SAME_NOTICE_MS;
+  function tellServer(id: string, state: "opened" | "dismissed") {
+    if (!server || !fromServer.has(id)) return;
+    void server.mark(id, state).catch(() => { /* not marked: offered again at most until it is 30 minutes old */ });
+  }
+  /** Close a notice where it was written down, and its twin: the worker's record of a notice and the server's are the same notice. */
+  function settle(record: PushRecord, state: "opened" | "dismissed" | "timeout") {
+    if (fromServer.has(record.id)) {
+      if (state !== "timeout") tellServer(record.id, state);
+      if (delivered && delivered.id !== record.id && !handled.has(delivered.id) && same(delivered, record)) {
+        handled.add(delivered.id);
+        forget(delivered.id);
+        delivered = null;
+      }
+      return;
+    }
+    forget(record.id);
+    const twin = latestServer;
+    if (twin && twin.id !== record.id && !handled.has(twin.id) && same(twin, record)) {
+      handled.add(twin.id);
+      if (state !== "timeout") tellServer(twin.id, state);
+    }
+  }
   function hide(id?: string) {
     if (!showing || (id !== undefined && showing.id !== id)) return;
     showing = null;
@@ -134,12 +167,12 @@ export function createPushOpener({ sources, location, navigation, banner = () =>
     note({ banner: now() }, record.id);
     banner({ id: record.id, path: record.path, title: record.title });
   }
-  function open(record: PushRecord, via: "pending" | "banner" | "gone-after-tap") {
+  function open(record: PushRecord, via: "pending" | "banner" | "gone-after-tap" | "server-tap") {
     if (handled.has(record.id)) return null;
     handled.add(record.id);
     if (delivered?.id === record.id) delivered = null;
     hide(record.id);
-    forget(record.id);
+    settle(record, "opened");
     openPushPath(record.path, location(), navigation);
     note({ navigated: now(), via }, record.id);
     return record.path;
@@ -149,6 +182,7 @@ export function createPushOpener({ sources, location, navigation, banner = () =>
     if (event.origin && event.origin !== here.origin) return null;
     const data = event.data as { type?: unknown; id?: unknown } | null;
     if (data && typeof data === "object" && data.type === "delivered") {
+      serverDue = true;
       const record = pushRecord(data, now());
       if (record && !handled.has(record.id) && (!delivered || record.at >= delivered.at)) { delivered = record; show(record); }
       return null;
@@ -159,12 +193,28 @@ export function createPushOpener({ sources, location, navigation, banner = () =>
     const fresh = !id || !handled.has(id);
     if (id) { handled.add(id); if (delivered?.id === id) delivered = null; hide(id); forget(id); }
     if (fresh) { openPushPath(path, here, navigation); if (id) note({ navigated: now(), via: "worker-message" }, id); }
+    // The server's record of the same notice (same page, sent a moment ago) is opened too.
+    const twin = latestServer;
+    if (fresh && twin && !handled.has(twin.id) && twin.path === path && Math.abs(now() - twin.at) <= SAME_NOTICE_MS) {
+      handled.add(twin.id); hide(twin.id); tellServer(twin.id, "opened");
+    }
     try { event.ports?.[0]?.postMessage({ type: "opened" }); } catch { /* the worker stopped waiting; the page has moved anyway */ }
     return fresh ? path : null;
   }
+  /** The server's newest notice for this device: asked on every return to the front, and otherwise at most every 10 seconds. */
+  async function askServer(at: number) {
+    if (!server || (!serverDue && serverAskedAt !== null && at - serverAskedAt < PUSH_SERVER_LOOK_MS)) return;
+    serverDue = false; serverAskedAt = at;
+    const record = serverNoticeRecord(await server.recent().catch(() => null), now());
+    if (!record) return;
+    fromServer.add(record.id);
+    if (handled.has(record.id) || latestServer?.id === record.id) return;
+    latestServer = { id: record.id, path: record.path, at: record.at, tag: "", title: record.title, listed: false };
+    note({ server: now() }, record.id);
+  }
   async function run(): Promise<string | null> {
     const at = now();
-    const stored = await sources.read().catch(() => null);
+    const [stored] = await Promise.all([sources.read().catch(() => null), askServer(at).catch(() => { /* same as no notice */ })]);
     if (stored?.diag) { try { diagnostics?.fromWorker(stored.diag); } catch { /* best effort */ } }
     note(stored?.source === "worker" ? { query: at } : stored?.source === "store" ? { queryTimeout: at, store: at } : { queryTimeout: at });
     const pending = pushRecord(stored?.pending, at);
@@ -179,6 +229,15 @@ export function createPushOpener({ sources, location, navigation, banner = () =>
     const written = pushRecord(stored?.delivered, at, PUSH_BANNER_LISTED_MS);
     if (written && !handled.has(written.id) && (!delivered || written.at > delivered.at)) delivered = written;
     if (delivered && !pushRecord({ ...delivered, url: delivered.path }, at, PUSH_BANNER_LISTED_MS)) { if (showing?.id === delivered.id) hide(); delivered = null; }
+    // Nov 16: the server's record of a notice it sent this device, which works without the worker. The app came to the front within
+    // 15 seconds of the send (PUSH_SERVER_TAP_MS): a tap brought it up, so its page opens. Otherwise the banner, unless the banner
+    // already shows the worker's record of the same notice.
+    const sent = latestServer;
+    if (sent && !handled.has(sent.id) && at - sent.at <= PUSH_BANNER_RECENT_MS) {
+      if (serverNoticeAction(sent, foregroundAt) === "open") return open(sent, "server-tap");
+      if (!showing || (showing.id !== sent.id && !same(showing, sent))) show(sent);
+      return null;
+    }
     const candidate = delivered;
     if (!candidate || handled.has(candidate.id)) return null;
     const ids = await sources.shown(candidate.tag).catch(() => null);
@@ -211,7 +270,8 @@ export function createPushOpener({ sources, location, navigation, banner = () =>
     handled.add(record.id);
     if (delivered?.id === record.id) delivered = null;
     note(reason === "close" ? { bannerClose: now() } : { bannerTimeout: now() }, record.id);
-    forget(record.id);
+    // ✕ marks the server's notice dismissed; the 15-second timer only hides it here (offered again until it is 30 minutes old).
+    settle(record, reason === "close" ? "dismissed" : "timeout");
     hide(record.id);
   }
   /** The app came to the front (or was launched) at this time; the listener calls it before the looks that follow. */
