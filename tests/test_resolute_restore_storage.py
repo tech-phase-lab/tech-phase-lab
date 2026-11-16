@@ -31,6 +31,7 @@ class RestoreStorageTests(unittest.TestCase):
             'RESOLUTE_PROTECTION_EVENTS_MANIFEST_SHA256': 'a' * 64,
         }
         self.factory = Mock()
+        self.history = dict(db_events=[], backup_cutoff=backup.backup_point_cutoff('20261019T120000000000Z'))
 
     def test_each_missing_independent_setting_stops_before_network(self):
         for name in self.env:
@@ -38,8 +39,22 @@ class RestoreStorageTests(unittest.TestCase):
                 with self.subTest(name=name):
                     env = dict(self.env)
                     del env[name]
-                    with self.assertRaises(RuntimeError):
-                        backup.load_online_protection(env, self.factory, None)
+                    with self.assertRaises(RuntimeError) as caught:
+                        backup.load_online_protection(env, self.factory, None, **self.history)
+                    self.assertEqual(caught.exception.reason, 'protection-config')
+        self.factory.assert_not_called()
+
+    def test_missing_database_history_or_backup_point_stops_before_network(self):
+        for kwargs in ({}, dict(db_events=[]), dict(backup_cutoff=self.history['backup_cutoff'])):
+            with self.subTest(kwargs=sorted(kwargs)):
+                with self.assertRaises(RuntimeError):
+                    backup.load_online_protection(self.env, self.factory, None, **kwargs)
+        for value in ('', 'latest', '2026-10-19', None):
+            with self.subTest(created_at=value), self.assertRaises(RuntimeError):
+                backup.backup_point_cutoff(value)
+        with self.assertRaises(RuntimeError):
+            backup.load_online_protection(dict(self.env, RESOLUTE_PROTECTION_CHAIN_WRITE='yes'),
+                                          self.factory, None, **self.history)
         self.factory.assert_not_called()
 
     def test_dump_bucket_and_unsafe_endpoints_are_rejected(self):
@@ -51,11 +66,11 @@ class RestoreStorageTests(unittest.TestCase):
             with self.subTest(endpoint=endpoint):
                 env = dict(self.env, RESOLUTE_RESTORE_PROTECTION_ENDPOINT=endpoint)
                 with self.assertRaises(RuntimeError):
-                    backup.load_online_protection(env, self.factory, None)
+                    backup.load_online_protection(env, self.factory, None, **self.history)
         env = dict(self.env, RESOLUTE_RESTORE_PROTECTION_ENDPOINT='https://DUMPS.example.invalid/',
                    RESOLUTE_RESTORE_PROTECTION_BUCKET='dumps')
         with self.assertRaises(RuntimeError):
-            backup.load_online_protection(env, self.factory, None)
+            backup.load_online_protection(env, self.factory, None, **self.history)
         self.factory.assert_not_called()
 
     def test_invalid_key_or_manifest_pin_stops_before_network(self):
@@ -64,7 +79,7 @@ class RestoreStorageTests(unittest.TestCase):
                 with self.subTest(name=name, value=value):
                     env = dict(self.env, **{name: value})
                     with self.assertRaises(RuntimeError):
-                        backup.load_online_protection(env, self.factory, None)
+                        backup.load_online_protection(env, self.factory, None, **self.history)
         self.factory.assert_not_called()
 
     def test_real_authenticated_event_uses_independent_read_only_inventory_and_gets(self):
@@ -88,25 +103,32 @@ class RestoreStorageTests(unittest.TestCase):
             return {'Body': io.BytesIO(files[kwargs['Key']])}
         client = Mock(spec=['get_object', 'get_paginator'])
         client.get_object.side_effect = get_object
-        client.get_paginator.return_value.paginate.return_value = [
-            {'IsTruncated': False, 'Contents': [{'Key': name, 'Size': len(body), 'ETag': 'fixture'}]}]
+        def paginate(**kwargs):
+            contents = [{'Key': name, 'Size': len(body), 'ETag': 'fixture'}]
+            return [{'IsTruncated': False,
+                     'Contents': contents if kwargs['Prefix'] == backup.protection_events.PREFIX else []}]
+        client.get_paginator.return_value.paginate.side_effect = paginate
         self.factory.return_value = client
         config = object()
-        ledger = backup.load_online_protection(self.env, self.factory, config)
+        ledger = backup.load_online_protection(self.env, self.factory, config, **self.history)
         self.assertEqual(ledger['deletions'][0]['revision'], 3)
         self.assertEqual(len(reads), 2)
-        self.assertEqual(client.get_paginator.call_count, 2)
+        # Chain listing plus two complete event listings; no write without opt-in.
+        self.assertEqual(client.get_paginator.call_count, 3)
         self.factory.assert_called_once_with('s3', endpoint_url='https://history.example.invalid',
             aws_access_key_id='history-access', aws_secret_access_key='history-secret',
             region_name='auto', config=config)
         files[name] = body[:-1] + bytes([body[-1] ^ 1])
-        with self.assertRaisesRegex(ValueError, 'checksum'):
-            backup.load_online_protection(self.env, self.factory, config)
+        with self.assertRaisesRegex(ValueError, 'sealed protection object changed') as caught:
+            backup.load_online_protection(self.env, self.factory, config, **self.history)
+        self.assertEqual(caught.exception.reason, 'inventory-modified-object')
 
     def test_missing_history_never_falls_back_to_dump_client(self):
         self.factory.return_value.get_object.side_effect = FileNotFoundError()
-        with self.assertRaises(FileNotFoundError):
-            backup.load_online_protection(self.env, self.factory, None)
+        with self.assertRaises(ValueError) as caught:
+            backup.load_online_protection(self.env, self.factory, None, **self.history)
+        self.assertEqual(caught.exception.reason, 'chain-anchor-unreadable')
+        self.assertIsInstance(caught.exception.__cause__, FileNotFoundError)
         self.assertEqual(self.factory.call_count, 1)
 
 

@@ -7,6 +7,7 @@ import { createRequire } from "node:module";
 import ts from "typescript";
 import { cleanPushDiagnostic, createPushDiagnosticLimiter, createPushDiagnostics, pushDiagnosticLine, pushDiagnosticRows, pushDiagnosticSignature,
   readPushDiagnostic, recentPushDiagnostic, PUSH_DIAG_STORAGE_KEY } from "../lib/research/push-diagnostic.ts";
+import { pushSwFactRows, readPushSwFacts, reinstallMessage } from "../lib/research/push-sw-facts.ts";
 
 const require = createRequire(import.meta.url);
 const NOW = Date.now();
@@ -101,16 +102,25 @@ test("the panel is collapsed under 「通知の動作の記録」 and says when 
     new Function("require", "module", "exports", source)(id => {
       if (id === "react") return { ...React, useSyncExternalStore: () => text };
       if (id === "@/lib/research/push-diagnostic") return { cleanPushDiagnostic, pushDiagnosticRows, PUSH_DIAG_EVENT: "e", PUSH_DIAG_STORAGE_KEY };
+      if (id === "@/lib/research/push-sw-facts") return { pushSwFactRows, readPushSwFacts, reinstallMessage };
       if (id.endsWith(".css")) return { default: new Proxy({}, { get: (_, key) => String(key) }) };
       return require(id);
     }, target, target.exports);
-    return renderToStaticMarkup(React.createElement(target.exports.default, { lang }));
+    return renderToStaticMarkup(React.createElement(target.exports.default, { lang, onReinstall }));
   };
+  let onReinstall;
   const empty = render("", "ja");
   assert.match(empty, /^<details class="diagnostic"><summary>通知の動作の記録<\/summary>/);
   assert.doesNotMatch(empty, /<details[^>]* open/);
   assert.match(empty, /まだ記録がありません/);
+  // The live facts are read in the browser after the first paint; the reinstall button is only there when the page gives it.
+  assert.match(empty, /この端末の状態（いま読み取った値）<\/p><p class="note">読み取り中…<\/p>/);
+  assert.doesNotMatch(empty, /通知の仕組みを入れ直す/);
+  onReinstall = async () => ({ ok: true });
+  assert.match(render("", "ja"), /<button type="button" class="testButton">通知の仕組みを入れ直す<\/button>/);
+  onReinstall = undefined;
   const full = render(JSON.stringify({ v: "x", id: "n-1", push: NOW }), "en");
-  assert.match(full, /<summary>Notification step record<\/summary><dl class="diagnosticList">/);
+  assert.match(full, /<summary>Notification step record<\/summary>/);
+  assert.match(full, /Latest notice<\/p><dl class="diagnosticList">/);
   assert.match(full, /<dt>Notice id \(random\)<\/dt><dd>n-1<\/dd>/);
 });

@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { browserPushOpenSources, createPushOpener, PUSH_BANNER_MS, type PushBanner } from "@/lib/research/push-open";
 import { createPushDiagnostics, PUSH_DIAG_EVENT, pushDiagnosticSignature, recentPushDiagnostic, type PushDiagnostic } from "@/lib/research/push-diagnostic";
+import { refreshPushWorker, type ContainerLike } from "@/lib/research/push-sw-facts";
 import { useOwnerAccount } from "./member-display-provider";
 import { useResearchLanguage } from "./use-research-language";
 import styles from "./push-open-banner.module.css";
@@ -71,7 +72,8 @@ export default function PushOpenListener() {
     function update() {
       if (Date.now() - lastUpdate < UPDATE_EVERY_MS) return;
       lastUpdate = Date.now();
-      container.getRegistration("/research").then(registration => registration?.update()).catch(() => { /* offline: checked again next time */ });
+      // Nov 16: also moves a registration made before then onto updateViaCache "none" (registered again, which checks for a new version too).
+      refreshPushWorker(container as unknown as ContainerLike).catch(() => { /* offline: checked again next time */ });
     }
     function look() {
       if (!shown()) { clearTimeout(hideTimer); return; }

@@ -2908,3 +2908,12 @@ Final integrated checks passed: Node 1,561 + Python 2,648; lint 0 errors / 9 exi
 warnings; production build/typecheck, compileall and diff check. New security tests
 cover shared DB concurrency, retries, MFA membership integration and non-admin
 sandbox tester compatibility. These checks do not verify the blocked live settings.
+
+## 2026-11-16 — RESOLUTE weekly restore: append-only protection inventory
+
+Branch `claude/resolute-protection-inventory`. The 11-16 00:03 UTC weekly restore failed
+because the fixed manifest pin required the exact 10-20 inventory. Replaced with an
+append-only chain verification checked against the restored DB, fixed failure reason
+codes, a fenced reseal maintenance mode and an offline bundle builder. Nothing was
+deployed and no Railway variable was changed. Operator steps, each production step
+marked for owner approval: [RESOLUTE-PROTECTION-CHAIN.md](RESOLUTE-PROTECTION-CHAIN.md).
