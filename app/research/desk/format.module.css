@@ -6,7 +6,7 @@
 .reactions{display:flex;align-items:center;gap:5px;flex-wrap:wrap;margin-top:9px}.reactions button{display:inline-flex;align-items:center;gap:4px;border:1px solid #52615c;border-radius:12px;background:transparent;color:#ccc6b8;padding:3px 6px;min-height:26px;line-height:1;cursor:pointer;font-size:11px}.reactions button[aria-pressed=true]{border-color:#d5bd83;background:#c9aa5830;color:#f3dfac}.reactions button:disabled{opacity:.5}.reactions small{width:100%;color:#c5a795;font-size:11px}
 
 /* The editor owns its selection and DOM; keep native iOS selection handles. */
-.editable p{margin:0;min-height:1.65em}.editable strong{font-weight:700}.editable mark{background:#705b00;color:inherit}.editable:global(.ProseMirror){white-space:pre-wrap;-webkit-user-select:text;user-select:text;-webkit-touch-callout:default}.editable ::selection{background:#a5becb66}.reactions button{transition:background .12s,border-color .12s,transform .12s}.reactions button:active{transform:scale(.92)}.reactions button[aria-pressed=true] .reactionEmoji{animation:reaction-pop .25s ease-out}.reactionCount{font-variant-numeric:tabular-nums;display:inline-block;min-width:.7em;animation:reaction-count .18s ease-out}@keyframes reaction-pop{0%{transform:scale(.85)}55%{transform:scale(1.25)}100%{transform:scale(1)}}@keyframes reaction-count{from{transform:translateY(3px);opacity:.35}to{transform:translateY(0);opacity:1}}@media(prefers-reduced-motion:reduce){.reactionCount,.reactions button[aria-pressed=true] .reactionEmoji{animation:none}.reactions button{transition:none}}
+.editable p{margin:0;min-height:1.65em}.editable strong{font-weight:700}.editable mark{background:#705b00;color:inherit}.editable:global(.ProseMirror){white-space:pre-wrap;-webkit-user-select:text;user-select:text;-webkit-touch-callout:default}.reactions button{transition:background .12s,border-color .12s,transform .12s}.reactions button:active{transform:scale(.92)}.reactions button[aria-pressed=true] .reactionEmoji{animation:reaction-pop .25s ease-out}.reactionCount{font-variant-numeric:tabular-nums;display:inline-block;min-width:.7em;animation:reaction-count .18s ease-out}@keyframes reaction-pop{0%{transform:scale(.85)}55%{transform:scale(1.25)}100%{transform:scale(1)}}@keyframes reaction-count{from{transform:translateY(3px);opacity:.35}to{transform:translateY(0);opacity:1}}@media(prefers-reduced-motion:reduce){.reactionCount,.reactions button[aria-pressed=true] .reactionEmoji{animation:none}.reactions button{transition:none}}
 
 .reactionEmoji{display:inline-block;font-size:13px;line-height:1}.editor{user-select:text;-webkit-user-select:text;-webkit-touch-callout:default}
 
@@ -80,3 +80,9 @@
 .count{font-size:14px;white-space:nowrap}
 .audioUpload .memoRow{grid-column:1/-1;display:block;margin:0}
 .audioUpload .memoRow .audioMemoEntry{grid-column:auto;grid-row:auto;height:auto;min-height:40px;padding:6px 4px;border:0;background:none;color:#a99876;font-size:14px;text-decoration:underline;white-space:normal;text-align:left}
+
+/* Nov 16 (owner): text in the input is 16px with a 1.7 line height (an iPhone zooms into anything smaller), and the
+   native long-press selection (blue highlight and handles) is left to the system. Posted text is styled elsewhere. */
+.editor .editable,.editor .editable p{font-size:16px;line-height:1.7}
+.editor .editable p{min-height:1.7em}
+.editor,.editor .editable,.editor .editable *{-webkit-user-select:text;user-select:text;-webkit-touch-callout:default}

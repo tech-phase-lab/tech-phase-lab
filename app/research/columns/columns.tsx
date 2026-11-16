@@ -1,6 +1,6 @@
 "use client";
 import { useIdentityRefresh } from "../identity-provider";
-import { useEffect, useRef, useState } from "react";
+import { memo, useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { postNames, type EditorialPost, type PostKind } from "@/lib/research/editorial-posts";
@@ -14,9 +14,9 @@ import { weeklySections } from "@/lib/research/weekly";
 import PostActions from "../desk/post-actions";
 import DeskBody from "../desk/body";
 import Reactions from "../desk/reactions";
-import { isFresh, useMinuteClock } from "../desk/use-minute";
+import { nextSteadyOwner, useNewNoteId } from "../desk/use-minute";
 import NoteComposer from "../notes/composer";
-import { useMemberDisplay, useOwnerMode } from "../member-display-provider";
+import { useMemberDisplay, useMemberSettled, useOwnerMode } from "../member-display-provider";
 type Result = { items: EditorialPost[]; access: string; status: string; validUntil?: number };
 export default function ColumnsPage({ initialKind = "all", initial, postId }: { postId?: string; initialKind?: PostKind | "all"; initial?: Result } = {}) {
   const refreshIdentity = useIdentityRefresh();
@@ -24,6 +24,7 @@ export default function ColumnsPage({ initialKind = "all", initial, postId }: { 
   const kind = initialKind;
   const memberPlan = useMemberDisplay();
   const ownerMode = useOwnerMode();
+  const steadyOwner = useSteadyOwnerMode(ownerMode, useMemberSettled());
   const [result, setResult] = useState<Result>(initial ?? { items: [], access: "", status: "loading" });
   const latest = useRef(result);
   useEffect(() => { latest.current = result; }, [result]);
@@ -81,21 +82,35 @@ export default function ColumnsPage({ initialKind = "all", initial, postId }: { 
   }, [retry, initial, memberPlan, refreshIdentity, postId]);
   const membershipMismatch = memberPlan !== null && result.status === "ready" && (result.access === "pro") !== (memberPlan === "pro");
   const shown = membershipMismatch ? { items: [], access: "", status: "loading" } : result;
+  const published = useCallback(() => setRetry(value => value + 1), []);
+  const newNote = useNewNoteId(shown.items.filter(item => item.kind === "notes"));
   return <ResearchToolShell desk compactTitle lang={lang} setLang={setLang} title={initialKind === "all" ? "RIZEL’S DESK" : initialKind === "qa" ? ja ? "リゼルに聞く" : "Ask Rizel" : postNames[initialKind][lang]} description={initialKind === "notes" ? (ja ? "PRO会員だけに、本音を。" : "Candid thoughts, for PRO members only.") : ""}>
     {initialKind === "weekly" && ownerMode && <WeeklyComposer onPublished={() => setRetry(value => value + 1)} />}
     {initialKind === "all" && <nav className={styles.writeAction}><Link href="/research/weekly">{ja ? "週刊 Tech Phase PRO" : "Tech Phase PRO Weekly"}</Link></nav>}
     {initialKind === "qa" && <nav className={questionStyles.views} aria-label={ja ? "質問メニュー" : "Question views"}><Link href="/research/qa">{ja ? "みんなの質問" : "Questions"}</Link><span aria-current="page">{ja ? "公開された回答" : "Published answers"}</span></nav>}
-    {initialKind === "notes" && ownerMode && <NoteComposer onPublished={() => setRetry(value => value + 1)} />}
+    {initialKind === "notes" && steadyOwner && <SteadyNoteComposer onPublished={published} />}
     {shown.status === "loading" && <div className={styles.placeholder} aria-busy="true" aria-label={ja ? "記事を読み込んでいます" : "Loading articles"} />}
     {shown.status === "error" && <div role="status"><p>{ja ? "記事を読み込めませんでした。" : "Unable to load articles."}</p><button onClick={() => setRetry(v => v + 1)}>{ja ? "再読み込み" : "Retry"}</button></div>}
     {shown.status === "ready" && !shown.items.filter(item => kind === "all" || item.kind === kind).length && <section className={styles.article}><h2>{kind === "all" ? ja ? "公開記事は準備中です" : "Articles are being prepared" : ja ? "この種類の記事はまだありません" : "No articles in this category yet"}</h2><p>{ja ? "公開された投稿がここに並びます。" : "Published posts will appear here."}</p><Link href="/research/account">{ja ? "会員情報を確認する" : "View membership"}</Link></section>}
-    {shown.items.filter(item => kind === "all" || item.kind === kind).map(item => <ColumnArticle key={item.id} item={item} ja={ja} ownerMode={ownerMode} access={shown.access} onUpdated={() => setRetry(value => value + 1)} />)}
+    {shown.items.filter(item => kind === "all" || item.kind === kind).map(item => <ColumnArticle key={item.id} item={item} ja={ja} ownerMode={steadyOwner} access={shown.access} fresh={item.id === newNote} onUpdated={() => setRetry(value => value + 1)} />)}
   </ResearchToolShell>;
 }
 
-function ColumnArticle({ item, ja, ownerMode, access, onUpdated }: { item: EditorialPost; ja: boolean; ownerMode: boolean; access: string; onUpdated: () => void }) {
+// The post box must not be unmounted while the membership is only being re-checked (resume, network back,
+// access renewal): unmounting it destroyed the TipTap editor that held focus, so on the iPhone the keyboard
+// stayed up over a fresh, empty editor and nothing typed appeared (owner, Nov 16). It goes away only when a
+// finished check says this is not the owner. Publishing is still checked by the server.
+function useSteadyOwnerMode(ownerMode: boolean, settled: boolean) {
+  const [steady, setSteady] = useState(ownerMode);
+  const next = nextSteadyOwner(steady, ownerMode, settled);
+  if (next !== steady) setSteady(next);
+  return ownerMode || next;
+}
+// List refreshes (lease renewal, focus reload) must not re-render the editor while a selection is being made.
+const SteadyNoteComposer = memo(NoteComposer);
+
+function ColumnArticle({ item, ja, ownerMode, access, fresh, onUpdated }: { item: EditorialPost; ja: boolean; ownerMode: boolean; access: string; fresh: boolean; onUpdated: () => void }) {
   const [editing, setEditing] = useState(false);
-  const minute = useMinuteClock();
   useEffect(() => {
     if (item.kind !== "qa" || window.location.hash !== `#${encodeURIComponent(item.id)}`) return;
     // Answers arrive asynchronously, after the browser's initial anchor scroll.
@@ -105,8 +120,9 @@ function ColumnArticle({ item, ja, ownerMode, access, onUpdated }: { item: Edito
   const lang = ja ? "ja" : "en";
   const date = <time dateTime={item.publishedAt!}>{new Intl.DateTimeFormat(ja ? "ja-JP" : "en-US", { dateStyle: "medium", ...(item.kind !== "weekly" ? { timeStyle: "short", hourCycle: "h23" } as const : {}), timeZone: "Asia/Tokyo" }).format(new Date(item.publishedAt!))}</time>;
   const answerLabel = <div className={styles.answerLabel}><Image src="/rizel-avatar.webp" alt={ja ? "リゼル" : "RIZEL"} width={32} height={32} unoptimized /><div><span>{ja ? "リゼル" : "RIZEL"}</span><small>{date} JST</small></div></div>;
-  // A post from the last 60 minutes carries a gold NEW tag next to its time.
-  const noteMeta = <p className={styles.meta}>{date}<small className={styles.zone}> JST</small>{item.kind === "notes" && isFresh(minute, item.publishedAt!) && <span className={styles.newTag}>NEW</span>}</p>;
+  // Only the newest note, for 30 minutes after posting, carries the gold NEW tag. The date, time and JST never
+  // break apart; when the row is too narrow, NEW moves under them and the pencil and trash stay on the right.
+  const noteMeta = <p className={styles.meta}><span className={styles.stamp}>{date}<small className={styles.zone}> JST</small></span>{item.kind === "notes" && fresh && <span className={styles.newTag}>NEW</span>}</p>;
   return <article className={`${styles.article} ${editing ? styles.editing : ""} ${item.kind === "notes" ? styles.note : item.kind === "qa" ? styles.qaArticle : ""}`} id={item.id}>
     {item.kind === "notes" ? <div className={styles.noteHeader}><div className={styles.noteAvatar}><Image src="/rizel-avatar.webp" alt={ja ? "リゼル" : "RIZEL"} width={46} height={46} unoptimized /></div></div> : item.kind === "weekly" ? <p className={styles.meta}>{postNames[item.kind][lang]} · {date}</p> : null}
     <div className={item.kind === "notes" ? styles.noteBubble : undefined}>
