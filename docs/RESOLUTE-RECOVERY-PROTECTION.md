@@ -170,3 +170,12 @@ allowlist and production gates. Unsafe effective grants (including column-only o
 PUBLIC access), role escalation and missing required rights abort the transaction.
 This has not been applied to production and does not establish key custody or an
 independent object-write permission boundary. All storage flags remain disabled.
+
+## 2026-11-16 — append-only verification replaces the fixed full-inventory pin
+
+The weekly restore failed on 2026-11-16 because the pinned 10-20 manifest no longer
+matched the live inventory after the 11-13 acceptance events. The restore now treats
+RESOLUTE_PROTECTION_EVENTS_MANIFEST_SHA256 as a chain anchor and accepts only an
+append-only extension that the restored database's protection_outbox confirms.
+Failures carry fixed reason codes. Details, the chain format, the step-1 reseal mode
+and the V4 bundle procedure: RESOLUTE-PROTECTION-CHAIN.md. Not deployed.
