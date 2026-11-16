@@ -9,12 +9,12 @@ export const PUSH_DIAG_TIMES = [
   // Service worker (written to Cache Storage, read back by the app)
   "push", "shown", "click",
   // App
-  "foreground", "query", "queryTimeout", "store", "pending", "banner", "bannerOpen", "bannerClose", "bannerTimeout", "navigated",
+  "foreground", "query", "queryTimeout", "store", "server", "pending", "banner", "bannerOpen", "bannerClose", "bannerTimeout", "navigated",
 ] as const;
 /** Yes/no answers (null: the device could not say). */
 export const PUSH_DIAG_FLAGS = ["listApi", "listed", "stillListed", "controlled", "standalone"] as const;
 /** How the app moved to the notice's page. */
-export const PUSH_DIAG_VIA = ["worker-message", "pending", "banner", "gone-after-tap"] as const;
+export const PUSH_DIAG_VIA = ["worker-message", "pending", "banner", "gone-after-tap", "server-tap"] as const;
 
 type Time = (typeof PUSH_DIAG_TIMES)[number];
 type Flag = (typeof PUSH_DIAG_FLAGS)[number];
@@ -144,7 +144,8 @@ export function pushDiagnosticRows(record: PushDiagnostic, lang: "ja" | "en"): P
     : `${new Date(at).toLocaleTimeString(lang === "ja" ? "ja-JP" : "en-US", { hour12: false })}${start !== undefined && at !== start ? ` (+${((at - start) / 1000).toFixed(1)}s)` : ""}`;
   const yes = (flag: boolean | null | undefined) => flag === undefined ? undefined : flag === null ? t("不明", "unknown") : flag ? t("はい", "yes") : t("いいえ", "no");
   const via = { "worker-message": t("ワーカーからの依頼", "worker message"), pending: t("記録したタップ", "written tap"), banner: t("アプリ内の通知", "in-app banner"),
-    "gone-after-tap": t("一覧から消えた直後に起動（タップとみなす）", "gone from the list just before the app came up (taken as a tap)") };
+    "gone-after-tap": t("一覧から消えた直後に起動（タップとみなす）", "gone from the list just before the app came up (taken as a tap)"),
+    "server-tap": t("送信から15秒以内に起動（タップとみなす）", "app came up within 15 s of the send (taken as a tap)") };
   const rows: [string, string | undefined][] = [
     [t("ワーカーの版", "Worker version"), record.v],
     [t("通知の番号（ランダム）", "Notice id (random)"), record.id],
@@ -157,6 +158,7 @@ export function pushDiagnosticRows(record: PushDiagnostic, lang: "ja" | "en"): P
     [t("ワーカーが問い合わせに応答", "Worker answered the app"), time(record.query)],
     [t("ワーカーが応答しなかった", "Worker did not answer"), time(record.queryTimeout)],
     [t("前面に来た時も一覧にあったか", "Still listed when the app came back"), yes(record.stillListed)],
+    [t("サーバーの記録で通知を見つけた", "Notice found in the server's record"), time(record.server)],
     [t("記録したタップを見つけた", "Written tap found"), time(record.pending)],
     [t("アプリ内の通知を表示", "In-app banner shown"), time(record.banner)],
     [t("「開く」を押した", "Open pressed"), time(record.bannerOpen)],

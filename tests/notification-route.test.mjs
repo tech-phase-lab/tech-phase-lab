@@ -6,7 +6,8 @@ const source=readFileSync(new URL('../app/api/research/notifications/route.ts',i
  .replace('import { getMembership } from "@/lib/membership/server";', 'const getMembership = async () => globalThis.__pushMember;')
  .replace('"@/lib/membership/entitlements"', JSON.stringify(new URL('../lib/membership/entitlements.ts',import.meta.url).href))
  .replace('"@/lib/research/push-diagnostic"', JSON.stringify(new URL('../lib/research/push-diagnostic.ts',import.meta.url).href))
- .replace('"@/lib/research/push-send-log"', JSON.stringify(new URL('../lib/research/push-send-log.ts',import.meta.url).href));
+ .replace('"@/lib/research/push-send-log"', JSON.stringify(new URL('../lib/research/push-send-log.ts',import.meta.url).href))
+ .replace('"@/lib/research/push-server-notice"', JSON.stringify(new URL('../lib/research/push-server-notice.ts',import.meta.url).href));
 const {GET,POST}=await import('data:text/javascript;base64,'+Buffer.from(stripTypeScriptTypes(source)).toString('base64'));
 test('member notification routes enforce verified identity, expiry and fixed owned-device paths',async()=>{
  const saved={fetch:globalThis.fetch,url:process.env.RESEARCH_MONITOR_URL,token:process.env.RESEARCH_MONITOR_TOKEN};
@@ -140,5 +141,40 @@ test('Nov 16: the send log is for owner accounts only, read from the monitor and
    assert.deepEqual(await response.json(),{ok:true,items:[item]});
   }
   assert.deepEqual(calls,[['https://monitor.example/push/send-log','GET',undefined],['https://monitor.example/push/send-log','GET',undefined]]);
+ } finally {globalThis.fetch=saved.fetch;delete globalThis.__pushMember;for(const [key,value] of [['RESEARCH_MONITOR_URL',saved.url],['RESEARCH_MONITOR_TOKEN',saved.token]]){if(value===undefined)delete process.env[key];else process.env[key]=value;}}
+});
+
+// Nov 16: the app's own banner asks the server for the newest notice sent to this member's current device, then marks it opened or
+// dismissed. Any signed-in member (FREE or PRO); the member id comes from the session, never the body; only the cleaned notice returns.
+test('Nov 16: recent-notice, notice-opened and notice-dismissed are for the signed-in member, with the session member id only', async () => {
+ const saved={fetch:globalThis.fetch,url:process.env.RESEARCH_MONITOR_URL,token:process.env.RESEARCH_MONITOR_TOKEN};
+ process.env.RESEARCH_MONITOR_URL='https://monitor.example';process.env.RESEARCH_MONITOR_TOKEN='fixture';
+ const id='0123456789abcdef0123456789abcdef';
+ const clean={id,kind:'test',page:'/research/notifications',title:'テスト通知',sentAt:1,ageMs:4000,state:'new',openedAt:null,dismissedAt:null};
+ const calls=[];let answer={ok:true,registered:true,notice:{...clean,endpoint:'https://web.push.apple.com/secret'}};
+ globalThis.fetch=async(url,options)=>{calls.push({url:String(url),body:JSON.parse(options.body)});return Response.json(answer);};
+ const req=(action,extra={},origin='https://example.test')=>new Request('https://example.test/api/research/notifications',{method:'POST',headers:{origin,'content-type':'application/json'},
+  body:JSON.stringify({action,subscription:{endpoint:'https://web.push.apple.com/x'},memberId:'user_victim',...extra})});
+ try {
+  for(const action of ['recent-notice','notice-opened','notice-dismissed','notice-status']) {
+   for(const [member,status] of [[{status:'signed-out'},401],[{status:'unavailable'},503]]) { globalThis.__pushMember=member;assert.equal((await POST(req(action))).status,status); }
+   globalThis.__pushMember={status:'signed-in',userId:'user_member',plan:'free',accessExpiresAt:0};
+   assert.equal((await POST(req(action,{},'https://attacker.test'))).status,403);
+  }
+  assert.equal(calls.length,0);
+  // A FREE member and an owner account alike reach their own device's notice.
+  for (const member of [{status:'signed-in',userId:'user_member',plan:'free',accessExpiresAt:0},{status:'signed-in',userId:'user_owner',plan:'pro',accessExpiresAt:Date.now()+60000,ownerAccount:true}]) {
+   globalThis.__pushMember=member;calls.length=0;
+   assert.deepEqual(await (await POST(req('recent-notice'))).json(),{ok:true,registered:true,notice:clean});
+   assert.equal(calls[0].url,'https://monitor.example/push/member/recent-notice');
+   assert.equal(calls[0].body.memberId,member.userId);
+   assert.equal('noticeId' in calls[0].body,false);
+  }
+  answer={ok:true,marked:true};calls.length=0;
+  assert.deepEqual(await (await POST(req('notice-opened',{noticeId:id}))).json(),{ok:true,marked:true});
+  assert.deepEqual(await (await POST(req('notice-dismissed',{noticeId:{x:1}}))).json(),{ok:true,marked:true});
+  assert.deepEqual(calls.map(c=>[c.url,c.body.noticeId,c.body.memberId]),[['https://monitor.example/push/member/notice-opened',id,'user_owner'],['https://monitor.example/push/member/notice-dismissed','','user_owner']]);
+  globalThis.fetch=async()=>Response.json({ok:false,error:'not-owned'},{status:400});
+  assert.deepEqual(await (await POST(req('notice-opened',{noticeId:id}))).json(),{ok:false,error:'not-owned'});
  } finally {globalThis.fetch=saved.fetch;delete globalThis.__pushMember;for(const [key,value] of [['RESEARCH_MONITOR_URL',saved.url],['RESEARCH_MONITOR_TOKEN',saved.token]]){if(value===undefined)delete process.env[key];else process.env[key]=value;}}
 });

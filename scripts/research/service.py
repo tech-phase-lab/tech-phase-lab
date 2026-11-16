@@ -2051,7 +2051,7 @@ class AutomaticMonitor:
             if self.notification_config.get("mode") == "web-push":
                 with self.db_lock, monitor.connect(self.db_path) as db:
                     devices = release_watch.owner_devices(db)
-                incident_delivery.send_owner_push(claim, devices, web_push.send)
+                incident_delivery.send_owner_push(claim, devices, self.noted(web_push.send))
             else:
                 transport(self.notification_config, claim)
         except incident_delivery.DeliveryUnavailable:
@@ -2842,6 +2842,23 @@ class AutomaticMonitor:
             monitor.resolve_operational_incident(db, "backup:database")
         return True
 
+    def noted(self, transport):
+        """The transport, then each accepted notice is written down for the app's own banner (Nov 16, web_push.remember_notice).
+        For senders called outside a database connection (incident alerts)."""
+        return lambda subscription, message: self.note_sent(subscription, message, transport(subscription, message))
+
+    def note_sent(self, subscription, message, code):
+        try:
+            with self.db_lock:
+                db = web_push.connect(self.db_path)
+                try:
+                    web_push.remember_notice(db, subscription, message, code)
+                finally:
+                    db.close()
+        except Exception as exc:
+            print(json.dumps({"event": "push-notice-not-recorded", "error": type(exc).__name__}), flush=True)
+        return code
+
     def release_watch_once(self, now=None, transport=None):
         """Alert the owner about a late or published scheduled result."""
         now = now or datetime.now(timezone.utc)
@@ -2853,6 +2870,9 @@ class AutomaticMonitor:
         if transport is None and web_push.configuration()["enabled"]:
             transport = web_push.send
         with self.db_lock, monitor.connect(self.db_path) as db:
+            # Nov 16: each accepted alert is written down for the app's own banner, on the same connection (web_push.noting).
+            if transport is not None:
+                transport = web_push.noting(db, transport, now.timestamp())
             return release_watch.check(db, payload, now, transport)
 
     def run_release_watch(self):
@@ -3901,7 +3921,9 @@ class Handler(BaseHTTPRequestHandler):
             except Exception:
                 self.send_json(503, {"ok": False, "error": "question-submit-unavailable"})
             return
-        if path in {"/push/register", "/push/remove", "/push/status", "/push/test", "/push/member/register", "/push/member/remove", "/push/member/status", "/push/member/test", "/push/member/revoke", "/push/member/preferences", "/push/member/save-preferences"}:
+        if path in {"/push/register", "/push/remove", "/push/status", "/push/test", "/push/member/register", "/push/member/remove", "/push/member/status", "/push/member/test", "/push/member/revoke", "/push/member/preferences", "/push/member/save-preferences",
+                    # Nov 16: the app's own banner for a notice sent to this device (web_push.notice_action).
+                    "/push/member/recent-notice", "/push/member/notice-opened", "/push/member/notice-dismissed", "/push/member/notice-status"}:
             if not self.authorized():
                 self.send_json(401, {"ok": False})
                 return
