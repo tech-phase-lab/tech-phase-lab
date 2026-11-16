@@ -7,27 +7,28 @@ import { useMemberDisplay, useMemberSettled, useOwnerAccount, useResearchOwner }
 import { inLanguage, nextFeature, proFeatures, type ProFeature } from "@/lib/research/pro-experience";
 import { hasSample, showStartButton } from "@/lib/research/pro-experience-samples";
 import ProTag from "./pro-tag";
+import FeatureIcon from "./feature-icons";
 import FeatureSample from "./samples";
 import styles from "./styles.module.css";
 
-const playIcon = <svg width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><path d="M2 1l7 4-7 4z" fill="currentColor" /></svg>;
+/** The one feature still shown by video (the others have a hands-on sample); only it carries 「動画で見る」 (owner's mockup, Nov 16). */
+export const VIDEO_FEATURE = "phone-alerts";
 
-/** The list (owner, Nov 5; Nov 5 again): eight features, a thumbnail on the left, the name and one line, and › on the right. */
+/** The list (owner, Nov 5; redesigned Nov 16 from the mockup 01-list): a heading like the other pages (eyebrow, white title, no PRO tag),
+ * eight features with a 56px mini screen on the left, the name and one line, and › on the right. Gold is only inside the mini screens. */
 export function ProExperienceList() {
   const [lang, setLang] = useResearchLanguage(), ja = lang === "ja";
   return <ResearchToolShell lang={lang} setLang={setLang} title={ja ? "PRO機能体験" : "PRO feature tour"} description="" showHeading={false} showTools={false}>
     <div className={styles.page}>
       <Link className={styles.back} href="/research">‹ {ja ? "メニュー" : "Menu"}</Link>
-      <div className={styles.titleRow}><h1 className={styles.title}>{ja ? "PRO機能体験" : "PRO feature tour"}</h1><ProTag /></div>
-      <p className={styles.lead}>{ja ? "PROでできることを、画像と動画で見られます。" : "See what you can do with PRO, in images and video."}</p>
+      <p className={styles.eyebrow}>PRO PREVIEW</p>
+      <h1 className={styles.listTitle}>{ja ? "PRO機能体験" : "PRO feature tour"}</h1>
+      <p className={styles.lead}>{ja ? "PROの機能を、サンプルで実際に触って試せます。" : "Try PRO features hands-on with samples."}</p>
       <ul className={styles.list}>{proFeatures.map(feature => <li key={feature.id}>
         <Link className={styles.row} href={`/research/pro-experience/${feature.id}`}>
-          <span className={styles.thumb} aria-hidden="true">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            {(feature.thumbnailUrl || feature.imageUrl) && <img src={feature.thumbnailUrl || feature.imageUrl} alt="" loading="lazy" />}
-            {feature.videoUrl && <span className={styles.play}>{playIcon}</span>}
-          </span>
-          <span><p className={styles.name}>{inLanguage(feature.name, lang)}</p><p className={styles.summary}>{inLanguage(feature.summary, lang)}</p></span>
+          <span className={styles.thumb} aria-hidden="true"><FeatureIcon id={feature.id} /></span>
+          <span className={styles.rowText}><span className={styles.name}>{inLanguage(feature.name, lang)}</span><span className={styles.summary}>{inLanguage(feature.summary, lang)}</span>
+            {feature.id === VIDEO_FEATURE && <span className={styles.videoPill}>{ja ? "動画で見る" : "Watch video"}</span>}</span>
           <span className={styles.chev} aria-hidden="true">›</span>
         </Link></li>)}</ul>
       {/* Not a feature page: the one difference that is only a number, in words (owner, Nov 5). Nothing here opens a page. */}

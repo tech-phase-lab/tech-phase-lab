@@ -6,7 +6,8 @@ import { featureById, inLanguage, mediaUrl, nextFeature, proFeatures, readFeatur
 const read = path => readFileSync(new URL(path, import.meta.url), "utf8");
 
 test("eight features, in the owner's order, each with its own address; Tech Alerts is not one of them", () => {
-  assert.deepEqual(proFeatures.map(feature => feature.name.ja), ["RIZEL'S DESK", "監視22銘柄", "テーマランキング", "銘柄比較", "財務レーダー", "スマホ通知", "連関マップ", "米国株の資産管理"]);
+  // Nov 16 (owner's mockup 01-list): a new order; names unchanged.
+  assert.deepEqual(proFeatures.map(feature => feature.name.ja), ["連関マップ", "テーマランキング", "銘柄比較", "監視22銘柄", "RIZEL'S DESK", "財務レーダー", "米国株の資産管理", "スマホ通知"]);
   assert.equal(new Set(proFeatures.map(feature => feature.id)).size, 8);
   assert.equal(proFeatures.some(feature => /ハイテク速報|厳選ニュース/.test(feature.name.ja)), false);
   assert.equal(featureById("watch-22").summary.ja, "22銘柄の動きと、決算後のまとめを確認");
@@ -24,9 +25,9 @@ test("the provisional text of the 22-stock page is the owner's sample; media sta
 });
 
 test("the next feature follows the list and wraps from the last to the first", () => {
-  assert.equal(nextFeature("watch-22").id, "theme-ranking");
-  assert.equal(nextFeature("relation-map").id, "us-portfolio");
-  assert.equal(nextFeature("us-portfolio").id, "rizels-desk");
+  assert.equal(nextFeature("watch-22").id, "rizels-desk");
+  assert.equal(nextFeature("relation-map").id, "theme-ranking");
+  assert.equal(nextFeature("phone-alerts").id, "relation-map");
   assert.equal(nextFeature("unknown"), undefined);
 });
 
@@ -77,9 +78,36 @@ test("below the list: 'そのほかのPROの違い' with the Tech Alerts differe
   assert.match(screen, /30分遅れ・新着5件まで/);
   assert.match(screen, /リアルタイム・件数の制限なし/);
   assert.doesNotMatch(screen.slice(screen.indexOf("そのほかのPROの違い"), screen.indexOf("function FeatureVideo")), /<Link|href=/);
-  assert.match(css, /\.row\{[^}]*grid-template-columns:80px[^}]*padding:9px 0/);
-  assert.match(css, /\.thumb\{[^}]*width:80px;height:50px/);
+  assert.match(css, /\.row\{[^}]*grid-template-columns:56px[^}]*padding:10px 0/);
+  assert.match(css, /\.thumb\{[^}]*width:56px;height:56px/);
   assert.match(css, /\.others::after\{[^}]*height:1px/);
   assert.match(css, /\.free\{[^}]*#6fe0b5/);
   assert.match(css, /\.pro\{[^}]*#e3c47e/);
+});
+
+test("the list follows the owner's mockup (Nov 16): heading like other pages without the crown tag, mini screens, 「動画で見る」 only on phone notifications", async () => {
+  const screen = read("../app/research/pro-experience/screen.tsx");
+  const list = screen.slice(screen.indexOf("export function ProExperienceList"), screen.indexOf("function FeatureVideo"));
+  assert.match(list, /<p className=\{styles\.eyebrow\}>PRO PREVIEW<\/p>\s*<h1 className=\{styles\.listTitle\}>\{ja \? "PRO機能体験"/);
+  assert.doesNotMatch(list, /<ProTag/, "no crown PRO pill beside the heading");
+  assert.match(list, /PROの機能を、サンプルで実際に触って試せます。/);
+  assert.match(list, /<FeatureIcon id=\{feature\.id\} \/>/);
+  assert.match(list, /\{feature\.id === VIDEO_FEATURE && <span className=\{styles\.videoPill\}>\{ja \? "動画で見る"/);
+  assert.match(screen, /export const VIDEO_FEATURE = "phone-alerts";/);
+  assert.equal((list.match(/動画で見る/g) ?? []).length, 1);
+  assert.match(list, /<span className=\{styles\.chev\} aria-hidden="true">›<\/span>/);
+  assert.match(list, /href=\{`\/research\/pro-experience\/\$\{feature\.id\}`\}/);
+  const icons = read("../app/research/pro-experience/feature-icons.tsx");
+  for (const feature of proFeatures) assert.ok(icons.includes(`"${feature.id}": <>`) || icons.includes(`${feature.id}: <>`), `${feature.id} has a mini screen`);
+  const css = read("../app/research/pro-experience/styles.module.css");
+  assert.match(css, /\.eyebrow\{[^}]*font-size:11px;font-weight:600;[^}]*letter-spacing:\.16em;color:#8e9aaa/);
+  assert.match(css, /\.thumb\{[^}]*border:1px solid #5c4a24;border-radius:14px;background:radial-gradient\(circle at 30% 20%,#2a2416,#0f141c 70%\);box-shadow:0 0 14px rgba\(226,194,122,\.12\)/);
+  assert.match(css, /\.rowText\{[^}]*gap:3px/);
+  assert.match(css, /\.name\{[^}]*font-size:16px/);
+  assert.match(css, /\.videoPill\{[^}]*border:1px solid #2c3a4a;border-radius:999px;background:#1a2230;color:#aab6c4;font-size:11px;font-weight:700/);
+  // Gold only inside the mini screens: the heading, lead and rows carry none.
+  for (const rule of ["eyebrow", "listTitle", "lead", "row", "name", "summary", "chev", "row:focus-visible"]) {
+    const body = css.match(new RegExp(`\\.${rule.replace(":", "\\:")}\\{([^}]*)\\}`))?.[1] ?? "";
+    assert.doesNotMatch(body, /#e3c47e|#e2c27a|#c9a55a|#d9b56a/, rule);
+  }
 });

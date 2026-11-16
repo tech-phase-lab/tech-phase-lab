@@ -14,18 +14,17 @@ import { buildSecMarketEvidence } from "../../lib/research/sec-market-evidence.t
 import { prepareComparisonAnalysis } from "../../lib/research/comparison-analysis.ts";
 import { appendMarketItems } from "../../lib/research/twelve-data-financials.ts";
 import { comparisonCatalog } from "../../lib/research/comparison-catalog.ts";
-import { radarFacts } from "../../lib/research/radar-facts.ts";
 import { buildRadar } from "../../lib/research/radar.ts";
 import { THEME_TICKERS } from "../../lib/research/theme-definitions.ts";
 import { sampleStockReturns } from "../../lib/research/theme-ranking.ts";
 import { providers, sectorNames, sectorNamesEn } from "../../lib/research/intake.ts";
 import { companyWatches } from "../../lib/research/company-watch.ts";
-import { fictionalize } from "./fictional-samples.mjs";
+import { RADAR_SEMIS, SAMPLE_NOW, fictionalize } from "./fictional-samples.mjs";
 
 const root = new URL("../../", import.meta.url);
 const out = new URL("lib/research/pro-experience-samples/", root);
 mkdirSync(out, { recursive: true });
-const FICTIONAL = new Set(["relation-map-nvda.json", "watch22.json", "compare.json", "radar.json"]);
+const FICTIONAL = new Set(["relation-map-nvda.json", "watch22.json", "compare.json"]);
 const save = (name, value) => writeFileSync(new URL(name, out), `${JSON.stringify(FICTIONAL.has(name) ? fictionalize(name, value) : value, null, 1)}\n`);
 const STOCKS = [["NVDA", "1045810"], ["AMD", "2488"], ["INTC", "50863"], ["ARM", "1973239"]];
 
@@ -35,13 +34,20 @@ save("relation-map-nvda.json", { _source: "data/chain/NVDA.json (copied unchange
 // 3. Theme Ranking: the repository's own preview returns (lib/research/theme-ranking.ts sampleStockReturns), one set for every theme ticker.
 save("themes.json", { _source: "lib/research/theme-ranking.ts sampleStockReturns(THEME_TICKERS): the repository's seeded preview numbers, not real prices (no price data is committed and Twelve Data is paid)", asOf: "2035-03-09", stocks: sampleStockReturns(THEME_TICKERS).map(stock => ({ ticker: stock.ticker, returns: Object.fromEntries(Object.entries(stock.returns).map(([period, value]) => [period, Math.round(value * 100) / 100])) })) });
 
-// 4. 22 tracked stocks: the list as lib/research/intake.ts gives it, and the saved post-earnings summaries of NVDA and AMD (lib/research/company-watch.ts).
-const OPEN = ["NVDA", "AMD"];
+// 4. 22 tracked stocks: the list as lib/research/intake.ts gives it. The earnings deep dive of NVDA and AMD, the centre of the sample, is
+// hand-written made-up data in watch22-dives.json (shown by the real EarningsDive); this script does not write that file.
 const watched = new Set(companyWatches.map(item => item.ticker));
 save("watch22.json", {
-  _source: "lib/research/intake.ts providers (the 22 tracked stocks) and lib/research/company-watch.ts (NVDA, AMD saved earnings summaries); only these two summaries are copied",
+  _source: "lib/research/intake.ts providers (the 22 tracked stocks). The earnings deep dives are in watch22-dives.json",
   companies: providers.map(p => ({ ticker: p.ticker, name: p.name, sector: { ja: sectorNames[p.sector], en: sectorNamesEn[p.sector] }, verified: watched.has(p.ticker) })),
-  summaries: OPEN.map(ticker => companyWatches.find(item => item.ticker === ticker)),
+});
+
+// 5. Financial Radar: one genre (semiconductors) of made-up earnings (fictional-samples.mjs RADAR_SEMIS) through the real buildRadar(tier pro),
+// so the PRO 体力ランキング has six ranked companies (owner, Nov 16).
+save("radar.json", {
+  _source: "Made-up latest and previous earnings for the six semiconductor tickers (scripts/pro-experience/fictional-samples.mjs RADAR_SEMIS) through lib/research/radar.ts buildRadar(tier pro). All figures and dates are fictional sample values on the sample's own timeline (as of 2035/03/12 09:00 JST); they are not real data.",
+  fictional: true, snapshotAt: SAMPLE_NOW,
+  radar: buildRadar("semis", Object.entries(RADAR_SEMIS).map(([ticker, facts]) => ({ ticker, facts })), "pro"),
 });
 
 if (process.argv.includes("--sec")) {
@@ -67,8 +73,4 @@ if (process.argv.includes("--sec")) {
     companies[ticker] = { ...company, ...c, preparedAnalysis: prepared };
   }
   save("compare.json", { _source: "SEC EDGAR companyfacts, submissions and the latest 10-Q/10-K filings (free public data), read through lib/research/comparison-loader.ts as the PRO comparison does; no Twelve Data, so valuation and momentum are not scored", snapshotAt, companies });
-  // 5. Financial Radar: SEC companyfacts through lib/research/radar-facts.ts and buildRadar, as /api/research/radar does for PRO.
-  const entries = [];
-  for (const [ticker, cik] of STOCKS) entries.push({ ticker, facts: radarFacts(JSON.parse(await secText(`https://data.sec.gov/api/xbrl/companyfacts/CIK${cik.padStart(10, "0")}.json`, 25_000_000)), now) });
-  save("radar.json", { _source: "SEC EDGAR companyfacts (free public data) through lib/research/radar-facts.ts radarFacts and lib/research/radar.ts buildRadar(tier pro)", snapshotAt, radar: buildRadar("semis", entries, "pro") });
 }
