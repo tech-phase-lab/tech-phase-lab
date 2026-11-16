@@ -29,7 +29,7 @@ export const SAMPLE_HINTS: Record<SampleFeature, { ja: string; en: string }> = {
   "relation-map": { ja: "企業をタップすると、NVDAとのつながりが見られます", en: "Tap a company to see how it connects to NVDA" },
   compare: { ja: "4銘柄から2つを選ぶと、結果ページが開きます", en: "Choose two of the four stocks to open the result" },
   "theme-ranking": { ja: "テーマをタップすると、中の銘柄が見られます", en: "Tap a theme to see its stocks" },
-  "watch-22": { ja: "NVDAとAMDは、決算後のまとめを開けます", en: "Open the post-earnings summary of NVDA or AMD" },
-  "financial-radar": { ja: "4銘柄を切り替えて、稼ぐ力と守る力を見比べられます", en: "Switch between the four stocks to compare them" },
+  "watch-22": { ja: "NVDAとAMDを切り替えて、決算の深掘りを読めます", en: "Switch between NVDA and AMD to read their earnings deep dive" },
+  "financial-radar": { ja: "半導体6社を、稼ぐ力と守る力の点数で順位付けしています", en: "Six chipmakers, ranked by their cash-generation and resilience scores" },
   "us-portfolio": { ja: "押すと読み取りの動きのあと、サンプルの持ち株が表示されます", en: "Press it to watch the reading, then see the sample holdings" },
 };

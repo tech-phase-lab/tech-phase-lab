@@ -36,6 +36,8 @@ export default function Questions() {
   const [state, setState] = useState<QuestionState>("loading");
   const [open, setOpen] = useState(false), [body, setBody] = useState(""), [requestId, setRequestId] = useState(""), [busy, setBusy] = useState(false), [message, setMessage] = useState("");
   const reload = () => setRevision(value => value + 1);
+  // The owner posts sample questions from the same bar (owner, Nov 16) without the daily limit, so no day count is shown to them.
+  const quota = ownerMode ? null : left;
 
   useEffect(() => {
     setRequestId(nextId());
@@ -92,24 +94,26 @@ export default function Questions() {
   const rules = [
     ja ? "質問は、PRO会員全員に公開されます。" : "Questions are visible to all PRO members.",
     ja ? "リゼルが選んだ質問にだけ、回答します。" : "Rizel chooses which questions to answer.",
-    ja ? `1日${limit ?? 2}件まで(日本時間の0時で切り替わります)。消しても、その日の残り件数は戻りません。` : `Up to ${limit ?? 2} a day (resets at 0:00 Japan time). Deleting a post does not give it back.`,
+    ownerMode
+      ? (ja ? "運営者の投稿には、1日の件数の上限はありません。回答は、各質問の「回答する」から公開します。" : "Owner posts have no daily limit. Publish a reply with “Answer” on the question.")
+      : ja ? `1日${limit ?? 2}件まで(日本時間の0時で切り替わります)。消しても、その日の残り件数は戻りません。` : `Up to ${limit ?? 2} a day (resets at 0:00 Japan time). Deleting a post does not give it back.`,
   ];
   return <ResearchToolShell desk lang={lang} setLang={setLang} title={ja ? "リゼルに聞く" : "Ask Rizel"} description={description}>
     {(state === "signed-out" || state === "pro-required") && <section className={styles.askNotice}><h2>{ja ? "閲覧・投稿はPRO会員限定です" : "PRO membership required"}</h2><p>{ja ? "PRO会員になると質問の投稿と閲覧ができます。すべての質問への回答はお約束していません。" : "PRO members can post and read questions. Not every question will receive an answer."}</p><Link href="/research/account">{ja ? "ログイン・会員情報" : "Sign in or view plans"}</Link></section>}
     {state === "error" && <p role="status">{ja ? "質問機能に接続できませんでした。時間をおいて再読み込みしてください。" : "We couldn't load the questions. Please try again later."}</p>}
     {(state === "ready" || state === "loading") && <>
-      {!ownerMode && (open
+      {(open
         ? <section className={styles.askPanel} aria-busy={busy} aria-label={ja ? "リゼルに質問する" : "Ask Rizel"}>
           <header><h2>{ja ? "リゼルに質問する" : "Ask Rizel"}</h2><button type="button" className={styles.askClose} aria-label={ja ? "閉じる" : "Close"} disabled={busy} onClick={() => setOpen(false)}>×</button></header>
           <textarea autoFocus maxLength={MAX} value={body} aria-label={ja ? "質問" : "Question"} onChange={event => setBody(event.target.value)} />
-          <p className={styles.askChips}><span>{ja ? "全員に公開" : "Visible to all PRO members"}</span><span>{ja ? "個人情報は書かない" : "Don't include personal information"}</span>{left !== null && <span>{ja ? `今日あと ${left} 件` : `${left} left today`}</span>}</p>
+          <p className={styles.askChips}><span>{ja ? "全員に公開" : "Visible to all PRO members"}</span><span>{ja ? "個人情報は書かない" : "Don't include personal information"}</span>{quota !== null && <span>{ja ? `今日あと ${quota} 件` : `${quota} left today`}</span>}</p>
           <div className={styles.askFoot}><span className={styles.askCount}>{body.length.toLocaleString()} / {MAX.toLocaleString()}<small>{ja ? `${MIN}文字から` : `${MIN}+ characters`}</small></span>
-            <button type="button" className={styles.askSend} disabled={state !== "ready" || busy || body.trim().length < MIN || left === 0} onClick={() => void submit()}>{busy ? (ja ? "送信中…" : "Posting…") : ja ? "投稿" : "Post question"}</button></div>
+            <button type="button" className={styles.askSend} disabled={state !== "ready" || busy || body.trim().length < MIN || quota === 0} onClick={() => void submit()}>{busy ? (ja ? "送信中…" : "Posting…") : ja ? "投稿" : "Post question"}</button></div>
           <details className={styles.askRules}><summary>{ja ? "回答と投稿について" : "Posting limits and replies"}</summary>{rules.map(text => <p key={text}>{text}</p>)}</details>
         </section>
-        : <button type="button" className={styles.askBar} disabled={state !== "ready" || left === 0} onClick={() => { setMessage(""); setOpen(true); }}>
+        : <button type="button" className={styles.askBar} disabled={state !== "ready" || quota === 0} onClick={() => { setMessage(""); setOpen(true); }}>
           <span className={styles.askBarIcon}>{icons.pen}</span><b>{ja ? "リゼルに質問する" : "Ask Rizel"}</b>
-          {left !== null && <small>{left === 0 ? (ja ? "今日は終わりました" : "Done for today") : ja ? `今日あと ${left} 件` : `${left} left today`}</small>}
+          {quota !== null && <small>{quota === 0 ? (ja ? "今日は終わりました" : "Done for today") : ja ? `今日あと ${quota} 件` : `${quota} left today`}</small>}
         </button>)}
       {message && <p className={styles.askMessage} role="status" aria-live="polite">{message}</p>}
       {items.length === 0 && <p className={styles.askEmpty}>{state === "loading" ? (ja ? "読み込み中…" : "Loading…") : ja ? "まだ質問はありません。" : "No questions yet."}</p>}
@@ -156,6 +160,7 @@ function QuestionCard({ item, ja, ownerMode, onChanged }: { item: Question; ja: 
     {message && <p className={styles.askMessage} role="status">{message}</p>}
     <footer>
       {ownerMode ? <>
+        {item.isMine && <small>{ja ? "あなたの質問" : "Your question"}</small>}
         {held && <><button type="button" className={styles.btnLine} disabled={busy} onClick={() => void call("/api/research/questions/moderation", { id: item.id, decision: "release" }, ja ? "表示できませんでした。" : "Could not show it.")}>{ja ? "表示する" : "Show"}</button><small>{item.heldReason}</small></>}
         {!held && item.status === "pending" && !editing && <button type="button" className={styles.btnGold} onClick={() => { setText(""); setEditing(true); }}>{ja ? "回答する" : "Answer"}</button>}
         {!held && item.status === "answered" && item.answer && !editing && <button type="button" className={styles.btnLine} onClick={() => { setText(item.answer!.bodyJa); setEditing(true); }}>{icons.pen}{ja ? "回答を編集" : "Edit answer"}</button>}

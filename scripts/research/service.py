@@ -1615,9 +1615,9 @@ class AutomaticMonitor:
         with editorial_posts.connect(self.db_path) as db:
             return editorial_posts.review(db, payload) if review else editorial_posts.save(db, payload)
 
-    def submit_question(self, payload):
+    def submit_question(self, payload, owner_post=False):
         with questions.connect(self.db_path) as db:
-            return questions.submit(db, payload)
+            return questions.submit(db, payload, owner_post)
 
     def member_questions(self, owner_key, limit=20, board=False, page=1, owner_view=False):
         with questions.connect(self.db_path) as db:
@@ -3915,7 +3915,8 @@ class Handler(BaseHTTPRequestHandler):
                 self.send_json(401, {"ok": False, "error": "unauthorized"})
                 return
             try:
-                self.send_json(200, {"ok": True, **self.app.submit_question(self.read_json())})
+                # Only an authenticated caller (the site's server) gets here; it sets this header for a verified owner account only.
+                self.send_json(200, {"ok": True, **self.app.submit_question(self.read_json(), self.headers.get("X-Question-Owner-Post") == "1")})
             except ValueError as exc:
                 self.send_json(400, {"ok": False, "error": str(exc)})
             except Exception:

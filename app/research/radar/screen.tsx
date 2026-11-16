@@ -43,8 +43,6 @@ export default function RadarScreen({ initial }: { initial: RadarPayload | null 
   }, [confirmed, request]);
   const radar = payloads[genre] ?? null;
   const pro = radar?.tier === "pro" ? radar : null;
-  const ranked = pro ? pro.dots.filter(dot => dot.rank !== null).sort((a, b) => a.rank! - b.rank!) : [];
-  const review = pro ? pro.dots.filter(dot => dot.review) : [];
   return <ResearchToolShell lang={lang} setLang={setLang} title="" description="" showHeading={false}>
     <div className={styles.page}>
       <p className={styles.eyebrow}>FINANCIAL RADAR</p>
@@ -66,16 +64,7 @@ export default function RadarScreen({ initial }: { initial: RadarPayload | null 
               {pro && <li><b aria-hidden="true">┈</b>{t("点線=前の決算から", "Dotted = since the previous report")}</li>}
             </ul>
           </section>
-          {pro ? <section className={styles.ranking}>
-            <header><h2>{t("体力ランキング", "Financial strength ranking")}</h2><small>{ja ? `最新の決算（${quarterOf(pro.asOf, true)}）・決算ごとに自動更新` : `Latest results (${quarterOf(pro.asOf, false)}) · updated with each report`}</small></header>
-            <p className={styles.order}>{t("並び順:稼ぐ力と守る力の点数の平均。グラフの右上ほど上位です", "Ranked by the average of the cash-generation and resilience scores. The closer to the upper right, the higher the rank.")}</p>
-            {ranked.map(dot => <RankCard key={dot.ticker} dot={dot} lang={lang} />)}
-            {review.length > 0 && <h3 className={styles.reviewHead}>{t("要確認(順位外)", "Needs review (not ranked)")}</h3>}
-            {review.map(dot => <RankCard key={dot.ticker} dot={dot} lang={lang} />)}
-            {pro.missing.length > 0
-              ? <details className={styles.missing}><summary>{t("データが足りない銘柄 ・ ", "Stocks with missing data · ")}{pro.missing.length}{t("件", "")}</summary><p>{pro.missing.join("　")}</p></details>
-              : <p className={styles.missing}>{t("データが足りない銘柄 ・ 0件", "Stocks with missing data · 0")}</p>}
-          </section> : !confirmed ? <section className={styles.rankWait} aria-hidden="true" /> : <section className={styles.locked} aria-label={t("PRO限定", "Available with PRO")}>
+          {pro ? <StrengthRanking pro={pro} lang={lang} /> : !confirmed ? <section className={styles.rankWait} aria-hidden="true" /> : <section className={styles.locked} aria-label={t("PRO限定", "Available with PRO")}>
             <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="11" width="14" height="9" rx="2" /><path d="M8 11V8a4 4 0 0 1 8 0v3" /></svg>
             <span>{t("PRO限定", "Available with PRO")}</span>
           </section>}
@@ -85,6 +74,24 @@ export default function RadarScreen({ initial }: { initial: RadarPayload | null 
       <p className={styles.foot}>{t("稼ぐ力は営業キャッシュフローの売上に対する割合です。守る力の現金は現金同等物と短期の投資、借入は短期・長期の借入とリース負債の合計です。売上や現金の流れは、年の決算の日は1年分、それ以外は直近4四半期分を使います。", "Cash generation is operating cash flow divided by revenue. Financial resilience compares cash (cash equivalents plus short-term investments) with debt (short- and long-term borrowings plus lease liabilities). Revenue and cash flow use the full year for annual reports and the latest four quarters otherwise.")}</p>
     </div>
   </ResearchToolShell>;
+}
+
+type ProRadar = Extract<RadarPayload, { tier: "pro" }>;
+/** 体力ランキング: the PRO part of the radar (also shown by the PRO feature tour's fixed sample, with one genre of made-up figures). */
+export function StrengthRanking({ pro, lang }: { pro: ProRadar; lang: "ja" | "en" }) {
+  const ja = lang === "ja", t = (a: string, b: string) => ja ? a : b;
+  const ranked = pro.dots.filter(dot => dot.rank !== null).sort((a, b) => a.rank! - b.rank!);
+  const review = pro.dots.filter(dot => dot.review);
+  return <section className={styles.ranking}>
+    <header><h2>{t("体力ランキング", "Financial strength ranking")}</h2><small>{ja ? `最新の決算（${quarterOf(pro.asOf, true)}）・決算ごとに自動更新` : `Latest results (${quarterOf(pro.asOf, false)}) · updated with each report`}</small></header>
+    <p className={styles.order}>{t("並び順:稼ぐ力と守る力の点数の平均。グラフの右上ほど上位です", "Ranked by the average of the cash-generation and resilience scores. The closer to the upper right, the higher the rank.")}</p>
+    {ranked.map(dot => <RankCard key={dot.ticker} dot={dot} lang={lang} />)}
+    {review.length > 0 && <h3 className={styles.reviewHead}>{t("要確認(順位外)", "Needs review (not ranked)")}</h3>}
+    {review.map(dot => <RankCard key={dot.ticker} dot={dot} lang={lang} />)}
+    {pro.missing.length > 0
+      ? <details className={styles.missing}><summary>{t("データが足りない銘柄 ・ ", "Stocks with missing data · ")}{pro.missing.length}{t("件", "")}</summary><p>{pro.missing.join("　")}</p></details>
+      : <p className={styles.missing}>{t("データが足りない銘柄 ・ 0件", "Stocks with missing data · 0")}</p>}
+  </section>;
 }
 
 /** One stock's card in the ranking (also shown by the PRO feature tour's fixed sample). */

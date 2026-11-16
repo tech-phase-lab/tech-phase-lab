@@ -113,8 +113,21 @@ export function fictionalize(name, file) {
 
 if (import.meta.url === `file://${process.argv[1]}`) {
   const dir = new URL("../../lib/research/pro-experience-samples/", import.meta.url);
-  for (const name of ["compare.json", "radar.json", "relation-map-nvda.json", "watch22.json"]) {
+  for (const name of ["compare.json", "relation-map-nvda.json", "watch22.json"]) {
     const path = new URL(name, dir), file = JSON.parse(readFileSync(path, "utf8"));
     writeFileSync(path, `${JSON.stringify(fictionalize(name, file), null, 1)}\n`);
   }
 }
+
+/** Financial Radar: one genre (semiconductors, the radar's own six tickers) with made-up latest and previous earnings, so the PRO
+ * 体力ランキング shows six ranked companies with every figure filled (owner, Nov 16: 「1つのジャンルで5〜6社を体力ランキングに入れて」).
+ * buildRadar (the real code) turns them into the dots, the scores and the order. Revenue in million USD; margins and growth in percent. */
+const snap = (end, basis, revenue, ocfMargin, fcfMargin, cover, revenueGrowth) => ({ end, basis, revenue, ocfMargin, fcfMargin, cover, revenueGrowth });
+export const RADAR_SEMIS = {
+  NVDA: { latest: snap("2034-10-26", "ttm", 408_000, 52.4, 49.1, 3.6, 68.2), previous: snap("2034-07-27", "ttm", 352_000, 54.0, 50.6, 3.1, 79.5) },
+  AMD: { latest: snap("2034-12-27", "annual", 44_200, 21.5, 17.8, 1.9, 34.6), previous: snap("2034-09-27", "ttm", 40_100, 19.8, 15.9, 1.7, 30.2) },
+  INTC: { latest: snap("2034-12-27", "annual", 56_800, 18.2, -6.4, 0.78, 4.1), previous: snap("2034-09-27", "ttm", 55_900, 15.6, -9.8, 0.71, 2.2) },
+  QCOM: { latest: snap("2034-12-24", "ttm", 46_900, 31.8, 28.9, 1.45, 9.3), previous: snap("2034-09-24", "annual", 45_300, 33.0, 30.1, 1.38, 8.1) },
+  AMAT: { latest: snap("2034-10-26", "annual", 31_400, 29.6, 25.1, 1.62, 7.8), previous: snap("2034-07-27", "ttm", 30_700, 27.9, 23.6, 1.70, 6.4) },
+  LRCX: { latest: snap("2034-12-28", "ttm", 21_700, 33.4, 30.2, 1.35, 15.2), previous: snap("2034-09-28", "ttm", 20_600, 30.1, 27.0, 1.20, 12.9) },
+};
