@@ -139,33 +139,79 @@ def sha(path):
             h.update(block)
     return h.hexdigest()
 
-def load_online_protection(env, client_factory, config):
-    """Read the isolated history store, never fall back to dump credentials."""
+# Restored DB's own protection history, compared object-for-row with the store.
+PROTECTION_HISTORY_SQL = """SELECT COALESCE(json_agg(json_build_object('userId',clerk_user_id,
+ 'revision',revision,'kind',kind,'at',to_char(occurred_at AT TIME ZONE 'UTC','YYYY-MM-DD"T"HH24:MI:SS.MS"Z"'))
+ ORDER BY clerk_user_id,revision,kind),'[]'::json)::text FROM resolute.protection_outbox"""
+# An event committed after the dump's snapshot is legitimately absent from the
+# restored DB. The backup manifest stamp is taken after pg_dump finishes, so a
+# bounded margin before it is allowed; anything older must have its restored row.
+BACKUP_POINT_GRACE = dt.timedelta(minutes=10)
+
+
+class ProtectionConfigError(RuntimeError):
+    reason = 'protection-config'
+
+
+def backup_point_cutoff(created_at):
+    if not isinstance(created_at, str) or not re.fullmatch(r'\d{8}T\d{12}Z', created_at):
+        raise ProtectionConfigError('backup point in time required')
+    stamp = dt.datetime.strptime(created_at, '%Y%m%dT%H%M%S%fZ').replace(tzinfo=dt.timezone.utc)
+    return stamp - BACKUP_POINT_GRACE
+
+
+def load_online_protection(env, client_factory, config, *, db_events=None,
+                           backup_cutoff=None, state=None):
+    """Read the isolated history store, never fall back to dump credentials.
+
+    The pinned manifest is the chain anchor (docs/RESOLUTE-PROTECTION-CHAIN.md).
+    With `state` and RESOLUTE_PROTECTION_CHAIN_WRITE=true, state['extend'] seals
+    the verified inventory as a new chained manifest; call it only after replay.
+    """
     names = ('ENDPOINT', 'BUCKET', 'REGION', 'ACCESS_KEY_ID', 'SECRET_ACCESS_KEY')
     values = {name: env.get('RESOLUTE_RESTORE_PROTECTION_' + name) for name in names}
     if any(not isinstance(value, str) or not value.strip() for value in values.values()):
-        raise RuntimeError('independent protection store configuration required')
+        raise ProtectionConfigError('independent protection store configuration required')
     endpoint = urlsplit(values['ENDPOINT'])
     if (endpoint.scheme != 'https' or not endpoint.hostname or endpoint.username
             or endpoint.password or endpoint.query or endpoint.fragment
             or endpoint.path not in ('', '/')):
-        raise RuntimeError('invalid independent protection endpoint')
+        raise ProtectionConfigError('invalid independent protection endpoint')
     backup_endpoint = urlsplit(env.get('BACKUP_ENDPOINT', ''))
     if (endpoint.netloc.lower() == backup_endpoint.netloc.lower()
             and values['BUCKET'] == env.get('BACKUP_BUCKET')):
-        raise RuntimeError('protection history must be separate from dump storage')
+        raise ProtectionConfigError('protection history must be separate from dump storage')
     key_hex = env.get('RESOLUTE_PROTECTION_KEY_HEX', '')
     pin = env.get('RESOLUTE_PROTECTION_EVENTS_MANIFEST_SHA256', '')
     if (not re.fullmatch('[0-9a-f]{64}', key_hex)
             or not re.fullmatch('[0-9a-f]{64}', pin)):
-        raise RuntimeError('independent protection key and manifest pin required')
+        raise ProtectionConfigError('independent protection key and manifest pin required')
+    if db_events is None or backup_cutoff is None:
+        raise ProtectionConfigError('restored database history and backup point required')
+    write = env.get('RESOLUTE_PROTECTION_CHAIN_WRITE') or 'false'
+    if write not in ('true', 'false'):
+        raise ProtectionConfigError('invalid chain write setting')
     client = client_factory('s3', endpoint_url=values['ENDPOINT'],
                             aws_access_key_id=values['ACCESS_KEY_ID'],
                             aws_secret_access_key=values['SECRET_ACCESS_KEY'],
                             region_name=values['REGION'], config=config)
-    return protection_events.load_manifest(client, values['BUCKET'],
-                                           bytes.fromhex(key_hex), pin, protection,
-                                           require_complete_inventory=True)
+    result = protection_events.verify_append_only(
+        client, values['BUCKET'], bytes.fromhex(key_hex), pin, protection,
+        db_events=db_events, backup_cutoff=backup_cutoff)
+    if state is not None:
+        state['chain'] = {'linked_manifests': result['linked'], 'tip_height': result['height'],
+                          'objects': len(result['objects']), 'added_since_tip': result['added'],
+                          'newer_than_backup': result['newer_than_backup'],
+                          'extended': False, 'manifest_sha256': None}
+        if write == 'true':
+            def extend():
+                now = dt.datetime.now(dt.timezone.utc)
+                sealed = now.strftime('%Y-%m-%dT%H:%M:%S.') + f'{now.microsecond // 1000:03d}Z'
+                digest = protection_events.extend_chain(client, values['BUCKET'], pin, result,
+                                                        mode='restore', sealed_at=sealed)
+                state['chain'].update(extended=digest is not None, manifest_sha256=digest)
+            state['extend'] = extend
+    return result['ledger']
 
 def validate_restore_environment(env):
     """Reject source database credentials before client imports or any I/O.
@@ -284,14 +330,24 @@ def main():
                     if online not in ('true', 'false'):
                         raise RuntimeError('invalid online protection schema result')
                     if online == 'true':
+                        history = json.loads(run(['psql', '-XAt', '-v', 'ON_ERROR_STOP=1', '-c',
+                            PROTECTION_HISTORY_SQL], env=e))
+                        chain_state = {}
                         ledger = load_online_protection(os.environ, boto3.client,
                             Config(s3={'addressing_style': 'virtual'},
                                    retries={'max_attempts': 3}, connect_timeout=15,
-                                   read_timeout=120))
+                                   read_timeout=120),
+                            db_events=history,
+                            backup_cutoff=backup_point_cutoff(manifest.get('created_at')),
+                            state=chain_state)
                         run(['psql', '-Xq', '-v', 'ON_ERROR_STOP=1'], env=e,
                             data=protection.restore_sql(ledger).encode())
-                        protection_result = {'state':'verified', 'source':'independent_online_manifest',
-                            'deletions':len(ledger['deletions']), 'suppressions':len(ledger['suppressions'])}
+                        # Only after a successful replay may the verified base grow.
+                        if 'extend' in chain_state:
+                            chain_state['extend']()
+                        protection_result = {'state':'verified', 'source':'independent_online_chain',
+                            'deletions':len(ledger['deletions']), 'suppressions':len(ledger['suppressions']),
+                            'chain':chain_state.get('chain')}
                     else:
                         protection_result = protection.restore_checkpoint(s3, bucket, root, run, e, identity,
                             os.environ.get('RESOLUTE_PROTECTION_CHECKPOINT_SHA256'))
@@ -329,7 +385,12 @@ def entrypoint():
         if notify_monitor:
             heartbeat('/fail')
         # No exception details: third-party errors can embed secret material.
-        print(json.dumps({'event':'RESOLUTE_JOB_FAILED','error_type':type(exc).__name__}), flush=True)
+        # Only a fixed, allowlisted reason code is added for diagnosis.
+        report = {'event':'RESOLUTE_JOB_FAILED','error_type':type(exc).__name__}
+        reason = getattr(exc, 'reason', None)
+        if isinstance(reason, str) and reason in protection_events.REASONS:
+            report['reason'] = reason
+        print(json.dumps(report), flush=True)
         raise SystemExit(1)
 
 
