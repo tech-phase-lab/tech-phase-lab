@@ -7,6 +7,7 @@ import { EditorContent, useEditor, useEditorState } from "@tiptap/react";
 import DeskBody, { mediaSource } from "./body";
 import { deskDocument, deskText } from "./document";
 import { deskExtensions } from "./editor-extensions";
+import { DeskLongPress } from "./long-press";
 import AudioUpload from "./audio-upload";
 import PhotoTile from "./photo-tile";
 import styles from "./format.module.css";
@@ -34,8 +35,9 @@ export default function DeskTextEditor({ value, onChange, disabled = false, labe
   }
   // Keep editor configuration stable while native selection handles move.
   const [initialContent] = useState(() => deskDocument(parts(value, media).text));
+  // A finger held still on a word selects it: on the iPhone a long press inside an editable only moves the caret (Nov 16).
   // eslint-disable-next-line react-hooks/refs -- Budget is read only by an editing transaction.
-  const [extensions] = useState(() => deskExtensions(() => 6000 - reserved.current));
+  const [extensions] = useState(() => [...deskExtensions(() => 6000 - reserved.current), DeskLongPress]);
   const editorProps = useMemo<EditorProps>(() => ({
       attributes: { class: styles.editable, role: "textbox", "aria-label": label, "aria-multiline": "true", spellcheck: "true" },
       handlePaste(view, event) {
