@@ -155,7 +155,9 @@ def delete_own(db, payload):
     return {"item": {"id": question_id, "deleted": True}, "left": _left(db, owner_key)}
 
 
-def submit(db, payload):
+def submit(db, payload, owner_post=False):
+    """`owner_post` comes only from the monitor's authenticated route header, which the site sets for a verified owner account;
+    never from the payload. The owner's sample posts skip the daily limit (owner, Nov 16); everything else stays the same."""
     if payload.get("action") == "delete":
         return delete_own(db, payload)
     owner_key = _owner(payload.get("ownerKey"))
@@ -181,10 +183,10 @@ def submit(db, payload):
         if current:
             if current["owner_key"] != owner_key or current["body"] != body or current["audience"] != audience:
                 raise ValueError("question-conflict")
-            return {"item": _item(current), "left": _left(db, owner_key)}
+            return {"item": _item(current), "left": None if owner_post is True else _left(db, owner_key)}
         held, reason = 0, ""
         if audience == "pro-board":
-            if _used_today(db, owner_key) >= settings()["dailyLimit"]:
+            if owner_post is not True and _used_today(db, owner_key) >= settings()["dailyLimit"]:
                 raise ValueError("question-daily-limit")
             reason = hold_reason(db, owner_key, body, now)
             held = int(bool(reason))
@@ -195,7 +197,7 @@ def submit(db, payload):
         # The author is never told a post is held: the reply looks the same.
         return {"item": _item(db.execute(
             "SELECT * FROM member_questions WHERE id=?", (question_id,)
-        ).fetchone()), "left": _left(db, owner_key)}
+        ).fetchone()), "left": None if owner_post is True else _left(db, owner_key)}
 
 
 def member_queue(db, owner_key, limit=20):
@@ -228,7 +230,7 @@ def board_queue(db, owner_key, limit=10, page=1, owner_view=False):
         items.append(value)
     private = db.execute("SELECT * FROM member_questions WHERE owner_key=? AND audience='private' ORDER BY created_at DESC,id DESC LIMIT 20", (owner_key,)).fetchall()
     return {"items": items, "privateItems": [_item(row) for row in private], "audience": "pro-board", "page": page, "hasNext": len(rows) > limit,
-            "limit": settings()["dailyLimit"], "left": _left(db, owner_key)}
+            "limit": settings()["dailyLimit"], "left": None if owner_view else _left(db, owner_key)}
 
 
 def moderation_queue(db, view="pending", limit=50):

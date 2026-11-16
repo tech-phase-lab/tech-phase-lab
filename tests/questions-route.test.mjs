@@ -34,8 +34,14 @@ test('member question route requires identity, hashes ownership and keeps retrie
     const body=JSON.stringify({audience:'pro-board',requestId:'q-'+'1'.repeat(32),body:'決算で最初に見る数字は何ですか？'});
     assert.equal((await POST(new Request('https://example.test/api/research/questions',{method:'POST',headers:{origin:'https://attacker.test','content-type':'application/json'},body}))).status,403);
     assert.equal((await POST(new Request('https://example.test/api/research/questions',{method:'POST',headers:{origin:'https://example.test','content-type':'application/json'},body}))).status,200);
+    assert.equal(state.calls.at(-1).init.headers['X-Question-Owner-Post'],undefined,'a member post has no owner flag');
+    // Nov 16: the owner posts too; the flag needs owner mode and the admin check, both from the server-side membership.
     state.member.ownerMode=true;
-    assert.equal((await POST(new Request('https://example.test/api/research/questions',{method:'POST',headers:{origin:'https://example.test','content-type':'application/json'},body}))).status,403);
+    assert.equal((await POST(new Request('https://example.test/api/research/questions',{method:'POST',headers:{origin:'https://example.test','content-type':'application/json'},body}))).status,200);
+    assert.equal(state.calls.at(-1).init.headers['X-Question-Owner-Post'],undefined,'owner mode without the admin check gets no flag');
+    state.member.isAdmin=true;
+    assert.equal((await POST(new Request('https://example.test/api/research/questions',{method:'POST',headers:{origin:'https://example.test','content-type':'application/json'},body}))).status,200);
+    assert.equal(state.calls.at(-1).init.headers['X-Question-Owner-Post'],'1');
     const sent=JSON.parse(state.calls.at(-1).init.body);assert.match(sent.ownerKey,/^[a-f0-9]{64}$/);assert.equal(sent.body,'決算で最初に見る数字は何ですか？');
   } finally {globalThis.fetch=saved.fetch;delete globalThis.__questions;for(const [key,value] of [['RESEARCH_MONITOR_URL',saved.url],['RESEARCH_MONITOR_TOKEN',saved.token]]){if(value===undefined)delete process.env[key];else process.env[key]=value;}}
 });
@@ -104,7 +110,7 @@ test('the ask screen follows the owner spec: one list, tags, the bar with the da
   for (const text of ['回答済み','受付中','保留','リゼルに質問する','今日あと','あなたの質問','リゼルの回答','表示する','回答する','回答を編集','文字から']) assert.ok(screen.includes(text), text);
   assert.match(screen,/const MIN = 10, MAX = 1200/);
   assert.doesNotMatch(screen,/DeskTextEditor|DeskBody/,'answers are plain text, no bold or marker');
-  assert.match(screen,/ownerMode &&/);assert.match(screen,/\{!ownerMode && \(open/,'owners get no writing box');
+  assert.match(screen,/ownerMode &&/);assert.doesNotMatch(screen,/!ownerMode && \(open/,'the owner gets the writing box too (Nov 16)');assert.match(screen,/const quota = ownerMode \? null : left/);
   const settings=JSON.parse(readFileSync(new URL('../scripts/research/question_settings.json',import.meta.url),'utf8'));
   assert.equal(settings.dailyLimit,2);assert.deepEqual(settings.holdWords,['ドル箱','ゼウス','詐欺','情報商材']);
   const python=readFileSync(new URL('../scripts/research/questions.py',import.meta.url),'utf8');
