@@ -2,8 +2,8 @@ import assert from "node:assert/strict";
 import { existsSync, readdirSync, readFileSync } from "node:fs";
 import test from "node:test";
 import { SAMPLE_FEATURES, SAMPLE_HINTS, SAMPLE_TIME, guardedTarget, hasSample, showStartButton } from "../lib/research/pro-experience-samples.ts";
-import { COMPARE_TICKERS, PORTFOLIO_IMAGE, PORTFOLIO_TOTAL_GAIN, compareNow, comparePairs, compareSample, portfolioHoldings, portfolioMarket } from "../lib/research/pro-experience-sample-data.ts";
-import { commonTotals, comparisonScores, overallComparison } from "../lib/research/comparison-scorecard.ts";
+import { COMPARE_TICKERS, PORTFOLIO_IMAGE, PORTFOLIO_TOTAL_GAIN, PORTFOLIO_TOTAL_GAIN_JPY, compareNow, comparePairs, compareSample, portfolioGainJpy, portfolioHoldings, portfolioMarket } from "../lib/research/pro-experience-sample-data.ts";
+import { commonTotals, comparisonAvailability, comparisonMetric, comparisonScores, overallComparison } from "../lib/research/comparison-scorecard.ts";
 import { valueHoldings } from "../lib/portfolio/calc.ts";
 import { proFeatures } from "../lib/research/pro-experience.ts";
 import { OWNER_ACCOUNT_ID, PRODUCTION_OWNER_ACCOUNT_ID } from "../lib/membership/entitlements.ts";
@@ -141,4 +141,90 @@ test("nothing in a sample leads to a real PRO screen: unhandled links only show 
   assert.match(read(`${SAMPLES}theme-ranking.tsx`), /<DivergingChart ja=\{ja\} mono onSelect=\{\(\) => proOnly\(\)\}/);
   // The tiles of the 22 stocks have no address to follow in the sample.
   assert.match(read("../app/research/companies/company-directory.tsx"), /\?<a key=\{company\.ticker\} role="button" tabIndex=\{0\}/);
+});
+
+// ---- Owner, Nov 16: 「サンプルなのですべて埋めてください」 — no blank, 「—」 or missing value anywhere; dates on the frame's made-up timeline. ----
+const SAMPLE_DIR = "../lib/research/pro-experience-samples/";
+const SAMPLE_FILES = ["compare.json", "portfolio.json", "radar.json", "relation-map-nvda.json", "themes.json", "watch22.json"];
+const MISSING_TEXT = /—|未取得|未開示|確認できません|そろいません|記載なし|読み取れません|不足|データなし|N\/A|未確認/;
+
+test("Stock Comparison: every factor of every pair has a score and a figure (割安性 and 株価モメンタム included), and every company has a strength and a weakness", () => {
+  for (const pair of comparePairs()) {
+    const result = compareSample(pair), name = pair.join("-");
+    const common = commonTotals(result.companies, compareNow);
+    assert.equal(common.ids.length, 7, `${name}: all seven factors are shared`);
+    assert.ok(common.totals.every(total => typeof total === "number"), name);
+    const overall = overallComparison(result.companies, "ja", compareNow);
+    assert.equal(overall.note, undefined, `${name}: the total is not limited to fewer factors`);
+    for (const c of result.companies) {
+      const scores = comparisonScores(c, compareNow);
+      assert.equal(scores.length, 7);
+      for (const score of scores) {
+        assert.equal(typeof score.value, "number", `${name} ${c.ticker} ${score.id}`);
+        for (const lang of ["ja", "en"]) {
+          const metric = comparisonMetric(c, score.id, lang, compareNow);
+          assert.ok(metric && !MISSING_TEXT.test(metric) && !/unavailable|not available|unverified|not readable|Not enough/i.test(metric), `${name} ${c.ticker} ${score.id}: ${metric}`);
+        }
+      }
+      assert.equal(comparisonAvailability(c, "ja", compareNow), null, `${c.ticker} is complete`);
+      const items = c.preparedAnalysis.items;
+      assert.ok(items.some(item => item.kind === "strength") && items.some(item => item.kind === "weakness"), `${c.ticker}: no 「該当なし」 box`);
+    }
+  }
+  const metric = ticker => id => comparisonMetric(compareSample([ticker, ticker === "NVDA" ? "AMD" : "NVDA"]).companies[0], id, "ja", compareNow);
+  assert.equal(metric("ARM")("valuation"), "予想PER 48.0×");
+  assert.equal(metric("NVDA")("momentum"), "約3か月 +14.6%");
+  assert.equal(metric("ARM")("stability"), "営業黒字 4/4四半期");
+  assert.equal(metric("ARM")("cash"), "簡易FCF率 17.6%");
+  // Nothing is left blank, so the sample leaves out the 「— 未取得…」 legend (the real screen keeps it).
+  assert.match(read(`${SAMPLES}compare.tsx`), /<ScoreOverview [^>]*missingNote=\{false\}/);
+  assert.match(read("../app/research/compare/screen.tsx"), /<ScoreOverview companies=\{result.companies\} lang=\{lang\} now=\{now\}\/>/);
+});
+
+test("Financial Radar: the four stocks each have every figure the PRO card shows", () => {
+  const radar = JSON.parse(read(`${SAMPLE_DIR}radar.json`)).radar;
+  assert.deepEqual(radar.dots.map(dot => dot.ticker), ["NVDA", "AMD", "INTC", "ARM"]);
+  assert.deepEqual(radar.missing, []);
+  for (const dot of radar.dots) {
+    for (const key of ["ocfMargin", "cover", "fcfMargin", "growth", "score", "rank", "size"]) assert.ok(Number.isFinite(dot[key]), `${dot.ticker} ${key}`);
+    assert.equal(dot.review, false);
+    assert.ok(dot.previous && Number.isFinite(dot.previous.ocfMargin) && Number.isFinite(dot.previous.cover), `${dot.ticker} previous`);
+  }
+});
+
+test("US stock portfolio: the yen gain is the image's +484,710円, row by row in whole yen, beside the unchanged +2,301.25 USD", () => {
+  const { rows, totals } = valueHoldings(portfolioHoldings, portfolioMarket.quotes, portfolioMarket.usdJpy);
+  assert.equal(portfolioMarket.usdJpy, 152.4);
+  assert.equal(Math.round(totals.gainUsd * 100) / 100, 2301.25);
+  assert.equal(PORTFOLIO_TOTAL_GAIN_JPY, 484710);
+  assert.equal(Math.round(totals.gainJpy), 484710);
+  assert.ok(Number.isFinite(totals.valueJpy));
+  for (const row of rows) {
+    assert.ok(row.gainJpy !== null && Math.abs(row.gainJpy - portfolioGainJpy[row.ticker]) < 0.5, row.ticker);
+    assert.ok(row.avgCostFx > 140 && row.avgCostFx < 160, `${row.ticker} rate ${row.avgCostFx}`);
+  }
+  assert.equal(rows.reduce((sum, row) => sum + Math.round(row.gainJpy), 0), 484710);
+});
+
+test("dates inside the samples belong to the made-up timeline: nothing after 2035/03/12 09:00 and no real 2020s dates; every file says its values are fictional", () => {
+  const sampleMoment = Date.parse("2035-03-12T00:00:00.000Z"); // 2035/03/12 09:00 in Japan
+  assert.equal(compareNow, sampleMoment);
+  const NOT_SHOWN = new Set(["url", "sourceUrl", "quarterSourceUrl", "href", "accession", "sourceRevision", "_source"]);
+  for (const name of SAMPLE_FILES) {
+    const file = JSON.parse(read(`${SAMPLE_DIR}${name}`));
+    assert.match(file._source, /fictional|not real/i, `${name}: _source says the values are made up`);
+    const walk = (value, key) => {
+      if (Array.isArray(value)) return value.forEach(item => walk(item, key));
+      if (value && typeof value === "object") return Object.entries(value).forEach(([k, v]) => walk(v, k));
+      if (typeof value !== "string" || NOT_SHOWN.has(key)) return;
+      for (const [date] of value.matchAll(/\b20\d\d-\d\d-\d\d(T[\d:.]+Z)?/g)) {
+        const at = Date.parse(date);
+        assert.ok(at <= sampleMoment && at >= Date.parse("2030-01-01"), `${name} ${key}: ${date}`);
+      }
+      assert.doesNotMatch(value, /(?<![\d,.$])202\d(?![\d,])/, `${name} ${key}: ${value.slice(0, 80)}`);
+    };
+    walk(file, "");
+  }
+  assert.equal(JSON.parse(read(`${SAMPLE_DIR}themes.json`)).asOf, "2035-03-09");
+  assert.equal(portfolioMarket.asOf, "2035-03-09");
 });

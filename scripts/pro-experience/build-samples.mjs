@@ -5,6 +5,9 @@
 //   node --experimental-strip-types scripts/pro-experience/build-samples.mjs --sec    (also re-reads the free SEC EDGAR data)
 //
 // No paid service is called (no OpenAI, Twelve Data or Stock News). Where each sample comes from is written into its file (_source).
+// Every file except Theme Ranking and the portfolio then goes through fictional-samples.mjs: its dates move onto the samples' made-up
+// timeline (2035/03/12 09:00) and what the real screen would leave blank gets a made-up value, so no sample shows 「—」 (owner, Nov 16).
+// The 99-month date shift was chosen for data read in November 2026; check the dates again if the SEC data is read much later.
 import { readFileSync, writeFileSync, mkdirSync } from "node:fs";
 import { loadSecComparison } from "../../lib/research/comparison-loader.ts";
 import { buildSecMarketEvidence } from "../../lib/research/sec-market-evidence.ts";
@@ -17,11 +20,13 @@ import { THEME_TICKERS } from "../../lib/research/theme-definitions.ts";
 import { sampleStockReturns } from "../../lib/research/theme-ranking.ts";
 import { providers, sectorNames, sectorNamesEn } from "../../lib/research/intake.ts";
 import { companyWatches } from "../../lib/research/company-watch.ts";
+import { fictionalize } from "./fictional-samples.mjs";
 
 const root = new URL("../../", import.meta.url);
 const out = new URL("lib/research/pro-experience-samples/", root);
 mkdirSync(out, { recursive: true });
-const save = (name, value) => writeFileSync(new URL(name, out), `${JSON.stringify(value, null, 1)}\n`);
+const FICTIONAL = new Set(["relation-map-nvda.json", "watch22.json", "compare.json", "radar.json"]);
+const save = (name, value) => writeFileSync(new URL(name, out), `${JSON.stringify(FICTIONAL.has(name) ? fictionalize(name, value) : value, null, 1)}\n`);
 const STOCKS = [["NVDA", "1045810"], ["AMD", "2488"], ["INTC", "50863"], ["ARM", "1973239"]];
 
 // 1. Relationship map: the reviewed NVDA map exactly as the PRO screen serves it (data/chain/NVDA.json; NVDA is already the free sample).
@@ -50,7 +55,7 @@ if (process.argv.includes("--sec")) {
   };
   const now = Date.now(), snapshotAt = new Date(now).toISOString();
   // 2. Stock Comparison: the SEC-first path of lib/research/comparison-server.ts (filing figures and the four-quarter margin series). The
-  // provider's price series and forward P/E (Twelve Data, paid) are not read, so momentum and valuation stay "—" as the real screen shows them.
+  // provider's price series and forward P/E (Twelve Data, paid) are not read; fictionalize() gives them made-up values instead.
   const companies = {};
   for (const [ticker, cik] of STOCKS) {
     const sec = await loadSecComparison(ticker, cik, secText, now);

@@ -1,6 +1,7 @@
 {
- "_source": "SEC EDGAR companyfacts (free public data) through lib/research/radar-facts.ts radarFacts and lib/research/radar.ts buildRadar(tier pro)",
- "snapshotAt": "2026-11-16T14:02:01.689Z",
+ "_source": "SEC EDGAR companyfacts (free public data) through lib/research/radar-facts.ts radarFacts and lib/research/radar.ts buildRadar(tier pro). All figures and dates are fictional sample values on the sample's own timeline (as of 2035/03/12 09:00 JST); they are not real data.",
+ "fictional": true,
+ "snapshotAt": "2035-03-12T00:00:00.000Z",
  "radar": {
   "tier": "pro",
   "genre": "semis",
@@ -14,12 +15,12 @@
     "size": 3,
     "fcfMargin": 41.92032214410668,
     "growth": 83.37590335193501,
-    "asOf": "2026-07-26",
+    "asOf": "2034-10-26",
     "basis": "ttm",
     "previous": {
      "ocfMargin": 49.56704577282823,
      "cover": 3.928125487747776,
-     "asOf": "2026-04-26"
+     "asOf": "2034-07-26"
     },
     "score": 71.25396756304166,
     "rank": 2,
@@ -34,12 +35,12 @@
     "size": 1,
     "fcfMargin": 15.529536050708689,
     "growth": 41.86779904455615,
-    "asOf": "2026-09-26",
+    "asOf": "2034-12-26",
     "basis": "ttm",
     "previous": {
      "ocfMargin": 24.403825202759958,
      "cover": 3.0661833489242283,
-     "asOf": "2026-06-27"
+     "asOf": "2034-09-27"
     },
     "score": 60.881648955928014,
     "rank": 3,
@@ -54,12 +55,12 @@
     "size": 2,
     "fcfMargin": 6.291324383891003,
     "growth": 12.075450513669782,
-    "asOf": "2026-09-26",
+    "asOf": "2034-12-26",
     "basis": "ttm",
     "previous": {
      "ocfMargin": 26.18880628419133,
      "cover": 0.5882224904525397,
-     "asOf": "2026-06-27"
+     "asOf": "2034-09-27"
     },
     "score": 60.39379560254911,
     "rank": 4,
@@ -74,12 +75,12 @@
     "size": 1,
     "fcfMargin": 19.898373983739837,
     "growth": 22.785126029448467,
-    "asOf": "2026-03-31",
+    "asOf": "2034-06-30",
     "basis": "annual",
     "previous": {
      "ocfMargin": 9.907661592213627,
      "cover": 7.61455525606469,
-     "asOf": "2025-03-31"
+     "asOf": "2033-06-30"
     },
     "score": 82.1213456092567,
     "rank": 1,
@@ -87,6 +88,6 @@
    }
   ],
   "missing": [],
-  "asOf": "2026-09-26"
+  "asOf": "2034-12-26"
  }
 }

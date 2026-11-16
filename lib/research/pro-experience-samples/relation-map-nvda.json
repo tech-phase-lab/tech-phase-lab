@@ -1,5 +1,6 @@
 {
- "_source": "data/chain/NVDA.json (copied unchanged; the map /api/research/chain-map serves for NVDA)",
+ "_source": "data/chain/NVDA.json (copied unchanged; the map /api/research/chain-map serves for NVDA). All figures and dates are fictional sample values on the sample's own timeline (as of 2035/03/12 09:00 JST); they are not real data.",
+ "fictional": true,
  "data": {
   "root": {
    "ticker": "NVDA",
@@ -44,8 +45,8 @@
       "text": "チップの製造とCoWoS先端パッケージ",
       "text_en": "Chip manufacturing and CoWoS advanced packaging",
       "source": {
-       "label": "NVIDIA 10-K(2026年1月25日終了の会計年度)",
-       "label_en": "NVIDIA 10-K (fiscal year ended January 25, 2026)",
+       "label": "NVIDIA 10-K(2034年4月25日終了の会計年度)",
+       "label_en": "NVIDIA 10-K (fiscal year ended April 25, 2034)",
        "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm",
        "level": "official",
        "quote": "such as Taiwan Semiconductor Manufacturing Company Limited, or TSMC, and Samsung Electronics Co., Ltd., or Samsung"
@@ -66,8 +67,8 @@
       "text": "AI向けメモリの購入先",
       "text_en": "Source of memory purchased for AI",
       "source": {
-       "label": "NVIDIA 10-K(2026年1月25日終了の会計年度)",
-       "label_en": "NVIDIA 10-K (fiscal year ended January 25, 2026)",
+       "label": "NVIDIA 10-K(2034年4月25日終了の会計年度)",
+       "label_en": "NVIDIA 10-K (fiscal year ended April 25, 2034)",
        "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm",
        "level": "official",
        "quote": "We purchase memory from SK Hynix Inc., Micron Technology, Inc., and Samsung."
@@ -88,8 +89,8 @@
       "text": "AI向けメモリの購入先",
       "text_en": "Source of memory purchased for AI",
       "source": {
-       "label": "NVIDIA 10-K(2026年1月25日終了の会計年度)",
-       "label_en": "NVIDIA 10-K (fiscal year ended January 25, 2026)",
+       "label": "NVIDIA 10-K(2034年4月25日終了の会計年度)",
+       "label_en": "NVIDIA 10-K (fiscal year ended April 25, 2034)",
        "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm",
        "level": "official",
        "quote": "We purchase memory from SK Hynix Inc., Micron Technology, Inc., and Samsung."
@@ -110,8 +111,8 @@
       "text": "チップ製造の委託先でメモリの購入先",
       "text_en": "Contract chip manufacturer and source of memory purchased",
       "source": {
-       "label": "NVIDIA 10-K(2026年1月25日終了の会計年度)",
-       "label_en": "NVIDIA 10-K (fiscal year ended January 25, 2026)",
+       "label": "NVIDIA 10-K(2034年4月25日終了の会計年度)",
+       "label_en": "NVIDIA 10-K (fiscal year ended April 25, 2034)",
        "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm",
        "level": "official",
        "quote": "We purchase memory from SK Hynix Inc., Micron Technology, Inc., and Samsung."
@@ -136,7 +137,7 @@
        "label_en": "Press release attached to Lumentum 8-K",
        "url": "https://www.sec.gov/Archives/edgar/data/1633978/000119312526085412/d41019dex991.htm",
        "level": "official",
-       "date": "2026-03-02",
+       "date": "2034-06-02",
        "quote": "NVIDIA is investing $2 billion in Lumentum to support R&D, future capacity and operations."
       }
      }
@@ -159,7 +160,7 @@
        "label_en": "SiliconANGLE report",
        "url": "https://siliconangle.com/2026/03/02/nvidia-invests-4b-co-packaged-optics-suppliers-lumentum-coherent/",
        "level": "press",
-       "date": "2026-03-02"
+       "date": "2034-06-02"
       }
      }
     ]
@@ -181,7 +182,7 @@
        "label_en": "Marvell announcement",
        "url": "https://investor.marvell.com/news-events/press-releases/detail/1019/nvidia-ai-ecosystem-expands-as-marvell-joins-forces-through-nvlink-fusion",
        "level": "official",
-       "date": "2026-03-31",
+       "date": "2034-06-30",
        "quote": "In addition, NVIDIA has invested $2 billion in Marvell."
       }
      }
@@ -204,7 +205,7 @@
        "label_en": "The Decoder report",
        "url": "https://the-decoder.com/nvidia-and-intel-strike-partnership-on-x86-chips-with-5-billion-investment/",
        "level": "press",
-       "date": "2025-09-18"
+       "date": "2033-12-18"
       }
      },
      {
@@ -212,8 +213,8 @@
       "text": "計算用半導体で競合",
       "text_en": "Competes in computing chips",
       "source": {
-       "label": "NVIDIA 10-K(2026年1月25日終了の会計年度)",
-       "label_en": "NVIDIA 10-K (fiscal year ended January 25, 2026)",
+       "label": "NVIDIA 10-K(2034年4月25日終了の会計年度)",
+       "label_en": "NVIDIA 10-K (fiscal year ended April 25, 2034)",
        "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm",
        "level": "official",
        "quote": "such as Advanced Micro Devices, Inc., or AMD, Huawei Technologies Co. Ltd., or Huawei, and Intel Corporation, or Intel;"
@@ -238,7 +239,7 @@
        "label_en": "Dell announcement",
        "url": "https://www.dell.com/en-us/dt/corporate/newsroom/announcements/detailpage.press-releases~usa~2026~03~dell-ai-factory-with-nvidia-delivers-proven-path-to-enterprise-ai-roi.htm",
        "level": "official",
-       "date": "2026-03-16"
+       "date": "2034-06-16"
       }
      }
     ]
@@ -256,8 +257,8 @@
       "text": "ネットワーク機器で競合",
       "text_en": "Competes in networking equipment",
       "source": {
-       "label": "NVIDIA 10-K(2026年1月25日終了の会計年度)",
-       "label_en": "NVIDIA 10-K (fiscal year ended January 25, 2026)",
+       "label": "NVIDIA 10-K(2034年4月25日終了の会計年度)",
+       "label_en": "NVIDIA 10-K (fiscal year ended April 25, 2034)",
        "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm",
        "level": "official",
        "note": "競合の項目に社名の記載あり",
@@ -279,8 +280,8 @@
       "text": "ネットワーク機器で競合",
       "text_en": "Competes in networking equipment",
       "source": {
-       "label": "NVIDIA 10-K(2026年1月25日終了の会計年度)",
-       "label_en": "NVIDIA 10-K (fiscal year ended January 25, 2026)",
+       "label": "NVIDIA 10-K(2034年4月25日終了の会計年度)",
+       "label_en": "NVIDIA 10-K (fiscal year ended April 25, 2034)",
        "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm",
        "level": "official",
        "note": "競合の項目に社名の記載あり",
@@ -302,8 +303,8 @@
       "text": "ネットワーク用チップで競合",
       "text_en": "Competes in networking chips",
       "source": {
-       "label": "NVIDIA 10-K(2026年1月25日終了の会計年度)",
-       "label_en": "NVIDIA 10-K (fiscal year ended January 25, 2026)",
+       "label": "NVIDIA 10-K(2034年4月25日終了の会計年度)",
+       "label_en": "NVIDIA 10-K (fiscal year ended April 25, 2034)",
        "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm",
        "level": "official",
        "note": "競合の項目に社名の記載あり",
@@ -325,8 +326,8 @@
       "text": "GPUなどで競合",
       "text_en": "Competes in GPUs and other products",
       "source": {
-       "label": "NVIDIA 10-K(2026年1月25日終了の会計年度)",
-       "label_en": "NVIDIA 10-K (fiscal year ended January 25, 2026)",
+       "label": "NVIDIA 10-K(2034年4月25日終了の会計年度)",
+       "label_en": "NVIDIA 10-K (fiscal year ended April 25, 2034)",
        "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm",
        "level": "official",
        "quote": "such as Advanced Micro Devices, Inc., or AMD, Huawei Technologies Co. Ltd., or Huawei, and Intel Corporation, or Intel;"
@@ -358,8 +359,8 @@
       "text": "自社設計のAIチップで競合",
       "text_en": "Competes with its own AI chip designs",
       "source": {
-       "label": "NVIDIA 10-K(2026年1月25日終了の会計年度)",
-       "label_en": "NVIDIA 10-K (fiscal year ended January 25, 2026)",
+       "label": "NVIDIA 10-K(2034年4月25日終了の会計年度)",
+       "label_en": "NVIDIA 10-K (fiscal year ended April 25, 2034)",
        "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm",
        "level": "official",
        "note": "競合の項目に社名の記載あり",
@@ -392,8 +393,8 @@
       "text": "自社設計のAIチップで競合",
       "text_en": "Competes with its own AI chip designs",
       "source": {
-       "label": "NVIDIA 10-K(2026年1月25日終了の会計年度)",
-       "label_en": "NVIDIA 10-K (fiscal year ended January 25, 2026)",
+       "label": "NVIDIA 10-K(2034年4月25日終了の会計年度)",
+       "label_en": "NVIDIA 10-K (fiscal year ended April 25, 2034)",
        "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm",
        "level": "official",
        "note": "競合の項目に社名の記載あり",
@@ -440,7 +441,7 @@
        "label_en": "NVIDIA announcement",
        "url": "https://investor.nvidia.com/news/press-release-details/2026/Meta-Builds-AI-Infrastructure-With-NVIDIA/",
        "level": "official",
-       "date": "2026-02-17",
+       "date": "2034-05-17",
        "quote": "This partnership will enable the large-scale deployment of NVIDIA CPUs and millions of NVIDIA Blackwell and Rubin GPUs."
       }
      }
@@ -463,8 +464,8 @@
        "label_en": "CoreWeave 8-K",
        "url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000044/crwv-20260123.htm",
        "level": "official",
-       "date": "2026-01-23",
-       "quote": "to accelerate the Company's buildout of more than 5 gigawatts of artificial intelligence factories by 2030"
+       "date": "2034-04-23",
+       "quote": "to accelerate the Company's buildout of more than 5 gigawatts of artificial intelligence factories by 2038"
       }
      },
      {
@@ -476,7 +477,7 @@
        "label_en": "CoreWeave 8-K",
        "url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000044/crwv-20260123.htm",
        "level": "official",
-       "date": "2026-01-23"
+       "date": "2034-04-23"
       }
      }
     ]
@@ -498,7 +499,7 @@
        "label_en": "The Next Web report",
        "url": "https://thenextweb.com/news/nvidia-invests-2-billion-in-nebius",
        "level": "press",
-       "date": "2026-03-12"
+       "date": "2034-06-12"
       }
      }
     ]
@@ -516,8 +517,8 @@
       "text": "自社設計のAIチップで競合",
       "text_en": "Competes with its own AI chip designs",
       "source": {
-       "label": "NVIDIA 10-K(2026年1月25日終了の会計年度)",
-       "label_en": "NVIDIA 10-K (fiscal year ended January 25, 2026)",
+       "label": "NVIDIA 10-K(2034年4月25日終了の会計年度)",
+       "label_en": "NVIDIA 10-K (fiscal year ended April 25, 2034)",
        "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/nvda-20260125.htm",
        "level": "official",
        "note": "競合の項目に社名の記載あり",
@@ -543,7 +544,7 @@
        "label_en": "NVIDIA Newsroom press release",
        "url": "https://nvidianews.nvidia.com/news/openai-and-nvidia-announce-strategic-partnership-to-deploy-10gw-of-nvidia-systems",
        "level": "official",
-       "date": "2025-09-22",
+       "date": "2033-12-22",
        "quote": "OpenAI and NVIDIA today announced a letter of intent for a landmark strategic partnership to deploy at least 10 gigawatts of NVIDIA systems for OpenAI's next-generation AI infrastructure",
        "note": "基本合意書の段階で、確定した契約ではありません。導入は段階的です。",
        "note_en": "A letter of intent, not a definitive agreement; deployment is phased."
@@ -558,7 +559,7 @@
        "label_en": "NVIDIA Newsroom press release",
        "url": "https://nvidianews.nvidia.com/news/openai-and-nvidia-announce-strategic-partnership-to-deploy-10gw-of-nvidia-systems",
        "level": "official",
-       "date": "2025-09-22",
+       "date": "2033-12-22",
        "quote": "NVIDIA intends to invest up to $100 billion in OpenAI as the new NVIDIA systems are deployed.",
        "note": "「意向」「最大」の記載で、基本合意書の段階です。",
        "note_en": "'Intends' / 'up to'; letter-of-intent stage."
@@ -583,7 +584,7 @@
        "label_en": "Anthropic announcement",
        "url": "https://www.anthropic.com/news/microsoft-nvidia-anthropic-announce-strategic-partnerships",
        "level": "official",
-       "date": "2025-11-18",
+       "date": "2034-02-18",
        "quote": "Anthropic's compute commitment will initially be up to one gigawatt of compute capacity with NVIDIA Grace Blackwell and Vera Rubin systems.",
        "note": "「最大」1GWの記載です。",
        "note_en": "'Up to' one gigawatt."
@@ -594,12 +595,12 @@
       "text": "Anthropicに最大100億ドルを出資する契約",
       "text_en": "Agreement to invest up to $10B in Anthropic",
       "source": {
-       "label": "NVIDIA 10-Q(2025年10月26日終了四半期)",
-       "label_en": "NVIDIA 10-Q (quarter ended 2025-10-26)",
+       "label": "NVIDIA 10-Q(2034年1月26日終了四半期)",
+       "label_en": "NVIDIA 10-Q (quarter ended 2034-01-26)",
        "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581025000230/nvda-20251026.htm",
        "level": "official",
-       "date": "2025-11-19",
-       "quote": "In November 2025, we entered into an agreement, subject to certain closing conditions, to invest up to $ 10 billion in Anthropic.",
+       "date": "2034-02-19",
+       "quote": "In February 2034, we entered into an agreement, subject to certain closing conditions, to invest up to $ 10 billion in Anthropic.",
        "note": "「最大」の記載で、完了条件があります。",
        "note_en": "'Up to'; subject to closing conditions."
       }
@@ -614,8 +615,8 @@
     "text": "DellがGB300 NVL72を初めてCoreWeaveへ出荷",
     "text_en": "Dell shipped the first GB300 NVL72 to CoreWeave",
     "source": {
-     "label": "CoreWeave の発表(2025年7月)",
-     "label_en": "CoreWeave announcement (July 2025)",
+     "label": "CoreWeave の発表(2033年10月)",
+     "label_en": "CoreWeave announcement (October 2033)",
      "url": "https://investors.coreweave.com/news/news-details/2025/CoreWeave-Becomes-First-Hyperscaler-to-Deploy-NVIDIA-GB300-NVL72-Platform/default.aspx",
      "level": "official"
     }
@@ -630,7 +631,7 @@
      "label_en": "CoreWeave 8-K",
      "url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962825000050/crwv-20250925.htm",
      "level": "official",
-     "date": "2025-09-25"
+     "date": "2033-12-25"
     }
    },
    {
@@ -643,7 +644,7 @@
      "label_en": "Report (RCPmag)",
      "url": "https://rcpmag.com/articles/2025/09/12/microsoft-nebius-ai-infrastructure-deal.aspx",
      "level": "press",
-     "date": "2025-09-12"
+     "date": "2033-12-12"
     }
    }
   ],

@@ -22,14 +22,18 @@ export function compareSample(tickers: readonly string[]): ComparisonResult | nu
 }
 
 // ---- US stock portfolio: the holdings in sample-holdings.jpg ----
-type SampleHolding = Holding & { name: string; price: number };
-const portfolio = portfolioFile as { image: string; asOf: string; totalGainUsd: number; holdings: SampleHolding[] };
+type SampleHolding = Holding & { name: string; price: number; avgCostFx: number; gainJpy: number };
+const portfolio = portfolioFile as { image: string; asOf: string; usdJpy: number; totalGainUsd: number; totalGainJpy: number; holdings: SampleHolding[] };
 export const PORTFOLIO_IMAGE = portfolio.image;
 export const PORTFOLIO_TOTAL_GAIN = portfolio.totalGainUsd;
-export const portfolioHoldings: Holding[] = portfolio.holdings.map(({ ticker, name, shares, avgCostUsd }) => ({ ticker, name, shares, avgCostUsd }));
+/** The image's yen total (+484,710円); the made-up exchange rates in the file are chosen so the holdings add up to it. */
+export const PORTFOLIO_TOTAL_GAIN_JPY = portfolio.totalGainJpy;
+/** Each holding's yen gain as saved in the file (whole yen), for checking the made-up rates. */
+export const portfolioGainJpy: Record<string, number> = Object.fromEntries(portfolio.holdings.map(h => [h.ticker, h.gainJpy]));
+export const portfolioHoldings: Holding[] = portfolio.holdings.map(({ ticker, name, shares, avgCostUsd, avgCostFx }) => ({ ticker, name, shares, avgCostUsd, avgCostFx }));
 export const portfolioMarket: { quotes: Record<string, Quote>; usdJpy: number | null; asOf: string } = {
   quotes: Object.fromEntries(portfolio.holdings.map(h => [h.ticker, { ticker: h.ticker, close: h.price, asOf: portfolio.asOf }])),
-  usdJpy: null, asOf: portfolio.asOf,
+  usdJpy: portfolio.usdJpy, asOf: portfolio.asOf,
 };
 /** How long the reading animation runs before the holdings appear (owner: "2秒ほど"): the first step, then the second. */
 export const READING_STEPS_MS = [700, 1300] as const;
