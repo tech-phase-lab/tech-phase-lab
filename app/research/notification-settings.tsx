@@ -8,6 +8,7 @@ import type { Language } from "@/lib/research/data";
 import styles from "./price-targets-panel.module.css";
 import { useOwnerAccount, useOwnerMode } from "./member-display-provider";
 import PushDiagnosticPanel from "./push-diagnostic-panel";
+import { PUSH_SW_OPTIONS, PUSH_SW_URL, reinstallPushWorker, type ContainerLike, type ReinstallResult } from "@/lib/research/push-sw-facts";
 import NotificationPageView, { type Preferences } from "./notification-page-view";
 
 const DEVICE_KEY = "tech-phase:notification-device-state";
@@ -150,10 +151,10 @@ export default function NotificationSettings({ lang, initiallyOpen = false, page
       default: return null;
     }
   }
-  async function request(action: string, subscription: PushSubscription) {
+  async function request(action: string, subscription: PushSubscription, extra: Record<string, unknown> = {}) {
     const response = await fetch("/api/research/notifications", {
       method: "POST", headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ action, subscription: subscription.toJSON(), allTargets: true, language: lang }),
+      body: JSON.stringify({ action, subscription: subscription.toJSON(), allTargets: true, language: lang, ...extra }),
       signal: AbortSignal.timeout(15_000),
     });
     if (response.status === 401 || response.status === 403) { setState(response.status === 401 ? "sign-in" : "pro-required"); throw new Error(t("ログインとPRO会員の有効期限を確認してください。", "Check your sign-in and PRO membership.")); }
@@ -173,7 +174,8 @@ export default function NotificationSettings({ lang, initiallyOpen = false, page
           if (permission !== "granted") { setState(permission === "denied" ? "blocked" : "off"); return; }
         }
       }
-      const registration = await navigator.serviceWorker.register("/research-sw.js", { scope: "/" });
+      // updateViaCache "none": the browser always fetches research-sw.js from the network when it checks for a new version.
+      const registration = await navigator.serviceWorker.register(PUSH_SW_URL, PUSH_SW_OPTIONS);
       // Wait for installation without relying on an indefinitely pending ready promise.
       if (!registration.active) await new Promise<void>((resolve, reject) => {
         const worker = registration.installing || registration.waiting;
@@ -192,8 +194,7 @@ export default function NotificationSettings({ lang, initiallyOpen = false, page
         wasOn.current = false; setHasSubscription(false); setState("off"); setTestSent(false); setReceived(false); confirmed.current = null; setPrefs(null); setPrefsState("idle"); return;
       }
       if (action === "enable") {
-        const bytes = Uint8Array.from(atob(key.replace(/-/g, "+").replace(/_/g, "/")), c => c.charCodeAt(0));
-        subscription = subscription || await registration.pushManager.subscribe({ userVisibleOnly: true, applicationServerKey: bytes });
+        subscription = subscription || await registration.pushManager.subscribe({ userVisibleOnly: true, applicationServerKey: keyBytes() });
         setHasSubscription(true);
         const result = await request("register", subscription);
         setState(result.registered ? "on" : "unknown"); setReceived(false); setTestSent(false);
@@ -217,6 +218,40 @@ export default function NotificationSettings({ lang, initiallyOpen = false, page
       }
     } catch (error) { setMessage(error instanceof Error ? error.message : t("接続を確認してください。", "Check your connection.")); if (action === "enable") setState(current => current === "sign-in" || current === "pro-required" ? current : "unknown"); }
     finally { operation.current = false; setBusy(false); if (pendingInspection.current) setRefresh(value => value + 1); }
+  }
+  const keyBytes = () => Uint8Array.from(atob(key.replace(/-/g, "+").replace(/_/g, "/")), c => c.charCodeAt(0));
+  // Owner button 「通知の仕組みを入れ直す」 (Nov 16): the owner's phone kept an old worker. Every push-worker registration is removed, the
+  // worker is registered again and this device is subscribed and saved through the usual "register" action. The previous device's
+  // choices are read first and saved on the new one, and the previous device is then removed, so notices keep arriving as chosen.
+  async function reinstall(): Promise<ReinstallResult> {
+    if (operation.current || !key || !("serviceWorker" in navigator)) throw new Error("unavailable");
+    operation.current = true;
+    inspection.current++;
+    setBusy(true); setMessage("");
+    try {
+      return await reinstallPushWorker({
+        container: navigator.serviceWorker as unknown as ContainerLike, origin: window.location.origin,
+        resubscribe: async (installed, before) => {
+          const registration = installed as unknown as ServiceWorkerRegistration;
+          const previous = before as PushSubscription | null;
+          const subscription = await registration.pushManager.getSubscription()
+            ?? await registration.pushManager.subscribe({ userVisibleOnly: true, applicationServerKey: keyBytes() });
+          setHasSubscription(true);
+          let choices: Preferences | null = null;
+          if (previous && previous.endpoint !== subscription.endpoint) {
+            try { choices = (await request("preferences", previous)).preferences ?? null; } catch { choices = null; }
+          }
+          const result = await request("register", subscription);
+          let kept = false;
+          if (result.registered && choices) { try { kept = (await request("save-preferences", subscription, { preferences: choices })).ok === true; } catch { kept = false; } }
+          if (result.registered && previous && previous.endpoint !== subscription.endpoint) { try { await request("remove", previous); } catch { /* it expires on the next send */ } }
+          wasOn.current = result.registered === true;
+          setState(result.registered ? "on" : "unknown"); setTestSent(false); setReceived(false);
+          if (page && result.registered) await loadPreferences(subscription, AbortSignal.timeout(15_000), () => true);
+          return { registered: result.registered === true, keptPreferences: kept };
+        },
+      });
+    } finally { operation.current = false; setBusy(false); if (pendingInspection.current) setRefresh(value => value + 1); }
   }
   const label = { "sign-in": t("通知を利用するにはログインしてください", "Sign in to use notifications"), "pro-required": t("スマホ通知はPRO会員向けです", "Phone notifications are available with PRO"), checking: t("確認中…", "Checking…"), off: t("この端末：通知オフ", "This device: off"), on: t("この端末：通知オン", "This device: on"), unknown: t("この端末：登録状態を確認", "This device: verify registration"), blocked: t("この端末：通知が許可されていません", "This device: permission blocked"), unsupported: t("このブラウザでは通知を利用できません", "Notifications unavailable in this browser"), unavailable: t("通知サービスに接続できません", "Notification service unavailable") }[state];
   const usable = ["off", "on", "unknown"].includes(state);
@@ -268,7 +303,7 @@ export default function NotificationSettings({ lang, initiallyOpen = false, page
   const toggle = () => { if (state === "checking" && shownState === "off") { setStarting(true); return; } void run(shownState === "on" ? "disable" : "enable"); };
   if (page) return <NotificationPageView owner={ownerMode} lang={lang} state={shownState} label={label} busy={busy} starting={starting} usable={usable || state === "checking"} hasSubscription={hasSubscription} message={message} testSent={testSent} received={received}
     prefs={prefs} prefsState={prefsState} prefsMessage={prefsMessage} onPrefs={savePreferences}
-    diagnostic={ownerAccount ? <PushDiagnosticPanel lang={lang} /> : null}
+    diagnostic={ownerAccount ? <PushDiagnosticPanel lang={lang} onReinstall={key ? reinstall : undefined} /> : null}
     onToggle={toggle} onDisable={() => void run("disable")} onTest={() => void run("test")} onRetry={() => setRefresh(value => value + 1)} onStatus={() => void run("status")} onReceived={() => { setReceived(true); setMessage(""); }} />;
   return <>
     <button type="button" className={styles.notificationToggle} aria-expanded={open} aria-controls={open ? "price-target-notifications" : undefined} onClick={() => setOpen(!open)}><svg className={styles.bellIcon} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 22a2.3 2.3 0 0 0 2.3-2.3H9.7A2.3 2.3 0 0 0 12 22zm6.6-6.4V11a6.6 6.6 0 0 0-5.1-6.4V3.9a1.5 1.5 0 0 0-3 0v.7A6.6 6.6 0 0 0 5.4 11v4.6L3.6 17.4V19h16.8v-1.6z"/></svg>{t("スマホ通知設定", "Mobile notifications")}</button>

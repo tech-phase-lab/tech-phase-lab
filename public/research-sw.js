@@ -1,6 +1,6 @@
 /* Push only: no fetch handler and no cached private/API responses. */
-// Version 2026-11-15 (iPhone: in-app banner for a new notice, step record): changing this file is what makes installed phones pick up the new worker.
-const VERSION = "2026-11-15-inapp-banner";
+// Version 2026-11-16 (answers the owner's version question): changing this file is what makes installed phones pick up the new worker.
+const VERSION = "2026-11-16-version-query";
 // Where a notification tap may go (Nov 13: every tap used to open the price-target page, whatever the notice was about).
 // Only a same-origin path on this list is opened; anything else falls back to /research.
 // Keep in step with lib/research/push-targets.json (tests/research-sw-click-target.test.mjs checks they match).
@@ -162,6 +162,14 @@ self.addEventListener("message", (event) => {
     event.waitUntil((async () => {
       const [pending, delivered, diag] = await Promise.all([recall(PENDING_KEY), recall(DELIVERED_KEY), recall(DIAG_KEY)]);
       try { port.postMessage({ type: "pending", pending, delivered, diag, version: VERSION }); } catch { /* page gone */ }
+    })());
+  } else if (data.type === "version-query" && port) {
+    // Nov 16: the owner's settings page asks each worker on the phone (active, waiting, installing) which version it is and when it
+    // last saw a push. A worker older than this one does not answer, which is itself the answer (「古い版（応答なし）」).
+    event.waitUntil((async () => {
+      const diag = await recall(DIAG_KEY);
+      const lastPush = diag && typeof diag.push === "number" ? diag.push : null;
+      try { port.postMessage({ type: "version", version: VERSION, lastPush }); } catch { /* page gone */ }
     })());
   } else if (data.type === "pending-clear" && typeof data.id === "string" && ID.test(data.id)) {
     event.waitUntil(Promise.all([forget(PENDING_KEY, data.id), forget(DELIVERED_KEY, data.id)]));

@@ -457,8 +457,9 @@ def test_notification(db, payload, transport=None, now=None):
         return {'accepted': False, 'retryAfter': 60}
     row = db.execute('SELECT language FROM push_devices WHERE id=?', (device,)).fetchone()
     ja = row['language'] == 'ja'
-    message = {'title': 'Tech Phase · ' + ('テスト通知' if ja else 'Test notification'),
-               'body': 'この通知が届いたら、設定画面で「届きました」を押してください。' if ja else 'If you see this, select “Received” in notification settings.',
+    # Nov 16 (owner): plain words for members; the notice itself never asks anyone to press a button.
+    message = {'title': 'テスト通知' if ja else 'Test notification',
+               'body': '通知は正しく届いています。' if ja else 'Notifications are working.',
                'tag': 'tech-phase-test', 'url': '/research/notifications'}
     failure_kind = None
     try:
