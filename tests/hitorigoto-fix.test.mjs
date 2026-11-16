@@ -73,3 +73,11 @@ test("5. NEW: 30 minutes, newest note only, gone without a reload", async () => 
   assert.match(hook, /document\.addEventListener\("visibilitychange", wake\)/, "re-checked when the phone shows the page again");
   assert.match(await read("../app/research/columns/columns.tsx"), /const newNote = useNewNoteId\(shown\.items\.filter\(item => item\.kind === "notes"\)\)/);
 });
+
+test("the tool row fits inside the post box on a 360px phone, with tap targets of at least 36px (Nov 16)", async () => {
+  const format = await read("../app/research/desk/format.module.css");
+  const tail = format.slice(format.lastIndexOf("/* Nov 16 (owner): the tool row fits"));
+  assert.match(tail, /\.editor \.toolbar\{flex-wrap:wrap;gap:6px;max-width:100%\}/);
+  assert.match(tail, /@media\(max-width:420px\)\{[^\n]*\.editor \.toolbar button\{min-width:40px;padding:0 8px;font-size:14px/);
+  for (const size of tail.matchAll(/min-(?:width|height):(\d+)px/g)) assert.ok(Number(size[1]) >= 36);
+});

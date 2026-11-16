@@ -86,3 +86,6 @@
 .editor .editable,.editor .editable p{font-size:16px;line-height:1.7}
 .editor .editable p{min-height:1.7em}
 .editor,.editor .editable,.editor .editable *{-webkit-user-select:text;user-select:text;-webkit-touch-callout:default}
+/* Nov 16 (owner): the tool row fits inside the post box on a 360px phone. Buttons shrink first and wrap only if still too wide; tap targets stay at 40px. */
+.editor .toolbar{flex-wrap:wrap;gap:6px;max-width:100%}
+@media(max-width:420px){.editor .toolbar{gap:5px}.editor .toolbar button{min-width:40px;padding:0 8px;font-size:14px;gap:4px}.editor .toolbar button strong{font-size:18px}.markTool{padding:2px 4px}.redTool i{width:10px;height:10px}}
