@@ -23,7 +23,7 @@ test("6. the dotted ＋ picker is gone; the five emoji are one row in the fixed 
   assert.match(component, /aria-pressed=\{value\.selected\}/);
   const css = await read("../app/research/desk/format.module.css");
   assert.doesNotMatch(css, /\.reaction(Plus|Picker|Add)\b/);
-  assert.match(css, /\.reactionRow\{display:flex;flex-wrap:nowrap;align-items:center;gap:4px/);
+  assert.match(css, /\.reactionRow\{display:flex;flex-wrap:nowrap;align-items:center;gap:4px[^}]*overflow-x:auto/, "never wraps and never widens the page");
   const chip = css.match(/\.reactions \.reactionChip\{([^}]*)\}/)[1];
   for (const rule of ["gap:3px", "height:30px", "padding:0 7px", "border:1px solid #2a3140", "border-radius:15px", "background:#121620"]) assert.ok(chip.includes(rule), rule);
   assert.match(css, /\.reactions \.reactionChip\[aria-pressed=true\]\{border-color:#8a7444;background:#2a2213\}/);

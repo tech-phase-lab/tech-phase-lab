@@ -23,9 +23,10 @@
 .audioUpload .audioFileEntry{grid-column:1}.audioUpload .audioRecordEntry{grid-column:2}.audioUpload .audioMemoEntry{grid-column:3}
 .audioUpload .recorder{display:contents}.recorderControls{grid-column:1/-1;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
 
-/* RIZEL'S DESK, Nov 16 design: the five reactions sit in one row from the start (no picker); a count only after the first press. */
+/* RIZEL'S DESK, Nov 16 design: the five reactions sit in one row from the start (no picker); a count only after the first press.
+   The row never wraps; if a narrow bubble cannot hold it, it scrolls sideways inside the bubble instead of widening the page. */
 .reactions{display:block;margin-top:16px}
-.reactionRow{display:flex;flex-wrap:nowrap;align-items:center;gap:4px;min-width:0}
+.reactionRow{display:flex;flex-wrap:nowrap;align-items:center;gap:4px;min-width:0;max-width:100%;overflow-x:auto;overscroll-behavior-x:contain;scrollbar-width:none}.reactionRow::-webkit-scrollbar{display:none}
 .reactions .reactionChip{flex:0 0 auto;display:inline-flex;align-items:center;gap:3px;height:30px;min-height:30px;padding:0 7px;border:1px solid #2a3140;border-radius:15px;background:#121620;color:#8e9aaa;line-height:1;white-space:nowrap}
 .reactions .reactionChip[aria-pressed=true]{border-color:#8a7444;background:#2a2213}
 .reactions .reactionChip:disabled{opacity:1;cursor:default}
