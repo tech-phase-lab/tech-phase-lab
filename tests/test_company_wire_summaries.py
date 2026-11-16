@@ -75,7 +75,11 @@ class SummaryTests(unittest.TestCase):
         self.assertIn('summaryJa', props['required'])
         self.assertEqual(props['properties']['summaryJa'], {'type': 'string'})
         self.assertEqual(payload['instructions'], company_wire.POLICY + company_wire.SUMMARY_POLICY)
-        self.assertIn('at most 100 characters, one or two sentences', payload['instructions'])
+        self.assertIn('about 80 to 100 characters and never more than 100, two or three sentences', payload['instructions'])
+        for rule in ('keep numbers exactly', 'keep names, negation and direction', 'add nothing of your own',
+                     'leave out what you cannot keep exactly', 'never pad it'):
+            self.assertIn(rule, payload['instructions'])
+        self.assertNotIn('one or two sentences', payload['instructions'])
         self.assertEqual(payload['max_output_tokens'], 4000 + company_wire.SUMMARY_OUTPUT_TOKENS, 'room for the one article with text')
         sent = {item['title']: item for item in json.loads(payload['input'])}
         self.assertEqual(sent[TITLE]['text'], TEXT)
@@ -138,8 +142,8 @@ class SummaryTests(unittest.TestCase):
     def test_the_estimate_prices_the_days_summaries(self):
         self.assertEqual(company_wire.PRICE_PER_MILLION, {'input': 0.4, 'cachedInput': 0.1, 'output': 1.6})
         cost = company_wire.summary_cost({'summaryRequested': 100, 'summaryCalls': 100, 'summaryInputChars': 50000, 'summaryOutputChars': 10000})
-        self.assertEqual((cost['inputTokens'], cost['outputTokens']), (12500 + 1000 + 9000, 12000 + 1000))
-        self.assertAlmostEqual(cost['usd'], (22500 * 0.4 + 13000 * 1.6) / 1e6, places=4)
+        self.assertEqual((cost['inputTokens'], cost['outputTokens']), (12500 + 1000 + 13500, 12000 + 1000))
+        self.assertAlmostEqual(cost['usd'], (27000 * 0.4 + 13000 * 1.6) / 1e6, places=4)
 
     def test_a_checked_summary_is_stored_per_article_and_shown_in_both_languages(self):
         self.store()

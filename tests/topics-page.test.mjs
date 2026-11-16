@@ -6,7 +6,7 @@ import React from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import ts from "typescript";
 import { parseCompanyWire } from "../lib/research/company-wire.ts";
-import { impactOf, publisherRank, sameTopic, summaryMayOverflow, summaryToggle, topicCards, topicCredit, topicImpact } from "../lib/research/topics.ts";
+import { impactOf, publisherRank, sameTopic, SUMMARY_LINES, summaryMayOverflow, summaryToggle, topicCards, topicCredit, topicImpact } from "../lib/research/topics.ts";
 
 // Owner, Nov 15: 一般ニュース becomes 注目トピック, a list of open cards of the Stock News API stories.
 const require = createRequire(import.meta.url);
@@ -204,6 +204,9 @@ test("a long summary is clamped to three lines with 「＋」 (「−」 when op
   assert.equal(summaryMayOverflow("あ".repeat(67), true), true);
   assert.equal(summaryMayOverflow("a".repeat(144), false), false);
   assert.equal(summaryMayOverflow("a".repeat(145), false), true);
+  // Owner, Nov 16: summaries now aim for 80 to 100 Japanese characters; the clamp stays at three lines and the rest opens with 「＋」.
+  assert.equal(SUMMARY_LINES, 3);
+  assert.equal(summaryMayOverflow("あ".repeat(100), true), true, "a full 100-character summary is clamped with 「＋」 before measurement");
   assert.deepEqual(summaryToggle(false, true), { text: "＋", label: "要約をすべて表示" });
   assert.deepEqual(summaryToggle(true, true), { text: "−", label: "要約を閉じる" });
   assert.deepEqual(summaryToggle(false, false), { text: "＋", label: "Show the full summary" });
