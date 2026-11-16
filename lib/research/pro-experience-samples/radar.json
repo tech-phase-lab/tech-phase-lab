@@ -1,5 +1,5 @@
 {
- "_source": "SEC EDGAR companyfacts (free public data) through lib/research/radar-facts.ts radarFacts and lib/research/radar.ts buildRadar(tier pro). All figures and dates are fictional sample values on the sample's own timeline (as of 2035/03/12 09:00 JST); they are not real data.",
+ "_source": "Made-up latest and previous earnings for the six semiconductor tickers (scripts/pro-experience/fictional-samples.mjs RADAR_SEMIS) through lib/research/radar.ts buildRadar(tier pro). All figures and dates are fictional sample values on the sample's own timeline (as of 2035/03/12 09:00 JST); they are not real data.",
  "fictional": true,
  "snapshotAt": "2035-03-12T00:00:00.000Z",
  "radar": {
@@ -8,86 +8,126 @@
   "dots": [
    {
     "ticker": "NVDA",
-    "ocfMargin": 44.34762517741031,
-    "cover": 1.4561502830674216,
+    "ocfMargin": 52.4,
+    "cover": 3.6,
     "up": true,
     "tone": "up",
     "size": 3,
-    "fcfMargin": 41.92032214410668,
-    "growth": 83.37590335193501,
+    "fcfMargin": 49.1,
+    "growth": 68.2,
     "asOf": "2034-10-26",
     "basis": "ttm",
     "previous": {
-     "ocfMargin": 49.56704577282823,
-     "cover": 3.928125487747776,
-     "asOf": "2034-07-26"
+     "ocfMargin": 54,
+     "cover": 3.1,
+     "asOf": "2034-07-27"
     },
-    "score": 71.25396756304166,
-    "rank": 2,
+    "score": 85.10756251918218,
+    "rank": 1,
     "review": false
    },
    {
     "ticker": "AMD",
-    "ocfMargin": 20.078792147196054,
-    "cover": 1.7127347736402128,
+    "ocfMargin": 21.5,
+    "cover": 1.9,
     "up": true,
     "tone": "up",
-    "size": 1,
-    "fcfMargin": 15.529536050708689,
-    "growth": 41.86779904455615,
-    "asOf": "2034-12-26",
-    "basis": "ttm",
+    "size": 2,
+    "fcfMargin": 17.8,
+    "growth": 34.6,
+    "asOf": "2034-12-27",
+    "basis": "annual",
     "previous": {
-     "ocfMargin": 24.403825202759958,
-     "cover": 3.0661833489242283,
+     "ocfMargin": 19.8,
+     "cover": 1.7,
      "asOf": "2034-09-27"
     },
-    "score": 60.881648955928014,
-    "rank": 3,
+    "score": 62.71884002382072,
+    "rank": 5,
     "review": false
    },
    {
     "ticker": "INTC",
-    "ocfMargin": 29.172510518934082,
-    "cover": 1.0772130689751467,
+    "ocfMargin": 18.2,
+    "cover": 0.78,
+    "up": true,
+    "tone": "up",
+    "size": 3,
+    "fcfMargin": -6.4,
+    "growth": 4.1,
+    "asOf": "2034-12-27",
+    "basis": "annual",
+    "previous": {
+     "ocfMargin": 15.6,
+     "cover": 0.71,
+     "asOf": "2034-09-27"
+    },
+    "score": 51.40236506726202,
+    "rank": 6,
+    "review": false
+   },
+   {
+    "ticker": "QCOM",
+    "ocfMargin": 31.8,
+    "cover": 1.45,
     "up": true,
     "tone": "up",
     "size": 2,
-    "fcfMargin": 6.291324383891003,
-    "growth": 12.075450513669782,
-    "asOf": "2034-12-26",
+    "fcfMargin": 28.9,
+    "growth": 9.3,
+    "asOf": "2034-12-24",
     "basis": "ttm",
     "previous": {
-     "ocfMargin": 26.18880628419133,
-     "cover": 0.5882224904525397,
-     "asOf": "2034-09-27"
+     "ocfMargin": 33,
+     "cover": 1.38,
+     "asOf": "2034-09-24"
     },
-    "score": 60.39379560254911,
+    "score": 64.93420005587437,
     "rank": 4,
     "review": false
    },
    {
-    "ticker": "ARM",
-    "ocfMargin": 30.975609756097562,
-    "cover": 7.334012219959267,
+    "ticker": "AMAT",
+    "ocfMargin": 29.6,
+    "cover": 1.62,
     "up": true,
     "tone": "up",
     "size": 1,
-    "fcfMargin": 19.898373983739837,
-    "growth": 22.785126029448467,
-    "asOf": "2034-06-30",
+    "fcfMargin": 25.1,
+    "growth": 7.8,
+    "asOf": "2034-10-26",
     "basis": "annual",
     "previous": {
-     "ocfMargin": 9.907661592213627,
-     "cover": 7.61455525606469,
-     "asOf": "2033-06-30"
+     "ocfMargin": 27.9,
+     "cover": 1.7,
+     "asOf": "2034-07-27"
     },
-    "score": 82.1213456092567,
-    "rank": 1,
+    "score": 65.03787536356577,
+    "rank": 2,
+    "review": false
+   },
+   {
+    "ticker": "LRCX",
+    "ocfMargin": 33.4,
+    "cover": 1.35,
+    "up": true,
+    "tone": "up",
+    "size": 1,
+    "fcfMargin": 30.2,
+    "growth": 15.2,
+    "asOf": "2034-12-28",
+    "basis": "ttm",
+    "previous": {
+     "ocfMargin": 30.1,
+     "cover": 1.2,
+     "asOf": "2034-09-28"
+    },
+    "score": 64.95834421237515,
+    "rank": 3,
     "review": false
    }
   ],
   "missing": [],
-  "asOf": "2034-12-26"
+  "asOf": "2034-12-28"
  }
 }

@@ -1,0 +1,485 @@
+{
+ "_source": "Hand-written for the PRO feature tour (owner, Nov 16: the 22-stock sample must show the earnings deep dive). Shown by the real app/research/companies/earnings-dive.tsx. All figures, texts and dates are fictional sample values on the sample's own timeline (as of 2035/03/12 09:00 JST); they are not real data.",
+ "fictional": true,
+ "dives": [
+  {
+   "ticker": "NVDA",
+   "name": "NVIDIA",
+   "live": {
+    "ticker": "NVDA",
+    "period": "FQ4 2035",
+    "releasedOn": "2035-02-26",
+    "publicAt": "2035-02-26T21:24:00Z",
+    "dive": {
+     "numbers": {
+      "revenue": {
+       "current": 121850,
+       "previous": 108400,
+       "yearAgo": 70200
+      },
+      "adjustedEPS": 2.41,
+      "epsEstimate": 2.28,
+      "grossMargin": {
+       "current": 74.6,
+       "previous": 75.0
+      },
+      "guidance": {
+       "low": 129000,
+       "high": 135000,
+       "grossMarginPercent": 73.5
+      },
+      "segments": [
+       {
+        "key": "dc",
+        "nameJa": "データセンター",
+        "nameEn": "Data Center",
+        "revenue": 113600,
+        "previous": 100900,
+        "operatingMargin": 66.8,
+        "previousOperatingMargin": 68.1
+       }
+      ]
+     },
+     "summary": {
+      "conclusion": [
+       {
+        "ja": "売上は前期から12.4%増えて1,218.5億ドルとなり、4四半期続けて過去最高を更新しました。伸びの大半はデータセンター向けです。",
+        "en": "Revenue rose 12.4% from the previous quarter to $121.85B, a record for the fourth quarter in a row. Most of the growth came from Data Center."
+       },
+       {
+        "ja": "一方で、利益率は少し下がり、次期の粗利益率の見通しも今回を下回ります。新製品の立ち上げ費用が続くかどうかが、次の決算の焦点です。",
+        "en": "Margins slipped a little, and the gross margin outlook for next quarter is below this quarter. Whether new-product ramp costs continue is the key question for the next report."
+       }
+      ],
+      "cards": {
+       "growth": {
+        "headline": {
+         "ja": "データセンターが売上の9割超を占め、伸びを引っ張りました",
+         "en": "Data Center made up over 90% of revenue and led the growth"
+        },
+        "segment": "dc",
+        "chips": [
+         {
+          "tone": "up",
+          "text": {
+           "ja": "データセンター +12.6%",
+           "en": "Data Center +12.6%"
+          }
+         },
+         {
+          "tone": "gold",
+          "text": {
+           "ja": "売上の93%",
+           "en": "93% of revenue"
+          }
+         }
+        ],
+        "sections": [
+         {
+          "key": "happened",
+          "text": {
+           "ja": "データセンター部門の売上は1,136億ドルで、前期の1,009億ドルから12.6%増えました。大手クラウド各社の設備投資が続いています。",
+           "en": "Data Center revenue was $113.6B, up 12.6% from $100.9B last quarter, as large cloud providers kept investing."
+          }
+         },
+         {
+          "key": "good",
+          "text": {
+           "ja": "新しい世代の製品が出荷の中心になり、1台あたりの単価も上がっています。",
+           "en": "The new product generation now makes up most shipments, and the price per system is higher."
+          }
+         },
+         {
+          "key": "means",
+          "text": {
+           "ja": "会社全体の売上の93%がこの部門です。今後の業績は、データセンター投資の勢いにより強く左右されます。",
+           "en": "This segment is 93% of total revenue, so results depend more and more on data-center spending."
+          }
+         }
+        ]
+       },
+       "change": {
+        "headline": {
+         "ja": "売上は4四半期続けて過去最高を更新",
+         "en": "Revenue hit a record for the fourth straight quarter"
+        },
+        "chips": [
+         {
+          "tone": "up",
+          "text": {
+           "ja": "前期比 +12.4%",
+           "en": "+12.4% QoQ"
+          }
+         },
+         {
+          "tone": "up",
+          "text": {
+           "ja": "前年同期比 +73.6%",
+           "en": "+73.6% YoY"
+          }
+         }
+        ],
+        "sections": [
+         {
+          "key": "happened",
+          "text": {
+           "ja": "売上は816億ドル→962億ドル→1,084億ドル→1,218.5億ドルと、毎四半期増えています。",
+           "en": "Revenue grew every quarter: $81.6B → $96.2B → $108.4B → $121.85B."
+          }
+         },
+         {
+          "key": "view",
+          "text": {
+           "ja": "増え方は前期(+12.6%)とほぼ同じペースです。急な減速は見られません。",
+           "en": "The pace is about the same as last quarter (+12.6%), with no sharp slowdown."
+          }
+         }
+        ]
+       },
+       "caution": {
+        "headline": {
+         "ja": "利益率は少し下がり、次期の見通しも今回を下回ります",
+         "en": "Margins dipped, and the outlook is below this quarter"
+        },
+        "segment": "dc",
+        "chips": [
+         {
+          "tone": "down",
+          "text": {
+           "ja": "部門営業利益率 −1.3pt",
+           "en": "Segment margin −1.3 pt"
+          }
+         },
+         {
+          "tone": "down",
+          "text": {
+           "ja": "粗利益率見通し 約73.5%",
+           "en": "Gross margin outlook ~73.5%"
+          }
+         }
+        ],
+        "sections": [
+         {
+          "key": "watch",
+          "text": {
+           "ja": "データセンター部門の営業利益率は68.1%から66.8%に下がりました。新製品の量産を始めた費用が重くなっています。",
+           "en": "The Data Center operating margin fell from 68.1% to 66.8%, weighed down by the cost of ramping new products."
+          }
+         },
+         {
+          "key": "means",
+          "text": {
+           "ja": "次期の粗利益率は約73.5%の見通しで、今回の74.6%を下回ります。売上が伸びても、利益の伸びは売上ほどではない可能性があります。",
+           "en": "Next quarter's gross margin is guided at about 73.5%, below this quarter's 74.6%. Profit may grow more slowly than revenue."
+          }
+         }
+        ]
+       },
+       "next": {
+        "headline": {
+         "ja": "次期の売上見通しは1,290〜1,350億ドル。新製品の出荷ペースが焦点",
+         "en": "Next quarter: $129–135B. Watch the pace of new-product shipments"
+        },
+        "chips": [
+         {
+          "tone": "gold",
+          "text": {
+           "ja": "売上 1,290〜1,350億ドル",
+           "en": "Revenue $129.0–135.0B"
+          }
+         },
+         {
+          "tone": "gold",
+          "text": {
+           "ja": "粗利益率 約73.5%",
+           "en": "Gross margin ~73.5%"
+          }
+         }
+        ],
+        "sections": [
+         {
+          "key": "view",
+          "text": {
+           "ja": "見通しの中央(1,320億ドル)は、今回より約8%多い水準です。",
+           "en": "The midpoint ($132B) is about 8% above this quarter."
+          }
+         },
+         {
+          "key": "means",
+          "text": {
+           "ja": "次の決算では、売上が見通しの上限に届くかと、粗利益率が74%台に戻るかを確認します。",
+           "en": "At the next report, check whether revenue reaches the top of the range and whether gross margin returns to the 74% range."
+          }
+         }
+        ]
+       }
+      }
+     },
+     "summaryAt": "2035-02-26T21:41:00Z",
+     "failed": false
+    }
+   },
+   "history": [
+    {
+     "label": "Q1",
+     "end": "2034-04-27",
+     "value": 81615
+    },
+    {
+     "label": "Q2",
+     "end": "2034-07-27",
+     "value": 96221
+    },
+    {
+     "label": "Q3",
+     "end": "2034-10-26",
+     "value": 108400
+    }
+   ]
+  },
+  {
+   "ticker": "AMD",
+   "name": "AMD",
+   "live": {
+    "ticker": "AMD",
+    "period": "FQ4 2034",
+    "releasedOn": "2035-02-04",
+    "publicAt": "2035-02-04T21:16:00Z",
+    "dive": {
+     "numbers": {
+      "revenue": {
+       "current": 13380,
+       "previous": 11920,
+       "yearAgo": 9700
+      },
+      "adjustedEPS": 1.62,
+      "epsEstimate": 1.55,
+      "grossMargin": {
+       "current": 54.8,
+       "previous": 54.1
+      },
+      "guidance": {
+       "low": 13600,
+       "high": 14400,
+       "grossMarginPercent": 55.5
+      },
+      "segments": [
+       {
+        "key": "dc",
+        "nameJa": "データセンター",
+        "nameEn": "Data Center",
+        "revenue": 6950,
+        "previous": 5880,
+        "operatingMargin": 31.5,
+        "previousOperatingMargin": 29.4
+       },
+       {
+        "key": "client",
+        "nameJa": "クライアント・ゲーム",
+        "nameEn": "Client and Gaming",
+        "revenue": 4850,
+        "previous": 4920,
+        "operatingMargin": 18.2,
+        "previousOperatingMargin": 21.0
+       }
+      ]
+     },
+     "summary": {
+      "conclusion": [
+       {
+        "ja": "売上は前期から12.2%増えて133.8億ドルとなり、データセンター部門が初めて売上の半分を超えました。",
+        "en": "Revenue rose 12.2% from the previous quarter to $13.38B, and Data Center passed half of revenue for the first time."
+       },
+       {
+        "ja": "パソコン・ゲーム向けは売上も利益率も下がりました。次期は売上・粗利益率とも今回を上回る見通しです。",
+        "en": "Client and Gaming saw lower revenue and margins. The outlook for next quarter is above this quarter for both revenue and gross margin."
+       }
+      ],
+      "cards": {
+       "growth": {
+        "headline": {
+         "ja": "データセンター部門が18%伸び、売上の半分を超えました",
+         "en": "Data Center grew 18% and passed half of revenue"
+        },
+        "segment": "dc",
+        "chips": [
+         {
+          "tone": "up",
+          "text": {
+           "ja": "データセンター +18.2%",
+           "en": "Data Center +18.2%"
+          }
+         },
+         {
+          "tone": "gold",
+          "text": {
+           "ja": "売上の52%",
+           "en": "52% of revenue"
+          }
+         }
+        ],
+        "sections": [
+         {
+          "key": "happened",
+          "text": {
+           "ja": "データセンター部門の売上は69.5億ドルで、前期の58.8億ドルから18.2%増えました。AI向けの製品が伸びの中心です。",
+           "en": "Data Center revenue was $6.95B, up 18.2% from $5.88B, led by AI products."
+          }
+         },
+         {
+          "key": "good",
+          "text": {
+           "ja": "部門の営業利益率も29.4%から31.5%に上がり、売上と利益がそろって伸びています。",
+           "en": "The segment's operating margin also rose from 29.4% to 31.5%, so revenue and profit grew together."
+          }
+         },
+         {
+          "key": "means",
+          "text": {
+           "ja": "会社の稼ぎ頭が、パソコン向けからデータセンター向けに移りつつあります。",
+           "en": "The company's main earner is shifting from PCs to data centers."
+          }
+         }
+        ]
+       },
+       "change": {
+        "headline": {
+         "ja": "売上は前期比 +12.2%、前年同期比 +37.9%",
+         "en": "Revenue +12.2% QoQ and +37.9% YoY"
+        },
+        "chips": [
+         {
+          "tone": "up",
+          "text": {
+           "ja": "前期比 +12.2%",
+           "en": "+12.2% QoQ"
+          }
+         },
+         {
+          "tone": "up",
+          "text": {
+           "ja": "前年同期比 +37.9%",
+           "en": "+37.9% YoY"
+          }
+         }
+        ],
+        "sections": [
+         {
+          "key": "happened",
+          "text": {
+           "ja": "売上は98.2億ドル→106.4億ドル→119.2億ドル→133.8億ドルと、4四半期続けて増えました。",
+           "en": "Revenue grew four quarters in a row: $9.82B → $10.64B → $11.92B → $13.38B."
+          }
+         },
+         {
+          "key": "view",
+          "text": {
+           "ja": "増え方は前期(+12.0%)とほぼ同じで、勢いは保たれています。",
+           "en": "Growth is about the same as last quarter (+12.0%); momentum is holding."
+          }
+         }
+        ]
+       },
+       "caution": {
+        "headline": {
+         "ja": "パソコン・ゲーム向けは売上も利益率も低下",
+         "en": "Client and Gaming: lower revenue and margin"
+        },
+        "segment": "client",
+        "chips": [
+         {
+          "tone": "down",
+          "text": {
+           "ja": "部門売上 −1.4%",
+           "en": "Segment revenue −1.4%"
+          }
+         },
+         {
+          "tone": "down",
+          "text": {
+           "ja": "部門営業利益率 −2.8pt",
+           "en": "Segment margin −2.8 pt"
+          }
+         }
+        ],
+        "sections": [
+         {
+          "key": "watch",
+          "text": {
+           "ja": "クライアント・ゲーム部門の営業利益率は21.0%から18.2%に下がりました。ゲーム機向けの需要が一服しています。",
+           "en": "The Client and Gaming operating margin fell from 21.0% to 18.2% as game-console demand cooled."
+          }
+         },
+         {
+          "key": "means",
+          "text": {
+           "ja": "全社の粗利益率は54.8%に上がっていますが、この部門の弱さが続くと、全体の伸びを抑える可能性があります。",
+           "en": "Company gross margin rose to 54.8%, but continued weakness here could hold back overall growth."
+          }
+         }
+        ]
+       },
+       "next": {
+        "headline": {
+         "ja": "次期の売上見通しは136〜144億ドル。AI向けの伸びが続くか",
+         "en": "Next quarter: $13.6–14.4B. Can AI growth continue?"
+        },
+        "chips": [
+         {
+          "tone": "gold",
+          "text": {
+           "ja": "売上 136〜144億ドル",
+           "en": "Revenue $13.6–14.4B"
+          }
+         },
+         {
+          "tone": "gold",
+          "text": {
+           "ja": "粗利益率 約55.5%",
+           "en": "Gross margin ~55.5%"
+          }
+         }
+        ],
+        "sections": [
+         {
+          "key": "view",
+          "text": {
+           "ja": "見通しの中央(140億ドル)は、今回より約5%多い水準です。",
+           "en": "The midpoint ($14.0B) is about 5% above this quarter."
+          }
+         },
+         {
+          "key": "means",
+          "text": {
+           "ja": "次の決算では、データセンター部門の伸びと、パソコン向けが下げ止まるかを確認します。",
+           "en": "At the next report, check Data Center growth and whether Client and Gaming stops falling."
+          }
+         }
+        ]
+       }
+      }
+     },
+     "summaryAt": "2035-02-04T21:38:00Z",
+     "failed": false
+    }
+   },
+   "history": [
+    {
+     "label": "Q1",
+     "end": "2034-03-29",
+     "value": 9820
+    },
+    {
+     "label": "Q2",
+     "end": "2034-06-28",
+     "value": 10640
+    },
+    {
+     "label": "Q3",
+     "end": "2034-09-27",
+     "value": 11920
+    }
+   ]
+  }
+ ]
+}

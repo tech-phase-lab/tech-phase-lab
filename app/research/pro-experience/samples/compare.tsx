@@ -1,5 +1,5 @@
 "use client";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { overallComparison } from "@/lib/research/comparison-scorecard";
 import { COMPARE_TICKERS, compareNow, compareSample } from "@/lib/research/pro-experience-sample-data";
 import { CompanyScoreCard, ScoreHeadline, VerdictHeading, ScoreOverview, StatusOverlay } from "../../compare/comparison-visuals";
@@ -11,19 +11,25 @@ import styles from "./samples.module.css";
 export default function CompareSample({ lang }: { lang: "ja" | "en" }) {
   const ja = lang === "ja";
   const [picked, setPicked] = useState<string[]>(["NVDA", "AMD"]);
+  // In the order they were chosen (owner, Nov 16: 「数字がないので、どれが入れ替わるか分からない」): ① is the older choice, ② the newer.
+  // A third choice drops ①; the old ② becomes ① and the new stock ②. The result keeps that order, so ① is the first (gold) company.
   const toggle = (ticker: string) => setPicked(current => current.includes(ticker) ? current.filter(t => t !== ticker)
-    // A third choice replaces the earlier of the two.
     : current.length >= 2 ? [current[1], ticker] : [...current, ticker]);
-  // Shown in the order of the four, so a pair always looks the same.
-  const ordered = useMemo(() => COMPARE_TICKERS.filter(t => picked.includes(t)), [picked]);
-  const result = compareSample(ordered);
+  const result = compareSample(picked);
   const now = compareNow;
   const assessment = result ? overallComparison(result.companies, lang, now) : null;
   return <div className={styles.compare}>
     <p className={styles.pickLabel}>{ja ? "2つ選んでください" : "Choose two"}</p>
     <div className={styles.pills} role="group" aria-label={ja ? "比較する銘柄" : "Stocks to compare"}>
-      {COMPARE_TICKERS.map(ticker => <button key={ticker} type="button" className={styles.pill} aria-pressed={picked.includes(ticker)} onClick={() => toggle(ticker)}>{ticker}</button>)}
+      {COMPARE_TICKERS.map(ticker => {
+        const order = picked.indexOf(ticker);
+        return <button key={ticker} type="button" className={styles.pill} aria-pressed={order >= 0} onClick={() => toggle(ticker)}
+          aria-label={order >= 0 ? (ja ? `${ticker}（${order + 1}つ目）` : `${ticker} (choice ${order + 1})`) : ticker}>
+          {order >= 0 && <span className={styles.pickNo} data-slot={order} aria-hidden="true">{order + 1}</span>}{ticker}
+        </button>;
+      })}
     </div>
+    <p className={styles.pickRule}>{ja ? "3つ目を選ぶと、①が外れて入れ替わります" : "Choosing a third stock replaces ①"}</p>
     {!result || !assessment ? <p className={styles.waiting}>{ja ? "もう1つ選ぶと、結果が開きます。" : "Choose one more to see the result."}</p>
       : <div className={`${compareStyles.results} ${compareStyles.resultView} ${styles.compareResult}`}>
         <VerdictHeading title={assessment.title} leader={assessment.leader} companies={result.companies} lang={lang} now={now} />

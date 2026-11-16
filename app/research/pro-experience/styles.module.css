@@ -2,17 +2,24 @@
 .back{display:inline-flex;align-items:center;gap:6px;padding:10px 0;color:#9aa6bb;font-size:14px;text-decoration:none}
 .titleRow{display:flex;align-items:center;gap:14px;margin:12px 0 0;flex-wrap:wrap}
 .title{margin:0;font-size:30px;font-weight:700;line-height:1.3}
+/* The shell's `.main h1` (margin 22px 0 10px) outranks `.title` and pushed the heading 6px below the PRO tag beside it (owner, Nov 16:
+ * 「PROのタグがずれている」). Two classes win over it; the size stays the 24px the owner has been seeing. */
+.titleRow .title{margin:0;font-size:24px;line-height:1.3}
 .proTag{display:inline-flex;align-items:center;gap:6px;height:26px;padding:0 10px;border:1px solid #7a6330;border-radius:999px;background:#2a2312;color:#e3c47e;font:700 12px var(--font-geist-mono),ui-monospace,monospace;letter-spacing:.08em}
-.lead{margin:16px 0 26px;font-size:15px;color:#8c98ab}
+/* The list's heading, as on the other pages (owner's mockup 01-list, Nov 16): eyebrow, white title, one line. No gold. */
+.eyebrow{margin:12px 0 0;font-size:11px;font-weight:600;line-height:1.3;letter-spacing:.16em;color:#8e9aaa}
+.page .listTitle{margin:2px 0 0;font-size:26px;font-weight:700;line-height:1.3;color:#f1f4f8}
+.lead{margin:12px 0 16px;font-size:14px;line-height:1.7;color:#c6d0dc}
 .list{margin:0;padding:0;list-style:none}
-.row{display:grid;grid-template-columns:80px minmax(0,1fr) 12px;align-items:center;gap:0 12px;padding:9px 0;border-bottom:1px solid #151b25;color:inherit;text-decoration:none}
-.thumb{position:relative;display:grid;place-items:center;width:80px;height:50px;overflow:hidden;border:1px solid #1f2a3d;border-radius:10px;background:repeating-linear-gradient(135deg,#0f1520 0 8px,#121a28 8px 16px)}
-.thumb img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.play{position:relative;display:grid;place-items:center;width:24px;height:24px;border:1.5px solid #3f8f77;border-radius:50%;background:rgba(10,24,22,.7);color:#5de0b0}
-.name{margin:0;font-size:17px;line-height:1.35;font-weight:700;overflow-wrap:anywhere}
-.summary{margin:1px 0 0;font-size:13px;line-height:1.4;color:#7d8ca0;overflow-wrap:anywhere}
-.chev{color:#7d8ca0;font-size:20px;text-align:right}
-.row:focus-visible{outline:2px solid #e3c47e;outline-offset:3px}
+.row{display:grid;grid-template-columns:56px minmax(0,1fr) 12px;align-items:center;gap:0 14px;padding:10px 0;border-bottom:1px solid #1c2633;color:inherit;text-decoration:none}
+.thumb{display:block;box-sizing:border-box;width:56px;height:56px;overflow:hidden;border:1px solid #5c4a24;border-radius:14px;background:radial-gradient(circle at 30% 20%,#2a2416,#0f141c 70%);box-shadow:0 0 14px rgba(226,194,122,.12)}
+.thumb svg{display:block;margin:-1px}
+.rowText{display:flex;flex-direction:column;gap:3px;min-width:0}
+.videoPill{align-self:flex-start;padding:2px 8px;border:1px solid #2c3a4a;border-radius:999px;background:#1a2230;color:#aab6c4;font-size:11px;font-weight:700;line-height:1.5}
+.name{margin:0;font-size:16px;line-height:1.35;font-weight:700;overflow-wrap:anywhere}
+.summary{margin:0;font-size:12.5px;line-height:1.5;color:#9aa7b7;overflow-wrap:anywhere}
+.chev{color:#6f7c8c;font-size:20px;text-align:right}
+.row:focus-visible{outline:2px solid #8fe3c0;outline-offset:3px}
 /* The feature pages are read by FREE visitors: no gold in their frame or text (owner, Nov 16); green as in the owner's mockups. */
 .proTagPlain{border-color:#3f6b5d;background:transparent;color:#8fe3c0}
 .back:focus-visible,.next:focus-visible,.go:focus-visible{outline:2px solid #8fe3c0;outline-offset:3px}

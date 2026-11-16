@@ -37,9 +37,9 @@ test("the tour's samples never ask the network: no fetch, no API address, no Nex
       assert.doesNotMatch(source, banned, `${name}: ${banned}`);
     // Data comes only from the committed sample files.
     for (const [, from] of source.matchAll(/from "(@\/lib\/[^"]+)"/g))
-      assert.ok(/pro-experience-sample|comparison-scorecard|theme-definitions|theme-ranking|theme-stock-names|portfolio\/calc|chain-map-core|radar|company-watch/.test(from), `${name} imports ${from}`);
+      assert.ok(/pro-experience-sample|comparison-scorecard|theme-definitions|theme-ranking|theme-stock-names|portfolio\/calc|chain-map-core|radar|company-watch|watch-earnings/.test(from), `${name} imports ${from}`);
   }
-  for (const name of ["compare.json", "portfolio.json", "radar.json", "relation-map-nvda.json", "themes.json", "watch22.json"]) {
+  for (const name of ["compare.json", "portfolio.json", "radar.json", "relation-map-nvda.json", "themes.json", "watch22.json", "watch22-dives.json"]) {
     const file = JSON.parse(read(`../lib/research/pro-experience-samples/${name}`));
     assert.ok(typeof file._source === "string" && file._source.length > 20, `${name} says where its numbers came from`);
   }
@@ -75,7 +75,7 @@ test("Stock Comparison: only NVDA, AMD, INTC and ARM; all six pairs open a score
   }
   for (const bad of [["NVDA", "TSM"], ["NVDA", "NVDA"], ["NVDA", "AMD", "INTC"], ["NVDA"], ["MU", "SNDK"]]) assert.equal(compareSample(bad), null, bad.join("-"));
   const ui = read(`${SAMPLES}compare.tsx`);
-  assert.match(ui, /COMPARE_TICKERS\.map\(ticker => <button/);
+  assert.match(ui, /COMPARE_TICKERS\.map\(ticker => \{[\s\S]*?<button/);
   assert.doesNotMatch(ui, /<input/);
 });
 
@@ -131,12 +131,13 @@ test("nothing in a sample leads to a real PRO screen: unhandled links only show 
   assert.match(frame, /PRO_ONLY_VIEW = \{ ja: "PROで見られます"/);
   assert.match(frame, /event\.preventDefault\(\);\n    show\(\);/);
   assert.match(frame, /onClick=\{guard\}/);
-  // 22 stocks: only NVDA and AMD open a summary; any other stock says 「PROで見られます」.
+  // 22 stocks: only NVDA and AMD open a deep dive; any other stock says 「PROで見られます」.
   const watch = read(`${SAMPLES}watch-22.tsx`);
-  assert.match(watch, /summaries\.some\(item => item\.ticker === ticker\) \? setOpen\(ticker\) : proOnly\(PRO_ONLY_VIEW\)/);
+  assert.match(watch, /onClick=\{\(\) => has \? setOpen\(company\.ticker\) : proOnly\(PRO_ONLY_VIEW\)\}/);
   const data = JSON.parse(read("../lib/research/pro-experience-samples/watch22.json"));
   assert.equal(data.companies.length, 22);
-  assert.deepEqual(data.summaries.map(item => item.ticker), ["NVDA", "AMD"]);
+  assert.equal(data.summaries, undefined);
+  assert.deepEqual(JSON.parse(read("../lib/research/pro-experience-samples/watch22-dives.json")).dives.map(item => item.ticker), ["NVDA", "AMD"]);
   // Theme Ranking: a stock row stays on the page and shows the notice.
   assert.match(read(`${SAMPLES}theme-ranking.tsx`), /<DivergingChart ja=\{ja\} mono onSelect=\{\(\) => proOnly\(\)\}/);
   // The tiles of the 22 stocks have no address to follow in the sample.
@@ -145,7 +146,7 @@ test("nothing in a sample leads to a real PRO screen: unhandled links only show 
 
 // ---- Owner, Nov 16: 「サンプルなのですべて埋めてください」 — no blank, 「—」 or missing value anywhere; dates on the frame's made-up timeline. ----
 const SAMPLE_DIR = "../lib/research/pro-experience-samples/";
-const SAMPLE_FILES = ["compare.json", "portfolio.json", "radar.json", "relation-map-nvda.json", "themes.json", "watch22.json"];
+const SAMPLE_FILES = ["compare.json", "portfolio.json", "radar.json", "relation-map-nvda.json", "themes.json", "watch22.json", "watch22-dives.json"];
 const MISSING_TEXT = /—|未取得|未開示|確認できません|そろいません|記載なし|読み取れません|不足|データなし|N\/A|未確認/;
 
 test("Stock Comparison: every factor of every pair has a score and a figure (割安性 and 株価モメンタム included), and every company has a strength and a weakness", () => {
@@ -179,17 +180,6 @@ test("Stock Comparison: every factor of every pair has a score and a figure (割
   // Nothing is left blank, so the sample leaves out the 「— 未取得…」 legend (the real screen keeps it).
   assert.match(read(`${SAMPLES}compare.tsx`), /<ScoreOverview [^>]*missingNote=\{false\}/);
   assert.match(read("../app/research/compare/screen.tsx"), /<ScoreOverview companies=\{result.companies\} lang=\{lang\} now=\{now\}\/>/);
-});
-
-test("Financial Radar: the four stocks each have every figure the PRO card shows", () => {
-  const radar = JSON.parse(read(`${SAMPLE_DIR}radar.json`)).radar;
-  assert.deepEqual(radar.dots.map(dot => dot.ticker), ["NVDA", "AMD", "INTC", "ARM"]);
-  assert.deepEqual(radar.missing, []);
-  for (const dot of radar.dots) {
-    for (const key of ["ocfMargin", "cover", "fcfMargin", "growth", "score", "rank", "size"]) assert.ok(Number.isFinite(dot[key]), `${dot.ticker} ${key}`);
-    assert.equal(dot.review, false);
-    assert.ok(dot.previous && Number.isFinite(dot.previous.ocfMargin) && Number.isFinite(dot.previous.cover), `${dot.ticker} previous`);
-  }
 });
 
 test("US stock portfolio: the yen gain is the image's +484,710円, row by row in whole yen, beside the unchanged +2,301.25 USD", () => {

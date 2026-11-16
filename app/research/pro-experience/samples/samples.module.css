@@ -32,3 +32,31 @@
 .tryButton{min-height:48px;padding:0 12px;border:1.5px solid #8fe3c0;border-radius:12px;background:transparent;color:#8fe3c0;font-weight:700;font-size:15px;font-family:inherit;cursor:pointer}
 .tryButton:disabled{opacity:.5;cursor:default}
 .portfolioStage{margin-top:16px;padding-top:14px;border-top:1px solid #1f2a3a}
+
+/* Stock Comparison: each chosen stock shows its order, in the result's colours (① gold = first company, ② blue = second, as on the real picker). */
+.pill{display:inline-flex;align-items:center;justify-content:center;gap:6px}
+/* With a badge the name must still fit at 360px: two classes so the shell's `.app button{font:inherit}` (16px) does not win here either. */
+.pills .pill{gap:4px;padding:0 4px;font:700 14px var(--font-geist-sans,system-ui),system-ui,sans-serif;white-space:nowrap}
+.pickNo{display:inline-grid;place-items:center;flex:none;width:18px;height:18px;border-radius:50%;background:#ffc247;color:#0b111c;font:800 11px/1 var(--font-geist-mono),ui-monospace,monospace}
+.pickNo[data-slot="1"]{background:#4cc9f0}
+.pickRule{margin:8px 0 0;font-size:12px;color:#7d8a9a}
+
+/* 22 tracked stocks: the list is a compact row of tickers; NVDA and AMD open their deep dive, the others say 「PROで見られます」. */
+.tickers{display:grid;grid-template-columns:repeat(auto-fill,minmax(62px,1fr));gap:5px}
+/* Two classes: the shell's `.app button{font:inherit}` (one class + one element) outranked a lone `.ticker`, so the chips took the 16px body
+ * font and GOOGL ran past its border at 360px (owner's check, Nov 16). */
+.tickers .ticker{min-width:0;height:28px;padding:0 2px;overflow:hidden;border:1px solid #1f2a3a;border-radius:8px;background:#0f1620;color:#6f7d8e;font-family:var(--font-geist-mono,ui-monospace),ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px;font-weight:600;line-height:1;letter-spacing:0;white-space:nowrap;cursor:pointer}
+.ticker[data-open]{border-color:#2c3a4a;color:#c6d0dc}
+.ticker[aria-pressed="true"]{border-color:#8fe3c0;background:#12261d;color:#8fe3c0}
+.ticker:focus-visible{outline:2px solid #8fe3c0;outline-offset:2px}
+.dive{min-width:0;margin-top:2px;padding-top:4px;border-top:1px solid #1f2a3a}
+.dive>section{margin-top:14px}
+
+/* Financial Radar: one genre, the ranking first, then the (FREE) chart. */
+.genreLine{display:flex;align-items:baseline;gap:8px;margin:0;font-size:12.5px;color:#9aa7b7}
+.genreLine b{font-size:15px;color:#e8eef5}
+.rankingWrap>section{margin-top:0}
+/* The sample is narrower than the radar page: the heading keeps one line and the date line goes under it. */
+.rankingWrap header{flex-wrap:wrap;row-gap:2px}
+.rankingWrap h2{white-space:nowrap}
+.chartNote{margin:6px 0 0;font-size:12px;color:#7d8a9a}
