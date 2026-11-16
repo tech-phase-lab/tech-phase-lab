@@ -13,6 +13,12 @@ const compare = compareFile as unknown as { snapshotAt: string; companies: Recor
 /** The time the comparison is judged at: the moment the figures were saved, so the sample never goes stale. */
 export const compareNow = Date.parse(compare.snapshotAt);
 export const comparePairs = (): [string, string][] => COMPARE_TICKERS.flatMap((a, i) => COMPARE_TICKERS.slice(i + 1).map(b => [a, b] as [string, string]));
+/** One tap on a stock in the picker (owner, Nov 16), in the order chosen: ① is the older choice, ② the newer. A chosen stock is removed; with
+ * fewer than two it is added; a third drops ①, so the old ② becomes ① and the tapped stock ②. Never refuses a tap. */
+export function nextPicks(current: readonly string[], ticker: string): string[] {
+  if (current.includes(ticker)) return current.filter(t => t !== ticker);
+  return current.length >= 2 ? [current[current.length - 1], ticker] : [...current, ticker];
+}
 /** The result page's data for two of the four stocks; null for anything else (another stock, the same stock twice, more than two). */
 export function compareSample(tickers: readonly string[]): ComparisonResult | null {
   if (tickers.length !== 2 || tickers[0] === tickers[1] || !tickers.every(t => (COMPARE_TICKERS as readonly string[]).includes(t))) return null;

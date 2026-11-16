@@ -131,9 +131,10 @@ test("nothing in a sample leads to a real PRO screen: unhandled links only show 
   assert.match(frame, /PRO_ONLY_VIEW = \{ ja: "PROで見られます"/);
   assert.match(frame, /event\.preventDefault\(\);\n    show\(\);/);
   assert.match(frame, /onClick=\{guard\}/);
-  // 22 stocks: only NVDA and AMD open a deep dive; any other stock says 「PROで見られます」.
+  // 22 stocks: only NVDA and AMD are buttons (they open a deep dive); the other 20 are plain text in the 「一覧 ▾」 list.
   const watch = read(`${SAMPLES}watch-22.tsx`);
-  assert.match(watch, /onClick=\{\(\) => has \? setOpen\(company\.ticker\) : proOnly\(PRO_ONLY_VIEW\)\}/);
+  assert.match(watch, /\{dives\.map\(item => <button [^>]*onClick=\{\(\) => setOpen\(item\.ticker\)\}/);
+  assert.match(watch, /\{OTHER_TICKERS\.map\(ticker => <li key=\{ticker\}>\{ticker\}<\/li>\)\}/);
   const data = JSON.parse(read("../lib/research/pro-experience-samples/watch22.json"));
   assert.equal(data.companies.length, 22);
   assert.equal(data.summaries, undefined);

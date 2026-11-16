@@ -57,8 +57,8 @@ test("「PROではじめる」 is for people who are not PRO, goes to the plan p
   assert.match(screen, /const showStart = showStartButton\(\{ settled, plan: plan \?\? null, ownerAccount: owner, ownerRole \}\);/);
   assert.match(screen, /\{showStart && <div className=\{styles\.start\}>\s*<Link className=\{styles\.go\} href="\/research\/account\?upgrade=1"/);
   assert.ok(screen.indexOf("PROではじめる") < screen.indexOf("次の機能"));
-  // Nov 16: the feature pages are read by FREE visitors, so the button is green, not gold (owner's mockups).
-  assert.match(read("../app/research/pro-experience/styles.module.css"), /\.go\{[^}]*background:#8fe3c0/);
+  // Nov 16 (second review): the button is gold and glowing, like the header's PRO button (owner's mockups 01/02).
+  assert.match(read("../app/research/pro-experience/styles.module.css"), /\.go\{[^}]*background:linear-gradient\(135deg,#f1dca0,#d9b25f 55%,#b8893a\)/);
 });
 
 test("the FREE menu has 「PRO機能体験」 with a gold-crown PRO tag; the page opens for FREE and PRO alike", () => {
