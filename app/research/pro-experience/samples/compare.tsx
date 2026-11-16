@@ -30,7 +30,7 @@ export default function CompareSample({ lang }: { lang: "ja" | "en" }) {
         <ScoreHeadline companies={result.companies} lang={lang} now={now} />
         <StatusOverlay companies={result.companies} lang={lang} now={now} />
         <section className={compareStyles.explain}><p>{assessment.description}</p>{assessment.note && <details><summary>{ja ? "比較条件・注意点" : "Comparison caveats"}</summary><ul><li>{assessment.note}</li></ul></details>}</section>
-        <ScoreOverview companies={result.companies} lang={lang} now={now} />
+        <ScoreOverview companies={result.companies} lang={lang} now={now} missingNote={false} />
         <h2 className={compareStyles.companiesHeading}>{ja ? "会社ごとの長所と短所" : "Strengths and weaknesses by company"}</h2>
         <div className={compareStyles.companyCards}>{result.companies.map((c, i) => <CompanyScoreCard colorIndex={i} key={c.ticker} company={c} lang={lang} now={now} />)}</div>
         <DetailPanels lang={lang}>

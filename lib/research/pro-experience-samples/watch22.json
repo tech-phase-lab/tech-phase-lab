@@ -1,5 +1,6 @@
 {
- "_source": "lib/research/intake.ts providers (the 22 tracked stocks) and lib/research/company-watch.ts (NVDA, AMD saved earnings summaries); only these two summaries are copied",
+ "_source": "lib/research/intake.ts providers (the 22 tracked stocks) and lib/research/company-watch.ts (NVDA, AMD saved earnings summaries); only these two summaries are copied. All figures and dates are fictional sample values on the sample's own timeline (as of 2035/03/12 09:00 JST); they are not real data.",
+ "fictional": true,
  "companies": [
   {
    "ticker": "MU",
@@ -206,14 +207,14 @@
    "name": "NVIDIA",
    "exchange": "NASDAQ",
    "quoteTicker": "NVDA",
-   "period": "Q2 FY2027",
-   "releasedOn": "2026-08-26",
-   "reviewedOn": "2026-09-19",
+   "period": "Q2 FY2035",
+   "releasedOn": "2034-11-26",
+   "reviewedOn": "2034-12-19",
    "sources": [
     {
      "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000073/q2fy27pr.htm",
-     "title": "NVIDIA Announces Financial Results for Second Quarter Fiscal 2027",
-     "location": "Q2 Fiscal 2027 Summary; Outlook; Data Center"
+     "title": "NVIDIA Announces Financial Results for Second Quarter Fiscal 2035",
+     "location": "Q2 Fiscal 2035 Summary; Outlook; Data Center"
     }
    ],
    "tiles": [
@@ -227,8 +228,8 @@
       "en": "$96.221B"
      },
      "note": {
-      "ja": "Q1 FY2027 816.15億ドル",
-      "en": "Q1 FY2027 $81.615B"
+      "ja": "Q1 FY2035 816.15億ドル",
+      "en": "Q1 FY2035 $81.615B"
      }
     },
     {
@@ -241,8 +242,8 @@
       "en": "75%"
      },
      "note": {
-      "ja": "Q1 FY2027 74.9%",
-      "en": "Q1 FY2027 74.9%"
+      "ja": "Q1 FY2035 74.9%",
+      "en": "Q1 FY2035 74.9%"
      }
     },
     {
@@ -255,8 +256,8 @@
       "en": "$89B"
      },
      "note": {
-      "ja": "Q1 FY2027比 +18%",
-      "en": "+18% vs Q1 FY2027"
+      "ja": "Q1 FY2035比 +18%",
+      "en": "+18% vs Q1 FY2035"
      }
     }
    ],
@@ -272,15 +273,15 @@
      },
      "points": [
       {
-       "ja": "売上高 962.21億ドル（Q1 FY2027比 +17.9%）",
-       "en": "Revenue $96.221B (+17.9% vs Q1 FY2027)"
+       "ja": "売上高 962.21億ドル（Q1 FY2035比 +17.9%）",
+       "en": "Revenue $96.221B (+17.9% vs Q1 FY2035)"
       }
      ],
      "detail": {
       "ja": "売上と営業利益はいずれも前四半期比で約18〜19%増え、GAAP粗利益率は75.0%でほぼ横ばいでした。データセンター売上は$89.0Bで、全社売上の約92.5%です。",
       "en": "Revenue and operating income rose roughly 18–19% quarter-on-quarter, while GAAP gross margin was nearly flat at 75.0%. Data Center revenue was $89.0B, about 92.5% of total revenue."
      },
-     "sourceSection": "Q2 Fiscal 2027 Summary; Outlook; Data Center"
+     "sourceSection": "Q2 Fiscal 2035 Summary; Outlook; Data Center"
     },
     {
      "title": {
@@ -293,19 +294,19 @@
      },
      "points": [
       {
-       "ja": "データセンター売上 890億ドル（Q1 FY2027比 +18%）",
-       "en": "Data Center revenue $89B (+18% vs Q1 FY2027)"
+       "ja": "データセンター売上 890億ドル（Q1 FY2035比 +18%）",
+       "en": "Data Center revenue $89B (+18% vs Q1 FY2035)"
       },
       {
-       "ja": "GAAP粗利益率 75%（Q1 FY2027比 +0.1ポイント）",
-       "en": "GAAP gross margin 75% (+0.1 pp vs Q1 FY2027)"
+       "ja": "GAAP粗利益率 75%（Q1 FY2035比 +0.1ポイント）",
+       "en": "GAAP gross margin 75% (+0.1 pp vs Q1 FY2035)"
       }
      ],
      "detail": {
-      "ja": "比較対象：Q1 FY2027 → Q2 FY2027。利益率の差はパーセントポイント、金額の増減率は%で表示しています。",
-      "en": "Comparison: Q1 FY2027 → Q2 FY2027. Margin differences use percentage points; changes in monetary amounts use percent."
+      "ja": "比較対象：Q1 FY2035 → Q2 FY2035。利益率の差はパーセントポイント、金額の増減率は%で表示しています。",
+      "en": "Comparison: Q1 FY2035 → Q2 FY2035. Margin differences use percentage points; changes in monetary amounts use percent."
      },
-     "sourceSection": "Q2 Fiscal 2027 Summary; Outlook; Data Center"
+     "sourceSection": "Q2 Fiscal 2035 Summary; Outlook; Data Center"
     },
     {
      "title": {
@@ -326,7 +327,7 @@
       "ja": "Q3見通しの達成可否、Vera Rubinの量産が今後の売上に寄与する時期、中国向けデータセンター売上の回復は、このQ2発表だけでは確定しません。",
       "en": "This Q2 release does not establish whether Q3 guidance will be met, when Vera Rubin production will contribute to revenue, or whether China Data Center revenue will recover."
      },
-     "sourceSection": "Q2 Fiscal 2027 Summary; Outlook; Data Center"
+     "sourceSection": "Q2 Fiscal 2035 Summary; Outlook; Data Center"
     },
     {
      "title": {
@@ -351,7 +352,7 @@
       "ja": "見通しに中国向けデータセンターCompute売上を含めていない。見通し・計画と達成済みの実績を分けて追います。",
       "en": "The outlook assumes no Data Center compute revenue from China. Distinguish forecasts and plans from achieved results."
      },
-     "sourceSection": "Q2 Fiscal 2027 Summary; Outlook; Data Center"
+     "sourceSection": "Q2 Fiscal 2035 Summary; Outlook; Data Center"
     }
    ]
   },
@@ -360,13 +361,13 @@
    "name": "AMD",
    "exchange": "NASDAQ",
    "quoteTicker": "AMD",
-   "period": "Q2 2026",
-   "releasedOn": "2026-08-04",
-   "reviewedOn": "2026-09-19",
+   "period": "Q3 2034",
+   "releasedOn": "2034-11-04",
+   "reviewedOn": "2034-12-19",
    "sources": [
     {
      "url": "https://ir.amd.com/news-events/press-releases/detail/1295/amd-reports-second-quarter-2026-financial-results",
-     "title": "AMD Reports Second Quarter 2026 Financial Results",
+     "title": "AMD Reports Third Quarter 2034 Financial Results",
      "location": "GAAP Quarterly Financial Results; Segment Summary; Current Outlook"
     }
    ],
@@ -381,8 +382,8 @@
       "en": "$11.536B"
      },
      "note": {
-      "ja": "Q1 2026 102.53億ドル",
-      "en": "Q1 2026 $10.253B"
+      "ja": "Q2 2034 102.53億ドル",
+      "en": "Q2 2034 $10.253B"
      }
     },
     {
@@ -395,8 +396,8 @@
       "en": "54%"
      },
      "note": {
-      "ja": "Q1 2026 53%",
-      "en": "Q1 2026 53%"
+      "ja": "Q2 2034 53%",
+      "en": "Q2 2034 53%"
      }
     },
     {
@@ -409,8 +410,8 @@
       "en": "$2.297B"
      },
      "note": {
-      "ja": "Q1 2026 13.83億ドル",
-      "en": "Q1 2026 $1.383B"
+      "ja": "Q2 2034 13.83億ドル",
+      "en": "Q2 2034 $1.383B"
      }
     }
    ],
@@ -426,8 +427,8 @@
      },
      "points": [
       {
-       "ja": "売上高 115.36億ドル（Q1 2026比 +12.5%）",
-       "en": "Revenue $11.536B (+12.5% vs Q1 2026)"
+       "ja": "売上高 115.36億ドル（Q2 2034比 +12.5%）",
+       "en": "Revenue $11.536B (+12.5% vs Q2 2034)"
       }
      ],
      "detail": {
@@ -447,17 +448,17 @@
      },
      "points": [
       {
-       "ja": "GAAP粗利益率 54%（Q1 2026比 +1ポイント）",
-       "en": "GAAP gross margin 54% (+1 pp vs Q1 2026)"
+       "ja": "GAAP粗利益率 54%（Q2 2034比 +1ポイント）",
+       "en": "GAAP gross margin 54% (+1 pp vs Q2 2034)"
       },
       {
-       "ja": "GAAP営業利益 19.9億ドル（Q1 2026比 +34.8%）",
-       "en": "GAAP operating income $1.99B (+34.8% vs Q1 2026)"
+       "ja": "GAAP営業利益 19.9億ドル（Q2 2034比 +34.8%）",
+       "en": "GAAP operating income $1.99B (+34.8% vs Q2 2034)"
       }
      ],
      "detail": {
-      "ja": "比較対象：Q1 2026 → Q2 2026。利益率の差はパーセントポイント、金額の増減率は%で表示しています。",
-      "en": "Comparison: Q1 2026 → Q2 2026. Margin differences use percentage points; changes in monetary amounts use percent."
+      "ja": "比較対象：Q2 2034 → Q3 2034。利益率の差はパーセントポイント、金額の増減率は%で表示しています。",
+      "en": "Comparison: Q2 2034 → Q3 2034. Margin differences use percentage points; changes in monetary amounts use percent."
      },
      "sourceSection": "GAAP Quarterly Financial Results; Segment Summary; Current Outlook"
     },
