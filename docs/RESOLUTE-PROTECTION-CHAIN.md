@@ -102,7 +102,7 @@ anchor からのチェーンを検証し、現在の在庫が (a)(b)(d) を満�
 ## 6. ステップ2: V4 復元バンドルの作成と適用
 
 本番の週次ジョブは、変数 `RESOLUTE_PROTECTED_JOB_V3_B64` のランチャー（fb7c4eda の3モジュールを内包）を実行している。
-ランチャーは3つのファイル名（`backup.py` / `protection.py` / `protection_events.py`）ちょうどのマッピングと、その SHA256 を検査する。今回の変更はこの3モジュール内に収めたので、ランチャーの構造はそのままで中身だけ差し替えられる。
+ランチャーは3つのファイル名（`backup.py` / `protection.py` / `protection_events.py`）ちょうどのマッピングと、その SHA256 を検査する。今回の変更はこの3モジュール内に収めた。V4 ではランチャーもリポジトリのテンプレートから作り直す（下記）。
 
 ### オフラインで作る（承認不要。本番に触れない）
 
@@ -115,20 +115,49 @@ python3 scripts/resolute/build-protected-bundle.py build --source scripts/resolu
   `8e9cae071117da8b293ea3d6c3c529b29b6ef8a7b57e3cabadecd82330590063` が再現する（2026-11-16 確認）。
 - `check --payload <ファイル> --source <ディレクトリ>` で、取り出したペイロードとソースの一致を確認できる。
 
-### ランチャーの差し替え（2026-10-20 と同じ方法）
+### ランチャー（V4 からリポジトリ管理）
 
-1. （読み取りのみ）`resolute-restore-check` の `RESOLUTE_PROTECTED_JOB_V3_B64` を取得してデコードする（コードであって秘密ではないが、ほかの変数は読まない）。
-   内包ペイロードを取り出し、`check --source`（fb7c4eda のソース）で一致を確認する。
-2. 内包ペイロード・digest・コミット表示だけを、このブランチのコミット SHA と `build` の出力に置き換えて V4 ランチャーを作る。
-   ローカルで runpy を差し替えた状態で実行し、展開されたモジュールがソースと一致すること、digest 不一致・モード不正を拒否することを確認する（ジョブ本体は実行しない）。
-3. 【本番変更・オーナー承認要】`resolute-restore-check` に新しい変数 `RESOLUTE_PROTECTED_JOB_V4_B64` を追加し、開始コマンドの参照先を V4 に変える（V3 は戻し用に残す）。cron `0 0 * * 1` は変えない。
+V3 までのランチャー本体（ペイロードを取り出して `backup.py` を実行するラッパー）は Railway 変数にだけ置かれ、リポジトリに無かった。
+本番変数を読まずに再現できるよう、V4 からはランチャーをリポジトリに置き、決定的に組み立てる（2026-11-16）。
+
+- `scripts/resolute/protected-launcher.py`: テンプレート。定数 `COMMIT` / `EXPECTED_MODE` / `MODULES_SHA256` / `PAYLOAD` が空のままでは実行を拒否する（`launcher-unbuilt`）。
+- `scripts/resolute/build-protected-launcher.py`: `git show <commit>:scripts/resolute/<3モジュール>` から `build-protected-bundle.py` と同じ方法でペイロードを作り、テンプレートに埋め込む。
+
+```
+python3 scripts/resolute/build-protected-launcher.py --commit <モジュールのコミット SHA 40桁> --mode restore \
+    --variable RESOLUTE_PROTECTED_JOB_V4_B64 --out <作業ディレクトリ>
+```
+
+出力は `launcher.py`、`launcher.b64`（変数の値。改行なし1行）、`launcher.json`（`modules_sha256`・`launcher_sha256`・サイズ）、`start-command.txt`（現行の開始コマンドの変数名だけを替えたもの）。同じ入力からは同じバイト列になる。
+
+ランチャーの動作（`tests/test_resolute_protected_launcher.py` で確認）:
+
+1. `RESOLUTE_BACKUP_MODE` が組み込んだモード（復元サービスは `restore`）と一致しなければ停止（`launcher-mode`）。日次バックアップ用に作る場合は `--mode backup` で別のランチャーにする。
+2. ペイロードを展開し、`modules_sha256` の一致、モジュールがちょうど3つ（`backup.py` / `protection.py` / `protection_events.py`）であること、正規化 JSON であること、構文を検査する。どれかが違えば停止（`launcher-bundle`）。
+3. `tempfile.mkdtemp`（0700）にファイルを 0600 で書き、書いたものを読み戻して digest を再確認する。
+4. `RESOLUTE_PROTECTED_BUNDLE_READY`（`commit` = モジュールのコミット、`sha256` = `modules_sha256`、`modules` = 3、`mode`）を出す。
+5. `runpy.run_path(backup.py, run_name="__main__")` で実行する。`sys.argv` は `[展開先/backup.py]`、環境変数はそのまま。監視の `/start`・`/fail` と `RESOLUTE_JOB_FAILED` は従来どおり `backup.py` の `entrypoint()` が出し、その終了コード（失敗時 1）をそのまま返す。
+6. 成功・失敗にかかわらず一時ディレクトリを削除する。
+7. ランチャー自身の失敗（`launcher-mode` / `launcher-bundle` / `launcher-extract`、`backup.py` が entrypoint に入る前に落ちた場合の `launcher-run`）では、`RESOLUTE_JOB_FAILED`（`error_type` と固定の `reason` のみ。例外文は出さない）を出し、`BACKUP_MONITOR_PING_URL` が `https://hc-ping.com` のときだけ `/fail` を送って 1 で終了する（`protection-export` モードでは送らない）。
+
+注意: V3 のログのキー名は記録が無く、V4 の `RESOLUTE_PROTECTED_BUNDLE_READY` とキー名が同じとは限らない。本番確認はキー名ではなく値（コミット・digest）で行う。
+
+### V4 の値（2026-11-16 に作成。a638c88f のモジュール）
+
+- `modules_sha256`: `4656f8ba2d584965d15be6f22501796f435875a0a18231f1f9c6dc603c365ff6`（`protection.py` は fb7c4eda と同一。`backup.py`・`protection_events.py` が変更）
+- ランチャーの SHA256 と変数の値のサイズは、このブランチのテンプレートから作った `launcher.json` を参照する（テンプレートを変えると変わる）。
+
+### 適用手順
+
+1. （オフライン）上のコマンドで V4 を作り、`launcher.json` の `modules_sha256` が上の値と一致することを確認する。
+2. 【本番変更・オーナー承認要】`resolute-restore-check` に新しい変数 `RESOLUTE_PROTECTED_JOB_V4_B64` を追加し、開始コマンドの参照先を V4 に変える（V3 は戻し用に残す）。cron `0 0 * * 1` は変えない。
    日次 `resolute-backup` は backup モードのコードが変わっていないので V3 のままでよい。
-4. （任意）【本番変更・オーナー承認要】自動追記を使う場合のみ: `manifests-v2/` に書ける保護ストア認証情報を用意し、`RESOLUTE_PROTECTION_CHAIN_WRITE=true` を設定する。
-   使わない場合は何もしない（復元は検証のみ行い、基点は手順5の再封印で進める）。
-5. 【オーナー操作】Run now（または次の月曜 00:00 UTC の定期実行を待つ）。スケジュールを変えて実行を作らないこと。
-6. 本番ログで確認する: `RESOLUTE_PROTECTED_BUNDLE_READY`（このブランチのコミットと `modules_sha256`）と、同じ実行の `RESOLUTE_RESTORE_OK`（`data_protection.source=independent_online_chain`、`chain` の件数）。
+3. （任意）【本番変更・オーナー承認要】自動追記を使う場合のみ: `manifests-v2/` に書ける保護ストア認証情報を用意し、`RESOLUTE_PROTECTION_CHAIN_WRITE=true` を設定する。
+   使わない場合は何もしない（復元は検証のみ行い、基点は §5 の再封印で進める）。
+4. 【オーナー操作】Run now（または次の月曜 00:00 UTC の定期実行を待つ）。スケジュールを変えて実行を作らないこと。
+5. 本番ログで確認する: `RESOLUTE_PROTECTED_BUNDLE_READY`（`commit`=a638c88f… と `sha256`=4656f8ba…）と、同じ実行の `RESOLUTE_RESTORE_OK`（`data_protection.source=independent_online_chain`、`chain` の件数）。
    失敗時は `reason` を見て判断する。`inventory-db-mismatch` の場合、DB 行の無いイベントがストアにある（または逆）ことを意味するので、anchor 以外に DB を書かずに公開されたイベントが無いかを確認する。
-7. 監視（hc-ping）の成功を確認する。
+6. 監視（hc-ping）の成功を確認する。
 
 ## 7. 安全性について残ること
 
