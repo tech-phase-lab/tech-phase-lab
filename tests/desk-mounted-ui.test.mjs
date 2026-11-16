@@ -20,7 +20,7 @@ async function component(path, editorStub=false) {
   return (await import(pathToFileURL(outfile).href)).default;
  }finally{await rm(dir,{recursive:true,force:true});}
 }
-test('reactions show only pressed choices as chips; the dotted button opens the five choices; pressing again undoes',async()=>{
+test('reactions: the five choices sit in one row from the start, counts only when pressed, pressing again undoes',async()=>{
  const Reactions=await component('../app/research/desk/reactions.tsx');
  const original=globalThis.fetch;let resolveLoad;
  let votes=Object.fromEntries(['like','smile','sad','angry','fire'].map(k=>[k,{count:0,selected:false}]));
@@ -31,23 +31,22 @@ test('reactions show only pressed choices as chips; the dotted button opens the 
   return {ok:true,json:async()=>({ok:true,reactions:votes})};
  };
  const host=document.createElement('div');document.body.append(host);const root=createRoot(host);
+ const buttons=()=>[...host.querySelectorAll('button')];
  try{
   await act(async()=>root.render(React.createElement(Reactions,{postId:'note-reaction-test',ja:true})));
-  assert.equal(host.querySelectorAll('button').length,1,'before loading only the (disabled) smile button');
+  assert.equal(buttons().length,5,'all five are shown before loading');
+  assert.ok(buttons().every(button=>button.disabled),'disabled until the counts arrive');
   await act(async()=>{resolveLoad();await tick();});
-  assert.equal(host.querySelectorAll('[aria-pressed]').length,1,'only the pressed choice (smile, 2) is a chip');
-  assert.match(host.textContent,/😊.*2/);
-  assert.ok(!host.textContent.includes('👍'),'choices nobody pressed are not shown');
-  await act(async()=>{host.querySelector('[aria-haspopup]').click();await tick();});
-  const picker=host.querySelector('[role=group]');
-  assert.equal(picker.querySelectorAll('button').length,5);
-  await act(async()=>{picker.querySelectorAll('button')[4].click();await tick();});
-  assert.equal(host.querySelector('[role=group]'),null,'the picker closes after a choice');
-  const chips=()=>[...host.querySelectorAll('[aria-pressed=true]')];
-  assert.equal(chips().length,1);
-  assert.match(chips()[0].textContent,/🔥/,'my own choice is the highlighted chip');
-  await act(async()=>{chips()[0].click();await tick();});
-  assert.equal(chips().length,0,'pressing it again cancels it');
+  assert.deepEqual(buttons().map(button=>button.textContent),['\u{1F44D}','\u{1F60A}2','\u{1F622}','\u{1F620}','\u{1F525}'],'fixed order; a number only where someone reacted');
+  assert.deepEqual(buttons().map(button=>button.getAttribute('aria-label')),['いいね','うれしい 2','悲しい','怒り','炎']);
+  assert.ok(buttons().every(button=>button.getAttribute('aria-pressed')==='false'&&!button.disabled));
+  assert.equal(host.querySelector('[aria-haspopup]'),null,'no picker button');
+  await act(async()=>{buttons()[4].click();await tick();});
+  assert.equal(buttons()[4].getAttribute('aria-pressed'),'true','my own choice is highlighted');
+  assert.equal(buttons()[4].textContent,'\u{1F525}1');
+  await act(async()=>{buttons()[4].click();await tick();});
+  assert.equal(buttons()[4].getAttribute('aria-pressed'),'false','pressing it again cancels it');
+  assert.equal(buttons()[4].textContent,'\u{1F525}','back to no number');
  }finally{await act(async()=>root.unmount());host.remove();globalThis.fetch=original;}
 });
 
