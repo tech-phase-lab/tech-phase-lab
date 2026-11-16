@@ -67,6 +67,10 @@ class LauncherCase(unittest.TestCase):
         self.report = self.builder.build(COMMIT, 'restore', self.base / 'out', source=self.source,
                                          variable='RESOLUTE_PROTECTED_JOB_V4_B64')
         self.launcher = (self.base / 'out' / 'launcher.py').read_text(encoding='utf-8')
+        # The variable value must decode (base64 -d | gunzip) to exactly launcher.py.
+        value = (self.base / 'out' / 'launcher.b64').read_bytes()
+        self.assertEqual(gzip.decompress(base64.b64decode(value, validate=True)).decode('utf-8'),
+                         self.launcher)
 
     def write(self, text, name='launcher.py'):
         path = self.base / name
@@ -139,8 +143,7 @@ class LauncherCase(unittest.TestCase):
 
     def test_tampered_payload_fails_closed(self):
         tampered = dict(FAKE_MODULES, **{'protection.py': 'VALUE = 2\n'})
-        payload = base64.b64encode(gzip.compress(body_of(tampered), mtime=0)).decode()
-        path = self.write(self.replace_constant('PAYLOAD', payload))
+        path = self.write(self.replace_constant('PAYLOAD', body_of(tampered).decode()))
         self.assert_failed_closed(*self.run_launcher(path), 'launcher-bundle')
 
     def test_extra_or_missing_module_fails_closed_even_with_matching_digest(self):
@@ -148,7 +151,7 @@ class LauncherCase(unittest.TestCase):
         missing = {k: v for k, v in FAKE_MODULES.items() if k != 'protection.py'}
         for index, mapping in enumerate((extra, missing)):
             body = body_of(mapping)
-            text = self.replace_constant('PAYLOAD', base64.b64encode(gzip.compress(body, mtime=0)).decode())
+            text = self.replace_constant('PAYLOAD', body.decode())
             text = re.sub(r"^MODULES_SHA256 = .*$", f"MODULES_SHA256 = {hashlib.sha256(body).hexdigest()!r}",
                           text, flags=re.M)
             path = self.write(text, f'launcher{index}.py')
@@ -208,17 +211,42 @@ class BuilderCase(unittest.TestCase):
         a = (Path(self.tmp.name) / 'a' / 'launcher.b64').read_bytes()
         self.assertEqual(a, (Path(self.tmp.name) / 'b' / 'launcher.b64').read_bytes())
         self.assertFalse(a.endswith(b'\n'))
-        launcher = base64.b64decode(a, validate=True)
+        self.assertEqual(hashlib.sha256(a).hexdigest(), first['value_sha256'])
+        compressed = base64.b64decode(a, validate=True)
+        # gzip header: no FNAME flag, mtime 0, so the bytes do not depend on time or path.
+        self.assertEqual(compressed[:4], b'\x1f\x8b\x08\x00')
+        self.assertEqual(compressed[4:8], b'\x00\x00\x00\x00')
+        launcher = gzip.decompress(compressed)
+        self.assertEqual(launcher, (Path(self.tmp.name) / 'a' / 'launcher.py').read_bytes())
         self.assertEqual(hashlib.sha256(launcher).hexdigest(), first['launcher_sha256'])
+        self.assertEqual(len(compressed), first['launcher_gzip_bytes'])
+        self.assertEqual(len(a), first['launcher_b64_bytes'])
 
-    def test_start_command_matches_current_form_with_new_variable(self):
+    def test_variable_value_round_trips_through_base64_and_gunzip(self):
+        out = Path(self.tmp.name) / 'r'
+        self.builder.build(COMMIT, 'restore', out, source=self.source, variable='RESOLUTE_PROTECTED_JOB_V4_B64')
+        decoded = subprocess.run(['bash', '-c', 'printf "%s" "$V" | base64 -d | gunzip'],
+                                 env={'V': (out / 'launcher.b64').read_text(), 'PATH': os.environ['PATH']},
+                                 capture_output=True, check=True).stdout
+        self.assertEqual(decoded, (out / 'launcher.py').read_bytes())
+
+    def test_module_digest_matches_bundle_builder(self):
+        spec = importlib.util.spec_from_file_location('bundle', ROOT / 'scripts' / 'resolute' / 'build-protected-bundle.py')
+        bundle = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(bundle)
+        report = self.builder.build(COMMIT, 'restore', Path(self.tmp.name) / 'm', source=self.source)
+        self.assertEqual(report['modules_sha256'], bundle.digest(bundle.module_json(self.source)))
+
+    def test_start_command_is_current_one_with_v4_and_gunzip_only(self):
+        current = ('/bin/bash -c \'printf "%s" "$RESOLUTE_PROTECTED_JOB_V3_B64" | base64 -d > '
+                   '/tmp/resolute_backup.py; timeout 900 /bin/bash -c "apt-get update -qq && '
+                   'apt-get install -y -qq python3 python3-boto3 python3-cryptography age '
+                   '>/dev/null && python3 /tmp/resolute_backup.py"\'')
         out = Path(self.tmp.name) / 'c'
-        self.builder.build(COMMIT, 'restore', out, source=self.source, variable='RESOLUTE_PROTECTED_JOB_V3_B64')
-        self.assertEqual((out / 'start-command.txt').read_text(),
-                         '/bin/bash -c \'printf "%s" "$RESOLUTE_PROTECTED_JOB_V3_B64" | base64 -d > '
-                         '/tmp/resolute_backup.py; timeout 900 /bin/bash -c "apt-get update -qq && '
-                         'apt-get install -y -qq python3 python3-boto3 python3-cryptography age '
-                         '>/dev/null && python3 /tmp/resolute_backup.py"\'')
+        self.builder.build(COMMIT, 'restore', out, source=self.source, variable='RESOLUTE_PROTECTED_JOB_V4_B64')
+        expected = current.replace('_V3_B64', '_V4_B64', 1).replace('base64 -d >', 'base64 -d | gunzip >', 1)
+        self.assertEqual(expected.count('V4'), 1)
+        self.assertEqual((out / 'start-command.txt').read_text(), expected)
 
     def test_rejects_bad_inputs(self):
         out = Path(self.tmp.name) / 'd'

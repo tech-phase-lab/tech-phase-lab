@@ -1,11 +1,13 @@
 """Build the RESOLUTE protected job launcher deterministically from repository sources.
 
 Offline only: no network, no credentials, no Railway access. Reads the three
-protected modules at --commit (git show), packs them with build-protected-bundle.py,
-fills the constants of protected-launcher.py and writes:
+protected modules at --commit (git show), serialises them exactly as
+build-protected-bundle.py does (same modules_sha256), embeds that JSON text in
+protected-launcher.py and writes:
 
   launcher.py      the launcher that RESOLUTE_PROTECTED_JOB_*_B64 decodes to
-  launcher.b64     base64 of launcher.py on one line, no trailing newline (the variable value)
+  launcher.py.gz   gzip of launcher.py (level 9, mtime 0, no file name)
+  launcher.b64     base64 of launcher.py.gz on one line, no trailing newline (the variable value)
   launcher.json    commit, mode, modules_sha256, launcher_sha256 and sizes
   start-command.txt (only with --variable) the service start command for that variable
 
@@ -18,6 +20,7 @@ commit is then only a label.
 import argparse
 import ast
 import base64
+import gzip
 import hashlib
 import importlib.util
 import json
@@ -34,7 +37,7 @@ _spec.loader.exec_module(bundle)
 TEMPLATE = HERE / 'protected-launcher.py'
 MODES = ('restore', 'backup')
 CONSTANTS = ('COMMIT', 'EXPECTED_MODE', 'MODULES_SHA256', 'PAYLOAD')
-START_COMMAND = ('/bin/bash -c \'printf "%s" "${variable}" | base64 -d > /tmp/resolute_backup.py; '
+START_COMMAND = ('/bin/bash -c \'printf "%s" "${variable}" | base64 -d | gunzip > /tmp/resolute_backup.py; '
                  'timeout 900 /bin/bash -c "apt-get update -qq && apt-get install -y -qq python3 '
                  'python3-boto3 python3-cryptography age >/dev/null && python3 /tmp/resolute_backup.py"\'')
 
@@ -52,13 +55,21 @@ def dir_modules(source):
     return {name: (Path(source) / name).read_text(encoding='utf-8') for name in bundle.MODULES}
 
 
+def literal(value):
+    # Module JSON escapes every quote and newline, so a raw triple-quoted string holds it
+    # without doubling backslashes (better gzip ratio). fill() checks the round trip.
+    if value.startswith('{') and value.endswith('}') and '"""' not in value and '\n' not in value:
+        return 'r"""' + value + '"""'
+    return repr(value)
+
+
 def fill(template, values):
     text = template
     for name in CONSTANTS:
         line = f"{name} = ''\n"
         if text.count(line) != 1:
             raise ValueError(f'template must contain exactly one empty {name}')
-        text = text.replace(line, f'{name} = {values[name]!r}\n')
+        text = text.replace(line, f'{name} = {literal(values[name])}\n')
     tree = ast.parse(text)
     found = {node.targets[0].id: node.value.value for node in tree.body
              if isinstance(node, ast.Assign) and isinstance(node.targets[0], ast.Name)
@@ -81,16 +92,21 @@ def build(commit, mode, out, source=None, repo=None, variable=None):
         compile(text, name, 'exec')
     body = json.dumps(mapping, sort_keys=True, separators=(',', ':')).encode()
     values = {'COMMIT': commit, 'EXPECTED_MODE': mode, 'MODULES_SHA256': bundle.digest(body),
-              'PAYLOAD': bundle.payload(body).decode('ascii')}
+              'PAYLOAD': body.decode('ascii')}
     launcher = fill(TEMPLATE.read_text(encoding='utf-8'), values).encode('utf-8')
-    encoded = base64.b64encode(launcher)
+    compressed = gzip.compress(launcher, compresslevel=9, mtime=0)
+    if gzip.decompress(compressed) != launcher:
+        raise ValueError('gzip round trip failed')
+    encoded = base64.b64encode(compressed)
     out = Path(out)
     out.mkdir(parents=True, exist_ok=True)
     (out / 'launcher.py').write_bytes(launcher)
+    (out / 'launcher.py.gz').write_bytes(compressed)
     (out / 'launcher.b64').write_bytes(encoded)
     report = {'commit': commit, 'mode': mode, 'modules_sha256': values['MODULES_SHA256'],
               'launcher_sha256': hashlib.sha256(launcher).hexdigest(),
-              'launcher_bytes': len(launcher), 'launcher_b64_bytes': len(encoded),
+              'launcher_bytes': len(launcher), 'launcher_gzip_bytes': len(compressed),
+              'launcher_b64_bytes': len(encoded), 'value_sha256': hashlib.sha256(encoded).hexdigest(),
               'files': {name: hashlib.sha256(text.encode('utf-8')).hexdigest()
                         for name, text in sorted(mapping.items())}}
     if variable:

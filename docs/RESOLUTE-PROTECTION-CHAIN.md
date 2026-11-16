@@ -121,14 +121,22 @@ V3 までのランチャー本体（ペイロードを取り出して `backup.py
 本番変数を読まずに再現できるよう、V4 からはランチャーをリポジトリに置き、決定的に組み立てる（2026-11-16）。
 
 - `scripts/resolute/protected-launcher.py`: テンプレート。定数 `COMMIT` / `EXPECTED_MODE` / `MODULES_SHA256` / `PAYLOAD` が空のままでは実行を拒否する（`launcher-unbuilt`）。
-- `scripts/resolute/build-protected-launcher.py`: `git show <commit>:scripts/resolute/<3モジュール>` から `build-protected-bundle.py` と同じ方法でペイロードを作り、テンプレートに埋め込む。
+- `scripts/resolute/build-protected-launcher.py`: `git show <commit>:scripts/resolute/<3モジュール>` から `build-protected-bundle.py` と同じ正規化 JSON（同じ `modules_sha256`）を作り、そのままテンプレートに埋め込む。ランチャー全体を gzip（レベル9・mtime 0・ファイル名なし）してから base64 にしたものが変数の値になる（V3 までの「base64 のみ」より約 1/3 小さい）。
 
 ```
 python3 scripts/resolute/build-protected-launcher.py --commit <モジュールのコミット SHA 40桁> --mode restore \
     --variable RESOLUTE_PROTECTED_JOB_V4_B64 --out <作業ディレクトリ>
 ```
 
-出力は `launcher.py`、`launcher.b64`（変数の値。改行なし1行）、`launcher.json`（`modules_sha256`・`launcher_sha256`・サイズ）、`start-command.txt`（現行の開始コマンドの変数名だけを替えたもの）。同じ入力からは同じバイト列になる。
+出力は `launcher.py`、`launcher.py.gz`、`launcher.b64`（変数の値。改行なし1行）、`launcher.json`（`modules_sha256`・`launcher_sha256`・`value_sha256`・サイズ）、`start-command.txt`。同じ入力からは同じバイト列になる。
+
+開始コマンドは現行のものから2点だけ変わる: 変数名が V4 になり、`base64 -d` の後に `| gunzip` が入る。gzip は Debian bookworm の必須（Essential）パッケージなので `postgres:18-bookworm` に最初から入っている（apt を待たずに展開できる）。
+
+```
+/bin/bash -c 'printf "%s" "$RESOLUTE_PROTECTED_JOB_V4_B64" | base64 -d | gunzip > /tmp/resolute_backup.py; timeout 900 /bin/bash -c "apt-get update -qq && apt-get install -y -qq python3 python3-boto3 python3-cryptography age >/dev/null && python3 /tmp/resolute_backup.py"'
+```
+
+変数の値の下限: 3モジュールのソースは gzip / bzip2 / xz のどれでも約 13.8〜14.6 KB にしかならず、base64 で約 18.4 KB 以上になる。モジュールのバイト列を変えずに 16 KiB 未満にはできない。
 
 ランチャーの動作（`tests/test_resolute_protected_launcher.py` で確認）:
 
@@ -145,7 +153,9 @@ python3 scripts/resolute/build-protected-launcher.py --commit <モジュール�
 ### V4 の値（2026-11-16 に作成。a638c88f のモジュール）
 
 - `modules_sha256`: `4656f8ba2d584965d15be6f22501796f435875a0a18231f1f9c6dc603c365ff6`（`protection.py` は fb7c4eda と同一。`backup.py`・`protection_events.py` が変更）
-- ランチャーの SHA256 と変数の値のサイズは、このブランチのテンプレートから作った `launcher.json` を参照する（テンプレートを変えると変わる）。
+- このブランチのテンプレートから作った値（テンプレートやビルダーを変えると変わる）:
+  - ランチャー（展開後の Python）SHA256 `c5bec004131fcd0e0941fc51ba286ff535852c16271a970fa65eabce5b408dc9`、58,180 bytes（gzip 16,332 bytes）
+  - 変数の値 SHA256 `6ac91c1d54382134ea5b0e0bf658e166c724eae4e7d23c2568ad978bd8c0b19f`、21,776 bytes
 
 ### 適用手順
 

@@ -1,11 +1,10 @@
 """RESOLUTE protected job launcher: runs one embedded, digest-checked module set.
 
 Template only. scripts/resolute/build-protected-launcher.py fills the four constants
-below and the result is stored base64-encoded in RESOLUTE_PROTECTED_JOB_*_B64. The
-unbuilt template refuses to run. Never logs environment values or exception text.
+below (PAYLOAD is the canonical module JSON text) and the result is stored as
+base64(gzip(launcher)) in RESOLUTE_PROTECTED_JOB_*_B64. The unbuilt template refuses
+to run. Never logs environment values or exception text.
 """
-import base64
-import gzip
 import hashlib
 import json
 import os
@@ -43,7 +42,7 @@ def load_modules():
     try:
         if len(PAYLOAD) > MAX_PAYLOAD:
             raise ValueError('payload too large')
-        body = gzip.decompress(base64.b64decode(PAYLOAD, validate=True))
+        body = PAYLOAD.encode('ascii')
         if hashlib.sha256(body).hexdigest() != MODULES_SHA256:
             raise ValueError('digest mismatch')
         mapping = json.loads(body)
