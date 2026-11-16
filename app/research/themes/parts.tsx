@@ -85,20 +85,22 @@ export type ChartRow = { id: string; rank?: number; value: number; href: string;
 
 /** The up/down comparison chart (owner, Nov 10): one list, strongest first; 0 in the middle, rises to the right in green, falls to the left in
  * red. A bar is |value| / the largest |value| shown, up to 48% of the width from the centre. 0% and above count as rising. */
-export function DivergingChart({ rows, ja, mono = false }: { rows: ChartRow[]; ja: boolean; mono?: boolean }) {
+export function DivergingChart({ rows, ja, mono = false, onSelect }: { rows: ChartRow[]; ja: boolean; mono?: boolean; onSelect?: (id: string) => void }) {
   const widest = Math.max(1e-9, ...rows.map(row => Math.abs(row.value)));
   const falling = rows.filter(row => shown(row.value) < 0).length;
   return <section className={styles.chart} aria-label={ja ? "騰落率の比較" : "Performance comparison"}>
     <div className={styles.scale}><span className={styles.scaleDown}>← {ja ? "下落" : "Down"} {falling}</span><span className={styles.scaleZero}>0</span><span className={styles.scaleUp}>{ja ? "上昇" : "Up"} {rows.length - falling} →</span></div>
-    <ol>{rows.map(row => <li key={row.id}>
-      <Link href={row.href} className={styles.row}>
+    <ol>{rows.map(row => { const content = <>
         {row.rank !== undefined && <span className={`${styles.rankDot} ${row.rank === 1 ? styles.rankGold : ""}`}>{row.rank}</span>}
         <span className={`${styles.who} ${row.rank === undefined ? styles.whoWide : ""}`}><strong className={mono ? styles.ticker : undefined}>{row.name}</strong>{row.sub && <span className={styles.sub}>{row.sub}</span>}{row.tag && <em className={styles.tag}>{row.tag}</em>}</span>
         <span className={`${styles.figure} ${toneClass(row.value)}`}><i aria-hidden="true">{arrow(row.value)}</i>{signed(row.value)}</span>
         <span className={styles.track} aria-hidden="true"><i className={styles.mid} />
           <b className={`${styles.bar} ${shown(row.value) < 0 ? styles.barDown : styles.barUp}`} style={{ width: `${Math.abs(row.value) / widest * 48}%` }} /></span>
-      </Link>
-    </li>)}</ol>
+      </>;
+      // The PRO feature tour's fixed sample passes onSelect: the row then stays on the page (a button) instead of linking to another screen.
+      return <li key={row.id}>{onSelect
+        ? <button type="button" className={`${styles.row} ${styles.rowButton}`} onClick={() => onSelect(row.id)}>{content}</button>
+        : <Link href={row.href} className={styles.row}>{content}</Link>}</li>; })}</ol>
   </section>;
 }
 

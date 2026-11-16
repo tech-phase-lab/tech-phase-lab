@@ -1,0 +1,35 @@
+/** The saved data of the PRO feature tour's samples (owner, Nov 16). The tour pages read only these committed files and never fetch
+ * anything: real PRO data costs money to read and must not reach FREE visitors. scripts/pro-experience/build-samples.mjs writes them; each
+ * file says where its numbers came from (_source). Pure: no network, no storage. */
+import type { ComparisonResult } from "./comparison.ts";
+import type { Holding, Quote } from "../portfolio/calc.ts";
+import compareFile from "./pro-experience-samples/compare.json" with { type: "json" };
+import portfolioFile from "./pro-experience-samples/portfolio.json" with { type: "json" };
+
+// ---- Stock Comparison: four stocks, any two of them (six pairs) ----
+export const COMPARE_TICKERS = ["NVDA", "AMD", "INTC", "ARM"] as const;
+type SampleCompany = ComparisonResult["companies"][number];
+const compare = compareFile as unknown as { snapshotAt: string; companies: Record<string, SampleCompany> };
+/** The time the comparison is judged at: the moment the figures were saved, so the sample never goes stale. */
+export const compareNow = Date.parse(compare.snapshotAt);
+export const comparePairs = (): [string, string][] => COMPARE_TICKERS.flatMap((a, i) => COMPARE_TICKERS.slice(i + 1).map(b => [a, b] as [string, string]));
+/** The result page's data for two of the four stocks; null for anything else (another stock, the same stock twice, more than two). */
+export function compareSample(tickers: readonly string[]): ComparisonResult | null {
+  if (tickers.length !== 2 || tickers[0] === tickers[1] || !tickers.every(t => (COMPARE_TICKERS as readonly string[]).includes(t))) return null;
+  const companies = tickers.map(t => compare.companies[t]);
+  if (companies.some(c => !c)) return null;
+  return { companies, comparable: true, reasons: [], generatedAt: compare.snapshotAt, conclusion: { ja: "", en: "" } };
+}
+
+// ---- US stock portfolio: the holdings in sample-holdings.jpg ----
+type SampleHolding = Holding & { name: string; price: number };
+const portfolio = portfolioFile as { image: string; asOf: string; totalGainUsd: number; holdings: SampleHolding[] };
+export const PORTFOLIO_IMAGE = portfolio.image;
+export const PORTFOLIO_TOTAL_GAIN = portfolio.totalGainUsd;
+export const portfolioHoldings: Holding[] = portfolio.holdings.map(({ ticker, name, shares, avgCostUsd }) => ({ ticker, name, shares, avgCostUsd }));
+export const portfolioMarket: { quotes: Record<string, Quote>; usdJpy: number | null; asOf: string } = {
+  quotes: Object.fromEntries(portfolio.holdings.map(h => [h.ticker, { ticker: h.ticker, close: h.price, asOf: portfolio.asOf }])),
+  usdJpy: null, asOf: portfolio.asOf,
+};
+/** How long the reading animation runs before the holdings appear (owner: "2秒ほど"): the first step, then the second. */
+export const READING_STEPS_MS = [700, 1300] as const;
