@@ -12,17 +12,22 @@
 .name{margin:0;font-size:17px;line-height:1.35;font-weight:700;overflow-wrap:anywhere}
 .summary{margin:1px 0 0;font-size:13px;line-height:1.4;color:#7d8ca0;overflow-wrap:anywhere}
 .chev{color:#7d8ca0;font-size:20px;text-align:right}
-.row:focus-visible,.back:focus-visible,.next:focus-visible,.go:focus-visible{outline:2px solid #e3c47e;outline-offset:3px}
+.row:focus-visible{outline:2px solid #e3c47e;outline-offset:3px}
+/* The feature pages are read by FREE visitors: no gold in their frame or text (owner, Nov 16); green as in the owner's mockups. */
+.proTagPlain{border-color:#3f6b5d;background:transparent;color:#8fe3c0}
+.back:focus-visible,.next:focus-visible,.go:focus-visible{outline:2px solid #8fe3c0;outline-offset:3px}
 .media{position:relative;margin:22px 0 0;overflow:hidden;border:1px solid #1f2a3d;border-radius:22px;background:#0c111b}
 .video{display:block;width:100%;height:auto;max-height:70vh;background:#000}
 .videoLabel{position:absolute;left:16px;bottom:12px;font:12px var(--font-geist-mono),ui-monospace,monospace;color:#9aa6bb}
 .pause{position:absolute;right:12px;bottom:12px;display:grid;place-items:center;width:44px;height:44px;border:1px solid rgba(255,255,255,.35);border-radius:50%;background:rgba(5,8,13,.65);color:#fff;cursor:pointer}
-.pause:focus-visible{outline:2px solid #e3c47e;outline-offset:3px}
+.pause:focus-visible{outline:2px solid #8fe3c0;outline-offset:3px}
 .text{margin:26px 0 0;font-size:17px;line-height:1.95;overflow-wrap:anywhere}
 .figure{margin:26px 0 0}
 .figure img{display:block;width:100%;height:auto;border:1px solid #1f2a3d;border-radius:22px;background:#0c111b}
 .figure figcaption{margin:8px 0 0;font-size:13px;color:#6b7589}
-.go{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;height:64px;margin-top:34px;border-radius:32px;background:linear-gradient(180deg,#e3c47e,#c79f4c);color:#2a1f08;font:700 17px "Noto Sans JP",system-ui,sans-serif;text-decoration:none}
+.start{display:flex;flex-direction:column;gap:8px;margin-top:34px}
+.go{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;height:56px;border-radius:14px;background:#8fe3c0;color:#07120d;font:800 17px "Noto Sans JP",system-ui,sans-serif;text-decoration:none}
+.startNote{margin:0;font-size:12.5px;color:#7d8a9a;text-align:center}
 .nextRow{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:30px;padding-top:18px;border-top:1px solid #151b25}
 .nextRow span{font-size:14px;color:#6b7589}
 .next{font-size:17px;font-weight:700;color:#eef0f6;text-decoration:none;text-align:right;overflow-wrap:anywhere}

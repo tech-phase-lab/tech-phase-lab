@@ -1,0 +1,1394 @@
+{
+ "_source": "SEC EDGAR companyfacts, submissions and the latest 10-Q/10-K filings (free public data), read through lib/research/comparison-loader.ts as the PRO comparison does. All figures and dates are fictional sample values on the sample's own timeline (as of 2035/03/12 09:00 JST); they are not real data. Forward P/E, the three-month price change and Arm's quarterly margins and free cash flow are made up (scripts/pro-experience/fictional-samples.mjs MARKET, ARM_FILL) and scored by the real scorecard.",
+ "fictional": true,
+ "snapshotAt": "2035-03-12T00:00:00.000Z",
+ "companies": {
+  "NVDA": {
+   "ticker": "NVDA",
+   "name": "NVIDIA",
+   "peer": "compute",
+   "caution": {
+    "ja": "顧客の設備投資、輸出規制、競争と製品構成の変化を確認します。",
+    "en": "Watch customer capital spending, export controls, competition, and changes in the product mix."
+   },
+   "status": "ready",
+   "retrievedAt": "2035-03-12T00:00:00.000Z",
+   "revenue": {
+    "value": 215938000000,
+    "unit": "USD",
+    "start": "2033-04-27",
+    "end": "2034-04-25",
+    "filed": "2034-05-25",
+    "accession": "0001045810-26-000021",
+    "tag": "Revenues",
+    "basis": "us-gaap"
+   },
+   "previousRevenue": {
+    "value": 130497000000,
+    "unit": "USD",
+    "start": "2032-04-29",
+    "end": "2033-04-26",
+    "filed": "2034-05-25",
+    "accession": "0001045810-26-000021",
+    "tag": "Revenues",
+    "basis": "us-gaap"
+   },
+   "operatingIncome": {
+    "value": 130387000000,
+    "unit": "USD",
+    "start": "2033-04-27",
+    "end": "2034-04-25",
+    "filed": "2034-05-25",
+    "accession": "0001045810-26-000021",
+    "tag": "OperatingIncomeLoss",
+    "basis": "us-gaap"
+   },
+   "operatingCash": {
+    "value": 102718000000,
+    "unit": "USD",
+    "start": "2033-04-27",
+    "end": "2034-04-25",
+    "filed": "2034-05-25",
+    "accession": "0001045810-26-000021",
+    "tag": "NetCashProvidedByUsedInOperatingActivities",
+    "basis": "us-gaap"
+   },
+   "capex": {
+    "value": 6042000000,
+    "unit": "USD",
+    "start": "2033-04-27",
+    "end": "2034-04-25",
+    "filed": "2034-05-25",
+    "accession": "0001045810-26-000021",
+    "tag": "PaymentsToAcquireProductiveAssets",
+    "basis": "us-gaap"
+   },
+   "cash": {
+    "value": 10605000000,
+    "unit": "USD",
+    "start": null,
+    "end": "2034-04-25",
+    "filed": "2034-05-25",
+    "accession": "0001045810-26-000021",
+    "tag": "CashAndCashEquivalentsAtCarryingValue",
+    "basis": "us-gaap"
+   },
+   "revenueGrowth": 65.47353579009479,
+   "operatingMargin": 60.38168363141272,
+   "fcfMargin": 44.770258129648326,
+   "stockCompensation": {
+    "value": 6386000000,
+    "unit": "USD",
+    "start": "2033-04-27",
+    "end": "2034-04-25",
+    "filed": "2034-05-25",
+    "accession": "0001045810-26-000021",
+    "tag": "ShareBasedCompensation",
+    "basis": "us-gaap"
+   },
+   "stockCompensationRatio": 2.9573303448211985,
+   "dilutedShares": {
+    "value": 24514000000,
+    "unit": "shares",
+    "start": "2033-04-27",
+    "end": "2034-04-25",
+    "filed": "2034-05-25",
+    "accession": "0001045810-26-000021",
+    "tag": "WeightedAverageNumberOfDilutedSharesOutstanding",
+    "basis": "us-gaap"
+   },
+   "previousDilutedShares": {
+    "value": 24804000000,
+    "unit": "shares",
+    "start": "2032-04-29",
+    "end": "2033-04-26",
+    "filed": "2034-05-25",
+    "accession": "0001045810-26-000021",
+    "tag": "WeightedAverageNumberOfDilutedSharesOutstanding",
+    "basis": "us-gaap"
+   },
+   "dilutedSharesGrowth": -1.169166263505883,
+   "quarterRevenue": {
+    "value": 96221000000,
+    "unit": "USD",
+    "start": "2034-07-27",
+    "end": "2034-10-26",
+    "filed": "2034-11-26",
+    "accession": "0001045810-26-000075",
+    "tag": "Revenues",
+    "basis": "us-gaap"
+   },
+   "previousQuarterRevenue": {
+    "value": 46743000000,
+    "unit": "USD",
+    "start": "2033-07-28",
+    "end": "2033-10-27",
+    "filed": "2034-11-26",
+    "accession": "0001045810-26-000075",
+    "tag": "Revenues",
+    "basis": "us-gaap"
+   },
+   "quarterOperatingIncome": {
+    "value": 63734000000,
+    "unit": "USD",
+    "start": "2034-07-27",
+    "end": "2034-10-26",
+    "filed": "2034-11-26",
+    "accession": "0001045810-26-000075",
+    "tag": "OperatingIncomeLoss",
+    "basis": "us-gaap"
+   },
+   "quarterRevenueGrowth": 105.85114348672526,
+   "quarterOperatingMargin": 66.23710000935347,
+   "quarterSourceUrl": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000075/0001045810-26-000075-index.htm",
+   "balance": {
+    "end": "2034-10-26",
+    "filed": "2034-11-26",
+    "sourceUrl": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000075/0001045810-26-000075-index.htm",
+    "cash": {
+     "value": 22443000000,
+     "unit": "USD",
+     "start": null,
+     "end": "2034-10-26",
+     "filed": "2034-11-26",
+     "accession": "0001045810-26-000075",
+     "tag": "CashAndCashEquivalentsAtCarryingValue",
+     "basis": "us-gaap"
+    },
+    "currentAssets": {
+     "value": 197412000000,
+     "unit": "USD",
+     "start": null,
+     "end": "2034-10-26",
+     "filed": "2034-11-26",
+     "accession": "0001045810-26-000075",
+     "tag": "AssetsCurrent",
+     "basis": "us-gaap"
+    },
+    "currentLiabilities": {
+     "value": 43019000000,
+     "unit": "USD",
+     "start": null,
+     "end": "2034-10-26",
+     "filed": "2034-11-26",
+     "accession": "0001045810-26-000075",
+     "tag": "LiabilitiesCurrent",
+     "basis": "us-gaap"
+    },
+    "currentRatio": 4.588949069016016,
+    "debtCurrent": {
+     "value": 1000000000,
+     "unit": "USD",
+     "start": null,
+     "end": "2034-10-26",
+     "filed": "2034-11-26",
+     "accession": "0001045810-26-000075",
+     "tag": "LongTermDebtCurrent",
+     "basis": "us-gaap"
+    },
+    "debtNoncurrent": {
+     "value": 32366000000,
+     "unit": "USD",
+     "start": null,
+     "end": "2034-10-26",
+     "filed": "2034-11-26",
+     "accession": "0001045810-26-000075",
+     "tag": "LongTermDebtNoncurrent",
+     "basis": "us-gaap"
+    },
+    "shortBorrowings": null,
+    "leaseCurrent": {
+     "value": 509000000,
+     "unit": "USD",
+     "start": null,
+     "end": "2034-10-26",
+     "filed": "2034-11-26",
+     "accession": "0001045810-26-000075",
+     "tag": "OperatingLeaseLiabilityCurrent",
+     "basis": "us-gaap"
+    },
+    "leaseNoncurrent": {
+     "value": 4985000000,
+     "unit": "USD",
+     "start": null,
+     "end": "2034-10-26",
+     "filed": "2034-11-26",
+     "accession": "0001045810-26-000075",
+     "tag": "OperatingLeaseLiabilityNoncurrent",
+     "basis": "us-gaap"
+    },
+    "debtTotal": {
+     "value": 33366000000,
+     "source": "split"
+    }
+   },
+   "sourceUrl": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000021/0001045810-26-000021-index.htm",
+   "quarterMargins": [
+    {
+     "periodEnd": "2034-10-26",
+     "value": 66.23710000935347
+    },
+    {
+     "periodEnd": "2034-07-26",
+     "value": 65.59578508852539
+    },
+    {
+     "periodEnd": "2034-04-25",
+     "value": 65.02414608011507
+    },
+    {
+     "periodEnd": "2034-01-26",
+     "value": 63.16878925025436
+    }
+   ],
+   "quarterRevenueTtm": 302969000000,
+   "quarterRevenueQoq": 17.896220057587463,
+   "quarterFcfMargin": 22.240467257667245,
+   "quarterStockCompensationRatio": null,
+   "quarterDilutedSharesGrowth": -1.0068481982716482,
+   "quarterDilutedShares": 24285000000,
+   "dataWarnings": [],
+   "twelveData": {
+    "version": 1,
+    "periodEnd": "2034-10-26",
+    "retrievedAt": "2035-03-12T00:00:00.000Z",
+    "statistics": {
+     "retrievedAt": "2035-03-12T00:00:00.000Z",
+     "quarterEnd": "2034-10-26",
+     "forwardPE": 42.5,
+     "trailingPE": null,
+     "currentRatio": null,
+     "totalCash": null,
+     "totalDebt": null,
+     "priceToSales": 18.2
+    },
+    "margins": [
+     {
+      "periodEnd": "2034-10-26",
+      "value": 66.23710000935347
+     },
+     {
+      "periodEnd": "2034-07-26",
+      "value": 65.59578508852539
+     },
+     {
+      "periodEnd": "2034-04-25",
+      "value": 65.02414608011507
+     },
+     {
+      "periodEnd": "2034-01-26",
+      "value": 63.16878925025436
+     }
+    ],
+    "momentum": {
+     "from": "2034-12-08",
+     "to": "2035-03-09",
+     "changePct": 14.6
+    }
+   },
+   "preparedAnalysis": {
+    "version": 1,
+    "method": "deterministic",
+    "sourceRevision": "90ab15be205ce217743498635757dbf7fc39d912152541b48e45d8194704f3c4",
+    "preparedAt": "2035-03-12T00:00:00.000Z",
+    "processingMs": 0.3,
+    "periodEnd": "2034-10-26",
+    "sourceUrl": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000075/0001045810-26-000075-index.htm",
+    "items": [
+     {
+      "id": "revenue-growth",
+      "kind": "strength",
+      "short": {
+       "ja": "売上成長 +105.9%",
+       "en": "Revenue growth +105.9%"
+      },
+      "detail": {
+       "ja": "売上高は前年同期の46,743,000,000 USDから96,221,000,000 USDへ。前年同期比+105.9%。",
+       "en": "Revenue changed from 46,743,000,000 USD in the prior-year quarter to 96,221,000,000 USD, +105.9% year over year."
+      }
+     },
+     {
+      "id": "operating-margin",
+      "kind": "strength",
+      "short": {
+       "ja": "営業利益率 66.2%",
+       "en": "Operating margin 66.2%"
+      },
+      "detail": {
+       "ja": "四半期の営業損益は63,734,000,000 USD。売上高に対する割合は66.2%。",
+       "en": "Quarterly operating income was 63,734,000,000 USD, representing 66.2% of revenue."
+      }
+     },
+     {
+      "id": "cash-generation",
+      "kind": "strength",
+      "short": {
+       "ja": "簡易FCF率 22.2%",
+       "en": "Simple FCF margin 22.2%"
+      },
+      "detail": {
+       "ja": "四半期の営業キャッシュフローから現金支出の設備投資を引いた金額は、売上高の22.2%。買収支出やリース等は網羅しません。",
+       "en": "Quarterly operating cash flow less cash capital expenditure equaled 22.2% of revenue. This measure does not capture all acquisitions or leases."
+      }
+     },
+     {
+      "id": "valuation",
+      "kind": "weakness",
+      "short": {
+       "ja": "予想PER 42.5×",
+       "en": "Forward P/E 42.5×"
+      },
+      "detail": {
+       "ja": "割安性：予想PER 10倍＝9点、20倍＝7点、30倍＝5点、40倍＝3点、55倍以上＝0点の共通目盛り。比較する会社のどれかが赤字などで予想PERを持たないときは、全社をPSR（時価総額÷直近4四半期の売上）でそろえて比べます：1倍＝9点、2倍＝7点、4倍＝5点、8倍＝3点、16倍＝1点、23倍以上＝0点。同業順位や適正株価ではなく、循環的な利益のピークは調整していません。",
+       "en": "Valuation: all companies use the same forward P/E scale. A P/E of 10× scores 9, 20× scores 7, 30× scores 5, 40× scores 3, and 55× or higher scores 0. When any company in the comparison has no forward P/E (for example, it is loss-making), every company is compared on price-to-sales instead (market value ÷ the last four quarters' revenue): 1× scores 9, 2× scores 7, 4× scores 5, 8× scores 3, 16× scores 1, and 23× or higher scores 0. This isn't a ranking against peers or an estimate of fair value. Earnings at the peak of a business cycle aren't adjusted to a normal level."
+      }
+     },
+     {
+      "id": "stability",
+      "kind": "strength",
+      "short": {
+       "ja": "営業黒字 4/4四半期",
+       "en": "Profitable 4/4 quarters"
+      },
+      "detail": {
+       "ja": "安定性：直近4四半期の営業黒字割合と営業利益率のばらつきから計算。株価の安定や将来の業績を保証する指標ではありません。",
+       "en": "Stability combines how many of four consecutive quarters were profitable with how much operating margins varied across those quarters. It doesn't measure stock-price stability or guarantee future results."
+      }
+     }
+    ]
+   }
+  },
+  "AMD": {
+   "ticker": "AMD",
+   "name": "AMD",
+   "peer": "compute",
+   "caution": {
+    "ja": "顧客の設備投資、輸出規制、競争と製品構成の変化を確認します。",
+    "en": "Watch customer capital spending, export controls, competition, and changes in the product mix."
+   },
+   "status": "ready",
+   "retrievedAt": "2035-03-12T00:00:00.000Z",
+   "revenue": {
+    "value": 34639000000,
+    "unit": "USD",
+    "start": "2033-03-29",
+    "end": "2034-03-27",
+    "filed": "2034-05-04",
+    "accession": "0000002488-26-000018",
+    "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+    "basis": "us-gaap"
+   },
+   "previousRevenue": {
+    "value": 25785000000,
+    "unit": "USD",
+    "start": "2032-03-31",
+    "end": "2033-03-28",
+    "filed": "2034-05-04",
+    "accession": "0000002488-26-000018",
+    "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+    "basis": "us-gaap"
+   },
+   "operatingIncome": {
+    "value": 3694000000,
+    "unit": "USD",
+    "start": "2033-03-29",
+    "end": "2034-03-27",
+    "filed": "2034-05-04",
+    "accession": "0000002488-26-000018",
+    "tag": "OperatingIncomeLoss",
+    "basis": "us-gaap"
+   },
+   "operatingCash": {
+    "value": 7709000000,
+    "unit": "USD",
+    "start": "2033-03-29",
+    "end": "2034-03-27",
+    "filed": "2034-05-04",
+    "accession": "0000002488-26-000018",
+    "tag": "NetCashProvidedByUsedInOperatingActivities",
+    "basis": "us-gaap"
+   },
+   "capex": {
+    "value": 974000000,
+    "unit": "USD",
+    "start": "2033-03-29",
+    "end": "2034-03-27",
+    "filed": "2034-05-04",
+    "accession": "0000002488-26-000018",
+    "tag": "PaymentsToAcquirePropertyPlantAndEquipment",
+    "basis": "us-gaap"
+   },
+   "cash": {
+    "value": 5539000000,
+    "unit": "USD",
+    "start": null,
+    "end": "2034-03-27",
+    "filed": "2034-05-04",
+    "accession": "0000002488-26-000018",
+    "tag": "CashAndCashEquivalentsAtCarryingValue",
+    "basis": "us-gaap"
+   },
+   "revenueGrowth": 34.33779329067288,
+   "operatingMargin": 10.664280146655504,
+   "fcfMargin": 19.443401945783652,
+   "stockCompensation": {
+    "value": 1638000000,
+    "unit": "USD",
+    "start": "2033-03-29",
+    "end": "2034-03-27",
+    "filed": "2034-05-04",
+    "accession": "0000002488-26-000018",
+    "tag": "ShareBasedCompensation",
+    "basis": "us-gaap"
+   },
+   "stockCompensationRatio": 4.7287739253442655,
+   "dilutedShares": {
+    "value": 1636000000,
+    "unit": "shares",
+    "start": "2033-03-29",
+    "end": "2034-03-27",
+    "filed": "2034-05-04",
+    "accession": "0000002488-26-000018",
+    "tag": "WeightedAverageNumberOfDilutedSharesOutstanding",
+    "basis": "us-gaap"
+   },
+   "previousDilutedShares": {
+    "value": 1637000000,
+    "unit": "shares",
+    "start": "2032-03-31",
+    "end": "2033-03-28",
+    "filed": "2034-05-04",
+    "accession": "0000002488-26-000018",
+    "tag": "WeightedAverageNumberOfDilutedSharesOutstanding",
+    "basis": "us-gaap"
+   },
+   "dilutedSharesGrowth": -0.06108735491753281,
+   "quarterRevenue": {
+    "value": 13377000000,
+    "unit": "USD",
+    "start": "2034-09-28",
+    "end": "2034-12-26",
+    "filed": "2035-02-04",
+    "accession": "0000002488-26-000191",
+    "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+    "basis": "us-gaap"
+   },
+   "previousQuarterRevenue": {
+    "value": 9246000000,
+    "unit": "USD",
+    "start": "2033-09-29",
+    "end": "2033-12-27",
+    "filed": "2035-02-04",
+    "accession": "0000002488-26-000191",
+    "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+    "basis": "us-gaap"
+   },
+   "quarterOperatingIncome": {
+    "value": 2832000000,
+    "unit": "USD",
+    "start": "2034-09-28",
+    "end": "2034-12-26",
+    "filed": "2035-02-04",
+    "accession": "0000002488-26-000191",
+    "tag": "OperatingIncomeLoss",
+    "basis": "us-gaap"
+   },
+   "quarterRevenueGrowth": 44.67878001297858,
+   "quarterOperatingMargin": 21.170666068625252,
+   "quarterSourceUrl": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000191/0000002488-26-000191-index.htm",
+   "balance": {
+    "end": "2034-12-26",
+    "filed": "2035-02-04",
+    "sourceUrl": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000191/0000002488-26-000191-index.htm",
+    "cash": {
+     "value": 7404000000,
+     "unit": "USD",
+     "start": null,
+     "end": "2034-12-26",
+     "filed": "2035-02-04",
+     "accession": "0000002488-26-000191",
+     "tag": "CashAndCashEquivalentsAtCarryingValue",
+     "basis": "us-gaap"
+    },
+    "currentAssets": {
+     "value": 39471000000,
+     "unit": "USD",
+     "start": null,
+     "end": "2034-12-26",
+     "filed": "2035-02-04",
+     "accession": "0000002488-26-000191",
+     "tag": "AssetsCurrent",
+     "basis": "us-gaap"
+    },
+    "currentLiabilities": {
+     "value": 14486000000,
+     "unit": "USD",
+     "start": null,
+     "end": "2034-12-26",
+     "filed": "2035-02-04",
+     "accession": "0000002488-26-000191",
+     "tag": "LiabilitiesCurrent",
+     "basis": "us-gaap"
+    },
+    "currentRatio": 2.724768742233881,
+    "debtCurrent": {
+     "value": 0,
+     "unit": "USD",
+     "start": null,
+     "end": "2034-12-26",
+     "filed": "2035-02-04",
+     "accession": "0000002488-26-000191",
+     "tag": "LongTermDebtCurrent",
+     "basis": "us-gaap"
+    },
+    "debtNoncurrent": {
+     "value": 7079000000,
+     "unit": "USD",
+     "start": null,
+     "end": "2034-12-26",
+     "filed": "2035-02-04",
+     "accession": "0000002488-26-000191",
+     "tag": "LongTermDebtNoncurrent",
+     "basis": "us-gaap"
+    },
+    "shortBorrowings": null,
+    "leaseCurrent": {
+     "value": 295000000,
+     "unit": "USD",
+     "start": null,
+     "end": "2034-12-26",
+     "filed": "2035-02-04",
+     "accession": "0000002488-26-000191",
+     "tag": "OperatingLeaseLiabilityCurrent",
+     "basis": "us-gaap"
+    },
+    "leaseNoncurrent": {
+     "value": 1837000000,
+     "unit": "USD",
+     "start": null,
+     "end": "2034-12-26",
+     "filed": "2035-02-04",
+     "accession": "0000002488-26-000191",
+     "tag": "OperatingLeaseLiabilityNoncurrent",
+     "basis": "us-gaap"
+    },
+    "debtTotal": {
+     "value": 7079000000,
+     "source": "split"
+    }
+   },
+   "sourceUrl": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000018/0000002488-26-000018-index.htm",
+   "quarterMargins": [
+    {
+     "periodEnd": "2034-12-26",
+     "value": 21.170666068625252
+    },
+    {
+     "periodEnd": "2034-09-27",
+     "value": 17.250346740638005
+    },
+    {
+     "periodEnd": "2034-06-28",
+     "value": 14.395786599044182
+    },
+    {
+     "periodEnd": "2034-03-27",
+     "value": 17.05939629990263
+    }
+   ],
+   "quarterRevenueTtm": 45436000000,
+   "quarterRevenueQoq": 15.958737864077666,
+   "quarterFcfMargin": 4.141436794498019,
+   "quarterStockCompensationRatio": null,
+   "quarterDilutedSharesGrowth": 1.218769043266299,
+   "quarterDilutedShares": 1661000000,
+   "dataWarnings": [],
+   "twelveData": {
+    "version": 1,
+    "periodEnd": "2034-12-26",
+    "retrievedAt": "2035-03-12T00:00:00.000Z",
+    "statistics": {
+     "retrievedAt": "2035-03-12T00:00:00.000Z",
+     "quarterEnd": "2034-12-26",
+     "forwardPE": 31,
+     "trailingPE": null,
+     "currentRatio": null,
+     "totalCash": null,
+     "totalDebt": null,
+     "priceToSales": 9.4
+    },
+    "margins": [
+     {
+      "periodEnd": "2034-12-26",
+      "value": 21.170666068625252
+     },
+     {
+      "periodEnd": "2034-09-27",
+      "value": 17.250346740638005
+     },
+     {
+      "periodEnd": "2034-06-28",
+      "value": 14.395786599044182
+     },
+     {
+      "periodEnd": "2034-03-27",
+      "value": 17.05939629990263
+     }
+    ],
+    "momentum": {
+     "from": "2034-12-08",
+     "to": "2035-03-09",
+     "changePct": -8.6
+    }
+   },
+   "preparedAnalysis": {
+    "version": 1,
+    "method": "deterministic",
+    "sourceRevision": "9fe9c5032bd1db83d9a0bc1206b23d1e062b387be4931bc8e33c9d603c10dceb",
+    "preparedAt": "2035-03-12T00:00:00.000Z",
+    "processingMs": 0.3,
+    "periodEnd": "2034-12-26",
+    "sourceUrl": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000191/0000002488-26-000191-index.htm",
+    "items": [
+     {
+      "id": "revenue-growth",
+      "kind": "strength",
+      "short": {
+       "ja": "売上成長 +44.7%",
+       "en": "Revenue growth +44.7%"
+      },
+      "detail": {
+       "ja": "売上高は前年同期の9,246,000,000 USDから13,377,000,000 USDへ。前年同期比+44.7%。",
+       "en": "Revenue changed from 9,246,000,000 USD in the prior-year quarter to 13,377,000,000 USD, +44.7% year over year."
+      }
+     },
+     {
+      "id": "operating-margin",
+      "kind": "strength",
+      "short": {
+       "ja": "営業利益率 21.2%",
+       "en": "Operating margin 21.2%"
+      },
+      "detail": {
+       "ja": "四半期の営業損益は2,832,000,000 USD。売上高に対する割合は21.2%。",
+       "en": "Quarterly operating income was 2,832,000,000 USD, representing 21.2% of revenue."
+      }
+     },
+     {
+      "id": "cash-generation",
+      "kind": "strength",
+      "short": {
+       "ja": "簡易FCF率 4.1%",
+       "en": "Simple FCF margin 4.1%"
+      },
+      "detail": {
+       "ja": "四半期の営業キャッシュフローから現金支出の設備投資を引いた金額は、売上高の4.1%。買収支出やリース等は網羅しません。",
+       "en": "Quarterly operating cash flow less cash capital expenditure equaled 4.1% of revenue. This measure does not capture all acquisitions or leases."
+      }
+     },
+     {
+      "id": "stability",
+      "kind": "strength",
+      "short": {
+       "ja": "営業黒字 4/4四半期",
+       "en": "Profitable 4/4 quarters"
+      },
+      "detail": {
+       "ja": "安定性：直近4四半期の営業黒字割合と営業利益率のばらつきから計算。株価の安定や将来の業績を保証する指標ではありません。",
+       "en": "Stability combines how many of four consecutive quarters were profitable with how much operating margins varied across those quarters. It doesn't measure stock-price stability or guarantee future results."
+      }
+     },
+     {
+      "id": "momentum",
+      "kind": "weakness",
+      "short": {
+       "ja": "約3か月の株価 -8.6%",
+       "en": "3-month price -8.6%"
+      },
+      "detail": {
+       "ja": "2034-12-08〜2035-03-09の分割調整済み株価が-8.6%。将来の下落を予測するものではありません。",
+       "en": "Split-adjusted price return from 2034-12-08 to 2035-03-09 was -8.6%. This does not predict future declines."
+      }
+     }
+    ]
+   }
+  },
+  "INTC": {
+   "ticker": "INTC",
+   "name": "Intel",
+   "peer": "INTC",
+   "caution": {
+    "ja": "買収・売却、為替、一時損益、顧客集中、株式報酬の影響は原資料で追加確認が必要です。",
+    "en": "Review acquisitions, disposals, FX, one-offs, customer concentration and stock-based compensation in the filings."
+   },
+   "status": "ready",
+   "retrievedAt": "2035-03-12T00:00:00.000Z",
+   "revenue": {
+    "value": 52853000000,
+    "unit": "USD",
+    "start": "2033-03-29",
+    "end": "2034-03-27",
+    "filed": "2034-04-23",
+    "accession": "0000050863-26-000011",
+    "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+    "basis": "us-gaap"
+   },
+   "previousRevenue": {
+    "value": 53101000000,
+    "unit": "USD",
+    "start": "2032-03-31",
+    "end": "2033-03-28",
+    "filed": "2034-04-23",
+    "accession": "0000050863-26-000011",
+    "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+    "basis": "us-gaap"
+   },
+   "operatingIncome": {
+    "value": -2214000000,
+    "unit": "USD",
+    "start": "2033-03-29",
+    "end": "2034-03-27",
+    "filed": "2034-04-23",
+    "accession": "0000050863-26-000011",
+    "tag": "OperatingIncomeLoss",
+    "basis": "us-gaap"
+   },
+   "operatingCash": {
+    "value": 9697000000,
+    "unit": "USD",
+    "start": "2033-03-29",
+    "end": "2034-03-27",
+    "filed": "2034-04-23",
+    "accession": "0000050863-26-000011",
+    "tag": "NetCashProvidedByUsedInOperatingActivities",
+    "basis": "us-gaap"
+   },
+   "capex": {
+    "value": 14646000000,
+    "unit": "USD",
+    "start": "2033-03-29",
+    "end": "2034-03-27",
+    "filed": "2034-04-23",
+    "accession": "0000050863-26-000011",
+    "tag": "PaymentsToAcquirePropertyPlantAndEquipment",
+    "basis": "us-gaap"
+   },
+   "cash": {
+    "value": 14265000000,
+    "unit": "USD",
+    "start": null,
+    "end": "2034-03-27",
+    "filed": "2034-04-23",
+    "accession": "0000050863-26-000011",
+    "tag": "CashAndCashEquivalentsAtCarryingValue",
+    "basis": "us-gaap"
+   },
+   "revenueGrowth": -0.46703451912393223,
+   "operatingMargin": -4.188976973870925,
+   "fcfMargin": -9.36370688513424,
+   "stockCompensation": {
+    "value": 2434000000,
+    "unit": "USD",
+    "start": "2033-03-29",
+    "end": "2034-03-27",
+    "filed": "2034-04-23",
+    "accession": "0000050863-26-000011",
+    "tag": "ShareBasedCompensation",
+    "basis": "us-gaap"
+   },
+   "stockCompensationRatio": 4.60522581499631,
+   "dilutedShares": {
+    "value": 4530000000,
+    "unit": "shares",
+    "start": "2033-03-29",
+    "end": "2034-03-27",
+    "filed": "2034-04-23",
+    "accession": "0000050863-26-000011",
+    "tag": "WeightedAverageNumberOfDilutedSharesOutstanding",
+    "basis": "us-gaap"
+   },
+   "previousDilutedShares": {
+    "value": 4280000000,
+    "unit": "shares",
+    "start": "2032-03-31",
+    "end": "2033-03-28",
+    "filed": "2034-04-23",
+    "accession": "0000050863-26-000011",
+    "tag": "WeightedAverageNumberOfDilutedSharesOutstanding",
+    "basis": "us-gaap"
+   },
+   "dilutedSharesGrowth": 5.841121495327095,
+   "quarterRevenue": {
+    "value": 16513000000,
+    "unit": "USD",
+    "start": "2034-09-28",
+    "end": "2034-12-26",
+    "filed": "2035-01-30",
+    "accession": "0000050863-26-000191",
+    "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+    "basis": "us-gaap"
+   },
+   "previousQuarterRevenue": {
+    "value": 13653000000,
+    "unit": "USD",
+    "start": "2033-09-29",
+    "end": "2033-12-27",
+    "filed": "2035-01-30",
+    "accession": "0000050863-26-000191",
+    "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+    "basis": "us-gaap"
+   },
+   "quarterOperatingIncome": {
+    "value": 2522000000,
+    "unit": "USD",
+    "start": "2034-09-28",
+    "end": "2034-12-26",
+    "filed": "2035-01-30",
+    "accession": "0000050863-26-000191",
+    "tag": "OperatingIncomeLoss",
+    "basis": "us-gaap"
+   },
+   "quarterRevenueGrowth": 20.94777704533801,
+   "quarterOperatingMargin": 15.272815357597045,
+   "quarterSourceUrl": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000191/0000050863-26-000191-index.htm",
+   "balance": {
+    "end": "2034-12-26",
+    "filed": "2035-01-30",
+    "sourceUrl": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000191/0000050863-26-000191-index.htm",
+    "cash": {
+     "value": 21846000000,
+     "unit": "USD",
+     "start": null,
+     "end": "2034-12-26",
+     "filed": "2035-01-30",
+     "accession": "0000050863-26-000191",
+     "tag": "CashAndCashEquivalentsAtCarryingValue",
+     "basis": "us-gaap"
+    },
+    "currentAssets": {
+     "value": 82574000000,
+     "unit": "USD",
+     "start": null,
+     "end": "2034-12-26",
+     "filed": "2035-01-30",
+     "accession": "0000050863-26-000191",
+     "tag": "AssetsCurrent",
+     "basis": "us-gaap"
+    },
+    "currentLiabilities": {
+     "value": 37396000000,
+     "unit": "USD",
+     "start": null,
+     "end": "2034-12-26",
+     "filed": "2035-01-30",
+     "accession": "0000050863-26-000191",
+     "tag": "LiabilitiesCurrent",
+     "basis": "us-gaap"
+    },
+    "currentRatio": 2.2080971226869184,
+    "debtCurrent": null,
+    "debtNoncurrent": {
+     "value": 46317000000,
+     "unit": "USD",
+     "start": null,
+     "end": "2034-12-26",
+     "filed": "2035-01-30",
+     "accession": "0000050863-26-000191",
+     "tag": "LongTermDebtNoncurrent",
+     "basis": "us-gaap"
+    },
+    "shortBorrowings": null,
+    "leaseCurrent": null,
+    "leaseNoncurrent": null,
+    "debtTotal": {
+     "value": 46317000000,
+     "source": "noncurrent"
+    }
+   },
+   "sourceUrl": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000011/0000050863-26-000011-index.htm",
+   "quarterMargins": [
+    {
+     "periodEnd": "2034-12-26",
+     "value": 15.272815357597045
+    },
+    {
+     "periodEnd": "2034-09-27",
+     "value": 11.1359126984127
+    },
+    {
+     "periodEnd": "2034-06-28",
+     "value": -23.097886130956766
+    },
+    {
+     "periodEnd": "2034-03-27",
+     "value": 4.241626444346936
+    }
+   ],
+   "quarterRevenueTtm": 59892000000,
+   "quarterRevenueQoq": 2.387152777777768,
+   "quarterFcfMargin": 6.407073215042694,
+   "quarterStockCompensationRatio": null,
+   "quarterDilutedSharesGrowth": 17.126462149635845,
+   "quarterDilutedShares": 5307000000,
+   "dataWarnings": [],
+   "twelveData": {
+    "version": 1,
+    "periodEnd": "2034-12-26",
+    "retrievedAt": "2035-03-12T00:00:00.000Z",
+    "statistics": {
+     "retrievedAt": "2035-03-12T00:00:00.000Z",
+     "quarterEnd": "2034-12-26",
+     "forwardPE": 19.5,
+     "trailingPE": null,
+     "currentRatio": null,
+     "totalCash": null,
+     "totalDebt": null,
+     "priceToSales": 3.1
+    },
+    "margins": [
+     {
+      "periodEnd": "2034-12-26",
+      "value": 15.272815357597045
+     },
+     {
+      "periodEnd": "2034-09-27",
+      "value": 11.1359126984127
+     },
+     {
+      "periodEnd": "2034-06-28",
+      "value": -23.097886130956766
+     },
+     {
+      "periodEnd": "2034-03-27",
+      "value": 4.241626444346936
+     }
+    ],
+    "momentum": {
+     "from": "2034-12-08",
+     "to": "2035-03-09",
+     "changePct": 18.4
+    }
+   },
+   "preparedAnalysis": {
+    "version": 1,
+    "method": "deterministic",
+    "sourceRevision": "0b92c4ab6f786f790afa46c4f4d3a86f9b8ecd79c2d37795175a950102bd5980",
+    "preparedAt": "2035-03-12T00:00:00.000Z",
+    "processingMs": 0.3,
+    "periodEnd": "2034-12-26",
+    "sourceUrl": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000191/0000050863-26-000191-index.htm",
+    "items": [
+     {
+      "id": "revenue-growth",
+      "kind": "strength",
+      "short": {
+       "ja": "売上成長 +20.9%",
+       "en": "Revenue growth +20.9%"
+      },
+      "detail": {
+       "ja": "売上高は前年同期の13,653,000,000 USDから16,513,000,000 USDへ。前年同期比+20.9%。",
+       "en": "Revenue changed from 13,653,000,000 USD in the prior-year quarter to 16,513,000,000 USD, +20.9% year over year."
+      }
+     },
+     {
+      "id": "operating-margin",
+      "kind": "strength",
+      "short": {
+       "ja": "営業利益率 15.3%",
+       "en": "Operating margin 15.3%"
+      },
+      "detail": {
+       "ja": "四半期の営業損益は2,522,000,000 USD。売上高に対する割合は15.3%。",
+       "en": "Quarterly operating income was 2,522,000,000 USD, representing 15.3% of revenue."
+      }
+     },
+     {
+      "id": "share-count",
+      "kind": "weakness",
+      "short": {
+       "ja": "平均株式数 +17.1%",
+       "en": "Average shares +17.1%"
+      },
+      "detail": {
+       "ja": "希薄化後の平均株式数は前年同期比+17.1%。発行済株式数や新株発行数そのものとは異なります。",
+       "en": "Diluted weighted-average shares increased +17.1% year over year. This is not the period-end shares outstanding or the number of newly issued shares."
+      }
+     },
+     {
+      "id": "cash-generation",
+      "kind": "strength",
+      "short": {
+       "ja": "簡易FCF率 6.4%",
+       "en": "Simple FCF margin 6.4%"
+      },
+      "detail": {
+       "ja": "四半期の営業キャッシュフローから現金支出の設備投資を引いた金額は、売上高の6.4%。買収支出やリース等は網羅しません。",
+       "en": "Quarterly operating cash flow less cash capital expenditure equaled 6.4% of revenue. This measure does not capture all acquisitions or leases."
+      }
+     },
+     {
+      "id": "valuation",
+      "kind": "strength",
+      "short": {
+       "ja": "予想PER 19.5×",
+       "en": "Forward P/E 19.5×"
+      },
+      "detail": {
+       "ja": "割安性：予想PER 10倍＝9点、20倍＝7点、30倍＝5点、40倍＝3点、55倍以上＝0点の共通目盛り。比較する会社のどれかが赤字などで予想PERを持たないときは、全社をPSR（時価総額÷直近4四半期の売上）でそろえて比べます：1倍＝9点、2倍＝7点、4倍＝5点、8倍＝3点、16倍＝1点、23倍以上＝0点。同業順位や適正株価ではなく、循環的な利益のピークは調整していません。",
+       "en": "Valuation: all companies use the same forward P/E scale. A P/E of 10× scores 9, 20× scores 7, 30× scores 5, 40× scores 3, and 55× or higher scores 0. When any company in the comparison has no forward P/E (for example, it is loss-making), every company is compared on price-to-sales instead (market value ÷ the last four quarters' revenue): 1× scores 9, 2× scores 7, 4× scores 5, 8× scores 3, 16× scores 1, and 23× or higher scores 0. This isn't a ranking against peers or an estimate of fair value. Earnings at the peak of a business cycle aren't adjusted to a normal level."
+      }
+     }
+    ]
+   }
+  },
+  "ARM": {
+   "ticker": "ARM",
+   "name": "Arm",
+   "peer": "ip",
+   "caution": {
+    "ja": "買収・売却、為替、一時損益、顧客集中、株式報酬の影響は原資料で追加確認が必要です。",
+    "en": "Review acquisitions, disposals, FX, one-offs, customer concentration and stock-based compensation in the filings."
+   },
+   "status": "ready",
+   "retrievedAt": "2035-03-12T00:00:00.000Z",
+   "revenue": {
+    "value": 4920000000,
+    "unit": "USD",
+    "start": "2033-07-01",
+    "end": "2034-06-30",
+    "filed": "2034-08-26",
+    "accession": "0001973239-26-000097",
+    "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+    "basis": "us-gaap"
+   },
+   "previousRevenue": {
+    "value": 4007000000,
+    "unit": "USD",
+    "start": "2032-07-01",
+    "end": "2033-06-30",
+    "filed": "2034-08-26",
+    "accession": "0001973239-26-000097",
+    "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+    "basis": "us-gaap"
+   },
+   "operatingIncome": {
+    "value": 900000000,
+    "unit": "USD",
+    "start": "2033-07-01",
+    "end": "2034-06-30",
+    "filed": "2034-08-26",
+    "accession": "0001973239-26-000097",
+    "tag": "OperatingIncomeLoss",
+    "basis": "us-gaap"
+   },
+   "operatingCash": {
+    "value": 1524000000,
+    "unit": "USD",
+    "start": "2033-07-01",
+    "end": "2034-06-30",
+    "filed": "2034-08-26",
+    "accession": "0001973239-26-000097",
+    "tag": "NetCashProvidedByUsedInOperatingActivities",
+    "basis": "us-gaap"
+   },
+   "capex": {
+    "value": 545000000,
+    "unit": "USD",
+    "start": "2033-07-01",
+    "end": "2034-06-30",
+    "filed": "2034-08-26",
+    "accession": "0001973239-26-000097",
+    "tag": "PaymentsToAcquirePropertyPlantAndEquipment",
+    "basis": "us-gaap"
+   },
+   "cash": {
+    "value": 2751000000,
+    "unit": "USD",
+    "start": null,
+    "end": "2034-06-30",
+    "filed": "2034-08-26",
+    "accession": "0001973239-26-000097",
+    "tag": "CashAndCashEquivalentsAtCarryingValue",
+    "basis": "us-gaap"
+   },
+   "revenueGrowth": 22.785126029448467,
+   "operatingMargin": 18.29268292682927,
+   "fcfMargin": 19.898373983739837,
+   "stockCompensation": {
+    "value": 1052000000,
+    "unit": "USD",
+    "start": "2033-07-01",
+    "end": "2034-06-30",
+    "filed": "2034-08-26",
+    "accession": "0001973239-26-000097",
+    "tag": "ShareBasedCompensation",
+    "basis": "us-gaap"
+   },
+   "stockCompensationRatio": 21.38211382113821,
+   "dilutedShares": {
+    "value": 1068000000,
+    "unit": "shares",
+    "start": "2033-07-01",
+    "end": "2034-06-30",
+    "filed": "2034-08-26",
+    "accession": "0001973239-26-000097",
+    "tag": "WeightedAverageNumberOfDilutedSharesOutstanding",
+    "basis": "us-gaap"
+   },
+   "previousDilutedShares": {
+    "value": 1063000000,
+    "unit": "shares",
+    "start": "2032-07-01",
+    "end": "2033-06-30",
+    "filed": "2034-08-26",
+    "accession": "0001973239-26-000097",
+    "tag": "WeightedAverageNumberOfDilutedSharesOutstanding",
+    "basis": "us-gaap"
+   },
+   "dilutedSharesGrowth": 0.470366886171214,
+   "quarterRevenue": {
+    "value": 1443000000,
+    "unit": "USD",
+    "start": "2034-10-01",
+    "end": "2034-12-31",
+    "filed": "2035-02-04",
+    "accession": "0001973239-26-000142",
+    "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+    "basis": "us-gaap"
+   },
+   "previousQuarterRevenue": {
+    "value": 1135000000,
+    "unit": "USD",
+    "start": "2033-10-01",
+    "end": "2033-12-31",
+    "filed": "2035-02-04",
+    "accession": "0001973239-26-000142",
+    "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+    "basis": "us-gaap"
+   },
+   "quarterOperatingIncome": {
+    "value": 201000000,
+    "unit": "USD",
+    "start": "2034-10-01",
+    "end": "2034-12-31",
+    "filed": "2035-02-04",
+    "accession": "0001973239-26-000142",
+    "tag": "OperatingIncomeLoss",
+    "basis": "us-gaap"
+   },
+   "quarterRevenueGrowth": 27.136563876651977,
+   "quarterOperatingMargin": 13.92931392931393,
+   "quarterSourceUrl": "https://www.sec.gov/Archives/edgar/data/1973239/000197323926000142/0001973239-26-000142-index.htm",
+   "balance": {
+    "end": "2034-12-31",
+    "filed": "2035-02-04",
+    "sourceUrl": "https://www.sec.gov/Archives/edgar/data/1973239/000197323926000142/0001973239-26-000142-index.htm",
+    "cash": {
+     "value": 3251000000,
+     "unit": "USD",
+     "start": null,
+     "end": "2034-12-31",
+     "filed": "2035-02-04",
+     "accession": "0001973239-26-000142",
+     "tag": "CashAndCashEquivalentsAtCarryingValue",
+     "basis": "us-gaap"
+    },
+    "currentAssets": {
+     "value": 6178000000,
+     "unit": "USD",
+     "start": null,
+     "end": "2034-12-31",
+     "filed": "2035-02-04",
+     "accession": "0001973239-26-000142",
+     "tag": "AssetsCurrent",
+     "basis": "us-gaap"
+    },
+    "currentLiabilities": {
+     "value": 973000000,
+     "unit": "USD",
+     "start": null,
+     "end": "2034-12-31",
+     "filed": "2035-02-04",
+     "accession": "0001973239-26-000142",
+     "tag": "LiabilitiesCurrent",
+     "basis": "us-gaap"
+    },
+    "currentRatio": 6.349434737923946,
+    "debtCurrent": null,
+    "debtNoncurrent": null,
+    "shortBorrowings": null,
+    "leaseCurrent": {
+     "value": 45000000,
+     "unit": "USD",
+     "start": null,
+     "end": "2034-12-31",
+     "filed": "2035-02-04",
+     "accession": "0001973239-26-000142",
+     "tag": "OperatingLeaseLiabilityCurrent",
+     "basis": "us-gaap"
+    },
+    "leaseNoncurrent": {
+     "value": 435000000,
+     "unit": "USD",
+     "start": null,
+     "end": "2034-12-31",
+     "filed": "2035-02-04",
+     "accession": "0001973239-26-000142",
+     "tag": "OperatingLeaseLiabilityNoncurrent",
+     "basis": "us-gaap"
+    },
+    "debtTotal": {
+     "value": 0,
+     "source": "none"
+    }
+   },
+   "sourceUrl": "https://www.sec.gov/Archives/edgar/data/1973239/000197323926000097/0001973239-26-000097-index.htm",
+   "quarterMargins": [
+    {
+     "periodEnd": "2034-12-31",
+     "value": 13.92931392931393
+    },
+    {
+     "periodEnd": "2034-09-30",
+     "value": 16.8
+    },
+    {
+     "periodEnd": "2034-06-30",
+     "value": 18.1
+    },
+    {
+     "periodEnd": "2034-03-31",
+     "value": 20.4
+    }
+   ],
+   "quarterRevenueTtm": 5236000000,
+   "quarterRevenueQoq": 11.947245927075256,
+   "quarterFcfMargin": 17.6,
+   "quarterStockCompensationRatio": null,
+   "quarterDilutedSharesGrowth": 0.9354536950420878,
+   "quarterDilutedShares": 1079000000,
+   "dataWarnings": [],
+   "twelveData": {
+    "version": 1,
+    "periodEnd": "2034-12-31",
+    "retrievedAt": "2035-03-12T00:00:00.000Z",
+    "statistics": {
+     "retrievedAt": "2035-03-12T00:00:00.000Z",
+     "quarterEnd": "2034-12-31",
+     "forwardPE": 48,
+     "trailingPE": null,
+     "currentRatio": null,
+     "totalCash": null,
+     "totalDebt": null,
+     "priceToSales": 32.5
+    },
+    "margins": [
+     {
+      "periodEnd": "2034-12-31",
+      "value": 13.92931392931393
+     },
+     {
+      "periodEnd": "2034-09-30",
+      "value": 16.8
+     },
+     {
+      "periodEnd": "2034-06-30",
+      "value": 18.1
+     },
+     {
+      "periodEnd": "2034-03-31",
+      "value": 20.4
+     }
+    ],
+    "momentum": {
+     "from": "2034-12-08",
+     "to": "2035-03-09",
+     "changePct": -12.5
+    }
+   },
+   "preparedAnalysis": {
+    "version": 1,
+    "method": "deterministic",
+    "sourceRevision": "37cf426435c8a9ba53ee2d0051ef9453dd70cf74bc6a8992a3ea9e55663033a1",
+    "preparedAt": "2035-03-12T00:00:00.000Z",
+    "processingMs": 0.3,
+    "periodEnd": "2034-12-31",
+    "sourceUrl": "https://www.sec.gov/Archives/edgar/data/1973239/000197323926000142/0001973239-26-000142-index.htm",
+    "items": [
+     {
+      "id": "revenue-growth",
+      "kind": "strength",
+      "short": {
+       "ja": "売上成長 +27.1%",
+       "en": "Revenue growth +27.1%"
+      },
+      "detail": {
+       "ja": "売上高は前年同期の1,135,000,000 USDから1,443,000,000 USDへ。前年同期比+27.1%。",
+       "en": "Revenue changed from 1,135,000,000 USD in the prior-year quarter to 1,443,000,000 USD, +27.1% year over year."
+      }
+     },
+     {
+      "id": "cash-generation",
+      "kind": "strength",
+      "short": {
+       "ja": "簡易FCF率 17.6%",
+       "en": "Simple FCF margin 17.6%"
+      },
+      "detail": {
+       "ja": "四半期の営業キャッシュフローから現金支出の設備投資を引いた金額は、売上高の17.6%。買収支出やリース等は網羅しません。",
+       "en": "Quarterly operating cash flow less cash capital expenditure equaled 17.6% of revenue. This measure does not capture all acquisitions or leases."
+      }
+     },
+     {
+      "id": "valuation",
+      "kind": "weakness",
+      "short": {
+       "ja": "予想PER 48.0×",
+       "en": "Forward P/E 48.0×"
+      },
+      "detail": {
+       "ja": "割安性：予想PER 10倍＝9点、20倍＝7点、30倍＝5点、40倍＝3点、55倍以上＝0点の共通目盛り。比較する会社のどれかが赤字などで予想PERを持たないときは、全社をPSR（時価総額÷直近4四半期の売上）でそろえて比べます：1倍＝9点、2倍＝7点、4倍＝5点、8倍＝3点、16倍＝1点、23倍以上＝0点。同業順位や適正株価ではなく、循環的な利益のピークは調整していません。",
+       "en": "Valuation: all companies use the same forward P/E scale. A P/E of 10× scores 9, 20× scores 7, 30× scores 5, 40× scores 3, and 55× or higher scores 0. When any company in the comparison has no forward P/E (for example, it is loss-making), every company is compared on price-to-sales instead (market value ÷ the last four quarters' revenue): 1× scores 9, 2× scores 7, 4× scores 5, 8× scores 3, 16× scores 1, and 23× or higher scores 0. This isn't a ranking against peers or an estimate of fair value. Earnings at the peak of a business cycle aren't adjusted to a normal level."
+      }
+     },
+     {
+      "id": "stability",
+      "kind": "strength",
+      "short": {
+       "ja": "営業黒字 4/4四半期",
+       "en": "Profitable 4/4 quarters"
+      },
+      "detail": {
+       "ja": "安定性：直近4四半期の営業黒字割合と営業利益率のばらつきから計算。株価の安定や将来の業績を保証する指標ではありません。",
+       "en": "Stability combines how many of four consecutive quarters were profitable with how much operating margins varied across those quarters. It doesn't measure stock-price stability or guarantee future results."
+      }
+     },
+     {
+      "id": "margin-decline",
+      "kind": "weakness",
+      "short": {
+       "ja": "営業利益率 16.8→13.9%",
+       "en": "Operating margin 16.8→13.9%"
+      },
+      "detail": {
+       "ja": "2034-09-30期から2034-12-31期に営業利益率が低下。原因はこの数値だけでは特定できません。",
+       "en": "Operating margin declined from the quarter ended 2034-09-30 to 2034-12-31. These figures alone do not establish the cause."
+      }
+     },
+     {
+      "id": "momentum",
+      "kind": "weakness",
+      "short": {
+       "ja": "約3か月の株価 -12.5%",
+       "en": "3-month price -12.5%"
+      },
+      "detail": {
+       "ja": "2034-12-08〜2035-03-09の分割調整済み株価が-12.5%。将来の下落を予測するものではありません。",
+       "en": "Split-adjusted price return from 2034-12-08 to 2035-03-09 was -12.5%. This does not predict future declines."
+      }
+     }
+    ]
+   }
+  }
+ }
+}

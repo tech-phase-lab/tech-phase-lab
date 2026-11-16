@@ -18,7 +18,8 @@ test("the provisional text of the 22-stock page is the owner's sample; media sta
   assert.equal(feature.textAfterImage.ja, "銘柄を探しにいく手間がなくなります。");
   for (const item of proFeatures) assert.deepEqual([item.videoUrl, item.imageUrl, item.thumbnailUrl], ["", "", ""], item.id);
   const screen = read("../app/research/pro-experience/screen.tsx");
-  assert.match(screen, /\{feature\.videoUrl && <FeatureVideo/);
+  // Nov 16: a feature with a fixed sample shows it instead; the others keep the video when one is set.
+  assert.match(screen, /: feature\.videoUrl && <FeatureVideo/);
   assert.match(screen, /\{feature\.imageUrl && <figure/);
 });
 
@@ -52,10 +53,11 @@ test("the video is silent, loops, plays on a phone and has a button to stop it",
 
 test("「PROではじめる」 is for people who are not PRO, goes to the plan page, and the next-feature link follows it", () => {
   const screen = read("../app/research/pro-experience/screen.tsx");
-  assert.match(screen, /const showStart = settled && plan !== "pro" && !owner && !ownerRole;/);
-  assert.match(screen, /\{showStart && <Link className=\{styles\.go\} href="\/research\/account\?upgrade=1"/);
+  assert.match(screen, /const showStart = showStartButton\(\{ settled, plan: plan \?\? null, ownerAccount: owner, ownerRole \}\);/);
+  assert.match(screen, /\{showStart && <div className=\{styles\.start\}>\s*<Link className=\{styles\.go\} href="\/research\/account\?upgrade=1"/);
   assert.ok(screen.indexOf("PROではじめる") < screen.indexOf("次の機能"));
-  assert.match(read("../app/research/pro-experience/styles.module.css"), /\.go\{[^}]*linear-gradient\(180deg,#e3c47e,#c79f4c\)/);
+  // Nov 16: the feature pages are read by FREE visitors, so the button is green, not gold (owner's mockups).
+  assert.match(read("../app/research/pro-experience/styles.module.css"), /\.go\{[^}]*background:#8fe3c0/);
 });
 
 test("the FREE menu has 「PRO機能体験」 with a gold-crown PRO tag; the page opens for FREE and PRO alike", () => {

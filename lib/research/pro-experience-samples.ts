@@ -1,0 +1,35 @@
+/** The fixed samples of the PRO feature tour (owner, Nov 16): which features have one, the frame's text. Light on purpose (no saved data
+ * here), so the tour's list and pages carry none of it; the data is in pro-experience-sample-data.ts and pro-experience-samples/. */
+
+/** The same made-up moment on every sample (owner: "日付は架空です。全機能で同じ日付にそろえてください"). */
+export const SAMPLE_TIME = { ja: "2035/03/12 09:00 時点", en: "As of 2035/03/12 09:00" } as const;
+/** The last U.S. close before that moment (2035-03-12 is a Monday): the date the samples' prices are "as of". */
+export const SAMPLE_CLOSE_DAY = "2035-03-09";
+/** The features that show a sample instead of a video. Phone notifications keep the video; RIZEL'S DESK is unchanged. */
+export const SAMPLE_FEATURES = ["relation-map", "compare", "theme-ranking", "watch-22", "financial-radar", "us-portfolio"] as const;
+export type SampleFeature = typeof SAMPLE_FEATURES[number];
+export const hasSample = (id: string): id is SampleFeature => (SAMPLE_FEATURES as readonly string[]).includes(id);
+
+/** 「PROではじめる」 and 「PROなら好きな銘柄で使えます」 are for people who are not PRO. They wait for the membership check, so a PRO member never
+ * sees them flash; the owner's accounts count as PRO in every environment (AGENTS.md, operator access). */
+export function showStartButton(member: { settled: boolean; plan: string | null; ownerAccount: boolean; ownerRole: boolean }): boolean {
+  return member.settled && member.plan !== "pro" && !member.ownerAccount && !member.ownerRole;
+}
+
+/** What a tap inside a sample may not do: leave for another screen. A link (or a control marked data-pro-only) that the sample did not handle
+ * itself is stopped and answered with the small 「PROで使えます」. Returns the element to stop, or null to let the tap through. */
+export const GUARDED = "a[href], [data-pro-only]";
+export function guardedTarget<T>(target: { closest?: (selector: string) => T | null } | null, handled: boolean): T | null {
+  if (handled || !target?.closest) return null;
+  return target.closest(GUARDED);
+}
+
+/** One line under each sample: what you can do in it. */
+export const SAMPLE_HINTS: Record<SampleFeature, { ja: string; en: string }> = {
+  "relation-map": { ja: "企業をタップすると、NVDAとのつながりが見られます", en: "Tap a company to see how it connects to NVDA" },
+  compare: { ja: "4銘柄から2つを選ぶと、結果ページが開きます", en: "Choose two of the four stocks to open the result" },
+  "theme-ranking": { ja: "テーマをタップすると、中の銘柄が見られます", en: "Tap a theme to see its stocks" },
+  "watch-22": { ja: "NVDAとAMDは、決算後のまとめを開けます", en: "Open the post-earnings summary of NVDA or AMD" },
+  "financial-radar": { ja: "4銘柄を切り替えて、稼ぐ力と守る力を見比べられます", en: "Switch between the four stocks to compare them" },
+  "us-portfolio": { ja: "押すと読み取りの動きのあと、サンプルの持ち株が表示されます", en: "Press it to watch the reading, then see the sample holdings" },
+};

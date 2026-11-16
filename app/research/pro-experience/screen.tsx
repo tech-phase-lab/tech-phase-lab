@@ -5,7 +5,9 @@ import ResearchToolShell from "../research-tool-shell";
 import { useResearchLanguage } from "../use-research-language";
 import { useMemberDisplay, useMemberSettled, useOwnerAccount, useResearchOwner } from "../member-display-provider";
 import { inLanguage, nextFeature, proFeatures, type ProFeature } from "@/lib/research/pro-experience";
+import { hasSample, showStartButton } from "@/lib/research/pro-experience-samples";
 import ProTag from "./pro-tag";
+import FeatureSample from "./samples";
 import styles from "./styles.module.css";
 
 const playIcon = <svg width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><path d="M2 1l7 4-7 4z" fill="currentColor" /></svg>;
@@ -58,21 +60,24 @@ function FeatureVideo({ feature, ja }: { feature: ProFeature; ja: boolean }) {
   </div>;
 }
 
-/** One feature: video, text, image, text, then "PROではじめる" (only for people who are not PRO) and the next feature. */
+/** One feature: its sample (or, for phone notifications, the video), text, image, text, then "PROではじめる" (only for people who are not PRO)
+ * and the next feature. FREE visitors read this page, so its frame and text carry no gold (owner, Nov 16). */
 export function ProExperienceDetail({ id }: { id: string }) {
   const [lang, setLang] = useResearchLanguage(), ja = lang === "ja";
   const plan = useMemberDisplay(), settled = useMemberSettled(), owner = useOwnerAccount(), ownerRole = useResearchOwner();
   const feature = proFeatures.find(item => item.id === id);
   const next = nextFeature(id);
+  const sample = hasSample(id) ? id : null;
   if (!feature) return null;
   // The button is for people who are not PRO. It waits for the membership check, so a PRO member never sees it flash.
-  const showStart = settled && plan !== "pro" && !owner && !ownerRole;
+  const showStart = showStartButton({ settled, plan: plan ?? null, ownerAccount: owner, ownerRole });
   const before = inLanguage(feature.textBeforeImage, lang), after = inLanguage(feature.textAfterImage, lang), caption = inLanguage(feature.imageCaption, lang);
   return <ResearchToolShell lang={lang} setLang={setLang} title={inLanguage(feature.name, lang)} description="" showHeading={false} showTools={false}>
     <div className={styles.page}>
       <Link className={styles.back} href="/research/pro-experience">‹ {ja ? "PRO機能体験" : "PRO feature tour"}</Link>
-      <div className={styles.titleRow}><h1 className={styles.title}>{inLanguage(feature.name, lang)}</h1><ProTag /></div>
-      {feature.videoUrl && <FeatureVideo feature={feature} ja={ja} />}
+      <div className={styles.titleRow}><h1 className={styles.title}>{inLanguage(feature.name, lang)}</h1><ProTag tone="plain" /></div>
+      {/* A feature with a sample shows the sample, never a video: the samples read only saved files (no request for real data). */}
+      {sample ? <FeatureSample feature={sample} lang={lang} /> : feature.videoUrl && <FeatureVideo feature={feature} ja={ja} />}
       {before && <p className={styles.text}>{before}</p>}
       {feature.imageUrl && <figure className={styles.figure}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -80,8 +85,10 @@ export function ProExperienceDetail({ id }: { id: string }) {
         {caption && <figcaption>{caption}</figcaption>}
       </figure>}
       {after && <p className={styles.text}>{after}</p>}
-      {showStart && <Link className={styles.go} href="/research/account?upgrade=1" prefetch={false}>
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinejoin="round" aria-hidden="true"><path d="M3 8l4.5 4L12 5l4.5 7L21 8l-2 11H5z" /></svg>{ja ? "PROではじめる" : "Start with PRO"}</Link>}
+      {showStart && <div className={styles.start}>
+        <Link className={styles.go} href="/research/account?upgrade=1" prefetch={false}>{ja ? "PROではじめる" : "Start with PRO"}</Link>
+        {sample && <p className={styles.startNote}>{ja ? "PROなら好きな銘柄で使えます" : "With PRO, use it with any stock you like"}</p>}
+      </div>}
       {next && <div className={styles.nextRow}><span>{ja ? "次の機能" : "Next feature"}</span><Link className={styles.next} href={`/research/pro-experience/${next.id}`}>{inLanguage(next.name, lang)} ›</Link></div>}
     </div>
   </ResearchToolShell>;

@@ -23,17 +23,17 @@
 .audioUpload .audioFileEntry{grid-column:1}.audioUpload .audioRecordEntry{grid-column:2}.audioUpload .audioMemoEntry{grid-column:3}
 .audioUpload .recorder{display:contents}.recorderControls{grid-column:1/-1;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
 
-/* RIZEL'S DESK, Nov 2 design: reactions are chips of what was pressed, plus one dotted button that opens the five choices. */
-.reactions{position:relative;display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:16px}
-.reactions .reactionChip{display:inline-flex;align-items:center;gap:8px;min-height:42px;padding:0 16px;border:1px solid #2a3140;border-radius:999px;background:#0e121a;color:#cfc8b6;font-size:15px}
-.reactions .reactionChip[aria-pressed=true]{border-color:#c8aa70;background:#c9aa5818;color:#f1dba6}
-.reactions .reactionEmoji{font-size:19px}.reactions .reactionCount{font:15px ui-monospace,monospace}
-.reactionAdd{position:relative}
-.reactions .reactionPlus{display:grid;place-items:center;width:42px;height:42px;padding:0;border:1.5px dashed #6e6244;border-radius:50%;background:transparent;color:#a99876}
-.reactionPlus svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
-.reactionPicker{position:absolute;left:0;bottom:calc(100% + 10px);z-index:20;display:flex;gap:2px;padding:6px;border:1px solid #6e6244;border-radius:999px;background:#10131b;box-shadow:0 14px 34px #000a}
-.reactions .reactionPicker button{display:grid;place-items:center;width:46px;height:46px;padding:0;border:0;border-radius:50%;background:transparent;font-size:24px}
-.reactions .reactionPicker button[aria-pressed=true]{background:#c9aa5826}
+/* RIZEL'S DESK, Nov 16 design: the five reactions sit in one row from the start (no picker); a count only after the first press.
+   The row never wraps; if a narrow bubble cannot hold it, it scrolls sideways inside the bubble instead of widening the page. */
+.reactions{display:block;margin-top:16px}
+.reactionRow{display:flex;flex-wrap:nowrap;align-items:center;gap:4px;min-width:0;max-width:100%;overflow-x:auto;overscroll-behavior-x:contain;scrollbar-width:none}.reactionRow::-webkit-scrollbar{display:none}
+.reactions .reactionChip{flex:0 0 auto;display:inline-flex;align-items:center;gap:3px;height:30px;min-height:30px;padding:0 7px;border:1px solid #2a3140;border-radius:15px;background:#121620;color:#8e9aaa;line-height:1;white-space:nowrap}
+.reactions .reactionChip[aria-pressed=true]{border-color:#8a7444;background:#2a2213}
+.reactions .reactionChip:disabled{opacity:1;cursor:default}
+.reactions .reactionEmoji{font-size:15px;line-height:1}
+.reactions .reactionCount{min-width:0;font:11px/1 ui-monospace,SFMono-Regular,Menlo,monospace;color:#8e9aaa}
+.reactions .reactionChip[aria-pressed=true] .reactionCount{color:#e2c27a}
+.reactions small{display:block;margin-top:6px}
 
 /* RIZEL'S DESK composer, Nov 2 design: tool row, quiet input, 添付 panel with four tiles, count and the gold 投稿 button. */
 .editor .toolbar{gap:8px;margin:0 0 12px;flex-wrap:wrap}

@@ -1,0 +1,20 @@
+{
+ "_source": "The owner's sample screenshot public/pro-experience/sample-holdings.jpg (a broker's holdings screen; owner's instruction, Nov 16). Shares, average cost (USD) and current price (USD) are copied from that image; its unrealized P/L total is +2,301.25 USD (+484,710 JPY). Fictional sample values: the exchange rate (1 USD = 152.40 JPY on 2035-03-09) and each holding's yen rate at purchase (avgCostFx) are made up so that the per-holding yen P/L (gainJpy, whole yen) adds up to the image's +484,710 JPY.",
+ "fictional": true,
+ "image": "/pro-experience/sample-holdings.jpg",
+ "asOf": "2035-03-09",
+ "usdJpy": 152.4,
+ "totalGainUsd": 2301.25,
+ "totalGainJpy": 484710,
+ "holdings": [
+  { "ticker": "AVGO", "name": "ブロードコム", "shares": 10, "avgCostUsd": 351.84, "price": 340.73, "avgCostFx": 151.200125, "gainJpy": -12710 },
+  { "ticker": "CRDO", "name": "クレド・テクノロジー", "shares": 20, "avgCostUsd": 154.6075, "price": 146.315, "avgCostFx": 153.099985, "gainJpy": -27440 },
+  { "ticker": "GLDM", "name": "SPDR ゴールド・ミニシェアーズ", "shares": 50, "avgCostUsd": 84.15, "price": 93.81, "avgCostFx": 146.299988, "gainJpy": 99275 },
+  { "ticker": "GOOGL", "name": "アルファベット", "shares": 5, "avgCostUsd": 293.9033, "price": 321.28, "avgCostFx": 149.799856, "gainJpy": 24682 },
+  { "ticker": "IREN", "name": "IREN", "shares": 30, "avgCostUsd": 53.9311, "price": 54.11, "avgCostFx": 152.600213, "gainJpy": 494 },
+  { "ticker": "MU", "name": "マイクロン・テクノロジー", "shares": 15, "avgCostUsd": 319.255, "price": 365.56, "avgCostFx": 147.400074, "gainJpy": 129797 },
+  { "ticker": "NBIS", "name": "ネビウス・グループ", "shares": 100, "avgCostUsd": 94.8982, "price": 100.845, "avgCostFx": 147.900044, "gainJpy": 133333 },
+  { "ticker": "QQQ", "name": "インベスコQQQ", "shares": 10, "avgCostUsd": 601, "price": 610.3699, "avgCostFx": 150.099955, "gainJpy": 28103 },
+  { "ticker": "SLV", "name": "iシェアーズ シルバー・トラスト", "shares": 40, "avgCostUsd": 71.5225, "price": 85.7723, "avgCostFx": 144.602028, "gainJpy": 109176 }
+ ]
+}

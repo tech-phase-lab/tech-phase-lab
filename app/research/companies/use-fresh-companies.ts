@@ -13,13 +13,14 @@ const subscribe = (callback: () => void) => {
 const seenSnapshot = () => { try { return localStorage.getItem("tech-phase:company-seen:v1") ?? "{}"; } catch { return "{}"; } };
 
 /** Which monitored companies have something new, read from the same feeds the
- * company pages use. Reads only; nothing here changes delivery. */
-export function useFreshCompanies(lang: Language) {
+ * company pages use. Reads only; nothing here changes delivery. `enabled` false (the PRO feature tour's fixed sample) reads nothing. */
+export function useFreshCompanies(lang: Language, enabled = true) {
   const [feed, setFeed] = useState<GeneralNewsFeed | null>(null);
   const [wire, setWire] = useState<Record<string, CompanyWireItem[]>>({});
   const [now, setNow] = useState(0);
   const seenRaw = useSyncExternalStore(subscribe, seenSnapshot, () => "{}");
   useEffect(() => {
+    if (!enabled) return;
     let alive = true, timer: ReturnType<typeof setInterval> | undefined;
     const load = async () => {
       try {
@@ -36,7 +37,7 @@ export function useFreshCompanies(lang: Language) {
     const stop = observePageActivity(() => { void load(); timer ??= setInterval(load, 60_000); }, () => { clearInterval(timer); timer = undefined; });
     void load(); timer = setInterval(load, 60_000);
     return () => { alive = false; clearInterval(timer); stop(); };
-  }, []);
+  }, [enabled]);
   void seenRaw; // re-evaluate when a company is opened
   return now ? freshByCompany(feed, wire, lang, readSeen(), now) : new Map<string, number>();
 }
