@@ -1,4 +1,4 @@
-import {inspectCandidateFeed,generate,isInDailyWindow,windowHours} from './risk-job.mjs';
+import {inspectCandidateFeed,generate,isInDailyWindow,windowHours,FEED_CHECKS} from './risk-job.mjs';
 import {riskDate,parseRiskArticle} from '../../lib/resolute/risk.ts';
 import {selectArticleForReview} from './rizel-worker.mjs';
 
@@ -62,11 +62,15 @@ export async function prepareDailyReview({enabled=false,readFeed,selectionPool,b
   const saved=(await selectionPool.query('SELECT state,candidate_count,selection_refs,publication FROM public.resolute_rizel_daily_runs WHERE day=$1',[day])).rows[0];
   if(saved?.state!=='ready'||saved.candidate_count!==selected.length||saved.publication!=='withheld'||!Array.isArray(saved.selection_refs)||saved.selection_refs.length!==refs.length||refs.some((ref,i)=>saved.selection_refs[i]?.articleId!==ref.articleId||saved.selection_refs[i]?.articleRevision!==ref.articleRevision))throw Error('READBACK_MISMATCH');
   return {state:refs.length?'ready':'no-candidates',day,count:refs.length,publication:'withheld',storageVerified:true,diagnostics};
- }catch{
+ }catch(cause){
   await selectionPool.query("UPDATE public.resolute_rizel_daily_runs SET state='failed',finished_at=$2 WHERE day=$1",[day,now.toISOString()]);
   // A real failure is recorded so the app can say "couldn't update" (never "quiet day").
   await saveRiskDay(publishPool??budgetPool,day,null,now).catch(()=>{});
-  const error=new Error('PRIVATE_DAILY_REVIEW_FAILED');error.stage=stage;error.diagnostics=diagnostics;throw error;
+  const error=new Error('PRIVATE_DAILY_REVIEW_FAILED');error.stage=stage;error.diagnostics=diagnostics;
+  // Only fixed codes and counts travel on; the cause itself (which may hold a URL or body) is dropped.
+  error.code=safeErrorCode(cause);if(FEED_CHECKS.includes(cause?.check))error.check=cause.check;
+  if(cause?.counts)error.counts=safeCounts(cause.counts);if(Number.isSafeInteger(cause?.limit))error.limit=cause.limit;
+  throw error;
  }
 }
 
@@ -75,8 +79,30 @@ export async function prepareDailyReview({enabled=false,readFeed,selectionPool,b
  * day) and the job exits 0 instead of crashing; any other failure still exits 1. ``stats`` comes from withSourceRetry. */
 export function dailyReviewFailure(error,stats){
  const attempts=stats?.attempts?{sourceAttempts:stats.attempts}:{};
+ const code=SAFE_ERROR_CODES.has(error?.code)?error.code:safeErrorCode(error);
  if(error?.stage==='source'&&stats?.exhausted===true)return {exitCode:0,line:{event:'RIZEL_DAILY_REVIEW',state:'source-unavailable-after-retries',...attempts}};
- return {exitCode:1,line:{event:'RIZEL_DAILY_REVIEW_FAILED',stage:['source','storage','generation','readback'].includes(error?.stage)?error.stage:'configuration',diagnostics:error?.diagnostics,...attempts}};
+ return {exitCode:1,line:{event:'RIZEL_DAILY_REVIEW_FAILED',stage:['source','storage','generation','readback'].includes(error?.stage)?error.stage:'configuration',
+  error:code,...(FEED_CHECKS.includes(error?.check)?{check:error.check}:{}),...(error?.counts?{counts:safeCounts(error.counts)}:{}),
+  ...(Number.isSafeInteger(error?.limit)?{limit:error.limit}:{}),diagnostics:error?.diagnostics,...attempts}};
+}
+
+/** Error codes this worker and its readers throw on purpose. Anything else is logged as UNLISTED (with a built-in error
+ * class name at most), because a foreign message can carry a URL, token or response text. */
+export const SAFE_ERROR_CODES=new Set(['SOURCE_UNAVAILABLE','SOURCE_LIMIT','SOURCE_CONFIG','REPORT_SOURCE_UNAVAILABLE','REPORT_SOURCE_CONFIG',
+ 'INVALID_CLOCK','INVALID_INPUT','ARTICLE_MISMATCH','SELECTION_UNAVAILABLE','NO_VERIFIED_OUTPUT','READBACK_MISMATCH','MODEL_NOT_CONFIGURED',
+ 'MODEL_UNAVAILABLE','MODEL_INCOMPLETE','AI_BUDGET_NOT_CONFIGURED','AI_REQUEST_OUTSIDE_BUDGET','BUDGET_LIMIT','RIZEL_AI_FAILED',
+ 'RIZEL_AI_INCOMPLETE','RIZEL_AI_NOT_ENABLED','PRIVATE_BANK_INCOMPLETE','SCOPE','KEY_REQUIRED','READ_ONLY_REQUIRED']);
+const BUILTIN_ERRORS=new Set(['Error','TypeError','RangeError','SyntaxError','ReferenceError','AbortError','TimeoutError']);
+export function safeErrorCode(error){
+ if(SAFE_ERROR_CODES.has(error?.message))return error.message;
+ const name=typeof error?.name==='string'&&BUILTIN_ERRORS.has(error.name)?error.name:'unknown';
+ return `UNLISTED:${name}`;
+}
+const COUNT_KEYS=['generalEnabled','generalCount','officialCount','reportCount','reportReturned','reportMarketLane'];
+function safeCounts(counts){
+ const out={};
+ for(const key of COUNT_KEYS){const v=counts?.[key];out[key]=typeof v==='boolean'||Number.isSafeInteger(v)?v:null;}
+ return out;
 }
 
 /** articles=null records a failed day; an empty array is a verified quiet day. Never overwrites a ready day. */

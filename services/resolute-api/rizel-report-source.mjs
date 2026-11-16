@@ -1,6 +1,11 @@
 import {boundedJSON} from './risk-store.mjs';
 import {sourceError} from './rizel-news-source.mjs';
 
+// One provider page per lane; at most two lanes (company + market-wide). The daily intake bound follows from these.
+export const REPORT_PAGE_ITEMS=100;
+export const REPORT_LANES_MAX=2;
+export const REPORT_UPDATES_LIMIT=REPORT_PAGE_ITEMS*REPORT_LANES_MAX;
+
 // Separate, opt-in reporting intake. Does not enable the home feed or access
 // editor/monitor credentials. Only the provider API is fetched, never articles.
 export function createReportReader({enabled=false,token,tickers,marketWide=false,fetcher=fetch}={}){
@@ -11,7 +16,7 @@ export function createReportReader({enabled=false,token,tickers,marketWide=false
  if(!roster.length||roster.length>50||roster.some(t=>! /^[A-Z]{1,5}(?:[.-][A-Z])?$/.test(t)))throw Error('REPORT_SOURCE_CONFIG');
  const readLane=async(lane)=>{
   const url=new URL(lane==='market'?'https://stocknewsapi.com/api/v1/category':'https://stocknewsapi.com/api/v1');
-  const params={items:'100',page:'1',token};
+  const params={items:String(REPORT_PAGE_ITEMS),page:'1',token};
   if(lane==='market')params.section='general';else params.tickers=roster.join(',');
   url.search=new URLSearchParams(params).toString();
   let response;
@@ -20,7 +25,7 @@ export function createReportReader({enabled=false,token,tickers,marketWide=false
   if(!response.ok)throw sourceError('UNAVAILABLE',response.status>=500);
   if(!/^application\/json(?:;|$)/i.test(response.headers.get('content-type')??''))throw Error('UNAVAILABLE');
   const payload=await boundedJSON(response,2000000);
-  if(!payload||!Array.isArray(payload.data)||payload.data.length>100)throw Error('INVALID_RESPONSE');
+  if(!payload||!Array.isArray(payload.data)||payload.data.length>REPORT_PAGE_ITEMS)throw Error('INVALID_RESPONSE');
   const items=[];
   for(const row of payload.data){
    if(!row||typeof row!=='object')throw Error('INVALID_ITEM');
@@ -42,7 +47,7 @@ export function createReportReader({enabled=false,token,tickers,marketWide=false
   }
   const oldest=payload.data.map(r=>Date.parse(r?.date)).filter(Number.isFinite).sort((a,b)=>a-b)[0];
   // A full page is a bounded sample, not proof of exhaustive coverage. Report how far back it reached.
-  return {items,returned:payload.data.length,possiblyTruncated:payload.data.length===100,oldestPublishedAt:Number.isFinite(oldest)?new Date(oldest).toISOString():null};
+  return {items,returned:payload.data.length,possiblyTruncated:payload.data.length===REPORT_PAGE_ITEMS,oldestPublishedAt:Number.isFinite(oldest)?new Date(oldest).toISOString():null};
  };
  return async()=>{
   try{

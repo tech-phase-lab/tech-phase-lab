@@ -4,6 +4,7 @@ import {pathToFileURL} from 'node:url';
 import {riskPool,hash,boundedJSON} from './risk-store.mjs';
 import {riskStars,parseRiskArticle,riskDate} from '../../lib/resolute/risk.ts';
 import {RISK_POLICY} from '../../lib/resolute/risk-policy.ts';
+import {REPORT_UPDATES_LIMIT} from './rizel-report-source.mjs';
 const relevant=/\b(AI|semiconductor|NVIDIA|NVDA|AMD|TSMC|Micron|MU|ASML|AVGO|NBIS|HBM|chip|export controls?)\b|半導体|人工知能|輸出規制|エヌビディア|マイクロン/i;
 // Match complete English words, including explicit inflections. Substrings such
 // as Urban, bandwidth and cutting-edge must not become downside evidence.
@@ -41,13 +42,33 @@ export function isInDailyWindow(value,now=new Date()){
  if(value.length===10)return value>=riskDate(new Date(start))&&value<=riskDate(now);
  return bounds.latest<=now.getTime()&&bounds.earliest>=start;
 }
+// Bounds for one read. buildPublicNews returns at most 30 general items and 100 official updates; the Stock News reader
+// returns at most one page per lane (company + market-wide), so up to two pages of reports.
+export const FEED_LIMITS=Object.freeze({items:500,reportUpdates:REPORT_UPDATES_LIMIT,raw:1000});
+/** Which shape or size check rejected a feed. Every value is a fixed code: safe to log. */
+export const FEED_CHECKS=Object.freeze(['feed-not-ok','enabled-not-boolean','items-not-array','items-over-limit','reports-not-array','reports-over-limit','official-not-array','general-disabled-without-official','raw-over-limit']);
+const count=v=>Array.isArray(v)?v.length:null;
+/** Numbers and booleans only (no titles, URLs or bodies), for the failure log line. */
+export function feedCounts(feed){
+ const returned=feed?.reportCoverage?.returned;
+ return {generalEnabled:typeof feed?.enabled==='boolean'?feed.enabled:null,generalCount:count(feed?.items),officialCount:count(feed?.officialUpdates),
+  reportCount:count(feed?.reportUpdates),reportReturned:Number.isSafeInteger(returned)?returned:null,reportMarketLane:feed?.reportCoverage?.marketLane===true};
+}
+function feedError(message,check,feed,limit){
+ const error=Error(message);error.check=check;error.counts=feedCounts(feed);if(limit!==undefined)error.limit=limit;return error;
+}
 export function inspectCandidateFeed(feed,now=new Date(),{allowDateOnly=false}={}){
- if(!feed||feed.ok!==true||typeof feed.enabled!=='boolean'||!Array.isArray(feed.items)||feed.items.length>500)throw Error('SOURCE_UNAVAILABLE');
+ if(!feed||feed.ok!==true)throw feedError('SOURCE_UNAVAILABLE','feed-not-ok',feed);
+ if(typeof feed.enabled!=='boolean')throw feedError('SOURCE_UNAVAILABLE','enabled-not-boolean',feed);
+ if(!Array.isArray(feed.items))throw feedError('SOURCE_UNAVAILABLE','items-not-array',feed);
+ if(feed.items.length>FEED_LIMITS.items)throw feedError('SOURCE_LIMIT','items-over-limit',feed,FEED_LIMITS.items);
  // enabled controls only the general-news lane; officialUpdates remains independent.
- if(feed.reportUpdates!==undefined&&(!Array.isArray(feed.reportUpdates)||feed.reportUpdates.length>100))throw Error('SOURCE_UNAVAILABLE');
- if(feed.officialUpdates!==undefined&&!Array.isArray(feed.officialUpdates))throw Error('SOURCE_UNAVAILABLE');
- if(!feed.enabled&&feed.officialUpdates===undefined)throw Error('SOURCE_UNAVAILABLE');
- const raw=[...(feed.enabled?feed.items:[]),...(feed.officialUpdates??[]),...(feed.reportUpdates??[])];if(raw.length>1000)throw Error('SOURCE_LIMIT');const unique=new Map();
+ if(feed.reportUpdates!==undefined&&!Array.isArray(feed.reportUpdates))throw feedError('SOURCE_UNAVAILABLE','reports-not-array',feed);
+ // Nov 2026: company + market-wide lanes return up to two full pages; the old cap of one page (100) failed every run.
+ if(feed.reportUpdates!==undefined&&feed.reportUpdates.length>FEED_LIMITS.reportUpdates)throw feedError('SOURCE_LIMIT','reports-over-limit',feed,FEED_LIMITS.reportUpdates);
+ if(feed.officialUpdates!==undefined&&!Array.isArray(feed.officialUpdates))throw feedError('SOURCE_UNAVAILABLE','official-not-array',feed);
+ if(!feed.enabled&&feed.officialUpdates===undefined)throw feedError('SOURCE_UNAVAILABLE','general-disabled-without-official',feed);
+ const raw=[...(feed.enabled?feed.items:[]),...(feed.officialUpdates??[]),...(feed.reportUpdates??[])];if(raw.length>FEED_LIMITS.raw)throw feedError('SOURCE_LIMIT','raw-over-limit',feed,FEED_LIMITS.raw);const unique=new Map();
  const rejected={partial:0,body:0,unrelated:0,noDownsideHeadline:0,date:0,url:0,duplicateUrl:0};
  for(const a of raw){if(!a||a.pendingResearch||a.brief||a.confidence==='low'){rejected.partial++;continue;}const title=a.title,body=[a.bodyJa,a.bodyEn].filter(Boolean).join('\n')||[a.summaryJa,a.summaryEn].filter(Boolean).join('\n');
  if(typeof title!=='string'||!body||body.length<100||body.length>24000){rejected.body++;continue;}
