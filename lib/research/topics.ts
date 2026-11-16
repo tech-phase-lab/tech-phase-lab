@@ -25,9 +25,9 @@ export function impactOf(label?: GeneralNewsItem["impactLabel"], sentiment?: Com
 /** The line under the topics list (owner, Nov 15): the cards come from the Stock News API. */
 export const topicCredit = (ja: boolean) => ja ? "提供：Stock News API" : "Source: Stock News API";
 
-/** Summaries are shown in three lines with a 「＋」 to open the rest (owner, Nov 15). Before the page can measure the text, a summary
- * longer than about three lines on a 360-pixel phone is taken to need the button; the page then measures and corrects it. */
-export const SUMMARY_LINES = 3;
+/** Summaries are shown in four lines with a 「＋」 to open the rest (owner, Nov 15; four lines from Nov 17 for the 80-100 character
+ * summaries). Before the page can measure the text, a summary longer than about four lines on a 360-pixel phone is taken to need the button; the page then measures and corrects it. */
+export const SUMMARY_LINES = 4;
 export const summaryMayOverflow = (summary: string, ja: boolean) => summary.length > (ja ? SUMMARY_LINES * 22 : SUMMARY_LINES * 48);
 export const summaryToggle = (open: boolean, ja: boolean) => ({ text: open ? "−" : "＋",
   label: open ? (ja ? "要約を閉じる" : "Show less") : (ja ? "要約をすべて表示" : "Show the full summary") });

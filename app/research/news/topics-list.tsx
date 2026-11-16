@@ -12,7 +12,7 @@ import styles from "./general-news.module.css";
 const clock = new Intl.DateTimeFormat("ja-JP", { timeZone: "Asia/Tokyo", hour: "2-digit", minute: "2-digit", hour12: false });
 const IMPACT_CLASS: Record<TopicImpact, string> = { positive: "topicPositive", negative: "topicNegative", neutral: "topicNeutral" };
 
-/** A card's summary in three lines; a longer one gets a 「＋」 that opens the full text (「−」 closes it). Until the browser has measured
+/** A card's summary in four lines; a longer one gets a 「＋」 that opens the full text (「−」 closes it). Until the browser has measured
  * the text, the length decides whether the button is shown (summaryMayOverflow), so the first paint already has it. */
 function TopicSummary({ text, lang }: { text: string; lang: Language }) {
   const ja = lang === "ja";
@@ -37,7 +37,7 @@ function TopicSummary({ text, lang }: { text: string; lang: Language }) {
 }
 
 /** 注目トピック (owner, Nov 15): the Stock News API stories as cards, newest first, with a divider per day. Each card: ticker and impact,
- * the time, the full headline as the link to the article (new tab), its summary in up to three lines with 「＋」, and the publisher in
+ * the time, the full headline as the link to the article (new tab), its summary in up to four lines with 「＋」, and the publisher in
  * small type. The same story from several publishers is one card (topicCards). One credit line closes the list.
  * No business-impact text or confidence (the provider gives only a short summary), and no gold: FREE members see this page too. */
 export default function TopicsList({ lang, data, wire, wireReady, error, receivedAt, page, onPage }: {
