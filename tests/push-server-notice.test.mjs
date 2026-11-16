@@ -4,13 +4,13 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import fs from "node:fs";
-import { createPushOpener, PUSH_BANNER_RECENT_MS } from "../lib/research/push-open.ts";
-import { browserPushServerNotices, cleanPushServerNotice, PUSH_NOTICE_ACTIONS, PUSH_SERVER_LOOK_MS, PUSH_SERVER_RECENT_MS, PUSH_SERVER_TAP_MS,
-  pushServerNoticeRows, serverNoticeAction, serverNoticeRecord } from "../lib/research/push-server-notice.ts";
+import { createPushOpener, PUSH_BANNER_RECENT_MS, PUSH_TEST_TAG } from "../lib/research/push-open.ts";
+import { browserPushServerNotices, cleanPushServerNotice, createVisiblePoller, PUSH_NOTICE_ACTIONS, PUSH_NOTICE_DEVICE_LIMIT, PUSH_NOTICE_MEMBER_LIMIT,
+  PUSH_NOTICE_WINDOW_MS, PUSH_SERVER_LOOK_MS, PUSH_SERVER_POLL_MS, PUSH_SERVER_RECENT_MS, PUSH_SERVER_TAP_MS, pushServerNoticeRows, serverNoticeAction, serverNoticeRecord } from "../lib/research/push-server-notice.ts";
 
 const NOW = 1_800_000_000_000;
 const ID = "0123456789abcdef0123456789abcdef";
-const raw = (extra = {}) => ({ id: ID, kind: "test", page: "/research/notifications", title: "テスト通知", sentAt: NOW / 1000 - 5, ageMs: 5000,
+const raw = (extra = {}) => ({ id: ID, kind: "earnings", page: "/research/notifications", title: "NVDA · 決算速報", sentAt: NOW / 1000 - 5, ageMs: 5000,
   state: "new", openedAt: null, dismissedAt: null, ...extra });
 
 function opener({ answers = [raw()], worker = {}, clock = { now: NOW }, at = { pathname: "/research", hash: "" } } = {}) {
@@ -46,7 +46,7 @@ test("the tap threshold is 15 seconds and the server offers a notice for 30 minu
 
 test("a notice is placed on the phone's own clock from its age, so a phone clock that is off does not matter", () => {
   const notice = cleanPushServerNotice(raw({ sentAt: 1, ageMs: 4000 }));
-  assert.deepEqual(serverNoticeRecord(notice, NOW), { id: ID, path: "/research/notifications", title: "テスト通知", at: NOW - 4000 });
+  assert.deepEqual(serverNoticeRecord(notice, NOW), { id: ID, path: "/research/notifications", title: "NVDA · 決算速報", at: NOW - 4000, test: false });
   assert.equal(serverNoticeRecord(cleanPushServerNotice(raw({ state: "opened" })), NOW), null);
   assert.equal(serverNoticeRecord(cleanPushServerNotice(raw({ ageMs: PUSH_SERVER_RECENT_MS + 1 })), NOW), null);
   assert.equal(serverNoticeRecord(null, NOW), null);
@@ -78,7 +78,7 @@ test("came to the front 20 seconds after the send: the banner 「新しい通知
   o.foreground(NOW);
   assert.equal(await o.check(), null);
   assert.deepEqual(moves, []);
-  assert.deepEqual(banners.at(-1), { id: ID, path: "/research/notifications", title: "テスト通知" });
+  assert.deepEqual(banners.at(-1), { id: ID, path: "/research/notifications", title: "NVDA · 決算速報" });
   assert.equal(o.openBanner(), "/research/notifications");
   assert.deepEqual(moves, [["push", "/research/notifications"]]);
   assert.deepEqual(marks, [[ID, "opened"]]);
@@ -124,7 +124,7 @@ test("the server is asked on every return to the front, and otherwise at most ev
 });
 
 test("the worker's banner and the server's record of the same notice give one banner, and ✕ closes both", async () => {
-  const worker = { delivered: { id: "w-1", url: "/research/notifications", at: NOW - 30_000, tag: "tech-phase-test", title: "テスト通知" } };
+  const worker = { delivered: { id: "w-1", url: "/research/notifications", at: NOW - 30_000, tag: "earnings-NVDA", title: "NVDA · 決算速報" } };
   const { o, banners, marks, cleared } = opener({ worker, answers: [raw({ ageMs: 31_000 })] });
   o.foreground(NOW);
   await o.check();
@@ -137,7 +137,7 @@ test("the worker's banner and the server's record of the same notice give one ba
 });
 
 test("a tap the worker did write down opens the page once and marks the server's record opened too", async () => {
-  const worker = { pending: { id: "w-2", url: "/research/notifications", at: NOW - 3000, tag: "tech-phase-test", title: "テスト通知" } };
+  const worker = { pending: { id: "w-2", url: "/research/notifications", at: NOW - 3000, tag: "earnings-NVDA", title: "NVDA · 決算速報" } };
   const { o, moves, marks } = opener({ worker, answers: [raw({ ageMs: 3000 })] });
   o.foreground(NOW);
   assert.equal(await o.check(), "/research/notifications");
@@ -184,7 +184,7 @@ test("the owner's panel says when the server sent the newest notice and whether 
   const sent = NOW / 1000;
   const opened = pushServerNoticeRows(cleanPushServerNotice(raw({ sentAt: sent, state: "opened", openedAt: sent + 4 })), "ja");
   assert.deepEqual(opened.map(row => row.label), ["サーバーが送った通知", "送信時刻", "状態"]);
-  assert.equal(opened[0].value, "テスト通知 · /research/notifications");
+  assert.equal(opened[0].value, "NVDA · 決算速報 · /research/notifications");
   assert.match(opened[2].value, /^開いた /);
   assert.match(pushServerNoticeRows(cleanPushServerNotice(raw({ state: "dismissed", dismissedAt: sent })), "ja")[2].value, /^閉じた（✕）/);
   assert.match(pushServerNoticeRows(cleanPushServerNotice(raw()), "ja")[2].value, /^未読/);
@@ -198,4 +198,99 @@ test("the listener gives the opener the server source with this device's subscri
   assert.match(panel, /action: "notice-status"/);
   // The SW-based path stays as an extra signal.
   assert.match(listener, /browserPushOpenSources\(container/);
+});
+
+// Owner, Nov 16: the banner 「新しい通知：<title>」 is for real notices only, never the test notice; a tap on the test notice (the app up
+// within 15 s of the send) still opens its page. While the app is visible it asks the server every 20 s; the route limits each device.
+const testRaw = (extra = {}) => raw({ kind: "test", title: "テスト通知", ...extra });
+
+test("a test notice from the server never gets the banner, whether the app came up later or was already in front", async () => {
+  const later = opener({ answers: [testRaw({ ageMs: 20_000 })] });
+  later.o.foreground(NOW);
+  assert.equal(await later.o.check(), null);
+  assert.deepEqual(later.banners.filter(Boolean), []);
+  assert.deepEqual(later.moves, []);
+  assert.equal(later.o.banner(), null);
+  const inFront = opener({ answers: [null, testRaw({ ageMs: 1000 })] });
+  inFront.o.foreground(NOW - 60_000);
+  await inFront.o.check();
+  inFront.clock.now = NOW + PUSH_SERVER_LOOK_MS;
+  await inFront.o.check();
+  assert.deepEqual(inFront.banners.filter(Boolean), []);
+  assert.deepEqual(inFront.marks, [], "left alone on the server");
+  assert.equal(serverNoticeRecord(cleanPushServerNotice(testRaw()), NOW).test, true);
+});
+
+test("a test notice opened within 15 s of the send still opens its page directly (taps keep working)", async () => {
+  const { o, moves, banners, marks } = opener({ answers: [testRaw({ ageMs: 5000 })] });
+  o.foreground(NOW);
+  assert.equal(await o.check(), "/research/notifications");
+  assert.deepEqual(moves, [["push", "/research/notifications"]]);
+  assert.deepEqual(banners.filter(Boolean), []);
+  assert.deepEqual(marks, [[ID, "opened"]]);
+});
+
+test("the worker's record of a test notice (tag tech-phase-test) gets no banner either; a real one does", async () => {
+  const testWorker = { delivered: { id: "w-1", url: "/research/notifications", at: NOW - 30_000, tag: PUSH_TEST_TAG, title: "テスト通知" } };
+  const quiet = opener({ worker: testWorker, answers: [null] });
+  quiet.o.foreground(NOW);
+  await quiet.o.check();
+  quiet.o.message({ data: { type: "delivered", id: "w-3", url: "/research/notifications", at: NOW, tag: PUSH_TEST_TAG, title: "テスト通知" },
+    origin: "https://techphase.app" });
+  assert.deepEqual(quiet.banners.filter(Boolean), []);
+  const real = opener({ answers: [null] });
+  real.o.message({ data: { type: "delivered", id: "w-4", url: "/research/news", at: NOW, tag: "news-NVDA", title: "NVDA · ニュース" },
+    origin: "https://techphase.app" });
+  assert.deepEqual(real.banners.at(-1), { id: "w-4", path: "/research/news", title: "NVDA · ニュース" });
+});
+
+test("a test notice sent after a real notice the worker still holds does not hide the real one's banner", async () => {
+  const worker = { delivered: { id: "w-5", url: "/research/news", at: NOW - 60_000, tag: "news-NVDA", title: "NVDA · ニュース" } };
+  const { o, banners } = opener({ worker, answers: [testRaw({ ageMs: 20_000 })] });
+  o.foreground(NOW);
+  await o.check();
+  assert.deepEqual(banners.filter(Boolean), [{ id: "w-5", path: "/research/news", title: "NVDA · ニュース" }]);
+});
+
+test("real kinds (news, earnings flash, price targets, notebook, notes, weekly, answers, economic) all get the banner with their title", async () => {
+  for (const [kind, title] of [["news", "NVDA · ニュース"], ["notifications", "NVDA · 決算速報"], ["compare", "AMD · 目標株価の変更"],
+    ["notebook", "銘柄手帳"], ["notes", "リゼルのひとりごと"], ["weekly", "週刊 Tech Phase PRO"], ["qa", "リゼルに聞く"], ["economic", "米 CPI"]]) {
+    const { o, banners } = opener({ answers: [raw({ kind, title, ageMs: 40_000 })] });
+    o.foreground(NOW);
+    await o.check();
+    assert.deepEqual(banners.at(-1), { id: ID, path: "/research/notifications", title }, kind);
+  }
+});
+
+test("the poller asks every 20 s while the app is visible, pauses while hidden and stops on unmount", () => {
+  assert.equal(PUSH_SERVER_POLL_MS, 20_000);
+  const timers = new Map(); let next = 0; let ticks = 0; let visible = true;
+  const poller = createVisiblePoller({ visible: () => visible, tick: () => { ticks += 1; },
+    timers: { set: (fn, ms) => { next += 1; timers.set(next, { fn, ms }); return next; }, clear: id => { timers.delete(id); } } });
+  const only = () => [...timers.values()][0];
+  poller.sync(); poller.sync();
+  assert.equal(timers.size, 1, "one interval, however many visibility events");
+  assert.equal(only().ms, 20_000);
+  only().fn(); only().fn();
+  assert.equal(ticks, 2);
+  visible = false; poller.sync();
+  assert.equal(timers.size, 0, "paused while hidden");
+  assert.equal(poller.running(), false);
+  visible = true; poller.sync();
+  assert.equal(timers.size, 1, "resumes when visible again");
+  visible = false; only().fn();
+  assert.equal(ticks, 2, "a tick that finds the page hidden asks nothing and pauses");
+  assert.equal(timers.size, 0);
+  visible = true; poller.sync(); poller.stop();
+  assert.equal(timers.size, 0);
+  const listener = fs.readFileSync(new URL("../app/research/push-open-listener.tsx", import.meta.url), "utf8");
+  assert.match(listener, /createVisiblePoller\(\{ visible: shown, tick: \(\) => \{ void opener\.check\(\); \} \}\)/);
+  assert.match(listener, /function look\(\) \{\n\s+poller\.sync\(\);/);
+  assert.match(listener, /poller\.stop\(\);/);
+});
+
+test("polling every 20 s stays inside the route's per-device limit, with room for looks on each return to the front", () => {
+  assert.ok(PUSH_SERVER_POLL_MS >= PUSH_SERVER_LOOK_MS);
+  assert.ok(PUSH_NOTICE_WINDOW_MS / PUSH_SERVER_POLL_MS * 2 <= PUSH_NOTICE_DEVICE_LIMIT, "twice the polling rate still fits");
+  assert.ok(PUSH_NOTICE_MEMBER_LIMIT >= PUSH_NOTICE_DEVICE_LIMIT * 2);
 });

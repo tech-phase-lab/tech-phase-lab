@@ -134,12 +134,12 @@ test("a tap for the page already shown does not reload it; a fragment still swit
 
 // Nov 15, after #597: on the owner's iPhone a tap on a notice for an app already open still left it on the home page (WebKit 282935:
 // notificationclick never fires). A notice that arrives while the app is shown, or within 2 minutes before it comes back, gets a banner.
-const notice = (extra = {}) => ({ id: "n-1", url: "/research/notifications", at: NOW - 3_000, tag: "tech-phase-test", title: "Tech Phase · テスト通知", ...extra });
+const notice = (extra = {}) => ({ id: "n-1", url: "/research/notifications", at: NOW - 3_000, tag: "earnings-NVDA-2026Q3", title: "NVDA · 決算速報", ...extra });
 
 test("a notice that arrives while the app is shown puts up the banner at once; 開く goes to its page once", async () => {
   const { o, moves, banners, cleared, notes } = opener();
   o.message({ data: { type: "delivered", ...notice() }, origin: here.origin });
-  assert.deepEqual(banners, [{ id: "n-1", path: "/research/notifications", title: "Tech Phase · テスト通知" }]);
+  assert.deepEqual(banners, [{ id: "n-1", path: "/research/notifications", title: "NVDA · 決算速報" }]);
   assert.deepEqual(o.banner(), banners[0]);
   assert.deepEqual(moves, [], "the banner never moves the app by itself");
   assert.equal(o.openBanner(), "/research/notifications");
@@ -156,7 +156,7 @@ test("a notice that arrives while the app is shown puts up the banner at once; �
 test("the app coming to the front within 30 minutes of a notice shows the banner from the worker's record; not after unless still listed", async () => {
   const recent = opener({ delivered: notice() });
   assert.equal(await recent.o.check(), null);
-  assert.deepEqual(recent.banners, [{ id: "n-1", path: "/research/notifications", title: "Tech Phase · テスト通知" }]);
+  assert.deepEqual(recent.banners, [{ id: "n-1", path: "/research/notifications", title: "NVDA · 決算速報" }]);
   await recent.o.check();
   assert.equal(recent.banners.length, 1, "a second look does not put it up again");
   assert.deepEqual(recent.moves, []);
@@ -365,8 +365,8 @@ test("the banner reads 「新しい通知：<title>」 with 開く and ✕ (Engl
     return renderToStaticMarkup(React.createElement(target.exports.default));
   };
   assert.equal(render(null, "ja"), "");
-  const ja = render({ id: "n-1", path: "/research/notifications", title: "Tech Phase · テスト通知" }, "ja");
-  assert.equal(ja, '<div class="banner" role="status" aria-live="polite"><p class="text">新しい通知：Tech Phase · テスト通知</p>'
+  const ja = render({ id: "n-1", path: "/research/notifications", title: "NVDA · 決算速報" }, "ja");
+  assert.equal(ja, '<div class="banner" role="status" aria-live="polite"><p class="text">新しい通知：NVDA · 決算速報</p>'
     + '<button type="button" class="open">開く</button><button type="button" class="close" aria-label="閉じる">✕</button></div>');
   const en = render({ id: "n-1", path: "/research", title: "" }, "en");
   assert.match(en, /<p class="text">New notification<\/p><button type="button" class="open">Open<\/button><button type="button" class="close" aria-label="Dismiss">/);
