@@ -2,6 +2,7 @@ import { createHmac } from "node:crypto";
 import { getMembership } from "@/lib/membership/server";
 import { isOwnerAccount } from "@/lib/membership/entitlements";
 import { cleanPushDiagnostic, createPushDiagnosticLimiter, pushDiagnosticLine } from "@/lib/research/push-diagnostic";
+import { cleanPushSendLog } from "@/lib/research/push-send-log";
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 const headers = { "Cache-Control": "private, no-store", Vary: "Cookie" };
@@ -70,6 +71,13 @@ export async function POST(request: Request) {
       if (!diagnosticAllowed(member.userId, Date.now())) return Response.json({ ok: false, error: "rate-limited" }, { status: 429, headers });
       console.info(`[push-diag] ${pushDiagnosticLine(record)}`);
       return Response.json({ ok: true }, { headers });
+    }
+    // Nov 16: the monitor's last sends (short device hash, push service host, its HTTP status, whether the device is still registered),
+    // for the owner's panel. Owner accounts only; cleaned again here so nothing else can reach the page.
+    if (body?.action === "send-log") {
+      if (!isOwnerAccount(member.userId)) return Response.json({ ok: false, error: "owner-required" }, { status: 403, headers });
+      const log = await monitor("/push/send-log");
+      return Response.json({ ok: true, items: cleanPushSendLog(log?.items) }, { headers });
     }
     if (!body ||!["register", "remove", "status", "test", "preferences", "save-preferences"].includes(body.action)) throw new Error("Invalid action");
     if (body.action !== "remove" && (member.plan !== "pro" || !Number.isFinite(member.accessExpiresAt) || member.accessExpiresAt <= Date.now())) {

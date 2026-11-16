@@ -157,6 +157,25 @@ python3 scripts/resolute/build-protected-launcher.py --commit <モジュール�
   - ランチャー（展開後の Python）SHA256 `c5bec004131fcd0e0941fc51ba286ff535852c16271a970fa65eabce5b408dc9`、58,180 bytes（gzip 16,332 bytes）
   - 変数の値 SHA256 `6ac91c1d54382134ea5b0e0bf658e166c724eae4e7d23c2568ad978bd8c0b19f`、21,776 bytes
 
+### 方式B（推奨）: コミット済みランチャーを取得する開始コマンド（新しい変数なし）
+
+21 KB の変数値を Railway に貼り付ける手順は確実でないため、ビルド済みランチャーをリポジトリに置き、開始コマンドが公開リポジトリから固定コミットで取得して SHA256 を照合する方式を用意した。
+
+- ファイル: `scripts/resolute/dist/protected-launcher-v4.py`（ビルダーの出力そのもの。圧縮なし、58,180 bytes）
+  - SHA256 `c5bec004131fcd0e0941fc51ba286ff535852c16271a970fa65eabce5b408dc9`
+  - `tests/test_resolute_launcher_dist.py` が、このファイルに埋め込まれたモジュールからビルダーで作り直してバイト単位で一致すること（浅いクローンでも動く）、`modules_sha256`=4656f8ba… を確認する。履歴があれば a638c88f のソースとの一致も確認する。
+- 開始コマンド（`<COMMIT>` は、このファイルを含むマージ後のコミットの40桁 SHA。`build-protected-launcher.py --fetch-commit <SHA>` で `start-command-fetch.txt` として出力できる）:
+
+```
+/bin/bash -c 'set -euo pipefail; f=/tmp/resolute_backup.py; rm -f $f; timeout 300 apt-get update -qq; timeout 300 apt-get install -y -qq python3 python3-boto3 python3-cryptography age ca-certificates >/dev/null; python3 -c "import hashlib as h,urllib.request as u;b=u.urlopen(\"https://raw.githubusercontent.com/tech-phase-lab/tech-phase-lab/<COMMIT>/scripts/resolute/dist/protected-launcher-v4.py\",timeout=60).read();h.sha256(b).hexdigest()==\"c5bec004131fcd0e0941fc51ba286ff535852c16271a970fa65eabce5b408dc9\" or exit(1);open(\"$f\",\"wb\").write(b)" 2>/dev/null || { echo "{\"event\":\"RESOLUTE_JOB_FAILED\",\"reason\":\"launcher-fetch\"}"; exit 1; }; exec timeout 900 python3 $f'
+```
+
+- 動作: `set -euo pipefail` の下で apt（各 300 秒上限）→ urllib で取得（60 秒上限）→ SHA256 が一致したときだけ書き出す → `timeout 900` でランチャーを実行し、その終了コードを返す。
+  取得失敗・不一致のときは `{"event":"RESOLUTE_JOB_FAILED","reason":"launcher-fetch"}` だけを出して 1 で終了する（Python の例外文は出さない）。
+  apt の失敗はその終了コードで止まる。`ca-certificates` は urllib の HTTPS 検証のために明示的に入れる。
+- 注意: 取得失敗・不一致の時点ではランチャーがまだ動いていないので、hc-ping の `/start`・`/fail` は送られない（Healthchecks は期限超過で検知する）。
+  取得先は GitHub（raw.githubusercontent.com）で、改ざんは SHA256 照合で防ぐが、GitHub 障害時は実行できない。
+
 ### 適用手順
 
 1. （オフライン）上のコマンドで V4 を作り、`launcher.json` の `modules_sha256` が上の値と一致することを確認する。

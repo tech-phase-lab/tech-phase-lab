@@ -2,6 +2,7 @@
 import { useEffect, useState, useSyncExternalStore } from "react";
 import { cleanPushDiagnostic, PUSH_DIAG_EVENT, PUSH_DIAG_STORAGE_KEY, pushDiagnosticRows, type PushDiagnostic } from "@/lib/research/push-diagnostic";
 import { pushSwFactRows, readPushSwFacts, reinstallMessage, type ContainerLike, type PushSwFacts, type ReinstallResult } from "@/lib/research/push-sw-facts";
+import { cleanPushSendLog, pushDeviceRef, pushSendRows, type PushSend } from "@/lib/research/push-send-log";
 import type { Language } from "@/lib/research/data";
 import styles from "./notification-page.module.css";
 
@@ -21,6 +22,21 @@ function liveFacts(): Promise<PushSwFacts> {
   });
 }
 
+/** Nov 16: the monitor's last sends (owner accounts only on the server) and this device's short hash, to tell which one is this phone. */
+async function liveSends(): Promise<{ items: PushSend[]; current: string | null }> {
+  let current: string | null = null;
+  try {
+    const registration = "serviceWorker" in navigator ? await navigator.serviceWorker.getRegistration("/research") : undefined;
+    const subscription = await registration?.pushManager?.getSubscription();
+    if (subscription?.endpoint && globalThis.crypto?.subtle) current = await pushDeviceRef(subscription.endpoint);
+  } catch { current = null; }
+  const response = await fetch("/api/research/notifications", { method: "POST", credentials: "same-origin", cache: "no-store",
+    headers: { "Content-Type": "application/json" }, body: JSON.stringify({ action: "send-log" }), signal: AbortSignal.timeout(15_000) });
+  const result = await response.json().catch(() => null) as { ok?: unknown; items?: unknown } | null;
+  if (!response.ok || result?.ok !== true) throw new Error("send-log");
+  return { items: cleanPushSendLog(result.items), current };
+}
+
 /** Owner account only (the caller decides): what is installed on this device, the steps the latest notice went through, and a button
  * that installs the notification worker afresh. Collapsed. */
 export default function PushDiagnosticPanel({ lang, onReinstall }: { lang: Language; onReinstall?: () => Promise<ReinstallResult> }) {
@@ -29,9 +45,11 @@ export default function PushDiagnosticPanel({ lang, onReinstall }: { lang: Langu
   const [reading, setReading] = useState(0);
   const [working, setWorking] = useState(false);
   const [result, setResult] = useState("");
+  const [sends, setSends] = useState<{ items: PushSend[]; current: string | null } | "error" | null>(null);
   useEffect(() => {
     let active = true;
     liveFacts().then(value => { if (active) setFacts(value); }).catch(() => { /* shown as still reading */ });
+    liveSends().then(value => { if (active) setSends(value); }).catch(() => { if (active) setSends("error"); });
     return () => { active = false; };
   }, [reading]);
   let record: PushDiagnostic | null = null;
@@ -53,6 +71,14 @@ export default function PushDiagnosticPanel({ lang, onReinstall }: { lang: Langu
     {onReinstall && <p><button type="button" className={styles.testButton} disabled={working} onClick={() => void reinstall()}>
       {working ? (ja ? "入れ直し中…" : "Reinstalling…") : (ja ? "通知の仕組みを入れ直す" : "Reinstall the notification worker")}</button></p>}
     {result && <p className={styles.note} role="status">{result}</p>}
+    <p className={styles.note}>{ja ? "サーバーからの送信（直近10件・新しい順）" : "Sends from the server (last 10, newest first)"}{" "}
+      <button type="button" className={styles.testButton} onClick={() => { setSends(null); setReading(value => value + 1); }}>{ja ? "再読み込み" : "Reload"}</button></p>
+    {sends === null ? <p className={styles.note}>{ja ? "読み取り中…" : "Reading…"}</p>
+      : sends === "error" ? <p className={styles.note}>{ja ? "読み取れませんでした。" : "Could not read the send log."}</p>
+      : sends.items.length === 0 ? <p className={styles.note}>{ja ? "サーバーの再起動後、まだ送信がありません。" : "No sends since the server last started."}</p>
+      : <dl className={styles.diagnosticList}>
+        {pushSendRows(sends.items, lang, sends.current).map(row => <div key={row.key}><dt>{row.time}</dt><dd>{row.mine ? <strong>{row.label}</strong> : row.label}<br />{row.detail}</dd></div>)}
+      </dl>}
     <p className={styles.note}>{ja ? "最新の通知の記録" : "Latest notice"}</p>
     {record ? <dl className={styles.diagnosticList}>
       {pushDiagnosticRows(record, lang).map(row => <div key={row.label}><dt>{row.label}</dt><dd>{row.value}</dd></div>)}

@@ -10,6 +10,8 @@ protected-launcher.py and writes:
   launcher.b64     base64 of launcher.py.gz on one line, no trailing newline (the variable value)
   launcher.json    commit, mode, modules_sha256, launcher_sha256 and sizes
   start-command.txt (only with --variable) the service start command for that variable
+  start-command-fetch.txt (only with --fetch-commit) start command that downloads the
+                   committed copy in scripts/resolute/dist/ at that commit and checks its SHA256
 
   python3 scripts/resolute/build-protected-launcher.py --commit SHA --mode restore \
       --variable RESOLUTE_PROTECTED_JOB_V4_B64 --out DIR
@@ -40,6 +42,32 @@ CONSTANTS = ('COMMIT', 'EXPECTED_MODE', 'MODULES_SHA256', 'PAYLOAD')
 START_COMMAND = ('/bin/bash -c \'printf "%s" "${variable}" | base64 -d | gunzip > /tmp/resolute_backup.py; '
                  'timeout 900 /bin/bash -c "apt-get update -qq && apt-get install -y -qq python3 '
                  'python3-boto3 python3-cryptography age >/dev/null && python3 /tmp/resolute_backup.py"\'')
+
+
+# Start command that downloads a committed launcher (scripts/resolute/dist/) from the
+# public repository at a pinned commit and refuses it unless its SHA256 matches.
+RAW_BASE = 'https://raw.githubusercontent.com/tech-phase-lab/tech-phase-lab'
+DIST = {'restore': 'scripts/resolute/dist/protected-launcher-v4.py'}
+FETCH_START_COMMAND = (
+    "/bin/bash -c 'set -euo pipefail; f={target}; rm -f $f; "
+    "timeout 300 apt-get update -qq; "
+    "timeout 300 apt-get install -y -qq python3 python3-boto3 python3-cryptography age ca-certificates >/dev/null; "
+    "python3 -c \"import hashlib as h,urllib.request as u;b=u.urlopen(\\\"{url}\\\",timeout=60).read();"
+    "h.sha256(b).hexdigest()==\\\"{sha256}\\\" or exit(1);open(\\\"$f\\\",\\\"wb\\\").write(b)\" 2>/dev/null "
+    "|| {{ echo \"{{\\\"event\\\":\\\"RESOLUTE_JOB_FAILED\\\",\\\"reason\\\":\\\"launcher-fetch\\\"}}\"; exit 1; }}; "
+    "exec timeout 900 python3 $f'")
+
+
+def fetch_start_command(commit, sha256, mode='restore', base=RAW_BASE, target='/tmp/resolute_backup.py'):
+    """Start command for the committed launcher; commit may be the literal <COMMIT> placeholder."""
+    if not (re.fullmatch(r'[0-9a-f]{40}', commit) or commit == '<COMMIT>'):
+        raise ValueError('commit must be a full 40-character SHA or <COMMIT>')
+    if not re.fullmatch(r'[0-9a-f]{64}', sha256):
+        raise ValueError('sha256 must be 64 hex characters')
+    if not re.fullmatch(r'[A-Za-z0-9:/._-]+', base) or not re.fullmatch(r'/[A-Za-z0-9/._-]+', target):
+        raise ValueError('unsafe base or target')
+    url = f'{base}/{commit}/{DIST[mode]}'
+    return FETCH_START_COMMAND.format(url=url, sha256=sha256, target=target)
 
 
 def git_modules(commit, repo):
@@ -124,9 +152,14 @@ def main(argv=None):
     parser.add_argument('--variable')
     parser.add_argument('--source')
     parser.add_argument('--repo')
+    parser.add_argument('--fetch-commit', help='also write start-command-fetch.txt (a SHA or <COMMIT>)')
     args = parser.parse_args(argv)
-    print(json.dumps(build(args.commit, args.mode, args.out, args.source, args.repo, args.variable),
-                     sort_keys=True))
+    report = build(args.commit, args.mode, args.out, args.source, args.repo, args.variable)
+    if args.fetch_commit:
+        command = fetch_start_command(args.fetch_commit, report['launcher_sha256'], args.mode)
+        (Path(args.out) / 'start-command-fetch.txt').write_text(command)
+        report['fetch_start_command_chars'] = len(command)
+    print(json.dumps(report, sort_keys=True))
 
 
 if __name__ == '__main__':

@@ -20,7 +20,8 @@ const storage = () => { try { return window.localStorage; } catch { return null;
 /** A tapped phone notification opens its own page even when the app was already open on another one (owner, Nov 15). The service
  * worker asks this page to move when it cannot navigate the window itself; on the iPhone home-screen app, where that message may never
  * arrive, the tap the worker wrote down is read when the app is shown again. When iOS never tells the worker about the tap at all
- * (WebKit 282935), a notice that arrived while the app is shown, or within 2 minutes before it comes back to the front, gets a banner at
+ * (WebKit 282935), a notice that arrived while the app is shown, or within 30 minutes before it comes back to the front (or that the
+ * phone still lists, up to a day), gets a banner at
  * the top: 「新しい通知：<title>」 with 開く and ✕, hidden after 15 seconds. Mounted in the research layout, so on every /research page.
  * Also checks for a newer worker, and keeps the step record (sent to the server log for the owner's account only). */
 export default function PushOpenListener() {
@@ -75,8 +76,12 @@ export default function PushOpenListener() {
       // Nov 16: also moves a registration made before then onto updateViaCache "none" (registered again, which checks for a new version too).
       refreshPushWorker(container as unknown as ContainerLike).catch(() => { /* offline: checked again next time */ });
     }
+    // Nov 16: when the app comes to the front (or is launched), so a notice that vanished from the phone's list just before can be
+    // told apart from one swiped away earlier (lib/research/push-open.ts, PUSH_TAP_GAP_MS).
+    let away = true;
     function look() {
-      if (!shown()) { clearTimeout(hideTimer); return; }
+      if (!shown()) { away = true; clearTimeout(hideTimer); return; }
+      if (away) { away = false; opener.foreground(Date.now()); }
       // focus, pageshow and visibilitychange arrive together on resume: one series of looks is enough.
       for (const id of timers) clearTimeout(id);
       timers.clear();

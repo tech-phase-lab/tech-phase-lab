@@ -88,6 +88,8 @@ LEGACY_FULL_TICKERS = (
 DISCOVERY_OUTAGE_GRACE_SECONDS = 600  # a freshly started process has not polled every source yet
 PRIORITY_SEC_TICKERS = ("TSM", "MRVL", "ANET", "VRT", "PLTR")
 WEB_PUSH_POLL_SECONDS = 5
+# Waits before a push request that found the database locked is tried again (Nov 16: preferences answered 503, then 200 on a retry).
+PUSH_BUSY_RETRY_SECONDS = (0.2, 0.6)
 WEB_PUSH_STALE_SECONDS = 30
 DISCOVERY_METRICS_FLUSH_SECONDS = 5
 DISCOVERY_METRICS_MAX_CHECKS = 1000
@@ -3439,6 +3441,28 @@ class Handler(BaseHTTPRequestHandler):
         supplied = self.headers.get("Authorization", "")
         return hmac.compare_digest(supplied, "Bearer " + token)
 
+    def push_action(self, path, payload):
+        db = web_push.connect(self.app.db_path)
+        try:
+            with db:
+                if path in {"/push/member/preferences", "/push/member/save-preferences"}:
+                    return web_push.member_preferences(db, payload, save=path.endswith('/save-preferences'))
+                if path == "/push/member/register":
+                    return web_push.register_member(db, payload, set(self.app.tickers) | signals.X_EXTRA_TICKERS)
+                if path == "/push/member/revoke":
+                    return web_push.revoke_member(db, payload)
+                if path.startswith("/push/member/"):
+                    return web_push.member_action(db, payload, path.rsplit("/", 1)[1])
+                if path == "/push/status":
+                    return web_push.device_status(db, payload)
+                if path == "/push/test":
+                    return web_push.test_notification(db, payload)
+                if path == "/push/remove":
+                    return web_push.remove(db, payload)
+                return web_push.register(db, payload, set(self.app.tickers) | signals.X_EXTRA_TICKERS)
+        finally:
+            db.close()
+
     def read_json(self, max_bytes=64 * 1024):
         try:
             length = int(self.headers.get("Content-Length", "0"))
@@ -3479,6 +3503,18 @@ class Handler(BaseHTTPRequestHandler):
                 self.send_json(200, watch_earnings.feed(self.app.db_path))
             except Exception:
                 self.send_json(503, {"ok": False, "error": "watch-earnings-unavailable"})
+            return
+        if path == "/push/send-log":
+            # Nov 16: the last sends for the owner's panel (the website allows owner accounts only): a short device hash, the push
+            # service's host, its HTTP status and whether the device is still registered. Never an endpoint, a key or a member.
+            if not self.authorized():
+                self.send_json(401, {"ok": False})
+                return
+            try:
+                with web_push.connect(self.app.db_path) as db:
+                    self.send_json(200, {"ok": True, "items": web_push.send_log(db)})
+            except Exception:
+                self.send_json(503, {"ok": False})
             return
         if path == "/push/config":
             if not self.authorized():
@@ -3872,32 +3908,31 @@ class Handler(BaseHTTPRequestHandler):
             if not web_push.configuration()["enabled"]:
                 self.send_json(503, {"ok": False})
                 return
+            action = path.rsplit("/", 1)[1]
             try:
                 payload = self.read_json()
-                with web_push.connect(self.app.db_path) as db:
-                    if path in {"/push/member/preferences", "/push/member/save-preferences"}:
-                        result = web_push.member_preferences(db, payload, save=path.endswith('/save-preferences'))
-                    elif path == "/push/member/register":
-                        result = web_push.register_member(db, payload, set(self.app.tickers) | signals.X_EXTRA_TICKERS)
-                    elif path == "/push/member/revoke":
-                        result = web_push.revoke_member(db, payload)
-                    elif path.startswith("/push/member/"):
-                        result = web_push.member_action(db, payload, path.rsplit("/", 1)[1])
-                    elif path == "/push/status":
-                        result = web_push.device_status(db, payload)
-                    elif path == "/push/test":
-                        result = web_push.test_notification(db, payload)
-                    elif path == "/push/remove":
-                        result = web_push.remove(db, payload)
-                    else:
-                        result = web_push.register(db, payload, set(self.app.tickers) | signals.X_EXTRA_TICKERS)
+                # Nov 16: a request that found the database locked by another connection is tried again (at most twice, shortly after),
+                # except a test notice: its send may already have gone out, and a second try would be refused for a minute anyway.
+                retries = 0 if path.endswith("/test") else len(PUSH_BUSY_RETRY_SECONDS)
+                for attempt in range(retries + 1):
+                    try:
+                        result = self.push_action(path, payload)
+                        break
+                    except Exception as exc:
+                        if attempt >= retries or not web_push.is_busy(exc):
+                            raise
+                        print(json.dumps({"event": "push-action-retry", "action": action, "attempt": attempt + 1, "error": "database-busy"}), flush=True)
+                        time.sleep(PUSH_BUSY_RETRY_SECONDS[attempt])
                 self.send_json(200, {"ok": True, **result})
             except ValueError as exc:
                 reason = web_push.refusal_reason(exc)
                 # One line per refusal with the action and the reason only (never the device, the member or the provider's text).
-                print(json.dumps({"event": "push-action-refused", "action": path.rsplit("/", 1)[1], "reason": reason}), flush=True)
+                print(json.dumps({"event": "push-action-refused", "action": action, "reason": reason}), flush=True)
                 self.send_json(400, {"ok": False, "error": reason})
-            except Exception:
+            except Exception as exc:
+                # Nov 16: the 503s were silent. One line with the action and the error class only (never the request or the device).
+                print(json.dumps({"event": "push-action-failed", "action": action, "error": type(exc).__name__,
+                                  "busy": web_push.is_busy(exc)}), flush=True)
                 self.send_json(503, {"ok": False})
             return
         if path not in {
