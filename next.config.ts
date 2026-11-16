@@ -25,7 +25,9 @@ const nextConfig: NextConfig = {
     return { beforeFiles: [{ source: "/start", destination: "/start/index.html" }], afterFiles: [], fallback: [] };
   },
   async headers() {
-    return [...cached, ...["/research/account/:path*", "/resolute/checkout/:path*", "/api/research/member/:path*", "/api/research/billing/:path*", "/api/resolute/payments/:path*", "/api/resolute/live-payments/:path*"].map(source => ({
+    // The notification worker is never kept by a cache: a phone checking for a new version must get the current file (owner, Nov 16).
+    const worker = { source: "/research-sw.js", headers: [{ key: "Cache-Control", value: "no-cache, no-store, must-revalidate" }] };
+    return [...cached, worker, ...["/research/account/:path*", "/resolute/checkout/:path*", "/api/research/member/:path*", "/api/research/billing/:path*", "/api/resolute/payments/:path*", "/api/resolute/live-payments/:path*"].map(source => ({
       source,
       headers: [
         { key: "Referrer-Policy", value: "no-referrer" },

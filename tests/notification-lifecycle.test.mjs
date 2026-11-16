@@ -7,15 +7,16 @@ import {renderToStaticMarkup} from 'react-dom/server';
 import ts from 'typescript';
 import {waitForIdentity} from '../lib/research/member-recovery.ts';
 import * as preferencesLoad from '../lib/research/preferences-load.ts';
+import * as pushSwFacts from '../lib/research/push-sw-facts.ts';
 const require=createRequire(import.meta.url);
 const flush=()=>new Promise(resolve=>setImmediate(resolve));
 const pending=()=>{let resolve;const promise=new Promise(done=>{resolve=done;});return {promise,resolve};};
-function harness(fetch, subscription=null, props={}) {
+function harness(fetch, subscription=null, props={}, serviceWorker=null) {
  let view=null;const states=[],refs=[],effects=[],tasks=new Map();let index=0,refIndex=0,mounted=false,next=0,cleanup=[];
- const window=Object.assign(new EventTarget(),{PushManager:function(){},Notification:function(){}});
+ const window=Object.assign(new EventTarget(),{PushManager:function(){},Notification:function(){},location:{origin:'https://techphase.app'}});
  const document=Object.assign(new EventTarget(),{visibilityState:'visible'});
  const registration={active:true,pushManager:{getSubscription:async()=>subscription}};
- const navigator={serviceWorker:{getRegistration:async()=>registration,register:async()=>registration}};
+ const navigator={serviceWorker:serviceWorker??{getRegistration:async()=>registration,register:async()=>registration}};
  const source=ts.transpileModule(readFileSync(new URL('../app/research/notification-settings.tsx',import.meta.url),'utf8'),{compilerOptions:{jsx:ts.JsxEmit.ReactJSX,module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2022}}).outputText;
  const target={exports:{}};
  new Function('require','module','exports','window','document','navigator','Notification','fetch','setTimeout','clearTimeout',source)(id=>{
@@ -23,6 +24,7 @@ function harness(fetch, subscription=null, props={}) {
   if(id==='next/link')return {default:({children,...props})=>React.createElement('a',props,children)};
   if(id==='@/lib/research/member-recovery')return {waitForIdentity};
   if(id==='@/lib/research/preferences-load')return preferencesLoad;
+  if(id==='@/lib/research/push-sw-facts')return pushSwFacts;
   if(id==='./notification-page-view')return {default:p=>{view=p;return null;}};
   if(id==='./member-display-provider')return {useOwnerMode:()=>false,useOwnerAccount:()=>props.ownerAccount===true};
   if(id==='./push-diagnostic-panel')return {default:()=>null};
@@ -150,5 +152,42 @@ test('Nov 15: the notification step record (通知の動作の記録) reaches th
   assert.equal(Boolean(view.diagnostic), ownerAccount, String(ownerAccount));
  }
  const settings = readFileSync(new URL('../app/research/notification-settings.tsx', import.meta.url), 'utf8');
- assert.match(settings, /diagnostic=\{ownerAccount \? <PushDiagnosticPanel lang=\{lang\} \/> : null\}/);
+ assert.match(settings, /diagnostic=\{ownerAccount \? <PushDiagnosticPanel lang=\{lang\} onReinstall=\{key \? reinstall : undefined\} \/> : null\}/);
+});
+
+// Nov 16: the owner's phone kept an old worker. 「通知の仕組みを入れ直す」 removes it, installs the worker again and saves the device
+// through the usual actions, carrying the old device's choices over before the old device is removed.
+test('the owner reinstall button unregisters the old worker, registers it again and saves the new device with the old choices', async () => {
+ const log = [];
+ const oldSub = { endpoint: 'https://push.example/old', toJSON: () => ({ endpoint: 'old' }) };
+ const newSub = { endpoint: 'https://push.example/new', toJSON: () => ({ endpoint: 'new' }) };
+ const oldReg = { scope: 'https://techphase.app/', active: { scriptURL: 'https://techphase.app/research-sw.js' },
+  pushManager: { getSubscription: async () => oldSub }, unregister: async () => { log.push('unregister'); return true; } };
+ const newReg = { scope: 'https://techphase.app/', updateViaCache: 'none', active: { scriptURL: 'https://techphase.app/research-sw.js' },
+  pushManager: { getSubscription: async () => null, subscribe: async () => { log.push('subscribe'); return newSub; } } };
+ let installed = false;
+ const serviceWorker = { getRegistration: async () => installed ? newReg : oldReg, getRegistrations: async () => installed ? [newReg] : [oldReg],
+  register: async (url, options) => { log.push(['register', url, options]); installed = true; return newReg; } };
+ const panel = harness(async (_url, options = {}) => {
+  if (options.method !== 'POST') return pageConfig();
+  const body = JSON.parse(options.body);
+  if (body.action !== 'status') log.push([body.action, body.subscription.endpoint, body.preferences]);
+  if (body.action === 'preferences') return Response.json({ ok: true, preferences: savedPrefs });
+  return Response.json({ ok: true, registered: true });
+ }, null, { page: true, ownerAccount: true }, serviceWorker);
+ try {
+  panel.render(); panel.mount(); await flush(); await flush();
+  log.length = 0;
+  const onReinstall = panel.view().diagnostic.props.onReinstall;
+  assert.equal(typeof onReinstall, 'function');
+  const result = await onReinstall();
+  assert.deepEqual(result, { ok: true, removed: 1, hadSubscription: true, registered: true, keptPreferences: true, updateViaCache: 'none' });
+  assert.deepEqual(log, ['unregister', ['register', '/research-sw.js', { scope: '/', updateViaCache: 'none' }], 'subscribe',
+   ['preferences', 'old', undefined], ['register', 'new', undefined], ['save-preferences', 'new', savedPrefs], ['remove', 'old', undefined],
+   ['preferences', 'new', undefined]]);
+  assert.equal(panel.view().state, 'on');
+ } finally { panel.stop(); }
+ // Without the server's push key (not loaded yet) there is no button.
+ const keyless = harness(async () => Response.json({}), null, { page: true, ownerAccount: true });
+ assert.equal(keyless.view().diagnostic.props.onReinstall, undefined);
 });

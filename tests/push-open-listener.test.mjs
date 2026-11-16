@@ -54,7 +54,7 @@ test("the listener is mounted in the research layout and listens to the service 
   assert.match(listener, /document\.addEventListener\("visibilitychange", look\)/);
   assert.match(listener, /browserPushOpenSources\(container/);
   assert.match(listener, /removeEventListener\("message", onMessage\)/);
-  assert.match(listener, /registration\?\.update\(\)/);
+  assert.match(listener, /refreshPushWorker\(container/);
 });
 
 // Nov 15 (iPhone home-screen app): the tap the worker wrote down is read when the app is shown again, and opened once.

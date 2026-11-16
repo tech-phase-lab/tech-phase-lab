@@ -174,6 +174,12 @@ class PushTests(unittest.TestCase):
         push.remove(self.db, {'subscription': subscription()})
         self.assertFalse(push.device_status(self.db, {'subscription': subscription()})['registered'])
 
+    def test_test_notification_in_english_says_it_works(self):
+        push.register(self.db, {'subscription': subscription(), 'tickers': ['MU'], 'language': 'en'}, {'MU', 'NBIS'}, self.now - 10)
+        calls = []
+        push.test_notification(self.db, {'subscription': subscription()}, lambda sub, message: calls.append(message) or 201, self.now)
+        self.assertEqual((calls[0]['title'], calls[0]['body']), ('Test notification', 'Notifications are working.'))
+
     def test_test_notification_requires_registration_and_limits_retries(self):
         payload = {'subscription': subscription()}
         with self.assertRaises(ValueError):
@@ -182,6 +188,9 @@ class PushTests(unittest.TestCase):
         transport=lambda sub, message: calls.append(message) or 201
         self.assertTrue(push.test_notification(self.db, payload, transport, self.now)['accepted'])
         self.assertEqual(calls[0]['url'], '/research/notifications')
+        # Members are told it works, never asked to press a button (Nov 16).
+        self.assertEqual((calls[0]['title'], calls[0]['body']), ('テスト通知', '通知は正しく届いています。'))
+        self.assertNotIn('押して', calls[0]['body'])
         self.assertEqual(push.test_notification(self.db, payload, transport, self.now+1)['retryAfter'], 60)
         self.assertEqual(len(calls), 1)
         self.assertFalse(push.test_notification(self.db, payload, lambda *_: 0, self.now+61)['accepted'])
