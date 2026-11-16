@@ -217,8 +217,35 @@ DROP_PUBLISHERS = (
 )
 
 
+# Owner, Nov 15 (取り込みを広げる): the provider names one outlet several ways ("WSJ" was dropped while "Wall Street Journal" was kept).
+# Each alias is compared like a listed name (no case, spaces, punctuation, leading "The" or "(video)" suffix) and stands for it.
+PUBLISHER_ALIASES = {
+    'WSJ': 'Wall Street Journal', 'The Wall Street Journal': 'Wall Street Journal', 'Wall Street Journal (WSJ)': 'Wall Street Journal',
+    'FT': 'Financial Times', 'The Financial Times': 'Financial Times', 'FT.com': 'Financial Times',
+    'AP': 'Associated Press', 'The Associated Press': 'Associated Press',
+    "Barron's": 'Barrons', 'Barrons.com': 'Barrons',
+    'MarketWatch': 'Market Watch',
+    'NYT': 'New York Times', 'NY Times': 'New York Times',
+    'Reuters.com': 'Reuters', 'Thomson Reuters': 'Reuters',
+    'CNBC TV': 'CNBC Television',
+}
+# Every Bloomberg outlet (Bloomberg News, Bloomberg Television, Bloomberg Business, ...) except its opinion column.
+BLOOMBERG = re.compile(r'^bloomberg(?!opinion)')
+
+
+def plain_publisher_key(name):
+    """A publisher name without case, spaces, punctuation, a leading "The" or a "(video)" / "(articles)" suffix."""
+    name = re.sub(r'\((?:video|articles)\)', '', str(name or '').lower())
+    return re.sub(r'[^a-z0-9]+', '', re.sub(r'^\W*the\s+', '', name))
+
+
+ALIAS_KEYS = {plain_publisher_key(alias): plain_publisher_key(name) for alias, name in PUBLISHER_ALIASES.items()}
+
+
 def publisher_key(name):
-    return re.sub(r'[^a-z0-9]+', '', re.sub(r'\((?:video|articles)\)', '', str(name or '').lower()))
+    """The outlet a publisher name stands for: aliases resolved, every Bloomberg outlet one key."""
+    key = plain_publisher_key(name)
+    return 'bloomberg' if BLOOMBERG.match(key) else ALIAS_KEYS.get(key, key)
 
 
 KEEP_KEYS = frozenset(publisher_key(n) for n in KEEP_PUBLISHERS)
@@ -235,10 +262,15 @@ def stock_news_publisher_kept(publisher):
 
 def publisher_counter(publisher):
     """The counter name part for a publisher: its listed spelling when known, else the provider's name (bounded)."""
-    key = publisher_key(publisher)
+    plain = plain_publisher_key(publisher)
     for name in KEEP_PUBLISHERS + DROP_PUBLISHERS:
-        if publisher_key(name) == key:
+        if plain_publisher_key(name) == plain:
             return name
+    for alias, name in PUBLISHER_ALIASES.items():
+        if plain_publisher_key(alias) == plain:
+            return name
+    if BLOOMBERG.match(plain):
+        return 'Bloomberg'
     return re.sub(r'[^\w .&/-]+', '', str(publisher or ''))[:40].strip() or 'unknown'
 
 
@@ -399,6 +431,38 @@ def truncated(title):
     return title.rstrip().endswith(('...', '…'))
 
 
+# Owner, Nov 15 (注目トピック showed 「GILT投資家にSBS法律事務所と…詐欺調査参加の機会」): a law firm advertising a shareholder
+# investigation or class action is not news, whatever the firm. Caught by the firm's name or by the solicitation wording; news
+# about a lawsuit itself ("SEC sues …", "Intel shareholders sue after 29% drop", "Apple faces class action over …") is kept.
+# The same patterns are in LAW_FIRM_SOLICITATION in lib/research/wire-stories.ts; keep the two in step.
+LAW_FIRM_SOLICITATION_EN = (
+    r'\b(?:Rosen Law|Pomerantz|Faruqi|Bragar,? Eagel|Levi (?:&|and) Korsinsky|Bronstein,? Gewirtz|Glancy,? Prongay|Kessler,? Topaz|Robbins Geller'
+    r'|Robbins LLP|Schall Law|Gross Law|Portnoy Law|Kirby McInerney|Howard G\. Smith|Frank R\. Cruz|Bernstein Liebhard|Bernstein Litowitz|Hagens Berman'
+    r'|Block (?:&|and) Leviton|Johnson Fistel|Holzer (?:&|and) Holzer|Edelson Lechtzin|Halper Sadeh|Ademi (?:Firm|LLP|& O)|Monteverde (?:&|and) Associates'
+    r'|Brodsky (?:&|and) Smith|Rigrodsky|Wohl (?:&|and) Fruchter|Kahn,? Swick|Lieff Cabraser|Labaton|Saxena White|Scott\+Scott|Berger Montague'
+    r'|Bleichmar,? Fonti|Lowey Dannenberg|Wolf Haldenstein|Kaskela|Khang (?:&|and) Khang|Grabar Law|Squitieri|DJS Law|SBS (?:Law|Legal))\b'
+    r'|\bwith (?:the )?SBS\b|\b(?:law firm|law offices?)\b.{0,120}\b(?:investors?|shareholders?|stockholders?|investigation|class action)\b'
+    r'|\b(?:investors?|shareholders?|stockholders?|investigation|class action)\b.{0,120}\b(?:law firm|law offices?)\b'
+    r'|\b(?:investors?|shareholders?|stockholders?)\b.{0,100}\b(?:encouraged|urged|reminded|opportunity|have until)\b.{0,40}\bto (?:contact|join|participate|inquire|discuss|learn more|secure|seek)\b'
+    r'|\b(?:encourages?|urges?|reminds?)\b.{0,60}\b(?:investors|shareholders|stockholders)\b.{0,40}\bto (?:contact|join|participate|inquire|discuss|secure counsel|seek)\b'
+    r'|\b(?:encourages?|urges?|reminds?) (?:shareholders|investors|stockholders)\b|\bsecure counsel\b'
+    r'|\bopportunity to (?:join|lead|participate in)\b.{0,80}\b(?:investigation|lawsuit|class action|litigation)\b'
+    r'|\b(?:join|participate in)\b.{0,80}\b(?:fraud investigation|securities (?:class action|lawsuit|litigation|fraud)|class action)\b'
+    r'|\binvestigat(?:ion|ions|es|ing)\b.{0,60}\bon behalf of\b.{0,40}\b(?:investors|shareholders|stockholders)\b'
+    r'|\b(?:class action|lawsuit|lead plaintiff|securities (?:suit|litigation))\b.{0,100}\bdeadline\b|\bdeadline\b.{0,100}\b(?:class action|lawsuit|lead plaintiff)\b'
+    r'|\b(?:deadline|investor|shareholder|stockholder) alert\b|\blead plaintiff\b|\bclass period\b'
+    r'|\b(?:investors?|shareholders?|stockholders?) (?:who|that) (?:lost|suffered|incurred)\b|\b(?:have you|did you) (?:lose|lost|suffer)\b'
+    r'|\b(?:investors?|shareholders?) with (?:substantial |significant )?losses\b'
+)
+LAW_FIRM_SOLICITATION_JA = (
+    r'法律事務所|弁護士事務所|ロー・?ファーム|ブロンスタイン|ローゼン法律|ポメランツ|株主に対し.{0,20}(?:調査|問い合わせ)'
+    r'|(?:調査|集団訴訟|訴訟)(?:へ|に)?の?参加|(?:投資家|株主)(?:に|へ)(?:対し(?:て)?)?.{0,20}(?:呼びかけ|呼び掛け|参加を促|連絡を促|問い合わせを)'
+    r'|集団訴訟.{0,30}(?:期限|締め?切|参加|呼びかけ|原告募集|主導)|(?:期限|締め?切り?).{0,20}集団訴訟|株主向け警告|リード原告|主任原告'
+    r'|損失を(?:被った|出した|抱えた|受けた)(?:投資家|株主)'
+)
+LAW_FIRM_SOLICITATION = re.compile(LAW_FIRM_SOLICITATION_EN + '|' + LAW_FIRM_SOLICITATION_JA, re.I)
+
+
 # Oct 16: the feeds carry about 2,000 headlines a day for the 22 stocks, far more than can be translated,
 # and the same story arrives from five publishers. The translator takes one headline per story, from the
 # most reliable publisher first, and skips headlines that are not news about the company.
@@ -414,9 +478,8 @@ NOISE = re.compile(
     r'|\bshould (?:check out|review|take a look at|know about)\b|\bfor (?:long-term|retail|income|dividend) investors\b'
     r'|\bfaces? (?:market )?(?:challenges|headwinds) (?:amid|as|following)\b'
     # Nov 15 (Stock News API on the home): law firms soliciting shareholders for class actions are advertisements, not news.
-    r'|\b(?:class action|securities fraud|securities litigation)\b.{0,80}\b(?:lawsuit|investigation|deadline|filed|lead plaintiff|investors?|shareholders?)\b'
-    r'|\b(?:investors?|shareholders?)\b.{0,80}\b(?:class action|securities fraud)\b|\blead plaintiff\b|\b(?:Rosen|Pomerantz|Faruqi|Bragar Eagel|Levi & Korsinsky|Bronstein|Glancy|Kessler Topaz|Robbins Geller|Schall|Gross Law|Portnoy|Kirby McInerney|Howard G\. Smith|Bernstein Liebhard|Hagens Berman|Block & Leviton|Johnson Fistel|Holzer)\b'
-    r'|\b(?:Deadline|Investor) Alert\b|\bINVESTOR ALERT\b', re.I)
+    # Owner, Nov 15 (注目トピック): one pattern for those, LAW_FIRM_SOLICITATION, shared with NOT_NEWS in lib/research/wire-stories.ts.
+    r'|' + LAW_FIRM_SOLICITATION_EN, re.I)
 # Owner, Nov 16 (訳す前に落とす): the English-title patterns of NOT_NEWS in lib/research/wire-stories.ts. The site already hides a
 # headline whose English title matches one of them (wireStories: isNotNews(titleEn)), so sending it to the model only spent a call.
 # Only patterns that read English titles are ported, and only the conservative ones: the "Wall Street rallies / following earnings",
@@ -439,9 +502,7 @@ NOT_NEWS_EN = tuple(re.compile(pattern, flags) for pattern, flags in (
     (r'\bweek in review\b|\bweekly (?:news )?(?:roundup|digest|recap|wrap)\b|\bthis week(?:[\'’]s)? (?:top|key|main|biggest|major)\b|\bwhat happened this week\b', re.I),
     (r'\bwhat (?:it|this|that) means for\b|\bwhat (?:it|this) (?:could )?mean(?:s)? for (?:investors|the stock)\b', re.I),
     (r'(?:\b(?:EUR|GBP|CHF)\s?\d[\d.,]*|\d[\d.,]*\s?(?:EUR|GBP|CHF)\b).{0,12}\btrad|\btrad\w*\b.{0,24}\b(?:EUR|GBP|CHF)\s?\d', re.I),
-    (r'\b(?:Bronstein,? Gewirtz|Rosen Law|Pomerantz|Levi & Korsinsky|Faruqi|Glancy Prongay|Schall Law|Gross Law|Kessler Topaz|Johnson Fistel|Block & Leviton)\b'
-     r'|\b(?:encourages?|urges?|reminds?) (?:shareholders|investors)\b|\binvestors? who (?:lost|suffered)\b', re.I),
-    (r'\bshareholder alert\b|\blead plaintiff\b|\bclass action\b.{0,60}\b(?:deadline|lawsuit|filed)\b', re.I),
+    (LAW_FIRM_SOLICITATION_EN, re.I),
     (r'\bearnings preview\b|\b(?:Q[1-4]|quarter(?:ly)?) (?:earnings )?preview\b|\bwhat to (?:expect|watch)\b|\bwhat (?:investors )?should (?:you )?expect\b'
      r'|\bkey things to watch\b|\b(?:set|slated|scheduled) to (?:report|release|announce)\b.{0,60}\btomorrow\b'
      r'|\b(?:reports?|releases?) (?:Q[1-4]|\w+ quarter) (?:results|earnings) tomorrow\b', re.I),
@@ -840,7 +901,7 @@ def public_feed(db, now_ts=None):
           LEFT JOIN company_wire_article_attempts a ON a.article=w.article
           WHERE w.ticker=? AND w.published_at>=? AND COALESCE(a.reason,'') NOT IN ('not-news','off-topic') ORDER BY w.published_at DESC LIMIT 120''',
                           (ticker, since)).fetchall()
-        rows = [r for r in rows if not locally_rejected(r)]
+        rows = [r for r in rows if not locally_rejected(r) and not LAW_FIRM_SOLICITATION.search(r['title_ja'] or '')]
         # Oct 16: the Japanese view shows only translated headlines, so a company whose newest ten were
         # all still untranslated (or rejected) looked stale. Keep the newest translated ones in their own
         # allowance, plus a few untranslated ones for the English view.
@@ -859,7 +920,7 @@ def public_feed(db, now_ts=None):
       FROM company_wire w JOIN company_wire_article_ja j ON j.article=w.article WHERE w.published_at>=? AND w.source='stocknews'
       ORDER BY w.published_at DESC LIMIT 400''', (since,)).fetchall()
     for r in extra:
-        if r['ticker'] in WATCHED or locally_rejected(r) or len(items.get(r['ticker'], [])) >= PUBLIC_PER_COMPANY:
+        if r['ticker'] in WATCHED or locally_rejected(r) or LAW_FIRM_SOLICITATION.search(r['title_ja'] or '') or len(items.get(r['ticker'], [])) >= PUBLIC_PER_COMPANY:
             continue
         items.setdefault(r['ticker'], []).append({'id': r['key'], 'titleEn': r['title'], 'titleJa': r['title_ja'], 'shortJa': r['short_ja'] or None,
                                                  'publisher': r['publisher'], 'origin': r['origin'], 'url': r['url'], 'publishedAt': r['published_at'],
@@ -895,10 +956,18 @@ def sentiment_field(row):
 # With a token the call is made at once (real time); without one the headlines stay queued and the service wakes when the next
 # token arrives (next_wake), with or without a new intake. The bucket is replayed from the call times stored in company_wire_calls,
 # so a restart does not grant a fresh burst. The per-day counts on /health (companyWireTranslation.daily) show how calls were spent
-# and how long headlines waited; the budget alert fires only when headlines wait longer than BUDGET_WAIT_SECONDS.
+# and how long headlines waited; the budget alert fires only on a long, sustained wait (BUDGET_ALERT_WAIT_SECONDS below).
 DEFAULT_DAILY_LIMIT = 400
 BUCKET_CAPACITY = 12          # calls that can be made back to back after a quiet spell
-BUDGET_WAIT_SECONDS = 30 * 60  # the budget alert: headlines held back by the pacing for longer than this
+BUDGET_WAIT_SECONDS = 30 * 60  # headlines held back by the pacing this long: the stall alert (b) is not raised (pacing is the cause)
+# The budget alert itself is quiet (owner, Nov 16 night: the 30-minute version flapped opened/復旧 several times while the average
+# wait was about 20 minutes and translation never stopped). It opens only when the oldest unsent headline has waited
+# BUDGET_ALERT_WAIT_SECONDS, continuously for BUDGET_SUSTAIN_SECONDS, while no call may be made; at most once per
+# BUDGET_REPEAT_SECONDS; and its 復旧 notice is sent only for an alert that was opened, after BUDGET_CLEAR_SECONDS without a long wait.
+BUDGET_ALERT_WAIT_SECONDS = 90 * 60
+BUDGET_SUSTAIN_SECONDS = 60 * 60
+BUDGET_REPEAT_SECONDS = 6 * 3600
+BUDGET_CLEAR_SECONDS = 30 * 60
 ROUND_MAX_CALLS = 20          # consecutive calls in one round at most (600 articles); the rest wait for the next round
 RETRY_WAKE_SECONDS = 600      # with no intake round, the translator still looks for due retries every ten minutes
 QUIET_RESULTS = ('done', 'idle', 'budget', 'paced', 'disabled')
@@ -1164,7 +1233,10 @@ def daily_counts(db, now_ts, env=None):
                       'articlesBySource': {name.split(':', 1)[1]: n for name, n in sorted(counts.items()) if name.startswith('articles:')},
                       # Owner, Nov 15: new Stock News API articles per publisher, taken or dropped (see KEEP_PUBLISHERS).
                       'stockNewsPublishers': {kind: {name.split(':', 1)[1]: n for name, n in sorted(counts.items(), key=lambda c: (-c[1], c[0]))
-                                                     if name.startswith('publisher-%s:' % kind)} for kind in ('kept', 'dropped')}}
+                                                     if name.startswith('publisher-%s:' % kind)} for kind in ('kept', 'dropped')},
+                      # Owner, Nov 15 (取り込みを広げる): the same new articles per stream (tech / tickers / market), taken or dropped.
+                      'stockNewsStreams': {stream: {kind: counts.get('stream-%s:%s' % (kind, stream), 0) for kind in ('kept', 'dropped')}
+                                           for stream in sorted({name.split(':', 1)[1] for name in counts if name.startswith('stream-')})}}
     return out
 
 
@@ -1184,14 +1256,47 @@ def sync_incident(db, now_ts=None, env=None, started_ts=None):
     at = iso(now_ts)
     active = {}
 
-    # (a) The call pacing holds headlines back too long (owner, Nov 16): headlines have waited more than 30 minutes while no call
-    # may be made (no token, or the 24-hour ceiling). An empty bucket alone is the normal pacing and is no alert.
-    # Once open it stays open while they still wait, even at a moment a token is free (no repeated phone alert).
+    # (a) The call pacing holds headlines back too long (owner, Nov 16; quiet version, see BUDGET_ALERT_WAIT_SECONDS): the oldest
+    # unsent headline has waited 90 minutes, continuously for an hour, and no call may be made now (no token, or the 24-hour
+    # ceiling). An empty bucket alone is the normal pacing and is no alert. Once open it stays open until the long wait has been
+    # gone for 30 minutes, and it is not opened again within 6 hours of the last alert (no repeated phone alert).
+    budget_key = WATCH_PREFIX + 'translation-budget'
+    budget_open = open_incident(db, budget_key)
     held = health['pacing']['nextTokenAt']
-    held_back = (held is None or datetime.fromisoformat(held).timestamp() > now_ts or health['budgetReached']
-                 or open_incident(db, WATCH_PREFIX + 'translation-budget'))
-    if health['enabled'] and held_back and (health['queue']['oldestWaitMinutes'] or 0) * 60 >= BUDGET_WAIT_SECONDS:
-        active['translation-budget'] = 'company-wire-translation-budget:%d' % health['dailyLimit']
+    held_back = (held is None or datetime.fromisoformat(held).timestamp() > now_ts or health['budgetReached'] or budget_open)
+    waited = (health['queue']['oldestWaitMinutes'] or 0) * 60
+    paced = health['enabled'] and held_back and waited >= BUDGET_WAIT_SECONDS  # the pacing explains a wait: no stall alert
+    long_wait = health['enabled'] and waited >= BUDGET_ALERT_WAIT_SECONDS
+    budget_code = 'company-wire-translation-budget:%d' % health['dailyLimit']
+    budget_state, budget_drop = {}, []
+    if long_wait:
+        since = float(state.get('budget_since') or now_ts)
+        budget_state['budget_since'] = since if since >= floor else now_ts
+        budget_drop.append('budget_clear_since')
+    else:
+        budget_drop.append('budget_since')
+    if not budget_open:
+        budget_drop.append('budget_clear_since')
+    if budget_open:
+        if long_wait:
+            active['translation-budget'] = budget_code
+        else:
+            clear_since = float(state.get('budget_clear_since') or now_ts)
+            if now_ts - clear_since >= BUDGET_CLEAR_SECONDS:
+                monitor.resolve_operational_incident(db, budget_key, resolved_at=at)
+                budget_drop.append('budget_clear_since')
+            else:
+                budget_state['budget_clear_since'] = clear_since
+                active['translation-budget'] = budget_code
+    elif long_wait and held_back and now_ts - budget_state['budget_since'] >= BUDGET_SUSTAIN_SECONDS:
+        last_alert = float(state.get('budget_alerted_at') or float('-inf'))
+        if now_ts - last_alert >= BUDGET_REPEAT_SECONDS:
+            if monitor.record_operational_incident(db, budget_key, 'company-wire', 'translation-budget', 'critical', budget_code,
+                                                   seen_at=at) == 'opened':
+                budget_state['budget_alerted_at'] = now_ts
+            active['translation-budget'] = budget_code
+    with db:
+        put_watch(db, budget_state, drop=[key for key in budget_drop if key not in budget_state])
 
     # (c) Every call failed (model error, worker error or every headline rejected) for 15 minutes.
     if state.get('failing_since'):
@@ -1202,7 +1307,8 @@ def sync_incident(db, now_ts=None, env=None, started_ts=None):
             active['translation-failing'] = 'company-wire-translation-failing:' + (state.get('last_failure') or 'unknown')
 
     # (b) A Stock News story waits more than 20 minutes for its Japanese headline, for 30 minutes, while new ones keep arriving.
-    # Not raised on top of (a) or (c), which already name the cause.
+    # Not raised on top of (a) or (c), which already name the cause, nor while the pacing holds headlines back 30 minutes (the
+    # condition that raised (a) before it was made quiet), so the quieter budget alert never turns into a stall alert instead.
     stalled = (health['pending']['oldestMinutes'] or 0) * 60 >= STALL_ROW_SECONDS and health['newStockNews30m'] > 0
     if stalled:
         since = float(state.get('stalled_since') or now_ts)
@@ -1210,14 +1316,14 @@ def sync_incident(db, now_ts=None, env=None, started_ts=None):
             since = now_ts
         with db:
             put_watch(db, {'stalled_since': since})
-        if now_ts - since >= STALL_SECONDS and not active:
+        if now_ts - since >= STALL_SECONDS and not active and not paced:
             active['translation-stalled'] = 'company-wire-translation-stalled:' + (
                 'disabled' if not health['enabled'] else state.get('last_result') or 'no-worker')
     elif state.get('stalled_since'):
         with db:
             put_watch(db, {}, drop=('stalled_since',))
 
-    for subject in ('translation-budget', 'translation-failing', 'translation-stalled'):
+    for subject in ('translation-failing', 'translation-stalled'):
         if subject in active:
             monitor.record_operational_incident(db, WATCH_PREFIX + subject, 'company-wire', subject, 'critical', active[subject], seen_at=at)
         else:

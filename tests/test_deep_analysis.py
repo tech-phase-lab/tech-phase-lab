@@ -640,6 +640,160 @@ class DeepAnalysisTests(unittest.TestCase):
             self.assertEqual(db.execute("SELECT state,failure FROM deep_analyses").fetchone()[:], ('held', 'interrupted'))
 
 
+    def test_rejected_copy_is_kept_in_the_database_never_in_health_and_can_be_rechecked_without_a_call(self):
+        self.earnings()
+        bad = json.loads(json.dumps(GOOD))
+        bad['points'] = bad['points'] + [point('売上は45%増。', 'Revenue rose 45%.')]
+        import contextlib, io
+        with contextlib.redirect_stdout(io.StringIO()):
+            self.assertEqual(self.run_deep(reply(bad)), 'done')
+        with deep_analysis.connect(self.path) as db:
+            rows = db.execute("SELECT subject,part,reason,ja,quote FROM deep_rejected_copy").fetchall()
+            self.assertEqual(len(rows), 1)
+            self.assertEqual((rows[0]['part'], rows[0]['ja']), ('point', '売上は45%増。'))
+            self.assertTrue(rows[0]['quote'] and rows[0]['reason'].startswith('unsupported-number'))
+            self.assertNotIn('45%', json.dumps(deep_analysis.diagnostics(db, now=base.NOW.timestamp())))  # never in /health
+            old = db.execute("SELECT at FROM deep_rejected_copy").fetchone()[0]
+        self.assertEqual(deep_analysis.recheck_rejected(self.path), [])  # still rejected under today's checks; nothing is called
+        deep_analysis.save_rejected(self.path, {'ref': 'x', 'subject': 'AMD'}, 'point', 'r', {'ja': 'a', 'en': 'b'}, 'q', now=old + 61 * 86400)
+        with deep_analysis.connect(self.path) as db:
+            self.assertEqual(db.execute("SELECT count(*) FROM deep_rejected_copy").fetchone()[0], 1)  # the 61-day-old record went
+
+    # Owner decision B (Nov 15): mixed ups and downs are checked clause by clause against the source, not rejected wholesale.
+    CRDO_SOURCE = ('Credo Reconciliations\nGAAP gross margin\n64.5%\n68.2%\n67.4%\nNon-GAAP gross margin\n68.0%\n68.3%\n67.6%\n'
+                   'Revenue was $X, up 20% from the prior quarter as revenue increased.')
+    DELL_SOURCE = ('(in millions, except per share amounts and percentages; unaudited)\nNet revenue\n$\n22,244\n$\n20,922\n6%\nOperating income\n$\n920\n$\n1,069\n(14)%\nTotal cost of net revenue\n17,438\n15,904\n10%\n'
+                   'Gross margin\n4,806\n5,018\n(4)%\nOperating expenses\nServices\n3,672\n3,529\n4%\n'
+                   'Operating income was $920 million, down 14% and non-GAAP operating income down 8% year over year.')
+    AMD_SOURCE = ('Client segment revenue was $2.9 billion, up 7% year-over-year. Gaming segment revenue was $0.7 billion, down 40% year-over-year. '
+                  'Embedded segment revenue was $0.9 billion, up 29% year-over-year.')
+
+    def mixed(self, ja, en, source):
+        return deep_analysis.checked({'ja': ja, 'en': en}, source)
+
+    def test_mixed_directions_that_match_the_source_clause_by_clause_pass(self):
+        self.mixed('GAAP粗利益率は 64.5%で、前四半期の 68.2%から低下した。売上が拡大する局面でも粗利率の回復力が焦点となる。',
+                   'GAAP gross margin was 64.5%, down from 68.2% in the prior quarter. Gross margin recovery is a focal point even as revenue expands.',
+                   self.CRDO_SOURCE)
+        self.mixed('売上原価は10%増、粗利益は4%減となり、GAAP営業利益は14%減だった。',
+                   'Cost of net revenue increased 10% and gross margin declined 4%, while GAAP operating income was down 14%.',
+                   self.DELL_SOURCE)
+        self.mixed('Clientは7%増、Gamingは40%減、Embeddedは29%増となった。',
+                   'Client segment revenue was up 7%, Gaming was down 40% and Embedded was up 29%.', self.AMD_SOURCE)
+
+    def test_one_direction_swapped_in_either_language_is_always_rejected(self):
+        cases = (
+            ('GAAP粗利益率は 64.5%で、前四半期の 68.2%から上昇した。売上が拡大する局面でも粗利率の回復力が焦点となる。',
+             'GAAP gross margin was 64.5%, up from 68.2% in the prior quarter. Gross margin recovery is a focal point even as revenue expands.', self.CRDO_SOURCE),
+            ('売上原価は10%減、粗利益は4%減となり、GAAP営業利益は14%減だった。',
+             'Cost of net revenue decreased 10% and gross margin declined 4%, while GAAP operating income was down 14%.', self.DELL_SOURCE),
+            ('売上原価は10%増、粗利益は4%増となり、GAAP営業利益は14%減だった。',
+             'Cost of net revenue increased 10% and gross margin declined 4%, while GAAP operating income was down 14%.', self.DELL_SOURCE),
+            ('Clientは7%増、Gamingは40%増、Embeddedは29%増となった。',
+             'Client segment revenue was up 7%, Gaming was down 40% and Embedded was up 29%.', self.AMD_SOURCE),
+            ('Clientは7%増、Gamingは40%減、Embeddedは29%増となった。',
+             'Client segment revenue was up 7%, Gaming was up 40% and Embedded was up 29%.', self.AMD_SOURCE),
+            ('Clientは7%減、Gamingは40%減、Embeddedは29%増となった。',
+             'Client segment revenue was down 7%, Gaming was down 40% and Embedded was up 29%.', self.AMD_SOURCE),
+        )
+        for ja, en, source in cases:
+            with self.assertRaises(ValueError, msg=en):
+                self.mixed(ja, en, source)
+
+    def test_a_clause_the_source_does_not_show_still_falls_back_to_the_old_rules(self):
+        with self.assertRaises(ValueError):  # Gaming is not in this source at all: unknown, so the mixed-direction rule applies as before
+            self.mixed('Clientは7%増、Gamingは40%減。', 'Client segment revenue was up 7%, Gaming was down 40%.',
+                       'Client segment revenue was $2.9 billion, up 7% year-over-year.')
+
+
+    def test_the_real_amd_copy_rejected_on_nov_15_passes_against_its_quote_and_its_swaps_do_not(self):
+        quote = ('Client and Gaming segment revenue was $3.7 billion, down 8% year-over-year. Client business revenue was $2.9 billion, up 7% year-over-year, '
+                 'driven by sales of AMD Ryzen mobile processors. Gaming business revenue was $773 million, down 40% year-over-year, due to lower semi-custom '
+                 'and graphics revenue.\nEmbedded segment revenue was $1.1 billion, up 29% year-over-year, led by growth in aerospace and defense, automotive.')
+        ja = ('ClientはAMD Ryzen mobile processorsに支えられ前年同期比7%増だったが、Gamingはセミカスタムとグラフィックスの減収で40%減となった。'
+              '一方、Embeddedは航空宇宙・防衛、自動車など幅広い用途で29%増。AI以外の事業は回復の濃淡が大きく、Gamingの動向がClientの成長をどこまで相殺するかが焦点となる。')
+        en = ('Client grew 7% year over year on AMD Ryzen mobile processors, but Gaming fell 40% on lower semi-custom and graphics revenue. Embedded grew 29% '
+              'across markets including aerospace and defense and automotive. Recovery outside AI remains uneven, making the extent to which Gaming offsets '
+              'Client growth a key issue.')
+        self.mixed(ja, en, quote)
+        for bad_ja, bad_en in ((ja.replace('40%減', '40%増'), en), (ja, en.replace('Gaming fell 40%', 'Gaming grew 40%')),
+                               (ja.replace('7%増', '7%減'), en.replace('Client grew 7%', 'Client fell 7%'))):
+            with self.assertRaises(ValueError):
+                self.mixed(bad_ja, bad_en, quote)
+
+    def test_an_old_release_stored_under_a_new_date_is_not_taken_for_the_latest_quarter(self):
+        old = 'Exhibit 99.1\nDell Technologies Delivers First Quarter Fiscal 2025 Financial Results\nROUND ROCK, Texas \u2014 May 30, 2024\n' + base.BODY
+        self.stored_release(ticker='DELL', url='https://www.sec.gov/Archives/edgar/data/1571996/x/ex991.htm', text=old + '\nStatements of Income and Related Financial Highlights')
+        with deep_analysis.connect(self.path) as db:
+            self.assertEqual(deep_analysis.stored_release_sources(db, base.NOW, False, since=base.NOW - timedelta(days=30)), [])
+            reasons = deep_analysis.source_reasons(db, 'DELL', base.NOW)
+        self.assertEqual(reasons['verdicts'], {'stale-period': 1})
+        current = old.replace('May 30, 2024', (base.NOW - timedelta(days=5)).strftime('%B %d, %Y').replace(' 0', ' ')).replace('2025', '2027')
+        self.stored_release(ticker='DELL', url='https://www.sec.gov/Archives/edgar/data/1571996/x/ex991.htm', text=current + '\nStatements of Income and Related Financial Highlights')
+        with deep_analysis.connect(self.path) as db:
+            self.assertEqual(len(deep_analysis.stored_release_sources(db, base.NOW, False, since=base.NOW - timedelta(days=30))), 1)
+        self.assertFalse(deep_analysis.stale_release('Results\nJanuary 15, 2027 ... December 2026', datetime(2027, 1, 20, tzinfo=timezone.utc)))
+
+    def test_health_says_why_a_roster_company_has_no_analysis(self):
+        self.stored_release(ticker='GEV', url='https://www.sec.gov/Archives/edgar/data/1996810/x/ex991.htm', text='tiny')
+        with deep_analysis.connect(self.path) as db:
+            report = deep_analysis.diagnostics(db, now=base.NOW.timestamp())
+        gev = {row['ticker']: row for row in report['roster']}['GEV']
+        self.assertEqual(gev['storedPages']['verdicts'], {'short': 1})
+        self.assertEqual(gev['storedPages']['samples']['short'][0]['address'], 'www.sec.gov/Archives/edgar/data/1996810/x/ex991.htm')
+        self.assertNotIn('tiny', json.dumps(report))
+
+
+    def test_an_analysis_made_weeks_after_a_release_does_not_cover_it(self):
+        # Dell, Nov 15: a held analysis of an old page dated Sep 24 must not keep the Sep 1 release from being made.
+        released = base.NOW - timedelta(days=10)
+        self.stored_release(at=released)
+        with deep_analysis.connect(self.path) as db:
+            db.execute("INSERT INTO deep_analyses(source_ref,kind,subject,source_sha,state,created_at,source_url) VALUES('old','earnings','CRWV','x','held',?,?)",
+                       ((released + timedelta(days=21)).isoformat(), 'https://elsewhere.example/old'))
+            self.assertEqual(len(deep_analysis.stored_release_sources(db, base.NOW, False, since=base.NOW - timedelta(days=30))), 1)
+            db.execute("UPDATE deep_analyses SET created_at=?", ((released + timedelta(hours=1)).isoformat(),))
+            deep_analysis.STORED_CACHE.clear()
+            self.assertEqual(deep_analysis.stored_release_sources(db, base.NOW, False, since=base.NOW - timedelta(days=30)), [])
+
+
+    def test_the_newest_release_by_its_own_date_is_taken_not_the_newest_by_the_day_it_was_stored(self):
+        # Nov 15: AVGO's, DELL's and ORCL's old SEC filings were all stored on Sep 24, so "newest stored" was arbitrary.
+        stored = base.NOW - timedelta(days=30)
+        pages = (('https://www.sec.gov/Archives/edgar/data/1571996/000157199624000050/dell-20240530.htm', 'May 30, 2024'),
+                 ('https://www.sec.gov/Archives/edgar/data/1571996/000157199626000100/dell-20260901.htm', 'September 1, 2026'),
+                 ('https://www.sec.gov/Archives/edgar/data/1571996/000157199625000096/dell-20250828.htm', 'August 28, 2025'))
+        with research.connect(self.path) as db:
+            db.execute("DELETE FROM source_revisions"); db.execute("DELETE FROM release_events"); db.execute("DELETE FROM sources")
+            for index, (url, day) in enumerate(pages):
+                text = 'Dell Technologies Delivers Results\nROUND ROCK, Texas \u2014 %s\n' % day + base.BODY + '\nStatements of Income and Related Financial Highlights'
+                db.execute('INSERT INTO sources(url,ticker,title,published_on,discovered_at,sha256) VALUES(?,?,?,?,?,?)', (url, 'DELL', 'x', '2026-09-01', stored.isoformat(), 'rev%d' % index))
+                db.execute('INSERT INTO source_revisions(url,sha256,observed_at,extracted_text,extracted_chars) VALUES(?,?,?,?,?)', (url, 'rev%d' % index, stored.isoformat(), text, len(text)))
+        with deep_analysis.connect(self.path) as db:
+            found = deep_analysis.stored_release_sources(db, base.NOW, False, since=base.NOW - timedelta(days=120))
+            self.assertEqual([item['url'][-17:] for item in found], ['dell-20260901.htm'])
+            self.assertTrue(found[0]['observedAt'].startswith('2026-09-01'))
+            # once that newest release is covered, an older one is never taken in its place
+            db.execute("INSERT INTO deep_analyses(source_ref,kind,subject,source_sha,state,created_at,source_url) VALUES('x','earnings','DELL','s','done',?,?)",
+                       ('2026-09-01T22:00:00+00:00', 'https://elsewhere.example/dell'))
+            deep_analysis.STORED_CACHE.clear()
+            self.assertEqual(deep_analysis.stored_release_sources(db, base.NOW, False, since=base.NOW - timedelta(days=120)), [])
+        self.assertEqual(deep_analysis.release_date('https://x/y/avgo-20260902.htm', '', stored).date().isoformat(), '2026-09-02')
+        self.assertEqual(deep_analysis.release_date('https://x/y/page', 'ROUND ROCK \u2014 May 30, 2024 ...', stored).date().isoformat(), '2024-05-30')
+        self.assertEqual(deep_analysis.release_date('https://x/y/page', 'no date', stored), stored)
+
+
+    def test_the_roster_shows_a_later_correct_analysis_over_an_old_wrong_page_hold(self):
+        now = base.NOW.timestamp()
+        with deep_analysis.connect(self.path) as db:
+            for ref, state, created, published in (('wrong', 'held', (base.NOW - timedelta(days=10)).isoformat(), None),
+                                                   ('right', 'done', (base.NOW - timedelta(days=40)).isoformat(), (base.NOW - timedelta(days=40)).isoformat())):
+                db.execute("INSERT INTO deep_analyses(source_ref,kind,subject,source_sha,state,created_at,published_at) VALUES(?,?,?,?,?,?,?)",
+                           (ref, 'earnings', 'DELL', 'x', state, created, published))
+            roster = {row['ticker']: row for row in deep_analysis.roster_status(db, now)}
+        self.assertEqual(roster['DELL']['deepState'], 'done')
+
+
 class IndicatorAnalysisTests(unittest.TestCase):
     setUp = base.OfficialResearchTests.setUp
 

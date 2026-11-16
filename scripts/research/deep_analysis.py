@@ -18,6 +18,7 @@ import sqlite3
 import time
 
 import brief_generator
+import direction_clauses
 import factual_validation
 import llm_cost
 import monitor
@@ -81,6 +82,10 @@ def schema(db):
         db.execute('ALTER TABLE deep_analyses ADD COLUMN version INTEGER NOT NULL DEFAULT 0')
     if 'detail' not in columns:
         db.execute('ALTER TABLE deep_analyses ADD COLUMN detail TEXT')
+    db.execute('''CREATE TABLE IF NOT EXISTS deep_rejected_copy(
+      id INTEGER PRIMARY KEY, source_ref TEXT NOT NULL, subject TEXT NOT NULL, at REAL NOT NULL, part TEXT NOT NULL, reason TEXT NOT NULL,
+      ja TEXT, en TEXT, quote TEXT, evidence_ids TEXT)''')
+    db.execute('CREATE INDEX IF NOT EXISTS deep_rejected_copy_ref ON deep_rejected_copy(source_ref)')
     db.execute('CREATE TABLE IF NOT EXISTS deep_old_retries(source_ref TEXT PRIMARY KEY, marker TEXT NOT NULL, at REAL NOT NULL, outcome TEXT NOT NULL)')
     db.execute('''CREATE TABLE IF NOT EXISTS deep_analysis_calls(
       at REAL NOT NULL, source_ref TEXT NOT NULL, model TEXT NOT NULL, ok INTEGER NOT NULL)''')
@@ -253,6 +258,105 @@ def release_text_ok(ticker, text):
     return bool(release_watch.EARNINGS_TITLE.search(head) and not release_watch.NOT_RELEASE.search(head[:200]) and RELEASE_HEAD.search(head))
 
 
+MONTHS = {name: number for number, name in enumerate(
+    ('january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november', 'december'), 1)}
+URL_DATE = re.compile(r'(?<!\d)(20\d\d)(0[1-9]|1[0-2])(0[1-9]|[12]\d|3[01])(?!\d)')
+TEXT_DATE = re.compile(r'\b(January|February|March|April|May|June|July|August|September|October|November|December)\s+(\d{1,2}),?\s+(20\d\d)\b')
+
+
+def release_date(url, head, detected):
+    """The date a stored page's release is dated, not the date the monitor found it (Nov 15: years of old SEC filings were all stored on Sep 24, so
+    "the newest page" by discovery date was an arbitrary one, and Dell's May 2024 results page was taken for its latest quarter). From the file
+    name of an SEC document (avgo-20260902.htm), else the first "Month D, YYYY" in the page's opening, else the discovery date."""
+    segment = str(url).split('?')[0].rsplit('/', 1)[-1]
+    found = URL_DATE.search(segment)
+    try:
+        if found:
+            return datetime(int(found[1]), int(found[2]), int(found[3]), 12, tzinfo=timezone.utc)
+        found = TEXT_DATE.search((head or '')[:2500])
+        if found:
+            return datetime(int(found[3]), MONTHS[found[1].lower()], int(found[2]), 12, tzinfo=timezone.utc)
+    except ValueError:
+        pass
+    return detected
+
+
+def stale_release(text, detected, released=None, oldest=None):
+    """An old release stored under a new date: its release date is before `oldest`, or its own text carries only years before the one it was
+    found in (a January or February release may carry only the year before)."""
+    if released is not None and oldest is not None and released < oldest:
+        return True
+    years = [int(year) for year in re.findall(r'(?<!\d)(20\d\d)(?!\d)', (text or '')[:3000])]
+    if not years:
+        return False
+    newest = max(years)
+    return newest < detected.year and not (detected.month <= 2 and newest == detected.year - 1)
+
+
+def source_verdict(ticker, text, detected, released=None, oldest=None):
+    """'ok' or the short reason a stored page is not taken as the company's latest results release."""
+    if not text:
+        return 'no-text'
+    if not 1200 <= len(text) <= 160000:
+        return 'length'
+    if not release_text_ok(ticker, text):
+        return 'not-results'
+    return 'stale-period' if stale_release(text, detected, released, oldest) else 'ok'
+
+
+def source_reasons(db, ticker, reference, days=120, max_pages=400, max_reads=80):
+    """For one roster company: how its stored pages of the last `days` days fare (counts by verdict, the newest detection date) and up to three
+    sample pages per verdict (public address without query, size in characters, date). Page sizes come from the stored revision's own count, so
+    only pages of a plausible size are read (at most `max_reads`). Names, counts and addresses only; never page text."""
+    counts, samples, newest, reads = {}, {}, None, 0
+    since = (reference - timedelta(days=days)).isoformat()
+    oldest = reference - timedelta(days=days + 2)
+    for row in db.execute('SELECT s.url,s.sha256,s.status,r.extracted_chars AS chars,substr(r.extracted_text,1,3000) AS head,COALESCE(e.detected_at,s.discovered_at) AS detected FROM sources s '
+                          'LEFT JOIN release_events e ON e.url=s.url LEFT JOIN source_revisions r ON r.url=s.url AND r.sha256=s.sha256 '
+                          'WHERE s.ticker=? AND julianday(COALESCE(e.detected_at,s.discovered_at))>=julianday(?) '
+                          'ORDER BY julianday(COALESCE(e.detected_at,s.discovered_at)) DESC LIMIT ?', (ticker, since, max_pages)).fetchall():
+        try:
+            detected = datetime.fromisoformat(str(row['detected']).replace('Z', '+00:00'))
+            if detected.tzinfo is None:
+                detected = detected.replace(tzinfo=timezone.utc)
+        except ValueError:
+            continue
+        newest = newest or detected.date().isoformat()
+        chars = row['chars']
+        released = release_date(row['url'], row['head'], detected)
+        if row['status'] in ('held', 'rejected'):
+            verdict = 'status-' + row['status']
+        elif chars is None:
+            verdict = 'no-text'
+        elif chars < 1200:
+            verdict = 'short'
+        elif chars > 160000:
+            verdict = 'long'
+        elif reads >= max_reads:
+            verdict = 'unread'
+        else:
+            reads += 1
+            revision = db.execute('SELECT extracted_text FROM source_revisions WHERE url=? AND sha256=?', (row['url'], row['sha256'])).fetchone()
+            verdict = source_verdict(ticker, revision['extracted_text'] if revision else None, detected, released, oldest)
+        counts[verdict] = counts.get(verdict, 0) + 1
+        if len(samples.setdefault(verdict, [])) < 3:
+            samples[verdict].append({'address': re.sub(r'^https?://', '', str(row['url']).split('?')[0])[:110], 'chars': chars, 'detected': detected.date().isoformat(), 'released': released.date().isoformat()})
+    return {'pages': sum(counts.values()), 'newestDetected': newest, 'verdicts': counts, 'samples': samples}
+
+
+REASONS_CACHE = {}
+
+
+def cached_reasons(db, ticker, now):
+    """source_reasons for /health, recomputed at most every five minutes (the health check calls often and this reads stored page texts)."""
+    key = (db.execute('PRAGMA database_list').fetchone()[2], ticker)
+    hit = REASONS_CACHE.get(key)
+    if hit is None or now - hit[0] > 300:
+        hit = (now, source_reasons(db, ticker, datetime.fromtimestamp(now, timezone.utc)))
+        REASONS_CACHE[key] = hit
+    return hit[1]
+
+
 def stored_release_sources(db, reference, excerpts=True, skip=(), since=None, tickers=None):
     """Results releases of the roster companies read from the pages the monitor stored (SEC exhibits, company pages), for companies whose IR
     feed event did not yield one (CoreWeave, Palantir and Arista never reached deep analysis through the feed). Ref source:<url hash>:<revision>.
@@ -270,41 +374,48 @@ def stored_release_sources(db, reference, excerpts=True, skip=(), since=None, ti
     wanted = [t for t in (tickers or ROSTER) if t not in skip]
     if not wanted:
         return found
-    for row in db.execute('SELECT s.url,s.ticker,s.sha256,COALESCE(e.detected_at,s.discovered_at) AS detected FROM sources s '
-                          'LEFT JOIN release_events e ON e.url=s.url '
+    oldest = since - timedelta(days=2)
+    candidates = []
+    for row in db.execute('SELECT s.url,s.ticker,s.sha256,substr(r.extracted_text,1,3000) AS head,COALESCE(e.detected_at,s.discovered_at) AS detected FROM sources s '
+                          'LEFT JOIN release_events e ON e.url=s.url LEFT JOIN source_revisions r ON r.url=s.url AND r.sha256=s.sha256 '
                           "WHERE s.ticker IN (%s) AND s.status NOT IN ('held','rejected') AND julianday(COALESCE(e.detected_at,s.discovered_at))>=julianday(?) "
-                          'ORDER BY julianday(COALESCE(e.detected_at,s.discovered_at)) DESC' % ','.join('?' for _ in wanted),
+                          'ORDER BY julianday(COALESCE(e.detected_at,s.discovered_at)) DESC LIMIT 2000' % ','.join('?' for _ in wanted),
                           (*wanted, since.isoformat())).fetchall():
-        if row['ticker'] not in wanted:
-            continue
         try:
             detected = datetime.fromisoformat(str(row['detected']).replace('Z', '+00:00'))
             if detected.tzinfo is None:
                 detected = detected.replace(tzinfo=timezone.utc)
         except ValueError:
             continue
-        if detected > reference or row['url'][:8] != 'https://':
+        if row['url'][:8] != 'https://':
+            continue
+        released = release_date(row['url'], row['head'], detected)
+        if released > reference:
+            continue
+        candidates.append((released, detected, row))
+    candidates.sort(key=lambda item: item[0], reverse=True)  # the newest RELEASE of each company first, whatever day the monitor stored it
+    for released, detected, row in candidates:
+        if row['ticker'] not in wanted:
             continue
         revision = db.execute('SELECT extracted_text FROM source_revisions WHERE url=? AND sha256=?', (row['url'], row['sha256'])).fetchone()
         text = revision['extracted_text'] if revision else None
-        if not release_text_ok(row['ticker'], text):
+        if source_verdict(row['ticker'], text, detected, released, oldest) != 'ok':
             continue
+        ticker = row['ticker']
+        wanted = [t for t in wanted if t != ticker]  # the newest release of each company only: if it is already covered, never fall back to an older one
+        skip = {*skip, ticker}
         # one analysis per release: a company with an analysis created within two days of this release, or this page analysed before, is covered
-        covered = db.execute("SELECT 1 FROM deep_analyses WHERE kind='earnings' AND subject=? AND (source_url=? OR created_at>=?) LIMIT 1",
-                             (row['ticker'], row['url'], (detected - timedelta(days=2)).isoformat())).fetchone()
+        covered = db.execute("SELECT 1 FROM deep_analyses WHERE kind='earnings' AND subject=? AND (source_url=? OR (created_at>=? AND created_at<=?)) LIMIT 1",
+                             (row['ticker'], row['url'], (released - timedelta(days=2)).isoformat(), (released + timedelta(days=2)).isoformat())).fetchone()
         if covered and not db.execute('SELECT 1 FROM deep_analyses WHERE source_ref=?', (stored_ref(row['url'], row['sha256']),)).fetchone():
             continue
         item = {'ref': stored_ref(row['url'], row['sha256']), 'kind': 'earnings', 'subject': row['ticker'], 'sha': row['sha256'],
-                'title': release_title(row['ticker'], text), 'url': row['url'], 'observedAt': detected.isoformat(), 'excerpts': {}}
+                'title': release_title(row['ticker'], text), 'url': row['url'], 'observedAt': released.isoformat(), 'excerpts': {}}
         if excerpts:
             trimmed, trim = trim_release(text)
             item.update({'excerpts': official_research.evidence_excerpts(trimmed), 'trim': trim})
             with_derived(item, text)
         found.append(item)
-        skip = {*skip, row['ticker']}
-        wanted = [t for t in wanted if t != row['ticker']]  # the newest release of each company only
-        if not wanted:
-            break
     if cache_key is not None:
         if len(STORED_CACHE) > 20:
             STORED_CACHE.clear()
@@ -397,7 +508,9 @@ def table_scaled_figures(evidence, within=None):
 
 
 def checked(item, quote, release=None):
-    """Copy that passes the number, meaning and pair checks against `quote`."""
+    """Copy that passes the number, meaning and pair checks against `quote`. The direction rules (an increase and a decrease in one copy, a
+    direction the quote does not state in words) are replaced by the clause-by-clause check of direction_clauses when it can match every
+    direction to the quote; where it contradicts the quote the copy is rejected, where it cannot tell the original rules apply unchanged."""
     for lang in ('ja', 'en'):
         text = item.get(lang)
         if not isinstance(text, str) or not text.strip():
@@ -405,8 +518,14 @@ def checked(item, quote, release=None):
         if len(text) > MAX_COPY_CHARS:
             raise ValueError('copy-too-long')
         factual_validation.validate_numbers(text, table_scaled_figures(release or quote, within=quote) + '\n' + quote)  # scaled figures first: an excerpt cut inside a "(" would turn text appended after it into a negative
-        factual_validation.validate_semantics(text, quote)
-    factual_validation.validate_pair(item['ja'], item['en'])
+    outcome = direction_clauses.verdict(item['ja'], item['en'], quote)
+    if outcome == 'contradicted':
+        factual_validation.LAST_DIRECTION_REJECTION[0] = {'family': 'clause', 'copy': 'down', 'source': ['up']}  # a clause-level mismatch (the direction text is only a label here)
+        raise ValueError('changed-direction')
+    exact = outcome != 'verified'
+    for lang in ('ja', 'en'):
+        factual_validation.validate_semantics(item[lang], quote, directions=exact)
+    factual_validation.validate_pair(item['ja'], item['en'], polarity=exact)
 
 
 def why(exc, everything=None):
@@ -513,6 +632,39 @@ def log_rejected(source, kind, reason, item, quote):
                       'ja': str(item.get('ja'))[:600], 'en': str(item.get('en'))[:600], 'quote': (quote or '')[:2000]}, ensure_ascii=False), flush=True)
 
 
+REJECTED_KEEP_DAYS = 60
+
+
+def save_rejected(path, source, kind, reason, item, quote, now=None):
+    """Keep the rejected copy and the excerpt it cited (owner, Nov 15) so a later, finer check can look at it again without a new model call.
+    Database only: never in /health. Never raises (keeping the record must not break the analysis). Records older than REJECTED_KEEP_DAYS go."""
+    try:
+        item = item if isinstance(item, dict) else {}
+        now = time.time() if now is None else now
+        with connect(path) as db:
+            db.execute('INSERT INTO deep_rejected_copy(source_ref,subject,at,part,reason,ja,en,quote,evidence_ids) VALUES(?,?,?,?,?,?,?,?,?)',
+                       (source['ref'], source['subject'], now, kind, str(reason)[:120], str(item.get('ja'))[:1000], str(item.get('en'))[:1000],
+                        (quote or '')[:6000], json.dumps(item.get('evidenceIds')) if isinstance(item.get('evidenceIds'), list) else None))
+            db.execute('DELETE FROM deep_rejected_copy WHERE at<?', (now - REJECTED_KEEP_DAYS * 86400,))
+    except Exception:
+        return False
+    return True
+
+
+def recheck_rejected(path, source_ref=None):
+    """The stored rejected points that pass today's checks (no model call): [(subject, source_ref, ja, en)]. For the owner to review; it changes nothing."""
+    passed = []
+    with connect(path) as db:
+        rows = db.execute("SELECT * FROM deep_rejected_copy WHERE part='point' AND (? IS NULL OR source_ref=?) ORDER BY id", (source_ref, source_ref)).fetchall()
+    for row in rows:
+        try:
+            checked({'ja': row['ja'], 'en': row['en']}, row['quote'] or '')
+        except (ValueError, TypeError, KeyError):
+            continue
+        passed.append((row['subject'], row['source_ref'], row['ja'], row['en']))
+    return passed
+
+
 def earnings_reserve(limit):
     return min(EARNINGS_RESERVE, limit // 3)
 
@@ -613,7 +765,7 @@ def run_once(path, transport=None, env=None, now=None, reference=None, only_ref=
             raise ValueError('incomplete')
         received = True
         note = bind(json.loads(brief_generator.output_text(response)), source['excerpts'],
-                    diagnose=lambda kind, reason, item, quote: log_rejected(source, kind, reason, item, quote))  # every rejection, no extra call; Railway log only
+                    diagnose=lambda kind, reason, item, quote: (log_rejected(source, kind, reason, item, quote), save_rejected(path, source, kind, reason, item, quote)))  # every rejection, no extra call: Railway log and the database, never /health
     except Exception as exc:
         reason = str(exc) if isinstance(exc, ValueError) else type(exc).__name__
         detail = json.dumps(exc.detail, ensure_ascii=False, sort_keys=True) if isinstance(exc, Unchecked) else None
@@ -673,8 +825,12 @@ def roster_status(db, now):
     for ticker in ROSTER:
         past = max((at for at in releases.get(ticker, []) if at <= when), default=None)
         future = min((at for at in releases.get(ticker, []) if at > when), default=None)
-        row = db.execute("SELECT state,published_at,created_at FROM deep_analyses WHERE kind='earnings' AND subject=? ORDER BY created_at DESC LIMIT 1",
-                         (ticker,)).fetchone()
+        # the newest finished analysis of the last 120 days, else the newest row: an old wrong-page hold (Dell: a 2024 page dated Sep 24) must not
+        # hide a later, correct analysis of an earlier release date
+        recent = (when - timedelta(days=120)).isoformat()
+        row = db.execute("SELECT state,published_at,created_at FROM deep_analyses WHERE kind='earnings' AND subject=? AND state='done' AND created_at>=? "
+                         "ORDER BY created_at DESC LIMIT 1", (ticker, recent)).fetchone() or db.execute(
+            "SELECT state,published_at,created_at FROM deep_analyses WHERE kind='earnings' AND subject=? ORDER BY created_at DESC LIMIT 1", (ticker,)).fetchone()
         item = {'ticker': ticker, 'lastReleaseAt': past.isoformat() if past else None,
                 'deepState': row['state'] if row is not None else 'none',
                 'deepPublishedAt': row['published_at'] if row is not None and row['state'] == 'done' else None,
@@ -709,6 +865,9 @@ def diagnostics(db, now=None):
         "SELECT subject,kind,published_at,source_url,source_ref FROM deep_analyses WHERE state='done' ORDER BY published_at DESC LIMIT 60")]
     try:
         roster = roster_status(db, now)
+        for item in roster:
+            if item['deepState'] != 'done':
+                item['storedPages'] = cached_reasons(db, item['ticker'], now)
     except Exception:
         roster = []
     return {'configured': configuration() is not None, 'callsLast24h': used_today(db, now), 'states': states,

@@ -98,7 +98,7 @@ Scope (owner): US high-tech news across all tickers, plus market news that moves
 geopolitics such as the Strait of Hormuz, statements by Trump or Musk). Not a watch list. Everything else is dropped.
 
 How: the monitor reads two provider feeds, "tech" (all tickers, sector Technology) and "market" (general market news), each at
-its own pace (75 s and 300 s: about 44,500 calls a month, inside the plan's 50,000 and the 48,000 ceiling). Articles are written
+its own pace (75 s and 300 s at first; since Nov 15 120 s and 360 s, plus the `tickers` stream, see below). Articles are written
 into the company headline table (`company_wire`): a "tech" article under up to three tickers it names (watched companies first), a
 "market" article under `MKT` (shown as 市場 / Market). The existing translation then judges each headline: `news` / `not-news`
 and, new, `off-topic` (outside the scope above), writes the Japanese and one-line headline, and only kept headlines reach the home
@@ -187,3 +187,33 @@ API into the home table (`company_wire.KEEP_PUBLISHERS`); opinion, analysis, sto
 shown. A publisher in neither list is dropped, and appears under `stockNewsPublishers.dropped` on `/health`, so a news organisation
 that should be kept can be added. Rows already stored from a dropped publisher are neither translated nor shown. The intake queue
 (`news_articles`, `/admin/news`) still keeps every article. `STOCK_NEWS_PUBLISHER_FILTER=false` takes every publisher again.
+
+## Wider Stock News intake for 注目トピック (owner, 2026-11-15)
+
+- **Publisher names.** The provider names one outlet several ways: on Nov 15 `WSJ` was dropped while `Wall Street Journal` was
+  kept. Names are now compared without case, spaces, punctuation, a leading "The" or a "(video)" / "(articles)" suffix, and
+  `company_wire.PUBLISHER_ALIASES` maps the other spellings to the listed outlet (WSJ / The Wall Street Journal, FT / The Financial
+  Times, AP / The Associated Press, Barron's, MarketWatch, NYT, Reuters.com). Every Bloomberg outlet (Bloomberg News, Bloomberg
+  Television, ...) is one outlet, except Bloomberg Opinion. The /health counters use the listed spelling.
+- **A third stream, `tickers`.** The Company Ticker News endpoint (`/api/v1?tickers=...`, up to 50 symbols per request) asked for the
+  22 watched companies, the rest of the first 22 of the earnings watch list (DELL, AMZN, ORCL) and the big tech companies outside the
+  provider's Technology sector, which the `tech` stream never sees (GOOGL, GOOG, META, AMZN, NFLX, TSLA): 29 symbols. Only the
+  symbols it asked for are kept and filed (up to three, watched first). ANT (Anthropic) is not included by default: it has no
+  listing yet and the provider's answer for it is unverified. `STOCK_NEWS_EXTRA_TICKERS=ANT` adds it after a probe.
+  Turn it on with `STOCK_NEWS_STREAMS=tech,tickers,market`.
+- **Calls** (plan 50,000 a month, hard ceiling `STOCK_NEWS_MONTHLY_CALL_LIMIT` 48,000, unchanged). New default paces:
+
+  | Stream | Every | 31-day month | 30-day month |
+  | --- | --- | --- | --- |
+  | `tech` | 120 s (was 75 s) | 22,320 | 21,600 |
+  | `tickers` | 240 s (new) | 11,160 | 10,800 |
+  | `market` | 360 s (was 300 s) | 7,440 | 7,200 |
+  | Total, one page a round | | 40,920 | 39,600 |
+
+  A second or third page in a round is now taken only while the month's calls are under an even pace to 44,000
+  (`stock_news.MONTHLY_TARGET`), so a busy feed cannot carry the month past about 44,000; the 48,000 ceiling still stops every call.
+  `STOCK_NEWS_TECH_SECONDS`, `STOCK_NEWS_TICKERS_SECONDS` and `STOCK_NEWS_MARKET_SECONDS` still override a pace (never below 30 s).
+- **Translation cost unchanged.** More headlines ride in the same calls (at most 30 articles per call, each article once whatever
+  tickers or streams it came under), under the same 400 calls a day and the token-bucket pacing above.
+- **/health.** `companyWireTranslation.daily.today.stockNewsStreams` shows the new articles per stream (the stream that found the
+  article first), `kept` / `dropped` by the publisher filter.

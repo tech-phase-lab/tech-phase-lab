@@ -1,0 +1,24 @@
+/* In-app banner for a notice that just arrived (Nov 15, iPhone app: a tap on the phone's notification may never reach the app). */
+.banner {
+  position: fixed; z-index: 130;
+  top: calc(env(safe-area-inset-top) + 8px);
+  left: max(12px, env(safe-area-inset-left)); right: max(12px, env(safe-area-inset-right));
+  max-width: 520px; margin: 0 auto; box-sizing: border-box;
+  display: flex; align-items: center; gap: 8px; min-width: 0;
+  padding: 8px 8px 8px 14px; border-radius: 14px;
+  background: linear-gradient(175deg, #16233a, #0e1522 80%); border: 1px solid #2a3652;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, .5); color: #eef0f6;
+  font: 500 13px/1.45 "Noto Sans JP", system-ui, sans-serif;
+  animation: drop .3s ease-out both;
+}
+@keyframes drop { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: none; } }
+.text {
+  flex: 1 1 auto; min-width: 0; margin: 0;
+  overflow: hidden; overflow-wrap: anywhere;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+}
+.open, .close { flex: none; display: flex; align-items: center; justify-content: center; height: 36px; padding: 0; border: 0; cursor: pointer; }
+.open { min-width: 56px; padding: 0 14px; border-radius: 18px; background: linear-gradient(180deg, #6df0c0, #47d4a2); color: #06241a; font: 700 13px "Noto Sans JP", system-ui, sans-serif; }
+.close { width: 36px; border-radius: 50%; background: transparent; color: #c9d1e4; font-size: 15px; }
+.open:focus-visible, .close:focus-visible { outline: 2px solid #9ce2cc; outline-offset: 2px; }
+@media (prefers-reduced-motion: reduce) { .banner { animation: none; } }

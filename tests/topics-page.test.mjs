@@ -57,6 +57,15 @@ test("the cards are the Stock News API stories, newest first, each with a publis
   assert.deepEqual(topicCards(null, wire(), "en").map(card => card.id), ["wire-s5", "wire-s1", "wire-s2", "wire-s4", "wire-s3"]);
 });
 
+test("a law firm's shareholder solicitation is never a topic card, from the company wire or the reviewed feed (owner, Nov 15)", () => {
+  const ad = parseCompanyWire({ ok: true, items: { GILT: [row("g1", "Gilat Satellite Networks news for holders", "GIL T投資家にSBS法律事務所とジラット衛星ネットワーク詐欺調査参加の機会", { publisher: "Business Wire" })] } }).items;
+  assert.deepEqual(topicCards(null, { ...wire(), ...ad }, "ja").map(card => card.id), ["wire-s1", "wire-s2", "wire-s4", "wire-s3"]);
+  const reviewed = { ...draft, id: "d2", url: "https://news.example/gilt", title: "GILT Investors Have Opportunity to Join Gilat Satellite Networks Ltd. Fraud Investigation with SBS Law Firm",
+    shortTitleJa: "ジラット投資家に調査参加の機会", shortTitleEn: "Gilat investors invited" };
+  assert.equal(topicCards({ ...feed, items: [reviewed] }, {}, "ja").length, 0);
+  assert.equal(topicCards({ ...feed, items: [reviewed] }, {}, "en").length, 0);
+});
+
 test("a reviewed article shows its checked summary and impactLabel, and the same article is listed once", () => {
   const ja = topicCards(feed, wire(), "ja");
   assert.deepEqual(ja.map(card => card.id), ["news-d1", "wire-s2", "wire-s4", "wire-s3"]);

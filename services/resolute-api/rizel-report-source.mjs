@@ -1,4 +1,5 @@
 import {boundedJSON} from './risk-store.mjs';
+import {sourceError} from './rizel-news-source.mjs';
 
 // Separate, opt-in reporting intake. Does not enable the home feed or access
 // editor/monitor credentials. Only the provider API is fetched, never articles.
@@ -13,8 +14,11 @@ export function createReportReader({enabled=false,token,tickers,marketWide=false
   const params={items:'100',page:'1',token};
   if(lane==='market')params.section='general';else params.tickers=roster.join(',');
   url.search=new URLSearchParams(params).toString();
-  const response=await fetcher(url,{method:'GET',headers:{Accept:'application/json'},redirect:'error',signal:AbortSignal.timeout(20000)});
-  if(!response.ok||!/^application\/json(?:;|$)/i.test(response.headers.get('content-type')??''))throw Error('UNAVAILABLE');
+  let response;
+  try{response=await fetcher(url,{method:'GET',headers:{Accept:'application/json'},redirect:'error',signal:AbortSignal.timeout(20000)});}
+  catch{throw sourceError('UNAVAILABLE',true);} // network error or timeout: worth another try
+  if(!response.ok)throw sourceError('UNAVAILABLE',response.status>=500);
+  if(!/^application\/json(?:;|$)/i.test(response.headers.get('content-type')??''))throw Error('UNAVAILABLE');
   const payload=await boundedJSON(response,2000000);
   if(!payload||!Array.isArray(payload.data)||payload.data.length>100)throw Error('INVALID_RESPONSE');
   const items=[];
@@ -50,7 +54,7 @@ export function createReportReader({enabled=false,token,tickers,marketWide=false
    const lanes=[company,market].filter(Boolean);
    const oldest=lanes.map(l=>l.oldestPublishedAt).filter(Boolean).sort().pop()??null; // the shallowest lane limits coverage
    return {items,returned:lanes.reduce((n,l)=>n+l.returned,0),possiblyTruncated:lanes.some(l=>l.possiblyTruncated),oldestPublishedAt:oldest,marketLane:!!market};
-  }catch{throw Error('REPORT_SOURCE_UNAVAILABLE');}
+  }catch(error){throw sourceError('REPORT_SOURCE_UNAVAILABLE',error?.retryable===true);}
  };
 }
 

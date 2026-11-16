@@ -1,8 +1,11 @@
 import { createHmac } from "node:crypto";
 import { getMembership } from "@/lib/membership/server";
+import { isOwnerAccount } from "@/lib/membership/entitlements";
+import { cleanPushDiagnostic, createPushDiagnosticLimiter, pushDiagnosticLine } from "@/lib/research/push-diagnostic";
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 const headers = { "Cache-Control": "private, no-store", Vary: "Cookie" };
+const diagnosticAllowed = createPushDiagnosticLimiter();
 
 async function monitor(path: string, body?: unknown) {
   const base = process.env.RESEARCH_MONITOR_URL;
@@ -58,7 +61,17 @@ export async function POST(request: Request) {
       chunks.push(value);
     }
     const body = JSON.parse(Buffer.concat(chunks).toString());
-    if (!body || !["register", "remove", "status", "test", "preferences", "save-preferences"].includes(body.action)) throw new Error("Invalid action");
+    // Nov 15: the owner's notification step record (times, yes/no answers, worker version, a random per-notice id) as one log line.
+    // Owner accounts only, rate limited; nothing is sent on to the monitor and nothing about the member is logged.
+    if (body?.action === "diagnostic") {
+      if (!isOwnerAccount(member.userId)) return Response.json({ ok: false, error: "owner-required" }, { status: 403, headers });
+      const record = cleanPushDiagnostic(body.record);
+      if (!record) return Response.json({ ok: false }, { status: 400, headers });
+      if (!diagnosticAllowed(member.userId, Date.now())) return Response.json({ ok: false, error: "rate-limited" }, { status: 429, headers });
+      console.info(`[push-diag] ${pushDiagnosticLine(record)}`);
+      return Response.json({ ok: true }, { headers });
+    }
+    if (!body ||!["register", "remove", "status", "test", "preferences", "save-preferences"].includes(body.action)) throw new Error("Invalid action");
     if (body.action !== "remove" && (member.plan !== "pro" || !Number.isFinite(member.accessExpiresAt) || member.accessExpiresAt <= Date.now())) {
       return Response.json({ ok: false, error: "pro-required" }, { status: 403, headers });
     }

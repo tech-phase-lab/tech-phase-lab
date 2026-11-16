@@ -6,7 +6,8 @@ import { preferencesFailure, preferencesNextStep, PREFERENCES_RETRY_MS, type Pre
 import { useIdentityRefresh } from "./identity-provider";
 import type { Language } from "@/lib/research/data";
 import styles from "./price-targets-panel.module.css";
-import { useOwnerMode } from "./member-display-provider";
+import { useOwnerAccount, useOwnerMode } from "./member-display-provider";
+import PushDiagnosticPanel from "./push-diagnostic-panel";
 import NotificationPageView, { type Preferences } from "./notification-page-view";
 
 const DEVICE_KEY = "tech-phase:notification-device-state";
@@ -14,6 +15,7 @@ const readDeviceState = () => { try { return localStorage.getItem(DEVICE_KEY) ??
 type State = "checking" | "off" | "on" | "unknown" | "blocked" | "unsupported" | "unavailable" | "sign-in" | "pro-required";
 export default function NotificationSettings({ lang, initiallyOpen = false, page = false }: { lang: Language; initiallyOpen?: boolean; page?: boolean }) {
   const ownerMode = useOwnerMode();
+  const ownerAccount = useOwnerAccount();
   const refreshIdentity = useIdentityRefresh();
   const [open, setOpen] = useState(initiallyOpen || page);
   const [state, setState] = useState<State>("checking");
@@ -266,6 +268,7 @@ export default function NotificationSettings({ lang, initiallyOpen = false, page
   const toggle = () => { if (state === "checking" && shownState === "off") { setStarting(true); return; } void run(shownState === "on" ? "disable" : "enable"); };
   if (page) return <NotificationPageView owner={ownerMode} lang={lang} state={shownState} label={label} busy={busy} starting={starting} usable={usable || state === "checking"} hasSubscription={hasSubscription} message={message} testSent={testSent} received={received}
     prefs={prefs} prefsState={prefsState} prefsMessage={prefsMessage} onPrefs={savePreferences}
+    diagnostic={ownerAccount ? <PushDiagnosticPanel lang={lang} /> : null}
     onToggle={toggle} onDisable={() => void run("disable")} onTest={() => void run("test")} onRetry={() => setRefresh(value => value + 1)} onStatus={() => void run("status")} onReceived={() => { setReceived(true); setMessage(""); }} />;
   return <>
     <button type="button" className={styles.notificationToggle} aria-expanded={open} aria-controls={open ? "price-target-notifications" : undefined} onClick={() => setOpen(!open)}><svg className={styles.bellIcon} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 22a2.3 2.3 0 0 0 2.3-2.3H9.7A2.3 2.3 0 0 0 12 22zm6.6-6.4V11a6.6 6.6 0 0 0-5.1-6.4V3.9a1.5 1.5 0 0 0-3 0v.7A6.6 6.6 0 0 0 5.4 11v4.6L3.6 17.4V19h16.8v-1.6z"/></svg>{t("スマホ通知設定", "Mobile notifications")}</button>

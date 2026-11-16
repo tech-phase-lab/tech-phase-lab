@@ -2,7 +2,7 @@ import type { Language } from "./data";
 import type { CompanyWireItem } from "./company-wire.ts";
 import type { GeneralNewsFeed, GeneralNewsItem } from "./general-news.ts";
 import { stockNewsWire } from "./home-stock-news.ts";
-import { cleanTitle, similarStory, STORY_WINDOW_MS, storyCandidates, storyKey, storyWords, tickerLabel } from "./wire-stories.ts";
+import { cleanTitle, lawFirmSolicitation, similarStory, STORY_WINDOW_MS, storyCandidates, storyKey, storyWords, tickerLabel } from "./wire-stories.ts";
 
 /** プラス / マイナス / 中立 (owner, Nov 15): mixed, neutral and uncertain all read as 中立. */
 export type TopicImpact = "positive" | "negative" | "neutral";
@@ -96,7 +96,9 @@ export function topicCards(data: GeneralNewsFeed | null, wire: Record<string, Co
   for (const item of data?.enabled ? data.items : []) {
     const title = ja ? item.shortTitleJa ?? item.summaryJa : item.shortTitleEn ?? item.title;
     const summary = ja ? item.summaryJa : item.summaryEn;
-    if (!title?.trim() || (ja && !JAPANESE.test(title)) || !item.url || !item.publisher.trim() || seen.has(item.url)) continue;
+    if (!title?.trim() || (ja && !JAPANESE.test(title)) || !item.url || !item.publisher.trim() || seen.has(item.url)
+      // A law firm's shareholder solicitation is never a topic, from either feed (owner, Nov 15).
+      || lawFirmSolicitation(item.title) || lawFirmSolicitation(title)) continue;
     seen.add(item.url);
     add({ id: `news-${item.id}`, tickers: "", impact: impactOf(item.impactLabel), at: item.publishedAt, title,
       ...(summary && summary !== title ? { summary } : {}), publisher: item.publisher.trim(), url: item.url }, [...item.tickers], item.title, true);
