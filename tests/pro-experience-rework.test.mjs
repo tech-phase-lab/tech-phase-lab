@@ -54,6 +54,13 @@ test("22 tracked stocks: NVDA's (and AMD's) earnings deep dive renders in full f
   assert.match(ui, /<EarningsDive [^>]*live=\{dive\.live\} unlocked history=\{dive\.history\} failed=\{false\} \/>/);
   assert.match(ui, /useState<string>\(dives\[0\]\.ticker\)/, "the sample opens on NVDA's deep dive");
   assert.match(SAMPLE_HINTS["watch-22"].ja, /決算の深掘り/);
+  // The ticker chips outrank the shell's `.app button{font:inherit}` (the 16px body font made GOOGL overflow at 360px).
+  const chip = read(`${SAMPLES}samples.module.css`).match(/\.tickers \.ticker\{([^}]*)\}/)[1];
+  assert.match(chip, /min-width:0/);
+  assert.match(chip, /overflow:hidden/);
+  assert.match(chip, /font-family:var\(--font-geist-mono,ui-monospace\)/);
+  assert.match(chip, /font-size:11px/);
+  assert.doesNotMatch(chip, /(^|;)font:/);
 });
 
 test("Financial Radar: the 体力ランキング shows six ranked companies of one genre (semiconductors), every figure filled", () => {
