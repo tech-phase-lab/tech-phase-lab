@@ -14,7 +14,7 @@ export const PUSH_DIAG_TIMES = [
 /** Yes/no answers (null: the device could not say). */
 export const PUSH_DIAG_FLAGS = ["listApi", "listed", "stillListed", "controlled", "standalone"] as const;
 /** How the app moved to the notice's page. */
-export const PUSH_DIAG_VIA = ["worker-message", "pending", "banner"] as const;
+export const PUSH_DIAG_VIA = ["worker-message", "pending", "banner", "gone-after-tap"] as const;
 
 type Time = (typeof PUSH_DIAG_TIMES)[number];
 type Flag = (typeof PUSH_DIAG_FLAGS)[number];
@@ -143,7 +143,8 @@ export function pushDiagnosticRows(record: PushDiagnostic, lang: "ja" | "en"): P
   const time = (at: number | undefined) => at === undefined ? undefined
     : `${new Date(at).toLocaleTimeString(lang === "ja" ? "ja-JP" : "en-US", { hour12: false })}${start !== undefined && at !== start ? ` (+${((at - start) / 1000).toFixed(1)}s)` : ""}`;
   const yes = (flag: boolean | null | undefined) => flag === undefined ? undefined : flag === null ? t("不明", "unknown") : flag ? t("はい", "yes") : t("いいえ", "no");
-  const via = { "worker-message": t("ワーカーからの依頼", "worker message"), pending: t("記録したタップ", "written tap"), banner: t("アプリ内の通知", "in-app banner") };
+  const via = { "worker-message": t("ワーカーからの依頼", "worker message"), pending: t("記録したタップ", "written tap"), banner: t("アプリ内の通知", "in-app banner"),
+    "gone-after-tap": t("一覧から消えた直後に起動（タップとみなす）", "gone from the list just before the app came up (taken as a tap)") };
   const rows: [string, string | undefined][] = [
     [t("ワーカーの版", "Worker version"), record.v],
     [t("通知の番号（ランダム）", "Notice id (random)"), record.id],

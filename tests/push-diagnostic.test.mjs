@@ -8,6 +8,7 @@ import ts from "typescript";
 import { cleanPushDiagnostic, createPushDiagnosticLimiter, createPushDiagnostics, pushDiagnosticLine, pushDiagnosticRows, pushDiagnosticSignature,
   readPushDiagnostic, recentPushDiagnostic, PUSH_DIAG_STORAGE_KEY } from "../lib/research/push-diagnostic.ts";
 import { pushSwFactRows, readPushSwFacts, reinstallMessage } from "../lib/research/push-sw-facts.ts";
+import { cleanPushSendLog, pushDeviceRef, pushSendRows, pushSendStatusText } from "../lib/research/push-send-log.ts";
 
 const require = createRequire(import.meta.url);
 const NOW = Date.now();
@@ -103,6 +104,7 @@ test("the panel is collapsed under 「通知の動作の記録」 and says when 
       if (id === "react") return { ...React, useSyncExternalStore: () => text };
       if (id === "@/lib/research/push-diagnostic") return { cleanPushDiagnostic, pushDiagnosticRows, PUSH_DIAG_EVENT: "e", PUSH_DIAG_STORAGE_KEY };
       if (id === "@/lib/research/push-sw-facts") return { pushSwFactRows, readPushSwFacts, reinstallMessage };
+      if (id === "@/lib/research/push-send-log") return { cleanPushSendLog, pushDeviceRef, pushSendRows };
       if (id.endsWith(".css")) return { default: new Proxy({}, { get: (_, key) => String(key) }) };
       return require(id);
     }, target, target.exports);
@@ -113,6 +115,8 @@ test("the panel is collapsed under 「通知の動作の記録」 and says when 
   assert.match(empty, /^<details class="diagnostic"><summary>通知の動作の記録<\/summary>/);
   assert.doesNotMatch(empty, /<details[^>]* open/);
   assert.match(empty, /まだ記録がありません/);
+  // Nov 16: the server's last sends are read after the first paint too.
+  assert.match(empty, /サーバーからの送信（直近10件・新しい順）/);
   // The live facts are read in the browser after the first paint; the reinstall button is only there when the page gives it.
   assert.match(empty, /この端末の状態（いま読み取った値）<\/p><p class="note">読み取り中…<\/p>/);
   assert.doesNotMatch(empty, /通知の仕組みを入れ直す/);
@@ -123,4 +127,39 @@ test("the panel is collapsed under 「通知の動作の記録」 and says when 
   assert.match(full, /<summary>Notification step record<\/summary>/);
   assert.match(full, /Latest notice<\/p><dl class="diagnosticList">/);
   assert.match(full, /<dt>Notice id \(random\)<\/dt><dd>n-1<\/dd>/);
+});
+
+// Nov 16: the owner's panel lists the monitor's last sends: device hash, push service host, its HTTP status, still registered or not.
+test("the send log keeps known fields only, newest first, at most ten, and marks this device", async () => {
+  const at = Date.UTC(2026, 10, 16, 3, 18, 34) / 1000;
+  const raw = [
+    ...Array.from({ length: 11 }, (_, i) => ({ at: at - 100 - i, device: "aaaaaaaaaaaa", host: "web.push.apple.com", status: 201, kind: "notice", page: "/research/news", ms: 120.4, failure: null, gone: false, registered: true })),
+    { at, device: "0123456789ab", host: "web.push.apple.com", status: 410, kind: "test", page: "/research/notifications", ms: 80, failure: null, gone: true, registered: false,
+      endpoint: "https://web.push.apple.com/secret", keys: { auth: "k" }, memberId: "user_x" },
+    { at, device: "not-a-hash", host: "web.push.apple.com", status: 201 },
+    { at, device: "0123456789ab", host: "evil.example", status: 201 },
+    { at: at - 1, device: "0123456789ab", host: "web.push.apple.com", status: 201, page: "https://evil.example/", failure: "<b>" },
+    "x", null,
+  ];
+  const items = cleanPushSendLog(raw);
+  assert.equal(items.length, 10);
+  assert.deepEqual(items[0], { at, device: "0123456789ab", host: "web.push.apple.com", status: 410, kind: "test", page: "/research/notifications", ms: 80, failure: null, gone: true, registered: false });
+  assert.equal(items[1].page, null);
+  assert.equal(items[1].failure, null);
+  assert.deepEqual(cleanPushSendLog("x"), []);
+  const rows = pushSendRows(items.slice(0, 3), "ja", "0123456789ab");
+  assert.equal(rows[0].mine, true);
+  assert.equal(rows[2].mine, false);
+  assert.equal(rows[0].label, "テスト通知 · 410 登録が無効（期限切れ）");
+  assert.match(rows[0].detail, /^0123456789ab（この端末） · web\.push\.apple\.com · 登録：削除済み · 80ms$/);
+  assert.equal(pushSendRows(items.slice(-1), "en", null)[0].label, "Notice · 201 accepted");
+  assert.match(pushSendRows(items.slice(-1), "en", null)[0].detail, /still registered · 120ms$/);
+  assert.equal(pushSendStatusText({ status: 0, failure: "ConnectTimeout" }, "ja"), "送信できず（ConnectTimeout）");
+  assert.equal(pushSendStatusText({ status: 403, failure: null }, "en"), "403 authentication refused");
+  assert.equal(pushSendStatusText({ status: 502, failure: null }, "ja"), "502 拒否");
+  for (const secret of ["secret", "user_x", "evil"]) assert.equal(JSON.stringify(items).includes(secret), false, secret);
+  // The same short hash as the monitor: the first 12 hex characters of SHA-256(endpoint).
+  const { createHash } = await import("node:crypto");
+  const endpoint = "https://web.push.apple.com/push/fixture";
+  assert.equal(await pushDeviceRef(endpoint), createHash("sha256").update(endpoint).digest("hex").slice(0, 12));
 });
