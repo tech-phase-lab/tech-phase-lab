@@ -34,3 +34,10 @@ export function reactionState(initial: ReactionCounts, draw: (counts: ReactionCo
     draw(snapshot()); void flush();
   } };
 }
+// Reaction counts under 1,000 are shown as they are; from 1,000 they are shortened
+// to one decimal place with "k" ("1k", "1.2k", "12.3k"), rounded down so a count is never overstated.
+export function shortCount(count: number) {
+  if (!Number.isFinite(count) || count < 1000) return String(Math.max(0, Math.floor(count || 0)));
+  const tenths = Math.floor(count / 100);
+  return `${tenths % 10 ? (tenths / 10).toFixed(1) : tenths / 10}k`;
+}
