@@ -62,10 +62,13 @@ export async function POST(request: Request) {
       const removal = await fetch(account.url, { method: "POST", headers: { Authorization: `Bearer ${account.token}`, "Content-Type": "application/json" }, body: JSON.stringify({ ownerKey: account.ownerKey, action: "delete", id: asked.id }), cache: "no-store", signal: AbortSignal.timeout(10_000) });
       return reply(removal.status, await parse(removal));
     }
-    if (account.ownerMode) return reply(403, { ok: false, error: "owner-posting-disabled" });
     const input = JSON.parse(text) as { requestId?: unknown; body?: unknown; audience?: unknown };
     if (input.audience !== "pro-board" || typeof input.requestId !== "string" || !/^q-[a-f0-9]{32}$/.test(input.requestId) || typeof input.body !== "string" || input.body.trim().length < 10 || input.body.length > 1200 || input.body.includes("\0")) return reply(400, { ok: false, error: "invalid-question" });
-    const response = await fetch(account.url, { method: "POST", headers: { Authorization: `Bearer ${account.token}`, "Content-Type": "application/json" }, body: JSON.stringify({ ownerKey: account.ownerKey, requestId: input.requestId, body: input.body, audience: "pro-board" }), cache: "no-store", signal: AbortSignal.timeout(10_000) });
+    // The owner posts sample questions like any member (owner, Nov 16), without the daily limit. The flag comes only from the verified
+    // server-side membership (ownerMode and the admin check), never from the request: only the three fields above are forwarded.
+    const postHeaders: Record<string, string> = { Authorization: `Bearer ${account.token}`, "Content-Type": "application/json" };
+    if (account.ownerView) postHeaders["X-Question-Owner-Post"] = "1";
+    const response = await fetch(account.url, { method: "POST", headers: postHeaders, body: JSON.stringify({ ownerKey: account.ownerKey, requestId: input.requestId, body: input.body, audience: "pro-board" }), cache: "no-store", signal: AbortSignal.timeout(10_000) });
     return reply(response.status, await parse(response));
   } catch { return reply(503, { ok: false, error: "questions-unavailable" }); }
 }
