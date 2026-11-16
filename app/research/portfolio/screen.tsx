@@ -15,7 +15,7 @@ type Market = { quotes: Record<string, Quote>; usdJpy: number | null; asOf: stri
 type Problem = "unreadable" | "limit" | "config" | "service" | "other";
 type Stage = "preparing" | "reading";
 
-const COLORS = ["#e7c982", "#7fa8e0", "#b39af0", "#5de0b0", "#f0a67a", "#e07fa0", "#7fd1d9", "#c5d27a"];
+export const COLORS = ["#e7c982", "#7fa8e0", "#b39af0", "#5de0b0", "#f0a67a", "#e07fa0", "#7fd1d9", "#c5d27a"];
 const usd = (n: number, digits = 2) => n.toLocaleString("en-US", { minimumFractionDigits: digits, maximumFractionDigits: digits });
 const yen = (n: number) => Math.round(n).toLocaleString("ja-JP");
 const sign = (n: number) => (n > 0 ? "+" : n < 0 ? "−" : "");
@@ -203,7 +203,8 @@ function Empty({ ja, pick, onManual, onInfo }: { ja: boolean; pick: (event: Reac
   </>;
 }
 
-function Reading({ ja, stage, onCancel, onInfo }: { ja: boolean; stage: Stage; onCancel: () => void; onInfo: () => void }) {
+/** The reading animation (also played by the PRO feature tour's fixed sample, which calls no reading service). */
+export function Reading({ ja, stage, onCancel, onInfo }: { ja: boolean; stage: Stage; onCancel: () => void; onInfo: () => void }) {
   return <>
     <section className={s.drop} role="status" aria-live="polite">
       <div className={s.scan} aria-hidden="true"><div className={s.phone}><i style={{ width: "46%" }} /><i style={{ width: "62%" }} /><i className={s.bar} /><div><i /><b /></div><div><i /><b /></div><div><i /><b /></div></div><span className={s.beam} /></div>
@@ -244,10 +245,14 @@ function ErrorCard({ ja, kind, reason, onManual, pick, onClose }: { ja: boolean;
   </section>;
 }
 
-function List({ ja, rows, totals, shares, hide, market, marketError, onRetry, pick, onManual, colorOf, onClear }: {
+/** `sample` (the PRO feature tour's fixed holdings): no upload, manual entry or delete; hiding amounts stays on the page (onToggleHide)
+ * instead of changing this device's saved setting; costs and prices show every decimal the broker screen showed (up to four). */
+export function List({ ja, rows, totals, shares, hide, market, marketError, onRetry, pick, onManual, colorOf, onClear, sample = false, onToggleHide }: {
   ja: boolean; rows: Row[]; totals: ReturnType<typeof valueHoldings>["totals"]; shares: ReturnType<typeof weights>; hide: boolean; market: Market | null; marketError: boolean;
   onRetry: () => void; pick: (event: React.ChangeEvent<HTMLInputElement>) => void; onManual: () => void; colorOf: (ticker: string) => string; onClear: () => void;
+  sample?: boolean; onToggleHide?: () => void;
 }) {
+  const price = (n: number) => sample ? n.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 4 }) : usd(n);
   const unknown = marketError;
   const loading = !market && !marketError;
   const gainClass = (n: number | null) => n === null ? "" : n >= 0 ? s.up : s.down;
@@ -258,7 +263,7 @@ function List({ ja, rows, totals, shares, hide, market, marketError, onRetry, pi
       <button type="button" className={s.retry} onClick={onRetry}>{Icon.retry}{t("もう一度取得する", "Try again")}</button></div></div>}
     <section className={s.total} aria-label={t("合計", "Total")}>
       <div className={s.totalTop}><span>{t("評価額の合計", "Total value")}</span>
-        <button type="button" className={s.hideBtn} onClick={() => writeHide(!hide)} aria-pressed={hide}>{hide ? Icon.eyeOff : Icon.eye}{hide ? t("金額を表示する", "Show amounts") : t("金額を伏せる", "Hide amounts")}</button></div>
+        <button type="button" className={s.hideBtn} onClick={() => onToggleHide ? onToggleHide() : writeHide(!hide)} aria-pressed={hide}>{hide ? Icon.eyeOff : Icon.eye}{hide ? t("金額を表示する", "Show amounts") : t("金額を伏せる", "Hide amounts")}</button></div>
       {hide ? <b className={`${s.big} ${s.mask}`}>{MASK}</b>
         : unknown ? <b className={`${s.big} ${s.dim}`}>{na}</b>
         : loading ? <b className={`${s.big} ${s.dim}`}>{t("取得しています…", "Loading…")}</b>
@@ -279,10 +284,10 @@ function List({ ja, rows, totals, shares, hide, market, marketError, onRetry, pi
         ? <>{market.usdJpy ? `1ドル＝${usd(market.usdJpy)}円で換算 ・ ` : ""}{dateJa(market.asOf).replace(/^\d+年/, "")}の終値</>
         : <>{market.usdJpy ? `Converted at $1 = ¥${usd(market.usdJpy)} · ` : ""}Closing prices on {dateEn(market.asOf)}</>}</p>}
     </section>
-    <div className={s.actions}>
+    {!sample && <div className={s.actions}>
       <label className={s.cta}><input type="file" accept="image/*" onChange={pick} />{Icon.image}{t("スクショを追加", "Add screenshot")}</label>
       <button type="button" className={s.outline} onClick={onManual}>{Icon.plus}{t("手入力", "Add manually")}</button>
-    </div>
+    </div>}
 
     {shares.length > 0 && <section className={s.weights} aria-label={t("銘柄の割合", "Allocation")}>
       <h3>{t("銘柄の割合", "Allocation")}</h3>
@@ -299,8 +304,8 @@ function List({ ja, rows, totals, shares, hide, market, marketError, onRetry, pi
         {row.breakdown && <p className={s.breakdown}><small>{t("内訳", "Breakdown")}</small>{row.breakdown.map(part => <span key={part.source}>{part.source} {usd(part.shares, Number.isInteger(part.shares) ? 0 : 4)}{t("株", " sh")}</span>)}</p>}
         <dl className={s.grid3}>
           <div><dt>{t("株数", "Shares")}</dt><dd>{usd(row.shares, Number.isInteger(row.shares) ? 0 : 4)}{t("株", "")}</dd></div>
-          <div><dt>{t("平均取得", "Avg. cost")}</dt><dd>${usd(row.avgCostUsd)}</dd></div>
-          <div><dt>{t("終値", "Close")}</dt><dd>{known && row.price !== null ? `$${usd(row.price)}` : "—"}</dd></div>
+          <div><dt>{t("平均取得", "Avg. cost")}</dt><dd>${price(row.avgCostUsd)}</dd></div>
+          <div><dt>{t("終値", "Close")}</dt><dd>{known && row.price !== null ? `$${price(row.price)}` : "—"}</dd></div>
         </dl>
         <div className={s.cardFoot}>
           <div><small>{t("評価額", "Value")}</small><b>{known ? `$${usd(row.valueUsd!)}` : na}</b></div>
@@ -310,7 +315,7 @@ function List({ ja, rows, totals, shares, hide, market, marketError, onRetry, pi
         </div>
       </article>;
     })}</div>
-    <p className={s.clear}><button type="button" onClick={onClear}>{t("この端末のデータを消す", "Delete data on this device")}</button></p>
+    {!sample && <p className={s.clear}><button type="button" onClick={onClear}>{t("この端末のデータを消す", "Delete data on this device")}</button></p>}
   </>;
 }
 

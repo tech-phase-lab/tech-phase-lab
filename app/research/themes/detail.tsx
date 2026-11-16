@@ -4,13 +4,25 @@ import Link from "next/link";
 import ResearchToolShell from "../research-tool-shell";
 import { useMemberDisplay, useMemberSettled } from "../member-display-provider";
 import { useResearchLanguage } from "../use-research-language";
-import { groupOf, themeById } from "@/lib/research/theme-definitions";
-import { rankThemes } from "@/lib/research/theme-ranking";
+import { groupOf, themeById, type ThemeDefinition } from "@/lib/research/theme-definitions";
+import { rankThemes, type ThemeRow } from "@/lib/research/theme-ranking";
 import namesFile from "@/lib/research/theme-stock-names.json";
 import { BasisLine, DivergingChart, PeriodPills, arrow, signed, toneClass, updateNote, usePeriod, useThemeData } from "./parts";
 import styles from "./themes.module.css";
 
 const names = namesFile as Record<string, { ja: string; en: string }>;
+
+/** The theme's name, genre, number of stocks and average move (also used by the PRO feature tour's fixed sample). */
+export function ThemeCard({ theme, row, ja }: { theme: ThemeDefinition; row: ThemeRow | undefined; ja: boolean }) {
+  const t = (a: string, b: string) => ja ? a : b;
+  const group = groupOf(theme.group);
+  return <section className={styles.themeCard} aria-label={ja ? theme.ja : theme.en}>
+    <p className={styles.label}>THEME</p>
+    <h2>{ja ? theme.ja : theme.en}</h2>
+    <div className={styles.themeMeta}>{group && <em className={styles.tag}>{ja ? group.ja : group.en}</em>}<span>{t(`${theme.tickers.length}銘柄`, `${theme.tickers.length} stocks`)}</span></div>
+    {row && <div className={styles.themeBig}><strong className={toneClass(row.value)}>{arrow(row.value)} {signed(row.value)}</strong><span>{t(`テーマ内${row.covered}銘柄の平均`, `Average of ${row.covered} stocks`)}</span></div>}
+  </section>;
+}
 
 export default function ThemeDetailScreen({ id }: { id: string }) {
   const theme = themeById(id)!;
@@ -23,19 +35,13 @@ export default function ThemeDetailScreen({ id }: { id: string }) {
   const [period, setPeriod] = usePeriod();
   const { state, data } = useThemeData(theme.group, plan);
   const row = useMemo(() => data ? rankThemes(data.stocks, period, [theme])[0] : undefined, [data, period, theme]);
-  const group = groupOf(theme.group);
   const priced = row?.members.filter((member): member is { ticker: string; value: number } => member.value !== null) ?? [];
   return <ResearchToolShell lang={lang} setLang={setLang} title={ja ? theme.ja : theme.en} showHeading={false} description="">
     <Link href="/research/themes" className={styles.back}><span aria-hidden="true">‹</span>{t("テーマランキング", "Theme Ranking")}</Link>
     {plan === null && <p role="status" className={styles.note}>{t("会員情報を確認中…", "Checking membership…")}</p>}
     {plan === "free" && <p className={styles.note}>{t("テーマランキングはPRO会員限定です。", "Theme Ranking is exclusive to PRO.")} <Link href="/research#tech-phase-pro">{t("Tech Phase PROを見る", "See Tech Phase PRO")}</Link></p>}
     {plan === "pro" && <>
-      <section className={styles.themeCard} aria-label={ja ? theme.ja : theme.en}>
-        <p className={styles.label}>THEME</p>
-        <h2>{ja ? theme.ja : theme.en}</h2>
-        <div className={styles.themeMeta}>{group && <em className={styles.tag}>{ja ? group.ja : group.en}</em>}<span>{t(`${theme.tickers.length}銘柄`, `${theme.tickers.length} stocks`)}</span></div>
-        {row && <div className={styles.themeBig}><strong className={toneClass(row.value)}>{arrow(row.value)} {signed(row.value)}</strong><span>{t(`テーマ内${row.covered}銘柄の平均`, `Average of ${row.covered} stocks`)}</span></div>}
-      </section>
+      <ThemeCard theme={theme} row={row} ja={ja} />
       <PeriodPills period={period} onChange={setPeriod} ja={ja} />
       {state === "ready" && <BasisLine data={data} period={period} ja={ja} />}
       {state === "loading" && <p role="status" className={styles.note}>{t("データを読み込み中…", "Loading data…")}</p>}

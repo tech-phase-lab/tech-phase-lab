@@ -1,0 +1,17 @@
+{
+ "_source": "The owner's sample screenshot public/pro-experience/sample-holdings.jpg (a broker's holdings screen; owner's instruction, Nov 16). Every number is copied from that image: shares, average cost (USD) and current price (USD). The image's unrealized P/L total is +2,301.25 USD.",
+ "image": "/pro-experience/sample-holdings.jpg",
+ "asOf": "2035-03-09",
+ "totalGainUsd": 2301.25,
+ "holdings": [
+  { "ticker": "AVGO", "name": "ブロードコム", "shares": 10, "avgCostUsd": 351.84, "price": 340.73 },
+  { "ticker": "CRDO", "name": "クレド・テクノロジー", "shares": 20, "avgCostUsd": 154.6075, "price": 146.315 },
+  { "ticker": "GLDM", "name": "SPDR ゴールド・ミニシェアーズ", "shares": 50, "avgCostUsd": 84.15, "price": 93.81 },
+  { "ticker": "GOOGL", "name": "アルファベット", "shares": 5, "avgCostUsd": 293.9033, "price": 321.28 },
+  { "ticker": "IREN", "name": "IREN", "shares": 30, "avgCostUsd": 53.9311, "price": 54.11 },
+  { "ticker": "MU", "name": "マイクロン・テクノロジー", "shares": 15, "avgCostUsd": 319.255, "price": 365.56 },
+  { "ticker": "NBIS", "name": "ネビウス・グループ", "shares": 100, "avgCostUsd": 94.8982, "price": 100.845 },
+  { "ticker": "QQQ", "name": "インベスコQQQ", "shares": 10, "avgCostUsd": 601, "price": 610.3699 },
+  { "ticker": "SLV", "name": "iシェアーズ シルバー・トラスト", "shares": 40, "avgCostUsd": 71.5225, "price": 85.7723 }
+ ]
+}

@@ -1,0 +1,513 @@
+{
+ "_source": "lib/research/intake.ts providers (the 22 tracked stocks) and lib/research/company-watch.ts (NVDA, AMD saved earnings summaries); only these two summaries are copied",
+ "companies": [
+  {
+   "ticker": "MU",
+   "name": "Micron",
+   "sector": {
+    "ja": "半導体",
+    "en": "Semiconductors"
+   },
+   "verified": false
+  },
+  {
+   "ticker": "SKHY",
+   "name": "SK hynix",
+   "sector": {
+    "ja": "半導体",
+    "en": "Semiconductors"
+   },
+   "verified": true
+  },
+  {
+   "ticker": "SNDK",
+   "name": "Sandisk",
+   "sector": {
+    "ja": "半導体",
+    "en": "Semiconductors"
+   },
+   "verified": true
+  },
+  {
+   "ticker": "NBIS",
+   "name": "Nebius",
+   "sector": {
+    "ja": "AIクラウド",
+    "en": "AI cloud"
+   },
+   "verified": true
+  },
+  {
+   "ticker": "NVDA",
+   "name": "NVIDIA",
+   "sector": {
+    "ja": "半導体",
+    "en": "Semiconductors"
+   },
+   "verified": true
+  },
+  {
+   "ticker": "AMD",
+   "name": "AMD",
+   "sector": {
+    "ja": "半導体",
+    "en": "Semiconductors"
+   },
+   "verified": true
+  },
+  {
+   "ticker": "AVGO",
+   "name": "Broadcom",
+   "sector": {
+    "ja": "半導体",
+    "en": "Semiconductors"
+   },
+   "verified": true
+  },
+  {
+   "ticker": "ARM",
+   "name": "Arm",
+   "sector": {
+    "ja": "半導体",
+    "en": "Semiconductors"
+   },
+   "verified": true
+  },
+  {
+   "ticker": "TSM",
+   "name": "TSMC",
+   "sector": {
+    "ja": "半導体",
+    "en": "Semiconductors"
+   },
+   "verified": true
+  },
+  {
+   "ticker": "ASML",
+   "name": "ASML",
+   "sector": {
+    "ja": "半導体",
+    "en": "Semiconductors"
+   },
+   "verified": true
+  },
+  {
+   "ticker": "MRVL",
+   "name": "Marvell",
+   "sector": {
+    "ja": "ネットワーク",
+    "en": "Networking"
+   },
+   "verified": true
+  },
+  {
+   "ticker": "ANET",
+   "name": "Arista Networks",
+   "sector": {
+    "ja": "ネットワーク",
+    "en": "Networking"
+   },
+   "verified": true
+  },
+  {
+   "ticker": "CRDO",
+   "name": "Credo",
+   "sector": {
+    "ja": "ネットワーク",
+    "en": "Networking"
+   },
+   "verified": true
+  },
+  {
+   "ticker": "CRWV",
+   "name": "CoreWeave",
+   "sector": {
+    "ja": "AIクラウド",
+    "en": "AI cloud"
+   },
+   "verified": true
+  },
+  {
+   "ticker": "VRT",
+   "name": "Vertiv",
+   "sector": {
+    "ja": "電力・冷却",
+    "en": "Power & cooling"
+   },
+   "verified": true
+  },
+  {
+   "ticker": "GEV",
+   "name": "GE Vernova",
+   "sector": {
+    "ja": "電力・冷却",
+    "en": "Power & cooling"
+   },
+   "verified": true
+  },
+  {
+   "ticker": "PLTR",
+   "name": "Palantir",
+   "sector": {
+    "ja": "AIソフトウェア",
+    "en": "AI software"
+   },
+   "verified": true
+  },
+  {
+   "ticker": "MSFT",
+   "name": "Microsoft",
+   "sector": {
+    "ja": "大手クラウド",
+    "en": "Large cloud platforms"
+   },
+   "verified": true
+  },
+  {
+   "ticker": "BE",
+   "name": "Bloom Energy",
+   "sector": {
+    "ja": "電力・冷却",
+    "en": "Power & cooling"
+   },
+   "verified": true
+  },
+  {
+   "ticker": "GOOGL",
+   "name": "Alphabet / Google",
+   "sector": {
+    "ja": "大手クラウド",
+    "en": "Large cloud platforms"
+   },
+   "verified": true
+  },
+  {
+   "ticker": "LITE",
+   "name": "Lumentum",
+   "sector": {
+    "ja": "光・フォトニクス",
+    "en": "Optics & photonics"
+   },
+   "verified": true
+  },
+  {
+   "ticker": "ALAB",
+   "name": "Astera Labs",
+   "sector": {
+    "ja": "ネットワーク",
+    "en": "Networking"
+   },
+   "verified": true
+  }
+ ],
+ "summaries": [
+  {
+   "ticker": "NVDA",
+   "name": "NVIDIA",
+   "exchange": "NASDAQ",
+   "quoteTicker": "NVDA",
+   "period": "Q2 FY2027",
+   "releasedOn": "2026-08-26",
+   "reviewedOn": "2026-09-19",
+   "sources": [
+    {
+     "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000073/q2fy27pr.htm",
+     "title": "NVIDIA Announces Financial Results for Second Quarter Fiscal 2027",
+     "location": "Q2 Fiscal 2027 Summary; Outlook; Data Center"
+    }
+   ],
+   "tiles": [
+    {
+     "label": {
+      "ja": "売上高",
+      "en": "Revenue"
+     },
+     "value": {
+      "ja": "962.21億ドル",
+      "en": "$96.221B"
+     },
+     "note": {
+      "ja": "Q1 FY2027 816.15億ドル",
+      "en": "Q1 FY2027 $81.615B"
+     }
+    },
+    {
+     "label": {
+      "ja": "GAAP粗利益率",
+      "en": "GAAP gross margin"
+     },
+     "value": {
+      "ja": "75%",
+      "en": "75%"
+     },
+     "note": {
+      "ja": "Q1 FY2027 74.9%",
+      "en": "Q1 FY2027 74.9%"
+     }
+    },
+    {
+     "label": {
+      "ja": "データセンター売上",
+      "en": "Data Center revenue"
+     },
+     "value": {
+      "ja": "890億ドル",
+      "en": "$89B"
+     },
+     "note": {
+      "ja": "Q1 FY2027比 +18%",
+      "en": "+18% vs Q1 FY2027"
+     }
+    }
+   ],
+   "cards": [
+    {
+     "title": {
+      "ja": "成長の中身",
+      "en": "Growth drivers"
+     },
+     "headline": {
+      "ja": "売上の約93%をデータセンターが占める",
+      "en": "Data Center accounts for about 93% of revenue"
+     },
+     "points": [
+      {
+       "ja": "売上高 962.21億ドル（Q1 FY2027比 +17.9%）",
+       "en": "Revenue $96.221B (+17.9% vs Q1 FY2027)"
+      }
+     ],
+     "detail": {
+      "ja": "売上と営業利益はいずれも前四半期比で約18〜19%増え、GAAP粗利益率は75.0%でほぼ横ばいでした。データセンター売上は$89.0Bで、全社売上の約92.5%です。",
+      "en": "Revenue and operating income rose roughly 18–19% quarter-on-quarter, while GAAP gross margin was nearly flat at 75.0%. Data Center revenue was $89.0B, about 92.5% of total revenue."
+     },
+     "sourceSection": "Q2 Fiscal 2027 Summary; Outlook; Data Center"
+    },
+    {
+     "title": {
+      "ja": "前回からの変化",
+      "en": "What changed"
+     },
+     "headline": {
+      "ja": "売上・営業利益とも前四半期から拡大",
+      "en": "Revenue and operating income grew from the previous quarter"
+     },
+     "points": [
+      {
+       "ja": "データセンター売上 890億ドル（Q1 FY2027比 +18%）",
+       "en": "Data Center revenue $89B (+18% vs Q1 FY2027)"
+      },
+      {
+       "ja": "GAAP粗利益率 75%（Q1 FY2027比 +0.1ポイント）",
+       "en": "GAAP gross margin 75% (+0.1 pp vs Q1 FY2027)"
+      }
+     ],
+     "detail": {
+      "ja": "比較対象：Q1 FY2027 → Q2 FY2027。利益率の差はパーセントポイント、金額の増減率は%で表示しています。",
+      "en": "Comparison: Q1 FY2027 → Q2 FY2027. Margin differences use percentage points; changes in monetary amounts use percent."
+     },
+     "sourceSection": "Q2 Fiscal 2027 Summary; Outlook; Data Center"
+    },
+    {
+     "title": {
+      "ja": "注意点",
+      "en": "Risks to watch"
+     },
+     "headline": {
+      "ja": "中国売上を含まない次期見通し",
+      "en": "Next-quarter outlook excludes China compute revenue"
+     },
+     "points": [
+      {
+       "ja": "見通しに中国向けデータセンターCompute売上を含めていない",
+       "en": "The outlook assumes no Data Center compute revenue from China"
+      }
+     ],
+     "detail": {
+      "ja": "Q3見通しの達成可否、Vera Rubinの量産が今後の売上に寄与する時期、中国向けデータセンター売上の回復は、このQ2発表だけでは確定しません。",
+      "en": "This Q2 release does not establish whether Q3 guidance will be met, when Vera Rubin production will contribute to revenue, or whether China Data Center revenue will recover."
+     },
+     "sourceSection": "Q2 Fiscal 2027 Summary; Outlook; Data Center"
+    },
+    {
+     "title": {
+      "ja": "次に見るポイント",
+      "en": "What to watch next"
+     },
+     "headline": {
+      "ja": "増収見通しと粗利益率を照合",
+      "en": "Watch revenue guidance alongside gross margin"
+     },
+     "points": [
+      {
+       "ja": "Q3売上見通し：$108.0B ±2%",
+       "en": "Q3 revenue outlook: $108.0B ±2%"
+      },
+      {
+       "ja": "Q3 GAAP粗利益率：74.0% ±0.5pt",
+       "en": "Q3 GAAP gross margin: 74.0% ±0.5pt"
+      }
+     ],
+     "detail": {
+      "ja": "見通しに中国向けデータセンターCompute売上を含めていない。見通し・計画と達成済みの実績を分けて追います。",
+      "en": "The outlook assumes no Data Center compute revenue from China. Distinguish forecasts and plans from achieved results."
+     },
+     "sourceSection": "Q2 Fiscal 2027 Summary; Outlook; Data Center"
+    }
+   ]
+  },
+  {
+   "ticker": "AMD",
+   "name": "AMD",
+   "exchange": "NASDAQ",
+   "quoteTicker": "AMD",
+   "period": "Q2 2026",
+   "releasedOn": "2026-08-04",
+   "reviewedOn": "2026-09-19",
+   "sources": [
+    {
+     "url": "https://ir.amd.com/news-events/press-releases/detail/1295/amd-reports-second-quarter-2026-financial-results",
+     "title": "AMD Reports Second Quarter 2026 Financial Results",
+     "location": "GAAP Quarterly Financial Results; Segment Summary; Current Outlook"
+    }
+   ],
+   "tiles": [
+    {
+     "label": {
+      "ja": "売上高",
+      "en": "Revenue"
+     },
+     "value": {
+      "ja": "115.36億ドル",
+      "en": "$11.536B"
+     },
+     "note": {
+      "ja": "Q1 2026 102.53億ドル",
+      "en": "Q1 2026 $10.253B"
+     }
+    },
+    {
+     "label": {
+      "ja": "GAAP粗利益率",
+      "en": "GAAP gross margin"
+     },
+     "value": {
+      "ja": "54%",
+      "en": "54%"
+     },
+     "note": {
+      "ja": "Q1 2026 53%",
+      "en": "Q1 2026 53%"
+     }
+    },
+    {
+     "label": {
+      "ja": "GAAP純利益",
+      "en": "GAAP net income"
+     },
+     "value": {
+      "ja": "22.97億ドル",
+      "en": "$2.297B"
+     },
+     "note": {
+      "ja": "Q1 2026 13.83億ドル",
+      "en": "Q1 2026 $1.383B"
+     }
+    }
+   ],
+   "cards": [
+    {
+     "title": {
+      "ja": "成長の中身",
+      "en": "Growth drivers"
+     },
+     "headline": {
+      "ja": "データセンターが全社売上の58%",
+      "en": "Data Center represents 58% of revenue"
+     },
+     "points": [
+      {
+       "ja": "売上高 115.36億ドル（Q1 2026比 +12.5%）",
+       "en": "Revenue $11.536B (+12.5% vs Q1 2026)"
+      }
+     ],
+     "detail": {
+      "ja": "売上は前四半期比約13%増、GAAP営業利益は約35%増でした。データセンター売上は$6.7Bで全社売上の58%を占めましたが、同じ表に前四半期値がないため比較カードには混ぜていません。",
+      "en": "Revenue rose about 13% from the previous quarter, while GAAP operating income rose about 35%. Data Center revenue was $6.7B, or 58% of total revenue. It isn't included in the comparison cards because the same source table doesn't provide a prior-quarter figure."
+     },
+     "sourceSection": "GAAP Quarterly Financial Results; Segment Summary; Current Outlook"
+    },
+    {
+     "title": {
+      "ja": "前回からの変化",
+      "en": "What changed"
+     },
+     "headline": {
+      "ja": "営業利益が売上以上に伸びる",
+      "en": "Operating income grew faster than revenue"
+     },
+     "points": [
+      {
+       "ja": "GAAP粗利益率 54%（Q1 2026比 +1ポイント）",
+       "en": "GAAP gross margin 54% (+1 pp vs Q1 2026)"
+      },
+      {
+       "ja": "GAAP営業利益 19.9億ドル（Q1 2026比 +34.8%）",
+       "en": "GAAP operating income $1.99B (+34.8% vs Q1 2026)"
+      }
+     ],
+     "detail": {
+      "ja": "比較対象：Q1 2026 → Q2 2026。利益率の差はパーセントポイント、金額の増減率は%で表示しています。",
+      "en": "Comparison: Q1 2026 → Q2 2026. Margin differences use percentage points; changes in monetary amounts use percent."
+     },
+     "sourceSection": "GAAP Quarterly Financial Results; Segment Summary; Current Outlook"
+    },
+    {
+     "title": {
+      "ja": "注意点",
+      "en": "Risks to watch"
+     },
+     "headline": {
+      "ja": "新製品の需要と売上化を分ける",
+      "en": "Separate new-product demand from revenue"
+     },
+     "points": [
+      {
+       "ja": "Q3見通しの達成可否、Heliosの立ち上がりが売上に寄与する時期、データセンター売上の製品別内訳は、この発表だけでは確定しません。",
+       "en": "This release does not establish whether Q3 guidance will be met, when the Helios ramp will contribute to revenue, or the product-level mix of Data Center revenue."
+      }
+     ],
+     "detail": {
+      "ja": "不明点を悪化と断定せず、次回の開示で確認する項目です。",
+      "en": "These are open questions to revisit in future disclosures. They don't, by themselves, show that the business is weakening."
+     },
+     "sourceSection": "GAAP Quarterly Financial Results; Segment Summary; Current Outlook"
+    },
+    {
+     "title": {
+      "ja": "次に見るポイント",
+      "en": "What to watch next"
+     },
+     "headline": {
+      "ja": "次期売上と調整後粗利益率を確認",
+      "en": "Track next-quarter sales and adjusted margin"
+     },
+     "points": [
+      {
+       "ja": "Q3売上見通し：約$13.0B ±$0.3B",
+       "en": "Q3 revenue outlook: approximately $13.0B ±$0.3B"
+      },
+      {
+       "ja": "Q3非GAAP粗利益率：約56%",
+       "en": "Q3 non-GAAP gross margin: approximately 56%"
+      }
+     ],
+     "detail": {
+      "ja": "売上レンジ中央値は前四半期比約13%増。見通し・計画と達成済みの実績を分けて追います。",
+      "en": "Revenue range midpoint implies approximately 13% sequential growth. Distinguish forecasts and plans from achieved results."
+     },
+     "sourceSection": "GAAP Quarterly Financial Results; Segment Summary; Current Outlook"
+    }
+   ]
+  }
+ ]
+}
