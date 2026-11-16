@@ -12,6 +12,17 @@ export const PUSH_SERVER_TAP_MS = 15_000;
 export const PUSH_SERVER_RECENT_MS = 30 * 60_000;
 /** While the app stays in front, the server is asked again at most this often (a new look after coming to the front always asks). */
 export const PUSH_SERVER_LOOK_MS = 10_000;
+/** Owner, Nov 16: while the app is open and visible it asks again every 20 seconds (paused while hidden), so a notice iOS did not show
+ * while the app was in front still gets the banner. */
+export const PUSH_SERVER_POLL_MS = 20_000;
+/** The route's limit on the notice actions (recent-notice, notice-opened, ...): per device, and per member across their devices.
+ * Polling every 20 seconds plus a look on each return to the front stays well inside it. */
+export const PUSH_NOTICE_DEVICE_LIMIT = 12;
+export const PUSH_NOTICE_MEMBER_LIMIT = 30;
+export const PUSH_NOTICE_WINDOW_MS = 60_000;
+/** The kind the monitor gives the "send a test notification" notice (scripts/research/web_push.py notice_kind). Owner, Nov 16: a test
+ * notice never gets the in-app banner 「新しい通知：…」; a tap on it still opens its page (it proves taps work). */
+export const PUSH_TEST_KIND = "test";
 export const PUSH_NOTICE_ACTIONS = ["recent-notice", "notice-opened", "notice-dismissed", "notice-status"] as const;
 
 const NOTICE_ID = /^[a-f0-9]{32}$/;
@@ -48,16 +59,31 @@ export function cleanPushServerNotice(value: unknown): PushServerNotice | null {
 }
 
 /** The notice placed on this device's clock: sent `ageMs` before the answer arrived (so a phone clock that is off does not matter). */
-export type PushServerRecord = { id: string; path: string; title: string; at: number };
+/** test: the "send a test notification" notice (no banner; the 15-second tap rule still opens its page). */
+export type PushServerRecord = { id: string; path: string; title: string; at: number; test: boolean };
 export function serverNoticeRecord(notice: PushServerNotice | null, receivedAt: number): PushServerRecord | null {
   if (!notice || notice.state !== "new" || notice.ageMs > PUSH_SERVER_RECENT_MS) return null;
-  return { id: notice.id, path: notice.page, title: notice.title, at: receivedAt - notice.ageMs };
+  return { id: notice.id, path: notice.page, title: notice.title, at: receivedAt - notice.ageMs, test: notice.kind === PUSH_TEST_KIND };
 }
 
 /** "open" when the app came to the front within PUSH_SERVER_TAP_MS after the notice was sent (a tap brought it up); "banner" otherwise
  * (the app was already shown when it arrived, or was opened later). */
 export function serverNoticeAction(record: Pick<PushServerRecord, "at">, foregroundAt: number | null): "open" | "banner" {
   return foregroundAt !== null && foregroundAt >= record.at && foregroundAt - record.at <= PUSH_SERVER_TAP_MS ? "open" : "banner";
+}
+
+type IntervalTimers = { set: (fn: () => void, ms: number) => unknown; clear: (id: unknown) => void };
+const intervalTimers: IntervalTimers = { set: (fn, ms) => setInterval(fn, ms), clear: id => clearInterval(id as ReturnType<typeof setInterval>) };
+/** Asks again every PUSH_SERVER_POLL_MS while the page is visible; sync() (called on every visibility change) starts or pauses it. */
+export function createVisiblePoller({ visible, tick, every = PUSH_SERVER_POLL_MS, timers = intervalTimers }:
+  { visible: () => boolean; tick: () => void; every?: number; timers?: IntervalTimers }) {
+  let id: unknown = null;
+  function stop() { if (id !== null) { timers.clear(id); id = null; } }
+  function sync() {
+    if (!visible()) { stop(); return; }
+    if (id === null) id = timers.set(() => { if (visible()) tick(); else stop(); }, every);
+  }
+  return { sync, stop, running: () => id !== null };
 }
 
 /** Where the opener asks the server. Every method may fail; a failure is the same as "no notice". */

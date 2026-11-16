@@ -178,3 +178,32 @@ test('Nov 16: recent-notice, notice-opened and notice-dismissed are for the sign
   assert.deepEqual(await (await POST(req('notice-opened',{noticeId:id}))).json(),{ok:false,error:'not-owned'});
  } finally {globalThis.fetch=saved.fetch;delete globalThis.__pushMember;for(const [key,value] of [['RESEARCH_MONITOR_URL',saved.url],['RESEARCH_MONITOR_TOKEN',saved.token]]){if(value===undefined)delete process.env[key];else process.env[key]=value;}}
 });
+
+// Owner, Nov 16: the app asks recent-notice every 20 s while it is open, so the notice actions are limited per device (and per member)
+// before the monitor is called; a refused ask reads as "no notice" in the app.
+test('Nov 16: the notice actions are rate limited per device and per member before the monitor is asked', async () => {
+ const saved={fetch:globalThis.fetch,url:process.env.RESEARCH_MONITOR_URL,token:process.env.RESEARCH_MONITOR_TOKEN};
+ process.env.RESEARCH_MONITOR_URL='https://monitor.example';process.env.RESEARCH_MONITOR_TOKEN='fixture';
+ const {PUSH_NOTICE_DEVICE_LIMIT,PUSH_NOTICE_MEMBER_LIMIT}=await import('../lib/research/push-server-notice.ts');
+ let monitorCalls=0;
+ globalThis.fetch=async()=>{monitorCalls+=1;return Response.json({ok:true,registered:true,notice:null});};
+ const req=(endpoint,action='recent-notice')=>new Request('https://example.test/api/research/notifications',{method:'POST',headers:{origin:'https://example.test','content-type':'application/json'},
+  body:JSON.stringify({action,subscription:{endpoint}})});
+ try {
+  globalThis.__pushMember={status:'signed-in',userId:'user_rate_limited',plan:'free',accessExpiresAt:0};
+  for(let i=0;i<PUSH_NOTICE_DEVICE_LIMIT;i+=1) assert.equal((await POST(req('https://web.push.apple.com/device-a'))).status,200);
+  const refused=await POST(req('https://web.push.apple.com/device-a'));
+  assert.equal(refused.status,429);
+  assert.deepEqual(await refused.json(),{ok:false,error:'rate-limited'});
+  assert.equal((await POST(req('https://web.push.apple.com/device-a','notice-status'))).status,429,'every notice action counts');
+  assert.equal(monitorCalls,PUSH_NOTICE_DEVICE_LIMIT,'the monitor is not asked once the device is over its limit');
+  // Another device of the same member has its own allowance, until the member's limit is reached.
+  monitorCalls=0;let limited=0;
+  for(let i=0;i<PUSH_NOTICE_MEMBER_LIMIT;i+=1) { if((await POST(req(`https://web.push.apple.com/device-${i}`))).status===429) limited+=1; }
+  assert.ok(monitorCalls>0&&limited>0);
+  assert.ok(monitorCalls+PUSH_NOTICE_DEVICE_LIMIT<=PUSH_NOTICE_MEMBER_LIMIT,'never more than the member limit across devices');
+  // Another member is not affected.
+  globalThis.__pushMember={status:'signed-in',userId:'user_rate_other',plan:'free',accessExpiresAt:0};
+  assert.equal((await POST(req('https://web.push.apple.com/device-a'))).status,200);
+ } finally {globalThis.fetch=saved.fetch;delete globalThis.__pushMember;for(const [key,value] of [['RESEARCH_MONITOR_URL',saved.url],['RESEARCH_MONITOR_TOKEN',saved.token]]){if(value===undefined)delete process.env[key];else process.env[key]=value;}}
+});

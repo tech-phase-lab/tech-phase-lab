@@ -22,6 +22,8 @@ export const PUSH_BANNER_LISTED_MS = 24 * 3600_000;
  * these seconds is the only way to be wrong, so only that case moves the app; any other notice gone from the list gets the banner. */
 export const PUSH_TAP_GAP_MS = 10_000;
 const ID = /^[A-Za-z0-9-]{1,64}$/;
+/** The tag the monitor gives the "send a test notification" notice (scripts/research/web_push.py). Owner, Nov 16: no banner for it. */
+export const PUSH_TEST_TAG = "tech-phase-test";
 
 /** The page a service-worker "open" message asks for, or null when the message is anything else or names a page off the list. */
 export function pushOpenPath(data: unknown): string | null {
@@ -65,8 +67,8 @@ export function handlePushOpenMessage(event: MessageLike, location: { origin: st
 }
 
 /** A tap (or a shown notice) the worker wrote down, when it is well formed, on the list and recent. */
-/** listed: the worker found the notice in the phone's list right after showing it. */
-export type PushRecord = { id: string; path: string; at: number; tag: string; title: string; listed: boolean };
+/** listed: the worker found the notice in the phone's list right after showing it. test: the test notice (never a banner). */
+export type PushRecord = { id: string; path: string; at: number; tag: string; title: string; listed: boolean; test: boolean };
 export function pushRecord(value: unknown, now: number, maxAge = PENDING_OPEN_MAX_AGE_MS): PushRecord | null {
   if (!value || typeof value !== "object") return null;
   const { id, url, at, tag, title, listed } = value as { id?: unknown; url?: unknown; at?: unknown; tag?: unknown; title?: unknown; listed?: unknown };
@@ -76,7 +78,8 @@ export function pushRecord(value: unknown, now: number, maxAge = PENDING_OPEN_MA
   const path = pushOpenPath({ type: "open", url });
   if (!path) return null;
   return { id, path, at, tag: typeof tag === "string" ? tag.slice(0, 100) : "",
-    title: typeof title === "string" ? title.replace(/[\u0000-\u001f\u007f]+/g, " ").trim().slice(0, 100) : "", listed: listed === true };
+    title: typeof title === "string" ? title.replace(/[\u0000-\u001f\u007f]+/g, " ").trim().slice(0, 100) : "", listed: listed === true,
+    test: tag === PUSH_TEST_TAG };
 }
 
 /** The in-app banner for a notice that arrived a moment ago: 「新しい通知：<title>」 with 開く and ✕. */
@@ -162,7 +165,8 @@ export function createPushOpener({ sources, location, navigation, banner = () =>
     banner(null);
   }
   function show(record: PushRecord) {
-    if (handled.has(record.id) || showing?.id === record.id) return;
+    // Owner, Nov 16: the banner is for real notices only; a test notice is never shown here (a tap on it still opens its page).
+    if (record.test || handled.has(record.id) || showing?.id === record.id) return;
     showing = record;
     note({ banner: now() }, record.id);
     banner({ id: record.id, path: record.path, title: record.title });
@@ -209,7 +213,8 @@ export function createPushOpener({ sources, location, navigation, banner = () =>
     if (!record) return;
     fromServer.add(record.id);
     if (handled.has(record.id) || latestServer?.id === record.id) return;
-    latestServer = { id: record.id, path: record.path, at: record.at, tag: "", title: record.title, listed: false };
+    latestServer = { id: record.id, path: record.path, at: record.at, tag: record.test ? PUSH_TEST_TAG : "", title: record.title, listed: false,
+      test: record.test };
     note({ server: now() }, record.id);
   }
   async function run(): Promise<string | null> {
@@ -231,12 +236,14 @@ export function createPushOpener({ sources, location, navigation, banner = () =>
     if (delivered && !pushRecord({ ...delivered, url: delivered.path }, at, PUSH_BANNER_LISTED_MS)) { if (showing?.id === delivered.id) hide(); delivered = null; }
     // Nov 16: the server's record of a notice it sent this device, which works without the worker. The app came to the front within
     // 15 seconds of the send (PUSH_SERVER_TAP_MS): a tap brought it up, so its page opens. Otherwise the banner, unless the banner
-    // already shows the worker's record of the same notice.
+    // already shows the worker's record of the same notice. A test notice opens the same way but never gets the banner.
     const sent = latestServer;
     if (sent && !handled.has(sent.id) && at - sent.at <= PUSH_BANNER_RECENT_MS) {
       if (serverNoticeAction(sent, foregroundAt) === "open") return open(sent, "server-tap");
-      if (!showing || (showing.id !== sent.id && !same(showing, sent))) show(sent);
-      return null;
+      if (!sent.test) {
+        if (!showing || (showing.id !== sent.id && !same(showing, sent))) show(sent);
+        return null;
+      }
     }
     const candidate = delivered;
     if (!candidate || handled.has(candidate.id)) return null;
