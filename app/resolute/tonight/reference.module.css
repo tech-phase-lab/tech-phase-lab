@@ -51,3 +51,8 @@
 @media(max-width:420px){.qs li{padding:12px 12px 12px 46px;font-size:14px}.qs li::before{left:10px;top:12px;width:25px;height:25px;font-size:13px}}
 
 .phrase{display:inline-block;white-space:nowrap}
+/* Owner, Nov 17: cover before playing; small play button at the bottom right, away from the face in the middle. */
+.video .cover { position:absolute; inset:0; padding:0; margin:0; border:0; background:#0a1018; cursor:pointer; display:block; width:100%; height:100%; -webkit-tap-highlight-color:transparent; }
+.video .cover img { display:block; width:100%; height:100%; object-fit:cover; }
+.video .coverPlay { position:absolute; right:12px; bottom:12px; width:34px; height:34px; border-radius:50%; background:rgba(10,16,32,.62); border:1px solid rgba(216,179,106,.8); display:grid; place-items:center; box-sizing:border-box; }
+.video .coverPlay::before { content:""; width:0; height:0; margin-left:3px; border-left:11px solid #f3e6c4; border-top:7px solid transparent; border-bottom:7px solid transparent; }
