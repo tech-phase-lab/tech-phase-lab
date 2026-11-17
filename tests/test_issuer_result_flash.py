@@ -330,6 +330,20 @@ class Parsers(unittest.TestCase):
         self.assertNotIn('eps',keys(text.replace('Diluted $ 1.56','Diluted $ 1.96')))
         self.assertNotIn('eps',keys(text.replace('Preferred stock dividends 81','Preferred stock dividends 181')))
         with self.assertRaises(ValueError): flash.PROFILES['ORCL']['parse'](text.replace('Three Months Ended August 31','Three Months Ended July 31'))
+    def test_nvidia_q3fy27_billions_table_and_starred_change_columns(self):
+        # Nov 17, 2026: the summary tables moved to "$ in billions" and the change columns became "Q/Q* Y/Y*".
+        text=fixture('nvidia-results-q3fy27.txt')
+        parsed=flash.parse_nvidia(text)
+        self.assertEqual(parsed['period'],'Q3 FY2027')
+        self.assertEqual([(f[0],f[1],f[2]) for f in parsed['facts']],[('revenue','$115.8B','$57B'),('gross-margin','74.8%','73.4%'),('eps','$2.70','$1.30'),
+            ('adjusted-eps','$2.68','$1.27'),('net-income','$65.3B','$31.9B'),('operating-income','$77.5B','$36B'),('guidance-revenue','$130.0B ± 3%',None)])
+        with self.assertRaises(ValueError): flash.parse_nvidia(text.replace('($ in billions, except earnings per share)','($ in dollars)',1))   # unit never assumed
+        with self.assertRaises(ValueError): flash.parse_nvidia(text.replace('Revenue $115.8 $96.2 $57.0 20 % 103 %','Revenue $115.8 $96.2 $57.0 20 % 143 %',1))
+        self.assertNotIn('net-income',[f[0] for f in flash.parse_nvidia(text.replace('Net income $65.3 $59.7 $31.9 9 %','Net income $65.3 $59.7 $31.9 19 %',1))['facts']])
+    def test_sk_hynix_late_6k_keeps_the_day_the_results_were_given_out(self):
+        # Results given out Oct 28, 2026 9:00 KST; the October 6-K was filed Nov 13. The calendar must not show them as Nov 14 news.
+        parsed=flash.PROFILES['SKHY']['parse'](fixture('skhynix-prelim-q326.txt'))
+        self.assertEqual(parsed['givenAt'],datetime(2026,10,28,0,0,tzinfo=timezone.utc))
     def test_sk_hynix_preliminary_results_in_won_checked_against_stated_changes(self):
         text=fixture('skhynix-prelim-q326.txt')
         parsed=flash.PROFILES['SKHY']['parse'](text)

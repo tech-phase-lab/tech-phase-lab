@@ -242,16 +242,23 @@ def parse_nvidia(text, url=None):
     if split < 0:
         raise ValueError('non-gaap-table-missing')
     gaap, non = t[head.end():split], t[split:split + 1800]
-    if not re.search(re.escape(f'{cur} {prev} {ago} Q/Q Y/Y'), gaap):
+    # Nov 17, 2026 (Q3 FY27): the tables moved from "$ in millions" to "$ in billions". Read the unit every time; never assume it.
+    unit = re.match(r' ?\(\$ in (millions|billions), except earnings per share\)', gaap)
+    if not unit:
+        raise ValueError('units-unrecognized')
+    scale = Decimal(1000) if unit[1] == 'billions' else Decimal(1)
+    # Nov 17, 2026 (Q3 FY27): the change columns became "Q/Q* Y/Y*" (footnote: calculated on $ in millions).
+    if not re.search(re.escape(f'{cur} {prev} {ago} ') + r'Q/Q\*? Y/Y\*?', gaap):
         raise ValueError('columns-unrecognized')
     amount = r'\$([\d,]+(?:\.\d+)?)'
-    change = r'(-?\d+) % (-?\d+) %'
+    change = r'(\(?-?\d+\)?) % (\(?-?\d+\)?) %'  # a fall prints as "(5) %"
 
     def row(label, block, money=True):
         found = re.findall(r'(?<![A-Za-z])' + label + ' ' + amount + ' ' + amount + ' ' + amount + ' ' + change, block)
         if len(found) != 1:
             return None
         a, b, c, qq, yy = found[0]
+        qq, yy = (('-' + x.strip('()')) if x.startswith('(') else x for x in (qq, yy))
         values = [Decimal(x.replace(',', '')) for x in (a, b, c)]
         # the stated Q/Q and Y/Y changes must agree with the three values (to the rounding of the printed figures)
         for stated, ref in ((qq, values[1]), (yy, values[2])):
@@ -261,15 +268,17 @@ def parse_nvidia(text, url=None):
     revenue = row('Revenue', gaap)
     if not revenue:
         raise ValueError('revenue-row-unrecognized')
-    facts = [('revenue', money_millions(revenue[0]), money_millions(revenue[2]))]
-    margin = re.findall(r'Gross margin ([\d.]+) % ([\d.]+) % ([\d.]+) % (?:[\d.]+|—) (?:pts)? ?(?:[\d.]+|—) pts', gaap)
-    if len(margin) == 1 and abs((Decimal(margin[0][0]) - Decimal(margin[0][2])) - Decimal(re.search(r'Gross margin [\d.]+ % [\d.]+ % [\d.]+ % \S+ (?:pts )?([\d.]+) pts', gaap)[1])) <= Decimal('0.15'):
+    facts = [('revenue', money_millions(revenue[0] * scale), money_millions(revenue[2] * scale))]
+    pts = r'(?:\(?[\d.]+\)?|—)'
+    margin = re.findall(r'Gross margin ([\d.]+) % ([\d.]+) % ([\d.]+) % ' + pts + r' (?:pts)? ?(\(?[\d.]+\)?) pts', gaap)
+    yoy_pts = margin and Decimal(margin[0][3].strip('()')) * (-1 if margin[0][3].startswith('(') else 1)
+    if len(margin) == 1 and abs((Decimal(margin[0][0]) - Decimal(margin[0][2])) - yoy_pts) <= Decimal('0.15'):
         facts.append(('gross-margin', margin[0][0] + '%', margin[0][2] + '%'))
     for key, label, block in (('eps', 'Diluted earnings per share', gaap), ('adjusted-eps', 'Diluted earnings per share', non),
                               ('net-income', 'Net income', gaap), ('operating-income', 'Operating income', gaap)):
         values = row(label, block)
         if values:
-            money = per_share if key.endswith('eps') else money_millions
+            money = per_share if key.endswith('eps') else (lambda v: money_millions(v * scale))
             facts.append((key, money(values[0]), money(values[2])))
     guidance = re.findall(r'Revenue is expected to be \$(\d+(?:\.\d+)?) billion, plus or minus (\d+(?:\.\d+)?)%', t)
     if len(guidance) == 1:
@@ -843,7 +852,18 @@ def parse_skhynix(text, url=None):
     facts = [(key, won(rows[key][0]), won(rows[key][1]), names[key]) for key in ('revenue', 'operating-income', 'net-income') if key in rows]
     order = {k: i for i, k in enumerate(ORDER)}
     facts.sort(key=lambda f: order[f[0]])
-    return {'period': f'Q{quarter} {year}', 'facts': facts}
+    out = {'period': f'Q{quarter} {year}', 'facts': facts}
+    # The 6-K is often filed weeks after the results were given out ("October 28, 2026 / 9:00 a.m. (Seoul time)", filed Nov 13).
+    # The calendar shows the day the results were given out, not the filing day (owner, Nov 18).
+    given = re.search(r'Date / Time of Provision (January|February|March|April|May|June|July|August|September|October|November|December) '
+                      r'(\d{1,2}), (20\d\d) / (\d{1,2}):(\d\d) (a\.m\.|p\.m\.) \(Seoul time\)', t)
+    if given:
+        hour = int(given[4]) % 12 + (12 if given[6] == 'p.m.' else 0)
+        month = ['january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november',
+                 'december'].index(given[1].lower()) + 1
+        out['givenAt'] = datetime(int(given[3]), month, int(given[2]), hour, int(given[5]),
+                                  tzinfo=timezone(timedelta(hours=9))).astimezone(timezone.utc)
+    return out
 
 
 def parse_dell(text, url=None):
@@ -1287,13 +1307,17 @@ def run_once(path, reference=None, fetch=None, fetch_pdf=None):
                 STATUS[url] = {'ticker': ticker, 'state': 'unreadable', 'reason': code, 'at': stamp()}
                 continue
             STATUS[url] = {'ticker': ticker, 'state': 'published', 'reason': None, 'at': stamp()}
+            given = parsed.get('givenAt')
+            if given is not None and given < observed:
+                observed = given  # a late filing of results given out earlier keeps their own date
             key, payload = build(ticker, url, parsed, stamp(observed))
             old = existing.get(key)
-            if old and json.loads(old['payload'])['facts'] == payload['facts']:
+            if old and json.loads(old['payload'])['facts'] == payload['facts'] \
+                    and json.loads(old['payload']).get('publishedAt') == payload['publishedAt']:
                 continue
             with db:
                 db.execute('''INSERT INTO issuer_result_publications VALUES(?,?,?,?,?,?,?,?,?)
-                  ON CONFLICT(key) DO UPDATE SET payload=excluded.payload,published_at=excluded.published_at,
+                  ON CONFLICT(key) DO UPDATE SET payload=excluded.payload,observed_at=excluded.observed_at,published_at=excluded.published_at,
                   processing_ms=excluded.processing_ms,version=excluded.version''',
                            (key, ticker, url, parsed['period'], json.dumps(payload, ensure_ascii=False),
                             stamp(observed), stamp(), round((time.monotonic() - started) * 1000), VERSION))
