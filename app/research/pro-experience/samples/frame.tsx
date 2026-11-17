@@ -10,11 +10,15 @@ export const PRO_ONLY_VIEW = { ja: "PROで見られます", en: "View it with PR
 const Notice = createContext<(text?: { ja: string; en: string }) => void>(() => {});
 /** Shows the small 「PROで使えます」 notice (or another short text) inside the current sample. */
 export const useProOnly = () => useContext(Notice);
+const Hint = createContext<(text: { ja: string; en: string } | null) => void>(() => {});
+/** Replaces the one line under the sample (null: the feature's own line), for a sample with tabs (RIZEL'S DESK). */
+export const useSampleHint = () => useContext(Hint);
 
 /** Above the sample: 「サンプル」 on the left, the same made-up time on the right. Around it: a dotted frame. Under it: one line on what to do.
  * Inside it nothing leaves the page: any link that is not handled by the sample itself (sources, other screens) only shows the notice. */
 export default function SampleFrame({ feature, lang, children }: { feature: SampleFeature; lang: Lang; children: ReactNode }) {
   const [notice, setNotice] = useState<string | null>(null);
+  const [hint, setHint] = useState<{ ja: string; en: string } | null>(null);
   const timer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
   const show = useCallback((text: { ja: string; en: string } = PRO_ONLY) => {
     clearTimeout(timer.current);
@@ -32,11 +36,13 @@ export default function SampleFrame({ feature, lang, children }: { feature: Samp
   return <section className={styles.sample} aria-label={lang === "ja" ? "サンプル" : "Sample"}>
     <div className={styles.sampleHead}><span className={styles.sampleTag}>{lang === "ja" ? "サンプル" : "Sample"}</span><span className={styles.sampleTime}>{SAMPLE_TIME[lang]}</span></div>
     <Notice.Provider value={show}>
-      <div className={styles.sampleBox} data-sample={feature} onClick={guard}>
-        {children}
-        {notice && <p className={styles.notice} role="status">{notice}</p>}
-      </div>
+      <Hint.Provider value={setHint}>
+        <div className={styles.sampleBox} data-sample={feature} onClick={guard}>
+          {children}
+          {notice && <p className={styles.notice} role="status">{notice}</p>}
+        </div>
+      </Hint.Provider>
     </Notice.Provider>
-    <p className={styles.sampleHint}>{SAMPLE_HINTS[feature][lang]}</p>
+    <p className={styles.sampleHint}>{hint ? hint[lang] : SAMPLE_HINTS[feature][lang]}</p>
   </section>;
 }
