@@ -10,6 +10,8 @@ import s from './reference.module.css';
 import MarketGaugeCard from './market-gauge-card';
 import { useThermometerSnapshot } from '../use-thermometer-snapshot';
 import type { ThermometerSnapshot } from '@/lib/resolute/thermometer-view';
+import type { NotificationSnapshot } from '@/lib/resolute/notification-settings';
+import { useRemembered } from '../features/use-remembered';
 type Snapshot=ReturnType<typeof validateSnapshot>;
 const colors=['','#7fb6e0','#e0c070','#f0a24a','#ee7a3c','#ff4d55'];
 export default function HomeScreen({identityReady=true,snapshot}:{identityReady?:boolean;snapshot?:ThermometerSnapshot}) {
@@ -25,7 +27,9 @@ export function Home({locale,entitlement,thermometerSnapshot}:{thermometerSnapsh
  const previewExpired=review?.scenario==='expired';
  const locked=previewExpired||!review&&entitlement!==null&&!entitlement.canReceiveNotifications;
  const requestSettings=useNotificationClient();
- const [morning,setMorning]=useState<boolean|null>(null),[date,setDate]=useState<string|null>(null);
+ // What this tab already knows is shown at once instead of a dash (owner, Nov 17); both are refreshed right after.
+ const knownSettings=useRemembered<NotificationSnapshot>('notifications');
+ const [morning,setMorning]=useState<boolean|null>(knownSettings?.settings.morningEnabled??null),[date,setDate]=useState<string|null>(()=>typeof window==='undefined'?null:formatDisplay(new Date(),en?'en':'ja',{dateStyle:'full'}));
  const [offer,setOffer]=useState<{ja:number;en:number}|null>(null);
  useEffect(()=>{const c=new AbortController();let busy=false;
   const load=async()=>{if(busy)return;busy=true;try{const next=await requestSettings(undefined,c.signal);if(!c.signal.aborted)setMorning(next.settings.morningEnabled);}catch{if(!c.signal.aborted)setMorning(null);}finally{busy=false;}};

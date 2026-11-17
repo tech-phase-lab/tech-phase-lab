@@ -7,7 +7,8 @@ import {scaledNumberInput} from "@/lib/resolute/number-input";
 import FlowNavigation from "../flow-navigation";
 import styles from "../diagnosis.module.css";
 import { PlanClientError } from "@/lib/resolute/plan-client";
-import type { PlanInput } from "@/lib/resolute/plan-data";
+import type { PlanInput, PlanSnapshot } from "@/lib/resolute/plan-data";
+import { useRemembered } from "../features/use-remembered";
 import { simulateDrop,simulateSurge } from "@/lib/resolute/simulate";
 import type { DiagnosisLocale } from "@/lib/resolute/diagnosis-copy";
 export default function SimulationScreen({identityReady=true}:{identityReady?:boolean}) {
@@ -15,17 +16,20 @@ export default function SimulationScreen({identityReady=true}:{identityReady?:bo
 }
 function Simulation({locale,deny}:{locale:DiagnosisLocale;deny:()=>void}) {
  const requestPlan = usePlanClient();
- const [plan,setPlan]=useState<PlanInput|null>(null),[state,setState]=useState("loading"),[attempt,setAttempt]=useState(0);
- const [holding,setHolding]=useState("0"),[drop,setDrop]=useState("30"),[rise,setRise]=useState("30");
+ // A plan already loaded in this tab is shown at once and refreshed behind it (owner, Nov 17).
+ const known=useRemembered<PlanSnapshot>("plan"),knownPlan=known?.plan??null;
+ const [plan,setPlan]=useState<PlanInput|null>(knownPlan),[state,setState]=useState(known?(knownPlan?"ready":"empty"):"loading"),[attempt,setAttempt]=useState(0);
+ const [holding,setHolding]=useState(()=>knownPlan?String((knownPlan.investedAmount??0)/(knownPlan.currency==="JPY"?10000:100)):"0"),[drop,setDrop]=useState("30"),[rise,setRise]=useState("30");
  const [holdings,setHoldings]=useState(()=>Array.from({length:3},()=>({name:"",value:"0"})));
  const [tab,setTab]=useState<"drop"|"surge">("drop");
  const denyRef=useRef(deny);useEffect(()=>{denyRef.current=deny;},[deny]);
  useEffect(()=>{const controller=new AbortController();
   void requestPlan(undefined,controller.signal).then(p=>{if(controller.signal.aborted)return;
    setPlan(p.plan);setState(p.plan?"ready":"empty");
-   if(p.plan){setHolding(String((p.plan.investedAmount??0)/(p.plan.currency==="JPY"?10000:100)));setHoldings(Array.from({length:3},()=>({name:"",value:"0"})));}
+   // Figures typed while the shown plan was being checked again stay, unless the saved plan itself changed.
+   if(p.plan&&!(attempt===0&&known&&p.revision===known.revision)){setHolding(String((p.plan.investedAmount??0)/(p.plan.currency==="JPY"?10000:100)));setHoldings(Array.from({length:3},()=>({name:"",value:"0"})));}
   },e=>{if(controller.signal.aborted)return;if(e instanceof PlanClientError&&["signed-out","denied"].includes(e.kind))denyRef.current();else setState("error");});
-  return()=>controller.abort();},[attempt,requestPlan]);
+  return()=>controller.abort();},[attempt,requestPlan,known]);
  const en=locale==="en",t=(ja:string,eng:string)=>en?eng:ja;
  const currency=plan?.currency??"JPY",scale=currency==="USD"?100:1;
  const unit=currency==="JPY"?10000:1,unitLabel=currency==="JPY"?t("万円","× ¥10,000"):"USD";

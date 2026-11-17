@@ -1,5 +1,6 @@
 import { parsePreferences, readPreferences } from "./preferences-data.ts";
 import type { PreferencesSnapshot, ResolutePreferences } from "./preferences-data.ts";
+import { remember } from "./view-memory.ts";
 
 export class PreferencesError extends Error {
   readonly kind: "signed-out" | "invalid" | "unavailable";
@@ -34,6 +35,8 @@ export async function requestPreferences(preferences?: ResolutePreferences, sign
     const expected = preferences ? parsePreferences(preferences) : null;
     if (expected && (result.locale !== expected.locale || result.timezone !== expected.timezone))
       throw new PreferencesError("unavailable");
+    // A language saved in settings is the one the next RESOLUTE page opens in (see view-memory.ts).
+    if (preferences && result.locale) remember("locale", result.locale);
     return result;
   } catch (error) {
     if (error instanceof PreferencesError) throw error;

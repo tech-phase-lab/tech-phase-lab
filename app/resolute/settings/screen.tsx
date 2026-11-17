@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import HomeLink from "../home-link";
 import { useEffect, useRef, useState } from "react";
 import type { FormEvent } from "react";
 import { parsePreferences } from "@/lib/resolute/preferences-data";
@@ -104,6 +105,7 @@ export default function SettingsScreen({ identityReady = true }: { identityReady
   }
 
   return <main className={styles.page} lang={viewLocale}>
+    <HomeLink en={viewLocale === "en"} />
     <div className={styles.top}><span className={styles.brand}>RESOLUTE</span>
       <div className={styles.languages} aria-label="Display language">
         <button type="button" aria-pressed={viewLocale === "ja"} onClick={() => setViewLocale("ja")}>日本語</button>
