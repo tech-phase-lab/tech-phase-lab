@@ -48,3 +48,27 @@ test('market lane reads the general feed (no ticker list), merges, dedupes and f
  const failing=createReportReader({...options,marketWide:true,fetcher:async url=>url.pathname==='/api/v1/category'?Response.json({},{status:500}):Response.json({data:[row]})});
  await assert.rejects(failing(),e=>e.message==='REPORT_SOURCE_UNAVAILABLE');
 });
+
+test('one malformed article is skipped and counted, not a failed day; the failure reason travels as a fixed check',async()=>{
+ const good={...row,news_url:'https://publisher.example/news/good'};
+ const general={...row,title:'Fed holds rates',news_url:'https://publisher.example/market/2',tickers:null};
+ const reader=createReportReader({...options,marketWide:true,fetcher:async url=>Response.json({data:url.pathname==='/api/v1/category'
+  ?[general,{...row,news_url:'https://publisher.example/market/3',text:''}]
+  :[good,{...row,news_url:'https://publisher.example/news/bad',date:'2026-11-17'}]})});
+ const out=await reader();
+ assert.equal(out.items.length,2);assert.equal(out.skipped,2);assert.equal(out.returned,4);
+ const merged=await withReportReader(async()=>({ok:true,enabled:false,items:[],officialUpdates:[]}),reader)();
+ assert.equal(merged.reportCoverage.skipped,2);
+ for(const [response,check] of [[Response.json({},{status:403}),'report-http-4xx'],[Response.json({},{status:503}),'report-http-5xx'],[new Response('x'),'report-not-json'],
+  [Response.json({error:'x'}),'report-shape'],[Response.json({data:[{...row,text:''}]}),'report-rows-invalid']]){
+  await assert.rejects(createReportReader({...options,fetcher:async()=>response})(),e=>e.message==='REPORT_SOURCE_UNAVAILABLE'&&e.check===check);
+ }
+ await assert.rejects(createReportReader({...options,fetcher:async()=>{throw Error('down');}})(),e=>e.check==='report-network'&&e.retryable===true);
+});
+
+test('a reporting failure check reaches the daily review failure line',async()=>{
+ const {dailyReviewFailure}=await import('../services/resolute-api/rizel-daily-review.mjs');
+ const error=Object.assign(Error('PRIVATE_DAILY_REVIEW_FAILED'),{stage:'source',code:'REPORT_SOURCE_UNAVAILABLE',check:'report-http-4xx'});
+ const {line}=dailyReviewFailure(error,{attempts:1,exhausted:false});
+ assert.equal(line.error,'REPORT_SOURCE_UNAVAILABLE');assert.equal(line.check,'report-http-4xx');
+});

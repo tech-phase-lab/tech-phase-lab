@@ -1,4 +1,6 @@
-import {inspectCandidateFeed,generate,isInDailyWindow,windowHours,FEED_CHECKS,reactArticles} from './risk-job.mjs';
+import {inspectCandidateFeed,generate,isInDailyWindow,windowHours,FEED_CHECKS as INSPECT_CHECKS,reactArticles} from './risk-job.mjs';
+import {REPORT_CHECKS} from './rizel-report-source.mjs';
+const FEED_CHECKS=[...INSPECT_CHECKS,...REPORT_CHECKS];
 import {riskDate,parseRiskArticle} from '../../lib/resolute/risk.ts';
 import {selectArticleForReview} from './rizel-worker.mjs';
 

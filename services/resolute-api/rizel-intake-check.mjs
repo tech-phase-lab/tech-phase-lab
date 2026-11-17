@@ -1,4 +1,4 @@
-import {createReportReader,withReportReader} from './rizel-report-source.mjs';
+import {createReportReader,withReportReader,REPORT_CHECKS} from './rizel-report-source.mjs';
 import {pathToFileURL} from 'node:url';
 import {createNewsReader} from './rizel-news-source.mjs';
 import {selectDailyCandidates,safeErrorCode} from './rizel-daily-review.mjs';
@@ -21,7 +21,7 @@ if(process.argv[1]&&import.meta.url===pathToFileURL(process.argv[1]).href){
   console.log(JSON.stringify(await checkIntake({readFeed})));
  }catch(error){
   // Fixed codes only (never the message of a foreign error, which may hold a URL or body).
-  console.error(JSON.stringify({event:'RIZEL_INTAKE_CHECK_FAILED',error:safeErrorCode(error),...(FEED_CHECKS.includes(error?.check)?{check:error.check}:{}),aiCalls:0,writes:0}));
+  console.error(JSON.stringify({event:'RIZEL_INTAKE_CHECK_FAILED',error:safeErrorCode(error),...([...FEED_CHECKS,...REPORT_CHECKS].includes(error?.check)?{check:error.check}:{}),aiCalls:0,writes:0}));
   process.exitCode=1;
  }
 }
