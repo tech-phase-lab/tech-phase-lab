@@ -680,14 +680,18 @@ def validated_short(short_ja, title_ja):
 SUMMARY_JA_MAX = 300
 # Owner, Nov 16 (要約は月200円まで): appended to POLICY, and summaryJa added to the schema, only in a call whose batch holds an article
 # that gets a summary; a headline-only call is exactly the call it was before.
-SUMMARY_POLICY = ('Also write summaryJa. When an item has text, translate it into natural Japanese of at most 100 characters, one or two '
-                  'sentences, using only facts in text or the headline: keep numbers exactly, keep names, negation and direction, add '
-                  'nothing of your own, and leave out what you cannot keep exactly. Without text, or for not-news or off-topic, summaryJa is "".\n')
+# Owner, Nov 16 (もう少し長く、3行くらい): aim for about 80 to 100 characters in two or three sentences, still at most 100, with the
+# same factual rules; a short English text still gets a short summary rather than padding.
+SUMMARY_POLICY = ('Also write summaryJa. When an item has text, write it in natural Japanese of about 80 to 100 characters and never more '
+                  'than 100, two or three sentences with the key facts of text (who, what, the figures, and why or what next when text '
+                  'says so), using only facts in text or the headline: keep numbers exactly, keep names, negation and direction, add '
+                  'nothing of your own, and leave out what you cannot keep exactly. A short text gets a shorter summaryJa; never pad it. '
+                  'Without text, or for not-news or off-topic, summaryJa is "".\n')
 SUMMARY_SEND_MAX = 500          # characters of English text sent to the model per article (the page still shows up to SUMMARY_EN_MAX)
 DEFAULT_SUMMARY_DAILY_LIMIT = 100
 # gpt-4.1-mini prices, USD per 1M tokens (owner, Nov 16), and how the summary share of a call is estimated from what was sent.
 PRICE_PER_MILLION = {'input': 0.4, 'cachedInput': 0.1, 'output': 1.6}
-SUMMARY_POLICY_TOKENS = 90      # SUMMARY_POLICY and the schema field, per call that carries them
+SUMMARY_POLICY_TOKENS = 135     # SUMMARY_POLICY and the schema field, per call that carries them
 SUMMARY_ITEM_TOKENS = 10        # the "text" / "summaryJa" keys and quotes, per summary, each way
 EN_CHARS_PER_TOKEN = 4.0
 JA_TOKENS_PER_CHAR = 1.2        # conservative for Japanese in gpt-4.1's tokenizer

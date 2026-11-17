@@ -6,7 +6,7 @@ import React from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import ts from "typescript";
 import { parseCompanyWire } from "../lib/research/company-wire.ts";
-import { impactOf, publisherRank, sameTopic, summaryMayOverflow, summaryToggle, topicCards, topicCredit, topicImpact } from "../lib/research/topics.ts";
+import { impactOf, publisherRank, sameTopic, SUMMARY_LINES, summaryMayOverflow, summaryToggle, topicCards, topicCredit, topicImpact } from "../lib/research/topics.ts";
 
 // Owner, Nov 15: 一般ニュース becomes 注目トピック, a list of open cards of the Stock News API stories.
 const require = createRequire(import.meta.url);
@@ -127,7 +127,7 @@ test("the cards follow the owner's colours and sizes, with no gold", () => {
   assert.doesNotMatch(topics, /#d0ae65|#dcc58e|gold|#c9a|#e6c|#f5d/i);
   assert.doesNotMatch(topics, /text-overflow:ellipsis|\.topicSource/);
   assert.doesNotMatch(topics.match(/\.topicTitle\{[^}]*\}/)[0], /line-clamp|overflow:hidden/, "headlines are never cut");
-  assert.match(topics, /\.topicClamped\{[^}]*-webkit-line-clamp:3/, "only the summary is clamped, to three lines");
+  assert.match(topics, /\.topicClamped\{[^}]*-webkit-line-clamp:4/, "only the summary is clamped, to four lines");
 });
 
 test("the name 注目トピック is used everywhere the page is named", () => {
@@ -199,11 +199,14 @@ test("the same-story rule and the publisher order", () => {
   assert.ok(publisherRank("TechCrunch") < publisherRank("Some Blog"));
 });
 
-test("a long summary is clamped to three lines with 「＋」 (「−」 when open); a short one has no button", () => {
-  assert.equal(summaryMayOverflow("あ".repeat(66), true), false);
-  assert.equal(summaryMayOverflow("あ".repeat(67), true), true);
-  assert.equal(summaryMayOverflow("a".repeat(144), false), false);
-  assert.equal(summaryMayOverflow("a".repeat(145), false), true);
+test("a long summary is clamped to four lines with 「＋」 (「−」 when open); a short one has no button", () => {
+  assert.equal(summaryMayOverflow("あ".repeat(88), true), false);
+  assert.equal(summaryMayOverflow("あ".repeat(89), true), true);
+  assert.equal(summaryMayOverflow("a".repeat(192), false), false);
+  assert.equal(summaryMayOverflow("a".repeat(193), false), true);
+  // Owner, Nov 17: summaries aim for 80 to 100 Japanese characters, so four lines are shown from the start (「＋」 would add one line).
+  assert.equal(SUMMARY_LINES, 4);
+  assert.equal(summaryMayOverflow("あ".repeat(85), true), false, "an 85-character summary shows in full without 「＋」");
   assert.deepEqual(summaryToggle(false, true), { text: "＋", label: "要約をすべて表示" });
   assert.deepEqual(summaryToggle(true, true), { text: "−", label: "要約を閉じる" });
   assert.deepEqual(summaryToggle(false, false), { text: "＋", label: "Show the full summary" });
