@@ -3,6 +3,9 @@ import {createHash} from 'node:crypto';
 import {resoluteDatabaseConfig} from '../../lib/resolute/database-config.ts';
 import {isOwnerAccount} from '../../lib/membership/entitlements.ts';
 import {boundedJSON} from './risk-store.mjs';
+import {rizelCopyIssues,rizelRewrite} from '../../lib/resolute/risk-copy-check.ts';
+/** Lawyer review (Nov 2026): approved lines that evaluate impact, give an outlook or a trading action are marked for re-approval, with a suggested mindset line. */
+export function markReapproval(copy){const ja=rizelCopyIssues(copy.text),en=rizelCopyIssues(copy.english?.text??'');return {...copy,needsReapproval:ja.length>0||en.length>0,issues:{ja,en},suggestion:{ja:ja.length?rizelRewrite(copy.text,'ja'):null,en:en.length?rizelRewrite(copy.english?.text??'','en'):null}};}
 let db;
 export function rizelPool(){
  if(!db){const config=resoluteDatabaseConfig(process.env.RESOLUTE_RIZEL_DB_URL);
@@ -25,13 +28,15 @@ export async function rizelReviewRequest(request,userId,_read,pool){
    FROM resolute_rizel_selections s WHERE NOT EXISTS (SELECT 1 FROM resolute_rizel_selections n WHERE n.article_id=s.article_id AND n.created_at>s.created_at) ORDER BY s.created_at DESC LIMIT 30`);
   const count=await pool.query(`SELECT count(*)::int AS count FROM resolute_rizel_reviews r JOIN resolute_rizel_selections s USING(article_id,article_revision) WHERE r.state='pending' AND NOT EXISTS(SELECT 1 FROM resolute_rizel_selections n WHERE n.article_id=s.article_id AND n.created_at>s.created_at)`);
   return json({mode:'manual',publication:'withheld',pending:count.rows[0].count,articles:rows.rows,
-   copies:await readApprovedBank(pool)});
+   copies:(await readApprovedBank(pool)).map(markReapproval)});
  }
  if(request.method!=='POST')return json({error:'METHOD_NOT_ALLOWED'},405);
  const v=await boundedJSON(request,40000);
  if(!['ja','en'].includes(v.locale)||!Number.isInteger(v.baseRevision)||v.baseRevision<0)return json({error:'INVALID_INPUT'},400);
  if(v.action==='approve-copy'){
   if(typeof v.id!=='string'||!/^[A-D]-[a-z-]+-\d{2}$/.test(v.id)||v.id==='D-executive-03'||typeof v.text!=='string'||!v.text.trim()||v.text.length>1000)return json({error:'INVALID_INPUT'},400);
+  // The same approval flow; a replacement must itself pass the check.
+  const issues=rizelCopyIssues(v.text);if(issues.length)return json({error:'COPY_NEEDS_REWRITE',codes:issues},422);
   const c=await pool.connect();try{
    await c.query('BEGIN');await c.query('SELECT pg_advisory_xact_lock(70773191)');
    const old=(await c.query('SELECT value,revision FROM resolute_rizel_copy_versions WHERE id=$1 AND locale=$2 ORDER BY revision DESC LIMIT 1',[v.id,v.locale])).rows[0];

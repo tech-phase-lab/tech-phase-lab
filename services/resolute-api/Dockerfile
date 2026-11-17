@@ -4,7 +4,7 @@ COPY services/resolute-api/package.json services/resolute-api/package-lock.json 
 RUN npm ci --omit=dev --ignore-scripts && npm cache clean --force
 COPY services/resolute-api/*.mjs ./services/resolute-api/
 COPY services/resolute-api/payments/ ./services/resolute-api/payments/
-COPY lib/resolute/*.ts ./lib/resolute/
+COPY lib/resolute/*.ts lib/resolute/thermometer-rosters.json ./lib/resolute/
 COPY lib/membership/entitlements.ts ./lib/membership/entitlements.ts
 COPY lib/research/ ./lib/research/
 COPY scripts/research/mu_fq4_recovery.json scripts/research/sources.json ./scripts/research/

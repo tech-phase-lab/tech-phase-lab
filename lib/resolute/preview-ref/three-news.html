@@ -1,4 +1,4 @@
-<title>RESOLUTE 危険度チェッカー</title>
+<title>RESOLUTE 衝撃度チェッカー</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Noto+Serif+JP:wght@500;700&display=swap">
 <style>
 /* 濃紺と金。ニュースを1枚の型に整理し「今日やること」を最後に大きく出す。 */
@@ -57,12 +57,12 @@ h1 { font-family:var(--serif); font-size:30px; line-height:1.4; margin:0; text-a
 </style>
 <div class="wrap">
   <div class="brand">RESOLUTE</div>
-  <h1>危険度チェッカー</h1>
+  <h1>衝撃度チェッカー</h1>
   <p class="lead">気になるニュースを、事実とあなたのルールで整理します。</p>
   <div class="date">2027年1月15日(見本)</div>
   <div class="tabs" role="tablist" id="tabs"></div>
   <div id="out" style="display:flex;flex-direction:column;gap:18px"></div>
-  <p class="rfoot">※危険度は、出どころ・範囲・時間の長さなどの基準で決めています。</p>
+  <p class="rfoot">★は、ニュースのあとに関連するTP指標が実際にどれだけ動いたかで決めています。今後の値動きを示すものではありません。売買の判断は、あなた自身でおこなってください。</p>
   <div class="notice">確認用の見本です。文章と数字は例です。公開前に事実を確認します。</div>
 </div>
 <script>
@@ -86,7 +86,7 @@ function draw() {
   <div class="card">
     <div class="eyebrow">NEWS</div>
     <h2 class="head">${esc(n.head)}</h2>
-    <div class="risk"><span class="k">危険度</span><span class="s" aria-label="5段階中${n.star}">${"★".repeat(n.star)}<span>${"☆".repeat(5 - n.star)}</span></span></div>
+    <div class="risk"><span class="k">衝撃度</span><span class="s" aria-label="5段階中${n.star}">${"★".repeat(n.star)}<span>${"☆".repeat(5 - n.star)}</span></span></div>
     <dl class="kv">
       <div><dt>出どころ</dt><dd>${esc(n.src)}</dd></div>
       <div><dt>内容</dt><dd>${esc(n.what)}</dd></div>

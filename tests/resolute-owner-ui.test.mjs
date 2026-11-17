@@ -146,7 +146,7 @@ test("RESOLUTE header and menu are the same on every page, with no bottom bar (N
   const steps = shell.slice(shell.indexOf("const STEPS"), shell.indexOf("const TOOLS"));
   assert.deepEqual([...steps.matchAll(/"(\/resolute\/[a-z]+)","([^"]+)"/g)].map(m => [m[1], m[2]]), [["/resolute/diagnosis","投資ルール診断"],["/resolute/simulation","シミュレーション"],["/resolute/alerts","終値アラート"],["/resolute/morning","翌朝のひとこと"],["/resolute/thermometer","相場の温度計"],["/resolute/tax","税金の目安"]]);
   const tools = shell.slice(shell.indexOf("const TOOLS"), shell.indexOf("export default function ToolShell"));
-  assert.deepEqual([...tools.matchAll(/\["(\/resolute\/[a-z]+)","([^"]+)"/g)].map(m => [m[1], m[2]]), [["/resolute/notebook","マイルール"],["/resolute/wall","ルールのお守り"],["/resolute/tonight","今夜のひと息"],["/resolute/news","危険度チェッカー"]]);
+  assert.deepEqual([...tools.matchAll(/\["(\/resolute\/[a-z]+)","([^"]+)"/g)].map(m => [m[1], m[2]]), [["/resolute/notebook","マイルール"],["/resolute/wall","ルールのお守り"],["/resolute/tonight","今夜のひと息"],["/resolute/news","衝撃度チェッカー"]]);
   const css = await read("../app/resolute/tool-shell.module.css");
   assert.match(css, /height: 38px/);
   assert.match(css, /\.step\[aria-current="page"\]/);
