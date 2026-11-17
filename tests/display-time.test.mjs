@@ -93,8 +93,6 @@ const ALLOWED = {
   "app/research/notification-page-view.tsx": "explains quiet hours still saved in Japan time",
   // The PRO tour's made-up sample moment (owner spec, Nov 17: 2035/03/12 09:00 JST), fixed text in desk.json.
   "app/research/pro-experience/samples/rizels-desk.tsx": "fixed sample timestamps from the owner's spec",
-  // Fixed Japan-time schedules described as such on both sites.
-  "app/resolute/notifications-screen.tsx": "RESOLUTE alerts are sent at a fixed hour in Japan time",
   // Server-side rules kept in Japan time (display only changed).
   "lib/research/calendar.ts": "default zone of the date selectors; callers on screens pass zoneFor(lang)",
   "lib/research/stock-notebook.ts": "the notebook week is Monday 00:00 Japan time; its labels name those days",

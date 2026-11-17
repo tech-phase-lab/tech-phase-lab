@@ -15,6 +15,7 @@ import { DELIVERY_HOURS,defaultNotificationSettings,parseNotificationSettings,ty
 import { NotificationClientError } from "@/lib/resolute/notification-client";
 import { judge } from "@/lib/resolute/alert-judge";
 import { renderAlertMail,renderNextMorningMail } from "@/lib/resolute/mail-templates";
+import { deliveryClock,deliveryZone } from "@/lib/resolute/delivery-time";
 
 const tips={
  ja:{done:"計画どおりに動けた夜は、そのまま記録しておく価値があります。ルールに書いたことと実際にやったことが同じだったか、1行だけ見直してみてください。次の下落でも、迷いにくくなります。",skipped:"見送ることも、ルールの中の選択肢のひとつです。見送った理由が「買わない条件」に入っているか確かめてみてください。入っていなければ、足しておくと次に迷いません。",unsure:"迷っているのは、ルールとその夜の気持ちがずれているサインかもしれません。急いで決めなくて大丈夫です。計画を開いて、ラインと買い増しの額をもう一度読んでみてください。"},
@@ -95,7 +96,7 @@ function Notifications({locale,deny,mode}:{locale:DiagnosisLocale;deny:()=>void;
  const mail=events.length?renderAlertMail({locale,date:"2027-02-03",items:events,tonightUrl:"/resolute/tonight",planUrl:"/resolute",unsubscribeUrl:"/resolute/alerts"}):null;
  const morningMail=renderNextMorningMail({locale,doneUrl:"/resolute/morning",skippedUrl:"/resolute/morning",unsureUrl:"/resolute/morning",planUrl:"/resolute",unsubscribeUrl:"/resolute/morning"});
  const usd=(v:number)=>new Intl.NumberFormat(en?"en-US":"ja-JP",{style:"currency",currency:"USD"}).format(v);
- const timeButtons=<div className={styles.timeGrid}>{DELIVERY_HOURS.map(h=><button type="button" key={h} aria-pressed={draft.deliveryHourJst===h} onClick={()=>update({deliveryHourJst:h})}>{h}:00</button>)}</div>;
+ const timeButtons=<div className={styles.timeGrid}>{DELIVERY_HOURS.map(h=><button type="button" key={h} aria-pressed={draft.deliveryHourJst===h} onClick={()=>update({deliveryHourJst:h})}>{deliveryClock(h,locale)}</button>)}</div>;
  const mailExample=(example:{subject:string;text:string})=><div className={styles.mailPreview}><div className={styles.mailSubject}>{en?example.subject:example.subject.split(/(【RESOLUTE】|あなたの計画の|ラインに|ラインと|上昇の目安に|届いた銘柄があります|昨日のお知らせのあと、|どうでしたか\?)/).filter(Boolean).map((part,i)=><span className={styles.phrase} key={i}>{part}</span>)}</div><div className={styles.mailText}>{example.text.split("\n").map((line,i)=><p key={i} className={/^(あなたの計画では|In your plan)/.test(line)?styles.planEmphasis:undefined}>{line||"\u00a0"}</p>)}</div></div>;
  const lineColors=["#ecd48f","#eba85a","#e5744f","#cf4a52","#b03a62"];
  const picks=[t("計画どおり動いた","I followed my plan"),t("見送った","I held off"),t("まだ迷っている","I'm still unsure")];
@@ -106,7 +107,7 @@ function Notifications({locale,deny,mode}:{locale:DiagnosisLocale;deny:()=>void;
    {isMorning?<section className={styles.card}>
     <label className={styles.switchRow}><span>{en?"Get the morning note":<><span className={styles.phrase}>翌朝のひとことを</span><span className={styles.phrase}>受け取る</span></>}</span><input type="checkbox" role="switch" checked={draft.morningEnabled} onChange={e=>update({morningEnabled:e.target.checked})}/></label>
     <p className={styles.muted}>{t("オンにするとお知らせと同じ時間に届きます","Turn it on to receive a note at the same time as your alerts.")}</p>
-    <div className={styles.deliveryRow}><span>{draft.deliveryHourJst}:00 <small>{t("日本時間","JST")}</small></span><button type="button" className={styles.timeEdit} aria-expanded={timeOpen} aria-controls="morning-delivery-time" onClick={()=>setTimeOpen(v=>!v)}>{t("届く時間を変更する","Change delivery time")}</button></div>
+    <div className={styles.deliveryRow}><span>{deliveryClock(draft.deliveryHourJst,locale)} <small>{deliveryZone(locale)}</small></span><button type="button" className={styles.timeEdit} aria-expanded={timeOpen} aria-controls="morning-delivery-time" onClick={()=>setTimeOpen(v=>!v)}>{t("届く時間を変更する","Change delivery time")}</button></div>
     {timeOpen?<div id="morning-delivery-time">{timeButtons}</div>:null}
    </section>:<>
     <section className={styles.card}><h2>{t("見る銘柄（例：NVDA）","Stocks to watch (e.g. NVDA)")}</h2><p className={styles.muted}>{t("カタカナでも会社名を検索できます", "You can search by company name too")}</p>
@@ -122,7 +123,7 @@ function Notifications({locale,deny,mode}:{locale:DiagnosisLocale;deny:()=>void;
      <label className={styles.switchRow}><span>{t("上昇の目安も知らせる","Also alert me on a rise")}</span><input type="checkbox" role="switch" checked={draft.surgeCapPct!==null} onChange={e=>update({surgeCapPct:e.target.checked?50:null})}/></label>
      {draft.surgeCapPct!==null?<label className={styles.compactField}><span>{t("基準からの上昇率","Rise from reference price")}</span><span><NumberInput decimal value={draft.surgeCapPct} onValueChange={value=>update({surgeCapPct:Number(value)})}/> %</span></label>:null}
     </section>
-    <section className={styles.card}><h2>{t("届く時間","Delivery time")}</h2><p className={styles.muted}>{t("前の夜の終値をもとに、この時間にお知らせします(日本時間)","We check the previous night’s closing prices and send alerts at this time in Japan (JST)")}</p>{timeButtons}
+    <section className={styles.card}><h2>{t("届く時間","Delivery time")}</h2><p className={styles.muted}>{t("前の夜の終値をもとに、この時間にお知らせします(日本時間)","We check the U.S. closing prices and send alerts at this time (ET).")}</p>{timeButtons}
      <label className={styles.switchRow}><span>{t("終値アラートを受け取る","Receive closing-price alerts")}</span><input type="checkbox" role="switch" checked={draft.alertsEnabled} onChange={e=>update({alertsEnabled:e.target.checked})}/></label>
     </section>
    </>}

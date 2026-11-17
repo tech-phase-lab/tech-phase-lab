@@ -44,7 +44,7 @@ test("the landing copy is the owner's wording, unchanged", () => {
 });
 
 test("the alert sample shows the 7:00 morning notification", () => {
-  assert.match(lp, /<time>7:00<\/time>/);
+  assert.match(lp, /<time>\{en \? "5:00 PM" : "7:00"\}<\/time>/, "7:00 Japan time; the January sample is 5:00 PM ET in English");
   assert.ok(!lp.includes("6:02"));
 });
 
