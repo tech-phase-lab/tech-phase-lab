@@ -620,6 +620,90 @@ def test_notification(db, payload, transport=None, now=None):
             'providerStatus': code, 'failureKind': failure_kind}
 
 
+def price_target_payload(ticker, firm, previous, latest, ja, tag):
+    """The phone notice for one price-target change. The real notices (deliver) and the owner's demo notice (scheduled_demo_target) are
+    both built here, so the demo always looks exactly like a real one."""
+    # Nov 15: a price-target notice opens the price-target page (it opened the dashboard's #what-changed view).
+    return {'title': f"{ticker} · " + ('目標株価の変更' if ja else 'Price target update'),
+            'body': f"{firm}: ${previous:g} → ${latest:g}",
+            'tag': tag, 'url': '/research/price-targets'}
+
+
+# Nov 17 (owner): a sample price-target notice for filming the PRO video. Nothing appears on any page: the coordinator sets the Railway
+# variable PUSH_DEMO_TARGET_AT on the monitor to "<RFC3339 time> <ja|en>" (e.g. "2026-11-17T05:30:00Z ja"); the monitor's demo clock
+# (service.py run_push_demo) sends ONE notice at that time to every active device registered to the owner accounts, read fresh at that
+# moment, so a phone turned on just before still gets it. Each distinct value is handled once (push_demo_schedule), also across
+# restarts; more than DEMO_LATE_SECONDS late, it is skipped. Fictional firm and numbers; never a real firm name.
+DEMO_TARGET_VARIABLE = 'PUSH_DEMO_TARGET_AT'
+DEMO_TARGET = {'ticker': 'NVDA', 'firm': 'Sample Securities', 'previous': 295, 'latest': 340}
+# OWNER_ACCOUNT_ID and PRODUCTION_OWNER_ACCOUNT_ID in lib/membership/entitlements.ts (a test checks they match).
+DEMO_OWNER_ACCOUNT_IDS = ('user_3JulL4D07KtVl5Eg2zdY1iczKbC', 'user_3LHR1K8f8zwyDcVzMg7ud6KB9Wb')
+DEMO_LATE_SECONDS = 600
+
+
+def parse_demo_target(value):
+    """(send time as epoch seconds, language) from "<RFC3339 time with zone> <ja|en>", or None."""
+    parts = value.split() if isinstance(value, str) else []
+    if len(parts) != 2 or parts[1] not in ('ja', 'en') or len(parts[0]) > 40:
+        return None
+    try:
+        at = datetime.fromisoformat(parts[0].replace('Z', '+00:00').replace('z', '+00:00'))
+    except ValueError:
+        return None
+    if at.tzinfo is None:
+        return None
+    return at.timestamp(), parts[1]
+
+
+def scheduled_demo_target(db, value, transport=None, now=None):
+    """Send the demo notice for this variable value once it is due. Returns None (no value), 'waiting', 'done' (this value was already
+    handled), or the outcome recorded now: 'sent', 'no-device', 'late', 'invalid'. One log line per outcome, never a device or text."""
+    value = (value or '').strip()
+    if not value:
+        return None
+    now = time.time() if now is None else now
+    parsed = parse_demo_target(value)
+    if parsed and now < parsed[0]:
+        return 'waiting'
+    language = parsed[1] if parsed else None
+    outcome = 'invalid' if not parsed else 'late' if now - parsed[0] > DEMO_LATE_SECONDS else None
+    # Claim the value before any send: a restart (or a second caller) can never send it twice.
+    with db:
+        db.execute('CREATE TABLE IF NOT EXISTS push_demo_schedule (value TEXT PRIMARY KEY, handled_at REAL NOT NULL, outcome TEXT)')
+        if not db.execute('INSERT OR IGNORE INTO push_demo_schedule VALUES(?,?,NULL)', (value, now)).rowcount:
+            return 'done'
+    devices = accepted = 0
+    if outcome is None:
+        marks = ','.join('?' * len(DEMO_OWNER_ACCOUNT_IDS))
+        # Read at the moment of sending, so a device turned on just before the time is included.
+        rows = db.execute(f'SELECT id,subscription FROM push_devices WHERE active=1 AND owner_id IN ({marks}) ORDER BY id',
+                          DEMO_OWNER_ACCOUNT_IDS).fetchall()
+        for row in rows:
+            devices += 1
+            # A fresh tag of the same shape as a real one (a sha256 hex), so each send is shown as its own notice.
+            tag = hashlib.sha256(json.dumps(['demo-target', secrets.token_hex(16)]).encode()).hexdigest()
+            message = price_target_payload(DEMO_TARGET['ticker'], DEMO_TARGET['firm'], DEMO_TARGET['previous'], DEMO_TARGET['latest'],
+                                           language == 'ja', tag)
+            try:
+                # Through noting(): written down in push_notices as a real price-target notice (the in-app banner behaves as for one).
+                code = noting(db, transport or send, now)(json.loads(row['subscription']), message)
+            except Exception:
+                code = 0
+            code = code if isinstance(code, int) and not isinstance(code, bool) else 0
+            accepted += 200 <= code < 300
+            if code in (404, 410):
+                with db:
+                    db.execute('DELETE FROM push_devices WHERE id=?', (row['id'],))
+                    db.execute('DELETE FROM push_device_preferences WHERE device_id=?', (row['id'],))
+        outcome = 'sent' if devices else 'no-device'
+    with db:
+        db.execute('UPDATE push_demo_schedule SET outcome=? WHERE value=?', (outcome, value))
+    # Language and counts only: never the device, endpoint, keys, the text or the provider's response.
+    print(json.dumps({'event': 'push-demo-target', 'language': language, 'devices': devices, 'accepted': accepted,
+                      'outcome': outcome}), flush=True)
+    return outcome
+
+
 def parse_event_time(value):
     """Return a bounded aware UTC event time, or None for unusable evidence."""
     if not isinstance(value, str) or not 1 <= len(value) <= 64:
@@ -1014,10 +1098,7 @@ def deliver(db, items, transport=send, now=None, monotonic_now=time.monotonic,
                 payload = {'title': f"{' · '.join(item['tickers'][:3])} · " + ('ニュース' if ja else 'News'),
                            'body': item['texts']['ja' if ja else 'en'], 'tag': key, 'url': '/research/news'}
             else:
-                # Nov 15: a price-target notice opens the price-target page (it opened the dashboard's #what-changed view).
-                payload = {'title': f"{item['ticker']} · " + ('目標株価の変更' if ja else 'Price target update'),
-                           'body': f"{item['firm']}: ${item['previous']:g} → ${item['latest']:g}",
-                           'tag': key, 'url': '/research/price-targets'}
+                payload = price_target_payload(item['ticker'], item['firm'], item['previous'], item['latest'], ja, key)
             provider_started = monotonic_now()
             try:
                 code = noting(db, transport, attempted_at)(json.loads(device['subscription']), payload)

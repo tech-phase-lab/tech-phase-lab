@@ -88,6 +88,8 @@ LEGACY_FULL_TICKERS = (
 DISCOVERY_OUTAGE_GRACE_SECONDS = 600  # a freshly started process has not polled every source yet
 PRIORITY_SEC_TICKERS = ("TSM", "MRVL", "ANET", "VRT", "PLTR")
 WEB_PUSH_POLL_SECONDS = 5
+# Nov 17: how often the scheduled demo notice (PUSH_DEMO_TARGET_AT) is checked; the first check is right after boot.
+PUSH_DEMO_CHECK_SECONDS = 5
 # Waits before a push request that found the database locked is tried again (Nov 16: preferences answered 503, then 200 on a retry).
 PUSH_BUSY_RETRY_SECONDS = (0.2, 0.6)
 WEB_PUSH_STALE_SECONDS = 30
@@ -819,6 +821,7 @@ class AutomaticMonitor:
         self.x_stream_trial_thread = (threading.Thread(target=self.run_x_stream_trial, name="x-receive-only-trial", daemon=True)
                                       if x_stream_trial_service.requested() else None)
         self.push_thread = threading.Thread(target=self.run_web_push, name="web-push-pilot", daemon=True)
+        self.push_demo_thread = threading.Thread(target=self.run_push_demo, name="push-demo-target", daemon=True)
         self.note_translation_thread = threading.Thread(target=self.run_note_translation, name="note-translation", daemon=True)
         # Several headline workers translate different articles at once. Each
         # job is leased to one worker in an IMMEDIATE transaction, so no article
@@ -1180,6 +1183,33 @@ class AutomaticMonitor:
                 self.state["radarRefresh"]["nextAt"] = radar_refresh.iso(radar_refresh.next_slot(now()))
             self.stop_event.wait(wait)
 
+    def run_push_demo(self):
+        """Nov 17 (owner): the scheduled demo price-target notice for filming (web_push.scheduled_demo_target). Checks the
+        PUSH_DEMO_TARGET_AT variable right after boot and then every PUSH_DEMO_CHECK_SECONDS, so a value set shortly before the time
+        still fires on time once Railway has restarted the service."""
+        if not self.web_push_enabled:
+            return
+        handled = failed = None
+        while not self.stop_event.is_set():
+            # Everything inside the try: nothing here can stop this thread or the service; one safe line per failing value.
+            value = None
+            try:
+                value = os.environ.get(web_push.DEMO_TARGET_VARIABLE, "").strip()
+                parsed = web_push.parse_demo_target(value) if value and value != handled else None
+                # The database is opened only once the time has come (or for a malformed value, to record and log it once).
+                if value and value != handled and (parsed is None or time.time() >= parsed[0]):
+                    db = web_push.connect(self.db_path)
+                    try:
+                        web_push.scheduled_demo_target(db, value)
+                    finally:
+                        db.close()
+                    handled = value
+            except Exception as exc:
+                if failed != value:
+                    failed = value
+                    print(json.dumps({"event": "push-demo-target-error", "error": type(exc).__name__}), flush=True)
+            self.stop_event.wait(PUSH_DEMO_CHECK_SECONDS)
+
     def run_web_push(self):
         if not self.web_push_enabled:
             return
@@ -1331,6 +1361,7 @@ class AutomaticMonitor:
         self.event_results_thread.start()
         self.watch_earnings_thread.start()
         self.push_thread.start()
+        self.push_demo_thread.start()
 
     def stop(self):
         self.stop_event.set()
@@ -1364,6 +1395,7 @@ class AutomaticMonitor:
         self.radar_refresh_thread.join(timeout=90)
         self.watch_earnings_thread.join(timeout=10)
         self.push_thread.join(timeout=15)
+        self.push_demo_thread.join(timeout=15)
 
     def run_stock_news(self):
         # No schema writes or network activity until explicitly enabled.

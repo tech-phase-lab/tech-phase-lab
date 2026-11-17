@@ -30,3 +30,10 @@ test("the monitor sends the new notices, and the site gives the monitor the ques
   assert.match(python, /def quiet_blocks/);
   assert.match(python, /'quiet_on', 'INTEGER NOT NULL DEFAULT 1'/);
 });
+
+test("notifications page: the title reads 「スマホ通知」 with the PRO tag beside it, not on the small NOTIFICATIONS line (owner, Nov 17)", () => {
+  const page = read("../app/research/notifications/page.tsx");
+  assert.match(page, /<div className=\{styles\.titleRow\}><h1 className=\{styles\.title\}>\{ja \? "スマホ通知" : "Mobile notifications"\}<\/h1><ProTag \/><\/div>/);
+  assert.doesNotMatch(page, /スマホ通知設定/);
+  assert.doesNotMatch(page, /<span>NOTIFICATIONS<\/span><b>PRO<\/b>/);
+});
