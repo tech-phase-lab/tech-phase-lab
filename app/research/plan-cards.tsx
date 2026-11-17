@@ -5,7 +5,7 @@ import ProOfferCard from "./pro-offer-card";
 import styles from "./plan-cards.module.css";
 import { priceFont } from "./price-font";
 
-/** The only commercial-transactions page on the site today (RESOLUTE's footer link); a Tech Phase PRO page is pending. */
+/** 特定商取引法に基づく表記 for both Tech Phase Research and RESOLUTE (app/resolute/legal/commerce). */
 export const TOKUSHOHO_HREF = "/resolute/legal/commerce";
 
 /** The plan introduction cards (owner's design, Oct 27): one line per feature, "name｜description", with a small square,

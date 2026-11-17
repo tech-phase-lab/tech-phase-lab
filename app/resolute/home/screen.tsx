@@ -63,6 +63,6 @@ export function Home({locale,entitlement,thermometerSnapshot}:{thermometerSnapsh
    <Link className={s.item} href="/resolute/tonight"><div><b>{en?'When the market tumbles':'暴落の夜に開く'}</b><span>{en?'A moment to breathe':'今夜のひと息'}</span></div><i>{en?'Open →':'開く →'}</i></Link>
    <Link className={s.item} href="/resolute/morning"><div><b>{en?'A note the next morning':'翌朝のひとこと'}</b><span>{en?'One note the morning after an alert':'アラートの翌朝に1通'}</span></div><i>{morning===null?'—':morning?(en?'On':'オン'):(en?'Off':'オフ')}</i></Link>
   </div></section>
-  <footer className={s.foot}><Link href="/resolute/diagnosis">{en?'Retake the quiz':'診断をやり直す'}</Link><p className={s.disc}>{en?'For information only. This is not investment advice.':'情報の提供であり、投資助言ではありません。'}</p></footer>
+  <footer className={s.foot}><Link href="/resolute/diagnosis">{en?'Retake the quiz':'診断をやり直す'}</Link></footer>
  </div></div>;
 }

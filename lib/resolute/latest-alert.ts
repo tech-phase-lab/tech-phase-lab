@@ -1,6 +1,7 @@
 // RESOLUTE「今日のお知らせ」(/resolute/alerts/latest)。③の通知を押すと開く画面で、中身はアラートメールの本文と同じ(オーナー 2026-11-17)。
 // データは、その人に受け付け済み(accepted_at あり)の最新の③1件だけ。銘柄・終値・基準からの%・届いたラインのみで、計画の回答や自由記述は含めない。
 import { formatDate } from "./mail-templates.ts";
+import { DISCLAIMER } from "../legal/disclaimer.ts";
 
 export type LatestAlertItem = {
   kind: "line_reached" | "surge_cap"; symbol: string; close: number;
@@ -74,7 +75,7 @@ export function latestAlertView(alert: LatestAlert, locale: "ja" | "en") {
       : `Check your planned purchase amounts and conditions for not buying.${hasSurge ? " After a rise, check your single-stock cap too." : ""}`,
     openPlan: ja ? "計画を開く" : "Open your plan",
     tonight: ja ? "今夜のひと息" : "A moment to breathe",
-    disclaimer: ja ? "情報の提供であり、投資助言ではありません。" : "It's information only, not investment advice.",
+    disclaimer: ja ? DISCLAIMER.ja : DISCLAIMER.en,
   };
 }
 

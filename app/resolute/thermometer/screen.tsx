@@ -9,6 +9,7 @@ import styles from "../diagnosis.module.css";
 import gaugeStyles from "./screen.module.css";
 import { gaugeReading, gaugeStatus, temperatureLabels, type ThermometerSnapshot } from "@/lib/resolute/thermometer-view";
 import type { ThermometerIndex } from "@/lib/resolute/thermometer";
+import { THERMOMETER_NOTE, THERMOMETER_METHOD } from "@/lib/resolute/thermometer-copy";
 const positions = [
   { ja: "上向き × 冷えている", en: "Rising × Cool", detailJa: "上昇が続いていますが、相場の価格は最近の水準より低い状態です。", detailEn: "The market is trending upward, but prices are below recent levels." },
   { ja: "上向き × 熱い", en: "Rising × Hot", detailJa: "上昇が続いていて、相場の価格が最近の水準より高い状態です。", detailEn: "The market is trending upward, with prices above recent levels." },
@@ -65,7 +66,11 @@ export function MarketGauge({ locale, snapshot }: { locale: DiagnosisLocale; sna
         <div><dt>{t("252営業日高値から", "From the 252-session closing high")}</dt><dd>{signedPercent(reading.drawdownPercent)}</dd></div>
         <div><dt>{t("200日移動平均から", "From the 200-day moving average")}</dt><dd>{signedPercent(reading.deviationPercent)}</dd></div>
       </dl> : null}
+      <p className={styles.disclaimer}>{THERMOMETER_NOTE[locale]}</p>
     </section>
+    <details className={`${styles.card} ${styles.disclosure}`}><summary>{t("計算方法の概要", "How it is calculated")}</summary><dl className={styles.methodRows}>
+      {THERMOMETER_METHOD.map(row => <div key={row.en.term}><dt>{row[locale].term}</dt><dd>{row[locale].text}</dd></div>)}
+    </dl></details>
     <details className={`${styles.card} ${styles.disclosure}`}><summary>{t("くわしく", "Details")}</summary><dl className={styles.methodRows}>
       <div><dt>{t("何を見ている？", "What do we measure?")}</dt><dd>{t("次の2つの指標から、いまの相場の位置を見ています。", "We use two measures to show where the market stands.")}</dd></div>
       <div><dt>{t("① 高値からどれくらい下がったか", "1. How far prices have fallen from their high")}</dt><dd>{t("直近252営業日（約1年）の最も高い終値から、現在の終値が何％下がったかを見ます。", "The percentage decline from the highest closing price in the last 252 trading sessions (about one year).")}</dd></div>

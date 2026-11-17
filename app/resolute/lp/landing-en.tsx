@@ -7,6 +7,7 @@ import OpenAtTop from "./open-at-top";
 import OwnedRedirect from "./owned-redirect";
 import { Anchor, Feature, stars } from "./parts";
 import s from "./lp.module.css";
+import Disclaimer from "../disclaimer";
 
 // The English page buys through the English checkout.
 const CHECKOUT = "/resolute/checkout?lang=en";
@@ -151,11 +152,11 @@ export default function LandingEn({ embedded = false }: { embedded?: boolean }) 
     <div className={s.faq}>
      <details><summary>I&apos;m new to investing. Can I use it?</summary><p>Yes. Just tap to answer 30 straightforward questions. You don’t need any investing knowledge to get started.</p></details>
      <details><summary>Will it tell me what to buy or when to sell?</summary><p>No. RESOLUTE doesn&apos;t recommend trades. It turns the rules you set into something you can hold onto, so you can come back to them when the market moves.</p></details>
-     <details><summary>Is it a one-time purchase?</summary><p>Your one-time purchase includes ongoing access to the core tools, plus one year of Closing-price Alerts, Morning Note, News Risk Meter, and RIZEL’s Take. After the first year, you can choose to renew these four features for another year. Renewal is optional and never automatic.</p></details>
+     <details><summary>Is it a one-time purchase?</summary><p>Alerts, Morning Note, Shock Gauge and RIZEL’s Take run for one year from purchase; from the second year they need renewal, at $39 a year or $29 for Tech Phase PRO members. Card payments (PayPal) renew automatically and you can stop anytime. Bank transfers renew only if you choose. Everything else is a one-time purchase you can keep using for as long as we provide RESOLUTE.</p></details>
      <details><summary>How much does renewal cost?</summary><p>Renewal costs $39 per year, or $29 per year for active Tech Phase PRO members.</p></details>
      <details><summary>Do I need Tech Phase PRO?</summary><p>No. You can purchase RESOLUTE without a Tech Phase PRO subscription. Every feature is included for the first year, with optional renewal for the four features listed above.</p></details>
      <details><summary>Can I buy without an account?</summary><p>Yes. You don’t need an account to purchase. After payment, we’ll email you a link to create an account or sign in and activate your access.</p></details>
-     <details><summary>Can I get a refund?</summary><p>As a digital product, RESOLUTE can&apos;t be refunded after purchase. Please review the details before you buy.</p></details>
+     <details><summary>Can I get a refund?</summary><p>As a digital product, RESOLUTE can&apos;t be refunded after purchase. Please review the details before you buy. We do refund double charges, or if a fault on our side stops it from working.</p></details>
     </div>
     <Buy small />
    </section>
@@ -163,7 +164,7 @@ export default function LandingEn({ embedded = false }: { embedded?: boolean }) 
    {/* 8 Footer */}
    <footer className={s.foot}>
     <nav className={s.footWide}><Link href="/resolute/legal/commerce?lang=en">Legal Notice</Link><Link href="/terms?lang=en">Terms of Service</Link><Link href="/privacy?lang=en">Privacy Policy</Link></nav>
-    <p>RESOLUTE provides information, not investment advice.</p>
+    <Disclaimer en />
     <p>Screens shown are for illustrative purposes only.</p>
    </footer>
   </main>

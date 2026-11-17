@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import SiteHeader from "./site-header";
+import Disclaimer from "../resolute/disclaimer";
 import FreshnessNotice from "./freshness-notice";
 import { usePathname } from "next/navigation";
 import HomeSidebar from "./home-sidebar";
@@ -33,6 +34,7 @@ export default function ResearchToolShell({ lang, setLang, title, description, c
       </nav>}
       {freshness && <FreshnessNotice lang={lang} />}
       {children}
+      <footer><Disclaimer en={lang === "en"} /></footer>
     </main>
     </div>
   </div>;

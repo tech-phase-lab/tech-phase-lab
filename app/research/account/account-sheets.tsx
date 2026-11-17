@@ -4,6 +4,7 @@ import { useEffect, useRef, useState, type ReactNode } from "react";
 import { billingRequest, billingSummary, sandboxApproval } from "@/lib/membership/billing-client";
 import { INITIAL, TILES, tileBackground, tileById } from "./avatars";
 import styles from "./account.module.css";
+import AgreeButton, { CheckoutLines, PRO_CHECKOUT_LINE } from "../../legal/agree-button";
 
 export type Mode = "live" | "sandbox";
 const check = <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2a1f05" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M5 12l5 5 9-10" /></svg>;
@@ -66,7 +67,8 @@ export function UpgradeSheet({ ja, mode, blocked, refresh, onClose, currency = "
     {closed && <p className={styles.err}>{t("お申し込みの受付は、現在停止中です。", "New subscriptions are closed right now.")}</p>}
     {error === "failed" && <p className={styles.err} role="alert">{t("お申し込みを開始できませんでした。時間をおいて、もう一度お試しください。", "Could not start checkout. Please try again shortly.")}</p>}
     {error === "existing" && <p className={styles.err} role="alert">{t("手続き中の契約があります。", "A checkout is already in progress.")} <Link href="/research/account/billing" style={{ color: "#e7c982" }}>{t("手続きを再開する", "Resume")}</Link></p>}
-    <button type="button" className={`${styles.btn} ${styles.gbt}`} disabled={!agreed || busy || closed} onClick={() => void go()}>{busy ? t("PayPalへ移動しています…", "Opening PayPal…") : t("PayPalへ進む", "Continue to PayPal")}</button>
+    <CheckoutLines lines={[ja ? PRO_CHECKOUT_LINE.ja : PRO_CHECKOUT_LINE.en]} />
+    <AgreeButton en={!ja} className={`${styles.btn} ${styles.gbt}`} disabled={!agreed || busy || closed} busy={busy} busyLabel={t("PayPalへ移動しています…", "Opening PayPal…")} onClick={() => void go()} />
     <button type="button" className={styles.sCancel} disabled={busy} onClick={onClose}>{t("キャンセル", "Cancel")}</button>
   </Sheet>;
 }
