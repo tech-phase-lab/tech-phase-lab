@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import test from "node:test";
-import { featureById, inLanguage, mediaUrl, nextFeature, proFeatures, readFeatures } from "../lib/research/pro-experience.ts";
+import { featureById, inLanguage, mediaUrl, nextFeature, proFeatures, readFeatures, videoFor } from "../lib/research/pro-experience.ts";
 
 const read = path => readFileSync(new URL(path, import.meta.url), "utf8");
 
@@ -17,7 +17,8 @@ test("the provisional text of the 22-stock page is the owner's sample; media sta
   const feature = featureById("watch-22");
   assert.equal(feature.textBeforeImage.ja, "22銘柄の動きを、まとめて確認できます。決算が出たあとのまとめも読めます。");
   assert.equal(feature.textAfterImage.ja, "銘柄を探しにいく手間がなくなります。");
-  for (const item of proFeatures) assert.deepEqual([item.videoUrl, item.imageUrl, item.thumbnailUrl], ["", "", ""], item.id);
+  // Nov 17: only phone notifications has a video (its own test below); images and thumbnails stay empty.
+  for (const item of proFeatures) assert.deepEqual([item.id === "phone-alerts" ? "" : item.videoUrl, item.imageUrl, item.thumbnailUrl], ["", "", ""], item.id);
   const screen = read("../app/research/pro-experience/screen.tsx");
   // Nov 16: a feature with a fixed sample shows it instead; the others keep the video when one is set.
   assert.match(screen, /: feature\.videoUrl && <FeatureVideo/);
@@ -45,11 +46,51 @@ test("a video or image address is a path on the site or https; anything else cou
   assert.deepEqual(features.map(feature => [feature.id, feature.videoUrl, feature.imageUrl]), [["a-1", "", "/a.png"]]);
 });
 
-test("the video is silent, loops, plays on a phone and has a button to stop it", () => {
+test("phone notifications carry the owner's two videos: Japanese 0:30, English 0:36, each with a first-frame poster (Nov 17)", () => {
+  const raw = JSON.parse(read("../lib/research/pro-experience.json")).features.find(item => item.id === "phone-alerts");
+  assert.deepEqual([raw.videoUrl, raw.videoLabel, raw.videoUrlEn, raw.videoLabelEn, raw.videoPosterUrl, raw.videoPosterUrlEn],
+    ["/media/pro-experience/phone-alerts-ja.mp4", "0:30", "/media/pro-experience/phone-alerts-en.mp4", "0:36", "/media/pro-experience/phone-alerts-ja.jpg", "/media/pro-experience/phone-alerts-en.jpg"]);
+  const feature = featureById("phone-alerts");
+  assert.equal(feature.videoUrlEn, "/media/pro-experience/phone-alerts-en.mp4");
+  assert.equal(feature.videoLabelEn, "0:36");
+  // The media lives outside /research so the Clerk proxy (matcher on /research/*) never runs on it.
+  const proxy = read("../proxy.ts");
+  assert.doesNotMatch(proxy, /"\/media/);
+});
+
+test("the English view uses the English video; with none set it falls back to the Japanese video, label and poster", () => {
+  const feature = featureById("phone-alerts");
+  assert.deepEqual(videoFor(feature, "ja"), { src: "/media/pro-experience/phone-alerts-ja.mp4", label: "0:30", poster: "/media/pro-experience/phone-alerts-ja.jpg" });
+  assert.deepEqual(videoFor(feature, "en"), { src: "/media/pro-experience/phone-alerts-en.mp4", label: "0:36", poster: "/media/pro-experience/phone-alerts-en.jpg" });
+  const [jaOnly] = readFeatures({ features: [{ id: "only-ja", nameJa: "A", videoUrl: "/a.mp4", videoLabel: "0:10", videoPosterUrl: "/a.jpg", videoUrlEn: "", videoLabelEn: "0:12" }] });
+  assert.deepEqual(videoFor(jaOnly, "en"), { src: "/a.mp4", label: "0:10", poster: "/a.jpg" });
+  const [bad] = readFeatures({ features: [{ id: "bad-en", nameJa: "A", videoUrl: "/a.mp4", videoUrlEn: "javascript:x" }] });
+  assert.equal(videoFor(bad, "en").src, "/a.mp4");
+});
+
+test("the video files exist under public/media, are MP4 (ftyp, moov before mdat) and the posters are JPEG", () => {
+  for (const lang of ["ja", "en"]) {
+    const video = readFileSync(new URL(`../public/media/pro-experience/phone-alerts-${lang}.mp4`, import.meta.url));
+    assert.equal(video.subarray(4, 8).toString("latin1"), "ftyp", lang);
+    const moov = video.indexOf("moov"), mdat = video.indexOf("mdat");
+    assert.ok(moov > 0 && mdat > 0 && moov < mdat, `${lang}: moov before mdat so a tap starts playback without the whole file`);
+    assert.ok(video.length < 2_000_000, lang);
+    const poster = readFileSync(new URL(`../public/media/pro-experience/phone-alerts-${lang}.jpg`, import.meta.url));
+    assert.deepEqual([...poster.subarray(0, 3)], [0xff, 0xd8, 0xff], lang);
+    assert.ok(poster.length < 80_000, lang);
+  }
+});
+
+test("the video does not start by itself: tap to play, inline on a phone, poster first, no cropping", () => {
   const screen = read("../app/research/pro-experience/screen.tsx");
-  assert.match(screen, /<video[^>]*\bmuted\b[^>]*\bloop\b[^>]*\bplaysInline\b[^>]*\bautoPlay\b/);
-  assert.match(screen, /動画を止める/);
-  assert.match(screen, /動画を再生/);
+  const tag = screen.match(/<video[^>]*\/>/)?.[0] ?? "";
+  assert.ok(tag, "video tag");
+  assert.doesNotMatch(tag, /autoPlay|autoplay/);
+  for (const attribute of [/\bcontrols\b/, /\bplaysInline\b/, /preload="metadata"/, /poster=\{poster/, /src=\{src\}/]) assert.match(tag, attribute);
+  assert.match(screen, /videoFor\(feature, lang\)/);
+  const css = read("../app/research/pro-experience/styles.module.css");
+  assert.match(css, /\.video\{[^}]*width:100%;height:auto;aspect-ratio:720\/1566;object-fit:contain/);
+  assert.doesNotMatch(css.match(/\.video\{[^}]*\}/)[0], /max-height/);
 });
 
 test("「PROではじめる」 is for people who are not PRO, goes to the plan page, and the next-feature link follows it", () => {
