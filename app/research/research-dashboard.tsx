@@ -18,7 +18,7 @@ import styles from "./research.module.css";
 import HomeTools, { HomeHelp } from "./home-tools";
 import ResoluteBar from "./resolute-bar";
 import Deferred from "./deferred";
-import PlanCards from "./plan-cards";
+import PlanCards, { TOKUSHOHO_HREF } from "./plan-cards";
 import FreshnessNotice from "./freshness-notice";
 import HomeToday from "./home-today";
 import type { InitialNewsSnapshot } from "@/lib/research/general-news";
@@ -35,6 +35,7 @@ import { useSavedResearch } from "./use-saved-research";
 import { notebookKey } from "@/lib/research/saved-document";
 import SavedSyncStatus from "./saved-sync-status";
 import SavedEmpty from "./saved-empty";
+import Disclaimer from "../resolute/disclaimer";
 function subscribeView(callback: () => void) {
   window.addEventListener("hashchange", callback);
   window.addEventListener("popstate", callback);
@@ -345,7 +346,7 @@ export default function ResearchDashboard({ events, monitoredCompanies, initialN
           <Bookmark filled /><span>{t(`${savedBurst}件を保存しました`, `${savedBurst} saved`)}</span>
           <button type="button" onClick={() => { setSavedBurst(0); clearFilters(); openView("saved"); }}>{t("保存一覧へ", "View saved")} ›</button>
         </div>}
-        <footer className={styles.footer}><span>TECH PHASE RESEARCH</span><p>{t("変化を読み、一歩先へ。", "Read the shifts. Think ahead.")}</p><nav className={styles.legalLinks} aria-label={t("規約", "Legal")}><Link href="/terms">{t("利用規約", "Terms of Service")}</Link><Link href="/privacy">{t("プライバシーポリシー", "Privacy Policy")}</Link></nav></footer>
+        <footer className={styles.footer}><span>TECH PHASE RESEARCH</span><p>{t("変化を読み、一歩先へ。", "Read the shifts. Think ahead.")}</p><nav className={styles.legalLinks} aria-label={t("規約", "Legal")}><Link href="/terms">{t("利用規約", "Terms of Service")}</Link><Link href="/privacy">{t("プライバシーポリシー", "Privacy Policy")}</Link><Link href={TOKUSHOHO_HREF}>{t("特定商取引法に基づく表記", "Legal Notice")}</Link></nav><Disclaimer en={lang === "en"} /></footer>
       </main>
     </div>
   </div>;

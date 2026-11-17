@@ -152,14 +152,15 @@ test("「今日のお知らせ」 shows the alert email's content, JA and EN, as
   assert.deepEqual(ja.notes, ["あなたの計画では 下落のラインは決めておいたルールを見直す合図です"]);
   assert.deepEqual(ja.cards.map(c => [c.symbol, c.chip, c.text]), [["NVDA", "-10%", "終値 $171.20(基準から -10.4%)"], ["AMD", "-15%", "終値 $121.80(基準から -15.2%)"]]);
   assert.equal(ja.check, "計画に書いた買い増し額と買わない条件を確認してください");
-  assert.deepEqual([ja.openPlan, ja.tonight, ja.disclaimer], ["計画を開く", "今夜のひと息", "情報の提供であり、投資助言ではありません。"]);
+  // The disclaimer is the lawyer-reviewed sentence (owner pack, Nov 17, section 6), from lib/legal/disclaimer.ts.
+  assert.deepEqual([ja.openPlan, ja.tonight, ja.disclaimer], ["計画を開く", "今夜のひと息", "本サービスと本商品は、情報の提供とご自身で決めたルールの管理を目的としたもので、特定の銘柄の売買や売買の時期をすすめるものではありません。投資の判断は、ご自身でおこなってください。"]);
   const en = latestAlertView(parsed, "en");
   assert.equal(en.title, "Today's alert");
   assert.equal(en.date, "Closing prices on Nov 17 (US market)");
   assert.deepEqual(en.notes, ["In your plan, a drop to this level is your cue to pause and reread the rules you wrote for yourself."]);
   assert.equal(en.cards[0].text, "Closed at $171.20, down 10.4% from your reference price");
   assert.equal(en.check, "Check your planned purchase amounts and conditions for not buying.");
-  assert.deepEqual([en.openPlan, en.tonight, en.disclaimer], ["Open your plan", "A moment to breathe", "It's information only, not investment advice."]);
+  assert.deepEqual([en.openPlan, en.tonight, en.disclaimer], ["Open your plan", "A moment to breathe", "The Service and the Product are intended to provide information and to help you manage rules you set for yourself. They do not recommend buying or selling any particular security or the timing of trades. Please make your own investment decisions."]);
   const mixed = latestAlertView(latestAlertFromDigest({ date: "2026-11-17", items: [line("NVDA", [10]), rise("AVGO")] }), "ja");
   assert.equal(mixed.notes.length, 2);
   assert.match(mixed.check, /上昇時は1銘柄の上限も確認できます$/);
@@ -230,7 +231,8 @@ test("copy: phone notification wording across RESOLUTE screens, LP, diagnosis an
   const present = [[files.alerts, "ラインに届いた日に、スマホ通知でお知らせ"], [files.alerts, "Get a phone notification on the day a line is hit"],
     [files.alerts, "届く通知の例を見る"], [files.alerts, "届く通知の例"], [files.tonight, "お知らせの内容はもう読みましたね。"], [files.tonight, "You’ve read the alert. Now take a breath."],
     [files.lp, "選んだ朝の時間にスマホ通知でお知らせします。"], [files.diagnosis, "スマホ通知が届くので"],
-    [files.privacy, "スマホ通知をオンにしていない場合はメール"], [files.terms, "通知機能のスマホ通知やメールは"]];
+    // The legal pages are the lawyer-reviewed full texts since Nov 17; their notification wording is checked here.
+    [files.privacy, "ブラウザ通知(Web Push)やスマートフォンへの通知に必要な端末の識別情報"], [files.terms, "ブラウザ通知やスマートフォンへの通知などは"]];
   for (const [text, phrase] of present) assert.ok(text.includes(phrase), phrase);
   // The email itself stays as it is (fallback): templates and unsubscribe unchanged.
   assert.match(read("../lib/resolute/mail-templates.ts"), /【RESOLUTE】あなたの計画のラインに届いた銘柄があります/);

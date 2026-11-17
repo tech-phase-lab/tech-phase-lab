@@ -2,6 +2,7 @@
 import { ReviewLink as Link } from '../review-context';
 import { gaugeReading, gaugeStatus, temperatureLabels, type ThermometerSnapshot } from '@/lib/resolute/thermometer-view';
 import s from './reference.module.css';
+import { THERMOMETER_NOTE } from '@/lib/resolute/thermometer-copy';
 /** Home always summarizes TP大型株100, matching the detail page's initial selection. */
 export default function MarketGaugeCard({locale,snapshot,sample=false}:{locale:'ja'|'en';snapshot?:ThermometerSnapshot;sample?:boolean}) {
  const en=locale==='en',reading=sample?null:gaugeReading(snapshot,'nas100');
@@ -16,5 +17,6 @@ export default function MarketGaugeCard({locale,snapshot,sample=false}:{locale:'
    <div className={s.track} aria-hidden="true">{score!==undefined?<i className={s.needle} style={{left:`${score}%`}}/>:null}</div>
    <div className={s.scale}><span>{en?'Cool':'冷えている'}</span><span>{en?'Hot':'熱い'}</span></div>
   </div>
+  <p style={{margin:'8px 0 0',fontSize:11,lineHeight:1.6,opacity:.6}}>{THERMOMETER_NOTE[locale]}</p>
  </div>;
 }

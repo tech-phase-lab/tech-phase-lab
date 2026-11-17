@@ -281,6 +281,31 @@ export function calcLossRealization(i: LossInput): LossResult {
   };
 }
 
+/** 計算の前提(画面にいつも出す。owner pack, Nov 17, section 7): 対象の口座・年度・為替の換算方法・確定申告が必要な場合と、
+ * NISA口座の損失の扱い。calcSale / calcLossRealization の実際の動きと合わせること。 */
+export const TAX_ASSUMPTIONS: readonly { ja: { term: string; text: string }; en: { term: string; text: string } }[] = [
+  {
+    ja: { term: '対象の口座', text: '特定口座(源泉徴収あり)と一般口座(特定口座の源泉徴収なしを含む)の売却を計算します。NISA口座の売却益は非課税として計算します。' },
+    en: { term: 'Accounts', text: 'Sales in a tokutei account with tax withheld and in a general account (including a tokutei account without withholding). Gains in a NISA account are treated as tax-free.' },
+  },
+  {
+    ja: { term: '年度', text: '2026年分(令和8年分)の税制で計算します。税率は所得税15%・住民税5%・復興特別所得税(所得税額の2.1%)の合計20.315%です。' },
+    en: { term: 'Tax year', text: 'Japan’s rules for tax year 2026 (Reiwa 8). The rate is 20.315%: income tax 15%, resident tax 5% and the reconstruction surtax (2.1% of income tax).' },
+  },
+  {
+    ja: { term: '為替の換算方法', text: '金額は円で入力します。米ドルで売買した株は、売却代金は売った日、購入額は買った日の為替レートで円に換算した金額(証券会社の取引報告書の円換算額)を入れてください。為替の動きによる損益は、その円換算額の差に含まれます。' },
+    en: { term: 'Currency conversion', text: 'Enter amounts in yen. For shares traded in U.S. dollars, enter the proceeds converted at the exchange rate on the day you sold and the cost converted at the rate on the day you bought (the yen amounts on your broker’s trade reports). Gains or losses from currency moves are included in the difference between those yen amounts.' },
+  },
+  {
+    ja: { term: '確定申告が必要な場合', text: '一般口座で利益が出たときは、確定申告が必要です。特定口座(源泉徴収あり)でも、損失を翌年以後に繰り越すときや、ほかの証券会社の口座の損益と通算するときは、確定申告が必要です。' },
+    en: { term: 'When you need to file a return', text: 'You need to file a tax return when you have a gain in a general account. Even with a withholding tokutei account, you need to file to carry a loss forward to later years or to offset it against gains in an account at another broker.' },
+  },
+  {
+    ja: { term: 'NISA口座の損失', text: 'NISA口座の損失は、ほかの利益と通算できず、繰り越しもできません。この計算でも、NISA口座の損失はほかの利益から差し引かず、繰り越す損失にも入れません。' },
+    en: { term: 'Losses in a NISA account', text: 'Losses in a NISA account can’t be offset against other gains or carried forward. This estimate does the same: a NISA loss is never deducted from other gains and is never carried forward.' },
+  },
+];
+
 /** 注記コード → 画面に出す文章(日英)。コードはAPI/テスト用、文章はUI用。 */
 export const NOTE_TEXT: Record<string, { ja: string; en: string }> = {
   nisa_tax_free: {

@@ -7,3 +7,14 @@
 .items { margin: 0 0 14px; }
 .items p { display: grid; grid-template-columns: 2em 1fr; gap: 4px; margin: 0 0 10px; }
 .no { color: var(--muted, #8a95a3); font-variant-numeric: tabular-nums; }
+.tableWrap { margin: 0 0 18px; }
+.table { width: 100%; border-collapse: collapse; font-size: 14px; line-height: 1.8; color: #cfd8e3; }
+.table thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+.table tr { border-top: 1px solid var(--line, #243040); }
+.table th[scope="row"] { width: 30%; padding: 12px 12px 12px 0; text-align: left; vertical-align: top; color: var(--muted, #8a95a3); font-weight: 600; }
+.table td { padding: 12px 0; vertical-align: top; }
+@media (max-width: 560px) {
+  .table tr { display: block; padding: 10px 0; }
+  .table th[scope="row"], .table td { display: block; width: auto; padding: 0; }
+  .table th[scope="row"] { margin-bottom: 2px; font-size: 13px; }
+}

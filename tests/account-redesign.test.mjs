@@ -1,3 +1,4 @@
+import { legalModule } from "./support-legal-modules.mjs";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { createRequire } from "node:module";
@@ -11,7 +12,7 @@ const require = createRequire(import.meta.url);
 function load(path, stubs = {}) {
   const out = ts.transpileModule(readFileSync(new URL(path, import.meta.url), "utf8"), { compilerOptions: { module: ts.ModuleKind.CommonJS, jsx: ts.JsxEmit.ReactJSX, target: ts.ScriptTarget.ES2022 } }).outputText;
   const mod = { exports: {} };
-  new Function("require", "module", "exports", out)(id => id.endsWith(".module.css") ? { default: new Proxy({}, { get: (_, key) => String(key) }) } : id in stubs ? stubs[id] : require(id), mod, mod.exports);
+  new Function("require", "module", "exports", out)(id => id.endsWith(".module.css") ? { default: new Proxy({}, { get: (_, key) => String(key) }) } : id in stubs ? stubs[id] : legalModule(id) ?? require(id), mod, mod.exports);
   return mod.exports;
 }
 const avatars = load("../app/research/account/avatars.ts");
@@ -43,7 +44,9 @@ test("upgrade sheet: the consent starts off and the PayPal button is dimmed unti
   const html = renderToStaticMarkup(createElement(sheets.UpgradeSheet, { ja: true, mode: "live", refresh: async () => {}, onClose: () => {} }));
   assert.match(html, /type="checkbox"/);
   assert.doesNotMatch(html, /checked=""/);
-  assert.match(html, /<button[^>]*disabled=""[^>]*>PayPalへ進む<\/button>/);
+  // The final button carries the lawyer's wording (owner pack, Nov 17); 「利用規約」 inside it opens the full terms.
+  assert.match(html, /<button[^>]*disabled=""[^>]*aria-label="利用規約に同意して申し込む"[^>]*><span role="link" data-href="\/terms"[^>]*>利用規約<\/span>に同意して申し込む<\/button>/);
+  assert.match(html, /月額・年額とも解約するまで自動更新。いつでも解約できます。/);
   assert.doesNotMatch(html, /月額料金/); assert.match(html, /料金/); assert.match(html, /¥2,980 \/ 月/); assert.match(html, /毎月自動で更新/);
   const yearly = renderToStaticMarkup(createElement(sheets.UpgradeSheet, { ja: true, mode: "live", refresh: async () => {}, onClose: () => {}, currency: "USD", period: "year" }));
   assert.match(yearly, /\$200 \/ 年/); assert.match(yearly, /毎年自動で更新/); assert.doesNotMatch(yearly, /毎月/);
@@ -52,7 +55,7 @@ test("upgrade sheet: the consent starts off and the PayPal button is dimmed unti
 test("with billing closed the upgrade sheet says so and cannot proceed", () => {
   const html = renderToStaticMarkup(createElement(sheets.UpgradeSheet, { ja: true, mode: null, refresh: async () => {}, onClose: () => {} }));
   assert.match(html, /受付は、現在停止中/);
-  assert.match(html, /disabled=""[^>]*>PayPalへ進む/);
+  assert.match(html, /disabled=""[^>]*aria-label="利用規約に同意して申し込む"/);
 });
 
 test("a contract is drawn only when every printed value came from the server", () => {
