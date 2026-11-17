@@ -9,6 +9,7 @@ import { calendarEvents } from "@/lib/research/calendar";
 import { publicPriceTargets, type PriceTarget } from "@/lib/research/price-targets";
 import { buildNotebook, type Notebook, type NotebookNews } from "@/lib/research/stock-notebook";
 import { useMemberDisplay, useOwnerAccount, useResearchOwner } from "../member-display-provider";
+import { displayClock, displayDayKey, formatDisplay } from "@/lib/research/display-time";
 import styles from "./stock-notebook.module.css";
 
 type Kind = "earnings" | "targets" | "news";
@@ -19,16 +20,14 @@ type Entry =
   | { id: string; kind: "institutional"; at: string; items: NotebookNews[] };
 
 const usd = (value: number) => `$${value.toLocaleString("en-US", { maximumFractionDigits: 2 })}`;
-const dayKey = (value: string) => new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Tokyo", year: "numeric", month: "2-digit", day: "2-digit" }).format(new Date(value));
-const dayHeading = (value: string, ja: boolean) => {
-  const date = new Date(value);
-  const md = new Intl.DateTimeFormat("en-US", { timeZone: "Asia/Tokyo", month: "numeric", day: "numeric" }).format(date);
-  return `${md} ${new Intl.DateTimeFormat(ja ? "ja-JP" : "en-US", { timeZone: "Asia/Tokyo", weekday: "short" }).format(date)}`;
-};
-const clock = (value: string) => new Intl.DateTimeFormat("en-GB", { timeZone: "Asia/Tokyo", hour: "2-digit", minute: "2-digit", hour12: false }).format(new Date(value));
+// Days, headings and clocks: Japan time in Japanese, U.S. Eastern in English (owner, Nov 17).
+const dayKey = (value: string, lang: Language) => displayDayKey(value, lang);
+const dayHeading = (value: string, lang: Language) =>
+  `${formatDisplay(value, lang, { month: "numeric", day: "numeric" }, "en-US")} ${formatDisplay(value, lang, { weekday: "short" })}`;
+const clock = (value: string, lang: Language) => displayClock(value, lang);
 
 /** The entries of the notebook, newest first. News from investment firms buying or selling shares are folded into one line per day. */
-export function notebookEntries(notebook: Notebook): Entry[] {
+export function notebookEntries(notebook: Notebook, lang: Language): Entry[] {
   const entries: Entry[] = [
     ...notebook.earnings.map((item): Entry => ({ id: `e-${item.ticker}`, kind: "earnings", at: item.at, ticker: item.ticker, title: item.title, facts: item.facts })),
     ...notebook.targets.map((item, index): Entry => ({ id: `t-${item.ticker}-${index}`, kind: "targets", at: item.at, ticker: item.ticker, firm: item.firm, previous: item.previous, latest: item.latest })),
@@ -36,7 +35,7 @@ export function notebookEntries(notebook: Notebook): Entry[] {
   const folded = new Map<string, NotebookNews[]>();
   notebook.news.forEach((item, index) => {
     if (!item.institutional) { entries.push({ id: `n-${item.ticker}-${index}`, kind: "news", at: item.at, ticker: item.ticker, title: item.title }); return; }
-    const key = dayKey(item.at);
+    const key = dayKey(item.at, lang);
     folded.set(key, [...(folded.get(key) ?? []), item]);
   });
   for (const [key, items] of folded) entries.push({ id: `i-${key}`, kind: "institutional", at: items[0].at, items });
@@ -78,7 +77,7 @@ export default function StockNotebook({ tickers, lang, weeksBack }: { tickers: s
   const notebook = useMemo(() => state === "ready" && now ? buildNotebook({
     tickers, now: now - weeksBack * 7 * 86_400_000, lang, rows: flashRows(feed, wire, lang), targets: targets ?? [], events: calendarEvents,
   }) : null, [state, now, weeksBack, tickers, lang, feed, wire, targets]);
-  const entries = useMemo(() => notebook ? notebookEntries(notebook) : [], [notebook]);
+  const entries = useMemo(() => notebook ? notebookEntries(notebook, lang) : [], [notebook, lang]);
   const counts = { earnings: notebook?.earnings.length ?? 0, targets: notebook?.targets.length ?? 0, news: notebook?.news.length ?? 0 };
   const chips: { key: "all" | Kind; label: string; count: number }[] = [
     { key: "all", label: t("すべて", "All"), count: counts.earnings + counts.targets + counts.news },
@@ -87,7 +86,7 @@ export default function StockNotebook({ tickers, lang, weeksBack }: { tickers: s
     { key: "news", label: t("ニュース", "News"), count: counts.news },
   ];
   const shown = entries.filter(entry => filter === "all" || (filter === "news" ? entry.kind === "news" || entry.kind === "institutional" : entry.kind === filter));
-  const days = [...new Set(shown.map(entry => dayKey(entry.at)))];
+  const days = [...new Set(shown.map(entry => dayKey(entry.at, lang)))];
   const label = (kind: Kind) => kind === "earnings" ? t("決算", "Earnings") : kind === "targets" ? t("目標株価", "Target") : t("ニュース", "News");
 
   return <section className={styles.notebook} aria-label={t("ニュース・決算・目標株価", "News, earnings and targets")}>
@@ -99,8 +98,8 @@ export default function StockNotebook({ tickers, lang, weeksBack }: { tickers: s
       </div>
       {full ? <div className={styles.details}>
         {days.map(day => <section key={day} className={styles.day}>
-          <h3>{dayHeading(shown.find(entry => dayKey(entry.at) === day)!.at, ja)}</h3>
-          <ul>{shown.filter(entry => dayKey(entry.at) === day).map(entry => {
+          <h3>{dayHeading(shown.find(entry => dayKey(entry.at, lang) === day)!.at, lang)}</h3>
+          <ul>{shown.filter(entry => dayKey(entry.at, lang) === day).map(entry => {
             if (entry.kind === "institutional") {
               const names = [...new Set(entry.items.map(item => item.ticker))];
               const expanded = !!open[entry.id];
@@ -108,13 +107,13 @@ export default function StockNotebook({ tickers, lang, weeksBack }: { tickers: s
                 <button type="button" aria-expanded={expanded} onClick={() => setOpen(current => ({ ...current, [entry.id]: !expanded }))}>
                   <span>{t(`機関投資家の売買 ${entry.items.length}件(${names.join("、")})`, `Institutional trades: ${entry.items.length} (${names.join(", ")})`)}</span><i aria-hidden="true">{expanded ? "⌃" : "⌄"}</i>
                 </button>
-                {expanded && <ul className={styles.foldList}>{entry.items.map((item, index) => <li key={index}><b>{item.ticker}</b><span>{item.title}</span><time dateTime={item.at}>{clock(item.at)}</time></li>)}</ul>}
+                {expanded && <ul className={styles.foldList}>{entry.items.map((item, index) => <li key={index}><b>{item.ticker}</b><span>{item.title}</span><time dateTime={item.at}>{clock(item.at, lang)}</time></li>)}</ul>}
               </li>;
             }
             const kind: Kind = entry.kind;
             const change = entry.kind === "targets" && entry.previous > 0 ? (entry.latest / entry.previous - 1) * 100 : null;
             return <li key={entry.id} className={styles.entry} data-kind={kind}>
-              <div className={styles.entryTop}><i className={styles.dot} aria-hidden="true" /><b>{entry.ticker}</b><span className={styles.tag}>{label(kind)}</span><time dateTime={entry.at}>{clock(entry.at)}</time></div>
+              <div className={styles.entryTop}><i className={styles.dot} aria-hidden="true" /><b>{entry.ticker}</b><span className={styles.tag}>{label(kind)}</span><time dateTime={entry.at}>{clock(entry.at, lang)}</time></div>
               {entry.kind === "targets" ? <>
                 <p>{entry.firm}</p>
                 <div className={styles.facts}><span>{usd(entry.previous)} → {usd(entry.latest)}</span>{change !== null && <span className={change >= 0 ? styles.rise : styles.fall}>{change > 0 ? "+" : change < 0 ? "−" : ""}{Math.abs(change).toFixed(1)}%</span>}</div>

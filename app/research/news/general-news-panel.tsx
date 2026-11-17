@@ -15,6 +15,7 @@ import { tickerLabel, wireStories } from "@/lib/research/wire-stories";
 import { homeStockStories } from "@/lib/research/home-stock-news";
 import Link from "next/link";
 import { dayKey, dayLabel, pageWindow, withDayDividers } from "@/lib/research/news-day";
+import { displayDateTime } from "@/lib/research/display-time";
 import styles from "./general-news.module.css";
 
 import { takeNewsStartup } from "@/lib/research/news-startup";
@@ -152,7 +153,7 @@ export default function GeneralNewsPanel({ lang, officialOnly = false, generalOn
   const { pages, current, start, end } = pageWindow(updates.length + news.length, page, generalOnly ? Infinity : HOME_STORIES);
   const visibleUpdates = updates.slice(start, end);
   const visibleNews = news.slice(Math.max(0, start - updates.length), Math.max(0, end - updates.length));
-  const format = (value: string) => new Date(value).toLocaleString(lang === "ja" ? "ja-JP" : "en-US", { timeZone: "Asia/Tokyo", hour12: false }) + " JST";
+  const format = (value: string) => displayDateTime(value, lang);
   // A glowing dot only for what was published within the hour and found promptly (same rule as the top band).
   const receivedMs = receivedAt ? Date.parse(receivedAt) : 0;
   const isFresh = (at: string, kind: string, observedAt?: string) => !!receivedAt && recentPublication(at, kind, Date.parse(receivedAt)) && !lateDetection(at, observedAt);
@@ -170,23 +171,23 @@ export default function GeneralNewsPanel({ lang, officialOnly = false, generalOn
           ? " 取得範囲に上限があり、全件表示ではありません。"
           : " Acquisition scan is limited; this is not a complete history.")}</p>}
     {!!visibleUpdates.length && <section aria-label={lang === "ja" ? "ニュース速報" : "News updates"}>
-      <div className={styles.items}>{withDayDividers(visibleUpdates.map(update => ({ update, dayKey: update.kind === "official" ? dayKey(update.publication.at, update.publication.kind === "date" ? "date" : "time") : dayKey(update.at, "time") }))).map(({ entry: { update }, divider }) => {
+      <div className={styles.items}>{withDayDividers(visibleUpdates.map(update => ({ update, dayKey: update.kind === "official" ? dayKey(update.publication.at, update.publication.kind === "date" ? "date" : "time", lang) : dayKey(update.at, "time", lang) }))).map(({ entry: { update }, divider }) => {
         // One divider per day ("今日", "昨日", "11月3日"); each row then shows only its time (owner, Nov 5).
         const rule = divider ? <div className={styles.dayRow} key={`day-${divider}-${update.kind === "wire" ? update.story.id : update.item.id}`}><span>{dayLabel(divider, receivedMs, lang === "ja")}</span></div> : null;
         const row = (() => {
           if (update.kind === "original-preview") return <OriginalPreviewCard key={update.item.id} item={update.item} lang={lang} />;
           if (update.kind === "wire") {
             const story = update.story;
-            return <article key={`wire-${story.id}`}><TimelineRow at={story.at} kind="time" fresh={isFresh(story.at, "published")}><NewsStory label={story.tickers.map(ticker => tickerLabel(ticker, lang === "ja")).join(" · ")} title={story.title} lang={lang} publication="" /></TimelineRow></article>;
+            return <article key={`wire-${story.id}`}><TimelineRow lang={lang} at={story.at} kind="time" fresh={isFresh(story.at, "published")}><NewsStory label={story.tickers.map(ticker => tickerLabel(ticker, lang === "ja")).join(" · ")} title={story.title} lang={lang} publication="" /></TimelineRow></article>;
           }
           if (update.kind === "market") {
             const item = update.item;
             const display = marketNewsDisplay(item, lang);
-            return <article key={`market-${item.id}`}><TimelineRow at={item.publishedAt} kind="time" fresh={isFresh(item.publishedAt, "published", item.observedAt)}><NewsStory label={display.label} title={display.title} body={marketNewsBody(item, lang)} lang={lang} publication="" /></TimelineRow></article>;
+            return <article key={`market-${item.id}`}><TimelineRow lang={lang} at={item.publishedAt} kind="time" fresh={isFresh(item.publishedAt, "published", item.observedAt)}><NewsStory label={display.label} title={display.title} body={marketNewsBody(item, lang)} lang={lang} publication="" /></TimelineRow></article>;
           }
           const item = update.item;
           const publication = update.publication, display = officialNewsDisplay(item, lang, data?.resultBriefs);
-          return <article key={item.id}><TimelineRow at={publication.at} kind={publication.kind === "date" ? "date" : "time"} fresh={isFresh(publication.at, publication.kind, item.observedAt)}><NewsStory label={display.label} title={display.title} body={display.body} fullBody={display.fullBody} concise={!item.brief && !item.newsCategory && !item.generalSource && !item.researchId} lang={lang} publication="" /></TimelineRow></article>;
+          return <article key={item.id}><TimelineRow lang={lang} at={publication.at} kind={publication.kind === "date" ? "date" : "time"} fresh={isFresh(publication.at, publication.kind, item.observedAt)}><NewsStory label={display.label} title={display.title} body={display.body} fullBody={display.fullBody} concise={!item.brief && !item.newsCategory && !item.generalSource && !item.researchId} lang={lang} publication="" /></TimelineRow></article>;
         })();
         return rule ? [rule, row] : row; })}</div>
     </section>}

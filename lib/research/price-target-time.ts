@@ -1,10 +1,10 @@
 import type { Language } from "./data";
+import { formatDisplay } from "./display-time.ts";
 
 export function formatTargetTime(date: string, lang: Language, compact = false) {
-  return new Intl.DateTimeFormat(lang === "ja" ? "ja-JP" : "en-US", {
-    timeZone: lang === "ja" ? "Asia/Tokyo" : "America/New_York",
+  return formatDisplay(date, lang, {
     ...(compact ? {} : { month: "short", day: "numeric" } as const),
     hour: "2-digit", minute: "2-digit", hour12: false,
     ...(compact ? {} : { timeZoneName: "short" } as const),
-  }).format(new Date(date));
+  });
 }

@@ -3,9 +3,11 @@
 import { useEffect, useState, useSyncExternalStore } from "react";
 import type { Language } from "@/lib/research/data";
 import { usMarketSession, type MarketSession } from "@/lib/research/us-market-session";
+import { formatDisplay } from "@/lib/research/display-time";
 import styles from "./home-hero.module.css";
 
-const dateLabel = (ja: boolean) => new Intl.DateTimeFormat(ja ? "ja-JP" : "en-US", { timeZone: "Asia/Tokyo", month: ja ? "long" : "short", day: "numeric", weekday: "short" }).format(new Date());
+/** Today's date in the site's zone: Japan time in Japanese, U.S. Eastern in English (owner, Nov 17). */
+export const dateLabel = (lang: Language, now: number | Date = new Date()) => formatDisplay(now, lang, { month: lang === "ja" ? "long" : "short", day: "numeric", weekday: "short" });
 
 /** Home heading: date, market state, one-line headline. Visual only. The market
  * state comes from the clock and the NYSE holiday calendar (lib/research/us-market-session). */
@@ -18,7 +20,7 @@ export default function HomeHero({ lang }: { lang: Language }) {
     const timer = setInterval(tick, 60_000);
     return () => { clearTimeout(first); clearInterval(timer); };
   }, []);
-  const date = useSyncExternalStore(() => () => {}, () => dateLabel(ja), () => "");
+  const date = useSyncExternalStore(() => () => {}, () => dateLabel(lang), () => "");
   const session = now ? usMarketSession(new Date(now)) : null;
   const labels: Record<MarketSession, [string, string]> = {
     regular: ["米国市場 取引中", "US MARKET OPEN"], pre: ["米国市場 プレマーケット", "US PRE-MARKET"], post: ["米国市場 時間外取引", "US AFTER-HOURS"],

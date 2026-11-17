@@ -25,6 +25,7 @@ import StockThemeDiscovery from "./stock-theme-discovery";
 import StockSearchHistory from "./stock-search-history";
 import { useStockHistory } from "./use-stock-history";
 import { stockSearchReturnPosition, stockSearchUrl } from "@/lib/research/stock-search-navigation";
+import { formatDisplay, zoneLabel } from "@/lib/research/display-time";
 
 type SearchResponse = { ok: boolean; results?: StockDirectoryEntry[]; error?: string; source?: string; asOf?: string };
 type IntroducedStockProfile = StockProfile & { introduction?: CompanyIntroduction | null; network?: CompanyNetwork | null };
@@ -282,7 +283,7 @@ export default function StockDirectory() {
           {errorMessage && <div className={styles.error} role="alert"><strong>{t("取得経路を確認中", "Source unavailable")}</strong><p>{errorMessage}</p></div>}
           {!error && query.trim() && !loading && results.length === 0 && <div className={styles.empty}><strong>{t("該当銘柄が見つかりません", "No matching ticker")}</strong><p>{t("英語の企業名またはティッカーで検索してください。SEC名簿は全銘柄を保証するものではありません。", "Try an English company name or ticker. The SEC does not guarantee complete coverage.")}</p></div>}
           <SearchRows results={visibleResults} lang={lang} onSelect={selectStock} />
-          {asOf && <p className={styles.asOf}>{t("表示取得時刻", "Retrieved")}: <time dateTime={asOf}>{new Intl.DateTimeFormat(lang === "ja" ? "ja-JP" : "en-US", { timeZone: "Asia/Tokyo", dateStyle: "medium", timeStyle: "short" }).format(new Date(asOf))} JST</time></p>}
+          {asOf && <p className={styles.asOf}>{t("表示取得時刻", "Retrieved")}: <time dateTime={asOf}>{formatDisplay(asOf, lang, { dateStyle: "medium", timeStyle: "short" })} {zoneLabel(lang)}</time></p>}
         </section>
 
       </div>}

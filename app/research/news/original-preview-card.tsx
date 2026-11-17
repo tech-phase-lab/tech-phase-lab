@@ -1,12 +1,13 @@
 import type { Language } from "@/lib/research/data";
 import type { OriginalPreviewItem } from "@/lib/research/original-preview-news";
+import { displayDateTime } from "@/lib/research/display-time";
 import NewsStory from "./news-story";
 import styles from "./general-news.module.css";
 
 /** Only the bounded original excerpt is shown; this card is never a verified story. */
 export default function OriginalPreviewCard({ item, lang }: { item: OriginalPreviewItem; lang: Language }) {
   const ja = lang === "ja";
-  const format = (value: string) => new Date(value).toLocaleString(ja ? "ja-JP" : "en-US", { timeZone: "Asia/Tokyo", hour12: false }) + " JST";
+  const format = (value: string) => displayDateTime(value, lang);
   if (item.status === "sec-filing-notice-unreviewed") return <article className={styles.originalPreview}>
     <p className={styles.previewBadge}>SEC · {ja ? "提出情報・未確認・テスト掲載" : "Filing notice · Unreviewed · Test publication"}</p>
     <p className={styles.summary}>{item.issuerName} ({item.issuerTicker}) · Form {item.form}</p>

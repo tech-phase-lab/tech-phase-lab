@@ -42,9 +42,9 @@ test("3. native long-press selection is not overridden, and B / 赤 / マーカ�
   assert.doesNotMatch(editor, /onTouchStart|touchstart/);
 });
 
-test("4. date, time and JST never split; NEW wraps under them; pencil and trash stay right", async () => {
+test("4. date, time and zone (JST / ET) never split; NEW wraps under them; pencil and trash stay right", async () => {
   const columns = await read("../app/research/columns/columns.tsx");
-  assert.match(columns, /<span className=\{styles\.stamp\}>\{date\}<small className=\{styles\.zone\}> JST<\/small><\/span>/);
+  assert.match(columns, /<span className=\{styles\.stamp\}>\{date\}<small className=\{styles\.zone\}> \{zoneLabel\(lang\)\}<\/small><\/span>/);
   const css = await read("../app/research/columns/styles.module.css");
   assert.match(css, /\.stamp\{white-space:nowrap\}/);
   assert.match(css, /\.article\.note \.meta\{flex:1 1 auto;min-width:0;[^}]*flex-wrap:wrap/);

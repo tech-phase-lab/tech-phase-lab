@@ -54,4 +54,3 @@ export function useNumbersHidden() {
 
 /** Company names as the cards show them: "Micron Technology Inc" → "Micron Technology", never cut with an ellipsis. */
 export const shortName = (name: string) => name.replace(/[,.]?\s+(Inc|Incorporated|Corp|Corporation|Co|Company|Ltd|Limited|PLC|Plc|N\.V|S\.A|Holdings?)\.?(\s+Class [A-C])?$/i, "").replace(/\s+/g, " ").trim() || name;
-export const jstClock = (iso: string) => new Date(iso).toLocaleTimeString("en-GB", { timeZone: "Asia/Tokyo", hour: "2-digit", minute: "2-digit", hour12: false });

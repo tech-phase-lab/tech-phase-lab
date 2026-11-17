@@ -11,6 +11,7 @@ import styles from "../research-tools.module.css";
 import calendarStyles from "./event-calendar.module.css";
 import { calendarInsight } from "./calendar-insights";
 import EconomicResultsPanel from "./economic-results-panel";
+import { zoneFor } from "@/lib/research/display-time";
 
 const earningsFocus: Record<string, { ja: string; en: string }> = {
   MU: { ja: "注目点：DRAM・NANDの売上と価格動向／粗利益率／HBMと設備投資／次四半期の会社見通し", en: "Watch: DRAM/NAND revenue and pricing; gross margin; HBM and capex; next-quarter guidance." },
@@ -31,7 +32,7 @@ export default function EventCalendar() {
   const [lang, setLang] = useResearchLanguage();
   const [kind, setKind] = useState<"all" | CalendarEvent["kind"]>("all");
   const [zoneOverride, setZoneOverride] = useState<string | null>(null);
-  const zone = zoneOverride ?? (lang === "ja" ? "Asia/Tokyo" : "America/New_York");
+  const zone = zoneOverride ?? zoneFor(lang);
   const otherZone = zone === "Asia/Tokyo" ? "America/New_York" : "Asia/Tokyo";
   const zoneLabel = (value: string) => value === "Asia/Tokyo" ? "JST" : "ET";
   const [view, setView] = useState<"upcoming" | "results">("upcoming");

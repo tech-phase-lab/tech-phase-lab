@@ -3,6 +3,7 @@ import { useCallback, useEffect, useRef, useState, useSyncExternalStore, type Re
 import Link from "next/link";
 import type { GroupFilter } from "@/lib/research/theme-definitions";
 import { PERIODS, type Period, type StockReturns } from "@/lib/research/theme-ranking";
+import { formatDisplay } from "@/lib/research/display-time";
 import styles from "./themes.module.css";
 
 export type ThemeData = { stocks: StockReturns[]; asOf: string; fetchedAt: number; marketOpen: boolean; validUntil: number };
@@ -104,9 +105,9 @@ export function DivergingChart({ rows, ja, mono = false, onSelect }: { rows: Cha
   </section>;
 }
 
-/** Clock in Japan time for the note under the chart: "更新 23:19 JST · 米国市場 取引中 / 休場中". */
+/** Clock for the note under the chart, Japan time in Japanese and U.S. Eastern in English: "更新 23:19 JST · 米国市場 取引中 / 休場中". */
 export function updateNote(data: ThemeData, ja: boolean) {
-  const time = new Intl.DateTimeFormat(ja ? "ja-JP" : "en-US", { timeZone: ja ? "Asia/Tokyo" : "America/New_York", hour: "2-digit", minute: "2-digit", hour12: false }).format(data.fetchedAt || Date.now());
+  const time = formatDisplay(data.fetchedAt || Date.now(), ja ? "ja" : "en", { hour: "2-digit", minute: "2-digit", hour12: false });
   return ja ? `更新 ${time} JST ・ 米国市場 ${data.marketOpen ? "取引中" : "休場中"}` : `Updated ${time} ET · U.S. market ${data.marketOpen ? "open" : "closed"}`;
 }
 

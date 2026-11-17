@@ -48,7 +48,7 @@ test('the page has All / Earnings tabs only, shows one date heading per day (mon
   assert.match(source, /row\.kind === "earnings" \|\| row\.tickers\.some\(ticker => WATCH_TICKERS\.has\(ticker\)\)/);
   assert.match(source, /className=\{styles\.day\}/);
   assert.doesNotMatch(source, /timeline\.src|row\.source/);
-  assert.match(source, /const dayKey = /);
+  assert.match(source, /const flashDayKey = /);
   assert.match(source, /\$\{Number\(month\)\}\/\$\{Number\(day\)\}/);
   assert.doesNotMatch(source, /<time dateTime=\{row\.at\}><span>/);
   assert.doesNotMatch(source, /公式発表/);

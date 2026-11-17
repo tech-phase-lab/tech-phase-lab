@@ -17,16 +17,28 @@ test("the home list is five stories a page, five pages at most; the Top Topics p
   assert.equal(pageWindow(80, 16).pages, 16, "no cap on the whole-list page");
 });
 
-test("day dividers: 今日, 昨日, then the date; days are Japan time", () => {
+test("day dividers: 今日, 昨日, then the date; days are Japan time in Japanese and U.S. Eastern in English", () => {
   assert.equal(dayLabel("2026-11-05", now, true), "今日");
   assert.equal(dayLabel("2026-11-04", now, true), "昨日");
   assert.equal(dayLabel("2026-11-03", now, true), "11月3日");
-  assert.equal(dayLabel("2026-11-03", now, false), "Nov 3");
   assert.equal(dayLabel("2026-10-31", now, true), "10月31日");
   // 23:30 UTC on Nov 4 is 08:30 on Nov 5 in Japan.
-  assert.equal(dayKey("2026-11-04T23:30:00Z", "time"), "2026-11-05");
-  assert.equal(dayKey("2026-11-04T14:59:00Z", "time"), "2026-11-04");
-  assert.equal(dayKey("2026-11-03", "date"), "2026-11-03");
+  assert.equal(dayKey("2026-11-04T23:30:00Z", "time", "ja"), "2026-11-05");
+  assert.equal(dayKey("2026-11-04T14:59:00Z", "time", "ja"), "2026-11-04");
+  assert.equal(dayKey("2026-11-03", "date", "ja"), "2026-11-03");
+  // English (owner, Nov 17): `now` is 22:00 on Nov 4 in New York (EST), so Nov 4 is today there.
+  assert.equal(dayLabel("2026-11-04", now, false), "Today");
+  assert.equal(dayLabel("2026-11-03", now, false), "Yesterday");
+  assert.equal(dayLabel("2026-11-02", now, false), "Nov 2");
+  assert.equal(dayKey("2026-11-04T23:30:00Z", "time", "en"), "2026-11-04");
+  assert.equal(dayKey("2026-11-05T04:59:00Z", "time", "en"), "2026-11-04");
+  assert.equal(dayKey("2026-11-05T05:00:00Z", "time", "en"), "2026-11-05");
+  // During daylight saving (EDT, UTC-4) the day turns at 04:00 UTC.
+  assert.equal(dayKey("2026-07-10T03:59:00Z", "time", "en"), "2026-07-09");
+  assert.equal(dayKey("2026-07-10T04:00:00Z", "time", "en"), "2026-07-10");
+  assert.equal(dayKey("2026-11-03", "date", "en"), "2026-11-03");
+  // The day after the clocks go back (Nov 1, a 25-hour day) still names Nov 1 as yesterday.
+  assert.equal(dayLabel("2026-11-01", Date.parse("2026-11-02T06:30:00Z"), false), "Yesterday");
 });
 
 test("a divider goes before the first story of each day, and the top of every page", () => {
@@ -60,7 +72,7 @@ test("the list has one time on the left, no 発表 line, no seconds, and a butto
   assert.match(panel, /const HOME_STORIES = 25/);
   const row = read("../app/research/news/timeline-row.tsx");
   assert.doesNotMatch(row, /second/);
-  assert.match(row, /jst\(\{ hour: "2-digit", minute: "2-digit" \}, at\)/);
+  assert.match(row, /displayClock\(at, lang\)/);
 });
 
 test("the price target list no longer carries the notification link (it lives in the menu)", () => {
