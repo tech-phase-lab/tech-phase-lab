@@ -126,14 +126,14 @@ export default function NotificationPageView(p: PageViewProps) {
   const more = (icon: ReactNode, title: string, value: string, open: () => void) =>
     <li><button type="button" className={styles.more} onClick={open}><span className={styles.icon}>{icon}</span><span className={styles.rowTitleBig}>{title}</span><span className={styles.value}>{value}</span><span className={styles.chev} aria-hidden="true">›</span></button></li>;
   const statusText = state === "unavailable" || state === "unknown" ? t("通知の状態を確認できませんでした。", "Could not check the notification status.")
-    : needsAccount || !p.usable ? p.label : on ? t("選んだお知らせが届きます。", "The alerts you pick below reach this device.") : t("オンにすると、お知らせが届きます。", "Turn on notifications, then choose which updates you'd like to receive.");
+    : needsAccount || !p.usable ? p.label : on ? t("選んだ通知が届きます", "The alerts you pick below reach this device.") : t("オンにすると届きます", "Turn on notifications, then choose which updates you'd like to receive.");
   return <div className={styles.page}>
     <div className={styles.status}>
       <div className={styles.statusRow}>
         <span className={`${styles.bell} ${on ? styles.bellOn : ""}`}>{icons.bell}</span>
         <div className={styles.statusBody}>
           <p className={styles.statusName}>{t("この端末の通知", "This device")}<span className={`${styles.tag} ${on ? styles.tagOn : ""}`} role="status"><i />{on ? t("オン", "On") : t("オフ", "Off")}</span></p>
-          <p className={styles.statusText} data-oneline={lang === "ja"} role="status">{statusText}</p>
+          <p className={styles.statusText} role="status">{statusText}</p>
         </div>
         {state === "unsupported" && installContext(navigator.userAgent, isStandalone(window)) !== "none" && <button type="button" className={styles.statusOn} onClick={() => window.dispatchEvent(new Event(SHOW_EVENT))}>{t("オンにする", "Turn on")}</button>}
         {p.usable && <button type="button" className={on ? styles.statusOff : styles.statusOn} disabled={p.busy || p.starting} onClick={p.onToggle}>{p.busy || p.starting ? t("設定中…", "Setting up…") : on ? t("オフにする", "Turn off") : t("オンにする", "Turn on")}</button>}
