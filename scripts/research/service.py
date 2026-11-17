@@ -53,6 +53,7 @@ import x_preflight_service
 import x_stream_trial_service
 import market_results
 import issuer_result_flash
+import result_fallback
 import dart_api
 import dart_watch
 import earnings_announce
@@ -1059,6 +1060,11 @@ class AutomaticMonitor:
                 issuer_result_flash.run_once(self.db_path)
             except Exception:
                 print("issuer-result-flash-unavailable", flush=True)
+            try:
+                # Where the parser could not read the table: figures of the release's deep analysis, verified against the stored release.
+                result_fallback.run_once(self.db_path)
+            except Exception:
+                print("issuer-result-fallback-unavailable", flush=True)
             if os.environ.get("OFFICIAL_HEADLINE_TRANSLATION_ENABLED") == "true":
                 try:
                     x_market_news.publish_direct_once(self.db_path)
