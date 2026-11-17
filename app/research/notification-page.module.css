@@ -2,6 +2,7 @@
 .eyebrow { display:flex; align-items:center; gap:10px; margin:0 0 2px; }
 .eyebrow span { font-size:11px; font-weight:600; line-height:1.3; letter-spacing:.16em; color:#8e9aaa; }
 .eyebrow b { padding:3px 8px; border-radius:6px; background:var(--gold); color:#2a1f05; font:700 9.5px "JetBrains Mono",ui-monospace,monospace; letter-spacing:.08em; }
+.titleRow { display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
 main h1.title { margin:0; font-size:26px; font-weight:700; line-height:1.25; color:#f1f4f8; }
 .sub { margin:8px 0 22px; font-size:12.5px; color:#8697ab; }
 .subRow { display:flex; align-items:baseline; justify-content:space-between; gap:12px; margin:8px 0 18px; }
