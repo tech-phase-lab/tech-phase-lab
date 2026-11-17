@@ -48,7 +48,7 @@ class Defaults(Base):
         self.assertTrue(prefs['economic'])
         self.assertEqual(prefs['economicKinds'], ['jobs', 'cpi', 'ppi', 'pce', 'fomc', 'adp', 'ism'])
         self.assertFalse(prefs['weeklyIssue']); self.assertFalse(prefs['rizelAnswer'])
-        self.assertEqual(prefs['quiet'], {'on': True, 'start': 23, 'end': 7})
+        self.assertEqual(prefs['quiet'], {'on': True, 'start': 23, 'end': 7, 'zone': 'Asia/Tokyo'})
 
     def test_each_choice_is_saved_and_bad_values_are_refused(self):
         saved = self.save({'economicKinds': ['gdp', 'jobs'], 'weeklyIssue': True, 'rizelAnswer': True, 'quiet': {'on': True, 'start': 22, 'end': 6}})
