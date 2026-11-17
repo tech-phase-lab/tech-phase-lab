@@ -15,7 +15,9 @@ import { enablePushDevice, PushEnableError, pushEnableReportLine, readyWithin, t
 const DEVICE_KEY = "tech-phase:notification-device-state";
 const readDeviceState = () => { try { return localStorage.getItem(DEVICE_KEY) ?? ""; } catch { return ""; } };
 type State = "checking" | "off" | "on" | "unknown" | "blocked" | "unsupported" | "unavailable" | "sign-in" | "pro-required";
-export default function NotificationSettings({ lang, initiallyOpen = false, page = false }: { lang: Language; initiallyOpen?: boolean; page?: boolean }) {
+/** scope "resolute" (owner, Nov 17): the same part on RESOLUTE's ③ and ④ screens, worded 「この端末で受け取る」 for the RESOLUTE notices. */
+export default function NotificationSettings({ lang, initiallyOpen = false, page = false, scope = "research" }: { lang: Language; initiallyOpen?: boolean; page?: boolean; scope?: "research" | "resolute" }) {
+  const resoluteScope = scope === "resolute";
   const ownerMode = useOwnerMode();
   const ownerAccount = useOwnerAccount();
   const refreshIdentity = useIdentityRefresh();
@@ -27,6 +29,8 @@ export default function NotificationSettings({ lang, initiallyOpen = false, page
   const [message, setMessage] = useState("");
   const [testSent, setTestSent] = useState(false);
   const [received, setReceived] = useState(false);
+  // What this member may receive, as the server decided: PRO (the Tech Phase notices) and/or RESOLUTE (its ③④ notices).
+  const [access, setAccess] = useState<{ pro: boolean; resolute: boolean }>({ pro: true, resolute: false });
   const [retryAt, setRetryAt] = useState(0);
   const inspection = useRef(0);
   const operation = useRef(false);
@@ -116,6 +120,7 @@ export default function NotificationSettings({ lang, initiallyOpen = false, page
         setHasSubscription(Boolean(subscription));
         if (config.reason === "sign-in" || config.reason === "pro-required") { setState(config.reason); return; }
         if (!response.ok || !config.enabled || !config.publicKey) { setState("unavailable"); return; }
+        setAccess({ pro: config.pro !== false, resolute: config.resolute === true });
         setPrefsState(current => config.preferencesVersion === 1 ? current === "unsupported" ? "idle" : current : "unsupported");
         if (!Number.isFinite(config.validUntil) || config.validUntil <= Date.now()) { setState("pro-required"); return; }
         // A capped browser timer is a recheck, not proof that paid access expired.
@@ -146,7 +151,8 @@ export default function NotificationSettings({ lang, initiallyOpen = false, page
   function refusalMessage(code: unknown): string | null {
     switch (code) {
       case "not-owned": return t("この端末は、ログイン中のアカウントに登録されていません。通知をオフにして、オンにし直してください。", "This device is not registered to the account you are signed in with. Turn notifications off, then on again.");
-      case "expired-membership": return t("PRO会員の有効期限を確認できませんでした。ログインし直してから、もう一度お試しください。", "Your PRO access could not be confirmed. Sign in again and retry.");
+      case "expired-membership": return resoluteScope ? t("終値アラートの利用期間を確認できませんでした。ログインし直してから、もう一度お試しください。", "Your closing-price alert access could not be confirmed. Sign in again and retry.")
+        : t("PRO会員の有効期限を確認できませんでした。ログインし直してから、もう一度お試しください。", "Your PRO access could not be confirmed. Sign in again and retry.");
       case "not-registered": return t("この端末はまだ登録されていません。通知をオンにしてください。", "This device is not registered yet. Turn notifications on.");
       case "disabled": return t("サーバー側で通知が止まっています。しばらくしてからお試しください。", "Notifications are paused on the server. Try again later.");
       default: return null;
@@ -158,7 +164,7 @@ export default function NotificationSettings({ lang, initiallyOpen = false, page
       body: JSON.stringify({ action, subscription: subscription.toJSON(), allTargets: true, language: lang, ...extra }),
       signal: AbortSignal.timeout(15_000),
     });
-    if (response.status === 401 || response.status === 403) { setState(response.status === 401 ? "sign-in" : "pro-required"); throw new Error(t("ログインとPRO会員の有効期限を確認してください。", "Check your sign-in and PRO membership.")); }
+    if (response.status === 401 || response.status === 403) { setState(response.status === 401 ? "sign-in" : "pro-required"); throw new Error(resoluteScope ? t("ログインと終値アラートの利用期間を確認してください。", "Check your sign-in and your closing-price alert access.") : t("ログインとPRO会員の有効期限を確認してください。", "Check your sign-in and PRO membership.")); }
     const result = await response.json();
     if (!response.ok || !result.ok) throw new Error(refusalMessage(result?.error) ?? t("接続できませんでした。もう一度お試しください。", "Unable to connect. Please try again."));
     return result;
@@ -282,7 +288,7 @@ export default function NotificationSettings({ lang, initiallyOpen = false, page
       });
     } finally { operation.current = false; setBusy(false); if (pendingInspection.current) setRefresh(value => value + 1); }
   }
-  const label = { "sign-in": t("通知を利用するにはログインしてください", "Sign in to use notifications"), "pro-required": t("スマホ通知はPRO会員向けです", "Phone notifications are available with PRO"), checking: t("確認中…", "Checking…"), off: t("この端末：通知オフ", "This device: off"), on: t("この端末：通知オン", "This device: on"), unknown: t("この端末：登録状態を確認", "This device: verify registration"), blocked: t("この端末：通知が許可されていません", "This device: permission blocked"), unsupported: t("このブラウザでは通知を利用できません", "Notifications unavailable in this browser"), unavailable: t("通知サービスに接続できません", "Notification service unavailable") }[state];
+  const label = { "sign-in": t("通知を利用するにはログインしてください", "Sign in to use notifications"), "pro-required": resoluteScope ? t("スマホ通知は、終値アラートを使える期間に利用できます", "Phone notifications are available while your closing-price alerts are active") : t("スマホ通知はPRO会員向けです", "Phone notifications are available with PRO"), checking: t("確認中…", "Checking…"), off: t("この端末：通知オフ", "This device: off"), on: t("この端末：通知オン", "This device: on"), unknown: t("この端末：登録状態を確認", "This device: verify registration"), blocked: t("この端末：通知が許可されていません", "This device: permission blocked"), unsupported: t("このブラウザでは通知を利用できません", "Notifications unavailable in this browser"), unavailable: t("通知サービスに接続できません", "Notification service unavailable") }[state];
   const usable = ["off", "on", "unknown"].includes(state);
   // Saves run one at a time. A failed save returns to the last value the server confirmed.
   function savePreferences(patch: Partial<Preferences>) {
@@ -330,28 +336,28 @@ export default function NotificationSettings({ lang, initiallyOpen = false, page
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [starting, state]);
   const toggle = () => { if (state === "checking" && shownState === "off") { setStarting(true); return; } void run(shownState === "on" ? "disable" : "enable"); };
-  if (page) return <NotificationPageView owner={ownerMode} lang={lang} state={shownState} label={label} busy={busy} starting={starting} usable={usable || state === "checking"} hasSubscription={hasSubscription} message={message} testSent={testSent} received={received}
+  if (page) return <NotificationPageView owner={ownerMode} access={access} lang={lang} state={shownState} label={label} busy={busy} starting={starting} usable={usable || state === "checking"} hasSubscription={hasSubscription} message={message} testSent={testSent} received={received}
     prefs={prefs} prefsState={prefsState} prefsMessage={prefsMessage} onPrefs={savePreferences}
     diagnostic={ownerAccount ? <PushDiagnosticPanel lang={lang} onReinstall={key ? reinstall : undefined} /> : null}
     onToggle={toggle} onDisable={() => void run("disable")} onTest={() => void run("test")} onRetry={() => setRefresh(value => value + 1)} onStatus={() => void run("status")} onReceived={() => { setReceived(true); setMessage(""); }} />;
   return <>
     <button type="button" className={styles.notificationToggle} aria-expanded={open} aria-controls={open ? "price-target-notifications" : undefined} onClick={() => setOpen(!open)}><svg className={styles.bellIcon} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 22a2.3 2.3 0 0 0 2.3-2.3H9.7A2.3 2.3 0 0 0 12 22zm6.6-6.4V11a6.6 6.6 0 0 0-5.1-6.4V3.9a1.5 1.5 0 0 0-3 0v.7A6.6 6.6 0 0 0 5.4 11v4.6L3.6 17.4V19h16.8v-1.6z"/></svg>{t("スマホ通知設定", "Mobile notifications")}</button>
     {open && <div id="price-target-notifications" className={styles.notificationBody}>
-      <strong className={styles.notificationTitle}>{t("目標株価・決算速報のスマホ通知", "Price target and earnings phone alerts")}</strong>
+      <strong className={styles.notificationTitle}>{resoluteScope ? t("RESOLUTEのスマホ通知", "RESOLUTE phone notifications") : t("目標株価・決算速報のスマホ通知", "Price target and earnings phone alerts")}</strong>
       <p role="status">{label}</p>
       {(state === "unavailable" || state === "checking") && <button type="button" disabled={busy} onClick={() => setRefresh(value => value + 1)}>{t("再確認", "Try again")}</button>}
-      {(state === "sign-in" || state === "pro-required") && <Link href="/research/account">{t("ログイン・会員情報", "Sign in or view plans")}</Link>}
+      {(state === "sign-in" || (state === "pro-required" && !resoluteScope)) && <Link href="/research/account">{t("ログイン・会員情報", "Sign in or view plans")}</Link>}
       {!usable && hasSubscription && <button type="button" disabled={busy} onClick={() => void run("disable")}>{t("この端末の通知をオフ", "Turn off on this device")}</button>}
       {state === "unsupported" && <p>{t("iPhoneではSafariの共有メニューからホーム画面に追加し、そのアイコンから開いてください。", "On iPhone, add this site to your Home Screen using Safari’s Share menu, then open that icon.")}</p>}
       {state === "blocked" && <p>{t("端末またはブラウザの設定で、Tech Phaseの通知を許可してください。", "Allow Tech Phase notifications in your device or browser settings.")}</p>}
       {usable && <>
         <div className={styles.notificationActions}>
-          <button type="button" disabled={busy} onClick={() => void run(state === "on" ? "disable" : "enable")}>{state === "on" ? t("この端末の通知をオフ", "Turn off on this device") : t("通知をオンにする", "Turn on notifications")}</button>
+          <button type="button" disabled={busy} onClick={() => void run(state === "on" ? "disable" : "enable")}>{state === "on" ? t("この端末の通知をオフ", "Turn off on this device") : resoluteScope ? t("この端末で受け取る", "Get them on this device") : t("通知をオンにする", "Turn on notifications")}</button>
           {state === "unknown" && <><button type="button" disabled={busy} onClick={() => void run("status")}>{t("登録状態を確認", "Check registration")}</button><button type="button" disabled={busy} onClick={() => void run("disable")}>{t("この端末の通知をオフ", "Turn off on this device")}</button></>}
           {state === "on" && <button type="button" disabled={busy} onClick={() => void run("test")}>{t("テスト通知を送る", "Send test notification")}</button>}
         </div>
         {state === "on" && <p><Link href="/research/notifications">{t("届く内容を選ぶ", "Choose what you receive")}</Link></p>}
-        {state !== "on" && <p>{t("通知をオンにすると、この設定で届きます。", "This applies once notifications are on.")}</p>}
+        {state !== "on" && <p>{resoluteScope ? t("オンにすると、この端末にスマホ通知で届きます。", "Turn this on to get them as phone notifications on this device.") : t("通知をオンにすると、この設定で届きます。", "This applies once notifications are on.")}</p>}
       </>}
       {busy && <p role="status">{t("処理中…", "Working…")}</p>}
       {message && <p role="status">{message}</p>}

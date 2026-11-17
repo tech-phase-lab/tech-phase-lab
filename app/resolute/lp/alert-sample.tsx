@@ -1,37 +1,35 @@
 "use client";
 import { useState } from "react";
+import { latestAlertView, type LatestAlert } from "@/lib/resolute/latest-alert";
+import { resoluteAlertPushBody } from "@/lib/resolute/push-notice";
 import s from "./lp.module.css";
 
 type Locale = "ja" | "en";
-/** A phone notification; tapping it opens the sample mail it stands for. */
+/** 届く通知の例 (owner, Nov 17): the phone notification (title RESOLUTE, one line) and, on a tap, the 「今日のお知らせ」 page it opens,
+ * worded by the same functions as the real notice and page. Example numbers only. */
+const SAMPLE: LatestAlert = { date: "2027-01-14", items: [
+  { kind: "line_reached", symbol: "NVDA", close: 118.4, dropPct: 10.2, newLines: [10] },
+  { kind: "surge_cap", symbol: "PLTR", close: 96.1, risePct: 41.5 },
+] };
 export default function AlertSample({ locale = "ja" }: { locale?: Locale }) {
  const [open, setOpen] = useState(false);
  const en = locale === "en";
+ const body = resoluteAlertPushBody(SAMPLE.items.map(i => ({ ...i, date: SAMPLE.date, referencePrice: 0 })), locale);
+ const v = latestAlertView(SAMPLE, locale);
  return <div className={s.alert}>
   <button type="button" className={s.push} aria-expanded={open} aria-controls="lp-alert-mail" onClick={() => setOpen(true)} hidden={open}>
-   <span className={s.pushHead}><b>{en ? "RESOLUTE · Closing-price alert" : "RESOLUTE ・ 終値アラート"}</b><time>{en ? "5:00 PM" : "7:00"}</time></span>
-   <span className={s.pushTitle}>{en ? "Your price alerts were triggered" : "計画のラインに届いた銘柄があります"}</span>
-   <span className={s.pushBody}>{en ? "NVDA −10.2% · PLTR +41.5%" : "NVDA −10.2% ・ PLTR +41.5%"}</span>
-   <small className={s.tap}>{en ? "Tap to see details" : "タップして詳細を見る"}</small>
+   <span className={s.pushHead}><b>RESOLUTE</b><time>{en ? "5:00 PM" : "7:00"}</time></span>
+   <span className={s.pushTitle}>{body}</span>
+   <small className={s.tap}>{en ? "Tap to open Today's alert" : "タップして「今日のお知らせ」を開く"}</small>
   </button>
-  {open && (en ? <div id="lp-alert-mail" className={s.mail}>
-   <p className={s.mailTitle}>[RESOLUTE] Your downside and upside alerts were triggered</p>
-   <p>We checked January 14 closing prices in the U.S. market against your alert levels.</p>
-   <ul>
-    <li>NVDA closed at $118.40 (10.2% below your reference price)<br />Downside alert triggered: −10%</li>
-    <li>PLTR closed at $96.10 (41.5% above your reference price)<br />Your upside alert level was reached</li>
-   </ul>
-   <p>A downside alert is your cue to pause and reread your rules. An upside alert is your cue to check whether one holding now makes up too much of your portfolio.</p>
-   <button type="button" className={s.mailClose} onClick={() => setOpen(false)}>Close</button>
-  </div> : <div id="lp-alert-mail" className={s.mail}>
-   <p className={s.mailTitle}>【RESOLUTE】あなたの計画のラインと上昇の目安に届いた銘柄があります</p>
-   <p>1月14日(米国市場)の終値を、あなたの計画と照らしました。</p>
-   <ul>
-    <li><b>NVDA</b> 終値 $118.40(基準から −10.2%)<br />新しく届いたライン −10%</li>
-    <li><b>PLTR</b> 終値 $96.10(基準から +41.5%)<br />決めておいた上昇の目安に届きました</li>
-   </ul>
-   <p>下落のラインは立ち止まってルールを見直す合図。上昇の目安は持ち分の偏りを確かめる合図です。</p>
-   <button type="button" className={s.mailClose} onClick={() => setOpen(false)}>閉じる</button>
-  </div>)}
+  {open && <div id="lp-alert-mail" className={s.mail}>
+   <p className={s.mailTitle}>{v.title}</p>
+   <p>{v.date}</p>
+   {v.notes.map(note => <p key={note}>{note}</p>)}
+   <ul>{v.cards.map(card => <li key={card.symbol}><b>{card.symbol}</b> {card.text}<br />{card.chip}</li>)}</ul>
+   <p>{v.check}</p>
+   <p>{v.disclaimer}</p>
+   <button type="button" className={s.mailClose} onClick={() => setOpen(false)}>{en ? "Close" : "閉じる"}</button>
+  </div>}
  </div>;
 }

@@ -110,7 +110,7 @@ export default function ToolShell({ identityReady=true, home=false, children }: 
    {access==="mfa" ? <Link href="/research/account/security" prefetch={false}>{en?"Open security settings":"セキュリティ設定を開く"}</Link> : null}
    <button type="button" className={styles.secondary} onClick={()=>setAttempt(n=>n+1)}>{en?"Check again":"再確認"}</button>
   </section>}
-  {review ? <p className={styles.reviewNote}>{en ? "Owner preview · You can choose to save on this device. No emails are sent." : "運営者専用の確認画面です。端末への保存は上の設定で選べます。メールは送信しません。"}</p> : null}
+  {review ? <p className={styles.reviewNote}>{en ? "Owner preview · You can choose to save on this device. No notifications are sent." : "運営者専用の確認画面です。端末への保存は上の設定で選べます。通知は送信しません。"}</p> : null}
   {home && !reviewing ? <AddToHomeCard en={en} /> : null}
  </div></main>;
 }

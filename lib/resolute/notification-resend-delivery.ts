@@ -3,6 +3,7 @@ import { createAlertDelivery } from "./notification-delivery.ts";
 import { createResendAlertProvider, resendOutboxEvidence } from "./notification-resend.ts";
 import { createClerkNotificationRecipient } from "./notification-recipient.ts";
 import { createMailStopTokens, mailStopLinks } from "./notification-stop-token.ts";
+import { withPushFirst, type PushSender } from "./notification-push.ts";
 
 /** Explicit composition only. No startup/cron/config changes or implicit sends.
  * Production enablement also needs domain verification, a working public stop
@@ -11,6 +12,8 @@ import { createMailStopTokens, mailStopLinks } from "./notification-stop-token.t
 export function createResendAlertDelivery(pool:Pick<Pool,"connect">,options:{
  enabled?:boolean;apiKey:string;from:string;publicOrigin:string;stopKey:Buffer;
  clerk:Parameters<typeof createClerkNotificationRecipient>[0];request?:typeof fetch;now?:()=>Date;
+ /** RESOLUTE ③④ by phone notification first (notification-push.ts); without it, email only as before. */
+ push?:PushSender;
 }) {
  const now=options.now??(()=>new Date());
  return async(userId:string,key:string,mode:"send"|"reconcile"="send")=>{
@@ -20,7 +23,7 @@ export function createResendAlertDelivery(pool:Pick<Pool,"connect">,options:{
   const deliver=createAlertDelivery(pool,{enabled:true,now,publicOrigin:options.publicOrigin,
    recipient:async id=>{const result=await recipient(id);locale=result.locale;return result;},
    links:async id=>({...mailStopLinks(options.publicOrigin,tokens,id,locale),doneUrl:options.publicOrigin+"/resolute/morning#done",skippedUrl:options.publicOrigin+"/resolute/morning#skipped",unsureUrl:options.publicOrigin+"/resolute/morning#unsure"}),
-   provider:(client,id)=>createResendAlertProvider({apiKey:options.apiKey,from:options.from,enabled:true},resendOutboxEvidence(client,id),options.request,now),
+   provider:(client,id)=>withPushFirst(createResendAlertProvider({apiKey:options.apiKey,from:options.from,enabled:true},resendOutboxEvidence(client,id),options.request,now),options.push,id,now),
   });
   return deliver(userId,key,mode);
  };

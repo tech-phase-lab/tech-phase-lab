@@ -25,7 +25,7 @@ In the RESOLUTE diagnostic, you may be asked to enter amounts such as living exp
 
 1. Providing the Service, verifying identity, and managing logins
 2. Billing, confirming payments, and granting or suspending usage rights
-3. Sending notification emails such as Closing-price Alerts and Next-morning Notes
+3. Sending notifications such as Closing-price Alerts and Next-morning Notes (phone notifications, or email if phone notifications are not turned on)
 4. Responding to inquiries and sending important notices
 5. Preventing unauthorized use and ensuring security
 6. Analysis to improve the Service (done in a form that does not identify individuals)

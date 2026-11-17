@@ -3,6 +3,7 @@ import {createClerkClient} from '@clerk/backend';
 import {resoluteDatabaseConfig} from '../../lib/resolute/database-config.ts';
 import {createResendAlertDelivery} from '../../lib/resolute/notification-resend-delivery.ts';
 import {createMailWorker} from '../../lib/resolute/notification-mail-worker.ts';
+import {createMonitorPushSender} from '../../lib/resolute/notification-push.ts';
 
 // No automatic startup, scheduler registration or environment changes.
 let pool;
@@ -18,8 +19,11 @@ try{
   if(new URL(config.connectionString).username!=='resolute_notification_sender')throw Error('Scoped sender required');
   const origin=new URL(env.RESOLUTE_MAIL_PUBLIC_ORIGIN??'');
   if(origin.protocol!=='https:'||origin.origin!==env.RESOLUTE_MAIL_PUBLIC_ORIGIN||origin.username||origin.password)throw Error('Public origin required');
+  // RESOLUTE ③④ by phone notification first (owner, Nov 17): set only with both variables (the research monitor's https origin and
+  // its dedicated RESOLUTE token). Without them, email only, exactly as before. A notice no device accepted goes by email.
+  const push=createMonitorPushSender({url:env.RESOLUTE_PUSH_MONITOR_URL,token:env.RESOLUTE_PUSH_TOKEN});
   pool=new Pool(config);pool.on('error',()=>{});
-  const deliver=createResendAlertDelivery(pool,{enabled:true,apiKey:env.RESOLUTE_RESEND_API_KEY??'',from:env.RESOLUTE_MAIL_FROM??'',publicOrigin:origin.origin,stopKey:Buffer.from(key,'hex'),clerk:createClerkClient({secretKey:env.RESOLUTE_MAIL_CLERK_SECRET_KEY})});
+  const deliver=createResendAlertDelivery(pool,{enabled:true,apiKey:env.RESOLUTE_RESEND_API_KEY??'',from:env.RESOLUTE_MAIL_FROM??'',publicOrigin:origin.origin,stopKey:Buffer.from(key,'hex'),clerk:createClerkClient({secretKey:env.RESOLUTE_MAIL_CLERK_SECRET_KEY}),push});
   const report=await createMailWorker(pool,{enabled:true,deliver})();console.log(JSON.stringify(report));
   if(report.uncertain||report.errors||report.incomplete)process.exitCode=1;
  }

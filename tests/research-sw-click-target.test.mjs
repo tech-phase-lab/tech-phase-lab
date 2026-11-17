@@ -164,14 +164,15 @@ test("the focused window is tried first; other sites and non-research pages are 
   const w = worker([[`${ORIGIN}/research/news`, { navigate: "reject" }], [`${ORIGIN}/research/compare`, { navigate: "reject", focused: true }]]);
   await w.click({ url: "/research/calendar" });
   assert.deepEqual(w.log.filter(([kind]) => kind === "message"), [["message", `${ORIGIN}/research/compare`, "/research/calendar"]]);
-  const other = worker([["https://evil.example/research"], [`${ORIGIN}/resolute`]]);
+  // Nov 17: a RESOLUTE window is the same app's window (a RESOLUTE tap reuses it); other pages of the site are still left alone.
+  const other = worker([["https://evil.example/research"], [`${ORIGIN}/terms`]]);
   await other.click({ url: "/research/weekly" });
   assert.deepEqual(moves(other.log), [["open", `${ORIGIN}/research/weekly`]]);
 });
 
 test("a new worker takes over at once so installed phones get this version", async () => {
   const w = worker();
-  assert.match(source, /const VERSION = "2026-11-17-page-query"/);
+  assert.match(source, /const VERSION = "2026-11-17-resolute"/);
   w.listeners.install({});
   let waiting;
   w.listeners.activate({ waitUntil: p => { waiting = p; } });
@@ -242,7 +243,7 @@ test("the worker notes the push, the notice shown and whether the phone lists it
   await w.push({ title: "Tech Phase · テスト通知", body: "b", url: "/research/notifications", tag: "tech-phase-test" });
   const diag = await w.record("/research-sw/diagnostic");
   assert.deepEqual(Object.keys(diag).sort(), ["id", "listApi", "listed", "push", "shown", "v"]);
-  assert.equal(diag.v, "2026-11-17-page-query"); assert.equal(diag.id, "id-1");
+  assert.equal(diag.v, "2026-11-17-resolute"); assert.equal(diag.id, "id-1");
   assert.ok(diag.push >= before && diag.shown >= diag.push && diag.shown <= Date.now());
   assert.equal(diag.listApi, true); assert.equal(diag.listed, true);
   assert.equal(JSON.stringify(diag).includes("テスト"), false); assert.equal(JSON.stringify(diag).includes("/research"), false);
@@ -263,7 +264,7 @@ test("a tap the worker hears of is added to the notice's step record, and the ap
   assert.equal(diag.id, "id-1"); assert.ok(diag.push && diag.shown && diag.click >= before);
   const answer = await w.ask({ type: "pending-query" });
   assert.deepEqual(answer.diag, diag);
-  assert.equal(answer.version, "2026-11-17-page-query");
+  assert.equal(answer.version, "2026-11-17-resolute");
   // A tap on an older notice starts a record of its own.
   await w.click({ url: "/research/news", id: "old-1" });
   const other = await w.record("/research-sw/diagnostic");
@@ -273,11 +274,11 @@ test("a tap the worker hears of is added to the notice's step record, and the ap
 // Nov 16: the owner's app stayed on home after a tap and recorded nothing; the settings page now asks each worker its version.
 test("the worker answers a version question with its VERSION and the time of the last push it saw", async () => {
   const w = worker();
-  assert.deepEqual(await w.ask({ type: "version-query" }), { type: "version", version: "2026-11-17-page-query", lastPush: null });
+  assert.deepEqual(await w.ask({ type: "version-query" }), { type: "version", version: "2026-11-17-resolute", lastPush: null });
   const before = Date.now();
   await w.push({ title: "t", body: "b" });
   const answer = await w.ask({ type: "version-query" });
-  assert.equal(answer.version, "2026-11-17-page-query");
+  assert.equal(answer.version, "2026-11-17-resolute");
   assert.ok(answer.lastPush >= before && answer.lastPush <= Date.now());
   assert.deepEqual(Object.keys(answer).sort(), ["lastPush", "type", "version"]);
 });

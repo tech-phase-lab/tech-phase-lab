@@ -3844,6 +3844,29 @@ class Handler(BaseHTTPRequestHandler):
             self.send_json(403, {"ok": False, "error": "read-only"})
             return
         path = urlsplit(self.path).path
+        if path == "/internal/resolute/push":
+            # Nov 17 (owner): RESOLUTE's sender asks for its ③/④ notice to reach the member's phones (web_push.resolute_push). Its own
+            # token only; RESOLUTE has already checked the member's rights and settings in its database. Counts only in the answer.
+            if not web_push.resolute_token_ok(self.headers.get("Authorization", "")):
+                self.send_json(401, {"ok": False, "error": "unauthorized"})
+                return
+            if not web_push.configuration()["enabled"]:
+                self.send_json(503, {"ok": False, "error": "disabled"})
+                return
+            try:
+                payload = self.read_json(4096)
+                db = web_push.connect(self.app.db_path)
+                try:
+                    result = web_push.resolute_push(db, payload)
+                finally:
+                    db.close()
+                self.send_json(200, {"ok": True, **result})
+            except ValueError as exc:
+                self.send_json(400, {"ok": False, "error": web_push.refusal_reason(exc)})
+            except Exception as exc:
+                print(json.dumps({"event": "resolute-push-failed", "error": type(exc).__name__}), flush=True)
+                self.send_json(503, {"ok": False})
+            return
         if path == "/inbox/upload":
             self.inbox_upload()
             return

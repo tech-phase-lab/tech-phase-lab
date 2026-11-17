@@ -1,5 +1,5 @@
 {
-  "comment": "Pages a phone-notification tap may open. public/research-sw.js keeps the same list (a test checks they match); every push payload url sent from scripts/research must be one of these, optionally with a #fragment. queries: the only query each page may carry (Nov 17: the owner's filming notice opens the price-target page with ?demo=nvda).",
+  "comment": "Pages a phone-notification tap may open. public/research-sw.js keeps the same list (a test checks they match); every push payload url sent from scripts/research must be one of these, optionally with a #fragment. RESOLUTE (Nov 17): its alert notice opens /resolute/alerts/latest and its morning notice /resolute/morning. queries: the only query each page may carry (Nov 17: the owner's filming notice opens the price-target page with ?demo=nvda).",
   "openable": [
     "/research",
     "/research/calendar",
@@ -10,7 +10,9 @@
     "/research/price-targets",
     "/research/qa",
     "/research/questions",
-    "/research/weekly"
+    "/research/weekly",
+    "/resolute/alerts/latest",
+    "/resolute/morning"
   ],
   "fragment": "^#[a-z0-9-]{1,40}$",
   "queries": {
