@@ -48,7 +48,7 @@ Mail bodies and ④ subject lines: already in lib/mail-templates.ts (EN).
 | JA | EN |
 |---|---|
 | 終値アラート | Closing-price alerts |
-| ラインに届いた日に、メールでお知らせ | Get an email on the day a line is hit |
+| ラインに届いた日に、スマホ通知でお知らせ | Get a phone notification on the day a line is hit |
 | 見る銘柄 / ＋ 銘柄を追加 | Stocks to watch / + Add a stock |
 | 銘柄 / 基準 / 消す | Symbol / Base price / Remove |
 | 銘柄と基準価格を入れてください | Enter a symbol and base price |
@@ -63,24 +63,24 @@ Mail bodies and ④ subject lines: already in lib/mail-templates.ts (EN).
 | もしも、ある日の終値が基準から〇〇だったら？ | What if a day's close is 〇〇 from your base? |
 | 終値の変化 | Close vs. base |
 | 基準から〇%上がったら | If it rises 〇% from base |
-| 届くメールの例を見る | See an example email |
-| 今日は届きません / メールは送られません | No alert today / No email will be sent |
+| 届く通知の例を見る | See an example notification |
+| 今日は届きません / 通知は送られません | No alert today / No notification will be sent |
 | 通知は、米国市場の終値が確定したあとに送ります。 | Alerts are sent after the US market close is final. |
 
 ## ④ Morning note
 | JA | EN |
 |---|---|
 | 翌朝のひとこと | Morning note |
-| お知らせの翌朝に、1通だけ届きます | One short email the morning after an alert |
+| お知らせの翌朝に、1通だけ届きます | One short notification the morning after an alert |
 | 翌朝のひとことを受け取る | Get the morning note |
 | 初めはオフです。オンにすると、お知らせと同じ時間に届きます。 | Off by default. When on, it arrives at the same time as your alerts. |
-| オフになっています。 / 翌朝のメールは届きません。 | It's off. / No morning email will be sent. |
-| 届くメールの例 | Example email |
+| オフになっています。 / 翌朝のスマホ通知は届きません。 | It's off. / No morning notification will be sent. |
+| 届く通知の例 | Example notification |
 | いまの気持ちに近いものを、1つだけ選んでください。 | Pick the one that feels closest right now. |
 | 計画どおり動いた / 見送った / まだ迷っている | I followed my plan / I held off / I'm still unsure |
 | 計画を開く / 選び直す | Open my plan / Choose again |
 | どれを選んでも、正解・不正解はありません。 | There's no right or wrong answer. |
-| このメールは、昨日のお知らせについて1回だけ届きます。 | You'll get this email once, about yesterday's alert. |
+| この通知は、昨日のお知らせについて1回だけ届きます。 | You'll get this notification once, about yesterday's alert. |
 
 Tips shown after choosing:
 - Followed my plan: "A night when you stuck to your plan is worth noting. Check in one line: did what you did match what you wrote in your rules? It makes the next drop easier to face."

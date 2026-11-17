@@ -41,6 +41,8 @@ test('the public list has no stale entries', () => {
 });
 test('the PRO-only notification route rejects non-PRO callers before touching the monitor', () => {
   const source = readFileSync('app/api/research/notifications/route.ts', 'utf8');
-  assert.match(source, /member\.plan !== "pro"/);
+  // Nov 17 (owner): PRO, or RESOLUTE rights confirmed on the server (pushAccessDecision); anyone else is refused before the monitor.
+  assert.match(source, /member\.plan === "pro"/);
+  assert.match(source, /pushAccessDecision\(access\)/);
   assert.match(source, /pro-required/);
 });

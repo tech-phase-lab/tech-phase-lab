@@ -10,6 +10,7 @@ import { parsePlanSnapshot } from "./plan-data.ts";
 import { notificationRuleKey } from "./notification-rule-key.ts";
 import { renderAlertMail, renderNextMorningMail, type RenderedMail } from "./mail-templates.ts";
 import { composeMorningNote, withMorningNote, withProviderCredit, type NoteFacts } from "./morning-note.ts";
+import { resoluteAlertPush, resoluteMorningPush, type ResolutePushNotice } from "./push-notice.ts";
 
 export type AlertReceipt={key:string;messageId:string;acceptedAt:string};
 export type AlertRecipient={ownerAccess?:OwnerAccess;userId:string;email:string;verified:boolean;preferencesConfigured:boolean;unsubscribed:boolean;locale:"ja"|"en"};
@@ -18,7 +19,9 @@ export type AlertProvider={
  recipientAllowed?:(email:string)=>Promise<boolean>;
  // Adapter must honor this key, use the abort signal, and normalize verified
  // provider responses. A duplicate alone is NOT a confirmed acceptance receipt.
- send:(input:{key:string;to:string;mail:RenderedMail},signal:AbortSignal)=>Promise<AlertReceipt|null>;
+ // push: the same notice as a phone notification (push-notice.ts). A provider that tries the phone first
+ // (notification-push.ts withPushFirst) sends the mail only when no device accepted it.
+ send:(input:{key:string;to:string;mail:RenderedMail;push?:ResolutePushNotice},signal:AbortSignal)=>Promise<AlertReceipt|null>;
  lookup:(key:string,signal:AbortSignal)=>Promise<AlertReceipt|null>;
 };
 type Dependencies={
@@ -96,7 +99,7 @@ export function createAlertDelivery(pool:Pick<Pool,"connect">,deps:Dependencies)
    if(reservation.status!=="queued")return "review-required";
    if(mode==="reconcile")return "not-attempted";
    const task:QueuedNotification={key,kind,deliveryDateJst:row.date,settingsRevision:row.payload.settingsRevision,ruleKey:row.payload.ruleKey,acceptedAt:null};
-   let sourceItems:unknown,recipient:AlertRecipient|undefined,message:RenderedMail|undefined,receipt:AlertReceipt|null=null,attemptedAt:unknown;
+   let sourceItems:unknown,recipient:AlertRecipient|undefined,message:RenderedMail|undefined,receipt:AlertReceipt|null=null,attemptedAt:unknown,push:ResolutePushNotice|undefined;
    if(kind==="morning"){
     const source=(await client.query("SELECT accepted_at,payload->'digest'->'payload'->'items' AS items FROM resolute.notification_outbox WHERE clerk_user_id=$1 AND idempotency_key=$2 AND kind='alerts'",[userId,row.payload.sourceAlertId])).rows[0];
     if(!source?.accepted_at||jstSlot(new Date(source.accepted_at.getTime()+86400000)).date!==row.date)return "suppressed";
@@ -121,6 +124,8 @@ export function createAlertDelivery(pool:Pick<Pool,"connect">,deps:Dependencies)
      const digest=row.payload.digest as Digest;
      if(!digest||digest.clerkUserId!==userId||digest.idempotencyKey!==key)throw new Error("Digest identity mismatch");
      message=withProviderCredit(renderAlertMail({locale:recipient.locale,date:digest.payload.date,items:digest.payload.items,...safeLinks(await deps.links(userId),deps.publicOrigin)}),recipient.locale);
+     // A notice that cannot be worded (unexpected digest) is simply not pushed: the email still goes.
+     try{push=resoluteAlertPush(digest.payload.items,recipient.locale);}catch{push=undefined;}
      const claimed=await claimAlertReservation(client,userId,task,provider.name);
      if(claimed)attemptedAt=(await client.query("SELECT payload->'reservation'->>'attemptedAt' AS at FROM resolute.notification_outbox WHERE clerk_user_id=$1 AND idempotency_key=$2",[userId,key])).rows[0]?.at;
      return claimed;
@@ -133,12 +138,13 @@ export function createAlertDelivery(pool:Pick<Pool,"connect">,deps:Dependencies)
       // The one-liner uses only facts from the accepted alert; any failure falls back to a fixed short sentence.
       const note=await composeMorningNote({events:sourceItems as NoteFacts,locale:recipient.locale,...(deps.generateNote?{generate:deps.generateNote}:{})});
       message=withMorningNote(renderNextMorningMail({locale:recipient.locale,planUrl:links.planUrl,unsubscribeUrl:links.unsubscribeUrl,doneUrl:links.doneUrl,skippedUrl:links.skippedUrl,unsureUrl:links.unsureUrl}),note.text);
+      push=resoluteMorningPush(recipient.locale);
       const claim=await client.query(`UPDATE resolute.notification_outbox SET payload=jsonb_set(payload,'{reservation}',jsonb_build_object('version',1,'status','attempting','provider',$3::text,'attemptedAt',statement_timestamp()))
        WHERE clerk_user_id=$1 AND idempotency_key=$2 AND kind='morning' AND accepted_at IS NULL AND NOT(payload?'reservation') RETURNING payload->'reservation'->>'attemptedAt' AS at`,[userId,key,provider.name]);
       if(claim.rowCount!==1)throw new Error("Morning already claimed");attemptedAt=claim.rows[0].at;
      }
      if(!recipient||!message)throw new Error("Mail preparation missing");
-     receipt=await provider.send({key,to:recipient.email,mail:message},AbortSignal.timeout(15000));
+     receipt=await provider.send({key,to:recipient.email,mail:message,...(push?{push}:{})},AbortSignal.timeout(15000));
      if(!validReceipt(receipt,key,attemptedAt,clock()))throw new Error("Unconfirmed acceptance");
      return "accepted";
     },

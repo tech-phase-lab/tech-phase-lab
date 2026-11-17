@@ -58,12 +58,12 @@ export default function LandingEn({ embedded = false }: { embedded?: boolean }) 
    <section className={s.sec}>
     <p className={s.eyebrow}>WHAT IS RESOLUTE</p>
     <h2 className={s.h2}>Stay level-headed<br />whatever the market does.</h2>
-    <p className={s.body}>RESOLUTE is a kit for keeping your head when the market gets wild. Build your own rules with a 30-question quiz, then keep them where you&apos;ll see them every day. When a stock’s closing price reaches one of your alert levels, an email prompts you to pause and revisit your rules.</p>
+    <p className={s.body}>RESOLUTE is a kit for keeping your head when the market gets wild. Build your own rules with a 30-question quiz, then keep them where you&apos;ll see them every day. When a stock’s closing price reaches one of your alert levels, a phone notification prompts you to pause and revisit your rules.</p>
     <p className={s.pull}>When markets crash,<br />let your rules guide you.</p>
     <ol className={s.steps}>
      <li><span>01</span><b>Decide</b><p>Define your rules with a 30-question quiz</p></li>
      <li><span>02</span><b>Carry</b><p>Keep your rules close with a wallpaper and a personal rulebook</p></li>
-     <li><span>03</span><b>Alert</b><p>Email alerts based on your price levels and closing prices</p></li>
+     <li><span>03</span><b>Alert</b><p>Phone notifications based on your price levels and closing prices</p></li>
      <li><span>04</span><b>Return</b><p>Return to your rules through market ups and downs</p></li>
     </ol>
    </section>
@@ -100,8 +100,8 @@ export default function LandingEn({ embedded = false }: { embedded?: boolean }) 
      <p className={s.groupNo}>03 <b>Alert</b></p>
      <AlertSample locale="en" />
      <div className={s.thermo} aria-hidden="true"><p className={s.thermoLab}>Market Gauge</p><p className={s.thermoWord}>Warm</p><p className={s.thermoIdx}>TP Large Cap 100</p><div className={s.track}><i style={{ left: "66%" }} /></div><p className={s.thermoEnds}><span>Cold</span><span>Hot</span></p></div>
-     <Feature title="Closing-price Alerts" text="When a stock’s closing price reaches a downside or upside level you’ve set, you get an email at your chosen delivery time (U.S. Eastern Time). No need to watch the market all day." />
-     <Feature title="Morning Note" text="One short email the morning after an alert, to read with a rested mind." />
+     <Feature title="Closing-price Alerts" text="When a stock’s closing price reaches a downside or upside level you’ve set, you get a phone notification at your chosen delivery time (U.S. Eastern Time). No need to watch the market all day." />
+     <Feature title="Morning Note" text="One short notification the morning after an alert, to read with a rested mind." />
      <Feature title="Market Gauge" text="Shows how cool or hot the market is on a five-point scale. Helps you put market moves in perspective." />
     </div>
 

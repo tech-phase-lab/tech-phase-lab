@@ -1,5 +1,8 @@
 import { createHash, createHmac } from "node:crypto";
+import { auth } from "@clerk/nextjs/server";
 import { getMembership } from "@/lib/membership/server";
+import { getResoluteEntitlementsForSession } from "@/lib/resolute/server";
+import { hasResolute, pushAccessDecision, resoluteNotificationUntil, resoluteOnlyPreferences, type PushAccess } from "@/lib/research/push-resolute-access";
 import { isOwnerAccount } from "@/lib/membership/entitlements";
 import { cleanPushDiagnostic, createPushDiagnosticLimiter, pushDiagnosticLine } from "@/lib/research/push-diagnostic";
 import { cleanPushSendLog } from "@/lib/research/push-send-log";
@@ -17,6 +20,17 @@ const noticeMemberAllowed = createPushDiagnosticLimiter(PUSH_NOTICE_MEMBER_LIMIT
 function deviceKey(memberId: string, subscription: unknown) {
   const endpoint = subscription && typeof subscription === "object" ? (subscription as { endpoint?: unknown }).endpoint : undefined;
   return createHash("sha256").update(`${memberId}\n${typeof endpoint === "string" ? endpoint.slice(0, 2048) : ""}`).digest("hex");
+}
+
+/** PRO from the membership; RESOLUTE from RESOLUTE's own entitlement answer for this session (owner accounts: always). Server only. */
+async function pushAccess(member: { userId: string; plan: string; accessExpiresAt: number }): Promise<PushAccess> {
+  const pro = member.plan === "pro" && Number.isFinite(member.accessExpiresAt) && member.accessExpiresAt > Date.now();
+  const resoluteUntil = await resoluteNotificationUntil(member.userId, async () => {
+    const token = await (await auth()).getToken();
+    if (!token) throw new Error("Authentication unavailable");
+    return getResoluteEntitlementsForSession(token);
+  });
+  return { pro, resoluteUntil };
 }
 
 async function monitor(path: string, body?: unknown) {
@@ -46,11 +60,16 @@ export async function GET() {
     const member = await getMembership();
     if (member.status === "unavailable") return Response.json({ enabled: false }, { status: 503, headers });
     if (member.status !== "signed-in") return Response.json({ enabled: false, reason: "sign-in" }, { headers });
-    if (member.plan !== "pro" || !Number.isFinite(member.accessExpiresAt) || member.accessExpiresAt <= Date.now()) return Response.json({ enabled: false, reason: "pro-required" }, { headers });
+    // Nov 17 (owner): a RESOLUTE buyer may turn notifications on without PRO, for the RESOLUTE notices only.
+    const access = await pushAccess(member);
+    const decision = pushAccessDecision(access);
+    if (decision === "unavailable") return Response.json({ enabled: false }, { status: 503, headers });
+    if (decision === "pro-required") return Response.json({ enabled: false, reason: "pro-required" }, { headers });
     const config = await monitor("/push/config");
     return Response.json({ enabled: config.enabled === true && config.memberAccessVersion === 1,
-      publicKey: config.memberAccessVersion === 1 ? config.publicKey : "", validUntil: member.accessExpiresAt,
-      preferencesVersion: config.preferencesVersion === 1 ? 1 : 0 }, { headers });
+      publicKey: config.memberAccessVersion === 1 ? config.publicKey : "",
+      validUntil: access.pro ? member.accessExpiresAt : Math.min((access.resoluteUntil ?? 0) * 1000, Date.now() + 3_600_000),
+      preferencesVersion: config.preferencesVersion === 1 ? 1 : 0, pro: access.pro, resolute: hasResolute(access) }, { headers });
   } catch { return Response.json({ enabled: false }, { status: 503, headers }); }
 }
 export async function POST(request: Request) {
@@ -114,13 +133,20 @@ export async function POST(request: Request) {
       return Response.json({ ok: true, registered: result?.registered === true, notice: cleanPushServerNotice(result?.notice) }, { headers });
     }
     if (!body ||!["register", "remove", "status", "test", "preferences", "save-preferences"].includes(body.action)) throw new Error("Invalid action");
-    if (body.action !== "remove" && (member.plan !== "pro" || !Number.isFinite(member.accessExpiresAt) || member.accessExpiresAt <= Date.now())) {
-      return Response.json({ ok: false, error: "pro-required" }, { status: 403, headers });
+    const access = body.action === "remove" ? null : await pushAccess(member);
+    if (access) {
+      const decision = pushAccessDecision(access);
+      if (decision === "unavailable") return Response.json({ ok: false }, { status: 503, headers });
+      if (decision === "pro-required") return Response.json({ ok: false, error: "pro-required" }, { status: 403, headers });
+      // A RESOLUTE buyer without PRO chooses the RESOLUTE row only; PRO choices are refused, never silently stored.
+      if (!access.pro && body.preferences !== undefined && !resoluteOnlyPreferences(body.preferences)) return Response.json({ ok: false, error: "pro-required" }, { status: 403, headers });
     }
     // Weekly-draft notices are the owner's alone; a member's request for them is refused, never silently stored.
     if (body.preferences && typeof body.preferences === "object" && (body.preferences as { weeklyDraft?: unknown }).weeklyDraft === true && !member.isAdmin) return Response.json({ ok: false, error: "owner-required" }, { status: 403, headers });
     const result = await monitor(`/push/member/${body.action}`, {
-      memberId: member.userId, accessExpiresAt: member.accessExpiresAt / 1000,
+      memberId: member.userId, accessExpiresAt: access && !access.pro ? 0 : member.accessExpiresAt / 1000,
+      // RESOLUTE rights confirmed just now on this server (seconds; 0: none). Left out when RESOLUTE could not be asked.
+      ...(access && access.resoluteUntil !== undefined ? { resoluteUntil: access.resoluteUntil } : {}),
       // The key the question board uses for this member, so "your question was answered" reaches its asker only.
       questionOwner: createHmac("sha256", process.env.RESEARCH_MONITOR_TOKEN ?? "").update(`question:${member.userId}`).digest("hex"),
       subscription: body.subscription, tickers: body.tickers, allTargets: body.allTargets === true, language: body.language,

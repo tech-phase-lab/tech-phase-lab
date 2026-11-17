@@ -20,7 +20,7 @@ const copy = {
     saveError: "保存を確認できませんでした。保存済みの設定を再読込して確認してください。",
     reload: "保存済みの設定を再読込", login: "設定を保存するにはログインしてください。",
     account: "ログイン画面へ", afterLogin: "ログイン後にこの画面へ戻り、設定を再読込してください。",
-    note: "設定の保存だけではメール配信は始まりません。", back: "Tech Phaseへ戻る" },
+    note: "設定の保存だけでは通知の配信は始まりません。", back: "Tech Phaseへ戻る" },
   en: { title: "Language and time zone", intro: "Choose the language for RESOLUTE and the time zone used to display dates and times.",
     language: "Language", choose: "Please select", zone: "Time zone", zoneHint: "For example: Asia/Tokyo (Japan) or America/New_York (US Eastern)",
     device: "Use this device’s time zone", deviceError: "We couldn’t detect your time zone. Please enter it.",
@@ -31,7 +31,7 @@ const copy = {
     saveError: "We couldn’t confirm your settings were saved. Reload them to check.",
     reload: "Reload saved settings", login: "Sign in to save your settings.", account: "Go to sign-in",
     afterLogin: "After signing in, return here and reload your settings.",
-    note: "Saving these settings won’t turn on email alerts.", back: "Back to Tech Phase" },
+    note: "Saving these settings won’t turn on notifications.", back: "Back to Tech Phase" },
 };
 type Phase = "loading" | "ready" | "saving" | "saved" | "signed-out" | "error";
 type Message = "unset" | "saved" | "changed" | "invalid" | "loadError" | "saveError" | "deviceError" | null;

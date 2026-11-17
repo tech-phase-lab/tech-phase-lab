@@ -1,0 +1,25 @@
+/* 「今日のお知らせ」: 濃紺とゴールド(今夜のひと息と同じ色)。screens/02_alert_page_* の見た目。 */
+.root { --bg:#0a1018; --panel:#0e141e; --ink:#f1ece1; --sub:#9aa8b8; --line:rgba(216,179,106,.28); --gold:#d8b36a; --gold2:#f3dfae; --gold-ink:#2a1d06; --drop:#f08a8a;
+  --font:var(--font-resolute-sans),"Hiragino Kaku Gothic ProN","Yu Gothic",system-ui,sans-serif; --serif:var(--font-resolute-serif),"Hiragino Mincho ProN","Yu Mincho",serif;
+  color-scheme:dark; color:var(--ink); font-family:var(--font); font-size:16px; line-height:1.8; width:100%; }
+.root * { box-sizing:border-box; }
+.wrap { max-width:600px; margin:0 auto; display:flex; flex-direction:column; gap:16px; padding-block:12px 32px; }
+.brand { text-align:center; font-family:var(--serif); letter-spacing:.32em; font-size:13px; color:var(--gold); }
+.root h1 { font-family:var(--serif); font-size:30px; line-height:1.4; margin:0; text-align:center; color:var(--gold2); font-weight:500; }
+.date { margin:-8px 0 4px; text-align:center; color:var(--sub); font-size:14px; }
+.note { margin:0; color:#d7dde6; font-size:16px; overflow-wrap:anywhere; }
+.cards { list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:12px; }
+.card { background:var(--panel); border:1px solid var(--line); border-radius:16px; padding:16px 18px; display:flex; flex-direction:column; gap:6px; }
+.cardHead { display:flex; align-items:center; justify-content:space-between; gap:12px; }
+.symbol { font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:20px; letter-spacing:.04em; color:var(--ink); }
+.chip { border:1px solid rgba(240,138,138,.45); color:var(--drop); border-radius:999px; padding:2px 12px; font-size:14px; white-space:nowrap; }
+.chip.rise { border-color:rgba(127,209,160,.45); color:#7fd1a0; }
+.close { margin:0; color:var(--sub); font-size:15px; overflow-wrap:anywhere; }
+.primary, .ghost { display:block; text-align:center; text-decoration:none; border-radius:16px; padding:15px 20px; font-family:inherit; font-size:17px; font-weight:700; cursor:pointer; width:100%; }
+.primary { background:linear-gradient(90deg,var(--gold2),#b88f3c); color:var(--gold-ink); border:0; }
+.ghost { background:transparent; color:var(--gold2); border:1px solid rgba(216,179,106,.6); font-weight:500; }
+.root a.primary, .root a.primary:visited { color:var(--gold-ink); }
+.root a.ghost, .root a.ghost:visited { color:var(--gold2); }
+.disc { margin:4px 0 0; font-size:13px; color:var(--sub); }
+.status { text-align:center; color:var(--sub); margin:0; }
+.root :focus-visible { outline:2px solid var(--gold); outline-offset:2px; }

@@ -142,7 +142,10 @@ def connect(path):
             # The zone those hours are in (owner, Nov 17: the English site shows US Eastern Time). Devices saved before then keep Japan time.
             ('quiet_zone', "TEXT NOT NULL DEFAULT 'Asia/Tokyo'"),
             # The key the question board uses for this member, sent by the website so a reply can be told to its asker only.
-            ('question_owner', 'TEXT')):
+            ('question_owner', 'TEXT'),
+            # RESOLUTE (Nov 17, owner): the member's choice for this device (on unless turned off), and until when the website last
+            # confirmed, on its own server, that the member holds the RESOLUTE alert rights (epoch seconds; NULL: not confirmed).
+            ('resolute', 'INTEGER NOT NULL DEFAULT 1'), ('resolute_until', 'REAL')):
         if column not in columns:
             db.execute(f"ALTER TABLE push_devices ADD COLUMN {column} {definition}")
     db.execute('''CREATE TABLE IF NOT EXISTS push_device_preferences (
@@ -174,6 +177,8 @@ def notice_schema(db):
 def notice_kind(payload, page):
     if payload.get('tag') == 'tech-phase-test':
         return 'test'
+    if page in RESOLUTE_PAGES:
+        return RESOLUTE_PAGES[page]
     name = page.split('#', 1)[0].split('?', 1)[0].rsplit('/', 1)[-1]
     return name if name != 'research' and NOTICE_KIND.fullmatch(name) else 'research'
 
@@ -285,7 +290,7 @@ def monitored_news_tickers():
 
 
 def validate_preferences(value):
-    flags = ('targets', 'earnings', 'news', 'weeklyNotebook', 'rizelNote', 'weeklyDraft', 'economic', 'weeklyIssue', 'rizelAnswer')
+    flags = ('targets', 'earnings', 'news', 'weeklyNotebook', 'rizelNote', 'weeklyDraft', 'economic', 'weeklyIssue', 'rizelAnswer', 'resolute')
     if not isinstance(value, dict) or not value or set(value) - {*flags, 'newsTickers', 'economicKinds', 'quiet'}:
         raise ValueError('invalid-preferences')
     for field in flags:
@@ -330,7 +335,7 @@ def preference_view(db, device):
                         'newsTickers': list(monitored_news_tickers())}),
             'weeklyNotebook': bool(device['weekly_notebook']), 'rizelNote': bool(device['note_posts']), 'weeklyDraft': bool(device['weekly_draft']),
             'economic': bool(device['econ']), 'economicKinds': economic_kinds(device), 'weeklyIssue': bool(device['weekly_issue']),
-            'rizelAnswer': bool(device['answer_posts']),
+            'rizelAnswer': bool(device['answer_posts']), 'resolute': bool(device['resolute']),
             'quiet': {'on': bool(device['quiet_on']), 'start': device['quiet_start'], 'end': device['quiet_end'], 'zone': quiet_zone(device)}}
 
 
@@ -398,9 +403,9 @@ def write_preferences(db, device, patch):
       news=excluded.news,news_tickers=excluded.news_tickers''',
       (device['id'], int(prefs['targets']), int(prefs['earnings']), int(prefs['news']), json.dumps(prefs['newsTickers'])))
     db.execute('''UPDATE push_devices SET weekly_notebook=?, note_posts=?, weekly_draft=?, econ=?, econ_kinds=?, weekly_issue=?, answer_posts=?,
-      quiet_on=?, quiet_start=?, quiet_end=?, quiet_zone=? WHERE id=?''', (int(prefs['weeklyNotebook']), int(prefs['rizelNote']), int(prefs['weeklyDraft']),
+      quiet_on=?, quiet_start=?, quiet_end=?, quiet_zone=?, resolute=? WHERE id=?''', (int(prefs['weeklyNotebook']), int(prefs['rizelNote']), int(prefs['weeklyDraft']),
       int(prefs['economic']), json.dumps(prefs['economicKinds']), int(prefs['weeklyIssue']), int(prefs['rizelAnswer']),
-      int(prefs['quiet']['on']), prefs['quiet']['start'], prefs['quiet']['end'], prefs['quiet']['zone'], device['id']))
+      int(prefs['quiet']['on']), prefs['quiet']['start'], prefs['quiet']['end'], prefs['quiet']['zone'], int(prefs['resolute']), device['id']))
     return prefs
 
 
@@ -413,9 +418,10 @@ def remember_question_owner(db, device_id, payload):
 def member_preferences(db, payload, *, save=False, now=None):
     owner = member_identity(payload)
     now = time.time() if now is None else now
-    until = payload.get('accessExpiresAt')
-    if not isinstance(until, (float, int)) or isinstance(until, bool) or not math.isfinite(until) or until <= now:
-        raise ValueError('expired-membership')
+    pro, _resolute = member_access(payload, now)
+    if save and not pro and set(validate_preferences(payload.get('preferences'))) - RESOLUTE_ONLY_PREFERENCES:
+        # A RESOLUTE buyer without PRO chooses only the RESOLUTE notices (the PRO kinds are refused, never silently stored).
+        raise ValueError('invalid-preferences')
     sub = validate_subscription(payload.get('subscription'))
     device_id = hashlib.sha256(sub['endpoint'].encode()).hexdigest()
     with db:
@@ -428,9 +434,45 @@ def member_preferences(db, payload, *, save=False, now=None):
         if not device or device['owner_id'] != owner or json.loads(device['subscription']) != sub:
             raise ValueError('not-owned')
         remember_question_owner(db, device_id, payload)
+        remember_resolute(db, device_id, payload, now)
+        device = db.execute('SELECT * FROM push_devices WHERE id=?', (device_id,)).fetchone()
         prefs = write_preferences(db, device, payload.get('preferences')) if save else preference_view(db, device)
         device = db.execute('SELECT * FROM push_devices WHERE id=?', (device_id,)).fetchone()
     return {'preferences': prefs}
+
+
+def _future(value, now):
+    return isinstance(value, (float, int)) and not isinstance(value, bool) and math.isfinite(value) and value > now
+
+
+def member_access(payload, now):
+    """(PRO, RESOLUTE) for a member request. Both come from the website's server, never from the browser: accessExpiresAt is the PRO
+    membership's expiry, resoluteUntil the end of the member's RESOLUTE alert rights (app/api/research/notifications). A member with
+    neither is refused. RESOLUTE without PRO lets the member turn notifications on for the RESOLUTE notices only (owner, Nov 17): every
+    PRO sender checks PRO again before each send (member_expiry), so such a device never receives a PRO notice."""
+    pro = _future(payload.get('accessExpiresAt'), now)
+    resolute = payload.get('resoluteUntil') if _future(payload.get('resoluteUntil'), now) else None
+    if not pro and resolute is None:
+        raise ValueError('expired-membership')
+    return pro, resolute
+
+
+def remember_resolute(db, device_id, payload, now):
+    """Keep the RESOLUTE rights the website just confirmed for this device's member. A request without the field (the website could not
+    check) leaves what is stored; a request with it and no rights (0) clears it."""
+    if 'resoluteUntil' in payload:
+        until = payload['resoluteUntil']
+        db.execute('UPDATE push_devices SET resolute_until=? WHERE id=?', (until if _future(until, now) else None, device_id))
+
+
+def resolute_entitled(device, now):
+    """The member holds RESOLUTE alert rights as last confirmed by the website, or is one of the owner accounts (every feature, every
+    environment: AGENTS.md)."""
+    keys = device.keys()
+    if 'owner_id' in keys and device['owner_id'] in DEMO_OWNER_ACCOUNT_IDS:
+        return True
+    until = device['resolute_until'] if 'resolute_until' in keys else None
+    return _future(until, now)
 
 
 def validate_subscription(value):
@@ -491,9 +533,8 @@ def member_identity(payload):
 def register_member(db, payload, allowed, now=None):
     owner = member_identity(payload)
     now = time.time() if now is None else now
-    until = payload.get('accessExpiresAt')
-    if not isinstance(until, (float, int)) or isinstance(until, bool) or not math.isfinite(until) or until <= now:
-        raise ValueError('expired-membership')
+    pro, resolute = member_access(payload, now)
+    until = payload['accessExpiresAt'] if pro else 0
     sub = validate_subscription(payload.get('subscription'))
     device = hashlib.sha256(sub['endpoint'].encode()).hexdigest()
     with db:
@@ -514,15 +555,18 @@ def register_member(db, payload, allowed, now=None):
             raise ValueError('invalid-preferences')
         # The Sunday-night notebook notice is on unless the device says otherwise.
         weekly = (0 if payload.get('weeklyNotebook') is False else 1) if 'weeklyNotebook' in payload else (existing['weekly_notebook'] if existing else 1)
+        resolute_until = resolute if 'resoluteUntil' in payload else (existing['resolute_until'] if existing else None)
         # A new device starts its おやすみモード (23:00 to 07:00) in the site's zone: ET from the English site, Japan time from the
         # Japanese one. An existing device keeps the zone it has, whichever language it registers in again.
-        db.execute("""INSERT INTO push_devices (id,subscription,tickers,language,since,active,owner_id,access_until,weekly_notebook,quiet_zone)
-          VALUES(?,?,?,?,?,1,?,?,?,?) ON CONFLICT(id) DO UPDATE SET tickers=excluded.tickers,
+        db.execute("""INSERT INTO push_devices (id,subscription,tickers,language,since,active,owner_id,access_until,weekly_notebook,quiet_zone,resolute_until)
+          VALUES(?,?,?,?,?,1,?,?,?,?,?) ON CONFLICT(id) DO UPDATE SET tickers=excluded.tickers,
           language=excluded.language,since=excluded.since,active=1,owner_id=excluded.owner_id,access_until=excluded.access_until,
-          weekly_notebook=excluded.weekly_notebook""",
-          (device,json.dumps(sub),json.dumps(sorted(set(tickers))),lang,now,owner,until,weekly,quiet_zone_for(lang)))
+          weekly_notebook=excluded.weekly_notebook,resolute_until=excluded.resolute_until""",
+          (device,json.dumps(sub),json.dumps(sorted(set(tickers))),lang,now,owner,until,weekly,quiet_zone_for(lang),resolute_until))
         remember_question_owner(db, device, payload)
         if 'preferences' in payload:
+            if not pro and set(validate_preferences(payload['preferences'])) - RESOLUTE_ONLY_PREFERENCES:
+                raise ValueError('invalid-preferences')
             current = db.execute('SELECT * FROM push_devices WHERE id=?', (device,)).fetchone()
             write_preferences(db, current, payload['preferences'])
     return {'registered': True}
@@ -555,7 +599,12 @@ def member_action(db, payload, action, transport=None, now=None):
     if action == 'remove':
         return remove(db, payload)
     eligible = bool(row['active'] and row['access_until'] and row['access_until'] > now)
-    if row['active'] and not eligible and action in ('status', 'test'):
+    if row['active']:
+        with db:
+            remember_resolute(db, device, payload, now)
+        row = db.execute('SELECT * FROM push_devices WHERE id=?', (device,)).fetchone()
+    resolute_ok = bool(row['active'] and resolute_entitled(row, now))
+    if row['active'] and not eligible and not resolute_ok and action in ('status', 'test'):
         # The expiry stored at sign-up is only a cache. The owner's access is one hour long and is renewed on every request, and a
         # member's paid period is extended when they renew, so a lapsed cache is checked against the current membership before
         # the device is reported as switched off (it was turning itself off an hour after being turned on).
@@ -568,10 +617,10 @@ def member_action(db, payload, action, transport=None, now=None):
                 db.execute('UPDATE push_devices SET access_until=? WHERE id=? AND active=1', (current, device))
             eligible = True
     if action == 'status':
-        return {'registered': eligible}
-    if action != 'test' or not eligible:
+        return {'registered': eligible or resolute_ok}
+    if action != 'test' or not (eligible or resolute_ok):
         raise ValueError('expired-membership')
-    if member_expiry(owner) <= now:
+    if not resolute_ok and member_expiry(owner) <= now:
         raise ValueError('expired-membership')
     return test_notification(db, payload, transport, now)
 
@@ -869,7 +918,7 @@ SEND_LOG = deque(maxlen=SEND_LOG_SIZE)
 SEND_LOG_LOCK = threading.Lock()
 # Nov 17: the owner's filming notice opens the price-target page with ?demo=nvda (DEMO_TARGET_URL; the only listed query in
 # lib/research/push-targets.json).
-SEND_PAGE = re.compile(r'/research(/[a-z-]{1,40})?(#[a-z0-9-]{1,40})?|/research/price-targets\?demo=nvda')
+SEND_PAGE = re.compile(r'/research(/[a-z-]{1,40})?(#[a-z0-9-]{1,40})?|/research/price-targets\?demo=nvda|/resolute/alerts/latest|/resolute/morning')
 SEND_FAILURE_KINDS = frozenset({'ImportError', 'ModuleNotFoundError', 'TypeError', 'ValueError', 'KeyError', 'ConnectionError',
                                 'ConnectTimeout', 'ReadTimeout', 'Timeout', 'SSLError', 'WebPushException'})
 
@@ -1585,3 +1634,85 @@ def deliver_economic(db, items, **options):
                                             'body': f"理由：{item.get('reason')}" if ja else f"Reason: {item.get('reason')}", 'url': '/research/calendar'},
                      (made,), **options)
     return {'status': 'ready', **total}
+
+
+# RESOLUTE (owner, Nov 17): the closing-price alert (③) and the next-morning note (④) reach the member's phone with the same Web Push
+# as Tech Phase. RESOLUTE decides who gets what and when (its own database, the same checks as its emails), then asks this monitor to
+# send the notice to the member's devices (POST /internal/resolute/push with its own token, RESOLUTE_PUSH_TOKEN). This monitor sends
+# only to a device that (1) belongs to that member, (2) kept its RESOLUTE switch on, and (3) whose member the website confirmed, on its
+# own server, holds the RESOLUTE alert rights (resolute_until), or is an owner account. Tech Phase PRO plays no part. When no device
+# accepts the notice, RESOLUTE sends its email instead. Notices are never held for おやすみモード: the member chose the delivery hour.
+# Both pages are on the service worker's list (lib/research/push-targets.json).
+RESOLUTE_PAGES = {'/resolute/alerts/latest': 'resolute-alert', '/resolute/morning': 'resolute-morning'}
+RESOLUTE_TITLE = 'RESOLUTE'
+RESOLUTE_EVENT = re.compile(r'[a-f0-9]{32}')
+RESOLUTE_BODY_LIMIT = 120
+# What a RESOLUTE buyer without PRO may switch on the settings page: the RESOLUTE row only.
+RESOLUTE_ONLY_PREFERENCES = frozenset({'resolute'})
+
+
+def resolute_token_ok(supplied):
+    """The dedicated RESOLUTE sender token: at least 32 characters and never one of the monitor's other tokens."""
+    import hmac
+    token = os.environ.get('RESOLUTE_PUSH_TOKEN', '')
+    privileged = [os.environ.get(k, '') for k in ('RESEARCH_API_TOKEN', 'RESEARCH_EDITOR_TOKEN', 'RESOLUTE_NEWS_READ_TOKEN')]
+    return len(token) >= 32 and token not in privileged and isinstance(supplied, str) and hmac.compare_digest(supplied, 'Bearer ' + token)
+
+
+def resolute_message(payload):
+    """The notice as RESOLUTE built it: title RESOLUTE, one short line, one of the two RESOLUTE pages. Anything else is refused."""
+    title, body, url = payload.get('title'), payload.get('body'), payload.get('url')
+    if (title != RESOLUTE_TITLE or not isinstance(body, str) or not 1 <= len(body) <= RESOLUTE_BODY_LIMIT
+            or re.search(r'[\x00-\x1f\x7f]', body) or url not in RESOLUTE_PAGES):
+        raise ValueError('invalid-notice')
+    return dict(title=title, body=body, url=url)
+
+
+def resolute_push(db, payload, transport=send, now=None):
+    """Send one RESOLUTE notice to the member's eligible devices, once per device (the claim is written before the network call; an
+    ambiguous failure is never retried). mode "lookup" only counts the devices that already accepted it (RESOLUTE's reconciliation).
+    Returns counts only: never a device, an endpoint or the text."""
+    if not configuration()['enabled']:
+        raise ValueError('disabled')
+    owner = member_identity(payload)
+    event = payload.get('event')
+    if not isinstance(event, str) or not RESOLUTE_EVENT.fullmatch(event):
+        raise ValueError('invalid-notice')
+    key = 'resolute:' + event
+    now = time.time() if now is None else now
+    if payload.get('mode') == 'lookup':
+        accepted = db.execute('''SELECT COUNT(*) FROM push_deliveries d JOIN push_devices v ON v.id=d.device_id
+          WHERE v.owner_id=? AND d.event_key=? AND d.status='accepted' ''', (owner, key)).fetchone()[0]
+        return {'devices': accepted, 'accepted': accepted, 'failed': 0}
+    message = resolute_message(payload)
+    devices = accepted = failed = 0
+    for device in db.execute('SELECT * FROM push_devices WHERE active=1 AND owner_id=?', (owner,)).fetchall():
+        if not device['resolute'] or not resolute_entitled(device, now):
+            continue
+        devices += 1
+        with db:
+            claim = db.execute('''INSERT OR IGNORE INTO push_deliveries (device_id,event_key,status,attempted_at,observed_at)
+                VALUES(?,?,?,?,?)''', (device['id'], key, 'uncertain', now, now)).rowcount
+        if not claim:
+            prior = db.execute('SELECT status FROM push_deliveries WHERE device_id=? AND event_key=?', (device['id'], key)).fetchone()
+            if prior and prior['status'] == 'accepted':
+                accepted += 1
+            else:
+                failed += 1
+            continue
+        notice = {**message, 'tag': 'resolute-' + event[:16]}
+        try:
+            code = noting(db, transport, now)(json.loads(device['subscription']), notice)
+        except Exception:
+            code = 0
+        status = 'accepted' if isinstance(code, int) and 200 <= code < 300 else 'expired' if code in (404, 410) else 'uncertain'
+        with db:
+            db.execute('UPDATE push_deliveries SET status=? WHERE device_id=? AND event_key=?', (status, device['id'], key))
+            if status == 'expired':
+                db.execute('DELETE FROM push_devices WHERE id=?', (device['id'],))
+                db.execute('DELETE FROM push_device_preferences WHERE device_id=?', (device['id'],))
+        accepted += status == 'accepted'
+        failed += status != 'accepted'
+    print(json.dumps({'event': 'resolute-push', 'kind': RESOLUTE_PAGES[message['url']], 'devices': devices,
+                      'accepted': accepted, 'failed': failed}), flush=True)
+    return {'devices': devices, 'accepted': accepted, 'failed': failed}
