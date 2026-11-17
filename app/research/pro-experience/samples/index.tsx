@@ -13,6 +13,7 @@ const samples: Record<SampleFeature, ComponentType<Props>> = {
   compare: dynamic(() => import("./compare"), { loading }),
   "theme-ranking": dynamic(() => import("./theme-ranking"), { loading }),
   "watch-22": dynamic(() => import("./watch-22"), { loading }),
+  "rizels-desk": dynamic(() => import("./rizels-desk"), { loading }),
   "financial-radar": dynamic(() => import("./financial-radar"), { loading }),
   "us-portfolio": dynamic(() => import("./us-portfolio"), { loading }),
 };

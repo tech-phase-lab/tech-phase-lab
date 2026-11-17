@@ -5,8 +5,8 @@
 export const SAMPLE_TIME = { ja: "2035/03/12 09:00 時点", en: "As of 2035/03/12 09:00" } as const;
 /** The last U.S. close before that moment (2035-03-12 is a Monday): the date the samples' prices are "as of". */
 export const SAMPLE_CLOSE_DAY = "2035-03-09";
-/** The features that show a sample instead of a video. Phone notifications keep the video; RIZEL'S DESK is unchanged. */
-export const SAMPLE_FEATURES = ["relation-map", "compare", "theme-ranking", "watch-22", "financial-radar", "us-portfolio"] as const;
+/** The features that show a sample instead of a video. Phone notifications keep the video; RIZEL'S DESK has its sample since Nov 17. */
+export const SAMPLE_FEATURES = ["relation-map", "compare", "theme-ranking", "watch-22", "rizels-desk", "financial-radar", "us-portfolio"] as const;
 export type SampleFeature = typeof SAMPLE_FEATURES[number];
 export const hasSample = (id: string): id is SampleFeature => (SAMPLE_FEATURES as readonly string[]).includes(id);
 
@@ -32,4 +32,11 @@ export const SAMPLE_HINTS: Record<SampleFeature, { ja: string; en: string }> = {
   "watch-22": { ja: "NVDAとAMDを切り替えて、決算の深掘りを読めます", en: "Switch between NVDA and AMD to read their earnings deep dive" },
   "financial-radar": { ja: "半導体6社を、稼ぐ力と守る力の点数で順位付けしています", en: "Six chipmakers, ranked by their cash-generation and resilience scores" },
   "us-portfolio": { ja: "押すと読み取りの動きのあと、サンプルの持ち株が表示されます", en: "Press it to watch the reading, then see the sample holdings" },
+  "rizels-desk": { ja: "☺を押して、リアクションしてみましょう", en: "Tap ☺ to react to a note" },
 };
+/** RIZEL'S DESK has three tabs, each with its own line under the sample (owner's spec, Nov 17; the weekly line is not in the spec). */
+export const DESK_HINTS = {
+  notes: SAMPLE_HINTS["rizels-desk"],
+  ask: { ja: "質問を送ると、リゼルの回答が届きます", en: "Send a question and get Rizel's answer" },
+  weekly: { ja: "週刊PROのサンプル号を読めます", en: "Read a sample issue of PRO Weekly" },
+} as const;

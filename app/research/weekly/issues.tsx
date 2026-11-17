@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import Link from "next/link";
 import ResearchToolShell from "../research-tool-shell";
 import { useResearchLanguage } from "../use-research-language";
@@ -20,6 +20,9 @@ type Part = (
 const SECTION_TITLES: Partial<Record<Section, [string, string]>> = { earnings: ["決算", "Earnings"], indicators: ["経済指標", "Economic indicators"], market: ["市場全体の流れ", "The wider market"] };
 export type Issue = { id: string; number: number | null; status: "draft" | "published"; date: string; headline: string; lead: string; parts: Part[]; sources: { title: string; url: string }[]; notes?: string[]; auto?: boolean; createdAt?: string; updatedAt?: string };
 type Listed = { number: number; date: string; headline: string };
+/** How a text is drawn. The page shows it as written; a sample (PRO feature tour) passes the desk markup (red, marker, bold). */
+type Format = (text: string) => ReactNode;
+const plain: Format = text => text;
 type State = "loading" | "ready" | "signed-out" | "pro-required" | "error";
 const two = (n: number) => String(n + 1).padStart(2, "0");
 
@@ -31,12 +34,12 @@ function KindIcon({ kind }: { kind: "earnings" | "indicators" | "market" }) {
   return <svg {...common}><path d="M3 17l6-6 4 4 8-8M15 7h6v6" /></svg>;
 }
 /** The takeaway cards: one short sentence each, with the icon of the material it rests on. Falls back to the plain lines when the owner has edited the text. */
-function Takeaways({ part, ja }: { part: Extract<Part, { type: "text" }>; ja: boolean }) {
+function Takeaways({ part, ja, format }: { part: Extract<Part, { type: "text" }>; ja: boolean; format: Format }) {
   const lines = part.body.split("\n").map(line => line.replace(/^・/, "").trim()).filter(Boolean);
   const items = part.items && part.items.map(item => item.text).join("\n") === lines.join("\n") ? part.items : null;
-  if (!items) return <p className={styles.text}>{part.body}</p>;
+  if (!items) return <p className={styles.text}>{format(part.body)}</p>;
   return <ol className={styles.takeaways}>{items.map((item, index) => <li key={index} className={styles[`kind_${item.kind}`]}>
-    <span className={styles.icon}><KindIcon kind={item.kind} /></span><div><small>{KIND_LABEL[item.kind][ja ? 0 : 1]}</small><p>{item.text}</p></div>
+    <span className={styles.icon}><KindIcon kind={item.kind} /></span><div><small>{KIND_LABEL[item.kind][ja ? 0 : 1]}</small><p>{format(item.text)}</p></div>
   </li>)}</ol>;
 }
 /** Result / forecast / previous as short horizontal bars, from zero, one scale per group (the group shares a unit by construction). */
@@ -66,9 +69,9 @@ function Numbers({ part, ja }: { part: Extract<Part, { type: "numbers" }>; ja: b
     {part.note && <p className={styles.partNote}>{part.note}</p>}
   </>;
 }
-function Timeline({ part }: { part: Extract<Part, { type: "timeline" }> }) {
+function Timeline({ part, format }: { part: Extract<Part, { type: "timeline" }>; format: Format }) {
   return <ol className={styles.timeline}>{part.points.map((point, index) => <li key={index} className={styles[`dot_${point.tone}`]}>
-    <time>{point.when}</time><b>{point.event}</b>{point.comment && <p>{point.comment}</p>}
+    <time>{point.when}</time><b>{point.event}</b>{point.comment && <p>{format(point.comment)}</p>}
   </li>)}</ol>;
 }
 function Schedule({ part, ja }: { part: Extract<Part, { type: "schedule" }>; ja: boolean }) {
@@ -108,30 +111,30 @@ function Photos({ tickers, ja }: { tickers?: string[]; ja: boolean }) {
       <small>{ja ? "写真" : "Photo"}: <a href={photo.source} target="_blank" rel="noreferrer">{photo.credit}</a> / {photo.licenseUrl ? <a href={photo.licenseUrl} target="_blank" rel="noreferrer">{photo.license}</a> : photo.license}{photo.modified ? (ja ? "（一部を切り抜き）" : " (cropped)") : ""}</small></figcaption>
   </figure>)}</div>;
 }
-function Body({ part, ja }: { part: Part; ja: boolean }) {
-  if (part.type === "text") return part.section === "summary" && part.items ? <Takeaways part={part} ja={ja} /> : <><Photos tickers={part.tickers} ja={ja} /><p className={`${styles.text} ${styles.lines}`}>{part.body}</p></>;
+function Body({ part, ja, format }: { part: Part; ja: boolean; format: Format }) {
+  if (part.type === "text") return part.section === "summary" && part.items ? <Takeaways part={part} ja={ja} format={format} /> : <><Photos tickers={part.tickers} ja={ja} /><p className={`${styles.text} ${styles.lines}`}>{format(part.body)}</p></>;
   if (part.type === "numbers") return <Numbers part={part} ja={ja} />;
-  if (part.type === "timeline") return <Timeline part={part} />;
+  if (part.type === "timeline") return <Timeline part={part} format={format} />;
   if (part.type === "schedule") return <Schedule part={part} ja={ja} />;
   if (part.type === "chart") return <Chart part={part} ja={ja} />;
   return null;
 }
 
-export function IssueView({ issue, lang = "ja" }: { issue: Issue; lang?: "ja" | "en" }) {
+export function IssueView({ issue, lang = "ja", format = plain }: { issue: Issue; lang?: "ja" | "en"; format?: Format }) {
   const ja = lang === "ja";
   const numbered = issue.parts.reduce<{ part: Part; label: string | null }[]>((all, part) => [...all, { part, label: part.type === "highlight" ? null : two(all.filter(item => item.label).length) }], []);
   return <article className={styles.issue}>
     <section className={styles.hitokoto}>
       <small>{ja ? "今週のひとこと" : "This week's note"} · {shortDate(issue.date)}</small>
       <h2>{issue.headline}</h2>
-      <p>{issue.lead}</p>
+      <p>{format(issue.lead)}</p>
     </section>
     {numbered.map(({ part, label }, index) => {
       const title = part.section && part.section !== numbered[index - 1]?.part.section ? SECTION_TITLES[part.section] : undefined;
       const group = title && part.type !== "highlight" ? <h2 className={styles.group}>{title[ja ? 0 : 1]}</h2> : null;
       return <div key={index} className={styles.slot}>{group}{part.type === "highlight"
-        ? <blockquote className={styles.highlight}>{part.text}</blockquote>
-        : <section className={styles.part}><h3><span>{label}</span>{part.heading}</h3><Body part={part} ja={ja} /></section>}</div>;
+        ? <blockquote className={styles.highlight}>{format(part.text)}</blockquote>
+        : <section className={styles.part}><h3><span>{label}</span>{part.heading}</h3><Body part={part} ja={ja} format={format} /></section>}</div>;
     })}
     {issue.sources.length > 0 && <details className={styles.sources}><summary>{ja ? "出典" : "Sources"}</summary><ul>{issue.sources.map((source, index) => <li key={index}><a href={source.url} target="_blank" rel="noopener noreferrer">{source.title}</a></li>)}</ul></details>}
   </article>;

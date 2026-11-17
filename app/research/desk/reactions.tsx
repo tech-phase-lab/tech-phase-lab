@@ -68,10 +68,10 @@ export function ReactionFace({ reactions, ja, children }: { reactions: Reactions
 /** The counts as a small badge over the bottom-right edge of the post: only emoji with at least one, most first. Shown to the owner too. */
 export function ReactionBadge({ reactions, ja }: { reactions: Reactions; ja: boolean }) {
   const { counts, error } = reactions;
-  const shown = choices.map(choice => ({ ...choice, count: counts?.[choice.key]?.count ?? 0 })).filter(choice => choice.count > 0).sort((a, b) => b.count - a.count);
+  const shown = choices.map(choice => ({ ...choice, count: counts?.[choice.key]?.count ?? 0, mine: counts?.[choice.key]?.selected === true })).filter(choice => choice.count > 0).sort((a, b) => b.count - a.count);
   return <>
     {shown.length > 0 && <div className={styles.reactionBadge} role="img" aria-label={`${ja ? "リアクション" : "Reactions"}: ${shown.map(choice => `${ja ? choice.ja : choice.en} ${choice.count}`).join(ja ? "、" : ", ")}`}>
-      {shown.map(choice => <span key={choice.key} className={styles.badgeItem} aria-hidden="true"><span className={styles.reactionEmoji}>{choice.emoji}</span><span className={styles.reactionCount} key={`count-${choice.count}`}>{shortCount(choice.count)}</span></span>)}
+      {shown.map(choice => <span key={choice.key} className={styles.badgeItem} data-mine={choice.mine || undefined} aria-hidden="true"><span className={styles.reactionEmoji}>{choice.emoji}</span><span className={styles.reactionCount} key={`count-${choice.count}`}>{shortCount(choice.count)}</span></span>)}
     </div>}
     {error && <small className={styles.reactionError} role="status">{ja ? "通信に失敗しました。もう一度お試しください。" : "Could not sync reactions. Please try again."}</small>}
   </>;
