@@ -36,12 +36,35 @@ test("RESOLUTE tool pages and both landing pages open at the very top", async ()
   assert.match(await read("../app/resolute/lp/landing-en.tsx"), /<OpenAtTop \/>/);
 });
 
-test("the RESOLUTE bar measures the bottom menu again after returning and when the viewport moves", async () => {
+test("the RESOLUTE bar is drawn inside the bottom menu's fixed dock, 8px above it, with no viewport math (Safari, Nov 17)", async () => {
   const bar = await read("../app/research/resolute-bar.tsx");
+  // Portalled into the dock's slot instead of being a second fixed element lifted by measuring the menu.
+  assert.match(bar, /import \{ createPortal \} from "react-dom";/);
+  assert.match(bar, /document\.querySelector<HTMLElement>\("\[data-resolute-slot\]"\)/);
+  assert.match(bar, /return createPortal\(<aside ref=\{bar\}/);
+  assert.match(bar, /<\/aside>, host\);/);
+  assert.match(bar, /if \(!shown \|\| !host\) return null;/);
+  assert.doesNotMatch(bar, /visualViewport|setLift|bottom: lift/);
+  // The notch is still cut around the Search button and measured again when the dock changes size or the page returns.
+  assert.match(bar, /\[data-tab\] \[data-orb\]/);
   assert.match(bar, /addEventListener\("pageshow", place\)/);
-  assert.match(bar, /visualViewport/);
   assert.match(bar, /ResizeObserver/);
   assert.match(bar, /\[60, 250, 700, 1500, 3000\]/);
+  // "×" still hides it for seven days.
+  assert.match(bar, /localStorage\.setItem\(BAR_DISMISS_KEY, String\(Date\.now\(\)\)\)/);
+
+  const nav = await read("../app/research/bottom-nav.tsx");
+  const dock = nav.indexOf("styles.dock"), slot = nav.indexOf('<div data-resolute-slot="" className={styles.slot} />'), menu = nav.indexOf("<nav ref={bar}");
+  assert.ok(dock > 0 && slot > dock && menu > slot, "the slot is inside the dock, before the menu");
+
+  const css = await read("../app/research/resolute-bar.module.css");
+  assert.match(css, /\.bar \{ position:absolute; z-index:0; left:var\(--resolute-left,0px\); right:var\(--resolute-right,0px\); bottom:calc\(100% \+ 8px\);/);
+  assert.doesNotMatch(css, /position:fixed/);
+  const navCss = await read("../app/research/bottom-nav.module.css");
+  assert.match(navCss, /\.slot \{ display:contents; \}/);
+  assert.match(navCss, /\.browser \{ --resolute-left:max\(12px, env\(safe-area-inset-left\)\); --resolute-right:max\(12px, env\(safe-area-inset-right\)\); \}/);
+  // Room under the page for the bar, so the last rows are never hidden behind it.
+  assert.match(await read("../app/research/research.module.css"), /:global\(html\[data-resolute-bar\]\) \.app \{ padding-bottom:calc\(158px \+ env\(safe-area-inset-bottom\)\); \}/);
 });
 
 test("the owner can open the security page to set up two-step verification when it is not on", async () => {
@@ -146,7 +169,7 @@ test("RESOLUTE header and menu are the same on every page, with no bottom bar (N
   const steps = shell.slice(shell.indexOf("const STEPS"), shell.indexOf("const TOOLS"));
   assert.deepEqual([...steps.matchAll(/"(\/resolute\/[a-z]+)","([^"]+)"/g)].map(m => [m[1], m[2]]), [["/resolute/diagnosis","投資ルール診断"],["/resolute/simulation","シミュレーション"],["/resolute/alerts","終値アラート"],["/resolute/morning","翌朝のひとこと"],["/resolute/thermometer","相場の温度計"],["/resolute/tax","税金の目安"]]);
   const tools = shell.slice(shell.indexOf("const TOOLS"), shell.indexOf("export default function ToolShell"));
-  assert.deepEqual([...tools.matchAll(/\["(\/resolute\/[a-z]+)","([^"]+)"/g)].map(m => [m[1], m[2]]), [["/resolute/notebook","マイルール"],["/resolute/wall","ルールのお守り"],["/resolute/tonight","今夜のひと息"],["/resolute/news","危険度チェッカー"]]);
+  assert.deepEqual([...tools.matchAll(/\["(\/resolute\/[a-z]+)","([^"]+)"/g)].map(m => [m[1], m[2]]), [["/resolute/notebook","マイルール"],["/resolute/wall","ルールのお守り"],["/resolute/tonight","今夜のひと息"],["/resolute/news","衝撃度チェッカー"]]);
   const css = await read("../app/resolute/tool-shell.module.css");
   assert.match(css, /height: 38px/);
   assert.match(css, /\.step\[aria-current="page"\]/);

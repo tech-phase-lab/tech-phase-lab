@@ -108,7 +108,7 @@ export default function CheckoutScreen({ orderId, language: initialLanguage, can
    <button disabled={busy} onClick={() => void act("create")}>{en ? "Check price and create test order" : "価格を確認してテスト注文を作る"}</button>
   </> : null}
   {order && <>
-   <dl><dt>{en ? "Order" : "注文内容"}</dt><dd>{order.quote.kind === "initial" ? (en ? "First purchase" : "初回購入") : (en ? "Annual renewal · no automatic renewal" : "1年間の更新・自動継続なし")}</dd>
+   <dl><dt>{en ? "Order" : "注文内容"}</dt><dd>{order.quote.kind === "initial" ? (en ? "First purchase" : "初回購入") : (en ? "Annual renewal" : "1年間の更新")}</dd>
     <dt>{en ? "Amount" : "金額"}</dt><dd className={styles.amount}>{new Intl.NumberFormat(en ? "en-US" : "ja-JP", { style: "currency", currency: order.quote.currency }).format(Number(order.quote.value))} <small>{order.quote.currency}</small></dd>
     <dt>{en ? "Order ID" : "注文番号"}</dt><dd className={styles.orderId}>{order.orderId}</dd></dl>
    <p role="status">{stateText}</p>

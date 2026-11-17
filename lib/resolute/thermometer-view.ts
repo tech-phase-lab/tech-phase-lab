@@ -6,7 +6,10 @@ export type ThermometerSnapshot = {
  nas100: Temperature | {status: 'unavailable'; reason: string};
  sox: Temperature | {status: 'unavailable'; reason: string};
  vix: {status: 'ready'; asOf: string; level: number; percentile: number} | {status: 'unavailable'; reason: string};
+ /** Close-to-close basket moves on asOf (Shock Gauge stars). Absent on snapshots stored before Nov 2026. */
+ moves?: {nas100: DailyMoveReading | null; sox: DailyMoveReading | null};
 };
+export type DailyMoveReading = {date: string; previousDate: string; changePercent: number};
 export const temperatureLabels = {
  ja: ['冷えている', 'やや冷え', '平常', 'やや熱い', '熱い'],
  en: ['Cool', 'Slightly cool', 'Normal', 'Slightly hot', 'Hot'],

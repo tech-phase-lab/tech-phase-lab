@@ -1,4 +1,4 @@
-import {inspectCandidateFeed,generate,isInDailyWindow,windowHours,FEED_CHECKS} from './risk-job.mjs';
+import {inspectCandidateFeed,generate,isInDailyWindow,windowHours,FEED_CHECKS,reactArticles} from './risk-job.mjs';
 import {riskDate,parseRiskArticle} from '../../lib/resolute/risk.ts';
 import {selectArticleForReview} from './rizel-worker.mjs';
 
@@ -26,7 +26,7 @@ export function selectDailyCandidates(feed,now=new Date()){
  * Daily claims survive errors: retrying cannot silently repeat paid generation.
  */
 export async function prepareDailyReview({enabled=false,readFeed,selectionPool,budgetPool,apiKey,
- publishPool,now=new Date(),summarize=generate,select=selectArticleForReview,fetcher=fetch}) {
+ publishPool,now=new Date(),summarize=generate,select=selectArticleForReview,fetcher=fetch,readMoves=null}) {
  if(!enabled)return {state:'disabled'};
  const jst=new Date(now.getTime()+9*3600000);
  if([0,6].includes(jst.getUTCDay())||jst.getUTCHours()!==7)return {state:'outside-window'};
@@ -42,18 +42,24 @@ export async function prepareDailyReview({enabled=false,readFeed,selectionPool,b
   stage='storage';
   await selectionPool.query('UPDATE public.resolute_rizel_daily_runs SET candidate_count=$2 WHERE day=$1',[day,selected.length]);
   stage='generation';
+  const quotes=(publishPool??budgetPool)&&readMoves?((await (publishPool??budgetPool).query('SELECT value FROM resolute.risk_quotes')).rows??[]).map(r=>r.value).filter(q=>q?.approved===true):[];
   for(const candidate of selected){
    const draft=await summarize(candidate,budgetPool,now,fetcher);
    if(!draft)continue;
-   const article=parseRiskArticle(draft);
-   if(article.id!==candidate.id||article.url!==candidate.url||article.publishedAt!==candidate.publishedAt)throw Error('ARTICLE_MISMATCH');
+   const parsed=parseRiskArticle(draft);
+   if(parsed.id!==candidate.id||parsed.url!==candidate.url||parsed.publishedAt!==candidate.publishedAt)throw Error('ARTICLE_MISMATCH');
+   // Shock Gauge: stars only from the related TP index's move at the first U.S. close after the news (may still be waiting).
+   const [article]=(await reactArticles([parsed],readMoves,quotes,day)).map(parseRiskArticle);
+   // A story still waiting for the market has no stars yet, so no RIZEL line is chosen for it now.
+   if(article.stars===null){articles.push(article);continue;}
    // Model classification is not verified evidence for D's factual conditions.
    const result=await select({article,evidence:[],selectionPool,budgetPool,apiKey,now});
-   if(result.publication!=='withheld'||result.state!=='selected')throw Error('SELECTION_UNAVAILABLE');
+   // 'no-relevant-conclusion' (e.g. every fitting line awaits re-approval) keeps the story without a RIZEL line.
+   if(result.publication!=='withheld'||!['selected','no-relevant-conclusion'].includes(result.state))throw Error('SELECTION_UNAVAILABLE');
    refs.push({articleId:result.articleId,articleRevision:result.articleRevision});articles.push(article);
    await selectionPool.query('UPDATE public.resolute_rizel_daily_runs SET selection_refs=$2 WHERE day=$1',[day,JSON.stringify(refs)]);
   }
-  if(selected.length&&!refs.length)throw Error('NO_VERIFIED_OUTPUT');
+  if(selected.length&&!articles.length)throw Error('NO_VERIFIED_OUTPUT');
   stage='readback';
   // Publication stays gated (owner switch + approval variable); this only stores what the owner can preview.
   const stored=articles.length?articles:(diagnostics.coverageComplete&&!selected.length?[]:null);
@@ -61,7 +67,7 @@ export async function prepareDailyReview({enabled=false,readFeed,selectionPool,b
   await selectionPool.query("UPDATE public.resolute_rizel_daily_runs SET state='ready',finished_at=$2 WHERE day=$1",[day,new Date().toISOString()]);
   const saved=(await selectionPool.query('SELECT state,candidate_count,selection_refs,publication FROM public.resolute_rizel_daily_runs WHERE day=$1',[day])).rows[0];
   if(saved?.state!=='ready'||saved.candidate_count!==selected.length||saved.publication!=='withheld'||!Array.isArray(saved.selection_refs)||saved.selection_refs.length!==refs.length||refs.some((ref,i)=>saved.selection_refs[i]?.articleId!==ref.articleId||saved.selection_refs[i]?.articleRevision!==ref.articleRevision))throw Error('READBACK_MISMATCH');
-  return {state:refs.length?'ready':'no-candidates',day,count:refs.length,publication:'withheld',storageVerified:true,diagnostics};
+  return {state:articles.length?'ready':'no-candidates',day,count:articles.length,rizelSelections:refs.length,waitingForMarket:articles.filter(a=>a.stars===null).length,publication:'withheld',storageVerified:true,diagnostics};
  }catch(cause){
   await selectionPool.query("UPDATE public.resolute_rizel_daily_runs SET state='failed',finished_at=$2 WHERE day=$1",[day,now.toISOString()]);
   // A real failure is recorded so the app can say "couldn't update" (never "quiet day").

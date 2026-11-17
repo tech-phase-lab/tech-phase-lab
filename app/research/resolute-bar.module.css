@@ -1,8 +1,10 @@
 /* Phone only: 50px tall, 12px from each side, 8px above the bottom menu; a round notch is cut out of the lower middle so
-   the bar never touches the Search button. */
+   the bar never touches the Search button. The bar is portalled into the bottom menu's fixed dock and placed against it
+   (bottom:100% + 8px), so the two are one fixed element: Safari's toolbar sliding in and out can no longer pull them apart,
+   and no measuring of the viewport is needed (owner, Nov 17). */
 .bar { display:none; }
 @media (max-width:760px) {
-  .bar { position:fixed; z-index:55; left:12px; right:12px; bottom:calc(102px + env(safe-area-inset-bottom)); display:flex; align-items:center; gap:10px; height:50px; padding:0 10px 0 12px; border-radius:25px;
+  .bar { position:absolute; z-index:0; left:var(--resolute-left,0px); right:var(--resolute-right,0px); bottom:calc(100% + 8px); display:flex; align-items:center; gap:10px; height:50px; padding:0 10px 0 12px; border-radius:25px;
     border:1px solid #b99a55; background:linear-gradient(90deg,#141a2b 0%,#181b27 50%,#241d12 100%); box-shadow:0 10px 24px -10px #000;
     -webkit-mask:radial-gradient(circle var(--notch-r,39px) at var(--notch-x,50%) var(--notch-y,calc(100% + 27px)),transparent calc(var(--notch-r,39px) - 1px),#000 var(--notch-r,39px)); mask:radial-gradient(circle var(--notch-r,39px) at var(--notch-x,50%) var(--notch-y,calc(100% + 27px)),transparent calc(var(--notch-r,39px) - 1px),#000 var(--notch-r,39px));
     animation:barRise .26s cubic-bezier(.2,.9,.3,1) both; }

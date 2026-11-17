@@ -1,3 +1,4 @@
+import { legalModule } from "./support-legal-modules.mjs";
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
@@ -9,7 +10,7 @@ const require = createRequire(import.meta.url);
 function load(path, stubs = {}) {
   const out = ts.transpileModule(readFileSync(new URL(path, import.meta.url), 'utf8'), { compilerOptions: { module: ts.ModuleKind.CommonJS, jsx: ts.JsxEmit.ReactJSX, target: ts.ScriptTarget.ES2022 } }).outputText;
   const mod = { exports: {} };
-  new Function('require', 'module', 'exports', out)(id => id.endsWith('.module.css') ? { default: new Proxy({}, { get: (_, key) => String(key) }) } : id in stubs ? stubs[id] : require(id), mod, mod.exports);
+  new Function('require', 'module', 'exports', out)(id => id.endsWith('.module.css') ? { default: new Proxy({}, { get: (_, key) => String(key) }) } : id in stubs ? stubs[id] : legalModule(id) ?? require(id), mod, mod.exports);
   return mod.exports;
 }
 const card = load('../app/research/pro-offer-card.tsx', { 'next/link': { default: ({ children, ...p }) => createElement('a', p, children) }, './price-font': { priceFont: { variable: 'price-font' } } });
@@ -37,7 +38,12 @@ test('first render: monthly (lowest price first); JPY for Japanese, USD for Engl
 });
 test('the PayPal button goes straight to PayPal: a real button when a handler is given, never a sheet', () => {
   const button = html(true, { href: undefined, onSubscribe: () => {} });
-  assert.match(button, /<button[^>]*class="paypal"[^>]*>PayPalで申し込む<\/button>/);
+  // The account page's button is the final one (owner pack, Nov 17): the lawyer's wording, 「利用規約」 opening the terms, the renewal line above.
+  assert.match(button, /<button[^>]*class="paypal"[^>]*aria-label="利用規約に同意して申し込む"[^>]*><span role="link" data-href="\/terms"[^>]*>利用規約<\/span>に同意して申し込む<\/button>/);
+  assert.match(button, /<p>月額・年額とも解約するまで自動更新。いつでも解約できます。<\/p><\/div><button/);
+  assert.match(html(false, { href: undefined, onSubscribe: () => {} }), /aria-label="Agree to the Terms and buy"[^>]*>Agree to the <span role="link" data-href="\/terms\?lang=en"[^>]*>Terms<\/span> and buy<\/button>/);
+  // The introduction card's link only leads to the account page, so it keeps 「PayPalで申し込む」.
+  assert.match(html(true, { href: "/research/account?upgrade=1" }), />PayPalで申し込む<\/a>/);
   assert.match(html(true, { href: undefined, onSubscribe: () => {}, busy: true }), /disabled=""[^>]*>PayPalへ移動しています/);
 });
 test('the FREE card shows 0円 / 月 with the same price classes as PRO; the note sits outside the cards', () => {

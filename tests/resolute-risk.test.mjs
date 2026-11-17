@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {PGlite} from '@electric-sql/pglite';
-import {riskStars,riskAction,parseRiskFeed,latestRiskDate} from '../lib/resolute/risk.ts';
+import {starsFromMove,riskAction,parseRiskFeed,latestRiskDate,formatMove,SUMMARY_QUESTION} from '../lib/resolute/risk.ts';
 import {candidatesFromFeed,validateGeneration,collect,publish,isInDailyWindow} from '../services/resolute-api/risk-job.mjs';
 import {saveRiskDay} from '../services/resolute-api/rizel-daily-review.mjs';
 import {RISK_POLICY} from '../lib/resolute/risk-policy.ts';
@@ -11,11 +11,37 @@ import {OWNER_ACCOUNT_ID} from '../lib/membership/entitlements.ts';
 const now=new Date('2026-10-12T22:00:00Z');
 const body='NVIDIA warned that export restrictions across the semiconductor sector could affect earnings for several months. The restrictions are planned, not completed.';
 const candidate={id:hash('https://investor.nvidia.com/test'),title:'NVIDIA warns of export restrictions',body,url:'https://investor.nvidia.com/test',publishedAt:'2026-10-12T20:00:00Z',source:'official'};
-const generated={publishable:true,facts:{scope:'sector',duration:'months',impact:'possible'},evidence:{scope:'across the semiconductor sector',duration:'for several months',impact:'could affect earnings'},ja:{title:'NVIDIAが輸出規制の影響を警告',source:'NVIDIAの公式発表',content:'半導体業界への輸出規制が業績に影響する可能性があるとしています。',duration:'数か月'},en:{title:'NVIDIA warns of export restrictions',source:'NVIDIA announcement',content:'Planned export restrictions could affect earnings across the semiconductor sector.',duration:'Several months'}};
+const generated={publishable:true,ja:{title:'NVIDIAが輸出規制について警告',source:'NVIDIAの公式発表',content:'NVIDIAが、半導体業界への輸出規制が計画段階にあると発表しました。',date:'2026年10月12日の発表'},en:{title:'NVIDIA warns of export restrictions',source:'NVIDIA announcement',content:'NVIDIA said export restrictions across the semiconductor sector are planned, not completed.',date:'Announced on October 12, 2026'}};
 const article=validateGeneration(generated,candidate);
-test('risk rubric is bounded, deterministic and rejects unknowns; high rating is a rule review, never a trade',()=>{assert.equal(article.stars,3);assert.equal(riskStars({source:'sns',scope:'company',duration:'days',impact:'opinion'}),1);assert.equal(riskStars({source:'official',scope:'market',duration:'years',impact:'confirmed'}),5);assert.equal(riskAction(4),'review');assert.equal(riskAction(3),'none');assert.throws(()=>riskStars({source:'official',scope:'unknown',duration:'years',impact:'confirmed'}));assert.throws(()=>riskAction(0));assert.throws(()=>parseRiskFeed({state:'ready',date:'2026-10-13',articles:[{...article,stars:5}],quotes:[]}));});
+test('Shock Gauge stars are mechanical: |TP index move| <1 ★1, 1–2 ★2, 2–3 ★3, 3–5 ★4, ≥5 ★5; high stars mean "reread your rules", never a trade',()=>{
+ for(const [move,stars] of [[0,1],[0.94,1],[-0.95,2],[1,2],[-1.94,2],[2,3],[2.94,3],[-3,4],[-3.2,4],[4.94,4],[4.96,5],[5,5],[-12.3,5]])assert.equal(starsFromMove(move),stars,String(move));
+ assert.equal(riskAction(4),'review');assert.equal(riskAction(3),'none');assert.equal(riskAction(null),'none');assert.throws(()=>riskAction(0));
+ assert.deepEqual(RISK_POLICY.stars.thresholds,[1,2,3,5]);assert.equal(RISK_POLICY.reviewMinStars,4);
+});
+test('a new story waits for the market: no stars, its index and the first U.S. close after the news are recorded',()=>{
+ // 2026-10-12T20:00Z is 16:00 New York time: exactly at the close, so it belongs to the next close.
+ assert.equal(article.stars,null);assert.deepEqual(article.market,{index:'sox',session:'2026-10-13',changePercent:null});
+ assert.equal(formatMove(article.market,'ja'),null);
+ // Stars and move must agree: a stored story cannot carry stars without a move, or the wrong stars for its move.
+ assert.throws(()=>parseRiskFeed({state:'ready',date:'2026-10-13',articles:[{...article,stars:5}],quotes:[]}));
+ assert.throws(()=>parseRiskFeed({state:'ready',date:'2026-10-13',articles:[{...article,market:{...article.market,changePercent:-3.2},stars:2}],quotes:[]}));
+ const filled={...article,market:{...article.market,changePercent:-3.2},stars:4};
+ assert.equal(parseRiskFeed({state:'ready',date:'2026-10-13',articles:[filled],quotes:[]}).articles[0].stars,4);
+ assert.equal(formatMove(filled.market,'ja'),'TP半導体40 −3.2%');assert.equal(formatMove(filled.market,'en'),'TP Semiconductor 40 −3.2%');
+ assert.equal(formatMove({index:'nas100',session:'2026-10-13',changePercent:0.4},'en'),'TP Large Cap 100 +0.4%');
+ // Legacy rubric fields are gone.
+ assert.equal('facts' in article,false);
+});
+test('every summary ends with the exact closing question; new numbers still suppress generated copy',()=>{
+ assert.ok(article.ja.content.endsWith('\n'+SUMMARY_QUESTION.ja));assert.ok(article.en.content.endsWith('\n'+SUMMARY_QUESTION.en));
+ assert.equal(SUMMARY_QUESTION.ja,'このニュースで、あなたのルールの条件に当てはまるものはありますか？');assert.equal(SUMMARY_QUESTION.en,'Does anything in this news meet a condition in your rules?');
+ // A model that already added the question does not get it twice.
+ const twice=validateGeneration({...generated,ja:{...generated.ja,content:generated.ja.content+SUMMARY_QUESTION.ja}},candidate);
+ assert.equal(twice.ja.content.split(SUMMARY_QUESTION.ja).length,2);
+ assert.equal(validateGeneration({...generated,en:{...generated.en,content:'Profit falls 99%.'}},candidate),null);
+ assert.equal(validateGeneration({...generated,publishable:false},candidate),null);
+});
 test('JST weekday publication boundary handles Monday before 7, weekends, and Friday after 7',()=>{assert.equal(latestRiskDate(new Date('2026-10-11T21:59:00Z')),'2026-10-09');assert.equal(latestRiskDate(new Date('2026-10-11T22:00:00Z')),'2026-10-12');assert.equal(latestRiskDate(new Date('2026-10-10T12:00:00Z')),'2026-10-09');});
-test('unsupported duration, evidence and new numbers suppress generated copy',()=>{assert.equal(validateGeneration({...generated,facts:{...generated.facts,duration:'unknown'}},candidate),null);assert.equal(validateGeneration({...generated,evidence:{...generated.evidence,impact:'fabricated claim'}},candidate),null);assert.equal(validateGeneration({...generated,en:{...generated.en,content:'Profit falls 99%.'}},candidate),null);});
 test('collector excludes stale, partial, positive-only and headline-only items and canonicalizes duplicates',()=>{const a={...candidate,bodyEn:body,bodyJa:'半導体の輸出規制で業績に影響する可能性があると警告しました。'};const feed={ok:true,enabled:true,items:[],officialUpdates:[a,{...a,url:a.url+'?utm_source=test'},{...a,id:'partial',brief:{}},{...a,publishedAt:'2020-01-01',url:a.url+'/old'},{...a,bodyEn:null,bodyJa:null,url:a.url+'/title'}]};const result=candidatesFromFeed(feed,now);assert.equal(result.length,1);assert.equal(result[0].source,'official');assert.equal(candidatesFromFeed({...feed,enabled:false},now).length,1);});
 test('risk store enforces notification ownership, owner identity, publication stop, hidden stories, daily claims and scoped SQL',async()=>{
  const boot=new PGlite();await boot.exec('CREATE DATABASE resolute');const dump=await boot.dumpDataDir();await boot.close();const db=new PGlite({database:'resolute',loadDataDir:dump});const pool={async query(sql,args){const r=await db.query(sql,args);return{...r,rowCount:r.rows.length||r.affectedRows};}};
@@ -55,7 +81,10 @@ test('private date-only intake preserves dates and conservatively rejects future
  assert.equal(candidatesFromFeed(feed(item),now).length,0);
  const selected=candidatesFromFeed(feed(item),now,{allowDateOnly:true});
  assert.equal(selected.length,1);assert.equal(selected[0].publishedAt,'2026-10-11');
- assert.equal(validateGeneration(generated,selected[0]).publishedAt,'2026-10-11');
+ const dated=validateGeneration({...generated,ja:{...generated.ja,date:'2026年10月11日の報道'},en:{...generated.en,date:'Reported on October 11, 2026'}},selected[0]);
+ assert.equal(dated.publishedAt,'2026-10-11');
+ // A date-only source uses the latest instant it could mean, so the first close is never before the news.
+ assert.equal(dated.market.session,'2026-10-12');
  for(const date of ['2026-10-13','2026-10-01','2026-02-30','not-a-date'])
   assert.equal(candidatesFromFeed(feed({...item,publishedOn:date}),now,{allowDateOnly:true}).length,0);
  assert.equal(candidatesFromFeed(feed({...item,publishedAt:'invalid'}),now,{allowDateOnly:true}).length,0);

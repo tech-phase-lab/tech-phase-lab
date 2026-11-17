@@ -81,3 +81,11 @@
 @media(max-width:380px){.bar a[href="/research/watchlist"] .label{font-size:9px}}
 
 :global(html[data-hide-nav="1"]) .dock, :global(html[data-hide-nav="1"]) .spacer { display:none; }
+
+/* RESOLUTE's bar is portalled into .slot and placed against .dock (one fixed element for both), 8px above the menu.
+   The browser dock runs edge to edge, so the bar keeps the 12px side margins it has in the home-screen app. */
+.slot { display:contents; }
+@media (max-width:760px) {
+  .dock { --resolute-left:0px; --resolute-right:0px; }
+  .browser { --resolute-left:max(12px, env(safe-area-inset-left)); --resolute-right:max(12px, env(safe-area-inset-right)); }
+}

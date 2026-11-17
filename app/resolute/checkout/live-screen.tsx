@@ -3,6 +3,8 @@ import { useEffect, useRef, useState, type ReactNode } from "react";
 import { checkoutUrl, liveApprovalUrl, liveCheckoutRequest, liveOrder, type LiveOrder } from "@/lib/resolute/live-checkout";
 import type { CheckoutProps } from "./screen";
 import styles from "./styles.module.css";
+import AgreeButton, { CheckoutLines, RESOLUTE_CHECKOUT_LINES, termsHref } from "../../legal/agree-button";
+import Disclaimer from "../disclaimer";
 const errors: Record<string,[string,string]> = {
  GUEST_SESSION_REQUIRED:["購入時と同じブラウザで開いてください。解決しない場合は注文番号を添えてお問い合わせください。","Open this page in the browser you used to purchase. If you still need help, contact support with your order number."],
  PAYMENT_DISABLED:["現在、購入の受付を停止しています。","Checkout is currently closed."],
@@ -76,7 +78,7 @@ export default function LiveCheckoutScreen({orderId,language:initialLanguage,can
   {!salesEnabled && <p role="status">{errors.PAYMENT_DISABLED[en?1:0]}</p>}
   {cancelled && <p>{en?"You returned from PayPal. Opening this page does not complete a payment.":"PayPalから戻りました。このページを開いただけで支払いは確定しません。"}</p>}
   {!id && <>
-   <p>{en?"Your first purchase includes RESOLUTE and one year of alerts and the Risk Checker. Annual renewals are separate purchases and never renew automatically.":"初回購入にはRESOLUTEと、1年間のアラート・危険度チェッカーが含まれます。2年目以降の更新は1年ごとの購入で、自動継続はありません。"}</p>
+   <p>{en?"Your first purchase includes RESOLUTE and one year of Alerts, Morning Note, Shock Gauge and RIZEL’s Take. Payment is by PayPal (credit card or bank account).":"初回購入にはRESOLUTEと、1年間のアラート通知・翌朝のひとこと・衝撃度チェッカー・RIZELの一言が含まれます。お支払いはPayPal（クレジットカード・銀行口座払い）です。"}</p>
    <label>{en?"Purchase type":"購入内容"}<select value={kind} disabled={busy || !salesEnabled || attempt.current!==null} onChange={e=>setKind(e.target.value as "initial"|"renewal")}>
     <option value="initial">{en?"First purchase":"初回購入"}</option><option value="renewal" disabled={guest}>{en?"Annual renewal":"1年間の更新"}</option>
    </select></label>
@@ -84,7 +86,8 @@ export default function LiveCheckoutScreen({orderId,language:initialLanguage,can
    <button disabled={busy || !salesEnabled} onClick={()=>void act("create")}>{en?"Check price and continue":"価格を確認して進む"}</button>
   </>}
   {order && <>
-   <dl><dt>{en?"Order":"購入内容"}</dt><dd>{order.quote.kind==="initial"?(en?"First purchase":"初回購入"):(en?"Annual renewal · no automatic renewal":"1年間の更新・自動継続なし")}</dd>
+   <dl><dt>{en?"Order":"購入内容"}</dt><dd>{order.quote.kind==="initial"?(en?"First purchase":"初回購入"):(en?"Annual renewal":"1年間の更新")}</dd>
+    <dt>{en?"Payment method":"お支払い方法"}</dt><dd>{en?"PayPal (credit card or bank account)":"PayPal（クレジットカード・銀行口座払い）"}</dd>
     <dt>{en?"Amount":"金額"}</dt><dd className={styles.amount}>{new Intl.NumberFormat(en?"en-US":"ja-JP",{style:"currency",currency:order.quote.currency}).format(Number(order.quote.value))} <small>{order.quote.currency}</small></dd>
     <dt>{en?"Order ID":"注文番号"}</dt><dd className={styles.orderId}>{order.orderId}</dd></dl>
    <p>{en?"Changing the display language won’t change this order’s amount or currency.":"表示言語を切り替えても、この注文の金額と通貨は変わりません。"}</p>
@@ -95,7 +98,8 @@ export default function LiveCheckoutScreen({orderId,language:initialLanguage,can
    {!paid && !held && !uncertain && order.state==="created" && salesEnabled && <div className={styles.actions}>
     {approval && <a className={styles.button} href={approval} rel="noreferrer">{en?"Continue to PayPal":"PayPalへ進む"}</a>}
     <p>{en?"After approving in PayPal, return here to complete your payment.":"PayPalで承認した後、この画面で支払いを確定します。"}</p>
-    <button disabled={busy} onClick={()=>void act("capture")}>{en?"Complete payment":"支払いを確定する"}</button>
+    <CheckoutLines lines={RESOLUTE_CHECKOUT_LINES[en?"en":"ja"]} />
+    <AgreeButton en={en} disabled={busy} onClick={()=>void act("capture")} />
    </div>}
   </>}
   {paid && order?.claimRequired && !claimed && <section>
@@ -113,6 +117,7 @@ export default function LiveCheckoutScreen({orderId,language:initialLanguage,can
   {id && <button disabled={busy} onClick={()=>void act("status")}>{en?"Refresh payment status":"支払い状況を再確認する"}</button>}
   {busy && <p role="status">{en?"Checking…":"確認しています…"}</p>}
   {error && <p role="alert">{errors[error]?.[en?1:0] ?? (en?"We couldn’t confirm the result. If you started a payment, refresh its status before creating another order.":"結果を確認できませんでした。支払い操作の後は、新しい注文を作る前に支払い状況を再確認してください。")}</p>}
-  <footer className={styles.links}>{!uncertain && (!attempt.current || order) && order?.state!=="capturing" && <a href={checkoutUrl(language)}>{en?"Start a new order":"新しい注文へ"}</a>}<a href={`/resolute?lang=${language}`}>{en?"Back to RESOLUTE":"RESOLUTEへ戻る"}</a></footer>
+  <footer className={styles.links}>{!uncertain && (!attempt.current || order) && order?.state!=="capturing" && <a href={checkoutUrl(language)}>{en?"Start a new order":"新しい注文へ"}</a>}<a href={`/resolute?lang=${language}`}>{en?"Back to RESOLUTE":"RESOLUTEへ戻る"}</a><a href={termsHref(en)} target="_blank" rel="noopener">{en?"Terms of Service":"利用規約"}</a><a href={`/resolute/legal/commerce${en?"?lang=en":""}`} target="_blank" rel="noopener">{en?"Legal Notice":"特定商取引法に基づく表記"}</a></footer>
+  <Disclaimer en={en} />
  </section></main>;
 }

@@ -7,6 +7,7 @@ import { useIdentityRefresh } from "../../identity-provider";
 import { billingRequest, billingReturn, billingSummary, sandboxApproval, verifyBillingReturn, type BillingSummary } from "@/lib/membership/billing-client";
 import styles from "./styles.module.css";
 import { formatDisplay, zoneLabel } from "@/lib/research/display-time";
+import AgreeButton, { CheckoutLines, PRO_CHECKOUT_LINE } from "../../../legal/agree-button";
 
 const messages: Record<string, [string, string]> = {
   "identity-loading": ["ログイン状態を確認しています。", "Checking your sign-in status."],
@@ -164,7 +165,10 @@ export default function BillingScreen({mode="sandbox", preview=false}: {mode?: "
         <label>{t("期間", "Period")}<select value={period} disabled={Boolean(open)} onChange={e => { setPeriod(e.target.value as "month" | "year"); setAgreed(false); }}><option value="year">{t("年額", "Yearly")}</option><option value="month">{t("月額", "Monthly")}</option></select></label>
         <label>{t("通貨", "Currency")}<select value={currency} disabled={Boolean(open)} onChange={e => { setCurrency(e.target.value as "JPY" | "USD"); setAgreed(false); }}><option value="JPY">JPY {period === "year" ? "29,800" : "2,980"} / {period === "year" ? t("年", "year") : t("月", "month")}</option><option value="USD">USD {period === "year" ? "200" : "20"} / {period === "year" ? t("年", "year") : t("月", "month")}</option></select></label>
         <label className={styles.check}><input type="checkbox" checked={agreed} onChange={e => setAgreed(e.target.checked)} />{mode === "live" ? period === "year" ? t("選択した年額料金で毎年自動更新されることに同意します。自動更新はこの画面で停止できます。", "I agree to yearly renewal at the selected price. I can stop automatic renewal on this page.") : t("選択した月額料金で毎月自動更新されることに同意します。自動更新はこの画面で停止できます。", "I agree to monthly renewal at the selected price. I can stop automatic renewal on this page.") : t("Sandbox内で自動更新されるテスト契約に同意します。実際の請求はありません。", "I agree to a recurring Sandbox test subscription. There is no real charge.")}</label>
-        <button type="button" disabled={!agreed || busy || preview} onClick={() => void act("create")}>{open ? t("PayPalで手続きを再開", "Resume on PayPal") : mode === "live" ? t("PayPalで申し込む", "Subscribe with PayPal") : t("PayPalでテスト購入", "Test checkout with PayPal")}</button>
+        {mode === "live" && !open ? <>
+          <CheckoutLines lines={[ja ? PRO_CHECKOUT_LINE.ja : PRO_CHECKOUT_LINE.en]} />
+          <AgreeButton en={!ja} disabled={!agreed || busy || preview} onClick={() => void act("create")} />
+        </> : <button type="button" disabled={!agreed || busy || preview} onClick={() => void act("create")}>{open ? t("PayPalで手続きを再開", "Resume on PayPal") : t("PayPalでテスト購入", "Test checkout with PayPal")}</button>}
       </fieldset>}
       {ready && sub && sub.state !== "creating" && <button type="button" disabled={busy} onClick={() => void act("reconcile")}>{t("支払いを確認", "Verify payment")}</button>}
       {ready && sub && ["active", "suspended"].includes(sub.state) && <fieldset disabled={busy}>
