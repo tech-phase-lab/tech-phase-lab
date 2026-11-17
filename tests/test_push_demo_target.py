@@ -1,5 +1,6 @@
-"""Nov 17 (owner): the demo price-target notice for filming the PRO video (web_push.demo_price_target).
-It must look exactly like a real price-target notice, reach only the owner's own registered device, and be recorded as a real notice."""
+"""Nov 17 (owner): the scheduled demo price-target notice for filming the PRO video (web_push.scheduled_demo_target).
+Set PUSH_DEMO_TARGET_AT="<RFC3339 time> <ja|en>" on the monitor; at that time one notice, exactly like a real price-target notice, goes
+to the owner accounts' active devices only, once per value, never more than ten minutes late. Nothing appears on the notifications page."""
 import base64
 from contextlib import redirect_stdout
 from datetime import datetime, timezone
@@ -8,15 +9,14 @@ import json
 import os
 from pathlib import Path
 import re
+import sqlite3
 import sys
 import tempfile
-import threading
 import unittest
 from unittest.mock import patch
-from urllib.error import HTTPError
-from urllib.request import Request, urlopen
 
-sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'scripts/research'))
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / 'scripts/research'))
 import web_push as push
 
 
@@ -29,15 +29,18 @@ def awake(db):
     db.execute("CREATE TRIGGER IF NOT EXISTS test_awake AFTER INSERT ON push_devices BEGIN UPDATE push_devices SET quiet_on=0 WHERE id=NEW.id; END")
     return db
 
+
 OWNER = 'user_3LHR1K8f8zwyDcVzMg7ud6KB9Wb'
+PREVIEW_OWNER = 'user_3JulL4D07KtVl5Eg2zdY1iczKbC'
 OTHER = 'user_member0001'
+AT = '2026-11-17T03:00:00Z'
 
 
 def subscription(host='web.push.apple.com', path='owner-phone'):
     return {'endpoint': f'https://{host}/push/{path}', 'keys': {'p256dh': b64(b'\x04' + b'k' * 64), 'auth': b64(b'a' * 16)}}
 
 
-class DemoTargetTests(unittest.TestCase):
+class ScheduledDemoTargetTests(unittest.TestCase):
     def setUp(self):
         self.tmp = tempfile.TemporaryDirectory()
         self.path = Path(self.tmp.name) / 'push.sqlite'
@@ -54,15 +57,21 @@ class DemoTargetTests(unittest.TestCase):
         push.register_member(self.db, {'memberId': member, 'accessExpiresAt': self.now + 3600, 'subscription': sub or subscription(),
                                        'allTargets': True, 'language': language}, {'NVDA'}, self.now - 10)
 
-    def demo(self, language='ja', member=OWNER, sub=None, now=None, transport=None):
+    def fire(self, value=AT + ' ja', now=None, transport=None):
         sent = []
-        def capture(_, message):
-            sent.append(message)
+        def capture(sub, message):
+            sent.append((sub['endpoint'], message))
             return 201
         with redirect_stdout(StringIO()) as out:
-            result = push.demo_price_target(self.db, {'memberId': member, 'subscription': sub or subscription(), 'language': language},
-                                            transport or capture, self.now if now is None else now)
+            result = push.scheduled_demo_target(self.db, value, transport or capture, self.now if now is None else now)
         return result, sent, out.getvalue()
+
+    def test_owner_ids_match_the_site(self):
+        source = (ROOT / 'lib/membership/entitlements.ts').read_text()
+        ids = (re.search(r'export const OWNER_ACCOUNT_ID = "([^"]+)"', source).group(1),
+               re.search(r'export const PRODUCTION_OWNER_ACCOUNT_ID = "([^"]+)"', source).group(1))
+        self.assertEqual(push.DEMO_OWNER_ACCOUNT_IDS, ids)
+        self.assertEqual(push.DEMO_TARGET_VARIABLE, 'PUSH_DEMO_TARGET_AT')
 
     def test_text_is_the_real_price_target_notice_for_the_same_inputs_in_both_languages(self):
         self.assertEqual(push.DEMO_TARGET, {'ticker': 'NVDA', 'firm': 'Sample Securities', 'previous': 295, 'latest': 340})
@@ -76,104 +85,152 @@ class DemoTargetTests(unittest.TestCase):
             push.deliver(self.db, [item], lambda sub, message: real.append((sub['endpoint'], message)) or 201, self.now)
         real = {('ja' if endpoint.endswith('/ja') else 'en'): message for endpoint, message in real}
         self.register()
-        _, ja, _ = self.demo('ja')
-        _, en, _ = self.demo('en', now=self.now + 61)
-        for language, demo in (('ja', ja[0]), ('en', en[0])):
+        _, ja, _ = self.fire(AT + ' ja')
+        _, en, _ = self.fire(AT + ' en', now=self.now + 1)
+        for language, (_, demo) in (('ja', ja[0]), ('en', en[0])):
             self.assertEqual({k: demo[k] for k in ('title', 'body', 'url')}, {k: real[language][k] for k in ('title', 'body', 'url')})
             self.assertEqual(set(demo), set(real[language]))
             self.assertRegex(demo['tag'], r'^[a-f0-9]{64}$')
-        self.assertEqual(ja[0]['title'], 'NVDA · 目標株価の変更')
-        self.assertEqual(en[0]['title'], 'NVDA · Price target update')
-        self.assertEqual(ja[0]['body'], 'Sample Securities: $295 → $340')
-        self.assertEqual(en[0]['body'], 'Sample Securities: $295 → $340')
-        self.assertEqual(ja[0]['url'], '/research/price-targets')
-        # The shared builder is the one deliver() uses.
-        self.assertEqual(push.price_target_payload('NVDA', 'Sample Securities', 295, 340, True, 'k'),
-                         {'title': 'NVDA · 目標株価の変更', 'body': 'Sample Securities: $295 → $340', 'tag': 'k', 'url': '/research/price-targets'})
+        self.assertEqual(ja[0][1]['title'], 'NVDA · 目標株価の変更')
+        self.assertEqual(en[0][1]['title'], 'NVDA · Price target update')
+        self.assertEqual(ja[0][1]['body'], 'Sample Securities: $295 → $340')
+        self.assertEqual(en[0][1]['body'], 'Sample Securities: $295 → $340')
+        self.assertEqual(ja[0][1]['url'], '/research/price-targets')
+        self.assertNotEqual(ja[0][1]['tag'], en[0][1]['tag'])
 
-    def test_one_notice_to_the_owners_own_device_only(self):
+    def test_fires_once_at_the_time_and_never_twice_for_the_same_value(self):
         self.register()
+        self.assertEqual(self.fire(now=self.now - 1, transport=lambda *_: self.fail('early'))[0], 'waiting')
+        result, sent, _ = self.fire(now=self.now)
+        self.assertEqual((result, len(sent)), ('sent', 1))
+        for later in (1, 30, 300):
+            self.assertEqual(self.fire(now=self.now + later, transport=lambda *_: self.fail('twice'))[0], 'done')
+        # Across a restart: a new connection to the same database still knows the value was handled.
+        self.db.close()
+        self.db = push.connect(self.path)
+        self.assertEqual(self.fire(now=self.now + 5, transport=lambda *_: self.fail('twice after restart'))[0], 'done')
+        # A new value (another time or language) is a new demo.
+        result, sent, _ = self.fire(value='2026-11-17T03:05:00Z en', now=self.now + 300)
+        self.assertEqual((result, len(sent)), ('sent', 1))
+
+    def test_only_the_owner_accounts_active_devices_read_at_the_moment_of_sending(self):
         self.register(OTHER, subscription('fcm.googleapis.com', 'member'))
-        result, sent, _ = self.demo('ja')
-        self.assertTrue(result['accepted'])
-        self.assertEqual(len(sent), 1)
-        # Another member's device, an unregistered device, or the owner asking for someone else's device: nothing is sent.
-        for member, sub in ((OWNER, subscription('fcm.googleapis.com', 'member')), (OTHER, subscription()),
-                            (OWNER, subscription('fcm.googleapis.com', 'unknown'))):
-            with self.assertRaisesRegex(ValueError, 'not-registered'):
-                self.demo('ja', member=member, sub=sub, now=self.now + 120, transport=lambda *_: self.fail('sent to another device'))
-        with self.assertRaisesRegex(ValueError, 'invalid-language'):
-            self.demo('fr', now=self.now + 120, transport=lambda *_: self.fail('bad language'))
-        with self.assertRaisesRegex(ValueError, 'invalid-member'):
-            self.demo('ja', member='', now=self.now + 120, transport=lambda *_: self.fail('no member'))
-        with patch.dict(os.environ, {'WEB_PUSH_ENABLED': 'false'}), self.assertRaisesRegex(ValueError, 'disabled'):
-            self.demo('ja', now=self.now + 120, transport=lambda *_: self.fail('disabled'))
+        push.register(self.db, {'subscription': subscription('fcm.googleapis.com', 'anon'), 'tickers': ['NVDA'], 'language': 'ja'}, {'NVDA'}, self.now - 10)
+        # Turned on just before the time: still picked up.
+        self.register(OWNER)
+        self.register(PREVIEW_OWNER, subscription('fcm.googleapis.com', 'preview-owner'))
+        self.register(OWNER, subscription('fcm.googleapis.com', 'owner-off'))
+        self.db.execute('UPDATE push_devices SET active=0 WHERE subscription LIKE ?', ('%owner-off%',))
+        result, sent, _ = self.fire(now=self.now + 2)
+        self.assertEqual(result, 'sent')
+        self.assertEqual(sorted(endpoint for endpoint, _ in sent),
+                         ['https://fcm.googleapis.com/push/preview-owner', 'https://web.push.apple.com/push/owner-phone'])
 
-    def test_one_send_per_device_per_minute_with_a_new_tag_each_time(self):
+    def test_no_owner_device_is_skipped_and_not_retried(self):
+        self.register(OTHER, subscription('fcm.googleapis.com', 'member'))
+        result, sent, out = self.fire(now=self.now + 3)
+        self.assertEqual((result, sent), ('no-device', []))
+        self.assertEqual(json.loads(out), {'event': 'push-demo-target', 'language': 'ja', 'devices': 0, 'accepted': 0, 'outcome': 'no-device'})
         self.register()
-        first, sent, _ = self.demo('ja')
-        self.assertTrue(first['accepted'])
-        again, more, _ = self.demo('en', now=self.now + 30, transport=lambda *_: self.fail('rate limited'))
-        self.assertEqual(again, {'accepted': False, 'retryAfter': 60})
-        later, more, _ = self.demo('en', now=self.now + 60)
-        self.assertTrue(later['accepted'])
-        self.assertNotEqual(sent[0]['tag'], more[0]['tag'])
-        # A failed send still uses the minute (no automatic retry), and a gone device is removed.
-        failed, _, _ = self.demo('ja', now=self.now + 120, transport=lambda *_: 410)
-        self.assertTrue(failed['expired'])
-        self.assertIsNone(self.db.execute('SELECT 1 FROM push_devices WHERE id IS NOT NULL AND owner_id=?', (OWNER,)).fetchone())
+        self.assertEqual(self.fire(now=self.now + 60, transport=lambda *_: self.fail('retried'))[0], 'done')
 
-    def test_recorded_as_a_real_price_target_notice_not_a_test(self):
+    def test_more_than_ten_minutes_late_or_malformed_is_never_sent(self):
         self.register()
-        self.demo('ja')
+        result, sent, out = self.fire(now=self.now + 601, transport=lambda *_: self.fail('late'))
+        self.assertEqual(result, 'late')
+        self.assertEqual(json.loads(out)['devices'], 0)
+        self.assertEqual(self.fire(value=AT + ' ja', now=self.now + 600)[0], 'done')
+        self.assertEqual(self.fire(value='2026-11-17T03:10:00Z ja', now=self.now + 1200)[0], 'sent')
+        for value in ('2026-11-17T03:00:00 ja', AT + ' fr', AT, 'soon ja', AT + ' ja extra'):
+            self.assertEqual(self.fire(value=value, now=self.now, transport=lambda *_: self.fail('malformed'))[0], 'invalid', value)
+        self.assertIsNone(self.fire(value='  ')[0])
+        # A zone other than UTC is the same moment.
+        self.assertEqual(push.parse_demo_target('2026-11-17T12:00:00+09:00 en'), (self.now, 'en'))
+
+    def test_recorded_as_a_real_price_target_notice_and_the_log_has_no_device_or_text(self):
+        self.register()
+        _, _, out = self.fire(AT + ' en')
         device = push.hashlib.sha256(subscription()['endpoint'].encode()).hexdigest()
         notice = push.recent_notice(self.db, device, self.now + 1)
         self.assertEqual((notice['kind'], notice['page'], notice['title'], notice['state']),
-                         ('price-targets', '/research/price-targets', 'NVDA · 目標株価の変更', 'new'))
-        self.assertNotEqual(notice['kind'], 'test')
-
-    def test_log_line_has_no_endpoint_key_or_text(self):
-        self.register()
-        _, _, out = self.demo('en')
+                         ('price-targets', '/research/price-targets', 'NVDA · Price target update', 'new'))
         sub = subscription()
         for secret in (sub['endpoint'], 'owner-phone', sub['keys']['p256dh'], sub['keys']['auth'], 'Sample Securities', 'NVDA', OWNER):
             self.assertNotIn(secret, out)
-        self.assertEqual(json.loads(out.strip()), {'event': 'push-demo-target', 'language': 'en', 'providerStatus': 201, 'failure': None})
+        self.assertEqual(json.loads(out), {'event': 'push-demo-target', 'language': 'en', 'devices': 1, 'accepted': 1, 'outcome': 'sent'})
 
-    def test_http_route_needs_the_token_and_the_owner_flag_from_the_site_server(self):
-        import service
+    def test_a_gone_device_is_removed(self):
         self.register()
-        self.db.commit()
-        app = object.__new__(service.AutomaticMonitor); app.db_path = self.path
-        server = service.ThreadingHTTPServer(('127.0.0.1', 0), service.Handler); server.app = app
-        thread = threading.Thread(target=server.serve_forever, daemon=True); thread.start()
-        base = f'http://127.0.0.1:{server.server_port}'
-        sent = []
-        def post(token='member-api-token', flag=None, body=None):
-            headers = {'Authorization': 'Bearer ' + token, 'Content-Type': 'application/json'}
-            if flag is not None:
-                headers['X-Push-Owner-Demo'] = flag
-            payload = body or {'memberId': OWNER, 'subscription': subscription(), 'language': 'ja', 'ownerDemo': True}
-            try:
-                with urlopen(Request(base + '/push/member/demo-target', data=json.dumps(payload).encode(), headers=headers), timeout=5) as response:
-                    return response.status, json.load(response)
-            except HTTPError as error:
-                return error.code, json.load(error)
-        try:
-            with patch.dict(os.environ, {'RESEARCH_API_TOKEN': 'member-api-token'}), \
-                    patch.object(push, 'send', lambda _, message: sent.append(message) or 201), redirect_stdout(StringIO()):
-                self.assertEqual(post(token='wrong', flag='1')[0], 401)
-                # Without the flag (a field in the body is never the flag), or with any other value: refused, nothing sent.
-                for flag in (None, '0', 'true'):
-                    self.assertEqual(post(flag=flag), (400, {'ok': False, 'error': 'owner-required'}))
-                self.assertEqual(sent, [])
-                status, result = post(flag='1')
-                self.assertEqual((status, result['ok'], result['accepted']), (200, True, True))
-                self.assertEqual([m['title'] for m in sent], ['NVDA · 目標株価の変更'])
-                self.assertEqual(post(flag='1')[1]['retryAfter'], 60)
-                self.assertEqual(len(sent), 1)
-        finally:
-            server.shutdown(); server.server_close(); thread.join(timeout=2)
+        result, _, out = self.fire(transport=lambda *_: 410)
+        self.assertEqual((result, json.loads(out)['accepted']), ('sent', 0))
+        self.assertIsNone(self.db.execute('SELECT 1 FROM push_devices WHERE owner_id=?', (OWNER,)).fetchone())
+
+
+class MonitorClockTests(unittest.TestCase):
+    def test_the_monitor_checks_right_after_boot_and_at_least_every_ten_seconds(self):
+        import service
+        self.assertLessEqual(service.PUSH_DEMO_CHECK_SECONDS, 10)
+        source = (ROOT / 'scripts/research/service.py').read_text()
+        self.assertIn('target=self.run_push_demo', source)
+        self.assertIn('self.push_demo_thread.start()', source)
+        self.assertNotIn('/push/member/demo-target', source)
+
+    def test_the_monitor_loop_sends_once_when_the_time_comes(self):
+        import threading
+        import service
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / 'push.sqlite'
+            db = push.connect(path)
+            push.register_member(db, {'memberId': OWNER, 'accessExpiresAt': 4102444800, 'subscription': subscription(),
+                                      'allTargets': True, 'language': 'ja'}, {'NVDA'})
+            db.commit(); db.close()
+            app = object.__new__(service.AutomaticMonitor)
+            app.db_path, app.web_push_enabled, app.stop_event = path, True, threading.Event()
+            sent = []
+            def transport(_, message):
+                sent.append(message)
+                if len(sent) >= 1:
+                    app.stop_event.set()
+                return 201
+            value = datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ') + ' en'
+            with patch.dict(os.environ, {'PUSH_DEMO_TARGET_AT': value}), patch.object(push, 'send', transport), \
+                    patch.object(service, 'PUSH_DEMO_CHECK_SECONDS', 0.05), redirect_stdout(StringIO()):
+                thread = threading.Thread(target=app.run_push_demo, daemon=True)
+                thread.start(); thread.join(timeout=5)
+                app.stop_event.clear()
+                # Running again (a restart) with the same value sends nothing.
+                thread = threading.Thread(target=app.run_push_demo, daemon=True)
+                thread.start(); app.stop_event.wait(0.3); app.stop_event.set(); thread.join(timeout=5)
+            self.assertEqual([m['title'] for m in sent], ['NVDA · Price target update'])
+
+    def test_a_failure_is_logged_once_and_never_stops_the_clock(self):
+        import threading
+        import service
+        app = object.__new__(service.AutomaticMonitor)
+        app.db_path, app.web_push_enabled, app.stop_event = Path('/nonexistent'), True, threading.Event()
+        calls = []
+        def broken(*_):
+            calls.append(1)
+            if len(calls) >= 3:
+                app.stop_event.set()
+            raise sqlite3.OperationalError('locked')
+        value = datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ') + ' ja'
+        with patch.dict(os.environ, {'PUSH_DEMO_TARGET_AT': value}), patch.object(push, 'connect', broken), \
+                patch.object(service, 'PUSH_DEMO_CHECK_SECONDS', 0.01), redirect_stdout(StringIO()) as out:
+            thread = threading.Thread(target=app.run_push_demo, daemon=True)
+            thread.start(); thread.join(timeout=5)
+        self.assertFalse(thread.is_alive())
+        self.assertEqual(len(calls), 3)
+        self.assertEqual([json.loads(line) for line in out.getvalue().splitlines()],
+                         [{'event': 'push-demo-target-error', 'error': 'OperationalError'}])
+
+    def test_the_notifications_page_has_no_demo(self):
+        self.assertFalse((ROOT / 'app/research/push-demo-panel.tsx').exists())
+        self.assertFalse((ROOT / 'lib/research/push-demo-notice.ts').exists())
+        for name in ('app/research/notification-settings.tsx', 'app/research/notification-page-view.tsx',
+                     'app/api/research/notifications/route.ts'):
+            source = (ROOT / name).read_text()
+            self.assertNotRegex(source, r'(?i)demo', name)
 
 
 if __name__ == '__main__':

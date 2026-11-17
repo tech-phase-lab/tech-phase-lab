@@ -275,8 +275,8 @@ class ResearchServiceTests(unittest.TestCase):
             # 21 single workers (including the news refresher, strip titles, deep analysis, the release
             # watch, the Saturday weekly-draft clock and the big-event results reader) plus one thread per
             # parallel headline translator, the stock comparison's once-a-minute refresh clock and the
-            # Financial Radar's twice-daily refresh clock.
-            self.assertEqual(len(observed), 25 + app.translation_workers)
+            # Financial Radar's twice-daily refresh clock, and (Nov 17) the scheduled demo notice clock.
+            self.assertEqual(len(observed), 26 + app.translation_workers)
             self.assertTrue(all(observed))
 
     def test_release_watch_alerts_from_the_public_payload_and_reports_in_health(self):
