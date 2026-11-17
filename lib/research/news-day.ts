@@ -1,14 +1,17 @@
-/** Day dividers for the home news list (owner, Nov 5): "今日", "昨日", then "11月3日"; days are Japan time. */
-const day = new Intl.DateTimeFormat("sv-SE", { timeZone: "Asia/Tokyo" });
+import { displayDayKey, type DisplayLang } from "./display-time.ts";
 
-/** The Japan-time date ("2026-11-05") a list entry belongs to. A source that states only a date keeps that date. */
-export function dayKey(at: string, kind: "date" | "time") {
-  return kind === "date" ? at.slice(0, 10) : day.format(new Date(at));
+/** Day dividers for the home news list (owner, Nov 5): "今日", "昨日", then "11月3日". Days are Japan time
+ * on the Japanese site and U.S. Eastern time on the English site (owner, Nov 17). */
+
+/** The date ("2026-11-05") a list entry belongs to in the site's zone. A source that states only a date keeps that date. */
+export function dayKey(at: string, kind: "date" | "time", lang: DisplayLang) {
+  return kind === "date" ? at.slice(0, 10) : displayDayKey(at, lang);
 }
 
 export function dayLabel(key: string, now: number, ja: boolean) {
-  const today = day.format(new Date(now));
-  const yesterday = day.format(new Date(now - 24 * 3_600_000));
+  const today = displayDayKey(now, ja ? "ja" : "en");
+  // The calendar day before today's (stepping from noon UTC of the key, so a 23- or 25-hour DST day cannot skip one).
+  const yesterday = new Date(Date.parse(`${today}T12:00:00Z`) - 24 * 3_600_000).toISOString().slice(0, 10);
   if (key === today) return ja ? "今日" : "Today";
   if (key === yesterday) return ja ? "昨日" : "Yesterday";
   const [, month, date] = key.split("-").map(Number);

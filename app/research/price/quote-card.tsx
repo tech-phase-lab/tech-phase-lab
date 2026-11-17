@@ -5,12 +5,14 @@ import { useFacts, useNumbersHidden, useQuotes, shortName, type CardQuote } from
 import { compact, dateJa, plain, rangePosition, signedBoth, signedMoney, signedPercent } from "@/lib/research/market-quote";
 import { useResearchLanguage } from "../use-research-language";
 import StarButton from "./star-button";
+import { displayClock, zoneLabel } from "@/lib/research/display-time";
 import styles from "./price.module.css";
 
 export type DetailOrigin = "watchlist" | "watch" | "search" | "market";
 export const detailHref = (ticker: string, from: DetailOrigin) => `/research/quote/${encodeURIComponent(ticker)}?from=${from}`;
 export const toneOf = (value: number | null): "up" | "down" | "flat" => value === null || value === 0 ? "flat" : value > 0 ? "up" : "down";
-const clock = (iso: string, seconds: boolean) => new Date(iso).toLocaleTimeString("en-GB", { timeZone: "Asia/Tokyo", hour: "2-digit", minute: "2-digit", ...(seconds ? { second: "2-digit" } : {}), hour12: false });
+/** Japan time in Japanese, U.S. Eastern in English (owner, Nov 17). */
+const clock = (iso: string, seconds: boolean, ja: boolean) => displayClock(iso, ja ? "ja" : "en", seconds);
 
 export function Eye({ hidden, onToggle, label }: { hidden: boolean; onToggle: () => void; label: string }) {
   return <button type="button" className={styles.eye} aria-pressed={hidden} aria-label={label} onClick={onToggle}>
@@ -22,11 +24,11 @@ export function Eye({ hidden, onToggle, label }: { hidden: boolean; onToggle: ()
 export function Tile({ ticker, size = "gauge" }: { ticker: string; size?: "gauge" | "dial" | "detail" }) {
   return <StockLogo ticker={ticker} className={`${styles.tile} ${size === "dial" ? styles.tileDial : size === "detail" ? styles.tileDetail : ""}`} />;
 }
-/** "取引終了 ・ 06:00 JST" (a green point while the regular session is open). */
+/** "取引終了 ・ 06:00 JST" / "Closed · 16:00 ET" (a green point while the regular session is open). */
 /** `updatedAt` (a stock page): the time this page last received the price, instead of the quote's own time. */
 export function Status({ quote, ja, update, updatedAt }: { quote: CardQuote; ja: boolean; update?: boolean; updatedAt?: number | null }) {
   const open = quote.session === "regular";
-  return <><span className={styles.dot} data-open={open} aria-hidden="true" /><span>{open ? (ja ? "取引中" : "Open") : (ja ? "取引終了" : "Closed")}{ja ? " ・ " : " · "}{clock(updatedAt ? new Date(updatedAt).toISOString() : quote.asOf, false)} JST{update ? (ja ? " 更新" : " updated") : ""}</span></>;
+  return <><span className={styles.dot} data-open={open} aria-hidden="true" /><span>{open ? (ja ? "取引中" : "Open") : (ja ? "取引終了" : "Closed")}{ja ? " ・ " : " · "}{clock(updatedAt ? new Date(updatedAt).toISOString() : quote.asOf, false, ja)} {zoneLabel(ja ? "ja" : "en")}{update ? (ja ? " 更新" : " updated") : ""}</span></>;
 }
 /** The pre-market / after-hours line: the label, a pulsing point and the time of the latest extended quote, then its price and its move from the close. */
 export function Extended({ quote, ja }: { quote: CardQuote; ja: boolean }) {
@@ -34,7 +36,7 @@ export function Extended({ quote, ja }: { quote: CardQuote; ja: boolean }) {
   if (!ext) return null;
   const amount = ext.price - quote.price, tone = toneOf(ext.percentChange);
   return <div className={styles.ext}>
-    <span className={styles.extLeft}><span className={styles.extLabel}>{ext.session === "pre" ? (ja ? "プレ" : "Pre") : (ja ? "時間外" : "After")}</span><span className={styles.extTime}><span className={styles.live} aria-hidden="true" />{clock(ext.asOf, true)}</span></span>
+    <span className={styles.extLeft}><span className={styles.extLabel}>{ext.session === "pre" ? (ja ? "プレ" : "Pre") : (ja ? "時間外" : "After")}</span><span className={styles.extTime}><span className={styles.live} aria-hidden="true" />{clock(ext.asOf, true, ja)}</span></span>
     <span className={styles.extRight}><b>{plain(ext.price)}</b><span className={styles[tone]}>{signedBoth(amount, ext.percentChange)}</span></span>
   </div>;
 }

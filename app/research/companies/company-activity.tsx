@@ -17,6 +17,7 @@ import { freeWindow } from "@/lib/research/free-flash";
 import { useMemberDisplay, useOwnerAccount, useResearchOwner } from "../member-display-provider";
 import styles from "./company-activity.module.css";
 import DeepAnalysisPanel from "../deep-analysis-panel";
+import { displayClock, displayDayKey, formatDisplay, zoneLabel } from "@/lib/research/display-time";
 
 type Tag = "flash" | "analyst" | "news";
 type Row = {
@@ -24,16 +25,14 @@ type Row = {
   label?: string; title: string; body?: string; wire?: CompanyWireItem;
 };
 
-const jst = (options: Intl.DateTimeFormatOptions, value: string | number | Date, locale = "en-GB") =>
-  new Intl.DateTimeFormat(locale, { timeZone: "Asia/Tokyo", hourCycle: "h23", ...options }).format(new Date(value));
-const clock = (at: string) => jst({ hour: "2-digit", minute: "2-digit" }, at);
-const dayKey = (at: string | number) => jst({ year: "numeric", month: "numeric", day: "numeric" }, at);
+// Japan time in Japanese, U.S. Eastern in English (owner, Nov 17).
+const clock = (at: string, lang: Language) => displayClock(at, lang);
 /** Time column: today shows HH:mm, an earlier day shows its date over the time. A date-only source shows just the date. */
-function timeCell(row: Row) {
+function timeCell(row: Row, lang: Language) {
   // A date-only source has no publication time; the time it was found is shown separately and labelled (owner, Oct 14).
-  if (row.kind === "date") { const [, month, day] = row.at.split("-"); return <time dateTime={row.at}>{Number(month)}/{Number(day)}{row.observedAt && <span className={styles.found}>取得 {clock(row.observedAt)}</span>}</time>; }
-  const today = dayKey(row.at) === dayKey(Date.now());
-  return <time dateTime={row.at}>{!today && <span>{jst({ month: "numeric", day: "numeric" }, row.at)}</span>}{clock(row.at)}</time>;
+  if (row.kind === "date") { const [, month, day] = row.at.split("-"); return <time dateTime={row.at}>{Number(month)}/{Number(day)}{row.observedAt && <span className={styles.found}>{lang === "ja" ? "取得" : "Found"} {clock(row.observedAt, lang)}</span>}</time>; }
+  const today = displayDayKey(row.at, lang) === displayDayKey(Date.now(), lang);
+  return <time dateTime={row.at}>{!today && <span>{formatDisplay(row.at, lang, { month: "numeric", day: "numeric" }, "en-GB")}</span>}{clock(row.at, lang)}</time>;
 }
 
 // Reads the existing public feed only; collection, translation and publication
@@ -134,9 +133,9 @@ export default function CompanyActivity({ ticker, lang }: { ticker: string; lang
   };
   // A time the source never stated is never shown as a publication time.
   const detected = (row: Row, locale: boolean) => row.kind === "observed" ? (locale ? "発表時刻は不明（取得時刻を表示）" : "Publication time unknown (showing when found)")
-    : row.observedAt ? `${locale ? "取得" : "Detected"} ${clock(row.observedAt)}` : "";
+    : row.observedAt ? `${locale ? "取得" : "Detected"} ${clock(row.observedAt, lang)}` : "";
   const item = (row: Row) => <article key={row.id} className={`${styles.item} ${marked.has(row.id) ? styles.unread : ""}`}>
-    <span className={styles.when}>{timeCell(row)}</span><span className={styles.node} aria-hidden="true"/>
+    <span className={styles.when}>{timeCell(row, lang)}</span><span className={styles.node} aria-hidden="true"/>
     <div className={styles.entry}>
       <div className={styles.meta}><span className={`${styles.tag} ${styles[row.tag]}`}>{tagText[row.tag]}</span>{marked.has(row.id) && <span className={styles.newMark}>NEW</span>}</div>
       {row.wire
@@ -149,7 +148,7 @@ export default function CompanyActivity({ ticker, lang }: { ticker: string; lang
     <h2 className={styles.rtTitle}><button type="button" className={styles.head} aria-expanded={open} aria-controls={bodyId} onClick={toggle}>
       <span className={styles.ttl}><svg className={styles.chev} viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M7 4l6 6-6 6"/></svg>{full ? (ja ? 'リアルタイム監視' : 'Live news') : (ja ? 'ニュース監視' : 'News monitor')}{!full && <small className={styles.delayTag}>{ja ? '30分遅れ' : '30-minute delay'}</small>}</span>
       <span className={styles.state} data-failed={failed}>{hasFresh ? <span className={styles.badge}>{ja ? "新着" : "New"} {freshCount > 9 ? "9+" : freshCount}</span> : <span>{status}</span>}<i className={styles.dot} data-live={!!data && !failed && !paused} aria-hidden="true"/></span>
-      {!open && <span className={styles.peek}>{newest ? <>{newest.kind === "date" ? <time>{newest.at.slice(5).replace("-", "/")}</time> : <time>{clock(newest.at)}</time>}<span>{newest.title}</span></> : <span>{data ? (ja ? "現在の配信データ内に該当銘柄の記事はありません。" : "No matching articles in the current feed window.") : (ja ? "配信済み記事を読み込んでいます…" : "Loading updates…")}</span>}</span>}
+      {!open && <span className={styles.peek}>{newest ? <>{newest.kind === "date" ? <time>{newest.at.slice(5).replace("-", "/")}</time> : <time>{clock(newest.at, lang)}</time>}<span>{newest.title}</span></> : <span>{data ? (ja ? "現在の配信データ内に該当銘柄の記事はありません。" : "No matching articles in the current feed window.") : (ja ? "配信済み記事を読み込んでいます…" : "Loading updates…")}</span>}</span>}
     </button></h2>
     <div id={bodyId} hidden={!open}>
       {!full && <p className={styles.freeNote} role="note"><b>FREE</b>{ja ? "版　30分遅延・新着5件" : " 30 min behind · latest 5"}<br /><Link href="/research#tech-phase-pro">{ja ? "PRO版は、リアルタイム・全件" : "PRO: real-time access to all updates"}</Link></p>}
@@ -165,7 +164,7 @@ export default function CompanyActivity({ ticker, lang }: { ticker: string; lang
         <button type="button" className={styles.bell} aria-disabled="true" aria-label={ja ? "この銘柄の速報を通知する(PRO・準備中)" : "Notify me about this stock (PRO, coming soon)"}>
           <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 22a2.3 2.3 0 0 0 2.3-2.3H9.7A2.3 2.3 0 0 0 12 22zm6.6-6.4V11a6.6 6.6 0 0 0-5.1-6.4V3.9a1.5 1.5 0 0 0-3 0v.7A6.6 6.6 0 0 0 5.4 11v4.6L3.6 17.4V19h16.8v-1.6z"/></svg>
           {ja ? "この銘柄の速報を通知する" : "Notify me about this stock"}<small>PRO</small></button>
-        <span>{checkedAt ? `${ja ? "更新" : "Updated"} ${clock(checkedAt)} JST` : ""}</span>
+        <span>{checkedAt ? `${ja ? "更新" : "Updated"} ${clock(checkedAt, lang)} ${zoneLabel(lang)}` : ""}</span>
       </div>
       {data && <p className={styles.fine}>{ja ? "配信済み情報を自動確認。未取得の情報・全期間の履歴は含みません。" : "Auto-checking published updates; excludes uncollected information and older history."}</p>}
     </div>

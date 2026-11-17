@@ -20,12 +20,15 @@ test('invalid or future timestamps never claim freshness; hydration is unknown',
  assert.equal(quoteFreshness({...quote(0),asOf:'bad'},now),'invalid');
  assert.equal(quoteFreshness(quote(0),null),'unknown');
 });
-test('old quotes include the JST date, including across UTC date boundaries',()=>{
+test('old quotes include the JST date (ET date in English), including across UTC date boundaries',()=>{
  const beforeJstMidnight='2026-10-09T14:59:00Z';
- assert.match(quoteTimeText(beforeJstMidnight,now),/10\/9/);
- assert.equal(quoteTimeText('2026-10-09T15:00:00Z',now),'00:00 JST');
- assert.match(quoteTimeText(beforeJstMidnight,now,'en'),/Oct 9/);
- assert.match(quoteTimeText('2025-10-09T14:59:00Z',now),/2025/);
- assert.equal(quoteTimeText('invalid',now),'—');
+ assert.match(quoteTimeText(beforeJstMidnight,now,'ja'),/10\/9/);
+ assert.equal(quoteTimeText('2026-10-09T15:00:00Z',now,'ja'),'00:00 JST');
+ assert.match(quoteTimeText('2025-10-09T14:59:00Z',now,'ja'),/2025/);
+ assert.equal(quoteTimeText('invalid',now,'ja'),'—');
+ // English (owner, Nov 17): `now` is 11:00 EDT on Oct 9 in New York, so a quote from earlier that day shows only its time.
+ assert.equal(quoteTimeText(beforeJstMidnight,now,'en'),'10:59 ET');
+ assert.equal(quoteTimeText('2026-10-09T03:59:00Z',now,'en'),'Oct 8 23:59 ET');
+ assert.equal(quoteTimeText('2026-12-09T03:59:00Z',Date.parse('2026-12-09T15:00:00Z'),'en'),'Dec 8 22:59 ET', 'EST in December');
  assert.equal(freshnessLabel('stale','en'),'Last available');
 });

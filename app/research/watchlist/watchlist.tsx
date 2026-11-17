@@ -24,6 +24,8 @@ import EmptyWatchlist from "./empty-watchlist";
 import { useWatchlistSectors } from "./use-watchlist-sectors";
 import { watchlistSector } from "@/lib/research/watchlist-sector";
 import styles from "./watchlist.module.css";
+import { displayClock, zoneLabel } from "@/lib/research/display-time";
+import type { Language } from "@/lib/research/data";
 
 type Company = { ticker: string; name: string; sector?: { ja: string; en: string }; exchange?: string };
 type SearchEntry = { ticker: string; name: string; exchange: string };
@@ -33,7 +35,8 @@ const LIST_NAME_LIMIT = 9;
 /** The first nine characters (code points), with no ellipsis. */
 export const shownListName = (name: string) => Array.from(name).slice(0, LIST_NAME_LIMIT).join("");
 
-function CurrentTime() {
+/** The live clock beside the market state: Japan time in Japanese, U.S. Eastern in English (owner, Nov 17). */
+function CurrentTime({ lang }: { lang: Language }) {
   const [now, setNow] = useState<Date | null>(null);
   useEffect(() => {
     const updateClock = () => setNow(new Date());
@@ -41,7 +44,7 @@ function CurrentTime() {
     const timer = setInterval(updateClock, 1000);
     return () => clearInterval(timer);
   }, []);
-  return <time dateTime={now?.toISOString()}>{now ? now.toLocaleTimeString("en-GB", { timeZone: "Asia/Tokyo", hour12: false }) : "—"}</time>;
+  return <time dateTime={now?.toISOString()}>{now ? displayClock(now, lang, true) : "—"}</time>;
 }
 
 export default function Watchlist({ companies, quotes = {} }: { companies: Company[]; quotes?: Record<string, FavoriteQuote> }) {
@@ -169,7 +172,7 @@ export default function Watchlist({ companies, quotes = {} }: { companies: Compa
         <div className={styles.toolbar}>
           <WatchMenu buttonClass={styles.textButton} label={t("並び順", "Sort order")} value={sort} options={sortOptions} onChange={setSort}>{sortOptions.find(option => option.value === sort)?.label}</WatchMenu>
           <WatchMenu buttonClass={styles.textButton} menuClass={styles.viewMenu} label={t("取引時間帯の表示", "Market session view")} value={sessionView} options={viewOptions} onChange={value => { setSessionView(value as WatchlistSession); setRevealed(""); }}>{t("表示", "View")} {viewOptions.find(option => option.value === sessionView)?.label}</WatchMenu>
-          <span className={styles.marketState}><i aria-hidden="true" />{sharedSession ? stateLabels[sharedSession] : t("現在", "Now")}{t(" ・ ", " · ")}<CurrentTime /> JST</span>
+          <span className={styles.marketState}><i aria-hidden="true" />{sharedSession ? stateLabels[sharedSession] : t("現在", "Now")}{t(" ・ ", " · ")}<CurrentTime lang={lang} /> {zoneLabel(lang)}</span>
         </div>
         <ul className={styles.quoteRows} data-watchlist-rows>{ordered.map(ticker => {
           const item = companies.find(entry => entry.ticker === ticker) ?? known[ticker];

@@ -29,6 +29,7 @@ function harness(lang='ja', editable=true, ready=true, status='synced') {
   if(id==='./use-quote-clock')return {useQuoteClock:()=>Date.now()};
   if(id==='./use-watchlist-sectors')return {useWatchlistSectors:()=>({})};
   if(id==='@/lib/research/watchlist-sector')return {watchlistSector:()=>null};
+  if(id==='@/lib/research/display-time')return require('../lib/research/display-time.ts');
   return {default:()=>null,TrashIcon:()=>null};
  },target,target.exports,{confirm:message=>{messages.push(message);return accepted;}});
  const nodes=(n=tree)=>!n||typeof n!=='object'?[]:[n,...[].concat(n.props?.children??[]).flat(Infinity).filter(child=>child!=null).flatMap(nodes)];

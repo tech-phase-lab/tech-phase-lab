@@ -84,10 +84,11 @@ test("the cancellation page: same-size buttons, the real renewal date, only real
   assert.match(read("../app/research/account/account-view.tsx"), /href="\/research\/account\/cancel"/);
 });
 
-test("the day PRO ends is the real date in Japan time, and the loss list names only PRO-only features", () => {
+test("the day PRO ends is the real date in Japan time (U.S. Eastern on the English site), and the loss list names only PRO-only features", () => {
   assert.equal(monthDay("2026-12-05T00:00:00+09:00", true), "12月5日");
   assert.equal(monthDay("2026-12-04T16:00:00Z", true), "12月5日", "16:00 UTC is already Dec 5 in Japan");
-  assert.equal(monthDay("2026-12-05T00:00:00+09:00", false), "December 5");
+  assert.equal(monthDay("2026-12-05T00:00:00+09:00", false), "December 4", "00:00 Dec 5 in Japan is 10:00 Dec 4 in New York (owner, Nov 17)");
+  assert.equal(monthDay("2026-12-05T12:00:00Z", false), "December 5");
   assert.equal(monthDay(null, true), null);
   assert.equal(monthDay("not a date", true), null);
   const names = PRO_ONLY_FEATURES.map(feature => feature.ja);

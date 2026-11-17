@@ -18,27 +18,24 @@ import timeline from "../companies/company-activity.module.css";
 import tabStyles from "./news-feed.module.css";
 import styles from "./flash-page.module.css";
 import FeedPagination from "./feed-pagination";
+import { displayClock, displayDateTime, displayDayKey } from "@/lib/research/display-time";
 import NewsStory from "./news-story";
 
 const PAGE = 20;
 /** Short company names keep each stock on one line in the coverage list. */
 const shortName = (name: string) => name.split(" / ")[0].replace(/ (?:Technologies|Platforms|Networks)$/, "").replace("Applied Optoelectronics", "Applied Opto").replace("Constellation Energy", "Constellation");
-const jst = (options: Intl.DateTimeFormatOptions, value: string | number | Date) =>
-  new Intl.DateTimeFormat("en-GB", { timeZone: "Asia/Tokyo", hourCycle: "h23", ...options }).format(new Date(value));
-const clock = (at: string) => jst({ hour: "2-digit", minute: "2-digit" }, at);
-
-/** One date heading per day (owner, Oct 14): rows then show only the time. */
-const dayKey = (row: FlashRow) => row.timeKind === "date" ? row.at : new Intl.DateTimeFormat("sv-SE", { timeZone: "Asia/Tokyo" }).format(new Date(row.at));
-function dayHeading(key: string, ja: boolean) {
-  const date = new Date(`${key}T12:00:00+09:00`);
-  const parts = new Intl.DateTimeFormat(ja ? "ja-JP" : "en-US", { timeZone: "Asia/Tokyo", weekday: "short" }).format(date);
+/** One date heading per day (owner, Oct 14): rows then show only the time. Days and times are
+ * Japan time in Japanese and U.S. Eastern in English (owner, Nov 17). */
+export const flashDayKey = (row: Pick<FlashRow, "at" | "timeKind">, lang: Language) => row.timeKind === "date" ? row.at : displayDayKey(row.at, lang);
+export function dayHeading(key: string, ja: boolean) {
+  const weekday = new Intl.DateTimeFormat(ja ? "ja-JP" : "en-US", { timeZone: "UTC", weekday: "short" }).format(new Date(`${key}T12:00:00Z`));
   const [, month, day] = key.split("-");
-  return `${Number(month)}/${Number(day)}${ja ? `（${parts}）` : ` ${parts}`}`;
+  return `${Number(month)}/${Number(day)}${ja ? `（${weekday}）` : ` ${weekday}`}`;
 }
-function timeCell(row: FlashRow) {
+function timeCell(row: FlashRow, lang: Language) {
   // A source that states only the day sits under that day's heading with no clock (owner, Oct 15: "時刻なし" removed).
   if (row.timeKind === "date") return null;
-  return <time dateTime={row.at}>{clock(row.at)}</time>;
+  return <time dateTime={row.at}>{displayClock(row.at, lang)}</time>;
 }
 
 /** 速報: the watched companies' live monitor and earnings results as one
@@ -141,12 +138,12 @@ export default function FlashPage({ lang, onReady }: { lang: Language; onReady?:
   const current = Math.min(page, pages);
   const shown = rows.slice((current - 1) * PAGE, current * PAGE);
   const marked = (row: FlashRow) => unread.has(row.id) || (seenAtLoad !== null && checkedAt > 0 && row.timeKind === "published" && isFreshItem(row.at, "published", row.observedAt, seenAtLoad, checkedAt));
-  const today = new Intl.DateTimeFormat("sv-SE", { timeZone: "Asia/Tokyo" }).format(checkedAt || undefined);
+  const today = displayDayKey(checkedAt || Date.now(), lang);
   const kindLabel = { news: ja ? "ニュース" : "News", earnings: ja ? "決算" : "Earnings" };
   const publication = (row: FlashRow) => row.timeKind === "date" ? `${ja ? "発表" : "Published"} ${row.at}`
-    : `${ja ? "発表" : "Published"} ${new Date(row.at).toLocaleString(ja ? "ja-JP" : "en-US", { timeZone: "Asia/Tokyo", hour12: false })} JST`;
+    : `${ja ? "発表" : "Published"} ${displayDateTime(row.at, lang)}`;
   const item = (row: FlashRow) => <article key={row.id} className={`${timeline.item} ${marked(row) ? timeline.unread : ""}`}>
-    <span className={timeline.when}>{timeCell(row)}</span><span className={timeline.node} aria-hidden="true" />
+    <span className={timeline.when}>{timeCell(row, lang)}</span><span className={timeline.node} aria-hidden="true" />
     <div className={timeline.entry}>
       <div className={timeline.meta}><span className={styles.ticker}>{row.tickers.join(" · ")}</span><span className={`${timeline.tag} ${row.kind === "earnings" ? styles.earnings : timeline.news}`}>{kindLabel[row.kind]}</span>{marked(row) && <span className={timeline.newMark}>NEW</span>}</div>
       {/* A long headline shows two lines and the ＋ opens the whole text, never a cut-off "…" (owner, Oct 18). */}
@@ -173,13 +170,13 @@ export default function FlashPage({ lang, onReady }: { lang: Language; onReady?:
       {wireSettled && !wireLoaded && view === "all" && <p className={timeline.fine} role="status">{ja ? "ニュースを読み込んでいます" : "Loading news…"}</p>}
       {feed && !rows.length && <p className={timeline.problem}>{ja ? "現在、該当する速報はありません。" : "No matching alerts right now."}</p>}
       {!!shown.length && <div className={timeline.timeline}>{shown.flatMap((row, index) => {
-        const key = dayKey(row);
-        const heading: ReactNode[] = key !== dayKey(shown[index - 1] ?? row) || index === 0
+        const key = flashDayKey(row, lang);
+        const heading: ReactNode[] = key !== flashDayKey(shown[index - 1] ?? row, lang) || index === 0
           ? [<h3 key={`day-${key}`} className={styles.day}>{dayHeading(key, ja)}{key === today && <span>{ja ? "今日" : "Today"}</span>}</h3>] : [];
         return [...heading, item(row)];
       })}</div>}
     </div>
     <FeedPagination page={current} pages={pages} ja={ja} onChange={next => { setPage(next); list.current?.scrollIntoView({ block: "start", behavior: "instant" }); }} />
-    <p className={timeline.fine}>{ja ? "監視22銘柄のニュースと、発表された決算を、新しい順に掲載しています。時刻は日本時間です。" : "News and earnings updates for the 22 stocks we track, newest first. All times are Japan Standard Time (JST)."}</p>
+    <p className={timeline.fine}>{ja ? "監視22銘柄のニュースと、発表された決算を、新しい順に掲載しています。時刻は日本時間です。" : "News and earnings updates for the 22 stocks we track, newest first. All times are U.S. Eastern Time (ET)."}</p>
   </section>;
 }

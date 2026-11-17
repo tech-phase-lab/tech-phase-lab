@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
+import { formatDisplay } from "@/lib/research/display-time";
 import styles from "./styles.module.css";
 export type CheckoutProps = { orderId: string | null; language: "ja" | "en"; cancelled: boolean };
 type Order = { orderId: string; state: string; sandbox: true; expiresAt: string; approvalUrl?: string | null;
@@ -80,9 +81,8 @@ export default function CheckoutScreen({ orderId, language: initialLanguage, can
    }
   } catch (e) { failure(action === "access" ? new Error("ACCESS_UNAVAILABLE") : e); } finally { lock.current = false; setBusy(false); }
  }
- const date = (value: string) => new Intl.DateTimeFormat(en ? "en-US" : "ja-JP", {
-  timeZone: "Asia/Tokyo", year: "numeric", month: "short", day: "numeric", hour: "2-digit", minute: "2-digit", hour12: false,
- }).format(new Date(value));
+ // Japan time in Japanese, U.S. Eastern in English (owner, Nov 17).
+ const date = (value: string) => formatDisplay(value, en ? "en" : "ja", { year: "numeric", month: "short", day: "numeric", hour: "2-digit", minute: "2-digit", hour12: false });
  const approval = order?.approvalUrl;
  const safeApproval = approval && /^https:\/\/www\.sandbox\.paypal\.com\/checkoutnow\?token=[A-Z0-9]{8,32}$/.test(approval) ? approval : null;
  const paid = order?.state === "paid";
@@ -129,10 +129,10 @@ export default function CheckoutScreen({ orderId, language: initialLanguage, can
     <dl><dt>{en ? "Tools" : "ツール"}</dt><dd>{access.canUseTools ? (en ? "Available · no expiry" : "利用可・期限なし") : (en ? "Not available" : "利用不可")}</dd>
      <dt>{en ? "Alerts" : "通知"}</dt><dd>{access.canReceiveNotifications ? (en ? "Available" : "利用可") : (en ? "Not currently available" : "現在は利用不可")}</dd></dl>
     {access.canUseTools && access.alertPeriods.length > 0 && <>
-     <p>{en ? "Recorded alert periods (Japan time). Each period ends at the time shown." : "通知の有効期間（日本時間）。終了時刻になると期限切れになります。"}</p>
+     <p>{en ? "Recorded alert periods (U.S. Eastern Time, ET). Each period ends at the time shown." : "通知の有効期間（日本時間）。終了時刻になると期限切れになります。"}</p>
      <ul>{access.alertPeriods.map(p => <li key={p.startsAt}>{date(p.startsAt)}<br />{en ? "to " : "〜 "}{date(p.expiresAt)}</li>)}</ul>
     </>}
-    <p className={styles.checkedAt}>{en ? "Checked: " : "確認日時："}{date(access.asOf)} {en ? "JST" : "（日本時間）"}</p>
+    <p className={styles.checkedAt}>{en ? "Checked: " : "確認日時："}{date(access.asOf)} {en ? "ET" : "（日本時間）"}</p>
     <p>{en ? "These are test results only. Live RESOLUTE access is unchanged." : "検証用の判定結果です。本番のRESOLUTE利用権は変更されません。"}</p>
    </div>}
   </section>

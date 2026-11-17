@@ -2,17 +2,17 @@
 import { useEffect, useRef, useState } from "react";
 import { movingAverages, plain, compact, easternToIso, type Bar } from "@/lib/research/market-quote";
 import { liveBand, sessionTicks, volumeBars } from "@/lib/research/market-board-periods";
+import { displayParts } from "@/lib/research/display-time";
 import styles from "./chart.module.css";
 
 const W = 390, PR = 50;
 const UP = "#4fe3a6", DOWN = "#ff7b7b", GOLD = "#f3d98b", MUTED = "#8c98ab";
 export const MA_STYLE = [{ period: 5, color: "#f3d98b", ja: "短期", en: "Short" }, { period: 25, color: "#8fb0ff", ja: "中期", en: "Mid" }, { period: 75, color: "#c3a6ff", ja: "長期", en: "Long" }] as const;
-const jstParts = new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Tokyo", year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit", hourCycle: "h23" });
 /** A bar's New York time ("2026-11-12 15:55:00") as Japan time in the same shape; unchanged when it is not a datetime. */
 function jstText(at: string): string {
   const iso = easternToIso(at);
   if (!iso) return at;
-  const p = Object.fromEntries(jstParts.formatToParts(new Date(iso)).map(part => [part.type, part.value]));
+  const p = Object.fromEntries(displayParts(iso, "ja", { year: "numeric", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit", hourCycle: "h23" }, "en-CA").map(part => [part.type, part.value]));
   return `${p.year}-${p.month}-${p.day} ${p.hour}:${p.minute}:00`;
 }
 const axis = (value: number) => Math.abs(value) >= 10000 ? `${(value / 1000).toFixed(value >= 100000 ? 0 : 1)}K` : Math.abs(value) >= 100 ? value.toFixed(0) : Math.abs(value) >= 10 ? value.toFixed(2) : value.toFixed(4);
@@ -43,7 +43,7 @@ type ChartProps = {
   bars: Bar[]; before?: Bar[]; mode: "candles" | "line"; interval: "intraday" | "daily" | "weekly"; variant?: "detail" | "market" | "board"; ja: boolean;
   /** Moving averages to draw (default 5 / 25 / 75); the market board uses 25 / 75. */ maPeriods?: readonly number[];
   /** The crosshair and its tags (gold on the stock pages, mint on the market board). */ accent?: string; lineColor?: string;
-  /** Axis times in Japan time (the bars come in New York time). */
+  /** Axis times in Japan time (the bars come in New York time). Japanese site only: the English site keeps New York time (owner, Nov 17). */
   jst?: boolean;
   /** The price tag on the right axis (the market board: the same value as the big price above the chart), green / red / grey by the day's change.
    * Axis numbers it would cover are hidden. */
@@ -84,7 +84,7 @@ function ChartBody({ bars, before = [], mode, interval, variant = "detail", ja, 
   const X = (k: number) => step * (k + 0.5), Y = (v: number) => PT + (hi - v) / (hi - lo) * (priceBottom - PT);
   const rising = bars[n - 1].close >= bars[0].close;
   const grid = [0, 1, 2, 3].map(i => { const v = hi - (hi - lo) * (i + 0.5) / 4; return { y: Y(v), label: axis(v) }; });
-  const ticks = bySession ? sessionTicks(bars, before[before.length - 1]).filter((tick, k, all) => !k || step * (tick.index - all[k - 1].index) >= 34) : null;
+  const ticks = bySession ? sessionTicks(bars, before[before.length - 1], ja ? "ja" : "en").filter((tick, k, all) => !k || step * (tick.index - all[k - 1].index) >= 34) : null;
   const dateIdx = ticks ? [] : (interval === "intraday" && jst && bars[0].at.slice(0, 10) !== bars[n - 1].at.slice(0, 10) ? [0.12, 0.37, 0.62, 0.87] : [0.1, 0.3, 0.5, 0.7, 0.9]).map(f => Math.min(n - 1, Math.round(n * f)));
   const local = (at: string) => jst && interval === "intraday" ? jstText(at) : at;
   const label = (raw: string) => { const at = local(raw); return interval === "intraday" ? (local(bars[0].at).slice(0, 10) === local(bars[n - 1].at).slice(0, 10) ? at.slice(11, 16) : `${Number(at.slice(5, 7))}/${Number(at.slice(8, 10))} ${at.slice(11, 16)}`)

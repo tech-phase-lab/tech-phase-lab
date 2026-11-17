@@ -81,7 +81,7 @@ test('a pending original card shows its test status, source link and all three c
     for (const text of ['ORIGINAL', original.excerptOriginal, original.sourceName,
       lang === 'ja' ? '翻訳準備中（原文）・未確認・テスト掲載' : 'Summary pending · Unreviewed · Test publication',
       lang === 'ja' ? '原文を開く' : 'Read original', lang === 'ja' ? '自動テスト掲載' : 'Automatic test publication',
-      '18:00:00 JST', '18:01:00 JST', '18:02:00 JST']) assert.ok(html.includes(text), text);
+      ...(lang === 'ja' ? ['18:00:00 JST', '18:01:00 JST', '18:02:00 JST'] : ['05:00:00 ET', '05:01:00 ET', '05:02:00 ET'])]) assert.ok(html.includes(text), text); // English: U.S. Eastern (EDT) (owner, Nov 17)
     assert.ok(html.includes(`href="${original.sourceUrl}"`));
     assert.ok(html.includes('rel="noopener noreferrer"'));
     for (const value of [original.sourcePublishedAt, original.acquiredAt, original.previewPublishedAt]) assert.ok(html.includes(`dateTime="${value}"`));

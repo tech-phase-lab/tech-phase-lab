@@ -3,6 +3,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import type { Language } from "@/lib/research/data";
 import type { DeepAnalysis } from "@/lib/research/deep-analysis";
+import { formatDisplay, zoneLabel } from "@/lib/research/display-time";
 import styles from "./deep-analysis-panel.module.css";
 
 type State = { status: "loading" } | { status: "locked" } | { status: "unavailable" } | { status: "ready"; items: DeepAnalysis[] };
@@ -32,13 +33,13 @@ export default function DeepAnalysisPanel({ lang, ticker, kind }: { lang: Langua
   }
   const items = state.items.filter(item => item.kind === kind && (!ticker || item.subject === ticker)).slice(0, 3);
   if (!items.length) return null;
-  const format = (value: string) => new Intl.DateTimeFormat(ja ? "ja-JP" : "en-US", { timeZone: "Asia/Tokyo", month: "short", day: "numeric", hour: "2-digit", minute: "2-digit" }).format(new Date(value));
+  const format = (value: string) => formatDisplay(value, lang, { month: "short", day: "numeric", hour: "2-digit", minute: "2-digit" });
   return <section className={styles.panel} aria-label={title}><span className={styles.badge}>PRO</span><h3>{title}</h3>
     {items.map(item => <article key={item.id} className={styles.item}>
       <strong>{item.headline[lang]}</strong>
       <ul>{item.points.map((point, index) => <li key={index}>{point[lang]}</li>)}</ul>
       {item.watch && <p className={styles.watch}>{ja ? "次に見るべき点：" : "What to watch: "}{item.watch[lang]}</p>}
-      <p className={styles.meta}>{ja ? "分析" : "Analysed"} {format(item.publishedAt)} JST · <a href={item.sourceUrl} target="_blank" rel="noreferrer">{ja ? "元の発表 ↗" : "Source ↗"}</a></p>
+      <p className={styles.meta}>{ja ? "分析" : "Analysed"} {format(item.publishedAt)} {zoneLabel(lang)} · <a href={item.sourceUrl} target="_blank" rel="noreferrer">{ja ? "元の発表 ↗" : "Source ↗"}</a></p>
     </article>)}
   </section>;
 }

@@ -3,6 +3,7 @@ import { useEffect,useRef,useState } from "react";
 import type { PlanSnapshot } from "@/lib/resolute/plan-data";
 import type { DiagnosisLocale } from "@/lib/resolute/diagnosis-copy";
 import { rulebookChapters,bookMoney } from "@/lib/resolute/rulebook";
+import { formatDisplay } from "@/lib/research/display-time";
 import styles from "../diagnosis.module.css";
 export default function Rulebook({plan,locale}:{plan:NonNullable<PlanSnapshot["plan"]>;locale:DiagnosisLocale}) {
  const chapters=rulebookChapters(plan,locale),en=locale==="en";
@@ -18,7 +19,7 @@ export default function Rulebook({plan,locale}:{plan:NonNullable<PlanSnapshot["p
   setTurn({from:current,to});timer.current=setTimeout(finish,580);
  }
  function page(number:number) {
-  if(number===0)return <div className={styles.boundCover}><div className={styles.coverFrame}><span className={styles.coverBrand}>RESOLUTE</span><span className={styles.coverEdition}>THE PERSONAL EDITION</span><div className={styles.coverSeal} aria-hidden="true"><span>R</span></div><h2>{en?<>My rules<br/>My resolve</>:<>相場に揺れない<br/>私のルール</>}</h2><div className={styles.coverRule}/><p>{en?<>Written from my answers<br/>Kept for the days that test them</>:<>自分の答えからつくる<br/>迷った日に立ち戻る一冊</>}</p><small>{plan.currency} · {new Date(plan.updatedAt).toLocaleDateString(en?"en-US":"ja-JP",{timeZone:"Asia/Tokyo"})}</small></div></div>;
+  if(number===0)return <div className={styles.boundCover}><div className={styles.coverFrame}><span className={styles.coverBrand}>RESOLUTE</span><span className={styles.coverEdition}>THE PERSONAL EDITION</span><div className={styles.coverSeal} aria-hidden="true"><span>R</span></div><h2>{en?<>My rules<br/>My resolve</>:<>相場に揺れない<br/>私のルール</>}</h2><div className={styles.coverRule}/><p>{en?<>Written from my answers<br/>Kept for the days that test them</>:<>自分の答えからつくる<br/>迷った日に立ち戻る一冊</>}</p><small>{plan.currency} · {formatDisplay(plan.updatedAt,en?"en":"ja",{year:"numeric",month:"numeric",day:"numeric"})}</small></div></div>;
   const chapter=chapters[number-1];
   return <div className={styles.paperPage}><div className={styles.paperRunning}><span>RESOLUTE</span><span>MY RULES</span></div><span className={styles.chapterKicker}>{chapter.kicker}</span><h2>{chapter.title}</h2><p className={styles.chapterLead}>{chapter.lead}</p>
    {chapter.metrics.length?<dl className={styles.chapterMetrics}>{chapter.metrics.map(metric=><div key={metric.label} data-text={metric.text||undefined}><dt>{metric.label}</dt><dd>{metric.value}</dd>{metric.detail?<dd className={styles.metricDetail}>{metric.detail}</dd>:null}</div>)}</dl>:null}
