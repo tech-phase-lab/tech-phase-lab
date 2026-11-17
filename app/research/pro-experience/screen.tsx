@@ -4,7 +4,7 @@ import Link from "next/link";
 import ResearchToolShell from "../research-tool-shell";
 import { useResearchLanguage } from "../use-research-language";
 import { useMemberDisplay, useMemberSettled, useOwnerAccount, useResearchOwner } from "../member-display-provider";
-import { inLanguage, nextFeature, proFeatures, type ProFeature } from "@/lib/research/pro-experience";
+import { inLanguage, nextFeature, proFeatures, videoFor, type ProFeature } from "@/lib/research/pro-experience";
 import { hasSample, showStartButton } from "@/lib/research/pro-experience-samples";
 import ProTag from "./pro-tag";
 import FeatureIcon from "./feature-icons";
@@ -42,23 +42,19 @@ export function ProExperienceList() {
   </ResearchToolShell>;
 }
 
-/** The video loops without sound and plays on a phone; the button stops and starts it. With reduced motion it starts stopped. */
-function FeatureVideo({ feature, ja }: { feature: ProFeature; ja: boolean }) {
-  const video = useRef<HTMLVideoElement>(null);
-  const [playing, setPlaying] = useState(true);
-  const toggle = () => {
-    const element = video.current;
-    if (!element) return;
-    if (element.paused) { void element.play().then(() => setPlaying(true), () => setPlaying(false)); } else { element.pause(); setPlaying(false); }
-  };
-  return <div className={styles.media}>
-    <video ref={video} className={styles.video} src={feature.videoUrl} muted loop playsInline autoPlay preload="metadata" aria-label={ja ? `${feature.name.ja}の動画` : `${feature.name.en || feature.name.ja} video`}
-      onPlay={() => setPlaying(true)} onPause={() => setPlaying(false)} />
-    {feature.videoLabel && <span className={styles.videoLabel}>{feature.videoLabel}</span>}
-    <button type="button" className={styles.pause} onClick={toggle} aria-pressed={!playing} aria-label={playing ? (ja ? "動画を止める" : "Pause video") : (ja ? "動画を再生" : "Play video")}>
-      {playing ? <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M3 2h3v10H3zM8 2h3v10H8z" fill="currentColor" /></svg> : <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M3 1.5l9 5.5-9 5.5z" fill="currentColor" /></svg>}
-    </button>
-  </div>;
+/** The phone-notification video (owner, Nov 17): portrait, the full width of the column, never cropped. It does not start by itself; a tap
+ * plays it (the browser's own controls). The English view shows the English video, or the Japanese one while none is set. The poster is the
+ * first frame, so the box is never black before it plays. The video has no sound. */
+function FeatureVideo({ feature, lang }: { feature: ProFeature; lang: "ja" | "en" }) {
+  const ja = lang === "ja";
+  const { src, label, poster } = videoFor(feature, lang);
+  return <figure className={styles.videoFigure}>
+    <div className={styles.media}>
+      <video key={src} className={styles.video} src={src} poster={poster || undefined} controls playsInline muted preload="metadata" width={720} height={1566}
+        aria-label={ja ? `${feature.name.ja}の動画` : `${feature.name.en || feature.name.ja} video`} />
+    </div>
+    {label && <figcaption className={styles.videoLabel}>{ja ? `動画 ${label}・タップで再生` : `Video ${label} · tap to play`}</figcaption>}
+  </figure>;
 }
 
 export const LIST_HREF = "/research/pro-experience";
@@ -107,7 +103,7 @@ export function ProExperienceDetail({ id }: { id: string }) {
       <BackToList ja={ja} />
       <div className={styles.titleRow}><h1 className={styles.title}>{inLanguage(feature.name, lang)}</h1><ProTag tone="plain" /></div>
       {/* A feature with a sample shows the sample, never a video: the samples read only saved files (no request for real data). */}
-      {sample ? <FeatureSample feature={sample} lang={lang} /> : feature.videoUrl && <FeatureVideo feature={feature} ja={ja} />}
+      {sample ? <FeatureSample feature={sample} lang={lang} /> : feature.videoUrl && <FeatureVideo feature={feature} lang={lang} />}
       {before && <p className={styles.text}>{before}</p>}
       {feature.imageUrl && <figure className={styles.figure}>
         {/* eslint-disable-next-line @next/next/no-img-element */}
