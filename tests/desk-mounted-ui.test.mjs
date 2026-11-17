@@ -12,42 +12,95 @@ globalThis.IS_REACT_ACT_ENVIRONMENT=true;
 dom.window.Range.prototype.getClientRects=()=>[];
 dom.window.Range.prototype.getBoundingClientRect=()=>({top:0,left:0,bottom:0,right:0,width:0,height:0});
 const tick=()=>new Promise(resolve=>setTimeout(resolve,25));
-async function component(path, editorStub=false) {
+// A single post (ColumnArticle) is mounted without the page around it: Next's image/link and the page-level
+// providers, shell and composers are replaced with plain stand-ins.
+const pageStubs={name:'page-stubs',setup(b){
+ b.onResolve({filter:/^react$/,namespace:'test-page'},()=>({path:'react',external:true}));
+ b.onResolve({filter:/^next\/(image|link)$|\/(identity-provider|research-tool-shell|use-research-language|member-display-provider|weekly\/composer|notes\/composer|text-editor)$/},args=>({path:args.path,namespace:'test-page'}));
+ b.onLoad({filter:/.*/,namespace:'test-page'},args=>({loader:'js',contents:args.path==='next/image'?`import React from 'react';export default function Image(p){return React.createElement('img',{src:p.src,alt:p.alt})}`:args.path==='next/link'?`import React from 'react';export default function Link(p){return React.createElement('a',{href:p.href},p.children)}`:`const none=()=>null;export default none;export const useIdentityRefresh=()=>async()=>{},useResearchLanguage=()=>['ja',()=>{}],useMemberDisplay=()=>'pro',useMemberSettled=()=>true,useOwnerMode=()=>false;`}));
+}};
+async function component(path, editorStub=false, named=false) {
  const dir=await mkdtemp(new URL('../.desk-ui-',import.meta.url));
  try {
   const outfile=`${dir}/component.mjs`;
-  await build({entryPoints:[new URL(path,import.meta.url).pathname],bundle:true,platform:'node',format:'esm',packages:'external',jsx:'automatic',outfile,plugins:[{name:'css',setup(b){if(editorStub){b.onResolve({filter:/^react$/,namespace:'test-editor'},()=>({path:'react',external:true}));b.onResolve({filter:/\/desk\/text-editor$/},()=>({path:'editor',namespace:'test-editor'}));b.onLoad({filter:/.*/,namespace:'test-editor'},()=>({contents:`import React from 'react';export default function Editor(p){return React.createElement('button',{type:'button',onClick:()=>p.onChange('[audio](/api/research/desk-media/12345678-1234-4123-8123-123456789abc.m4a)')},'Attach test audio')}`,loader:'js'}));}b.onLoad({filter:/\.css$/},()=>({contents:'export default new Proxy({}, {get: (_, key) => key})',loader:'js'}));}}]});
-  return (await import(pathToFileURL(outfile).href)).default;
+  await build({entryPoints:[new URL(path,import.meta.url).pathname],bundle:true,platform:'node',format:'esm',packages:'external',jsx:'automatic',outfile,plugins:[...(named?[pageStubs]:[]),{name:'css',setup(b){if(editorStub){b.onResolve({filter:/^react$/,namespace:'test-editor'},()=>({path:'react',external:true}));b.onResolve({filter:/\/desk\/text-editor$/},()=>({path:'editor',namespace:'test-editor'}));b.onLoad({filter:/.*/,namespace:'test-editor'},()=>({contents:`import React from 'react';export default function Editor(p){return React.createElement('button',{type:'button',onClick:()=>p.onChange('[audio](/api/research/desk-media/12345678-1234-4123-8123-123456789abc.m4a)')},'Attach test audio')}`,loader:'js'}));}b.onLoad({filter:/\.css$/},()=>({contents:'export default new Proxy({}, {get: (_, key) => key})',loader:'js'}));}}]});
+  const loaded=await import(pathToFileURL(outfile).href);return named?loaded:loaded.default;
  }finally{await rm(dir,{recursive:true,force:true});}
 }
-test('reactions: the five choices sit in one row from the start, counts only when pressed, pressing again undoes',async()=>{
- const Reactions=await component('../app/research/desk/reactions.tsx');
- const original=globalThis.fetch;let resolveLoad;
- let votes=Object.fromEntries(['like','smile','sad','angry','fire'].map(k=>[k,{count:0,selected:false}]));
- votes.smile={count:2,selected:false};
- globalThis.fetch=async(_url,options)=>{
-  if(!options.method) await new Promise(resolve=>resolveLoad=resolve);
-  else {const input=JSON.parse(options.body);votes=Object.fromEntries(Object.keys(votes).map(k=>[k,{count:(k==='smile'?2:0)+Number(input.selected&&input.emoji===k),selected:input.selected&&input.emoji===k}]));}
+// Nov 17 design (owner): the owner sees the pencil and trash, a PRO member one face button that opens the five emoji
+// under it; counts are a badge over the post's bottom-right edge (owner included).
+const keys=['like','smile','sad','angry','fire'];
+function reactionServer(initial){
+ let votes=Object.fromEntries(keys.map(k=>[k,{count:initial[k]??0,selected:false}]));const calls=[];
+ const fetch=async(_url,options={})=>{
+  calls.push(options.method??'GET');
+  if(options.method){const input=JSON.parse(options.body);votes=Object.fromEntries(keys.map(k=>{const selected=input.selected&&input.emoji===k;return [k,{count:(initial[k]??0)+Number(selected),selected}];}));}
   return {ok:true,json:async()=>({ok:true,reactions:votes})};
  };
+ return {fetch,calls};
+}
+async function mountNote({ownerMode,access='pro',counts={}}){
+ const {ColumnArticle}=await component('../app/research/columns/columns.tsx',true,true);
+ const server=reactionServer(counts);const original=globalThis.fetch;globalThis.fetch=server.fetch;
+ const item={id:'note-reaction-test-0001',kind:'notes',titleJa:'',titleEn:'',introJa:'',introEn:'',bodyJa:'出来高をみる。',bodyEn:'Watch the volume.',sources:[],publishedAt:'2026-11-17T00:00:00.000Z',version:1,translationStatus:'done'};
  const host=document.createElement('div');document.body.append(host);const root=createRoot(host);
- const buttons=()=>[...host.querySelectorAll('button')];
+ await act(async()=>{root.render(React.createElement(ColumnArticle,{item,ja:true,ownerMode,access,fresh:false,onUpdated:()=>{}}));await tick();});
+ return {host,server,unmount:async()=>{await act(async()=>root.unmount());host.remove();globalThis.fetch=original;}};
+}
+const badgeText=host=>[...host.querySelectorAll('.reactionBadge .badgeItem')].map(item=>item.textContent);
+test('reactions: a PRO member gets one face button (no pencil or trash) that opens the five emoji under it',async()=>{
+ const {host,server,unmount}=await mountNote({ownerMode:false,counts:{smile:2}});
+ const face=()=>host.querySelector('button.faceButton');const popover=()=>host.querySelector('.reactionPopover');
+ const choice=label=>[...host.querySelectorAll('.reactionChoice')].find(b=>b.getAttribute('aria-label').startsWith(label));
  try{
-  await act(async()=>root.render(React.createElement(Reactions,{postId:'note-reaction-test',ja:true})));
-  assert.equal(buttons().length,5,'all five are shown before loading');
-  assert.ok(buttons().every(button=>button.disabled),'disabled until the counts arrive');
-  await act(async()=>{resolveLoad();await tick();});
-  assert.deepEqual(buttons().map(button=>button.textContent),['\u{1F44D}','\u{1F60A}2','\u{1F622}','\u{1F620}','\u{1F525}'],'fixed order; a number only where someone reacted');
-  assert.deepEqual(buttons().map(button=>button.getAttribute('aria-label')),['いいね','うれしい 2','悲しい','怒り','炎']);
-  assert.ok(buttons().every(button=>button.getAttribute('aria-pressed')==='false'&&!button.disabled));
-  assert.equal(host.querySelector('[aria-haspopup]'),null,'no picker button');
-  await act(async()=>{buttons()[4].click();await tick();});
-  assert.equal(buttons()[4].getAttribute('aria-pressed'),'true','my own choice is highlighted');
-  assert.equal(buttons()[4].textContent,'\u{1F525}1');
-  await act(async()=>{buttons()[4].click();await tick();});
-  assert.equal(buttons()[4].getAttribute('aria-pressed'),'false','pressing it again cancels it');
-  assert.equal(buttons()[4].textContent,'\u{1F525}','back to no number');
- }finally{await act(async()=>root.unmount());host.remove();globalThis.fetch=original;}
+  assert.ok(face(),'face button');assert.equal(host.querySelectorAll('button').length,1,'only the face button inside the post');
+  assert.equal(host.querySelector('[aria-label="投稿を編集"]'),null);assert.equal(host.querySelector('[aria-label="投稿を削除"]'),null);
+  assert.equal(face().getAttribute('aria-label'),'リアクションする');assert.equal(face().getAttribute('aria-expanded'),'false');
+  assert.equal(popover(),null,'closed at first');
+  assert.ok(face().parentElement.parentElement.querySelector('.stamp'),'the face sits on the date line');
+  await act(async()=>{face().click();await tick();});
+  assert.equal(face().getAttribute('aria-expanded'),'true');assert.equal(face().getAttribute('aria-controls'),popover().id);
+  assert.deepEqual([...popover().querySelectorAll('button')].map(b=>b.textContent),['\u{1F44D}','\u{1F60A}','\u{1F622}','\u{1F620}','\u{1F525}']);
+  assert.deepEqual([...popover().querySelectorAll('button')].map(b=>b.getAttribute('aria-label')),['いいね','うれしい 2','悲しい','怒り','炎']);
+  assert.ok([...popover().querySelectorAll('button')].every(b=>b.getAttribute('aria-pressed')==='false'));
+  await act(async()=>{choice('炎').click();await tick();});
+  assert.equal(popover(),null,'choosing closes the popover');assert.equal(face().getAttribute('aria-expanded'),'false');
+  assert.equal(document.activeElement,face(),'focus returns to the face');
+  assert.deepEqual(server.calls,['GET','POST']);
+  assert.deepEqual(badgeText(host),['\u{1F60A}2','\u{1F525}1'],'most first');
+  await act(async()=>{face().click();await tick();});
+  assert.equal(choice('炎').getAttribute('aria-pressed'),'true','my own reaction carries the gold border');
+  assert.equal(choice('炎').getAttribute('aria-label'),'炎 1');
+  await act(async()=>{choice('炎').click();await tick();});
+  assert.equal(popover(),null);assert.deepEqual(badgeText(host),['\u{1F60A}2'],'choosing it again removes it');
+  await act(async()=>{face().click();await tick();});assert.ok(popover());
+  await act(async()=>{document.body.dispatchEvent(new window.Event('pointerdown',{bubbles:true}));await tick();});
+  assert.equal(popover(),null,'a tap outside closes');
+  await act(async()=>{face().click();await tick();});
+  await act(async()=>{popover().dispatchEvent(new window.Event('pointerdown',{bubbles:true}));await tick();});
+  assert.ok(popover(),'a tap inside the popover does not close it');
+  await act(async()=>{document.dispatchEvent(new window.KeyboardEvent('keydown',{key:'Escape',bubbles:true}));await tick();});
+  assert.equal(popover(),null,'Escape closes');assert.equal(document.activeElement,face());
+  await act(async()=>{face().click();await tick();});await act(async()=>{face().click();await tick();});
+  assert.equal(popover(),null,'the face toggles');
+ }finally{await unmount();}
+});
+test('reactions: the owner keeps the pencil and trash, has no face button and still sees the badge',async()=>{
+ const {host,unmount}=await mountNote({ownerMode:true,counts:{like:5,fire:12}});
+ try{
+  assert.ok(host.querySelector('[aria-label="投稿を編集"]'));assert.ok(host.querySelector('[aria-label="投稿を削除"]'));
+  assert.equal(host.querySelector('.faceButton'),null);assert.equal(host.querySelector('.reactionPopover'),null);
+  assert.deepEqual(badgeText(host),['\u{1F525}12','\u{1F44D}5']);
+  assert.equal(host.querySelector('.reactionBadge').getAttribute('aria-label'),'リアクション: 炎 12、いいね 5');
+ }finally{await unmount();}
+});
+test('reactions: the badge hides at zero, sorts by count and shortens 1,000+; FREE sees neither face nor badge',async()=>{
+ let mounted=await mountNote({ownerMode:false});
+ try{assert.equal(mounted.host.querySelector('.reactionBadge'),null,'no badge when nobody reacted');assert.ok(mounted.host.querySelector('.faceButton'));}finally{await mounted.unmount();}
+ mounted=await mountNote({ownerMode:false,counts:{like:3,smile:1200,sad:0,angry:1000,fire:45}});
+ try{assert.deepEqual(badgeText(mounted.host),['\u{1F60A}1.2k','\u{1F620}1k','\u{1F525}45','\u{1F44D}3']);}finally{await mounted.unmount();}
+ mounted=await mountNote({ownerMode:false,access:'free',counts:{fire:3}});
+ try{assert.equal(mounted.host.querySelector('.faceButton'),null);assert.equal(mounted.host.querySelector('.reactionBadge'),null);assert.deepEqual(mounted.server.calls,[],'FREE never asks for reactions');}finally{await mounted.unmount();}
 });
 
 test('selecting differently formatted text updates toolbar without resetting editor options or DOM selection',async()=>{

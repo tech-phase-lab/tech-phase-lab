@@ -3,12 +3,11 @@
 .editable{min-height:88px;white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.65;padding:9px 10px;border:1px solid #465451;border-radius:6px;background:#0b141b;color:#f0ece4;cursor:text;font-size:16px}.editable,.editable *{user-select:text;-webkit-user-select:text;-webkit-touch-callout:default;touch-action:auto}.editor .editable:focus,.editor .editable:focus-visible{outline:none;box-shadow:none;border-color:#86958f}.editable[aria-disabled=true]{opacity:.6}.editor>details{margin-top:8px;font-size:12px;line-height:1.5}.editor>details>summary{cursor:pointer;color:#b7beb9;width:fit-content;padding:4px 0}.editor>p{font-size:12px;margin:7px 0;line-height:1.5}
 .media{margin:10px 0}.media audio,.media video,.media iframe{width:100%;max-width:720px}.media video,.media iframe{aspect-ratio:16/9;border:0}.media a{display:block;font-size:12px}.media img{display:block;max-width:100%;max-height:640px;object-fit:contain;border-radius:8px}.hint{font-size:11px;color:#afbec2}.mediaInput{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}.mediaInput input{min-width:100px;flex:1;font-size:16px;padding:7px;background:#0b171f;color:#f0ece4;border:1px solid #627579;border-radius:4px}.mediaInput input:focus{outline:none;box-shadow:none;border-color:#86958f}.mediaInput select,.mediaInput button{font-size:12px;padding:6px;border:1px solid #627579;border-radius:4px;background:#14212c;color:#e6e8e4}.attachment{position:relative}.attachment>button{position:absolute;right:4px;top:4px;border:1px solid #627579;background:#14212c;color:#fff;border-radius:50%;width:32px;height:32px}
 .postHeader{display:flex;align-items:center;justify-content:space-between;gap:8px;width:100%}.postActions{display:flex;align-items:center;gap:2px;margin-left:auto;flex-shrink:0}.postActions button{display:grid;place-items:center;width:32px;height:32px;padding:7px;border:0;border-radius:5px;background:transparent;color:#b7b4aa;cursor:pointer}.postActions button:hover,.postActions button[aria-pressed=true]{background:#a7c3b426;color:#dbebdf}.postActions button:focus-visible{outline:1px solid #b4c8bc}.postActions svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}.inlineEditor{width:100%;margin:5px 0 0}.saveActions{display:flex;align-items:center;justify-content:flex-end;gap:8px;margin-top:9px}.saveActions button{font:inherit;font-size:12px;padding:6px 12px;min-height:32px;border:0;border-radius:5px;background:#b8cbbd;color:#13231b;cursor:pointer}.saveActions button:last-child{background:transparent;color:#b8c0bb}.saveActions button:disabled{opacity:.4}.actionMessage{font-size:12px;color:#ffb2a3}
-.reactions{display:flex;align-items:center;gap:5px;flex-wrap:wrap;margin-top:9px}.reactions button{display:inline-flex;align-items:center;gap:4px;border:1px solid #52615c;border-radius:12px;background:transparent;color:#ccc6b8;padding:3px 6px;min-height:26px;line-height:1;cursor:pointer;font-size:11px}.reactions button[aria-pressed=true]{border-color:#d5bd83;background:#c9aa5830;color:#f3dfac}.reactions button:disabled{opacity:.5}.reactions small{width:100%;color:#c5a795;font-size:11px}
 
 /* The editor owns its selection and DOM; keep native iOS selection handles. */
-.editable p{margin:0;min-height:1.65em}.editable strong{font-weight:700}.editable mark{background:#705b00;color:inherit}.editable:global(.ProseMirror){white-space:pre-wrap;-webkit-user-select:text;user-select:text;-webkit-touch-callout:default}.reactions button{transition:background .12s,border-color .12s,transform .12s}.reactions button:active{transform:scale(.92)}.reactions button[aria-pressed=true] .reactionEmoji{animation:reaction-pop .25s ease-out}.reactionCount{font-variant-numeric:tabular-nums;display:inline-block;min-width:.7em;animation:reaction-count .18s ease-out}@keyframes reaction-pop{0%{transform:scale(.85)}55%{transform:scale(1.25)}100%{transform:scale(1)}}@keyframes reaction-count{from{transform:translateY(3px);opacity:.35}to{transform:translateY(0);opacity:1}}@media(prefers-reduced-motion:reduce){.reactionCount,.reactions button[aria-pressed=true] .reactionEmoji{animation:none}.reactions button{transition:none}}
+.editable p{margin:0;min-height:1.65em}.editable strong{font-weight:700}.editable mark{background:#705b00;color:inherit}.editable:global(.ProseMirror){white-space:pre-wrap;-webkit-user-select:text;user-select:text;-webkit-touch-callout:default}
 
-.reactionEmoji{display:inline-block;font-size:13px;line-height:1}.editor{user-select:text;-webkit-user-select:text;-webkit-touch-callout:default}
+.editor{user-select:text;-webkit-user-select:text;-webkit-touch-callout:default}
 
 .audioUpload{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:7px 0 10px}.audioUpload button{padding:7px 10px;border:1px solid #627579;border-radius:5px;background:#14212c;color:#e6e8e4;font-size:12px;cursor:pointer}.audioUpload button:disabled{opacity:.45;cursor:default}.audioUpload small,.audioUpload span{font-size:11px;color:#afbec2}.audioUpload p{width:100%;margin:0;font-size:12px;color:#efb6a8}
 
@@ -23,17 +22,23 @@
 .audioUpload .audioFileEntry{grid-column:1}.audioUpload .audioRecordEntry{grid-column:2}.audioUpload .audioMemoEntry{grid-column:3}
 .audioUpload .recorder{display:contents}.recorderControls{grid-column:1/-1;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
 
-/* RIZEL'S DESK, Nov 16 design: the five reactions sit in one row from the start (no picker); a count only after the first press.
-   The row never wraps; if a narrow bubble cannot hold it, it scrolls sideways inside the bubble instead of widening the page. */
-.reactions{display:block;margin-top:16px}
-.reactionRow{display:flex;flex-wrap:nowrap;align-items:center;gap:4px;min-width:0;max-width:100%;overflow-x:auto;overscroll-behavior-x:contain;scrollbar-width:none}.reactionRow::-webkit-scrollbar{display:none}
-.reactions .reactionChip{flex:0 0 auto;display:inline-flex;align-items:center;gap:3px;height:30px;min-height:30px;padding:0 7px;border:1px solid #2a3140;border-radius:15px;background:#121620;color:#8e9aaa;line-height:1;white-space:nowrap}
-.reactions .reactionChip[aria-pressed=true]{border-color:#8a7444;background:#2a2213}
-.reactions .reactionChip:disabled{opacity:1;cursor:default}
-.reactions .reactionEmoji{font-size:15px;line-height:1}
-.reactions .reactionCount{min-width:0;font:11px/1 ui-monospace,SFMono-Regular,Menlo,monospace;color:#8e9aaa}
-.reactions .reactionChip[aria-pressed=true] .reactionCount{color:#e2c27a}
-.reactions small{display:block;margin-top:6px}
+/* RIZEL'S DESK, Nov 17 design (owner): inside the post only the date line and the text. A PRO member reacts through one
+   round face button at the right end of the date line; the five emoji open in a small popover right under it.
+   The counts sit in a badge over the bottom-right edge of the post (most first, only those with at least one). */
+.reactionFace{position:relative;flex:none;display:flex;margin-left:auto}
+.faceButton{display:grid;place-items:center;width:30px;height:30px;padding:0;border:1px solid #3a3424;border-radius:50%;background:transparent;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.faceButton svg{width:18px;height:18px;fill:none;stroke:#b9a77f;stroke-width:1.8;stroke-linecap:round}.faceButton .faceEye{fill:#b9a77f;stroke:none}
+.faceButton[aria-expanded=true]{border-color:#8a7444;background:#2a2213}.faceButton:focus-visible{outline:1px solid #b9a77f;outline-offset:2px}
+.reactionPopover{position:absolute;top:calc(100% + 8px);right:-8px;z-index:5;display:flex;gap:4px;padding:6px 8px;border:1px solid #33465b;border-radius:24px;background:#1b2330;box-shadow:0 10px 24px #0009;white-space:nowrap}
+.reactionChoice{display:flex;align-items:center;justify-content:center;width:36px;height:36px;padding:0;border:1px solid transparent;border-radius:50%;background:transparent;font-size:22px;line-height:1;cursor:pointer;transition:transform .12s,background .12s}
+.reactionChoice:active{transform:scale(.9)}.reactionChoice[aria-pressed=true]{border-color:#8a7444;background:#2a2213}.reactionChoice:disabled{opacity:.5;cursor:default}
+.reactionBadge{position:absolute;right:14px;bottom:-14px;z-index:1;display:flex;align-items:center;gap:6px;box-sizing:border-box;height:28px;max-width:calc(100% - 28px);padding:0 10px;border:1px solid #2f3a4a;border-radius:14px;background:#151b25;overflow:hidden;white-space:nowrap}
+.badgeItem{display:inline-flex;align-items:center;gap:6px;flex:none}
+.reactionBadge .reactionEmoji{display:inline-block;font-size:13px;line-height:1}
+.reactionBadge .reactionCount{font:11px/1 ui-monospace,"SF Mono",Menlo,monospace;color:#c6d0dc;font-variant-numeric:tabular-nums;animation:reaction-count .18s ease-out}
+.reactionError{display:block;margin-top:8px;color:#c5a795;font-size:11px}
+@keyframes reaction-count{from{transform:translateY(3px);opacity:.35}to{transform:translateY(0);opacity:1}}
+@media(prefers-reduced-motion:reduce){.reactionBadge .reactionCount{animation:none}.reactionChoice{transition:none}}
 
 /* RIZEL'S DESK composer, Nov 2 design: tool row, quiet input, 添付 panel with four tiles, count and the gold 投稿 button. */
 .editor .toolbar{gap:8px;margin:0 0 12px;flex-wrap:wrap}
