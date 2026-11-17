@@ -22,9 +22,14 @@ OPENABLE = set(TARGETS['openable'])
 FRAGMENT = re.compile(TARGETS['fragment'])
 
 
+QUERIES = TARGETS['queries']
+
+
 def openable(url):
-    path, _, fragment = url.partition('#')
-    return path in OPENABLE and (not fragment or bool(FRAGMENT.fullmatch('#' + fragment)))
+    before, _, fragment = url.partition('#')
+    path, mark, query = before.partition('?')
+    return (path in OPENABLE and (not fragment or bool(FRAGMENT.fullmatch('#' + fragment)))
+            and (not mark or '?' + query in QUERIES.get(path, [])))
 
 
 # The modules that build phone notifications: web_push itself, and the two that service.py hands web_push.send to.
@@ -70,6 +75,15 @@ class PushTargetTests(unittest.TestCase):
                 self.assertTrue(openable(url.value), f'{where}: {url.value}')
             else:
                 self.assertEqual(ast.unparse(url), 'url', where)  # the answer notice: checked by sending one below
+
+    def test_the_demo_notice_page_is_the_only_listed_query_and_is_kept_in_the_send_log(self):
+        self.assertEqual(QUERIES, {'/research/price-targets': ['?demo=nvda']})
+        self.assertTrue(openable(push.DEMO_TARGET_URL))
+        for url in ('/research/price-targets?demo=amd', '/research/calendar?demo=nvda', '/research/price-targets?demo=nvda&x=1'):
+            self.assertFalse(openable(url), url)
+            self.assertIsNone(push.SEND_PAGE.fullmatch(url), url)
+        self.assertIsNotNone(push.SEND_PAGE.fullmatch(push.DEMO_TARGET_URL))
+        self.assertEqual(push.notice_kind({'tag': 'x'}, push.DEMO_TARGET_URL), 'price-targets')
 
 
 class SentPayloadTests(unittest.TestCase):

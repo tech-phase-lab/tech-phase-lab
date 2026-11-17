@@ -28,14 +28,23 @@ export const PUSH_NOTICE_ACTIONS = ["recent-notice", "notice-opened", "notice-di
 const NOTICE_ID = /^[a-f0-9]{32}$/;
 const OPENABLE: ReadonlySet<string> = new Set(targets.openable);
 const FRAGMENT = new RegExp(targets.fragment);
-/** A page on the notification list (the same rule as pushOpenPath in ./push-open, which imports this file). */
-function openablePage(value: string): string | null {
+const QUERIES: Readonly<Record<string, readonly string[]>> = targets.queries;
+/** A page on the notification list, optionally with one of the queries listed for it (Nov 17: only "?demo=nvda" on the price-target
+ * page, for the owner's filming notice) and a fragment. pushOpenPath in ./push-open uses it too; public/research-sw.js keeps the same
+ * rule (tests/research-sw-click-target.test.mjs checks the lists match). */
+export function openablePushPage(value: string): string | null {
   if (value.length > 200 || !value.startsWith("/") || value.startsWith("//") || /[\\\s]/.test(value)) return null;
   const hash = value.indexOf("#");
-  const path = hash < 0 ? value : value.slice(0, hash);
+  const beforeHash = hash < 0 ? value : value.slice(0, hash);
   const fragment = hash < 0 ? "" : value.slice(hash);
-  return OPENABLE.has(path) && (!fragment || FRAGMENT.test(fragment)) ? path + fragment : null;
+  const mark = beforeHash.indexOf("?");
+  const path = mark < 0 ? beforeHash : beforeHash.slice(0, mark);
+  const query = mark < 0 ? "" : beforeHash.slice(mark);
+  if (!OPENABLE.has(path) || (fragment && !FRAGMENT.test(fragment))) return null;
+  if (query && !(Object.hasOwn(QUERIES, path) && QUERIES[path].includes(query))) return null;
+  return path + query + fragment;
 }
+const openablePage = openablePushPage;
 const KIND = /^[a-z-]{1,40}$/;
 const finite = (value: unknown): value is number => typeof value === "number" && Number.isFinite(value);
 
@@ -58,16 +67,20 @@ export function cleanPushServerNotice(value: unknown): PushServerNotice | null {
     openedAt: finite(item.openedAt) ? item.openedAt : null, dismissedAt: finite(item.dismissedAt) ? item.dismissedAt : null };
 }
 
-/** The notice placed on this device's clock: sent `ageMs` before the answer arrived (so a phone clock that is off does not matter). */
-/** test: the "send a test notification" notice (no banner; the 15-second tap rule still opens its page). */
-export type PushServerRecord = { id: string; path: string; title: string; at: number; test: boolean };
-export function serverNoticeRecord(notice: PushServerNotice | null, receivedAt: number): PushServerRecord | null {
+/** The notice placed on this device's clock: sent `ageMs` (the server's own figure) before the app ASKED, so a phone clock that is off
+ * does not matter. Nov 17 (owner's filming take): it was placed from the moment the answer was handled, but iOS can suspend the app
+ * between the two: an answer to a question asked at the very moment of the send was handed over only after the tap brought the app
+ * back, so the notice looked newer than the return to the front and the tap became a banner.
+ * test: the "send a test notification" notice (no banner; the 15-second tap rule still opens its page). */
+export type PushServerRecord = { id: string; path: string; title: string; at: number; askedAt: number; test: boolean };
+export function serverNoticeRecord(notice: PushServerNotice | null, askedAt: number): PushServerRecord | null {
   if (!notice || notice.state !== "new" || notice.ageMs > PUSH_SERVER_RECENT_MS) return null;
-  return { id: notice.id, path: notice.page, title: notice.title, at: receivedAt - notice.ageMs, test: notice.kind === PUSH_TEST_KIND };
+  return { id: notice.id, path: notice.page, title: notice.title, at: askedAt - notice.ageMs, askedAt, test: notice.kind === PUSH_TEST_KIND };
 }
 
 /** "open" when the app came to the front within PUSH_SERVER_TAP_MS after the notice was sent (a tap brought it up); "banner" otherwise
- * (the app was already shown when it arrived, or was opened later). */
+ * (the app was already shown when it arrived, or was opened later). The opener takes "open" only from an answer to a question asked
+ * after that return to the front (lib/research/push-open.ts), so the age is measured on the server across the return. */
 export function serverNoticeAction(record: Pick<PushServerRecord, "at">, foregroundAt: number | null): "open" | "banner" {
   return foregroundAt !== null && foregroundAt >= record.at && foregroundAt - record.at <= PUSH_SERVER_TAP_MS ? "open" : "banner";
 }
