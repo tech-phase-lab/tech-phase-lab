@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useOwnerAccount } from "./member-display-provider";
 import { useResearchLanguage } from "./use-research-language";
 import { signedInFromCookies } from "@/lib/resolute/landing-gate";
-import { BAR_DISMISS_KEY, BAR_EVENT, BAR_STATE_KEY, barVisible, needsRefresh, parseBarState, writeBarState } from "@/lib/research/resolute-bar-state";
+import { BAR_DISMISS_KEY, BAR_EVENT, BAR_STATE_KEY, barStateFromAnswer, barVisible, needsRefresh, parseBarState, writeBarState } from "@/lib/research/resolute-bar-state";
 import styles from "./resolute-bar.module.css";
 
 /** RESOLUTE's standing bar (owner, Oct 26): home screen, phones only, floating 8px above the bottom menu.
@@ -44,7 +44,8 @@ export default function ResoluteBar() {
         if (response.status === 401) { writeBarState({ owned: false, anon: true }); return; }
         if (!response.ok) return;
         const body = await response.json();
-        if (body && typeof body.canUseTools === "boolean") writeBarState({ owned: body.canUseTools, anon: false });
+        const answer = barStateFromAnswer(body);
+        if (answer) writeBarState(answer);
       } catch { /* unknown keeps what is remembered */ }
     })();
     return () => controller.abort();

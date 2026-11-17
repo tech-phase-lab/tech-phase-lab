@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { barVisible, needsRefresh, parseBarState, DISMISS_MS, REFRESH_MS } from "../lib/research/resolute-bar-state.ts";
+import { barStateFromAnswer, barVisible, needsRefresh, parseBarState, DISMISS_MS, REFRESH_MS } from "../lib/research/resolute-bar-state.ts";
 
 const now = Date.parse("2026-10-27T00:00:00Z");
 const state = (owned, anon = false) => ({ owned, anon, at: now });
@@ -44,4 +44,40 @@ test("the owner sees the bar in every view until the seven-day mark", () => {
   assert.equal(barVisible(state(true), 0, true, now, true), true);
   assert.equal(barVisible(state(true), 0, true, now, false), false);
   assert.equal(barVisible(state(true), now - 1000, true, now, true), false);
+});
+
+test("the owner previewing a member plan sees the home bar exactly as a member without RESOLUTE does", () => {
+  const now = 1_000_000_000;
+  const ownerAnswer = barStateFromAnswer({ canUseTools: true, accessBasis: "owner" });
+  const buyerAnswer = barStateFromAnswer({ canUseTools: true, use: { status: "active" } });
+  const memberAnswer = barStateFromAnswer({ canUseTools: false, use: { status: "none" } });
+  assert.deepEqual(ownerAnswer, { owned: true, anon: false, basis: "owner" });
+  assert.deepEqual(buyerAnswer, { owned: true, anon: false });
+  assert.deepEqual(memberAnswer, { owned: false, anon: false });
+  assert.equal(barStateFromAnswer({ error: "x" }), null);
+  const at = (answer) => ({ ...answer, at: now });
+  // Owner mode (ownerAccount=true).
+  assert.equal(barVisible(at(ownerAnswer), 0, true, now, true), true);
+  // Owner previewing PRO or FREE (ownerAccount=false, but the entitlement answer is still the owner exception).
+  assert.equal(barVisible(at(ownerAnswer), 0, true, now, false), true);
+  // A real PRO member and a FREE member, neither of whom bought RESOLUTE.
+  assert.equal(barVisible(at(memberAnswer), 0, true, now, false), true);
+  // A RESOLUTE buyer (whatever their Tech Phase plan) never sees it.
+  assert.equal(barVisible(at(buyerAnswer), 0, true, now, false), false);
+  // "×" still hides it for seven days in the preview.
+  assert.equal(barVisible(at(ownerAnswer), now - 1000, true, now, false), false);
+});
+
+test("the owner-access mark survives being remembered on the device", () => {
+  assert.deepEqual(parseBarState(JSON.stringify({ owned: true, anon: false, at: 5, basis: "owner" })), { owned: true, anon: false, at: 5, basis: "owner" });
+  assert.deepEqual(parseBarState(JSON.stringify({ owned: true, anon: false, at: 5, basis: "gift" })), { owned: true, anon: false, at: 5 });
+});
+
+test("every place that remembers the RESOLUTE answer keeps the owner-access mark", async () => {
+  const { readFile } = await import("node:fs/promises");
+  for (const file of ["../app/research/resolute-bar.tsx", "../app/resolute/entry-gate.tsx", "../app/resolute/lp/owned-redirect.tsx"]) {
+    const source = await readFile(new URL(file, import.meta.url), "utf8");
+    assert.match(source, /barStateFromAnswer\(body\)/, file);
+    assert.doesNotMatch(source, /writeBarState\(\{ owned: body\.canUseTools/, file);
+  }
 });
