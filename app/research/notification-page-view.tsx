@@ -4,15 +4,16 @@ import { useEffect, useRef, useState, type ReactNode } from "react";
 import { earningsOnlyProviders, providers } from "@/lib/research/intake";
 import type { Language } from "@/lib/research/data";
 import { SHOW_EVENT, installContext, isStandalone } from "@/lib/research/home-install";
+import { quietDraft, quietLabel, quietToSave, quietZoneFor, storedQuietZone, type QuietHours } from "@/lib/research/quiet-hours";
 import styles from "./notification-page.module.css";
 
 const monitored = providers.map(p => p.ticker);
 const tracked = earningsOnlyProviders.map(p => p.ticker);
-export type Quiet = { on: boolean; start: number; end: number };
+export type Quiet = QuietHours;
 export type Preferences = { targets: boolean; earnings: boolean; news: boolean; newsTickers: string[]; weeklyNotebook: boolean;
   /** Economic-indicator results, and which indicators (Nov 4). */ economic: boolean; economicKinds: string[];
   /** A new issue of 週刊 Tech Phase PRO is out. */ weeklyIssue: boolean; /** Your question to Rizel was answered. */ rizelAnswer: boolean;
-  /** おやすみモード: hours in Japan time. */ quiet: Quiet;
+  /** おやすみモード: hours in their zone (Japan time, or ET when saved from the English site; none means Japan time). */ quiet: Quiet;
   /** A new "リゼルのひとりごと" post; off until turned on. */ rizelNote: boolean; /** Owner only: a weekly issue draft is ready. */ weeklyDraft?: boolean };
 type PrefsState = "idle" | "loading" | "ready" | "error" | "unsupported";
 // The ten indicators; the first seven start on. Only jobless claims has no result reader yet ("soon"): the Department of Labor blocks automated reading of its page.
@@ -81,15 +82,20 @@ export default function NotificationPageView(p: PageViewProps) {
   const t = (ja: string, en: string) => lang === "ja" ? ja : en;
   const [sheet, setSheet] = useState<"" | "earnings" | "news" | "economic" | "quiet">("");
   const prefs: Preferences = { ...placeholder, ...(p.prefs ?? {}) };
-  const [draft, setDraft] = useState<Quiet>(prefs.quiet);
+  // Until the server's settings arrive the hours are shown in this site's zone (a new device starts at 23 to 7 there).
+  const quiet: Quiet = { ...prefs.quiet, zone: p.prefs ? storedQuietZone(prefs.quiet) : quietZoneFor(lang) };
+  const [draft, setDraft] = useState(() => quietDraft(quiet, lang));
   const news = prefs.newsTickers.filter(x => monitored.includes(x));
   const saveNews = (next: string[]) => p.onPrefs({ newsTickers: next });
   const kinds = prefs.economicKinds;
   const on = state === "on";
   const editable = on && p.prefsState === "ready" && !p.busy;
   const needsAccount = state === "sign-in" || state === "pro-required";
-  const quietText = prefs.quiet.on ? `${hour(prefs.quiet.start)}〜${hour(prefs.quiet.end)}` : t("オフ", "Off");
-  const openQuiet = () => { setDraft(prefs.quiet); setSheet("quiet"); };
+  const quietText = quietLabel(quiet, lang);
+  // The sheet edits the hours in this site's zone (ET in English); hours stored in the other zone are converted for it.
+  const openQuiet = () => { setDraft(quietDraft(quiet, lang)); setSheet("quiet"); };
+  const quietSub = lang === "en" ? `Hours are in US Eastern Time (ET).${quiet.zone === "Asia/Tokyo" && quiet.on ? ` Now set in Japan time: ${quietText}.` : ""}`
+    : quiet.zone === "America/New_York" && quiet.on ? `日本時間で設定します。いまは${quietText}です。` : "";
   const sw = (title: string, checked: boolean, onChange: (v: boolean) => void) =>
     <button type="button" role="switch" aria-checked={checked} aria-label={title} disabled={!editable} className={`${styles.switch} ${checked ? styles.switchOn : ""}`} onClick={() => onChange(!checked)} />;
   const sheets = <>
@@ -108,9 +114,9 @@ export default function NotificationPageView(p: PageViewProps) {
       <ul className={styles.kinds}>{indicators.map(k => { const chosen = kinds.includes(k.key); return <li key={k.key} className={styles.kind}>
         <div><p className={styles.rowTitle}>{t(k.ja, k.en)}{!k.ready && <span className={styles.soon}>{t("準備中", "Soon")}</span>}</p><p className={styles.rowDesc}>{t(k.whenJa, k.whenEn)}</p></div>
         {sw(t(k.ja, k.en), chosen, v => p.onPrefs({ economicKinds: v ? indicators.map(x => x.key).filter(x => x === k.key || kinds.includes(x)) : kinds.filter(x => x !== k.key) }))}</li>; })}</ul>
-      <p className={styles.foot}>{t("日本時間の発表の時刻に届きます。おやすみモード中は届きません。", "Sent at the release time in Japan. Nothing is sent during Do Not Disturb.")}</p>
+      <p className={styles.foot}>{t("日本時間の発表の時刻に届きます。おやすみモード中は届きません。", "Sent as soon as each result is released (release times are in ET on the calendar). Nothing is sent during quiet hours.")}</p>
     </Sheet>}
-    {sheet === "quiet" && <Sheet title={t("おやすみモード", "Quiet hours")} sub="" action="×" onClose={() => setSheet("")}>
+    {sheet === "quiet" && <Sheet title={t("おやすみモード", "Quiet hours")} sub={quietSub} action="×" onClose={() => setSheet("")}>
       <div className={styles.quietUse}><div><p className={styles.rowTitle}>{t("おやすみモードを使う", "Use Do Not Disturb")}</p><p className={styles.rowDesc}>{t("この時間は、通知を止めます。", "Notifications pause during these hours.")}</p></div>
         {sw(t("おやすみモードを使う", "Use Do Not Disturb"), draft.on, v => setDraft({ ...draft, on: v }))}</div>
       <div className={`${styles.pickers} ${draft.on ? "" : styles.rowsOff}`}>
@@ -118,7 +124,7 @@ export default function NotificationPageView(p: PageViewProps) {
         <HourPicker label={t("おわり", "To")} value={draft.end} onChange={h => setDraft({ ...draft, end: h })} />
       </div>
       {draft.on && draft.start === draft.end && <p className={styles.note} role="status">{t("はじめとおわりは、別の時刻にしてください。", "Pick two different hours.")}</p>}
-      <button type="button" className={styles.main} disabled={!editable || (draft.on && draft.start === draft.end)} onClick={() => { p.onPrefs({ quiet: draft }); setSheet(""); }}>{t("決定", "Done")}</button>
+      <button type="button" className={styles.main} disabled={!editable || (draft.on && draft.start === draft.end)} onClick={() => { p.onPrefs({ quiet: quietToSave(draft) }); setSheet(""); }}>{t("決定", "Done")}</button>
     </Sheet>}
   </>;
   const row = (icon: ReactNode, title: string, desc: string, checked: boolean, onChange: (v: boolean) => void) =>

@@ -8,15 +8,16 @@ import ts from 'typescript';
 import {waitForIdentity} from '../lib/research/member-recovery.ts';
 import * as preferencesLoad from '../lib/research/preferences-load.ts';
 import * as pushSwFacts from '../lib/research/push-sw-facts.ts';
+import * as pushSubscribe from '../lib/research/push-subscribe.ts';
 const require=createRequire(import.meta.url);
 const flush=()=>new Promise(resolve=>setImmediate(resolve));
 const pending=()=>{let resolve;const promise=new Promise(done=>{resolve=done;});return {promise,resolve};};
-function harness(fetch, subscription=null, props={}, serviceWorker=null) {
+function harness(fetch, subscription=null, props={}, serviceWorker=null, notification={permission:'granted'}) {
  let view=null;const states=[],refs=[],effects=[],tasks=new Map();let index=0,refIndex=0,mounted=false,next=0,cleanup=[];
  const window=Object.assign(new EventTarget(),{PushManager:function(){},Notification:function(){},location:{origin:'https://techphase.app'}});
  const document=Object.assign(new EventTarget(),{visibilityState:'visible'});
  const registration={active:true,pushManager:{getSubscription:async()=>subscription}};
- const navigator={serviceWorker:serviceWorker??{getRegistration:async()=>registration,register:async()=>registration}};
+ const navigator={serviceWorker:serviceWorker??{getRegistration:async()=>registration,register:async()=>registration,ready:Promise.resolve(registration)}};
  const source=ts.transpileModule(readFileSync(new URL('../app/research/notification-settings.tsx',import.meta.url),'utf8'),{compilerOptions:{jsx:ts.JsxEmit.ReactJSX,module:ts.ModuleKind.CommonJS,target:ts.ScriptTarget.ES2022}}).outputText;
  const target={exports:{}};
  new Function('require','module','exports','window','document','navigator','Notification','fetch','setTimeout','clearTimeout',source)(id=>{
@@ -25,13 +26,14 @@ function harness(fetch, subscription=null, props={}, serviceWorker=null) {
   if(id==='@/lib/research/member-recovery')return {waitForIdentity};
   if(id==='@/lib/research/preferences-load')return preferencesLoad;
   if(id==='@/lib/research/push-sw-facts')return pushSwFacts;
+  if(id==='@/lib/research/push-subscribe')return pushSubscribe;
   if(id==='./notification-page-view')return {default:p=>{view=p;return null;}};
   if(id==='./member-display-provider')return {useOwnerMode:()=>false,useOwnerAccount:()=>props.ownerAccount===true};
   if(id==='./push-diagnostic-panel')return {default:()=>null};
   if(id==='./identity-provider')return {useIdentityRefresh:()=>async()=>{}};
   if(id.endsWith('.css'))return {default:{}};
   return require(id);
- },target,target.exports,window,document,navigator,{permission:'granted'},fetch,(fn,delay)=>{const id=++next;tasks.set(id,{fn,delay});return id;},id=>tasks.delete(id));
+ },target,target.exports,window,document,navigator,notification,fetch,(fn,delay)=>{const id=++next;tasks.set(id,{fn,delay});return id;},id=>tasks.delete(id));
  return {
   render(){index=0;refIndex=0;return renderToStaticMarkup(React.createElement(target.exports.default,{lang:'en',initiallyOpen:true,...props}));},
   click(label){index=0;refIndex=0;const tree=target.exports.default({lang:'en',initiallyOpen:true,...props});let found;function walk(node){if(!node||typeof node!=='object')return;if(node.type==='button'&&node.props.children===label)found=node;React.Children.forEach(node.props?.children,walk);}walk(tree);assert.ok(found);found.props.onClick();},
@@ -190,4 +192,138 @@ test('the owner reinstall button unregisters the old worker, registers it again 
  // Without the server's push key (not loaded yet) there is no button.
  const keyless = harness(async () => Response.json({}), null, { page: true, ownerAccount: true });
  assert.equal(keyless.view().diagnostic.props.onReinstall, undefined);
+});
+
+// Nov 17 (owner's iPhone home-screen app): off then on failed on the first tap and worked on the second; no register request left the
+// phone. The subscribe step now gets one quiet retry after 800 ms on the ready worker, permission is never asked again, and only a
+// second failure is shown. Each failure is reported as a stage and an error name only.
+function enableRig({subscribeFails=0,registerFails=0,permission='granted',start='on'}={}){
+ const log=[],reports=[];let subscribes=0,registers=0,asked=0;
+ const oldSub={endpoint:'https://push.example/old',toJSON:()=>({endpoint:'old'}),unsubscribe:async()=>{log.push('unsubscribe');current=null;return true;}};
+ const newSub={endpoint:'https://push.example/new',toJSON:()=>({endpoint:'new'}),unsubscribe:async()=>{log.push('unsubscribe-new');current=null;return true;}};
+ let current=start==='on'?oldSub:null;
+ const reg={active:true,pushManager:{getSubscription:async()=>current,subscribe:async options=>{
+  subscribes++;log.push(['subscribe',options.userVisibleOnly,options.applicationServerKey instanceof Uint8Array]);
+  if(subscribes<=subscribeFails)throw new DOMException('Subscribing failed.','AbortError');
+  current=newSub;return newSub;}}};
+ const serviceWorker={getRegistration:async()=>reg,register:async()=>reg,ready:Promise.resolve(reg)};
+ const notification={permission,requestPermission:async()=>{asked++;notification.permission='granted';return 'granted';}};
+ const panel=harness(async(_url,options={})=>{
+  if(options.method!=='POST')return config();
+  const body=JSON.parse(options.body);
+  if(body.action==='client-error'){reports.push(body);return Response.json({ok:true});}
+  log.push([body.action,body.subscription?.endpoint]);
+  if(body.action==='status')return Response.json({ok:true,registered:current===oldSub});
+  if(body.action==='register'){registers++;if(registers<=registerFails)throw new TypeError('Load failed');return Response.json({ok:true,registered:true});}
+  return Response.json({ok:true});
+ },null,{},serviceWorker,notification);
+ return {panel,log,reports,subscribes:()=>subscribes,registers:()=>registers,asked:()=>asked};
+}
+const settle=async()=>{for(let i=0;i<8;i++)await flush();};
+test('off then on: a first subscribe that fails after the unsubscribe is retried once quietly; register is sent once',async t=>{
+ t.mock.method(console,'info',()=>{});
+ const rig=enableRig({subscribeFails:1});const {panel}=rig;
+ try {
+  panel.render();panel.mount();await settle();assert.match(panel.render(),/This device: on/);
+  panel.click('Turn off on this device');await settle();assert.match(panel.render(),/This device: off/);
+  rig.log.length=0;
+  panel.click('Turn on notifications');await settle();
+  assert.equal(rig.subscribes(),1);assert.ok(panel.delays().includes(800));
+  assert.doesNotMatch(panel.render(),/could not|Unable|Subscribing failed/i);
+  await panel.timer(800);await settle();
+  assert.equal(rig.subscribes(),2);assert.equal(rig.registers(),1);
+  assert.deepEqual(rig.log,[['subscribe',true,true],['subscribe',true,true],['register','new']]);
+  assert.match(panel.render(),/This device: on/);assert.doesNotMatch(panel.render(),/could not|Unable|Subscribing failed/i);
+  assert.deepEqual(rig.reports,[{action:'client-error',report:{stage:'subscribe',name:'AbortError',retry:'ok'}}]);
+  assert.doesNotMatch(JSON.stringify(rig.reports),/push\.example|endpoint|old|new/);
+ } finally {panel.stop();}
+});
+test('when the retry fails too, a precise error is shown and nothing is registered',async t=>{
+ t.mock.method(console,'info',()=>{});
+ const rig=enableRig({subscribeFails:2,start:'off'});const {panel}=rig;
+ try {
+  panel.render();panel.mount();await settle();assert.match(panel.render(),/This device: off/);
+  panel.click('Turn on notifications');await settle();
+  assert.doesNotMatch(panel.render(),/could not be registered/);
+  await panel.timer(800);await settle();
+  assert.equal(rig.subscribes(),2);assert.equal(rig.registers(),0);
+  assert.match(panel.render(),/This device could not be registered with the push service \(AbortError\)/);
+  assert.deepEqual(rig.reports.map(r=>r.report),[{stage:'subscribe',name:'AbortError',retry:'failed',retryStage:'subscribe',retryName:'AbortError'}]);
+ } finally {panel.stop();}
+});
+test('permission is asked once inside the tap, never by the retry',async t=>{
+ t.mock.method(console,'info',()=>{});
+ const rig=enableRig({subscribeFails:1,permission:'default',start:'off'});const {panel}=rig;
+ try {
+  panel.render();panel.mount();await settle();
+  panel.click('Turn on notifications');
+  assert.equal(rig.asked(),1); // asked synchronously in the tap handler, before any await
+  await settle();await panel.timer(800);await settle();
+  assert.equal(rig.asked(),1);assert.equal(rig.subscribes(),2);assert.equal(rig.registers(),1);assert.match(panel.render(),/This device: on/);
+ } finally {panel.stop();}
+});
+test('a register request that never left the phone (network TypeError) is sent once more; a server refusal is not retried',async t=>{
+ t.mock.method(console,'info',()=>{});
+ const rig=enableRig({registerFails:1,start:'off'});const {panel}=rig;
+ try {
+  panel.render();panel.mount();await settle();
+  panel.click('Turn on notifications');await settle();await panel.timer(800);await settle();
+  assert.equal(rig.registers(),2);assert.equal(rig.subscribes(),1);assert.match(panel.render(),/This device: on/);
+  assert.deepEqual(rig.reports.map(r=>r.report),[{stage:'register',name:'TypeError',retry:'ok'}]);
+ } finally {panel.stop();}
+ const sub={endpoint:'x',toJSON:()=>({endpoint:'x'}),unsubscribe:async()=>true};let registers=0;
+ const reg={active:true,pushManager:{getSubscription:async()=>null,subscribe:async()=>sub}};
+ const refused=harness(async(_url,options={})=>{if(options.method!=='POST')return config();const {action}=JSON.parse(options.body);if(action==='register'){registers++;return Response.json({ok:false,error:'disabled'});}return Response.json({ok:true});},null,{},
+  {getRegistration:async()=>reg,register:async()=>reg,ready:Promise.resolve(reg)});
+ try {
+  refused.render();refused.mount();await settle();refused.click('Turn on notifications');await settle();
+  assert.equal(registers,1);assert.ok(!refused.delays().includes(800));assert.match(refused.render(),/Notifications are paused on the server/);
+ } finally {refused.stop();}
+});
+
+// Nov 17 (owner, screens now_JA_flash / now_EN_flash): after 「オンにする」 the tag read オン while the button was still the outlined
+// 「設定中…」 until the choices had been read. The tag and the button now change together: off + busy, then on + not busy.
+for (const lang of ['ja','en']) test(`turning on (and off) never shows "on" while still busy (${lang})`,async t=>{
+ t.mock.method(console,'info',()=>{});
+ const prefsRead=pending(),removed=pending();let current=null;
+ const sub={endpoint:'https://push.example/x',toJSON:()=>({endpoint:'x'}),unsubscribe:async()=>{current=null;return true;}};
+ const reg={active:true,pushManager:{getSubscription:async()=>current,subscribe:async()=>{current=sub;return sub;}}};
+ const panel=harness(async(_url,options={})=>{
+  if(options.method!=='POST')return pageConfig();
+  const {action}=JSON.parse(options.body);
+  if(action==='status')return Response.json({ok:true,registered:current!==null});
+  if(action==='register')return Response.json({ok:true,registered:true});
+  if(action==='preferences')return prefsRead.promise;
+  if(action==='remove')return removed.promise;
+  return Response.json({ok:true});
+ },null,{page:true,lang},{getRegistration:async()=>reg,register:async()=>reg,ready:Promise.resolve(reg)});
+ const seen=[];const look=()=>{const v=panel.view();seen.push([v.state,v.busy]);return v;};
+ try {
+  panel.render();panel.mount();await settle();
+  assert.equal(look().state,'off');
+  look().onToggle();await settle();
+  assert.deepEqual([look().state,look().busy],['off',true]); // gold 「設定中…」 while the choices are read
+  prefsRead.resolve(Response.json({ok:true,preferences:savedPrefs}));await settle();
+  assert.deepEqual([look().state,look().busy],['on',false]);assert.equal(look().prefsState,'ready');
+  look().onToggle();await settle();
+  assert.deepEqual([look().state,look().busy],['on',true]); // the tapped outlined button says 「設定中…」, the tag still オン
+  removed.resolve(Response.json({ok:true}));await settle();
+  assert.deepEqual([look().state,look().busy],['off',false]);
+  // "on" first appears only together with busy false.
+  const firstOn=seen.findIndex(([state])=>state==='on');assert.equal(seen[firstOn][1],false);
+ } finally {panel.stop();}
+});
+test('a failed choices read after a successful registration still ends "on"',async t=>{
+ t.mock.method(console,'info',()=>{});t.mock.method(console,'warn',()=>{});
+ let current=null;const sub={endpoint:'y',toJSON:()=>({endpoint:'y'}),unsubscribe:async()=>true};
+ const reg={active:true,pushManager:{getSubscription:async()=>current,subscribe:async()=>{current=sub;return sub;}}};
+ const panel=harness(async(_url,options={})=>{
+  if(options.method!=='POST')return pageConfig();
+  const {action}=JSON.parse(options.body);
+  if(action==='status')return Response.json({ok:true,registered:current!==null});
+  if(action==='register')return Response.json({ok:true,registered:true});
+  return Response.json({ok:false,error:'not-registered'});
+ },null,{page:true},{getRegistration:async()=>reg,register:async()=>reg,ready:Promise.resolve(reg)});
+ try {panel.render();panel.mount();await settle();panel.view().onToggle();await settle();
+  assert.deepEqual([panel.view().state,panel.view().busy,panel.view().prefsState],['on',false,'error']);} finally {panel.stop();}
 });

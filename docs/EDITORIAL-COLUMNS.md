@@ -134,6 +134,21 @@ owner identity. Successful output updates the same published revision atomically
 retains its original publication timestamp. Withdrawal or editing during a call
 invalidates its output. Synthetic tests do not establish natural-language accuracy.
 
+Body marks (owner, 2026-11-17; policy version 2): the note and answer policies keep
+`**…**`, `==…==` and `[red]…[/red]` around the matching English words, turn 「・」 lines
+into "• " lines (a "- " the model writes is rewritten) and keep `[audio]/[image]/[video]`
+lines unchanged. After each translation the count of each mark and the exact media lines
+are compared with the Japanese; on a mismatch the body is retranslated once (counted in
+the same daily limit); a second mismatch keeps that translation and logs
+`note-translation-markup-mismatch` with counts only. Each automatic translation records
+its policy version in `note_translation_policy`. When no new post is waiting, the worker
+runs a one-time backfill: published notes and owner answers whose current English is an
+automatic translation from before version 2 and whose Japanese has marks or 「・」 lines
+are retranslated once (`note_translation_backfill`, at most two attempts), at most one
+call per 10 minutes and at most half of NOTE_TRANSLATION_DAILY_LIMIT per 24 hours.
+Owner-edited or manual English is never redone. Token usage of both lanes goes to
+`llm_usage` (`note-translation`, `note-translation-backfill`).
+
 RESEARCH_EDITOR_TOKEN was configured server-side for codex/research-preview and
 the owner-login composer list, draft save, publish and withdrawal were verified
 live on September 28. It remains scoped to Preview and must stay server-only.

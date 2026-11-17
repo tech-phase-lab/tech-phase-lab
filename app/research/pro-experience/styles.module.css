@@ -28,10 +28,10 @@
 .proTagPlain{border-color:#3f6b5d;background:transparent;color:#8fe3c0}
 .back:focus-visible,.next:focus-visible,.go:focus-visible{outline:2px solid #8fe3c0;outline-offset:3px}
 .media{position:relative;margin:22px 0 0;overflow:hidden;border:1px solid #1f2a3d;border-radius:22px;background:#0c111b}
-.video{display:block;width:100%;height:auto;max-height:70vh;background:#000}
-.videoLabel{position:absolute;left:16px;bottom:12px;font:12px var(--font-geist-mono),ui-monospace,monospace;color:#9aa6bb}
-.pause{position:absolute;right:12px;bottom:12px;display:grid;place-items:center;width:44px;height:44px;border:1px solid rgba(255,255,255,.35);border-radius:50%;background:rgba(5,8,13,.65);color:#fff;cursor:pointer}
-.pause:focus-visible{outline:2px solid #8fe3c0;outline-offset:3px}
+/* The portrait video fills the column's width at its own shape (720×1566): no height cap, so nothing is cropped or letterboxed. */
+.videoFigure{margin:0}
+.video{display:block;width:100%;height:auto;aspect-ratio:720/1566;object-fit:contain;background:#000}
+.videoLabel{margin:8px 0 0;font:12px var(--font-geist-mono),ui-monospace,monospace;color:#9aa6bb}
 .text{margin:26px 0 0;font-size:17px;line-height:1.95;overflow-wrap:anywhere}
 .figure{margin:26px 0 0}
 .figure img{display:block;width:100%;height:auto;border:1px solid #1f2a3d;border-radius:22px;background:#0c111b}

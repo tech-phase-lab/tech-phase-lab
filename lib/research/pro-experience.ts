@@ -4,7 +4,9 @@ import config from "./pro-experience.json" with { type: "json" };
  * pro-experience.json. A video or image left empty is not drawn; the text alone is shown. */
 export type ProFeature = {
   id: string; name: { ja: string; en: string }; summary: { ja: string; en: string };
-  thumbnailUrl: string; videoUrl: string; videoLabel: string; imageUrl: string; imageCaption: { ja: string; en: string };
+  thumbnailUrl: string; videoUrl: string; videoLabel: string; imageUrl: string;
+  /** The English video (owner, Nov 17); left empty, the English view shows the Japanese one. Each poster is that video's first frame. */
+  videoUrlEn: string; videoLabelEn: string; videoPosterUrl: string; videoPosterUrlEn: string; imageCaption: { ja: string; en: string };
   textBeforeImage: { ja: string; en: string }; textAfterImage: { ja: string; en: string };
 };
 
@@ -28,7 +30,8 @@ export function readFeatures(value: unknown): ProFeature[] {
     if (!/^[a-z0-9-]{2,40}$/.test(id) || seen.has(id) || !text(v.nameJa)) return [];
     seen.add(id);
     return [{ id, name: pair(v.nameJa, v.nameEn), summary: pair(v.summaryJa, v.summaryEn), thumbnailUrl: mediaUrl(v.thumbnailUrl), videoUrl: mediaUrl(v.videoUrl),
-      videoLabel: text(v.videoLabel), imageUrl: mediaUrl(v.imageUrl), imageCaption: pair(v.imageCaptionJa, v.imageCaptionEn),
+      videoLabel: text(v.videoLabel), videoUrlEn: mediaUrl(v.videoUrlEn), videoLabelEn: text(v.videoLabelEn),
+      videoPosterUrl: mediaUrl(v.videoPosterUrl), videoPosterUrlEn: mediaUrl(v.videoPosterUrlEn), imageUrl: mediaUrl(v.imageUrl), imageCaption: pair(v.imageCaptionJa, v.imageCaptionEn),
       textBeforeImage: pair(v.textBeforeImageJa, v.textBeforeImageEn), textAfterImage: pair(v.textAfterImageJa, v.textAfterImageEn) }];
   });
 }
@@ -36,6 +39,12 @@ export const proFeatures: ProFeature[] = readFeatures(config);
 
 /** English text is not written yet; the Japanese is shown until it is. */
 export const inLanguage = (value: { ja: string; en: string }, lang: "ja" | "en") => lang === "en" && value.en ? value.en : value.ja;
+/** The video for a language: English uses the English video, label and poster; with no English video, all three are the Japanese ones. */
+export function videoFor(feature: ProFeature, lang: "ja" | "en") {
+  return lang === "en" && feature.videoUrlEn
+    ? { src: feature.videoUrlEn, label: feature.videoLabelEn, poster: feature.videoPosterUrlEn }
+    : { src: feature.videoUrl, label: feature.videoLabel, poster: feature.videoPosterUrl };
+}
 export const featureById = (id: string) => proFeatures.find(feature => feature.id === id);
 /** The next feature in the list; after the last, the first. */
 export function nextFeature(id: string, list: readonly ProFeature[] = proFeatures) {

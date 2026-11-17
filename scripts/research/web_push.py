@@ -139,6 +139,8 @@ def connect(path):
             ('weekly_issue', 'INTEGER NOT NULL DEFAULT 0'), ('answer_posts', 'INTEGER NOT NULL DEFAULT 0'),
             # おやすみモード: on, 23:00 to 07:00 Japan time, unless changed.
             ('quiet_on', 'INTEGER NOT NULL DEFAULT 1'), ('quiet_start', 'INTEGER NOT NULL DEFAULT 23'), ('quiet_end', 'INTEGER NOT NULL DEFAULT 7'),
+            # The zone those hours are in (owner, Nov 17: the English site shows US Eastern Time). Devices saved before then keep Japan time.
+            ('quiet_zone', "TEXT NOT NULL DEFAULT 'Asia/Tokyo'"),
             # The key the question board uses for this member, sent by the website so a reply can be told to its asker only.
             ('question_owner', 'TEXT')):
         if column not in columns:
@@ -172,7 +174,7 @@ def notice_schema(db):
 def notice_kind(payload, page):
     if payload.get('tag') == 'tech-phase-test':
         return 'test'
-    name = page.split('#', 1)[0].rsplit('/', 1)[-1]
+    name = page.split('#', 1)[0].split('?', 1)[0].rsplit('/', 1)[-1]
     return name if name != 'research' and NOTICE_KIND.fullmatch(name) else 'research'
 
 
@@ -301,9 +303,12 @@ def validate_preferences(value):
             raise ValueError('invalid-preferences')
     if 'quiet' in value:
         quiet = value['quiet']
-        if (not isinstance(quiet, dict) or set(quiet) != {'on', 'start', 'end'} or type(quiet['on']) is not bool
-                or any(type(quiet[k]) is not int or not 0 <= quiet[k] <= 23 for k in ('start', 'end')) or quiet['start'] == quiet['end']):
+        if (not isinstance(quiet, dict) or set(quiet) - {'zone'} != {'on', 'start', 'end'} or type(quiet['on']) is not bool
+                or any(type(quiet[k]) is not int or not 0 <= quiet[k] <= 23 for k in ('start', 'end')) or quiet['start'] == quiet['end']
+                or quiet.get('zone', QUIET_DEFAULT_ZONE) not in QUIET_ZONES):
             raise ValueError('invalid-preferences')
+        # A screen that sends no zone is the Japanese one (or one from before Nov 17): its hours are Japan time.
+        value = {**value, 'quiet': {**quiet, 'zone': quiet.get('zone', QUIET_DEFAULT_ZONE)}}
     return {**value, **({'newsTickers': sorted(set(value['newsTickers']))} if 'newsTickers' in value else {}),
             **({'economicKinds': [k for k in ECON_KINDS if k in value['economicKinds']]} if 'economicKinds' in value else {})}
 
@@ -326,7 +331,7 @@ def preference_view(db, device):
             'weeklyNotebook': bool(device['weekly_notebook']), 'rizelNote': bool(device['note_posts']), 'weeklyDraft': bool(device['weekly_draft']),
             'economic': bool(device['econ']), 'economicKinds': economic_kinds(device), 'weeklyIssue': bool(device['weekly_issue']),
             'rizelAnswer': bool(device['answer_posts']),
-            'quiet': {'on': bool(device['quiet_on']), 'start': device['quiet_start'], 'end': device['quiet_end']}}
+            'quiet': {'on': bool(device['quiet_on']), 'start': device['quiet_start'], 'end': device['quiet_end'], 'zone': quiet_zone(device)}}
 
 
 def economic_kinds(device):
@@ -339,14 +344,31 @@ def economic_kinds(device):
         return list(ECON_DEFAULT_ON)
 
 
+# おやすみモード hours are kept in one of these zones: Japan time from the Japanese site, US Eastern Time from the English one.
+QUIET_ZONES = ('Asia/Tokyo', 'America/New_York')
+QUIET_DEFAULT_ZONE = 'Asia/Tokyo'
+
+
+def quiet_zone(device):
+    zone = device['quiet_zone'] if 'quiet_zone' in device.keys() else None
+    return zone if zone in QUIET_ZONES else QUIET_DEFAULT_ZONE
+
+
+def quiet_zone_for(language):
+    """The zone a new device's おやすみモード starts in: ET when it was turned on from the English site."""
+    return 'America/New_York' if language == 'en' else QUIET_DEFAULT_ZONE
+
+
 def quiet_blocks(device, *moments):
     """おやすみモード: true when the device is asleep now or was asleep when the news happened, so a notice held back
-    during the night is never delivered when the night ends. Hours are Japan time; 23 to 7 spans midnight."""
+    during the night is never delivered when the night ends. Hours are wall-clock hours in the device's zone (Japan time or
+    US Eastern Time, with daylight saving time); 23 to 7 spans midnight."""
     if not device['quiet_on']:
         return False
     start, end = device['quiet_start'], device['quiet_end']
+    zone = ZoneInfo(quiet_zone(device))
     for moment in moments:
-        hour = datetime.fromtimestamp(moment, JST).hour
+        hour = datetime.fromtimestamp(moment, zone).hour
         if (start <= hour < end) if start < end else (hour >= start or hour < end):
             return True
     return False
@@ -376,9 +398,9 @@ def write_preferences(db, device, patch):
       news=excluded.news,news_tickers=excluded.news_tickers''',
       (device['id'], int(prefs['targets']), int(prefs['earnings']), int(prefs['news']), json.dumps(prefs['newsTickers'])))
     db.execute('''UPDATE push_devices SET weekly_notebook=?, note_posts=?, weekly_draft=?, econ=?, econ_kinds=?, weekly_issue=?, answer_posts=?,
-      quiet_on=?, quiet_start=?, quiet_end=? WHERE id=?''', (int(prefs['weeklyNotebook']), int(prefs['rizelNote']), int(prefs['weeklyDraft']),
+      quiet_on=?, quiet_start=?, quiet_end=?, quiet_zone=? WHERE id=?''', (int(prefs['weeklyNotebook']), int(prefs['rizelNote']), int(prefs['weeklyDraft']),
       int(prefs['economic']), json.dumps(prefs['economicKinds']), int(prefs['weeklyIssue']), int(prefs['rizelAnswer']),
-      int(prefs['quiet']['on']), prefs['quiet']['start'], prefs['quiet']['end'], device['id']))
+      int(prefs['quiet']['on']), prefs['quiet']['start'], prefs['quiet']['end'], prefs['quiet']['zone'], device['id']))
     return prefs
 
 
@@ -451,10 +473,11 @@ def register(db, payload, allowed, now=None, device_limit=DEVICE_LIMIT):
                 'SELECT COUNT(*) FROM push_devices').fetchone()[0] >= device_limit:
             raise ValueError('pilot-device-limit')
         # Updating preferences resets the baseline, never backfills old alerts.
-        db.execute('''INSERT INTO push_devices (id,subscription,tickers,language,since,active) VALUES(?,?,?,?,?,1)
+        # A new device starts its おやすみモード in the site's zone; an existing one keeps the zone it has.
+        db.execute('''INSERT INTO push_devices (id,subscription,tickers,language,since,active,quiet_zone) VALUES(?,?,?,?,?,1,?)
             ON CONFLICT(id) DO UPDATE SET subscription=excluded.subscription,
             tickers=excluded.tickers,language=excluded.language,since=excluded.since,active=1''',
-            (device, json.dumps(subscription), json.dumps(sorted(set(tickers))), lang, now))
+            (device, json.dumps(subscription), json.dumps(sorted(set(tickers))), lang, now, quiet_zone_for(lang)))
     return {'registered': True}
 
 
@@ -491,11 +514,13 @@ def register_member(db, payload, allowed, now=None):
             raise ValueError('invalid-preferences')
         # The Sunday-night notebook notice is on unless the device says otherwise.
         weekly = (0 if payload.get('weeklyNotebook') is False else 1) if 'weeklyNotebook' in payload else (existing['weekly_notebook'] if existing else 1)
-        db.execute("""INSERT INTO push_devices (id,subscription,tickers,language,since,active,owner_id,access_until,weekly_notebook)
-          VALUES(?,?,?,?,?,1,?,?,?) ON CONFLICT(id) DO UPDATE SET tickers=excluded.tickers,
+        # A new device starts its おやすみモード (23:00 to 07:00) in the site's zone: ET from the English site, Japan time from the
+        # Japanese one. An existing device keeps the zone it has, whichever language it registers in again.
+        db.execute("""INSERT INTO push_devices (id,subscription,tickers,language,since,active,owner_id,access_until,weekly_notebook,quiet_zone)
+          VALUES(?,?,?,?,?,1,?,?,?,?) ON CONFLICT(id) DO UPDATE SET tickers=excluded.tickers,
           language=excluded.language,since=excluded.since,active=1,owner_id=excluded.owner_id,access_until=excluded.access_until,
           weekly_notebook=excluded.weekly_notebook""",
-          (device,json.dumps(sub),json.dumps(sorted(set(tickers))),lang,now,owner,until,weekly))
+          (device,json.dumps(sub),json.dumps(sorted(set(tickers))),lang,now,owner,until,weekly,quiet_zone_for(lang)))
         remember_question_owner(db, device, payload)
         if 'preferences' in payload:
             current = db.execute('SELECT * FROM push_devices WHERE id=?', (device,)).fetchone()
@@ -636,6 +661,9 @@ def price_target_payload(ticker, firm, previous, latest, ja, tag):
 # restarts; more than DEMO_LATE_SECONDS late, it is skipped. Fictional firm and numbers; never a real firm name.
 DEMO_TARGET_VARIABLE = 'PUSH_DEMO_TARGET_AT'
 DEMO_TARGET = {'ticker': 'NVDA', 'firm': 'Sample Securities', 'previous': 295, 'latest': 340}
+# Nov 17 (owner): the demo notice (only it; real notices keep '/research/price-targets') opens the price-target page with the sample
+# row on top. The page shows that row from this query alone, in the browser, and removes the query from the address bar.
+DEMO_TARGET_URL = '/research/price-targets?demo=nvda'
 # OWNER_ACCOUNT_ID and PRODUCTION_OWNER_ACCOUNT_ID in lib/membership/entitlements.ts (a test checks they match).
 DEMO_OWNER_ACCOUNT_IDS = ('user_3JulL4D07KtVl5Eg2zdY1iczKbC', 'user_3LHR1K8f8zwyDcVzMg7ud6KB9Wb')
 DEMO_LATE_SECONDS = 600
@@ -657,7 +685,9 @@ def parse_demo_target(value):
 
 def scheduled_demo_target(db, value, transport=None, now=None):
     """Send the demo notice for this variable value once it is due. Returns None (no value), 'waiting', 'done' (this value was already
-    handled), or the outcome recorded now: 'sent', 'no-device', 'late', 'invalid'. One log line per outcome, never a device or text."""
+    handled), or the outcome recorded now: 'sent', 'no-device', 'quiet-hours' (every owner device was in its おやすみモード), 'late', 'invalid'.
+    One log line per outcome, never a device or text. Nov 17 (owner): a device in its quiet hours is skipped exactly as for a real
+    price-target notice (quiet_blocks, called as deliver calls it: now and the moment of the change, here the scheduled time)."""
     value = (value or '').strip()
     if not value:
         return None
@@ -672,18 +702,22 @@ def scheduled_demo_target(db, value, transport=None, now=None):
         db.execute('CREATE TABLE IF NOT EXISTS push_demo_schedule (value TEXT PRIMARY KEY, handled_at REAL NOT NULL, outcome TEXT)')
         if not db.execute('INSERT OR IGNORE INTO push_demo_schedule VALUES(?,?,NULL)', (value, now)).rowcount:
             return 'done'
-    devices = accepted = 0
+    devices = accepted = quiet = 0
     if outcome is None:
         marks = ','.join('?' * len(DEMO_OWNER_ACCOUNT_IDS))
         # Read at the moment of sending, so a device turned on just before the time is included.
-        rows = db.execute(f'SELECT id,subscription FROM push_devices WHERE active=1 AND owner_id IN ({marks}) ORDER BY id',
+        rows = db.execute(f'SELECT * FROM push_devices WHERE active=1 AND owner_id IN ({marks}) ORDER BY id',
                           DEMO_OWNER_ACCOUNT_IDS).fetchall()
         for row in rows:
             devices += 1
+            if quiet_blocks(row, now, parsed[0]):
+                quiet += 1
+                continue
             # A fresh tag of the same shape as a real one (a sha256 hex), so each send is shown as its own notice.
             tag = hashlib.sha256(json.dumps(['demo-target', secrets.token_hex(16)]).encode()).hexdigest()
             message = price_target_payload(DEMO_TARGET['ticker'], DEMO_TARGET['firm'], DEMO_TARGET['previous'], DEMO_TARGET['latest'],
                                            language == 'ja', tag)
+            message['url'] = DEMO_TARGET_URL
             try:
                 # Through noting(): written down in push_notices as a real price-target notice (the in-app banner behaves as for one).
                 code = noting(db, transport or send, now)(json.loads(row['subscription']), message)
@@ -695,12 +729,12 @@ def scheduled_demo_target(db, value, transport=None, now=None):
                 with db:
                     db.execute('DELETE FROM push_devices WHERE id=?', (row['id'],))
                     db.execute('DELETE FROM push_device_preferences WHERE device_id=?', (row['id'],))
-        outcome = 'sent' if devices else 'no-device'
+        outcome = 'no-device' if not devices else 'quiet-hours' if quiet == devices else 'sent'
     with db:
         db.execute('UPDATE push_demo_schedule SET outcome=? WHERE value=?', (outcome, value))
     # Language and counts only: never the device, endpoint, keys, the text or the provider's response.
-    print(json.dumps({'event': 'push-demo-target', 'language': language, 'devices': devices, 'accepted': accepted,
-                      'outcome': outcome}), flush=True)
+    print(json.dumps({'event': 'push-demo-target', 'language': language, 'devices': devices, 'quiet': quiet,
+                      'accepted': accepted, 'outcome': outcome}), flush=True)
     return outcome
 
 
@@ -833,7 +867,9 @@ def is_busy(exc):
 SEND_LOG_SIZE = 10
 SEND_LOG = deque(maxlen=SEND_LOG_SIZE)
 SEND_LOG_LOCK = threading.Lock()
-SEND_PAGE = re.compile(r'/research(/[a-z-]{1,40})?(#[a-z0-9-]{1,40})?')
+# Nov 17: the owner's filming notice opens the price-target page with ?demo=nvda (DEMO_TARGET_URL; the only listed query in
+# lib/research/push-targets.json).
+SEND_PAGE = re.compile(r'/research(/[a-z-]{1,40})?(#[a-z0-9-]{1,40})?|/research/price-targets\?demo=nvda')
 SEND_FAILURE_KINDS = frozenset({'ImportError', 'ModuleNotFoundError', 'TypeError', 'ValueError', 'KeyError', 'ConnectionError',
                                 'ConnectTimeout', 'ReadTimeout', 'Timeout', 'SSLError', 'WebPushException'})
 

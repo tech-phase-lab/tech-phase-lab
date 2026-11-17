@@ -7,6 +7,7 @@ const source=readFileSync(new URL('../app/api/research/notifications/route.ts',i
  .replace('"@/lib/membership/entitlements"', JSON.stringify(new URL('../lib/membership/entitlements.ts',import.meta.url).href))
  .replace('"@/lib/research/push-diagnostic"', JSON.stringify(new URL('../lib/research/push-diagnostic.ts',import.meta.url).href))
  .replace('"@/lib/research/push-send-log"', JSON.stringify(new URL('../lib/research/push-send-log.ts',import.meta.url).href))
+ .replace('"@/lib/research/push-subscribe"', JSON.stringify(new URL('../lib/research/push-subscribe.ts',import.meta.url).href))
  .replace('"@/lib/research/push-server-notice"', JSON.stringify(new URL('../lib/research/push-server-notice.ts',import.meta.url).href));
 const {GET,POST}=await import('data:text/javascript;base64,'+Buffer.from(stripTypeScriptTypes(source)).toString('base64'));
 test('member notification routes enforce verified identity, expiry and fixed owned-device paths',async()=>{
@@ -206,4 +207,28 @@ test('Nov 16: the notice actions are rate limited per device and per member befo
   globalThis.__pushMember={status:'signed-in',userId:'user_rate_other',plan:'free',accessExpiresAt:0};
   assert.equal((await POST(req('https://web.push.apple.com/device-a'))).status,200);
  } finally {globalThis.fetch=saved.fetch;delete globalThis.__pushMember;for(const [key,value] of [['RESEARCH_MONITOR_URL',saved.url],['RESEARCH_MONITOR_TOKEN',saved.token]]){if(value===undefined)delete process.env[key];else process.env[key]=value;}}
+});
+
+test('Nov 17: a failed or retried enable is logged as a stage and an error name only, for any signed-in member, rate limited', async () => {
+ const saved={fetch:globalThis.fetch,warn:console.warn};const calls=[],lines=[];
+ globalThis.fetch=async(...args)=>{calls.push(args);return Response.json({ok:true});};
+ console.warn=(...args)=>lines.push(args.join(' '));
+ const req=(body,origin='https://example.test')=>new Request('https://example.test/api/research/notifications',{method:'POST',headers:{origin,'content-type':'application/json'},body:JSON.stringify(body)});
+ const report={stage:'subscribe',name:'AbortError',retry:'failed',retryStage:'subscribe',retryName:'AbortError',endpoint:'https://push.example/secret',message:'secret text'};
+ try {
+  globalThis.__pushMember={status:'signed-out'};
+  assert.equal((await POST(req({action:'client-error',report}))).status,401);
+  globalThis.__pushMember={status:'signed-in',userId:'user_free_member',plan:'free',accessExpiresAt:0};
+  assert.equal((await POST(req({action:'client-error',report},'https://elsewhere.test'))).status,403);
+  assert.equal((await POST(req({action:'client-error',report:{stage:'anything',name:'AbortError',retry:'ok'}}))).status,400);
+  const response=await POST(req({action:'client-error',report}));
+  assert.equal(response.status,200);assert.deepEqual(await response.json(),{ok:true});
+  assert.deepEqual(lines,['[push-client] stage=subscribe name=AbortError retry=failed retryStage=subscribe retryName=AbortError']);
+  for (const secret of ['secret','push.example','user_']) assert.equal(lines[0].includes(secret),false,secret);
+  assert.equal(calls.length,0,'nothing goes to the monitor');
+  let limited=0;
+  for (let i=0;i<20;i++) if ((await POST(req({action:'client-error',report:{stage:'worker',name:'Weird<script>',retry:'none'}}))).status===429) limited++;
+  assert.ok(limited>=10,`rate limited ${limited}`);
+  assert.match(lines[1],/^\[push-client\] stage=worker name=Other retry=none$/);
+ } finally {globalThis.fetch=saved.fetch;console.warn=saved.warn;delete globalThis.__pushMember;}
 });

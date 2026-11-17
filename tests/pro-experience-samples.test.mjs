@@ -12,11 +12,11 @@ const read = path => readFileSync(new URL(path, import.meta.url), "utf8");
 const SAMPLES = "../app/research/pro-experience/samples/";
 const sampleFiles = readdirSync(new URL(SAMPLES, import.meta.url)).filter(name => name.endsWith(".tsx"));
 
-test("six features show a sample in place of a video; phone notifications keep the video and RIZEL'S DESK is unchanged", () => {
-  assert.deepEqual([...SAMPLE_FEATURES].sort(), ["compare", "financial-radar", "relation-map", "theme-ranking", "us-portfolio", "watch-22"]);
+test("seven features show a sample in place of a video (RIZEL'S DESK since Nov 17); phone notifications keep the video", () => {
+  assert.deepEqual([...SAMPLE_FEATURES].sort(), ["compare", "financial-radar", "relation-map", "rizels-desk", "theme-ranking", "us-portfolio", "watch-22"]);
   for (const id of SAMPLE_FEATURES) assert.ok(proFeatures.some(feature => feature.id === id), id);
   assert.equal(hasSample("phone-alerts"), false);
-  assert.equal(hasSample("rizels-desk"), false);
+  assert.equal(hasSample("rizels-desk"), true);
   const screen = read("../app/research/pro-experience/screen.tsx");
   assert.match(screen, /\{sample \? <FeatureSample feature=\{sample\} lang=\{lang\} \/> : feature\.videoUrl && <FeatureVideo/);
   assert.equal(SAMPLE_TIME.ja, "2035/03/12 09:00 時点");
@@ -37,7 +37,7 @@ test("the tour's samples never ask the network: no fetch, no API address, no Nex
       assert.doesNotMatch(source, banned, `${name}: ${banned}`);
     // Data comes only from the committed sample files.
     for (const [, from] of source.matchAll(/from "(@\/lib\/[^"]+)"/g))
-      assert.ok(/pro-experience-sample|comparison-scorecard|theme-definitions|theme-ranking|theme-stock-names|portfolio\/calc|chain-map-core|radar|company-watch|watch-earnings/.test(from), `${name} imports ${from}`);
+      assert.ok(/pro-experience-sample|comparison-scorecard|theme-definitions|theme-ranking|theme-stock-names|portfolio\/calc|chain-map-core|radar|company-watch|watch-earnings|weekly-format/.test(from), `${name} imports ${from}`);
   }
   for (const name of ["compare.json", "portfolio.json", "radar.json", "relation-map-nvda.json", "themes.json", "watch22.json", "watch22-dives.json"]) {
     const file = JSON.parse(read(`../lib/research/pro-experience-samples/${name}`));

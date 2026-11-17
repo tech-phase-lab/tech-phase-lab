@@ -97,6 +97,15 @@ test("the worker's page list is the shared list in lib/research/push-targets.jso
   assert.deepEqual([...block.matchAll(/"([^"]+)"/g)].map(m => m[1]).sort(), [...targets.openable].sort());
   assert.equal(/const FRAGMENT = \/(.+)\/;/.exec(source)[1], targets.fragment);
   for (const path of targets.openable) assert.ok(fs.existsSync(new URL(`../app${path}/page.tsx`, import.meta.url)), path);
+  const queries = /const QUERIES = (\{[^\n]*\});/.exec(source)[1];
+  assert.deepEqual(JSON.parse(queries), targets.queries);
+});
+
+test("Nov 17: the price-target page keeps its listed ?demo=nvda query; any other query, or that query on another page, falls back", async () => {
+  assert.deepEqual(targets.queries, { "/research/price-targets": ["?demo=nvda"] });
+  assert.equal(await sent("/research/price-targets?demo=nvda"), "/research/price-targets?demo=nvda");
+  for (const url of ["/research/price-targets?demo=amd", "/research/price-targets?demo=nvda&x=1", "/research/calendar?demo=nvda",
+    "/research/price-targets?", "/research?demo=nvda"]) assert.equal(await sent(url), "/research", url);
 });
 
 test("known research pages are kept, with or without a hash", async () => {
@@ -162,7 +171,7 @@ test("the focused window is tried first; other sites and non-research pages are 
 
 test("a new worker takes over at once so installed phones get this version", async () => {
   const w = worker();
-  assert.match(source, /const VERSION = "2026-11-16-version-query"/);
+  assert.match(source, /const VERSION = "2026-11-17-page-query"/);
   w.listeners.install({});
   let waiting;
   w.listeners.activate({ waitUntil: p => { waiting = p; } });
@@ -233,7 +242,7 @@ test("the worker notes the push, the notice shown and whether the phone lists it
   await w.push({ title: "Tech Phase · テスト通知", body: "b", url: "/research/notifications", tag: "tech-phase-test" });
   const diag = await w.record("/research-sw/diagnostic");
   assert.deepEqual(Object.keys(diag).sort(), ["id", "listApi", "listed", "push", "shown", "v"]);
-  assert.equal(diag.v, "2026-11-16-version-query"); assert.equal(diag.id, "id-1");
+  assert.equal(diag.v, "2026-11-17-page-query"); assert.equal(diag.id, "id-1");
   assert.ok(diag.push >= before && diag.shown >= diag.push && diag.shown <= Date.now());
   assert.equal(diag.listApi, true); assert.equal(diag.listed, true);
   assert.equal(JSON.stringify(diag).includes("テスト"), false); assert.equal(JSON.stringify(diag).includes("/research"), false);
@@ -254,7 +263,7 @@ test("a tap the worker hears of is added to the notice's step record, and the ap
   assert.equal(diag.id, "id-1"); assert.ok(diag.push && diag.shown && diag.click >= before);
   const answer = await w.ask({ type: "pending-query" });
   assert.deepEqual(answer.diag, diag);
-  assert.equal(answer.version, "2026-11-16-version-query");
+  assert.equal(answer.version, "2026-11-17-page-query");
   // A tap on an older notice starts a record of its own.
   await w.click({ url: "/research/news", id: "old-1" });
   const other = await w.record("/research-sw/diagnostic");
@@ -264,11 +273,11 @@ test("a tap the worker hears of is added to the notice's step record, and the ap
 // Nov 16: the owner's app stayed on home after a tap and recorded nothing; the settings page now asks each worker its version.
 test("the worker answers a version question with its VERSION and the time of the last push it saw", async () => {
   const w = worker();
-  assert.deepEqual(await w.ask({ type: "version-query" }), { type: "version", version: "2026-11-16-version-query", lastPush: null });
+  assert.deepEqual(await w.ask({ type: "version-query" }), { type: "version", version: "2026-11-17-page-query", lastPush: null });
   const before = Date.now();
   await w.push({ title: "t", body: "b" });
   const answer = await w.ask({ type: "version-query" });
-  assert.equal(answer.version, "2026-11-16-version-query");
+  assert.equal(answer.version, "2026-11-17-page-query");
   assert.ok(answer.lastPush >= before && answer.lastPush <= Date.now());
   assert.deepEqual(Object.keys(answer).sort(), ["lastPush", "type", "version"]);
 });
