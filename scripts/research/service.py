@@ -894,8 +894,11 @@ class AutomaticMonitor:
             return
         while not self.stop_event.is_set():
             try:
-                note_translation.run_once(self.db_path)
+                fresh = note_translation.run_once(self.db_path)
                 question_translation.run_once(self.db_path)
+                if fresh == 'idle':
+                    # One-time redo of English made under an older policy; own share of the daily limit.
+                    note_translation.run_backfill_once(self.db_path)
             except Exception:
                 print("note-translation-unavailable", flush=True)
             self.stop_event.wait(30)
