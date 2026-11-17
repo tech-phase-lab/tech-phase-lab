@@ -85,7 +85,7 @@
 .topicTitle a:focus-visible{outline:2px solid #8fe3c0;outline-offset:3px;border-radius:4px}
 /* The summary: three lines, the rest behind 「＋」 (owner, Nov 15). Only the summary is clamped; headlines are never cut. */
 .topicSummaryRow{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:end;gap:8px;min-width:0}
-.topicClamped{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:3;line-clamp:3;overflow:hidden}
+.topicClamped{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:4;line-clamp:4;overflow:hidden}
 .topicMore{flex:none;display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;padding:0;border:1px solid #2a3646;border-radius:8px;background:transparent;color:#8fe3c0;font-size:15px;line-height:1;cursor:pointer}
 .topicMore:focus-visible{outline:2px solid #8fe3c0;outline-offset:2px}
 .topicPublisher{margin:0;font-size:11px;line-height:1.5;color:#8e9aaa;overflow-wrap:anywhere}

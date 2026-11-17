@@ -12,7 +12,7 @@ import { OWNER_ACCOUNT_ID, PRODUCTION_OWNER_ACCOUNT_ID } from '../lib/membership
 const require = createRequire(import.meta.url);
 const question = id => ({ id, body: '決算で最初に見る数字を教えてください。', status: 'pending', answerPostId: null, createdAt: '2026-11-16T00:00:00.000Z', isMine: true });
 
-function renderQuestions({ ownerMode, open = false, left = 1, items = [] }) {
+function renderQuestions({ ownerMode, ownerAccount = ownerMode, open = false, left = 1, items = [] }) {
   let index = 0;
   const react = require('react');
   const values = { 0: items, 5: left, 6: 'ready', 7: open };
@@ -23,7 +23,7 @@ function renderQuestions({ ownerMode, open = false, left = 1, items = [] }) {
     '../identity-provider': { useIdentityRefresh: () => async () => {} },
     '../research-tool-shell': { default: ({ children }) => createElement('main', null, children) },
     '../use-research-language': { useResearchLanguage: () => ['ja', () => {}] },
-    '../member-display-provider': { useOwnerMode: () => ownerMode },
+    '../member-display-provider': { useOwnerMode: () => ownerMode, useOwnerAccount: () => ownerAccount },
   };
   const out = ts.transpileModule(readFileSync(new URL('../app/research/qa/questions.tsx', import.meta.url), 'utf8'), { compilerOptions: { module: ts.ModuleKind.CommonJS, jsx: ts.JsxEmit.ReactJSX, target: ts.ScriptTarget.ES2022 } }).outputText;
   const mod = { exports: {} };
@@ -125,4 +125,14 @@ test('owner previewing the PRO member plan: the board comes back with no 「自�
     globalThis.fetch = savedFetch; delete globalThis.__ownerPost; delete globalThis.__ownerPostMembership;
     for (const key of keys) { if (before[key] === undefined) delete process.env[key]; else process.env[key] = before[key]; }
   }
+});
+
+test('the owner account viewing as a PRO member sees its own card like any other member (no 「あなたの質問」, no delete) for screenshots', () => {
+  const answered = { ...question('q-' + 'c'.repeat(32)), status: 'answered' };
+  const preview = renderQuestions({ ownerMode: false, ownerAccount: true, items: [answered] });
+  assert.doesNotMatch(preview, /あなたの質問|この質問を削除|回答する|運営者/);
+  const member = renderQuestions({ ownerMode: false, ownerAccount: false, items: [answered] });
+  assert.match(member, /あなたの質問/); assert.match(member, /この質問を削除/);
+  const owner = renderQuestions({ ownerMode: true, items: [answered] });
+  assert.match(owner, /あなたの質問/); assert.match(owner, /この質問を削除/);
 });

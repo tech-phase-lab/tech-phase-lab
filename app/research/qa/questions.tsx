@@ -6,7 +6,7 @@ import Image from "next/image";
 import type { EditorialPost } from "@/lib/research/editorial-posts";
 import ResearchToolShell from "../research-tool-shell";
 import { useResearchLanguage } from "../use-research-language";
-import { useOwnerMode } from "../member-display-provider";
+import { useOwnerAccount, useOwnerMode } from "../member-display-provider";
 import styles from "./styles.module.css";
 
 type Question = { id: string; body: string; bodyEn?: string; status: "pending" | "answered" | "closed"; answerPostId: string | null; createdAt: string; isMine?: boolean; answer?: EditorialPost; held?: boolean; heldReason?: string };
@@ -30,6 +30,9 @@ export default function Questions() {
   const [lang, setLang] = useResearchLanguage();
   const ja = lang === "ja";
   const ownerMode = useOwnerMode();
+  // Owner, Nov 17: the owner account viewing as a PRO member takes screenshots of sample questions, so its own cards show no
+  // 「あなたの質問」 and no delete button (only in that view; the owner view keeps both).
+  const memberPreview = useOwnerAccount() && !ownerMode;
   const [items, setItems] = useState<Question[]>([]);
   const [pages, setPages] = useState(1), [hasNext, setHasNext] = useState(false), [revision, setRevision] = useState(0);
   const [limit, setLimit] = useState<number | null>(null), [left, setLeft] = useState<number | null>(null);
@@ -117,7 +120,7 @@ export default function Questions() {
         </button>)}
       {message && <p className={styles.askMessage} role="status" aria-live="polite">{message}</p>}
       {items.length === 0 && <p className={styles.askEmpty}>{state === "loading" ? (ja ? "読み込み中…" : "Loading…") : ja ? "まだ質問はありません。" : "No questions yet."}</p>}
-      <div className={styles.askList}>{items.map(item => <QuestionCard key={item.id} item={item} ja={ja} ownerMode={ownerMode} onChanged={reload} />)}</div>
+      <div className={styles.askList}>{items.map(item => <QuestionCard key={item.id} item={memberPreview ? { ...item, isMine: false } : item} ja={ja} ownerMode={ownerMode} onChanged={reload} />)}</div>
       {hasNext && <button type="button" className={styles.askMore} onClick={() => setPages(value => value + 1)}>{ja ? "さらに表示する" : "Show more"}</button>}
     </>}
   </ResearchToolShell>;
