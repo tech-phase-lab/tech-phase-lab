@@ -1671,6 +1671,8 @@
   .homeIcon,.primaryNav { display:none; }
   .headerPro { min-height:34px; padding:0 10px; font-size:11px; }
   .app { padding-bottom:calc(100px + env(safe-area-inset-bottom)); }
+  /* RESOLUTE's bar (50px + 8px) sits on top of the bottom menu: room for it too, so the last rows are never hidden. */
+  :global(html[data-resolute-bar]) .app { padding-bottom:calc(158px + env(safe-area-inset-bottom)); }
 }
 
 .headerPro { cursor:pointer; }
