@@ -13,20 +13,25 @@ test("6. reaction counts: as they are below 1,000, then 1k / 1.2k with one decim
   assert.equal(shortCount(Number.NaN), "0");
 });
 
-test("6. the dotted ＋ picker is gone; the five emoji are one row in the fixed order", async () => {
+test("6. Nov 17 design: no emoji row in the post; a face button, a popover under it and a badge on the bottom-right edge", async () => {
   const component = await read("../app/research/desk/reactions.tsx");
-  assert.doesNotMatch(component, /reactionPlus|reactionPicker|reactionAdd|aria-haspopup|aria-expanded/);
+  assert.doesNotMatch(component, /reactionRow|reactionChip|reactionPlus|reactionPicker/);
   const order = [...component.matchAll(/emoji: "([^"]+)"/g)].map(match => match[1]);
   assert.deepEqual(order, ["👍", "😊", "😢", "😠", "🔥"]);
-  assert.match(component, /choices\.map\(choice =>/, "every choice is rendered, not only pressed ones");
-  assert.match(component, /value\.count > 0 && <span className=\{styles\.reactionCount\}/, "no number at zero");
+  assert.match(component, /reactionState\(/, "the existing toggle is kept");
+  assert.match(component, /aria-expanded=\{open\}/);
   assert.match(component, /aria-pressed=\{value\.selected\}/);
+  assert.match(component, /\.filter\(choice => choice\.count > 0\)\.sort\(\(a, b\) => b\.count - a\.count\)/, "only those with one or more, most first");
+  assert.match(component, /shortCount\(choice\.count\)/);
   const css = await read("../app/research/desk/format.module.css");
-  assert.doesNotMatch(css, /\.reaction(Plus|Picker|Add)\b/);
-  assert.match(css, /\.reactionRow\{display:flex;flex-wrap:nowrap;align-items:center;gap:4px[^}]*overflow-x:auto/, "never wraps and never widens the page");
-  const chip = css.match(/\.reactions \.reactionChip\{([^}]*)\}/)[1];
-  for (const rule of ["gap:3px", "height:30px", "padding:0 7px", "border:1px solid #2a3140", "border-radius:15px", "background:#121620"]) assert.ok(chip.includes(rule), rule);
-  assert.match(css, /\.reactions \.reactionChip\[aria-pressed=true\]\{border-color:#8a7444;background:#2a2213\}/);
-  assert.match(css, /\.reactions \.reactionCount\{[^}]*font:11px\/1 [^;}]*monospace;color:#8e9aaa/);
-  assert.match(css, /\.reactions \.reactionChip\[aria-pressed=true\] \.reactionCount\{color:#e2c27a\}/);
+  assert.doesNotMatch(css, /\.reaction(Row|Chip|Plus|Picker|Add)\b/);
+  const rule = name => css.match(new RegExp(`\\.${name}\\{([^}]*)\\}`))[1];
+  for (const value of ["width:30px", "height:30px", "border:1px solid #3a3424", "border-radius:50%"]) assert.ok(rule("faceButton").includes(value), value);
+  assert.match(css, /\.faceButton svg\{[^}]*stroke:#b9a77f/);
+  for (const value of ["position:absolute", "top:calc(100% + 8px)", "display:flex", "background:#1b2330", "border:1px solid #33465b"]) assert.ok(rule("reactionPopover").includes(value), value);
+  assert.match(css, /\.reactionChoice\[aria-pressed=true\]\{border-color:#8a7444;background:#2a2213\}/, "gold border on my own");
+  for (const value of ["position:absolute", "right:14px", "bottom:-14px", "height:28px", "border-radius:14px", "background:#151b25", "border:1px solid #2f3a4a", "max-width:calc(100% - 28px)"]) assert.ok(rule("reactionBadge").includes(value), value);
+  const columns = await read("../app/research/columns/columns.tsx");
+  assert.match(columns, /ownerMode \? <PostActions[^]*?: access === "pro" \? <ReactionFace reactions=\{reactions\} ja=\{ja\}>\{noteMeta\}<\/ReactionFace> : noteMeta/, "owner: pencil and trash; PRO member: the face");
+  assert.match(columns, /item\.kind === "notes" && access === "pro" && !editing && <ReactionBadge/, "the badge shows for the owner too");
 });
