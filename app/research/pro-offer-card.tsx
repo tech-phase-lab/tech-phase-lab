@@ -3,6 +3,7 @@ import Link from "next/link";
 import { useEffect, useState, type ReactNode } from "react";
 import styles from "./plan-cards.module.css";
 import { priceFont } from "./price-font";
+import AgreeButton, { CheckoutLines, PRO_CHECKOUT_LINE } from "../legal/agree-button";
 
 export type OfferCurrency = "JPY" | "USD";
 export type OfferPeriod = "month" | "year";
@@ -10,6 +11,8 @@ export type OfferPeriod = "month" | "year";
 /** Display prices (owner decision, Nov 2026). The charged amounts are set on the server and in PayPal, never taken from here. */
 const AMOUNT: Record<OfferCurrency, Record<OfferPeriod, number>> = { JPY: { month: 2980, year: 29800 }, USD: { month: 20, year: 200 } };
 const TWELVE_MONTHS: Record<OfferCurrency, number> = { JPY: 35760, USD: 240 };
+/** The small words under the struck-through yearly figure: it is twelve monthly payments, not an earlier price (owner pack, Nov 17, section 8). */
+export const TWELVE_MONTHS_NOTE = { ja: "月額の12か月分", en: "12 × monthly" } as const;
 export function offerPrice(currency: OfferCurrency, period: OfferPeriod, ja: boolean) {
   const money = (value: number) => ja ? `${value.toLocaleString("en-US")}${currency === "JPY" ? "円" : "ドル"}` : `${currency === "JPY" ? "¥" : "$"}${value.toLocaleString("en-US")}`;
   const unit = period === "year"
@@ -60,10 +63,11 @@ export default function ProOfferCard({ ja, onSubscribe, href, busy = false, disa
     </div>
     <p className={styles.priceRow} aria-live="polite">
       <span className={styles.priceN}>{price.amount}</span><span className={styles.priceU}>{price.unit}</span>
-      {price.twelveMonths && <del className={styles.priceOld}>{price.twelveMonths}</del>}
+      {price.twelveMonths && <span className={styles.priceOldBox}><del className={styles.priceOld}>{price.twelveMonths}</del><small className={styles.priceOldNote}>{t(TWELVE_MONTHS_NOTE.ja, TWELVE_MONTHS_NOTE.en)}</small></span>}
     </p>
     {onSubscribe
-      ? <button type="button" className={styles.paypal} disabled={busy || disabled} onClick={() => onSubscribe(currency, period)}>{label}</button>
+      // The account page's button goes straight to PayPal, so it is the final one: the lawyer's wording and the renewal line above it.
+      ? <><CheckoutLines lines={[ja ? PRO_CHECKOUT_LINE.ja : PRO_CHECKOUT_LINE.en]} className={styles.agreeLine} /><AgreeButton en={!ja} className={styles.paypal} disabled={busy || disabled} busy={busy} busyLabel={label} onClick={() => onSubscribe(currency, period)} /></>
       : href && !disabled ? <Link className={styles.paypal} href={href} prefetch={false}>{label}</Link> : <button type="button" className={styles.paypal} disabled>{label}</button>}
     {notice}
     <p className={styles.includes}>{t("無料プランのすべての機能に加えて", "Everything in Free, plus")}</p>
