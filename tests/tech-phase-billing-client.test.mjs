@@ -28,7 +28,7 @@ test('checkout clears an earlier identity-loading error only after a successful 
    if(statusFails)throw Error('billing-unavailable');return summary;
   }};
   if(name==='next/link'||name==='../../research-tool-shell'||name.endsWith('.module.css'))return {default:()=>null};
-  return require(name);
+  return require(name==='@/lib/research/display-time'?'../lib/research/display-time.ts':name);
  },m,m.exports);
  const previousWindow=globalThis.window;globalThis.window={location:{search:''}};
  const run=async()=>{stateIndex=0;refIndex=0;m.exports.default();const cleanup=effect();await new Promise(resolve=>setImmediate(resolve));return cleanup;};
@@ -53,7 +53,7 @@ test('checkout waits for server status and displays persisted review state in bo
   if(name==='react')return {...require(name),useCallback:fn=>fn,useState:initial=>{
    const index=stateIndex++;return require(name).useState(seed&&Object.hasOwn(seed,index)?seed[index]:initial);
   }};
-  return require(name);
+  return require(name==='@/lib/research/display-time'?'../lib/research/display-time.ts':name);
  },m,m.exports);
  for(language of ['ja','en']){
   stateIndex=0;
@@ -201,7 +201,7 @@ test('billing page gates preview and enrolled Sandbox identity before rendering 
   if(name==='@/services/tech-phase-billing/access.mjs')return {sandboxMemberAllowed};
   if(name==='@/services/tech-phase-billing/live-http.mjs')return {liveEnabled};
   if(name==='./screen')return {default:function Screen(){}};
-  return require(name);
+  return require(name==='@/lib/research/display-time'?'../lib/research/display-time.ts':name);
  },m,m.exports);
  try {
   process.env.VERCEL_ENV='production';await assert.rejects(m.exports.default(),/404/);assert.equal(authCalls,0);
@@ -276,7 +276,7 @@ test('purchase screen automatically verifies a matching return only once across 
   if(name==='../../use-research-language')return {useResearchLanguage:()=>['ja',()=>{}]};
   if(name==='@/lib/membership/billing-client')return {billingReturn,billingSummary,billingRequest:request,verifyBillingReturn:(returned,current,signal)=>verifyBillingReturn(returned,current,signal,request)};
   if(name==='next/link'||name==='../../research-tool-shell'||name.endsWith('.module.css'))return {default:()=>null};
-  return require(name);
+  return require(name==='@/lib/research/display-time'?'../lib/research/display-time.ts':name);
  },m,m.exports);
  const previous=globalThis.window;globalThis.window={location:{search:'?billing='+id}};
  const run=async()=>{stateIndex=0;refIndex=0;m.exports.default();const cleanup=effect();await new Promise(r=>setImmediate(r));return cleanup;};
@@ -304,7 +304,7 @@ test('subscription refresh removes stale payment notices and preserves durable r
    if(fail)throw Error('billing-unavailable');return next;
   }};
   if(name==='next/link'||name==='../../research-tool-shell'||name.endsWith('.module.css'))return {default:()=>null};
-  return require(name);
+  return require(name==='@/lib/research/display-time'?'../lib/research/display-time.ts':name);
  },m,m.exports);
  const button=node=>{
   if(!node||typeof node!=='object')return null;
@@ -356,7 +356,7 @@ test('leaving checkout during identity refresh or an in-flight action prevents n
     if(name==='../../use-research-language')return {useResearchLanguage:()=>['ja',()=>{}]};
     if(name==='@/lib/membership/billing-client')return {billingReturn,billingSummary,sandboxApproval,billingRequest:request};
     if(name==='next/link'||name==='../../research-tool-shell'||name.endsWith('.module.css'))return {default:()=>null};
-    return require(name);
+    return require(name==='@/lib/research/display-time'?'../lib/research/display-time.ts':name);
    },m,m.exports);
    globalThis.window={location:{search:'',assign:url=>navigation.push(url)}};
    m.exports.default();const cleanup=effect();await new Promise(r=>setImmediate(r));
@@ -406,7 +406,7 @@ test('manual response loss recovers only matching durable access or cancellation
    if(name==='../../use-research-language')return {useResearchLanguage:()=>['ja',()=>{}]};
    if(name==='@/lib/membership/billing-client')return {billingSummary,billingRequest:async name=>{calls.push(name);if(name===action)throw failure;if(name==='status')return next;assert.fail('unexpected request');}};
    if(name==='next/link'||name==='../../research-tool-shell'||name.endsWith('.module.css'))return {default:()=>null};
-   return require(name);
+   return require(name==='@/lib/research/display-time'?'../lib/research/display-time.ts':name);
   },m,m.exports);
   find(m.exports.default(),action==='cancel'?'テスト契約を解約':'支払いを確認').props.onClick();
   await new Promise(r=>setImmediate(r));

@@ -11,7 +11,7 @@ const require = createRequire(import.meta.url);
 function load(path, stubs = {}) {
   const out = ts.transpileModule(readFileSync(new URL(path, import.meta.url), "utf8"), { compilerOptions: { module: ts.ModuleKind.CommonJS, jsx: ts.JsxEmit.ReactJSX, target: ts.ScriptTarget.ES2022 } }).outputText;
   const mod = { exports: {} };
-  new Function("require", "module", "exports", out)(id => id.endsWith(".module.css") ? { default: new Proxy({}, { get: (_, key) => String(key) }) } : id in stubs ? stubs[id] : require(id), mod, mod.exports);
+  new Function("require", "module", "exports", out)(id => id.endsWith(".module.css") ? { default: new Proxy({}, { get: (_, key) => String(key) }) } : id in stubs ? stubs[id] : require(id === "@/lib/research/display-time" ? "../lib/research/display-time.ts" : id), mod, mod.exports);
   return mod.exports;
 }
 const EarningsDive = load("../app/research/companies/earnings-dive.tsx", {
@@ -69,7 +69,7 @@ test("English view: same structure, English wording", () => {
   const t = text(render({ lang: "en", live: live({ numbers, summary, summaryAt: "2026-09-30T13:58:00Z", failed: false }) }));
   assert.match(t, /Earnings Deep Dive PRO/);
   assert.match(t, /Micron \(MU\) FQ4 2026 Reported Sep 30/);
-  assert.match(t, /Numbers updated 22:43/); assert.match(t, /Summary ready 22:58/);
+  assert.match(t, /Numbers updated 09:43/); assert.match(t, /Summary ready 09:58/); // U.S. Eastern (EDT) on the English site (owner, Nov 17)
   assert.match(t, /Takeaway/); assert.match(t, /01 WHAT DROVE GROWTH/); assert.match(t, /Details/);
   assert.match(t, /Next quarter \$60–63B Company outlook/);
   assert.doesNotMatch(t, /[ぁ-んァ-ン一-龥]/);

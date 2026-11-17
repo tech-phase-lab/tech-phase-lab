@@ -3,10 +3,12 @@ import { useEffect, useRef, useState } from "react";
 import type { Language } from "@/lib/research/data";
 import { countBadAnswer, type Freshness } from "@/lib/research/freshness";
 import { observePageActivity } from "@/lib/research/page-activity";
+import { formatDisplay, zoneLabel } from "@/lib/research/display-time";
 import styles from "./freshness-notice.module.css";
 
 const POLL_MS = 60_000;
-const jst = (value: string) => new Intl.DateTimeFormat("ja-JP", { timeZone: "Asia/Tokyo", month: "numeric", day: "numeric", hour: "2-digit", minute: "2-digit", hour12: false }).format(new Date(value));
+/** "11/5 21:05", Japan time in Japanese and U.S. Eastern in English (owner, Nov 17). */
+const stamp = (value: string, lang: Language) => formatDisplay(value, lang, { month: "numeric", day: "numeric", hour: "2-digit", minute: "2-digit", hour12: false }, "ja-JP");
 
 /** Shown only while new information is not arriving; says when the page was last updated (owner, Oct 22). */
 export default function FreshnessNotice({ lang }: { lang: Language }) {
@@ -37,10 +39,10 @@ export default function FreshnessNotice({ lang }: { lang: Language }) {
   }, []);
   if (!freshness || freshness.status === "ok" || bad < 2) return null;
   const ja = lang === "ja";
-  const at = freshness.lastCycleAt ? jst(freshness.lastCycleAt) : null;
+  const at = freshness.lastCycleAt ? stamp(freshness.lastCycleAt, lang) : null;
   // One short line (owner, Oct 22): the kind of problem first, the last update time in the same line.
   const text = freshness.status === "delayed"
-    ? (ja ? `更新が遅れています${at ? `（最終 ${at}）` : ""}` : `Updates are delayed${at ? ` (last ${at} JST)` : ""}`)
+    ? (ja ? `更新が遅れています${at ? `（最終 ${at}）` : ""}` : `Updates are delayed${at ? ` (last ${at} ${zoneLabel(lang)})` : ""}`)
     : (ja ? "最新情報を取得できていません" : "Can't fetch the latest updates");
   return <p className={styles.notice} role="status" lang={lang}>{text}</p>;
 }

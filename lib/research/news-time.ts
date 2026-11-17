@@ -1,4 +1,5 @@
 import type { OfficialUpdate } from './general-news';
+import { formatDisplay, zoneLabel, type DisplayLang } from './display-time.ts';
 /** An X post ID carries the moment it was posted. Re-fetching an old post
  * must never make it look new (NBIS Platinum, posted Sep 23, resurfaced Oct 8). */
 export function xPostedAt(url: string) {
@@ -26,14 +27,18 @@ export function recentPublication(at: string, kind: string, now: number) {
   const age = now - Date.parse(at);
   return kind === 'published' && Number.isFinite(age) && age >= 0 && age < 3_600_000;
 }
+/** "M/D HH:MM JST" / "M/D HH:MM ET" in the site's zone (owner, Nov 17). */
+export function newsTime(at: string, lang: DisplayLang) {
+  return `${formatDisplay(at, lang, {month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit',hourCycle:'h23'}, 'en-US').replace(',', '')} ${zoneLabel(lang)}`;
+}
 export function shortNewsTime(at: string, kind: string) {
   if (kind === 'date') { const [, month, day] = at.split('-'); return `${Number(month)}/${Number(day)}`; }
-  return new Intl.DateTimeFormat('en-US', {timeZone:'Asia/Tokyo',month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit',hourCycle:'h23'}).format(new Date(at)).replace(',', '') + ' JST';
+  return newsTime(at, 'ja');
 }
 /** The same instant in U.S. Eastern time (EDT/EST handled by the time zone). */
 export function usEasternTime(at: string, kind: string) {
   if (kind === 'date') return null;
-  return new Intl.DateTimeFormat('en-US', {timeZone:'America/New_York',month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit',hourCycle:'h23'}).format(new Date(at)).replace(',', '') + ' ET';
+  return newsTime(at, 'en');
 }
 /** The time a card shows is only ever the source's own: a publication time, or
  * for a date-only release just that date. The time this system first saw an

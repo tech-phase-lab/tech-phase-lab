@@ -69,13 +69,15 @@ test("banner words and the point: lit for pre, regular and after-hours only", ()
   assert.deepEqual(marketBanner("closed"), { ja: "取引終了", en: "Closed", lit: false });
 });
 
-test("banner line: the state word and the time of the last successful read, to the second, in Japan time", () => {
+test("banner line: the state word and the time of the last successful read, to the second, in Japan time (U.S. Eastern in English)", () => {
   const at = Date.parse("2026-11-12T21:20:35Z"); // 06:20:35 on Nov 13 in Tokyo
   assert.equal(bannerLine("post", true, at), "アフター取引中 ・ 06:20:35 JST");
   assert.equal(bannerLine("pre", true, at), "プレ取引中 ・ 06:20:35 JST");
   assert.equal(bannerLine("regular", true, at), "取引中 ・ 06:20:35 JST");
   assert.equal(bannerLine("closed", true, at), "取引終了 ・ 06:20:35 JST");
-  assert.equal(bannerLine("closed", false, at), "Closed · 06:20:35 JST");
+  assert.equal(bannerLine("closed", false, at), "Closed · 16:20:35 ET", "16:20:35 EST on Nov 12 in New York (owner, Nov 17)");
+  assert.equal(bannerLine("regular", false, Date.parse("2026-07-10T14:05:09Z")), "Open · 10:05:09 ET", "EDT in July");
+  assert.equal(bannerLine("regular", true, Date.parse("2026-07-10T14:05:09Z")), "取引中 ・ 23:05:09 JST");
   assert.equal(bannerLine("regular", true, null), "取引中");
 });
 

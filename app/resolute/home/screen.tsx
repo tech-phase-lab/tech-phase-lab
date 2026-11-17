@@ -5,6 +5,7 @@ import {ReviewLink as Link,useReview,useNotificationClient} from '../review-cont
 import {useRisk,riskStatus} from '../features/use-risk';
 import {RISK_PREVIEW_DETAILS} from '@/lib/resolute/risk-preview';
 import {validateSnapshot} from '@/lib/resolute/transport';
+import {formatDisplay} from '@/lib/research/display-time';
 import s from './reference.module.css';
 import MarketGaugeCard from './market-gauge-card';
 import { useThermometerSnapshot } from '../use-thermometer-snapshot';
@@ -30,7 +31,7 @@ export function Home({locale,entitlement,thermometerSnapshot}:{thermometerSnapsh
   const load=async()=>{if(busy)return;busy=true;try{const next=await requestSettings(undefined,c.signal);if(!c.signal.aborted)setMorning(next.settings.morningEnabled);}catch{if(!c.signal.aborted)setMorning(null);}finally{busy=false;}};
   void load();const timer=setInterval(()=>void load(),60000);return()=>{c.abort();clearInterval(timer);};
  },[requestSettings]);
- useEffect(()=>{const update=()=>setDate(new Intl.DateTimeFormat(en?'en-US':'ja-JP',{dateStyle:'full',timeZone:'Asia/Tokyo'}).format(new Date()));update();const timer=setInterval(update,60000);return()=>clearInterval(timer);},[en]);
+ useEffect(()=>{const update=()=>setDate(formatDisplay(new Date(),en?'en':'ja',{dateStyle:'full'}));update();const timer=setInterval(update,60000);return()=>clearInterval(timer);},[en]);
  useEffect(()=>{if(!locked||review)return;const c=new AbortController();void fetch('/api/resolute/renewal-offer',{cache:'no-store',credentials:'same-origin',signal:c.signal}).then(async r=>{if(!r.ok)throw Error();const v=await r.json();if((v.ja===5980&&v.en===39)||(v.ja===3980&&v.en===29))setOffer(v);}).catch(()=>{});return()=>c.abort();},[locked,review]);
  const displayOffer=previewExpired?{ja:5980,en:39}:offer;
  const expiry=displaySample?'2028-01-15T00:00:00+09:00':entitlement?.alerts.expiresAt;
@@ -54,7 +55,7 @@ export function Home({locale,entitlement,thermometerSnapshot}:{thermometerSnapsh
   </section>
   <section className={s.sec}><div className={s.lab}>YOUR RULES</div><div className={s.grid}>{tiles.map(([path,ja,eng,sub,subEn,icon])=><Link key={path} className={s.tile} href={`/resolute/${path}`}><div className={s.t}><b>{en?eng:ja}</b><span>{en?subEn:sub}</span></div><svg viewBox="0 0 48 48" aria-hidden="true">{path==='tax'?<circle cx="24" cy="24" r="16"/>:null}<path d={icon}/></svg></Link>)}</div></section>
   <section className={s.sec}><div className={s.lab}>ALERTS</div><div className={s.list}>
-   <Link className={s.item} href="/resolute/alerts"><div><b>{en?'Closing-price alerts':'終値アラート'}</b><span>{expiry?`${en?'Access until ':'利用期限 '}${new Intl.DateTimeFormat(en?'en-US':'ja-JP',{dateStyle:'long',timeZone:'Asia/Tokyo'}).format(new Date(expiry))}`:(en?'Access period not available':'利用期限は未確認です')}</span>{displaySample?<small className={s.sampleLabel}>{en?'Display sample':'表示見本'}</small>:null}</div><i>{en?'Settings →':'設定 →'}</i></Link>
+   <Link className={s.item} href="/resolute/alerts"><div><b>{en?'Closing-price alerts':'終値アラート'}</b><span>{expiry?`${en?'Access until ':'利用期限 '}${formatDisplay(expiry,en?'en':'ja',{dateStyle:'long'})}`:(en?'Access period not available':'利用期限は未確認です')}</span>{displaySample?<small className={s.sampleLabel}>{en?'Display sample':'表示見本'}</small>:null}</div><i>{en?'Settings →':'設定 →'}</i></Link>
    <Link className={s.item} href="/resolute/tonight"><div><b>{en?'When the market tumbles':'暴落の夜に開く'}</b><span>{en?'A moment to breathe':'今夜のひと息'}</span></div><i>{en?'Open →':'開く →'}</i></Link>
    <Link className={s.item} href="/resolute/morning"><div><b>{en?'A note the next morning':'翌朝のひとこと'}</b><span>{en?'One note the morning after an alert':'アラートの翌朝に1通'}</span></div><i>{morning===null?'—':morning?(en?'On':'オン'):(en?'Off':'オフ')}</i></Link>
   </div></section>

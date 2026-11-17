@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import OwnerGate from "../owner-gate";
 import { getJson } from "../account-data";
+import { formatDisplay, zoneLabel } from "@/lib/research/display-time";
 import styles from "../account.module.css";
 
 type Delivery = {
@@ -10,7 +11,8 @@ type Delivery = {
 };
 const stamp = (iso: string | null | undefined, ja: boolean) => {
   const ms = iso ? Date.parse(iso) : NaN;
-  return Number.isFinite(ms) ? new Intl.DateTimeFormat(ja ? "ja-JP" : "en-US", { timeZone: "Asia/Tokyo", year: "numeric", month: ja ? "long" : "short", day: "numeric", hour: "2-digit", minute: "2-digit", hour12: false }).format(ms) : null;
+  const lang = ja ? "ja" : "en";
+  return Number.isFinite(ms) ? `${formatDisplay(ms, lang, { year: "numeric", month: ja ? "long" : "short", day: "numeric", hour: "2-digit", minute: "2-digit", hour12: false })} ${zoneLabel(lang)}` : null;
 };
 
 function DeliveryView({ ja }: { ja: boolean }) {

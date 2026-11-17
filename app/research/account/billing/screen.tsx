@@ -6,6 +6,7 @@ import { useResearchLanguage } from "../../use-research-language";
 import { useIdentityRefresh } from "../../identity-provider";
 import { billingRequest, billingReturn, billingSummary, sandboxApproval, verifyBillingReturn, type BillingSummary } from "@/lib/membership/billing-client";
 import styles from "./styles.module.css";
+import { formatDisplay, zoneLabel } from "@/lib/research/display-time";
 
 const messages: Record<string, [string, string]> = {
   "identity-loading": ["ログイン状態を確認しています。", "Checking your sign-in status."],
@@ -154,7 +155,7 @@ export default function BillingScreen({mode="sandbox", preview=false}: {mode?: "
         {summary.reviewRequired && <p role="status">{t("この契約のお支払いは運営側での確認が必要です。", "Payment for this subscription needs review.")}</p>}
         <p>{t("契約状況：", "Subscription: ")}{sub ? states[sub.state] : t("契約なし", "None")}</p>
         <p>{mode === "live" ? t("ご利用プラン：", "Your plan: ") : t("テスト環境の利用状態：", "Sandbox access: ")}{summary.plan.toUpperCase()}</p>
-        {summary.proExpiresAt && <p>{t("確認済みの利用期限：", "Verified access until: ")}<time dateTime={summary.proExpiresAt}>{new Intl.DateTimeFormat(ja ? "ja-JP" : "en-US", { timeZone: "Asia/Tokyo", dateStyle: "medium", timeStyle: "short" }).format(new Date(summary.proExpiresAt))} JST</time></p>}
+        {summary.proExpiresAt && <p>{t("確認済みの利用期限：", "Verified access until: ")}<time dateTime={summary.proExpiresAt}>{formatDisplay(summary.proExpiresAt, ja ? "ja" : "en", { dateStyle: "medium", timeStyle: "short" })} {zoneLabel(ja ? "ja" : "en")}</time></p>}
       </div>}
       <button type="button" disabled={busy || preview} onClick={() => void act("refresh")}>{busy ? t("確認中…", "Checking…") : t("契約状況を再確認", "Refresh subscription")}</button>
       {ready && !salesReady && <p role="status">{t("新規お申し込みの受付は停止中です。契約の確認と自動更新の停止は引き続き行えます。", "New subscriptions are closed. You can still manage your subscription and stop renewal.")}</p>}

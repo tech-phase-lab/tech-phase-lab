@@ -9,7 +9,7 @@ const read = path => readFileSync(new URL(`../${path}`, import.meta.url), "utf8"
 function load(path, mocks) {
   const compiled = ts.transpileModule(read(path), { compilerOptions: { module: ts.ModuleKind.CommonJS, jsx: ts.JsxEmit.ReactJSX } }).outputText;
   const mod = { exports: {} };
-  new Function("require", "module", "exports", compiled)(id => id in mocks ? mocks[id] : id.endsWith(".css") ? { default: new Proxy({}, { get: (_, key) => String(key) }) } : /^(\.|@\/)/.test(id) ? { default: id } : require(id), mod, mod.exports);
+  new Function("require", "module", "exports", compiled)(id => id in mocks ? mocks[id] : id === "@/lib/research/display-time" ? require("../lib/research/display-time.ts") : id.endsWith(".css") ? { default: new Proxy({}, { get: (_, key) => String(key) }) } : /^(\.|@\/)/.test(id) ? { default: id } : require(id), mod, mod.exports);
   return mod.exports;
 }
 const nodes = tree => tree && typeof tree === "object" ? [tree, ...[].concat(tree.props?.children ?? []).flat(Infinity).flatMap(nodes)] : [];
@@ -55,7 +55,7 @@ test("the watchlist screen follows the Nov 13 design", () => {
   assert.match(source, /\{nameLength\}\/\{LIST_NAME_LIMIT\}/);
   assert.doesNotMatch(source, /ListWheel|<select|tableHead|quoteTimeText|signed\(quote\.change\)/);
   for (const label of ["追加した順", "ティッカー順", "上昇率順", "下落率順", "自動", "取引中", "プレ", "前日比", "時間外", "現在"]) assert.match(source, new RegExp(label));
-  assert.match(source, /<CurrentTime \/> JST/);
+  assert.match(source, /<CurrentTime lang=\{lang\} \/> \{zoneLabel\(lang\)\}/);
   assert.match(source, /<FlashValue scope=/);
   const css = read("app/research/watchlist/watchlist.module.css");
   assert.match(css, /\.eyebrow \{ margin:0;font-size:11px;font-weight:600;letter-spacing:\.16em;[^}]*color:#8e9aaa;/);

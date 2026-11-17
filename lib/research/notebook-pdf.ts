@@ -1,5 +1,6 @@
 import { PDFDocument, PDFName, PDFString, rgb, type PDFFont, type PDFPage } from "pdf-lib";
 import fontkit from "@pdf-lib/fontkit";
+import { displayDayKey } from "./display-time.ts";
 
 export type PdfMark = { id: string; kind: string; color: string };
 /** A note marker: the small "MEMO①" after the annotated passage; the note itself is set in a box at the foot of the page. */
@@ -24,7 +25,8 @@ const PRINT_INK: Record<string, { line: string; fill: string }> = {
   "#ef777f": { line: "#e0606f", fill: "#f7c5cb" }, "#e9cc61": { line: "#d6a93a", fill: "#fbe9a4" }, "#78bafa": { line: "#5b8fd6", fill: "#cfe0f7" },
 };
 const CIRCLED = "①②③④⑤⑥⑦⑧⑨⑩";
-const fixed = (date: Date) => new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Tokyo", year: "numeric", month: "2-digit", day: "2-digit" }).format(date).replaceAll("-", ".");
+/** "2026.11.17": the day the PDF was saved, Japan time in Japanese and U.S. Eastern in English (owner, Nov 17). */
+const fixed = (date: Date, lang: string) => displayDayKey(date, lang === "ja" ? "ja" : "en").replaceAll("-", ".");
 
 /** Bold subsets for the headings (optional: without them the headings are set in the regular weight). */
 export type BoldFonts = { manifest: FontSubset[]; loadFont: (file: string) => Promise<Uint8Array> };
@@ -211,7 +213,7 @@ export async function createNotebookPdf(blocks: PdfBlock[], title: string, manif
   finishPage();
   // The running head, the foot and the page number sit on every page.
   const total = pdf.getPageCount();
-  const stamp = lang === "ja" ? `保存日 ${fixed(savedOn)}` : `Saved ${fixed(savedOn)}`;
+  const stamp = lang === "ja" ? `保存日 ${fixed(savedOn, lang)}` : `Saved ${fixed(savedOn, lang)}`;
   for (const [i, sheet] of pdf.getPages().entries()) {
     page = sheet;
     drawSpaced("TECH PHASE RESEARCH", MARGIN, PAGE[1] - 30, 8, GOLD_INK, .22, sheet);

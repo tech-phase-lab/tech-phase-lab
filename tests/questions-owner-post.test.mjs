@@ -27,7 +27,7 @@ function renderQuestions({ ownerMode, ownerAccount = ownerMode, open = false, le
   };
   const out = ts.transpileModule(readFileSync(new URL('../app/research/qa/questions.tsx', import.meta.url), 'utf8'), { compilerOptions: { module: ts.ModuleKind.CommonJS, jsx: ts.JsxEmit.ReactJSX, target: ts.ScriptTarget.ES2022 } }).outputText;
   const mod = { exports: {} };
-  new Function('require', 'module', 'exports', out)(id => id.endsWith('.module.css') ? { default: new Proxy({}, { get: (_, key) => String(key) }) } : id in stubs ? stubs[id] : require(id), mod, mod.exports);
+  new Function('require', 'module', 'exports', out)(id => id.endsWith('.module.css') ? { default: new Proxy({}, { get: (_, key) => String(key) }) } : id in stubs ? stubs[id] : require(id === "@/lib/research/display-time" ? "../lib/research/display-time.ts" : id), mod, mod.exports);
   return renderToStaticMarkup(createElement(mod.exports.default));
 }
 

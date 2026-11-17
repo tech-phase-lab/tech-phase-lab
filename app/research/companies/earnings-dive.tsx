@@ -3,15 +3,13 @@ import Link from "next/link";
 import ProTag from "../pro-experience/pro-tag";
 import type { Copy } from "@/lib/research/data";
 import type { DiveCard, DiveHistory, DiveNumbers, DiveSection, WatchEarnings } from "@/lib/research/watch-earnings";
+import { displayClock } from "@/lib/research/display-time";
 import styles from "./earnings-dive.module.css";
 
 type Lang = "ja" | "en";
 const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-const clock = (iso: string | null | undefined) => {
-  if (!iso) return "";
-  const parts = new Intl.DateTimeFormat("en-GB", { timeZone: "Asia/Tokyo", hour: "2-digit", minute: "2-digit", hourCycle: "h23" }).format(new Date(iso));
-  return parts;
-};
+/** "21:05": Japan time in Japanese, U.S. Eastern in English (owner, Nov 17). */
+const clock = (iso: string | null | undefined, lang: Lang) => iso ? displayClock(iso, lang) : "";
 const releasedLabel = (releasedOn: string, lang: Lang) => { const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(releasedOn); return !m ? "" : lang === "ja" ? `${Number(m[2])}/${Number(m[3])}発表` : `Reported ${MONTHS[Number(m[2]) - 1]} ${Number(m[3])}`; };
 const trim = (value: number, places: number) => { const text = value.toFixed(places); return text.includes(".") ? text.replace(/0+$/, "").replace(/\.$/, "") : text; };
 const oku = (million: number) => trim(million / 100, 2);
@@ -148,8 +146,8 @@ export default function EarningsDive({ lang, name, ticker, live, unlocked, histo
   return <section className={styles.dive}>
     {header}
     <div className={styles.pills} role="status">
-      <span className={`${styles.pill} ${styles.done}`}><i />{ja ? "数字 反映済み" : "Numbers updated"} <b>{clock(live?.publicAt)}</b></span>
-      {summary ? <span className={`${styles.pill} ${styles.done}`}><i />{ja ? "まとめ 反映済み" : "Summary ready"} <b>{clock(dive?.summaryAt)}</b></span>
+      <span className={`${styles.pill} ${styles.done}`}><i />{ja ? "数字 反映済み" : "Numbers updated"} <b>{clock(live?.publicAt, lang)}</b></span>
+      {summary ? <span className={`${styles.pill} ${styles.done}`}><i />{ja ? "まとめ 反映済み" : "Summary ready"} <b>{clock(dive?.summaryAt, lang)}</b></span>
         : <span className={`${styles.pill} ${styles.wait}`}><i />{dive?.failed ? (ja ? "まとめ 確認中" : "Summary checking") : (ja ? "まとめ 準備中" : "Summary in progress")}</span>}
     </div>
     {summary && <section className={`${styles.card} ${styles.takeaway}`} aria-labelledby="dive-takeaway">

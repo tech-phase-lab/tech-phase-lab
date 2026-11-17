@@ -13,6 +13,7 @@ import WeeklyComposer from "../weekly/composer";
 import { weeklySections } from "@/lib/research/weekly";
 import PostActions from "../desk/post-actions";
 import DeskBody from "../desk/body";
+import { formatDisplay, zoneLabel } from "@/lib/research/display-time";
 import { ReactionBadge, ReactionFace, useReactions } from "../desk/reactions";
 import { nextSteadyOwner, useNewNoteId } from "../desk/use-minute";
 import NoteComposer from "../notes/composer";
@@ -120,11 +121,11 @@ export function ColumnArticle({ item, ja, ownerMode, access, fresh, onUpdated }:
     return () => cancelAnimationFrame(frame);
   }, [item.id, item.kind]);
   const lang = ja ? "ja" : "en";
-  const date = <time dateTime={item.publishedAt!}>{new Intl.DateTimeFormat(ja ? "ja-JP" : "en-US", { dateStyle: "medium", ...(item.kind !== "weekly" ? { timeStyle: "short", hourCycle: "h23" } as const : {}), timeZone: "Asia/Tokyo" }).format(new Date(item.publishedAt!))}</time>;
-  const answerLabel = <div className={styles.answerLabel}><Image src="/rizel-avatar.webp" alt={ja ? "リゼル" : "RIZEL"} width={32} height={32} unoptimized /><div><span>{ja ? "リゼル" : "RIZEL"}</span><small>{date} JST</small></div></div>;
-  // Only the newest note, for 30 minutes after posting, carries the gold NEW tag. The date, time and JST never
+  const date = <time dateTime={item.publishedAt!}>{formatDisplay(item.publishedAt!, lang, { dateStyle: "medium", ...(item.kind !== "weekly" ? { timeStyle: "short", hourCycle: "h23" } as const : {}) })}</time>;
+  const answerLabel = <div className={styles.answerLabel}><Image src="/rizel-avatar.webp" alt={ja ? "リゼル" : "RIZEL"} width={32} height={32} unoptimized /><div><span>{ja ? "リゼル" : "RIZEL"}</span><small>{date} {zoneLabel(lang)}</small></div></div>;
+  // Only the newest note, for 30 minutes after posting, carries the gold NEW tag. The date, time and zone (JST / ET) never
   // break apart; when the row is too narrow, NEW moves under them and the pencil and trash stay on the right.
-  const noteMeta = <p className={styles.meta}><span className={styles.stamp}>{date}<small className={styles.zone}> JST</small></span>{item.kind === "notes" && fresh && <span className={styles.newTag}>NEW</span>}</p>;
+  const noteMeta = <p className={styles.meta}><span className={styles.stamp}>{date}<small className={styles.zone}> {zoneLabel(lang)}</small></span>{item.kind === "notes" && fresh && <span className={styles.newTag}>NEW</span>}</p>;
   return <article className={`${styles.article} ${editing ? styles.editing : ""} ${item.kind === "notes" ? styles.note : item.kind === "qa" ? styles.qaArticle : ""}`} id={item.id}>
     {item.kind === "notes" ? <div className={styles.noteHeader}><div className={styles.noteAvatar}><Image src="/rizel-avatar.webp" alt={ja ? "リゼル" : "RIZEL"} width={46} height={46} unoptimized /></div></div> : item.kind === "weekly" ? <p className={styles.meta}>{postNames[item.kind][lang]} · {date}</p> : null}
     <div className={item.kind === "notes" ? styles.noteBubble : undefined}>

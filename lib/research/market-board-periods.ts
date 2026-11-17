@@ -1,4 +1,5 @@
 import { easternToIso, splitBars, WARMUP, type Bar } from "./market-quote.ts";
+import { displayClock, type DisplayLang } from "./display-time.ts";
 
 /** The market board's period buttons: the candle size and the span each one shows (owner, Nov 13). */
 export type BoardPeriod = "5m" | "15m" | "1h" | "3h" | "1d" | "1w" | "1m" | "6m" | "1y" | "5y";
@@ -119,17 +120,17 @@ export function drawnSeries<T extends { bars: Bar[]; before: Bar[] }>(period: Bo
 }
 
 const SEGMENT_START = { pre: 240, regular: 570, post: 960 } as const;
-const jstClock = new Intl.DateTimeFormat("en-GB", { timeZone: "Asia/Tokyo", hour: "2-digit", minute: "2-digit", hourCycle: "h23" });
-/** Where each part of a day begins (pre-market, session, after-hours) and its nominal start in Japan time: 18:00 / 23:30 / 06:00 in winter, 17:00 / 22:30 / 05:00
- * in summer (worked out from New York time). `previous` is the bar just before the first one, so a view that starts mid-part gets no tick there. */
-export function sessionTicks(bars: Bar[], previous?: Bar): { index: number; label: string }[] {
+/** Where each part of a day begins (pre-market, session, after-hours) and its nominal start in the site's zone: in Japan time 18:00 / 23:30 / 06:00 in winter,
+ * 17:00 / 22:30 / 05:00 in summer (worked out from New York time); on the English site U.S. Eastern 04:00 / 09:30 / 16:00 all year (owner, Nov 17).
+ * `previous` is the bar just before the first one, so a view that starts mid-part gets no tick there. */
+export function sessionTicks(bars: Bar[], previous?: Bar, lang: DisplayLang = "ja"): { index: number; label: string }[] {
   const out: { index: number; label: string }[] = [];
   bars.forEach((bar, k) => {
     if (bar.at.length < 16) return;
     const prev = k ? bars[k - 1] : previous, segment = segmentOf(bar.at);
     if (prev && prev.at.slice(0, 10) === bar.at.slice(0, 10) && segmentOf(prev.at) === segment) return;
     const iso = easternToIso(stamp(bar.at.slice(0, 10), SEGMENT_START[segment]));
-    if (iso) out.push({ index: k, label: jstClock.format(new Date(iso)) });
+    if (iso) out.push({ index: k, label: displayClock(iso, lang) });
   });
   return out;
 }

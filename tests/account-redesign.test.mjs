@@ -21,7 +21,8 @@ const sheets = load("../app/research/account/account-sheets.tsx", {
   "./avatars": avatars,
 });
 
-const data = load("../app/research/account/account-data.ts");
+const displayTime = { "@/lib/research/display-time": require("../lib/research/display-time.ts") };
+const data = load("../app/research/account/account-data.ts", displayTime);
 const profileLib = load("../lib/account/profile.ts");
 
 test("icon ids are exactly the ones the profile API accepts (initial + 23)", () => {
@@ -160,7 +161,7 @@ test("the contract and RESOLUTE reads start once during hydration and are consum
   globalThis.window = {};
   globalThis.fetch = async url => { calls.push(String(url)); return new Response(JSON.stringify({ ok: true }), { status: 200, headers: { "content-type": "application/json" } }); };
   try {
-    const fresh = load("../app/research/account/account-data.ts");
+    const fresh = load("../app/research/account/account-data.ts", displayTime);
     fresh.prefetchAccountData(); fresh.prefetchAccountData(); fresh.prefetchAccountData();
     assert.deepEqual(calls, ["/api/research/account/contract", "/api/resolute/entitlements"], "started once, however often the screen renders");
     await fresh.getJson("/api/research/account/contract");

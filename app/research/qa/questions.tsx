@@ -8,14 +8,16 @@ import ResearchToolShell from "../research-tool-shell";
 import { useResearchLanguage } from "../use-research-language";
 import { useOwnerAccount, useOwnerMode } from "../member-display-provider";
 import styles from "./styles.module.css";
+import { displayParts } from "@/lib/research/display-time";
 
 type Question = { id: string; body: string; bodyEn?: string; status: "pending" | "answered" | "closed"; answerPostId: string | null; createdAt: string; isMine?: boolean; answer?: EditorialPost; held?: boolean; heldReason?: string };
 const nextId = () => `q-${crypto.randomUUID().replaceAll("-", "")}`;
 type QuestionState = "loading" | "ready" | "signed-out" | "pro-required" | "error";
 const MIN = 10, MAX = 1200;
 
+/** Japan time in Japanese, U.S. Eastern in English (owner, Nov 17). */
 const when = (iso: string, ja: boolean, short = false) => {
-  const parts = new Intl.DateTimeFormat(ja ? "ja-JP" : "en-US", { ...(short ? {} : { year: "numeric" }), month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit", hourCycle: "h23", timeZone: "Asia/Tokyo" }).formatToParts(new Date(iso));
+  const parts = displayParts(iso, ja ? "ja" : "en", { ...(short ? {} : { year: "numeric" }), month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit", hourCycle: "h23" });
   const get = (type: string) => parts.find(part => part.type === type)?.value ?? "";
   return short ? `${get("month")}/${get("day")} ${get("hour")}:${get("minute")}` : `${get("year")}/${get("month")}/${get("day")} ${get("hour")}:${get("minute")}`;
 };

@@ -1,4 +1,5 @@
 /** Browser side of the account APIs (docs/ACCOUNT-API-HANDOFF-2026-10-31.md). Nothing here guesses a value. */
+import { formatDisplay } from "@/lib/research/display-time";
 export type Profile = {
   displayName: string; email: string | null; plan: "free" | "pro" | "owner"; ownerAccess: boolean;
   passwordEnabled: boolean; twoFactorEnabled: boolean; icon: string; iconEditable: boolean;
@@ -59,7 +60,8 @@ export async function patchProfile(body: { displayName?: string; icon?: string }
 }
 export const formatDay = (iso: string | null | undefined, ja: boolean) => {
   const ms = iso ? Date.parse(iso) : NaN;
-  return Number.isFinite(ms) ? new Intl.DateTimeFormat(ja ? "ja-JP" : "en-US", { timeZone: "Asia/Tokyo", year: "numeric", month: "long", day: "numeric" }).format(ms) : null;
+  // The day in Japan time on the Japanese site and U.S. Eastern time on the English site (owner, Nov 17).
+  return Number.isFinite(ms) ? formatDisplay(ms, ja ? "ja" : "en", { year: "numeric", month: "long", day: "numeric" }) : null;
 };
 export const formatAmount = (amount: string, currency: "JPY" | "USD") => {
   const n = Number(amount);

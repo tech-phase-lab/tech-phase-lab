@@ -6,6 +6,7 @@ import { informativeOfficial, shownInLanguage } from "./news-presentation.ts";
 import { officialTime } from "./news-time.ts";
 import { calendarDateKey, calendarEvents, dateOnlyEvents, selectCalendarEvents, selectDateOnlyEvents } from "./calendar.ts";
 import type { PriceTarget } from "./price-targets.ts";
+import { zoneFor } from "./display-time.ts";
 
 /** The official stories the home list shows. The list and the TODAY count read
  * this one function, so the two cannot disagree. A story with no time stated
@@ -25,12 +26,13 @@ export function todayKey(now: number, zone: string) {
   return calendarDateKey(new Date(now).toISOString(), zone);
 }
 
-/** Stories published today in Japan time (owner, Oct 14). A story that states
- * only a date counts when that date is today. */
+/** Stories published today (owner, Oct 14): today in Japan time on the Japanese site, in U.S. Eastern time on the
+ * English site (owner, Nov 17). A story that states only a date counts when that date is today. */
 export function countTodayNews(data: GeneralNewsFeed | null, lang: Language, now: number): number | null {
   if (!data) return null;
-  const today = todayKey(now, "Asia/Tokyo");
-  const onToday = (at: string) => (/^\d{4}-\d{2}-\d{2}$/.test(at) ? at : calendarDateKey(at, "Asia/Tokyo")) === today;
+  const zone = zoneFor(lang);
+  const today = todayKey(now, zone);
+  const onToday = (at: string) => (/^\d{4}-\d{2}-\d{2}$/.test(at) ? at : calendarDateKey(at, zone)) === today;
   return listedOfficialNews(data, lang).filter(item => onToday(officialTime(item).at)).length
     + (data.items ?? []).filter(item => onToday(item.publishedAt)).length
     + (data.marketUpdates ?? []).filter(item => onToday(item.publishedAt)).length
@@ -40,7 +42,7 @@ export function countTodayNews(data: GeneralNewsFeed | null, lang: Language, now
 /** Today's earnings and economic events, counted from the same lists and the
  * same selectors as the calendar screen, in the zone that screen opens with. */
 export function countTodayEvents(now: number, lang: Language): number {
-  const zone = lang === "ja" ? "Asia/Tokyo" : "America/New_York";
+  const zone = zoneFor(lang);
   const period = todayKey(now, zone);
   return selectCalendarEvents(calendarEvents, "all", period, now, zone).length
     + selectDateOnlyEvents(dateOnlyEvents, "all", period, now).length;
@@ -49,7 +51,7 @@ export function countTodayEvents(now: number, lang: Language): number {
 /** Target price changes posted today, in the zone the price target cards show. */
 export function countTodayTargets(items: PriceTarget[] | null, lang: Language, now: number): number | null {
   if (!items) return null;
-  const zone = lang === "ja" ? "Asia/Tokyo" : "America/New_York";
+  const zone = zoneFor(lang);
   const today = todayKey(now, zone);
   return items.filter(item => calendarDateKey(item.publishedAt, zone) === today).length;
 }
