@@ -3,12 +3,14 @@ import { getMembership } from "@/lib/membership/server";
 import { isOwnerAccount } from "@/lib/membership/entitlements";
 import { cleanPushDiagnostic, createPushDiagnosticLimiter, pushDiagnosticLine } from "@/lib/research/push-diagnostic";
 import { cleanPushSendLog } from "@/lib/research/push-send-log";
+import { cleanPushEnableReport, pushEnableReportLine } from "@/lib/research/push-subscribe";
 import { cleanPushServerNotice, PUSH_NOTICE_ACTIONS, PUSH_NOTICE_DEVICE_LIMIT, PUSH_NOTICE_MEMBER_LIMIT, PUSH_NOTICE_WINDOW_MS }
   from "@/lib/research/push-server-notice";
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 const headers = { "Cache-Control": "private, no-store", Vary: "Cookie" };
 const diagnosticAllowed = createPushDiagnosticLimiter();
+const clientErrorAllowed = createPushDiagnosticLimiter(10, 10 * 60_000);
 // Nov 16: the app asks recent-notice every 20 seconds while it is open; these keep one device (or one member) from asking much more.
 const noticeDeviceAllowed = createPushDiagnosticLimiter(PUSH_NOTICE_DEVICE_LIMIT, PUSH_NOTICE_WINDOW_MS);
 const noticeMemberAllowed = createPushDiagnosticLimiter(PUSH_NOTICE_MEMBER_LIMIT, PUSH_NOTICE_WINDOW_MS);
@@ -79,6 +81,15 @@ export async function POST(request: Request) {
       if (!record) return Response.json({ ok: false }, { status: 400, headers });
       if (!diagnosticAllowed(member.userId, Date.now())) return Response.json({ ok: false, error: "rate-limited" }, { status: 429, headers });
       console.info(`[push-diag] ${pushDiagnosticLine(record)}`);
+      return Response.json({ ok: true }, { headers });
+    }
+    // Nov 17: the phone could not turn notifications on (or needed its one retry). Any signed-in member: one `[push-client]` line with
+    // the failed stage and the error name only (fixed words); nothing is sent on to the monitor and nothing about the member is logged.
+    if (body?.action === "client-error") {
+      const report = cleanPushEnableReport(body.report);
+      if (!report) return Response.json({ ok: false }, { status: 400, headers });
+      if (!clientErrorAllowed(member.userId, Date.now())) return Response.json({ ok: false, error: "rate-limited" }, { status: 429, headers });
+      console.warn(`[push-client] ${pushEnableReportLine(report)}`);
       return Response.json({ ok: true }, { headers });
     }
     // Nov 16: the monitor's last sends (short device hash, push service host, its HTTP status, whether the device is still registered),
