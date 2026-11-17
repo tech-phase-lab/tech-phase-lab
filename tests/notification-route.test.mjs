@@ -4,6 +4,10 @@ import {readFileSync} from 'node:fs';
 import {stripTypeScriptTypes} from 'node:module';
 const source=readFileSync(new URL('../app/api/research/notifications/route.ts',import.meta.url),'utf8')
  .replace('import { getMembership } from "@/lib/membership/server";', 'const getMembership = async () => globalThis.__pushMember;')
+ // RESOLUTE (Nov 17): the session token and RESOLUTE's entitlement answer, set per test (none by default).
+ .replace('import { auth } from "@clerk/nextjs/server";', 'const auth = async () => ({ getToken: async () => "session-jwt" });')
+ .replace('import { getResoluteEntitlementsForSession } from "@/lib/resolute/server";', 'const getResoluteEntitlementsForSession = async () => globalThis.__resoluteSnapshot ?? { canReceiveNotifications: false, alerts: { status: "missing", expiresAt: null } };')
+ .replace('"@/lib/research/push-resolute-access"', JSON.stringify(new URL('../lib/research/push-resolute-access.ts',import.meta.url).href))
  .replace('"@/lib/membership/entitlements"', JSON.stringify(new URL('../lib/membership/entitlements.ts',import.meta.url).href))
  .replace('"@/lib/research/push-diagnostic"', JSON.stringify(new URL('../lib/research/push-diagnostic.ts',import.meta.url).href))
  .replace('"@/lib/research/push-send-log"', JSON.stringify(new URL('../lib/research/push-send-log.ts',import.meta.url).href))
@@ -231,4 +235,42 @@ test('Nov 17: a failed or retried enable is logged as a stage and an error name 
   assert.ok(limited>=10,`rate limited ${limited}`);
   assert.match(lines[1],/^\[push-client\] stage=worker name=Other retry=none$/);
  } finally {globalThis.fetch=saved.fetch;console.warn=saved.warn;delete globalThis.__pushMember;}
+});
+
+// Owner, Nov 17: a RESOLUTE buyer without PRO may turn notifications on for the RESOLUTE notices only. RESOLUTE's answer comes from
+// the server (the session), never from the body; PRO choices are refused for such a member; RESOLUTE unreachable is not a guess.
+test('Nov 17: FREE + RESOLUTE may register for the RESOLUTE notices only; the rights come from the server', async () => {
+ const saved={fetch:globalThis.fetch,url:process.env.RESEARCH_MONITOR_URL,token:process.env.RESEARCH_MONITOR_TOKEN};
+ process.env.RESEARCH_MONITOR_URL='https://monitor.example';process.env.RESEARCH_MONITOR_TOKEN='fixture';
+ const calls=[];
+ globalThis.fetch=async(url,options)=>{calls.push({url:String(url),body:options.body?JSON.parse(options.body):null});return Response.json({ok:true,enabled:true,memberAccessVersion:1,publicKey:'public',preferencesVersion:1,registered:true,preferences:{resolute:true}});};
+ const req=(action,extra={})=>new Request('https://example.test/api/research/notifications',{method:'POST',headers:{origin:'https://example.test','content-type':'application/json'},
+  body:JSON.stringify({action,subscription:{endpoint:'https://web.push.apple.com/x'},resoluteUntil:9999999999,...extra})});
+ const until='2027-11-17T00:00:00.000Z';
+ try {
+  globalThis.__pushMember={status:'signed-in',userId:'user_free',plan:'free',accessExpiresAt:0};
+  // No RESOLUTE purchase: refused before the monitor, whatever the body says.
+  assert.equal((await POST(req('register'))).status,403);
+  assert.equal((await (await GET()).json()).reason,'pro-required');
+  assert.equal(calls.length,0);
+  globalThis.__resoluteSnapshot={canReceiveNotifications:true,alerts:{status:'active',expiresAt:until}};
+  const config=await (await GET()).json();
+  assert.equal(config.enabled,true);assert.equal(config.pro,false);assert.equal(config.resolute,true);
+  for(const action of ['register','status','preferences']) assert.equal((await POST(req(action))).status,200,action);
+  for(const c of calls.filter(c=>c.body)){assert.equal(c.body.accessExpiresAt,0);assert.equal(c.body.resoluteUntil,Date.parse(until)/1000);assert.equal(c.body.memberId,'user_free');}
+  assert.equal((await POST(req('save-preferences',{preferences:{resolute:false}}))).status,200);
+  calls.length=0;
+  assert.equal((await POST(req('save-preferences',{preferences:{targets:true}}))).status,403);
+  assert.equal(calls.length,0);
+  // PRO without RESOLUTE: allowed as PRO, and the monitor is told there are no RESOLUTE rights (0).
+  globalThis.__resoluteSnapshot=undefined;
+  globalThis.__pushMember={status:'signed-in',userId:'user_pro',plan:'pro',accessExpiresAt:Date.now()+60000};
+  assert.equal((await POST(req('register'))).status,200);
+  assert.equal(calls.at(-1).body.resoluteUntil,0);
+  assert.equal((await (await GET()).json()).resolute,false);
+  // RESOLUTE could not be asked: a FREE member gets 503, not a guess.
+  globalThis.__resoluteSnapshot=new Proxy({}, {get(){throw Error('down');}});
+  globalThis.__pushMember={status:'signed-in',userId:'user_free',plan:'free',accessExpiresAt:0};
+  assert.equal((await POST(req('register'))).status,503);
+ } finally {globalThis.fetch=saved.fetch;delete globalThis.__pushMember;delete globalThis.__resoluteSnapshot;for(const [key,value] of [['RESEARCH_MONITOR_URL',saved.url],['RESEARCH_MONITOR_TOKEN',saved.token]]){if(value===undefined)delete process.env[key];else process.env[key]=value;}}
 });

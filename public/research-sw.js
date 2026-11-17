@@ -1,12 +1,14 @@
 /* Push only: no fetch handler and no cached private/API responses. */
 // Version 2026-11-17 (answers the owner's version question): changing this file is what makes installed phones pick up the new worker.
-const VERSION = "2026-11-17-page-query";
+const VERSION = "2026-11-17-resolute";
 // Where a notification tap may go (Nov 13: every tap used to open the price-target page, whatever the notice was about).
 // Only a same-origin path on this list is opened; anything else falls back to /research.
 // Keep in step with lib/research/push-targets.json (tests/research-sw-click-target.test.mjs checks they match).
 const OPENABLE = new Set([
   "/research", "/research/calendar", "/research/news", "/research/notebook", "/research/notes",
   "/research/notifications", "/research/price-targets", "/research/qa", "/research/questions", "/research/weekly",
+  // RESOLUTE (Nov 17): the alert notice opens 「今日のお知らせ」, the morning notice the ④ three-choice screen.
+  "/resolute/alerts/latest", "/resolute/morning",
 ]);
 const FRAGMENT = /^#[a-z0-9-]{1,40}$/;
 // Nov 17: the only query a page may carry (the owner's filming notice opens the price-target page with its sample row). Same as
@@ -70,10 +72,11 @@ async function forget(key, id) {
     await store.delete(keyRequest(key));
   } catch { /* nothing to forget */ }
 }
+// A window of this site's app, Tech Phase (/research) or RESOLUTE (/resolute), so a RESOLUTE tap reuses the open app window.
 function researchWindow(client) {
   try {
     const url = new URL(client.url);
-    return url.origin === self.location.origin && url.pathname.startsWith("/research");
+    return url.origin === self.location.origin && (url.pathname.startsWith("/research") || url.pathname.startsWith("/resolute"));
   } catch { return false; }
 }
 async function researchClients() {

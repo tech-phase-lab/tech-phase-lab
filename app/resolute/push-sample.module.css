@@ -1,0 +1,6 @@
+.push { display:flex; align-items:center; gap:12px; background:#3a3f4a; color:#f5f5f7; border-radius:20px; padding:12px 14px; margin:8px 0 12px; font-family:inherit; }
+.icon { flex:none; width:40px; height:40px; border-radius:10px; display:grid; place-items:center; background:#0a1018; border:1px solid rgba(216,179,106,.5); font-size:20px; }
+.text { display:flex; flex-direction:column; min-width:0; line-height:1.4; font-size:14px; }
+.text b { font-size:15px; }
+.text span { overflow-wrap:anywhere; }
+.time { align-self:flex-start; margin-left:auto; color:#b9bec8; font-size:12px; }

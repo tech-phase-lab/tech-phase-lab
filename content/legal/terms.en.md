@@ -72,7 +72,7 @@ Users must not do any of the following.
 
 1. The Operator strives for accuracy in the information in the Service, but does not guarantee its accuracy, completeness, or timeliness.
 2. Data such as stock prices is obtained from external providers and may be delayed or contain errors. On the free plan, some information is displayed with a delay.
-3. Emails for the Notification Features may be delayed or may not arrive, depending on network conditions or the circumstances of external services.
+3. Phone notifications and emails for the Notification Features may be delayed or may not arrive, depending on network conditions or the circumstances of external services.
 
 ## Article 10 (Intellectual Property Rights)
 

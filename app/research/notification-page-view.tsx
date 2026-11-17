@@ -14,7 +14,8 @@ export type Preferences = { targets: boolean; earnings: boolean; news: boolean; 
   /** Economic-indicator results, and which indicators (Nov 4). */ economic: boolean; economicKinds: string[];
   /** A new issue of 週刊 Tech Phase PRO is out. */ weeklyIssue: boolean; /** Your question to Rizel was answered. */ rizelAnswer: boolean;
   /** おやすみモード: hours in their zone (Japan time, or ET when saved from the English site; none means Japan time). */ quiet: Quiet;
-  /** A new "リゼルのひとりごと" post; off until turned on. */ rizelNote: boolean; /** Owner only: a weekly issue draft is ready. */ weeklyDraft?: boolean };
+  /** A new "リゼルのひとりごと" post; off until turned on. */ rizelNote: boolean; /** Owner only: a weekly issue draft is ready. */ weeklyDraft?: boolean;
+  /** RESOLUTE ③④ (owner, Nov 17): shown to RESOLUTE buyers only; on unless turned off. */ resolute?: boolean };
 type PrefsState = "idle" | "loading" | "ready" | "error" | "unsupported";
 // The ten indicators; the first seven start on. Only jobless claims has no result reader yet ("soon"): the Department of Labor blocks automated reading of its page.
 export const indicators: { key: string; ja: string; en: string; whenJa: string; whenEn: string; ready: boolean }[] = [
@@ -33,7 +34,7 @@ const defaultKinds = ["jobs", "cpi", "ppi", "pce", "fomc", "adp", "ism"];
 const hour = (h: number) => `${String(h).padStart(2, "0")}:00`;
 // Shown (and locked) until the server's own settings have been read.
 const placeholder: Preferences = { targets: true, earnings: true, news: true, newsTickers: monitored, weeklyNotebook: true, economic: true, economicKinds: defaultKinds,
-  weeklyIssue: false, rizelAnswer: false, quiet: { on: true, start: 23, end: 7 }, rizelNote: false };
+  weeklyIssue: false, rizelAnswer: false, quiet: { on: true, start: 23, end: 7 }, resolute: true, rizelNote: false };
 const svg = (d: ReactNode) => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">{d}</svg>;
 const icons = {
   bell: svg(<><path d="M6 16.5V11a6 6 0 0 1 12 0v5.5l1.5 1.5h-15z" /><path d="M10 20.5a2.2 2.2 0 0 0 4 0" /></>),
@@ -46,12 +47,15 @@ const icons = {
   chat: svg(<><path d="M5 5h14a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1h-7l-4 3.5V16H5a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1z" /></>),
   moon: svg(<><path d="M19 14.5A7.5 7.5 0 0 1 9.5 5a7.5 7.5 0 1 0 9.5 9.5z" /></>),
   pencil: svg(<><path d="M5 19l1-4L16.5 4.5a2 2 0 0 1 3 3L9 18z" /><path d="M14.5 6.5l3 3" /></>),
+  anchor: svg(<><circle cx="12" cy="5" r="2" /><path d="M12 7v13M8 11h8M5 14a7 7 0 0 0 14 0" /></>),
 };
 
 export type PageViewProps = {
   lang: Language; state: string; label: string; busy: boolean; starting: boolean; usable: boolean; hasSubscription: boolean;
   message: string; testSent: boolean; received: boolean;
   prefs: Preferences | null; prefsState: PrefsState; prefsMessage: string; owner?: boolean; diagnostic?: ReactNode; onPrefs: (patch: Partial<Preferences>) => void;
+  /** What the server lets this member receive (owner, Nov 17): PRO, RESOLUTE, or both. Without it, PRO only (as before). */
+  access?: { pro: boolean; resolute: boolean };
   onToggle: () => void; onDisable: () => void; onTest: () => void; onRetry: () => void; onStatus: () => void; onReceived: () => void;
 };
 
@@ -79,6 +83,9 @@ function HourPicker({ label, value, onChange }: { label: string; value: number; 
 
 export default function NotificationPageView(p: PageViewProps) {
   const { lang, state } = p;
+  // A RESOLUTE buyer without PRO sees the RESOLUTE row only (owner, Nov 17): never the PRO rows or the PRO sign-up message.
+  const pro = p.access?.pro !== false;
+  const resolute = p.access?.resolute === true;
   const t = (ja: string, en: string) => lang === "ja" ? ja : en;
   const [sheet, setSheet] = useState<"" | "earnings" | "news" | "economic" | "quiet">("");
   const prefs: Preferences = { ...placeholder, ...(p.prefs ?? {}) };
@@ -153,7 +160,13 @@ export default function NotificationPageView(p: PageViewProps) {
       {state === "blocked" && <p className={styles.note}>{t("端末またはブラウザの設定で、Tech Phaseの通知を許可してください。", "Allow Tech Phase notifications in your device or browser settings.")}</p>}
       {!on && p.message && <p className={styles.note} role="status">{p.message}</p>}
     </div>
-    <div className={on ? "" : styles.rowsOff}>
+    {resolute && <div className={on ? "" : styles.rowsOff}>
+      <p className={styles.section}>RESOLUTE</p>
+      <ul className={styles.rows}>
+        {row(icons.anchor, t("RESOLUTE（暴落アラート）", "RESOLUTE (crash alerts)"), t("終値アラートと翌朝のひとこと", "Closing-price alerts and the morning note"), prefs.resolute ?? true, v => p.onPrefs({ resolute: v }))}
+      </ul>
+    </div>}
+    {pro && <><div className={on ? "" : styles.rowsOff}>
       <p className={styles.section}>{t("銘柄", "STOCKS")}</p>
       <ul className={styles.rows}>
         {row(icons.target, t("目標株価の変更", "Price target changes"), t("主要AI株の多くが対象", "Most major AI stocks are covered"), prefs.targets, v => p.onPrefs({ targets: v }))}
@@ -172,16 +185,17 @@ export default function NotificationPageView(p: PageViewProps) {
         {row(icons.chat, t("リゼルに聞く", "Ask Rizel"), t("あなたの質問に回答がついたとき", "When your question gets an answer"), prefs.rizelAnswer, v => p.onPrefs({ rizelAnswer: v }))}
       </ul>
     </div>
+    </>}
     {p.prefsMessage && <p className={styles.note} role="status">{p.prefsMessage}</p>}
     {p.prefsState === "unsupported" && <p className={styles.note} role="status">{t("届く内容の保存は、現在準備中です。", "Saving what you receive is not available yet.")}</p>}
     <section id="details" className={styles.details} aria-label={t("詳しい設定", "Details")}>
       <h2 className={styles.detailsHead}>{t("詳しい設定", "Details")}<span>{t("対象や時間を細かく決められます", "Choose what you get and when")}</span></h2>
-      <ul className={`${styles.moreList} ${on ? "" : styles.rowsOff}`}>
+      {pro && <ul className={`${styles.moreList} ${on ? "" : styles.rowsOff}`}>
         {more(icons.earnings, t("決算の対象", "Earnings coverage"), t(`${monitored.length + tracked.length}社`, `${monitored.length + tracked.length}`), () => setSheet("earnings"))}
         {more(icons.news, t("監視株ニュース", "News for selected stocks"), t(`${news.length}銘柄`, `${news.length}`), () => setSheet("news"))}
         {more(icons.calendar, t("経済指標の種類", "Economic indicators"), t(`${kinds.length}件`, `${kinds.length}`), () => setSheet("economic"))}
         {more(icons.moon, t("おやすみモード", "Quiet hours"), quietText, openQuiet)}
-      </ul>
+      </ul>}
       {on && <div className={styles.testBlock}>
         <button type="button" className={styles.testButton} disabled={p.busy} onClick={p.onTest}><span>{t("テスト通知を送る", "Send test notification")}</span><span className={styles.value}>{t("動作の確認", "Check it works")}</span></button>
         {p.testSent && !p.received && <button type="button" className={styles.testButton} onClick={p.onReceived}>{t("届きました", "Received")}</button>}

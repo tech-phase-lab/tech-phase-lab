@@ -1,6 +1,6 @@
 "use client";
 import { useEffect } from "react";
-import { BAR_STATE_KEY, needsRefresh, parseBarState, writeBarState } from "@/lib/research/resolute-bar-state";
+import { BAR_STATE_KEY, barStateFromAnswer, needsRefresh, parseBarState, writeBarState } from "@/lib/research/resolute-bar-state";
 
 /** A purchaser must never see this page. The remembered answer hides the page before it is painted
  * (see the inline guard in landing.tsx); the purchase answer is refreshed in the background and, if it says
@@ -20,9 +20,10 @@ export default function OwnedRedirect() {
     if (response.status === 401) { writeBarState({ owned: false, anon: true }); return; }
     if (!response.ok) return;
     const body = await response.json();
-    if (body && typeof body.canUseTools === "boolean") {
-     writeBarState({ owned: body.canUseTools, anon: false });
-     if (body.canUseTools) go();
+    const answer = barStateFromAnswer(body);
+    if (answer) {
+     writeBarState(answer);
+     if (answer.owned) go();
     }
    } catch { /* unknown keeps the page */ }
   })();

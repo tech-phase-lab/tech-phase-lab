@@ -15,7 +15,11 @@ import { PlanClientError } from "@/lib/resolute/plan-client";
 import { DELIVERY_HOURS,defaultNotificationSettings,parseNotificationSettings,type NotificationSettings,type NotificationSnapshot } from "@/lib/resolute/notification-settings";
 import { NotificationClientError } from "@/lib/resolute/notification-client";
 import { judge } from "@/lib/resolute/alert-judge";
-import { renderAlertMail,renderNextMorningMail } from "@/lib/resolute/mail-templates";
+import { resoluteAlertPushBody,resoluteMorningPushBody } from "@/lib/resolute/push-notice";
+import { latestAlertFromDigest } from "@/lib/resolute/latest-alert";
+import DeviceNotifications from "@/app/research/notification-settings";
+import PushSample from "./push-sample";
+import { LatestAlertContent } from "./alerts/latest/screen";
 import { deliveryClock,deliveryZone } from "@/lib/resolute/delivery-time";
 
 const tips={
@@ -97,15 +101,17 @@ function Notifications({locale,deny,mode}:{locale:DiagnosisLocale;deny:()=>void;
  const validItems=draft.watchItems.filter(i=>/^[A-Z][A-Z0-9.-]{0,14}$/.test(i.symbol)&&Number.isFinite(i.referencePrice)&&i.referencePrice>0&&i.referencePrice<=1000000);
  const watch=validItems.map(i=>({...i,lines,renotifyAfterRecovery:false,...(draft.surgeCapPct===null?{}:{surgeCapPct:draft.surgeCapPct})}));
  const events=judge(watch,watch.map(i=>({symbol:i.symbol,date:"2027-02-03",close:Math.max(0.01,Math.round(i.referencePrice*(100+change))/100),isFinal:true})),{}).events;
- const mail=events.length?renderAlertMail({locale,date:"2027-02-03",items:events,tonightUrl:"/resolute/tonight",planUrl:"/resolute",unsubscribeUrl:"/resolute/alerts"}):null;
- const morningMail=renderNextMorningMail({locale,doneUrl:"/resolute/morning",skippedUrl:"/resolute/morning",unsureUrl:"/resolute/morning",planUrl:"/resolute",unsubscribeUrl:"/resolute/morning"});
+ // 「届く通知の例」: the phone notification (screens/01_push_*) and the 「今日のお知らせ」 page it opens. Nothing is sent.
+ const sample=events.length?latestAlertFromDigest({date:"2027-02-03",items:events}):null;
  const usd=(v:number)=>new Intl.NumberFormat(en?"en-US":"ja-JP",{style:"currency",currency:"USD"}).format(v);
  const timeButtons=<div className={styles.timeGrid}>{DELIVERY_HOURS.map(h=><button type="button" key={h} aria-pressed={draft.deliveryHourJst===h} onClick={()=>update({deliveryHourJst:h})}>{deliveryClock(h,locale)}</button>)}</div>;
- const mailExample=(example:{subject:string;text:string})=><div className={styles.mailPreview}><div className={styles.mailSubject}>{en?example.subject:example.subject.split(/(【RESOLUTE】|あなたの計画の|ラインに|ラインと|上昇の目安に|届いた銘柄があります|昨日のお知らせのあと、|どうでしたか\?)/).filter(Boolean).map((part,i)=><span className={styles.phrase} key={i}>{part}</span>)}</div><div className={styles.mailText}>{example.text.split("\n").map((line,i)=><p key={i} className={/^(あなたの計画では|In your plan)/.test(line)?styles.planEmphasis:undefined}>{line||"\u00a0"}</p>)}</div></div>;
+ const alertExample=sample?<><PushSample body={resoluteAlertPushBody(events,locale)} locale={locale}/><p className={styles.muted}>{t("押すと「今日のお知らせ」が開きます","Tap it to open Today's alert")}</p><div className={styles.mailPreview}><LatestAlertContent locale={locale} state={{status:"ready",alert:sample}}/></div></>:null;
  const lineColors=["#ecd48f","#eba85a","#e5744f","#cf4a52","#b03a62"];
  const picks=[t("計画どおり動いた","I followed my plan"),t("見送った","I held off"),t("まだ迷っている","I'm still unsure")];
  return <div className={styles.section}>
-  <header className={styles.toolHeading}><h1>{isMorning?t("翌朝のひとこと","Morning note"):t("終値アラート","Closing-price alerts")}</h1><p className={styles.muted}>{isMorning?t("お知らせの翌朝に、1通だけ届きます","One short email the morning after an alert"):t("ラインに届いた日に、メールでお知らせ","An email when the closing price reaches a level in your plan")}</p></header>
+  <header className={styles.toolHeading}><h1>{isMorning?t("翌朝のひとこと","Morning note"):t("終値アラート","Closing-price alerts")}</h1><p className={styles.muted}>{isMorning?t("お知らせの翌朝に、1通だけ届きます","One short notification the morning after an alert"):t("ラインに届いた日に、スマホ通知でお知らせ","Get a phone notification on the day a line is hit")}</p></header>
+  {/* Owner, Nov 17: ③④ arrive as phone notifications (the same part as Tech Phase's notification settings). */}
+  <section className={styles.card}><DeviceNotifications lang={locale} scope="resolute" initiallyOpen/>{isMorning?null:<p className={styles.muted}>{t("スマホ通知をオンにしていない場合はメールで届きます","If phone notifications aren’t on, you’ll get an email instead")}</p>}</section>
   {loading?<p role="status">{t("設定を読み込んでいます…","Loading your settings…")}</p>:null}
   <fieldset className={styles.settingsFields} disabled={loading||busy||locked}>
    {isMorning?<section className={styles.card}>
@@ -141,18 +147,18 @@ function Notifications({locale,deny,mode}:{locale:DiagnosisLocale;deny:()=>void;
     <span className={styles.eyebrow}>GOOD MORNING</span>
     <p className={styles.morningQuestion}>{en?"Quick check-in on yesterday's alert.":<><span className={styles.phrase}>昨日のお知らせから</span><span className={styles.phrase}>一晩が経ちました</span></>}</p>
     <p className={styles.muted}>{en?"Pick whichever feels closest right now.":<><span className={styles.phrase}>今の気持ちに近いものを</span><span className={styles.phrase}>1つだけ選んでください</span></>}</p>
-    {pick?<div className={styles.morningAnswer}><div className={`${styles.verdict} ${styles.verdictOk}`}><strong>{picks[(["done","skipped","unsure"] as const).indexOf(pick)]}</strong></div><p>{tips[locale][pick]}</p><button type="button" className={styles.primary} onClick={()=>setPlanOpen(true)}>{t("計画を開く","Open your plan")}</button><button className={styles.ghost} onClick={()=>setPick(null)}>{t("選び直す","Choose again")}</button></div>:<><div className={styles.options}>{(["done","skipped","unsure"] as const).map((k,i)=><button key={k} className={styles.option} onClick={()=>setPick(k)}>{picks[i]}</button>)}</div><p className={styles.disclaimer}>{t("このメールは、昨日のお知らせについて1回だけ届きます。","We send this once per alert.")}</p></>}
+    {pick?<div className={styles.morningAnswer}><div className={`${styles.verdict} ${styles.verdictOk}`}><strong>{picks[(["done","skipped","unsure"] as const).indexOf(pick)]}</strong></div><p>{tips[locale][pick]}</p><button type="button" className={styles.primary} onClick={()=>setPlanOpen(true)}>{t("計画を開く","Open your plan")}</button><button className={styles.ghost} onClick={()=>setPick(null)}>{t("選び直す","Choose again")}</button></div>:<><div className={styles.options}>{(["done","skipped","unsure"] as const).map((k,i)=><button key={k} className={styles.option} onClick={()=>setPick(k)}>{picks[i]}</button>)}</div><p className={styles.disclaimer}>{t("この通知は、昨日のお知らせについて1回だけ届きます。","We send this once per alert.")}</p></>}
    </section>}
-   {draft.morningEnabled?<details className={`${styles.card} ${styles.disclosure}`}><summary>{t("届くメールの例","Example email")}</summary>{mailExample(morningMail)}</details>:null}
+   {draft.morningEnabled?<details className={`${styles.card} ${styles.disclosure}`}><summary>{t("届く通知の例","Example notification")}</summary><PushSample body={resoluteMorningPushBody(locale)} locale={locale}/><p className={styles.muted}>{t("押すと、この画面で3つから選べます","Tap it to open this screen and pick one of the three")}</p></details>:null}
   </>:<section className={`${styles.card} ${styles.hero}`}>
     <span className={styles.eyebrow}>LINES</span><h2 className={styles.linesTitle}>{t("あなたのライン","Your alert levels")}</h2>
     <div className={styles.alertLines}>{validItems.map(item=><div className={styles.stockLines} key={item.symbol}><strong>{item.symbol}</strong>{lines.map((l,i)=><div className={styles.priceLine} key={l} style={{"--line-color":lineColors[Math.min(i,lineColors.length-1)]} as CSSProperties}><span>−{l}%</span><b>{usd(item.referencePrice*(100-l)/100)}</b></div>)}{draft.surgeCapPct!==null?<div className={styles.priceLine} style={{"--line-color":"#8fd6a8"} as CSSProperties}><span>+{draft.surgeCapPct}%</span><b>{usd(item.referencePrice*(100+draft.surgeCapPct)/100)}</b></div>:null}</div>)}</div>
     {!validItems.length?<p className={styles.muted}>{t("銘柄と基準価格を入れてください","Enter a symbol and reference price")}</p>:null}
     <hr className={styles.divider}/><span className={styles.eyebrow}>TRY IT</span><p className={styles.muted}>{t("もしも、ある日の終値が基準から","What if a closing price moved")}</p><p className={styles.percentNumber}>{change>=0?"+":"−"}{Math.abs(change)}%</p><p className={styles.muted}>{t("だったら？","from your reference price?")}</p><input type="range" min="-50" max="100" value={change} aria-label={t("終値の変化","Closing-price change")} onChange={e=>setChange(Number(e.target.value))}/>
-    <details className={styles.mailDetails}><summary>{t("届くメールの例を見る","See an example email")}</summary>{mail?mailExample(mail):<p className={styles.muted}>{t("この条件では通知に該当しません。","No alert would be sent in this example.")}</p>}</details>
+    <details className={styles.mailDetails}><summary>{t("届く通知の例を見る","See an example notification")}</summary>{alertExample??<p className={styles.muted}>{t("この条件では通知に該当しません。","No alert would be sent in this example.")}</p>}</details>
    </section>}
   {!isMorning?<p className={styles.disclaimer}>{t("通知は、米国市場の終値が確定したあとに送ります。","Alerts are sent after US closing prices are final.")}<br/>{t("情報の提供であり、投資助言ではありません。","For information only. Not investment advice.")}</p>:null}
-  <p className={styles.disclaimer}>{t("メール配信は準備中です。この画面の試算でメールは送信されません。","Email delivery is not available yet. Using this screen will not send an email.")}</p>
+  <p className={styles.disclaimer}>{t("通知の配信は準備中です。この画面の試算で通知は送信されません。","Notification delivery is not available yet. Using this screen will not send a notification.")}</p>
   <dialog ref={planDialog} className={styles.planDialog} onClose={()=>setPlanOpen(false)} onCancel={()=>setPlanOpen(false)} aria-labelledby="morning-plan-title">
    <h2 id="morning-plan-title">{t("あなたの計画", "Your plan")}</h2>
    {plan?<dl className={styles.ruleCards}>
