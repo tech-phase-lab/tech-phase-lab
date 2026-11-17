@@ -46,7 +46,7 @@ test("the tap threshold is 15 seconds and the server offers a notice for 30 minu
 
 test("a notice is placed on the phone's own clock from its age, so a phone clock that is off does not matter", () => {
   const notice = cleanPushServerNotice(raw({ sentAt: 1, ageMs: 4000 }));
-  assert.deepEqual(serverNoticeRecord(notice, NOW), { id: ID, path: "/research/notifications", title: "NVDA · 決算速報", at: NOW - 4000, test: false });
+  assert.deepEqual(serverNoticeRecord(notice, NOW), { id: ID, path: "/research/notifications", title: "NVDA · 決算速報", at: NOW - 4000, askedAt: NOW, test: false });
   assert.equal(serverNoticeRecord(cleanPushServerNotice(raw({ state: "opened" })), NOW), null);
   assert.equal(serverNoticeRecord(cleanPushServerNotice(raw({ ageMs: PUSH_SERVER_RECENT_MS + 1 })), NOW), null);
   assert.equal(serverNoticeRecord(null, NOW), null);
