@@ -23,7 +23,11 @@ async function identity() {
   if (member.plan !== "pro") return "free" as const;
   const { url, token } = configuration();
   const ownerKey = createHmac("sha256", token).update(`question:${member.userId}`).digest("hex");
-  return { url, token, ownerKey, ownerMode: member.ownerMode, ownerView: member.ownerMode && member.isAdmin };
+  // Owner, Nov 17: the owner account previewing the PRO member plan takes screenshots of sample questions, so its own
+  // questions read like anyone else's there (no 「あなたの質問」, no delete). The owner view is unchanged.
+  // Only a verified administrator can preview a plan (previewPlan), so `testing` never comes from an ordinary member.
+  const memberPreview = member.testing === true;
+  return { url, token, ownerKey, ownerMode: member.ownerMode, ownerView: member.ownerMode && member.isAdmin, memberPreview };
 }
 
 async function parse(response: Response) {
@@ -43,6 +47,7 @@ export async function GET(request?: Request) {
     const response = await fetch(account.url, { headers: { Authorization: `Bearer ${account.token}`, "X-Question-Owner": account.ownerKey, "X-Question-Audience": "pro-board", "X-Question-Owner-View": account.ownerView ? "1" : "0" }, cache: "no-store", signal: AbortSignal.timeout(10_000) });
     const data = await parse(response);
     if (response.ok && data.audience !== "pro-board") return reply(503, { ok: false, error: "board-unavailable" });
+    if (response.ok && account.memberPreview && Array.isArray(data.items)) data.items = data.items.map((item: Record<string, unknown>) => ({ ...item, isMine: false }));
     return reply(response.status, data);
   } catch { return reply(503, { ok: false, error: "questions-unavailable" }); }
 }
