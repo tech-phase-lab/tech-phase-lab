@@ -1,9 +1,8 @@
 import targets from "./push-targets.json" with { type: "json" };
-import { PUSH_SERVER_LOOK_MS, serverNoticeAction, serverNoticeRecord, type PushServerNotices } from "./push-server-notice.ts";
+import { openablePushPage, PUSH_SERVER_LOOK_MS, PUSH_SERVER_TAP_MS, serverNoticeAction, serverNoticeRecord, type PushServerNotices } from "./push-server-notice.ts";
 
 /** Pages a notification tap may open (the same list as public/research-sw.js). */
 export const PUSH_OPENABLE: ReadonlySet<string> = new Set(targets.openable);
-const FRAGMENT = new RegExp(targets.fragment);
 
 /** Where public/research-sw.js writes a tap down (and the latest notice shown). Keep in step with that file. */
 export const PUSH_OPEN_STORE = "tech-phase-push-open";
@@ -29,23 +28,21 @@ export const PUSH_TEST_TAG = "tech-phase-test";
 export function pushOpenPath(data: unknown): string | null {
   if (!data || typeof data !== "object" || (data as { type?: unknown }).type !== "open") return null;
   const value = (data as { url?: unknown }).url;
-  if (typeof value !== "string" || value.length > 200 || !value.startsWith("/") || value.startsWith("//") || /[\\\s]/.test(value)) return null;
-  const hash = value.indexOf("#");
-  const path = hash < 0 ? value : value.slice(0, hash);
-  const fragment = hash < 0 ? "" : value.slice(hash);
-  if (!PUSH_OPENABLE.has(path) || (fragment && !FRAGMENT.test(fragment))) return null;
-  return path + fragment;
+  return typeof value === "string" ? openablePushPage(value) : null;
 }
 
 export type PushOpenNavigation = { push: (href: string) => void; setHash: (hash: string) => void };
 
 /** Go to the notice's page. Nothing happens when the app already shows it; only the fragment changes when the app shows that page
  * with another fragment, so the page's own hash handling (e.g. the dashboard's #what-changed view) runs; otherwise a client-side
- * navigation. */
+ * navigation. A page with a query (Nov 17: /research/price-targets?demo=nvda) is always navigated to, query included, so the page
+ * reads it even when the app already shows that page. */
 export function openPushPath(path: string, current: { pathname: string; hash: string }, navigation: PushOpenNavigation) {
   const hash = path.indexOf("#");
-  const pathname = hash < 0 ? path : path.slice(0, hash);
+  const beforeHash = hash < 0 ? path : path.slice(0, hash);
   const fragment = hash < 0 ? "" : path.slice(hash);
+  if (beforeHash.includes("?")) { navigation.push(path); return; }
+  const pathname = beforeHash;
   if (pathname === current.pathname) {
     if (!fragment) return;
     if (current.hash !== fragment) navigation.setHash(fragment);
@@ -127,11 +124,14 @@ export function createPushOpener({ sources, location, navigation, banner = () =>
   // Ids of notices the server reported (they are marked opened or dismissed on the server, not in the worker's store).
   const fromServer = new Set<string>();
   let latestServer: PushRecord | null = null;
+  // When the app asked the question whose answer placed latestServer (this device's clock).
+  let latestAskedAt = -Infinity;
   let serverAskedAt: number | null = null;
   let serverDue = true;
   let delivered: PushRecord | null = null;
   let showing: PushRecord | null = null;
   let checking: Promise<string | null> | null = null;
+  let checkingFrom = -Infinity;
   // When the app last came to the front (from the background, or launched); the listener says so.
   let foregroundAt: number | null = null;
   const note = (patch: Record<string, unknown>, id?: string) => { try { diagnostics?.note(patch, id); } catch { /* the record is best effort */ } };
@@ -209,12 +209,20 @@ export function createPushOpener({ sources, location, navigation, banner = () =>
   async function askServer(at: number) {
     if (!server || (!serverDue && serverAskedAt !== null && at - serverAskedAt < PUSH_SERVER_LOOK_MS)) return;
     serverDue = false; serverAskedAt = at;
-    const record = serverNoticeRecord(await server.recent().catch(() => null), now());
+    // Placed from the moment of asking (`at`), not of handling the answer: iOS may hand an answer over long after it was given.
+    const record = serverNoticeRecord(await server.recent().catch(() => null), at);
     if (!record) return;
     fromServer.add(record.id);
-    if (handled.has(record.id) || latestServer?.id === record.id) return;
+    // An answer to an older question, handed over after a newer one, changes nothing.
+    if (handled.has(record.id) || (latestServer && record.askedAt < latestAskedAt)) return;
+    if (latestServer?.id === record.id) {
+      // Nov 17: the same notice again from a newer question replaces the older placing (it was kept, so a late answer decided the tap).
+      if (record.askedAt > latestAskedAt) { latestServer = { ...latestServer, at: record.at }; latestAskedAt = record.askedAt; }
+      return;
+    }
     latestServer = { id: record.id, path: record.path, at: record.at, tag: record.test ? PUSH_TEST_TAG : "", title: record.title, listed: false,
       test: record.test };
+    latestAskedAt = record.askedAt;
     note({ server: now() }, record.id);
   }
   async function run(): Promise<string | null> {
@@ -237,9 +245,14 @@ export function createPushOpener({ sources, location, navigation, banner = () =>
     // Nov 16: the server's record of a notice it sent this device, which works without the worker. The app came to the front within
     // 15 seconds of the send (PUSH_SERVER_TAP_MS): a tap brought it up, so its page opens. Otherwise the banner, unless the banner
     // already shows the worker's record of the same notice. A test notice opens the same way but never gets the banner.
+    // Nov 17 (owner's filming take): the tap is judged only from an answer to a question asked after the latest return to the front,
+    // so the server's age figure spans the return. Within the 15 seconds after a return, an older answer decides nothing (no banner
+    // either): the next look asks again. After that, an older answer still gets the banner.
     const sent = latestServer;
     if (sent && !handled.has(sent.id) && at - sent.at <= PUSH_BANNER_RECENT_MS) {
-      if (serverNoticeAction(sent, foregroundAt) === "open") return open(sent, "server-tap");
+      const before = foregroundAt !== null && latestAskedAt < foregroundAt;
+      if (before && now() - (foregroundAt as number) <= PUSH_SERVER_TAP_MS) { serverDue = true; return null; }
+      if (!before && serverNoticeAction(sent, foregroundAt) === "open") return open(sent, "server-tap");
       if (!sent.test) {
         if (!showing || (showing.id !== sent.id && !same(showing, sent))) show(sent);
         return null;
@@ -260,8 +273,15 @@ export function createPushOpener({ sources, location, navigation, banner = () =>
   }
   /** Look for a tap to open (or a new notice to show). Calls made while a look is running share it. */
   function check(): Promise<string | null> {
-    if (!checking) checking = run().finally(() => { checking = null; });
-    return checking;
+    // Nov 17: a look still running from before the latest return to the front (iOS suspended it mid-way) is not shared: a fresh look
+    // follows it, so the tap is judged from a question asked after the return.
+    if (checking && checkingFrom >= (foregroundAt ?? -Infinity)) return checking;
+    const previous = checking;
+    const from = now();
+    const next: Promise<string | null> = (previous ? previous.catch(() => null).then(() => run()) : run())
+      .finally(() => { if (checking === next) checking = null; });
+    checking = next; checkingFrom = from;
+    return next;
   }
   /** 開く on the banner: go to the notice's page. */
   function openBanner(): string | null {
@@ -282,7 +302,7 @@ export function createPushOpener({ sources, location, navigation, banner = () =>
     hide(record.id);
   }
   /** The app came to the front (or was launched) at this time; the listener calls it before the looks that follow. */
-  function foreground(at: number = now()) { foregroundAt = at; }
+  function foreground(at: number = now()) { foregroundAt = at; serverDue = true; }
   return { message, check, openBanner, dismissBanner, foreground, banner:() => showing && { id: showing.id, path: showing.path, title: showing.title } };
 }
 

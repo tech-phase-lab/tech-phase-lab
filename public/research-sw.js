@@ -1,6 +1,6 @@
 /* Push only: no fetch handler and no cached private/API responses. */
-// Version 2026-11-16 (answers the owner's version question): changing this file is what makes installed phones pick up the new worker.
-const VERSION = "2026-11-16-version-query";
+// Version 2026-11-17 (answers the owner's version question): changing this file is what makes installed phones pick up the new worker.
+const VERSION = "2026-11-17-page-query";
 // Where a notification tap may go (Nov 13: every tap used to open the price-target page, whatever the notice was about).
 // Only a same-origin path on this list is opened; anything else falls back to /research.
 // Keep in step with lib/research/push-targets.json (tests/research-sw-click-target.test.mjs checks they match).
@@ -9,6 +9,9 @@ const OPENABLE = new Set([
   "/research/notifications", "/research/price-targets", "/research/qa", "/research/questions", "/research/weekly",
 ]);
 const FRAGMENT = /^#[a-z0-9-]{1,40}$/;
+// Nov 17: the only query a page may carry (the owner's filming notice opens the price-target page with its sample row). Same as
+// "queries" in lib/research/push-targets.json.
+const QUERIES = { "/research/price-targets": ["?demo=nvda"] };
 const LEGACY_TARGET = "/research/price-targets"; // notices sent before the payload carried a url
 const SAFE_TARGET = "/research";
 // How long an open app page has to confirm it moved to the notice's page before a window is opened for it instead.
@@ -29,10 +32,14 @@ function destination(value) {
   if (value === undefined || value === null) return LEGACY_TARGET;
   if (typeof value !== "string" || value.length > 200 || !value.startsWith("/") || value.startsWith("//") || /[\\\s]/.test(value)) return SAFE_TARGET;
   const hash = value.indexOf("#");
-  const path = hash < 0 ? value : value.slice(0, hash);
+  const beforeHash = hash < 0 ? value : value.slice(0, hash);
   const fragment = hash < 0 ? "" : value.slice(hash);
+  const mark = beforeHash.indexOf("?");
+  const path = mark < 0 ? beforeHash : beforeHash.slice(0, mark);
+  const query = mark < 0 ? "" : beforeHash.slice(mark);
   if (!OPENABLE.has(path) || (fragment && !FRAGMENT.test(fragment))) return SAFE_TARGET;
-  return path + fragment;
+  if (query && !(Object.prototype.hasOwnProperty.call(QUERIES, path) && QUERIES[path].includes(query))) return SAFE_TARGET;
+  return path + query + fragment;
 }
 function noticeId() {
   try { if (self.crypto && typeof self.crypto.randomUUID === "function") return self.crypto.randomUUID(); } catch { /* fall through */ }

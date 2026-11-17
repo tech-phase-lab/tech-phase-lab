@@ -174,7 +174,7 @@ def notice_schema(db):
 def notice_kind(payload, page):
     if payload.get('tag') == 'tech-phase-test':
         return 'test'
-    name = page.split('#', 1)[0].rsplit('/', 1)[-1]
+    name = page.split('#', 1)[0].split('?', 1)[0].rsplit('/', 1)[-1]
     return name if name != 'research' and NOTICE_KIND.fullmatch(name) else 'research'
 
 
@@ -661,6 +661,9 @@ def price_target_payload(ticker, firm, previous, latest, ja, tag):
 # restarts; more than DEMO_LATE_SECONDS late, it is skipped. Fictional firm and numbers; never a real firm name.
 DEMO_TARGET_VARIABLE = 'PUSH_DEMO_TARGET_AT'
 DEMO_TARGET = {'ticker': 'NVDA', 'firm': 'Sample Securities', 'previous': 295, 'latest': 340}
+# Nov 17 (owner): the demo notice (only it; real notices keep '/research/price-targets') opens the price-target page with the sample
+# row on top. The page shows that row from this query alone, in the browser, and removes the query from the address bar.
+DEMO_TARGET_URL = '/research/price-targets?demo=nvda'
 # OWNER_ACCOUNT_ID and PRODUCTION_OWNER_ACCOUNT_ID in lib/membership/entitlements.ts (a test checks they match).
 DEMO_OWNER_ACCOUNT_IDS = ('user_3JulL4D07KtVl5Eg2zdY1iczKbC', 'user_3LHR1K8f8zwyDcVzMg7ud6KB9Wb')
 DEMO_LATE_SECONDS = 600
@@ -682,7 +685,9 @@ def parse_demo_target(value):
 
 def scheduled_demo_target(db, value, transport=None, now=None):
     """Send the demo notice for this variable value once it is due. Returns None (no value), 'waiting', 'done' (this value was already
-    handled), or the outcome recorded now: 'sent', 'no-device', 'late', 'invalid'. One log line per outcome, never a device or text."""
+    handled), or the outcome recorded now: 'sent', 'no-device', 'quiet-hours' (every owner device was in its おやすみモード), 'late', 'invalid'.
+    One log line per outcome, never a device or text. Nov 17 (owner): a device in its quiet hours is skipped exactly as for a real
+    price-target notice (quiet_blocks, called as deliver calls it: now and the moment of the change, here the scheduled time)."""
     value = (value or '').strip()
     if not value:
         return None
@@ -697,18 +702,22 @@ def scheduled_demo_target(db, value, transport=None, now=None):
         db.execute('CREATE TABLE IF NOT EXISTS push_demo_schedule (value TEXT PRIMARY KEY, handled_at REAL NOT NULL, outcome TEXT)')
         if not db.execute('INSERT OR IGNORE INTO push_demo_schedule VALUES(?,?,NULL)', (value, now)).rowcount:
             return 'done'
-    devices = accepted = 0
+    devices = accepted = quiet = 0
     if outcome is None:
         marks = ','.join('?' * len(DEMO_OWNER_ACCOUNT_IDS))
         # Read at the moment of sending, so a device turned on just before the time is included.
-        rows = db.execute(f'SELECT id,subscription FROM push_devices WHERE active=1 AND owner_id IN ({marks}) ORDER BY id',
+        rows = db.execute(f'SELECT * FROM push_devices WHERE active=1 AND owner_id IN ({marks}) ORDER BY id',
                           DEMO_OWNER_ACCOUNT_IDS).fetchall()
         for row in rows:
             devices += 1
+            if quiet_blocks(row, now, parsed[0]):
+                quiet += 1
+                continue
             # A fresh tag of the same shape as a real one (a sha256 hex), so each send is shown as its own notice.
             tag = hashlib.sha256(json.dumps(['demo-target', secrets.token_hex(16)]).encode()).hexdigest()
             message = price_target_payload(DEMO_TARGET['ticker'], DEMO_TARGET['firm'], DEMO_TARGET['previous'], DEMO_TARGET['latest'],
                                            language == 'ja', tag)
+            message['url'] = DEMO_TARGET_URL
             try:
                 # Through noting(): written down in push_notices as a real price-target notice (the in-app banner behaves as for one).
                 code = noting(db, transport or send, now)(json.loads(row['subscription']), message)
@@ -720,12 +729,12 @@ def scheduled_demo_target(db, value, transport=None, now=None):
                 with db:
                     db.execute('DELETE FROM push_devices WHERE id=?', (row['id'],))
                     db.execute('DELETE FROM push_device_preferences WHERE device_id=?', (row['id'],))
-        outcome = 'sent' if devices else 'no-device'
+        outcome = 'no-device' if not devices else 'quiet-hours' if quiet == devices else 'sent'
     with db:
         db.execute('UPDATE push_demo_schedule SET outcome=? WHERE value=?', (outcome, value))
     # Language and counts only: never the device, endpoint, keys, the text or the provider's response.
-    print(json.dumps({'event': 'push-demo-target', 'language': language, 'devices': devices, 'accepted': accepted,
-                      'outcome': outcome}), flush=True)
+    print(json.dumps({'event': 'push-demo-target', 'language': language, 'devices': devices, 'quiet': quiet,
+                      'accepted': accepted, 'outcome': outcome}), flush=True)
     return outcome
 
 
@@ -858,7 +867,9 @@ def is_busy(exc):
 SEND_LOG_SIZE = 10
 SEND_LOG = deque(maxlen=SEND_LOG_SIZE)
 SEND_LOG_LOCK = threading.Lock()
-SEND_PAGE = re.compile(r'/research(/[a-z-]{1,40})?(#[a-z0-9-]{1,40})?')
+# Nov 17: the owner's filming notice opens the price-target page with ?demo=nvda (DEMO_TARGET_URL; the only listed query in
+# lib/research/push-targets.json).
+SEND_PAGE = re.compile(r'/research(/[a-z-]{1,40})?(#[a-z0-9-]{1,40})?|/research/price-targets\?demo=nvda')
 SEND_FAILURE_KINDS = frozenset({'ImportError', 'ModuleNotFoundError', 'TypeError', 'ValueError', 'KeyError', 'ConnectionError',
                                 'ConnectTimeout', 'ReadTimeout', 'Timeout', 'SSLError', 'WebPushException'})
 

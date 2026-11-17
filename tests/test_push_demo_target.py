@@ -88,14 +88,16 @@ class ScheduledDemoTargetTests(unittest.TestCase):
         _, ja, _ = self.fire(AT + ' ja')
         _, en, _ = self.fire(AT + ' en', now=self.now + 1)
         for language, (_, demo) in (('ja', ja[0]), ('en', en[0])):
-            self.assertEqual({k: demo[k] for k in ('title', 'body', 'url')}, {k: real[language][k] for k in ('title', 'body', 'url')})
+            self.assertEqual({k: demo[k] for k in ('title', 'body')}, {k: real[language][k] for k in ('title', 'body')})
+            # Nov 17: only the demo opens the page with its sample row; the real notice keeps the plain page.
+            self.assertEqual((demo['url'], real[language]['url']), ('/research/price-targets?demo=nvda', '/research/price-targets'))
             self.assertEqual(set(demo), set(real[language]))
             self.assertRegex(demo['tag'], r'^[a-f0-9]{64}$')
         self.assertEqual(ja[0][1]['title'], 'NVDA · 目標株価の変更')
         self.assertEqual(en[0][1]['title'], 'NVDA · Price target update')
         self.assertEqual(ja[0][1]['body'], 'Sample Securities: $295 → $340')
         self.assertEqual(en[0][1]['body'], 'Sample Securities: $295 → $340')
-        self.assertEqual(ja[0][1]['url'], '/research/price-targets')
+        self.assertEqual(ja[0][1]['url'], push.DEMO_TARGET_URL)
         self.assertNotEqual(ja[0][1]['tag'], en[0][1]['tag'])
 
     def test_fires_once_at_the_time_and_never_twice_for_the_same_value(self):
@@ -130,7 +132,7 @@ class ScheduledDemoTargetTests(unittest.TestCase):
         self.register(OTHER, subscription('fcm.googleapis.com', 'member'))
         result, sent, out = self.fire(now=self.now + 3)
         self.assertEqual((result, sent), ('no-device', []))
-        self.assertEqual(json.loads(out), {'event': 'push-demo-target', 'language': 'ja', 'devices': 0, 'accepted': 0, 'outcome': 'no-device'})
+        self.assertEqual(json.loads(out), {'event': 'push-demo-target', 'language': 'ja', 'devices': 0, 'quiet': 0, 'accepted': 0, 'outcome': 'no-device'})
         self.register()
         self.assertEqual(self.fire(now=self.now + 60, transport=lambda *_: self.fail('retried'))[0], 'done')
 
@@ -153,11 +155,33 @@ class ScheduledDemoTargetTests(unittest.TestCase):
         device = push.hashlib.sha256(subscription()['endpoint'].encode()).hexdigest()
         notice = push.recent_notice(self.db, device, self.now + 1)
         self.assertEqual((notice['kind'], notice['page'], notice['title'], notice['state']),
-                         ('price-targets', '/research/price-targets', 'NVDA · Price target update', 'new'))
+                         ('price-targets', '/research/price-targets?demo=nvda', 'NVDA · Price target update', 'new'))
         sub = subscription()
         for secret in (sub['endpoint'], 'owner-phone', sub['keys']['p256dh'], sub['keys']['auth'], 'Sample Securities', 'NVDA', OWNER):
             self.assertNotIn(secret, out)
-        self.assertEqual(json.loads(out), {'event': 'push-demo-target', 'language': 'en', 'devices': 1, 'accepted': 1, 'outcome': 'sent'})
+        self.assertEqual(json.loads(out), {'event': 'push-demo-target', 'language': 'en', 'devices': 1, 'quiet': 0, 'accepted': 1, 'outcome': 'sent'})
+
+    def test_quiet_hours_skip_the_device_exactly_as_for_a_real_price_target_notice(self):
+        # Nov 17 (owner): the demo reached the phone inside おやすみモード. 03:00Z is 12:00 Japan time.
+        self.register()
+        self.register(PREVIEW_OWNER, subscription('fcm.googleapis.com', 'preview-owner'))
+        self.db.execute('UPDATE push_devices SET quiet_on=1, quiet_start=11, quiet_end=13 WHERE subscription LIKE ?', ('%owner-phone%',))
+        self.db.commit()
+        # The same check as a real price-target notice (deliver): quiet_blocks(device, now, moment of the change).
+        rows = self.db.execute('SELECT * FROM push_devices ORDER BY id').fetchall()
+        expected = [json.loads(row['subscription'])['endpoint'] for row in rows if not push.quiet_blocks(row, self.now + 2, self.now)]
+        result, sent, out = self.fire(now=self.now + 2)
+        self.assertEqual([endpoint for endpoint, _ in sent], expected)
+        self.assertEqual([endpoint for endpoint, _ in sent], ['https://fcm.googleapis.com/push/preview-owner'])
+        self.assertEqual((result, json.loads(out)['quiet'], json.loads(out)['accepted']), ('sent', 1, 1))
+        # Every owner device asleep: nothing is sent and the outcome says why (and the value is not retried).
+        self.db.execute('UPDATE push_devices SET quiet_on=1, quiet_start=11, quiet_end=13')
+        self.db.commit()
+        result, sent, out = self.fire(value='2026-11-17T03:01:00Z ja', now=self.now + 61)
+        self.assertEqual((result, sent), ('quiet-hours', []))
+        self.assertEqual(json.loads(out), {'event': 'push-demo-target', 'language': 'ja', 'devices': 2, 'quiet': 2, 'accepted': 0,
+                                           'outcome': 'quiet-hours'})
+        self.assertEqual(self.fire(value='2026-11-17T03:01:00Z ja', now=self.now + 62, transport=lambda *_: self.fail('retried'))[0], 'done')
 
     def test_a_gone_device_is_removed(self):
         self.register()

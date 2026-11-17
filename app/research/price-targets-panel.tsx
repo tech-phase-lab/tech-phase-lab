@@ -13,11 +13,13 @@ import { publishPriceTargets } from "@/lib/research/price-target-snapshot";
 import FeedPagination from "./news/feed-pagination";
 import { useCalendarClock } from "./use-calendar-clock";
 import PriceTargetCard from "./price-target-card";
+import { withPriceTargetSample } from "@/lib/research/price-target-sample";
 
 let snapshot: { items: Target[]; at: string; time: number } | null = null;
 const recent = () => snapshot && Date.now() - snapshot.time < 120_000 ? snapshot : null;
 
-export default function PriceTargetsPanel({ lang }: { lang: Language }) {
+/** sample: the owner's filming row (price-targets page, ?demo=nvda only; lib/research/price-target-sample.ts), shown first, never shared. */
+export default function PriceTargetsPanel({ lang, sample = null }: { lang: Language; sample?: Target | null }) {
   const panelRef = useRef<HTMLElement>(null);
   const now = useCalendarClock();
   const [items, setItems] = useState<Target[]>(() => recent()?.items ?? []);
@@ -25,8 +27,6 @@ export default function PriceTargetsPanel({ lang }: { lang: Language }) {
   const [updatedAt, setUpdatedAt] = useState<string | null>(() => recent()?.at ?? null);
   const [delivery, setDelivery] = useState<"connecting" | "live" | "polling">("connecting");
   const [page, setPage] = useState(1);
-  const pages = Math.max(1, Math.ceil(items.length / 4));
-  const current = Math.min(page, pages);
   useEffect(() => {
     let active = true;
     let visible = false;
@@ -165,13 +165,17 @@ export default function PriceTargetsPanel({ lang }: { lang: Language }) {
   }, []);
   const t = (ja: string, en: string) => lang === "ja" ? ja : en;
   const time = (date: string) => formatTargetTime(date, lang);
+  // The sample row (if any) first; paging counts it.
+  const shown = withPriceTargetSample(items, sample);
+  const pages = Math.max(1, Math.ceil(shown.length / 4));
+  const current = Math.min(page, pages);
   return <section ref={panelRef} id="home-price-targets" className={styles.panel} aria-label={t("目標株価の速報", "Price target updates")}>
     <div className={styles.head}><p className={styles.eyebrow}>ANALYST</p><h2>{t("目標株価の変更", "Price target changes")}</h2><p className={styles.period}>{t("過去1週間", "Past week")}</p></div>
     {status === "error" && <p role="status" className={styles.state}>{t("現在、目標株価の更新を取得できません。表示内容は最新とは限りません。", "Price target updates are temporarily unavailable. Displayed items may be stale.")}</p>}
     {status === "loading" && <div aria-busy="true" aria-label={t("目標株価を取得中", "Fetching price targets")} className={styles.pending} />}
-    {status === "ready" && items.length === 0 && <p className={styles.state}>{t("条件に合う目標株価の投稿はまだありません。", "No matching price target posts yet.")}</p>}
-    {items.length > 0 && <div className={styles.list}>{items.slice((current - 1) * 4, current * 4).map(item =>
-      <PriceTargetCard key={item.id} item={item} lang={lang} now={now} />
+    {status === "ready" && shown.length === 0 && <p className={styles.state}>{t("条件に合う目標株価の投稿はまだありません。", "No matching price target posts yet.")}</p>}
+    {shown.length > 0 && <div className={styles.list}>{shown.slice((current - 1) * 4, current * 4).map(item =>
+      <PriceTargetCard key={item === sample ? "sample" : item.id} item={item} lang={lang} now={now} />
     )}</div>}
     <FeedPagination page={current} pages={pages} ja={lang === "ja"} onChange={n => { setPage(n); panelRef.current?.scrollIntoView({ block: "start", behavior: "instant" }); }} />
     <div className={styles.footer}>

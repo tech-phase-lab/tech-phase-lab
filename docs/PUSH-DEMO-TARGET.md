@@ -16,17 +16,25 @@ PUSH_DEMO_TARGET_AT=2026-11-17T05:30:00Z ja
   時刻を過ぎていればすぐ送る。時刻を過ぎて10分を超えた値は送らない（ログの `outcome: "late"`）。
 - 送る相手：その時点で有効な、運営者アカウント（`OWNER_ACCOUNT_ID` / `PRODUCTION_OWNER_ACCOUNT_ID`）の登録端末すべて。
   端末は送る瞬間に読むので、直前に通知をオンにした端末にも届く。
+- おやすみモード中の端末には送らない（本物の目標株価通知と同じ `quiet_blocks` 判定）。全端末がおやすみモードなら
+  ログは `outcome: "quiet-hours"`（`quiet` に見送った端末数）。
 - 同じ値では二度と送らない（DB の `push_demo_schedule` に記録、再起動後も有効）。もう一度送るには時刻か言語を変える。
-- 内容は本物の目標株価通知と同じ形：`NVDA · 目標株価の変更` / `Sample Securities: $295 → $340`、タップで `/research/price-targets`。
+- 内容は本物の目標株価通知と同じ形：`NVDA · 目標株価の変更` / `Sample Securities: $295 → $340`。
   本物の通知として記録される（アプリ内バナーも同じ動き）。
+- タップ先はこの通知だけ `/research/price-targets?demo=nvda`（本物の目標株価通知は `/research/price-targets` のまま）。
+  このクエリ付きで開いた目標株価ページは、同じ架空の変更（NVDA・Sample Securities・$295 → $340・引き上げ・開いた時刻）を
+  一覧の先頭に本物の行と同じ見た目で表示する。ブラウザ内だけの表示でサーバーには何も書かず、クエリはすぐアドレスから消すので
+  再読み込みすると通常の一覧に戻る。クエリなしでは誰にも表示されない。
+- タップ判定（11/17 修正）：アプリが前面に戻ってから尋ねた問い合わせへのサーバーの経過時間（ageMs）だけで判定する。
+  前面に戻った時刻と送信の差が15秒以内ならページを直接開く。端末とサーバーの時計は比べない。
 
 ## 確認
 
 ログに1行だけ出る（端末・本文・鍵は出さない）。
 
 ```
-{"event": "push-demo-target", "language": "ja", "devices": 1, "accepted": 1, "outcome": "sent"}
+{"event": "push-demo-target", "language": "ja", "devices": 1, "quiet": 0, "accepted": 1, "outcome": "sent"}
 ```
 
-`outcome` は `sent` / `no-device`（運営者の有効な端末がない。再試行しない）/ `late` / `invalid`（値の形式が違う）。
+`outcome` は `sent` / `no-device`（運営者の有効な端末がない。再試行しない）/ `quiet-hours`（全端末がおやすみモード。再試行しない）/ `late` / `invalid`（値の形式が違う）。
 撮影後は変数を消してよい（消さなくても再送はしない）。
