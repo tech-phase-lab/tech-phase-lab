@@ -37,7 +37,7 @@ export default function Landing({ embedded = false }: { embedded?: boolean }) {
     <p className={s.lead}>相場が荒れた日に立ち戻る場所を<br />あなたのスマホに置いておくキットです。</p>
     <div className={s.phone} aria-hidden="true"><div className={s.screen}>
      <p className={s.miniBrand}>RESOLUTE</p>
-     <div className={s.miniCard}><span className={s.miniLab}>今日の危険度</span><p>米商務省がAI半導体の対中規制を拡大へ</p>{stars(4)}</div>
+     <div className={s.miniCard}><span className={s.miniHead}><span className={s.miniLab}>衝撃度チェッカー</span><span className={s.miniEn}>SHOCK GAUGE</span></span><p>米商務省がAI半導体の対中規制を拡大へ</p>{stars(4)}</div>
      <div className={s.miniCard}><span className={s.miniLab}>相場の温度計</span><div className={s.track}><i style={{ left: "66%" }} /></div></div>
      <div className={s.miniTiles}><span>迷った日の一冊</span><span>ルールのお守り</span></div>
     </div></div>
@@ -109,7 +109,7 @@ export default function Landing({ embedded = false }: { embedded?: boolean }) {
     <div className={s.group}>
      <p className={s.groupNo}>04 <b>立ち戻る</b></p>
      <div className={s.sample} aria-hidden="true">
-      <div className={s.sampleHead}><span>今日の危険度</span><span className={s.all}>すべて見る →</span></div>
+      <div className={s.sampleHead}><span>衝撃度チェッカー</span><span className={s.miniEn}>SHOCK GAUGE</span></div>
       <ul className={s.news}>
        <li>米商務省がAI半導体の対中輸出規制を拡大する方針を発表{stars(4)}</li>
        <li>大手クラウド企業がデータセンター投資の計画を下方修正{stars(3)}</li>
@@ -117,7 +117,7 @@ export default function Landing({ embedded = false }: { embedded?: boolean }) {
       <div className={s.video}><span className={s.play} /><div><b>今夜のひと息</b><small>リゼルから</small></div><em>1:40</em></div>
      </div>
      <Feature title="暴落の夜に開く" text="リゼルの短い動画と、あなたが決めた「やらないこと」を1画面に。今夜は決めなくていいと思い出せます。" />
-     <Feature title="危険度チェッカー" text="その日の市場を揺るがすニュースを選び、危険度を★5段階で整理します。大きなニュースがない日は公開しません。" />
+     <Feature title="衝撃度チェッカー" text="その日の気になるニュースを選び、関連するTP指標が実際にどれだけ動いたかを★5段階で示します。大きなニュースがない日は公開しません。" />
      <Feature title="リゼルの一言" text="ニュースごとに、リゼル本人の見方をひと言添えて届けます。" />
     </div>
    </section>
@@ -160,7 +160,7 @@ export default function Landing({ embedded = false }: { embedded?: boolean }) {
     <div className={s.faq}>
      <details><summary>投資を始めたばかりでも使えますか?</summary><p>使えます。診断はボタンを押していくだけの30問です。難しい言葉を知らなくても、最後まで進めるように作りました。</p></details>
      <details><summary>特定の銘柄や売買のタイミングを教えてくれますか?</summary><p>いいえ。RESOLUTEは売買をすすめるものではありません。あなたが自分で決めたルールを形にして、相場が動いた日にそこへ戻るための道具です。</p></details>
-     <details><summary>買い切りですか?</summary><p>終値アラート・翌朝のひとこと・危険度チェッカー・リゼルの一言は購入から1年間で、2年目以降は更新する形です。それ以外の機能は一度の購入でずっと使えます。</p></details>
+     <details><summary>買い切りですか?</summary><p>終値アラート・翌朝のひとこと・衝撃度チェッカー・リゼルの一言は購入から1年間で、2年目以降は更新する形です。それ以外の機能は一度の購入でずっと使えます。</p></details>
      <details><summary>2年目の更新はいくらですか?</summary><p>5,980円です。Tech Phase PROの会員なら3,980円で更新できます。</p></details>
      <details><summary>Tech Phase PROに入っていなくても使えますか?</summary><p>使えます。FREE会員の方でも、RESOLUTEを購入すればすべての機能を使えます。</p></details>
      <details><summary>ログインしなくても買えますか?</summary><p>買えます。購入のあとにメールで案内が届くので、そこから受け取りの手続きをしてください。</p></details>

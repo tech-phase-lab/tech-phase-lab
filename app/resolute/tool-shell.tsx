@@ -20,7 +20,7 @@ const TOOLS: [string,string,string,ReactNode][] = [
  ["/resolute/notebook","マイルール","My rulebook",<path key="a" d="M7 4h10v16l-5-4-5 4z"/>],
  ["/resolute/wall","ルールのお守り","Rules wallpaper",<path key="b" d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"/>],
  ["/resolute/tonight","今夜のひと息","A moment to breathe",<path key="c" d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/>],
- ["/resolute/news","危険度チェッカー","News risk checker",<path key="d" d="M12 4l9 16H3zM12 10v4M12 17v.5"/>]];
+ ["/resolute/news","衝撃度チェッカー","Shock Gauge",<path key="d" d="M12 4l9 16H3zM12 10v4M12 17v.5"/>]];
 export default function ToolShell({ identityReady=true, home=false, children }: { identityReady?: boolean; home?: boolean;
  children: (locale: DiagnosisLocale, deny: () => void, entitlement: ReturnType<typeof validateSnapshot> | null) => ReactNode }) {
  useOpenAtTop();

@@ -37,7 +37,7 @@ export default function LandingEn({ embedded = false }: { embedded?: boolean }) 
     <p className={s.lead}>A kit that keeps your rules on your phone, ready for the days the market goes wild.</p>
     <div className={s.phone} aria-hidden="true"><div className={s.screen}>
      <p className={s.miniBrand}>RESOLUTE</p>
-     <div className={s.miniCard}><span className={s.miniHead}><span className={s.miniLab}>Today&apos;s News Risk Meter</span><span className={s.miniAll}>All →</span></span><p>US widens curbs on AI chip exports to China</p>{stars(4)}</div>
+     <div className={s.miniCard}><span className={s.miniHead}><span className={s.miniLab}>Shock Gauge</span><span className={s.miniAll}>All →</span></span><p>US widens curbs on AI chip exports to China</p>{stars(4)}</div>
      <div className={s.miniCard}><span className={s.miniHead}><span className={s.miniLab}>Market Gauge</span><span className={s.miniAll}>Hot</span></span><div className={s.track}><i style={{ left: "66%" }} /></div></div>
      <div className={s.miniTiles}><span>Your Rulebook</span><span>Rules Wallpaper</span></div>
     </div></div>
@@ -108,7 +108,7 @@ export default function LandingEn({ embedded = false }: { embedded?: boolean }) 
     <div className={s.group}>
      <p className={s.groupNo}>04 <b>Return</b></p>
      <div className={s.sample} aria-hidden="true">
-      <div className={s.sampleHead}><span>Today&apos;s News Risk Meter</span><span className={s.all}>See all →</span></div>
+      <div className={s.sampleHead}><span>Shock Gauge</span><span className={s.all}>See all →</span></div>
       <ul className={s.news}>
        <li>US Commerce Dept. plans wider limits on AI chip exports to China{stars(4)}</li>
        <li>A major cloud provider scales back its data center spending plan{stars(3)}</li>
@@ -116,7 +116,7 @@ export default function LandingEn({ embedded = false }: { embedded?: boolean }) 
       <div className={s.video}><span className={s.play} /><div><b>A Moment to Breathe</b><small>From RIZEL</small></div><em>1:40</em></div>
      </div>
      <Feature title="When the Market Tumbles" text={'A short video from RIZEL and the "won\'t do" list you made, on one screen. A reminder that you don\'t have to decide tonight.'} />
-     <Feature title="News Risk Meter" text="Highlights the day’s market-moving news and rates each story’s potential risk on a scale of 1 to 5 stars. No major news, no update." />
+     <Feature title="Shock Gauge" text="Picks the day’s notable news and shows, on a scale of 1 to 5 stars, how much the related TP index actually moved. No major news, no update." />
      <Feature title="RIZEL's Take" text="A one-line take from RIZEL on each story." />
     </div>
    </section>
@@ -151,7 +151,7 @@ export default function LandingEn({ embedded = false }: { embedded?: boolean }) 
     <div className={s.faq}>
      <details><summary>I&apos;m new to investing. Can I use it?</summary><p>Yes. Just tap to answer 30 straightforward questions. You don’t need any investing knowledge to get started.</p></details>
      <details><summary>Will it tell me what to buy or when to sell?</summary><p>No. RESOLUTE doesn&apos;t recommend trades. It turns the rules you set into something you can hold onto, so you can come back to them when the market moves.</p></details>
-     <details><summary>Is it a one-time purchase?</summary><p>Your one-time purchase includes ongoing access to the core tools, plus one year of Closing-price Alerts, Morning Note, News Risk Meter, and RIZEL’s Take. After the first year, you can choose to renew these four features for another year. Renewal is optional and never automatic.</p></details>
+     <details><summary>Is it a one-time purchase?</summary><p>Your one-time purchase includes ongoing access to the core tools, plus one year of Closing-price Alerts, Morning Note, Shock Gauge, and RIZEL’s Take. After the first year, you can choose to renew these four features for another year. Renewal is optional and never automatic.</p></details>
      <details><summary>How much does renewal cost?</summary><p>Renewal costs $39 per year, or $29 per year for active Tech Phase PRO members.</p></details>
      <details><summary>Do I need Tech Phase PRO?</summary><p>No. You can purchase RESOLUTE without a Tech Phase PRO subscription. Every feature is included for the first year, with optional renewal for the four features listed above.</p></details>
      <details><summary>Can I buy without an account?</summary><p>Yes. You don’t need an account to purchase. After payment, we’ll email you a link to create an account or sign in and activate your access.</p></details>

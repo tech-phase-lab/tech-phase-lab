@@ -1,5 +1,5 @@
 import rosters from './thermometer-rosters.json' with { type: 'json' };
-import { equalWeightLevels, realizedVolatility } from './thermometer-basket.ts';
+import { dailyMove, equalWeightLevels, realizedVolatility } from './thermometer-basket.ts';
 import { calculateTemperature, calculateVixContext, validSessionDate, type DailyClose } from './thermometer.ts';
 
 export type ThermometerRosters = { nasdaq100: string[]; semiconductors: string[] };
@@ -63,5 +63,7 @@ export async function collectThermometer(config: ThermometerProviderConfig, conf
   const nas100 = 'levels' in large ? calculateTemperature('nas100', large.levels, confirmedSession) : large;
   const sox = 'levels' in chips ? calculateTemperature('sox', chips.levels, confirmedSession) : chips;
   const vix = 'levels' in large ? calculateVixContext(realizedVolatility(large.levels), confirmedSession) : large;
-  return { asOf: confirmedSession, nas100, sox, vix, missing: [...new Set(missing)].sort() };
+  // Day-over-day basket moves for the Shock Gauge stars; independent of the 10-year history the temperature needs.
+  const moves = { nas100: 'levels' in large ? dailyMove(large.levels, confirmedSession) : null, sox: 'levels' in chips ? dailyMove(chips.levels, confirmedSession) : null };
+  return { asOf: confirmedSession, nas100, sox, vix, moves, missing: [...new Set(missing)].sort() };
 }

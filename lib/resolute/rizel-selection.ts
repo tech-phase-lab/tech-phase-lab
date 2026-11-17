@@ -1,4 +1,7 @@
 /** Private input only: never import the approved bank into a client bundle. */
+import {rizelCopyIssues} from './risk-copy-check.ts';
+/** Approved lines that evaluate importance/impact, give an outlook or a trading action wait for the owner's re-approval (rizel-admin). */
+export const needsReapproval=(e:{text:string;english?:{text:string}})=>rizelCopyIssues(e.text).length>0||rizelCopyIssues(e.english?.text??'').length>0;
 export type CopyEntry = {id:string;group:'A'|'B'|'C'|'D';kind:'conclusion'|'reason';revision:number;approval:string;publication:string;text:string;textSha256:string;english?:{text:string;approval:string;textSha256:string}};
 export type Evidence = {condition:string;articleRevision:string;source:string;verifiedBy:'data'|'editor';reference:string};
 export type SelectionArticle = {id:string;revision:string;stars:number;text:string};
@@ -16,7 +19,7 @@ export function eligibleCopies(bank:CopyEntry[],article:SelectionArticle,evidenc
  if(!Number.isInteger(article.stars)||article.stars<1||article.stars>5||!article.id||!article.revision)throw Error('INVALID_ARTICLE');
  const group=article.stars<=2?'A':article.stars===3?'B':'C';
  const verified=new Set(evidence.filter(e=>e.articleRevision===article.revision&&e.source&&e.reference&&(e.verifiedBy==='data'||e.verifiedBy==='editor'&&!numeric.has(e.condition))).map(e=>e.condition));
- return bank.filter(e=>e.approval==='approved'&&e.english?.approval==='approved'&&e.id!=='D-executive-03'&&(e.group===group&&(!factualCopyConditions[e.id]||verified.has(factualCopyConditions[e.id]))||e.group==='D'&&e.kind==='reason'&&conditions[e.id]&&verified.has(conditions[e.id])));
+ return bank.filter(e=>e.approval==='approved'&&e.english?.approval==='approved'&&e.id!=='D-executive-03'&&!needsReapproval(e)&&(e.group===group&&(!factualCopyConditions[e.id]||verified.has(factualCopyConditions[e.id]))||e.group==='D'&&e.kind==='reason'&&conditions[e.id]&&verified.has(conditions[e.id])));
 }
 /** Editorial checks operate on immutable approved wording, never rewrite it. */
 export function repetitionIssues(entries:CopyEntry[]) {

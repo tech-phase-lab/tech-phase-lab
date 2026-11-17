@@ -52,3 +52,17 @@ export function realizedVolatility(levels: readonly DailyClose[], window = 20): 
   }
   return out;
 }
+
+/** One basket's close-to-close move on a confirmed session (used by the Shock Gauge stars).
+ * Only when the session itself has a level and the previous basket day is at most 7 calendar days earlier. Never guessed.
+ */
+export type DailyMove = { date: string; previousDate: string; changePercent: number };
+export function dailyMove(levels: readonly DailyClose[], session: string): DailyMove | null {
+  const sorted = levels.filter(bar => bar.date <= session).slice().sort((a, b) => a.date.localeCompare(b.date));
+  const last = sorted.at(-1), previous = sorted.at(-2);
+  if (!last || !previous || last.date !== session || !(last.close > 0) || !(previous.close > 0)) return null;
+  const days = (Date.parse(last.date) - Date.parse(previous.date)) / 86400000;
+  if (!(days > 0 && days <= 7)) return null;
+  const changePercent = 100 * (last.close / previous.close - 1);
+  return Number.isFinite(changePercent) && Math.abs(changePercent) < 100 ? { date: last.date, previousDate: previous.date, changePercent } : null;
+}

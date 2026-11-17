@@ -1,7 +1,7 @@
 import { usMarketSession } from '../research/us-market-session.ts';
 import { collectThermometer, type ThermometerProviderConfig } from './thermometer-provider.ts';
 import { THERMOMETER_VERSION, validSessionDate } from './thermometer.ts';
-import { gaugeReading, type ThermometerSnapshot } from './thermometer-view.ts';
+import { gaugeReading, type DailyMoveReading, type ThermometerSnapshot } from './thermometer-view.ts';
 
 /** The calendar is deliberately bounded; no weekday-only guesses beyond its coverage.
  * A close becomes eligible one hour after the regular/shortened session ends.
@@ -38,7 +38,21 @@ export function safeThermometerSnapshot(raw: unknown, expected: string): Thermom
   const v = source.vix;
   if (v?.status === 'ready' && v.asOf === expected && Number.isFinite(v.level) && v.level > 0 && Number.isFinite(v.percentile) && v.percentile >= 0 && v.percentile <= 100) empty.vix = {status:'ready',asOf:expected,level:v.level,percentile:v.percentile};
   else if (v?.status === 'unavailable') empty.vix = {status:'unavailable',reason:reasons.has(v.reason)?v.reason:'invalid-data'};
-  return empty;
+  const moves = safeMoves(source.moves, expected);
+  return moves ? {...empty, moves} : empty;
+}
+/** Only a move dated on the snapshot's own session, with a plausible earlier previous close, is kept. */
+function safeMove(raw: unknown, expected: string): DailyMoveReading | null {
+  const m = raw as DailyMoveReading | null | undefined;
+  if (!m || typeof m !== 'object' || m.date !== expected || !validSessionDate(m.previousDate) || m.previousDate >= expected) return null;
+  const days = (Date.parse(expected) - Date.parse(m.previousDate)) / 86400000;
+  if (days > 7 || typeof m.changePercent !== 'number' || !Number.isFinite(m.changePercent) || Math.abs(m.changePercent) >= 100) return null;
+  return {date: m.date, previousDate: m.previousDate, changePercent: m.changePercent};
+}
+export function safeMoves(raw: unknown, expected: string): ThermometerSnapshot['moves'] | undefined {
+  if (!raw || typeof raw !== 'object') return undefined;
+  const source = raw as Record<string, unknown>;
+  return {nas100: safeMove(source.nas100, expected), sox: safeMove(source.sox, expected)};
 }
 export interface ThermometerDatabase {
   query(sql: string, values?: unknown[]): Promise<{rows: Record<string,unknown>[]}>;

@@ -4,6 +4,7 @@ import ToolShell from '../tool-shell';
 import {ReviewLink as Link,useReview,useNotificationClient} from '../review-context';
 import {useRisk,riskStatus} from '../features/use-risk';
 import {RISK_PREVIEW_DETAILS} from '@/lib/resolute/risk-preview';
+import {ShockGaugeTitle,ShockStars} from '../features/shock-gauge';
 import {validateSnapshot} from '@/lib/resolute/transport';
 import {formatDisplay} from '@/lib/research/display-time';
 import s from './reference.module.css';
@@ -22,7 +23,7 @@ export function Home({locale,entitlement,thermometerSnapshot}:{thermometerSnapsh
  const en=locale==='en',review=useReview(),live=useRisk();
  const {feed,status}=live;
  const available=status==='ready'&&feed?.state==='ready';
- const high=available&&feed.articles.some(a=>a.stars>=4);
+ const high=available&&feed.articles.some(a=>a.stars!==null&&a.stars>=4);
  const displaySample=!!review&&review.scenario!=='live';
  const previewExpired=review?.scenario==='expired';
  const locked=previewExpired||!review&&entitlement!==null&&!entitlement.canReceiveNotifications;
@@ -49,9 +50,9 @@ export function Home({locale,entitlement,thermometerSnapshot}:{thermometerSnapsh
   <h1><svg className={s.anc} viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="9" r="4"/><path d="M24 13v28M17 19h14M9 31c0 7 7 11 15 11s15-4 15-11M5 33l4-4 4 4M35 33l4-4 4 4"/></svg><span>RESOLUTE</span></h1>
   <div className={s.date}>{date??'—'}</div>
   <section className={s.sec}><div className={s.lab}>TODAY</div>
-   <div className={`${s.card} ${high&&!locked?s.high:''}`}><div className={s.row}><h2>{en?'Today’s news risk':'今日の危険度'}</h2>{!locked&&available&&feed.articles.length>0?<Link className={s.more} href="/resolute/news">{en?`See all ${feed.articles.length} →`:`${feed.articles.length}件すべて見る →`}</Link>:null}</div>
-    {locked?<div className={s.lock}><p>🔒 {en?'The news risk checker is included while your alerts access is active.':'危険度チェッカーは、アラートの利用期間中に見られます。'}</p><p className={s.sub}>{en?'Renew for another year of daily news risk updates.':'更新すると、また毎朝の危険度を確認できます。'}</p><button className={s.primary} disabled>{en?'Renew for one year':'1年分を更新する'}{displayOffer?`　${en?'$'+displayOffer.en:displayOffer.ja.toLocaleString('ja-JP')+'円'}`:''}</button><p className={s.sub}>{en?'Renewal checkout is not open yet.':'更新の受付は準備中です。'}</p></div>:<>
-     {available&&feed.articles.length>0?<><ul className={s.news}>{feed.articles.slice(0,2).map(a=><li key={a.id} style={{'--c':colors[a.stars]} as CSSProperties}><span className={s.headline}>{displaySample?(RISK_PREVIEW_DETAILS[a.id]?.[en?'homeEn':'homeJa']??a[locale].title):a[locale].title}</span><b aria-label={`${a.stars}/5`}>{Array.from({length:a.stars},(_,i)=><i key={i} aria-hidden="true">★</i>)}<span aria-hidden="true">{'☆'.repeat(5-a.stars)}</span></b></li>)}</ul><div className={`${s.today} ${high?s.warn:''}`}>{en?'What to do today: ':'今日やること: '}{high?<Link href="/resolute/notebook">{en?'Reread your rules':'ルールを読み返す'}</Link>:displaySample?<Link href="/resolute/notebook">{en?'Check your first price level':'最初のラインを確認する'}</Link>:(en?'Nothing for now':'なし')}</div></>:<p role="status">{riskStatus(en,status,feed?.state)}</p>}
+   <div className={`${s.card} ${high&&!locked?s.high:''}`}><div className={s.row}><h2 style={{flex:1,minWidth:0}}><ShockGaugeTitle locale={locale}/></h2>{!locked&&available&&feed.articles.length>0?<Link className={s.more} href="/resolute/news">{en?`See all ${feed.articles.length} →`:`${feed.articles.length}件すべて見る →`}</Link>:null}</div>
+    {locked?<div className={s.lock}><p>🔒 {en?'The Shock Gauge is included while your alerts access is active.':'衝撃度チェッカーは、アラートの利用期間中に見られます。'}</p><p className={s.sub}>{en?'Renew for another year of the daily Shock Gauge.':'更新すると、また毎朝の衝撃度チェッカーを確認できます。'}</p><button className={s.primary} disabled>{en?'Renew for one year':'1年分を更新する'}{displayOffer?`　${en?'$'+displayOffer.en:displayOffer.ja.toLocaleString('ja-JP')+'円'}`:''}</button><p className={s.sub}>{en?'Renewal checkout is not open yet.':'更新の受付は準備中です。'}</p></div>:<>
+     {available&&feed.articles.length>0?<><ul className={s.news}>{feed.articles.slice(0,2).map(a=><li key={a.id} style={a.stars?{'--c':colors[a.stars]} as CSSProperties:undefined}><span className={s.headline}>{displaySample?(RISK_PREVIEW_DETAILS[a.id]?.[en?'homeEn':'homeJa']??a[locale].title):a[locale].title}</span><ShockStars article={a} locale={locale}/></li>)}</ul><div className={`${s.today} ${high?s.warn:''}`}>{en?'What to do today: ':'今日やること: '}{high?<Link href="/resolute/notebook">{en?'Reread your rules':'ルールを読み返す'}</Link>:displaySample?<Link href="/resolute/notebook">{en?'Check your first price level':'最初のラインを確認する'}</Link>:(en?'Nothing for now':'なし')}</div></>:<p role="status">{riskStatus(en,status,feed?.state)}</p>}
      {displaySample?<p className={s.notice}>{feed?.date} · {en?'Display sample':'表示見本'}</p>:null}
     </>}
    </div>

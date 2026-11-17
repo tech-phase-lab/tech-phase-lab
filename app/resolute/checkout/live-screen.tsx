@@ -76,7 +76,7 @@ export default function LiveCheckoutScreen({orderId,language:initialLanguage,can
   {!salesEnabled && <p role="status">{errors.PAYMENT_DISABLED[en?1:0]}</p>}
   {cancelled && <p>{en?"You returned from PayPal. Opening this page does not complete a payment.":"PayPalから戻りました。このページを開いただけで支払いは確定しません。"}</p>}
   {!id && <>
-   <p>{en?"Your first purchase includes RESOLUTE and one year of alerts and the Risk Checker. Annual renewals are separate purchases and never renew automatically.":"初回購入にはRESOLUTEと、1年間のアラート・危険度チェッカーが含まれます。2年目以降の更新は1年ごとの購入で、自動継続はありません。"}</p>
+   <p>{en?"Your first purchase includes RESOLUTE and one year of alerts and the Shock Gauge. Annual renewals are separate purchases and never renew automatically.":"初回購入にはRESOLUTEと、1年間のアラート・衝撃度チェッカーが含まれます。2年目以降の更新は1年ごとの購入で、自動継続はありません。"}</p>
    <label>{en?"Purchase type":"購入内容"}<select value={kind} disabled={busy || !salesEnabled || attempt.current!==null} onChange={e=>setKind(e.target.value as "initial"|"renewal")}>
     <option value="initial">{en?"First purchase":"初回購入"}</option><option value="renewal" disabled={guest}>{en?"Annual renewal":"1年間の更新"}</option>
    </select></label>

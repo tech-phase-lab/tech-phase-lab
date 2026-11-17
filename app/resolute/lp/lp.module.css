@@ -171,6 +171,9 @@
 .foot .footWide { gap:8px 28px; }
 .miniHead { display:flex; justify-content:space-between; align-items:baseline; gap:6px; }
 .miniAll { font-size:9px; color:var(--gold2); white-space:nowrap; }
+/* Shock Gauge: small faint English name at the right end of the same heading line (no extra line). */
+.miniEn { margin-left:auto; font-size:7.5px; letter-spacing:.2em; color:var(--gold); opacity:.55; white-space:nowrap; }
+.sampleHead .miniEn { font-size:9px; align-self:center; }
 .lockDate { font-size:9.5px; color:var(--sub); margin-top:2px !important; }
 .thermoLab { font-size:11px; letter-spacing:.2em; color:var(--gold); }
 .bookEn { --w:172px; --h:240px; }

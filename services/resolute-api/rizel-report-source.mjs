@@ -43,7 +43,7 @@ export function createReportReader({enabled=false,token,tickers,marketWide=false
    const month=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'].indexOf(clock[2]);
    const calendar=new Date(Date.UTC(Number(clock[3]),month,Number(clock[1])));
    if(calendar.getUTCFullYear()!==Number(clock[3])||calendar.getUTCMonth()!==month||calendar.getUTCDate()!==Number(clock[1]))throw Error('INVALID_DATE');
-   items.push({title:row.title.trim(),bodyEn:row.text.trim(),url:article.href,publishedAt:new Date(row.date).toISOString(),publisher:row.source_name.trim()});
+   items.push({title:row.title.trim(),bodyEn:row.text.trim(),url:article.href,publishedAt:new Date(row.date).toISOString(),publisher:row.source_name.trim(),tickers:rowTickers.filter(t=>/^[A-Z][A-Z0-9.]{0,9}$/.test(t)).slice(0,30)});
   }
   const oldest=payload.data.map(r=>Date.parse(r?.date)).filter(Number.isFinite).sort((a,b)=>a-b)[0];
   // A full page is a bounded sample, not proof of exhaustive coverage. Report how far back it reached.
