@@ -10,6 +10,7 @@ import { useOwnerAccount, useOwnerMode } from "./member-display-provider";
 import PushDiagnosticPanel from "./push-diagnostic-panel";
 import { PUSH_SW_OPTIONS, PUSH_SW_URL, reinstallPushWorker, type ContainerLike, type ReinstallResult } from "@/lib/research/push-sw-facts";
 import NotificationPageView, { type Preferences } from "./notification-page-view";
+import { enablePushDevice, PushEnableError, pushEnableReportLine, readyWithin, type PushEnableReport } from "@/lib/research/push-subscribe";
 
 const DEVICE_KEY = "tech-phase:notification-device-state";
 const readDeviceState = () => { try { return localStorage.getItem(DEVICE_KEY) ?? ""; } catch { return ""; } };
@@ -162,6 +163,34 @@ export default function NotificationSettings({ lang, initiallyOpen = false, page
     if (!response.ok || !result.ok) throw new Error(refusalMessage(result?.error) ?? t("接続できませんでした。もう一度お試しください。", "Unable to connect. Please try again."));
     return result;
   }
+  // updateViaCache "none": the browser always fetches research-sw.js from the network when it checks for a new version.
+  async function activeWorker() {
+    const registration = await navigator.serviceWorker.register(PUSH_SW_URL, PUSH_SW_OPTIONS);
+    // Wait for installation without relying on an indefinitely pending ready promise.
+    if (!registration.active) await new Promise<void>((resolve, reject) => {
+      const worker = registration.installing || registration.waiting;
+      if (!worker) { reject(new Error("Service worker unavailable")); return; }
+      const timeout = setTimeout(() => { worker.removeEventListener("statechange", changed); reject(new Error("Service worker timeout")); }, 10_000);
+      function changed() { if (worker?.state === "activated") { clearTimeout(timeout); worker.removeEventListener("statechange", changed); resolve(); } }
+      worker.addEventListener("statechange", changed); changed();
+    });
+    return registration;
+  }
+  // A failed (or retried) enable is logged on the server as a stage and an error name only: never an endpoint, a key or a message.
+  function reportEnable(report: PushEnableReport) {
+    console.info(`[notifications] enable ${pushEnableReportLine(report)}`);
+    try {
+      void fetch("/api/research/notifications", { method: "POST", credentials: "same-origin", keepalive: true, headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ action: "client-error", report }) }).catch(() => {});
+    } catch { /* the report is best effort */ }
+  }
+  // Shown only when the retry failed too.
+  function enableFailure(error: PushEnableError): string {
+    if (error.errorName === "NotAllowedError") return t("この端末で通知が許可されていません。設定アプリでTech Phaseの通知を許可してください。", "Notifications are not allowed on this device. Allow Tech Phase notifications in Settings.");
+    if (error.stage === "worker") return t("通知の仕組み（サービスワーカー）を準備できませんでした。アプリを開き直してから、もう一度お試しください。", "The notification service worker could not start. Reopen the app and try again.");
+    if (error.stage === "register") return t("サーバーに接続できませんでした。通信状態を確認して、もう一度お試しください。", "Could not reach the server. Check your connection and try again.");
+    return t(`この端末を通知サービスに登録できませんでした（${error.errorName}）。少し待ってから、もう一度お試しください。`, `This device could not be registered with the push service (${error.errorName}). Wait a moment and try again.`);
+  }
   async function run(action: "enable" | "disable" | "status" | "test") {
     if (operation.current) return;
     operation.current = true;
@@ -173,18 +202,24 @@ export default function NotificationSettings({ lang, initiallyOpen = false, page
           const permission = await Notification.requestPermission();
           if (permission !== "granted") { setState(permission === "denied" ? "blocked" : "off"); return; }
         }
+        // Nov 17: off then on failed on the first tap on the owner's iPhone (no register request ever left the phone). The subscription is
+        // made by enablePushDevice, which waits for the ready worker and tries a transient failure once more without asking permission again.
+        const { subscription, result } = await enablePushDevice({
+          prepare: async attempt => attempt === 1 ? await activeWorker() : await readyWithin(navigator.serviceWorker.ready),
+          key: keyBytes(), register: subscription => request("register", subscription), subscribed: () => setHasSubscription(true),
+          wait: ms => new Promise<void>(resolve => { setTimeout(resolve, ms); }), report: reportEnable,
+        });
+        // Nov 17 (owner): "on" was set before the choices were read (up to 15 s) while the button still said 「設定中…」, so the tag read
+        // オン next to the outlined off-style button for a moment. The state now changes together with busy: read first, then show "on"
+        // (still "on" when the read fails, as before: the device is registered).
+        const registered = result.registered === true;
+        setReceived(false); setTestSent(false);
+        if (page && registered) { try { await loadPreferences(subscription, AbortSignal.timeout(15_000), () => true); } catch { /* shown by loadPreferences */ } }
+        setState(registered ? "on" : "unknown");
+        return;
       }
-      // updateViaCache "none": the browser always fetches research-sw.js from the network when it checks for a new version.
-      const registration = await navigator.serviceWorker.register(PUSH_SW_URL, PUSH_SW_OPTIONS);
-      // Wait for installation without relying on an indefinitely pending ready promise.
-      if (!registration.active) await new Promise<void>((resolve, reject) => {
-        const worker = registration.installing || registration.waiting;
-        if (!worker) { reject(new Error("Service worker unavailable")); return; }
-        const timeout = setTimeout(() => { worker.removeEventListener("statechange", changed); reject(new Error("Service worker timeout")); }, 10_000);
-        function changed() { if (worker?.state === "activated") { clearTimeout(timeout); worker.removeEventListener("statechange", changed); resolve(); } }
-        worker.addEventListener("statechange", changed); changed();
-      });
-      let subscription = await registration.pushManager.getSubscription();
+      const registration = await activeWorker();
+      const subscription = await registration.pushManager.getSubscription();
       if (action === "disable") {
         // A successful browser unsubscribe stops this device even if the server is unavailable.
         if (subscription) {
@@ -193,13 +228,7 @@ export default function NotificationSettings({ lang, initiallyOpen = false, page
         }
         wasOn.current = false; setHasSubscription(false); setState("off"); setTestSent(false); setReceived(false); confirmed.current = null; setPrefs(null); setPrefsState("idle"); return;
       }
-      if (action === "enable") {
-        subscription = subscription || await registration.pushManager.subscribe({ userVisibleOnly: true, applicationServerKey: keyBytes() });
-        setHasSubscription(true);
-        const result = await request("register", subscription);
-        setState(result.registered ? "on" : "unknown"); setReceived(false); setTestSent(false);
-        if (page && result.registered) await loadPreferences(subscription, AbortSignal.timeout(15_000), () => true);
-      } else if (!subscription) { setState("off"); }
+      if (!subscription) { setState("off"); }
       else if (action === "status") {
         const result = await request("status", subscription); setState(result.registered ? "on" : "off");
       } else {
@@ -216,7 +245,7 @@ export default function NotificationSettings({ lang, initiallyOpen = false, page
           : t("通知サービスに受け付けられませんでした。1分後に再試行できます。", "The push service did not accept the message. You can retry in one minute.");
         setMessage(result.accepted ? t("送信を受け付けました。スマホに届いたら「届きました」を押してください。", "Send accepted. Select Received after it appears on your phone.") : failure);
       }
-    } catch (error) { setMessage(error instanceof Error ? error.message : t("接続を確認してください。", "Check your connection.")); if (action === "enable") setState(current => current === "sign-in" || current === "pro-required" ? current : "unknown"); }
+    } catch (error) { setMessage(error instanceof PushEnableError ? enableFailure(error) : error instanceof Error ? error.message : t("接続を確認してください。", "Check your connection.")); if (action === "enable") setState(current => current === "sign-in" || current === "pro-required" ? current : "unknown"); }
     finally { operation.current = false; setBusy(false); if (pendingInspection.current) setRefresh(value => value + 1); }
   }
   const keyBytes = () => Uint8Array.from(atob(key.replace(/-/g, "+").replace(/_/g, "/")), c => c.charCodeAt(0));
