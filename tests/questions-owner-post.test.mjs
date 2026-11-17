@@ -102,6 +102,31 @@ test('owner access: both owner accounts post through the route with the server-d
   }
 });
 
+test('owner previewing the PRO member plan: the board comes back with no 「自分の質問」 mark, so no 「あなたの質問」 or delete shows', async () => {
+  const { GET } = await ownerRoute();
+  const keys = ['CLERK_SECRET_KEY', 'NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY', 'TECH_PHASE_REQUIRE_ADMIN_MFA', 'VERCEL_ENV', 'RESEARCH_MONITOR_URL', 'RESEARCH_MONITOR_TOKEN'];
+  const before = Object.fromEntries(keys.map(key => [key, process.env[key]])), savedFetch = globalThis.fetch;
+  globalThis.fetch = async () => Response.json({ ok: true, audience: 'pro-board', items: [{ id: 'q-' + 'd'.repeat(32), body: 'x', status: 'answered', isMine: true }], hasNext: false, limit: 2, left: 1 });
+  const preview = { membershipPreview: { plan: 'pro', proExpiresAt: new Date(Date.now() + 3600000).toISOString(), testUntil: new Date(Date.now() + 3600000).toISOString() } };
+  const mine = async () => (await (await GET(new Request('https://example.test/api/research/questions?page=1'))).json()).items[0].isMine;
+  try {
+    Object.assign(process.env, { CLERK_SECRET_KEY: 'fixture', NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: 'fixture', TECH_PHASE_REQUIRE_ADMIN_MFA: 'true', RESEARCH_MONITOR_URL: 'https://monitor.example', RESEARCH_MONITOR_TOKEN: 'monitor-token-at-least-24-characters' });
+    // The production owner previewing PRO on techphase.app (production owner previews run as "preview").
+    process.env.VERCEL_ENV = 'production';
+    globalThis.__ownerPost = { live: { plan: 'free', accessExpiresAt: 0 }, session: { userId: PRODUCTION_OWNER_ACCOUNT_ID, sessionClaims: { fva: [0, 0] } }, user: { twoFactorEnabled: true, privateMetadata: preview } };
+    assert.equal(await mine(), false, 'owner previewing PRO');
+    // The owner view keeps the mark.
+    globalThis.__ownerPost.user = { twoFactorEnabled: true, privateMetadata: {} };
+    assert.equal(await mine(), true, 'owner view');
+    // An ordinary PRO member keeps the mark on their own question.
+    globalThis.__ownerPost = { live: { plan: 'pro', accessExpiresAt: Date.now() + 600000 }, session: { userId: 'user_other', sessionClaims: { fva: [0, 0] } }, user: { twoFactorEnabled: true, privateMetadata: {} } };
+    assert.equal(await mine(), true, 'member');
+  } finally {
+    globalThis.fetch = savedFetch; delete globalThis.__ownerPost; delete globalThis.__ownerPostMembership;
+    for (const key of keys) { if (before[key] === undefined) delete process.env[key]; else process.env[key] = before[key]; }
+  }
+});
+
 test('the owner account viewing as a PRO member sees its own card like any other member (no 「あなたの質問」, no delete) for screenshots', () => {
   const answered = { ...question('q-' + 'c'.repeat(32)), status: 'answered' };
   const preview = renderQuestions({ ownerMode: false, ownerAccount: true, items: [answered] });
