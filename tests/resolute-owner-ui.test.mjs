@@ -100,7 +100,8 @@ test("RESOLUTE has its own home-screen app: manifest, icons, scope and a hint to
   const manifest = JSON.parse(await read("../public/resolute.webmanifest"));
   assert.equal(manifest.name, "RESOLUTE");
   assert.equal(manifest.start_url, "/resolute");
-  assert.equal(manifest.scope, "/resolute");
+  // Owner, Nov 17: scope "/" so RESOLUTE ⇄ Tech Phase links stay inside the installed app (no address bar).
+  assert.equal(manifest.scope, "/"); assert.equal(manifest.id, "/resolute"); assert.equal(manifest.start_url, "/resolute");
   assert.equal(manifest.display, "standalone");
   for (const icon of manifest.icons) assert.ok((await readFile(new URL(`../public${icon.src}`, import.meta.url))).length > 1000, icon.src);
   const layout = await read("../app/resolute/layout.tsx");
@@ -108,7 +109,7 @@ test("RESOLUTE has its own home-screen app: manifest, icons, scope and a hint to
   assert.match(layout, /appleWebApp: \{ capable: true, title: "RESOLUTE" \}/);
   assert.match(layout, /resolute-180\.png/);
   const tech = await read("../app/manifest.ts");
-  assert.match(tech, /scope: "\/research"/, "the Tech Phase app keeps its own scope");
+  assert.match(tech, /id: "\/research"/, "the Tech Phase app keeps its own identity"); assert.match(tech, /scope: "\/"/, "both apps cover the whole site (owner, Nov 17)");
   assert.match(await read("../app/resolute/add-to-home-steps.tsx"), /ホーム画面に追加/);
   assert.match(await read("../app/resolute/tool-shell.tsx"), /<AddToHomeCard en=\{en\} \/>/);
   assert.match(await read("../app/resolute/lp/landing.tsx"), /<AddToHomeSteps className=\{s\.homeSteps\} \/>/);
