@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState, useSyncExternalStore, type ReactNode } from "react";
 import { useRouter } from "next/navigation";
-import { BAR_EVENT, BAR_STATE_KEY, needsRefresh, parseBarState, writeBarState } from "@/lib/research/resolute-bar-state";
+import { BAR_EVENT, BAR_STATE_KEY, barStateFromAnswer, needsRefresh, parseBarState, writeBarState } from "@/lib/research/resolute-bar-state";
 import { FIRST_VISIT_KEY, entryDecision, signedInFromCookies, staleNotOwned } from "@/lib/resolute/landing-gate";
 import { requestPlan } from "@/lib/resolute/plan-client";
 
@@ -42,7 +42,8 @@ export default function EntryGate({ landing, children }: { landing: ReactNode; c
     const body = await response.json();
     // The owner opens the home directly: the first-time quiz is for purchasers only.
     if (body && body.accessBasis === "owner" && body.canUseTools === true) { try { localStorage.setItem(FIRST_VISIT_KEY, "1"); } catch { /* storage may be blocked */ } }
-    if (body && typeof body.canUseTools === "boolean") writeBarState({ owned: body.canUseTools, anon: false }); else setFailed(true);
+    const answer = barStateFromAnswer(body);
+    if (answer) writeBarState(answer); else setFailed(true);
    } catch { if (!controller.signal.aborted) setFailed(true); }
   })();
   return () => controller.abort();
