@@ -506,7 +506,7 @@ def register_member(db, payload, allowed, now=None):
 # Reasons a push request can be refused that are safe to show (no device, no member, no text from the provider).
 REFUSAL_REASONS = frozenset({'not-owned', 'expired-membership', 'not-registered', 'disabled', 'invalid-member', 'invalid-subscription',
                              'subscription-mismatch', 'device-owned-by-another-member', 'member-device-limit', 'invalid-preferences',
-                             'invalid-notice', 'owner-required', 'invalid-language'})
+                             'invalid-notice'})
 
 
 def refusal_reason(exc):
@@ -621,7 +621,7 @@ def test_notification(db, payload, transport=None, now=None):
 
 
 def price_target_payload(ticker, firm, previous, latest, ja, tag):
-    """The phone notice for one price-target change. The real notices (deliver) and the owner's demo notice (demo_price_target) are
+    """The phone notice for one price-target change. The real notices (deliver) and the owner's demo notice (scheduled_demo_target) are
     both built here, so the demo always looks exactly like a real one."""
     # Nov 15: a price-target notice opens the price-target page (it opened the dashboard's #what-changed view).
     return {'title': f"{ticker} · " + ('目標株価の変更' if ja else 'Price target update'),
@@ -629,56 +629,79 @@ def price_target_payload(ticker, firm, previous, latest, ja, tag):
             'tag': tag, 'url': '/research/price-targets'}
 
 
-# Nov 17 (owner): one sample price-target notice to the owner's own phone, for filming the PRO video, in Japanese or English on request.
-# Fictional firm and numbers; never a real firm name. Sent only on the site server's authenticated call with its owner flag (service.py).
-# lib/research/push-demo-notice.ts shows the same text on the owner's panel (a test compares the two).
+# Nov 17 (owner): a sample price-target notice for filming the PRO video. Nothing appears on any page: the coordinator sets the Railway
+# variable PUSH_DEMO_TARGET_AT on the monitor to "<RFC3339 time> <ja|en>" (e.g. "2026-11-17T05:30:00Z ja"); the monitor's demo clock
+# (service.py run_push_demo) sends ONE notice at that time to every active device registered to the owner accounts, read fresh at that
+# moment, so a phone turned on just before still gets it. Each distinct value is handled once (push_demo_schedule), also across
+# restarts; more than DEMO_LATE_SECONDS late, it is skipped. Fictional firm and numbers; never a real firm name.
+DEMO_TARGET_VARIABLE = 'PUSH_DEMO_TARGET_AT'
 DEMO_TARGET = {'ticker': 'NVDA', 'firm': 'Sample Securities', 'previous': 295, 'latest': 340}
+# OWNER_ACCOUNT_ID and PRODUCTION_OWNER_ACCOUNT_ID in lib/membership/entitlements.ts (a test checks they match).
+DEMO_OWNER_ACCOUNT_IDS = ('user_3JulL4D07KtVl5Eg2zdY1iczKbC', 'user_3LHR1K8f8zwyDcVzMg7ud6KB9Wb')
+DEMO_LATE_SECONDS = 600
 
 
-def demo_price_target(db, payload, transport=None, now=None):
-    """Send exactly one demo price-target notice to this one device, which must be registered to the calling owner account.
-    Built by price_target_payload and sent like a real notice (noting: written down in push_notices as a real notice, so the in-app
-    banner behaves as for one). At most one per device per 60 seconds. Never logs the device, endpoint, keys or text."""
-    if not configuration()['enabled']:
-        raise ValueError('disabled')
-    owner = member_identity(payload)
-    language = payload.get('language')
-    if language not in ('ja', 'en'):
-        raise ValueError('invalid-language')
-    subscription = validate_subscription(payload.get('subscription'))
-    device = hashlib.sha256(subscription['endpoint'].encode()).hexdigest()
-    row = db.execute('SELECT * FROM push_devices WHERE id=?', (device,)).fetchone()
-    if not (row and row['active'] and row['owner_id'] == owner and json.loads(row['subscription']) == subscription):
-        raise ValueError('not-registered')
-    now = time.time() if now is None else now
-    # Reserve before transport, including ambiguous outcomes; no automatic retry.
-    with db:
-        db.execute('CREATE TABLE IF NOT EXISTS push_demo_attempts (device_id TEXT PRIMARY KEY, attempted_at REAL NOT NULL)')
-        claim = db.execute("""INSERT INTO push_demo_attempts VALUES(?,?)
-            ON CONFLICT(device_id) DO UPDATE SET attempted_at=excluded.attempted_at
-            WHERE push_demo_attempts.attempted_at <= excluded.attempted_at - 60""", (device, now)).rowcount
-    if not claim:
-        return {'accepted': False, 'retryAfter': 60}
-    # A fresh tag of the same shape as a real one (a sha256 hex), so each send is shown as its own notice.
-    tag = hashlib.sha256(json.dumps(['demo-target', secrets.token_hex(16)]).encode()).hexdigest()
-    message = price_target_payload(DEMO_TARGET['ticker'], DEMO_TARGET['firm'], DEMO_TARGET['previous'], DEMO_TARGET['latest'],
-                                   language == 'ja', tag)
-    failure_kind = None
+def parse_demo_target(value):
+    """(send time as epoch seconds, language) from "<RFC3339 time with zone> <ja|en>", or None."""
+    parts = value.split() if isinstance(value, str) else []
+    if len(parts) != 2 or parts[1] not in ('ja', 'en') or len(parts[0]) > 40:
+        return None
     try:
-        code = noting(db, transport or send, now)(subscription, message)
-    except Exception as exc:
-        code = 0
-        failure_kind = type(exc).__name__ if type(exc).__name__ in {
-            'ImportError', 'ModuleNotFoundError', 'TypeError', 'ValueError',
-            'ConnectionError', 'ConnectTimeout', 'ReadTimeout', 'Timeout', 'SSLError', 'KeyError',
-        } else 'other'
-    code = code if isinstance(code, int) and not isinstance(code, bool) else 0
-    # Language and outcome only: never the device, endpoint, keys, the text or the provider's response.
-    print(json.dumps({'event': 'push-demo-target', 'language': language, 'providerStatus': code,
-                      'failure': None if 200 <= code < 300 else failure_kind or 'provider'}), flush=True)
-    if code in (404, 410):
-        remove(db, payload)
-    return {'accepted': 200 <= code < 300, 'expired': code in (404, 410), 'providerStatus': code, 'failureKind': failure_kind}
+        at = datetime.fromisoformat(parts[0].replace('Z', '+00:00').replace('z', '+00:00'))
+    except ValueError:
+        return None
+    if at.tzinfo is None:
+        return None
+    return at.timestamp(), parts[1]
+
+
+def scheduled_demo_target(db, value, transport=None, now=None):
+    """Send the demo notice for this variable value once it is due. Returns None (no value), 'waiting', 'done' (this value was already
+    handled), or the outcome recorded now: 'sent', 'no-device', 'late', 'invalid'. One log line per outcome, never a device or text."""
+    value = (value or '').strip()
+    if not value:
+        return None
+    now = time.time() if now is None else now
+    parsed = parse_demo_target(value)
+    if parsed and now < parsed[0]:
+        return 'waiting'
+    language = parsed[1] if parsed else None
+    outcome = 'invalid' if not parsed else 'late' if now - parsed[0] > DEMO_LATE_SECONDS else None
+    # Claim the value before any send: a restart (or a second caller) can never send it twice.
+    with db:
+        db.execute('CREATE TABLE IF NOT EXISTS push_demo_schedule (value TEXT PRIMARY KEY, handled_at REAL NOT NULL, outcome TEXT)')
+        if not db.execute('INSERT OR IGNORE INTO push_demo_schedule VALUES(?,?,NULL)', (value, now)).rowcount:
+            return 'done'
+    devices = accepted = 0
+    if outcome is None:
+        marks = ','.join('?' * len(DEMO_OWNER_ACCOUNT_IDS))
+        # Read at the moment of sending, so a device turned on just before the time is included.
+        rows = db.execute(f'SELECT id,subscription FROM push_devices WHERE active=1 AND owner_id IN ({marks}) ORDER BY id',
+                          DEMO_OWNER_ACCOUNT_IDS).fetchall()
+        for row in rows:
+            devices += 1
+            # A fresh tag of the same shape as a real one (a sha256 hex), so each send is shown as its own notice.
+            tag = hashlib.sha256(json.dumps(['demo-target', secrets.token_hex(16)]).encode()).hexdigest()
+            message = price_target_payload(DEMO_TARGET['ticker'], DEMO_TARGET['firm'], DEMO_TARGET['previous'], DEMO_TARGET['latest'],
+                                           language == 'ja', tag)
+            try:
+                # Through noting(): written down in push_notices as a real price-target notice (the in-app banner behaves as for one).
+                code = noting(db, transport or send, now)(json.loads(row['subscription']), message)
+            except Exception:
+                code = 0
+            code = code if isinstance(code, int) and not isinstance(code, bool) else 0
+            accepted += 200 <= code < 300
+            if code in (404, 410):
+                with db:
+                    db.execute('DELETE FROM push_devices WHERE id=?', (row['id'],))
+                    db.execute('DELETE FROM push_device_preferences WHERE device_id=?', (row['id'],))
+        outcome = 'sent' if devices else 'no-device'
+    with db:
+        db.execute('UPDATE push_demo_schedule SET outcome=? WHERE value=?', (outcome, value))
+    # Language and counts only: never the device, endpoint, keys, the text or the provider's response.
+    print(json.dumps({'event': 'push-demo-target', 'language': language, 'devices': devices, 'accepted': accepted,
+                      'outcome': outcome}), flush=True)
+    return outcome
 
 
 def parse_event_time(value):
