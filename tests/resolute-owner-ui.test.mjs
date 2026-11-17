@@ -100,7 +100,8 @@ test("RESOLUTE has its own home-screen app: manifest, icons, scope and a hint to
   const manifest = JSON.parse(await read("../public/resolute.webmanifest"));
   assert.equal(manifest.name, "RESOLUTE");
   assert.equal(manifest.start_url, "/resolute");
-  assert.equal(manifest.scope, "/resolute");
+  // Owner, Nov 17: scope "/" so RESOLUTE ⇄ Tech Phase links stay inside the installed app (no address bar).
+  assert.equal(manifest.scope, "/"); assert.equal(manifest.id, "/resolute"); assert.equal(manifest.start_url, "/resolute");
   assert.equal(manifest.display, "standalone");
   for (const icon of manifest.icons) assert.ok((await readFile(new URL(`../public${icon.src}`, import.meta.url))).length > 1000, icon.src);
   const layout = await read("../app/resolute/layout.tsx");
@@ -108,7 +109,7 @@ test("RESOLUTE has its own home-screen app: manifest, icons, scope and a hint to
   assert.match(layout, /appleWebApp: \{ capable: true, title: "RESOLUTE" \}/);
   assert.match(layout, /resolute-180\.png/);
   const tech = await read("../app/manifest.ts");
-  assert.match(tech, /scope: "\/research"/, "the Tech Phase app keeps its own scope");
+  assert.match(tech, /id: "\/research"/, "the Tech Phase app keeps its own identity"); assert.match(tech, /scope: "\/"/, "both apps cover the whole site (owner, Nov 17)");
   assert.match(await read("../app/resolute/add-to-home-steps.tsx"), /ホーム画面に追加/);
   assert.match(await read("../app/resolute/tool-shell.tsx"), /<AddToHomeCard en=\{en\} \/>/);
   assert.match(await read("../app/resolute/lp/landing.tsx"), /<AddToHomeSteps className=\{s\.homeSteps\} \/>/);
@@ -122,14 +123,14 @@ test("while access is being checked RESOLUTE shows its logo and 確認中…, ne
 });
 
 test("the RESOLUTE menu always offers the way back to Tech Phase", async () => {
-  assert.match(await read("../app/resolute/tool-shell.tsx"), /href="\/research" onClick=\{close\} prefetch=\{false\}>[\s\S]*\{en\?"Tech Phase":"Tech Phaseへ"\}/);
+  assert.match(await read("../app/resolute/tool-shell.tsx"), /href="\/research" prefetch=\{false\}>[\s\S]*\{en\?"Tech Phase":"Tech Phaseへ"\}/);
 });
 
 test("RESOLUTE can measure the top inset (viewport-fit=cover), asks again quietly before showing a sign-in message, and explains adding to the home screen in settings (Nov 1)", async () => {
   assert.match(await read("../app/resolute/layout.tsx"), /viewportFit: "cover"/);
   const shell = await read("../app/resolute/tool-shell.tsx");
   assert.match(shell, /const retryLater=/);
-  assert.match(shell, /r\.status===401\) \{if\(!retryLater\(\)\) setAccess\("signed-out"\)/);
+  assert.match(shell, /r\.status===401\) \{if\(!retryLater\(\)\) \{forget\(\);setAccess\("signed-out"\);\}/);
   assert.match(shell, /\/resolute\/settings#home-screen/);
   const settings = await read("../app/resolute/settings/screen.tsx");
   assert.match(settings, /id="home-screen"/);

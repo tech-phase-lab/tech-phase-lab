@@ -3,7 +3,7 @@
   "short_name": "RESOLUTE",
   "id": "/resolute",
   "start_url": "/resolute",
-  "scope": "/resolute",
+  "scope": "/",
   "display": "standalone",
   "lang": "ja",
   "background_color": "#0a1018",

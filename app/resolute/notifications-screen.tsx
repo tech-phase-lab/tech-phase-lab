@@ -6,10 +6,11 @@ import { useUnsavedChanges } from "./use-unsaved-changes";
 import StockInput from "./stock-input";
 import NumberInput from "./number-input";
 import FlowNavigation from "./flow-navigation";
+import { useRemembered } from "./features/use-remembered";
 import styles from "./diagnosis.module.css";
 import type { DiagnosisLocale } from "@/lib/resolute/diagnosis-copy";
 import {questions,questionCopy} from "@/lib/resolute/diagnosis-form";
-import type { PlanInput } from "@/lib/resolute/plan-data";
+import type { PlanInput, PlanSnapshot } from "@/lib/resolute/plan-data";
 import { PlanClientError } from "@/lib/resolute/plan-client";
 import { DELIVERY_HOURS,defaultNotificationSettings,parseNotificationSettings,type NotificationSettings,type NotificationSnapshot } from "@/lib/resolute/notification-settings";
 import { NotificationClientError } from "@/lib/resolute/notification-client";
@@ -28,8 +29,10 @@ function Notifications({locale,deny,mode}:{locale:DiagnosisLocale;deny:()=>void;
  const requestPlan = usePlanClient();
  const reviewPath=useReview()?.path;
  const requestNotificationSettings = useNotificationClient();
- const [snapshot,setSnapshot]=useState<NotificationSnapshot|null>(null),[draft,setDraft]=useState<NotificationSettings>(defaultNotificationSettings);
- const [plan,setPlan]=useState<PlanInput|null>(null),[planState,setPlanState]=useState("loading"),[loading,setLoading]=useState(true),[busy,setBusy]=useState(false),[locked,setLocked]=useState(false),[attempt,setAttempt]=useState(0);
+ // Settings and rules already loaded in this tab are shown at once and refreshed behind them (owner, Nov 17).
+ const knownSettings=useRemembered<NotificationSnapshot>("notifications"),knownPlan=useRemembered<PlanSnapshot>("plan");
+ const [snapshot,setSnapshot]=useState<NotificationSnapshot|null>(knownSettings??null),[draft,setDraft]=useState<NotificationSettings>(()=>knownSettings?.settings??defaultNotificationSettings());
+ const [plan,setPlan]=useState<PlanInput|null>(knownPlan?.plan??null),[planState,setPlanState]=useState(knownPlan?(knownPlan.plan?"ready":"empty"):"loading"),[loading,setLoading]=useState(!(knownSettings&&knownPlan)),[busy,setBusy]=useState(false),[locked,setLocked]=useState(false),[attempt,setAttempt]=useState(0);
  useUnsavedChanges(busy || (!!snapshot && JSON.stringify(draft)!==JSON.stringify(snapshot.settings)));
  const [timeOpen,setTimeOpen]=useState(false),[planOpen,setPlanOpen]=useState(false);
  const planDialog=useRef<HTMLDialogElement>(null);
@@ -46,13 +49,14 @@ function Notifications({locale,deny,mode}:{locale:DiagnosisLocale;deny:()=>void;
  useEffect(()=>{const c=new AbortController();controllerRef.current=c;
   void Promise.allSettled([requestNotificationSettings(undefined,c.signal),requestPlan(undefined,c.signal)]).then(([settings,planResult])=>{
    if(c.signal.aborted)return;
-   if(settings.status==="fulfilled"){setSnapshot(settings.value);setDraft(settings.value.settings);setLocked(false);setMessage("");}
+   // Changes made while the shown settings were being checked again stay, unless the saved settings themselves changed.
+   if(settings.status==="fulfilled"){const keep=attempt===0&&knownSettings?.revision===settings.value.revision;setSnapshot(settings.value);if(!keep)setDraft(settings.value.settings);setLocked(false);setMessage("");}
    else {if(settings.reason instanceof NotificationClientError&&[401,403].includes(settings.reason.status)){denyRef.current();return;}setMessage(settings.reason instanceof NotificationClientError&&settings.reason.status===503?"preparing":"unavailable");setLocked(true);}
    if(planResult.status==="fulfilled"){setPlan(planResult.value.plan);setPlanState(planResult.value.plan?"ready":"empty");}
    else {if(planResult.reason instanceof PlanClientError&&["signed-out","denied"].includes(planResult.reason.kind)){denyRef.current();return;}setPlanState(planResult.reason instanceof PlanClientError&&planResult.reason.kind==="unavailable"?"preparing":"error");}
    setLoading(false);
   });return()=>c.abort();
- },[attempt,requestPlan,requestNotificationSettings]);
+ },[attempt,requestPlan,requestNotificationSettings,knownSettings]);
  // While saving is not switched on yet, check again quietly; the real screen appears by itself once it is.
  useEffect(()=>{
   if(loading||(message!=="preparing"&&planState!=="preparing"))return;

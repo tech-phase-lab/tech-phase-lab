@@ -12,12 +12,15 @@ import type { DiagnosisLocale } from "@/lib/resolute/diagnosis-copy";
 import { deliveryLabel } from "@/lib/resolute/delivery-time";
 import { notebookResult,notebookEdits,adjustNotebook,notebookDocument,type NotebookEdits } from "@/lib/resolute/notebook";
 import styles from "../diagnosis.module.css";
+import { useRemembered } from "../features/use-remembered";
 export default function NotebookScreen({identityReady=true}:{identityReady?:boolean}) {
  return <ToolShell identityReady={identityReady}>{(locale,deny)=><Notebook locale={locale} deny={deny}/>}</ToolShell>;
 }
 function Notebook({locale,deny}:{locale:DiagnosisLocale;deny:()=>void}) {
  const requestPlan=usePlanClient(), requestNotifications=useNotificationClient(),en=locale==="en";
- const [snapshot,setSnapshot]=useState<PlanSnapshot|null>(null),[notifications,setNotifications]=useState<NotificationSnapshot|null>(null);
+ // The rules and settings already loaded in this tab are shown at once and refreshed behind them (owner, Nov 17).
+ const knownPlan=useRemembered<PlanSnapshot>("plan"),knownNotifications=useRemembered<NotificationSnapshot>("notifications");
+ const [snapshot,setSnapshot]=useState<PlanSnapshot|null>(knownPlan??null),[notifications,setNotifications]=useState<NotificationSnapshot|null>(knownNotifications??null);
  const [edits,setEdits]=useState<NotebookEdits|null>(null),[busy,setBusy]=useState(false),[locked,setLocked]=useState(false),[message,setMessage]=useState("");
  const [attempt,setAttempt]=useState(0), pending=useRef<AbortController|null>(null),mutex=useRef(false),denyRef=useRef(deny),editor=useRef<HTMLElement>(null);
  const notice:Record<string,string>={load:en?"We couldn’t load your saved rules. Please try again.":"保存済みのルールを読み込めませんでした。再確認してください。",invalid:en?"Check the numbers and text lengths. Use up to 10 conditions, 100 characters each.":"数字と文字数を確認してください。条件は1行100文字までで10行以内です。",saved:en?"Your rules are saved.":"マイルールを保存しました",conflict:en?"Your plan changed in another window. Your edits are still here. Load the saved version before editing again.":"別の画面で更新されています。入力は残しています。保存済みの内容を読み込んでから見直してください。",uncertain:en?"We couldn’t confirm your rules were saved. Load the saved version before trying again.":"保存を確認できませんでした。再送する前に保存済みの内容を読み込んでください。"};

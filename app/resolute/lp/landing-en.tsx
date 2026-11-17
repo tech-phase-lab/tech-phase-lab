@@ -162,7 +162,7 @@ export default function LandingEn({ embedded = false }: { embedded?: boolean }) 
 
    {/* 8 Footer */}
    <footer className={s.foot}>
-    <nav className={s.footWide}><Link href="/resolute/legal/commerce?lang=en">Legal Notice</Link><Link href="/resolute/legal/terms?lang=en">Terms of Service</Link><Link href="/resolute/legal/privacy?lang=en">Privacy Policy</Link></nav>
+    <nav className={s.footWide}><Link href="/resolute/legal/commerce?lang=en">Legal Notice</Link><Link href="/terms?lang=en">Terms of Service</Link><Link href="/privacy?lang=en">Privacy Policy</Link></nav>
     <p>RESOLUTE provides information, not investment advice.</p>
     <p>Screens shown are for illustrative purposes only.</p>
    </footer>

@@ -1,4 +1,5 @@
 import { parsePlanMutation, parsePlanSnapshot, type PlanInput, type PlanSnapshot } from "./plan-data.ts";
+import { forget, remember } from "./view-memory.ts";
 export class PlanClientError extends Error {
  readonly kind: "signed-out"|"denied"|"conflict"|"invalid"|"rate-limited"|"unavailable";
  readonly snapshot?: PlanSnapshot;
@@ -13,6 +14,7 @@ export async function requestPlan(mutation?: { plan: PlanInput; baseRevision: nu
   const response = await fetcher("/api/resolute/plan", { method: mutation ? "PUT" : "GET", credentials: "same-origin",
    cache: "no-store", redirect: "error", signal: signal ? AbortSignal.any([signal,timeout]) : timeout,
    ...(body ? { headers: { "Content-Type": "application/json" }, body } : {}) });
+  if (response.status === 401 || response.status === 403) forget("plan");
   if (response.status === 401) throw new PlanClientError("signed-out");
   if (response.status === 403) throw new PlanClientError("denied");
   if (response.status === 400 || response.status === 413) throw new PlanClientError("invalid");
@@ -25,6 +27,8 @@ export async function requestPlan(mutation?: { plan: PlanInput; baseRevision: nu
    text+=decoder.decode();
   } catch(e) { await reader.cancel(); throw e; }
   const snapshot = parsePlanSnapshot(JSON.parse(text));
+  // The next RESOLUTE page opens with this saved plan straight away (see view-memory.ts).
+  remember("plan", snapshot);
   if(response.status===409) throw new PlanClientError("conflict",snapshot);
   if(mutation && (snapshot.revision !== mutation.baseRevision + 1 || snapshot.plan === null)) throw new PlanClientError("unavailable");
   return snapshot;

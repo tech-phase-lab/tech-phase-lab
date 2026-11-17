@@ -26,4 +26,14 @@
 .foot a { display: inline-flex; align-items: center; gap: 6px; color: var(--sub); text-decoration: none; }
 .foot a svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
 .foot .lang { flex-basis: 100%; }
+/* Way back to the home (owner, Nov 17), under the bar at the top left. The tap area is 44px tall and wider than the label. */
+.homeRow { display: flex; margin: 2px 0 -6px; }
+.home { display: inline-flex; align-items: center; gap: 4px; min-height: 44px; min-width: 88px; margin-left: -8px; padding: 0 12px 0 6px; color: var(--gold2, #e9cf95); font-size: 14px; letter-spacing: .06em; text-decoration: none; -webkit-tap-highlight-color: transparent; }
+.home svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.home:active { opacity: .6; }
 @media (max-width: 360px) { .steps { grid-template-columns: 1fr; } .menuBtn { padding: 0 14px 0 12px; } }
+/* Tapped menu item while its page is on the way (owner, Nov 17: the menu stays up until the next page replaces it). */
+.step i.pending, .tool i.pending { flex: none; width: 7px; height: 7px; margin-left: auto; border: 0; border-radius: 50%; background: transparent; }
+.step i.pending.on, .tool i.pending.on { background: var(--gold2); animation: pending .7s .1s ease-in-out infinite alternate both; }
+@keyframes pending { from { opacity: .25; } to { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .step i.pending.on, .tool i.pending.on { animation: none; } }
