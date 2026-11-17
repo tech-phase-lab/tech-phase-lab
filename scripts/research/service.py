@@ -3465,6 +3465,12 @@ class Handler(BaseHTTPRequestHandler):
         db = web_push.connect(self.app.db_path)
         try:
             with db:
+                if path == "/push/member/demo-target":
+                    # Nov 17: the owner's demo price-target notice. Only an authenticated caller (the site's server) gets here, and it
+                    # sets X-Push-Owner-Demo for a verified owner account only; without it nothing is sent. Never a field of the body.
+                    if self.headers.get("X-Push-Owner-Demo") != "1":
+                        raise ValueError("owner-required")
+                    return web_push.demo_price_target(db, payload)
                 if path in {"/push/member/preferences", "/push/member/save-preferences"}:
                     return web_push.member_preferences(db, payload, save=path.endswith('/save-preferences'))
                 if path == "/push/member/register":
@@ -3924,7 +3930,9 @@ class Handler(BaseHTTPRequestHandler):
             return
         if path in {"/push/register", "/push/remove", "/push/status", "/push/test", "/push/member/register", "/push/member/remove", "/push/member/status", "/push/member/test", "/push/member/revoke", "/push/member/preferences", "/push/member/save-preferences",
                     # Nov 16: the app's own banner for a notice sent to this device (web_push.notice_action).
-                    "/push/member/recent-notice", "/push/member/notice-opened", "/push/member/notice-dismissed", "/push/member/notice-status"}:
+                    "/push/member/recent-notice", "/push/member/notice-opened", "/push/member/notice-dismissed", "/push/member/notice-status",
+                    # Nov 17: the owner's demo price-target notice (web_push.demo_price_target).
+                    "/push/member/demo-target"}:
             if not self.authorized():
                 self.send_json(401, {"ok": False})
                 return
@@ -3936,7 +3944,7 @@ class Handler(BaseHTTPRequestHandler):
                 payload = self.read_json()
                 # Nov 16: a request that found the database locked by another connection is tried again (at most twice, shortly after),
                 # except a test notice: its send may already have gone out, and a second try would be refused for a minute anyway.
-                retries = 0 if path.endswith("/test") else len(PUSH_BUSY_RETRY_SECONDS)
+                retries = 0 if path.endswith(("/test", "/demo-target")) else len(PUSH_BUSY_RETRY_SECONDS)
                 for attempt in range(retries + 1):
                     try:
                         result = self.push_action(path, payload)
