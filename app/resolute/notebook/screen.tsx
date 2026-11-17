@@ -9,6 +9,7 @@ import { PlanClientError } from "@/lib/resolute/plan-client";
 import type { PlanSnapshot } from "@/lib/resolute/plan-data";
 import type { NotificationSnapshot } from "@/lib/resolute/notification-settings";
 import type { DiagnosisLocale } from "@/lib/resolute/diagnosis-copy";
+import { deliveryLabel } from "@/lib/resolute/delivery-time";
 import { notebookResult,notebookEdits,adjustNotebook,notebookDocument,type NotebookEdits } from "@/lib/resolute/notebook";
 import styles from "../diagnosis.module.css";
 export default function NotebookScreen({identityReady=true}:{identityReady?:boolean}) {
@@ -64,7 +65,7 @@ function Notebook({locale,deny}:{locale:DiagnosisLocale;deny:()=>void}) {
   {message?<p className={styles.status} role="status">{notice[message]}</p>:null}
   {locked?<button className={styles.secondary} onClick={()=>{if(window.confirm(en?"Replace these edits with the saved version?":"入力を保存済みの内容に置き換えますか？")){setEdits(null);setAttempt(n=>n+1);}}}>{en?"Load saved version":"保存済みの内容を読み込む"}</button>:null}
   <details className={styles.bookSettings}><summary>{en?"My notifications":"いつものお知らせ"}</summary><div className={styles.bookNotifications}>
-   {settings?<><div className={styles.bookSectionHead}><p>{settings.alertsEnabled?(en?"Closing-price alerts on":"終値アラート オン"):(en?"Closing-price alerts off":"終値アラート オフ")} · {settings.deliveryHourJst}:00 {en?"JST":"日本時間"}</p><Link href="/resolute/alerts" className={styles.secondary}>{en?"Change":"変更"}</Link></div><div className={styles.bookSectionHead}><p>{settings.morningEnabled?(en?"Morning note on":"翌朝のひとこと オン"):(en?"Morning note off":"翌朝のひとこと オフ")}</p><Link href="/resolute/morning" className={styles.secondary}>{en?"Change":"変更"}</Link></div></>:<p>{en?"We couldn’t load your notification settings.":"通知設定を確認できませんでした"}</p>}
+   {settings?<><div className={styles.bookSectionHead}><p>{settings.alertsEnabled?(en?"Closing-price alerts on":"終値アラート オン"):(en?"Closing-price alerts off":"終値アラート オフ")} · {deliveryLabel(settings.deliveryHourJst,locale)}</p><Link href="/resolute/alerts" className={styles.secondary}>{en?"Change":"変更"}</Link></div><div className={styles.bookSectionHead}><p>{settings.morningEnabled?(en?"Morning note on":"翌朝のひとこと オン"):(en?"Morning note off":"翌朝のひとこと オフ")}</p><Link href="/resolute/morning" className={styles.secondary}>{en?"Change":"変更"}</Link></div></>:<p>{en?"We couldn’t load your notification settings.":"通知設定を確認できませんでした"}</p>}
   </div></details>
   <section className={styles.bookActions}><button className={styles.primary} disabled={!!edits||busy} onClick={download}>{en?"Save this book":"この一冊を保存する"}</button><p>{en?"Read it anytime, even offline.":"通信なしで読み返せます。"}<br/>{en?"Keep it somewhere only you can access.":"自分だけが開ける場所に保管してください。"}</p></section>
   <p className={styles.disclaimer}>{result.disclaimer}</p>

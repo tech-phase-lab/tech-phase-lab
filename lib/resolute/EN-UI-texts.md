@@ -57,7 +57,8 @@ Mail bodies and ④ subject lines: already in lib/mail-templates.ts (EN).
 | 上昇の目安も知らせる | Also alert me on a rise |
 | 上昇の目安 | Rise level |
 | 届く時間 | Delivery time |
-| 前の夜の終値をもとに、この時間にお知らせします(日本時間) | Based on the previous night's close, sent at this time (JST) |
+| 前の夜の終値をもとに、この時間にお知らせします(日本時間) | We check the U.S. closing prices and send alerts at this time (ET). |
+| 7:00 / 8:00 / 9:00 / 10:00(日本時間) | Shown in U.S. Eastern Time for the next delivery: 5:00 PM / 6:00 PM / 7:00 PM / 8:00 PM ET in winter (EST), 6:00 PM / 7:00 PM / 8:00 PM / 9:00 PM ET in summer (EDT), on the previous U.S. day. Sending times are unchanged (Japan time). |
 | あなたのライン | Your lines |
 | もしも、ある日の終値が基準から〇〇だったら？ | What if a day's close is 〇〇 from your base? |
 | 終値の変化 | Close vs. base |

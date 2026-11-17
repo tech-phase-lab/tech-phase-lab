@@ -9,7 +9,7 @@ export default function AlertSample({ locale = "ja" }: { locale?: Locale }) {
  const en = locale === "en";
  return <div className={s.alert}>
   <button type="button" className={s.push} aria-expanded={open} aria-controls="lp-alert-mail" onClick={() => setOpen(true)} hidden={open}>
-   <span className={s.pushHead}><b>{en ? "RESOLUTE · Closing-price alert" : "RESOLUTE ・ 終値アラート"}</b><time>7:00</time></span>
+   <span className={s.pushHead}><b>{en ? "RESOLUTE · Closing-price alert" : "RESOLUTE ・ 終値アラート"}</b><time>{en ? "5:00 PM" : "7:00"}</time></span>
    <span className={s.pushTitle}>{en ? "Your price alerts were triggered" : "計画のラインに届いた銘柄があります"}</span>
    <span className={s.pushBody}>{en ? "NVDA −10.2% · PLTR +41.5%" : "NVDA −10.2% ・ PLTR +41.5%"}</span>
    <small className={s.tap}>{en ? "Tap to see details" : "タップして詳細を見る"}</small>
