@@ -161,9 +161,10 @@ export default function Landing({ embedded = false }: { embedded?: boolean }) {
     <div className={s.faq}>
      <details><summary>投資を始めたばかりでも使えますか?</summary><p>使えます。診断はボタンを押していくだけの30問です。難しい言葉を知らなくても、最後まで進めるように作りました。</p></details>
      <details><summary>特定の銘柄や売買のタイミングを教えてくれますか?</summary><p>いいえ。RESOLUTEは売買をすすめるものではありません。あなたが自分で決めたルールを形にして、相場が動いた日にそこへ戻るための道具です。</p></details>
-     <details><summary>買い切りですか?</summary><p>アラート通知・翌朝のひとこと・衝撃度チェッカー・RIZELの一言は購入から1年間で、2年目以降は更新する形です。更新料金は5,980円、Tech Phase PRO会員は3,980円です。カード払い(PayPal)は自動で更新され、いつでも停止できます。銀行振込の方は、希望した場合だけ更新します。それ以外の機能は、一度の購入で、提供を続ける限り使えます。</p></details>
+     <details><summary>買い切りですか?</summary><p>アラート通知・翌朝のひとこと・衝撃度チェッカー・RIZELの一言は購入から1年間で、2年目以降は更新する形です。更新料金は5,980円、Tech Phase PRO会員は3,980円です。更新時期にお知らせし、ご希望の方だけ更新します。それ以外の機能は、一度の購入で、提供を続ける限り使えます。</p></details>
      <details><summary>2年目の更新はいくらですか?</summary><p>5,980円です。Tech Phase PROの会員なら3,980円で更新できます。</p></details>
      <details><summary>Tech Phase PROに入っていなくても使えますか?</summary><p>使えます。FREE会員の方でも、RESOLUTEを購入すればすべての機能を使えます。</p></details>
+     <details><summary>支払い方法は?</summary><p>PayPal（クレジットカード・銀行口座払い）です。</p></details>
      <details><summary>ログインしなくても買えますか?</summary><p>買えます。購入のあとにメールで案内が届くので、そこから受け取りの手続きをしてください。</p></details>
      <details><summary>返金はできますか?</summary><p>デジタル商品のため、購入後の返金はお受けしていません。内容をご確認のうえお申し込みください。二重課金や、当方の不具合で使えない場合は返金します。</p></details>
     </div>

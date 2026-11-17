@@ -29,7 +29,7 @@ This is an English translation of the Japanese Terms of Service. If the English 
 
 ## Article 5 (PRO Plan Fees and Payment)
 
-1. PRO plan fees are paid by credit card through PayPal. Monthly plans are charged automatically every month, and yearly plans every year.
+1. PRO plan fees are paid through PayPal (credit card or bank account). Monthly plans are charged automatically every month, and yearly plans every year.
 2. The billing date is based on the date you applied.
 3. If a payment fails, the Operator may suspend PRO features.
 4. Card details are managed by PayPal; the Operator never receives your card number.
@@ -110,9 +110,9 @@ The Japanese version of these Terms is the original, and if the English version 
 ## Article 19 (Price and Purchase)
 
 1. The Product costs JPY 9,800 (tax included) from March 1, 2027. Until the end of February 2027, it is sold at the launch price of JPY 7,980 (tax included).
-2. A purchase is completed when payment is completed. For bank transfers, it is completed when the Operator confirms the payment.
-3. You can pay with PayPal or by bank transfer. Bank transfer fees are paid by you.
-4. You can use the Product right after purchase. For bank transfers, you can use it after the payment is confirmed.
+2. A purchase is completed when payment is completed.
+3. You can pay with PayPal (credit card or bank account).
+4. You can use the Product right after purchase.
 5. The English version is sold in U.S. dollars, at the prices shown on the English pages.
 
 ## Article 20 (Gauge and Notifications)
@@ -126,10 +126,10 @@ The Japanese version of these Terms is the original, and if the English version 
 ## Article 21 (Period of Use and Renewal of Notifications)
 
 1. Alerts (including closing-price alerts), the next-morning note, the Shock Gauge and RIZEL's Take (the "Notification Features") can be used for one year from the date of purchase.
-2. From the second year, you can keep using the Notification Features by renewing. Renewal costs JPY 5,980 (tax included). If you are a Tech Phase PRO member on the renewal date (for bank transfers, the date you pay the renewal fee), it costs JPY 3,980 (tax included).
-3. If you bought with PayPal, the renewal is charged automatically through PayPal on the renewal date. At least 30 days before the renewal date, the Operator will notify your registered email address of the renewal date and the renewal fee.
-4. You can stop automatic renewal at any time. Even if you stop it, you can use the Notification Features for the period you have already paid for. If you stop it by the day before the renewal date, you will not be charged again.
-5. If you bought by bank transfer, there is no automatic renewal. At least 30 days before the end of the period, the Operator will notify you of the renewal fee, the bank details and the payment deadline, and renews when you complete the procedure. If you do not, the Notification Features end at the end of the period.
+2. From the second year, you can keep using the Notification Features by renewing. Renewal costs JPY 5,980 (tax included). If you are a Tech Phase PRO member when you pay the renewal fee, it costs JPY 3,980 (tax included).
+3. At least 30 days before the end of the period, the Operator will notify your registered email address of when to renew and the renewal fee.
+4. Renewal happens only for those who choose it. When you complete the renewal procedure and pay the renewal fee, the period in which you can use the Notification Features is extended by one year. You are never charged automatically.
+5. If you do not renew, the Notification Features end at the end of the period.
 6. Even after the Notification Features end, you can keep using the rest of the Product. The parts of the Product other than the Notification Features are a one-time purchase and can be used without a set period, except in the case of Article 14.
 
 ## Article 22 (Refunds)

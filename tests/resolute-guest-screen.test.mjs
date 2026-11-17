@@ -43,7 +43,7 @@ test('guest screen preserves order through create, payment, sign-in prompt, relo
   assert.equal(new URL(window.location.href).searchParams.get('order'),id);
   assert.equal(new URL(window.location.href).searchParams.get('guest'),'1');
   // The final pay button reads 「Agree to the Terms and buy」, with the two small lines right above it (owner pack, Nov 17).
-  assert.ok(document.body.textContent.includes('Alerts run for one year. From year two, card payments renew automatically ($39, PRO $29) and you can stop anytime. Bank transfers renew only if you choose.'));
+  assert.ok(document.body.textContent.includes('Alerts run for one year. For renewal from year two ($39, PRO $29), we\'ll let you know when it\'s time to renew; only those who choose to renew are renewed.'));
   assert.ok(document.body.textContent.includes('No refunds for change of mind (except double charges or if a fault on our side stops it from working).'));
   await click('Agree to the Terms and buy');
   assert.equal(document.querySelector('[data-login-order]').getAttribute('data-login-order'),id);

@@ -69,8 +69,9 @@ test("2: the gauge's one-line note (JA/EN) and the collapsible method outline si
 test("3: RESOLUTE checkout — only the final pay button reads 「利用規約に同意して申し込む」, with the two small lines right above it", async () => {
   const agree = legalModule("../../legal/agree-button");
   assert.deepEqual(agree.AGREE_LABEL, { ja: "利用規約に同意して申し込む", en: "Agree to the Terms and buy" });
-  assert.deepEqual(agree.RESOLUTE_CHECKOUT_LINES.ja, ["通知機能は1年間。2年目からはカード払いは自動更新(5,980円・PRO会員3,980円)、いつでも停止できます。銀行振込は希望した方だけ更新します。", "お客様都合の返金はできません(二重課金・当方の不具合で使えない場合を除く)。"]);
-  assert.deepEqual(agree.RESOLUTE_CHECKOUT_LINES.en, ["Alerts run for one year. From year two, card payments renew automatically ($39, PRO $29) and you can stop anytime. Bank transfers renew only if you choose.", "No refunds for change of mind (except double charges or if a fault on our side stops it from working)."]);
+  // Owner decision 案B: renewal as implemented today, the same for everyone (notice, then renew only if you choose).
+  assert.deepEqual(agree.RESOLUTE_CHECKOUT_LINES.ja, ["通知機能は1年間。2年目からの更新（5,980円・PRO会員3,980円）は、更新時期にお知らせし、ご希望の方だけ更新します。", "お客様都合の返金はできません(二重課金・当方の不具合で使えない場合を除く)。"]);
+  assert.deepEqual(agree.RESOLUTE_CHECKOUT_LINES.en, ["Alerts run for one year. For renewal from year two ($39, PRO $29), we'll let you know when it's time to renew; only those who choose to renew are renewed.", "No refunds for change of mind (except double charges or if a fault on our side stops it from working)."]);
   assert.equal(agree.PRO_CHECKOUT_LINE.ja, "月額・年額とも解約するまで自動更新。いつでも解約できます。");
   const { createElement } = await import("react"), { renderToStaticMarkup } = await import("react-dom/server");
   const ja = renderToStaticMarkup(createElement(agree.default, { en: false, onClick: () => {} })), en = renderToStaticMarkup(createElement(agree.default, { en: true, onClick: () => {} }));
@@ -94,25 +95,42 @@ test("3: PRO — the final button (account card, resume sheet, live billing page
   assert.ok(!read("../app/research/account/account-sheets.tsx").includes('t("PayPalへ進む", "Continue to PayPal")'));
 });
 
-test("4: renewal is the same everywhere — card (PayPal) renews automatically, bank transfer only on request", () => {
-  assert.ok(lp.includes("カード払い(PayPal)は自動で更新され、いつでも停止できます。銀行振込の方は、希望した場合だけ更新します。"));
-  assert.ok(lpEn.includes("Card payments (PayPal) renew automatically and you can stop anytime. Bank transfers renew only if you choose."));
+test("4 (owner decision 案B): one payment method — PayPal (credit card or bank account) — and RESOLUTE renewal only on request, everywhere", () => {
+  const PM = "PayPal（クレジットカード・銀行口座払い）", PE = "PayPal (credit card or bank account)";
+  assert.ok(lp.includes("更新時期にお知らせし、ご希望の方だけ更新します。"));
+  assert.ok(lpEn.includes("We’ll let you know when it’s time to renew; only those who choose to renew are renewed."));
+  assert.ok(lp.includes(`<details><summary>支払い方法は?</summary><p>${PM}です。</p></details>`));
+  assert.ok(lpEn.includes(`<details><summary>How can I pay?</summary><p>${PE}.</p></details>`));
+  const live = read("../app/resolute/checkout/live-screen.tsx");
+  assert.ok(live.includes(`お支払いは${PM}です。`) && live.includes(`Payment is by ${PE}.`));
+  assert.ok(live.includes(`<dt>{en?"Payment method":"お支払い方法"}</dt><dd>{en?"${PE}":"${PM}"}</dd>`));
+  assert.ok(termsJa.includes(`3. 支払方法は、${PM}です。`) && termsJa.includes(`PROプランの料金は、${PM}で支払います。`));
+  assert.ok(termsEn.includes(`3. You can pay with ${PE}.`));
+  assert.equal(commerceJa.split(`| 支払方法 | ${PM} |`).length - 1, 2);
+  assert.equal(commerceEn.split(`| Payment method | ${PE} |`).length - 1, 2);
+  assert.ok(termsJa.includes("4. 更新は、ご希望の方だけ行います。") && termsJa.includes("自動で課金することはありません。"));
+  assert.ok(commerceJa.includes("| 通知機能の更新 | 更新時期にお知らせし、ご希望の方だけ更新します。自動で課金することはありません |"));
+  // No bank transfer anywhere, and no claim that RESOLUTE renews automatically (PRO's own subscription does auto-renew).
+  const mail = read("../services/resolute-api/payments/recovery.mjs");
+  const everywhere = { termsJa, termsEn, privacyJa, privacyEn, commerceJa, commerceEn, lp, lpEn, live, sandbox: read("../app/resolute/checkout/screen.tsx"), agree: read("../app/legal/agree-button.tsx"), mail };
+  for (const [name, text] of Object.entries(everywhere)) assert.ok(!/銀行振込|振込手数料|振込先|bank transfer/i.test(text), `${name}: bank transfer`);
+  const resoluteOnly = { lp, lpEn, live, mail, lines: JSON.stringify(legalModule("../../legal/agree-button").RESOLUTE_CHECKOUT_LINES),
+    terms21: termsJa.slice(termsJa.indexOf("## 第21条")), terms21En: termsEn.slice(termsEn.indexOf("## Article 21")), commerceResolute: commerceJa.slice(commerceJa.indexOf("## RESOLUTE")), commerceResoluteEn: commerceEn.slice(commerceEn.indexOf("## RESOLUTE")) };
+  for (const [name, text] of Object.entries(resoluteOnly)) {
+    assert.ok(!/自動で更新され|自動更新|自動で課金します|renews? automatically|charged automatically|automatic renewal/.test(text.replace(/自動で課金することはありません|You are never charged automatically/g, "")), `${name}: auto-renew claim`);
+  }
   for (const text of [lp, lpEn, read("../app/resolute/checkout/live-screen.tsx"), read("../app/resolute/checkout/screen.tsx")]) {
     assert.ok(!/never renew automatically|never automatic|自動継続なし|自動継続はありません|自動で更新されることはありません/.test(text));
   }
-  assert.ok(termsJa.includes("PayPalで購入した方は、更新日にPayPalを通じて自動で課金します。"));
-  assert.ok(termsJa.includes("銀行振込で購入した方には、自動更新はありません。"));
-  assert.ok(commerceJa.includes("更新は、PayPalは更新日に自動で課金し、銀行振込は更新の案内に書く期日までです"));
-  assert.ok(commerceJa.includes("銀行振込の方に自動更新はありません"));
   const order = { id: "12345678-1234-4234-8234-123456789abc" };
   const ja = recoveryMail({ ...order, quote: { language: "ja" } }, "t", "https://techphase.app").text, en = recoveryMail({ ...order, quote: { language: "en" } }, "t", "https://techphase.app").text;
-  assert.ok(ja.includes("2年目からは、カード払い(PayPal)は自動で更新され(5,980円・PRO会員3,980円)、いつでも停止できます。") && ja.includes("銀行振込は希望した方だけ更新します。"));
-  assert.ok(en.includes("From year two, card payments (PayPal) renew automatically ($39, PRO $29) and you can stop anytime") && en.includes("Bank transfers renew only if you choose."));
+  assert.ok(ja.includes("2年目からの更新（5,980円・PRO会員3,980円）は、更新時期にメールでお知らせし、ご希望の方だけ更新します。お支払いはPayPal（クレジットカード・銀行口座払い）です。"));
+  assert.ok(en.includes("For renewal from year two ($39, PRO $29), we'll let you know by email when it's time to renew; only those who choose to renew are renewed. Payment is by PayPal (credit card or bank account)."));
 });
 
 test("5: LP FAQ — one-time purchase (feature names, renewal prices, 「提供を続ける限り使えます」) and the refund exception, JA and EN", () => {
   assert.ok(lp.includes("<details><summary>買い切りですか?</summary><p>アラート通知・翌朝のひとこと・衝撃度チェッカー・RIZELの一言は購入から1年間で、2年目以降は更新する形です。更新料金は5,980円、Tech Phase PRO会員は3,980円です。"));
-  assert.ok(lp.includes("それ以外の機能は、一度の購入で、提供を続ける限り使えます。</p></details>"));
+  assert.ok(lp.includes("更新料金は5,980円、Tech Phase PRO会員は3,980円です。更新時期にお知らせし、ご希望の方だけ更新します。それ以外の機能は、一度の購入で、提供を続ける限り使えます。</p></details>"));
   assert.ok(!lp.includes("ずっと使えます"));
   assert.ok(lp.includes("内容をご確認のうえお申し込みください。二重課金や、当方の不具合で使えない場合は返金します。</p>"));
   assert.ok(lpEn.includes("<p>Alerts, Morning Note, Shock Gauge and RIZEL’s Take run for one year from purchase; from the second year they need renewal, at $39 a year or $29 for Tech Phase PRO members."));

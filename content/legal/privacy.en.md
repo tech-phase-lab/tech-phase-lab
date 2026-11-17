@@ -6,7 +6,7 @@ This is an English translation of the Japanese Privacy Policy. If the English an
 
 - Account information: email address, user ID and the information needed to sign in (sign-in is managed by Clerk's service)
 - Contract information: plan, contract start date and end date (payment status). We do not receive card numbers or PayPal account details
-- RESOLUTE purchase information: purchase date, type of payment method (PayPal or bank transfer) and when the Notification Features expire. For bank transfers, the sender name and other details needed to confirm the payment. We do not receive bank account PINs or similar information
+- RESOLUTE purchase information: purchase date, payment method (PayPal) and when the Notification Features expire. We do not receive card numbers or bank account details
 - Settings: display language, notification settings and favorite stocks
 - Notification information: device identifiers needed for browser notifications (Web Push) and phone notifications
 - Access information: pages viewed, device and browser type, and error records

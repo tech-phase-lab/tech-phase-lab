@@ -5,8 +5,8 @@ import type { CSSProperties, MouseEvent, ReactNode } from "react";
 export const AGREE_LABEL = { ja: "利用規約に同意して申し込む", en: "Agree to the Terms and buy" } as const;
 /** The small lines right above the final button. */
 export const RESOLUTE_CHECKOUT_LINES = {
-  ja: ["通知機能は1年間。2年目からはカード払いは自動更新(5,980円・PRO会員3,980円)、いつでも停止できます。銀行振込は希望した方だけ更新します。", "お客様都合の返金はできません(二重課金・当方の不具合で使えない場合を除く)。"],
-  en: ["Alerts run for one year. From year two, card payments renew automatically ($39, PRO $29) and you can stop anytime. Bank transfers renew only if you choose.", "No refunds for change of mind (except double charges or if a fault on our side stops it from working)."],
+  ja: ["通知機能は1年間。2年目からの更新（5,980円・PRO会員3,980円）は、更新時期にお知らせし、ご希望の方だけ更新します。", "お客様都合の返金はできません(二重課金・当方の不具合で使えない場合を除く)。"],
+  en: ["Alerts run for one year. For renewal from year two ($39, PRO $29), we'll let you know when it's time to renew; only those who choose to renew are renewed.", "No refunds for change of mind (except double charges or if a fault on our side stops it from working)."],
 } as const;
 export const PRO_CHECKOUT_LINE = { ja: "月額・年額とも解約するまで自動更新。いつでも解約できます。", en: "Monthly and yearly plans renew automatically until you cancel. You can cancel anytime." } as const;
 

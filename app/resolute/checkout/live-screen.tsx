@@ -78,7 +78,7 @@ export default function LiveCheckoutScreen({orderId,language:initialLanguage,can
   {!salesEnabled && <p role="status">{errors.PAYMENT_DISABLED[en?1:0]}</p>}
   {cancelled && <p>{en?"You returned from PayPal. Opening this page does not complete a payment.":"PayPalから戻りました。このページを開いただけで支払いは確定しません。"}</p>}
   {!id && <>
-   <p>{en?"Your first purchase includes RESOLUTE and one year of Alerts, Morning Note, Shock Gauge and RIZEL’s Take.":"初回購入にはRESOLUTEと、1年間のアラート通知・翌朝のひとこと・衝撃度チェッカー・RIZELの一言が含まれます。"}</p>
+   <p>{en?"Your first purchase includes RESOLUTE and one year of Alerts, Morning Note, Shock Gauge and RIZEL’s Take. Payment is by PayPal (credit card or bank account).":"初回購入にはRESOLUTEと、1年間のアラート通知・翌朝のひとこと・衝撃度チェッカー・RIZELの一言が含まれます。お支払いはPayPal（クレジットカード・銀行口座払い）です。"}</p>
    <label>{en?"Purchase type":"購入内容"}<select value={kind} disabled={busy || !salesEnabled || attempt.current!==null} onChange={e=>setKind(e.target.value as "initial"|"renewal")}>
     <option value="initial">{en?"First purchase":"初回購入"}</option><option value="renewal" disabled={guest}>{en?"Annual renewal":"1年間の更新"}</option>
    </select></label>
@@ -87,6 +87,7 @@ export default function LiveCheckoutScreen({orderId,language:initialLanguage,can
   </>}
   {order && <>
    <dl><dt>{en?"Order":"購入内容"}</dt><dd>{order.quote.kind==="initial"?(en?"First purchase":"初回購入"):(en?"Annual renewal":"1年間の更新")}</dd>
+    <dt>{en?"Payment method":"お支払い方法"}</dt><dd>{en?"PayPal (credit card or bank account)":"PayPal（クレジットカード・銀行口座払い）"}</dd>
     <dt>{en?"Amount":"金額"}</dt><dd className={styles.amount}>{new Intl.NumberFormat(en?"en-US":"ja-JP",{style:"currency",currency:order.quote.currency}).format(Number(order.quote.value))} <small>{order.quote.currency}</small></dd>
     <dt>{en?"Order ID":"注文番号"}</dt><dd className={styles.orderId}>{order.orderId}</dd></dl>
    <p>{en?"Changing the display language won’t change this order’s amount or currency.":"表示言語を切り替えても、この注文の金額と通貨は変わりません。"}</p>
