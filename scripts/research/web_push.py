@@ -506,7 +506,7 @@ def register_member(db, payload, allowed, now=None):
 # Reasons a push request can be refused that are safe to show (no device, no member, no text from the provider).
 REFUSAL_REASONS = frozenset({'not-owned', 'expired-membership', 'not-registered', 'disabled', 'invalid-member', 'invalid-subscription',
                              'subscription-mismatch', 'device-owned-by-another-member', 'member-device-limit', 'invalid-preferences',
-                             'invalid-notice'})
+                             'invalid-notice', 'owner-required', 'invalid-language'})
 
 
 def refusal_reason(exc):
@@ -618,6 +618,67 @@ def test_notification(db, payload, transport=None, now=None):
         remove(db, payload)
     return {'accepted': 200 <= code < 300, 'expired': code in (404, 410),
             'providerStatus': code, 'failureKind': failure_kind}
+
+
+def price_target_payload(ticker, firm, previous, latest, ja, tag):
+    """The phone notice for one price-target change. The real notices (deliver) and the owner's demo notice (demo_price_target) are
+    both built here, so the demo always looks exactly like a real one."""
+    # Nov 15: a price-target notice opens the price-target page (it opened the dashboard's #what-changed view).
+    return {'title': f"{ticker} · " + ('目標株価の変更' if ja else 'Price target update'),
+            'body': f"{firm}: ${previous:g} → ${latest:g}",
+            'tag': tag, 'url': '/research/price-targets'}
+
+
+# Nov 17 (owner): one sample price-target notice to the owner's own phone, for filming the PRO video, in Japanese or English on request.
+# Fictional firm and numbers; never a real firm name. Sent only on the site server's authenticated call with its owner flag (service.py).
+# lib/research/push-demo-notice.ts shows the same text on the owner's panel (a test compares the two).
+DEMO_TARGET = {'ticker': 'NVDA', 'firm': 'Sample Securities', 'previous': 295, 'latest': 340}
+
+
+def demo_price_target(db, payload, transport=None, now=None):
+    """Send exactly one demo price-target notice to this one device, which must be registered to the calling owner account.
+    Built by price_target_payload and sent like a real notice (noting: written down in push_notices as a real notice, so the in-app
+    banner behaves as for one). At most one per device per 60 seconds. Never logs the device, endpoint, keys or text."""
+    if not configuration()['enabled']:
+        raise ValueError('disabled')
+    owner = member_identity(payload)
+    language = payload.get('language')
+    if language not in ('ja', 'en'):
+        raise ValueError('invalid-language')
+    subscription = validate_subscription(payload.get('subscription'))
+    device = hashlib.sha256(subscription['endpoint'].encode()).hexdigest()
+    row = db.execute('SELECT * FROM push_devices WHERE id=?', (device,)).fetchone()
+    if not (row and row['active'] and row['owner_id'] == owner and json.loads(row['subscription']) == subscription):
+        raise ValueError('not-registered')
+    now = time.time() if now is None else now
+    # Reserve before transport, including ambiguous outcomes; no automatic retry.
+    with db:
+        db.execute('CREATE TABLE IF NOT EXISTS push_demo_attempts (device_id TEXT PRIMARY KEY, attempted_at REAL NOT NULL)')
+        claim = db.execute("""INSERT INTO push_demo_attempts VALUES(?,?)
+            ON CONFLICT(device_id) DO UPDATE SET attempted_at=excluded.attempted_at
+            WHERE push_demo_attempts.attempted_at <= excluded.attempted_at - 60""", (device, now)).rowcount
+    if not claim:
+        return {'accepted': False, 'retryAfter': 60}
+    # A fresh tag of the same shape as a real one (a sha256 hex), so each send is shown as its own notice.
+    tag = hashlib.sha256(json.dumps(['demo-target', secrets.token_hex(16)]).encode()).hexdigest()
+    message = price_target_payload(DEMO_TARGET['ticker'], DEMO_TARGET['firm'], DEMO_TARGET['previous'], DEMO_TARGET['latest'],
+                                   language == 'ja', tag)
+    failure_kind = None
+    try:
+        code = noting(db, transport or send, now)(subscription, message)
+    except Exception as exc:
+        code = 0
+        failure_kind = type(exc).__name__ if type(exc).__name__ in {
+            'ImportError', 'ModuleNotFoundError', 'TypeError', 'ValueError',
+            'ConnectionError', 'ConnectTimeout', 'ReadTimeout', 'Timeout', 'SSLError', 'KeyError',
+        } else 'other'
+    code = code if isinstance(code, int) and not isinstance(code, bool) else 0
+    # Language and outcome only: never the device, endpoint, keys, the text or the provider's response.
+    print(json.dumps({'event': 'push-demo-target', 'language': language, 'providerStatus': code,
+                      'failure': None if 200 <= code < 300 else failure_kind or 'provider'}), flush=True)
+    if code in (404, 410):
+        remove(db, payload)
+    return {'accepted': 200 <= code < 300, 'expired': code in (404, 410), 'providerStatus': code, 'failureKind': failure_kind}
 
 
 def parse_event_time(value):
@@ -1014,10 +1075,7 @@ def deliver(db, items, transport=send, now=None, monotonic_now=time.monotonic,
                 payload = {'title': f"{' · '.join(item['tickers'][:3])} · " + ('ニュース' if ja else 'News'),
                            'body': item['texts']['ja' if ja else 'en'], 'tag': key, 'url': '/research/news'}
             else:
-                # Nov 15: a price-target notice opens the price-target page (it opened the dashboard's #what-changed view).
-                payload = {'title': f"{item['ticker']} · " + ('目標株価の変更' if ja else 'Price target update'),
-                           'body': f"{item['firm']}: ${item['previous']:g} → ${item['latest']:g}",
-                           'tag': key, 'url': '/research/price-targets'}
+                payload = price_target_payload(item['ticker'], item['firm'], item['previous'], item['latest'], ja, key)
             provider_started = monotonic_now()
             try:
                 code = noting(db, transport, attempted_at)(json.loads(device['subscription']), payload)

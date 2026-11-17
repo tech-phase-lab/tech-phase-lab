@@ -50,7 +50,7 @@ const icons = {
 export type PageViewProps = {
   lang: Language; state: string; label: string; busy: boolean; starting: boolean; usable: boolean; hasSubscription: boolean;
   message: string; testSent: boolean; received: boolean;
-  prefs: Preferences | null; prefsState: PrefsState; prefsMessage: string; owner?: boolean; diagnostic?: ReactNode; onPrefs: (patch: Partial<Preferences>) => void;
+  prefs: Preferences | null; prefsState: PrefsState; prefsMessage: string; owner?: boolean; diagnostic?: ReactNode; demo?: ReactNode; onPrefs: (patch: Partial<Preferences>) => void;
   onToggle: () => void; onDisable: () => void; onTest: () => void; onRetry: () => void; onStatus: () => void; onReceived: () => void;
 };
 
@@ -185,6 +185,7 @@ export default function NotificationPageView(p: PageViewProps) {
     </section>
     {p.owner && <><p className={styles.section}>{t("運営者だけ", "OWNER ONLY")}</p>
       <ul className={`${styles.rows} ${on ? "" : styles.rowsOff}`}>{row(icons.pencil, t("週刊の下書き", "Weekly drafts"), t("下書きができたときにお知らせ", "When a draft is ready"), prefs.weeklyDraft ?? false, v => p.onPrefs({ weeklyDraft: v }))}</ul></>}
+    {p.demo}
     {p.diagnostic}
     <p className={styles.foot}>{t("通知の設定は、この端末だけに反映されます。", "These settings apply to this device only.")}</p>
     {sheets}

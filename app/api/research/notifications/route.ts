@@ -17,7 +17,7 @@ function deviceKey(memberId: string, subscription: unknown) {
   return createHash("sha256").update(`${memberId}\n${typeof endpoint === "string" ? endpoint.slice(0, 2048) : ""}`).digest("hex");
 }
 
-async function monitor(path: string, body?: unknown) {
+async function monitor(path: string, body?: unknown, extraHeaders: Record<string, string> = {}) {
   const base = process.env.RESEARCH_MONITOR_URL;
   const token = process.env.RESEARCH_MONITOR_TOKEN;
   if (!base || !token) throw new Error("Unavailable");
@@ -25,7 +25,7 @@ async function monitor(path: string, body?: unknown) {
   if (url.protocol !== "https:") throw new Error("HTTPS required");
   url.pathname = path; url.search = ""; url.hash = ""; url.username = ""; url.password = "";
   const response = await fetch(url, { method: body ? "POST" : "GET", cache: "no-store",
-    headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
+    headers: { ...extraHeaders, Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
     body: body ? JSON.stringify(body) : undefined, signal: AbortSignal.timeout(10_000) });
   if (!response.ok) {
     // A refusal with a known reason is passed on, so the screen can say why (Nov 13: every refusal read "could not connect").
@@ -38,7 +38,8 @@ async function monitor(path: string, body?: unknown) {
   return response.json();
 }
 const REFUSALS = new Set(["not-owned", "expired-membership", "not-registered", "disabled", "invalid-member", "invalid-subscription",
-  "subscription-mismatch", "device-owned-by-another-member", "member-device-limit", "invalid-preferences", "invalid-registration", "invalid-notice"]);
+  "subscription-mismatch", "device-owned-by-another-member", "member-device-limit", "invalid-preferences", "invalid-registration", "invalid-notice",
+  "owner-required", "invalid-language"]);
 export async function GET() {
   try {
     const member = await getMembership();
@@ -87,6 +88,22 @@ export async function POST(request: Request) {
       if (!isOwnerAccount(member.userId)) return Response.json({ ok: false, error: "owner-required" }, { status: 403, headers });
       const log = await monitor("/push/send-log");
       return Response.json({ ok: true, items: cleanPushSendLog(log?.items) }, { headers });
+    }
+    // Nov 17 (owner): one sample price-target notice (NVDA, Sample Securities, $295 → $340) to the device the owner presses the button
+    // on, for filming the PRO video, in Japanese or English. The owner is checked here from the verified server-side membership only
+    // (an owner account, in owner mode, with the admin check), never from the request; only then is the monitor asked, with the owner
+    // flag it requires. Everyone else is refused before the monitor. The monitor builds it with the real price-target format.
+    if (body?.action === "demo-target") {
+      if (!(member.ownerMode === true && member.isAdmin === true && isOwnerAccount(member.userId))) {
+        return Response.json({ ok: false, error: "owner-required" }, { status: 403, headers });
+      }
+      if (body.language !== "ja" && body.language !== "en") return Response.json({ ok: false, error: "invalid-language" }, { status: 400, headers });
+      const result = await monitor("/push/member/demo-target", { memberId: member.userId, subscription: body.subscription, language: body.language },
+        { "X-Push-Owner-Demo": "1" });
+      if (result?.ok === false) return Response.json(result, { headers });
+      return Response.json({ ok: true, accepted: result?.accepted === true, expired: result?.expired === true,
+        ...(result?.retryAfter === 60 ? { retryAfter: 60 } : {}),
+        providerStatus: Number.isInteger(result?.providerStatus) ? result.providerStatus : 0 }, { headers });
     }
     // Nov 16: the newest notice the server sent this member's current device (and opening or dismissing it), so the app can show its
     // own banner without the service worker. Any signed-in member, FREE or PRO: it only reads or closes a notice this device was already

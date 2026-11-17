@@ -26,8 +26,9 @@ function harness(fetch, subscription=null, props={}, serviceWorker=null) {
   if(id==='@/lib/research/preferences-load')return preferencesLoad;
   if(id==='@/lib/research/push-sw-facts')return pushSwFacts;
   if(id==='./notification-page-view')return {default:p=>{view=p;return null;}};
-  if(id==='./member-display-provider')return {useOwnerMode:()=>false,useOwnerAccount:()=>props.ownerAccount===true};
+  if(id==='./member-display-provider')return {useOwnerMode:()=>props.ownerMode===true,useOwnerAccount:()=>props.ownerAccount===true};
   if(id==='./push-diagnostic-panel')return {default:()=>null};
+  if(id==='./push-demo-panel')return {default:()=>null};
   if(id==='./identity-provider')return {useIdentityRefresh:()=>async()=>{}};
   if(id.endsWith('.css'))return {default:{}};
   return require(id);
@@ -153,6 +154,13 @@ test('Nov 15: the notification step record (通知の動作の記録) reaches th
  }
  const settings = readFileSync(new URL('../app/research/notification-settings.tsx', import.meta.url), 'utf8');
  assert.match(settings, /diagnostic=\{ownerAccount \? <PushDiagnosticPanel lang=\{lang\} onReinstall=\{key \? reinstall : undefined\} \/> : null\}/);
+});
+
+test('Nov 17: the demo price-target section reaches the settings page in owner mode on the owner account only', () => {
+ for (const ownerMode of [true, false]) for (const ownerAccount of [true, false]) {
+  const view = harness(async () => Response.json({}), null, { page: true, ownerMode, ownerAccount }).view();
+  assert.equal(Boolean(view.demo), ownerMode && ownerAccount, `${ownerMode} ${ownerAccount}`);
+ }
 });
 
 // Nov 16: the owner's phone kept an old worker. 「通知の仕組みを入れ直す」 removes it, installs the worker again and saves the device
