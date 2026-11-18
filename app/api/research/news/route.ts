@@ -20,18 +20,22 @@ export async function GET() {
     }
     url.pathname = `${url.pathname.replace(/\/$/, "")}/news`; url.search = ""; url.hash = "";
     if (process.env.VERCEL_ENV === "preview") url.searchParams.set("originalPreview", "1");
+    // The membership check and, for FREE, the company headlines that decide the newest five run alongside the news read instead of
+    // after it: the alerts page waits for this answer behind its loader (owner, Nov 18). A PRO viewer never triggers the wire read.
+    const fullAccess = viewerHasFullNews();
+    const freeWire = fullAccess.then(full => full ? null : readMonitor("company-wire", 400_000, 2_500).then(raw => parseCompanyWire(raw).items).catch(() => null));
     const response = await fetch(url, { headers: { Authorization: `Bearer ${token}` }, cache: "no-store", signal: AbortSignal.timeout(10_000) });
     if (!response.ok) throw new Error("News unavailable");
     const text = await response.text();
     if (new TextEncoder().encode(text).length > 500_000) throw new Error("Oversized response");
     const upstreamMs = performance.now() - startedAt;
     const raw = JSON.parse(text);
-    const full = await viewerHasFullNews();
+    const full = await fullAccess;
     let feed = buildPublicNews(raw, { allowOriginalPreview: full && process.env.VERCEL_ENV === "preview" });
     if (!full) {
       // FREE: the watched companies' stories are limited here, before anything is sent (30 minutes behind, newest five, headlines only).
-      let wire = {};
-      try { wire = parseCompanyWire(await readMonitor("company-wire", 400_000, 2_500)).items; } catch { /* no wire: the other sources still limit themselves */ }
+      // No wire: the other sources still limit themselves.
+      const wire = (await freeWire) ?? {};
       feed = projectFreeNews(feed, freeTechSelection(feed, wire));
     }
     return Response.json(feed, { headers: { ...headers,

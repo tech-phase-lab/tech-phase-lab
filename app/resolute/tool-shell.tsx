@@ -80,6 +80,9 @@ export default function ToolShell({ identityReady=true, home=false, children }: 
  // Going to another page keeps the menu up until that page replaces this one: closing it first showed the old page again
  // for a moment, one more flip on every move (owner, Nov 17). The owner preview changes pages in place, so it closes there.
  const leave=(href:string)=>reviewing || current===href ? close : undefined;
+ const shown=reviewing ? identityReady : access==="allowed";
+ // While access is being checked the page shows only the RESOLUTE loader: the disclaimer belongs under real content (owner, Nov 18).
+ const checking=!shown && (!identityReady || access==="loading");
  return <main className={`${styles.page} ${home?styles.homePage:""}`} lang={locale}><div className={`${home?styles.homeWrap:styles.wrap} ${h.shell}`}>
   <header className={`${h.bar} ${home?h.inHome:""}`}>
    <button type="button" className={h.menuBtn} aria-expanded={menuOpen} aria-controls="resolute-tools" onClick={()=>setMenuOpen(open=>!open)}>
@@ -103,7 +106,7 @@ export default function ToolShell({ identityReady=true, home=false, children }: 
     <Link href="/resolute/settings" prefetch={false} className={h.lang}>{en?"Language and time zone":"言語とタイムゾーン"} ›</Link>
    </div> : null}
   </nav> : null}
-  {(reviewing ? identityReady : access==="allowed") ? children(locale,()=>{forget("entitlement");setAccess("denied");},entitlement) : (!identityReady || access==="loading") ? <section className={styles.loadingBrand} role="status" aria-live="polite">
+  {shown ? children(locale,()=>{forget("entitlement");setAccess("denied");},entitlement) : checking ? <section className={styles.loadingBrand} role="status" aria-live="polite">
    <svg viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="9" r="4" /><path d="M24 13v28M17 19h14M9 31c0 7 7 11 15 11s15-4 15-11M5 33l4-4 4 4M35 33l4-4 4 4" /></svg>
    <b>RESOLUTE</b><span>{en?"Checking…":"確認中…"}</span></section> : <section className={styles.card}>
    <h1>{en?"Your investing rules":"自分の投資ルール"}</h1><p role="status">{message}</p>
@@ -113,7 +116,7 @@ export default function ToolShell({ identityReady=true, home=false, children }: 
   </section>}
   {review ? <p className={styles.reviewNote}>{en ? "Owner preview · You can choose to save on this device. No notifications are sent." : "運営者専用の確認画面です。端末への保存は上の設定で選べます。通知は送信しません。"}</p> : null}
   {home && !reviewing ? <AddToHomeCard en={en} /> : null}
-  <Disclaimer en={en} />
+  {checking ? null : <Disclaimer en={en} />}
  </div></main>;
 }
 /** A small gold dot on the tapped menu item while its page is on the way, so the tap is seen to have worked. */

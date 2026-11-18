@@ -3,6 +3,7 @@ import Link from "next/link";
 import { useClerk } from "@clerk/nextjs";
 import { useCallback, useEffect, useState, useSyncExternalStore, type ReactNode } from "react";
 import { useIdentityRefresh } from "../identity-provider";
+import { forgetMemberHint } from "../member-display-provider";
 import Crown from "./crown";
 import { INITIAL, tileBackground, tileById } from "./avatars";
 import { AvatarSheet, NameSheet, startCheckout, type Mode } from "./account-sheets";
@@ -245,7 +246,7 @@ export default function AccountView({ ja, member, billingAvailable, onRecheck, i
     {/* The owner's two-step verification is required for admin access: when it is on it is only shown (never offered to turn off);
         when it is off or cannot be read, the row opens the security page so it can be set up. */}
     {owner && twoFactor === true ? row(I.shield, t("2段階認証", "Two-step verification"), { value: twoValue, chevron: false }) : row(I.shield, t("2段階認証", "Two-step verification"), { href: "/research/account/security", value: twoValue })}
-    {row(I.out, t("ログアウト", "Log out"), { onClick: () => { if (clerk.loaded) void clerk.signOut({ redirectUrl: "/research" }); }, chevron: false, className: styles.muted })}
+    {row(I.out, t("ログアウト", "Log out"), { onClick: () => { if (clerk.loaded) { forgetMemberHint(); void clerk.signOut({ redirectUrl: "/research" }); } }, chevron: false, className: styles.muted })}
   </div>;
 
   // ---- owner menu
