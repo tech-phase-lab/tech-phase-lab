@@ -5,7 +5,8 @@
 .root * { box-sizing:border-box; }
 :global(html[data-resolute-owned]) .root { display:none; }
 .lp { max-width:480px; margin:0 auto; padding:0 20px 56px; }
-.lp p, .lp h1, .lp h2, .lp h3 { margin:0; }
+/* Zero-specificity reset: the class rules' own margins (catch 30px, lead 20px, kana 6px …) must win (owner, Nov 18: the hero was cramped). */
+:where(.lp) :where(p, h1, h2, h3) { margin:0; }
 .lp button { font:inherit; }
 
 .hero { display:flex; flex-direction:column; align-items:center; text-align:center; padding:44px 0 36px; }
