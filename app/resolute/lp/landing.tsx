@@ -5,6 +5,7 @@ import AlertSample from "./alert-sample";
 import Book from "./book";
 import AddToHomeSteps from "../add-to-home-steps";
 import OpenAtTop from "./open-at-top";
+import TechPhaseBack from "./tech-phase-back";
 import OwnedRedirect from "./owned-redirect";
 import { Anchor, Feature, stars } from "./parts";
 import s from "./lp.module.css";
@@ -28,6 +29,7 @@ const WHAT = "RESOLUTEは相場が荒れる日でも冷静に立ち回るため�
 export default function Landing({ embedded = false }: { embedded?: boolean }) {
  return <div className={s.root}>
   <OpenAtTop />
+  <TechPhaseBack en={false} />
   {embedded ? null : <><script dangerouslySetInnerHTML={{ __html: ownedGuardScript(BAR_STATE_KEY) }} /><OwnedRedirect /></>}
   <main className={s.lp}>
    {/* 1 ファーストビュー */}

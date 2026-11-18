@@ -4,6 +4,7 @@ import { ownedGuardScript } from "@/lib/resolute/landing-gate";
 import AlertSample from "./alert-sample";
 import Book from "./book";
 import OpenAtTop from "./open-at-top";
+import TechPhaseBack from "./tech-phase-back";
 import OwnedRedirect from "./owned-redirect";
 import { Anchor, Feature, stars } from "./parts";
 import s from "./lp.module.css";
@@ -28,6 +29,7 @@ function Buy({ small = false }: { small?: boolean }) {
 export default function LandingEn({ embedded = false }: { embedded?: boolean }) {
  return <div className={`${s.root} ${s.en}`} lang="en">
   <OpenAtTop />
+  <TechPhaseBack en={true} />
   {embedded ? null : <><script dangerouslySetInnerHTML={{ __html: ownedGuardScript(BAR_STATE_KEY) }} /><OwnedRedirect /></>}
   <main className={s.lp}>
    {/* 1 Hero */}
