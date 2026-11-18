@@ -25,6 +25,7 @@ from decimal import Decimal, InvalidOperation
 from urllib.parse import urlsplit
 
 import monitor
+import result_fallback
 
 VERSION = 'issuer-flash-v1'
 WINDOW = timedelta(days=7)
@@ -1306,8 +1307,10 @@ def run_once(path, reference=None, fetch=None, fetch_pdf=None):
             except Exception as exc:
                 code = str(exc) if isinstance(exc, ValueError) and re.fullmatch(r'[a-z0-9-]{1,40}', str(exc)) else type(exc).__name__
                 STATUS[url] = {'ticker': ticker, 'state': 'unreadable', 'reason': code, 'at': stamp()}
+                remember(db, ticker, url, 'unreadable', code)
                 continue
             STATUS[url] = {'ticker': ticker, 'state': 'published', 'reason': None, 'at': stamp()}
+            remember(db, ticker, url, 'published', None, parsed['period'])
             given = parsed.get('givenAt')
             if given is not None and given < observed:
                 observed = given  # a late filing of results given out earlier keeps their own date
@@ -1323,7 +1326,19 @@ def run_once(path, reference=None, fetch=None, fetch_pdf=None):
                            (key, ticker, url, parsed['period'], json.dumps(payload, ensure_ascii=False),
                             stamp(observed), stamp(), round((time.monotonic() - started) * 1000), VERSION))
             changed += 1
+            try:
+                result_fallback.replace_with_flash(db, ticker, observed)  # the parser's figures always win over the fallback
+            except Exception:
+                print('issuer-result-fallback-replace-unavailable', flush=True)
     return changed
+
+
+def remember(db, ticker, url, state, reason, period=None):
+    """Persist the reading state (codes only) so it survives a restart; never lets a storage error stop the flash."""
+    try:
+        result_fallback.record(db, ticker, url, state, reason, period)
+    except Exception:
+        print('issuer-result-state-unavailable', flush=True)
 
 
 def public_feed(db, cutoff):
@@ -1352,6 +1367,11 @@ def diagnostics(db):
                    'detectionToPublicMs': monitor.stored_latency_ms(r['observed_at'], r['published_at'])}
                   for r in db.execute('SELECT ticker,period,observed_at,published_at FROM issuer_result_publications '
                                       'ORDER BY julianday(observed_at) DESC LIMIT 5')]
-    return {'status': 'running', 'published': stored, 'latest': latest,
-            'waiting': [{k: v[k] for k in ('ticker', 'state', 'reason', 'at')}
-                        for v in sorted(STATUS.values(), key=lambda v: v['at'], reverse=True)[:10] if v['state'] != 'published']}
+    persisted = result_fallback.diagnostics(db)
+    waiting = [{k: v[k] for k in ('ticker', 'state', 'reason', 'at')}
+               for v in sorted(STATUS.values(), key=lambda v: v['at'], reverse=True)[:10] if v['state'] != 'published']
+    if not waiting:  # after a restart the in-memory outcome is gone; the stored one still says why
+        waiting = [{'ticker': a['ticker'], 'state': a['state'], 'reason': a['reason'], 'at': a['changedAt']}
+                   for a in persisted['attempts'] if a['state'] != 'published'][:10]
+    return {'status': 'running', 'published': stored, 'latest': latest, 'waiting': waiting,
+            'attempts': persisted['attempts'], 'fallbacks': persisted['fallbacks']}
