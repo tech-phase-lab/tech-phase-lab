@@ -2,6 +2,8 @@ import { createHash } from 'node:crypto';
 import { isGuest } from './guest.mjs';
 import { paypalEnvironment } from './paypal-environments.mjs';
 import { identity, input, quote, sameQuote, verifyOrder, reject, minorUnits, PaymentError } from './policy.mjs';
+// The price was fixed when the order was created (see quote); fall back to now for rows without a creation time.
+const pricedAt = (order, now) => { const at=Date.parse(order.created_at); return Number.isFinite(at) && at <= now ? at : now; };
 const uuid = value => typeof value === 'string' && /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(value);
 export function paymentEngine({ store, paypal, merchantId, getUser, now = Date.now, environment = 'sandbox', canCharge = () => true, allowGuest = () => false, recovery = null }) {
   const selected=paypalEnvironment(environment), sandbox=environment === 'sandbox';
@@ -54,12 +56,13 @@ export function paymentEngine({ store, paypal, merchantId, getUser, now = Date.n
       verifyOrder(order,remote,merchantId);
       const m=await buyer(userId);
       order=await store.prepare(order,m,now(),(current,rights)=>{
-        if(!sameQuote(current.quote,quote(current.quote.kind,current.quote.language,m,rights,now()))) reject('PRICE_CHANGED');
+        const time=now();
+        if(!sameQuote(current.quote,quote(current.quote.kind,current.quote.language,m,rights,time,pricedAt(current,time)))) reject('PRICE_CHANGED');
       });
       // Fresh authoritative identity lookup immediately before the irreversible API operation.
       const finalMember=await buyer(userId), time=now();
       if(time >= Date.parse(order.expires_at) || !sameQuote(order.quote,quote(order.quote.kind,order.quote.language,finalMember,
-        { use:order.quote.kind === 'renewal' },time))) {
+        { use:order.quote.kind === 'renewal' },time,pricedAt(order,time)))) {
         await store.flag(order,'CAPTURE_ELIGIBILITY_CHANGED'); reject('PRICE_CHANGED');
       }
       order=await store.refreshCapture(order,finalMember,now());

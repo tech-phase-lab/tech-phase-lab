@@ -167,6 +167,9 @@ export function createPaypal(config, fetcher = fetch) {
       const plan = plans[planKey(currency, period)];
       if (!plan) fail('INVALID_OFFER'); // The yearly plan is not configured on this deployment.
       assertPlan(await call(`/v1/billing/plans/${plan}`), plan, currency, period);
+      // No landing page setting here: the v1 Subscriptions application_context has only brand_name, locale,
+      // shipping_preference, user_action, payment_method.payee_preferred, return_url and cancel_url (no landing_page,
+      // unlike Orders v2's GUEST_CHECKOUT used for RESOLUTE). PayPal shows its 「銀行｜カード」 page for PRO already.
       const result = await call('/v1/billing/subscriptions', 'POST', { plan_id: plan, custom_id: id,
         plan: { billing_cycles: [{ sequence: 1, pricing_scheme: { fixed_price: { currency_code: q.currency, value: q.value } } }] },
         application_context: { brand_name: 'Tech Phase', shipping_preference: 'NO_SHIPPING', user_action: 'SUBSCRIBE_NOW',

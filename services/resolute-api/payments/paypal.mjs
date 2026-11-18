@@ -71,7 +71,9 @@ export function createPaypal(config, fetcher = fetch) {
     async create(order) {
       const q = order.quote, amount = { currency_code: q.currency, value: q.value };
       return call('/v2/checkout/orders', 'POST', { intent: 'CAPTURE', payment_source: { paypal: { experience_context: {
-        shipping_preference: 'NO_SHIPPING', user_action: 'CONTINUE',
+        // Opens PayPal on its 「銀行｜カード」 page (card/bank without a PayPal login) instead of the login page.
+        // Checked in Sandbox with a JP buyer (owner, Nov 2026).
+        shipping_preference: 'NO_SHIPPING', user_action: 'CONTINUE', landing_page: 'GUEST_CHECKOUT',
         return_url: `${returnUrl}?order=${order.id}&lang=${q.language}${order.guest_id ? "&guest=1" : ""}`,
         cancel_url: `${returnUrl}?order=${order.id}&lang=${q.language}${order.guest_id ? "&guest=1" : ""}&cancel=1`
       } } }, purchase_units: [{ reference_id: order.id,

@@ -53,8 +53,8 @@ test("no wording that promises results", () => {
   for (const banned of ["負けない", "必ず", "絶対", "保証", "確実に", "リアルタイム"]) assert.ok(!lp.includes(banned), banned);
 });
 
-test("buying goes to the checkout and the page needs no sign-in", () => {
-  assert.match(lp, /CHECKOUT = "\/resolute\/checkout"/);
+test("buying goes straight to PayPal (checkout page as fallback) and the page needs no sign-in", () => {
+  assert.match(lp, /<BuyButton language="ja"/);
   const page = read("../app/resolute/lp/page.tsx");
   assert.ok(!/clerk|auth\(/i.test(page) && !/clerk/i.test(lp));
 });

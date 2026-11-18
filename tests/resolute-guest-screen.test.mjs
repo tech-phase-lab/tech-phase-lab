@@ -37,7 +37,9 @@ test('guest screen preserves order through create, payment, sign-in prompt, relo
    await React.act(async()=>{button.dispatchEvent(new dom.window.MouseEvent('click',{bubbles:true}));});
   };
   await React.act(async()=>root.render(React.createElement(Screen,props)));
-  assert.equal(document.querySelector('option[value="renewal"]').disabled,true);
+  // First purchase only: no purchase-type choice and no renewal explanation (owner, Nov 2026).
+  assert.equal(document.querySelector('select'),null);
+  assert.ok(!/renewal eligibility|Sign in for annual renewal|Purchase type/.test(document.body.textContent));
   await click('Check price and continue');
   assert.deepEqual(calls,['/api/resolute/live-payments/guest/session','/api/resolute/live-payments/guest/orders']);
   assert.equal(new URL(window.location.href).searchParams.get('order'),id);

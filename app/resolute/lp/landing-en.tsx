@@ -9,24 +9,29 @@ import OwnedRedirect from "./owned-redirect";
 import { Anchor, Feature, stars } from "./parts";
 import s from "./lp.module.css";
 import Disclaimer from "../disclaimer";
+import BuyButton from "./buy-button";
+import { resolutePrice, type ResolutePrice } from "@/lib/resolute/price";
 
-// The English page buys through the English checkout.
-const CHECKOUT = "/resolute/checkout?lang=en";
-
-function Price() {
+// From 2027-03-01 00:00 JST the launch line and the struck-through price go and only $69 is shown (owner, Nov 2026).
+function Price({ price }: { price: ResolutePrice }) {
+ if (!price.launch) return <div className={s.price}>
+  <p className={s.amount}><b>$69</b></p>
+ </div>;
  return <div className={s.price}>
   <p className={s.launch}>Launch price · Through Feb 28, 2027</p>
   <p className={s.amount}><del>$69</del><b>$59</b></p>
  </div>;
 }
-function Buy({ small = false }: { small?: boolean }) {
+function Buy({ price, small = false }: { price: ResolutePrice; small?: boolean }) {
  return <div className={s.buy}>
-  <Link href={CHECKOUT} className={small ? `${s.cta} ${s.ctaSmall}` : s.cta}>Get RESOLUTE</Link>
+  <BuyButton language="en" shownValue={price.value} className={small ? `${s.cta} ${s.ctaSmall}` : s.cta}>Get RESOLUTE</BuyButton>
   <p className={s.guest}>No account needed to buy</p>
+  <p className={s.terms}>By continuing, you agree to the <Link href="/terms?lang=en" target="_blank" rel="noopener">Terms</Link></p>
  </div>;
 }
 
 export default function LandingEn({ embedded = false }: { embedded?: boolean }) {
+ const price = resolutePrice("en");
  return <div className={`${s.root} ${s.en}`} lang="en">
   <OpenAtTop />
   <TechPhaseBack en={true} />
@@ -44,8 +49,8 @@ export default function LandingEn({ embedded = false }: { embedded?: boolean }) 
      <div className={s.miniCard}><span className={s.miniHead}><span className={s.miniLab}>Market Gauge</span><span className={s.miniAll}>Hot</span></span><div className={s.track}><i style={{ left: "66%" }} /></div></div>
      <div className={s.miniTiles}><span>Your Rulebook</span><span>Rules Wallpaper</span></div>
     </div></div>
-    <Price />
-    <Buy />
+    <Price price={price} />
+    <Buy price={price} />
    </section>
 
    {/* 2 TWO NIGHTS */}
@@ -128,8 +133,8 @@ export default function LandingEn({ embedded = false }: { embedded?: boolean }) 
    <section className={`${s.sec} ${s.final}`}>
     <Anchor className={s.anchor} />
     <h2 className={s.h2}>Before the next market storm,<br /><em>have your rules ready.</em></h2>
-    <Price />
-    <Buy />
+    <Price price={price} />
+    <Buy price={price} />
    </section>
 
    {/* 6 MESSAGE */}
@@ -161,7 +166,7 @@ export default function LandingEn({ embedded = false }: { embedded?: boolean }) 
      <details><summary>Can I buy without an account?</summary><p>Yes. You don’t need an account to purchase. After payment, we’ll email you a link to create an account or sign in and activate your access.</p></details>
      <details><summary>Can I get a refund?</summary><p>As a digital product, RESOLUTE can&apos;t be refunded after purchase. Please review the details before you buy. We do refund double charges, or if a fault on our side stops it from working.</p></details>
     </div>
-    <Buy small />
+    <Buy price={price} small />
    </section>
 
    {/* 8 Footer */}
