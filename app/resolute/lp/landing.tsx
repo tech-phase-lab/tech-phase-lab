@@ -33,7 +33,7 @@ export default function Landing({ embedded = false }: { embedded?: boolean }) {
    {/* 1 ファーストビュー */}
    <section className={s.hero}>
     <div className={s.mark}><Anchor className={s.anchor} /><span className={s.wordmark}>RESOLUTE</span></div>
-    <p className={s.kana}>レゾリュート ｜ リゼル</p>
+    <p className={s.kana}>レゾリュート</p>
     <h1 className={s.catch}>暴落の夜も<br />急騰の夜も<br /><em>自分のルールを守る</em></h1>
     <p className={s.lead}>相場が荒れた日に立ち戻る場所を<br />あなたのスマホに置いておくキットです。</p>
     <div className={s.phone} aria-hidden="true"><div className={s.screen}>

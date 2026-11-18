@@ -10,8 +10,9 @@
 .lp button { font:inherit; }
 
 .hero { display:flex; flex-direction:column; align-items:center; text-align:center; padding:44px 0 36px; }
-.mark { position:relative; display:flex; align-items:center; }
-.anchor { position:absolute; right:100%; margin-right:10px; width:30px; height:30px; fill:none; stroke:var(--gold); stroke-width:2.2; stroke-linecap:round; stroke-linejoin:round; }
+/* Icon above the word so icon, RESOLUTE, the reading and the headline share one centre line (owner, Nov 18). */
+.mark { display:flex; flex-direction:column; align-items:center; gap:10px; }
+.anchor { width:30px; height:30px; fill:none; stroke:var(--gold); stroke-width:2.2; stroke-linecap:round; stroke-linejoin:round; }
 .wordmark { font-family:var(--serif); font-size:22px; font-weight:500; letter-spacing:.42em; padding-left:.42em; background:linear-gradient(180deg,var(--gold2),var(--gold) 55%,var(--gold3)); -webkit-background-clip:text; background-clip:text; color:transparent; }
 .kana { margin-top:6px; font-size:11px; letter-spacing:.14em; padding-left:.14em; color:var(--sub); }
 .catch { margin-top:18px; font-family:var(--serif); font-size:clamp(28px,8.6vw,36px); line-height:1.5; font-weight:600; letter-spacing:.04em; }
