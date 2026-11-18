@@ -54,6 +54,7 @@ Structure (every part is checked on its own and a part that fails is dropped, so
 - next: one to four concrete things to check in the next release or filing (次に見ること).
 Every part except unknowns cites one to three evidence ids (evidenceIds); cite every excerpt that holds a figure you use.
 Numbers: use only figures that appear literally in the evidence excerpts the part cites, with the same units and signs. Never calculate, round, convert or infer a number (no growth rates you compute, no yen conversions). An excerpt that begins "Computed by the service" holds year-over-year changes and margins the service calculated from the release's own table: copy those figures exactly as written and cite that excerpt; you still never calculate anything yourself. If a comparison needs a number the source does not give, describe it in words without a number.
+Money: write every dollar amount with its scale word in both languages, as the source states it ($130.0 billion, $482 million); a figure of a table headed "$ in billions" printed bare ($115.8) has lost its scale, so leave it out. The service rewrites the Japanese amounts into Japanese units (1,300億ドル); a part with a dollar amount lacking its scale is dropped. A per-share figure (EPS, dividend) stays a plain dollar amount.
 You get one attempt: keep one idea per part and do not mix increases and decreases of different items in one sentence. A claim about a trend or a comparison must cite the excerpt that states it. Write an amount exactly as the source does and put a space or punctuation between an English unit word and the Japanese text that follows it. A negated or capacity clause of the source (cannot, able to, not expected) must keep its negation or qualifier.
 Outside unknowns, write what the excerpts say, not what cannot be known: do not add negative statements of your own (できない、ではない、ない、not、cannot) unless the cited excerpt itself says so; express caution as something to watch (…かどうかを確認したい).
 Preserve negation, uncertainty and time: plans stay plans, guidance stays guidance; never state an outlook beyond what the source states.
@@ -589,10 +590,16 @@ def why(exc, everything=None):
         reason = 'changed-negation:%s:%s' % (cue.get('rule', '?'), '|'.join(cue.get('sourceCues') or cue.get('copyCues') or []))
     elif reason == 'unsupported-number':
         miss = factual_validation.LAST_NUMBER_REJECTION[0] or {}
-        values = [str(v) for v in (miss.get('values') or [])[:4]]
+        def plain(value):  # 172000000.00 (from a converted 1.72億ドル) and 172000000 are the same figure
+            text = str(value)
+            try:
+                return format(Decimal(text.rstrip('%')).normalize(), 'f') + ('%' if text.endswith('%') else '')
+            except InvalidOperation:
+                return text
+        values = [plain(v) for v in (miss.get('values') or [])[:4]]
         where = ''
         if everything is not None and miss.get('kind') == 'value' and values:
-            known = {str(v) for v, _ in factual_validation.numeric_values(everything)}
+            known = {plain(v) for v, _ in factual_validation.numeric_values(everything)}
             hits = [value.rstrip('%') in known for value in values]
             where = ':' + ('E' if all(hits) else 'A' if not any(hits) else 'M')
         return ('unsupported-number:%s:%s' % (miss.get('kind', '?'), '|'.join(values)))[:77 - len(where)] + where
@@ -623,6 +630,58 @@ def cited_quote(item, excerpts):
     return '\n'.join(found) if found else None
 
 
+# Money units (owner, Nov 18): the Japanese copy shows every dollar amount in Japanese units (1,158億ドル, 4.82億ドル, 1,250万ドル), never
+# "$130.0 billion" or a bare "$115.8" whose scale was lost. Rewritten here, deterministically, BEFORE the checks, so the number check
+# verifies the converted amount against the source; the English keeps "$115.8 billion". A dollar amount without its scale in either
+# language (a table figure "$115.8" of a "$ in billions" table) fails the part, unless it is a per-share figure (EPS, dividend).
+SCALE_WORDS = {'trillion': 12, 't': 12, 'billion': 9, 'b': 9, 'bn': 9, 'million': 6, 'm': 6, 'mn': 6, 'thousand': 3, 'k': 3}
+AMOUNT = r'\d{1,3}(?:,\d{3})+(?:\.\d+)?|\d+(?:\.\d+)?'
+SCALE = r'(?:trillion|billion|million|thousand|bn|mn|[TBMK])(?![A-Za-z])'
+MONEY_RANGE = re.compile(r'(?<![\d.,])\$?\s*(' + AMOUNT + r')\s*(?:[–—~〜～]|-(?=\s*\$?\d)|to)\s*\$?\s*(' + AMOUNT + r')\s*(' + SCALE + r')\s*(?:米?ドル|USD|dollars?)?', re.I)
+MONEY_SCALED = re.compile(r'(?<![\d.,])(?:US)?\$\s*(' + AMOUNT + r')\s*(' + SCALE + r')\s*(?:米?ドル)?|(?<![\d.,$])(' + AMOUNT + r')\s*(' + SCALE + r')\s*(?:米?ドル|USD|dollars?)', re.I)
+BARE_DOLLAR = re.compile(r'(?<![A-Za-z0-9.])(?:US)?\$\s*(' + AMOUNT + r')(?!\d)(?![.,]\d)(?!\s*(?:' + SCALE + r'|兆|億|万|千))'
+                         r'(?!\s*(?:[–—~〜～-]|to)\s*\$?\s*(?:' + AMOUNT + r')\s*' + SCALE + r')', re.I)
+PER_SHARE = re.compile(r'1株|株当たり|EPS|配当|株価|per[- ]share|dividend|share price', re.I)
+ENGLISH_SCALE_JA = re.compile(r'(?:trillion|billion|million|thousand)|\d\s*(?:bn|mn|[BM])(?![A-Za-z])', re.I)
+
+
+def yen_style(digits, exponent):
+    """'115.8', 9 -> '1,158億ドル'; '482', 6 -> '4.82億ドル'; '12.5', 6 -> '1,250万ドル' (exact decimal arithmetic)."""
+    value = Decimal(digits.replace(',', '')) * (Decimal(10) ** exponent)
+    for unit, power in (('兆', 12), ('億', 8), ('万', 4)):
+        if value >= Decimal(10) ** power:
+            return format((value / (Decimal(10) ** power)).normalize(), ',f') + unit + 'ドル'
+    return format(value.normalize(), ',f') + 'ドル'
+
+
+def japanese_money(text):
+    """The Japanese copy with every scaled dollar amount in Japanese units; a per-share "$2.70" becomes "2.70ドル"."""
+    def scale_of(word):
+        return SCALE_WORDS[word.lower()]
+
+    def ranged(m):
+        return yen_style(m[1], scale_of(m[3]))[:-2] + '〜' + yen_style(m[2], scale_of(m[3]))
+
+    text = MONEY_RANGE.sub(ranged, text)
+    text = MONEY_SCALED.sub(lambda m: yen_style(m[1] or m[3], scale_of(m[2] or m[4])), text)
+    if PER_SHARE.search(text):
+        text = BARE_DOLLAR.sub(lambda m: m[1] + 'ドル', text)
+    return text.replace('プラスマイナス', '±')
+
+
+def money_units(item):
+    """Rewrite item['ja'] to Japanese money units in place; ValueError when a dollar amount has lost its scale (either language) or the
+    Japanese still carries an English scale word."""
+    for lang in ('ja', 'en'):
+        text = item.get(lang)
+        if isinstance(text, str) and BARE_DOLLAR.search(text) and not PER_SHARE.search(text):
+            raise ValueError('money-unit-missing')
+    if isinstance(item.get('ja'), str):
+        item['ja'] = japanese_money(item['ja'])
+        if ENGLISH_SCALE_JA.search(item['ja']) or BARE_DOLLAR.search(item['ja']) or '$' in item['ja']:
+            raise ValueError('ja-english-unit')
+
+
 def checked_unknown(item):
     """An unknown (わからないこと) states what the release does not let a reader determine, so the source-negation rule cannot apply to it. Instead it
     may hold no figure at all, no banned wording, and stays short; both languages are required."""
@@ -637,6 +696,8 @@ def checked_unknown(item):
         code = banned_wording(text)
         if code:
             raise ValueError('banned-wording:' + code)
+    if ENGLISH_SCALE_JA.search(item['ja']) or '$' in item['ja']:
+        raise ValueError('ja-english-unit')
 
 
 def bind(value, excerpts, diagnose=None):
@@ -657,6 +718,7 @@ def bind(value, excerpts, diagnose=None):
         try:
             if not isinstance(item, dict):
                 raise ValueError('invalid-note')
+            money_units(item)
             checked(item, quote or evidence, evidence, limit=limit)
             return None
         except (ValueError, TypeError, KeyError, AttributeError) as exc:
@@ -684,8 +746,9 @@ def bind(value, excerpts, diagnose=None):
         if len(sections) >= 5 or item['ja'] in {s['ja'] for s in sections}:
             continue
         heading = item.get('heading')
-        if heading is not None and passes('heading', {**heading, 'evidenceIds': item.get('evidenceIds')} if isinstance(heading, dict) else heading,
-                                          HEADING_CHARS) is not None:
+        if isinstance(heading, dict):
+            heading = {**heading, 'evidenceIds': item.get('evidenceIds')}
+        if heading is not None and passes('heading', heading, HEADING_CHARS) is not None:
             heading = None  # the body stands without its heading
         sections.append({'heading': {'ja': heading['ja'], 'en': heading['en']} if heading else None, 'ja': item['ja'], 'en': item['en']})
     if not sections:

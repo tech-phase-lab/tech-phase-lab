@@ -133,7 +133,7 @@ class DeepAnalysisTests(unittest.TestCase):
         self.assertTrue(reason.startswith('changed-negation:source-negated:'), reason)
         self.assertEqual(caught.exception.detail['kept'], 0)
         kept = deep_analysis.bind({'headline': headline, 'points': [flipped, ok_point], 'watch': None}, excerpts)  # one passed point is published
-        self.assertEqual([p['ja'] for p in kept['points']], [ok_point['ja']])
+        self.assertEqual([p['ja'] for p in kept['points']], ['営業利益は1.72億ドル。'])  # Japanese money units (Nov 18)
 
     def test_a_rejected_headline_gets_a_fixed_one_so_a_passed_point_is_published_and_no_point_holds_with_the_reason(self):
         excerpts = {'0': 'Revenue was $3.41 billion in the quarter.', '1': 'Operating income was $172 million.'}
@@ -887,6 +887,37 @@ class ResearchNoteTests(unittest.TestCase):
         self.assertIn(('point', 'unsupported-number:value:45%:A'), rejected)
         self.assertEqual(reasons['scenario'], 'scenario-not-conditional')
         self.assertEqual(reasons['unknown'], 'unknown-with-number')
+
+    def test_japanese_money_is_in_japanese_units_and_an_amount_without_its_scale_drops_the_part(self):
+        # Owner, Nov 18: 「売上高は$115.8で」 (a "$ in billions" table figure printed bare) has lost its unit; 「$130.0 billion」 mixes English units.
+        excerpts = self.research_note_excerpts()
+        note = self.research_note()
+        note['summary'] = {'ja': '第3四半期の売上高は$115.8で、前年同期比103%増だった。', 'en': 'Third-quarter revenue was $115.8, up 103% year over year.', 'evidenceIds': ['0']}
+        rejected = []
+        bound = deep_analysis.bind(note, excerpts, diagnose=lambda kind, reason, *_: rejected.append((kind, reason)))
+        self.assertIsNone(bound['summary'])
+        self.assertIn(('summary', 'money-unit-missing'), rejected)
+        guidance = next(s for s in bound['sections'] if s['heading']['ja'].startswith('見通し'))
+        self.assertEqual(guidance['ja'], '会社は次の四半期の売上高を1,300億ドル（±3%）と見込む。')
+        self.assertEqual(guidance['en'], 'The company expects revenue of $130.0 billion, plus or minus 3%.')  # English keeps its units
+        japanese = json.dumps([bound['headline'], *bound['sections'], *bound['scenarios'], *bound['unknowns'], *bound['next']], ensure_ascii=False)
+        for part in [bound['headline'], *bound['sections'], *bound['scenarios'], *bound['unknowns'], *bound['next']]:
+            self.assertNotRegex(part['ja'], r'(?i)billion|million|trillion|\$')
+        self.assertIn('1,300億ドル', japanese)
+
+    def test_japanese_money_conversion_is_exact(self):
+        cases = {'売上高は$115.8 billion。': '売上高は1,158億ドル。', '純利益は$482 million。': '純利益は4.82億ドル。',
+                 '費用は$12.5 million。': '費用は1,250万ドル。', '$49–51 billionを見込む。': '490億〜510億ドルを見込む。',
+                 '受注残は$1.5 trillion。': '受注残は1.5兆ドル。', '希薄化後1株利益は$2.70。': '希薄化後1株利益は2.70ドル。',
+                 '売上は3.41 billionドル。': '売上は34.1億ドル。'}
+        for ja, expected in cases.items():
+            item = {'ja': ja, 'en': 'Revenue was $3.41 billion.'}
+            deep_analysis.money_units(item)
+            self.assertEqual(item['ja'], expected)
+        for ja, en in (('売上高は$115.8で増えた。', 'Revenue was $115.8 billion.'), ('売上高は1,158億ドル。', 'Revenue was $115.8, up.'),
+                       ('売上は115.8 billionの規模。', 'Revenue was $115.8 billion.')):
+            with self.assertRaises(ValueError):
+                deep_analysis.money_units({'ja': ja, 'en': en})
 
     def test_banned_wording_follows_the_lawyer_review_list_and_a_source_may_be_quoted(self):
         for text in ('今が買い時だ。', 'Investors should buy the shares.', '株価は割安だ。', '警戒が必要だ。'):
