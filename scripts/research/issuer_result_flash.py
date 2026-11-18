@@ -1278,7 +1278,8 @@ def candidates(db, reference):
             continue
         revision = db.execute('SELECT extracted_text FROM source_revisions WHERE url=? AND sha256=?',
                               (row['url'], row['sha256'])).fetchone()
-        if revision and markers[row['ticker']] in (revision['extracted_text'] or ''):
+        # The stored text keeps the page's line breaks ("Summary\nGAAP" in NVIDIA's Q3 FY27 release, Nov 17): compare on single spaces.
+        if revision and markers[row['ticker']] in ' '.join((revision['extracted_text'] or '').split()):
             yield row['ticker'], row['url'], row['detected'], revision['extracted_text']
 
 
