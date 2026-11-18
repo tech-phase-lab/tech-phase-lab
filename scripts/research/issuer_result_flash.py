@@ -132,6 +132,8 @@ def parse_nebius(text, url=None):
     t = tidy_numbers(clean(text))
     if 'nebius' not in t.lower():
         raise ValueError('issuer-identity-missing')
+    # The HTML release (SEC 6-K EX-99.1, Nov 12, 2026) prints "571 %" and "(119.6 )": close those gaps as in the PDF.
+    t = re.sub(r'\(([\d,.]+) \)', r'(\1)', re.sub(r'(?<=\d) %', '%', t))
     despaced = re.sub(r'\s+', '', t)
     head = re.search(r'Q([1-4])(20\d\d)financialhighlights', despaced, re.I)
     period = (int(head[1]), int(head[2])) if head else period_from_url(url)
@@ -1207,6 +1209,48 @@ SOURCE_URL = {
 }
 
 
+
+def sentences(text, url=None):
+    import highlight_sentences  # imported here: it reads this module's labels and formats
+    parsed = highlight_sentences.parse(text, url)
+    return {**parsed, 'method': highlight_sentences.METHOD}
+
+
+def sentence_candidate(flat):
+    import highlight_sentences
+    head = flat[:800]
+    return bool(highlight_sentences.RESULTS_HEAD.search(head)) and not highlight_sentences.NOT_RESULTS_HEAD.search(head)
+
+
+def outside_roster(ticker):
+    """The 22 deep-analysis companies have their own verified fallback (result_fallback); the others get the sentence reading."""
+    try:
+        import deep_analysis
+        return ticker not in deep_analysis.ROSTER
+    except Exception:  # noqa: BLE001
+        return False
+
+
+def parse_with_sentences(ticker, text, url):
+    """The company's table parser; when it cannot read the release (or the company has none), outside the deep-analysis roster,
+    the figures its highlight sentences state (owner, Nov 18: never only 「決算を発表しました」 when the release states them)."""
+    try:
+        return PROFILES[ticker]['parse'](text, url)
+    except Exception as table_error:
+        if not outside_roster(ticker):
+            raise
+        try:
+            return sentences(text, url)
+        except ValueError:
+            raise table_error
+
+
+# Companies without a table parser: their figures come from the release's highlight sentences only.
+for _ticker, _name in (('CEG', 'Constellation Energy'), ('COHR', 'Coherent'), ('IBM', 'IBM'), ('IREN', 'IREN'), ('QCOM', 'Qualcomm'),
+                       ('TSLA', 'Tesla'), ('VST', 'Vistra')):
+    PROFILES.setdefault(_ticker, {'publisher': f'{_name} IR (SEC 8-K)', 'parse': sentences, 'sentences-only': True})
+
+
 # ---- storage -----------------------------------------------------------------------------------------------
 
 def schema(db):
@@ -1228,7 +1272,7 @@ def stamp(value=None):
     return (value or datetime.now(timezone.utc)).isoformat(timespec='milliseconds')
 
 
-def build(ticker, url, parsed, observed_at):
+def build(ticker, url, parsed, observed_at, publisher=None):
     key = hashlib.sha256('\0'.join([ticker, parsed['period'], url]).encode()).hexdigest()
     number = str(int(key[:12], 16))
     # comparisons.yearAgo is the same quarter one year earlier, read from the table's prior-year column (same format as value).
@@ -1240,8 +1284,8 @@ def build(ticker, url, parsed, observed_at):
         'id': number, 'researchId': 'ir-flash-' + number, 'kind': 'earnings', 'ticker': ticker, 'period': period,
         'titleJa': f'{ticker} {period}決算：' + '、'.join(f['ja'] + f['value'] for f in first),
         'titleEn': f'{ticker} {period} earnings: ' + ', '.join(f['en'] + ' ' + f['value'] for f in first),
-        'facts': facts, 'url': url, 'publisher': PROFILES[ticker]['publisher'],
-        'publishedAt': observed_at, 'observedAt': observed_at, 'method': 'deterministic-issuer-table',
+        'facts': facts, 'url': url, 'publisher': publisher or PROFILES[ticker]['publisher'],
+        'publishedAt': observed_at, 'observedAt': observed_at, 'method': parsed.get('method', 'deterministic-issuer-table'),
     }
 
 
@@ -1275,6 +1319,8 @@ def candidates(db, reference):
     # every few seconds and starves the monitor (Nov 12). Pick the few recent sources of these companies first, then read only
     # their current revision.
     markers = {t: p['marker'] for t, p in PROFILES.items() if p.get('marker')}
+    # sentence-only companies (no table parser): any stored release whose first lines name a quarter's results
+    markers.update({t: None for t, p in PROFILES.items() if p.get('sentences-only')})
     for row in db.execute('SELECT s.url,s.ticker,s.sha256,COALESCE(e.detected_at,s.discovered_at) AS detected '
                           'FROM sources s LEFT JOIN release_events e ON e.url=s.url '
                           "WHERE s.ticker IN (%s) AND s.status NOT IN ('held','rejected') "
@@ -1287,7 +1333,8 @@ def candidates(db, reference):
         revision = db.execute('SELECT extracted_text FROM source_revisions WHERE url=? AND sha256=?',
                               (row['url'], row['sha256'])).fetchone()
         # The stored text keeps the page's line breaks ("Summary\nGAAP" in NVIDIA's Q3 FY27 release, Nov 17): compare on single spaces.
-        if revision and markers[row['ticker']] in ' '.join((revision['extracted_text'] or '').split()):
+        flat = ' '.join((revision['extracted_text'] or '').split()) if revision else ''
+        if revision and (markers[row['ticker']] in flat if markers[row['ticker']] else sentence_candidate(flat)):
             yield row['ticker'], row['url'], row['detected'], revision['extracted_text']
 
 
@@ -1310,7 +1357,7 @@ def run_once(path, reference=None, fetch=None, fetch_pdf=None):
             started = time.monotonic()
             try:
                 text = body if body is not None else nebius_pdf_text(url, fetch, fetch_pdf or (fetch if fetch is not monitor.fetch else None))
-                parsed = PROFILES[ticker]['parse'](text, url)
+                parsed = parse_with_sentences(ticker, text, url)
             except Exception as exc:
                 code = str(exc) if isinstance(exc, ValueError) and re.fullmatch(r'[a-z0-9-]{1,40}', str(exc)) else type(exc).__name__
                 STATUS[url] = {'ticker': ticker, 'state': 'unreadable', 'reason': code, 'at': stamp()}
@@ -1348,13 +1395,15 @@ def remember(db, ticker, url, state, reason, period=None):
         print('issuer-result-state-unavailable', flush=True)
 
 
-def public_feed(db, cutoff):
-    """Stored flashes still inside the window, in the same shape as market_results items."""
+def public_feed(db, cutoff, until=None):
+    """Stored flashes still inside the window (observed at or after `cutoff`, and before `until` when given: the calendar's
+    results history asks for a month), in the same shape as market_results items."""
     if not db.execute("SELECT 1 FROM sqlite_master WHERE name='issuer_result_publications'").fetchone():
         return []
     items = []
     for row in db.execute('SELECT payload,observed_at,published_at,processing_ms FROM issuer_result_publications '
-                          'WHERE julianday(observed_at)>=julianday(?) ORDER BY julianday(observed_at) DESC', (cutoff,)):
+                          'WHERE julianday(observed_at)>=julianday(?) AND julianday(observed_at)<julianday(?) '
+                          'ORDER BY julianday(observed_at) DESC', (cutoff, until or '9999-12-31T00:00:00+00:00')):
         item = json.loads(row['payload'])
         item['publicAt'] = row['published_at']
         item['processingMs'] = row['processing_ms']

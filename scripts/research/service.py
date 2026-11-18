@@ -57,6 +57,7 @@ import result_fallback
 import dart_api
 import dart_watch
 import earnings_announce
+import earnings_history
 import official_research
 import deep_analysis
 import llm_cost
@@ -3799,6 +3800,22 @@ class Handler(BaseHTTPRequestHandler):
                 self.send_json(400, {"ok": False, "error": str(exc)})
             except Exception:
                 self.send_json(503, {"ok": False, "error": "question-list-unavailable"})
+            return
+        if path == "/earnings-results":
+            # Nov 18 (owner): the calendar's results view reads every stored result of a month, not only the news feed's last
+            # seven days. Same token as /news; a bounded, validated range; read only.
+            if not self.authorized():
+                self.send_json(401, {"ok": False, "error": "unauthorized"})
+                return
+            try:
+                earnings_history.parse_range(parse_qs(parsed.query))
+            except ValueError:
+                self.send_json(400, {"ok": False, "error": "invalid-range"})
+                return
+            try:
+                self.send_json(200, earnings_history.answer(self.app.db_path, parse_qs(parsed.query)))
+            except Exception:
+                self.send_json(503, {"ok": False, "error": "earnings-results-unavailable"})
             return
         if path not in {"/snapshot", "/live", "/price-targets", "/news", "/posts", "/company-wire"}:
             self.send_json(404, {"ok": False, "error": "not-found"})

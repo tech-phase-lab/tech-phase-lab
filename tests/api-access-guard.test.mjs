@@ -16,6 +16,7 @@ const PUBLIC = {
   'research/news/stream': 'change signal only, short-lived origin-bound ticket',
   'research/price-targets/stream': 'change signal only, short-lived origin-bound ticket',
   'research/news': 'public news feed (FREE limits are applied by the feed builder)',
+  'research/earnings-results': 'public earnings results of a month for the calendar (FREE under the Oct 25 policy; no member data)',
   'research/price-targets': 'public price-target feed',
   'research/company-wire': 'public company wire',
   'research/live': 'public live feed',

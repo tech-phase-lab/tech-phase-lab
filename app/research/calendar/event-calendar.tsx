@@ -39,6 +39,9 @@ export default function EventCalendar() {
   const [period, setPeriod] = useState("all");
   const [reported, setReported] = useState<{ ticker: string; at: number }[]>([]);
   const onReported = useCallback((rows: { ticker: string; at: number }[]) => setReported(rows), []);
+  // Months that have stored earnings results, older than the live feed included (owner, Nov 18: October came up empty).
+  const [historyMonths, setHistoryMonths] = useState<string[]>([]);
+  const onMonths = useCallback((months: string[]) => setHistoryMonths(current => [...new Set([...current, ...months])]), []);
   // A company whose result is already in the results view no longer keeps its call row (owner, Oct 15).
   // The same goes for an economic release (jobs, CPI, PPI, PCE) once its result is posted.
   const resultKey = (event: CalendarEvent) => event.ticker ?? (event.kind === "economic" ? `econ:${/^[a-z]+/.exec(event.id)?.[0]}` : undefined);
@@ -54,7 +57,7 @@ export default function EventCalendar() {
   const visible = now === null ? [] : selectCalendarEvents(calendarEvents, kind, "today-upcoming", now, zone).filter(event => period === "all" || calendarDateKey(event.startsAt, zone).startsWith(period)).filter(event => !resultPosted(event));
   const visibleDateOnly = now === null ? [] : selectDateOnlyEvents(dateOnlyEvents, kind, "today-upcoming", now).filter(event => period === "all" || event.date.startsWith(period));
   const months = [...new Set(view === "results"
-    ? reported.map(row => calendarDateKey(new Date(row.at).toISOString(), zone).slice(0, 7))
+    ? [...reported.map(row => calendarDateKey(new Date(row.at).toISOString(), zone).slice(0, 7)), ...(kind === "economic" ? [] : historyMonths)]
     : now === null ? [] : [...selectCalendarEvents(calendarEvents, kind, "today-upcoming", now, zone).map(event => calendarDateKey(event.startsAt, zone).slice(0, 7)), ...selectDateOnlyEvents(dateOnlyEvents, kind, "today-upcoming", now).map(event => event.date.slice(0, 7))])].sort();
   const stamp = (value: string, zone: string) => new Intl.DateTimeFormat(lang === "ja" ? "ja-JP" : "en-US", { timeZone: zone, month: "short", day: "numeric", weekday: "short", hour: "2-digit", minute: "2-digit", hour12: false }).format(new Date(value));
   return <ResearchToolShell lang={lang} setLang={(value) => { setLang(value); setZoneOverride(null); setPeriod("all"); }} eyebrow="CALENDAR" title={t("決算・経済指標カレンダー", "Earnings & economic calendar")} description={t("相場の転機を、見逃さない。", "Don’t miss the moments that move markets.")} freshness>
@@ -69,7 +72,7 @@ export default function EventCalendar() {
       <select aria-label={t("表示月", "Month")} value={period} onChange={event => setPeriod(event.target.value)}><option value="all">{t("すべての月", "All months")}</option>{months.map(month => <option key={month} value={month}>{month}</option>)}</select>
       <select aria-label={t("時間帯", "Time zone")} value={zone} onChange={event => { setZoneOverride(event.target.value); setPeriod("all"); }}><option value="Asia/Tokyo">JST</option><option value="America/New_York">ET</option></select>
     </div>
-    <EconomicResultsPanel lang={lang} zone={zone} period={period} kind={kind} onReported={onReported} onSettled={onSettled} active={view === "results"} />
+    <EconomicResultsPanel lang={lang} zone={zone} period={period} kind={kind} onReported={onReported} onMonths={onMonths} onSettled={onSettled} active={view === "results"} />
     {view === "upcoming" && now === null && <div className={calendarStyles.waiting} aria-busy="true" aria-label={t("予定を読み込み中", "Loading the schedule")} />}
     {view === "upcoming" && <div className={calendarStyles.upcomingContent}>
     <ol className={calendarStyles.agenda}>{visible.map((event) => <li key={event.id}>
