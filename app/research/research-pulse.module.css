@@ -1,14 +1,17 @@
 /* Home news band (owner, Nov 4): a LIVE badge and one still headline that changes every five seconds; the time sits under the headline;
    a thin line keeps flowing underneath and brightens for half a second at each change. */
 .pulse{position:relative;margin:0 0 34px;border-top:1px solid #1a1d27;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;touch-action:pan-y pinch-zoom}
-.strip{position:relative;height:56px;overflow:hidden}
-.item{position:absolute;inset:0;display:flex;align-items:center;gap:12px}
+/* Owner, Nov 18: no "…". The lines share one grid cell, so the band grows to the longest headline in rotation (a hidden copy of each
+   is laid out there) and stays that height while they change; one line keeps the 56px band as before. */
+.strip{position:relative;display:grid;grid-template-columns:minmax(0,1fr);min-height:56px;overflow:hidden}
+.item{position:relative;grid-area:1/1;display:flex;align-items:center;gap:12px;min-height:56px;box-sizing:border-box;padding:9px 0 15px}
+.sizer{visibility:hidden;pointer-events:none}
 .in{animation:rise .45s cubic-bezier(.3,.7,.2,1) both}
 .out{animation:leave .45s cubic-bezier(.3,.7,.2,1) both;pointer-events:none}
 @keyframes rise{from{transform:translateY(16px);opacity:0}to{transform:none;opacity:1}}
 @keyframes leave{from{transform:none;opacity:1}to{transform:translateY(-16px);opacity:0}}
-.live{flex:none;display:inline-flex;align-items:center;height:22px;margin-top:-6px;padding:0 9px;border-radius:7px;background:#8ef0c4;color:#0b2a1f;font:800 11px var(--font-geist-mono),ui-monospace,monospace;letter-spacing:.06em}
-.hd{flex:1;min-width:0;margin-top:-6px;font-size:14.5px;line-height:1.6;color:#e6e8f0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.live{flex:none;display:inline-flex;align-items:center;height:22px;padding:0 9px;border-radius:7px;background:#8ef0c4;color:#0b2a1f;font:800 11px var(--font-geist-mono),ui-monospace,monospace;letter-spacing:.06em}
+.hd{flex:1;min-width:0;font-size:14.5px;line-height:1.6;color:#e6e8f0;white-space:normal;overflow-wrap:anywhere}
 .sym{font:700 13.5px var(--font-geist-mono),ui-monospace,monospace;color:#fff;letter-spacing:.02em}
 .tm{position:absolute;right:0;bottom:2px;font:10.5px var(--font-geist-mono),ui-monospace,monospace;color:#5d6275;white-space:nowrap}
 .wave{height:1px;background:linear-gradient(90deg,#1a1d27 0%,#1a1d27 30%,#2f8a6c 50%,#1a1d27 70%,#1a1d27 100%);background-size:200% 100%;animation:wave 3.6s linear infinite;opacity:.9}
