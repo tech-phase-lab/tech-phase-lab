@@ -7,8 +7,14 @@ const n = twelveNumber;
 const day = 86400000;
 const clamp = (v:number) => Math.round(Math.max(0,Math.min(10,v))*10)/10;
 const validDate = (v:unknown):v is string => typeof v==="string" && /^\d{4}-\d{2}-\d{2}$/.test(v) && Number.isFinite(Date.parse(v)) && new Date(v).toISOString().slice(0,10)===v;
+/** How long a period's figures stay current: a quarter 180 days (as before); a half-year 270 days (its next report comes about eight months
+ *  after the period ends); a fiscal year standing as a foreign filer's latest period 500 days (the next 20-F is due within four months of
+ *  the following year end). */
+export const periodMaxAgeDays = (months?: number) => months === 12 ? 500 : months === 6 ? 270 : 180;
 export type TwelveFactorEvidence = {
   version: 1; periodEnd: string; retrievedAt: string;
+  /** Set when the period is not a quarter (Financials.periodMonths). */
+  periodMonths?: 6 | 12;
   statistics: null | { retrievedAt:string; quarterEnd:string; forwardPE:number|null; trailingPE:number|null;
     currentRatio:number|null; totalCash:number|null; totalDebt:number|null;
     /** Market value ÷ trailing four quarters' revenue. Used for every company in a comparison when any of them has no forward P/E (a loss-maker). */
@@ -83,7 +89,7 @@ export function normalizeTwelveFactors(snapshot:TwelveComparisonSnapshot, income
 export type ValuationBasis = "pe" | "ps";
 const psScore = (ps:number) => clamp(9-2*Math.log2(ps));
 export function twelveExtraFactors(e:TwelveFactorEvidence,now=Date.now(),basis:ValuationBasis="pe") {
-  const fresh=now-Date.parse(e.periodEnd)>=0 && now-Date.parse(e.periodEnd)<=180*day;
+  const fresh=now-Date.parse(e.periodEnd)>=0 && now-Date.parse(e.periodEnd)<=periodMaxAgeDays(e.periodMonths)*day;
   const s=e.statistics;
   const stats=fresh && s && now-Date.parse(s.retrievedAt)>=0 && now-Date.parse(s.retrievedAt)<=36*3600000 ? s : null;
   // Banks have no current ratio (HSBC, MUFG): cash against debt alone on the full ten-point scale, as for US banks from their filings.

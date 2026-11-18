@@ -29,10 +29,15 @@ test("stability comes from the SEC's four quarters, momentum from the live serie
 test("nothing unverified is used: wrong symbol, wrong currency, no/negative P/E or no series leave the factor out", () => {
   const f = mu();
   assert.equal(buildSecMarketEvidence(f, series("NVDA"), stats("NVDA"), NOW).momentum, null);
-  assert.equal(buildSecMarketEvidence(f, series(), stats("MU", "JPY"), NOW).statistics, null);
+  // Forward P/E is a ratio and holds for a listing quoted in another currency (BTI's ADR); amounts such as price-to-sales still need the same currency.
+  const yen = buildSecMarketEvidence(f, series(), stats("MU", "JPY"), NOW).statistics;
+  assert.equal(yen.forwardPE, 11.5); assert.equal(yen.totalDebt, null);
   assert.equal(buildSecMarketEvidence(f, series(), stats("MU", "USD", "-3"), NOW).statistics, null);
   assert.equal(buildSecMarketEvidence(f, undefined, undefined, NOW).momentum, null);
-  assert.equal(buildSecMarketEvidence({ ...f, status: "unavailable" }, series(), stats(), NOW), null);
+  // No usable filing: the share price alone gives momentum; nothing else is taken.
+  const priceOnly = buildSecMarketEvidence({ ...f, status: "unavailable" }, series(), stats(), NOW);
+  assert.ok(priceOnly.momentum); assert.equal(priceOnly.statistics, null); assert.deepEqual(priceOnly.margins, []);
+  assert.equal(buildSecMarketEvidence({ ...f, status: "unavailable" }, undefined, stats(), NOW), null);
 });
 
 test("without four SEC quarters stability stays empty (not shortened)", () => {

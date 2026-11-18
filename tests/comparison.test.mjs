@@ -43,7 +43,11 @@ test('restatement does not combine prior-year values from another filing',()=>{
  assert.equal(parse(p).revenueGrowth,null);
 });
 test('currency ambiguity and conflicting revenue tags hold the comparison',()=>{
- let p=payload();p.facts['us-gaap'].RevenueFromContractWithCustomerExcludingAssessedTax.units.EUR=[entry(80)];assert.equal(parse(p).status,'unsupported');
+ // A convenience translation of one line beside the filing's native figures: the filing's own currency (the one most of its facts use) is kept.
+ let p=payload();p.facts['us-gaap'].RevenueFromContractWithCustomerExcludingAssessedTax.units.EUR=[entry(80)];
+ assert.equal(parse(p).status,'ready');assert.equal(parse(p).revenue.unit,'USD');assert.equal(parse(p).revenue.value,120);
+ // Every figure in two currencies: no currency dominates, so the comparison is held as before.
+ p=payload();for(const tag of Object.values(p.facts['us-gaap'])) tag.units.EUR=tag.units.USD.map(f=>({...f,val:f.val*0.8}));assert.equal(parse(p).status,'unsupported');
  p=payload();p.facts['us-gaap'].Revenues={units:{USD:[entry(119)]}};assert.equal(parse(p).status,'unsupported');
 });
 test('missing, differently dated or negative capex is not treated as zero',()=>{
