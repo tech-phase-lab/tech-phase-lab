@@ -21,7 +21,7 @@ async function handle(request: Request) {
   if (!config) return Response.json({ ok: true, storage: false, done: true, next: null, refreshed: 0, live: 0, failed: 0, failures: [] }, { headers });
   try {
     const report = await refreshChunk(cursor, { load: loadRadarFactsFresh, save: row => saveRow(row, config) });
-    console.info(`radar refresh ${report.from}-${report.next ?? report.total}/${report.total} refreshed=${report.refreshed} live=${report.live} failed=${report.failures.join(",") || "-"}`);
+    console.info(`radar refresh ${report.from}-${report.next ?? report.total}/${report.total} refreshed=${report.refreshed} live=${report.live} failed=${report.failures.join(",") || "-"} stale=${report.stale.join(",") || "-"}`);
     return Response.json({ ok: true, storage: true, ...report }, { headers });
   } catch (error) {
     console.warn(`radar refresh failed: ${error instanceof Error ? error.message : "error"}`);

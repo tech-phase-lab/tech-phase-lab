@@ -795,6 +795,7 @@ class AutomaticMonitor:
             # The Financial Radar's twice-daily refresh (radar_refresh.py): counts and times only, never the URL or secret.
             "radarRefresh": {
                 "status": "waiting" if radar_refresh.config() else "off",
+                "missing": radar_refresh.missing_settings(),   # setting names only, never values
                 "slotsJst": [f"{h:02d}:{m:02d}" for h, m in radar_refresh.SLOTS_JST],
                 "slot": None, "refreshed": None, "failed": None, "checkedAt": None, "nextAt": None,
             },
@@ -1174,6 +1175,8 @@ class AutomaticMonitor:
     def run_radar_refresh(self, now=lambda: datetime.now(timezone.utc)):
         # The Financial Radar: every company calculated again at 08:00 and 22:30 JST (off unless the comparison warm settings are set).
         if not radar_refresh.config():
+            # Nov 18: this lane was silently off in production for days (the two settings were never set here). Say so once, names only.
+            print("radar-refresh off missing=" + (",".join(radar_refresh.missing_settings()) or "-"), flush=True)
             return
         schedule = radar_refresh.Schedule()
         while not self.stop_event.is_set():
@@ -1183,11 +1186,12 @@ class AutomaticMonitor:
                 result = radar_refresh.run_once(should_stop=self.stop_event.is_set)
                 schedule.record(slot, result)
                 with self.state_lock:
-                    self.state["radarRefresh"] = {**self.state["radarRefresh"], "refreshed": None, "failed": None, "failures": [],
+                    self.state["radarRefresh"] = {**self.state["radarRefresh"], "refreshed": None, "failed": None, "failures": [], "stale": [],
                                                   **result, "slot": radar_refresh.iso(slot), "checkedAt": utc_now()}
                 if schedule.done_slot != slot:
                     wait = radar_refresh.RETRY_AFTER
-                print(f"radar-refresh {result.get('status')} refreshed={result.get('refreshed')} failed={result.get('failed')}", flush=True)
+                print(f"radar-refresh {result.get('status')} refreshed={result.get('refreshed')} failed={result.get('failed')}"
+                      f" stale={','.join(result.get('stale') or []) or '-'}", flush=True)
             with self.state_lock:
                 self.state["radarRefresh"]["nextAt"] = radar_refresh.iso(radar_refresh.next_slot(now()))
             self.stop_event.wait(wait)
