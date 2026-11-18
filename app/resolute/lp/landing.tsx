@@ -183,8 +183,8 @@ export default function Landing({ embedded = false }: { embedded?: boolean }) {
    {/* 8 フッター */}
    <footer className={s.foot}>
     <nav><Link href="/resolute/legal/commerce">特定商取引法に基づく表記</Link><Link href="/terms">利用規約</Link><Link href="/privacy">プライバシー</Link></nav>
-    <Disclaimer />
     <p>画面はイメージです。</p>
+    <Disclaimer />
    </footer>
   </main>
  </div>;

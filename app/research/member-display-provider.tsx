@@ -17,7 +17,18 @@ function readHint(): InitialDisplay | null {
 }
 function writeHint(hint: InitialDisplay | null) {
   try { if (hint) window.localStorage.setItem(HINT_KEY, JSON.stringify(hint)); else window.localStorage.removeItem(HINT_KEY); } catch { /* storage may be blocked */ }
+  showHint(hint);
 }
+/** Keeps <html data-member-hint> (set before the first paint by member-hint-boot) in step with the stored hint: put back if React
+ * ever re-creates <html> (which drops its attributes), and taken away once the hint is cleared. */
+function showHint(hint: InitialDisplay | null) {
+  try {
+    const value = hint?.ownerAccount === true ? "owner" : hint?.plan === "pro" ? "pro" : "";
+    if (value) document.documentElement.dataset.memberHint = value; else delete document.documentElement.dataset.memberHint;
+  } catch { /* no document */ }
+}
+/** Signing out on this device: the remembered owner/PRO header goes with it. */
+export function forgetMemberHint() { writeHint(null); }
 const MemberDisplay = createContext<DisplayPlan>(null);
 const ResearchOwner = createContext(false);
 const OwnerMode = createContext(false);
@@ -38,8 +49,10 @@ export function MemberDisplayProvider({ children, initial }: { children: ReactNo
     let request: AbortController | null = null;
     let retryTimer: ReturnType<typeof setTimeout> | undefined;
     let retries = 0, signedOutAnswers = 0;
-    // True while the header shows the remembered state; a transient bad answer at startup (service waking,
-    // session still restoring) must not blank it or throw the hint away. Only a repeated answer does.
+    // True while the header shows a remembered or verified owner/PRO state; a transient bad answer (service waking, session still
+    // restoring at startup or after the app comes back from the background) must not blank it or throw the hint away. Only a
+    // repeated answer does. A single signed-out answer on resume had cleared the hint, so the next cold start opened without the
+    // reload ring and the 「運営者」 label until the check answered (owner, Nov 18).
     let remembered = false;
     function retrySoon() {
       if (retries++ < 3) retryTimer = setTimeout(() => { void check(true, true, true); }, 2_000);
@@ -61,7 +74,7 @@ export function MemberDisplayProvider({ children, initial }: { children: ReactNo
         setSettled(true);
         if (remembered && (!response.ok || member.status === "unavailable" || (member.status === "signed-out" && ++signedOutAnswers < 3))) { retrySoon(); return; }
         if (!response.ok || member.status === "unavailable") { setPlan(null); setOwner(false); setOwnerMode(false); setOwnerAccount(false); retrySoon(); return; }
-        retries = 0; remembered = false; signedOutAnswers = 0;
+        retries = 0; signedOutAnswers = 0;
         const pro = member.status === "signed-in" && member.plan === "pro" && Number.isFinite(member.accessExpiresAt) && member.accessExpiresAt > Date.now();
         setOwner(member.status === "signed-in" && member.isAdmin === true && pro);
         setOwnerMode(member.status === "signed-in" && member.isAdmin === true && member.ownerMode === true);
@@ -72,28 +85,31 @@ export function MemberDisplayProvider({ children, initial }: { children: ReactNo
         // The owner account's live access window is only about an hour (and it may read as a member without a paid plan),
         // so its display hint keeps its own 7-day life instead of the server's access time.
         const ownerHint = member.status === "signed-in" && member.ownerAccount === true;
+        remembered = pro || ownerHint;
         writeHint(pro || ownerHint ? { plan: pro ? "pro" : "free", owner: member.isAdmin === true, ownerMode: member.ownerMode === true, ownerAccount: ownerHint, accessExpiresAt: ownerHint ? Math.max(pro ? member.accessExpiresAt : 0, Date.now() + 7 * 24 * 3_600_000) : member.accessExpiresAt } : null);
         if (pro) expiry = setTimeout(() => { setPlan(null); void check(true); }, Math.min(member.accessExpiresAt - Date.now(), 2147483647));
       } catch (error) { if (error instanceof Error && error.message === "identity-loading") return; if (active && !signal.aborted && current === generation) { if (remembered) { retrySoon(); return; } setSettled(true); setPlan(null); setOwner(false); setOwnerMode(false); setOwnerAccount(false); retrySoon(); } }
       finally { if (current === generation) request = null; }
     }
     const changed = () => { retries = 0; remembered = false; void check(true); };
+    const reconnected = () => { retries = 0; void check(true, true, true); };
     const focused = () => { if (document.visibilityState === "visible") void check(false, true); };
     const periodic = () => { if (document.visibilityState === "visible") void check(); };
     if (initial?.plan === "pro") expiry = setTimeout(() => { setPlan(null); void check(true); }, Math.max(0, Math.min(initial.accessExpiresAt - Date.now(), 2147483647)));
     const hint = initial ? null : readHint();
     if (hint) {
       remembered = true;
+      showHint(hint);
       setPlan(hint.plan); setOwner(hint.owner && hint.plan === "pro"); setOwnerMode(hint.ownerMode); setOwnerAccount(hint.ownerAccount === true); setSettled(true);
       if (hint.plan === "pro") expiry = setTimeout(() => { setPlan(null); void check(true); }, Math.max(0, Math.min(hint.accessExpiresAt - Date.now(), 2147483647)));
     }
     void check(); const timer = setInterval(periodic, 60_000);
     window.addEventListener("tech-phase:membership-changed", changed);
     window.addEventListener("focus", focused);
-    window.addEventListener("online", changed);
+    window.addEventListener("online", reconnected);
     document.addEventListener("visibilitychange", focused);
     window.addEventListener("pageshow", focused);
-    return () => { active = false; request?.abort(); clearTimeout(expiry); clearTimeout(retryTimer); clearInterval(timer); window.removeEventListener("online", changed); window.removeEventListener("tech-phase:membership-changed", changed); window.removeEventListener("focus", focused); document.removeEventListener("visibilitychange", focused); window.removeEventListener("pageshow", focused); };
+    return () => { active = false; request?.abort(); clearTimeout(expiry); clearTimeout(retryTimer); clearInterval(timer); window.removeEventListener("online", reconnected); window.removeEventListener("tech-phase:membership-changed", changed); window.removeEventListener("focus", focused); document.removeEventListener("visibilitychange", focused); window.removeEventListener("pageshow", focused); };
   }, [initial, refreshIdentity]);
   return <MemberDisplay.Provider value={plan}><ResearchOwner.Provider value={owner}><OwnerMode.Provider value={ownerMode}><OwnerAccount.Provider value={ownerAccount}><MemberSettled.Provider value={settled}>{children}</MemberSettled.Provider></OwnerAccount.Provider></OwnerMode.Provider></ResearchOwner.Provider></MemberDisplay.Provider>;
 }

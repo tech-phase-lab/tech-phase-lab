@@ -79,7 +79,8 @@ test("moving between RESOLUTE pages draws the page once with what the tab alread
   const shell = await read("../app/resolute/tool-shell.tsx");
   assert.match(shell, /useState<Access>\(\(\)=>recall\("entitlement"\)\?"allowed":"loading"\)/);
   assert.match(shell, /recall<DiagnosisLocale>\("locale"\)/);
-  assert.match(shell, /\(reviewing \? identityReady : access==="allowed"\) \? children/);
+  assert.match(shell, /const shown=reviewing \? identityReady : access==="allowed";/);
+  assert.match(shell, /\{shown \? children\(/);
   // A refusal or failed check forgets the remembered access.
   assert.match(shell, /r\.status===401\) \{if\(!retryLater\(\)\) \{forget\(\);setAccess\("signed-out"\);\}/);
   assert.match(shell, /if\(value\.canUseTools\) remember\("entitlement",value\); else forget\("entitlement"\);/);
