@@ -1139,6 +1139,38 @@
 .sources>a:hover {
   border-color:#618574
 }
+/* Issuer notes (owner, Nov 18): the source link stays, smaller and quieter. */
+.sourcesQuiet {
+  margin-top:18px;
+  padding-top:14px
+}
+.sourcesQuiet h3 {
+  font-size:11px;
+  color:#8a9bab;
+  margin-bottom:6px
+}
+.sourcesQuiet>a {
+  min-height:40px;
+  padding:7px 10px;
+  margin-top:4px;
+  gap:8px;
+  background:transparent;
+  border-color:rgba(158,175,191,.16);
+  color:#a9b8c6
+}
+.sourcesQuiet .sourceIndex {
+  flex:none;
+  color:#7f93a5
+}
+.sourcesQuiet strong {
+  font-size:11px
+}
+.sourcesQuiet small {
+  font-size:10px
+}
+.sourcesQuiet>a>span:last-child {
+  color:#7f93a5
+}
 .revision {
   color:#8ca0b2;
   font-size:11px;
@@ -1598,6 +1630,9 @@
   }
   .sources small {
     font-size:11px
+  }
+  .sourcesQuiet small {
+    font-size:10px
   }
 }
 @media(prefers-reduced-motion:reduce) {

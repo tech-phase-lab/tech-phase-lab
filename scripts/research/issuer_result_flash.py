@@ -354,6 +354,12 @@ def parse_statement(text, cfg):
     if cfg.get('glue'):  # "$4.92" printed without a space after the dollar sign
         block = re.sub(r'\$(?=\d)', '$ ', block)
     n, ago, scale = cfg['columns'], cfg['year-ago'], cfg['scale']
+    # A first fiscal quarter prints no year-to-date columns (PANW FQ1 2027, Nov 18, 2026: "Three Months Ended" only, two columns,
+    # while the layout was configured from a later quarter with four). Drop the two year-to-date columns when the heading has none.
+    head = block[:600]
+    if (n, ago) in ((4, 1), (5, 2)) and re.search(r'(?i)three months ended', head) \
+            and not re.search(r'(?i)\b(?:six|nine|twelve) months ended|\byears? ended|year[- ]to[- ]date|fiscal year', head):
+        n -= 2
     rows = {}
     for key, label in cfg['rows'].items():
         if isinstance(label, list):  # a subtotal the release does not print: the sum of its listed rows, every one of which must be read
@@ -567,9 +573,10 @@ STATEMENT = {
              'growth': r'Total revenue for the fiscal (?:first|second|third|fourth) quarter \d{4} grew (\d+)% year over year to \$[\d.]+ billion',
              'period-re': r'Reports Fiscal (First|Second|Third|Fourth) Quarter(?: and Fiscal Year)? (20\d\d) Financial Results', 'period': lambda q, y: f'Q{q} FY{y}',
              'rows': {'revenue': 'Total revenue', 'cost': 'Total cost of revenue', 'gross': 'Total gross profit', 'opex': 'Total operating expenses',
-                      'operating': 'Operating income', 'pretax': r'Income \(loss\) before income taxes', 'tax': 'Provision for income taxes',
-                      'net': r'Net income \(loss\)', 'eps': r'Net income \(loss\) per share, diluted',
-                      'shares': r'Weighted-average shares used to compute net income \(loss\) per share, diluted'}},
+                      # FQ1 2027 dropped "(loss)" and printed "Provision for (benefit from) income taxes": both forms are read.
+                      'operating': 'Operating income', 'pretax': r'Income (?:\(loss\) )?before income taxes', 'tax': r'Provision for (?:\(benefit from\) )?income taxes',
+                      'net': r'Net income(?: \(loss\))?', 'eps': r'Net income(?: \(loss\))? per share, diluted',
+                      'shares': r'Weighted-average shares used to compute net income(?: \(loss\))? per share, diluted'}},
     'ARM': {'identity': 'arm holdings', 'heading': 'Condensed Consolidated Income Statements(in millions', 'end': 'Condensed Consolidated Balance Sheets', 'units': 'in millions',
             'scale': Decimal(1), 'tol': Decimal(1), 'columns': 4, 'year-ago': 1, 'op-signed': True, 'net-chain': 'additive', 'window': 30000,
             'growth': r'Total revenue increased (\d+)% year-over-year to \$[\d,]+ million',

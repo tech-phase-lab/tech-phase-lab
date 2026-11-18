@@ -1,6 +1,7 @@
 import type { RadarFacts } from "./radar-facts.ts";
 import { REVIEW_ABOVE, radarGenres } from "./radar.ts";
 import { toRow, type StoredRow } from "./radar-store.ts";
+import { filingLag } from "./radar-filings.ts";
 
 /** The Financial Radar's daily refresh (owner decision, Nov 15): every company of every genre is calculated again from its SEC filing
  * at fixed times, so the first visitor after a filing never sees the old numbers. The Railway monitor calls
@@ -32,7 +33,9 @@ export type RefreshDeps = {
   budgetMs?: number;
   spacingMs?: number;
 };
-export type RefreshReport = { from: number; next: number | null; done: boolean; total: number; refreshed: number; live: number; failed: number; failures: string[]; secRequests: number };
+export type RefreshReport = { from: number; next: number | null; done: boolean; total: number; refreshed: number; live: number; failed: number; failures: string[]; secRequests: number;
+  /** Companies whose newest filed period is not what the radar now holds, more than two days after filing ("NBIS:behind"): tickers and codes only. */
+  stale: string[] };
 
 /** Calculates and saves the companies from `start` on until the time budget is used (always at least one, so every call moves on). */
 export async function refreshChunk(start: number, deps: RefreshDeps): Promise<RefreshReport> {
@@ -42,7 +45,7 @@ export async function refreshChunk(start: number, deps: RefreshDeps): Promise<Re
   const budget = deps.budgetMs ?? REFRESH_BUDGET_MS, spacing = deps.spacingMs ?? SEC_SPACING_MS;
   const started = now();
   const facts = new Map<string, RadarFacts>(); // a company listed in two genres is read once per call
-  const failures: string[] = [];
+  const failures: string[] = [], stale = new Set<string>();
   let refreshed = 0, live = 0, secRequests = 0, lastRequest: number | null = null, index = start;
   for (; index < queue.length; index++) {
     if (index > start && now() - started >= budget) break;
@@ -53,6 +56,8 @@ export async function refreshChunk(start: number, deps: RefreshDeps): Promise<Re
       lastRequest = now(); secRequests++;
       try { value = await deps.load(ticker); } catch { value = { latest: null, previous: null, reason: "unavailable" }; }
       facts.set(ticker, value);
+      const lag = filingLag(value.latest?.end ?? null, value, now());
+      if (lag) stale.add(`${ticker}:${lag}`);
     }
     // A company without revenue is never stored (its figure is a stand-in): the radar calculates it live, so it is not a failure.
     if (!value.reason && value.latest?.noRevenue) { live++; continue; }
@@ -62,5 +67,5 @@ export async function refreshChunk(start: number, deps: RefreshDeps): Promise<Re
     if (saved) refreshed++; else failures.push(`${genre}:${ticker}`);
   }
   const done = index >= queue.length;
-  return { from: start, next: done ? null : index, done, total: queue.length, refreshed, live, failed: failures.length, failures, secRequests };
+  return { from: start, next: done ? null : index, done, total: queue.length, refreshed, live, failed: failures.length, failures, secRequests, stale: [...stale] };
 }
