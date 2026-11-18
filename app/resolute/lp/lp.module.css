@@ -5,17 +5,19 @@
 .root * { box-sizing:border-box; }
 :global(html[data-resolute-owned]) .root { display:none; }
 .lp { max-width:480px; margin:0 auto; padding:0 20px 56px; }
-.lp p, .lp h1, .lp h2, .lp h3 { margin:0; }
+/* Zero-specificity reset: the class rules' own margins (catch 30px, lead 20px, kana 6px …) must win (owner, Nov 18: the hero was cramped). */
+:where(.lp) :where(p, h1, h2, h3) { margin:0; }
 .lp button { font:inherit; }
 
 .hero { display:flex; flex-direction:column; align-items:center; text-align:center; padding:44px 0 36px; }
-.mark { display:flex; align-items:center; gap:10px; }
+/* Icon above the word so icon, RESOLUTE, the reading and the headline share one centre line (owner, Nov 18). */
+.mark { display:flex; flex-direction:column; align-items:center; gap:10px; }
 .anchor { width:30px; height:30px; fill:none; stroke:var(--gold); stroke-width:2.2; stroke-linecap:round; stroke-linejoin:round; }
 .wordmark { font-family:var(--serif); font-size:22px; font-weight:500; letter-spacing:.42em; padding-left:.42em; background:linear-gradient(180deg,var(--gold2),var(--gold) 55%,var(--gold3)); -webkit-background-clip:text; background-clip:text; color:transparent; }
-.kana { margin-top:6px; font-size:11px; letter-spacing:.14em; color:var(--sub); }
-.catch { margin-top:30px; font-family:var(--serif); font-size:clamp(28px,8.6vw,36px); line-height:1.5; font-weight:600; letter-spacing:.04em; }
+.kana { margin-top:6px; font-size:11px; letter-spacing:.14em; padding-left:.14em; color:var(--sub); }
+.catch { margin-top:18px; font-family:var(--serif); font-size:clamp(28px,8.6vw,36px); line-height:1.5; font-weight:600; letter-spacing:.04em; }
 .catch em, .h2 em, .closing em, .final em { font-style:normal; background:linear-gradient(180deg,#fff0c0,var(--gold) 60%,var(--gold3)); -webkit-background-clip:text; background-clip:text; color:transparent; filter:drop-shadow(0 0 14px rgba(216,179,106,.35)); }
-.lead { margin-top:20px; font-size:14px; color:var(--sub); line-height:1.9; }
+.lead { margin-top:12px; font-size:14px; color:var(--sub); line-height:1.9; }
 
 .phone { margin-top:28px; width:236px; padding:9px; border-radius:34px; background:linear-gradient(160deg,#2a3a54,#111a2a); border:1px solid #34465f; box-shadow:0 18px 50px rgba(0,0,0,.55),0 0 40px rgba(216,179,106,.08); }
 .screen { border-radius:26px; padding:16px 12px 14px; background:linear-gradient(180deg,#0e1726,#090f1a); display:flex; flex-direction:column; gap:9px; text-align:left; }
@@ -168,7 +170,7 @@
 
 /* ---- English page ---- */
 .en .catch { font-size:clamp(26px,7.8vw,33px); line-height:1.4; letter-spacing:.01em; }
-.en .kana { letter-spacing:.34em; }
+.en .kana { letter-spacing:.34em; padding-left:.34em; }
 .en .h2 { line-height:1.5; letter-spacing:.01em; }
 .en .steps li { grid-template-columns:30px 64px 1fr; }
 .foot .footWide { gap:8px 28px; }
