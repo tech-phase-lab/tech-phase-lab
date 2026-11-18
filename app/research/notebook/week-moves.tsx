@@ -5,6 +5,7 @@ import type { Language } from "@/lib/research/data";
 import { sampleStockReturns } from "@/lib/research/theme-ranking";
 import { weekSummary, type WeekMover } from "@/lib/research/watchlist-week";
 import { useMemberDisplay, useOwnerAccount, useResearchOwner } from "../member-display-provider";
+import { notebookWeek } from "./notebook-data";
 import styles from "./week-moves.module.css";
 
 type Data = { asOf: string; full: boolean; up: number; down: number; flat: number; covered: number; missing: number; ranked?: WeekMover[] };
@@ -28,17 +29,14 @@ export default function WeekMoves({ tickers, lang }: { tickers: string[]; lang: 
 
   useEffect(() => {
     if (!key) return;
-    const controller = new AbortController();
-    (async () => {
-      try {
-        const response = await fetch(`/api/research/notebook-week?tickers=${encodeURIComponent(key)}`, { cache: "no-store", signal: AbortSignal.any([controller.signal, AbortSignal.timeout(20_000)]) });
-        const body = await response.json().catch(() => null);
-        if (controller.signal.aborted) return;
-        if (response.ok && body?.ok) { setData(body); setState("ready"); }
-        else setState(body?.error === "not-connected" ? "not-connected" : body?.error === "sign-in" ? "sign-in" : "error");
-      } catch { if (!controller.signal.aborted) setState("error"); }
-    })();
-    return () => controller.abort();
+    let active = true;
+    // The same read the page waits for before it opens (notebook-data.ts); the reload button asks again.
+    void notebookWeek(key, attempt > 0).then(({ ok, body }) => {
+      if (!active) return;
+      if (ok && body) { setData(body as unknown as Data); setState("ready"); }
+      else setState(body?.error === "not-connected" ? "not-connected" : body?.error === "sign-in" ? "sign-in" : "error");
+    });
+    return () => { active = false; };
   }, [key, attempt]);
 
   const shown = useMemo<Data | null>(() => {

@@ -10,6 +10,7 @@ import { DEFAULT_PERIOD, OTHER_PERIODS, PERIOD_LABEL, PRIMARY_PERIODS, drawnSeri
 import { nextFlash, startFlash } from "@/lib/research/value-flash";
 import type { BoardQuote } from "@/lib/research/market-data";
 import styles from "./board.module.css";
+import chartStyles from "./chart.module.css";
 
 type Kind = "fx2" | "fx4" | "usd" | "etf";
 type Entry = { id: string; ja: string; en: string; short: string; shortEn?: string; kind: Kind };
@@ -234,7 +235,9 @@ export default function MarketBoard() {
         {quote?.percentChange != null && <span className={`${styles.chip} ${styles[tone]}`} style={{ fontSize: 13 }}>{tone === "up" ? "▲" : tone === "down" ? "▼" : "–"} {signedPercent(quote.percentChange)}</span>}</div>
       {mode === "candles" && bar && <div className={styles.ohlc} aria-live="polite">
         <span><small>{t("始値", "Open")}</small><b>{num(bar.open)}</b></span><span><small>{t("高値", "High")}</small><b>{num(bar.high)}</b></span><span><small>{t("安値", "Low")}</small><b>{num(bar.low)}</b></span><span data-close="true"><small>{t("終値", "Close")}</small><b>{num(bar.close)}</b></span></div>}
-      <div className={styles.chartBox}>{loading ? <p className={styles.note} role="status">{t("チャートを読み込み中…", "Loading the chart…")}</p>
+      {mode === "candles" && !bar && loading && <div className={styles.ohlc} aria-hidden="true" style={{ visibility: "hidden" }}>{[0, 1, 2, 3].map(index => <span key={index}><small>&nbsp;</small><b>&nbsp;</b></span>)}</div>}
+      {/* While the chart is on its way, its frame (and the OHLC row above) already hold their places, so the page does not grow when it arrives. */}
+      <div className={styles.chartBox}>{loading ? <div>{mode === "candles" && <div className={chartStyles.legend} aria-hidden="true">&nbsp;</div>}<div className={`${chartStyles.frame} ${chartStyles.board}`} role="status"><span className={chartStyles.empty}>{t("チャートを読み込み中…", "Loading the chart…")}</span></div></div>
         : chart.bars.length < 2 ? <p className={styles.note} role="status">{t("この銘柄のチャートを取得できませんでした。", "The chart for this symbol could not be loaded.")} <button type="button" className={styles.retry} onClick={() => { store.drop(key); setReload(n => n + 1); }}>{t("もう一度読み込む", "Try again")}</button></p>
         : <PriceChart defaultVolume={day ? day.volume : undefined} bars={drawn.bars} jst={shownIntraday && ja} tag={tag} live={shownIntraday ? { phase } : undefined} sessionTicks={shownPeriod === "15m"} busy={store.busy} before={drawn.before} mode={mode} interval={periodInterval(shownPeriod)} variant="board" ja={ja} maPeriods={[25, 75]} accent="#7fe3c0" lineColor="#7fe3c0" onActive={setActive} />}</div>
       <div className={styles.ranges} role="group" aria-label={t("チャートの期間", "Chart range")}>{PRIMARY_PERIODS.map(p => <button key={p} type="button" aria-pressed={period === p} onClick={() => setPeriod(p)}>{name(p)}</button>)}
