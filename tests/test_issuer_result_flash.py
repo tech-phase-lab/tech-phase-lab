@@ -344,6 +344,12 @@ class Parsers(unittest.TestCase):
         # Results given out Oct 28, 2026 9:00 KST; the October 6-K was filed Nov 13. The calendar must not show them as Nov 14 news.
         parsed=flash.PROFILES['SKHY']['parse'](fixture('skhynix-prelim-q326.txt'))
         self.assertEqual(parsed['givenAt'],datetime(2026,10,28,0,0,tzinfo=timezone.utc))
+    def test_panw_first_quarter_two_column_statement(self):
+        # Nov 18, 2026: a first fiscal quarter prints no year-to-date columns (two, not four), drops "(loss)" from the labels and
+        # prints "Provision for (benefit from) income taxes"; the flash read nothing (revenue-row-unrecognized).
+        parsed=flash.PROFILES['PANW']['parse'](fixture('panw-results-q1fy27.txt'))
+        self.assertEqual(parsed['period'],'Q1 FY2027')
+        self.assertEqual([(f[0],f[1],f[2]) for f in parsed['facts']],[('revenue','$3.445B','$2.474B'),('eps','$0.57','$0.47'),('net-income','$482M','$334M'),('operating-income','$96M','$309M')])
     def test_sk_hynix_preliminary_results_in_won_checked_against_stated_changes(self):
         text=fixture('skhynix-prelim-q326.txt')
         parsed=flash.PROFILES['SKHY']['parse'](text)
