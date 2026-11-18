@@ -5,6 +5,7 @@ import { useLayoutEffect, useRef, useState, useSyncExternalStore, type MouseEven
 import { useResearchLanguage } from "./use-research-language";
 import { useAlertsUnread } from "./use-alerts-unread";
 import { effectiveHash, rememberHash } from "@/lib/research/view-hash";
+import { registerResoluteSlot } from "@/lib/research/resolute-slot";
 import styles from "./bottom-nav.module.css";
 
 function subscribe(notify: () => void) {
@@ -78,7 +79,7 @@ export default function BottomNav() {
   return <>{browser && <div className={styles.spacer} aria-hidden="true" />}<div className={browser ? `${styles.dock} ${styles.browser}` : styles.dock}>
     {/* RESOLUTE's home bar is drawn into this slot (a portal), so it rides on the same fixed element as the menu and stays
         attached right above it however Safari's toolbars move the viewport (owner, Nov 17). */}
-    <div data-resolute-slot="" className={styles.slot} />
+    <div ref={registerResoluteSlot} data-resolute-slot="" className={styles.slot} />
     <nav ref={bar} data-bottom-nav className={styles.bar} aria-label={ja ? "メインメニュー" : "Main navigation"}>
       <span className={styles.glow} aria-hidden="true" style={glow ? { transform: `translateX(${glow.x}px)`, width: glow.w } : { opacity: 0 }} />
       {tabs.map(tab => <Link key={tab.key} data-tab="" href={tab.href} className={tab.key === "search" ? styles.mid : undefined}

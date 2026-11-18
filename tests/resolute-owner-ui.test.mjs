@@ -40,7 +40,9 @@ test("the RESOLUTE bar is drawn inside the bottom menu's fixed dock, 8px above i
   const bar = await read("../app/research/resolute-bar.tsx");
   // Portalled into the dock's slot instead of being a second fixed element lifted by measuring the menu.
   assert.match(bar, /import \{ createPortal \} from "react-dom";/);
-  assert.match(bar, /document\.querySelector<HTMLElement>\("\[data-resolute-slot\]"\)/);
+  // The slot is followed through the store the menu registers it in (never looked up once; Nov 18 cold-start fix).
+  assert.match(bar, /useSyncExternalStore\(subscribeResoluteSlot, resoluteSlot, noResoluteSlot\)/);
+  assert.doesNotMatch(bar, /querySelector<HTMLElement>\("\[data-resolute-slot\]"\)/);
   assert.match(bar, /return createPortal\(<aside ref=\{bar\}/);
   assert.match(bar, /<\/aside>, host\);/);
   assert.match(bar, /if \(!shown \|\| !host\) return null;/);
@@ -54,7 +56,7 @@ test("the RESOLUTE bar is drawn inside the bottom menu's fixed dock, 8px above i
   assert.match(bar, /localStorage\.setItem\(BAR_DISMISS_KEY, String\(Date\.now\(\)\)\)/);
 
   const nav = await read("../app/research/bottom-nav.tsx");
-  const dock = nav.indexOf("styles.dock"), slot = nav.indexOf('<div data-resolute-slot="" className={styles.slot} />'), menu = nav.indexOf("<nav ref={bar}");
+  const dock = nav.indexOf("styles.dock"), slot = nav.indexOf('<div ref={registerResoluteSlot} data-resolute-slot="" className={styles.slot} />'), menu = nav.indexOf("<nav ref={bar}");
   assert.ok(dock > 0 && slot > dock && menu > slot, "the slot is inside the dock, before the menu");
 
   const css = await read("../app/research/resolute-bar.module.css");

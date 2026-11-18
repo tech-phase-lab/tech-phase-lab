@@ -6,6 +6,7 @@ import { useOwnerAccount } from "./member-display-provider";
 import { useResearchLanguage } from "./use-research-language";
 import { signedInFromCookies } from "@/lib/resolute/landing-gate";
 import { BAR_DISMISS_KEY, BAR_EVENT, BAR_STATE_KEY, barStateFromAnswer, barVisible, needsRefresh, parseBarState, writeBarState } from "@/lib/research/resolute-bar-state";
+import { noResoluteSlot, resoluteSlot, subscribeResoluteSlot } from "@/lib/research/resolute-slot";
 import styles from "./resolute-bar.module.css";
 
 /** RESOLUTE's standing bar (owner, Oct 26): home screen, phones only, attached 8px above the bottom menu (drawn inside its dock).
@@ -30,7 +31,6 @@ export default function ResoluteBar() {
   const dismissedAt = Number(dismissRaw) || 0;
   const [openedAt] = useState(() => Date.now());
   const shown = barVisible(state, dismissedAt, signedIn, openedAt, ownerAccount);
-  const [host, setHost] = useState<HTMLElement | null>(null);
   const [notch, setNotch] = useState<{ x: number; y: number; r: number } | null>(null);
   const bar = useRef<HTMLElement>(null);
 
@@ -68,16 +68,10 @@ export default function ResoluteBar() {
   // The bar is drawn inside the bottom menu's fixed dock (its RESOLUTE slot), so CSS alone keeps it 8px above the menu: the
   // earlier separate fixed bar was lifted by measuring the menu, and in iPhone Safari the toolbar sliding in and out moved the
   // menu before the measurement caught up, leaving the bar floating apart or over the menu (owner, Nov 17).
-  useLayoutEffect(() => {
-    if (!shown) return;
-    const find = () => setHost(current => {
-      const slot = document.querySelector<HTMLElement>("[data-resolute-slot]");
-      return current?.isConnected && current === slot ? current : slot;
-    });
-    find();
-    window.addEventListener("pageshow", find);
-    return () => window.removeEventListener("pageshow", find);
-  }, [shown]);
+  // The slot is followed, not looked up once: after a cold start the bar could appear before the menu's slot was ready, and the
+  // single lookup left it missing until a page change remounted it (owner, Nov 18). The menu registers its slot when it mounts.
+  const slot = useSyncExternalStore(subscribeResoluteSlot, resoluteSlot, noResoluteSlot);
+  const host = shown ? slot : null;
 
   // The round notch is cut around the Search button where it really is (in a browser tab the menu is docked differently and the
   // button is raised less). Bar and button sit in the same fixed dock, so their distance only changes when the dock's size does.
