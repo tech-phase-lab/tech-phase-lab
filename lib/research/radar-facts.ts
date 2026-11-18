@@ -28,29 +28,37 @@ export type RadarSnapshot = {
   /** True for a company with no revenue (not yet selling): earning power cannot be calculated, so it is a stand-in of -1000% and the screen says "no revenue". */
   noRevenue?: boolean;
 };
-export type RadarFacts = { latest: RadarSnapshot | null; previous: RadarSnapshot | null; reason?: string };
+/** The newest periodic report the SEC lists for the company (10-Q, 10-K, 20-F, 40-F, or a 6-K whose statements were read), so the
+ * radar's period can be compared with what was actually filed (radar-filings.ts). */
+export type LatestFiling = { form: string; period: string; filed: string };
+export type RadarFacts = { latest: RadarSnapshot | null; previous: RadarSnapshot | null; reason?: string; filing?: LatestFiling | null; /** A newer filing exists that could not be read (a code). */ unread?: string | null };
 
-const FORMS = new Set(["10-K", "10-K/A", "10-Q", "10-Q/A", "20-F", "20-F/A", "40-F", "40-F/A"]);
+// A 6-K carries a foreign filer's quarter (Nebius, Nov 2026); its statements are read from the exhibit when the SEC has no XBRL for it.
+const FORMS = new Set(["10-K", "10-K/A", "10-Q", "10-Q/A", "20-F", "20-F/A", "40-F", "40-F/A", "6-K", "6-K/A"]);
 const DAY = 86_400_000;
 const day = (date: string) => Date.parse(`${date}T00:00:00Z`) / DAY;
 const near = (a: string, b: string, within: number) => Math.abs(day(a) - day(b)) <= within;
 const shift = (date: string, days: number) => new Date((day(date) + days) * DAY).toISOString().slice(0, 10);
 
-const REVENUE = ["RevenueFromContractWithCustomerExcludingAssessedTax", "Revenues", "RevenueFromContractWithCustomerIncludingAssessedTax", "SalesRevenueNet", "SalesRevenueGoodsNet"];
-const OPERATING_CASH = ["NetCashProvidedByUsedInOperatingActivities", "NetCashProvidedByUsedInOperatingActivitiesContinuingOperations"];
-const CAPEX = ["PaymentsToAcquirePropertyPlantAndEquipment", "PaymentsToAcquireProductiveAssets", "PaymentsForCapitalImprovements", "PaymentsToAcquireOtherPropertyPlantAndEquipment", "PaymentsToAcquirePropertyPlantAndEquipmentAndIntangibleAssets"];
-const CASH = ["CashAndCashEquivalentsAtCarryingValue", "CashCashEquivalentsRestrictedCashAndRestrictedCashEquivalents", "Cash"];
+export const REVENUE = ["RevenueFromContractWithCustomerExcludingAssessedTax", "Revenues", "RevenueFromContractWithCustomerIncludingAssessedTax", "SalesRevenueNet", "SalesRevenueGoodsNet", "ifrs-full:Revenue", "ifrs-full:RevenueFromContractsWithCustomers"];
+export const OPERATING_CASH = ["NetCashProvidedByUsedInOperatingActivities", "NetCashProvidedByUsedInOperatingActivitiesContinuingOperations", "ifrs-full:CashFlowsFromUsedInOperatingActivities"];
+export const CAPEX = ["PaymentsToAcquirePropertyPlantAndEquipment", "PaymentsToAcquireProductiveAssets", "PaymentsForCapitalImprovements", "PaymentsToAcquireOtherPropertyPlantAndEquipment", "PaymentsToAcquirePropertyPlantAndEquipmentAndIntangibleAssets", "ifrs-full:PurchaseOfPropertyPlantAndEquipmentClassifiedAsInvestingActivities", "ifrs-full:PurchaseOfPropertyPlantAndEquipment"];
+export const CASH = ["CashAndCashEquivalentsAtCarryingValue", "CashCashEquivalentsRestrictedCashAndRestrictedCashEquivalents", "Cash", "ifrs-full:CashAndCashEquivalents"];
 const CASH_AND_INVESTMENTS = ["CashCashEquivalentsAndShortTermInvestments", "CashCashEquivalentsAndMarketableSecurities"];
 const SHORT_INVESTMENTS = ["MarketableSecuritiesCurrent", "ShortTermInvestments", "DebtSecuritiesCurrent", "AvailableForSaleSecuritiesDebtSecuritiesCurrent", "AvailableForSaleSecuritiesCurrent", "OtherShortTermInvestments"];
-const DEBT_TOTAL = ["DebtLongtermAndShorttermCombinedAmount", "LongTermDebt", "DebtAndCapitalLeaseObligations", "LongTermDebtAndCapitalLeaseObligationsIncludingCurrentMaturities", "DebtInstrumentCarryingAmount"];
-const DEBT_CURRENT = ["DebtCurrent", "LongTermDebtCurrent", "LongTermDebtAndCapitalLeaseObligationsCurrent", "NotesPayableCurrent", "ConvertibleNotesPayableCurrent", "ConvertibleDebtCurrent"];
-const DEBT_LONG = ["LongTermDebtNoncurrent", "LongTermDebtAndCapitalLeaseObligations", "LongTermNotesPayable", "ConvertibleNotesPayableNoncurrent", "ConvertibleDebtNoncurrent", "SeniorNotesNoncurrent", "NotesPayableNoncurrent", "LongTermLineOfCredit", "ConvertibleDebt", "ConvertibleNotesPayable", "SeniorNotes", "SecuredDebt"];
+const DEBT_TOTAL = ["DebtLongtermAndShorttermCombinedAmount", "LongTermDebt", "DebtAndCapitalLeaseObligations", "LongTermDebtAndCapitalLeaseObligationsIncludingCurrentMaturities", "DebtInstrumentCarryingAmount", "ifrs-full:Borrowings"];
+const DEBT_CURRENT = ["DebtCurrent", "LongTermDebtCurrent", "LongTermDebtAndCapitalLeaseObligationsCurrent", "NotesPayableCurrent", "ConvertibleNotesPayableCurrent", "ConvertibleDebtCurrent", "ifrs-full:CurrentBorrowings"];
+const DEBT_LONG = ["LongTermDebtNoncurrent", "LongTermDebtAndCapitalLeaseObligations", "LongTermNotesPayable", "ConvertibleNotesPayableNoncurrent", "ConvertibleDebtNoncurrent", "SeniorNotesNoncurrent", "NotesPayableNoncurrent", "LongTermLineOfCredit", "ConvertibleDebt", "ConvertibleNotesPayable", "SeniorNotes", "SecuredDebt", "ifrs-full:NoncurrentBorrowings"];
 const SHORT_BORROWINGS = ["ShortTermBorrowings", "CommercialPaper", "LinesOfCreditCurrent", "ShortTermBankLoansAndNotesPayable"];
-const LEASE_OPERATING = { total: ["OperatingLeaseLiability"], current: ["OperatingLeaseLiabilityCurrent"], long: ["OperatingLeaseLiabilityNoncurrent"] };
+// IFRS has one lease model: its lease liabilities sit with the operating leases.
+const LEASE_OPERATING = { total: ["OperatingLeaseLiability", "ifrs-full:LeaseLiabilities"], current: ["OperatingLeaseLiabilityCurrent", "ifrs-full:CurrentLeaseLiabilities"], long: ["OperatingLeaseLiabilityNoncurrent", "ifrs-full:NoncurrentLeaseLiabilities"] };
 const LEASE_FINANCE = { total: ["FinanceLeaseLiability"], current: ["FinanceLeaseLiabilityCurrent"], long: ["FinanceLeaseLiabilityNoncurrent"] };
 
+const taxonomyOf = (tag: string) => tag.includes(":") ? tag.split(":", 2) as [string, string] : ["us-gaap", tag] as const;
+/** A tag's USD facts; "ifrs-full:Name" reads the IFRS taxonomy (a foreign filer's 20-F), a bare name reads us-gaap. */
 function series(data: CompanyFacts, tag: string): Fact[] {
-  const units = data.facts?.["us-gaap"]?.[tag]?.units as Unit | undefined;
+  const [taxonomy, name] = taxonomyOf(tag);
+  const units = data.facts?.[taxonomy]?.[name]?.units as Unit | undefined;
   const rows = units?.USD;
   if (!Array.isArray(rows)) return [];
   return rows.filter(row => row && typeof row.val === "number" && Number.isFinite(row.val) && typeof row.end === "string" && typeof row.filed === "string" && FORMS.has(row.form) && /^\d{4}-\d{2}-\d{2}$/.test(row.end));
@@ -63,17 +71,41 @@ function pick(rows: Fact[], accept: (row: Fact) => boolean): Fact | null {
 }
 const duration = (row: Fact) => row.start ? day(row.end) - day(row.start) + 1 : NaN;
 
+/** The year to date ending around `end`: the latest filed; of one filing's quarter and year to date (same filing date), the longer, since
+ * the trailing year is built from the year to date. */
+function yearToDate(rows: Fact[], end: string): Fact | null {
+  let best: Fact | null = null;
+  for (const row of rows) {
+    if (!near(row.end, end, 4) || duration(row) < 80 || duration(row) > 290) continue;
+    if (!best || row.filed > best.filed || (row.filed === best.filed && duration(row) > duration(best) + 20)) best = row;
+  }
+  return best;
+}
 /** One flow (revenue, cash flow) for the twelve months ending around `end`. */
 function twelveMonths(data: CompanyFacts, tags: string[], end: string): { value: number; basis: "annual" | "ttm" } | null {
+  const durations = (tag: string) => series(data, tag).filter(row => row.start);
+  const priorYearOf = (rows: Fact[], ytd: Fact) => pick(rows, row => near(row.end, shift(ytd.start!, -1), 8) && duration(row) >= 350 && duration(row) <= 380);
+  const partial: { ytd: Fact; priorYtd: Fact }[] = [];
   for (const tag of tags) {
-    const rows = series(data, tag).filter(row => row.start);
+    const rows = durations(tag);
     const year = pick(rows, row => near(row.end, end, 9) && duration(row) >= 350 && duration(row) <= 380);
     if (year) return { value: year.val, basis: "annual" };
-    const ytd = pick(rows, row => near(row.end, end, 4) && duration(row) >= 80 && duration(row) <= 290);
+    const ytd = yearToDate(rows, end);
     if (!ytd?.start) continue;
     const priorYtd = pick(rows, row => near(row.end, shift(end, -365), 8) && near(row.start!, shift(ytd.start!, -365), 8) && Math.abs(duration(row) - duration(ytd)) <= 8);
-    const priorYear = pick(rows, row => near(row.end, shift(ytd.start!, -1), 8) && duration(row) >= 350 && duration(row) <= 380);
+    const priorYear = priorYearOf(rows, ytd);
     if (priorYtd && priorYear) return { value: priorYear.val + ytd.val - priorYtd.val, basis: "ttm" };
+    if (priorYtd) partial.push({ ytd, priorYtd });
+  }
+  // The quarters and the last year filed under different names of the same line (Nov 18: Arista's capital spending is
+  // PaymentsToAcquirePropertyPlantAndEquipment in its 10-Qs but PaymentsToAcquireProductiveAssets in its 10-K; Applied Optoelectronics
+  // renamed it in 2026), which left both on an old quarter. The year to date and the same period a year earlier still come from one
+  // name; only the last full year is taken from another name of the same list.
+  for (const { ytd, priorYtd } of partial) {
+    for (const tag of tags) {
+      const priorYear = priorYearOf(durations(tag), ytd);
+      if (priorYear) return { value: priorYear.val + ytd.val - priorYtd.val, basis: "ttm" };
+    }
   }
   return null;
 }
@@ -147,13 +179,22 @@ function snapshotAt(data: CompanyFacts, end: string): RadarSnapshot | null {
   return null;
 }
 
+/** True when the cash line is filed only in another currency (an IFRS filer reporting in euros): the radar's sizes are dollars, so it is not drawn. */
+function otherCurrency(data: CompanyFacts): boolean {
+  return CASH.some(tag => {
+    const [taxonomy, name] = taxonomyOf(tag);
+    const units = data.facts?.[taxonomy]?.[name]?.units;
+    return !!units && Object.keys(units).some(unit => unit !== "USD");
+  });
+}
+
 /** Latest snapshot and the one before it (the previous earnings), from one company-facts payload. */
 export function radarFacts(data: unknown, now = Date.now()): RadarFacts {
   const root = data as CompanyFacts;
   const ends = new Set<string>();
   for (const tag of [...CASH, ...CASH_AND_INVESTMENTS]) for (const row of series(root, tag)) if (!row.start) ends.add(row.end);
   const candidates = [...ends].filter(end => day(end) <= now / DAY).sort().reverse().slice(0, 10);
-  if (!candidates.length) return { latest: null, previous: null, reason: "no-balance-sheet" };
+  if (!candidates.length) return { latest: null, previous: null, reason: otherCurrency(root) ? "currency" : "no-balance-sheet" };
   let latest: RadarSnapshot | null = null, previous: RadarSnapshot | null = null;
   for (const end of candidates) {
     const snapshot = snapshotAt(root, end);
