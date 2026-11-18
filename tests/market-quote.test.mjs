@@ -87,12 +87,36 @@ test("moving averages use the bars fetched before the visible ones; the visible 
 
 test("a pre-market price that is current replaces the close in the watchlist row, with its own move and path", async () => {
   const { quoteForSession } = await import("../lib/research/watchlist-session.ts");
-  const base = toFavoriteQuote(parseQuote({ ...quote, is_market_open: false, extended_price: "722.80", extended_percent_change: "1.04", extended_timestamp: Math.floor(Date.now() / 1000) - 60 }, "MU"));
+  // Wed Nov 18 2026, 09:20 ET (23:20 JST): pre-market.
+  const NOW = Date.parse("2026-11-18T14:20:00Z");
+  const base = toFavoriteQuote(parseQuote({ ...quote, is_market_open: false, extended_price: "722.80", extended_percent_change: "1.04", extended_timestamp: NOW / 1000 - 60 }, "MU"), [], NOW);
   assert.equal(base.extended.live, true);
   const row = quoteForSession(base, "MU", "auto");
   assert.equal(row.price, 722.8); assert.equal(row.session, "post" === row.session ? "post" : row.session); assert.ok(Math.abs(row.change - (722.8 - 715.41)) < 1e-9);
-  const stale = toFavoriteQuote(parseQuote({ ...quote, is_market_open: false, extended_price: "722.80", extended_percent_change: "1.04", extended_timestamp: Math.floor(Date.now() / 1000) - 3600 }, "MU"));
+  const stale = toFavoriteQuote(parseQuote({ ...quote, is_market_open: false, extended_price: "722.80", extended_percent_change: "1.04", extended_timestamp: NOW / 1000 - 3600 }, "MU"), [], NOW);
   assert.equal(quoteForSession(stale, "MU", "auto").price, 715.41);
+});
+
+test("every row of a list gets the pre-market label while pre-market is under way, however many minutes the provider's time trails (owner, Nov 18: MU had it, SNDK did not)", async () => {
+  const { quoteForSession } = await import("../lib/research/watchlist-session.ts");
+  const { quoteFreshness } = await import("../lib/research/watchlist-freshness.ts");
+  const NOW = Date.parse("2026-11-18T14:27:49Z"); // 09:27 ET
+  // The answers Twelve Data gave at that moment: MU's print 5.8 minutes old, SNDK's 3.8.
+  const answers = { MU: { close: "712.41998", extended_price: "719.95", extended_percent_change: "1.056963", extended_timestamp: 1795011720 },
+    SNDK: { close: "797.23999", extended_price: "808", extended_percent_change: "1.34966", extended_timestamp: 1795011840 } };
+  for (const [ticker, extra] of Object.entries(answers)) {
+    const fav = toFavoriteQuote(parseQuote({ ...quote, symbol: ticker, is_market_open: false, ...extra }, ticker), [], NOW);
+    assert.equal(fav.extended.live, true, ticker);
+    const row = quoteForSession(fav, ticker, "auto");
+    assert.equal(row.session, "pre", ticker);
+    assert.equal(quoteFreshness(row, NOW), "recent", ticker);
+  }
+  // Once the regular session has begun, a pre-market print is no longer "now"; a print from yesterday's after-hours never is.
+  const { extendedIsCurrent } = await import("../lib/research/market-quote.ts");
+  assert.equal(extendedIsCurrent({ asOf: "2026-11-18T14:26:00Z", session: "pre" }, Date.parse("2026-11-18T14:31:00Z")), false);
+  assert.equal(extendedIsCurrent({ asOf: "2026-11-17T23:50:00Z", session: "post" }, Date.parse("2026-11-18T09:10:00Z")), false);
+  assert.equal(extendedIsCurrent({ asOf: "2026-11-18T22:10:00Z", session: "post" }, Date.parse("2026-11-18T22:30:00Z")), true);
+  assert.equal(extendedIsCurrent({ asOf: "2026-11-18T13:00:00Z", session: "pre" }, Date.parse("2026-11-18T14:20:00Z")), false);
 });
 
 const bar = (at, close = 100) => ({ at, open: close, high: close + 1, low: close - 1, close, volume: 10 });

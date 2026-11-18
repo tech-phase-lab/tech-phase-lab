@@ -81,11 +81,13 @@ const questions = [
   ]
 ] as const;
 
-export default function Faq() {
+export default function Faq({ phoneRequest = false }: { phoneRequest?: boolean }) {
   const [lang, setLang] = useResearchLanguage();
   const ja = lang === "ja";
   // The Home Screen guide is for phones; on a computer it is left out (owner, Nov 10).
-  const phone = useSyncExternalStore(() => () => {}, () => /iPhone|iPad|Android/.test(navigator.userAgent), () => false);
+  // The server already knows from the request (page.tsx), so a phone gets the guide in the first HTML instead of having it pushed in above
+  // the other answers after the page has opened (owner, Nov 18: pages that open in steps).
+  const phone = useSyncExternalStore(() => () => {}, () => /iPhone|iPad|Android/.test(navigator.userAgent), () => phoneRequest);
   // A link to #add-to-home (the account menu) arrives before the phone-only guide is drawn, so scroll to it once it is.
   useEffect(() => { if (phone && window.location.hash === "#add-to-home") document.getElementById("add-to-home")?.scrollIntoView(); }, [phone]);
   return <ResearchToolShell lang={lang} setLang={setLang} eyebrow="FAQ" title={ja ? "よくある質問・使い方" : "FAQ & help"} description={ja ? "利用方法、PRO会員、質問についてのご案内です。" : "Quick answers about getting started, PRO, and Ask Rizel."}>
