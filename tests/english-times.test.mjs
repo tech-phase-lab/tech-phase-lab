@@ -53,8 +53,8 @@ test("news/flash: rows are grouped by the ET day in English and the JST day in J
   assert.equal(dayHeading("2026-11-04", false), "11/4 Wed");
   assert.equal(dayHeading("2026-11-04", true), "11/4（水）");
   const source = read("../app/research/news/flash-page.tsx");
-  assert.match(source, /All times are U\.S\. Eastern Time \(ET\)\./);
-  assert.match(source, /時刻は日本時間です。/);
+  // Each row already prints its time with JST / ET, so the page no longer adds a note under the list (owner, Nov 19).
+  assert.doesNotMatch(source, /時刻は日本時間です。/);
   assert.match(source, /displayDateTime\(row\.at, lang\)/);
 });
 
