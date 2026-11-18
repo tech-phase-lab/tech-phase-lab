@@ -91,3 +91,5 @@
 .colChip.flat{background:#8c98ab1f;border-color:#8c98ab66}
 .colExt{font:400 10.5px "IBM Plex Mono",ui-monospace,monospace;white-space:nowrap}
 .colExt small{font:400 10.5px "Zen Kaku Gothic New",sans-serif;color:#8c98ab}
+/* While the price is on its way, the watched-company card keeps the loaded card's height (242px minus the status line under it), so the page below does not jump. */
+.gaugeCard[aria-busy="true"]{min-height:217px}

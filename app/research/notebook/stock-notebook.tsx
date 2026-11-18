@@ -2,11 +2,12 @@
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import type { Language } from "@/lib/research/data";
-import { availableNewsPayload, type GeneralNewsFeed } from "@/lib/research/general-news";
-import { parseCompanyWire, type CompanyWireItem } from "@/lib/research/company-wire";
+import type { GeneralNewsFeed } from "@/lib/research/general-news";
+import type { CompanyWireItem } from "@/lib/research/company-wire";
 import { flashRows } from "@/lib/research/flash-rows";
 import { calendarEvents } from "@/lib/research/calendar";
-import { publicPriceTargets, type PriceTarget } from "@/lib/research/price-targets";
+import type { PriceTarget } from "@/lib/research/price-targets";
+import { notebookSources } from "./notebook-data";
 import { buildNotebook, type Notebook, type NotebookNews } from "@/lib/research/stock-notebook";
 import { useMemberDisplay, useOwnerAccount, useResearchOwner } from "../member-display-provider";
 import { displayClock, displayDayKey, formatDisplay } from "@/lib/research/display-time";
@@ -60,18 +61,15 @@ export default function StockNotebook({ tickers, lang, weeksBack }: { tickers: s
   const [open, setOpen] = useState<Record<string, boolean>>({});
 
   useEffect(() => {
-    const controller = new AbortController();
-    const get = async (url: string) => { const response = await fetch(url, { cache: "no-store", signal: AbortSignal.any([controller.signal, AbortSignal.timeout(15_000)]) }); if (!response.ok) throw Error(url); return response.json(); };
-    (async () => {
-      const [news, companyWire, priceTargets] = await Promise.allSettled([get("/api/research/news"), get("/api/research/company-wire"), get("/api/research/price-targets")]);
-      if (controller.signal.aborted) return;
-      if (news.status === "fulfilled") { try { setFeed(availableNewsPayload(news.value)); } catch { /* shown as unavailable below */ } }
-      if (companyWire.status === "fulfilled") { try { setWire(parseCompanyWire(companyWire.value).items); } catch { /* optional lane */ } }
-      if (priceTargets.status === "fulfilled") { try { setTargets(publicPriceTargets(priceTargets.value).items); } catch { /* optional lane */ } }
+    let active = true;
+    // The page started this read already (notebook-data.ts), so a list change or a remount does not ask again.
+    void notebookSources().then(result => {
+      if (!active) return;
+      setFeed(result.feed); setWire(result.wire); setTargets(result.targets);
       setNow(Date.now());
-      setState(news.status === "fulfilled" || priceTargets.status === "fulfilled" ? "ready" : "failed");
-    })();
-    return () => controller.abort();
+      setState(result.ok ? "ready" : "failed");
+    });
+    return () => { active = false; };
   }, []);
 
   const notebook = useMemo(() => state === "ready" && now ? buildNotebook({
