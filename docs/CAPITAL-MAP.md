@@ -241,6 +241,8 @@ no new pillar pages are created here. Railway access/reauthentication remains pr
   同じ形式の1〜2文の事実説明（設立年・設立者・拠点・業務）に統一。参照元は `descriptionSource`
   （主にWikipedia、Thiel MacroはSEC提出書類、拠点はSEC 13F表紙の住所と照合）。人物行も全社で
   「人物名＋役職」に統一（JPモルガンはジェイミー・ダイモン、ブラックロックはラリー・フィンク）。
+- 企業タブ14社の説明も同じ形式（設立年・設立者・本社・主な事業の1〜2文）に統一し、`descriptionSource` を記録。
+  社名は英語のまま。バークシャーとJPモルガンにも設立・発足の年を加えた（ティール・マクロは公開資料に設立年がないため年なし）。
 - 企業タブに9社追加（5社→14社）：AMD、Uber、Walmart、Johnson & Johnson、Pfizer、Merck、
   Regeneron、Gilead Sciences、GE Aerospace。いずれも自社名で13F-HRを提出する事業会社で、
   2026-06-30（当期）と2026-03-31（前期）の原本をSEC EDGARから取得し、

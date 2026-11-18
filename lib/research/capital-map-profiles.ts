@@ -1,4 +1,4 @@
-// Public biographies reviewed 2026-10-12; manager names and descriptions rewritten 2026-11-18 as short
+// Public biographies reviewed 2026-10-12; manager names and all manager/company descriptions rewritten 2026-11-18 as short
 // factual firm descriptions (founding, base, business) from public references. No opinions or performance claims.
 export type CapitalProfile = {
   person: [string, string]; role: [string, string]; description: [string, string]; source: string;
@@ -32,7 +32,7 @@ export const capitalProfiles: Record<string, CapitalProfile> = {
   },
   jpmorgan: { name: ["JPモルガン・チェース", "JPMorgan Chase"], descriptionSource: "https://en.wikipedia.org/wiki/JPMorgan_Chase", checkedOn: "2026-11-18",
     person: ["ジェイミー・ダイモン", "Jamie Dimon"], role: ["会長・CEO", "Chairman & CEO"],
-    description: ["ニューヨークに本社を置く米国の金融持株会社。投資銀行や商業銀行、資産運用などの事業を営む。", "A U.S. financial holding company headquartered in New York. Its businesses include investment banking, commercial banking and asset management."],
+    description: ["2000年にチェース・マンハッタンとJ.P.モルガンの合併で発足した、ニューヨークに本社を置く米国の金融持株会社。投資銀行や商業銀行、資産運用などの事業を営む。", "A U.S. financial holding company headquartered in New York, formed in 2000 by the merger of Chase Manhattan and J.P. Morgan. Its businesses include investment banking, commercial banking and asset management."],
     source: "https://en.wikipedia.org/wiki/JPMorgan_Chase",
   },
   blackrock: { name: ["ブラックロック", "BlackRock"], descriptionSource: "https://en.wikipedia.org/wiki/BlackRock", checkedOn: "2026-11-18",
@@ -43,38 +43,38 @@ export const capitalProfiles: Record<string, CapitalProfile> = {
 
   nvidia: {
     person: ["ジェンスン・フアン", "Jensen Huang"], role: ["共同創業者・CEO", "Co-Founder & CEO"],
-    description: ["GPUを軸にAIの計算基盤を支える。", "GPUs powering AI computing."],
+    description: ["1993年にジェンスン・フアンらが設立した、米カリフォルニア州サンタクララの半導体企業。GPUやAI向けの計算基盤を手がける。", "A semiconductor company in Santa Clara, California, founded in 1993 by Jensen Huang and others. It makes GPUs and AI computing platforms."], descriptionSource: "https://en.wikipedia.org/wiki/Nvidia",
     source: "https://nvidianews.nvidia.com/bios/jensen-huang",
     portrait: { url: "/capital-map/nvidia.webp", source: "https://commons.wikimedia.org/wiki/File:P20250430JB-0891_(cropped).jpg", credit: "Joyce N. Boghosian / The White House", license: "Public domain", licenseUrl: "https://creativecommons.org/publicdomain/mark/1.0/" },
   },
   alphabet: {
     person: ["スンダー・ピチャイ", "Sundar Pichai"], role: ["CEO", "CEO"],
-    description: ["Alphabet傘下で検索やYouTube、クラウドを展開。", "Part of Alphabet, offering search, YouTube and cloud services."],
+    description: ["2015年にラリー・ペイジとセルゲイ・ブリンがGoogleの持株会社として設立した、米カリフォルニア州マウンテンビューの企業。検索や広告、YouTube、クラウドを手がける。", "Founded in 2015 by Larry Page and Sergey Brin as the holding company of Google, based in Mountain View, California. Its businesses include search, advertising, YouTube and cloud."], descriptionSource: "https://en.wikipedia.org/wiki/Alphabet_Inc.",
     source: "https://blog.google/authors/sundar-pichai/",
     portrait: { url: "/capital-map/alphabet.webp", source: "https://commons.wikimedia.org/wiki/File:Mateusz_Morawiecki_spotka%C5%82_si%C4%99_z_CEO_Google_Sundar_Pichai_w_KPRM_(2022.03.29)_01_(cropped).jpg", credit: "Krystian Maj", license: "CC BY 3.0 PL", licenseUrl: "https://creativecommons.org/licenses/by/3.0/pl/" },
   },
   amazon: {
     person: ["アンディ・ジャシー", "Andy Jassy"], role: ["社長・CEO", "President & CEO"],
-    description: ["通販とクラウドのAWSが主力。", "Online retail and AWS cloud computing."],
+    description: ["1994年にジェフ・ベゾスが設立した、米ワシントン州シアトルの企業。ネット通販とクラウドサービスのAWSを手がける。", "A company in Seattle, Washington, founded by Jeff Bezos in 1994. It runs online retail and the AWS cloud service."], descriptionSource: "https://en.wikipedia.org/wiki/Amazon_(company)",
     source: "https://ir.aboutamazon.com/officers-and-directors/default.aspx",
     portrait: { url: "/capital-map/amazon.webp", source: "https://commons.wikimedia.org/wiki/File:Andy_Jassy.jpg", credit: "Lisi Mezistrano Wolf", license: "CC BY-SA 4.0", licenseUrl: "https://creativecommons.org/licenses/by-sa/4.0/" },
   },
   intel: {
     person: ["リップブー・タン", "Lip-Bu Tan"], role: ["CEO", "CEO"],
-    description: ["CPUなどの半導体を設計・製造。", "Designing and manufacturing chips."],
+    description: ["1968年にロバート・ノイスとゴードン・ムーアが設立した、米カリフォルニア州サンタクララの半導体企業。CPUなどの半導体を設計・製造する。", "A semiconductor company in Santa Clara, California, founded in 1968 by Robert Noyce and Gordon Moore. It designs and manufactures CPUs and other chips."], descriptionSource: "https://en.wikipedia.org/wiki/Intel",
     source: "https://newsroom.intel.com/corporate/my-commitment-to-you-and-our-company",
     portrait: { url: "/capital-map/intel.webp", source: "https://commons.wikimedia.org/wiki/File:Intel_CEO_Lip-Bu_Tan_(2025)_(cropped).jpg", credit: "United States Department of Commerce", license: "Public domain", licenseUrl: "https://creativecommons.org/publicdomain/mark/1.0/" },
   },
   cisco: {
     person: ["チャック・ロビンス", "Chuck Robbins"], role: ["会長・CEO", "Chair & CEO"],
-    description: ["ネットワーク機器とセキュリティを提供。", "Networking equipment and security."],
+    description: ["1984年にレオナード・ボサックとサンディ・ラーナーが設立した、米カリフォルニア州サンノゼの企業。ネットワーク機器やセキュリティ製品を手がける。", "A company in San Jose, California, founded in 1984 by Leonard Bosack and Sandy Lerner. It makes networking equipment and security products."], descriptionSource: "https://en.wikipedia.org/wiki/Cisco",
     source: "https://newsroom.cisco.com/c/r/newsroom/en/us/executives/robbins-chuck.html",
     portrait: { url: "/capital-map/cisco.webp", source: "https://commons.wikimedia.org/wiki/File:Charles_H._Robbins.jpg", credit: "U.S. Army Sgt. James K. McCann / Chairman of the Joint Chiefs of Staff", license: "CC BY 2.0", licenseUrl: "https://creativecommons.org/licenses/by/2.0/" },
   },
   berkshire: { name: ["バークシャー・ハサウェイ", "Berkshire Hathaway"], descriptionSource: "https://en.wikipedia.org/wiki/Berkshire_Hathaway",
     person: ["ウォーレン・バフェット", "Warren Buffett"], role: ["名誉会長", "Chairman Emeritus"],
     leadership: ["現CEO：グレッグ・アベル", "Current CEO: Greg Abel"],
-    description: ["米ネブラスカ州オマハに本社を置く持株会社。保険や鉄道、エネルギーなどの事業を傘下に持ち、上場株式にも投資する。", "A holding company based in Omaha, Nebraska. Its subsidiaries include insurance, railroad and energy businesses, and it also invests in listed stocks."],
+    description: ["米ネブラスカ州オマハに本社を置く持株会社。もとは繊維会社で、1965年からウォーレン・バフェットのもとで保険や鉄道、エネルギーなどの事業を傘下に収め、上場株式にも投資する。", "A holding company based in Omaha, Nebraska. Originally a textile maker, it has grown under Warren Buffett since 1965 into a group of insurance, railroad and energy businesses that also invests in listed stocks."],
     source: "https://www.berkshirehathaway.com/news/sep1826.pdf",
     portrait: { url: "/capital-map/berkshire.webp", source: "https://commons.wikimedia.org/wiki/File:Warren_Buffett_at_the_2015_SelectUSA_Investment_Summit_(cropped).jpg", credit: "USA International Trade Administration", license: "Public domain", licenseUrl: "https://creativecommons.org/publicdomain/mark/1.0/" },
   },
@@ -92,15 +92,15 @@ export const capitalProfiles: Record<string, CapitalProfile> = {
   fundsmith: { name: ["ファンドスミス", "Fundsmith"], descriptionSource: "https://en.wikipedia.org/wiki/Fundsmith", checkedOn: "2026-11-18", person: ["テリー・スミス", "Terry Smith"], role: ["創業者", "Founder"], description: ["2010年にテリー・スミスが設立した、ロンドンの資産運用会社。株式ファンドなどを運用する。", "A London investment manager founded by Terry Smith in 2010. It manages equity funds and investment trusts."], source: "https://www.fundsmith.co.uk/sef/about-us/", portrait: { url: "/capital-map/fundsmith.webp", source: "https://commons.wikimedia.org/wiki/File:Terry_Smith_MNZM_investiture.jpg", credit: "New Zealand Government, Office of the Governor-General", license: "CC BY 4.0", licenseUrl: "https://creativecommons.org/licenses/by/4.0/" } },
 
   // Added 2026-11-18 with their SEC 13F-HR reports; roles checked against each company's reference page.
-  amd: { person: ["リサ・スー", "Lisa Su"], role: ["会長・CEO", "Chair & CEO"], description: ["CPUやGPUなどの半導体を設計。", "Designs CPUs, GPUs and other chips."], source: "https://en.wikipedia.org/wiki/AMD", checkedOn: "2026-11-18" },
-  uber: { person: ["ダラ・コスロシャヒ", "Dara Khosrowshahi"], role: ["CEO", "CEO"], description: ["配車や宅配、貨物輸送のサービスを展開。", "Ride-hailing, delivery and freight services."], source: "https://en.wikipedia.org/wiki/Uber", checkedOn: "2026-11-18" },
-  walmart: { person: ["ジョン・ファーナー", "John Furner"], role: ["社長・CEO", "President & CEO"], description: ["米国を中心にスーパーなどの小売店を展開。", "Retail stores, mainly in the U.S."], source: "https://en.wikipedia.org/wiki/Walmart", checkedOn: "2026-11-18" },
-  jnj: { person: ["ホアキン・デュアト", "Joaquin Duato"], role: ["会長・CEO", "Chairman & CEO"], description: ["医薬品と医療機器を手がける。", "Medicines and medical technology."], source: "https://en.wikipedia.org/wiki/Johnson_%26_Johnson", checkedOn: "2026-11-18" },
-  pfizer: { person: ["アルバート・ブーラ", "Albert Bourla"], role: ["会長・CEO", "Chairman & CEO"], description: ["医薬品やワクチンを開発・販売。", "Develops medicines and vaccines."], source: "https://en.wikipedia.org/wiki/Pfizer", checkedOn: "2026-11-18" },
-  merck: { person: ["ロバート・デービス", "Robert M. Davis"], role: ["会長・社長・CEO", "Chairman, President & CEO"], description: ["医薬品やワクチン、動物用医薬品を展開。", "Medicines, vaccines and animal health products."], source: "https://en.wikipedia.org/wiki/Merck_%26_Co.", checkedOn: "2026-11-18" },
-  regeneron: { person: ["レナード・シュライファー", "Leonard Schleifer"], role: ["共同創業者・CEO", "Co-Founder & CEO"], description: ["バイオ医薬品を開発。", "Develops biotech medicines."], source: "https://en.wikipedia.org/wiki/Regeneron_Pharmaceuticals", checkedOn: "2026-11-18" },
-  gilead: { person: ["ダニエル・オデイ", "Daniel O’Day"], role: ["会長・CEO", "Chairman & CEO"], description: ["HIVや肝炎などの抗ウイルス薬を開発。", "Develops antiviral drugs, including for HIV and hepatitis."], source: "https://en.wikipedia.org/wiki/Gilead_Sciences", checkedOn: "2026-11-18" },
-  ge: { person: ["ラリー・カルプ", "Larry Culp"], role: ["会長・CEO", "Chairman & CEO"], description: ["航空機エンジンを製造。", "Makes aircraft engines."], source: "https://en.wikipedia.org/wiki/GE_Aerospace", checkedOn: "2026-11-18" },
+  amd: { person: ["リサ・スー", "Lisa Su"], role: ["会長・CEO", "Chair & CEO"], description: ["1969年にジェリー・サンダースらが設立した、米カリフォルニア州サンタクララの半導体企業。CPUやGPUなどを設計する。", "A semiconductor company in Santa Clara, California, founded in 1969 by Jerry Sanders and others. It designs CPUs, GPUs and other chips."], descriptionSource: "https://en.wikipedia.org/wiki/AMD", source: "https://en.wikipedia.org/wiki/AMD", checkedOn: "2026-11-18" },
+  uber: { person: ["ダラ・コスロシャヒ", "Dara Khosrowshahi"], role: ["CEO", "CEO"], description: ["2009年にギャレット・キャンプとトラビス・カラニックが設立した、米カリフォルニア州サンフランシスコの企業。配車や宅配、貨物輸送のサービスを手がける。", "A company in San Francisco, California, founded in 2009 by Garrett Camp and Travis Kalanick. It provides ride-hailing, delivery and freight services."], descriptionSource: "https://en.wikipedia.org/wiki/Uber", source: "https://en.wikipedia.org/wiki/Uber", checkedOn: "2026-11-18" },
+  walmart: { person: ["ジョン・ファーナー", "John Furner"], role: ["社長・CEO", "President & CEO"], description: ["1962年にサム・ウォルトンとバド・ウォルトンが設立した、米アーカンソー州ベントンビルの小売企業。米国を中心にスーパーなどの店舗を展開する。", "A retailer in Bentonville, Arkansas, founded in 1962 by Sam Walton and Bud Walton. It operates supermarkets and other stores, mainly in the U.S."], descriptionSource: "https://en.wikipedia.org/wiki/Walmart", source: "https://en.wikipedia.org/wiki/Walmart", checkedOn: "2026-11-18" },
+  jnj: { person: ["ホアキン・デュアト", "Joaquin Duato"], role: ["会長・CEO", "Chairman & CEO"], description: ["1886年にジョンソン家の3兄弟が設立した、米ニュージャージー州ニューブランズウィックの企業。医薬品と医療機器を手がける。", "A company in New Brunswick, New Jersey, founded in 1886 by three Johnson brothers. It makes medicines and medical technology."], descriptionSource: "https://en.wikipedia.org/wiki/Johnson_%26_Johnson", source: "https://en.wikipedia.org/wiki/Johnson_%26_Johnson", checkedOn: "2026-11-18" },
+  pfizer: { person: ["アルバート・ブーラ", "Albert Bourla"], role: ["会長・CEO", "Chairman & CEO"], description: ["1849年にチャールズ・ファイザーとチャールズ・エアハートが設立した、ニューヨークの製薬会社。医薬品やワクチンを開発・販売する。", "A pharmaceutical company in New York, founded in 1849 by Charles Pfizer and Charles Erhart. It develops and sells medicines and vaccines."], descriptionSource: "https://en.wikipedia.org/wiki/Pfizer", source: "https://en.wikipedia.org/wiki/Pfizer", checkedOn: "2026-11-18" },
+  merck: { person: ["ロバート・デービス", "Robert M. Davis"], role: ["会長・社長・CEO", "Chairman, President & CEO"], description: ["1891年にドイツのメルクの米国法人として設立され、1917年に独立した、米ニュージャージー州ラーウェイの製薬会社。医薬品やワクチン、動物用医薬品を手がける。", "A pharmaceutical company in Rahway, New Jersey, set up in 1891 as the U.S. arm of Germany’s Merck and independent since 1917. It makes medicines, vaccines and animal health products."], descriptionSource: "https://en.wikipedia.org/wiki/Merck_%26_Co.", source: "https://en.wikipedia.org/wiki/Merck_%26_Co.", checkedOn: "2026-11-18" },
+  regeneron: { person: ["レナード・シュライファー", "Leonard Schleifer"], role: ["共同創業者・CEO", "Co-Founder & CEO"], description: ["1988年にレナード・シュライファーとジョージ・ヤンコプロスが設立した、米ニューヨーク州タリータウンのバイオ医薬品企業。バイオ医薬品を開発する。", "A biotechnology company in Tarrytown, New York, founded in 1988 by Leonard Schleifer and George Yancopoulos. It develops biotech medicines."], descriptionSource: "https://en.wikipedia.org/wiki/Regeneron_Pharmaceuticals", source: "https://en.wikipedia.org/wiki/Regeneron_Pharmaceuticals", checkedOn: "2026-11-18" },
+  gilead: { person: ["ダニエル・オデイ", "Daniel O’Day"], role: ["会長・CEO", "Chairman & CEO"], description: ["1987年にマイケル・リオーダンが設立した、米カリフォルニア州フォスターシティのバイオ医薬品企業。HIVや肝炎などの抗ウイルス薬を開発する。", "A biopharmaceutical company in Foster City, California, founded by Michael Riordan in 1987. It develops antiviral drugs, including for HIV and hepatitis."], descriptionSource: "https://en.wikipedia.org/wiki/Gilead_Sciences", source: "https://en.wikipedia.org/wiki/Gilead_Sciences", checkedOn: "2026-11-18" },
+  ge: { person: ["ラリー・カルプ", "Larry Culp"], role: ["会長・CEO", "Chairman & CEO"], description: ["米オハイオ州エベンデールに本社を置く航空機エンジンメーカー。1892年に設立されたGeneral Electricの法人で、2024年から航空宇宙事業だけを営む。", "An aircraft engine maker headquartered in Evendale, Ohio. It is the General Electric company founded in 1892, which has run only its aerospace business since 2024."], descriptionSource: "https://en.wikipedia.org/wiki/GE_Aerospace", source: "https://en.wikipedia.org/wiki/GE_Aerospace", checkedOn: "2026-11-18" },
 };
 
 /** The portfolio name to show: the Japanese firm name in Japanese mode when one exists; English mode keeps the filed name. */

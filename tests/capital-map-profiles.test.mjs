@@ -27,17 +27,23 @@ test('every fund manager has a Japanese and English firm name, person, role and 
   }
 });
 
-test('manager descriptions are short factual firm descriptions, not disclaimers', () => {
+test('manager and company descriptions are short factual descriptions, not disclaimers or slogans', () => {
   const disclaimer = /売買|示すもの|ではありません|開示保有|13F|個人資産全体|not the founder|not a complete|not solely|not total|aggregate|disclosed holdings|reportable/i;
   const opinion = /おすすめ|買い時|売り時|注目|有望|優れ|強み|リターン|好成績|best|outperform|recommend|should buy/i;
-  for (const p of managers) {
+  for (const p of [...managers, ...corporates]) {
     const [ja, en] = profileOf(p).description;
+    assert.match(profileOf(p).descriptionSource ?? '', /^https:\/\//, p.id);
     assert.doesNotMatch(`${ja} ${en}`, disclaimer, p.id);
     assert.doesNotMatch(`${ja} ${en}`, opinion, p.id);
     assert.ok((ja.match(/。/g) ?? []).length <= 2 && ja.endsWith('。'), `${p.id}: 1–2 Japanese sentences`);
-    assert.ok((en.replace(/\b(U\.S|St)\./g, '').match(/\.(\s|$)/g) ?? []).length <= 2 && en.endsWith('.'), `${p.id}: 1–2 English sentences`);
-    // Each describes the firm itself by name, base or founding, like Berkshire's.
-    assert.ok(/年|本社|拠点|ニューヨーク|ロンドン/.test(ja), p.id);
+    assert.ok((en.replace(/\b(U\.S|St|J\.P)\./g, '').match(/\.(\s|$)/g) ?? []).length <= 2 && en.endsWith('.'), `${p.id}: 1–2 English sentences`);
+    // Each describes the firm itself by founding and base, like Berkshire's.
+    // Thiel Macro's founding year is not stated in its SEC filings or other public references.
+    if (p.id !== 'thiel-13f') {
+      assert.match(ja, /(18|19|20)\d\d年/, `${p.id}: founding year`);
+      assert.match(en, /\b(18|19|20)\d\d\b/, `${p.id}: founding year`);
+    }
+    assert.ok(/本社|拠点|米|ニューヨーク|ロンドン/.test(ja), `${p.id}: base`);
   }
   // Person rows are consistent: a named person, never the firm repeated as the "person".
   for (const p of managers) assert.notEqual(profileOf(p).person[1], p.name, p.id);
@@ -62,7 +68,11 @@ test('every company has a profile with a person, role and description', () => {
     const profile = profileOf(p);
     assert.ok(profile, p.id);
     for (const pair of [profile.person, profile.role, profile.description]) assert.ok(pair.every(value => value.trim()), p.id);
+    // Company names stay English: no katakana firm name.
+    assert.equal(profile.name, undefined, p.id);
   }
+  // The old one-line slogans are gone.
+  assert.doesNotMatch(profileOf(corporates[0]).description[0], /^GPUを軸に/);
 });
 
 test('added corporate 13F reports reconcile full SEC totals for both quarters', () => {
