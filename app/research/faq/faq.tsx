@@ -72,6 +72,12 @@ const questions = [
     "Is this investment advice?",
     "いいえ。企業調査と学習のための一般情報で、特定の銘柄の売買を勧めたり、利益を保証したりするものではありません。",
     "No. We provide general information for company research and learning, not recommendations to buy or sell specific stocks or guarantees of returns."
+  ],
+  [
+    "銀行口座から払えますか？",
+    "Can I pay from my bank account?",
+    "はい、PayPalを通じて払えます。PayPalの画面で「銀行」を選んでください。初めての方は、そこで口座を登録します。",
+    "Yes, through PayPal. Choose “Bank” on the PayPal screen. If it’s your first time, you’ll add your account there."
   ]
 ] as const;
 
