@@ -61,7 +61,7 @@ function PriceLine({ reaction: r, ticker, ja }: { reaction: MarketReaction; tick
 function CompareBars({ reaction: r, ticker, ja }: { reaction: MarketReaction; ticker: string; ja: boolean }) {
   if (!r.benchmark) return null;
   const rows = [{ name: ticker, value: r.closeChange, color: GOLD }, { name: r.benchmark.symbol, value: r.benchmark.change, color: MUTED }];
-  const W = 320, H = 96, NAME = 52, VALUE = 62, T = 10, ROW = 34, BAR = 16;
+  const W = 320, NAME = 52, VALUE = 62, T = 10, ROW = 34, BAR = 16, H = T + ROW * rows.length - 6;
   const span = Math.max(1, ...rows.map(row => Math.abs(row.value)));
   const negatives = rows.some(row => row.value < 0), positives = rows.some(row => row.value > 0);
   const left = NAME, right = W - VALUE, zero = negatives && positives ? (left + right) / 2 : negatives ? right : left;
