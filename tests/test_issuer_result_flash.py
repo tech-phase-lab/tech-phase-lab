@@ -408,6 +408,20 @@ class BodyCompanies(unittest.TestCase):
         self.assertEqual(item['facts'][0]['comparisons'],{'yearAgo':'$46.743B'})
         self.assertEqual(item['facts'][-1]['ja'],'次四半期見通し 売上高')
 
+    def test_nvidia_stored_text_with_line_breaks_is_still_read(self):
+        # Nov 17, 2026: the stored release had "Summary\nGAAP", so the marker never matched and the calendar showed no figures.
+        tmp=tempfile.TemporaryDirectory();self.addCleanup(tmp.cleanup)
+        path=str(Path(tmp.name)/'db.sqlite')
+        with monitor.connect(path) as db: signals.schema(db)
+        url='https://www.sec.gov/Archives/edgar/data/1045810/000104581026000088/nvda-20261117.htm'
+        body=fixture('nvidia-results-q3fy27.txt').replace('Summary GAAP','Summary\nGAAP').replace(' $','\n$'); sha=hashlib.sha256(body.encode()).hexdigest()
+        with monitor.connect(path) as db:
+            db.execute('INSERT INTO sources(url,ticker,discovered_at,sha256) VALUES(?,?,?,?)',(url,'NVDA','2026-11-17T21:22:03+00:00',sha))
+            db.execute('INSERT INTO release_events(url,ticker,detected_at) VALUES(?,?,?)',(url,'NVDA','2026-11-17T21:22:03+00:00'))
+            db.execute('INSERT INTO source_revisions(url,sha256,observed_at,extracted_text,extracted_chars) VALUES(?,?,?,?,?)',(url,sha,'2026-11-17T21:22:04+00:00',body,len(body)))
+        self.assertEqual(flash.run_once(path,datetime(2026,11,17,21,23,tzinfo=timezone.utc)),1)
+        with monitor.connect(path) as db: [item]=flash.public_feed(db,'2026-11-10T00:00:00+00:00')
+        self.assertEqual((item['period'],item['facts'][0]['value']),('Q3 FY2027','$115.8B'))
     def test_statement_companies_figures_from_the_stored_release_text(self):
         cases=[('DELL','dell-results-q2fy27.txt','https://www.sec.gov/Archives/edgar/data/1571996/000157199626000039/exhibit991earnings8kq2fy27.htm','Q2 FY2027','$46.971B','Dell Technologies IR (SEC 8-K)'),
                ('MRVL','marvell-results-q2fy27.txt','https://www.sec.gov/Archives/edgar/data/1835632/000183563226000022/q227_8kx812026ex-991.htm','Q2 FY2027','$2.7393B','Marvell IR (SEC 8-K)'),
