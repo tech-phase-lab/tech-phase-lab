@@ -4,8 +4,18 @@ import {resoluteDatabaseConfig} from '../../lib/resolute/database-config.ts';
 import {isOwnerAccount} from '../../lib/membership/entitlements.ts';
 import {boundedJSON} from './risk-store.mjs';
 import {rizelCopyIssues,rizelRewrite} from '../../lib/resolute/risk-copy-check.ts';
-/** Lawyer review (Nov 2026): approved lines that evaluate impact, give an outlook or a trading action are marked for re-approval, with a suggested mindset line. */
-export function markReapproval(copy){const ja=rizelCopyIssues(copy.text),en=rizelCopyIssues(copy.english?.text??'');return {...copy,needsReapproval:ja.length>0||en.length>0,issues:{ja,en},suggestion:{ja:ja.length?rizelRewrite(copy.text,'ja'):null,en:en.length?rizelRewrite(copy.english?.text??'','en'):null}};}
+import {ownerRewrites,pendingOwnerRewrite,OWNER_REWRITE_ISSUE} from '../../lib/resolute/rizel-owner-rewrites.ts';
+/** Lawyer review (Nov 2026): approved lines that evaluate impact, give an outlook or a trading action are marked for re-approval, with a suggested mindset line.
+ * An owner rewrite (private env) flags each locale whose approved text differs from it and is the suggestion there. */
+export function markReapproval(copy,rewrites=ownerRewrites()){
+ const text={ja:copy.text,en:copy.english?.text??''},issues={},suggestion={};
+ for(const l of ['ja','en']){
+  const owner=pendingOwnerRewrite(copy,l,rewrites),codes=rizelCopyIssues(text[l]);
+  issues[l]=owner===null?codes:[...codes,OWNER_REWRITE_ISSUE];
+  suggestion[l]=owner??(codes.length?rizelRewrite(text[l],l):null);
+ }
+ return {...copy,needsReapproval:issues.ja.length>0||issues.en.length>0,issues,suggestion};
+}
 let db;
 export function rizelPool(){
  if(!db){const config=resoluteDatabaseConfig(process.env.RESOLUTE_RIZEL_DB_URL);
@@ -28,7 +38,7 @@ export async function rizelReviewRequest(request,userId,_read,pool){
    FROM resolute_rizel_selections s WHERE NOT EXISTS (SELECT 1 FROM resolute_rizel_selections n WHERE n.article_id=s.article_id AND n.created_at>s.created_at) ORDER BY s.created_at DESC LIMIT 30`);
   const count=await pool.query(`SELECT count(*)::int AS count FROM resolute_rizel_reviews r JOIN resolute_rizel_selections s USING(article_id,article_revision) WHERE r.state='pending' AND NOT EXISTS(SELECT 1 FROM resolute_rizel_selections n WHERE n.article_id=s.article_id AND n.created_at>s.created_at)`);
   return json({mode:'manual',publication:'withheld',pending:count.rows[0].count,articles:rows.rows,
-   copies:(await readApprovedBank(pool)).map(markReapproval)});
+   copies:(await readApprovedBank(pool)).map(c=>markReapproval(c))});
  }
  if(request.method!=='POST')return json({error:'METHOD_NOT_ALLOWED'},405);
  const v=await boundedJSON(request,40000);
