@@ -18,11 +18,15 @@ export function identity(user, now) {
   return { userId: user.id, pro: meta.plan === 'pro' && expires > now,
     proUntil: meta.plan === 'pro' && expires > now ? new Date(expires).toISOString() : null };
 }
-export function quote(kind, language, member, rights, now) {
-  if (!['initial', 'renewal'].includes(kind) || !['ja', 'en'].includes(language) || !Number.isFinite(now)) reject('INVALID_PAYMENT_INPUT', 400);
+// The first-purchase price switches by itself at LAUNCH_END (2027-03-01 00:00 JST): ¥7,980 → ¥9,800, $59 → $69.
+// `priceAt` is when the price was fixed: the order's creation time. An order made before the switch keeps the
+// amount it was created (and shown in PayPal) with until it expires, so what was shown is what is charged.
+export function quote(kind, language, member, rights, now, priceAt = now) {
+  if (!['initial', 'renewal'].includes(kind) || !['ja', 'en'].includes(language) || !Number.isFinite(now) ||
+      !Number.isFinite(priceAt) || priceAt > now) reject('INVALID_PAYMENT_INPUT', 400);
   if (kind === 'initial' && rights.use) reject('ALREADY_PURCHASED');
   if (kind === 'renewal' && !rights.use) reject('INITIAL_PURCHASE_REQUIRED', 403);
-  const priceClass = kind === 'initial' ? (now < LAUNCH_END ? 'launch' : 'standard') : (member.pro ? 'pro' : 'free');
+  const priceClass = kind === 'initial' ? (priceAt < LAUNCH_END ? 'launch' : 'standard') : (member.pro ? 'pro' : 'free');
   const amounts = language === 'ja' ? { launch: 7980, standard: 9800, pro: 3980, free: 5980 }
     : { launch: 5900, standard: 6900, pro: 2900, free: 3900 };
   const minor = amounts[priceClass], currency = language === 'ja' ? 'JPY' : 'USD';
@@ -52,9 +56,11 @@ export function verifyOrder(order, remote, merchantId, completed = false) {
   const c = captures[0];
   if (c.status !== 'COMPLETED' || c.final_capture !== true || !/^[A-Z0-9]{8,32}$/.test(c.id ?? '') ||
       c.amount?.currency_code !== q.currency || minorUnits(c.amount?.value, q.currency) !== q.minor) reject('PAYMENT_MISMATCH');
-  const paid = Date.parse(c.create_time);
+  const paid = Date.parse(c.create_time), created = Date.parse(order.created_at);
+  // A launch price needs an order created before the switch; the order's own expiry bounds how late it can be paid.
+  const pricedAt = Number.isFinite(created) ? created : paid;
   if (!Number.isFinite(paid) || !order.capture_checked_at || paid < Date.parse(order.capture_checked_at) - 5000 ||
-      paid > Date.parse(order.expires_at) || (q.priceClass === 'launch' && paid >= LAUNCH_END) ||
+      paid > Date.parse(order.expires_at) || (q.priceClass === 'launch' && !(pricedAt < LAUNCH_END)) ||
       (q.priceClass === 'pro' && !(Date.parse(order.capture_pro_until) > paid))) reject('PAYMENT_REVIEW_REQUIRED');
   return { captureId: c.id, paidAt: new Date(paid).toISOString() };
 }

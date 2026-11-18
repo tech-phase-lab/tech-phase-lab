@@ -590,6 +590,9 @@ def display_floor(items):
       release is read, the site shows nothing rather than a thin or second-hand result.
     Flashes below the floor stay available to the phone alerts and the release watch, which use the unfiltered feed."""
     flashed = {i['ticker'] for i in items if str(i.get('researchId', '')).startswith('ir-flash-') and i.get('kind') == 'earnings'}
+    # figures of the release verified through its deep analysis (result_fallback), only while the parser has not read the table
+    fallback = {i['ticker'] for i in items if str(i.get('researchId', '')).startswith('ir-fallback-') and i['ticker'] not in flashed
+                and any(not str(f.get('key', '')).startswith('guidance-') for f in i.get('facts', []))}
     kept = []
     for item in items:
         if item.get('kind') != 'earnings':
@@ -597,7 +600,12 @@ def display_floor(items):
             continue
         if str(item.get('researchId', '')).startswith('ir-announce-'):
             # "announced" line (no figures): kept until the company's own figures are published, then replaced by them
-            if item['ticker'] not in flashed:
+            if item['ticker'] not in flashed and item['ticker'] not in fallback:
+                kept.append(item)
+            continue
+        if str(item.get('researchId', '')).startswith('ir-fallback-'):
+            # below MIN_DISPLAY_FACTS it carries the announced line as its title (each figure shown once), so it is kept as such
+            if item['ticker'] in fallback:
                 kept.append(item)
             continue
         figures = [f for f in item.get('facts', []) if not str(f.get('key', '')).startswith('guidance-')]
@@ -652,6 +660,13 @@ def public_feed(db, reference=None, earnings_hours=24, *, floor=False):
         pass  # the announcement line is independent of every other source
     items = latest_source_posts(items)
     if floor:
+        try:
+            import result_fallback
+            # figures stated by the release's deep analysis and verified against the stored release, only where the parser could not
+            # read it (after latest_source_posts: it shares the announced line's address and publisher, and replaces that line below)
+            items.extend(result_fallback.public_feed(db, cutoff))
+        except Exception:
+            pass
         items = display_floor(items)
     epoch = datetime.min.replace(tzinfo=timezone.utc)
     import issuer_result_flash as flash

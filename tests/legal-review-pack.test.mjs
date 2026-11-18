@@ -30,8 +30,8 @@ test("変えないもの: PRO card copy, the LP's 「もう暴落は怖くない
   assert.ok(lp.includes(`<p className={s.launch}>発売記念価格 ・ 2027年2月末まで</p>`));
   assert.ok(lp.includes(`<p className={s.amount}><del>¥9,800</del><b>¥7,980</b><small>税込</small></p>`));
   assert.ok(lpEn.includes(`<p className={s.amount}><del>$69</del><b>$59</b></p>`));
-  // The LP buttons stay as they are; only the checkout's final button changes.
-  assert.ok(lp.includes(">RESOLUTEを手に入れる</Link>")); assert.ok(lpEn.includes(">Get RESOLUTE</Link>"));
+  // The LP buttons keep their wording; since the payment pack (owner, Nov 2026) they go straight to PayPal.
+  assert.ok(lp.includes(">RESOLUTEを手に入れる</BuyButton>")); assert.ok(lpEn.includes(">Get RESOLUTE</BuyButton>"));
   // Diagnosis: the drop % is the reader's choice or their own number.
   assert.equal(sha("../lib/resolute/diagnosis-questions-ja.ts"), "a961e67a5c46ea1d687e760999e92ed2be585209eb6c9facf7aa04589cfcc776");
   assert.ok(read("../lib/resolute/diagnosis-questions-ja.ts").includes("自分で数字を入れる"));

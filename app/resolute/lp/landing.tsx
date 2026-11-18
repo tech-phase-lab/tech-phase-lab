@@ -5,35 +5,43 @@ import AlertSample from "./alert-sample";
 import Book from "./book";
 import AddToHomeSteps from "../add-to-home-steps";
 import OpenAtTop from "./open-at-top";
+import TechPhaseBack from "./tech-phase-back";
 import OwnedRedirect from "./owned-redirect";
 import { Anchor, Feature, stars } from "./parts";
 import s from "./lp.module.css";
 import Disclaimer from "../disclaimer";
+import BuyButton from "./buy-button";
+import { resolutePrice, type ResolutePrice } from "@/lib/resolute/price";
 
-const CHECKOUT = "/resolute/checkout";
-
-function Price() {
+// From 2027-03-01 00:00 JST the launch line and the struck-through price go and only ¥9,800 is shown (owner, Nov 2026).
+function Price({ price }: { price: ResolutePrice }) {
+ if (!price.launch) return <div className={s.price}>
+  <p className={s.amount}><b>¥9,800</b><small>税込</small></p>
+ </div>;
  return <div className={s.price}>
   <p className={s.launch}>発売記念価格 ・ 2027年2月末まで</p>
   <p className={s.amount}><del>¥9,800</del><b>¥7,980</b><small>税込</small></p>
  </div>;
 }
-function Buy({ small = false }: { small?: boolean }) {
+function Buy({ price, small = false }: { price: ResolutePrice; small?: boolean }) {
  return <div className={s.buy}>
-  <Link href={CHECKOUT} className={small ? `${s.cta} ${s.ctaSmall}` : s.cta}>RESOLUTEを手に入れる</Link>
+  <BuyButton language="ja" shownValue={price.value} className={small ? `${s.cta} ${s.ctaSmall}` : s.cta}>RESOLUTEを手に入れる</BuyButton>
   <p className={s.guest}>ログインなしでも購入できます</p>
+  <p className={s.terms}><Link href="/terms" target="_blank" rel="noopener">利用規約</Link>に同意のうえお進みください</p>
  </div>;
 }
 const WHAT = "RESOLUTEは相場が荒れる日でも冷静に立ち回るためのキットです。30問の診断で自分だけのルールを作り、壁紙と一冊の本にしていつも手元に置いておく。決めたラインに株価が届けばアラートが知らせてくれるので、感情で売り買いする前に立ち止まれます。";
 export default function Landing({ embedded = false }: { embedded?: boolean }) {
+ const price = resolutePrice("ja");
  return <div className={s.root}>
   <OpenAtTop />
+  <TechPhaseBack en={false} />
   {embedded ? null : <><script dangerouslySetInnerHTML={{ __html: ownedGuardScript(BAR_STATE_KEY) }} /><OwnedRedirect /></>}
   <main className={s.lp}>
    {/* 1 ファーストビュー */}
    <section className={s.hero}>
     <div className={s.mark}><Anchor className={s.anchor} /><span className={s.wordmark}>RESOLUTE</span></div>
-    <p className={s.kana}>レゾリュート ｜ リゼル</p>
+    <p className={s.kana}>レゾリュート</p>
     <h1 className={s.catch}>暴落の夜も<br />急騰の夜も<br /><em>自分のルールを守る</em></h1>
     <p className={s.lead}>相場が荒れた日に立ち戻る場所を<br />あなたのスマホに置いておくキットです。</p>
     <div className={s.phone} aria-hidden="true"><div className={s.screen}>
@@ -42,8 +50,8 @@ export default function Landing({ embedded = false }: { embedded?: boolean }) {
      <div className={s.miniCard}><span className={s.miniLab}>相場の温度計</span><div className={s.track}><i style={{ left: "66%" }} /></div></div>
      <div className={s.miniTiles}><span>迷った日の一冊</span><span>ルールのお守り</span></div>
     </div></div>
-    <Price />
-    <Buy />
+    <Price price={price} />
+    <Buy price={price} />
    </section>
 
    {/* 2 TWO NIGHTS */}
@@ -135,8 +143,8 @@ export default function Landing({ embedded = false }: { embedded?: boolean }) {
    <section className={`${s.sec} ${s.final}`}>
     <Anchor className={s.anchor} />
     <h2 className={s.h2}>次に相場が荒れる夜のために<br /><em>いまルールを持っておく</em></h2>
-    <Price />
-    <Buy />
+    <Price price={price} />
+    <Buy price={price} />
    </section>
 
    {/* 6 MESSAGE */}
@@ -165,10 +173,11 @@ export default function Landing({ embedded = false }: { embedded?: boolean }) {
      <details><summary>2年目の更新はいくらですか?</summary><p>5,980円です。Tech Phase PROの会員なら3,980円で更新できます。</p></details>
      <details><summary>Tech Phase PROに入っていなくても使えますか?</summary><p>使えます。FREE会員の方でも、RESOLUTEを購入すればすべての機能を使えます。</p></details>
      <details><summary>支払い方法は?</summary><p>PayPal（クレジットカード・銀行口座払い）です。</p></details>
+     <details><summary>銀行口座から払えますか?</summary><p>はい、PayPalを通じて払えます。PayPalの画面で「銀行」を選んでください。初めての方は、そこで口座を登録します。</p></details>
      <details><summary>ログインしなくても買えますか?</summary><p>買えます。購入のあとにメールで案内が届くので、そこから受け取りの手続きをしてください。</p></details>
      <details><summary>返金はできますか?</summary><p>デジタル商品のため、購入後の返金はお受けしていません。内容をご確認のうえお申し込みください。二重課金や、当方の不具合で使えない場合は返金します。</p></details>
     </div>
-    <Buy small />
+    <Buy price={price} small />
    </section>
 
    {/* 8 フッター */}

@@ -5,17 +5,19 @@
 .root * { box-sizing:border-box; }
 :global(html[data-resolute-owned]) .root { display:none; }
 .lp { max-width:480px; margin:0 auto; padding:0 20px 56px; }
-.lp p, .lp h1, .lp h2, .lp h3 { margin:0; }
+/* Zero-specificity reset: the class rules' own margins (catch 30px, lead 20px, kana 6px …) must win (owner, Nov 18: the hero was cramped). */
+:where(.lp) :where(p, h1, h2, h3) { margin:0; }
 .lp button { font:inherit; }
 
 .hero { display:flex; flex-direction:column; align-items:center; text-align:center; padding:44px 0 36px; }
-.mark { display:flex; align-items:center; gap:10px; }
+/* Icon above the word so icon, RESOLUTE, the reading and the headline share one centre line (owner, Nov 18). */
+.mark { display:flex; flex-direction:column; align-items:center; gap:10px; }
 .anchor { width:30px; height:30px; fill:none; stroke:var(--gold); stroke-width:2.2; stroke-linecap:round; stroke-linejoin:round; }
 .wordmark { font-family:var(--serif); font-size:22px; font-weight:500; letter-spacing:.42em; padding-left:.42em; background:linear-gradient(180deg,var(--gold2),var(--gold) 55%,var(--gold3)); -webkit-background-clip:text; background-clip:text; color:transparent; }
-.kana { margin-top:6px; font-size:11px; letter-spacing:.14em; color:var(--sub); }
-.catch { margin-top:30px; font-family:var(--serif); font-size:clamp(28px,8.6vw,36px); line-height:1.5; font-weight:600; letter-spacing:.04em; }
+.kana { margin-top:6px; font-size:11px; letter-spacing:.14em; padding-left:.14em; color:var(--sub); }
+.catch { margin-top:18px; font-family:var(--serif); font-size:clamp(28px,8.6vw,36px); line-height:1.5; font-weight:600; letter-spacing:.04em; }
 .catch em, .h2 em, .closing em, .final em { font-style:normal; background:linear-gradient(180deg,#fff0c0,var(--gold) 60%,var(--gold3)); -webkit-background-clip:text; background-clip:text; color:transparent; filter:drop-shadow(0 0 14px rgba(216,179,106,.35)); }
-.lead { margin-top:20px; font-size:14px; color:var(--sub); line-height:1.9; }
+.lead { margin-top:12px; font-size:14px; color:var(--sub); line-height:1.9; }
 
 .phone { margin-top:28px; width:236px; padding:9px; border-radius:34px; background:linear-gradient(160deg,#2a3a54,#111a2a); border:1px solid #34465f; box-shadow:0 18px 50px rgba(0,0,0,.55),0 0 40px rgba(216,179,106,.08); }
 .screen { border-radius:26px; padding:16px 12px 14px; background:linear-gradient(180deg,#0e1726,#090f1a); display:flex; flex-direction:column; gap:9px; text-align:left; }
@@ -40,6 +42,9 @@
 .cta { display:grid; place-items:center; width:100%; max-width:340px; height:56px; border-radius:999px; background:linear-gradient(135deg,#fbeab8 0%,#e3c274 42%,#b8913f 100%); color:#1d1608; font-size:16px; font-weight:800; letter-spacing:.06em; text-decoration:none; box-shadow:inset 0 1px 0 rgba(255,255,255,.65),0 10px 30px rgba(216,179,106,.28); }
 .ctaSmall { height:46px; font-size:14px; }
 .guest { font-size:11.5px; color:var(--sub); }
+.terms { margin-top:-6px; font-size:11px; color:var(--sub); }
+.terms a { color:var(--gold); text-decoration:underline; text-underline-offset:2px; }
+.cta[aria-busy] { opacity:.7; cursor:progress; }
 
 .sec { padding:44px 0 8px; display:flex; flex-direction:column; gap:16px; border-top:1px solid rgba(216,179,106,.14); }
 .eyebrow { font-size:11px; letter-spacing:.34em; color:var(--gold); text-align:center; }
@@ -165,7 +170,7 @@
 
 /* ---- English page ---- */
 .en .catch { font-size:clamp(26px,7.8vw,33px); line-height:1.4; letter-spacing:.01em; }
-.en .kana { letter-spacing:.34em; }
+.en .kana { letter-spacing:.34em; padding-left:.34em; }
 .en .h2 { line-height:1.5; letter-spacing:.01em; }
 .en .steps li { grid-template-columns:30px 64px 1fr; }
 .foot .footWide { gap:8px 28px; }
@@ -194,6 +199,13 @@
 
 :global(html[data-overlay-bar="1"]) .lp { padding-top:calc(env(safe-area-inset-top, 0px) + 56px); }
 :global(html[data-overlay-bar="app"]) .lp { padding-top:calc(env(safe-area-inset-top, 0px) + 12px); }
+/* "‹ Tech Phase" for a visitor who came from Tech Phase: faint, small, laid over the top-left corner inside the hero's
+   top padding (the page under it does not move); clears the status bar and the in-app view's floating buttons. */
+.tpBack { position:absolute; z-index:2; top:calc(env(safe-area-inset-top, 0px) + 2px); left:calc(env(safe-area-inset-left, 0px) + 6px); display:inline-flex; align-items:center; gap:2px; min-height:40px; padding:0 10px 0 4px; color:var(--sub); opacity:.45; font-size:11.5px; letter-spacing:.06em; text-decoration:none; -webkit-tap-highlight-color:transparent; }
+.tpBack svg { width:13px; height:13px; fill:none; stroke:currentColor; stroke-width:1.6; stroke-linecap:round; stroke-linejoin:round; }
+.tpBack:active { opacity:.25; }
+:global(html[data-overlay-bar="1"]) .tpBack { top:calc(env(safe-area-inset-top, 0px) + 58px); }
+:global(html[data-overlay-bar="app"]) .tpBack { top:calc(env(safe-area-inset-top, 0px) + 14px); }
 .homeSteps ol { margin:0; padding:16px 18px 16px 2.2em; border:1px solid var(--line); border-radius:14px; background:linear-gradient(180deg,var(--panel),var(--bg2)); font-size:13.5px; line-height:1.9; color:#cfd6df; }
 .homeSteps li b { color:var(--gold2); font-weight:600; }
 .homeSteps p { margin-top:10px; font-size:12.5px; color:var(--sub); text-align:center; }
