@@ -66,3 +66,6 @@
 .sheetActions button[type="submit"]{border:0;background:linear-gradient(135deg,#f3d98b,#c9a14e);color:#1a1305}
 .saved{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:6px;color:#f3d98b;font-size:15px}
 .saved button{border:1px solid rgba(217,180,106,.45);border-radius:8px;background:none;color:#f3d98b;padding:6px 12px;font:inherit;cursor:pointer}
+
+/* While the price is on its way: the price block's own height (48px price, change chip, state row), so the chart below does not jump when it arrives. */
+.priceHold{display:flex;align-items:center;min-height:126px}

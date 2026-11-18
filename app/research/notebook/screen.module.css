@@ -48,3 +48,16 @@ div.page h1 { margin:0 0 10px; font-size:26px; font-weight:700; line-height:1.25
 .notice { display:flex; align-items:center; gap:12px; margin:14px 0 0; padding:14px 16px; border:1px solid #243244; border-radius:16px; color:#aab6c4; font-size:12.5px; line-height:1.6; }
 .notice span:nth-child(2) { flex:1; }
 .notice a { flex:none; color:#d9b56a; text-decoration:none; font-size:12.5px; white-space:nowrap; }
+
+/* The outline shown while the page opens: the filled page's own sizes (controls 30px, price tiles, chips, the sheet), so nothing moves when it is replaced. */
+.outline { margin:0; }
+.outline i, .outline u { display:block; border-radius:10px; background:#111a26; }
+.outlineControls { display:flex; align-items:center; justify-content:space-between; height:30px; margin-bottom:14px; }
+.outlineControls i { width:190px; height:30px; border-radius:15px; }
+.outlineControls u { width:96px; height:18px; }
+.outlineTiles { display:flex; gap:10px; margin:0 0 14px; padding:2px 2px 6px; overflow:hidden; }
+.outlineTiles i { flex:none; width:78px; height:70px; border-radius:14px; border:1px solid #1e2a3a; background:#0e1520; }
+.outlineChips { display:flex; gap:8px; margin-top:6px; padding:2px 2px 14px; overflow:hidden; }
+.outlineChips i { flex:none; width:76px; height:35px; border-radius:999px; border:1px solid #1b2636; background:transparent; }
+.outlineSheet { display:grid; gap:14px; padding:20px 16px 18px 34px; border:1px solid #1c2735; border-radius:6px 16px 16px 6px; background:linear-gradient(90deg,#0b1119,#0d141d); }
+.outlineSheet i { height:52px; }
