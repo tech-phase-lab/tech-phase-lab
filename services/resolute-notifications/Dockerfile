@@ -8,6 +8,7 @@ COPY services/resolute-api/payments/ ./services/resolute-api/payments/
 COPY services/resolute-notifications/run.mjs ./services/resolute-notifications/run.mjs
 COPY lib/resolute/*.ts ./lib/resolute/
 COPY lib/membership/entitlements.ts ./lib/membership/entitlements.ts
+COPY lib/legal/ ./lib/legal/
 COPY lib/research/ ./lib/research/
 COPY scripts/research/mu_fq4_recovery.json scripts/research/sources.json ./scripts/research/
 USER node
