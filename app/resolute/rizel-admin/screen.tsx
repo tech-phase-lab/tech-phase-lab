@@ -25,7 +25,7 @@ export default function Screen(){
    <button disabled={busy||!review} onClick={()=>void mutate({action:'review',articleId:a.article_id,articleRevision:a.article_revision,locale:lang,baseRevision:review?.revision,decision:'rejected'})}>今回は見送る</button></div></div>;})}
  </section>)}
  {data?.copies.some(c=>c.needsReapproval)&&<section className={s.card}><h2>承認し直しが必要な文章</h2><p>ニュースの重要性や影響の評価・見通し・売買の行動を書いた文章です。承認し直すまで、この文章は選ばれません。直した案を下に入れてあります。確認して承認してください（承認の流れは今までと同じです）。</p>
- {data.copies.filter(c=>c.needsReapproval).flatMap(c=>(['ja','en'] as const).filter(l=>c.issues?.[l]?.length).map(l=><div key={c.id+l} className={s.notice}><p>{c.id} · {l==='ja'?'日本語':'English'} · 要再承認</p><blockquote>{l==='ja'?c.text:c.english.text}</blockquote><p>直した案: {c.suggestion?.[l]}</p><button disabled={busy} onClick={()=>{setId(c.id);setLocale(l);setDraft(c.suggestion?.[l]??'');setPreview(false);}}>この案で直す</button></div>))}
+ {data.copies.filter(c=>c.needsReapproval).flatMap(c=>(['ja','en'] as const).filter(l=>c.issues?.[l]?.length).map(l=><div key={c.id+l} className={s.notice}><p>{c.id} · {l==='ja'?'日本語':'English'} · 要再承認{c.issues?.[l]?.includes('owner-rewrite')?' · 運営者の直し案があります':''}</p><blockquote>{l==='ja'?c.text:c.english.text}</blockquote><p>直した案: {c.suggestion?.[l]}</p><button disabled={busy} onClick={()=>{setId(c.id);setLocale(l);setDraft(c.suggestion?.[l]??'');setPreview(false);}}>この案で直す</button></div>))}
  </section>}
  <section className={s.card}><h2>承認済みの文章を差し替える</h2><p>文章と言語を選ぶ → 貼り付け → プレビュー → 承認して非公開保存</p>
  <label>言語<select value={locale} onChange={e=>{setLocale(e.target.value as Locale);setPreview(false);setDraft('');}}><option value="ja">日本語</option><option value="en">English</option></select></label>
