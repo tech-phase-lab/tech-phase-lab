@@ -21,6 +21,9 @@
 .portfolioToolbar { margin:22px 0 16px; }
 .portfolioSelect { display:block; max-width:650px; }
 .portfolioSelect select { width:100%; min-height:50px; color:#f1f3fa; background:#141c28; border:1px solid #3d4759; border-radius:7px; padding:10px 14px; font:inherit; font-weight:650; font-size:1.16rem; color-scheme:dark; text-overflow:ellipsis; }
+.portfolioSelect[data-subtitled] { position:relative; }
+.portfolioSelect[data-subtitled] select { min-height:62px; padding-bottom:26px; }
+.selectSubtitle { position:absolute; left:19px; right:40px; bottom:9px; color:var(--muted); font-size:.74rem; font-weight:500; line-height:1.2; letter-spacing:.01em; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; pointer-events:none; }
 .identity { display:flex; align-items:center; gap:25px; padding:0 0 20px; }
 .identity>p { color:var(--muted); font-size:.8rem; line-height:1.7; max-width:480px; margin:0; }
 .person { display:flex; align-items:center; gap:12px; flex-shrink:0; }

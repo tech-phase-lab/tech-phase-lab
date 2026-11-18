@@ -231,3 +231,37 @@ no new pillar pages are created here. Railway access/reauthentication remains pr
   On integrated base 5441b88a: Node 1417/1417, Python 2639/2639, lint (0 errors,
   5 existing warnings), production build/typecheck, compileall and diff check pass.
   This is local validation preceding branch publication, not hosted UI acceptance.
+
+### 2026-11-18: 運用会社の日本語名・説明の統一、企業9社追加
+
+- 運用会社13社すべてに日本語名（カタカナ）と英語名を持たせた（`capitalProfiles[*].name`）。
+  日本語表示では選択欄に日本語名、その下に英語の登録名を小さく表示。英語表示は従来どおり。
+  企業タブの社名は英語のまま。
+- 「創業者個人の売買を示すものではありません」等の注記型の説明を廃止し、全13社をバークシャーと
+  同じ形式の1〜2文の事実説明（設立年・設立者・拠点・業務）に統一。参照元は `descriptionSource`
+  （主にWikipedia、Thiel MacroはSEC提出書類、拠点はSEC 13F表紙の住所と照合）。人物行も全社で
+  「人物名＋役職」に統一（JPモルガンはジェイミー・ダイモン、ブラックロックはラリー・フィンク）。
+- 企業タブに9社追加（5社→14社）：AMD、Uber、Walmart、Johnson & Johnson、Pfizer、Merck、
+  Regeneron、Gilead Sciences、GE Aerospace。いずれも自社名で13F-HRを提出する事業会社で、
+  2026-06-30（当期）と2026-03-31（前期）の原本をSEC EDGARから取得し、
+  `scripts/capital-map/import-additional-corporate.py` で `capital-map-additional-corporate.json` に変換
+  （合計額・件数・提出者名・報告期を検証、SHA-256記録）。ティッカーは既存データのCUSIP対応表と、
+  SEC company_tickers.json との社名照合を目視確認した対応表で付与。一致しない銘柄は空欄。
+- 調査したが対象外：Salesforce・Qualcomm・Visa・Palantir（2023年で13F提出終了）、Accenture
+  （2024年で終了）、Zoom（2024年で終了）。Apple・Microsoft・Meta等は13Fを提出していない。
+- 注意：Ciscoは2026-11-16に2025Q4〜2026Q3の13F-HR/Aを一括提出。既存のCisco当期データは原本のまま。
+  次回更新時に訂正内容（全面訂正か追加か）を確認すること。
+
+#### 定期更新（未実装）
+
+資本マップ専用の定期更新ジョブは存在しない（GitHub Actions・vercel.json に該当なし。データは
+レビュー済みの原本ファイルから手動でJSONに変換する方式）。13Fは四半期末から45日以内に提出される
+ため、四半期ごとの更新には次が必要：
+
+1. 2月・5月・8月・11月の各15日以降（提出期限後）に、対象CIKのSEC submissions APIから新しい
+   13F-HR / 13F-HR/A を検出（SECのUser-Agent要件と毎秒10件の上限を守る）。
+2. 表紙と情報テーブルを取得し、既存のimport系スクリプトの検証（提出者名・報告期・件数・合計額・
+   訂正種別）を通す。当期→前期へのローテーションを行い、ETFは運用元の日次データで別途更新。
+3. 生成したJSONをプレビューブランチへのPRとして出し、人がレビューしてからマージ（自動公開しない）。
+4. 実行基盤はGitHub Actionsのscheduleで足りる（新規有料サービス不要）。本番反映は従来どおり
+   オーナー承認のデプロイ。
