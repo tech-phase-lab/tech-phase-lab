@@ -7,7 +7,7 @@ import { useResearchLanguage } from "../use-research-language";
 import { groupOf, themeById, type ThemeDefinition } from "@/lib/research/theme-definitions";
 import { rankThemes, type ThemeRow } from "@/lib/research/theme-ranking";
 import namesFile from "@/lib/research/theme-stock-names.json";
-import { BasisLine, DivergingChart, PeriodPills, arrow, signed, toneClass, updateNote, usePeriod, useThemeData } from "./parts";
+import { BasisLine, DataProblem, DivergingChart, PeriodPills, arrow, signed, toneClass, updateNote, usePeriod, useThemeData } from "./parts";
 import styles from "./themes.module.css";
 
 const names = namesFile as Record<string, { ja: string; en: string }>;
@@ -33,7 +33,7 @@ export default function ThemeDetailScreen({ id }: { id: string }) {
   const ja = lang === "ja";
   const t = (a: string, b: string) => ja ? a : b;
   const [period, setPeriod] = usePeriod();
-  const { state, data } = useThemeData(theme.group, plan);
+  const { state, data, retry } = useThemeData(theme.group, plan);
   const row = useMemo(() => data ? rankThemes(data.stocks, period, [theme])[0] : undefined, [data, period, theme]);
   const priced = row?.members.filter((member): member is { ticker: string; value: number } => member.value !== null) ?? [];
   return <ResearchToolShell lang={lang} setLang={setLang} title={ja ? theme.ja : theme.en} showHeading={false} description="">
@@ -46,7 +46,7 @@ export default function ThemeDetailScreen({ id }: { id: string }) {
       {state === "ready" && <BasisLine data={data} period={period} ja={ja} />}
       {state === "loading" && <p role="status" className={styles.note}>{t("データを読み込み中…", "Loading data…")}</p>}
       {state === "not-connected" && <p role="status" className={styles.note}>{t("株価データの接続を準備中です。", "The price data is not connected yet.")}</p>}
-      {state === "error" && <p role="alert" className={styles.note}>{t("データを取得できませんでした。しばらくしてからもう一度お試しください。", "We couldn't load the data. Please try again in a moment.")}</p>}
+      {(state === "error" || state === "sign-in" || state === "pro-required") && <DataProblem state={state} ja={ja} onRetry={retry} />}
       {state === "ready" && data && (priced.length
         ? <DivergingChart ja={ja} mono rows={priced.map(member => ({ id: member.ticker, value: member.value, href: `/research/stocks?q=${encodeURIComponent(member.ticker)}`, name: member.ticker, sub: names[member.ticker]?.[ja ? "ja" : "en"] }))} />
         : <p className={styles.empty}>{t("この期間の株価データがありません。", "No price data for this period.")}</p>)}
