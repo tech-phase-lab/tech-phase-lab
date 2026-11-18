@@ -34,6 +34,7 @@ import reviewed_business_news
 import micron_reviewed_recovery
 import news_delivery_status
 import issuer_business_news
+import issuer_note_outlook
 import release_watch
 import rollout_validation
 import token_pricing
@@ -1018,6 +1019,10 @@ def run_once(path, transport=brief_generator.request_response, env=None, now=Non
         policy+='\n'+buyback_news.POLICY
     if row.get('issuer_business'):
         policy+='\n'+issuer_business_news.FINANCIAL_POLICY
+    # Owner, Nov 18: note-specific unknown/next lines in the same call.
+    outlook=not general and not semantic and issuer_note_outlook.enabled(row)
+    if outlook:
+        policy+='\n'+issuer_note_outlook.POLICY
     with connect(path) as db:
         corrections=retry_feedback(db,row,excerpts)
         previous=[] if general else earlier_attempts(db,row)
@@ -1025,9 +1030,10 @@ def run_once(path, transport=brief_generator.request_response, env=None, now=Non
             failure=db.execute('SELECT reason,detail,payload FROM official_research_attempt_failures WHERE event_id=? AND sha=? ORDER BY failed_at DESC LIMIT 1',(row['id'],row['sha'])).fetchone()
             corrections=(general_source_news.retry_feedback(failure['payload'],row) or [{'issue':failure['reason'],'field':failure['detail']}]) if failure else []
     policy+=factual_validation.MEANING_POLICY
-    payload={'model':model,'store':False,'max_output_tokens':2400,'instructions':policy,
-             'input':json.dumps({'ticker':row['ticker'],'title':row['title'],'evidenceExcerpts':excerpts,'correctionsRequired':corrections},ensure_ascii=False),
-             'text':{'format':{'type':'json_schema','name':'issuer_factual_note','strict':True,'schema':general_source_news.assessment_response_schema() if semantic else general_source_news.response_schema() if general else response_schema()}}}
+    payload={'model':model,'store':False,'max_output_tokens':2800 if outlook else 2400,'instructions':policy,
+             'input':json.dumps({'ticker':row['ticker'],'title':row['title'],**({'kind':issuer_note_outlook.release_kind(row['title'])} if outlook else {}),
+                                 'evidenceExcerpts':excerpts,'correctionsRequired':corrections},ensure_ascii=False),
+             'text':{'format':{'type':'json_schema','name':'issuer_factual_note','strict':True,'schema':general_source_news.assessment_response_schema() if semantic else general_source_news.response_schema() if general else issuer_note_outlook.extend_schema(response_schema()) if outlook else response_schema()}}}
     if general:
         input_data=json.loads(payload['input'])
         input_data['evidenceContext']={u['id']:{'actor':u['actor'],'requiredTopics':sorted(general_source_news.concepts(u['quote'],'en'))} for u in row['units']}
@@ -1080,6 +1086,9 @@ def run_once(path, transport=brief_generator.request_response, env=None, now=Non
         elif general:
             note=general_source_news.bind_note(value,row)
         else:
+            # The two extra lines never hold back the note: they are taken out
+            # before the note checks and kept only if they pass their own.
+            outlook_raw=issuer_note_outlook.extract(value)
             for item in [value.get('title'),value.get('summary'),*(value.get('facts') or []),value.get('purpose')]:
                 if isinstance(item,dict) and 'evidenceId' in item:
                     evidence_id=item.pop('evidenceId')
@@ -1087,6 +1096,10 @@ def run_once(path, transport=brief_generator.request_response, env=None, now=Non
                         raise ValueError('unsupported-quote')
                     bind_evidence(item,evidence_id,excerpts,row)
             note=validate(salvage(value,row,previous),row['body'],row['title'])
+            if outlook:
+                lines=issuer_note_outlook.checked(outlook_raw,excerpts,row,validate_item)
+                if lines:
+                    note['outlook']=lines
             if row.get('issuer_business'):
                 note['issuerBusinessPolicy']=issuer_business_news.POLICY
                 issuer_business_news.validate_paraphrase(note)
@@ -1225,13 +1238,12 @@ def primary_publication_items(publications):
             continue
         # Evidence quotes/source body are never serialized to the public app.
         copy=lambda x:{k:x[k] for k in ('ja','en')}
-        kind=('acquisition' if re.search(r'\bacquir|\bacquisition',r['title'],re.I) else
-              'earnings' if re.search(r'results|earnings',r['title'],re.I) else
-              'partnership' if re.search(r'partner|agreement',r['title'],re.I) else 'product')
+        kind=issuer_note_outlook.release_kind(r['title'])
         published=r['published_on'] or r['observed_at'][:10]
         items.append({'id':'ir-result-'+str(r['id']),'ticker':r['ticker'],'kind':kind,
                       'title':copy(note['title']),'summary':copy(note['summary']),
                       'facts':[copy(x) for x in note['facts']],'purpose':copy(note['purpose']),
+                      **issuer_note_outlook.public_lines(note,r,validate_item),
                       'url':r['url'],'sourceTitle':r['title'],'publishedOn':published,
                       'dateBasis':'publication' if r['published_on'] else 'detection',
                       'observedAt':r['observed_at'],'bodyReadyAt':r['body_at'],

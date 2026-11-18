@@ -6,7 +6,6 @@ import { useWatchlistSelection } from "./use-watchlist-selection";
 import { watchlistSlots, sortFavorites, addFavoriteToList, favoriteListLimit, type FavoriteQuote } from "@/lib/research/favorite-lists";
 import { useResearchLanguage } from "../use-research-language";
 import WatchlistFrame from "./watchlist-frame";
-import ResearchLoading from "../loading";
 import ResearchToolShell from "../research-tool-shell";
 import { useRouter } from "next/navigation";
 import { useQuotes } from "../price/use-market";
@@ -127,7 +126,9 @@ export default function Watchlist({ companies, quotes = {} }: { companies: Compa
   const viewOptions = [{ value: "auto", label: t("自動", "Auto") }, { value: "regular", label: t("取引中", "Market open") }, { value: "pre", label: t("プレ", "Pre-market") }, { value: "closed", label: t("前日比", "Daily change") }];
   const number = (value: number) => value.toLocaleString(lang === "ja" ? "ja-JP" : "en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
   const percent = (value: number) => `${value > 0 ? "+" : value < 0 ? "−" : ""}${Math.abs(value).toFixed(2)}%`;
-  if (!ready && status === "loading") return <ResearchLoading />;
+  // The page opens in its own frame (owner, Nov 18: pages that open in several visible steps). While the saved lists are being read, the
+  // heading, search and rows keep their final places: rows are drawn as 68px outlines instead of a separate full-screen loading screen.
+  const listsLoading = !ready && status === "loading";
   return <WatchlistFrame lang={lang}><ResearchToolShell lang={lang} setLang={setLang} title={t("ウォッチリスト", "Watchlist")} description="" showHeading={false}>
     <div className={styles.page}>
       <header className={styles.heading}>
@@ -135,7 +136,7 @@ export default function Watchlist({ companies, quotes = {} }: { companies: Compa
         <div className={styles.listPicker}>
           <WatchMenu buttonClass={styles.listButton} menuClass={styles.listMenu} label={t(`リストを選ぶ（${currentName}）`, `Choose a list (${currentName})`)} value={list.id}
             options={slots.map((item, index) => ({ value: item.id, label: listLabel(index) }))}
-            onChange={id => { setListId(id); setQuery(""); setListAction(null); setRevealed(""); }}><span className={styles.listName}>{currentName}</span></WatchMenu>
+            onChange={id => { setListId(id); setQuery(""); setListAction(null); setRevealed(""); }}><span className={styles.listName} style={listsLoading ? { visibility: "hidden" } : undefined}>{currentName}</span></WatchMenu>
           <button type="button" disabled={!editable} className={styles.renameButton} onClick={() => { setListAction(listAction ? null : "rename"); setListName(fullName(slots.indexOf(list))); }} aria-label={t("リスト名を編集", "Edit list name")} aria-expanded={!!listAction}>
             <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 20h9" /><path d="M16.5 3.5a2.1 2.1 0 013 3L7 19l-4 1 1-4z" /></svg>
           </button>
@@ -153,8 +154,8 @@ export default function Watchlist({ companies, quotes = {} }: { companies: Compa
         <button type="submit" className={styles.saveButton} disabled={!listName.trim() || nameLength > LIST_NAME_LIMIT}>{t("保存", "Save")}</button>
         <button type="button" className={styles.cancelButton} onClick={() => setListAction(null)}>{t("取消", "Cancel")}</button>
       </form>}
-      <section className={`${styles.searchPanel} ${favorites.length === 0 ? styles.searchEmpty : ""}`} aria-label={t("銘柄を追加", "Add stock")}>
-        <div className={styles.searchRow}><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><circle cx="11" cy="11" r="7" /><path d="M21 21l-4.3-4.3" /></svg><input ref={searchInput} type="search" autoComplete="off" autoCapitalize="none" spellCheck={false} aria-label={t("銘柄を追加：会社名・ティッカーで検索", "Add a stock: search by company name or ticker")} value={query} onChange={event => setQuery(event.target.value)} placeholder={favorites.length === 0 ? t("銘柄名・ティッカーで追加", "Add by name or ticker") : t("銘柄を追加・検索", "Find a stock to add")} onKeyDown={event => { if (event.key === "Escape") setQuery(""); }} />{query && <button className={styles.iconButton} onClick={() => { setQuery(""); searchInput.current?.focus(); }} aria-label={t("検索をクリア", "Clear search")}>×</button>}{favorites.length === 0 && !query && <button type="button" className={styles.searchPlus} aria-label={t("入力欄で銘柄を探す", "Search for a stock")} onClick={() => searchInput.current?.focus()}>＋</button>}</div>
+      <section className={`${styles.searchPanel} ${favorites.length === 0 && !listsLoading ? styles.searchEmpty : ""}`} aria-label={t("銘柄を追加", "Add stock")}>
+        <div className={styles.searchRow}><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><circle cx="11" cy="11" r="7" /><path d="M21 21l-4.3-4.3" /></svg><input ref={searchInput} type="search" autoComplete="off" autoCapitalize="none" spellCheck={false} aria-label={t("銘柄を追加：会社名・ティッカーで検索", "Add a stock: search by company name or ticker")} value={query} onChange={event => setQuery(event.target.value)} placeholder={favorites.length === 0 && !listsLoading ? t("銘柄名・ティッカーで追加", "Add by name or ticker") : t("銘柄を追加・検索", "Find a stock to add")} onKeyDown={event => { if (event.key === "Escape") setQuery(""); }} />{query && <button className={styles.iconButton} onClick={() => { setQuery(""); searchInput.current?.focus(); }} aria-label={t("検索をクリア", "Clear search")}>×</button>}{favorites.length === 0 && !listsLoading && !query && <button type="button" className={styles.searchPlus} aria-label={t("入力欄で銘柄を探す", "Search for a stock")} onClick={() => searchInput.current?.focus()}>＋</button>}</div>
         {query.trim() && <div className={styles.results}><div role="status" className={styles.searchStatus}>{searching ? t("検索中…", "Searching…") : searchError ? t("検索できませんでした。もう一度お試しください。", "Search unavailable. Please try again.") : !matches.length ? t("一致する銘柄がありません", "No matching stocks") : null}</div>
           <ul className={styles.choices}>{matches.map(item => <li key={item.ticker}><button disabled={!editable || listFull || favorites.includes(item.ticker)} onClick={() => { setKnown(previous => ({ ...previous, [item.ticker]: item })); if (add(item.ticker, item.name)) { setQuery(""); searchInput.current?.blur(); } }}><span><strong>{item.ticker}</strong><small>{item.name}</small></span><span className={styles.choiceAction}>{favorites.includes(item.ticker) ? t("追加済み", "Added") : listFull ? t("上限", "List full") : t("＋追加", "+ Add")}</span></button></li>)}</ul>
         </div>}
@@ -168,7 +169,11 @@ export default function Watchlist({ companies, quotes = {} }: { companies: Compa
       </div>}
       {canImport && <div className={styles.syncNotice}><button onClick={importLocal}>{t("この端末のウォッチリストを取り込む", "Import this device’s watchlist")}</button></div>}
       {error && <p role="alert" className={styles.error}>{t("保存できませんでした。ブラウザーの保存設定をご確認ください。", "Could not save. Check your browser storage settings.")}</p>}
-      {!ready ? <div className={styles.loading} role="status">{t("保存済みのリストを確認できません", "Your saved watchlist is unavailable")}</div> : favorites.length > 0 ? <>
+      {listsLoading ? <div role="status" aria-busy="true" aria-label={t("読み込み中…", "Loading…")}>
+        <div className={styles.toolbar} aria-hidden="true" />
+        <ul className={styles.quoteRows} aria-hidden="true">{[0, 1, 2, 3, 4].map(index => <li key={index} className={styles.quoteRow}><span className={`${styles.rowMain} ${styles.rowOutline}`}><i /><b /><u /></span></li>)}</ul>
+      </div>
+      : !ready ? <div className={styles.loading} role="status">{t("保存済みのリストを確認できません", "Your saved watchlist is unavailable")}</div> : favorites.length > 0 ? <>
         <div className={styles.toolbar}>
           <WatchMenu buttonClass={styles.textButton} label={t("並び順", "Sort order")} value={sort} options={sortOptions} onChange={setSort}>{sortOptions.find(option => option.value === sort)?.label}</WatchMenu>
           <WatchMenu buttonClass={styles.textButton} menuClass={styles.viewMenu} label={t("取引時間帯の表示", "Market session view")} value={sessionView} options={viewOptions} onChange={value => { setSessionView(value as WatchlistSession); setRevealed(""); }}>{t("表示", "View")} {viewOptions.find(option => option.value === sessionView)?.label}</WatchMenu>

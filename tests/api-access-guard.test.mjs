@@ -21,6 +21,7 @@ const PUBLIC = {
   'research/company-wire': 'public company wire',
   'research/live': 'public live feed',
   'research/freshness': 'public freshness stamps',
+  'research/radar/freshness': 'tickers and codes of radar companies behind their SEC filing (no figures, no dates); cached an hour',
   'research/stocks': 'public stock directory',
   'resolute/receive': 'guest checkout receipt (switch-gated, origin-checked)',
 };

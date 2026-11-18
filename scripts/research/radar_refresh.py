@@ -13,6 +13,7 @@ Fixed times, Japan time (JST, no daylight saving):
 A slot missed by more than three hours (the monitor was down) is skipped; the next slot comes at most fourteen and a half hours later.
 """
 import json
+import os
 import urllib.request
 from datetime import datetime, timedelta, timezone
 from urllib.parse import urlsplit
@@ -27,6 +28,7 @@ MAX_CALLS = 30          # about 54 companies take two to four calls; this only s
 MAX_ATTEMPTS = 3        # per slot, when a run ends in an error
 RETRY_AFTER = 600       # seconds between those attempts
 SHOWN_FAILURES = 20
+SHOWN_STALE = 60       # every radar company fits; tickers and codes only ("NBIS:behind")
 
 
 def config(env=None):
@@ -35,6 +37,15 @@ def config(env=None):
         return None
     url, secret = settings
     return f"https://{urlsplit(url).netloc}{PATH}", secret
+
+
+def missing_settings(env=None):
+    """The names of the settings this lane still needs (never their values)."""
+    env = os.environ if env is None else env
+    missing = [name for name in ("COMPARISON_WARM_URL", "COMPARISON_WARM_SECRET") if not (env.get(name) or "").strip()]
+    if not missing and not comparison_warm.config(env):
+        missing = ["COMPARISON_WARM_URL(https)", "COMPARISON_WARM_SECRET(32+)"]
+    return missing
 
 
 def _slots_around(now):
@@ -89,7 +100,7 @@ def run_once(env=None, opener=urllib.request.urlopen, should_stop=lambda: False)
     if not settings:
         return {"status": "off"}
     url, secret = settings
-    cursor, calls, refreshed, live, failures, total = 0, 0, 0, 0, [], None
+    cursor, calls, refreshed, live, failures, stale, total = 0, 0, 0, 0, [], [], None
     try:
         while calls < MAX_CALLS and not should_stop():
             body = _call(url, secret, cursor, opener)
@@ -101,6 +112,8 @@ def run_once(env=None, opener=urllib.request.urlopen, should_stop=lambda: False)
             refreshed += int(body.get("refreshed") or 0)
             live += int(body.get("live") or 0)
             failures += [str(item)[:40] for item in body.get("failures") or []]
+            # companies whose newest filed period the radar still lacks, more than two days after filing (Nov 18)
+            stale += [str(item)[:40] for item in body.get("stale") or [] if str(item)[:40] not in stale]
             total = body.get("total")
             following = body.get("next")
             if body.get("done") or following is None:
@@ -114,7 +127,7 @@ def run_once(env=None, opener=urllib.request.urlopen, should_stop=lambda: False)
     except Exception as exc:  # the schedule tries again in ten minutes
         return {"status": "error", "error": type(exc).__name__, "calls": calls, "refreshed": refreshed, "failed": len(failures)}
     return {"status": "ok" if not failures else "partial", "calls": calls, "total": total, "refreshed": refreshed, "live": live,
-            "failed": len(failures), "failures": failures[:SHOWN_FAILURES]}
+            "failed": len(failures), "failures": failures[:SHOWN_FAILURES], "stale": stale[:SHOWN_STALE]}
 
 
 def iso(moment):

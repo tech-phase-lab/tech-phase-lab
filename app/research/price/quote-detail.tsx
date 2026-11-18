@@ -23,6 +23,7 @@ import { useMinute } from "./use-minute";
 import { useChartStore } from "./use-chart-store";
 import FlashValue from "./flash-value";
 import styles from "./detail.module.css";
+import chartStyles from "./chart.module.css";
 
 const ORIGINS: Record<DetailOrigin, { ja: string; en: string; href: string }> = {
   watchlist: { ja: "ウォッチリスト", en: "Watchlist", href: "/research/watchlist" },
@@ -151,9 +152,9 @@ export default function QuoteDetail({ ticker, from, title: fixedTitle, plain: ba
           <span className={`${styles.changeLine} ${styles[tone]}`}><span className={`${styles.chip} ${styles[tone]}`}>{arrow} {quote.percentChange === null ? "—" : signedPercent(quote.percentChange)}</span><span className={styles.amount}>{quote.change === null ? "" : signedMoney(quote.change, quote.currency)}</span></span>
           <div className={styles.stateRow}><span><Status quote={quote} ja={ja} update updatedAt={receivedAt} /></span>
             <span className={styles.mode} role="group" aria-label={t("チャートの種類", "Chart type")}><button type="button" aria-pressed={mode === "candles"} onClick={() => setMode("candles")}>{t("ローソク足", "Candles")}</button><button type="button" aria-pressed={mode === "line"} onClick={() => setMode("line")}>{t("ライン", "Line")}</button></span></div>
-        </div> : <p className={styles.error} role="status">{!loaded ? t("株価を読み込み中…", "Loading the price…") : failed ? t("株価を取得できませんでした。しばらくしてからもう一度お試しください。", "Could not load the price. Please try again shortly.") : ""}</p>}
+        </div> : <div className={styles.priceHold}><p className={styles.error} role="status">{!loaded ? t("株価を読み込み中…", "Loading the price…") : failed ? t("株価を取得できませんでした。しばらくしてからもう一度お試しください。", "Could not load the price. Please try again shortly.") : ""}</p></div>}
         <div className={styles.chartBlock}>
-          {drawn === null ? <div className={styles.pad}><p className={styles.error} style={{ padding: 0 }} role="status">{t("チャートを読み込み中…", "Loading the chart…")}</p></div> : <PriceChart bars={drawn.bars} before={drawn.before} mode={mode} interval={interval} jst={intraday} tag={tag} live={intraday && now !== null ? { phase } : undefined} sessionTicks={shownRange === "15m"} busy={store.busy} ja={ja} />}
+          {drawn === null ? <div>{mode === "candles" && <div className={chartStyles.legend} aria-hidden="true">&nbsp;</div>}<div className={`${chartStyles.frame} ${chartStyles.detail}`} role="status"><span className={chartStyles.empty}>{t("チャートを読み込み中…", "Loading the chart…")}</span></div></div> : <PriceChart bars={drawn.bars} before={drawn.before} mode={mode} interval={interval} jst={intraday} tag={tag} live={intraday && now !== null ? { phase } : undefined} sessionTicks={shownRange === "15m"} busy={store.busy} ja={ja} />}
           <PeriodButtons period={range} onChange={setRange} ja={ja} />
           {isChangePeriod(range) && periodBases && <PeriodChangeLine period={range} base={periodBases.bases[range]} price={quote?.price ?? null} today={periodBases.today} ja={ja} />}
         </div>
