@@ -1,0 +1,698 @@
+{
+ "AAOI": {
+  "url": "https://www.sec.gov/Archives/edgar/data/1158114/000168316826008351/aaoi_ex9901.htm",
+  "form": "8-K",
+  "accepted": "2026-11-05T21:10:28+00:00",
+  "status": "figures",
+  "period": "Q3 2026",
+  "facts": [
+   "revenue",
+   "eps",
+   "net-income",
+   "operating-income"
+  ],
+  "failure": null
+ },
+ "AAPL": {
+  "url": "https://www.sec.gov/Archives/edgar/data/320193/000032019326000024/a8-kex991q4202609262026.htm",
+  "form": "8-K",
+  "accepted": "2026-11-02T21:30:23+00:00",
+  "status": "figures",
+  "period": "Q4 FY2026",
+  "facts": [
+   "revenue",
+   "eps",
+   "net-income",
+   "operating-income"
+  ],
+  "failure": null
+ },
+ "ADBE": {
+  "url": "https://www.sec.gov/Archives/edgar/data/796343/000079634326000147/adbeex991q326.htm",
+  "form": "8-K",
+  "accepted": "2026-09-10T20:06:14+00:00",
+  "status": "figures",
+  "period": "Q3 FY2026",
+  "facts": [
+   "revenue",
+   "eps",
+   "net-income",
+   "operating-income"
+  ],
+  "failure": null
+ },
+ "ALAB": {
+  "url": "https://www.sec.gov/Archives/edgar/data/1736297/000173629726000044/q326exhibit991.htm",
+  "form": "8-K",
+  "accepted": "2026-11-03T21:09:51+00:00",
+  "status": "figures",
+  "period": "Q3 2026",
+  "facts": [
+   "revenue",
+   "eps",
+   "net-income",
+   "operating-income"
+  ],
+  "failure": null
+ },
+ "AMAT": {
+  "url": "https://www.sec.gov/Archives/edgar/data/6951/000162828026073360/exhibit991q42026earningsre.htm",
+  "form": "8-K",
+  "accepted": "2026-11-12T21:02:46+00:00",
+  "status": "figures",
+  "period": "Q4 FY2026",
+  "facts": [
+   "revenue",
+   "eps",
+   "net-income",
+   "operating-income"
+  ],
+  "failure": null
+ },
+ "AMD": {
+  "url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000188/q32026991.htm",
+  "form": "8-K",
+  "accepted": "2026-11-03T21:16:27+00:00",
+  "status": "figures",
+  "period": "Q3 2026",
+  "facts": [
+   "revenue",
+   "eps",
+   "net-income",
+   "operating-income"
+  ],
+  "failure": null
+ },
+ "AMZN": {
+  "url": "https://www.sec.gov/Archives/edgar/data/1018724/000101872426000038/amzn-20260930xex991.htm",
+  "form": "8-K",
+  "accepted": "2026-10-29T20:05:27+00:00",
+  "status": "figures",
+  "period": "Q3 2026",
+  "facts": [
+   "revenue",
+   "eps",
+   "net-income",
+   "operating-income"
+  ],
+  "failure": null
+ },
+ "ANET": {
+  "url": "https://www.sec.gov/Archives/edgar/data/1596532/000159653226000252/ex991q326-earningsrelease.htm",
+  "form": "8-K",
+  "accepted": "2026-11-03T21:10:17+00:00",
+  "status": "figures",
+  "period": "Q3 2026",
+  "facts": [
+   "revenue",
+   "eps",
+   "net-income",
+   "operating-income"
+  ],
+  "failure": null
+ },
+ "APH": {
+  "url": "https://www.sec.gov/Archives/edgar/data/820313/000110465926119421/aph-ex99d1.htm",
+  "form": "8-K",
+  "accepted": "2026-10-28T13:42:41+00:00",
+  "status": "figures",
+  "period": "Q3 2026",
+  "facts": [
+   "revenue",
+   "eps",
+   "net-income",
+   "operating-income"
+  ],
+  "failure": null
+ },
+ "ARM": {
+  "url": "https://www.sec.gov/Archives/edgar/data/1973239/000197323926000141/exhibit992fye27q230-sepx26.htm",
+  "form": "6-K",
+  "accepted": "2026-11-04T21:02:18+00:00",
+  "status": "figures",
+  "period": "Q2 FYE27",
+  "facts": [
+   "revenue",
+   "eps",
+   "net-income",
+   "operating-income"
+  ],
+  "failure": null
+ },
+ "ASML": {
+  "url": "https://www.sec.gov/Archives/edgar/data/937966/000162828026065813/pressreleasefinancialresul.htm",
+  "form": "6-K",
+  "accepted": "2026-10-14T10:01:18+00:00",
+  "status": "figures",
+  "period": "Q3 2026",
+  "facts": [
+   "revenue",
+   "gross-margin",
+   "eps",
+   "net-income",
+   "guidance-revenue"
+  ],
+  "failure": null
+ },
+ "AVGO": {
+  "url": "https://www.sec.gov/Archives/edgar/data/1730168/000173016826000076/avgo-08022026x8kxex99.htm",
+  "form": "8-K",
+  "accepted": "2026-09-02T20:26:04+00:00",
+  "status": "figures",
+  "period": "Q3 FY2026",
+  "facts": [
+   "revenue",
+   "eps",
+   "net-income",
+   "operating-income",
+   "guidance-revenue"
+  ],
+  "failure": null
+ },
+ "BE": {
+  "url": "https://www.sec.gov/Archives/edgar/data/1664703/000162828026066890/ex991_q326financialresults.htm",
+  "form": "8-K",
+  "accepted": "2026-10-22T20:09:25+00:00",
+  "status": "figures",
+  "period": "Q3 2026",
+  "facts": [
+   "revenue",
+   "eps",
+   "net-income",
+   "operating-income"
+  ],
+  "failure": null
+ },
+ "CEG": {
+  "url": "https://www.sec.gov/Archives/edgar/data/1868275/000186827526000116/ceg-20261109991.htm",
+  "form": "8-K",
+  "accepted": "2026-11-09T11:53:11+00:00",
+  "status": "figures",
+  "period": "Q3 2026",
+  "facts": [
+   "revenue",
+   "eps",
+   "adjusted-eps",
+   "net-income",
+   "operating-income"
+  ],
+  "failure": null
+ },
+ "COHR": {
+  "url": "https://www.sec.gov/Archives/edgar/data/820318/000119312526447200/d176836dex991.htm",
+  "form": "8-K",
+  "accepted": "2026-11-04T21:05:07+00:00",
+  "status": "figures",
+  "period": "Q1 FY2027",
+  "facts": [
+   "revenue",
+   "eps",
+   "adjusted-eps"
+  ],
+  "failure": null
+ },
+ "CRDO": {
+  "url": "https://www.sec.gov/Archives/edgar/data/1807794/000162828026059795/credoq12027ex-991.htm",
+  "form": "8-K",
+  "accepted": "2026-09-01T20:08:16+00:00",
+  "status": "figures",
+  "period": "Q1 FY2027",
+  "facts": [
+   "revenue",
+   "eps",
+   "net-income",
+   "operating-income"
+  ],
+  "failure": null
+ },
+ "CRM": {
+  "url": "https://www.sec.gov/Archives/edgar/data/1108524/000110852426000187/crm-q2fy27xexhibit991.htm",
+  "form": "8-K",
+  "accepted": "2026-08-26T20:03:53+00:00",
+  "status": "figures",
+  "period": "Q2 FY2027",
+  "facts": [
+   "revenue",
+   "eps",
+   "net-income",
+   "operating-income"
+  ],
+  "failure": null
+ },
+ "CRWD": {
+  "url": "https://www.sec.gov/Archives/edgar/data/1535527/000153552726000029/crwd-20260826xex991.htm",
+  "form": "8-K",
+  "accepted": "2026-08-26T20:07:02+00:00",
+  "status": "figures",
+  "period": "Q2 FY2027",
+  "facts": [
+   "revenue",
+   "eps",
+   "net-income",
+   "operating-income"
+  ],
+  "failure": null
+ },
+ "CRWV": {
+  "url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000461/coreweave3q26earningspress.htm",
+  "form": "8-K",
+  "accepted": "2026-11-10T21:05:53+00:00",
+  "status": "figures",
+  "period": "Q3 2026",
+  "facts": [
+   "revenue",
+   "eps",
+   "net-income",
+   "operating-income",
+   "adjusted-ebitda",
+   "guidance-revenue"
+  ],
+  "failure": null
+ },
+ "DELL": {
+  "url": "https://www.sec.gov/Archives/edgar/data/1571996/000157199626000039/exhibit991earnings8kq2fy27.htm",
+  "form": "8-K",
+  "accepted": "2026-09-01T20:10:14+00:00",
+  "status": "figures",
+  "period": "Q2 FY2027",
+  "facts": [
+   "revenue",
+   "eps",
+   "net-income",
+   "operating-income",
+   "guidance-revenue"
+  ],
+  "failure": null
+ },
+ "GEV": {
+  "url": "https://www.sec.gov/Archives/edgar/data/1996810/000199681026000162/gevpressrelease3q26.htm",
+  "form": "8-K",
+  "accepted": "2026-10-28T10:16:59+00:00",
+  "status": "figures",
+  "period": "Q3 2026",
+  "facts": [
+   "revenue",
+   "eps",
+   "net-income",
+   "adjusted-ebitda"
+  ],
+  "failure": null
+ },
+ "GOOGL": {
+  "url": "https://www.sec.gov/Archives/edgar/data/1652044/000165204426000080/googexhibit991q32026.htm",
+  "form": "8-K",
+  "accepted": "2026-10-28T20:01:33+00:00",
+  "status": "figures",
+  "period": "Q3 2026",
+  "facts": [
+   "revenue",
+   "eps",
+   "net-income",
+   "operating-income"
+  ],
+  "failure": null
+ },
+ "IBM": {
+  "url": "https://www.sec.gov/Archives/edgar/data/51143/000005114326000093/ibm-20261021xex991.htm",
+  "form": "8-K",
+  "accepted": "2026-10-21T20:19:17+00:00",
+  "status": "figures",
+  "period": "Q3 2026",
+  "facts": [
+   "revenue"
+  ],
+  "failure": null
+ },
+ "INTC": {
+  "url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000188/q326earningsrelease.htm",
+  "form": "8-K",
+  "accepted": "2026-10-29T20:08:53+00:00",
+  "status": "figures",
+  "period": "Q3 2026",
+  "facts": [
+   "revenue",
+   "eps",
+   "net-income",
+   "operating-income"
+  ],
+  "failure": null
+ },
+ "IONQ": {
+  "url": "https://www.sec.gov/Archives/edgar/data/1824920/000119312526449779/ionq-ex99_1.htm",
+  "form": "8-K",
+  "accepted": "2026-11-05T21:07:04+00:00",
+  "status": "figures",
+  "period": "Q3 2026",
+  "facts": [
+   "revenue",
+   "net-income",
+   "operating-income"
+  ],
+  "failure": null
+ },
+ "IREN": {
+  "url": "https://www.sec.gov/Archives/edgar/data/1878848/000187884826000065/irenreportsq1-fy27result.htm",
+  "form": "8-K",
+  "accepted": "2026-11-05T21:03:11+00:00",
+  "status": "figures",
+  "period": "Q1 FY2027",
+  "facts": [
+   "revenue"
+  ],
+  "failure": null
+ },
+ "KLAC": {
+  "url": "https://www.sec.gov/Archives/edgar/data/319201/000031920126000032/exhibit991earningsrelease0.htm",
+  "form": "8-K",
+  "accepted": "2026-10-28T20:07:50+00:00",
+  "status": "figures",
+  "period": "Q1 FY2027",
+  "facts": [
+   "revenue",
+   "eps",
+   "net-income"
+  ],
+  "failure": null
+ },
+ "LITE": {
+  "url": "https://www.sec.gov/Archives/edgar/data/1633978/000162828026068655/lite_ex991xq1fy27.htm",
+  "form": "8-K",
+  "accepted": "2026-11-02T12:12:55+00:00",
+  "status": "figures",
+  "period": "Q1 FY2027",
+  "facts": [
+   "revenue",
+   "eps",
+   "net-income",
+   "operating-income"
+  ],
+  "failure": null
+ },
+ "LRCX": {
+  "url": "https://www.sec.gov/Archives/edgar/data/707549/000070754926000052/lrcx_exhibitx991xq1x2027.htm",
+  "form": "8-K",
+  "accepted": "2026-10-21T20:13:03+00:00",
+  "status": "figures",
+  "period": "Sep 2026 quarter",
+  "facts": [
+   "revenue",
+   "eps",
+   "net-income",
+   "operating-income"
+  ],
+  "failure": null
+ },
+ "META": {
+  "url": "https://www.sec.gov/Archives/edgar/data/1326801/000162828026066700/meta-09302026xexhibit991.htm",
+  "form": "8-K",
+  "accepted": "2026-10-21T20:03:35+00:00",
+  "status": "figures",
+  "period": "Q3 2026",
+  "facts": [
+   "revenue",
+   "eps",
+   "net-income",
+   "operating-income"
+  ],
+  "failure": null
+ },
+ "MRVL": {
+  "url": "https://www.sec.gov/Archives/edgar/data/1835632/000183563226000022/q227_8kx812026ex-991.htm",
+  "form": "8-K",
+  "accepted": "2026-08-27T20:05:59+00:00",
+  "status": "figures",
+  "period": "Q2 FY2027",
+  "facts": [
+   "revenue",
+   "eps",
+   "net-income",
+   "operating-income"
+  ],
+  "failure": null
+ },
+ "MSFT": {
+  "url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526436122/msft-ex99_1.htm",
+  "form": "8-K",
+  "accepted": "2026-10-28T20:04:44+00:00",
+  "status": "figures",
+  "period": "Q1 FY2027",
+  "facts": [
+   "revenue",
+   "eps",
+   "net-income",
+   "operating-income"
+  ],
+  "failure": null
+ },
+ "MU": {
+  "url": "https://www.sec.gov/Archives/edgar/data/723125/000072312526000018/a2026q4ex991-pressrelease.htm",
+  "form": "8-K",
+  "accepted": "2026-09-30T20:02:22+00:00",
+  "status": "figures",
+  "period": "Q4 FY2026",
+  "facts": [
+   "revenue",
+   "eps",
+   "net-income",
+   "operating-income"
+  ],
+  "failure": null
+ },
+ "NBIS": {
+  "url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926126008/tm2629571d1_ex99-1.htm",
+  "form": "6-K",
+  "accepted": "2026-11-12T14:22:11+00:00",
+  "status": "figures",
+  "period": "Q3 2026",
+  "facts": [
+   "revenue",
+   "net-income",
+   "adjusted-ebitda",
+   "adjusted-net-income"
+  ],
+  "failure": null
+ },
+ "NFLX": {
+  "url": "https://www.sec.gov/Archives/edgar/data/1065280/000106528026000290/ex991_q326.htm",
+  "form": "8-K",
+  "accepted": "2026-10-20T20:01:55+00:00",
+  "status": "figures",
+  "period": "Q3 2026",
+  "facts": [
+   "revenue",
+   "eps",
+   "net-income",
+   "operating-income"
+  ],
+  "failure": null
+ },
+ "NOW": {
+  "url": "https://www.sec.gov/Archives/edgar/data/1373715/000137371526000095/erq3fy262.htm",
+  "form": "8-K/A",
+  "accepted": "2026-10-28T21:10:49+00:00",
+  "status": "figures",
+  "period": "Q3 2026",
+  "facts": [
+   "revenue",
+   "eps",
+   "net-income",
+   "operating-income"
+  ],
+  "failure": null
+ },
+ "NVDA": {
+  "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000088/q3fy27pr.htm",
+  "form": "8-K",
+  "accepted": "2026-11-17T21:20:51+00:00",
+  "status": "figures",
+  "period": "Q3 FY2027",
+  "facts": [
+   "revenue",
+   "gross-margin",
+   "eps",
+   "adjusted-eps",
+   "net-income",
+   "operating-income",
+   "guidance-revenue"
+  ],
+  "failure": null
+ },
+ "ORCL": {
+  "url": "https://www.sec.gov/Archives/edgar/data/1341439/000119312526387905/orcl-ex99_1.htm",
+  "form": "8-K",
+  "accepted": "2026-09-10T20:16:50+00:00",
+  "status": "figures",
+  "period": "Q1 FY2027",
+  "facts": [
+   "revenue",
+   "eps",
+   "net-income",
+   "operating-income"
+  ],
+  "failure": null
+ },
+ "PANW": {
+  "url": "https://www.sec.gov/Archives/edgar/data/1327567/000132756726000030/ex991q127earningsrelease.htm",
+  "form": "8-K",
+  "accepted": "2026-11-18T21:37:04+00:00",
+  "status": "figures",
+  "period": "Q1 FY2027",
+  "facts": [
+   "revenue",
+   "eps",
+   "net-income",
+   "operating-income"
+  ],
+  "failure": null
+ },
+ "PLTR": {
+  "url": "https://www.sec.gov/Archives/edgar/data/1321655/000132165526000045/a2026q3ex991pressrelease.htm",
+  "form": "8-K",
+  "accepted": "2026-11-02T21:06:48+00:00",
+  "status": "figures",
+  "period": "Q3 2026",
+  "facts": [
+   "revenue",
+   "eps",
+   "net-income",
+   "operating-income"
+  ],
+  "failure": null
+ },
+ "QCOM": {
+  "url": "https://www.sec.gov/Archives/edgar/data/804328/000080432826000127/qcom092726erex991.htm",
+  "form": "8-K",
+  "accepted": "2026-11-04T21:03:36+00:00",
+  "status": "figures",
+  "period": "Q4 FY2026",
+  "facts": [
+   "revenue",
+   "eps",
+   "adjusted-eps",
+   "net-income",
+   "operating-income"
+  ],
+  "failure": null
+ },
+ "SKHY": {
+  "url": "https://www.sec.gov/Archives/edgar/data/2120882/000119312526434994/d162547d6k.htm",
+  "form": "6-K",
+  "accepted": "2026-10-28T10:01:57+00:00",
+  "status": "figures",
+  "period": "Q3 2026",
+  "facts": [
+   "revenue",
+   "net-income",
+   "operating-income"
+  ],
+  "failure": null
+ },
+ "SNDK": {
+  "url": "https://www.sec.gov/Archives/edgar/data/2023554/000162828026068243/sndkq1-27ex991xpressrelease.htm",
+  "form": "8-K",
+  "accepted": "2026-10-29T20:13:53+00:00",
+  "status": "figures",
+  "period": "Q1 FY2027",
+  "facts": [
+   "revenue",
+   "eps",
+   "net-income",
+   "operating-income"
+  ],
+  "failure": null
+ },
+ "SNOW": {
+  "url": "https://www.sec.gov/Archives/edgar/data/1640147/000164014726000033/fy2027q2earnings.htm",
+  "form": "8-K",
+  "accepted": "2026-09-02T20:08:29+00:00",
+  "status": "figures",
+  "period": "Q2 FY2027",
+  "facts": [
+   "revenue",
+   "eps",
+   "net-income",
+   "operating-income"
+  ],
+  "failure": null
+ },
+ "SOFI": {
+  "url": "https://www.sec.gov/Archives/edgar/data/1818874/000181887426000065/a2026q3earningsrelease.htm",
+  "form": "8-K",
+  "accepted": "2026-10-27T11:02:59+00:00",
+  "status": "figures",
+  "period": "Q3 2026",
+  "facts": [
+   "revenue",
+   "eps",
+   "net-income"
+  ],
+  "failure": null
+ },
+ "STX": {
+  "url": "https://www.sec.gov/Archives/edgar/data/1137789/000113778926000300/stxq12027pressreleasefinan.htm",
+  "form": "8-K",
+  "accepted": "2026-10-27T20:12:44+00:00",
+  "status": "figures",
+  "period": "Q1 FY2027",
+  "facts": [
+   "revenue",
+   "eps",
+   "net-income",
+   "operating-income"
+  ],
+  "failure": null
+ },
+ "TSLA": {
+  "url": "https://www.sec.gov/Archives/edgar/data/1318605/000162828026066738/exhibit9914.htm",
+  "form": "8-K",
+  "accepted": "2026-10-21T20:41:42+00:00",
+  "status": "figures",
+  "period": "Q3 2026",
+  "facts": [
+   "net-income",
+   "operating-income"
+  ],
+  "failure": null
+ },
+ "TSM": {
+  "url": "https://www.sec.gov/Archives/edgar/data/1046179/000104617926000726/a3q26e_withguidancexfinal.htm",
+  "form": "6-K",
+  "accepted": "2026-10-15T10:40:56+00:00",
+  "status": "figures",
+  "period": "Q3 2026",
+  "facts": [
+   "revenue",
+   "gross-margin",
+   "eps",
+   "net-income",
+   "operating-income",
+   "guidance-revenue"
+  ],
+  "failure": null
+ },
+ "VRT": {
+  "url": "https://www.sec.gov/Archives/edgar/data/1674101/000162828026067707/q32026exhibit991vrt10282026.htm",
+  "form": "8-K",
+  "accepted": "2026-10-28T10:02:00+00:00",
+  "status": "figures",
+  "period": "Q3 2026",
+  "facts": [
+   "revenue",
+   "eps",
+   "net-income",
+   "operating-income"
+  ],
+  "failure": null
+ },
+ "VST": {
+  "url": "https://www.sec.gov/Archives/edgar/data/1692819/000169281926000023/vistra-20260930xearningsre.htm",
+  "form": "8-K",
+  "accepted": "2026-11-06T12:01:01+00:00",
+  "status": "figures",
+  "period": "Q3 2026",
+  "facts": [
+   "net-income"
+  ],
+  "failure": null
+ }
+}

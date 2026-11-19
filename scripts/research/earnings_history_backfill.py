@@ -36,7 +36,6 @@ USER_AGENT = os.environ.get('BACKFILL_USER_AGENT', 'research-backfill admin@exam
 # A filing the parser could not read is listed only when it is a quarter's results release: an 8-K under item 2.02 whose
 # exhibit (or, without one, its cover) names the quarter's results, or a 6-K whose own first lines do. Not a 6-K share report,
 # not Tesla's deliveries 8-K (Oct 2), not Marvell's merger announcement with preliminary revenue (Nov 2).
-RESULTS_HEAD, NOT_RESULTS_HEAD = highlight_sentences.RESULTS_HEAD, highlight_sentences.NOT_RESULTS_HEAD
 SAME_EVENT_SECONDS = 36 * 3600
 
 
@@ -112,14 +111,31 @@ def read_filing(client, ticker, cik, filing):
     raise ValueError('sec-exhibit-not-found' if not evidence else 'sec-exhibit-unreadable')
 
 
+def read_figures(ticker, url, text):
+    """(parsed, None) when the company's parser reads figures the site shows, else (None, failure code). The same reading as the live
+    flash (issuer_result_flash.parse_with_sentences) and the same display floor as the site."""
+    profile = flash.PROFILES.get(ticker)
+    parsed, code = None, None
+    if profile is None:
+        return None, 'no-parser'
+    try:
+        if profile.get('sentences-only'):
+            code = 'no-table-parser'
+        parsed = flash.parse_with_sentences(ticker, text, url)
+    except Exception as exc:  # noqa: BLE001
+        return None, failure_code(exc) if not profile.get('sentences-only') else 'no-table-parser/' + failure_code(exc)
+    floor = 1 if parsed.get('method') == highlight_sentences.METHOD else market_results.MIN_DISPLAY_FACTS
+    if len([f for f in parsed['facts'] if not f[0].startswith('guidance-')]) < floor:
+        return None, 'below-display-floor'  # the site shows no result with fewer figures (owner, Nov 12)
+    return parsed, code
+
+
 def is_results(filing, url, text):
     head = flash.clean(text)[:800]
-    if NOT_RESULTS_HEAD.search(head):
-        return False
     if filing['form'].startswith('8-K') and url.endswith('/' + filing['primary']):
-        # no readable exhibit (Constellation's EX-99.1 sits in its co-registrant's directory): the 8-K's own item 2.02 text says so
+        # no readable exhibit: the 8-K's own item 2.02 text says so
         return bool(re.search(r'(?i)Item 2\.02.{0,400}\bresults\b', flash.clean(text)))
-    return bool(RESULTS_HEAD.search(head))
+    return highlight_sentences.results_head(head)
 
 
 def backfill(start, end, tickers=None, client=None, log=print):
@@ -153,19 +169,7 @@ def backfill(start, end, tickers=None, client=None, log=print):
                 continue
             observed = filing['accepted']
             profile = flash.PROFILES.get(ticker)
-            parsed, code = None, None
-            if profile is None:
-                code = 'no-parser'
-            else:
-                try:
-                    if profile.get('sentences-only'):
-                        code = 'no-table-parser'
-                    parsed = flash.parse_with_sentences(ticker, text, url)
-                except Exception as exc:  # noqa: BLE001
-                    code = failure_code(exc) if not profile.get('sentences-only') else 'no-table-parser/' + failure_code(exc)
-            floor = 1 if parsed and parsed.get('method') == highlight_sentences.METHOD else market_results.MIN_DISPLAY_FACTS
-            if parsed and len([f for f in parsed['facts'] if not f[0].startswith('guidance-')]) < floor:
-                parsed, code = None, 'below-display-floor'  # the site shows no result with fewer figures (owner, Nov 12)
+            parsed, code = read_figures(ticker, url, text)
             if parsed is None and not is_results(filing, url, text):
                 log(f'{ticker} {filing["filed"]} {filing["form"]} skipped: not a results release ({code})')
                 skipped = skipped or 'not-a-results-release'

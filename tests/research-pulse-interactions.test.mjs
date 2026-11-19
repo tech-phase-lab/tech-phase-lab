@@ -21,15 +21,15 @@ runtime.setTimeout=()=>0;runtime.clearTimeout=()=>{};
 globalThis.__pulseInteractionRuntime=runtime;
 const require=createRequire(import.meta.url);
 let source=await readFile(new URL('../app/research/research-pulse.tsx',import.meta.url),'utf8');
-source=source.replace('import { useEffect, useRef, useState, useSyncExternalStore } from "react";',
-  'const runtime=globalThis.__pulseInteractionRuntime; const {useEffect,useRef,useState,useSyncExternalStore,window,document,setInterval,clearInterval,setTimeout,clearTimeout}=runtime;');
+source=source.replace('import { useEffect, useLayoutEffect, useRef, useState, useSyncExternalStore } from "react";',
+  'const runtime=globalThis.__pulseInteractionRuntime; const {useEffect,useRef,useState,useSyncExternalStore,window,document,setInterval,clearInterval,setTimeout,clearTimeout}=runtime; const useLayoutEffect=useEffect;');
 source=source.replace('import { newsSnapshot, serverNewsSnapshot, subscribeNews } from "@/lib/research/news-snapshot";','const newsSnapshot=()=>runtime.feed;const serverNewsSnapshot=newsSnapshot;const subscribeNews=()=>()=>{};');
 source=source.replace('import { WATCH_TICKERS } from "@/lib/research/flash-rows";','const WATCH_TICKERS = new Set(["NVDA"]);');
 for(const name of ['news-pulse-items','news-time','news-band','company-wire','wire-store','news-startup'])source=source.replace(`"@/lib/research/${name}"`,JSON.stringify(new URL(`../lib/research/${name}.ts`,import.meta.url).href));
 source=source.replace('const [wireSettled, setWireSettled] = useState(false);','const [wireSettled, setWireSettled] = useState(true);').replace('const [gaveUp, setGaveUp] = useState(false);','const [gaveUp, setGaveUp] = useState(true);');
 // The band carries the Stock News API stories only (owner, Nov 15): the harness hands the component its company-wire rows directly.
 source=source.replace('const [wire, setWire] = useState<Record<string, CompanyWireItem[]>>({});','const [wire, setWire] = useState<Record<string, CompanyWireItem[]>>(runtime.wire ?? {});');
-source=source.replace('import styles from "./research-pulse.module.css";','const styles={pulse:"pulse",strip:"strip",item:"item",in:"in",out:"out",live:"live",hd:"hd",sym:"sym",tm:"tm",wave:"wave",flash:"flash",slot:"slot"};');
+source=source.replace('import styles from "./research-pulse.module.css";','const styles={pulse:"pulse",strip:"strip",item:"item",in:"in",out:"out",live:"live",hd:"hd",sym:"sym",tm:"tm",wave:"wave",flash:"flash",slot:"slot",sizer:"sizer"};');
 const compiled=ts.transpileModule(source,{compilerOptions:{jsx:ts.JsxEmit.ReactJSX,module:ts.ModuleKind.ESNext}}).outputText.replace('"react/jsx-runtime"',JSON.stringify(pathToFileURL(require.resolve('react/jsx-runtime')).href));
 const {default:ResearchPulse}=await import('data:text/javascript;base64,'+Buffer.from(compiled).toString('base64'));
 function context(){return {cursor:0,slots:[],effects:[]};}
@@ -76,4 +76,45 @@ test('a story with no short headline is skipped without stopping the band',()=>{
   const tree=render(owner,{lang:'ja'});
   assert.equal(shown(tree).band,'NVDA、増配を発表');
   assert.equal(runtime.timers.size,0,'one story: nothing to rotate to');
+});
+
+test('a fresh open shows the first company-headline answer at once, without waiting for later rounds (Nov 19)',async()=>{
+  reset();const owner=context();
+  const realFetch=globalThis.fetch,realNow=performance.now;let clock=0;
+  const pending=[];
+  globalThis.fetch=()=>new Promise(resolve=>pending.push(resolve));
+  performance.now=()=>clock;
+  const answer=items=>({ok:true,json:async()=>({ok:true,items})});
+  const settle=()=>new Promise(resolve=>setImmediate(resolve));
+  try {
+    runtime.feed=null;runtime.wire=undefined;
+    let tree=render(owner,{lang:'ja'});await settle();
+    assert.equal(pending.length,1,'the page asks for the company headlines once');
+    // The news answer arrives first: it does not ask again for what is already on its way (no second answer to jump to).
+    runtime.feed=feedAt;tree=render(owner,{lang:'ja'});await settle();
+    assert.equal(pending.length,1);
+    pending[0](answer({NVDA:[story('a','2026-10-03T23:15:00Z','NVDA、新製品を発表')]}));await settle();
+    tree=render(owner,{lang:'ja'});
+    assert.equal(shown(tree).band,'NVDA、新製品を発表','the answer still on its way is used, not thrown away');
+    // Later refreshes ask as before; an older answer never replaces a newer one.
+    clock=10_000;runtime.feed={...feedAt,checkedAt:feedAt.checkedAt+10_000};render(owner,{lang:'ja'});
+    await settle();
+    clock=20_000;runtime.feed={...feedAt,checkedAt:feedAt.checkedAt+20_000};render(owner,{lang:'ja'});await settle();
+    assert.equal(pending.length,3);
+    pending[2](answer({NVDA:[story('c','2026-10-03T23:45:00Z','NVDA、提携を発表')]}));await settle();
+    pending[1](answer({NVDA:[story('b','2026-10-03T23:30:00Z','NVDA、増配を発表')]}));await settle();
+    tree=render(owner,{lang:'ja'});
+    assert.equal(shown(tree).band,'NVDA、提携を発表');
+  } finally { globalThis.fetch=realFetch;performance.now=realNow;runtime.wire=undefined; }
+});
+
+test('without a news answer the band opens on the company headlines alone',async()=>{
+  reset();const owner=context();
+  const realFetch=globalThis.fetch;
+  globalThis.fetch=async()=>({ok:true,json:async()=>({ok:true,items:{NVDA:[story('a',new Date(Date.now()-60_000).toISOString(),'NVDA、新製品を発表')]}})});
+  try {
+    runtime.feed=null;runtime.wire=undefined;
+    render(owner,{lang:'ja'});await new Promise(resolve=>setImmediate(resolve));
+    assert.equal(shown(render(owner,{lang:'ja'})).band,'NVDA、新製品を発表');
+  } finally { globalThis.fetch=realFetch; }
 });

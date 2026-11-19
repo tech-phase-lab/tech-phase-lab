@@ -30,6 +30,8 @@ const HOME_STORIES = 25;
 let snapshot: { data: GeneralNewsFeed; at: string; time: number } | null = null;
 const recent = () => snapshot && Date.now() - snapshot.time < 120_000 ? snapshot : null;
 let lastFailedAt = 0;
+/** The list's first check takes over the request warmNews already started instead of sending a second one alongside it (Nov 19). */
+let warming: Promise<GeneralNewsFeed> | null = null;
 function initialSnapshot(initialNews?: InitialNewsSnapshot | null) {
   const cached = recent();
   if (!initialNews || initialNews.checkedAt <= lastFailedAt || Date.now() - initialNews.checkedAt >= 120_000
@@ -40,21 +42,22 @@ function initialSnapshot(initialNews?: InitialNewsSnapshot | null) {
 /** Starts the feed as soon as the home page is on screen, so the top strip has its headlines at once instead of waiting for the news list below
  * (which is drawn a moment later). The list then adopts this snapshot rather than asking again (owner, Oct 29: the strip appeared empty first). */
 export function warmNews() {
-  if (typeof window === "undefined" || recent()) return;
-  void (async () => {
-    try {
-      const started = takeNewsStartup();
-      let payload: GeneralNewsFeed;
-      if (started) { const result = await started; if (result.error) throw new Error("unavailable"); payload = availableNewsPayload(result.data); }
-      else {
-        const response = await fetch("/api/research/news", { cache: "no-store", signal: AbortSignal.timeout(10_000) });
-        if (!response.ok) throw new Error("unavailable");
-        payload = availableNewsPayload(await response.json());
-      }
-      snapshot = { data: payload, at: new Date().toISOString(), time: Date.now() };
-      publishNews(payload);
-    } catch { /* the list asks again when it appears */ }
+  if (typeof window === "undefined" || recent() || warming) return;
+  const request = (async () => {
+    const started = takeNewsStartup();
+    let payload: GeneralNewsFeed;
+    if (started) { const result = await started; if (result.error) throw new Error("unavailable"); payload = availableNewsPayload(result.data); }
+    else {
+      const response = await fetch("/api/research/news", { cache: "no-store", signal: AbortSignal.timeout(10_000) });
+      if (!response.ok) throw new Error("unavailable");
+      payload = availableNewsPayload(await response.json());
+    }
+    snapshot = { data: payload, at: new Date().toISOString(), time: Date.now() };
+    publishNews(payload);
+    return payload;
   })();
+  warming = request;
+  request.catch(() => { /* the list asks again when it appears */ }).finally(() => { if (warming === request) warming = null; });
 }
 
 export default function GeneralNewsPanel({ lang, officialOnly = false, generalOnly = false, stockNews = false, initialNews }: { lang: Language; officialOnly?: boolean; generalOnly?: boolean; /** The home list: Stock News API stories (owner, Nov 15). */ stockNews?: boolean; initialNews?: InitialNewsSnapshot | null }) {
@@ -99,6 +102,7 @@ export default function GeneralNewsPanel({ lang, officialOnly = false, generalOn
     const poller = createNewsPoller({
       push: true,
       load: async signal => {
+        if (warming) { try { return await warming; } catch { /* asks itself below, as before */ } }
         const started = takeNewsStartup();
         if (started) {
           const result = await started;

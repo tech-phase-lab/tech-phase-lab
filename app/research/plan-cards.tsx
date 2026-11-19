@@ -5,8 +5,8 @@ import ProOfferCard from "./pro-offer-card";
 import styles from "./plan-cards.module.css";
 import { priceFont } from "./price-font";
 
-/** 特定商取引法に基づく表記 for both Tech Phase Research and RESOLUTE (app/resolute/legal/commerce). */
-export const TOKUSHOHO_HREF = "/resolute/legal/commerce";
+/** 特定商取引法に基づく表記 for both Tech Phase Research and RESOLUTE (app/commerce). */
+export const TOKUSHOHO_HREF = "/commerce";
 
 /** The plan introduction cards (owner's design, Oct 27): one line per feature, "name｜description", with a small square,
  * grouped under small headings. Nothing here promises results, and stock prices and charts are not called "real-time". */

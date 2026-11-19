@@ -51,6 +51,10 @@ We use the services of external businesses for sign-in (Clerk), payment (PayPal)
 
 ## 10. Operator and Contact
 
-Operator: RIZEL (リゼル) (we will answer without delay if you ask for the Operator's name and address.)
+Operator: RIZEL
+
+Address: Park Front Shinjuku Room 202, 2-8-15 Shinjuku, Shinjuku-ku, Tokyo 160-0022, Japan
+
+We will give the Operator's name on request.
 
 Contact for inquiries and complaints about the handling of personal information: support@techphase.app

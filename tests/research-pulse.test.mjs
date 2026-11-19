@@ -54,13 +54,15 @@ test('a story without a short headline is left out and the band moves on; the sa
   assert.equal(bandTitle(['あ'.repeat(23)+'い'],true).length,24);
   assert.equal(bandTitle(['あ'.repeat(24)+'い'],true),'');
   assert.equal(bandTitle(['米10年債利回り、再び急上昇。'],true),'米10年債利回り、再び急上昇','no final 。');
+  assert.equal(bandTitle(['エヌビディア、データセンター売上が…','エヌビディア決算が予想超え'],true),'エヌビディア決算が予想超え','a headline cut with … is skipped');
+  assert.equal(bandTitle(['Nvidia beats on data center...'],false),'','a headline cut with ... is skipped');
 });
 
 test('stock symbols are bold monospace parts of the headline; other capitals are not',()=>{
   assert.deepEqual(bandParts('APH、AI需要でMUも上昇',['APH','MU']).filter(part=>part.symbol).map(part=>part.text),['APH','MU']);
 });
 
-test('the headline starts at 14.5px, shrinks 0.5px at a time to 12.5px, and only then is cut',()=>{
+test('the headline starts at 14.5px, shrinks 0.5px at a time to 12.5px, and only then wraps',()=>{
   assert.equal(fitFontSize(()=>true),14.5);
   assert.equal(fitFontSize(size=>size<=13.5),13.5);
   assert.equal(fitFontSize(size=>size<=12.5),12.5);
@@ -69,9 +71,9 @@ test('the headline starts at 14.5px, shrinks 0.5px at a time to 12.5px, and only
 
 test('the band follows the owner design in its stylesheet',async()=>{
   const css=await readFile(new URL('../app/research/research-pulse.module.css',import.meta.url),'utf8');
-  assert.match(css,/\.strip\{[^}]*height:56px/);
+  assert.match(css,/\.strip\{[^}]*min-height:56px/);
   assert.match(css,/\.live\{[^}]*background:#8ef0c4/);
-  assert.match(css,/\.hd\{[^}]*font-size:14\.5px[^}]*white-space:nowrap[^}]*text-overflow:ellipsis/);
+  assert.match(css,/\.hd\{[^}]*font-size:14\.5px[^}]*white-space:normal/);
   assert.match(css,/\.tm\{[^}]*bottom:2px[^}]*10\.5px/);
   assert.match(css,/\.in\{animation:rise \.45s cubic-bezier\(\.3,\.7,\.2,1\)/);
   assert.match(css,/translateY\(16px\)/);
@@ -84,7 +86,7 @@ test('the band follows the owner design in its stylesheet',async()=>{
 test("the band looks through a wide pool, so long company headlines at the top cannot empty it (Nov 5)", async () => {
   const source = await readFile(new URL("../app/research/research-pulse.tsx", import.meta.url), "utf8");
   assert.match(source, /const PULSE_POOL = 400/);
-  assert.match(source, /homePulseItems\(feed, lang, snapshot\.checkedAt, wire, PULSE_POOL, pool => bandItems\(pool, ja, 1, wide\)\.length > 0\)/);
+  assert.match(source, /homePulseItems\(feed, lang, now, wire, PULSE_POOL, pool => bandItems\(pool, ja, 1, wide\)\.length > 0\)/);
   assert.match(source, /writePulseCache\(lang, bandItems\(live, ja, 8, wide\)\)/);
 });
 
@@ -106,4 +108,19 @@ test('on a wide screen the band prefers the fuller headline; on a phone it keeps
   assert.equal(bandItems(items, true, 5, false)[0].band, 'エヌビディアは強い四半期期待');
   assert.equal(bandItems(items, true, 5, true)[0].band, full);
   assert.equal(bandItems([{ id: 'b', title: full + full, headlines: ['短い見出し'] }], true, 5, true)[0].band, '短い見出し');
+});
+
+// Owner, Nov 18: 「LIVE SSTI トランサムがサウンドシンキング買収完…」 — the band must never cut a headline with "…". One that does not fit on
+// one line even at 12.5px wraps onto more lines, and the band holds the height of its longest headline so rotating does not move the page.
+test('the band never cuts a headline with an ellipsis: a long one wraps, and the band keeps one height while it rotates', async () => {
+  const css = await readFile(new URL('../app/research/research-pulse.module.css', import.meta.url), 'utf8');
+  const source = await readFile(new URL('../app/research/research-pulse.tsx', import.meta.url), 'utf8');
+  assert.doesNotMatch(css, /text-overflow\s*:\s*ellipsis/);
+  assert.doesNotMatch(css.match(/\.hd\{[^}]*\}/)[0], /nowrap|overflow:hidden/, 'the headline box itself neither stops at one line nor hides text');
+  assert.match(css, /\.strip\{[^}]*display:grid;grid-template-columns:minmax\(0,1fr\);min-height:56px/, "one column the width of the band, so a long line cannot widen it");
+  assert.match(css, /\.item\{[^}]*grid-area:1\/1[^}]*min-height:56px/);
+  assert.match(css, /\.sizer\{visibility:hidden/);
+  assert.match(source, /items\.map\(entry => <Line key=\{`size-\$\{entry\.id\}`\} line=\{entry\} ja=\{ja\} sizer \/>\)/, 'a hidden copy of every headline in rotation sets the height');
+  assert.match(source, /target\.style\.whiteSpace = "nowrap";[^\n]*\n[^\n]*fitFontSize[^\n]*\n\s*target\.style\.whiteSpace = "";/, 'measured on one line, then laid out normally (wrapping)');
+  assert.doesNotMatch(source, /…/, 'no ellipsis character in the band');
 });

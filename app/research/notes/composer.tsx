@@ -40,8 +40,8 @@ export default function NoteComposer({ onPublished }: { onPublished: () => void 
     } finally { inFlight.current = false; setBusy(false); }
   }
   return <form id="note-composer" className={styles.composer} onSubmit={event => void publish(event)} aria-label="ひとりごとを投稿" aria-busy={busy}>
-    <DeskTextEditor label="ひとりごとの本文" value={body} onChange={setBody} disabled={busy} media onMediaBusyChange={setMediaBusy}
-      actions={<button type="submit" className={styles.submit} disabled={busy || mediaBusy || !body.trim()}>{busy ? "投稿中…" : "投稿"}</button>} />
+    <div className={styles.editorSlot}><DeskTextEditor label="ひとりごとの本文" value={body} onChange={setBody} disabled={busy} media onMediaBusyChange={setMediaBusy}
+      actions={<button type="submit" className={styles.submit} disabled={busy || mediaBusy || !body.trim()}>{busy ? "投稿中…" : "投稿"}</button>} /></div>
     {message && <p role="status">{message}</p>}
   </form>;
 }
