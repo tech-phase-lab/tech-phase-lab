@@ -6,10 +6,13 @@ const choices = [{ key: "like", emoji: "👍", ja: "いいね", en: "Like" }, { 
 const empty = { count: 0, selected: false };
 export type Reactions = { counts: ReactionCounts | null; error: boolean; react: (key: string) => void };
 
-/** Loads one note's reactions and keeps the toggle (reactionState) for the face button and the badge. */
-export function useReactions(postId: string, enabled: boolean): Reactions {
-  const [counts, setCounts] = useState<ReactionCounts | null>(null), [error, setError] = useState(false);
+/** Loads one note's reactions and keeps the toggle (reactionState) for the face button and the badge. `preloaded`: the counts the page
+ * already read with the notes (server or page load), so the badge is there on the first paint and no second request is made. */
+export function useReactions(postId: string, enabled: boolean, preloaded?: ReactionCounts | null): Reactions {
+  const [counts, setCounts] = useState<ReactionCounts | null>(preloaded ?? null), [error, setError] = useState(false);
   const control = useRef<ReturnType<typeof reactionState> | null>(null);
+  // Used once, for the first load: a later run (or a page refresh) asks the server instead of restoring older counts.
+  const seed = useRef(preloaded ?? null);
   useEffect(() => {
     if (!enabled) return;
     const controller = new AbortController();
@@ -18,7 +21,8 @@ export function useReactions(postId: string, enabled: boolean): Reactions {
       const data = await response.json(); if (!response.ok || !data.ok) throw Error();
       return Object.fromEntries(choices.map(choice => [choice.key, data.reactions[choice.key] ?? empty])) as ReactionCounts;
     }
-    request().then(data => {
+    const start = seed.current; seed.current = null;
+    (start ? Promise.resolve(start) : request()).then(data => {
       if (controller.signal.aborted) return;
       control.current = reactionState(data, value => { if (!controller.signal.aborted) setCounts(value); }, request, () => { if (!controller.signal.aborted) setError(true); });
       setCounts(data);

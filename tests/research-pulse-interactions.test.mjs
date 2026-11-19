@@ -21,15 +21,15 @@ runtime.setTimeout=()=>0;runtime.clearTimeout=()=>{};
 globalThis.__pulseInteractionRuntime=runtime;
 const require=createRequire(import.meta.url);
 let source=await readFile(new URL('../app/research/research-pulse.tsx',import.meta.url),'utf8');
-source=source.replace('import { useEffect, useRef, useState, useSyncExternalStore } from "react";',
-  'const runtime=globalThis.__pulseInteractionRuntime; const {useEffect,useRef,useState,useSyncExternalStore,window,document,setInterval,clearInterval,setTimeout,clearTimeout}=runtime;');
+source=source.replace('import { useEffect, useLayoutEffect, useRef, useState, useSyncExternalStore } from "react";',
+  'const runtime=globalThis.__pulseInteractionRuntime; const {useEffect,useRef,useState,useSyncExternalStore,window,document,setInterval,clearInterval,setTimeout,clearTimeout}=runtime; const useLayoutEffect=useEffect;');
 source=source.replace('import { newsSnapshot, serverNewsSnapshot, subscribeNews } from "@/lib/research/news-snapshot";','const newsSnapshot=()=>runtime.feed;const serverNewsSnapshot=newsSnapshot;const subscribeNews=()=>()=>{};');
 source=source.replace('import { WATCH_TICKERS } from "@/lib/research/flash-rows";','const WATCH_TICKERS = new Set(["NVDA"]);');
 for(const name of ['news-pulse-items','news-time','news-band','company-wire','wire-store','news-startup'])source=source.replace(`"@/lib/research/${name}"`,JSON.stringify(new URL(`../lib/research/${name}.ts`,import.meta.url).href));
 source=source.replace('const [wireSettled, setWireSettled] = useState(false);','const [wireSettled, setWireSettled] = useState(true);').replace('const [gaveUp, setGaveUp] = useState(false);','const [gaveUp, setGaveUp] = useState(true);');
 // The band carries the Stock News API stories only (owner, Nov 15): the harness hands the component its company-wire rows directly.
 source=source.replace('const [wire, setWire] = useState<Record<string, CompanyWireItem[]>>({});','const [wire, setWire] = useState<Record<string, CompanyWireItem[]>>(runtime.wire ?? {});');
-source=source.replace('import styles from "./research-pulse.module.css";','const styles={pulse:"pulse",strip:"strip",item:"item",in:"in",out:"out",live:"live",hd:"hd",sym:"sym",tm:"tm",wave:"wave",flash:"flash",slot:"slot"};');
+source=source.replace('import styles from "./research-pulse.module.css";','const styles={pulse:"pulse",strip:"strip",item:"item",in:"in",out:"out",live:"live",hd:"hd",sym:"sym",tm:"tm",wave:"wave",flash:"flash",slot:"slot",sizer:"sizer"};');
 const compiled=ts.transpileModule(source,{compilerOptions:{jsx:ts.JsxEmit.ReactJSX,module:ts.ModuleKind.ESNext}}).outputText.replace('"react/jsx-runtime"',JSON.stringify(pathToFileURL(require.resolve('react/jsx-runtime')).href));
 const {default:ResearchPulse}=await import('data:text/javascript;base64,'+Buffer.from(compiled).toString('base64'));
 function context(){return {cursor:0,slots:[],effects:[]};}

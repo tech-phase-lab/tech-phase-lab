@@ -4,10 +4,12 @@ import Link from "next/link";
 import type { GroupFilter } from "@/lib/research/theme-definitions";
 import { PERIODS, type Period, type StockReturns } from "@/lib/research/theme-ranking";
 import { formatDisplay } from "@/lib/research/display-time";
+import { THEME_REQUEST_MS, fetchThemeData } from "@/lib/research/theme-fetch";
+import { useIdentityRefresh } from "../identity-provider";
 import styles from "./themes.module.css";
 
 export type ThemeData = { stocks: StockReturns[]; asOf: string; fetchedAt: number; marketOpen: boolean; validUntil: number };
-export type DataState = "loading" | "ready" | "not-connected" | "error";
+export type DataState = "loading" | "ready" | "not-connected" | "error" | "sign-in" | "pro-required";
 
 /** "−" (a true minus) and a fixed one decimal, as in the design (+6.8%, −1.2%). */
 /** What the screen shows is the value rounded to one decimal, so a tiny fall such as −0.04 reads (and counts) as 0.0%, never "−0.0%". */
@@ -35,35 +37,53 @@ export function usePeriod(): [Period, (period: Period) => void] {
   return [period, choose];
 }
 
-/** One genre's (or all genres') per-stock returns, from the server. `plan` gates the request: only PRO asks. */
+/** One genre's (or all genres') per-stock returns, from the server. `plan` gates the request: only PRO asks.
+ * Every request ends in data, "not connected", a refusal or an error, each with something on screen: it never stays on loading
+ * (owner, Nov 18). A refusal used to leave "loading" up and wait for the membership display to change, which it often did not
+ * (stuck), or which flipped back to PRO and asked again (an endless loop). `retry` asks again. */
 export function useThemeData(group: GroupFilter, plan: string | null, enabled = true) {
-  const [state, setState] = useState<DataState>("loading");
-  const [data, setData] = useState<ThemeData | null>(null);
+  const [attempt, setAttempt] = useState(0);
+  // The answer for one genre and attempt; anything else (another genre, a retry, not PRO) reads as loading until its own answer comes.
+  const key = `${group}|${attempt}`;
+  const [result, setResult] = useState<{ key: string; state: DataState; data: ThemeData | null } | null>(null);
+  const refreshIdentity = useIdentityRefresh();
+  // Held in a ref: the session helper changes identity while the sign-in SDK starts, which must not restart a request in flight.
+  const refresh = useRef(refreshIdentity);
+  useEffect(() => { refresh.current = refreshIdentity; }, [refreshIdentity]);
+  // A refusal asks the membership display to check again only once per visit (or per retry), so a refusal that persists cannot loop.
+  const announced = useRef(false);
+  const retry = useCallback(() => { announced.current = false; setAttempt(value => value + 1); }, []);
   useEffect(() => {
-    if (plan !== "pro" || !enabled) { setData(null); return; }
+    if (plan !== "pro" || !enabled) return;
     const controller = new AbortController();
-    setState("loading");
-    (async () => {
-      try {
-        const response = await fetch(`/api/research/themes?group=${group}`, { cache: "no-store", signal: AbortSignal.any([controller.signal, AbortSignal.timeout(55_000)]) });
-        const body = await response.json();
-        if (controller.signal.aborted) return;
-        if (response.status === 401 || response.status === 403) { setData(null); window.dispatchEvent(new Event("tech-phase:membership-changed")); return; }
-        if (body?.error === "not-connected") { setState("not-connected"); return; }
-        if (!response.ok || !body.ok || !Array.isArray(body.stocks)) throw Error();
-        setData({ stocks: body.stocks, asOf: body.asOf, fetchedAt: Number(body.fetchedAt) || 0, marketOpen: body.marketOpen === true, validUntil: body.validUntil });
-        setState("ready");
-      } catch { if (!controller.signal.aborted) setState("error"); }
-    })();
-    return () => controller.abort();
-  }, [plan, group, enabled]);
-  // The access window can close while the page is open: drop the numbers then.
+    let timedOut = false;
+    const timer = setTimeout(() => { timedOut = true; controller.abort(); }, THEME_REQUEST_MS);
+    fetchThemeData(group, { fetch: (url, init) => fetch(url, init), refresh: force => refresh.current(force), signal: controller.signal }).then(outcome => {
+      if (controller.signal.aborted) return;
+      if (outcome.kind === "ready") { setResult({ key, state: "ready", data: outcome.data }); return; }
+      setResult({ key, state: outcome.kind === "denied" ? outcome.reason : outcome.kind, data: null });
+      if (outcome.kind === "denied" && !announced.current) { announced.current = true; window.dispatchEvent(new Event("tech-phase:membership-changed")); }
+    }, () => { if (timedOut) setResult({ key, state: "error", data: null }); }).finally(() => clearTimeout(timer));
+    return () => { clearTimeout(timer); controller.abort(); };
+  }, [plan, group, enabled, key]);
+  const current = plan === "pro" && enabled && result?.key === key ? result : null;
+  const data = current?.data ?? null;
+  // The access window can close while the page is open: drop the numbers then and ask again (the server decides what is shown next).
   useEffect(() => {
     if (!data?.validUntil) return;
-    const timer = setTimeout(() => setData(null), Math.max(0, Math.min(data.validUntil - Date.now(), 2147483647)));
+    const timer = setTimeout(() => { setResult(null); setAttempt(value => value + 1); }, Math.max(0, Math.min(data.validUntil - Date.now(), 2147483647)));
     return () => clearTimeout(timer);
   }, [data]);
-  return { state, data };
+  return { state: current?.state ?? "loading", data, retry };
+}
+
+/** The existing "could not load" message with a button to ask again, whatever stopped the data (owner, Nov 18: never a dead end). */
+export function DataProblem({ ja, onRetry }: { state: "error" | "sign-in" | "pro-required"; ja: boolean; onRetry: () => void }) {
+  const text = ja ? "データを取得できませんでした。しばらくしてからもう一度お試しください。" : "We couldn't load the data. Please try again in a moment.";
+  return <div role="alert" className={styles.note}>
+    <p className={styles.problemText}>{text}</p>
+    <button type="button" className={styles.retry} onClick={onRetry}>{ja ? "もう一度読み込む" : "Try again"}</button>
+  </div>;
 }
 
 /** Which day the numbers are as of (owner, Nov 11: "no date, so I can't tell when this is"): the last close, with the period it is measured over. */
