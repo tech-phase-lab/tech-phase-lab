@@ -106,7 +106,7 @@ test('first purchase saves PayPal with consent; the renewal is charged once on t
   s.at(RENEWS - 7 * DAY); await s.job();
   assert.equal(s.mails.length, 1);
   assert.equal(s.mails[0].subject, 'RESOLUTE 通知機能の更新のお知らせ'); assert.equal(s.mails[0].to, 'buyer@example.com');
-  assert.equal(s.mails[0].text, '12月16日に、RESOLUTEの通知機能を1年分自動で更新します。\n更新料は5,980円で、ご登録のカードにてお支払いいただきます。\n停止をご希望の方は、更新日の前日までにアカウント画面からお手続きください。');
+  assert.equal(s.mails[0].text, '12月16日に、RESOLUTEの通知機能を1年分自動で更新します。\n更新料は5,980円で、ご登録のPayPalにてお支払いいただきます。\n停止をご希望の方は、更新日の前日までにアカウント画面からお手続きください。');
   assert.equal(s.paypal.charges, 0, 'no charge at notice time');
   // The day before the renewal day (JST): still nothing.
   s.at(renewalDayStart(new Date(RENEWS).toISOString()) - 60000); await s.job(); assert.equal(s.paypal.charges, 0);
@@ -135,7 +135,7 @@ test('PRO membership is read from server records at charge time: member price, w
   assert.equal(order.quote.priceClass, 'pro'); assert.equal(order.state, 'paid');
   // English buyers pay in USD: $39 / PRO $29 (same table as quote()).
   assert.equal(renewalMessage('upcoming_auto', 'en', new Date(RENEWS).toISOString(), '$29').text,
-    'Your RESOLUTE alerts will renew automatically for another year on December 16, 2027. The renewal fee of $29 will be charged to your card on file. To stop the renewal, please do so from your account page before December 16, 2027.');
+    'Your RESOLUTE alerts will renew automatically for another year on December 16, 2027. The renewal fee of $29 will be charged to your PayPal account on file. To stop the renewal, please do so from your account page before December 16, 2027.');
 });
 
 test('a lost answer is retried with the same PayPal-Request-Id; PayPal replays it and nothing is charged twice', async t => {
@@ -272,7 +272,7 @@ test('notices: the owner\'s wording word for word, date and price formats, email
   assert.equal(renewalDate(end, 'ja'), '12月16日'); assert.equal(renewalDate(end, 'en'), 'December 16, 2027');
   assert.equal(renewalDate('2027-12-15T15:00:00Z', 'ja'), '12月16日', 'JST date');
   assert.equal(renewalPrice({ currency: 'JPY', value: '5980' }), '5,980円'); assert.equal(renewalPrice({ currency: 'USD', value: '39.00' }), '$39');
-  assert.deepEqual(renewalMessage('upcoming_auto', 'ja', end, '5,980円'), { subject: 'RESOLUTE 通知機能の更新のお知らせ', text: '12月16日に、RESOLUTEの通知機能を1年分自動で更新します。\n更新料は5,980円で、ご登録のカードにてお支払いいただきます。\n停止をご希望の方は、更新日の前日までにアカウント画面からお手続きください。' });
+  assert.deepEqual(renewalMessage('upcoming_auto', 'ja', end, '5,980円'), { subject: 'RESOLUTE 通知機能の更新のお知らせ', text: '12月16日に、RESOLUTEの通知機能を1年分自動で更新します。\n更新料は5,980円で、ご登録のPayPalにてお支払いいただきます。\n停止をご希望の方は、更新日の前日までにアカウント画面からお手続きください。' });
   assert.deepEqual(renewalMessage('upcoming_manual', 'ja', end), { subject: 'RESOLUTE 通知機能の更新のお知らせ', text: '12月16日でRESOLUTEの通知機能のご利用期間が終わります。続けてご利用の方は、アカウント画面から更新のお手続きをお願いします。' });
   assert.deepEqual(renewalMessage('upcoming_manual', 'en', end), { subject: 'Your RESOLUTE alerts renewal', text: 'Your RESOLUTE alerts end on December 16, 2027. To keep using them, please renew from your account page.' });
   assert.throws(() => renewalMessage('upcoming_auto', 'ja', end));

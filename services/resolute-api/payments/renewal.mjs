@@ -36,9 +36,9 @@ export function renewalMessage(kind, language, periodEnd, price = null) {
   if (kind === 'upcoming_auto') {
     if (!price) throw Error('Renewal price required');
     return en ? { subject: 'Your RESOLUTE alerts renewal',
-      text: `Your RESOLUTE alerts will renew automatically for another year on ${date}. The renewal fee of ${price} will be charged to your card on file. To stop the renewal, please do so from your account page before ${date}.` }
+      text: `Your RESOLUTE alerts will renew automatically for another year on ${date}. The renewal fee of ${price} will be charged to your PayPal account on file. To stop the renewal, please do so from your account page before ${date}.` }
       : { subject: 'RESOLUTE 通知機能の更新のお知らせ',
-      text: `${date}に、RESOLUTEの通知機能を1年分自動で更新します。\n更新料は${price}で、ご登録のカードにてお支払いいただきます。\n停止をご希望の方は、更新日の前日までにアカウント画面からお手続きください。` };
+      text: `${date}に、RESOLUTEの通知機能を1年分自動で更新します。\n更新料は${price}で、ご登録のPayPalにてお支払いいただきます。\n停止をご希望の方は、更新日の前日までにアカウント画面からお手続きください。` };
   }
   if (kind === 'upcoming_manual') {
     return en ? { subject: 'Your RESOLUTE alerts renewal', text: `Your RESOLUTE alerts end on ${date}. To keep using them, please renew from your account page.` }
