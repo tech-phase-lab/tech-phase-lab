@@ -28,19 +28,21 @@ export function prepareComparisonAnalysis(c: Financials, now=Date.now()): Prepar
   const items:PreparedComparisonAnalysis["items"]=[];
   const add=(id:string,kind:"strength"|"weakness",short:Copy,detail:Copy)=>items.push({id,kind,short,detail});
   const q=c.quarterRevenue, prior=c.previousQuarterRevenue;
+  // A foreign filer's half-year or fiscal year (periodMonths) is named as such, not as a quarter.
+  const span=c.periodMonths===6 ? {ja:"半期",en:"Half-year"} : c.periodMonths===12 ? {ja:"年度",en:"Annual"} : {ja:"四半期",en:"Quarterly"};
   if(valid("growth") && prior && c.quarterRevenueGrowth!==null && c.quarterRevenueGrowth!==0) {
     const growth=c.quarterRevenueGrowth, pct=`${growth>0?"+":""}${growth.toFixed(1)}%`;
     add("revenue-growth",growth>0?"strength":"weakness",
       copy(`${growth>0?"売上成長":"売上減少"} ${pct}`,`Revenue ${growth>0?"growth":"decline"} ${pct}`),
       copy(`売上高は前年同期の${amount(prior.value,prior.unit)}から${amount(q.value,q.unit)}へ。前年同期比${pct}。`,
-        `Revenue changed from ${amount(prior.value,prior.unit)} in the prior-year quarter to ${amount(q.value,q.unit)}, ${pct} year over year.`));
+        `Revenue changed from ${amount(prior.value,prior.unit)} in the prior-year ${c.periodMonths===6 ? "half" : c.periodMonths===12 ? "year" : "quarter"} to ${amount(q.value,q.unit)}, ${pct} year over year.`));
   }
   if(valid("profitability") && c.quarterOperatingIncome && c.quarterOperatingMargin!==null && (c.quarterOperatingMargin>=15 || c.quarterOperatingMargin<0)) {
     const margin=c.quarterOperatingMargin, pct=`${margin.toFixed(1)}%`;
     add("operating-margin",margin<0?"weakness":"strength",
       copy(margin<0?`営業赤字 ${pct}`:`営業利益率 ${pct}`,margin<0?`Operating loss ${pct}`:`Operating margin ${pct}`),
-      copy(`四半期の営業損益は${amount(c.quarterOperatingIncome.value,c.quarterOperatingIncome.unit)}。売上高に対する割合は${pct}。`,
-        `Quarterly operating income was ${amount(c.quarterOperatingIncome.value,c.quarterOperatingIncome.unit)}, representing ${pct} of revenue.`));
+      copy(`${span.ja}の営業損益は${amount(c.quarterOperatingIncome.value,c.quarterOperatingIncome.unit)}。売上高に対する割合は${pct}。`,
+        `${span.en} operating income was ${amount(c.quarterOperatingIncome.value,c.quarterOperatingIncome.unit)}, representing ${pct} of revenue.`));
   }
   if(valid("growth") && Number.isFinite(c.quarterDilutedSharesGrowth) && c.quarterDilutedSharesGrowth!>5) {
     const pct=`+${c.quarterDilutedSharesGrowth!.toFixed(1)}%`;
@@ -51,8 +53,8 @@ export function prepareComparisonAnalysis(c: Financials, now=Date.now()): Prepar
   if(valid("cash") && Number.isFinite(c.quarterFcfMargin) && c.quarterFcfMargin!==0) {
     const positive=c.quarterFcfMargin!>0, pct=`${c.quarterFcfMargin!.toFixed(1)}%`;
     add("cash-generation",positive?"strength":"weakness",copy(`簡易FCF率 ${pct}`,`Simple FCF margin ${pct}`),
-      copy(`四半期の営業キャッシュフローから現金支出の設備投資を引いた金額は、売上高の${pct}。買収支出やリース等は網羅しません。`,
-        `Quarterly operating cash flow less cash capital expenditure equaled ${pct} of revenue. This measure does not capture all acquisitions or leases.`));
+      copy(`${span.ja}の営業キャッシュフローから現金支出の設備投資を引いた金額は、売上高の${pct}。買収支出やリース等は網羅しません。`,
+        `${span.en} operating cash flow less cash capital expenditure equaled ${pct} of revenue. This measure does not capture all acquisitions or leases.`));
   }
   return {version:1,method:"deterministic",sourceRevision:comparisonEvidenceRevision(c),preparedAt:new Date(now).toISOString(),
     processingMs:Math.round((performance.now()-started)*1000)/1000,periodEnd:q.end,sourceUrl:c.quarterSourceUrl,items};

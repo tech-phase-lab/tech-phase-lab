@@ -62,16 +62,21 @@ export function inlineFinancialFacts(html: string, cik: string, filing: Financia
   // financing revenue). The consolidated income statement identifies which
   // standard concept is its total; note tables alone cannot establish this.
   const primary = new Set<string>();
-  const revenueNames = new Set(["us-gaap:Revenues","us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax","us-gaap:SalesRevenueNet","ifrs-full:Revenue","ifrs-full:RevenueFromContractsWithCustomers"]);
+  const revenueNames = new Set(["us-gaap:Revenues","us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax","us-gaap:SalesRevenueNet","us-gaap:RegulatedAndUnregulatedOperatingRevenue","ifrs-full:Revenue","ifrs-full:RevenueFromContractsWithCustomers"]);
   for (const table of root.querySelectorAll("table")) {
     const text = table.textContent.replace(/\s+/g," ");
-    if (!/(?:income|loss).*operations/i.test(text) || !/net (?:income|loss)/i.test(text) || !/basic.*diluted/i.test(text)) continue;
+    // The income statement: net income (or "net earnings": Devon) with per-share lines; its title need not say "operations" (PSEG: operating
+    // revenues, operating expenses, net income).
+    if (!/net (?:income|loss|earnings)/i.test(text) || !/basic.*diluted/i.test(text)) continue;
     for (const node of table.querySelectorAll("ix\\:nonfraction")) {
       const name = node.getAttribute("name"), context = contexts.get(node.getAttribute("contextRef") ?? "");
       if (name && revenueNames.has(name) && context?.end === filing.end) primary.add(name);
     }
   }
   if (primary.size === 1) result.primaryRevenueTag = [...primary][0];
+  // The statement shows its sales lines and then their total (Devon: oil, gas and NGL sales, then total revenues, which derivative losses can
+  // take below the sales line): the total line is the revenue.
+  else if (primary.has("us-gaap:Revenues")) result.primaryRevenueTag = "us-gaap:Revenues";
   return result;
 }
 

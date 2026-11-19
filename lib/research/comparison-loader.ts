@@ -10,15 +10,19 @@ const warning = (ja: string, en: string) => ({ ja, en });
  * Check submissions first: companyfacts alone is not proof of freshness.
  */
 export async function loadSecComparison(ticker: string, cik: string, fetchText: FetchText, now = Date.now()) {
+  // Size limits: the largest filers passed the old ones (JPMorgan's submissions list is about 4.6 MB, a few companyfacts files pass 20 MB),
+  // which left them with "New filings could not be checked" or no figures at all.
   const [factsResponse, submissionsResponse] = await Promise.allSettled([
-    fetchText(`https://data.sec.gov/api/xbrl/companyfacts/CIK${cik.padStart(10,"0")}.json`, 20_000_000).then(JSON.parse),
-    fetchText(`https://data.sec.gov/submissions/CIK${cik.padStart(10,"0")}.json`, 4_000_000).then(JSON.parse),
+    fetchText(`https://data.sec.gov/api/xbrl/companyfacts/CIK${cik.padStart(10,"0")}.json`, 40_000_000).then(JSON.parse),
+    fetchText(`https://data.sec.gov/submissions/CIK${cik.padStart(10,"0")}.json`, 12_000_000).then(JSON.parse),
   ]);
   const currency = ticker === "TSM" && Number(cik) === 1046179 ? "TWD" : undefined;
   const initial = factsResponse.status === "fulfilled" ? extractFinancials(ticker,cik,factsResponse.value,now,currency) : emptyFinancials(ticker,"unavailable",new Date(now).toISOString());
   if (submissionsResponse.status !== "fulfilled") return { ...initial, dataWarnings: [warning("新しい提出書類を確認できませんでした。", "New filings could not be checked.")] };
   const filings = financialFilings(submissionsResponse.value,cik,now);
-  const annual = filings.find(f => annualForm.test(f.form));
+  // An amendment that only adds Part III or exhibits (MO's 10-K/A of May 2026) carries no figures: the original report anchors freshness,
+  // and figures an amendment restates arrive in companyfacts under it anyway. Before, MO's amendment was read on every load and flagged.
+  const annual = filings.find(f => annualForm.test(f.form) && !f.form.endsWith("/A")) ?? filings.find(f => annualForm.test(f.form));
   const quarter = filings.find(f => (/^(?:10-Q)(?:\/A)?$/.test(f.form) || (/^6-K(?:\/A)?$/.test(f.form) && ["03-31","06-30","09-30","12-31"].includes(f.end.slice(5)))) && f.inline && (!annual || f.end > annual.end));
   // TSM's untagged earnings exhibits have a separate, verified actuals parser.
   const tsmRelease = ticker === "TSM" && Number(cik) === 1046179 ? filings.find(f => f.form.startsWith("6-K") && /\/tsm-\d{8}x6k\.htm$/.test(f.url) && ["03-31","06-30","09-30","12-31"].includes(f.end.slice(5)) && (!annual || f.end > annual.end)) : undefined;
@@ -29,13 +33,17 @@ export async function loadSecComparison(ticker: string, cik: string, fetchText: 
     tsmStatement && (!initial.quarterRevenue || initial.quarterRevenue.end < tsmStatement.end || (initial.quarterRevenue.filed ?? "") < tsmStatement.filed) ? tsmStatement : undefined,
   ].filter((f): f is FinancialFiling => !!f);
   const additions: SecFacts[] = [];
-  let primaryRevenueTag: string | undefined;
+  let primaryRevenueTag: string | undefined, quarterRevenueTag: string | undefined;
   await Promise.all(wanted.map(async filing => {
     try {
       const html = await fetchText(filing.url, 20_000_000);
-      const inline = inlineFinancialFacts(html,cik,filing);
+      let inline = inlineFinancialFacts(html,cik,filing);
+      // A foreign filer's 6-K is often a cover page with the tagged statements in another document of the same filing (BTI's half-year
+      // report: bti-20260630_d2.htm is the cover, bti-20260630.htm the statements). The largest other inline document is then read.
+      if (!hasRevenue(inline)) inline = await statementDocument(filing, cik, fetchText) ?? inline;
       additions.push(inline);
       if (filing === annual) primaryRevenueTag = inline.primaryRevenueTag;
+      if (filing === quarter) quarterRevenueTag = inline.primaryRevenueTag;
       if (filing === tsmRelease) {
         const root = new URL(".",filing.url).href;
         const hrefs = parse(html).querySelectorAll("a").map(a => a.getAttribute("href")).filter((h): h is string => !!h && /^a[1-4]q\d{2}e[a-z0-9_]*\.htm$/i.test(h));
@@ -54,7 +62,7 @@ export async function loadSecComparison(ticker: string, cik: string, fetchText: 
       }
     } catch { /* Keep retrieved figures with an explicit freshness warning below. */ }
   }));
-  const result = extractFinancials(ticker,cik,mergeFinancialFacts(factsResponse.status === "fulfilled" ? factsResponse.value : null, additions,cik),now,currency,primaryRevenueTag);
+  const result = extractFinancials(ticker,cik,mergeFinancialFacts(factsResponse.status === "fulfilled" ? factsResponse.value : null, additions,cik),now,currency,primaryRevenueTag,quarterRevenueTag);
   const dataWarnings = [];
   if (annual && (!result.revenue || result.revenue.end < annual.end || (result.revenue.filed ?? "") < annual.filed)) dataWarnings.push(warning(`${annual.end}期の年次提出書類から数値を取得できていません。`, `Figures from the annual filing for ${annual.end} are unavailable.`));
   const latestQuarter = [quarter,tsmRelease,tsmStatement].filter((f): f is FinancialFiling=>!!f).sort((a,b)=>b.end.localeCompare(a.end)||b.filed.localeCompare(a.filed))[0];
@@ -64,6 +72,22 @@ export async function loadSecComparison(ticker: string, cik: string, fetchText: 
   if(earnings && (!newestFigures || earnings.filed>newestFigures)) dataWarnings.push(warning(`${earnings.filed}の新しい決算発表は数値の反映が未確認です。`, `Figures from the newer earnings release on ${earnings.filed} are not verified.`));
   // An untagged foreign quarterly report cannot be inferred from monthly 6-Ks.
   // Make the limitation visible rather than presenting annual data as latest.
-  if (annual && /^(?:20-F|40-F)/.test(annual.form) && !result.quarterRevenue && filings.some(f => f.form.startsWith("6-K") && f.end > annual.end)) dataWarnings.push(warning("年次決算後の四半期数値は未取得です。", "Quarterly figures after the annual report are unavailable."));
+  if (annual && /^(?:20-F|40-F)/.test(annual.form) && (!result.quarterRevenue || result.periodMonths === 12) && filings.some(f => f.form.startsWith("6-K") && f.end > annual.end)) dataWarnings.push(warning("年次決算後の四半期数値は未取得です。", "Quarterly figures after the annual report are unavailable."));
   return { ...result, dataWarnings };
+}
+
+const REVENUE_TAGS = ["Revenues", "RevenueFromContractWithCustomerExcludingAssessedTax", "RevenueFromContractWithCustomerIncludingAssessedTax", "SalesRevenueNet", "RevenuesNetOfInterestExpense", "RegulatedAndUnregulatedOperatingRevenue", "Revenue", "RevenueFromContractsWithCustomers", "RevenueFromSaleOfGoods", "InterestIncomeExpenseNet", "GrossInvestmentIncomeOperating"];
+const hasRevenue = (facts: SecFacts) => Object.values(facts.facts).some(tags => REVENUE_TAGS.some(tag => tag in tags));
+/** The filing's other inline document with the statements: the largest .htm in its folder besides the primary one (not the rendered R pages
+ *  or the index), read only when the primary document has no revenue fact. */
+async function statementDocument(filing: FinancialFiling, cik: string, fetchText: FetchText): Promise<SecFacts | null> {
+  if (!filing.inline) return null;
+  const folder = new URL(".", filing.url).href, primary = filing.url.slice(folder.length);
+  const listing = JSON.parse(await fetchText(`${folder}index.json`, 2_000_000)) as { directory?: { item?: { name?: unknown; size?: unknown }[] } };
+  const candidates = (listing.directory?.item ?? []).flatMap(item => typeof item.name === "string" && /^[A-Za-z0-9][A-Za-z0-9._-]{0,199}\.htm$/.test(item.name)
+    && item.name !== primary && !/^R\d+\.htm$/.test(item.name) && !item.name.includes("index") && Number(item.size) > 0 && Number(item.size) <= 20_000_000 ? [{ name: item.name, size: Number(item.size) }] : [])
+    .sort((a, b) => b.size - a.size);
+  if (!candidates.length) return null;
+  const facts = inlineFinancialFacts(await fetchText(new URL(candidates[0].name, folder).href, 20_000_000), cik, filing);
+  return hasRevenue(facts) ? facts : null;
 }
