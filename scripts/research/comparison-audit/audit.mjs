@@ -129,6 +129,12 @@ async function auditTicker(row) {
     // The figures themselves, for a spot check against the filing (scripts/research/comparison-audit/spot-check.py).
     figures: q ? { revenue: q.value, tag: q.tag, accession: q.accession, previous: c.previousQuarterRevenue?.value ?? null, operating: c.quarterOperatingIncome?.value ?? null,
       operatingTag: c.quarterOperatingIncome?.tag ?? null, growth: c.quarterRevenueGrowth, margin: c.quarterOperatingMargin } : null, price: globalThis.__comparisonAudit.priceCurrency(row.ticker), scored: have.length, scores, missing,
+    // The strengths and weaknesses the company card shows (kind:id), and the inputs their rules read, for the items audit (summarize-items.py).
+    items: (c.preparedAnalysis?.items ?? []).map(i => `${i.kind === "strength" ? "S" : "W"}:${i.id}`),
+    inputs: { growth: c.quarterRevenueGrowth ?? null, qoq: c.quarterRevenueQoq ?? null, margin: c.quarterOperatingMargin ?? null, fcf: c.quarterFcfMargin ?? null,
+      shares: c.quarterDilutedSharesGrowth ?? null, currentRatio: c.balance?.currentRatio ?? null, supplemented: c.supplemented ?? [], source: c.quarterSourceUrl ?? null,
+      balance: c.balance ? { end: c.balance.end, cash: c.balance.cash?.value ?? null, cashTag: c.balance.cash?.tag ?? null, currentAssets: c.balance.currentAssets?.value ?? null,
+        currentLiabilities: c.balance.currentLiabilities?.value ?? null, debt: c.balance.debtTotal?.value ?? null, debtSource: c.balance.debtTotal?.source ?? null } : null },
     availability: comparisonAvailability(c, "en", now), warnings: (c.dataWarnings ?? []).map(w => w.en), ms: Math.round(performance.now() - started),
   };
   // Six of seven: valuation on the forward P/E comes from the provider's statistics, which the audit does not read.

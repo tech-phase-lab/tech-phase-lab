@@ -51,12 +51,14 @@ test('MO and BTI: a weak balance read from the filing is a weakness for each, in
   assert.deepEqual(currentComparisonAnalysis({...mo.c,preparedAnalysis:mo.prepared},now).items,mo.prepared.items);
 });
 
-test('other pairs: weak balances are flagged, strong ones are strengths, middling ones say nothing',()=>{
+test('other pairs: weak balances are flagged, strong ones are strengths, middling ones with more debt than cash say so',()=>{
   assert.deepEqual(points('T').weaknesses,['流動比率 0.87倍','有利子負債が現金を上回る','営業利益率 22.3→12.7%']);
   assert.deepEqual(points('VZ').weaknesses,['流動比率 0.63倍','有利子負債が現金を上回る']);
-  // KO 5.1 and PEP 3.4 on financial strength: no balance point either way; KO keeps its margin decline.
-  assert.deepEqual(points('KO').weaknesses,['営業利益率 34.9→33.4%']);
-  assert.deepEqual(points('PEP').weaknesses,[]);
+  // KO 5.1 and PEP 3.4 on financial strength: no score point either way, but debt above cash is said as the provider's figures say it
+  // (before, PEP showed no weakness at all); KO keeps its margin decline.
+  assert.deepEqual(points('KO').weaknesses,['有利子負債が現金を上回る','営業利益率 34.9→33.4%']);
+  assert.deepEqual(points('PEP').weaknesses,['有利子負債が現金を上回る']);
+  assert.equal(points('KO').prepared.items.some(i=>i.id==='financial'),false);
   // NVDA 8.4 and AMD 10: a strong balance is a strength, never "debt exceeds cash".
   assert.ok(points('NVDA').strengths.includes('流動比率 4.59倍'));assert.deepEqual(points('NVDA').weaknesses,[]);
   assert.ok(points('AMD').strengths.includes('流動比率 2.72倍'));assert.deepEqual(points('AMD').weaknesses,[]);
