@@ -8,3 +8,31 @@
 .meta { margin-top: 8px; font-size: 12px; color: #8697a7; }
 .meta a { color: inherit; }
 .locked { color: #b9c7d4; line-height: 1.7; }
+/* Research-note layout (Nov 18): the question, what changed, sections with headings, conditional readings, unknowns, next checks. */
+.kicker { margin: 0 0 4px; font-size: 11px; letter-spacing: .08em; color: #8697a7; }
+.question { display: block; font-size: 17px; line-height: 1.55; color: #f3f6f9; }
+.summary { margin: 10px 0 0; padding: 10px 12px; border-radius: 10px; background: rgba(243, 217, 139, .06); border: 1px solid rgba(243, 217, 139, .18); line-height: 1.7; color: #dbe3ea; }
+.summary span { display: block; font-size: 11px; letter-spacing: .08em; color: #d9b45b; margin-bottom: 2px; }
+.section, .block, .reaction { margin-top: 14px; }
+.section h4, .block h4, .reaction h4 { margin: 0 0 4px; font-size: 14px; line-height: 1.5; color: #e6ecf1; }
+.section p { margin: 0; line-height: 1.75; color: #c9d4de; }
+.block ul, .block ol { margin: 4px 0 0; padding-left: 1.3em; color: #c9d4de; }
+.block ul { list-style: disc; }
+.block ol { list-style: decimal; }
+.block li { margin: 4px 0; line-height: 1.7; }
+.blockNote { margin: 0 0 6px; font-size: 12px; color: #8697a7; }
+.scenario { margin: 6px 0 0; line-height: 1.7; color: #c9d4de; }
+.scenario b { display: inline-block; min-width: 4.5em; margin-right: 6px; font-size: 12px; color: #d9b45b; font-weight: 600; }
+/* 翌日の市場の反応: figures from daily prices, two small charts. */
+.reaction { padding-top: 12px; border-top: 1px dashed #2a3c4c; }
+.reactionWhen { margin: 0 0 8px; font-size: 12px; color: #8697a7; }
+.stats { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; margin: 0; }
+.stats div:last-child:nth-child(odd) { grid-column: 1 / -1; } /* an odd last tile (SMHとの差) spans the row, never half width alone */
+.stats div { padding: 8px 10px; border-radius: 10px; background: rgba(255, 255, 255, .03); border: 1px solid #22313f; }
+.stats dt { font-size: 11px; color: #8697a7; }
+.stats dd { margin: 2px 0 0; font-size: 15px; font-variant-numeric: tabular-nums; color: #f3f6f9; }
+.charts { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 10px; margin-top: 10px; }
+.chart { margin: 0; padding: 8px 10px 4px; border-radius: 10px; border: 1px solid #22313f; background: rgba(0, 0, 0, .15); }
+.chart figcaption { font-size: 11px; color: #8697a7; margin-bottom: 4px; }
+.chart svg { display: block; width: 100%; height: auto; overflow: visible; }
+.reactionNote { margin: 8px 0 0; font-size: 11px; line-height: 1.6; color: #8697a7; }

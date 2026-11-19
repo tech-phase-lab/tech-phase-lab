@@ -1,5 +1,6 @@
 import { getMembership } from "@/lib/membership/server";
-import { parseDeepAnalyses } from "@/lib/research/deep-analysis";
+import { parseDeepAnalyses, type DeepAnalysis } from "@/lib/research/deep-analysis";
+import { loadMarketReaction } from "@/lib/research/market-reaction-server";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -23,8 +24,18 @@ export async function GET() {
     if (!response.ok) throw Error("Unavailable");
     const text = await response.text();
     if (new TextEncoder().encode(text).length > 400_000) throw Error("Oversized response");
-    return Response.json({ items: parseDeepAnalyses(JSON.parse(text)) }, { headers });
+    return Response.json({ items: await withReactions(parseDeepAnalyses(JSON.parse(text))) }, { headers });
   } catch {
     return Response.json({ error: "unavailable" }, { status: 503, headers });
   }
+}
+
+/** 「翌日の市場の反応」 (owner, Nov 18): each company's newest earnings analysis gets the next-day reaction computed from daily prices, once that
+ * session has closed. Prices only, no model; a reaction that cannot be computed yet is simply absent. */
+async function withReactions(items: DeepAnalysis[]): Promise<DeepAnalysis[]> {
+  const newest = new Map<string, DeepAnalysis>();
+  for (const item of items) if (item.kind === "earnings" && !newest.has(item.subject)) newest.set(item.subject, item);
+  const reactions = new Map(await Promise.all([...newest.values()].map(async item =>
+    [item.id, await loadMarketReaction(item.subject, item.releasedAt ?? item.publishedAt)] as const)));
+  return items.map(item => reactions.get(item.id) ? { ...item, reaction: reactions.get(item.id) } : item);
 }

@@ -133,7 +133,7 @@ class DeepAnalysisTests(unittest.TestCase):
         self.assertTrue(reason.startswith('changed-negation:source-negated:'), reason)
         self.assertEqual(caught.exception.detail['kept'], 0)
         kept = deep_analysis.bind({'headline': headline, 'points': [flipped, ok_point], 'watch': None}, excerpts)  # one passed point is published
-        self.assertEqual([p['ja'] for p in kept['points']], [ok_point['ja']])
+        self.assertEqual([p['ja'] for p in kept['points']], ['営業利益は1.72億ドル。'])  # Japanese money units (Nov 18)
 
     def test_a_rejected_headline_gets_a_fixed_one_so_a_passed_point_is_published_and_no_point_holds_with_the_reason(self):
         excerpts = {'0': 'Revenue was $3.41 billion in the quarter.', '1': 'Operating income was $172 million.'}
@@ -834,6 +834,126 @@ class IndicatorAnalysisTests(unittest.TestCase):
         self.assertEqual(roster['MU']['deepState'], 'none')
         self.assertNotIn('SECRET', json.dumps(report))
 
+
+
+
+class ResearchNoteTests(unittest.TestCase):
+    setUp = DeepAnalysisTests.setUp
+    earnings = DeepAnalysisTests.earnings
+    run_deep = DeepAnalysisTests.run_deep
+    items = DeepAnalysisTests.items
+
+    # Owner, Nov 18: the analysis reads like a research note (the September Micron analysis): a question as the headline, what changed,
+    # sections with headings, conditional scenarios, unknowns and next checks. Every existing check still applies to every part.
+    def research_note_excerpts(self):
+        from pathlib import Path
+        lines = (Path(__file__).parent / 'fixtures' / 'nvidia-results-q3fy27.txt').read_text().split('\n')
+        return {'0': lines[1], '1': lines[2]}
+
+    def research_note(self):
+        def cite(ja, en, *ids):
+            return {'ja': ja, 'en': en, 'evidenceIds': list(ids or ('0',))}
+        return {
+            'headline': cite('増収は、粗利益率を保ったまま続くか。', 'Can growth continue while gross margin holds?'),
+            'summary': cite('GAAP粗利益率は74.8%で、前年同期の73.4%を上回った。', 'GAAP gross margin was 74.8%, above 73.4% a year earlier.'),
+            'sections': [
+                {'heading': {'ja': '採算｜粗利益率は高水準', 'en': 'Margins | Gross margin stays high'},
+                 **cite('GAAP粗利益率は74.8%で、前年同期の73.4%を上回った。', 'GAAP gross margin was 74.8%, above 73.4% a year earlier.')},
+                {'heading': {'ja': '見通し｜次の四半期の売上高', 'en': 'Guidance | Next-quarter revenue'},
+                 **cite('会社は次の四半期の売上高を$130.0 billion（プラスマイナス3%）と見込む。', 'The company expects revenue of $130.0 billion, plus or minus 3%.', '1')},
+                {'heading': {'ja': '買い時か', 'en': 'Time to buy?'}, **cite('今は買い時だ。', 'Now is a good time to buy.')},
+                {'heading': {'ja': '規模｜売上は前年の約2倍', 'en': 'Scale | Revenue about doubled'},
+                 **cite('売上高は前年同期比45%増えた。', 'Revenue rose 45% year over year.')}],
+            'scenarios': [
+                {'case': 'reassessment', **cite('粗利益率が74.8%を下回る場合は、採算の読み方を見直す。', 'If gross margin falls below 74.8%, the reading of profitability is revisited.')},
+                {'case': 'upside', **cite('売上高はさらに伸びる。', 'Revenue grows further.', '1')},
+                {'case': 'base', **cite('売上高が$130.0 billion前後で着地するなら、増収基調が続いていると読める。', 'If revenue lands near $130.0 billion, the reading of continued growth holds.', '1')}],
+            'unknowns': [{'ja': '製品別の粗利益率は今回の発表からはわからない。', 'en': 'Margins by product are not given in this release.'},
+                         {'ja': '在庫は3%増えた。', 'en': 'Inventory rose 3%.'}],
+            'next': [cite('次の決算で売上高を$130.0 billionの見通しと比べたい。', 'Compare next-quarter revenue with the $130.0 billion outlook.', '1')]}
+
+    def test_a_research_note_keeps_its_structure_and_drops_each_failing_part_alone(self):
+        rejected = []
+        note = deep_analysis.bind(self.research_note(), self.research_note_excerpts(), diagnose=lambda kind, reason, *_: rejected.append((kind, reason)))
+        self.assertTrue(note['headline']['ja'].endswith('か。'))
+        self.assertEqual([s['heading']['ja'] for s in note['sections']], ['採算｜粗利益率は高水準', '見通し｜次の四半期の売上高'])
+        self.assertEqual([s['case'] for s in note['scenarios']], ['base', 'reassessment'])  # ordered; the unconditional "upside" forecast is dropped
+        self.assertEqual([u['ja'] for u in note['unknowns']], ['製品別の粗利益率は今回の発表からはわからない。'])  # an "unknown" carrying a figure is dropped
+        self.assertEqual(len(note['next']), 1)
+        self.assertEqual(note['points'], [{'ja': s['ja'], 'en': s['en']} for s in note['sections']])  # readers of the earlier format still get points
+        self.assertEqual(note['watch'], note['next'][0])
+        reasons = dict(rejected)
+        self.assertIn(('point', 'banned-wording:buy-sell-timing'), rejected)
+        self.assertIn(('point', 'unsupported-number:value:45%:A'), rejected)
+        self.assertEqual(reasons['scenario'], 'scenario-not-conditional')
+        self.assertEqual(reasons['unknown'], 'unknown-with-number')
+
+    def test_japanese_money_is_in_japanese_units_and_an_amount_without_its_scale_drops_the_part(self):
+        # Owner, Nov 18: 「売上高は$115.8で」 (a "$ in billions" table figure printed bare) has lost its unit; 「$130.0 billion」 mixes English units.
+        excerpts = self.research_note_excerpts()
+        note = self.research_note()
+        note['summary'] = {'ja': '第3四半期の売上高は$115.8で、前年同期比103%増だった。', 'en': 'Third-quarter revenue was $115.8, up 103% year over year.', 'evidenceIds': ['0']}
+        rejected = []
+        bound = deep_analysis.bind(note, excerpts, diagnose=lambda kind, reason, *_: rejected.append((kind, reason)))
+        self.assertIsNone(bound['summary'])
+        self.assertIn(('summary', 'money-unit-missing'), rejected)
+        guidance = next(s for s in bound['sections'] if s['heading']['ja'].startswith('見通し'))
+        self.assertEqual(guidance['ja'], '会社は次の四半期の売上高を1,300億ドル（±3%）と見込む。')
+        self.assertEqual(guidance['en'], 'The company expects revenue of $130.0 billion, plus or minus 3%.')  # English keeps its units
+        japanese = json.dumps([bound['headline'], *bound['sections'], *bound['scenarios'], *bound['unknowns'], *bound['next']], ensure_ascii=False)
+        for part in [bound['headline'], *bound['sections'], *bound['scenarios'], *bound['unknowns'], *bound['next']]:
+            self.assertNotRegex(part['ja'], r'(?i)billion|million|trillion|\$')
+        self.assertIn('1,300億ドル', japanese)
+
+    def test_japanese_money_conversion_is_exact(self):
+        cases = {'売上高は$115.8 billion。': '売上高は1,158億ドル。', '純利益は$482 million。': '純利益は4.82億ドル。',
+                 '費用は$12.5 million。': '費用は1,250万ドル。', '$49–51 billionを見込む。': '490億〜510億ドルを見込む。',
+                 '受注残は$1.5 trillion。': '受注残は1.5兆ドル。', '希薄化後1株利益は$2.70。': '希薄化後1株利益は2.70ドル。',
+                 '売上は3.41 billionドル。': '売上は34.1億ドル。'}
+        for ja, expected in cases.items():
+            item = {'ja': ja, 'en': 'Revenue was $3.41 billion.'}
+            deep_analysis.money_units(item)
+            self.assertEqual(item['ja'], expected)
+        for ja, en in (('売上高は$115.8で増えた。', 'Revenue was $115.8 billion.'), ('売上高は1,158億ドル。', 'Revenue was $115.8, up.'),
+                       ('売上は115.8 billionの規模。', 'Revenue was $115.8 billion.')):
+            with self.assertRaises(ValueError):
+                deep_analysis.money_units({'ja': ja, 'en': en})
+
+    def test_banned_wording_follows_the_lawyer_review_list_and_a_source_may_be_quoted(self):
+        for text in ('今が買い時だ。', 'Investors should buy the shares.', '株価は割安だ。', '警戒が必要だ。'):
+            self.assertIsNotNone(deep_analysis.banned_wording(text, text), text)  # never, even when a source says it
+        self.assertEqual(deep_analysis.banned_wording('需要の落ち込みは一時的だ。'), 'temporary')
+        self.assertIsNone(deep_analysis.banned_wording('The company said the decline was temporary.', 'The decline in demand was temporary, the company said.'))
+        self.assertEqual(deep_analysis.banned_wording('Demand will likely grow.'), 'likely')
+        self.assertIsNone(deep_analysis.banned_wording('粗利益率は74.8%だった。'))
+        with self.assertRaises(ValueError) as caught:
+            deep_analysis.checked({'ja': '今は買い時だ。', 'en': 'Now is the time to buy.'}, 'Revenue was $3.41 billion.')
+        self.assertEqual(str(caught.exception), 'banned-wording:buy-sell-timing')
+
+    def test_the_research_note_is_one_call_with_the_new_schema_and_the_member_view_carries_it(self):
+        self.earnings()
+        sent = []
+        def transport(payload, key):
+            sent.append(payload)
+            note = json.loads(json.dumps(GOOD))
+            return reply({'headline': {**note['headline'], 'ja': 'Inferizeの買収で、推論基盤の稼働率は上がるか。', 'en': 'Will Inferize lift utilization?'},
+                          'summary': note['points'][0],
+                          'sections': [{'heading': {'ja': '買収｜推論の最適化', 'en': 'Deal | Inference optimization'}, **p} for p in note['points']],
+                          'scenarios': [], 'unknowns': [{'ja': '買収の金額は今回の発表からはわからない。', 'en': 'The price paid is not in this release.'}],
+                          'next': [note['watch']]})(payload, key)
+        self.assertEqual(self.run_deep(transport), 'done')
+        self.assertEqual(len(sent), 1)
+        schema = sent[0]['text']['format']['schema']
+        self.assertEqual(schema['required'], ['headline', 'summary', 'sections', 'scenarios', 'unknowns', 'next'])
+        self.assertIn('わからないこと', sent[0]['instructions'])
+        self.assertIn('tech-phase-deep-analysis-v%d' % deep_analysis.VERSION, sent[0]['prompt_cache_key'])
+        [item] = self.items()
+        self.assertEqual(len(item['sections']), 3)
+        self.assertEqual(item['sections'][0]['heading']['ja'], '買収｜推論の最適化')
+        self.assertEqual(item['headline']['ja'], 'Inferizeの買収で、推論基盤の稼働率は上がるか。')
+        self.assertEqual(len(item['points']), 3)
+        self.assertTrue(item['releasedAt'])
+        self.assertEqual(len(item['unknowns']), 1)
 
 
 if __name__ == '__main__':
