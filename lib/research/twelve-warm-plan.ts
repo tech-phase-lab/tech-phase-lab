@@ -51,6 +51,15 @@ export function tickersForMinute(universe: string[], now: number): { ticker: str
   return out;
 }
 
+/** The order in which a minute's companies may take the statements (200 credits): the minute has room for about one after its statistics
+ *  and series, and its companies are the same every day, so a fixed order gave the room to the same company each day and the others were
+ *  skipped for good (production log, Nov 19: skipped=LPTH:statements,CMCM:statements,...). The order turns by one company a day. */
+export function statementOrder<T>(due: T[], now: number): T[] {
+  if (due.length < 2) return due;
+  const start = daySlot(now) % due.length;
+  return [...due.slice(start), ...due.slice(0, start)];
+}
+
 /** The day of the week on which a company's need for statements is checked again (spread evenly over the week). */
 export const profileDue = (index: number, now: number) => (index + daySlot(now)) % 7 === 0;
 

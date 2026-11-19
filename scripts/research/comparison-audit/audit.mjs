@@ -63,9 +63,12 @@ globalThis.fetch = async (input, init) => {
 };
 
 const prices = new Map();
-if (args.prices) for (const row of JSON.parse(readFileSync(args.prices, "utf8")).data ?? []) if (row?.symbol && /^[A-Z]{3}$/.test(row.currency ?? "")) prices.set(String(row.symbol).toUpperCase().replace("/", "."), row.currency);
-// The provider writes share classes with a dot (BRK.B); the SEC list writes them with a dash (BRK-B).
-globalThis.__comparisonAudit = { priceCurrency: ticker => prices.get(ticker) ?? prices.get(ticker.replace("-", ".")) ?? null };
+if (args.prices) for (const row of JSON.parse(readFileSync(args.prices, "utf8")).data ?? []) if (row?.symbol && /^[A-Z]{3}$/.test(row.currency ?? "")) prices.set(String(row.symbol).toUpperCase(), row.currency);
+// The symbol production sends to the provider (BRK-B is BRK.B there): the checkout's own mapping, or the ticker unchanged for a checkout
+// without one (as production did before; the provider answered 404 for BRK-B).
+const symbolFile = path.join(root, "lib/research/provider-symbol.ts");
+const { providerSymbol } = existsSync(symbolFile) ? await import(symbolFile) : { providerSymbol: ticker => ticker };
+globalThis.__comparisonAudit = { priceCurrency: ticker => prices.get(providerSymbol(ticker)) ?? null, providerSymbol };
 
 const lib = rel => import(path.join(root, "lib/research", rel));
 const server = await lib("comparison-server.ts");
@@ -122,7 +125,10 @@ async function auditTicker(row) {
   const result = {
     ticker: row.ticker, cik: row.cik, name: row.name, exchange: row.exchange ?? "", status: c.status, basis: q?.basis ?? c.revenue?.basis ?? null,
     unit: q?.unit ?? c.revenue?.unit ?? null, periodStart: q?.start ?? null, periodEnd: q?.end ?? null, periodMonths: c.periodMonths ?? (q ? 3 : null),
-    annualEnd: c.revenue?.end ?? null, price: globalThis.__comparisonAudit.priceCurrency(row.ticker), scored: have.length, scores, missing,
+    annualEnd: c.revenue?.end ?? null,
+    // The figures themselves, for a spot check against the filing (scripts/research/comparison-audit/spot-check.py).
+    figures: q ? { revenue: q.value, tag: q.tag, accession: q.accession, previous: c.previousQuarterRevenue?.value ?? null, operating: c.quarterOperatingIncome?.value ?? null,
+      operatingTag: c.quarterOperatingIncome?.tag ?? null, growth: c.quarterRevenueGrowth, margin: c.quarterOperatingMargin } : null, price: globalThis.__comparisonAudit.priceCurrency(row.ticker), scored: have.length, scores, missing,
     availability: comparisonAvailability(c, "en", now), warnings: (c.dataWarnings ?? []).map(w => w.en), ms: Math.round(performance.now() - started),
   };
   // Six of seven: valuation on the forward P/E comes from the provider's statistics, which the audit does not read.

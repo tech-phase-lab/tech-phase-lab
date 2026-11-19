@@ -56,7 +56,7 @@ export default function ComparisonScreen() {
     const slot = openSlot, query = queries[slot]; const controller = new AbortController();
     setSuggestions(current => current.map((v,index) => index === slot ? searchStocks(comparisonCatalog, query, 10) : v));
     const timer = setTimeout(async () => { try {
-      const response = await fetch(`/api/research/stocks?q=${encodeURIComponent(query)}&limit=10`, { signal: controller.signal }); const data = await response.json();
+      const response = await fetch(`/api/research/stocks?scope=compare&q=${encodeURIComponent(query)}&limit=10`, { signal: controller.signal }); const data = await response.json();
       if (!controller.signal.aborted && data.ok && Array.isArray(data.results)) setSuggestions(current => current.map((v,index) => index === slot ? data.results : v));
     } catch {} }, 250);
     return () => { clearTimeout(timer); controller.abort(); };

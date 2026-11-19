@@ -31,6 +31,7 @@ async function server(stubs) {
     .replace(/import \{ appendMarketItems \}[^;]*;/, "const appendMarketItems = globalThis.__t.appendMarketItems;")
     .replace(/import \{ comparisonScores, hasRecentQuarter \}[^;]*;/, "const { comparisonScores, hasRecentQuarter } = globalThis.__t;")
     .replace(/import \{ fillFromProvider \}[^;]*;/, "const fillFromProvider = globalThis.__t.fillFromProvider;")
+    .replace('"./comparison-exclusions"', JSON.stringify(new URL("../lib/research/comparison-exclusions.ts", import.meta.url).href))
     .replace(/import type \{ Financials \}[^;]*;/, "");
   globalThis.__t = { emptyFinancials, prepareComparisonAnalysis, currentComparisonAnalysis, buildSecMarketEvidence, appendMarketItems, hasRecentQuarter, comparisonScores, fillFromProvider, ...stubs };
   return import("data:text/javascript;base64," + Buffer.from(stripTypeScriptTypes(text)).toString("base64") + `#${Math.random()}`);

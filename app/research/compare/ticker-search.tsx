@@ -16,7 +16,7 @@ export default function TickerSearch({ lang, selection, onSelect }: { lang: "ja"
     const controller = new AbortController();
     const timer = setTimeout(async () => {
       try {
-        const response = await fetch(`/api/research/stocks?q=${encodeURIComponent(query)}&limit=20`, { signal: AbortSignal.any([controller.signal, AbortSignal.timeout(15000)]) });
+        const response = await fetch(`/api/research/stocks?scope=compare&q=${encodeURIComponent(query)}&limit=20`, { signal: AbortSignal.any([controller.signal, AbortSignal.timeout(15000)]) });
         const data = await response.json();
         if (controller.signal.aborted) return;
         if (!response.ok || !data.ok || !Array.isArray(data.results)) throw Error();

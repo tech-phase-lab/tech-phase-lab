@@ -3,6 +3,7 @@ import { AsyncLocalStorage } from "node:async_hooks";
 import { unstable_cache } from "next/cache";
 import { after } from "next/server";
 import { parseUsage, shareInflight } from "./twelve-credit-gate";
+import { providerSymbol } from "./provider-symbol";
 import { BACKGROUND_CEILING, COST, USER_SERIES_CEILING, daySlot, hasRoom, hourSlot, weekSlot } from "./twelve-warm-plan";
 
 /** The comparison's shared store of provider data (statistics, price series, statements), kept in the Next.js data cache that every
@@ -69,15 +70,15 @@ const required = <T>(value: T | null, reason: string): T => {
 const stamp = () => new Date().toISOString();
 
 const statisticsDay = sharedCache("comparison-store-statistics-day-v1", 3 * 86400,
-  async (ticker): Promise<Raw> => ({ payload: required(await providerCall("statistics", { symbol: ticker }), "statistics-unavailable"), retrievedAt: stamp() }));
-const seriesParams = (ticker: string) => ({ symbol: ticker, interval: "1day", outputsize: "100", adjust: "splits" });
+  async (ticker): Promise<Raw> => ({ payload: required(await providerCall("statistics", { symbol: providerSymbol(ticker) }), "statistics-unavailable"), retrievedAt: stamp() }));
+const seriesParams = (ticker: string) => ({ symbol: providerSymbol(ticker), interval: "1day", outputsize: "100", adjust: "splits" });
 const readSeries = async (ticker: string): Promise<Series> => ({ payload: required(await providerCall("time_series", seriesParams(ticker), 4_000), "series-unavailable"), adjust: "splits", retrievedAt: stamp() });
 const seriesHour = sharedCache("comparison-store-series-hour-v1", 3 * 3600, readSeries);
 const seriesDay = sharedCache("comparison-store-series-day-v1", 3 * 86400, readSeries);
 const statementsWeek = sharedCache("comparison-store-statements-week-v1", 21 * 86400, async (ticker): Promise<Statements> => {
   const [income, cashFlow] = await Promise.all([
-    providerCall("income_statement", { symbol: ticker, period: "quarterly" }),
-    providerCall("cash_flow", { symbol: ticker, period: "quarterly" }),
+    providerCall("income_statement", { symbol: providerSymbol(ticker), period: "quarterly" }),
+    providerCall("cash_flow", { symbol: providerSymbol(ticker), period: "quarterly" }),
   ]);
   return { income: required(income, "statements-unavailable"), cashFlow, retrievedAt: stamp() };
 });

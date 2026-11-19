@@ -2,6 +2,7 @@ import { companyNetworkPlaceholderFor } from "@/lib/research/chain-network.serve
 import { createHash } from "node:crypto";
 import { companyIntroductionFor } from "@/lib/research/company-introductions";
 import { approvedAnnualFilingBrief, validateAnnualFilingBrief } from "@/lib/research/annual-filing-briefs";
+import { COMPARISON_EXCLUSIONS, comparableEntries } from "@/lib/research/comparison-exclusions";
 import { extractBusinessSection, extractRiskSection, normalizeTicker, parseSecDirectory, parseSecProfile, searchDirectory, type BusinessSection, type RiskSection } from "@/lib/research/stock-directory";
 
 const directoryUrl = "https://www.sec.gov/files/company_tickers_exchange.json";
@@ -160,7 +161,9 @@ export async function GET(request: Request) {
       return Response.json({ ok: true, profile: { ...profile, introduction: companyIntroductionFor(profile), network: companyNetworkPlaceholderFor(profile) }, source: directoryUrl, profileSource: profileUrl, asOf: new Date().toISOString() }, { headers: { "Cache-Control": "public, s-maxage=300, stale-while-revalidate=3600" } });
     }
     if (!query.trim()) return Response.json({ ok: true, results: [], source: directoryUrl, notice: "query-required" });
-    const results = searchDirectory(entries, query, Number(url.searchParams.get("limit") ?? 24));
+    // The comparison's own search leaves out what it does not compare (SPACs, funds, preferreds, warrants, units, rights; owner, Nov 19).
+    const limit = Number(url.searchParams.get("limit") ?? 24);
+    const results = url.searchParams.get("scope") === "compare" ? searchDirectory(comparableEntries(entries, COMPARISON_EXCLUSIONS), query, limit) : searchDirectory(entries, query, limit);
     return Response.json({ ok: true, results, source: directoryUrl, asOf: new Date().toISOString() }, { headers: { "Cache-Control": "public, s-maxage=300, stale-while-revalidate=86400" } });
   } catch (error) {
     return errorResponse(error);
