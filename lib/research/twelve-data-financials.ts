@@ -1,6 +1,6 @@
 import { emptyFinancials, type Fact, type Financials } from "./comparison.ts";
 import { comparisonScores } from "./comparison-scorecard.ts";
-import { prepareComparisonAnalysis, comparisonEvidenceRevision } from "./comparison-analysis.ts";
+import { prepareComparisonAnalysis, comparisonEvidenceRevision, debtCashItem } from "./comparison-analysis.ts";
 import { normalizeTwelveComparison, prepareTwelveComparison } from "./twelve-data-comparison.ts";
 import { normalizeTwelveFactors, twelveExtraFactors, twelveFactorMetric, twelveFactorMethods, type TwelveFactorEvidence } from "./twelve-data-factors.ts";
 
@@ -33,9 +33,8 @@ export function appendMarketItems(prepared:NonNullable<Financials["preparedAnaly
     }
     const stats=evidence.statistics;
     if(extras.financial!==null && stats && stats.totalDebt!>stats.totalCash!) {
-      addRisk("debt-cash","有利子負債が現金を上回る","Debt exceeds cash",
-        `${periodEnd}時点の現金は${stats.totalCash} ${currency}、有利子負債は${stats.totalDebt} ${currency}。返済期限・借換余力は別途確認が必要で、これだけで資金繰り難とは判断しません。`,
-        `Cash was ${stats.totalCash} ${currency} versus debt of ${stats.totalDebt} ${currency} as of ${periodEnd}. Maturities and refinancing capacity require separate review; this alone does not establish liquidity distress.`);
+      prepared.items=prepared.items.filter(item=>item.id!=="debt-cash");
+      prepared.items.push(debtCashItem(periodEnd,stats.totalCash!,stats.totalDebt!,currency));
     }
     if(extras.momentum!==null && evidence.momentum!.changePct<0) {
       const pct=evidence.momentum!.changePct.toFixed(1);
