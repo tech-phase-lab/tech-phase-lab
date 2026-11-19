@@ -248,6 +248,7 @@ class PacingTests(unittest.TestCase):
         today = state['daily']['today']
         self.assertEqual(today['maxWaitMinutes'], 0.5)
         self.assertEqual(today['averageWaitMinutes'], 0.5)
+        self.assertEqual(today['waitedOver60Minutes'], 0)
         self.assertEqual(today['calls'], 12)
         with monitor.connect(self.path) as db:
             self.assertEqual(company_wire.sync_incident(db, self.start + 230, ENV, self.start), [])  # an empty bucket is no alert
