@@ -609,7 +609,8 @@ def display_floor(items):
                 kept.append(item)
             continue
         figures = [f for f in item.get('facts', []) if not str(f.get('key', '')).startswith('guidance-')]
-        if len(figures) < MIN_DISPLAY_FACTS:
+        # a release read from its highlight sentences states fewer figures: each one is the company's own (owner, Nov 18)
+        if len(figures) < (1 if item.get('method') == 'issuer-highlight-sentences' else MIN_DISPLAY_FACTS):
             continue
         if str(item.get('researchId', '')).startswith('x-result-'):
             continue

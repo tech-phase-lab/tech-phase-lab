@@ -32,9 +32,12 @@ async function readFinancials(ticker: string, cik: string) {
   return { ...data, preparedAnalysis: prepareComparisonAnalysis(data) };
 }
 // v8: the quarter's diluted shares, for price-to-sales from the filing when no statistics are stored (Nov 15).
-const cachedFinancials = unstable_cache(readFinancials, ["comparison-financials-v8-quarter-shares"], { revalidate: 300 });
-/** Results matter most right after they are filed: an entry older than 15 minutes is read again from the SEC now, not served stale. */
-const financials = (ticker: string, cik: string) => freshEnough(() => cachedFinancials(ticker, cik), () => readFinancials(ticker, cik), 15 * 60_000);
+// v9: a foreign filer's half-year or annual period, IFRS borrowings, the statements document of a 6-K (Nov 18).
+const cachedFinancials = unstable_cache(readFinancials, ["comparison-financials-v9-periods"], { revalidate: 900 });
+/** Speed (owner, Nov 18: a comparison took about 20 seconds). A stored reading up to a day old is answered at once; once it is older than 15
+ * minutes the cache reads the SEC again in the background (Next's own refresh of a stale entry), so the next viewer has the new figures. The
+ * background job reads every listed company once a day (prewarmComparison), so only a company nobody has opened for a day waits for the SEC. */
+const financials = (ticker: string, cik: string) => freshEnough(() => cachedFinancials(ticker, cik), () => readFinancials(ticker, cik), 24 * 3600_000);
 /** The SEC identifier of a listed company, from the provider list or the SEC's own directory. */
 export async function secCik(ticker: string): Promise<string | null> {
   const provider = providers.find(p => p.ticker === ticker);
@@ -54,15 +57,19 @@ export async function loadComparisonFinancials(ticker: string) {
 }
 
 async function loadFinancials(ticker: string, wants: { statements: boolean }) {
+  // The price inputs (stored statistics, the price series) are read beside the filing, not after it (speed, owner Nov 18).
+  const market = loadMarketInputs(ticker);
+  market.catch(() => undefined);
   const sec = await loadSecFinancials(ticker);
   const now = Date.now();
-  // An IFRS filer (TSM, ...) keeps the provider's standardized statements, which compare with US GAAP companies as they do today; the SEC
-  // figures are used only if the provider cannot serve it.
+  // An IFRS filer (TSM, ...) keeps the provider's standardized statements, which compare with US GAAP companies as they do today, when they
+  // have a current quarter; the SEC figures are used when the provider cannot serve it or only has an old period (before, a stored but stale
+  // provider record left a half-year filer such as BTI with no figures at all while its own 6-K had them).
   const ifrs = sec.quarterRevenue?.basis === "ifrs-full";
   if (ifrs) {
     const { data: twelve } = await loadTwelveComparisonState(ticker);
-    if (twelve) return twelve.financials;
-    wants.statements = true;
+    if (twelve && (hasRecentQuarter(twelve.financials, now) || !hasRecentQuarter(sec, now))) return twelve.financials;
+    if (!twelve) wants.statements = true;
   }
   // A newer earnings release is out but its quarterly report is not filed yet: the provider's statements are used when they already have
   // the newer quarter; otherwise the filing's previous quarter is shown, said on screen, rather than leaving every figure empty (owner, Nov 14).
@@ -73,11 +80,12 @@ async function loadFinancials(ticker: string, wants: { statements: boolean }) {
     if (!twelve) wants.statements = true;
     if (twelve && twelve.financials.quarterRevenue && Date.parse(twelve.financials.quarterRevenue.end) > Date.parse(sec.quarterRevenue!.end) + 10 * 86400000) return twelve.financials;
     const shown = { ...sec, dataWarnings: [], previousQuarterShown: sec.dataWarnings!.map(w => /^(\d{4}-\d{2}-\d{2})/.exec(w.ja)?.[1]).find(Boolean) ?? "" };
-    return completeFromProvider(ticker, await withMarketFactors(ticker, shown, now), now, wants, twelve?.financials ?? null);
+    return completeFromProvider(ticker, await withMarketFactors(ticker, shown, now, market), now, wants, twelve?.financials ?? null);
   }
-  if (sec.status === "ready" && hasRecentQuarter(sec, now)) return completeFromProvider(ticker, await withMarketFactors(ticker, sec, now), now, wants);
+  if (sec.status === "ready" && hasRecentQuarter(sec, now)) return completeFromProvider(ticker, await withMarketFactors(ticker, sec, now, market), now, wants);
   const { data: twelve } = await loadTwelveComparisonState(ticker);
-  if (!twelve) { wants.statements = true; return sec; }
+  // No current figures from either source: the share price still gives momentum (the radar showed no point at all for such a company).
+  if (!twelve) { wants.statements = true; return withMarketFactors(ticker, sec, now, market); }
   const base = twelve.financials;
   if (twelve.scores.find(score => score.id === "financial")?.value != null) return base;
   // Balance-sheet figures are only borrowed when they describe the same quarter as Twelve Data's.
@@ -109,8 +117,8 @@ function onlyReleasePending(c: Financials) {
 }
 
 /** The price series, forward P/E and price-to-sales from the provider beside the filing's figures (no change to the filing's own numbers). */
-async function withMarketFactors(ticker: string, sec: Financials, start: number): Promise<Financials> {
-  const { series, statistics } = await loadMarketInputs(ticker);
+async function withMarketFactors(ticker: string, sec: Financials, start: number, inputs?: ReturnType<typeof loadMarketInputs>): Promise<Financials> {
+  const { series, statistics } = await (inputs ?? loadMarketInputs(ticker));
   // A series read just now is stamped after this request began; the evidence is judged at the time it arrived (a stamp later than "now" is
   // rejected as invalid, which left momentum empty on the first comparison of a company).
   const now = Math.max(start, Date.now());
@@ -135,6 +143,12 @@ async function completeFromProvider(ticker: string, c: Financials, now: number, 
   const ownFinancial = scores.find(score => score.id === "financial")?.value !== null;
   const filled = fillFromProvider({ ...c, supplementedFinancialAllowed: ownFinancial ? false : undefined }, other, now);
   return filled === c || !filled.supplemented?.length ? c : rebuildAnalysis(filled, now);
+}
+
+/** For the background job (once a day per company): read the company's filing figures into the cache, so a user's first comparison of the day
+ *  is answered from it rather than waiting for the SEC. False when the SEC could not be read. */
+export async function prewarmComparison(ticker: string): Promise<boolean> {
+  return (await loadSecFinancials(ticker)).status !== "unavailable";
 }
 
 /** The SEC's list of listed companies (cached for a day), for the background job's universe. */

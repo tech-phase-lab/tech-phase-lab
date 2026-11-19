@@ -177,6 +177,5 @@ export default function FlashPage({ lang, onReady }: { lang: Language; onReady?:
       })}</div>}
     </div>
     <FeedPagination page={current} pages={pages} ja={ja} onChange={next => { setPage(next); list.current?.scrollIntoView({ block: "start", behavior: "instant" }); }} />
-    <p className={timeline.fine}>{ja ? "監視22銘柄のニュースと、発表された決算を、新しい順に掲載しています。時刻は日本時間です。" : "News and earnings updates for the 22 stocks we track, newest first. All times are U.S. Eastern Time (ET)."}</p>
   </section>;
 }

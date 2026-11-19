@@ -1,0 +1,73 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
+import { checkedBriefs, historyRange, mergeHistory, resultMonths } from '../lib/research/earnings-results-history.ts';
+import { earningsResults, orderedFacts } from '../lib/research/earnings-results.ts';
+
+const history = JSON.parse(readFileSync(new URL('../lib/research/earnings-results-history.json', import.meta.url)));
+const coverage = JSON.parse(readFileSync(new URL('../lib/research/calendar-coverage.json', import.meta.url)));
+const source = path => readFileSync(new URL(`../${path}`, import.meta.url), 'utf8');
+
+test('a month is a bounded range; anything else is refused', () => {
+  const now = Date.parse('2026-11-18T12:00:00Z');
+  assert.deepEqual(historyRange('2026-10', now), { from: '2026-10-01', to: '2026-10-31' });
+  assert.deepEqual(historyRange('2026-11', now), { from: '2026-11-01', to: '2026-11-30' });
+  assert.deepEqual(historyRange('recent', now), { from: '2026-09-01', to: '2026-11-30' });
+  for (const bad of ['', '2026-13', '2026-1', '2026-12', '1999-10', '2026-10-01', 'all', '2026-10;x']) assert.equal(historyRange(bad, now), null, bad);
+});
+
+test('the committed backfill: every tracked company, every row valid for the site, October and November both filled', () => {
+  assert.deepEqual(history.companies.map(c => c.ticker), coverage.map(c => c.ticker));
+  const briefs = checkedBriefs(history.resultBriefs);
+  assert.equal(briefs.length, history.resultBriefs.length, 'no backfill row is rejected by the site rules');
+  const october = mergeHistory({ from: '2026-10-01', to: '2026-10-31' }, briefs);
+  const november = mergeHistory({ from: '2026-11-01', to: '2026-11-30' }, briefs);
+  assert.ok(october.length >= 15, `October: ${october.length}`);
+  assert.ok(november.length >= 15, `November: ${november.length}`);
+  assert.deepEqual(resultMonths(briefs), ['2026-10', '2026-11']);
+  // October shows on the calendar although the live feed has nothing older than seven days
+  const rows = earningsResults([], october);
+  assert.ok(rows.some(row => row.ticker === 'META' && row.facts.length >= 3));
+  assert.ok(rows.every(row => row.factsFrom !== 'post'));
+});
+
+test('one malformed stored row never hides the others; duplicates are merged', () => {
+  const [one] = checkedBriefs(history.resultBriefs);
+  const rows = checkedBriefs([{ ...one, url: 'https://evil.example/x' }, one, null, 'x']);
+  assert.equal(rows.length, 1);
+  assert.equal(mergeHistory({ from: '2026-10-01', to: '2026-11-30' }, rows, rows).length, 1);
+  assert.deepEqual(checkedBriefs({ resultBriefs: [] }), []);
+});
+
+test('every company lists its figures in one order: revenue, EPS, adjusted EPS, net income, operating income, then outlook', () => {
+  const keys = orderedFacts(['guidance-revenue', 'operating-income', 'gross-margin', 'net-income', 'adjusted-eps', 'eps', 'revenue'].map(key => ({ key }))).map(fact => fact.key);
+  assert.deepEqual(keys, ['revenue', 'eps', 'adjusted-eps', 'net-income', 'operating-income', 'gross-margin', 'guidance-revenue']);
+});
+
+test('the row note says where the figures were read', () => {
+  const [issuer] = checkedBriefs(history.resultBriefs).filter(brief => brief.facts.length);
+  assert.equal(earningsResults([], [issuer])[0].factsFrom, 'issuer');
+  const post = { ...issuer, id: '5', researchId: 'x-result-5', url: 'https://x.com/wallstengine/status/5', publisher: 'Wall St Engine' };
+  assert.equal(earningsResults([], [post])[0].factsFrom, 'post');
+  const panel = source('app/research/calendar/economic-results-panel.tsx');
+  assert.match(panel, /row\.factsFrom === "post" && <p>\{ja \? "決算速報の投稿から数値を読み取りました。/);
+  assert.match(panel, /row\.factsFrom === "issuer" && <p>\{ja \? "会社の決算資料から数値を読み取りました。"/);
+});
+
+test('the calendar reads stored results by month and lists their months', () => {
+  const panel = source('app/research/calendar/economic-results-panel.tsx');
+  assert.match(panel, /\/api\/research\/earnings-results\?month=/);
+  assert.match(source('app/research/calendar/event-calendar.tsx'), /historyMonths/);
+  const route = source('app/api/research/earnings-results/route.ts');
+  assert.match(route, /readMonitor\("earnings-results"/);
+  assert.match(route, /backfillBriefs\(\)/);
+});
+
+test('the X post copy is shown to the owner accounts only (server-decided ownerAccount)', () => {
+  const panel = source('app/research/calendar/economic-results-panel.tsx');
+  assert.match(panel, /const ownerAccount = useOwnerAccount\(\);/);
+  assert.match(panel, /\{ownerAccount && <XPostCopyButton /);
+  assert.equal(panel.match(/<XPostCopyButton /g).length, 1);
+  assert.match(source('lib/membership/server.ts'), /ownerAccount: isOwnerAccount\(userId\)/);
+  assert.match(source('lib/membership/entitlements.ts'), /return userId === OWNER_ACCOUNT_ID \|\| userId === PRODUCTION_OWNER_ACCOUNT_ID;/);
+});

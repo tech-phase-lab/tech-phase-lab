@@ -69,19 +69,29 @@ class RadarRefreshRunTest(unittest.TestCase):
     def test_follows_the_cursor_with_the_bearer_secret_and_keeps_no_secret(self):
         seen = []
         pages = [{"ok": True, "storage": True, "done": False, "next": 20, "total": 54, "refreshed": 19, "live": 1, "failures": []},
-                 {"ok": True, "storage": True, "done": False, "next": 41, "total": 54, "refreshed": 20, "live": 0, "failures": ["semis:NVDA"]},
-                 {"ok": True, "storage": True, "done": True, "next": None, "total": 54, "refreshed": 13, "live": 0, "failures": []}]
+                 {"ok": True, "storage": True, "done": False, "next": 41, "total": 54, "refreshed": 20, "live": 0, "failures": ["semis:NVDA"],
+                  "stale": ["NBIS:behind"]},
+                 {"ok": True, "storage": True, "done": True, "next": None, "total": 54, "refreshed": 13, "live": 0, "failures": [],
+                  "stale": ["NBIS:behind", "CEG:xbrl-unread"]}]
 
         def opener(request, timeout):
             seen.append((request.full_url, request.get_method(), request.get_header("Authorization"), timeout))
             return FakeResponse(json.dumps(pages[len(seen) - 1]).encode())
 
         result = radar_refresh.run_once(ENV, opener)
-        self.assertEqual(result, {"status": "partial", "calls": 3, "total": 54, "refreshed": 52, "live": 1, "failed": 1, "failures": ["semis:NVDA"]})
+        self.assertEqual(result, {"status": "partial", "calls": 3, "total": 54, "refreshed": 52, "live": 1, "failed": 1, "failures": ["semis:NVDA"],
+                                  "stale": ["NBIS:behind", "CEG:xbrl-unread"]})  # a company in two genres is listed once
         base = "https://techphase.app/api/research/radar/refresh"
         self.assertEqual([s[0] for s in seen], [base, base + "?cursor=20", base + "?cursor=41"])
         self.assertTrue(all(s[1] == "POST" and s[2] == f"Bearer {SECRET}" and s[3] > 60 for s in seen))
         self.assertNotIn(SECRET, json.dumps(result))
+
+    def test_missing_settings_are_named_never_valued(self):
+        self.assertEqual(radar_refresh.missing_settings({}), ["COMPARISON_WARM_URL", "COMPARISON_WARM_SECRET"])
+        self.assertEqual(radar_refresh.missing_settings({"COMPARISON_WARM_URL": "https://x.example/a"}), ["COMPARISON_WARM_SECRET"])
+        self.assertEqual(radar_refresh.missing_settings(ENV), [])
+        short = radar_refresh.missing_settings({**ENV, "COMPARISON_WARM_SECRET": "short"})
+        self.assertTrue(short and not any("short" in name for name in short))
 
     def test_errors_are_reported_without_details(self):
         def boom(request, timeout):
@@ -132,9 +142,23 @@ class RadarRefreshHealthTest(unittest.TestCase):
         with patch.dict("os.environ", {"COMPARISON_WARM_URL": "", "COMPARISON_WARM_SECRET": ""}):
             app = service.AutomaticMonitor(root / "db2.sqlite", root / "snapshot2.json")
             self.assertEqual(app.state["radarRefresh"]["status"], "off")
-            with patch.object(service.radar_refresh, "run_once") as run:
+            # Nov 18: production ran with this lane silently off; /health and the log name the missing settings (names, never values)
+            self.assertEqual(app.state["radarRefresh"]["missing"], ["COMPARISON_WARM_URL", "COMPARISON_WARM_SECRET"])
+            out = io.StringIO()
+            with patch.object(service.radar_refresh, "run_once") as run, patch("sys.stdout", out):
                 app.run_radar_refresh()
             run.assert_not_called()
+            self.assertIn("radar-refresh off missing=COMPARISON_WARM_URL,COMPARISON_WARM_SECRET", out.getvalue())
+
+    def test_the_run_line_lists_lagging_companies(self):
+        moments = iter([utc("2026-11-15T23:01:00"), utc("2026-11-15T23:01:30")])
+        result = {"status": "ok", "calls": 3, "total": 54, "refreshed": 54, "live": 0, "failed": 0, "failures": [], "stale": ["NBIS:behind"]}
+        out = io.StringIO()
+        with patch.dict("os.environ", ENV), patch.object(service.radar_refresh, "run_once", return_value=result), patch("sys.stdout", out), \
+                patch.object(self.app.stop_event, "wait", side_effect=lambda seconds: self.app.stop_event.set()):
+            self.app.run_radar_refresh(now=lambda: next(moments))
+        self.assertIn("radar-refresh ok refreshed=54 failed=0 stale=NBIS:behind", out.getvalue())
+        self.assertEqual(self.app.state["radarRefresh"]["stale"], ["NBIS:behind"])
 
 
 if __name__ == "__main__":

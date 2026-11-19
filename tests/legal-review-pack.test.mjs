@@ -145,13 +145,16 @@ test("6: one disclaimer sentence, small and faint, in every footer, after each a
   assert.match(DISCLAIMER.en, /^The Service and the Product are intended to provide information and to help you manage rules you set for yourself\. They do not recommend buying or selling any particular security or the timing of trades\./);
   assert.ok(termsJa.includes("本サービスと本商品は、投資判断の参考となる情報の提供と、利用者自身が決めたルールの管理の補助を目的とするものであり、特定の銘柄の売買、保有の継続、売買の時期その他の投資判断について助言し、又は推奨するものではありません。"));
   const component = read("../app/resolute/disclaimer.tsx");
-  assert.match(component, /fontSize: 11/); assert.match(component, /opacity: 0\.55/);
+  // Small and faint (owner, Nov 18: far too obtrusive at 11px / 0.55): 10px, opacity 0.4, a 12px gap above, never enlarged by iOS.
+  assert.match(component, /fontSize: 10,/); assert.match(component, /opacity: 0\.4,/); assert.match(component, /margin: "12px 0 0"/);
+  assert.match(component, /WebkitTextSizeAdjust: "100%"/);
   const places = {
-    "../app/research/research-tool-shell.tsx": /\{children\}\n      <footer><Disclaimer en=\{lang === "en"\} \/><\/footer>/,
+    "../app/research/research-tool-shell.tsx": /\{children\}\n[^\n]*\n      \{footer && <footer><Disclaimer en=\{lang === "en"\} \/><\/footer>\}\n    <\/main>/,
     "../app/research/research-dashboard.tsx": /<Disclaimer en=\{lang === "en"\} \/><\/footer>/,
-    "../app/resolute/tool-shell.tsx": /<Disclaimer en=\{en\} \/>\n \<\/div><\/main>;/,
-    "../app/resolute/lp/landing.tsx": /<footer className=\{s\.foot\}>[\s\S]*<Disclaimer \/>[\s\S]*<\/footer>/,
-    "../app/resolute/lp/landing-en.tsx": /<footer className=\{s\.foot\}>[\s\S]*<Disclaimer en \/>[\s\S]*<\/footer>/,
+    "../app/resolute/tool-shell.tsx": /\{checking \? null : <Disclaimer en=\{en\} \/>\}\n \<\/div><\/main>;/,
+    // The last line of the LP footers.
+    "../app/resolute/lp/landing.tsx": /<footer className=\{s\.foot\}>[\s\S]*<Disclaimer \/>\n   <\/footer>/,
+    "../app/resolute/lp/landing-en.tsx": /<footer className=\{s\.foot\}>[\s\S]*<Disclaimer en \/>\n   <\/footer>/,
     "../app/resolute/checkout/live-screen.tsx": /<Disclaimer en=\{en\} \/>/,
     "../app/research/columns/columns.tsx": /\{access === "pro" && !editing && <Disclaimer en=\{!ja\} \/>\}\n    <\/div>\n  <\/article>/,
     "../app/research/weekly/issues.tsx": /<Disclaimer en=\{!ja\} \/>\n  <\/article>/,

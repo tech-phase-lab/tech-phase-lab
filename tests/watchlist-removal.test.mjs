@@ -49,9 +49,11 @@ test('uneditable watchlists cannot trigger a removal or confirmation',()=>{
  const h=harness('ja',false);h.accept();assert.equal(h.remove(),false);assert.equal(h.writes,0);assert.deepEqual(h.messages,[]);
 });
 
-test('pending watchlist uses the shared branded loading screen without flashing an empty list',()=>{
+test('pending watchlist opens in its own frame with row outlines, without flashing an empty list (owner, Nov 18: one-step opening)',()=>{
  const h=harness('ja',false,false,'loading');
- assert.equal(h.nodes().filter(n=>n.type==='research-loading').length,1);
+ assert.equal(h.nodes().filter(n=>n.type==='research-loading').length,0);
+ assert.equal(h.nodes().filter(n=>n.props?.['aria-busy']==='true').length,1);
+ assert.equal(h.nodes().filter(n=>n.type==='h1').length,1);
  assert.equal(h.nodes().filter(n=>n.type==='h2').length,0);
  assert.equal(h.nodes().filter(n=>n.props?.removeLabel).length,0);
  assert.equal(h.writes,0);

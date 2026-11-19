@@ -233,7 +233,8 @@ test('the public Capital Map returns actual reports without membership or a paid
   new Function('require', 'module', 'exports', compiled.outputFiles[0].text)(require, compiledModule, compiledModule.exports);
   const result = await compiledModule.exports.default();
   assert.equal(result.props.mode, 'reports');
-  assert.equal(result.props.portfolios.length, 24);
+  assert.equal(result.props.portfolios.length, 33);
+  assert.equal(result.props.portfolios.filter(p => p.kind === 'corporate').length, 14);
   assert.equal(result.props.portfolios.filter(p => p.kind === 'manager').length, 13);
   assert.ok(result.props.portfolios.every(p => p.current.holdings.length > 0 && p.current.source.url.startsWith('https://')));
   assert.ok(result.props.portfolios.filter(p => p.kind !== 'etf').every(p => p.previous?.asOf === '2026-03-31'));

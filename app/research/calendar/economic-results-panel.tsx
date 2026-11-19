@@ -1,20 +1,22 @@
 "use client";
 
 import { noBreakUnits } from "@/lib/research/no-break-units";
-import { useEffect, useState, type ReactNode } from "react";
+import { useEffect, useMemo, useState, type ReactNode } from "react";
 import type { ResultBrief } from "@/lib/research/market-results";
 import { calendarDateKey } from "@/lib/research/calendar";
 import { publicNewsPayload, type EventResult, type OfficialUpdate } from "@/lib/research/general-news";
 import { mergeEconomicResults } from "@/lib/research/pce-results";
 import { earningsResults } from "@/lib/research/earnings-results";
+import { checkedBriefs } from "@/lib/research/earnings-results-history";
 import { createNewsPoller } from "@/lib/research/news-poller";
 import { observePageActivity } from "@/lib/research/page-activity";
 import styles from "../research-tools.module.css";
 import calendarStyles from "./event-calendar.module.css";
 import DeepAnalysisPanel from "../deep-analysis-panel";
-import { useOwnerMode } from "../member-display-provider";
+import { useOwnerAccount, useOwnerMode } from "../member-display-provider";
 import XPostCopyButton from "./x-post-copy-button";
 import EarningsReaction from "./earnings-reaction";
+import { japaneseMoney } from "@/lib/research/money-ja";
 
 function ResultList({ rows, lang }: { rows: ReactNode[]; lang: "ja" | "en" }) {
   const [limit, setLimit] = useState(3);
@@ -25,9 +27,12 @@ function ResultList({ rows, lang }: { rows: ReactNode[]; lang: "ja" | "en" }) {
   </>;
 }
 
-export default function EconomicResultsPanel({ lang, zone, period, kind = "all", active = true, onSettled, onReported }: { lang: "ja" | "en"; zone: string; period: string; active?: boolean; kind?: "all" | "earnings" | "economic"; onSettled?: () => void; onReported?: (rows: { ticker: string; at: number }[]) => void }) {
+export default function EconomicResultsPanel({ lang, zone, period, kind = "all", active = true, onSettled, onReported, onMonths }: { lang: "ja" | "en"; zone: string; period: string; active?: boolean; kind?: "all" | "earnings" | "economic"; onSettled?: () => void; onReported?: (rows: { ticker: string; at: number }[]) => void; onMonths?: (months: string[]) => void }) {
   const [updates, setUpdates] = useState<OfficialUpdate[]>([]);
-  const [briefs, setBriefs] = useState<ResultBrief[]>([]);
+  const [liveBriefs, setBriefs] = useState<ResultBrief[]>([]);
+  // Results older than the news feed's seven days, by month (owner, Nov 18): the monitor's stored results and the SEC backfill.
+  const [history, setHistory] = useState<Record<string, ResultBrief[]>>({});
+  const ownerAccount = useOwnerAccount();
   const [events, setEvents] = useState<EventResult[]>([]);
   const ownerMode = useOwnerMode();
   const [failed, setFailed] = useState(false);
@@ -50,6 +55,24 @@ export default function EconomicResultsPanel({ lang, zone, period, kind = "all",
       poller.stop();
     };
   }, []);
+  const historyMonth = period === "all" ? "recent" : period;
+  useEffect(() => {
+    if (kind === "economic" || history[historyMonth]) return;
+    const controller = new AbortController();
+    fetch(`/api/research/earnings-results?month=${encodeURIComponent(historyMonth)}`, { signal: controller.signal })
+      .then(response => response.ok ? response.json() : null)
+      .then(body => {
+        if (!body) return;
+        setHistory(current => ({ ...current, [historyMonth]: checkedBriefs(body.resultBriefs) }));
+        if (Array.isArray(body.months)) onMonths?.(body.months.filter((month: unknown): month is string => typeof month === "string" && /^20\d\d-\d\d$/.test(month)));
+      }).catch(() => {});
+    return () => controller.abort();
+  }, [historyMonth, kind, history, onMonths]);
+  // One copy of each result: the live feed's, then the stored ones of every month read so far.
+  const briefs = useMemo(() => {
+    const seen = new Set<string>();
+    return [...liveBriefs, ...Object.values(history).flat()].filter(brief => { const key = `${brief.researchId}|${brief.url}`; if (seen.has(key)) return false; seen.add(key); return true; });
+  }, [liveBriefs, history]);
   const ja = lang === "ja";
   // The agenda below marks a company's call "results posted" from these rows (owner, Oct 15).
   useEffect(() => {
@@ -70,18 +93,19 @@ export default function EconomicResultsPanel({ lang, zone, period, kind = "all",
   const earningsSection = !!earnings.length && <section className={styles.section} aria-label={ja ? "決算の結果" : "Earnings results"}>
     <h2>{ja ? "決算の結果" : "Earnings results"}</h2>
     <ResultList key={`${lang}:${zone}:${period}:${kind}`} lang={lang} rows={earnings.map(row => {
-      const label = <>{time(row.releasedAt)}<span className={calendarStyles.eventName}>{ja ? noBreakUnits(row.title[lang]) : row.title[lang]}<small>{ja ? noBreakUnits(row.result.ja ?? "") : row.result.en}</small></span></>;
+      const label = <>{time(row.releasedAt)}<span className={calendarStyles.eventName}>{ja ? noBreakUnits(japaneseMoney(row.title[lang])) : row.title[lang]}<small>{ja ? noBreakUnits(japaneseMoney(row.result.ja ?? "")) : row.result.en}</small></span></>;
       const links = row.sources.filter(source => !source.url.startsWith("https://x.com/")).map(source => <a key={source.url} href={source.url} target="_blank" rel="noreferrer">{source.name} ↗</a>);
-      const text = ja ? row.body.ja : row.body.en;
+      const text = ja ? (row.body.ja && japaneseMoney(row.body.ja)) : row.body.en;
       // A row opens only when there is something more to read; "the company's
       // own release" alone is not a reason to expand (owner, Oct 14).
       if (!row.facts.length && !text) return <li key={row.id}><div className={calendarStyles.plainRow}>{label}<span className={calendarStyles.rowLinks}>{links}</span></div></li>;
       return <li key={row.id}><details>
         <summary>{label}<span className={calendarStyles.expand} aria-hidden="true">＋</span></summary>
         <div className={calendarStyles.eventDetails}>
-          {!!row.facts.length && <ul className={calendarStyles.facts}>{row.facts.map(fact => <li key={fact.en}>{ja ? fact.ja : fact.en}</li>)}</ul>}
-          {row.kind === "flash" && (() => { const brief = briefs.find(b => b.kind === "earnings" && b.ticker === row.ticker && row.sources.some(source => source.url === b.url)); return brief ? <><EarningsReaction ticker={brief.ticker} releasedAt={brief.publishedAt} lang={lang} /><XPostCopyButton brief={brief} lang={lang} /></> : null; })()}
-          {row.kind === "flash" && <p>{ja ? "決算速報の投稿から数値を読み取りました。会社の決算資料で確認してください。" : "Figures read from a results flash post; confirm against the company release."}</p>}
+          {!!row.facts.length && <ul className={calendarStyles.facts}>{row.facts.map(fact => <li key={fact.en}>{ja ? japaneseMoney(fact.ja) : fact.en}</li>)}</ul>}
+          {row.kind === "flash" && (() => { const brief = briefs.find(b => b.kind === "earnings" && b.ticker === row.ticker && row.sources.some(source => source.url === b.url)); return brief ? <><EarningsReaction ticker={brief.ticker} releasedAt={brief.publishedAt} lang={lang} />{ownerAccount && <XPostCopyButton brief={brief} lang={lang} />}</> : null; })()}
+          {row.factsFrom === "post" && <p>{ja ? "決算速報の投稿から数値を読み取りました。会社の決算資料で確認してください。" : "Figures read from a results flash post; confirm against the company release."}</p>}
+          {row.factsFrom === "issuer" && <p>{ja ? "会社の決算資料から数値を読み取りました。" : "Figures read from the company release."}</p>}
           {!!text && <p>{text.length > 500 ? `${text.slice(0, 500).replace(/[^。.!?！？]*$/, "").trim() || text.slice(0, 500)}…` : text}</p>}
           {links}
         </div>

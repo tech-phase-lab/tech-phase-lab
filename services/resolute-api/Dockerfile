@@ -6,6 +6,7 @@ COPY services/resolute-api/*.mjs ./services/resolute-api/
 COPY services/resolute-api/payments/ ./services/resolute-api/payments/
 COPY lib/resolute/*.ts lib/resolute/thermometer-rosters.json ./lib/resolute/
 COPY lib/membership/entitlements.ts ./lib/membership/entitlements.ts
+COPY lib/legal/ ./lib/legal/
 COPY lib/research/ ./lib/research/
 COPY scripts/research/mu_fq4_recovery.json scripts/research/sources.json ./scripts/research/
 USER node

@@ -1,7 +1,10 @@
 /** Private input only: never import the approved bank into a client bundle. */
 import {rizelCopyIssues} from './risk-copy-check.ts';
-/** Approved lines that evaluate importance/impact, give an outlook or a trading action wait for the owner's re-approval (rizel-admin). */
-export const needsReapproval=(e:{text:string;english?:{text:string}})=>rizelCopyIssues(e.text).length>0||rizelCopyIssues(e.english?.text??'').length>0;
+import {ownerRewrites,pendingOwnerRewrite,type OwnerRewrites} from './rizel-owner-rewrites.ts';
+/** Approved lines that evaluate importance/impact, give an outlook or a trading action wait for the owner's re-approval (rizel-admin).
+ * So does a line with an owner rewrite (private env) until the approved text in each locale equals that rewrite. */
+export const needsReapproval=(e:{id:string;text:string;english?:{text:string}},rewrites:OwnerRewrites=ownerRewrites())=>rizelCopyIssues(e.text).length>0||rizelCopyIssues(e.english?.text??'').length>0
+ ||pendingOwnerRewrite(e,'ja',rewrites)!==null||pendingOwnerRewrite(e,'en',rewrites)!==null;
 export type CopyEntry = {id:string;group:'A'|'B'|'C'|'D';kind:'conclusion'|'reason';revision:number;approval:string;publication:string;text:string;textSha256:string;english?:{text:string;approval:string;textSha256:string}};
 export type Evidence = {condition:string;articleRevision:string;source:string;verifiedBy:'data'|'editor';reference:string};
 export type SelectionArticle = {id:string;revision:string;stars:number;text:string};
@@ -15,11 +18,11 @@ export const conditions:Record<string,string> = {
 };
 const factualCopyConditions:Record<string,string>={'A-reason-07':'source_unverified','A-reason-03':'personal_criteria_not_met'};
 const numeric=new Set(['personal_criteria_not_met','target_changed','target_lowered','earnings_slight_miss','guidance_large_cut','rates_rose','rates_caused_price_fall','fx_large_move']);
-export function eligibleCopies(bank:CopyEntry[],article:SelectionArticle,evidence:Evidence[]) {
+export function eligibleCopies(bank:CopyEntry[],article:SelectionArticle,evidence:Evidence[],rewrites:OwnerRewrites=ownerRewrites()) {
  if(!Number.isInteger(article.stars)||article.stars<1||article.stars>5||!article.id||!article.revision)throw Error('INVALID_ARTICLE');
  const group=article.stars<=2?'A':article.stars===3?'B':'C';
  const verified=new Set(evidence.filter(e=>e.articleRevision===article.revision&&e.source&&e.reference&&(e.verifiedBy==='data'||e.verifiedBy==='editor'&&!numeric.has(e.condition))).map(e=>e.condition));
- return bank.filter(e=>e.approval==='approved'&&e.english?.approval==='approved'&&e.id!=='D-executive-03'&&!needsReapproval(e)&&(e.group===group&&(!factualCopyConditions[e.id]||verified.has(factualCopyConditions[e.id]))||e.group==='D'&&e.kind==='reason'&&conditions[e.id]&&verified.has(conditions[e.id])));
+ return bank.filter(e=>e.approval==='approved'&&e.english?.approval==='approved'&&e.id!=='D-executive-03'&&!needsReapproval(e,rewrites)&&(e.group===group&&(!factualCopyConditions[e.id]||verified.has(factualCopyConditions[e.id]))||e.group==='D'&&e.kind==='reason'&&conditions[e.id]&&verified.has(conditions[e.id])));
 }
 /** Editorial checks operate on immutable approved wording, never rewrite it. */
 export function repetitionIssues(entries:CopyEntry[]) {
