@@ -12,6 +12,7 @@ import { buildSecMarketEvidence } from "../lib/research/sec-market-evidence.ts";
 import { loadSecComparison, fiscalQuarterEnd } from "../lib/research/comparison-loader.ts";
 import { comparisonScores, hasRecentQuarter } from "../lib/research/comparison-scorecard.ts";
 import { statementOrder } from "../lib/research/twelve-warm-plan.ts";
+import { comparisonExclusion, comparableEntries, tickersByCik } from "../lib/research/comparison-exclusions.ts";
 
 test("share classes use the provider's dotted symbol; preferreds, warrants, units and rights are left as they are", () => {
   for (const [sec, provider] of [["BRK-B", "BRK.B"], ["BRK-A", "BRK.A"], ["LEN-B", "LEN.B"], ["HEI-A", "HEI.A"], ["PBR-A", "PBR.A"], ["MKC-V", "MKC.V"], ["BF-B", "BF.B"]]) assert.equal(providerSymbol(sec), provider);
@@ -135,4 +136,40 @@ test("a half-year: twelve-month revenue is the fiscal year plus this half minus 
   // Only this half's sales (Ohmyhome's exhibit): no growth or margin could come from it, so the fiscal year stays the period.
   const alone = extractFinancials("HALF", "1", facts(false), NOW);
   assert.equal(alone.periodMonths, 12); assert.equal(alone.quarterRevenue.value, 400e6);
+});
+
+// ---------- what the comparison does not offer (owner, Nov 19: option A) ----------
+const lists = JSON.parse(readFileSync(new URL("../lib/research/comparison-exclusions.json", import.meta.url), "utf8"));
+const dir = [
+  { ticker: "AACI", cik: 2092897, name: "Armada Acquisition Corp. III", exchange: "Nasdaq" }, { ticker: "AACIU", cik: 2092897, name: "Armada Acquisition Corp. III", exchange: "Nasdaq" },
+  { ticker: "AACIW", cik: 2092897, name: "Armada Acquisition Corp. III", exchange: "Nasdaq" },
+  { ticker: "SPY", cik: 884394, name: "SPDR S&P 500 ETF TRUST", exchange: "NYSE" }, { ticker: "GLD", cik: 1222333, name: "SPDR GOLD TRUST", exchange: "NYSE" },
+  { ticker: "CTA-PB", cik: 30554, name: "EIDP, Inc.", exchange: "NYSE" }, { ticker: "OPEN", cik: 1801169, name: "Opendoor Technologies Inc.", exchange: "Nasdaq" },
+  { ticker: "OPENW", cik: 1801169, name: "Opendoor Technologies Inc.", exchange: "Nasdaq" }, { ticker: "KCAC-UN", cik: 1, name: "K Acquisition", exchange: "NYSE" },
+  { ticker: "NMZ-RI", cik: 2, name: "Nuveen", exchange: "NYSE" },
+  // Ordinary shares that must stay: share classes, a five-letter ticker without a four-letter sibling, a mortgage REIT named "Trust", a foreign filer.
+  { ticker: "BRK-B", cik: 1067983, name: "BERKSHIRE HATHAWAY INC", exchange: "NYSE" }, { ticker: "MKC-V", cik: 63754, name: "MCCORMICK & CO INC", exchange: "NYSE" },
+  { ticker: "GOOGL", cik: 1652044, name: "Alphabet Inc.", exchange: "Nasdaq" }, { ticker: "MO", cik: 764180, name: "ALTRIA GROUP, INC.", exchange: "NYSE" },
+  { ticker: "ADAM", cik: 1273685, name: "ADAMAS TRUST, INC.", exchange: "Nasdaq" }, { ticker: "BTI", cik: 1303523, name: "British American Tobacco p.l.c.", exchange: "NYSE" },
+];
+test("SPACs, funds, preferreds, warrants, units and rights are not offered; ordinary shares and share classes are", () => {
+  const sib = tickersByCik(dir), kind = t => comparisonExclusion(dir.find(e => e.ticker === t), sib, lists);
+  assert.deepEqual(Object.fromEntries(["AACI", "AACIU", "AACIW", "SPY", "GLD", "CTA-PB", "OPENW", "KCAC-UN", "NMZ-RI"].map(t => [t, kind(t)])),
+    { AACI: "spac", AACIU: "unit", AACIW: "warrant", SPY: "fund", GLD: "fund", "CTA-PB": "preferred", OPENW: "warrant", "KCAC-UN": "unit", "NMZ-RI": "right" });
+  for (const t of ["BRK-B", "MKC-V", "GOOGL", "OPEN", "MO", "ADAM", "BTI"]) assert.equal(kind(t), null, t);
+  // A SPAC that completed its merger has the operating company's name: offered again without a new list.
+  assert.equal(comparisonExclusion({ ...dir[0], name: "Merged Operating Co." }, sib, lists), null);
+  assert.deepEqual(comparableEntries(dir, lists).map(e => e.ticker), ["OPEN", "BRK-B", "MKC-V", "GOOGL", "MO", "ADAM", "BTI"]);
+});
+
+test("the comparison's search asks for its own scope; a direct request for an excluded ticker is an unknown company, as before", () => {
+  for (const file of ["../app/research/compare/screen.tsx", "../app/research/compare/ticker-search.tsx"])
+    assert.match(readFileSync(new URL(file, import.meta.url), "utf8"), /\/api\/research\/stocks\?scope=compare&q=/);
+  const route = readFileSync(new URL("../app/api/research/stocks/route.ts", import.meta.url), "utf8");
+  assert.match(route, /searchParams\.get\("scope"\) === "compare" \? searchDirectory\(comparableEntries\(entries, COMPARISON_EXCLUSIONS\), query, limit\) : searchDirectory\(entries, query, limit\)/);
+  const server = readFileSync(new URL("../lib/research/comparison-server.ts", import.meta.url), "utf8");
+  assert.match(server, /return entry && !excluded \? \{/);
+  assert.match(server, /\(await excludedEntry\(ticker\)\)\.excluded\) return \{ needs: false, checkedAt \}/);
+  // The route answers an unresolved company with its existing error; nothing new is said on screen.
+  assert.match(readFileSync(new URL("../app/api/research/compare/route.ts", import.meta.url), "utf8"), /error: "unknown-company"/);
 });

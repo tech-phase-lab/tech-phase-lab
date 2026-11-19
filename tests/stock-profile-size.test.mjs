@@ -7,7 +7,8 @@ const source = (await readFile(new URL("../app/api/research/stocks/route.ts", im
   .replaceAll("@/lib/research/chain-network.server", new URL("../lib/research/chain-network.server.ts", import.meta.url).href)
   .replaceAll("@/lib/research/company-introductions", new URL("../lib/research/company-introductions.ts", import.meta.url).href)
   .replaceAll("@/lib/research/annual-filing-briefs", new URL("../lib/research/annual-filing-briefs.ts", import.meta.url).href)
-  .replaceAll("@/lib/research/stock-directory", new URL("../lib/research/stock-directory.ts", import.meta.url).href);
+  .replaceAll("@/lib/research/stock-directory", new URL("../lib/research/stock-directory.ts", import.meta.url).href)
+  .replaceAll("@/lib/research/comparison-exclusions", new URL("../lib/research/comparison-exclusions.ts", import.meta.url).href);
 const { GET } = await import("data:text/javascript;base64," + Buffer.from(stripTypeScriptTypes(source)).toString("base64"));
 
 test("large SEC profiles retain their industry while directory and profile limits stay bounded", async () => {
