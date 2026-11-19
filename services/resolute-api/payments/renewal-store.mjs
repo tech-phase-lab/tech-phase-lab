@@ -10,6 +10,7 @@ export const RETRY_DELAYS = Object.freeze([86400000, 2 * 86400000]);
 // A charge whose answer was lost is retried with the same PayPal-Request-Id only while PayPal still remembers it.
 export const SAME_KEY_WINDOW = 6 * 3600000;
 export const PENDING_LIMIT = 14 * 86400000;
+export const NOTICE_WINDOW = 30 * 86400000;
 const iso = row => row && Object.fromEntries(Object.entries(row).map(([k,v]) => [k,v instanceof Date ? v.toISOString() : v]));
 export const noticeKey = (user, periodEnd, kind) =>
   createHash('sha256').update(`resolute-renewal-notice-v1\n${user}\n${new Date(periodEnd).toISOString()}\n${kind}`).digest('hex').slice(0, 32);
@@ -194,13 +195,13 @@ export function renewalStore(pool, store, { environment = 'live' } = {}) {
       });
     },
 
-    // ---- notices (7 days before; and after a final failure)
+    // ---- notices (30 days before, as the terms say; and after a final failure)
     async noticesDue(now) {
-      const week = new Date(now + 7 * 86400000), at = new Date(now);
+      const window = new Date(now + NOTICE_WINDOW), at = new Date(now);
       const auto = (await pool.query(`SELECT user_id, next_renewal_at AS period_end, language, 'upcoming_auto' AS kind FROM ${S}.renewal_plans
-        WHERE state='active' AND next_renewal_at > $1 AND next_renewal_at <= $2`, [at, week])).rows;
+        WHERE state='active' AND next_renewal_at > $1 AND next_renewal_at <= $2`, [at, window])).rows;
       const failed = (await pool.query(`SELECT user_id, next_renewal_at AS period_end, language, 'failed' AS kind FROM ${S}.renewal_plans
-        WHERE state='failed' AND updated_at > $1`, [new Date(now - 7 * 86400000)])).rows;
+        WHERE state='failed' AND updated_at > $1`, [new Date(now - 30 * 86400000)])).rows;
       // Everyone else whose alerts end within a week (no saved PayPal, stopped, bank/guest payers…): the notice
       // that renewal is open, as before — only those who choose to renew are renewed.
       const manual = (await pool.query(`SELECT e.user_id, e.period_end, COALESCE((SELECT o.quote->>'language' FROM ${S}.orders o
@@ -208,7 +209,7 @@ export function renewalStore(pool, store, { environment = 'live' } = {}) {
         FROM (SELECT g.user_id, max(g.expires_at) AS period_end FROM ${S}.grants g JOIN ${S}.orders o ON o.id=g.order_id AND o.user_id=g.user_id
           WHERE g.state='active' AND o.state='paid' GROUP BY g.user_id) e
         WHERE e.period_end > $1 AND e.period_end <= $2
-          AND NOT EXISTS (SELECT 1 FROM ${S}.renewal_plans p WHERE p.user_id=e.user_id AND p.state='active')`, [at, week])).rows;
+          AND NOT EXISTS (SELECT 1 FROM ${S}.renewal_plans p WHERE p.user_id=e.user_id AND p.state='active')`, [at, window])).rows;
       return [...auto, ...failed, ...manual].map(iso).map(r => ({ ...r, key: noticeKey(r.user_id, r.period_end, r.kind) }));
     },
     /** Claim before sending. A notice already accepted (push/mail) is never sent again; a failed one is retried a few times. */

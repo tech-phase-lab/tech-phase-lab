@@ -8,9 +8,13 @@ export const RESOLUTE_CHECKOUT_LINES = {
   ja: ["通知機能は1年間。2年目からの更新（5,980円・PRO会員3,980円）は、更新時期にお知らせし、ご希望の方だけ更新します。", "お客様都合の返金はできません(二重課金・当方の不具合で使えない場合を除く)。"],
   en: ["Alerts run for one year. For renewal from year two ($39, PRO $29), we'll let you know when it's time to renew; only those who choose to renew are renewed.", "No refunds for change of mind (except double charges or if a fault on our side stops it from working)."],
 } as const;
-// RESOLUTE automatic renewal (owner, Nov 19): the only line added to the checkout screen, shown only for an order the
-// server created with automatic renewal (order.autoRenewal, flag RESOLUTE_AUTO_RENEWAL_ENABLED).
+// RESOLUTE automatic renewal (owner, Nov 19): replaces the first line ("…ご希望の方だけ更新します") for an order the server
+// created with automatic renewal (order.autoRenewal, flag RESOLUTE_AUTO_RENEWAL_ENABLED). With the flag off the lines stay as above.
 export const RESOLUTE_AUTO_RENEWAL_LINE = { ja: "1年後から自動で更新されます。いつでも止められます", en: "Renews automatically after one year. You can stop it anytime." } as const;
+export function resoluteCheckoutLines(en: boolean, autoRenewal: boolean): readonly string[] {
+  const lines = RESOLUTE_CHECKOUT_LINES[en ? "en" : "ja"];
+  return autoRenewal ? [RESOLUTE_AUTO_RENEWAL_LINE[en ? "en" : "ja"], lines[1]] : lines;
+}
 export const PRO_CHECKOUT_LINE = { ja: "月額・年額とも解約するまで自動更新。いつでも解約できます。", en: "Monthly and yearly plans renew automatically until you cancel. You can cancel anytime." } as const;
 
 export function termsHref(en: boolean) { return en ? "/terms?lang=en" : "/terms"; }

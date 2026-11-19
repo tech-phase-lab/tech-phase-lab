@@ -1,6 +1,6 @@
 // RESOLUTE automatic renewal (owner request 2026-11-19): PayPal Vault on the first purchase, merchant-initiated renewal
 // a year later at the renewal price of that moment (PRO member price from server records), the 7-days-before notice
-// (phone first, email otherwise), stop anytime, retries without double charges. Sandbox-style mocks only, no network.
+// (one email 30 days before, as the terms say), stop anytime, retries without double charges. Sandbox-style mocks only, no network.
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
@@ -12,9 +12,10 @@ import { paymentHttp } from '../services/resolute-api/payments/http.mjs';
 import { createPaypal } from '../services/resolute-api/payments/paypal.mjs';
 import { PaymentError } from '../services/resolute-api/payments/policy.mjs';
 import { renewalStore, noticeKey } from '../services/resolute-api/payments/renewal-store.mjs';
-import { renewalJob, renewalMessage, renewalDayStart, renewalMailProvider, primaryEmail, ACCOUNT_PAGE } from '../services/resolute-api/payments/renewal.mjs';
+import { renewalJob, renewalMessage, renewalDayStart, renewalDate, renewalPrice, renewalMailProvider, primaryEmail } from '../services/resolute-api/payments/renewal.mjs';
 import { OWNER_ACCOUNT_ID } from '../lib/membership/entitlements.ts';
 import { liveOrder } from '../lib/resolute/live-checkout.ts';
+import { legalModule } from './support-legal-modules.mjs';
 
 const read = path => readFileSync(new URL(path, import.meta.url), 'utf8');
 const MID = 'MERCHANT1234', DAY = 86400000;
@@ -77,11 +78,10 @@ async function buy(t, { flag = true, pro = false, user = 'user_buyer1', vault } 
   const engine = paymentEngine({ store: l.store, paypal, environment: 'live', merchantId: MID, getUser, now, renewals: l.renewals, autoRenewal: () => flag });
   const created = await engine.create(user, { kind: 'initial', language: 'ja', requestKey: randomUUID() });
   const captured = await engine.capture(user, { orderId: created.orderId });
-  const pushes = [], mails = [];
-  const push = { pushAccepted: 1, send: async input => { pushes.push(input); return { devices: 1, accepted: push.pushAccepted, failed: 0 }; } };
+  const mails = [];
   const mail = { send: async (key, to, m) => { mails.push({ key, to, ...m }); return 'mail-id'; } };
-  const job = () => renewalJob({ store: l.store, renewals: l.renewals, paypal, merchantId: MID, getUser, push, mail, origin: 'https://techphase.app', now, enabled: true })();
-  return { ...l, engine, paypal, users, created, captured, pushes, mails, push, job, user, at: v => { clock = v; } };
+  const job = () => renewalJob({ store: l.store, renewals: l.renewals, paypal, merchantId: MID, getUser, mail, now, enabled: true })();
+  return { ...l, engine, paypal, users, created, captured, mails, job, user, at: v => { clock = v; } };
 }
 
 test('flag off (default): no PayPal vault request, no screen line, no plan — today\'s purchase unchanged', async t => {
@@ -100,10 +100,13 @@ test('first purchase saves PayPal with consent; the renewal is charged once on t
   assert.ok(order.auto_renewal_consent_at, 'agree click recorded as consent');
   assert.deepEqual(await s.renewals.view(s.user), { available: true, enabled: true, state: 'active', nextRenewalAt: new Date(RENEWS).toISOString() });
   // Nothing before the 7-day window, then one phone notice (no email), never twice.
-  s.at(RENEWS - 8 * DAY); await s.job(); assert.equal(s.pushes.length, 0);
-  s.at(RENEWS - 7 * DAY + 3600000); assert.equal((await s.job()).notices, 1); await s.job();
-  assert.equal(s.pushes.length, 1); assert.equal(s.mails.length, 0);
-  assert.equal(s.pushes[0].notice.url, ACCOUNT_PAGE); assert.match(s.pushes[0].notice.body, /2027年12月16日に通知機能が自動で更新されます（5,980円・PRO会員3,980円）/);
+  // One email 30 days before (as the terms say), never twice, no phone notice.
+  s.at(RENEWS - 31 * DAY); await s.job(); assert.equal(s.mails.length, 0);
+  s.at(RENEWS - 30 * DAY + 3600000); assert.equal((await s.job()).notices, 1); await s.job();
+  s.at(RENEWS - 7 * DAY); await s.job();
+  assert.equal(s.mails.length, 1);
+  assert.equal(s.mails[0].subject, 'RESOLUTE 通知機能の更新のお知らせ'); assert.equal(s.mails[0].to, 'buyer@example.com');
+  assert.equal(s.mails[0].text, '12月16日に、RESOLUTEの通知機能を1年分自動で更新します。\n更新料は5,980円で、ご登録のカードにてお支払いいただきます。\n停止をご希望の方は、更新日の前日までにアカウント画面からお手続きください。');
   assert.equal(s.paypal.charges, 0, 'no charge at notice time');
   // The day before the renewal day (JST): still nothing.
   s.at(renewalDayStart(new Date(RENEWS).toISOString()) - 60000); await s.job(); assert.equal(s.paypal.charges, 0);
@@ -123,13 +126,16 @@ test('first purchase saves PayPal with consent; the renewal is charged once on t
 test('PRO membership is read from server records at charge time: member price, whatever it was at purchase', async t => {
   const s = await buy(t);
   s.users.set(s.user, account(s.user, true));
+  s.at(RENEWS - 30 * DAY + 60000); await s.job();
+  assert.match(s.mails[0].text, /更新料は3,980円で/, 'the email shows the member price');
   s.at(RENEWS - 60000); await s.job();
   const renewal = [...s.paypal.keys.values()][0];
   assert.equal(renewal.purchase_units[0].amount.value, '3980');
   const order = await s.store.findPaypal(renewal.id);
   assert.equal(order.quote.priceClass, 'pro'); assert.equal(order.state, 'paid');
   // English buyers pay in USD: $39 / PRO $29 (same table as quote()).
-  assert.match(renewalMessage('upcoming_auto', 'en', new Date(RENEWS).toISOString(), 'https://techphase.app').push.body, /\(\$39, PRO \$29\)/);
+  assert.equal(renewalMessage('upcoming_auto', 'en', new Date(RENEWS).toISOString(), '$29').text,
+    'Your RESOLUTE alerts will renew automatically for another year on December 16, 2027. The renewal fee of $29 will be charged to your card on file. To stop the renewal, please do so from your account page before December 16, 2027.');
 });
 
 test('a lost answer is retried with the same PayPal-Request-Id; PayPal replays it and nothing is charged twice', async t => {
@@ -151,7 +157,7 @@ test('a lost answer is retried with the same PayPal-Request-Id; PayPal replays i
 
 test('declines retry on day 0, +1 and +3, then stop, tell the member (email when no phone) and never charge again', async t => {
   const s = await buy(t);
-  s.paypal.next = 'decline'; s.push.pushAccepted = 0;
+  s.paypal.next = 'decline';
   const start = renewalDayStart(new Date(RENEWS).toISOString()) + 60000;
   s.at(start); assert.equal((await s.job()).declined, 1);
   s.at(start + 3600000); await s.job(); // before the retry time: nothing
@@ -180,8 +186,8 @@ test('bank-funded PENDING capture: wait, never charge again, grant when PayPal c
 test('stop anytime from the account screen (also while sales are closed); restart only before the renewal day', async t => {
   const s = await buy(t);
   assert.equal((await s.engine.setAutoRenewal(s.user, { enabled: false })).enabled, false);
-  s.at(RENEWS - 7 * DAY + 60000); await s.job();
-  assert.equal(s.pushes[0].notice.body.includes('有効期限'), true, 'stopped members get the ordinary renewal notice');
+  s.at(RENEWS - 30 * DAY + 60000); await s.job();
+  assert.equal(s.mails[0].text, '12月16日でRESOLUTEの通知機能のご利用期間が終わります。続けてご利用の方は、アカウント画面から更新のお手続きをお願いします。', 'stopped members get the renew-by-hand email');
   s.at(RENEWS - 60000); await s.job(); assert.equal(s.paypal.charges, 0);
   s.at(RENEWS + 60000);
   await assert.rejects(s.engine.setAutoRenewal(s.user, { enabled: true }), /AUTO_RENEWAL_UNAVAILABLE/);
@@ -205,8 +211,8 @@ test('without a saved PayPal (guest card, PayPal declined to save) the member fa
   const s = await buy(t, { vault: { status: 'APPROVED', id: 'tok_later' } });
   assert.equal((await s.renewals.view(s.user)).available, false);
   assert.ok((await s.db.query("SELECT 1 FROM resolute_payments_live.audit WHERE code='AUTO_RENEWAL_NOT_SAVED'")).rows.length);
-  s.at(RENEWS - 7 * DAY + 60000); await s.job();
-  assert.match(s.pushes[0].notice.body, /有効期限は2027年12月16日です。更新を希望する場合は/);
+  s.at(RENEWS - 30 * DAY + 60000); await s.job();
+  assert.equal(s.mails[0].text, '12月16日でRESOLUTEの通知機能のご利用期間が終わります。続けてご利用の方は、アカウント画面から更新のお手続きをお願いします。');
   s.at(RENEWS - 60000); await s.job(); assert.equal(s.paypal.charges, 0);
   // PayPal later sends the saved token (APPROVED → VAULTED): enrolled through the webhook.
   const engine = paymentEngine({ store: s.store, renewals: s.renewals, merchantId: MID, environment: 'live', getUser: async id => account(id),
@@ -261,14 +267,17 @@ test('PayPal requests: vault only when offered, merchant-initiated renewal with 
   assert.equal(savedPaypal({ payment_source: { paypal: { attributes: { vault: { id: 'a', status: 'APPROVED' } } } } }), null);
 });
 
-test('notices: texts fit the phone limit, open the account page, and fall back to email; mail uses an idempotency key', async () => {
-  for (let m = 0; m < 12; m++) for (const language of ['ja', 'en']) for (const kind of ['upcoming_auto', 'upcoming_manual', 'failed']) {
-    const n = renewalMessage(kind, language, new Date(Date.UTC(2027, m, 28, 3)).toISOString(), 'https://techphase.app');
-    assert.ok(n.push.body.length <= 120 && !/[\x00-\x1f]/.test(n.push.body), `${kind} ${language} ${m}`);
-    assert.equal(n.push.title, 'RESOLUTE'); assert.equal(n.push.url, '/research/account');
-  }
-  assert.match(read('../scripts/research/web_push.py'), /'\/research\/account': 'resolute-renewal'/);
-  assert.ok(JSON.parse(read('../lib/research/push-targets.json')).openable.includes('/research/account'));
+test('notices: the owner\'s wording word for word, date and price formats, email only (no phone notice)', async () => {
+  const end = '2027-12-16T03:00:01Z';
+  assert.equal(renewalDate(end, 'ja'), '12月16日'); assert.equal(renewalDate(end, 'en'), 'December 16, 2027');
+  assert.equal(renewalDate('2027-12-15T15:00:00Z', 'ja'), '12月16日', 'JST date');
+  assert.equal(renewalPrice({ currency: 'JPY', value: '5980' }), '5,980円'); assert.equal(renewalPrice({ currency: 'USD', value: '39.00' }), '$39');
+  assert.deepEqual(renewalMessage('upcoming_auto', 'ja', end, '5,980円'), { subject: 'RESOLUTE 通知機能の更新のお知らせ', text: '12月16日に、RESOLUTEの通知機能を1年分自動で更新します。\n更新料は5,980円で、ご登録のカードにてお支払いいただきます。\n停止をご希望の方は、更新日の前日までにアカウント画面からお手続きください。' });
+  assert.deepEqual(renewalMessage('upcoming_manual', 'ja', end), { subject: 'RESOLUTE 通知機能の更新のお知らせ', text: '12月16日でRESOLUTEの通知機能のご利用期間が終わります。続けてご利用の方は、アカウント画面から更新のお手続きをお願いします。' });
+  assert.deepEqual(renewalMessage('upcoming_manual', 'en', end), { subject: 'Your RESOLUTE alerts renewal', text: 'Your RESOLUTE alerts end on December 16, 2027. To keep using them, please renew from your account page.' });
+  assert.throws(() => renewalMessage('upcoming_auto', 'ja', end));
+  assert.ok(!read('../scripts/research/web_push.py').includes('/research/account'), 'no phone notice for renewal');
+  assert.ok(!read('../services/resolute-api/payments/renewal.mjs').includes('push.send'));
   assert.match(noticeKey('user_a', '2027-12-16T03:00:00Z', 'upcoming_auto'), /^[a-f0-9]{32}$/);
   assert.equal(primaryEmail(account('user_a')), 'buyer@example.com');
   assert.equal(primaryEmail({ ...account('user_a'), emailAddresses: [{ id: 'e1', emailAddress: 'x@example.com', verification: { status: 'unverified' } }] }), null);
@@ -285,8 +294,17 @@ test('screens: exactly one checkout line behind the server flag, the account tog
   const live = read('../app/resolute/checkout/live-screen.tsx'), agree = read('../app/legal/agree-button.tsx');
   assert.ok(agree.includes('ja: "1年後から自動で更新されます。いつでも止められます"'));
   assert.ok(agree.includes('en: "Renews automatically after one year. You can stop it anytime."'));
-  assert.equal(live.split('RESOLUTE_AUTO_RENEWAL_LINE').length - 1, 2, 'imported once, rendered once');
-  assert.match(live, /\{order\.autoRenewal===true && <CheckoutLines lines=\{\[RESOLUTE_AUTO_RENEWAL_LINE\[en\?"en":"ja"\]\]\} \/>\}/);
+  // The 「ご希望の方だけ更新します」 line is replaced (not added to) for an auto-renewal order; flag off = today's lines.
+  assert.match(live, /<CheckoutLines lines=\{resoluteCheckoutLines\(en,order\.autoRenewal===true\)\} \/>\n    <AgreeButton/);
+  const { resoluteCheckoutLines, RESOLUTE_CHECKOUT_LINES } = legalModule('../../legal/agree-button');
+  assert.deepEqual(resoluteCheckoutLines(false, false), RESOLUTE_CHECKOUT_LINES.ja);
+  assert.deepEqual(resoluteCheckoutLines(false, true), ['1年後から自動で更新されます。いつでも止められます', RESOLUTE_CHECKOUT_LINES.ja[1]]);
+  assert.deepEqual(resoluteCheckoutLines(true, true), ['Renews automatically after one year. You can stop it anytime.', RESOLUTE_CHECKOUT_LINES.en[1]]);
+  // Renew by hand from the account page: the existing 「通知サービスを更新」 button opens the renewal checkout (members only).
+  assert.match(read('../app/research/account/account-view.tsx'), /"\/resolute\/checkout\?lang=ja&kind=renewal"[^\n]*通知サービスを更新/);
+  assert.match(read('../app/resolute/checkout/page.tsx'), /renewal=\{params\.kind === "renewal" && !order\}/);
+  assert.match(live, /kind=renewal && !guest \? "renewal" as const : "initial" as const/);
+  assert.match(read('../app/resolute/checkout/live-identity.tsx'), /props\.guestEnabled && !props\.renewal/);
   const route = read('../app/api/resolute/live-payments/[...action]/route.ts');
   assert.match(route, /\["claim", "recovery\/claim", "auto-renewal"\]\.includes\(path\) && process\.env\.RESOLUTE_LIVE_SALES_ENABLED/);
   const view = read('../app/research/account/account-view.tsx');
@@ -295,4 +313,17 @@ test('screens: exactly one checkout line behind the server flag, the account tog
     quote: { kind: 'initial', language: 'ja', currency: 'JPY', value: '7980', priceClass: 'launch' } }));
   // The job is never scheduled by the repository; the worker prints only {"enabled":false} while the flag is off.
   assert.match(read('../services/resolute-api/payments/renewal-worker.mjs'), /RESOLUTE_AUTO_RENEWAL_ENABLED !== 'true'/);
+});
+
+test('stop deadline: stopping by the day before the renewal date means no charge; the charge happens on the renewal date (JST)', async t => {
+  const dayStart = renewalDayStart(new Date(RENEWS).toISOString());
+  assert.equal(new Date(dayStart + 9 * 3600000).toISOString().slice(0, 10), '2027-12-16');
+  const s = await buy(t);
+  s.at(dayStart - 60000); // 23:59 JST on 12/15, the day before
+  assert.equal((await s.engine.setAutoRenewal(s.user, { enabled: false })).enabled, false);
+  s.at(dayStart + 60000); await s.job(); s.at(RENEWS + DAY); await s.job();
+  assert.equal(s.paypal.charges, 0);
+  const k = await buy(t, { user: 'user_buyer4' });
+  k.at(dayStart - 60000); await k.job(); assert.equal(k.paypal.charges, 0, 'nothing the day before');
+  k.at(dayStart + 60000); await k.job(); assert.equal(k.paypal.charges, 1, 'charged on 12/16 JST');
 });

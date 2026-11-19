@@ -3,7 +3,7 @@ import { useEffect, useRef, useState, type ReactNode } from "react";
 import { checkoutUrl, liveApprovalUrl, liveCheckoutRequest, liveOrder, type LiveOrder } from "@/lib/resolute/live-checkout";
 import type { CheckoutProps } from "./screen";
 import styles from "./styles.module.css";
-import AgreeButton, { CheckoutLines, RESOLUTE_AUTO_RENEWAL_LINE, RESOLUTE_CHECKOUT_LINES, termsHref } from "../../legal/agree-button";
+import AgreeButton, { CheckoutLines, resoluteCheckoutLines, termsHref } from "../../legal/agree-button";
 import Disclaimer from "../disclaimer";
 const errors: Record<string,[string,string]> = {
  GUEST_SESSION_REQUIRED:["購入時と同じブラウザで開いてください。解決しない場合は注文番号を添えてお問い合わせください。","Open this page in the browser you used to purchase. If you still need help, contact support with your order number."],
@@ -15,9 +15,10 @@ const errors: Record<string,[string,string]> = {
  PAYMENT_NOT_APPROVED:["PayPalでの承認が確認できません。","PayPal hasn’t confirmed your approval yet."],
  ORDER_NOT_FOUND:["このアカウントの注文を確認できません。","We couldn’t find this order for your account."],
 };
-export default function LiveCheckoutScreen({orderId,language:initialLanguage,cancelled,salesEnabled,guest=false,signedIn=false,signIn,accountLabel}: CheckoutProps & {salesEnabled:boolean;guest?:boolean;signedIn?:boolean;signIn?:(id:string|null)=>ReactNode;signingUp?:boolean;accountLabel?:string}) {
- // First purchase only (owner, Nov 2026): renewal moves to the account screen later, so there is no purchase-type choice here.
- const [language,setLanguage]=useState(initialLanguage),kind="initial" as const;
+export default function LiveCheckoutScreen({orderId,language:initialLanguage,cancelled,salesEnabled,guest=false,signedIn=false,signIn,accountLabel,renewal=false}: CheckoutProps & {salesEnabled:boolean;guest?:boolean;signedIn?:boolean;signIn?:(id:string|null)=>ReactNode;signingUp?:boolean;accountLabel?:string;renewal?:boolean}) {
+ // No purchase-type choice here (owner, Nov 2026). Renewal by hand (Nov 19) is opened from the account screen's
+ // 「通知サービスを更新」 button (?kind=renewal, signed-in members only) and reuses this screen's words.
+ const [language,setLanguage]=useState(initialLanguage),kind=renewal && !guest ? "renewal" as const : "initial" as const;
  const [order,setOrder]=useState<LiveOrder|null>(null),[busy,setBusy]=useState(false),[error,setError]=useState("");
  const [claimed,setClaimed]=useState(false);
  const [uncertain,setUncertain]=useState(false);
@@ -35,7 +36,7 @@ export default function LiveCheckoutScreen({orderId,language:initialLanguage,can
  function switchLanguage(next:"ja"|"en") {
   if(lock.current)return;
   setLanguage(next);
-  window.history.replaceState(null,"",checkoutUrl(next,id,cancelled,guest));
+  window.history.replaceState(null,"",checkoutUrl(next,id,cancelled,guest,kind==="renewal" && !id));
  }
  async function act(action:"create"|"capture"|"status"|"claim") {
   if(lock.current)return;
@@ -78,7 +79,7 @@ export default function LiveCheckoutScreen({orderId,language:initialLanguage,can
   {!salesEnabled && <p role="status">{errors.PAYMENT_DISABLED[en?1:0]}</p>}
   {cancelled && <p>{en?"You returned from PayPal. Opening this page does not complete a payment.":"PayPalから戻りました。このページを開いただけで支払いは確定しません。"}</p>}
   {!id && <>
-   <p>{en?"Your first purchase includes RESOLUTE and one year of Alerts, Morning Note, Shock Gauge and RIZEL’s Take. Payment is by PayPal (credit card or bank account).":"初回購入にはRESOLUTEと、1年間のアラート通知・翌朝のひとこと・衝撃度チェッカー・RIZELの一言が含まれます。お支払いはPayPal（クレジットカード・銀行口座払い）です。"}</p>
+   {kind==="initial" && <p>{en?"Your first purchase includes RESOLUTE and one year of Alerts, Morning Note, Shock Gauge and RIZEL’s Take. Payment is by PayPal (credit card or bank account).":"初回購入にはRESOLUTEと、1年間のアラート通知・翌朝のひとこと・衝撃度チェッカー・RIZELの一言が含まれます。お支払いはPayPal（クレジットカード・銀行口座払い）です。"}</p>}
    <button disabled={busy || !salesEnabled} onClick={()=>void act("create")}>{en?"Check price and continue":"価格を確認して進む"}</button>
   </>}
   {order && <>
@@ -94,8 +95,7 @@ export default function LiveCheckoutScreen({orderId,language:initialLanguage,can
    {!paid && !held && !uncertain && order.state==="created" && salesEnabled && <div className={styles.actions}>
     {approval && <a className={styles.button} href={approval} rel="noreferrer">{en?"Continue to PayPal":"PayPalへ進む"}</a>}
     <p>{en?"After approving in PayPal, return here to complete your payment.":"PayPalで承認した後、この画面で支払いを確定します。"}</p>
-    {order.autoRenewal===true && <CheckoutLines lines={[RESOLUTE_AUTO_RENEWAL_LINE[en?"en":"ja"]]} />}
-    <CheckoutLines lines={RESOLUTE_CHECKOUT_LINES[en?"en":"ja"]} />
+    <CheckoutLines lines={resoluteCheckoutLines(en,order.autoRenewal===true)} />
     <AgreeButton en={en} disabled={busy} onClick={()=>void act("capture")} />
    </div>}
   </>}

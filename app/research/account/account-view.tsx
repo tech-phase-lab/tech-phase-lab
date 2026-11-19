@@ -259,7 +259,7 @@ export default function AccountView({ ja, member, billingAvailable, onRecheck, i
       ? <>{resolute.alertsUntil && formatDay(resolute.alertsUntil, ja) && <div className={styles.kvs} style={{ marginTop: 6 }}><div className={styles.kv}><span>{t("通知サービスの有効期限", "Alerts valid until")}</span><b>{formatDay(resolute.alertsUntil, ja)}</b></div>
             {renewal?.available && <div className={styles.kv}><span>{t("自動更新", "Auto-renewal")}</span><button type="button" className={styles.link} disabled={renewalBusy} aria-pressed={renewal.enabled} onClick={() => void toggleRenewal()}>{renewal.enabled ? t("オン（止める）", "On (stop)") : t("オフ（再開する）", "Off (resume)")}</button></div>}</div>}
           <div className={styles.stack}><Link className={`${styles.btn} ${styles.abt}`} href={ja ? "/resolute" : "/resolute?lang=en"}>{t("RESOLUTEを開く", "Open RESOLUTE")}</Link>
-            <Link className={`${styles.btn} ${styles.abt} ${styles.abtO}`} style={{ height: 46, fontSize: 14 }} href="/resolute/settings">{t("通知サービスを更新", "Renew alerts")}</Link></div></>
+            <Link className={`${styles.btn} ${styles.abt} ${styles.abtO}`} style={{ height: 46, fontSize: 14 }} href={ja ? "/resolute/checkout?lang=ja&kind=renewal" : "/resolute/checkout?lang=en&kind=renewal"}>{t("通知サービスを更新", "Renew alerts")}</Link></div></>
       : <Link className={`${styles.btn} ${styles.abt} ${styles.abtO}`} style={{ marginTop: 16 }} href={ja ? "/resolute" : "/resolute?lang=en"}>{t("RESOLUTEを見る", "See RESOLUTE")}</Link>}
   </div>;
 

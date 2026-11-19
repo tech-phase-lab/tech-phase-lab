@@ -5,8 +5,9 @@ export type LiveOrder = {
  autoRenewal?: true;
  quote: { kind: "initial" | "renewal"; language: CheckoutLanguage; currency: "JPY" | "USD"; value: string; priceClass: string };
 };
-export function checkoutUrl(language: CheckoutLanguage, orderId?: string | null, cancelled = false, guest = false) {
+export function checkoutUrl(language: CheckoutLanguage, orderId?: string | null, cancelled = false, guest = false, renewal = false) {
  const query = new URLSearchParams({lang: language});
+ if (renewal) query.set("kind", "renewal");
  if (orderId) query.set("order", orderId);
  if (guest) query.set("guest", "1");
  if (cancelled) query.set("cancel", "1");

@@ -6,52 +6,49 @@ import { SAME_KEY_WINDOW, PENDING_LIMIT } from './renewal-store.mjs';
 //  1. settles renewal charges whose answer is not final yet (lost answer, bank-funded PENDING capture),
 //  2. charges plans whose renewal day (JST) has come, with the saved PayPal and the renewal price of that moment
 //     (PRO members get the member price, read from Clerk on the server at charge time),
-//  3. sends the 7-days-before notice by phone (Web Push) and by email to those the phone notice did not reach,
-//     plus the "could not renew" notice after the last declined attempt.
+//  3. sends the renewal notice once by email 30 days before the renewal date (owner, Nov 19: as the terms say;
+//     no phone notice), plus the "could not renew" email after the last declined attempt.
 // Never: a second charge for the same period, a charge without a saved PayPal and recorded consent, a retry after an
 // unknown result outside PayPal's idempotency window, or any change to refunds (those stay webhook-driven).
-export const ACCOUNT_PAGE = '/research/account';
 const JST = 9 * 3600000;
 export function renewalDayStart(iso) {
   const d = new Date(Date.parse(iso) + JST);
   return Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate()) - JST;
 }
-const PRICES = { ja: ['5,980円', '3,980円'], en: ['$39', '$29'] };
-function day(iso, language) {
+const MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+/** 「12月16日」 / "December 16, 2027" — the renewal date in JST. */
+export function renewalDate(iso, language) {
   const d = new Date(Date.parse(iso) + JST);
-  return language === 'en'
-    ? `${['January','February','March','April','May','June','July','August','September','October','November','December'][d.getUTCMonth()]} ${d.getUTCDate()}, ${d.getUTCFullYear()}`
-    : `${d.getUTCFullYear()}年${d.getUTCMonth() + 1}月${d.getUTCDate()}日`;
+  return language === 'en' ? `${MONTHS[d.getUTCMonth()]} ${d.getUTCDate()}, ${d.getUTCFullYear()}` : `${d.getUTCMonth() + 1}月${d.getUTCDate()}日`;
 }
-/** Phone text (≤120 characters), email subject and body. No amounts beyond the published renewal prices. */
-export function renewalMessage(kind, language, periodEnd, origin) {
-  const en = language === 'en', date = day(periodEnd, language), [free, pro] = PRICES[en ? 'en' : 'ja'];
-  const link = `${origin}${ACCOUNT_PAGE}${en ? '?lang=en' : ''}`;
-  const text = {
-    upcoming_auto: en
-      ? [`Your RESOLUTE alerts renew automatically on ${date} (${free}, PRO ${pro}). Stop anytime on your account page.`,
-        'RESOLUTE: your alerts renew automatically in 7 days',
-        `Your RESOLUTE alerts renew automatically on ${date}. The renewal is ${free} (${pro} for Tech Phase PRO members on the renewal date), paid with the PayPal you saved at purchase.\n\nYou can stop automatic renewal anytime on your account page:\n${link}`]
-      : [`${date}に通知機能が自動で更新されます（${free}・PRO会員${pro}）。止めるときはアカウント画面から。`,
-        'RESOLUTE 通知機能の自動更新のお知らせ（7日前）',
-        `RESOLUTEの通知機能は${date}に自動で更新されます。更新料金は${free}（更新日にTech Phase PRO会員の方は${pro}）で、購入時に保存したPayPalでお支払いいただきます。\n\n自動更新はアカウント画面からいつでも止められます。\n${link}`],
-    upcoming_manual: en
-      ? [`Your RESOLUTE alerts end on ${date}. To renew (${free}, PRO ${pro}), go to your account page.`,
-        'RESOLUTE: your alerts end in 7 days',
-        `Your RESOLUTE alerts end on ${date}. Renewal is ${free} (${pro} for Tech Phase PRO members). Only those who choose to renew are renewed.\n\n${link}`]
-      : [`通知機能の有効期限は${date}です。更新を希望する場合は、アカウント画面から手続きできます（${free}・PRO会員${pro}）。`,
-        'RESOLUTE 通知機能の更新時期のお知らせ',
-        `RESOLUTEの通知機能の有効期限は${date}です。更新料金は${free}（Tech Phase PRO会員の方は${pro}）です。ご希望の方だけ更新します。\n\n${link}`],
-    failed: en
-      ? ["We couldn't renew your RESOLUTE alerts automatically. Please check your PayPal and renew from your account page.",
-        "RESOLUTE: we couldn't renew your alerts",
-        `We couldn't renew your RESOLUTE alerts automatically with your saved PayPal, so we have stopped trying and nothing was charged. Please check your PayPal payment method, then renew from your account page if you'd like to continue.\n\n${link}`]
-      : ['通知機能の自動更新ができませんでした。PayPalのお支払い方法をご確認のうえ、アカウント画面から更新してください。',
-        'RESOLUTE 通知機能を自動で更新できませんでした',
-        `保存されたPayPalで通知機能を自動で更新できなかったため、自動更新を止めました。料金は請求していません。PayPalのお支払い方法をご確認のうえ、続ける場合はアカウント画面から更新してください。\n\n${link}`],
-  }[kind];
-  if (!text) throw Error('Unknown renewal notice');
-  return { push: { title: 'RESOLUTE', body: text[0], url: ACCOUNT_PAGE }, subject: text[1], text: text[2] };
+/** 「5,980円」 / "$39" from the quote (the renewal price for this member now; PRO members get the member price). */
+export function renewalPrice(q) {
+  return q.currency === 'JPY' ? `${Number(q.value).toLocaleString('en-US')}円` : `$${q.value.endsWith('.00') ? q.value.slice(0, -3) : q.value}`;
+}
+export const NOTICE_DAYS = 30;
+/**
+ * The owner's wording (Nov 19), word for word. upcoming_auto: saved PayPal, renews automatically; upcoming_manual:
+ * no saved PayPal (bank/guest-page payers, stopped renewals) — renew from the account page. failed: after the last
+ * declined attempt (not part of the owner's wording; plain notice that nothing was charged).
+ */
+export function renewalMessage(kind, language, periodEnd, price = null) {
+  const en = language === 'en', date = renewalDate(periodEnd, language);
+  if (kind === 'upcoming_auto') {
+    if (!price) throw Error('Renewal price required');
+    return en ? { subject: 'Your RESOLUTE alerts renewal',
+      text: `Your RESOLUTE alerts will renew automatically for another year on ${date}. The renewal fee of ${price} will be charged to your card on file. To stop the renewal, please do so from your account page before ${date}.` }
+      : { subject: 'RESOLUTE 通知機能の更新のお知らせ',
+      text: `${date}に、RESOLUTEの通知機能を1年分自動で更新します。\n更新料は${price}で、ご登録のカードにてお支払いいただきます。\n停止をご希望の方は、更新日の前日までにアカウント画面からお手続きください。` };
+  }
+  if (kind === 'upcoming_manual') {
+    return en ? { subject: 'Your RESOLUTE alerts renewal', text: `Your RESOLUTE alerts end on ${date}. To keep using them, please renew from your account page.` }
+      : { subject: 'RESOLUTE 通知機能の更新のお知らせ', text: `${date}でRESOLUTEの通知機能のご利用期間が終わります。続けてご利用の方は、アカウント画面から更新のお手続きをお願いします。` };
+  }
+  if (kind === 'failed') {
+    return en ? { subject: "Your RESOLUTE alerts couldn't be renewed", text: "We couldn't renew your RESOLUTE alerts automatically, so automatic renewal has stopped and nothing was charged. To keep using them, please renew from your account page." }
+      : { subject: 'RESOLUTE 通知機能を自動で更新できませんでした', text: '通知機能を自動で更新できなかったため、自動更新を止めました。料金は請求していません。続けてご利用の方は、アカウント画面から更新のお手続きをお願いします。' };
+  }
+  throw Error('Unknown renewal notice');
 }
 
 const email = s => typeof s === 'string' && s.length <= 320 && /^[A-Za-z0-9.!#$%&'*+/=?^_`{|}~-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/.test(s);
@@ -78,7 +75,7 @@ export function renewalMailProvider({ apiKey, from }, request = fetch) {
   };
 }
 
-export function renewalJob({ store, renewals, paypal, merchantId, getUser, push = null, mail = null, origin, now = Date.now, enabled = false }) {
+export function renewalJob({ store, renewals, paypal, merchantId, getUser, mail = null, now = Date.now, enabled = false }) {
   return async () => {
     const report = { enabled, charged: 0, pending: 0, declined: 0, failed: 0, uncertain: 0, review: 0, skipped: 0, notices: 0, noticeErrors: 0, errors: 0 };
     if (!enabled) return report;
@@ -136,22 +133,19 @@ export function renewalJob({ store, renewals, paypal, merchantId, getUser, push 
         await attempt(started.order, p.token_id, started.attempt);
       } catch { report.errors++; }
     }
-    // 3. Notices: phone first, email when no phone accepted it.
+    // 3. Notices: one email (30 days before; after a final decline). A failed send is retried on later runs with the
+    //    same Resend idempotency key, so it reaches the member at most once.
     for (const n of await renewals.noticesDue(time)) {
       try {
         if (!await renewals.claimNotice(n, time)) continue;
-        const message = renewalMessage(n.kind, n.language, n.period_end, origin);
         let state = 'failed';
-        if (push) {
-          try { if ((await push.send({ userId: n.user_id, key: n.key, notice: message.push }, AbortSignal.timeout(8000))).accepted > 0) state = 'push'; }
-          catch { /* the email below */ }
-        }
-        if (state === 'failed' && mail) {
-          try {
-            const to = primaryEmail(await getUser(n.user_id));
-            if (to) { await mail.send(n.key, to, { subject: message.subject, text: message.text }); state = 'mail'; }
-          } catch { /* retried next run (claimNotice allows a few attempts) */ }
-        }
+        try {
+          const user = await getUser(n.user_id), to = primaryEmail(user);
+          let price = null;
+          if (n.kind === 'upcoming_auto') price = renewalPrice(quote('renewal', n.language, identity(user, time), { use: true }, time));
+          const message = renewalMessage(n.kind, n.language, n.period_end, price);
+          if (to && mail) { await mail.send(n.key, to, message); state = 'mail'; }
+        } catch { /* retried next run (claimNotice allows a few attempts) */ }
         await renewals.finishNotice(n, state, time);
         report[state === 'failed' ? 'noticeErrors' : 'notices']++;
       } catch { report.noticeErrors++; }
