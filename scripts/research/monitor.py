@@ -901,9 +901,11 @@ class Links(HTMLParser):
 class SecIndexExhibits(HTMLParser):
     """Collect same-accession document links from rows typed exactly EX-99.<number> (1 unless a company's provider says otherwise)."""
 
-    def __init__(self, base, ticker, directory, number="1"):
+    def __init__(self, base, ticker, directory, number="1", co_registrants=()):
         super().__init__(convert_charrefs=True)
         self.base, self.ticker, self.directory = base, ticker, directory
+        # the same accession filed under a co-registrant named in this filing (Constellation's EX-99.1 sits under CIK 1168165)
+        self.co_directories = {co_registrant_directory(directory, cik) for cik in co_registrants} - {None}
         # GE Vernova files its results release as a plain "EX-99" (no ".1"): where the number asked for is 1, a bare EX-99 is that exhibit
         self.type_pattern = re.compile(r"EX(?:HIBIT)?[- .]*99(?:[.\- ]?1)?" if number == "1" else r"EX(?:HIBIT)?[- .]*99[.\- ]?" + number, re.I)
         self.row_depth = self.cell_depth = 0
@@ -932,13 +934,15 @@ class SecIndexExhibits(HTMLParser):
         try:
             url = article_url(safe_url(urljoin(self.base, href), self.ticker), self.ticker)
         except ValueError:
-            return
+            url = None
+        if not url and self.co_directories:
+            url = co_registrant_url(urljoin(self.base, href), self.co_directories)
         if not url:
             return
         parsed = urlsplit(url)
         filename = parsed.path.rsplit("/", 1)[-1]
         if (parsed.hostname == "www.sec.gov"
-                and parsed.path.rsplit("/", 1)[0] + "/" == self.directory
+                and parsed.path.rsplit("/", 1)[0] + "/" in {self.directory, *self.co_directories}
                 and re.search(r"\.(?:html?|pdf)$", filename, re.I)):
             self.row_urls.add(url)
 
@@ -970,7 +974,33 @@ def sec_exhibit_numbers(ticker):
     return ["1"]
 
 
-def sec_exhibit_links(content, filing_url, ticker, number="1"):
+SEC_INDEX_CIK = re.compile(r'/cgi-bin/browse-edgar\?(?:[^"\'<>]*&(?:amp;)?)?CIK=(\d{10})(?=[&"\'])', re.I)
+
+
+def sec_filing_ciks(index_markup):
+    """The CIKs a filing index names as its filers (the registrant and any co-registrant), from SEC's own company links."""
+    return sorted({str(int(cik)) for cik in SEC_INDEX_CIK.findall(index_markup or "")})
+
+
+def co_registrant_directory(directory, cik):
+    """/Archives/edgar/data/<own cik>/<accession>/ -> the same accession under <cik>; None for anything else."""
+    match = re.fullmatch(r"/Archives/edgar/data/(\d+)/(\d{18})/", directory or "")
+    if not match or not re.fullmatch(r"\d{1,10}", str(cik)) or str(int(cik)) == match[1]:
+        return None
+    return f"/Archives/edgar/data/{int(cik)}/{match[2]}/"
+
+
+def co_registrant_url(url, directories):
+    """A document of the same accession in a co-registrant's EDGAR directory, or None (https, www.sec.gov, no query, no port)."""
+    parts = urlsplit(url)
+    if (parts.scheme != "https" or parts.hostname != "www.sec.gov" or parts.port not in (None, 443) or parts.username
+            or parts.password or parts.query or parts.fragment or parts.path.rsplit("/", 1)[0] + "/" not in directories
+            or not re.fullmatch(r"[A-Za-z0-9_.-]+", parts.path.rsplit("/", 1)[-1])):
+        return None
+    return urlunsplit(("https", "www.sec.gov", parts.path, "", ""))
+
+
+def sec_exhibit_links(content, filing_url, ticker, number="1", co_registrants=()):
     """Return explicit EX-99.<number> links (EX-99.1 by default) in the same immutable SEC filing directory.
 
     Filing HTML is untrusted input. The same-host and same-accession checks prevent
@@ -998,7 +1028,7 @@ def sec_exhibit_links(content, filing_url, ticker, number="1"):
                 continue
         score = 2 if re.search(r"\bEX(?:HIBIT)?[- .]*99[.\- ]?" + number + r"\b", label, re.I) else 1
         candidates.append((score, url))
-    index_parser = SecIndexExhibits(filing_url, ticker, directory, number)
+    index_parser = SecIndexExhibits(filing_url, ticker, directory, number, co_registrants)
     index_parser.feed(markup)
     index_parser.close()
     candidates.extend((3, url) for url in index_parser.urls)
@@ -1048,7 +1078,9 @@ def sec_exhibit_evidence(content, filing_url, ticker, transport):
                         index = False
                         last_error = exc
                 if index:
-                    candidates = sec_exhibit_links(index[0], index[1], ticker, number)
+                    # Only the index lists the filers: an exhibit filed under a co-registrant it names (same accession) is allowed.
+                    named = sec_filing_ciks(index[0][:MAX_EXTRACTED_CHARS * 2].decode("utf-8", "replace"))
+                    candidates = sec_exhibit_links(index[0], index[1], ticker, number, named)
                     if not candidates:
                         last_error = ValueError("SEC exhibit link not found in filing index")
         for url in candidates:

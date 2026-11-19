@@ -306,19 +306,32 @@
    "method": "deterministic-issuer-table"
   },
   {
-   "id": "222624037682404",
-   "researchId": "ir-announce-222624037682404",
+   "id": "69655713164419",
+   "researchId": "ir-flash-69655713164419",
    "kind": "earnings",
    "ticker": "CEG",
    "period": "Q3 2026",
-   "titleJa": "CEG 決算を発表しました",
-   "titleEn": "CEG announced its results",
-   "facts": [],
-   "url": "https://www.sec.gov/Archives/edgar/data/1868275/000186827526000116/ceg-20261109.htm",
+   "titleJa": "CEG Q3 2026決算：EPS（GAAP）$5.19、調整後EPS（Non-GAAP）$5.06",
+   "titleEn": "CEG Q3 2026 earnings: GAAP EPS $5.19, Non-GAAP EPS $5.06",
+   "facts": [
+    {
+     "key": "eps",
+     "ja": "EPS（GAAP）",
+     "en": "GAAP EPS",
+     "value": "$5.19"
+    },
+    {
+     "key": "adjusted-eps",
+     "ja": "調整後EPS（Non-GAAP）",
+     "en": "Non-GAAP EPS",
+     "value": "$5.06"
+    }
+   ],
+   "url": "https://www.sec.gov/Archives/edgar/data/1168165/000186827526000116/ceg-20261109991.htm",
    "publisher": "Constellation Energy IR (SEC 8-K)",
    "publishedAt": "2026-11-09T11:53:11.000+00:00",
    "observedAt": "2026-11-09T11:53:11.000+00:00",
-   "method": "sec-results-filing"
+   "method": "issuer-highlight-sentences"
   },
   {
    "id": "276572847192994",
@@ -494,19 +507,56 @@
    "method": "issuer-highlight-sentences"
   },
   {
-   "id": "277170576354696",
-   "researchId": "ir-announce-277170576354696",
+   "id": "29913695722401",
+   "researchId": "ir-flash-29913695722401",
    "kind": "earnings",
    "ticker": "QCOM",
    "period": "Q4 FY2026",
-   "titleJa": "QCOM 決算を発表しました",
-   "titleEn": "QCOM announced its results",
-   "facts": [],
+   "titleJa": "QCOM Q4 FY2026決算：売上高$10.322B、EPS（希薄化後）$1.17",
+   "titleEn": "QCOM Q4 FY2026 earnings: Revenue $10.322B, Diluted EPS $1.17",
+   "facts": [
+    {
+     "key": "revenue",
+     "ja": "売上高",
+     "en": "Revenue",
+     "value": "$10.322B",
+     "comparisons": {
+      "yearAgo": "$11.27B"
+     }
+    },
+    {
+     "key": "eps",
+     "ja": "EPS（希薄化後）",
+     "en": "Diluted EPS",
+     "value": "$1.17",
+     "comparisons": {
+      "yearAgo": "$-2.89"
+     }
+    },
+    {
+     "key": "adjusted-eps",
+     "ja": "調整後EPS（希薄化後）",
+     "en": "Adjusted diluted EPS",
+     "value": "$2.17",
+     "comparisons": {
+      "yearAgo": "$3.00"
+     }
+    },
+    {
+     "key": "net-income",
+     "ja": "純損益",
+     "en": "Net income / (loss)",
+     "value": "$1.251B",
+     "comparisons": {
+      "yearAgo": "$-3.117B"
+     }
+    }
+   ],
    "url": "https://www.sec.gov/Archives/edgar/data/804328/000080432826000127/qcom092726erex991.htm",
    "publisher": "Qualcomm IR (SEC 8-K)",
    "publishedAt": "2026-11-04T21:03:36.000+00:00",
    "observedAt": "2026-11-04T21:03:36.000+00:00",
-   "method": "sec-results-filing"
+   "method": "deterministic-issuer-table"
   },
   {
    "id": "1492450087599",
@@ -2049,11 +2099,11 @@
    "reportedAt": "2026-11-09T11:53:11.000+00:00",
    "form": "8-K",
    "period": "Q3 2026",
-   "figures": false,
-   "failure": "no-table-parser/not-a-results-release",
-   "url": "https://www.sec.gov/Archives/edgar/data/1868275/000186827526000116/ceg-20261109.htm",
+   "figures": true,
+   "failure": null,
+   "url": "https://www.sec.gov/Archives/edgar/data/1168165/000186827526000116/ceg-20261109991.htm",
    "events": 1,
-   "method": "sec-results-filing"
+   "method": "issuer-highlight-sentences"
   },
   {
    "ticker": "COHR",
@@ -2359,11 +2409,11 @@
    "reportedAt": "2026-11-04T21:03:36.000+00:00",
    "form": "8-K",
    "period": "Q4 FY2026",
-   "figures": false,
-   "failure": "no-table-parser/highlights-unreadable",
+   "figures": true,
+   "failure": null,
    "url": "https://www.sec.gov/Archives/edgar/data/804328/000080432826000127/qcom092726erex991.htm",
    "events": 1,
-   "method": "sec-results-filing"
+   "method": "deterministic-issuer-table"
   },
   {
    "ticker": "SKHY",

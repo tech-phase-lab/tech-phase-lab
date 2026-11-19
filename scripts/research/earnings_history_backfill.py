@@ -36,7 +36,6 @@ USER_AGENT = os.environ.get('BACKFILL_USER_AGENT', 'research-backfill admin@exam
 # A filing the parser could not read is listed only when it is a quarter's results release: an 8-K under item 2.02 whose
 # exhibit (or, without one, its cover) names the quarter's results, or a 6-K whose own first lines do. Not a 6-K share report,
 # not Tesla's deliveries 8-K (Oct 2), not Marvell's merger announcement with preliminary revenue (Nov 2).
-RESULTS_HEAD, NOT_RESULTS_HEAD = highlight_sentences.RESULTS_HEAD, highlight_sentences.NOT_RESULTS_HEAD
 SAME_EVENT_SECONDS = 36 * 3600
 
 
@@ -114,12 +113,10 @@ def read_filing(client, ticker, cik, filing):
 
 def is_results(filing, url, text):
     head = flash.clean(text)[:800]
-    if NOT_RESULTS_HEAD.search(head):
-        return False
     if filing['form'].startswith('8-K') and url.endswith('/' + filing['primary']):
-        # no readable exhibit (Constellation's EX-99.1 sits in its co-registrant's directory): the 8-K's own item 2.02 text says so
+        # no readable exhibit: the 8-K's own item 2.02 text says so
         return bool(re.search(r'(?i)Item 2\.02.{0,400}\bresults\b', flash.clean(text)))
-    return bool(RESULTS_HEAD.search(head))
+    return highlight_sentences.results_head(head)
 
 
 def backfill(start, end, tickers=None, client=None, log=print):

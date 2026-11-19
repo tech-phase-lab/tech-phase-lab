@@ -217,5 +217,87 @@ class HighlightSentences(unittest.TestCase):
         self.assertEqual(market_results.display_floor([table]), [])
 
 
+
+class Qualcomm(unittest.TestCase):
+    """Qualcomm's quarterly results table (Q4 FY2026, 8-K of Nov 4, 2026)."""
+
+    def text(self):
+        return (FX / 'qualcomm-results-q4fy26-head.txt').read_text()
+
+    def test_reads_the_gaap_and_non_gaap_columns(self):
+        parsed = flash.parse_qualcomm(self.text())
+        self.assertEqual(parsed['period'], 'Q4 FY2026')
+        self.assertEqual(parsed['facts'], [('revenue', '$10.322B', '$11.27B'), ('eps', '$1.17', '$-2.89'), ('adjusted-eps', '$2.17', '$3.00'),
+                                           ('net-income', '$1.251B', '$-3.117B')])
+        self.assertIs(flash.PROFILES['QCOM']['parse'], flash.parse_qualcomm)
+        self.assertIn(flash.PROFILES['QCOM']['marker'], self.text())
+
+    def test_a_row_whose_change_disagrees_is_left_out(self):
+        parsed = flash.parse_qualcomm(self.text().replace('Net income $1,251 ($3,117) +140%', 'Net income $1,251 ($3,117) +40%'))
+        self.assertNotIn('net-income', [f[0] for f in parsed['facts']])
+        with self.assertRaisesRegex(ValueError, 'revenue-row-unrecognized'):
+            flash.parse_qualcomm(self.text().replace('Revenues $10,322 $11,270 (8%)', 'Revenues $10,322 $11,270 (18%)', 1))
+
+    def test_the_columns_must_be_the_quarter_and_a_year_earlier(self):
+        with self.assertRaisesRegex(ValueError, 'columns-unrecognized'):
+            flash.parse_qualcomm(self.text().replace('Q4 Fiscal 2026 Q4 Fiscal 2025 Change Q4', 'Q4 Fiscal 2026 Q3 Fiscal 2026 Change Q4', 1))
+        with self.assertRaisesRegex(ValueError, 'table-heading-missing'):
+            flash.parse_qualcomm(self.text().replace('Fourth Quarter Results', 'Fourth Quarter Summary'))
+
+
+INDEX = """<html><body>
+<div class="companyInfo"><span class="companyName">CONSTELLATION ENERGY GENERATION LLC (Filer) <acronym title="Central Index Key">CIK</acronym>:
+<a href="/cgi-bin/browse-edgar?CIK=0001168165&amp;action=getcompany">0001168165 (see all company filings)</a></span></div>
+<div class="companyInfo"><span class="companyName">Constellation Energy Corp (Filer) <acronym title="Central Index Key">CIK</acronym>:
+<a href="/cgi-bin/browse-edgar?CIK=0001868275&amp;action=getcompany">0001868275 (see all company filings)</a></span></div>
+<table class="tableFile">
+<tr><td scope="row">1</td><td scope="row"></td><td scope="row"><a href="/ix?doc=/Archives/edgar/data/1168165/000186827526000116/ceg-20261109.htm">ceg-20261109.htm</a></td><td scope="row">8-K</td></tr>
+<tr><td scope="row">2</td><td scope="row">EX-99.1</td><td scope="row"><a href="/Archives/edgar/data/1168165/000186827526000116/ceg-20261109991.htm">ceg-20261109991.htm</a></td><td scope="row">EX-99.1</td></tr>
+<tr><td scope="row">3</td><td scope="row">EX-99.1</td><td scope="row"><a href="/Archives/edgar/data/9999999/000186827526000116/other.htm">other.htm</a></td><td scope="row">EX-99.1</td></tr>
+<tr><td scope="row">4</td><td scope="row">EX-99.1</td><td scope="row"><a href="/Archives/edgar/data/1168165/000186827526000999/other-accession.htm">x</a></td><td scope="row">EX-99.1</td></tr>
+</table></body></html>"""
+PRIMARY = 'https://www.sec.gov/Archives/edgar/data/1868275/000186827526000116/ceg-20261109.htm'
+
+
+class CoRegistrant(unittest.TestCase):
+    """Constellation's EX-99.1 is filed under its co-registrant's CIK (1168165), not under CEG's own directory."""
+
+    def test_only_ciks_the_index_names_and_the_same_accession(self):
+        self.assertEqual(monitor.sec_filing_ciks(INDEX), ['1168165', '1868275'])
+        directory = '/Archives/edgar/data/1868275/000186827526000116/'
+        self.assertEqual(monitor.co_registrant_directory(directory, '1168165'), '/Archives/edgar/data/1168165/000186827526000116/')
+        self.assertIsNone(monitor.co_registrant_directory(directory, '1868275'))
+        allowed = {'/Archives/edgar/data/1168165/000186827526000116/'}
+        good = 'https://www.sec.gov/Archives/edgar/data/1168165/000186827526000116/ceg-20261109991.htm'
+        self.assertEqual(monitor.co_registrant_url(good, allowed), good)
+        for bad in ['https://www.sec.gov/Archives/edgar/data/9999999/000186827526000116/x.htm', 'http://www.sec.gov' + good[19:],
+                    'https://evil.example/Archives/edgar/data/1168165/000186827526000116/x.htm', good + '?x=1',
+                    'https://www.sec.gov/Archives/edgar/data/1168165/000186827526000999/x.htm']:
+            self.assertIsNone(monitor.co_registrant_url(bad, allowed), bad)
+
+    def test_the_exhibit_under_the_co_registrant_is_fetched_from_the_index(self):
+        fetched = []
+        release = ('<html><body><p>CONSTELLATION REPORTS THIRD QUARTER 2026 RESULTS Earnings Release Highlights GAAP Net Income of $5.19 per share '
+                   + 'and more text ' * 40 + '</p></body></html>').encode()
+
+        def transport(url, ticker, **_):
+            fetched.append(url)
+            if url.endswith('-index.html'):
+                return INDEX.encode(), 'text/html'
+            if url.endswith('ceg-20261109991.htm'):
+                return release, 'text/html'
+            raise AssertionError('unexpected fetch ' + url)
+        cover = b'<html><body><p>FORM 8-K Item 2.02 Results of Operations</p></body></html>'
+        evidence = monitor.sec_exhibit_evidence(cover, PRIMARY, 'CEG', transport)
+        self.assertEqual(evidence['url'], 'https://www.sec.gov/Archives/edgar/data/1168165/000186827526000116/ceg-20261109991.htm')
+        self.assertTrue(all('9999999' not in url and '000186827526000999' not in url for url in fetched))
+
+    def test_constellation_highlight_sentences(self):
+        parsed = highlight_sentences.parse((FX / 'constellation-results-q326-head.txt').read_text())
+        self.assertEqual(parsed['period'], 'Q3 2026')
+        # GAAP per share and the adjusted (non-GAAP) operating earnings per share; the full-year guidance range is not read
+        self.assertEqual([(f[0], f[1]) for f in parsed['facts']], [('eps', '$5.19'), ('adjusted-eps', '$5.06')])
+
+
 if __name__ == '__main__':
     unittest.main()

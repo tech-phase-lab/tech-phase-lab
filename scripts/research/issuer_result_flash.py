@@ -1036,6 +1036,69 @@ def parse_tsmc(text, url=None):
     return {'period': f'Q{quarter} {year}', 'facts': out}
 
 
+QCOM_AMOUNT = r'(\(?\$[\d,]+(?:\.\d+)?\)?)'
+QCOM_CHANGE = r'(\(\d+%\)|[+-]?\d+%|N/M)'
+
+
+def qcom_amount(text):
+    """'$10,322' -> 10322; '($3,117)' -> -3117 (the release prints a negative in brackets around the dollar sign)."""
+    return signed(text.replace('$', ''))
+
+
+def qcom_change_ok(current, prior, change):
+    """Qualcomm's change column is (current - prior) / |prior|, rounded to a whole percent ("(8%)", "+140%")."""
+    if change == 'N/M' or prior == 0:
+        return change == 'N/M'
+    stated = Decimal(change.strip('()+%')) * (-1 if change.startswith('(') or change.startswith('-') else 1)
+    actual = (current - prior) / abs(prior) * 100
+    return abs(actual - stated) <= Decimal('0.6')
+
+
+def parse_qualcomm(text, url=None):
+    """Qualcomm's "<Quarter> Quarter Results" table (SEC 8-K EX-99.1), in millions except per-share data: for GAAP and then non-GAAP,
+    this quarter, the same quarter a year earlier and the stated change. A row is read only when it has exactly those six cells and both
+    stated changes agree with the values; the column headings must name the quarter and the same quarter one fiscal year earlier.
+    GAAP revenue, net income and diluted EPS are published; the non-GAAP EPS as adjusted EPS (non-GAAP revenue is not shown)."""
+    t = clean(text)
+    if 'qualcomm' not in t.lower():
+        raise ValueError('issuer-identity-missing')
+    head = re.search(r'(First|Second|Third|Fourth) Quarter Results\d? GAAP Non-GAAP \(in millions, except per share data and percentages\) '
+                     r'Q([1-4]) Fiscal (20\d\d) Q([1-4]) Fiscal (20\d\d) Change Q([1-4]) Fiscal (20\d\d) Q([1-4]) Fiscal (20\d\d) Change ', t)
+    if not head:
+        raise ValueError('table-heading-missing')
+    quarter, year = QUARTERS[head[1].lower()], int(head[3])
+    if (int(head[2]), int(head[4]), int(head[6]), int(head[8])) != (quarter,) * 4 or int(head[5]) != year - 1 \
+            or (int(head[7]), int(head[9])) != (year, year - 1):
+        raise ValueError('columns-unrecognized')
+    block = t[head.end():head.end() + 900]
+    stop = block.find('Fiscal ' + str(year) + ' Results')
+    block = block[:stop] if stop > 0 else block
+    cells = ' '.join([QCOM_AMOUNT, QCOM_AMOUNT, QCOM_CHANGE] * 2)
+    labels = {'revenue': r'Revenues', 'net-income': r'Net income(?: \(loss\))?',
+              'eps': r'Diluted earnings(?: \(loss\))? per share \(EPS\)'}
+    rows = {}
+    for key, label in labels.items():
+        found = re.findall(r'(?<![A-Za-z])' + label + ' ' + cells + r'(?= |$)', block)
+        if len(found) != 1:
+            continue  # missing or repeated: ambiguous
+        cur, ago, change, ncur, nago, nchange = found[0]
+        values = [qcom_amount(cur), qcom_amount(ago), qcom_amount(ncur), qcom_amount(nago)]
+        if not (qcom_change_ok(values[0], values[1], change) and qcom_change_ok(values[2], values[3], nchange)):
+            continue
+        rows[key] = values
+    if 'revenue' not in rows or rows['revenue'][0] <= 0:
+        raise ValueError('revenue-row-unrecognized')
+    facts = [('revenue', money_millions(rows['revenue'][0]), money_millions(rows['revenue'][1]))]
+    if 'eps' in rows:
+        facts.append(('eps', per_share(rows['eps'][0]), per_share(rows['eps'][1])))
+        facts.append(('adjusted-eps', per_share(rows['eps'][2]), per_share(rows['eps'][3])))
+    if 'net-income' in rows:
+        facts.append(('net-income', money_millions(rows['net-income'][0]), money_millions(rows['net-income'][1])))
+    order = {k: i for i, k in enumerate(ORDER)}
+    facts.sort(key=lambda f: order[f[0]])
+    return {'period': f'Q{quarter} FY{year}', 'facts': facts}
+
+
 def parse_asml(text, url=None):
     """ASML's results release (6-K EX-99.1): a small table in EUR million (previous quarter, this quarter) and the headline in billions.
     Net sales and net income must agree with the headline; gross margin with gross profit / net sales."""
@@ -1202,6 +1265,8 @@ PROFILES = {
              'marker': STATEMENT['CRDO']['heading']},
     'AVGO': {'publisher': 'Broadcom IR (SEC 8-K)', 'parse': lambda t, u=None: parse_statement(t, STATEMENT['AVGO']),
              'marker': STATEMENT['AVGO']['heading']},
+    'QCOM': {'publisher': 'Qualcomm IR (SEC 8-K)', 'parse': parse_qualcomm,
+             'marker': 'GAAP Non-GAAP (in millions, except per share data and percentages)'},
 }
 SOURCE_URL = {
     'NBIS': re.compile(r'^https://nebius\.com/newsroom/[a-z0-9-]+$'),
@@ -1219,7 +1284,7 @@ def sentences(text, url=None):
 def sentence_candidate(flat):
     import highlight_sentences
     head = flat[:800]
-    return bool(highlight_sentences.RESULTS_HEAD.search(head)) and not highlight_sentences.NOT_RESULTS_HEAD.search(head)
+    return highlight_sentences.results_head(head)
 
 
 def outside_roster(ticker):
@@ -1246,7 +1311,7 @@ def parse_with_sentences(ticker, text, url):
 
 
 # Companies without a table parser: their figures come from the release's highlight sentences only.
-for _ticker, _name in (('CEG', 'Constellation Energy'), ('COHR', 'Coherent'), ('IBM', 'IBM'), ('IREN', 'IREN'), ('QCOM', 'Qualcomm'),
+for _ticker, _name in (('CEG', 'Constellation Energy'), ('COHR', 'Coherent'), ('IBM', 'IBM'), ('IREN', 'IREN'),
                        ('TSLA', 'Tesla'), ('VST', 'Vistra')):
     PROFILES.setdefault(_ticker, {'publisher': f'{_name} IR (SEC 8-K)', 'parse': sentences, 'sentences-only': True})
 
