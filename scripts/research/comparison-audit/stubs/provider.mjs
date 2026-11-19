@@ -15,7 +15,8 @@ export function syntheticSeries(ticker, currency, now = Date.now()) {
 }
 export async function loadMarketInputs(ticker) {
   const currency = audit().priceCurrency?.(ticker);
-  return currency ? { series: syntheticSeries(ticker, currency) } : {};
+  // The provider answers with its own symbol (BRK.B for BRK-B), as production receives it.
+  return currency ? { series: syntheticSeries(audit().providerSymbol?.(ticker) ?? ticker, currency) } : {};
 }
 export async function loadTwelveComparison() { return null; }
 export async function loadTwelveComparisonState() { return { data: null, busy: false }; }

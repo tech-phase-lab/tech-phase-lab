@@ -92,8 +92,10 @@ export const DERIVED_PRETAX = "TechPhasePretaxIncome";
 /** A bank's revenue worked out from the same filing: net interest income plus noninterest income (it tags no revenue line). */
 export const BANK_REVENUE = "TechPhaseBankRevenue";
 /** Revenue lines used only when a period has no other revenue line: a bank's derived revenue; a business development company's total
- *  investment income (Ares Capital, Main Street); an IFRS filer's sales of goods (Novartis, Sanofi tag no total "Revenue"). */
-const REVENUE_FALLBACKS: string[] = [BANK_REVENUE, "GrossInvestmentIncomeOperating", "RevenueFromSaleOfGoods"];
+ *  investment income (Ares Capital, Main Street); an IFRS filer's sales of goods (Novartis, Sanofi tag no total "Revenue"); an IFRS bank's
+ *  total operating income (HSBC: its reported revenue, $65.9bn for 2024, tagged as revenue and operating income). */
+const LAST_REVENUE_FALLBACK = "RevenueAndOperatingIncome";
+const REVENUE_FALLBACKS: string[] = [BANK_REVENUE, "GrossInvestmentIncomeOperating", "RevenueFromSaleOfGoods", LAST_REVENUE_FALLBACK];
 const PRETAX_TAGS = ["IncomeLossFromContinuingOperationsBeforeIncomeTaxesExtraordinaryItemsNoncontrollingInterest", "IncomeLossFromContinuingOperationsBeforeIncomeTaxesMinorityInterestAndIncomeLossFromEquityMethodInvestments"];
 type RawFact = { val: number; end: string; start?: string; accn: string; filed: string; form: string };
 /** Adds figures the scorecard needs that a filing states in another form, period by period and filing by filing, never across filings:
@@ -145,7 +147,7 @@ function supplementIfrs(ifrs: Record<string, unknown>): Record<string, unknown> 
   const rows = (tag: string): [string, RawFact[]][] => Object.entries(obj(obj(facts[tag]).units)).flatMap(([unit, values]) => Array.isArray(values) ? [[unit, values as RawFact[]]] : []);
   const key = (unit: string, f: RawFact) => `${unit}|${f.accn}|${f.start ?? ""}|${f.end}`;
   const stated = new Set(rows("ProfitLossFromOperatingActivities").flatMap(([unit, values]) => values.map(f => key(unit, f))));
-  const revenue = new Set(["Revenue", "RevenueFromContractsWithCustomers", "RevenueFromSaleOfGoods"].flatMap(tag => rows(tag).flatMap(([unit, values]) => values.map(f => key(unit, f)))));
+  const revenue = new Set(["Revenue", "RevenueFromContractsWithCustomers", "RevenueFromSaleOfGoods", "RevenueAndOperatingIncome"].flatMap(tag => rows(tag).flatMap(([unit, values]) => values.map(f => key(unit, f)))));
   const pre: Record<string, RawFact[]> = {};
   for (const [unit, values] of rows("ProfitLossBeforeTax")) for (const f of values) {
     if (typeof f.val === "number" && f.start && revenue.has(key(unit, f)) && !stated.has(key(unit, f))) (pre[unit] ??= []).push(f);
@@ -169,7 +171,7 @@ export function dominantCurrency(facts: Record<string, unknown>, accession: stri
 const tags = {
   "us-gaap": { revenue: ["RevenueFromContractWithCustomerExcludingAssessedTax", "RevenueFromContractWithCustomerIncludingAssessedTax", "Revenues", "SalesRevenueNet", "RevenuesNetOfInterestExpense", "RegulatedAndUnregulatedOperatingRevenue", BANK_REVENUE, "GrossInvestmentIncomeOperating"], operatingIncome: ["OperatingIncomeLoss", DERIVED_OPERATING, DERIVED_PRETAX], operatingCash: ["NetCashProvidedByUsedInOperatingActivities", "NetCashProvidedByUsedInOperatingActivitiesContinuingOperations"], capex: ["PaymentsToAcquirePropertyPlantAndEquipment", "PaymentsToAcquireOtherPropertyPlantAndEquipment", "PaymentsToAcquireProductiveAssets", "PaymentsToAcquireOtherProductiveAssets"], cash: ["CashAndCashEquivalentsAtCarryingValue"], stockCompensation: ["ShareBasedCompensation"], dilutedShares: ["WeightedAverageNumberOfDilutedSharesOutstanding"] },
   // IFRS filers (20-F/40-F/6-K): the pre-tax line only where no operating line is tagged (banks, insurers), shown as a pre-tax margin as for US filers.
-  "ifrs-full": { revenue: ["Revenue", "RevenueFromContractsWithCustomers", "RevenueFromSaleOfGoods"], operatingIncome: ["ProfitLossFromOperatingActivities", DERIVED_PRETAX], operatingCash: ["CashFlowsFromUsedInOperatingActivities", "CashFlowsFromUsedInOperatingActivitiesContinuingOperations"], capex: ["PurchaseOfPropertyPlantAndEquipmentClassifiedAsInvestingActivities", "PurchaseOfPropertyPlantAndEquipment", "PurchaseOfPropertyPlantAndEquipmentIntangibleAssetsOtherThanGoodwillInvestmentPropertyAndOtherNoncurrentAssets"], cash: ["CashAndCashEquivalents"], stockCompensation: [], dilutedShares: ["AdjustedWeightedAverageShares"] },
+  "ifrs-full": { revenue: ["Revenue", "RevenueFromContractsWithCustomers", "RevenueFromSaleOfGoods", "RevenueAndOperatingIncome"], operatingIncome: ["ProfitLossFromOperatingActivities", DERIVED_PRETAX], operatingCash: ["CashFlowsFromUsedInOperatingActivities", "CashFlowsFromUsedInOperatingActivitiesContinuingOperations"], capex: ["PurchaseOfPropertyPlantAndEquipmentClassifiedAsInvestingActivities", "PurchaseOfPropertyPlantAndEquipment", "PurchaseOfPropertyPlantAndEquipmentIntangibleAssetsOtherThanGoodwillInvestmentPropertyAndOtherNoncurrentAssets"], cash: ["CashAndCashEquivalents"], stockCompensation: [], dilutedShares: ["AdjustedWeightedAverageShares"] },
 } as const;
 const REVENUE_TOTALS = ["Revenues", "Revenue", "RegulatedAndUnregulatedOperatingRevenue", "RevenuesNetOfInterestExpense"];
 /** Standard consolidated facts. Annual and standalone-quarter periods remain separate. */
@@ -217,7 +219,10 @@ export function extractFinancials(ticker: string, cik: string, payload: unknown,
   // (Walmart's membership income, GM Financial, lease revenue at Applied Digital and IREN, SoFi's and AmEx's interest income). When both
   // are filed and the total is not below any part, the total is the revenue; a total below a part stays held.
   const preferTotal = <T extends Fact>(all: T[]): T[] => {
-    const stated = all.filter(f => !REVENUE_FALLBACKS.includes(f.tag)), rows = stated.length ? stated : all;
+    // Total operating income comes last of all: it also holds other operating income, so a sales line beside it is the revenue (argenx:
+    // sales of goods $4.15bn, revenue and other operating income $4.25bn for 2025).
+    const stated = all.filter(f => !REVENUE_FALLBACKS.includes(f.tag)), fallback = all.filter(f => f.tag !== LAST_REVENUE_FALLBACK);
+    const rows = stated.length ? stated : fallback.length ? fallback : all;
     // "Revenues" is the total whenever it is filed (Ameriprise files both); net-of-interest revenue only where it is the sole total.
     // IFRS: "Revenue" is the total and revenue from contracts with customers a part of it (BHP, Rio Tinto: other revenue such as
     // provisional pricing adjustments sits outside contract revenue); they were held as conflicting before.
@@ -312,7 +317,11 @@ export function extractFinancials(ticker: string, cik: string, payload: unknown,
   let qp: "quarter" | "half" | "annual" = "quarter";
   if (!quarterRevenue) {
     const halves = collect(basis, tags[basis].revenue, false, "half").filter(f => f.end > revenue.end && f.unit === revenue.unit && f.value > 0 && (!primaryRevenueTag || `${f.basis}:${f.tag}` === primaryRevenueTag)).sort((a,b) => b.end.localeCompare(a.end) || b.filed.localeCompare(a.filed));
-    const half = halves[0] ? unique(preferTotal(halves.filter(f => f.end === halves[0].end && f.filed === halves[0].filed))) : null;
+    const newest = halves[0] ? unique(preferTotal(halves.filter(f => f.end === halves[0].end && f.filed === halves[0].filed))) : null;
+    // Only a half-year report that states the same half a year earlier: a 6-K exhibit with this half's sales alone (Ohmyhome) gives no growth
+    // or margin, and the fiscal year stays the period compared, as before.
+    const half = newest && collect(basis, [newest.tag], false, "half").some(f => f.accession === newest.accession && f.unit === newest.unit
+      && day(newest.end) - day(f.end) >= 350 && day(newest.end) - day(f.end) <= 380) ? newest : null;
     if (half) { quarterRevenue = half; qp = "half"; }
     else if (/^(?:20-F|40-F)/.test(formOf.get(revenue.accession) ?? "")) { quarterRevenue = revenue; qp = "annual"; }
   }
@@ -354,6 +363,13 @@ export function extractFinancials(ticker: string, cik: string, payload: unknown,
   // a quarter reported twice with different values, or a gap in the sequence, leaves the whole series empty.
   // A fiscal year standing as the latest period is its own trailing twelve months; a half-year has no four-quarter series.
   let quarterRevenueTtm: number | null = annualPeriod ? revenue.value : null, quarterRevenueQoq: number | null = null;
+  // A half-year right after the fiscal year: the last twelve months are that year, plus this half, minus the same half a year earlier (the
+  // half-year report states it beside its own), same line and currency. Before, a half-year had no twelve-month revenue, so no price-to-sales.
+  if (qp === "half" && quarterRevenue?.start && previousQuarterRevenue && !derivedQuarter && revenue.tag === quarterRevenue.tag && revenue.unit === quarterRevenue.unit
+    && previousQuarterRevenue.unit === revenue.unit && previousQuarterRevenue.start === revenue.start && day(quarterRevenue.start) - day(revenue.end) === 1) {
+    const ttm = revenue.value + quarterRevenue.value - previousQuarterRevenue.value;
+    if (Number.isFinite(ttm) && ttm > 0) quarterRevenueTtm = ttm;
+  }
   function marginSeries(): { periodEnd: string; value: number }[] | null {
     if (!quarterRevenue || qp !== "quarter") return null;
     const perEnd = (names: readonly string[]) => {

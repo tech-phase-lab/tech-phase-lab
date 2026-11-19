@@ -33,7 +33,8 @@ async function readFinancials(ticker: string, cik: string) {
 }
 // v8: the quarter's diluted shares, for price-to-sales from the filing when no statistics are stored (Nov 15).
 // v9: a foreign filer's half-year or annual period, IFRS borrowings, the statements document of a 6-K (Nov 18).
-const cachedFinancials = unstable_cache(readFinancials, ["comparison-financials-v9-periods"], { revalidate: 900 });
+// v10: a Canadian bank's quarterly 6-K, an inline XBRL document set, an IFRS bank's operating income, a half-year's twelve months (Nov 19).
+const cachedFinancials = unstable_cache(readFinancials, ["comparison-financials-v10-coverage"], { revalidate: 900 });
 /** Speed (owner, Nov 18: a comparison took about 20 seconds). A stored reading up to a day old is answered at once; once it is older than 15
  * minutes the cache reads the SEC again in the background (Next's own refresh of a stale entry), so the next viewer has the new figures. The
  * background job reads every listed company once a day (prewarmComparison), so only a company nobody has opened for a day waits for the SEC. */

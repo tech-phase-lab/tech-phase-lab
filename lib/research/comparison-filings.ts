@@ -21,18 +21,21 @@ export type SecFacts = { cik: number; facts: Record<string, Record<string, { uni
  * Dimensional segments, per-share units, nils and unsupported numeric transforms
  * are deliberately not interpreted as consolidated monetary amounts.
  */
-export function inlineFinancialFacts(html: string, cik: string, filing: FinancialFiling): SecFacts {
+export function inlineFinancialFacts(html: string, cik: string, filing: FinancialFiling, headerHtml?: string): SecFacts {
   const root = parse(html);
+  // An inline XBRL document set keeps its contexts and units in one document's header and its facts in another (BMO's quarterly 6-K: the
+  // header in bmo-20260731.htm, the statements in bmo-20260731_d2.htm): the header document is read for them too.
+  const resources = headerHtml ? [parse(headerHtml), root] : [root];
   const result: SecFacts = { cik: Number(cik), facts: {} };
   const contexts = new Map<string, { start?: string; end: string }>();
-  for (const node of root.querySelectorAll("xbrli\\:context")) {
+  for (const node of resources.flatMap(r => r.querySelectorAll("xbrli\\:context"))) {
     const id = node.getAttribute("id"), identifier = node.querySelector("xbrli\\:identifier");
     if (!id || !identifier || identifier.getAttribute("scheme") !== "http://www.sec.gov/CIK" || Number(identifier.textContent.trim()) !== Number(cik) || node.querySelector("xbrli\\:segment") || node.querySelector("xbrli\\:scenario")) continue;
     const start = date(node.querySelector("xbrli\\:startdate")?.textContent.trim()), end = date(node.querySelector("xbrli\\:enddate")?.textContent.trim() ?? node.querySelector("xbrli\\:instant")?.textContent.trim());
     if (end && end <= filing.filed && (!start || start <= end)) contexts.set(id, { ...(start ? { start } : {}), end });
   }
   const units = new Map<string, string>();
-  for (const node of root.querySelectorAll("xbrli\\:unit")) {
+  for (const node of resources.flatMap(r => r.querySelectorAll("xbrli\\:unit"))) {
     const id = node.getAttribute("id"), measures = node.querySelectorAll("xbrli\\:measure");
     if (!id || measures.length !== 1 || node.querySelector("xbrli\\:divide")) continue;
     const name = measures[0].textContent.trim();

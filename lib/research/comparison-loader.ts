@@ -23,7 +23,7 @@ export async function loadSecComparison(ticker: string, cik: string, fetchText: 
   // An amendment that only adds Part III or exhibits (MO's 10-K/A of May 2026) carries no figures: the original report anchors freshness,
   // and figures an amendment restates arrive in companyfacts under it anyway. Before, MO's amendment was read on every load and flagged.
   const annual = filings.find(f => annualForm.test(f.form) && !f.form.endsWith("/A")) ?? filings.find(f => annualForm.test(f.form));
-  const quarter = filings.find(f => (/^(?:10-Q)(?:\/A)?$/.test(f.form) || (/^6-K(?:\/A)?$/.test(f.form) && ["03-31","06-30","09-30","12-31"].includes(f.end.slice(5)))) && f.inline && (!annual || f.end > annual.end));
+  const quarter = filings.find(f => (/^(?:10-Q)(?:\/A)?$/.test(f.form) || (/^6-K(?:\/A)?$/.test(f.form) && fiscalQuarterEnd(f.end, annual?.end))) && f.inline && (!annual || f.end > annual.end));
   // TSM's untagged earnings exhibits have a separate, verified actuals parser.
   const tsmRelease = ticker === "TSM" && Number(cik) === 1046179 ? filings.find(f => f.form.startsWith("6-K") && /\/tsm-\d{8}x6k\.htm$/.test(f.url) && ["03-31","06-30","09-30","12-31"].includes(f.end.slice(5)) && (!annual || f.end > annual.end)) : undefined;
   const tsmStatement = ticker === "TSM" && Number(cik) === 1046179 ? filings.find(f => f.form.startsWith("6-K") && /\/tsm-fsx\d{8}x6k\.htm$/.test(f.url) && (!annual || f.end > annual.end)) : undefined;
@@ -40,7 +40,7 @@ export async function loadSecComparison(ticker: string, cik: string, fetchText: 
       let inline = inlineFinancialFacts(html,cik,filing);
       // A foreign filer's 6-K is often a cover page with the tagged statements in another document of the same filing (BTI's half-year
       // report: bti-20260630_d2.htm is the cover, bti-20260630.htm the statements). The largest other inline document is then read.
-      if (!hasRevenue(inline)) inline = await statementDocument(filing, cik, fetchText) ?? inline;
+      if (!hasRevenue(inline)) inline = await statementDocument(filing, cik, fetchText, html) ?? inline;
       additions.push(inline);
       if (filing === annual) primaryRevenueTag = inline.primaryRevenueTag;
       if (filing === quarter) quarterRevenueTag = inline.primaryRevenueTag;
@@ -76,11 +76,23 @@ export async function loadSecComparison(ticker: string, cik: string, fetchText: 
   return { ...result, dataWarnings };
 }
 
-const REVENUE_TAGS = ["Revenues", "RevenueFromContractWithCustomerExcludingAssessedTax", "RevenueFromContractWithCustomerIncludingAssessedTax", "SalesRevenueNet", "RevenuesNetOfInterestExpense", "RegulatedAndUnregulatedOperatingRevenue", "Revenue", "RevenueFromContractsWithCustomers", "RevenueFromSaleOfGoods", "InterestIncomeExpenseNet", "GrossInvestmentIncomeOperating"];
+const CALENDAR_QUARTER_ENDS = ["03-31","06-30","09-30","12-31"];
+/** A 6-K dated at the end of one of the company's fiscal quarters: a calendar quarter end, or a month end three, six or nine months after the
+ *  annual report's year end (a Canadian bank's fiscal year ends October 31: its quarterly reports end January 31, April 30 and July 31). */
+export function fiscalQuarterEnd(end: string, annualEnd?: string): boolean {
+  if (CALENDAR_QUARTER_ENDS.includes(end.slice(5))) return true;
+  if (!annualEnd || !/^\d{4}-\d{2}-\d{2}$/.test(end) || !/^\d{4}-\d{2}-\d{2}$/.test(annualEnd)) return false;
+  const monthEnd = (d: string) => new Date(Date.UTC(Number(d.slice(0, 4)), Number(d.slice(5, 7)), 0)).toISOString().slice(0, 10) === d;
+  if (!monthEnd(end) || !monthEnd(annualEnd)) return false;
+  const months = (Number(end.slice(0, 4)) - Number(annualEnd.slice(0, 4))) * 12 + Number(end.slice(5, 7)) - Number(annualEnd.slice(5, 7));
+  return months > 0 && months % 3 === 0;
+}
+
+const REVENUE_TAGS = ["Revenues", "RevenueFromContractWithCustomerExcludingAssessedTax", "RevenueFromContractWithCustomerIncludingAssessedTax", "SalesRevenueNet", "RevenuesNetOfInterestExpense", "RegulatedAndUnregulatedOperatingRevenue", "Revenue", "RevenueFromContractsWithCustomers", "RevenueFromSaleOfGoods", "InterestIncomeExpenseNet", "GrossInvestmentIncomeOperating", "RevenueAndOperatingIncome"];
 const hasRevenue = (facts: SecFacts) => Object.values(facts.facts).some(tags => REVENUE_TAGS.some(tag => tag in tags));
 /** The filing's other inline document with the statements: the largest .htm in its folder besides the primary one (not the rendered R pages
  *  or the index), read only when the primary document has no revenue fact. */
-async function statementDocument(filing: FinancialFiling, cik: string, fetchText: FetchText): Promise<SecFacts | null> {
+async function statementDocument(filing: FinancialFiling, cik: string, fetchText: FetchText, primaryHtml: string): Promise<SecFacts | null> {
   if (!filing.inline) return null;
   const folder = new URL(".", filing.url).href, primary = filing.url.slice(folder.length);
   const listing = JSON.parse(await fetchText(`${folder}index.json`, 2_000_000)) as { directory?: { item?: { name?: unknown; size?: unknown }[] } };
@@ -88,6 +100,6 @@ async function statementDocument(filing: FinancialFiling, cik: string, fetchText
     && item.name !== primary && !/^R\d+\.htm$/.test(item.name) && !item.name.includes("index") && Number(item.size) > 0 && Number(item.size) <= 20_000_000 ? [{ name: item.name, size: Number(item.size) }] : [])
     .sort((a, b) => b.size - a.size);
   if (!candidates.length) return null;
-  const facts = inlineFinancialFacts(await fetchText(new URL(candidates[0].name, folder).href, 20_000_000), cik, filing);
+  const facts = inlineFinancialFacts(await fetchText(new URL(candidates[0].name, folder).href, 20_000_000), cik, filing, primaryHtml);
   return hasRevenue(facts) ? facts : null;
 }

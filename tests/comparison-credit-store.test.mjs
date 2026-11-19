@@ -2,7 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { stripTypeScriptTypes } from "node:module";
-import { COST, PLAN_CREDITS_PER_MINUTE, WARM_CEILING, BACKGROUND_CEILING, USER_SERIES_CEILING, MINUTES_PER_DAY, dailyCost, hasRoom, tickersForMinute, warmUniverse, daySlot } from "../lib/research/twelve-warm-plan.ts";
+import { COST, PLAN_CREDITS_PER_MINUTE, WARM_CEILING, BACKGROUND_CEILING, USER_SERIES_CEILING, MINUTES_PER_DAY, dailyCost, hasRoom, tickersForMinute, warmUniverse, daySlot, statementOrder } from "../lib/research/twelve-warm-plan.ts";
 import { extractFinancials } from "../lib/research/comparison.ts";
 import { buildSecMarketEvidence, lastClose } from "../lib/research/sec-market-evidence.ts";
 import { applyValuationBasis, comparisonScores } from "../lib/research/comparison-scorecard.ts";
@@ -58,7 +58,8 @@ async function loadStore() {
     .replace(/import \{ unstable_cache \} from "next\/cache";/, "const { unstable_cache } = globalThis.__store;")
     .replace(/import \{ after \} from "next\/server";/, "const { after } = globalThis.__store;")
     .replace('"./twelve-credit-gate"', JSON.stringify(here("twelve-credit-gate.ts")))
-    .replace('"./twelve-warm-plan"', JSON.stringify(here("twelve-warm-plan.ts")));
+    .replace('"./twelve-warm-plan"', JSON.stringify(here("twelve-warm-plan.ts")))
+    .replace('"./provider-symbol"', JSON.stringify(here("provider-symbol.ts")));
   const mod = await import("data:text/javascript;base64," + Buffer.from(stripTypeScriptTypes(text)).toString("base64") + `#${Math.random()}`);
   return { mod, cache, afterJobs };
 }
@@ -142,14 +143,16 @@ test("one minute of the job: five companies' statistics and series, statements o
   assert.equal(report.filings, 5); assert.deepEqual(globalThis.__prewarmed.slice(0, 5), report.tickers); delete globalThis.__prewarmed;
   assert.equal(p.calls.filter(c => c.startsWith("statistics:")).length, 5);
   assert.equal(p.calls.filter(c => c.startsWith("time_series:")).length, 5);
-  // 255 + one company's statements (200) fits under 460; the second company's statements wait for its minute tomorrow.
-  assert.deepEqual(p.calls.filter(c => c.startsWith("income_statement:")), ["income_statement:C1440"]);
-  assert.deepEqual(report.skipped, ["C2880:statements"]);
+  // 255 + one company's statements (200) fits under 460; the second company's statements wait for its minute tomorrow, when the order has
+  // turned (statementOrder), so the same company is not skipped every day.
+  const [first, second] = statementOrder(report.tickers, clock.now()).filter(t => t === "C1440" || t === "C2880");
+  assert.deepEqual(p.calls.filter(c => c.startsWith("income_statement:")), [`income_statement:${first}`]);
+  assert.deepEqual(report.skipped, [`${second}:statements`]);
   assert.ok(p.peak <= WARM_CEILING, `peak ${p.peak}`);
   // Called again in the same minute (a retry): everything is already stored, nothing is spent.
   p.calls.length = 0;
   const again = await warm.warmMinute(clock.now());
-  assert.equal(again.spent, 0); assert.ok(p.calls.every(c => c === "income_statement:C2880" || c === "cash_flow:C2880"));
+  assert.equal(again.spent, 0); assert.ok(p.calls.every(c => c === `income_statement:${second}` || c === `cash_flow:${second}`));
 }));
 
 test("a busy site minute: the job sends nothing that would take the minute over its ceiling", () => withClock(Date.UTC(2026, 10, 15, 0, 1, 10), async clock => {

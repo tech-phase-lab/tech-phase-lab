@@ -1,5 +1,6 @@
 import type { TwelveComparisonSnapshot } from "./twelve-data-comparison.ts";
 import { twelveNumber } from "./twelve-data-values.ts";
+import { sameProviderSymbol } from "./provider-symbol.ts";
 type Copy = { ja: string; en: string };
 type Row = Record<string, unknown>;
 const obj = (v: unknown): Row => v && typeof v === "object" && !Array.isArray(v) ? v as Row : {};
@@ -37,7 +38,7 @@ export function normalizeTwelveFactors(snapshot:TwelveComparisonSnapshot, income
   let stats:TwelveFactorEvidence["statistics"]=null;
   if(statistics) {
     const root=obj(statistics.payload), meta=obj(root.meta), s=obj(root.statistics), f=obj(s.financials), b=obj(f.balance_sheet), v=obj(s.valuations_metrics);
-    if(root.status!=="error" && meta.symbol===snapshot.ticker && typeof meta.currency==="string" && /^[A-Z]{3}$/.test(meta.currency)
+    if(root.status!=="error" && sameProviderSymbol(meta.symbol,snapshot.ticker) && typeof meta.currency==="string" && /^[A-Z]{3}$/.test(meta.currency)
       && f.most_recent_quarter===snapshot.periodEnd && Number.isFinite(Date.parse(statistics.retrievedAt)) && Date.parse(statistics.retrievedAt)<=now) {
       const nonnegative=(v:unknown)=>{const x=n(v);return x!==null && x>=0 ? x : null;};
       const positive=(v:unknown)=>{const x=n(v);return x!==null && x>0 ? x : null;};
@@ -50,7 +51,7 @@ export function normalizeTwelveFactors(snapshot:TwelveComparisonSnapshot, income
   }
   const root=obj(income), meta=obj(root.meta);
   let margins:TwelveFactorEvidence["margins"]=[];
-  if(meta.symbol===snapshot.ticker && meta.currency===snapshot.currency && meta.period==="Quarterly" && Array.isArray(root.income_statement)) {
+  if(sameProviderSymbol(meta.symbol,snapshot.ticker) && meta.currency===snapshot.currency && meta.period==="Quarterly" && Array.isArray(root.income_statement)) {
     const byDate=new Map<string,(number|null)[]>();
     const profitField=snapshot.operatingIncomeBasis==="pretax" ? "pretax_income" : "operating_income";
     for(const raw of root.income_statement){const r=obj(raw),revenue=n(r.sales),profit=n(r[profitField]);
@@ -66,7 +67,7 @@ export function normalizeTwelveFactors(snapshot:TwelveComparisonSnapshot, income
   let momentum:TwelveFactorEvidence["momentum"]=null;
   if(series) {
     const r=obj(series.payload),m=obj(r.meta),seen=new Set<string>();
-    if(series.adjust==="splits" && r.status!=="error" && m.symbol===snapshot.ticker && m.interval==="1day" && typeof m.currency==="string" && /^[A-Z]{3}$/.test(m.currency)
+    if(series.adjust==="splits" && r.status!=="error" && sameProviderSymbol(m.symbol,snapshot.ticker) && m.interval==="1day" && typeof m.currency==="string" && /^[A-Z]{3}$/.test(m.currency)
       && Number.isFinite(Date.parse(series.retrievedAt)) && Date.parse(series.retrievedAt)<=now && Array.isArray(r.values)) {
       let conflict=false;
       const points=r.values.flatMap(raw=>{const row=obj(raw),close=n(row.close);
