@@ -1,4 +1,5 @@
 import type { NextConfig } from "next";
+import { siteSecurityHeaders } from "./lib/security-headers.ts";
 
 // Files that never change under the same name (the fonts carry a content hash) are kept by the browser for a year;
 // images and icons for a week, and re-checked quietly in the background for a month after that.
@@ -31,7 +32,9 @@ const nextConfig: NextConfig = {
   async headers() {
     // The notification worker is never kept by a cache: a phone checking for a new version must get the current file (owner, Nov 16).
     const worker = { source: "/research-sw.js", headers: [{ key: "Cache-Control", value: "no-cache, no-store, must-revalidate" }] };
-    return [...cached, worker, ...["/research/account/:path*", "/resolute/checkout/:path*", "/api/research/member/:path*", "/api/research/billing/:path*", "/api/resolute/payments/:path*", "/api/resolute/live-payments/:path*"].map(source => ({
+    // Every path gets the site-wide security headers first; the stricter account/billing rules below override them (no-referrer).
+    const site = { source: "/:path*", headers: siteSecurityHeaders() };
+    return [site, ...cached, worker, ...["/research/account/:path*", "/resolute/checkout/:path*", "/api/research/member/:path*", "/api/research/billing/:path*", "/api/resolute/payments/:path*", "/api/resolute/live-payments/:path*"].map(source => ({
       source,
       headers: [
         { key: "Referrer-Policy", value: "no-referrer" },

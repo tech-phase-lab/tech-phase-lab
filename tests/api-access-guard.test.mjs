@@ -24,6 +24,7 @@ const PUBLIC = {
   'research/radar/freshness': 'tickers and codes of radar companies behind their SEC filing (no figures, no dates); cached an hour',
   'research/stocks': 'public stock directory',
   'resolute/receive': 'guest checkout receipt (switch-gated, origin-checked)',
+  'csp-report': 'browsers post CSP report-only violations; write-only, logs directive and blocked host only, rate limited',
 };
 const GUARD = /getMembership\w*\(|auth\(\)|currentUser|ownerIdentity|accountIdentity|riskProxy|handleLiveBilling|handleSandboxBilling|validSyncToken|createRecoveryCheck|requireOwner|isOwnerAccount|Bearer|getResoluteEntitlements|canUseTools|\.\.\.action|routes\./;
 function routes(dir) {
