@@ -190,11 +190,11 @@ test("7: the tax estimate shows its assumptions and keeps NISA losses out of off
   assert.ok(calcLossRealization({ taxYear: 2026, account: "general", lossJpy: 500_000, otherNetGainJpy: 1_000_000 }).taxChange < 0);
 });
 
-test("8: the struck-through 35,760円 carries a small 「月額の12か月分」 (EN: 12 × monthly)", () => {
+test("8: the struck-through 35,760円 stands alone; the 「月額の12か月分」 note was removed (owner, Nov 19)", () => {
   const card = read("../app/research/pro-offer-card.tsx");
-  assert.match(card, /export const TWELVE_MONTHS_NOTE = \{ ja: "月額の12か月分", en: "12 × monthly" \} as const;/);
-  assert.match(card, /<del className=\{styles\.priceOld\}>\{price\.twelveMonths\}<\/del><small className=\{styles\.priceOldNote\}>\{t\(TWELVE_MONTHS_NOTE\.ja, TWELVE_MONTHS_NOTE\.en\)\}<\/small>/);
-  assert.match(read("../app/research/plan-cards.module.css"), /\.priceOldNote \{ font-size:10px;/);
+  assert.doesNotMatch(card, /月額の12か月分|12 × monthly|TWELVE_MONTHS_NOTE/);
+  assert.match(card, /<del className=\{styles\.priceOld\}>\{price\.twelveMonths\}<\/del><\/span>/);
+  assert.doesNotMatch(read("../app/research/plan-cards.module.css"), /\.priceOldNote/);
 });
 
 test("9: the three lawyer-reviewed texts, their English, Web Push providers, and the commerce page at the linked URL", () => {
