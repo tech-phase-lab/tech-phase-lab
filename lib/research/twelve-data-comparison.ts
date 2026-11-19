@@ -1,5 +1,6 @@
 import { twelveNumber } from "./twelve-data-values.ts";
 export { twelveNumber } from "./twelve-data-values.ts";
+import { sameProviderSymbol } from "./provider-symbol.ts";
 import { createHash } from "node:crypto";
 
 /** Offline ingestion boundary. No network calls, API key, or paid-feed activation. */
@@ -32,7 +33,7 @@ function integer(x: unknown, min: number, max: number): number | null {
 }
 function envelope(raw: unknown, ticker: string, key: string) {
   const root = object(raw), meta = object(root.meta);
-  if (root.status === "error" || meta.symbol !== ticker || meta.period !== "Quarterly"
+  if (root.status === "error" || !sameProviderSymbol(meta.symbol, ticker) || meta.period !== "Quarterly"
     || typeof meta.currency !== "string" || !/^[A-Z]{3}$/.test(meta.currency)
     || !Array.isArray(root[key])) throw Error(`invalid-twelve-${key}`);
   return { currency: meta.currency, rows: (root[key] as unknown[]).map(object) };

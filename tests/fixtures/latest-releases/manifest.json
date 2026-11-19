@@ -319,7 +319,10 @@
   "status": "figures",
   "period": "Q3 2026",
   "facts": [
-   "revenue"
+   "revenue",
+   "eps",
+   "adjusted-eps",
+   "net-income"
   ],
   "failure": null
  },
@@ -357,7 +360,9 @@
   "status": "figures",
   "period": "Q1 FY2027",
   "facts": [
-   "revenue"
+   "revenue",
+   "net-income",
+   "operating-income"
   ],
   "failure": null
  },
@@ -649,6 +654,9 @@
   "status": "figures",
   "period": "Q3 2026",
   "facts": [
+   "revenue",
+   "eps",
+   "adjusted-eps",
    "net-income",
    "operating-income"
   ],
@@ -691,7 +699,9 @@
   "status": "figures",
   "period": "Q3 2026",
   "facts": [
-   "net-income"
+   "revenue",
+   "net-income",
+   "operating-income"
   ],
   "failure": null
  }

@@ -2,7 +2,7 @@ import "server-only";
 import providers from "./providers.json";
 import { comparisonDirectory, prewarmComparison, statementsNeeded } from "./comparison-server";
 import { cachedStatements, hasSeriesToday, hasStatisticsToday, minuteUsage, providerConfigured, warmSeries, warmStatements, warmStatistics, weeklyNote } from "./twelve-store";
-import { COST, WARM_CEILING, hasRoom, profileDue, tickersForMinute, warmUniverse } from "./twelve-warm-plan";
+import { COST, WARM_CEILING, hasRoom, profileDue, statementOrder, tickersForMinute, warmUniverse } from "./twelve-warm-plan";
 
 /** One minute of the background job (app/api/research/compare/warm, called once a minute): the companies whose minute it is get today's
  * statistics and price series, and, when their filing cannot give every figure, the provider's statements about once a week. Every call is sent
@@ -35,7 +35,7 @@ export async function warmMinute(now = Date.now()): Promise<WarmReport> {
     if (!await hasSeriesToday(ticker, now)) await spend(ticker, "series", COST.series, () => warmSeries(ticker, now));
   }));
   // Then, one company at a time, the statements where the filing falls short (200 credits; the meter is read again first).
-  for (const { ticker, index } of due) {
+  for (const { ticker, index } of statementOrder(due, now)) {
     let note = await need.read(ticker, now);
     if (!note || profileDue(index, now)) note = await need.write(ticker, now) ?? note;
     if (!note?.needs) continue;

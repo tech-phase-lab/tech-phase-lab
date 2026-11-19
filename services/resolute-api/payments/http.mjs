@@ -48,6 +48,9 @@ export function paymentHttp({ engine, store, authenticate, enabled, allowedUsers
           return json(await engine.claim(user,await authenticateGuest(request.headers),await readJson(request,2048)));
         }
         if(path === base+'/access' && request.method === 'GET') return json(await access(user));
+        // RESOLUTE automatic renewal: read, stop or restart (account screen). Not tied to sales being open.
+        if(path === base+'/auto-renewal' && request.method === 'GET') return json(await engine.autoRenewal(user));
+        if(path === base+'/auto-renewal' && request.method === 'POST') return json(await engine.setAutoRenewal(user,await readJson(request,256)));
         if(path === base+'/audit' && request.method === 'GET') return json({events:await store.auditList()});
         const match=route.slice(base.length).match(/^\/orders\/([0-9a-f-]{36})$/i);
         if(match && request.method === 'GET') return json(await engine.status(user,match[1]));

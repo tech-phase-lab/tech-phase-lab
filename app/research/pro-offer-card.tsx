@@ -12,7 +12,6 @@ export type OfferPeriod = "month" | "year";
 const AMOUNT: Record<OfferCurrency, Record<OfferPeriod, number>> = { JPY: { month: 2980, year: 29800 }, USD: { month: 20, year: 200 } };
 const TWELVE_MONTHS: Record<OfferCurrency, number> = { JPY: 35760, USD: 240 };
 /** The small words under the struck-through yearly figure: it is twelve monthly payments, not an earlier price (owner pack, Nov 17, section 8). */
-export const TWELVE_MONTHS_NOTE = { ja: "月額の12か月分", en: "12 × monthly" } as const;
 export function offerPrice(currency: OfferCurrency, period: OfferPeriod, ja: boolean) {
   const money = (value: number) => ja ? `${value.toLocaleString("en-US")}${currency === "JPY" ? "円" : "ドル"}` : `${currency === "JPY" ? "¥" : "$"}${value.toLocaleString("en-US")}`;
   const unit = period === "year"
@@ -63,7 +62,7 @@ export default function ProOfferCard({ ja, onSubscribe, href, busy = false, disa
     </div>
     <p className={styles.priceRow} aria-live="polite">
       <span className={styles.priceN}>{price.amount}</span><span className={styles.priceU}>{price.unit}</span>
-      {price.twelveMonths && <span className={styles.priceOldBox}><del className={styles.priceOld}>{price.twelveMonths}</del><small className={styles.priceOldNote}>{t(TWELVE_MONTHS_NOTE.ja, TWELVE_MONTHS_NOTE.en)}</small></span>}
+      {price.twelveMonths && <span className={styles.priceOldBox}><del className={styles.priceOld}>{price.twelveMonths}</del></span>}
     </p>
     {onSubscribe
       // The account page's button goes straight to PayPal, so it is the final one: the lawyer's wording and the renewal line above it.

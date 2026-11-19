@@ -7,6 +7,7 @@ import { livePaypalConfig, createPaypal } from './paypal.mjs';
 import { paymentStore } from './store.mjs';
 import { paymentEngine } from './engine.mjs';
 import { createLiveEntitlementReader } from './live-entitlements.mjs';
+import { renewalStore } from './renewal-store.mjs';
 
 export function livePaymentConfiguration(env) {
   const paypal=livePaypalConfig(env);
@@ -22,9 +23,12 @@ export function createLivePaymentServices(env) {
   const pool=new Pool({...config.db,max:4,application_name:'resolute-payment-live'});
   pool.on('error',()=>{});
   const store=paymentStore(pool,{environment:'live'}), paypal=createPaypal(config.paypal);
+  // Needs db/resolute/025_auto_renewal.sql. Off (the default) = no order asks PayPal to save a payment method.
+  const renewals=renewalStore(pool,store,{environment:'live'});
   const clerk=createClerkClient({secretKey:env.RESOLUTE_PAYMENT_CLERK_SECRET_KEY});
   // Guest checkout remains off until migration, receipt sender configuration and live acceptance are ready.
   return {store, access:createLiveEntitlementReader(pool), close:()=>pool.end(),
     engine:paymentEngine({store,paypal,recovery,environment:'live',merchantId:config.paypal.merchantId,
-      getUser:id=>clerk.users.getUser(id), allowGuest:()=>env.RESOLUTE_GUEST_CHECKOUT_ENABLED === 'true', canCharge:()=>env.RESOLUTE_LIVE_SALES_ENABLED === 'true'})};
+      getUser:id=>clerk.users.getUser(id), allowGuest:()=>env.RESOLUTE_GUEST_CHECKOUT_ENABLED === 'true', canCharge:()=>env.RESOLUTE_LIVE_SALES_ENABLED === 'true',
+      renewals, autoRenewal:()=>env.RESOLUTE_AUTO_RENEWAL_ENABLED === 'true'})};
 }

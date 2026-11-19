@@ -2,6 +2,7 @@ import "server-only";
 import { unstable_cache } from "next/cache";
 import { comparisonCatalog } from "./comparison-catalog";
 import providers from "./providers.json";
+import { COMPARISON_EXCLUSIONS, comparisonExclusion, tickersByCik } from "./comparison-exclusions";
 import { parseSecDirectory } from "./stock-directory";
 import { emptyFinancials } from "./comparison";
 import { prepareComparisonAnalysis, currentComparisonAnalysis } from "./comparison-analysis";
@@ -33,7 +34,8 @@ async function readFinancials(ticker: string, cik: string) {
 }
 // v8: the quarter's diluted shares, for price-to-sales from the filing when no statistics are stored (Nov 15).
 // v9: a foreign filer's half-year or annual period, IFRS borrowings, the statements document of a 6-K (Nov 18).
-const cachedFinancials = unstable_cache(readFinancials, ["comparison-financials-v9-periods"], { revalidate: 900 });
+// v10: a Canadian bank's quarterly 6-K, an inline XBRL document set, an IFRS bank's operating income, a half-year's twelve months (Nov 19).
+const cachedFinancials = unstable_cache(readFinancials, ["comparison-financials-v10-coverage"], { revalidate: 900 });
 /** Speed (owner, Nov 18: a comparison took about 20 seconds). A stored reading up to a day old is answered at once; once it is older than 15
  * minutes the cache reads the SEC again in the background (Next's own refresh of a stale entry), so the next viewer has the new figures. The
  * background job reads every listed company once a day (prewarmComparison), so only a company nobody has opened for a day waits for the SEC. */
@@ -103,11 +105,23 @@ async function loadSecFinancials(ticker: string) {
   } catch { return emptyFinancials(ticker, "unavailable"); }
 }
 
+/** A SPAC, fund, preferred, warrant, unit or right (lib/research/comparison-exclusions.ts): not offered by the comparison. */
+const siblingsOf = new WeakMap<object, ReturnType<typeof tickersByCik>>();
+async function excludedEntry(ticker: string) {
+  const entries = await directory();
+  const entry = entries.find(c => c.ticker === ticker);
+  if (!entry) return { entry, excluded: false };
+  let siblings = siblingsOf.get(entries);
+  if (!siblings) { siblings = tickersByCik(entries); siblingsOf.set(entries, siblings); }
+  return { entry, excluded: comparisonExclusion(entry, siblings, COMPARISON_EXCLUSIONS) !== null };
+}
+
 export async function resolveComparisonCompany(ticker: string) {
   const known = comparisonCatalog.find(c => c.ticker === ticker);
   if (known) return known;
-  const entry = (await directory()).find(c => c.ticker === ticker);
-  return entry ? { ticker, name: entry.name, peer: ticker, caution: { ja: "事業構成や決算期間の違いを確認してください。", en: "Review differences in business mix and reporting periods." } } : null;
+  // An excluded ticker asked for directly (an old link, the API) is answered as an unknown company, as any ticker the comparison does not know.
+  const { entry, excluded } = await excludedEntry(ticker);
+  return entry && !excluded ? { ticker, name: entry.name, peer: ticker, caution: { ja: "事業構成や決算期間の違いを確認してください。", en: "Review differences in business mix and reporting periods." } } : null;
 }
 
 /** True when the only reason the filing is not current is a newer earnings release whose quarterly report is not filed yet. */
@@ -158,8 +172,10 @@ const STATEMENT_FACTORS = ["growth", "profitability", "cash", "financial", "stab
 /** For the background job, about once a week per company: does this company's filing leave a figure that only the provider's statements can
  * give (an IFRS or 20-F/6-K filer, no recent quarter, or a statement factor still empty)? A filing that cannot be read now is not judged. */
 export async function statementsNeeded(ticker: string): Promise<{ needs: boolean; checkedAt: string }> {
-  const sec = await loadSecFinancials(ticker);
   const now = Date.now(), checkedAt = new Date(now).toISOString();
+  // Never compared, so never worth the statements' credits (owner, Nov 19).
+  if (!comparisonCatalog.some(c => c.ticker === ticker) && (await excludedEntry(ticker)).excluded) return { needs: false, checkedAt };
+  const sec = await loadSecFinancials(ticker);
   if (sec.status === "unavailable") throw new Error("sec-unavailable");
   if (sec.quarterRevenue?.basis === "ifrs-full" || sec.status !== "ready" || !hasRecentQuarter(sec, now)) return { needs: true, checkedAt };
   const evidence = buildSecMarketEvidence(sec, undefined, undefined, now);

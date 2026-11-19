@@ -77,8 +77,9 @@ test('6-K and 40-F tagged periods work for arbitrary issuers, without treating Y
   const p=inlineFinancialFacts(annualHtml,'1046179',{...annual,form:'40-F'});
   const q=tsmQuarterFacts(quarterHtml,'1046179',quarter);const r=parse(mergeFinancialFacts(p,[q],'1046179'));
   assert.equal(r.status,'ready');assert.equal(r.quarterRevenue.end,'2026-06-30');
-  q.facts['ifrs-full'].Revenue.units.TWD[0].start='2026-01-01';
-  // A six-month figure is never a quarter: it can only stand as a half-year period, and is labelled so (periodMonths 6).
+  q.facts['ifrs-full'].Revenue.units.TWD[0].start='2026-01-01';q.facts['ifrs-full'].Revenue.units.TWD[1].start='2025-01-01';
+  // A six-month figure is never a quarter: it can only stand as a half-year period (with the same half a year earlier beside it, Nov 19), and
+  // is labelled so (periodMonths 6).
   const h=parse(mergeFinancialFacts(p,[q],'1046179'));
   assert.equal(h.periodMonths,6);assert.equal(h.quarterRevenue.start,'2026-01-01');assert.equal(h.quarterMargins,null);
 });

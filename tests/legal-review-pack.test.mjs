@@ -79,7 +79,9 @@ test("3: RESOLUTE checkout — only the final pay button reads 「利用規約�
   assert.match(en, /^<button type="button" aria-label="Agree to the Terms and buy">Agree to the <span role="link" data-href="\/terms\?lang=en"[^>]*>Terms<\/span> and buy<\/button>$/);
   assert.match(read("../app/legal/agree-button.tsx"), /window\.open\(href, "_blank", "noopener"\)/);
   const live = read("../app/resolute/checkout/live-screen.tsx");
-  assert.match(live, /<CheckoutLines lines=\{RESOLUTE_CHECKOUT_LINES\[en\?"en":"ja"\]\} \/>\n    <AgreeButton en=\{en\} disabled=\{busy\} onClick=\{\(\)=>void act\("capture"\)\} \/>/);
+  // Owner, Nov 19: for an automatic-renewal order the first line becomes 「1年後から自動で更新されます。いつでも止められます」;
+  // with RESOLUTE_AUTO_RENEWAL_ENABLED off the two lines are RESOLUTE_CHECKOUT_LINES as before (tests/resolute-auto-renewal.test.mjs).
+  assert.match(live, /<CheckoutLines lines=\{resoluteCheckoutLines\(en,order\.autoRenewal===true\)\} \/>\n    <AgreeButton en=\{en\} disabled=\{busy\} onClick=\{\(\)=>void act\("capture"\)\} \/>/);
   assert.ok(!live.includes("支払いを確定する") && !live.includes("Complete payment"));
   // The other buttons keep their words; the footer links the full terms and the commerce notice.
   for (const kept of ["価格を確認して進む", "Check price and continue", "PayPalへ進む", "Continue to PayPal"]) assert.ok(live.includes(kept), kept);
@@ -188,11 +190,11 @@ test("7: the tax estimate shows its assumptions and keeps NISA losses out of off
   assert.ok(calcLossRealization({ taxYear: 2026, account: "general", lossJpy: 500_000, otherNetGainJpy: 1_000_000 }).taxChange < 0);
 });
 
-test("8: the struck-through 35,760円 carries a small 「月額の12か月分」 (EN: 12 × monthly)", () => {
+test("8: the struck-through 35,760円 stands alone; the 「月額の12か月分」 note was removed (owner, Nov 19)", () => {
   const card = read("../app/research/pro-offer-card.tsx");
-  assert.match(card, /export const TWELVE_MONTHS_NOTE = \{ ja: "月額の12か月分", en: "12 × monthly" \} as const;/);
-  assert.match(card, /<del className=\{styles\.priceOld\}>\{price\.twelveMonths\}<\/del><small className=\{styles\.priceOldNote\}>\{t\(TWELVE_MONTHS_NOTE\.ja, TWELVE_MONTHS_NOTE\.en\)\}<\/small>/);
-  assert.match(read("../app/research/plan-cards.module.css"), /\.priceOldNote \{ font-size:10px;/);
+  assert.doesNotMatch(card, /月額の12か月分|12 × monthly|TWELVE_MONTHS_NOTE/);
+  assert.match(card, /<del className=\{styles\.priceOld\}>\{price\.twelveMonths\}<\/del><\/span>/);
+  assert.doesNotMatch(read("../app/research/plan-cards.module.css"), /\.priceOldNote/);
 });
 
 test("9: the three lawyer-reviewed texts, their English, Web Push providers, and the commerce page at the linked URL", () => {

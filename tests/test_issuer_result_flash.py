@@ -450,6 +450,31 @@ class BodyCompanies(unittest.TestCase):
                 self.assertEqual((item['ticker'],item['period'],item['publisher'],item['facts'][0]['value']),(ticker,period,publisher,revenue))
                 self.assertGreaterEqual(len([f for f in item['facts'] if not f['key'].startswith('guidance-')]),3)
 
+    def test_ibm_iren_vistra_tesla_full_set_from_the_stored_sec_exhibit(self):
+        # Nov 19: the live flash read these four from their highlight sentences only (IBM/IREN revenue, Vistra net income, Tesla two
+        # rounded figures). The stored SEC exhibit is now read from its statements, with the year-ago column where the statement has one.
+        import gzip
+        manifest=json.loads((FX/'latest-releases'/'manifest.json').read_text())
+        cases={'IBM':['revenue','eps','adjusted-eps','net-income'],'IREN':['revenue','net-income','operating-income'],
+               'VST':['revenue','net-income','operating-income'],'TSLA':['revenue','eps','adjusted-eps','net-income','operating-income']}
+        for ticker,keys in cases.items():
+            with self.subTest(ticker):
+                tmp=tempfile.TemporaryDirectory();self.addCleanup(tmp.cleanup)
+                path=str(Path(tmp.name)/'db.sqlite')
+                with monitor.connect(path) as db: signals.schema(db)
+                url=manifest[ticker]['url']; body=gzip.decompress((FX/'latest-releases'/f'{ticker}.txt.gz').read_bytes()).decode()
+                sha=hashlib.sha256(body.encode()).hexdigest()
+                with monitor.connect(path) as db:
+                    db.execute('INSERT INTO sources(url,ticker,discovered_at,sha256) VALUES(?,?,?,?)',(url,ticker,'2026-11-12T21:00:10+00:00',sha))
+                    db.execute('INSERT INTO release_events(url,ticker,detected_at) VALUES(?,?,?)',(url,ticker,'2026-11-12T21:00:10+00:00'))
+                    db.execute('INSERT INTO source_revisions(url,sha256,observed_at,extracted_text,extracted_chars) VALUES(?,?,?,?,?)',(url,sha,'2026-11-12T21:00:11+00:00',body,len(body)))
+                self.assertEqual(flash.run_once(path,datetime(2026,11,12,21,1,tzinfo=timezone.utc)),1)
+                with monitor.connect(path) as db: [item]=flash.public_feed(db,'2026-11-05T00:00:00+00:00')
+                self.assertEqual([f['key'] for f in item['facts']],keys)
+                self.assertEqual(item['method'],'deterministic-issuer-table')
+                self.assertEqual(len(market_results.display_floor([item])),1)
+                self.assertEqual(all('comparisons' in f for f in item['facts']),ticker!='IREN')
+
 class Publication(unittest.TestCase):
     def setUp(self):
         self.tmp=tempfile.TemporaryDirectory();self.addCleanup(self.tmp.cleanup)
