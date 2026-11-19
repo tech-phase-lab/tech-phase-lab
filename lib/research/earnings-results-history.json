@@ -326,21 +326,42 @@
    "kind": "earnings",
    "ticker": "VST",
    "period": "Q3 2026",
-   "titleJa": "VST Q3 2026決算：純損益$1.14B",
-   "titleEn": "VST Q3 2026 earnings: Net income / (loss) $1.14B",
+   "titleJa": "VST Q3 2026決算：売上高$6.347B、純損益$1.14B",
+   "titleEn": "VST Q3 2026 earnings: Revenue $6.347B, Net income / (loss) $1.14B",
    "facts": [
+    {
+     "key": "revenue",
+     "ja": "売上高",
+     "en": "Revenue",
+     "value": "$6.347B",
+     "comparisons": {
+      "yearAgo": "$4.971B"
+     }
+    },
     {
      "key": "net-income",
      "ja": "純損益",
      "en": "Net income / (loss)",
-     "value": "$1.14B"
+     "value": "$1.14B",
+     "comparisons": {
+      "yearAgo": "$652M"
+     }
+    },
+    {
+     "key": "operating-income",
+     "ja": "営業損益",
+     "en": "Operating income / (loss)",
+     "value": "$1.706B",
+     "comparisons": {
+      "yearAgo": "$1.037B"
+     }
     }
    ],
    "url": "https://www.sec.gov/Archives/edgar/data/1692819/000169281926000023/vistra-20260930xearningsre.htm",
    "publisher": "Vistra IR (SEC 8-K)",
    "publishedAt": "2026-11-06T12:01:01.000+00:00",
    "observedAt": "2026-11-06T12:01:01.000+00:00",
-   "method": "issuer-highlight-sentences"
+   "method": "deterministic-issuer-table"
   },
   {
    "id": "161917196249215",
@@ -443,21 +464,33 @@
    "kind": "earnings",
    "ticker": "IREN",
    "period": "Q1 FY2027",
-   "titleJa": "IREN Q1 FY2027決算：売上高$228M",
-   "titleEn": "IREN Q1 FY2027 earnings: Revenue $228M",
+   "titleJa": "IREN Q1 FY2027決算：売上高$228M、純損益$-263M",
+   "titleEn": "IREN Q1 FY2027 earnings: Revenue $228M, Net income / (loss) $-263M",
    "facts": [
     {
      "key": "revenue",
      "ja": "売上高",
      "en": "Revenue",
      "value": "$228M"
+    },
+    {
+     "key": "net-income",
+     "ja": "純損益",
+     "en": "Net income / (loss)",
+     "value": "$-263M"
+    },
+    {
+     "key": "operating-income",
+     "ja": "営業損益",
+     "en": "Operating income / (loss)",
+     "value": "$-186M"
     }
    ],
    "url": "https://www.sec.gov/Archives/edgar/data/1878848/000187884826000065/irenreportsq1-fy27result.htm",
    "publisher": "IREN IR (SEC 8-K)",
    "publishedAt": "2026-11-05T21:03:11.000+00:00",
    "observedAt": "2026-11-05T21:03:11.000+00:00",
-   "method": "issuer-highlight-sentences"
+   "method": "deterministic-issuer-table"
   },
   {
    "id": "33034685498074",
@@ -1579,27 +1612,60 @@
    "kind": "earnings",
    "ticker": "TSLA",
    "period": "Q3 2026",
-   "titleJa": "TSLA Q3 2026決算：純損益$800M、営業損益$700M",
-   "titleEn": "TSLA Q3 2026 earnings: Net income / (loss) $800M, Operating income / (loss) $700M",
+   "titleJa": "TSLA Q3 2026決算：売上高$28.046B、EPS（希薄化後）$0.22",
+   "titleEn": "TSLA Q3 2026 earnings: Revenue $28.046B, Diluted EPS $0.22",
    "facts": [
+    {
+     "key": "revenue",
+     "ja": "売上高",
+     "en": "Revenue",
+     "value": "$28.046B",
+     "comparisons": {
+      "yearAgo": "$28.095B"
+     }
+    },
+    {
+     "key": "eps",
+     "ja": "EPS（希薄化後）",
+     "en": "Diluted EPS",
+     "value": "$0.22",
+     "comparisons": {
+      "yearAgo": "$0.39"
+     }
+    },
+    {
+     "key": "adjusted-eps",
+     "ja": "調整後EPS（希薄化後）",
+     "en": "Adjusted diluted EPS",
+     "value": "$0.48",
+     "comparisons": {
+      "yearAgo": "$0.50"
+     }
+    },
     {
      "key": "net-income",
      "ja": "純損益",
      "en": "Net income / (loss)",
-     "value": "$800M"
+     "value": "$787M",
+     "comparisons": {
+      "yearAgo": "$1.373B"
+     }
     },
     {
      "key": "operating-income",
      "ja": "営業損益",
      "en": "Operating income / (loss)",
-     "value": "$700M"
+     "value": "$718M",
+     "comparisons": {
+      "yearAgo": "$1.624B"
+     }
     }
    ],
    "url": "https://www.sec.gov/Archives/edgar/data/1318605/000162828026066738/exhibit9914.htm",
    "publisher": "Tesla IR (SEC 8-K)",
    "publishedAt": "2026-10-21T20:41:42.000+00:00",
    "observedAt": "2026-10-21T20:41:42.000+00:00",
-   "method": "issuer-highlight-sentences"
+   "method": "deterministic-issuer-table"
   },
   {
    "id": "135159257561874",
@@ -1607,21 +1673,51 @@
    "kind": "earnings",
    "ticker": "IBM",
    "period": "Q3 2026",
-   "titleJa": "IBM Q3 2026決算：売上高$17.1B",
-   "titleEn": "IBM Q3 2026 earnings: Revenue $17.1B",
+   "titleJa": "IBM Q3 2026決算：売上高$17.103B、EPS（希薄化後）$2.30",
+   "titleEn": "IBM Q3 2026 earnings: Revenue $17.103B, Diluted EPS $2.30",
    "facts": [
     {
      "key": "revenue",
      "ja": "売上高",
      "en": "Revenue",
-     "value": "$17.1B"
+     "value": "$17.103B",
+     "comparisons": {
+      "yearAgo": "$16.331B"
+     }
+    },
+    {
+     "key": "eps",
+     "ja": "EPS（希薄化後）",
+     "en": "Diluted EPS",
+     "value": "$2.30",
+     "comparisons": {
+      "yearAgo": "$1.84"
+     }
+    },
+    {
+     "key": "adjusted-eps",
+     "ja": "調整後EPS（希薄化後）",
+     "en": "Adjusted diluted EPS",
+     "value": "$2.95",
+     "comparisons": {
+      "yearAgo": "$2.65"
+     }
+    },
+    {
+     "key": "net-income",
+     "ja": "純損益",
+     "en": "Net income / (loss)",
+     "value": "$2.19B",
+     "comparisons": {
+      "yearAgo": "$1.744B"
+     }
     }
    ],
    "url": "https://www.sec.gov/Archives/edgar/data/51143/000005114326000093/ibm-20261021xex991.htm",
    "publisher": "IBM IR (SEC 8-K)",
    "publishedAt": "2026-10-21T20:19:17.000+00:00",
    "observedAt": "2026-10-21T20:19:17.000+00:00",
-   "method": "issuer-highlight-sentences"
+   "method": "deterministic-issuer-table"
   },
   {
    "id": "119717948308858",
@@ -2153,7 +2249,7 @@
    "failure": null,
    "url": "https://www.sec.gov/Archives/edgar/data/51143/000005114326000093/ibm-20261021xex991.htm",
    "events": 1,
-   "method": "issuer-highlight-sentences"
+   "method": "deterministic-issuer-table"
   },
   {
    "ticker": "INTC",
@@ -2189,7 +2285,7 @@
    "failure": null,
    "url": "https://www.sec.gov/Archives/edgar/data/1878848/000187884826000065/irenreportsq1-fy27result.htm",
    "events": 1,
-   "method": "issuer-highlight-sentences"
+   "method": "deterministic-issuer-table"
   },
   {
    "ticker": "KLAC",
@@ -2433,7 +2529,7 @@
    "failure": null,
    "url": "https://www.sec.gov/Archives/edgar/data/1318605/000162828026066738/exhibit9914.htm",
    "events": 1,
-   "method": "issuer-highlight-sentences"
+   "method": "deterministic-issuer-table"
   },
   {
    "ticker": "TSM",
@@ -2469,7 +2565,7 @@
    "failure": null,
    "url": "https://www.sec.gov/Archives/edgar/data/1692819/000169281926000023/vistra-20260930xearningsre.htm",
    "events": 1,
-   "method": "issuer-highlight-sentences"
+   "method": "deterministic-issuer-table"
   }
  ]
 }

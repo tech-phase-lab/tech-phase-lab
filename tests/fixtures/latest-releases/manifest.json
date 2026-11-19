@@ -1,0 +1,133 @@
+{
+ "version": 1,
+ "source": "SEC EDGAR results filings (8-K item 2.02 / results 6-K), exhibit text as read by earnings_history_backfill",
+ "releases": [
+  {
+   "ticker": "IBM",
+   "form": "8-K",
+   "acceptedAt": "2026-10-21T20:19:17.000+00:00",
+   "filingUrl": "https://www.sec.gov/Archives/edgar/data/51143/000005114326000093/ibm-20261021.htm",
+   "url": "https://www.sec.gov/Archives/edgar/data/51143/000005114326000093/ibm-20261021xex991.htm",
+   "sha256": "7bf3156b7fdf42088cb4dfc33603ce44dcacd66ec78b3c683eb9418be4679c93",
+   "period": "Q3 2026",
+   "method": "deterministic-issuer-table",
+   "facts": [
+    {
+     "key": "revenue",
+     "value": "$17.103B",
+     "yearAgo": "$16.331B"
+    },
+    {
+     "key": "eps",
+     "value": "$2.30",
+     "yearAgo": "$1.84"
+    },
+    {
+     "key": "adjusted-eps",
+     "value": "$2.95",
+     "yearAgo": "$2.65"
+    },
+    {
+     "key": "net-income",
+     "value": "$2.19B",
+     "yearAgo": "$1.744B"
+    }
+   ],
+   "failure": null
+  },
+  {
+   "ticker": "IREN",
+   "form": "8-K",
+   "acceptedAt": "2026-11-05T21:03:11.000+00:00",
+   "filingUrl": "https://www.sec.gov/Archives/edgar/data/1878848/000187884826000065/iren-20261105.htm",
+   "url": "https://www.sec.gov/Archives/edgar/data/1878848/000187884826000065/irenreportsq1-fy27result.htm",
+   "sha256": "36ca982df03e502ad0641f3546787a84e83f8fef6f20ed81966e65543180d363",
+   "period": "Q1 FY2027",
+   "method": "deterministic-issuer-table",
+   "facts": [
+    {
+     "key": "revenue",
+     "value": "$228M",
+     "yearAgo": null
+    },
+    {
+     "key": "net-income",
+     "value": "$-263M",
+     "yearAgo": null
+    },
+    {
+     "key": "operating-income",
+     "value": "$-186M",
+     "yearAgo": null
+    }
+   ],
+   "failure": null
+  },
+  {
+   "ticker": "TSLA",
+   "form": "8-K",
+   "acceptedAt": "2026-10-21T20:41:42.000+00:00",
+   "filingUrl": "https://www.sec.gov/Archives/edgar/data/1318605/000162828026066738/tsla-20261021.htm",
+   "url": "https://www.sec.gov/Archives/edgar/data/1318605/000162828026066738/exhibit9914.htm",
+   "sha256": "b4e383bef50911e7959c4e94f0bef26bcc10a1670e43a9d9f354a6be49138788",
+   "period": "Q3 2026",
+   "method": "deterministic-issuer-table",
+   "facts": [
+    {
+     "key": "revenue",
+     "value": "$28.046B",
+     "yearAgo": "$28.095B"
+    },
+    {
+     "key": "eps",
+     "value": "$0.22",
+     "yearAgo": "$0.39"
+    },
+    {
+     "key": "adjusted-eps",
+     "value": "$0.48",
+     "yearAgo": "$0.50"
+    },
+    {
+     "key": "net-income",
+     "value": "$787M",
+     "yearAgo": "$1.373B"
+    },
+    {
+     "key": "operating-income",
+     "value": "$718M",
+     "yearAgo": "$1.624B"
+    }
+   ],
+   "failure": null
+  },
+  {
+   "ticker": "VST",
+   "form": "8-K",
+   "acceptedAt": "2026-11-06T12:01:01.000+00:00",
+   "filingUrl": "https://www.sec.gov/Archives/edgar/data/1692819/000169281926000023/vistra-20261106.htm",
+   "url": "https://www.sec.gov/Archives/edgar/data/1692819/000169281926000023/vistra-20260930xearningsre.htm",
+   "sha256": "21d7cea3f06b968d6b6bbdfc581c54f76640c684dcac96b97036600832bcb284",
+   "period": "Q3 2026",
+   "method": "deterministic-issuer-table",
+   "facts": [
+    {
+     "key": "revenue",
+     "value": "$6.347B",
+     "yearAgo": "$4.971B"
+    },
+    {
+     "key": "net-income",
+     "value": "$1.14B",
+     "yearAgo": "$652M"
+    },
+    {
+     "key": "operating-income",
+     "value": "$1.706B",
+     "yearAgo": "$1.037B"
+    }
+   ],
+   "failure": null
+  }
+ ]
+}
