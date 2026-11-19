@@ -7,7 +7,7 @@ import { useMemberDisplay, useMemberSettled, useOwnerAccount, useResearchOwner }
 import { useResearchLanguage } from "../use-research-language";
 import { GROUPS, THEMES, groupOf, themesOf, tickersOf, type GroupFilter } from "@/lib/research/theme-definitions";
 import { rankThemes, sampleStockReturns } from "@/lib/research/theme-ranking";
-import { BasisLine, DivergingChart, PeriodPills, updateNote, usePeriod, useThemeData, type ThemeData } from "./parts";
+import { BasisLine, DataProblem, DivergingChart, PeriodPills, updateNote, usePeriod, useThemeData, type ThemeData } from "./parts";
 import styles from "./themes.module.css";
 
 const OPTIONS: { id: GroupFilter; ja: string; en: string }[] = [{ id: "all", ja: "すべて", en: "All" }, ...GROUPS];
@@ -86,7 +86,7 @@ export default function ThemeRankingScreen() {
   const t = (a: string, b: string) => ja ? a : b;
   const [period, setPeriod] = usePeriod();
   const [group, setGroup] = useState<GroupFilter>("all");
-  const { state, data } = useThemeData(group, plan);
+  const { state, data, retry } = useThemeData(group, plan);
   // Owner-only: look at the finished screen with clearly labelled sample numbers while the price feed is not connected.
   const ownerAccount = useOwnerAccount();
   const ownerRole = useResearchOwner();
@@ -119,7 +119,7 @@ export default function ThemeRankingScreen() {
         <p role="status" className={styles.note}>{t("株価データの接続を準備中です。接続でき次第、順位と騰落率がここに入ります。", "The price data is not connected yet. Ranks and returns will appear here once it is.")}</p>
         {owner && <button type="button" className={styles.sampleButton} onClick={() => setSample(true)}>{t("見本の数字で見た目を確認（運営者のみ・実際の株価ではありません）", "Preview with sample numbers (owner only · not real prices)")}</button>}
       </>}
-      {state === "error" && !sample && <p role="alert" className={styles.note}>{t("データを取得できませんでした。しばらくしてからもう一度お試しください。", "We couldn't load the data. Please try again in a moment.")}</p>}
+      {(state === "error" || state === "sign-in" || state === "pro-required") && !sample && <DataProblem state={state} ja={ja} onRetry={retry} />}
       {((state === "ready" && data) || sample) && shown && <>
         {sample && <p role="status" className={styles.sample}><b>SAMPLE</b>{t("見た目の確認用の見本です。実際の株価ではありません（運営者のみに表示）。", "A look at the finished screen with made-up numbers — not real prices (owner only).")}<button type="button" onClick={() => setSample(false)}>{t("閉じる", "Close")}</button></p>}
         {rows.length ? <DivergingChart ja={ja} rows={rows.map(row => ({ id: row.id, rank: row.rank, value: row.value, href: `/research/themes/${row.id}`, name: ja ? row.ja : row.en, tag: ja ? groupOf(row.group)?.ja : groupOf(row.group)?.en }))} />
