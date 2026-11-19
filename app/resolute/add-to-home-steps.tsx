@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 
 /** How to put RESOLUTE on the phone's home screen. Presentational only (used on the home card and on the landing page). */
 export const ADD_TO_HOME_JA: ReactNode[] = [
-  <>iPhoneは<b>Safari</b>で、このページを開きます(LINEやメールの中で開いた画面ではなく)。</>,
+  <>iPhoneは<b>Safari</b>で、このページを開きます(LINEやメールの中で開いた画面ではなく)</>,
   <>画面の下の<b>「共有」ボタン</b>(四角に上向きの矢印)を押します。</>,
   <>一覧から<b>「ホーム画面に追加」</b>を選び、右上の<b>「追加」</b>を押します。</>,
   <>ホーム画面に、<b>錨のアイコン</b>のRESOLUTEが入ります。そこから開くと、Tech Phaseを通らず、すぐ開けます。</>,

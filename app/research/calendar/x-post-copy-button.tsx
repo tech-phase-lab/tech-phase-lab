@@ -29,7 +29,7 @@ export default function XPostCopyButton({ brief, lang }: { brief: ResultBrief; l
       <button type="button" aria-pressed={mode === "consensus"} onClick={() => setMode("consensus")}>{ja ? "予想つき" : "With forecast"}</button>
     </div>
     <pre>{text}</pre>
-    {mode === "consensus" && !consensus && <small>{ja ? "予想なし（取得できた予想がないか、実績と基準が合いません）。売上高の予想は取得していません。" : "No forecast available (none found, or its basis differs). Revenue forecasts are not available."}</small>}
+    {mode === "consensus" && !consensus && <small>{ja ? <>予想なし（取得できた予想がないか、実績と基準が合いません）<br />売上高の予想は取得していません。</> : "No forecast available (none found, or its basis differs). Revenue forecasts are not available."}</small>}
     <button type="button" onClick={copy}>{state === "copied" ? (ja ? "コピーしました" : "Copied") : state === "failed" ? (ja ? "コピーできませんでした" : "Copy failed") : (ja ? "X投稿用にコピー" : "Copy for X")}</button>
   </div>;
 }

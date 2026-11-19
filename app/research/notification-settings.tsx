@@ -195,7 +195,7 @@ export default function NotificationSettings({ lang, initiallyOpen = false, page
     if (error.errorName === "NotAllowedError") return t("この端末で通知が許可されていません。設定アプリでTech Phaseの通知を許可してください。", "Notifications are not allowed on this device. Allow Tech Phase notifications in Settings.");
     if (error.stage === "worker") return t("通知の仕組み（サービスワーカー）を準備できませんでした。アプリを開き直してから、もう一度お試しください。", "The notification service worker could not start. Reopen the app and try again.");
     if (error.stage === "register") return t("サーバーに接続できませんでした。通信状態を確認して、もう一度お試しください。", "Could not reach the server. Check your connection and try again.");
-    return t(`この端末を通知サービスに登録できませんでした（${error.errorName}）。少し待ってから、もう一度お試しください。`, `This device could not be registered with the push service (${error.errorName}). Wait a moment and try again.`);
+    return t(`この端末を通知サービスに登録できませんでした。少し待ってから、もう一度お試しください。（${error.errorName}）`, `This device could not be registered with the push service (${error.errorName}). Wait a moment and try again.`);
   }
   async function run(action: "enable" | "disable" | "status" | "test") {
     if (operation.current) return;
