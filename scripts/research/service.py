@@ -124,6 +124,14 @@ PRODUCTIVE_RESULTS = frozenset({"done", "stale"})
 NEWS_REFRESH_IDLE_SECONDS = 6 * 3600
 # At most one background rebuild per feed in this many seconds.
 NEWS_REFRESH_MIN_INTERVAL_SECONDS = 10
+# Company headlines (/company-wire), Nov 19: building them on every request took 1-2.5 s (Railway p50/p90) and the home band waited
+# for it on every open. The last result is served at once and rebuilt in the background after a write: every few seconds while
+# someone is reading (the page asks every five), less often otherwise, so the first open after a quiet spell is not slow either.
+WIRE_REFRESH_ACTIVE_SECONDS = 600
+WIRE_REFRESH_ACTIVE_INTERVAL = 5
+WIRE_REFRESH_QUIET_INTERVAL = 20
+# The feed covers the last 24 hours, so even an unchanged database is rebuilt this often.
+WIRE_REFRESH_MAX_AGE = 60
 
 
 
@@ -679,6 +687,10 @@ class AutomaticMonitor:
         self.news_stale_seconds = positive_int("RESEARCH_NEWS_STALE_SECONDS", 30, 0)
         self.news_compute_ms = []
         self.news_requested = {}
+        # (finished, database version when it began, payload); built once right after start.
+        self.wire_cache = None
+        self.wire_lock = threading.Lock()
+        self.wire_requested_at = time.monotonic()
         self.body_probe_urls = set()
         self.body_probe_eligible_at = {}
         self.stop_event = threading.Event()
@@ -837,6 +849,7 @@ class AutomaticMonitor:
         self.result_thread = threading.Thread(target=self.run_results, name="result-publication", daemon=True)
         self.preview_summary_thread = threading.Thread(target=self.run_preview_summaries, name="preview-summary", daemon=True)
         self.news_refresh_thread = threading.Thread(target=self.run_news_refresh, name="news-refresh", daemon=True)
+        self.wire_refresh_thread = threading.Thread(target=self.run_company_wire_refresh, name="company-wire-refresh", daemon=True)
         self.pulse_title_thread = threading.Thread(target=self.run_pulse_titles, name="pulse-titles", daemon=True)
         self.official_research_thread = threading.Thread(target=self.run_official_research, name="official-research", daemon=True)
         self.deep_analysis_thread = threading.Thread(target=self.run_deep_analysis, name="deep-analysis", daemon=True)
@@ -1370,6 +1383,7 @@ class AutomaticMonitor:
         self.result_thread.start()
         self.preview_summary_thread.start()
         self.news_refresh_thread.start()
+        self.wire_refresh_thread.start()
         self.pulse_title_thread.start()
         self.official_research_thread.start()
         self.deep_analysis_thread.start()
@@ -1494,9 +1508,66 @@ class AutomaticMonitor:
                 if self.company_wire_arrived.wait(min(5, max(0.1, deadline - time.monotonic()))):
                     break
 
-    def company_wire_feed(self):
+    def compute_company_wire(self):
         with company_wire.connect(self.db_path) as db:
             return company_wire.public_feed(db)
+
+    def company_wire_feed(self):
+        """The company headlines, from the last build when it is recent enough (see WIRE_REFRESH_*). A result is reused while it is
+        at most news_stale_seconds old (the refresher replaces it within seconds of a write, the same allowance the owner chose for
+        the news feed), or while nothing was written since it began. Requests that arrive during a build wait for that build."""
+        if not hasattr(self, "wire_lock"):
+            return self.compute_company_wire()
+        arrived = time.monotonic()
+        self.wire_requested_at = arrived
+        cached = self.wire_cache
+        if cached and self.wire_reusable(cached, arrived):
+            return cached[2]
+        with self.wire_lock:
+            cached = self.wire_cache
+            if cached and (cached[0] >= arrived or self.wire_reusable(cached, time.monotonic())):
+                return cached[2]
+            return self.build_company_wire()
+
+    def wire_reusable(self, cached, at):
+        age = at - cached[0]
+        if age <= getattr(self, "news_stale_seconds", 0):
+            return True
+        return age <= WIRE_REFRESH_MAX_AGE and cached[1] is not None and cached[1] == self.database_version()
+
+    def build_company_wire(self):
+        """Callers hold wire_lock. The version is read first, so a write during the build is picked up by the next one."""
+        version = self.database_version()
+        payload = self.compute_company_wire()
+        self.wire_cache = (time.monotonic(), version, payload)
+        return payload
+
+    def refresh_company_wire(self):
+        """One background step: rebuild when something was written since the last build (or it is WIRE_REFRESH_MAX_AGE old),
+        at most every few seconds while someone is reading and less often otherwise; nothing after NEWS_REFRESH_IDLE_SECONDS."""
+        now = time.monotonic()
+        idle = now - self.wire_requested_at
+        if idle > NEWS_REFRESH_IDLE_SECONDS:
+            return False
+        cached = self.wire_cache
+        if cached:
+            age = now - cached[0]
+            if age < (WIRE_REFRESH_ACTIVE_INTERVAL if idle <= WIRE_REFRESH_ACTIVE_SECONDS else WIRE_REFRESH_QUIET_INTERVAL):
+                return False
+            if age < WIRE_REFRESH_MAX_AGE and cached[1] is not None and cached[1] == self.database_version():
+                return False
+        with self.wire_lock:
+            self.build_company_wire()
+        return True
+
+    def run_company_wire_refresh(self):
+        while not self.stop_event.wait(1):
+            try:
+                self.refresh_company_wire()
+            except Exception as exc:
+                log_publication_failure("company-wire-refresh-unavailable", exc)
+                # Requests still build their own answer; the refresher tries again later instead of every second.
+                self.stop_event.wait(30)
 
     def stock_news_probe(self, payload=None):
         # One request at most once a minute per stream, whoever asks; it never changes the automatic intake setting.
