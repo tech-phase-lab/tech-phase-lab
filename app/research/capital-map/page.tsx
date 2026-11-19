@@ -3,14 +3,15 @@ import type { CapitalPortfolio, CapitalSnapshot } from "@/lib/research/capital-m
 export const dynamic = "force-dynamic";
 export const metadata = { title: "資本マップ | CAPITAL MAP | Tech Phase Research", robots: { index: false, follow: false } };
 export default async function Page() {
-  const [{ default: disclosures }, { default: acwi }, { default: corporate }, { default: history }, { default: additional }] = await Promise.all([
+  const [{ default: disclosures }, { default: acwi }, { default: corporate }, { default: history }, { default: additional }, { default: additionalCorporate }] = await Promise.all([
     import("@/lib/research/capital-map-disclosures.json"),
     import("@/lib/research/capital-map-acwi.json"),
     import("@/lib/research/capital-map-corporate.json"),
     import("@/lib/research/capital-map-history.json"),
     import("@/lib/research/capital-map-additional-managers.json"),
+    import("@/lib/research/capital-map-additional-corporate.json"),
   ]);
   const previous = history as Record<string, CapitalSnapshot>;
-  const portfolios = ([...disclosures, ...corporate, acwi, ...additional] as CapitalPortfolio[]).map(portfolio => ({ ...portfolio, previous: previous[portfolio.id] ?? portfolio.previous }));
+  const portfolios = ([...disclosures, ...corporate, ...additionalCorporate, acwi, ...additional] as CapitalPortfolio[]).map(portfolio => ({ ...portfolio, previous: previous[portfolio.id] ?? portfolio.previous }));
   return <CapitalMap portfolios={portfolios} mode="reports" />;
 }

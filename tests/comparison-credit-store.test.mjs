@@ -122,11 +122,11 @@ test("statistics older than the factor's 36 hours are not used; the day slots ke
 // ---------- the background job ----------
 async function loadWarm(clock, { directory, needs }) {
   const { mod, cache } = await loadStore();
-  globalThis.__warm = { store: mod, comparisonDirectory: async () => directory, statementsNeeded: async t => ({ needs: needs(t), checkedAt: new Date(clock.now()).toISOString() }) };
+  globalThis.__warm = { store: mod, comparisonDirectory: async () => directory, prewarmComparison: async t => { (globalThis.__prewarmed ??= []).push(t); return true; }, statementsNeeded: async t => ({ needs: needs(t), checkedAt: new Date(clock.now()).toISOString() }) };
   const text = readFileSync(new URL("../lib/research/comparison-warm.ts", import.meta.url), "utf8")
     .replace('import "server-only";', "")
     .replace(/import providers from[^;]*;/, "const providers = [];")
-    .replace(/import \{ comparisonDirectory, statementsNeeded \}[^;]*;/, "const { comparisonDirectory, statementsNeeded } = globalThis.__warm;")
+    .replace(/import \{ comparisonDirectory, prewarmComparison, statementsNeeded \}[^;]*;/, "const { comparisonDirectory, prewarmComparison, statementsNeeded } = globalThis.__warm;")
     .replace(/import \{ cachedStatements,[^;]*;/, "const { cachedStatements, hasSeriesToday, hasStatisticsToday, minuteUsage, providerConfigured, warmSeries, warmStatements, warmStatistics, weeklyNote } = globalThis.__warm.store;")
     .replace('"./twelve-warm-plan"', JSON.stringify(here("twelve-warm-plan.ts")));
   return { warm: await import("data:text/javascript;base64," + Buffer.from(stripTypeScriptTypes(text)).toString("base64") + `#${Math.random()}`), store: mod, cache };
@@ -138,6 +138,8 @@ test("one minute of the job: five companies' statistics and series, statements o
   const { warm } = await loadWarm(clock, { directory, needs: t => t === "C1440" || t === "C2880" });
   const report = await warm.warmMinute(clock.now());
   assert.deepEqual(report.tickers, ["C0", "C1440", "C2880", "C4320", "C5760"]);
+  // The same five companies' SEC figures are read into the comparison cache (no provider credits).
+  assert.equal(report.filings, 5); assert.deepEqual(globalThis.__prewarmed.slice(0, 5), report.tickers); delete globalThis.__prewarmed;
   assert.equal(p.calls.filter(c => c.startsWith("statistics:")).length, 5);
   assert.equal(p.calls.filter(c => c.startsWith("time_series:")).length, 5);
   // 255 + one company's statements (200) fits under 460; the second company's statements wait for its minute tomorrow.

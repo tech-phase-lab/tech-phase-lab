@@ -1,6 +1,6 @@
 import "server-only";
 import providers from "./providers.json";
-import { comparisonDirectory, statementsNeeded } from "./comparison-server";
+import { comparisonDirectory, prewarmComparison, statementsNeeded } from "./comparison-server";
 import { cachedStatements, hasSeriesToday, hasStatisticsToday, minuteUsage, providerConfigured, warmSeries, warmStatements, warmStatistics, weeklyNote } from "./twelve-store";
 import { COST, WARM_CEILING, hasRoom, profileDue, tickersForMinute, warmUniverse } from "./twelve-warm-plan";
 
@@ -11,7 +11,8 @@ import { COST, WARM_CEILING, hasRoom, profileDue, tickersForMinute, warmUniverse
 const need = weeklyNote("comparison-store-statement-need-v1", statementsNeeded);
 const STATEMENTS_MAX_AGE = 6.5 * 86_400_000;
 
-export type WarmReport = { minute: string; tickers: string[]; spent: number; skipped: string[]; usedAtStart: number | null };
+/** `filings`: companies whose SEC figures were read into the comparison cache this minute (no provider credits). */
+export type WarmReport = { minute: string; tickers: string[]; spent: number; skipped: string[]; usedAtStart: number | null; filings?: number };
 
 export async function warmMinute(now = Date.now()): Promise<WarmReport> {
   const report: WarmReport = { minute: new Date(now).toISOString().slice(0, 16), tickers: [], spent: 0, skipped: [], usedAtStart: null };
@@ -25,6 +26,9 @@ export async function warmMinute(now = Date.now()): Promise<WarmReport> {
     used! += cost; report.spent += cost;
     await run();
   };
+  // The SEC figures of this minute's companies are read into the comparison cache beside the provider calls (free; speed, owner Nov 18: a
+  // user's first comparison of the day no longer waits for the SEC). A failure only leaves that company to be read on demand.
+  const filings = Promise.all(due.map(({ ticker }) => prewarmComparison(ticker).catch(() => false)));
   // Statistics and series first, for all of this minute's companies at once (5 companies, 255 credits).
   await Promise.all(due.map(async ({ ticker }) => {
     if (!await hasStatisticsToday(ticker, now)) await spend(ticker, "statistics", COST.statistics, () => warmStatistics(ticker, now));
@@ -40,5 +44,6 @@ export async function warmMinute(now = Date.now()): Promise<WarmReport> {
     used = Math.max(used ?? 0, await minuteUsage(0) ?? Infinity);
     await spend(ticker, "statements", COST.statements, () => warmStatements(ticker, now));
   }
+  report.filings = (await filings).filter(Boolean).length;
   return report;
 }
