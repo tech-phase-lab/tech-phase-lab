@@ -1220,6 +1220,324 @@ def parse_constellation(text, url=None):
     return {'period': f'Q{quarter} {year}', 'facts': facts}
 
 
+# ---- IBM, IREN, Vistra, Tesla (owner, Nov 19: the full set the release states, not only the figures of its highlight sentences) ----
+
+ROW_VALUE = re.compile(r'\(-?[\d,]*\d(?:\.\d+)?\)|-?[\d,]*\d(?:\.\d+)?|[—–-]')
+ROW_SKIP = {'$', '%', 'pts', 'Pts'}
+FOOTNOTE = re.compile(r'\(\d\)')
+MONTHS = {m: i + 1 for i, m in enumerate(('January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September',
+                                          'October', 'November', 'December'))}
+
+
+def statement_rows(block):
+    """[(label, [cells])] of a statement flattened to one line: each row is its label's words followed by its numbers. A dollar sign,
+    a percent sign or "pts" is no cell; a dash is a cell (nil). "(2,370 )" is closed up first."""
+    block = re.sub(r'\(([\d,.]+) \)', r'(\1)', block)
+    rows, label, cells = [], [], []
+    for token in block.split(' '):
+        if token in ROW_SKIP or not token:
+            continue
+        if label and ROW_VALUE.fullmatch(token):
+            cells.append(token)
+            continue
+        if cells:
+            rows.append((' '.join(label), cells))
+            label, cells = [], []
+        label.append(token)
+    if cells:
+        rows.append((' '.join(label), cells))
+    return rows
+
+
+def cell(text):
+    return Decimal(0) if text in ('-', '–') else signed(text)
+
+
+def labelled(label, pattern):
+    """The row label ends with the pattern, at a word start."""
+    return re.search(r'(?:^|(?<= ))(?:' + pattern + r')$', label) is not None
+
+
+def row_values(rows, pattern, n):
+    """The `n` values of the one row whose label ends with `pattern` (footnote marks such as "(1)" before the values dropped).
+    None when no row or more than one row matches, or the row has another number of values."""
+    found = []
+    for label, cells in rows:
+        if labelled(label, pattern):
+            extra = len(cells) - n
+            if extra > 0 and all(FOOTNOTE.fullmatch(c) for c in cells[:extra]):
+                cells = cells[extra:]
+            found.append(cells)
+    if len(found) != 1 or len(found[0]) != n:
+        return None
+    try:
+        return [cell(c) for c in found[0]]
+    except ValueError:
+        return None
+
+
+def row_after(rows, pattern, label, n):
+    """The values of the row right after the one row whose label ends with `pattern`, when that next row is labelled `label`
+    ("... per share ... Basic $ 0.43 ... Diluted $ 0.39": the diluted row has no label of its own)."""
+    at = [i for i, (name, _cells) in enumerate(rows) if labelled(name, pattern)]
+    if len(at) != 1 or at[0] + 1 >= len(rows) or rows[at[0] + 1][0] != label:
+        return None
+    return row_values([rows[at[0] + 1]], re.escape(label), n)
+
+
+def near(a, b, tol):
+    return a is not None and b is not None and abs(a - b) <= tol
+
+
+def per_share_ok(income, shares, eps):
+    """Per-share figure against income / diluted shares, to the rounding of the printed figures (the rule of parse_statement)."""
+    return shares > 0 and abs(income / shares - eps) <= Decimal('0.015') + abs(eps) * Decimal('0.02')
+
+
+def ordered(facts):
+    order = {k: i for i, k in enumerate(ORDER)}
+    return sorted(facts, key=lambda f: order[f[0]])
+
+
+IBM_ROWS = {'revenue': 'TOTAL REVENUE', 'gross': 'GROSS PROFIT', 'expense': 'TOTAL EXPENSE AND OTHER INCOME',
+            'pretax': r'INCOME(?:/\(LOSS\))? FROM CONTINUING OPERATIONS BEFORE INCOME TAXES',
+            'tax': r'(?i:Provision for/\(benefit from\) income taxes)', 'cont': r'INCOME(?:/\(LOSS\))? FROM CONTINUING OPERATIONS',
+            'disc': r'(?i:Income(?:/ ?\(loss\))? from discontinued operations, net of taxes)', 'net': r'NET INCOME(?:/\(LOSS\))?',
+            'eps': r'(?i:Assuming dilution Continuing operations)', 'shares': r'(?i:COMMON SHARES OUTSTANDING \(M’s\) Assuming dilution)'}
+
+
+def ibm_operating_eps(t, start, month_day, year, income, eps, shares):
+    """Operating (non-GAAP) diluted EPS of one quarter from IBM's "U.S. GAAP to Operating (Non-GAAP) Results Reconciliation": its GAAP
+    column must be the statement's income and EPS from continuing operations, the adjustments must add up to the operating figure, and
+    operating income / diluted shares must give the operating EPS. None otherwise."""
+    heads = [m for m in re.finditer(r'Three Months Ended ' + re.escape(month_day) + ', ' + str(year) + ' Continuing Operations GAAP ', t)
+             if m.start() > start]
+    if len(heads) != 1:
+        return None
+    stop = re.search(r'(?:Three|Six|Nine|Twelve) Months Ended|Year Ended|\(1\) ?Includes', t[heads[0].end():])
+    rows = statement_rows(t[heads[0].end():heads[0].end() + (stop.start() if stop else 2500)])
+    found = {}
+    for key, pattern in (('income', r'(?<![Pp]re-tax )(?i:Income from continuing operations)'),
+                         ('eps', r'(?i:Diluted earnings per share: continuing operations)')):
+        values = [cells for label, cells in rows if labelled(label, pattern)]
+        if len(values) != 1 or not 3 <= len(values[0]) <= 7:
+            return None
+        try:
+            found[key] = [cell(c) for c in values[0]]
+        except ValueError:
+            return None
+    operating = found['eps'][-1]
+    if found['income'][0] != income or found['eps'][0] != eps or not per_share_ok(found['income'][-1], shares, operating) \
+            or abs(sum(found['eps'][:-1]) - operating) > Decimal('0.021') or abs(sum(found['income'][:-1]) - found['income'][-1]) > 2:
+        return None
+    return operating
+
+
+def parse_ibm(text, url=None):
+    """IBM's results release (8-K EX-99.1): the "Comparative Financial Results" statement (this quarter, the same quarter a year earlier
+    [, the year to date]) and the GAAP-to-operating reconciliation. IBM prints no operating income line (its statement goes from gross
+    profit to pre-tax income). Every column read must hold gross profit - expense and other income = pre-tax income, pre-tax income - tax
+    = income from continuing operations, + discontinued operations = net income, and the diluted EPS from continuing operations (the
+    figure IBM's own summary shows) = that income / diluted shares; the revenue must be the headline's. Operating (non-GAAP) EPS is shown
+    as adjusted EPS when the reconciliation agrees with the statement."""
+    t = clean(text)
+    if 'international business machines' not in t.lower():
+        raise ValueError('issuer-identity-missing')
+    title = re.search(r'IBM RELEASES (FIRST|SECOND|THIRD|FOURTH)-QUARTER', t[:400])
+    said = re.search(r'today announced (first|second|third|fourth)-quarter (20\d\d) earnings results', t[:1500])
+    if not title or not said or title[1].lower() != said[1].lower():
+        raise ValueError('period-unrecognized')
+    quarter, year = QUARTERS[said[1].lower()], int(said[2])
+    head = re.search(r'COMPARATIVE FINANCIAL RESULTS ?\(Unaudited; (?:\$|Dollars) in millions except per share amounts\) Three Months Ended ('
+                     + MONTH + r' \d{1,2}),( (?:(?:Six|Nine) Months|Year) Ended ' + MONTH + r' \d{1,2},)? (20\d\d) (20\d\d)(?: (20\d\d) (20\d\d))? ', t)
+    if not head:
+        raise ValueError('statement-heading-missing')
+    n = 4 if head[2] else 2
+    if (int(head[3]), int(head[4])) != (year, year - 1) or bool(head[5]) != (n == 4) or (n == 4 and (int(head[5]), int(head[6])) != (year, year - 1)):
+        raise ValueError('columns-unrecognized')
+    end = t.find('CONDENSED CONSOLIDATED BALANCE SHEET', head.end())
+    end = end if end > 0 else head.end() + 4000
+    rows = statement_rows(t[head.end():end])
+    r = {key: row_values(rows, pattern, n) for key, pattern in IBM_ROWS.items()}
+    if any(v is None for v in r.values()):
+        raise ValueError('revenue-row-unrecognized')
+    for i in (0, 1):
+        if not (near(r['gross'][i] - r['expense'][i], r['pretax'][i], 1) and near(r['pretax'][i] - r['tax'][i], r['cont'][i], 1)
+                and near(r['cont'][i] + r['disc'][i], r['net'][i], 1) and per_share_ok(r['cont'][i], r['shares'][i], r['eps'][i])):
+            raise ValueError('statement-mismatch')
+    # IBM's own "Income Statement Summary" (revenue in billions, one decimal; diluted EPS from continuing operations) must be this column's
+    summary = re.findall(r'INCOME STATEMENT SUMMARY Revenue .{0,200}? GAAP from Continuing Operations \$ (\d+\.\d)B [^Y]{0,120}?\$ (\(?\d+\.\d\d\)?)'
+                         r'(?: \(\d\))? Year/Year', t[:6000])
+    # (the first one: a fourth-quarter release then summarizes the full year)
+    if not summary or abs(Decimal(summary[0][0]) * 1000 - r['revenue'][0]) > 50 or signed(summary[0][1]) != r['eps'][0]:
+        raise ValueError('change-mismatch')
+    facts = [('revenue', money_millions(r['revenue'][0]), money_millions(r['revenue'][1])),
+             ('eps', per_share(r['eps'][0]), per_share(r['eps'][1]))]
+    adjusted = [ibm_operating_eps(t, end, head[1], y, r['cont'][i], r['eps'][i], r['shares'][i]) for i, y in ((0, year), (1, year - 1))]
+    operating = re.findall(r'Year/Year .{0,120}? Operating \(Non-GAAP\) [^Y]{0,120}?\$ (\d+\.\d\d)(?: \(\d\))? Year/Year', t[:6000])
+    if None not in adjusted and operating and Decimal(operating[0]) == adjusted[0]:
+        facts.append(('adjusted-eps', per_share(adjusted[0]), per_share(adjusted[1])))
+    facts.append(('net-income', money_millions(r['net'][0]), money_millions(r['net'][1])))
+    return {'period': f'Q{quarter} {year}', 'facts': ordered(facts)}
+
+
+IREN_ROWS = {'revenue': r'(?i:Total revenue)', 'cost': r'(?i:Total cost of revenue)', 'opex': r'Total operating \(expenses\) income',
+             'operating': r'Operating \(loss\) income', 'other': r'Total other \(expense\) income', 'pretax': r'Income \(loss\) before taxes',
+             'tax': r'Income tax \(expense\) benefit', 'net': r'Net income \(loss\)'}
+IREN_QUARTER = {9: 1, 12: 2, 3: 3, 6: 4}  # quarter end month -> fiscal quarter (the fiscal year ends June 30)
+
+
+def parse_iren(text, url=None):
+    """IREN's results release (8-K EX-99.1): its "Consolidated Statement of Operations" shows this quarter and the previous quarter
+    (not the same quarter a year earlier, so no year-ago comparison is given). Revenue, operating income and net income are read when
+    both columns hold revenue - cost of revenue + operating (expenses) income = operating income, + other (expense) income = income
+    before taxes, + tax = net income, and the quarter is the one the headline names. IREN prints no per-share figures in the release."""
+    t = clean(text)
+    if 'iren' not in t[:3000].lower():
+        raise ValueError('issuer-identity-missing')
+    head = re.search(r'Consolidated Statement of Operations US\$ ?(m|Million) Quarter ended Quarter ended (' + MONTH + r') (\d{1,2}), (20\d\d)\d? ('
+                     + MONTH + r') (\d{1,2}), (20\d\d)\d? ', t)
+    if not head:
+        raise ValueError('statement-heading-missing')
+    month, year, before = MONTHS[head[2]], int(head[4]), (MONTHS[head[5]], int(head[7]))
+    if month not in IREN_QUARTER or before != ((month - 3, year) if month > 3 else (12, year - 1)):
+        raise ValueError('columns-unrecognized')
+    quarter, fiscal = IREN_QUARTER[month], year + 1 if month > 6 else year
+    title = re.search(r'IREN (?:Reports|Business Update and) (?:Q([1-4]) )?FY(\d\d) Results', t[:600])
+    if not title or 2000 + int(title[2]) != fiscal or (int(title[1]) if title[1] else 4) != quarter:
+        raise ValueError('period-unrecognized')
+    end = re.search(r'Consolidated (?:Balance Sheet|Statement of Cash ?flows)', t[head.end():])
+    block = t[head.end():head.end() + (end.start() if end else 3000)]
+    # the statement's last row runs into its footnote ("1) For further detail") or the page number ("(684.0) (247.8) 10")
+    block = re.sub(r' (?:\d\) .*|\d{1,2})$', '', block.strip())
+    rows = statement_rows(block)
+    r = {key: row_values(rows, pattern, 2) for key, pattern in IREN_ROWS.items()}
+    if any(v is None for v in r.values()) or r['revenue'][0] <= 0:
+        raise ValueError('revenue-row-unrecognized')
+    tol = Decimal(1) if head[1] == 'Million' else Decimal('0.15')
+    for i in (0, 1):
+        if not (near(r['revenue'][i] + r['cost'][i] + r['opex'][i], r['operating'][i], tol)
+                and near(r['operating'][i] + r['other'][i], r['pretax'][i], tol) and near(r['pretax'][i] + r['tax'][i], r['net'][i], tol)):
+            raise ValueError('statement-mismatch')
+    return {'period': f'Q{quarter} FY{fiscal}', 'facts': [('revenue', money_millions(r['revenue'][0]), None),
+                                                          ('net-income', money_millions(r['net'][0]), None),
+                                                          ('operating-income', money_millions(r['operating'][0]), None)]}
+
+
+def parse_vistra(text, url=None):
+    """Vistra's results release (8-K EX-99.1): the condensed consolidated statement of operations (this quarter, the same quarter a year
+    earlier [, the year to date]; a fourth-quarter release prints the full year only and is not read here). Revenue and operating
+    income are read when operating revenues plus every expense line printed between them equal operating income in both columns; net
+    income attributable to Vistra (the figure the highlights state) when income before taxes + tax [+ non-controlling interests] gives
+    it in both columns and it is the highlights' own figure. Vistra's release prints no per-share figures."""
+    t = clean(text)
+    if 'vistra' not in t[:600].lower():
+        raise ValueError('issuer-identity-missing')
+    title = re.search(r'Vistra Reports (First|Second|Third) Quarter (20\d\d) Results', t[:400])
+    if not title:
+        raise ValueError('period-unrecognized')
+    quarter, year = QUARTERS[title[1].lower()], int(title[2])
+    head = re.search(r'CONDENSED CONSOLIDATED STATEMENTS OF OPERATIONS \(Unaudited\) \(Millions of Dollars\) Three Months Ended ' + MONTH
+                     + r' \d{1,2},( (?:Six|Nine) Months Ended ' + MONTH + r' \d{1,2},)? (20\d\d) (20\d\d)(?: (20\d\d) (20\d\d))? ', t)
+    if not head:
+        raise ValueError('statement-heading-missing')
+    n = 4 if head[1] else 2
+    if (int(head[2]), int(head[3])) != (year, year - 1) or bool(head[4]) != (n == 4) or (n == 4 and (int(head[4]), int(head[5])) != (year, year - 1)):
+        raise ValueError('columns-unrecognized')
+    end = re.search(r'STATEMENTS OF CASH FLOWS|Vistra – Press Release', t[head.end():])
+    rows = statement_rows(t[head.end():head.end() + (end.start() if end else 2500)])
+    labels = [label for label, _cells in rows]
+    first = [i for i, label in enumerate(labels) if label == 'Operating revenues']
+    last = [i for i, label in enumerate(labels) if re.fullmatch(r'Operating income(?: \(loss\))?', label)]
+    if len(first) != 1 or len(last) != 1 or not first[0] < last[0]:
+        raise ValueError('revenue-row-unrecognized')
+    lines = [row_values([rows[i]], re.escape(labels[i]), n) for i in range(first[0], last[0] + 1)]
+    if any(v is None for v in lines) or lines[0][0] <= 0 \
+            or any(not near(sum(v[i] for v in lines[:-1]), lines[-1][i], 1) for i in (0, 1)):
+        raise ValueError('statement-mismatch')
+    revenue, operating = lines[0], lines[-1]
+    facts = [('revenue', money_millions(revenue[0]), money_millions(revenue[1]))]
+    pretax = row_values(rows, r'Net income(?: \(loss\))? before income taxes', n)
+    tax = row_values(rows, r'Income tax (?:\(expense\) benefit|expense)', n)
+    attrib = row_values(rows, r'Net income(?: \(loss\))? attributable to Vistra', n)
+    total = row_values(rows, r'Net income(?: \(loss\))?', n)
+    nci = row_values(rows, r'Net \(income\) loss attributable to noncontrolling interest', n)
+    said = re.findall(r'(?i)(?:GAAP (?:first|second|third) quarter ' + str(year) + r'|(?:first|second|third) quarter ' + str(year)
+                      + r' GAAP) Net Income(?: \(Loss\))? of \$(\(?[\d,]+\)?) million', t[:1500])
+    if None not in (pretax, tax, attrib) and len(set(said)) == 1 and signed(said[0]) == attrib[0] \
+            and all(near(pretax[i] + tax[i], total[i] if total else attrib[i], 1)
+                    and (total is None or nci is not None and near(total[i] + nci[i], attrib[i], 1)) for i in (0, 1)):
+        facts.append(('net-income', money_millions(attrib[0]), money_millions(attrib[1])))
+    facts.append(('operating-income', money_millions(operating[0]), money_millions(operating[1])))
+    return {'period': f'Q{quarter} {year}', 'facts': ordered(facts)}
+
+
+TESLA_ROWS = {'revenue': 'Total revenues', 'cost': 'Total cost of revenues', 'gross': 'Gross profit', 'opex': 'Total operating expenses',
+              'operating': 'INCOME FROM OPERATIONS', 'interest-income': 'Interest income', 'interest-expense': 'Interest expense',
+              'other': r'Other (?:\(expense\) income|income \(expense\)), net', 'pretax': 'INCOME BEFORE INCOME TAXES',
+              'tax': 'Provision for income taxes', 'net': 'NET INCOME',
+              'nci': 'Net income attributable to noncontrolling interests and redeemable noncontrolling interests in subsidiaries',
+              'attrib': 'NET INCOME ATTRIBUTABLE TO COMMON STOCKHOLDERS'}
+
+
+def parse_tesla(text, url=None):
+    """Tesla's quarterly update (8-K EX-99.1): the statement of operations prints the last five quarters (the same quarter a year earlier
+    first, this quarter last). Every figure is read from this quarter's and the year-earlier column, each holding revenue - cost =
+    gross profit, - operating expenses = income from operations, + interest and other income = income before taxes, - tax = net
+    income, - non-controlling interests = net income attributable to common stockholders, and diluted EPS = net income used in the
+    per-share figure / diluted shares. The non-GAAP diluted EPS comes from the release's reconciliation, whose GAAP EPS and diluted
+    shares must be the statement's and whose non-GAAP net income / diluted shares must give it."""
+    t = clean(text)
+    if 'tesla' not in t.lower():
+        raise ValueError('issuer-identity-missing')
+    title = re.search(r'\bQ([1-4]) (?:and FY )?(20\d\d) Update\b', t[:300])
+    if not title:
+        raise ValueError('period-unrecognized')
+    quarter, year = int(title[1]), int(title[2])
+    head = re.search(r'In millions of USD or shares as applicable, except per share data ((?:Q[1-4]-20\d\d ){5})REVENUES ', t)
+    if not head:
+        raise ValueError('statement-heading-missing')
+    columns = [(int(q), int(y)) for q, y in re.findall(r'Q([1-4])-(20\d\d)', head[1])]
+    if columns[-1] != (quarter, year) or columns[0] != (quarter, year - 1) \
+            or any((b[1] * 4 + b[0]) - (a[1] * 4 + a[0]) != 1 for a, b in zip(columns, columns[1:])):
+        raise ValueError('columns-unrecognized')
+    end = re.search(r'S T A T E M E N T|B A L A N C E', t[head.end():])
+    stop = head.end() + (end.start() if end else 3000)
+    rows = statement_rows(t[head.end():stop])
+    r = {key: row_values(rows, pattern, 5) for key, pattern in TESLA_ROWS.items()}
+    if any(v is None for v in r.values()):
+        raise ValueError('revenue-row-unrecognized')
+    used = row_values(rows, 'NET INCOME USED IN COMPUTING NET INCOME PER SHARE OF COMMON STOCK', 5) or r['attrib']
+    eps = row_after(rows, 'Net income per share of common stock attributable to common stockholders Basic', 'Diluted', 5)
+    shares = row_after(rows, 'Weighted average shares used in computing net income per share of common stock Basic', 'Diluted', 5)
+    for i in (4, 0):
+        if not (r['revenue'][i] > 0 and near(r['revenue'][i] - r['cost'][i], r['gross'][i], 1) and near(r['gross'][i] - r['opex'][i], r['operating'][i], 1)
+                and near(r['operating'][i] + r['interest-income'][i] + r['interest-expense'][i] + r['other'][i], r['pretax'][i], 1)
+                and near(r['pretax'][i] - r['tax'][i], r['net'][i], 1) and near(r['net'][i] - r['nci'][i], r['attrib'][i], 1)):
+            raise ValueError('statement-mismatch')
+    facts = [('revenue', money_millions(r['revenue'][4]), money_millions(r['revenue'][0]))]
+    if eps and shares and all(per_share_ok(used[i], shares[i], eps[i]) for i in (4, 0)):
+        facts.append(('eps', per_share(eps[4]), per_share(eps[0])))
+        # each reconciliation ends with its diluted share count (a fourth-quarter update also reconciles the last five years)
+        recon, start, found = statement_rows(t[stop:]), 0, []
+        for k, (label, _cells) in enumerate(recon):
+            if not labelled(label, r'Shares used in EPS calculation, diluted \(GAAP and non-GAAP\)'):
+                continue
+            part, start = recon[start:k + 1], k + 1
+            gaap = row_values(part, r'EPS attributable to common stockholders, diluted \(GAAP\)', 5)
+            non = row_values(part, r'EPS attributable to common stockholders, diluted \(non-GAAP\)', 5)
+            income = row_values(part, r'Net income used in computing diluted EPS attributable to common stockholders \(non-GAAP\)', 5) \
+                or row_values(part, r'Net income attributable to common stockholders \(non-GAAP\)', 5)
+            if None not in (gaap, non, income) and gaap == eps and row_values(part[-1:], '.+', 5) == shares \
+                    and all(per_share_ok(income[i], shares[i], non[i]) for i in (4, 0)):
+                found.append(non)
+        if len(found) == 1:
+            facts.append(('adjusted-eps', per_share(found[0][4]), per_share(found[0][0])))
+    facts.append(('net-income', money_millions(r['attrib'][4]), money_millions(r['attrib'][0])))
+    facts.append(('operating-income', money_millions(r['operating'][4]), money_millions(r['operating'][0])))
+    return {'period': f'Q{quarter} {year}', 'facts': ordered(facts)}
+
+
 def parse_asml(text, url=None):
     """ASML's results release (6-K EX-99.1): a small table in EUR million (previous quarter, this quarter) and the headline in billions.
     Net sales and net income must agree with the headline; gross margin with gross profit / net sales."""
@@ -1390,6 +1708,13 @@ PROFILES = {
              'marker': 'GAAP Non-GAAP (in millions, except per share data and percentages)'},
     'CEG': {'publisher': 'Constellation Energy IR (SEC 8-K)', 'parse': parse_constellation,
             'marker': 'Adjusted (non-GAAP) Operating Earnings'},
+    # Read from their statements (owner, Nov 19: IBM and IREN showed revenue only, Vistra net income only, Tesla two rounded figures).
+    # Picked up like the sentence-only companies (a stored release whose first lines name a quarter's results), so a release whose
+    # tables the parser cannot read still gets its highlight sentences (parse_with_sentences).
+    'IBM': {'publisher': 'IBM IR (SEC 8-K)', 'parse': parse_ibm, 'results-head': True},
+    'IREN': {'publisher': 'IREN IR (SEC 8-K)', 'parse': parse_iren, 'results-head': True},
+    'TSLA': {'publisher': 'Tesla IR (SEC 8-K)', 'parse': parse_tesla, 'results-head': True},
+    'VST': {'publisher': 'Vistra IR (SEC 8-K)', 'parse': parse_vistra, 'results-head': True},
 }
 SOURCE_URL = {
     'NBIS': re.compile(r'^https://nebius\.com/newsroom/[a-z0-9-]+$'),
@@ -1434,8 +1759,7 @@ def parse_with_sentences(ticker, text, url):
 
 
 # Companies without a table parser: their figures come from the release's highlight sentences only.
-for _ticker, _name in (('COHR', 'Coherent'), ('IBM', 'IBM'), ('IREN', 'IREN'),
-                       ('TSLA', 'Tesla'), ('VST', 'Vistra')):
+for _ticker, _name in (('COHR', 'Coherent'),):
     PROFILES.setdefault(_ticker, {'publisher': f'{_name} IR (SEC 8-K)', 'parse': sentences, 'sentences-only': True})
 
 
@@ -1508,7 +1832,7 @@ def candidates(db, reference):
     # their current revision.
     markers = {t: p['marker'] for t, p in PROFILES.items() if p.get('marker')}
     # sentence-only companies (no table parser): any stored release whose first lines name a quarter's results
-    markers.update({t: None for t, p in PROFILES.items() if p.get('sentences-only')})
+    markers.update({t: None for t, p in PROFILES.items() if p.get('sentences-only') or p.get('results-head')})
     for row in db.execute('SELECT s.url,s.ticker,s.sha256,COALESCE(e.detected_at,s.discovered_at) AS detected '
                           'FROM sources s LEFT JOIN release_events e ON e.url=s.url '
                           "WHERE s.ticker IN (%s) AND s.status NOT IN ('held','rejected') "
