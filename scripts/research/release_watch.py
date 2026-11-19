@@ -219,7 +219,7 @@ def notification(event, kind, delay, result=''):
     base = '米国市場終了' if event.get('approximate') else '予定時刻'
     timing = (f"{base}から{delay_text(delay)}" if delay >= 0 else f"{base}の{delay_text(-delay)}前")
     # Nov 13: the number itself goes in the notice, so a tap on the phone is not needed to see what the result was.
-    body = f"{result.strip()[:120]}（{timing}）" if result and result.strip() else f"結果を掲載しました（{timing}）。"
+    body = f"{result.strip()[:120]}（{timing}）" if result and result.strip() else f"結果を掲載しました（{timing}）"
     return {'title': f"✅ 掲載：{event['titleJa']}", 'body': body,
             'tag': f"release-watch-published-{event['id']}", 'url': '/research/calendar'}
 

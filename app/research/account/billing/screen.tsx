@@ -148,8 +148,8 @@ export default function BillingScreen({mode="sandbox", preview=false}: {mode?: "
   return <ResearchToolShell showTools={false} lang={lang} setLang={setLang} eyebrow="PRO MEMBERSHIP" title={mode === "live" ? t("PROのお申し込み・契約管理", "PRO subscription") : t("PRO テスト購入", "PRO test checkout")} description="">
     <section className={styles.card} aria-busy={busy}>
       <h2>{mode === "live" ? "Tech Phase PRO" : "PayPal Sandbox"}</h2>
-      <p>{mode === "live" ? t("月額2,980円(20米ドル)または年額29,800円(200米ドル)で自動更新されます。PayPalで承認する前に、通貨・期間・金額をご確認ください。", "Renews automatically at JPY 2,980 or USD 20 per month, or JPY 29,800 or USD 200 per year. Check the currency, period and amount before approving on PayPal.") : t("運営者専用のテストです。実際の請求や本番のPRO会員状態への変更はありません。PayPalのSandbox購入者アカウントを使用してください。", "Owner-only test. No real charge or production PRO membership change. Use a PayPal Sandbox buyer account.")}</p>
-      {preview && <p role="status" style={{ border: "1px dashed currentColor", padding: "8px 10px", borderRadius: 8 }}>{t("確認用の表示です（購入はできません）。", "Review screen only (purchases are not possible here).")}</p>}
+      <p>{mode === "live" ? t("月額2,980円(20ドル)または年額29,800円(200ドル)で自動更新されます。PayPalで承認する前に、通貨・期間・金額をご確認ください。", "Renews automatically at JPY 2,980 or USD 20 per month, or JPY 29,800 or USD 200 per year. Check the currency, period and amount before approving on PayPal.") : t("運営者専用のテストです。実際の請求や本番のPRO会員状態への変更はありません。PayPalのSandbox購入者アカウントを使用してください。", "Owner-only test. No real charge or production PRO membership change. Use a PayPal Sandbox buyer account.")}</p>
+      {preview && <p role="status" style={{ border: "1px dashed currentColor", padding: "8px 10px", borderRadius: 8 }}>{t("確認用の表示です（購入はできません）", "Review screen only (purchases are not possible here).")}</p>}
       {notice && !(notice === "verified" && summary?.reviewRequired) && <p role="status">{notices[notice]}</p>}
       {error && <p role={error === "identity-loading" ? "status" : "alert"}>{errorText}</p>}
       {summary && <div>

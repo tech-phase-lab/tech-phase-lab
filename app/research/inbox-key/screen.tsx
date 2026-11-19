@@ -58,11 +58,11 @@ export default function InboxKeyScreen() {
         <button type="button" className={styles.plain} onClick={() => void copy("finish", status.finishUrl)}>{copied === "finish" ? "コピーしました" : "②をコピー"}</button>
         <h2>ショートカットの作り方</h2>
         <ol>
-          <li>共有シートで受け取る(ボイスメモの「共有」から)。</li>
+          <li>共有シートで受け取る(ボイスメモの「共有」から)</li>
           <li>「URLの内容を取得」を足し、URLに①を入れる。方法は「POST」、ヘッダーに <b>Authorization</b> を足し、値は <b>Bearer</b> と半角スペースのあとに鍵を続ける。</li>
           <li>もう1つ「URLの内容を取得」を足し、URLには、1つ前の「URLの内容」(保存先の住所)を入れる。方法は「PUT」、本文は「ファイル」にして、「ショートカットの入力」を入れる。</li>
           <li>3つ目の「URLの内容を取得」を足し、URLに②を入れる。方法は「POST」、ヘッダーは1つ目と同じ。</li>
-          <li>最後に「通知を表示」を足し、3つ目の「URLの内容」を出す(「受信箱に届きました。」などの返事が出ます)。</li>
+          <li>最後に「通知を表示」を足し、3つ目の「URLの内容」を出す(「受信箱に届きました。」などの返事が出ます)</li>
         </ol>
         <p className={styles.note}>作り直すと、古い鍵はすぐ使えなくなります。鍵そのものはサーバーに残さず、ハッシュだけを保存します。あとから見ることはできません。</p>
       </>}

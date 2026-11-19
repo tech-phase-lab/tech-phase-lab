@@ -121,7 +121,7 @@ export default function ThemeRankingScreen() {
       </>}
       {(state === "error" || state === "sign-in" || state === "pro-required") && !sample && <DataProblem state={state} ja={ja} onRetry={retry} />}
       {((state === "ready" && data) || sample) && shown && <>
-        {sample && <p role="status" className={styles.sample}><b>SAMPLE</b>{t("見た目の確認用の見本です。実際の株価ではありません（運営者のみに表示）。", "A look at the finished screen with made-up numbers — not real prices (owner only).")}<button type="button" onClick={() => setSample(false)}>{t("閉じる", "Close")}</button></p>}
+        {sample && <p role="status" className={styles.sample}><b>SAMPLE</b>{t("見た目の確認用の見本です。実際の株価ではありません（運営者のみに表示）", "A look at the finished screen with made-up numbers — not real prices (owner only).")}<button type="button" onClick={() => setSample(false)}>{t("閉じる", "Close")}</button></p>}
         {rows.length ? <DivergingChart ja={ja} rows={rows.map(row => ({ id: row.id, rank: row.rank, value: row.value, href: `/research/themes/${row.id}`, name: ja ? row.ja : row.en, tag: ja ? groupOf(row.group)?.ja : groupOf(row.group)?.en }))} />
           : <p className={styles.empty}>{t("この期間のランキングを作れるだけのデータがありません。", "There is not enough data to rank this period.")}</p>}
         <div className={styles.fine}>

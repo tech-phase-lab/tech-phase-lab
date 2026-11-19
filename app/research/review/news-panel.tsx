@@ -39,7 +39,7 @@ const errors: Record<string, string> = {
   "generation-not-configured": "AI生成は無効、または設定が未完了です。手動保存は利用できます。",
   "stock-news-key-not-set": "監視サービスにキー(STOCK_NEWS_API_KEY)が登録されていません。",
   "stock-news-probe-wait": "接続テストは1分に1回までです。少し待ってからもう一度押してください。",
-  "stock-news-fetch-failed": "Stock News APIに接続できませんでした(通信の失敗・時間切れ)。",
+  "stock-news-fetch-failed": "Stock News APIに接続できませんでした(通信の失敗・時間切れ)",
   "stock-news-invalid-response": "Stock News APIの応答の形が想定と違います。",
   "stock-news-content-type": "Stock News APIの応答がJSONではありません。",
   "stock-news-unknown-stream": "取得の種類が不明です。",

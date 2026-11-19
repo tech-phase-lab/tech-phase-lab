@@ -22,7 +22,7 @@ export function RetainedSourceProofResult({ data }: { data: Proof }) {
     && data.sourceKind === "retained-x-acquisition" && !data.researchBodyIncluded
     && hash(data.expectedSourceSha) && data.sourceSha === data.expectedSourceSha
     && data.currentOriginSha === data.expectedSourceSha && data.bodySha256 && hash(data.bodySha256);
-  if (!current) return <p role="status">選択した保存投稿版を確認できません（{data.status}）。一覧を再取得してください。保存本文は表示しません。未表示 {data.omittedBodyChars ?? "不明"}文字 / {data.bodyBytes ?? "不明"}バイト。</p>;
+  if (!current) return <p role="status">選択した保存投稿版を確認できません（{data.status}）<br />一覧を再取得してください。保存本文は表示しません。未表示 {data.omittedBodyChars ?? "不明"}文字 / {data.bodyBytes ?? "不明"}バイト。</p>;
   return <section aria-label="選択した1件の保存取得本文（非公開）">
     <h5>選択した1件の保存取得本文（非公開）</h5>
     <p className={styles.note}>保存済みX取得行の読取専用です。イベント未作成でも確認できます。研究本文・生成時本文・保存記事とは別の記録です。表示中のX原文や翻訳への差し替えは行いません。</p>

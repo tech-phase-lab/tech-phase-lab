@@ -375,7 +375,7 @@ def receive(db, rfile, length, content_type, authorization, sender, now=None, up
     if length <= 0:
         return 400, "音声ファイルが入っていません。", None
     if length > config["maxBytes"] + 65536:
-        return 413, f"ファイルが大きすぎます(上限 {config['maxBytes'] // 1_000_000}MB)。", None
+        return 413, f"ファイルが大きすぎます(上限 {config['maxBytes'] // 1_000_000}MB)", None
     match = re.search(r'boundary=(?:"([^"]+)"|([^;\s]+))', content_type or "", re.I)
     if not (content_type or "").lower().startswith("multipart/form-data") or not match:
         return 400, "音声ファイルが入っていません。", None
@@ -396,7 +396,7 @@ def receive(db, rfile, length, content_type, authorization, sender, now=None, up
                 return 400, "音声ファイルが入っていません。", None
             size = end - start
             if size > config["maxBytes"]:
-                return 413, f"ファイルが大きすぎます(上限 {config['maxBytes'] // 1_000_000}MB)。", None
+                return 413, f"ファイルが大きすぎます(上限 {config['maxBytes'] // 1_000_000}MB)", None
             if size < 512:
                 return 400, "音声ファイルではありません。", None
             read = lambda offset, count: bytes(data[start + offset:start + min(size, offset + count)])
@@ -413,7 +413,7 @@ def receive(db, rfile, length, content_type, authorization, sender, now=None, up
                 if error.reason.startswith("r2-not-configured") or error.reason == "r2-config-invalid-format":
                     return 503, "受信箱の保存先の設定が、まだ終わっていません。", None
                 if error.reason == "r2-auth-failed-403":
-                    return 503, "受信箱の保存先に入れませんでした(権限)。", None
+                    return 503, "受信箱の保存先に入れませんでした(権限)", None
                 return 503, "受信箱に保存できませんでした。もう一度送ってください。", None
     with db:
         db.execute("INSERT INTO inbox_items(id,title,file_key,content_type,bytes,seconds,created_at) VALUES(?,?,?,?,?,?,?)",
@@ -561,7 +561,7 @@ def finish(db, authorization, sender, now=None, bucket=None):
                 bucket.delete(row["file_key"])
                 with db:
                     db.execute("DELETE FROM inbox_pending WHERE id=?", (row["id"],))
-                return 413, f"ファイルが大きすぎます(上限 {config['maxBytes'] // 1_000_000}MB)。", None
+                return 413, f"ファイルが大きすぎます(上限 {config['maxBytes'] // 1_000_000}MB)", None
             if size < 512:
                 bucket.delete(row["file_key"])
                 with db:

@@ -234,7 +234,7 @@ function OwnerPanel({ owner, onChanged, shown, onWatch, latestPublished, onPrevi
     setBusy(true); setError("");
     const result = await send("generate", {});
     setBusy(false);
-    if (!result.ok) { setError(result.data?.error === "weekly-not-configured" ? "AIの設定がまだ終わっていません(監視サービスの設定が必要です)。" : result.data?.error === "weekly-already-running" ? "いま作っています。しばらくお待ちください。" : "始められませんでした。"); return; }
+    if (!result.ok) { setError(result.data?.error === "weekly-not-configured" ? "AIの設定がまだ終わっていません(監視サービスの設定が必要です)" : result.data?.error === "weekly-already-running" ? "いま作っています。しばらくお待ちください。" : "始められませんでした。"); return; }
     onWatch();
   };
   const toggle = async () => { setBusy(true); const result = await send("settings", { autoPublish: !autoPublish }); setBusy(false); if (!result.ok) setError("切り替えられませんでした。"); else onChanged(!autoPublish ? "確認なしで公開に切り替えました" : "公開前に確認する設定に戻しました"); };
@@ -259,7 +259,7 @@ function OwnerPanel({ owner, onChanged, shown, onWatch, latestPublished, onPrevi
       <label className={styles.hour}><span>作る時刻(土曜・日本時間)</span><select value={generateHour} disabled={busy} onChange={event => void changeHour(Number(event.target.value))}>{Array.from({ length: 24 }, (_, hour) => <option key={hour} value={hour}>{hour}時</option>)}</select></label>
       <button type="button" disabled={busy || generation.running || !generation.configured} onClick={() => void makeNow()}>{generation.running ? "作っています…(数分かかります)" : "今すぐ下書きを作る"}</button>
       {!generation.configured && <p className={styles.empty}>AIの設定がまだ終わっていません。終わるまで、自動でも手動でも作れません。</p>}
-      {generation.lastOk === false && <p role="alert" className={styles.error}>前回は作れませんでした({generation.lastError || "原因不明"})。</p>}
+      {generation.lastOk === false && <p role="alert" className={styles.error}>前回は作れませんでした({generation.lastError || "原因不明"})</p>}
     </div>
     {shown && <button type="button" className={styles.danger} disabled={busy} onClick={() => void remove()}>この号(第{shown.number}号)を消す</button>}
     {error && <p role="alert" className={styles.error}>{error}</p>}
@@ -299,7 +299,7 @@ export default function WeeklyIssues() {
   };
   // After "make one now": look again every few seconds (the model takes a few minutes) until it has finished.
   const watch = () => {
-    setMessage("下書きを作っています。できたら下の「確認待ち」に出ます(通知も届きます)。");
+    setMessage("下書きを作っています。できたら下の「確認待ち」に出ます(通知も届きます)");
     let rounds = 0;
     const timer = window.setInterval(() => { rounds += 1; setRevision(value => value + 1); if (rounds >= 60) window.clearInterval(timer); }, 6000);
     window.setTimeout(() => window.clearInterval(timer), 6 * 60 * 1000);
