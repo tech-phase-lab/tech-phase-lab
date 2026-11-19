@@ -292,6 +292,67 @@ class Constellation(unittest.TestCase):
             flash.parse_constellation(self.text().replace('Three Months Ended September 30, 2025 Nine', 'Three Months Ended June 30, 2025 Nine'))
 
 
+class StatementCompanies(unittest.TestCase):
+    """IBM, IREN, Vistra and Tesla read from their statements (owner, Nov 19: the calendar showed IBM and IREN with revenue only, Vistra with
+    net income only and Tesla with two rounded figures from the highlight sentences). Every figure checked against the SEC document."""
+
+    def text(self, ticker):
+        return ' '.join(latest_release(ticker).split())
+
+    def facts(self, ticker, text=None):
+        return flash.parse_with_sentences(ticker, text or self.text(ticker), None)['facts']
+
+    def test_ibm(self):
+        self.assertEqual(self.facts('IBM'), [('revenue', '$17.103B', '$16.331B'), ('eps', '$2.31', '$1.84'), ('adjusted-eps', '$2.95', '$2.65'),
+                                             ('net-income', '$2.19B', '$1.744B')])
+        self.assertIs(flash.PROFILES['IBM']['parse'], flash.parse_ibm)
+        with self.assertRaisesRegex(ValueError, 'statement-mismatch'):
+            flash.parse_ibm(self.text('IBM').replace('NET INCOME $ 2,190', 'NET INCOME $ 2,200'))
+        with self.assertRaisesRegex(ValueError, 'statement-mismatch'):
+            flash.parse_ibm(self.text('IBM').replace('Assuming dilution Continuing operations $ 2.31', 'Assuming dilution Continuing operations $ 2.41'))
+        # a reconciliation whose adjustments do not add up to the operating EPS: no adjusted EPS, the rest stays
+        changed = flash.parse_ibm(self.text('IBM').replace('$ 2.31 $ 0.57 $ 0.07 $ — $ 2.95', '$ 2.31 $ 0.57 $ 0.07 $ — $ 2.97'))
+        self.assertEqual([f[0] for f in changed['facts']], ['revenue', 'eps', 'net-income'])
+
+    def test_iren(self):
+        self.assertEqual(self.facts('IREN'), [('revenue', '$228M', None), ('net-income', '$-263M', None), ('operating-income', '$-186M', None)])
+        with self.assertRaisesRegex(ValueError, 'statement-mismatch'):
+            flash.parse_iren(self.text('IREN').replace('Operating (loss) income (186)', 'Operating (loss) income (196)'))
+        with self.assertRaisesRegex(ValueError, 'period-unrecognized'):
+            flash.parse_iren(self.text('IREN').replace('IREN Reports Q1 FY27 Results', 'IREN Reports Q2 FY27 Results'))
+
+    def test_vistra(self):
+        self.assertEqual(self.facts('VST'), [('revenue', '$6.347B', '$4.971B'), ('net-income', '$1.14B', '$652M'),
+                                             ('operating-income', '$1.706B', '$1.037B')])
+        with self.assertRaisesRegex(ValueError, 'statement-mismatch'):
+            flash.parse_vistra(self.text('VST').replace('Selling, general, and administrative expenses (448)',
+                                                        'Selling, general, and administrative expenses (458)'))
+        # net income must be the highlights' own figure
+        changed = flash.parse_vistra(self.text('VST').replace('Net Income of $1,140 million', 'Net Income of $1,150 million', 1))
+        self.assertEqual([f[0] for f in changed['facts']], ['revenue', 'operating-income'])
+
+    def test_tesla(self):
+        self.assertEqual(self.facts('TSLA'), [('revenue', '$28.046B', '$28.095B'), ('eps', '$0.22', '$0.39'), ('adjusted-eps', '$0.48', '$0.50'),
+                                              ('net-income', '$787M', '$1.373B'), ('operating-income', '$718M', '$1.624B')])
+        with self.assertRaisesRegex(ValueError, 'statement-mismatch'):
+            flash.parse_tesla(self.text('TSLA').replace('INCOME FROM OPERATIONS 1,624', 'INCOME FROM OPERATIONS 1,634'))
+        keys = lambda text: [f[0] for f in flash.parse_tesla(text)['facts']]  # noqa: E731
+        self.assertNotIn('adjusted-eps', keys(self.text('TSLA').replace('diluted (non-GAAP) 0.50 0.50 0.41 0.33 0.48 Shares',
+                                                                          'diluted (non-GAAP) 0.50 0.50 0.41 0.33 0.58 Shares')))
+        changed = keys(self.text('TSLA').replace('Diluted $ 0.39', 'Diluted $ 0.49'))
+        self.assertEqual(changed, ['revenue', 'net-income', 'operating-income'])
+
+    def test_sentences_remain_the_fallback(self):
+        # a release whose statement the parser cannot read still gets its highlight sentences (outside the deep-analysis roster)
+        parsed = flash.parse_with_sentences('IBM', (FX / 'ibm-results-q326-head.txt').read_text(), None)
+        self.assertEqual((parsed['method'], parsed['facts'][0][1]), (highlight_sentences.METHOD, '$17.1B'))
+        with self.assertRaisesRegex(ValueError, 'period-unrecognized'):  # Tesla's deliveries report is no results release
+            flash.parse_with_sentences('TSLA', (FX / 'tesla-deliveries-q326-head.txt').read_text(), None)
+        for ticker in ('IBM', 'IREN', 'TSLA', 'VST'):
+            self.assertNotIn('sentences-only', flash.PROFILES[ticker])
+            self.assertTrue(flash.PROFILES[ticker]['results-head'])
+
+
 INDEX = """<html><body>
 <div class="companyInfo">
   <span class="companyName">CONSTELLATION ENERGY GENERATION LLC (Filer)
