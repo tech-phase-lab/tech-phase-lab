@@ -108,7 +108,7 @@ export default function LiveCheckoutScreen({orderId,language:initialLanguage,can
   {id && <button disabled={busy} onClick={()=>void act("status")}>{en?"Refresh payment status":"支払い状況を再確認する"}</button>}
   {busy && <p role="status">{en?"Checking…":"確認しています…"}</p>}
   {error && <p role="alert">{errors[error]?.[en?1:0] ?? (en?"We couldn’t confirm the result. If you started a payment, refresh its status before creating another order.":"結果を確認できませんでした。支払い操作の後は、新しい注文を作る前に支払い状況を再確認してください。")}</p>}
-  <footer className={styles.links}>{!uncertain && (!attempt.current || order) && order?.state!=="capturing" && <a href={checkoutUrl(language)}>{en?"Start a new order":"新しい注文へ"}</a>}<a href={`/resolute?lang=${language}`}>{en?"Back to RESOLUTE":"RESOLUTEへ戻る"}</a><a href={termsHref(en)} target="_blank" rel="noopener">{en?"Terms of Service":"利用規約"}</a><a href={`/resolute/legal/commerce${en?"?lang=en":""}`} target="_blank" rel="noopener">{en?"Legal Notice":"特定商取引法に基づく表記"}</a></footer>
+  <footer className={styles.links}>{!uncertain && (!attempt.current || order) && order?.state!=="capturing" && <a href={checkoutUrl(language)}>{en?"Start a new order":"新しい注文へ"}</a>}<a href={`/resolute?lang=${language}`}>{en?"Back to RESOLUTE":"RESOLUTEへ戻る"}</a><a href={termsHref(en)} target="_blank" rel="noopener">{en?"Terms of Service":"利用規約"}</a><a href={`/commerce${en?"?lang=en":""}`} target="_blank" rel="noopener">{en?"Legal Notice":"特定商取引法に基づく表記"}</a></footer>
   <Disclaimer en={en} />
  </section></main>;
 }

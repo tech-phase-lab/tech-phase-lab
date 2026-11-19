@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import LegalScreen, { LegalBody } from "../../../legal/legal-screen";
+import LegalScreen, { LegalBody } from "../legal/legal-screen";
 import commerce from "@/lib/legal/commerce-ja";
 import commerceEn from "@/lib/legal/commerce-en";
 

@@ -24,6 +24,10 @@ const nextConfig: NextConfig = {
   async rewrites() {
     return { beforeFiles: [{ source: "/start", destination: "/start/index.html" }], afterFiles: [], fallback: [] };
   },
+  // The 特商法 notice moved next to /terms and /privacy (Nov 19); old links (LPs, emails, payment settings) keep working, with ?lang= carried over.
+  async redirects() {
+    return [{ source: "/resolute/legal/commerce", destination: "/commerce", permanent: false }];
+  },
   async headers() {
     // The notification worker is never kept by a cache: a phone checking for a new version must get the current file (owner, Nov 16).
     const worker = { source: "/research-sw.js", headers: [{ key: "Cache-Control", value: "no-cache, no-store, must-revalidate" }] };
