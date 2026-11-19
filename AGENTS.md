@@ -1,3 +1,5 @@
+オーナーへの返事・報告・質問は、必ず日本語で書く。
+
 # Owner assignment — 2026-11-01 (latest explicit instruction; earlier 2026-10-25 lines below still apply unless replaced)
 
 - ALL news work belongs to Claude. Codex must not modify news collection, feeds,
