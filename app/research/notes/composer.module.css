@@ -16,3 +16,11 @@
 .composer .submit{margin-left:auto;min-height:54px;padding:0 32px;border:0;border-radius:999px;background:linear-gradient(120deg,#efd899,#c9a257);color:#2a1f05;font:700 20px inherit;font-family:inherit;cursor:pointer}
 .composer .submit:disabled{background:#2c2718;color:#6e6244;cursor:default}
 .composer .submit{min-height:48px;padding:0 26px;font-size:18px;white-space:nowrap}
+
+/* Opening the desk in one step (owner, Nov 18): the editor's space is held at its final size while its code loads, and before the
+   membership display starts the owner's device holds the whole post box as an empty frame (hint set before the first paint). */
+.editorSlot{min-height:266px}
+.slot{box-sizing:content-box;height:266px;margin:0 0 30px;padding:18px;border:1.5px solid #8f7851;border-radius:26px;background:radial-gradient(120% 70% at 0% 0%,#1b1608,#0a0d12 65%);box-shadow:inset 0 1px 0 #ead5a512}
+.hinted{display:none}
+:global(html[data-member-hint="owner"]) .hinted{display:block}
+@media(max-width:359px){.editorSlot{min-height:311px}.slot{height:311px}}

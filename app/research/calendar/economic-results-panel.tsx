@@ -7,7 +7,7 @@ import { calendarDateKey } from "@/lib/research/calendar";
 import { publicNewsPayload, type EventResult, type OfficialUpdate } from "@/lib/research/general-news";
 import { mergeEconomicResults } from "@/lib/research/pce-results";
 import { earningsResults } from "@/lib/research/earnings-results";
-import { checkedBriefs } from "@/lib/research/earnings-results-history";
+import { checkedBriefs, oneResultPerQuarter } from "@/lib/research/earnings-results-history";
 import { createNewsPoller } from "@/lib/research/news-poller";
 import { observePageActivity } from "@/lib/research/page-activity";
 import styles from "../research-tools.module.css";
@@ -68,10 +68,12 @@ export default function EconomicResultsPanel({ lang, zone, period, kind = "all",
       }).catch(() => {});
     return () => controller.abort();
   }, [historyMonth, kind, history, onMonths]);
-  // One copy of each result: the live feed's, then the stored ones of every month read so far.
+  // One copy of each result: the live feed's, then the stored ones of every month read so far; one row per company and quarter.
   const briefs = useMemo(() => {
     const seen = new Set<string>();
-    return [...liveBriefs, ...Object.values(history).flat()].filter(brief => { const key = `${brief.researchId}|${brief.url}`; if (seen.has(key)) return false; seen.add(key); return true; });
+    const unique = (list: typeof liveBriefs) => list.filter(brief => { const key = `${brief.researchId}|${brief.url}`; if (seen.has(key)) return false; seen.add(key); return true; });
+    const live = unique(liveBriefs);
+    return oneResultPerQuarter(live, unique(Object.values(history).flat()));
   }, [liveBriefs, history]);
   const ja = lang === "ja";
   // The agenda below marks a company's call "results posted" from these rows (owner, Oct 15).

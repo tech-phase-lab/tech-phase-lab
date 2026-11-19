@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useRef, useState, useSyncExternalStore } from "react";
+import { useEffect, useLayoutEffect, useRef, useState, useSyncExternalStore } from "react";
 import { WATCH_TICKERS } from "@/lib/research/flash-rows";
 import { bandItems, bandLead, bandParts } from "@/lib/research/news-band";
 import type { Language } from "@/lib/research/data";
@@ -20,7 +20,10 @@ const SWIPE_PX = 36;
 const TAP_PX = 10;
 /** One headline every five seconds (owner, Nov 4). */
 const ROTATE_MS = 5000;
-/** The headline starts at 14.5px and shrinks by 0.5px to 12.5px; only then is it cut with "…". */
+/** A news answer this soon after the last company-headline request does not ask again. */
+const WIRE_REPEAT_MS = 3_000;
+/** The headline starts at 14.5px and shrinks by 0.5px to 12.5px; a headline that is still too long then wraps onto more lines at 12.5px.
+ * It is never cut with an ellipsis (owner, Nov 18: the whole headline must be readable). */
 const START_PX = 14.5;
 const MIN_PX = 12.5;
 const STEP_PX = 0.5;
@@ -32,13 +35,22 @@ export function fitFontSize(fits: (size: number) => boolean) {
 }
 
 type BandLine = { id: string; band: string; ticker: string; at: string; kind: string };
-function Line({ line, ja, leaving }: { line: BandLine; ja: boolean; leaving?: boolean }) {
+/** `sizer`: an invisible copy in the same place, one per headline in rotation, so the band is as tall as its longest headline needs and
+ * does not change height (moving the page) when a two-line headline comes round. */
+function Line({ line, ja, leaving, sizer }: { line: BandLine; ja: boolean; leaving?: boolean; sizer?: boolean }) {
   const element = useRef<HTMLSpanElement>(null);
-  useEffect(() => {
+  // Before the first paint, so a headline never shows for a frame at the wrong size.
+  useLayoutEffect(() => {
     const target = element.current;
     if (!target) return;
     let frame = 0;
-    const fit = () => { frame = 0; target.style.fontSize = `${fitFontSize(size => { target.style.fontSize = `${size}px`; return target.scrollWidth <= target.clientWidth; })}px`; };
+    // Measured on one line; the headline then lays out normally, so one that does not fit even at 12.5px wraps instead of being cut.
+    const fit = () => {
+      frame = 0;
+      target.style.whiteSpace = "nowrap"; target.style.overflow = "hidden";
+      target.style.fontSize = `${fitFontSize(size => { target.style.fontSize = `${size}px`; return target.scrollWidth <= target.clientWidth; })}px`;
+      target.style.whiteSpace = ""; target.style.overflow = "";
+    };
     const request = () => { if (!frame) frame = requestAnimationFrame(fit); };
     fit();
     const observer = new ResizeObserver(request);
@@ -51,7 +63,7 @@ function Line({ line, ja, leaving }: { line: BandLine; ja: boolean; leaving?: bo
   const lead = bandLead(line.ticker, line.band);
   // Japan time in Japanese and U.S. Eastern time in English, as before.
   const timestamp = pulseClock(line.at, line.kind, ja);
-  return <div className={`${styles.item} ${leaving ? styles.out : styles.in}`} aria-hidden={leaving || undefined}>
+  return <div className={`${styles.item} ${sizer ? styles.sizer : leaving ? styles.out : styles.in}`} aria-hidden={leaving || sizer || undefined}>
     <span className={styles.live}>LIVE</span>
     <span ref={element} className={styles.hd} lang={ja ? "ja" : "en"} title={line.band}>
       {lead ? <><b className={styles.sym}>{lead}</b>{" "}</> : null}
@@ -96,26 +108,43 @@ export default function ResearchPulse({ lang }: { lang: Language }) {
   const [gaveUp, setGaveUp] = useState(false);
   useEffect(() => { const timer = setTimeout(() => setGaveUp(true), 8_000); return () => clearTimeout(timer); }, []);
   const checkedAt = snapshot?.checkedAt;
+  // When the company headlines last arrived: the band can open on them before the news answer, which it does not use (owner, Nov 15).
+  const [wireAt, setWireAt] = useState(0);
+  const mounted = useRef(false);
+  useEffect(() => { mounted.current = true; return () => { mounted.current = false; }; }, []);
+  // Every answer is used unless a later request's answer already was. A news refresh used to throw away the answer still on its way,
+  // so a fresh open waited through several rounds before the band appeared (about 7 s, Nov 19).
+  const wireRound = useRef({ next: 0, applied: 0, startedAt: -Infinity });
   useEffect(() => {
     // Company headlines join the strip, refreshed whenever the news feed is; a failure here never affects the rest.
-    let alive = true;
+    const round = wireRound.current;
+    // The first news answer comes moments after the page asked for the headlines; asking again then could replace the opening
+    // headline a second later (owner, Oct 25: no jump). Later refreshes ask as before.
+    if (performance.now() - round.startedAt < WIRE_REPEAT_MS) return;
+    round.startedAt = performance.now();
+    const id = ++round.next;
+    const apply = (items: Record<string, CompanyWireItem[]>) => {
+      if (!mounted.current || id < round.applied) return;
+      round.applied = id; setWire(items); publishWire(items); setWireAt(Date.now());
+    };
     void (async () => {
       try {
         const started = await takeWireStartup();
         if (started) {
-          if (!started.error) { const items = parseCompanyWire(started.data).items; if (alive) { setWire(items); publishWire(items); } }
+          if (!started.error) apply(parseCompanyWire(started.data).items);
           return;
         }
         const response = await fetch("/api/research/company-wire", { cache: "no-store", signal: AbortSignal.timeout(10_000) });
-        if (response.ok) { const items = parseCompanyWire(await response.json()).items; if (alive) { setWire(items); publishWire(items); } }
+        if (response.ok) apply(parseCompanyWire(await response.json()).items);
       } catch { /* keep the previous list */ }
-      finally { if (alive) setWireSettled(true); }
+      finally { if (mounted.current) setWireSettled(true); }
     })();
     const grace = setTimeout(() => setWireSettled(true), 2_500);
-    return () => { alive = false; clearTimeout(grace); };
+    return () => clearTimeout(grace);
   }, [checkedAt]);
   // Stock News API stories only (owner, Nov 15); the previous items only while none of them can be shown yet.
-  const live = snapshot?.checkedAt && wireSettled ? homePulseItems(feed, lang, snapshot.checkedAt, wire, PULSE_POOL, pool => bandItems(pool, ja, 1, wide).length > 0) : [];
+  const now = checkedAt || wireAt;
+  const live = now && wireSettled ? homePulseItems(feed, lang, now, wire, PULSE_POOL, pool => bandItems(pool, ja, 1, wide).length > 0) : [];
   const [remembered, setRemembered] = useState<PulseItem[]>([]);
   useEffect(() => { setRemembered(readPulseCache(lang)); }, [lang]);
   const liveKey = live.map(item => item.id).join("|");
@@ -158,6 +187,7 @@ export default function ResearchPulse({ lang }: { lang: Language }) {
     onPointerDown={event => { pressX.current = event?.clientX ?? 0; setHeld(true); }} onPointerUp={event => finish(event?.clientX ?? 0)}
     onPointerCancel={() => { pressX.current = null; release(); }} onPointerLeave={() => { pressX.current = null; release(); }}>
     <div className={styles.strip} aria-live="polite">
+      {items.map(entry => <Line key={`size-${entry.id}`} line={entry} ja={ja} sizer />)}
       {leaving && <Line key={`out-${leaving.id}`} line={leaving} ja={ja} leaving />}
       <Line key={item.id} line={item} ja={ja} />
     </div>

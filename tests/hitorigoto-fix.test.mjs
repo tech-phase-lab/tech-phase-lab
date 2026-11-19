@@ -13,8 +13,9 @@ test("1. the post box stays mounted while the membership is only being re-checke
   assert.equal(nextSteadyOwner(false, false, false), false, "never shown to someone who was not the owner");
   assert.equal(nextSteadyOwner(false, true, false), true, "the owner always gets the post box");
   const columns = await read("../app/research/columns/columns.tsx");
-  assert.match(columns, /initialKind === "notes" && steadyOwner && <SteadyNoteComposer onPublished=\{published\} \/>/);
-  assert.match(columns, /const steadyOwner = useSteadyOwnerMode\(ownerMode, useMemberSettled\(\)\)/);
+  // Nov 18: before the membership display has started, a frame of the post box's final size stands in its place (owner's device only).
+  assert.match(columns, /initialKind === "notes" && \(steadyOwner \? <SteadyNoteComposer onPublished=\{published\} \/> : !settled && /);
+  assert.match(columns, /const settled = useMemberSettled\(\);\n\s*const steadyOwner = useSteadyOwnerMode\(ownerMode, settled\)/);
   assert.match(columns, /const SteadyNoteComposer = memo\(NoteComposer\)/);
   assert.match(columns, /const published = useCallback\(/, "a stable callback, so list refreshes do not re-render the editor");
 });

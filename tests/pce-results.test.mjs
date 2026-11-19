@@ -183,3 +183,34 @@ test("the market expectation read from headlines joins the official jobs row and
   // Without an expectation the row is unchanged.
   assert.doesNotMatch(mergeEconomicResults([jobsUpdate], [], []).find(item => item.id === "jobs-2026-10").result.ja, /市場予想/);
 });
+
+test("one row per indicator and release day: the Oct 28 FOMC read from the Fed statement does not add a second row (owner, Nov 19)", () => {
+  // The shape indicator_results.fomc_payload saves (its id carries the meeting date, the hand-written row's only the month).
+  const fomc = (meeting, month) => ({ id: `fomc-${meeting}`, titleJa: `FOMC 政策金利（${month}月会合）`, titleEn: "FOMC rate decision", sourceName: "FRB",
+    releasedAt: `${meeting}T18:00:00Z`, resultJa: "政策金利を据え置き（3.75〜4.00%）", resultEn: "Policy rate held: target range 3.75% to 4.00%",
+    detailJa: "FRBの声明文から、フェデラルファンド金利の誘導目標レンジを取得。市場予想との比較は含みません。", detailEn: "x",
+    sourceUrl: "https://www.federalreserve.gov/newsevents/pressreleases/monetary20261028a.htm", verifiedOn: meeting });
+  const merged = mergeEconomicResults([], [], [fomc("2026-10-28", 10)]);
+  const october = merged.filter(row => row.id.startsWith("fomc-") && row.releasedAt.startsWith("2026-10-28"));
+  assert.equal(october.length, 1);
+  // The more detailed hand-written row stays: target range and the 10-2 vote.
+  assert.equal(october[0].title.ja, "FOMC 政策金利の発表（10月会合）");
+  assert.equal(october[0].result.ja, "政策金利を据え置き（誘導目標レンジ3.75〜4.00%）。採決は10対2");
+  assert.equal(merged.length, mergeEconomicResults().length);
+  // Another meeting is its own row.
+  const december = mergeEconomicResults([], [], [fomc("2026-12-09", 12)]);
+  assert.equal(december.filter(row => row.id.startsWith("fomc-")).length, 2);
+  assert.ok(december.some(row => row.id === "fomc-2026-12-09"));
+});
+
+test("the same report under two ids on one day collapses for every indicator; other days and other indicators stay", () => {
+  const event = (id, releasedAt, resultJa) => ({ id, titleJa: id, titleEn: id, sourceName: "x", releasedAt, resultJa, resultEn: resultJa, detailJa: "", detailEn: "", sourceUrl: "https://example.com/", verifiedOn: releasedAt.slice(0, 10) });
+  const rows = mergeEconomicResults([], [], [
+    event("retail-2026-10", "2026-11-17T13:30:00Z", "前月比+0.4%（売上高 750.0十億ドル）"), event("retail-release-2026-11-17", "2026-11-17T13:35:00Z", "前月比+0.4%"),
+    event("gdp-2026-q3-advance", "2026-10-29T12:30:00Z", "年率+2.1%"), event("retail-2026-11", "2026-12-15T13:30:00Z", "前月比+0.2%"),
+  ]);
+  assert.deepEqual(rows.filter(row => row.id.startsWith("retail")).map(row => row.id).sort(), ["retail-2026-10", "retail-2026-11"]);
+  assert.ok(rows.some(row => row.id === "gdp-2026-q3-advance"));
+  const apart = mergeEconomicResults([], [], [event("adp-2026-12", "2026-12-02T13:15:00Z", "a"), event("adp-2027-01", "2027-01-06T13:15:00Z", "b")]);
+  assert.equal(apart.filter(row => /^adp-202(6-12|7-01)$/.test(row.id)).length, 2);
+});

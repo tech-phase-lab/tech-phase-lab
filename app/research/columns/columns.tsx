@@ -15,18 +15,21 @@ import PostActions from "../desk/post-actions";
 import DeskBody from "../desk/body";
 import { formatDisplay, zoneLabel } from "@/lib/research/display-time";
 import { ReactionBadge, ReactionFace, useReactions } from "../desk/reactions";
+import { preloadReactions, type ReactionCounts } from "../desk/reaction-state";
 import { nextSteadyOwner, useNewNoteId } from "../desk/use-minute";
 import NoteComposer from "../notes/composer";
+import composerStyles from "../notes/composer.module.css";
 import { useMemberDisplay, useMemberSettled, useOwnerMode } from "../member-display-provider";
 import Disclaimer from "../../resolute/disclaimer";
-type Result = { items: EditorialPost[]; access: string; status: string; validUntil?: number };
+type Result = { items: EditorialPost[]; access: string; status: string; validUntil?: number; reactions?: Record<string, ReactionCounts> };
 export default function ColumnsPage({ initialKind = "all", initial, postId }: { postId?: string; initialKind?: PostKind | "all"; initial?: Result } = {}) {
   const refreshIdentity = useIdentityRefresh();
   const [lang, setLang] = useResearchLanguage();
   const kind = initialKind;
   const memberPlan = useMemberDisplay();
   const ownerMode = useOwnerMode();
-  const steadyOwner = useSteadyOwnerMode(ownerMode, useMemberSettled());
+  const settled = useMemberSettled();
+  const steadyOwner = useSteadyOwnerMode(ownerMode, settled);
   const [result, setResult] = useState<Result>(initial ?? { items: [], access: "", status: "loading" });
   const latest = useRef(result);
   useEffect(() => { latest.current = result; }, [result]);
@@ -61,7 +64,11 @@ export default function ColumnsPage({ initialKind = "all", initial, postId }: { 
         const data = await response.json();
         if (current.signal.aborted || stopped) return;
         if (!response.ok || !data.ok || !Array.isArray(data.items) || !Number.isFinite(data.validUntil) || data.validUntil <= Date.now()) throw new Error("unavailable");
-        accept({ items: data.items, access: data.access, status: "ready", validUntil: data.validUntil });
+        // The notes and their reaction badges appear together (owner, Nov 18), as on the server-rendered page.
+        const reactions = data.access === "pro" ? await preloadReactions((data.items as EditorialPost[]).filter(item => item.kind === "notes").map(item => item.id),
+          id => fetch(`/api/research/desk-reactions?postId=${encodeURIComponent(id)}`, { cache: "no-store", signal: current.signal }).then(answer => answer.json())) : undefined;
+        if (current.signal.aborted || stopped) return;
+        accept({ items: data.items, access: data.access, status: "ready", validUntil: data.validUntil, reactions });
       } catch { if (!current.signal.aborted && !stopped) {
         cancelLease?.(); latest.current = { items: [], access: "", status: "error" }; setResult(latest.current);
       } }
@@ -83,18 +90,20 @@ export default function ColumnsPage({ initialKind = "all", initial, postId }: { 
     return () => { stopped = true; controller?.abort(); cancelLease?.(); window.removeEventListener("focus", focused); window.removeEventListener("tech-phase:membership-changed", changed); };
   }, [retry, initial, memberPlan, refreshIdentity, postId]);
   const membershipMismatch = memberPlan !== null && result.status === "ready" && (result.access === "pro") !== (memberPlan === "pro");
-  const shown = membershipMismatch ? { items: [], access: "", status: "loading" } : result;
+  const shown: Result = membershipMismatch ? { items: [], access: "", status: "loading" } : result;
   const published = useCallback(() => setRetry(value => value + 1), []);
   const newNote = useNewNoteId(shown.items.filter(item => item.kind === "notes"));
   return <ResearchToolShell desk compactTitle lang={lang} setLang={setLang} title={initialKind === "all" ? "RIZEL’S DESK" : initialKind === "qa" ? ja ? "リゼルに聞く" : "Ask Rizel" : postNames[initialKind][lang]} description={initialKind === "notes" ? (ja ? "PRO会員だけに、本音を。" : "Candid thoughts, for PRO members only.") : ""}>
     {initialKind === "weekly" && ownerMode && <WeeklyComposer onPublished={() => setRetry(value => value + 1)} />}
     {initialKind === "all" && <nav className={styles.writeAction}><Link href="/research/weekly">{ja ? "週刊 Tech Phase PRO" : "Tech Phase PRO Weekly"}</Link></nav>}
     {initialKind === "qa" && <nav className={questionStyles.views} aria-label={ja ? "質問メニュー" : "Question views"}><Link href="/research/qa">{ja ? "みんなの質問" : "Questions"}</Link><span aria-current="page">{ja ? "公開された回答" : "Published answers"}</span></nav>}
-    {initialKind === "notes" && steadyOwner && <SteadyNoteComposer onPublished={published} />}
+    {/* Before the membership display has started, the owner's post box is a frame of its final size (shown only on a device whose
+        last check was the owner's, by the hint set before the first paint), so the notes do not jump down when it appears (Nov 18). */}
+    {initialKind === "notes" && (steadyOwner ? <SteadyNoteComposer onPublished={published} /> : !settled && <div className={`${composerStyles.slot} ${composerStyles.hinted}`} aria-hidden="true" />)}
     {shown.status === "loading" && <div className={styles.placeholder} aria-busy="true" aria-label={ja ? "記事を読み込んでいます" : "Loading articles"} />}
     {shown.status === "error" && <div role="status"><p>{ja ? "記事を読み込めませんでした。" : "Unable to load articles."}</p><button onClick={() => setRetry(v => v + 1)}>{ja ? "再読み込み" : "Retry"}</button></div>}
     {shown.status === "ready" && !shown.items.filter(item => kind === "all" || item.kind === kind).length && <section className={styles.article}><h2>{kind === "all" ? ja ? "公開記事は準備中です" : "Articles are being prepared" : ja ? "この種類の記事はまだありません" : "No articles in this category yet"}</h2><p>{ja ? "公開された投稿がここに並びます。" : "Published posts will appear here."}</p><Link href="/research/account">{ja ? "会員情報を確認する" : "View membership"}</Link></section>}
-    {shown.items.filter(item => kind === "all" || item.kind === kind).map(item => <ColumnArticle key={item.id} item={item} ja={ja} ownerMode={steadyOwner} access={shown.access} fresh={item.id === newNote} onUpdated={() => setRetry(value => value + 1)} />)}
+    {shown.items.filter(item => kind === "all" || item.kind === kind).map(item => <ColumnArticle key={item.id} item={item} ja={ja} ownerMode={steadyOwner} access={shown.access} fresh={item.id === newNote} reactions={shown.reactions?.[item.id]} onUpdated={() => setRetry(value => value + 1)} />)}
   </ResearchToolShell>;
 }
 
@@ -112,9 +121,9 @@ function useSteadyOwnerMode(ownerMode: boolean, settled: boolean) {
 const SteadyNoteComposer = memo(NoteComposer);
 
 // Exported for the mounted UI tests (tests/desk-mounted-ui.test.mjs).
-export function ColumnArticle({ item, ja, ownerMode, access, fresh, onUpdated }: { item: EditorialPost; ja: boolean; ownerMode: boolean; access: string; fresh: boolean; onUpdated: () => void }) {
+export function ColumnArticle({ item, ja, ownerMode, access, fresh, reactions: preloaded, onUpdated }: { item: EditorialPost; ja: boolean; ownerMode: boolean; access: string; fresh: boolean; reactions?: ReactionCounts; onUpdated: () => void }) {
   const [editing, setEditing] = useState(false);
-  const reactions = useReactions(item.id, item.kind === "notes" && access === "pro");
+  const reactions = useReactions(item.id, item.kind === "notes" && access === "pro", preloaded);
   useEffect(() => {
     if (item.kind !== "qa" || window.location.hash !== `#${encodeURIComponent(item.id)}`) return;
     // Answers arrive asynchronously, after the browser's initial anchor scroll.

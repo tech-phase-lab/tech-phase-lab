@@ -21,7 +21,7 @@ test("the pages carry the owner's Markdown byte for byte", () => {
 test("every line of the text is shown exactly as written, the ●日 placeholder included", () => {
   for (const [source, placeholders] of [[terms, ["月額2,980円(税込)または年額29,800円(税込)", "東京地方裁判所を第一審の合意管轄"]],
     [privacy, ["最長●日間", "バックアップを含めて●日以内に削除します"]],
-    [commerce, ["IP電話などで取得した番号を記載します(取得後に確定)", "support@techphase.app"]]]) {
+    [commerce, ["| 事業者の氏名 | ご請求があればメールでお知らせします |", "support@techphase.app"]]]) {
     const lines = source.split("\n").filter(line => line.trim()).map(line => line.trimEnd());
     assert.deepEqual(blockTexts(parseLegal(source)), lines);
     for (const mark of placeholders) assert.ok(source.includes(mark) && blockTexts(parseLegal(source)).join("\n").includes(mark), mark);
@@ -33,7 +33,7 @@ test("terms has 22 articles, privacy 10 sections, and the commerce notice one ta
   assert.equal(parseLegal(privacy).filter(b => b.kind === "heading").length, 10);
   const tables = parseLegal(commerce).filter(b => b.kind === "table");
   assert.deepEqual(parseLegal(commerce).filter(b => b.kind === "heading").map(b => b.text), ["Tech Phase Research", "RESOLUTE"]);
-  assert.deepEqual(tables.map(t => t.rows.length), [12, 12]);
+  assert.deepEqual(tables.map(t => t.rows.length), [13, 13]);
 });
 
 test("the pages are public drafts: no sign-in, not indexed, at /terms and /privacy", () => {
