@@ -20,7 +20,8 @@ MANAGERS = {
     'blackrock': (2012383, 'BlackRock', 'BLACKROCK, INC.'),
 }
 
-def import_reports(directory):
+def import_reports(directory, entries=MANAGERS, kind='manager', checked_on='2026-10-25',
+                   mapping_sources=('disclosures', 'corporate', 'acwi', 'history'), extra_symbols=None):
     symbols = {}
     def collect(value):
         if isinstance(value, list):
@@ -30,11 +31,13 @@ def import_reports(directory):
                 symbols.setdefault(value['securityId'], set()).add(value['ticker'])
             for item in value.values():
                 if isinstance(item, (list, dict)): collect(item)
-    for name in ['disclosures', 'corporate', 'acwi', 'history']:
+    for name in mapping_sources:
         collect(json.loads((ROOT / f'lib/research/capital-map-{name}.json').read_text()))
     mapping = {k: next(iter(v)) for k, v in symbols.items() if len(v) == 1}
+    for cusip, ticker in (extra_symbols or {}).items():
+        mapping.setdefault(cusip, ticker)
     portfolios = []
-    for key, (cik, name, identity) in MANAGERS.items():
+    for key, (cik, name, identity) in entries.items():
         snapshots = {}
         for period, date in [('current', '2026-06-30'), ('previous', '2026-03-31')]:
             stem = directory / f'{key}-{period}'
@@ -79,9 +82,9 @@ def import_reports(directory):
             assert sum(h['value'] for h in holdings) == total
             snapshots[period] = dict(id=key+'-'+accession, asOf=date, publishedOn=filing['filingDate'],
                 complete=True, source=dict(type='13f', url=meta['urls']['table'], coverUrl=meta['urls']['cover'],
-                    accession=accession.replace('-', ''), checkedOn='2026-10-25', entryCount=count,
+                    accession=accession.replace('-', ''), checkedOn=checked_on, entryCount=count,
                     totalValue=total, sha256=hashlib.sha256(raw).hexdigest()), holdings=holdings)
-        portfolios.append(dict(id=key+'-13f', kind='manager', name=name, subtitle='SEC 13F', **snapshots))
+        portfolios.append(dict(id=key+'-13f', kind=kind, name=name, subtitle='SEC 13F', **snapshots))
     return portfolios
 
 if __name__ == '__main__':

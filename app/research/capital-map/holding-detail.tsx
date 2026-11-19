@@ -1,6 +1,7 @@
 "use client";
 
 import { capitalRows, type CapitalPortfolio, type CapitalSnapshot } from "@/lib/research/capital-map";
+import { capitalPortfolioName } from "@/lib/research/capital-map-profiles";
 import styles from "./capital-map.module.css";
 
 export default function HoldingDetail({ portfolio, securityId, instrument, baseline, lang, sample, onBack }: {
@@ -18,7 +19,7 @@ export default function HoldingDetail({ portfolio, securityId, instrument, basel
     <div className={styles.detailBack}><button onClick={onBack}>← {t("保有一覧に戻る", "Back to holdings")}</button></div>
     {sample && <p className={styles.notice}>{t("架空データの表示サンプルです。", "Display sample using fictional data.")}</p>}
     {!row || !portfolio ? <p>{t("この保有情報は見つかりませんでした。", "This holding was not found.")}</p> : <>
-      <p className={styles.detailOwner}>{portfolio.name}</p>
+      <p className={styles.detailOwner}>{portfolio.kind === "etf" ? portfolio.name : capitalPortfolioName(portfolio.id, portfolio.name, lang)}</p>
       <h1 tabIndex={-1} data-detail-title>{row.name}</h1>
       <p className={styles.detailTicker}>{row.ticker || `CUSIP ${row.securityId}`}{row.shareClass ? ` · ${row.shareClass}` : ""}{row.instrument !== "stock" ? ` · ${row.instrument.toUpperCase()}` : ""}</p>
       <div className={styles.detailMetrics}>

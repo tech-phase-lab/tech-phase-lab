@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { capitalProfiles } from "@/lib/research/capital-map-profiles";
+import { capitalPortfolioName, capitalProfiles } from "@/lib/research/capital-map-profiles";
 import { Suspense, useEffect, useMemo, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import HoldingDetail from "./holding-detail";
@@ -20,6 +20,17 @@ const managerMarks: Record<string, { initials: string; tone: string }> = {
   tiger: { initials: "TG", tone: "amber" },
   viking: { initials: "V", tone: "violet" },
   fundsmith: { initials: "FS", tone: "mint" },
+  jpmorgan: { initials: "JP", tone: "cyan" },
+  blackrock: { initials: "BR", tone: "violet" },
+  amd: { initials: "A", tone: "mint" },
+  uber: { initials: "U", tone: "violet" },
+  walmart: { initials: "W", tone: "cyan" },
+  jnj: { initials: "J&J", tone: "amber" },
+  pfizer: { initials: "P", tone: "cyan" },
+  merck: { initials: "M", tone: "mint" },
+  regeneron: { initials: "R", tone: "violet" },
+  gilead: { initials: "G", tone: "amber" },
+  ge: { initials: "GE", tone: "cyan" },
 };
 const emptyPortfolios: CapitalPortfolio[] = [];
 const colors = ["#9875ff", "#ffb52e", "#46b4ff", "#ef69b6", "#28c7bc", "#ff8548", "#8596ff", "#9bce50", "#e6cf70", "#63c6de"];
@@ -73,11 +84,14 @@ function CapitalMapContent({ portfolios = emptyPortfolios, mode = "sample" }: { 
   const [leftId, setLeftId] = useState(etfs[0]?.id ?? "");
   const [rightId, setRightId] = useState(etfs.find(item => item.name === "ACWI")?.id ?? etfs[1]?.id ?? "");
   const fundLabel = (item: CapitalPortfolio) => lang === "ja" ? fundNames[item.name] ?? item.name : item.name;
+  const portfolioLabel = (item: CapitalPortfolio) => item.kind === "etf" ? fundLabel(item) : capitalPortfolioName(item.id, item.name, lang);
   const isPortfolio = view !== "lookup" && view !== "overlap";
   const visiblePortfolios = portfolios.filter(item => item.kind === view);
   const selected = visiblePortfolios.find(item => item.id === selectedId) ?? visiblePortfolios[0];
   const profile = selected ? capitalProfiles[selected.id.split("-")[0]] : undefined;
   const managerMark = selected ? managerMarks[selected.id.split("-")[0]] : undefined;
+  // Japanese mode: the English filed name stays visible, small, under the katakana firm name.
+  const selectedSubtitle = selected && selected.kind !== "etf" && portfolioLabel(selected) !== selected.name ? selected.name : "";
   const totalValue = selected?.current.holdings.reduce((sum, row) => sum + row.value, 0) ?? 0;
   const money = (value: number) => new Intl.NumberFormat(lang === "ja" ? "ja-JP" : "en-US", { style: "currency", currency: "USD", notation: "compact", maximumFractionDigits: 2 }).format(value);
   const hasValues = totalValue > 0;
@@ -131,10 +145,11 @@ function CapitalMapContent({ portfolios = emptyPortfolios, mode = "sample" }: { 
           {etfs.length > 0 && <button aria-pressed={view === "etf"} onClick={() => chooseView("etf")}>ETF</button>}
         </nav><nav className={styles.tools} aria-label={t("資本マップのツール", "Capital map tools")}><button aria-pressed={view === "lookup"} onClick={() => chooseView("lookup")}>{t("銘柄から検索", "Stock search")}</button>{etfs.length >= 2 && <button aria-pressed={view === "overlap"} onClick={() => chooseView("overlap")}>{t("ETF比較", "Compare ETFs")}</button>}</nav></div>
         {isPortfolio && <div className={styles.portfolioToolbar}>
-          <label className={styles.portfolioSelect}>
+          <label className={styles.portfolioSelect} data-subtitled={selectedSubtitle ? "" : undefined}>
             <select aria-label={t("表示する投資先", "Select portfolio")} value={selected?.id ?? ""} onChange={event => choosePortfolio(event.target.value)}>
-              {visiblePortfolios.map(item => <option key={item.id} value={item.id}>{item.kind === "etf" ? fundLabel(item) : item.name}</option>)}
+              {visiblePortfolios.map(item => <option key={item.id} value={item.id}>{portfolioLabel(item)}</option>)}
             </select>
+            {selectedSubtitle && <span className={styles.selectSubtitle} lang="en">{selectedSubtitle}</span>}
           </label>
         </div>}
         {view === "lookup" && <section className={styles.find} aria-labelledby="find-holders">
@@ -144,10 +159,10 @@ function CapitalMapContent({ portfolios = emptyPortfolios, mode = "sample" }: { 
           {watchOnly && !watched.size && <p className={styles.empty}>{t("ウォッチリストに登録銘柄がありません。", "Your watchlists are empty.")}</p>}
           {searching && <><h3 className={styles.resultCount}>{t("検索結果", "Results")} <span>{holders.length}{t("件", " holders")}</span></h3>
             {holders.length > 0 && <div className={styles.holderHead}><span>{t("保有者", "Holder")}</span><span>{t("保有内の割合", "Portfolio weight")}</span><span>{t("保有評価額", "Holding value")}</span></div>}
-            <div className={styles.holderResults}>{holders.slice(0, rowLimit).map(row => <div className={styles.holderRow} key={`${row.portfolio.id}-${row.securityId}-${row.instrument}`}><div><small className={styles.holderKind}>{row.portfolio.kind === "etf" ? "ETFs" : row.portfolio.kind === "corporate" ? t("企業", "Company") : t("運用会社", "Manager")}</small><button className={styles.holderLink} onClick={() => { setView(row.portfolio.kind); choosePortfolio(row.portfolio.id); }}>{row.portfolio.kind === "etf" ? fundLabel(row.portfolio) : row.portfolio.name} →</button><small>{row.ticker} · {t(`${row.portfolio.current.asOf}時点`, `As of ${row.portfolio.current.asOf}`)}</small></div><strong>{percent(row.weight)}</strong><span>{row.value > 0 ? money(row.value) : "—"}</span></div>)}</div>
+            <div className={styles.holderResults}>{holders.slice(0, rowLimit).map(row => <div className={styles.holderRow} key={`${row.portfolio.id}-${row.securityId}-${row.instrument}`}><div><small className={styles.holderKind}>{row.portfolio.kind === "etf" ? "ETFs" : row.portfolio.kind === "corporate" ? t("企業", "Company") : t("運用会社", "Manager")}</small><button className={styles.holderLink} onClick={() => { setView(row.portfolio.kind); choosePortfolio(row.portfolio.id); }}>{portfolioLabel(row.portfolio)} →</button><small>{row.ticker} · {t(`${row.portfolio.current.asOf}時点`, `As of ${row.portfolio.current.asOf}`)}</small></div><strong>{percent(row.weight)}</strong><span>{row.value > 0 ? money(row.value) : "—"}</span></div>)}</div>
             {!holders.length && <p className={styles.empty}>{t("該当する保有者が見つかりません。企業名やティッカーを変えて検索してください。", "No holders found. Try another company name or ticker.")}</p>}{holders.length > rowLimit && <button className={styles.more} onClick={() => setRowLimit(value => value + 50)}>{t("さらに表示", "Show more")}</button>}</>}
         </section>}
-        {selected && isPortfolio && <section className={styles.portfolio} aria-label={selected.name}>
+        {selected && isPortfolio && <section className={styles.portfolio} aria-label={portfolioLabel(selected)}>
           <div className={styles.identity}>
             {profile ? <><div className={styles.person}>{profile.portrait && portraitError !== selected.id ? <span className={styles.portrait}><Image unoptimized src={profile.portrait.url} alt={t(...profile.person)} width={64} height={64} className={selected.id.startsWith("bridgewater") ? styles.rayPortrait : undefined} onError={() => setPortraitError(selected.id)} /></span> : <span className={styles.managerMark} data-tone={managerMark?.tone ?? "violet"} aria-hidden="true"><svg viewBox="0 0 64 64" fill="none"><circle cx="32" cy="32" r="27" /><path d="M7 32a25 25 0 0 1 25-25M57 32a25 25 0 0 1-25 25" /><path d="M16 49h32M20 53h24" /></svg><span>{managerMark?.initials ?? selected.name.split(" ").slice(0, 2).map(word => word[0]).join("")}</span></span>}<div><strong>{t(...profile.person)}</strong><small>{t(...profile.role)}{profile.leadership && ` · ${t(...profile.leadership)}`}</small></div></div><p>{t(...profile.description)}</p></> : <p>{selected.kind === "etf" ? selected.subtitle : t("企業が公開している株式の保有ポートフォリオ。", "Equity investments disclosed by the company.")}</p>}
           </div>
@@ -205,7 +220,7 @@ function CapitalMapContent({ portfolios = emptyPortfolios, mode = "sample" }: { 
             </div>
           </div>
           <details className={styles.source} key={selected.id}><summary>{t("データについて", "About this data")}</summary>
-            {profile && <p><a href={profile.source} target="_blank" rel="noreferrer">{t("人物・会社紹介の出典", "Profile source")}</a> · {t(`役職確認：${profile.checkedOn ?? "2026-10-12"}`, `Roles checked: ${profile.checkedOn ?? "2026-10-12"}`)}</p>}
+            {profile && <p><a href={profile.source} target="_blank" rel="noreferrer">{t("人物・会社紹介の出典", "Profile source")}</a>{profile.descriptionSource && <> · <a href={profile.descriptionSource} target="_blank" rel="noreferrer">{t("会社紹介の参照元", "Company description source")}</a></>} · {t(`役職確認：${profile.checkedOn ?? "2026-10-12"}`, `Roles checked: ${profile.checkedOn ?? "2026-10-12"}`)}</p>}
             {profile?.portrait && <p>{t("写真", "Photo")}: {profile.portrait.credit} · <a href={profile.portrait.source} target="_blank" rel="noreferrer">{profile.portrait.sourceLabel ?? "Wikimedia Commons"}</a>{profile.portrait.license && profile.portrait.licenseUrl && <a href={profile.portrait.licenseUrl} target="_blank" rel="noreferrer">{profile.portrait.license}</a>}{t("（表示枠に合わせてトリミング）", " (cropped to fit)")}</p>}
             {selected.current.source && <><p><a href={selected.current.source.url} target="_blank" rel="noreferrer">{selected.kind === "etf" ? t("運用元の保有明細", "Issuer holdings") : t("SEC保有明細", "SEC holdings")}</a>{selected.kind !== "etf" && <a href={selected.current.source.coverUrl} target="_blank" rel="noreferrer">{t("SEC集計表", "SEC summary")}</a>}</p><p>{t("基準日", "As of")} {selected.current.asOf} · {t("公表日", "Published")} {selected.current.publishedOn}</p></>}
             {selected.previous?.source && <p><a href={selected.previous.source.url} target="_blank" rel="noreferrer">{t("前期のSEC保有明細", "Prior-quarter SEC holdings")}</a> · {selected.previous.asOf}</p>}
