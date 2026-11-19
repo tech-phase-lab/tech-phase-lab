@@ -130,17 +130,20 @@ export async function cachedStatements(ticker: string, now = Date.now()): Promis
   const w = weekSlot(now);
   return peek(statementsWeek, ticker, [w, w - 1]);
 }
-/** The daily price series: this hour's shared copy, else one credit now if the minute has plenty of room (four seconds at most, no wait),
- * else the background job's copy from today or yesterday. */
+/** The daily price series: this hour's shared copy, else the background job's copy from today (it holds every completed daily close up to
+ * yesterday, which is all the momentum factor reads), else one credit now if the minute has plenty of room (four seconds at most, no wait),
+ * else yesterday's copy. Speed (owner, Nov 18): the user no longer waits for the meter and the provider when today's copy is stored. */
 export async function userSeries(ticker: string, now = Date.now()): Promise<Series | null> {
   const h = hourSlot(now), d = daySlot(now);
   const hot = await peek(seriesHour, ticker, [h, h - 1]);
   if (hot) return hot;
+  const today = await peek(seriesDay, ticker, [d]);
+  if (today) return today;
   if (providerConfigured() && !recentlyFailed("series", ticker) && hasRoom(await minuteUsage(), COST.series, USER_SERIES_CEILING, true)) {
     const fresh = await fill("series", seriesHour, ticker, h);
     if (fresh) return fresh;
   }
-  return peek(seriesDay, ticker, [d, d - 1]);
+  return peek(seriesDay, ticker, [d - 1]);
 }
 
 /** After the answer is sent, fill what this comparison missed (statistics, and statements when the filing could not give every figure), one

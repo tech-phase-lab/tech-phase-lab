@@ -7,8 +7,10 @@ export const dynamic = "force-dynamic";
 export const maxDuration = 120;
 const headers = { "Cache-Control": "private, no-store", Vary: "Cookie" };
 export async function GET(request: Request) {
+  const started = performance.now();
   try {
     const member = await getMembership();
+    const signedIn = performance.now();
     const access = comparisonAccess(member);
     if (access !== 200) return Response.json({ ok: false, error: access === 401 ? "sign-in" : access === 403 ? "pro-required" : "unavailable" }, { status: access, headers });
     const raw = new URL(request.url).searchParams.get("tickers") || "";
@@ -22,9 +24,18 @@ export async function GET(request: Request) {
     }
     const selected = await Promise.all(tickers.map(resolveComparisonCompany));
     if (selected.some(c => !c)) return Response.json({ ok: false, error: "unknown-company" }, { status: 400, headers });
-    const companies = applyValuationBasis(await Promise.all(selected.map(async company => ({ ...company!, ...await loadComparisonFinancials(company!.ticker) }))));
+    // Each company's time is measured on its own (they load in parallel), for the log line and the Server-Timing header below.
+    const each: number[] = [];
+    const companies = applyValuationBasis(await Promise.all(selected.map(async (company, i) => {
+      const t = performance.now();
+      try { return { ...company!, ...await loadComparisonFinancials(company!.ticker) }; } finally { each[i] = Math.round(performance.now() - t); }
+    })));
     // The entitlement may expire while upstream data is being fetched.
     if (comparisonAccess(member) !== 200) return Response.json({ ok: false, error: "pro-required" }, { status: 403, headers });
-    return Response.json({ ok: true, result: buildComparison(companies), validUntil: comparisonExpiresAt(member) }, { headers });
+    const total = Math.round(performance.now() - started), auth = Math.round(signedIn - started);
+    // Speed (owner, Nov 18: about 20 seconds): where the time goes, per company, in the log (tickers and milliseconds only).
+    console.info(`comparison timing total=${total}ms auth=${auth}ms ${tickers.map((t, i) => `${t}=${each[i]}ms`).join(" ")}`);
+    return Response.json({ ok: true, result: buildComparison(companies), validUntil: comparisonExpiresAt(member) },
+      { headers: { ...headers, "Server-Timing": [`auth;dur=${auth}`, ...tickers.map((t, i) => `c${i + 1};desc="${t}";dur=${each[i]}`), `total;dur=${total}`].join(", ") } });
   } catch { return Response.json({ ok: false, error: "unavailable" }, { status: 503, headers }); }
 }

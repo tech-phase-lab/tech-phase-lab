@@ -12,7 +12,7 @@ export async function GET(request: Request) {
   if (!validSyncToken(auth, process.env.COMPARISON_WARM_SECRET) && !validSyncToken(auth, process.env.CRON_SECRET)) return Response.json({ ok: false }, { status: 401, headers });
   try {
     const report = await warmMinute();
-    console.info(`comparison warm ${report.minute} spent=${report.spent} tickers=${report.tickers.join(",")} skipped=${report.skipped.join(",") || "-"}`);
+    console.info(`comparison warm ${report.minute} spent=${report.spent} filings=${report.filings ?? 0} tickers=${report.tickers.join(",")} skipped=${report.skipped.join(",") || "-"}`);
     return Response.json({ ok: true, ...report }, { headers });
   } catch (error) {
     console.warn(`comparison warm failed: ${error instanceof Error ? error.message : "error"}`);

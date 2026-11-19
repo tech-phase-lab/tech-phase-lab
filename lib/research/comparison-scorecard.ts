@@ -1,13 +1,17 @@
-import { twelveExtraFactors, twelveFactorMetric, twelveFactorMethods } from "./twelve-data-factors.ts";
+import { periodMaxAgeDays, twelveExtraFactors, twelveFactorMetric, twelveFactorMethods } from "./twelve-data-factors.ts";
 import type { Financials } from "./comparison.ts";
 export type ScoreId = "valuation" | "growth" | "profitability" | "financial" | "cash" | "stability" | "momentum";
 export type ComparisonScore = { id: ScoreId; label: {ja:string;en:string}; value: number | null };
 const clamp = (n:number) => Math.round(Math.max(0,Math.min(10,n))*10)/10;
 const finite = (n: unknown): n is number => typeof n === "number" && Number.isFinite(n);
+/** The latest period is current: a quarter, or for a foreign filer a half-year or fiscal year (`periodMonths`), each with its own age limit.
+ * A foreign filer's fiscal year stands as its latest period only because no tagged interim report exists, so the notes saying so do not
+ * block it; a check that could not be made still does. */
 export function hasRecentQuarter(c: Financials, now = Date.now()): boolean {
+  const annual = c.periodMonths === 12;
   return c.status === "ready" && !!c.quarterRevenue && now-Date.parse(c.quarterRevenue.end)>=0
-    && now-Date.parse(c.quarterRevenue.end)<=180*86400000
-    && !c.dataWarnings?.some(w=>w.en.includes("quarterly filing") || w.en.includes("earnings release") || w.en.includes("could not be checked"));
+    && now-Date.parse(c.quarterRevenue.end)<=periodMaxAgeDays(c.periodMonths)*86400000
+    && !c.dataWarnings?.some(w=>(!annual && w.en.includes("quarterly filing")) || w.en.includes("earnings release") || w.en.includes("could not be checked"));
 }
 /** Shared comparison conditions for both the conclusion and highlighted scores. */
 export function comparableQuarters(companies: Financials[], now=Date.now()): boolean {
@@ -20,7 +24,8 @@ export function comparableQuarters(companies: Financials[], now=Date.now()): boo
   // US one is ranked today); two different SEC accounting bases (US GAAP beside IFRS) still do not. Each company's source is shown beside its
   // numbers. On the 22 monitored companies' 231 pairs this rule loses no ranking that exists today (docs/SEC-FIRST-COMPARISON-VALIDATION-2026-11-13.md).
   const filingBases=new Set(bases.filter(b=>b!=="twelve-standardized"));
-  return filingBases.size<=1 && spread<=100*86400000;
+  // A half-year or a fiscal year beside a quarter is a different period, however close the end dates.
+  return filingBases.size<=1 && spread<=100*86400000 && new Set(companies.map(c=>c.periodMonths ?? 3)).size===1;
 }
 export function comparisonLeaders(companies: Financials[], id: ScoreId, now=Date.now()): boolean[] {
   const none=companies.map(()=>false);
@@ -213,7 +218,7 @@ export function overallComparison(companies: (Financials & {ticker:string})[],la
   const ja=lang==="ja",common=commonTotals(companies,now);
   const ranked=companies.map((c,i)=>({c,scores:comparisonScores(c,now).filter(s=>common.ids.includes(s.id)),total:common.totals[i]}));
   if(new Set(companies.map(c=>!!c.referenceEvaluation)).size>1 || ranked.some(r=>r.total===null))
-    return {title:ja?"必要なデータが揃っていません":"There isn't enough data for an overall score",description:ja?"3社に共通する項目が3つ未満のため、総合順位は出していません。":"Fewer than three factors are available for every company, so no overall ranking is given."};
+    return {title:ja?"必要なデータが揃っていません":"There isn't enough data for an overall score",description:ja?`${companies.length}社に共通する項目が3つ未満のため、総合順位は出していません。`:"Fewer than three factors are available for every company, so no overall ranking is given."};
   const count=common.ids.length;
   const note=count<7 ? (ja?`総合点は、全社にそろう${count}項目の平均です。`:`Overall scores average the ${count} factors every company has.`) : undefined;
   const periods=comparableQuarters(companies,now) ? "" : (ja?"決算期間が異なる会社を含みます。":"Reporting periods differ. ");

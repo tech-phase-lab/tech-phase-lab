@@ -16,6 +16,7 @@ import DeepAnalysisPanel from "../deep-analysis-panel";
 import { useOwnerAccount, useOwnerMode } from "../member-display-provider";
 import XPostCopyButton from "./x-post-copy-button";
 import EarningsReaction from "./earnings-reaction";
+import { japaneseMoney } from "@/lib/research/money-ja";
 
 function ResultList({ rows, lang }: { rows: ReactNode[]; lang: "ja" | "en" }) {
   const [limit, setLimit] = useState(3);
@@ -92,16 +93,16 @@ export default function EconomicResultsPanel({ lang, zone, period, kind = "all",
   const earningsSection = !!earnings.length && <section className={styles.section} aria-label={ja ? "決算の結果" : "Earnings results"}>
     <h2>{ja ? "決算の結果" : "Earnings results"}</h2>
     <ResultList key={`${lang}:${zone}:${period}:${kind}`} lang={lang} rows={earnings.map(row => {
-      const label = <>{time(row.releasedAt)}<span className={calendarStyles.eventName}>{ja ? noBreakUnits(row.title[lang]) : row.title[lang]}<small>{ja ? noBreakUnits(row.result.ja ?? "") : row.result.en}</small></span></>;
+      const label = <>{time(row.releasedAt)}<span className={calendarStyles.eventName}>{ja ? noBreakUnits(japaneseMoney(row.title[lang])) : row.title[lang]}<small>{ja ? noBreakUnits(japaneseMoney(row.result.ja ?? "")) : row.result.en}</small></span></>;
       const links = row.sources.filter(source => !source.url.startsWith("https://x.com/")).map(source => <a key={source.url} href={source.url} target="_blank" rel="noreferrer">{source.name} ↗</a>);
-      const text = ja ? row.body.ja : row.body.en;
+      const text = ja ? (row.body.ja && japaneseMoney(row.body.ja)) : row.body.en;
       // A row opens only when there is something more to read; "the company's
       // own release" alone is not a reason to expand (owner, Oct 14).
       if (!row.facts.length && !text) return <li key={row.id}><div className={calendarStyles.plainRow}>{label}<span className={calendarStyles.rowLinks}>{links}</span></div></li>;
       return <li key={row.id}><details>
         <summary>{label}<span className={calendarStyles.expand} aria-hidden="true">＋</span></summary>
         <div className={calendarStyles.eventDetails}>
-          {!!row.facts.length && <ul className={calendarStyles.facts}>{row.facts.map(fact => <li key={fact.en}>{ja ? fact.ja : fact.en}</li>)}</ul>}
+          {!!row.facts.length && <ul className={calendarStyles.facts}>{row.facts.map(fact => <li key={fact.en}>{ja ? japaneseMoney(fact.ja) : fact.en}</li>)}</ul>}
           {row.kind === "flash" && (() => { const brief = briefs.find(b => b.kind === "earnings" && b.ticker === row.ticker && row.sources.some(source => source.url === b.url)); return brief ? <><EarningsReaction ticker={brief.ticker} releasedAt={brief.publishedAt} lang={lang} />{ownerAccount && <XPostCopyButton brief={brief} lang={lang} />}</> : null; })()}
           {row.factsFrom === "post" && <p>{ja ? "決算速報の投稿から数値を読み取りました。会社の決算資料で確認してください。" : "Figures read from a results flash post; confirm against the company release."}</p>}
           {row.factsFrom === "issuer" && <p>{ja ? "会社の決算資料から数値を読み取りました。" : "Figures read from the company release."}</p>}

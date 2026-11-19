@@ -6,7 +6,9 @@ const fixture = JSON.parse(await readFile(new URL('./fixtures/tsm-companyfacts-e
 const now = Date.parse('2026-10-03T00:00:00Z');
 const parse = data => extractFinancials('TSM', '1046179', data, now, 'TWD');
 test('TSMC native currency yields same-filing revenue, growth, margins, cash flow and balance data', () => {
-  assert.equal(extractFinancials('TSM', '1046179', fixture, now).status, 'unsupported');
+  // Without the verified currency, the filing's own currency is still found: TWD outnumbers the US dollar convenience translation.
+  const auto = extractFinancials('TSM', '1046179', fixture, now);
+  assert.equal(auto.status, 'ready'); assert.equal(auto.revenue.unit, 'TWD'); assert.equal(auto.revenue.value, 2894307700000);
   const r = parse(fixture);
   assert.equal(r.status, 'ready');
   assert.equal(r.revenue.unit, 'TWD');
@@ -22,11 +24,15 @@ test('TSMC native currency yields same-filing revenue, growth, margins, cash flo
   assert.equal(r.balance.currentLiabilities.unit, 'TWD');
   assert.equal(r.balance.debtNoncurrent, null);
   for (const f of [r.previousRevenue,r.operatingIncome,r.operatingCash,r.capex,r.balance.cash]) assert.equal(f.accession,r.revenue.accession);
-  assert.equal(r.quarterRevenue,null);
+  // A 20-F with no tagged interim report: the fiscal year stands as the latest period, labelled as such (never as a quarter).
+  assert.equal(r.periodMonths,12); assert.equal(r.quarterRevenue.accession,r.revenue.accession); assert.equal(r.quarterMargins,null);
 });
 test('native-currency selection still rejects conflicting data, a different CIK and missing current native amounts', () => {
   const p = structuredClone(fixture);
+  // IFRS "Revenue" is the total and contract revenue a part of it: a total above the part is used (BHP, Rio Tinto), a total below it is held.
   p.facts['ifrs-full'].Revenue.units.TWD.find(f => f.end === '2024-12-31').val++;
+  assert.equal(parse(p).status,'ready'); assert.equal(parse(p).revenue.tag,'Revenue');
+  p.facts['ifrs-full'].Revenue.units.TWD.find(f => f.end === '2024-12-31').val -= 2;
   assert.equal(parse(p).status,'unsupported');
   assert.equal(parse({...fixture,cik:999}).status,'unsupported');
   const missing = structuredClone(fixture);
