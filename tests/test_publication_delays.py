@@ -185,6 +185,77 @@ class NewsCacheTests(unittest.TestCase):
         self.assertEqual(len(calls), 2)
 
 
+class CompanyWireCacheTests(unittest.TestCase):
+    """Nov 19: /company-wire was rebuilt on every request (1-2.5 s) and the home band waited for it on every open."""
+
+    def make_app(self, stale=30):
+        app = service.AutomaticMonitor.__new__(service.AutomaticMonitor)
+        app.news_stale_seconds = stale
+        app.wire_cache, app.wire_lock, app.wire_requested_at = None, threading.Lock(), time.monotonic()
+        tmp = tempfile.TemporaryDirectory()
+        self.addCleanup(tmp.cleanup)
+        app.db_path = Path(tmp.name) / 'db.sqlite'
+        app.db_path.write_bytes(b'v1')
+        calls = []
+
+        def compute():
+            calls.append(1)
+            return {'ok': True, 'n': len(calls)}
+        app.compute_company_wire = compute
+        return app, calls
+
+    def age(self, app, seconds):
+        finished, version, payload = app.wire_cache
+        app.wire_cache = (finished - seconds, version, payload)
+
+    def test_requests_reuse_the_last_build_and_the_refresher_picks_up_writes(self):
+        app, calls = self.make_app()
+        self.assertEqual(app.company_wire_feed(), {'ok': True, 'n': 1})
+        app.db_path.write_bytes(b'v2 new headline')
+        # The visitor is answered at once from the last build...
+        self.assertEqual(app.company_wire_feed(), {'ok': True, 'n': 1})
+        self.assertEqual(len(calls), 1)
+        # ...the refresher rebuilds after the write once its short interval has passed, and only once.
+        self.assertFalse(app.refresh_company_wire())
+        self.age(app, service.WIRE_REFRESH_ACTIVE_INTERVAL)
+        self.assertTrue(app.refresh_company_wire())
+        self.age(app, service.WIRE_REFRESH_ACTIVE_INTERVAL)
+        self.assertFalse(app.refresh_company_wire())
+        self.assertEqual(app.company_wire_feed(), {'ok': True, 'n': 2})
+
+    def test_an_old_build_is_never_served_after_a_write(self):
+        app, calls = self.make_app()
+        app.company_wire_feed()
+        self.age(app, 31)
+        # Nothing written: still the same answer (the database version is unchanged).
+        self.assertEqual(app.company_wire_feed(), {'ok': True, 'n': 1})
+        app.db_path.write_bytes(b'v2')
+        self.assertEqual(app.company_wire_feed(), {'ok': True, 'n': 2})
+        # The 24-hour window moves, so even an unchanged database is rebuilt after a minute.
+        self.age(app, service.WIRE_REFRESH_MAX_AGE + 1)
+        self.assertEqual(app.company_wire_feed(), {'ok': True, 'n': 3})
+
+    def test_without_the_stale_allowance_every_write_is_seen_at_once(self):
+        app, calls = self.make_app(stale=0)
+        app.company_wire_feed()
+        app.db_path.write_bytes(b'v2')
+        self.assertEqual(app.company_wire_feed(), {'ok': True, 'n': 2})
+
+    def test_quiet_periods_refresh_less_often_and_stop_after_the_idle_limit(self):
+        app, calls = self.make_app()
+        app.company_wire_feed()
+        app.wire_requested_at -= service.WIRE_REFRESH_ACTIVE_SECONDS + 1
+        app.db_path.write_bytes(b'v2')
+        self.age(app, service.WIRE_REFRESH_ACTIVE_INTERVAL)
+        self.assertFalse(app.refresh_company_wire())
+        self.age(app, service.WIRE_REFRESH_QUIET_INTERVAL)
+        self.assertTrue(app.refresh_company_wire())
+        app.wire_requested_at -= service.NEWS_REFRESH_IDLE_SECONDS
+        app.db_path.write_bytes(b'v3')
+        self.age(app, service.WIRE_REFRESH_MAX_AGE)
+        self.assertFalse(app.refresh_company_wire())
+
+
 class PipelineStageTests(unittest.TestCase):
     setUp = fixtures.HeadlineTranslationTests.setUp
 
