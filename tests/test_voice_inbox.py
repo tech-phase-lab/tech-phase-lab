@@ -106,7 +106,7 @@ class InboxTests(unittest.TestCase):
         base = inbox.settings()
         with patch.object(inbox, "settings", lambda: {**base, "maxBytes": 1_000_000}):
             status, message, _ = self.send("big.m4a", mp4(pad=1_200_000))
-            self.assertEqual((status, message), (413, "ファイルが大きすぎます(上限 1MB)。"))
+            self.assertEqual((status, message), (413, "ファイルが大きすぎます(上限 1MB)"))
         self.assertEqual(self.send("a.m4a", mp4(), field="other")[:2], (400, "音声ファイルが入っていません。"))
         self.assertEqual(inbox.receive(self.db, io.BytesIO(b""), 0, "multipart/form-data; boundary=x", f"Bearer {self.key}", "3.3.3.3", upload=self.upload)[0], 400)
         self.assertEqual(inbox.receive(self.db, io.BytesIO(b"{}"), 2, "application/json", f"Bearer {self.key}", "3.3.3.3", upload=self.upload)[0], 400)

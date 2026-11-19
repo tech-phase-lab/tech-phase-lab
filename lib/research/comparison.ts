@@ -512,7 +512,7 @@ export function buildComparison(companies: ComparisonResult["companies"], now = 
     const sorted = [...companies].sort((a,b) => b.revenueGrowth! - a.revenueGrowth!);
     if (sorted[0].revenueGrowth! - sorted[1].revenueGrowth! >= 0.1) {
       const top = sorted[0];
-      conclusion = copy(`比較した年次実績では${top.ticker}の売上増減率が最も高い（${top.revenueGrowth!.toFixed(1)}%）。ただし、将来の成長力や割安さの順位ではありません。`, `${top.ticker} has the highest reported annual revenue change (${top.revenueGrowth!.toFixed(1)}%) in this comparison. This is not a ranking of future growth or value.`);
+      conclusion = copy(`比較した年次実績では${top.ticker}の売上増減率（${top.revenueGrowth!.toFixed(1)}%）が最も高い。ただし、将来の成長力や割安さの順位ではありません。`, `${top.ticker} has the highest reported annual revenue change (${top.revenueGrowth!.toFixed(1)}%) in this comparison. This is not a ranking of future growth or value.`);
     }
   }
   return { companies, comparable, reasons, conclusion, generatedAt: new Date(now).toISOString() };
