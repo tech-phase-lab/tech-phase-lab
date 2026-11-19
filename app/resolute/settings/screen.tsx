@@ -11,7 +11,7 @@ import styles from "./settings.module.css";
 
 const copy = {
   ja: { title: "言語とタイムゾーン", intro: "RESOLUTEで使う言語と、日時を表示する地域を設定します。",
-    language: "言語", choose: "選択してください", zone: "タイムゾーン", zoneHint: "例：Asia/Tokyo（日本）、America/New_York（米国東部）",
+    language: "言語", choose: "選択してください", zone: "タイムゾーン", zoneHint: "例：Asia/Tokyo（日本）・America/New_York（米国東部）",
     device: "端末のタイムゾーンを使う", deviceError: "端末の地域を取得できませんでした。入力してください。",
     save: "設定を保存", saving: "保存しています…", loading: "設定を読み込んでいます…",
     unset: "設定がまだ保存されていません。言語とタイムゾーンを選んで保存してください。",

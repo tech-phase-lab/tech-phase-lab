@@ -105,6 +105,6 @@ export default function PushDiagnosticPanel({ lang, onReinstall }: { lang: Langu
     {record ? <dl className={styles.diagnosticList}>
       {pushDiagnosticRows(record, lang).map(row => <div key={row.label}><dt>{row.label}</dt><dd>{row.value}</dd></div>)}
     </dl> : <p className={styles.note}>{ja ? "まだ記録がありません。テスト通知を送ると記録されます。" : "Nothing recorded yet. Send a test notification to record one."}</p>}
-    <p className={styles.note}>{ja ? "運営者のアカウントだけに表示されます。記録はサーバーのログにも送られます（番号と時刻のみ）。" : "Shown to the owner's account only. The record is also sent to the server log (id and times only)."}</p>
+    <p className={styles.note}>{ja ? "運営者のアカウントだけに表示されます。記録はサーバーのログにも送られます（番号と時刻のみ）" : "Shown to the owner's account only. The record is also sent to the server log (id and times only)."}</p>
   </details>;
 }

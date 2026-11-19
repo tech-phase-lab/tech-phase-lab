@@ -129,7 +129,7 @@ export default function CheckoutScreen({ orderId, language: initialLanguage, can
     <dl><dt>{en ? "Tools" : "ツール"}</dt><dd>{access.canUseTools ? (en ? "Available · no expiry" : "利用可・期限なし") : (en ? "Not available" : "利用不可")}</dd>
      <dt>{en ? "Alerts" : "通知"}</dt><dd>{access.canReceiveNotifications ? (en ? "Available" : "利用可") : (en ? "Not currently available" : "現在は利用不可")}</dd></dl>
     {access.canUseTools && access.alertPeriods.length > 0 && <>
-     <p>{en ? "Recorded alert periods (U.S. Eastern Time, ET). Each period ends at the time shown." : "通知の有効期間（日本時間）。終了時刻になると期限切れになります。"}</p>
+     <p>{en ? "Recorded alert periods (U.S. Eastern Time, ET). Each period ends at the time shown." : <>通知の有効期間（日本時間）<br />終了時刻になると期限切れになります。</>}</p>
      <ul>{access.alertPeriods.map(p => <li key={p.startsAt}>{date(p.startsAt)}<br />{en ? "to " : "〜 "}{date(p.expiresAt)}</li>)}</ul>
     </>}
     <p className={styles.checkedAt}>{en ? "Checked: " : "確認日時："}{date(access.asOf)} {en ? "ET" : "（日本時間）"}</p>

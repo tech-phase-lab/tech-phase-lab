@@ -53,7 +53,7 @@ function SavedCopy({ value }: { value: Copy | null }) {
 
 export function ResearchProofResult({ data }: { data: Proof }) {
   if (data.status !== "current" || !data.currentRevision || !data.researchBody || data.researchBody.revisionSha !== data.bodySha) {
-    return <p role="status">選択した原文版を確認できません（{data.status}）。診断一覧を再取得してください。本文・保存文章は表示しません。{data.omittedResearchBodyChars ? `本文${data.omittedResearchBodyChars}文字は未表示です。` : ""}</p>;
+    return <p role="status">選択した原文版を確認できません（{data.status}）<br />診断一覧を再取得してください。本文・保存文章は表示しません。{data.omittedResearchBodyChars ? `本文${data.omittedResearchBodyChars}文字は未表示です。` : ""}</p>;
   }
   const body = data.researchBody;
   const publication = data.publication;

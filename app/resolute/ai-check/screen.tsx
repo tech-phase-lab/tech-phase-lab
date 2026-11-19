@@ -13,7 +13,7 @@ export default function Screen(){
     ...(execute?{headers:{'Content-Type':'application/json'},body:JSON.stringify({action:'check'})}:{})});
    const value:Check=await response.json();setCheck(value);
    const result=value.result??value;
-   setMessage(result.ok&&result.reply==='RESOLUTE_OK'?'AIから RESOLUTE_OK の応答を確認しました。':result.error?(messages[result.error]??`確認できませんでした（${result.error}）。`):value.state==='not-started'?(!value.enabled?'確認機能はまだ無効です。':!value.keyConfigured?'実行環境にキーが設定されていません。':'未実行です。'):value.state==='claimed'?'実行開始が記録されています。結果未確認のため再実行しません。':'保存された結果を確認してください。');
+   setMessage(result.ok&&result.reply==='RESOLUTE_OK'?'AIから RESOLUTE_OK の応答を確認しました。':result.error?(messages[result.error]??`確認できませんでした（${result.error}）`):value.state==='not-started'?(!value.enabled?'確認機能はまだ無効です。':!value.keyConfigured?'実行環境にキーが設定されていません。':'未実行です。'):value.state==='claimed'?'実行開始が記録されています。結果未確認のため再実行しません。':'保存された結果を確認してください。');
   }catch{setCheck(null);setMessage('応答を確認できません。実行状況の読み取りだけ行ってください。');}
   finally{lock.current=false;setBusy(false);}
  }

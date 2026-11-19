@@ -195,7 +195,7 @@ test("one row per indicator and release day: the Oct 28 FOMC read from the Fed s
   assert.equal(october.length, 1);
   // The more detailed hand-written row stays: target range and the 10-2 vote.
   assert.equal(october[0].title.ja, "FOMC 政策金利の発表（10月会合）");
-  assert.equal(october[0].result.ja, "政策金利を据え置き（誘導目標レンジ3.75〜4.00%）。採決は10対2");
+  assert.equal(october[0].result.ja, "政策金利（誘導目標レンジ3.75〜4.00%）を据え置き。採決は10対2");
   assert.equal(merged.length, mergeEconomicResults().length);
   // Another meeting is its own row.
   const december = mergeEconomicResults([], [], [fomc("2026-12-09", 12)]);

@@ -403,7 +403,7 @@
       },
       "resultJa": "市場予想 非農業部門雇用者数 {value}人",
       "resultEn": "Consensus: nonfarm payrolls {value}",
-      "noteJa": "報道の見出しが伝えた市場予想です(公式の数字ではありません)。",
+      "noteJa": "報道の見出しが伝えた市場予想です(公式の数字ではありません)",
       "noteEn": "The consensus as stated in news headlines (not an official figure)."
     },
     {
@@ -430,7 +430,7 @@
       },
       "resultJa": "市場予想 非農業部門雇用者数 {value}人",
       "resultEn": "Consensus: nonfarm payrolls {value}",
-      "noteJa": "報道の見出しが伝えた市場予想です(公式の数字ではありません)。",
+      "noteJa": "報道の見出しが伝えた市場予想です(公式の数字ではありません)",
       "noteEn": "The consensus as stated in news headlines (not an official figure)."
     },
     {
@@ -457,7 +457,7 @@
       },
       "resultJa": "市場予想 非農業部門雇用者数 {value}人",
       "resultEn": "Consensus: nonfarm payrolls {value}",
-      "noteJa": "報道の見出しが伝えた市場予想です(公式の数字ではありません)。",
+      "noteJa": "報道の見出しが伝えた市場予想です(公式の数字ではありません)",
       "noteEn": "The consensus as stated in news headlines (not an official figure)."
     },
     {
@@ -484,7 +484,7 @@
       },
       "resultJa": "市場予想 非農業部門雇用者数 {value}人",
       "resultEn": "Consensus: nonfarm payrolls {value}",
-      "noteJa": "報道の見出しが伝えた市場予想です(公式の数字ではありません)。",
+      "noteJa": "報道の見出しが伝えた市場予想です(公式の数字ではありません)",
       "noteEn": "The consensus as stated in news headlines (not an official figure)."
     }
   ]

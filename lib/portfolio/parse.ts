@@ -52,7 +52,7 @@ export function normalizeParsed(raw: unknown): Parsed {
     const shares = num(row.shares);
     const avg = num(row.avgCostUsd);
     const jpy = num(row.avgCostJpy);
-    if (!TICKER.test(ticker)) { warnings.push(`ティッカーを読み取れない行がありました(${String(row.ticker ?? "不明").slice(0, 12)})。`); continue; }
+    if (!TICKER.test(ticker)) { warnings.push(`ティッカーを読み取れない行がありました(${String(row.ticker ?? "不明").slice(0, 12)})`); continue; }
     if (shares !== null && (!(shares > 0) || shares > 1e9)) { warnings.push(`${ticker}: 株数が正しくないため、飛ばしました。`); continue; }
     if (avg !== null && (!(avg > 0) || avg > 1e7)) { warnings.push(`${ticker}: 平均取得価額(ドル)が正しくないため、飛ばしました。`); continue; }
     if (shares === null || avg === null) {
