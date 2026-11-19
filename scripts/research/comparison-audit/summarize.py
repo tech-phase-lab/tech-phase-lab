@@ -75,4 +75,4 @@ for g in sorted({g for g, _ in groups}, key=str): print(f"group {g}: before {gro
 for (g, r), n in sorted(reasons.items(), key=lambda x: -x[1]): print(f"reason {g} / {r}: {n}")
 if args.csv:
     with open(args.csv, "w", newline="") as fh:
-        w = csv.DictWriter(fh, fieldnames=list(rows[0].keys())); w.writeheader(); w.writerows(sorted(rows, key=lambda r: r["ticker"]))
+        w = csv.DictWriter(fh, fieldnames=list(rows[0].keys()), lineterminator="\n"); w.writeheader(); w.writerows(sorted(rows, key=lambda r: r["ticker"]))
