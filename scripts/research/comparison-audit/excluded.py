@@ -4,17 +4,22 @@ exchange-traded funds and commodity trusts, which file no comparable revenue or 
 and its SEC cache (submissions: SIC code, name); only certain cases are listed:
 
 - SPAC: SIC 6770 (blank checks), and the comparison found no revenue for it;
-- fund: SIC 6221 (commodity trusts) or no SIC, a fund-like name (ETF, Trust, Fund, ...), and no revenue (or no XBRL financial data at all).
+- fund: SIC 6221 (commodity trusts), 6199 (crypto funds such as FETH, ETHW) or no SIC, a fund-like name (ETF, Trust, Fund, ...), and no revenue (or no XBRL financial data at all);
+- fund, even with revenue: SIC 6221 or 6199 and a fund-like name. A crypto staking, commodity or currency fund books its staking rewards,
+  interest or trading gains as revenue (SOLC, SUIS, IAU, USO, ProShares Trust II), which is no business to compare (Nov 19). An operating
+  company in those codes (Evernorth, Antalpha, AI Financial, Solana Co) has no fund-like name and stays.
 
 Each entry keeps the issuer's name: a SPAC that completes its merger takes the operating company's name, and the comparison then offers it
 again without a new list. Preferreds, warrants, units and rights are recognised from the ticker itself (lib/research/comparison-exclusions.ts).
 
-    python3 -I excluded.py --cache DIR --audit after.jsonl --out lib/research/comparison-exclusions.json
+    python3 -I excluded.py --cache DIR --audit after.jsonl --out lib/research/comparison-exclusions.json [--merge]
+
+--merge keeps the entries already in --out (an audit run after the exclusions answers an excluded ticker as unknown, without its figures).
 """
 import argparse, gzip, hashlib, json, os, re
 
 ap = argparse.ArgumentParser()
-ap.add_argument("--cache", required=True); ap.add_argument("--audit", required=True); ap.add_argument("--out", required=True)
+ap.add_argument("--cache", required=True); ap.add_argument("--audit", required=True); ap.add_argument("--out", required=True); ap.add_argument("--merge", action="store_true")
 args = ap.parse_args()
 
 def cached(url):
@@ -28,16 +33,22 @@ def cached(url):
 
 FUND_NAME = re.compile(r"\bETF\b|\bETFs\b|\bTrust\b|\bFund\b|\bShares\b|iShares|SPDR|ProShares|Grayscale|\bETN\b", re.I)
 out = {"spac": {}, "fund": {}}
+if args.merge and os.path.exists(args.out):
+    kept = json.load(open(args.out))
+    out = {"spac": dict(kept.get("spac", {})), "fund": dict(kept.get("fund", {}))}
 for line in open(args.audit):
     r = json.loads(line)
-    if r.get("status") == "ready": continue   # the comparison found revenue: never excluded
+    if r.get("cause") == "not-resolved": continue   # already excluded (kept by --merge)
     cik = int(r["cik"])
     _, sub = cached(f"https://data.sec.gov/submissions/CIK{cik:010d}.json")
     if not sub: continue
     sic = str(sub.get("sic") or "")
     name = r.get("name") or sub.get("name") or ""
+    if r.get("status") == "ready":   # the comparison found revenue: excluded only as a commodity, currency or crypto fund
+        if sic in ("6221", "6199") and FUND_NAME.search(name): out["fund"][str(cik)] = name
+        continue
     if sic == "6770": out["spac"][str(cik)] = name
-    elif sic in ("6221", "") and FUND_NAME.search(name): out["fund"][str(cik)] = name
+    elif sic in ("6221", "6199", "") and FUND_NAME.search(name): out["fund"][str(cik)] = name
 result = {"source": "scripts/research/comparison-audit/excluded.py", **{k: dict(sorted(v.items(), key=lambda x: int(x[0]))) for k, v in out.items()}}
 json.dump(result, open(args.out, "w"), ensure_ascii=False, indent=0)
 open(args.out, "a").write("\n")
