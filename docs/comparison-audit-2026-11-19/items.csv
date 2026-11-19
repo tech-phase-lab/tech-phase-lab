@@ -167,7 +167,6 @@ AGNCZ,1423689,AGNC Investment Corp.,Nasdaq,US GAAP,10-K,金融・不動産,直�
 AGNT,1495932,"AGNT, Inc.",Nasdaq,US GAAP,10-K,金融・不動産,要点あり（直近期間あり）,2026-09-30,3,S:revenue-growth S:cash-generation S:financial,S:revenue-growth S:cash-generation S:financial,3,0
 AGO,1273813,ASSURED GUARANTY LTD,NYSE,US GAAP,10-K,金融・不動産,要点あり（直近期間あり）,2026-09-30,3,S:revenue-growth S:operating-margin S:cash-generation W:financial W:debt-cash,S:revenue-growth S:operating-margin S:cash-generation W:financial W:debt-cash,3,2
 AGPU,1446159,AXE COMPUTE INC.,Nasdaq,US GAAP,10-K,金融・不動産,要点あり（直近期間あり）,2026-09-30,3,S:operating-margin S:cash-generation W:stability,S:operating-margin S:cash-generation W:stability,2,1
-AGQ,1415311,ProShares Trust II,NYSE,US GAAP,10-K,金融・不動産,要点あり（直近期間あり）,2026-09-30,3,S:revenue-growth S:operating-margin,S:revenue-growth S:operating-margin,2,0
 AGRO,1499505,Adecoagro S.A.,NYSE,IFRS,20-F,農業・鉱業・エネルギー,要点あり（直近期間あり）,2025-12-31,12,W:revenue-growth S:cash-generation,W:revenue-growth S:cash-generation,1,1
 AGRZ,2009233,Agroz Inc.,Nasdaq,IFRS,20-F,農業・鉱業・エネルギー,要点あり（直近期間あり）,2025-12-31,12,S:revenue-growth S:operating-margin W:cash-generation S:financial,S:revenue-growth S:operating-margin W:cash-generation S:financial,3,1
 AGX,100591,ARGAN INC,NYSE,US GAAP,10-K,建設,要点あり（直近期間あり）,2026-07-31,3,S:revenue-growth S:cash-generation S:financial S:stability W:margin-decline,S:revenue-growth S:cash-generation S:financial S:stability W:margin-decline,4,1
@@ -723,7 +722,6 @@ BIPI,1406234,Brookfield Infrastructure Partners L.P.,NYSE,IFRS,20-F,運輸・通
 BIPJ,1406234,Brookfield Infrastructure Partners L.P.,NYSE,IFRS,20-F,運輸・通信・公益,要点あり（直近期間あり）,2026-06-30,3,S:revenue-growth S:operating-margin S:cash-generation,S:revenue-growth S:operating-margin S:cash-generation,3,0
 BIRD,1653909,"Smartbird, Inc.",Nasdaq,US GAAP,10-K,サービス,直近期間を確認できない,2026-06-30,3,,,0,0
 BIRK,1977102,Birkenstock Holding plc,NYSE,IFRS,20-F,製造,要点あり（直近期間あり）,2026-06-30,3,S:revenue-growth S:operating-margin S:financial,S:revenue-growth S:operating-margin S:financial,3,0
-BITA,2089969,iShares Bitcoin Premium Income ETF,Nasdaq,US GAAP,なし,金融・不動産,要点未作成,2026-09-30,3,,,0,0
 BIVI,1580149,BIOVIE INC.,Nasdaq,なし,10-K,医薬・バイオ,四半期データなし,,,,,0,0
 BIYA,1944712,Baiya International Group Inc.,Nasdaq,US GAAP,20-F,サービス,要点あり（直近期間あり）,2025-12-31,12,S:revenue-growth W:operating-margin W:share-count W:cash-generation,S:revenue-growth W:operating-margin W:share-count W:cash-generation,1,3
 BJ,1531152,"BJ's Wholesale Club Holdings, Inc.",NYSE,US GAAP,10-K,卸売・小売,要点あり（直近期間あり）,2026-08-01,3,S:revenue-growth S:cash-generation W:financial W:debt-cash S:stability,S:revenue-growth S:cash-generation W:financial W:debt-cash S:stability,3,2
@@ -791,7 +789,6 @@ BNKD,927971,BANK OF MONTREAL /CAN/,NYSE,IFRS,なし,金融・不動産,要点あ
 BNKK,1760903,"BONK, INC.",Nasdaq,US GAAP,10-K,金融・不動産,要点あり（直近期間あり）,2026-09-30,3,W:revenue-growth S:financial,W:revenue-growth S:financial,1,1
 BNKU,927971,BANK OF MONTREAL /CAN/,NYSE,IFRS,なし,金融・不動産,要点あり（直近期間あり）,2026-07-31,3,S:revenue-growth S:operating-margin S:cash-generation S:stability W:margin-decline,S:revenue-growth S:operating-margin S:cash-generation S:stability W:margin-decline,4,1
 BNL,1424182,"Broadstone Net Lease, Inc.",NYSE,US GAAP,10-K,金融・不動産,要点あり（直近期間あり）,2026-09-30,3,S:revenue-growth S:operating-margin S:cash-generation W:financial W:debt-cash S:stability W:margin-decline,S:revenue-growth S:operating-margin S:cash-generation W:financial W:debt-cash S:stability W:margin-decline,4,3
-BNO,1472494,"United States Brent Oil Fund, LP",NYSE,US GAAP,10-K,金融・不動産,直近期間を確認できない,2014-06-30,3,,,0,0
 BNR,1792267,Burning Rock Biotech Ltd,Nasdaq,US GAAP,20-F,サービス,要点あり（直近期間あり）,2025-12-31,12,S:revenue-growth W:operating-margin W:cash-generation S:financial,S:revenue-growth W:operating-margin W:cash-generation S:financial,2,2
 BNS,9631,BANK OF NOVA SCOTIA,NYSE,IFRS,なし,金融・不動産,要点あり（直近期間あり）,2026-07-31,3,S:revenue-growth S:operating-margin S:stability,S:revenue-growth S:operating-margin S:stability,3,0
 BNT,1837429,Brookfield Wealth Solutions Ltd.,NYSE,US GAAP,20-F,金融・不動産,要点あり（直近期間あり）,2026-06-30,3,S:revenue-growth,S:revenue-growth,1,0
@@ -803,7 +800,6 @@ BOC,1494582,BOSTON OMAHA Corp,NYSE,US GAAP,10-K,金融・不動産,要点あり�
 BODI,1826889,"Beachbody Company, Inc.",Nasdaq,US GAAP,10-K,卸売・小売,要点あり（直近期間あり）,2026-09-30,3,W:revenue-growth W:share-count W:cash-generation S:financial S:stability W:margin-decline,W:revenue-growth W:share-count W:cash-generation S:financial S:stability W:margin-decline,2,4
 BOF,1962481,BranchOut Food Inc.,Nasdaq,US GAAP,10-K,製造,要点あり（直近期間あり）,2026-09-30,3,W:revenue-growth W:operating-margin W:share-count W:cash-generation W:stability W:margin-decline,W:revenue-growth W:operating-margin W:share-count W:cash-generation W:debt-cash W:stability W:margin-decline,0,7
 BOH,46195,BANK OF HAWAII CORP,NYSE,US GAAP,10-K,金融・不動産,要点あり（直近期間あり）,2026-09-30,3,S:revenue-growth S:operating-margin S:cash-generation S:stability,S:revenue-growth S:operating-margin S:cash-generation W:debt-cash S:stability,4,1
-BOIL,1415311,ProShares Trust II,NYSE,US GAAP,10-K,金融・不動産,要点あり（直近期間あり）,2026-09-30,3,S:revenue-growth S:operating-margin,S:revenue-growth S:operating-margin,2,0
 BOKF,875357,BOK FINANCIAL CORP,Nasdaq,US GAAP,10-K,金融・不動産,要点あり（直近期間あり）,2026-09-30,3,S:revenue-growth S:operating-margin S:cash-generation S:stability W:margin-decline,S:revenue-growth S:operating-margin S:cash-generation S:stability W:margin-decline,4,1
 BOLD,1782303,"Boundless Bio, Inc.",Nasdaq,なし,10-K,医薬・バイオ,四半期データなし,,,,,0,0
 BOLT,1641281,"Bolt Biotherapeutics, Inc.",Nasdaq,US GAAP,10-K,医薬・バイオ,直近期間を確認できない,2026-06-30,3,,,0,0
@@ -874,7 +870,6 @@ BSX,885725,BOSTON SCIENTIFIC CORP,NYSE,US GAAP,10-K,製造,要点あり（直近
 BSY,1031308,BENTLEY SYSTEMS INC,Nasdaq,US GAAP,10-K,サービス,要点あり（直近期間あり）,2026-09-30,3,S:revenue-growth S:operating-margin S:cash-generation W:financial W:debt-cash S:stability,S:revenue-growth S:operating-margin S:cash-generation W:financial W:debt-cash S:stability,4,2
 BTBD,1718224,"BT Brands, Inc.",Nasdaq,US GAAP,10-K,卸売・小売,要点あり（直近期間あり）,2026-09-27,3,W:revenue-growth S:cash-generation S:financial,W:revenue-growth S:cash-generation S:financial,2,1
 BTBT,1710350,"Bit Digital, Inc",Nasdaq,US GAAP,10-K,金融・不動産,要点あり（直近期間あり）,2026-09-30,3,W:revenue-growth S:operating-margin W:share-count W:cash-generation S:financial W:stability,W:revenue-growth S:operating-margin W:share-count W:cash-generation S:financial W:stability,2,4
-BTCK,1471824,Teucrium Commodity Trust,NYSE,US GAAP,10-K,金融・不動産,直近期間を確認できない,2024-09-30,3,,,0,0
 BTCS,1436229,BTCS Inc.,Nasdaq,US GAAP,10-K,金融・不動産,要点あり（直近期間あり）,2026-09-30,3,W:revenue-growth S:operating-margin W:stability,W:revenue-growth S:operating-margin W:debt-cash W:stability,1,3
 BTCT,1796514,BTC Digital Ltd.,Nasdaq,US GAAP,20-F,金融・不動産,要点あり（直近期間あり）,2025-12-31,12,S:revenue-growth W:operating-margin W:share-count W:cash-generation,S:revenue-growth W:operating-margin W:share-count W:cash-generation,1,3
 BTDR,1899123,Bitdeer Technologies Group,Nasdaq,IFRS,20-F,金融・不動産,要点あり（直近期間あり）,2025-12-31,12,S:revenue-growth S:operating-margin W:share-count,S:revenue-growth S:operating-margin W:share-count W:debt-cash,2,2
@@ -957,7 +952,6 @@ CALY,837465,Callaway Golf Co,NYSE,US GAAP,10-K,製造,要点あり（直近期�
 CAMP,1736730,Camp4 Therapeutics Corp,Nasdaq,US GAAP,10-K,医薬・バイオ,要点あり（直近期間あり）,2026-09-30,3,S:revenue-growth W:operating-margin W:share-count W:cash-generation S:financial W:stability,S:revenue-growth W:operating-margin W:share-count W:cash-generation S:financial W:stability,2,4
 CAMT,1109138,CAMTEK LTD,Nasdaq,US GAAP,20-F,製造,要点あり（直近期間あり）,2025-12-31,12,S:revenue-growth S:operating-margin S:cash-generation,S:revenue-growth S:operating-margin S:cash-generation W:debt-cash,3,1
 CAN,1780652,Canaan Inc.,Nasdaq,US GAAP,20-F,金融・不動産,要点あり（直近期間あり）,2025-12-31,12,S:revenue-growth W:operating-margin W:share-count W:cash-generation S:financial,S:revenue-growth W:operating-margin W:share-count W:cash-generation S:financial,2,3
-CANE,1471824,Teucrium Commodity Trust,NYSE,US GAAP,10-K,金融・不動産,直近期間を確認できない,2024-09-30,3,,,0,0
 CANF,1536196,Can-Fite BioPharma Ltd.,NYSE,US GAAP,20-F,医薬・バイオ,要点あり（直近期間あり）,2026-06-30,6,W:operating-margin W:share-count W:cash-generation S:financial,W:operating-margin W:share-count W:cash-generation S:financial,1,3
 CANG,1725123,Cango Inc.,NYSE,US GAAP,20-F,金融・不動産,要点あり（直近期間あり）,2025-12-31,12,W:operating-margin W:cash-generation W:financial W:debt-cash,W:operating-margin W:cash-generation W:financial W:debt-cash,0,4
 CAPL,1538849,CrossAmerica Partners LP,NYSE,US GAAP,10-K,卸売・小売,要点あり（直近期間あり）,2026-09-30,3,S:revenue-growth S:cash-generation W:financial W:debt-cash S:stability W:margin-decline,S:revenue-growth S:cash-generation W:financial W:debt-cash S:stability W:margin-decline,3,3
@@ -1269,7 +1263,6 @@ COOT,1959994,Australian Oilseeds Holdings Ltd,Nasdaq,IFRS,20-F,製造,要点あ�
 COP,1163165,CONOCOPHILLIPS,NYSE,US GAAP,10-K,製造,要点あり（直近期間あり）,2026-09-30,3,S:revenue-growth S:operating-margin S:stability W:margin-decline,S:revenue-growth S:operating-margin W:debt-cash S:stability W:margin-decline,3,2
 COPR,1263364,Idaho Copper Corp,NYSE,US GAAP,10-K,農業・鉱業・エネルギー,直近期間を確認できない,2020-09-30,3,,,0,0
 COR,1140859,"Cencora, Inc.",NYSE,US GAAP,10-K,卸売・小売,要点あり（直近期間あり）,2026-06-30,3,S:revenue-growth S:cash-generation S:stability W:margin-decline,S:revenue-growth S:cash-generation W:debt-cash S:stability W:margin-decline,3,2
-CORN,1471824,Teucrium Commodity Trust,NYSE,US GAAP,10-K,金融・不動産,直近期間を確認できない,2024-09-30,3,,,0,0
 CORT,1088856,CORCEPT THERAPEUTICS INC,Nasdaq,US GAAP,10-K,医薬・バイオ,要点あり（直近期間あり）,2026-09-30,3,S:revenue-growth S:operating-margin S:cash-generation S:financial,S:revenue-growth S:operating-margin S:cash-generation S:financial,4,0
 CORZ,1839341,"Core Scientific, Inc./tx",Nasdaq,US GAAP,10-K,金融・不動産,要点あり（直近期間あり）,2026-09-30,3,S:revenue-growth S:operating-margin W:share-count W:cash-generation W:financial W:debt-cash W:stability,S:revenue-growth S:operating-margin W:share-count W:cash-generation W:financial W:debt-cash W:stability,2,5
 CORZZ,1839341,"Core Scientific, Inc./tx",Nasdaq,US GAAP,10-K,金融・不動産,要点あり（直近期間あり）,2026-09-30,3,S:revenue-growth S:operating-margin W:share-count W:cash-generation W:financial W:debt-cash W:stability,S:revenue-growth S:operating-margin W:share-count W:cash-generation W:financial W:debt-cash W:stability,2,5
@@ -1285,7 +1278,6 @@ CPAC,1221029,CEMENTOS PACASMAYO SAA,NYSE,IFRS,20-F,製造,要点あり（直近�
 CPAY,1175454,"CORPAY, INC.",NYSE,US GAAP,10-K,サービス,要点あり（直近期間あり）,2026-09-30,3,S:revenue-growth S:operating-margin W:cash-generation S:stability,S:revenue-growth S:operating-margin W:cash-generation W:debt-cash S:stability,3,2
 CPB,16732,CAMPBELL'S Co,Nasdaq,US GAAP,10-K,製造,要点あり（直近期間あり）,2026-08-02,3,W:revenue-growth S:cash-generation W:financial W:debt-cash S:stability W:margin-decline,W:revenue-growth S:cash-generation W:financial W:debt-cash S:stability W:margin-decline,2,4
 CPBI,1979332,"Central Plains Bancshares, Inc.",Nasdaq,なし,10-K,金融・不動産,四半期データなし,,,,,0,0
-CPER,1479247,United States Commodity Index Funds Trust,NYSE,US GAAP,10-K,金融・不動産,直近期間を確認できない,2019-03-31,3,,,0,0
 CPF,701347,CENTRAL PACIFIC FINANCIAL CORP,NYSE,US GAAP,10-K,金融・不動産,要点あり（直近期間あり）,2026-09-30,3,W:revenue-growth S:operating-margin S:cash-generation S:financial,W:revenue-growth S:operating-margin S:cash-generation S:financial,3,1
 CPHC,1672909,Canterbury Park Holding Corp,Nasdaq,US GAAP,10-K,サービス,要点あり（直近期間あり）,2026-09-30,3,S:revenue-growth S:stability,S:revenue-growth S:stability,2,0
 CPHI,1106644,"CHINA PHARMA HOLDINGS, INC.",NYSE,US GAAP,10-K,医薬・バイオ,要点あり（直近期間あり）,2026-09-30,3,S:revenue-growth W:operating-margin W:share-count W:stability W:margin-decline,S:revenue-growth W:operating-margin W:share-count W:stability W:margin-decline,1,4
@@ -1386,7 +1378,6 @@ CTSH,1058290,COGNIZANT TECHNOLOGY SOLUTIONS CORP,Nasdaq,US GAAP,10-K,サービ�
 CTSO,1175151,Cytosorbents Corp,Nasdaq,US GAAP,10-K,製造,要点あり（直近期間あり）,2026-06-30,3,,S:revenue-growth W:operating-margin W:cash-generation W:financial W:debt-cash,1,4
 CTVA,1755672,"Corteva, Inc.",NYSE,US GAAP,10-K,農業・鉱業・エネルギー,要点あり（直近期間あり）,2026-09-30,3,W:revenue-growth W:operating-margin W:cash-generation S:financial W:stability W:margin-decline,W:revenue-growth W:operating-margin W:cash-generation S:financial W:stability W:margin-decline,1,5
 CTW,2047148,CTW,Nasdaq,US GAAP,20-F,サービス,要点あり（直近期間あり）,2026-07-31,12,W:revenue-growth W:operating-margin W:cash-generation,W:revenue-growth W:operating-margin W:cash-generation,0,3
-CTWO,1958928,COTWO ADVISORS PHYSICAL EUROPEAN CARBON ALLOWANCE TRUST,NYSE,なし,10-K,金融・不動産,四半期データなし,,,,,0,0
 CTXR,1506251,"Citius Pharmaceuticals, Inc.",Nasdaq,US GAAP,10-K,医薬・バイオ,直近期間を確認できない,2026-06-30,3,,,0,0
 CTY,2143850,"CITY THERAPEUTICS, INC.",Nasdaq,なし,なし,医薬・バイオ,四半期データなし,,,,,0,0
 CUBB,1488813,"Customers Bancorp, Inc.",NYSE,US GAAP,10-K,金融・不動産,要点あり（直近期間あり）,2026-09-30,3,S:revenue-growth S:operating-margin S:cash-generation S:stability,S:revenue-growth S:operating-margin S:cash-generation S:stability,4,0
@@ -1818,8 +1809,6 @@ ESTC,1707753,Elastic N.V.,NYSE,US GAAP,10-K,サービス,要点あり（直近�
 ESYN,1897245,EnerSyn Global Inc.,Nasdaq,US GAAP,10-K,卸売・小売,要点あり（直近期間あり）,2026-09-30,3,W:revenue-growth W:operating-margin W:share-count W:cash-generation S:financial,W:revenue-growth W:operating-margin W:share-count W:cash-generation S:financial,1,4
 ET,1276187,Energy Transfer LP,TXSE,US GAAP,10-K,運輸・通信・公益,要点あり（直近期間あり）,2026-09-30,3,S:revenue-growth S:cash-generation W:financial W:debt-cash S:stability W:margin-decline,S:revenue-growth S:cash-generation W:financial W:debt-cash S:stability W:margin-decline,3,3
 ETD,896156,ETHAN ALLEN INTERIORS INC,NYSE,US GAAP,10-K,製造,要点あり（直近期間あり）,2026-09-30,3,W:revenue-growth W:cash-generation S:financial S:stability W:margin-decline,W:revenue-growth W:cash-generation S:financial S:stability W:margin-decline,2,3
-ETHB,2099103,iShares Staked Ethereum Trust ETF,Nasdaq,US GAAP,なし,金融・不動産,要点あり（直近期間あり）,2026-09-30,3,S:operating-margin,S:operating-margin,1,0
-ETHW,2013744,Bitwise Ethereum ETF,NYSE,なし,10-K,金融・不動産,四半期データなし,,,,,0,0
 ETN,1551182,Eaton Corp plc,NYSE,US GAAP,10-K,製造,要点あり（直近期間あり）,2026-09-30,3,S:revenue-growth S:operating-margin S:cash-generation S:stability,S:revenue-growth S:operating-margin S:cash-generation W:debt-cash S:stability,4,1
 ETON,1710340,"Eton Pharmaceuticals, Inc.",Nasdaq,US GAAP,10-K,医薬・バイオ,要点あり（直近期間あり）,2026-09-30,3,S:revenue-growth S:operating-margin W:share-count S:cash-generation S:financial,S:revenue-growth S:operating-margin W:share-count S:cash-generation S:financial,4,1
 ETOR,1493318,eToro Group Ltd.,Nasdaq,IFRS,20-F,金融・不動産,要点あり（直近期間あり）,2025-12-31,12,S:revenue-growth W:share-count S:cash-generation,S:revenue-growth W:share-count S:cash-generation,2,1
@@ -1829,7 +1818,6 @@ ETS,2053641,Elite Express Holding Inc.,Nasdaq,US GAAP,10-K,運輸・通信・公
 ETSY,1370637,ETSY INC,NYSE,US GAAP,10-K,サービス,要点あり（直近期間あり）,2026-09-30,3,S:revenue-growth S:operating-margin S:cash-generation S:stability W:margin-decline,S:revenue-growth S:operating-margin S:cash-generation W:debt-cash S:stability W:margin-decline,4,2
 EU,1500881,enCore Energy Corp.,Nasdaq,US GAAP,10-K,農業・鉱業・エネルギー,要点あり（直近期間あり）,2026-09-30,3,S:revenue-growth W:operating-margin W:stability,S:revenue-growth W:operating-margin W:debt-cash W:stability,1,3
 EUDA,1847846,EUDA Health Holdings Ltd,Nasdaq,US GAAP,20-F,サービス,要点あり（直近期間あり）,2026-06-30,6,S:revenue-growth W:operating-margin W:share-count S:financial,S:revenue-growth W:operating-margin W:share-count S:financial,2,2
-EUO,1415311,ProShares Trust II,NYSE,US GAAP,10-K,金融・不動産,要点あり（直近期間あり）,2026-09-30,3,S:revenue-growth S:operating-margin,S:revenue-growth S:operating-margin,2,0
 EURK,2000410,Eureka Acquisition Corp,Nasdaq,なし,10-K,運輸・通信・公益,四半期データなし,,,,,0,0
 EVAX,1828253,Evaxion A/S,Nasdaq,IFRS,20-F,医薬・バイオ,要点あり（直近期間あり）,2025-12-31,12,S:revenue-growth W:operating-margin W:cash-generation S:financial,S:revenue-growth W:operating-margin W:cash-generation S:financial,2,2
 EVC,1109116,ENTRAVISION COMMUNICATIONS CORP,NYSE,US GAAP,10-K,運輸・通信・公益,要点あり（直近期間あり）,2026-09-30,3,S:revenue-growth W:share-count S:cash-generation W:margin-decline,S:revenue-growth W:share-count S:cash-generation W:debt-cash W:margin-decline,2,3
@@ -1933,7 +1921,6 @@ FENG,1509646,Phoenix New Media Ltd,NYSE,US GAAP,20-F,運輸・通信・公益,�
 FER,1468522,Ferrovial N.V.,Nasdaq,IFRS,20-F,建設,要点あり（直近期間あり）,2025-12-31,12,S:revenue-growth,S:revenue-growth W:debt-cash,1,1
 FERG,2011641,Ferguson Enterprises Inc. /DE/,NYSE,US GAAP,10-K,卸売・小売,要点あり（直近期間あり）,2026-09-30,3,S:revenue-growth S:cash-generation,S:revenue-growth S:cash-generation W:debt-cash,2,1
 FET,1401257,"FORUM ENERGY TECHNOLOGIES, INC.",NYSE,US GAAP,10-K,製造,要点あり（直近期間あり）,2026-09-30,3,S:revenue-growth S:cash-generation S:stability W:margin-decline,S:revenue-growth S:cash-generation W:debt-cash S:stability W:margin-decline,3,2
-FETH,2000046,Fidelity Ethereum Fund,CBOE,なし,10-K,金融・不動産,四半期データなし,,,,,0,0
 FF,1337298,FutureFuel Corp.,NYSE,US GAAP,10-K,製造,要点あり（直近期間あり）,2026-09-30,3,S:revenue-growth W:operating-margin W:cash-generation S:financial W:stability W:margin-decline,S:revenue-growth W:operating-margin W:cash-generation S:financial W:stability W:margin-decline,2,4
 FFAI,1805521,FARADAY FUTURE INTELLIGENT ELECTRIC INC.,Nasdaq,US GAAP,10-K,製造,要点あり（直近期間あり）,2026-09-30,3,S:revenue-growth W:operating-margin W:cash-generation W:financial W:debt-cash W:stability,S:revenue-growth W:operating-margin W:cash-generation W:financial W:debt-cash W:stability,1,5
 FFBC,708955,FIRST FINANCIAL BANCORP /OH/,Nasdaq,US GAAP,10-K,金融・不動産,要点あり（直近期間あり）,2026-09-30,3,S:revenue-growth S:operating-margin W:share-count S:cash-generation W:financial W:debt-cash S:stability,S:revenue-growth S:operating-margin W:share-count S:cash-generation W:financial W:debt-cash S:stability,4,3
@@ -2116,15 +2103,9 @@ FWONA,1560385,Liberty Media Corp,Nasdaq,US GAAP,10-K,運輸・通信・公益,�
 FWONK,1560385,Liberty Media Corp,Nasdaq,US GAAP,10-K,運輸・通信・公益,要点あり（直近期間あり）,2026-09-30,3,S:revenue-growth S:operating-margin S:cash-generation S:stability,S:revenue-growth S:operating-margin S:cash-generation W:debt-cash S:stability,4,1
 FWRD,912728,FORWARD AIR CORP,Nasdaq,US GAAP,10-K,運輸・通信・公益,要点あり（直近期間あり）,2026-09-30,3,S:revenue-growth W:share-count S:cash-generation,S:revenue-growth W:share-count S:cash-generation W:debt-cash,2,2
 FWRG,1789940,"First Watch Restaurant Group, Inc.",Nasdaq,US GAAP,10-K,卸売・小売,要点あり（直近期間あり）,2026-09-27,3,S:revenue-growth S:cash-generation W:financial W:debt-cash S:stability,S:revenue-growth S:cash-generation W:financial W:debt-cash S:stability,3,2
-FXA,1353614,Invesco CurrencyShares Australian Dollar Trust,NYSE,US GAAP,10-K,金融・不動産,要点あり（直近期間あり）,2026-09-30,3,S:revenue-growth S:operating-margin W:share-count S:stability,S:revenue-growth S:operating-margin W:share-count S:stability,3,1
 FXAC,2121703,FortuneX Acquisition Corp,Nasdaq,なし,なし,金融・不動産,四半期データなし,,,,,0,0
-FXB,1353611,Invesco CurrencyShares British Pound Sterling Trust,NYSE,US GAAP,10-K,金融・不動産,要点あり（直近期間あり）,2026-09-30,3,W:revenue-growth S:operating-margin S:stability,W:revenue-growth S:operating-margin S:stability,2,1
-FXC,1353612,Invesco CurrencyShares Canadian Dollar Trust,NYSE,US GAAP,10-K,金融・不動産,要点あり（直近期間あり）,2026-09-30,3,W:revenue-growth S:operating-margin S:stability,W:revenue-growth S:operating-margin S:stability,2,1
-FXE,1328598,Invesco CurrencyShares Euro Trust,NYSE,US GAAP,10-K,金融・不動産,要点あり（直近期間あり）,2026-09-30,3,W:revenue-growth S:operating-margin S:stability,W:revenue-growth S:operating-margin S:stability,2,1
-FXF,1353615,Invesco CurrencyShares Swiss Franc Trust,NYSE,US GAAP,10-K,金融・不動産,直近期間を確認できない,2024-12-31,3,,,0,0
 FXHO,1789299,UTime Ltd,Nasdaq,US GAAP,20-F,製造,要点あり（直近期間あり）,2026-03-31,12,W:revenue-growth W:operating-margin W:share-count W:cash-generation S:financial,W:revenue-growth W:operating-margin W:share-count W:cash-generation S:financial,1,4
 FXNC,719402,FIRST NATIONAL CORP /VA/,Nasdaq,US GAAP,10-K,金融・不動産,要点あり（直近期間あり）,2026-09-30,3,W:revenue-growth S:operating-margin S:cash-generation,W:revenue-growth S:operating-margin S:cash-generation,2,1
-FXY,1353613,Invesco CurrencyShares Japanese Yen Trust,NYSE,US GAAP,10-K,金融・不動産,要点あり（直近期間あり）,2026-09-30,3,W:operating-margin,W:operating-margin,0,1
 G,1398659,Genpact LTD,NYSE,US GAAP,10-K,サービス,要点あり（直近期間あり）,2026-09-30,3,S:revenue-growth S:operating-margin S:cash-generation S:financial S:stability,S:revenue-growth S:operating-margin S:cash-generation S:financial S:stability,5,0
 GABC,714395,"GERMAN AMERICAN BANCORP, INC.",Nasdaq,US GAAP,10-K,金融・不動産,要点あり（直近期間あり）,2026-09-30,3,S:revenue-growth S:operating-margin S:cash-generation S:stability W:margin-decline,S:revenue-growth S:operating-margin S:cash-generation S:stability W:margin-decline,4,1
 GAIA,1089872,"GAIA, INC",Nasdaq,US GAAP,10-K,サービス,要点あり（直近期間あり）,2026-09-30,3,W:revenue-growth W:operating-margin W:cash-generation W:stability,W:revenue-growth W:operating-margin W:cash-generation W:stability,0,4
@@ -2241,7 +2222,6 @@ GLDI,1053092,CREDIT SUISSE AG,Nasdaq,US GAAP,20-F,金融・不動産,直近期�
 GLE,1908705,Global Engine Group Holding Ltd,Nasdaq,US GAAP,20-F,サービス,要点あり（直近期間あり）,2026-06-30,12,W:revenue-growth W:operating-margin W:share-count W:cash-generation S:financial,W:revenue-growth W:operating-margin W:share-count W:cash-generation S:financial,1,4
 GLIBA,2057463,Liberty Capital Corp/NV,Nasdaq,US GAAP,10-K,運輸・通信・公益,要点あり（直近期間あり）,2026-09-30,3,S:revenue-growth W:share-count S:cash-generation S:stability,S:revenue-growth W:share-count S:cash-generation W:debt-cash S:stability,3,2
 GLIBK,2057463,Liberty Capital Corp/NV,Nasdaq,US GAAP,10-K,運輸・通信・公益,要点あり（直近期間あり）,2026-09-30,3,S:revenue-growth W:share-count S:cash-generation S:stability,S:revenue-growth W:share-count S:cash-generation W:debt-cash S:stability,3,2
-GLL,1415311,ProShares Trust II,NYSE,US GAAP,10-K,金融・不動産,要点あり（直近期間あり）,2026-09-30,3,S:revenue-growth S:operating-margin,S:revenue-growth S:operating-margin,2,0
 GLLD,927971,BANK OF MONTREAL /CAN/,NYSE,IFRS,なし,金融・不動産,要点あり（直近期間あり）,2026-07-31,3,S:revenue-growth S:operating-margin S:cash-generation S:stability W:margin-decline,S:revenue-growth S:operating-margin S:cash-generation S:stability W:margin-decline,4,1
 GLND,2093507,Greenland Energy Co,Nasdaq,なし,なし,農業・鉱業・エネルギー,四半期データなし,,,,,0,0
 GLNG,1207179,GOLAR LNG LTD,Nasdaq,US GAAP,20-F,運輸・通信・公益,要点あり（直近期間あり）,2026-06-30,6,S:revenue-growth S:operating-margin W:share-count,S:revenue-growth S:operating-margin W:share-count W:debt-cash,2,2
@@ -2336,14 +2316,12 @@ GS,886982,GOLDMAN SACHS GROUP INC,NYSE,US GAAP,なし,金融・不動産,要点�
 GSAT,1366868,"Globalstar, Inc.",Nasdaq,US GAAP,10-K,運輸・通信・公益,要点あり（直近期間あり）,2026-09-30,3,W:revenue-growth S:cash-generation S:financial,W:revenue-growth S:cash-generation S:financial,2,1
 GSBC,854560,"GREAT SOUTHERN BANCORP, INC.",Nasdaq,US GAAP,10-K,金融・不動産,要点あり（直近期間あり）,2026-09-30,3,W:revenue-growth S:operating-margin S:cash-generation S:stability W:margin-decline,W:revenue-growth S:operating-margin S:cash-generation S:stability W:margin-decline,3,2
 GSBD,1572694,"Goldman Sachs BDC, Inc.",NYSE,US GAAP,10-K,不明,直近期間を確認できない,2026-09-30,3,,,0,0
-GSG,1332174,iShares S&P GSCI Commodity-Indexed Trust,NYSE,US GAAP,10-K,金融・不動産,要点あり（直近期間あり）,2026-09-30,3,W:revenue-growth S:operating-margin,W:revenue-growth S:operating-margin,1,1
 GSHD,1726978,"Goosehead Insurance, Inc.",Nasdaq,US GAAP,10-K,金融・不動産,要点あり（直近期間あり）,2026-06-30,3,S:revenue-growth S:operating-margin S:cash-generation S:stability,S:revenue-growth S:operating-margin S:cash-generation W:debt-cash S:stability,4,1
 GSIT,1126741,GSI TECHNOLOGY INC,Nasdaq,US GAAP,10-K,製造,要点あり（直近期間あり）,2026-09-30,3,W:revenue-growth W:operating-margin W:share-count W:cash-generation S:financial W:stability W:margin-decline,W:revenue-growth W:operating-margin W:share-count W:cash-generation S:financial W:stability W:margin-decline,1,6
 GSIW,1954269,Garden Stage Ltd,Nasdaq,US GAAP,20-F,金融・不動産,要点あり（直近期間あり）,2026-03-31,12,S:revenue-growth W:operating-margin W:share-count W:cash-generation,S:revenue-growth W:operating-margin W:share-count W:cash-generation,1,3
 GSK,1131399,GSK plc,NYSE,IFRS,20-F,医薬・バイオ,要点あり（直近期間あり）,2025-12-31,12,S:revenue-growth S:operating-margin S:cash-generation,S:revenue-growth S:operating-margin S:cash-generation W:debt-cash,3,1
 GSL,1430725,"Global Ship Lease, Inc.",NYSE,US GAAP,20-F,運輸・通信・公益,要点あり（直近期間あり）,2026-06-30,6,S:revenue-growth S:operating-margin S:cash-generation S:financial,S:revenue-growth S:operating-margin S:cash-generation S:financial,4,0
 GSM,1639877,Ferroglobe PLC,Nasdaq,IFRS,20-F,農業・鉱業・エネルギー,要点あり（直近期間あり）,2025-12-31,12,W:revenue-growth W:operating-margin W:cash-generation S:financial,W:revenue-growth W:operating-margin W:cash-generation S:financial,1,3
-GSOL,1896677,Grayscale Solana Staking ETF,NYSE,US GAAP,10-K,金融・不動産,要点あり（直近期間あり）,2026-09-30,3,S:operating-margin S:stability,S:operating-margin S:stability,2,0
 GSUN,1826376,Golden Sun Technology Group Ltd.,Nasdaq,US GAAP,20-F,サービス,要点あり（直近期間あり）,2026-03-31,6,S:revenue-growth W:operating-margin W:share-count W:cash-generation,S:revenue-growth W:operating-margin W:share-count W:cash-generation W:debt-cash,1,4
 GT,42582,GOODYEAR TIRE & RUBBER CO /OH/,Nasdaq,US GAAP,10-K,製造,要点あり（直近期間あり）,2026-09-30,3,W:revenue-growth W:operating-margin W:cash-generation W:stability W:margin-decline,W:revenue-growth W:operating-margin W:cash-generation W:debt-cash W:stability W:margin-decline,0,6
 GTBP,109657,"GT Biopharma, Inc.",Nasdaq,US GAAP,10-K,医薬・バイオ,四半期データなし,,,,,0,0
@@ -2396,7 +2374,6 @@ HBIO,1123494,HARVARD BIOSCIENCE INC,Nasdaq,US GAAP,10-K,製造,要点あり（�
 HBM,1322422,Hudbay Minerals Inc.,NYSE,IFRS,40-F,農業・鉱業・エネルギー,要点あり（直近期間あり）,2025-12-31,12,S:revenue-growth S:operating-margin W:share-count S:cash-generation,S:revenue-growth S:operating-margin W:share-count S:cash-generation W:debt-cash,3,2
 HBNB,2054507,Hotel101 Global Holdings Corp.,Nasdaq,IFRS,20-F,サービス,要点あり（直近期間あり）,2025-12-31,12,S:revenue-growth W:operating-margin W:cash-generation,S:revenue-growth W:operating-margin W:cash-generation,1,2
 HBNC,706129,HORIZON BANCORP INC /IN/,Nasdaq,US GAAP,10-K,金融・不動産,要点あり（直近期間あり）,2026-09-30,3,S:operating-margin S:cash-generation S:financial,S:operating-margin S:cash-generation S:financial,3,0
-HBR,2039458,Canary HBAR ETF,Nasdaq,なし,10-K,金融・不動産,四半期データなし,,,,,0,0
 HBT,775215,"HBT Financial, Inc.",Nasdaq,US GAAP,10-K,金融・不動産,要点あり（直近期間あり）,2026-09-30,3,S:revenue-growth S:operating-margin W:share-count S:cash-generation S:stability,S:revenue-growth S:operating-margin W:share-count S:cash-generation S:stability,4,1
 HCA,860730,"HCA Healthcare, Inc.",NYSE,US GAAP,10-K,サービス,要点あり（直近期間あり）,2026-09-30,3,S:revenue-growth S:cash-generation W:financial W:debt-cash S:stability W:margin-decline,S:revenue-growth S:cash-generation W:financial W:debt-cash S:stability W:margin-decline,3,3
 HCAC,2079013,Hall Chadwick Acquisition Corp,Nasdaq,なし,10-K,製造,四半期データなし,,,,,0,0
@@ -2565,7 +2542,6 @@ HYLN,1759631,Hyliion Holdings Corp.,NYSE,US GAAP,10-K,製造,要点あり（直�
 HYMC,1718405,HYCROFT MINING HOLDING CORP,Nasdaq,US GAAP,10-K,農業・鉱業・エネルギー,直近期間を確認できない,2022-12-31,3,,,0,0
 HYNE,2073153,"Hoyne Bancorp, Inc.",Nasdaq,US GAAP,10-K,金融・不動産,要点あり（直近期間あり）,2026-09-30,3,S:revenue-growth S:cash-generation,S:revenue-growth S:cash-generation,2,0
 HYPD,1682639,"HYPERION DEFI, INC.",Nasdaq,US GAAP,10-K,金融・不動産,要点あり（直近期間あり）,2026-09-30,3,S:revenue-growth S:operating-margin W:margin-decline,S:revenue-growth S:operating-margin W:margin-decline,2,1
-HYPG,2107730,Grayscale Hyperliquid Staking ETF,Nasdaq,US GAAP,なし,金融・不動産,要点未作成,2026-09-30,3,,,0,0
 HYPR,1833769,"Hyperfine, Inc.",Nasdaq,US GAAP,10-K,製造,要点あり（直近期間あり）,2026-09-30,3,S:revenue-growth W:operating-margin W:share-count W:cash-generation S:financial W:stability,S:revenue-growth W:operating-margin W:share-count W:cash-generation S:financial W:stability,2,4
 HZN,1130464,Bright Horizon Energy Corp,NYSE,US GAAP,10-K,運輸・通信・公益,要点あり（直近期間あり）,2026-09-30,3,S:revenue-growth S:operating-margin W:cash-generation W:financial W:debt-cash S:stability W:margin-decline,S:revenue-growth S:operating-margin W:cash-generation W:financial W:debt-cash S:stability W:margin-decline,3,4
 HZO,1057060,MARINEMAX INC,NYSE,US GAAP,10-K,卸売・小売,要点あり（直近期間あり）,2026-09-30,3,W:revenue-growth W:operating-margin W:cash-generation S:stability W:margin-decline,W:revenue-growth W:operating-margin W:cash-generation W:debt-cash S:stability W:margin-decline,1,5
@@ -2573,7 +2549,6 @@ IA,836690,INNOVATIVE SOLUTIONS & SUPPORT INC,Nasdaq,US GAAP,10-K,サービス,�
 IAG,1203464,IAMGOLD CORP,NYSE,IFRS,40-F,農業・鉱業・エネルギー,要点あり（直近期間あり）,2025-12-31,12,S:revenue-growth S:operating-margin W:share-count S:cash-generation,S:revenue-growth S:operating-margin W:share-count S:cash-generation,3,1
 IAM,1997038,"Iambic Therapeutics, Inc.",Nasdaq,なし,なし,医薬・バイオ,四半期データなし,,,,,0,0
 IART,917520,INTEGRA LIFESCIENCES HOLDINGS CORP,Nasdaq,US GAAP,10-K,製造,要点あり（直近期間あり）,2026-09-30,3,S:revenue-growth S:cash-generation S:stability,S:revenue-growth S:cash-generation W:debt-cash S:stability,3,1
-IAU,1278680,ISHARES GOLD TRUST,NYSE,US GAAP,10-K,金融・不動産,直近期間を確認できない,2013-09-30,3,,,0,0
 IAUX,1853962,i-80 Gold Corp.,NYSE,US GAAP,10-K,農業・鉱業・エネルギー,要点あり（直近期間あり）,2026-09-30,3,S:revenue-growth W:operating-margin W:share-count W:cash-generation S:financial W:stability,S:revenue-growth W:operating-margin W:share-count W:cash-generation S:financial W:stability,2,4
 IBAC,1998781,IB Acquisition Corp.,Nasdaq,なし,10-K,医薬・バイオ,四半期データなし,,,,,0,0
 IBCP,39311,INDEPENDENT BANK CORP /MI/,Nasdaq,US GAAP,10-K,金融・不動産,要点あり（直近期間あり）,2026-09-30,3,S:revenue-growth S:operating-margin W:share-count S:cash-generation W:margin-decline,S:revenue-growth S:operating-margin W:share-count S:cash-generation W:margin-decline,3,2
@@ -2678,7 +2653,6 @@ INGN,1294133,Inogen Inc,Nasdaq,US GAAP,10-K,製造,要点あり（直近期間�
 INGR,1046257,Ingredion Inc,NYSE,US GAAP,10-K,製造,要点あり（直近期間あり）,2026-09-30,3,W:revenue-growth S:cash-generation S:financial S:stability,W:revenue-growth S:cash-generation S:financial S:stability,3,1
 INHD,1961847,INNO HOLDINGS INC.,Nasdaq,US GAAP,10-K,卸売・小売,要点あり（直近期間あり）,2026-06-30,3,S:revenue-growth W:operating-margin W:share-count W:stability,S:revenue-growth W:operating-margin W:share-count W:stability,1,3
 INIO,2109150,INNIO N.V.,Nasdaq,US GAAP,なし,製造,要点あり（直近期間あり）,2026-09-30,3,S:revenue-growth S:operating-margin S:cash-generation,S:revenue-growth S:operating-margin S:cash-generation W:debt-cash,3,1
-INJC,2073616,Canary Staked INJ ETF,Nasdaq,なし,なし,金融・不動産,四半期データなし,,,,,0,0
 INKT,1840229,"MiNK Therapeutics, Inc.",Nasdaq,US GAAP,10-K,医薬・バイオ,要点あり（直近期間あり）,2026-09-30,3,W:operating-margin,W:operating-margin,0,1
 INLF,1991592,INLIF Ltd,Nasdaq,US GAAP,20-F,製造,要点あり（直近期間あり）,2026-06-30,6,S:revenue-growth W:cash-generation,S:revenue-growth W:cash-generation,1,1
 INLX,1081745,"INTELLINETICS, INC.",NYSE,US GAAP,10-K,サービス,要点あり（直近期間あり）,2026-09-30,3,S:revenue-growth W:operating-margin S:cash-generation S:financial W:stability,S:revenue-growth W:operating-margin S:cash-generation S:financial W:stability,3,2
@@ -2925,7 +2899,6 @@ KO,21344,COCA COLA CO,NYSE,US GAAP,10-K,製造,要点あり（直近期間あり
 KOD,1468748,Kodiak Sciences Inc.,Nasdaq,なし,10-K,医薬・バイオ,四半期データなし,,,,,0,0
 KODK,31235,EASTMAN KODAK CO,NYSE,US GAAP,10-K,製造,要点あり（直近期間あり）,2026-09-30,3,S:revenue-growth W:share-count S:cash-generation S:financial,S:revenue-growth W:share-count S:cash-generation S:financial,3,1
 KOF,910631,COCA COLA FEMSA SAB DE CV,NYSE,IFRS,20-F,製造,要点あり（直近期間あり）,2025-12-31,12,S:revenue-growth S:cash-generation,S:revenue-growth S:cash-generation W:debt-cash,2,1
-KOLD,1415311,ProShares Trust II,NYSE,US GAAP,10-K,金融・不動産,要点あり（直近期間あり）,2026-09-30,3,S:revenue-growth S:operating-margin,S:revenue-growth S:operating-margin,2,0
 KOP,1315257,Koppers Holdings Inc.,NYSE,US GAAP,10-K,製造,要点あり（直近期間あり）,2026-09-30,3,S:revenue-growth S:cash-generation,S:revenue-growth S:cash-generation W:debt-cash,2,1
 KOPN,771266,KOPIN CORP,Nasdaq,なし,10-K,製造,四半期データなし,,,,,0,0
 KOS,1509991,Kosmos Energy Ltd.,NYSE,US GAAP,10-K,農業・鉱業・エネルギー,要点あり（直近期間あり）,2026-09-30,3,S:revenue-growth W:operating-margin W:share-count W:financial W:debt-cash W:stability W:margin-decline,S:revenue-growth W:operating-margin W:share-count W:financial W:debt-cash W:stability W:margin-decline,1,6
@@ -4279,7 +4252,6 @@ QNTM,1771885,Quantum Biopharma Ltd.,Nasdaq,IFRS,20-F,医薬・バイオ,直近�
 QRHC,1442236,Quest Resource Holding Corp,Nasdaq,US GAAP,10-K,運輸・通信・公益,要点あり（直近期間あり）,2026-09-30,3,S:revenue-growth W:cash-generation,S:revenue-growth W:cash-generation W:debt-cash,1,2
 QS,1811414,QuantumScape Corp,Nasdaq,なし,10-K,製造,四半期データなし,,,,,0,0
 QSI,1816431,Quantum-Si Inc,Nasdaq,US GAAP,10-K,製造,要点あり（直近期間あり）,2026-09-30,3,W:revenue-growth W:operating-margin W:cash-generation S:financial W:stability W:margin-decline,W:revenue-growth W:operating-margin W:cash-generation S:financial W:stability W:margin-decline,1,5
-QSOL,2074409,Invesco Galaxy Solana ETF,CBOE,US GAAP,10-K,金融・不動産,直近期間を確認できない,2026-03-31,3,,,0,0
 QSR,1618756,Restaurant Brands International Inc.,NYSE,US GAAP,10-K,卸売・小売,要点あり（直近期間あり）,2026-09-30,3,S:revenue-growth S:operating-margin S:cash-generation W:financial W:debt-cash S:stability W:margin-decline,S:revenue-growth S:operating-margin S:cash-generation W:financial W:debt-cash S:stability W:margin-decline,4,3
 QTEX,1837493,QTREX Quantum Ltd.,Nasdaq,US GAAP,20-F,製造,要点あり（直近期間あり）,2026-06-30,3,S:operating-margin S:financial,S:operating-margin S:financial,2,0
 QTI,1844505,"QT IMAGING HOLDINGS, INC.",Nasdaq,US GAAP,10-K,製造,要点あり（直近期間あり）,2026-09-30,3,S:revenue-growth W:operating-margin W:share-count W:cash-generation S:financial W:stability W:margin-decline,S:revenue-growth W:operating-margin W:share-count W:cash-generation S:financial W:stability W:margin-decline,2,5
@@ -4587,7 +4559,6 @@ SCLX,1820190,Scilex Holding Co,Nasdaq,US GAAP,10-K,医薬・バイオ,要点あ�
 SCM,1551901,Stellus Capital Investment Corp,NYSE,US GAAP,10-K,不明,要点あり（直近期間あり）,2026-09-30,3,W:revenue-growth S:operating-margin,W:revenue-growth S:operating-margin,1,1
 SCNI,1611747,Scinai Immunotherapeutics Ltd.,Nasdaq,US GAAP,20-F,医薬・バイオ,要点あり（直近期間あり）,2026-06-30,6,S:revenue-growth W:operating-margin W:share-count W:cash-generation,S:revenue-growth W:operating-margin W:share-count W:cash-generation,1,3
 SCNX,1382574,"Scienture Holdings, Inc.",Nasdaq,US GAAP,10-K,医薬・バイオ,要点あり（直近期間あり）,2026-09-30,3,S:revenue-growth W:operating-margin W:share-count,S:revenue-growth W:operating-margin W:share-count,1,2
-SCO,1415311,ProShares Trust II,NYSE,US GAAP,10-K,金融・不動産,要点あり（直近期間あり）,2026-09-30,3,S:revenue-growth S:operating-margin,S:revenue-growth S:operating-margin,2,0
 SCOR,1158172,"COMSCORE, INC.",Nasdaq,US GAAP,10-K,サービス,要点あり（直近期間あり）,2026-09-30,3,W:revenue-growth W:operating-margin W:share-count W:cash-generation W:stability W:margin-decline,W:revenue-growth W:operating-margin W:share-count W:cash-generation W:stability W:margin-decline,0,6
 SCSC,918965,"SCANSOURCE, INC.",Nasdaq,US GAAP,10-K,卸売・小売,要点あり（直近期間あり）,2026-09-30,3,S:revenue-growth W:cash-generation S:stability W:margin-decline,S:revenue-growth W:cash-generation W:debt-cash S:stability W:margin-decline,2,3
 SCTX,1853921,"Scribe Therapeutics, Inc.",Nasdaq,US GAAP,なし,医薬・バイオ,要点あり（直近期間あり）,2026-09-30,3,W:revenue-growth W:operating-margin W:share-count W:cash-generation S:financial,W:revenue-growth W:operating-margin W:share-count W:cash-generation S:financial,1,4
@@ -4736,7 +4707,6 @@ SLRC,1418076,SLR Investment Corp.,Nasdaq,US GAAP,10-K,不明,要点あり（直�
 SLS,1390478,"SELLAS Life Sciences Group, Inc.",Nasdaq,US GAAP,10-K,医薬・バイオ,四半期データなし,,,,,0,0
 SLSN,883107,"SOLESENCE, INC.",Nasdaq,US GAAP,10-K,製造,要点あり（直近期間あり）,2026-09-30,3,S:revenue-growth S:operating-margin,S:revenue-growth S:operating-margin,2,0
 SLSR,2019103,Solaris Resources Inc.,NYSE,なし,40-F,農業・鉱業・エネルギー,四半期データなし,,,,,0,0
-SLV,1330568,iShares Silver Trust,NYSE,US GAAP,10-K,金融・不動産,直近期間を確認できない,2013-09-30,3,,,0,0
 SLVM,1856485,Sylvamo Corp,NYSE,US GAAP,10-K,製造,要点あり（直近期間あり）,2026-09-30,3,W:revenue-growth S:cash-generation,W:revenue-growth S:cash-generation W:debt-cash,1,2
 SLVO,1053092,CREDIT SUISSE AG,Nasdaq,US GAAP,20-F,金融・不動産,直近期間を確認できない,2023-12-31,12,,,0,0
 SLXN,2022416,Silexion Therapeutics Corp,Nasdaq,なし,10-K,医薬・バイオ,四半期データなし,,,,,0,0
@@ -4804,7 +4774,6 @@ SOJC,92122,SOUTHERN CO,NYSE,US GAAP,10-K,運輸・通信・公益,要点あり�
 SOJD,92122,SOUTHERN CO,NYSE,US GAAP,10-K,運輸・通信・公益,要点あり（直近期間あり）,2026-09-30,3,S:revenue-growth S:operating-margin W:financial W:debt-cash,S:revenue-growth S:operating-margin W:financial W:debt-cash,2,2
 SOJE,92122,SOUTHERN CO,NYSE,US GAAP,10-K,運輸・通信・公益,要点あり（直近期間あり）,2026-09-30,3,S:revenue-growth S:operating-margin W:financial W:debt-cash,S:revenue-growth S:operating-margin W:financial W:debt-cash,2,2
 SOJF,92122,SOUTHERN CO,NYSE,US GAAP,10-K,運輸・通信・公益,要点あり（直近期間あり）,2026-09-30,3,S:revenue-growth S:operating-margin W:financial W:debt-cash,S:revenue-growth S:operating-margin W:financial W:debt-cash,2,2
-SOLC,2041869,Canary Marinade Solana ETF,Nasdaq,US GAAP,10-K,金融・不動産,要点あり（直近期間あり）,2026-09-30,3,,,0,0
 SOLS,2064953,Solstice Advanced Materials Inc.,Nasdaq,US GAAP,10-K,製造,要点あり（直近期間あり）,2026-09-30,3,S:revenue-growth S:cash-generation S:stability W:margin-decline,S:revenue-growth S:cash-generation W:debt-cash S:stability W:margin-decline,3,2
 SOLV,1964738,Solventum Corp,NYSE,US GAAP,10-K,製造,要点あり（直近期間あり）,2026-09-30,3,W:revenue-growth S:cash-generation S:stability W:margin-decline,W:revenue-growth S:cash-generation W:debt-cash S:stability W:margin-decline,2,3
 SOMN,92122,SOUTHERN CO,NYSE,US GAAP,10-K,運輸・通信・公益,要点あり（直近期間あり）,2026-09-30,3,S:revenue-growth S:operating-margin W:financial W:debt-cash,S:revenue-growth S:operating-margin W:financial W:debt-cash,2,2
@@ -4819,7 +4788,6 @@ SOS,1346610,SOS Ltd,NYSE,US GAAP,20-F,金融・不動産,要点あり（直近�
 SOTK,806172,SONO TEK CORP,Nasdaq,US GAAP,10-K,製造,要点あり（直近期間あり）,2026-08-31,3,S:revenue-growth S:cash-generation S:financial S:stability W:margin-decline,S:revenue-growth S:cash-generation S:financial S:stability W:margin-decline,4,1
 SOUN,1840856,"SOUNDHOUND AI, INC.",Nasdaq,US GAAP,10-K,サービス,要点あり（直近期間あり）,2026-09-30,3,S:revenue-growth W:operating-margin W:share-count W:cash-generation S:financial W:stability W:margin-decline,S:revenue-growth W:operating-margin W:share-count W:cash-generation S:financial W:stability W:margin-decline,2,5
 SOWG,1490161,Sow Good Inc.,Nasdaq,US GAAP,10-K,製造,直近期間を確認できない,2025-09-30,3,,,0,0
-SOYB,1471824,Teucrium Commodity Trust,NYSE,US GAAP,10-K,金融・不動産,直近期間を確認できない,2024-09-30,3,,,0,0
 SPAI,2011208,Safe Pro Group Inc.,Nasdaq,US GAAP,10-K,サービス,要点あり（直近期間あり）,2026-09-30,3,S:revenue-growth W:operating-margin W:share-count W:cash-generation S:financial W:stability,S:revenue-growth W:operating-margin W:share-count W:cash-generation S:financial W:stability,2,4
 SPB,109177,"Spectrum Brands Holdings, Inc.",NYSE,US GAAP,10-K,製造,要点あり（直近期間あり）,2026-09-30,3,W:revenue-growth S:cash-generation S:financial S:stability,W:revenue-growth S:cash-generation S:financial S:stability,3,1
 SPCB,1291855,SuperCom Ltd,Nasdaq,US GAAP,20-F,製造,要点あり（直近期間あり）,2026-06-30,6,S:revenue-growth W:share-count W:cash-generation,S:revenue-growth W:share-count W:cash-generation W:debt-cash,1,3
@@ -4939,7 +4907,6 @@ SU,311337,SUNCOR ENERGY INC,NYSE,IFRS,40-F,製造,要点あり（直近期間あ
 SUGP,1969863,SU Group Holdings Ltd,Nasdaq,US GAAP,20-F,サービス,要点あり（直近期間あり）,2025-09-30,12,S:revenue-growth W:operating-margin W:share-count W:cash-generation,S:revenue-growth W:operating-margin W:share-count W:cash-generation,1,3
 SUI,912593,SUN COMMUNITIES INC,NYSE,US GAAP,10-K,金融・不動産,要点あり（直近期間あり）,2026-09-30,3,S:revenue-growth S:operating-margin,S:revenue-growth S:operating-margin,2,0
 SUIG,1425355,SUI Group Holdings Ltd.,Nasdaq,US GAAP,10-K,金融・不動産,要点あり（直近期間あり）,2026-09-30,3,W:revenue-growth S:operating-margin W:share-count W:cash-generation W:stability,W:revenue-growth S:operating-margin W:share-count W:cash-generation W:stability,1,4
-SUIS,2060703,Canary Staked SUI ETF,Nasdaq,US GAAP,なし,金融・不動産,要点あり（直近期間あり）,2026-09-30,3,,,0,0
 SUJA,1934114,"SUJA LIFE, INC.",Nasdaq,US GAAP,なし,製造,要点あり（直近期間あり）,2026-09-28,3,S:revenue-growth W:operating-margin W:cash-generation,S:revenue-growth W:operating-margin W:cash-generation W:debt-cash,1,3
 SUN,1552275,Sunoco LP,TXSE,US GAAP,10-K,製造,要点あり（直近期間あり）,2026-09-30,3,S:revenue-growth S:cash-generation S:stability,S:revenue-growth S:cash-generation W:debt-cash S:stability,3,1
 SUNB,2083785,"Sunbelt Rentals Holdings, Inc.",NYSE,US GAAP,10-K,サービス,要点あり（直近期間あり）,2026-07-31,3,S:revenue-growth S:operating-margin S:cash-generation W:financial W:debt-cash,S:revenue-growth S:operating-margin S:cash-generation W:financial W:debt-cash,3,2
@@ -4956,13 +4923,11 @@ SVAQ,2085659,Silicon Valley Acquisition Corp.,Nasdaq,なし,10-K,サービス,�
 SVC,945394,Service Properties Trust,Nasdaq,US GAAP,10-K,金融・不動産,要点あり（直近期間あり）,2026-09-30,3,W:revenue-growth W:operating-margin W:share-count S:cash-generation W:stability,W:revenue-growth W:operating-margin W:share-count S:cash-generation W:stability,1,4
 SVCO,1943289,"Silvaco Group, Inc.",Nasdaq,US GAAP,10-K,サービス,要点あり（直近期間あり）,2026-09-30,3,W:revenue-growth W:operating-margin W:share-count W:cash-generation S:financial W:stability W:margin-decline,W:revenue-growth W:operating-margin W:share-count W:cash-generation S:financial W:stability W:margin-decline,1,6
 SVIA,2076163,"Silvia, Inc.",Nasdaq,US GAAP,10-K,金融・不動産,要点あり（直近期間あり）,2026-09-30,3,S:revenue-growth W:operating-margin W:share-count W:cash-generation W:financial W:debt-cash,S:revenue-growth W:operating-margin W:share-count W:cash-generation W:financial W:debt-cash,1,5
-SVIX,1793497,VS Trust,CBOE,US GAAP,10-K,金融・不動産,四半期データなし,,,,,0,0
 SVM,1340677,SILVERCORP METALS INC,NYSE,IFRS,40-F,農業・鉱業・エネルギー,直近期間を確認できない,2025-03-31,12,,,0,0
 SVRA,1160308,Savara Inc,Nasdaq,US GAAP,10-K,医薬・バイオ,直近期間を確認できない,2020-12-31,3,,,0,0
 SVRE,1894693,SaverOne 2014 Ltd.,Nasdaq,IFRS,20-F,サービス,要点あり（直近期間あり）,2026-06-30,6,W:revenue-growth W:operating-margin W:share-count W:cash-generation,W:revenue-growth W:operating-margin W:share-count W:cash-generation,0,4
 SVRN,1869467,"SVRN, Inc.",Nasdaq,US GAAP,20-F,運輸・通信・公益,直近期間を確認できない,2025-06-30,6,,,0,0
 SVV,1883313,"Savers Value Village, Inc.",NYSE,US GAAP,10-K,卸売・小売,要点あり（直近期間あり）,2026-10-03,3,S:revenue-growth S:cash-generation W:financial W:debt-cash S:stability,S:revenue-growth S:cash-generation W:financial W:debt-cash S:stability,3,2
-SVXY,1415311,ProShares Trust II,CBOE,US GAAP,10-K,金融・不動産,要点あり（直近期間あり）,2026-09-30,3,S:revenue-growth S:operating-margin,S:revenue-growth S:operating-margin,2,0
 SW,2005951,Smurfit Westrock plc,NYSE,US GAAP,10-K,製造,要点あり（直近期間あり）,2026-09-30,3,S:revenue-growth S:cash-generation S:stability,S:revenue-growth S:cash-generation W:debt-cash S:stability,3,1
 SWAG,1872525,"Stran & Company, Inc.",Nasdaq,US GAAP,10-K,サービス,要点あり（直近期間あり）,2026-09-30,3,S:revenue-growth W:operating-margin S:cash-generation S:financial W:margin-decline,S:revenue-growth W:operating-margin S:cash-generation S:financial W:margin-decline,3,2
 SWBI,1092796,"SMITH & WESSON BRANDS, INC.",Nasdaq,US GAAP,10-K,製造,要点あり（直近期間あり）,2026-07-31,3,S:revenue-growth W:cash-generation S:financial S:stability W:margin-decline,S:revenue-growth W:cash-generation S:financial S:stability W:margin-decline,3,2
@@ -4991,7 +4956,6 @@ SYY,96021,SYSCO CORP,NYSE,US GAAP,10-K,卸売・小売,要点あり（直近期�
 T,732717,AT&T INC.,NYSE,US GAAP,10-K,運輸・通信・公益,要点あり（直近期間あり）,2026-09-30,3,S:revenue-growth S:cash-generation W:financial W:debt-cash S:stability W:margin-decline,S:revenue-growth S:cash-generation W:financial W:debt-cash S:stability W:margin-decline,3,3
 TAC,1144800,TRANSALTA CORP,NYSE,IFRS,40-F,運輸・通信・公益,要点あり（直近期間あり）,2025-12-31,12,W:revenue-growth S:cash-generation W:financial W:debt-cash,W:revenue-growth S:cash-generation W:financial W:debt-cash,1,3
 TACT,1017303,TRANSACT TECHNOLOGIES INC,Nasdaq,US GAAP,10-K,製造,要点あり（直近期間あり）,2026-09-30,3,S:revenue-growth W:operating-margin S:cash-generation S:financial W:stability W:margin-decline,S:revenue-growth W:operating-margin S:cash-generation S:financial W:stability W:margin-decline,3,3
-TAGS,1471824,Teucrium Commodity Trust,NYSE,US GAAP,10-K,金融・不動産,直近期間を確認できない,2024-09-30,3,,,0,0
 TAK,1395064,TAKEDA PHARMACEUTICAL CO LTD,NYSE,IFRS,20-F,医薬・バイオ,要点あり（直近期間あり）,2026-03-31,12,W:revenue-growth S:cash-generation,W:revenue-growth S:cash-generation W:debt-cash,1,2
 TAL,1499620,TAL Education Group,NYSE,US GAAP,20-F,サービス,要点あり（直近期間あり）,2026-02-28,12,S:revenue-growth S:cash-generation S:financial,S:revenue-growth S:cash-generation S:financial,3,0
 TALO,1724965,TALOS ENERGY INC.,NYSE,US GAAP,10-K,農業・鉱業・エネルギー,要点あり（直近期間あり）,2026-09-30,3,S:revenue-growth S:operating-margin S:cash-generation W:stability W:margin-decline,S:revenue-growth S:operating-margin S:cash-generation W:debt-cash W:stability W:margin-decline,3,3
@@ -5097,7 +5061,6 @@ TK,911971,TEEKAY CORP LTD,NYSE,US GAAP,20-F,運輸・通信・公益,要点あ�
 TKC,1071321,TURKCELL ILETISIM HIZMETLERI A S,NYSE,IFRS,20-F,運輸・通信・公益,要点あり（直近期間あり）,2025-12-31,12,S:revenue-growth S:operating-margin S:cash-generation S:financial,S:revenue-growth S:operating-margin S:cash-generation S:financial,4,0
 TKLF,1836242,"Tokyo Lifestyle Co., Ltd.",Nasdaq,US GAAP,20-F,卸売・小売,要点あり（直近期間あり）,2026-03-31,12,S:revenue-growth W:cash-generation,S:revenue-growth W:cash-generation W:debt-cash,1,2
 TKNO,1850902,"Alpha Teknova, Inc.",Nasdaq,US GAAP,10-K,医薬・バイオ,要点あり（直近期間あり）,2026-09-30,3,S:revenue-growth W:operating-margin W:cash-generation S:financial W:stability W:margin-decline,S:revenue-growth W:operating-margin W:cash-generation S:financial W:stability W:margin-decline,2,4
-TKNZ,2089855,T. Rowe Price Active Crypto ETF,NYSE,US GAAP,なし,金融・不動産,要点未作成,2026-09-30,3,,,0,0
 TKO,1973266,"TKO Group Holdings, Inc.",NYSE,US GAAP,10-K,サービス,要点あり（直近期間あり）,2026-09-30,3,S:revenue-growth S:operating-margin S:cash-generation S:stability,S:revenue-growth S:operating-margin S:cash-generation W:debt-cash S:stability,4,1
 TKR,98362,TIMKEN CO,NYSE,US GAAP,10-K,製造,要点あり（直近期間あり）,2026-09-30,3,S:revenue-growth S:cash-generation S:stability,S:revenue-growth S:cash-generation W:debt-cash S:stability,3,1
 TLF,909724,TANDY LEATHER FACTORY INC,Nasdaq,US GAAP,10-K,製造,要点あり（直近期間あり）,2026-09-30,3,S:revenue-growth W:cash-generation S:stability,S:revenue-growth W:cash-generation S:stability,2,1
@@ -5284,7 +5247,6 @@ UCB,857855,UNITED COMMUNITY BANKS INC,NYSE,US GAAP,10-K,金融・不動産,直�
 UCFI,1901203,CN Healthy Food Tech Group Corp.,Nasdaq,US GAAP,10-K,製造,要点あり（直近期間あり）,2026-09-30,3,W:revenue-growth S:operating-margin W:share-count W:cash-generation W:margin-decline,W:revenue-growth S:operating-margin W:share-count W:cash-generation W:margin-decline,1,4
 UCIB,1114446,UBS AG,NYSE,IFRS,なし,金融・不動産,要点あり（直近期間あり）,2026-06-30,6,S:revenue-growth S:operating-margin,S:revenue-growth S:operating-margin,2,0
 UCL,1775898,uCloudlink Group Inc.,Nasdaq,US GAAP,20-F,運輸・通信・公益,要点あり（直近期間あり）,2025-12-31,12,W:revenue-growth S:cash-generation S:financial,W:revenue-growth S:cash-generation S:financial,2,1
-UCO,1415311,ProShares Trust II,NYSE,US GAAP,10-K,金融・不動産,要点あり（直近期間あり）,2026-09-30,3,S:revenue-growth S:operating-margin,S:revenue-growth S:operating-margin,2,0
 UCTT,1275014,"Ultra Clean Holdings, Inc.",Nasdaq,US GAAP,10-K,製造,要点あり（直近期間あり）,2026-09-25,3,S:revenue-growth W:cash-generation S:financial S:stability,S:revenue-growth W:cash-generation S:financial S:stability,3,1
 UDR,74208,"UDR, Inc.",NYSE,US GAAP,10-K,金融・不動産,要点あり（直近期間あり）,2026-09-30,3,W:revenue-growth S:operating-margin S:cash-generation W:financial W:debt-cash,W:revenue-growth S:operating-margin S:cash-generation W:financial W:debt-cash,2,3
 UE,1611547,Urban Edge Properties,NYSE,US GAAP,10-K,金融・不動産,要点あり（直近期間あり）,2026-09-30,3,W:revenue-growth S:operating-margin,W:revenue-growth S:operating-margin,1,1
@@ -5296,9 +5258,7 @@ UFI,100726,UNIFI INC,NYSE,US GAAP,10-K,製造,要点あり（直近期間あり�
 UFPI,912767,UFP INDUSTRIES INC,Nasdaq,US GAAP,10-K,製造,要点あり（直近期間あり）,2026-09-26,3,S:revenue-growth S:cash-generation S:financial S:stability W:margin-decline,S:revenue-growth S:cash-generation S:financial S:stability W:margin-decline,4,1
 UFPT,914156,UFP TECHNOLOGIES INC,Nasdaq,US GAAP,10-K,製造,要点あり（直近期間あり）,2026-09-30,3,S:revenue-growth S:operating-margin S:cash-generation S:stability W:margin-decline,S:revenue-growth S:operating-margin S:cash-generation W:debt-cash S:stability W:margin-decline,4,2
 UG,101295,UNITED GUARDIAN INC,Nasdaq,US GAAP,10-K,製造,要点あり（直近期間あり）,2026-09-30,3,S:revenue-growth S:operating-margin S:cash-generation S:financial S:stability,S:revenue-growth S:operating-margin S:cash-generation S:financial S:stability,5,0
-UGA,1396878,"United States Gasoline Fund, LP",NYSE,US GAAP,10-K,金融・不動産,要点あり（直近期間あり）,2026-09-30,3,S:revenue-growth S:operating-margin,S:revenue-growth S:operating-margin,2,0
 UGI,884614,UGI CORP /PA/,NYSE,US GAAP,10-K,運輸・通信・公益,要点あり（直近期間あり）,2026-06-30,3,W:revenue-growth W:operating-margin S:cash-generation W:margin-decline,W:revenue-growth W:operating-margin S:cash-generation W:debt-cash W:margin-decline,1,4
-UGL,1415311,ProShares Trust II,NYSE,US GAAP,10-K,金融・不動産,要点あり（直近期間あり）,2026-09-30,3,S:revenue-growth S:operating-margin,S:revenue-growth S:operating-margin,2,0
 UGP,1094972,ULTRAPAR HOLDINGS INC,NYSE,IFRS,20-F,運輸・通信・公益,要点あり（直近期間あり）,2025-12-31,12,S:revenue-growth,S:revenue-growth W:debt-cash,1,1
 UHAL,4457,U-Haul Holding Co /NV/,NYSE,US GAAP,10-K,サービス,要点あり（直近期間あり）,2026-09-30,3,S:revenue-growth W:cash-generation S:financial,S:revenue-growth W:cash-generation S:financial,2,1
 UHAL-B,4457,U-Haul Holding Co /NV/,NYSE,US GAAP,10-K,サービス,要点あり（直近期間あり）,2026-09-30,3,S:revenue-growth W:cash-generation S:financial,S:revenue-growth W:cash-generation S:financial,2,1
@@ -5310,7 +5270,6 @@ UK,1821424,Ucommune International Ltd,Nasdaq,US GAAP,20-F,サービス,要点あ
 UL,217410,UNILEVER PLC,NYSE,IFRS,20-F,製造,要点あり（直近期間あり）,2026-06-30,3,S:revenue-growth,S:revenue-growth,1,0
 ULBI,875657,ULTRALIFE CORP,Nasdaq,US GAAP,10-K,製造,要点あり（直近期間あり）,2026-09-30,3,S:revenue-growth W:cash-generation W:margin-decline,S:revenue-growth W:cash-generation W:debt-cash W:margin-decline,1,3
 ULCC,1670076,"Frontier Group Holdings, Inc.",Nasdaq,US GAAP,10-K,運輸・通信・公益,要点あり（直近期間あり）,2026-09-30,3,S:revenue-growth W:operating-margin W:cash-generation W:stability W:margin-decline,S:revenue-growth W:operating-margin W:cash-generation W:stability W:margin-decline,1,4
-ULE,1415311,ProShares Trust II,NYSE,US GAAP,10-K,金融・不動産,要点あり（直近期間あり）,2026-09-30,3,S:revenue-growth S:operating-margin,S:revenue-growth S:operating-margin,2,0
 ULH,1308208,"UNIVERSAL LOGISTICS HOLDINGS, INC.",Nasdaq,US GAAP,10-K,運輸・通信・公益,要点あり（直近期間あり）,2026-10-03,3,W:revenue-growth S:cash-generation S:stability W:margin-decline,W:revenue-growth S:cash-generation W:debt-cash S:stability W:margin-decline,2,3
 ULS,1901440,UL Solutions Inc.,NYSE,US GAAP,10-K,医薬・バイオ,要点あり（直近期間あり）,2026-09-30,3,S:revenue-growth S:operating-margin S:cash-generation S:financial S:stability,S:revenue-growth S:operating-margin S:cash-generation S:financial S:stability,5,0
 ULTA,1403568,"Ulta Beauty, Inc.",Nasdaq,US GAAP,10-K,卸売・小売,要点あり（直近期間あり）,2026-08-01,3,S:revenue-growth S:cash-generation S:stability W:margin-decline,S:revenue-growth S:cash-generation S:stability W:margin-decline,3,1
@@ -5323,10 +5282,8 @@ UNB,706863,UNION BANKSHARES INC,Nasdaq,US GAAP,10-K,金融・不動産,要点あ
 UNCY,1766140,"Unicycive Therapeutics, Inc.",Nasdaq,US GAAP,10-K,医薬・バイオ,四半期データなし,,,,,0,0
 UNF,717954,UNIFIRST CORP,NYSE,US GAAP,10-K,サービス,要点あり（直近期間あり）,2026-08-29,3,S:revenue-growth S:cash-generation S:financial S:stability,S:revenue-growth S:cash-generation S:financial S:stability,4,0
 UNFI,1020859,UNITED NATURAL FOODS INC,NYSE,US GAAP,10-K,卸売・小売,要点あり（直近期間あり）,2026-08-01,3,W:revenue-growth S:cash-generation S:stability,W:revenue-growth S:cash-generation W:debt-cash S:stability,2,2
-UNG,1376227,"United States Natural Gas Fund, LP",NYSE,US GAAP,10-K,金融・不動産,四半期データなし,,,,,0,0
 UNH,731766,UNITEDHEALTH GROUP INC,NYSE,US GAAP,10-K,金融・不動産,要点あり（直近期間あり）,2026-09-30,3,W:revenue-growth S:cash-generation S:stability W:margin-decline,W:revenue-growth S:cash-generation W:debt-cash S:stability W:margin-decline,2,3
 UNIT,2020795,Uniti Group Inc.,Nasdaq,US GAAP,10-K,運輸・通信・公益,要点あり（直近期間あり）,2026-09-30,3,S:revenue-growth W:operating-margin W:cash-generation W:margin-decline,S:revenue-growth W:operating-margin W:cash-generation W:debt-cash W:margin-decline,1,4
-UNL,1405513,"United States 12 Month Natural Gas Fund, LP",NYSE,US GAAP,10-K,金融・不動産,要点あり（直近期間あり）,2026-09-30,3,W:revenue-growth W:operating-margin W:stability W:margin-decline,W:revenue-growth W:operating-margin W:stability W:margin-decline,0,4
 UNM,5513,Unum Group,NYSE,US GAAP,10-K,金融・不動産,要点あり（直近期間あり）,2026-09-30,3,W:revenue-growth W:operating-margin S:cash-generation W:financial W:debt-cash W:margin-decline,W:revenue-growth W:operating-margin S:cash-generation W:financial W:debt-cash W:margin-decline,1,5
 UNMA,5513,Unum Group,NYSE,US GAAP,10-K,金融・不動産,要点あり（直近期間あり）,2026-09-30,3,W:revenue-growth W:operating-margin S:cash-generation W:financial W:debt-cash W:margin-decline,W:revenue-growth W:operating-margin S:cash-generation W:financial W:debt-cash W:margin-decline,1,5
 UNP,100885,UNION PACIFIC CORP,NYSE,US GAAP,10-K,運輸・通信・公益,要点あり（直近期間あり）,2026-09-30,3,S:revenue-growth S:operating-margin S:cash-generation S:stability,S:revenue-growth S:operating-margin S:cash-generation W:debt-cash S:stability,4,1
@@ -5354,16 +5311,13 @@ USAU,27093,U.S. GOLD CORP.,Nasdaq,US GAAP,10-K,農業・鉱業・エネルギー
 USB,36104,US BANCORP \DE\,NYSE,US GAAP,10-K,金融・不動産,要点あり（直近期間あり）,2026-09-30,3,S:revenue-growth S:operating-margin S:cash-generation S:stability W:margin-decline,S:revenue-growth S:operating-margin S:cash-generation W:debt-cash S:stability W:margin-decline,4,2
 USBC,1074828,"USBC, Inc.",NYSE,US GAAP,10-K,金融・不動産,四半期データなし,,,,,0,0
 USCB,1901637,"USCB FINANCIAL HOLDINGS, INC.",Nasdaq,US GAAP,10-K,金融・不動産,要点あり（直近期間あり）,2026-09-30,3,S:revenue-growth S:operating-margin S:cash-generation S:stability W:margin-decline,S:revenue-growth S:operating-margin S:cash-generation S:stability W:margin-decline,4,1
-USCI,1479247,United States Commodity Index Funds Trust,NYSE,US GAAP,10-K,金融・不動産,直近期間を確認できない,2019-03-31,3,,,0,0
 USDE,2080215,StableCoinX Inc.,Nasdaq,US GAAP,なし,金融・不動産,要点あり（直近期間あり）,2026-09-30,3,W:operating-margin,W:operating-margin W:debt-cash,0,2
 USEA,1912847,United Maritime Corp,Nasdaq,US GAAP,20-F,運輸・通信・公益,要点あり（直近期間あり）,2026-06-30,6,W:revenue-growth S:operating-margin W:share-count W:cash-generation,W:revenue-growth S:operating-margin W:share-count W:cash-generation W:debt-cash,1,4
 USFD,1665918,US Foods Holding Corp.,NYSE,US GAAP,10-K,卸売・小売,要点あり（直近期間あり）,2026-09-26,3,S:revenue-growth S:cash-generation W:financial W:debt-cash S:stability W:margin-decline,S:revenue-growth S:cash-generation W:financial W:debt-cash S:stability W:margin-decline,3,3
 USGO,1947244,U.S. GoldMining Inc.,Nasdaq,なし,10-K,農業・鉱業・エネルギー,四半期データなし,,,,,0,0
 USIO,1088034,"Usio, Inc.",Nasdaq,US GAAP,10-K,金融・不動産,要点あり（直近期間あり）,2026-09-30,3,S:revenue-growth W:share-count S:cash-generation S:financial W:margin-decline,S:revenue-growth W:share-count S:cash-generation S:financial W:margin-decline,3,2
-USL,1405528,"United States 12 Month Oil Fund, LP",NYSE,US GAAP,10-K,金融・不動産,要点あり（直近期間あり）,2026-09-30,3,S:revenue-growth,S:revenue-growth,1,0
 USLM,82020,UNITED STATES LIME & MINERALS INC,Nasdaq,US GAAP,10-K,農業・鉱業・エネルギー,要点あり（直近期間あり）,2026-09-30,3,S:revenue-growth S:operating-margin S:cash-generation S:financial S:stability,S:revenue-growth S:operating-margin S:cash-generation S:financial S:stability,5,0
 USNA,896264,USANA HEALTH SCIENCES INC,NYSE,US GAAP,10-K,医薬・バイオ,要点あり（直近期間あり）,2026-10-03,3,W:revenue-growth W:operating-margin S:cash-generation S:financial,W:revenue-growth W:operating-margin S:cash-generation S:financial,2,2
-USO,1327068,"United States Oil Fund, LP",NYSE,US GAAP,10-K,金融・不動産,要点あり（直近期間あり）,2026-09-30,3,S:revenue-growth W:operating-margin,S:revenue-growth W:operating-margin,1,1
 USOI,1053092,CREDIT SUISSE AG,Nasdaq,US GAAP,20-F,金融・不動産,直近期間を確認できない,2023-12-31,12,,,0,0
 USPH,885978,U S PHYSICAL THERAPY INC /NV,NYSE,US GAAP,10-K,サービス,要点あり（直近期間あり）,2026-09-30,3,S:revenue-growth S:cash-generation S:stability,S:revenue-growth S:cash-generation W:debt-cash S:stability,3,1
 UTHR,1082554,UNITED THERAPEUTICS Corp,Nasdaq,US GAAP,10-K,医薬・バイオ,要点あり（直近期間あり）,2026-09-30,3,S:revenue-growth S:operating-margin S:cash-generation S:financial S:stability W:margin-decline,S:revenue-growth S:operating-margin S:cash-generation S:financial S:stability W:margin-decline,5,1
@@ -5374,10 +5328,8 @@ UTSI,1030471,UTSTARCOM HOLDINGS CORP.,Nasdaq,US GAAP,20-F,製造,要点あり（
 UTZ,1739566,"Utz Brands, Inc.",NYSE,US GAAP,10-K,製造,要点あり（直近期間あり）,2026-09-27,3,W:revenue-growth W:operating-margin W:cash-generation W:margin-decline,W:revenue-growth W:operating-margin W:cash-generation W:debt-cash W:margin-decline,0,5
 UUUU,1385849,ENERGY FUELS INC,NYSE,US GAAP,10-K,農業・鉱業・エネルギー,要点あり（直近期間あり）,2026-09-30,3,S:revenue-growth W:operating-margin W:share-count W:cash-generation W:stability,S:revenue-growth W:operating-margin W:share-count W:cash-generation W:debt-cash W:stability,1,5
 UVE,891166,"UNIVERSAL INSURANCE HOLDINGS, INC.",NYSE,US GAAP,10-K,金融・不動産,要点あり（直近期間あり）,2026-09-30,3,S:revenue-growth S:operating-margin S:cash-generation S:financial S:stability W:margin-decline,S:revenue-growth S:operating-margin S:cash-generation S:financial S:stability W:margin-decline,5,1
-UVIX,1793497,VS Trust,CBOE,US GAAP,10-K,金融・不動産,四半期データなし,,,,,0,0
 UVSP,102212,UNIVEST FINANCIAL Corp,Nasdaq,US GAAP,10-K,金融・不動産,要点あり（直近期間あり）,2026-09-30,3,S:revenue-growth S:operating-margin S:cash-generation S:stability W:margin-decline,S:revenue-growth S:operating-margin S:cash-generation S:stability W:margin-decline,4,1
 UVV,102037,UNIVERSAL CORP /VA/,NYSE,US GAAP,10-K,卸売・小売,要点あり（直近期間あり）,2026-09-30,3,W:revenue-growth W:cash-generation,W:revenue-growth W:cash-generation W:debt-cash,0,3
-UVXY,1415311,ProShares Trust II,CBOE,US GAAP,10-K,金融・不動産,要点あり（直近期間あり）,2026-09-30,3,S:revenue-growth S:operating-margin,S:revenue-growth S:operating-margin,2,0
 UWMC,1783398,UWM Holdings Corp,NYSE,US GAAP,10-K,金融・不動産,要点あり（直近期間あり）,2026-09-30,3,W:revenue-growth S:operating-margin W:share-count S:cash-generation W:financial W:debt-cash S:stability,W:revenue-growth S:operating-margin W:share-count S:cash-generation W:financial W:debt-cash S:stability,3,4
 UXIN,1729173,Uxin Ltd,Nasdaq,US GAAP,20-F,サービス,要点あり（直近期間あり）,2025-12-31,12,W:operating-margin W:cash-generation W:financial W:debt-cash,W:operating-margin W:cash-generation W:financial W:debt-cash,0,4
 UZD,821130,"ARRAY DIGITAL INFRASTRUCTURE, INC.",NYSE,US GAAP,10-K,運輸・通信・公益,要点あり（直近期間あり）,2026-09-30,3,S:revenue-growth W:operating-margin W:cash-generation W:margin-decline,S:revenue-growth W:operating-margin W:cash-generation W:debt-cash W:margin-decline,1,4
@@ -5446,8 +5398,6 @@ VIV,1066119,TELEFONICA BRASIL S.A.,NYSE,なし,20-F,運輸・通信・公益,四
 VIVK,1450704,"Vivakor, Inc.",Nasdaq,US GAAP,10-K,運輸・通信・公益,要点あり（直近期間あり）,2026-06-30,3,S:revenue-growth W:share-count W:stability,S:revenue-growth W:share-count W:stability,1,2
 VIVO,1681348,VivoPower PLC,Nasdaq,IFRS,20-F,金融・不動産,要点あり（直近期間あり）,2026-06-30,12,S:revenue-growth W:operating-margin,S:revenue-growth W:operating-margin,1,1
 VIVS,1497253,"VivoSim Labs, INC.",Nasdaq,US GAAP,10-K,医薬・バイオ,要点あり（直近期間あり）,2026-09-30,3,S:revenue-growth W:operating-margin W:share-count W:cash-generation W:stability,S:revenue-growth W:operating-margin W:share-count W:cash-generation W:stability,1,4
-VIXM,1415311,ProShares Trust II,CBOE,US GAAP,10-K,金融・不動産,要点あり（直近期間あり）,2026-09-30,3,S:revenue-growth S:operating-margin,S:revenue-growth S:operating-margin,2,0
-VIXY,1415311,ProShares Trust II,CBOE,US GAAP,10-K,金融・不動産,要点あり（直近期間あり）,2026-09-30,3,S:revenue-growth S:operating-margin,S:revenue-growth S:operating-margin,2,0
 VJET,1716621,"Flyte Aviation, Inc.",NYSE,US GAAP,10-K,製造,要点あり（直近期間あり）,2026-09-30,3,W:operating-margin W:cash-generation W:stability,W:operating-margin W:cash-generation W:stability,0,3
 VKTX,1607678,"Viking Therapeutics, Inc.",Nasdaq,なし,10-K,医薬・バイオ,四半期データなし,,,,,0,0
 VLGEA,103595,VILLAGE SUPER MARKET INC,Nasdaq,US GAAP,10-K,卸売・小売,要点あり（直近期間あり）,2026-07-25,3,S:revenue-growth S:cash-generation S:financial S:stability,S:revenue-growth S:cash-generation S:financial S:stability,4,0
@@ -5558,7 +5508,6 @@ WDC,106040,WESTERN DIGITAL CORP,Nasdaq,US GAAP,10-K,製造,要点あり（直近
 WDFC,105132,WD 40 CO,Nasdaq,US GAAP,10-K,製造,要点あり（直近期間あり）,2026-08-31,3,S:revenue-growth S:cash-generation S:financial S:stability W:margin-decline,S:revenue-growth S:cash-generation S:financial S:stability W:margin-decline,4,1
 WDH,1823986,Waterdrop Inc.,NYSE,US GAAP,20-F,金融・不動産,要点あり（直近期間あり）,2025-12-31,12,S:revenue-growth S:cash-generation,S:revenue-growth S:cash-generation,2,0
 WDS,844551,WOODSIDE ENERGY GROUP LTD,NYSE,IFRS,20-F,農業・鉱業・エネルギー,要点あり（直近期間あり）,2025-12-31,12,W:revenue-growth S:operating-margin,W:revenue-growth S:operating-margin W:debt-cash,1,2
-WEAT,1471824,Teucrium Commodity Trust,NYSE,US GAAP,10-K,金融・不動産,直近期間を確認できない,2024-09-30,3,,,0,0
 WEC,783325,"WEC ENERGY GROUP, INC.",NYSE,US GAAP,10-K,運輸・通信・公益,要点あり（直近期間あり）,2026-09-30,3,S:revenue-growth S:operating-margin W:cash-generation W:financial W:debt-cash S:stability,S:revenue-growth S:operating-margin W:cash-generation W:financial W:debt-cash S:stability,3,3
 WELL,766704,WELLTOWER INC.,NYSE,US GAAP,10-K,金融・不動産,要点あり（直近期間あり）,2026-09-30,3,S:revenue-growth W:operating-margin W:share-count S:cash-generation W:financial W:debt-cash W:stability W:margin-decline,S:revenue-growth W:operating-margin W:share-count S:cash-generation W:financial W:debt-cash W:stability W:margin-decline,2,6
 WEN,30697,Wendy's Co,Nasdaq,US GAAP,10-K,卸売・小売,要点あり（直近期間あり）,2026-09-27,3,W:revenue-growth S:cash-generation S:stability W:margin-decline,W:revenue-growth S:cash-generation W:debt-cash S:stability W:margin-decline,2,3
@@ -5740,8 +5689,6 @@ YALA,1794350,Yalla Group Ltd,NYSE,US GAAP,20-F,サービス,要点あり（直�
 YARW,1566044,"Yarrow Bioscience, Inc.",Nasdaq,US GAAP,10-K,医薬・バイオ,直近期間を確認できない,2026-06-30,3,,,0,0
 YB,1995520,Yuanbao Inc.,Nasdaq,US GAAP,20-F,金融・不動産,要点あり（直近期間あり）,2025-12-31,12,S:revenue-growth S:operating-margin W:share-count S:cash-generation S:financial,S:revenue-growth S:operating-margin W:share-count S:cash-generation S:financial,4,1
 YCBD,1644903,"cbdMD, Inc.",NYSE,US GAAP,10-K,製造,要点あり（直近期間あり）,2026-06-30,3,S:revenue-growth W:operating-margin W:cash-generation W:stability W:margin-decline,S:revenue-growth W:operating-margin W:cash-generation W:stability W:margin-decline,1,4
-YCL,1415311,ProShares Trust II,NYSE,US GAAP,10-K,金融・不動産,要点あり（直近期間あり）,2026-09-30,3,S:revenue-growth S:operating-margin,S:revenue-growth S:operating-margin,2,0
-YCS,1415311,ProShares Trust II,NYSE,US GAAP,10-K,金融・不動産,要点あり（直近期間あり）,2026-09-30,3,S:revenue-growth S:operating-margin,S:revenue-growth S:operating-margin,2,0
 YDDL,2034723,One & one Green Technologies. INC,Nasdaq,US GAAP,20-F,卸売・小売,要点あり（直近期間あり）,2026-06-30,6,S:revenue-growth W:cash-generation,S:revenue-growth W:cash-generation,1,1
 YDES,2011674,YD Bio Ltd,Nasdaq,US GAAP,20-F,サービス,要点あり（直近期間あり）,2026-06-30,6,S:revenue-growth W:operating-margin W:share-count W:cash-generation,S:revenue-growth W:operating-margin W:share-count W:cash-generation,1,3
 YDKG,1413745,Yueda Digital Holding,Nasdaq,US GAAP,20-F,金融・不動産,要点あり（直近期間あり）,2026-06-30,6,S:revenue-growth W:operating-margin W:share-count S:financial,S:revenue-growth W:operating-margin W:share-count S:financial,2,2
@@ -5804,7 +5751,6 @@ ZNTL,1725160,"Zentalis Pharmaceuticals, Inc.",Nasdaq,US GAAP,10-K,医薬・バ�
 ZONE,1956741,Zone Frontier Inc.,NYSE,US GAAP,10-K,製造,要点あり（直近期間あり）,2026-09-30,3,S:revenue-growth W:operating-margin W:share-count W:cash-generation S:financial W:stability W:margin-decline,S:revenue-growth W:operating-margin W:share-count W:cash-generation S:financial W:stability W:margin-decline,2,5
 ZOOZ,1992818,ZOOZ Strategy Ltd.,Nasdaq,US GAAP,20-F,製造,要点あり（直近期間あり）,2025-12-31,12,W:revenue-growth W:operating-margin W:share-count W:cash-generation,W:revenue-growth W:operating-margin W:share-count W:cash-generation,0,4
 ZS,1713683,"Zscaler, Inc.",Nasdaq,US GAAP,10-K,サービス,要点あり（直近期間あり）,2026-07-31,3,S:revenue-growth W:operating-margin S:cash-generation S:financial W:stability,S:revenue-growth W:operating-margin S:cash-generation S:financial W:stability,3,2
-ZSL,1415311,ProShares Trust II,NYSE,US GAAP,10-K,金融・不動産,要点あり（直近期間あり）,2026-09-30,3,S:revenue-growth S:operating-margin,S:revenue-growth S:operating-margin,2,0
 ZSQR,1759186,Z Squared Inc.,Nasdaq,US GAAP,10-K,金融・不動産,要点あり（直近期間あり）,2026-06-30,3,W:operating-margin W:stability,W:operating-margin W:stability,0,2
 ZSTK,1790169,ZeroStack Corp.,Nasdaq,US GAAP,10-K,金融・不動産,要点あり（直近期間あり）,2026-06-30,3,S:revenue-growth W:operating-margin W:share-count S:financial,S:revenue-growth W:operating-margin W:share-count S:financial,2,2
 ZTG,2011458,Zenta Group Co Ltd,Nasdaq,US GAAP,20-F,サービス,要点あり（直近期間あり）,2026-03-31,6,W:revenue-growth W:operating-margin W:share-count S:financial,W:revenue-growth W:operating-margin W:share-count S:financial,1,3

@@ -162,6 +162,17 @@ test("SPACs, funds, preferreds, warrants, units and rights are not offered; ordi
   assert.deepEqual(comparableEntries(dir, lists).map(e => e.ticker), ["OPEN", "BRK-B", "MKC-V", "GOOGL", "MO", "ADAM", "BTI"]);
 });
 
+test("crypto, commodity and currency funds whose income reads as revenue are not offered; operating companies in those codes are", () => {
+  // Nov 19: SOLC and SUIS (staking rewards booked as revenue) showed neither a strength nor a weakness; the same kind of fund is left out.
+  const funds = [{ ticker: "SOLC", cik: 2041869, name: "Canary Marinade Solana ETF" }, { ticker: "SUIS", cik: 2060703, name: "Canary Staked SUI ETF" },
+    { ticker: "IAU", cik: 1278680, name: "ISHARES GOLD TRUST" }, { ticker: "UVXY", cik: 1415311, name: "ProShares Trust II" }, { ticker: "FETH", cik: 2000046, name: "Fidelity Ethereum Fund" }];
+  const companies = [{ ticker: "ANTA", cik: 2044255, name: "Antalpha Platform Holding Co" }, { ticker: "XRPN", cik: 2092592, name: "Evernorth Holdings Inc." },
+    { ticker: "HSDT", cik: 1610853, name: "Solana Co" }, { ticker: "ABTC", cik: 1755953, name: "American Bitcoin Corp." }];
+  const entries = [...funds, ...companies].map(e => ({ ...e, exchange: "Nasdaq" })), sib = tickersByCik(entries);
+  for (const e of entries.slice(0, funds.length)) assert.equal(comparisonExclusion(e, sib, lists), "fund", e.ticker);
+  for (const e of entries.slice(funds.length)) assert.equal(comparisonExclusion(e, sib, lists), null, e.ticker);
+});
+
 test("the comparison's search asks for its own scope; a direct request for an excluded ticker is an unknown company, as before", () => {
   for (const file of ["../app/research/compare/screen.tsx", "../app/research/compare/ticker-search.tsx"])
     assert.match(readFileSync(new URL(file, import.meta.url), "utf8"), /\/api\/research\/stocks\?scope=compare&q=/);
