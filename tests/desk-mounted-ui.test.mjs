@@ -39,12 +39,15 @@ function reactionServer(initial){
  };
  return {fetch,calls};
 }
-async function mountNote({ownerMode,access='pro',counts={}}){
+async function mountNote({ownerMode,access='pro',counts={},preloaded,firstPaint}){
  const {ColumnArticle}=await component('../app/research/columns/columns.tsx',true,true);
  const server=reactionServer(counts);const original=globalThis.fetch;globalThis.fetch=server.fetch;
  const item={id:'note-reaction-test-0001',kind:'notes',titleJa:'',titleEn:'',introJa:'',introEn:'',bodyJa:'出来高をみる。',bodyEn:'Watch the volume.',sources:[],publishedAt:'2026-11-17T00:00:00.000Z',version:1,translationStatus:'done'};
  const host=document.createElement('div');document.body.append(host);const root=createRoot(host);
- await act(async()=>{root.render(React.createElement(ColumnArticle,{item,ja:true,ownerMode,access,fresh:false,onUpdated:()=>{}}));await tick();});
+ // firstPaint: what the note shows in its very first commit, before any effect or request has run.
+ act(()=>{root.render(React.createElement(ColumnArticle,{item,ja:true,ownerMode,access,fresh:false,reactions:preloaded,onUpdated:()=>{}}));});
+ firstPaint?.(host);
+ await act(async()=>{await tick();});
  return {host,server,unmount:async()=>{await act(async()=>root.unmount());host.remove();globalThis.fetch=original;}};
 }
 const badgeText=host=>[...host.querySelectorAll('.reactionBadge .badgeItem')].map(item=>item.textContent);
@@ -101,6 +104,35 @@ test('reactions: the badge hides at zero, sorts by count and shortens 1,000+; FR
  try{assert.deepEqual(badgeText(mounted.host),['\u{1F60A}1.2k','\u{1F620}1k','\u{1F525}45','\u{1F44D}3']);}finally{await mounted.unmount();}
  mounted=await mountNote({ownerMode:false,access:'free',counts:{fire:3}});
  try{assert.equal(mounted.host.querySelector('.faceButton'),null);assert.equal(mounted.host.querySelector('.reactionBadge'),null);assert.deepEqual(mounted.server.calls,[],'FREE never asks for reactions');}finally{await mounted.unmount();}
+});
+
+// Owner, Nov 18: RIZEL'S DESK opened in about three visible stages; one was each badge popping in after the notes and pushing the notes
+// below it down. Counts read with the notes are in the note's first paint, and the note does not ask for them again.
+test('reactions read with the notes are in the first paint, with no second request; a vote still saves',async()=>{
+ const preloaded=Object.fromEntries(keys.map(k=>[k,{count:{like:4,fire:2}[k]??0,selected:false}]));
+ let first=null;
+ const {host,server,unmount}=await mountNote({ownerMode:false,counts:{like:4,fire:2},preloaded,firstPaint:h=>{first=badgeText(h);}});
+ try{
+  assert.deepEqual(first,['\u{1F44D}4','\u{1F525}2'],'badge in the first commit');
+  assert.deepEqual(server.calls,[],'no GET for counts the page already has');
+  await act(async()=>{host.querySelector('button.faceButton').click();await tick();});
+  await act(async()=>{[...host.querySelectorAll('.reactionChoice')].find(b=>b.getAttribute('aria-label').startsWith('炎')).click();await tick();});
+  assert.deepEqual(server.calls,['POST']);assert.deepEqual(badgeText(host),['\u{1F44D}4','\u{1F525}3']);
+ }finally{await unmount();}
+ let none=null;
+ const plain=await mountNote({ownerMode:false,counts:{like:1},firstPaint:h=>{none=badgeText(h);}});
+ try{assert.deepEqual(none,[],'without preloaded counts the badge waits for its own request');assert.deepEqual(plain.server.calls,['GET']);assert.deepEqual(badgeText(plain.host),['\u{1F44D}1']);}finally{await plain.unmount();}
+});
+test('the page reads every note\'s reactions at once, keeps what arrived in time and skips failures',async()=>{
+ const {preloadReactions,readReactions}=await import('../app/research/desk/reaction-state.ts');
+ assert.equal(readReactions({ok:false}),null);
+ assert.deepEqual(readReactions({ok:true,reactions:{like:{count:2,selected:true}}}).like,{count:2,selected:true});
+ assert.deepEqual(readReactions({ok:true,reactions:{}}).fire,{count:0,selected:false});
+ const asked=[];
+ const found=await preloadReactions(['a','b','c','d'],async id=>{asked.push(id);if(id==='b')throw new Error('down');if(id==='c')return {ok:false};if(id==='d')return new Promise(()=>{});return {ok:true,reactions:{like:{count:1,selected:false}}};},50);
+ assert.deepEqual(asked,['a','b','c','d'],'all asked together');
+ assert.deepEqual(Object.keys(found),['a'],'late, failed and refused answers are left to the note itself');
+ const started=Date.now();await preloadReactions(['x'],()=>new Promise(()=>{}),40);assert.ok(Date.now()-started<1000,'never waits past the cap');
 });
 
 test('selecting differently formatted text updates toolbar without resetting editor options or DOM selection',async()=>{

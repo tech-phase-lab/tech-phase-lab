@@ -41,3 +41,25 @@ export function shortCount(count: number) {
   const tenths = Math.floor(count / 100);
   return `${tenths % 10 ? (tenths / 10).toFixed(1) : tenths / 10}k`;
 }
+
+/** The five reactions, in the order of the face button's popover. */
+export const REACTION_KEYS = ["like", "smile", "sad", "angry", "fire"] as const;
+/** One note's counts from a desk-reactions answer, or null when the answer is not a usable one. */
+export function readReactions(data: unknown): ReactionCounts | null {
+  const body = data as { ok?: unknown; reactions?: unknown } | null;
+  if (!body || body.ok !== true || !body.reactions || typeof body.reactions !== "object") return null;
+  const reactions = body.reactions as Record<string, { count: number; selected: boolean } | undefined>;
+  return Object.fromEntries(REACTION_KEYS.map(key => [key, reactions[key] ?? { count: 0, selected: false }]));
+}
+/** How long the page waits for the notes' reactions before it shows the notes anyway (the rest then arrive on their own). */
+export const REACTION_PRELOAD_MS = 1500;
+/** Every note's reactions at once, so the notes appear with their badges in one step instead of each badge popping in and pushing
+ * the notes below down (owner, Nov 18: the desk opened in three visible stages). A note whose answer is late or failed is left out. */
+export async function preloadReactions(ids: readonly string[], read: (id: string) => Promise<unknown>, waitMs = REACTION_PRELOAD_MS): Promise<Record<string, ReactionCounts>> {
+  const found: Record<string, ReactionCounts> = {};
+  const all = Promise.all(ids.map(async id => { try { const counts = readReactions(await read(id)); if (counts) found[id] = counts; } catch { /* left to the note itself */ } }));
+  let timer: ReturnType<typeof setTimeout> | undefined;
+  await Promise.race([all, new Promise(resolve => { timer = setTimeout(resolve, waitMs); })]);
+  clearTimeout(timer);
+  return { ...found };
+}

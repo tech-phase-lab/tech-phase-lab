@@ -10,12 +10,14 @@ export const BAND_WIDE_MAX_EN = 120;
 const JAPANESE = /[぀-ヿ㐀-鿿]/;
 
 /** The short headline of a story, or "" when it has none. A headline that is too long is never cut: the story is left out of the band
- * (it stays in the news list). The ending "。" is dropped, since the band is not a full sentence. */
+ * (it stays in the news list). The ending "。" is dropped, since the band is not a full sentence. A headline that already arrives cut
+ * ("…" or "..." at the end) is skipped as well (owner, Nov 18: no "…" in the band). */
 export function bandTitle(candidates: readonly (string | undefined | null)[], ja: boolean, wide = false) {
   const max = wide ? (ja ? BAND_WIDE_MAX_JA : BAND_WIDE_MAX_EN) : ja ? BAND_MAX_JA : BAND_MAX_EN;
   for (const candidate of candidates) {
-    const text = candidate?.trim().replace(/[。.]$/, "").trim();
-    if (!text || /[\r\n]/.test(text) || Array.from(text).length > max || isGenericPulseLabel(text) || (ja && !JAPANESE.test(text))) continue;
+    const raw = candidate?.trim() ?? "";
+    const text = raw.replace(/[。.]$/, "").trim();
+    if (!text || /[\r\n]/.test(text) || /(?:…|\.\.\.)$/.test(raw) || Array.from(text).length > max || isGenericPulseLabel(text) || (ja && !JAPANESE.test(text))) continue;
     return text;
   }
   return "";
