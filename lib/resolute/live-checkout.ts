@@ -1,10 +1,13 @@
 export type CheckoutLanguage = "ja" | "en";
 export type LiveOrder = {
  orderId: string; sandbox: false; state: string; expiresAt: string; approvalUrl?: string | null; claimRequired?: boolean;
+ /** The server asks PayPal to save the payment method for automatic renewal (RESOLUTE_AUTO_RENEWAL_ENABLED). */
+ autoRenewal?: true;
  quote: { kind: "initial" | "renewal"; language: CheckoutLanguage; currency: "JPY" | "USD"; value: string; priceClass: string };
 };
-export function checkoutUrl(language: CheckoutLanguage, orderId?: string | null, cancelled = false, guest = false) {
+export function checkoutUrl(language: CheckoutLanguage, orderId?: string | null, cancelled = false, guest = false, renewal = false) {
  const query = new URLSearchParams({lang: language});
+ if (renewal) query.set("kind", "renewal");
  if (orderId) query.set("order", orderId);
  if (guest) query.set("guest", "1");
  if (cancelled) query.set("cancel", "1");
@@ -16,8 +19,8 @@ export function liveApprovalUrl(value: unknown): string | null {
 export function liveOrder(value: unknown): LiveOrder {
  const o = value as LiveOrder;
  if (!o || o.sandbox !== false || !/^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(o.orderId) ||
-  !["creating","created","capturing","paid","held","suspended","revoked"].includes(o.state) || !Number.isFinite(Date.parse(o.expiresAt)) ||
-  (o.claimRequired !== undefined && typeof o.claimRequired !== "boolean") ||
+  !["creating","created","capturing","paid","held","suspended","revoked","declined"].includes(o.state) || !Number.isFinite(Date.parse(o.expiresAt)) ||
+  (o.claimRequired !== undefined && typeof o.claimRequired !== "boolean") || (o.autoRenewal !== undefined && o.autoRenewal !== true) ||
   !o.quote || !["initial","renewal"].includes(o.quote.kind) || !["ja","en"].includes(o.quote.language) ||
   o.quote.currency !== (o.quote.language === "ja" ? "JPY" : "USD") ||
   typeof o.quote.value !== "string" || !/^\d+(?:\.\d{2})?$/.test(o.quote.value) || Number(o.quote.value) <= 0 ||
@@ -25,7 +28,7 @@ export function liveOrder(value: unknown): LiveOrder {
  return o;
 }
 export async function liveCheckoutRequest(path: string, body?: object, guest = false) {
- if (!["orders","capture","access","claim","session"].includes(path) && !/^orders\/[0-9a-f-]{36}$/i.test(path)) throw Error("INVALID_PAYMENT_INPUT");
+ if (!["orders","capture","access","claim","session","auto-renewal"].includes(path) && !/^orders\/[0-9a-f-]{36}$/i.test(path)) throw Error("INVALID_PAYMENT_INPUT");
  const response = await fetch(`/api/resolute/live-payments/${guest ? "guest/" : ""}${path}`, {
   method: body ? "POST" : "GET", cache: "no-store", credentials: "same-origin", redirect: "error", signal: AbortSignal.timeout(25000),
   ...(body ? {headers:{"Content-Type":"application/json"},body:JSON.stringify(body)} : {}),

@@ -6,6 +6,7 @@ import { OWNER_ACCOUNT_ID } from '../../../lib/membership/entitlements.ts';
 import { sandboxTester } from '../../../lib/resolute/sandbox-access.ts';
 import { paypalConfig, createPaypal } from './paypal.mjs';
 import { paymentStore } from './store.mjs';
+import { renewalStore } from './renewal-store.mjs';
 import { paymentEngine } from './engine.mjs';
 import { paymentHttp } from './http.mjs';
 export function paymentRuntime(env,authConfig) {
@@ -24,7 +25,9 @@ export function paymentRuntime(env,authConfig) {
         const pool=new Pool({...db,max:4,application_name:'resolute-payment-sandbox'});pool.on('error',()=>{});
         const store=paymentStore(pool),paypal=createPaypal(config);
         const clerk=createClerkClient({secretKey:env.RESOLUTE_PAYMENT_CLERK_SECRET_KEY});
-        const engine=paymentEngine({store,paypal,merchantId:config.merchantId,getUser:id=>clerk.users.getUser(id)});
+        // Sandbox acceptance of automatic renewal uses the same flag (off by default) and migration 025.
+        const engine=paymentEngine({store,paypal,merchantId:config.merchantId,getUser:id=>clerk.users.getUser(id),
+          renewals:renewalStore(pool,store,{environment:'sandbox'}),autoRenewal:()=>env.RESOLUTE_AUTO_RENEWAL_ENABLED === 'true'});
         handler=paymentHttp({engine,store,authenticate:headers=>authenticate(headers,authConfig),
           enabled:env.RESOLUTE_PAYMENTS_ENABLED === 'true',
           allowedUsers:()=>[OWNER_ACCOUNT_ID, ...(env.RESOLUTE_PAYPAL_ENV === 'sandbox' && sandboxTester(env) ? [sandboxTester(env)] : [])],

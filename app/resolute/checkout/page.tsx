@@ -21,7 +21,7 @@ export default async function CheckoutPage({ searchParams }: { searchParams: Pro
   if (!membershipConfigured()) return <LiveCheckoutScreen orderId={null} language={language} cancelled={false} salesEnabled={false}/>;
   const guestOrder = Boolean(order && params.guest === "1");
   return <ClerkProvider appearance={clerkAppearance} signInUrl="/resolute/checkout" signUpUrl="/research/account/sign-up">
-   <LiveCheckoutIdentity signingUp={params.signup === "1"} guestOrder={guestOrder} guestEnabled={process.env.RESOLUTE_GUEST_CHECKOUT_ENABLED === "true"} orderId={order} language={language} cancelled={params.cancel === "1"} salesEnabled={process.env.RESOLUTE_LIVE_SALES_ENABLED === "true"}/>
+   <LiveCheckoutIdentity signingUp={params.signup === "1"} guestOrder={guestOrder} guestEnabled={process.env.RESOLUTE_GUEST_CHECKOUT_ENABLED === "true"} orderId={order} language={language} cancelled={params.cancel === "1"} salesEnabled={process.env.RESOLUTE_LIVE_SALES_ENABLED === "true"} renewal={params.kind === "renewal" && !order}/>
   </ClerkProvider>;
  }
  if (!membershipConfigured()) return <main><h1>RESOLUTE</h1><p>{language === "en" ? "Test checkout is unavailable." : "テスト購入は現在利用できません。"}</p></main>;
