@@ -25,63 +25,63 @@ export function oku(usd: number): string {
 }
 const dollars = (n: number) => `${trim(n)}ドル`;
 
-type Mark = "⭕️" | "❌" | "⚠️" | "・" | "✅";
+/** ○ above the forecast, △ in line (within ±1%), ✕ below. A figure without a forecast has no mark (owner, Nov 18: never from the year-ago
+ * change). Today the only forecast is the EPS consensus (Twelve Data), attached when its basis matches the issuer's EPS. */
+export type Mark = "○" | "△" | "✕";
 export type XPostMode = "short" | "consensus";
+
+export function forecastMark(actual: number, forecast: number): Mark {
+  const gap = forecast === 0 ? actual : (actual - forecast) / Math.abs(forecast);
+  if (Math.abs(gap) <= 0.01) return "△";
+  return gap > 0 ? "○" : "✕";
+}
 
 /** The prior-year value as the issuer-flash facts carry it (comparisons.yearAgo; `previous` means the previous release, never a year-ago figure). */
 const yearAgoOf = (fact: ResultFact): string | undefined => (fact.comparisons as { yearAgo?: string } | undefined)?.yearAgo;
-/** Direction from a prior-year value, when the fact carries one. */
-function growth(value: number, previousText: string | undefined): { pct: number; up: boolean } | null {
+/** Change from a prior-year value, when the fact carries one (shown as text, never as a mark). */
+function growth(value: number, previousText: string | undefined): number | null {
   const prev = previousText ? parseAmount(previousText) : null;
   if (prev === null || prev === 0 || (value < 0) !== (prev < 0)) return null; // sign changes have no meaningful percentage
-  const pct = (value - prev) / Math.abs(prev) * 100;
-  return { pct, up: pct >= 0 };
+  return (value - prev) / Math.abs(prev) * 100;
 }
 const signed = (pct: number) => `${pct >= 0 ? "+" : "-"}${Math.abs(Math.round(pct)).toLocaleString("en-US")}％`;
+const ORDER = ["revenue", "eps", "adjusted-eps", "net-income", "operating-income"];
+const rank = (key: string) => key.startsWith("guidance-") || key === "capex-guidance" ? 100 : ORDER.includes(key) ? ORDER.indexOf(key) : 50;
 
-function line(fact: ResultFact, consensus: EpsConsensus | null, mode: XPostMode): { mark: Mark; text: string } | null {
+function line(fact: ResultFact, consensus: EpsConsensus | null, mode: XPostMode): { mark: Mark | null; text: string } | null {
   if (fact.key.startsWith("guidance-") || fact.key === "capex-guidance") {
     const now = span(fact.value);
-    if (!now) return null;
+    if (!now) return /^(?:NT\$|€|₩)[\d.]/.test(fact.value) ? { mark: null, text: `${fact.ja}${fact.value}` } : null;
     const text = `${fact.ja}${now.lo === now.hi ? oku(now.lo) : `${trim(now.lo / 1e8)}〜${trim(now.hi / 1e8)}億ドル`}`;
     const priorText = (fact.comparisons as { priorGuidance?: string } | undefined)?.priorGuidance;
     const prior = priorText ? span(priorText) : null;
-    const dir = prior ? (now.lo > prior.hi ? "up" : now.hi < prior.lo ? "down" : now.lo === prior.lo && now.hi === prior.hi ? "same" : "mixed") : null;
-    const priorWords = prior ? `${prior.lo === prior.hi ? oku(prior.lo) : `${trim(prior.lo / 1e8)}〜${trim(prior.hi / 1e8)}億ドル`}` : "";
-    if (!dir || dir === "mixed") return { mark: "✅", text };
-    const word = dir === "up" ? "上回る" : dir === "down" ? "下回る" : "据え置き";
-    const detail = dir === "same" ? `（従来予想${priorWords}から据え置き）` : `（従来予想${priorWords}を${word}）`;
-    // Capex above or below the old outlook is neither good nor bad by itself: caution. Revenue-type guidance has a direction.
-    if (fact.key === "capex-guidance") return { mark: dir === "same" ? "✅" : "⚠️", text: text + detail };
-    return { mark: dir === "up" ? "⭕️" : dir === "down" ? "❌" : "✅", text: text + (dir === "up" ? "（従来予想" + priorWords + "を上方修正）" : dir === "down" ? "（従来予想" + priorWords + "を下方修正）" : detail) };
+    if (!prior) return { mark: null, text };
+    const priorWords = prior.lo === prior.hi ? oku(prior.lo) : `${trim(prior.lo / 1e8)}〜${trim(prior.hi / 1e8)}億ドル`;
+    const capex = fact.key === "capex-guidance";
+    const dir = now.lo > prior.hi ? (capex ? "を上回る" : "を上方修正") : now.hi < prior.lo ? (capex ? "を下回る" : "を下方修正") : now.lo === prior.lo && now.hi === prior.hi ? "から据え置き" : "";
+    return { mark: null, text: dir ? `${text}（従来予想${priorWords}${dir}）` : text };
   }
   const v = parseAmount(fact.value);
-  if (v === null) return null;
+  // a figure in another currency (NT$, €, ₩) or unit is written as the issuer printed it
+  if (v === null) return /^(?:NT\$|€|₩)-?[\d.]/.test(fact.value) ? { mark: null, text: `${fact.ja}${fact.value}` } : null;
   const g = growth(v, yearAgoOf(fact));
-  const yoy = g ? `前年比${signed(g.pct)}` : "";
+  const yoy = g === null ? "" : `前年比${signed(g)}`;
   if (fact.key === "eps") {
-    const withForecast = mode === "consensus" && consensus ? consensus : null;
-    const parts = [withForecast ? `予想${dollars(withForecast.estimate)}` : "", yoy].filter(Boolean);
-    const text = `${fact.ja}${dollars(v)}${parts.length ? `（${parts.join("、")}）` : ""}`;
-    // Beat/miss is decided from the consensus whenever one is attached to the facts of this post; otherwise only a loss or a known YoY direction decides.
-    if (consensus) return { mark: v >= consensus.estimate ? "⭕️" : "❌", text };
-    return { mark: g ? (g.up ? "⭕️" : "❌") : v < 0 ? "❌" : "・", text };
+    const parts = [mode === "consensus" && consensus ? `予想${dollars(consensus.estimate)}` : "", yoy].filter(Boolean);
+    return { mark: consensus ? forecastMark(v, consensus.estimate) : null, text: `${fact.ja}${dollars(v)}${parts.length ? `（${parts.join("、")}）` : ""}` };
   }
-  if (fact.key === "net-income" || fact.key === "operating-income") {
-    const name = fact.key === "net-income" ? (v < 0 ? "純損失" : "純利益") : (v < 0 ? "営業損失" : "営業利益");
-    const text = `${name}${oku(v)}${yoy ? `（${yoy}）` : ""}`;
-    return { mark: v < 0 ? "❌" : g ? (g.up ? "⭕️" : "❌") : "・", text };
-  }
-  const text = `${fact.ja}${oku(v)}${yoy ? `（${yoy}）` : ""}`;
-  return { mark: g ? (g.up ? "⭕️" : "❌") : v < 0 ? "❌" : "・", text };
+  if (fact.key === "adjusted-eps") return { mark: null, text: `${fact.ja}${dollars(v)}${yoy ? `（${yoy}）` : ""}` };
+  const name = fact.key === "net-income" ? (v < 0 ? "純損失" : "純利益") : fact.key === "operating-income" ? (v < 0 ? "営業損失" : "営業利益") : fact.ja;
+  return { mark: null, text: `${name}${oku(v)}${yoy ? `（${yoy}）` : ""}` };
 }
 
-/** The X post text, built only from the brief's own figures (and the consensus when attached). Returns null when no figure can be written. */
+/** The X post text, built only from the brief's own figures (and the consensus when attached): one figure per line, the same order
+ * for every company. Returns null when no figure can be written. */
 export function buildXPost(brief: Pick<ResultBrief, "ticker" | "period" | "facts">, consensus: EpsConsensus | null, mode: XPostMode): string | null {
-  const rows = brief.facts.map(f => line(f, consensus, mode)).filter((r): r is { mark: Mark; text: string } => r !== null);
+  const facts = brief.facts.map((fact, index) => ({ fact, index })).sort((a, b) => rank(a.fact.key) - rank(b.fact.key) || a.index - b.index).map(item => item.fact);
+  const rows = facts.map(f => line(f, consensus, mode)).filter((r): r is { mark: Mark | null; text: string } => r !== null);
   if (!rows.length) return null;
-  const groups = (["⭕️", "❌", "⚠️", "・", "✅"] as Mark[]).map(mark => rows.filter(r => r.mark === mark).map(r => `${mark === "・" ? "・" : mark}${r.text}`)).filter(g => g.length);
-  const body = groups.map(g => g.join("\n")).join("\n\n");
+  const body = rows.map(r => `${r.mark ?? ""}${r.text}`).join("\n");
   const attribution = mode === "consensus" && consensus ? "\n\n予想の提供: Twelve Data" : "";
   return `${brief.ticker} ${brief.period} 決算速報\n\n${body}${attribution}`;
 }

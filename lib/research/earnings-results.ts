@@ -10,7 +10,18 @@ export type EarningsResult = {
   body: { ja: string | null; en: string | null };
   /** Every source behind this one result, oldest first. */
   sources: { name: string; url: string }[];
+  /** Where the figures were read: the company's own release or SEC filing ("issuer"), or a third-party flash post ("post"). */
+  factsFrom: "issuer" | "post" | null;
 };
+
+/** One order for every company (owner, Nov 18): revenue, EPS, adjusted EPS, net income, operating income, the other figures,
+ * then the outlook. */
+export const FACT_ORDER = ["revenue", "eps", "adjusted-eps", "net-income", "operating-income", "gross-margin", "operating-margin",
+  "adjusted-ebitda", "adjusted-net-income", "operating-cash-flow", "capex"];
+const rank = (key: string) => key.startsWith("guidance-") || key === "capex-guidance" ? 100 : FACT_ORDER.includes(key) ? FACT_ORDER.indexOf(key) : 50;
+export function orderedFacts<T extends { key: string }>(facts: T[]): T[] {
+  return facts.map((fact, index) => ({ fact, index })).sort((a, b) => rank(a.fact.key) - rank(b.fact.key) || a.index - b.index).map(item => item.fact);
+}
 
 /** Companies known by a name other than their ticker on screen (owner, Oct 15: "TSM" next to "TSMC"). */
 const DISPLAY_NAME: Record<string, string> = { TSM: "TSMC" };
@@ -41,8 +52,10 @@ export function earningsResults(updates: OfficialUpdate[] = [], briefs: ResultBr
     rows.push({ id: `flash-${brief.id}`, ticker: brief.ticker, releasedAt: brief.publishedAt, kind: "flash",
       title: { ja: `${displayName(brief.ticker)} 決算速報（${brief.period}）`, en: `${displayName(brief.ticker)} ${brief.period} earnings flash` },
       result: { ja: withName(brief.titleJa, brief.ticker), en: withName(brief.titleEn, brief.ticker) }, sourceUrl: brief.url, sourceName: brief.publisher,
-      facts: brief.facts.map(fact => ({ ja: `${fact.ja} ${fact.value}`, en: `${fact.en} ${fact.value}` })),
-      body: { ja: null, en: null }, sources: [{ name: brief.publisher, url: brief.url }] });
+      facts: orderedFacts(brief.facts).map(fact => ({ ja: `${fact.ja} ${fact.value}`, en: `${fact.en} ${fact.value}` })),
+      body: { ja: null, en: null }, sources: [{ name: brief.publisher, url: brief.url }],
+      // ir-flash- / ir-fallback-: read from the issuer's own results table or release; x-result-: a third-party flash post.
+      factsFrom: !brief.facts.length ? null : brief.researchId.startsWith("ir-") ? "issuer" : "post" });
   }
   for (const item of updates) {
     const ticker = item.tickers[0];
@@ -51,7 +64,7 @@ export function earningsResults(updates: OfficialUpdate[] = [], briefs: ResultBr
     rows.push({ id: `release-${item.id}`, ticker, releasedAt: at, kind: "release",
       title: { ja: `${displayName(ticker)} 決算発表`, en: `${displayName(ticker)} earnings release` },
       result: { ja: item.translationJa ?? null, en: item.title }, sourceUrl: item.url, sourceName: item.publisher,
-      facts: [], body: { ja: item.bodyJa?.trim() || null, en: item.bodyEn?.trim() || null }, sources: [{ name: item.publisher, url: item.url }] });
+      facts: [], body: { ja: item.bodyJa?.trim() || null, en: item.bodyEn?.trim() || null }, sources: [{ name: item.publisher, url: item.url }], factsFrom: null });
   }
   rows.sort((a, b) => Date.parse(a.releasedAt) - Date.parse(b.releasedAt));
   const events: EarningsResult[][] = [];
@@ -70,6 +83,8 @@ export function earningsResults(updates: OfficialUpdate[] = [], briefs: ResultBr
       // Figures come from the flash; the release supplies the official wording.
       result: flash && !release?.result.ja ? flash.result : release ? { ja: flash?.result.ja ?? release.result.ja, en: flash?.result.en ?? release.result.en } : first.result,
       facts: group.flatMap(row => row.facts).filter(fact => !seen.has(fact.en) && seen.add(fact.en)),
+      // A third-party post's figures in the group make the note say so; figures only from the issuer say they are the issuer's.
+      factsFrom: group.some(row => row.factsFrom === "post") ? "post" as const : group.some(row => row.factsFrom === "issuer") ? "issuer" as const : null,
       body: group.find(row => row.body.ja || row.body.en)?.body ?? { ja: null, en: null },
       sources: group.flatMap(row => row.sources).filter((source, index, all) => all.findIndex(other => other.url === source.url) === index) };
   }).sort((a, b) => Date.parse(b.releasedAt) - Date.parse(a.releasedAt));

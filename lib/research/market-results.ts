@@ -11,9 +11,10 @@ export type ResultBrief = {
   processingMs:number; sourceToDetectionMs:number|null; detectionToPublicMs:number|null;
 };
 
-export function parseResultBriefs(value: unknown): ResultBrief[] {
+/** `max`: the news feed carries at most 20; the calendar's results history (one month of every tracked company) more. */
+export function parseResultBriefs(value: unknown, max = 20): ResultBrief[] {
   if (value === undefined) return [];
-  if (!Array.isArray(value) || value.length>20) throw Error('Invalid results');
+  if (!Array.isArray(value) || value.length>max) throw Error('Invalid results');
   return value.map(raw => {
     if (!raw || typeof raw !== 'object') throw Error('Invalid result');
     const r=raw as Record<string,unknown>;
