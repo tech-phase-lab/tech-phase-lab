@@ -37,6 +37,8 @@ const I = {
 const chev = <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#5d6c80" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7" /></svg>;
 
 
+// RESOLUTE automatic renewal (owner, Nov 19): shown only when the member has a saved-PayPal renewal plan; stop anytime.
+type AutoRenewal = { available: boolean; enabled: boolean } | null;
 type Resolute = { state: "loading" } | { state: "unknown" } | { state: "none" } | { state: "bought"; alertsUntil: string | null };
 type ContractState = { state: "loading" } | { state: "unknown" } | { state: "ok"; value: Contract };
 type ProfileState = { state: "loading" } | { state: "error" } | { state: "ok"; value: Profile };
@@ -86,6 +88,8 @@ export default function AccountView({ ja, member, billingAvailable, onRecheck, i
   const [contract, setContract] = useState<ContractState>({ state: "loading" });
   const [resolute, setResolute] = useState<Resolute>({ state: "loading" });
   const [tick, setTick] = useState(0);
+  const [renewal, setRenewal] = useState<AutoRenewal>(null);
+  const [renewalBusy, setRenewalBusy] = useState(false);
   const [sheet, setSheet] = useState<"" | "avatar" | "name">("");
   const [checkout, setCheckout] = useState<{ busy: boolean; error: "" | "failed" | "existing" }>({ busy: false, error: "" });
 
@@ -115,6 +119,26 @@ export default function AccountView({ ja, member, billingAvailable, onRecheck, i
       .catch(() => { if (!controller.signal.aborted) setResolute({ state: "unknown" }); });
     return () => controller.abort();
   }, [owner, tick]);
+  useEffect(() => {
+    if (owner || resolute.state !== "bought") return;
+    const controller = new AbortController();
+    // 503/404 (feature off, no plan, payments closed) simply hides the row.
+    getJson("/api/resolute/live-payments/auto-renewal", controller.signal)
+      .then(value => { if (!controller.signal.aborted && value?.sandbox === false && typeof value.available === "boolean") setRenewal({ available: value.available, enabled: value.enabled === true }); })
+      .catch(() => { if (!controller.signal.aborted) setRenewal(null); });
+    return () => controller.abort();
+  }, [owner, resolute.state, tick]);
+  async function toggleRenewal() {
+    if (!renewal || renewalBusy) return;
+    setRenewalBusy(true);
+    try {
+      const response = await fetch("/api/resolute/live-payments/auto-renewal", { method: "POST", cache: "no-store", credentials: "same-origin", redirect: "error",
+        headers: { "Content-Type": "application/json" }, body: JSON.stringify({ enabled: !renewal.enabled }) });
+      const value = await response.json();
+      if (response.ok && value?.sandbox === false && typeof value.available === "boolean") setRenewal({ available: value.available, enabled: value.enabled === true });
+    } catch { /* the row keeps showing the last confirmed state */ }
+    finally { setRenewalBusy(false); }
+  }
   const recheck = useCallback(() => { setContract({ state: "loading" }); setResolute({ state: "loading" }); setTick(v => v + 1); onRecheck(); }, [onRecheck]);
 
   useEffect(() => {
@@ -232,7 +256,8 @@ export default function AccountView({ ja, member, billingAvailable, onRecheck, i
       <span className={styles.resSub}>{t("暴落の夜も、上昇の朝も、自分のルールに立ち戻るためのキット。", "A toolkit to help you stick to your own rules through market drops and rallies.")}</span></div>
     {!preview && resolute.state === "unknown" && <p className={styles.note} role="status">{t("購入状況を確認できませんでした。", "Could not check your purchase.")} <button type="button" className={styles.link} onClick={recheck}>{t("再確認", "Check again")}</button></p>}
     {resolute.state === "bought" && !preview
-      ? <>{resolute.alertsUntil && formatDay(resolute.alertsUntil, ja) && <div className={styles.kvs} style={{ marginTop: 6 }}><div className={styles.kv}><span>{t("通知サービスの有効期限", "Alerts valid until")}</span><b>{formatDay(resolute.alertsUntil, ja)}</b></div></div>}
+      ? <>{resolute.alertsUntil && formatDay(resolute.alertsUntil, ja) && <div className={styles.kvs} style={{ marginTop: 6 }}><div className={styles.kv}><span>{t("通知サービスの有効期限", "Alerts valid until")}</span><b>{formatDay(resolute.alertsUntil, ja)}</b></div>
+            {renewal?.available && <div className={styles.kv}><span>{t("自動更新", "Auto-renewal")}</span><button type="button" className={styles.link} disabled={renewalBusy} aria-pressed={renewal.enabled} onClick={() => void toggleRenewal()}>{renewal.enabled ? t("オン（止める）", "On (stop)") : t("オフ（再開する）", "Off (resume)")}</button></div>}</div>}
           <div className={styles.stack}><Link className={`${styles.btn} ${styles.abt}`} href={ja ? "/resolute" : "/resolute?lang=en"}>{t("RESOLUTEを開く", "Open RESOLUTE")}</Link>
             <Link className={`${styles.btn} ${styles.abt} ${styles.abtO}`} style={{ height: 46, fontSize: 14 }} href="/resolute/settings">{t("通知サービスを更新", "Renew alerts")}</Link></div></>
       : <Link className={`${styles.btn} ${styles.abt} ${styles.abtO}`} style={{ marginTop: 16 }} href={ja ? "/resolute" : "/resolute?lang=en"}>{t("RESOLUTEを見る", "See RESOLUTE")}</Link>}

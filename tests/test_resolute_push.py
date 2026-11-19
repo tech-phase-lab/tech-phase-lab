@@ -169,6 +169,15 @@ class ResolutePushTests(unittest.TestCase):
         rows = [tuple(r) for r in self.db.execute('SELECT kind,page FROM push_notices ORDER BY rowid')]
         self.assertEqual(rows[-1], ('resolute-morning', '/resolute/morning'))
 
+    def test_the_renewal_notice_opens_the_account_page(self):
+        # Nov 19 (owner): RESOLUTE automatic renewal - the 7-days-before notice opens the account page (stop anytime).
+        self.register()
+        self.assertEqual(self.send(event='c' * 32, url='/research/account', body='2027年12月16日に通知機能が自動で更新されます。'),
+                         {'devices': 1, 'accepted': 1, 'failed': 0})
+        self.assertEqual(self.sent[-1]['url'], '/research/account')
+        row = self.db.execute('SELECT kind,page FROM push_notices ORDER BY rowid DESC').fetchone()
+        self.assertEqual((row['kind'], row['page']), ('resolute-renewal', '/research/account'))
+
     def test_the_dedicated_token_is_required_and_is_never_another_token(self):
         token = 'r' * 40
         with patch.dict(os.environ, {'RESOLUTE_PUSH_TOKEN': token, 'RESEARCH_API_TOKEN': 'p' * 40}):

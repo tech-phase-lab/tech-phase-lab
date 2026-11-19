@@ -1643,7 +1643,8 @@ def deliver_economic(db, items, **options):
 # own server, holds the RESOLUTE alert rights (resolute_until), or is an owner account. Tech Phase PRO plays no part. When no device
 # accepts the notice, RESOLUTE sends its email instead. Notices are never held for おやすみモード: the member chose the delivery hour.
 # Both pages are on the service worker's list (lib/research/push-targets.json).
-RESOLUTE_PAGES = {'/resolute/alerts/latest': 'resolute-alert', '/resolute/morning': 'resolute-morning'}
+# Nov 19 (owner): the automatic-renewal notices (7 days before, and "could not renew") open the account page, where renewal is stopped.
+RESOLUTE_PAGES = {'/resolute/alerts/latest': 'resolute-alert', '/resolute/morning': 'resolute-morning', '/research/account': 'resolute-renewal'}
 RESOLUTE_TITLE = 'RESOLUTE'
 RESOLUTE_EVENT = re.compile(r'[a-f0-9]{32}')
 RESOLUTE_BODY_LIMIT = 120

@@ -20,10 +20,11 @@ async function handle(request: Request, context: { params: Promise<{ action: str
     const route = guest ? path.slice(6) : path;
     if (path === "audit" && userId !== OWNER_ACCOUNT_ID)
       return Response.json({ error: "PAYMENT_ACCESS_DENIED" }, { status: 403, headers });
-    if (!(request.method === "POST" && (guest ? ["session", "orders", "capture"] : ["orders", "capture", "claim", "recovery/claim"]).includes(route)) &&
-        !(request.method === "GET" && ((!guest && (path === "audit" || path === "access")) || /^orders\/[0-9a-f-]{36}$/i.test(route))))
+    if (!(request.method === "POST" && (guest ? ["session", "orders", "capture"] : ["orders", "capture", "claim", "recovery/claim", "auto-renewal"]).includes(route)) &&
+        !(request.method === "GET" && ((!guest && (path === "audit" || path === "access" || path === "auto-renewal")) || /^orders\/[0-9a-f-]{36}$/i.test(route))))
       return Response.json({ error: "NOT_FOUND" }, { status: 404, headers });
-    if (request.method === "POST" && !["claim", "recovery/claim"].includes(path) && process.env.RESOLUTE_LIVE_SALES_ENABLED !== "true")
+    // Stopping automatic renewal must work even while sales are closed.
+    if (request.method === "POST" && !["claim", "recovery/claim", "auto-renewal"].includes(path) && process.env.RESOLUTE_LIVE_SALES_ENABLED !== "true")
       return Response.json({ error: "PAYMENT_DISABLED" }, { status: 503, headers });
     const incoming = new URL(request.url);
     if (incoming.search || request.method === "POST" && request.headers.get("origin") !== incoming.origin)

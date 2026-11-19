@@ -3,7 +3,7 @@ import { useEffect, useRef, useState, type ReactNode } from "react";
 import { checkoutUrl, liveApprovalUrl, liveCheckoutRequest, liveOrder, type LiveOrder } from "@/lib/resolute/live-checkout";
 import type { CheckoutProps } from "./screen";
 import styles from "./styles.module.css";
-import AgreeButton, { CheckoutLines, RESOLUTE_CHECKOUT_LINES, termsHref } from "../../legal/agree-button";
+import AgreeButton, { CheckoutLines, RESOLUTE_AUTO_RENEWAL_LINE, RESOLUTE_CHECKOUT_LINES, termsHref } from "../../legal/agree-button";
 import Disclaimer from "../disclaimer";
 const errors: Record<string,[string,string]> = {
  GUEST_SESSION_REQUIRED:["購入時と同じブラウザで開いてください。解決しない場合は注文番号を添えてお問い合わせください。","Open this page in the browser you used to purchase. If you still need help, contact support with your order number."],
@@ -94,6 +94,7 @@ export default function LiveCheckoutScreen({orderId,language:initialLanguage,can
    {!paid && !held && !uncertain && order.state==="created" && salesEnabled && <div className={styles.actions}>
     {approval && <a className={styles.button} href={approval} rel="noreferrer">{en?"Continue to PayPal":"PayPalへ進む"}</a>}
     <p>{en?"After approving in PayPal, return here to complete your payment.":"PayPalで承認した後、この画面で支払いを確定します。"}</p>
+    {order.autoRenewal===true && <CheckoutLines lines={[RESOLUTE_AUTO_RENEWAL_LINE[en?"en":"ja"]]} />}
     <CheckoutLines lines={RESOLUTE_CHECKOUT_LINES[en?"en":"ja"]} />
     <AgreeButton en={en} disabled={busy} onClick={()=>void act("capture")} />
    </div>}

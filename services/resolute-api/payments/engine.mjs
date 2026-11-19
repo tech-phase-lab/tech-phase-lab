@@ -5,7 +5,18 @@ import { identity, input, quote, sameQuote, verifyOrder, reject, minorUnits, Pay
 // The price was fixed when the order was created (see quote); fall back to now for rows without a creation time.
 const pricedAt = (order, now) => { const at=Date.parse(order.created_at); return Number.isFinite(at) && at <= now ? at : now; };
 const uuid = value => typeof value === 'string' && /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(value);
-export function paymentEngine({ store, paypal, merchantId, getUser, now = Date.now, environment = 'sandbox', canCharge = () => true, allowGuest = () => false, recovery = null }) {
+// The vault (saved PayPal) PayPal returns with a capture: payment_source.paypal.attributes.vault {id,status,customer.id}.
+export function savedPaypal(...sources) {
+  for (const source of sources) {
+    const v = source?.payment_source?.paypal?.attributes?.vault;
+    if (v?.status === 'VAULTED' && typeof v.id === 'string') return { id: v.id, customer: typeof v.customer?.id === 'string' ? v.customer.id : null };
+  }
+  return null;
+}
+// renewals/autoRenewal: RESOLUTE automatic renewal (renewal-store.mjs). autoRenewal() is the server flag
+// RESOLUTE_AUTO_RENEWAL_ENABLED; while it is off no order asks PayPal to save a payment method. Stopping a plan
+// that already exists stays possible whatever the flag says.
+export function paymentEngine({ store, paypal, merchantId, getUser, now = Date.now, environment = 'sandbox', canCharge = () => true, allowGuest = () => false, recovery = null, renewals = null, autoRenewal = () => false }) {
   const selected=paypalEnvironment(environment), sandbox=environment === 'sandbox';
   const requireSales=()=>{ if (!canCharge()) reject('PAYMENT_DISABLED',503); };
   async function buyer(userId) {
@@ -25,6 +36,17 @@ export function paymentEngine({ store, paypal, merchantId, getUser, now = Date.n
     try { return await store.paid(order,verifyOrder(order,remote,merchantId,true)); }
     catch(e) { if(e instanceof PaymentError) await store.flag(order,e.code); throw e; }
   }
+  // Never lets a renewal problem fail or undo a verified purchase: without a saved PayPal the member simply
+  // gets the renewal notice and renews by hand.
+  async function enroll(order, ...sources) {
+    if(!renewals || order.auto_renewal_offered !== true) return;
+    try {
+      const vault=savedPaypal(...sources);
+      if(vault) await renewals.enroll(order.id,vault,now());
+      else await store.flag(order,'AUTO_RENEWAL_NOT_SAVED');
+    } catch { try { await store.flag(order,'AUTO_RENEWAL_ENROLL_FAILED'); } catch { /* the payment itself is settled */ } }
+  }
+  const renewalFlag = order => order.auto_renewal_offered === true ? { autoRenewal:true } : {};
   return {
     async create(userId,body) {
       requireSales();
@@ -36,11 +58,12 @@ export function paymentEngine({ store, paypal, merchantId, getUser, now = Date.n
       if(Date.parse(order.expires_at) <= now()) reject('ORDER_EXPIRED');
       if(order.state === 'creating') {
         requireSales();
+        if(renewals && autoRenewal() && !isGuest(userId) && order.quote.kind === 'initial') order=await renewals.offer(order);
         const remote=await paypal.create(order);
         if(!/^[A-Z0-9]{8,32}$/.test(remote.id ?? '')) reject('PAYPAL_UNAVAILABLE',503);
         order=await store.bind(order,remote.id);
       }
-      return { orderId:order.id,paypalOrderId:order.paypal_id,state:order.state,claimRequired:isGuest(order.user_id),quote:order.quote,expiresAt:order.expires_at,
+      return { orderId:order.id,paypalOrderId:order.paypal_id,state:order.state,claimRequired:isGuest(order.user_id),quote:order.quote,expiresAt:order.expires_at,...renewalFlag(order),
         approvalUrl:order.state === 'created' ? await paypal.approval(order.paypal_id) : null,sandbox };
     },
     async capture(userId,body) {
@@ -51,7 +74,9 @@ export function paymentEngine({ store, paypal, merchantId, getUser, now = Date.n
       // A lost capture response is reconciled by reading PayPal, never by inventing a new capture.
       if(order.state === 'capturing') {
         if(remote.status !== 'COMPLETED') return { state:'pending',sandbox };
-        return { state:await settle(order,remote),sandbox };
+        const state=await settle(order,remote);
+        if(state === 'paid') await enroll(order,remote);
+        return { state,sandbox };
       }
       verifyOrder(order,remote,merchantId);
       const m=await buyer(userId);
@@ -66,9 +91,13 @@ export function paymentEngine({ store, paypal, merchantId, getUser, now = Date.n
         await store.flag(order,'CAPTURE_ELIGIBILITY_CHANGED'); reject('PRICE_CHANGED');
       }
       order=await store.refreshCapture(order,finalMember,now());
+      // The agree click on a screen that showed 「1年後から自動で更新されます。いつでも止められます」 is the consent.
+      if(renewals && order.auto_renewal_offered === true) await renewals.consent(order,now());
       requireSales();
-      await paypal.capture(order);
-      return { state:await settle(order,await paypal.get(order.paypal_id)),sandbox };
+      const captured=await paypal.capture(order), completed=await paypal.get(order.paypal_id);
+      const state=await settle(order,completed);
+      if(state === 'paid') await enroll(order,captured,completed);
+      return { state,sandbox };
     },
     async status(userId,id) {
       const order=await owned(userId,id);
@@ -77,7 +106,7 @@ export function paymentEngine({ store, paypal, merchantId, getUser, now = Date.n
         if(remote.status === 'COMPLETED') await settle(order,remote);
       }
       const current=await owned(userId,id);
-      return { orderId:current.id,state:current.state,claimRequired:isGuest(current.user_id),quote:current.quote,expiresAt:current.expires_at,sandbox,
+      return { orderId:current.id,state:current.state,claimRequired:isGuest(current.user_id),quote:current.quote,expiresAt:current.expires_at,sandbox,...renewalFlag(current),
         ...(!sandbox ? {approvalUrl:current.state === 'created' ? await paypal.approval(current.paypal_id) : null} : {}) };
     },
     async claim(userId,guest,body) {
@@ -96,13 +125,36 @@ export function paymentEngine({ store, paypal, merchantId, getUser, now = Date.n
       if(!order || !isGuest(order.guest_id) || Date.parse(order.paid_at)!==proof.paid) reject('INVALID_RECOVERY_LINK',400);
       return {state:await store.claim(order.guest_id,userId,order.id,now()),sandbox};
     },
+    async autoRenewal(userId) {
+      if(isGuest(userId) || !renewals) reject('AUTO_RENEWAL_UNAVAILABLE',404);
+      await member(userId);
+      return { ...(await renewals.view(userId)),sandbox };
+    },
+    async setAutoRenewal(userId,body) {
+      input(body,['enabled']);
+      if(typeof body.enabled !== 'boolean') reject('INVALID_PAYMENT_INPUT',400);
+      if(isGuest(userId) || !renewals) reject('AUTO_RENEWAL_UNAVAILABLE',404);
+      await member(userId);
+      await renewals.set(userId,body.enabled,now());
+      return { ...(await renewals.view(userId)),sandbox };
+    },
     async webhook(headers,event) {
       if(!await paypal.verify(headers,event)) { await store.flag(null,'INVALID_WEBHOOK_SIGNATURE'); reject('INVALID_SIGNATURE',400); }
       if(typeof event.id !== 'string' || event.id.length > 160 || typeof event.event_type !== 'string') reject('INVALID_EVENT',400);
       const digest=createHash('sha256').update(JSON.stringify(event)).digest('hex');
       if(await store.eventSeen(event.id,digest)) return { received:true };
       const type=event.event_type, resource=event.resource ?? {};
-      if(type === 'PAYMENT.CAPTURE.COMPLETED') {
+      if(renewals && type === 'VAULT.PAYMENT-TOKEN.CREATED') {
+        // Vault status was APPROVED (not yet VAULTED) at capture: PayPal sends the saved token here.
+        const order=await renewals.findOrderByPaypal(resource.metadata?.order_id);
+        if(order?.auto_renewal_offered === true && typeof resource.id === 'string') {
+          const token=await paypal.vaultToken(resource.id);
+          if(token.id !== resource.id || !token.payment_source?.paypal) reject('PAYMENT_MISMATCH');
+          await renewals.enroll(order.id,{id:token.id,customer:typeof token.customer?.id === 'string' ? token.customer.id : null},now());
+        }
+      } else if(renewals && type === 'VAULT.PAYMENT-TOKEN.DELETED') {
+        await renewals.tokenDeleted(resource.id);
+      } else if(type === 'PAYMENT.CAPTURE.COMPLETED') {
         const details=await paypal.captureDetails(resource.id);
         const orderId=details.supplementary_data?.related_ids?.order_id;
         const order=await store.findPaypal(orderId);
@@ -112,7 +164,7 @@ export function paymentEngine({ store, paypal, merchantId, getUser, now = Date.n
         if(!['revoked','suspended','held'].includes(order.state)) {
           const payment=verifyOrder(order,remote,merchantId,true);
           if(payment.captureId !== resource.id || details.id !== resource.id) reject('PAYMENT_MISMATCH');
-          await settle(order,remote);
+          if(await settle(order,remote) === 'paid') await enroll(order,remote);
         }
       } else if(['PAYMENT.CAPTURE.REFUNDED','PAYMENT.CAPTURE.REVERSED'].includes(type) || type.startsWith('CUSTOMER.DISPUTE.')) {
         let captureId;

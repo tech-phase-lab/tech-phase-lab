@@ -48,7 +48,9 @@ export function createPaypal(config, fetcher = fetch) {
     return config.returnUrl;
   })();
   let cached, expires = 0;
-  async function call(path, method = 'GET', body, key) {
+  // definite: a 4xx answer (other than auth, idempotency-in-progress and rate limits) is PayPal's final refusal of a
+  // merchant-initiated charge — nothing was captured — so the caller may record a decline instead of an unknown result.
+  async function call(path, method = 'GET', body, key, definite = false) {
     try {
       if (!cached || Date.now() >= expires) {
         const res = await fetcher(`${config.base}/v1/oauth2/token`, { method: 'POST', redirect: 'error', cache: 'no-store',
@@ -62,26 +64,46 @@ export function createPaypal(config, fetcher = fetch) {
       const res = await fetcher(config.base + path, { method, redirect: 'error', cache: 'no-store', signal: AbortSignal.timeout(10000),
         headers: { Authorization: `Bearer ${cached}`, 'Content-Type': 'application/json', Prefer: 'return=representation',
           ...(key ? { 'PayPal-Request-Id': key } : {}) }, ...(body === undefined ? {} : { body: JSON.stringify(body) }) });
-      if (!res.ok) { if (res.status === 401) cached = undefined; await res.body?.cancel(); reject('PAYPAL_UNAVAILABLE', 503); }
+      if (!res.ok) { if (res.status === 401) cached = undefined; await res.body?.cancel();
+        if (definite && res.status >= 400 && res.status < 500 && ![401, 403, 408, 409, 429].includes(res.status)) reject('PAYPAL_DECLINED', 402);
+        reject('PAYPAL_UNAVAILABLE', 503); }
       return await readJson(res);
-    } catch { reject('PAYPAL_UNAVAILABLE', 503); } // Never expose response bodies, tokens or payment PII.
+    } catch (error) { if (error instanceof PaymentError && error.code === 'PAYPAL_DECLINED') throw error; reject('PAYPAL_UNAVAILABLE', 503); } // Never expose response bodies, tokens or payment PII.
   }
   const id = value => { if (!/^[A-Z0-9]{8,32}$/.test(value ?? '')) reject('INVALID_PAYMENT_INPUT', 400); return value; };
+  const token = value => { if (!/^[A-Za-z0-9_-]{1,64}$/.test(value ?? '')) reject('INVALID_PAYMENT_INPUT', 400); return value; };
+  // The same purchase unit for first purchases and renewals, so verifyOrder checks both the same way.
+  const unit = (order, q, amount) => ({ reference_id: order.id,
+        custom_id: order.id, invoice_id: order.id, payee: { merchant_id: config.merchantId },
+        amount: { ...amount, breakdown: { item_total: amount } },
+        items: [{ name: q.kind === 'initial' ? 'RESOLUTE' : 'RESOLUTE annual renewal', sku: q.sku,
+          quantity: '1', category: 'DIGITAL_GOODS', unit_amount: amount }] });
   return {
     async create(order) {
       const q = order.quote, amount = { currency_code: q.currency, value: q.value };
-      return call('/v2/checkout/orders', 'POST', { intent: 'CAPTURE', payment_source: { paypal: { experience_context: {
+      // Automatic renewal (flag on, signed-in first purchase only): ask PayPal to save the buyer's PayPal for later
+      // merchant-initiated renewals. PayPal shows its own consent for that; the vault id comes back with the capture.
+      // https://developer.paypal.com/docs/checkout/save-payment-methods/during-purchase/orders-api/paypal/
+      const vault = order.auto_renewal_offered === true && q.kind === 'initial'
+        ? { attributes: { vault: { store_in_vault: 'ON_SUCCESS', usage_type: 'MERCHANT', customer_type: 'CONSUMER' } } } : {};
+      return call('/v2/checkout/orders', 'POST', { intent: 'CAPTURE', payment_source: { paypal: { ...vault, experience_context: {
         // Opens PayPal on its 「銀行｜カード」 page (card/bank without a PayPal login) instead of the login page.
         // Checked in Sandbox with a JP buyer (owner, Nov 2026).
         shipping_preference: 'NO_SHIPPING', user_action: 'CONTINUE', landing_page: 'GUEST_CHECKOUT',
         return_url: `${returnUrl}?order=${order.id}&lang=${q.language}${order.guest_id ? "&guest=1" : ""}`,
         cancel_url: `${returnUrl}?order=${order.id}&lang=${q.language}${order.guest_id ? "&guest=1" : ""}&cancel=1`
-      } } }, purchase_units: [{ reference_id: order.id,
-        custom_id: order.id, invoice_id: order.id, payee: { merchant_id: config.merchantId },
-        amount: { ...amount, breakdown: { item_total: amount } },
-        items: [{ name: q.kind === 'initial' ? 'RESOLUTE' : 'RESOLUTE annual renewal', sku: q.sku,
-          quantity: '1', category: 'DIGITAL_GOODS', unit_amount: amount }] }] }, order.id);
+      } } }, purchase_units: [unit(order, q, amount)] }, order.id);
     },
+    // Merchant-initiated renewal with the saved PayPal (payer not present). PayPal-Request-Id is the order's own
+    // capture key, so a retry after a lost answer returns the same PayPal order instead of charging twice.
+    // https://developer.paypal.com/docs/checkout/save-payment-methods/purchase-later/payment-tokens-api/paypal/
+    async charge(order, vaultId) {
+      const q = order.quote, amount = { currency_code: q.currency, value: q.value };
+      if (q.kind !== 'renewal') reject('INVALID_PAYMENT_INPUT', 400);
+      return call('/v2/checkout/orders', 'POST', { intent: 'CAPTURE', payment_source: { paypal: { vault_id: token(vaultId) } },
+        purchase_units: [unit(order, q, amount)] }, order.capture_key, true);
+    },
+    vaultToken: tokenId => call(`/v3/vault/payment-tokens/${token(tokenId)}`),
     approval: async orderId => approvalUrl(await call(`/v2/checkout/orders/${id(orderId)}`),orderId,environment),
     get: orderId => call(`/v2/checkout/orders/${id(orderId)}`),
     capture: order => call(`/v2/checkout/orders/${id(order.paypal_id)}/capture`, 'POST', {}, order.capture_key),
