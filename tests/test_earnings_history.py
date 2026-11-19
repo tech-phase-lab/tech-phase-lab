@@ -1,5 +1,6 @@
 """The calendar's 「発表済みの結果」 reads every stored result of a month (owner, Nov 18), and the SEC backfill lists results
 without inventing figures."""
+import gzip
 import hashlib
 import json
 import os
@@ -215,6 +216,165 @@ class HighlightSentences(unittest.TestCase):
         self.assertEqual(len(market_results.display_floor([payload])), 1)
         table = {**payload, 'method': 'deterministic-issuer-table'}
         self.assertEqual(market_results.display_floor([table]), [])
+
+
+
+def latest_release(ticker):
+    """The extracted text of the company's latest results release (tests/fixtures/latest-releases, from SEC EDGAR)."""
+    return gzip.decompress((FX / 'latest-releases' / f'{ticker}.txt.gz').read_bytes()).decode()
+
+
+class Qualcomm(unittest.TestCase):
+    """Qualcomm's quarterly results table (Q4 FY2026, 8-K of Nov 4, 2026): the quarter is only in tables, its highlight sentences are
+    the fiscal year's."""
+
+    def text(self):
+        return ' '.join(latest_release('QCOM').split())
+
+    def test_reads_the_gaap_and_non_gaap_columns_and_the_statement(self):
+        parsed = flash.parse_qualcomm(self.text())
+        self.assertEqual(parsed['period'], 'Q4 FY2026')
+        self.assertEqual(parsed['facts'], [('revenue', '$10.322B', '$11.27B'), ('eps', '$1.17', '$-2.89'), ('adjusted-eps', '$2.17', '$3.00'),
+                                           ('net-income', '$1.251B', '$-3.117B'), ('operating-income', '$1.356B', '$2.918B')])
+        self.assertIs(flash.PROFILES['QCOM']['parse'], flash.parse_qualcomm)
+        self.assertIn(flash.PROFILES['QCOM']['marker'], ' '.join(self.text().split()))
+        self.assertNotIn('sentences-only', flash.PROFILES['QCOM'])
+
+    def test_a_row_whose_change_disagrees_is_left_out(self):
+        parsed = flash.parse_qualcomm(self.text().replace('Net income $1,251 ($3,117) +140%', 'Net income $1,251 ($3,117) +40%'))
+        self.assertNotIn('net-income', [f[0] for f in parsed['facts']])
+        self.assertIn('operating-income', [f[0] for f in parsed['facts']])  # still checked against the statement's own revenue and costs
+        with self.assertRaisesRegex(ValueError, 'revenue-row-unrecognized'):
+            flash.parse_qualcomm(self.text().replace('Revenues $10,322 $11,270 (8%)', 'Revenues $10,322 $11,270 (18%)', 1))
+
+    def test_operating_income_only_when_the_statement_agrees(self):
+        keys = lambda text: [f[0] for f in flash.parse_qualcomm(text)['facts']]  # noqa: E731
+        self.assertNotIn('operating-income', keys(self.text().replace('Operating income 1,356 2,918', 'Operating income 1,366 2,918')))
+        self.assertNotIn('operating-income', keys(self.text().replace('Total revenues 10,322 11,270', 'Total revenues 10,323 11,270')))
+
+    def test_the_columns_must_be_the_quarter_and_a_year_earlier(self):
+        with self.assertRaisesRegex(ValueError, 'columns-unrecognized'):
+            flash.parse_qualcomm(self.text().replace('Q4 Fiscal 2026 Q4 Fiscal 2025 Change Q4', 'Q4 Fiscal 2026 Q3 Fiscal 2026 Change Q4', 1))
+        with self.assertRaisesRegex(ValueError, 'table-heading-missing'):
+            flash.parse_qualcomm(self.text().replace('Fourth Quarter Results', 'Fourth Quarter Summary'))
+
+
+class Constellation(unittest.TestCase):
+    """Constellation's Q3 2026 release (8-K EX-99.1 of Nov 9, 2026, filed under its co-registrant's CIK 1168165)."""
+
+    def text(self):
+        return ' '.join(latest_release('CEG').split())
+
+    def test_reads_the_statements_and_the_reconciliation(self):
+        parsed = flash.parse_with_sentences('CEG', self.text(), None)
+        self.assertEqual(parsed['period'], 'Q3 2026')
+        self.assertEqual(parsed['facts'], [('revenue', '$9.55B', '$6.57B'), ('eps', '$5.19', '$2.97'), ('adjusted-eps', '$5.06', '$3.04'),
+                                           ('net-income', '$1.835B', '$930M'), ('operating-income', '$2.492B', '$1.086B')])
+        self.assertIs(flash.PROFILES['CEG']['parse'], flash.parse_constellation)
+        self.assertIn(flash.PROFILES['CEG']['marker'], ' '.join(self.text().split()))
+
+    def test_a_statement_that_disagrees_with_itself_is_refused(self):
+        with self.assertRaisesRegex(ValueError, 'revenue-row-unrecognized'):
+            flash.parse_constellation(self.text().replace('Operating income (loss) 2,492 5,404', 'Operating income (loss) 2,592 5,404'))
+        with self.assertRaisesRegex(ValueError, 'revenue-row-unrecognized'):
+            flash.parse_constellation(self.text().replace('Net income (loss) 929 1,891', 'Net income (loss) 939 1,891'))
+
+    def test_per_share_figures_must_agree_with_the_highlights_and_the_statement(self):
+        keys = lambda text: [f[0] for f in flash.parse_constellation(text)['facts']]  # noqa: E731
+        self.assertNotIn('adjusted-eps', keys(self.text().replace('Operating Earnings of $5.06 per share', 'Operating Earnings of $5.16 per share')))
+        changed = keys(self.text().replace('Diluted $ 5.19 $ 2.97', 'Diluted $ 5.18 $ 2.97'))
+        self.assertNotIn('eps', changed)
+        self.assertNotIn('adjusted-eps', changed)
+        self.assertIn('net-income', changed)
+
+    def test_the_year_ago_block_must_be_the_same_quarter(self):
+        with self.assertRaisesRegex(ValueError, 'columns-unrecognized'):
+            flash.parse_constellation(self.text().replace('Three Months Ended September 30, 2025 Nine', 'Three Months Ended June 30, 2025 Nine'))
+
+
+INDEX = """<html><body>
+<div class="companyInfo">
+  <span class="companyName">CONSTELLATION ENERGY GENERATION LLC (Filer)
+ <acronym title="Central Index Key">CIK</acronym>: <a href="/cgi-bin/browse-edgar?CIK=0001168165&amp;action=getcompany">0001168165 (see all company filings)</a></span>
+</div>
+<div class="companyInfo">
+  <span class="companyName">Constellation Energy Corp (Filer)
+ <acronym title="Central Index Key">CIK</acronym>: <a href="/cgi-bin/browse-edgar?CIK=0001868275&amp;action=getcompany">0001868275 (see all company filings)</a></span>
+</div>
+<p>See also <a href="/cgi-bin/browse-edgar?CIK=0009999999&amp;action=getcompany">another company</a></p>
+<table class="tableFile">
+<tr><td scope="row">1</td><td scope="row"></td><td scope="row"><a href="/ix?doc=/Archives/edgar/data/1168165/000186827526000116/ceg-20261109.htm">ceg-20261109.htm</a></td><td scope="row">8-K</td></tr>
+<tr><td scope="row">2</td><td scope="row">EX-99.1</td><td scope="row"><a href="/Archives/edgar/data/1168165/000186827526000116/ceg-20261109991.htm">ceg-20261109991.htm</a></td><td scope="row">EX-99.1</td></tr>
+<tr><td scope="row">3</td><td scope="row">EX-99.1</td><td scope="row"><a href="/Archives/edgar/data/9999999/000186827526000116/other.htm">other.htm</a></td><td scope="row">EX-99.1</td></tr>
+<tr><td scope="row">4</td><td scope="row">EX-99.1</td><td scope="row"><a href="/Archives/edgar/data/1168165/000186827526000999/other-accession.htm">x</a></td><td scope="row">EX-99.1</td></tr>
+</table></body></html>"""
+PRIMARY = 'https://www.sec.gov/Archives/edgar/data/1868275/000186827526000116/ceg-20261109.htm'
+# The 8-K's own exhibit list (as filed): the exhibit number and then its description, both linked to the same document.
+COVER = (b'<html><body><p>FORM 8-K Item 2.02 Results of Operations and Financial Condition</p><table>'
+         b'<tr><td><a href="ceg-20261109991.htm">99.1</a></td><td><a href="ceg-20261109991.htm">Press release and earnings release attachments</a></td></tr>'
+         b'<tr><td><a href="ceg-20261109992.htm">99.2</a></td><td><a href="ceg-20261109992.htm">Earnings conference call presentation slides</a></td></tr>'
+         b'</table></body></html>')
+
+
+class CoRegistrant(unittest.TestCase):
+    """Constellation's EX-99.1: the 8-K links it under CEG's own directory; the filing index lists it under its co-registrant's."""
+
+    def release(self):
+        return ('<html><body><p>CONSTELLATION REPORTS THIRD QUARTER 2026 RESULTS Earnings Release Highlights GAAP Net Income of $5.19 per share '
+                + 'and more text ' * 40 + '</p></body></html>').encode()
+
+    def test_the_exhibit_number_label_counts_although_a_description_follows(self):
+        self.assertEqual(monitor.sec_exhibit_links(COVER, PRIMARY, 'CEG'),
+                         ['https://www.sec.gov/Archives/edgar/data/1868275/000186827526000116/ceg-20261109991.htm'])
+        self.assertEqual(monitor.sec_exhibit_links(COVER, PRIMARY, 'CEG', '2'),
+                         ['https://www.sec.gov/Archives/edgar/data/1868275/000186827526000116/ceg-20261109992.htm'])
+
+    def test_only_filers_the_index_names_and_the_same_accession(self):
+        self.assertEqual(monitor.sec_filing_ciks(INDEX, '1868275'), ['1168165', '1868275'])
+        self.assertEqual(monitor.sec_filing_ciks(INDEX, '0001868275'), ['1168165', '1868275'])
+        self.assertEqual(monitor.sec_filing_ciks(INDEX, '320193'), [])  # an index that does not name the company itself: nobody
+        directory = '/Archives/edgar/data/1868275/000186827526000116/'
+        self.assertEqual(monitor.co_registrant_directory(directory, '1168165'), '/Archives/edgar/data/1168165/000186827526000116/')
+        self.assertIsNone(monitor.co_registrant_directory(directory, '1868275'))
+        allowed = {'/Archives/edgar/data/1168165/000186827526000116/'}
+        good = 'https://www.sec.gov/Archives/edgar/data/1168165/000186827526000116/ceg-20261109991.htm'
+        self.assertEqual(monitor.co_registrant_url(good, allowed), good)
+        for bad in ['https://www.sec.gov/Archives/edgar/data/9999999/000186827526000116/x.htm', 'http://www.sec.gov' + good[19:],
+                    'https://evil.example/Archives/edgar/data/1168165/000186827526000116/x.htm', good + '?x=1',
+                    'https://www.sec.gov/Archives/edgar/data/1168165/000186827526000999/x.htm']:
+            self.assertIsNone(monitor.co_registrant_url(bad, allowed), bad)
+
+    def test_the_exhibit_under_the_co_registrant_is_fetched_from_the_index(self):
+        fetched = []
+        release = self.release()
+
+        def transport(url, ticker, **_):
+            fetched.append(url)
+            if url.endswith('-index.html'):
+                return INDEX.encode(), 'text/html'
+            if url.endswith('/1168165/000186827526000116/ceg-20261109991.htm'):
+                return release, 'text/html'
+            raise AssertionError('unexpected fetch ' + url)
+        cover = b'<html><body><p>FORM 8-K Item 2.02 Results of Operations</p></body></html>'
+        evidence = monitor.sec_exhibit_evidence(cover, PRIMARY, 'CEG', transport)
+        self.assertEqual(evidence['url'], 'https://www.sec.gov/Archives/edgar/data/1168165/000186827526000116/ceg-20261109991.htm')
+        self.assertTrue(all('9999999' not in url and '000186827526000999' not in url for url in fetched))
+
+    def test_a_co_registrant_the_index_does_not_name_is_never_fetched(self):
+        index = INDEX.replace('CIK=0001168165', 'CIK=0001111111')
+
+        def transport(url, ticker, **_):
+            if url.endswith('-index.html'):
+                return index.encode(), 'text/html'
+            raise AssertionError('unexpected fetch ' + url)
+        cover = b'<html><body><p>FORM 8-K Item 2.02 Results of Operations</p></body></html>'
+        self.assertIn('error', monitor.sec_exhibit_evidence(cover, PRIMARY, 'CEG', transport))
+
+    def test_constellation_highlight_sentences(self):
+        parsed = highlight_sentences.parse((FX / 'constellation-results-q326-head.txt').read_text())
+        self.assertEqual(parsed['period'], 'Q3 2026')
+        # GAAP per share and the adjusted (non-GAAP) operating earnings per share; the full-year guidance range is not read
+        self.assertEqual([(f[0], f[1]) for f in parsed['facts']], [('eps', '$5.19'), ('adjusted-eps', '$5.06')])
 
 
 if __name__ == '__main__':

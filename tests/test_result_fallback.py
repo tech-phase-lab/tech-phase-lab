@@ -126,5 +126,45 @@ class Publication(unittest.TestCase):
         self.assertEqual([(w['ticker'],w['state'],w['reason']) for w in health['waiting']],[('NVDA','unreadable','columns-unrecognized')])
         self.assertEqual([(a['ticker'],a['state'],a['parseReason']) for a in health['attempts']],[('NVDA','unreadable','columns-unrecognized')])
 
+class Gaps(unittest.TestCase):
+    """A tracked company's announced release still without figures 30 minutes later writes one log line (codes only), then one when
+    figures arrive."""
+    setUp=Publication.setUp
+    def lines(self, out):
+        return [json.loads(l) for l in out.getvalue().splitlines() if l.startswith('{') and '"earnings-results-' in l]
+    def test_one_line_when_figures_are_missing_and_one_when_they_arrive(self):
+        later=datetime(2026,11,17,22,0,tzinfo=timezone.utc)
+        out=io.StringIO()
+        with contextlib.redirect_stdout(out), mock.patch.dict(flash.PROFILES['NVDA'],{'parse':fails}):
+            flash.run_once(self.path,NOW)
+            self.assertEqual(rf.report_gaps(self.path,NOW),0)            # 8 minutes after the announcement: still waiting
+            self.assertEqual(rf.report_gaps(self.path,later),1)
+            self.assertEqual(rf.report_gaps(self.path,later),0)          # once per release
+        [line]=self.lines(out)
+        self.assertEqual((line['event'],line['ticker'],line['reason'],line['period'],line['minutes']),
+                         ('earnings-results-without-figures','NVDA','columns-unrecognized','Q3 2027',37))
+        self.assertNotIn('sec.gov',out.getvalue())
+        with monitor.connect(self.path) as db:
+            self.assertEqual([(g['ticker'],g['state']) for g in flash.diagnostics(db)['gaps']],[('NVDA','without-figures')])
+        out=io.StringIO()
+        with contextlib.redirect_stdout(out):
+            flash.run_once(self.path,later)
+            self.assertEqual(rf.report_gaps(self.path,later),1)
+            self.assertEqual(rf.report_gaps(self.path,later),0)
+        self.assertEqual([(l['event'],l['ticker']) for l in self.lines(out)],[('earnings-results-figures-arrived','NVDA')])
+    def test_a_release_read_in_time_writes_nothing(self):
+        out=io.StringIO()
+        with contextlib.redirect_stdout(out):
+            flash.run_once(self.path,NOW)
+            self.assertEqual(rf.report_gaps(self.path,datetime(2026,11,18,9,0,tzinfo=timezone.utc)),0)
+        self.assertEqual(self.lines(out),[])
+    def test_a_company_without_any_reading_says_so(self):
+        with monitor.connect(self.path) as db:
+            db.execute("UPDATE earnings_announcements SET ticker='QCOM'")
+        out=io.StringIO()
+        with contextlib.redirect_stdout(out):
+            rf.report_gaps(self.path,datetime(2026,11,17,23,0,tzinfo=timezone.utc))
+        self.assertEqual([(l['ticker'],l['reason']) for l in self.lines(out)],[('QCOM','not-attempted')])
+
 if __name__=='__main__':
     unittest.main()

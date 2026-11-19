@@ -19,6 +19,14 @@ METHOD = 'issuer-highlight-sentences'
 HEAD = 4000  # the highlights come first; later text is tables, reconciliations and the outlook
 RESULTS_HEAD = re.compile(r'(?i)\b(?:first|second|third|fourth|Q[1-4]|quarter(?:ly)?)\b.{0,120}\b(?:results|earnings|update)\b')
 NOT_RESULTS_HEAD = re.compile(r'(?i)\bproduction,? deliveries\b|\bto combine\b|\bto acquire\b|\bmerger\b')
+
+
+def results_head(head):
+    """The first lines name a quarter's results, and no deliveries report or deal comes before or inside that headline
+    (Constellation's highlights mention an acquisition after "THIRD QUARTER 2026 RESULTS"; Marvell's merger comes first)."""
+    found = RESULTS_HEAD.search(head)
+    other = NOT_RESULTS_HEAD.search(head)
+    return bool(found) and not (other and other.start() < found.end())
 QUARTER = r'(?:Q[1-4]|(?:first|second|third|fourth)[- ]quarter)'
 START = r'(?:^|(?<=[•–;:])\s*|(?<=\.)\s+|(?<=Highlights)\s*)'
 VALUE_FIRST = r'(?<![\w$.,])'  # a figure printed before its label ("$0.8B GAAP net income")
@@ -43,7 +51,10 @@ PATTERNS = (
     # "Q1 GAAP EPS OF $1.90", "Q1 NON-GAAP EPS OF $2.09", "diluted EPS of $0.57", "GAAP net income of $1.90 per diluted share"
     ('eps', re.compile(START + r'(?i:(?:' + QUARTER + r' )?(GAAP |non-GAAP )?(diluted )?(?:EPS|earnings per (?:diluted )?share)'
                        r'(?: \(EPS\))?(?: of| was|:)? )\$(\d+\.\d{2})\b')),
-    ('eps', re.compile(START + r'(?i:(GAAP |non-GAAP )?()net income of )\$(\d+\.\d{2}) per diluted share\b')),
+    ('eps', re.compile(START + r'(?i:(GAAP |non-GAAP )?()net income of )\$(\d+\.\d{2}) per (?:diluted )?share\b')),
+    # Constellation: "GAAP Net Income of $5.19 per share and Adjusted (non-GAAP) Operating Earnings of $5.06 per share"
+    ('eps', re.compile(r'(?:' + START + r'|(?<=per share and )|(?<=per diluted share and ))'
+                       r'(?i:Adjusted \((non-GAAP)\)() Operating Earnings of )\$(\d+\.\d{2}) per (?:diluted )?share\b')),
 )
 LABELS = {
     'eps-diluted': flash.LABELS['eps'],
@@ -93,7 +104,7 @@ def segment_ok(head, match):
 def parse(text, url=None):
     """{'period', 'facts'} in issuer_result_flash's shape, or ValueError(code)."""
     head = flash.clean(text)[:HEAD]
-    if not RESULTS_HEAD.search(head[:800]) or NOT_RESULTS_HEAD.search(head[:800]):
+    if not results_head(head[:800]):
         raise ValueError('not-a-results-release')
     period = release_period(head[:800])
     if period == '決算':

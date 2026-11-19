@@ -309,7 +309,7 @@ def statement_row(block, label, columns):
     found = re.findall(r'(?<![A-Za-z])' + label + r'(?: \$)? ' + ' '.join(['(?:\\$ )?(' + AMT + ')'] * columns) + r'(?= |$)', block)
     if len(found) != 1:
         return None
-    return [signed(x) for x in found[0]]
+    return [signed(x) for x in (found[0] if columns > 1 else (found[0],))]  # one group: findall gives the string itself
 
 
 def parse_statement(text, cfg):
@@ -1036,6 +1036,190 @@ def parse_tsmc(text, url=None):
     return {'period': f'Q{quarter} {year}', 'facts': out}
 
 
+QCOM_AMOUNT = r'(\(?\$[\d,]+(?:\.\d+)?\)?)'
+QCOM_CHANGE = r'(\(\d+%\)|[+-]?\d+%|N/M)'
+
+
+def qcom_amount(text):
+    """'$10,322' -> 10322; '($3,117)' -> -3117 (the release prints a negative in brackets around the dollar sign)."""
+    return signed(text.replace('$', ''))
+
+
+def qcom_change_ok(current, prior, change):
+    """Qualcomm's change column is (current - prior) / |prior|, rounded to a whole percent ("(8%)", "+140%")."""
+    if change == 'N/M' or prior == 0:
+        return change == 'N/M'
+    stated = Decimal(change.strip('()+%')) * (-1 if change.startswith('(') or change.startswith('-') else 1)
+    actual = (current - prior) / abs(prior) * 100
+    return abs(actual - stated) <= Decimal('0.6')
+
+
+def parse_qualcomm(text, url=None):
+    """Qualcomm's "<Quarter> Quarter Results" table (SEC 8-K EX-99.1), in millions except per-share data: for GAAP and then non-GAAP,
+    this quarter, the same quarter a year earlier and the stated change. A row is read only when it has exactly those six cells and both
+    stated changes agree with the values; the column headings must name the quarter and the same quarter one fiscal year earlier.
+    GAAP revenue, net income and diluted EPS are published; the non-GAAP EPS as adjusted EPS (non-GAAP revenue is not shown)."""
+    t = clean(text)
+    if 'qualcomm' not in t.lower():
+        raise ValueError('issuer-identity-missing')
+    head = re.search(r'(First|Second|Third|Fourth) Quarter Results(?:\d(?:,\d)*)? GAAP Non-GAAP \(in millions, except per share data and percentages\) '
+                     r'Q([1-4]) Fiscal (20\d\d) Q([1-4]) Fiscal (20\d\d) Change Q([1-4]) Fiscal (20\d\d) Q([1-4]) Fiscal (20\d\d) Change ', t)
+    if not head:
+        raise ValueError('table-heading-missing')
+    quarter, year = QUARTERS[head[1].lower()], int(head[3])
+    if (int(head[2]), int(head[4]), int(head[6]), int(head[8])) != (quarter,) * 4 or int(head[5]) != year - 1 \
+            or (int(head[7]), int(head[9])) != (year, year - 1):
+        raise ValueError('columns-unrecognized')
+    block = t[head.end():head.end() + 900]
+    # the table ends at its first footnote, the segment table or the fiscal year's table (each repeats "Revenues")
+    stop = re.search(r' \(\d\) |Segment Results|Fiscal ' + str(year) + ' Results', block)
+    block = block[:stop.start()] if stop else block
+    cells = ' '.join([QCOM_AMOUNT, QCOM_AMOUNT, QCOM_CHANGE] * 2)
+    labels = {'revenue': r'Revenues', 'net-income': r'Net income(?: \(loss\))?',
+              'eps': r'Diluted earnings(?: \(loss\))? per share \(EPS\)'}
+    rows = {}
+    for key, label in labels.items():
+        found = re.findall(r'(?<![A-Za-z])' + label + ' ' + cells + r'(?= |$)', block)
+        if len(found) != 1:
+            continue  # missing or repeated: ambiguous
+        cur, ago, change, ncur, nago, nchange = found[0]
+        values = [qcom_amount(cur), qcom_amount(ago), qcom_amount(ncur), qcom_amount(nago)]
+        if not (qcom_change_ok(values[0], values[1], change) and qcom_change_ok(values[2], values[3], nchange)):
+            continue
+        rows[key] = values
+    if 'revenue' not in rows or rows['revenue'][0] <= 0:
+        raise ValueError('revenue-row-unrecognized')
+    facts = [('revenue', money_millions(rows['revenue'][0]), money_millions(rows['revenue'][1]))]
+    if 'eps' in rows:
+        facts.append(('eps', per_share(rows['eps'][0]), per_share(rows['eps'][1])))
+        facts.append(('adjusted-eps', per_share(rows['eps'][2]), per_share(rows['eps'][3])))
+    if 'net-income' in rows:
+        facts.append(('net-income', money_millions(rows['net-income'][0]), money_millions(rows['net-income'][1])))
+    operating = qualcomm_operating_income(t, rows)
+    if operating:
+        facts.append(('operating-income', money_millions(operating[0]), money_millions(operating[1])))
+    order = {k: i for i, k in enumerate(ORDER)}
+    facts.sort(key=lambda f: order[f[0]])
+    return {'period': f'Q{quarter} FY{year}', 'facts': facts}
+
+
+def qualcomm_operating_income(t, rows):
+    """Operating income from Qualcomm's consolidated statement of operations (this quarter, the same quarter a year earlier), read only
+    when the statement's total revenues (and net income, where read) are the summary table's own and total revenues - total costs and
+    expenses = operating income in both columns. None otherwise."""
+    start = t.find('CONSOLIDATED STATEMENTS OF OPERATIONS (In millions, except per share data)')
+    if start < 0:
+        return None
+    block = t[start:start + 2500]
+    stop = block.find('CONSOLIDATED STATEMENTS OF CASH FLOWS')
+    block = block[:stop] if stop > 0 else block
+    n = 4 if re.search(r'Three Months Ended (?:Six|Nine|Twelve) Months Ended', block[:300]) else 2
+    revenue = statement_row(block, 'Total revenues', n)
+    costs = statement_row(block, 'Total costs and expenses', n)
+    operating = statement_row(block, r'Operating income(?: \(loss\))?', n)
+    net = statement_row(block, r'Net income(?: \(loss\))?', n)
+    if None in (revenue, costs, operating) or revenue[:2] != rows['revenue'][:2]:
+        return None
+    if 'net-income' in rows and (net is None or net[:2] != rows['net-income'][:2]):
+        return None
+    if any(abs(revenue[i] - costs[i] - operating[i]) > 1 for i in (0, 1)):
+        return None
+    return operating[0], operating[1]
+
+
+CEG_ROWS = {'revenue': 'Operating revenues', 'opex': 'Total operating expenses', 'gain': r'Gain \(loss\) on sales of assets(?: and businesses)?',
+            'operating': r'Operating income \(loss\)', 'pretax': r'Income \(loss\) before income taxes',
+            'tax': r'Income tax \(benefit\) expense', 'equity': r'Equity in income \(losses\) of unconsolidated affiliates',
+            'net': r'Net income \(loss\)', 'nci': r'Net income \(loss\) attributable to noncontrolling interests',
+            'attrib': r'Net income \(loss\) attributable to common shareholders'}
+CEG_OPTIONAL = ('gain', 'equity')  # a line the statement leaves out in a year without such items (2025: no gain on sales)
+CEG_PER_SHARE = r'\$ (\(?\d+\.\d\d\)?)'
+
+
+def constellation_quarter(block, n):
+    """This quarter's column of one of Constellation's statements of operations (in millions), checked against itself:
+    revenues - operating expenses + gains on sales = operating income; pretax income - tax + equity income = net income;
+    net income - non-controlling interests = net income attributable to common shareholders. None when any identity fails."""
+    rows = {}
+    for key, label in CEG_ROWS.items():
+        row = statement_row(block, label, n)
+        if row is None and key in CEG_OPTIONAL and n > 1:
+            # a small line printed for one column only ("Equity in income (losses) of unconsolidated affiliates (1)", Q4 2025):
+            # taken as this quarter's only because the identities below must then hold with it
+            row = statement_row(block, label, 1)
+        if row is None and key not in CEG_OPTIONAL:
+            return None
+        rows[key] = row[0] if row else Decimal(0)
+    if rows['revenue'] <= 0 or abs(rows['revenue'] - rows['opex'] + rows['gain'] - rows['operating']) > 1 \
+            or abs(rows['pretax'] - rows['tax'] + rows['equity'] - rows['net']) > 1 or abs(rows['net'] - rows['nci'] - rows['attrib']) > 1:
+        return None
+    return rows
+
+
+def parse_constellation(text, url=None):
+    """Constellation Energy's results release (8-K EX-99.1, filed under its co-registrant's CIK): the consolidated statements of
+    operations print this year's quarter and the same quarter a year earlier as two separate blocks (each with its year-to-date column).
+    Revenue, operating income and net income attributable to common shareholders are read from both blocks, each checked against
+    itself; GAAP diluted EPS and Adjusted (non-GAAP) Operating Earnings per share from the release's quarterly reconciliation, which must
+    repeat the statement's net income, agree with the diluted share count and with the per-share figures the highlights state."""
+    t = clean(text)
+    if 'constellation' not in t[:3000].lower():
+        raise ValueError('issuer-identity-missing')
+    head = re.search(r'(?i)CONSTELLATION REPORTS (FIRST|SECOND|THIRD|FOURTH) QUARTER (?:AND FULL[- ]YEAR )?(20\d\d) RESULTS', t[:1500])
+    if not head:
+        raise ValueError('period-unrecognized')
+    quarter, year = QUARTERS[head[1].lower()], int(head[2])
+    heading = re.search(r'Consolidated Statements of Operations ?\(unaudited\) ?\(in millions\) Three Months Ended (' + MONTH
+                        + r' \d{1,2}), ' + str(year) + r'( (?:Six|Nine|Twelve) Months Ended ' + MONTH + r' \d{1,2}, ' + str(year) + ')?', t)
+    if not heading:
+        raise ValueError('statement-heading-missing')
+    n = 2 if heading[2] else 1
+    earlier = re.compile(r'Three Months Ended ' + re.escape(heading[1]) + ', ' + str(year - 1)
+                         + (r' (?:Six|Nine|Twelve) Months Ended ' + MONTH + r' \d{1,2}, ' + str(year - 1) if n == 2 else '') + ' ')
+    ago_head = earlier.search(t, heading.end(), heading.end() + 2500)
+    if not ago_head:
+        raise ValueError('columns-unrecognized')
+    current = constellation_quarter(t[heading.end():ago_head.start()], n)
+    end = t.find('Change in Net income', ago_head.end(), ago_head.end() + 2500)
+    prior = constellation_quarter(t[ago_head.end():end if end > 0 else ago_head.end() + 2000], n)
+    if current is None or prior is None:
+        raise ValueError('revenue-row-unrecognized')
+    facts = [('revenue', money_millions(current['revenue']), money_millions(prior['revenue']))]
+    eps = adjusted = None
+    # the quarter's reconciliation is the one whose net income is the statement's (a fourth-quarter release also has the year's)
+    gaap = next((m for m in re.finditer(r'GAAP Net Income \(Loss\) Attributable to Common Shareholders \$ (\(?[\d,]+\)?) ' + CEG_PER_SHARE
+                                        + r' \$ (\(?[\d,]+\)?) ' + CEG_PER_SHARE, t)
+                 if (signed(m[1]), signed(m[3])) == (current['attrib'], prior['attrib'])), None)
+    adj = re.compile(r'Adjusted \(non-GAAP\) Operating Earnings \$ (\(?[\d,]+\)?) ' + CEG_PER_SHARE + r' \$ (\(?[\d,]+\)?) '
+                     + CEG_PER_SHARE).search(t, gaap.end()) if gaap else None
+    diluted = next((m for m in re.finditer(r'Earnings per average common share Basic \$ \(?\d+\.\d\d\)? \$ \(?\d+\.\d\d\)? Diluted '
+                                           + CEG_PER_SHARE + ' ' + CEG_PER_SHARE + r' Average common shares outstanding Basic \d[\d,]* '
+                                           r'\d[\d,]* Diluted (\d[\d,]*) (\d[\d,]*)', t)
+                    if gaap and (m[1], m[2]) == (gaap[2], gaap[4])), None)
+    if gaap and diluted:
+        values = [signed(gaap[2]), signed(gaap[4])]
+        shares = [signed(diluted[3]), signed(diluted[4])]
+        said = re.search(r'GAAP Net Income of \$(\d+\.\d\d) per share', t[:1500])
+        if values == [signed(diluted[1]), signed(diluted[2])] and all(s > 0 for s in shares) \
+                and all(abs(net / s - v) <= Decimal('0.015') + abs(v) * Decimal('0.02')
+                        for net, s, v in zip((current['attrib'], prior['attrib']), shares, values)) \
+                and (said is None or Decimal(said[1]) == values[0]):
+            eps = values
+            if adj:
+                totals, per = [signed(adj[1]), signed(adj[3])], [signed(adj[2]), signed(adj[4])]
+                said = re.search(r'Adjusted \(non-GAAP\) Operating Earnings of \$(\d+\.\d\d) per share', t[:1500])
+                if said and Decimal(said[1]) == per[0] and all(abs(x / s - v) <= Decimal('0.015') + abs(v) * Decimal('0.02')
+                                                               for x, s, v in zip(totals, shares, per)):
+                    adjusted = per
+    if eps:
+        facts.append(('eps', per_share(eps[0]), per_share(eps[1])))
+    if adjusted:
+        facts.append(('adjusted-eps', per_share(adjusted[0]), per_share(adjusted[1])))
+    facts.append(('net-income', money_millions(current['attrib']), money_millions(prior['attrib'])))
+    facts.append(('operating-income', money_millions(current['operating']), money_millions(prior['operating'])))
+    return {'period': f'Q{quarter} {year}', 'facts': facts}
+
+
 def parse_asml(text, url=None):
     """ASML's results release (6-K EX-99.1): a small table in EUR million (previous quarter, this quarter) and the headline in billions.
     Net sales and net income must agree with the headline; gross margin with gross profit / net sales."""
@@ -1202,6 +1386,10 @@ PROFILES = {
              'marker': STATEMENT['CRDO']['heading']},
     'AVGO': {'publisher': 'Broadcom IR (SEC 8-K)', 'parse': lambda t, u=None: parse_statement(t, STATEMENT['AVGO']),
              'marker': STATEMENT['AVGO']['heading']},
+    'QCOM': {'publisher': 'Qualcomm IR (SEC 8-K)', 'parse': parse_qualcomm,
+             'marker': 'GAAP Non-GAAP (in millions, except per share data and percentages)'},
+    'CEG': {'publisher': 'Constellation Energy IR (SEC 8-K)', 'parse': parse_constellation,
+            'marker': 'Adjusted (non-GAAP) Operating Earnings'},
 }
 SOURCE_URL = {
     'NBIS': re.compile(r'^https://nebius\.com/newsroom/[a-z0-9-]+$'),
@@ -1219,7 +1407,7 @@ def sentences(text, url=None):
 def sentence_candidate(flat):
     import highlight_sentences
     head = flat[:800]
-    return bool(highlight_sentences.RESULTS_HEAD.search(head)) and not highlight_sentences.NOT_RESULTS_HEAD.search(head)
+    return highlight_sentences.results_head(head)
 
 
 def outside_roster(ticker):
@@ -1246,7 +1434,7 @@ def parse_with_sentences(ticker, text, url):
 
 
 # Companies without a table parser: their figures come from the release's highlight sentences only.
-for _ticker, _name in (('CEG', 'Constellation Energy'), ('COHR', 'Coherent'), ('IBM', 'IBM'), ('IREN', 'IREN'), ('QCOM', 'Qualcomm'),
+for _ticker, _name in (('COHR', 'Coherent'), ('IBM', 'IBM'), ('IREN', 'IREN'),
                        ('TSLA', 'Tesla'), ('VST', 'Vistra')):
     PROFILES.setdefault(_ticker, {'publisher': f'{_name} IR (SEC 8-K)', 'parse': sentences, 'sentences-only': True})
 
@@ -1430,4 +1618,4 @@ def diagnostics(db):
         waiting = [{'ticker': a['ticker'], 'state': a['state'], 'reason': a['reason'], 'at': a['changedAt']}
                    for a in persisted['attempts'] if a['state'] != 'published'][:10]
     return {'status': 'running', 'published': stored, 'latest': latest, 'waiting': waiting,
-            'attempts': persisted['attempts'], 'fallbacks': persisted['fallbacks']}
+            'attempts': persisted['attempts'], 'fallbacks': persisted['fallbacks'], 'gaps': persisted.get('gaps', [])}
