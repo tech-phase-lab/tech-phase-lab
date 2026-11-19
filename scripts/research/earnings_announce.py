@@ -147,13 +147,14 @@ def run_once(path, reference=None):
     return added
 
 
-def public_feed(db, cutoff):
+def public_feed(db, cutoff, until=None):
     """Stored announcements still inside the window, in the shape of the other result briefs (no figures)."""
     if not db.execute("SELECT 1 FROM sqlite_master WHERE name='earnings_announcements'").fetchone():
         return []
     items = []
     for row in db.execute('SELECT * FROM earnings_announcements WHERE julianday(observed_at)>=julianday(?) '
-                          'ORDER BY julianday(observed_at) DESC', (cutoff,)):
+                          'AND julianday(observed_at)<julianday(?) ORDER BY julianday(observed_at) DESC',
+                          (cutoff, until or '9999-12-31T00:00:00+00:00')):
         number = str(int(row['key'][:12], 16))
         name = monitor.PROVIDERS[row['ticker']]['name']
         items.append({

@@ -11,7 +11,7 @@ export async function viewerHasFullNews(): Promise<boolean> {
 export const PRIVATE_HEADERS = { "Cache-Control": "private, no-store", Vary: "Cookie", "X-Content-Type-Options": "nosniff" } as const;
 
 /** One read from the monitor, same checks as the public routes. */
-export async function readMonitor(path: "news" | "company-wire", maxBytes: number, timeoutMs: number): Promise<unknown> {
+export async function readMonitor(path: "news" | "company-wire" | "earnings-results", maxBytes: number, timeoutMs: number, search: Record<string, string> = {}): Promise<unknown> {
   const base = process.env.RESEARCH_MONITOR_URL;
   const token = process.env.RESEARCH_MONITOR_TOKEN;
   if (!base || !token) throw new Error("Not configured");
@@ -19,6 +19,7 @@ export async function readMonitor(path: "news" | "company-wire", maxBytes: numbe
   if (url.username || url.password || (url.protocol !== "https:" && !(process.env.NODE_ENV !== "production" && ["localhost", "127.0.0.1"].includes(url.hostname)))) throw new Error("Invalid monitor");
   url.pathname = `${url.pathname.replace(/\/$/, "")}/${path}`; url.search = ""; url.hash = "";
   if (path === "news" && process.env.VERCEL_ENV === "preview") url.searchParams.set("originalPreview", "1");
+  for (const [key, value] of Object.entries(search)) url.searchParams.set(key, value);
   const response = await fetch(url, { headers: { Authorization: `Bearer ${token}` }, cache: "no-store", signal: AbortSignal.timeout(timeoutMs) });
   if (!response.ok) throw new Error("Unavailable");
   const text = await response.text();

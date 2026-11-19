@@ -1,0 +1,2475 @@
+{
+ "version": 1,
+ "range": {
+  "from": "2026-10-01",
+  "to": "2026-11-30"
+ },
+ "source": "SEC EDGAR results filings (8-K item 2.02 / results 6-K), deterministic issuer-table parsers",
+ "resultBriefs": [
+  {
+   "id": "25142105144810",
+   "researchId": "ir-flash-25142105144810",
+   "kind": "earnings",
+   "ticker": "PANW",
+   "period": "Q1 FY2027",
+   "titleJa": "PANW Q1 FY2027決算：売上高$3.445B、EPS（希薄化後）$0.57",
+   "titleEn": "PANW Q1 FY2027 earnings: Revenue $3.445B, Diluted EPS $0.57",
+   "facts": [
+    {
+     "key": "revenue",
+     "ja": "売上高",
+     "en": "Revenue",
+     "value": "$3.445B",
+     "comparisons": {
+      "yearAgo": "$2.474B"
+     }
+    },
+    {
+     "key": "eps",
+     "ja": "EPS（希薄化後）",
+     "en": "Diluted EPS",
+     "value": "$0.57",
+     "comparisons": {
+      "yearAgo": "$0.47"
+     }
+    },
+    {
+     "key": "net-income",
+     "ja": "純損益",
+     "en": "Net income / (loss)",
+     "value": "$482M",
+     "comparisons": {
+      "yearAgo": "$334M"
+     }
+    },
+    {
+     "key": "operating-income",
+     "ja": "営業損益",
+     "en": "Operating income / (loss)",
+     "value": "$96M",
+     "comparisons": {
+      "yearAgo": "$309M"
+     }
+    }
+   ],
+   "url": "https://www.sec.gov/Archives/edgar/data/1327567/000132756726000030/ex991q127earningsrelease.htm",
+   "publisher": "Palo Alto Networks IR (SEC 8-K)",
+   "publishedAt": "2026-11-18T21:37:04.000+00:00",
+   "observedAt": "2026-11-18T21:37:04.000+00:00",
+   "method": "deterministic-issuer-table"
+  },
+  {
+   "id": "37946516730190",
+   "researchId": "ir-flash-37946516730190",
+   "kind": "earnings",
+   "ticker": "NVDA",
+   "period": "Q3 FY2027",
+   "titleJa": "NVDA Q3 FY2027決算：売上高$115.8B、粗利益率74.8%",
+   "titleEn": "NVDA Q3 FY2027 earnings: Revenue $115.8B, Gross margin 74.8%",
+   "facts": [
+    {
+     "key": "revenue",
+     "ja": "売上高",
+     "en": "Revenue",
+     "value": "$115.8B",
+     "comparisons": {
+      "yearAgo": "$57B"
+     }
+    },
+    {
+     "key": "gross-margin",
+     "ja": "粗利益率",
+     "en": "Gross margin",
+     "value": "74.8%",
+     "comparisons": {
+      "yearAgo": "73.4%"
+     }
+    },
+    {
+     "key": "eps",
+     "ja": "EPS（希薄化後）",
+     "en": "Diluted EPS",
+     "value": "$2.70",
+     "comparisons": {
+      "yearAgo": "$1.30"
+     }
+    },
+    {
+     "key": "adjusted-eps",
+     "ja": "調整後EPS（希薄化後）",
+     "en": "Adjusted diluted EPS",
+     "value": "$2.68",
+     "comparisons": {
+      "yearAgo": "$1.27"
+     }
+    },
+    {
+     "key": "net-income",
+     "ja": "純損益",
+     "en": "Net income / (loss)",
+     "value": "$65.3B",
+     "comparisons": {
+      "yearAgo": "$31.9B"
+     }
+    },
+    {
+     "key": "operating-income",
+     "ja": "営業損益",
+     "en": "Operating income / (loss)",
+     "value": "$77.5B",
+     "comparisons": {
+      "yearAgo": "$36B"
+     }
+    },
+    {
+     "key": "guidance-revenue",
+     "ja": "次四半期見通し 売上高",
+     "en": "Next-quarter guidance Revenue",
+     "value": "$130.0B ± 3%"
+    }
+   ],
+   "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000088/q3fy27pr.htm",
+   "publisher": "NVIDIA IR",
+   "publishedAt": "2026-11-17T21:20:51.000+00:00",
+   "observedAt": "2026-11-17T21:20:51.000+00:00",
+   "method": "deterministic-issuer-table"
+  },
+  {
+   "id": "70481311523838",
+   "researchId": "ir-flash-70481311523838",
+   "kind": "earnings",
+   "ticker": "AMAT",
+   "period": "Q4 FY2026",
+   "titleJa": "AMAT Q4 FY2026決算：売上高$10.409B、EPS（希薄化後）$3.40",
+   "titleEn": "AMAT Q4 FY2026 earnings: Revenue $10.409B, Diluted EPS $3.40",
+   "facts": [
+    {
+     "key": "revenue",
+     "ja": "売上高",
+     "en": "Revenue",
+     "value": "$10.409B",
+     "comparisons": {
+      "yearAgo": "$6.8B"
+     }
+    },
+    {
+     "key": "eps",
+     "ja": "EPS（希薄化後）",
+     "en": "Diluted EPS",
+     "value": "$3.40",
+     "comparisons": {
+      "yearAgo": "$2.38"
+     }
+    },
+    {
+     "key": "net-income",
+     "ja": "純損益",
+     "en": "Net income / (loss)",
+     "value": "$2.718B",
+     "comparisons": {
+      "yearAgo": "$1.897B"
+     }
+    },
+    {
+     "key": "operating-income",
+     "ja": "営業損益",
+     "en": "Operating income / (loss)",
+     "value": "$3.658B",
+     "comparisons": {
+      "yearAgo": "$1.712B"
+     }
+    }
+   ],
+   "url": "https://www.sec.gov/Archives/edgar/data/6951/000162828026073360/exhibit991q42026earningsre.htm",
+   "publisher": "Applied Materials IR (SEC 8-K)",
+   "publishedAt": "2026-11-12T21:02:46.000+00:00",
+   "observedAt": "2026-11-12T21:02:46.000+00:00",
+   "method": "deterministic-issuer-table"
+  },
+  {
+   "id": "275930877006151",
+   "researchId": "ir-flash-275930877006151",
+   "kind": "earnings",
+   "ticker": "NBIS",
+   "period": "Q3 2026",
+   "titleJa": "NBIS Q3 2026決算：売上高$980.8M、純損益$-37.5M",
+   "titleEn": "NBIS Q3 2026 earnings: Revenue $980.8M, Net income / (loss) $-37.5M",
+   "facts": [
+    {
+     "key": "revenue",
+     "ja": "売上高",
+     "en": "Revenue",
+     "value": "$980.8M",
+     "comparisons": {
+      "yearAgo": "$146.1M"
+     }
+    },
+    {
+     "key": "net-income",
+     "ja": "純損益",
+     "en": "Net income / (loss)",
+     "value": "$-37.5M",
+     "comparisons": {
+      "yearAgo": "$-119.6M"
+     }
+    },
+    {
+     "key": "adjusted-ebitda",
+     "ja": "調整後EBITDA",
+     "en": "Adjusted EBITDA",
+     "value": "$465.8M",
+     "comparisons": {
+      "yearAgo": "$-5.2M"
+     }
+    },
+    {
+     "key": "adjusted-net-income",
+     "ja": "調整後純損益",
+     "en": "Adjusted net income / (loss)",
+     "value": "$90.9M",
+     "comparisons": {
+      "yearAgo": "$-100.4M"
+     }
+    }
+   ],
+   "url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926126008/tm2629571d1_ex99-1.htm",
+   "publisher": "Nebius IR",
+   "publishedAt": "2026-11-12T14:22:11.000+00:00",
+   "observedAt": "2026-11-12T14:22:11.000+00:00",
+   "method": "deterministic-issuer-table"
+  },
+  {
+   "id": "141477135421170",
+   "researchId": "ir-flash-141477135421170",
+   "kind": "earnings",
+   "ticker": "CRWV",
+   "period": "Q3 2026",
+   "titleJa": "CRWV Q3 2026決算：売上高$3.661B、EPS（希薄化後）$-1.27",
+   "titleEn": "CRWV Q3 2026 earnings: Revenue $3.661B, Diluted EPS $-1.27",
+   "facts": [
+    {
+     "key": "revenue",
+     "ja": "売上高",
+     "en": "Revenue",
+     "value": "$3.661B",
+     "comparisons": {
+      "yearAgo": "$1.365B"
+     }
+    },
+    {
+     "key": "eps",
+     "ja": "EPS（希薄化後）",
+     "en": "Diluted EPS",
+     "value": "$-1.27",
+     "comparisons": {
+      "yearAgo": "$-0.22"
+     }
+    },
+    {
+     "key": "net-income",
+     "ja": "純損益",
+     "en": "Net income / (loss)",
+     "value": "$-709M",
+     "comparisons": {
+      "yearAgo": "$-110M"
+     }
+    },
+    {
+     "key": "operating-income",
+     "ja": "営業損益",
+     "en": "Operating income / (loss)",
+     "value": "$207M",
+     "comparisons": {
+      "yearAgo": "$52M"
+     }
+    },
+    {
+     "key": "adjusted-ebitda",
+     "ja": "調整後EBITDA",
+     "en": "Adjusted EBITDA",
+     "value": "$2.256B",
+     "comparisons": {
+      "yearAgo": "$838M"
+     }
+    },
+    {
+     "key": "guidance-revenue",
+     "ja": "通期見通し 売上高",
+     "en": "Full-year guidance Revenue",
+     "value": "$13.0B-$13.3B"
+    }
+   ],
+   "url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000461/coreweave3q26earningspress.htm",
+   "publisher": "CoreWeave IR (SEC 8-K)",
+   "publishedAt": "2026-11-10T21:05:53.000+00:00",
+   "observedAt": "2026-11-10T21:05:53.000+00:00",
+   "method": "deterministic-issuer-table"
+  },
+  {
+   "id": "222624037682404",
+   "researchId": "ir-announce-222624037682404",
+   "kind": "earnings",
+   "ticker": "CEG",
+   "period": "Q3 2026",
+   "titleJa": "CEG 決算を発表しました",
+   "titleEn": "CEG announced its results",
+   "facts": [],
+   "url": "https://www.sec.gov/Archives/edgar/data/1868275/000186827526000116/ceg-20261109.htm",
+   "publisher": "Constellation Energy IR (SEC 8-K)",
+   "publishedAt": "2026-11-09T11:53:11.000+00:00",
+   "observedAt": "2026-11-09T11:53:11.000+00:00",
+   "method": "sec-results-filing"
+  },
+  {
+   "id": "276572847192994",
+   "researchId": "ir-flash-276572847192994",
+   "kind": "earnings",
+   "ticker": "VST",
+   "period": "Q3 2026",
+   "titleJa": "VST Q3 2026決算：純損益$1.14B",
+   "titleEn": "VST Q3 2026 earnings: Net income / (loss) $1.14B",
+   "facts": [
+    {
+     "key": "net-income",
+     "ja": "純損益",
+     "en": "Net income / (loss)",
+     "value": "$1.14B"
+    }
+   ],
+   "url": "https://www.sec.gov/Archives/edgar/data/1692819/000169281926000023/vistra-20260930xearningsre.htm",
+   "publisher": "Vistra IR (SEC 8-K)",
+   "publishedAt": "2026-11-06T12:01:01.000+00:00",
+   "observedAt": "2026-11-06T12:01:01.000+00:00",
+   "method": "issuer-highlight-sentences"
+  },
+  {
+   "id": "161917196249215",
+   "researchId": "ir-flash-161917196249215",
+   "kind": "earnings",
+   "ticker": "AAOI",
+   "period": "Q3 2026",
+   "titleJa": "AAOI Q3 2026決算：売上高$269.875M、EPS（希薄化後）$0.07",
+   "titleEn": "AAOI Q3 2026 earnings: Revenue $269.875M, Diluted EPS $0.07",
+   "facts": [
+    {
+     "key": "revenue",
+     "ja": "売上高",
+     "en": "Revenue",
+     "value": "$269.875M",
+     "comparisons": {
+      "yearAgo": "$118.63M"
+     }
+    },
+    {
+     "key": "eps",
+     "ja": "EPS（希薄化後）",
+     "en": "Diluted EPS",
+     "value": "$0.07",
+     "comparisons": {
+      "yearAgo": "$-0.28"
+     }
+    },
+    {
+     "key": "net-income",
+     "ja": "純損益",
+     "en": "Net income / (loss)",
+     "value": "$6.3M",
+     "comparisons": {
+      "yearAgo": "$-17.936M"
+     }
+    },
+    {
+     "key": "operating-income",
+     "ja": "営業損益",
+     "en": "Operating income / (loss)",
+     "value": "$-1.442M",
+     "comparisons": {
+      "yearAgo": "$-18.187M"
+     }
+    }
+   ],
+   "url": "https://www.sec.gov/Archives/edgar/data/1158114/000168316826008351/aaoi_ex9901.htm",
+   "publisher": "Applied Optoelectronics IR (SEC 8-K)",
+   "publishedAt": "2026-11-05T21:10:28.000+00:00",
+   "observedAt": "2026-11-05T21:10:28.000+00:00",
+   "method": "deterministic-issuer-table"
+  },
+  {
+   "id": "258738330139811",
+   "researchId": "ir-flash-258738330139811",
+   "kind": "earnings",
+   "ticker": "IONQ",
+   "period": "Q3 2026",
+   "titleJa": "IONQ Q3 2026決算：売上高$173.831M、純損益$563.957M",
+   "titleEn": "IONQ Q3 2026 earnings: Revenue $173.831M, Net income / (loss) $563.957M",
+   "facts": [
+    {
+     "key": "revenue",
+     "ja": "売上高",
+     "en": "Revenue",
+     "value": "$173.831M",
+     "comparisons": {
+      "yearAgo": "$39.866M"
+     }
+    },
+    {
+     "key": "net-income",
+     "ja": "純損益",
+     "en": "Net income / (loss)",
+     "value": "$563.957M",
+     "comparisons": {
+      "yearAgo": "$-1.054955B"
+     }
+    },
+    {
+     "key": "operating-income",
+     "ja": "営業損益",
+     "en": "Operating income / (loss)",
+     "value": "$-433.075M",
+     "comparisons": {
+      "yearAgo": "$-168.813M"
+     }
+    }
+   ],
+   "url": "https://www.sec.gov/Archives/edgar/data/1824920/000119312526449779/ionq-ex99_1.htm",
+   "publisher": "IonQ IR (SEC 8-K)",
+   "publishedAt": "2026-11-05T21:07:04.000+00:00",
+   "observedAt": "2026-11-05T21:07:04.000+00:00",
+   "method": "deterministic-issuer-table"
+  },
+  {
+   "id": "141774352702347",
+   "researchId": "ir-flash-141774352702347",
+   "kind": "earnings",
+   "ticker": "IREN",
+   "period": "Q1 FY2027",
+   "titleJa": "IREN Q1 FY2027決算：売上高$228M",
+   "titleEn": "IREN Q1 FY2027 earnings: Revenue $228M",
+   "facts": [
+    {
+     "key": "revenue",
+     "ja": "売上高",
+     "en": "Revenue",
+     "value": "$228M"
+    }
+   ],
+   "url": "https://www.sec.gov/Archives/edgar/data/1878848/000187884826000065/irenreportsq1-fy27result.htm",
+   "publisher": "IREN IR (SEC 8-K)",
+   "publishedAt": "2026-11-05T21:03:11.000+00:00",
+   "observedAt": "2026-11-05T21:03:11.000+00:00",
+   "method": "issuer-highlight-sentences"
+  },
+  {
+   "id": "33034685498074",
+   "researchId": "ir-flash-33034685498074",
+   "kind": "earnings",
+   "ticker": "COHR",
+   "period": "Q1 FY2027",
+   "titleJa": "COHR Q1 FY2027決算：売上高$2.37B、EPS（GAAP）$1.90",
+   "titleEn": "COHR Q1 FY2027 earnings: Revenue $2.37B, GAAP EPS $1.90",
+   "facts": [
+    {
+     "key": "revenue",
+     "ja": "売上高",
+     "en": "Revenue",
+     "value": "$2.37B"
+    },
+    {
+     "key": "eps",
+     "ja": "EPS（GAAP）",
+     "en": "GAAP EPS",
+     "value": "$1.90"
+    },
+    {
+     "key": "adjusted-eps",
+     "ja": "調整後EPS（Non-GAAP）",
+     "en": "Non-GAAP EPS",
+     "value": "$2.09"
+    }
+   ],
+   "url": "https://www.sec.gov/Archives/edgar/data/820318/000119312526447200/d176836dex991.htm",
+   "publisher": "Coherent IR (SEC 8-K)",
+   "publishedAt": "2026-11-04T21:05:07.000+00:00",
+   "observedAt": "2026-11-04T21:05:07.000+00:00",
+   "method": "issuer-highlight-sentences"
+  },
+  {
+   "id": "277170576354696",
+   "researchId": "ir-announce-277170576354696",
+   "kind": "earnings",
+   "ticker": "QCOM",
+   "period": "Q4 FY2026",
+   "titleJa": "QCOM 決算を発表しました",
+   "titleEn": "QCOM announced its results",
+   "facts": [],
+   "url": "https://www.sec.gov/Archives/edgar/data/804328/000080432826000127/qcom092726erex991.htm",
+   "publisher": "Qualcomm IR (SEC 8-K)",
+   "publishedAt": "2026-11-04T21:03:36.000+00:00",
+   "observedAt": "2026-11-04T21:03:36.000+00:00",
+   "method": "sec-results-filing"
+  },
+  {
+   "id": "1492450087599",
+   "researchId": "ir-flash-1492450087599",
+   "kind": "earnings",
+   "ticker": "ARM",
+   "period": "Q2 FYE27",
+   "titleJa": "ARM Q2 FYE27決算：売上高$1.443B、EPS（希薄化後）$0.12",
+   "titleEn": "ARM Q2 FYE27 earnings: Revenue $1.443B, Diluted EPS $0.12",
+   "facts": [
+    {
+     "key": "revenue",
+     "ja": "売上高",
+     "en": "Revenue",
+     "value": "$1.443B",
+     "comparisons": {
+      "yearAgo": "$1.135B"
+     }
+    },
+    {
+     "key": "eps",
+     "ja": "EPS（希薄化後）",
+     "en": "Diluted EPS",
+     "value": "$0.12",
+     "comparisons": {
+      "yearAgo": "$0.22"
+     }
+    },
+    {
+     "key": "net-income",
+     "ja": "純損益",
+     "en": "Net income / (loss)",
+     "value": "$130M",
+     "comparisons": {
+      "yearAgo": "$238M"
+     }
+    },
+    {
+     "key": "operating-income",
+     "ja": "営業損益",
+     "en": "Operating income / (loss)",
+     "value": "$201M",
+     "comparisons": {
+      "yearAgo": "$163M"
+     }
+    }
+   ],
+   "url": "https://www.sec.gov/Archives/edgar/data/1973239/000197323926000141/exhibit992fye27q230-sepx26.htm",
+   "publisher": "Arm IR (SEC 6-K)",
+   "publishedAt": "2026-11-04T21:02:18.000+00:00",
+   "observedAt": "2026-11-04T21:02:18.000+00:00",
+   "method": "deterministic-issuer-table"
+  },
+  {
+   "id": "41537823327485",
+   "researchId": "ir-flash-41537823327485",
+   "kind": "earnings",
+   "ticker": "AMD",
+   "period": "Q3 2026",
+   "titleJa": "AMD Q3 2026決算：売上高$13.377B、EPS（希薄化後）$1.46",
+   "titleEn": "AMD Q3 2026 earnings: Revenue $13.377B, Diluted EPS $1.46",
+   "facts": [
+    {
+     "key": "revenue",
+     "ja": "売上高",
+     "en": "Revenue",
+     "value": "$13.377B",
+     "comparisons": {
+      "yearAgo": "$9.246B"
+     }
+    },
+    {
+     "key": "eps",
+     "ja": "EPS（希薄化後）",
+     "en": "Diluted EPS",
+     "value": "$1.46",
+     "comparisons": {
+      "yearAgo": "$0.75"
+     }
+    },
+    {
+     "key": "net-income",
+     "ja": "純損益",
+     "en": "Net income / (loss)",
+     "value": "$2.428B",
+     "comparisons": {
+      "yearAgo": "$1.243B"
+     }
+    },
+    {
+     "key": "operating-income",
+     "ja": "営業損益",
+     "en": "Operating income / (loss)",
+     "value": "$2.832B",
+     "comparisons": {
+      "yearAgo": "$1.27B"
+     }
+    }
+   ],
+   "url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000188/q32026991.htm",
+   "publisher": "AMD IR (SEC 8-K)",
+   "publishedAt": "2026-11-03T21:16:27.000+00:00",
+   "observedAt": "2026-11-03T21:16:27.000+00:00",
+   "method": "deterministic-issuer-table"
+  },
+  {
+   "id": "260434883711694",
+   "researchId": "ir-flash-260434883711694",
+   "kind": "earnings",
+   "ticker": "ANET",
+   "period": "Q3 2026",
+   "titleJa": "ANET Q3 2026決算：売上高$3.6576B、EPS（希薄化後）$1.22",
+   "titleEn": "ANET Q3 2026 earnings: Revenue $3.6576B, Diluted EPS $1.22",
+   "facts": [
+    {
+     "key": "revenue",
+     "ja": "売上高",
+     "en": "Revenue",
+     "value": "$3.6576B",
+     "comparisons": {
+      "yearAgo": "$2.3083B"
+     }
+    },
+    {
+     "key": "eps",
+     "ja": "EPS（希薄化後）",
+     "en": "Diluted EPS",
+     "value": "$1.22",
+     "comparisons": {
+      "yearAgo": "$0.67"
+     }
+    },
+    {
+     "key": "net-income",
+     "ja": "純損益",
+     "en": "Net income / (loss)",
+     "value": "$1.5604B",
+     "comparisons": {
+      "yearAgo": "$853M"
+     }
+    },
+    {
+     "key": "operating-income",
+     "ja": "営業損益",
+     "en": "Operating income / (loss)",
+     "value": "$1.6424B",
+     "comparisons": {
+      "yearAgo": "$978.2M"
+     }
+    }
+   ],
+   "url": "https://www.sec.gov/Archives/edgar/data/1596532/000159653226000252/ex991q326-earningsrelease.htm",
+   "publisher": "Arista IR (SEC 8-K)",
+   "publishedAt": "2026-11-03T21:10:17.000+00:00",
+   "observedAt": "2026-11-03T21:10:17.000+00:00",
+   "method": "deterministic-issuer-table"
+  },
+  {
+   "id": "117907853843192",
+   "researchId": "ir-flash-117907853843192",
+   "kind": "earnings",
+   "ticker": "ALAB",
+   "period": "Q3 2026",
+   "titleJa": "ALAB Q3 2026決算：売上高$584.899M、EPS（希薄化後）$0.99",
+   "titleEn": "ALAB Q3 2026 earnings: Revenue $584.899M, Diluted EPS $0.99",
+   "facts": [
+    {
+     "key": "revenue",
+     "ja": "売上高",
+     "en": "Revenue",
+     "value": "$584.899M",
+     "comparisons": {
+      "yearAgo": "$230.575M"
+     }
+    },
+    {
+     "key": "eps",
+     "ja": "EPS（希薄化後）",
+     "en": "Diluted EPS",
+     "value": "$0.99",
+     "comparisons": {
+      "yearAgo": "$0.50"
+     }
+    },
+    {
+     "key": "net-income",
+     "ja": "純損益",
+     "en": "Net income / (loss)",
+     "value": "$182.944M",
+     "comparisons": {
+      "yearAgo": "$91.114M"
+     }
+    },
+    {
+     "key": "operating-income",
+     "ja": "営業損益",
+     "en": "Operating income / (loss)",
+     "value": "$179.056M",
+     "comparisons": {
+      "yearAgo": "$55.406M"
+     }
+    }
+   ],
+   "url": "https://www.sec.gov/Archives/edgar/data/1736297/000173629726000044/q326exhibit991.htm",
+   "publisher": "Astera Labs IR (SEC 8-K)",
+   "publishedAt": "2026-11-03T21:09:51.000+00:00",
+   "observedAt": "2026-11-03T21:09:51.000+00:00",
+   "method": "deterministic-issuer-table"
+  },
+  {
+   "id": "215329928989344",
+   "researchId": "ir-flash-215329928989344",
+   "kind": "earnings",
+   "ticker": "AAPL",
+   "period": "Q4 FY2026",
+   "titleJa": "AAPL Q4 FY2026決算：売上高$114.477B、EPS（希薄化後）$2.10",
+   "titleEn": "AAPL Q4 FY2026 earnings: Revenue $114.477B, Diluted EPS $2.10",
+   "facts": [
+    {
+     "key": "revenue",
+     "ja": "売上高",
+     "en": "Revenue",
+     "value": "$114.477B",
+     "comparisons": {
+      "yearAgo": "$102.466B"
+     }
+    },
+    {
+     "key": "eps",
+     "ja": "EPS（希薄化後）",
+     "en": "Diluted EPS",
+     "value": "$2.10",
+     "comparisons": {
+      "yearAgo": "$1.85"
+     }
+    },
+    {
+     "key": "net-income",
+     "ja": "純損益",
+     "en": "Net income / (loss)",
+     "value": "$30.711B",
+     "comparisons": {
+      "yearAgo": "$27.466B"
+     }
+    },
+    {
+     "key": "operating-income",
+     "ja": "営業損益",
+     "en": "Operating income / (loss)",
+     "value": "$35.631B",
+     "comparisons": {
+      "yearAgo": "$32.427B"
+     }
+    }
+   ],
+   "url": "https://www.sec.gov/Archives/edgar/data/320193/000032019326000024/a8-kex991q4202609262026.htm",
+   "publisher": "Apple IR (SEC 8-K)",
+   "publishedAt": "2026-11-02T21:30:23.000+00:00",
+   "observedAt": "2026-11-02T21:30:23.000+00:00",
+   "method": "deterministic-issuer-table"
+  },
+  {
+   "id": "27380063871376",
+   "researchId": "ir-flash-27380063871376",
+   "kind": "earnings",
+   "ticker": "PLTR",
+   "period": "Q3 2026",
+   "titleJa": "PLTR Q3 2026決算：売上高$2.313411B、EPS（希薄化後）$0.44",
+   "titleEn": "PLTR Q3 2026 earnings: Revenue $2.313411B, Diluted EPS $0.44",
+   "facts": [
+    {
+     "key": "revenue",
+     "ja": "売上高",
+     "en": "Revenue",
+     "value": "$2.313411B",
+     "comparisons": {
+      "yearAgo": "$1.181092B"
+     }
+    },
+    {
+     "key": "eps",
+     "ja": "EPS（希薄化後）",
+     "en": "Diluted EPS",
+     "value": "$0.44",
+     "comparisons": {
+      "yearAgo": "$0.18"
+     }
+    },
+    {
+     "key": "net-income",
+     "ja": "純損益",
+     "en": "Net income / (loss)",
+     "value": "$1.128012B",
+     "comparisons": {
+      "yearAgo": "$475.599M"
+     }
+    },
+    {
+     "key": "operating-income",
+     "ja": "営業損益",
+     "en": "Operating income / (loss)",
+     "value": "$1.084845B",
+     "comparisons": {
+      "yearAgo": "$393.256M"
+     }
+    }
+   ],
+   "url": "https://www.sec.gov/Archives/edgar/data/1321655/000132165526000045/a2026q3ex991pressrelease.htm",
+   "publisher": "Palantir IR (SEC 8-K)",
+   "publishedAt": "2026-11-02T21:06:48.000+00:00",
+   "observedAt": "2026-11-02T21:06:48.000+00:00",
+   "method": "deterministic-issuer-table"
+  },
+  {
+   "id": "75919824953650",
+   "researchId": "ir-flash-75919824953650",
+   "kind": "earnings",
+   "ticker": "LITE",
+   "period": "Q1 FY2027",
+   "titleJa": "LITE Q1 FY2027決算：売上高$1.2626B、EPS（希薄化後）$3.54",
+   "titleEn": "LITE Q1 FY2027 earnings: Revenue $1.2626B, Diluted EPS $3.54",
+   "facts": [
+    {
+     "key": "revenue",
+     "ja": "売上高",
+     "en": "Revenue",
+     "value": "$1.2626B",
+     "comparisons": {
+      "yearAgo": "$533.8M"
+     }
+    },
+    {
+     "key": "eps",
+     "ja": "EPS（希薄化後）",
+     "en": "Diluted EPS",
+     "value": "$3.54",
+     "comparisons": {
+      "yearAgo": "$0.05"
+     }
+    },
+    {
+     "key": "net-income",
+     "ja": "純損益",
+     "en": "Net income / (loss)",
+     "value": "$360.3M",
+     "comparisons": {
+      "yearAgo": "$4.2M"
+     }
+    },
+    {
+     "key": "operating-income",
+     "ja": "営業損益",
+     "en": "Operating income / (loss)",
+     "value": "$359.8M",
+     "comparisons": {
+      "yearAgo": "$6.7M"
+     }
+    }
+   ],
+   "url": "https://www.sec.gov/Archives/edgar/data/1633978/000162828026068655/lite_ex991xq1fy27.htm",
+   "publisher": "Lumentum IR (SEC 8-K)",
+   "publishedAt": "2026-11-02T12:12:55.000+00:00",
+   "observedAt": "2026-11-02T12:12:55.000+00:00",
+   "method": "deterministic-issuer-table"
+  },
+  {
+   "id": "209669230904628",
+   "researchId": "ir-flash-209669230904628",
+   "kind": "earnings",
+   "ticker": "SNDK",
+   "period": "Q1 FY2027",
+   "titleJa": "SNDK Q1 FY2027決算：売上高$11.031B、EPS（希薄化後）$52.60",
+   "titleEn": "SNDK Q1 FY2027 earnings: Revenue $11.031B, Diluted EPS $52.60",
+   "facts": [
+    {
+     "key": "revenue",
+     "ja": "売上高",
+     "en": "Revenue",
+     "value": "$11.031B",
+     "comparisons": {
+      "yearAgo": "$2.308B"
+     }
+    },
+    {
+     "key": "eps",
+     "ja": "EPS（希薄化後）",
+     "en": "Diluted EPS",
+     "value": "$52.60",
+     "comparisons": {
+      "yearAgo": "$0.75"
+     }
+    },
+    {
+     "key": "net-income",
+     "ja": "純損益",
+     "en": "Net income / (loss)",
+     "value": "$8.101B",
+     "comparisons": {
+      "yearAgo": "$112M"
+     }
+    },
+    {
+     "key": "operating-income",
+     "ja": "営業損益",
+     "en": "Operating income / (loss)",
+     "value": "$8.78B",
+     "comparisons": {
+      "yearAgo": "$176M"
+     }
+    }
+   ],
+   "url": "https://www.sec.gov/Archives/edgar/data/2023554/000162828026068243/sndkq1-27ex991xpressrelease.htm",
+   "publisher": "Sandisk IR (SEC 8-K)",
+   "publishedAt": "2026-10-29T20:13:53.000+00:00",
+   "observedAt": "2026-10-29T20:13:53.000+00:00",
+   "method": "deterministic-issuer-table"
+  },
+  {
+   "id": "215002592075642",
+   "researchId": "ir-flash-215002592075642",
+   "kind": "earnings",
+   "ticker": "INTC",
+   "period": "Q3 2026",
+   "titleJa": "INTC Q3 2026決算：売上高$16.513B、EPS（希薄化後）$0.60",
+   "titleEn": "INTC Q3 2026 earnings: Revenue $16.513B, Diluted EPS $0.60",
+   "facts": [
+    {
+     "key": "revenue",
+     "ja": "売上高",
+     "en": "Revenue",
+     "value": "$16.513B",
+     "comparisons": {
+      "yearAgo": "$13.653B"
+     }
+    },
+    {
+     "key": "eps",
+     "ja": "EPS（希薄化後）",
+     "en": "Diluted EPS",
+     "value": "$0.60",
+     "comparisons": {
+      "yearAgo": "$0.90"
+     }
+    },
+    {
+     "key": "net-income",
+     "ja": "純損益",
+     "en": "Net income / (loss)",
+     "value": "$3.32B",
+     "comparisons": {
+      "yearAgo": "$4.063B"
+     }
+    },
+    {
+     "key": "operating-income",
+     "ja": "営業損益",
+     "en": "Operating income / (loss)",
+     "value": "$2.522B",
+     "comparisons": {
+      "yearAgo": "$683M"
+     }
+    }
+   ],
+   "url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000188/q326earningsrelease.htm",
+   "publisher": "Intel IR (SEC 8-K)",
+   "publishedAt": "2026-10-29T20:08:53.000+00:00",
+   "observedAt": "2026-10-29T20:08:53.000+00:00",
+   "method": "deterministic-issuer-table"
+  },
+  {
+   "id": "124263105927054",
+   "researchId": "ir-flash-124263105927054",
+   "kind": "earnings",
+   "ticker": "AMZN",
+   "period": "Q3 2026",
+   "titleJa": "AMZN Q3 2026決算：売上高$201.944B、EPS（希薄化後）$1.89",
+   "titleEn": "AMZN Q3 2026 earnings: Revenue $201.944B, Diluted EPS $1.89",
+   "facts": [
+    {
+     "key": "revenue",
+     "ja": "売上高",
+     "en": "Revenue",
+     "value": "$201.944B",
+     "comparisons": {
+      "yearAgo": "$180.169B"
+     }
+    },
+    {
+     "key": "eps",
+     "ja": "EPS（希薄化後）",
+     "en": "Diluted EPS",
+     "value": "$1.89",
+     "comparisons": {
+      "yearAgo": "$1.95"
+     }
+    },
+    {
+     "key": "net-income",
+     "ja": "純損益",
+     "en": "Net income / (loss)",
+     "value": "$20.685B",
+     "comparisons": {
+      "yearAgo": "$21.187B"
+     }
+    },
+    {
+     "key": "operating-income",
+     "ja": "営業損益",
+     "en": "Operating income / (loss)",
+     "value": "$28.076B",
+     "comparisons": {
+      "yearAgo": "$17.422B"
+     }
+    }
+   ],
+   "url": "https://www.sec.gov/Archives/edgar/data/1018724/000101872426000038/amzn-20260930xex991.htm",
+   "publisher": "Amazon IR (SEC 8-K)",
+   "publishedAt": "2026-10-29T20:05:27.000+00:00",
+   "observedAt": "2026-10-29T20:05:27.000+00:00",
+   "method": "deterministic-issuer-table"
+  },
+  {
+   "id": "144532079730713",
+   "researchId": "ir-flash-144532079730713",
+   "kind": "earnings",
+   "ticker": "NOW",
+   "period": "Q3 2026",
+   "titleJa": "NOW Q3 2026決算：売上高$4.106B、EPS（希薄化後）$0.27",
+   "titleEn": "NOW Q3 2026 earnings: Revenue $4.106B, Diluted EPS $0.27",
+   "facts": [
+    {
+     "key": "revenue",
+     "ja": "売上高",
+     "en": "Revenue",
+     "value": "$4.106B",
+     "comparisons": {
+      "yearAgo": "$3.407B"
+     }
+    },
+    {
+     "key": "eps",
+     "ja": "EPS（希薄化後）",
+     "en": "Diluted EPS",
+     "value": "$0.27",
+     "comparisons": {
+      "yearAgo": "$0.48"
+     }
+    },
+    {
+     "key": "net-income",
+     "ja": "純損益",
+     "en": "Net income / (loss)",
+     "value": "$277M",
+     "comparisons": {
+      "yearAgo": "$502M"
+     }
+    },
+    {
+     "key": "operating-income",
+     "ja": "営業損益",
+     "en": "Operating income / (loss)",
+     "value": "$385M",
+     "comparisons": {
+      "yearAgo": "$572M"
+     }
+    }
+   ],
+   "url": "https://www.sec.gov/Archives/edgar/data/1373715/000137371526000092/erq3fy26.htm",
+   "publisher": "ServiceNow IR (SEC 8-K)",
+   "publishedAt": "2026-10-28T20:14:14.000+00:00",
+   "observedAt": "2026-10-28T20:14:14.000+00:00",
+   "method": "deterministic-issuer-table"
+  },
+  {
+   "id": "196379943910272",
+   "researchId": "ir-flash-196379943910272",
+   "kind": "earnings",
+   "ticker": "KLAC",
+   "period": "Q1 FY2027",
+   "titleJa": "KLAC Q1 FY2027決算：売上高$4.136015B、EPS（希薄化後）$1.18",
+   "titleEn": "KLAC Q1 FY2027 earnings: Revenue $4.136015B, Diluted EPS $1.18",
+   "facts": [
+    {
+     "key": "revenue",
+     "ja": "売上高",
+     "en": "Revenue",
+     "value": "$4.136015B",
+     "comparisons": {
+      "yearAgo": "$3.209696B"
+     }
+    },
+    {
+     "key": "eps",
+     "ja": "EPS（希薄化後）",
+     "en": "Diluted EPS",
+     "value": "$1.18",
+     "comparisons": {
+      "yearAgo": "$0.85"
+     }
+    },
+    {
+     "key": "net-income",
+     "ja": "純損益",
+     "en": "Net income / (loss)",
+     "value": "$1.548588B",
+     "comparisons": {
+      "yearAgo": "$1.12104B"
+     }
+    }
+   ],
+   "url": "https://www.sec.gov/Archives/edgar/data/319201/000031920126000032/exhibit991earningsrelease0.htm",
+   "publisher": "KLA IR (SEC 8-K)",
+   "publishedAt": "2026-10-28T20:07:50.000+00:00",
+   "observedAt": "2026-10-28T20:07:50.000+00:00",
+   "method": "deterministic-issuer-table"
+  },
+  {
+   "id": "255878342802710",
+   "researchId": "ir-flash-255878342802710",
+   "kind": "earnings",
+   "ticker": "MSFT",
+   "period": "Q1 FY2027",
+   "titleJa": "MSFT Q1 FY2027決算：売上高$92.279B、EPS（希薄化後）$4.92",
+   "titleEn": "MSFT Q1 FY2027 earnings: Revenue $92.279B, Diluted EPS $4.92",
+   "facts": [
+    {
+     "key": "revenue",
+     "ja": "売上高",
+     "en": "Revenue",
+     "value": "$92.279B",
+     "comparisons": {
+      "yearAgo": "$77.673B"
+     }
+    },
+    {
+     "key": "eps",
+     "ja": "EPS（希薄化後）",
+     "en": "Diluted EPS",
+     "value": "$4.92",
+     "comparisons": {
+      "yearAgo": "$3.72"
+     }
+    },
+    {
+     "key": "net-income",
+     "ja": "純損益",
+     "en": "Net income / (loss)",
+     "value": "$36.629B",
+     "comparisons": {
+      "yearAgo": "$27.747B"
+     }
+    },
+    {
+     "key": "operating-income",
+     "ja": "営業損益",
+     "en": "Operating income / (loss)",
+     "value": "$45.915B",
+     "comparisons": {
+      "yearAgo": "$37.961B"
+     }
+    }
+   ],
+   "url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526436122/msft-ex99_1.htm",
+   "publisher": "Microsoft IR (SEC 8-K)",
+   "publishedAt": "2026-10-28T20:04:44.000+00:00",
+   "observedAt": "2026-10-28T20:04:44.000+00:00",
+   "method": "deterministic-issuer-table"
+  },
+  {
+   "id": "247127966233724",
+   "researchId": "ir-flash-247127966233724",
+   "kind": "earnings",
+   "ticker": "GOOGL",
+   "period": "Q3 2026",
+   "titleJa": "GOOGL Q3 2026決算：売上高$127.577B、EPS（希薄化後）$2.12",
+   "titleEn": "GOOGL Q3 2026 earnings: Revenue $127.577B, Diluted EPS $2.12",
+   "facts": [
+    {
+     "key": "revenue",
+     "ja": "売上高",
+     "en": "Revenue",
+     "value": "$127.577B",
+     "comparisons": {
+      "yearAgo": "$102.346B"
+     }
+    },
+    {
+     "key": "eps",
+     "ja": "EPS（希薄化後）",
+     "en": "Diluted EPS",
+     "value": "$2.12",
+     "comparisons": {
+      "yearAgo": "$2.87"
+     }
+    },
+    {
+     "key": "net-income",
+     "ja": "純損益",
+     "en": "Net income / (loss)",
+     "value": "$26.17B",
+     "comparisons": {
+      "yearAgo": "$34.979B"
+     }
+    },
+    {
+     "key": "operating-income",
+     "ja": "営業損益",
+     "en": "Operating income / (loss)",
+     "value": "$40.576B",
+     "comparisons": {
+      "yearAgo": "$31.228B"
+     }
+    }
+   ],
+   "url": "https://www.sec.gov/Archives/edgar/data/1652044/000165204426000080/googexhibit991q32026.htm",
+   "publisher": "Alphabet IR (SEC 8-K)",
+   "publishedAt": "2026-10-28T20:01:33.000+00:00",
+   "observedAt": "2026-10-28T20:01:33.000+00:00",
+   "method": "deterministic-issuer-table"
+  },
+  {
+   "id": "164404557161111",
+   "researchId": "ir-flash-164404557161111",
+   "kind": "earnings",
+   "ticker": "APH",
+   "period": "Q3 2026",
+   "titleJa": "APH Q3 2026決算：売上高$10.2297B、EPS（希薄化後）$0.79",
+   "titleEn": "APH Q3 2026 earnings: Revenue $10.2297B, Diluted EPS $0.79",
+   "facts": [
+    {
+     "key": "revenue",
+     "ja": "売上高",
+     "en": "Revenue",
+     "value": "$10.2297B",
+     "comparisons": {
+      "yearAgo": "$6.1944B"
+     }
+    },
+    {
+     "key": "eps",
+     "ja": "EPS（希薄化後）",
+     "en": "Diluted EPS",
+     "value": "$0.79",
+     "comparisons": {
+      "yearAgo": "$0.49"
+     }
+    },
+    {
+     "key": "net-income",
+     "ja": "純損益",
+     "en": "Net income / (loss)",
+     "value": "$2.0343B",
+     "comparisons": {
+      "yearAgo": "$1.2457B"
+     }
+    },
+    {
+     "key": "operating-income",
+     "ja": "営業損益",
+     "en": "Operating income / (loss)",
+     "value": "$3.0208B",
+     "comparisons": {
+      "yearAgo": "$1.7023B"
+     }
+    }
+   ],
+   "url": "https://www.sec.gov/Archives/edgar/data/820313/000110465926119421/aph-ex99d1.htm",
+   "publisher": "Amphenol IR (SEC 8-K)",
+   "publishedAt": "2026-10-28T13:42:41.000+00:00",
+   "observedAt": "2026-10-28T13:42:41.000+00:00",
+   "method": "deterministic-issuer-table"
+  },
+  {
+   "id": "15503012114682",
+   "researchId": "ir-flash-15503012114682",
+   "kind": "earnings",
+   "ticker": "GEV",
+   "period": "Q3 2026",
+   "titleJa": "GEV Q3 2026決算：売上高$12.642B、EPS（希薄化後）$4.81",
+   "titleEn": "GEV Q3 2026 earnings: Revenue $12.642B, Diluted EPS $4.81",
+   "facts": [
+    {
+     "key": "revenue",
+     "ja": "売上高",
+     "en": "Revenue",
+     "value": "$12.642B",
+     "comparisons": {
+      "yearAgo": "$9.969B"
+     }
+    },
+    {
+     "key": "eps",
+     "ja": "EPS（希薄化後）",
+     "en": "Diluted EPS",
+     "value": "$4.81",
+     "comparisons": {
+      "yearAgo": "$1.64"
+     }
+    },
+    {
+     "key": "net-income",
+     "ja": "純損益",
+     "en": "Net income / (loss)",
+     "value": "$1.289B",
+     "comparisons": {
+      "yearAgo": "$453M"
+     }
+    },
+    {
+     "key": "adjusted-ebitda",
+     "ja": "調整後EBITDA",
+     "en": "Adjusted EBITDA",
+     "value": "$1.943B",
+     "comparisons": {
+      "yearAgo": "$811M"
+     }
+    }
+   ],
+   "url": "https://www.sec.gov/Archives/edgar/data/1996810/000199681026000162/gevpressrelease3q26.htm",
+   "publisher": "GE Vernova IR (SEC 8-K)",
+   "publishedAt": "2026-10-28T10:16:59.000+00:00",
+   "observedAt": "2026-10-28T10:16:59.000+00:00",
+   "method": "deterministic-issuer-table"
+  },
+  {
+   "id": "1723692330180",
+   "researchId": "ir-flash-1723692330180",
+   "kind": "earnings",
+   "ticker": "VRT",
+   "period": "Q3 2026",
+   "titleJa": "VRT Q3 2026決算：売上高$4.3128B、EPS（希薄化後）$1.95",
+   "titleEn": "VRT Q3 2026 earnings: Revenue $4.3128B, Diluted EPS $1.95",
+   "facts": [
+    {
+     "key": "revenue",
+     "ja": "売上高",
+     "en": "Revenue",
+     "value": "$4.3128B",
+     "comparisons": {
+      "yearAgo": "$2.6758B"
+     }
+    },
+    {
+     "key": "eps",
+     "ja": "EPS（希薄化後）",
+     "en": "Diluted EPS",
+     "value": "$1.95",
+     "comparisons": {
+      "yearAgo": "$1.02"
+     }
+    },
+    {
+     "key": "net-income",
+     "ja": "純損益",
+     "en": "Net income / (loss)",
+     "value": "$764.5M",
+     "comparisons": {
+      "yearAgo": "$398.5M"
+     }
+    },
+    {
+     "key": "operating-income",
+     "ja": "営業損益",
+     "en": "Operating income / (loss)",
+     "value": "$983.8M",
+     "comparisons": {
+      "yearAgo": "$516.7M"
+     }
+    }
+   ],
+   "url": "https://www.sec.gov/Archives/edgar/data/1674101/000162828026067707/q32026exhibit991vrt10282026.htm",
+   "publisher": "Vertiv IR (SEC 8-K)",
+   "publishedAt": "2026-10-28T10:02:00.000+00:00",
+   "observedAt": "2026-10-28T10:02:00.000+00:00",
+   "method": "deterministic-issuer-table"
+  },
+  {
+   "id": "175395126363398",
+   "researchId": "ir-flash-175395126363398",
+   "kind": "earnings",
+   "ticker": "SKHY",
+   "period": "Q3 2026",
+   "titleJa": "SKHY Q3 2026決算：売上高（暫定・兆ウォン）₩104.615483T、当期利益（暫定・兆ウォン）₩39.775593T",
+   "titleEn": "SKHY Q3 2026 earnings: Revenue (preliminary, KRW trillion) ₩104.615483T, Profit for the period (preliminary, KRW trillion) ₩39.775593T",
+   "facts": [
+    {
+     "key": "revenue",
+     "ja": "売上高（暫定・兆ウォン）",
+     "en": "Revenue (preliminary, KRW trillion)",
+     "value": "₩104.615483T",
+     "comparisons": {
+      "yearAgo": "₩24.448929T"
+     }
+    },
+    {
+     "key": "net-income",
+     "ja": "当期利益（暫定・兆ウォン）",
+     "en": "Profit for the period (preliminary, KRW trillion)",
+     "value": "₩39.775593T",
+     "comparisons": {
+      "yearAgo": "₩12.597538T"
+     }
+    },
+    {
+     "key": "operating-income",
+     "ja": "営業利益（暫定・兆ウォン）",
+     "en": "Operating profit (preliminary, KRW trillion)",
+     "value": "₩83.333818T",
+     "comparisons": {
+      "yearAgo": "₩11.38339T"
+     }
+    }
+   ],
+   "url": "https://www.sec.gov/Archives/edgar/data/2120882/000119312526434994/d162547d6k.htm",
+   "publisher": "SK hynix IR (SEC 6-K)",
+   "publishedAt": "2026-10-28T00:00:00.000+00:00",
+   "observedAt": "2026-10-28T00:00:00.000+00:00",
+   "method": "deterministic-issuer-table"
+  },
+  {
+   "id": "163202274207908",
+   "researchId": "ir-flash-163202274207908",
+   "kind": "earnings",
+   "ticker": "STX",
+   "period": "Q1 FY2027",
+   "titleJa": "STX Q1 FY2027決算：売上高$4.233B、EPS（希薄化後）$7.59",
+   "titleEn": "STX Q1 FY2027 earnings: Revenue $4.233B, Diluted EPS $7.59",
+   "facts": [
+    {
+     "key": "revenue",
+     "ja": "売上高",
+     "en": "Revenue",
+     "value": "$4.233B",
+     "comparisons": {
+      "yearAgo": "$2.629B"
+     }
+    },
+    {
+     "key": "eps",
+     "ja": "EPS（希薄化後）",
+     "en": "Diluted EPS",
+     "value": "$7.59",
+     "comparisons": {
+      "yearAgo": "$2.43"
+     }
+    },
+    {
+     "key": "net-income",
+     "ja": "純損益",
+     "en": "Net income / (loss)",
+     "value": "$1.761B",
+     "comparisons": {
+      "yearAgo": "$549M"
+     }
+    },
+    {
+     "key": "operating-income",
+     "ja": "営業損益",
+     "en": "Operating income / (loss)",
+     "value": "$2.064B",
+     "comparisons": {
+      "yearAgo": "$694M"
+     }
+    }
+   ],
+   "url": "https://www.sec.gov/Archives/edgar/data/1137789/000113778926000300/stxq12027pressreleasefinan.htm",
+   "publisher": "Seagate IR (SEC 8-K)",
+   "publishedAt": "2026-10-27T20:12:44.000+00:00",
+   "observedAt": "2026-10-27T20:12:44.000+00:00",
+   "method": "deterministic-issuer-table"
+  },
+  {
+   "id": "36347794833263",
+   "researchId": "ir-flash-36347794833263",
+   "kind": "earnings",
+   "ticker": "SOFI",
+   "period": "Q3 2026",
+   "titleJa": "SOFI Q3 2026決算：売上高$1.385099B、EPS（希薄化後）$0.18",
+   "titleEn": "SOFI Q3 2026 earnings: Revenue $1.385099B, Diluted EPS $0.18",
+   "facts": [
+    {
+     "key": "revenue",
+     "ja": "売上高",
+     "en": "Revenue",
+     "value": "$1.385099B",
+     "comparisons": {
+      "yearAgo": "$961.6M"
+     }
+    },
+    {
+     "key": "eps",
+     "ja": "EPS（希薄化後）",
+     "en": "Diluted EPS",
+     "value": "$0.18",
+     "comparisons": {
+      "yearAgo": "$0.11"
+     }
+    },
+    {
+     "key": "net-income",
+     "ja": "純損益",
+     "en": "Net income / (loss)",
+     "value": "$240.989M",
+     "comparisons": {
+      "yearAgo": "$139.392M"
+     }
+    }
+   ],
+   "url": "https://www.sec.gov/Archives/edgar/data/1818874/000181887426000065/a2026q3earningsrelease.htm",
+   "publisher": "SoFi IR (SEC 8-K)",
+   "publishedAt": "2026-10-27T11:02:59.000+00:00",
+   "observedAt": "2026-10-27T11:02:59.000+00:00",
+   "method": "deterministic-issuer-table"
+  },
+  {
+   "id": "244538921991300",
+   "researchId": "ir-flash-244538921991300",
+   "kind": "earnings",
+   "ticker": "BE",
+   "period": "Q3 2026",
+   "titleJa": "BE Q3 2026決算：売上高$1.235837B、EPS（希薄化後）$0.78",
+   "titleEn": "BE Q3 2026 earnings: Revenue $1.235837B, Diluted EPS $0.78",
+   "facts": [
+    {
+     "key": "revenue",
+     "ja": "売上高",
+     "en": "Revenue",
+     "value": "$1.235837B",
+     "comparisons": {
+      "yearAgo": "$519.048M"
+     }
+    },
+    {
+     "key": "eps",
+     "ja": "EPS（希薄化後）",
+     "en": "Diluted EPS",
+     "value": "$0.78",
+     "comparisons": {
+      "yearAgo": "$-0.10"
+     }
+    },
+    {
+     "key": "net-income",
+     "ja": "純損益",
+     "en": "Net income / (loss)",
+     "value": "$250.271M",
+     "comparisons": {
+      "yearAgo": "$-23.093M"
+     }
+    },
+    {
+     "key": "operating-income",
+     "ja": "営業損益",
+     "en": "Operating income / (loss)",
+     "value": "$225.449M",
+     "comparisons": {
+      "yearAgo": "$7.846M"
+     }
+    }
+   ],
+   "url": "https://www.sec.gov/Archives/edgar/data/1664703/000162828026066890/ex991_q326financialresults.htm",
+   "publisher": "Bloom Energy IR (SEC 8-K)",
+   "publishedAt": "2026-10-22T20:09:25.000+00:00",
+   "observedAt": "2026-10-22T20:09:25.000+00:00",
+   "method": "deterministic-issuer-table"
+  },
+  {
+   "id": "261975943175831",
+   "researchId": "ir-flash-261975943175831",
+   "kind": "earnings",
+   "ticker": "TSLA",
+   "period": "Q3 2026",
+   "titleJa": "TSLA Q3 2026決算：純損益$800M、営業損益$700M",
+   "titleEn": "TSLA Q3 2026 earnings: Net income / (loss) $800M, Operating income / (loss) $700M",
+   "facts": [
+    {
+     "key": "net-income",
+     "ja": "純損益",
+     "en": "Net income / (loss)",
+     "value": "$800M"
+    },
+    {
+     "key": "operating-income",
+     "ja": "営業損益",
+     "en": "Operating income / (loss)",
+     "value": "$700M"
+    }
+   ],
+   "url": "https://www.sec.gov/Archives/edgar/data/1318605/000162828026066738/exhibit9914.htm",
+   "publisher": "Tesla IR (SEC 8-K)",
+   "publishedAt": "2026-10-21T20:41:42.000+00:00",
+   "observedAt": "2026-10-21T20:41:42.000+00:00",
+   "method": "issuer-highlight-sentences"
+  },
+  {
+   "id": "135159257561874",
+   "researchId": "ir-flash-135159257561874",
+   "kind": "earnings",
+   "ticker": "IBM",
+   "period": "Q3 2026",
+   "titleJa": "IBM Q3 2026決算：売上高$17.1B",
+   "titleEn": "IBM Q3 2026 earnings: Revenue $17.1B",
+   "facts": [
+    {
+     "key": "revenue",
+     "ja": "売上高",
+     "en": "Revenue",
+     "value": "$17.1B"
+    }
+   ],
+   "url": "https://www.sec.gov/Archives/edgar/data/51143/000005114326000093/ibm-20261021xex991.htm",
+   "publisher": "IBM IR (SEC 8-K)",
+   "publishedAt": "2026-10-21T20:19:17.000+00:00",
+   "observedAt": "2026-10-21T20:19:17.000+00:00",
+   "method": "issuer-highlight-sentences"
+  },
+  {
+   "id": "119717948308858",
+   "researchId": "ir-flash-119717948308858",
+   "kind": "earnings",
+   "ticker": "LRCX",
+   "period": "Sep 2026 quarter",
+   "titleJa": "LRCX Sep 2026 quarter決算：売上高$8.219418B、EPS（希薄化後）$2.19",
+   "titleEn": "LRCX Sep 2026 quarter earnings: Revenue $8.219418B, Diluted EPS $2.19",
+   "facts": [
+    {
+     "key": "revenue",
+     "ja": "売上高",
+     "en": "Revenue",
+     "value": "$8.219418B",
+     "comparisons": {
+      "yearAgo": "$5.324173B"
+     }
+    },
+    {
+     "key": "eps",
+     "ja": "EPS（希薄化後）",
+     "en": "Diluted EPS",
+     "value": "$2.19",
+     "comparisons": {
+      "yearAgo": "$1.24"
+     }
+    },
+    {
+     "key": "net-income",
+     "ja": "純損益",
+     "en": "Net income / (loss)",
+     "value": "$2.753138B",
+     "comparisons": {
+      "yearAgo": "$1.56866B"
+     }
+    },
+    {
+     "key": "operating-income",
+     "ja": "営業損益",
+     "en": "Operating income / (loss)",
+     "value": "$3.283727B",
+     "comparisons": {
+      "yearAgo": "$1.829088B"
+     }
+    }
+   ],
+   "url": "https://www.sec.gov/Archives/edgar/data/707549/000070754926000052/lrcx_exhibitx991xq1x2027.htm",
+   "publisher": "Lam Research IR (SEC 8-K)",
+   "publishedAt": "2026-10-21T20:13:03.000+00:00",
+   "observedAt": "2026-10-21T20:13:03.000+00:00",
+   "method": "deterministic-issuer-table"
+  },
+  {
+   "id": "217467017950887",
+   "researchId": "ir-flash-217467017950887",
+   "kind": "earnings",
+   "ticker": "META",
+   "period": "Q3 2026",
+   "titleJa": "META Q3 2026決算：売上高$64.601B、EPS（希薄化後）$3.83",
+   "titleEn": "META Q3 2026 earnings: Revenue $64.601B, Diluted EPS $3.83",
+   "facts": [
+    {
+     "key": "revenue",
+     "ja": "売上高",
+     "en": "Revenue",
+     "value": "$64.601B",
+     "comparisons": {
+      "yearAgo": "$51.242B"
+     }
+    },
+    {
+     "key": "eps",
+     "ja": "EPS（希薄化後）",
+     "en": "Diluted EPS",
+     "value": "$3.83",
+     "comparisons": {
+      "yearAgo": "$1.05"
+     }
+    },
+    {
+     "key": "net-income",
+     "ja": "純損益",
+     "en": "Net income / (loss)",
+     "value": "$9.86B",
+     "comparisons": {
+      "yearAgo": "$2.709B"
+     }
+    },
+    {
+     "key": "operating-income",
+     "ja": "営業損益",
+     "en": "Operating income / (loss)",
+     "value": "$12.988B",
+     "comparisons": {
+      "yearAgo": "$20.535B"
+     }
+    }
+   ],
+   "url": "https://www.sec.gov/Archives/edgar/data/1326801/000162828026066700/meta-09302026xexhibit991.htm",
+   "publisher": "Meta Platforms IR (SEC 8-K)",
+   "publishedAt": "2026-10-21T20:03:35.000+00:00",
+   "observedAt": "2026-10-21T20:03:35.000+00:00",
+   "method": "deterministic-issuer-table"
+  },
+  {
+   "id": "150646203045635",
+   "researchId": "ir-flash-150646203045635",
+   "kind": "earnings",
+   "ticker": "NFLX",
+   "period": "Q3 2026",
+   "titleJa": "NFLX Q3 2026決算：売上高$12.874176B、EPS（希薄化後）$0.87",
+   "titleEn": "NFLX Q3 2026 earnings: Revenue $12.874176B, Diluted EPS $0.87",
+   "facts": [
+    {
+     "key": "revenue",
+     "ja": "売上高",
+     "en": "Revenue",
+     "value": "$12.874176B",
+     "comparisons": {
+      "yearAgo": "$11.510307B"
+     }
+    },
+    {
+     "key": "eps",
+     "ja": "EPS（希薄化後）",
+     "en": "Diluted EPS",
+     "value": "$0.87",
+     "comparisons": {
+      "yearAgo": "$0.59"
+     }
+    },
+    {
+     "key": "net-income",
+     "ja": "純損益",
+     "en": "Net income / (loss)",
+     "value": "$3.663927B",
+     "comparisons": {
+      "yearAgo": "$2.546916B"
+     }
+    },
+    {
+     "key": "operating-income",
+     "ja": "営業損益",
+     "en": "Operating income / (loss)",
+     "value": "$4.4586B",
+     "comparisons": {
+      "yearAgo": "$3.248247B"
+     }
+    }
+   ],
+   "url": "https://www.sec.gov/Archives/edgar/data/1065280/000106528026000290/ex991_q326.htm",
+   "publisher": "Netflix IR (SEC 8-K)",
+   "publishedAt": "2026-10-20T20:01:55.000+00:00",
+   "observedAt": "2026-10-20T20:01:55.000+00:00",
+   "method": "deterministic-issuer-table"
+  },
+  {
+   "id": "32427522121405",
+   "researchId": "ir-flash-32427522121405",
+   "kind": "earnings",
+   "ticker": "TSM",
+   "period": "Q3 2026",
+   "titleJa": "TSM Q3 2026決算：売上高NT$1494.243B、粗利益率66.4%",
+   "titleEn": "TSM Q3 2026 earnings: Revenue NT$1494.243B, Gross margin 66.4%",
+   "facts": [
+    {
+     "key": "revenue",
+     "ja": "売上高",
+     "en": "Revenue",
+     "value": "NT$1494.243B",
+     "comparisons": {
+      "yearAgo": "NT$989.918B"
+     }
+    },
+    {
+     "key": "gross-margin",
+     "ja": "粗利益率",
+     "en": "Gross margin",
+     "value": "66.4%"
+    },
+    {
+     "key": "eps",
+     "ja": "EPS（希薄化後）",
+     "en": "Diluted EPS",
+     "value": "NT$29.43",
+     "comparisons": {
+      "yearAgo": "NT$17.44"
+     }
+    },
+    {
+     "key": "net-income",
+     "ja": "純損益",
+     "en": "Net income / (loss)",
+     "value": "NT$763.064B",
+     "comparisons": {
+      "yearAgo": "NT$452.302B"
+     }
+    },
+    {
+     "key": "operating-income",
+     "ja": "営業損益",
+     "en": "Operating income / (loss)",
+     "value": "NT$876.445B",
+     "comparisons": {
+      "yearAgo": "NT$500.685B"
+     }
+    },
+    {
+     "key": "guidance-revenue",
+     "ja": "次四半期見通し 売上高",
+     "en": "Next-quarter guidance Revenue",
+     "value": "$52.3B-$54.3B"
+    }
+   ],
+   "url": "https://www.sec.gov/Archives/edgar/data/1046179/000104617926000726/a3q26e_withguidancexfinal.htm",
+   "publisher": "TSMC IR (SEC 6-K)",
+   "publishedAt": "2026-10-15T10:40:56.000+00:00",
+   "observedAt": "2026-10-15T10:40:56.000+00:00",
+   "method": "deterministic-issuer-table"
+  },
+  {
+   "id": "253413884545915",
+   "researchId": "ir-flash-253413884545915",
+   "kind": "earnings",
+   "ticker": "ASML",
+   "period": "Q3 2026",
+   "titleJa": "ASML Q3 2026決算：売上高€11.662B、粗利益率57.5%",
+   "titleEn": "ASML Q3 2026 earnings: Revenue €11.662B, Gross margin 57.5%",
+   "facts": [
+    {
+     "key": "revenue",
+     "ja": "売上高",
+     "en": "Revenue",
+     "value": "€11.662B"
+    },
+    {
+     "key": "gross-margin",
+     "ja": "粗利益率",
+     "en": "Gross margin",
+     "value": "57.5%"
+    },
+    {
+     "key": "eps",
+     "ja": "EPS（基本）",
+     "en": "Basic EPS",
+     "value": "€12.95"
+    },
+    {
+     "key": "net-income",
+     "ja": "純損益",
+     "en": "Net income / (loss)",
+     "value": "€4.96B"
+    },
+    {
+     "key": "guidance-revenue",
+     "ja": "次四半期見通し 売上高",
+     "en": "Next-quarter guidance Revenue",
+     "value": "€14.2B-€15.2B"
+    }
+   ],
+   "url": "https://www.sec.gov/Archives/edgar/data/937966/000162828026065813/pressreleasefinancialresul.htm",
+   "publisher": "ASML IR (SEC 6-K)",
+   "publishedAt": "2026-10-14T10:01:18.000+00:00",
+   "observedAt": "2026-10-14T10:01:18.000+00:00",
+   "method": "deterministic-issuer-table"
+  }
+ ],
+ "companies": [
+  {
+   "ticker": "AAOI",
+   "name": "Applied Optoelectronics",
+   "reportedAt": "2026-11-05T21:10:28.000+00:00",
+   "form": "8-K",
+   "period": "Q3 2026",
+   "figures": true,
+   "failure": null,
+   "url": "https://www.sec.gov/Archives/edgar/data/1158114/000168316826008351/aaoi_ex9901.htm",
+   "events": 1,
+   "method": "deterministic-issuer-table"
+  },
+  {
+   "ticker": "AAPL",
+   "name": "Apple",
+   "reportedAt": "2026-11-02T21:30:23.000+00:00",
+   "form": "8-K",
+   "period": "Q4 FY2026",
+   "figures": true,
+   "failure": null,
+   "url": "https://www.sec.gov/Archives/edgar/data/320193/000032019326000024/a8-kex991q4202609262026.htm",
+   "events": 1,
+   "method": "deterministic-issuer-table"
+  },
+  {
+   "ticker": "ADBE",
+   "name": "Adobe",
+   "reportedAt": null,
+   "form": null,
+   "period": null,
+   "figures": false,
+   "failure": "not-reported-in-range",
+   "url": null
+  },
+  {
+   "ticker": "ALAB",
+   "name": "Astera Labs",
+   "reportedAt": "2026-11-03T21:09:51.000+00:00",
+   "form": "8-K",
+   "period": "Q3 2026",
+   "figures": true,
+   "failure": null,
+   "url": "https://www.sec.gov/Archives/edgar/data/1736297/000173629726000044/q326exhibit991.htm",
+   "events": 1,
+   "method": "deterministic-issuer-table"
+  },
+  {
+   "ticker": "AMAT",
+   "name": "Applied Materials",
+   "reportedAt": "2026-11-12T21:02:46.000+00:00",
+   "form": "8-K",
+   "period": "Q4 FY2026",
+   "figures": true,
+   "failure": null,
+   "url": "https://www.sec.gov/Archives/edgar/data/6951/000162828026073360/exhibit991q42026earningsre.htm",
+   "events": 1,
+   "method": "deterministic-issuer-table"
+  },
+  {
+   "ticker": "AMD",
+   "name": "AMD",
+   "reportedAt": "2026-11-03T21:16:27.000+00:00",
+   "form": "8-K",
+   "period": "Q3 2026",
+   "figures": true,
+   "failure": null,
+   "url": "https://www.sec.gov/Archives/edgar/data/2488/000000248826000188/q32026991.htm",
+   "events": 1,
+   "method": "deterministic-issuer-table"
+  },
+  {
+   "ticker": "AMZN",
+   "name": "Amazon",
+   "reportedAt": "2026-10-29T20:05:27.000+00:00",
+   "form": "8-K",
+   "period": "Q3 2026",
+   "figures": true,
+   "failure": null,
+   "url": "https://www.sec.gov/Archives/edgar/data/1018724/000101872426000038/amzn-20260930xex991.htm",
+   "events": 1,
+   "method": "deterministic-issuer-table"
+  },
+  {
+   "ticker": "ANET",
+   "name": "Arista Networks",
+   "reportedAt": "2026-11-03T21:10:17.000+00:00",
+   "form": "8-K",
+   "period": "Q3 2026",
+   "figures": true,
+   "failure": null,
+   "url": "https://www.sec.gov/Archives/edgar/data/1596532/000159653226000252/ex991q326-earningsrelease.htm",
+   "events": 1,
+   "method": "deterministic-issuer-table"
+  },
+  {
+   "ticker": "APH",
+   "name": "Amphenol",
+   "reportedAt": "2026-10-28T13:42:41.000+00:00",
+   "form": "8-K",
+   "period": "Q3 2026",
+   "figures": true,
+   "failure": null,
+   "url": "https://www.sec.gov/Archives/edgar/data/820313/000110465926119421/aph-ex99d1.htm",
+   "events": 1,
+   "method": "deterministic-issuer-table"
+  },
+  {
+   "ticker": "ARM",
+   "name": "Arm",
+   "reportedAt": "2026-11-04T21:02:18.000+00:00",
+   "form": "6-K",
+   "period": "Q2 FYE27",
+   "figures": true,
+   "failure": null,
+   "url": "https://www.sec.gov/Archives/edgar/data/1973239/000197323926000141/exhibit992fye27q230-sepx26.htm",
+   "events": 1,
+   "method": "deterministic-issuer-table"
+  },
+  {
+   "ticker": "ASML",
+   "name": "ASML",
+   "reportedAt": "2026-10-14T10:01:18.000+00:00",
+   "form": "6-K",
+   "period": "Q3 2026",
+   "figures": true,
+   "failure": null,
+   "url": "https://www.sec.gov/Archives/edgar/data/937966/000162828026065813/pressreleasefinancialresul.htm",
+   "events": 1,
+   "method": "deterministic-issuer-table"
+  },
+  {
+   "ticker": "AVGO",
+   "name": "Broadcom",
+   "reportedAt": null,
+   "form": null,
+   "period": null,
+   "figures": false,
+   "failure": "not-reported-in-range",
+   "url": null
+  },
+  {
+   "ticker": "BE",
+   "name": "Bloom Energy",
+   "reportedAt": "2026-10-22T20:09:25.000+00:00",
+   "form": "8-K",
+   "period": "Q3 2026",
+   "figures": true,
+   "failure": null,
+   "url": "https://www.sec.gov/Archives/edgar/data/1664703/000162828026066890/ex991_q326financialresults.htm",
+   "events": 1,
+   "method": "deterministic-issuer-table"
+  },
+  {
+   "ticker": "CEG",
+   "name": "Constellation Energy",
+   "reportedAt": "2026-11-09T11:53:11.000+00:00",
+   "form": "8-K",
+   "period": "Q3 2026",
+   "figures": false,
+   "failure": "no-table-parser/not-a-results-release",
+   "url": "https://www.sec.gov/Archives/edgar/data/1868275/000186827526000116/ceg-20261109.htm",
+   "events": 1,
+   "method": "sec-results-filing"
+  },
+  {
+   "ticker": "COHR",
+   "name": "Coherent",
+   "reportedAt": "2026-11-04T21:05:07.000+00:00",
+   "form": "8-K",
+   "period": "Q1 FY2027",
+   "figures": true,
+   "failure": null,
+   "url": "https://www.sec.gov/Archives/edgar/data/820318/000119312526447200/d176836dex991.htm",
+   "events": 1,
+   "method": "issuer-highlight-sentences"
+  },
+  {
+   "ticker": "CRDO",
+   "name": "Credo",
+   "reportedAt": null,
+   "form": null,
+   "period": null,
+   "figures": false,
+   "failure": "not-reported-in-range",
+   "url": null
+  },
+  {
+   "ticker": "CRM",
+   "name": "Salesforce",
+   "reportedAt": null,
+   "form": null,
+   "period": null,
+   "figures": false,
+   "failure": "not-reported-in-range",
+   "url": null
+  },
+  {
+   "ticker": "CRWD",
+   "name": "CrowdStrike",
+   "reportedAt": null,
+   "form": null,
+   "period": null,
+   "figures": false,
+   "failure": "not-reported-in-range",
+   "url": null
+  },
+  {
+   "ticker": "CRWV",
+   "name": "CoreWeave",
+   "reportedAt": "2026-11-10T21:05:53.000+00:00",
+   "form": "8-K",
+   "period": "Q3 2026",
+   "figures": true,
+   "failure": null,
+   "url": "https://www.sec.gov/Archives/edgar/data/1769628/000176962826000461/coreweave3q26earningspress.htm",
+   "events": 1,
+   "method": "deterministic-issuer-table"
+  },
+  {
+   "ticker": "DELL",
+   "name": "Dell Technologies",
+   "reportedAt": null,
+   "form": null,
+   "period": null,
+   "figures": false,
+   "failure": "not-reported-in-range",
+   "url": null
+  },
+  {
+   "ticker": "GEV",
+   "name": "GE Vernova",
+   "reportedAt": "2026-10-28T10:16:59.000+00:00",
+   "form": "8-K",
+   "period": "Q3 2026",
+   "figures": true,
+   "failure": null,
+   "url": "https://www.sec.gov/Archives/edgar/data/1996810/000199681026000162/gevpressrelease3q26.htm",
+   "events": 1,
+   "method": "deterministic-issuer-table"
+  },
+  {
+   "ticker": "GOOGL",
+   "name": "Alphabet / Google",
+   "reportedAt": "2026-10-28T20:01:33.000+00:00",
+   "form": "8-K",
+   "period": "Q3 2026",
+   "figures": true,
+   "failure": null,
+   "url": "https://www.sec.gov/Archives/edgar/data/1652044/000165204426000080/googexhibit991q32026.htm",
+   "events": 1,
+   "method": "deterministic-issuer-table"
+  },
+  {
+   "ticker": "IBM",
+   "name": "IBM",
+   "reportedAt": "2026-10-21T20:19:17.000+00:00",
+   "form": "8-K",
+   "period": "Q3 2026",
+   "figures": true,
+   "failure": null,
+   "url": "https://www.sec.gov/Archives/edgar/data/51143/000005114326000093/ibm-20261021xex991.htm",
+   "events": 1,
+   "method": "issuer-highlight-sentences"
+  },
+  {
+   "ticker": "INTC",
+   "name": "Intel",
+   "reportedAt": "2026-10-29T20:08:53.000+00:00",
+   "form": "8-K",
+   "period": "Q3 2026",
+   "figures": true,
+   "failure": null,
+   "url": "https://www.sec.gov/Archives/edgar/data/50863/000005086326000188/q326earningsrelease.htm",
+   "events": 1,
+   "method": "deterministic-issuer-table"
+  },
+  {
+   "ticker": "IONQ",
+   "name": "IonQ",
+   "reportedAt": "2026-11-05T21:07:04.000+00:00",
+   "form": "8-K",
+   "period": "Q3 2026",
+   "figures": true,
+   "failure": null,
+   "url": "https://www.sec.gov/Archives/edgar/data/1824920/000119312526449779/ionq-ex99_1.htm",
+   "events": 1,
+   "method": "deterministic-issuer-table"
+  },
+  {
+   "ticker": "IREN",
+   "name": "IREN",
+   "reportedAt": "2026-11-05T21:03:11.000+00:00",
+   "form": "8-K",
+   "period": "Q1 FY2027",
+   "figures": true,
+   "failure": null,
+   "url": "https://www.sec.gov/Archives/edgar/data/1878848/000187884826000065/irenreportsq1-fy27result.htm",
+   "events": 1,
+   "method": "issuer-highlight-sentences"
+  },
+  {
+   "ticker": "KLAC",
+   "name": "KLA",
+   "reportedAt": "2026-10-28T20:07:50.000+00:00",
+   "form": "8-K",
+   "period": "Q1 FY2027",
+   "figures": true,
+   "failure": null,
+   "url": "https://www.sec.gov/Archives/edgar/data/319201/000031920126000032/exhibit991earningsrelease0.htm",
+   "events": 1,
+   "method": "deterministic-issuer-table"
+  },
+  {
+   "ticker": "LITE",
+   "name": "Lumentum",
+   "reportedAt": "2026-11-02T12:12:55.000+00:00",
+   "form": "8-K",
+   "period": "Q1 FY2027",
+   "figures": true,
+   "failure": null,
+   "url": "https://www.sec.gov/Archives/edgar/data/1633978/000162828026068655/lite_ex991xq1fy27.htm",
+   "events": 1,
+   "method": "deterministic-issuer-table"
+  },
+  {
+   "ticker": "LRCX",
+   "name": "Lam Research",
+   "reportedAt": "2026-10-21T20:13:03.000+00:00",
+   "form": "8-K",
+   "period": "Sep 2026 quarter",
+   "figures": true,
+   "failure": null,
+   "url": "https://www.sec.gov/Archives/edgar/data/707549/000070754926000052/lrcx_exhibitx991xq1x2027.htm",
+   "events": 1,
+   "method": "deterministic-issuer-table"
+  },
+  {
+   "ticker": "META",
+   "name": "Meta Platforms",
+   "reportedAt": "2026-10-21T20:03:35.000+00:00",
+   "form": "8-K",
+   "period": "Q3 2026",
+   "figures": true,
+   "failure": null,
+   "url": "https://www.sec.gov/Archives/edgar/data/1326801/000162828026066700/meta-09302026xexhibit991.htm",
+   "events": 1,
+   "method": "deterministic-issuer-table"
+  },
+  {
+   "ticker": "MRVL",
+   "name": "Marvell",
+   "reportedAt": null,
+   "form": null,
+   "period": null,
+   "figures": false,
+   "failure": "not-a-results-release",
+   "url": null
+  },
+  {
+   "ticker": "MSFT",
+   "name": "Microsoft",
+   "reportedAt": "2026-10-28T20:04:44.000+00:00",
+   "form": "8-K",
+   "period": "Q1 FY2027",
+   "figures": true,
+   "failure": null,
+   "url": "https://www.sec.gov/Archives/edgar/data/789019/000119312526436122/msft-ex99_1.htm",
+   "events": 1,
+   "method": "deterministic-issuer-table"
+  },
+  {
+   "ticker": "MU",
+   "name": "Micron",
+   "reportedAt": null,
+   "form": null,
+   "period": null,
+   "figures": false,
+   "failure": "not-reported-in-range",
+   "url": null
+  },
+  {
+   "ticker": "NBIS",
+   "name": "Nebius",
+   "reportedAt": "2026-11-12T14:22:11.000+00:00",
+   "form": "6-K",
+   "period": "Q3 2026",
+   "figures": true,
+   "failure": null,
+   "url": "https://www.sec.gov/Archives/edgar/data/1513845/000110465926126008/tm2629571d1_ex99-1.htm",
+   "events": 1,
+   "method": "deterministic-issuer-table"
+  },
+  {
+   "ticker": "NFLX",
+   "name": "Netflix",
+   "reportedAt": "2026-10-20T20:01:55.000+00:00",
+   "form": "8-K",
+   "period": "Q3 2026",
+   "figures": true,
+   "failure": null,
+   "url": "https://www.sec.gov/Archives/edgar/data/1065280/000106528026000290/ex991_q326.htm",
+   "events": 1,
+   "method": "deterministic-issuer-table"
+  },
+  {
+   "ticker": "NOW",
+   "name": "ServiceNow",
+   "reportedAt": "2026-10-28T20:14:14.000+00:00",
+   "form": "8-K",
+   "period": "Q3 2026",
+   "figures": true,
+   "failure": null,
+   "url": "https://www.sec.gov/Archives/edgar/data/1373715/000137371526000092/erq3fy26.htm",
+   "events": 1,
+   "method": "deterministic-issuer-table"
+  },
+  {
+   "ticker": "NVDA",
+   "name": "NVIDIA",
+   "reportedAt": "2026-11-17T21:20:51.000+00:00",
+   "form": "8-K",
+   "period": "Q3 FY2027",
+   "figures": true,
+   "failure": null,
+   "url": "https://www.sec.gov/Archives/edgar/data/1045810/000104581026000088/q3fy27pr.htm",
+   "events": 1,
+   "method": "deterministic-issuer-table"
+  },
+  {
+   "ticker": "ORCL",
+   "name": "Oracle",
+   "reportedAt": null,
+   "form": null,
+   "period": null,
+   "figures": false,
+   "failure": "not-reported-in-range",
+   "url": null
+  },
+  {
+   "ticker": "PANW",
+   "name": "Palo Alto Networks",
+   "reportedAt": "2026-11-18T21:37:04.000+00:00",
+   "form": "8-K",
+   "period": "Q1 FY2027",
+   "figures": true,
+   "failure": null,
+   "url": "https://www.sec.gov/Archives/edgar/data/1327567/000132756726000030/ex991q127earningsrelease.htm",
+   "events": 1,
+   "method": "deterministic-issuer-table"
+  },
+  {
+   "ticker": "PLTR",
+   "name": "Palantir",
+   "reportedAt": "2026-11-02T21:06:48.000+00:00",
+   "form": "8-K",
+   "period": "Q3 2026",
+   "figures": true,
+   "failure": null,
+   "url": "https://www.sec.gov/Archives/edgar/data/1321655/000132165526000045/a2026q3ex991pressrelease.htm",
+   "events": 1,
+   "method": "deterministic-issuer-table"
+  },
+  {
+   "ticker": "QCOM",
+   "name": "Qualcomm",
+   "reportedAt": "2026-11-04T21:03:36.000+00:00",
+   "form": "8-K",
+   "period": "Q4 FY2026",
+   "figures": false,
+   "failure": "no-table-parser/highlights-unreadable",
+   "url": "https://www.sec.gov/Archives/edgar/data/804328/000080432826000127/qcom092726erex991.htm",
+   "events": 1,
+   "method": "sec-results-filing"
+  },
+  {
+   "ticker": "SKHY",
+   "name": "SK hynix",
+   "reportedAt": "2026-10-28T00:00:00.000+00:00",
+   "form": "6-K",
+   "period": "Q3 2026",
+   "figures": true,
+   "failure": null,
+   "url": "https://www.sec.gov/Archives/edgar/data/2120882/000119312526434994/d162547d6k.htm",
+   "events": 1,
+   "method": "deterministic-issuer-table"
+  },
+  {
+   "ticker": "SNDK",
+   "name": "Sandisk",
+   "reportedAt": "2026-10-29T20:13:53.000+00:00",
+   "form": "8-K",
+   "period": "Q1 FY2027",
+   "figures": true,
+   "failure": null,
+   "url": "https://www.sec.gov/Archives/edgar/data/2023554/000162828026068243/sndkq1-27ex991xpressrelease.htm",
+   "events": 1,
+   "method": "deterministic-issuer-table"
+  },
+  {
+   "ticker": "SNOW",
+   "name": "Snowflake",
+   "reportedAt": null,
+   "form": null,
+   "period": null,
+   "figures": false,
+   "failure": "not-reported-in-range",
+   "url": null
+  },
+  {
+   "ticker": "SOFI",
+   "name": "SoFi Technologies",
+   "reportedAt": "2026-10-27T11:02:59.000+00:00",
+   "form": "8-K",
+   "period": "Q3 2026",
+   "figures": true,
+   "failure": null,
+   "url": "https://www.sec.gov/Archives/edgar/data/1818874/000181887426000065/a2026q3earningsrelease.htm",
+   "events": 1,
+   "method": "deterministic-issuer-table"
+  },
+  {
+   "ticker": "STX",
+   "name": "Seagate",
+   "reportedAt": "2026-10-27T20:12:44.000+00:00",
+   "form": "8-K",
+   "period": "Q1 FY2027",
+   "figures": true,
+   "failure": null,
+   "url": "https://www.sec.gov/Archives/edgar/data/1137789/000113778926000300/stxq12027pressreleasefinan.htm",
+   "events": 1,
+   "method": "deterministic-issuer-table"
+  },
+  {
+   "ticker": "TSLA",
+   "name": "Tesla",
+   "reportedAt": "2026-10-21T20:41:42.000+00:00",
+   "form": "8-K",
+   "period": "Q3 2026",
+   "figures": true,
+   "failure": null,
+   "url": "https://www.sec.gov/Archives/edgar/data/1318605/000162828026066738/exhibit9914.htm",
+   "events": 1,
+   "method": "issuer-highlight-sentences"
+  },
+  {
+   "ticker": "TSM",
+   "name": "TSMC",
+   "reportedAt": "2026-10-15T10:40:56.000+00:00",
+   "form": "6-K",
+   "period": "Q3 2026",
+   "figures": true,
+   "failure": null,
+   "url": "https://www.sec.gov/Archives/edgar/data/1046179/000104617926000726/a3q26e_withguidancexfinal.htm",
+   "events": 1,
+   "method": "deterministic-issuer-table"
+  },
+  {
+   "ticker": "VRT",
+   "name": "Vertiv",
+   "reportedAt": "2026-10-28T10:02:00.000+00:00",
+   "form": "8-K",
+   "period": "Q3 2026",
+   "figures": true,
+   "failure": null,
+   "url": "https://www.sec.gov/Archives/edgar/data/1674101/000162828026067707/q32026exhibit991vrt10282026.htm",
+   "events": 1,
+   "method": "deterministic-issuer-table"
+  },
+  {
+   "ticker": "VST",
+   "name": "Vistra",
+   "reportedAt": "2026-11-06T12:01:01.000+00:00",
+   "form": "8-K",
+   "period": "Q3 2026",
+   "figures": true,
+   "failure": null,
+   "url": "https://www.sec.gov/Archives/edgar/data/1692819/000169281926000023/vistra-20260930xearningsre.htm",
+   "events": 1,
+   "method": "issuer-highlight-sentences"
+  }
+ ]
+}

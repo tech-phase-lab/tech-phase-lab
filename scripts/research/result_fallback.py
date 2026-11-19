@@ -422,13 +422,14 @@ def replace_with_flash(db, ticker, observed):
             record(db, ticker, row['url'], 'published', None)
 
 
-def public_feed(db, cutoff):
+def public_feed(db, cutoff, until=None):
     """Shown fallbacks inside the window, in the shape of the other result briefs; never one whose release has a parser flash."""
     if not db.execute("SELECT 1 FROM sqlite_master WHERE name='issuer_result_fallbacks'").fetchone():
         return []
     items = []
     for row in db.execute("SELECT payload,observed_at,published_at FROM issuer_result_fallbacks WHERE state='shown' AND payload IS NOT NULL "
-                          'AND julianday(observed_at)>=julianday(?) ORDER BY julianday(observed_at) DESC', (cutoff,)):
+                          'AND julianday(observed_at)>=julianday(?) AND julianday(observed_at)<julianday(?) '
+                          'ORDER BY julianday(observed_at) DESC', (cutoff, until or '9999-12-31T00:00:00+00:00')):
         item = json.loads(row['payload'])
         if flashed(db, item['ticker'], instant(row['observed_at'])):
             continue
