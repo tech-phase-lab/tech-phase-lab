@@ -85,7 +85,7 @@ test("3: RESOLUTE checkout — only the final pay button reads 「利用規約�
   assert.ok(!live.includes("支払いを確定する") && !live.includes("Complete payment"));
   // The other buttons keep their words; the footer links the full terms and the commerce notice.
   for (const kept of ["価格を確認して進む", "Check price and continue", "PayPalへ進む", "Continue to PayPal"]) assert.ok(live.includes(kept), kept);
-  assert.match(live, /href=\{termsHref\(en\)\} target="_blank"/); assert.match(live, /\/resolute\/legal\/commerce/);
+  assert.match(live, /href=\{termsHref\(en\)\} target="_blank"/); assert.match(live, /href=\{`\/commerce\$\{en/);
 });
 
 test("3: PRO — the final button (account card, resume sheet, live billing page) carries the same wording and the renewal line", () => {
@@ -207,20 +207,39 @@ test("9: the three lawyer-reviewed texts, their English, Web Push providers, and
   assert.equal(termsEn, source("terms.en.md")); assert.equal(privacyEn, source("privacy.en.md")); assert.equal(commerceEn, source("commerce.en.md"));
   // 「●日」 stays until the backup retention is confirmed (RESOLUTE's protection chain keeps objects without an expiry today).
   assert.equal((privacyJa.match(/●日/g) ?? []).length, 2); assert.equal((privacyEn.match(/● days/g) ?? []).length, 2);
-  // No 運営責任者 row; the phone number stays as currently written.
+  // No 運営責任者 row. Operator wording (owner, Nov 19), the same for Tech Phase Research and RESOLUTE: seller リゼル / RIZEL,
+  // the name and the phone number by email on request, RESOLUTE's address without "same as".
   assert.ok(!commerceJa.includes("運営責任者"));
-  assert.equal((commerceJa.match(/IP電話などで取得した番号を記載します\(取得後に確定\)/g) ?? []).length, 2);
+  const rows = (text, label) => text.split("\n").filter(line => line.startsWith(`| ${label} |`));
+  assert.deepEqual(rows(commerceJa, "販売事業者"), Array(2).fill("| 販売事業者 | リゼル |"));
+  assert.deepEqual(rows(commerceJa, "事業者の氏名"), Array(2).fill("| 事業者の氏名 | ご請求があればメールでお知らせします |"));
+  assert.deepEqual(rows(commerceJa, "所在地"), Array(2).fill("| 所在地 | 〒160-0022 東京都新宿区新宿2丁目8番15号 パークフロント新宿 202号室 |"));
+  assert.deepEqual(rows(commerceJa, "電話番号"), Array(2).fill("| 電話番号 | ご請求があればメールでお知らせします |"));
+  assert.deepEqual(rows(commerceEn, "Seller"), Array(2).fill("| Seller | RIZEL |"));
+  assert.deepEqual(rows(commerceEn, "Seller's name"), Array(2).fill("| Seller's name | Provided by email on request |"));
+  assert.deepEqual(rows(commerceEn, "Address"), Array(2).fill("| Address | Park Front Shinjuku Room 202, 2-8-15 Shinjuku, Shinjuku-ku, Tokyo 160-0022, Japan |"));
+  assert.deepEqual(rows(commerceEn, "Phone"), Array(2).fill("| Phone | Provided by email on request |"));
+  for (const text of [commerceJa, commerceEn]) for (const label of ["販売事業者", "Seller"]) {
+    const at = text.split("\n").findIndex(line => line.startsWith(`| ${label} |`));
+    if (at >= 0) assert.match(text.split("\n")[at + 1], /^\| (事業者の氏名|Seller's name) \|/);
+  }
+  assert.ok(privacyJa.includes("## 10. 運営者・お問い合わせ窓口\n\n運営者: リゼル\n\n所在地: 〒160-0022 東京都新宿区新宿2丁目8番15号 パークフロント新宿 202号室\n\n氏名はご請求があればお知らせします\n\n個人情報の取扱いに関するお問い合わせ・苦情の申出先: support@techphase.app"));
+  assert.ok(privacyEn.includes("## 10. Operator and Contact\n\nOperator: RIZEL\n\nAddress: Park Front Shinjuku Room 202, 2-8-15 Shinjuku, Shinjuku-ku, Tokyo 160-0022, Japan\n\nWe will give the Operator's name on request.\n\nContact for inquiries and complaints about the handling of personal information: support@techphase.app"));
   // Web Push delivery services: exactly the push hosts web_push.py allows.
   const allowed = read("../scripts/research/web_push.py").match(/'fcm\.googleapis\.com', 'updates\.push\.services\.mozilla\.com', 'web\.push\.apple\.com'/);
   assert.ok(allowed, "the allowlist in web_push.py");
   assert.ok(privacyJa.includes("Apple Push Notification service(Apple社)、Firebase Cloud Messaging(Google社)、Mozillaのプッシュサービス(Mozilla社)"));
   assert.ok(privacyEn.includes("Apple Push Notification service (Apple), Firebase Cloud Messaging (Google) or Mozilla's push service (Mozilla)"));
   // The commerce notice is reachable where the LPs and plan cards link.
-  assert.ok(lp.includes(`<Link href="/resolute/legal/commerce">特定商取引法に基づく表記</Link>`));
-  assert.ok(lpEn.includes(`<Link href="/resolute/legal/commerce?lang=en">Legal Notice</Link>`));
-  assert.match(read("../app/research/plan-cards.tsx"), /export const TOKUSHOHO_HREF = "\/resolute\/legal\/commerce";/);
-  const page = read("../app/resolute/legal/commerce/page.tsx");
+  assert.ok(lp.includes(`<Link href="/commerce">特定商取引法に基づく表記</Link>`));
+  assert.ok(lpEn.includes(`<Link href="/commerce?lang=en">Legal Notice</Link>`));
+  assert.match(read("../app/research/plan-cards.tsx"), /export const TOKUSHOHO_HREF = "\/commerce";/);
+  const page = read("../app/commerce/page.tsx");
   assert.match(page, /import commerce from "@\/lib\/legal\/commerce-ja";/); assert.match(page, /robots: \{ index: false, follow: false \}/);
-  assert.ok(!/clerk|auth\(|getMembership/i.test(page + read("../app/resolute/legal/commerce/layout.tsx")));
+  assert.ok(!/clerk|auth\(|getMembership/i.test(page + read("../app/commerce/layout.tsx")));
   assert.match(read("../scripts/legal-sync.mjs"), /\["terms", "privacy", "commerce"\]/);
+  // It sits beside /terms and /privacy (outside RESOLUTE's viewport-fit: cover, which lifted the bottom menu); the old URL redirects.
+  assert.match(read("../app/commerce/layout.tsx"), /import ResearchLayout from "\.\.\/research\/layout";/);
+  assert.match(read("../next.config.ts"), /\{ source: "\/resolute\/legal\/commerce", destination: "\/commerce", permanent: false \}/);
+  assert.ok(!read("../app/resolute/checkout/live-screen.tsx").includes("/resolute/legal/commerce"));
 });

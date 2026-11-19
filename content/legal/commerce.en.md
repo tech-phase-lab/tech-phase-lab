@@ -6,9 +6,10 @@ This is an English translation of the Japanese notice. If the English and Japane
 
 | Item | Details |
 |---|---|
-| Seller | RIZEL (trade name). We will provide the seller's name by email without delay on request. |
+| Seller | RIZEL |
+| Seller's name | Provided by email on request |
 | Address | Park Front Shinjuku Room 202, 2-8-15 Shinjuku, Shinjuku-ku, Tokyo 160-0022, Japan |
-| Phone | We will list a number obtained through an IP phone service or similar (to be confirmed once obtained) |
+| Phone | Provided by email on request |
 | Email | support@techphase.app |
 | Price | PRO plan: JPY 2,980 per month (tax included) or JPY 29,800 per year (tax included). For users outside Japan, USD 20 per month or USD 200 per year. FREE plan: free |
 | Other costs | Internet connection costs are paid by the user |
@@ -23,9 +24,10 @@ This is an English translation of the Japanese notice. If the English and Japane
 
 | Item | Details |
 |---|---|
-| Seller | RIZEL (trade name). We will provide the seller's name by email without delay on request. |
-| Address | Same as Tech Phase Research. Park Front Shinjuku Room 202, 2-8-15 Shinjuku, Shinjuku-ku, Tokyo 160-0022, Japan |
-| Phone | Same as Tech Phase Research. We will list a number obtained through an IP phone service or similar (to be confirmed once obtained) |
+| Seller | RIZEL |
+| Seller's name | Provided by email on request |
+| Address | Park Front Shinjuku Room 202, 2-8-15 Shinjuku, Shinjuku-ku, Tokyo 160-0022, Japan |
+| Phone | Provided by email on request |
 | Email | support@techphase.app |
 | Price | JPY 9,800 (tax included) from March 1, 2027. Until the end of February 2027, the launch price of JPY 7,980 (tax included). The product itself is a one-time purchase. The Notification Features (alerts, the next-morning note, the Shock Gauge and RIZEL's Take) can be used for one year from the date of purchase and need renewal from the second year. Renewal of the Notification Features (from the second year): JPY 5,980 (tax included). JPY 3,980 (tax included) for Tech Phase PRO members at the time of renewal |
 | Other costs | Internet connection costs are paid by the user |

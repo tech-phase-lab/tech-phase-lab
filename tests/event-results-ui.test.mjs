@@ -4,13 +4,13 @@ import { buildPublicNews } from "../lib/research/public-news-response.ts";
 import { readFileSync } from "node:fs";
 import { createRequire } from "node:module";
 import ts from "typescript";
-import { economicResults } from "../lib/research/calendar.ts";
+import { calendarDateKey, economicResults } from "../lib/research/calendar.ts";
 import { parseEventResults } from "../lib/research/general-news.ts";
 
-// pce-results.ts imports "./calendar" without an extension, which plain Node cannot resolve; load it with that one import supplied.
+// pce-results.ts imports "./calendar" without an extension, which plain Node cannot resolve; load it with those imports supplied.
 const source = ts.transpileModule(readFileSync(new URL("../lib/research/pce-results.ts", import.meta.url), "utf8"), { compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2022 } }).outputText;
 const loaded = { exports: {} };
-new Function("require", "module", "exports", source)(id => (id === "./calendar" ? { economicResults } : createRequire(import.meta.url)(id)), loaded, loaded.exports);
+new Function("require", "module", "exports", source)(id => (id === "./calendar" ? { calendarDateKey, economicResults } : createRequire(import.meta.url)(id)), loaded, loaded.exports);
 const { mergeEconomicResults } = loaded.exports;
 
 const event = (over = {}) => ({ id: "us-midterm-2026-11-03", titleJa: "米国中間選挙（現地11月3日投票・日本時間4日に結果）", titleEn: "U.S. midterm elections", sourceName: "CBS News・NPR(報道)", releasedAt: "2026-11-04T04:10:00+00:00",

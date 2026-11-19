@@ -1,4 +1,4 @@
-import { economicResults } from "./calendar";
+import { calendarDateKey, economicResults } from "./calendar";
 import type { ResultBrief } from "./market-results";
 import type { EventResult, OfficialUpdate } from "./general-news";
 
@@ -102,5 +102,24 @@ export function mergeEconomicResults(updates: OfficialUpdate[] = [], briefs: Res
       detail:{ja:r.facts.map(f => `${f.ja}：${f.value}`).join("\n"),en:r.facts.map(f => `${f.en}: ${f.value}`).join("\n")},
       sourceUrl:r.url,verifiedOn:r.publicAt.slice(0,10)});
   }
-  return [...results.values()].sort((a, b) => Date.parse(b.releasedAt) - Date.parse(a.releasedAt));
+  return onePerRelease([...results.values()], officialIds).sort((a, b) => Date.parse(b.releasedAt) - Date.parse(a.releasedAt));
+}
+
+/** One row per indicator and release day (owner, Nov 19: the Oct 28 FOMC showed twice, as the hand-written "fomc-2026-10" and the
+ * statement reader's "fomc-2026-10-28"). The indicator is the id's leading word (fomc, jobs, cpi, gdp…) and the day is the
+ * release date in New York. A verified row beats one from posts; then the row with the more detailed result is kept.
+ * Rows from posts that name no known indicator ("economic-…") are separate reports and are left as they are. */
+function onePerRelease<Row extends { id: string; releasedAt: string; result: { ja: string }; detail: { ja: string } }>(rows: Row[], officialIds: Set<string>) {
+  const kept = new Map<string, Row>();
+  const rank = (row: Row) => [officialIds.has(row.id) ? 0 : 1, -row.result.ja.length, -row.detail.ja.length];
+  for (const row of rows) {
+    const indicator = /^[a-z]+/.exec(row.id)?.[0] ?? row.id;
+    const key = indicator === "economic" ? row.id : `${indicator}|${calendarDateKey(row.releasedAt, "America/New_York")}`;
+    const held = kept.get(key);
+    if (!held) { kept.set(key, row); continue; }
+    const [a, b] = [rank(row), rank(held)];
+    const better = a.findIndex((value, i) => value !== b[i]);
+    if (better >= 0 && a[better] < b[better]) kept.set(key, row);
+  }
+  return [...kept.values()];
 }

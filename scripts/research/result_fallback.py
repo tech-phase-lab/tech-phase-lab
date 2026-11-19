@@ -439,13 +439,93 @@ def public_feed(db, cutoff, until=None):
     return items
 
 
+# ---- releases stored without figures (owner, Nov 19) ----------------------------------------------------------
+# QCOM (Nov 4) and CEG (Nov 9) stayed 「決算を発表しました」 in the calendar for two weeks before anyone noticed. A tracked company's
+# results release that still has no figures GAP_GRACE after it was announced writes one log line (codes and tickers only, nothing
+# on any screen), and one more when figures arrive later, so the same day's logs show it.
+GAP_GRACE = timedelta(minutes=30)
+
+
+def gap_schema(db):
+    db.execute('''CREATE TABLE IF NOT EXISTS issuer_result_gaps(
+      key TEXT PRIMARY KEY, ticker TEXT NOT NULL, url TEXT NOT NULL, period TEXT, state TEXT NOT NULL, reason TEXT,
+      announced_at TEXT NOT NULL, changed_at TEXT NOT NULL)''')
+
+
+def has_figures(db, ticker, at):
+    """The release has figures on the site: a parser flash, or a shown fallback, of the company within SAME_RELEASE of `at`."""
+    if flashed(db, ticker, at):
+        return True
+    if not db.execute("SELECT 1 FROM sqlite_master WHERE name='issuer_result_fallbacks'").fetchone():
+        return False
+    return any(abs(instant(r[0]) - at) <= SAME_RELEASE for r in db.execute(
+        "SELECT observed_at FROM issuer_result_fallbacks WHERE ticker=? AND state='shown'", (ticker,)) if instant(r[0]))
+
+
+def gap_reason(db, ticker, url, at):
+    """Why no figures: the parser's own code for its reading of that release (same address; else the company's latest reading near
+    that time), else whether the company has a parser at all."""
+    import issuer_result_flash as flash
+    best = None
+    if db.execute("SELECT 1 FROM sqlite_master WHERE name='issuer_result_attempts'").fetchone():
+        best = db.execute('SELECT parse_reason,reason,state FROM issuer_result_attempts WHERE key=?', (attempt_key(ticker, url),)).fetchone()
+        for row in db.execute('SELECT parse_reason,reason,state,first_seen_at,changed_at FROM issuer_result_attempts WHERE ticker=?', (ticker,)):
+            if best is not None:
+                break
+            seen = instant(row['first_seen_at'])
+            if seen and abs(seen - at) <= SAME_RELEASE:
+                best = row
+    if best is not None:
+        return best['parse_reason'] or best['reason'] or best['state']
+    return 'not-attempted' if ticker in flash.PROFILES else 'no-parser'
+
+
+def report_gaps(path, reference=None):
+    """Log every tracked company's results release that is announced but still has no figures after GAP_GRACE (once), and its
+    figures arriving later (once). No network, no screen text. Returns the number of log lines written."""
+    import earnings_announce
+    reference = reference or datetime.now(timezone.utc)
+    written = 0
+    with monitor.connect(path) as db:
+        if not db.execute("SELECT 1 FROM sqlite_master WHERE name='earnings_announcements'").fetchone():
+            return 0
+        gap_schema(db)
+        known = {r['key']: r for r in db.execute('SELECT key,state FROM issuer_result_gaps')}
+        cutoff = (reference - earnings_announce.WINDOW - SAME_RELEASE).isoformat()
+        for row in db.execute('SELECT ticker,url,period,observed_at FROM earnings_announcements WHERE julianday(observed_at)>=julianday(?)',
+                              (cutoff,)).fetchall():
+            at = instant(row['observed_at'])
+            if at is None or row['ticker'] not in monitor.PROVIDERS or reference - at < GAP_GRACE:
+                continue
+            key = attempt_key(row['ticker'], row['url'])
+            old = known.get(key)
+            figures = has_figures(db, row['ticker'], at)
+            if not figures and old is None:
+                state, reason = 'without-figures', gap_reason(db, row['ticker'], row['url'], at)
+            elif figures and old is not None and old['state'] == 'without-figures':
+                state, reason = 'figures-arrived', None
+            else:
+                continue
+            with db:
+                db.execute('''INSERT INTO issuer_result_gaps VALUES(?,?,?,?,?,?,?,?) ON CONFLICT(key) DO UPDATE SET
+                  state=excluded.state,reason=excluded.reason,changed_at=excluded.changed_at''',
+                           (key, row['ticker'], row['url'], row['period'], state, reason, row['observed_at'], stamp(reference)))
+            print(json.dumps({'event': 'earnings-results-' + state, 'ticker': row['ticker'], 'ref': key[:12], 'period': row['period'],
+                              'reason': reason, 'minutes': int((reference - at).total_seconds() // 60)}, ensure_ascii=False), flush=True)
+            written += 1
+    return written
+
+
 def diagnostics(db):
     """Persisted reading states (codes only) and fallback counts for /health."""
+    gaps = [{'ticker': r['ticker'], 'period': r['period'], 'state': r['state'], 'reason': r['reason'], 'announcedAt': r['announced_at']}
+            for r in db.execute('SELECT * FROM issuer_result_gaps ORDER BY announced_at DESC LIMIT 10')] \
+        if db.execute("SELECT 1 FROM sqlite_master WHERE name='issuer_result_gaps'").fetchone() else []
     if not db.execute("SELECT 1 FROM sqlite_master WHERE name='issuer_result_attempts'").fetchone():
-        return {'attempts': [], 'fallbacks': {}}
+        return {'attempts': [], 'fallbacks': {}, 'gaps': gaps}
     attempts = [{'ticker': r['ticker'], 'period': r['period'], 'state': r['state'], 'reason': r['reason'], 'parseReason': r['parse_reason'],
                  'firstSeenAt': r['first_seen_at'], 'changedAt': r['changed_at']}
                 for r in db.execute('SELECT * FROM issuer_result_attempts ORDER BY changed_at DESC LIMIT 15')]
     fallbacks = dict(db.execute('SELECT state,count(*) FROM issuer_result_fallbacks GROUP BY state').fetchall()) \
         if db.execute("SELECT 1 FROM sqlite_master WHERE name='issuer_result_fallbacks'").fetchone() else {}
-    return {'attempts': attempts, 'fallbacks': fallbacks}
+    return {'attempts': attempts, 'fallbacks': fallbacks, 'gaps': gaps}

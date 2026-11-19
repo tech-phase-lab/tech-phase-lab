@@ -1080,6 +1080,11 @@ class AutomaticMonitor:
                 result_fallback.run_once(self.db_path)
             except Exception:
                 print("issuer-result-fallback-unavailable", flush=True)
+            try:
+                # A tracked company's results release still without figures 30 minutes after it was announced: one log line.
+                result_fallback.report_gaps(self.db_path)
+            except Exception:
+                print("issuer-result-gaps-unavailable", flush=True)
             if os.environ.get("OFFICIAL_HEADLINE_TRANSLATION_ENABLED") == "true":
                 try:
                     x_market_news.publish_direct_once(self.db_path)
