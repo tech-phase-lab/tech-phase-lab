@@ -77,13 +77,9 @@ export function useThemeData(group: GroupFilter, plan: string | null, enabled = 
   return { state: current?.state ?? "loading", data, retry };
 }
 
-/** What the screen says when the data could not be shown, always with a button to ask again (owner, Nov 18: never a dead end). */
-export function DataProblem({ state, ja, onRetry }: { state: "error" | "sign-in" | "pro-required"; ja: boolean; onRetry: () => void }) {
-  const text = state === "sign-in"
-    ? (ja ? "ログインの確認ができませんでした。もう一度お試しください。" : "We couldn't confirm your sign-in. Please try again.")
-    : state === "pro-required"
-      ? (ja ? "PRO会員の確認ができませんでした。もう一度お試しください。" : "We couldn't confirm your PRO membership. Please try again.")
-      : (ja ? "データを取得できませんでした。しばらくしてからもう一度お試しください。" : "We couldn't load the data. Please try again in a moment.");
+/** The existing "could not load" message with a button to ask again, whatever stopped the data (owner, Nov 18: never a dead end). */
+export function DataProblem({ ja, onRetry }: { state: "error" | "sign-in" | "pro-required"; ja: boolean; onRetry: () => void }) {
+  const text = ja ? "データを取得できませんでした。しばらくしてからもう一度お試しください。" : "We couldn't load the data. Please try again in a moment.";
   return <div role="alert" className={styles.note}>
     <p className={styles.problemText}>{text}</p>
     <button type="button" className={styles.retry} onClick={onRetry}>{ja ? "もう一度読み込む" : "Try again"}</button>

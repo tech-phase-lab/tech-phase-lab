@@ -166,7 +166,7 @@ test('both theme screens show the refusal and error message with a retry button,
   const root = createRoot(host);
   let retried = 0;
   await act(async () => { root.render(React.createElement(parts.DataProblem, { state: 'sign-in', ja: true, onRetry: () => { retried++; } })); });
-  assert.match(host.textContent, /ログインの確認ができませんでした/);
+  assert.match(host.textContent, /データを取得できませんでした/);
   await act(async () => { host.querySelector('button').click(); });
   assert.equal(retried, 1);
   await act(async () => root.unmount()); host.remove();

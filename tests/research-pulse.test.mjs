@@ -54,6 +54,8 @@ test('a story without a short headline is left out and the band moves on; the sa
   assert.equal(bandTitle(['あ'.repeat(23)+'い'],true).length,24);
   assert.equal(bandTitle(['あ'.repeat(24)+'い'],true),'');
   assert.equal(bandTitle(['米10年債利回り、再び急上昇。'],true),'米10年債利回り、再び急上昇','no final 。');
+  assert.equal(bandTitle(['エヌビディア、データセンター売上が…','エヌビディア決算が予想超え'],true),'エヌビディア決算が予想超え','a headline cut with … is skipped');
+  assert.equal(bandTitle(['Nvidia beats on data center...'],false),'','a headline cut with ... is skipped');
 });
 
 test('stock symbols are bold monospace parts of the headline; other capitals are not',()=>{
