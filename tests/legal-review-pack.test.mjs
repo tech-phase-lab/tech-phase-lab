@@ -166,7 +166,9 @@ test("6: one disclaimer sentence, small and faint, in every footer (never under 
   const alert = { date: "2026-11-17", items: [{ kind: "line_reached", symbol: "NVDA", close: 100, dropPct: 10, newLines: [10] }] };
   assert.equal(latestAlertView(alert, "ja").disclaimer, DISCLAIMER.ja);
   assert.equal(latestAlertView(alert, "en").disclaimer, DISCLAIMER.en);
-  assert.match(read("../app/resolute/alerts/latest/screen.tsx"), /<p className=\{s\.disc\}>\{v\.disclaimer\}<\/p>/);
+  // The alert page is drawn inside the RESOLUTE tool shell, whose last line is the disclaimer: not repeated in the page (owner, Nov 21).
+  assert.doesNotMatch(read("../app/resolute/alerts/latest/screen.tsx"), /v\.disclaimer/);
+  assert.match(read("../app/resolute/alerts/latest/screen.tsx"), /<ToolShell identityReady=\{identityReady\}>/);
   // Under the checker: the news page is drawn inside the RESOLUTE tool shell, whose last line is the disclaimer.
   assert.match(read("../app/resolute/news/screen.tsx"), /<ToolShell identityReady=\{identityReady\}>\{locale=><News locale=\{locale\}\/>\}<\/ToolShell>/);
 });

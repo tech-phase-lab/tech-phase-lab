@@ -171,7 +171,7 @@ test('wording: names, note under the stars, waiting text and the disclaimer are 
  assert.equal(RIZEL_DISCLAIMER.ja,'本サービスと本商品は、情報の提供とご自身で決めたルールの管理を目的としたもので、特定の銘柄の売買や売買の時期をすすめるものではありません。投資の判断は、ご自身でおこなってください。');
  assert.deepEqual(RISK_POLICY.indices,{sox:{ja:'TP半導体40',en:'TP Semiconductor 40'},nas100:{ja:'TP大型株100',en:'TP Large Cap 100'}});
  const gauge=read('../app/resolute/features/shock-gauge.tsx');assert.ok(gauge.includes("'衝撃度チェッカー'"));assert.ok(gauge.includes('>SHOCK GAUGE</small>'));assert.ok(gauge.includes("'Shock Gauge'"));
- const news=read('../app/resolute/news/screen.tsx');assert.ok(news.includes('<ShockGaugeTitle locale={locale}/>'));assert.ok(news.includes('RISK_POLICY.note'));assert.ok(news.includes('RIZEL_DISCLAIMER[locale]'));assert.ok(news.includes('<ShockStars'));
+ const news=read('../app/resolute/news/screen.tsx');assert.ok(news.includes('<ShockGaugeTitle locale={locale}/>'));assert.ok(news.includes('RISK_POLICY.note'));assert.ok(!news.includes('RIZEL_DISCLAIMER'));assert.ok(news.includes('<ShockStars'));
  const owner=read('../app/resolute/news/owner/screen.tsx');assert.ok(owner.includes('<h1>衝撃度チェッカーの管理</h1>'));assert.ok(!/action:'(?:stars|setStars|rate)'/.test(owner));assert.ok(owner.includes('手で変える操作はありません'));
  for(const file of ['../app/resolute/home/screen.tsx','../app/resolute/tonight/screen.tsx'])assert.ok(read(file).includes('<ShockGaugeTitle locale={locale}/>'),file);
  assert.ok(read('../app/resolute/tool-shell.tsx').includes('["/resolute/news","衝撃度チェッカー","Shock Gauge",'));
