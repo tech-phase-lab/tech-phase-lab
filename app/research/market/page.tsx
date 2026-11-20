@@ -38,7 +38,7 @@ function MacroCards({ ja }: { ja: boolean }) {
         {quote?.date && <time dateTime={quote.date}>{quote.date}</time>}
       </article>;
     })}</div>
-    <p className={styles.note}>{ja ? "出典：FRED（FRB・EIA）。掲載日付時点の値です。" : "Source: FRED (Federal Reserve / EIA). Values as of the dates shown."}</p>
+    <p className={styles.note}>{ja ? <>出典：FRED（FRB・EIA）<br />掲載日付時点の値です。</> : "Source: FRED (Federal Reserve / EIA). Values as of the dates shown."}</p>
     <a className={styles.treasury} href="https://home.treasury.gov/resource-center/data-chart-center/interest-rates/TextView?type=daily_treasury_yield_curve" target="_blank" rel="noopener noreferrer">{ja ? "米国債利回り · 米財務省の公式データ" : "Treasury yields · Official U.S. Treasury data"} ↗</a>
   </section>;
 }

@@ -238,3 +238,12 @@ test("a law firm's shareholder-investigation solicitation is dropped whatever th
     "Gilat Satellite Networks wins $50 million defense contract", "米SEC、ニコラ創業者を証券詐欺で提訴", "インテル株主が集団訴訟を提起、株価29%下落後"])
     assert.equal(lawFirmSolicitation(title), false, title);
 });
+
+test('an untranslated copy of a story is never shown on the Japanese screens, only in English (Nov 19)', () => {
+  // The monitor skips a later copy of a story it already translated (PR #710 keeps it skipped for its whole 24 hours), so the
+  // copy has no Japanese. The Japanese band, list and topics leave it out instead of showing its English headline.
+  const wire = { NVDA: [item('t', 'Nvidia expands Nemotron family with two new models', null, '2026-11-18T05:00:00Z'),
+                        item('u', 'Nvidia expands Nemotron family with two new open models', null, '2026-11-18T05:10:00Z')] };
+  assert.deepEqual(wireStories(wire, 'ja', WATCHED), []);
+  assert.equal(wireStories(wire, 'en', WATCHED).length, 1);
+});

@@ -87,7 +87,7 @@ test("「通知の仕組みを入れ直す」 unregisters, registers with update
     resubscribe: async (registration, before) => { log.push(["resubscribe", registration === fresh, before]); return { registered: true, keptPreferences: true }; } });
   assert.deepEqual(log, ["unregister /", ["register", "/research-sw.js", { scope: "/", updateViaCache: "none" }], ["resubscribe", true, previous]]);
   assert.deepEqual(result, { ok: true, removed: 1, hadSubscription: true, registered: true, keptPreferences: true, updateViaCache: "none" });
-  assert.match(reinstallMessage(result, "ja"), /^入れ直しました（古い登録 1 件を削除、通知の登録を保存、届く内容の設定を引き継ぎ）/);
+  assert.match(reinstallMessage(result, "ja"), /^入れ直しました。テスト通知で確かめてください。（古い登録 1 件を削除、通知の登録を保存、届く内容の設定を引き継ぎ）$/);
 });
 
 test("a reinstall that cannot finish says which step failed", async () => {
@@ -96,7 +96,7 @@ test("a reinstall that cannot finish says which step failed", async () => {
   const timedOut = await reinstallPushWorker({ container: { ...base, register: async () => ({ scope: `${ORIGIN}/`, installing: stuck }) }, origin: ORIGIN,
     timeout: immediate, ms: 1, resubscribe: async () => assert.fail("not reached") });
   assert.equal(timedOut.ok, false); assert.equal(timedOut.failedAt, "activate"); assert.equal(timedOut.hadSubscription, false);
-  assert.match(reinstallMessage(timedOut, "ja"), /入れ直しに失敗しました（ワーカーの起動）/);
+  assert.match(reinstallMessage(timedOut, "ja"), /^入れ直しに失敗しました。.*（ワーカーの起動）$/);
   const refused = await reinstallPushWorker({ container: { ...base, register: async () => { throw new Error("SecurityError"); } }, origin: ORIGIN,
     resubscribe: async () => assert.fail("not reached") });
   assert.equal(refused.failedAt, "register");

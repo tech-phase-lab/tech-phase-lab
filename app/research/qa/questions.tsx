@@ -102,7 +102,8 @@ export default function Questions() {
     ja ? "リゼルが選んだ質問にだけ、回答します。" : "Rizel chooses which questions to answer.",
     ownerMode
       ? (ja ? "運営者の投稿には、1日の件数の上限はありません。回答は、各質問の「回答する」から公開します。" : "Owner posts have no daily limit. Publish a reply with “Answer” on the question.")
-      : ja ? `1日${limit ?? 2}件まで(日本時間の0時で切り替わります)。消しても、その日の残り件数は戻りません。` : `Up to ${limit ?? 2} a day (resets at 0:00 Japan time). Deleting a post does not give it back.`,
+      : ja ? `1日${limit ?? 2}件まで(日本時間の0時で切り替わります)` : `Up to ${limit ?? 2} a day (resets at 0:00 Japan time). Deleting a post does not give it back.`,
+    ...(!ownerMode && ja ? ["消しても、その日の残り件数は戻りません。"] : []),
   ];
   return <ResearchToolShell desk lang={lang} setLang={setLang} title={ja ? "リゼルに聞く" : "Ask Rizel"} description={description}>
     {(state === "signed-out" || state === "pro-required") && <section className={styles.askNotice}><h2>{ja ? "閲覧・投稿はPRO会員限定です" : "PRO membership required"}</h2><p>{ja ? "PRO会員になると質問の投稿と閲覧ができます。すべての質問への回答はお約束していません。" : "PRO members can post and read questions. Not every question will receive an answer."}</p><Link href="/research/account">{ja ? "ログイン・会員情報" : "Sign in or view plans"}</Link></section>}

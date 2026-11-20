@@ -214,11 +214,11 @@ export async function refreshPushWorker(container: ContainerLike): Promise<"none
 
 export function reinstallMessage(result: ReinstallResult, lang: "ja" | "en"): string {
   const t = (ja: string, en: string) => lang === "ja" ? ja : en;
-  if (result.ok) return t(`入れ直しました（古い登録 ${result.removed} 件を削除、通知の登録を保存${result.keptPreferences ? "、届く内容の設定を引き継ぎ" : ""}）。テスト通知で確かめてください。`,
+  if (result.ok) return t(`入れ直しました。テスト通知で確かめてください。（古い登録 ${result.removed} 件を削除、通知の登録を保存${result.keptPreferences ? "、届く内容の設定を引き継ぎ" : ""}）`,
     `Reinstalled (${result.removed} old registration(s) removed, this device saved${result.keptPreferences ? ", your choices carried over" : ""}). Send a test notification to check.`);
   const step = { list: t("登録の確認", "listing registrations"), unregister: t("古い登録の削除", "removing old registrations"),
     register: t("ワーカーの登録", "registering the worker"), activate: t("ワーカーの起動", "activating the worker"),
     subscribe: t("通知の登録の保存", "saving this device") }[result.failedAt ?? "subscribe"];
-  return t(`入れ直しに失敗しました（${step}）。アプリを閉じて開き直してから、もう一度お試しください。`,
+  return t(`入れ直しに失敗しました。アプリを閉じて開き直してから、もう一度お試しください。（${step}）`,
     `Reinstall failed (${step}). Close and reopen the app, then try again.`);
 }

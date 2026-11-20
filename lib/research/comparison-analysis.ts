@@ -1,6 +1,7 @@
 import { createHash } from "node:crypto";
 import type { Financials } from "./comparison.ts";
-import { comparisonScores, hasRecentQuarter } from "./comparison-scorecard.ts";
+import { balanceDebt, comparisonMetric, comparisonScores, hasRecentQuarter } from "./comparison-scorecard.ts";
+import { twelveExtraFactors, twelveFactorMethods } from "./twelve-data-factors.ts";
 
 type Copy = { ja: string; en: string };
 export type PreparedComparisonAnalysis = {
@@ -56,8 +57,32 @@ export function prepareComparisonAnalysis(c: Financials, now=Date.now()): Prepar
       copy(`${span.ja}の営業キャッシュフローから現金支出の設備投資を引いた金額は、売上高の${pct}。買収支出やリース等は網羅しません。`,
         `${span.en} operating cash flow less cash capital expenditure equaled ${pct} of revenue. This measure does not capture all acquisitions or leases.`));
   }
+  appendFilingFinancialItems(items,c,now);
   return {version:1,method:"deterministic",sourceRevision:comparisonEvidenceRevision(c),preparedAt:new Date(now).toISOString(),
     processingMs:Math.round((performance.now()-started)*1000)/1000,periodEnd:q.end,sourceUrl:c.quarterSourceUrl,items};
+}
+/** Financial strength scored from the filing's own balance (current ratio, cash against debt): the same thresholds and the same words as when
+ * the provider's statistics score it (appendMarketItems). Before, only the provider's score could become a point, so a weak balance read from
+ * the filing (MO: current ratio 0.58, debt 24.1 billion against cash 2.7 billion; BTI 0.84) left both companies with no weakness (Nov 19).
+ * "Debt exceeds cash" follows the provider's rule too (debt larger than cash on a scored balance), except beside a financial-strength point
+ * (score 7 or more), which it would contradict. Before, it needed a score of 3 or less, so a middling balance such as PEP's (score 3.4, debt
+ * 51.9 billion against cash 10.7 billion) gave no weakness at all while the provider's figures would have said it (all-ticker audit, Nov 19).
+ * Also used when a provider-sourced company scores its balance from the filing (comparison-server.ts). */
+export function appendFilingFinancialItems(items:PreparedComparisonAnalysis["items"],c:Financials,now=Date.now()) {
+  const q=c.quarterRevenue;
+  const financial=comparisonScores(c,now).find(s=>s.id==="financial")?.value ?? null;
+  const providerFinancial=c.twelveData ? twelveExtraFactors(c.twelveData,now).financial : null;
+  if(!q || providerFinancial!==null || financial===null || items.some(i=>i.id==="financial" || i.id==="debt-cash")) return items;
+  if(financial<=3 || financial>=7) items.push({id:"financial",kind:financial>=7?"strength":"weakness",short:copy(comparisonMetric(c,"financial","ja",now),comparisonMetric(c,"financial","en",now)),detail:twelveFactorMethods.financial});
+  const debt=balanceDebt(c), cash=c.balance?.cash?.value;
+  if(financial<7 && debt!==null && cash!==undefined && debt>cash) items.push(debtCashItem(q.end,cash,debt,q.unit));
+  return items;
+}
+/** "Debt exceeds cash", from the provider's statistics or the filing's own balance, in the same words. */
+export function debtCashItem(periodEnd:string,cash:number,debt:number,currency:string):PreparedComparisonAnalysis["items"][number] {
+  return {id:"debt-cash",kind:"weakness",short:copy("有利子負債が現金を上回る","Debt exceeds cash"),
+    detail:copy(`${periodEnd}時点の現金は${cash} ${currency}、有利子負債は${debt} ${currency}。返済期限・借換余力は別途確認が必要で、これだけで資金繰り難とは判断しません。`,
+      `Cash was ${cash} ${currency} versus debt of ${debt} ${currency} as of ${periodEnd}. Maturities and refinancing capacity require separate review; this alone does not establish liquidity distress.`)};
 }
 /** Reuse only the saved analysis matching this exact evidence and a usable quarter. */
 export function currentComparisonAnalysis(c: Financials, now=Date.now()) {

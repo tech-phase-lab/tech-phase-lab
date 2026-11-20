@@ -51,7 +51,7 @@ export default function InboxSheet({ onPick, onClose }: { onPick: (file: File) =
       const blob = await response.blob(); if (!response.ok || blob.size < 512) throw Error();
       const extension = blob.type.includes("mpeg") ? "mp3" : blob.type.includes("mp4") ? "m4a" : "wav";
       // Attaching takes MP3 and M4A up to 50 MB; a larger or WAV memo stays in the inbox.
-      if (extension === "wav" || blob.size > maxDeskAudioBytes) { setError("この音声は、いまは添付できません(MP3・M4Aの50MBまで)。"); setBusy(""); return; }
+      if (extension === "wav" || blob.size > maxDeskAudioBytes) { setError("この音声は、いまは添付できません(MP3・M4Aの50MBまで)"); setBusy(""); return; }
       void post({ action: "read", id: item.id }).catch(() => undefined);
       onPick(new File([blob], `${item.title.replace(/[\\/:*?"<>|]/g, " ").trim().slice(0, 70) || "音声メモ"}.${extension}`, { type: blob.type }));
     } catch { setError("この音声を取り込めませんでした。"); setBusy(""); }

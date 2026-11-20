@@ -590,16 +590,24 @@ def candidates(db, now_ts):
         best['summary_en'] = next((r['summary_en'] for r in copies if r['summary_en'] and r['source'] == 'stocknews'
                                    and stock_news_publisher_kept(r['publisher'])), '')
         entries.append(best)
-    # A story already translated for the same company needs no second copy.
+    # A story already translated for the same company needs no second copy. Nov 19 (翻訳の待ち時間): the translated copy keeps
+    # covering a later copy of its story for the later copy's whole 24 hours, not only its own. Before, the later copy became
+    # "new" the moment the translated one left the 24-hour window, and was sent then, nearly a day after it arrived: a call spent
+    # on a day-old duplicate, and the waits of up to 1437 minutes that raised the day's average wait. A translated copy covers
+    # an article only when it was published at most 24 hours before the article arrived, so the same kind of headline on
+    # another day is still translated.
+    lookback = (datetime.fromtimestamp(now_ts, timezone.utc) - timedelta(hours=2 * PUBLIC_HOURS)).isoformat()
     done = {}
-    for r in db.execute('''SELECT w.ticker, w.title FROM company_wire w JOIN company_wire_article_ja j ON j.article=w.article
-                         WHERE w.published_at>=?''', (since,)):
-        done.setdefault(r['ticker'], []).append(story_words(r['title']))
+    for r in db.execute('''SELECT w.ticker, w.title, w.published_at FROM company_wire w JOIN company_wire_article_ja j ON j.article=w.article
+                         WHERE w.published_at>=?''', (lookback,)):
+        done.setdefault(r['ticker'], []).append((story_words(r['title']), datetime.fromisoformat(r['published_at']).timestamp()))
     chosen, taken = [], {}
     # Best publisher first; within a tier, the newest first. An article is taken while any of its tickers still lacks the story.
     for r in sorted(entries, key=order):
         words = story_words(r['title'])
-        if all(any(same_story(words, other) for other in done.get(t, []) + taken.get(t, [])) for t in r['tickers']):
+        arrived = datetime.fromisoformat(r['first_seen_at']).timestamp()
+        if all(any(same_story(words, other) for other, published in done.get(t, []) if published >= arrived - PUBLIC_HOURS * 3600)
+               or any(same_story(words, other) for other in taken.get(t, [])) for t in r['tickers']):
             continue
         for t in r['tickers']:
             taken.setdefault(t, []).append(words)
@@ -811,6 +819,8 @@ def translate_once(path, transport=None, env=None, now_ts=None, report=None):
             bump(db, 'waitCount', len(waits), now_ts)
             bump(db, 'waitSeconds', sum(waits), now_ts)
             bump_max(db, 'waitMaxSeconds', max(waits), now_ts)
+            # Nov 19: how many of them waited more than an hour, so one late article cannot hide in (or make) the average.
+            bump(db, 'waitOver60', sum(1 for wait in waits if wait > 3600), now_ts)
         db.commit()
     by_id = {str(i): r for i, r in enumerate(rows)}
     with_text = sum(1 for r in rows if r['send_text'])
@@ -1222,7 +1232,8 @@ def daily_counts(db, now_ts, env=None):
     summariesRequested / summariesOverCap (owner, Nov 16: summaries asked for, and articles with text translated without one because
     the day's COMPANY_WIRE_SUMMARY_DAILY_LIMIT was reached), summaryDailyLimit, summaryEstimate (tokens and USD of the summaries),
     inputTokens / outputTokens (the tokens the model reported for the day's calls), and how long articles waited between arrival and
-    their first call: maxWaitMinutes and averageWaitMinutes (None before the day's first call)."""
+    their first call: maxWaitMinutes, averageWaitMinutes and waitedOver60Minutes (how many waited over an hour; None before the
+    day's first call)."""
     out = {'timezone': 'Asia/Tokyo'}
     for label, ts in (('today', now_ts), ('yesterday', now_ts - 86400)):
         day = day_of(ts)
@@ -1231,6 +1242,7 @@ def daily_counts(db, now_ts, env=None):
         out[label] = {'date': day, **{field: counts.get(name, 0) for field, name in DAILY_FIELDS},
                       'maxWaitMinutes': round(counts.get('waitMaxSeconds', 0) / 60, 1) if waited else None,
                       'averageWaitMinutes': round(counts.get('waitSeconds', 0) / waited / 60, 1) if waited else None,
+                      'waitedOver60Minutes': counts.get('waitOver60', 0) if waited else None,
                       # Owner, Nov 16: the summary cap and the estimated cost of the day's summaries (gpt-4.1-mini prices).
                       'summaryDailyLimit': summary_daily_limit(os.environ if env is None else env),
                       'summaryEstimate': {**summary_cost(counts), 'pricesPerMillionUsd': PRICE_PER_MILLION},

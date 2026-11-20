@@ -392,6 +392,33 @@ class TriageTests(unittest.TestCase):
                                 ('Germany plans AI cooperation deal with Nvidia, Handelsblatt says', 'Reuters'))
         self.assertEqual(picked, ['Germany plans AI cooperation deal with Nvidia, Handelsblatt says'])
 
+    def translated_twin(self, published, seen):
+        """A translated copy of the Nemotron story, and a later copy of it (Techzine) that was skipped as the same story."""
+        with company_wire.connect(self.path) as db:
+            company_wire.store(db, [{'ticker': 'NVDA', 'source': 'gnews', 'title': 'Nvidia expands Nemotron family with two new models',
+                                     'publisher': 'Reuters', 'url': 'https://news.example/a', 'published': published}], 'NVIDIA', seen_at=published)
+            company_wire.store(db, [{'ticker': 'NVDA', 'source': 'gnews', 'title': 'Nvidia expands Nemotron family with two new open models',
+                                     'publisher': 'Techzine', 'url': 'https://news.example/b', 'published': seen}], 'NVIDIA', seen_at=seen)
+            company_wire.schema_translation(db)
+            key = db.execute("SELECT article FROM company_wire WHERE publisher='Reuters'").fetchone()[0]
+            db.execute('INSERT INTO company_wire_article_ja(article,title_ja,model,created_at) VALUES(?,?,?,?)', (key, 'エヌビディアがNemotronを拡充', 'm', published.isoformat()))
+            db.commit()
+
+    def test_a_skipped_copy_is_not_sent_when_its_translated_twin_leaves_the_24_hours(self):
+        # Nov 19 (翻訳の待ち時間): the later copy used to be sent the moment the translated one turned 24 hours old, nearly a day
+        # after it arrived (the 1437-minute waits). It stays covered for its own 24 hours, so it is never sent.
+        published = self.now - timedelta(hours=24, minutes=5)
+        self.translated_twin(published, published + timedelta(minutes=10))
+        with company_wire.connect(self.path) as db:
+            self.assertEqual(company_wire.pending_rows(db, self.now.timestamp()), [])
+
+    def test_the_same_kind_of_headline_on_another_day_is_still_translated(self):
+        published = self.now - timedelta(hours=30)
+        self.translated_twin(published, self.now - timedelta(minutes=5))
+        with company_wire.connect(self.path) as db:
+            picked = [r['title'] for r in company_wire.pending_rows(db, self.now.timestamp())]
+        self.assertEqual(picked, ['Nvidia expands Nemotron family with two new open models'])
+
 
 class LawFirmSolicitationTests(unittest.TestCase):
     """Nov 15: law firms soliciting shareholders for class actions flooded the home band once the Stock News API was on."""

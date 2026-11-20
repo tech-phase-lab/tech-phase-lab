@@ -6,6 +6,7 @@ import { COMPARISON_EXCLUSIONS, comparisonExclusion, tickersByCik } from "./comp
 import { parseSecDirectory } from "./stock-directory";
 import { emptyFinancials } from "./comparison";
 import { prepareComparisonAnalysis, currentComparisonAnalysis } from "./comparison-analysis";
+import { appendFilingFinancialItems } from "./comparison-analysis";
 import { loadSecComparison } from "./comparison-loader";
 import { loadMarketInputs, loadTwelveComparisonState } from "./twelve-data-collector";
 import { scheduleFill } from "./twelve-store";
@@ -35,7 +36,9 @@ async function readFinancials(ticker: string, cik: string) {
 // v8: the quarter's diluted shares, for price-to-sales from the filing when no statistics are stored (Nov 15).
 // v9: a foreign filer's half-year or annual period, IFRS borrowings, the statements document of a 6-K (Nov 18).
 // v10: a Canadian bank's quarterly 6-K, an inline XBRL document set, an IFRS bank's operating income, a half-year's twelve months (Nov 19).
-const cachedFinancials = unstable_cache(readFinancials, ["comparison-financials-v10-coverage"], { revalidate: 900 });
+// v11: financial strength read from the filing's own balance becomes a strength or weakness point (Nov 19: MO and BTI showed no weakness).
+// v12: "debt exceeds cash" from the filing whenever its balance is scored, as from the provider's figures (Nov 19, all-ticker audit).
+const cachedFinancials = unstable_cache(readFinancials, ["comparison-financials-v12-item-coverage"], { revalidate: 900 });
 /** Speed (owner, Nov 18: a comparison took about 20 seconds). A stored reading up to a day old is answered at once; once it is older than 15
  * minutes the cache reads the SEC again in the background (Next's own refresh of a stale entry), so the next viewer has the new figures. The
  * background job reads every listed company once a day (prewarmComparison), so only a company nobody has opened for a day waits for the SEC. */
@@ -90,8 +93,12 @@ async function loadFinancials(ticker: string, wants: { statements: boolean }) {
   if (!twelve) { wants.statements = true; return withMarketFactors(ticker, sec, now, market); }
   const base = twelve.financials;
   if (twelve.scores.find(score => score.id === "financial")?.value != null) return base;
-  // Balance-sheet figures are only borrowed when they describe the same quarter as Twelve Data's.
-  return sec.status === "ready" && sec.balance && sec.balance.end === base.quarterRevenue?.end ? { ...base, balance: sec.balance } : base;
+  // Balance-sheet figures are only borrowed when they describe the same quarter as Twelve Data's. The balance they score becomes a strength
+  // or weakness point in the same words as for a filing (before, it scored the factor but never became a point).
+  if (!(sec.status === "ready" && sec.balance && sec.balance.end === base.quarterRevenue?.end)) return base;
+  const borrowed: Financials = { ...base, balance: sec.balance };
+  const prepared = borrowed.preparedAnalysis;
+  return prepared ? { ...borrowed, preparedAnalysis: { ...prepared, items: appendFilingFinancialItems([...prepared.items], borrowed, now) } } : borrowed;
 }
 
 async function loadSecFinancials(ticker: string) {
@@ -137,7 +144,9 @@ async function withMarketFactors(ticker: string, sec: Financials, start: number,
   // rejected as invalid, which left momentum empty on the first comparison of a company).
   const now = Math.max(start, Date.now());
   const evidence = buildSecMarketEvidence(sec, series, statistics, now);
-  if (!evidence || !(evidence.margins.length === 4 || evidence.statistics || evidence.momentum)) return sec;
+  // No market evidence: the filing's own points as they are. A filing shown for its previous quarter (a newer release not yet filed) had no
+  // points at all, because they were prepared while its newer release still blocked the period ("長所・短所の要点は未作成です", DTE, RJF).
+  if (!evidence || !(evidence.margins.length === 4 || evidence.statistics || evidence.momentum)) return sec.preparedAnalysis || !hasRecentQuarter(sec, now) ? sec : rebuildAnalysis(sec, now);
   return rebuildAnalysis({ ...sec, twelveData: evidence }, now);
 }
 
