@@ -264,6 +264,8 @@ def diagnostics(db, env=None, now=None, sources=signals.SOURCES):
                 next_retry = retry_at
         except (TypeError, ValueError, OverflowError, OSError):
             pass
+    # Every call in the shared ledger: official and X headlines, home band titles (pulse:), official research (research:)
+    # and previews. Not this lane alone; pipeline_status.model_budget splits it by lane.
     calls = {"total": 0, "failed": 0, "completed": 0, "stale": 0}
     for row in budget_calls(db, now - 86400, limit=MAX_DAILY_LIMIT + 1):
         if not row['dispatch_accounting']:

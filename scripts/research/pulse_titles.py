@@ -38,10 +38,13 @@ FIELDS = ('shortJa', 'shortEn')
 OUTPUT_TOKENS = 2000
 BUDGET_SHARE = 0.2
 LEDGER_PREFIX = 'pulse:'
-# The band no longer slides or scrolls (Nov 4): a title over 22 characters would not be shown, so it is rejected and rewritten.
-MAX_JA = 22
+# The band shows a headline of at most BAND_MAX_JA (lib/research/news-band.ts) characters: 22 on Nov 4, 24 since Nov 5
+# (owner: "a little more"). A longer title would not be shown, so it is rejected and rewritten. The prompt still asks for
+# about 20 and never more than 22; the check must not be stricter than the band. Until Nov 20 it still rejected 23 and 24
+# characters as too-long, which was the most common rejection of this lane (83 of 147 retrying jobs on staging).
+MAX_JA = 24
 # A headline this short already fits a phone and needs no call.
-FITS_JA = 22
+FITS_JA = MAX_JA
 MAX_EN = 64
 CANDIDATES = 30
 JAPANESE = re.compile(r'[぀-ヿ一-鿿]')
