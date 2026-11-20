@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { stripTypeScriptTypes } from 'node:module';
 import { emptyFinancials } from '../lib/research/comparison.ts';
-import { prepareComparisonAnalysis, currentComparisonAnalysis, comparisonEvidenceRevision, appendFilingFinancialItems } from '../lib/research/comparison-analysis.ts';
+import { prepareComparisonAnalysis, currentComparisonAnalysis, comparisonEvidenceRevision, appendFilingFinancialItems, appendEquityItem } from '../lib/research/comparison-analysis.ts';
 import { buildSecMarketEvidence } from '../lib/research/sec-market-evidence.ts';
 import { appendMarketItems } from '../lib/research/twelve-data-financials.ts';
 import { hasRecentQuarter, comparisonScores } from '../lib/research/comparison-scorecard.ts';
@@ -41,13 +41,13 @@ test('actual cached financial loader prepares once per refresh and reuses saved 
  const state={
   providers:[{ticker:'AAA',supplementalSources:[{cik:'1'}]}],catalog:[],emptyFinancials,
   load:async()=>{loads++;return current;},prepare:c=>{prepares++;return prepareComparisonAnalysis(c,now);},read:c=>currentComparisonAnalysis(c,now),
-  buildSecMarketEvidence,appendMarketItems,appendFilingFinancialItems,hasRecentQuarter,comparisonScores,fillFromProvider,
+  buildSecMarketEvidence,appendMarketItems,appendFilingFinancialItems,appendEquityItem,hasRecentQuarter,comparisonScores,fillFromProvider,
   cache:fn=>async(...args)=>{const key=JSON.stringify(args);if(!cache.has(key))cache.set(key,await fn(...args));return structuredClone(cache.get(key));},
  };
  globalThis.__preparedComparison=state;
  let source=readFileSync(new URL('../lib/research/comparison-server.ts',import.meta.url),'utf8');
  source=source.replace(/^import .*;\n/gm,'');
- source='const {providers,catalog:comparisonCatalog,emptyFinancials,load:loadSecComparison,prepare:prepareComparisonAnalysis,read:currentComparisonAnalysis,cache:unstable_cache}=globalThis.__preparedComparison; const parseSecDirectory=()=>[]; const freshEnough=cachedRead=>cachedRead(); const loadMarketInputs=async()=>({}); const loadTwelveComparisonState=async()=>({data:null,busy:false}); const scheduleFill=()=>{}; const {buildSecMarketEvidence,appendMarketItems,appendFilingFinancialItems,hasRecentQuarter,comparisonScores,fillFromProvider}=globalThis.__preparedComparison;\n'+source;
+ source='const {providers,catalog:comparisonCatalog,emptyFinancials,load:loadSecComparison,prepare:prepareComparisonAnalysis,read:currentComparisonAnalysis,cache:unstable_cache}=globalThis.__preparedComparison; const parseSecDirectory=()=>[]; const freshEnough=cachedRead=>cachedRead(); const loadMarketInputs=async()=>({}); const loadTwelveComparisonState=async()=>({data:null,busy:false}); const scheduleFill=()=>{}; const {buildSecMarketEvidence,appendMarketItems,appendFilingFinancialItems,appendEquityItem,hasRecentQuarter,comparisonScores,fillFromProvider}=globalThis.__preparedComparison;\n'+source;
  try {
   const mod=await import('data:text/javascript;base64,'+Buffer.from(stripTypeScriptTypes(source)).toString('base64'));
   const a=await mod.loadComparisonFinancials('AAA'), b=await mod.loadComparisonFinancials('AAA');

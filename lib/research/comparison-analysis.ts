@@ -38,6 +38,14 @@ export function prepareComparisonAnalysis(c: Financials, now=Date.now()): Prepar
       copy(`売上高は前年同期の${amount(prior.value,prior.unit)}から${amount(q.value,q.unit)}へ。前年同期比${pct}。`,
         `Revenue changed from ${amount(prior.value,prior.unit)} in the prior-year ${c.periodMonths===6 ? "half" : c.periodMonths===12 ? "year" : "quarter"} to ${amount(q.value,q.unit)}, ${pct} year over year.`));
   }
+  // No revenue a year earlier: growth is scored against the quarter just before (comparisonScores), and said as such here too. A quarter
+  // only: a half-year or a fiscal year has no previous quarter.
+  if(valid("growth") && !Number.isFinite(c.quarterRevenueGrowth) && !c.periodMonths && Number.isFinite(c.quarterRevenueQoq) && c.quarterRevenueQoq!==0) {
+    const growth=c.quarterRevenueQoq!, pct=`${growth>0?"+":""}${growth.toFixed(1)}%`;
+    add("revenue-qoq",growth>0?"strength":"weakness",copy(`売上前四半期比 ${pct}`,`Revenue ${pct} QoQ`),
+      copy(`売上高は前の四半期から${pct}。前年同期の売上がないため、前の四半期と比べています。季節による増減を含みます。`,
+        `Revenue changed ${pct} from the previous quarter. There is no revenue a year earlier, so it is compared with the quarter before; seasonal swings are included.`));
+  }
   if(valid("profitability") && c.quarterOperatingIncome && c.quarterOperatingMargin!==null && (c.quarterOperatingMargin>=15 || c.quarterOperatingMargin<0)) {
     const margin=c.quarterOperatingMargin, pct=`${margin.toFixed(1)}%`;
     add("operating-margin",margin<0?"weakness":"strength",
@@ -58,6 +66,7 @@ export function prepareComparisonAnalysis(c: Financials, now=Date.now()): Prepar
         `${span.en} operating cash flow less cash capital expenditure equaled ${pct} of revenue. This measure does not capture all acquisitions or leases.`));
   }
   appendFilingFinancialItems(items,c,now);
+  appendEquityItem(items,c);
   return {version:1,method:"deterministic",sourceRevision:comparisonEvidenceRevision(c),preparedAt:new Date(now).toISOString(),
     processingMs:Math.round((performance.now()-started)*1000)/1000,periodEnd:q.end,sourceUrl:c.quarterSourceUrl,items};
 }
@@ -76,6 +85,16 @@ export function appendFilingFinancialItems(items:PreparedComparisonAnalysis["ite
   if(financial<=3 || financial>=7) items.push({id:"financial",kind:financial>=7?"strength":"weakness",short:copy(comparisonMetric(c,"financial","ja",now),comparisonMetric(c,"financial","en",now)),detail:twelveFactorMethods.financial});
   const debt=balanceDebt(c), cash=c.balance?.cash?.value;
   if(financial<7 && debt!==null && cash!==undefined && debt>cash) items.push(debtCashItem(q.end,cash,debt,q.unit));
+  return items;
+}
+/** Negative shareholders' equity, read from the filing's balance for the very period shown (MO: liabilities above assets after years of
+ * buybacks, Nov 20). Only a reported figure counts: equity that is missing, from another date or in another currency says nothing. */
+export function appendEquityItem(items:PreparedComparisonAnalysis["items"],c:Financials) {
+  const q=c.quarterRevenue, equity=c.balance?.equity;
+  if(!q || !equity || c.balance!.end!==q.end || equity.end!==q.end || equity.unit!==q.unit || !(equity.value<0) || items.some(i=>i.id==="negative-equity")) return items;
+  items.push({id:"negative-equity",kind:"weakness",short:copy("株主資本がマイナス","Negative shareholders' equity"),
+    detail:copy(`${equity.end}時点の株主資本は${amount(equity.value,equity.unit)}で、負債が資産を上回っています。自社株買いや累積損失など、原因はこの数値だけでは特定できません。`,
+      `Shareholders' equity was ${amount(equity.value,equity.unit)} as of ${equity.end}: liabilities exceed assets. This figure alone does not establish the cause, such as buybacks or accumulated losses.`)});
   return items;
 }
 /** "Debt exceeds cash", from the provider's statistics or the filing's own balance, in the same words. */

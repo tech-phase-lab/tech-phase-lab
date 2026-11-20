@@ -2,8 +2,9 @@
  *  blank-check companies (SPACs), funds and commodity trusts, and a company's preferreds, warrants, units and rights. They are left out of
  *  the comparison's search, a direct request for one is answered as an unknown company (as before for any ticker the comparison does not
  *  know), and the background job spends no statement credits on them. Only certain cases are excluded; an ordinary share never is:
- *  - preferred, warrant, unit, right: the SEC's ticker suffix (CTA-PB, AAC-WT, KCAC-UN, NMZ-RI), or a five-letter Nasdaq ticker ending in
- *    W, U or R whose four-letter base is a ticker of the same company (AACIW, AACIU beside AACI);
+ *  - preferred, warrant, unit, right: the SEC's ticker suffix (CTA-PB, AAC-WT, KCAC-UN, NMZ-RI), or a Nasdaq ticker ending in W, U or R
+ *    that is another ticker of the same company plus one or two letters (AACIW, AACIU beside AACI; MOBBW beside MOB, HTZWW beside HTZ,
+ *    ZKPU beside ZKP: Nov 20, MOBBW was still offered because its base has three letters);
  *  - SPAC, fund: the issuer is on the audit's list (comparison-exclusions.json: SIC 6770, or a fund with no revenue) under the same name. A
  *    SPAC that completes its merger takes the operating company's name and is offered again without a new list. */
 
@@ -20,7 +21,7 @@ const sameName = (a: string, b: string) => a.trim().toUpperCase() === b.trim().t
 /** The audit's list of SPACs and funds (comparison-exclusions.json). */
 export const COMPARISON_EXCLUSIONS: ExclusionLists = exclusionLists;
 
-/** The tickers of each company, for the five-letter rule (built once per directory). */
+/** The tickers of each company, for the Nasdaq warrant, unit and right rule (built once per directory). */
 export function tickersByCik(entries: Entry[]): Map<string, Set<string>> {
   const out = new Map<string, Set<string>>();
   for (const e of entries) { const key = String(Number(e.cik)); const set = out.get(key) ?? new Set<string>(); set.add(e.ticker); out.set(key, set); }
@@ -30,7 +31,9 @@ export function tickersByCik(entries: Entry[]): Map<string, Set<string>> {
 export function comparisonExclusion(entry: Entry, siblings: Map<string, Set<string>>, lists: ExclusionLists): ExclusionKind | null {
   const ticker = entry.ticker.toUpperCase(), cik = String(Number(entry.cik));
   for (const [pattern, kind] of SUFFIX) if (pattern.test(ticker)) return kind;
-  if (/^[A-Z]{5}$/.test(ticker) && FIFTH[ticker[4]] && (entry.exchange === undefined || entry.exchange === "Nasdaq") && siblings.get(cik)?.has(ticker.slice(0, 4))) return FIFTH[ticker[4]];
+  const last = FIFTH[ticker.at(-1) ?? ""];
+  if (/^[A-Z]{2,6}$/.test(ticker) && last && (entry.exchange === undefined || entry.exchange === "Nasdaq")
+    && [1, 2].some(n => ticker.length - n >= 1 && siblings.get(cik)?.has(ticker.slice(0, -n)))) return last;
   if (lists.spac[cik] !== undefined && sameName(lists.spac[cik], entry.name)) return "spac";
   if (lists.fund[cik] !== undefined && sameName(lists.fund[cik], entry.name)) return "fund";
   return null;

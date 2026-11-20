@@ -6,7 +6,7 @@ import { COMPARISON_EXCLUSIONS, comparisonExclusion, tickersByCik } from "./comp
 import { parseSecDirectory } from "./stock-directory";
 import { emptyFinancials } from "./comparison";
 import { prepareComparisonAnalysis, currentComparisonAnalysis } from "./comparison-analysis";
-import { appendFilingFinancialItems } from "./comparison-analysis";
+import { appendEquityItem, appendFilingFinancialItems } from "./comparison-analysis";
 import { loadSecComparison } from "./comparison-loader";
 import { loadMarketInputs, loadTwelveComparisonState } from "./twelve-data-collector";
 import { scheduleFill } from "./twelve-store";
@@ -38,7 +38,8 @@ async function readFinancials(ticker: string, cik: string) {
 // v10: a Canadian bank's quarterly 6-K, an inline XBRL document set, an IFRS bank's operating income, a half-year's twelve months (Nov 19).
 // v11: financial strength read from the filing's own balance becomes a strength or weakness point (Nov 19: MO and BTI showed no weakness).
 // v12: "debt exceeds cash" from the filing whenever its balance is scored, as from the provider's figures (Nov 19, all-ticker audit).
-const cachedFinancials = unstable_cache(readFinancials, ["comparison-financials-v12-item-coverage"], { revalidate: 900 });
+// v13: shareholders' equity in the balance (negative equity is a weakness) and revenue against the previous quarter as a point (Nov 20).
+const cachedFinancials = unstable_cache(readFinancials, ["comparison-financials-v13-items-fill"], { revalidate: 900 });
 /** Speed (owner, Nov 18: a comparison took about 20 seconds). A stored reading up to a day old is answered at once; once it is older than 15
  * minutes the cache reads the SEC again in the background (Next's own refresh of a stale entry), so the next viewer has the new figures. The
  * background job reads every listed company once a day (prewarmComparison), so only a company nobody has opened for a day waits for the SEC. */
@@ -98,7 +99,7 @@ async function loadFinancials(ticker: string, wants: { statements: boolean }) {
   if (!(sec.status === "ready" && sec.balance && sec.balance.end === base.quarterRevenue?.end)) return base;
   const borrowed: Financials = { ...base, balance: sec.balance };
   const prepared = borrowed.preparedAnalysis;
-  return prepared ? { ...borrowed, preparedAnalysis: { ...prepared, items: appendFilingFinancialItems([...prepared.items], borrowed, now) } } : borrowed;
+  return prepared ? { ...borrowed, preparedAnalysis: { ...prepared, items: appendEquityItem(appendFilingFinancialItems([...prepared.items], borrowed, now), borrowed) } } : borrowed;
 }
 
 async function loadSecFinancials(ticker: string) {
