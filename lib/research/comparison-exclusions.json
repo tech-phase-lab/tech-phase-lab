@@ -712,5 +712,71 @@
 "2103976": "Morgan Stanley Ethereum Trust",
 "2107730": "Grayscale Hyperliquid Staking ETF",
 "2108383": "Sprott Physical Copper Trust"
+},
+"etn": {
+"19617": {
+"name": "JPMORGAN CHASE & CO",
+"shares": [
+"JPM"
+]
+},
+"200245": {
+"name": "Citigroup Global Markets Holdings Inc.",
+"shares": []
+},
+"312070": {
+"name": "BARCLAYS BANK PLC",
+"shares": []
+},
+"831001": {
+"name": "CITIGROUP INC",
+"shares": [
+"C"
+]
+},
+"886982": {
+"name": "GOLDMAN SACHS GROUP INC",
+"shares": [
+"GS"
+]
+},
+"895421": {
+"name": "MORGAN STANLEY",
+"shares": [
+"MS"
+]
+},
+"927971": {
+"name": "BANK OF MONTREAL /CAN/",
+"shares": [
+"BMO"
+]
+},
+"1053092": {
+"name": "CREDIT SUISSE AG",
+"shares": []
+},
+"1114446": {
+"name": "UBS AG",
+"shares": []
+},
+"1159508": {
+"name": "DEUTSCHE BANK AKTIENGESELLSCHAFT",
+"shares": [
+"DB"
+]
+},
+"1419828": {
+"name": "GS Finance Corp.",
+"shares": []
+},
+"1665650": {
+"name": "JPMorgan Chase Financial Co. LLC",
+"shares": []
+},
+"1666268": {
+"name": "Morgan Stanley Finance LLC",
+"shares": []
+}
 }
 }

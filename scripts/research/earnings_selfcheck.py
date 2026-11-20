@@ -1,4 +1,5 @@
-"""Daily self-check of the earnings flash for the watch-list companies (owner, Nov 13). Read-only.
+"""Daily self-check of the earnings flash for every company on the earnings calendar (owner, Nov 13; all 50 calendar companies since
+Nov 20, not only the deep-analysis ones: earnings_backtest.WATCH). Read-only.
 
 Takes each watch-list company's latest real results release (SEC EDGAR; Nebius: its newsroom PDF), runs the same parser the monitor
 uses and prints ONE line of JSON: how many companies pass (three or more reported figures read and cross-checked), which fail, and

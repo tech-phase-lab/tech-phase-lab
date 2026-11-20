@@ -30,6 +30,7 @@ LACKS = {
     'IREN': {'eps': 'no per-share figure anywhere in the release', 'adjusted-eps': 'no per-share figure anywhere in the release'},
     'VST': {'eps': 'no per-share figure anywhere in the release', 'adjusted-eps': 'no per-share figure anywhere in the release'},
     'TSLA': {},
+    'COHR': {},  # read from its tables since Nov 20 (before: the highlight sentences' revenue and EPS only)
 }
 ROSTER = ['MU', 'SKHY', 'SNDK', 'NBIS', 'NVDA', 'AMD', 'AVGO', 'ARM', 'TSM', 'ASML', 'MRVL', 'ANET', 'CRDO', 'CRWV', 'VRT', 'GEV', 'DELL', 'PLTR',
           'MSFT', 'AMZN', 'GOOGL', 'ORCL']
@@ -125,6 +126,27 @@ class LatestReleases(unittest.TestCase):
                 release = gzip.decompress((ROOT / 'tests/fixtures/earlier-releases' / f'{name}.txt.gz').read_bytes()).decode()
                 parsed, code = backfill.read_figures(name.split('-')[0], None, release)
                 self.assertIsNone(code)
+                self.assertEqual((parsed['period'], [f[:3] for f in parsed['facts']]), (period, facts))
+
+    def test_earlier_quarters_of_coherent(self):
+        # the four releases before the latest one (a fourth quarter with full-year columns, quarters with a loss a year earlier, a Table 8
+        # whose EPS row is not labelled non-GAAP), read in full; each figure checked against the SEC document (Nov 20)
+        expected = {
+            'COHR-q1fy26': ('Q1 FY2026', [('revenue', '$1.5814B', '$1.3481B'), ('eps', '$1.19', '$-0.04'), ('adjusted-eps', '$1.16', '$0.67'),
+                                          ('net-income', '$226.3M', '$25.9M'), ('operating-income', '$259M', '$75M')]),
+            'COHR-q2fy26': ('Q2 FY2026', [('revenue', '$1.6856B', '$1.4347B'), ('eps', '$0.76', '$0.44'), ('adjusted-eps', '$1.29', '$0.95'),
+                                          ('net-income', '$146.7M', '$103.4M'), ('operating-income', '$184M', '$137M')]),
+            'COHR-q3fy26': ('Q3 FY2026', [('revenue', '$1.8056B', '$1.4979B'), ('eps', '$0.97', '$-0.11'), ('adjusted-eps', '$1.41', '$0.91'),
+                                          ('net-income', '$191.4M', '$15.7M'), ('operating-income', '$201M', '$72M')]),
+            'COHR-q4fy26': ('Q4 FY2026', [('revenue', '$2.0455B', '$1.5294B'), ('eps', '$1.19', '$-0.83'), ('adjusted-eps', '$1.74', '$1.00'),
+                                          ('net-income', '$240.5M', '$-95.6M'), ('operating-income', '$254M', '$6M')]),
+        }
+        for name, (period, facts) in expected.items():
+            with self.subTest(release=name):
+                release = gzip.decompress((ROOT / 'tests/fixtures/earlier-releases' / f'{name}.txt.gz').read_bytes()).decode()
+                parsed, code = backfill.read_figures('COHR', None, release)
+                self.assertIsNone(code)
+                self.assertEqual(parsed.get('method', 'deterministic-issuer-table'), 'deterministic-issuer-table')
                 self.assertEqual((parsed['period'], [f[:3] for f in parsed['facts']]), (period, facts))
 
     def test_vistra_fourth_quarter_release_has_no_quarterly_statement(self):

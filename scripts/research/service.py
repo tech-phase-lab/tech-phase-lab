@@ -61,6 +61,7 @@ import earnings_history
 import official_research
 import deep_analysis
 import llm_cost
+import member_data_retention
 import issuer_syndication
 import official_research_diagnostics
 import official_research_detail
@@ -132,6 +133,12 @@ WIRE_REFRESH_ACTIVE_INTERVAL = 5
 WIRE_REFRESH_QUIET_INTERVAL = 20
 # The feed covers the last 24 hours, so even an unchanged database is rebuilt this often.
 WIRE_REFRESH_MAX_AGE = 60
+# /live (the operator intake page and the site's freshness notice), Nov 20: building it took 8-13 s in production, longer than
+# the site waits, so it is built in the background every LIVE_REFRESH_INTERVAL seconds while someone asks and served from there.
+LIVE_REFRESH_INTERVAL = 15
+LIVE_MAX_AGE = 45
+LIVE_IDLE_SECONDS = 600
+LIVE_SLOW_BUILD_SECONDS = 5
 
 
 
@@ -691,6 +698,9 @@ class AutomaticMonitor:
         self.wire_cache = None
         self.wire_lock = threading.Lock()
         self.wire_requested_at = time.monotonic()
+        self.live_cache = None
+        self.live_lock = threading.Lock()
+        self.live_requested_at = time.monotonic()
         self.body_probe_urls = set()
         self.body_probe_eligible_at = {}
         self.stop_event = threading.Event()
@@ -850,6 +860,7 @@ class AutomaticMonitor:
         self.preview_summary_thread = threading.Thread(target=self.run_preview_summaries, name="preview-summary", daemon=True)
         self.news_refresh_thread = threading.Thread(target=self.run_news_refresh, name="news-refresh", daemon=True)
         self.wire_refresh_thread = threading.Thread(target=self.run_company_wire_refresh, name="company-wire-refresh", daemon=True)
+        self.live_refresh_thread = threading.Thread(target=self.run_live_refresh, name="live-refresh", daemon=True)
         self.pulse_title_thread = threading.Thread(target=self.run_pulse_titles, name="pulse-titles", daemon=True)
         self.official_research_thread = threading.Thread(target=self.run_official_research, name="official-research", daemon=True)
         self.deep_analysis_thread = threading.Thread(target=self.run_deep_analysis, name="deep-analysis", daemon=True)
@@ -1384,6 +1395,7 @@ class AutomaticMonitor:
         self.preview_summary_thread.start()
         self.news_refresh_thread.start()
         self.wire_refresh_thread.start()
+        self.live_refresh_thread.start()
         self.pulse_title_thread.start()
         self.official_research_thread.start()
         self.deep_analysis_thread.start()
@@ -2307,6 +2319,79 @@ class AutomaticMonitor:
         with self.db_lock, monitor.connect(self.db_path) as db:
             return monitor.snapshot(db, recent_per_item=20)
 
+    def build_live(self):
+        """Callers hold live_lock. The intake dashboard's /live payload: full operating state and a byte-bounded snapshot,
+        with how long each part took (Nov 20: public_state alone took 4-11 s in production, mostly waiting for db_lock)."""
+        started = time.monotonic()
+        state = self.public_state()
+        state_done = time.monotonic()
+        with self.db_lock:
+            locked = time.monotonic()
+            with monitor.connect(self.db_path) as db:
+                snapshot = monitor.bounded_live_snapshot(db)
+        done = time.monotonic()
+        omitted = snapshot.get("omitted") or {}
+        state["liveBuild"] = {
+            "builtAt": utc_now(),
+            "stateMs": round((state_done - started) * 1000),
+            "snapshotLockWaitMs": round((locked - state_done) * 1000),
+            "snapshotMs": round((done - locked) * 1000),
+            "snapshotBytes": monitor.encoded_size(snapshot),
+            "sources": len(snapshot["sources"]), "omittedSources": omitted.get("sources", 0),
+            "history": len(snapshot["history"]), "omittedHistory": omitted.get("history", 0),
+        }
+        if done - started > LIVE_SLOW_BUILD_SECONDS:
+            print(json.dumps({"event": "live-build-slow", **{key: value for key, value in state["liveBuild"].items()
+                                                             if key != "builtAt"}}), flush=True)
+        payload = {"ok": True, "mode": "automatic", "monitor": state, "snapshot": snapshot}
+        self.live_cache = (done, payload)
+        return payload
+
+    def live_payload(self):
+        """/live from the last background build when it is at most LIVE_MAX_AGE seconds old, else built now. The cycle age and
+        the monitor-stale issue are recomputed for the moment of the answer, so a cached build never hides a stalled monitor."""
+        arrived = time.monotonic()
+        self.live_requested_at = arrived
+        cached = self.live_cache
+        if not (cached and arrived - cached[0] <= LIVE_MAX_AGE):
+            with self.live_lock:
+                cached = self.live_cache
+                if not (cached and time.monotonic() - cached[0] <= LIVE_MAX_AGE):
+                    cached = (time.monotonic(), self.build_live())
+        payload = cached[1]
+        state = dict(payload["monitor"])
+        age = timestamp_age_seconds(state.get("lastCycleAt"))
+        state["lastCycleAgeSeconds"] = age
+        health = dict(state.get("health") or {})
+        issues = list(health.get("issues") or [])
+        if state.get("ready") and (age is None or age > self.monitor_stale_seconds) and "monitor-stale" not in issues:
+            issues.append("monitor-stale")
+            health["status"] = "degraded"
+        if health:
+            health["issues"] = issues
+            state["health"] = health
+        return {**payload, "monitor": state}
+
+    def refresh_live(self):
+        """One background step: rebuild every LIVE_REFRESH_INTERVAL seconds while someone asked within LIVE_IDLE_SECONDS."""
+        now = time.monotonic()
+        if now - self.live_requested_at > LIVE_IDLE_SECONDS:
+            return False
+        cached = self.live_cache
+        if cached and now - cached[0] < LIVE_REFRESH_INTERVAL:
+            return False
+        with self.live_lock:
+            self.build_live()
+        return True
+
+    def run_live_refresh(self):
+        while not self.stop_event.wait(1):
+            try:
+                self.refresh_live()
+            except Exception as exc:
+                log_publication_failure("live-refresh-unavailable", exc)
+                self.stop_event.wait(30)
+
     def editorial_queue(self, limit=20, review_filter="all"):
         with self.db_lock, monitor.connect(self.db_path) as db:
             return monitor.private_brief_queue(db, limit, review_filter)
@@ -3031,7 +3116,22 @@ class AutomaticMonitor:
                 self.perform_backup()
             finally:
                 self.backup_initial_complete.set()
+            self.enforce_data_retention()
             self.stop_event.wait(self.backup_interval)
+
+    def enforce_data_retention(self):
+        """Nov 20 (owner-approved): purge expired member data after each backup. Off unless RESEARCH_RETENTION_PURGE_ENABLED=true."""
+        if not member_data_retention.purge_enabled():
+            return
+        try:
+            db = sqlite3.connect(self.db_path, timeout=20)
+            try:
+                result = member_data_retention.purge_expired(db)
+            finally:
+                db.close()
+            print(json.dumps({"event": "retention-purge", **result}), flush=True)
+        except Exception as exc:
+            print(json.dumps({"event": "retention-purge-failed", "error": type(exc).__name__}), flush=True)
 
     def enforce_backup_retention(self):
         """Delete leftover temporaries and the generations the volume cannot hold; the newest verified snapshot and the live database stay."""
@@ -3828,6 +3928,24 @@ class Handler(BaseHTTPRequestHandler):
             except Exception:
                 self.send_json(503, {"ok": False, "error": "annual-brief-unavailable"})
             return
+        if path == "/member/erasure-requests":
+            # Nov 20 (owner-approved): the member-erasure job reads the members whose Postgres steps are still pending.
+            if not os.environ.get("RESEARCH_API_TOKEN") or not self.authorized():
+                self.send_json(401, {"ok": False})
+                return
+            if not member_data_retention.erasure_enabled():
+                self.send_json(503, {"ok": False, "error": "disabled"})
+                return
+            try:
+                db = sqlite3.connect(self.app.db_path, timeout=20)
+                try:
+                    result = member_data_retention.pending_requests(db)
+                finally:
+                    db.close()
+                self.send_json(200, {"ok": True, "requests": result})
+            except Exception:
+                self.send_json(503, {"ok": False})
+            return
         if path == "/saved-research":
             if not os.environ.get("RESEARCH_API_TOKEN") or not self.authorized():
                 self.send_json(401, {"ok": False})
@@ -3931,11 +4049,10 @@ class Handler(BaseHTTPRequestHandler):
                     return
                 self.send_json(200, self.app.deep_analyses())
                 return
-            snapshot = self.app.public_snapshot()
             if path == "/snapshot":
-                self.send_json(200, snapshot)
+                self.send_json(200, self.app.public_snapshot())
             else:
-                self.send_json(200, {"ok": True, "mode": "automatic", "monitor": self.app.public_state(), "snapshot": snapshot})
+                self.send_json(200, self.app.live_payload())
         except Exception as exc:
             if path == "/news":
                 log_publication_failure("public-news-unavailable", exc)
@@ -4027,6 +4144,35 @@ class Handler(BaseHTTPRequestHandler):
                 self.send_json(404 if str(exc) == "inbox-not-found" else 400, {"ok": False, "error": str(exc)})
             except Exception:
                 self.send_json(503, {"ok": False, "error": "inbox-unavailable"})
+            return
+        if path in ("/member/erase", "/member/erasure-requests/ack"):
+            # Nov 20 (owner-approved): erase a departed member's monitor data (off unless MEMBER_ERASURE_ENABLED=true; owner
+            # accounts always refused). Counts only in the answer and the log; never the member, a key or text.
+            if not os.environ.get("RESEARCH_API_TOKEN") or not self.authorized():
+                self.send_json(401, {"ok": False})
+                return
+            if not member_data_retention.erasure_enabled():
+                self.send_json(503, {"ok": False, "error": "disabled"})
+                return
+            try:
+                payload = self.read_json(4096)
+                db = sqlite3.connect(self.app.db_path, timeout=20)
+                try:
+                    if path == "/member/erase":
+                        result = member_data_retention.erase_member(db, payload)
+                    else:
+                        result = member_data_retention.acknowledge(db, payload)
+                finally:
+                    db.close()
+                print(json.dumps({"event": "member-erasure", "path": path,
+                                  **{k: v for k, v in result.items() if k != "receipt"}}), flush=True)
+                self.send_json(200, {"ok": True, **result})
+            except ValueError as exc:
+                reason = str(exc) if str(exc) in member_data_retention.REFUSALS else "invalid-request"
+                self.send_json(409 if reason == "owner-account" else 400, {"ok": False, "error": reason})
+            except Exception as exc:
+                print(json.dumps({"event": "member-erasure-failed", "error": type(exc).__name__}), flush=True)
+                self.send_json(503, {"ok": False})
             return
         if path == "/saved-research":
             if not os.environ.get("RESEARCH_API_TOKEN") or not self.authorized():

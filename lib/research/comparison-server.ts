@@ -113,7 +113,7 @@ async function loadSecFinancials(ticker: string) {
   } catch { return emptyFinancials(ticker, "unavailable"); }
 }
 
-/** A SPAC, fund, preferred, warrant, unit or right (lib/research/comparison-exclusions.ts): not offered by the comparison. */
+/** A SPAC, fund, ETN, preferred, warrant, unit or right (lib/research/comparison-exclusions.ts): not offered by the comparison. */
 const siblingsOf = new WeakMap<object, ReturnType<typeof tickersByCik>>();
 async function excludedEntry(ticker: string) {
   const entries = await directory();

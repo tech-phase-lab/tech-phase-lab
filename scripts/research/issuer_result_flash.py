@@ -1538,6 +1538,110 @@ def parse_tesla(text, url=None):
     return {'period': f'Q{quarter} {year}', 'facts': ordered(facts)}
 
 
+def lead_values(rows, pattern, n):
+    """The first `n` values of the one row whose label ends with `pattern` (a summary table prints change columns after them)."""
+    found = [cells for label, cells in rows if labelled(label, pattern)]
+    if len(found) != 1 or len(found[0]) < n:
+        return None
+    try:
+        return [cell(c) for c in found[0][:n]]
+    except ValueError:
+        return None
+
+
+def exact_values(rows, pattern, n):
+    """The `n` values of the one row whose whole label is `pattern` ("Income Taxes", not "Earnings Before Income Taxes")."""
+    found = [cells for label, cells in rows if re.fullmatch(pattern, label)]
+    if len(found) != 1 or len(found[0]) != n:
+        return None
+    try:
+        return [cell(c) for c in found[0]]
+    except ValueError:
+        return None
+
+
+def section(t, start, stop, size=4000):
+    """The text after the one heading `start` up to `stop` (or `size` characters), footnote marks after a figure ("190.7 (1) 155.5") dropped."""
+    at = [m.end() for m in re.finditer(start, t)]
+    if len(at) != 1:
+        return ''
+    end = re.search(stop, t[at[0]:at[0] + size])
+    block = t[at[0]:at[0] + (end.start() if end else size)]
+    return re.sub(r'(?<=[\d)]) \(\d\)(?= |$)', '', block)
+
+
+COHERENT_LOSS = r'(?: \(Loss\))?'
+
+
+def parse_coherent(text, url=None):
+    """Coherent's results release (8-K EX-99.1). Table 1 summarises the quarter (this quarter, the previous quarter and the same quarter a
+    year earlier, GAAP and non-GAAP), Table 2 is the statement of earnings, Tables 7 and 8 work out GAAP and non-GAAP diluted EPS. The
+    release is read only when the statement holds revenue - total costs = earnings before income taxes, - taxes = net earnings, - the
+    non-controlling interests = net earnings attributable to Coherent, in this quarter's and the year-earlier column, and Table 1's revenue,
+    net earnings and diluted EPS are the statement's (and its revenue the headline's). Operating income (Table 1) is read when it is
+    earnings before income taxes + interest expense + other expense (income), net, as its footnote defines it; diluted EPS when Table 7's
+    diluted earnings / diluted shares give it; non-GAAP diluted EPS when Table 8's do and it is Table 1's non-GAAP figure."""
+    t = clean(text)
+    if 'coherent corp' not in t[:600].lower():
+        raise ValueError('issuer-identity-missing')
+    title = re.search(r'(?i)Coherent Corp\. Reports (First|Second|Third|Fourth) Quarter (?:and Full Year )?Fiscal (20\d\d) Results', t[:600])
+    if not title:
+        raise ValueError('period-unrecognized')
+    quarter, fiscal = QUARTERS[title[1].lower()], int(title[2])
+    summary = re.search(r'Table 1 GAAP Financial Results \(unaudited\)(?:\(\d\))* Q([1-4]) FY(\d\d) Q[1-4] FY\d\d Q([1-4]) FY(\d\d) Q/Q Y/Y', t)
+    if not summary or (int(summary[1]), int(summary[2]), int(summary[3]), int(summary[4])) != (quarter, fiscal % 100, quarter, fiscal % 100 - 1):
+        raise ValueError('columns-unrecognized')
+    loss = COHERENT_LOSS
+    statement = statement_rows(section(t, r'Condensed Consolidated Statements of Earnings' + loss + r'\* THREE MONTHS ENDED', r'\* Amounts may not'))
+    s = {key: exact_values(statement, pattern, 3) for key, pattern in {
+        'revenue': 'Revenues', 'cost': r'Total Costs, Expenses, & Other Expense', 'pretax': 'Earnings' + loss + ' Before Income Taxes',
+        'tax': 'Income Taxes', 'net': 'Net Earnings' + loss,
+        'nci': r'Net (?:\(Loss\) Earnings|\(Earnings\) Loss|Earnings \(Loss\)|Loss \(Earnings\)|Loss|Earnings) Attributable to Noncontrolling Interests',
+        'attrib': 'Net Earnings' + loss + r' Attributable to Coherent Corp\.', 'eps': 'Diluted Earnings' + loss + ' Per Share',
+        'interest': 'Interest expense', 'other': r'Other expense \(income\), net'}.items()}
+    if not statement:
+        raise ValueError('statement-heading-missing')
+    if any(s[k] is None for k in ('revenue', 'cost', 'pretax', 'tax', 'net', 'nci', 'attrib', 'eps')) or not s['revenue'][0] > 0:
+        raise ValueError('revenue-row-unrecognized')
+    tol = Decimal('0.15')
+    for i in (0, 2):
+        if not (near(s['revenue'][i] - s['cost'][i], s['pretax'][i], tol) and near(s['pretax'][i] - s['tax'][i], s['net'][i], tol)
+                and near(s['net'][i] - s['nci'][i], s['attrib'][i], tol)):
+            raise ValueError('statement-mismatch')
+    # Table 1 rounds to whole millions; its revenue, net earnings and diluted EPS must be the statement's
+    gaap = statement_rows(section(t, re.escape(summary[0]), r'Operating Income is defined|Table 1, continued', 2500))
+    g = {key: lead_values(gaap, pattern, 3) for key, pattern in {
+        'revenue': 'Revenues', 'operating': r'Operating Income(?:\(\d\))?', 'attrib': 'Net Earnings' + loss + r' Attributable to Coherent Corp\.',
+        'eps': 'Diluted Earnings' + loss + ' Per Share'}.items()}
+    if g['revenue'] is None or g['attrib'] is None or g['eps'] is None \
+            or not all(near(g['revenue'][i], s['revenue'][i], Decimal('0.55')) for i in (0, 1, 2)) \
+            or not all(near(g['attrib'][i], s['attrib'][i], Decimal('0.55')) and g['eps'][i] == s['eps'][i] for i in (0, 2)):
+        raise ValueError('summary-mismatch')
+    said = re.findall(r'Q' + str(quarter) + r' REVENUE OF \$([\d.]+)B', t[:600])
+    if len(said) != 1 or abs(Decimal(said[0]) * 1000 - s['revenue'][0]) > 5:
+        raise ValueError('change-mismatch')
+    facts = [('revenue', money_millions(s['revenue'][0]), money_millions(s['revenue'][2]))]
+    rows = statement_rows(section(t, r'Table 7 GAAP Earnings' + loss + r' Per Share Calculation\*', r'\* Amounts may not'))
+    income = lead_values(rows, r'Diluted earnings(?: \(loss\))? available to common shareholders', 3)
+    shares = lead_values(rows, r'Diluted weighted average common shares(?: outstanding)?', 3)
+    eps = lead_values(rows, r'Diluted earnings(?: \(loss\))? per common share', 3)
+    if None not in (income, shares, eps) and all(eps[i] == s['eps'][i] and per_share_ok(income[i], shares[i], eps[i]) for i in (0, 2)):
+        facts.append(('eps', per_share(eps[0]), per_share(eps[2])))
+    rows = statement_rows(section(t, r'Table 8 Non-GAAP Earnings Per Share Calculation\*', r'\* Amounts may not'))
+    income = lead_values(rows, 'Diluted earnings available to common shareholders', 3)
+    shares = lead_values(rows, r'Diluted weighted average common shares(?: outstanding)?', 3)
+    non = lead_values(rows, 'Diluted earnings per common share(?: on non-GAAP basis)?', 3)
+    stated = lead_values(statement_rows(section(t, r'Table 1, continued Non-GAAP Financial Results \(unaudited\)(?:\(\d\))*', r' \(\d\) [A-Z]', 2500)),
+                         'Diluted Earnings Per Share', 3)
+    if None not in (income, shares, non, stated) and all(non[i] == stated[i] and per_share_ok(income[i], shares[i], non[i]) for i in (0, 2)):
+        facts.append(('adjusted-eps', per_share(non[0]), per_share(non[2])))
+    facts.append(('net-income', money_millions(s['attrib'][0]), money_millions(s['attrib'][2])))
+    if g['operating'] and s['interest'] and s['other'] \
+            and all(near(s['pretax'][i] + s['interest'][i] + s['other'][i], g['operating'][i], Decimal('0.6')) for i in (0, 2)):
+        facts.append(('operating-income', money_millions(g['operating'][0]), money_millions(g['operating'][2])))
+    return {'period': f'Q{quarter} FY{fiscal}', 'facts': ordered(facts)}
+
+
 def parse_asml(text, url=None):
     """ASML's results release (6-K EX-99.1): a small table in EUR million (previous quarter, this quarter) and the headline in billions.
     Net sales and net income must agree with the headline; gross margin with gross profit / net sales."""
@@ -1715,6 +1819,8 @@ PROFILES = {
     'IREN': {'publisher': 'IREN IR (SEC 8-K)', 'parse': parse_iren, 'results-head': True},
     'TSLA': {'publisher': 'Tesla IR (SEC 8-K)', 'parse': parse_tesla, 'results-head': True},
     'VST': {'publisher': 'Vistra IR (SEC 8-K)', 'parse': parse_vistra, 'results-head': True},
+    # Coherent (owner, Nov 20: every calendar company read from its tables, not only from its highlight sentences)
+    'COHR': {'publisher': 'Coherent IR (SEC 8-K)', 'parse': parse_coherent, 'results-head': True},
 }
 SOURCE_URL = {
     'NBIS': re.compile(r'^https://nebius\.com/newsroom/[a-z0-9-]+$'),
@@ -1756,11 +1862,6 @@ def parse_with_sentences(ticker, text, url):
             return sentences(text, url)
         except ValueError:
             raise table_error
-
-
-# Companies without a table parser: their figures come from the release's highlight sentences only.
-for _ticker, _name in (('COHR', 'Coherent'),):
-    PROFILES.setdefault(_ticker, {'publisher': f'{_name} IR (SEC 8-K)', 'parse': sentences, 'sentences-only': True})
 
 
 # ---- storage -----------------------------------------------------------------------------------------------

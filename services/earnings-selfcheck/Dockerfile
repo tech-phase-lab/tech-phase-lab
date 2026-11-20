@@ -9,6 +9,7 @@ COPY scripts/research scripts/research
 RUN useradd --create-home --uid 10001 check
 USER check
 ENV PYTHONUNBUFFERED=1
-# Inert unless EARNINGS_SELFCHECK=true is set on the (cron) service; otherwise it prints DISABLED and exits 0. Read-only: it never writes.
-RUN python scripts/research/earnings_selfcheck.py
-CMD ["timeout", "--signal=TERM", "--kill-after=10s", "900s", "python", "scripts/research/earnings_selfcheck.py"]
+# Inert unless EARNINGS_SELFCHECK=true is set on the (cron) service; otherwise both checks print DISABLED and exit 0. Read-only: it never writes.
+# Nov 20: the same daily run also does the production watch (scripts/research/production_watch.py, docs/PRODUCTION-WATCH.md).
+RUN python scripts/research/daily_checks.py
+CMD ["timeout", "--signal=TERM", "--kill-after=10s", "900s", "python", "scripts/research/daily_checks.py"]
