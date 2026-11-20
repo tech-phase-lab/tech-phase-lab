@@ -201,28 +201,28 @@ test("a notice seen listed, gone when the app comes up within 10 s of it, is tak
   assert.equal(moves.length, 1);
 });
 
-test("a swiped-away notice never moves the app: any doubt gives the banner instead", async () => {
+test("a swiped-away notice never moves the app; owner, Nov 20: one that reached the phone before the app came up gets no banner either", async () => {
   const cases = {
-    "the app came up more than 10 s after the notice": { delivered: notice({ at: NOW - PUSH_TAP_GAP_MS - 2_000, listed: true }), foreground: NOW - 1_000 },
-    "the app was already in front when it arrived": { delivered: notice({ at: NOW - 3_000, listed: true }), foreground: NOW - 60_000 },
-    "the app never came to the front": { delivered: notice({ at: NOW - 3_000, listed: true }), foreground: null },
-    "the worker could not see the list after showing it": { delivered: notice({ at: NOW - 3_000, listed: false }), foreground: NOW - 1_000 },
-    "the worker's record has no listing": { delivered: notice({ at: NOW - 3_000 }), foreground: NOW - 1_000 },
+    "the app came up more than 10 s after the notice": { delivered: notice({ at: NOW - PUSH_TAP_GAP_MS - 2_000, listed: true }), foreground: NOW - 1_000, banner: false },
+    "the app was already in front when it arrived": { delivered: notice({ at: NOW - 3_000, listed: true }), foreground: NOW - 60_000, banner: true },
+    "the app never came to the front": { delivered: notice({ at: NOW - 3_000, listed: true }), foreground: null, banner: true },
+    "the worker could not see the list after showing it": { delivered: notice({ at: NOW - 3_000, listed: false }), foreground: NOW - 1_000, banner: false },
+    "the worker's record has no listing": { delivered: notice({ at: NOW - 3_000 }), foreground: NOW - 1_000, banner: false },
   };
-  for (const [name, { delivered, foreground }] of Object.entries(cases)) {
+  for (const [name, { delivered, foreground, banner }] of Object.entries(cases)) {
     const { o, moves, banners } = opener({ delivered, shown: [] });
     if (foreground !== null) o.foreground(foreground);
     assert.equal(await o.check(), null, name);
     assert.deepEqual(moves, [], name);
-    assert.equal(banners.length, 1, name);
+    assert.equal(banners.length, banner ? 1 : 0, name);
   }
-  // Still listed, or the phone cannot say: never a tap either.
+  // Still listed, or the phone cannot say: never a tap either, and no banner for a notice that came before the app.
   for (const shown of [["n-1"], null]) {
     const { o, moves, banners } = opener({ delivered: notice({ at: NOW - 3_000, listed: true }), shown });
     o.foreground(NOW - 1_000);
     await o.check();
     assert.deepEqual(moves, []);
-    assert.equal(banners.length, 1);
+    assert.equal(banners.length, 0);
   }
   assert.equal(PUSH_TAP_GAP_MS, 10_000);
 });
@@ -232,6 +232,26 @@ test("the worker's listing survives the record check; old taps keep the 2-minute
   assert.equal(pushRecord({ id: "a", url: "/research", at: NOW, listed: "yes" }, NOW).listed, false);
   assert.equal(pushRecord({ id: "a", url: "/research", at: NOW - PENDING_OPEN_MAX_AGE_MS - 1 }, NOW), null);
   assert.equal(pushRecord({ id: "a", url: "/research", at: NOW - PENDING_OPEN_MAX_AGE_MS - 1 }, NOW, PUSH_BANNER_RECENT_MS).id, "a");
+});
+
+test("owner, Nov 20: the worker's record of a notice that reached the phone before the app came up gets no banner, even while still listed", async () => {
+  for (const at of [NOW - 20_000, NOW - 10 * 60_000, NOW - 5 * 3600_000]) {
+    const { o, moves, banners } = opener({ delivered: notice({ at }), shown: ["n-1"] });
+    o.foreground(NOW);
+    assert.equal(await o.check(), null);
+    assert.deepEqual(banners, [], String(at));
+    assert.deepEqual(moves, []);
+  }
+  // A banner left up when the app went to the background is taken down on the return and not shown again.
+  const { o, banners } = opener();
+  o.foreground(NOW - 60_000);
+  o.message({ data: { type: "delivered", ...notice() }, origin: here.origin });
+  assert.equal(banners.length, 1);
+  o.foreground(NOW);
+  assert.equal(banners.at(-1), null);
+  await o.check();
+  o.message({ data: { type: "delivered", ...notice() }, origin: here.origin });
+  assert.equal(banners.filter(Boolean).length, 1);
 });
 
 test("✕ and the 15-second timer hide the banner for good and forget the notice; nothing moves", async () => {

@@ -7,9 +7,9 @@ const WATCHED = new Set(['MU', 'SNDK', 'NVDA', 'CRWV']);
 
 test('one story named by several companies is one row listing them all (owner, Oct 17)', () => {
   const wire = {
-    MU: [item('a', 'Did you miss Micron and SanDisk? Memory stocks to watch this week', 'メモリ株の注目点', '2026-10-17T05:33:00Z')],
-    SNDK: [item('b', 'Did you miss Micron and SanDisk? Memory stocks to watch this week', 'メモリ株の注目点', '2026-10-17T05:33:00Z')],
-    NVDA: [item('c', 'Did you miss Micron and SanDisk? Memory stocks to watch this week', 'メモリ株の注目点', '2026-10-17T05:50:00Z')],
+    MU: [item('a', 'Micron and SanDisk lead a memory chip rally as prices climb', 'マイクロンとサンディスクがメモリ株高を主導', '2026-10-17T05:33:00Z')],
+    SNDK: [item('b', 'Micron and SanDisk lead a memory chip rally as prices climb', 'マイクロンとサンディスクがメモリ株高を主導', '2026-10-17T05:33:00Z')],
+    NVDA: [item('c', 'Micron and SanDisk lead a memory chip rally as prices climb', 'マイクロンとサンディスクがメモリ株高を主導', '2026-10-17T05:50:00Z')],
   };
   const stories = wireStories(wire, 'ja', WATCHED);
   assert.equal(stories.length, 1);
@@ -246,4 +246,82 @@ test('an untranslated copy of a story is never shown on the Japanese screens, on
                         item('u', 'Nvidia expands Nemotron family with two new open models', null, '2026-11-18T05:10:00Z')] };
   assert.deepEqual(wireStories(wire, 'ja', WATCHED), []);
   assert.equal(wireStories(wire, 'en', WATCHED).length, 1);
+});
+
+// Owner, Nov 20 (「いらないニュース全排除で」): the 速報 headlines the owner called unneeded, in English and as they were translated.
+const LOW_VALUE_TITLES = [
+  'Stock Market Today: Anthropic’s Mega-IPO Sends Stocks Lower for a Second Day',
+  'Stock market today: Tech futures slide as Anthropic sinks 10% after IPO (live)',
+  'Anthropic shares fall in pre-market trade as AI rout hits global markets - business live',
+  'Dow Jones Futures: Techs Tumble, Anthropic Dives After Ugly Market Reversal To New Lows',
+  'Market Open: Record Breaking IPO For Anthropic, Stocks Jump, Walmart Slides 11-19-2026',
+  'Beyond TSMC: 3 Taiwanese Small-Cap Tech Stocks to Watch',
+  'Marvell Technology And 2 Top AI Stocks To Watch',
+  'Sandisk Stock Splits 8-for-1 — What It Means for Investors',
+  "Sandisk’s stock split is almost here. This is what investors need to know.",
+  'Intel 18A vs. TSMC N2: How to Read the Chip Claims',
+  "Anthropic IPO: Here's What Its Spending Commitments Mean to Microsoft, SpaceX, Amazon, and Alphabet",
+  'Prediction: Micron Stock Is Going to Soar After Its December Earnings Report',
+  'Micron Is the Memory Stock I’d Buy',
+  'Dear Sandisk Stock Fans, Mark Your Calendars for November 20',
+  'Is Vertiv Stock a Buy After Its Earnings Beat? (Nov 15, 2026)',
+  // HQ, Nov 20: "here's what it means / why / how" teasers stay dropped, and so does a broker-note teaser (the plain target change is kept below).
+  "Anthropic files for IPO. Here's what it means for Alphabet", "Nvidia stock fell. Here's how to play it",
+  "72% Upside for GE Vernova? Bernstein Thinks So, and Here's How It Gets to $1,298", 'Analysis: Anthropic IPO tests AI valuations',
+  // HQ, Nov 20: MarketBeat price-move templates with no event.
+  "Vertiv (NYSE:VRT) Stock Falls 5.1% - Here's What Happened",
+  "Arista Networks (NYSE:ANET) Stock Price Down 5.5% - Here's Why",
+  "Arista Networks (NYSE:ANET) Stock Price Breaks Below 50 Day Moving Average - Here's What Happened",
+  'Bloom Energy (NYSE:BE) Shares Gap Up - Time to Buy?',
+  'Lumentum (NASDAQ:LITE) Shares Gap Down',
+  "NVIDIA (NASDAQ:NVDA) Trading 3.2% Higher - Here's Why",
+  'Micron Technology (NASDAQ:MU) Stock Price Up 4.1% - Should You Buy?',
+  "Lumentum (NASDAQ:LITE) Stock Falls 2.9% - What's Next?",
+  '株式市場本日：AnthropicのIPO後株価10%急落でテック先物売られる（ライブ中継）',
+  'TSMCを超えて：注目すべき台湾の小型テクノロジー株3銘柄',
+  'サンディスク株が8分割—投資家にとっての意義とは',
+  'インテル18A対TSMC N2：チップの主張の読み方',
+  'AnthropicのIPO：その支出約束がマイクロソフト、スペースX、アマゾン、アルファベットに意味すること',
+];
+// Concrete company, analyst and regulatory news is never caught.
+const REAL_NEWS = [
+  'Microsoft announces general availability of Azure Cobalt 200', 'Azure Cobalt 200の一般提供開始を発表',
+  'The U.S. Approved 879,000 Nvidia and AMD Chips for China in 6 Months', '米国は6ヶ月間で879,000枚のNVIDIAとAMDの中国向けチップを承認',
+  'Stifel maintains Marvell Technology at Buy, lowers price target to $280 from $370', 'Stifel cuts Marvell stock price target on deal concerns to $280',
+  'スティーフェル、取引懸念でマーベルの目標株価を280ドルに引き下げ', 'BMO Capital Markets Upgrades Bloom Energy (NYSE:BE) to Outperform',
+  'Nvidia reports record third-quarter revenue of $115.8 billion', 'Micron raises guidance on HBM demand', 'Sandisk completes 8-for-1 stock split and increases authorized shares',
+  'TSMC halts advanced chip orders from Chinese designers in Taiwan', 'SK Hynix to become Kioxia\'s largest shareholder after bond conversion',
+  'Nvidia sells 10 million shares to SoftBank', 'Arista names new chief financial officer', 'Palantir wins $480 million Army contract',
+  'Commerce approved sales of more than 879,000 AI chips to Chinese companies, Rep. Mast says', 'Live Nation shares jump after earnings',
+  // HQ, Nov 20: "here's what" followed by what happened is a report of an event, not a teaser.
+  "Microsoft CEO Satya Nadella calls Outlook outage a 'perfect storm.' Here's what went wrong", "Sandisk Stock Looked Like It Fell 87%. Here's What Really Happened.",
+  "Nvidia board picks new CEO: here's what we know", 'Bernstein raises GE Vernova price target to $1,298',
+];
+
+test('market live blogs, stock lists, explainers and opinion are left out, and concrete news is kept (owner, Nov 20)', async () => {
+  const { lowValue } = await import('../lib/research/wire-stories.ts');
+  for (const title of LOW_VALUE_TITLES) assert.equal(isNotNews(title), true, title);
+  for (const title of REAL_NEWS) { assert.equal(isNotNews(title), false, title); assert.equal(lowValue(title), false, title); }
+});
+
+test('the same broker action from two outlets is one row, the first report (owner, Nov 20: MRVL twice)', async () => {
+  const { analystActions } = await import('../lib/research/wire-stories.ts');
+  assert.deepEqual(analystActions('Stifel maintains Marvell Technology at Buy, lowers price target to $280 from $370'), ['stifel|pt|280']);
+  assert.deepEqual(analystActions('Stifel cuts Marvell stock price target on deal concerns to $280'), ['stifel|pt|280']);
+  assert.deepEqual(analystActions('BMO Upgrades Bloom Energy to Outperform With $230 Price Target'), ['bmo|pt|230', 'bmo|rating|outperform']);
+  assert.deepEqual(analystActions('Credo Technology price target lowered to $175 from $300 at TD Cowen'), ['cowen|pt|175']);
+  assert.deepEqual(analystActions('Marvell agrees to buy Lumentum for $115 billion'), []);
+  const wire = { MRVL: [
+    item('first', 'Stifel maintains Marvell Technology at Buy, lowers price target to $280 from $370', 'マーベル、スティーフェルが維持も目標株価を280ドルに引き下げ', '2026-11-20T13:31:00Z'),
+    item('second', 'Stifel cuts Marvell stock price target on deal concerns to $280', 'スティーフェル、取引懸念でマーベルの目標株価を280ドルに引き下げ', '2026-11-20T14:24:00Z'),
+    item('other', 'Oppenheimer Maintains Marvell Technology With Buy Rating, Maintains Target Price $425', 'オッペンハイマー、マーベルの目標株価425ドルを維持', '2026-11-20T05:59:00Z'),
+    item('later-day', 'Stifel lowers Marvell price target to $280', 'スティーフェル、マーベル目標株価を280ドルに', '2026-11-22T14:24:00Z'),
+  ] };
+  const stories = wireStories(wire, 'ja', new Set(['MRVL']));
+  assert.deepEqual(stories.map(story => story.id), ['later-day', 'first', 'other']);
+  assert.equal(stories[1].at, '2026-11-20T13:31:00.000Z');
+  // Another firm with the same target, or the same firm's action on another company, stays apart.
+  const apart = wireStories({ MRVL: [item('a', 'Stifel cuts Marvell price target to $280', 'a', '2026-11-20T13:00:00Z'), item('b', 'Needham cuts Marvell price target to $280', 'b', '2026-11-20T13:10:00Z')],
+    LITE: [item('c', 'Stifel cuts Lumentum price target to $300', 'c', '2026-11-20T13:20:00Z')] }, 'en', new Set(['MRVL', 'LITE']));
+  assert.equal(apart.length, 3);
 });

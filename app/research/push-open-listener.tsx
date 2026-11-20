@@ -31,6 +31,8 @@ const storage = () => { try { return window.localStorage; } catch { return null;
  * Owner, Nov 16: while the app stays open and visible it asks again every 20 seconds (paused while hidden), so a notice iOS did not
  * show while the app was in front still gets the banner. The banner is for real notices only, never the test notice
  * (lib/research/push-open.ts); a tap on the test notice still opens its page.
+ * Owner, Nov 20: a notice that already reached the phone before the app came to the front (or was opened) no longer gets the banner
+ * on that return or any later one; only a notice that arrives while the app is shown does, once (lib/research/push-open.ts).
  * Also checks for a newer worker, and keeps the step record (sent to the server log for the owner's account only). */
 export default function PushOpenListener() {
   const router = useRouter();
