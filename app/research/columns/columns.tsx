@@ -69,7 +69,8 @@ export default function ColumnsPage({ initialKind = "all", initial, postId }: { 
           id => fetch(`/api/research/desk-reactions?postId=${encodeURIComponent(id)}`, { cache: "no-store", signal: current.signal }).then(answer => answer.json())) : undefined;
         if (current.signal.aborted || stopped) return;
         accept({ items: data.items, access: data.access, status: "ready", validUntil: data.validUntil, reactions });
-      } catch { if (!current.signal.aborted && !stopped) {
+      // While the sign-in library is still starting, keep waiting (this runs again once it is ready) instead of flashing an error.
+      } catch (error) { if (!current.signal.aborted && !stopped && !(error instanceof Error && error.message === "identity-loading")) {
         cancelLease?.(); latest.current = { items: [], access: "", status: "error" }; setResult(latest.current);
       } }
     }
