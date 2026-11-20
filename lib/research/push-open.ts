@@ -118,7 +118,10 @@ const SAME_NOTICE_MS = 5 * 60_000;
  * 30 minutes before it is shown again (or still in the phone's list, up to a day), also gets an in-app banner with an 開く button.
  * A notice gone from the phone's list is taken for a tap only when the worker saw it listed and the app came to the front at most
  * 10 seconds after it arrived (PUSH_TAP_GAP_MS); otherwise it gets the banner, so a swiped-away notice does not move the app by itself.
- * Each notice is opened or shown once. */
+ * Each notice is opened or shown once.
+ * Owner, Nov 20 (「目標株価がスマホに届いたの知ってるし、それでホーム開くとまた上に表示されるのやめたほうがいい」): a notice that reached
+ * the phone before the app came to the front never gets the banner on that return or any later start; only one that arrives while the
+ * app is shown does, once, and the 15-second timer or the next return to the front marks it seen on the server for good. */
 export function createPushOpener({ sources, location, navigation, banner = () => {}, diagnostics, server, now = Date.now }: PushOpenerOptions) {
   const handled = new Set<string>();
   // Ids of notices the server reported (they are marked opened or dismissed on the server, not in the worker's store).
@@ -137,14 +140,20 @@ export function createPushOpener({ sources, location, navigation, banner = () =>
   const note = (patch: Record<string, unknown>, id?: string) => { try { diagnostics?.note(patch, id); } catch { /* the record is best effort */ } };
   const forget = (id: string) => { void sources.clear(id).catch(() => { /* written down again only by a new notice */ }); };
   const same = (a: PushRecord, b: PushRecord) => a.path === b.path && a.title === b.title && Math.abs(a.at - b.at) <= SAME_NOTICE_MS;
+  /** Owner, Nov 20: a notice sent before the app came to the front (or was opened) reached the phone as a push, so it never gets the
+   * banner on that return: only a notice that arrives while the app is already shown does (at most once). Before the listener says
+   * when the app came to the front, the app counts as shown. */
+  const arrivedWhileShown = (record: Pick<PushRecord, "at">) => foregroundAt === null || record.at >= foregroundAt;
   function tellServer(id: string, state: "opened" | "dismissed") {
     if (!server || !fromServer.has(id)) return;
     void server.mark(id, state).catch(() => { /* not marked: offered again at most until it is 30 minutes old */ });
   }
   /** Close a notice where it was written down, and its twin: the worker's record of a notice and the server's are the same notice. */
   function settle(record: PushRecord, state: "opened" | "dismissed" | "timeout") {
+    // Owner, Nov 20: the 15-second timer counts as seen too, so the server never offers the notice again (on this or a later start).
+    const told = state === "opened" ? "opened" : "dismissed";
     if (fromServer.has(record.id)) {
-      if (state !== "timeout") tellServer(record.id, state);
+      tellServer(record.id, told);
       if (delivered && delivered.id !== record.id && !handled.has(delivered.id) && same(delivered, record)) {
         handled.add(delivered.id);
         forget(delivered.id);
@@ -156,7 +165,7 @@ export function createPushOpener({ sources, location, navigation, banner = () =>
     const twin = latestServer;
     if (twin && twin.id !== record.id && !handled.has(twin.id) && same(twin, record)) {
       handled.add(twin.id);
-      if (state !== "timeout") tellServer(twin.id, state);
+      tellServer(twin.id, told);
     }
   }
   function hide(id?: string) {
@@ -253,7 +262,7 @@ export function createPushOpener({ sources, location, navigation, banner = () =>
       const before = foregroundAt !== null && latestAskedAt < foregroundAt;
       if (before && now() - (foregroundAt as number) <= PUSH_SERVER_TAP_MS) { serverDue = true; return null; }
       if (!before && serverNoticeAction(sent, foregroundAt) === "open") return open(sent, "server-tap");
-      if (!sent.test) {
+      if (!sent.test && arrivedWhileShown(sent)) {
         if (!showing || (showing.id !== sent.id && !same(showing, sent))) show(sent);
         return null;
       }
@@ -268,7 +277,7 @@ export function createPushOpener({ sources, location, navigation, banner = () =>
     if (listed === false && candidate.listed && foregroundAt !== null && foregroundAt >= candidate.at && foregroundAt - candidate.at <= PUSH_TAP_GAP_MS) {
       return open(candidate, "gone-after-tap");
     }
-    if (listed === true || at - candidate.at <= PUSH_BANNER_RECENT_MS) show(candidate);
+    if ((listed === true || at - candidate.at <= PUSH_BANNER_RECENT_MS) && arrivedWhileShown(candidate)) show(candidate);
     return null;
   }
   /** Look for a tap to open (or a new notice to show). Calls made while a look is running share it. */
@@ -290,19 +299,23 @@ export function createPushOpener({ sources, location, navigation, banner = () =>
     note({ bannerOpen: now() }, record.id);
     return open(record, "banner");
   }
-  /** ✕ (or the 15-second timer): hide the banner and do not show this notice again. */
+  /** ✕ (or the 15-second timer, or the app coming to the front again): hide the banner and never show this notice again. */
   function dismissBanner(reason: "close" | "timeout" = "close") {
     if (!showing) return;
     const record = showing;
     handled.add(record.id);
     if (delivered?.id === record.id) delivered = null;
     note(reason === "close" ? { bannerClose: now() } : { bannerTimeout: now() }, record.id);
-    // ✕ marks the server's notice dismissed; the 15-second timer only hides it here (offered again until it is 30 minutes old).
+    // ✕ and the 15-second timer both mark the server's notice dismissed (owner, Nov 20: shown once is enough).
     settle(record, reason === "close" ? "dismissed" : "timeout");
     hide(record.id);
   }
   /** The app came to the front (or was launched) at this time; the listener calls it before the looks that follow. */
-  function foreground(at: number = now()) { foregroundAt = at; serverDue = true; }
+  /** Owner, Nov 20: a banner still up from before (the app went to the background within its 15 seconds) does not come back. */
+  function foreground(at: number = now()) {
+    if (showing) dismissBanner("timeout");
+    foregroundAt = at; serverDue = true;
+  }
   return { message, check, openBanner, dismissBanner, foreground, banner:() => showing && { id: showing.id, path: showing.path, title: showing.title } };
 }
 
