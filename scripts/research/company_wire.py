@@ -556,6 +556,8 @@ LOW_VALUE_EN = (
     r'|\bis (?:it|now) (?:a|the) (?:good |right |smart )?(?:buy|time to)\b|\bstock a buy\b|\bshould you (?:buy|sell|hold|invest|own|worry|be worried|panic|consider)\b'
     r'|\b(?:buy|sell|hold),? (?:or|and) (?:sell|hold|buy)\b|^\s*(?:prediction|opinion|analysis|commentary|explainer|my take)\s*:|\bbreakingviews\b'
     r'|^\s*dear\b|\bbetter buy\s*:|\b(?:no-brainer|screaming buy|millionaire|passive income)\b|\b(?:bull|bear) case\b'
+    # price-move templates (MarketBeat): "… Stock Falls 5.1% - Here's What Happened", "Shares Gap Up - Time to Buy?" (HQ, Nov 20)
+    r"|\s[-–—]\s+(?:here.s (?:why|what happened)|should you (?:buy|sell)|time to (?:buy|sell)|what.s next)\b|\bshares gap (?:up|down)\b"
 )
 LOW_VALUE = re.compile(LOW_VALUE_EN, re.I)
 

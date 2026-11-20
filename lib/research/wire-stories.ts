@@ -56,6 +56,7 @@ export const LOW_VALUE = new RegExp([
   String.raw`|\bis (?:it|now) (?:a|the) (?:good |right |smart )?(?:buy|time to)\b|\bstock a buy\b|\bshould you (?:buy|sell|hold|invest|own|worry|be worried|panic|consider)\b`,
   String.raw`|\b(?:buy|sell|hold),? (?:or|and) (?:sell|hold|buy)\b|^\s*(?:prediction|opinion|analysis|commentary|explainer|my take)\s*:|\bbreakingviews\b`,
   String.raw`|^\s*dear\b|\bbetter buy\s*:|\b(?:no-brainer|screaming buy|millionaire|passive income)\b|\b(?:bull|bear) case\b`,
+  String.raw`|\s[-–—]\s+(?:here.s (?:why|what happened)|should you (?:buy|sell)|time to (?:buy|sell)|what.s next)\b|\bshares gap (?:up|down)\b`, // MarketBeat price-move templates (HQ, Nov 20)
 ].join(""), "i");
 /** The same kinds of headline in Japanese, for a translated title whose English wording differs (owner, Nov 20). */
 const LOW_VALUE_JA = /株式市場(?:本日|今日)|(?:本日|今日)の株式市場|[(（]\s*ライブ(?:中継|更新|ブログ)?\s*[)）]|ライブ(?:中継|更新|ブログ)\s*$|注目すべき.{0,30}(?:銘柄|株)|買うべき.{0,20}(?:銘柄|株)|(?:銘柄|株)\d+選|(?:意味|意義)(?:とは|するもの)|(?:意味|意義)すること\s*$|の読み方|知っておくべき(?:こと|点)|投資家が知るべき/;

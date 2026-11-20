@@ -488,7 +488,16 @@ class LowValueTests(unittest.TestCase):
                  'Dear Sandisk Stock Fans, Mark Your Calendars for November 20',
                  # HQ, Nov 20: "here's what it means / how" teasers, a broker-note teaser and "Analysis:" stay dropped.
                  "Anthropic files for IPO. Here's what it means for Alphabet", "Nvidia stock fell. Here's how to play it",
-                 "72% Upside for GE Vernova? Bernstein Thinks So, and Here's How It Gets to $1,298", 'Analysis: Anthropic IPO tests AI valuations')
+                 "72% Upside for GE Vernova? Bernstein Thinks So, and Here's How It Gets to $1,298", 'Analysis: Anthropic IPO tests AI valuations',
+                 # HQ, Nov 20: MarketBeat price-move templates with no event.
+                 "Vertiv (NYSE:VRT) Stock Falls 5.1% - Here's What Happened",
+                 "Arista Networks (NYSE:ANET) Stock Price Down 5.5% - Here's Why",
+                 "Arista Networks (NYSE:ANET) Stock Price Breaks Below 50 Day Moving Average - Here's What Happened",
+                 'Bloom Energy (NYSE:BE) Shares Gap Up - Time to Buy?',
+                 'Lumentum (NASDAQ:LITE) Shares Gap Down',
+                 "NVIDIA (NASDAQ:NVDA) Trading 3.2% Higher - Here's Why",
+                 'Micron Technology (NASDAQ:MU) Stock Price Up 4.1% - Should You Buy?',
+                 "Lumentum (NASDAQ:LITE) Stock Falls 2.9% - What's Next?")
     NEWS = ('Microsoft announces general availability of Azure Cobalt 200',
             'The U.S. Approved 879,000 Nvidia and AMD Chips for China in 6 Months',
             'Stifel maintains Marvell Technology at Buy, lowers price target to $280 from $370',
