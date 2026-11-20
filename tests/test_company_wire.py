@@ -485,7 +485,10 @@ class LowValueTests(unittest.TestCase):
                  'Intel 18A vs. TSMC N2: How to Read the Chip Claims',
                  "Anthropic IPO: Here's What Its Spending Commitments Mean to Microsoft, SpaceX, Amazon, and Alphabet",
                  'Prediction: Micron Stock Is Going to Soar After Its December Earnings Report',
-                 'Dear Sandisk Stock Fans, Mark Your Calendars for November 20')
+                 'Dear Sandisk Stock Fans, Mark Your Calendars for November 20',
+                 # HQ, Nov 20: "here's what it means / how" teasers, a broker-note teaser and "Analysis:" stay dropped.
+                 "Anthropic files for IPO. Here's what it means for Alphabet", "Nvidia stock fell. Here's how to play it",
+                 "72% Upside for GE Vernova? Bernstein Thinks So, and Here's How It Gets to $1,298", 'Analysis: Anthropic IPO tests AI valuations')
     NEWS = ('Microsoft announces general availability of Azure Cobalt 200',
             'The U.S. Approved 879,000 Nvidia and AMD Chips for China in 6 Months',
             'Stifel maintains Marvell Technology at Buy, lowers price target to $280 from $370',
@@ -493,7 +496,11 @@ class LowValueTests(unittest.TestCase):
             'BMO Capital Markets Upgrades Bloom Energy (NYSE:BE) to Outperform',
             'Nvidia reports record third-quarter revenue of $115.8 billion', 'Sandisk completes 8-for-1 stock split and increases authorized shares',
             'TSMC halts advanced chip orders from Chinese designers in Taiwan', 'Nvidia sells 10 million shares to SoftBank',
-            'Arista names new chief financial officer', 'Live Nation shares jump after earnings')
+            'Arista names new chief financial officer', 'Live Nation shares jump after earnings',
+            # HQ, Nov 20: "here's what" followed by what happened reports an event; the plain broker target change is kept.
+            "Microsoft CEO Satya Nadella calls Outlook outage a 'perfect storm.' Here's what went wrong",
+            "Sandisk Stock Looked Like It Fell 87%. Here's What Really Happened.", "Nvidia board picks new CEO: here's what we know",
+            'Bernstein raises GE Vernova price target to $1,298')
 
     def setUp(self):
         import tempfile, os

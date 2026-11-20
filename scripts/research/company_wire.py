@@ -550,7 +550,7 @@ LOW_VALUE_EN = (
     r"|^\s*beyond [^:]{1,40}:|\b(?:\d{1,2}|two|three|four|five|six|seven|eight|nine|ten)\s+(?:[\w&.'’-]+\s+){0,4}(?:stocks|picks)\s+(?:to|for|that|worth|you|i)\b"
     r'|\bstocks? to (?:watch|buy|own|hold|consider|avoid|sell)\b|\bstock I.d (?:buy|own|hold)\b'
     # explainers and opinion
-    r'|\bwhat\b.{0,40}\bmeans?\s+(?:for|to)\b|\bhere.s (?:what|how|the)\b'
+    r'|\bwhat\b.{0,40}\bmeans?\s+(?:for|to)\b|\bhere.s (?:what(?! (?:really |actually )?(?:went wrong|happened|caused|we know|changed)\b)|how|the)\b'
     r'|\bwhat (?:you|investors|shareholders|traders|buyers) (?:need|should|must|ought|have) to know\b|\bwhat to know\b|\beverything (?:you|investors) need to know\b'
     r'|\bhow to (?:read|play|think about|invest(?: in)?|buy|trade|value|approach|navigate|position)\b'
     r'|\bis (?:it|now) (?:a|the) (?:good |right |smart )?(?:buy|time to)\b|\bstock a buy\b|\bshould you (?:buy|sell|hold|invest|own|worry|be worried|panic|consider)\b'

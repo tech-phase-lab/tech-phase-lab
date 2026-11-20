@@ -265,6 +265,9 @@ const LOW_VALUE_TITLES = [
   'Micron Is the Memory Stock I’d Buy',
   'Dear Sandisk Stock Fans, Mark Your Calendars for November 20',
   'Is Vertiv Stock a Buy After Its Earnings Beat? (Nov 15, 2026)',
+  // HQ, Nov 20: "here's what it means / why / how" teasers stay dropped, and so does a broker-note teaser (the plain target change is kept below).
+  "Anthropic files for IPO. Here's what it means for Alphabet", "Nvidia stock fell. Here's how to play it",
+  "72% Upside for GE Vernova? Bernstein Thinks So, and Here's How It Gets to $1,298", 'Analysis: Anthropic IPO tests AI valuations',
   '株式市場本日：AnthropicのIPO後株価10%急落でテック先物売られる（ライブ中継）',
   'TSMCを超えて：注目すべき台湾の小型テクノロジー株3銘柄',
   'サンディスク株が8分割—投資家にとっての意義とは',
@@ -281,6 +284,9 @@ const REAL_NEWS = [
   'TSMC halts advanced chip orders from Chinese designers in Taiwan', 'SK Hynix to become Kioxia\'s largest shareholder after bond conversion',
   'Nvidia sells 10 million shares to SoftBank', 'Arista names new chief financial officer', 'Palantir wins $480 million Army contract',
   'Commerce approved sales of more than 879,000 AI chips to Chinese companies, Rep. Mast says', 'Live Nation shares jump after earnings',
+  // HQ, Nov 20: "here's what" followed by what happened is a report of an event, not a teaser.
+  "Microsoft CEO Satya Nadella calls Outlook outage a 'perfect storm.' Here's what went wrong", "Sandisk Stock Looked Like It Fell 87%. Here's What Really Happened.",
+  "Nvidia board picks new CEO: here's what we know", 'Bernstein raises GE Vernova price target to $1,298',
 ];
 
 test('market live blogs, stock lists, explainers and opinion are left out, and concrete news is kept (owner, Nov 20)', async () => {

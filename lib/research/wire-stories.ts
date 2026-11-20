@@ -50,7 +50,7 @@ export const LOW_VALUE = new RegExp([
   String.raw`|^\s*(?:Dow Jones|Nasdaq|S&P 500|Stock|Stocks) futures\s*:|^\s*(?:market (?:open|close)|closing bell|opening bell|morning bid|markets? wrap)\s*:`,
   String.raw`|^\s*beyond [^:]{1,40}:|\b(?:\d{1,2}|two|three|four|five|six|seven|eight|nine|ten)\s+(?:[\w&.'’-]+\s+){0,4}(?:stocks|picks)\s+(?:to|for|that|worth|you|i)\b`,
   String.raw`|\bstocks? to (?:watch|buy|own|hold|consider|avoid|sell)\b|\bstock I.d (?:buy|own|hold)\b`,
-  String.raw`|\bwhat\b.{0,40}\bmeans?\s+(?:for|to)\b|\bhere.s (?:what|how|the)\b`,
+  String.raw`|\bwhat\b.{0,40}\bmeans?\s+(?:for|to)\b|\bhere.s (?:what(?! (?:really |actually )?(?:went wrong|happened|caused|we know|changed)\b)|how|the)\b`,
   String.raw`|\bwhat (?:you|investors|shareholders|traders|buyers) (?:need|should|must|ought|have) to know\b|\bwhat to know\b|\beverything (?:you|investors) need to know\b`,
   String.raw`|\bhow to (?:read|play|think about|invest(?: in)?|buy|trade|value|approach|navigate|position)\b`,
   String.raw`|\bis (?:it|now) (?:a|the) (?:good |right |smart )?(?:buy|time to)\b|\bstock a buy\b|\bshould you (?:buy|sell|hold|invest|own|worry|be worried|panic|consider)\b`,
