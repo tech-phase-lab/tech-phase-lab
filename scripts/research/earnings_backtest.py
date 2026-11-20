@@ -24,12 +24,15 @@ import earnings_announce
 import monitor
 import issuer_result_flash as flash
 
+# Every company on the earnings calendar (lib/research/calendar-coverage.json), the 22 deep-analysis companies first (owner, Nov 20:
+# not only the deep-analysis companies; tests/test_earnings_backtest_filter.py keeps this list equal to the calendar's).
 WATCH = ["MU", "SKHY", "SNDK", "NBIS", "NVDA", "AMD", "AVGO", "ARM", "TSM", "ASML", "MRVL", "ANET", "CRDO", "CRWV",
          "VRT", "GEV", "DELL", "PLTR", "MSFT", "AMZN", "GOOGL", "ORCL",
          "PANW", "CRWD", "SNOW", "CRM", "ADBE",
          "META", "NFLX", "NOW", "INTC", "AAPL",
          "KLAC", "LRCX", "STX", "APH", "BE",
-         "ALAB", "LITE", "AAOI", "IONQ", "SOFI"]
+         "ALAB", "LITE", "AAOI", "IONQ", "SOFI",
+         "AMAT", "QCOM", "CEG", "IBM", "IREN", "TSLA", "VST", "COHR"]
 UA = 'TechPhaseResearch research@example.com'  # SEC asks for a contact in the User-Agent; the monitor uses RESEARCH_SEC_USER_AGENT
 LOOKBACK = timedelta(days=130)
 
@@ -44,8 +47,14 @@ def get(url, binary=False):
 
 def is_results_exhibit(text):
     """A results press release: 'results'/'earnings' and a period word near the top. Q1-Q4 counts ("Oracle Announces Q1 Results"): requiring
-    the word quarter/fiscal made Oracle look as if it published nothing (Nov 13)."""
+    the word quarter/fiscal made Oracle look as if it published nothing (Nov 13). Tesla's results come as its "Q3 2026 Update", which names
+    neither; its production and deliveries report (an Item 2.02 8-K too, three weeks earlier) "achieves these results" but is none
+    (Nov 20: the self-check read the deliveries report as Tesla's latest results and failed)."""
     head = text[:3000]
+    if re.search(r'(?i)\bproduction,? deliveries\b', head[:400]):
+        return False
+    if re.search(r'\bQ[1-4] (?:and FY )?20\d\d Update\b', head[:400]):
+        return True
     return bool(re.search(r'\b(?:results|earnings)\b', head, re.I) and re.search(r'\b(?:quarter|fiscal|full[- ]year|Q[1-4])\b', head, re.I))
 
 

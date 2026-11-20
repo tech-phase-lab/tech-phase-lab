@@ -207,7 +207,9 @@
   "facts": [
    "revenue",
    "eps",
-   "adjusted-eps"
+   "adjusted-eps",
+   "net-income",
+   "operating-income"
   ],
   "failure": null
  },

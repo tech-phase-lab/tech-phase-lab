@@ -342,13 +342,37 @@ class StatementCompanies(unittest.TestCase):
         changed = keys(self.text('TSLA').replace('Diluted $ 0.39', 'Diluted $ 0.49'))
         self.assertEqual(changed, ['revenue', 'net-income', 'operating-income'])
 
+    def test_coherent(self):
+        # Q1 FY2027 (8-K of Nov 4, 2026): Table 2's statement, Table 1's summary and Tables 7 and 8's EPS calculations, checked against the
+        # SEC document (Nov 20); before, only the highlight sentences' revenue and EPS were shown
+        self.assertEqual(self.facts('COHR'), [('revenue', '$2.3703B', '$1.5814B'), ('eps', '$1.90', '$1.19'), ('adjusted-eps', '$2.09', '$1.16'),
+                                              ('net-income', '$384.7M', '$226.3M'), ('operating-income', '$378M', '$259M')])
+        self.assertIs(flash.PROFILES['COHR']['parse'], flash.parse_coherent)
+        text = self.text('COHR')
+        with self.assertRaisesRegex(ValueError, 'statement-mismatch'):
+            flash.parse_coherent(text.replace('Net Earnings 381.6 236.2 225.2', 'Net Earnings 391.6 236.2 225.2'))
+        with self.assertRaisesRegex(ValueError, 'summary-mismatch'):  # Table 1's revenue must be the statement's
+            flash.parse_coherent(text.replace('Revenues $ 2,370 $ 2,046 $ 1,581 15.9', 'Revenues $ 2,380 $ 2,046 $ 1,581 15.9', 1))
+        with self.assertRaisesRegex(ValueError, 'change-mismatch'):  # and the headline's
+            flash.parse_coherent(text.replace('Q1 REVENUE OF $2.37B', 'Q1 REVENUE OF $2.47B'))
+        with self.assertRaisesRegex(ValueError, 'columns-unrecognized'):  # the summary must be the headline's quarter
+            flash.parse_coherent(text.replace('REPORTS FIRST QUARTER FISCAL 2027', 'REPORTS SECOND QUARTER FISCAL 2027'))
+        keys = lambda text: [f[0] for f in flash.parse_coherent(text)['facts']]  # noqa: E731
+        # operating income must be earnings before taxes + interest + other expense, as Table 1's footnote defines it
+        self.assertNotIn('operating-income', keys(text.replace('Operating Income(1) $ 378', 'Operating Income(1) $ 388')))
+        # each EPS must be its calculation table's diluted earnings / diluted shares, and the summary's figure
+        self.assertNotIn('adjusted-eps', keys(text.replace('Diluted earnings per common share on non-GAAP basis $ 2.09',
+                                                           'Diluted earnings per common share on non-GAAP basis $ 2.19')))
+        self.assertEqual(keys(text.replace('Diluted earnings per common share $ 1.90', 'Diluted earnings per common share $ 1.91')),
+                         ['revenue', 'adjusted-eps', 'net-income', 'operating-income'])
+
     def test_sentences_remain_the_fallback(self):
         # a release whose statement the parser cannot read still gets its highlight sentences (outside the deep-analysis roster)
         parsed = flash.parse_with_sentences('IBM', (FX / 'ibm-results-q326-head.txt').read_text(), None)
         self.assertEqual((parsed['method'], parsed['facts'][0][1]), (highlight_sentences.METHOD, '$17.1B'))
         with self.assertRaisesRegex(ValueError, 'period-unrecognized'):  # Tesla's deliveries report is no results release
             flash.parse_with_sentences('TSLA', (FX / 'tesla-deliveries-q326-head.txt').read_text(), None)
-        for ticker in ('IBM', 'IREN', 'TSLA', 'VST'):
+        for ticker in ('IBM', 'IREN', 'TSLA', 'VST', 'COHR'):
             self.assertNotIn('sentences-only', flash.PROFILES[ticker])
             self.assertTrue(flash.PROFILES[ticker]['results-head'])
 
