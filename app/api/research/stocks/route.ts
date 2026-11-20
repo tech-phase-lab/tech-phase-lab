@@ -161,7 +161,7 @@ export async function GET(request: Request) {
       return Response.json({ ok: true, profile: { ...profile, introduction: companyIntroductionFor(profile), network: companyNetworkPlaceholderFor(profile) }, source: directoryUrl, profileSource: profileUrl, asOf: new Date().toISOString() }, { headers: { "Cache-Control": "public, s-maxage=300, stale-while-revalidate=3600" } });
     }
     if (!query.trim()) return Response.json({ ok: true, results: [], source: directoryUrl, notice: "query-required" });
-    // The comparison's own search leaves out what it does not compare (SPACs, funds, preferreds, warrants, units, rights; owner, Nov 19).
+    // The comparison's own search leaves out what it does not compare (SPACs, funds, ETNs, preferreds, warrants, units, rights; owner, Nov 19-20).
     const limit = Number(url.searchParams.get("limit") ?? 24);
     const results = url.searchParams.get("scope") === "compare" ? searchDirectory(comparableEntries(entries, COMPARISON_EXCLUSIONS), query, limit) : searchDirectory(entries, query, limit);
     return Response.json({ ok: true, results, source: directoryUrl, asOf: new Date().toISOString() }, { headers: { "Cache-Control": "public, s-maxage=300, stale-while-revalidate=86400" } });

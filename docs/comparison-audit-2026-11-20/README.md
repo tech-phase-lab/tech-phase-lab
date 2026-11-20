@@ -58,3 +58,36 @@
 - JPM（銀行）: 短所 有利子負債が現金を上回る・営業利益率 48.0→40.1%（変更なし）
 - O（REIT）: 短所 営業利益率 23.1→20.7%（変更なし）
 - A, AA, HSBC, TSM, COST: 短所なし（基準に当たる短所がない。作らない）
+
+## 追加: ETN（上場投資証券）を候補から外す（運営者の判断 11/20）
+
+ETN は銀行が発行する債券で、指数（VIX 先物、BDC、金、FANG+ など）に連動して払い戻される。SEC の会社一覧は ETN を発行銀行の CIK に
+登録しているため、比較は ETN を発行銀行自身の決算（売上・利益率など）で採点していた。上の「短所0」のうち UBS・Barclays・Deutsche Bank
+の ETN（19 と数えた分を含む 22 銘柄）は長所だけ、Bank of Montreal・JPMorgan の ETN 46 銘柄は銀行本体の要点が出ていた。
+SPAC・ファンドと同じく検索候補に出さず、直接指定（古いリンク・API）は「比較できない銘柄」（unknown-company）、背景ジョブは決算書の
+クレジットを使わない。画面の文言は変えない。
+
+判定（`lib/research/comparison-exclusions.ts`、一覧は `comparison-exclusions.json` の `etn`、`excluded.py` の `ETN_ISSUERS` で作成）:
+ETN を発行する銀行の CIK に登録されたティッカーのうち、その銀行自身の株（DB, BMO, JPM, GS, MS, C）以外。CIK は法人ごとに固定なので、
+同じ銀行が新しく出した ETN も自動で外れる。発行体と根拠（各社の提出書類で確認）:
+
+| 発行体（CIK） | 自社株（残す） | 外す ETN |
+|---|---|---|
+| UBS AG（1114446、ETRACS） | なし（UBS は UBS Group AG 1610520） | AMUB, BDCX, BDCZ, CEFD, HDLB, IFED, MLPB, MLPR, MVRL, PFFL, SMHB, UCIB |
+| Barclays Bank PLC（312070、iPath ほか） | なし（BCS は Barclays PLC 312069） | ATMP, DJP, GBUG, GRN, TAPR, VXX, VXZ, BWVTF（OTC）, JJETF（OTC） |
+| Credit Suisse AG（1053092、X-Links。現 UBS） | なし | GLDI, SLVO, USOI |
+| Deutsche Bank AG（1159508、DB ETN） | DB | DGP, DGZ, DZZ, ADZCF（OTC）, DEENF（OTC）, OLOXF（OTC。2019 年 4 月の 424B3） |
+| Bank of Montreal（927971、MicroSectors・MAX） | BMO | AIQD, AIQU, BERZ, BNKD, BNKU, BRZD, BRZL, BULZ, CARD, CARU, DULL, FLYD, FLYU, FNGD, FNGO, FNGS, FNGU, GDXD, GDXU, GLLD, HYGD, HYGU, JETD, JETU, JPND, JPNU, LQDD, LQDU, MNGU, NRGD, NRGU, OILD, OILU, SMHD, SMHU, SPYU, TAWN, TPEI, WTID, WTIU, XLCD, XLCU, XLPD, XLPU |
+| JPMorgan Chase & Co（19617） | JPM | AMJB（Alerian MLP ETN）, VYLD（Inverse VIX ETN。10-K 2025 の別紙 4.6） |
+| Goldman Sachs Group（886982） | GS | GSCE（OTC。GS Connect ETN、旧 GSC） |
+| Morgan Stanley（895421）, Citigroup（831001） | MS, C | なし（今は優先株だけ。将来の ETN に備えて登録） |
+| 各社の発行用子会社: JPMorgan Chase Financial（1665650）, GS Finance（1419828）, Morgan Stanley Finance（1666268）, Citigroup Global Markets Holdings（200245） | — | なし（今の一覧に上場ティッカーなし） |
+
+計 77 ティッカー（上場 71・OTC 6）。優先株（JPM-PC など）はこれまでどおり優先株として外れる。残すもの: 各銀行の自社株と親会社の株
+（UBS, BCS, DB, BMO, JPM, GS, MS, C）、ETN を発行していない銀行（RY, HSBC, NMR, BAC などと、その OTC の普通株 RYLBF, BCLYF など）、
+Morgan Stanley の暗号資産信託（MSBT などは既にファンドとして除外）。`excluded.py` は他の銀行・証券会社に自社株と優先株以外の上場
+ティッカーがないかも表示する（11/20 は Bradesco の BBDO〈優先株〉や地銀の Nasdaq 優先株・社債だけで、ETN はなかった）。
+構造化信託（STRATS、CORTS、Merrill Lynch Depositor の IndexPlus など、発行体が信託そのもの）は ETN ではないため今回は扱っていない。
+
+影響（11/20 の `items.csv`、比較に出る 5,725 から上場 71 銘柄を除く。再監査はしていない）: 比較に出る銘柄 5,725→5,654、
+短所0 658→636（長所だけの ETN 22）、長所0 447（変化なし）、両方0 1（変化なし）、要点なし（データ）845→842（GLDI, SLVO, USOI）。
