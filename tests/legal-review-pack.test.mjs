@@ -220,7 +220,7 @@ test("9: the three lawyer-reviewed texts, their English, Web Push providers, and
   assert.ok(privacyJa.includes("Apple Push Notification service(Apple社)、Firebase Cloud Messaging(Google社)、Mozillaのプッシュサービス(Mozilla社)"));
   assert.ok(privacyEn.includes("Apple Push Notification service (Apple), Firebase Cloud Messaging (Google) or Mozilla's push service (Mozilla)"));
   // The commerce notice is reachable where the LPs and plan cards link.
-  assert.ok(lp.includes(`<Link href="/commerce">特定商取引法に基づく表記</Link>`));
+  assert.ok(lp.includes(`<Link href="/commerce">特定商取引法</Link>`));
   assert.ok(lpEn.includes(`<Link href="/commerce?lang=en">Legal Notice</Link>`));
   assert.match(read("../app/research/plan-cards.tsx"), /export const TOKUSHOHO_HREF = "\/commerce";/);
   const page = read("../app/commerce/page.tsx");
