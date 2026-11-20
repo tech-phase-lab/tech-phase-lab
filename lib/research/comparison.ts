@@ -14,6 +14,9 @@ export type BalanceSnapshot = {
    * amount, convertible notes). "none": the filing has no borrowing or notes figure at all (a debt-free company such as CRDO or ALAB), shown as
    * such. Null: tagged in a way that cannot be added up safely. Absent on older saved results. */
   debtTotal?: { value: number; source: "split" | "total" | "noncurrent" | "carrying" | "convertible" | "none" } | null;
+  /** Shareholders' equity at the same date from the same filing (the parent's own, else the total with minority interests), negative values
+   * kept: MO, whose liabilities exceed its assets. Null when not reported once and unambiguously. Absent on older saved results. */
+  equity?: Fact | null;
 };
 export type Financials = {
   /** The length of the latest period when it is not a quarter: 6 for a half-year interim report (a foreign filer reporting twice a year,
@@ -467,6 +470,15 @@ export function extractFinancials(ticker: string, cik: string, payload: unknown,
     if (noncurrent && current) return { value: noncurrent.value + current.value, source: "split" };
     return null;
   }
+  /** Shareholders' equity of the balance date, negative or not (balanceMetric keeps only values of zero or more, right for cash and debt). */
+  function shareholdersEquity(): Fact | null {
+    const names = basis === "us-gaap" ? ["StockholdersEquity", "StockholdersEquityIncludingPortionAttributableToNoncontrollingInterest"] : ["EquityAttributableToOwnersOfParent", "Equity"];
+    for (const tag of names) {
+      const found = collect(basis, [tag], true, balancePeriod).filter(f => f.end === anchor.end && f.accession === anchor.accession && f.unit === anchor.unit);
+      if (found.length) return unique(found);
+    }
+    return null;
+  }
   const balance: BalanceSnapshot = {
     end: anchor.end, filed: anchor.filed, sourceUrl: filingUrl(anchor),
     cash: balanceMetric("CashAndCashEquivalentsAtCarryingValue"), currentAssets, currentLiabilities,
@@ -474,6 +486,7 @@ export function extractFinancials(ticker: string, cik: string, payload: unknown,
     debtCurrent: balanceMetric("LongTermDebtCurrent"), debtNoncurrent: balanceMetric("LongTermDebtNoncurrent"),
     shortBorrowings: balanceMetric("ShortTermBorrowings"), leaseCurrent: balanceMetric("OperatingLeaseLiabilityCurrent"), leaseNoncurrent: balanceMetric("OperatingLeaseLiabilityNoncurrent"),
     debtTotal: totalDebt(),
+    equity: shareholdersEquity(),
   };
   const out: Financials = { ...result, status: "ready", ...(capexNotReported ? { capexNotReported: true } : {}), ...(qp !== "quarter" ? { periodMonths: qp === "half" ? 6 as const : 12 as const } : {}), balance, revenue, previousRevenue, operatingIncome, operatingCash, capex, cash,
     stockCompensation, stockCompensationRatio: stockCompensation ? stockCompensation.value / revenue.value * 100 : null,

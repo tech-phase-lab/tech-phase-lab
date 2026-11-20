@@ -136,8 +136,50 @@ export function applyValuationBasis<T extends Financials>(companies: T[], now=Da
       const ja=twelveFactorMetric(c.twelveData!,"valuation","ja",now,"ps")!,en=twelveFactorMetric(c.twelveData!,"valuation","en",now,"ps")!;
       prepared.items.push({id:"valuation",kind:value>=7?"strength":"weakness",short:{ja,en},detail:twelveFactorMethods.valuation});
     }
-    return {...c,valuationBasis:"ps" as const,preparedAnalysis:prepared};
+    return withRelativeItems({...c,valuationBasis:"ps" as const,preparedAnalysis:prepared},now);
   });
+}
+/** The threshold points each factor gives (a relative point never stands beside a point of the other kind on the same factor). */
+const FACTOR_ITEMS: Record<ScoreId,readonly string[]> = {
+  growth:["revenue-growth","revenue-qoq"], profitability:["operating-margin"], cash:["cash-generation"], financial:["financial","debt-cash","negative-equity"],
+  stability:["stability","margin-decline"], momentum:["momentum"], valuation:["valuation"],
+};
+/** Every company with prepared points shows at least one strength and one weakness (owner, Nov 20: 「長所・短所出てない銘柄は全チェックして追加」).
+ * When the thresholds give no weakness, the company's lowest-scored factor is shown as one, said to be relative to its own other factors, with
+ * that factor's own figure (comparisonMetric); the same for a missing strength with its highest factor. Only scored factors count, never one
+ * that already gave a point of the other kind; valuation is left out (its yardstick depends on the other companies in the comparison). The
+ * chosen factor must be below (above) at least one of the company's other scored factors, so 「低め」 is true; with fewer than two scored
+ * factors nothing is added. Recomputed on each call: earlier relative points are dropped first. */
+export function withRelativeItems<T extends Financials>(c: T, now=Date.now()): T {
+  const prepared=c.preparedAnalysis;
+  if(!prepared || prepared.method!=="deterministic" || c.referenceEvaluation) return c;
+  const items=prepared.items.filter(i=>!i.relative);
+  const scores=hasRecentQuarter(c,now) ? comparisonScores(c,now).filter((s):s is ComparisonScore & {value:number}=>s.id!=="valuation" && finite(s.value)) : [];
+  const has=(kind:"strength"|"weakness")=>items.some(i=>i.kind===kind);
+  const shown=(id:ScoreId,kind:"strength"|"weakness")=>items.some(i=>i.kind===kind && FACTOR_ITEMS[id].includes(i.id));
+  const used=new Set<ScoreId>();
+  const pick=(kind:"strength"|"weakness")=>{
+    const sign=kind==="weakness" ? 1 : -1;
+    const candidate=scores.filter(s=>!used.has(s.id) && !shown(s.id,kind==="weakness"?"strength":"weakness")).sort((a,b)=>sign*(a.value-b.value))[0];
+    if(!candidate) return;
+    // 「低め」 must be true: below at least one of the company's other scored factors (above, for a strength).
+    const others=scores.filter(s=>s.id!==candidate.id).map(s=>s.value);
+    if(!others.length || (kind==="weakness" ? !(candidate.value<Math.max(...others)) : !(candidate.value>Math.min(...others)))) return;
+    used.add(candidate.id);
+    items.push(relativeItem(c,candidate,kind,now));
+  };
+  if(!has("weakness")) pick("weakness");
+  if(!has("strength")) pick("strength");
+  if(items.length===prepared.items.length && items.every((item,i)=>item===prepared.items[i])) return c;
+  return {...c,preparedAnalysis:{...prepared,items}};
+}
+const lowerFirst=(text:string)=>/^[A-Z][a-z]/.test(text) ? text[0].toLowerCase()+text.slice(1) : text;
+function relativeItem(c: Financials, score: ComparisonScore & {value:number}, kind: "strength"|"weakness", now: number): AnalysisItem {
+  const weak=kind==="weakness", ja=comparisonMetric(c,score.id,"ja",now), en=comparisonMetric(c,score.id,"en",now), points=score.value.toFixed(1);
+  return {id:`relative-${score.id}`,kind,relative:true,
+    short:{ja:`${score.label.ja}は他の項目より${weak?"低め":"高め"}（${ja}）`,en:`${score.label.en} is its ${weak?"weakest":"strongest"} area: ${lowerFirst(en)}`},
+    detail:{ja:`${score.label.ja}は10点中${points}点で、この会社のほかの採点項目より${weak?"低い":"高い"}水準です。業界平均や他社と比べた評価ではありません。`,
+      en:`${score.label.en} scores ${points} out of 10, ${weak?"below":"above"} this company's other scored factors. This is not a comparison with the industry or with other companies.`}};
 }
 /** Missing factors must never improve the composite by being omitted. */
 export function compositeScore(scores: ComparisonScore[]): number | null {
@@ -206,6 +248,12 @@ export function cautionClause(item: AnalysisItem, lang: "ja"|"en"): string {
   if(item.id==="momentum" && numbers.length) return ja ? `株価が約3か月で${abs(numbers.at(-1))}%下がっています` : `its share price fell ${abs(numbers.at(-1))}% over about three months`;
   if(item.id==="share-count" && numbers[0]) return ja ? `平均株式数が${abs(numbers[0])}%増えています` : `its average share count rose ${abs(numbers[0])}%`;
   if(item.id==="debt-cash") return ja ? "有利子負債が現金を上回っています" : "its debt exceeds its cash";
+  if(item.id==="revenue-qoq" && numbers[0]) return ja ? `売上が前の四半期より${abs(numbers[0])}%減っています` : `its revenue fell ${abs(numbers[0])}% from the previous quarter`;
+  if(item.id==="negative-equity") return ja ? "株主資本がマイナスです" : "its shareholders' equity is negative";
+  if(item.relative) {
+    const id=item.id.replace(/^relative-/,"") as ScoreId, words=factorWords[id] ?? {ja:text,en:text}, metric=/（(.+)）$/.exec(item.short.ja)?.[1], metricEn=/: (.+)$/.exec(item.short.en)?.[1];
+    return ja ? `${words.ja}が${metric ? `${metric}と` : ""}他の項目より低めです` : `its weakest area is ${words.en}${metricEn ? `: ${metricEn}` : ""}`;
+  }
   if(item.id==="cash-generation" && numbers[0]) return ja ? `簡易FCFがマイナスです（売上比 ${numbers[0]}%）` : `its simple free cash flow is negative (${numbers[0]}% of revenue)`;
   return ja ? `${text}には注意が必要です` : `watch ${text}`;
 }
@@ -229,7 +277,8 @@ export function overallComparison(companies: (Financials & {ticker:string})[],la
   const edges=(r:typeof best,others:typeof ranked)=>r.scores.map(s=>({id:s.id,lead:s.value!-Math.max(...others.map(o=>value(o,s.id)))}))
     .filter(s=>s.lead>0).sort((a,b)=>b.lead-a.lead).slice(0,2);
   const words=(list:{id:ScoreId}[])=>joinWords(list.map(s=>factorWords[s.id][lang]),ja);
-  const weakness=(r:typeof best)=>r.c.preparedAnalysis?.items.find(i=>i.kind==="weakness");
+  // A threshold weakness first; a relative one (withRelativeItems) only when neither company has a threshold weakness.
+  const weakness=(r:typeof best,relative:boolean)=>r.c.preparedAnalysis?.items.find(i=>i.kind==="weakness" && !!i.relative===relative);
   if(gap<0.3) {
     const a=edges(best,[next]),b=edges(next,[best]);
     const split=a.length && b.length ? (ja?`${best.c.ticker}は${words(a.slice(0,1))}、${next.c.ticker}は${words(b.slice(0,1))}で上回ります。`:`${best.c.ticker} is ahead in ${words(a.slice(0,1))}, ${next.c.ticker} in ${words(b.slice(0,1))}.`) : "";
@@ -240,7 +289,8 @@ export function overallComparison(companies: (Financials & {ticker:string})[],la
   const first=lead.length ? (ja?`${best.c.ticker}は${words(lead)}で${strongly?"大きく":""}上回ります。`:`${best.c.ticker} is ${strongly?"well ":""}ahead in ${words(lead)}.`)
     : (ja?`${best.c.ticker}は項目全体のバランスで上回ります。`:`${best.c.ticker} leads on the balance of the factors.`);
   // The runner-up: its own strength against the leader, and its weakness as the one caution; otherwise the leader's weakness.
-  const counter=edges(next,[best]).slice(0,1), nextWeak=weakness(next), bestWeak=weakness(best);
+  const genuine=!!(weakness(next,false) || weakness(best,false));
+  const counter=edges(next,[best]).slice(0,1), nextWeak=weakness(next,!genuine), bestWeak=weakness(best,!genuine);
   let second="";
   if(counter.length && nextWeak) second=ja?`${next.c.ticker}は${words(counter)}が強みですが、${cautionClause(nextWeak,lang)}。`:`${next.c.ticker} is stronger in ${words(counter)}, but ${cautionClause(nextWeak,lang)}.`;
   else if(bestWeak) second=ja?`ただし、${best.c.ticker}は${cautionClause(bestWeak,lang)}。`:`However, ${cautionClause(bestWeak,lang).replace(/^its /,`${best.c.ticker}'s `).replace(/^watch /,`watch ${best.c.ticker}'s `)}.`;
