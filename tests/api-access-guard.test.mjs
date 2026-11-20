@@ -25,6 +25,7 @@ const PUBLIC = {
   'research/stocks': 'public stock directory',
   'resolute/receive': 'guest checkout receipt (switch-gated, origin-checked)',
   'csp-report': 'browsers post CSP report-only violations; write-only, logs directive and blocked host only, rate limited',
+  'webhooks/clerk': 'Clerk user.deleted webhook: Svix signature (CLERK_WEBHOOK_SIGNING_SECRET) checked before anything, owner accounts refused, off unless MEMBER_ERASURE_ENABLED=true',
 };
 const GUARD = /getMembership\w*\(|auth\(\)|currentUser|ownerIdentity|accountIdentity|riskProxy|handleLiveBilling|handleSandboxBilling|validSyncToken|createRecoveryCheck|requireOwner|isOwnerAccount|Bearer|getResoluteEntitlements|canUseTools|\.\.\.action|routes\./;
 function routes(dir) {
