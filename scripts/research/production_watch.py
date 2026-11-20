@@ -1,0 +1,198 @@
+"""Daily production watch (owner, Nov 20). Read-only.
+
+Requests the public production pages' APIs on techphase.app and the research monitor's /health once, and checks their content,
+not only the status: non-empty answers, fresh timestamps, no snapshot fallback or diagnostic error mode, and response times.
+It prints ONE line of JSON of true/false values, counts, HTTP statuses and milliseconds (never titles, URLs, figures or any
+environment value) and exits 1 when any check fails, so the cron run shows as failed in Railway. It writes nothing and sends no
+credential: every request is the same anonymous GET a visitor's browser makes.
+
+    PRODUCTION_WATCH=true python3 scripts/research/production_watch.py
+
+It runs from the earnings self-check's cron container (scripts/research/daily_checks.py), which already has
+EARNINGS_SELFCHECK=true; that flag enables it too. PRODUCTION_WATCH=false turns it off. Without either it prints DISABLED and
+exits 0. PRODUCTION_WATCH_SITE_URL and PRODUCTION_WATCH_MONITOR_URL override the two hosts (for a local check only).
+"""
+import json
+import os
+import sys
+import time
+from datetime import datetime, timezone
+from urllib.error import HTTPError, URLError
+from urllib.request import Request, urlopen
+
+SITE = "https://techphase.app"
+MONITOR = "https://research-monitor-staging-research-staging.up.railway.app"
+USER_AGENT = "TechPhaseProductionWatch/1.0"
+MAX_BYTES = 6_000_000
+HOUR = 3600
+
+
+def enabled(env=None):
+    env = os.environ if env is None else env
+    flag = env.get("PRODUCTION_WATCH", "").strip().lower()
+    if flag == "false":
+        return False
+    return flag == "true" or env.get("EARNINGS_SELFCHECK") == "true"
+
+
+def parse_time(value):
+    if not isinstance(value, str) or not value:
+        return None
+    try:
+        parsed = datetime.fromisoformat(value.replace("Z", "+00:00"))
+    except ValueError:
+        return None
+    return parsed if parsed.tzinfo else parsed.replace(tzinfo=timezone.utc)
+
+
+def newest_age_seconds(values, now):
+    times = [t for t in (parse_time(v) for v in values) if t is not None]
+    return round((now - max(times)).total_seconds()) if times else None
+
+
+def fresh(age, window):
+    return age is not None and -300 <= age <= window
+
+
+def request(url, timeout):
+    """(status, payload or None, milliseconds, error code or None). Error codes are fixed words, never exception text."""
+    started = time.monotonic()
+    try:
+        with urlopen(Request(url, headers={"User-Agent": USER_AGENT, "Accept": "application/json"}), timeout=timeout) as response:
+            body = response.read(MAX_BYTES + 1)
+            status = response.status
+    except HTTPError as exc:
+        return exc.code, None, round((time.monotonic() - started) * 1000), "http-error"
+    except (TimeoutError, URLError, OSError) as exc:
+        reason = getattr(exc, "reason", exc)
+        code = "timeout" if isinstance(reason, TimeoutError) or "timed out" in str(reason) else "unreachable"
+        return None, None, round((time.monotonic() - started) * 1000), code
+    ms = round((time.monotonic() - started) * 1000)
+    if len(body) > MAX_BYTES:
+        return status, None, ms, "oversized"
+    try:
+        return status, json.loads(body), ms, None
+    except (UnicodeDecodeError, json.JSONDecodeError):
+        return status, None, ms, "invalid-json"
+
+
+# Each validator returns a dict of booleans and counts; "valid" is the content verdict.
+
+def check_company_wire(data, now):
+    """Home LIVE band (company headlines, last 24 hours)."""
+    items = [item for group in (data.get("items") or {}).values() if isinstance(group, list) for item in group]
+    age = newest_age_seconds([item.get("publishedAt") for item in items], now)
+    titled = sum(1 for item in items if item.get("titleJa") or item.get("titleEn"))
+    return {"valid": data.get("ok") is True and len(items) >= 10 and titled == len(items) and fresh(age, 12 * HOUR),
+            "items": len(items), "newestAgeSeconds": age}
+
+
+def check_news(data, now):
+    """Home news list: the public (FREE) view of /api/research/news."""
+    lists = ("items", "officialUpdates", "analystUpdates", "marketUpdates", "resultBriefs")
+    entries = [entry for key in lists for entry in (data.get(key) or []) if isinstance(entry, dict)]
+    age = newest_age_seconds([entry.get("observedAt") or entry.get("publishedAt") for entry in entries], now)
+    # Weekends and holidays have no economic releases or results: four days covers a long weekend.
+    return {"valid": data.get("ok") is True and len(entries) >= 1 and fresh(age, 96 * HOUR),
+            "entries": len(entries), "newestAgeSeconds": age}
+
+
+def check_live(data, now):
+    """The operator intake page's live monitor answer: never the bundled snapshot fallback."""
+    snapshot = data.get("snapshot") or {}
+    monitor = data.get("monitor") or {}
+    generated = newest_age_seconds([snapshot.get("generatedAt")], now)
+    cycle = monitor.get("lastCycleAgeSeconds")
+    sources = len(snapshot.get("sources") or [])
+    return {"valid": (data.get("ok") is True and data.get("mode") == "automatic" and not data.get("error")
+                      and not data.get("diagnosticReason") and sources >= 100 and fresh(generated, 600)
+                      and isinstance(cycle, (int, float)) and cycle <= 600),
+            "automatic": data.get("mode") == "automatic", "fallback": data.get("mode") == "snapshot",
+            "sources": sources, "snapshotAgeSeconds": generated,
+            "cycleAgeSeconds": round(cycle) if isinstance(cycle, (int, float)) else None}
+
+
+def check_freshness(data, now):
+    """The few bytes every page asks for: whether new information is still arriving."""
+    age = newest_age_seconds([data.get("lastCycleAt")], now)
+    return {"valid": data.get("ok") is True and data.get("status") == "ok" and fresh(age, 600),
+            "statusOk": data.get("status") == "ok", "cycleAgeSeconds": age}
+
+
+def check_earnings(data, now):
+    """Calendar earnings results (the recent window)."""
+    briefs = [brief for brief in (data.get("resultBriefs") or []) if isinstance(brief, dict)]
+    age = newest_age_seconds([brief.get("publicAt") or brief.get("observedAt") or brief.get("publishedAt") for brief in briefs], now)
+    with_facts = sum(1 for brief in briefs if brief.get("facts"))
+    # Between reporting seasons a few weeks can pass without results.
+    return {"valid": data.get("ok") is True and data.get("complete") is True and len(briefs) >= 1 and with_facts >= 1
+                     and fresh(age, 30 * 24 * HOUR),
+            "complete": data.get("complete") is True, "results": len(briefs), "withFacts": with_facts, "newestAgeSeconds": age}
+
+
+def check_compare_search(data, now):
+    """Stock Comparison search (scope=compare) finds a tracked company."""
+    results = [row for row in (data.get("results") or []) if isinstance(row, dict)]
+    found = any(row.get("ticker") == "NVDA" for row in results)
+    return {"valid": data.get("ok") is True and found, "results": len(results), "found": found}
+
+
+def check_monitor_health(data, now):
+    """The research monitor itself (the public /health of the production monitor)."""
+    health = data.get("health") or {}
+    age = newest_age_seconds([data.get("lastCycleAt")], now)
+    issues = health.get("issues") if isinstance(health.get("issues"), list) else []
+    return {"valid": data.get("ready") is True and health.get("status") == "ready" and not issues and fresh(age, 600),
+            "ready": data.get("ready") is True, "statusReady": health.get("status") == "ready",
+            "issues": len(issues), "cycleAgeSeconds": age}
+
+
+def checks(site=SITE, monitor=MONITOR):
+    """(name, url, validator, response-time limit in seconds)."""
+    return [
+        ("homeBand", f"{site}/api/research/company-wire", check_company_wire, 5),
+        ("news", f"{site}/api/research/news", check_news, 5),
+        ("live", f"{site}/api/research/live", check_live, 8),
+        ("freshness", f"{site}/api/research/freshness", check_freshness, 8),
+        ("earningsResults", f"{site}/api/research/earnings-results?month=recent", check_earnings, 5),
+        ("compareSearch", f"{site}/api/research/stocks?scope=compare&q=NVDA&limit=10", check_compare_search, 5),
+        ("monitorHealth", f"{monitor}/health", check_monitor_health, 15),
+    ]
+
+
+def run(fetch=None, now=None, site=SITE, monitor=MONITOR):
+    fetch = fetch or request  # looked up at call time
+    results = {}
+    for name, url, validator, limit in checks(site, monitor):
+        status, data, ms, error = fetch(url, limit + 10)
+        result = {"status": status, "ms": ms, "fast": ms <= limit * 1000}
+        if error:
+            result["error"] = error
+        if isinstance(data, dict):
+            try:
+                result.update(validator(data, now or datetime.now(timezone.utc)))
+            except Exception:
+                result["valid"] = False
+                result["error"] = "unexpected-shape"
+        else:
+            result["valid"] = False
+        result["ok"] = status == 200 and result["valid"] and result["fast"] and not error
+        results[name] = result
+    failed = [name for name, result in results.items() if not result["ok"]]
+    return {"ok": not failed, "failed": failed, "checks": results,
+            "generatedAt": datetime.now(timezone.utc).isoformat(timespec="seconds")}
+
+
+def main():
+    if not enabled():
+        print("DISABLED: set PRODUCTION_WATCH=true (or EARNINGS_SELFCHECK=true) to run the production watch")
+        return 0
+    site = os.environ.get("PRODUCTION_WATCH_SITE_URL", "").strip().rstrip("/") or SITE
+    monitor = os.environ.get("PRODUCTION_WATCH_MONITOR_URL", "").strip().rstrip("/") or MONITOR
+    summary = run(site=site, monitor=monitor)
+    print(json.dumps({"check": "production-watch", **summary}, separators=(",", ":")), flush=True)
+    return 0 if summary["ok"] else 1
+
+
+if __name__ == "__main__":
+    sys.exit(main())

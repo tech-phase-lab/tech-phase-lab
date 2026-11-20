@@ -39,6 +39,8 @@ export type IntakeSnapshot = {
   discoveryRuns: { id: number; ticker: string; at: string; status: "ok" | "fallback" | "degraded"; candidates: number; error: string | null; index_url: string | null;
     source_format?: string | null; sources_checked?: number; sources_configured?: number }[];
   briefs?: ReviewedBrief[];
+  /** The monitor's live snapshot is byte-bounded (Nov 20): how many older sources and history rows it left out. */
+  omitted?: { sources: number; history: number };
 };
 
 export type FetchState = "error" | "fetched" | "unfetched";

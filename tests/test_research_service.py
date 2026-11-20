@@ -276,8 +276,8 @@ class ResearchServiceTests(unittest.TestCase):
             # watch, the Saturday weekly-draft clock and the big-event results reader) plus one thread per
             # parallel headline translator, the stock comparison's once-a-minute refresh clock and the
             # Financial Radar's twice-daily refresh clock, and (Nov 17) the scheduled demo notice clock.
-            # Nov 19: the company-headline refresher.
-            self.assertEqual(len(observed), 27 + app.translation_workers)
+            # Nov 19: the company-headline refresher. Nov 20: the /live refresher.
+            self.assertEqual(len(observed), 28 + app.translation_workers)
             self.assertTrue(all(observed))
 
     def test_release_watch_alerts_from_the_public_payload_and_reports_in_health(self):
@@ -1725,7 +1725,10 @@ class ResearchServiceTests(unittest.TestCase):
                 self.assertEqual(response.headers["Content-Encoding"], "gzip")
                 wire = response.read()
                 self.assertLess(len(wire), len(gzip.decompress(wire)))
-                self.assertEqual(len(json.loads(gzip.decompress(wire))["snapshot"]["discoveryRuns"]), 20)
+                live = json.loads(gzip.decompress(wire))["snapshot"]
+                # /live carries the intake dashboard's bounded view (Nov 20): 10 runs, 3 history rows per source.
+                self.assertEqual(len(live["discoveryRuns"]), 10)
+                self.assertEqual(len([row for row in live["history"] if row["url"].endswith("older")]), 3)
         finally:
             server.shutdown()
             server.server_close()

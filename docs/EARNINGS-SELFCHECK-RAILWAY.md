@@ -46,3 +46,4 @@ Delete the `earnings-selfcheck` service (or remove the `EARNINGS_SELFCHECK` vari
 - Each parser added later (`issuer_result_flash.PROFILES`) is automatically expected to pass from then on.
 - The same table can be produced by hand: `python3 scripts/research/earnings_backtest.py` (see `docs/EARNINGS-PASSFAIL-2026-11-13.md`).
 - Showing the daily result on the operator screen or `/health` needs the job to write somewhere the monitor can read; that is deliberately not done here (read-only job).
+- Nov 20: the container now starts `scripts/research/daily_checks.py`, which runs this self-check and then the production watch (`docs/PRODUCTION-WATCH.md`) in the same daily run. No setting changes.
