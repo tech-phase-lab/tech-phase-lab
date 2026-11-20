@@ -67,7 +67,7 @@ test("the owner's take, replayed: an answer handed over late by iOS no longer tu
   assert.deepEqual(marks, [[ID, "opened"]]);
 });
 
-test("opened later than 15 s after the send (by the server's own clock), the banner shows instead and 開く still opens the page", async () => {
+test("opened later than 15 s after the send (by the server's own clock): the phone already showed it, so no banner and no jump (owner, Nov 20)", async () => {
   const { o, clock, moves, banners, answers } = harness();
   clock.now = device(SERVER_SEND + 40_000);
   o.foreground(clock.now);
@@ -77,9 +77,8 @@ test("opened later than 15 s after the send (by the server's own clock), the ban
   answer.resolve(cleanPushServerNotice(notice(40_000)));
   await look;
   assert.deepEqual(moves, []);
-  assert.equal(banners.at(-1)?.path, PAGE);
-  assert.equal(o.openBanner(), PAGE);
-  assert.deepEqual(moves, [PAGE]);
+  assert.deepEqual(banners.filter(Boolean), []);
+  assert.equal(o.openBanner(), null);
 });
 
 test("a notice that arrives while the app is in front still gets the banner, not a jump", async () => {

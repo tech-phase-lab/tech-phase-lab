@@ -73,16 +73,47 @@ test("came to the front 5 seconds after the send with the worker silent: the pag
   assert.equal(moves.length, 1);
 });
 
-test("came to the front 20 seconds after the send: the banner 「新しい通知」 is shown instead; 開く opens and marks it opened", async () => {
-  const { o, moves, banners, marks } = opener({ answers: [raw({ ageMs: 20_000 })] });
+// Owner, Nov 20: 「目標株価がスマホに届いたの知ってるし、それでホーム開くとまた上に表示されるのやめたほうがいい」.
+test("came to the front 20 seconds after the send: the phone already showed it, so no banner and nothing moves (owner, Nov 20)", async () => {
+  const { o, moves, banners, marks, clock } = opener({ answers: [raw({ ageMs: 20_000 }), raw({ ageMs: 20_000 + PUSH_SERVER_LOOK_MS })] });
   o.foreground(NOW);
   assert.equal(await o.check(), null);
+  clock.now = NOW + PUSH_SERVER_LOOK_MS;
+  await o.check();
   assert.deepEqual(moves, []);
-  assert.deepEqual(banners.at(-1), { id: ID, path: "/research/notifications", title: "NVDA · 決算速報" });
-  assert.equal(o.openBanner(), "/research/notifications");
-  assert.deepEqual(moves, [["push", "/research/notifications"]]);
-  assert.deepEqual(marks, [[ID, "opened"]]);
+  assert.deepEqual(banners.filter(Boolean), []);
+  assert.equal(o.banner(), null);
+  assert.deepEqual(marks, []);
+});
+
+test("a price-target notice that reached the phone is not shown at the top on this start or any later one (owner, Nov 20)", async () => {
+  const price = raw({ kind: "price-targets", page: "/research/price-targets", title: "NVDA · 目標株価の変更" });
+  for (const ageMs of [16_000, 60_000, 10 * 60_000, PUSH_SERVER_RECENT_MS - 3 * 60_000]) {
+    for (let start = 0; start < 3; start += 1) {
+      const { o, banners, moves } = opener({ answers: [{ ...price, ageMs: ageMs + start * 60_000 }] });
+      o.foreground(NOW);
+      await o.check();
+      assert.deepEqual(banners.filter(Boolean), [], `${ageMs} ms, start ${start}`);
+      assert.deepEqual(moves, []);
+    }
+  }
+});
+
+test("a banner still up when the app went to the background is gone on the next return and marked seen on the server", async () => {
+  const { o, banners, marks, clock } = opener({ answers: [null, raw({ ageMs: 1000 })] });
+  o.foreground(NOW - 60_000);
+  await o.check();
+  clock.now = NOW + PUSH_SERVER_LOOK_MS;
+  await o.check();
+  assert.equal(banners.at(-1).id, ID);
+  clock.now += 5_000;
+  o.foreground(clock.now);
   assert.equal(banners.at(-1), null);
+  assert.equal(o.banner(), null);
+  assert.deepEqual(marks, [[ID, "dismissed"]]);
+  clock.now += PUSH_SERVER_TAP_MS + 1;
+  await o.check();
+  assert.equal(banners.filter(Boolean).length, 1, "shown once only");
 });
 
 test("a notice that arrives while the app is already in front gets the banner, and ✕ marks it dismissed", async () => {
@@ -101,12 +132,13 @@ test("a notice that arrives while the app is already in front gets the banner, a
   assert.equal(banners.at(-1), null, "not shown again");
 });
 
-test("the 15-second timer only hides the banner here; the server notice is left for the next start", async () => {
-  const { o, marks, banners } = opener({ answers: [raw({ ageMs: 60_000 })] });
-  o.foreground(NOW);
+test("the 15-second timer marks the server notice seen too, so no later start offers it again (owner, Nov 20)", async () => {
+  const { o, marks, banners } = opener({ answers: [raw({ ageMs: 1000 })] });
+  o.foreground(NOW - 60_000);
   await o.check();
+  assert.equal(banners.at(-1).id, ID);
   o.dismissBanner("timeout");
-  assert.deepEqual(marks, []);
+  assert.deepEqual(marks, [[ID, "dismissed"]]);
   assert.equal(banners.at(-1), null);
 });
 
@@ -126,7 +158,7 @@ test("the server is asked on every return to the front, and otherwise at most ev
 test("the worker's banner and the server's record of the same notice give one banner, and ✕ closes both", async () => {
   const worker = { delivered: { id: "w-1", url: "/research/notifications", at: NOW - 30_000, tag: "earnings-NVDA", title: "NVDA · 決算速報" } };
   const { o, banners, marks, cleared } = opener({ worker, answers: [raw({ ageMs: 31_000 })] });
-  o.foreground(NOW);
+  o.foreground(NOW - 60_000);
   await o.check();
   assert.equal(banners.filter(Boolean).length, 1);
   o.dismissBanner("close");
@@ -247,16 +279,16 @@ test("the worker's record of a test notice (tag tech-phase-test) gets no banner 
 test("a test notice sent after a real notice the worker still holds does not hide the real one's banner", async () => {
   const worker = { delivered: { id: "w-5", url: "/research/news", at: NOW - 60_000, tag: "news-NVDA", title: "NVDA · ニュース" } };
   const { o, banners } = opener({ worker, answers: [testRaw({ ageMs: 20_000 })] });
-  o.foreground(NOW);
+  o.foreground(NOW - 120_000);
   await o.check();
   assert.deepEqual(banners.filter(Boolean), [{ id: "w-5", path: "/research/news", title: "NVDA · ニュース" }]);
 });
 
-test("real kinds (news, earnings flash, price targets, notebook, notes, weekly, answers, economic) all get the banner with their title", async () => {
+test("real kinds (news, earnings flash, price targets, notebook, notes, weekly, answers, economic) arriving while the app is shown get the banner with their title", async () => {
   for (const [kind, title] of [["news", "NVDA · ニュース"], ["notifications", "NVDA · 決算速報"], ["compare", "AMD · 目標株価の変更"],
     ["notebook", "銘柄手帳"], ["notes", "リゼルのひとりごと"], ["weekly", "週刊 Tech Phase PRO"], ["qa", "リゼルに聞く"], ["economic", "米 CPI"]]) {
     const { o, banners } = opener({ answers: [raw({ kind, title, ageMs: 40_000 })] });
-    o.foreground(NOW);
+    o.foreground(NOW - 60_000);
     await o.check();
     assert.deepEqual(banners.at(-1), { id: ID, path: "/research/notifications", title }, kind);
   }
