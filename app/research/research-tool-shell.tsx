@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import SiteHeader from "./site-header";
-import Disclaimer from "../resolute/disclaimer";
 import FreshnessNotice from "./freshness-notice";
 import { usePathname } from "next/navigation";
 import HomeSidebar from "./home-sidebar";
@@ -12,7 +11,7 @@ import type { Language } from "@/lib/research/data";
 import base from "./research.module.css";
 import styles from "./research-tools.module.css";
 
-export default function ResearchToolShell({ lang, setLang, title, description, children, desk = false, compactTitle = false, showTools = true, showHeading = true, freshness = false, eyebrow, footer = true }: { lang: Language; setLang: (lang: Language) => void; title: string; description: string; children: ReactNode; desk?: boolean; compactTitle?: boolean; showTools?: boolean; showHeading?: boolean; freshness?: boolean; eyebrow?: string; footer?: boolean }) {
+export default function ResearchToolShell({ lang, setLang, title, description, children, desk = false, compactTitle = false, showTools = true, showHeading = true, freshness = false, eyebrow }: { lang: Language; setLang: (lang: Language) => void; title: string; description: string; children: ReactNode; desk?: boolean; compactTitle?: boolean; showTools?: boolean; showHeading?: boolean; freshness?: boolean; eyebrow?: string; footer?: boolean }) {
   const pathname = usePathname();
   return <div className={base.app} lang={lang}>
     <a className={base.skip} href="#tool-main">{lang === "ja" ? "本文へ移動" : "Skip to content"}</a>
@@ -34,8 +33,6 @@ export default function ResearchToolShell({ lang, setLang, title, description, c
       </nav>}
       {freshness && <FreshnessNotice lang={lang} />}
       {children}
-      {/* The disclaimer closes a real page; a loading screen has no footer (owner, Nov 18). */}
-      {footer && <footer><Disclaimer en={lang === "en"} /></footer>}
     </main>
     </div>
   </div>;
