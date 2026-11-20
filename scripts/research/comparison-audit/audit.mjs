@@ -6,7 +6,7 @@
 // Never run from tests: it reads thousands of filings.
 //
 //   node --experimental-strip-types scripts/research/comparison-audit/audit.mjs --cache DIR --out audit.jsonl \
-//     [--prices twelve-data-stocks.json] [--tickers MO,BTI] [--offline] [--rate 8] [--concurrency 6] [--root CHECKOUT]
+//     [--prices twelve-data-stocks.json] [--tickers MO,BTI] [--offline] [--rate 8] [--concurrency 6] [--root CHECKOUT] [--texts]
 //
 // --prices: Twelve Data's reference list (GET /stocks, one request, no per-symbol credits); a ticker it lists gets a synthetic recent price
 // series so the momentum and price-to-sales code runs. --root: run another checkout's lib/ (for a before/after comparison).
@@ -131,6 +131,8 @@ async function auditTicker(row) {
       operatingTag: c.quarterOperatingIncome?.tag ?? null, growth: c.quarterRevenueGrowth, margin: c.quarterOperatingMargin } : null, price: globalThis.__comparisonAudit.priceCurrency(row.ticker), scored: have.length, scores, missing,
     // The strengths and weaknesses the company card shows (kind:id), and the inputs their rules read, for the items audit (summarize-items.py).
     items: (c.preparedAnalysis?.items ?? []).map(i => `${i.kind === "strength" ? "S" : "W"}:${i.id}`),
+    // --texts: the card's own words (ja), for a manual spot check.
+    ...(args.texts ? { texts: (c.preparedAnalysis?.items ?? []).map(i => `${i.kind === "strength" ? "長所" : "短所"}: ${i.short.ja}`) } : {}),
     inputs: { growth: c.quarterRevenueGrowth ?? null, qoq: c.quarterRevenueQoq ?? null, margin: c.quarterOperatingMargin ?? null, fcf: c.quarterFcfMargin ?? null,
       shares: c.quarterDilutedSharesGrowth ?? null, currentRatio: c.balance?.currentRatio ?? null, supplemented: c.supplemented ?? [], source: c.quarterSourceUrl ?? null,
       balance: c.balance ? { end: c.balance.end, cash: c.balance.cash?.value ?? null, cashTag: c.balance.cash?.tag ?? null, currentAssets: c.balance.currentAssets?.value ?? null,

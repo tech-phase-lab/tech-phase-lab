@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { stripTypeScriptTypes } from "node:module";
 import { emptyFinancials, comparisonAccess } from "../lib/research/comparison.ts";
-import { prepareComparisonAnalysis, currentComparisonAnalysis, appendFilingFinancialItems } from "../lib/research/comparison-analysis.ts";
+import { prepareComparisonAnalysis, currentComparisonAnalysis, appendFilingFinancialItems, appendEquityItem } from "../lib/research/comparison-analysis.ts";
 import { buildSecMarketEvidence } from "../lib/research/sec-market-evidence.ts";
 import { appendMarketItems } from "../lib/research/twelve-data-financials.ts";
 import { hasRecentQuarter, comparisonAvailability, comparisonScores } from "../lib/research/comparison-scorecard.ts";
@@ -81,7 +81,7 @@ async function server(stubs) {
     .replace(/import \{ parseSecDirectory \}[^;]*;/, "const parseSecDirectory = () => [];")
     .replace(/import \{ emptyFinancials \}[^;]*;/, "const emptyFinancials = globalThis.__items.emptyFinancials;")
     .replace(/import \{ prepareComparisonAnalysis, currentComparisonAnalysis \}[^;]*;/, "const { prepareComparisonAnalysis, currentComparisonAnalysis } = globalThis.__items;")
-    .replace(/import \{ appendFilingFinancialItems \}[^;]*;/, "const appendFilingFinancialItems = globalThis.__items.appendFilingFinancialItems;")
+    .replace(/import \{ appendEquityItem, appendFilingFinancialItems \}[^;]*;/, "const { appendEquityItem, appendFilingFinancialItems } = globalThis.__items;")
     .replace(/import \{ loadSecComparison \}[^;]*;/, "const loadSecComparison = globalThis.__items.loadSecComparison;")
     .replace(/import \{ loadMarketInputs, loadTwelveComparisonState \}[^;]*;/, "const { loadMarketInputs, loadTwelveComparisonState } = globalThis.__items;")
     .replace(/import \{ scheduleFill \}[^;]*;/, "const scheduleFill = () => {};")
@@ -92,7 +92,7 @@ async function server(stubs) {
     .replace(/import \{ fillFromProvider \}[^;]*;/, "const fillFromProvider = globalThis.__items.fillFromProvider;")
     .replace('"./comparison-exclusions"', JSON.stringify(new URL("../lib/research/comparison-exclusions.ts", import.meta.url).href))
     .replace(/import type \{ Financials \}[^;]*;/, "");
-  globalThis.__items = { emptyFinancials, prepareComparisonAnalysis, currentComparisonAnalysis, appendFilingFinancialItems, buildSecMarketEvidence, appendMarketItems,
+  globalThis.__items = { emptyFinancials, prepareComparisonAnalysis, currentComparisonAnalysis, appendFilingFinancialItems, appendEquityItem, buildSecMarketEvidence, appendMarketItems,
     hasRecentQuarter, comparisonScores, fillFromProvider, loadMarketInputs: async () => ({}), loadTwelveComparisonState: async () => ({ data: null, busy: false }), ...stubs };
   return import("data:text/javascript;base64," + Buffer.from(stripTypeScriptTypes(text)).toString("base64") + `#${Math.random()}`);
 }

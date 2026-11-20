@@ -206,6 +206,8 @@ export function cautionClause(item: AnalysisItem, lang: "ja"|"en"): string {
   if(item.id==="momentum" && numbers.length) return ja ? `株価が約3か月で${abs(numbers.at(-1))}%下がっています` : `its share price fell ${abs(numbers.at(-1))}% over about three months`;
   if(item.id==="share-count" && numbers[0]) return ja ? `平均株式数が${abs(numbers[0])}%増えています` : `its average share count rose ${abs(numbers[0])}%`;
   if(item.id==="debt-cash") return ja ? "有利子負債が現金を上回っています" : "its debt exceeds its cash";
+  if(item.id==="revenue-qoq" && numbers[0]) return ja ? `売上が前の四半期より${abs(numbers[0])}%減っています` : `its revenue fell ${abs(numbers[0])}% from the previous quarter`;
+  if(item.id==="negative-equity") return ja ? "株主資本がマイナスです" : "its shareholders' equity is negative";
   if(item.id==="cash-generation" && numbers[0]) return ja ? `簡易FCFがマイナスです（売上比 ${numbers[0]}%）` : `its simple free cash flow is negative (${numbers[0]}% of revenue)`;
   return ja ? `${text}には注意が必要です` : `watch ${text}`;
 }

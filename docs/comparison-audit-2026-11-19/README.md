@@ -138,3 +138,8 @@ Teucrium の 6 銘柄, CurrencyShares, FETH, ETHW ほか）。`excluded.py` の�
 
 銘柄ごとの結果は `items.csv`。SEC 原本との照合は `spot-check-items.jsonl`（`spot-check-items.py`。長所0・短所0・両方0 から会計基準×期間で
 38 社。売上・前年同期の売上・営業利益・現金・流動資産・流動負債がすべて一致。2 社の現金はタグ名 `Cash` で記載され、値は一致）。
+
+## 続き（2026-11-20）
+
+株主資本マイナス・売上前四半期比の追加と、Nasdaq のワラント等の判定の拡大（MOBBW など 40 銘柄）、再監査は
+`docs/comparison-audit-2026-11-20/README.md`。長所0 467→447、短所0 676→658、両方0 1→1。
