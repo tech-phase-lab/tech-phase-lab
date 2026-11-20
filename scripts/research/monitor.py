@@ -2107,6 +2107,10 @@ def connect(path):
       ON operational_incidents(status,last_seen_at);
     CREATE INDEX IF NOT EXISTS incident_outbox_status_created
       ON incident_notification_outbox(status,created_at);
+    -- Nov 20: the live snapshot ranks each source's history and each ticker's
+    -- discovery runs; without these every /live request sorted both whole tables.
+    CREATE INDEX IF NOT EXISTS history_url_id ON history(url,id);
+    CREATE INDEX IF NOT EXISTS discovery_runs_ticker_id ON discovery_runs(ticker,id);
     """)
     if "index_url" not in {row[1] for row in db.execute("PRAGMA table_info(discovery_runs)")}:
         db.execute("ALTER TABLE discovery_runs ADD COLUMN index_url TEXT")
@@ -4365,17 +4369,35 @@ def sec_evidence_summary(db, tickers, reference=None):
     }
 
 
-def snapshot(db, recent_per_item=None):
-    """Public-safe, read-only report. Explicit field lists prevent identity leaks."""
+def snapshot(db, recent_per_item=None, *, history_per_item=None, source_limit=None,
+             event_limit=200, brief_limit=None, compact=False):
+    """Public-safe, read-only report. Explicit field lists prevent identity leaks.
+
+    recent_per_item bounds discovery runs per ticker (and history per source
+    unless history_per_item is given). source_limit keeps the most recently
+    discovered sources; compact leaves out fields the intake dashboard does not
+    read (see bounded_live_snapshot)."""
+    if history_per_item is None:
+        history_per_item = recent_per_item
     with db:
         db.execute("BEGIN")
-        sources = [dict(r) for r in db.execute("""
-          SELECT url,ticker,title,published_on,discovered_at,checked_at,sha256,status,error,
-                 content_type,content_bytes,extracted_chars,fetched_at,
-                 COALESCE(evidence_url,url) AS evidence_url,evidence_kind
-          FROM sources ORDER BY ticker,url
-        """)]
-        if recent_per_item is None:
+        source_total = db.execute("SELECT count(*) FROM sources").fetchone()[0]
+        if source_limit is None:
+            sources = [dict(r) for r in db.execute("""
+              SELECT url,ticker,title,published_on,discovered_at,checked_at,sha256,status,error,
+                     content_type,content_bytes,extracted_chars,fetched_at,
+                     COALESCE(evidence_url,url) AS evidence_url,evidence_kind
+              FROM sources ORDER BY ticker,url
+            """)]
+        else:
+            sources = [dict(r) for r in db.execute("""
+              SELECT url,ticker,title,published_on,discovered_at,checked_at,sha256,status,error,
+                     content_type,content_bytes,extracted_chars,fetched_at,
+                     COALESCE(evidence_url,url) AS evidence_url,evidence_kind
+              FROM sources ORDER BY discovered_at DESC,url LIMIT ?
+            """, (max(0, int(source_limit)),))]
+            sources.sort(key=lambda row: (row["ticker"], row["url"]))
+        if recent_per_item is None and history_per_item is None:
             history = [dict(r) for r in db.execute("SELECT id,url,at,kind,sha256 FROM history ORDER BY id DESC")]
             runs = [dict(r) for r in db.execute("""
               SELECT id,ticker,at,status,candidates,error,index_url,source_format,
@@ -4389,7 +4411,14 @@ def snapshot(db, recent_per_item=None):
                        ROW_NUMBER() OVER (PARTITION BY url ORDER BY id DESC) AS rank
                 FROM history
               ) WHERE rank <= ? ORDER BY id DESC
-            """, (recent_per_item,))]
+            """, (history_per_item,))] if history_per_item else []
+        if recent_per_item is None and history_per_item is not None:
+            runs = [dict(r) for r in db.execute("""
+              SELECT id,ticker,at,status,candidates,error,index_url,source_format,
+                     sources_checked,sources_configured
+              FROM discovery_runs ORDER BY id DESC
+            """)]
+        elif recent_per_item is not None:
             runs = [dict(r) for r in db.execute("""
               SELECT id,ticker,at,status,candidates,error,index_url,source_format,
                      sources_checked,sources_configured FROM (
@@ -4427,8 +4456,8 @@ def snapshot(db, recent_per_item=None):
                  COALESCE((SELECT MIN(h.at) FROM history h
                            WHERE h.url=s.url AND h.kind='first-fetch'),s.fetched_at) AS body_fetched_at
           FROM release_events e JOIN sources s ON s.url=e.url
-          ORDER BY e.id DESC LIMIT 200
-        """)]
+          ORDER BY e.id DESC LIMIT ?
+        """, (max(0, int(event_limit)),))]
         brief_rows = [dict(r) for r in db.execute("""
           SELECT b.url,s.ticker,s.title,s.published_on,e.detected_at,b.source_sha256,
                  s.checked_at AS source_checked_at,
@@ -4481,6 +4510,8 @@ def snapshot(db, recent_per_item=None):
             row.pop("extracted_text")
             row["evidence"] = _public_brief_evidence(evidence)
             briefs.append(row)
+            if brief_limit is not None and len(briefs) >= brief_limit:
+                break
     for row in sources + runs:
         row["error"] = public_error(row["error"])
     # A stored row whose host is no longer approved (a provider's host list was
@@ -4502,7 +4533,79 @@ def snapshot(db, recent_per_item=None):
         row["detection_to_body_ms"] = stored_latency_ms(
             row["detected_at"], row["body_fetched_at"]
         )
-    return {"schemaVersion": 1, "generatedAt": now(), "sources": sources, "history": history, "discoveryRuns": runs, "events": events, "briefs": briefs}
+    result = {"schemaVersion": 1, "generatedAt": now(), "sources": sources, "history": history, "discoveryRuns": runs, "events": events, "briefs": briefs}
+    if compact:
+        for row in sources:
+            # Not read by the intake dashboard; the evidence link is shown only
+            # when it differs from the source itself.
+            row.pop("content_bytes", None)
+            row.pop("fetched_at", None)
+            if row.get("evidence_url") == row["url"]:
+                row["evidence_url"] = None
+        for row in history:
+            # The dashboard shows the first 12 characters of a history revision.
+            if row.get("sha256"):
+                row["sha256"] = row["sha256"][:16]
+    if source_limit is not None:
+        result["omitted"] = {"sources": max(0, source_total - len(sources)), "history": 0}
+    return result
+
+
+# Nov 20: /live carried every source with 20 history rows each and outgrew the
+# site's 3 MB response cap, so the intake page fell back to a September copy.
+# The live snapshot is bounded in bytes, not only in rows: it keeps the newest
+# sources and their latest history first and says how much it left out.
+LIVE_SNAPSHOT_BUDGET_BYTES = 2_400_000
+LIVE_SNAPSHOT_TIERS = ((4000, 3, 3000), (4000, 1, 1000), (4000, 0, 0), (2000, 0, 0), (1000, 0, 0), (400, 0, 0))
+
+
+def encoded_size(value):
+    """Bytes of `value` as the service sends it (compact UTF-8 JSON)."""
+    return len(json.dumps(value, ensure_ascii=False, separators=(",", ":")).encode())
+
+
+def _trim_snapshot(data, source_cap, history_per_url, history_cap):
+    newest = sorted(data["sources"], key=lambda row: (row.get("discovered_at") or "", row["url"]), reverse=True)
+    sources = sorted(newest[:source_cap], key=lambda row: (row["ticker"], row["url"]))
+    kept = {row["url"] for row in sources}
+    per_url = {}
+    history = []
+    for row in data["history"]:  # newest first
+        if len(history) >= history_cap:
+            break
+        if row["url"] not in kept or per_url.get(row["url"], 0) >= history_per_url:
+            continue
+        per_url[row["url"]] = per_url.get(row["url"], 0) + 1
+        history.append(row)
+    omitted = data.get("omitted") or {"sources": 0, "history": 0}
+    return {**data, "sources": sources, "history": history,
+            "events": [row for row in data.get("events", []) if row["url"] in kept],
+            "briefs": [row for row in data.get("briefs", []) if row["url"] in kept],
+            "omitted": {"sources": omitted.get("sources", 0) + len(data["sources"]) - len(sources),
+                        "history": omitted.get("history", 0) + len(data["history"]) - len(history)}}
+
+
+def fit_snapshot(data, budget=LIVE_SNAPSHOT_BUDGET_BYTES, tiers=LIVE_SNAPSHOT_TIERS):
+    """The largest tier of `data` whose JSON fits in `budget` bytes."""
+    candidate = data
+    for source_cap, history_per_url, history_cap in tiers:
+        candidate = _trim_snapshot(data, source_cap, history_per_url, history_cap)
+        if encoded_size(candidate) <= budget:
+            return candidate
+    cap = len(candidate["sources"])
+    while cap and encoded_size(candidate) > budget:
+        cap //= 2
+        candidate = _trim_snapshot(data, cap, 0, 0)
+    return candidate
+
+
+def bounded_live_snapshot(db, budget=LIVE_SNAPSHOT_BUDGET_BYTES):
+    """The intake dashboard's view: 10 runs per ticker, 3 history rows per
+    source, the 20 newest events and 12 newest briefs, at most `budget` bytes."""
+    source_cap, history_per_url, _ = LIVE_SNAPSHOT_TIERS[0]
+    data = snapshot(db, recent_per_item=10, history_per_item=history_per_url,
+                    source_limit=source_cap, event_limit=20, brief_limit=12, compact=True)
+    return fit_snapshot(data, budget)
 
 
 def private_brief_queue(db, limit=20, review_filter="all"):

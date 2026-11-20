@@ -516,7 +516,7 @@ export default function IntakeDashboard({ snapshot: initialSnapshot, titles }: {
         })}</div>
       </section>
       <section aria-labelledby="queue-title" className={styles.queue}><div className={styles.sectionTitle}><h2 id="queue-title">確認する資料</h2><span>編集上の確認待ち：{counts.pending}件</span></div>
-        <p className={styles.coverageNote}>全{counts.total}資料 ／ 取得済み {counts.fetched} ／ 未取得 {counts.unfetched} ／ エラー {counts.error}　表示分野：{sector === "all" ? "すべて" : sectorNames[sector]}</p>
+        <p className={styles.coverageNote}>全{counts.total}資料 ／ 取得済み {counts.fetched} ／ 未取得 {counts.unfetched} ／ エラー {counts.error}　表示分野：{sector === "all" ? "すべて" : sectorNames[sector]}{(snapshot.omitted?.sources ?? 0) > 0 && `　（応答サイズ上限のため、古い資料${snapshot.omitted!.sources}件は省略）`}</p>
         <div className={styles.filters}>
           <label className={styles.search}>資料名・会社名・URLを検索<input type="search" value={query} onChange={e => { setQuery(e.target.value); setPage(1); }} placeholder="NVIDIA、financial、AI…" /></label>
           <label>銘柄<select value={ticker} onChange={e => { setTicker(e.target.value); setPage(1); }}><option value="all">すべての銘柄</option>{providers.filter(p => sector === "all" || p.sector === sector).map(p => <option key={p.ticker} value={p.ticker}>{p.ticker} · {p.name}</option>)}</select></label>

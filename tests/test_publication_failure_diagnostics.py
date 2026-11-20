@@ -189,6 +189,7 @@ class PublicationFailureDiagnosticsTests(unittest.TestCase):
             with self.subTest(path=path), redirect_stdout(io.StringIO()) as output:
                 handler = self.handler(path)
                 handler.app.public_snapshot.side_effect = RuntimeError(PRIVATE)
+                handler.app.live_payload.side_effect = RuntimeError(PRIVATE)
                 handler.app.public_price_targets.side_effect = RuntimeError(PRIVATE)
                 handler.app.posts_queue.side_effect = RuntimeError(PRIVATE)
                 handler.do_GET()
