@@ -94,7 +94,7 @@ class SummaryTests(unittest.TestCase):
         self.assertNotIn('summaryJa', payload['instructions'])
         props = payload['text']['format']['schema']['properties']['items']['items']
         self.assertNotIn('summaryJa', props['properties'])
-        self.assertEqual(props['required'], ['id', 'titleJa', 'shortJa', 'kind'])
+        self.assertEqual(props['required'], ['id', 'titleJa', 'shortJa', 'kind', 'event'])
         self.assertEqual(payload['max_output_tokens'], 4000)
         self.assertEqual(self.today()['summariesRequested'], 0)
 
