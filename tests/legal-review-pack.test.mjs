@@ -140,7 +140,7 @@ test("5: LP FAQ — one-time purchase (feature names, renewal prices, 「提供�
   assert.ok(lpEn.includes("We do refund double charges, or if a fault on our side stops it from working.</p>"));
 });
 
-test("6: one disclaimer sentence, small and faint, in every footer, after each article, on the alert page and under the checker", () => {
+test("6: one disclaimer sentence, small and faint, in every footer (never under each post), on the alert page and under the checker", () => {
   assert.equal(DISCLAIMER.ja, "本サービスと本商品は、情報の提供とご自身で決めたルールの管理を目的としたもので、特定の銘柄の売買や売買の時期をすすめるものではありません。投資の判断は、ご自身でおこなってください。");
   // The English follows Article 2, Paragraph 2 of the English terms.
   assert.ok(termsEn.includes("The Service and the Product are intended to provide information for reference in your investment decisions and to help you manage rules you set for yourself. They do not advise on or recommend buying or selling any particular security"));
@@ -158,11 +158,10 @@ test("6: one disclaimer sentence, small and faint, in every footer, after each a
     "../app/resolute/lp/landing.tsx": /<footer className=\{s\.foot\}>[\s\S]*<Disclaimer \/>\n   <\/footer>/,
     "../app/resolute/lp/landing-en.tsx": /<footer className=\{s\.foot\}>[\s\S]*<Disclaimer en \/>\n   <\/footer>/,
     "../app/resolute/checkout/live-screen.tsx": /<Disclaimer en=\{en\} \/>/,
-    "../app/research/columns/columns.tsx": /\{access === "pro" && !editing && <Disclaimer en=\{!ja\} \/>\}\n    <\/div>\n  <\/article>/,
-    "../app/research/weekly/issues.tsx": /<Disclaimer en=\{!ja\} \/>\n  <\/article>/,
-    "../app/research/qa/questions.tsx": /<Disclaimer en=\{!ja\} \/>\n    <\/div>\}/,
   };
   for (const [file, pattern] of Object.entries(places)) assert.match(read(file), pattern, file);
+  // Owner, Nov 21: never under each post (Notes, Weekly, Ask Rizel answers); the page footer carries it once.
+  for (const file of ["../app/research/columns/columns.tsx", "../app/research/weekly/issues.tsx", "../app/research/qa/questions.tsx"]) assert.doesNotMatch(read(file), /Disclaimer/, file);
   // The alert page a phone notification opens (/resolute/alerts/latest).
   const alert = { date: "2026-11-17", items: [{ kind: "line_reached", symbol: "NVDA", close: 100, dropPct: 10, newLines: [10] }] };
   assert.equal(latestAlertView(alert, "ja").disclaimer, DISCLAIMER.ja);
