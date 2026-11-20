@@ -110,7 +110,7 @@ def remaining(ready):
             scored = [f for f, v in (r.get("scores") or {}).items() if v is not None and f != "valuation"]
             shown = {i[2:] for i in (r.get("items") or []) if i[0] == other}
             free = [f for f in scored if not shown & set(FACTOR_ITEMS[f])]
-            reasons["採点項目が1つ以下" if len(scored) < 2 else "採点項目がすべて反対側の要点" if not free else "他の項目と同点など"] += 1
+            reasons["採点項目が1つ以下" if len(scored) < 2 else "採点項目がすべて反対側の要点" if not free else "他の項目より低く（高く）ない・長所は5点未満か流動比率1倍未満"] += 1
         print(f"{label} {sum(reasons.values()):,}: " + ", ".join(f"{k} {v:,}" for k, v in reasons.most_common()))
 
 before = load(args.before)

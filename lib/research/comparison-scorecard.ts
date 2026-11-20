@@ -148,8 +148,8 @@ const FACTOR_ITEMS: Record<ScoreId,readonly string[]> = {
  * When the thresholds give no weakness, the company's lowest-scored factor is shown as one, said to be relative to its own other factors, with
  * that factor's own figure (comparisonMetric); the same for a missing strength with its highest factor. Only scored factors count, never one
  * that already gave a point of the other kind; valuation is left out (its yardstick depends on the other companies in the comparison). The
- * chosen factor must be below (above) at least one of the company's other scored factors, so 「低め」 is true; with fewer than two scored
- * factors nothing is added. Recomputed on each call: earlier relative points are dropped first. */
+ * chosen factor must be below (above) at least one of the company's other scored factors, so 「低め」 is true; a strength scores 5 or
+ * more; with fewer than two scored factors nothing is added. Recomputed on each call: earlier relative points are dropped first. */
 export function withRelativeItems<T extends Financials>(c: T, now=Date.now()): T {
   const prepared=c.preparedAnalysis;
   if(!prepared || prepared.method!=="deterministic" || c.referenceEvaluation) return c;
@@ -160,7 +160,10 @@ export function withRelativeItems<T extends Financials>(c: T, now=Date.now()): T
   const used=new Set<ScoreId>();
   const pick=(kind:"strength"|"weakness")=>{
     const sign=kind==="weakness" ? 1 : -1;
-    const candidate=scores.filter(s=>!used.has(s.id) && !shown(s.id,kind==="weakness"?"strength":"weakness")).sort((a,b)=>sign*(a.value-b.value))[0];
+    // A relative strength also needs the middle of the scale (5 of 10) at least, and a current ratio below 1 is never called a strength
+    // (KXIN in the audit, Nov 20: 0.11, scored 5.3 only because its cash is above its debt), however weak the rest is.
+    const eligible=(s:ComparisonScore & {value:number})=>kind==="weakness" || s.value>=5 && !(s.id==="financial" && finite(c.balance?.currentRatio) && c.balance.currentRatio<1);
+    const candidate=scores.filter(s=>!used.has(s.id) && !shown(s.id,kind==="weakness"?"strength":"weakness") && eligible(s)).sort((a,b)=>sign*(a.value-b.value))[0];
     if(!candidate) return;
     // 「低め」 must be true: below at least one of the company's other scored factors (above, for a strength).
     const others=scores.filter(s=>s.id!==candidate.id).map(s=>s.value);
@@ -177,9 +180,9 @@ const lowerFirst=(text:string)=>/^[A-Z][a-z]/.test(text) ? text[0].toLowerCase()
 function relativeItem(c: Financials, score: ComparisonScore & {value:number}, kind: "strength"|"weakness", now: number): AnalysisItem {
   const weak=kind==="weakness", ja=comparisonMetric(c,score.id,"ja",now), en=comparisonMetric(c,score.id,"en",now), points=score.value.toFixed(1);
   return {id:`relative-${score.id}`,kind,relative:true,
-    short:{ja:`${score.label.ja}は他の項目より${weak?"低め":"高め"}（${ja}）`,en:`${score.label.en} is its ${weak?"weakest":"strongest"} area: ${lowerFirst(en)}`},
-    detail:{ja:`${score.label.ja}は10点中${points}点で、この会社のほかの採点項目より${weak?"低い":"高い"}水準です。業界平均や他社と比べた評価ではありません。`,
-      en:`${score.label.en} scores ${points} out of 10, ${weak?"below":"above"} this company's other scored factors. This is not a comparison with the industry or with other companies.`}};
+    short:{ja:`${score.label.ja}は他の項目より${weak?"低め":"高め"}（${ja}）`,en:`${score.label.en} ${weak?"trails":"leads"} its other factors: ${lowerFirst(en)}`},
+    detail:{ja:`${score.label.ja}は10点中${points}点で、この会社の採点項目のなかでは${weak?"低め":"高め"}です。業界平均や他社と比べた評価ではありません。`,
+      en:`${score.label.en} scores ${points} out of 10, among this company's ${weak?"lower":"higher"} scores. This is not a comparison with the industry or with other companies.`}};
 }
 /** Missing factors must never improve the composite by being omitted. */
 export function compositeScore(scores: ComparisonScore[]): number | null {
@@ -252,7 +255,7 @@ export function cautionClause(item: AnalysisItem, lang: "ja"|"en"): string {
   if(item.id==="negative-equity") return ja ? "株主資本がマイナスです" : "its shareholders' equity is negative";
   if(item.relative) {
     const id=item.id.replace(/^relative-/,"") as ScoreId, words=factorWords[id] ?? {ja:text,en:text}, metric=/（(.+)）$/.exec(item.short.ja)?.[1], metricEn=/: (.+)$/.exec(item.short.en)?.[1];
-    return ja ? `${words.ja}が${metric ? `${metric}と` : ""}他の項目より低めです` : `its weakest area is ${words.en}${metricEn ? `: ${metricEn}` : ""}`;
+    return ja ? `${words.ja}が${metric ? `${metric}と` : ""}他の項目より低めです` : `its ${words.en} trails its other factors${metricEn ? `: ${metricEn}` : ""}`;
   }
   if(item.id==="cash-generation" && numbers[0]) return ja ? `簡易FCFがマイナスです（売上比 ${numbers[0]}%）` : `its simple free cash flow is negative (${numbers[0]}% of revenue)`;
   return ja ? `${text}には注意が必要です` : `watch ${text}`;

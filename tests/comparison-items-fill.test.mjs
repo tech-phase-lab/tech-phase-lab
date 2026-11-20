@@ -5,6 +5,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { extractFinancials, emptyFinancials, comparisonAccess } from "../lib/research/comparison.ts";
 import { prepareComparisonAnalysis } from "../lib/research/comparison-analysis.ts";
+import { buildSecMarketEvidence } from "../lib/research/sec-market-evidence.ts";
 import { comparisonScores, comparisonMetric, withRelativeItems, overallComparison, cautionClause } from "../lib/research/comparison-scorecard.ts";
 import { OWNER_ACCOUNT_ID, PRODUCTION_OWNER_ACCOUNT_ID } from "../lib/membership/entitlements.ts";
 
@@ -73,8 +74,8 @@ test("no threshold weakness: the lowest scored factor that is not a strength bec
   assert.equal(weak.id, "relative-financial");
   assert.equal(weak.short.ja, `財務健全性は他の項目より低め（${comparisonMetric(c, "financial", "ja", NOW)}）`);
   assert.equal(weak.short.ja, "財務健全性は他の項目より低め（流動比率 0.60倍）");
-  assert.equal(weak.short.en, "Financial strength is its weakest area: current ratio 0.60×");
-  assert.match(weak.detail.ja, /^財務健全性は10点中\d+\.\d点で、この会社のほかの採点項目より低い水準です。/);
+  assert.equal(weak.short.en, "Financial strength trails its other factors: current ratio 0.60×");
+  assert.match(weak.detail.ja, /^財務健全性は10点中\d+\.\d点で、この会社の採点項目のなかでは低めです。/);
   for (const text of [weak.short.ja, weak.detail.ja]) jaCopy(text);
   assert.doesNotMatch(weak.short.en + weak.detail.en, /[ぁ-んァ-ン一-龥]/);
   // The same call again changes nothing (an earlier relative point is replaced, never added twice).
@@ -85,14 +86,22 @@ test("no threshold weakness: the lowest scored factor that is not a strength bec
 });
 
 test("no threshold strength: the highest scored factor that is not a weakness becomes a relative strength", () => {
-  // Revenue -2% (weakness), margin 5% (no point), FCF -3% (weakness), financial 6.5 (no point): profitability 1.0 and financial 6.5 are left.
-  const c = card(company({ prev: 1020.4e6, op: 50e6, fcf: -3 }));
+  // Revenue -2% (weakness), margin 5% (no point), FCF -3% (weakness), no balance; four quarters' margins 5, 4, -6, 9%: stability 6.5, profitable
+  // in three of four quarters (no point either way). Stability is the highest factor left.
+  const base = company({ prev: 1020.4e6, op: 50e6, fcf: -3, cash: null });
+  base.quarterMargins = [{ periodEnd: "2026-09-30", value: 5 }, { periodEnd: "2026-06-30", value: 4 }, { periodEnd: "2026-03-31", value: -6 }, { periodEnd: "2025-12-31", value: 9 }];
+  const c = card({ ...base, twelveData: buildSecMarketEvidence(base, undefined, undefined, NOW) });
+  assert.equal(comparisonScores(c, NOW).find(s => s.id === "stability").value, 6.5);
   const [strong] = of(c, "strength");
   assert.equal(strong.relative, true);
-  assert.equal(strong.id, "relative-financial");
-  assert.equal(strong.short.ja, "財務健全性は他の項目より高め（流動比率 0.60倍）");
-  assert.equal(strong.short.en, "Financial strength is its strongest area: current ratio 0.60×");
+  assert.equal(strong.id, "relative-stability");
+  assert.equal(strong.short.ja, "安定性は他の項目より高め（営業黒字 3/4四半期）");
+  assert.equal(strong.short.en, "Stability leads its other factors: profitable 3/4 quarters");
   assert.ok(of(c, "weakness").every(i => !i.relative));
+  // A current ratio below 1 is never called a strength, even when cash above debt scores it 5.5 and the rest is weaker.
+  const poor = card(company({ prev: 1020.4e6, op: 50e6, fcf: -3, ca: 200e6, cl: 1000e6, cash: 50e6, debt: 49e6 }));
+  assert.equal(comparisonScores(poor, NOW).find(s => s.id === "financial").value, 5.5);
+  assert.deepEqual(of(poor, "strength"), []);
 });
 
 test("only one scored factor, or no factor that is not already a strength: nothing is invented", () => {
@@ -143,7 +152,7 @@ test("the comparison's caution prefers a threshold weakness; a relative one only
   assert.match(relative.description, /流動比率 0\.60倍と他の項目より低めです。/);
   jaCopy(relative.description);
   const en = overallComparison([ccc, bbb], "en", NOW);
-  assert.match(en.description, /weakest area is financial strength: current ratio 0\.60×/);
+  assert.match(en.description, /CCC's financial strength trails its other factors: current ratio 0\.60×/);
 });
 
 test("the owner accounts keep the comparison", () => {
