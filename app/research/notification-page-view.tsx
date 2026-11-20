@@ -121,10 +121,10 @@ export default function NotificationPageView(p: PageViewProps) {
       <ul className={styles.kinds}>{indicators.map(k => { const chosen = kinds.includes(k.key); return <li key={k.key} className={styles.kind}>
         <div><p className={styles.rowTitle}>{t(k.ja, k.en)}{!k.ready && <span className={styles.soon}>{t("準備中", "Soon")}</span>}</p><p className={styles.rowDesc}>{t(k.whenJa, k.whenEn)}</p></div>
         {sw(t(k.ja, k.en), chosen, v => p.onPrefs({ economicKinds: v ? indicators.map(x => x.key).filter(x => x === k.key || kinds.includes(x)) : kinds.filter(x => x !== k.key) }))}</li>; })}</ul>
-      <p className={styles.foot}>{t("日本時間の発表の時刻に届きます。おやすみモード中は届きません。", "Sent as soon as each result is released (release times are in ET on the calendar). Nothing is sent during quiet hours.")}</p>
+      <p className={styles.foot}>{t("日本時間の発表の時刻に届きます。おやすみモード中は音を鳴らさずに届きます。", "Sent as soon as each result is released (release times are in ET on the calendar). During quiet hours it arrives silently.")}</p>
     </Sheet>}
     {sheet === "quiet" && <Sheet title={t("おやすみモード", "Quiet hours")} sub={quietSub} action="×" onClose={() => setSheet("")}>
-      <div className={styles.quietUse}><div><p className={styles.rowTitle}>{t("おやすみモードを使う", "Use Do Not Disturb")}</p><p className={styles.rowDesc}>{t("この時間は、通知を止めます。", "Notifications pause during these hours.")}</p></div>
+      <div className={styles.quietUse}><div><p className={styles.rowTitle}>{t("おやすみモードを使う", "Use Do Not Disturb")}</p><p className={styles.rowDesc}>{t("この時間の通知は、音を鳴らさずに届きます。", "Notifications arrive silently during these hours.")}</p></div>
         {sw(t("おやすみモードを使う", "Use Do Not Disturb"), draft.on, v => setDraft({ ...draft, on: v }))}</div>
       <div className={`${styles.pickers} ${draft.on ? "" : styles.rowsOff}`}>
         <HourPicker label={t("はじめ", "From")} value={draft.start} onChange={h => setDraft({ ...draft, start: h })} />
