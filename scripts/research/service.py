@@ -61,6 +61,7 @@ import earnings_history
 import official_research
 import deep_analysis
 import llm_cost
+import member_data_retention
 import issuer_syndication
 import official_research_diagnostics
 import official_research_detail
@@ -3031,7 +3032,22 @@ class AutomaticMonitor:
                 self.perform_backup()
             finally:
                 self.backup_initial_complete.set()
+            self.enforce_data_retention()
             self.stop_event.wait(self.backup_interval)
+
+    def enforce_data_retention(self):
+        """Nov 20 (owner-approved): purge expired member data after each backup. Off unless RESEARCH_RETENTION_PURGE_ENABLED=true."""
+        if not member_data_retention.purge_enabled():
+            return
+        try:
+            db = sqlite3.connect(self.db_path, timeout=20)
+            try:
+                result = member_data_retention.purge_expired(db)
+            finally:
+                db.close()
+            print(json.dumps({"event": "retention-purge", **result}), flush=True)
+        except Exception as exc:
+            print(json.dumps({"event": "retention-purge-failed", "error": type(exc).__name__}), flush=True)
 
     def enforce_backup_retention(self):
         """Delete leftover temporaries and the generations the volume cannot hold; the newest verified snapshot and the live database stay."""
@@ -3828,6 +3844,24 @@ class Handler(BaseHTTPRequestHandler):
             except Exception:
                 self.send_json(503, {"ok": False, "error": "annual-brief-unavailable"})
             return
+        if path == "/member/erasure-requests":
+            # Nov 20 (owner-approved): the member-erasure job reads the members whose Postgres steps are still pending.
+            if not os.environ.get("RESEARCH_API_TOKEN") or not self.authorized():
+                self.send_json(401, {"ok": False})
+                return
+            if not member_data_retention.erasure_enabled():
+                self.send_json(503, {"ok": False, "error": "disabled"})
+                return
+            try:
+                db = sqlite3.connect(self.app.db_path, timeout=20)
+                try:
+                    result = member_data_retention.pending_requests(db)
+                finally:
+                    db.close()
+                self.send_json(200, {"ok": True, "requests": result})
+            except Exception:
+                self.send_json(503, {"ok": False})
+            return
         if path == "/saved-research":
             if not os.environ.get("RESEARCH_API_TOKEN") or not self.authorized():
                 self.send_json(401, {"ok": False})
@@ -4027,6 +4061,35 @@ class Handler(BaseHTTPRequestHandler):
                 self.send_json(404 if str(exc) == "inbox-not-found" else 400, {"ok": False, "error": str(exc)})
             except Exception:
                 self.send_json(503, {"ok": False, "error": "inbox-unavailable"})
+            return
+        if path in ("/member/erase", "/member/erasure-requests/ack"):
+            # Nov 20 (owner-approved): erase a departed member's monitor data (off unless MEMBER_ERASURE_ENABLED=true; owner
+            # accounts always refused). Counts only in the answer and the log; never the member, a key or text.
+            if not os.environ.get("RESEARCH_API_TOKEN") or not self.authorized():
+                self.send_json(401, {"ok": False})
+                return
+            if not member_data_retention.erasure_enabled():
+                self.send_json(503, {"ok": False, "error": "disabled"})
+                return
+            try:
+                payload = self.read_json(4096)
+                db = sqlite3.connect(self.app.db_path, timeout=20)
+                try:
+                    if path == "/member/erase":
+                        result = member_data_retention.erase_member(db, payload)
+                    else:
+                        result = member_data_retention.acknowledge(db, payload)
+                finally:
+                    db.close()
+                print(json.dumps({"event": "member-erasure", "path": path,
+                                  **{k: v for k, v in result.items() if k != "receipt"}}), flush=True)
+                self.send_json(200, {"ok": True, **result})
+            except ValueError as exc:
+                reason = str(exc) if str(exc) in member_data_retention.REFUSALS else "invalid-request"
+                self.send_json(409 if reason == "owner-account" else 400, {"ok": False, "error": reason})
+            except Exception as exc:
+                print(json.dumps({"event": "member-erasure-failed", "error": type(exc).__name__}), flush=True)
+                self.send_json(503, {"ok": False})
             return
         if path == "/saved-research":
             if not os.environ.get("RESEARCH_API_TOKEN") or not self.authorized():
