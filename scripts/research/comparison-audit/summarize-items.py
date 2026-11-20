@@ -63,9 +63,9 @@ def counts(r):
     return sum(i.startswith("S:") for i in items), sum(i.startswith("W:") for i in items)
 
 # Which factor rule gave (or could not give) a point: the item ids each factor produces.
-FACTOR_ITEMS = {"growth": ("revenue-growth", "revenue-qoq", "share-count", "relative-growth"), "profitability": ("operating-margin", "relative-profitability"),
-                "cash": ("cash-generation", "relative-cash"), "financial": ("financial", "debt-cash", "negative-equity", "relative-financial"),
-                "stability": ("stability", "margin-decline", "relative-stability"), "momentum": ("momentum", "relative-momentum"), "valuation": ("valuation",)}
+FACTOR_ITEMS = {"growth": ("revenue-growth", "revenue-qoq", "share-count"), "profitability": ("operating-margin",), "cash": ("cash-generation",),
+                "financial": ("financial", "debt-cash", "negative-equity"), "stability": ("stability", "margin-decline"), "momentum": ("momentum",),
+                "valuation": ("valuation",)}
 def factor_state(r, factor, kind):
     if (r.get("scores") or {}).get(factor) is None: return "missing"
     ids = {i[2:] for i in (r.get("items") or []) if i[0] == kind}
@@ -98,11 +98,9 @@ def report(name, rows):
     remaining(ready)
     return ready
 
-# Why a company is still left without a strength or a weakness once the relative points exist (withRelativeItems, Nov 20). Valuation is
-# never a relative point; the threshold point ids of each factor are FACTOR_ITEMS without the relative ones.
+# Why a company is left without a strength or a weakness: fewer than two scored factors, every scored factor already gave a point of the other
+# kind, or the factors left scored between the thresholds (no point is made up for them: owner, Nov 20).
 def remaining(ready):
-    relative = collections.Counter(i.split(":")[0] for r in ready for i in (r.get("items") or []) if ":relative-" in i)
-    print(f"\nrelative points: 長所 {relative['S']:,} / 短所 {relative['W']:,}")
     for kind, other, label in (("S", "W", "長所0"), ("W", "S", "短所0")):
         reasons = collections.Counter()
         for r in ready:
@@ -110,7 +108,7 @@ def remaining(ready):
             scored = [f for f, v in (r.get("scores") or {}).items() if v is not None and f != "valuation"]
             shown = {i[2:] for i in (r.get("items") or []) if i[0] == other}
             free = [f for f in scored if not shown & set(FACTOR_ITEMS[f])]
-            reasons["採点項目が1つ以下" if len(scored) < 2 else "採点項目がすべて反対側の要点" if not free else "他の項目より低く（高く）ない・長所は5点未満か流動比率1倍未満"] += 1
+            reasons["採点項目が1つ以下" if len(scored) < 2 else "採点項目がすべて反対側の要点" if not free else "残りの項目は基準の中間"] += 1
         print(f"{label} {sum(reasons.values()):,}: " + ", ".join(f"{k} {v:,}" for k, v in reasons.most_common()))
 
 before = load(args.before)

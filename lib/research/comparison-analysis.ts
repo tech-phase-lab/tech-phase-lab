@@ -7,9 +7,7 @@ type Copy = { ja: string; en: string };
 export type PreparedComparisonAnalysis = {
   version: 1; method: "deterministic" | "reviewed"; sourceRevision: string;
   preparedAt: string; processingMs: number; periodEnd: string; sourceUrl: string;
-  /** `relative`: not a threshold point but the company's own lowest (or highest) scored factor, set by withRelativeItems when it has no other
-   *  weakness (or strength). Never saved: it is added again on every answer. */
-  items: { id: string; kind: "strength" | "weakness"; short: Copy; detail: Copy; relative?: true }[];
+  items: { id: string; kind: "strength" | "weakness"; short: Copy; detail: Copy }[];
 };
 // The timestamp is deliberately excluded: unchanged evidence has the same revision.
 export function comparisonEvidenceRevision(c: Financials) {

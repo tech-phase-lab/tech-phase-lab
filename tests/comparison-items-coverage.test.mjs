@@ -6,7 +6,7 @@ import { emptyFinancials, comparisonAccess } from "../lib/research/comparison.ts
 import { prepareComparisonAnalysis, currentComparisonAnalysis, appendFilingFinancialItems, appendEquityItem } from "../lib/research/comparison-analysis.ts";
 import { buildSecMarketEvidence } from "../lib/research/sec-market-evidence.ts";
 import { appendMarketItems } from "../lib/research/twelve-data-financials.ts";
-import { hasRecentQuarter, comparisonAvailability, comparisonScores, withRelativeItems } from "../lib/research/comparison-scorecard.ts";
+import { hasRecentQuarter, comparisonAvailability, comparisonScores } from "../lib/research/comparison-scorecard.ts";
 import { fillFromProvider } from "../lib/research/comparison-fill.ts";
 import { OWNER_ACCOUNT_ID, PRODUCTION_OWNER_ACCOUNT_ID } from "../lib/membership/entitlements.ts";
 
@@ -88,11 +88,11 @@ async function server(stubs) {
     .replace(/import \{ freshEnough \}[^;]*;/, "const freshEnough = (cachedRead) => cachedRead();")
     .replace(/import \{ buildSecMarketEvidence \}[^;]*;/, "const buildSecMarketEvidence = globalThis.__items.buildSecMarketEvidence;")
     .replace(/import \{ appendMarketItems \}[^;]*;/, "const appendMarketItems = globalThis.__items.appendMarketItems;")
-    .replace(/import \{ comparisonScores, hasRecentQuarter, withRelativeItems \}[^;]*;/, "const { comparisonScores, hasRecentQuarter, withRelativeItems } = globalThis.__items;")
+    .replace(/import \{ comparisonScores, hasRecentQuarter \}[^;]*;/, "const { comparisonScores, hasRecentQuarter } = globalThis.__items;")
     .replace(/import \{ fillFromProvider \}[^;]*;/, "const fillFromProvider = globalThis.__items.fillFromProvider;")
     .replace('"./comparison-exclusions"', JSON.stringify(new URL("../lib/research/comparison-exclusions.ts", import.meta.url).href))
     .replace(/import type \{ Financials \}[^;]*;/, "");
-  globalThis.__items = { emptyFinancials, prepareComparisonAnalysis, currentComparisonAnalysis, appendFilingFinancialItems, appendEquityItem, withRelativeItems, buildSecMarketEvidence, appendMarketItems,
+  globalThis.__items = { emptyFinancials, prepareComparisonAnalysis, currentComparisonAnalysis, appendFilingFinancialItems, appendEquityItem, buildSecMarketEvidence, appendMarketItems,
     hasRecentQuarter, comparisonScores, fillFromProvider, loadMarketInputs: async () => ({}), loadTwelveComparisonState: async () => ({ data: null, busy: false }), ...stubs };
   return import("data:text/javascript;base64," + Buffer.from(stripTypeScriptTypes(text)).toString("base64") + `#${Math.random()}`);
 }

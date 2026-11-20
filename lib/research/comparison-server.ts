@@ -13,7 +13,7 @@ import { scheduleFill } from "./twelve-store";
 import { freshEnough } from "./fresh-enough";
 import { buildSecMarketEvidence } from "./sec-market-evidence";
 import { appendMarketItems } from "./twelve-data-financials";
-import { comparisonScores, hasRecentQuarter, withRelativeItems } from "./comparison-scorecard";
+import { comparisonScores, hasRecentQuarter } from "./comparison-scorecard";
 import { fillFromProvider } from "./comparison-fill";
 import type { Financials } from "./comparison";
 export async function secText(url: string, limit: number) {
@@ -59,8 +59,7 @@ export async function loadComparisonFinancials(ticker: string) {
   // Whatever the provider's store lacks for this company is filled after the answer is sent (statistics always; statements only when this
   // answer had to ask for them). The answer itself never waits for it.
   const wants = { statistics: true, statements: false };
-  // Every company with prepared points shows a strength and a weakness: its own lowest or highest factor when no threshold gives one (Nov 20).
-  try { return withRelativeItems(await loadFinancials(ticker, wants)); } finally { scheduleFill(ticker, wants); }
+  try { return await loadFinancials(ticker, wants); } finally { scheduleFill(ticker, wants); }
 }
 
 async function loadFinancials(ticker: string, wants: { statements: boolean }) {

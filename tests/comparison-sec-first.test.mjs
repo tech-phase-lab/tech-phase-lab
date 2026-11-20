@@ -6,7 +6,7 @@ import { extractFinancials, emptyFinancials } from "../lib/research/comparison.t
 import { prepareComparisonAnalysis, currentComparisonAnalysis, appendFilingFinancialItems, appendEquityItem } from "../lib/research/comparison-analysis.ts";
 import { buildSecMarketEvidence } from "../lib/research/sec-market-evidence.ts";
 import { appendMarketItems } from "../lib/research/twelve-data-financials.ts";
-import { hasRecentQuarter, comparisonAvailability, comparisonScores, withRelativeItems } from "../lib/research/comparison-scorecard.ts";
+import { hasRecentQuarter, comparisonAvailability, comparisonScores } from "../lib/research/comparison-scorecard.ts";
 import { fillFromProvider } from "../lib/research/comparison-fill.ts";
 
 const NOW = Date.parse("2026-11-13T12:00:00Z");
@@ -30,11 +30,11 @@ async function server(stubs) {
     .replace(/import \{ freshEnough \}[^;]*;/, "const freshEnough = (cachedRead) => cachedRead();")
     .replace(/import \{ buildSecMarketEvidence \}[^;]*;/, "const buildSecMarketEvidence = globalThis.__t.buildSecMarketEvidence;")
     .replace(/import \{ appendMarketItems \}[^;]*;/, "const appendMarketItems = globalThis.__t.appendMarketItems;")
-    .replace(/import \{ comparisonScores, hasRecentQuarter, withRelativeItems \}[^;]*;/, "const { comparisonScores, hasRecentQuarter, withRelativeItems } = globalThis.__t;")
+    .replace(/import \{ comparisonScores, hasRecentQuarter \}[^;]*;/, "const { comparisonScores, hasRecentQuarter } = globalThis.__t;")
     .replace(/import \{ fillFromProvider \}[^;]*;/, "const fillFromProvider = globalThis.__t.fillFromProvider;")
     .replace('"./comparison-exclusions"', JSON.stringify(new URL("../lib/research/comparison-exclusions.ts", import.meta.url).href))
     .replace(/import type \{ Financials \}[^;]*;/, "");
-  globalThis.__t = { emptyFinancials, prepareComparisonAnalysis, currentComparisonAnalysis, appendFilingFinancialItems, appendEquityItem, withRelativeItems, buildSecMarketEvidence, appendMarketItems, hasRecentQuarter, comparisonScores, fillFromProvider, ...stubs };
+  globalThis.__t = { emptyFinancials, prepareComparisonAnalysis, currentComparisonAnalysis, appendFilingFinancialItems, appendEquityItem, buildSecMarketEvidence, appendMarketItems, hasRecentQuarter, comparisonScores, fillFromProvider, ...stubs };
   return import("data:text/javascript;base64," + Buffer.from(stripTypeScriptTypes(text)).toString("base64") + `#${Math.random()}`);
 }
 const withClock = async fn => { const real = Date.now; Date.now = () => NOW; try { return await fn(); } finally { Date.now = real; } };

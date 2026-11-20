@@ -1,12 +1,11 @@
-// Every company with prepared points shows a strength and a weakness (owner, Nov 20: 「長所・短所出てない銘柄は全チェックして追加してください」).
-// First the points the filing itself supports (negative shareholders' equity, revenue against the previous quarter), then, only when the
-// thresholds still give no weakness (strength), the company's own lowest (highest) scored factor, said to be relative, with its real figure.
+// Strengths and weaknesses the filing itself supports, added for companies that showed none (owner, Nov 20: 「長所・短所出てない銘柄は全チェック
+// して追加してください」, then 「完全にないと判断したなら無理に書かなくていいですよ」): negative shareholders' equity, and revenue against the
+// previous quarter when there is no year-ago quarter. No point is made up for a company the thresholds give none.
 import test from "node:test";
 import assert from "node:assert/strict";
 import { extractFinancials, emptyFinancials, comparisonAccess } from "../lib/research/comparison.ts";
 import { prepareComparisonAnalysis } from "../lib/research/comparison-analysis.ts";
-import { buildSecMarketEvidence } from "../lib/research/sec-market-evidence.ts";
-import { comparisonScores, comparisonMetric, withRelativeItems, overallComparison, cautionClause } from "../lib/research/comparison-scorecard.ts";
+import { cautionClause } from "../lib/research/comparison-scorecard.ts";
 import { OWNER_ACCOUNT_ID, PRODUCTION_OWNER_ACCOUNT_ID } from "../lib/membership/entitlements.ts";
 
 const NOW = Date.parse("2026-11-20T12:00:00Z");
@@ -62,64 +61,14 @@ function company(change = {}) {
       currentLiabilities: { ...factOf(f.cl), start: null }, currentRatio: f.ca / f.cl, debtCurrent: null, debtNoncurrent: null, shortBorrowings: null, leaseCurrent: null, leaseNoncurrent: null,
       debtTotal: { value: f.debt, source: "total" } } };
 }
-const card = c => { const prepared = prepareComparisonAnalysis(c, NOW); return withRelativeItems({ ...c, preparedAnalysis: prepared }, NOW); };
+const card = c => ({ ...c, preparedAnalysis: prepareComparisonAnalysis(c, NOW) });
 const of = (c, kind) => c.preparedAnalysis.items.filter(i => i.kind === kind);
 
-test("no threshold weakness: the lowest scored factor that is not a strength becomes a relative weakness with its own figure", () => {
-  // Growth +5.3% (strength), margin 20% (strength), FCF 12% (strength); financial strength 6.5 (current ratio 0.6, cash above debt): no weakness.
+test("a company the thresholds give no weakness keeps none: nothing is made up", () => {
+  // Growth +5.3%, margin 20%, FCF 12% (strengths); financial strength 6.5 (current ratio 0.6, cash above debt): no weakness, none invented.
   const c = card(company());
   assert.deepEqual(of(c, "strength").map(i => i.short.ja), ["売上成長 +5.3%", "営業利益率 20.0%", "簡易FCF率 12.0%"]);
-  const [weak] = of(c, "weakness");
-  assert.equal(weak.relative, true);
-  assert.equal(weak.id, "relative-financial");
-  assert.equal(weak.short.ja, `財務健全性は他の項目より低め（${comparisonMetric(c, "financial", "ja", NOW)}）`);
-  assert.equal(weak.short.ja, "財務健全性は他の項目より低め（流動比率 0.60倍）");
-  assert.equal(weak.short.en, "Financial strength trails its other factors: current ratio 0.60×");
-  assert.match(weak.detail.ja, /^財務健全性は10点中\d+\.\d点で、この会社の採点項目のなかでは低めです。/);
-  for (const text of [weak.short.ja, weak.detail.ja]) jaCopy(text);
-  assert.doesNotMatch(weak.short.en + weak.detail.en, /[ぁ-んァ-ン一-龥]/);
-  // The same call again changes nothing (an earlier relative point is replaced, never added twice).
-  assert.deepEqual(withRelativeItems(c, NOW).preparedAnalysis.items, c.preparedAnalysis.items);
-  // A threshold weakness, when there is one, leaves no relative point: a 30% fall in revenue.
-  const falling = card(company({ prev: 1430e6 }));
-  assert.deepEqual(of(falling, "weakness").map(i => i.id), ["revenue-growth"]);
-});
-
-test("no threshold strength: the highest scored factor that is not a weakness becomes a relative strength", () => {
-  // Revenue -2% (weakness), margin 5% (no point), FCF -3% (weakness), no balance; four quarters' margins 5, 4, -6, 9%: stability 6.5, profitable
-  // in three of four quarters (no point either way). Stability is the highest factor left.
-  const base = company({ prev: 1020.4e6, op: 50e6, fcf: -3, cash: null });
-  base.quarterMargins = [{ periodEnd: "2026-09-30", value: 5 }, { periodEnd: "2026-06-30", value: 4 }, { periodEnd: "2026-03-31", value: -6 }, { periodEnd: "2025-12-31", value: 9 }];
-  const c = card({ ...base, twelveData: buildSecMarketEvidence(base, undefined, undefined, NOW) });
-  assert.equal(comparisonScores(c, NOW).find(s => s.id === "stability").value, 6.5);
-  const [strong] = of(c, "strength");
-  assert.equal(strong.relative, true);
-  assert.equal(strong.id, "relative-stability");
-  assert.equal(strong.short.ja, "安定性は他の項目より高め（営業黒字 3/4四半期）");
-  assert.equal(strong.short.en, "Stability leads its other factors: profitable 3/4 quarters");
-  assert.ok(of(c, "weakness").every(i => !i.relative));
-  // A current ratio below 1 is never called a strength, even when cash above debt scores it 5.5 and the rest is weaker.
-  const poor = card(company({ prev: 1020.4e6, op: 50e6, fcf: -3, ca: 200e6, cl: 1000e6, cash: 50e6, debt: 49e6 }));
-  assert.equal(comparisonScores(poor, NOW).find(s => s.id === "financial").value, 5.5);
-  assert.deepEqual(of(poor, "strength"), []);
-});
-
-test("only one scored factor, or no factor that is not already a strength: nothing is invented", () => {
-  // Growth alone (no operating income, no cash flow, no balance): one factor, its revenue growth is a strength, no weakness is made up.
-  const alone = card(company({ op: null, fcf: null, cash: null }));
-  assert.deepEqual(comparisonScores(alone, NOW).filter(s => s.value !== null).map(s => s.id), ["growth"]);
-  assert.deepEqual(of(alone, "weakness"), []);
-  // Two factors, both already strengths: no candidate for a weakness.
-  const strong = card(company({ cash: null, fcf: null }));
-  assert.deepEqual(of(strong, "weakness"), []);
-});
-
-test("a reviewed (reference) analysis or a company without prepared points is left as it is", () => {
-  const c = card(company());
-  const reviewed = { ...c, preparedAnalysis: { ...c.preparedAnalysis, method: "reviewed", items: c.preparedAnalysis.items.filter(i => !i.relative) } };
-  assert.equal(withRelativeItems(reviewed, NOW), reviewed);
-  const none = { ...company(), preparedAnalysis: undefined };
-  assert.equal(withRelativeItems(none, NOW), none);
+  assert.deepEqual(of(c, "weakness"), []);
 });
 
 test("no revenue a year earlier: revenue against the previous quarter is the growth point, as the growth score uses it", () => {
@@ -131,28 +80,6 @@ test("no revenue a year earlier: revenue against the previous quarter is the gro
   assert.equal(cautionClause(item, "ja"), "売上が前の四半期より8.4%減っています");
   // With a year-ago quarter the year-on-year point stands alone.
   assert.equal(card(company({ qoq: -8.4 })).preparedAnalysis.items.some(i => i.id === "revenue-qoq"), false);
-});
-
-test("the comparison's caution prefers a threshold weakness; a relative one only when no company has a threshold weakness", () => {
-  const named = (c, ticker) => ({ ...c, ticker, name: ticker, peer: ticker, caution: { ja: "", en: "" } });
-  // AAA leads clearly; BBB has only a relative weakness, AAA a threshold one (debt above cash).
-  const aaa = named(card(company({ rev: 1300e6, op: 400e6, fcf: 30, debt: 500e6 })), "AAA");
-  const bbb = named(card(company()), "BBB");
-  assert.ok(of(aaa, "weakness").every(i => !i.relative));
-  assert.ok(of(bbb, "weakness").every(i => i.relative));
-  const genuine = overallComparison([aaa, bbb], "ja", NOW);
-  assert.equal(genuine.leader, "AAA");
-  assert.match(genuine.description, /有利子負債が現金を上回っています/);
-  assert.doesNotMatch(genuine.description, /他の項目より低め/);
-  // Neither has a threshold weakness: the relative one is said, in plain words with its figure, without 「）。」.
-  const ccc = named(card(company({ rev: 1300e6, op: 400e6, fcf: 30 })), "CCC");
-  assert.ok(of(ccc, "weakness").every(i => i.relative));
-  const relative = overallComparison([ccc, bbb], "ja", NOW);
-  assert.match(relative.description, /財務健全性|財務の余力/);
-  assert.match(relative.description, /流動比率 0\.60倍と他の項目より低めです。/);
-  jaCopy(relative.description);
-  const en = overallComparison([ccc, bbb], "en", NOW);
-  assert.match(en.description, /CCC's financial strength trails its other factors: current ratio 0\.60×/);
 });
 
 test("the owner accounts keep the comparison", () => {

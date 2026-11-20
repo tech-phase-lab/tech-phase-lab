@@ -141,5 +141,5 @@ Teucrium の 6 銘柄, CurrencyShares, FETH, ETHW ほか）。`excluded.py` の�
 
 ## 続き（2026-11-20）
 
-長所・短所がない銘柄の補完（株主資本マイナス・相対の長所・短所）と再監査は `docs/comparison-audit-2026-11-20/README.md`。
-長所0 467→2、短所0 676→20、両方0 1→1。
+株主資本マイナス・売上前四半期比の追加と、Nasdaq のワラント等の判定の拡大（MOBBW など 40 銘柄）、再監査は
+`docs/comparison-audit-2026-11-20/README.md`。長所0 467→447、短所0 676→658、両方0 1→1。
