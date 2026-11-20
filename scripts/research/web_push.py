@@ -1014,7 +1014,32 @@ RELEASE_SKIPS = {}  # (ticker, quarter) -> {reason: count} since start; only for
 QUIET_SKIP_REASONS = frozenset({'published-not-fresh', 'already-delivered', 'invalid-item'})
 
 
+# Nov 20 (owner: "the latest MRVL price-target notice did not arrive"): skips were logged for earnings flashes only, so a price-target
+# change that reached no phone left no trace. The same once-per-change log line, and counts by reason, for price-target changes.
+TARGET_SKIPS = {}  # reason -> count since start (price-target changes only)
+TARGET_CHANGE_SKIPS = {}  # (ticker, firm, previous, latest, date) -> {reason: count} since start; only for the push-target-result line
+
+
+def target_change(item):
+    """The one change a price-target notice is about (the same facts as event_key), or None for anything else."""
+    if item.get('kind') is not None or not isinstance(item.get('published'), datetime):
+        return None
+    return (item.get('ticker'), item.get('firm'), item.get('previous'), item.get('latest'), item['published'].date().isoformat())
+
+
 def skip(item, reason, device=None):
+    change = target_change(item)
+    if change is not None:
+        TARGET_SKIPS[reason] = TARGET_SKIPS.get(reason, 0) + 1
+        if len(TARGET_CHANGE_SKIPS) < 500 or change in TARGET_CHANGE_SKIPS:
+            counts = TARGET_CHANGE_SKIPS.setdefault(change, {})
+            counts[reason] = counts.get(reason, 0) + 1
+        key = (reason, *change)
+        if reason not in QUIET_SKIP_REASONS and key not in _LOGGED_SKIPS and len(_LOGGED_SKIPS) < 500:
+            _LOGGED_SKIPS.add(key)
+            print(json.dumps({'event': 'push-target-skip', 'reason': reason, 'ticker': change[0], 'firm': change[1],
+                              'latest': change[3], 'publishedAt': item['published'].isoformat()}), flush=True)
+        return
     if item.get('kind') == 'earnings':
         SKIPS[reason] = SKIPS.get(reason, 0) + 1
         if len(RELEASE_SKIPS) < 500 or (item.get('ticker'), item.get('quarter')) in RELEASE_SKIPS:
@@ -1083,6 +1108,7 @@ def public_status(db, now=None):
         'activeDevices': devices,
         'deviceBreakdown': device_breakdown(db, now),
         'earningsSkipsSinceStart': dict(SKIPS),
+        'priceTargetSkipsSinceStart': dict(TARGET_SKIPS),
         'membershipCheck': dict(MEMBERSHIP_STATE),
         'maxDevices': DEVICE_LIMIT,
         'attempted24Hours': row['attempted'] or 0,
@@ -1111,6 +1137,7 @@ def deliver(db, items, transport=send, now=None, monotonic_now=time.monotonic,
     status_now = now
     attempted = accepted = uncertain = 0
     sent = {}  # (ticker, quarter) -> {status: count} for earnings flashes attempted in this call
+    target_sent = {}  # target_change -> {status: count} for price-target notices attempted in this call
     for device in db.execute('SELECT * FROM push_devices WHERE active=1').fetchall():
         if not device['owner_id'] and os.environ.get('WEB_PUSH_ALLOW_PILOT', '').lower() != 'true':
             for raw_item in items:
@@ -1126,7 +1153,10 @@ def deliver(db, items, transport=send, now=None, monotonic_now=time.monotonic,
             observed = item['observed_timestamp']
             # Late discoveries belong in history, never in a fresh-news push.
             if not 0 <= now - item['published'].timestamp() <= 900:
-                skip(item, 'published-not-fresh')
+                # A price-target post found only now, more than 15 minutes after it was posted, is named apart from the backlog
+                # (which every poll passes over) so that it is logged.
+                late = target_change(item) is not None and 0 <= now - observed <= 300
+                skip(item, 'detected-late' if late else 'published-not-fresh')
                 continue
             if quiet_blocks(device, now, item['published'].timestamp()):
                 skip(item, 'quiet-hours')
@@ -1208,6 +1238,9 @@ def deliver(db, items, transport=send, now=None, monotonic_now=time.monotonic,
             if item.get('kind') == 'earnings':
                 counts = sent.setdefault((item.get('ticker'), item.get('quarter')), {})
                 counts[status] = counts.get(status, 0) + 1
+            elif target_change(item) is not None:
+                counts = target_sent.setdefault(target_change(item), {})
+                counts[status] = counts.get(status, 0) + 1
             if status == 'expired':
                 break
     # One line per earnings flash attempted in this call: company, quarter, how many devices, and why others were skipped
@@ -1216,6 +1249,11 @@ def deliver(db, items, transport=send, now=None, monotonic_now=time.monotonic,
         print(json.dumps({'event': 'push-result', 'ticker': ticker, 'quarter': quarter, 'sent': sum(counts.values()),
                           'accepted': counts.get('accepted', 0), 'uncertain': counts.get('uncertain', 0), 'expired': counts.get('expired', 0),
                           'skips': dict(RELEASE_SKIPS.get((ticker, quarter), {}))}), flush=True)
+    # The same line for each price-target change attempted in this call, with the reasons other devices were skipped (since start).
+    for change, counts in target_sent.items():
+        print(json.dumps({'event': 'push-target-result', 'ticker': change[0], 'firm': change[1], 'latest': change[3],
+                          'sent': sum(counts.values()), 'accepted': counts.get('accepted', 0), 'uncertain': counts.get('uncertain', 0),
+                          'expired': counts.get('expired', 0), 'skips': dict(TARGET_CHANGE_SKIPS.get(change, {}))}), flush=True)
     with db:
         db.execute('DELETE FROM push_deliveries WHERE attempted_at<?',
                    (now - DELIVERY_RETENTION_SECONDS,))
