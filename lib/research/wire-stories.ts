@@ -38,6 +38,29 @@ export const LAW_FIRM_SOLICITATION = new RegExp([
 ].join(""), "i");
 export const lawFirmSolicitation = (text: string) => LAW_FIRM_SOLICITATION.test(text);
 
+/** Market live blogs and wraps, stock-picking lists, explainers and opinion are not news about the company (owner, Nov 20:
+ * 「いらないニュース全排除で」 — 速報 showed 「株式市場本日：…（ライブ中継）」, 「TSMCを超えて：注目すべき台湾の小型テクノロジー株3銘柄」,
+ * 「サンディスク株が8分割—投資家にとっての意義とは」, 「インテル18A対TSMC N2：チップの主張の読み方」 and
+ * 「AnthropicのIPO：その支出約束が…に意味すること」). Only wording that a report of a concrete event (results, guidance, a deal, a
+ * launch, a ruling, a rating or target change, a hire, a filing) does not use is listed. The English part is LOW_VALUE_EN in
+ * scripts/research/company_wire.py, which drops such headlines before translation; keep the two in step. */
+export const LOW_VALUE = new RegExp([
+  String.raw`\bstock market (?:today|news today|live)\b|\bstocks? (?:today|live)\s*:|[(\[]\s*live(?: updates?| coverage| blog)?\s*[)\]]`,
+  String.raw`|\blive (?:updates|coverage|blog)\b|[-–—:|]\s*(?:business |markets? |stock market )?live\s*$`,
+  String.raw`|^\s*(?:Dow Jones|Nasdaq|S&P 500|Stock|Stocks) futures\s*:|^\s*(?:market (?:open|close)|closing bell|opening bell|morning bid|markets? wrap)\s*:`,
+  String.raw`|^\s*beyond [^:]{1,40}:|\b(?:\d{1,2}|two|three|four|five|six|seven|eight|nine|ten)\s+(?:[\w&.'’-]+\s+){0,4}(?:stocks|picks)\s+(?:to|for|that|worth|you|i)\b`,
+  String.raw`|\bstocks? to (?:watch|buy|own|hold|consider|avoid|sell)\b|\bstock I.d (?:buy|own|hold)\b`,
+  String.raw`|\bwhat\b.{0,40}\bmeans?\s+(?:for|to)\b|\bhere.s (?:what|how|the)\b`,
+  String.raw`|\bwhat (?:you|investors|shareholders|traders|buyers) (?:need|should|must|ought|have) to know\b|\bwhat to know\b|\beverything (?:you|investors) need to know\b`,
+  String.raw`|\bhow to (?:read|play|think about|invest(?: in)?|buy|trade|value|approach|navigate|position)\b`,
+  String.raw`|\bis (?:it|now) (?:a|the) (?:good |right |smart )?(?:buy|time to)\b|\bstock a buy\b|\bshould you (?:buy|sell|hold|invest|own|worry|be worried|panic|consider)\b`,
+  String.raw`|\b(?:buy|sell|hold),? (?:or|and) (?:sell|hold|buy)\b|^\s*(?:prediction|opinion|analysis|commentary|explainer|my take)\s*:|\bbreakingviews\b`,
+  String.raw`|^\s*dear\b|\bbetter buy\s*:|\b(?:no-brainer|screaming buy|millionaire|passive income)\b|\b(?:bull|bear) case\b`,
+].join(""), "i");
+/** The same kinds of headline in Japanese, for a translated title whose English wording differs (owner, Nov 20). */
+const LOW_VALUE_JA = /株式市場(?:本日|今日)|(?:本日|今日)の株式市場|[(（]\s*ライブ(?:中継|更新|ブログ)?\s*[)）]|ライブ(?:中継|更新|ブログ)\s*$|注目すべき.{0,30}(?:銘柄|株)|買うべき.{0,20}(?:銘柄|株)|(?:銘柄|株)\d+選|(?:意味|意義)(?:とは|するもの)|(?:意味|意義)すること\s*$|の読み方|知っておくべき(?:こと|点)|投資家が知るべき/;
+export const lowValue = (text: string) => LOW_VALUE.test(text) || LOW_VALUE_JA.test(text);
+
 const NOT_NEWS = [
   /\$[^$\n]{1,80}\([A-Z.]{1,8}\.US\)\$/,                       // community posts: $NVIDIA (NVDA.US)$
   /\bNet ETF (?:Buying|Selling)\b|\bETFs? Are (?:Buying|Selling)\b|^Lobbying Update\b/i,
@@ -98,7 +121,7 @@ export function cleanTitle(title: string) {
 }
 /** News filed by the market rather than by a company (the Stock News API's general market feed) is stored under MKT (owner, Nov 10). */
 export const tickerLabel = (ticker: string, ja: boolean) => ticker === "MKT" ? (ja ? "市場" : "Market") : ticker;
-export const isNotNews = (text: string) => NOT_NEWS.some(pattern => pattern.test(text));
+export const isNotNews = (text: string) => NOT_NEWS.some(pattern => pattern.test(text)) || lowValue(text);
 
 /** "X reports third-quarter results" read days after the release is an old story (owner, Oct 26: ASML, 12 days late).
  * Only a headline that announces results is judged, and only against a release date we know for that company. */
@@ -152,6 +175,38 @@ export function storyCandidates(wire: Record<string, CompanyWireItem[]>, lang: L
     return title && !isNotNews(item.titleEn) && !isNotNews(title) && !staleResults(ticker, item.titleEn, item.publishedAt) && !staleResults(ticker, title, item.publishedAt) ? [{ ticker, item, title }] : [];
   })).sort((a, b) => Date.parse(a.item.publishedAt) - Date.parse(b.item.publishedAt));
 }
+/** One broker's action named in a headline (owner, Nov 20: 「MRVLは同じの2つある」 — "Stifel maintains Marvell Technology at Buy, lowers price
+ * target to $280 from $370" and "Stifel cuts Marvell stock price target on deal concerns to $280" are one action): the broker and its new
+ * price target, or its new rating, else null. The same rule is analyst_action in scripts/research/company_wire.py, which translates only
+ * the first copy. */
+const BROKER = new RegExp(String.raw`\b(Stifel|Morgan Stanley|Goldman(?: Sachs)?|J\.?P\.? ?Morgan|BofA(?: Securities)?|Bank of America|Citi(?:group)?|Wells Fargo|Barclays|UBS`
+  + String.raw`|Deutsche Bank|Jefferies|Bernstein|Evercore(?: ISI)?|Mizuho|Needham|Piper Sandler|Raymond James|KeyBanc|Truist|Oppenheimer`
+  + String.raw`|Cantor(?: Fitzgerald)?|Wedbush|TD Cowen|Cowen|Baird|BMO(?: Capital)?|RBC(?: Capital)?|Rosenblatt|Benchmark|Loop Capital|Melius`
+  + String.raw`|HSBC|Macquarie|Nomura|Susquehanna|Wolfe(?: Research)?|Northland|Craig-Hallum|Roth(?: Capital| MKM)?|Canaccord(?: Genuity)?`
+  + String.raw`|D\.?A\.? Davidson|B\.? Riley|Guggenheim|Seaport|Arete|New Street|Redburn|CLSA|Daiwa|BNP Paribas|Exane|Argus|CFRA|KGI`
+  + String.raw`|Citizens JMP|JMP|Lake Street|Ladenburg|H\.?C\.? Wainwright|Telsey|Summit Insights|Tigress|Morningstar)\b`);
+const BROKER_ALIASES: Record<string, string> = { bankofamerica: "bofa", bofasecurities: "bofa", goldmansachs: "goldman", citigroup: "citi", evercoreisi: "evercore",
+  cantorfitzgerald: "cantor", bmocapital: "bmo", rbccapital: "rbc", tdcowen: "cowen", wolferesearch: "wolfe", rothcapital: "roth", rothmkm: "roth",
+  canaccordgenuity: "canaccord", citizensjmp: "jmp" };
+const TARGET_WORDS = /\b(?:price target|target price|price objective|PT)\b/i;
+const NEW_TARGET = /\bto \$\s?(\d[\d,]*(?:\.\d+)?)/;
+const ANY_TARGET = /(?<!from )\$\s?(\d[\d,]*(?:\.\d+)?)(?!\s?(?:billion|million|bn|m|b)\b)/i;
+const RATING_CHANGE = /\b(?:upgrade[sd]?|downgrade[sd]?|initiate[sd]?|start(?:s|ed)?|resume[sd]?|reinstate[sd]?)\b.{0,80}?\b(?:to|at|with)\s+(?:an? )?(strong buy|buy|outperform|overweight|accumulate|add|neutral|hold|equal[- ]weight|market perform|sector perform|peer perform|in[- ]line|underperform|underweight|reduce|sell)\b/i;
+export function analystActions(title: string): string[] {
+  const broker = BROKER.exec(title ?? "");
+  if (!broker) return [];
+  const plain = broker[1].toLowerCase().replace(/[^a-z0-9]/g, "");
+  const firm = BROKER_ALIASES[plain] ?? plain;
+  const keys: string[] = [];
+  if (TARGET_WORDS.test(title)) {
+    const value = NEW_TARGET.exec(title) ?? ANY_TARGET.exec(title);
+    if (value) keys.push(`${firm}|pt|${Number(value[1].replace(/,/g, ""))}`);
+  }
+  const rating = RATING_CHANGE.exec(title);
+  if (rating) keys.push(`${firm}|rating|${rating[1].toLowerCase().replace(/[- ]/g, "")}`);
+  return keys;
+}
+
 /** The grouping rule of the stories: the same headline, or English headlines sharing half their words, within 24 hours. */
 export const storyKey = normalized;
 export const storyWords = words;
@@ -161,12 +216,18 @@ export const STORY_WINDOW_MS = WINDOW_MS;
 function buildWireStories(wire: Record<string, CompanyWireItem[]>, lang: Language, watched?: ReadonlySet<string>): WireStory[] {
   const ja = lang === "ja";
   const items = storyCandidates(wire, lang, watched);
-  type Cluster = { key: string; words: Set<string>; first: number; tickers: string[]; best: (typeof items)[number] };
+  type Cluster = { key: string; words: Set<string>; first: number; tickers: string[]; best: (typeof items)[number]; actions: Set<string> };
   const clusters: Cluster[] = [];
   for (const entry of items) {
     const at = Date.parse(entry.item.publishedAt), key = normalized(entry.title), tokens = words(entry.item.titleEn);
-    const cluster = clusters.find(c => at - c.first <= WINDOW_MS && (c.key === key || similar(c.words, tokens)));
-    if (!cluster) { clusters.push({ key, words: tokens, first: at, tickers: [entry.ticker], best: entry }); continue; }
+    // The same broker action for the same company from another outlet joins the first report (owner, Nov 20).
+    const actions = analystActions(entry.item.titleEn).map(found => `${entry.ticker}|${found}`);
+    // Two broker actions that read alike ("Stifel cuts Marvell price target to $280" / "Needham cuts …") are two stories.
+    const plain = new Set(actions.map(action => action.slice(action.indexOf("|") + 1)));
+    const otherAction = (c: Cluster) => plain.size > 0 && c.actions.size > 0 && ![...c.actions].some(action => plain.has(action.slice(action.indexOf("|") + 1)));
+    const cluster = clusters.find(c => at - c.first <= WINDOW_MS && (actions.some(action => c.actions.has(action)) || ((c.key === key || similar(c.words, tokens)) && !otherAction(c))));
+    if (!cluster) { clusters.push({ key, words: tokens, first: at, tickers: [entry.ticker], best: entry, actions: new Set(actions) }); continue; }
+    for (const action of actions) cluster.actions.add(action);
     if (!cluster.tickers.includes(entry.ticker)) cluster.tickers.push(entry.ticker);
     // The company's own wire text wins over a third party's rewording of it.
     if (entry.item.origin === "wire" && cluster.best.item.origin !== "wire") cluster.best = entry;

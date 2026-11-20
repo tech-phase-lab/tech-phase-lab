@@ -274,8 +274,20 @@ def publisher_counter(publisher):
     return re.sub(r'[^\w .&/-]+', '', str(publisher or ''))[:40].strip() or 'unknown'
 
 
+# Owner, Nov 20 (「いらないニュース全排除で」): the Google News feed names its outlet too. These outlets publish stock picks, ratings
+# columns and "why the stock moved" explainers, not reports of company events (checked on a week of their headlines for the watched
+# companies, Nov 20). Only these are dropped from that feed; an outlet not listed is kept, unlike the Stock News API list above.
+# Seeking Alpha, MarketBeat, Moomoo, TIKR and Traders Union also carry real news items (deals, rating changes) and are kept.
+GNEWS_DROP_PUBLISHERS = ('The Motley Fool', 'Simply Wall St', 'Trefis', 'TradingKey', 'Admirals', 'Zacks Investment Research', 'InvestorPlace',
+                         'Insider Monkey')
+GNEWS_DROP_KEYS = frozenset(publisher_key(n) for n in GNEWS_DROP_PUBLISHERS)
+
+
 def dropped_publisher(row):
-    """A Stock News API row from a publisher that is no longer taken (rows stored before Nov 15 are neither translated nor shown)."""
+    """A Stock News API row from a publisher that is no longer taken (rows stored before Nov 15 are neither translated nor shown), or a
+    Google News row from an opinion and stock-picking outlet (GNEWS_DROP_PUBLISHERS)."""
+    if row['source'] == 'gnews':
+        return publisher_key(row['publisher']) in GNEWS_DROP_KEYS
     return row['source'] == 'stocknews' and not stock_news_publisher_kept(row['publisher'])
 
 
@@ -524,11 +536,75 @@ NOT_NEWS_EN = tuple(re.compile(pattern, flags) for pattern, flags in (
      r'|Prabhudas Lilladher|Navin Fluorine|GE Vernova T&D India)\b|\bcheck (?:out )?(?:the )?(?:revised|updated) target price\b', re.I),
     (r'(?:^|\s)#[A-Za-z0-9_]{3,}\s*$', 0),
 ))
+# Owner, Nov 20 (「いらないニュース全排除で」, 速報 showed a market live blog, a "3 Taiwanese small-cap stocks" list, a stock-split explainer,
+# "Intel 18A vs. TSMC N2: How to Read the Chip Claims" and "Anthropic IPO: Here's What Its Spending Commitments Mean to …"): market live
+# blogs and wraps, stock-picking lists, explainers and opinion are not news about the company. Only wording that a report of a concrete
+# event (results, guidance, a deal, a launch, a ruling, a rating or target change, a hire, a filing) does not use is listed.
+# The same English patterns are LOW_VALUE in lib/research/wire-stories.ts, which also has the Japanese ones; keep the two in step.
+LOW_VALUE_EN = (
+    # market live blogs and market-wide wraps
+    r'\bstock market (?:today|news today|live)\b|\bstocks? (?:today|live)\s*:|[(\[]\s*live(?: updates?| coverage| blog)?\s*[)\]]'
+    r'|\blive (?:updates|coverage|blog)\b|[-–—:|]\s*(?:business |markets? |stock market )?live\s*$'
+    r'|^\s*(?:Dow Jones|Nasdaq|S&P 500|Stock|Stocks) futures\s*:|^\s*(?:market (?:open|close)|closing bell|opening bell|morning bid|markets? wrap)\s*:'
+    # stock-picking lists
+    r"|^\s*beyond [^:]{1,40}:|\b(?:\d{1,2}|two|three|four|five|six|seven|eight|nine|ten)\s+(?:[\w&.'’-]+\s+){0,4}(?:stocks|picks)\s+(?:to|for|that|worth|you|i)\b"
+    r'|\bstocks? to (?:watch|buy|own|hold|consider|avoid|sell)\b|\bstock I.d (?:buy|own|hold)\b'
+    # explainers and opinion
+    r'|\bwhat\b.{0,40}\bmeans?\s+(?:for|to)\b|\bhere.s (?:what|how|the)\b'
+    r'|\bwhat (?:you|investors|shareholders|traders|buyers) (?:need|should|must|ought|have) to know\b|\bwhat to know\b|\beverything (?:you|investors) need to know\b'
+    r'|\bhow to (?:read|play|think about|invest(?: in)?|buy|trade|value|approach|navigate|position)\b'
+    r'|\bis (?:it|now) (?:a|the) (?:good |right |smart )?(?:buy|time to)\b|\bstock a buy\b|\bshould you (?:buy|sell|hold|invest|own|worry|be worried|panic|consider)\b'
+    r'|\b(?:buy|sell|hold),? (?:or|and) (?:sell|hold|buy)\b|^\s*(?:prediction|opinion|analysis|commentary|explainer|my take)\s*:|\bbreakingviews\b'
+    r'|^\s*dear\b|\bbetter buy\s*:|\b(?:no-brainer|screaming buy|millionaire|passive income)\b|\b(?:bull|bear) case\b'
+)
+LOW_VALUE = re.compile(LOW_VALUE_EN, re.I)
 
 
 def hidden_title(title):
-    """True for a headline the site never shows: cut off, noise (NOISE) or not news by the site's own English patterns (NOT_NEWS_EN)."""
-    return truncated(title) or bool(NOISE.search(title)) or any(pattern.search(title) for pattern in NOT_NEWS_EN)
+    """True for a headline the site never shows: cut off, noise (NOISE) or not news by the site's own English patterns (NOT_NEWS_EN,
+    LOW_VALUE)."""
+    return (truncated(title) or bool(NOISE.search(title)) or any(pattern.search(title) for pattern in NOT_NEWS_EN)
+            or bool(LOW_VALUE.search(title)))
+
+
+# Owner, Nov 20 (「MRVLは同じの2つある」): "Stifel maintains Marvell Technology at Buy, lowers price target to $280 from $370" (TradingView)
+# and "Stifel cuts Marvell stock price target on deal concerns to $280" (Investing.com UK) are one broker action. A headline that names a
+# known broker and a new price target (or a new rating) is keyed by that broker and value, so copies from other outlets are one story.
+BROKERS = (r'Stifel|Morgan Stanley|Goldman(?: Sachs)?|J\.?P\.? ?Morgan|BofA(?: Securities)?|Bank of America|Citi(?:group)?|Wells Fargo|Barclays|UBS'
+           r'|Deutsche Bank|Jefferies|Bernstein|Evercore(?: ISI)?|Mizuho|Needham|Piper Sandler|Raymond James|KeyBanc|Truist|Oppenheimer'
+           r'|Cantor(?: Fitzgerald)?|Wedbush|TD Cowen|Cowen|Baird|BMO(?: Capital)?|RBC(?: Capital)?|Rosenblatt|Benchmark|Loop Capital|Melius'
+           r'|HSBC|Macquarie|Nomura|Susquehanna|Wolfe(?: Research)?|Northland|Craig-Hallum|Roth(?: Capital| MKM)?|Canaccord(?: Genuity)?'
+           r'|D\.?A\.? Davidson|B\.? Riley|Guggenheim|Seaport|Arete|New Street|Redburn|CLSA|Daiwa|BNP Paribas|Exane|Argus|CFRA|KGI'
+           r'|Citizens JMP|JMP|Lake Street|Ladenburg|H\.?C\.? Wainwright|Telsey|Summit Insights|Tigress|Morningstar')
+BROKER = re.compile(r'\b(' + BROKERS + r')\b')
+BROKER_ALIASES = {'bankofamerica': 'bofa', 'bofasecurities': 'bofa', 'goldmansachs': 'goldman', 'citigroup': 'citi', 'evercoreisi': 'evercore',
+                  'cantorfitzgerald': 'cantor', 'bmocapital': 'bmo', 'rbccapital': 'rbc', 'tdcowen': 'cowen', 'wolferesearch': 'wolfe',
+                  'rothcapital': 'roth', 'rothmkm': 'roth', 'canaccordgenuity': 'canaccord', 'citizensjmp': 'jmp'}
+TARGET_WORDS = re.compile(r'\b(?:price target|target price|price objective|PT)\b', re.I)
+NEW_TARGET = re.compile(r'\bto \$\s?(\d[\d,]*(?:\.\d+)?)')
+ANY_TARGET = re.compile(r'(?<!from )\$\s?(\d[\d,]*(?:\.\d+)?)(?!\s?(?:billion|million|bn|m|b)\b)', re.I)
+RATING_CHANGE = re.compile(r'\b(?:upgrade[sd]?|downgrade[sd]?|initiate[sd]?|start(?:s|ed)?|resume[sd]?|reinstate[sd]?)\b.{0,80}?\b(?:to|at|with)\s+(?:an? )?'
+                           r'(strong buy|buy|outperform|overweight|accumulate|add|neutral|hold|equal[- ]weight|market perform|sector perform|peer perform'
+                           r'|in[- ]line|underperform|underweight|reduce|sell)\b', re.I)
+
+
+def analyst_actions(title):
+    """The broker actions a headline reports, as keys: (broker, 'pt', new target) and (broker, 'rating', new rating). Empty for a
+    headline that names no known broker with a new target or rating. Two headlines that share a key report the same action."""
+    broker = BROKER.search(title or '')
+    if not broker:
+        return frozenset()
+    firm = re.sub(r'[^a-z0-9]', '', broker.group(1).lower())
+    firm = BROKER_ALIASES.get(firm, firm)
+    keys = set()
+    if TARGET_WORDS.search(title):
+        value = NEW_TARGET.search(title) or ANY_TARGET.search(title)
+        if value:
+            keys.add((firm, 'pt', float(value.group(1).replace(',', ''))))
+    rating = RATING_CHANGE.search(title)
+    if rating:
+        keys.add((firm, 'rating', re.sub(r'[- ]', '', rating.group(1).lower())))
+    return frozenset(keys)
 
 
 def locally_rejected(row):
@@ -600,17 +676,38 @@ def candidates(db, now_ts):
     done = {}
     for r in db.execute('''SELECT w.ticker, w.title, w.published_at FROM company_wire w JOIN company_wire_article_ja j ON j.article=w.article
                          WHERE w.published_at>=?''', (lookback,)):
-        done.setdefault(r['ticker'], []).append((story_words(r['title']), datetime.fromisoformat(r['published_at']).timestamp()))
+        done.setdefault(r['ticker'], []).append((story_words(r['title']), datetime.fromisoformat(r['published_at']).timestamp(),
+                                                 analyst_actions(r['title'])))
+    # Owner, Nov 20 (「MRVLは同じの2つある」): one broker action reported by several outlets is one story. Only the earliest copy is
+    # translated, so the page shows the first report; a copy is skipped when a translated or an earlier untranslated copy of the same
+    # action (same company, broker and new target or rating, within 24 hours) exists.
+    published_ts = lambda r: datetime.fromisoformat(r['published_at']).timestamp()
+    first_action = {}
+    for r in entries:
+        r['analyst'] = analyst_actions(r['title'])
+        rank = (published_ts(r), r['article'])
+        for t in r['tickers']:
+            for action in r['analyst']:
+                first_action[(t, action)] = min(first_action.get((t, action), rank), rank)
+
+    def later_copy(r, t):
+        at, window = published_ts(r), PUBLIC_HOURS * 3600
+        return any(any(action in actions and abs(at - published) <= window for _, published, actions in done.get(t, []))
+                   or (first_action[(t, action)] < (at, r['article']) and at - first_action[(t, action)][0] <= window)
+                   for action in r['analyst'])
+
     chosen, taken = [], {}
     # Best publisher first; within a tier, the newest first. An article is taken while any of its tickers still lacks the story.
     for r in sorted(entries, key=order):
         words = story_words(r['title'])
         arrived = datetime.fromisoformat(r['first_seen_at']).timestamp()
-        if all(any(same_story(words, other) for other, published in done.get(t, []) if published >= arrived - PUBLIC_HOURS * 3600)
-               or any(same_story(words, other) for other in taken.get(t, [])) for t in r['tickers']):
+        # Two broker actions that read alike ("Stifel cuts Marvell price target to $280" / "Needham cuts ...") are two stories.
+        alike = lambda other, actions: same_story(words, other) and not (r['analyst'] and actions and not r['analyst'] & actions)
+        if all(any(alike(other, actions) for other, published, actions in done.get(t, []) if published >= arrived - PUBLIC_HOURS * 3600)
+               or any(alike(other, actions) for other, actions in taken.get(t, [])) or later_copy(r, t) for t in r['tickers']):
             continue
         for t in r['tickers']:
-            taken.setdefault(t, []).append(words)
+            taken.setdefault(t, []).append((words, r['analyst']))
         chosen.append(r)
     # Owner, Nov 16: the batch takes Stock News stories (the home's) first, then the newest first.
     chosen.sort(key=lambda r: (r['source'] != 'stocknews', -datetime.fromisoformat(r['published_at']).timestamp()))

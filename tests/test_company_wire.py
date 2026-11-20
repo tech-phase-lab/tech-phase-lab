@@ -469,3 +469,93 @@ class LawFirmSolicitationTests(unittest.TestCase):
         block = re.search(r'export const LAW_FIRM_SOLICITATION = new RegExp\(\[(.*?)\]\.join', ts, re.S).group(1)
         self.assertEqual(''.join(re.findall(r'String\.raw`([^`]*)`', block)),
                          company_wire.LAW_FIRM_SOLICITATION_EN + '|' + company_wire.LAW_FIRM_SOLICITATION_JA)
+
+
+class LowValueTests(unittest.TestCase):
+    """Owner, Nov 20 (「いらないニュース全排除で。MRVLは同じの2つある」): market live blogs, stock lists, explainers and opinion are not
+    translated or shown, and one broker action reported by two outlets is translated once."""
+
+    LOW_VALUE = ('Stock Market Today: Anthropic’s Mega-IPO Sends Stocks Lower for a Second Day',
+                 'Stock market today: Tech futures slide as Anthropic sinks 10% after IPO (live)',
+                 'Anthropic shares fall in pre-market trade as AI rout hits global markets - business live',
+                 'Dow Jones Futures: Techs Tumble, Anthropic Dives After Ugly Market Reversal To New Lows',
+                 'Beyond TSMC: 3 Taiwanese Small-Cap Tech Stocks to Watch',
+                 'Sandisk Stock Splits 8-for-1 — What It Means for Investors',
+                 "Sandisk’s stock split is almost here. This is what investors need to know.",
+                 'Intel 18A vs. TSMC N2: How to Read the Chip Claims',
+                 "Anthropic IPO: Here's What Its Spending Commitments Mean to Microsoft, SpaceX, Amazon, and Alphabet",
+                 'Prediction: Micron Stock Is Going to Soar After Its December Earnings Report',
+                 'Dear Sandisk Stock Fans, Mark Your Calendars for November 20')
+    NEWS = ('Microsoft announces general availability of Azure Cobalt 200',
+            'The U.S. Approved 879,000 Nvidia and AMD Chips for China in 6 Months',
+            'Stifel maintains Marvell Technology at Buy, lowers price target to $280 from $370',
+            'Stifel cuts Marvell stock price target on deal concerns to $280',
+            'BMO Capital Markets Upgrades Bloom Energy (NYSE:BE) to Outperform',
+            'Nvidia reports record third-quarter revenue of $115.8 billion', 'Sandisk completes 8-for-1 stock split and increases authorized shares',
+            'TSMC halts advanced chip orders from Chinese designers in Taiwan', 'Nvidia sells 10 million shares to SoftBank',
+            'Arista names new chief financial officer', 'Live Nation shares jump after earnings')
+
+    def setUp(self):
+        import tempfile, os
+        self.dir = tempfile.TemporaryDirectory()
+        self.path = os.path.join(self.dir.name, 'db.sqlite')
+        self.now = datetime(2026, 11, 20, 14, 40, tzinfo=timezone.utc)
+
+    def tearDown(self):
+        self.dir.cleanup()
+
+    def test_low_value_headlines_are_hidden_and_news_is_kept(self):
+        self.assertEqual([t for t in self.LOW_VALUE if not company_wire.hidden_title(t)], [])
+        self.assertEqual([t for t in self.NEWS if company_wire.hidden_title(t)], [])
+
+    def test_opinion_outlets_on_google_news_are_dropped_and_others_kept(self):
+        row = lambda publisher, source='gnews': {'title': 'Nvidia stock: a closer look', 'publisher': publisher, 'source': source}
+        self.assertTrue(company_wire.locally_rejected(row('The Motley Fool')))
+        self.assertTrue(company_wire.locally_rejected(row('Simply Wall St')))
+        for publisher in ('Reuters', 'Seeking Alpha', 'MarketBeat', 'Investing.com UK', 'TradingView', 'Yahoo Finance'):
+            self.assertFalse(company_wire.locally_rejected(row(publisher)), publisher)
+        # Yahoo's feed names no outlet; its rows are judged by their titles only.
+        self.assertFalse(company_wire.locally_rejected(row('', 'yahoo')))
+
+    def test_the_patterns_match_lib_research_wire_stories(self):
+        import os, re
+        ts = open(os.path.join(os.path.dirname(__file__), '..', 'lib', 'research', 'wire-stories.ts'), encoding='utf-8').read()
+        block = re.search(r'export const LOW_VALUE = new RegExp\(\[(.*?)\]\.join', ts, re.S).group(1)
+        self.assertEqual(''.join(re.findall(r'String\.raw`([^`]*)`', block)), company_wire.LOW_VALUE_EN)
+
+    def test_a_broker_action_is_keyed_by_broker_and_new_target_or_rating(self):
+        self.assertEqual(company_wire.analyst_actions('Stifel maintains Marvell Technology at Buy, lowers price target to $280 from $370'),
+                         {('stifel', 'pt', 280.0)})
+        self.assertEqual(company_wire.analyst_actions('Stifel cuts Marvell stock price target on deal concerns to $280'), {('stifel', 'pt', 280.0)})
+        self.assertEqual(company_wire.analyst_actions('BMO Upgrades Bloom Energy to Outperform With $230 Price Target'),
+                         {('bmo', 'pt', 230.0), ('bmo', 'rating', 'outperform')})
+        self.assertEqual(company_wire.analyst_actions('Marvell agrees to buy Lumentum for $115 billion'), frozenset())
+
+    def store(self, *items):
+        with company_wire.connect(self.path) as db:
+            for title, publisher, minutes in items:
+                published = self.now - timedelta(minutes=minutes)
+                company_wire.store(db, [{'ticker': 'MRVL', 'source': 'gnews', 'title': title, 'publisher': publisher,
+                                         'url': f'https://news.example/{minutes}', 'published': published}], 'Marvell Technology', seen_at=published)
+            company_wire.schema_translation(db)
+
+    def pending(self):
+        with company_wire.connect(self.path) as db:
+            return [r['title'] for r in company_wire.pending_rows(db, self.now.timestamp())]
+
+    def test_one_broker_action_from_two_outlets_is_translated_once_the_first_report(self):
+        self.store(('Stifel maintains Marvell Technology at Buy, lowers price target to $280 from $370', 'TradingView', 69),
+                   ('Stifel cuts Marvell stock price target on deal concerns to $280', 'Investing.com UK', 16),
+                   ('Needham cuts Marvell price target to $280', 'Reuters', 10))
+        self.assertEqual(sorted(self.pending()), ['Needham cuts Marvell price target to $280',
+                                                  'Stifel maintains Marvell Technology at Buy, lowers price target to $280 from $370'])
+
+    def test_a_later_copy_of_a_translated_broker_action_is_not_sent(self):
+        self.store(('Stifel maintains Marvell Technology at Buy, lowers price target to $280 from $370', 'TradingView', 69))
+        with company_wire.connect(self.path) as db:
+            article = db.execute('SELECT article FROM company_wire').fetchone()[0]
+            db.execute('INSERT INTO company_wire_article_ja(article,title_ja,model,created_at) VALUES(?,?,?,?)',
+                       (article, 'マーベル、スティーフェルが維持も目標株価を280ドルに引き下げ', 'm', self.now.isoformat()))
+            db.commit()
+        self.store(('Stifel cuts Marvell stock price target on deal concerns to $280', 'Investing.com UK', 16))
+        self.assertEqual(self.pending(), [])
