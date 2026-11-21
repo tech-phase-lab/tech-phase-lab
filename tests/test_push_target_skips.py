@@ -74,6 +74,13 @@ class TargetSkipTests(unittest.TestCase):
         self.assertEqual(sent, [{'title': 'MRVL · 目標株価の変更', 'body': 'Stifel: $370 → $280', 'tag': sent[0]['tag'],
                                  'url': '/research/price-targets'}])
 
+    def test_a_change_from_the_night_sent_after_7_is_an_ordinary_notice(self):
+        # Nov 20 (HQ): the send time alone decides. Posted 06:55 Japan time, sent 07:05: no mark, not silent.
+        dawn = mrvl(published='2026-11-20T21:55:00+00:00', observed='2026-11-20T22:04:30+00:00')
+        result, sent, _ = self.deliver([dawn], stamp('2026-11-20T22:05:00+00:00'))
+        self.assertEqual((result['attempted'], result['quiet']), (1, 0))
+        self.assertEqual((sent[0]['title'], 'silent' in sent[0]), ('MRVL · 目標株価の変更', False))
+
     def test_an_earnings_flash_in_quiet_hours_is_sent_silently_and_marked(self):
         flash = {'kind': 'earnings', 'ticker': 'MRVL', 'period': 'Q3', 'titleJa': 'MRVL Q3決算：売上高が予想を上回る',
                  'titleEn': 'MRVL Q3 earnings beat', 'publishedAt': '2026-11-20T14:22:00+00:00', 'observedAt': '2026-11-20T14:26:44+00:00'}

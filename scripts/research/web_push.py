@@ -365,10 +365,11 @@ def quiet_zone_for(language):
 
 
 def in_quiet_hours(device, *moments):
-    """おやすみモード: true when the device is asleep now or was asleep when the news happened. Hours are wall-clock hours in
-    the device's zone (Japan time or US Eastern Time, with daylight saving time); 23 to 7 spans midnight.
-    Nov 20 (owner): おやすみモード never holds a notice back. Such a notice is sent at once with its usual content, quietly
-    (quietly(): no sound or vibration where the phone allows it) and marked 「おやすみモード」 / "Quiet mode"."""
+    """おやすみモード: true when the device is asleep at any of `moments`. Hours are wall-clock hours in the device's zone
+    (Japan time or US Eastern Time, with daylight saving time); 23 to 7 spans midnight.
+    Nov 20 (owner): おやすみモード never holds a notice back. A notice sent while the device is asleep (senders pass the send
+    time only, never the time of the news: a 6:30 item sent at 7:05 is an ordinary notice) goes out at once with its usual
+    content, quietly (quietly(): no sound or vibration) and marked 「おやすみモード」 / "Quiet mode"."""
     if not device['quiet_on']:
         return False
     start, end = device['quiet_start'], device['quiet_end']
@@ -748,8 +749,8 @@ def scheduled_demo_target(db, value, transport=None, now=None):
     """Send the demo notice for this variable value once it is due. Returns None (no value), 'waiting', 'done' (this value was already
     handled), or the outcome recorded now: 'sent', 'no-device', 'late', 'invalid'.
     One log line per outcome, never a device or text. A device in its おやすみモード gets the notice exactly as for a real price-target
-    notice (Nov 20: sent quietly and marked; in_quiet_hours, called as deliver calls it: now and the moment of the change, here the
-    scheduled time); 'quiet' in the log line counts those devices."""
+    notice (Nov 20: sent quietly and marked; in_quiet_hours at the send time, as deliver calls it); 'quiet' in the log line counts
+    those devices."""
     value = (value or '').strip()
     if not value:
         return None
@@ -777,7 +778,7 @@ def scheduled_demo_target(db, value, transport=None, now=None):
             message = price_target_payload(DEMO_TARGET['ticker'], DEMO_TARGET['firm'], DEMO_TARGET['previous'], DEMO_TARGET['latest'],
                                            language == 'ja', tag)
             message['url'] = DEMO_TARGET_URL
-            if in_quiet_hours(row, now, parsed[0]):
+            if in_quiet_hours(row, now):
                 quiet += 1
                 message = quietly(message, language == 'ja')
             try:
@@ -1191,8 +1192,8 @@ def deliver(db, items, transport=send, now=None, monotonic_now=time.monotonic,
                 late = target_change(item) is not None and 0 <= now - observed <= 300
                 skip(item, 'detected-late' if late else 'published-not-fresh', device['id'])
                 continue
-            # Nov 20 (owner): never held for おやすみモード; sent now, quietly and marked (below).
-            quiet = in_quiet_hours(device, now, item['published'].timestamp())
+            # Nov 20 (owner): never held for おやすみモード; sent now, quietly and marked (below) when the device is asleep now.
+            quiet = in_quiet_hours(device, now)
             if '*' not in watched and not watched.intersection(item.get('tickers') or [item['ticker']]):
                 skip(item, 'ticker-not-watched', device['id'])
                 continue
@@ -1413,7 +1414,7 @@ def deliver_notes(db, posts, transport=send, now=None, wall_now=time.time, entit
             payload = {'title': 'RIZEL\u2019S DESK' if not ja else 'リゼルのひとりごと',
                        'body': 'リゼルのひとりごとが更新されました' if ja else "RIZEL\u2019s Notes were updated",
                        'tag': key, 'url': '/research/notes'}
-            if in_quiet_hours(device, now, published):
+            if in_quiet_hours(device, now):
                 payload = quietly(payload, ja)
             try:
                 code = noting(db, transport, attempted_at)(json.loads(device['subscription']), payload)
@@ -1475,7 +1476,7 @@ def deliver_weekly_drafts(db, drafts, transport=send, now=None, wall_now=time.ti
             payload = {'title': '週刊 Tech Phase PRO' if ja else 'Tech Phase PRO Weekly',
                        'body': '週刊の下書きができました' if ja else 'A draft of the weekly issue is ready',
                        'tag': key, 'url': '/research/weekly'}
-            if in_quiet_hours(device, now, made):
+            if in_quiet_hours(device, now):
                 payload = quietly(payload, ja)
             try:
                 code = noting(db, transport, attempted_at)(json.loads(device['subscription']), payload)
@@ -1496,8 +1497,8 @@ def announce(db, key, select, args, payload_for, moments, *, accept=None, transp
     """Send one notice, once per device. `select` picks the devices that switched this kind on.
 
     Same guarantees as the senders above: the claim is written before the network call, an ambiguous failure is never
-    retried, PRO is checked again, and a notice that fell in the device's おやすみモード (when it happened or now) is sent at once,
-    quietly and marked (quietly(); Nov 20, owner: it used to be dropped)."""
+    retried, PRO is checked again, and a notice sent while the device is in its おやすみモード (the send time decides; `moments`,
+    the time of the news, no longer does) goes out at once, quietly and marked (quietly(); Nov 20, owner: it used to be dropped)."""
     now = wall_now() if now is None else now
     attempted = accepted = 0
     for device in db.execute(select, args).fetchall():
@@ -1522,7 +1523,7 @@ def announce(db, key, select, args, payload_for, moments, *, accept=None, transp
             continue
         ja = device['language'] == 'ja'
         payload = {**payload_for(ja), 'tag': key}
-        if in_quiet_hours(device, now, *moments):
+        if in_quiet_hours(device, now):
             payload = quietly(payload, ja)
         try:
             code = noting(db, transport, attempted_at)(json.loads(device['subscription']), payload)

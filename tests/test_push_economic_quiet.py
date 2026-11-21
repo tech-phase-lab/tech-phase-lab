@@ -86,6 +86,15 @@ class Quiet(Base):
         push.deliver_weekly_issues(self.db, items, **self.options(at(7, 20)))
         self.assertEqual(len(self.sent), 1)
 
+    def test_a_night_notice_sent_after_the_night_ends_is_an_ordinary_notice(self):
+        # Nov 20 (HQ): the send time alone decides. Made at 6:30, sent at 7:05: no mark, not silent.
+        made = at(6, 30)
+        items = [{'id': 'i3', 'number': 14, 'publishedAt': datetime.fromtimestamp(made, timezone.utc).isoformat()}]
+        self.save({'weeklyIssue': True})
+        push.deliver_weekly_issues(self.db, items, **self.options(at(7, 5)))
+        self.assertEqual([(m['title'], m['body'], 'silent' in m) for m in self.sent],
+                         [('週刊 Tech Phase PRO', '第14号が公開されました', False)])
+
     def test_the_same_notice_in_the_daytime_is_sent_once(self):
         made = at(10)
         items = [{'id': 'i2', 'number': 13, 'publishedAt': datetime.fromtimestamp(made, timezone.utc).isoformat()}]
