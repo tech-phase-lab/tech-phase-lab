@@ -157,6 +157,21 @@ class IssueWeekTests(Base):
         self.assertNotIn("結果", card["label"])
         self.assertEqual(card["range"], "予想 0.4%・前回 0.8%・10月分")
 
+    def test_a_scheduled_indicator_counts_only_when_its_release_is_in_the_week(self):
+        """Owner, Nov 21: 「結果1.1%」 was shown in a week with no indicator release. A PCE post dated this week is not this week's PCE: the
+        release schedule has PCE on Nov 25. Retail sales are not in the schedule, so their own release date decides."""
+        publish_flash(self.db, 3, PCE, "2026-11-18T13:00:00+00:00", released="2026-11-18T12:59:00+00:00")
+        publish_flash(self.db, 4, RETAIL, "2026-11-17T13:31:00+00:00", released="2026-11-17T13:30:00+00:00")
+        self.db.commit()
+        notes = []
+        evidence = gen.collect(self.db, NOV21, notes=notes)
+        self.assertEqual([item["label"] for item in evidence if item["kind"] == "indicator"], ["小売売上高"])
+        self.assertTrue(any("indicator-not-scheduled" in line and "PCE" in line for line in notes), notes)
+        # The bars of an indicator say 発表値 / 予想 / 前回, never a bare 結果.
+        retail = next(item for item in evidence if item["kind"] == "indicator")
+        row = gen.build_compare(evidence, {"evidenceId": retail["id"], "factKey": "actual"})
+        self.assertEqual((row["label"], [v["name"] for v in row["values"]]), ("小売売上高", ["発表値", "予想", "前回"]))
+
     def test_titles_lose_the_reference_month_in_parentheses(self):
         self.assertEqual(gen.plain_title("米国PCE物価指数（10月）"), "米国PCE物価指数")
         self.assertEqual(gen.plain_title("米国小売売上高（10月・速報）"), "米国小売売上高")
@@ -245,7 +260,7 @@ class LeadTests(Base):
         self.assertTrue(lead.startswith("今週はナスダック100が週間で10.5%下落し、2020年3月以来の大きな下げになりました。"), lead)
         self.assertIn("10.5%安", headline)
         self.assertTrue(any("omits-market-move" in line and line.startswith("【定型文】導入文") for line in notes))
-        self.assertEqual([p["heading"] for p in parts if p["section"] == "market"][:2], ["今週の指数と金・銀・ビットコイン", "今週大きく動いた銘柄"])
+        self.assertEqual([p["heading"] for p in parts if p["section"] == "market"], ["今週の騰落率", "今週の指数と金・銀・BTC", "今週大きく動いた銘柄"])
 
     def test_a_lead_that_leads_with_the_move_and_its_computed_comparison_is_kept(self):
         market = crash_market()
@@ -284,6 +299,48 @@ class LeadTests(Base):
                 gen.generate(self.db, NOV21, transport=model, env=ENV)
         self.assertIn("weekly-no-market-data", str(caught.exception))
         self.assertEqual(model.calls, [])
+
+
+class LookTests(Base):
+    """Owner, Nov 21 (on production): the card title wrapped on phones, every card carried a source line, the issue was mostly text, and a
+    price read 79.3 beside 2-decimal prices."""
+
+    def test_the_market_is_drawn_as_bars_and_cards_with_no_source_line_on_any_card(self):
+        model = FakeModel(model_output(headline="ナスダック100が週間10.5%安", lead="ナスダック100は週間で10.5%下落し、2020年3月以来の大きさでした。", parts=[]))
+        saved = gen.generate(self.db, NOV21, transport=model, env=ENV, market=crash_market())
+        market = [p for p in saved["parts"] if p["section"] == "market"]
+        self.assertEqual([(p["type"], p["heading"]) for p in market], [("moves", "今週の騰落率"), ("numbers", "今週の指数と金・銀・BTC"), ("moves", "今週大きく動いた銘柄")])
+        self.assertLessEqual(len("今週の指数と金・銀・BTC"), 13, "one line on a phone")
+        bars = market[0]["bars"]
+        self.assertEqual(bars[0], {"label": "ナスダック100", "value": -10.5, "group": "index"})
+        self.assertIn({"label": "BTC", "value": -10.5, "group": "asset"}, bars)
+        cards = market[1]["cards"]
+        self.assertIn("BTC", [card["label"] for card in cards])
+        self.assertTrue(all(card["digits"] == 2 for card in cards))
+        self.assertFalse(any("出典" in json.dumps(p, ensure_ascii=False) for p in saved["parts"]), "no source line on a card")
+        self.assertEqual([s["url"] for s in saved["sources"]].count("https://twelvedata.com/"), 1)
+        self.assertIn("Twelve Data", saved["sources"][-1]["title"])
+
+    def test_the_issue_store_accepts_signed_bars_and_fixed_decimals_and_nothing_else(self):
+        part = {"type": "moves", "heading": "今週の騰落率", "unit": "%", "bars": [{"label": "QQQ", "value": -10.5, "group": "index"}], "note": ""}
+        self.assertEqual(weekly._part(part)["bars"][0]["value"], -10.5)
+        for bad in ({**part, "bars": []}, {**part, "bars": [{"label": "QQQ", "value": "x"}]}, {**part, "bars": [{"label": "QQQ", "value": 1, "group": "other"}]}):
+            with self.assertRaises(ValueError):
+                weekly._part(bad)
+        card = {"label": "SNDK", "value": 79.3, "previous": 110.7, "unit": "ドル", "delta": "pct", "digits": 2}
+        self.assertEqual(weekly._part({"type": "numbers", "heading": "x", "cards": [card], "note": ""})["cards"][0]["digits"], 2)
+        with self.assertRaises(ValueError):
+            weekly._part({"type": "numbers", "heading": "x", "cards": [{**card, "digits": 5}], "note": ""})
+
+    def test_a_text_about_one_companys_news_shows_that_companys_photo(self):
+        rows = [{"title": "AMD dives on short seller report of alleged China exposure", "url": "https://www.cnbc.com/amd", "publisher": "CNBC",
+                 "publishedAt": "2026-11-19T16:24:00+00:00", "ticker": "AMD"}]
+        with mock.patch.object(gen, "wire_headlines", return_value=rows):
+            model = FakeModel(model_output(headline="ナスダック100が週間10.5%安", lead="ナスダック100は週間で10.5%下落し、2020年3月以来の大きさでした。",
+                                           parts=[part("text", heading="AMDに空売りレポート", body="CNBCは、AMDに空売りレポートが出たと報じました。", evidenceIds=["E2"])]))
+            saved = gen.generate(self.db, NOV21, transport=model, env=ENV, market=crash_market())
+        text = next(p for p in saved["parts"] if p.get("heading") == "AMDに空売りレポート")
+        self.assertEqual(text["tickers"], ["AMD"])
 
 
 class HeadlineRankingTests(Base):

@@ -129,6 +129,10 @@ def _part_body(raw):
                     "range": _text(card.get("range"), "range", 80, False), "delta": delta}
             if item["value"] is None and item["outlook"] is None:
                 raise ValueError("invalid-weekly-card")
+            if card.get("digits") is not None:  # fixed decimals (prices: 79.30, not 79.3), owner Nov 21
+                if card["digits"] not in (0, 1, 2) or type(card["digits"]) is not int:
+                    raise ValueError("invalid-weekly-digits")
+                item["digits"] = card["digits"]
             cards.append(item)
         part["cards"] = cards
         part["note"] = _text(raw.get("note"), "note", 600, False)
@@ -161,6 +165,19 @@ def _part_body(raw):
                 raise ValueError("invalid-weekly-date") from None
             items.append({"date": day.isoformat(), "name": _text(item.get("name"), "name", 80), "comment": _text(item.get("comment"), "comment", 200, False)})
         part["items"] = items
+    elif kind == "moves":
+        # The week's moves as bars left (down) and right (up) of zero, built by the program from computed closes (owner, Nov 21: "文字ばかり").
+        bars = []
+        for bar in _list(raw.get("bars"), "bars", 12):
+            if not isinstance(bar, dict) or bar.get("group") not in (None, "index", "asset", "stock"):
+                raise ValueError("invalid-weekly-bar")
+            value = _number(bar.get("value"), "bar", True)
+            if abs(value) > 1000:
+                raise ValueError("invalid-weekly-bar")
+            bars.append({"label": _text(bar.get("label"), "label", 30), "value": value, "group": bar.get("group") or "index"})
+        if not bars:
+            raise ValueError("invalid-weekly-bars")
+        part.update(unit=_text(raw.get("unit"), "unit", 12, False), bars=bars, note=_text(raw.get("note"), "note", 200, False))
     elif kind == "chart":
         bars = []
         for bar in _list(raw.get("bars"), "bars", 10):

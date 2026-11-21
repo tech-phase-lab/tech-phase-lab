@@ -3,7 +3,7 @@ import { readFileSync } from "node:fs";
 import test from "node:test";
 
 const read = file => readFileSync(new URL(`../${file}`, import.meta.url), "utf8");
-const { cardBadge, formatNumber, barHeights, scheduleDate, groupNotes, arrangeDrafts } = await import("../lib/research/weekly-format.ts");
+const { cardBadge, formatNumber, barHeights, scheduleDate, groupNotes, arrangeDrafts, moveWidths, signedPercent } = await import("../lib/research/weekly-format.ts");
 const { isOwnerAccount, OWNER_ACCOUNT_ID, PRODUCTION_OWNER_ACCOUNT_ID } = await import("../lib/membership/entitlements.ts");
 const card = over => ({ label: "a", value: null, outlook: null, previous: null, unit: "", outlookUnit: "", range: "", delta: null, ...over });
 
@@ -139,4 +139,15 @@ test("making another draft by hand asks first and says it costs money; nothing e
   const make = screen.slice(screen.indexOf("const makeNow"), screen.indexOf("const toggle = async"));
   assert.match(make, /window\.confirm\("[^"]*料金[^"]*"\)\) return;\s*setBusy\(true\)/, "the cost confirm comes before the request");
   assert.equal((screen.match(/send\("generate"/g) ?? []).length, 1, "only the owner's button asks for a new draft");
+});
+
+test("prices keep two decimals and the week's moves are drawn around zero (owner, Nov 21)", () => {
+  assert.equal(formatNumber(79.3, 2), "79.30");
+  assert.equal(formatNumber(58951.5, 2), "58,951.50");
+  assert.equal(formatNumber(79.3), "79.3", "cards without digits are unchanged");
+  assert.deepEqual(moveWidths([-10.5, -21, 4.2, 0]), [50, 100, 20, 0]);
+  assert.equal(signedPercent(-10.5), "−10.5%");
+  assert.equal(signedPercent(3), "+3.0%");
+  const screen = read("app/research/weekly/issues.tsx");
+  for (const text of ['part.type === "moves"', "<svg", "formatNumber(card.value, card.digits)", "aria-label"]) assert.ok(screen.includes(text), text);
 });
