@@ -7,13 +7,14 @@ import React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { formatTargetTime } from '../lib/research/price-target-time.ts';
 import { publicPriceTargets } from '../lib/research/price-targets.ts';
+import { priceTargetSplitView } from '../lib/research/price-target-splits.ts';
 
 const require = createRequire(import.meta.url);
 const source = await readFile(new URL('../app/research/price-target-card.tsx', import.meta.url), 'utf8');
 const compiled = ts.transpileModule(source, { compilerOptions: { module: ts.ModuleKind.CommonJS, jsx: ts.JsxEmit.ReactJSX } }).outputText;
 const loaded = { exports: {} };
 new Function('require', 'module', 'exports', compiled)(name => name.endsWith('.module.css') ? { default: {} }
-  : name.endsWith('/price-target-time') ? { formatTargetTime } : require(name), loaded, loaded.exports);
+  : name.endsWith('/price-target-time') ? { formatTargetTime } : name.endsWith('/price-target-splits') ? { priceTargetSplitView } : require(name), loaded, loaded.exports);
 const Card = loaded.exports.default;
 const primary = { id: 1, source: 'X · Market reporters', url: 'https://x.com/wallstengine/status/101', publishedAt: '2026-10-02T10:00:00Z', observedAt: '2026-10-02T10:00:01Z' };
 const secondary = { id: 2, source: 'X · TipRanks', url: 'https://x.com/TipRanks/status/102', publishedAt: '2026-10-02T10:01:00Z', observedAt: '2026-10-02T10:01:01Z' };
@@ -55,4 +56,14 @@ test('new badges follow the current clock and reject unknown, future or stale ti
   const render = asOf => renderToStaticMarkup(React.createElement(Card, { item: target, lang: 'ja', now: asOf ? Date.parse(asOf) : null }));
   assert.match(render('2026-10-02T10:02:00Z'), /NEW/);
   for (const asOf of [null, '2026-10-01T10:02:00Z', '2026-10-03T10:02:00Z']) assert.doesNotMatch(render(asOf), /NEW/);
+});
+
+test('SNDK 8-for-1: a pre-split old target is shown on the new basis and is not a cut; a pre-split action gets the converted figures', () => {
+  const now = Date.parse('2026-11-21T01:00:00Z');
+  const after = { ...primary, publishedAt: '2026-11-20T12:00:00Z', observedAt: '2026-11-20T12:00:01Z', ticker: 'SNDK', firm: 'Firm', previous: 1400, latest: 180 };
+  const html = renderToStaticMarkup(React.createElement(Card, { item: after, lang: 'ja', now }));
+  assert.match(html, /\$175 → \$180/); assert.match(html, /引き上げ/); assert.match(html, /旧目標 \$1,400 は株式分割（8:1）前の基準/);
+  const before = { ...after, publishedAt: '2026-11-18T12:00:00Z', observedAt: '2026-11-18T12:00:01Z', previous: 1400, latest: 1600 };
+  const old = renderToStaticMarkup(React.createElement(Card, { item: before, lang: 'en', now }));
+  assert.match(old, /\$1,400 → \$1,600/); assert.match(old, /on today&#x27;s basis \$175 → \$200/);
 });

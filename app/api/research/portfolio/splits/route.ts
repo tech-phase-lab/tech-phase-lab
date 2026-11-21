@@ -14,5 +14,5 @@ export async function GET(request: Request) {
   if (!quotesConfigured()) return json({ error: "not-configured" }, 503);
   const tickers = (new URL(request.url).searchParams.get("tickers") ?? "").split(",").map(t => t.trim().toUpperCase()).filter(Boolean);
   if (!tickers.length || tickers.length > 60 || tickers.some(t => !TICKER_PATTERN.test(t))) return json({ error: "invalid-input" }, 400);
-  return json({ splits: await loadSplits(tickers) });
+  return json(await loadSplits(tickers));
 }

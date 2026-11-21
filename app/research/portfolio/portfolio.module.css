@@ -210,3 +210,5 @@
 .sheet.srcSheet h2 small{color:#8e9aab}
 
 .splitNote{margin:0 0 14px;padding:10px 14px;border:1px solid #6b5a2c;border-radius:12px;background:#171409;color:#e3c981;font-size:13px;line-height:1.6}
+.splitNote p{margin:0 0 6px}.splitNote ul{margin:0 0 8px;padding-left:18px;overflow-wrap:anywhere}
+.splitNote button{min-height:36px;margin:4px 6px 0 0;padding:6px 12px;border:1px solid #6b5a2c;border-radius:10px;background:#231d0d;color:#f0d897;font:inherit}

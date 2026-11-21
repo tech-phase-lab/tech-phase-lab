@@ -3,6 +3,8 @@ import { createNotificationOutboxJob } from './notification-outbox.ts';
 import { jstSlot } from './notification-job.ts';
 import { createClerkNotificationRecipient } from './notification-recipient.ts';
 import { createCloseProvider } from './notification-closes.ts';
+import { createSettingsSplitAdjuster } from './notification-splits.ts';
+import { mergeSplits, type SplitLoader } from '../research/stock-splits.ts';
 
 type Job = (userId: string) => Promise<{ kind: string; status: string }[]>;
 type Recipient = ReturnType<typeof createClerkNotificationRecipient>;
@@ -19,6 +21,8 @@ export function createNotificationQueueRunner(
     makeJob?: (resolveInputs: Parameters<typeof createNotificationOutboxJob>[1]) => Job;
     recipient: Recipient;
     closes: ReturnType<typeof createCloseProvider>;
+    /** Stock splits of the watched symbols (provider + manual list). Without it, the manual list (lib/research/stock-splits.json) is used. */
+    splits?: SplitLoader;
     limit?: number;
     /** 試験用の安全弁: 指定があれば、この本人IDだけを対象にする(他の会員の設定が有効でも候補を作らない)。 */
     onlyUserIds?: string[];
@@ -47,7 +51,9 @@ export function createNotificationQueueRunner(
     }
     report.incomplete = rows.length > limit;
     const job: Job =
-      (options.makeJob ?? ((resolveInputs) => createNotificationOutboxJob(pool, resolveInputs, now)))(async (userId, symbols) => {
+      (options.makeJob ?? ((resolveInputs) => createNotificationOutboxJob(pool, resolveInputs, now, undefined, undefined,
+        // Reference prices saved before a stock split are judged on today's basis (closes are split-adjusted). Manual list when no loader.
+        createSettingsSplitAdjuster(options.splits ?? (async (symbols) => Object.fromEntries(symbols.map((s) => [s, mergeSplits(s, [])]))), now))))(async (userId, symbols) => {
         const who = await options.recipient(userId);
         const source = await options.closes(symbols);
         report.marketDate = source.marketDate;

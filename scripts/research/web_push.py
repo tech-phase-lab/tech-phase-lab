@@ -22,6 +22,8 @@ from urllib.parse import urlsplit, urlencode, urlunsplit
 from urllib.error import HTTPError
 from urllib.request import Request, build_opener, HTTPRedirectHandler
 
+import stock_splits
+
 DEVICE_LIMIT = 20
 DELIVERY_RETENTION_SECONDS = 7 * 86400
 PROVIDER_DURATION_LIMIT_MS = 60_000
@@ -698,8 +700,13 @@ def price_target_payload(ticker, firm, previous, latest, ja, tag):
     """The phone notice for one price-target change. The real notices (deliver) and the owner's demo notice (scheduled_demo_target) are
     both built here, so the demo always looks exactly like a real one."""
     # Nov 15: a price-target notice opens the price-target page (it opened the dashboard's #what-changed view).
+    # Nov 21 (SNDK 8-for-1): an old target still quoted before the split is put on today's basis, so "$1400 → $175" is not read as a cut.
+    body = f"{firm}: ${previous:g} → ${latest:g}"
+    ratio = stock_splits.pre_split_previous(ticker, previous, latest)
+    if ratio:
+        body = f"{firm}: ${round(previous / ratio, 2):g} → ${latest:g}" + (f"（旧目標${previous:g}は{ratio:g}:1分割前）" if ja else f" (old ${previous:g} was before the {ratio:g}:1 split)")
     return {'title': f"{ticker} · " + ('目標株価の変更' if ja else 'Price target update'),
-            'body': f"{firm}: ${previous:g} → ${latest:g}",
+            'body': body,
             'tag': tag, 'url': '/research/price-targets'}
 
 
