@@ -6,7 +6,7 @@ import { useResearchLanguage } from "../use-research-language";
 import { useMemberSettled, useOwnerMode } from "../member-display-provider";
 import { useIdentityRefresh } from "../identity-provider";
 import WeeklyDraftWriter, { WeeklyDraftWriterSlot } from "./draft-writer";
-import { arrangeDrafts, barHeights, cardBadge, formatNumber, groupNotes, scheduleDate, shortDate, type WeeklyCard } from "@/lib/research/weekly-format";
+import { arrangeDrafts, barHeights, cardBadge, formatNumber, groupNotes, moveWidths, scheduleDate, shortDate, signedPercent, type WeeklyCard } from "@/lib/research/weekly-format";
 import { companyPhotos } from "@/lib/research/company-photos";
 import styles from "./issues.module.css";
 
@@ -17,6 +17,7 @@ type Part = (
   | { type: "timeline"; heading: string; points: { when: string; event: string; comment: string; tone: "up" | "down" | "flat" }[] }
   | { type: "schedule"; heading: string; items: { date: string; name: string; comment: string }[] }
   | { type: "chart"; heading: string; title: string; unit: string; bars: { label: string; value: number }[]; note: string }
+  | { type: "moves"; heading: string; unit: string; bars: { label: string; value: number; group: "index" | "asset" | "stock" }[]; note: string }
   | { type: "highlight"; text: string }) & { section?: Section };
 // Group titles shown once, where a run of parts of that kind begins. The takeaways and the schedule carry their own headings.
 const SECTION_TITLES: Partial<Record<Section, [string, string]>> = { earnings: ["決算", "Earnings"], indicators: ["経済指標", "Economic indicators"], market: ["市場全体の流れ", "The wider market"] };
@@ -48,8 +49,8 @@ function Takeaways({ part, ja, format }: { part: Extract<Part, { type: "text" }>
 function Compare({ rows, ja }: { rows: NonNullable<Extract<Part, { type: "numbers" }>["compare"]>; ja: boolean }) {
   return <div className={styles.compare} role="group" aria-label={ja ? "予想・前回との比較" : "Versus forecast and previous"}>{rows.map((row, index) => {
     const top = Math.max(...row.values.map(v => Math.abs(v.value)), Number.MIN_VALUE);
-    return <figure key={index}><figcaption>{row.label}</figcaption>{row.values.map(v => <div key={v.name} className={`${styles.cmpRow} ${v.name === "結果" ? styles.cmpMain : ""}`}>
-      <span>{ja ? v.name : ({ 結果: "Result", 予想: "Forecast", 前回: "Previous" } as Record<string, string>)[v.name] ?? v.name}</span>
+    return <figure key={index}><figcaption>{row.label}</figcaption>{row.values.map(v => <div key={v.name} className={`${styles.cmpRow} ${v.name === "結果" || v.name === "発表値" ? styles.cmpMain : ""}`}>
+      <span>{ja ? v.name : ({ 結果: "Result", 発表値: "Result", 予想: "Forecast", 前回: "Previous" } as Record<string, string>)[v.name] ?? v.name}</span>
       <i style={{ width: `${Math.max((Math.abs(v.value) / top) * 100, 2)}%` }} /><b>{formatNumber(v.value)}{row.unit}</b>
     </div>)}</figure>;
   })}</div>;
@@ -60,9 +61,9 @@ function Numbers({ part, ja }: { part: Extract<Part, { type: "numbers" }>; ja: b
       const badge = cardBadge(card, ja ? "ja" : "en");
       return <article key={index} className={styles.card}>
         <h4>{card.label}</h4>
-        {card.value !== null && <p className={styles.big}><b>{formatNumber(card.value)}</b>{card.unit && <small>{card.unit}</small>}</p>}
+        {card.value !== null && <p className={styles.big}><b>{formatNumber(card.value, card.digits)}</b>{card.unit && <small>{card.unit}</small>}</p>}
         {card.outlook !== null && <p className={styles.outlook}><span>{card.value !== null ? (ja ? "次四半期の見通し" : "Next-quarter outlook") : (ja ? "見通し" : "Outlook")}</span> <b className={badge ? styles[`val_${badge.tone}`] : undefined}>{formatNumber(card.outlook)}</b>{(card.outlookUnit || card.unit) && <small>{card.outlookUnit || card.unit}</small>}</p>}
-        {card.previous !== null && <p className={styles.previous}><span>{ja ? "前回" : "Previous"}</span> {formatNumber(card.previous)}{card.unit}</p>}
+        {card.previous !== null && <p className={styles.previous}><span>{ja ? "前回" : "Previous"}</span> {formatNumber(card.previous, card.digits)}{card.unit}</p>}
         {badge && <p className={`${styles.badge} ${styles[badge.tone]}`}><b>{badge.text}</b><span>{badge.caption}</span></p>}
         {card.range && <p className={styles.range}>{card.range}</p>}
       </article>;
@@ -102,6 +103,29 @@ function Chart({ part, ja }: { part: Extract<Part, { type: "chart" }>; ja: boole
     {part.note && <p className={styles.partNote}>{part.note}</p>}
   </figure>;
 }
+/** The week's moves (owner, Nov 21: "文字ばかりで見づらい"): one row per index, market or stock, a bar left of zero for a fall and right
+ * for a rise, drawn as inline SVG from the computed figures. The value is written beside each bar, so the picture never stands alone. */
+function Moves({ part, ja }: { part: Extract<Part, { type: "moves" }>; ja: boolean }) {
+  const widths = moveWidths(part.bars.map(bar => bar.value));
+  const row = 30, label = 108, value = 64, half = 150, width = label + half * 2 + value, height = part.bars.length * row + 8, zero = label + half;
+  const caption = part.bars.map(bar => `${bar.label} ${signedPercent(bar.value)}`).join("、");
+  return <figure className={styles.moves}>
+    <svg viewBox={`0 0 ${width} ${height}`} role="img" aria-label={(ja ? "週間の騰落率: " : "Weekly change: ") + caption} preserveAspectRatio="xMinYMin meet">
+      <line x1={zero} x2={zero} y1={0} y2={height} className={styles.movesZero} />
+      {part.bars.map((bar, index) => {
+        const y = index * row + 6, length = (widths[index] / 100) * half, down = bar.value < 0;
+        const x = down ? zero - length : zero;
+        return <g key={index} className={styles[`moves_${bar.group}`]}>
+          {bar.group !== "stock" && index > 0 && part.bars[index - 1].group !== bar.group && <line x1={0} x2={width} y1={y - 4} y2={y - 4} className={styles.movesRule} />}
+          <text x={label - 8} y={y + 14} textAnchor="end" className={styles.movesLabel}>{bar.label}</text>
+          <rect x={x} y={y + 2} width={Math.max(length, 1)} height={row - 12} rx={3} className={down ? styles.movesDown : styles.movesUp} />
+          <text x={width - 4} y={y + 14} textAnchor="end" className={`${styles.movesValue} ${down ? styles.movesValueDown : styles.movesValueUp}`}>{signedPercent(bar.value)}</text>
+        </g>;
+      })}
+    </svg>
+    {part.note && <p className={styles.partNote}>{part.note}</p>}
+  </figure>;
+}
 /** The companies a text is about, side by side: free-license photos only, each credited with its author and license (owner, Nov 15). */
 function Photos({ tickers, ja }: { tickers?: string[]; ja: boolean }) {
   const shown = (tickers ?? []).map(ticker => ({ ticker, photo: companyPhotos[ticker] })).filter(item => item.photo);
@@ -119,6 +143,7 @@ function Body({ part, ja, format }: { part: Part; ja: boolean; format: Format })
   if (part.type === "timeline") return <Timeline part={part} format={format} />;
   if (part.type === "schedule") return <Schedule part={part} ja={ja} />;
   if (part.type === "chart") return <Chart part={part} ja={ja} />;
+  if (part.type === "moves") return <Moves part={part} ja={ja} />;
   return null;
 }
 
