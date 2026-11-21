@@ -72,8 +72,14 @@ test("the owner's review memo is grouped apart from the body, with a one-line co
   assert.equal(groupNotes(["【取得なし】x"]).summary, "確認メモ 1件(要対応はありません)");
   // Drafts saved before the tags still sort sensibly.
   const old = groupNotes(["見出しはAIの文が確認に通らなかったため、定型文にしています（changed-negation）", "ここは取れませんでした: numbers", "数字が食い違った: 雇用統計は強め", "QCOMの決算数値は、論点を絞るため掲載を見送りました。"]);
-  assert.deepEqual(old.counts, { attention: 1, substituted: 1, missing: 1, omitted: 1 });
+  assert.deepEqual(old.counts, { attention: 1, substituted: 1, missing: 1, omitted: 1, verified: 0 });
   assert.equal(old.groups[1].lines[0].code, "changed-negation");
+});
+test("the computed market figures are listed in the memo with their source and are not counted as to-do (Nov 21)", () => {
+  const memo = groupNotes(["【検証】QQQ 週間-10.5% = 2026-11-20終値 608.45 ÷ 2026-11-13終値 679.89 − 1。出典: Twelve Data の日足終値", "【取得なし】x"]);
+  assert.deepEqual(memo.groups.map(g => g.kind), ["missing", "verified"]);
+  assert.equal(memo.groups[1].title, "検証用の数字(出典と計算)");
+  assert.equal(memo.summary, "確認メモ 2件(要対応はありません)");
 });
 test("the draft shows the memo apart from the issue and the issue groups its parts by section (Nov 12)", () => {
   const screen = read("app/research/weekly/issues.tsx");

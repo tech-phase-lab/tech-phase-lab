@@ -23,15 +23,55 @@ def make_db(path):
     db = weekly.connect(path)
     market_results.schema(db)
     db.executescript("""
-      CREATE TABLE IF NOT EXISTS signal_events(id INTEGER PRIMARY KEY, url TEXT);
+      CREATE TABLE IF NOT EXISTS signal_events(id INTEGER PRIMARY KEY, url TEXT, tickers_json TEXT, published_at TEXT, published_on TEXT);
       CREATE TABLE IF NOT EXISTS official_research_publications(event_id INTEGER PRIMARY KEY, sha TEXT, body_sha TEXT, payload TEXT, evidence TEXT, started_at TEXT, public_at TEXT, generation_ms INTEGER);
     """)
     return db
 
 
-def publish_flash(db, event_id, item, at):
+def publish_flash(db, event_id, item, at, released=None):
+    """A stored flash: `at` is when this service stored it, `released` the source post's own time (payload publishedAt, as in production)."""
     db.execute("INSERT INTO market_result_publications(event_id,source_id,url,sha,payload,published_at,processing_ms) VALUES(?,?,?,?,?,?,0)",
-               (event_id, "s", item["url"], "sha", json.dumps(item), at))
+               (event_id, "s", item["url"], "sha", json.dumps({"publishedAt": released or at, **item}), at))
+
+
+def daily_series(weekly_closes, first_monday):
+    """Daily closes (Mon..Fri) whose Friday closes are `weekly_closes`, one week after another from `first_monday`."""
+    from datetime import date, timedelta
+    rows, day = [], date.fromisoformat(first_monday)
+    for close in weekly_closes:
+        for offset in range(5):
+            rows.append({"datetime": (day + timedelta(days=offset)).isoformat(), "close": str(close)})
+        day += timedelta(days=7)
+    return {"status": "ok", "values": rows}
+
+
+def fake_prices(drop_week="2026-11-02", crash_pct=-10.5):
+    """A Twelve Data stand-in: every index flat at 100 except one -11.3% week in March 2020 and the issue's week at `crash_pct`."""
+    from datetime import date, timedelta
+    start = date(2019, 12, 30)
+    weeks = (date.fromisoformat(drop_week) - start).days // 7 + 1
+    closes, level = [], 100.0
+    for i in range(weeks):
+        monday = start + timedelta(days=7 * i)
+        if monday.isoformat() == "2020-03-16":
+            level *= 1 - 0.113
+        if monday.isoformat() == drop_week:
+            level *= 1 + crash_pct / 100
+        closes.append(round(level, 4))
+
+    def transport(path, params):
+        symbols = params["symbol"].split(",")
+        body = {symbol: daily_series(closes, start.isoformat()) for symbol in symbols}
+        return body[symbols[0]] if len(symbols) == 1 else body
+    return transport
+
+
+def week_market(now=None, crash_pct=-10.5):
+    from datetime import date
+    issue = datetime.fromtimestamp(now or SATURDAY, JST).date()
+    monday, _ = gen.weekly_market.week_of(issue)
+    return gen.weekly_market.compute(issue, transport=fake_prices(monday.isoformat(), crash_pct))
 
 
 MU = {"kind": "earnings", "ticker": "MU", "period": "Q4 2026", "url": "https://x.com/tipranks/status/1",
@@ -82,6 +122,14 @@ class Base(unittest.TestCase):
         publish_flash(self.db, 2, JOBS, "2026-11-06T13:31:00+00:00")
         publish_flash(self.db, 3, {**MU, "ticker": "OLD", "url": "https://x.com/tipranks/status/9"}, "2026-10-01T00:00:00+00:00")
         self.db.commit()
+        # The fixtures' companies report on made-up dates: the release schedule's results dates are tested on their own (WindowTests).
+        # Prices come from a stand-in for Twelve Data with a calm market (no notable move) unless a test says otherwise.
+        self.market = week_market(crash_pct=-1.0)
+        for patch in (mock.patch.object(gen, "scheduled_results", return_value=None),
+                      mock.patch.object(gen, "market_facts", side_effect=lambda issue_date, env=None: week_market(
+                          datetime(issue_date.year, issue_date.month, issue_date.day, 9, tzinfo=JST).timestamp(), crash_pct=-1.0))):
+            patch.start()
+            self.addCleanup(patch.stop)
 
     def tearDown(self):
         self.db.close(); self.temp.cleanup()
@@ -123,7 +171,7 @@ class WhenTests(Base):
 
 class CollectTests(Base):
     def test_only_this_weeks_checked_results_are_evidence_and_each_has_an_id(self):
-        news = [{"title": "半導体株が上昇", "url": "https://example.com/n1"}, {"title": "", "url": "https://example.com/n2"}, {"title": "http only", "url": "http://x"}]
+        news = [{"title": "半導体株が上昇", "url": "https://example.com/n1", "publishedAt": "2026-11-05T15:00:00Z"}, {"title": "", "url": "https://example.com/n2"}, {"title": "http only", "url": "http://x"}]
         evidence = gen.collect(self.db, SATURDAY, news)
         self.assertEqual([item["id"] for item in evidence], ["E1", "E2", "E3"])
         self.assertEqual([item["kind"] for item in evidence], ["earnings", "indicator", "news"])
@@ -154,7 +202,7 @@ class GenerateTests(Base):
         saved = gen.generate(self.db, SATURDAY, transport=model, env=ENV)
         self.assertEqual((saved["status"], saved["auto"], saved["number"]), ("draft", True, None))
         self.assertEqual(saved["date"], "2026-11-07")
-        numbers = next(p for p in saved["parts"] if p["type"] == "numbers")
+        numbers = next(p for p in saved["parts"] if p["type"] == "numbers" and p["section"] != "market")
         revenue = numbers["cards"][0]
         self.assertEqual((revenue["label"], revenue["value"], revenue["unit"], revenue["outlook"], revenue["outlookUnit"]), ("MU 売上高", 113.2, "億ドル", 125.0, "億ドル"))
         self.assertIn("会社見通し $12.5B ± $300M", revenue["range"])
@@ -165,7 +213,7 @@ class GenerateTests(Base):
         self.assertEqual(weekly.member_issues(self.db)["issues"], [], "a draft is never visible to members")
         sent = json.loads(model.calls[0]["input"])
         self.assertEqual([e["id"] for e in sent["evidence"]][:2], ["E1", "E2"])
-        self.assertEqual({e["type"] for e in sent["evidence"][2:]}, {"schedule"}, "next week's releases are evidence the sentences may cite")
+        self.assertEqual({e["type"] for e in sent["evidence"][2:]}, {"market", "schedule"}, "the computed market facts and next week's releases are evidence the sentences may cite")
         self.assertEqual(sent["recentIssues"], [], "no earlier issue yet")
         self.assertIn("数字は、資料に書かれた値だけ", model.calls[0]["instructions"])
         self.assertIs(model.calls[0]["store"], False)
@@ -218,7 +266,7 @@ class GenerateTests(Base):
         saved = gen.generate(self.db, SATURDAY, transport=FakeModel(out), env=ENV)
         sections = [p["section"] for p in saved["parts"]]
         self.assertEqual(sections[0], "summary"); self.assertEqual(sections[-1], "schedule")
-        self.assertEqual([s for s in sections if s not in ("summary", "schedule")], sorted((s for s in sections if s not in ("summary", "schedule")), key=("earnings", "indicators", "market").index))
+        self.assertEqual([s for s in sections if s not in ("summary", "schedule")], sorted((s for s in sections if s not in ("summary", "schedule")), key=("market", "earnings", "indicators").index))
         self.assertLess(sections.index("earnings"), sections.index("indicators"))
         summary = saved["parts"][0]
         self.assertEqual(summary["heading"], "今週の主な結論")
@@ -226,13 +274,13 @@ class GenerateTests(Base):
         body_text = json.dumps(saved["parts"], ensure_ascii=False)
         for leak in ("取れませんでした", "見送りました", "changed-", "unsupported-number", "AIの文が"):
             self.assertNotIn(leak, body_text, "owner-only lines never reach the body")
-        self.assertTrue(all(line.startswith(("【要確認】", "【定型文】", "【取得なし】", "【AI省略】")) for line in saved["notes"]))
+        self.assertTrue(all(line.startswith(("【要確認】", "【定型文】", "【取得なし】", "【AI省略】", "【検証】")) for line in saved["notes"]))
         self.assertTrue(saved["notes"][0].startswith("【要確認】"), "lines that need the owner come first")
-        self.assertTrue(saved["notes"][-1].startswith("【AI省略】"))
+        self.assertTrue(saved["notes"][-1].startswith("【検証】"), "the computed market figures close the memo, with their source")
         self.assertTrue(any("〔unsupported-number〕" in line for line in saved["notes"]), "the error code lives in the memo")
 
     def test_a_substituted_headline_is_marked_in_the_memo_with_its_code_and_notes_are_deduplicated_and_capped(self):
-        notes = [gen.note(gen.OMITTED, "x")] + [gen.note(gen.ATTENTION, f"n{i}") for i in range(40)] + [gen.note(gen.ATTENTION, "n1")]
+        notes = [gen.note(gen.OMITTED, "x")] + [gen.note(gen.ATTENTION, f"n{i}") for i in range(70)] + [gen.note(gen.ATTENTION, "n1")]
         done = gen.finish_notes(notes)
         self.assertEqual(len(done), gen.MAX_NOTES)
         self.assertEqual(len(set(done)), len(done))
@@ -241,12 +289,12 @@ class GenerateTests(Base):
 
     def test_the_numbers_part_carries_result_forecast_previous_bars_only_from_checked_figures_in_one_unit(self):
         saved = gen.generate(self.db, SATURDAY, transport=FakeModel(model_output()), env=ENV)
-        self.assertEqual(next(p for p in saved["parts"] if p["type"] == "numbers")["compare"], [], "revenue and EPS have no forecast or previous in the evidence")
+        self.assertEqual(next(p for p in saved["parts"] if p["type"] == "numbers" and p["section"] != "market")["compare"], [], "revenue and EPS have no forecast or previous in the evidence")
         out = model_output()
         out["parts"].append(part("numbers", heading="雇用統計の数字", evidenceIds=["E2"], refs=[{"evidenceId": "E2", "factKey": "nonfarm-payrolls"}, {"evidenceId": "E2", "factKey": "unemployment-rate"}]))
         saved = gen.generate(self.db, SATURDAY, transport=FakeModel(out), env=ENV)
         jobs = next(p for p in saved["parts"] if p["type"] == "numbers" and p["heading"] == "雇用統計の数字")
-        self.assertEqual(jobs["compare"][0], {"label": "非農業部門雇用者数", "unit": "人", "values": [{"name": "結果", "value": 29000.0}, {"name": "予想", "value": 50000.0}, {"name": "前回", "value": 133000.0}]})
+        self.assertEqual(jobs["compare"][0], {"label": "米雇用統計 非農業部門雇用者数", "unit": "人", "values": [{"name": "結果", "value": 29000.0}, {"name": "予想", "value": 50000.0}, {"name": "前回", "value": 133000.0}]})
         self.assertEqual([v["name"] for v in jobs["compare"][1]["values"]], ["結果", "前回"], "no forecast for the unemployment rate: two bars")
         mixed = {"key": "x", "value": "29K", "comparisons": {"forecast": "4.2%"}}
         self.assertIsNone(gen.build_compare([{"id": "E1", "facts": [mixed], "ticker": ""}], {"evidenceId": "E1", "factKey": "x"}), "units differ: no bars")
@@ -309,7 +357,7 @@ class GenerateTests(Base):
         out["parts"] = [out["parts"][0]]
         out["skipped"] = ["雇用統計"]
         saved = gen.generate(self.db, SATURDAY, transport=FakeModel(out), env=ENV)
-        self.assertIn(gen.note(gen.MISSING, "今週に結果が出た経済指標が、集まっていません。"), saved["notes"])
+        self.assertIn(gen.note(gen.MISSING, "今週に発表された経済指標はありません。載せるのは今週が発表日の指標だけです。"), saved["notes"])
         self.assertIn(gen.note(gen.OMITTED, "AIが載せなかった話題: 雇用統計"), saved["notes"])
         self.assertIn("numbers", [p["type"] for p in saved["parts"]])
 
@@ -366,7 +414,7 @@ class DepthAndFiguresTests(Base):
         out = model_output()
         out["parts"] = [p for p in out["parts"] if p["type"] != "numbers"]
         saved = gen.generate(self.db, SATURDAY, transport=FakeModel(out), env=ENV)
-        numbers = [p for p in saved["parts"] if p["type"] == "numbers"]
+        numbers = [p for p in saved["parts"] if p["type"] == "numbers" and p["section"] != "market"]
         self.assertEqual([p["heading"] for p in numbers], ["決算の数字", "経済指標の数字"])
         self.assertEqual(numbers[0]["cards"][0]["label"], "MU 売上高")
         jobs = numbers[1]
@@ -408,7 +456,7 @@ class HeadlineTests(Base):
     company did not change its buyback plan) made every affirmative Japanese headline fail with changed-negation, so the fixed line was used."""
 
     def add_note(self, en, ja="会社は自社株買いの計画を変えていません。"):
-        self.db.execute("INSERT INTO signal_events(id,url) VALUES(7,'https://example.com/note')")
+        self.db.execute("INSERT INTO signal_events(id,url,published_on) VALUES(7,'https://example.com/note','2026-11-05')")
         payload = {"title": {"ja": "MUの公式発表", "en": "Micron update"}, "summary": {"ja": ja, "en": en}, "facts": []}
         self.db.execute("INSERT INTO official_research_publications(event_id,sha,body_sha,payload,evidence,started_at,public_at,generation_ms) VALUES(7,'s','b',?,'[]',?,?,0)",
                         (json.dumps(payload, ensure_ascii=False), "2026-11-06T00:00:00+00:00", "2026-11-06T00:00:00+00:00"))
@@ -483,17 +531,17 @@ class CostTests(Base):
         self.assertEqual(sent.call_args.kwargs.get("attempts"), 1)
 
     def test_a_company_with_a_deep_analysis_is_described_by_it_not_by_the_long_note(self):
-        self.db.executescript("""DROP TABLE signal_events; CREATE TABLE signal_events(id INTEGER PRIMARY KEY, url TEXT, tickers_json TEXT);
-          CREATE TABLE deep_analyses(kind TEXT, subject TEXT, payload TEXT, source_url TEXT, source_title TEXT, state TEXT, published_at TEXT);""")
-        self.db.execute("INSERT INTO signal_events(id,url,tickers_json) VALUES(7,'https://example.com/mu',?)", ('["MU"]',))
-        self.db.execute("INSERT INTO signal_events(id,url,tickers_json) VALUES(8,'https://example.com/amd',?)", ('["AMD"]',))
+        self.db.executescript("""DROP TABLE signal_events; CREATE TABLE signal_events(id INTEGER PRIMARY KEY, url TEXT, tickers_json TEXT, published_at TEXT, published_on TEXT);
+          CREATE TABLE deep_analyses(source_ref TEXT, created_at TEXT, kind TEXT, subject TEXT, payload TEXT, source_url TEXT, source_title TEXT, state TEXT, published_at TEXT);""")
+        self.db.execute("INSERT INTO signal_events(id,url,tickers_json,published_on) VALUES(7,'https://example.com/mu',?,'2026-11-05')", ('["MU"]',))
+        self.db.execute("INSERT INTO signal_events(id,url,tickers_json,published_on) VALUES(8,'https://example.com/amd',?,'2026-11-05')", ('["AMD"]',))
         long_ja = "長い公式発表の本文。" * 100
         for event_id, title in ((7, "MUの公式発表"), (8, "AMDの公式発表")):
             payload = {"title": {"ja": title, "en": title}, "summary": {"ja": long_ja, "en": "Long official note."}, "facts": []}
             self.db.execute("INSERT INTO official_research_publications(event_id,sha,body_sha,payload,evidence,started_at,public_at,generation_ms) VALUES(?,'s','b',?,'[]',?,?,0)",
                             (event_id, json.dumps(payload, ensure_ascii=False), "2026-11-06T00:00:00+00:00", "2026-11-06T00:00:00+00:00"))
         analysis = {"headline": {"ja": "MUはHBMが伸びました", "en": "MU HBM grew"}, "points": [{"ja": "HBMの売上が伸びました。", "en": "HBM revenue grew."}]}
-        self.db.execute("INSERT INTO deep_analyses VALUES('earnings','MU',?,'https://example.com/mu-ir','MU','done','2026-11-06T01:00:00+00:00')", (json.dumps(analysis, ensure_ascii=False),))
+        self.db.execute("INSERT INTO deep_analyses VALUES('event:7:s','2026-11-05T20:00:00+00:00','earnings','MU',?,'https://example.com/mu-ir','MU','done','2026-11-06T01:00:00+00:00')", (json.dumps(analysis, ensure_ascii=False),))
         self.db.commit()
         model = FakeModel(model_output())
         gen.generate(self.db, SATURDAY, transport=model, env=ENV)

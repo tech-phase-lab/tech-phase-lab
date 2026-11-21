@@ -33,8 +33,10 @@ import brief_generator
 import llm_cost
 import factual_validation
 import weekly_issues
+import weekly_market
 
 JST = ZoneInfo("Asia/Tokyo")
+NEW_YORK = ZoneInfo("America/New_York")
 SCHEDULE_PATH = Path(__file__).with_name("release_schedule.json")
 WINDOW_DAYS = 7
 OUTLOOK_DAYS = 9
@@ -52,8 +54,16 @@ POLICY = """あなたは「リゼル」として、週刊 Tech Phase PRO の1号
 - 比べる数字は、numbers(数字カード)か chart(棒グラフ)に任せます。refs に、資料の evidenceId と factKey を指定してください。値と増減はこちらで入れます。
 - 単位と通貨を、資料のとおりに必ず付けます。前年比か前期比かも、資料に書いてあれば明記します。
 
+【今週の相場(いちばん大事)】
+- type が market の資料は、実際の終値からプログラムが計算した今週の騰落率です(指数・金・銀・ビットコイン・追っている銘柄)。「〜以来の大きさ」「〜以降で最大」も、ここに書いてあるときだけ使えます。資料にない歴史比較(「コロナ以来」「過去最大」など)は書きません。
+- marketNotable が true の週は、lead(今週のひとこと)の1文目を、その週の相場の動きにします。指数の名前(例: ナスダック100)、資料にある騰落率、資料にある「〜以来」をそのまま入れます。headline にも相場の動きを入れます。決算や指標の話は、そのあとです。
+- その週の相場を動かした話(政策・要人の発言・大きな企業ニュース・資金の動き)は、type が news の資料から、市場への影響が大きい順に取り上げます。news の資料にない出来事は書きません。理由を断定せず、「〜と報じられました」「〜が重なりました」のように資料のとおりに書きます。
+- 相場が大きく動いた週に「決算が強かったので株価も上がりそう」のような、実際の値動きと逆の見立ては書きません。見立ては market の資料の数字と合わせます。
+
 【何を書くか】
 - その週に市場を動かした指標、ハイテク・半導体の決算、市場全体の流れから、重要なものを4〜6個に絞ります。資料が足りない週は少なくてかまいません。
+- 資料はすべて今週(weekStart〜weekEnd)に起きたことです。それより前の決算や指標を、今週の話として書きません。
+- 経済指標は、何の指標か(例: 米小売売上高)、前月比か前年比か、結果と予想・前回の比較が分かるように書きます。「結果1.1%」のような、何の数字か分からない書き方はしません。
 - Tech Phase はハイテク・半導体株の投資サイトです。どの話題も、「ハイテク・半導体株にとって何を意味するか」まで書きます。事実(何が起きたか)→数字→見立て(ハイテク株への影響。「〜という見方です」「〜のかもしれません」)→次に見るもの、の順に深く掘ります。ただし資料にない理由や原因を事実として書きません。
 - 決算は、売上・EPSなどの結果と、会社見通し・予想との差を、資料にある数字で書きます。強い部分と弱い部分の両方を挙げます。
 - 資料に「計算」と書かれた行(例: 予想比、前回比、見通し比)は、プログラムが検証済みの数字から計算した値です。そのまま使ってかまいません。自分で計算はしません。
@@ -67,6 +77,9 @@ POLICY = """あなたは「リゼル」として、週刊 Tech Phase PRO の1号
 - type が analysis の資料は、決算資料を読み込んだ深掘り分析です(各文は数字の検査に通っています)。決算の話題では、売上やEPSの結果だけで終わらせず、analysis にある「何が伸びたか・何が弱いか・会社が何を見通しているか・次に何を確かめるか」まで書いてください。PRO会員向けなので、ニュースの見出しを言い換えただけの文は書きません。
 - 資料にあったのに載せなかった話題は、skipped に話題の名前だけを短く書きます(「〜を見送りました」「記載していません」のような、制作側の言い訳の文は書きません)。
 - recentIssues は、直近の号の見出しとひとことです。同じ書き出し・同じ締め・同じ言い回しを避けてください。
+
+【表記】
+- 通貨は「ドル」と書きます(「米ドル」とは書きません)。閉じ括弧のすぐあとに句読点を置きません。飾らない、平易な文で書きます。
 
 【文体(リゼルの書き方)】
 - 丁寧語(です・ます)を基本にします。語尾を揃えず、「〜はず。」「〜ください。」「〜ましょう。」「〜ですよ!」「〜でしょうか?」を混ぜます。
@@ -149,7 +162,7 @@ def _table(db, name):
 
 def _fact_line(fact):
     compared = fact.get("comparisons") or {}
-    extra = ", ".join(f"{name} {compared[name]}" for name in ("forecast", "previous") if compared.get(name))
+    extra = ", ".join(f"{name} {compared[name]}" for name in ("forecast", "previous", "yearAgo") if compared.get(name))  # yearAgo: the same quarter a year before
     return f"{fact.get('en', fact.get('key', ''))}: {fact.get('value', '')}" + (f" ({extra})" if extra else "")
 
 
@@ -189,43 +202,175 @@ def derived_lines(facts):
     return lines
 
 
-def collect(db, now, news=()):
-    """Evidence for the week: each entry has an id, a label, its checked facts, and the exact text the numbers are checked against."""
-    start = datetime.fromtimestamp(now - WINDOW_DAYS * 86400, timezone.utc).isoformat()
+# ---- the issue's week, and the date of each event (owner, Nov 21) ---------------------------------------------------------------------
+# The Nov 21 draft carried SK hynix's results, released on Oct 28. Every source was picked by the time THIS service handled it (a flash's
+# insertion time, a translation's public time, a deep analysis's publication time), and SK hynix's SEC 6-K copies of older releases were
+# first stored on Nov 13 and Nov 16. An item now enters an issue only when the EVENT itself (the results release, the indicator release,
+# the headline) falls inside the issue's week, and the earliest date known for it decides: the source's own publication date, a date the
+# release states in its title or dateline, and, for company results, the results date in the release schedule this service keeps.
+
+MONTH_NUMBERS = {name: i for i, name in enumerate(("january", "february", "march", "april", "may", "june", "july", "august", "september",
+                                                   "october", "november", "december"), 1)}
+TITLE_DATE = re.compile(r"\b(January|February|March|April|May|June|July|August|September|October|November|December|Jan|Feb|Mar|Apr|Jun|Jul|Aug|Sep|Sept|Oct|Nov|Dec)\.?\s+(\d{1,2}),?\s+(20\d\d)\b", re.I)
+# A press-release dateline ("SEOUL, October 28, 2026 /PRNewswire/ --", "October 28, 2026 — SK hynix announced") or "announced on <date>".
+DATELINE = re.compile(r"(?:(?:announced|reported|released)\s+(?:on\s+)?(?P<a>" + TITLE_DATE.pattern[2:-2] + r"))|(?:(?P<b>" + TITLE_DATE.pattern[2:-2]
+                      + r")\s*(?:/[A-Za-z ]+/|[-–—]{1,2}|\(BUSINESS WIRE\)|\(GLOBE NEWSWIRE\)))", re.I)
+RESULTS_WORDS = re.compile(r"results|earnings|quarter|決算|四半期|業績", re.I)
+SCHEDULE_REACH_DAYS = 75  # a results date in the schedule further back than this is a different quarter, not this release
+
+
+def issue_window(now):
+    """(first, last) New York dates of the issue's week: from the Saturday before the trading week (a Monday release in Asia is still Sunday in
+    New York) to its Friday. A Saturday issue covers the Monday..Friday just before it."""
+    monday, friday = weekly_market.week_of(datetime.fromtimestamp(now, JST).date())
+    return monday - timedelta(days=2), friday
+
+
+def ny_date(value):
+    """The New York calendar date of an ISO timestamp, or the date itself for a date-only value. None when it cannot be read."""
+    text = str(value or "").strip()
+    if not text:
+        return None
+    try:
+        if len(text) == 10:
+            return datetime.fromisoformat(text).date()
+        moment = datetime.fromisoformat(text.replace("Z", "+00:00"))
+        return (moment if moment.tzinfo else moment.replace(tzinfo=timezone.utc)).astimezone(NEW_YORK).date()
+    except ValueError:
+        return None
+
+
+def _date_of(match):
+    word = match.group(1).lower().rstrip(".")
+    try:
+        month = MONTH_NUMBERS.get(word) or next(number for name, number in MONTH_NUMBERS.items() if name.startswith(word[:3]))
+        return datetime(int(match.group(3)), month, int(match.group(2))).date()
+    except (StopIteration, ValueError, TypeError):
+        return None
+
+
+def stated_dates(title, text=""):
+    """Dates a release states for itself: any date in its title ("... Financial Results October 28, 2026"), and its dateline."""
+    found = [_date_of(match) for match in TITLE_DATE.finditer(title or "")]
+    for match in DATELINE.finditer((text or "")[:1500]):
+        inner = TITLE_DATE.search(match.group("a") or match.group("b") or "")
+        if inner:
+            found.append(_date_of(inner))
+    return [day for day in found if day]
+
+
+def scheduled_results(ticker, around, events=None):
+    """The latest results date of `ticker` in the release schedule on or before `around` (+1 day), within SCHEDULE_REACH_DAYS."""
+    if not ticker or not around:
+        return None
+    if events is None:
+        try:
+            events = json.loads(SCHEDULE_PATH.read_text(encoding="utf-8"))["events"]
+        except (OSError, ValueError, KeyError):
+            return None
+    best = None
+    for event in events:
+        if event.get("kind") != "earnings" or event.get("ticker") != ticker:
+            continue
+        day = ny_date(event.get("at"))
+        if day and around - timedelta(days=SCHEDULE_REACH_DAYS) <= day <= around + timedelta(days=1) and (best is None or day > best):
+            best = day
+    return best
+
+
+def event_date(item, events=None):
+    """(date, how it was found) of the event an evidence item reports: the earliest of its own date, the dates it states, and (results only)
+    the scheduled results date. (None, 'unknown') when nothing gives a date."""
+    candidates = []
+    own = item.get("eventDate")
+    if own:
+        candidates.append((own, item.get("eventDateSource") or "source"))
+    for day in stated_dates(item.get("label", "") + "\n" + item.get("title", ""), item.get("quote", "")):
+        candidates.append((day, "stated"))
+    results = item["kind"] in ("earnings", "analysis") or (item["kind"] == "note" and RESULTS_WORDS.search(item.get("label", "") + " " + item.get("quote", "")[:300]))
+    if results and item.get("ticker"):
+        around = min((day for day, _ in candidates), default=None)
+        scheduled = scheduled_results(item["ticker"], around, events)
+        if scheduled:
+            candidates.append((scheduled, "schedule"))
+    if not candidates:
+        return None, "unknown"
+    return min(candidates, key=lambda pair: pair[0])
+
+
+def keep_in_window(evidence, window, notes, events=None):
+    """Only items whose event falls inside the issue's week. What is left out is written in the owner's memo with its date."""
+    first, last = window
+    kept = []
+    for item in evidence:
+        day, how = event_date(item, events)
+        if day is None:
+            if item["kind"] != "news":
+                notes.append(note(ATTENTION, f"日付が確かめられないため外しました: {item['label'][:60]}", "no-event-date"))
+            continue
+        if not first <= day <= last:
+            if item["kind"] != "news":
+                notes.append(note(ATTENTION, f"今週({first.month}/{first.day}〜{last.month}/{last.day})より前・後の出来事のため外しました: "
+                                  f"{item['label'][:60]}(米国時間{day.isoformat()})", "outside-week-" + how))
+            continue
+        item["date"] = day.isoformat()
+        item["dateFrom"] = how
+        for key in ("eventDate", "eventDateSource"):
+            item.pop(key, None)
+        kept.append(item)
+    for at, item in enumerate(kept, 1):
+        item["id"] = f"E{at}"
+    return kept
+
+
+def collect(db, now, news=(), notes=None, events=None):
+    """Evidence for the week: each entry has an id, a label, its checked facts, the exact text the numbers are checked against, and the date
+    of the event it reports. Items whose event is outside the issue's week are left out (and written in `notes` when given)."""
+    start = datetime.fromtimestamp(now - (WINDOW_DAYS + 3) * 86400, timezone.utc).isoformat()
     evidence = []
 
-    def add(kind, label, url, quote, facts=(), text="", ticker=""):
+    def add(kind, label, url, quote, facts=(), text="", ticker="", when=None, how="source", title=""):
         evidence.append({"id": f"E{len(evidence) + 1}", "kind": kind, "label": label, "url": url, "quote": quote,
-                         "facts": list(facts), "text": text, "ticker": ticker})
+                         "facts": list(facts), "text": text, "ticker": ticker, "eventDate": ny_date(when), "eventDateSource": how, "title": title})
 
     if _table(db, "market_result_publications"):
-        for row in db.execute("SELECT payload FROM market_result_publications WHERE julianday(published_at)>=julianday(?) "
+        for row in db.execute("SELECT payload,published_at FROM market_result_publications WHERE julianday(published_at)>=julianday(?) "
                               "ORDER BY julianday(published_at)", (start,)):
             try:
                 item = json.loads(row["payload"])
                 facts = [f for f in item["facts"] if isinstance(f, dict) and f.get("key") and f.get("value")]
                 quote = "\n".join([item["titleEn"], *[_fact_line(f) for f in facts], *derived_lines(facts)])
-                add("earnings" if item["kind"] == "earnings" else "indicator", item["titleJa"], item["url"], quote, facts,
-                    ticker=item.get("ticker", "") if item["kind"] == "earnings" else "")
+                kind = "earnings" if item["kind"] == "earnings" else "indicator"
+                label = item["titleJa"] if kind == "earnings" else indicator_title(item)
+                # The source post's own time (publishedAt), never the time this service stored it.
+                add(kind, label, item["url"], quote, facts, ticker=item.get("ticker", "") if kind == "earnings" else "",
+                    when=item.get("publishedAt"), how="source", title=item.get("titleEn", ""))
+                if kind == "indicator":
+                    evidence[-1]["period"] = item.get("period", "")
             except (KeyError, TypeError, ValueError):
                 continue
     if _table(db, "official_research_publications") and _table(db, "signal_events"):
-        has_tickers = any(column["name"] == "tickers_json" for column in db.execute("PRAGMA table_info(signal_events)"))
-        for row in db.execute(f"""SELECT p.payload, e.url, {'e.tickers_json' if has_tickers else "'[]'"} AS tickers FROM official_research_publications p
+        columns = {column["name"] for column in db.execute("PRAGMA table_info(signal_events)")}
+        pick = lambda name, fallback="NULL": f"e.{name}" if name in columns else fallback
+        for row in db.execute(f"""SELECT p.payload, e.url, {pick('tickers_json', "'[]'")} AS tickers, {pick('published_at')} AS published_at,
+                                  {pick('published_on')} AS published_on FROM official_research_publications p
                                   JOIN signal_events e ON e.id=p.event_id WHERE julianday(p.public_at)>=julianday(?) ORDER BY julianday(p.public_at)""", (start,)):
             try:
-                note = json.loads(row["payload"])
-                ja = "\n".join([note["summary"]["ja"], *[f["ja"] for f in note["facts"]]])
-                en = "\n".join([note["title"]["en"], note["summary"]["en"], *[f["en"] for f in note["facts"]]])
+                note_ = json.loads(row["payload"])
+                ja = "\n".join([note_["summary"]["ja"], *[f["ja"] for f in note_["facts"]]])
+                en = "\n".join([note_["title"]["en"], note_["summary"]["en"], *[f["en"] for f in note_["facts"]]])
                 tickers = [t for t in json.loads(row["tickers"] or "[]") if isinstance(t, str)]
-                add("note", note["title"]["ja"], row["url"], en, text=ja, ticker=tickers[0] if tickers else "")
+                add("note", note_["title"]["ja"], row["url"], en, text=ja, ticker=tickers[0] if tickers else "",
+                    when=row["published_at"] or row["published_on"], how="source", title=note_["title"]["en"])
             except (KeyError, TypeError, ValueError):
                 continue
     # The week's PRO deep analyses (owner, Nov 15: "ありきたりな情報だと弱い"): each point already passed the figure checks against the release, so
     # its own wording is the quote a weekly sentence is checked against. They give the model what drove the quarter, not only the headline figures.
+    # Its date is the release's: the source event's own date when it came from one, else the release time the analysis was made for.
     if _table(db, "deep_analyses"):
-        for row in db.execute("SELECT kind,subject,payload,source_url,source_title FROM deep_analyses WHERE state='done' AND published_at IS NOT NULL "
-                              "AND julianday(published_at)>=julianday(?) ORDER BY julianday(published_at)", (start,)):
+        columns = {column["name"] for column in db.execute("PRAGMA table_info(signal_events)")} if _table(db, "signal_events") else set()
+        for row in db.execute("SELECT source_ref,kind,subject,payload,source_url,source_title,created_at FROM deep_analyses WHERE state='done' "
+                              "AND published_at IS NOT NULL AND julianday(published_at)>=julianday(?) ORDER BY julianday(published_at)", (start,)):
             try:
                 note_ = json.loads(row["payload"])
                 pieces = [note_["headline"], *(note_.get("points") or []), *([note_["watch"]] if note_.get("watch") else [])]
@@ -233,30 +378,127 @@ def collect(db, now, news=()):
                 en = "\n".join(p["en"] for p in pieces if isinstance(p, dict) and p.get("en"))
                 if not ja:
                     continue
+                when = row["created_at"]
+                ref = str(row["source_ref"] or "").split(":")
+                if len(ref) == 3 and ref[0] == "event" and ref[1].isdigit() and {"published_at", "published_on"} <= columns:
+                    source = db.execute("SELECT published_at,published_on FROM signal_events WHERE id=?", (int(ref[1]),)).fetchone()
+                    if source and (source["published_at"] or source["published_on"]):
+                        when = min(filter(None, (ny_date(source["published_at"]), ny_date(source["published_on"]), ny_date(row["created_at"])))).isoformat()
                 url = row["source_url"] or ""
                 add("analysis", f"{row['subject']}: {note_['headline']['ja']}"[:120], url if url.startswith("https://") else "", en + "\n" + ja, text=ja,
-                    ticker=row["subject"] if row["kind"] == "earnings" else "")
+                    ticker=row["subject"] if row["kind"] == "earnings" else "", when=when, how="release", title=row["source_title"] or "")
             except (KeyError, TypeError, ValueError):
                 continue
     # Reuse what is already written (owner, Nov 15: cost): a company with a deep analysis this week is described to the model by that analysis.
     # Its official note stays evidence (the checks still read its exact words, and a sentence may still cite it), but its text is not sent again.
-    analysed = {item["ticker"] for item in evidence if item["kind"] == "analysis" and item["ticker"]}
-    for item in evidence:
-        if item["kind"] == "note" and item["ticker"] in analysed:
-            item["covered"] = True
     for item in news:
         title = str(item.get("title") or "").strip()
         url = str(item.get("url") or "")
         if title and url.startswith("https://"):
-            add("news", title[:120], url, title, text=title)
+            publisher = str(item.get("publisher") or "").strip()
+            label = (f"{publisher}: " if publisher else "") + title
+            add("news", label[:160], url, title + ("\n" + str(item["titleEn"]) if item.get("titleEn") and item["titleEn"] != title else ""),
+                text=title, when=item.get("publishedAt"), how="source")
+            evidence[-1]["publisher"] = publisher
+    evidence = keep_in_window(evidence, issue_window(now), notes if notes is not None else [], events)
+    analysed = {item["ticker"] for item in evidence if item["kind"] == "analysis" and item["ticker"]}
+    for item in evidence:
+        if item["kind"] == "note" and item["ticker"] in analysed:
+            item["covered"] = True
     return evidence
+
+
+MONTH_IN_TITLE = re.compile(r"[（(][^）)]*\d{1,2}月[^）)]*[）)]")
+
+
+def plain_title(name):
+    """「米国PCE物価指数（10月）」→「米国PCE物価指数」 (owner, Nov 21: the reference month in parentheses is not part of a title)."""
+    return re.sub(r"\s{2,}", " ", MONTH_IN_TITLE.sub("", str(name or ""))).strip()
+
+
+INDICATOR_TITLES = (("cpi", "米CPI(消費者物価指数)"), ("ppi", "米PPI(生産者物価指数)"), ("pce", "米PCE物価指数"), ("nonfarm", "米雇用統計"),
+                    ("unemployment", "米雇用統計"), ("hourly-earnings", "米雇用統計"))
+
+
+def indicator_title(item):
+    """What an indicator result is, in words: the indicator's name, never a bare 「結果 1.1%」."""
+    keys = [str(fact.get("key", "")) for fact in item.get("facts") or []]
+    for prefix, name in INDICATOR_TITLES:
+        if any(key.replace("core-", "").startswith(prefix) for key in keys):
+            return name
+    head = str(item.get("titleJa") or "").split("：")[0]
+    return plain_title(head) or "経済指標"
+
+
+# ---- the week's market headlines, ranked by how much they could move the market (owner, Nov 21) ----------------------------------------
+
+MAJOR_PUBLISHERS = re.compile(r"^(?:Reuters|Bloomberg|WSJ|Wall Street Journal|CNBC|Market ?Watch|Financial Times|Barron'?s|Associated Press|AP|Nikkei)\b", re.I)
+WIRE_PUBLISHERS = re.compile(r"GlobeNewsWire|Globe Newswire|Business Wire|PRNewsWire|PR Newswire|Newsfile|ACCESSWIRE", re.I)
+MARKET_WORDS = re.compile(r"\b(?:Nasdaq|S&P|Dow|Wall Street|stocks?|sell-?off|plunge|plunges|crash|rout|bear market|correction|wipeout|panic|"
+                          r"turns red|bust|slide|tumble|sinks?)\b", re.I)
+POLICY_WORDS = re.compile(r"\b(?:Trump|White House|tariffs?|export|ban|bans|sanctions?|China|Chinese|Commerce|Fed|Powell|Treasury|Bessent|"
+                          r"regulators?|SEC|Congress|penaliz\w*|probe|investigation)\b", re.I)
+TECH_WORDS = re.compile(r"\b(?:Nvidia|AMD|chips?|semiconductors?|AI|data cent(?:er|re)s?|Anthropic|OpenAI|TSMC|Broadcom|Micron|Intel)\b", re.I)
+NOISE_WORDS = re.compile(r"\b(?:Announces?|Declares?|Appoints?|to Present|Investor Event|Dividend|Inducement|Annual General Meeting|"
+                         r"Investigation Notice|Notifies Investors|Private Placement)\b", re.I)
+
+
+def impact(title, publisher="", ticker=""):
+    """A rough score of how much a headline could matter to the market: a major newsroom, market-wide words, policy words, chips and AI."""
+    score = 0
+    score += 3 if MAJOR_PUBLISHERS.search(publisher or "") else 0
+    score -= 4 if WIRE_PUBLISHERS.search(publisher or "") else 0
+    score += 4 if MARKET_WORDS.search(title) else 0
+    score += 3 if POLICY_WORDS.search(title) else 0
+    score += 2 if TECH_WORDS.search(title) else 0
+    score += 2 if ticker == "MKT" else 0
+    score -= 4 if NOISE_WORDS.search(title) else 0
+    return score
+
+
+def wire_headlines(db, now, limit=24):
+    """The week's company and market headlines from the news intake (company_wire: the Stock News API, Google News and Yahoo rows, already
+    judged news by the translator), ranked by `impact`, one per story. Each keeps its publisher, its own time and its link."""
+    if not _table(db, "company_wire"):
+        return []
+    first, last = issue_window(now)
+    since = datetime.combine(first, datetime.min.time(), NEW_YORK).astimezone(timezone.utc).isoformat()
+    rejected = _table(db, "company_wire_article_attempts")
+    translated = _table(db, "company_wire_article_ja")
+    columns = {column["name"] for column in db.execute("PRAGMA table_info(company_wire)")}
+    if not {"title", "url", "published_at"} <= columns:
+        return []
+    article = "article" in columns
+    publisher = "w.publisher" if "publisher" in columns else "NULL"
+    title_ja = ", j.title_ja" if translated and article else ", NULL AS title_ja"
+    joins = (" LEFT JOIN company_wire_article_ja j ON j.article=w.article" if translated and article else "") + \
+            (" LEFT JOIN company_wire_article_attempts a ON a.article=w.article" if rejected and article else "")
+    judged = " AND COALESCE(a.reason,'') NOT IN ('not-news','off-topic')" if rejected and article else ""
+    query = (f"SELECT w.ticker, w.title, w.url, {publisher} AS publisher, w.published_at{title_ja} FROM company_wire w{joins}"
+             f" WHERE w.published_at>=?{judged} ORDER BY w.published_at DESC LIMIT 3000")
+    seen, rows = set(), []
+    for row in db.execute(query, (since,)):
+        title, url = str(row["title"] or "").strip(), str(row["url"] or "")
+        day = ny_date(row["published_at"])
+        if not title or not url.startswith("https://") or not day or not first <= day <= last:
+            continue
+        key = re.sub(r"[^a-z0-9]+", " ", title.lower()).strip()[:80]
+        if key in seen:
+            continue
+        seen.add(key)
+        score = impact(title, row["publisher"] or "", row["ticker"] or "")
+        if score >= 5:
+            rows.append((score, row["published_at"], {"title": row["title_ja"] or title, "titleEn": title, "url": url, "publisher": row["publisher"] or "",
+                                                      "publishedAt": row["published_at"], "ticker": row["ticker"] or ""}))
+    rows.sort(key=lambda row: (row[0], str(row[1])), reverse=True)  # the largest impact first, the newest first within it
+    return [row[2] for row in rows[:limit]]
 
 
 def headlines(payload, now, limit=60):
     """The week's published headlines (title, https link, time) from the news the site already serves; result flashes are skipped (they are evidence already)."""
     if not isinstance(payload, dict):
         return []
-    start = now - WINDOW_DAYS * 86400
+    first, last = issue_window(now)
     seen, rows = set(), []
     for name, value in payload.items():
         if name == "resultBriefs" or not isinstance(value, list):
@@ -264,16 +506,17 @@ def headlines(payload, now, limit=60):
         for item in value:
             if not isinstance(item, dict):
                 continue
-            title, url, at = item.get("title"), item.get("url"), item.get("publishedAt")
+            title, url, at = item.get("title") or item.get("titleJa") or item.get("titleEn"), item.get("url"), item.get("publishedAt")
             try:
                 moment = datetime.fromisoformat(str(at).replace("Z", "+00:00")).timestamp()
             except ValueError:
                 continue
             if isinstance(title, dict):
                 title = title.get("ja") or title.get("en")
-            if isinstance(title, str) and isinstance(url, str) and url.startswith("https://") and moment >= start and url not in seen:
+            day = ny_date(at)
+            if isinstance(title, str) and isinstance(url, str) and url.startswith("https://") and day and first <= day <= last and url not in seen:
                 seen.add(url)
-                rows.append((moment, {"title": title.strip(), "url": url}))
+                rows.append((moment, {"title": title.strip(), "url": url, "publishedAt": str(at), "publisher": str(item.get("publisher") or item.get("source") or "")}))
     rows.sort(key=lambda row: -row[0])
     return [row[1] for row in rows[:limit]]
 
@@ -291,7 +534,7 @@ def upcoming(now, today=None):
         try:
             when = datetime.fromisoformat(event["at"].replace("Z", "+00:00")).astimezone(JST)
             if start <= when.date() < end:
-                rows.append({"id": event["id"], "date": when.date().isoformat(), "name": event["titleJa"], "at": when})
+                rows.append({"id": event["id"], "date": when.date().isoformat(), "name": plain_title(event["titleJa"]), "at": when})
         except (KeyError, ValueError, AttributeError):
             continue
     rows.sort(key=lambda row: (row["at"], row["id"]))
@@ -350,7 +593,7 @@ def build_card(evidence, ref):
     parsed = parse_value(fact["value"].split(" ± ")[0], fact["key"])
     if not parsed:
         return None
-    label = (item["ticker"] + " " if item["ticker"] else "") + fact.get("ja", fact["key"])
+    label = card_label(item, fact)
     card = {"label": label[:40], "value": parsed[0], "unit": parsed[1][:12], "outlook": None, "previous": None, "outlookUnit": "",
             "range": "", "delta": "pt" if parsed[1] == "%" else None}
     guidance = next((f for f in item["facts"] if f["key"] == "guidance-" + fact["key"]), None)
@@ -365,7 +608,28 @@ def build_card(evidence, ref):
         card["previous"] = previous[0]
     if compared.get("forecast") and not card["range"]:
         card["range"] = ("市場予想 " + str(compared["forecast"]))[:80]
+    if item["kind"] == "indicator":
+        # Owner, Nov 21: a card must say what it is. The basis and the comparisons in words; the reference month only here, small.
+        said = [f"{name} {compared[key]}" for key, name in (("forecast", "予想"), ("previous", "前回")) if compared.get(key)]
+        month = re.search(r"\b(JANUARY|FEBRUARY|MARCH|APRIL|MAY|JUNE|JULY|AUGUST|SEPTEMBER|OCTOBER|NOVEMBER|DECEMBER)\b", str(item.get("period", "")).upper())
+        if month:
+            said.append(f"{MONTH_NUMBERS[month[1].lower()]}月分")
+        card["range"] = "・".join(said)[:80]
     return card
+
+
+BASIS = (("-yoy", "前年比"), ("-mom", "前月比"))
+
+
+def card_label(item, fact):
+    """'NVDA 売上高'; for an indicator its name and what the figure is ('米CPI(消費者物価指数) 前年比'), never a bare '結果'."""
+    if item["kind"] != "indicator":
+        return (item["ticker"] + " " if item["ticker"] else "") + fact.get("ja", fact["key"])
+    name = item["label"]
+    what = fact.get("ja", "")
+    if what in ("", "結果", "Actual"):
+        what = next((basis for suffix, basis in BASIS if fact["key"].endswith(suffix)), "")
+    return (name + (" " + what if what and what not in name else "")).strip()
 
 
 COMPARE_NAMES = (("value", "結果"), ("forecast", "予想"), ("previous", "前回"))
@@ -387,7 +651,7 @@ def build_compare(evidence, ref):
     values = [{"name": label, "value": parsed[name][0]} for name, label in COMPARE_NAMES if name in parsed and parsed[name][1] == unit]
     if len(values) < 2:
         return None
-    label = (item["ticker"] + " " if item["ticker"] else "") + fact.get("ja", fact["key"])
+    label = card_label(item, fact)
     return {"label": label[:40], "unit": unit[:12], "values": values}
 
 
@@ -411,9 +675,9 @@ def _optional(text, quote):
 
 # ---- the review memo (owner-facing lines, kept apart from the body) -----------
 
-ATTENTION, SUBSTITUTED, MISSING, OMITTED = "要確認", "定型文", "取得なし", "AI省略"
-NOTE_ORDER = (ATTENTION, SUBSTITUTED, MISSING, OMITTED)
-MAX_NOTES = 30
+ATTENTION, SUBSTITUTED, MISSING, OMITTED, VERIFIED = "要確認", "定型文", "取得なし", "AI省略", "検証"
+NOTE_ORDER = (ATTENTION, SUBSTITUTED, MISSING, OMITTED, VERIFIED)
+MAX_NOTES = 60
 KIND_NAMES = {"text": "文章", "numbers": "数字カード", "timeline": "年表", "chart": "棒グラフ", "highlight": "大きな一文"}
 
 
@@ -430,7 +694,7 @@ def finish_notes(notes):
     return sorted(unique, key=rank)[:MAX_NOTES]
 
 
-SECTIONS = ("summary", "earnings", "indicators", "market", "schedule")
+SECTIONS = ("summary", "market", "earnings", "indicators", "schedule")  # owner, Nov 21: the week's market story comes first
 
 
 def section_of(kind, ids, evidence):
@@ -493,7 +757,11 @@ def _check_framing(text, evidence, quote):
     if not isinstance(text, str) or not text.strip():
         raise ValueError("empty-copy")
     factual_validation.validate_numbers(text, quote)
-    factual_validation.validate_semantics(text, quote, negated_scope=negated_scope(text, evidence))
+    # The computed market lines ("...は週間で-10.5%...下落") are read for the meaning of a headline only when it speaks about the market: a
+    # headline about one company's growth is not contradicted by the week's falling prices (the figures above still read everything).
+    speaks = any(alias in text for spec in weekly_market.INDICES + weekly_market.ASSETS for alias in spec["aliases"]) or re.search(r"相場|株価|市場|下落|上昇|売られ|買われ", text)
+    meaning = quote if speaks else "\n".join(item["quote"] for item in evidence if item.get("kind") != "market")
+    factual_validation.validate_semantics(text, meaning, negated_scope=negated_scope(text, evidence))
     return text.strip()
 
 
@@ -571,12 +839,42 @@ def auto_figures(evidence, limit=4):
     return parts
 
 
-def compose(model_output, evidence, schedule, lenient=False, date=""):
+def market_framing(text, market, fallback, lenient, notes, name):
+    """Owner, Nov 21: a week with a notable index move must say so in the headline and in 今週のひとこと, with the computed figure (and its
+    historical comparison when there is one). A copy that leaves it out is rejected (strict) or replaced by a sentence built here from the
+    computed facts (lenient), and the owner is told."""
+    if not weekly_market.notable(market) or weekly_market.mentions(text, market):
+        return text
+    if not lenient:
+        raise ValueError("omits-market-move")
+    notes.append(note(SUBSTITUTED, f"{name}は、今週の大きな相場の動き(指数の騰落率)に触れていなかったため、計算した数字から作った文にしています。", "omits-market-move"))
+    return fallback
+
+
+def market_parts(market, evidence):
+    """The week's market in figures, always built here from the computed closes (never by the model): the indices and other markets, then
+    the covered stocks that moved most."""
+    ids = [item["id"] for item in evidence if item["kind"] == "market"]
+    if not market or not ids:
+        return []
+    parts = [{"type": "numbers", "heading": "今週の指数と金・銀・ビットコイン", "cards": weekly_market.cards(market), "note": f"出典: {market['source']}。前週末の終値と比べた騰落率です。",
+              "section": "market", "ids": ids}]
+    movers = weekly_market.mover_cards(market)
+    if movers:
+        parts.append({"type": "numbers", "heading": "今週大きく動いた銘柄", "cards": movers, "note": f"Tech Phase が追う{market['covered']}銘柄から。出典: {market['source']}。",
+                      "section": "market", "ids": ids})
+    return parts
+
+
+def compose(model_output, evidence, schedule, lenient=False, date="", market=None):
     """(headline, lead, parts, notes, used evidence ids). A part that fails any check is left out and noted."""
     everything = "\n".join(item["quote"] for item in evidence)
     notes = []
     headline = _framing(model_output.get("headline"), evidence, everything, fallback_headline(evidence, date), lenient, notes, "見出し")
     lead = _framing(model_output.get("lead"), evidence, everything, NEUTRAL_LEAD, lenient, notes, "導入文")
+    if market:
+        headline = market_framing(headline, market, weekly_market.headline_sentence(market), lenient, notes, "見出し")
+        lead = market_framing(lead, market, weekly_market.lead_sentence(market), lenient, notes, "導入文")
     parts, used = [], set()
     highlights = 0
     known = {item["id"] for item in evidence}
@@ -656,7 +954,11 @@ def compose(model_output, evidence, schedule, lenient=False, date=""):
         if part["section"] not in shown:
             used.update(ids)
             parts.append(part)
-    comments = {c.get("id"): c.get("comment") for c in model_output.get("scheduleComments") or [] if isinstance(c, dict)}
+    for part in reversed(market_parts(market, evidence)):
+        used.update(part.pop("ids"))
+        part["fixed"] = True
+        parts.insert(0, part)
+    comments ={c.get("id"): c.get("comment") for c in model_output.get("scheduleComments") or [] if isinstance(c, dict)}
     items = []
     for event in schedule:
         comment = ""
@@ -679,6 +981,14 @@ def compose(model_output, evidence, schedule, lenient=False, date=""):
                          "items": [{"text": text, "kind": kind} for text, _, kind in takeaways]})
     if items:
         parts.append({"type": "schedule", "heading": "次の週の予定", "items": items, "section": "schedule"})
+    # An issue holds at most weekly_issues.MAX_PARTS parts: the model's last parts give way first, never the market figures, the takeaways
+    # or the schedule.
+    while len(parts) > weekly_issues.MAX_PARTS:
+        drop = next(i for i in range(len(parts) - 1, -1, -1) if not parts[i].get("fixed") and parts[i]["section"] not in ("summary", "schedule"))
+        notes.append(note(OMITTED, f"部品の数の上限のため外しました: {str(parts[drop].get('heading') or parts[drop].get('text') or '')[:60]}"))
+        parts.pop(drop)
+    for part in parts:
+        part.pop("fixed", None)
     for line in (model_output.get("skipped") or [])[:5]:
         if isinstance(line, str) and line.strip():
             notes.append(note(OMITTED, "AIが載せなかった話題: " + line.strip()[:100]))
@@ -697,7 +1007,7 @@ def configuration(env=None):
         return None
 
 
-def generate(db, now, news=(), transport=None, env=None):
+def generate(db, now, news=(), transport=None, env=None, market=None):
     """Make one draft. Returns the saved draft (weekly_issues.save_draft's item). Raises when nothing usable can be made."""
     config = configuration(env)
     if not config:
@@ -705,22 +1015,57 @@ def generate(db, now, news=(), transport=None, env=None):
     key, model = config
     # One request, never repeated by the transport either (a timed-out request may still be billed).
     transport = transport or (lambda payload, api_key: brief_generator.request_response(payload, api_key, timeout=240, attempts=1))
-    evidence = collect(db, now, news)
-    schedule = upcoming(now)
+    week = prepare(db, now, news, env, market)
+    payload = {"model": model, **week["request"]}
+    response = transport(payload, key)
+    llm_cost.record(db, "weekly", "weekly:%s" % datetime.fromtimestamp(now, JST).date().isoformat(), model, response, now=now)
+    if response.get("status") != "completed":
+        raise RuntimeError("weekly-incomplete")
+    output = json.loads(brief_generator.output_text(response))
+    # The only model call of this draft. What fails a check is dropped (a part) or replaced (the headline, the lead) and noted for the owner.
+    return weekly_issues.save_draft(db, {**finish(week, output), "auto": True})["item"]
+
+
+def market_facts(issue_date, env=None):
+    """The week's computed market facts (weekly_market.compute). Raises RuntimeError('weekly-no-market-data') when the prices cannot be read:
+    an issue that cannot see the week's market is not made (owner, Nov 21), and no model call is spent on it."""
+    try:
+        return weekly_market.compute(issue_date, env=env)
+    except weekly_market.MarketUnavailable as error:
+        raise RuntimeError(f"weekly-no-market-data:{error}") from None
+
+
+def prepare(db, now, news=(), env=None, market=None):
+    """Everything before the model call: the week's evidence (dated, inside the issue's week), the computed market facts, next week's schedule,
+    the owner's notes so far, and the request body (without the model name)."""
+    issue_date = datetime.fromtimestamp(now, JST).date()
+    first, last = issue_window(now)
     notes = []
+    market = market if market is not None else market_facts(issue_date, env)
+    # The week's headlines from the news intake, ranked by market impact, next to the ones the site serves.
+    wire = wire_headlines(db, now)
+    evidence = collect(db, now, list(news) + wire, notes)
     gathered = len(evidence)
+    quote = "\n".join(weekly_market.lines(market))
+    evidence.append({"id": f"E{len(evidence) + 1}", "kind": "market", "label": f"今週の市場の動き({market['source']})", "url": "", "quote": quote,
+                     "facts": [], "text": quote, "ticker": "", "date": market["week"]["friday"]})
+    schedule = upcoming(now)
     # Next week's schedule is evidence too, so a sentence may name the coming releases (米CPI, 米PPI, ...) and still be checked against the names.
     for event in schedule:
         quote = f"{event['name']} ({event['date']})"
         evidence.append({"id": f"E{len(evidence) + 1}", "kind": "schedule", "label": event["name"], "url": "", "quote": quote, "facts": [], "text": quote, "ticker": ""})
     if not any(item["kind"] == "indicator" for item in evidence):
-        notes.append(note(MISSING, "今週に結果が出た経済指標が、集まっていません。"))
+        notes.append(note(MISSING, "今週に発表された経済指標はありません。載せるのは今週が発表日の指標だけです。"))
     if not any(item["kind"] == "earnings" or item["kind"] == "note" for item in evidence):
         notes.append(note(MISSING, "今週の決算が、集まっていません。"))
+    if not any(item["kind"] == "news" for item in evidence):
+        notes.append(note(MISSING, "今週のニュースの見出しが、集まっていません。"))
     if not gathered:
         raise RuntimeError("weekly-no-evidence")
-    material = [{"id": item["id"], "type": item["kind"], "label": item["label"],
-                 "facts": [{"factKey": f["key"], "label": f.get("ja", f["key"]), "value": f["value"], "comparisons": f.get("comparisons") or {}} for f in item["facts"]],
+    notes += [note(VERIFIED, line) for line in weekly_market.verification(market)]
+    material = [{"id": item["id"], "type": item["kind"], "label": item["label"], "date": item.get("date", ""),
+                 "facts": [{"factKey": f["key"], "label": card_label(item, f) if item["kind"] == "indicator" else f.get("ja", f["key"]), "value": f["value"],
+                            "comparisons": f.get("comparisons") or {}} for f in item["facts"]],
                  "calculated": derived_lines(item["facts"]), "text": "" if item.get("covered") else item["text"][:1500],
                  **({"seeAnalysisOf": item["ticker"]} if item.get("covered") else {})} for item in evidence]
     # The last few issues, so the opening and the closing are not the same every week.
@@ -728,30 +1073,29 @@ def generate(db, now, news=(), transport=None, env=None):
         "SELECT headline,lead FROM weekly_issues WHERE status='published' ORDER BY number DESC LIMIT 3")]
     # The fixed parts first and identical every week (instructions, then the output schema), the week's material last, so the provider's
     # prompt cache can reuse the shared prefix (owner, Nov 15: cost). The cache key groups the weekly requests together.
-    payload = {"model": model, "instructions": POLICY,
+    request = {"instructions": POLICY,
                "text": {"format": {"type": "json_schema", "name": "weekly_issue", "strict": True, "schema": response_schema()}},
                "prompt_cache_key": PROMPT_CACHE_KEY, "store": False, "max_output_tokens": 8000,
-               "input": json.dumps({"weekEnding": datetime.fromtimestamp(now, JST).date().isoformat(), "schedule": [{"id": e["id"], "date": e["date"], "name": e["name"]} for e in schedule],
+               "input": json.dumps({"weekEnding": issue_date.isoformat(), "weekStart": first.isoformat(), "weekEnd": last.isoformat(),
+                                    "marketNotable": bool(weekly_market.notable(market)),
+                                    "schedule": [{"id": e["id"], "date": e["date"], "name": e["name"]} for e in schedule],
                                     "recentIssues": recent, "evidence": material}, ensure_ascii=False)}
-    response = transport(payload, key)
-    llm_cost.record(db, "weekly", "weekly:%s" % datetime.fromtimestamp(now, JST).date().isoformat(), model, response, now=now)
-    if response.get("status") != "completed":
-        raise RuntimeError("weekly-incomplete")
-    output = json.loads(brief_generator.output_text(response))
-    issue_date = datetime.fromtimestamp(now, JST).date().isoformat()
-    # The only model call of this draft. What fails a check is dropped (a part) or replaced (the headline, the lead) and noted for the owner.
-    headline, lead, parts, more, used = compose(output, evidence, schedule, lenient=True, date=issue_date)
-    notes += more
+    return {"date": issue_date.isoformat(), "evidence": evidence, "schedule": schedule, "notes": notes, "market": market, "request": request}
+
+
+def finish(week, output):
+    """The draft (date, headline, lead, parts, sources, notes) from the model's answer, after every check."""
+    evidence = week["evidence"]
+    headline, lead, parts, more, used = compose(output, evidence, week["schedule"], lenient=True, date=week["date"], market=week["market"])
     if not [part for part in parts if part["type"] != "schedule"]:
         raise RuntimeError("weekly-no-usable-part")
     sources, seen = [], set()
     for item in evidence:
         if item["id"] in used and item["url"] not in seen and item["url"].startswith("https://"):
             seen.add(item["url"])
-            sources.append({"title": item["label"][:120], "url": item["url"]})
-    result = weekly_issues.save_draft(db, {"date": issue_date, "headline": headline[:120], "lead": lead[:400],
-                                           "parts": parts, "sources": sources[:20], "notes": finish_notes(notes), "auto": True})
-    return result["item"]
+            sources.append({"title": (item["label"] + (f"({item['date']})" if item.get("date") else ""))[:180], "url": item["url"]})
+    return {"date": week["date"], "headline": headline[:120], "lead": lead[:400], "parts": parts, "sources": sources[:30],
+            "notes": finish_notes(week["notes"] + more)}
 
 
 def run_if_due(db_path, now=None, news=(), transport=None, env=None):
