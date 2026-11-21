@@ -121,7 +121,7 @@ test('週刊PRO and リゼルに聞く open with the first page from the server:
   for (const [page, route] of [['../app/research/weekly/page.tsx', 'weekly-issues'], ['../app/research/qa/page.tsx', 'questions']]) {
     const source = read(page);
     assert.match(source, new RegExp(`import \\{ GET \\} from "\\.\\./\\.\\./api/research/${route}/route";`), 'the same route and membership checks as the browser');
-    assert.match(source, /await firstAnswer\(/, 'bounded in time; a slow or refused answer is left to the browser');
+    assert.match(source, /firstAnswer\(\(\) => GET\(/, 'bounded in time; a slow or refused answer is left to the browser');
   }
   const first = read('../lib/research/first-answer.ts');
   assert.match(first, /limitMs = 3_000/); assert.match(first, /if \(!response \|\| !response\.ok\) return undefined;/);
@@ -154,4 +154,55 @@ test('リゼルに聞く keeps waiting while the sign-in library starts, instead
   const weekly = read('../app/research/weekly/issues.tsx');
   assert.match(weekly, /error\.message === "identity-loading"\)\) setState\("error"\)/);
   assert.match(weekly, /void refreshIdentity\(\)\.then\(\(\) => fetch\(`\/api\/research\/weekly-issues/, 'the token is renewed first, so a member is not shown the PRO lock');
+});
+
+// Owner, Nov 21: 「まだ投稿された号はありません」 showed first and then the page jumped to the draft; 「下書きを作る」 at the top; 公開 above and
+// below the draft; 自動公開 stays at the bottom.
+const draft = { id: 'd1', number: null, status: 'draft', date: '2026-11-21', headline: '下書きの見出し', lead: '下書きのリード', parts: [{ type: 'text', heading: '本文の見出し', body: '下書き本文。' }], sources: [], notes: [] };
+const noIssue = { issue: null, latest: null, issues: [], hasMore: false };
+const ownerWithDraft = { drafts: [draft], autoPublish: false, generateEnabled: true, generateHour: 8, lastGenerated: null, generation: { running: false, configured: true, lastOk: null, lastError: '' } };
+
+test('週刊PRO owner: the page opens on the draft, never on the empty message first', async () => {
+  const WeeklyIssues = await load('../app/research/weekly/issues.tsx');
+  // Before the membership display has started (ownerMode still false): the server's owner check decides the view.
+  const early = await mount(WeeklyIssues, { initial: noIssue, initialOwner: ownerWithDraft }, { ownerMode: false, settled: false });
+  try {
+    assert.ok(early.first.includes('下書きの確認表示') && early.first.includes('下書きの見出し'), 'the draft is in the very first paint');
+    assert.ok(!early.first.includes('まだ公開された号はありません'));
+    assert.equal(early.calls.length, 0, 'nothing is asked again');
+  } finally { await early.unmount(); }
+  // The owner's drafts not known yet (no server copy): no empty message while they are on their way.
+  let answer; const pending = new Promise(resolve => { answer = resolve; });
+  const late = await mount(WeeklyIssues, { initial: noIssue }, { ownerMode: true, fetch: async () => { await pending; return { ok: true, status: 200, json: async () => ({ ok: true, drafts: [draft], settings: { autoPublish: false, generateEnabled: true, generateHour: 8 }, generation: ownerWithDraft.generation }) }; } });
+  try {
+    assert.ok(!late.host.textContent.includes('まだ公開された号はありません'), 'not while the drafts are still coming');
+    await act(async () => { answer(); await tick(); });
+    assert.ok(late.host.textContent.includes('下書きの確認表示'));
+    assert.ok(!late.host.textContent.includes('まだ公開された号はありません'));
+  } finally { await late.unmount(); }
+  // A member with nothing published sees the message (the data is known).
+  const member = await mount(WeeklyIssues, { initial: noIssue }, { ownerMode: false });
+  try { assert.ok(member.first.includes('まだ公開された号はありません')); } finally { await member.unmount(); }
+});
+
+test('週刊PRO owner: 「今すぐ下書きを作る」 at the top, 公開 above and below the draft, 自動公開 at the bottom', async () => {
+  const WeeklyIssues = await load('../app/research/weekly/issues.tsx');
+  const page = await mount(WeeklyIssues, { initial: noIssue, initialOwner: ownerWithDraft }, { ownerMode: true, fetch: async url => ({ ok: true, status: 200, json: async () => (url.includes('view=owner') ? { ok: true, drafts: [], settings: { autoPublish: false }, generation: ownerWithDraft.generation } : { ok: true, ...noIssue }) }) });
+  try {
+    const text = page.host.textContent;
+    const make = text.indexOf('今すぐ下書きを作る'), review = text.indexOf('下書きの確認表示'), auto = text.indexOf('確認なしで自動公開');
+    assert.ok(make >= 0 && make < review && review < auto, 'generate at the top, the draft, then the settings at the bottom');
+    assert.equal(text.split('今すぐ下書きを作る').length - 1, 1, 'one generate button');
+    const shown = [...page.host.querySelectorAll('button.publishShown')];
+    assert.equal(shown.length, 2, '公開 above and below the draft shown at the top');
+    const article = [...page.host.querySelector('main').children].find(node => node.tagName === 'ARTICLE');
+    assert.ok(shown[0].compareDocumentPosition(article) & window.Node.DOCUMENT_POSITION_FOLLOWING, 'the first is above the draft');
+    assert.ok(article.compareDocumentPosition(shown[1]) & window.Node.DOCUMENT_POSITION_FOLLOWING, 'the second is below it');
+    const card = page.host.querySelector('details.draft');
+    assert.equal([...card.querySelectorAll('button')].filter(button => button.textContent === '公開').length, 2, 'the draft card has 公開 at its top and its bottom');
+    await act(async () => { shown[1].click(); await tick(); await tick(); });
+    const posts = page.calls.filter(call => call.method === 'POST').map(call => JSON.parse(call.body));
+    assert.deepEqual(posts.map(post => post.action), ['draft', 'publish'], 'saved as it stands, then published');
+    assert.equal(posts[1].payload.id, 'd1');
+  } finally { await page.unmount(); }
 });
