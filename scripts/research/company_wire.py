@@ -396,26 +396,24 @@ Also "not-news" (owner, Nov 9: judge strictly; when in doubt, choose not-news): 
 Also judge relevance (owner, Nov 10). The site is about US high-tech stocks and what moves the market. Use "off-topic" for any headline outside both: relevant are (a) US high-tech companies and their sectors (semiconductors, AI, cloud, software, internet, devices, EVs, space, data centers, networking) and (b) market-moving macro news: stock indices, oil and energy prices, bond yields, interest rates and central banks, inflation and jobs data, politics and policy, tariffs, wars and geopolitics (for example the Strait of Hormuz), and statements by figures such as Trump or Musk that move stocks. Consumer goods, retail, banks and insurers (unless the story is about interest rates or markets), health and pharma, crypto, sports, entertainment, celebrity, local and lifestyle news are "off-topic". A headline can be both news and off-topic: choose "off-topic" then.
 Examples: "Why AMD, Micron, Sandisk and Nvidia stocks are falling in premarket today" = not-news. "Which AI memory stock is the better buy?" = not-news. "ASML has orders and pricing power, but what it lacks is time" (an editorial take with no concrete business fact) = not-news. "At 21 at SK hynix, at 27 a home in Seoul: a vocational school's comeback" = not-news. "Sandisk: This isn't over (Upgrade)" = not-news. "CoreWeave faces market challenges amid AI sector sell-off" = not-news. "Core Scientific: 3 key points for long-term investors" = not-news. "IT admins should check out new features recently added to Entra" = not-news. "Micron raises fiscal Q1 guidance on HBM demand" = news. "Nvidia shares fall 3% after tighter export curbs" = news. When a headline states a concrete business fact, use "news" even if it is minor.
 """ + japanese_names.policy_line() + """
-Also write event (owner, Nov 21: only concrete news events are published): the concrete new event the headline reports. earnings, guidance, analyst (rating or price-target change), deal (M&A, stake, investment, financing), contract (contract or order), product (launch or availability), regulation (government or regulator decision, policy, tariff), legal (lawsuit, settlement, investigation), executive (executive or board change), filing, incident (major outage, breach, accident), corporate-action (split taking effect, index inclusion, dividend, buyback, offering, listing), market-move (any index-level move such as the Nasdaq, S&P 500, Dow or a country's market, even in a column or VIEW headline; a stock or sector move of 5% or more with a stated cause, a sector sell-off included; a concrete trading event such as a large options trade), macro (central bank, economic data, government statement).
-With no concrete new event, write why: opinion (view, column, interview take), explainer ("what it means", background, how-to), prediction (a pure forecast; when the main clause states a fact, e.g. "X falls below its IPO price — and Y could be next", use the fact's code), listicle, stock-pick (buy or sell advice, "undervalued?"), price-recap (a small stock move under 5% or a chart level with no stated cause, e.g. "shares up 2%", "crosses its 50-day average"), score-template (GF Score, GF Value, DCF or fair-value templates), live-blog (live blog, market open/close wrap), personal-finance, no-event (anything else: ETF holding tallies, awards and "named a leader" rankings, sponsored surveys, conference, webcast or results-date notices). For not-news or off-topic, write no-event.
+A news headline with no concrete new event gets its reason as kind: opinion (view, column, interview), explainer, prediction (pure forecast), listicle, stock-pick, price-recap (move under 5% without a cause), score-template (GF Score/Value, DCF), live-blog, personal-finance, no-event (awards, surveys, ETF tallies, conference, webcast or results-date notices). Index moves, moves of 5% or more with a cause, large trades and a factual main clause stay news.
 """
 
 
-# Owner, Nov 21 (「まだまだいらない記事ありそう」): the same call names the headline's concrete event (EVENT_KEEP) or why it has none
-# (EVENT_DROP). An article whose kind is "news" but whose event is a drop code is never published: it is stored with the reason
+# Owner, Nov 21 (「まだまだいらない記事ありそう」): the same call also says when a headline judged news reports no concrete event, by
+# giving the reason (EVENT_DROP) as its kind. It is a few more values of the existing kind field, not a new field, so a call costs
+# almost the same (owner: at most about 150 yen a month more). Such an article is never published: it is stored with the reason
 # 'not-event:<code>' (never retried) and counted per code on /health (judgedNoEvent, noEventByReason). Fail-open: a missing or
-# unknown event keeps the article as before.
-EVENT_KEEP = ('earnings', 'guidance', 'analyst', 'deal', 'contract', 'product', 'regulation', 'legal', 'executive', 'filing', 'incident',
-              'corporate-action', 'market-move', 'macro')
+# unknown kind keeps the article as before.
 EVENT_DROP = ('opinion', 'explainer', 'prediction', 'listicle', 'stock-pick', 'price-recap', 'score-template', 'live-blog',
               'personal-finance', 'no-event')
 NOT_EVENT = 'not-event:'
 
 
 def no_event(item):
-    """The drop code when the model said the headline reports no concrete event; None (publish as before) otherwise, including a
-    missing, malformed or unknown event."""
-    value = item.get('event') if isinstance(item, dict) else None
+    """The reason code when the model said the headline reports no concrete event; None (as before) otherwise, including a missing,
+    malformed or unknown kind."""
+    value = item.get('kind') if isinstance(item, dict) else None
     return value if isinstance(value, str) and value in EVENT_DROP else None
 
 
@@ -946,8 +944,7 @@ def translate_once(path, transport=None, env=None, now_ts=None, report=None):
     with_text = sum(1 for r in rows if r['send_text'])
     fields = {'id': {'type': 'string'}, 'titleJa': {'type': 'string'}, 'shortJa': {'type': 'string'},
               **({'summaryJa': {'type': 'string'}} if with_text else {}),
-              'kind': {'type': 'string', 'enum': ['news', 'not-news', 'off-topic']},
-              'event': {'type': 'string', 'enum': list(EVENT_KEEP + EVENT_DROP)}}
+              'kind': {'type': 'string', 'enum': ['news', 'not-news', 'off-topic', *EVENT_DROP]}}
     payload = {
         'model': model, 'store': False, 'max_output_tokens': 4000 + SUMMARY_OUTPUT_TOKENS * with_text,
         'instructions': POLICY + SUMMARY_POLICY if with_text else POLICY,

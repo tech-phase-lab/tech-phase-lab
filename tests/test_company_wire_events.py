@@ -1,6 +1,7 @@
-"""Owner, Nov 21 (「まだまだいらない記事ありそう。精査は難しいですか？」): the translation call also names the headline's concrete event.
-A headline judged news but with no concrete event (a GF Score template, an explainer, a prediction...) is never published; it is
-stored with its reason and counted on /health. A missing or unknown event, or a failed call, changes nothing (fail-open)."""
+"""Owner, Nov 21 (「まだまだいらない記事ありそう。精査は難しいですか？」): the translation call's kind also says why a headline has no
+concrete event (a GF Score template, an explainer, a prediction...). Such a headline is never published; it is stored with its reason
+and counted on /health. A missing or unknown kind, or a failed call, changes nothing (fail-open). Owner: the cost may rise by at most
+about 150 yen a month, so it is a few more kind values and one short prompt line, not a new field."""
 import json
 import os
 import sys
@@ -21,8 +22,8 @@ ETF = '14 ETFs Add to ASML Holding (ASML) on Nov. 18'
 CRASH = 'VIEW Nasdaq plunges 5% a day after Anthropic debut, but investors still believe in AI'
 
 
-def answering(seen, events, fail=False):
-    """A model stand-in: every headline is news; ``events`` maps an English title to its event (absent: no event field at all)."""
+def answering(seen, kinds, fail=False):
+    """A model stand-in: ``kinds`` maps an English title to its kind; any other headline is "news"; None leaves kind out."""
     def send(payload, key):
         seen.append(payload)
         if fail:
@@ -30,9 +31,9 @@ def answering(seen, events, fail=False):
         items = json.loads(payload['input'])
         out = []
         for i in items:
-            item = {'id': i['id'], 'titleJa': 'クレドの見出し', 'shortJa': 'クレドの見出し', 'kind': 'news'}
-            if i['title'] in events:
-                item['event'] = events[i['title']]
+            item = {'id': i['id'], 'titleJa': 'クレドの見出し', 'shortJa': 'クレドの見出し', 'kind': kinds.get(i['title'], 'news')}
+            if item['kind'] is None:
+                del item['kind']
             out.append(item)
         return {'status': 'completed', 'usage': {'input_tokens': 100, 'output_tokens': 20},
                 'output': [{'type': 'message', 'content': [{'type': 'output_text', 'text': json.dumps({'items': out}, ensure_ascii=False)}]}]}
@@ -71,26 +72,25 @@ class EventJudgmentTests(unittest.TestCase):
         with monitor.connect(self.path) as db:
             return company_wire.translation_health(db, self.now.timestamp(), ENV)['daily']['today']
 
-    def test_the_prompt_and_schema_ask_for_the_event_in_the_same_call(self):
+    def test_the_reasons_are_more_values_of_kind_in_the_same_call_with_one_short_prompt_line(self):
         seen = []
         self.store([DEAL])
-        self.assertEqual(self.translate(answering(seen, {DEAL: 'contract'})), 'done')
+        self.assertEqual(self.translate(answering(seen, {})), 'done')
         self.assertEqual(len(seen), 1, 'one call, as before')
         payload = seen[0]
         fields = payload['text']['format']['schema']['properties']['items']['items']
-        self.assertIn('event', fields['required'])
-        self.assertEqual(fields['properties']['event']['enum'], list(company_wire.EVENT_KEEP + company_wire.EVENT_DROP))
-        for phrase in ('GF Score', 'price-target', 'split taking effect', 'index inclusion', 'live blog', 'personal-finance',
-                       'what it means', 'listicle', 'prediction', 'For not-news or off-topic, write no-event.',
-                       'index-level move', '5% or more', 'large options trade', 'pure forecast', 'under 5%',
-                       'results-date notices'):
-            self.assertIn(phrase, payload['instructions'])
-        self.assertFalse(set(company_wire.EVENT_KEEP) & set(company_wire.EVENT_DROP))
+        self.assertEqual(fields['required'], ['id', 'titleJa', 'shortJa', 'kind'], 'no new field')
+        self.assertEqual(fields['properties']['kind']['enum'], ['news', 'not-news', 'off-topic', *company_wire.EVENT_DROP])
+        line = payload['instructions'][payload['instructions'].index('A news headline with no concrete new event'):]
+        for phrase in ('GF Score', 'live-blog', 'personal-finance', 'pure forecast', 'under 5%', 'results-date notices',
+                       'Index moves, moves of 5% or more with a cause, large trades and a factual main clause stay news.'):
+            self.assertIn(phrase, line)
+        self.assertLessEqual(len(line), 520, 'the added text stays short (cost)')
+        self.assertTrue(payload['instructions'].startswith(company_wire.POLICY), 'the same instruction prefix in every call (caching)')
 
     def test_news_with_no_concrete_event_is_not_published_but_kept_with_its_reason_and_counted(self):
         self.store([GF, DEAL, SPLIT, ETF, CRASH])
-        self.translate(answering([], {GF: 'score-template', DEAL: 'contract', SPLIT: 'corporate-action', ETF: 'no-event',
-                                      CRASH: 'market-move'}))
+        self.translate(answering([], {GF: 'score-template', ETF: 'no-event'}))
         self.assertEqual(sorted(self.shown()), sorted([DEAL, SPLIT, CRASH]), 'an index-level move (HQ, Nov 21) is kept')
         reasons = self.reasons()
         self.assertEqual(reasons[GF], ('not-event:score-template', company_wire.TRANSLATION_ATTEMPTS), 'stored for audit, never retried')
@@ -104,14 +104,15 @@ class EventJudgmentTests(unittest.TestCase):
         self.assertEqual(today['judgedNotNews'], 0, 'not-news keeps its own count')
         self.assertEqual(today['translated'], 3)
 
-    def test_fail_open_a_missing_or_unknown_event_publishes_as_before(self):
+    def test_fail_open_a_missing_or_unknown_kind_publishes_as_before(self):
         self.store([GF, DEAL])
-        self.translate(answering([], {DEAL: 'something-new'}))  # GF has no event field at all
+        self.translate(answering([], {GF: None, DEAL: 'something-new'}))
         self.assertEqual(sorted(self.shown()), sorted([GF, DEAL]))
         self.assertEqual(self.health()['judgedNoEvent'], 0)
-        self.assertIsNone(company_wire.no_event({'event': None}))
+        self.assertIsNone(company_wire.no_event({'kind': None}))
+        self.assertIsNone(company_wire.no_event({'kind': 'news'}))
         self.assertIsNone(company_wire.no_event(None))
-        self.assertEqual(company_wire.no_event({'event': 'opinion'}), 'opinion')
+        self.assertEqual(company_wire.no_event({'kind': 'opinion'}), 'opinion')
 
     def test_fail_open_a_failed_call_hides_nothing_and_is_retried(self):
         self.store([GF])
@@ -126,7 +127,7 @@ class EventJudgmentTests(unittest.TestCase):
 
         def send(payload, key):
             items = json.loads(payload['input'])
-            out = [{'id': i['id'], 'titleJa': 'x', 'shortJa': 'x', 'kind': 'not-news', 'event': 'score-template'} for i in items]
+            out = [{'id': i['id'], 'titleJa': 'x', 'shortJa': 'x', 'kind': 'not-news'} for i in items]
             return {'status': 'completed', 'output': [{'type': 'message', 'content': [{'type': 'output_text', 'text': json.dumps({'items': out})}]}]}
         self.translate(send)
         self.assertEqual(self.reasons()[GF][0], 'not-news')
