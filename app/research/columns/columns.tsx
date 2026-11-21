@@ -20,7 +20,6 @@ import { nextSteadyOwner, useNewNoteId } from "../desk/use-minute";
 import NoteComposer from "../notes/composer";
 import composerStyles from "../notes/composer.module.css";
 import { useMemberDisplay, useMemberSettled, useOwnerMode } from "../member-display-provider";
-import Disclaimer from "../../resolute/disclaimer";
 type Result = { items: EditorialPost[]; access: string; status: string; validUntil?: number; reactions?: Record<string, ReactionCounts> };
 export default function ColumnsPage({ initialKind = "all", initial, postId }: { postId?: string; initialKind?: PostKind | "all"; initial?: Result } = {}) {
   const refreshIdentity = useIdentityRefresh();
@@ -69,7 +68,8 @@ export default function ColumnsPage({ initialKind = "all", initial, postId }: { 
           id => fetch(`/api/research/desk-reactions?postId=${encodeURIComponent(id)}`, { cache: "no-store", signal: current.signal }).then(answer => answer.json())) : undefined;
         if (current.signal.aborted || stopped) return;
         accept({ items: data.items, access: data.access, status: "ready", validUntil: data.validUntil, reactions });
-      } catch { if (!current.signal.aborted && !stopped) {
+      // While the sign-in library is still starting, keep waiting (this runs again once it is ready) instead of flashing an error.
+      } catch (error) { if (!current.signal.aborted && !stopped && !(error instanceof Error && error.message === "identity-loading")) {
         cancelLease?.(); latest.current = { items: [], access: "", status: "error" }; setResult(latest.current);
       } }
     }
@@ -145,7 +145,6 @@ export function ColumnArticle({ item, ja, ownerMode, access, fresh, reactions: p
       {item.kind === "qa" && access === "pro" && (ownerMode ? <PostActions item={item} editing={editing} setEditing={setEditing} onUpdated={onUpdated}>{answerLabel}</PostActions> : answerLabel)}
       {!editing && (!ja && item.translationStatus === "pending" ? <p>Translation pending.</p> : access === "pro" ? <><div className={`${styles.text} ${item.kind === "qa" ? styles.qaBody : ""}`}>{item.kind === "weekly" ? weeklySections(ja ? item.bodyJa : item.bodyEn).map((section,index)=><details key={index} className={styles.weeklySection} open={index===0}><summary>{section.title || (ja ? "本文" : "Report")}</summary><p>{section.body}</p></details>) : <DeskBody text={ja ? item.bodyJa : item.bodyEn} media={item.kind === "notes"} postId={item.id} />}</div>{item.sources.length > 0 && (item.kind === "weekly" ? <footer className={styles.weeklySourceFooter}><details className={styles.weeklySources}><summary>{ja ? "出典" : "Sources"}</summary><ul>{item.sources.map((source, index) => <li key={index}><a href={source.url} target="_blank" rel="noopener noreferrer">{source.title} ↗</a></li>)}</ul></details></footer> : <footer><h3>{ja ? "出典" : "Sources"}</h3>{item.sources.map((source, index) => <a key={index} href={source.url} target="_blank" rel="noopener noreferrer">{source.title} ↗</a>)}</footer>)}</> : <aside><p>{ja ? "この先の本文はPRO会員向けです。" : "The full article is available to PRO members."}</p><Link href="/research/account">{ja ? "ログイン・会員情報" : "Sign in or view plans"}</Link></aside>)}
       {item.kind === "notes" && access === "pro" && !editing && <ReactionBadge reactions={reactions} ja={ja} />}
-      {access === "pro" && !editing && <Disclaimer en={!ja} />}
     </div>
   </article>;
 }

@@ -105,3 +105,14 @@ test("saving keeps a lot's check date, and a lot without one takes the previous 
   assert.equal(stored.holdings[0].checkedAt, "2026-10-20"); assert.equal(stored.holdings[1].checkedAt, "2026-11-01");
   assert.equal(parseStored(JSON.stringify(stored))[0].checkedAt, "2026-10-20");
 });
+
+test("the portfolio screen never rewrites saved holdings for a split by itself (replaces the Nov 21 pause, #735)", async () => {
+  const { readFileSync } = await import("node:fs");
+  const screen = readFileSync(new URL("../app/research/portfolio/screen.tsx", import.meta.url), "utf8");
+  assert.doesNotMatch(screen, /applySplits|SPLIT_ADJUSTMENT_PAUSED/);
+  // The only writes are the reader's own actions: manual add, saving a read screenshot, a chosen repair, deleting everything.
+  const writes = screen.split("\n").filter(line => line.includes("writeHoldings("));
+  assert.equal(writes.length, 4);
+  for (const [i, word] of ["applyRepairs(lots, [repair]", "onAdd={h =>", "onClear={", "replaceSource(existing"].entries()) assert.ok(writes[i].includes(word), word);
+  assert.match(screen, /const current = useMemo\(\(\) => adjustForSplits\(/);
+});

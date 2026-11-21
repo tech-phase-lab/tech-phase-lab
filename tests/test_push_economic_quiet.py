@@ -65,7 +65,7 @@ class Quiet(Base):
     def blocks(self, hour, start=23, end=7, on=True):
         self.save({'quiet': {'on': on, 'start': start, 'end': end}})
         device = self.db.execute('SELECT * FROM push_devices').fetchone()
-        return push.quiet_blocks(device, at(hour))
+        return push.in_quiet_hours(device, at(hour))
 
     def test_midnight_spanning_window(self):
         self.assertTrue(all(self.blocks(h) for h in (23, 0, 3, 6)))
@@ -75,14 +75,25 @@ class Quiet(Base):
         self.assertTrue(self.blocks(13, 12, 14)); self.assertFalse(self.blocks(14, 12, 14)); self.assertFalse(self.blocks(11, 12, 14))
         self.assertFalse(self.blocks(2, on=False))
 
-    def test_a_notice_made_in_the_night_is_not_sent_when_the_night_ends(self):
+    def test_a_notice_made_in_the_night_is_sent_once_quietly_and_marked(self):
+        # Nov 20 (owner): おやすみモード never drops a notice; it arrives silently with 「おやすみモード」 in front of its title.
         made = at(6, 30)
         items = [{'id': 'i1', 'number': 12, 'publishedAt': datetime.fromtimestamp(made, timezone.utc).isoformat()}]
         self.save({'weeklyIssue': True})
-        push.deliver_weekly_issues(self.db, items, **self.options(at(7, 5)))
-        self.assertEqual(self.sent, [])
+        push.deliver_weekly_issues(self.db, items, **self.options(at(6, 35)))
+        self.assertEqual([(m['title'], m['body'], m['url'], m['silent']) for m in self.sent],
+                         [('おやすみモード・週刊 Tech Phase PRO', '第12号が公開されました', '/research/weekly', True)])
         push.deliver_weekly_issues(self.db, items, **self.options(at(7, 20)))
-        self.assertEqual(self.sent, [])
+        self.assertEqual(len(self.sent), 1)
+
+    def test_a_night_notice_sent_after_the_night_ends_is_an_ordinary_notice(self):
+        # Nov 20 (HQ): the send time alone decides. Made at 6:30, sent at 7:05: no mark, not silent.
+        made = at(6, 30)
+        items = [{'id': 'i3', 'number': 14, 'publishedAt': datetime.fromtimestamp(made, timezone.utc).isoformat()}]
+        self.save({'weeklyIssue': True})
+        push.deliver_weekly_issues(self.db, items, **self.options(at(7, 5)))
+        self.assertEqual([(m['title'], m['body'], 'silent' in m) for m in self.sent],
+                         [('週刊 Tech Phase PRO', '第14号が公開されました', False)])
 
     def test_the_same_notice_in_the_daytime_is_sent_once(self):
         made = at(10)
@@ -92,6 +103,8 @@ class Quiet(Base):
             push.deliver_weekly_issues(self.db, items, **self.options(at(10, 5)))
         self.assertEqual(len(self.sent), 1)
         self.assertIn('第13号', self.sent[0]['body'])
+        self.assertEqual(self.sent[0]['title'], '週刊 Tech Phase PRO')
+        self.assertNotIn('silent', self.sent[0])
 
 
 class Economic(Base):
@@ -117,9 +130,10 @@ class Economic(Base):
         push.deliver_economic(self.db, [self.item(released=at(8, 30, 6))], **self.options(at(21, 35, 6)))
         self.assertEqual(self.sent, [], 'an old release is not announced')
 
-    def test_release_in_the_night_is_dropped(self):
-        push.deliver_economic(self.db, [self.item(released=at(22, 30))], **self.options(at(23, 5)))
-        self.assertEqual(self.sent, [])
+    def test_release_in_the_night_is_sent_quietly_and_marked(self):
+        push.deliver_economic(self.db, [self.item(released=at(23, 0))], **self.options(at(23, 5)))
+        self.assertEqual([(m['title'], m['body'], m['silent']) for m in self.sent],
+                         [('おやすみモード・米国雇用統計', '非農業部門雇用者数は+12.3万人、失業率は4.1%', True)])
 
     def test_items_are_read_from_official_updates_and_the_adp_result(self):
         updates = [
@@ -211,11 +225,14 @@ class Economic(Base):
         released = at(4, 0, 10)
         items = [{'kind': 'fomc', 'id': 'fomc-2026-12-09', 'publishedAt': datetime.fromtimestamp(released, timezone.utc).isoformat(), 'ja': '政策金利を据え置き（3.50〜3.75%）', 'en': 'Held'}]
         push.deliver_economic(self.db, items, **self.options(released + 120 - 4 * 3600 + 4 * 3600))
-        self.assertEqual(self.sent, [], 'asleep at 04:00 Japan time: dropped, never held')
+        self.assertEqual([(m['title'], m['silent']) for m in self.sent], [('おやすみモード・FOMC政策金利', True)],
+                         'asleep at 04:00 Japan time: sent at once, quietly and marked')
+        self.sent.clear()
         released = at(10, 0, 10)
-        items[0]['publishedAt'] = datetime.fromtimestamp(released, timezone.utc).isoformat()
+        items = [{**items[0], 'id': 'fomc-2026-12-10', 'publishedAt': datetime.fromtimestamp(released, timezone.utc).isoformat()}]
         push.deliver_economic(self.db, items, **self.options(released + 120))
         self.assertEqual([m['title'] for m in self.sent], ['FOMC政策金利'])
+        self.assertNotIn('silent', self.sent[0])
 
 
 class Answers(Base):
