@@ -1479,7 +1479,10 @@ def sync_incident(db, now_ts=None, env=None, started_ts=None):
         since = max(float(state['failing_since']), floor)
         last = float(state.get('last_failure_at') or 0)
         window = FAILING_CLEAR_SECONDS if open_incident(db, WATCH_PREFIX + 'translation-failing') else FAILING_SECONDS
-        if now_ts - since >= FAILING_SECONDS and now_ts - last <= window:
+        # Nov 22 (owner got a phone alert for one stubborn headline on a quiet weekend night): a single headline that keeps failing
+        # its checks is retried and given up on its own; the alert is for translation as a whole, so two or more must be waiting.
+        blocked = (health['pending']['count'] or 0) + (health['waitingRetry'] or 0)
+        if now_ts - since >= FAILING_SECONDS and now_ts - last <= window and blocked >= 2:
             active['translation-failing'] = 'company-wire-translation-failing:' + (state.get('last_failure') or 'unknown')
 
     # (b) A Stock News story waits more than 20 minutes for its Japanese headline, for 30 minutes, while new ones keep arriving.
