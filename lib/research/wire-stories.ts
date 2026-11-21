@@ -42,25 +42,48 @@ export const lawFirmSolicitation = (text: string) => LAW_FIRM_SOLICITATION.test(
  * 「いらないニュース全排除で」 — 速報 showed 「株式市場本日：…（ライブ中継）」, 「TSMCを超えて：注目すべき台湾の小型テクノロジー株3銘柄」,
  * 「サンディスク株が8分割—投資家にとっての意義とは」, 「インテル18A対TSMC N2：チップの主張の読み方」 and
  * 「AnthropicのIPO：その支出約束が…に意味すること」). Only wording that a report of a concrete event (results, guidance, a deal, a
- * launch, a ruling, a rating or target change, a hire, a filing) does not use is listed. The English part is LOW_VALUE_EN in
- * scripts/research/company_wire.py, which drops such headlines before translation; keep the two in step. */
+ * launch, a ruling, a rating or target change, a hire, a filing) does not use is listed. LOW_VALUE, LOW_VALUE_SOFT and CONCRETE_EVENT are
+ * LOW_VALUE_EN, LOW_VALUE_SOFT_EN and CONCRETE_EVENT_EN in scripts/research/company_wire.py, which drops such headlines before
+ * translation; keep them in step (a test compares them). */
 export const LOW_VALUE = new RegExp([
-  String.raw`\bstock market (?:today|news today|live)\b|\bstocks? (?:today|live)\s*:|[(\[]\s*live(?: updates?| coverage| blog)?\s*[)\]]`,
-  String.raw`|\blive (?:updates|coverage|blog)\b|[-–—:|]\s*(?:business |markets? |stock market )?live\s*$`,
+  String.raw`\bstock market (?:today|news today|live)\b|\bstocks? (?:today|live)\s*:`,
   String.raw`|^\s*(?:Dow Jones|Nasdaq|S&P 500|Stock|Stocks) futures\s*:|^\s*(?:market (?:open|close)|closing bell|opening bell|morning bid|markets? wrap)\s*:`,
   String.raw`|^\s*beyond [^:]{1,40}:|\b(?:\d{1,2}|two|three|four|five|six|seven|eight|nine|ten)\s+(?:[\w&.'’-]+\s+){0,4}(?:stocks|picks)\s+(?:to|for|that|worth|you|i)\b`,
   String.raw`|\bstocks? to (?:watch|buy|own|hold|consider|avoid|sell)\b|\bstock I.d (?:buy|own|hold)\b`,
-  String.raw`|\bwhat\b.{0,40}\bmeans?\s+(?:for|to)\b|\bhere.s (?:what(?! (?:really |actually )?(?:went wrong|happened|caused|we know|changed)\b)|how|the)\b`,
-  String.raw`|\bwhat (?:you|investors|shareholders|traders|buyers) (?:need|should|must|ought|have) to know\b|\bwhat to know\b|\beverything (?:you|investors) need to know\b`,
-  String.raw`|\bhow to (?:read|play|think about|invest(?: in)?|buy|trade|value|approach|navigate|position)\b`,
   String.raw`|\bis (?:it|now) (?:a|the) (?:good |right |smart )?(?:buy|time to)\b|\bstock a buy\b|\bshould you (?:buy|sell|hold|invest|own|worry|be worried|panic|consider)\b`,
   String.raw`|\b(?:buy|sell|hold),? (?:or|and) (?:sell|hold|buy)\b|^\s*(?:prediction|opinion|analysis|commentary|explainer|my take)\s*:|\bbreakingviews\b`,
-  String.raw`|^\s*dear\b|\bbetter buy\s*:|\b(?:no-brainer|screaming buy|millionaire|passive income)\b|\b(?:bull|bear) case\b`,
-  String.raw`|\s[-–—]\s+(?:here.s (?:why|what happened)|should you (?:buy|sell)|time to (?:buy|sell)|what.s next)\b|\bshares gap (?:up|down)\b`, // MarketBeat price-move templates (HQ, Nov 20)
+  String.raw`|^\s*dear\b|\bbetter buy\s*:|\b(?:no-brainer|screaming buy|millionaire|passive income)\b`,
+  String.raw`|[.?!]\s+here.s (?:what(?! (?:really |actually )?(?:went wrong|happened|caused|we know|changed)\b)|how)\b`,
+  String.raw`|\s[-–—]\s+(?:here.s (?:why|what happened)|should you (?:buy|sell)|time to (?:buy|sell))\b|\bshares gap (?:up|down)\b`,
+  String.raw`|\((?:NASDAQ|NYSE|NYSEAMERICAN|AMEX|NYSEARCA):[A-Z.]+\).{0,80}\s[-–—]\s+what.s next\b`,
+  String.raw`|\bGF (?:Score|Value|Rating)\b`,
+  String.raw`|^\s*(?:what\b.{0,40}\bmeans?\s+(?:for|to)|what to know|how to (?:read|play|think about|invest|buy|trade|value))\b`,
 ].join(""), "i");
+/** Nov 20 review: explainers, "- live", "here's the" and bull/bear-case wording drop a headline only when it reports no concrete event
+ * (CONCRETE_EVENT: a company that launches, names, invests, buys, wins, raises, cuts, reports, files, sues, surges ..., or a price target or
+ * rating change), so "AMD launches MI400: what it means for Nvidia" and "Intel names new CEO - live" are kept. LOW_VALUE drops anywhere. */
+export const LOW_VALUE_SOFT = new RegExp([
+  String.raw`[(\[]\s*live(?: updates?| coverage| blog)?\s*[)\]]|\blive (?:updates|coverage|blog)\b|[-–—:|]\s*(?:business |markets? |stock market )?live\s*$`,
+  String.raw`|\bwhat\b.{0,40}\bmeans?\s+(?:for|to)\b`,
+  String.raw`|\bhere.s (?:what(?! (?:really |actually )?(?:went wrong|happened|caused|we know|changed)\b)|how|the(?! (?:full |complete )?(?:statement|letter|memo|text|transcript|filing)\b))\b`,
+  String.raw`|\bwhat (?:you|investors|shareholders|traders|buyers) (?:need|should|must|ought|have) to know\b|\bwhat to know\b|\beverything (?:you|investors) need to know\b`,
+  String.raw`|\bhow to (?:read|play|think about|invest(?: in)?|buy|trade|value|approach|navigate|position)\b`,
+  String.raw`|\b(?:bull|bear) case\b|\s[-–—]\s+what.s next\b`,
+].join(""), "i");
+export const CONCRETE_EVENT = new RegExp([
+  String.raw`\b(?!(?:How|Time|What|Why|When|Where|Who|Here|Stock|Stocks|Shares|Has|Have|Had|Is|Are|Was|Were|Be|It|I|You|We|They|He|She)\b)[A-Z][\w&.'’-]*\s+(?:to\s+|will\s+)?(?:[Ll]aunch(?:es|ed)?|[Nn]ames|[Nn]amed|[Ii]nvest(?:s|ed)?|[Bb]uys|[Bb]uy|[Bb]ought|[Aa]cquires?|[Aa]cquired`,
+  String.raw`|[Ww]ins|[Ww]in|[Ww]on|[Rr]aises|[Rr]aised|[Cc]uts|[Cc]ut|[Ll]owers|[Ll]owered|[Uu]pgrades|[Uu]pgraded|[Dd]owngrades|[Dd]owngraded`,
+  String.raw`|[Rr]eports|[Rr]eported|[Bb]eats|[Mm]isses|[Mm]issed|[Aa]nnounces|[Aa]nnounced|[Ff]iles|[Ff]iled|[Aa]pproves|[Aa]pproved|[Bb]ans|[Bb]anned`,
+  String.raw`|[Ss]ues|[Ss]ued|[Aa]grees|[Aa]greed|[Ss]urges|[Ss]urged|[Pp]lunges|[Pp]lunged)\b`,
+  String.raw`|\b(?:[Pp]rice [Tt]arget|[Tt]arget [Pp]rice|PT)\b|\b(?:[Uu]pgrade[sd]?|[Dd]owngrade[sd]?)\b`,
+].join(""));
 /** The same kinds of headline in Japanese, for a translated title whose English wording differs (owner, Nov 20). */
-const LOW_VALUE_JA = /株式市場(?:本日|今日)|(?:本日|今日)の株式市場|[(（]\s*ライブ(?:中継|更新|ブログ)?\s*[)）]|ライブ(?:中継|更新|ブログ)\s*$|注目すべき.{0,30}(?:銘柄|株)|買うべき.{0,20}(?:銘柄|株)|(?:銘柄|株)\d+選|(?:意味|意義)(?:とは|するもの)|(?:意味|意義)すること\s*$|の読み方|知っておくべき(?:こと|点)|投資家が知るべき/;
-export const lowValue = (text: string) => LOW_VALUE.test(text) || LOW_VALUE_JA.test(text);
+const LOW_VALUE_JA = /株式市場(?:本日|今日)|(?:本日|今日)の株式市場|[(（]\s*ライブ(?:中継|更新|ブログ)?\s*[)）]|ライブ(?:中継|更新|ブログ)\s*$|注目すべき.{0,30}(?:銘柄|株)|買うべき.{0,20}(?:銘柄|株)|(?:銘柄|株)\d+選|(?:意味|意義)(?:とは|するもの)|(?:意味|意義)すること\s*$|の読み方|知っておくべき(?:こと|点)|投資家が知るべき|(?:にとっての意味|に与える影響とは|が意味すること|は何を意味|にとって何を意味)\s*$/; // the last: teasers whose answer is in an article we do not carry (owner, Oct 26)
+/** GuruFocus templates ("GF Score", "GF Value"), as they were translated (owner, Nov 21). */
+const GF_TEMPLATE_JA = /GF\s?(?:評価|スコア|バリュー|レーティング)/;
+const lowValueEn = (text: string) => LOW_VALUE.test(text) || (LOW_VALUE_SOFT.test(text) && !CONCRETE_EVENT.test(text));
+/** ``english`` is the English headline of a translated ``text``: a Japanese explainer phrase is not dropped when the English one reports an event. */
+export const lowValue = (text: string, english = text) => lowValueEn(text) || GF_TEMPLATE_JA.test(text) || (LOW_VALUE_JA.test(text) && !CONCRETE_EVENT.test(english));
 
 const NOT_NEWS = [
   /\$[^$\n]{1,80}\([A-Z.]{1,8}\.US\)\$/,                       // community posts: $NVIDIA (NVDA.US)$
@@ -81,7 +104,6 @@ const NOT_NEWS = [
   /\bbuying opportunit(?:y|ies)\b|\bbuy the dip\b|\btime to buy\b|買いの機会|買い時|買い場|押し目買い/i, // opinion pieces that argue for buying carry no news fact
   /逃した[?？]|見逃さない(?:よう|で)|お気に入りの恐竜/,
   /\bweek in review\b|\bweekly (?:news )?(?:roundup|digest|recap|wrap)\b|\bthis week(?:['’]s)? (?:top|key|main|biggest|major)\b|\bwhat happened this week\b|今週の(?:主な)?(?:動向|ニュース|まとめ)|週間(?:まとめ|ニュース|動向)/i, // weekly digests read as a teaser for a longer piece
-  /\bwhat (?:it|this|that) means for\b|\bwhat (?:it|this) (?:could )?mean(?:s)? for (?:investors|the stock)\b|(?:株|社|銘柄)?(?:にとっての意味|に与える影響とは|が意味すること|は何を意味|にとって何を意味)\s*$/i, // teasers: the answer is in an article we do not carry (owner, Oct 26)
   /(?:\b(?:EUR|GBP|CHF)\s?\d[\d.,]*|\d[\d.,]*\s?(?:EUR|GBP|CHF)\b|(?:ユーロ|ポンド)\s?\d[\d.,]*).{0,12}(?:で取引|\btrad)|\btrad\w*\b.{0,24}\b(?:EUR|GBP|CHF)\s?\d/i, // a foreign-currency quote, not news
   LAW_FIRM_SOLICITATION, // law-firm solicitations (owner, Oct 26; any firm or wording, Nov 15)
   /\b(?:tracking|following|eyeing)\b.{0,50}\bearnings\b|決算を追う|ウォール街が(?:ラリー|反発|続伸|下落|急落)|\bWall Street (?:rallies|rally mode|slides|falls|climbs|stabili[sz]es)\b/i, // other companies' earnings round-ups and market-wide wraps
@@ -122,7 +144,7 @@ export function cleanTitle(title: string) {
 }
 /** News filed by the market rather than by a company (the Stock News API's general market feed) is stored under MKT (owner, Nov 10). */
 export const tickerLabel = (ticker: string, ja: boolean) => ticker === "MKT" ? (ja ? "市場" : "Market") : ticker;
-export const isNotNews = (text: string) => NOT_NEWS.some(pattern => pattern.test(text)) || lowValue(text);
+export const isNotNews = (text: string, english = text) => NOT_NEWS.some(pattern => pattern.test(text)) || lowValue(text, english);
 
 /** "X reports third-quarter results" read days after the release is an old story (owner, Oct 26: ASML, 12 days late).
  * Only a headline that announces results is judged, and only against a release date we know for that company. */
@@ -173,7 +195,7 @@ export function storyCandidates(wire: Record<string, CompanyWireItem[]>, lang: L
   const ja = lang === "ja";
   return Object.entries(wire).flatMap(([ticker, list]) => watched && !watched.has(ticker) ? [] : list.flatMap(item => {
     const title = ja ? (item.titleJa && tidyJapanese(cleanTitle(item.titleJa))) : cleanTitle(item.titleEn);
-    return title && !isNotNews(item.titleEn) && !isNotNews(title) && !staleResults(ticker, item.titleEn, item.publishedAt) && !staleResults(ticker, title, item.publishedAt) ? [{ ticker, item, title }] : [];
+    return title && !isNotNews(item.titleEn) && !isNotNews(title, item.titleEn) && !staleResults(ticker, item.titleEn, item.publishedAt) && !staleResults(ticker, title, item.publishedAt) ? [{ ticker, item, title }] : [];
   })).sort((a, b) => Date.parse(a.item.publishedAt) - Date.parse(b.item.publishedAt));
 }
 /** One broker's action named in a headline (owner, Nov 20: 「MRVLは同じの2つある」 — "Stifel maintains Marvell Technology at Buy, lowers price
@@ -191,7 +213,7 @@ const BROKER_ALIASES: Record<string, string> = { bankofamerica: "bofa", bofasecu
   canaccordgenuity: "canaccord", citizensjmp: "jmp" };
 const TARGET_WORDS = /\b(?:price target|target price|price objective|PT)\b/i;
 const NEW_TARGET = /\bto \$\s?(\d[\d,]*(?:\.\d+)?)/;
-const ANY_TARGET = /(?<!from )\$\s?(\d[\d,]*(?:\.\d+)?)(?!\s?(?:billion|million|bn|m|b)\b)/i;
+const ANY_TARGET = /(?<!from )\$\s?(\d[\d,]*(?:\.\d+)?)(?![.,]?\d)(?!\s?(?:billion|million|trillion|bn|m|b|t)\b)/i;
 const RATING_CHANGE = /\b(?:upgrade[sd]?|downgrade[sd]?|initiate[sd]?|start(?:s|ed)?|resume[sd]?|reinstate[sd]?)\b.{0,80}?\b(?:to|at|with)\s+(?:an? )?(strong buy|buy|outperform|overweight|accumulate|add|neutral|hold|equal[- ]weight|market perform|sector perform|peer perform|in[- ]line|underperform|underweight|reduce|sell)\b/i;
 export function analystActions(title: string): string[] {
   const broker = BROKER.exec(title ?? "");
