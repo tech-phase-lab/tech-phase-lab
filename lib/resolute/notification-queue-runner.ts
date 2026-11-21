@@ -54,7 +54,7 @@ export function createNotificationQueueRunner(
       (options.makeJob ?? ((resolveInputs) => createNotificationOutboxJob(pool, resolveInputs, now, undefined, undefined,
         // Reference prices saved before a stock split are judged on today's basis (closes are split-adjusted). Manual list when no loader.
         // Without a loader only the manual list is known and no symbol counts as complete (its price day never jumps to today).
-        createSettingsSplitAdjuster(options.splits ?? (async (symbols) => ({ splits: Object.fromEntries(symbols.map((s) => [s, mergeSplits(s, [])])), complete: new Set<string>() })), now))))(async (userId, symbols) => {
+        createSettingsSplitAdjuster(options.splits ?? (async (symbols) => ({ splits: Object.fromEntries(symbols.map((s) => [s, mergeSplits(s, [])])), through: {} })), now))))(async (userId, symbols) => {
         const who = await options.recipient(userId);
         const source = await options.closes(symbols);
         report.marketDate = source.marketDate;

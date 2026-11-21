@@ -5,93 +5,87 @@ import { etDay, mergeSplits, parseTwelveSplits, rebase, type StockSplit } from "
  *
  * A lot's numbers are on the basis of its `checkedAt` day (the day it was typed in, read from a screenshot or last brought up to date).
  * They are adjusted when read: shares × ratio and average cost ÷ ratio for every split after that day, so the total cost stays the same.
- * Nothing is rewritten in storage by a split; a lot is written again only when the reader saves (then on the basis it was brought to). */
+ * Nothing is rewritten in storage by a split; a lot is written again only when the reader saves (then on the basis it was brought to).
+ *
+ * Some lots cannot be read safely, and are then shown exactly as stored, never adjusted, re-dated or saved until the reader chooses:
+ *  - a lot last written by the old screen (no `basis: 2`) and dated on or after a split the old screen could have applied. Between the
+ *    portfolio's launch (2026-11-01, #295) and the split-aware screen, the old screen (2026-11-11, #396) applied Twelve Data splits the wrong
+ *    way round (an 8-for-1 divided the shares by 8) and re-dated the lot on every visit, so its numbers may be as stored, pre-split (× ratio)
+ *    or wrong-way (× ratio²). Only splits dated after the launch can have been applied (no lot is older), so older splits (NVDA 2007,
+ *    GE 2021) never make a lot ambiguous.
+ *  - any lot dated from a split's own day to four days after it: a broker screen read then may still show the old numbers.
+ * The price never decides; it only orders the readings offered. */
 export type Split = StockSplit;
 export const parseSplits = parseTwelveSplits;
 export { mergeSplits };
 
+/** The old screen's lots can only carry splits dated after the portfolio launched and before the split-aware screen replaced it. */
+export const LEGACY_SPLITS = { after: "2026-11-01", through: "2026-12-31" } as const;
+const BROKER_LAG_DAYS = 4;
+
 export type Applied = { ticker: string; date: string; ratio: number };
+export type Reading = { kind: "as-stored" | "pre-split" | "wrong-way"; factor: number; shares: number; avgCostUsd: number };
+export type Ambiguous = { key: string; ticker: string; source?: string; split: Split; readings: Reading[] };
 export type SplitOptions = {
-  /** Tickers the provider answered for. A ticker known only from the manual list is adjusted, but its date moves only to the last split
-   * applied, never to today. Omitted: every ticker given is complete. */
-  complete?: ReadonlySet<string>;
-  /** Current (split-adjusted) prices, to tell which basis a lot checked on a split's own day is on. */
+  /** Per ticker the provider answered for, the day its list is complete through (knownThroughDay). A ticker without it is known only from
+   * the manual list: it is adjusted, but its date moves only to the last split applied. Omitted: every ticker given is complete to today. */
+  through?: Readonly<Record<string, string | undefined>>;
+  /** Current (split-adjusted) prices: only used to order the readings of an ambiguous lot. */
   prices?: Readonly<Record<string, number | null | undefined>>;
 };
 const round = (value: number, digits: number) => Math.round(value * 10 ** digits) / 10 ** digits;
-const dayBefore = (day: string) => new Date(Date.parse(`${day}T00:00:00Z`) - 86_400_000).toISOString().slice(0, 10);
+const addDays = (day: string, n: number) => new Date(Date.parse(`${day}T00:00:00Z`) + n * 86_400_000).toISOString().slice(0, 10);
+export const lotKey = (lot: Pick<Holding, "ticker" | "source">) => `${lot.ticker}|${lot.source ?? ""}`;
 
-/** A lot checked on a split's own day is ambiguous: an old screen stamped the UTC day (an evening in the US before it) and a broker screen
- * read before the open still shows the old numbers. The current price decides: average cost ÷ price nearer the ratio than 1 (in log terms,
- * at least √ratio for a forward split) is the old basis. Without a price the answer is null and the lot is left as it is. */
-function sameDayIsOld(lot: Holding, split: Split, price: number | null | undefined): boolean | null {
-  if (!(typeof price === "number" && price > 0)) return null;
-  const q = lot.avgCostUsd / price;
-  return split.ratio > 1 ? q >= Math.sqrt(split.ratio) : q <= Math.sqrt(split.ratio);
+function readings(lot: Holding, split: Split, legacy: boolean, price: number | null | undefined): Reading[] {
+  const make = (kind: Reading["kind"], factor: number): Reading => ({ kind, factor, shares: round(lot.shares * factor, 6), avgCostUsd: round(lot.avgCostUsd / factor, 6) });
+  const list = [make("as-stored", 1), make("pre-split", split.ratio), ...(legacy ? [make("wrong-way", split.ratio ** 2)] : [])];
+  if (!(typeof price === "number" && price > 0)) return list;
+  return list.map((r, i) => ({ r, i, d: Math.abs(Math.log(r.avgCostUsd / price)) })).sort((a, b) => a.d - b.d || a.i - b.i).map(x => x.r);
+}
+/** The split that makes this lot ambiguous, if any (see above), and whether the old screen may have touched it. */
+function ambiguity(lot: Holding, list: readonly Split[], basis: string, today: string): { split: Split; legacy: boolean } | null {
+  const open = list.filter(s => s.date <= today && !(lot.confirmedSplit && lot.confirmedSplit >= s.date));
+  const legacy = lot.basis !== 2 ? open.filter(s => s.date > LEGACY_SPLITS.after && s.date <= LEGACY_SPLITS.through && s.date <= basis).at(-1) : undefined;
+  if (legacy) return { split: legacy, legacy: true };
+  const lag = open.filter(s => s.date <= basis && basis <= addDays(s.date, BROKER_LAG_DAYS)).at(-1);
+  return lag ? { split: lag, legacy: false } : null;
 }
 
 /** The lots on today's basis. A ticker missing from `splits` (the provider failed and the manual list has nothing) is left exactly as it is,
- * date included. Every other lot is brought up to date (see `rebase`), so saving the result never applies a split twice. `baseline` is the
- * basis of a lot without a check date (the previous save's day). The yen cost rate is per dollar and does not change. */
-export function adjustForSplits(holdings: readonly Holding[], splits: Readonly<Record<string, readonly Split[] | undefined>>, baseline: string, today: string, options: SplitOptions = {}): { holdings: Holding[]; applied: Applied[] } {
-  const applied: Applied[] = [];
+ * date included; an ambiguous lot likewise, and it is listed in `ambiguous` with its readings. Every other lot is brought up to date (see
+ * `rebase`) and marked `basis: 2`, so saving the result never applies a split twice. `baseline` is the basis of a lot without a check date
+ * (the previous save's day). The yen cost rate is per dollar and does not change. */
+export function adjustForSplits(holdings: readonly Holding[], splits: Readonly<Record<string, readonly Split[] | undefined>>, baseline: string, today: string, options: SplitOptions = {}): { holdings: Holding[]; applied: Applied[]; ambiguous: Ambiguous[] } {
+  const applied: Applied[] = [], ambiguous: Ambiguous[] = [];
   const next = holdings.map(lot => {
     const list = splits[lot.ticker];
     if (list === undefined) return lot;
-    let since = lot.checkedAt && /^\d{4}-\d{2}-\d{2}$/.test(lot.checkedAt) ? lot.checkedAt : baseline;
-    const sameDay = list.find(s => s.date === since && s.date <= today);
-    if (sameDay) {
-      const old = sameDayIsOld(lot, sameDay, options.prices?.[lot.ticker]);
-      if (old === null) return lot;
-      if (old) since = dayBefore(since);
+    const since = lot.checkedAt && /^\d{4}-\d{2}-\d{2}$/.test(lot.checkedAt) ? lot.checkedAt : baseline;
+    const unsure = ambiguity(lot, list, since, today);
+    if (unsure) {
+      ambiguous.push({ key: lotKey(lot), ticker: lot.ticker, source: lot.source, split: unsure.split, readings: readings(lot, unsure.split, unsure.legacy, options.prices?.[lot.ticker]) });
+      return lot;
     }
-    const complete = options.complete ? options.complete.has(lot.ticker) : true;
-    const { factor, basis, applied: used } = rebase(list, since, today, complete);
+    const through = options.through ? options.through[lot.ticker] ?? null : today;
+    const { factor, basis, applied: used } = rebase(list, since, today, through);
     for (const split of used) if (!applied.some(a => a.ticker === lot.ticker && a.date === split.date)) applied.push({ ticker: lot.ticker, date: split.date, ratio: split.ratio });
     const checkedAt = lot.checkedAt && lot.checkedAt > basis ? lot.checkedAt : basis;
-    return factor === 1 ? (checkedAt === lot.checkedAt ? lot : { ...lot, checkedAt }) : { ...lot, shares: round(lot.shares * factor, 6), avgCostUsd: round(lot.avgCostUsd / factor, 6), checkedAt };
+    return { ...lot, ...(factor === 1 ? {} : { shares: round(lot.shares * factor, 6), avgCostUsd: round(lot.avgCostUsd / factor, 6) }), checkedAt, basis: 2 as const };
   });
-  return { holdings: next, applied };
+  return { holdings: next, applied, ambiguous };
+}
+/** The reader's choice for an ambiguous lot: its numbers become that reading, on today's basis, confirmed against that split. */
+export function chooseReading(lots: readonly Holding[], choice: Ambiguous, reading: Reading, today: string): Holding[] {
+  return lots.map(lot => lotKey(lot) !== choice.key ? lot
+    : { ...lot, shares: reading.shares, avgCostUsd: reading.avgCostUsd, checkedAt: today > choice.split.date ? today : choice.split.date, basis: 2 as const, confirmedSplit: choice.split.date });
 }
 /** The splits known without asking the provider (the manual list), for the held tickers that have any. */
 export function knownSplits(tickers: readonly string[]): Record<string, Split[]> {
   return Object.fromEntries(tickers.map(ticker => [ticker, mergeSplits(ticker, [])]).filter(([, list]) => list.length));
 }
-
-/** Before Nov 21 the screen applied a provider row the wrong way round (it read Twelve Data's from/to as old/new) and saved the result: an
- * 8-for-1 divided the shares by 8 and multiplied the cost by 8, so the lot is off by ratio² against the truth, and it rewrote the check date
- * on every later visit, so the date proves nothing. Such a lot is found by its numbers (one row per lot, per broker and ticker):
- *  - it claims to be on the new basis (checked on or after a split of its ticker) and was not adjusted now;
- *  - average cost ÷ current price is past the ratio (a correct lot would have lost 87.5% on an 8-for-1);
- *  - shares × ratio² is a whole number, and the shares are not whole or the cost ÷ price is past ratio^1.5.
- * A lot consistent with post-split prices is never listed. Nothing is written: the reader chooses per lot. */
-export type Repair = { key: string; ticker: string; source?: string; date: string; ratio: number; shares: number; fixedShares: number; avgCostUsd: number; fixedCost: number };
-export const lotKey = (lot: Pick<Holding, "ticker" | "source" | "shares" | "avgCostUsd">) => `${lot.ticker}|${lot.source ?? ""}|${lot.shares}|${lot.avgCostUsd}`;
-const whole = (n: number) => Math.abs(n - Math.round(n)) < 1e-6 * Math.max(1, Math.abs(n));
-export function invertedLots(lots: readonly Holding[], splits: Readonly<Record<string, readonly Split[] | undefined>>, prices: Readonly<Record<string, number | null | undefined>>, kept: ReadonlySet<string> = new Set()): Repair[] {
-  const out: Repair[] = [];
-  for (const lot of lots) {
-    const price = prices[lot.ticker], list = splits[lot.ticker];
-    if (!list?.length || !(typeof price === "number" && price > 0) || !lot.checkedAt || kept.has(lotKey(lot)) || out.some(r => r.key === lotKey(lot))) continue;
-    const q = lot.avgCostUsd / price;
-    const split = [...list].reverse().find(s => {
-      if (s.date > lot.checkedAt!) return false;
-      const r = s.ratio, past = r > 1 ? q >= r : q <= r, far = r > 1 ? q >= r ** 1.5 : q <= r ** 1.5;
-      return past && whole(lot.shares * r * r) && (!whole(lot.shares) || far);
-    });
-    if (!split) continue;
-    const fix = split.ratio ** 2;
-    out.push({ key: lotKey(lot), ticker: lot.ticker, source: lot.source, date: split.date, ratio: split.ratio, shares: lot.shares, fixedShares: round(lot.shares * fix, 6), avgCostUsd: lot.avgCostUsd, fixedCost: round(lot.avgCostUsd / fix, 6) });
-  }
-  return out;
-}
-/** The chosen repairs written into the lots (now on today's basis). Every other lot is returned unchanged. */
-export function applyRepairs(lots: readonly Holding[], repairs: readonly Repair[], today: string): Holding[] {
-  return lots.map(lot => {
-    const repair = repairs.find(r => r.key === lotKey(lot));
-    return repair ? { ...lot, shares: repair.fixedShares, avgCostUsd: repair.fixedCost, checkedAt: today } : lot;
-  });
-}
+/** A lot typed in or read from a screenshot now: on today's basis, written by this screen. */
+export const fresh = (lot: Holding, today: string): Holding => ({ ...lot, checkedAt: today, basis: 2 });
 
 /** Today's US (ET) day: the day split dates are compared with. */
 export const today = (now = Date.now()) => etDay(now);

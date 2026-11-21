@@ -35,9 +35,10 @@ export function createNotificationStore(pool: Pick<Pool,"connect">, source: Enti
    if(!parsed) throw new Error("Missing mutation");
    if(parsed.baseRevision!==current.revision) throw new NotificationConflict(await shown());
    if(current.revision>=Number.MAX_SAFE_INTEGER-1) throw new Error("Revision exhausted");
-   // Each reference price keeps the day it is on (sent back by the screen); one without a day was typed today (notification-splits.ts).
+   // Each reference price keeps the day it is on (sent back by the screen, or the stored one when an old screen sends the stored price
+   // unchanged); only a new or changed price without a day is today's (notification-splits.ts).
    const today=etDay(clock());
-   const saved={settings:stampPriceDays(parsed.settings,today,today),revision:current.revision+1};
+   const saved={settings:stampPriceDays(parsed.settings,today,today,row?{settings:current.settings,savedAt:row.updated_at??null}:undefined),revision:current.revision+1};
    await client.query(`INSERT INTO resolute.notification_settings(clerk_user_id,settings,revision,updated_at)
     VALUES($1,$2,$3,statement_timestamp()) ON CONFLICT(clerk_user_id) DO UPDATE
     SET settings=$2,revision=$3,updated_at=statement_timestamp()`,[userId,JSON.stringify(saved.settings),saved.revision]);

@@ -6,27 +6,36 @@ import type { NotificationSettings } from "./notification-settings.ts";
  * against the $79.24 close that is −9.4%, not −88.7% firing every line). The stored row is not rewritten by a split.
  *
  * The day travels with the price: GET shows the adjusted price with its new day, a PUT keeps the day the screen sent (a screen opened
- * before a split and saved after it still says "before"), an item without one is today's, and the mail stop records the old day before it
- * moves updated_at. Rows from before priceDay existed use their updated_at once. */
-type Answer = Pick<SplitAnswer, "splits"> & { complete?: ReadonlySet<string> };
+ * before a split and saved after it still says "before"); an item sent without a day keeps the stored day when its symbol and price are
+ * unchanged (an old screen), and only a new or changed price is today's; the mail stop records the old day before it moves updated_at.
+ * Rows from before priceDay existed use their updated_at. */
+type Answer = Pick<SplitAnswer, "splits"> & { through?: Readonly<Record<string, string | undefined>> };
 const round = (n: number) => Math.max(0.01, Math.round(n * 100) / 100);
+const legacyDay = (savedAt: Date | string | null | undefined) => savedAt ? etDay(savedAt) : "";
 
-/** Items on today's basis, each with the day it is now on. A symbol the provider did not answer for moves only up to the last split
- * applied from the manual list, so a provider-only split after that is still found later. */
+/** Items on today's basis, each with the day it is now on. The day never moves past the day the provider's list is complete through, and
+ * for a symbol the provider did not answer for only up to the last split applied from the manual list. `through` omitted: complete. */
 export function adjustWatchItems(settings: NotificationSettings, savedAt: Date | string | null | undefined, answer: Answer, now: Date): NotificationSettings {
-  const legacy = savedAt ? etDay(savedAt) : "", today = etDay(now);
+  const legacy = legacyDay(savedAt), today = etDay(now);
   const watchItems = settings.watchItems.map(item => {
     const basis = item.priceDay && isDay(item.priceDay) ? item.priceDay : legacy || today;
-    const complete = answer.complete ? answer.complete.has(item.symbol) : true;
-    const { factor, basis: next } = rebase(answer.splits[item.symbol], basis, today, complete);
+    const through = answer.through ? answer.through[item.symbol] ?? null : today;
+    const { factor, basis: next } = rebase(answer.splits[item.symbol], basis, today, through);
     return { symbol: item.symbol, referencePrice: factor === 1 ? item.referencePrice : round(item.referencePrice / factor), priceDay: next };
   });
   return { ...settings, watchItems };
 }
-/** Before a write: an item without a day gets `day` (today for a PUT from the screen, the old basis for the mail stop); a day in the future
- * is brought back to today. */
-export function stampPriceDays(settings: NotificationSettings, day: string, today: string): NotificationSettings {
-  return { ...settings, watchItems: settings.watchItems.map(item => ({ ...item, priceDay: item.priceDay && isDay(item.priceDay) ? (item.priceDay > today ? today : item.priceDay) : day })) };
+/** Before a write: every item gets a day. One sent with a day keeps it (a day in the future is brought back to today). One sent without a day
+ * keeps the stored item's day when the symbol and price are the same as stored (an old screen still open: its price is the stored one), and
+ * otherwise is `day` (a price typed now). */
+export function stampPriceDays(settings: NotificationSettings, day: string, today: string, stored?: { settings: NotificationSettings; savedAt: Date | string | null | undefined }): NotificationSettings {
+  const legacy = stored ? legacyDay(stored.savedAt) : "";
+  return { ...settings, watchItems: settings.watchItems.map(item => {
+    if (item.priceDay && isDay(item.priceDay)) return { ...item, priceDay: item.priceDay > today ? today : item.priceDay };
+    const same = stored?.settings.watchItems.find(old => old.symbol === item.symbol && old.referencePrice === item.referencePrice);
+    const kept = same ? (same.priceDay && isDay(same.priceDay) ? same.priceDay : legacy) : "";
+    return { ...item, priceDay: kept || day };
+  }) };
 }
 /** Symbols whose split is within one market day of the close being judged (the day before, the day, the day after): the provider may not
  * have adjusted every figure yet, so nothing is judged for them that day. */

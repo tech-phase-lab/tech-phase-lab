@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {PGlite} from '@electric-sql/pglite';
-import {SPLIT_OVERRIDES,createSplitLoader,etDay,marketDayShift,mergeSplits,parseTwelveSplits,splitFactor,splitLabel} from '../lib/research/stock-splits.ts';
+import {SPLIT_OVERRIDES,createSplitLoader,etDay,knownThroughDay,marketDayShift,mergeSplits,parseTwelveSplits,splitFactor,splitLabel} from '../lib/research/stock-splits.ts';
 import {adjustWatchItems,createSettingsSplitAdjuster,splitWindowSymbols,stampPriceDays} from '../lib/resolute/notification-splits.ts';
 import {createNotificationStore} from '../lib/resolute/notification-database.ts';
 import {createNotificationOutboxJob} from '../lib/resolute/notification-outbox.ts';
@@ -16,7 +16,7 @@ import {emptyPlanAnswers} from '../lib/resolute/plan-answers.ts';
 import {capitalRows} from '../lib/research/capital-map.ts';
 import {priceTargetSplitView} from '../lib/research/price-target-splits.ts';
 
-const manual=symbols=>({splits:Object.fromEntries(symbols.map(s=>[s,mergeSplits(s,[])])),complete:new Set(symbols)});
+const manual=symbols=>({splits:Object.fromEntries(symbols.map(s=>[s,mergeSplits(s,[])]))});
 const SNDK=manual(['SNDK','MU']);
 // Sandisk 8-K of 2026-11-19 (Item 5.03): 8-for-1 forward split, effective 4:01 p.m. ET Nov 19, split-adjusted trading from Nov 20.
 test('the manual list carries SNDK 8-for-1 from 2026-11-20 with its SEC source, and APH 2024-06-12 which the provider lacks', () => {
@@ -49,11 +49,11 @@ test('B3: the loader keeps a provider answer a day, never keeps a failure (HTTP 
  const request=async(url)=>{calls++;assert.equal(url.searchParams.get('range'),'full');
   return fail?new Response(JSON.stringify({code:429,status:'error',message:'credits'}),{status:200}):new Response(JSON.stringify({meta:{symbol:'NVDA'},splits:[{date:'2024-06-10',from_factor:10,to_factor:1}]}),{status:200});};
  const load=createSplitLoader({apiKey:'test',request});
- let answer=await load(['NVDA']);assert.deepEqual(answer.splits.NVDA,[]);assert.equal(answer.complete.has('NVDA'),false);
- fail=false;answer=await load(['NVDA','NVDA']);assert.deepEqual(answer.splits.NVDA.map(s=>s.ratio),[10]);assert.equal(answer.complete.has('NVDA'),true);
+ let answer=await load(['NVDA']);assert.deepEqual(answer.splits.NVDA,[]);assert.equal('NVDA' in answer.through,false);
+ fail=false;answer=await load(['NVDA','NVDA']);assert.deepEqual(answer.splits.NVDA.map(s=>s.ratio),[10]);assert.equal('NVDA' in answer.through,true);
  await load(['NVDA']);assert.equal(calls,2);
- const keyless=await createSplitLoader({apiKey:undefined})(['SNDK']);assert.deepEqual(keyless.splits.SNDK.map(s=>s.ratio),[8]);assert.equal(keyless.complete.size,0);
- assert.equal((await createSplitLoader({apiKey:'test',request:async()=>new Response('{}',{status:500})})(['SNDK'])).complete.size,0);
+ const keyless=await createSplitLoader({apiKey:undefined})(['SNDK']);assert.deepEqual(keyless.splits.SNDK.map(s=>s.ratio),[8]);assert.equal(Object.keys(keyless.through).length,0);
+ assert.equal((await createSplitLoader({apiKey:'test',request:async()=>new Response('{}',{status:500})})(['SNDK'])).through.SNDK,undefined);
 });
 
 const plan={schemaVersion:1,answersVersion:1,answers:emptyPlanAnswers(),fx:{thresholdYen:null,usdJpy:null,note:''},currency:'JPY',monthlyLivingCost:250000,savingsMonths:12,reserveMonths:6,nearTermExpense:0,financialAssets:10000000,investedAmount:3000000,investable:8500000,tolerancePct:20,toleranceDrop:600000,perStockCapPct:20,buyMode:'steps',buyLines:[{dropPct:10,amount:100000},{dropPct:20,amount:100000}],buyBudgetPct:10,allocation:'equal',noBuyConditions:[],haltConditions:[],ruleType:'undecided'};
@@ -73,11 +73,11 @@ test('RESOLUTE line: a reference from before the split is read ÷ 8 and carries 
  assert.equal(adjustWatchItems({...settings,watchItems:[{symbol:'SNDK',referencePrice:700,priceDay:'2026-11-19'}]},'2026-11-24T10:00:00Z',SNDK,slot).watchItems[0].referencePrice,87.5);
  assert.equal(adjustWatchItems({...settings,watchItems:[{symbol:'SNDK',referencePrice:87.5,priceDay:'2026-11-20'}]},'2026-11-18T10:00:00Z',SNDK,slot).watchItems[0].referencePrice,87.5);
  // Manual list only (provider failed): the day moves to the split, not to today.
- assert.equal(adjustWatchItems(settings,'2026-11-18T10:00:00Z',{splits:SNDK.splits,complete:new Set()},slot).watchItems[0].priceDay,'2026-11-20');
+ assert.equal(adjustWatchItems(settings,'2026-11-18T10:00:00Z',{splits:SNDK.splits,through:{}},slot).watchItems[0].priceDay,'2026-11-20');
  assert.deepEqual(parseNotificationSettings(adjusted),adjusted);
 });
 test('B6 (review F): an unrelated write (the mail stop) records the old day instead of freezing an unadjusted price', () => {
- const XYZ={splits:{XYZ:[{ticker:'XYZ',date:'2027-02-01',ratio:2}]},complete:new Set(['XYZ'])};
+ const XYZ={splits:{XYZ:[{ticker:'XYZ',date:'2027-02-01',ratio:2}]}};
  const s={...settings,watchItems:[{symbol:'XYZ',referencePrice:500}]};
  const stopped=stampPriceDays(s,etDay('2027-01-05T00:00:00Z'),'2027-02-10');
  assert.equal(stopped.watchItems[0].priceDay,'2027-01-04');
@@ -88,6 +88,21 @@ test('B6 (review G): a screen loaded before the split and saved after it keeps t
  assert.equal(loaded.watchItems[0].priceDay,'2026-11-19');
  const saved=stampPriceDays(loaded,'2026-11-21','2026-11-21');
  assert.equal(adjustWatchItems(saved,'2026-11-21T05:00:00Z',SNDK,new Date('2026-11-22T15:00:00Z')).watchItems[0].referencePrice,94.38);
+});
+test('review v2 #5 (G old client): an item sent without a day keeps the stored day when symbol and price are unchanged; a changed price is today\'s', () => {
+ const stored={settings:{...settings,watchItems:[{symbol:'SNDK',referencePrice:755,priceDay:'2026-11-19'},{symbol:'MU',referencePrice:100}]},savedAt:'2026-11-10T15:00:00Z'};
+ const sent={...settings,watchItems:[{symbol:'SNDK',referencePrice:755},{symbol:'MU',referencePrice:100},{symbol:'NVDA',referencePrice:180}]};
+ const saved=stampPriceDays(sent,'2026-11-21','2026-11-21',stored);
+ assert.deepEqual(saved.watchItems.map(i=>i.priceDay),['2026-11-19','2026-11-10','2026-11-21']);
+ assert.equal(adjustWatchItems(saved,'2026-11-21T15:00:00Z',SNDK,new Date('2026-11-25T15:00:00Z')).watchItems[0].referencePrice,94.38);
+ assert.equal(stampPriceDays({...sent,watchItems:[{symbol:'SNDK',referencePrice:90}]},'2026-11-21','2026-11-21',stored).watchItems[0].priceDay,'2026-11-21');
+});
+test('review v2 #4 (G2): a cached answer read on the split day (row not listed yet) never moves the day past the day before it was read', () => {
+ const s={...settings,watchItems:[{symbol:'XYZ',referencePrice:500,priceDay:'2027-01-05'}]};
+ const shown=adjustWatchItems(s,null,{splits:{XYZ:[]},through:{XYZ:knownThroughDay('2027-02-01T15:00:00Z')}},new Date('2027-02-02T15:00:00Z'));
+ assert.deepEqual(shown.watchItems[0],{symbol:'XYZ',referencePrice:500,priceDay:'2027-01-31'});
+ const later=adjustWatchItems(stampPriceDays(shown,'2027-02-02','2027-02-02'),null,{splits:{XYZ:[{ticker:'XYZ',date:'2027-02-01',ratio:2}]}},new Date('2027-02-05T15:00:00Z'));
+ assert.equal(later.watchItems[0].referencePrice,250);
 });
 test('RESOLUTE: nothing is judged for a symbol within one market day of its split', () => {
  assert.deepEqual(splitWindowSymbols(SNDK.splits,'2026-11-19'),['SNDK']);assert.deepEqual(splitWindowSymbols(SNDK.splits,'2026-11-20'),['SNDK']);

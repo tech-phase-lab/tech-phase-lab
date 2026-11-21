@@ -6,7 +6,7 @@ import { useResearchLanguage } from "../use-research-language";
 import { aggregate, replaceSource, statusOf, valueHoldings, weights, type Holding, type Quote, type Row } from "@/lib/portfolio/calc";
 import { BROKER_CHOICES, MANUAL, OTHER, typedBroker } from "@/lib/portfolio/brokers";
 import { parseStored, readHide, readRaw, readSavedDay, subscribeStore, writeHide, writeHoldings } from "@/lib/portfolio/store";
-import { adjustForSplits, applyRepairs, invertedLots, knownSplits, today, type Repair, type Split } from "@/lib/portfolio/splits";
+import { adjustForSplits, chooseReading, fresh as freshLot, knownSplits, today, type Ambiguous, type Reading as SplitReading, type Split } from "@/lib/portfolio/splits";
 import { splitLabel } from "@/lib/research/stock-splits";
 import s from "./portfolio.module.css";
 
@@ -27,14 +27,17 @@ const dateEn = (iso: string) => { const [y, m, d] = iso.split("-").map(Number); 
 const pick2 = (ja: boolean) => (a: string, b: string) => ja ? a : b;
 const TICKER = /^[A-Z][A-Z0-9.\-]{0,9}$/;
 let nextId = 1;
-const REPAIR_KEPT_KEY = "tech-phase:portfolio:split-repair-kept";
-const SPLIT_CACHE_KEY = "tech-phase:portfolio:splits:v3";
-/** The provider's answers kept on this device for the day they were read (failed reads are never kept). */
-function readSplitCache(day: string): Record<string, Split[]> {
-  try { const value = JSON.parse(localStorage.getItem(SPLIT_CACHE_KEY) ?? "null"); return value?.day === day && value.splits && typeof value.splits === "object" && !Array.isArray(value.splits) ? value.splits : {}; } catch { return {}; }
+const SPLIT_CACHE_KEY = "tech-phase:portfolio:splits:v4";
+type SplitCache = { splits: Record<string, Split[]>; through: Record<string, string> };
+/** The provider's answers kept on this device for the ET day they were asked for (failed reads are never kept). */
+function readSplitCache(day: string): SplitCache {
+  try {
+    const value = JSON.parse(localStorage.getItem(SPLIT_CACHE_KEY) ?? "null");
+    return value?.day === day && value.splits && typeof value.splits === "object" && value.through && typeof value.through === "object" ? { splits: value.splits, through: value.through } : { splits: {}, through: {} };
+  } catch { return { splits: {}, through: {} }; }
 }
-function writeSplitCache(day: string, splits: Record<string, Split[]>) {
-  try { localStorage.setItem(SPLIT_CACHE_KEY, JSON.stringify({ day, splits: { ...readSplitCache(day), ...splits } })); } catch { /* optional */ }
+function writeSplitCache(day: string, answer: SplitCache) {
+  try { const old = readSplitCache(day); localStorage.setItem(SPLIT_CACHE_KEY, JSON.stringify({ day, splits: { ...old.splits, ...answer.splits }, through: { ...old.through, ...answer.through } })); } catch { /* optional */ }
 }
 
 /** Shrink the screenshot in the browser before it is sent (a phone screenshot is several megabytes). */
@@ -88,39 +91,35 @@ export default function PortfolioScreen() {
   // day are applied when the list is shown (shares × ratio, cost ÷ ratio). Saving writes the shown numbers on the basis they were brought to.
   // Only the provider's answers count as complete; a ticker it could not answer for keeps its date (the manual list may still apply).
   const day = today();
-  const [splitMap, setSplitMap] = useState<Record<string, Split[]>>({});
-  useEffect(() => { setSplitMap(previous => ({ ...readSplitCache(day), ...previous })); }, [day]);
+  const [answer, setAnswer] = useState<SplitCache>({ splits: {}, through: {} });
+  useEffect(() => { const cached = readSplitCache(day); setAnswer(previous => ({ splits: { ...cached.splits, ...previous.splits }, through: { ...cached.through, ...previous.through } })); }, [day]);
   const heldTickers = useMemo(() => [...new Set(lots.map(lot => lot.ticker))].sort().join(","), [lots]);
   useEffect(() => {
     if (!heldTickers) return;
     // One answer a day per device (the provider charges 20 credits a call; the server also keeps each ticker a day).
-    const cached = readSplitCache(day), missing = heldTickers.split(",").filter(t => !(t in cached));
+    const cached = readSplitCache(day), missing = heldTickers.split(",").filter(t => !(t in cached.splits));
     if (!missing.length) return;
     const controller = new AbortController();
     fetch(`/api/research/portfolio/splits?tickers=${encodeURIComponent(missing.join(","))}`, { cache: "no-store", credentials: "same-origin", signal: controller.signal })
       .then(response => response.ok ? response.json() : Promise.reject(new Error("splits")))
-      .then((data: { splits?: Record<string, Split[]> }) => { if (data.splits) { setSplitMap(previous => ({ ...previous, ...data.splits })); writeSplitCache(day, data.splits); } })
+      .then((data: Partial<SplitCache>) => {
+        if (!data.splits || !data.through) return;
+        const got = { splits: data.splits, through: data.through };
+        setAnswer(previous => ({ splits: { ...previous.splits, ...got.splits }, through: { ...previous.through, ...got.through } })); writeSplitCache(day, got);
+      })
       .catch(() => { /* the manual list is used meanwhile; the dates of these tickers stay where they are */ });
     return () => controller.abort();
   }, [heldTickers, day]);
   const prices = useMemo(() => Object.fromEntries(Object.entries(market?.quotes ?? {}).map(([t, q]) => [t, q.close])), [market]);
-  const allSplits = useMemo(() => ({ ...knownSplits(lots.map(lot => lot.ticker)), ...splitMap }), [lots, splitMap]);
-  const current = useMemo(() => adjustForSplits(lots, allSplits, readSavedDay(raw) ?? day, day, { complete: new Set(Object.keys(splitMap)), prices }), [lots, allSplits, splitMap, raw, day, prices]);
+  const allSplits = useMemo(() => ({ ...knownSplits(lots.map(lot => lot.ticker)), ...answer.splits }), [lots, answer]);
+  const current = useMemo(() => adjustForSplits(lots, allSplits, readSavedDay(raw) ?? day, day, { through: answer.through, prices }), [lots, allSplits, answer, raw, day, prices]);
   const holdings = useMemo(() => aggregate(current.holdings), [current]);
   const tickers = holdings.map(h => h.ticker).join(",");
   const recentSplits = current.applied.filter(item => Date.parse(day) - Date.parse(item.date) <= 45 * 86400_000);
-  // Before Nov 21 a split was applied the wrong way round and saved (an 8-for-1 divided the shares by 8): found by the numbers against
-  // today's price, offered per lot, never changed silently.
-  const [kept, setKept] = useState<string[]>([]);
-  useEffect(() => { try { const v = JSON.parse(localStorage.getItem(REPAIR_KEPT_KEY) ?? "[]"); if (Array.isArray(v)) setKept(v.filter(x => typeof x === "string")); } catch { /* optional */ } }, []);
-  const repairs = useMemo(() => invertedLots(lots, allSplits, prices, new Set(kept)), [lots, allSplits, prices, kept]);
-  const fixLot = (repair: Repair) => writeHoldings(applyRepairs(lots, [repair], day));
-  const keepLot = (repair: Repair) => {
-    const next = [...kept, repair.key].slice(-200);
-    try { localStorage.setItem(REPAIR_KEPT_KEY, JSON.stringify(next)); } catch { /* optional */ }
-    setKept(next);
-  };
-  const stamp = (h: Holding): Holding => ({ ...h, checkedAt: day });
+  // A lot that cannot be read safely (the old screen may have applied a split the wrong way round, or it was read on a split's own days) is
+  // shown as stored until the reader picks a reading; nothing is guessed from the price.
+  const choose = (lot: Ambiguous, reading: SplitReading) => writeHoldings(chooseReading(lots, lot, reading, day));
+  const stamp = (h: Holding): Holding => freshLot(h, day);
 
   useEffect(() => {
     if (!tickers) return;
@@ -180,11 +179,11 @@ export default function PortfolioScreen() {
         </>
         : <>
           <Head ja={ja} sub={holdings.length > 0} />
-          {repairs.length > 0 && <div role="alert" className={s.splitNote}>
-            <p>{ja ? "以前の株式分割の反映で、株数と平均取得を逆向きに計算した可能性がある銘柄があります。今の株価と比べた数字です。証券会社の画面と比べて、銘柄ごとに選んでください。"
-              : "An earlier stock-split update may have calculated these the wrong way round. Compared with today's price; check your broker and choose for each."}</p>
-            <ul>{repairs.map(r => <li key={r.key}>{r.ticker}{r.source ? `（${r.source}）` : ""}: {usd(r.shares, Number.isInteger(r.shares) ? 0 : 4)} → {usd(r.fixedShares, Number.isInteger(r.fixedShares) ? 0 : 4)}{ja ? "株" : " sh"} / ${usd(r.avgCostUsd)} → ${usd(r.fixedCost)}
-              <br /><button type="button" onClick={() => fixLot(r)}>{ja ? "この数字に直す" : "Fix"}</button><button type="button" onClick={() => keepLot(r)}>{ja ? "このままにする" : "Keep as is"}</button></li>)}</ul>
+          {current.ambiguous.length > 0 && <div role="alert" className={s.splitNote}>
+            <p>{ja ? "株式分割の前後どちらの数字か確かめられない持ち株があります。下の数字は保存したままです。証券会社の画面と同じものを選んでください。"
+              : "Some holdings may be on either side of a stock split. They are shown as saved; pick the numbers that match your broker."}</p>
+            <ul>{current.ambiguous.map(item => <li key={item.key}>{item.ticker}{item.source ? `（${item.source}）` : ""} · {splitLabel(item.split.ratio)} {item.split.date.slice(5).replace("-", "/")}
+              <br />{item.readings.map(r => <button type="button" key={r.kind} onClick={() => choose(item, r)}>{usd(r.shares, Number.isInteger(r.shares) ? 0 : 4)}{ja ? "株" : " sh"} @ ${usd(r.avgCostUsd)}{r.kind === "as-stored" ? (ja ? "（保存したまま）" : " (as saved)") : ""}</button>)}</li>)}</ul>
           </div>}
           {recentSplits.length > 0 && holdings.length > 0 && <p role="status" className={s.splitNote}>{ja
             ? <>{recentSplits.map(item => `${item.ticker} ${splitLabel(item.ratio).replace("-for-", "対")}の株式分割（${item.date.slice(5).replace("-", "/")}）`).join("、")}の前に登録した株数と平均取得は、分割後の数字（株数×比率、平均取得÷比率）で表示しています。取得額の合計は変わりません。</>
@@ -364,7 +363,7 @@ function ReviewScreen({ ja, review, setReview, existing, day }: { ja: boolean; r
     setAttempted(true);
     if (needs.length || !review.rows.length) return;
     // A lot read today is on today's basis: a split before today is never applied to it.
-    writeHoldings(replaceSource(existing, review.source, review.rows.map(row => ({ ...asHolding(row), checkedAt: day }))));
+    writeHoldings(replaceSource(existing, review.source, review.rows.map(row => freshLot(asHolding(row), day))));
     setReview(null);
   };
   // New / updated, judged against what is saved for the same broker. Unchanged rows carry no badge.

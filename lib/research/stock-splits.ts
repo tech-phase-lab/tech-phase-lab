@@ -73,14 +73,21 @@ export function splitsBetween(splits: readonly StockSplit[] | undefined, basisDa
   if (!splits?.length || !basisDay || !isDay(basisDay)) return [];
   return splits.filter(s => s.date > basisDay && s.date <= asOfDay);
 }
-/** Brings a number written down on `basisDay` to `today`. `complete` says the provider answered for this ticker: only then is the new basis
- * today. With the manual list alone (the provider failed), the basis moves only up to the last split applied, so a provider-only split after
- * it is still found later. */
-export function rebase(splits: readonly StockSplit[] | undefined, basisDay: string, today: string, complete: boolean): { factor: number; basis: string; applied: StockSplit[] } {
+/** Brings a number written down on `basisDay` to `today`. `knownThrough` is the last day the split list is known to be complete for: the ET
+ * day before the provider's answer was read (a split dated on the read day may not be listed yet). The basis never moves past it, so a stale
+ * or late answer cannot freeze an unadjusted number. Null (the provider failed: manual list only): the basis moves only up to the last split
+ * applied, so a provider-only split is still found later. */
+export function rebase(splits: readonly StockSplit[] | undefined, basisDay: string, today: string, knownThrough: string | null): { factor: number; basis: string; applied: StockSplit[] } {
   const applied = splitsBetween(splits, basisDay, today);
   const factor = applied.reduce((f, s) => f * s.ratio, 1);
-  const basis = complete ? (basisDay > today ? basisDay : today) : applied.length ? applied[applied.length - 1].date : basisDay;
-  return { factor, basis, applied };
+  const reached = applied.length ? applied[applied.length - 1].date : basisDay;
+  const known = knownThrough ? (knownThrough < today ? knownThrough : today) : reached;
+  return { factor, basis: [basisDay, reached, known].sort().at(-1)!, applied };
+}
+/** The day before the ET day of `at`: through when a split list read at `at` is complete. */
+export function knownThroughDay(at: number | string | Date): string {
+  const day = etDay(at);
+  return day ? new Date(Date.parse(`${day}T12:00:00Z`) - DAY_MS).toISOString().slice(0, 10) : "";
 }
 
 const easternDay = new Intl.DateTimeFormat("en-CA", { timeZone: "America/New_York", year: "numeric", month: "2-digit", day: "2-digit" });
@@ -106,38 +113,39 @@ export function splitLabel(ratio: number): string {
 }
 
 type Fetcher = (input: URL, init?: RequestInit) => Promise<Response>;
-export type SplitAnswer = { splits: Record<string, StockSplit[]>; complete: Set<string> };
+/** `through`: per ticker the provider answered for, the day its list is complete through (knownThroughDay of the read). */
+export type SplitAnswer = { splits: Record<string, StockSplit[]>; through: Record<string, string> };
 /** Splits per ticker for a background job or a route: the provider's full history (/splits, range=full; 20 credits a call) with the manual
- * list laid over it. A ticker the provider answered for is in `complete` and kept in memory for `ttlMs` (a day by default); a failed read
- * (429, error body, timeout) is never kept and gives the manual list alone, outside `complete`. No key in output. */
+ * list laid over it. An answer is kept in memory for `ttlMs` (a day by default) with the time it was read; a failed read (429, error body,
+ * timeout) is never kept and gives the manual list alone, with no `through`. No key in output. */
 export function createSplitLoader(options: { apiKey: string | undefined; request?: Fetcher; baseUrl?: string; ttlMs?: number; now?: () => number }) {
   const request = options.request ?? ((input, init) => fetch(input, init));
   const base = options.baseUrl ?? "https://api.twelvedata.com";
   const ttl = options.ttlMs ?? 24 * 3600_000, now = options.now ?? Date.now;
   const memory = new Map<string, { at: number; splits: StockSplit[] }>();
-  async function one(ticker: string): Promise<StockSplit[] | null> {
+  async function one(ticker: string): Promise<{ at: number; splits: StockSplit[] } | null> {
     const hit = memory.get(ticker);
-    if (hit && now() - hit.at < ttl) return hit.splits;
+    if (hit && now() - hit.at < ttl) return hit;
     try {
       if (!options.apiKey || !TICKER.test(ticker)) return null;
       const url = new URL(`${base}/splits`);
       url.searchParams.set("symbol", ticker); url.searchParams.set("range", "full"); url.searchParams.set("apikey", options.apiKey);
       const response = await request(url, { cache: "no-store", redirect: "error", signal: AbortSignal.timeout(12_000) });
       if (response.status !== 200) return null;
-      const splits = mergeSplits(ticker, parseTwelveSplits(await response.json(), ticker));
-      memory.set(ticker, { at: now(), splits });
-      return splits;
+      const read = { at: now(), splits: mergeSplits(ticker, parseTwelveSplits(await response.json(), ticker)) };
+      memory.set(ticker, read);
+      return read;
     } catch {
       return null;
     }
   }
   return async function load(tickers: readonly string[]): Promise<SplitAnswer> {
-    const splits: Record<string, StockSplit[]> = {}, complete = new Set<string>();
+    const splits: Record<string, StockSplit[]> = {}, through: Record<string, string> = {};
     for (const ticker of [...new Set(tickers)]) {
       const read = await one(ticker);
-      if (read) { splits[ticker] = read; complete.add(ticker); } else splits[ticker] = mergeSplits(ticker, []);
+      if (read) { splits[ticker] = read.splits; through[ticker] = knownThroughDay(read.at); } else splits[ticker] = mergeSplits(ticker, []);
     }
-    return { splits, complete };
+    return { splits, through };
   };
 }
 export type SplitLoader = ReturnType<typeof createSplitLoader>;
