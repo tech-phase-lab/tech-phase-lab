@@ -1,5 +1,6 @@
 """One-line top-strip titles summarized from published headlines (no live calls)."""
 import json
+import re
 from pathlib import Path
 import sys
 import tempfile
@@ -57,11 +58,20 @@ class PulseTitleTests(unittest.TestCase):
         self.assertNotIn('pulseTitleJa', second)
         self.assertNotIn('pulseTitleJa', PAYLOAD['officialUpdates'][0])  # The input is never mutated.
 
-    def test_the_band_shows_one_still_line_so_a_title_over_22_characters_is_rejected(self):
-        self.assertEqual(pulse_titles.MAX_JA, 22)
+    def test_the_check_matches_the_band_so_a_title_over_24_characters_is_rejected(self):
+        band = (Path(__file__).resolve().parents[1] / 'lib/research/news-band.ts').read_text()
+        self.assertEqual(pulse_titles.MAX_JA, int(re.search(r'export const BAND_MAX_JA = (\d+);', band).group(1)))
+        self.assertEqual(pulse_titles.MAX_JA, 24)
+        self.assertEqual(pulse_titles.MAX_EN, int(re.search(r'export const BAND_MAX_EN = (\d+);', band).group(1)))
         ok = {'shortJa': 'オラクル、電力費3億ドル負担を計画', 'shortEn': GOOD['shortEn']}
         self.assertEqual(pulse_titles.validate(ok, JA, EN)[0], ok['shortJa'])
+        # 23 and 24 characters fit the band and were wrongly rejected as too-long before Nov 20.
+        for short in ('オラクル、州住民向け電力費3億ドルの負担を計画', 'オラクル、ウィスコンシン州電力費3億ドル負担計画'):
+            with self.subTest(length=len(short)):
+                self.assertIn(len(short), (23, 24))
+                self.assertEqual(pulse_titles.validate({'shortJa': short, 'shortEn': GOOD['shortEn']}, JA, EN)[0], short)
         long_ja = {'shortJa': 'オラクル、ウィスコンシン州住民向けに電力費3億ドル負担を計画', 'shortEn': GOOD['shortEn']}
+        self.assertGreater(len(long_ja['shortJa']), 24)
         with self.assertRaises(ValueError) as caught:
             pulse_titles.validate(long_ja, JA, EN)
         self.assertEqual(str(caught.exception), 'too-long')

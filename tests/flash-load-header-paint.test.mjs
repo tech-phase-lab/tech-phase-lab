@@ -12,20 +12,20 @@ const read = file => readFileSync(new URL(file, import.meta.url), "utf8");
 test("the shared research loader has no footer, so no disclaimer under 「読み込み中…」", () => {
   const loading = read("../app/research/loading.tsx");
   assert.match(loading, /<ResearchToolShell [^>]*footer=\{false\}>/);
-  const shell = read("../app/research/research-tool-shell.tsx");
-  assert.match(shell, /footer = true \}/);
-  assert.match(shell, /\{footer && <footer><Disclaimer en=\{lang === "en"\} \/><\/footer>\}/);
+  // Owner, Nov 21: the disclaimer is on the home screen only, so the shared shell has none at all.
+  assert.doesNotMatch(read("../app/research/research-tool-shell.tsx"), /Disclaimer/);
   // The alerts page, the watchlist and stock search all use this loader while they load.
   assert.match(read("../app/research/news/page.tsx"), /\{!ready && <ResearchLoading \/>\}/);
 });
 
-test("RESOLUTE's 「確認中…」 screen has no disclaimer; real content, the access message and the owner preview keep it as the last line", () => {
+test("RESOLUTE's 「確認中…」 screen and the tool shell have no disclaimer", () => {
   const shell = read("../app/resolute/tool-shell.tsx");
   assert.match(shell, /const shown=reviewing \? identityReady : access==="allowed";/);
   assert.match(shell, /const checking=!shown && \(!identityReady \|\| access==="loading"\);/);
   assert.match(shell, /\{shown \? children\(/);
   assert.match(shell, /: checking \? <section className=\{styles\.loadingBrand\}/);
-  assert.match(shell, /\{checking \? null : <Disclaimer en=\{en\} \/>\}\n <\/div><\/main>;/);
+  // Owner, Nov 21: the disclaimer is on the home screen only (and the RESOLUTE landing page), never in the tool shell.
+  assert.doesNotMatch(shell, /Disclaimer/);
 });
 
 test("the disclaimer is small and faint everywhere, and the sentence itself is unchanged", async () => {

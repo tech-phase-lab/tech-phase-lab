@@ -118,6 +118,54 @@ class MeaningValidationTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, '^changed-names$'):
             validation.validate_names('Armが上昇', 'Pharma stocks rise')
 
+    def test_x_handles_hashtags_and_cashtags_may_be_kept_or_written_out(self):
+        # Nov 20: an X post naming a company only by its handle (@ChefRobotics) was rejected five times because the translation
+        # wrote the name out ("Chef Robotics"), and the post never got a Japanese headline.
+        post = 'Training robots at scale with @ChefRobotics on Nebius AI Cloud #NebiusAI $NBIS'
+        for copy in ('Chef Robotics、ネビウスのAIクラウドでロボット学習を拡大',
+                     '@ChefRobotics、Nebius AI Cloudでロボット学習を拡大',
+                     'ChefRobotics、ネビウスのAIクラウドでロボット学習を拡大 #NebiusAI $NBIS',
+                     'Chef Robotics、NBISのAIクラウドで学習を拡大'):
+            with self.subTest(copy=copy):
+                validation.validate_names(copy, post)
+        validation.validate_names('Nebius AIの新機能を公開', 'New from @nebiusai today')  # a lowercase handle written out
+        validation.validate_names('Token Factoryを提供開始', 'Now live: #TokenFactory')
+        validation.validate_names('エヌビディアが指数に採用', '$NVDA added to index')  # a cashtag written as the Japanese name
+        validation.validate_names('$NBISが上昇', '$NBIS rises')  # a cashtag followed by Japanese is still a cashtag
+        # Still rejected: a name the post does not have, an added cashtag, a dropped cashtag with no name for it.
+        for copy, english, name in (('Chef Robotics、AIを拡大', 'Training robots with @nebiusai', 'chef'),
+                                    ('$AMDが指数に採用', '$NVDA added to index', '$AMD'),
+                                    ('指数に採用', '$NVDA added to index', '$NVDA'),
+                                    ('Chef Robotics Labsが参加', 'Welcome @ChefRobotics', 'labs')):
+            with self.subTest(copy=copy):
+                with self.assertRaisesRegex(ValueError, '^changed-names$'):
+                    validation.validate_names(copy, english)
+                self.assertEqual(validation.LAST_NAME_REJECTION[0], name)
+
+    def test_a_cached_rejection_reports_its_own_detail(self):
+        # The checks are cached for the public feed; a repeated rejection must not report the name of an earlier, different one.
+        for _ in range(2):
+            for copy, english, name in (('Zorvexが発表', 'Acme announced', 'zorvex'), ('Qwertyが発表', 'Acme announced', 'qwerty')):
+                with self.assertRaisesRegex(ValueError, '^changed-names$'):
+                    validation.validate_names(copy, english)
+                self.assertEqual(validation.LAST_NAME_REJECTION[0], name)
+
+    def test_program_names_and_properties_are_not_directions(self):
+        # Sentences of the GOOGL "Small businesses, big results" release (Nov 19): none of them says anything rose or fell.
+        for sentence in ('Constantly jumping between the flavor lab, marketing, and operations, team members use Gemini in Google Docs.',
+                         'Grow with Google AI training: Access Grow with Google resources that will help you reach more customers.',
+                         'The Gemini app is now available on lower-memory Android devices.'):
+            with self.subTest(sentence=sentence):
+                self.assertEqual(validation.directions(sentence, validation.DIRECTION_FAMILIES[0]), set())
+        validation.validate_directions('チームがGeminiで手作業の時間を削減', 'Constantly jumping between the flavor lab, marketing, '
+                                       'and operations, team members use Gemini in Google Docs to brainstorm campaigns.')
+        # Real directions are unchanged.
+        for copy, source in (('売上が減少', 'Revenue rose 5%'), ('株価が上昇', 'Shares fell 5%'), ('作業時間が増加', 'cut hours of manual work')):
+            with self.subTest(copy=copy):
+                with self.assertRaisesRegex(ValueError, '^changed-direction$'):
+                    validation.validate_directions(copy, source)
+        self.assertEqual(validation.directions('higher-than-expected revenue', validation.DIRECTION_FAMILIES[0]), {'up'})
+
     def test_every_lane_recognizes_the_new_failure_codes(self):
         import general_source_news, headline_translation, x_market_news
         for code in validation.MEANING_FAILURES:

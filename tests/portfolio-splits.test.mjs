@@ -33,3 +33,10 @@ test("saving keeps a lot's check date, and a lot without one takes the previous 
   assert.equal(stored.holdings[0].checkedAt, "2026-10-20"); assert.equal(stored.holdings[1].checkedAt, "2026-11-01");
   assert.equal(parseStored(JSON.stringify(stored))[0].checkedAt, "2026-10-20");
 });
+
+test("hotfix (Nov 21): the portfolio screen no longer rewrites saved holdings for splits until the corrected handling ships", async () => {
+  const { readFileSync } = await import("node:fs");
+  const screen = readFileSync(new URL("../app/research/portfolio/screen.tsx", import.meta.url), "utf8");
+  assert.match(screen, /const SPLIT_ADJUSTMENT_PAUSED = true;/);
+  assert.match(screen, /if \(SPLIT_ADJUSTMENT_PAUSED \|\| !lots\.length\) return;/);
+});

@@ -30,11 +30,11 @@ export { default as Desk, toggleReaction, BANNER_DELAY_MS, BANNER_SHOW_MS, TYPE_
       plugins: [{ name: "stubs", setup(b) {
         b.onResolve({ filter: /^react$/, namespace: "stub" }, () => ({ path: "react", external: true }));
         // Next's image and link, and the weekly page's shell around IssueView, are replaced with plain stand-ins.
-        b.onResolve({ filter: /^next\/(image|link|navigation)$|\/(research-tool-shell|use-research-language|member-display-provider)$/ }, args => ({ path: args.path, namespace: "stub" }));
+        b.onResolve({ filter: /^next\/(image|link|navigation)$|\/(research-tool-shell|use-research-language|member-display-provider|identity-provider)$/ }, args => ({ path: args.path, namespace: "stub" }));
         b.onLoad({ filter: /.*/, namespace: "stub" }, args => ({ loader: "js", contents: args.path === "next/image"
           ? "import React from 'react';export default function Image(p){return React.createElement('img',{src:p.src,alt:p.alt})}"
           : args.path === "next/link" ? "import React from 'react';export default function Link(p){return React.createElement('a',{href:p.href},p.children)}"
-          : "const none=()=>null;export default none;export const useRouter=()=>({}),usePathname=()=>'/',useResearchLanguage=()=>['ja',()=>{}],useOwnerMode=()=>false;" }));
+          : "const none=()=>null;export default none;export const useRouter=()=>({}),usePathname=()=>'/',useResearchLanguage=()=>['ja',()=>{}],useOwnerMode=()=>false,useMemberSettled=()=>true,useIdentityRefresh=()=>async()=>{};" }));
         b.onLoad({ filter: /\.css$/ }, () => ({ contents: "export default new Proxy({}, {get: (_, key) => key})", loader: "js" }));
       } }],
     });

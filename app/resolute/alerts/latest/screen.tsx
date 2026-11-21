@@ -38,7 +38,6 @@ export function LatestAlertContent({ locale, state, onRetry }: { locale: "ja" | 
     <p className={s.note}>{v.check}</p>
     <Link className={s.primary} href="/resolute/notebook">{v.openPlan}</Link>
     <Link className={s.ghost} href="/resolute/tonight">{v.tonight}</Link>
-    <p className={s.disc}>{v.disclaimer}</p>
   </div></div>;
 }
 function Latest({ locale, deny }: { locale: "ja" | "en"; deny: () => void }) {

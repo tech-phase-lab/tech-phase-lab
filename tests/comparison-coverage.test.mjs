@@ -175,6 +175,25 @@ test("a Nasdaq warrant, unit or right beside a shorter base ticker of the same c
   for (const t of ["MOB", "HTZ", "GEN", "GOOG", "GOOGL", "SNOW", "PMT", "PMTW", "ABCDW"]) assert.equal(kind(t), null, t);
 });
 
+test("a Nasdaq preferred or note beside a shorter base ticker of the same company is not offered; GOOGL is (Nov 20 review: BRKRP)", () => {
+  const e = (ticker, cik, name, exchange = "Nasdaq") => ({ ticker, cik, name, exchange });
+  const entries = [e("BRKR", 1109354, "BRUKER CORP"), e("BRKRP", 1109354, "BRUKER CORP"), e("AGNC", 1423689, "AGNC Investment Corp."),
+    e("AGNCM", 1423689, "AGNC Investment Corp."), e("AGNCN", 1423689, "AGNC Investment Corp."), e("AGNCO", 1423689, "AGNC Investment Corp."),
+    e("AGNCP", 1423689, "AGNC Investment Corp."), e("ACGL", 947484, "ARCH CAPITAL GROUP LTD."), e("ACGLO", 947484, "ARCH CAPITAL GROUP LTD."),
+    e("HBAN", 49196, "HUNTINGTON BANCSHARES INC /MD/"), e("HBANP", 49196, "HUNTINGTON BANCSHARES INC /MD/"), e("CHTR", 1091667, "CHARTER COMMUNICATIONS, INC. /MO/"),
+    e("CHTRP", 1091667, "CHARTER COMMUNICATIONS, INC. /MO/"), e("ZION", 109380, "ZIONS BANCORPORATION"), e("ZIONP", 109380, "ZIONS BANCORPORATION"),
+    e("SMCI", 1375365, "Super Micro Computer, Inc."), e("SMCIP", 1375365, "Super Micro Computer, Inc."), e("META", 1326801, "Meta Platforms, Inc."),
+    e("METAM", 1326801, "Meta Platforms, Inc."), e("GOOG", 1652044, "Alphabet Inc."), e("GOOGL", 1652044, "Alphabet Inc."), e("GOOGN", 1652044, "Alphabet Inc."),
+    e("BHF", 1685040, "Brighthouse Financial, Inc."), e("BHFAP", 1685040, "Brighthouse Financial, Inc."),
+    // Kept: a ticker ending in P, O, N or M with no shorter sibling, and an NYSE ticker (its preferreds carry the -P suffix).
+    e("ADAM", 1273685, "ADAMAS TRUST, INC."), e("SNOW", 1640147, "Snowflake Inc.", "NYSE"), e("SNO", 1640147, "Snowflake Inc.", "NYSE"), e("ON", 1097864, "ON SEMICONDUCTOR CORP")];
+  const sib = tickersByCik(entries), kind = t => comparisonExclusion(entries.find(x => x.ticker === t), sib, lists);
+  const excluded = ["BRKRP", "AGNCM", "AGNCN", "AGNCO", "AGNCP", "ACGLO", "HBANP", "CHTRP", "ZIONP", "SMCIP", "METAM", "GOOGN", "BHFAP"];
+  for (const t of excluded) assert.equal(kind(t), "preferred", t);
+  for (const t of ["BRKR", "AGNC", "ACGL", "HBAN", "CHTR", "ZION", "SMCI", "META", "GOOG", "GOOGL", "BHF", "ADAM", "SNOW", "SNO", "ON"]) assert.equal(kind(t), null, t);
+  assert.deepEqual(comparableEntries(entries, lists).filter(x => excluded.includes(x.ticker)), []);
+});
+
 test("crypto, commodity and currency funds whose income reads as revenue are not offered; operating companies in those codes are", () => {
   // Nov 19: SOLC and SUIS (staking rewards booked as revenue) showed neither a strength nor a weakness; the same kind of fund is left out.
   const funds = [{ ticker: "SOLC", cik: 2041869, name: "Canary Marinade Solana ETF" }, { ticker: "SUIS", cik: 2060703, name: "Canary Staked SUI ETF" },

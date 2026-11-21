@@ -27,7 +27,7 @@ test("the monitor sends the new notices, and the site gives the monitor the ques
   for (const call of ["deliver_weekly_issues(db, weekly_issue_list)", "deliver_answers(db, answered)", "deliver_economic(db, economic)"]) assert.ok(service.includes(`web_push.${call}`), call);
   assert.match(read("../app/api/research/notifications/route.ts"), /questionOwner: createHmac\("sha256", process\.env\.RESEARCH_MONITOR_TOKEN/);
   const python = read("../scripts/research/web_push.py");
-  assert.match(python, /def quiet_blocks/);
+  assert.match(python, /def in_quiet_hours/);
   assert.match(python, /'quiet_on', 'INTEGER NOT NULL DEFAULT 1'/);
 });
 
