@@ -253,6 +253,13 @@ class Claims(unittest.TestCase):
                 self.assertEqual(stored["sourceUrl"], "https://www.dol.gov/ui/data.pdf")
                 self.assertIn(stored, events.public_view(db))
 
+    def test_wednesday_is_read_only_before_a_thursday_holiday(self):
+        self.assertFalse(ind.claims_window(datetime(2026, 11, 18, 13, 35, tzinfo=timezone.utc)), "an ordinary Wednesday")
+        self.assertTrue(ind.claims_window(datetime(2026, 11, 25, 13, 35, tzinfo=timezone.utc)), "the day before Thanksgiving")
+        self.assertEqual(ind.expected_week(datetime(2026, 11, 25, 13, 35, tzinfo=timezone.utc)), date(2026, 11, 21))
+        self.assertTrue(ind.claims_window(datetime(2026, 12, 24, 13, 35, tzinfo=timezone.utc)), "Thursday Dec 24 2026 is a working day")
+        self.assertFalse(ind.claims_window(datetime(2026, 11, 19, 17, 5, tzinfo=timezone.utc)), "after noon")
+
     def test_a_refusal_is_recorded_and_never_worked_around(self):
         def refused(url):
             raise urllib.error.HTTPError(url, 403, "Forbidden", {}, None)

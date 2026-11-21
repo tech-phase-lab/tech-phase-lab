@@ -266,12 +266,21 @@ def _eastern(now):
     return now + timedelta(hours=-4 if _is_edt(now.date()) else -5)
 
 
+def _thursday_holiday(day):
+    """Thanksgiving (fourth Thursday of November), or New Year's Day, Independence Day or Christmas on a Thursday: DOL then
+    releases on Wednesday."""
+    return day.weekday() == 3 and ((day.month == 11 and 22 <= day.day <= 28) or (day.month, day.day) in ((1, 1), (7, 4), (12, 25)))
+
+
 def claims_window(now):
-    """The release comes out at 8:30 a.m. ET, normally on Thursday (Wednesday or Friday in a holiday week). The PDF is read on
-    Wednesday to Friday from 8:29 a.m. to noon ET only, and not again once the week's result is stored."""
+    """The release comes out at 8:30 a.m. ET on Thursday, on Wednesday when Thursday is a holiday, and late (Friday) only rarely.
+    The PDF is read from 8:29 a.m. to noon ET on Thursday and Friday, and on Wednesday only before a Thursday holiday; never again
+    once the week's result is stored."""
     local = _eastern(now)
     minutes = local.hour * 60 + local.minute
-    return local.weekday() in (2, 3, 4) and 8 * 60 + 29 <= minutes <= 12 * 60
+    day = local.weekday()
+    wanted = day in (3, 4) or (day == 2 and _thursday_holiday(local.date() + timedelta(days=1)))
+    return wanted and 8 * 60 + 29 <= minutes <= 12 * 60
 
 
 def expected_week(now):
