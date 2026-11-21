@@ -278,14 +278,20 @@ def publisher_counter(publisher):
 # columns and "why the stock moved" explainers, not reports of company events (checked on a week of their headlines for the watched
 # companies, Nov 20). Only these are dropped from that feed; an outlet not listed is kept, unlike the Stock News API list above.
 # Seeking Alpha, MarketBeat, Moomoo, TIKR and Traders Union also carry real news items (deals, rating changes) and are kept.
+# Owner, Nov 21: GuruFocus's templated items ("… Stock Down 11.7% — What the 84 GF Score Means for Investors", "… GF Value $207.57 vs
+# price $152.18") are not news either; they are dropped by outlet name and by a gurufocus.com link from any feed.
 GNEWS_DROP_PUBLISHERS = ('The Motley Fool', 'Simply Wall St', 'Trefis', 'TradingKey', 'Admirals', 'Zacks Investment Research', 'InvestorPlace',
-                         'Insider Monkey')
+                         'Insider Monkey', 'GuruFocus', 'GuruFocus.com')
 GNEWS_DROP_KEYS = frozenset(publisher_key(n) for n in GNEWS_DROP_PUBLISHERS)
+DROPPED_HOST = re.compile(r'^https?://(?:[\w-]+\.)*gurufocus\.com(?:[:/?#]|$)', re.I)
 
 
 def dropped_publisher(row):
-    """A Stock News API row from a publisher that is no longer taken (rows stored before Nov 15 are neither translated nor shown), or a
-    Google News row from an opinion and stock-picking outlet (GNEWS_DROP_PUBLISHERS)."""
+    """A Stock News API row from a publisher that is no longer taken (rows stored before Nov 15 are neither translated nor shown), a
+    Google News row from an opinion and stock-picking outlet (GNEWS_DROP_PUBLISHERS), or any row linking to GuruFocus."""
+    url = row['url'] if 'url' in row.keys() else ''
+    if DROPPED_HOST.match(url or '') or publisher_key(row['publisher']) in (publisher_key('GuruFocus'), publisher_key('GuruFocus.com')):
+        return True
     if row['source'] == 'gnews':
         return publisher_key(row['publisher']) in GNEWS_DROP_KEYS
     return row['source'] == 'stocknews' and not stock_news_publisher_kept(row['publisher'])
@@ -395,7 +401,26 @@ Also judge each headline (kind). "news" states a concrete fact about the company
 Also "not-news" (owner, Nov 9: judge strictly; when in doubt, choose not-news): an analyst blog's or columnist's own view or rating call about the company ("This isn't over (Upgrade)", "Why we are bullish", "3 key points for long-term investors"); vague mood or sector commentary with no concrete figure or event ("faces market challenges amid the AI sell-off", "stocks slide as investors worry"); how-to, tips and usage advice ("IT admins should check out the new features"); a headline where the named company is only incidental to another company's story; and rehashed older news with nothing new.
 Also judge relevance (owner, Nov 10). The site is about US high-tech stocks and what moves the market. Use "off-topic" for any headline outside both: relevant are (a) US high-tech companies and their sectors (semiconductors, AI, cloud, software, internet, devices, EVs, space, data centers, networking) and (b) market-moving macro news: stock indices, oil and energy prices, bond yields, interest rates and central banks, inflation and jobs data, politics and policy, tariffs, wars and geopolitics (for example the Strait of Hormuz), and statements by figures such as Trump or Musk that move stocks. Consumer goods, retail, banks and insurers (unless the story is about interest rates or markets), health and pharma, crypto, sports, entertainment, celebrity, local and lifestyle news are "off-topic". A headline can be both news and off-topic: choose "off-topic" then.
 Examples: "Why AMD, Micron, Sandisk and Nvidia stocks are falling in premarket today" = not-news. "Which AI memory stock is the better buy?" = not-news. "ASML has orders and pricing power, but what it lacks is time" (an editorial take with no concrete business fact) = not-news. "At 21 at SK hynix, at 27 a home in Seoul: a vocational school's comeback" = not-news. "Sandisk: This isn't over (Upgrade)" = not-news. "CoreWeave faces market challenges amid AI sector sell-off" = not-news. "Core Scientific: 3 key points for long-term investors" = not-news. "IT admins should check out new features recently added to Entra" = not-news. "Micron raises fiscal Q1 guidance on HBM demand" = news. "Nvidia shares fall 3% after tighter export curbs" = news. When a headline states a concrete business fact, use "news" even if it is minor.
-""" + japanese_names.policy_line()
+""" + japanese_names.policy_line() + """
+A news headline with no concrete new event gets its reason as kind: opinion (view, column, interview), explainer, prediction (pure forecast), listicle, stock-pick, price-recap (move under 5% without a cause), score-template (GF Score/Value, DCF), live-blog, personal-finance, no-event (awards, surveys, ETF tallies, conference, webcast or results-date notices). Index moves, moves of 5% or more with a cause, large trades and a factual main clause stay news.
+"""
+
+
+# Owner, Nov 21 (「まだまだいらない記事ありそう」): the same call also says when a headline judged news reports no concrete event, by
+# giving the reason (EVENT_DROP) as its kind. It is a few more values of the existing kind field, not a new field, so a call costs
+# almost the same (owner: at most about 150 yen a month more). Such an article is never published: it is stored with the reason
+# 'not-event:<code>' (never retried) and counted per code on /health (judgedNoEvent, noEventByReason). Fail-open: a missing or
+# unknown kind keeps the article as before.
+EVENT_DROP = ('opinion', 'explainer', 'prediction', 'listicle', 'stock-pick', 'price-recap', 'score-template', 'live-blog',
+              'personal-finance', 'no-event')
+NOT_EVENT = 'not-event:'
+
+
+def no_event(item):
+    """The reason code when the model said the headline reports no concrete event; None (as before) otherwise, including a missing,
+    malformed or unknown kind."""
+    value = item.get('kind') if isinstance(item, dict) else None
+    return value if isinstance(value, str) and value in EVENT_DROP else None
 
 
 def schema_translation(db):
@@ -512,7 +537,7 @@ NOT_NEWS_EN = tuple(re.compile(pattern, flags) for pattern, flags in (
     (r'^why\b', re.I),
     (r'\bbuying opportunit(?:y|ies)\b|\bbuy the dip\b|\btime to buy\b', re.I),
     (r'\bweek in review\b|\bweekly (?:news )?(?:roundup|digest|recap|wrap)\b|\bthis week(?:[\'’]s)? (?:top|key|main|biggest|major)\b|\bwhat happened this week\b', re.I),
-    (r'\bwhat (?:it|this|that) means for\b|\bwhat (?:it|this) (?:could )?mean(?:s)? for (?:investors|the stock)\b', re.I),
+    # "what it means for" teasers (owner, Oct 26) are LOW_VALUE_SOFT_EN below: kept when the headline reports an event (Nov 20 review).
     (r'(?:\b(?:EUR|GBP|CHF)\s?\d[\d.,]*|\d[\d.,]*\s?(?:EUR|GBP|CHF)\b).{0,12}\btrad|\btrad\w*\b.{0,24}\b(?:EUR|GBP|CHF)\s?\d', re.I),
     (LAW_FIRM_SOLICITATION_EN, re.I),
     (r'\bearnings preview\b|\b(?:Q[1-4]|quarter(?:ly)?) (?:earnings )?preview\b|\bwhat to (?:expect|watch)\b|\bwhat (?:investors )?should (?:you )?expect\b'
@@ -540,33 +565,56 @@ NOT_NEWS_EN = tuple(re.compile(pattern, flags) for pattern, flags in (
 # "Intel 18A vs. TSMC N2: How to Read the Chip Claims" and "Anthropic IPO: Here's What Its Spending Commitments Mean to …"): market live
 # blogs and wraps, stock-picking lists, explainers and opinion are not news about the company. Only wording that a report of a concrete
 # event (results, guidance, a deal, a launch, a ruling, a rating or target change, a hire, a filing) does not use is listed.
-# The same English patterns are LOW_VALUE in lib/research/wire-stories.ts, which also has the Japanese ones; keep the two in step.
+# Nov 20 review: a phrase alone is not enough. LOW_VALUE_EN (live market wraps, stock lists, buy/sell advice, a teaser sentence after the
+# headline, MarketBeat and GuruFocus templates) drops a headline anywhere; LOW_VALUE_SOFT_EN (explainers, "- live", "here's the", bull/bear
+# case) drops it only when it reports no concrete event (CONCRETE_EVENT_EN: a company that launches, names, invests, buys, wins, raises,
+# cuts, reports, files, sues, surges ..., or a price target or rating change), so "AMD launches MI400: what it means for Nvidia" and
+# "Intel names new CEO - live" are kept. The same patterns are LOW_VALUE, LOW_VALUE_SOFT and CONCRETE_EVENT in
+# lib/research/wire-stories.ts, which also has the Japanese ones; keep them in step (a test compares them).
 LOW_VALUE_EN = (
-    # market live blogs and market-wide wraps
-    r'\bstock market (?:today|news today|live)\b|\bstocks? (?:today|live)\s*:|[(\[]\s*live(?: updates?| coverage| blog)?\s*[)\]]'
-    r'|\blive (?:updates|coverage|blog)\b|[-–—:|]\s*(?:business |markets? |stock market )?live\s*$'
-    r'|^\s*(?:Dow Jones|Nasdaq|S&P 500|Stock|Stocks) futures\s*:|^\s*(?:market (?:open|close)|closing bell|opening bell|morning bid|markets? wrap)\s*:'
-    # stock-picking lists
+    r"\bstock market (?:today|news today|live)\b|\bstocks? (?:today|live)\s*:"
+    r"|^\s*(?:Dow Jones|Nasdaq|S&P 500|Stock|Stocks) futures\s*:|^\s*(?:market (?:open|close)|closing bell|opening bell|morning bid|markets? wrap)\s*:"
     r"|^\s*beyond [^:]{1,40}:|\b(?:\d{1,2}|two|three|four|five|six|seven|eight|nine|ten)\s+(?:[\w&.'’-]+\s+){0,4}(?:stocks|picks)\s+(?:to|for|that|worth|you|i)\b"
-    r'|\bstocks? to (?:watch|buy|own|hold|consider|avoid|sell)\b|\bstock I.d (?:buy|own|hold)\b'
-    # explainers and opinion
-    r'|\bwhat\b.{0,40}\bmeans?\s+(?:for|to)\b|\bhere.s (?:what(?! (?:really |actually )?(?:went wrong|happened|caused|we know|changed)\b)|how|the)\b'
-    r'|\bwhat (?:you|investors|shareholders|traders|buyers) (?:need|should|must|ought|have) to know\b|\bwhat to know\b|\beverything (?:you|investors) need to know\b'
-    r'|\bhow to (?:read|play|think about|invest(?: in)?|buy|trade|value|approach|navigate|position)\b'
-    r'|\bis (?:it|now) (?:a|the) (?:good |right |smart )?(?:buy|time to)\b|\bstock a buy\b|\bshould you (?:buy|sell|hold|invest|own|worry|be worried|panic|consider)\b'
-    r'|\b(?:buy|sell|hold),? (?:or|and) (?:sell|hold|buy)\b|^\s*(?:prediction|opinion|analysis|commentary|explainer|my take)\s*:|\bbreakingviews\b'
-    r'|^\s*dear\b|\bbetter buy\s*:|\b(?:no-brainer|screaming buy|millionaire|passive income)\b|\b(?:bull|bear) case\b'
-    # price-move templates (MarketBeat): "… Stock Falls 5.1% - Here's What Happened", "Shares Gap Up - Time to Buy?" (HQ, Nov 20)
-    r"|\s[-–—]\s+(?:here.s (?:why|what happened)|should you (?:buy|sell)|time to (?:buy|sell)|what.s next)\b|\bshares gap (?:up|down)\b"
+    r"|\bstocks? to (?:watch|buy|own|hold|consider|avoid|sell)\b|\bstock I.d (?:buy|own|hold)\b"
+    r"|\bis (?:it|now) (?:a|the) (?:good |right |smart )?(?:buy|time to)\b|\bstock a buy\b|\bshould you (?:buy|sell|hold|invest|own|worry|be worried|panic|consider)\b"
+    r"|\b(?:buy|sell|hold),? (?:or|and) (?:sell|hold|buy)\b|^\s*(?:prediction|opinion|analysis|commentary|explainer|my take)\s*:|\bbreakingviews\b"
+    r"|^\s*dear\b|\bbetter buy\s*:|\b(?:no-brainer|screaming buy|millionaire|passive income)\b"
+    r"|[.?!]\s+here.s (?:what(?! (?:really |actually )?(?:went wrong|happened|caused|we know|changed)\b)|how)\b"
+    r"|\s[-–—]\s+(?:here.s (?:why|what happened)|should you (?:buy|sell)|time to (?:buy|sell))\b|\bshares gap (?:up|down)\b"
+    r"|\((?:NASDAQ|NYSE|NYSEAMERICAN|AMEX|NYSEARCA):[A-Z.]+\).{0,80}\s[-–—]\s+what.s next\b"
+    r"|\bGF (?:Score|Value|Rating)\b"
+    r"|^\s*(?:what\b.{0,40}\bmeans?\s+(?:for|to)|what to know|how to (?:read|play|think about|invest|buy|trade|value))\b"
+)
+LOW_VALUE_SOFT_EN = (
+    r"[(\[]\s*live(?: updates?| coverage| blog)?\s*[)\]]|\blive (?:updates|coverage|blog)\b|[-–—:|]\s*(?:business |markets? |stock market )?live\s*$"
+    r"|\bwhat\b.{0,40}\bmeans?\s+(?:for|to)\b"
+    r"|\bhere.s (?:what(?! (?:really |actually )?(?:went wrong|happened|caused|we know|changed)\b)|how|the(?! (?:full |complete )?(?:statement|letter|memo|text|transcript|filing)\b))\b"
+    r"|\bwhat (?:you|investors|shareholders|traders|buyers) (?:need|should|must|ought|have) to know\b|\bwhat to know\b|\beverything (?:you|investors) need to know\b"
+    r"|\bhow to (?:read|play|think about|invest(?: in)?|buy|trade|value|approach|navigate|position)\b"
+    r"|\b(?:bull|bear) case\b|\s[-–—]\s+what.s next\b"
+)
+CONCRETE_EVENT_EN = (
+    r"\b(?!(?:How|Time|What|Why|When|Where|Who|Here|Stock|Stocks|Shares|Has|Have|Had|Is|Are|Was|Were|Be|It|I|You|We|They|He|She)\b)[A-Z][\w&.'’-]*\s+(?:to\s+|will\s+)?(?:[Ll]aunch(?:es|ed)?|[Nn]ames|[Nn]amed|[Ii]nvest(?:s|ed)?|[Bb]uys|[Bb]uy|[Bb]ought|[Aa]cquires?|[Aa]cquired"
+    r"|[Ww]ins|[Ww]in|[Ww]on|[Rr]aises|[Rr]aised|[Cc]uts|[Cc]ut|[Ll]owers|[Ll]owered|[Uu]pgrades|[Uu]pgraded|[Dd]owngrades|[Dd]owngraded"
+    r"|[Rr]eports|[Rr]eported|[Bb]eats|[Mm]isses|[Mm]issed|[Aa]nnounces|[Aa]nnounced|[Ff]iles|[Ff]iled|[Aa]pproves|[Aa]pproved|[Bb]ans|[Bb]anned"
+    r"|[Ss]ues|[Ss]ued|[Aa]grees|[Aa]greed|[Ss]urges|[Ss]urged|[Pp]lunges|[Pp]lunged)\b"
+    r"|\b(?:[Pp]rice [Tt]arget|[Tt]arget [Pp]rice|PT)\b|\b(?:[Uu]pgrade[sd]?|[Dd]owngrade[sd]?)\b"
 )
 LOW_VALUE = re.compile(LOW_VALUE_EN, re.I)
+LOW_VALUE_SOFT = re.compile(LOW_VALUE_SOFT_EN, re.I)
+CONCRETE_EVENT = re.compile(CONCRETE_EVENT_EN)
+
+
+def low_value(title):
+    """True for a headline that is not news about the company (LOW_VALUE, or LOW_VALUE_SOFT without a concrete event)."""
+    return bool(LOW_VALUE.search(title) or (LOW_VALUE_SOFT.search(title) and not CONCRETE_EVENT.search(title)))
 
 
 def hidden_title(title):
     """True for a headline the site never shows: cut off, noise (NOISE) or not news by the site's own English patterns (NOT_NEWS_EN,
-    LOW_VALUE)."""
+    low_value)."""
     return (truncated(title) or bool(NOISE.search(title)) or any(pattern.search(title) for pattern in NOT_NEWS_EN)
-            or bool(LOW_VALUE.search(title)))
+            or low_value(title))
 
 
 # Owner, Nov 20 (「MRVLは同じの2つある」): "Stifel maintains Marvell Technology at Buy, lowers price target to $280 from $370" (TradingView)
@@ -584,7 +632,7 @@ BROKER_ALIASES = {'bankofamerica': 'bofa', 'bofasecurities': 'bofa', 'goldmansac
                   'rothcapital': 'roth', 'rothmkm': 'roth', 'canaccordgenuity': 'canaccord', 'citizensjmp': 'jmp'}
 TARGET_WORDS = re.compile(r'\b(?:price target|target price|price objective|PT)\b', re.I)
 NEW_TARGET = re.compile(r'\bto \$\s?(\d[\d,]*(?:\.\d+)?)')
-ANY_TARGET = re.compile(r'(?<!from )\$\s?(\d[\d,]*(?:\.\d+)?)(?!\s?(?:billion|million|bn|m|b)\b)', re.I)
+ANY_TARGET = re.compile(r'(?<!from )\$\s?(\d[\d,]*(?:\.\d+)?)(?![.,]?\d)(?!\s?(?:billion|million|trillion|bn|m|b|t)\b)', re.I)
 RATING_CHANGE = re.compile(r'\b(?:upgrade[sd]?|downgrade[sd]?|initiate[sd]?|start(?:s|ed)?|resume[sd]?|reinstate[sd]?)\b.{0,80}?\b(?:to|at|with)\s+(?:an? )?'
                            r'(strong buy|buy|outperform|overweight|accumulate|add|neutral|hold|equal[- ]weight|market perform|sector perform|peer perform'
                            r'|in[- ]line|underperform|underweight|reduce|sell)\b', re.I)
@@ -647,7 +695,7 @@ def candidates(db, now_ts):
     entry, carried by its best row; ``tickers`` lists every ticker it is filed under, ``source`` is 'stocknews' when any copy came
     from the Stock News API, and ``first_seen_at`` is the earliest copy's."""
     since = (datetime.fromtimestamp(now_ts, timezone.utc) - timedelta(hours=PUBLIC_HOURS)).isoformat()
-    rows = db.execute('''SELECT w.key, w.article, w.title, w.ticker, w.origin, w.publisher, w.published_at, w.source, w.first_seen_at, w.summary_en
+    rows = db.execute('''SELECT w.key, w.article, w.title, w.ticker, w.origin, w.publisher, w.published_at, w.source, w.first_seen_at, w.summary_en, w.url
       FROM company_wire w LEFT JOIN company_wire_article_ja j ON j.article=w.article
       LEFT JOIN company_wire_article_attempts a ON a.article=w.article
       WHERE j.article IS NULL AND w.published_at>=? AND (a.article IS NULL OR (a.attempts<? AND a.next_at<=?))
@@ -721,7 +769,7 @@ def prefilter(db, now_ts):
     the reason 'prefilter', so it is never sent to the model, and count it in the day's ``prefiltered``. Returns how many were marked.
     It changes nothing on the site: public_feed hides these titles by the same checks."""
     since = (datetime.fromtimestamp(now_ts, timezone.utc) - timedelta(hours=PUBLIC_HOURS)).isoformat()
-    rows = db.execute('''SELECT w.article, w.title, w.source, w.publisher FROM company_wire w
+    rows = db.execute('''SELECT w.article, w.title, w.source, w.publisher, w.url FROM company_wire w
       LEFT JOIN company_wire_article_ja j ON j.article=w.article LEFT JOIN company_wire_article_attempts a ON a.article=w.article
       WHERE j.article IS NULL AND a.article IS NULL AND w.published_at>=?''', (since,)).fetchall()
     verdict = {}
@@ -925,7 +973,7 @@ def translate_once(path, transport=None, env=None, now_ts=None, report=None):
     with_text = sum(1 for r in rows if r['send_text'])
     fields = {'id': {'type': 'string'}, 'titleJa': {'type': 'string'}, 'shortJa': {'type': 'string'},
               **({'summaryJa': {'type': 'string'}} if with_text else {}),
-              'kind': {'type': 'string', 'enum': ['news', 'not-news', 'off-topic']}}
+              'kind': {'type': 'string', 'enum': ['news', 'not-news', 'off-topic', *EVENT_DROP]}}
     payload = {
         'model': model, 'store': False, 'max_output_tokens': 4000 + SUMMARY_OUTPUT_TOKENS * with_text,
         'instructions': POLICY + SUMMARY_POLICY if with_text else POLICY,
@@ -963,6 +1011,10 @@ def translate_once(path, transport=None, env=None, now_ts=None, report=None):
                 skipped.add(row['article'])
                 skip_reason[row['article']] = item['kind']
                 continue
+            if no_event(item):
+                skipped.add(row['article'])
+                skip_reason[row['article']] = NOT_EVENT + no_event(item)
+                continue
             try:
                 translated[row['article']] = validated_translation(item.get('titleJa'), row['title'])
                 shorts[row['article']] = validated_short(item.get('shortJa'), translated[row['article']])
@@ -988,7 +1040,11 @@ def translate_once(path, transport=None, env=None, now_ts=None, report=None):
                 db.execute('''INSERT INTO company_wire_article_attempts(article,attempts,next_at,reason) VALUES(?,1,?,?) ON CONFLICT(article) DO UPDATE SET
                   attempts=attempts+1, next_at=excluded.next_at, reason=excluded.reason''', (row['article'], now_ts + TRANSLATION_RETRY_SECONDS, reason))
         bump(db, 'translated', len(translated), now_ts)
-        bump(db, 'notNews', len(skipped), now_ts)
+        events = [skip_reason[a] for a in skipped if skip_reason.get(a, '').startswith(NOT_EVENT)]
+        bump(db, 'notNews', len(skipped) - len(events), now_ts)
+        bump(db, 'noEvent', len(events), now_ts)
+        for reason in sorted(set(events)):
+            bump(db, 'noEvent:' + reason[len(NOT_EVENT):], events.count(reason), now_ts)
         bump(db, 'rejected', len(rows) - len(translated) - len(skipped), now_ts)
         # Owner, Nov 15: summaries ride in the same call; how many were kept or dropped, and the tokens the calls used.
         offered = [row['article'] for row in rows if row['send_text'] and row['article'] in translated]
@@ -1012,7 +1068,8 @@ def public_feed(db, now_ts=None):
           j.title_ja, j.short_ja, j.summary_ja
           FROM company_wire w LEFT JOIN company_wire_article_ja j ON j.article=w.article
           LEFT JOIN company_wire_article_attempts a ON a.article=w.article
-          WHERE w.ticker=? AND w.published_at>=? AND COALESCE(a.reason,'') NOT IN ('not-news','off-topic') ORDER BY w.published_at DESC LIMIT 120''',
+          WHERE w.ticker=? AND w.published_at>=? AND COALESCE(a.reason,'') NOT IN ('not-news','off-topic')
+          AND COALESCE(a.reason,'') NOT LIKE 'not-event:%' ORDER BY w.published_at DESC LIMIT 120''',
                           (ticker, since)).fetchall()
         rows = [r for r in rows if not locally_rejected(r) and not LAW_FIRM_SOLICITATION.search(r['title_ja'] or '')]
         # Oct 16: the Japanese view shows only translated headlines, so a company whose newest ten were
@@ -1314,7 +1371,8 @@ def translation_health(db, now_ts=None, env=None):
 
 
 DAILY_FIELDS = (('articlesArrived', 'articles'), ('translated', 'translated'), ('calls', 'calls'), ('retries', 'retries'),
-                ('headlinesSent', 'sent'), ('judgedNotNews', 'notNews'), ('notAccepted', 'rejected'), ('prefiltered', 'prefiltered'),
+                ('headlinesSent', 'sent'), ('judgedNotNews', 'notNews'), ('judgedNoEvent', 'noEvent'), ('notAccepted', 'rejected'),
+                ('prefiltered', 'prefiltered'),
                 ('summariesRequested', 'summaryRequested'), ('summariesTranslated', 'summaries'), ('summariesNotAccepted', 'summaryRejected'),
                 ('summariesOverCap', 'summaryOverCap'),
                 ('inputTokens', 'inputTokens'), ('outputTokens', 'outputTokens'))
@@ -1325,7 +1383,8 @@ def daily_counts(db, now_ts, env=None):
     articlesArrived (new articles, each counted once whatever tickers or feeds it came under; by first feed in articlesBySource),
     translated (articles whose Japanese was accepted), calls (model calls), retries (headlines sent again after a rejected or
     failed attempt), headlinesSent (articles sent in all calls, retries included), judgedNotNews (not news or off topic: never
-    shown, never retried), notAccepted (rejected by the checks or lost to a failed call; retried up to three attempts),
+    shown, never retried), judgedNoEvent and noEventByReason (owner, Nov 21: judged news but naming no concrete event, in total and
+    per reason code; never shown, never retried), notAccepted (rejected by the checks or lost to a failed call; retried up to three attempts),
     prefiltered (owner, Nov 16: articles the site would hide anyway, never sent), summariesTranslated / summariesNotAccepted
     (owner, Nov 15: Japanese summaries of translated articles that carried English text, kept or dropped by the checks),
     summariesRequested / summariesOverCap (owner, Nov 16: summaries asked for, and articles with text translated without one because
@@ -1345,6 +1404,8 @@ def daily_counts(db, now_ts, env=None):
                       # Owner, Nov 16: the summary cap and the estimated cost of the day's summaries (gpt-4.1-mini prices).
                       'summaryDailyLimit': summary_daily_limit(os.environ if env is None else env),
                       'summaryEstimate': {**summary_cost(counts), 'pricesPerMillionUsd': PRICE_PER_MILLION},
+                      # Owner, Nov 21: articles judged news with no concrete event, per reason code (never shown, never retried).
+                      'noEventByReason': {name.split(':', 1)[1]: n for name, n in sorted(counts.items()) if name.startswith('noEvent:')},
                       'articlesBySource': {name.split(':', 1)[1]: n for name, n in sorted(counts.items()) if name.startswith('articles:')},
                       # Owner, Nov 15: new Stock News API articles per publisher, taken or dropped (see KEEP_PUBLISHERS).
                       'stockNewsPublishers': {kind: {name.split(':', 1)[1]: n for name, n in sorted(counts.items(), key=lambda c: (-c[1], c[0]))

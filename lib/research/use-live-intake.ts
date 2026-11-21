@@ -341,7 +341,7 @@ export type MonitorState = {
       status: "disabled" | "approval-required" | "misconfigured" | "enabled";
       dailyLimit: number | null;
       eligible: number; translated: number; pending: number;
-      running: number; retrying: number; exhausted: number;
+      running: number; retrying: number; exhausted: number; hiddenFromJapanese?: number;
       failureKinds?: Record<string, number>;
       oldestPendingAt: string | null; nextRetryAt: string | null;
       calls24Hours: { total: number; failed: number; completed: number; stale: number };

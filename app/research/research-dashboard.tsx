@@ -20,7 +20,6 @@ import ResoluteBar from "./resolute-bar";
 import Deferred from "./deferred";
 import PlanCards, { TOKUSHOHO_HREF } from "./plan-cards";
 import FreshnessNotice from "./freshness-notice";
-import HomeToday from "./home-today";
 import type { InitialNewsSnapshot } from "@/lib/research/general-news";
 import NewsFeed from "./news/news-feed";
 import { warmNews } from "./news/general-news-panel";
@@ -233,7 +232,6 @@ export default function ResearchDashboard({ events, monitoredCompanies, initialN
           <FreshnessNotice lang={lang} />
           <HomeTools lang={lang} onPro={() => openView("pro")} onWatch={() => openView("companies")} />
           <ResoluteBar />
-          <HomeToday lang={lang} />
           <Deferred fallback={<div aria-busy="true" style={{ minHeight: 420 }} />}><NewsFeed lang={lang} initialNews={initialNews} /></Deferred>
           <HomeHelp lang={lang} />
         </>}
@@ -273,7 +271,7 @@ export default function ResearchDashboard({ events, monitoredCompanies, initialN
           {((tab === "saved" && collection.status !== "synced" && collection.status !== "guest") || collection.status === "error" || collection.status === "conflict") && <SavedSyncStatus collection={collection} lang={lang} />}
 
           {tab === "metrics" ? <div className={styles.tableWrap}>
-            {allMetrics.length ? <table><caption>{t("実績・見通し・ARRを区別。金額のMは百万米ドル。", "Actuals, guidance, and run-rate are distinct. M denotes USD millions.")}</caption><thead><tr>{[t("銘柄 / 指標", "Ticker / metric"), t("値", "Value"), t("対象・基準", "Scope / basis"), t("期間", "Period"), t("根拠", "Source")].map((label) => <th key={label} scope="col">{label}</th>)}</tr></thead><tbody>{allMetrics.map(({ metric, event }) => <tr key={`${event.id}:${metric.name}`}><th scope="row"><span className={styles.tableTicker}>{event.ticker}</span>{metricNames[metric.name]?.[lang] ?? metric.name}</th><td className={styles.tableValue}>{valueLabel(metric)}</td><td>{metric.scope}<small>{metric.basis} · {metric.kind === "guidance" ? t("会社見通し", "Guidance") : metric.kind === "run-rate" ? t("年換算指標", "Run-rate") : t("実績", "Actual")}</small></td><td>{metric.period}</td><td><a href={event.sources.find((source) => source.id === metric.sourceId)?.url} target="_blank" rel="noreferrer">{t("原文", "Source")} <Arrow /></a></td></tr>)}</tbody></table> : <Empty lang={lang} onReset={clearFilters} />}
+            {allMetrics.length ? <table><caption>{t("実績・見通し・ARRを区別。金額のMは百万ドル。", "Actuals, guidance, and run-rate are distinct. M denotes USD millions.")}</caption><thead><tr>{[t("銘柄 / 指標", "Ticker / metric"), t("値", "Value"), t("対象・基準", "Scope / basis"), t("期間", "Period"), t("根拠", "Source")].map((label) => <th key={label} scope="col">{label}</th>)}</tr></thead><tbody>{allMetrics.map(({ metric, event }) => <tr key={`${event.id}:${metric.name}`}><th scope="row"><span className={styles.tableTicker}>{event.ticker}</span>{metricNames[metric.name]?.[lang] ?? metric.name}</th><td className={styles.tableValue}>{valueLabel(metric)}</td><td>{metric.scope}<small>{metric.basis} · {metric.kind === "guidance" ? t("会社見通し", "Guidance") : metric.kind === "run-rate" ? t("年換算指標", "Run-rate") : t("実績", "Actual")}</small></td><td>{metric.period}</td><td><a href={event.sources.find((source) => source.id === metric.sourceId)?.url} target="_blank" rel="noreferrer">{t("原文", "Source")} <Arrow /></a></td></tr>)}</tbody></table> : <Empty lang={lang} onReset={clearFilters} />}
           </div> : <div className={`${styles.researchGrid} ${showingResearchArticle ? styles.articleOnly : ""}`}>
             {!showingResearchArticle && <div className={styles.eventList}>
               {tab === "changes" ? filtered.map((event) => {
@@ -346,7 +344,7 @@ export default function ResearchDashboard({ events, monitoredCompanies, initialN
           <Bookmark filled /><span>{t(`${savedBurst}件を保存しました`, `${savedBurst} saved`)}</span>
           <button type="button" onClick={() => { setSavedBurst(0); clearFilters(); openView("saved"); }}>{t("保存一覧へ", "View saved")} ›</button>
         </div>}
-        <footer className={styles.footer}><span>TECH PHASE RESEARCH</span><p>{t("変化を読み、一歩先へ。", "Read the shifts. Think ahead.")}</p><nav className={styles.legalLinks} aria-label={t("規約", "Legal")}><Link href="/terms">{t("利用規約", "Terms of Service")}</Link><Link href="/privacy">{t("プライバシーポリシー", "Privacy Policy")}</Link><Link href={TOKUSHOHO_HREF}>{t("特定商取引法に基づく表記", "Legal Notice")}</Link></nav><Disclaimer en={lang === "en"} /></footer>
+        <footer className={styles.footer}><span>TECH PHASE RESEARCH</span><p>{t("変化を読み、一歩先へ。", "Read the shifts. Think ahead.")}</p><nav className={styles.legalLinks} aria-label={t("規約", "Legal")}><Link href="/terms">{t("利用規約", "Terms of Service")}</Link><Link href="/privacy">{t("プライバシーポリシー", "Privacy Policy")}</Link><Link href={TOKUSHOHO_HREF}>{t("特定商取引法", "Legal Notice")}</Link></nav><Disclaimer en={lang === "en"} /></footer>
       </main>
     </div>
   </div>;

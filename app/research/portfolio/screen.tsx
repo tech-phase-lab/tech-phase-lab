@@ -59,6 +59,9 @@ function Illustration() {
   </div>;
 }
 
+/** Paused on Nov 21 (owner): see the split effect in PortfolioScreen. */
+const SPLIT_ADJUSTMENT_PAUSED = true;
+
 export default function PortfolioScreen() {
   const [lang, setLang] = useResearchLanguage();
   const raw = useSyncExternalStore(subscribeStore, readRaw, () => "");
@@ -82,7 +85,9 @@ export default function PortfolioScreen() {
     try { const saved = JSON.parse(localStorage.getItem("tech-phase:portfolio:split-note") ?? "null"); if (saved && Date.now() - saved.at < 7 * 86400_000 && Array.isArray(saved.applied)) setSplitNote(saved.applied); } catch { /* optional */ }
   }, []);
   useEffect(() => {
-    if (!lots.length) return;
+    // Nov 21 hotfix: the split adjustment below applied splits the wrong way round (SNDK 8-for-1 cut shares to 1/8). It is paused, so saved
+    // holdings are no longer rewritten, until the corrected handling (split-aware display, PR #733) ships.
+    if (SPLIT_ADJUSTMENT_PAUSED || !lots.length) return;
     const day = today();
     if (lots.every(lot => lot.checkedAt === day)) return;
     const controller = new AbortController();

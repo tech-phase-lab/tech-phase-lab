@@ -84,7 +84,7 @@ class Migration(unittest.TestCase):
                 row = db.execute('SELECT * FROM push_devices').fetchone()
                 self.assertEqual(row['quiet_zone'], 'Asia/Tokyo', 'an English device saved before Nov 17 keeps the Japan-time hours it chose')
                 self.assertEqual((row['quiet_start'], row['quiet_end']), (23, 7))
-                self.assertTrue(push.quiet_blocks(row, datetime(2026, 11, 17, 23, 30, tzinfo=TOKYO).timestamp()))
+                self.assertTrue(push.in_quiet_hours(row, datetime(2026, 11, 17, 23, 30, tzinfo=TOKYO).timestamp()))
             finally:
                 db.close()
 
@@ -117,7 +117,7 @@ class Validation(Base):
 class QuietHours(Base):
     def blocks(self, moment, start=23, end=7, zone='America/New_York', on=True):
         self.save({'quiet': {'on': on, 'start': start, 'end': end, 'zone': zone}})
-        return push.quiet_blocks(self.device(), moment)
+        return push.in_quiet_hours(self.device(), moment)
 
     def test_japan_time_hours(self):
         self.assertTrue(self.blocks(datetime(2026, 11, 17, 23, 30, tzinfo=TOKYO).timestamp(), zone='Asia/Tokyo'))
@@ -158,13 +158,13 @@ class QuietHours(Base):
         self.save({'quiet': {'on': True, 'start': 23, 'end': 7, 'zone': 'America/New_York'}})
         day = datetime(2026, 11, 17, 12, tzinfo=NY).timestamp()
         night = datetime(2026, 11, 17, 2, tzinfo=NY).timestamp()
-        self.assertTrue(push.quiet_blocks(self.device(), day, night))
-        self.assertFalse(push.quiet_blocks(self.device(), day))
+        self.assertTrue(push.in_quiet_hours(self.device(), day, night))
+        self.assertFalse(push.in_quiet_hours(self.device(), day))
 
     def test_a_plain_dict_device_without_a_zone_is_japan_time(self):
         device = {'quiet_on': 1, 'quiet_start': 23, 'quiet_end': 7}
-        self.assertTrue(push.quiet_blocks(device, datetime(2026, 11, 17, 23, 30, tzinfo=TOKYO).timestamp()))
-        self.assertFalse(push.quiet_blocks(device, datetime(2026, 11, 17, 23, 30, tzinfo=NY).timestamp()))
+        self.assertTrue(push.in_quiet_hours(device, datetime(2026, 11, 17, 23, 30, tzinfo=TOKYO).timestamp()))
+        self.assertFalse(push.in_quiet_hours(device, datetime(2026, 11, 17, 23, 30, tzinfo=NY).timestamp()))
 
 
 class EnglishDevice(Base):
@@ -172,8 +172,8 @@ class EnglishDevice(Base):
 
     def test_new_english_device_defaults_and_eastern_blocking(self):
         self.assertEqual(self.prefs()['quiet'], {'on': True, 'start': 23, 'end': 7, 'zone': 'America/New_York'})
-        self.assertTrue(push.quiet_blocks(self.device(), datetime(2026, 11, 17, 23, 30, tzinfo=NY).timestamp()))
-        self.assertFalse(push.quiet_blocks(self.device(), datetime(2026, 11, 17, 23, 30, tzinfo=TOKYO).timestamp()))
+        self.assertTrue(push.in_quiet_hours(self.device(), datetime(2026, 11, 17, 23, 30, tzinfo=NY).timestamp()))
+        self.assertFalse(push.in_quiet_hours(self.device(), datetime(2026, 11, 17, 23, 30, tzinfo=TOKYO).timestamp()))
         self.assertEqual(hashlib.sha256(subscription()['endpoint'].encode()).hexdigest(), self.device()['id'])
 
 

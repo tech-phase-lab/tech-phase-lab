@@ -4,7 +4,7 @@ No delivery until configured. Ambiguous network failures are NOT retried: this
 pilot favors avoiding duplicate alerts; its ledger records uncertain delivery.
 """
 import base64
-from collections import deque
+from collections import OrderedDict, deque
 from datetime import datetime, timedelta, timezone
 from zoneinfo import ZoneInfo
 import hashlib
@@ -364,10 +364,12 @@ def quiet_zone_for(language):
     return 'America/New_York' if language == 'en' else QUIET_DEFAULT_ZONE
 
 
-def quiet_blocks(device, *moments):
-    """おやすみモード: true when the device is asleep now or was asleep when the news happened, so a notice held back
-    during the night is never delivered when the night ends. Hours are wall-clock hours in the device's zone (Japan time or
-    US Eastern Time, with daylight saving time); 23 to 7 spans midnight."""
+def in_quiet_hours(device, *moments):
+    """おやすみモード: true when the device is asleep at any of `moments`. Hours are wall-clock hours in the device's zone
+    (Japan time or US Eastern Time, with daylight saving time); 23 to 7 spans midnight.
+    Nov 20 (owner): おやすみモード never holds a notice back. A notice sent while the device is asleep (senders pass the send
+    time only, never the time of the news: a 6:30 item sent at 7:05 is an ordinary notice) goes out at once with its usual
+    content, quietly (quietly(): no sound or vibration) and marked 「おやすみモード」 / "Quiet mode"."""
     if not device['quiet_on']:
         return False
     start, end = device['quiet_start'], device['quiet_end']
@@ -377,6 +379,17 @@ def quiet_blocks(device, *moments):
         if (start <= hour < end) if start < end else (hour >= start or hour < end):
             return True
     return False
+
+
+QUIET_MARK = {True: 'おやすみモード・', False: 'Quiet mode · '}
+QUIET_SENDS = {'sent': 0}  # notices sent quietly since start (one per device and notice), for /health
+
+
+def quietly(payload, ja):
+    """The same notice, marked 「おやすみモード」 in front of its usual title, with `silent` for the service worker
+    (public/research-sw.js shows it with silent: true and no vibration). The page it opens is unchanged."""
+    QUIET_SENDS['sent'] += 1
+    return {**payload, 'title': QUIET_MARK[bool(ja)] + payload['title'], 'silent': True}
 
 
 def notification_allowed(db, device_id, category, tickers=()):
@@ -734,9 +747,10 @@ def parse_demo_target(value):
 
 def scheduled_demo_target(db, value, transport=None, now=None):
     """Send the demo notice for this variable value once it is due. Returns None (no value), 'waiting', 'done' (this value was already
-    handled), or the outcome recorded now: 'sent', 'no-device', 'quiet-hours' (every owner device was in its おやすみモード), 'late', 'invalid'.
-    One log line per outcome, never a device or text. Nov 17 (owner): a device in its quiet hours is skipped exactly as for a real
-    price-target notice (quiet_blocks, called as deliver calls it: now and the moment of the change, here the scheduled time)."""
+    handled), or the outcome recorded now: 'sent', 'no-device', 'late', 'invalid'.
+    One log line per outcome, never a device or text. A device in its おやすみモード gets the notice exactly as for a real price-target
+    notice (Nov 20: sent quietly and marked; in_quiet_hours at the send time, as deliver calls it); 'quiet' in the log line counts
+    those devices."""
     value = (value or '').strip()
     if not value:
         return None
@@ -759,14 +773,14 @@ def scheduled_demo_target(db, value, transport=None, now=None):
                           DEMO_OWNER_ACCOUNT_IDS).fetchall()
         for row in rows:
             devices += 1
-            if quiet_blocks(row, now, parsed[0]):
-                quiet += 1
-                continue
             # A fresh tag of the same shape as a real one (a sha256 hex), so each send is shown as its own notice.
             tag = hashlib.sha256(json.dumps(['demo-target', secrets.token_hex(16)]).encode()).hexdigest()
             message = price_target_payload(DEMO_TARGET['ticker'], DEMO_TARGET['firm'], DEMO_TARGET['previous'], DEMO_TARGET['latest'],
                                            language == 'ja', tag)
             message['url'] = DEMO_TARGET_URL
+            if in_quiet_hours(row, now):
+                quiet += 1
+                message = quietly(message, language == 'ja')
             try:
                 # Through noting(): written down in push_notices as a real price-target notice (the in-app banner behaves as for one).
                 code = noting(db, transport or send, now)(json.loads(row['subscription']), message)
@@ -778,7 +792,7 @@ def scheduled_demo_target(db, value, transport=None, now=None):
                 with db:
                     db.execute('DELETE FROM push_devices WHERE id=?', (row['id'],))
                     db.execute('DELETE FROM push_device_preferences WHERE device_id=?', (row['id'],))
-        outcome = 'no-device' if not devices else 'quiet-hours' if quiet == devices else 'sent'
+        outcome = 'no-device' if not devices else 'sent'
     with db:
         db.execute('UPDATE push_demo_schedule SET outcome=? WHERE value=?', (outcome, value))
     # Language and counts only: never the device, endpoint, keys, the text or the provider's response.
@@ -1017,7 +1031,24 @@ QUIET_SKIP_REASONS = frozenset({'published-not-fresh', 'already-delivered', 'inv
 # Nov 20 (owner: "the latest MRVL price-target notice did not arrive"): skips were logged for earnings flashes only, so a price-target
 # change that reached no phone left no trace. The same once-per-change log line, and counts by reason, for price-target changes.
 TARGET_SKIPS = {}  # reason -> count since start (price-target changes only)
-TARGET_CHANGE_SKIPS = {}  # (ticker, firm, previous, latest, date) -> {reason: count} since start; only for the push-target-result line
+TARGET_CHANGE_SKIPS = {}  # (ticker, firm, previous, latest, date) -> {reason: devices} since start; only for the push-target-result line
+# Nov 20: every poll passes the whole backlog again, so counting each pass put 86,592 'published-not-fresh' on /health minutes after a
+# deploy. A change is counted once per reason (TARGET_SKIPS) and once per reason and device (TARGET_CHANGE_SKIPS); these remember
+# what was already counted, the oldest forgotten first beyond TARGET_SKIP_MEMORY.
+TARGET_SKIP_MEMORY = 20000
+_COUNTED_TARGET_SKIPS = OrderedDict()
+_COUNTED_TARGET_DEVICE_SKIPS = OrderedDict()
+
+
+def _first_time(seen, key):
+    """True the first time `key` is seen (and remembers it); False when it was already counted."""
+    if key in seen:
+        seen.move_to_end(key)
+        return False
+    seen[key] = True
+    while len(seen) > TARGET_SKIP_MEMORY:
+        seen.popitem(last=False)
+    return True
 
 
 def target_change(item):
@@ -1030,8 +1061,10 @@ def target_change(item):
 def skip(item, reason, device=None):
     change = target_change(item)
     if change is not None:
-        TARGET_SKIPS[reason] = TARGET_SKIPS.get(reason, 0) + 1
-        if len(TARGET_CHANGE_SKIPS) < 500 or change in TARGET_CHANGE_SKIPS:
+        if _first_time(_COUNTED_TARGET_SKIPS, (reason, *change)):
+            TARGET_SKIPS[reason] = TARGET_SKIPS.get(reason, 0) + 1
+        if (_first_time(_COUNTED_TARGET_DEVICE_SKIPS, (reason, device, *change))
+                and (len(TARGET_CHANGE_SKIPS) < 500 or change in TARGET_CHANGE_SKIPS)):
             counts = TARGET_CHANGE_SKIPS.setdefault(change, {})
             counts[reason] = counts.get(reason, 0) + 1
         key = (reason, *change)
@@ -1109,6 +1142,7 @@ def public_status(db, now=None):
         'deviceBreakdown': device_breakdown(db, now),
         'earningsSkipsSinceStart': dict(SKIPS),
         'priceTargetSkipsSinceStart': dict(TARGET_SKIPS),
+        'quietSendsSinceStart': QUIET_SENDS['sent'],
         'membershipCheck': dict(MEMBERSHIP_STATE),
         'maxDevices': DEVICE_LIMIT,
         'attempted24Hours': row['attempted'] or 0,
@@ -1135,7 +1169,7 @@ def deliver(db, items, transport=send, now=None, monotonic_now=time.monotonic,
         return {'status': 'disabled', 'attempted': 0}
     now = wall_now() if now is None else now
     status_now = now
-    attempted = accepted = uncertain = 0
+    attempted = accepted = uncertain = quiet_sent = 0
     sent = {}  # (ticker, quarter) -> {status: count} for earnings flashes attempted in this call
     target_sent = {}  # target_change -> {status: count} for price-target notices attempted in this call
     for device in db.execute('SELECT * FROM push_devices WHERE active=1').fetchall():
@@ -1156,25 +1190,24 @@ def deliver(db, items, transport=send, now=None, monotonic_now=time.monotonic,
                 # A price-target post found only now, more than 15 minutes after it was posted, is named apart from the backlog
                 # (which every poll passes over) so that it is logged.
                 late = target_change(item) is not None and 0 <= now - observed <= 300
-                skip(item, 'detected-late' if late else 'published-not-fresh')
+                skip(item, 'detected-late' if late else 'published-not-fresh', device['id'])
                 continue
-            if quiet_blocks(device, now, item['published'].timestamp()):
-                skip(item, 'quiet-hours')
-                continue
+            # Nov 20 (owner): never held for おやすみモード; sent now, quietly and marked (below) when the device is asleep now.
+            quiet = in_quiet_hours(device, now)
             if '*' not in watched and not watched.intersection(item.get('tickers') or [item['ticker']]):
-                skip(item, 'ticker-not-watched')
+                skip(item, 'ticker-not-watched', device['id'])
                 continue
             if observed <= device['since']:
-                skip(item, 'seen-before-registration')
+                skip(item, 'seen-before-registration', device['id'])
                 continue
             if not 0 <= now - observed <= 300:
-                skip(item, 'observed-not-fresh')
+                skip(item, 'observed-not-fresh', device['id'])
                 continue
             key = event_key(item)
             # Record each network attempt when it actually starts. Reusing the
             # batch timestamp understates queueing for later devices.
             if db.execute('SELECT 1 FROM push_deliveries WHERE device_id=? AND event_key=?', (device['id'], key)).fetchone():
-                skip(item, 'already-delivered')
+                skip(item, 'already-delivered', device['id'])
                 continue
             if device['owner_id'] and verified_until is None:
                 try:
@@ -1184,14 +1217,14 @@ def deliver(db, items, transport=send, now=None, monotonic_now=time.monotonic,
             attempted_at = wall_now()
             if device['owner_id'] and (not isinstance(verified_until, (int, float)) or isinstance(verified_until, bool)
                     or not math.isfinite(verified_until) or verified_until <= attempted_at):
-                skip(item, 'membership-check-failed')
+                skip(item, 'membership-check-failed', device['id'])
                 continue
             current = db.execute('SELECT active,owner_id FROM push_devices WHERE id=?', (device['id'],)).fetchone()
             if not current or not current['active'] or current['owner_id'] != device['owner_id']:
                 continue
             category = {'earnings': 'earnings', 'news': 'news'}.get(item.get('kind'), 'targets')
             if not notification_allowed(db, device['id'], category, item.get('tickers', ())):
-                skip(item, 'preference-off')
+                skip(item, 'preference-off', device['id'])
                 continue
             # Reserve before network; a restart cannot silently send it twice.
             with db:
@@ -1214,6 +1247,8 @@ def deliver(db, items, transport=send, now=None, monotonic_now=time.monotonic,
                            'body': item['texts']['ja' if ja else 'en'], 'tag': key, 'url': '/research/news'}
             else:
                 payload = price_target_payload(item['ticker'], item['firm'], item['previous'], item['latest'], ja, key)
+            if quiet:
+                payload = quietly(payload, ja)
             provider_started = monotonic_now()
             try:
                 code = noting(db, transport, attempted_at)(json.loads(device['subscription']), payload)
@@ -1235,30 +1270,34 @@ def deliver(db, items, transport=send, now=None, monotonic_now=time.monotonic,
             attempted += 1
             accepted += status == 'accepted'
             uncertain += status == 'uncertain'
+            quiet_sent += quiet
             if item.get('kind') == 'earnings':
                 counts = sent.setdefault((item.get('ticker'), item.get('quarter')), {})
                 counts[status] = counts.get(status, 0) + 1
+                counts['quiet'] = counts.get('quiet', 0) + quiet
             elif target_change(item) is not None:
                 counts = target_sent.setdefault(target_change(item), {})
                 counts[status] = counts.get(status, 0) + 1
+                counts['quiet'] = counts.get('quiet', 0) + quiet
             if status == 'expired':
                 break
     # One line per earnings flash attempted in this call: company, quarter, how many devices, and why others were skipped
     # (counts since start). Never the device, member, endpoint or text. This is the line to read after an earnings night.
     for (ticker, quarter), counts in sent.items():
-        print(json.dumps({'event': 'push-result', 'ticker': ticker, 'quarter': quarter, 'sent': sum(counts.values()),
-                          'accepted': counts.get('accepted', 0), 'uncertain': counts.get('uncertain', 0), 'expired': counts.get('expired', 0),
+        print(json.dumps({'event': 'push-result', 'ticker': ticker, 'quarter': quarter,
+                          'sent': sum(v for k, v in counts.items() if k != 'quiet'), 'accepted': counts.get('accepted', 0),
+                          'uncertain': counts.get('uncertain', 0), 'expired': counts.get('expired', 0), 'quiet': counts.get('quiet', 0),
                           'skips': dict(RELEASE_SKIPS.get((ticker, quarter), {}))}), flush=True)
     # The same line for each price-target change attempted in this call, with the reasons other devices were skipped (since start).
     for change, counts in target_sent.items():
         print(json.dumps({'event': 'push-target-result', 'ticker': change[0], 'firm': change[1], 'latest': change[3],
-                          'sent': sum(counts.values()), 'accepted': counts.get('accepted', 0), 'uncertain': counts.get('uncertain', 0),
-                          'expired': counts.get('expired', 0), 'skips': dict(TARGET_CHANGE_SKIPS.get(change, {}))}), flush=True)
+                          'sent': sum(v for k, v in counts.items() if k != 'quiet'), 'accepted': counts.get('accepted', 0),
+                          'uncertain': counts.get('uncertain', 0), 'expired': counts.get('expired', 0), 'quiet': counts.get('quiet', 0), 'skips': dict(TARGET_CHANGE_SKIPS.get(change, {}))}), flush=True)
     with db:
         db.execute('DELETE FROM push_deliveries WHERE attempted_at<?',
                    (now - DELIVERY_RETENTION_SECONDS,))
     return {'status': 'ready', 'attempted': attempted, 'accepted': accepted,
-            'uncertain': uncertain, **public_status(db, status_now)}
+            'uncertain': uncertain, 'quiet': quiet_sent, **public_status(db, status_now)}
 
 
 JST = timezone(timedelta(hours=9))
@@ -1287,7 +1326,7 @@ def deliver_weekly(db, transport=send, now=None, wall_now=time.time, entitlement
         return {'status': 'ready', 'attempted': 0, 'accepted': 0}
     attempted = accepted = 0
     for device in db.execute('SELECT * FROM push_devices WHERE active=1 AND owner_id IS NOT NULL AND weekly_notebook=1').fetchall():
-        if db.execute('SELECT 1 FROM push_deliveries WHERE device_id=? AND event_key=?', (device['id'], key)).fetchone() or quiet_blocks(device, now):
+        if db.execute('SELECT 1 FROM push_deliveries WHERE device_id=? AND event_key=?', (device['id'], key)).fetchone():
             continue
         try:
             until = entitlement(device['owner_id'])
@@ -1309,6 +1348,8 @@ def deliver_weekly(db, transport=send, now=None, wall_now=time.time, entitlement
         payload = {'title': '銘柄手帳' if ja else 'Stock Notebook',
                    'body': '今週のウォッチリストの動きをまとめました。' if ja else "This week's watchlist moves are ready.",
                    'tag': key, 'url': '/research/notebook'}
+        if in_quiet_hours(device, now):
+            payload = quietly(payload, ja)
         try:
             code = noting(db, transport, attempted_at)(json.loads(device['subscription']), payload)
         except Exception:
@@ -1351,7 +1392,7 @@ def deliver_notes(db, posts, transport=send, now=None, wall_now=time.time, entit
     for post_id, published in fresh:
         key = f'note-{post_id}'
         for device in db.execute('SELECT * FROM push_devices WHERE active=1 AND owner_id IS NOT NULL AND note_posts=1').fetchall():
-            if db.execute('SELECT 1 FROM push_deliveries WHERE device_id=? AND event_key=?', (device['id'], key)).fetchone() or quiet_blocks(device, now, published):
+            if db.execute('SELECT 1 FROM push_deliveries WHERE device_id=? AND event_key=?', (device['id'], key)).fetchone():
                 continue
             try:
                 until = entitlement(device['owner_id'])
@@ -1373,6 +1414,8 @@ def deliver_notes(db, posts, transport=send, now=None, wall_now=time.time, entit
             payload = {'title': 'RIZEL\u2019S DESK' if not ja else 'リゼルのひとりごと',
                        'body': 'リゼルのひとりごとが更新されました' if ja else "RIZEL\u2019s Notes were updated",
                        'tag': key, 'url': '/research/notes'}
+            if in_quiet_hours(device, now):
+                payload = quietly(payload, ja)
             try:
                 code = noting(db, transport, attempted_at)(json.loads(device['subscription']), payload)
             except Exception:
@@ -1411,7 +1454,7 @@ def deliver_weekly_drafts(db, drafts, transport=send, now=None, wall_now=time.ti
     for draft_id, made in fresh:
         key = f'weekly-draft-{draft_id}'
         for device in db.execute('SELECT * FROM push_devices WHERE active=1 AND owner_id IS NOT NULL AND weekly_draft=1').fetchall():
-            if db.execute('SELECT 1 FROM push_deliveries WHERE device_id=? AND event_key=?', (device['id'], key)).fetchone() or quiet_blocks(device, now, made):
+            if db.execute('SELECT 1 FROM push_deliveries WHERE device_id=? AND event_key=?', (device['id'], key)).fetchone():
                 continue
             try:
                 until = entitlement(device['owner_id'])
@@ -1433,6 +1476,8 @@ def deliver_weekly_drafts(db, drafts, transport=send, now=None, wall_now=time.ti
             payload = {'title': '週刊 Tech Phase PRO' if ja else 'Tech Phase PRO Weekly',
                        'body': '週刊の下書きができました' if ja else 'A draft of the weekly issue is ready',
                        'tag': key, 'url': '/research/weekly'}
+            if in_quiet_hours(device, now):
+                payload = quietly(payload, ja)
             try:
                 code = noting(db, transport, attempted_at)(json.loads(device['subscription']), payload)
             except Exception:
@@ -1452,13 +1497,14 @@ def announce(db, key, select, args, payload_for, moments, *, accept=None, transp
     """Send one notice, once per device. `select` picks the devices that switched this kind on.
 
     Same guarantees as the senders above: the claim is written before the network call, an ambiguous failure is never
-    retried, PRO is checked again, and a notice that fell in the device's おやすみモード (when it happened or now) is dropped, never held."""
+    retried, PRO is checked again, and a notice sent while the device is in its おやすみモード (the send time decides; `moments`,
+    the time of the news, no longer does) goes out at once, quietly and marked (quietly(); Nov 20, owner: it used to be dropped)."""
     now = wall_now() if now is None else now
     attempted = accepted = 0
     for device in db.execute(select, args).fetchall():
         if db.execute('SELECT 1 FROM push_deliveries WHERE device_id=? AND event_key=?', (device['id'], key)).fetchone():
             continue
-        if quiet_blocks(device, now, *moments) or (accept is not None and not accept(device)):
+        if accept is not None and not accept(device):
             continue
         try:
             until = entitlement(device['owner_id'])
@@ -1475,7 +1521,10 @@ def announce(db, key, select, args, payload_for, moments, *, accept=None, transp
                 (device['id'], key, 'uncertain', attempted_at, now)).rowcount
         if not claim:
             continue
-        payload = {**payload_for(device['language'] == 'ja'), 'tag': key}
+        ja = device['language'] == 'ja'
+        payload = {**payload_for(ja), 'tag': key}
+        if in_quiet_hours(device, now):
+            payload = quietly(payload, ja)
         try:
             code = noting(db, transport, attempted_at)(json.loads(device['subscription']), payload)
         except Exception:

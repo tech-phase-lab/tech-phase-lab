@@ -31,19 +31,7 @@ test('today target changes follow the zone the cards show, and a failed read is 
   assert.equal(countTodayTargets([], 'ja', now), 0);
 });
 
-test('the TODAY row is for PRO and the owner, shows dashes for unreadable counts, and links to the right places', async () => {
-  const source = await readFile(new URL('../app/research/home-today.tsx', import.meta.url), 'utf8');
-  assert.match(source, /plan !== "pro" && !owner\) return null/);
-  assert.match(source, /count === null \? "–"/);
-  assert.match(source, /scrollToSection\("home-news"\)/);
-  assert.match(source, /href="\/research\/calendar"/);
-  assert.match(source, /scrollToSection\("home-price-targets"\)/);
-  for (const text of ['新着ニュース', '今日の予定', '目標株価更新', 'New news', 'Today’s events', 'Target price changes']) assert.ok(source.includes(text), text);
-  const css = await readFile(new URL('../app/research/home-today.module.css', import.meta.url), 'utf8');
-  assert.match(css, /white-space:nowrap/);
-  assert.match(css, /#1f2a3b/);
-  assert.match(css, /#5dffb4/);
-  assert.doesNotMatch(css, /animation/);
+test('the TODAY row is gone from home (owner, Nov 21: counts read 0 while news was arriving, and today\'s events were rarely above 0)', async () => {
   const dashboard = await readFile(new URL('../app/research/research-dashboard.tsx', import.meta.url), 'utf8');
-  assert.ok(dashboard.indexOf('<HomeTools') < dashboard.indexOf('<HomeToday') && dashboard.indexOf('<HomeToday') < dashboard.indexOf('<NewsFeed'));
+  assert.doesNotMatch(dashboard, /HomeToday/);
 });

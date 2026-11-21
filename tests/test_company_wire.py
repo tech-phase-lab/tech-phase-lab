@@ -536,8 +536,52 @@ class LowValueTests(unittest.TestCase):
     def test_the_patterns_match_lib_research_wire_stories(self):
         import os, re
         ts = open(os.path.join(os.path.dirname(__file__), '..', 'lib', 'research', 'wire-stories.ts'), encoding='utf-8').read()
-        block = re.search(r'export const LOW_VALUE = new RegExp\(\[(.*?)\]\.join', ts, re.S).group(1)
-        self.assertEqual(''.join(re.findall(r'String\.raw`([^`]*)`', block)), company_wire.LOW_VALUE_EN)
+        for name, python in (('LOW_VALUE', company_wire.LOW_VALUE_EN), ('LOW_VALUE_SOFT', company_wire.LOW_VALUE_SOFT_EN),
+                             ('CONCRETE_EVENT', company_wire.CONCRETE_EVENT_EN)):
+            block = re.search(r'export const ' + name + r' = new RegExp\(\[(.*?)\]\.join', ts, re.S).group(1)
+            self.assertEqual(''.join(re.findall(r'String\.raw`([^`]*)`', block)), python, name)
+        python_target = re.search(r"ANY_TARGET = re\.compile\(r'(.*?)', re\.I\)", open(company_wire.__file__, encoding='utf-8').read()).group(1)
+        self.assertEqual(re.search(r'const ANY_TARGET = /(.*?)/i;', ts).group(1), python_target)
+
+    # Nov 20 review: an explainer, "- live", "here's the" or bull-case phrase does not drop a headline that reports a concrete event.
+    EVENT_NEWS = ('AMD launches MI400: what it means for Nvidia', 'Microsoft to invest $10 billion in Japan, what to know',
+                  'Intel names new CEO - live', 'Oracle surges 30% on cloud backlog - live', "Here's the full statement from Apple on the EU fine",
+                  "Nvidia to buy stake in Intel; here's the deal terms", "Palantir wins $10 billion Army contract — what's next",
+                  'Morgan Stanley bull case for Tesla raised to $800')
+    # The owner's examples and the drops approved on Nov 20 stay dropped.
+    STILL_LOW_VALUE = ('Stock Market Today live: Nasdaq slides as Anthropic sinks', 'Beyond TSMC: 3 Taiwan small-cap tech stocks',
+                       'Sandisk 8-for-1: what it means for investors', 'Intel 18A vs. TSMC N2: How to Read the Chip Claims',
+                       "Anthropic IPO: Here's What Its Spending Commitments Mean to Microsoft, SpaceX, Amazon, and Alphabet",
+                       "Nvidia beats estimates - Here's why", 'Analysis: Nvidia names a new chief executive',
+                       "Lumentum (NASDAQ:LITE) Stock Surges 2.9% - What's Next?", 'Lumentum unveils AI rack optics demo: what it means for LITE stock')
+    # Owner, Nov 21: GuruFocus templates.
+    GURUFOCUS = ('Marvell Technology (MRVL) Stock Down 11.7% — What the 84 GF Score Means for Investors',
+                 'Arm Holdings (ARM) after 14.1% drop — GF Value $207.57 vs price $152.18',
+                 'Arista Networks (ANET) a bargain after 11.6% drop? GF rating')
+
+    def test_an_explainer_phrase_does_not_drop_an_event_headline(self):
+        self.assertEqual([t for t in self.EVENT_NEWS if company_wire.hidden_title(t)], [])
+        self.assertEqual([t for t in self.STILL_LOW_VALUE if not company_wire.hidden_title(t)], [])
+
+    def test_gurufocus_templates_links_and_outlet_are_dropped(self):
+        self.assertEqual([t for t in self.GURUFOCUS if not company_wire.hidden_title(t)], [])
+        # GF Securities is a broker, not a GuruFocus template.
+        self.assertFalse(company_wire.hidden_title('Micron, Sandisk, SK Hynix in focus as GF Securities cuts NAND price forecast, sees glut'))
+        row = lambda publisher, source='gnews', url='https://news.google.com/rss/articles/x': {
+            'title': 'Credo Technology Group Holding (CRDO) Announces Patent Agreement', 'publisher': publisher, 'source': source, 'url': url}
+        self.assertTrue(company_wire.locally_rejected(row('GuruFocus')))
+        self.assertTrue(company_wire.locally_rejected(row('GuruFocus.com', 'stocknews')))
+        self.assertTrue(company_wire.locally_rejected(row('', 'yahoo', 'https://www.gurufocus.com/news/123/credo')))
+        self.assertFalse(company_wire.locally_rejected(row('', 'yahoo', 'https://finance.yahoo.com/news/credo-123.html')))
+        self.assertFalse(company_wire.locally_rejected(row('', 'yahoo', 'https://notgurufocus.com.example/news')))
+
+    def test_a_billion_or_trillion_amount_is_not_read_as_the_target(self):
+        self.assertEqual(company_wire.analyst_actions('Goldman Sachs keeps Nvidia price target, sees $500 billion AI opportunity'), frozenset())
+        self.assertEqual(company_wire.analyst_actions('UBS lifts Apple PT ahead of $1.5 trillion buyback'), frozenset())
+        self.assertEqual(company_wire.analyst_actions('Goldman Sachs keeps Nvidia price target at $250, sees $500 billion AI opportunity'),
+                         {('goldman', 'pt', 250.0)})
+        self.assertEqual(company_wire.analyst_actions('UBS lifts Apple PT, sees $1.5 trillion buyback and $300 shares'), {('ubs', 'pt', 300.0)})
+        self.assertEqual(company_wire.analyst_actions('Bernstein raises GE Vernova price target, sees $1,298.'), {('bernstein', 'pt', 1298.0)})
 
     def test_a_broker_action_is_keyed_by_broker_and_new_target_or_rating(self):
         self.assertEqual(company_wire.analyst_actions('Stifel maintains Marvell Technology at Buy, lowers price target to $280 from $370'),

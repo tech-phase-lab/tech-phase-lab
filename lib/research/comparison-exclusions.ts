@@ -5,6 +5,10 @@
  *  - preferred, warrant, unit, right: the SEC's ticker suffix (CTA-PB, AAC-WT, KCAC-UN, NMZ-RI), or a Nasdaq ticker ending in W, U or R
  *    that is another ticker of the same company plus one or two letters (AACIW, AACIU beside AACI; MOBBW beside MOB, HTZWW beside HTZ,
  *    ZKPU beside ZKP: Nov 20, MOBBW was still offered because its base has three letters);
+ *  - preferred or note on Nasdaq (Nov 20 review: BRKRP was offered): a ticker ending in P, O, N or M that is another ticker of the same company
+ *    plus one or two letters (BRKRP beside BRKR, AGNCM/AGNCN/AGNCO/AGNCP beside AGNC, BHFAP beside BHF, GOOGN beside GOOG, METAM beside META).
+ *    L is never one of them: GOOGL is Alphabet's class A share. On the SEC's list of Nov 20 this matches 84 tickers, all preferreds and
+ *    notes (docs/comparison-audit-2026-11-20/items.csv), and no common or class share;
  *  - SPAC, fund: the issuer is on the audit's list (comparison-exclusions.json: SIC 6770, or a fund with no revenue) under the same name. A
  *    SPAC that completes its merger takes the operating company's name and is offered again without a new list;
  *  - ETN (exchange-traded note, owner Nov 20): a ticker the SEC files under a bank that issues ETNs (comparison-exclusions.json "etn": UBS AG,
@@ -21,7 +25,7 @@ export type ExclusionKind = "spac" | "fund" | "etn" | "preferred" | "warrant" | 
 type Entry = { ticker: string; cik: number | string; name: string; exchange?: string };
 
 const SUFFIX: [RegExp, ExclusionKind][] = [[/-P[A-Z]?$/, "preferred"], [/-(?:WTA?|WS|W)$/, "warrant"], [/-(?:UN|U)$/, "unit"], [/-(?:RI|R)$/, "right"]];
-const FIFTH: Record<string, ExclusionKind> = { W: "warrant", U: "unit", R: "right" };
+const FIFTH: Record<string, ExclusionKind> = { W: "warrant", U: "unit", R: "right", P: "preferred", O: "preferred", N: "preferred", M: "preferred" };
 const sameName = (a: string, b: string) => a.trim().toUpperCase() === b.trim().toUpperCase();
 
 /** The audit's list of SPACs, funds and ETN issuers (comparison-exclusions.json). */
