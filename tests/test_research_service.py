@@ -276,8 +276,8 @@ class ResearchServiceTests(unittest.TestCase):
             # watch, the Saturday weekly-draft clock and the big-event results reader) plus one thread per
             # parallel headline translator, the stock comparison's once-a-minute refresh clock and the
             # Financial Radar's twice-daily refresh clock, and (Nov 17) the scheduled demo notice clock.
-            # Nov 19: the company-headline refresher. Nov 20: the /live refresher.
-            self.assertEqual(len(observed), 28 + app.translation_workers)
+            # Nov 19: the company-headline refresher. Nov 20: the /live refresher. Nov 21: the price-alert checker.
+            self.assertEqual(len(observed), 29 + app.translation_workers)
             self.assertTrue(all(observed))
 
     def test_release_watch_alerts_from_the_public_payload_and_reports_in_health(self):

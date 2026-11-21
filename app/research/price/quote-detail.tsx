@@ -1,11 +1,12 @@
 "use client";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import ResearchToolShell from "../research-tool-shell";
 import { useResearchLanguage } from "../use-research-language";
 import { useStockFavorites } from "../use-stock-favorites";
 import { useFavoriteLists } from "../watchlist/use-favorite-lists";
-import { upsertPriceAlert, formatAlertPrice } from "@/lib/research/price-alert-settings";
+import { upsertPriceAlert, formatAlertPrice, priceAlertDelivery, type PriceAlertDelivery } from "@/lib/research/price-alert-settings";
 import { CompanyIntroductionPanel } from "../stocks/company-introduction";
 import { CompanyNetworkMap } from "../stocks/chain-map";
 import type { CompanyIntroduction } from "@/lib/research/company-introductions";
@@ -40,10 +41,21 @@ function AlertSheet({ ticker, currency, ja, onClose }: { ticker: string; currenc
   const [direction, setDirection] = useState<"above" | "below">(saved[0]?.direction ?? "above");
   const [unit, setUnit] = useState(saved[0]?.currency ?? currency);
   const [error, setError] = useState<"invalid" | "limit" | null>(null);
+  // Whether the monitor delivers price alerts to this member (Nov 21): until it says so, the sheet keeps saying delivery is not ready.
+  const [delivery, setDelivery] = useState<PriceAlertDelivery | null>(null);
+  useEffect(() => {
+    const controller = new AbortController();
+    fetch("/api/research/notifications", { cache: "no-store", credentials: "same-origin", signal: controller.signal })
+      .then(response => response.json().catch(() => null)).then(body => { if (!controller.signal.aborted) setDelivery(priceAlertDelivery(body)); })
+      .catch(() => { if (!controller.signal.aborted) setDelivery("not-ready"); });
+    return () => controller.abort();
+  }, []);
   const t = (a: string, b: string) => ja ? a : b;
   return <div className={styles.sheetBack} onClick={onClose}><div className={styles.sheet} role="dialog" aria-modal="true" aria-label={t("価格通知", "Price alert")} onClick={event => event.stopPropagation()}>
     <h2>{t("価格通知", "Price alert")}</h2>
-    <p>{t("設定のみ保存できます。通知配信は準備中です。", "You can save your settings, but alerts aren't being sent yet.")}</p>
+    {delivery === "live" ? <p>{t("米国市場の取引時間中に5分ごとに確認し、価格がこの水準を超えたとき（下回ったとき）に1回、スマホへ通知します。スマホ通知をオンにした端末に届きます。", "Checked every 5 minutes during U.S. market hours. You get one notification on your phone when the price crosses this level (on devices with notifications turned on).")} <Link href="/research/notifications">{t("通知の設定", "Notification settings")}</Link></p>
+      : delivery === "pro-required" ? <p>{t("スマホへの価格通知はPRO会員向けです。設定は保存できます。", "Price alerts on your phone are for PRO members. You can still save your settings.")}</p>
+      : delivery === "not-ready" ? <p>{t("設定のみ保存できます。通知配信は準備中です。", "You can save your settings, but alerts aren't being sent yet.")}</p> : null}
     <form onSubmit={event => {
       event.preventDefault();
       let failure: "invalid" | "limit" | null = null;

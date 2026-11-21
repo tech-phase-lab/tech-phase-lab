@@ -136,7 +136,7 @@ test("the notifications page shows the RESOLUTE row to buyers only, and only tha
   assert.match(view, /\{pro && <><div className=\{on \? "" : styles\.rowsOff\}>\s*<p className=\{styles\.section\}>\{t\("銘柄", "STOCKS"\)\}/);
   assert.match(view, /\{pro && <ul className=\{`\$\{styles\.moreList\}/);
   const settings = read("../app/research/notification-settings.tsx");
-  assert.match(settings, /setAccess\(\{ pro: config\.pro !== false, resolute: config\.resolute === true \}\)/);
+  assert.match(settings, /setAccess\(\{ pro: config\.pro !== false, resolute: config\.resolute === true, priceAlerts: config\.priceAlerts === true \}\)/);
   assert.match(settings, /resoluteScope \? t\("この端末で受け取る", "Get them on this device"\)/);
   const screen = read("../app/resolute/notifications-screen.tsx");
   assert.match(screen, /<DeviceNotifications lang=\{locale\} scope="resolute" initiallyOpen\/>/);

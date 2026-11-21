@@ -192,8 +192,96 @@ class Running(unittest.TestCase):
         self.assertEqual(wait(2026, 10, 31, 12, 30), 300, "Saturday")
 
 
+CLAIMS_TEXT = ("1 News Release Connect with DOL at https://blog.dol.gov TRANSMISSION OF MATERIALS IN THIS RELEASE IS EMBARGOED UNTIL 8:30 A.M. (Eastern) "
+               "Thursday, November 19, 2026 UNEMPLOYMENT INSURANCE WEEKLY CLAIMS SEASONALLY ADJUSTED DATA In the week ending November 14, the advance "
+               "figure for seasonally adjusted initial claims was 203,000, an increase of 1,000 from the previous week's revised level. The previous week's "
+               "level was revised up by 2,000 from 200,000 to 202,000. The 4-week moving average was 197,750, an increase of 2,000 from the previous week's revised average.")
+CLAIMS_NOW = datetime(2026, 11, 19, 13, 31, tzinfo=timezone.utc)  # Thursday 8:31 a.m. EST
+
+
+class Claims(unittest.TestCase):
+    """Weekly jobless claims from DOL's release PDF (Nov 21). The fixture is the opening of the Nov 19, 2026 release."""
+
+    def test_the_advance_figure_is_read_from_the_release(self):
+        r = ind.parse_claims(CLAIMS_TEXT)
+        self.assertEqual((r["value"], r["change"], r["week"]), (203000, 1000, date(2026, 11, 14)))
+        self.assertEqual(r["at"], datetime(2026, 11, 19, 13, 30, tzinfo=timezone.utc), "8:30 a.m. EST")
+        p = ind.claims_payload(r, ind.CLAIMS_URL, CLAIMS_NOW)
+        self.assertEqual(p["id"], "claims-2026-11-14")
+        self.assertEqual(p["resultJa"], "203,000件（前週改定値から1,000件増）")
+        self.assertEqual(p["titleJa"], "米国新規失業保険申請件数（11月14日終了週）")
+        self.assertEqual(p["sources"][0]["publisher"], "U.S. Department of Labor", "a single official source the site accepts")
+        self.assertNotIn("予想", p["resultJa"])
+
+    def test_a_decrease_unchanged_curly_quotes_and_the_new_year(self):
+        down = ind.parse_claims(CLAIMS_TEXT.replace("an increase of 1,000", "a decrease of 12,000"))
+        self.assertEqual(down["change"], -12000)
+        self.assertIn("12,000件減", ind.claims_payload(down, ind.CLAIMS_URL, CLAIMS_NOW)["resultJa"])
+        same = ind.parse_claims(CLAIMS_TEXT.replace("an increase of 1,000", "unchanged").replace("previous week's revised level", "previous week’s unrevised level"))
+        self.assertEqual(same["change"], 0)
+        january = CLAIMS_TEXT.replace("Thursday, November 19, 2026", "Thursday, January 7, 2027").replace("week ending November 14", "week ending January 2")
+        self.assertEqual(ind.parse_claims(january)["week"], date(2027, 1, 2))
+        late_december = CLAIMS_TEXT.replace("Thursday, November 19, 2026", "Thursday, January 1, 2027").replace("week ending November 14", "week ending December 26")
+        self.assertEqual(ind.parse_claims(late_december)["week"], date(2026, 12, 26))
+
+    def test_odd_wording_dates_and_sizes_are_not_read(self):
+        for text in (CLAIMS_TEXT.replace("seasonally adjusted initial claims", "unadjusted initial claims"),
+                     CLAIMS_TEXT.replace("week ending November 14", "week ending November 13"),  # not a Saturday
+                     CLAIMS_TEXT.replace("week ending November 14", "week ending October 31"),   # not the week before
+                     CLAIMS_TEXT.replace("203,000", "20,300,000"), CLAIMS_TEXT.replace("an increase of 1,000", "an increase of 300,000"),
+                     CLAIMS_TEXT.replace("EMBARGOED UNTIL", "RELEASED")):
+            self.assertIsNone(ind.parse_claims(text), text[:60])
+
+    def test_the_pdf_is_read_only_around_the_release_and_stored_once(self):
+        calls = []
+        def fetch_pdf(url):
+            calls.append(url)
+            return b"%PDF"
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "t.sqlite"
+            run = lambda when: ind.run_once(path, now=when, config={"version": 1, "fomcMeetings": []}, transport=lambda url: "",
+                                            fetch_pdf=fetch_pdf, read_pdf=lambda content: CLAIMS_TEXT)
+            self.assertEqual(run(CLAIMS_NOW - timedelta(days=1, hours=2)), 0, "Wednesday 6:31 a.m.: outside the window")
+            self.assertEqual(run(datetime(2026, 11, 21, 13, 31, tzinfo=timezone.utc)), 0, "Saturday")
+            self.assertEqual(calls, [])
+            self.assertEqual(run(CLAIMS_NOW), 1)
+            self.assertEqual(calls, [ind.CLAIMS_URL])
+            self.assertEqual(run(CLAIMS_NOW + timedelta(minutes=5)), 0)
+            self.assertEqual(len(calls), 1, "the week's result is stored: the PDF is not fetched again")
+            with events.connect(path) as db:
+                stored = json.loads(db.execute("SELECT payload FROM event_results WHERE id='claims-2026-11-14'").fetchone()["payload"])
+                self.assertEqual(stored["sourceUrl"], "https://www.dol.gov/ui/data.pdf")
+                self.assertIn(stored, events.public_view(db))
+
+    def test_wednesday_is_read_only_before_a_thursday_holiday(self):
+        self.assertFalse(ind.claims_window(datetime(2026, 11, 18, 13, 35, tzinfo=timezone.utc)), "an ordinary Wednesday")
+        self.assertTrue(ind.claims_window(datetime(2026, 11, 25, 13, 35, tzinfo=timezone.utc)), "the day before Thanksgiving")
+        self.assertEqual(ind.expected_week(datetime(2026, 11, 25, 13, 35, tzinfo=timezone.utc)), date(2026, 11, 21))
+        self.assertTrue(ind.claims_window(datetime(2026, 12, 24, 13, 35, tzinfo=timezone.utc)), "Thursday Dec 24 2026 is a working day")
+        self.assertFalse(ind.claims_window(datetime(2026, 11, 19, 17, 5, tzinfo=timezone.utc)), "after noon")
+
+    def test_a_refusal_is_recorded_and_never_worked_around(self):
+        def refused(url):
+            raise urllib.error.HTTPError(url, 403, "Forbidden", {}, None)
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / "t.sqlite"
+            self.assertEqual(ind.run_once(path, now=CLAIMS_NOW, config={"version": 1, "fomcMeetings": []}, transport=lambda url: "", fetch_pdf=refused), 0)
+            with events.connect(path) as db:
+                row = db.execute("SELECT ok,error FROM event_feed_status WHERE publisher=?", (ind.CLAIMS_SOURCE,)).fetchone()
+            self.assertEqual((row["ok"], row["error"]), (0, "HTTPError:403"))
+        self.assertIn("TechPhaseResearch", ind.USER_AGENT, "a plainly named reader, never a browser's name")
+
+    def test_claims_are_offered_to_the_notification_sender(self):
+        import web_push
+        payload = ind.claims_payload(ind.parse_claims(CLAIMS_TEXT), ind.CLAIMS_URL, CLAIMS_NOW)
+        [item] = web_push.economic_items([], [payload])
+        self.assertEqual((item["kind"], item["ja"]), ("claims", "203,000件（前週改定値から1,000件増）"))
+        self.assertEqual(web_push.NAMES["claims"][0], "米国新規失業保険申請件数")
+        self.assertNotIn("claims", web_push.ECON_DEFAULT_ON, "off until the member turns it on")
+
+
 class Ism(unittest.TestCase):
-    SPEC = {"level": True, "range": [30, 75], "must": [r"\bISM\b|Manufacturing PMI", "manufactur"], "mustNot": ["non-?manufacturing", r"\bservices\b"]}
+    SPEC ={"level": True, "range": [30, 75], "must": [r"\bISM\b|Manufacturing PMI", "manufactur"], "mustNot": ["non-?manufacturing", r"\bservices\b"]}
 
     def test_the_result_is_read_and_what_it_is_compared_with_is_not(self):
         for title, expected in (("October ISM manufacturing PMI comes in at 55.5, beating estimates", 55.5),

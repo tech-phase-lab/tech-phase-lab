@@ -216,11 +216,11 @@ class Economic(Base):
         self.db.execute('UPDATE push_devices SET econ_kinds=?', ('["jobs", "cpi"]',))
         self.assertNotIn('ppi', push.economic_kinds(self.db.execute('SELECT * FROM push_devices').fetchone()))
 
-    def test_fomc_ism_gdp_and_retail_results_are_announced_and_claims_never(self):
+    def test_fomc_ism_gdp_retail_and_claims_results_are_announced(self):
         base = {'releasedAt': '2026-12-09T19:00:00+00:00', 'resultJa': '政策金利を据え置き（3.50〜3.75%）', 'resultEn': 'Held'}
         events = [{**base, 'id': 'fomc-2026-12-09'}, {**base, 'id': 'ism-2026-12'}, {**base, 'id': 'gdp-2026-q3-second'}, {**base, 'id': 'retail-2026-10'}, {**base, 'id': 'claims-2026-11-05'},
                   {**base, 'id': 'us-midterm-2026-11-03'}]
-        self.assertEqual(sorted(i['kind'] for i in push.economic_items([], events)), ['fomc', 'gdp', 'ism', 'retail'])
+        self.assertEqual(sorted(i['kind'] for i in push.economic_items([], events)), ['claims', 'fomc', 'gdp', 'ism', 'retail'])
         self.save({'economicKinds': ['fomc']})
         released = at(4, 0, 10)
         items = [{'kind': 'fomc', 'id': 'fomc-2026-12-09', 'publishedAt': datetime.fromtimestamp(released, timezone.utc).isoformat(), 'ja': '政策金利を据え置き（3.50〜3.75%）', 'en': 'Held'}]

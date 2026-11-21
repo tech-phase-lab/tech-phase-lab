@@ -69,7 +69,9 @@ export async function GET() {
     return Response.json({ enabled: config.enabled === true && config.memberAccessVersion === 1,
       publicKey: config.memberAccessVersion === 1 ? config.publicKey : "",
       validUntil: access.pro ? member.accessExpiresAt : Math.min((access.resoluteUntil ?? 0) * 1000, Date.now() + 3_600_000),
-      preferencesVersion: config.preferencesVersion === 1 ? 1 : 0, pro: access.pro, resolute: hasResolute(access) }, { headers });
+      preferencesVersion: config.preferencesVersion === 1 ? 1 : 0, pro: access.pro, resolute: hasResolute(access),
+      // ウォッチリストの価格通知 (Nov 21): true only while the monitor delivers them (its PRICE_ALERT_PUSH_ENABLED switch).
+      priceAlerts: config.enabled === true && config.priceAlerts === true }, { headers });
   } catch { return Response.json({ enabled: false }, { status: 503, headers }); }
 }
 export async function POST(request: Request) {
@@ -149,6 +151,8 @@ export async function POST(request: Request) {
       ...(access && access.resoluteUntil !== undefined ? { resoluteUntil: access.resoluteUntil } : {}),
       // The key the question board uses for this member, so "your question was answered" reaches its asker only.
       questionOwner: createHmac("sha256", process.env.RESEARCH_MONITOR_TOKEN ?? "").update(`question:${member.userId}`).digest("hex"),
+      // The key the member's watchlists (and their price alerts) are kept under, as in app/api/research/favorites: price alerts reach this member's devices only.
+      favoritesOwner: createHmac("sha256", process.env.RESEARCH_MONITOR_TOKEN ?? "").update(`favorites:${member.userId}`).digest("hex"),
       subscription: body.subscription, tickers: body.tickers, allTargets: body.allTargets === true, language: body.language,
       ...(body.weeklyNotebook === undefined ? {} : { weeklyNotebook: body.weeklyNotebook !== false }),
       ...(body.preferences === undefined ? {} : { preferences: body.preferences }),

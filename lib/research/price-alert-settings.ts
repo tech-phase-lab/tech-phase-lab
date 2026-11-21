@@ -12,3 +12,13 @@ export function upsertPriceAlert(alerts: PriceAlert[], draft: PriceAlert):
 export function formatAlertPrice(price: number, locale: string) {
   return new Intl.NumberFormat(locale, { maximumSignificantDigits: 21 }).format(price);
 }
+
+/** What the price-alert sheet says about delivery (Nov 21), from GET /api/research/notifications. "live" only when the monitor delivers
+ * price alerts (its PRICE_ALERT_PUSH_ENABLED switch) and this member may receive Tech Phase notices (PRO, or an owner account, which the
+ * server reports as PRO). Anything unclear keeps the old wording: settings are saved, delivery is not ready. */
+export type PriceAlertDelivery = "live" | "pro-required" | "not-ready";
+export function priceAlertDelivery(body: unknown): PriceAlertDelivery {
+  const value = body && typeof body === "object" ? body as Record<string, unknown> : {};
+  if (value.reason === "pro-required" || (value.enabled === true && value.pro === false)) return "pro-required";
+  return value.enabled === true && value.pro !== false && value.priceAlerts === true ? "live" : "not-ready";
+}

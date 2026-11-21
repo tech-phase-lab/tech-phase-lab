@@ -30,7 +30,7 @@ export default function NotificationSettings({ lang, initiallyOpen = false, page
   const [testSent, setTestSent] = useState(false);
   const [received, setReceived] = useState(false);
   // What this member may receive, as the server decided: PRO (the Tech Phase notices) and/or RESOLUTE (its ③④ notices).
-  const [access, setAccess] = useState<{ pro: boolean; resolute: boolean }>({ pro: true, resolute: false });
+  const [access, setAccess] = useState<{ pro: boolean; resolute: boolean; priceAlerts?: boolean }>({ pro: true, resolute: false });
   const [retryAt, setRetryAt] = useState(0);
   const inspection = useRef(0);
   const operation = useRef(false);
@@ -120,7 +120,7 @@ export default function NotificationSettings({ lang, initiallyOpen = false, page
         setHasSubscription(Boolean(subscription));
         if (config.reason === "sign-in" || config.reason === "pro-required") { setState(config.reason); return; }
         if (!response.ok || !config.enabled || !config.publicKey) { setState("unavailable"); return; }
-        setAccess({ pro: config.pro !== false, resolute: config.resolute === true });
+        setAccess({ pro: config.pro !== false, resolute: config.resolute === true, priceAlerts: config.priceAlerts === true });
         setPrefsState(current => config.preferencesVersion === 1 ? current === "unsupported" ? "idle" : current : "unsupported");
         if (!Number.isFinite(config.validUntil) || config.validUntil <= Date.now()) { setState("pro-required"); return; }
         // A capped browser timer is a recheck, not proof that paid access expired.
