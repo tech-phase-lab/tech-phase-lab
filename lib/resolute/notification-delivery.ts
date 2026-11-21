@@ -108,7 +108,7 @@ export function createAlertDelivery(pool:Pick<Pool,"connect">,deps:Dependencies)
    const result=await dispatchNotification(task,{
     deliveryEnabled:true,now:clock,
     read:async()=>{
-     const saved=(await client.query("SELECT settings,revision FROM resolute.notification_settings WHERE clerk_user_id=$1",[userId])).rows[0];
+     const saved=(await client.query("SELECT settings,revision,updated_at FROM resolute.notification_settings WHERE clerk_user_id=$1",[userId])).rows[0];
      const snapshot=parseNotificationSnapshot(saved?{settings:saved.settings,revision:Number(saved.revision)}:undefined);
      const p=(await client.query("SELECT plan,revision,created_at,updated_at FROM resolute.plans WHERE clerk_user_id=$1",[userId])).rows[0];
      const plan=parsePlanSnapshot(p?{plan:p.plan?{...p.plan,createdAt:p.created_at.toISOString(),updatedAt:p.updated_at.toISOString()}:null,revision:Number(p.revision)}:{plan:null,revision:0}).plan;

@@ -1,0 +1,30 @@
+{
+  "version": 1,
+  "note": "Manual split overrides. date = the first trading day on a split-adjusted basis (ET); ratio = new shares per old share (8 = 8-for-1 forward, 0.125 = 1-for-8 reverse). An entry here wins over the provider's row for the same ticker within 5 days. Read by lib/research/stock-splits.ts and scripts/research/stock_splits.py.",
+  "splits": [
+    {
+      "ticker": "SNDK",
+      "date": "2026-11-20",
+      "ratio": 8,
+      "source": "https://www.sec.gov/Archives/edgar/data/2023554/000162828026075127/sndk-20261119.htm",
+      "checked": "2026-11-20",
+      "detail": "Sandisk 8-K (Item 5.03): 8-for-1 forward split effective 4:01 p.m. ET 2026-11-19; split-adjusted trading from market open 2026-11-20."
+    },
+    {
+      "ticker": "APH",
+      "date": "2026-09-03",
+      "ratio": 2,
+      "source": "https://api.twelvedata.com/splits?symbol=APH",
+      "checked": "2026-11-20",
+      "detail": "Amphenol 2-for-1 (Twelve Data /splits)."
+    },
+    {
+      "ticker": "APH",
+      "date": "2024-06-12",
+      "ratio": 2,
+      "source": "Amphenol 2-for-1 split, split-adjusted trading from 2024-06-12 (missing from Twelve Data /splits)",
+      "checked": "2026-11-21",
+      "detail": "Amphenol 2-for-1 of June 2024; the provider's list skips it."
+    }
+  ]
+}

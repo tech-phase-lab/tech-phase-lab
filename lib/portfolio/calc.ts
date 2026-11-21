@@ -11,6 +11,11 @@ export type Holding = {
   source?: string;
   /** The day this lot was last checked against stock splits (YYYY-MM-DD). Splits after it are applied once, then this moves to today. */
   checkedAt?: string;
+  /** 2: written by the split-aware screen (from Nov 21 2026): `checkedAt` is an ET day and the numbers are on that day's basis. A lot without
+   * it was last written by the old screen, which could apply a split the wrong way round (lib/portfolio/splits.ts). */
+  basis?: 2;
+  /** The latest split date the reader has confirmed this lot's numbers against (an ambiguous lot, answered once). */
+  confirmedSplit?: string;
 };
 export type Quote = { ticker: string; close: number; asOf: string };
 export type Breakdown = { source: string; shares: number };

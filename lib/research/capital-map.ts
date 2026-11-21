@@ -1,3 +1,5 @@
+import { SPLIT_OVERRIDES, splitFactor, type StockSplit } from "./stock-splits.ts";
+
 export type CapitalHolding = {
   securityId: string;
   ticker: string;
@@ -37,9 +39,16 @@ export type CapitalRow = CapitalHolding & {
 };
 const key = (row: CapitalHolding) => `${row.securityId}:${row.instrument}`;
 
-export function capitalRows(current: CapitalSnapshot, previous?: CapitalSnapshot): CapitalRow[] {
+/** The previous snapshot's share counts on the current snapshot's basis: a stock split between the two dates multiplies them (SNDK 8-for-1
+ * on 2026-11-20: 100 shares before are 800 after, which is "unchanged", not "+700%"). Bonds are principal amounts and never adjusted. */
+function splitAdjusted(row: CapitalHolding, from: string, to: string, splits: readonly StockSplit[]): CapitalHolding {
+  if (row.instrument === "bond") return row;
+  const factor = splitFactor(splits.filter(s => s.ticker === row.ticker), from, to);
+  return factor === 1 ? row : { ...row, shares: row.shares * factor };
+}
+export function capitalRows(current: CapitalSnapshot, previous?: CapitalSnapshot, splits: readonly StockSplit[] = SPLIT_OVERRIDES): CapitalRow[] {
   const total = current.holdings.reduce((sum, row) => sum + row.value, 0);
-  const earlier = new Map(previous?.holdings.map(row => [key(row), row]) ?? []);
+  const earlier = new Map(previous?.holdings.map(row => [key(row), splitAdjusted(row, previous.asOf, current.asOf, splits)]) ?? []);
   const seen = new Set(current.holdings.map(key));
   const rows: CapitalRow[] = current.holdings.map(row => {
     const old = earlier.get(key(row));
@@ -51,7 +60,7 @@ export function capitalRows(current: CapitalSnapshot, previous?: CapitalSnapshot
         ? row.shares / row.outstandingShares * 100 : null };
   });
   // A missing position only means an exit in a complete new disclosure.
-  if (previous && current.complete) for (const old of previous.holdings) if (!seen.has(key(old))) {
+  if (previous && current.complete) for (const old of earlier.values()) if (!seen.has(key(old))) {
     rows.push({ ...old, shares: 0, value: 0, weight: 0, change: "exited",
       shareChangePercent: old.shares > 0 ? -100 : null, companyPercent: null });
   }

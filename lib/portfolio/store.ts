@@ -25,6 +25,8 @@ export function parseStored(raw: string): Holding[] {
       out.push({ ticker: item.ticker, ...(typeof item.name === "string" ? { name: item.name.slice(0, 40) } : {}), shares: item.shares, avgCostUsd: item.avgCostUsd,
         ...(item.avgCostFx > 50 && item.avgCostFx < 400 ? { avgCostFx: item.avgCostFx } : {}),
         ...(typeof item.checkedAt === "string" && /^\d{4}-\d{2}-\d{2}$/.test(item.checkedAt) ? { checkedAt: item.checkedAt } : {}),
+        ...(item.basis === 2 ? { basis: 2 as const } : {}),
+        ...(typeof item.confirmedSplit === "string" && /^\d{4}-\d{2}-\d{2}$/.test(item.confirmedSplit) ? { confirmedSplit: item.confirmedSplit } : {}),
         source: value.version === 2 && typeof item.source === "string" && item.source.trim() ? item.source.trim().slice(0, 20) : OTHER });
     }
     return out;

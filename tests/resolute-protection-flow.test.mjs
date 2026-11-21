@@ -36,7 +36,7 @@ import {emptyPlanAnswers} from '../lib/resolute/plan-answers.ts';
 const migrations=['001_entitlements.sql','002_plans.sql','003_plan_answers_fx.sql','004_notification_settings.sql','005_notification_outbox.sql','017_notification_suppressions.sql','018_protection_outbox.sql','019_storage_permissions.sql'];
 const origin='https://preview.example.test',issuer='https://fixture.clerk.accounts.dev';
 const plan={schemaVersion:1,answersVersion:1,answers:emptyPlanAnswers(),fx:{thresholdYen:null,usdJpy:null,note:'synthetic'},currency:'JPY',monthlyLivingCost:250000,savingsMonths:12,reserveMonths:6,nearTermExpense:0,financialAssets:10000000,investedAmount:3000000,investable:8500000,tolerancePct:20,toleranceDrop:600000,perStockCapPct:20,buyMode:'steps',buyLines:[{dropPct:10,amount:100000},{dropPct:20,amount:100000}],buyBudgetPct:10,allocation:'equal',noBuyConditions:[],haltConditions:[],ruleType:'undecided'};
-const enabled={deliveryHourJst:7,alertsEnabled:true,morningEnabled:true,watchItems:[{symbol:'MU',referencePrice:100}],surgeCapPct:null};
+const enabled={deliveryHourJst:7,alertsEnabled:true,morningEnabled:true,watchItems:[{symbol:'MU',referencePrice:100,priceDay:'2026-11-01'}],surgeCapPct:null};
 const stopped={...enabled,alertsEnabled:false,morningEnabled:false};
 
 async function database(name){
