@@ -7,7 +7,7 @@ import { aggregate, replaceSource, statusOf, valueHoldings, weights, type Holdin
 import { BROKER_CHOICES, MANUAL, OTHER, typedBroker } from "@/lib/portfolio/brokers";
 import { parseStored, readHide, readRaw, readSavedDay, subscribeStore, writeHide, writeHoldings } from "@/lib/portfolio/store";
 import { adjustForSplits, chooseReading, fresh as freshLot, knownSplits, today, type Ambiguous, type Reading as SplitReading, type Split } from "@/lib/portfolio/splits";
-import { adjustedNote, lotTitle, readingParts, splitSentences } from "@/lib/portfolio/split-copy";
+import { adjustedNote, checkBody, checkTitle, lotTitle, readingParts, splitSentences } from "@/lib/portfolio/split-copy";
 import s from "./portfolio.module.css";
 
 type ReviewRow = { id: number; ticker: string; name?: string; shares: string; avg: string; fx?: number; added?: boolean };
@@ -179,9 +179,8 @@ export default function PortfolioScreen() {
         : <>
           <Head ja={ja} sub={holdings.length > 0} />
           {current.ambiguous.length > 0 && <section role="alert" className={s.splitCheck} aria-labelledby="split-check-title">
-            <h2 id="split-check-title">{ja ? "株式分割の確認をお願いします" : "Please confirm a stock split"}</h2>
-            <p>{splitSentences(current.ambiguous, ja).join(ja ? "" : " ")}{ja ? "下の保有株は、分割の前と後のどちらの数字で登録されたか判断できないため、登録したままの数字で表示しています。証券会社のアプリで今の株数を確かめて、同じ数字を選んでください。"
-              : " We can't tell whether the holdings below were registered with the numbers from before or after the split, so they are shown as registered. Check the current share count in your broker's app and pick the same numbers."}</p>
+            <h2 id="split-check-title">{checkTitle(current.ambiguous, ja)}</h2>
+            <p>{splitSentences(current.ambiguous, ja).join(ja ? "" : " ")}{ja ? "" : " "}{checkBody(current.ambiguous, ja)}</p>
             {current.ambiguous.map(item => <div key={item.key} className={s.splitLot}>
               <h3>{lotTitle(item, ja)}</h3>
               {item.readings.map(r => <button type="button" key={`${r.kind}${r.splits}`} onClick={() => choose(item, r)}>{(([main, note]) => <><b>{main}</b><small>{note}</small></>)(readingParts(r, ja))}</button>)}

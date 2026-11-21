@@ -36,16 +36,27 @@ export function readingLabel(reading: Reading, ja: boolean): string { return rea
 /** The button in two parts (numbers, then the reading in brackets) so a phone can put the bracket on its own line. */
 export function readingParts(reading: Reading, ja: boolean): [string, string] {
   const what = reading.kind === "as-stored" ? (ja ? "登録したまま" : "as registered")
-    : reading.kind === "pre-split" ? (ja ? `分割前の数字として${times(reading.factor, true)}` : `pre-split numbers, ${times(reading.factor, false)}`)
+    : reading.kind === "pre-split" ? (ja ? `${reading.factor < 1 ? "併合" : "分割"}前の数字として${times(reading.factor, true)}` : `pre-split numbers, ${times(reading.factor, false)}`)
     // The old screen applied the split the wrong way round: it divided by the ratio (an 8-for-1 gave 1/8) — the fix is ratio².
     : (ja ? `誤って${times(1 / Math.sqrt(reading.factor), true).replace(/にする$/, "")}になった数字を直す` : `undo the wrong ${times(1 / Math.sqrt(reading.factor), false)}`);
   return ja ? [`${count(reading.shares)}株・平均取得 ${money(reading.avgCostUsd)}ドル`, `（${what}）`] : [`${count(reading.shares)} shares · avg. cost $${money(reading.avgCostUsd)}`, ` (${what})`];
 }
 /** The lot's title: 「SNDK（楽天証券）」 */
 export const lotTitle = (item: Ambiguous, ja: boolean) => item.source ? (ja ? `${item.ticker}（${item.source}）` : `${item.ticker} (${item.source})`) : item.ticker;
+/** 「分割」 for forward splits, 「併合」 for reverse splits (a reverse split is a 株式併合), 「分割・併合」 when both are listed. */
+export function actionWord(splits: readonly Split[]): string {
+  const forward = splits.some(s => s.ratio > 1), reverse = splits.some(s => s.ratio < 1);
+  return forward && reverse ? "分割・併合" : reverse ? "併合" : "分割";
+}
+export const checkTitle = (items: readonly Ambiguous[], ja: boolean) => ja ? `株式${actionWord(items.flatMap(i => i.splits))}の確認をお願いします` : "Please confirm a stock split";
+export const checkBody = (items: readonly Ambiguous[], ja: boolean) => {
+  const word = actionWord(items.flatMap(i => i.splits));
+  return ja ? `下の保有株は、${word}の前と後のどちらの数字で登録されたか判断できないため、登録したままの数字で表示しています。証券会社のアプリで今の株数を確かめて、同じ数字を選んでください。`
+    : "We can't tell whether the holdings below were registered with the numbers from before or after the split, so they are shown as registered. Check the current share count in your broker's app and pick the same numbers.";
+};
 /** The note for lots this screen brought across a recent split. */
 export function adjustedNote(splits: readonly Split[], ja: boolean): string {
   const list = splits.map(s => ja ? `${s.ticker}（${md(s.date)} に${splitPhrase(s, true).replace(/されました$/, "")}）` : `${s.ticker} (${md(s.date)}: ${splitPhrase(s, false)})`);
-  return ja ? `${list.join("・")}より前に登録した株数と平均取得は、分割後の数字で表示しています。取得額の合計は変わりません。`
+  return ja ? `${list.join("・")}より前に登録した株数と平均取得は、${actionWord(splits)}後の数字で表示しています。取得額の合計は変わりません。`
     : `Shares and average cost registered before the split of ${list.join(", ")} are shown on the post-split basis. The total cost is unchanged.`;
 }

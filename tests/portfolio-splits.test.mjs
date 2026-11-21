@@ -215,5 +215,15 @@ test("owner wording (Nov 21): the split check says what happened in plain Japane
   assert.equal(C.readingLabel({ kind: "pre-split", factor: 2, splits: 1, shares: 20, avgCostUsd: 50 }, true), "20株・平均取得 50.00ドル（分割前の数字として2倍にする）");
   assert.equal(C.adjustedNote([{ ticker: "SNDK", date: "2026-11-20", ratio: 8 }], true), "SNDK（11/20 に1株が8株に分割）より前に登録した株数と平均取得は、分割後の数字で表示しています。取得額の合計は変わりません。");
   const screen = readFileSync(new URL("../app/research/portfolio/screen.tsx", import.meta.url), "utf8");
-  assert.match(screen, /株式分割の確認をお願いします/); assert.doesNotMatch(screen, /splitLabel/);
+  assert.match(screen, /checkTitle\(current\.ambiguous, ja\)/); assert.doesNotMatch(screen, /splitLabel/);
+  assert.equal(C.checkTitle(r.ambiguous, true), "株式分割の確認をお願いします");
+  assert.match(C.checkBody(r.ambiguous, true), /^下の保有株は、分割の前と後のどちらの数字で登録されたか判断できないため/);
+  // Final review (b): a reverse split is a 株式併合.
+  const reverse = { ticker: "XYZ", date: "2026-11-20", ratio: 0.125 };
+  const rv = adjustForSplits([{ ticker: "XYZ", source: "SBI証券", shares: 10, avgCostUsd: 3, checkedAt: "2026-11-21", basis: 2 }], { XYZ: [reverse] }, "2026-11-21", "2026-11-22");
+  assert.equal(C.checkTitle(rv.ambiguous, true), "株式併合の確認をお願いします");
+  assert.match(C.checkBody(rv.ambiguous, true), /^下の保有株は、併合の前と後のどちらの数字で/);
+  assert.deepEqual(C.splitSentences(rv.ambiguous, true), ["XYZ は 11/20 に、8株が1株に併合されました。"]);
+  assert.equal(C.readingLabel(rv.ambiguous[0].readings[1], true), "1.25株・平均取得 24.00ドル（併合前の数字として8分の1にする）");
+  assert.equal(C.adjustedNote([reverse], true), "XYZ（11/20 に8株が1株に併合）より前に登録した株数と平均取得は、併合後の数字で表示しています。取得額の合計は変わりません。");
 });

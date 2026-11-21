@@ -4,7 +4,7 @@ import type { ProtectionBarrier } from "./protection-outbox.ts";
 import { entitlementSource, readEntitlementSnapshot, type EntitlementSource } from "./entitlement-source.ts";
 import { Pool, type PoolClient } from "pg";
 import { resoluteDatabaseConfig } from "./database-config.ts";
-import { createSettingsSplitAdjuster, stampPriceDays, type SettingsSplitAdjuster } from "./notification-splits.ts";
+import { createSettingsSplitAdjuster, keepStoredOriginals, stampPriceDays, type SettingsSplitAdjuster } from "./notification-splits.ts";
 import { createSplitLoader, etDay } from "../research/stock-splits.ts";
 import { defaultNotificationSettings, parseNotificationMutation, parseNotificationSnapshot,
  type NotificationSnapshot, type NotificationSettings } from "./notification-settings.ts";
@@ -37,14 +37,17 @@ export function createNotificationStore(pool: Pick<Pool,"connect">, source: Enti
    if(current.revision>=Number.MAX_SAFE_INTEGER-1) throw new Error("Revision exhausted");
    // Each reference price keeps the day it is on (sent back by the screen, or the stored one when an old screen sends the stored price
    // unchanged); only a new or changed price without a day is today's (notification-splits.ts).
-   const today=etDay(clock());
-   const saved={settings:stampPriceDays(parsed.settings,today,today,row?{settings:current.settings,savedAt:row.updated_at??null}:undefined),revision:current.revision+1};
+   // An item sent back exactly as GET showed it keeps the stored original price and day (no rewrite by a split, same rule key).
+   const today=etDay(clock()),stored=row?{settings:current.settings,savedAt:row.updated_at??null}:undefined;
+   const sent=stored&&adjust?keepStoredOriginals(parsed.settings,stored,(await shown()).settings):parsed.settings;
+   const saved={settings:stampPriceDays(sent,today,today,stored),revision:current.revision+1};
    await client.query(`INSERT INTO resolute.notification_settings(clerk_user_id,settings,revision,updated_at)
     VALUES($1,$2,$3,statement_timestamp()) ON CONFLICT(clerk_user_id) DO UPDATE
     SET settings=$2,revision=$3,updated_at=statement_timestamp()`,[userId,JSON.stringify(saved.settings),saved.revision]);
    await client.query("COMMIT");
    if(protect) await protect(client,userId);
-   return saved;
+   // The answer is what GET would show (today's basis), so the screen sees the numbers it sent.
+   return adjust?{...saved,settings:(await adjust(saved.settings,clock()).catch(()=>({settings:saved.settings}))).settings}:saved;
   } catch(e) {try{await client.query("ROLLBACK");}catch{}
    if(e instanceof NotificationConflict && protect) await protect(client,userId);
    throw e;} finally{client.release();}

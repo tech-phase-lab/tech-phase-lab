@@ -153,9 +153,9 @@ test('RESOLUTE store and job: the stored price is never rewritten by a split; GE
   assert.deepEqual(stopped.settings.watchItems.map(i=>[i.referencePrice,i.priceDay]),[[700,'2026-11-18'],[100,'2026-11-18']]);
   const later=createNotificationStore(pool(),undefined,undefined,adjust,()=>slot);
   assert.equal((await later('user_buyer','GET')).settings.watchItems[0].referencePrice,87.5);
-  // Saving what GET showed is on the new basis and is not divided again.
+  // Saving what GET showed keeps the stored original (700 on 11/18): it is not divided again and the rule key does not move.
   const shown=await later('user_buyer','GET');await later('user_buyer','PUT',{settings:{...shown.settings,alertsEnabled:true},baseRevision:shown.revision});
-  assert.equal((await db.query('SELECT settings FROM resolute.notification_settings')).rows[0].settings.watchItems[0].priceDay,'2026-11-24');
+  assert.deepEqual((await db.query('SELECT settings FROM resolute.notification_settings')).rows[0].settings.watchItems.map(i=>[i.referencePrice,i.priceDay]),[[700,'2026-11-18'],[100,'2026-11-18']]);
   assert.equal((await later('user_buyer','GET')).settings.watchItems[0].referencePrice,87.5);
  }finally{await db.close();}
 });
@@ -187,20 +187,30 @@ test('review I: a reverse split converts a pre-split action upwards', () => {
  assert.deepEqual([v.previous,v.latest],[20,30]);
 });
 
-test('review v4 (2): the rule key ignores price days and split conversions, and matches the key from before price days existed', async () => {
+test('final review (a): the rule key hashes the stored price unchanged (no existing key moves), and a converted price sent back keeps the stored original', async () => {
  const {notificationRuleKey}=await import('../lib/resolute/notification-rule-key.ts');
+ const {keepStoredOriginals}=await import('../lib/resolute/notification-splits.ts');
  const {createHash}=await import('node:crypto');
  const oldKey=s=>createHash('sha256').update(JSON.stringify({items:s.watchItems,lines:[],surge:s.surgeCapPct})).digest('hex');
- const mu={deliveryHourJst:7,alertsEnabled:true,morningEnabled:false,watchItems:[{symbol:'MU',referencePrice:100}],surgeCapPct:null};
- const after=stampPriceDays({...mu,deliveryHourJst:8},'2026-11-25','2026-11-25',{settings:mu,savedAt:'2026-11-01T00:00:00Z'});
- assert.equal(notificationRuleKey(after,null,'2026-11-25T00:00:00Z'),notificationRuleKey(mu,null,'2026-11-01T00:00:00Z'));
- assert.equal(notificationRuleKey(mu,null,'2026-11-01T00:00:00Z'),oldKey(mu));
- for(const [pre,post] of [[700,87.5],[755,94.38]]){
-  const legacy={...mu,watchItems:[{symbol:'SNDK',referencePrice:pre}]};
-  const converted={...mu,watchItems:[{symbol:'SNDK',referencePrice:post,priceDay:'2026-11-24'}]};
-  assert.equal(notificationRuleKey(legacy,null,'2026-11-18T15:00:00Z'),oldKey(legacy));
-  assert.equal(notificationRuleKey(converted,null,'2026-11-24T15:00:00Z'),notificationRuleKey(legacy,null,'2026-11-18T15:00:00Z'));
+ const base={deliveryHourJst:7,alertsEnabled:true,morningEnabled:false,surgeCapPct:null};
+ const splits={splits:{...SNDK.splits,APH:mergeSplits('APH',[])}};
+ // Existing rows (no price day): SNDK $94.38 saved 11/21, APH $300 saved 8/01, SNDK $754.99 saved 11/18 — all keep their key.
+ for(const [symbol,price,savedAt] of [['SNDK',94.38,'2026-11-21T15:00:00Z'],['APH',300,'2026-08-01T15:00:00Z'],['SNDK',754.99,'2026-11-18T15:00:00Z']]){
+  const row={...base,watchItems:[{symbol,referencePrice:price}]};
+  assert.equal(notificationRuleKey(row,null),oldKey(row));
+  // GET shows it on today's basis; the screen saves it back unchanged (only the delivery hour changed): the stored original is kept.
+  const shown=adjustWatchItems(row,savedAt,splits,new Date('2026-11-25T15:00:00Z'));
+  const kept=stampPriceDays(keepStoredOriginals({...shown,deliveryHourJst:8},{settings:row,savedAt},shown),'2026-11-25','2026-11-25',{settings:row,savedAt});
+  assert.equal(kept.watchItems[0].referencePrice,price);
+  assert.equal(notificationRuleKey(kept,null),notificationRuleKey(row,null));
+  // And it is still converted when read, exactly as before the save.
+  assert.deepEqual(adjustWatchItems(kept,'2026-11-25T15:00:00Z',splits,new Date('2026-11-25T15:00:00Z')).watchItems[0].referencePrice,shown.watchItems[0].referencePrice);
  }
- // A new price is a new rule.
- assert.notEqual(notificationRuleKey({...mu,watchItems:[{symbol:'SNDK',referencePrice:80,priceDay:'2026-11-24'}]},null),notificationRuleKey({...mu,watchItems:[{symbol:'SNDK',referencePrice:700}]},null,'2026-11-18T15:00:00Z'));
+ assert.deepEqual(adjustWatchItems({...base,watchItems:[{symbol:'SNDK',referencePrice:754.99}]},'2026-11-18T15:00:00Z',splits,new Date('2026-11-25T15:00:00Z')).watchItems[0].referencePrice,94.37);
+ // A price day alone never changes the key; a new price does.
+ const mu={...base,watchItems:[{symbol:'MU',referencePrice:100}]};
+ assert.equal(notificationRuleKey({...mu,watchItems:[{symbol:'MU',referencePrice:100,priceDay:'2026-11-25'}]},null),oldKey(mu));
+ const edited=keepStoredOriginals({...base,watchItems:[{symbol:'SNDK',referencePrice:80,priceDay:'2026-11-25'}]},{settings:{...base,watchItems:[{symbol:'SNDK',referencePrice:700}]},savedAt:'2026-11-18T15:00:00Z'},adjustWatchItems({...base,watchItems:[{symbol:'SNDK',referencePrice:700}]},'2026-11-18T15:00:00Z',splits,new Date('2026-11-25T15:00:00Z')));
+ assert.deepEqual(edited.watchItems,[{symbol:'SNDK',referencePrice:80,priceDay:'2026-11-25'}]);
+ assert.notEqual(notificationRuleKey(edited,null),oldKey({...base,watchItems:[{symbol:'SNDK',referencePrice:700}]}));
 });

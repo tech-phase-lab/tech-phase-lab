@@ -37,6 +37,20 @@ export function stampPriceDays(settings: NotificationSettings, day: string, toda
     return { ...item, priceDay: kept || day };
   }) };
 }
+/** Before a write: an item the screen sends back exactly as GET showed it (the stored price converted across a split) is stored as the
+ * original price with its original day, so a split never rewrites a stored price and the rule key (notification-rule-key.ts) never moves
+ * because of one. `shown` is GET's version of `stored` (adjustWatchItems). */
+export function keepStoredOriginals(sent: NotificationSettings, stored: { settings: NotificationSettings; savedAt: Date | string | null | undefined }, shown: NotificationSettings | null): NotificationSettings {
+  if (!shown) return sent;
+  const legacy = legacyDay(stored.savedAt);
+  return { ...sent, watchItems: sent.watchItems.map(item => {
+    const asShown = shown.watchItems.find(s => s.symbol === item.symbol && s.referencePrice === item.referencePrice && s.priceDay === item.priceDay);
+    const original = asShown && stored.settings.watchItems.find(s => s.symbol === item.symbol);
+    if (!original) return item;
+    const day = original.priceDay && isDay(original.priceDay) ? original.priceDay : legacy;
+    return day ? { symbol: item.symbol, referencePrice: original.referencePrice, priceDay: day } : item;
+  }) };
+}
 /** Symbols whose split is within one market day of the close being judged (the day before, the day, the day after): the provider may not
  * have adjusted every figure yet, so nothing is judged for them that day. */
 export function splitWindowSymbols(splits: Readonly<Record<string, readonly StockSplit[] | undefined>>, marketDate: string): string[] {
