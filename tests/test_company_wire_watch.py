@@ -186,6 +186,14 @@ class TranslationWatchTests(unittest.TestCase):
         self.assertEqual(self.sync(self.start + 20 * MIN), [])
         self.assertEqual(self.incident('company-wire:translation-failing'), (('resolved', 'company-wire-translation-failing:model-TimeoutError'), 2))
 
+    def test_one_stubborn_headline_retried_on_a_quiet_night_is_not_an_alert(self):
+        # Nov 22: a single headline failed its checks on every retry for 15 minutes while nothing else arrived; translation
+        # as a whole was fine, so no phone alert.
+        self.arrive(self.start)
+        for k in range(0, 17, 2):
+            company_wire.run_once(self.path, transport=broken, env=ENV, now_ts=self.start + k * MIN + 1)
+        self.assertEqual(self.sync(self.start + 17 * MIN), [])
+
     def test_one_old_failure_followed_by_quiet_hours_is_not_an_alert(self):
         self.arrive(self.start)
         company_wire.run_once(self.path, transport=broken, env=ENV, now_ts=self.start + 1)
