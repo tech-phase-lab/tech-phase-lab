@@ -15,7 +15,8 @@ import company_wire  # noqa: E402
 import monitor  # noqa: E402
 
 ENV = {'OFFICIAL_HEADLINE_TRANSLATION_ENABLED': 'true', 'OPENAI_API_KEY': 'k' * 30, 'OFFICIAL_HEADLINE_TRANSLATION_MODEL': 'test-model'}
-GF = 'Credo Technology Group Holding Ltd (CRDO) Stock Down 8.2% -- Now Undervalued? GF Score: 77/100'
+# GF Score headlines are now dropped by the local rules (claude/review-fixes-1120); a DCF template they miss is the model's to judge.
+GF = 'Credo DCF Analysis: Intrinsic Value $95 vs Price $120'
 DEAL = 'Credo signs a multiyear supply contract with Microsoft'
 SPLIT = 'Sandisk 8-for-1 stock split takes effect'
 ETF = '14 ETFs Add to ASML Holding (ASML) on Nov. 18'
