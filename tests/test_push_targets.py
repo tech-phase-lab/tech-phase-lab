@@ -33,7 +33,7 @@ def openable(url):
 
 
 # The modules that build phone notifications: web_push itself, and the two that service.py hands web_push.send to.
-SENDERS = ('web_push.py', 'release_watch.py', 'incident_delivery.py')
+SENDERS = ('web_push.py', 'release_watch.py', 'incident_delivery.py', 'price_alerts.py')
 
 
 def payload_dicts():
@@ -60,7 +60,8 @@ class PushTargetTests(unittest.TestCase):
 
     def test_only_the_known_modules_send_notifications(self):
         users = {path.name for path in (ROOT / 'scripts/research').glob('*.py') if re.search(r'\bweb_push\b', path.read_text())}
-        self.assertEqual(users, {'service.py'})
+        # price_alerts.py (Nov 21) sends through web_push.announce, its payload checked below with the others.
+        self.assertEqual(users, {'service.py', 'price_alerts.py'})
         wiring = (ROOT / 'scripts/research/service.py').read_text()
         handed = set(re.findall(r'(\w+)\.\w+\([^\n]*web_push\.send\)', wiring)) | set(re.findall(r'(\w+)\.check\(db, payload, now, transport\)', wiring))
         self.assertEqual(handed, {'incident_delivery', 'release_watch'})
