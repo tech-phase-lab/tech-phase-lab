@@ -185,7 +185,7 @@ def validate(value):
         if not isinstance(url, str) or not re.fullmatch(r"https://[^\s]{1,990}", url):
             raise ValueError("invalid-weekly-source")
         sources.append({"title": _text(source.get("title"), "source", 180), "url": url})
-    notes = [_text(note, "note", 300) for note in _list(value.get("notes", []), "notes", 30)]
+    notes = [_text(note, "note", 300) for note in _list(value.get("notes", []), "notes", 60)]
     day = value.get("date") or today()
     try:
         day = Date.fromisoformat(day).isoformat()

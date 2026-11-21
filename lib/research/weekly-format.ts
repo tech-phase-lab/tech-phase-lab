@@ -44,11 +44,11 @@ export const shortDate = (iso: string) => iso.slice(5).replace("-", "/");
 
 /** The owner's review memo of a weekly draft. The generator writes each line as "【tag】text〔code〕" (scripts/research/weekly_generator.py, `note`);
  * lines saved before that format are sorted by their old wording. Pure, so the grouping is tested without a browser. */
-export type NoteKind = "attention" | "substituted" | "missing" | "omitted";
+export type NoteKind = "attention" | "substituted" | "missing" | "omitted" | "verified";
 export type MemoLine = { kind: NoteKind; text: string; code: string };
-const TAGS: Record<string, NoteKind> = { 要確認: "attention", 定型文: "substituted", 取得なし: "missing", AI省略: "omitted" };
-export const NOTE_TITLES: Record<NoteKind, string> = { attention: "要確認(外した部分)", substituted: "定型文に差し替えた箇所", missing: "集まらなかった材料", omitted: "AIが載せなかった話題" };
-const NOTE_ORDER: NoteKind[] = ["attention", "substituted", "missing", "omitted"];
+const TAGS: Record<string, NoteKind> = { 要確認: "attention", 定型文: "substituted", 取得なし: "missing", AI省略: "omitted", 検証: "verified" };
+export const NOTE_TITLES: Record<NoteKind, string> = { attention: "要確認(外した部分)", substituted: "定型文に差し替えた箇所", missing: "集まらなかった材料", omitted: "AIが載せなかった話題", verified: "検証用の数字(出典と計算)" };
+const NOTE_ORDER: NoteKind[] = ["attention", "substituted", "missing", "omitted", "verified"];
 
 export function parseNote(raw: string): MemoLine {
   const tagged = /^【([^】]+)】([\s\S]*)$/.exec(raw);
@@ -69,7 +69,7 @@ export type Memo = { groups: { kind: NoteKind; title: string; lines: MemoLine[] 
 
 export function groupNotes(notes: readonly string[] | undefined): Memo {
   const lines = (notes ?? []).map(parseNote);
-  const counts = { attention: 0, substituted: 0, missing: 0, omitted: 0 } as Record<NoteKind, number>;
+  const counts = { attention: 0, substituted: 0, missing: 0, omitted: 0, verified: 0 } as Record<NoteKind, number>;
   for (const line of lines) counts[line.kind] += 1;
   const groups = NOTE_ORDER.filter(kind => counts[kind] > 0).map(kind => ({ kind, title: NOTE_TITLES[kind], lines: lines.filter(line => line.kind === kind) }));
   const replaced = lines.filter(line => line.kind === "substituted");

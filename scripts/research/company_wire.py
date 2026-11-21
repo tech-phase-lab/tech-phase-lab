@@ -401,7 +401,26 @@ Also judge each headline (kind). "news" states a concrete fact about the company
 Also "not-news" (owner, Nov 9: judge strictly; when in doubt, choose not-news): an analyst blog's or columnist's own view or rating call about the company ("This isn't over (Upgrade)", "Why we are bullish", "3 key points for long-term investors"); vague mood or sector commentary with no concrete figure or event ("faces market challenges amid the AI sell-off", "stocks slide as investors worry"); how-to, tips and usage advice ("IT admins should check out the new features"); a headline where the named company is only incidental to another company's story; and rehashed older news with nothing new.
 Also judge relevance (owner, Nov 10). The site is about US high-tech stocks and what moves the market. Use "off-topic" for any headline outside both: relevant are (a) US high-tech companies and their sectors (semiconductors, AI, cloud, software, internet, devices, EVs, space, data centers, networking) and (b) market-moving macro news: stock indices, oil and energy prices, bond yields, interest rates and central banks, inflation and jobs data, politics and policy, tariffs, wars and geopolitics (for example the Strait of Hormuz), and statements by figures such as Trump or Musk that move stocks. Consumer goods, retail, banks and insurers (unless the story is about interest rates or markets), health and pharma, crypto, sports, entertainment, celebrity, local and lifestyle news are "off-topic". A headline can be both news and off-topic: choose "off-topic" then.
 Examples: "Why AMD, Micron, Sandisk and Nvidia stocks are falling in premarket today" = not-news. "Which AI memory stock is the better buy?" = not-news. "ASML has orders and pricing power, but what it lacks is time" (an editorial take with no concrete business fact) = not-news. "At 21 at SK hynix, at 27 a home in Seoul: a vocational school's comeback" = not-news. "Sandisk: This isn't over (Upgrade)" = not-news. "CoreWeave faces market challenges amid AI sector sell-off" = not-news. "Core Scientific: 3 key points for long-term investors" = not-news. "IT admins should check out new features recently added to Entra" = not-news. "Micron raises fiscal Q1 guidance on HBM demand" = news. "Nvidia shares fall 3% after tighter export curbs" = news. When a headline states a concrete business fact, use "news" even if it is minor.
-""" + japanese_names.policy_line()
+""" + japanese_names.policy_line() + """
+A news headline with no concrete new event gets its reason as kind: opinion (view, column, interview), explainer, prediction (pure forecast), listicle, stock-pick, price-recap (move under 5% without a cause), score-template (GF Score/Value, DCF), live-blog, personal-finance, no-event (awards, surveys, ETF tallies, conference, webcast or results-date notices). Index moves, moves of 5% or more with a cause, large trades and a factual main clause stay news.
+"""
+
+
+# Owner, Nov 21 (「まだまだいらない記事ありそう」): the same call also says when a headline judged news reports no concrete event, by
+# giving the reason (EVENT_DROP) as its kind. It is a few more values of the existing kind field, not a new field, so a call costs
+# almost the same (owner: at most about 150 yen a month more). Such an article is never published: it is stored with the reason
+# 'not-event:<code>' (never retried) and counted per code on /health (judgedNoEvent, noEventByReason). Fail-open: a missing or
+# unknown kind keeps the article as before.
+EVENT_DROP = ('opinion', 'explainer', 'prediction', 'listicle', 'stock-pick', 'price-recap', 'score-template', 'live-blog',
+              'personal-finance', 'no-event')
+NOT_EVENT = 'not-event:'
+
+
+def no_event(item):
+    """The reason code when the model said the headline reports no concrete event; None (as before) otherwise, including a missing,
+    malformed or unknown kind."""
+    value = item.get('kind') if isinstance(item, dict) else None
+    return value if isinstance(value, str) and value in EVENT_DROP else None
 
 
 def schema_translation(db):
@@ -954,7 +973,7 @@ def translate_once(path, transport=None, env=None, now_ts=None, report=None):
     with_text = sum(1 for r in rows if r['send_text'])
     fields = {'id': {'type': 'string'}, 'titleJa': {'type': 'string'}, 'shortJa': {'type': 'string'},
               **({'summaryJa': {'type': 'string'}} if with_text else {}),
-              'kind': {'type': 'string', 'enum': ['news', 'not-news', 'off-topic']}}
+              'kind': {'type': 'string', 'enum': ['news', 'not-news', 'off-topic', *EVENT_DROP]}}
     payload = {
         'model': model, 'store': False, 'max_output_tokens': 4000 + SUMMARY_OUTPUT_TOKENS * with_text,
         'instructions': POLICY + SUMMARY_POLICY if with_text else POLICY,
@@ -992,6 +1011,10 @@ def translate_once(path, transport=None, env=None, now_ts=None, report=None):
                 skipped.add(row['article'])
                 skip_reason[row['article']] = item['kind']
                 continue
+            if no_event(item):
+                skipped.add(row['article'])
+                skip_reason[row['article']] = NOT_EVENT + no_event(item)
+                continue
             try:
                 translated[row['article']] = validated_translation(item.get('titleJa'), row['title'])
                 shorts[row['article']] = validated_short(item.get('shortJa'), translated[row['article']])
@@ -1017,7 +1040,11 @@ def translate_once(path, transport=None, env=None, now_ts=None, report=None):
                 db.execute('''INSERT INTO company_wire_article_attempts(article,attempts,next_at,reason) VALUES(?,1,?,?) ON CONFLICT(article) DO UPDATE SET
                   attempts=attempts+1, next_at=excluded.next_at, reason=excluded.reason''', (row['article'], now_ts + TRANSLATION_RETRY_SECONDS, reason))
         bump(db, 'translated', len(translated), now_ts)
-        bump(db, 'notNews', len(skipped), now_ts)
+        events = [skip_reason[a] for a in skipped if skip_reason.get(a, '').startswith(NOT_EVENT)]
+        bump(db, 'notNews', len(skipped) - len(events), now_ts)
+        bump(db, 'noEvent', len(events), now_ts)
+        for reason in sorted(set(events)):
+            bump(db, 'noEvent:' + reason[len(NOT_EVENT):], events.count(reason), now_ts)
         bump(db, 'rejected', len(rows) - len(translated) - len(skipped), now_ts)
         # Owner, Nov 15: summaries ride in the same call; how many were kept or dropped, and the tokens the calls used.
         offered = [row['article'] for row in rows if row['send_text'] and row['article'] in translated]
@@ -1041,7 +1068,8 @@ def public_feed(db, now_ts=None):
           j.title_ja, j.short_ja, j.summary_ja
           FROM company_wire w LEFT JOIN company_wire_article_ja j ON j.article=w.article
           LEFT JOIN company_wire_article_attempts a ON a.article=w.article
-          WHERE w.ticker=? AND w.published_at>=? AND COALESCE(a.reason,'') NOT IN ('not-news','off-topic') ORDER BY w.published_at DESC LIMIT 120''',
+          WHERE w.ticker=? AND w.published_at>=? AND COALESCE(a.reason,'') NOT IN ('not-news','off-topic')
+          AND COALESCE(a.reason,'') NOT LIKE 'not-event:%' ORDER BY w.published_at DESC LIMIT 120''',
                           (ticker, since)).fetchall()
         rows = [r for r in rows if not locally_rejected(r) and not LAW_FIRM_SOLICITATION.search(r['title_ja'] or '')]
         # Oct 16: the Japanese view shows only translated headlines, so a company whose newest ten were
@@ -1343,7 +1371,8 @@ def translation_health(db, now_ts=None, env=None):
 
 
 DAILY_FIELDS = (('articlesArrived', 'articles'), ('translated', 'translated'), ('calls', 'calls'), ('retries', 'retries'),
-                ('headlinesSent', 'sent'), ('judgedNotNews', 'notNews'), ('notAccepted', 'rejected'), ('prefiltered', 'prefiltered'),
+                ('headlinesSent', 'sent'), ('judgedNotNews', 'notNews'), ('judgedNoEvent', 'noEvent'), ('notAccepted', 'rejected'),
+                ('prefiltered', 'prefiltered'),
                 ('summariesRequested', 'summaryRequested'), ('summariesTranslated', 'summaries'), ('summariesNotAccepted', 'summaryRejected'),
                 ('summariesOverCap', 'summaryOverCap'),
                 ('inputTokens', 'inputTokens'), ('outputTokens', 'outputTokens'))
@@ -1354,7 +1383,8 @@ def daily_counts(db, now_ts, env=None):
     articlesArrived (new articles, each counted once whatever tickers or feeds it came under; by first feed in articlesBySource),
     translated (articles whose Japanese was accepted), calls (model calls), retries (headlines sent again after a rejected or
     failed attempt), headlinesSent (articles sent in all calls, retries included), judgedNotNews (not news or off topic: never
-    shown, never retried), notAccepted (rejected by the checks or lost to a failed call; retried up to three attempts),
+    shown, never retried), judgedNoEvent and noEventByReason (owner, Nov 21: judged news but naming no concrete event, in total and
+    per reason code; never shown, never retried), notAccepted (rejected by the checks or lost to a failed call; retried up to three attempts),
     prefiltered (owner, Nov 16: articles the site would hide anyway, never sent), summariesTranslated / summariesNotAccepted
     (owner, Nov 15: Japanese summaries of translated articles that carried English text, kept or dropped by the checks),
     summariesRequested / summariesOverCap (owner, Nov 16: summaries asked for, and articles with text translated without one because
@@ -1374,6 +1404,8 @@ def daily_counts(db, now_ts, env=None):
                       # Owner, Nov 16: the summary cap and the estimated cost of the day's summaries (gpt-4.1-mini prices).
                       'summaryDailyLimit': summary_daily_limit(os.environ if env is None else env),
                       'summaryEstimate': {**summary_cost(counts), 'pricesPerMillionUsd': PRICE_PER_MILLION},
+                      # Owner, Nov 21: articles judged news with no concrete event, per reason code (never shown, never retried).
+                      'noEventByReason': {name.split(':', 1)[1]: n for name, n in sorted(counts.items()) if name.startswith('noEvent:')},
                       'articlesBySource': {name.split(':', 1)[1]: n for name, n in sorted(counts.items()) if name.startswith('articles:')},
                       # Owner, Nov 15: new Stock News API articles per publisher, taken or dropped (see KEEP_PUBLISHERS).
                       'stockNewsPublishers': {kind: {name.split(':', 1)[1]: n for name, n in sorted(counts.items(), key=lambda c: (-c[1], c[0]))
