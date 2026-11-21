@@ -107,10 +107,15 @@ test("the page: TOPICS / 注目トピック, an automatic-update line, open card
   assert.match(html, /<span class="topicTicker">MU<\/span><span class="topicImpact">● 中立<\/span>/);
   assert.match(html, /class="topicCard topicNegative"/);
   assert.match(html, /<p class="topicSummary topicClamped" lang="ja">次世代メモリHBM4[^<]*<\/p><\/div>/);
-  assert.match(html, /<h3 class="topicTitle" lang="ja"><a href="https:\/\/news\.example\/s1" target="_blank" rel="noopener noreferrer">マイクロン、HBM4の出荷を前倒し<\/a><\/h3>/, "the headline is the link");
+  // Owner, Nov 21: the articles are in English, so the Japanese headline is plain text with no link.
+  assert.match(html, /<h3 class="topicTitle" lang="ja">マイクロン、HBM4の出荷を前倒し<\/h3>/, "the Japanese headline is plain text");
   assert.match(html, /<p class="topicPublisher">Bloomberg<\/p>/);
   assert.doesNotMatch(html, /元記事を読む|Read the article|↗/, "no per-card link row");
-  assert.equal((html.match(/<a /g) ?? []).length, 4, "one link per card: its headline");
+  assert.equal((html.match(/<a |href=|target=/g) ?? []).length, 0, "no link to the English article on the Japanese page");
+  const en = renderToStaticMarkup(React.createElement(Topics, { lang: "en", data: feed, wire: wire(), wireReady: true, error: false,
+    receivedAt: new Date(now).toISOString(), page: 1, onPage: () => {} }));
+  assert.match(en, /<h3 class="topicTitle" lang="en"><a href="https:\/\/news\.example\/s1" target="_blank" rel="noopener noreferrer">Micron brings HBM4 forward<\/a><\/h3>/, "the English headline is the link");
+  assert.equal((en.match(/<a /g) ?? []).length, (en.match(/<article /g) ?? []).length, "one link per English card: its headline");
   assert.match(html, /<\/div><p class="topicCredit">提供：Stock News API<\/p><\/section>$/, "one credit line at the bottom");
   const empty = renderToStaticMarkup(React.createElement(Topics, { lang: "ja", data: { ok: true, enabled: false, items: [] }, wire: {}, wireReady: true, error: false, receivedAt: null, page: 1, onPage: () => {} }));
   assert.match(empty, /現在、掲載中のトピックはありません。/);
