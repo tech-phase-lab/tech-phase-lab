@@ -37,7 +37,7 @@ function TopicSummary({ text, lang }: { text: string; lang: Language }) {
 }
 
 /** 注目トピック (owner, Nov 15): the Stock News API stories as cards, newest first, with a divider per day. Each card: ticker and impact,
- * the time, the full headline as the link to the article (new tab), its summary in up to four lines with 「＋」, and the publisher in
+ * the time, the full headline (in English, the link to the article in a new tab; in Japanese plain text, owner Nov 21), its summary in up to four lines with 「＋」, and the publisher in
  * small type. The same story from several publishers is one card (topicCards). One credit line closes the list.
  * No business-impact text or confidence (the provider gives only a short summary), and no gold: FREE members see this page too. */
 export default function TopicsList({ lang, data, wire, wireReady, error, receivedAt, page, onPage }: {
@@ -66,7 +66,8 @@ export default function TopicsList({ lang, data, wire, wireReady, error, receive
             <span className={styles.topicTags}>{card.tickers && <span className={styles.topicTicker}>{card.tickers}</span>}<span className={styles.topicImpact}>{impactText(card.impact)}</span></span>
             <time dateTime={card.at}>{displayClock(card.at, lang)}</time>
           </div>
-          <h3 className={styles.topicTitle} lang={lang}><a href={card.url} target="_blank" rel="noopener noreferrer">{card.title}</a></h3>
+          {/* Owner, Nov 21: the articles are all in English, so the Japanese page shows the headline as plain text, not a link. */}
+          <h3 className={styles.topicTitle} lang={lang}>{ja ? card.title : <a href={card.url} target="_blank" rel="noopener noreferrer">{card.title}</a>}</h3>
           {card.summary && <TopicSummary text={card.summary} lang={lang} />}
           <p className={styles.topicPublisher}>{card.publisher}</p>
         </article>;
