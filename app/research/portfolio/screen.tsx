@@ -6,7 +6,7 @@ import { useResearchLanguage } from "../use-research-language";
 import { aggregate, replaceSource, statusOf, valueHoldings, weights, type Holding, type Quote, type Row } from "@/lib/portfolio/calc";
 import { BROKER_CHOICES, MANUAL, OTHER, typedBroker } from "@/lib/portfolio/brokers";
 import { parseStored, readHide, readRaw, readSavedDay, subscribeStore, writeHide, writeHoldings } from "@/lib/portfolio/store";
-import { adjustForSplits, applyRepairs, knownSplits, legacyRepairs, today, type Split } from "@/lib/portfolio/splits";
+import { adjustForSplits, applyRepairs, invertedLots, knownSplits, today, type Repair, type Split } from "@/lib/portfolio/splits";
 import { splitLabel } from "@/lib/research/stock-splits";
 import s from "./portfolio.module.css";
 
@@ -27,13 +27,14 @@ const dateEn = (iso: string) => { const [y, m, d] = iso.split("-").map(Number); 
 const pick2 = (ja: boolean) => (a: string, b: string) => ja ? a : b;
 const TICKER = /^[A-Z][A-Z0-9.\-]{0,9}$/;
 let nextId = 1;
-const SPLIT_NOTE_KEY = "tech-phase:portfolio:split-note";
-const SPLIT_CACHE_KEY = "tech-phase:portfolio:splits:v2";
-function readSplitCache(): Record<string, Split[]> {
-  try { const value = JSON.parse(localStorage.getItem(SPLIT_CACHE_KEY) ?? "null"); return value && typeof value === "object" && !Array.isArray(value) ? value : {}; } catch { return {}; }
+const REPAIR_KEPT_KEY = "tech-phase:portfolio:split-repair-kept";
+const SPLIT_CACHE_KEY = "tech-phase:portfolio:splits:v3";
+/** The provider's answers kept on this device for the day they were read (failed reads are never kept). */
+function readSplitCache(day: string): Record<string, Split[]> {
+  try { const value = JSON.parse(localStorage.getItem(SPLIT_CACHE_KEY) ?? "null"); return value?.day === day && value.splits && typeof value.splits === "object" && !Array.isArray(value.splits) ? value.splits : {}; } catch { return {}; }
 }
-function writeSplitCache(splits: Record<string, Split[]>) {
-  try { localStorage.setItem(SPLIT_CACHE_KEY, JSON.stringify({ ...readSplitCache(), ...splits })); } catch { /* optional */ }
+function writeSplitCache(day: string, splits: Record<string, Split[]>) {
+  try { localStorage.setItem(SPLIT_CACHE_KEY, JSON.stringify({ day, splits: { ...readSplitCache(day), ...splits } })); } catch { /* optional */ }
 }
 
 /** Shrink the screenshot in the browser before it is sent (a phone screenshot is several megabytes). */
@@ -84,33 +85,40 @@ export default function PortfolioScreen() {
   const [sheet, setSheet] = useState(false);
   const abort = useRef<AbortController | null>(null);
   // Stock splits (owner, Nov 11 APH; Nov 21 SNDK 8-for-1): a lot keeps the numbers of the day it was entered (checkedAt); splits after that
-  // day are applied when the list is shown (shares × ratio, cost ÷ ratio). Saving writes the shown numbers with today's date, never twice.
-  const [splitMap, setSplitMap] = useState<Record<string, Split[]>>({});
-  useEffect(() => { setSplitMap(previous => ({ ...readSplitCache(), ...previous })); }, []);
-  useEffect(() => {
-    if (!lots.length) return;
-    const controller = new AbortController();
-    const list = [...new Set(lots.map(lot => lot.ticker))];
-    fetch(`/api/research/portfolio/splits?tickers=${encodeURIComponent(list.join(","))}`, { cache: "no-store", credentials: "same-origin", signal: controller.signal })
-      .then(response => response.ok ? response.json() : Promise.reject(new Error("splits")))
-      .then((data: { splits?: Record<string, Split[]> }) => { if (data.splits) { setSplitMap(previous => ({ ...previous, ...data.splits })); writeSplitCache(data.splits); } })
-      .catch(() => { /* the manual list and the last answer on this device are used meanwhile */ });
-    return () => controller.abort();
-  }, [lots]);
+  // day are applied when the list is shown (shares × ratio, cost ÷ ratio). Saving writes the shown numbers on the basis they were brought to.
+  // Only the provider's answers count as complete; a ticker it could not answer for keeps its date (the manual list may still apply).
   const day = today();
-  const current = useMemo(() => adjustForSplits(lots, { ...knownSplits(lots.map(lot => lot.ticker)), ...splitMap }, readSavedDay(raw) ?? day, day), [lots, splitMap, raw, day]);
+  const [splitMap, setSplitMap] = useState<Record<string, Split[]>>({});
+  useEffect(() => { setSplitMap(previous => ({ ...readSplitCache(day), ...previous })); }, [day]);
+  const heldTickers = useMemo(() => [...new Set(lots.map(lot => lot.ticker))].sort().join(","), [lots]);
+  useEffect(() => {
+    if (!heldTickers) return;
+    // One answer a day per device (the provider charges 20 credits a call; the server also keeps each ticker a day).
+    const cached = readSplitCache(day), missing = heldTickers.split(",").filter(t => !(t in cached));
+    if (!missing.length) return;
+    const controller = new AbortController();
+    fetch(`/api/research/portfolio/splits?tickers=${encodeURIComponent(missing.join(","))}`, { cache: "no-store", credentials: "same-origin", signal: controller.signal })
+      .then(response => response.ok ? response.json() : Promise.reject(new Error("splits")))
+      .then((data: { splits?: Record<string, Split[]> }) => { if (data.splits) { setSplitMap(previous => ({ ...previous, ...data.splits })); writeSplitCache(day, data.splits); } })
+      .catch(() => { /* the manual list is used meanwhile; the dates of these tickers stay where they are */ });
+    return () => controller.abort();
+  }, [heldTickers, day]);
+  const prices = useMemo(() => Object.fromEntries(Object.entries(market?.quotes ?? {}).map(([t, q]) => [t, q.close])), [market]);
+  const allSplits = useMemo(() => ({ ...knownSplits(lots.map(lot => lot.ticker)), ...splitMap }), [lots, splitMap]);
+  const current = useMemo(() => adjustForSplits(lots, allSplits, readSavedDay(raw) ?? day, day, { complete: new Set(Object.keys(splitMap)), prices }), [lots, allSplits, splitMap, raw, day, prices]);
   const holdings = useMemo(() => aggregate(current.holdings), [current]);
   const tickers = holdings.map(h => h.ticker).join(",");
   const recentSplits = current.applied.filter(item => Date.parse(day) - Date.parse(item.date) <= 45 * 86400_000);
-  // Before Nov 21 a split was applied the wrong way round and saved (a 2-for-1 halved the shares): offered back, never changed silently.
-  const [legacy, setLegacy] = useState<unknown>(null);
-  useEffect(() => { try { setLegacy(JSON.parse(localStorage.getItem(SPLIT_NOTE_KEY) ?? "null")); } catch { /* optional */ } }, []);
-  const repairs = useMemo(() => legacyRepairs(lots, legacy), [lots, legacy]);
-  const closeRepair = (fix: boolean) => {
-    if (fix) writeHoldings(applyRepairs(lots, repairs));
-    const resolved = { ...(legacy as object), resolved: true };
-    try { localStorage.setItem(SPLIT_NOTE_KEY, JSON.stringify(resolved)); } catch { /* optional */ }
-    setLegacy(resolved);
+  // Before Nov 21 a split was applied the wrong way round and saved (an 8-for-1 divided the shares by 8): found by the numbers against
+  // today's price, offered per lot, never changed silently.
+  const [kept, setKept] = useState<string[]>([]);
+  useEffect(() => { try { const v = JSON.parse(localStorage.getItem(REPAIR_KEPT_KEY) ?? "[]"); if (Array.isArray(v)) setKept(v.filter(x => typeof x === "string")); } catch { /* optional */ } }, []);
+  const repairs = useMemo(() => invertedLots(lots, allSplits, prices, new Set(kept)), [lots, allSplits, prices, kept]);
+  const fixLot = (repair: Repair) => writeHoldings(applyRepairs(lots, [repair], day));
+  const keepLot = (repair: Repair) => {
+    const next = [...kept, repair.key].slice(-200);
+    try { localStorage.setItem(REPAIR_KEPT_KEY, JSON.stringify(next)); } catch { /* optional */ }
+    setKept(next);
   };
   const stamp = (h: Holding): Holding => ({ ...h, checkedAt: day });
 
@@ -173,10 +181,10 @@ export default function PortfolioScreen() {
         : <>
           <Head ja={ja} sub={holdings.length > 0} />
           {repairs.length > 0 && <div role="alert" className={s.splitNote}>
-            <p>{ja ? "以前の株式分割の反映で、株数と平均取得を逆向きに計算していました。たとえば2分割で株数が半分になっています。証券会社の画面と比べて、下の数字が正しい場合は直してください。"
-              : "An earlier stock-split update calculated shares and average cost the wrong way round (for example, a 2-for-1 halved the shares). Compare with your broker and fix it if so."}</p>
-            <ul>{repairs.map(r => <li key={`${r.ticker}:${r.source}`}>{r.ticker}{r.source ? `（${r.source}）` : ""}: {usd(r.shares, Number.isInteger(r.shares) ? 0 : 4)} → {usd(r.fixedShares, Number.isInteger(r.fixedShares) ? 0 : 4)}{ja ? "株" : " sh"} / ${usd(r.avgCostUsd)} → ${usd(r.fixedCost)}</li>)}</ul>
-            <p><button type="button" onClick={() => closeRepair(true)}>{ja ? "この数字に直す" : "Fix these numbers"}</button> <button type="button" onClick={() => closeRepair(false)}>{ja ? "このままにする" : "Keep as is"}</button></p>
+            <p>{ja ? "以前の株式分割の反映で、株数と平均取得を逆向きに計算した可能性がある銘柄があります。今の株価と比べた数字です。証券会社の画面と比べて、銘柄ごとに選んでください。"
+              : "An earlier stock-split update may have calculated these the wrong way round. Compared with today's price; check your broker and choose for each."}</p>
+            <ul>{repairs.map(r => <li key={r.key}>{r.ticker}{r.source ? `（${r.source}）` : ""}: {usd(r.shares, Number.isInteger(r.shares) ? 0 : 4)} → {usd(r.fixedShares, Number.isInteger(r.fixedShares) ? 0 : 4)}{ja ? "株" : " sh"} / ${usd(r.avgCostUsd)} → ${usd(r.fixedCost)}
+              <br /><button type="button" onClick={() => fixLot(r)}>{ja ? "この数字に直す" : "Fix"}</button><button type="button" onClick={() => keepLot(r)}>{ja ? "このままにする" : "Keep as is"}</button></li>)}</ul>
           </div>}
           {recentSplits.length > 0 && holdings.length > 0 && <p role="status" className={s.splitNote}>{ja
             ? <>{recentSplits.map(item => `${item.ticker} ${splitLabel(item.ratio).replace("-for-", "対")}の株式分割（${item.date.slice(5).replace("-", "/")}）`).join("、")}の前に登録した株数と平均取得は、分割後の数字（株数×比率、平均取得÷比率）で表示しています。取得額の合計は変わりません。</>

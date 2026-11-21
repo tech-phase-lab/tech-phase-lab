@@ -10,7 +10,7 @@ import { twelveNumber } from "./twelve-data-values.ts";
 export type StockSplit = { ticker: string; date: string; ratio: number; source?: string };
 
 const DAY = /^\d{4}-\d{2}-\d{2}$/;
-const isDay = (x: unknown): x is string => typeof x === "string" && DAY.test(x) && Number.isFinite(Date.parse(x)) && new Date(`${x}T00:00:00Z`).toISOString().slice(0, 10) === x;
+export const isDay = (x: unknown): x is string => typeof x === "string" && DAY.test(x) && Number.isFinite(Date.parse(x)) && new Date(`${x}T00:00:00Z`).toISOString().slice(0, 10) === x;
 const TICKER = /^[A-Z][A-Z0-9.\-]{0,14}$/;
 
 function readOverrides(value: unknown): StockSplit[] {
@@ -24,31 +24,46 @@ function readOverrides(value: unknown): StockSplit[] {
 /** The manual list (lib/research/stock-splits.json). Used everywhere, also when the provider cannot be read. */
 export const SPLIT_OVERRIDES: readonly StockSplit[] = Object.freeze(readOverrides(overrides));
 
+const DAY_MS = 86_400_000;
+const daysApart = (a: string, b: string) => Math.abs(Date.parse(a) - Date.parse(b)) / DAY_MS;
+/** A provider row is taken as a split only when both factors are small whole numbers (at most 50) and the ratio is at least 10% away from 1.
+ * Twelve Data also lists spin-off price adjustments as "splits" (HON 1061-for-1000, CMCSA 1067-for-1000, DD 239-for-100, GE 1281-for-1000):
+ * they change no share count and are dropped. */
+export function isSimpleSplit(from: number, to: number): boolean {
+  return Number.isInteger(from) && Number.isInteger(to) && from >= 1 && to >= 1 && from <= 50 && to <= 50 && Math.abs(from / to - 1) >= 0.1;
+}
+/** One row per event: the same ratio listed twice within 10 days (NVDA 2001-09-12 and 2001-09-17) is one split (the later date is kept). */
+function dedupe(rows: StockSplit[]): StockSplit[] {
+  const sorted = [...rows].sort((a, b) => a.date.localeCompare(b.date));
+  return sorted.filter((row, i) => !sorted.slice(i + 1).some(next => next.ticker === row.ticker && Math.abs(next.ratio - row.ratio) < 1e-9 && daysApart(next.date, row.date) <= 10));
+}
+
+export class SplitReadError extends Error {}
 /** Twelve Data's /splits answer. Its `from_factor` is the NEW share count and `to_factor` the old one ("8-for-1 split": from 8, to 1;
- * GE's "1-for-8" reverse split: from 1, to 8), so the ratio is from ÷ to. Malformed rows, 1-for-1 rows and another symbol's answer are dropped. */
+ * GE's "1-for-8" reverse split: from 1, to 8), so the ratio is from ÷ to. An error answer (a 429 credit limit comes back as a 200 with
+ * status "error"), a missing list or another symbol's answer throws: an answer we could not read is never "no splits". */
 export function parseTwelveSplits(raw: unknown, ticker: string): StockSplit[] {
   const body = raw && typeof raw === "object" ? raw as Record<string, unknown> : {};
   const meta = body.meta && typeof body.meta === "object" ? body.meta as Record<string, unknown> : {};
-  if (body.status === "error" || !Array.isArray(body.splits) || (typeof meta.symbol === "string" && meta.symbol.toUpperCase() !== ticker.toUpperCase())) return [];
+  if (body.status === "error" || !Array.isArray(body.splits) || (typeof meta.symbol === "string" && meta.symbol.toUpperCase() !== ticker.toUpperCase())) throw new SplitReadError("unreadable");
   const out: StockSplit[] = [];
   for (const item of body.splits) {
     const row = item && typeof item === "object" ? item as Record<string, unknown> : {};
     const from = twelveNumber(row.from_factor), to = twelveNumber(row.to_factor);
-    if (!isDay(row.date) || from === null || to === null || from <= 0 || to <= 0 || from === to) continue;
+    if (!isDay(row.date) || from === null || to === null || !isSimpleSplit(from, to)) continue;
     out.push({ ticker: ticker.toUpperCase(), date: row.date, ratio: from / to });
   }
-  return out.sort((a, b) => a.date.localeCompare(b.date));
+  return dedupe(out);
 }
 
-const daysApart = (a: string, b: string) => Math.abs(Date.parse(a) - Date.parse(b)) / 86_400_000;
-/** The provider's rows for one ticker with the manual list laid over them: a manual row replaces a provider row within 5 days of it. */
+/** The provider's rows for one ticker with the manual list laid over them: a manual row replaces a provider row within 10 days of it. */
 export function mergeSplits(ticker: string, provider: readonly StockSplit[] = [], manual: readonly StockSplit[] = SPLIT_OVERRIDES): StockSplit[] {
   const own = manual.filter(s => s.ticker === ticker);
-  return [...provider.filter(p => p.ticker === ticker && !own.some(m => daysApart(m.date, p.date) <= 5)), ...own].sort((a, b) => a.date.localeCompare(b.date));
+  return dedupe([...provider.filter(p => p.ticker === ticker && !own.some(m => daysApart(m.date, p.date) <= 10)), ...own]);
 }
 
 /** How many of today's shares one share written down on `basisDay` became by `asOfDay` (1 when no split lies between). A split dated on
- * the basis day itself is already in the written number (the number was taken on the adjusted basis). */
+ * the basis day itself is taken as already in the written number. */
 export function splitFactor(splits: readonly StockSplit[] | undefined, basisDay: string | null | undefined, asOfDay: string): number {
   if (!splits?.length || !basisDay || !isDay(basisDay)) return 1;
   return splits.reduce((factor, s) => s.date > basisDay && s.date <= asOfDay ? factor * s.ratio : factor, 1);
@@ -58,6 +73,15 @@ export function splitsBetween(splits: readonly StockSplit[] | undefined, basisDa
   if (!splits?.length || !basisDay || !isDay(basisDay)) return [];
   return splits.filter(s => s.date > basisDay && s.date <= asOfDay);
 }
+/** Brings a number written down on `basisDay` to `today`. `complete` says the provider answered for this ticker: only then is the new basis
+ * today. With the manual list alone (the provider failed), the basis moves only up to the last split applied, so a provider-only split after
+ * it is still found later. */
+export function rebase(splits: readonly StockSplit[] | undefined, basisDay: string, today: string, complete: boolean): { factor: number; basis: string; applied: StockSplit[] } {
+  const applied = splitsBetween(splits, basisDay, today);
+  const factor = applied.reduce((f, s) => f * s.ratio, 1);
+  const basis = complete ? (basisDay > today ? basisDay : today) : applied.length ? applied[applied.length - 1].date : basisDay;
+  return { factor, basis, applied };
+}
 
 const easternDay = new Intl.DateTimeFormat("en-CA", { timeZone: "America/New_York", year: "numeric", month: "2-digit", day: "2-digit" });
 /** The US (ET) calendar day of a moment: the day a split date is compared with. */
@@ -65,44 +89,55 @@ export function etDay(at: Date | string | number = Date.now()): string {
   const time = at instanceof Date ? at.getTime() : typeof at === "string" ? Date.parse(at) : at;
   return Number.isFinite(time) ? easternDay.format(time) : "";
 }
+/** Weekday steps (holidays are not known here): the market day before / after a day. */
+export function marketDayShift(day: string, steps: number): string {
+  let t = Date.parse(`${day}T12:00:00Z`);
+  for (let n = Math.abs(steps); n > 0;) { t += Math.sign(steps) * DAY_MS; const w = new Date(t).getUTCDay(); if (w !== 0 && w !== 6) n--; }
+  return new Date(t).toISOString().slice(0, 10);
+}
 
 /** "8-for-1" / "1-for-8" / "3-for-2" for a ratio (new shares per old share). */
 export function splitLabel(ratio: number): string {
-  for (let old = 1; old <= 1000; old++) {
+  for (let old = 1; old <= 50; old++) {
     const fresh = ratio * old;
-    if (Math.abs(fresh - Math.round(fresh)) < 1e-6) return `${Math.round(fresh)}-for-${old}`;
+    if (Math.abs(fresh - Math.round(fresh)) < 1e-6 && Math.round(fresh) >= 1) return `${Math.round(fresh)}-for-${old}`;
   }
-  return `${ratio}-for-1`;
+  return `${Number(ratio.toFixed(4))}-for-1`;
 }
 
 type Fetcher = (input: URL, init?: RequestInit) => Promise<Response>;
-/** Splits per ticker for a background job or a route: the provider's full history (/splits, range=full) with the manual list laid over
- * it. Kept in memory for `ttlMs`; a failed read is not kept and gives the manual list alone, so a known split is never missed. No key in output. */
+export type SplitAnswer = { splits: Record<string, StockSplit[]>; complete: Set<string> };
+/** Splits per ticker for a background job or a route: the provider's full history (/splits, range=full; 20 credits a call) with the manual
+ * list laid over it. A ticker the provider answered for is in `complete` and kept in memory for `ttlMs` (a day by default); a failed read
+ * (429, error body, timeout) is never kept and gives the manual list alone, outside `complete`. No key in output. */
 export function createSplitLoader(options: { apiKey: string | undefined; request?: Fetcher; baseUrl?: string; ttlMs?: number; now?: () => number }) {
   const request = options.request ?? ((input, init) => fetch(input, init));
   const base = options.baseUrl ?? "https://api.twelvedata.com";
-  const ttl = options.ttlMs ?? 6 * 3600_000, now = options.now ?? Date.now;
+  const ttl = options.ttlMs ?? 24 * 3600_000, now = options.now ?? Date.now;
   const memory = new Map<string, { at: number; splits: StockSplit[] }>();
-  async function one(ticker: string): Promise<StockSplit[]> {
+  async function one(ticker: string): Promise<StockSplit[] | null> {
     const hit = memory.get(ticker);
     if (hit && now() - hit.at < ttl) return hit.splits;
     try {
-      if (!options.apiKey || !TICKER.test(ticker)) throw new Error("unavailable");
+      if (!options.apiKey || !TICKER.test(ticker)) return null;
       const url = new URL(`${base}/splits`);
       url.searchParams.set("symbol", ticker); url.searchParams.set("range", "full"); url.searchParams.set("apikey", options.apiKey);
       const response = await request(url, { cache: "no-store", redirect: "error", signal: AbortSignal.timeout(12_000) });
-      if (response.status !== 200) throw new Error("unavailable");
+      if (response.status !== 200) return null;
       const splits = mergeSplits(ticker, parseTwelveSplits(await response.json(), ticker));
       memory.set(ticker, { at: now(), splits });
       return splits;
     } catch {
-      return mergeSplits(ticker, []);
+      return null;
     }
   }
-  return async function load(tickers: readonly string[]): Promise<Record<string, StockSplit[]>> {
-    const out: Record<string, StockSplit[]> = {};
-    for (const ticker of [...new Set(tickers)]) out[ticker] = await one(ticker);
-    return out;
+  return async function load(tickers: readonly string[]): Promise<SplitAnswer> {
+    const splits: Record<string, StockSplit[]> = {}, complete = new Set<string>();
+    for (const ticker of [...new Set(tickers)]) {
+      const read = await one(ticker);
+      if (read) { splits[ticker] = read; complete.add(ticker); } else splits[ticker] = mergeSplits(ticker, []);
+    }
+    return { splits, complete };
   };
 }
 export type SplitLoader = ReturnType<typeof createSplitLoader>;

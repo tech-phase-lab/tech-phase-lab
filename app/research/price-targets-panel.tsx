@@ -175,7 +175,7 @@ export default function PriceTargetsPanel({ lang, sample = null }: { lang: Langu
     {status === "loading" && <div aria-busy="true" aria-label={t("目標株価を取得中", "Fetching price targets")} className={styles.pending} />}
     {status === "ready" && shown.length === 0 && <p className={styles.state}>{t("条件に合う目標株価の投稿はまだありません。", "No matching price target posts yet.")}</p>}
     {shown.length > 0 && <div className={styles.list}>{shown.slice((current - 1) * 4, current * 4).map(item =>
-      <PriceTargetCard key={item === sample ? "sample" : item.id} item={item} lang={lang} now={now} />
+      <PriceTargetCard key={item === sample ? "sample" : item.id} item={item} lang={lang} now={now} earlier={shown} />
     )}</div>}
     <FeedPagination page={current} pages={pages} ja={lang === "ja"} onChange={n => { setPage(n); panelRef.current?.scrollIntoView({ block: "start", behavior: "instant" }); }} />
     <div className={styles.footer}>

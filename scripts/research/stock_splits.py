@@ -32,20 +32,38 @@ def known_splits(path=SPLITS_FILE):
     return tuple(sorted(out, key=lambda x: x[1]))
 
 
-def pre_split_previous(ticker, previous, latest, now=None, splits=None):
-    """When a target published after a split still quotes the old target on the pre-split basis ("$1,400 -> $175"), the ratio of that
-    split; otherwise None. Same rule as lib/research/price-target-splits.ts: within 60 days of the split, and the two figures nearer the
-    split ratio apart than equal."""
+def _et_day(value):
+    try:
+        moment = datetime.fromisoformat(str(value).replace('Z', '+00:00'))
+    except (TypeError, ValueError):
+        return None
+    return moment.astimezone(EASTERN).date() if moment.tzinfo else None
+
+
+def pre_split_previous(ticker, firm, previous, latest, earlier=(), now=None, splits=None):
+    """When a target published after a split still quotes the old target on the pre-split basis ("$1,400 -> $180"), the ratio of that
+    split; otherwise None. Same rule as lib/research/price-target-splits.ts: within 60 days after the split, and never from the size of the
+    change alone (a real 35% cut after a 2-for-1 stays a cut): the same firm's earlier target for the ticker (an item of `earlier`, with
+    ticker, firm, latest and publishedAt) must have been published before the split at that old figure."""
     try:
         previous, latest = float(previous), float(latest)
     except (TypeError, ValueError):
         return None
-    if not (previous > 0 and latest > 0 and math.isfinite(previous) and math.isfinite(latest)):
+    if not (previous > 0 and latest > 0 and math.isfinite(previous) and math.isfinite(latest)) or not isinstance(firm, str):
         return None
     today = (now or datetime.now(EASTERN)).astimezone(EASTERN).date()
-    recent = [ratio for t, day, ratio in (known_splits() if splits is None else splits)
+    recent = [(day, ratio) for t, day, ratio in (known_splits() if splits is None else splits)
               if t == ticker and day <= today and today - day <= timedelta(days=60)]
     if not recent:
         return None
-    ratio, move = recent[-1], math.log(previous / latest)
-    return ratio if abs(move - math.log(ratio)) < abs(move) else None
+    day, ratio = recent[-1]
+    name = firm.strip().lower()
+    for item in earlier or ():
+        if not isinstance(item, dict) or item.get('ticker') != ticker or not isinstance(item.get('firm'), str) or item['firm'].strip().lower() != name:
+            continue
+        published, old = _et_day(item.get('publishedAt')), item.get('latest')
+        if published is None or published >= day or not isinstance(old, (int, float)) or isinstance(old, bool):
+            continue
+        if abs(old - previous) <= 0.005 * max(old, previous):
+            return ratio
+    return None

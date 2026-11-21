@@ -8,7 +8,7 @@ import { parsePlanSnapshot } from "./plan-data.ts";
 import { defaultNotificationSettings, parseNotificationSettings } from "./notification-settings.ts";
 import { prepareNotificationSlot, jstSlot, type NotificationContext, type NotificationTask } from "./notification-job.ts";
 import { resolveResoluteEntitlements, type EntitlementRecord } from "./entitlements.ts";
-import type { SettingsSplitAdjuster } from "./notification-splits.ts";
+import { splitWindowSymbols, type SettingsSplitAdjuster } from "./notification-splits.ts";
 type Inputs=Pick<NotificationContext,"locale"|"preferencesConfigured"|"recipientVerified"|"unsubscribed"|"marketDate"|"closes">;
 /** Durable queue only. SMTP/provider calls must not occur inside this transaction.
  * resolveInputs must return fresh verified account consent and provider-final closes, never request-body identity.
@@ -43,8 +43,10 @@ export function createNotificationOutboxJob(pool:Pick<Pool,"connect">,resolveInp
    const receipt=(await client.query("SELECT idempotency_key,accepted_at FROM resolute.notification_outbox WHERE clerk_user_id=$1 AND kind='alerts' AND accepted_at IS NOT NULL ORDER BY accepted_at DESC LIMIT 1",[userId])).rows[0];
    const inputs=await resolveInputs(userId,settings.watchItems.map(i=>i.symbol));
    const baseState=previous?.rule_key===ruleKey?previous.notified:{};
-   const judged=adjust&&row?await adjust(settings,row.updated_at??null):settings;
-   const tasks=prepareNotificationSlot(userId,clock(),{...inputs,settings:judged,plan,entitlements,ownerAccess,state:baseState,lastConfirmedAlert:receipt?{id:receipt.idempotency_key,acceptedAt:receipt.accepted_at.toISOString()}:null});
+   const adjusted=adjust&&row?await adjust(settings,row.updated_at??null):null;
+   // Within one market day of a split nothing is judged for that symbol (its close is left out: "no_close", state unchanged).
+   const hold=new Set(adjusted?splitWindowSymbols(adjusted.splits,inputs.marketDate):[]);
+   const tasks=prepareNotificationSlot(userId,clock(),{...inputs,closes:inputs.closes.filter(c=>!hold.has(c.symbol)),settings:adjusted?.settings??settings,plan,entitlements,ownerAccess,state:baseState,lastConfirmedAlert:receipt?{id:receipt.idempotency_key,acceptedAt:receipt.accepted_at.toISOString()}:null});
    const results:{kind:NotificationTask["kind"];status:"queued"|"duplicate"}[]=[];
    for(const task of tasks){
     if(task.kind==="alerts"&&pendingAlert){results.push({kind:"alerts",status:"duplicate"});continue;}

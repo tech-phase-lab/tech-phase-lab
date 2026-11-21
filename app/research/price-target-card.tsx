@@ -7,7 +7,8 @@ import styles from "./price-targets-panel.module.css";
 import fit from "./price-target-card.module.css";
 
 /** One action, one publication time. Retained provenance is not a display row. */
-export default function PriceTargetCard({ item, lang, now }: { item: PriceTarget; lang: Language; now: number | null }) {
+/** `earlier`: the other targets on the page, so a pre-split old target is recognised only from the same firm's pre-split action. */
+export default function PriceTargetCard({ item, lang, now, earlier = [] }: { item: PriceTarget; lang: Language; now: number | null; earlier?: readonly PriceTarget[] }) {
   const t = (ja: string, en: string) => lang === "ja" ? ja : en;
   const [showFirm, setShowFirm] = useState(false);
   const number = (value: number) => value.toLocaleString("en-US", { maximumFractionDigits: 2 });
@@ -18,7 +19,7 @@ export default function PriceTargetCard({ item, lang, now }: { item: PriceTarget
   });
   // Stock splits (SNDK 8-for-1, Nov 20 2026): a pre-split old target is a basis change, not a cut; an action from before a split is also
   // shown on today's basis. The clock is the page's (or the observation time before it is known), so server and browser agree.
-  const split = priceTargetSplitView(item, now ?? Date.parse(item.observedAt));
+  const split = priceTargetSplitView(item, now ?? Date.parse(item.observedAt), undefined, earlier);
   const previous = split?.kind === "previous-pre-split" ? split.previous : item.previous;
   const up = item.latest > previous;
   const percent = previous > 0 ? (item.latest / previous - 1) * 100 : null;

@@ -4,8 +4,8 @@ import type { ProtectionBarrier } from "./protection-outbox.ts";
 import { entitlementSource, readEntitlementSnapshot, type EntitlementSource } from "./entitlement-source.ts";
 import { Pool, type PoolClient } from "pg";
 import { resoluteDatabaseConfig } from "./database-config.ts";
-import { createSettingsSplitAdjuster, type SettingsSplitAdjuster } from "./notification-splits.ts";
-import { createSplitLoader } from "../research/stock-splits.ts";
+import { createSettingsSplitAdjuster, stampPriceDays, type SettingsSplitAdjuster } from "./notification-splits.ts";
+import { createSplitLoader, etDay } from "../research/stock-splits.ts";
 import { defaultNotificationSettings, parseNotificationMutation, parseNotificationSnapshot,
  type NotificationSnapshot, type NotificationSettings } from "./notification-settings.ts";
 export class NotificationAccessDenied extends Error {}
@@ -15,7 +15,7 @@ export class NotificationConflict extends Error {
 }
 /** `adjust` (stock splits): GET and a conflict answer show the reference prices on today's basis (see notification-splits.ts), so what the
  * member sees and saves back is post-split; the saved row then carries the new date and is not adjusted again. */
-export function createNotificationStore(pool: Pick<Pool,"connect">, source: EntitlementSource = entitlementSource(), protect?: ProtectionBarrier, adjust?: SettingsSplitAdjuster) {
+export function createNotificationStore(pool: Pick<Pool,"connect">, source: EntitlementSource = entitlementSource(), protect?: ProtectionBarrier, adjust?: SettingsSplitAdjuster, clock: () => Date = () => new Date()) {
  return async (userId: string, method: "GET"|"PUT", mutation?: {settings:NotificationSettings;baseRevision:number}, ownerAccess?:OwnerAccess) => {
   if(!/^user_[A-Za-z0-9]{1,128}$/.test(userId)) throw new Error("Invalid identity");
   const parsed=method==="PUT"?parseNotificationMutation(mutation):undefined;
@@ -30,12 +30,14 @@ export function createNotificationStore(pool: Pick<Pool,"connect">, source: Enti
    if(rights.rowCount!==1) throw new NotificationAccessDenied();
    const row=(await client.query("SELECT settings,revision,updated_at FROM resolute.notification_settings WHERE clerk_user_id=$1 FOR UPDATE",[userId])).rows[0];
    const current=parseNotificationSnapshot(row?{settings:row.settings,revision:Number(row.revision)}:{settings:defaultNotificationSettings(),revision:0});
-   const shown=async():Promise<NotificationSnapshot>=>adjust&&row?{...current,settings:await adjust(current.settings,row.updated_at??null).catch(()=>current.settings)}:current;
+   const shown=async():Promise<NotificationSnapshot>=>adjust&&row?{...current,settings:(await adjust(current.settings,row.updated_at??null).catch(()=>({settings:current.settings}))).settings}:current;
    if(method==="GET") { await client.query("COMMIT");if(protect) await protect(client,userId);return shown(); }
    if(!parsed) throw new Error("Missing mutation");
    if(parsed.baseRevision!==current.revision) throw new NotificationConflict(await shown());
    if(current.revision>=Number.MAX_SAFE_INTEGER-1) throw new Error("Revision exhausted");
-   const saved={settings:parsed.settings,revision:current.revision+1};
+   // Each reference price keeps the day it is on (sent back by the screen); one without a day was typed today (notification-splits.ts).
+   const today=etDay(clock());
+   const saved={settings:stampPriceDays(parsed.settings,today,today),revision:current.revision+1};
    await client.query(`INSERT INTO resolute.notification_settings(clerk_user_id,settings,revision,updated_at)
     VALUES($1,$2,$3,statement_timestamp()) ON CONFLICT(clerk_user_id) DO UPDATE
     SET settings=$2,revision=$3,updated_at=statement_timestamp()`,[userId,JSON.stringify(saved.settings),saved.revision]);

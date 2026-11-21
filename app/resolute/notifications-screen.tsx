@@ -91,7 +91,8 @@ function Notifications({locale,deny,mode}:{locale:DiagnosisLocale;deny:()=>void;
  useEffect(()=>()=>controllerRef.current?.abort(),[]);
  const messages:Record<string,string>={preparing:t("通知の保存は、いま準備中です。準備ができたら、この画面が自動で使えるようになります。","Saving your notification settings isn’t switched on yet. This screen will start working by itself once it is."),unavailable:t("通知設定を読み込めませんでした。まだ保存できません。","We couldn’t load your notification settings, so you can’t save changes yet."),invalid:t("銘柄と基準価格、上昇率を確認してください。","Check your stock symbols, reference prices and rise alert level."),saved:t("通知設定を保存しました。","Your notification settings are saved."),conflict:t("別の画面で設定が変わりました。保存済みの設定を読み込み、確認してください。","Your settings changed in another window. Load the saved settings and review them."),uncertain:t("保存を確認できませんでした。再送する前に、保存済みの設定を読み込んでください。","We couldn’t confirm the save. Load your saved settings before trying again.")};
  const displayItems=draft.watchItems.length?draft.watchItems:[{symbol:"",referencePrice:0}];
- function changeItem(i:number,patch:Partial<NotificationSettings["watchItems"][number]>){update({watchItems:displayItems.map((x,k)=>k===i?{...x,...patch}:x)});}
+ // A price or symbol typed now is on today's basis (stock splits): the item's old price day is dropped and the save stamps today.
+ function changeItem(i:number,patch:Partial<NotificationSettings["watchItems"][number]>){update({watchItems:displayItems.map((x,k)=>k===i?{symbol:x.symbol,referencePrice:x.referencePrice,...patch}:x)});}
  function conditionText(id:"q28"|"q29",extra:string[]){
   const question=questions.find(q=>q.id===id)!;
   const selected=plan?.answers?.[id];

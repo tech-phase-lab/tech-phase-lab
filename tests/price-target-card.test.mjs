@@ -61,9 +61,11 @@ test('new badges follow the current clock and reject unknown, future or stale ti
 test('SNDK 8-for-1: a pre-split old target is shown on the new basis and is not a cut; a pre-split action gets the converted figures', () => {
   const now = Date.parse('2026-11-21T01:00:00Z');
   const after = { ...primary, publishedAt: '2026-11-20T12:00:00Z', observedAt: '2026-11-20T12:00:01Z', ticker: 'SNDK', firm: 'Firm', previous: 1400, latest: 180 };
-  const html = renderToStaticMarkup(React.createElement(Card, { item: after, lang: 'ja', now }));
+  const before = { ...after, publishedAt: '2026-11-18T12:00:00Z', observedAt: '2026-11-18T12:00:01Z', previous: 1200, latest: 1400 };
+  const html = renderToStaticMarkup(React.createElement(Card, { item: after, lang: 'ja', now, earlier: [before, after] }));
   assert.match(html, /\$175 → \$180/); assert.match(html, /引き上げ/); assert.match(html, /旧目標 \$1,400 は株式分割（8:1）前の基準/);
-  const before = { ...after, publishedAt: '2026-11-18T12:00:00Z', observedAt: '2026-11-18T12:00:01Z', previous: 1400, latest: 1600 };
+  // Without the firm's own pre-split action the size of the change alone never turns it into a raise.
+  assert.match(renderToStaticMarkup(React.createElement(Card, { item: after, lang: 'ja', now })), /\$1,400 → \$180/);
   const old = renderToStaticMarkup(React.createElement(Card, { item: before, lang: 'en', now }));
-  assert.match(old, /\$1,400 → \$1,600/); assert.match(old, /on today&#x27;s basis \$175 → \$200/);
+  assert.match(old, /\$1,200 → \$1,400/); assert.match(old, /on today&#x27;s basis \$150 → \$175/);
 });

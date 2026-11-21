@@ -17,6 +17,14 @@
       "source": "https://api.twelvedata.com/splits?symbol=APH",
       "checked": "2026-11-20",
       "detail": "Amphenol 2-for-1 (Twelve Data /splits)."
+    },
+    {
+      "ticker": "APH",
+      "date": "2024-06-12",
+      "ratio": 2,
+      "source": "Amphenol 2-for-1 split, split-adjusted trading from 2024-06-12 (missing from Twelve Data /splits)",
+      "checked": "2026-11-21",
+      "detail": "Amphenol 2-for-1 of June 2024; the provider's list skips it."
     }
   ]
 }

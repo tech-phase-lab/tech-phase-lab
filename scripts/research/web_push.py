@@ -696,13 +696,14 @@ def test_notification(db, payload, transport=None, now=None):
             'providerStatus': code, 'failureKind': failure_kind}
 
 
-def price_target_payload(ticker, firm, previous, latest, ja, tag):
+def price_target_payload(ticker, firm, previous, latest, ja, tag, earlier=()):
     """The phone notice for one price-target change. The real notices (deliver) and the owner's demo notice (scheduled_demo_target) are
     both built here, so the demo always looks exactly like a real one."""
     # Nov 15: a price-target notice opens the price-target page (it opened the dashboard's #what-changed view).
-    # Nov 21 (SNDK 8-for-1): an old target still quoted before the split is put on today's basis, so "$1400 → $175" is not read as a cut.
+    # Nov 21 (SNDK 8-for-1): an old target that the same firm set before the split (found in `earlier`, the feed's other items) is put on
+    # today's basis, so "$1400 → $180" is not read as a cut. The size of the change alone never decides it.
     body = f"{firm}: ${previous:g} → ${latest:g}"
-    ratio = stock_splits.pre_split_previous(ticker, previous, latest)
+    ratio = stock_splits.pre_split_previous(ticker, firm, previous, latest, earlier)
     if ratio:
         body = f"{firm}: ${round(previous / ratio, 2):g} → ${latest:g}" + (f"（旧目標${previous:g}は{ratio:g}:1分割前）" if ja else f" (old ${previous:g} was before the {ratio:g}:1 split)")
     return {'title': f"{ticker} · " + ('目標株価の変更' if ja else 'Price target update'),
@@ -1220,7 +1221,7 @@ def deliver(db, items, transport=send, now=None, monotonic_now=time.monotonic,
                 payload = {'title': f"{' · '.join(item['tickers'][:3])} · " + ('ニュース' if ja else 'News'),
                            'body': item['texts']['ja' if ja else 'en'], 'tag': key, 'url': '/research/news'}
             else:
-                payload = price_target_payload(item['ticker'], item['firm'], item['previous'], item['latest'], ja, key)
+                payload = price_target_payload(item['ticker'], item['firm'], item['previous'], item['latest'], ja, key, items)
             provider_started = monotonic_now()
             try:
                 code = noting(db, transport, attempted_at)(json.loads(device['subscription']), payload)
