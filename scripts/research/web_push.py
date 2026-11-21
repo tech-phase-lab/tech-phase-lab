@@ -145,7 +145,10 @@ def connect(path):
             ('question_owner', 'TEXT'),
             # RESOLUTE (Nov 17, owner): the member's choice for this device (on unless turned off), and until when the website last
             # confirmed, on its own server, that the member holds the RESOLUTE alert rights (epoch seconds; NULL: not confirmed).
-            ('resolute', 'INTEGER NOT NULL DEFAULT 1'), ('resolute_until', 'REAL')):
+            ('resolute', 'INTEGER NOT NULL DEFAULT 1'), ('resolute_until', 'REAL'),
+            # ウォッチリストの価格通知 (Nov 21): the key the website stores the member's watchlists (and their price alerts) under, sent by the
+            # website with each registration, and the device's switch for these notices (on: the member chose each alert).
+            ('favorites_owner', 'TEXT'), ('price_alerts', 'INTEGER NOT NULL DEFAULT 1')):
         if column not in columns:
             db.execute(f"ALTER TABLE push_devices ADD COLUMN {column} {definition}")
     db.execute('''CREATE TABLE IF NOT EXISTS push_device_preferences (
@@ -290,7 +293,7 @@ def monitored_news_tickers():
 
 
 def validate_preferences(value):
-    flags = ('targets', 'earnings', 'news', 'weeklyNotebook', 'rizelNote', 'weeklyDraft', 'economic', 'weeklyIssue', 'rizelAnswer', 'resolute')
+    flags = ('targets', 'earnings', 'news', 'weeklyNotebook', 'rizelNote', 'weeklyDraft', 'economic', 'weeklyIssue', 'rizelAnswer', 'resolute', 'priceAlerts')
     if not isinstance(value, dict) or not value or set(value) - {*flags, 'newsTickers', 'economicKinds', 'quiet'}:
         raise ValueError('invalid-preferences')
     for field in flags:
@@ -335,7 +338,7 @@ def preference_view(db, device):
                         'newsTickers': list(monitored_news_tickers())}),
             'weeklyNotebook': bool(device['weekly_notebook']), 'rizelNote': bool(device['note_posts']), 'weeklyDraft': bool(device['weekly_draft']),
             'economic': bool(device['econ']), 'economicKinds': economic_kinds(device), 'weeklyIssue': bool(device['weekly_issue']),
-            'rizelAnswer': bool(device['answer_posts']), 'resolute': bool(device['resolute']),
+            'rizelAnswer': bool(device['answer_posts']), 'resolute': bool(device['resolute']), 'priceAlerts': bool(device['price_alerts']),
             'quiet': {'on': bool(device['quiet_on']), 'start': device['quiet_start'], 'end': device['quiet_end'], 'zone': quiet_zone(device)}}
 
 
@@ -416,9 +419,9 @@ def write_preferences(db, device, patch):
       news=excluded.news,news_tickers=excluded.news_tickers''',
       (device['id'], int(prefs['targets']), int(prefs['earnings']), int(prefs['news']), json.dumps(prefs['newsTickers'])))
     db.execute('''UPDATE push_devices SET weekly_notebook=?, note_posts=?, weekly_draft=?, econ=?, econ_kinds=?, weekly_issue=?, answer_posts=?,
-      quiet_on=?, quiet_start=?, quiet_end=?, quiet_zone=?, resolute=? WHERE id=?''', (int(prefs['weeklyNotebook']), int(prefs['rizelNote']), int(prefs['weeklyDraft']),
+      quiet_on=?, quiet_start=?, quiet_end=?, quiet_zone=?, resolute=?, price_alerts=? WHERE id=?''', (int(prefs['weeklyNotebook']), int(prefs['rizelNote']), int(prefs['weeklyDraft']),
       int(prefs['economic']), json.dumps(prefs['economicKinds']), int(prefs['weeklyIssue']), int(prefs['rizelAnswer']),
-      int(prefs['quiet']['on']), prefs['quiet']['start'], prefs['quiet']['end'], prefs['quiet']['zone'], int(prefs['resolute']), device['id']))
+      int(prefs['quiet']['on']), prefs['quiet']['start'], prefs['quiet']['end'], prefs['quiet']['zone'], int(prefs['resolute']), int(prefs['priceAlerts']), device['id']))
     return prefs
 
 
@@ -426,6 +429,10 @@ def remember_question_owner(db, device_id, payload):
     key = payload.get('questionOwner')
     if isinstance(key, str) and QUESTION_OWNER.fullmatch(key):
         db.execute('UPDATE push_devices SET question_owner=? WHERE id=?', (key, device_id))
+    # The member's watchlist key (price alerts, price_alerts.py), sent by the website on the same requests as the question key.
+    key = payload.get('favoritesOwner')
+    if isinstance(key, str) and QUESTION_OWNER.fullmatch(key):
+        db.execute('UPDATE push_devices SET favorites_owner=? WHERE id=?', (key, device_id))
 
 
 def member_preferences(db, payload, *, save=False, now=None):
@@ -615,6 +622,8 @@ def member_action(db, payload, action, transport=None, now=None):
     if row['active']:
         with db:
             remember_resolute(db, device, payload, now)
+            # A device registered before Nov 21 learns its member's watchlist key (price alerts) on its next status check.
+            remember_question_owner(db, device, payload)
         row = db.execute('SELECT * FROM push_devices WHERE id=?', (device,)).fetchone()
     resolute_ok = bool(row['active'] and resolute_entitled(row, now))
     if row['active'] and not eligible and not resolute_ok and action in ('status', 'test'):

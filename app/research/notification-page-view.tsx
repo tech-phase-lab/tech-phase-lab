@@ -15,7 +15,8 @@ export type Preferences = { targets: boolean; earnings: boolean; news: boolean; 
   /** A new issue of 週刊 Tech Phase PRO is out. */ weeklyIssue: boolean; /** Your question to Rizel was answered. */ rizelAnswer: boolean;
   /** おやすみモード: hours in their zone (Japan time, or ET when saved from the English site; none means Japan time). */ quiet: Quiet;
   /** A new "リゼルのひとりごと" post; off until turned on. */ rizelNote: boolean; /** Owner only: a weekly issue draft is ready. */ weeklyDraft?: boolean;
-  /** RESOLUTE ③④ (owner, Nov 17): shown to RESOLUTE buyers only; on unless turned off. */ resolute?: boolean };
+  /** RESOLUTE ③④ (owner, Nov 17): shown to RESOLUTE buyers only; on unless turned off. */ resolute?: boolean;
+  /** ウォッチリストの価格通知 (Nov 21): on unless turned off; the row shows only while the monitor delivers them. */ priceAlerts?: boolean };
 type PrefsState = "idle" | "loading" | "ready" | "error" | "unsupported";
 // The ten indicators; the first seven start on. Jobless claims (off until turned on) is read from the Department of Labor's weekly release PDF (Nov 21).
 export const indicators: { key: string; ja: string; en: string; whenJa: string; whenEn: string; ready: boolean }[] = [
@@ -48,14 +49,16 @@ const icons = {
   moon: svg(<><path d="M19 14.5A7.5 7.5 0 0 1 9.5 5a7.5 7.5 0 1 0 9.5 9.5z" /></>),
   pencil: svg(<><path d="M5 19l1-4L16.5 4.5a2 2 0 0 1 3 3L9 18z" /><path d="M14.5 6.5l3 3" /></>),
   anchor: svg(<><circle cx="12" cy="5" r="2" /><path d="M12 7v13M8 11h8M5 14a7 7 0 0 0 14 0" /></>),
+  price: svg(<><path d="M4 17l5-5 4 3 7-8" /><path d="M3 7h18" strokeDasharray="2 2.5" /></>),
 };
 
 export type PageViewProps = {
   lang: Language; state: string; label: string; busy: boolean; starting: boolean; usable: boolean; hasSubscription: boolean;
   message: string; testSent: boolean; received: boolean;
   prefs: Preferences | null; prefsState: PrefsState; prefsMessage: string; owner?: boolean; diagnostic?: ReactNode; onPrefs: (patch: Partial<Preferences>) => void;
-  /** What the server lets this member receive (owner, Nov 17): PRO, RESOLUTE, or both. Without it, PRO only (as before). */
-  access?: { pro: boolean; resolute: boolean };
+  /** What the server lets this member receive (owner, Nov 17): PRO, RESOLUTE, or both. Without it, PRO only (as before).
+   * priceAlerts: the monitor delivers ウォッチリストの価格通知 (Nov 21). */
+  access?: { pro: boolean; resolute: boolean; priceAlerts?: boolean };
   onToggle: () => void; onDisable: () => void; onTest: () => void; onRetry: () => void; onStatus: () => void; onReceived: () => void;
 };
 
@@ -172,6 +175,7 @@ export default function NotificationPageView(p: PageViewProps) {
         {row(icons.target, t("目標株価の変更", "Price target changes"), t("主要AI株の多くが対象", "Most major AI stocks are covered"), prefs.targets, v => p.onPrefs({ targets: v }))}
         {row(icons.earnings, t("決算の速報", "Earnings updates"), t(`監視${monitored.length}銘柄と追跡${tracked.length}社、計${monitored.length + tracked.length}社を網羅`, `${monitored.length} monitored and ${tracked.length} tracked, ${monitored.length + tracked.length} in all`), prefs.earnings, v => p.onPrefs({ earnings: v }))}
         {row(icons.news, t("監視株ニュース", "News for selected stocks"), t(`監視${monitored.length}銘柄のうち、選んだ銘柄だけ`, `Only the stocks you pick of the ${monitored.length} monitored`), prefs.news, v => p.onPrefs({ news: v }))}
+        {p.access?.priceAlerts && row(icons.price, t("価格通知", "Price alerts"), t("ウォッチリストで設定した価格に届いたとき（米国市場の取引時間中）", "When a stock reaches a price you set (during U.S. market hours)"), prefs.priceAlerts ?? true, v => p.onPrefs({ priceAlerts: v }))}
       </ul>
       <p className={styles.section}>{t("市場", "MARKET")}</p>
       <ul className={styles.rows}>

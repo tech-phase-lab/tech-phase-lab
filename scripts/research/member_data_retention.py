@@ -120,6 +120,9 @@ def erase_member(db, payload, now=None, env=None):
             if "question_owner" in columns:
                 clauses.append("question_owner=?")
                 args.append(keys["question"])
+            if "favorites_owner" in columns:
+                clauses.append("favorites_owner=?")
+                args.append(keys["favorites"])
             if clauses:
                 ids = [r[0] for r in db.execute(f"SELECT id FROM push_devices WHERE {' OR '.join(clauses)}", args)]
                 counts.update(_delete_devices(db, tables, ids))
@@ -127,6 +130,9 @@ def erase_member(db, payload, now=None, env=None):
             counts["savedResearch"] = db.execute("DELETE FROM member_saved_research WHERE owner=?", (keys["savedResearch"],)).rowcount
         if "member_favorite_lists" in tables:
             counts["favoriteLists"] = db.execute("DELETE FROM member_favorite_lists WHERE owner=?", (keys["favorites"],)).rowcount
+        if "price_alert_state" in tables:
+            # The state of the member's price alerts (price_alerts.py) is kept under the same watchlist key.
+            db.execute("DELETE FROM price_alert_state WHERE owner=?", (keys["favorites"],))
         if "desk_reactions" in tables:
             counts["deskReactions"] = db.execute("DELETE FROM desk_reactions WHERE owner_key=?", (keys["deskReaction"],)).rowcount
         if "member_questions" in tables:
