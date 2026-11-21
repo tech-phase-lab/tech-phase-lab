@@ -2,6 +2,7 @@
 
 These checks reject known contradictions; they do not prove semantic accuracy.
 """
+import copy as _copy
 import re
 from decimal import Decimal
 from collections import Counter
@@ -647,8 +648,17 @@ def _has(pattern, text):
     return bool(re.search(pattern, text, re.I))
 
 
+# Words of the level family that state no change (GOOGL "Small businesses, big results", Nov 19: a program name, a
+# hyphenated property and "jumping between" tasks made the release read as rising, so a correct "cut hours of work" copy
+# was rejected, then the opposite, attempt after attempt).
+NON_DIRECTIONAL = re.compile(
+    r"\bgrow\s+with\s+google\b|\bjump(?:s|ed|ing)?\s+(?:between|into|on\s+board|at\s+the\s+chance)\b"
+    r"|\b(?:higher|lower|wider|narrower|slower)-(?!than\b)[a-z]+", re.I)
+
+
 def directions(text, family):
     _name, up_en, up_ja, down_en, down_ja = family
+    text = NON_DIRECTIONAL.sub(' ', text)
     return ({'up'} if _has(up_en, text) or _has(up_ja, text) else set()) | (
         {'down'} if _has(down_en, text) or _has(down_ja, text) else set())
 
@@ -820,15 +830,84 @@ def _mentioned(word, english):
 LAST_NAME_REJECTION = ['']
 
 
+# Not \b: a Japanese character after the ticker ($NBISが) is a word character to Python.
+CASHTAG = re.compile(r'(?<![A-Za-z0-9])\$[A-Z]{1,6}(?![A-Za-z0-9])')
+# An X handle, hashtag or cashtag body, and a run of Latin words in the Japanese copy (spaces, ・ or hyphens between).
+SOCIAL_TAG = re.compile(r'(?<![A-Za-z0-9_])[@#$]([A-Za-z][A-Za-z0-9_]*)')
+LATIN_RUN = re.compile(r'[A-Za-z][A-Za-z0-9&.\'’]*(?:[ \u3000・·\-_]+[A-Za-z][A-Za-z0-9&.\'’]*)*')
+
+
+def _camel_parts(word):
+    """ChefRobotics -> chef, robotics; NebiusAI -> nebius, ai; H100s -> h100s (one part)."""
+    return [part.lower() for part in re.findall(r'[A-Z]+(?![a-z])|[A-Z]?[a-z]+|\d+', word) if part]
+
+
+def _social_names(en):
+    """Words an X post names only inside a handle, hashtag, cashtag or joined compound (@ChefRobotics, #NebiusAI,
+    MasterChef): their CamelCase parts, and the whole compounds, so a translation that writes the name out
+    ("Chef Robotics") or keeps it ("@ChefRobotics") matches. Plain lowercase handles (@nebiusai) have no parts to split;
+    a copy that writes them out is matched by joining its words (see _joined_words)."""
+    parts, compounds = set(), set()
+    for token in re.findall(r'[@#$]?[A-Za-z][A-Za-z0-9_]*', en):
+        body = token.lstrip('@#$')
+        pieces = [piece for chunk in body.split('_') for piece in _camel_parts(chunk)]
+        if len(pieces) > 1:
+            parts.update(piece for piece in pieces if len(piece) >= 2 and not piece.isdigit())
+        if token[0] in '@#$' or len(pieces) > 1 or '_' in body:
+            compounds.add(re.sub(r'[^a-z0-9]', '', body.lower()))
+    return parts, {compound for compound in compounds if len(compound) >= 3}
+
+
+def _joined_words(ja, compounds):
+    """Latin words of the copy that together spell one English compound ("Chef Robotics" for @ChefRobotics)."""
+    covered = set()
+    for run in LATIN_RUN.finditer(ja):
+        words = NAME_TOKEN.findall(run.group(0))
+        for start in range(len(words)):
+            for end in range(start + 1, len(words) + 1):
+                if re.sub(r'[^a-z0-9]', '', ''.join(words[start:end]).lower()) in compounds:
+                    covered.update(word.lower().rstrip('.') for word in words[start:end])
+    return covered
+
+
+def _ticker_named(ticker, ja):
+    """An English $TICKER may be written as the ticker, a known English name or its one Japanese spelling."""
+    import japanese_names
+    symbol = ticker[1:]
+    if re.search(r'(?<![A-Za-z0-9])' + re.escape(symbol) + r'(?![A-Za-z0-9])', ja):
+        return True
+    lowered = ja.lower()
+    for group in NAME_GROUPS:
+        if symbol.lower() not in group:
+            continue
+        if any(len(alias) >= 3 and _mentioned(alias, lowered) for alias in group):
+            return True
+        for english, japanese in japanese_names.NAMES.items():
+            names = {english.lower(), english.lower().split()[0]}
+            if names & group and japanese in ja:
+                return True
+    return False
+
+
 def validate_names(ja, en):
-    """Tickers must match exactly; Latin-script names in Japanese must appear in English.
+    """Tickers must match; Latin-script names in Japanese must appear in English.
 
     A company may be written differently in each language (Taiwan Semiconductor
     in English, TSMC in Japanese); such known aliases count as the same name.
+    X posts name companies through @handles, #hashtags and $cashtags: a
+    translation may keep them or write the name out ("Chef Robotics" for
+    @ChefRobotics, ネビウス for $NBIS). It may never add a cashtag or a name the
+    post does not have.
     """
-    if set(re.findall(r'\$[A-Z]{1,6}\b', ja)) != set(re.findall(r'\$[A-Z]{1,6}\b', en)):
+    ja_tags, en_tags = set(CASHTAG.findall(ja)), set(CASHTAG.findall(en))
+    added = sorted(ja_tags - en_tags)
+    dropped = sorted(tag for tag in en_tags - ja_tags if not _ticker_named(tag, ja))
+    if added or dropped:
+        LAST_NAME_REJECTION[0] = (added or dropped)[0][:40]
         raise ValueError('changed-names')
     english = en.lower()
+    social_parts, compounds = _social_names(en)
+    joined = _joined_words(ja, compounds)
     for token in NAME_TOKEN.findall(ja):
         word = token.lower().rstrip('.')
         if word in NAME_ALLOWANCE or re.fullmatch(r'(?:fy|q[1-4]|h[12])\d*', word):
@@ -838,6 +917,8 @@ def validate_names(ja, en):
             continue
         # Japanese drops English plurals: "PC" for "PCs", "GPU" for "GPUs".
         if _mentioned(word, english) or (word.isalnum() and (_mentioned(word + 's', english) or _mentioned(word + 'es', english))):
+            continue
+        if word in social_parts or word in joined or re.sub(r'[^a-z0-9]', '', word) in compounds:
             continue
         if any(word in group and any(_mentioned(alias, english) for alias in group) for group in NAME_GROUPS):
             continue
@@ -934,17 +1015,23 @@ def _cache_checks(*names):
             try:
                 _original(*args, **dict(kwargs))
             except ValueError as exc:
-                return str(exc)
+                # What the rejection recorded, so a cached rejection reports the same detail as the first one
+                # (Nov 20: a cached rejection left the detail of an earlier, unrelated check in place).
+                return str(exc), tuple(_copy.deepcopy(holder[0]) for holder in _REJECTION_DETAILS)
             return None
 
         @functools.wraps(original)
         def checked(*args, _original=original, _outcome=outcome, **kwargs):
             if not all(isinstance(value, simple) for value in (*args, *kwargs.values())):
                 return _original(*args, **kwargs)
-            code = _outcome(args, tuple(sorted(kwargs.items())))
-            if code is not None:
+            result = _outcome(args, tuple(sorted(kwargs.items())))
+            if result is not None:
+                code, details = result
+                for holder, detail in zip(_REJECTION_DETAILS, details):
+                    holder[0] = _copy.deepcopy(detail)
                 raise ValueError(code)
         globals()[name] = checked
 
 
+_REJECTION_DETAILS = (LAST_DIRECTION_REJECTION, LAST_NEGATION_REJECTION, LAST_NAME_REJECTION)
 _cache_checks('validate_meaning', 'validate_names')

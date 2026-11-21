@@ -45,7 +45,8 @@ LEDGER_PREFIX = 'pulse:'
 MAX_JA = 24
 # A headline this short already fits a phone and needs no call.
 FITS_JA = MAX_JA
-MAX_EN = 64
+# The English band shows at most BAND_MAX_EN (48) characters; a longer English title was stored but never shown.
+MAX_EN = 48
 CANDIDATES = 30
 JAPANESE = re.compile(r'[぀-ヿ一-鿿]')
 UNSAFE = re.compile(r'[\x00-\x1f\x7f<>]|https?://|www\.', re.I)

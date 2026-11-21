@@ -437,6 +437,26 @@ class OfficialResearchTests(unittest.TestCase):
                             for item in indexed['facts[1]']['checks']))
         self.assertEqual(self.feed(),[])
 
+    def test_retry_is_told_which_direction_the_cited_excerpt_states(self):
+        # GOOGL, Nov 20: a title was rejected for changed-direction eight times, up then down then up, because the retry was
+        # told only "changed-direction" and reversed its claim instead of fixing the excerpt it cited.
+        source='Inferize cuts idle GPU time for its customers.'
+        body=source+' '+BODY
+        with research.connect(self.path) as db:
+            db.execute('UPDATE source_revisions SET extracted_text=?,extracted_chars=?',(body,len(body)))
+        def wrong(*args):
+            note=json.loads(json.dumps(NOTE))
+            note['facts'][0]=copy('GPUの遊休時間を拡大する。','Inferize expands idle GPU time.',source)
+            return {'status':'completed','output_text':json.dumps(note)}
+        self.assertEqual(self.run_note(wrong),'retry')
+        with research.connect(self.path) as db:
+            row=research.candidates(db,NOW)[0]
+            feedback=research.retry_feedback(db,row,research.evidence_excerpts(row['body']))
+        fact=next(item for item in feedback if item['field']=='facts[0]')
+        self.assertEqual(fact['issue'],'changed-direction')
+        self.assertEqual(fact['directionCheck'],{'family':'level','copyStated':'up','evidenceStates':['down']})
+        self.assertNotIn('directionCheck',json.dumps([item for item in feedback if item['field']!='facts[0]']))
+
     def test_retry_does_not_treat_obsolete_quote_as_current_evidence(self):
         self.assertEqual(self.run_note(lambda *_:{'status':'completed','output_text':json.dumps({
             **NOTE,'summary':copy('99%増加。','Increased 99%.','An invented source passage with a 99% increase.')})}),'retry')

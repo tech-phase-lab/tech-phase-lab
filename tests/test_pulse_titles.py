@@ -62,6 +62,7 @@ class PulseTitleTests(unittest.TestCase):
         band = (Path(__file__).resolve().parents[1] / 'lib/research/news-band.ts').read_text()
         self.assertEqual(pulse_titles.MAX_JA, int(re.search(r'export const BAND_MAX_JA = (\d+);', band).group(1)))
         self.assertEqual(pulse_titles.MAX_JA, 24)
+        self.assertEqual(pulse_titles.MAX_EN, int(re.search(r'export const BAND_MAX_EN = (\d+);', band).group(1)))
         ok = {'shortJa': 'オラクル、電力費3億ドル負担を計画', 'shortEn': GOOD['shortEn']}
         self.assertEqual(pulse_titles.validate(ok, JA, EN)[0], ok['shortJa'])
         # 23 and 24 characters fit the band and were wrongly rejected as too-long before Nov 20.
