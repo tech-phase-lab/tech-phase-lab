@@ -4,6 +4,7 @@ import {resoluteDatabaseConfig} from '../../lib/resolute/database-config.ts';
 import {createNotificationQueueRunner} from '../../lib/resolute/notification-queue-runner.ts';
 import {createClerkNotificationRecipient} from '../../lib/resolute/notification-recipient.ts';
 import {createCloseProvider} from '../../lib/resolute/notification-closes.ts';
+import {createSplitLoader} from '../../lib/research/stock-splits.ts';
 
 // 通知候補をoutboxへ入れるだけ(メールは送らない)。明示的な起動のみ。既定は無効で、DB・提供元・Clerkに触れない。
 // 有効化・スケジュール・変数の設定は、オーナーの承認が毎回必要。値は出力しない。
@@ -26,6 +27,8 @@ try{
    ...(only.length?{onlyUserIds:only}:{}),
    recipient:createClerkNotificationRecipient(createClerkClient({secretKey:env.RESOLUTE_MAIL_CLERK_SECRET_KEY}),env.RESOLUTE_MAIL_PUBLIC_ORIGIN==='https://techphase.app'),
    closes:createCloseProvider({apiKey:env.TWELVE_DATA_API_KEY}),
+   // Stock splits (SNDK 8-for-1, Nov 20 2026): reference prices saved before a split are judged on the split-adjusted basis of the closes.
+   splits:createSplitLoader({apiKey:env.TWELVE_DATA_API_KEY}),
   });
   const report=await run();console.log(JSON.stringify(report));
   if(report.errors||report.incomplete)process.exitCode=1;

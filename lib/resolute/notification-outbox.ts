@@ -8,19 +8,22 @@ import { parsePlanSnapshot } from "./plan-data.ts";
 import { defaultNotificationSettings, parseNotificationSettings } from "./notification-settings.ts";
 import { prepareNotificationSlot, jstSlot, type NotificationContext, type NotificationTask } from "./notification-job.ts";
 import { resolveResoluteEntitlements, type EntitlementRecord } from "./entitlements.ts";
+import { splitWindowSymbols, type SettingsSplitAdjuster } from "./notification-splits.ts";
 type Inputs=Pick<NotificationContext,"locale"|"preferencesConfigured"|"recipientVerified"|"unsubscribed"|"marketDate"|"closes">;
 /** Durable queue only. SMTP/provider calls must not occur inside this transaction.
  * resolveInputs must return fresh verified account consent and provider-final closes, never request-body identity.
  * Sender remains a separate, disabled-until-approved integration. An outbox row is NOT proof of delivery.
  */
-export function createNotificationOutboxJob(pool:Pick<Pool,"connect">,resolveInputs:(userId:string,symbols:string[])=>Promise<Inputs>,clock:()=>Date=()=>new Date(),source:EntitlementSource=entitlementSource(),readOwner=readBackgroundOwnerAccess) {
+/** `adjust` (stock splits): the closes are split-adjusted, so the reference prices are judged on today's basis (notification-splits.ts).
+ * The rule key stays the one of the stored settings, so a split alone does not reset what was already notified. */
+export function createNotificationOutboxJob(pool:Pick<Pool,"connect">,resolveInputs:(userId:string,symbols:string[])=>Promise<Inputs>,clock:()=>Date=()=>new Date(),source:EntitlementSource=entitlementSource(),readOwner=readBackgroundOwnerAccess,adjust?:SettingsSplitAdjuster) {
  return async (userId:string)=>{
   if(!/^user_[A-Za-z0-9]{1,128}$/.test(userId))throw new Error("Invalid identity");
   const client=await pool.connect();
   try{
    await client.query("BEGIN");
    await client.query("SELECT pg_advisory_xact_lock(hashtextextended($1, 0))",[userId]);
-   const row=(await client.query("SELECT settings,revision FROM resolute.notification_settings WHERE clerk_user_id=$1",[userId])).rows[0];
+   const row=(await client.query("SELECT settings,revision,updated_at FROM resolute.notification_settings WHERE clerk_user_id=$1",[userId])).rows[0];
    const settings=parseNotificationSettings(row?.settings??defaultNotificationSettings());
    const ownerAccess=await readOwner(userId);
    const owner=hasOwnerAccess(ownerAccess,userId,clock().getTime());
@@ -34,13 +37,16 @@ export function createNotificationOutboxJob(pool:Pick<Pool,"connect">,resolveInp
    const p=(await client.query("SELECT plan,revision,created_at,updated_at FROM resolute.plans WHERE clerk_user_id=$1",[userId])).rows[0];
    const plan=parsePlanSnapshot(p?{plan:p.plan?{...p.plan,createdAt:p.created_at.toISOString(),updatedAt:p.updated_at.toISOString()}:null,revision:Number(p.revision)}:{plan:null,revision:0}).plan;
    // A new reference price or set of thresholds is a new rule; a delivery-hour change is not.
-   const ruleKey=notificationRuleKey(settings,plan);
+   const ruleKey=notificationRuleKey(settings,plan,row?.updated_at??null);
    const pendingAlert=await reconcileAlertReservations(client,userId,{revision:Number(row?.revision??0),ruleKey,date:jstSlot(clock()).date});
    const previous=(await client.query("SELECT rule_key,notified FROM resolute.notification_state WHERE clerk_user_id=$1",[userId])).rows[0];
    const receipt=(await client.query("SELECT idempotency_key,accepted_at FROM resolute.notification_outbox WHERE clerk_user_id=$1 AND kind='alerts' AND accepted_at IS NOT NULL ORDER BY accepted_at DESC LIMIT 1",[userId])).rows[0];
    const inputs=await resolveInputs(userId,settings.watchItems.map(i=>i.symbol));
    const baseState=previous?.rule_key===ruleKey?previous.notified:{};
-   const tasks=prepareNotificationSlot(userId,clock(),{...inputs,settings,plan,entitlements,ownerAccess,state:baseState,lastConfirmedAlert:receipt?{id:receipt.idempotency_key,acceptedAt:receipt.accepted_at.toISOString()}:null});
+   const adjusted=adjust&&row?await adjust(settings,row.updated_at??null):null;
+   // Within one market day of a split nothing is judged for that symbol (its close is left out: "no_close", state unchanged).
+   const hold=new Set(adjusted?splitWindowSymbols(adjusted.splits,inputs.marketDate):[]);
+   const tasks=prepareNotificationSlot(userId,clock(),{...inputs,closes:inputs.closes.filter(c=>!hold.has(c.symbol)),settings:adjusted?.settings??settings,plan,entitlements,ownerAccess,state:baseState,lastConfirmedAlert:receipt?{id:receipt.idempotency_key,acceptedAt:receipt.accepted_at.toISOString()}:null});
    const results:{kind:NotificationTask["kind"];status:"queued"|"duplicate"}[]=[];
    for(const task of tasks){
     if(task.kind==="alerts"&&pendingAlert){results.push({kind:"alerts",status:"duplicate"});continue;}
