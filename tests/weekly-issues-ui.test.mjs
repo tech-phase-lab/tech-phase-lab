@@ -117,8 +117,9 @@ test("the owner reads the issue on top and manages drafts below; readers see no 
   assert.match(screen, /window\.confirm\(`\$\{shortDate\(draft\.date\)\}の古い下書き/, "deleting an old draft asks first");
   const page = screen.slice(screen.indexOf("export default function WeeklyIssues"));
   assert.ok(page.indexOf("<IssueView issue={reviewing}") < page.indexOf("<OwnerPanel"), "the issue comes before the management area");
-  assert.match(page, /const reviewing = ownerMode && owner \?/, "a draft is shown on top only in the owner's view");
-  assert.match(page, /\{ownerMode && owner && <OwnerPanel/);
+  assert.match(page, /const reviewing = ownerView && owner \?/, "a draft is shown on top only in the owner's view");
+  assert.match(page, /const ownerView = ownerMode \|\| \(!settled && initialOwner !== undefined\);/, "the server's owner check decides only until the membership display starts");
+  assert.match(page, /\{ownerView && owner && <OwnerPanel/);
   const css = read("app/research/weekly/issues.module.css");
   for (const rule of [".oldDrafts li{display:flex;flex-wrap:wrap", ".previewBar{display:flex;flex-wrap:wrap", "min-width:0"]) assert.ok(css.includes(rule), rule);
 });
