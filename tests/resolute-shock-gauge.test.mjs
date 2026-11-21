@@ -134,7 +134,7 @@ test('daily review stores a story that is still waiting for the market without c
  const saved=[];let selections=0,asked=null;
  const feed={ok:true,enabled:true,items:[{title:'AI semiconductor risk warning',url:'https://example.com/shock',publishedAt:'2026-10-14T21:30:00Z',tickers:['NVDA'],bodyEn:'AI semiconductor companies warned of possible earnings declines over several months. The reported risk affects the sector, but the impact remains uncertain.'}]};
  try{
-  const result=await prepareDailyReview({enabled:true,now:new Date('2026-10-14T22:00:00Z'),selectionPool:db,budgetPool:{query:async()=>({rows:[]})},publishPool:{query:async(sql,args)=>{if(sql.includes('risk_days'))saved.push(JSON.parse(args[2]));return {rows:[]};}},
+  const result=await prepareDailyReview({enabled:true,now:new Date('2026-10-14T23:00:00Z'),selectionPool:db,budgetPool:{query:async()=>({rows:[]})},publishPool:{query:async(sql,args)=>{if(sql.includes('risk_days'))saved.push(JSON.parse(args[2]));return {rows:[]};}},
    readFeed:async()=>feed,readMoves:async s=>{asked=s;return {};},
    summarize:async c=>{assert.deepEqual(c.tickers,['NVDA']);return validateGeneration({...clean,ja:{...clean.ja,content:'AI半導体企業が業績の下振れの可能性を警告しました。',date:'報道'},en:{...clean.en,content:'AI semiconductor companies warned of possible earnings declines.',date:'Reported'}},c);},
    select:async()=>{selections++;throw Error('must not select');}});

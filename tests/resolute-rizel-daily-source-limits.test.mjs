@@ -12,7 +12,7 @@ import {inspectCandidateFeed,FEED_LIMITS,FEED_CHECKS} from '../services/resolute
 // while inspectCandidateFeed still allowed only one page (100) of reportUpdates.
 const monitorToken='synthetic-reader-token-for-tests-only-1234';
 const providerToken='synthetic-provider-token';
-const now=new Date('2026-11-16T22:01:00Z'); // Tuesday 07:01 JST
+const now=new Date('2026-11-16T23:01:00Z'); // Tuesday 08:01 JST
 const roster='NVDA,AMD,MU,TSM,ASML,AVGO,NBIS';
 // Newest first, every 20 minutes: a full page reaches about 33 hours back, past the 24-hour weekday window.
 const clock=i=>new Date(now.getTime()-(i+1)*20*60000).toUTCString();

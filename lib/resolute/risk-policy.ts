@@ -37,6 +37,13 @@ export const RISK_POLICY = {
     failed: { ja: 'ニュースを更新できていません', en: 'We couldn’t update the news.' },
     stopped: { ja: 'ニュースの公開を停止しています', en: 'News updates are paused.' },
   },
-  /** Daily collection window: hours back from the 07:00 JST run (Monday covers the weekend). */
+  /** Daily collection window: hours back from the morning run (Monday covers the weekend). */
   lookbackHours: { weekday: 30, monday: 78 },
+  /** The weekday morning run (JST hour), Mon–Fri. 08:00 JST is after the thermometer stores the previous U.S. close
+   * (about 08:00–08:05 JST), so a story published before that close gets its stars in the same run (owner, Nov 21).
+   * The Railway cron of resolute-rizel-daily-review must start inside this hour (20 23 * * 0-4 = 08:20 JST). */
+  runHourJst: 8,
+  /** Up to this many stories a day; the next candidates are tried only when one fails the checks (bounded AI cost). */
+  dailyStories: 3,
+  dailyAttempts: 5,
 } as const;
