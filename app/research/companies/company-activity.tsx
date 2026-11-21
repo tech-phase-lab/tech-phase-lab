@@ -17,6 +17,7 @@ import { freeWindow } from "@/lib/research/free-flash";
 import { useMemberDisplay, useOwnerAccount, useResearchOwner } from "../member-display-provider";
 import styles from "./company-activity.module.css";
 import DeepAnalysisPanel from "../deep-analysis-panel";
+import StockNewsBell from "./stock-news-bell";
 import { displayClock, displayDayKey, formatDisplay, zoneLabel } from "@/lib/research/display-time";
 
 type Tag = "flash" | "analyst" | "news";
@@ -161,9 +162,7 @@ export default function CompanyActivity({ ticker, lang }: { ticker: string; lang
       {!!wireRows.length && <p className={styles.fine}>{ja ? "「企業・配信会社」「第三者」の表示がある記事は見出しのみで、本文は確認していません。見出しを押すと元の記事へ移動します。" : "Items labelled company / wire or third party are headlines only; article text is not checked. Headlines open the original."}</p>}
       <div className={styles.rule}/>
       <div className={styles.foot}>
-        <button type="button" className={styles.bell} aria-disabled="true" aria-label={ja ? "この銘柄の速報を通知する(PRO・準備中)" : "Notify me about this stock (PRO, coming soon)"}>
-          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 22a2.3 2.3 0 0 0 2.3-2.3H9.7A2.3 2.3 0 0 0 12 22zm6.6-6.4V11a6.6 6.6 0 0 0-5.1-6.4V3.9a1.5 1.5 0 0 0-3 0v.7A6.6 6.6 0 0 0 5.4 11v4.6L3.6 17.4V19h16.8v-1.6z"/></svg>
-          {ja ? "この銘柄の速報を通知する" : "Notify me about this stock"}<small>PRO</small></button>
+        <StockNewsBell ticker={ticker} ja={ja} full={full} />
         <span>{checkedAt ? `${ja ? "更新" : "Updated"} ${clock(checkedAt, lang)} ${zoneLabel(lang)}` : ""}</span>
       </div>
       {data && <p className={styles.fine}>{ja ? "配信済み情報を自動確認。未取得の情報・全期間の履歴は含みません。" : "Auto-checking published updates; excludes uncollected information and older history."}</p>}
