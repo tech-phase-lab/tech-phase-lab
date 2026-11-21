@@ -90,7 +90,8 @@ POLICY = """あなたは「リゼル」として、週刊 Tech Phase PRO の1号
 - 流れは矢印で短くつなぎます(例: 6月は暴騰→7月は急落)。ときどき問いかけを入れます。
 - 「正直、」「かなり」など、くだけた言葉を少し混ぜます。入れすぎません。括弧の補足は1号に1〜2か所まで。「笑」は使いません。
 - 読む人の気持ちに寄り添う一文を、最後の部品に入れてかまいません。
-- 1文は短く、1段落は2〜3文までにします。
+- 1文は短く、1段落は2〜3文までにします。text の body は2段落まで。3つ以上の点を並べるときは、行の頭を「・」にした箇条書きにします。
+- 相場の数字の図(騰落率の棒グラフ・終値のカード)はこちらで入れます。同じ数字を文章で長く並べ直しません。
 
 【書かないこと】
 - 買いや売りのすすめ、目標株価、「必ず上がる」といった断定。
@@ -300,6 +301,28 @@ def event_date(item, events=None):
     return min(candidates, key=lambda pair: pair[0])
 
 
+SCHEDULED_INDICATORS = (("cpi", "cpi"), ("core-cpi", "cpi"), ("ppi", "ppi"), ("core-ppi", "ppi"), ("pce", "pce"), ("core-pce", "pce"),
+                        ("nonfarm", "jobs"), ("unemployment", "jobs"), ("hourly-earnings", "jobs"), ("adp", "adp"))
+
+
+def scheduled_indicator(item, window, events=None):
+    """Owner, Nov 21: an indicator result (「結果1.1%」) was shown in a week with no indicator release. For an indicator the release schedule
+    keeps (CPI, PPI, PCE, the jobs report, ADP), a result is this week's only when the schedule has its release inside the week; a post that
+    repeats an older figure, or previews one, is not. None when the schedule does not keep that indicator (its own date then decides)."""
+    keys = [str(fact.get("key", "")) for fact in item.get("facts") or []]
+    wanted = {name for prefix, name in SCHEDULED_INDICATORS for key in keys if key.startswith(prefix)}
+    if not wanted:
+        return None
+    if events is None:
+        try:
+            events = json.loads(SCHEDULE_PATH.read_text(encoding="utf-8"))["events"]
+        except (OSError, ValueError, KeyError):
+            return None
+    first, last = window
+    return any(event.get("kind") == "economic" and event.get("indicator") in wanted and (day := ny_date(event.get("at"))) and first <= day <= last
+               for event in events)
+
+
 def keep_in_window(evidence, window, notes, events=None):
     """Only items whose event falls inside the issue's week. What is left out is written in the owner's memo with its date."""
     first, last = window
@@ -314,6 +337,9 @@ def keep_in_window(evidence, window, notes, events=None):
             if item["kind"] != "news":
                 notes.append(note(ATTENTION, f"今週({first.month}/{first.day}〜{last.month}/{last.day})より前・後の出来事のため外しました: "
                                   f"{item['label'][:60]}(米国時間{day.isoformat()})", "outside-week-" + how))
+            continue
+        if item["kind"] == "indicator" and scheduled_indicator(item, window, events) is False:
+            notes.append(note(ATTENTION, f"今週は発表予定のない指標のため外しました: {item['label'][:60]}", "indicator-not-scheduled"))
             continue
         item["date"] = day.isoformat()
         item["dateFrom"] = how
@@ -402,7 +428,8 @@ def collect(db, now, news=(), notes=None, events=None):
             english = str(item["titleEn"]) if item.get("titleEn") and item["titleEn"] != title else ""
             summary = str(item.get("summary") or "").strip()
             quote = "\n".join(part for part in (label, english, summary) if part)  # the publisher too: a sentence names who reported it
-            add("news", label[:160], url, quote, text="\n".join(part for part in (title, summary) if part), when=item.get("publishedAt"), how="source")
+            add("news", label[:160], url, quote, text="\n".join(part for part in (title, summary) if part), when=item.get("publishedAt"), how="source",
+                ticker=str(item.get("ticker") or "") if re.fullmatch(r"[A-Z]{1,6}", str(item.get("ticker") or "")) and item.get("ticker") != "MKT" else "")
             evidence[-1]["publisher"] = publisher
     evidence = keep_in_window(evidence, issue_window(now), notes if notes is not None else [], events)
     analysed = {item["ticker"] for item in evidence if item["kind"] == "analysis" and item["ticker"]}
@@ -667,7 +694,7 @@ def card_label(item, fact):
     return (name + (" " + what if what and what not in name else "")).strip()
 
 
-COMPARE_NAMES = (("value", "結果"), ("forecast", "予想"), ("previous", "前回"))
+COMPARE_NAMES = (("value", "発表値"), ("forecast", "予想"), ("previous", "前回"))
 
 
 def build_compare(evidence, ref):
@@ -892,12 +919,13 @@ def market_parts(market, evidence):
     ids = [item["id"] for item in evidence if item["kind"] == "market"]
     if not market or not ids:
         return []
-    parts = [{"type": "numbers", "heading": "今週の指数と金・銀・ビットコイン", "cards": weekly_market.cards(market), "note": f"出典: {market['source']}。前週末の終値と比べた騰落率です。",
-              "section": "market", "ids": ids}]
-    movers = weekly_market.mover_cards(market)
+    # Owner, Nov 21: more to look at, less to read. The week's moves as bars, the closes as cards (two decimals), the biggest movers as bars;
+    # no source line on any card (the issue lists Twelve Data once, in its sources).
+    parts = [{"type": "moves", "heading": "今週の騰落率", "unit": "%", "bars": weekly_market.move_bars(market), "note": "", "section": "market", "ids": ids},
+             {"type": "numbers", "heading": "今週の指数と金・銀・BTC", "cards": weekly_market.cards(market), "note": "", "section": "market", "ids": ids}]
+    movers = weekly_market.mover_bars(market)
     if movers:
-        parts.append({"type": "numbers", "heading": "今週大きく動いた銘柄", "cards": movers, "note": f"Tech Phase が追う{market['covered']}銘柄から。出典: {market['source']}。",
-                      "section": "market", "ids": ids})
+        parts.append({"type": "moves", "heading": "今週大きく動いた銘柄", "unit": "%", "bars": movers, "note": "", "section": "market", "ids": ids})
     return parts
 
 
@@ -932,8 +960,10 @@ def compose(model_output, evidence, schedule, lenient=False, date="", market=Non
             if kind == "text":
                 part = {"type": "text", "heading": _check(raw.get("heading"), quote), "body": _check(raw.get("body"), quote)}
                 # The companies a text is about (from the results it cites): the page shows their photos side by side (owner, Nov 15).
-                tickers = list(dict.fromkeys(item["ticker"] for item in evidence if item["id"] in ids and item["kind"] in ("earnings", "analysis")
-                                             and re.fullmatch(r"[A-Z]{1,6}", item.get("ticker") or "")))
+                # A news story about one company (company_wire files it under that company) shows its photo too (owner, Nov 21: more images).
+                # The company's own results come first; a story filed under another company only adds a second photo.
+                cited = [item for kinds in (("earnings", "analysis", "note"), ("news",)) for item in evidence if item["id"] in ids and item["kind"] in kinds]
+                tickers = list(dict.fromkeys(item["ticker"] for item in cited if re.fullmatch(r"[A-Z]{1,6}", item.get("ticker") or "") and item.get("ticker") != "MKT"))
                 if tickers:
                     part["tickers"] = tickers[:2]
             elif kind == "highlight":
@@ -1129,7 +1159,10 @@ def finish(week, output):
         if item["id"] in used and item["url"] not in seen and item["url"].startswith("https://"):
             seen.add(item["url"])
             sources.append({"title": (item["label"] + (f"({item['date']})" if item.get("date") else ""))[:180], "url": item["url"]})
-    return {"date": week["date"], "headline": headline[:120], "lead": lead[:400], "parts": parts, "sources": sources[:30],
+    sources = sources[:29]
+    if week.get("market") and any(part["type"] in ("moves", "numbers") and part["section"] == "market" for part in parts):
+        sources.append(weekly_market.source(week["market"]))  # the prices, listed once at the bottom with the articles
+    return {"date": week["date"], "headline": headline[:120], "lead": lead[:400], "parts": parts, "sources": sources,
             "notes": finish_notes(week["notes"] + more)}
 
 

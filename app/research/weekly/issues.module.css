@@ -45,6 +45,10 @@
 .schedule article{display:grid;grid-template-columns:76px 1fr;gap:14px;align-items:center;padding:12px 14px;border:1px solid #4a3d20;border-radius:16px;background:#0e121a;min-width:0}
 .date{display:grid;justify-items:center;padding:8px 0;border-right:1px solid #4a3d20}.date small{font:12px ui-monospace,monospace;letter-spacing:.08em;color:#d8b36a}.date b{font:700 30px ui-monospace,monospace;line-height:1.1}.date span{font-size:13px;color:#a9b3bd}
 .schedule h4{margin:0;font-size:16px;overflow-wrap:anywhere}.schedule p{margin:4px 0 0;font-size:14px;line-height:1.7;color:#9aa4b0;overflow-wrap:anywhere}
+.moves{margin:0}.moves svg{display:block;width:100%;height:auto;max-width:560px}
+.movesZero{stroke:#4a5260;stroke-width:1}.movesRule{stroke:#232a36;stroke-width:1}
+.movesLabel{fill:#cfd6df;font-size:13px}.movesValue{font:600 13px ui-monospace,monospace}.movesValueDown{fill:#ff8a8a}.movesValueUp{fill:#6fd39b}
+.movesDown{fill:#c4575c}.movesUp{fill:#3f9f6b}.moves_asset .movesDown{fill:#a86a4a}.moves_asset .movesUp{fill:#4f8f73}
 .chart{margin:0}.chart figcaption{margin:0 0 10px;font-size:14px;color:#a99876}
 .bars{display:grid;gap:10px;align-items:end;height:200px;padding:0 4px;border-bottom:1px solid #3a4150}
 .bars>div{display:flex;flex-direction:column;justify-content:flex-end;align-items:center;height:100%;min-width:0;position:relative}
@@ -146,3 +150,5 @@
 .owner .oldDrafts button{min-height:36px;padding:0 14px;font-size:13px}
 .oldDrafts li .error{flex-basis:100%;margin:0}
 @media (max-width:600px){.oldDrafts{padding:8px 8px}.previewBar{padding:8px 10px}}
+.owner.ownerTop{margin:0 0 14px;padding:12px 14px;gap:8px}.ownerTop button{justify-self:start}
+.previewBar .publishShown{border:0;background:linear-gradient(120deg,#efd899,#c9a257);color:#2a1f05;font-weight:700}.previewBar .publishShown:disabled{opacity:.5;cursor:default}

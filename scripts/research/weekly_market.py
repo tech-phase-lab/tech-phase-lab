@@ -36,7 +36,7 @@ INDICES = (
 ASSETS = (
     {"symbol": "XAU/USD", "name": "金", "label": "金（XAU/USD）", "aliases": ("金",), "notable": Decimal("3")},
     {"symbol": "XAG/USD", "name": "銀", "label": "銀（XAG/USD）", "aliases": ("銀",), "notable": Decimal("5")},
-    {"symbol": "BTC/USD", "name": "ビットコイン", "label": "ビットコイン（BTC/USD）", "aliases": ("ビットコイン", "BTC"), "notable": Decimal("8")},
+    {"symbol": "BTC/USD", "name": "ビットコイン", "label": "BTC", "aliases": ("ビットコイン", "BTC"), "notable": Decimal("8")},
 )
 # The covered stocks: the research roster (deep_analysis.ROSTER) less SK hynix, which has no US listing on the provider.
 COVERED = ("MU", "SNDK", "NBIS", "NVDA", "AMD", "AVGO", "ARM", "TSM", "ASML", "MRVL", "ANET", "CRDO", "CRWV", "VRT", "GEV", "DELL", "PLTR",
@@ -329,7 +329,7 @@ def headline_sentence(market):
 def _card(item, label):
     return {"label": label[:40], "value": float(round(item["close"], 2)), "previous": float(round(item["previousClose"], 2)), "outlook": None, "unit": "ドル",
             "outlookUnit": "", "range": (f"{item['record']}の{word(item['pct'])}率" if item.get("record") else f"{_md(item['previousDate'])}→{_md(item['lastDate'])}の終値")[:80],
-            "delta": "pct"}
+            "delta": "pct", "digits": 2}  # prices always with two decimals (79.30, not 79.3)
 
 
 def cards(market):
@@ -339,3 +339,22 @@ def cards(market):
 
 def mover_cards(market):
     return [_card(item, item["symbol"]) for item in market["losers"] + market["gainers"]][:8]
+
+
+SHORT = {"QQQ": "ナスダック100", "SPY": "S&P500", "SMH": "半導体SMH", "SOXX": "半導体SOXX", "XAU/USD": "金", "XAG/USD": "銀", "BTC/USD": "BTC"}
+
+
+def move_bars(market):
+    """The week's change of every index and other market as signed bars (the page draws them left and right of zero)."""
+    return [{"label": SHORT.get(item["symbol"], item["symbol"]), "value": float(item["pct"]), "group": item["group"]}
+            for item in market["indices"] + market["assets"]]
+
+
+def mover_bars(market):
+    """The covered stocks that moved most this week, as signed bars."""
+    return [{"label": item["symbol"], "value": float(item["pct"]), "group": "stock"} for item in market["losers"] + market["gainers"]][:8]
+
+
+def source(market):
+    """The one line for the issue's sources list (owner, Nov 21: no source line on each card)."""
+    return {"title": f"{SOURCE}(指数・金・銀・BTC・個別株、{market['week']['friday']}と前週末の終値)", "url": "https://twelvedata.com/"}
