@@ -37,7 +37,9 @@ test('actual gauge switches indices immediately, clears missing readings and iso
   const buttons=node=>!node||typeof node!=='object'?[]:[...(node.type==='button'?[node]:[]),...React.Children.toArray(node.props?.children).flatMap(buttons)];
   for(const locale of ['ja','en']){
    state.values=[];state.review=null;
-   let r=render(locale,snapshot());assert.match(r.html,/rotate\(72 150 150\)/);assert.match(r.html,/-12.5%/);assert.match(r.html,/\+3.2%/);
+   let r=render(locale,snapshot());assert.match(r.html,/rotate\(72 150 150\)/);
+   // Owner decision (Nov 21): the hard-coded sector rows had no data behind them and were removed.
+   assert.doesNotMatch(r.html,/セクター別|By sector|クラウド・AI|Cloud &amp; AI|ヘルスケア|Healthcare|通知利用権|Alerts access|Coming soon/);assert.match(r.html,/-12.5%/);assert.match(r.html,/\+3.2%/);
    buttons(r.tree).find(b=>/40/.test(String(b.props.children))).props.onClick();
    r=render(locale,snapshot());assert.match(r.html,/rotate\(-36 150 150\)/);assert.match(r.html,locale==='ja'?/aria-pressed="true">TP半導体40/:/aria-pressed="true">TP Semiconductor 40/);
    r=render(locale,{...snapshot(),sox:unavailable});assert.doesNotMatch(r.html,/rotate\(/);assert.doesNotMatch(r.html,/-12.5%/);
