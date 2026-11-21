@@ -20,7 +20,6 @@ import ResoluteBar from "./resolute-bar";
 import Deferred from "./deferred";
 import PlanCards, { TOKUSHOHO_HREF } from "./plan-cards";
 import FreshnessNotice from "./freshness-notice";
-import HomeToday from "./home-today";
 import type { InitialNewsSnapshot } from "@/lib/research/general-news";
 import NewsFeed from "./news/news-feed";
 import { warmNews } from "./news/general-news-panel";
@@ -233,7 +232,6 @@ export default function ResearchDashboard({ events, monitoredCompanies, initialN
           <FreshnessNotice lang={lang} />
           <HomeTools lang={lang} onPro={() => openView("pro")} onWatch={() => openView("companies")} />
           <ResoluteBar />
-          <HomeToday lang={lang} />
           <Deferred fallback={<div aria-busy="true" style={{ minHeight: 420 }} />}><NewsFeed lang={lang} initialNews={initialNews} /></Deferred>
           <HomeHelp lang={lang} />
         </>}
