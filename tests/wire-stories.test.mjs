@@ -304,6 +304,29 @@ test('market live blogs, stock lists, explainers and opinion are left out, and c
   for (const title of REAL_NEWS) { assert.equal(isNotNews(title), false, title); assert.equal(lowValue(title), false, title); }
 });
 
+// Nov 20 review: an explainer, "- live", "here's the" or bull-case phrase does not drop a headline that reports a concrete event.
+const EVENT_NEWS = ['AMD launches MI400: what it means for Nvidia', 'Microsoft to invest $10 billion in Japan, what to know',
+  'Intel names new CEO - live', 'Oracle surges 30% on cloud backlog - live', "Here's the full statement from Apple on the EU fine",
+  "Nvidia to buy stake in Intel; here's the deal terms", "Palantir wins $10 billion Army contract — what's next", 'Morgan Stanley bull case for Tesla raised to $800'];
+const STILL_LOW_VALUE = ['Stock Market Today live: Nasdaq slides as Anthropic sinks', 'Beyond TSMC: 3 Taiwan small-cap tech stocks',
+  'Sandisk 8-for-1: what it means for investors', "Nvidia beats estimates - Here's why", 'Analysis: Nvidia names a new chief executive',
+  "Lumentum (NASDAQ:LITE) Stock Surges 2.9% - What's Next?", 'Lumentum unveils AI rack optics demo: what it means for LITE stock'];
+const GURUFOCUS = ['Marvell Technology (MRVL) Stock Down 11.7% — What the 84 GF Score Means for Investors',
+  'Arm Holdings (ARM) after 14.1% drop — GF Value $207.57 vs price $152.18', 'Arista Networks (ANET) a bargain after 11.6% drop? GF rating',
+  'マーベル・テクノロジー株が11.7%下落—GFスコア84が投資家に意味すること', 'アーム、14.1%下落後のGFバリューは207.57ドル', 'アリスタ、11.6%下落で割安か？GF評価'];
+
+test('an explainer phrase does not drop an event headline; GuruFocus templates are dropped (Nov 20 review, owner Nov 21)', () => {
+  for (const title of EVENT_NEWS) assert.equal(isNotNews(title), false, title);
+  for (const title of STILL_LOW_VALUE) assert.equal(isNotNews(title), true, title);
+  for (const title of GURUFOCUS) assert.equal(isNotNews(title), true, title);
+  assert.equal(isNotNews('Micron, Sandisk, SK Hynix in focus as GF Securities cuts NAND price forecast, sees glut'), false);
+  // A translated explainer phrase is kept when the English headline reports the event, and dropped when it does not.
+  assert.equal(isNotNews('AMD、MI400を発表：エヌビディアにとっての意味', 'AMD launches MI400: what it means for Nvidia'), false);
+  assert.equal(isNotNews('サンディスクの8分割：投資家にとっての意味', 'Sandisk 8-for-1: what it means for investors'), true);
+  const wire = { AMD: [item('mi400', 'AMD launches MI400: what it means for Nvidia', 'AMD、MI400を発表：エヌビディアにとっての意味', '2026-11-20T13:00:00Z')] };
+  assert.deepEqual(wireStories(wire, 'ja', new Set(['AMD'])).map(story => story.id), ['mi400']);
+});
+
 test('the same broker action from two outlets is one row, the first report (owner, Nov 20: MRVL twice)', async () => {
   const { analystActions } = await import('../lib/research/wire-stories.ts');
   assert.deepEqual(analystActions('Stifel maintains Marvell Technology at Buy, lowers price target to $280 from $370'), ['stifel|pt|280']);
@@ -311,6 +334,11 @@ test('the same broker action from two outlets is one row, the first report (owne
   assert.deepEqual(analystActions('BMO Upgrades Bloom Energy to Outperform With $230 Price Target'), ['bmo|pt|230', 'bmo|rating|outperform']);
   assert.deepEqual(analystActions('Credo Technology price target lowered to $175 from $300 at TD Cowen'), ['cowen|pt|175']);
   assert.deepEqual(analystActions('Marvell agrees to buy Lumentum for $115 billion'), []);
+  // Nov 20 review: an amount in billions or trillions is not the target, however the number is cut.
+  assert.deepEqual(analystActions('Goldman Sachs keeps Nvidia price target, sees $500 billion AI opportunity'), []);
+  assert.deepEqual(analystActions('UBS lifts Apple PT ahead of $1.5 trillion buyback'), []);
+  assert.deepEqual(analystActions('Goldman Sachs keeps Nvidia price target at $250, sees $500 billion AI opportunity'), ['goldman|pt|250']);
+  assert.deepEqual(analystActions('UBS lifts Apple PT, sees $1.5 trillion buyback and $300 shares'), ['ubs|pt|300']);
   const wire = { MRVL: [
     item('first', 'Stifel maintains Marvell Technology at Buy, lowers price target to $280 from $370', 'マーベル、スティーフェルが維持も目標株価を280ドルに引き下げ', '2026-11-20T13:31:00Z'),
     item('second', 'Stifel cuts Marvell stock price target on deal concerns to $280', 'スティーフェル、取引懸念でマーベルの目標株価を280ドルに引き下げ', '2026-11-20T14:24:00Z'),

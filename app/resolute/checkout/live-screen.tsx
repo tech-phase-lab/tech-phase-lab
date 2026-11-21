@@ -4,7 +4,6 @@ import { checkoutUrl, liveApprovalUrl, liveCheckoutRequest, liveOrder, type Live
 import type { CheckoutProps } from "./screen";
 import styles from "./styles.module.css";
 import AgreeButton, { CheckoutLines, resoluteCheckoutLines, termsHref } from "../../legal/agree-button";
-import Disclaimer from "../disclaimer";
 const errors: Record<string,[string,string]> = {
  GUEST_SESSION_REQUIRED:["購入時と同じブラウザで開いてください。解決しない場合は注文番号を添えてお問い合わせください。","Open this page in the browser you used to purchase. If you still need help, contact support with your order number."],
  PAYMENT_DISABLED:["現在、購入の受付を停止しています。","Checkout is currently closed."],
@@ -109,7 +108,6 @@ export default function LiveCheckoutScreen({orderId,language:initialLanguage,can
   {id && <button disabled={busy} onClick={()=>void act("status")}>{en?"Refresh payment status":"支払い状況を再確認する"}</button>}
   {busy && <p role="status">{en?"Checking…":"確認しています…"}</p>}
   {error && <p role="alert">{errors[error]?.[en?1:0] ?? (en?"We couldn’t confirm the result. If you started a payment, refresh its status before creating another order.":"結果を確認できませんでした。支払い操作の後は、新しい注文を作る前に支払い状況を再確認してください。")}</p>}
-  <footer className={styles.links}>{!uncertain && (!attempt.current || order) && order?.state!=="capturing" && <a href={checkoutUrl(language)}>{en?"Start a new order":"新しい注文へ"}</a>}<a href={`/resolute?lang=${language}`}>{en?"Back to RESOLUTE":"RESOLUTEへ戻る"}</a><a href={termsHref(en)} target="_blank" rel="noopener">{en?"Terms of Service":"利用規約"}</a><a href={`/commerce${en?"?lang=en":""}`} target="_blank" rel="noopener">{en?"Legal Notice":"特定商取引法に基づく表記"}</a></footer>
-  <Disclaimer en={en} />
+  <footer className={styles.links}>{!uncertain && (!attempt.current || order) && order?.state!=="capturing" && <a href={checkoutUrl(language)}>{en?"Start a new order":"新しい注文へ"}</a>}<a href={`/resolute?lang=${language}`}>{en?"Back to RESOLUTE":"RESOLUTEへ戻る"}</a><a href={termsHref(en)} target="_blank" rel="noopener">{en?"Terms of Service":"利用規約"}</a><a href={`/commerce${en?"?lang=en":""}`} target="_blank" rel="noopener">{en?"Legal Notice":"特定商取引法"}</a></footer>
  </section></main>;
 }

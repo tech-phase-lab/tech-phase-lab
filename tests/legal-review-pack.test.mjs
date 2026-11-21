@@ -140,7 +140,7 @@ test("5: LP FAQ — one-time purchase (feature names, renewal prices, 「提供�
   assert.ok(lpEn.includes("We do refund double charges, or if a fault on our side stops it from working.</p>"));
 });
 
-test("6: one disclaimer sentence, small and faint, in every footer, after each article, on the alert page and under the checker", () => {
+test("6: one disclaimer sentence, small and faint, only on the home screen and the RESOLUTE landing page", () => {
   assert.equal(DISCLAIMER.ja, "本サービスと本商品は、情報の提供とご自身で決めたルールの管理を目的としたもので、特定の銘柄の売買や売買の時期をすすめるものではありません。投資の判断は、ご自身でおこなってください。");
   // The English follows Article 2, Paragraph 2 of the English terms.
   assert.ok(termsEn.includes("The Service and the Product are intended to provide information for reference in your investment decisions and to help you manage rules you set for yourself. They do not advise on or recommend buying or selling any particular security"));
@@ -150,26 +150,15 @@ test("6: one disclaimer sentence, small and faint, in every footer, after each a
   // Small and faint (owner, Nov 18: far too obtrusive at 11px / 0.55): 10px, opacity 0.4, a 12px gap above, never enlarged by iOS.
   assert.match(component, /fontSize: 10,/); assert.match(component, /opacity: 0\.4,/); assert.match(component, /margin: "12px 0 0"/);
   assert.match(component, /WebkitTextSizeAdjust: "100%"/);
+  // Owner, Nov 21: only on the home screen (and the RESOLUTE landing page that introduces the product); no other page carries it.
   const places = {
-    "../app/research/research-tool-shell.tsx": /\{children\}\n[^\n]*\n      \{footer && <footer><Disclaimer en=\{lang === "en"\} \/><\/footer>\}\n    <\/main>/,
     "../app/research/research-dashboard.tsx": /<Disclaimer en=\{lang === "en"\} \/><\/footer>/,
-    "../app/resolute/tool-shell.tsx": /\{checking \? null : <Disclaimer en=\{en\} \/>\}\n \<\/div><\/main>;/,
-    // The last line of the LP footers.
     "../app/resolute/lp/landing.tsx": /<footer className=\{s\.foot\}>[\s\S]*<Disclaimer \/>\n   <\/footer>/,
     "../app/resolute/lp/landing-en.tsx": /<footer className=\{s\.foot\}>[\s\S]*<Disclaimer en \/>\n   <\/footer>/,
-    "../app/resolute/checkout/live-screen.tsx": /<Disclaimer en=\{en\} \/>/,
-    "../app/research/columns/columns.tsx": /\{access === "pro" && !editing && <Disclaimer en=\{!ja\} \/>\}\n    <\/div>\n  <\/article>/,
-    "../app/research/weekly/issues.tsx": /<Disclaimer en=\{!ja\} \/>\n  <\/article>/,
-    "../app/research/qa/questions.tsx": /<Disclaimer en=\{!ja\} \/>\n    <\/div>\}/,
   };
   for (const [file, pattern] of Object.entries(places)) assert.match(read(file), pattern, file);
-  // The alert page a phone notification opens (/resolute/alerts/latest).
-  const alert = { date: "2026-11-17", items: [{ kind: "line_reached", symbol: "NVDA", close: 100, dropPct: 10, newLines: [10] }] };
-  assert.equal(latestAlertView(alert, "ja").disclaimer, DISCLAIMER.ja);
-  assert.equal(latestAlertView(alert, "en").disclaimer, DISCLAIMER.en);
-  assert.match(read("../app/resolute/alerts/latest/screen.tsx"), /<p className=\{s\.disc\}>\{v\.disclaimer\}<\/p>/);
-  // Under the checker: the news page is drawn inside the RESOLUTE tool shell, whose last line is the disclaimer.
-  assert.match(read("../app/resolute/news/screen.tsx"), /<ToolShell identityReady=\{identityReady\}>\{locale=><News locale=\{locale\}\/>\}<\/ToolShell>/);
+  for (const file of ["../app/research/research-tool-shell.tsx", "../app/resolute/tool-shell.tsx", "../app/resolute/checkout/live-screen.tsx", "../app/research/columns/columns.tsx", "../app/research/weekly/issues.tsx", "../app/research/qa/questions.tsx"]) assert.doesNotMatch(read(file), /Disclaimer/, file);
+  assert.doesNotMatch(read("../app/resolute/alerts/latest/screen.tsx"), /v\.disclaimer/);
 });
 
 test("7: the tax estimate shows its assumptions and keeps NISA losses out of offsets and carry-forwards", () => {
@@ -231,7 +220,7 @@ test("9: the three lawyer-reviewed texts, their English, Web Push providers, and
   assert.ok(privacyJa.includes("Apple Push Notification service(Apple社)、Firebase Cloud Messaging(Google社)、Mozillaのプッシュサービス(Mozilla社)"));
   assert.ok(privacyEn.includes("Apple Push Notification service (Apple), Firebase Cloud Messaging (Google) or Mozilla's push service (Mozilla)"));
   // The commerce notice is reachable where the LPs and plan cards link.
-  assert.ok(lp.includes(`<Link href="/commerce">特定商取引法に基づく表記</Link>`));
+  assert.ok(lp.includes(`<Link href="/commerce">特定商取引法</Link>`));
   assert.ok(lpEn.includes(`<Link href="/commerce?lang=en">Legal Notice</Link>`));
   assert.match(read("../app/research/plan-cards.tsx"), /export const TOKUSHOHO_HREF = "\/commerce";/);
   const page = read("../app/commerce/page.tsx");

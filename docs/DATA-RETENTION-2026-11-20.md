@@ -168,14 +168,13 @@ scripts/member-erasure-job.mjs (定期実行)
 2. **課金DB にマイグレーション適用**: `db/tech-phase/009_member_erasure.sql` を既存のマイグレーション用ロールで本番の課金DB(`tech_phase_billing_live`)に適用。適用前にバックアップが成功していることを確認。
 3. **RESOLUTE DB にマイグレーション適用**: `db/resolute/026_member_erasure.sql` を本番 `resolute` DB に適用。
 4. **専用ログインの作成**: 課金DB に `tech_phase_member_erasure`、RESOLUTE DB に `resolute_member_erasure`(LOGIN、関数の EXECUTE のみ。テーブル権限なし)。作成後に手順 2・3 のファイルをもう一度流すと GRANT が入る(冪等)。
-5. **Clerk の Webhook 登録**: 本番 Clerk インスタンス(プレビュー用ではない)で `https://techphase.app/api/webhooks/clerk` を `user.deleted` だけ購読で登録し、署名シークレットを Vercel 本番の `CLERK_WEBHOOK_SIGNING_SECRET` に設定。
-6. **モニター(Railway 本番)の変数**: `MEMBER_ERASURE_ENABLED=true`。再デプロイ。
-7. **ウェブ(Vercel 本番)の変数**: `MEMBER_ERASURE_ENABLED=true`。再デプロイ。
-8. **ジョブの作成**: Railway に `node scripts/member-erasure-job.mjs` を1日1回動かす cron サービスを作成し、`MEMBER_ERASURE_ENABLED=true`、`RESEARCH_MONITOR_URL`、`RESEARCH_MONITOR_TOKEN`、`MEMBER_ERASURE_BILLING_DATABASE_URL`(手順4のログイン)、`MEMBER_ERASURE_RESOLUTE_DATABASE_URL` を設定。
-9. **本番での確認**: テスト用の会員アカウントを本番で作り、Push 登録・保存・お気に入りをしてから Clerk で削除 → Vercel ログに `member-erasure` が出ること、モニター側で件数が出ること、次のジョブ実行で `steps` が増えることを確認(オーナーアカウントでは試さない)。
-10. **定期削除を ON**: 確認後、モニターとジョブに `RESEARCH_RETENTION_PURGE_ENABLED=true`。最初の実行の件数をログで確認。
-11. **ポリシーの改定**: 弁護士の確認後に §5 の文案を反映(この PR では変更しない)。
-12. **(任意)会員画面の削除ボタン**: 上の流れが本番で確認できてから、`/api/research/account/deletion` の `canDelete` を有効化する別作業。Clerk の UserProfile の削除を許可するかどうかも合わせて決める。
+5. **モニター(Railway 本番)の変数**: `MEMBER_ERASURE_ENABLED=true`。再デプロイ。
+6. **Clerk の Webhook 登録とウェブ(Vercel 本番)の `MEMBER_ERASURE_ENABLED=true` は同時に行う**: `https://techphase.app/api/webhooks/clerk` を `user.deleted` だけ購読で登録し、その署名シークレットを `CLERK_WEBHOOK_SIGNING_SECRET` に、`MEMBER_ERASURE_ENABLED=true` と一緒に設定して再デプロイする。**Webhook だけ先に登録してはいけない**: `MEMBER_ERASURE_ENABLED` が true でない間、受け口はすべての配信に 503 を返し、Svix は再送を繰り返したうえで失敗が続くエンドポイントを自動で無効化する(無効化されると、その後の退会が届かない)。逆に変数だけ先に ON にしても配信は来ないので害はないが、Webhook 登録までの退会は消えない。登録後すぐ Clerk ダッシュボードでエンドポイントが有効(Disabled でない)ことを確認する。
+7. **ジョブの作成**: Railway に `node scripts/member-erasure-job.mjs` を1日1回動かす cron サービスを作成し、`MEMBER_ERASURE_ENABLED=true`、`RESEARCH_MONITOR_URL`、`RESEARCH_MONITOR_TOKEN`、`MEMBER_ERASURE_BILLING_DATABASE_URL`(手順4のログイン)、`MEMBER_ERASURE_RESOLUTE_DATABASE_URL` を設定。
+8. **本番での確認**: テスト用の会員アカウントを本番で作り、Push 登録・保存・お気に入りをしてから Clerk で削除 → Vercel ログに `member-erasure` が出ること、モニター側で件数が出ること、次のジョブ実行で `steps` が増えることを確認(オーナーアカウントでは試さない)。
+9. **定期削除を ON**: 確認後、モニターとジョブに `RESEARCH_RETENTION_PURGE_ENABLED=true`。最初の実行の件数をログで確認。
+10. **ポリシーの改定**: 弁護士の確認後に §5 の文案を反映(この PR では変更しない)。
+11. **(任意)会員画面の削除ボタン**: 上の流れが本番で確認できてから、`/api/research/account/deletion` の `canDelete` を有効化する別作業。Clerk の UserProfile の削除を許可するかどうかも合わせて決める。
 
 ## 7. 残っている課題
 

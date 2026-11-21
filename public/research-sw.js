@@ -1,6 +1,6 @@
 /* Push only: no fetch handler and no cached private/API responses. */
 // Version 2026-11-17 (answers the owner's version question): changing this file is what makes installed phones pick up the new worker.
-const VERSION = "2026-11-17-resolute";
+const VERSION = "2026-11-20-quiet";
 // Where a notification tap may go (Nov 13: every tap used to open the price-target page, whatever the notice was about).
 // Only a same-origin path on this list is opened; anything else falls back to /research.
 // Keep in step with lib/research/push-targets.json (tests/research-sw-click-target.test.mjs checks they match).
@@ -92,9 +92,13 @@ async function deliver(payload) {
   const title = payload.title.slice(0, 100);
   const diag = { v: VERSION, id, push: Date.now() };
   await remember(DIAG_KEY, diag);
-  await self.registration.showNotification(title, {
-    body: payload.body.slice(0, 300), tag, renotify: false, data: { url, id },
-  });
+  // Nov 20 (owner): a notice sent during the device's おやすみモード carries silent: true (its title already starts with
+  // 「おやすみモード」). It is shown at once with no sound or vibration. On iPhone, WebKit's push daemon (webpushd,
+  // WebPushDaemon.mm platformShouldPlaySound) plays the default sound unless silent is true, so the flag is what keeps it quiet.
+  // Every other notice is shown exactly as before.
+  const options = { body: payload.body.slice(0, 300), tag, renotify: false, data: { url, id } };
+  if (payload.silent === true) options.silent = true;
+  await self.registration.showNotification(title, options);
   diag.shown = Date.now();
   // Whether this phone lists shown notices. Kept for the step record only: a notice gone from the list is no longer taken for a tap
   // (a notice swiped away would have opened its page too); the app shows an in-app banner instead.
