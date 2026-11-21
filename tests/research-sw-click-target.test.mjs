@@ -172,7 +172,7 @@ test("the focused window is tried first; other sites and non-research pages are 
 
 test("a new worker takes over at once so installed phones get this version", async () => {
   const w = worker();
-  assert.match(source, /const VERSION = "2026-11-17-resolute"/);
+  assert.match(source, /const VERSION = "2026-11-20-quiet"/);
   w.listeners.install({});
   let waiting;
   w.listeners.activate({ waitUntil: p => { waiting = p; } });
@@ -243,7 +243,7 @@ test("the worker notes the push, the notice shown and whether the phone lists it
   await w.push({ title: "Tech Phase · テスト通知", body: "b", url: "/research/notifications", tag: "tech-phase-test" });
   const diag = await w.record("/research-sw/diagnostic");
   assert.deepEqual(Object.keys(diag).sort(), ["id", "listApi", "listed", "push", "shown", "v"]);
-  assert.equal(diag.v, "2026-11-17-resolute"); assert.equal(diag.id, "id-1");
+  assert.equal(diag.v, "2026-11-20-quiet"); assert.equal(diag.id, "id-1");
   assert.ok(diag.push >= before && diag.shown >= diag.push && diag.shown <= Date.now());
   assert.equal(diag.listApi, true); assert.equal(diag.listed, true);
   assert.equal(JSON.stringify(diag).includes("テスト"), false); assert.equal(JSON.stringify(diag).includes("/research"), false);
@@ -264,7 +264,7 @@ test("a tap the worker hears of is added to the notice's step record, and the ap
   assert.equal(diag.id, "id-1"); assert.ok(diag.push && diag.shown && diag.click >= before);
   const answer = await w.ask({ type: "pending-query" });
   assert.deepEqual(answer.diag, diag);
-  assert.equal(answer.version, "2026-11-17-resolute");
+  assert.equal(answer.version, "2026-11-20-quiet");
   // A tap on an older notice starts a record of its own.
   await w.click({ url: "/research/news", id: "old-1" });
   const other = await w.record("/research-sw/diagnostic");
@@ -274,11 +274,30 @@ test("a tap the worker hears of is added to the notice's step record, and the ap
 // Nov 16: the owner's app stayed on home after a tap and recorded nothing; the settings page now asks each worker its version.
 test("the worker answers a version question with its VERSION and the time of the last push it saw", async () => {
   const w = worker();
-  assert.deepEqual(await w.ask({ type: "version-query" }), { type: "version", version: "2026-11-17-resolute", lastPush: null });
+  assert.deepEqual(await w.ask({ type: "version-query" }), { type: "version", version: "2026-11-20-quiet", lastPush: null });
   const before = Date.now();
   await w.push({ title: "t", body: "b" });
   const answer = await w.ask({ type: "version-query" });
-  assert.equal(answer.version, "2026-11-17-resolute");
+  assert.equal(answer.version, "2026-11-20-quiet");
   assert.ok(answer.lastPush >= before && answer.lastPush <= Date.now());
   assert.deepEqual(Object.keys(answer).sort(), ["lastPush", "type", "version"]);
+});
+
+// Nov 20 (owner): a notice sent during おやすみモード arrives at once, marked in its title, with silent: true and no vibration or
+// renotify; the tap opens the same page as always. A notice without the flag is shown exactly as before (no silent option at all).
+test("a quiet-hours notice is shown silently with its marked title, and opens the usual page", async () => {
+  const w = worker();
+  const shown = await w.push({ title: "おやすみモード・MRVL · 目標株価の変更", body: "Stifel: $370 → $280", tag: "k1", url: "/research/price-targets", silent: true });
+  assert.equal(shown.title, "おやすみモード・MRVL · 目標株価の変更");
+  assert.equal(shown.options.body, "Stifel: $370 → $280");
+  assert.equal(shown.options.silent, true);
+  assert.equal(shown.options.renotify, false);
+  assert.equal("vibrate" in shown.options, false);
+  assert.equal(shown.options.data.url, "/research/price-targets");
+  await w.click(shown.options.data);
+  assert.deepEqual(w.log.filter(([kind]) => kind === "open"), [["open", `${ORIGIN}/research/price-targets`]]);
+  const day = await w.push({ title: "MRVL · 目標株価の変更", body: "Stifel: $370 → $280", tag: "k2", url: "/research/price-targets" });
+  assert.equal("silent" in day.options, false);
+  const odd = await w.push({ title: "t", body: "b", tag: "k3", silent: "yes" });
+  assert.equal("silent" in odd.options, false);
 });
