@@ -1,11 +1,20 @@
-import {inspectCandidateFeed,generate,isInDailyWindow,windowHours,FEED_CHECKS as INSPECT_CHECKS,reactArticles} from './risk-job.mjs';
+import {inspectCandidateFeed,generate,isInDailyWindow,windowHours,FEED_CHECKS as INSPECT_CHECKS,reactArticles,fillMarketReactions} from './risk-job.mjs';
 import {REPORT_CHECKS} from './rizel-report-source.mjs';
 const FEED_CHECKS=[...INSPECT_CHECKS,...REPORT_CHECKS];
-import {riskDate,parseRiskArticle} from '../../lib/resolute/risk.ts';
+import {riskDate,parseRiskArticle,isDailyRunHour} from '../../lib/resolute/risk.ts';
+import {RISK_POLICY} from '../../lib/resolute/risk-policy.ts';
+import {chooseRiskIndex,firstCloseAfter,newsInstant} from '../../lib/resolute/risk-market.ts';
 import {selectArticleForReview} from './rizel-worker.mjs';
 
-/** Pure intake shared by the paid worker and read-only diagnostics. */
-export function selectDailyCandidates(feed,now=new Date()){
+/** The first U.S. close after a candidate and its related TP index (the same rule that later fills the stars). */
+export function candidateSession(c){return {session:firstCloseAfter(newsInstant(c.publishedAt)),index:chooseRiskIndex({tickers:c.tickers??[],texts:[c.title]})};}
+/** True when that close's move is already in the thermometer snapshots, so the story gets its stars in this run. */
+export function hasKnownMove(c,moves){const {session,index}=candidateSession(c);const m=session?moves?.[session]?.[index]:null;return !!m&&typeof m.changePercent==='number'&&Number.isFinite(m.changePercent);}
+/** Pure intake shared by the paid worker and read-only diagnostics.
+ * `selected` holds up to RISK_POLICY.dailyStories stories; `reserve` holds the next candidates, tried only when a selected one fails
+ * the checks (at most RISK_POLICY.dailyAttempts in all). With `moves`, stories whose U.S. close is already known come first
+ * (newest first in each group), so the day's stories show stars instead of "waiting for the market". */
+export function selectDailyCandidates(feed,now=new Date(),{moves=null}={}){
  if(!(now instanceof Date)||!Number.isFinite(now.getTime()))throw Error('INVALID_CLOCK');
  const intake=inspectCandidateFeed(feed,now,{allowDateOnly:true});
  const diagnostics={...intake.diagnostics,outsideDailyWindow:0,duplicateHeadline:0,overDailyLimit:0};
@@ -15,12 +24,14 @@ export function selectDailyCandidates(feed,now=new Date()){
   if(seen.has(c.fingerprint)){diagnostics.duplicateHeadline++;return false;}
   seen.add(c.fingerprint);return true;
  });
- diagnostics.overDailyLimit=Math.max(0,selected.length-3);selected.splice(3);
+ if(moves){const known=selected.filter(c=>hasKnownMove(c,moves));diagnostics.knownMove=known.length;selected.splice(0,selected.length,...known,...selected.filter(c=>!known.includes(c)));}
+ diagnostics.overDailyLimit=Math.max(0,selected.length-RISK_POLICY.dailyStories);
+ const reserve=selected.splice(RISK_POLICY.dailyStories).slice(0,RISK_POLICY.dailyAttempts-RISK_POLICY.dailyStories);
  // A quiet day may be claimed only when every configured lane was actually read.
  // Complete = company AND market-wide lanes read, and a full page still reached back past the window start.
  const reached=!diagnostics.reportPossiblyTruncated||(diagnostics.reportOldestPublishedAt!==null&&Date.parse(diagnostics.reportOldestPublishedAt)<=now.getTime()-windowHours(now)*3600000);
  diagnostics.coverageComplete=diagnostics.reportConfigured===true&&diagnostics.reportMarketLane===true&&reached;
- return {selected,diagnostics};
+ return {selected,reserve,diagnostics};
 }
 
 /** Trusted worker only, never a browser or customer read path.
@@ -30,24 +41,36 @@ export function selectDailyCandidates(feed,now=new Date()){
 export async function prepareDailyReview({enabled=false,readFeed,selectionPool,budgetPool,apiKey,
  publishPool,now=new Date(),summarize=generate,select=selectArticleForReview,fetcher=fetch,readMoves=null}) {
  if(!enabled)return {state:'disabled'};
- const jst=new Date(now.getTime()+9*3600000);
- if([0,6].includes(jst.getUTCDay())||jst.getUTCHours()!==7)return {state:'outside-window'};
+ if(!isDailyRunHour(now))return {state:'outside-window'};
  const day=riskDate(now);
  const claim=await selectionPool.query(`INSERT INTO public.resolute_rizel_daily_runs(day,state,started_at)
  VALUES($1,'processing',$2) ON CONFLICT DO NOTHING RETURNING day`,[day,now.toISOString()]);
  if(!claim.rows.length)return {state:'already-claimed',day};
  const refs=[],articles=[];let stage='source',diagnostics;
  try{
-  const intake=selectDailyCandidates(await readFeed(),now);
-  diagnostics=intake.diagnostics;
-  const selected=intake.selected;
+  const feed=await readFeed();
+  let intake=selectDailyCandidates(feed,now);
+  // Both steps below only improve the day (stars on earlier stories, starred stories first); a failure in them never
+  // blocks it or changes what is checked. Stories still waiting from earlier days get their stars once their close is known.
+  let market=null;
+  if(readMoves){
+   market={};
+   try{if(publishPool??budgetPool){const f=await fillMarketReactions(publishPool??budgetPool,readMoves,now);market.earlierDaysFilled=f.updated;market.earlierStoriesWaiting=f.waiting;}}catch{market.earlierDays='failed';}
+   try{const sessions=[...new Set([...intake.selected,...intake.reserve].map(c=>candidateSession(c).session).filter(Boolean))];
+    if(sessions.length)intake=selectDailyCandidates(feed,now,{moves:await readMoves(sessions)});}catch{market.ordering='failed';}
+  }
+  diagnostics={...intake.diagnostics,...(market?{market}:{})};
+  const selected=intake.selected,reserve=[...intake.reserve];
   stage='storage';
   await selectionPool.query('UPDATE public.resolute_rizel_daily_runs SET candidate_count=$2 WHERE day=$1',[day,selected.length]);
   stage='generation';
   const quotes=(publishPool??budgetPool)&&readMoves?((await (publishPool??budgetPool).query('SELECT value FROM resolute.risk_quotes')).rows??[]).map(r=>r.value).filter(q=>q?.approved===true):[];
-  for(const candidate of selected){
+  // A candidate that fails the checks is replaced by the next one in reserve (bounded: dailyAttempts model calls at most).
+  const queue=[...selected];let attempts=0;
+  while(queue.length&&articles.length<RISK_POLICY.dailyStories){
+   const candidate=queue.shift();attempts++;
    const draft=await summarize(candidate,budgetPool,now,fetcher);
-   if(!draft)continue;
+   if(!draft){if(reserve.length)queue.push(reserve.shift());continue;}
    const parsed=parseRiskArticle(draft);
    if(parsed.id!==candidate.id||parsed.url!==candidate.url||parsed.publishedAt!==candidate.publishedAt)throw Error('ARTICLE_MISMATCH');
    // Shock Gauge: stars only from the related TP index's move at the first U.S. close after the news (may still be waiting).
@@ -62,6 +85,7 @@ export async function prepareDailyReview({enabled=false,readFeed,selectionPool,b
    await selectionPool.query('UPDATE public.resolute_rizel_daily_runs SET selection_refs=$2 WHERE day=$1',[day,JSON.stringify(refs)]);
   }
   if(selected.length&&!articles.length)throw Error('NO_VERIFIED_OUTPUT');
+  diagnostics.attempts=attempts;
   stage='readback';
   // Publication stays gated (owner switch + approval variable); this only stores what the owner can preview.
   const stored=articles.length?articles:(diagnostics.coverageComplete&&!selected.length?[]:null);

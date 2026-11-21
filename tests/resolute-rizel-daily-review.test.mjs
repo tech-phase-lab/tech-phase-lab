@@ -4,7 +4,7 @@ import {readFile} from 'node:fs/promises';
 import {PGlite} from '@electric-sql/pglite';
 import {prepareDailyReview} from '../services/resolute-api/rizel-daily-review.mjs';
 import {RISK_VISUAL_FIXTURE} from '../lib/resolute/risk-preview.ts';
-const now=new Date('2026-10-14T22:00:00Z');
+const now=new Date('2026-10-14T23:00:00Z');
 const feed={ok:true,enabled:true,items:[{title:'AI semiconductor risk warning',url:'https://example.com/news',publishedAt:'2026-10-14T21:00:00Z',bodyEn:'AI semiconductor companies warned of possible earnings declines over several months. The reported risk affects the sector, but the impact remains uncertain.'}]};
 async function setup(){const db=new PGlite();await db.exec('CREATE ROLE resolute_rizel_writer');await db.exec(await readFile(new URL('../db/resolute/013_rizel_daily_review.sql',import.meta.url),'utf8'));return db;}
 test('private morning path claims once, passes no inferred evidence, and never writes a public feed',async()=>{
@@ -14,8 +14,8 @@ test('private morning path claims once, passes no inferred evidence, and never w
  select:async x=>{calls++;assert.deepEqual(x.evidence,[]);return {state:'selected',publication:'withheld',articleId:x.article.id,articleRevision:'private-v1'};}};
  try{
   assert.equal((await prepareDailyReview({...opts,enabled:false})).state,'disabled');
-  assert.equal((await prepareDailyReview({...opts,now:new Date('2026-10-16T22:00:00Z')})).state,'outside-window');
-  assert.equal((await prepareDailyReview({...opts,now:new Date('2026-10-14T21:59:00Z')})).state,'outside-window');
+  assert.equal((await prepareDailyReview({...opts,now:new Date('2026-10-16T23:00:00Z')})).state,'outside-window');
+  assert.equal((await prepareDailyReview({...opts,now:new Date('2026-10-14T22:59:00Z')})).state,'outside-window');
   assert.equal(reads,0);
   const result=await prepareDailyReview(opts);assert.equal(result.state,'ready');assert.equal(result.day,'2026-10-15');assert.equal(result.count,1);assert.equal(result.publication,'withheld');assert.equal(result.storageVerified,true);assert.equal(result.diagnostics.inspected,1);
   assert.equal((await prepareDailyReview(opts)).state,'already-claimed');assert.equal(calls,1);assert.equal(reads,1);

@@ -8,7 +8,7 @@ import {saveRiskDay} from '../services/resolute-api/rizel-daily-review.mjs';
 import {RISK_POLICY} from '../lib/resolute/risk-policy.ts';
 import {riskRequest,publicRiskFeed,hash} from '../services/resolute-api/risk-store.mjs';
 import {OWNER_ACCOUNT_ID} from '../lib/membership/entitlements.ts';
-const now=new Date('2026-10-12T22:00:00Z');
+const now=new Date('2026-10-12T23:00:00Z');
 const body='NVIDIA warned that export restrictions across the semiconductor sector could affect earnings for several months. The restrictions are planned, not completed.';
 const candidate={id:hash('https://investor.nvidia.com/test'),title:'NVIDIA warns of export restrictions',body,url:'https://investor.nvidia.com/test',publishedAt:'2026-10-12T20:00:00Z',source:'official'};
 const generated={publishable:true,ja:{title:'NVIDIAが輸出規制について警告',source:'NVIDIAの公式発表',content:'NVIDIAが、半導体業界への輸出規制が計画段階にあると発表しました。',date:'2026年10月12日の発表'},en:{title:'NVIDIA warns of export restrictions',source:'NVIDIA announcement',content:'NVIDIA said export restrictions across the semiconductor sector are planned, not completed.',date:'Announced on October 12, 2026'}};
@@ -41,7 +41,7 @@ test('every summary ends with the exact closing question; new numbers still supp
  assert.equal(validateGeneration({...generated,en:{...generated.en,content:'Profit falls 99%.'}},candidate),null);
  assert.equal(validateGeneration({...generated,publishable:false},candidate),null);
 });
-test('JST weekday publication boundary handles Monday before 7, weekends, and Friday after 7',()=>{assert.equal(latestRiskDate(new Date('2026-10-11T21:59:00Z')),'2026-10-09');assert.equal(latestRiskDate(new Date('2026-10-11T22:00:00Z')),'2026-10-12');assert.equal(latestRiskDate(new Date('2026-10-10T12:00:00Z')),'2026-10-09');});
+test('JST weekday publication boundary handles Monday before the morning run (08:00 JST), weekends, and Friday after it',()=>{assert.equal(latestRiskDate(new Date('2026-10-11T22:59:00Z')),'2026-10-09');assert.equal(latestRiskDate(new Date('2026-10-11T23:00:00Z')),'2026-10-12');assert.equal(latestRiskDate(new Date('2026-10-10T12:00:00Z')),'2026-10-09');});
 test('collector excludes stale, partial, positive-only and headline-only items and canonicalizes duplicates',()=>{const a={...candidate,bodyEn:body,bodyJa:'半導体の輸出規制で業績に影響する可能性があると警告しました。'};const feed={ok:true,enabled:true,items:[],officialUpdates:[a,{...a,url:a.url+'?utm_source=test'},{...a,id:'partial',brief:{}},{...a,publishedAt:'2020-01-01',url:a.url+'/old'},{...a,bodyEn:null,bodyJa:null,url:a.url+'/title'}]};const result=candidatesFromFeed(feed,now);assert.equal(result.length,1);assert.equal(result[0].source,'official');assert.equal(candidatesFromFeed({...feed,enabled:false},now).length,1);});
 test('risk store enforces notification ownership, owner identity, publication stop, hidden stories, daily claims and scoped SQL',async()=>{
  const boot=new PGlite();await boot.exec('CREATE DATABASE resolute');const dump=await boot.dumpDataDir();await boot.close();const db=new PGlite({database:'resolute',loadDataDir:dump});const pool={async query(sql,args){const r=await db.query(sql,args);return{...r,rowCount:r.rows.length||r.affectedRows};}};
@@ -59,7 +59,7 @@ test('risk store enforces notification ownership, owner identity, publication st
  assert.equal((await publicRiskFeed(pool,false,now)).articles.length,1);
  const hidden=await riskRequest(req('/owner','POST',{action:'hide',id:article.id}),OWNER_ACCOUNT_ID,async()=>({}),pool);assert.equal(hidden.status,200);assert.equal((await publicRiskFeed(pool,false,now)).state,'stopped');
  await db.exec('SET ROLE resolute_risk_writer');await assert.rejects(()=>db.query('UPDATE resolute.entitlements SET revoked_at=now()'),e=>e.code==='42501');await db.exec('RESET ROLE');
- const next=new Date('2026-10-13T22:00:00Z');await assert.rejects(()=>publish(pool,next,model),/RISK_JOB_FAILED/);assert.equal((await publicRiskFeed(pool,false,next)).state,'failed');
+ const next=new Date('2026-10-13T23:00:00Z');await assert.rejects(()=>publish(pool,next,model),/RISK_JOB_FAILED/);assert.equal((await publicRiskFeed(pool,false,next)).state,'failed');
  }finally{if(before===undefined)delete process.env.RESOLUTE_RISK_PUBLISH_APPROVED;else process.env.RESOLUTE_RISK_PUBLISH_APPROVED=before;await db.close();}
 });
 

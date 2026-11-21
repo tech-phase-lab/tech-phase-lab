@@ -2,16 +2,17 @@ import {hasConcreteBodyDownside} from './risk-body-signals.mjs';
 import {reserveAiSpend,serializeBudgetedRequest} from './ai-budget.mjs';
 import {pathToFileURL} from 'node:url';
 import {riskPool,hash,boundedJSON} from './risk-store.mjs';
-import {parseRiskArticle,riskDate,isLegacyRiskArticle,SUMMARY_QUESTION} from '../../lib/resolute/risk.ts';
+import {parseRiskArticle,riskDate,isLegacyRiskArticle,SUMMARY_QUESTION,isDailyRunHour} from '../../lib/resolute/risk.ts';
 import {chooseRiskIndex,cleanTickers,waitingMarket,applyMarketReaction,firstCloseAfter,newsInstant} from '../../lib/resolute/risk-market.ts';
 import {summaryIssues,quoteIssues} from '../../lib/resolute/risk-copy-check.ts';
 import {RISK_POLICY} from '../../lib/resolute/risk-policy.ts';
 import {REPORT_UPDATES_LIMIT} from './rizel-report-source.mjs';
 import {createMovesReader} from './risk-moves.mjs';
+import {japaneseMoney} from '../../lib/research/money-ja.ts';
 const relevant=/\b(AI|semiconductor|NVIDIA|NVDA|AMD|TSMC|Micron|MU|ASML|AVGO|NBIS|HBM|chip|export controls?)\b|半導体|人工知能|輸出規制|エヌビディア|マイクロン/i;
 // Match complete English words, including explicit inflections. Substrings such
 // as Urban, bandwidth and cutting-edge must not become downside evidence.
-const negative=/\b(?:risks?|risky|falls?|falling|fell|fallen|cuts?|cutting(?![- ]edge)|delays?|delayed|delaying|halts?|halted|halting|bans?|banned|banning|restrict(?:s|ed|ing|ions?)?|loss(?:es)?|warn(?:s|ed|ing|ings)?|declin(?:e|es|ed|ing)|defaults?|defaulted|defaulting|lawsuits?|shortages?|downgrad(?:e|es|ed|ing)|plung(?:e|es|ed|ing)|tumbl(?:e|es|ed|ing)|slump(?:s|ed|ing)?|slid(?:e|es|ing)?|sank|sinks?|sell-?offs?|crash(?:es|ed|ing)?|tank(?:s|ed|ing)?|drop(?:s|ped|ping)?|slash(?:es|ed|ing)?|slow(?:s|ed|ing|down)|miss(?:es|ed)?|shortfalls?|probes?|investigations?|bottlenecks?|disruptions?|postpone[sd]?|overruns?|supply (?:constraints?|crunch)|(?:above|exceed(?:s|ed)?|higher than|beat) (?:expectations?|estimates?|forecasts?)|capex (?:surge|jump|spike))\b|急落|暴落|急反落|下振れ|未達|供給制約|供給不足|調査|延期|見送り|懸念|下落|引き下げ|引下げ|格下げ|遅延|停止|規制|損失|減益|警告|不足/i;
+const negative=/\b(?:risks?|risky|falls?|falling|fell|fallen|cuts?|cutting(?![- ]edge)|delays?|delayed|delaying|halts?|halted|halting|bans?|banned|banning|restrict(?:s|ed|ing|ions?)?|loss(?:es)?|warn(?:s|ed|ing|ings)?|declin(?:e|es|ed|ing)|defaults?|defaulted|defaulting|lawsuits?|shortages?|downgrad(?:e|es|ed|ing)|plung(?:e|es|ed|ing)|tumbl(?:e|es|ed|ing)|slump(?:s|ed|ing)?|slid(?:e|es|ing)?|sank|sinks?|sell-?offs?|crash(?:es|ed|ing)?|tank(?:s|ed|ing)?|drop(?:s|ped|ping)?|slash(?:es|ed|ing)?|slow(?:s|ed|ing|down)|miss(?:es|ed)?|shortfalls?|probes?|investigations?|bottlenecks?|disruptions?|postpone[sd]?|overruns?|supply (?:constraints?|crunch)|bearish|bear[- ]market|(?:above|exceed(?:s|ed)?|higher than|beat) (?:expectations?|estimates?|forecasts?)|capex (?:surge|jump|spike))\b|急落|暴落|急反落|下振れ|未達|供給制約|供給不足|調査|延期|見送り|懸念|下落|引き下げ|引下げ|格下げ|遅延|停止|規制|損失|減益|警告|不足/i;
 // Market-wide stress that can shake technology stocks (macro, policy, broad sell-offs).
 // The headline must name a market-wide subject AND a market-wide downside; the model then
 // decides publishability from verbatim evidence. This only screens candidates.
@@ -101,22 +102,52 @@ export const SUMMARY_INSTRUCTIONS='Summarize the supplied article only, in natur
  +'publication date is not the date of every event described; do not use relative claims such as today, yesterday or just announced. '
  +'Never write: any outlook or prediction, any evaluation of how big or small the impact is, whether something is temporary, likelihoods, buying or selling timing, warnings or advice. '
  +'Banned examples: 一時的, 影響は小さい, 影響は大きい, 〜しそう, 可能性が高い, 買い時, 売り時, 警戒が必要, temporary, likely, the impact is small, buying opportunity, caution is needed, investors should. '
- +'Fields: title (<=100 characters), source (who announced or reported it), content (the facts, <=250 characters), date (when it was announced or takes effect, as stated in the source; otherwise the supplied publication date). '
+ +'Fields: title (<=100 characters), source (who announced or reported it), content (the facts, <=250 characters), date (when it was announced or takes effect, as stated in the source; otherwise publishedDateTokyo for Japanese and publishedDateNewYork for English). '
  +'Do not add a closing question; the service appends a fixed one. '
+ +'Japanese copy: keep every dollar amount exactly as the source writes it (for example $5 billion, $120 or 12%); the service converts amounts to Japanese units. Never write 米ドル, and never put 。 or 、 right after a closing parenthesis. '
  +'Return publishable false when ambiguous, unsupported or unrelated to downside concerns for AI, semiconductor or other high-technology stocks. Market-wide events (macro, rates, tariffs, policy, broad sell-offs) qualify only when the text itself ties them to equities or technology companies. No markdown.';
 const stripQuestion=(text,question)=>{let t=text.trim();for(const q of [question,question.replace('？','?')])if(t.endsWith(q))t=t.slice(0,-q.length).trim();return t;};
 /** Every summary ends with the exact closing question (added here, so the model cannot alter it). */
 export function withClosingQuestion(copy,locale){const body=stripQuestion(copy.content,SUMMARY_QUESTION[locale]);return {...copy,content:body+'\n'+SUMMARY_QUESTION[locale]};}
 /** Number check and copy shape only. Returns a waiting article (no stars) or null; banned wording is checked by the caller. */
-export function validateGeneration(output,candidate){
- if(output?.publishable!==true||!output.ja||!output.en)return null;
- // The publication date is supplied to the model, so its figures may appear in the date field.
- const text=JSON.stringify([output.ja,output.en]),source=candidate.title+' '+candidate.body+' '+candidate.publishedAt;
- // Fail closed on newly invented figures; model is instructed to avoid currency/unit conversions.
- const numbers=text.match(/[-+−]?\d+(?:[.,]\d+)*%?/g)??[];if(numbers.some(n=>!source.includes(n)))return null;
- const ja=withClosingQuestion(output.ja,'ja'),en=withClosingQuestion(output.en,'en');
+const AMOUNT=String.raw`\d{1,3}(?:,\d{3})+(?:\.\d+)?|\d+(?:\.\d+)?`;
+const ENGLISH_SCALE=/\b(?:trillion|billion|million|thousand|bn|mn)\b/i;
+/** Japanese copy rules (owner, Nov 18–19): dollar amounts in Japanese units (「50億ドル」「120ドル」, never "$5 billion" or 「米ドル」),
+ * and no 「。」「、」 right after a closing parenthesis. Exact digit arithmetic (lib/research/money-ja.ts). Null when an amount
+ * cannot be converted safely: an English scale left over, or a bare "$115.8" whose source amount carries a scale (lost scale). */
+export function japaneseCopyText(text,source){
+ if(typeof text!=='string')return null;
+ let out=japaneseMoney(text),lost=false;
+ out=out.replace(new RegExp(String.raw`(?:US)?\$\s*(${AMOUNT})(?![\d.,])`,'g'),(_,amount)=>{
+  const esc=amount.replace(/[.,]/g,m=>'\\'+m);
+  if(new RegExp(String.raw`(?<![\d.,])${esc}\s*(?:trillion|billion|million|thousand|bn|mn|[TBMK])(?![A-Za-z])`,'i').test(source))lost=true;
+  return amount+'ドル';
+ });
+ out=out.replace(/(\d)米ドル/g,'$1ドル').replace(/([)）])[。、]+/g,'$1');
+ if(lost||out.includes('$')||ENGLISH_SCALE.test(out))return null;
+ return out;
+}
+/** The publication's calendar date in Tokyo and New York (both true dates of the same instant; supplied to the model). */
+export function publicationDates(publishedAt){
+ if(/^\d{4}-\d{2}-\d{2}$/.test(publishedAt))return {tokyo:publishedAt,newYork:publishedAt};
+ const at=new Date(publishedAt),f=tz=>new Intl.DateTimeFormat('en-CA',{timeZone:tz,year:'numeric',month:'2-digit',day:'2-digit'}).format(at);
+ return {tokyo:f('Asia/Tokyo'),newYork:f('America/New_York')};
+}
+/** Why a model output was not used, as a fixed code (never text): logged so a failed day can be explained. */
+export const GENERATION_REJECTIONS=Object.freeze(['not-publishable','new-number','japanese-amount','shape']);
+export function validateGeneration(output,candidate,why={}){
+ if(output?.publishable!==true||!output.ja||!output.en){why.reason='not-publishable';return null;}
+ // The publication date is supplied to the model (as given, and as Tokyo / New York dates), so its figures may appear in the date field.
+ const dates=publicationDates(candidate.publishedAt);
+ const raw=candidate.title+' '+candidate.body+' '+candidate.publishedAt+' '+dates.tokyo+' '+dates.newYork,text=JSON.stringify([output.ja,output.en]);
+ // Fail closed on newly invented figures. The source's own amounts in Japanese units (exact digit shift) also count.
+ const source=raw+' '+japaneseMoney(raw)+' '+[dates.tokyo,dates.newYork].flatMap(d=>d.split('-').map(n=>String(Number(n)))).join(' ');
+ const numbers=text.match(/[-+−]?\d+(?:[.,]\d+)*%?/g)??[];if(numbers.some(n=>!source.includes(n))){why.reason='new-number';return null;}
+ const jaCopy={};for(const k of ['title','source','content','date']){const t=japaneseCopyText(output.ja[k],raw);if(t===null){why.reason='japanese-amount';return null;}jaCopy[k]=t;}
+ why.reason='shape';
+ const ja=withClosingQuestion(jaCopy,'ja'),en=withClosingQuestion(output.en,'en');
  const index=chooseRiskIndex({tickers:candidate.tickers??[],texts:[candidate.title,ja.title,en.title]});
- try{return parseRiskArticle({id:candidate.id,url:candidate.url,publishedAt:candidate.publishedAt,market:waitingMarket(index,candidate.publishedAt),stars:null,ja,en,quoteId:null});}catch{return null;}
+ try{const article=parseRiskArticle({id:candidate.id,url:candidate.url,publishedAt:candidate.publishedAt,market:waitingMarket(index,candidate.publishedAt),stars:null,ja,en,quoteId:null});delete why.reason;return article;}catch{return null;}
 }
 async function callModel(input,instructions,pool,now,fetcher){
  const requestBody={model:'gpt-5.4-mini',store:false,reasoning:{effort:'none'},max_output_tokens:1800,instructions,
@@ -127,13 +158,17 @@ async function callModel(input,instructions,pool,now,fetcher){
  return JSON.parse((data.output??[]).flatMap(x=>x.content??[]).filter(x=>x.type==='output_text').map(x=>x.text).join(''));
 }
 /** Fixed-code log line for a summary held back by the banned-word check (article id hash and codes only, never text). */
+/** Fixed-code log line for a model output that failed the checks (article id hash and a reason code only). */
+export function rejectedLog(candidate,reason,log=console.log){log(JSON.stringify({event:'RESOLUTE_RISK_SUMMARY_WITHHELD',articleId:candidate.id,reason:GENERATION_REJECTIONS.includes(reason)?reason:'shape'}));}
 export function bannedLog(candidate,codes,log=console.log){log(JSON.stringify({event:'RESOLUTE_RISK_SUMMARY_WITHHELD',articleId:candidate.id,reason:'banned-wording',codes}));}
 /** Machine check: banned wording → one rewrite; still present → not published, logged only. */
 export async function generate(candidate,pool,now,fetcher,{log=console.log}={}){
  if(!process.env.RESOLUTE_OPENAI_API_KEY)throw Error('MODEL_NOT_CONFIGURED');
- const input=JSON.stringify({title:candidate.title,body:candidate.body,source:candidate.source,publishedAt:candidate.publishedAt});
- let article=validateGeneration(await callModel(input,SUMMARY_INSTRUCTIONS,pool,now,fetcher),candidate);
- if(!article)return null;
+ const dates=publicationDates(candidate.publishedAt);
+ const input=JSON.stringify({title:candidate.title,body:candidate.body,source:candidate.source,publishedAt:candidate.publishedAt,publishedDateTokyo:dates.tokyo,publishedDateNewYork:dates.newYork});
+ const why={};
+ let article=validateGeneration(await callModel(input,SUMMARY_INSTRUCTIONS,pool,now,fetcher),candidate,why);
+ if(!article){rejectedLog(candidate,why.reason,log);return null;}
  let codes=summaryIssues(article.ja,article.en);
  if(!codes.length)return article;
  const retry=JSON.stringify({article:JSON.parse(input),previousSummary:{ja:article.ja,en:article.en},bannedCodes:codes});
@@ -184,7 +219,7 @@ export async function fillMarketReactions(pool,readMoves,now=new Date(),{days=6}
  return {days:rows.length,updated,waiting};
 }
 export async function publish(pool,now=new Date(),model=generate,fetcher=fetch,readMoves=null){
- const jst=new Date(now.getTime()+9*3600000);if([0,6].includes(jst.getUTCDay())||jst.getUTCHours()!==7)return 'outside-window';
+ if(!isDailyRunHour(now))return 'outside-window';
  if(process.env.RESOLUTE_RISK_PUBLISH_APPROVED!=='true')return 'approval-pending';
  if(!(await pool.query('SELECT enabled FROM resolute.risk_control WHERE id')).rows[0]?.enabled)return 'stopped';
  const date=riskDate(now),claim=await pool.query("INSERT INTO resolute.risk_days(day,state) VALUES($1,'processing') ON CONFLICT DO NOTHING RETURNING day",[date]);if(!claim.rows.length)return 'already-claimed';
