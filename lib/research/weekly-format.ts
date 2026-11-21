@@ -1,13 +1,22 @@
 /** Display helpers for 週刊 Tech Phase PRO number cards. Pure, so the badge rule is tested without a browser. */
-export type WeeklyCard = { label: string; value: number | null; outlook: number | null; previous: number | null; unit: string; outlookUnit: string; range: string; delta: "pct" | "pt" | null };
+export type WeeklyCard = { label: string; value: number | null; outlook: number | null; previous: number | null; unit: string; outlookUnit: string; range: string; delta: "pct" | "pt" | null;
+  /** Fixed decimals for this card (prices: 2, so 79.30 never reads 79.3 beside 400.06). */ digits?: number };
 export type Badge = { text: string; tone: "up" | "down" | "flat"; caption: string };
 
 const trim = (value: number, digits: number) => value.toFixed(digits).replace(/\.0+$/, "").replace(/(\.\d*?)0+$/, "$1");
-/** 542.29 → "542.29", 1234567 → "1,234,567". Never more than two decimals. */
-export function formatNumber(value: number): string {
-  const [whole, fraction] = trim(value, 2).split(".");
+/** 542.29 → "542.29", 1234567 → "1,234,567". Never more than two decimals. With `digits`, exactly that many: (79.3, 2) → "79.30". */
+export function formatNumber(value: number, digits?: number): string {
+  const fixed = digits !== undefined && Number.isInteger(digits) && digits >= 0 && digits <= 2;
+  const [whole, fraction] = (fixed ? value.toFixed(digits) : trim(value, 2)).split(".");
   return `${Number(whole).toLocaleString("en-US")}${fraction ? `.${fraction}` : ""}`.replace(/^-0(?=\.|$)/, "0");
 }
+/** Signed bars around zero for the week's moves: each bar's share of the half width (0–100), from the largest absolute move. */
+export function moveWidths(values: number[]): number[] {
+  const top = Math.max(0, ...values.map(Math.abs));
+  return values.map(value => (top > 0 ? Math.max(value !== 0 ? 2 : 0, Math.round((Math.abs(value) / top) * 100)) : 0));
+}
+/** "-10.5" → "−10.5%", "3" → "+3.0%". */
+export const signedPercent = (value: number) => `${sign(value)}${Math.abs(value).toFixed(1)}%`;
 const sign = (value: number) => (value > 0 ? "+" : value < 0 ? "−" : "");
 
 /** The change badge: next-quarter outlook against this time's value; if there is no outlook, this time against the previous one.

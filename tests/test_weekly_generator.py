@@ -209,7 +209,7 @@ class GenerateTests(Base):
         self.assertEqual(numbers["cards"][1]["value"], 2.51)
         self.assertEqual(saved["parts"][-1]["type"], "schedule", "next week's schedule is always there")
         self.assertTrue(any("CPI" in item["name"] for item in saved["parts"][-1]["items"]))
-        self.assertEqual({s["url"] for s in saved["sources"]}, {MU["url"], JOBS["url"]})
+        self.assertEqual({s["url"] for s in saved["sources"]}, {MU["url"], JOBS["url"], "https://twelvedata.com/"}, "the prices are listed once, with the articles")
         self.assertEqual(weekly.member_issues(self.db)["issues"], [], "a draft is never visible to members")
         sent = json.loads(model.calls[0]["input"])
         self.assertEqual([e["id"] for e in sent["evidence"]][:2], ["E1", "E2"])
@@ -294,8 +294,8 @@ class GenerateTests(Base):
         out["parts"].append(part("numbers", heading="雇用統計の数字", evidenceIds=["E2"], refs=[{"evidenceId": "E2", "factKey": "nonfarm-payrolls"}, {"evidenceId": "E2", "factKey": "unemployment-rate"}]))
         saved = gen.generate(self.db, SATURDAY, transport=FakeModel(out), env=ENV)
         jobs = next(p for p in saved["parts"] if p["type"] == "numbers" and p["heading"] == "雇用統計の数字")
-        self.assertEqual(jobs["compare"][0], {"label": "米雇用統計 非農業部門雇用者数", "unit": "人", "values": [{"name": "結果", "value": 29000.0}, {"name": "予想", "value": 50000.0}, {"name": "前回", "value": 133000.0}]})
-        self.assertEqual([v["name"] for v in jobs["compare"][1]["values"]], ["結果", "前回"], "no forecast for the unemployment rate: two bars")
+        self.assertEqual(jobs["compare"][0], {"label": "米雇用統計 非農業部門雇用者数", "unit": "人", "values": [{"name": "発表値", "value": 29000.0}, {"name": "予想", "value": 50000.0}, {"name": "前回", "value": 133000.0}]})
+        self.assertEqual([v["name"] for v in jobs["compare"][1]["values"]], ["発表値", "前回"], "no forecast for the unemployment rate: two bars")
         mixed = {"key": "x", "value": "29K", "comparisons": {"forecast": "4.2%"}}
         self.assertIsNone(gen.build_compare([{"id": "E1", "facts": [mixed], "ticker": ""}], {"evidenceId": "E1", "factKey": "x"}), "units differ: no bars")
 
@@ -419,7 +419,7 @@ class DepthAndFiguresTests(Base):
         self.assertEqual(numbers[0]["cards"][0]["label"], "MU 売上高")
         jobs = numbers[1]
         self.assertTrue(jobs["compare"], "result / forecast / previous bars for the indicator")
-        self.assertEqual([v["name"] for v in jobs["compare"][0]["values"]], ["結果", "予想", "前回"])
+        self.assertEqual([v["name"] for v in jobs["compare"][0]["values"]], ["発表値", "予想", "前回"])
 
     def test_a_text_about_companies_carries_their_tickers_for_the_photos(self):
         out = model_output()
