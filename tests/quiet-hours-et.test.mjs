@@ -73,7 +73,8 @@ test("the English footnote no longer says the release time in Japan, and the ser
   const source = read("../app/research/notification-page-view.tsx");
   assert.doesNotMatch(source, /release time in Japan/);
   assert.match(source, /release times are in ET on the calendar/);
-  assert.match(source, /日本時間の発表の時刻に届きます。おやすみモード中は届きません。/, "the Japanese footnote is unchanged");
+  assert.match(source, /日本時間の発表の時刻に届きます。おやすみモード中は音を鳴らさずに届きます。/, "Nov 20: quiet hours mean silent, never not sent");
+  assert.doesNotMatch(source, /おやすみモード中は届きません|通知を止めます|Nothing is sent during quiet hours|Notifications pause during these hours/);
   assert.match(source, /quietToSave\(draft\)/);
   const python = read("../scripts/research/web_push.py");
   assert.match(python, /\('quiet_zone', "TEXT NOT NULL DEFAULT 'Asia\/Tokyo'"\)/);

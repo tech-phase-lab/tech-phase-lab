@@ -1,13 +1,14 @@
 "use client";
-import { useEffect, useState, type ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import Link from "next/link";
 import ResearchToolShell from "../research-tool-shell";
 import { useResearchLanguage } from "../use-research-language";
-import { useOwnerMode } from "../member-display-provider";
+import { useMemberSettled, useOwnerMode } from "../member-display-provider";
+import { useIdentityRefresh } from "../identity-provider";
+import WeeklyDraftWriter, { WeeklyDraftWriterSlot } from "./draft-writer";
 import { arrangeDrafts, barHeights, cardBadge, formatNumber, groupNotes, scheduleDate, shortDate, type WeeklyCard } from "@/lib/research/weekly-format";
 import { companyPhotos } from "@/lib/research/company-photos";
 import styles from "./issues.module.css";
-import Disclaimer from "../../resolute/disclaimer";
 
 type Section = "summary" | "earnings" | "indicators" | "market" | "schedule";
 type Part = (
@@ -138,7 +139,6 @@ export function IssueView({ issue, lang = "ja", format = plain }: { issue: Issue
         : <section className={styles.part}><h3><span>{label}</span>{part.heading}</h3><Body part={part} ja={ja} format={format} /></section>}</div>;
     })}
     {issue.sources.length > 0 && <details className={styles.sources}><summary>{ja ? "出典" : "Sources"}</summary><ul>{issue.sources.map((source, index) => <li key={index}><a href={source.url} target="_blank" rel="noopener noreferrer">{source.title}</a></li>)}</ul></details>}
-    <Disclaimer en={!ja} />
   </article>;
 }
 
@@ -266,31 +266,45 @@ function OwnerPanel({ owner, onChanged, shown, onWatch, latestPublished, onPrevi
   </section>;
 }
 
-export default function WeeklyIssues() {
+/** The first page of issues as the member's own request returns it, read on the server so the page opens with the issue in place (owner,
+ * Nov 21: RIZEL'S DESK opened in about three stages). Only a successful answer is passed; anything else is asked again by the browser. */
+export type WeeklyInitial = { issue: Issue | null; latest: number | null; issues: Listed[]; hasMore: boolean };
+
+export default function WeeklyIssues({ initial, standby = false }: { initial?: WeeklyInitial; standby?: boolean } = {}) {
   const [lang, setLang] = useResearchLanguage();
   const ownerMode = useOwnerMode();
-  const [state, setState] = useState<State>("loading");
-  const [issue, setIssue] = useState<Issue | null>(null), [latest, setLatest] = useState<number | null>(null);
-  const [list, setList] = useState<Listed[]>([]), [hasMore, setHasMore] = useState(false), [pick, setPick] = useState(false), [more, setMore] = useState(false);
+  const settled = useMemberSettled();
+  const refreshIdentity = useIdentityRefresh();
+  const [state, setState] = useState<State>(initial ? "ready" : "loading");
+  const [issue, setIssue] = useState<Issue | null>(initial?.issue ?? null), [latest, setLatest] = useState<number | null>(initial?.latest ?? null);
+  const [list, setList] = useState<Listed[]>(initial?.issues ?? []), [hasMore, setHasMore] = useState(initial?.hasMore ?? false), [pick, setPick] = useState(false), [more, setMore] = useState(false);
+  // The server's first page is used as it is; the browser asks again only when the reader picks another issue or something changed.
+  const seeded = useRef(initial !== undefined);
   const [owner, setOwner] = useState<OwnerState | null>(null), [message, setMessage] = useState(""), [revision, setRevision] = useState(0);
   const [number, setNumber] = useState<number | null>(null), [preview, setPreview] = useState<Issue | null>(null);
 
   useEffect(() => {
+    // The route's loading screen draws this page in its waiting state only; the page itself asks.
+    if (standby) return;
+    if (seeded.current && number === null && revision === 0) return;
+    seeded.current = false;
     let live = true;
-    void fetch(`/api/research/weekly-issues?limit=6${number ? `&number=${number}` : ""}`, { cache: "no-store" }).then(async response => {
+    // The sign-in token is renewed first (as on the other desk pages), so a PRO member whose token lapsed in the background is not
+    // shown the PRO lock. While the sign-in library is still starting, the page keeps waiting and asks again once it is ready.
+    void refreshIdentity().then(() => fetch(`/api/research/weekly-issues?limit=6${number ? `&number=${number}` : ""}`, { cache: "no-store" })).then(async response => {
       if (!live) return;
       if (response.status === 401 || response.status === 403) { setState(response.status === 401 ? "signed-out" : "pro-required"); return; }
       const data = await response.json();
       if (!live) return;
       if (!response.ok || data.ok === false) { setState("error"); return; }
       setIssue(data.issue); setLatest(data.latest); setList(data.issues); setHasMore(data.hasMore); setState("ready");
-    }).catch(() => { if (live) setState("error"); });
+    }).catch(error => { if (live && !(error instanceof Error && error.message === "identity-loading")) setState("error"); });
     return () => { live = false; };
-  }, [number, revision]);
+  }, [number, revision, refreshIdentity, standby]);
   useEffect(() => {
-    if (!ownerMode) return;
+    if (!ownerMode || standby) return;
     void fetch("/api/research/weekly-issues?view=owner", { cache: "no-store" }).then(response => (response.ok ? response.json() : null)).then(data => data && setOwner({ drafts: data.drafts, autoPublish: data.settings.autoPublish, generateEnabled: data.settings.generateEnabled === true, generateHour: data.settings.generateHour ?? 8, lastGenerated: data.settings.lastGenerated ?? null, generation: data.generation ?? { running: false, configured: false, lastOk: null, lastError: "" } })).catch(() => undefined);
-  }, [ownerMode, revision]);
+  }, [ownerMode, revision, standby]);
   const olderPage = async () => {
     const last = list[list.length - 1]; if (!last) return;
     const response = await fetch(`/api/research/weekly-issues?limit=6&before=${last.number}`, { cache: "no-store" });
@@ -312,6 +326,7 @@ export default function WeeklyIssues() {
   const reviewing = ownerMode && owner ? preview ?? (issue ? null : arrangeDrafts(owner.drafts, latestPublished).current[0] ?? null) : null;
   const showPreview = (draft: Issue) => { setPreview(draft); window.scrollTo({ top: 0, behavior: "smooth" }); };
   return <ResearchToolShell desk compactTitle lang={lang} setLang={setLang} title={ja ? "週刊 Tech Phase PRO" : "PRO Weekly"} description="">
+    {ownerMode ? <WeeklyDraftWriter onSaved={changed} /> : !settled && <WeeklyDraftWriterSlot />}
     {(state === "signed-out" || state === "pro-required") && <section className={styles.notice}><h2>{ja ? "PRO会員限定です" : "Available with PRO"}</h2><p>{ja ? "PRO会員になると、週刊 Tech Phase PRO を読めます。" : "PRO members can read PRO Weekly."}</p><Link href="/research/account">{ja ? "ログイン・会員情報" : "Sign in or view plans"}</Link></section>}
     {state === "loading" && <p className={styles.empty}>{ja ? "読み込み中…" : "Loading…"}</p>}
     {state === "error" && <p role="alert" className={styles.error}>{ja ? "いま読み込めません。少し待ってからもう一度開いてください。" : "We couldn't load this right now. Please try again in a moment."}</p>}

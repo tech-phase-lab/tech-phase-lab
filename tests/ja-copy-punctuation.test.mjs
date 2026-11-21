@@ -4,12 +4,12 @@ import { extname, join } from "node:path";
 import test from "node:test";
 
 // Owner, Nov 19: no 「。」「、」 right after a closing parenthesis, and amounts are written 「20ドル」, not 「20米ドル」.
-// The currency name 「米ドル」 (tabs, 「百万米ドル」「米ドル建て」) is fine. Legal pages wait for the lawyer:
+// The currency name 「米ドル」 (tabs, 「米ドル建て」) is fine; the unit is 「百万ドル」, not 「百万米ドル」 (owner, Nov 20). Legal pages wait for the lawyer:
 // docs/COPY-PAREN-DOLLAR-LEGAL-PROPOSAL-2026-11-19.md.
 const ROOTS = ["app", "lib"];
 const SKIP_DIRS = new Set(["lib/legal", "node_modules"]);
 const CODE = new Set([".ts", ".tsx", ".mjs", ".js"]);
-const PATTERNS = [/[)）][。、]/g, /\d米ドル/g];
+const PATTERNS = [/[)）][。、]/g, /\d米ドル/g, /百万米ドル/g];
 
 // Each entry: file, a piece of the matching line, and why it stays.
 const ALLOWED = [

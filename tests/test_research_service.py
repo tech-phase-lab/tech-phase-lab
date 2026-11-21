@@ -2959,7 +2959,7 @@ class ResearchServiceTests(unittest.TestCase):
         self.assertEqual(summary["headlineTranslation"], {
             "status": "disabled", "dailyLimit": None,
             "eligible": 0, "translated": 0, "pending": 0,
-            "running": 0, "retrying": 0, "exhausted": 0,
+            "running": 0, "retrying": 0, "exhausted": 0, "hiddenFromJapanese": 0,
             "oldestPendingAt": None, "nextRetryAt": None,
             "calls24Hours": {"total": 0, "failed": 0, "completed": 0, "stale": 0},
         })

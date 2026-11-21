@@ -1,6 +1,6 @@
 /** おやすみモード / Quiet hours (owner, Nov 17): the English site shows US Eastern Time everywhere, so a device's quiet hours are
  * kept with their zone. The Japanese screen saves Japan time, the English one ET; the monitor reads the hours in the stored zone
- * (scripts/research/web_push.py quiet_blocks, with daylight saving time). Settings saved before Nov 17 carry no zone: Japan time. */
+ * (scripts/research/web_push.py in_quiet_hours, with daylight saving time). Settings saved before Nov 17 carry no zone: Japan time. */
 export type QuietZone = "Asia/Tokyo" | "America/New_York";
 export type QuietHours = { on: boolean; start: number; end: number; zone?: QuietZone };
 
