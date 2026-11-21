@@ -58,6 +58,8 @@ POLICY = """あなたは「リゼル」として、週刊 Tech Phase PRO の1号
 - type が market の資料は、実際の終値からプログラムが計算した今週の騰落率です(指数・金・銀・ビットコイン・追っている銘柄)。「〜以来の大きさ」「〜以降で最大」も、ここに書いてあるときだけ使えます。資料にない歴史比較(「コロナ以来」「過去最大」など)は書きません。
 - marketNotable が true の週は、lead(今週のひとこと)の1文目を、その週の相場の動きにします。指数の名前(例: ナスダック100)、資料にある騰落率、資料にある「〜以来」をそのまま入れます。headline にも相場の動きを入れます。決算や指標の話は、そのあとです。
 - その週の相場を動かした話(政策・要人の発言・大きな企業ニュース・資金の動き)は、type が news の資料から、市場への影響が大きい順に取り上げます。news の資料にない出来事は書きません。理由を断定せず、「〜と報じられました」「〜が重なりました」のように資料のとおりに書きます。
+- 疑惑・指摘・調査の報道(空売り調査会社のレポート、当局の調査など)は、事実として書きません。「〇〇(空売り調査会社)がレポートで〜と指摘し、会社は〜と反論しました」のように、誰の主張か、会社の反応(資料にあれば)を必ず書きます。資料にない社名や反論は書きません。
+- 輸出の承認や規制の話は、資料にある期間・数字・出どころ(例: 下院委員会が公開した記録)を添えます。出荷されたかどうかが資料で分からないときは、そう書きます。
 - 相場が大きく動いた週に「決算が強かったので株価も上がりそう」のような、実際の値動きと逆の見立ては書きません。見立ては market の資料の数字と合わせます。
 
 【何を書くか】
@@ -397,8 +399,10 @@ def collect(db, now, news=(), notes=None, events=None):
         if title and url.startswith("https://"):
             publisher = str(item.get("publisher") or "").strip()
             label = (f"{publisher}: " if publisher else "") + title
-            add("news", label[:160], url, title + ("\n" + str(item["titleEn"]) if item.get("titleEn") and item["titleEn"] != title else ""),
-                text=title, when=item.get("publishedAt"), how="source")
+            english = str(item["titleEn"]) if item.get("titleEn") and item["titleEn"] != title else ""
+            summary = str(item.get("summary") or "").strip()
+            quote = "\n".join(part for part in (label, english, summary) if part)  # the publisher too: a sentence names who reported it
+            add("news", label[:160], url, quote, text="\n".join(part for part in (title, summary) if part), when=item.get("publishedAt"), how="source")
             evidence[-1]["publisher"] = publisher
     evidence = keep_in_window(evidence, issue_window(now), notes if notes is not None else [], events)
     analysed = {item["ticker"] for item in evidence if item["kind"] == "analysis" and item["ticker"]}
@@ -441,17 +445,27 @@ POLICY_WORDS = re.compile(r"\b(?:Trump|White House|tariffs?|export|ban|bans|sanc
 TECH_WORDS = re.compile(r"\b(?:Nvidia|AMD|chips?|semiconductors?|AI|data cent(?:er|re)s?|Anthropic|OpenAI|TSMC|Broadcom|Micron|Intel)\b", re.I)
 NOISE_WORDS = re.compile(r"\b(?:Announces?|Declares?|Appoints?|to Present|Investor Event|Dividend|Inducement|Annual General Meeting|"
                          r"Investigation Notice|Notifies Investors|Private Placement)\b", re.I)
+# Owner, Nov 21: the week's export approvals (879,000 Nvidia and AMD chips for China) and a short seller's allegations against AMD moved the
+# market and were missing. Approvals, licences, allegations, short-seller reports and regulators' probes are scored as market-moving, in
+# English and in the Japanese headline the translator wrote.
+ALLEGATION_WORDS = re.compile(r"\b(?:short[- ]?sell(?:er|ing)?|short report|alleg\w*|accus\w*|probe[sd]?|subpoena\w*|fraud|divert\w*|smuggl\w*|"
+                              r"blacklist\w*|export controls?|licen[cs]es?|approv\w*)\b", re.I)
+JAPANESE_IMPACT = re.compile(r"空売り|疑惑|横流し|密輸|調査|承認|輸出|規制|制裁|禁止|中国|トランプ|急落|暴落|最悪|売り")
 
 
-def impact(title, publisher="", ticker=""):
-    """A rough score of how much a headline could matter to the market: a major newsroom, market-wide words, policy words, chips and AI."""
+def impact(title, publisher="", ticker="", title_ja=""):
+    """A rough score of how much a headline could matter to the market: a major newsroom, market-wide words, policy and allegation words,
+    chips and AI. Scored on the English headline and on its Japanese translation."""
     score = 0
     score += 3 if MAJOR_PUBLISHERS.search(publisher or "") else 0
     score -= 4 if WIRE_PUBLISHERS.search(publisher or "") else 0
     score += 4 if MARKET_WORDS.search(title) else 0
     score += 3 if POLICY_WORDS.search(title) else 0
+    score += 3 if ALLEGATION_WORDS.search(title) else 0
     score += 2 if TECH_WORDS.search(title) else 0
+    score += 2 if JAPANESE_IMPACT.search(title_ja or "") and not (MARKET_WORDS.search(title) or POLICY_WORDS.search(title) or ALLEGATION_WORDS.search(title)) else 0
     score += 2 if ticker == "MKT" else 0
+    score += 1 if ticker in weekly_market.COVERED else 0
     score -= 4 if NOISE_WORDS.search(title) else 0
     return score
 
@@ -470,11 +484,12 @@ def wire_headlines(db, now, limit=24):
         return []
     article = "article" in columns
     publisher = "w.publisher" if "publisher" in columns else "NULL"
+    summary = "w.summary_en" if "summary_en" in columns else "NULL"  # the provider's short summary: who said what, so a sentence can name them
     title_ja = ", j.title_ja" if translated and article else ", NULL AS title_ja"
     joins = (" LEFT JOIN company_wire_article_ja j ON j.article=w.article" if translated and article else "") + \
             (" LEFT JOIN company_wire_article_attempts a ON a.article=w.article" if rejected and article else "")
     judged = " AND COALESCE(a.reason,'') NOT IN ('not-news','off-topic')" if rejected and article else ""
-    query = (f"SELECT w.ticker, w.title, w.url, {publisher} AS publisher, w.published_at{title_ja} FROM company_wire w{joins}"
+    query = (f"SELECT w.ticker, w.title, w.url, {publisher} AS publisher, {summary} AS summary, w.published_at{title_ja} FROM company_wire w{joins}"
              f" WHERE w.published_at>=?{judged} ORDER BY w.published_at DESC LIMIT 3000")
     seen, rows = set(), []
     for row in db.execute(query, (since,)):
@@ -486,10 +501,10 @@ def wire_headlines(db, now, limit=24):
         if key in seen:
             continue
         seen.add(key)
-        score = impact(title, row["publisher"] or "", row["ticker"] or "")
+        score = impact(title, row["publisher"] or "", row["ticker"] or "", row["title_ja"] or "")
         if score >= 5:
             rows.append((score, row["published_at"], {"title": row["title_ja"] or title, "titleEn": title, "url": url, "publisher": row["publisher"] or "",
-                                                      "publishedAt": row["published_at"], "ticker": row["ticker"] or ""}))
+                                                      "publishedAt": row["published_at"], "ticker": row["ticker"] or "", "summary": str(row["summary"] or "")[:1200]}))
     rows.sort(key=lambda row: (row[0], str(row[1])), reverse=True)  # the largest impact first, the newest first within it
     return [row[2] for row in rows[:limit]]
 
@@ -586,6 +601,26 @@ def _find_fact(evidence, ref):
     return None, None
 
 
+def _plain_number(value):
+    return f"{Decimal(str(value)).normalize():f}"
+
+
+def ja_amount(text, key=""):
+    """'$130.0B ± 3%' -> '1300億ドル±3%', '$12.5B ± $300M' -> '125億ドル±3億ドル' (owner, Nov 21: a card reads in Japanese units). Left as
+    written when a part cannot be read exactly."""
+    out = []
+    for piece in str(text).split(" ± "):
+        parsed = parse_value(piece, key)
+        if not parsed:
+            return str(text)
+        number, unit = parsed
+        if unit.startswith("百万"):  # 300百万ドル -> 3億ドル, 96百万ドル -> 9600万ドル
+            number, unit = ((float(Decimal(str(number)) / 100), "億" + unit[2:]) if abs(number) >= 100
+                            else (float(Decimal(str(number)) * 100), "万" + unit[2:]))
+        out.append(_plain_number(number) + unit)
+    return "±".join(out)
+
+
 def build_card(evidence, ref):
     item, fact = _find_fact(evidence, ref)
     if not fact:
@@ -601,13 +636,13 @@ def build_card(evidence, ref):
         outlook = parse_value(guidance["value"].split(" ± ")[0], fact["key"])
         if outlook:
             card["outlook"], card["outlookUnit"] = outlook[0], outlook[1][:12]
-            card["range"] = ("会社見通し " + guidance["value"])[:80]
+            card["range"] = ("会社見通し " + ja_amount(guidance["value"], fact["key"]))[:80]
     compared = fact.get("comparisons") or {}
     previous = parse_value(compared["previous"], fact["key"]) if compared.get("previous") else None
     if previous and previous[1] == parsed[1]:
         card["previous"] = previous[0]
     if compared.get("forecast") and not card["range"]:
-        card["range"] = ("市場予想 " + str(compared["forecast"]))[:80]
+        card["range"] = ("市場予想 " + ja_amount(str(compared["forecast"]), fact["key"]))[:80]
     if item["kind"] == "indicator":
         # Owner, Nov 21: a card must say what it is. The basis and the comparisons in words; the reference month only here, small.
         said = [f"{name} {compared[key]}" for key, name in (("forecast", "予想"), ("previous", "前回")) if compared.get(key)]

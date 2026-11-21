@@ -207,6 +207,20 @@ class MarketComputationTests(unittest.TestCase):
         wm.fetch_closes([f"S{i}" for i in range(30)], "2008-01-01", "2026-11-21", transport)
         self.assertTrue(all(len(c["symbol"].split(",")) * int(c["outputsize"]) <= wm.BATCH_ROWS for c in calls))
 
+    def test_a_spent_minute_of_shared_credits_is_waited_out_at_most_twice(self):
+        import io
+        import urllib.error
+        ok = mock.MagicMock()
+        ok.__enter__.return_value = io.BytesIO(b'{"status": "ok", "values": []}')
+        limited = urllib.error.HTTPError("https://api.twelvedata.com/x", 429, "Too Many Requests", {}, None)
+        with mock.patch.object(wm, "sleep") as waited, mock.patch.object(wm.urllib.request, "urlopen", side_effect=[limited, ok]):
+            self.assertEqual(wm._get("time_series", {"symbol": "QQQ"}, env={})["status"], "ok")
+        self.assertEqual(waited.call_count, 1)
+        with mock.patch.object(wm, "sleep") as waited, mock.patch.object(wm.urllib.request, "urlopen", side_effect=[limited, limited, limited]):
+            with self.assertRaises(wm.MarketUnavailable) as caught:
+                wm._get("time_series", {"symbol": "QQQ"}, env={})
+        self.assertEqual((waited.call_count, str(caught.exception)), (2, "twelve-data-time_series-http-429"))
+
     def test_the_key_never_appears_in_an_error(self):
         with mock.patch.object(wm.urllib.request, "urlopen", side_effect=OSError("https://api.twelvedata.com/x?apikey=secret-value")):
             with self.assertRaises(wm.MarketUnavailable) as caught:
@@ -290,6 +304,26 @@ class HeadlineRankingTests(Base):
         news = [item for item in evidence if item["kind"] == "news"]
         self.assertEqual([item["date"] for item in news], ["2026-11-20", "2026-11-20"])
         self.assertTrue(news[1]["label"].startswith("Reuters: Trump"))
+
+    def test_export_approvals_and_short_seller_allegations_are_gathered_every_week(self):
+        """Owner, Nov 21: the approval of 879,000 Nvidia and AMD chips for China and a short seller's report on AMD were missing."""
+        self.add("e", "AMD", "The U.S. Approved 879,000 Nvidia and AMD Chips for China in 6 Months", "24/7 Wall St.", "2026-11-20T14:28:00+00:00")
+        self.add("f", "AMD", "AMD stock dives on short seller report of alleged China exposure", "CNBC", "2026-11-19T16:24:00+00:00")
+        self.add("g", "NVDA", "NVDA Stock Clocks Worst Week In 18 Years As SEC Reportedly Probes Its Accounting Practices", "", "2026-11-20T23:38:12+00:00")
+        self.add("h", "GEHC", "GE HealthCare introduces new Imaging 360 features", "Business Wire", "2026-11-20T14:00:00+00:00")
+        self.db.commit()
+        titles = [row["titleEn"] for row in gen.wire_headlines(self.db, NOV21)]
+        for wanted in ("879,000", "short seller", "SEC Reportedly Probes"):
+            self.assertTrue(any(wanted in title for title in titles), wanted)
+        self.assertFalse(any("GE HealthCare" in title for title in titles))
+        # A Japanese headline alone is enough to notice an allegation.
+        self.assertGreaterEqual(gen.impact("AMD update", "", "AMD", "AMDに中国への横流し疑惑"), 5)
+
+    def test_card_amounts_read_in_japanese_units(self):
+        self.assertEqual(gen.ja_amount("$130.0B ± 3%", "revenue"), "1300億ドル±3%")
+        self.assertEqual(gen.ja_amount("$12.5B ± $300M", "revenue"), "125億ドル±3億ドル")
+        self.assertEqual(gen.ja_amount("$96M", "operating-income"), "9600万ドル")
+        self.assertEqual(gen.ja_amount("about $5B", "revenue"), "about $5B")
 
 
 if __name__ == "__main__":

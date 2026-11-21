@@ -13,7 +13,9 @@ Every figure carries its source and dates, so the owner can check it (the draft'
 import json
 import os
 import urllib.parse
+import urllib.error
 import urllib.request
+from time import sleep
 from datetime import date as Date, timedelta
 from decimal import Decimal, ROUND_HALF_UP
 
@@ -43,6 +45,8 @@ COVERED = ("MU", "SNDK", "NBIS", "NVDA", "AMD", "AVGO", "ARM", "TSM", "ASML", "M
 RECORD_WEEKS = 52
 MOVERS = 3
 BATCH_ROWS = 100000  # the provider refuses a batch whose symbols x rows exceeds this
+RATE_RETRIES = 2
+RATE_WAIT_SECONDS = 61
 
 
 class MarketUnavailable(RuntimeError):
@@ -57,11 +61,23 @@ def _get(path, params, env=None, timeout=30):
     if key:
         query["apikey"] = key
     request = urllib.request.Request(f"{base}/{path}?{urllib.parse.urlencode(query)}", headers={"User-Agent": "tech-phase-weekly/1"})
-    try:
-        with urllib.request.urlopen(request, timeout=timeout) as response:
-            return json.loads(response.read().decode("utf-8"))
-    except Exception as error:  # the message may carry the URL (and the key): never print it
-        raise MarketUnavailable(f"twelve-data-{path}-{type(error).__name__}") from None
+    # The key is shared with the site's price screens, whose per-minute credits can run out: wait for the next minute, at most twice.
+    for attempt in range(RATE_RETRIES + 1):
+        try:
+            with urllib.request.urlopen(request, timeout=timeout) as response:
+                body = json.loads(response.read().decode("utf-8"))
+            if isinstance(body, dict) and body.get("code") == 429 and attempt < RATE_RETRIES:
+                sleep(RATE_WAIT_SECONDS)
+                continue
+            return body
+        except urllib.error.HTTPError as error:
+            if error.code == 429 and attempt < RATE_RETRIES:
+                sleep(RATE_WAIT_SECONDS)
+                continue
+            raise MarketUnavailable(f"twelve-data-{path}-http-{error.code}") from None
+        except Exception as error:  # the message may carry the URL (and the key): never print it
+            raise MarketUnavailable(f"twelve-data-{path}-{type(error).__name__}") from None
+    raise MarketUnavailable(f"twelve-data-{path}-rate-limited")
 
 
 def _series(body):

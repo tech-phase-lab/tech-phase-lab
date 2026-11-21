@@ -205,7 +205,7 @@ class GenerateTests(Base):
         numbers = next(p for p in saved["parts"] if p["type"] == "numbers" and p["section"] != "market")
         revenue = numbers["cards"][0]
         self.assertEqual((revenue["label"], revenue["value"], revenue["unit"], revenue["outlook"], revenue["outlookUnit"]), ("MU 売上高", 113.2, "億ドル", 125.0, "億ドル"))
-        self.assertIn("会社見通し $12.5B ± $300M", revenue["range"])
+        self.assertEqual(revenue["range"], "会社見通し 125億ドル±3億ドル", "Japanese units on the card (owner, Nov 21)")
         self.assertEqual(numbers["cards"][1]["value"], 2.51)
         self.assertEqual(saved["parts"][-1]["type"], "schedule", "next week's schedule is always there")
         self.assertTrue(any("CPI" in item["name"] for item in saved["parts"][-1]["items"]))
