@@ -9,7 +9,6 @@ import { useResearchLanguage } from "../use-research-language";
 import { useOwnerAccount, useOwnerMode } from "../member-display-provider";
 import styles from "./styles.module.css";
 import { displayParts } from "@/lib/research/display-time";
-import Disclaimer from "../../resolute/disclaimer";
 
 type Question = { id: string; body: string; bodyEn?: string; status: "pending" | "answered" | "closed"; answerPostId: string | null; createdAt: string; isMine?: boolean; answer?: EditorialPost; held?: boolean; heldReason?: string };
 const nextId = () => `q-${crypto.randomUUID().replaceAll("-", "")}`;
@@ -159,7 +158,6 @@ function QuestionCard({ item, ja, ownerMode, onChanged }: { item: Question; ja: 
     {item.status === "answered" && item.answer && !editing && <div className={styles.a}>
       <header><Image src="/rizel-avatar.webp" alt="" width={34} height={34} unoptimized /><b>{ja ? "リゼルの回答" : "RIZEL’s answer"}</b><time dateTime={item.answer.publishedAt!}>{when(item.answer.publishedAt!, ja, true)}</time></header>
       <p>{ja ? item.answer.bodyJa : item.answer.bodyEn || "Translation pending."}</p>
-      <Disclaimer en={!ja} />
     </div>}
     {editing && <div className={styles.aEdit}>
       <textarea autoFocus maxLength={6000} value={text} aria-label={ja ? "回答" : "Answer"} onChange={event => setText(event.target.value)} />

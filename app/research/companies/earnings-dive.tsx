@@ -24,7 +24,6 @@ const CARD_HEADINGS: Record<"growth" | "change" | "caution" | "next", Copy> = {
   growth: { ja: "01　成長の中身", en: "01  WHAT DROVE GROWTH" }, change: { ja: "02　前回からの変化", en: "02  CHANGE FROM LAST QUARTER" },
   caution: { ja: "03　注意点", en: "03  POINTS OF CAUTION" }, next: { ja: "04　次に見るポイント", en: "04  WHAT TO WATCH NEXT" },
 };
-const DISCLAIMER: Copy = { ja: "解説は決算の内容を説明するもので、売買の判断を示すものではありません。", en: "This explanation describes the results. It is not a recommendation to buy or sell." };
 
 function Bar({ label, value, width, tone }: { label: string; value: string; width: number; tone: "blue" | "gold" | "red" }) {
   return <div className={styles.barRow}><div className={styles.barHead}><span>{label}</span><b className={tone === "red" ? styles.redText : undefined}>{value}</b></div>
@@ -35,7 +34,6 @@ function Details({ card, lang }: { card: DiveCard; lang: Lang }) {
     <summary>{lang === "ja" ? "詳しい解説" : "Details"}</summary>
     <div className={styles.moreBody}>
       {card.sections.map(section => <section key={section.key}><h4 className={styles[`h_${section.key}`]}>{LABELS[section.key][lang]}</h4><p>{section.text[lang]}</p></section>)}
-      <small>{DISCLAIMER[lang]}</small>
     </div>
   </details>;
 }

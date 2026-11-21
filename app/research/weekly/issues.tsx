@@ -7,7 +7,6 @@ import { useOwnerMode } from "../member-display-provider";
 import { arrangeDrafts, barHeights, cardBadge, formatNumber, groupNotes, scheduleDate, shortDate, type WeeklyCard } from "@/lib/research/weekly-format";
 import { companyPhotos } from "@/lib/research/company-photos";
 import styles from "./issues.module.css";
-import Disclaimer from "../../resolute/disclaimer";
 
 type Section = "summary" | "earnings" | "indicators" | "market" | "schedule";
 type Part = (
@@ -138,7 +137,6 @@ export function IssueView({ issue, lang = "ja", format = plain }: { issue: Issue
         : <section className={styles.part}><h3><span>{label}</span>{part.heading}</h3><Body part={part} ja={ja} format={format} /></section>}</div>;
     })}
     {issue.sources.length > 0 && <details className={styles.sources}><summary>{ja ? "出典" : "Sources"}</summary><ul>{issue.sources.map((source, index) => <li key={index}><a href={source.url} target="_blank" rel="noopener noreferrer">{source.title}</a></li>)}</ul></details>}
-    <Disclaimer en={!ja} />
   </article>;
 }
 

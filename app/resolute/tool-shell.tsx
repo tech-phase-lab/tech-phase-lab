@@ -1,5 +1,4 @@
 "use client";
-import Disclaimer from "./disclaimer";
 import {writeBarState} from '@/lib/research/resolute-bar-state';
 import { ReviewLink as Link, useReview } from "./review-context";
 import { usePathname } from "next/navigation";
@@ -116,7 +115,6 @@ export default function ToolShell({ identityReady=true, home=false, children }: 
   </section>}
   {review ? <p className={styles.reviewNote}>{en ? "Owner preview · You can choose to save on this device. No notifications are sent." : "運営者専用の確認画面です。端末への保存は上の設定で選べます。通知は送信しません。"}</p> : null}
   {home && !reviewing ? <AddToHomeCard en={en} /> : null}
-  {checking ? null : <Disclaimer en={en} />}
  </div></main>;
 }
 /** A small gold dot on the tapped menu item while its page is on the way, so the tap is seen to have worked. */
