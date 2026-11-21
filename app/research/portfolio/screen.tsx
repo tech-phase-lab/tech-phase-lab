@@ -110,9 +110,8 @@ export default function PortfolioScreen() {
       .catch(() => { /* the manual list is used meanwhile; the dates of these tickers stay where they are */ });
     return () => controller.abort();
   }, [heldTickers, day]);
-  const prices = useMemo(() => Object.fromEntries(Object.entries(market?.quotes ?? {}).map(([t, q]) => [t, q.close])), [market]);
   const allSplits = useMemo(() => ({ ...knownSplits(lots.map(lot => lot.ticker)), ...answer.splits }), [lots, answer]);
-  const current = useMemo(() => adjustForSplits(lots, allSplits, readSavedDay(raw) ?? day, day, { through: answer.through, prices }), [lots, allSplits, answer, raw, day, prices]);
+  const current = useMemo(() => adjustForSplits(lots, allSplits, readSavedDay(raw) ?? day, day, { through: answer.through, savedDay: readSavedDay(raw) }), [lots, allSplits, answer, raw, day]);
   const holdings = useMemo(() => aggregate(current.holdings), [current]);
   const tickers = holdings.map(h => h.ticker).join(",");
   const recentSplits = current.applied.filter(item => Date.parse(day) - Date.parse(item.date) <= 45 * 86400_000);
@@ -180,10 +179,10 @@ export default function PortfolioScreen() {
         : <>
           <Head ja={ja} sub={holdings.length > 0} />
           {current.ambiguous.length > 0 && <div role="alert" className={s.splitNote}>
-            <p>{ja ? "株式分割の前後どちらの数字か確かめられない持ち株があります。下の数字は保存したままです。証券会社の画面と同じものを選んでください。"
-              : "Some holdings may be on either side of a stock split. They are shown as saved; pick the numbers that match your broker."}</p>
-            <ul>{current.ambiguous.map(item => <li key={item.key}>{item.ticker}{item.source ? `（${item.source}）` : ""} · {splitLabel(item.split.ratio)} {item.split.date.slice(5).replace("-", "/")}
-              <br />{item.readings.map(r => <button type="button" key={r.kind} onClick={() => choose(item, r)}>{usd(r.shares, Number.isInteger(r.shares) ? 0 : 4)}{ja ? "株" : " sh"} @ ${usd(r.avgCostUsd)}{r.kind === "as-stored" ? (ja ? "（保存したまま）" : " (as saved)") : ""}</button>)}</li>)}</ul>
+            <p>{ja ? "株式分割の前後どちらの数字か確かめられない持ち株があります。一覧の数字は保存したままです。今日の証券会社の画面と同じ数字を選んでください。"
+              : "Some holdings may be on either side of a stock split. The list shows them as saved; pick the numbers your broker shows today."}</p>
+            <ul>{current.ambiguous.map(item => <li key={item.key}>{item.ticker}{item.source ? `（${item.source}）` : ""} · {item.splits.map(x => `${splitLabel(x.ratio)} ${x.date.slice(5).replace("-", "/")}`).join(", ")}
+              <br />{item.readings.map(r => <button type="button" key={`${r.kind}${r.splits}`} onClick={() => choose(item, r)}>{usd(r.shares, Number.isInteger(r.shares) ? 0 : 4)}{ja ? "株" : " sh"} @ ${usd(r.avgCostUsd)}{r.kind === "as-stored" ? (ja ? "（保存したまま）" : " (as saved)") : r.kind === "pre-split" ? (ja ? `（分割前の数字として×${Number(r.factor.toFixed(4))}）` : ` (pre-split, ×${Number(r.factor.toFixed(4))})`) : (ja ? `（逆向きの計算を直す×${Number(r.factor.toFixed(4))}）` : ` (undo the wrong-way update, ×${Number(r.factor.toFixed(4))})`)}</button>)}</li>)}</ul>
           </div>}
           {recentSplits.length > 0 && holdings.length > 0 && <p role="status" className={s.splitNote}>{ja
             ? <>{recentSplits.map(item => `${item.ticker} ${splitLabel(item.ratio).replace("-for-", "対")}の株式分割（${item.date.slice(5).replace("-", "/")}）`).join("、")}の前に登録した株数と平均取得は、分割後の数字（株数×比率、平均取得÷比率）で表示しています。取得額の合計は変わりません。</>

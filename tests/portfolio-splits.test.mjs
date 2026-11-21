@@ -92,9 +92,62 @@ test("review v2 #2/#3: lots dated on a split's own days are never classified by 
   // Broker lag: read on Nov 23, still asked; on Nov 25 (more than four days after) it is not.
   assert.equal(adjustForSplits([L({ shares: 10, avgCostUsd: 400, checkedAt: "2026-11-23", basis: 2 })], SNDK, "2026-11-23", "2026-11-24").ambiguous.length, 1);
   assert.equal(adjustForSplits([L({ shares: 80, avgCostUsd: 50, checkedAt: "2026-11-25", basis: 2 })], SNDK, "2026-11-25", "2026-11-26").ambiguous.length, 0);
-  // The price only orders the readings: the closest to today's price comes first.
-  const ordered = adjustForSplits([L({ shares: 10, avgCostUsd: 755, checkedAt: "2026-11-20", basis: 2 })], SNDK, "2026-11-20", "2026-11-21", { prices: PRICE }).ambiguous[0];
-  assert.equal(ordered.readings[0].kind, "pre-split");
+  // Review v3 ordering: always as stored first, then pre-split, then wrong-way; never ordered by price.
+  for (const avg of [755, 40]) {
+    const ordered = adjustForSplits([L({ shares: 10, avgCostUsd: avg, checkedAt: "2026-11-21" })], SNDK, "2026-11-21", "2026-11-22", { prices: PRICE }).ambiguous[0];
+    assert.deepEqual(ordered.readings.map(x => [x.kind, x.shares]), [["as-stored", 10], ["pre-split", 80], ["wrong-way", 640]]);
+  }
+});
+test("review v3 P (blocker): a lot saved by the paused screen (no date, filled from the previous save) in a file saved after the split is asked, never ×8 silently", () => {
+  const previous = JSON.stringify({ version: 2, savedAt: "2026-11-15T01:00:00.000Z", holdings: [] });
+  const raw = serialize([L({ shares: 80, avgCostUsd: 94 })], previous); // the paused screen's lot has no checkedAt and no basis
+  const stored = parseStored(raw);
+  assert.equal(stored[0].checkedAt, "2026-11-15");
+  const savedDay = JSON.parse(raw).savedAt.slice(0, 10);
+  const r = adjustForSplits(stored, SNDK, savedDay, "2026-11-22", { through: { SNDK: "2026-11-21" }, savedDay: "2026-11-21" });
+  assert.equal(r.holdings[0], stored[0]);
+  assert.deepEqual(r.ambiguous[0].readings.map(x => [x.kind, x.shares, x.avgCostUsd]), [["as-stored", 80, 94], ["pre-split", 640, 11.75], ["wrong-way", 5120, 1.46875]]);
+  // The same old lot in a file last saved before the split is on the old basis and adjusted as usual.
+  assert.equal(adjustForSplits(stored, SNDK, "2026-11-15", "2026-11-22", { savedDay: "2026-11-15" }).holdings[0].shares, 640);
+});
+test("review v3 Q: a lot this screen adjusted itself is confirmed against that split and never asked about again", () => {
+  const r = adjustForSplits([L({ shares: 10, avgCostUsd: 755, checkedAt: "2026-11-10", basis: 2 })], SNDK, "2026-11-01", "2026-11-22", { through: { SNDK: "2026-11-21" } });
+  assert.deepEqual(r.holdings.map(h => [h.shares, h.avgCostUsd, h.checkedAt, h.confirmedSplit]), [[80, 94.375, "2026-11-21", "2026-11-20"]]);
+  const again = adjustForSplits(parseStored(serialize(r.holdings)), SNDK, "2026-11-21", "2026-11-23", { through: { SNDK: "2026-11-22" }, savedDay: "2026-11-22" });
+  assert.deepEqual([again.ambiguous.length, again.holdings[0].shares], [0, 80]);
+});
+test("review v3 R: a lot typed or read on 11/23 is asked once (broker lag); one on 11/26 is not", () => {
+  assert.deepEqual(adjustForSplits([fresh(L({ shares: 80, avgCostUsd: 94 }), "2026-11-23")], SNDK, "2026-11-01", "2026-11-23").ambiguous[0].readings.map(x => x.kind), ["as-stored", "pre-split"]);
+  assert.equal(adjustForSplits([fresh(L({ shares: 80, avgCostUsd: 94 }), "2026-11-26")], SNDK, "2026-11-01", "2026-11-26").ambiguous.length, 0);
+});
+test("review v3 C: choosing twice (a stale screen) gives the same numbers; the choice is not asked again a week later", () => {
+  const lot = L({ shares: 1.25, avgCostUsd: 6040, checkedAt: "2026-11-21" });
+  const a = adjustForSplits([lot], SNDK, "2026-11-01", "2026-11-22").ambiguous[0];
+  const w = a.readings.find(x => x.kind === "wrong-way");
+  const once = parseStored(serialize(chooseReading([lot], a, w, "2026-11-22")));
+  const twice = parseStored(serialize(chooseReading(once, a, w, "2026-11-22")));
+  assert.deepEqual(twice.map(l => [l.shares, l.avgCostUsd]), [[80, 94.375]]);
+  const later = adjustForSplits(twice, SNDK, "2026-11-22", "2026-12-01", { through: { SNDK: "2026-11-30" }, savedDay: "2026-11-22" });
+  assert.deepEqual([later.ambiguous.length, later.holdings[0].shares], [0, 80]);
+});
+test("review v3 M: two open splits offer cumulative readings, and the choice (today's numbers) settles both", () => {
+  const two = { SNDK: [...SNDK.SNDK, { ticker: "SNDK", date: "2026-12-10", ratio: 2 }] };
+  const lot = L({ shares: 10, avgCostUsd: 755, checkedAt: "2026-12-10" });
+  const r = adjustForSplits([lot], two, "2026-11-01", "2026-12-12", { through: { SNDK: "2026-12-11" } });
+  assert.equal(r.holdings[0], lot);
+  assert.deepEqual(r.ambiguous[0].readings.map(x => [x.kind, x.splits, x.factor]), [["as-stored", 0, 1], ["pre-split", 1, 2], ["pre-split", 2, 16], ["wrong-way", 1, 4], ["wrong-way", 2, 256]]);
+  const picked = chooseReading([lot], r.ambiguous[0], r.ambiguous[0].readings[2], "2026-12-12");
+  assert.deepEqual(picked.map(l => [l.shares, l.confirmedSplit]), [[160, "2026-12-10"]]);
+  assert.equal(adjustForSplits(picked, two, "2026-12-12", "2026-12-20").ambiguous.length, 0);
+  // "As stored" is today's numbers too: neither split is applied later.
+  assert.equal(adjustForSplits(chooseReading([lot], r.ambiguous[0], r.ambiguous[0].readings[0], "2026-12-12"), two, "2026-12-12", "2026-12-20").holdings[0].shares, 10);
+});
+test("review v3 APH: lots of any date are not asked about APH 2026-09-03 (older than the portfolio)", () => {
+  const aph = knownSplits(["APH"]);
+  for (const checkedAt of ["2026-11-01", "2026-11-02", "2026-11-21", undefined]) {
+    const r = adjustForSplits([{ ticker: "APH", shares: 100, avgCostUsd: 150, source: "SBI", ...(checkedAt ? { checkedAt } : {}) }], aph, "2026-11-01", "2026-11-22", { through: { APH: "2026-11-21" }, savedDay: "2026-11-21" });
+    assert.deepEqual([r.ambiguous.length, r.holdings[0].shares], [0, 100]);
+  }
 });
 test("review v2 #3: only splits the old screen could have applied make an old lot ambiguous (NVDA 2007/2021/2024, GE 2021 never do)", () => {
   assert.deepEqual(LEGACY_SPLITS, { after: "2026-11-01", through: "2026-12-31" });
