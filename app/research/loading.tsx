@@ -4,6 +4,8 @@ import { useResearchLanguage } from "./use-research-language";
 import styles from "./loading.module.css";
 import { usePathname } from "next/navigation";
 import NotesLoading from "./notes/loading";
+import Questions from "./qa/questions";
+import WeeklyIssues from "./weekly/issues";
 
 /** Lightweight route fallback; disappears as soon as the destination is ready. */
 export default function ResearchLoading() {
@@ -12,6 +14,10 @@ export default function ResearchLoading() {
   // of the full-screen mark and the desk opens in one step (owner, Nov 18).
   const pathname=usePathname();
   if (pathname === "/research/notes") return <NotesLoading />;
+  // The other two desk pages likewise (owner, Nov 21): the page itself in its waiting state, so the menu, title and footer stand still
+  // and the content fills in as the one change.
+  if (pathname === "/research/qa") return <Questions standby />;
+  if (pathname === "/research/weekly") return <WeeklyIssues standby />;
   return <ResearchToolShell lang={lang} setLang={setLang} title="" description="" showHeading={false} showTools={false} footer={false}>
     <div className={styles.loading} role="status" aria-live="polite">
       <svg className={styles.mark} viewBox="0 0 104 104" fill="currentColor" aria-hidden="true"><path d="M2 32 72 2v28L2 60Z"/><path d="m27 56 19-8v50l-19-9Z"/><path d="m72 30 30 17v34l-49 21V65l19-9Z"/></svg>

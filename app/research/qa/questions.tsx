@@ -1,6 +1,6 @@
 "use client";
 import { useIdentityRefresh } from "../identity-provider";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import type { EditorialPost } from "@/lib/research/editorial-posts";
@@ -27,7 +27,11 @@ const icons = {
   check: <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.500l4.500 4.500L19 7.500" /></svg>,
 };
 
-export default function Questions() {
+/** The first page of the board as the member's own request returns it, read on the server so the questions are in the first paint (owner,
+ * Nov 21: RIZEL'S DESK opened in about three stages). Only a successful answer is passed; anything else is asked by the browser. */
+export type QuestionsInitial = { items: Question[]; hasNext: boolean; limit: number | null; left: number | null };
+
+export default function Questions({ initial, standby = false }: { initial?: QuestionsInitial; standby?: boolean } = {}) {
   const refreshIdentity = useIdentityRefresh();
   const [lang, setLang] = useResearchLanguage();
   const ja = lang === "ja";
@@ -35,16 +39,20 @@ export default function Questions() {
   // Owner, Nov 17: the owner account viewing as a PRO member takes screenshots of sample questions, so its own cards show no
   // 「あなたの質問」 and no delete button (only in that view; the owner view keeps both).
   const memberPreview = useOwnerAccount() && !ownerMode;
-  const [items, setItems] = useState<Question[]>([]);
-  const [pages, setPages] = useState(1), [hasNext, setHasNext] = useState(false), [revision, setRevision] = useState(0);
-  const [limit, setLimit] = useState<number | null>(null), [left, setLeft] = useState<number | null>(null);
-  const [state, setState] = useState<QuestionState>("loading");
+  const [items, setItems] = useState<Question[]>(initial?.items ?? []);
+  const [pages, setPages] = useState(1), [hasNext, setHasNext] = useState(initial?.hasNext ?? false), [revision, setRevision] = useState(0);
+  const [limit, setLimit] = useState<number | null>(initial?.limit ?? null), [left, setLeft] = useState<number | null>(initial?.left ?? null);
+  const [state, setState] = useState<QuestionState>(initial ? "ready" : "loading");
+  // The server's first page stands as it is; the regular refresh (every minute, on focus, after posting) takes over from there.
+  const seeded = useRef(initial !== undefined);
   const [open, setOpen] = useState(false), [body, setBody] = useState(""), [requestId, setRequestId] = useState(""), [busy, setBusy] = useState(false), [message, setMessage] = useState("");
   const reload = () => setRevision(value => value + 1);
   // The owner posts sample questions from the same bar (owner, Nov 16) without the daily limit, so no day count is shown to them.
   const quota = ownerMode ? null : left;
 
   useEffect(() => {
+    // The route's loading screen draws this page in its waiting state only; the page itself asks.
+    if (standby) return;
     setRequestId(nextId());
     let active = true;
     let controller: AbortController | undefined;
@@ -63,12 +71,15 @@ export default function Questions() {
         setItems(data.flatMap(page => page.items)); setHasNext(data.at(-1).hasNext === true);
         setLimit(Number.isInteger(data[0].limit) ? data[0].limit : null); setLeft(Number.isInteger(data[0].left) ? data[0].left : null);
         setState("ready");
-      } catch (error) { if (active && !(error instanceof Error && error.name === "AbortError")) { setItems([]); setState("error"); } }
+      // While the sign-in library is still starting, the page keeps waiting (it asks again once it is ready) instead of flashing
+      // 「接続できませんでした」 before the real answer (measured on techphase.app, Nov 21).
+      } catch (error) { if (active && !(error instanceof Error && (error.name === "AbortError" || error.message === "identity-loading"))) { setItems([]); setState("error"); } }
     }
-    void refresh(); const timer = setInterval(refresh, 60_000);
+    if (seeded.current && pages === 1 && revision === 0) seeded.current = false; else void refresh();
+    const timer = setInterval(refresh, 60_000);
     window.addEventListener("focus", refresh);
     return () => { active = false; controller?.abort(); clearInterval(timer); window.removeEventListener("focus", refresh); };
-  }, [refreshIdentity, pages, revision]);
+  }, [refreshIdentity, pages, revision, standby]);
 
   // A link to a question (…#q-…) scrolls to it once the list has arrived.
   useEffect(() => {
