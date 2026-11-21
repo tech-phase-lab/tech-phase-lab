@@ -18,6 +18,7 @@ GF = 'Credo Technology Group Holding Ltd (CRDO) Stock Down 8.2% -- Now Undervalu
 DEAL = 'Credo signs a multiyear supply contract with Microsoft'
 SPLIT = 'Sandisk 8-for-1 stock split takes effect'
 ETF = '14 ETFs Add to ASML Holding (ASML) on Nov. 18'
+CRASH = 'VIEW Nasdaq plunges 5% a day after Anthropic debut, but investors still believe in AI'
 
 
 def answering(seen, events, fail=False):
@@ -80,25 +81,28 @@ class EventJudgmentTests(unittest.TestCase):
         self.assertIn('event', fields['required'])
         self.assertEqual(fields['properties']['event']['enum'], list(company_wire.EVENT_KEEP + company_wire.EVENT_DROP))
         for phrase in ('GF Score', 'price-target', 'split taking effect', 'index inclusion', 'live blog', 'personal-finance',
-                       'what it means', 'listicle', 'prediction', 'For not-news or off-topic, write no-event.'):
+                       'what it means', 'listicle', 'prediction', 'For not-news or off-topic, write no-event.',
+                       'index-level move', '5% or more', 'large options trade', 'pure forecast', 'under 5%',
+                       'results-date notices'):
             self.assertIn(phrase, payload['instructions'])
         self.assertFalse(set(company_wire.EVENT_KEEP) & set(company_wire.EVENT_DROP))
 
     def test_news_with_no_concrete_event_is_not_published_but_kept_with_its_reason_and_counted(self):
-        self.store([GF, DEAL, SPLIT, ETF])
-        self.translate(answering([], {GF: 'score-template', DEAL: 'contract', SPLIT: 'corporate-action', ETF: 'no-event'}))
-        self.assertEqual(sorted(self.shown()), sorted([DEAL, SPLIT]))
+        self.store([GF, DEAL, SPLIT, ETF, CRASH])
+        self.translate(answering([], {GF: 'score-template', DEAL: 'contract', SPLIT: 'corporate-action', ETF: 'no-event',
+                                      CRASH: 'market-move'}))
+        self.assertEqual(sorted(self.shown()), sorted([DEAL, SPLIT, CRASH]), 'an index-level move (HQ, Nov 21) is kept')
         reasons = self.reasons()
         self.assertEqual(reasons[GF], ('not-event:score-template', company_wire.TRANSLATION_ATTEMPTS), 'stored for audit, never retried')
         self.assertEqual(reasons[ETF], ('not-event:no-event', company_wire.TRANSLATION_ATTEMPTS))
         with company_wire.connect(self.path) as db:
             self.assertEqual(company_wire.pending_rows(db, self.now.timestamp() + 3600), [], 'not sent again')
-            self.assertEqual(db.execute('SELECT COUNT(*) FROM company_wire_article_ja').fetchone()[0], 2, 'no Japanese is written for them')
+            self.assertEqual(db.execute('SELECT COUNT(*) FROM company_wire_article_ja').fetchone()[0], 3, 'no Japanese is written for them')
         today = self.health()
         self.assertEqual(today['judgedNoEvent'], 2)
         self.assertEqual(today['noEventByReason'], {'no-event': 1, 'score-template': 1})
         self.assertEqual(today['judgedNotNews'], 0, 'not-news keeps its own count')
-        self.assertEqual(today['translated'], 2)
+        self.assertEqual(today['translated'], 3)
 
     def test_fail_open_a_missing_or_unknown_event_publishes_as_before(self):
         self.store([GF, DEAL])
