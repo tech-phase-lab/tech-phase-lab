@@ -109,9 +109,6 @@ Tips shown after choosing:
 | 　下落が続いていますが、相場の価格は最近の水準より高い状態です。 | The market keeps falling, but prices are still above their recent level. |
 | 下向き × 冷えている | Down × Cool |
 | 　下落が続いていて、相場の価格が最近の水準より低い状態です。 | The market keeps falling, and prices are below their recent level. |
-| セクター別 | By sector |
-| 半導体 / クラウド・AI / ソフトウェア / 通信機器 / ヘルスケア | Semiconductors / Cloud & AI / Software / Networking / Healthcare |
-| 通知の利用権 | Alerts access |
 | この温度計の判断のしかた | How this gauge works |
 | 更新のタイミング | When it updates |
 | 米国市場の終値が確定したあと、1日1回、更新します。 | Once a day, after the US market close is final. |
