@@ -17,7 +17,7 @@ export type Preferences = { targets: boolean; earnings: boolean; news: boolean; 
   /** A new "リゼルのひとりごと" post; off until turned on. */ rizelNote: boolean; /** Owner only: a weekly issue draft is ready. */ weeklyDraft?: boolean;
   /** RESOLUTE ③④ (owner, Nov 17): shown to RESOLUTE buyers only; on unless turned off. */ resolute?: boolean };
 type PrefsState = "idle" | "loading" | "ready" | "error" | "unsupported";
-// The ten indicators; the first seven start on. Only jobless claims has no result reader yet ("soon"): the Department of Labor blocks automated reading of its page.
+// The ten indicators; the first seven start on. Jobless claims (off until turned on) is read from the Department of Labor's weekly release PDF (Nov 21).
 export const indicators: { key: string; ja: string; en: string; whenJa: string; whenEn: string; ready: boolean }[] = [
   { key: "jobs", ja: "雇用統計", en: "Jobs report", whenJa: "毎月第1金曜", whenEn: "First Friday monthly", ready: true },
   { key: "cpi", ja: "CPI（消費者物価）", en: "CPI", whenJa: "毎月", whenEn: "Monthly", ready: true },
@@ -28,7 +28,7 @@ export const indicators: { key: string; ja: string; en: string; whenJa: string; 
   { key: "ism", ja: "ISM製造業景況指数", en: "ISM manufacturing", whenJa: "毎月初め", whenEn: "Early each month", ready: true },
   { key: "gdp", ja: "GDP", en: "GDP", whenJa: "四半期ごと", whenEn: "Quarterly", ready: true },
   { key: "retail", ja: "小売売上高", en: "Retail sales", whenJa: "毎月", whenEn: "Monthly", ready: true },
-  { key: "claims", ja: "新規失業保険申請件数", en: "Jobless claims", whenJa: "毎週木曜", whenEn: "Every Thursday", ready: false },
+  { key: "claims", ja: "新規失業保険申請件数", en: "Jobless claims", whenJa: "毎週木曜", whenEn: "Every Thursday", ready: true },
 ];
 const defaultKinds = ["jobs", "cpi", "ppi", "pce", "fomc", "adp", "ism"];
 const hour = (h: number) => `${String(h).padStart(2, "0")}:00`;

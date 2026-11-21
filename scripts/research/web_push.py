@@ -1599,17 +1599,18 @@ BLS_PATH = {'jobs': 'empsit', 'cpi': 'cpi', 'ppi': 'ppi'}
 MONTHS = ['january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november', 'december']
 NAMES = {'jobs': ('米国雇用統計', 'U.S. employment report'), 'cpi': ('米国CPI', 'U.S. CPI'), 'ppi': ('米国PPI', 'U.S. PPI'), 'pce': ('米国PCE', 'U.S. PCE'),
          'adp': ('ADP雇用統計', 'ADP employment report'), 'fomc': ('FOMC政策金利', 'FOMC rate decision'), 'ism': ('ISM製造業景況指数', 'ISM manufacturing PMI'),
-         'gdp': ('米国GDP', 'U.S. GDP'), 'retail': ('米国小売売上高', 'U.S. retail sales')}
-# Results read by event_results / indicator_results carry an id that starts with the indicator (Nov 5). Jobless claims have no reader.
-EVENT_KINDS = ('adp', 'fomc', 'ism', 'gdp', 'retail')
+         'gdp': ('米国GDP', 'U.S. GDP'), 'retail': ('米国小売売上高', 'U.S. retail sales'),
+         'claims': ('米国新規失業保険申請件数', 'U.S. jobless claims')}
+# Results read by event_results / indicator_results carry an id that starts with the indicator (Nov 5). Jobless claims: DOL's weekly PDF (Nov 21).
+EVENT_KINDS = ('adp', 'fomc', 'ism', 'gdp', 'retail', 'claims')
 
 
 def economic_items(updates, events, route_errors=None):
     """Releases with a result already read by the site, as {kind, id, publishedAt, ja, en}.
 
     Read from the same places the economic calendar uses: BLS (jobs, CPI) and BEA (PCE) official releases, and the ADP
-    result read from outlets, FOMC, GDP and retail sales read from the official pages, and ISM from headlines. Jobless claims have no reader
-    (the Department of Labor blocks automated reading), so they cannot be sent."""
+    result read from outlets, FOMC, GDP, retail sales and jobless claims (DOL's weekly release PDF) read from the official pages, and ISM
+    from headlines."""
     items = []
     for update in updates or []:
         try:

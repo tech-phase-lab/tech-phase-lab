@@ -11,12 +11,14 @@
 | ISM製造業景況指数 | 報道の見出し(Google News検索)+PR Newswireに出るISM自身の発表。小数1桁の数字 | **取れる**(実フィードで確認。10月分 55.5、11社が一致) | 2社以上、またはISM自身の発表1つ |
 | GDP | BEAの発表一覧(`/news/current-releases`)でGDPのページを見つけ、本文の「increased/decreased at an annual rate of X percent」を読む | **取れる**(実ページで確認。7〜9月期 速報 +3.4%) | BEA公式 |
 | 小売売上高 | 米国勢調査局の最新発表ページ(`census.gov/retail/sales.html`)の「sales for <月> … were $X billion, up/down Y percent」 | **取れる**(実ページで確認。9月 +0.8%、745.0十億ドル) | Census公式 |
-| 新規失業保険申請件数 | 公式ページ(dol.gov) | **取れない(飛ばした)** | — |
+| 新規失業保険申請件数 | 労働省の週次発表PDF(`dol.gov/ui/data.pdf`)の「the advance figure for seasonally adjusted initial claims was X」 | **取れる**(11/21追加。11/19発表: 203,000件、前週比+1,000) | DOL公式 |
 
-### 失業保険を飛ばした理由
+### 失業保険(11/5は飛ばした → 11/21に追加)
 - 労働省(dol.gov)の発表ページ・RSSは、自動アクセスに403を返す(ロボット対策)。ブラウザのふりをして通すことはしない。
 - 公式のデータ側(`oui.doleta.gov`)は取れるが、週次の表が直近3週分(10/10〜10/24)まで未掲載で、発表直後の値としては使えない。
 - 次の手: DOLが機械で読める配信を用意するか、許可をもらう。または、ADP・ISMと同じ報道の見出し方式で取る(オーナーの決定が要る。今回は指示どおり公式ページ方式のみ)。
+- 11/21: 労働省が毎週8:30(米東部)に出す発表そのもののPDF(`https://www.dol.gov/ui/data.pdf`)は、名前を明かした取得(TechPhaseResearch/1.0)にHTTP 200で答える。ブラウザのふりはしない。発表ページ・RSSは今も403で、読まない。PDFも403になったら `event_feed_status` に記録して止まる(回避しない)。
+- 取得は水〜金の8:29〜12:00(米東部)だけ。その週の結果を保存したら、もう取りに行かない。数字は「季節調整済み・速報値」と前週改定値からの増減のみ。
 
 ## しくみ
 - FOMC・GDP・小売売上高: `scripts/research/indicator_results.py`。公式ページの文面の決まった形だけを読み、数字の範囲を確かめる(金利は0.25刻みの0.25幅、GDPは0〜30%、小売は±10%以内など)。文面が違えば読まず、`event_feed_status` に「wording-not-recognised」と記録する。文章は固定の定型文で、モデルは何も書かない。
