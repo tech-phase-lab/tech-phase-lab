@@ -186,3 +186,21 @@ test('review I: a reverse split converts a pre-split action upwards', () => {
  const v=priceTargetSplitView({ticker:'X',previous:2,latest:3,publishedAt:'2027-01-01T15:00:00Z'},Date.parse('2027-01-11T00:00:00Z'),[{ticker:'X',date:'2027-01-05',ratio:0.1}]);
  assert.deepEqual([v.previous,v.latest],[20,30]);
 });
+
+test('review v4 (2): the rule key ignores price days and split conversions, and matches the key from before price days existed', async () => {
+ const {notificationRuleKey}=await import('../lib/resolute/notification-rule-key.ts');
+ const {createHash}=await import('node:crypto');
+ const oldKey=s=>createHash('sha256').update(JSON.stringify({items:s.watchItems,lines:[],surge:s.surgeCapPct})).digest('hex');
+ const mu={deliveryHourJst:7,alertsEnabled:true,morningEnabled:false,watchItems:[{symbol:'MU',referencePrice:100}],surgeCapPct:null};
+ const after=stampPriceDays({...mu,deliveryHourJst:8},'2026-11-25','2026-11-25',{settings:mu,savedAt:'2026-11-01T00:00:00Z'});
+ assert.equal(notificationRuleKey(after,null,'2026-11-25T00:00:00Z'),notificationRuleKey(mu,null,'2026-11-01T00:00:00Z'));
+ assert.equal(notificationRuleKey(mu,null,'2026-11-01T00:00:00Z'),oldKey(mu));
+ for(const [pre,post] of [[700,87.5],[755,94.38]]){
+  const legacy={...mu,watchItems:[{symbol:'SNDK',referencePrice:pre}]};
+  const converted={...mu,watchItems:[{symbol:'SNDK',referencePrice:post,priceDay:'2026-11-24'}]};
+  assert.equal(notificationRuleKey(legacy,null,'2026-11-18T15:00:00Z'),oldKey(legacy));
+  assert.equal(notificationRuleKey(converted,null,'2026-11-24T15:00:00Z'),notificationRuleKey(legacy,null,'2026-11-18T15:00:00Z'));
+ }
+ // A new price is a new rule.
+ assert.notEqual(notificationRuleKey({...mu,watchItems:[{symbol:'SNDK',referencePrice:80,priceDay:'2026-11-24'}]},null),notificationRuleKey({...mu,watchItems:[{symbol:'SNDK',referencePrice:700}]},null,'2026-11-18T15:00:00Z'));
+});

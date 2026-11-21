@@ -210,5 +210,15 @@
 .sheet.srcSheet h2 small{color:#8e9aab}
 
 .splitNote{margin:0 0 14px;padding:10px 14px;border:1px solid #6b5a2c;border-radius:12px;background:#171409;color:#e3c981;font-size:13px;line-height:1.6}
-.splitNote p{margin:0 0 6px}.splitNote ul{margin:0 0 8px;padding-left:18px;overflow-wrap:anywhere}
-.splitNote button{min-height:36px;margin:4px 6px 0 0;padding:6px 12px;border:1px solid #6b5a2c;border-radius:10px;background:#231d0d;color:#f0d897;font:inherit}
+/* Stock split check (owner, Nov 21): one choice per line, full width, easy to tap on a phone. */
+.splitCheck{margin:0 0 16px;padding:16px;border:1px solid #6b5a2c;border-radius:14px;background:#171409;color:#eadcb6}
+.splitCheck h2{margin:0 0 8px;font-size:17px;line-height:1.4;color:#f0d897}
+.splitCheck p{margin:0 0 14px;font-size:14px;line-height:1.75;overflow-wrap:anywhere}
+.splitLot{display:grid;gap:10px;padding-top:14px;border-top:1px solid #3a3120}
+.splitLot + .splitLot{margin-top:14px}
+.splitLot h3{margin:0;font-size:15px;font-weight:700;color:#f6e7bd}
+.splitLot button{display:block;width:100%;min-height:48px;padding:12px 14px;border:1px solid #6b5a2c;border-radius:12px;background:#231d0d;color:#f6e7bd;font:inherit;font-size:15px;line-height:1.5;text-align:left;overflow-wrap:anywhere;cursor:pointer;font-variant-numeric:tabular-nums}
+.splitLot button b{display:block;font-size:16px;font-weight:700;color:#fbefcf}
+.splitLot button small{display:block;margin-top:2px;font-size:13px;color:#d8c48f}
+.splitLot button:active{background:#33290f}
+.splitLot button:focus-visible{outline:2px solid #e3c981;outline-offset:2px}

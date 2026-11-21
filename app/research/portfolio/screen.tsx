@@ -7,7 +7,7 @@ import { aggregate, replaceSource, statusOf, valueHoldings, weights, type Holdin
 import { BROKER_CHOICES, MANUAL, OTHER, typedBroker } from "@/lib/portfolio/brokers";
 import { parseStored, readHide, readRaw, readSavedDay, subscribeStore, writeHide, writeHoldings } from "@/lib/portfolio/store";
 import { adjustForSplits, chooseReading, fresh as freshLot, knownSplits, today, type Ambiguous, type Reading as SplitReading, type Split } from "@/lib/portfolio/splits";
-import { splitLabel } from "@/lib/research/stock-splits";
+import { adjustedNote, lotTitle, readingParts, splitSentences } from "@/lib/portfolio/split-copy";
 import s from "./portfolio.module.css";
 
 type ReviewRow = { id: number; ticker: string; name?: string; shares: string; avg: string; fx?: number; added?: boolean };
@@ -117,7 +117,7 @@ export default function PortfolioScreen() {
   const recentSplits = current.applied.filter(item => Date.parse(day) - Date.parse(item.date) <= 45 * 86400_000);
   // A lot that cannot be read safely (the old screen may have applied a split the wrong way round, or it was read on a split's own days) is
   // shown as stored until the reader picks a reading; nothing is guessed from the price.
-  const choose = (lot: Ambiguous, reading: SplitReading) => writeHoldings(chooseReading(lots, lot, reading, day));
+  const choose = (lot: Ambiguous, reading: SplitReading) => writeHoldings(chooseReading(lots, lot, reading));
   const stamp = (h: Holding): Holding => freshLot(h, day);
 
   useEffect(() => {
@@ -178,15 +178,16 @@ export default function PortfolioScreen() {
         </>
         : <>
           <Head ja={ja} sub={holdings.length > 0} />
-          {current.ambiguous.length > 0 && <div role="alert" className={s.splitNote}>
-            <p>{ja ? "株式分割の前後どちらの数字か確かめられない持ち株があります。一覧の数字は保存したままです。今日の証券会社の画面と同じ数字を選んでください。"
-              : "Some holdings may be on either side of a stock split. The list shows them as saved; pick the numbers your broker shows today."}</p>
-            <ul>{current.ambiguous.map(item => <li key={item.key}>{item.ticker}{item.source ? `（${item.source}）` : ""} · {item.splits.map(x => `${splitLabel(x.ratio)} ${x.date.slice(5).replace("-", "/")}`).join(", ")}
-              <br />{item.readings.map(r => <button type="button" key={`${r.kind}${r.splits}`} onClick={() => choose(item, r)}>{usd(r.shares, Number.isInteger(r.shares) ? 0 : 4)}{ja ? "株" : " sh"} @ ${usd(r.avgCostUsd)}{r.kind === "as-stored" ? (ja ? "（保存したまま）" : " (as saved)") : r.kind === "pre-split" ? (ja ? `（分割前の数字として×${Number(r.factor.toFixed(4))}）` : ` (pre-split, ×${Number(r.factor.toFixed(4))})`) : (ja ? `（逆向きの計算を直す×${Number(r.factor.toFixed(4))}）` : ` (undo the wrong-way update, ×${Number(r.factor.toFixed(4))})`)}</button>)}</li>)}</ul>
-          </div>}
-          {recentSplits.length > 0 && holdings.length > 0 && <p role="status" className={s.splitNote}>{ja
-            ? <>{recentSplits.map(item => `${item.ticker} ${splitLabel(item.ratio).replace("-for-", "対")}の株式分割（${item.date.slice(5).replace("-", "/")}）`).join("、")}の前に登録した株数と平均取得は、分割後の数字（株数×比率、平均取得÷比率）で表示しています。取得額の合計は変わりません。</>
-            : <>Shares and average cost entered before {recentSplits.map(item => `the ${item.ticker} ${splitLabel(item.ratio)} stock split (${item.date.slice(5).replace("-", "/")})`).join(", ")} are shown on the post-split basis (shares × ratio, cost ÷ ratio). The total cost is unchanged.</>}</p>}
+          {current.ambiguous.length > 0 && <section role="alert" className={s.splitCheck} aria-labelledby="split-check-title">
+            <h2 id="split-check-title">{ja ? "株式分割の確認をお願いします" : "Please confirm a stock split"}</h2>
+            <p>{splitSentences(current.ambiguous, ja).join(ja ? "" : " ")}{ja ? "下の保有株は、分割の前と後のどちらの数字で登録されたか判断できないため、登録したままの数字で表示しています。証券会社のアプリで今の株数を確かめて、同じ数字を選んでください。"
+              : " We can't tell whether the holdings below were registered with the numbers from before or after the split, so they are shown as registered. Check the current share count in your broker's app and pick the same numbers."}</p>
+            {current.ambiguous.map(item => <div key={item.key} className={s.splitLot}>
+              <h3>{lotTitle(item, ja)}</h3>
+              {item.readings.map(r => <button type="button" key={`${r.kind}${r.splits}`} onClick={() => choose(item, r)}>{(([main, note]) => <><b>{main}</b><small>{note}</small></>)(readingParts(r, ja))}</button>)}
+            </div>)}
+          </section>}
+          {recentSplits.length > 0 && holdings.length > 0 && <p role="status" className={s.splitNote}>{adjustedNote(recentSplits, ja)}</p>}
           {problem && <ErrorCard ja={ja} kind={problem} reason={reason} onManual={() => setManual(true)} pick={pick} onClose={() => setProblem(null)} />}
           {!problem && holdings.length === 0 && <Empty ja={ja} pick={pick} onManual={() => setManual(true)} onInfo={() => setSheet(true)} />}
           {holdings.length > 0 && <List ja={ja} rows={rows} totals={totals} shares={shares} hide={hide} market={market} marketError={marketError} onRetry={() => { setMarketError(false); setRetry(value => value + 1); }}

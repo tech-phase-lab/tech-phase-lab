@@ -86,10 +86,11 @@ export function adjustForSplits(holdings: readonly Holding[], splits: Readonly<R
   });
   return { holdings: next, applied, ambiguous };
 }
-/** The reader's choice for an ambiguous lot: its numbers become that reading, on today's basis, confirmed against that split. */
-export function chooseReading(lots: readonly Holding[], choice: Ambiguous, reading: Reading, today: string): Holding[] {
+/** The reader's choice for an ambiguous lot: its numbers become that reading, dated the latest split it settles (and confirmed against it),
+ * so a later split of the ticker, even one while the choice was pending, is still applied. */
+export function chooseReading(lots: readonly Holding[], choice: Ambiguous, reading: Reading): Holding[] {
   return lots.map(lot => lotKey(lot) !== choice.key ? lot
-    : { ...lot, shares: reading.shares, avgCostUsd: reading.avgCostUsd, checkedAt: today > choice.split.date ? today : choice.split.date, basis: 2 as const, confirmedSplit: choice.split.date });
+    : { ...lot, shares: reading.shares, avgCostUsd: reading.avgCostUsd, checkedAt: choice.split.date, basis: 2 as const, confirmedSplit: choice.split.date });
 }
 /** The splits known without asking the provider (the manual list), for the held tickers that have any. */
 export function knownSplits(tickers: readonly string[]): Record<string, Split[]> {

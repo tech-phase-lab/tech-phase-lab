@@ -37,7 +37,7 @@ export function createNotificationOutboxJob(pool:Pick<Pool,"connect">,resolveInp
    const p=(await client.query("SELECT plan,revision,created_at,updated_at FROM resolute.plans WHERE clerk_user_id=$1",[userId])).rows[0];
    const plan=parsePlanSnapshot(p?{plan:p.plan?{...p.plan,createdAt:p.created_at.toISOString(),updatedAt:p.updated_at.toISOString()}:null,revision:Number(p.revision)}:{plan:null,revision:0}).plan;
    // A new reference price or set of thresholds is a new rule; a delivery-hour change is not.
-   const ruleKey=notificationRuleKey(settings,plan);
+   const ruleKey=notificationRuleKey(settings,plan,row?.updated_at??null);
    const pendingAlert=await reconcileAlertReservations(client,userId,{revision:Number(row?.revision??0),ruleKey,date:jstSlot(clock()).date});
    const previous=(await client.query("SELECT rule_key,notified FROM resolute.notification_state WHERE clerk_user_id=$1",[userId])).rows[0];
    const receipt=(await client.query("SELECT idempotency_key,accepted_at FROM resolute.notification_outbox WHERE clerk_user_id=$1 AND kind='alerts' AND accepted_at IS NOT NULL ORDER BY accepted_at DESC LIMIT 1",[userId])).rows[0];

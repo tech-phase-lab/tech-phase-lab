@@ -124,8 +124,8 @@ test("review v3 C: choosing twice (a stale screen) gives the same numbers; the c
   const lot = L({ shares: 1.25, avgCostUsd: 6040, checkedAt: "2026-11-21" });
   const a = adjustForSplits([lot], SNDK, "2026-11-01", "2026-11-22").ambiguous[0];
   const w = a.readings.find(x => x.kind === "wrong-way");
-  const once = parseStored(serialize(chooseReading([lot], a, w, "2026-11-22")));
-  const twice = parseStored(serialize(chooseReading(once, a, w, "2026-11-22")));
+  const once = parseStored(serialize(chooseReading([lot], a, w)));
+  const twice = parseStored(serialize(chooseReading(once, a, w)));
   assert.deepEqual(twice.map(l => [l.shares, l.avgCostUsd]), [[80, 94.375]]);
   const later = adjustForSplits(twice, SNDK, "2026-11-22", "2026-12-01", { through: { SNDK: "2026-11-30" }, savedDay: "2026-11-22" });
   assert.deepEqual([later.ambiguous.length, later.holdings[0].shares], [0, 80]);
@@ -136,11 +136,22 @@ test("review v3 M: two open splits offer cumulative readings, and the choice (to
   const r = adjustForSplits([lot], two, "2026-11-01", "2026-12-12", { through: { SNDK: "2026-12-11" } });
   assert.equal(r.holdings[0], lot);
   assert.deepEqual(r.ambiguous[0].readings.map(x => [x.kind, x.splits, x.factor]), [["as-stored", 0, 1], ["pre-split", 1, 2], ["pre-split", 2, 16], ["wrong-way", 1, 4], ["wrong-way", 2, 256]]);
-  const picked = chooseReading([lot], r.ambiguous[0], r.ambiguous[0].readings[2], "2026-12-12");
+  const picked = chooseReading([lot], r.ambiguous[0], r.ambiguous[0].readings[2]);
   assert.deepEqual(picked.map(l => [l.shares, l.confirmedSplit]), [[160, "2026-12-10"]]);
   assert.equal(adjustForSplits(picked, two, "2026-12-12", "2026-12-20").ambiguous.length, 0);
-  // "As stored" is today's numbers too: neither split is applied later.
-  assert.equal(adjustForSplits(chooseReading([lot], r.ambiguous[0], r.ambiguous[0].readings[0], "2026-12-12"), two, "2026-12-12", "2026-12-20").holdings[0].shares, 10);
+  // "As stored" settles both too: neither split is applied later.
+  assert.equal(adjustForSplits(chooseReading([lot], r.ambiguous[0], r.ambiguous[0].readings[0]), two, "2026-12-12", "2026-12-20").holdings[0].shares, 10);
+});
+test("review v4 (1): a split after the one the choice settles (even one while the choice was pending) is still applied", () => {
+  const later = { SNDK: [...SNDK.SNDK, { ticker: "SNDK", date: "2026-12-10", ratio: 2 }] };
+  const lot = L({ shares: 1.25, avgCostUsd: 6040, checkedAt: "2026-11-21" });
+  // The file was last saved on 11/21: only the 11/20 split is open for this old lot; the 12/10 one is ordinary.
+  const r = adjustForSplits([lot], later, "2026-11-21", "2026-12-20", { savedDay: "2026-11-21" });
+  assert.deepEqual(r.ambiguous[0].splits.map(s => s.date), ["2026-11-20"]);
+  const picked = chooseReading([lot], r.ambiguous[0], r.ambiguous[0].readings.find(x => x.kind === "wrong-way"));
+  assert.deepEqual(picked.map(l => [l.shares, l.checkedAt, l.confirmedSplit]), [[80, "2026-11-20", "2026-11-20"]]);
+  const shown = adjustForSplits(picked, later, "2026-11-21", "2026-12-20", { savedDay: "2026-12-20" });
+  assert.deepEqual([shown.ambiguous.length, shown.holdings[0].shares, shown.holdings[0].avgCostUsd], [0, 160, 47.1875]);
 });
 test("review v3 APH: lots of any date are not asked about APH 2026-09-03 (older than the portfolio)", () => {
   const aph = knownSplits(["APH"]);
@@ -161,13 +172,13 @@ test("review v2 #3: only splits the old screen could have applied make an old lo
   // APH 2026-09-03 is older than the portfolio itself (2026-11-01): no saved lot can predate it.
   assert.equal(adjustForSplits([{ ticker: "APH", source: "SBI", shares: 50, avgCostUsd: 140, checkedAt: "2026-11-12" }], knownSplits(["APH"]), "2026-11-12", "2026-11-21").ambiguous.length, 0);
 });
-test("the reader's choice is written once, on today's basis, confirmed against that split; a correct lot is never touched", () => {
+test("the reader's choice is written once, dated and confirmed at the split it settles; a correct lot is never touched", () => {
   const wrong = L({ shares: 1.25, avgCostUsd: 6040, checkedAt: "2026-11-21" });
   const right = L({ shares: 80, avgCostUsd: 94, source: "楽天", checkedAt: "2026-11-28", basis: 2 });
   const r = adjustForSplits([wrong, right], SNDK, "2026-11-21", "2026-11-30", { prices: PRICE });
   assert.deepEqual(r.ambiguous.map(a => a.source), ["SBI"]);
-  const picked = chooseReading([wrong, right], r.ambiguous[0], r.ambiguous[0].readings.find(x => x.kind === "wrong-way"), "2026-11-30");
-  assert.deepEqual(picked.map(l => [l.shares, l.avgCostUsd, l.checkedAt, l.basis ?? null, l.confirmedSplit ?? null]), [[80, 94.375, "2026-11-30", 2, "2026-11-20"], [80, 94, "2026-11-28", 2, null]]);
+  const picked = chooseReading([wrong, right], r.ambiguous[0], r.ambiguous[0].readings.find(x => x.kind === "wrong-way"));
+  assert.deepEqual(picked.map(l => [l.shares, l.avgCostUsd, l.checkedAt, l.basis ?? null, l.confirmedSplit ?? null]), [[80, 94.375, "2026-11-20", 2, "2026-11-20"], [80, 94, "2026-11-28", 2, null]]);
   const again = adjustForSplits(parseStored(serialize(picked)), SNDK, "2026-11-30", "2026-12-01", { prices: PRICE });
   assert.deepEqual([again.ambiguous.length, again.holdings[0].shares], [0, 80]);
 });
@@ -189,4 +200,20 @@ test("the portfolio screen never rewrites saved holdings for a split by itself (
   assert.equal(writes.length, 4);
   for (const [i, word] of ["chooseReading(lots, lot, reading", "onAdd={h =>", "onClear={", "replaceSource(existing"].entries()) assert.ok(writes[i].includes(word), word);
   assert.match(screen, /const current = useMemo\(\(\) => adjustForSplits\(/);
+});
+test("owner wording (Nov 21): the split check says what happened in plain Japanese, with ドル and one line per choice", async () => {
+  const C = await import("../lib/portfolio/split-copy.ts");
+  const lots = [L({ source: "楽天証券", shares: 80, avgCostUsd: 94, checkedAt: "2026-11-15" }), L({ source: "SBI証券", shares: 1.25, avgCostUsd: 6040, checkedAt: "2026-11-21" })];
+  const r = adjustForSplits(lots, SNDK, "2026-11-15", "2026-11-22", { savedDay: "2026-11-21" });
+  assert.deepEqual(C.splitSentences(r.ambiguous, true), ["SNDK は 11/20 に、1株が8株に分割されました。"]);
+  assert.deepEqual(r.ambiguous.map(a => [C.lotTitle(a, true), ...a.readings.map(x => C.readingLabel(x, true))]), [
+    ["SNDK（楽天証券）", "80株・平均取得 94.00ドル（登録したまま）", "640株・平均取得 11.75ドル（分割前の数字として8倍にする）", "5,120株・平均取得 1.47ドル（誤って8分の1になった数字を直す）"],
+    ["SNDK（SBI証券）", "1.25株・平均取得 6,040.00ドル（登録したまま）", "10株・平均取得 755.00ドル（分割前の数字として8倍にする）", "80株・平均取得 94.38ドル（誤って8分の1になった数字を直す）"],
+  ]);
+  assert.equal(C.splitPhrase({ ticker: "X", date: "2026-12-01", ratio: 0.125 }, true), "8株が1株に併合されました");
+  assert.equal(C.readingLabel({ kind: "wrong-way", factor: 4, splits: 1, shares: 40, avgCostUsd: 25 }, true), "40株・平均取得 25.00ドル（誤って2分の1になった数字を直す）");
+  assert.equal(C.readingLabel({ kind: "pre-split", factor: 2, splits: 1, shares: 20, avgCostUsd: 50 }, true), "20株・平均取得 50.00ドル（分割前の数字として2倍にする）");
+  assert.equal(C.adjustedNote([{ ticker: "SNDK", date: "2026-11-20", ratio: 8 }], true), "SNDK（11/20 に1株が8株に分割）より前に登録した株数と平均取得は、分割後の数字で表示しています。取得額の合計は変わりません。");
+  const screen = readFileSync(new URL("../app/research/portfolio/screen.tsx", import.meta.url), "utf8");
+  assert.match(screen, /株式分割の確認をお願いします/); assert.doesNotMatch(screen, /splitLabel/);
 });
