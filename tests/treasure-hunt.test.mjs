@@ -14,6 +14,7 @@ import * as samplesLib from "../lib/research/pro-experience-samples.ts";
 import { treasureHuntSample } from "../lib/research/pro-experience-sample-treasure.ts";
 import { whaleTracksSample } from "../lib/research/pro-experience-sample-whales.ts";
 import { proFeatures } from "../lib/research/pro-experience.ts";
+import { PRO_ONLY_FEATURES } from "../lib/research/pro-features.ts";
 import { OWNER_ACCOUNT_ID, PRODUCTION_OWNER_ACCOUNT_ID } from "../lib/membership/entitlements.ts";
 
 const read = path => readFileSync(new URL(path, import.meta.url), "utf8");
@@ -74,6 +75,16 @@ test("PRO card: two new rows under テーマランキング, the owner's English
   assert.match(css, /\.proCard \.includes \+ \.group \{ margin-top:14px; \}/);
   assert.match(css, /\.proCard \.group ul\[data-ja="false"\] li \{ white-space:nowrap;/);
   assert.doesNotMatch(css, /text-overflow:ellipsis/);
+});
+
+test("lost when PRO ends: トレジャーハント and クジラの足あと under テーマランキング, as on the PRO card", () => {
+  const names = PRO_ONLY_FEATURES.map(feature => feature.ja);
+  const at = names.indexOf("テーマランキング");
+  assert.deepEqual(names.slice(at, at + 3), ["テーマランキング", "トレジャーハント", "クジラの足あと"]);
+  assert.deepEqual(PRO_ONLY_FEATURES.slice(at + 1, at + 3), [
+    { ja: "トレジャーハント", descriptionJa: "割安銘柄を毎日掘り起こす", en: "Treasure Hunt", descriptionEn: "Daily value finds" },
+    { ja: "クジラの足あと", descriptionJa: "機関・空売り・自社株買いの裏側", en: "Whale Tracks", descriptionEn: "Funds, shorts & buybacks" },
+  ]);
 });
 
 test("FREE card in English: the owner's short table (Nov 22); the Japanese card is unchanged", () => {

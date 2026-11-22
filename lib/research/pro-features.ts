@@ -2,6 +2,9 @@
  * each one is gated in the code too. Add to this list only when a feature really becomes PRO-only. */
 export const PRO_ONLY_FEATURES: { ja: string; descriptionJa: string; en: string; descriptionEn: string }[] = [
   { ja: "テーマランキング", descriptionJa: "いま強いジャンルをひと目で確認", en: "Theme Ranking", descriptionEn: "See which themes are strong right now" },
+  // Nov 22: in the PRO card's order, right under テーマランキング.
+  { ja: "トレジャーハント", descriptionJa: "割安銘柄を毎日掘り起こす", en: "Treasure Hunt", descriptionEn: "Daily value finds" },
+  { ja: "クジラの足あと", descriptionJa: "機関・空売り・自社株買いの裏側", en: "Whale Tracks", descriptionEn: "Funds, shorts & buybacks" },
   // The earnings summaries are read inside this page, so they are not a separate item (owner, Nov 5).
   { ja: "監視22銘柄", descriptionJa: "リゼルが見ている22銘柄の動き", en: "22 tracked stocks", descriptionEn: "The moves of the 22 stocks Rizel follows" },
   { ja: "銘柄比較", descriptionJa: "気になる銘柄を並べて比べる", en: "Stock comparison", descriptionEn: "Compare stocks side by side" },
