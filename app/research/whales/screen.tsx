@@ -45,8 +45,8 @@ function Institutions({ data, sort, ja }: { data: WhaleSnapshot; sort: string; j
         <StockLogo ticker={row.ticker} className={styles.logo} full />
         <Name ticker={row.ticker} name={ja ? row.ja : row.en} />
         <span className={styles.figure}>
-          <b className={styles.big}>{row.pct > 100 ? (ja ? "100%超" : "Over 100%") : percent(row.pct)}</b>
-          <span className={`${styles.change} ${tone(row.change)}`}>{signedPoints(row.change)}</span>
+          <b className={styles.big}>{row.pct > 100 ? (ja ? "100%超" : ">100%") : percent(row.pct)}</b>
+          <span className={`${styles.change} ${tone(row.change)}`}>{signedPoints(row.change, 1, ja)}</span>
         </span>
       </div>
       <span className={styles.bar} aria-hidden="true"><i style={{ width: `${Math.min(100, row.pct)}%` }} /></span>
@@ -60,9 +60,9 @@ function Short({ data, sort, ja }: { data: WhaleSnapshot; sort: string; ja: bool
       <StockLogo ticker={row.ticker} className={styles.logo} full />
       <Name ticker={row.ticker} name={ja ? row.ja : row.en} />
       <span className={styles.figure}>
-        <span className={styles.label}>{ja ? "空売り比率" : "Short share"}</span>
+        <span className={styles.label}>{ja ? "空売り比率" : "Short interest"}</span>
         <b className={styles.mid}>{percent(row.pct, row.pct < 10 ? 2 : 1)}</b>
-        <span className={`${styles.change} ${tone(row.change, row.pct < 10 ? 2 : 1)}`}>{signedPoints(row.change, row.pct < 10 ? 2 : 1)}</span>
+        <span className={`${styles.change} ${tone(row.change, row.pct < 10 ? 2 : 1)}`}>{signedPoints(row.change, row.pct < 10 ? 2 : 1, ja)}</span>
       </span>
       <span className={styles.days}>
         <span className={styles.label}>{ja ? "買い戻し" : "Days to cover"}</span>
@@ -76,7 +76,7 @@ function Insiders({ data, sort, ja }: { data: WhaleSnapshot; sort: string; ja: b
   const items = filterInsiders(data.insiders, sort);
   if (!items.length) return <p className={styles.note}>{ja ? "該当する届け出はありません。" : "No filings to show."}</p>;
   return <ul className={styles.timeline}>{items.map((row, index) => <li key={`${row.ticker}-${row.date}-${index}`}>
-    <span className={styles.date}>{index === 0 || items[index - 1].date !== row.date ? monthDay(row.date) : ""}</span>
+    <span className={styles.date}>{index === 0 || items[index - 1].date !== row.date ? monthDay(row.date, ja) : ""}</span>
     <Link href={stockHref(row.ticker)} className={`${styles.card} ${row.side === "buy" ? styles.buyCard : styles.sellCard}`}>
       <StockLogo ticker={row.ticker} className={styles.logo} full />
       <span className={styles.names}>
@@ -84,7 +84,7 @@ function Insiders({ data, sort, ja }: { data: WhaleSnapshot; sort: string; ja: b
         <span className={styles.company}>{[roleLabel(row.role, ja), row.planned ? (ja ? "計画売買" : "Planned") : ""].filter(Boolean).join(ja ? "・" : " · ")}</span>
       </span>
       <span className={styles.figure}>
-        <i className={row.side === "buy" ? styles.buyTag : styles.sellTag}>{row.side === "buy" ? (ja ? "買い" : "Buy") : (ja ? "売り" : "Sell")}</i>
+        <i className={row.side === "buy" ? styles.buyTag : styles.sellTag}>{row.side === "buy" ? (ja ? "買い" : "Bought") : (ja ? "売り" : "Sold")}</i>
         <b className={styles.amount}>{money(row.value, ja)}</b>
       </span>
     </Link>
@@ -98,8 +98,8 @@ function Buybacks({ data, sort, ja }: { data: WhaleSnapshot; sort: string; ja: b
       <span className={styles.names}>
         <b className={styles.ticker}>{row.ticker}</b>
         <span className={styles.company}>{row.kind === "authorization"
-          ? (ja ? `${monthDay(row.date)}・新しい枠を発表` : `${monthDay(row.date)} · New authorization`)
-          : (ja ? `${quarterLabel(row.end ?? row.date, true)}・買い戻した金額` : `${quarterLabel(row.end ?? row.date, false)} · Amount bought back`)}</span>
+          ? (ja ? `${monthDay(row.date)}・新しい枠を発表` : `${monthDay(row.date, false)} · New authorization`)
+          : (ja ? `${quarterLabel(row.end ?? row.date, true)}・買い戻した金額` : `${quarterLabel(row.end ?? row.date, false)} · Repurchased`)}</span>
       </span>
       <b className={styles.amount}>{money(row.amount, ja)}</b>
     </Link>
@@ -142,18 +142,18 @@ export default function WhaleMovesScreen() {
 
       {plan === null && <p role="status" className={styles.note}>{t("会員情報を確認中…", "Checking membership…")}</p>}
       {plan === "free" && <div className={styles.lock}>
-        <p>{t("クジラの足あとはPRO会員限定です", "Whale Moves is for PRO members")}</p>
-        <Link href="/research#tech-phase-pro">{t("Tech Phase PROを見る", "See Tech Phase PRO")}</Link>
+        <p>{t("クジラの足あとはPRO会員限定です", "Whale Moves is available to PRO members")}</p>
+        <Link href="/research#tech-phase-pro">{t("Tech Phase PROを見る", "Learn about Tech Phase PRO")}</Link>
       </div>}
 
       {plan === "pro" && <>
-        <div className={styles.tabs} role="tablist" aria-label={t("データの種類", "Data")}>
+        <div className={styles.tabs} role="tablist" aria-label={t("データの種類", "Data type")}>
           {WHALE_TABS.map(item => <button key={item.id} type="button" role="tab" aria-selected={tab === item.id} onClick={() => setTab(item.id)}>{ja ? item.ja : item.en}</button>)}
         </div>
         {state === "loading" && <p role="status" className={styles.note}>{t("データを読み込み中…", "Loading data…")}</p>}
-        {state === "not-ready" && <p role="status" className={styles.note}>{t("データを準備中です。準備ができ次第、ここに表示されます。", "The data is being prepared. It will appear here once it is ready.")}</p>}
+        {state === "not-ready" && <p role="status" className={styles.note}>{t("データを準備中です。準備ができ次第、ここに表示されます。", "Data is being prepared. It will appear here once it's ready.")}</p>}
         {(state === "error" || state === "sign-in" || state === "pro-required") && <p role="alert" className={styles.note}>
-          {state === "sign-in" ? t("ログインしてください。", "Please sign in.") : state === "pro-required" ? t("PRO会員の期間を確認できませんでした。", "Your PRO membership could not be confirmed.") : t("データを読み込めませんでした。", "The data could not be loaded.")}
+          {state === "sign-in" ? t("ログインしてください。", "Please sign in.") : state === "pro-required" ? t("PRO会員の期間を確認できませんでした。", "We couldn't confirm your PRO membership.") : t("データを読み込めませんでした。", "Couldn't load the data.")}
           {state === "error" && <button type="button" className={styles.retry} onClick={retry}>{t("再読み込み", "Retry")}</button>}
         </p>}
         {state === "ready" && data && <div role="tabpanel">

@@ -56,6 +56,14 @@ test("copy: owner's wording, 実績値 for the trailing history, no advice words
     assert.doesNotMatch(source, /）[、。・]/);
   }
   assert.equal(monthDay("2026-11-05"), "11/5");
+  // English view (Nov 22 review): US multiples names, "Nov 20" dates, no Japanese punctuation or labels.
+  assert.equal(monthDay("2026-11-05", false), "Nov 5");
+  assert.equal(footerLine("2026-11-20", "trailing", false), "As of Nov 20 close · Trailing P/E and P/S · Revenue growth YoY");
+  assert.equal(periodNote("data", false), "Based on available filings");
+  assert.match(screen, /: `P\/E \$\{ratio\(item\.pe\)\} · P\/S \$\{ratio\(item\.ps\)\}`/);
+  const english = [...screen.matchAll(/t\("[^"]*", "([^"]*)"\)/g)].map(match => match[1]).join("\n") + footerLine("2026-11-20", "trailing", false) + aboutText("trailing", false);
+  assert.doesNotMatch(english, /[　-ヿ一-鿿＀-￯]|PER|PSR/);
+  assert.doesNotMatch(english, /\b(buys?|recommend\w*|opportunit\w*|bargain\w*)\b/i);
   assert.equal(ratio(null), "—");
   assert.equal(ratio(3.84), "3.8");
   assert.equal(growth(190), "+190%");
@@ -82,4 +90,22 @@ test("menu: PRO members get the 2x3 frame with Value Check and Whale Moves; 財�
   assert.match(page, /notFound\(\)/);
   const route = readFileSync(new URL("../app/api/research/value-check/route.ts", import.meta.url), "utf8");
   assert.match(route, /valueCheckAccess\(member, valueCheckEnabled\(\)\)/);
+});
+
+test("desktop left menu: Value Check and Whale Moves sit in the PRO rows in the phone menu's order, behind the same switches (owner, Nov 22)", () => {
+  const sidebar = readFileSync(new URL("../app/research/home-sidebar.tsx", import.meta.url), "utf8");
+  const start = sidebar.indexOf("const research: Item[]"), end = sidebar.indexOf("const destinations", start);
+  const rows = sidebar.slice(start, end);
+  const hrefs = [...rows.matchAll(/href: "(\/research\/[^"]+)"/g)].map(match => match[1]);
+  assert.deepEqual(hrefs.slice(hrefs.indexOf("/research/themes")), ["/research/themes", "/research/value-check", "/research/compare", "/research/whales"]);
+  // PRO only: both rows live inside the member block, each behind its own switch.
+  const memberBlock = rows.slice(rows.indexOf("...(member ? [\n"), rows.lastIndexOf("] : []),"));
+  assert.match(memberBlock, /\.\.\.\(valueCheck \? \[\{ key: "value-check", icon: icons\.tag, label: t\("割安判別ツール", "Value Check"\), href: "\/research\/value-check" \}\] : \[\]\)/);
+  assert.match(memberBlock, /\.\.\.\(whaleMoves \? \[\{ key: "whales", icon: icons\.whale, label: t\("クジラの足あと", "Whale Moves"\), href: "\/research\/whales" \}\] : \[\]\)/);
+  // The owner's accounts always see them (AGENTS.md, operator access); FREE rows are unchanged.
+  assert.match(sidebar, /const valueCheck = valueCheckEnabled\(\) \|\| ownerAccount;/);
+  assert.match(sidebar, /const whaleMoves = whaleMovesEnabled\(\) \|\| ownerAccount;/);
+  assert.match(sidebar, /const member = ownerAccount \|\| plan === "pro"/);
+  const quick = sidebar.slice(sidebar.indexOf("const quick: Item[]"), start);
+  assert.doesNotMatch(quick + rows.slice(0, rows.indexOf("...(member ? [\n")), /value-check|whales/);
 });

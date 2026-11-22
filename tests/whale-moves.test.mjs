@@ -2,7 +2,7 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { ABOUT, asOfLine, filterInsiders, money, parseWhaleSnapshot, quarterLabel, roleLabel, signedPoints, sortBuybacks, sortInstitutions, sortShort,
-  whaleMovesAccess, whaleMovesEnabled } from "../lib/research/whale-moves.ts";
+  whaleMovesAccess, whaleMovesEnabled, monthDay, SORTS, WHALE_TABS } from "../lib/research/whale-moves.ts";
 
 const now = Date.UTC(2026, 10, 22);
 const pro = { status: "signed-in", plan: "pro", accessExpiresAt: now + 60_000 };
@@ -74,6 +74,8 @@ test("amounts in Japanese units and short English units (owner's sheet)", () => 
   assert.equal(signedPoints(3.14), "+3.1pt");
   assert.equal(signedPoints(-0.09, 2), "−0.09pt");
   assert.equal(signedPoints(0.04), "±0.0pt");
+  assert.equal(signedPoints(3.14, 1, false), "+3.1 pts");
+  assert.equal(signedPoints(-0.09, 2, false), "−0.09 pts");
 });
 
 test("labels: quarter months, officer titles, the as-of line and the owner's i text", () => {
@@ -87,6 +89,19 @@ test("labels: quarter months, officer titles, the as-of line and the owner's i t
   assert.equal(asOfLine("institutions", data, true), "6月末時点・13F（四半期ごとに更新）");
   assert.equal(asOfLine("short", data, true), "11月14日時点・FINRA（月2回更新）");
   assert.match(ABOUT.institutions.ja, /100%を超える銘柄があります。$/);
+  // English view (Nov 22 review): "Nov 14" dates, no Japanese text, no advice words in labels.
+  assert.equal(quarterLabel("2026-09-30", false), "Jul–Sep");
+  assert.equal(monthDay("2026-11-14", false), "Nov 14");
+  assert.equal(asOfLine("institutions", data, false), "As of end-Jun · 13F (updated quarterly)");
+  assert.equal(asOfLine("short", data, false), "As of Nov 14 · FINRA (updated twice a month)");
+  assert.equal(roleLabel("President and Chief Executive Officer, Director", false), "CEO · Director");
+  const screen = read("../app/research/whales/screen.tsx");
+  const labels = [...WHALE_TABS, ...Object.values(SORTS).flat()].map(item => item.en);
+  const english = [...labels, ...Object.values(ABOUT).map(item => item.en), ...[...screen.matchAll(/t\("[^"]*", "([^"]*)"\)/g)].map(match => match[1]),
+    ...(["institutions", "short", "insiders", "buybacks"].map(tab => asOfLine(tab, data, false)))].join("\n");
+  assert.doesNotMatch(english, /[　-ヿ一-鿿＀-￯]/);
+  assert.doesNotMatch(labels.join("\n"), /\b(buys?|recommend\w*|opportunit\w*|bargain\w*)\b/i);
+  assert.match(screen, /\(ja \? "買い" : "Bought"\) : \(ja \? "売り" : "Sold"\)/);
 });
 
 test("no advice words and no institution lists on the page (owner's rules)", () => {

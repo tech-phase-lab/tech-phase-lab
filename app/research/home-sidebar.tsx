@@ -6,6 +6,8 @@ import type { Language } from "@/lib/research/data";
 import { researchViewHashes, type ResearchView } from "@/lib/research/navigation";
 import { useAlertsUnread } from "./use-alerts-unread";
 import { useMemberDisplay, useMemberSettled, useOwnerAccount } from "./member-display-provider";
+import { valueCheckEnabled } from "@/lib/research/value-check";
+import { whaleMovesEnabled } from "@/lib/research/whale-moves";
 import styles from "./home-sidebar.module.css";
 
 const icon = (paths: ReactNode) => <svg viewBox="0 0 24 24" aria-hidden="true">{paths}</svg>;
@@ -21,6 +23,8 @@ const icons = {
   map: icon(<><circle cx="8" cy="14" r="4.5" /><circle cx="17" cy="7" r="3" /><circle cx="18" cy="17" r="2.5" /><path d="M11.5 11.5L15 8.5M12 15.5h3.5" /></>),
   radar: icon(<><circle cx="12" cy="12" r="8.5" /><circle cx="12" cy="12" r="4.5" /><path d="M12 12l5-5M12 3.5v2M3.5 12h2" /></>),
   compare: icon(<path d="M4 20V9h6v11M14 20V4h6v16M2 20h20" />),
+  tag: icon(<><path d="M3.5 12.2V4.5a1 1 0 0 1 1-1h7.7l8.3 8.3a1.4 1.4 0 0 1 0 2l-6.2 6.2a1.4 1.4 0 0 1-2 0z" /><circle cx="8.3" cy="8.3" r="1.4" /></>),
+  whale: icon(<path d="M12 20.5v-7.2M12 13.3C10.4 9.6 7 7.6 3 7.8c1 3.4 4.6 5.8 9 5.5zM12 13.3c1.6-3.7 5-5.7 9-5.5-1 3.4-4.6 5.8-9 5.5z" />),
   saved: icon(<path d="M6 3.5h12v17l-6-4-6 4z" />),
   learn: icon(<path d="M12 3l9 5-9 5-9-5zM7 11v5c0 1.5 2.2 3 5 3s5-1.5 5-3v-5" />),
   gem: icon(<path d="M12 3l7 9-7 9-7-9z" />),
@@ -44,6 +48,9 @@ export default function HomeSidebar({ lang, tab, companyCount, savedCount, openV
   const settled = useMemberSettled() || ownerAccount || plan !== null;
   const hint = useSyncExternalStore(() => () => {}, () => document.documentElement.dataset.memberHint ?? "", () => "");
   const member = ownerAccount || plan === "pro" || (!settled && hint !== "");
+  // Same switches as the phone menu's PRO tiles; the owner's accounts always see them (AGENTS.md, operator access).
+  const valueCheck = valueCheckEnabled() || ownerAccount;
+  const whaleMoves = whaleMovesEnabled() || ownerAccount;
   const quick: Item[] = [
     { key: "alerts", icon: icons.alerts, label: t("ハイテク速報", "Tech Alerts"), href: "/research/news", badge: unread ? <em className={`${styles.count} ${styles.fresh}`}>NEW</em> : null },
     { key: "search", icon: icons.search, label: t("銘柄検索", "Stock search"), href: "/research/stocks" },
@@ -61,7 +68,10 @@ export default function HomeSidebar({ lang, tab, companyCount, savedCount, openV
     { key: "radar", icon: icons.radar, label: t("財務レーダー", "Financial Radar"), href: "/research/radar", current: pathname === "/research/radar" },
     ...(member ? [
       { key: "themes", icon: icons.market, label: t("テーマランキング", "Theme Ranking"), href: "/research/themes" },
+      // Phone menu order (owner, Nov 22): Theme Ranking, Value Check, Compare, Whale Moves.
+      ...(valueCheck ? [{ key: "value-check", icon: icons.tag, label: t("割安判別ツール", "Value Check"), href: "/research/value-check" }] : []),
       { key: "compare", icon: icons.compare, label: t("銘柄比較", "Stock Comparison"), href: "/research/compare" },
+      ...(whaleMoves ? [{ key: "whales", icon: icons.whale, label: t("クジラの足あと", "Whale Moves"), href: "/research/whales" }] : []),
     ] : []),
     { key: "saved", icon: icons.saved, label: t("リサーチノート", "Research notes"), onClick: () => openView?.("saved"), current: tab === "saved", badge: savedCount === undefined ? null : <em className={styles.count}>{savedCount}</em> },
   ];
