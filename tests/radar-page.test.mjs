@@ -28,9 +28,10 @@ test("the server decides PRO and a FREE caller is sent the dots only", () => {
   assert.ok(!/health/.test(route));
 });
 
-test("the menu lists 財務レーダー under Research, after 資本マップ, and not in the PRO tiles", () => {
+test("the menu lists 財務レーダー under Research after 資本マップ for everyone, never in the PRO tiles (owner, Nov 22 v2)", () => {
   const header = read("../app/research/site-header.tsx");
-  const map = header.indexOf('"/research/capital-map"'), radar = header.indexOf('"/research/radar"'), targets = header.indexOf('"/research/price-targets"');
+  const research = header.slice(header.indexOf('heading(ja ? "リサーチ"'));
+  const map = research.indexOf('"/research/capital-map"'), radar = research.indexOf('"/research/radar"'), targets = research.indexOf('"/research/price-targets"');
   assert.ok(map > 0 && radar > map && radar < targets);
   assert.equal(header.split('"/research/radar"').length - 1, 1);
   const proTiles = header.slice(header.indexOf("tile("), header.indexOf('heading(ja ? "リサーチ"'));
