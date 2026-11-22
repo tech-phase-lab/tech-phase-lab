@@ -913,7 +913,6 @@ def remaining_from_text(text):
     return found
 
 
-AUTH_SENTENCE = re.compile(r'\b(?:authoriz|approv)', re.I)
 REPURCHASE = re.compile(r'repurchase|buy[- ]?back', re.I)
 NOT_NEW = re.compile(r'\bremain(?:ing|ed|s)?\b|\bavailable\b|\bleft\b|\bunused\b|\bcompleted\b|\bexhausted\b', re.I)
 AMOUNT = re.compile(r'\$\s?(\d{1,3}(?:,\d{3})*(?:\.\d+)?|\d+(?:\.\d+)?)\s*(billion|million)\b', re.I)
@@ -924,17 +923,42 @@ def html_text(html):
     return ' '.join(unescape(re.sub(r'<[^>]+>', ' ', html)).split())
 
 
-def authorization_sentences(text):
+EVENT_DATE = re.compile(r'\b(?:on|in|as of)\s+((?:January|February|March|April|May|June|July|August|September|October|November|December)'
+                        r'(?:\s+\d{1,2},)?\s+20\d{2})', re.I)
+AUTH_THEN_AMOUNT = re.compile(r'\b(?:authoriz|approv)\w*\b[^.]{0,200}?\$\s?(\d{1,3}(?:,\d{3})*(?:\.\d+)?|\d+(?:\.\d+)?)\s*(billion|million)\b', re.I)
+NOT_AUTHORIZATION = re.compile(r'\bextension\b|\bextend(?:ed|s)?\b|\bexecuted\b|\breturned\b|\bsince\s+(?:inception|20\d{2})', re.I)
+
+
+def _event_date(sentence):
+    m = EVENT_DATE.search(sentence)
+    if not m:
+        return None
+    for layout in ('%B %d, %Y', '%B %Y'):
+        try:
+            return datetime.strptime(' '.join(m.group(1).split()), layout).date()
+        except ValueError:
+            continue
+    return None
+
+
+def authorization_sentences(text, filed=None):
+    """(amount, sentence) for a board authorizing or approving a repurchase amount; the amount must follow the verb. A sentence
+    that dates its approval more than 120 days before the filing is an old program restated, not a new one."""
     out = []
-    for sentence in re.split(r'(?<=[.;])\s+(?=[A-Z“"])', text):
-        if len(sentence) > 600 or not AUTH_SENTENCE.search(sentence) or not REPURCHASE.search(sentence) or NOT_NEW.search(sentence):
+    filed_day = date.fromisoformat(filed) if filed else None
+    for sentence in re.split(r'(?<=[.;])\s+(?=[A-Z“"])|\s[•●▪]\s', text):
+        if len(sentence) > 600 or not REPURCHASE.search(sentence) or NOT_NEW.search(sentence) or NOT_AUTHORIZATION.search(sentence):
             continue
         if not re.search(r'\bboard\b|\bdirectors\b', sentence, re.I):
             continue
-        amount = AMOUNT.search(sentence)
-        if amount:
-            value = float(amount.group(1).replace(',', '')) * (1e9 if amount.group(2).lower() == 'billion' else 1e6)
-            out.append((value, sentence.strip()))
+        amount = AUTH_THEN_AMOUNT.search(sentence)
+        if not amount:
+            continue
+        when = _event_date(sentence)
+        if filed_day and when and (filed_day - when).days > 120:
+            continue
+        value = float(amount.group(1).replace(',', '')) * (1e9 if amount.group(2).lower() == 'billion' else 1e6)
+        out.append((value, sentence.strip()))
     return out
 
 
@@ -952,7 +976,7 @@ def run_authorizations(db, ticker, cik, lookback_days=FTS_LOOKBACK_DAYS, max_doc
         accession, filename = doc_id.split(':', 1)
         url = f'https://www.sec.gov/Archives/edgar/data/{cik}/{accession.replace("-", "")}/{filename}'
         text = html_text(sec_get(url, limit=10_000_000).decode('utf-8', 'replace'))
-        for amount, sentence in authorization_sentences(text):
+        for amount, sentence in authorization_sentences(text, source.get('file_date')):
             db.execute('INSERT OR REPLACE INTO ownership_buyback_authorizations VALUES(?,?,?,?,?,?)',
                        (ticker, accession, source.get('file_date'), amount, sentence[:600], url))
             found += 1
@@ -1020,6 +1044,76 @@ def run_due(db_path, stop_event=None, now=None):
             run_job(db, job, stop_event=stop_event)
     finally:
         db.close()
+
+
+def page_companies(config=None, value_check=VALUE_CHECK_FILE):
+    """{ticker: (ja, en)} for the page: the Value Check ハイテク list (owner, Nov 22: クジラの足あと uses the same stocks)."""
+    config = config or load_config()
+    try:
+        data = json.loads(Path(value_check).read_text(encoding='utf-8'))
+        names = data.get('companies', {})
+        tech = data['tech']
+    except (OSError, ValueError, KeyError, TypeError):
+        names, tech = {}, config['tech']
+    return {t: ((names.get(t) or {}).get('ja') or t, (names.get(t) or {}).get('en') or t) for t in tech}
+
+
+def _rows(db, sql, args=()):
+    cursor = db.execute(sql, args)
+    names = [d[0] for d in cursor.description]
+    return [dict(zip(names, r)) for r in cursor.fetchall()]
+
+
+def public_payload(db, companies=None, today=None):
+    """The four tabs of クジラの足あと, per ticker only (never per institution). Read by the site's server for PRO members."""
+    companies = companies or page_companies()
+    today = today or date.today()
+    named = lambda ticker, row: {'ticker': ticker, 'ja': companies[ticker][0], 'en': companies[ticker][1], **row}
+
+    period = (db.execute('SELECT max(period) FROM ownership_institutional').fetchone() or [None])[0]
+    institutional = []
+    for r in _rows(db, 'SELECT ticker, pct, pct_change_pts, holders, holders_change FROM ownership_institutional WHERE period=? AND pct IS NOT NULL',
+                   (period,)) if period else []:
+        if r['ticker'] in companies:
+            institutional.append(named(r['ticker'], {'pct': r['pct'], 'change': r['pct_change_pts'], 'holders': r['holders'],
+                                                       'holdersChange': r['holders_change']}))
+
+    settlement = (db.execute('SELECT max(settlement_date) FROM ownership_short').fetchone() or [None])[0]
+    short = []
+    for r in _rows(db, 'SELECT ticker, short_shares, previous_short_shares, shares_outstanding, pct_outstanding, days_to_cover, '
+                       'finra_days_to_cover FROM ownership_short WHERE settlement_date=? AND pct_outstanding IS NOT NULL', (settlement,)) if settlement else []:
+        if r['ticker'] not in companies:
+            continue
+        ratio = r['pct_outstanding'] / r['short_shares'] if r['short_shares'] else None
+        previous = round(r['previous_short_shares'] * ratio, 2) if ratio and r['previous_short_shares'] is not None else None
+        short.append(named(r['ticker'], {'pct': r['pct_outstanding'], 'change': round(r['pct_outstanding'] - previous, 2) if previous is not None else None,
+                                         'days': r['days_to_cover'] if r['days_to_cover'] is not None else r['finra_days_to_cover']}))
+
+    since = (today - timedelta(days=FORM4_LOOKBACK_DAYS)).isoformat()
+    trades = []
+    for r in _rows(db, "SELECT accession, ticker, filed, max(trade_date) AS day, owner_name, owner_role, code, sum(value) AS value, "
+                       "max(plan_10b5_1) AS planned FROM ownership_insider_trades WHERE category='open-market' AND trade_date>=? AND value>0 "
+                       "GROUP BY accession, code ORDER BY day DESC, value DESC LIMIT 400", (since,)):
+        if r['ticker'] in companies:
+            trades.append(named(r['ticker'], {'date': r['day'], 'filed': r['filed'], 'role': r['owner_role'] or '',
+                                              'side': 'buy' if r['code'] == 'P' else 'sell', 'planned': r['planned'] == 1,
+                                              'value': round(r['value'], 2)}))
+
+    buybacks, seen = [], set()
+    for r in _rows(db, 'SELECT ticker, min(filed) AS filed, amount_usd FROM ownership_buyback_authorizations WHERE filed>=? '
+                       'GROUP BY ticker, amount_usd ORDER BY filed DESC', ((today - timedelta(days=365)).isoformat(),)):
+        if r['ticker'] in companies:
+            buybacks.append(named(r['ticker'], {'kind': 'authorization', 'date': r['filed'], 'amount': r['amount_usd']}))
+    for r in _rows(db, "SELECT ticker, concept, period_start, period_end, value, filed FROM ownership_buyback_quarters "
+                       "WHERE concept IN ('PaymentsForRepurchaseOfCommonStock','PaymentsForRepurchaseOfEquity','PaymentsToAcquireOrRedeemEntitysShares') "
+                       "AND value>0 AND period_end>=? ORDER BY period_end DESC", ((today - timedelta(days=200)).isoformat(),)):
+        if r['ticker'] in companies and r['ticker'] not in seen:
+            seen.add(r['ticker'])
+            buybacks.append(named(r['ticker'], {'kind': 'quarter', 'date': r['filed'] or r['period_end'], 'start': r['period_start'],
+                                                'end': r['period_end'], 'amount': r['value']}))
+    buybacks.sort(key=lambda b: b['date'] or '', reverse=True)
+    return {'ok': bool(institutional or short or trades or buybacks), 'institutionalAsOf': period, 'shortAsOf': settlement,
+            'institutional': institutional, 'short': short, 'insiders': trades, 'buybacks': buybacks}
 
 
 def report(db, tickers):

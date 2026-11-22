@@ -3833,6 +3833,21 @@ class Handler(BaseHTTPRequestHandler):
             except Exception:
                 self.send_json(503, {"ok": False, "error": "value-check-unavailable"})
             return
+        if path == "/ownership":
+            # クジラの足あと: served only to the site's server, which checks PRO membership (per-ticker totals; the same for every member).
+            if not os.environ.get("RESEARCH_API_TOKEN") or not self.authorized():
+                self.send_json(401, {"ok": False})
+                return
+            try:
+                db = ownership_data.connect(self.app.db_path)
+                try:
+                    payload = ownership_data.public_payload(db)
+                finally:
+                    db.close()
+                self.send_json(200 if payload.get("ok") else 503, payload)
+            except Exception:
+                self.send_json(503, {"ok": False, "error": "ownership-unavailable"})
+            return
         if path == "/push/send-log":
             # Nov 16: the last sends for the owner's panel (the website allows owner accounts only): a short device hash, the push
             # service's host, its HTTP status and whether the device is still registered. Never an endpoint, a key or a member.

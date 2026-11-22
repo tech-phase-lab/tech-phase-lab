@@ -174,6 +174,25 @@ class OwnershipDataTest(unittest.TestCase):
                 '<ix:nonFraction name="dei:EntityCommonStockSharesOutstanding" contextRef="c2" scale="6">6,100</ix:nonFraction>')
         self.assertEqual(od.cover_shares(html), (5.8e9 + 6.1e9, '2026-10-20'))
 
+    def test_public_payload_is_per_ticker_and_page_universe_only(self):
+        db = od.connect(':memory:')
+        db.execute("INSERT INTO ownership_institutional VALUES('NVDA','2026-06-30',700,10,1000,'2026-08-01',70.0,3.1,2,'q2','x')")
+        db.execute("INSERT INTO ownership_institutional VALUES('XYZ','2026-06-30',700,10,1000,'2026-08-01',70.0,3.1,2,'q2','x')")
+        db.execute("INSERT INTO ownership_short VALUES('NVDA','2026-10-30',280,300,-20,-6.7,100,2.8,200,1.4,24000,1.16,'x')")
+        for line, (code, value) in enumerate((('S', 1000.0), ('S', 500.0), ('M', 9.0))):
+            db.execute('INSERT INTO ownership_insider_trades VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)',
+                       ('acc1', line, 'NVDA', '2026-11-03', '2026-11-02', 'Doe', 'Director', code, 'sell',
+                        'open-market' if code == 'S' else 'other', 1, value, value, 1, 'checkbox'))
+        db.execute("INSERT INTO ownership_buyback_authorizations VALUES('NVDA','a1','2026-11-17',150e9,'s','u')")
+        db.execute("INSERT INTO ownership_buyback_authorizations VALUES('NVDA','a2','2026-11-20',150e9,'s','u')")
+        payload = od.public_payload(db, companies={'NVDA': ('エヌビディア', 'NVIDIA')}, today=od.date(2026, 11, 22))
+        self.assertEqual([r['ticker'] for r in payload['institutional']], ['NVDA'])
+        self.assertEqual(payload['short'][0]['change'], round(1.16 - 300 * 1.16 / 280, 2))
+        self.assertEqual(payload['short'][0]['days'], 1.4)
+        self.assertEqual([(t['side'], t['value'], t['planned']) for t in payload['insiders']], [('sell', 1500.0, True)])
+        self.assertEqual([(b['kind'], b['date']) for b in payload['buybacks']], [('authorization', '2026-11-17')])
+        self.assertNotIn('filer', json.dumps(payload))
+
     def test_run_due_skips_jobs_not_due(self):
         with tempfile.TemporaryDirectory() as folder:
             path = str(Path(folder) / 'o.sqlite')
