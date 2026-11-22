@@ -240,6 +240,30 @@
           }
         }
       ]
+    },
+    {
+      "id": "HITACHI",
+      "ticker": "6501",
+      "name": "日立製作所(日立ハイテク)",
+      "name_en": "Hitachi (Hitachi High-Tech)",
+      "sub": "検査・計測装置",
+      "sub_en": "Inspection & metrology",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "グループの日立ハイテクが、KLAの競合の一社として挙げられる",
+          "text_en": "Its Hitachi High-Tech unit is named among KLA’s competitors",
+          "source": {
+            "label": "KLA 10-K(2026年度)",
+            "label_en": "KLA 10-K (fiscal 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/319201/000031920126000027/klac-20260630.htm",
+            "level": "official",
+            "date": "2026-08-06",
+            "quote": "In each of our product markets, we have many competitors, including companies such as Applied Materials, Inc., ASML Holding N.V., Hitachi High-Tech Corporation"
+          }
+        }
+      ]
     }
   ],
   "far": [],
