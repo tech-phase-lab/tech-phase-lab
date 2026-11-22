@@ -28,13 +28,15 @@ test("the server decides PRO and a FREE caller is sent the dots only", () => {
   assert.ok(!/health/.test(route));
 });
 
-test("the menu lists 財務レーダー under Research, after 資本マップ, and not in the PRO tiles", () => {
+test("the menu lists 財務レーダー under Research after 資本マップ; with 割安判別ツール on, PRO members find it in the PRO tiles instead (owner, Nov 22)", () => {
   const header = read("../app/research/site-header.tsx");
-  const map = header.indexOf('"/research/capital-map"'), radar = header.indexOf('"/research/radar"'), targets = header.indexOf('"/research/price-targets"');
+  const research = header.slice(header.indexOf('heading(ja ? "リサーチ"'));
+  const map = research.indexOf('"/research/capital-map"'), radar = research.indexOf('"/research/radar"'), targets = research.indexOf('"/research/price-targets"');
   assert.ok(map > 0 && radar > map && radar < targets);
-  assert.equal(header.split('"/research/radar"').length - 1, 1);
+  assert.match(research, /\{!\(member && valueCheck\) && item\("\/research\/radar"/);
+  assert.equal(header.split('"/research/radar"').length - 1, 2);
   const proTiles = header.slice(header.indexOf("tile("), header.indexOf('heading(ja ? "リサーチ"'));
-  assert.ok(!proTiles.includes("radar"));
+  assert.match(proTiles, /\{valueCheck && tile\("\/research\/radar"/);
   const sidebar = read("../app/research/home-sidebar.tsx");
   assert.ok(sidebar.indexOf('"/research/radar"') > sidebar.indexOf('"/research/capital-map"'));
   const start = sidebar.indexOf("...(member ? [\n"), sidebarPro = sidebar.slice(start, sidebar.indexOf("] : [])", start));
