@@ -1917,7 +1917,7 @@ class IntakeTests(unittest.TestCase):
             (content, content_type),
             (b"<rss><channel/></rss>", "application/rss+xml"),
         )
-        self.assertEqual(opener.timeout, 8)
+        self.assertEqual(opener.timeout, 12)
 
     def test_persisted_validator_survives_restart_and_304_preserves_evidence(self):
         m.save_source_check(self.db, self.row(), {
@@ -2177,12 +2177,12 @@ class IntakeTests(unittest.TestCase):
 
     def test_automatic_monitor_unions_credo_company_and_current_report_routes(self):
         provider = m.PROVIDERS["CRDO"]
-        company_body = b'''<a href="https://investors.credosemi.com/news-events/news/news-details/2026/Credo-AI-Update/default.aspx">Credo AI update</a>'''
+        company_body = b'''<rss><channel><item><title>Credo AI update</title><link>https://investors.credosemi.com/news-events/news/news-details/2026/Credo-AI-Update/default.aspx</link></item></channel></rss>'''
         sec_body = b'''{"cik":1807794,"filings":{"recent":{"form":["8-K","10-Q"],"accessionNumber":["0001807794-26-000001","0001807794-26-000002"],"primaryDocument":["crdo-20260924.htm","crdo-20260731.htm"],"primaryDocDescription":["CURRENT REPORT","QUARTERLY REPORT"]}}}'''
 
         def transport(url, _ticker):
             if url == provider["indexUrl"]:
-                return company_body, "text/html"
+                return company_body, "application/rss+xml"
             if url == provider["supplementalSources"][0]["url"]:
                 return sec_body, "application/json"
             raise AssertionError(f"unexpected URL: {url}")
@@ -2190,7 +2190,7 @@ class IntakeTests(unittest.TestCase):
         result, links = m.collect_discovery("CRDO", transport, automatic=True)
         self.assertEqual(result["status"], "ok")
         self.assertEqual(result["route"], "primary+supplemental")
-        self.assertEqual(result["sourceFormat"], "html+sec-json")
+        self.assertEqual(result["sourceFormat"], "rss+sec-json")
         self.assertEqual(len(links), 2)
         self.assertTrue(any("news-details" in url for url in links))
         self.assertTrue(any("/Archives/edgar/data/1807794/" in url for url in links))
@@ -3513,9 +3513,9 @@ class IntakeTests(unittest.TestCase):
         self.assertEqual(dell_rss["format"], "rss")
         self.assertEqual(
             dell_rss["url"],
-            "https://investors.delltechnologies.com/rss/news-releases.xml",
+            "https://investors.delltechnologies.com/news-events/press-releases/rss",
         )
-        self.assertEqual(m.PROVIDERS["DELL"]["requestTimeoutSeconds"], 8)
+        self.assertEqual(m.PROVIDERS["DELL"]["requestTimeoutSeconds"], 12)
         avgo_rss = m.monitoring_sources("AVGO")[0]
         self.assertEqual(avgo_rss["route"], "primary")
         self.assertEqual(avgo_rss["format"], "rss")

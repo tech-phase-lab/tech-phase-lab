@@ -46,18 +46,6 @@
     "automatedAccess": "prohibited",
     "indexUrl": "https://news.skhynix.com/en/category/ir/",
     "format": "html",
-    "supplementalSources": [
-      {
-        "url": "https://data.sec.gov/submissions/CIK0002120882.json",
-        "format": "sec-json",
-        "label": "SEC submissions 6-K",
-        "cik": "0002120882",
-        "forms": [
-          "6-K"
-        ],
-        "limit": 40
-      }
-    ],
     "allowedHosts": [
       "news.skhynix.com",
       "www.skhynix.com",
@@ -72,6 +60,18 @@
       {
         "host": "www.sec.gov",
         "pattern": "^/Archives/edgar/data/2120882/.+"
+      }
+    ],
+    "fallbackSources": [
+      {
+        "url": "https://data.sec.gov/submissions/CIK0002120882.json",
+        "format": "sec-json",
+        "label": "SEC submissions 6-K",
+        "cik": "0002120882",
+        "forms": [
+          "6-K"
+        ],
+        "limit": 40
       }
     ]
   },
@@ -102,7 +102,8 @@
         "pattern": "^/Archives/edgar/data/2023554/.+"
       }
     ],
-    "supplementalSources": [
+    "automaticSource": "fallback",
+    "fallbackSources": [
       {
         "url": "https://data.sec.gov/submissions/CIK0002023554.json",
         "format": "sec-json",
@@ -575,8 +576,8 @@
     "ticker": "CRDO",
     "name": "Credo",
     "sector": "networking",
-    "indexUrl": "https://credosemi.com/",
-    "format": "html",
+    "indexUrl": "https://investors.credosemi.com/rss/pressrelease.aspx",
+    "format": "rss",
     "allowedHosts": [
       "credosemi.com",
       "data.sec.gov",
@@ -616,6 +617,22 @@
         "host": "investors.credosemi.com",
         "pattern": "/news-events/news/news-details/(\\d{4})/([^/]+)/default\\.aspx",
         "url": "https://s205.q4cdn.com/511065572/files/doc_news/{1}-{0}.pdf"
+      }
+    ],
+    "requestTimeoutSeconds": 12,
+    "fallbackSources": [
+      {
+        "url": "https://investors.credosemi.com/feed/PressRelease.svc/GetPressReleaseList?LanguageId=1&bodyType=0&pressReleaseDateFilter=3&categoryId=00000000-0000-0000-0000-000000000000&pageSize=20&pageNumber=0&tagList=&includeTags=true&year=-1&excludeSelection=1",
+        "format": "news-json",
+        "label": "Credo Q4 press-release list",
+        "itemsKey": "GetPressReleaseListResult",
+        "urlKey": "LinkToDetailPage",
+        "titleKey": "Headline"
+      },
+      {
+        "url": "https://credosemi.com/",
+        "format": "html",
+        "label": "Credo home page"
       }
     ]
   },
@@ -765,15 +782,19 @@
     "name": "Dell Technologies",
     "sector": "servers",
     "scope": "earnings",
-    "indexUrl": "https://investors.delltechnologies.com/rss/news-releases.xml",
+    "indexUrl": "https://investors.delltechnologies.com/news-events/press-releases/rss",
     "format": "rss",
-    "requestTimeoutSeconds": 8,
+    "requestTimeoutSeconds": 12,
     "allowedHosts": [
       "data.sec.gov",
       "investors.delltechnologies.com",
       "www.sec.gov"
     ],
     "articleRules": [
+      {
+        "host": "investors.delltechnologies.com",
+        "pattern": "^/news-events/press-releases/detail/\\d+/[a-z0-9]+(?:-[a-z0-9]+)*/?$"
+      },
       {
         "host": "investors.delltechnologies.com",
         "pattern": "^/news-releases/news-release-details/.+"
@@ -1290,10 +1311,31 @@
     "name": "Coherent",
     "sector": "networking",
     "scope": "earnings",
-    "indexUrl": "https://www.coherent.com/sitemap-coherentweb-en.xml",
-    "format": "sitemap",
+    "indexUrl": "https://ir.coherent.com/rss/news-releases.xml",
+    "format": "rss",
     "requestTimeoutSeconds": 15,
-    "supplementalSources": [
+    "allowedHosts": [
+      "data.sec.gov",
+      "ir.coherent.com",
+      "www.coherent.com",
+      "www.sec.gov"
+    ],
+    "articleRules": [
+      {
+        "host": "ir.coherent.com",
+        "pattern": "^/news-releases/news-release-details/.+"
+      },
+      {
+        "host": "www.coherent.com",
+        "pattern": "^/news/press-releases/[^/]+/?$"
+      },
+      {
+        "host": "www.sec.gov",
+        "pattern": "^/Archives/edgar/data/820318/.+"
+      }
+    ],
+    "automaticSource": "fallback",
+    "fallbackSources": [
       {
         "url": "https://data.sec.gov/submissions/CIK0000820318.json",
         "format": "sec-json",
@@ -1308,21 +1350,6 @@
         "url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000820318&type=8-K&owner=exclude&count=40&output=atom",
         "format": "rss",
         "label": "SEC 8-K"
-      }
-    ],
-    "allowedHosts": [
-      "data.sec.gov",
-      "www.coherent.com",
-      "www.sec.gov"
-    ],
-    "articleRules": [
-      {
-        "host": "www.coherent.com",
-        "pattern": "^/news/press-releases/[^/]+/?$"
-      },
-      {
-        "host": "www.sec.gov",
-        "pattern": "^/Archives/edgar/data/820318/.+"
       }
     ]
   },
@@ -1707,7 +1734,7 @@
     "name": "Lam Research",
     "sector": "semiconductors",
     "scope": "earnings",
-    "indexUrl": "https://investor.lamresearch.com/news-releases",
+    "indexUrl": "https://investor.lamresearch.com/",
     "format": "html",
     "requestTimeoutSeconds": 8,
     "supplementalSources": [
@@ -1733,6 +1760,10 @@
       "www.sec.gov"
     ],
     "articleRules": [
+      {
+        "host": "investor.lamresearch.com",
+        "pattern": "^/content/dam/newsroom/press_release_pdfs/\\d{4}-\\d{2}-\\d{2}-[^/]+\\.pdf$"
+      },
       {
         "host": "investor.lamresearch.com",
         "pattern": "^/\\d{4}-\\d{2}-\\d{2}-[^/]+/?$"

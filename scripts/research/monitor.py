@@ -886,6 +886,10 @@ class Links(HTMLParser):
         except ValueError:
             return
         self.current, self.text = article_url(url, self.ticker), []
+        # Lam Research's PDF button reads "VIEW PDF VERSION >>"; its accessible name carries the release title.
+        accessible = dict(attrs).get("aria-labelledby") or dict(attrs).get("aria-label") or ""
+        match = re.fullmatch(r"\s*view pdf version of\s+(.+?)\s*", accessible, re.I | re.S)
+        self.accessible_title = " ".join(match.group(1).split())[:300] if match else None
         if self.current:
             self.urls.add(self.current)
 
@@ -896,6 +900,8 @@ class Links(HTMLParser):
     def handle_endtag(self, tag):
         if tag == "a" and self.current:
             label = " ".join(" ".join(self.text).split())[:300]
+            if re.fullmatch(r"view pdf(?: version)?\W*", label, re.I):
+                label = getattr(self, "accessible_title", None) or ""
             if label and label.lower() not in {"read more", "read article", "learn more", "read press release", "read blog"}:
                 self.labels[self.current] = label
                 self.all_labels.setdefault(self.current, []).append(label)
@@ -3717,9 +3723,10 @@ def monitoring_sources(ticker, automatic=False, scope=None):
     for key in ("requestJson", "itemsKey", "urlKey", "titleKey", "dateKey", "twseCompanyCode", "allowEmpty"):
         if key in provider:
             primary[key] = provider[key]
-    primary_chain = [primary] + [
-        {**source, "route": "fallback"} for source in provider.get("fallbackSources", [])
-    ]
+    fallbacks = [{**source, "route": "fallback"} for source in provider.get("fallbackSources", [])]
+    # A site whose terms forbid robots is never requested, so it is not put in the chain at all (it would only
+    # add a refused attempt and a failure diagnostic every cycle) once an allowed fallback is configured.
+    primary_chain = fallbacks if fallbacks and automated_access_prohibited(ticker, primary["url"]) else [primary] + fallbacks
     if automatic and provider.get("automaticSource") == "fallback":
         primary_chain.sort(key=lambda source: source["route"] != "fallback")
     supplemental = [
