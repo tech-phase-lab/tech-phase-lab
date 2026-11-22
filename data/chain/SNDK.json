@@ -296,6 +296,54 @@
           }
         }
       ]
+    },
+    {
+      "id": "RMBS",
+      "ticker": "RMBS",
+      "name": "ランバス",
+      "name_en": "Rambus",
+      "sub": "半導体IP・メモリー接続",
+      "sub_en": "Chip IP & memory interfaces",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Rambusの特許のライセンスを受ける企業の一社",
+          "text_en": "One of the companies licensing Rambus patents",
+          "source": {
+            "label": "Rambus 10-Q(2026年7-9月期)",
+            "label_en": "Rambus 10-Q (Q3 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/917273/000119312526431941/rmbs-20260930.htm",
+            "level": "official",
+            "date": "2026-11",
+            "quote": "Leading semiconductor and electronic system companies such as AMD, Amlogic, Broadcom, CXMT, IBM, Infineon, Kioxia, Marvell, MediaTek, Micron, Nanya, Nuvoton, NVIDIA, Phison, Qualcomm, Samsung, Sandisk"
+          }
+        }
+      ]
+    },
+    {
+      "id": "YMTC",
+      "ticker": "YMTC",
+      "name": "長江存儲(YMTC)",
+      "name_en": "Yangtze Memory Technologies",
+      "sub": "NANDフラッシュ(中国)",
+      "sub_en": "NAND flash (China)",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "垂直統合型のフラッシュメーカーとしてSandiskと競合",
+          "text_en": "A vertically integrated flash maker competing with Sandisk",
+          "source": {
+            "label": "Sandisk 10-K(2026年度)",
+            "label_en": "Sandisk 10-K (FY2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2023554/000162828026057406/sndk-20260703.htm",
+            "level": "official",
+            "date": "2026-07-03",
+            "quote": "We compete with vertically-integrated suppliers such as Kioxia, Micron Technology, Inc., Samsung Electronics Co., Ltd., SK Hynix, Inc., Yangtze Memory Technologies Co., Ltd."
+          }
+        }
+      ]
     }
   ],
   "far": [],

@@ -1,0 +1,355 @@
+{
+  "root": {
+    "ticker": "CCJ",
+    "name": "カメコ",
+    "cik": 1009001,
+    "name_en": "Cameco"
+  },
+  "rows": [
+    {
+      "ja": "鉱山・濃縮の共同事業",
+      "en": "Mining & enrichment joint ventures",
+      "above": true
+    },
+    {
+      "ja": "Westinghouseの共同保有",
+      "en": "Westinghouse co-ownership"
+    },
+    {
+      "ja": "取引先(保管・ロイヤルティ)",
+      "en": "Counterparties (storage & royalties)"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "BWXT"
+  ],
+  "companies": [
+    {
+      "id": "KAP",
+      "ticker": "KAP",
+      "name": "カザトムプロム",
+      "name_en": "Kazatomprom",
+      "sub": "ウラン生産",
+      "sub_en": "Uranium mining",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "カザフスタンのInkai鉱山を合弁で運営(Cameco 40%、Kazatomprom 60%)",
+          "text_en": "Jointly owns the Inkai uranium operation in Kazakhstan (Cameco 40%, Kazatomprom 60%)",
+          "source": {
+            "label": "Cameco 年次情報書(2025年度、40-F添付)",
+            "label_en": "Cameco Annual Information Form (FY2025, Form 40-F exhibit)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1009001/000119312526116229/d34605dex991.htm",
+            "level": "official",
+            "date": "2026-03-19",
+            "quote": "The operator is JV Inkai limited liability partnership, which we jointly own (40%) 1 with Kazatomprom (KAP) (60%)."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SLX",
+      "ticker": "SLX",
+      "name": "サイレックス・システムズ",
+      "name_en": "Silex Systems",
+      "sub": "レーザー濃縮技術",
+      "sub_en": "Laser enrichment technology",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "レーザー濃縮技術の事業会社GLEを共同保有(Cameco 49%、Silex 51%)",
+          "text_en": "Co-owns Global Laser Enrichment (Cameco 49%, Silex 51%)",
+          "source": {
+            "label": "Cameco 年次情報書(2025年度、40-F添付)",
+            "label_en": "Cameco Annual Information Form (FY2025, Form 40-F exhibit)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1009001/000119312526116229/d34605dex991.htm",
+            "level": "official",
+            "date": "2026-03-19",
+            "quote": "Silex Systems Ltd. (Silex Systems), the licensor of the SILEX technology, owns the remaining 51% of GLE and is the technology lead for the project."
+          }
+        }
+      ]
+    },
+    {
+      "id": "TEPCO",
+      "ticker": "9501",
+      "name": "東京電力ホールディングス",
+      "name_en": "Tokyo Electric Power",
+      "sub": "電力会社",
+      "sub_en": "Utility",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "グループのTEPCO ResourcesがCigar Lake鉱山の5%を保有(Cameco 54.5%が操業)",
+          "text_en": "Group company TEPCO Resources holds 5% of the Cigar Lake mine that Cameco operates (54.5%)",
+          "source": {
+            "label": "Cameco 年次情報書(2025年度、40-F添付)",
+            "label_en": "Cameco Annual Information Form (FY2025, Form 40-F exhibit)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1009001/000119312526116229/d34605dex991.htm",
+            "level": "official",
+            "date": "2026-03-19",
+            "quote": "• Cameco - 54.547% (operator) • Orano - 40.453% • TEPCO Resources Inc. - 5.000%"
+          }
+        }
+      ]
+    },
+    {
+      "id": "BEP",
+      "ticker": "BEP",
+      "name": "ブルックフィールド・リニューアブル",
+      "name_en": "Brookfield Renewable",
+      "sub": "再エネ・原子力",
+      "sub_en": "Renewables & nuclear",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "原子力大手Westinghouseを共同保有(Cameco 49%)",
+          "text_en": "Co-owns Westinghouse with Cameco, which holds 49%",
+          "source": {
+            "label": "Cameco 年次情報書(2025年度、40-F添付)",
+            "label_en": "Cameco Annual Information Form (FY2025, Form 40-F exhibit)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1009001/000119312526116229/d34605dex991.htm",
+            "level": "official",
+            "date": "2026-03-19",
+            "quote": "We own a 49% interest in Westinghouse in a strategic partnership with Brookfield."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "2025年10月、Westinghouseの原子炉建設を加速する米政府との戦略提携をCamecoと結んだ",
+          "text_en": "In October 2025, joined Cameco in a strategic partnership with the US Government to speed Westinghouse reactor deployment",
+          "source": {
+            "label": "Cameco 年次情報書(2025年度、40-F添付)",
+            "label_en": "Cameco Annual Information Form (FY2025, Form 40-F exhibit)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1009001/000119312526116229/d34605dex991.htm",
+            "level": "official",
+            "date": "2026-03-19",
+            "quote": "In October, Cameco and Brookfield announced a strategic partnership with the US Government to accelerate deployment of Westinghouse nuclear reactors.",
+            "note": "最終投資判断と正式契約が前提です。",
+            "note_en": "Contingent on a final investment decision and definitive agreements."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BBUC",
+      "ticker": "BBUC",
+      "name": "ブルックフィールド・ビジネス",
+      "name_en": "Brookfield Business",
+      "sub": "事業投資",
+      "sub_en": "Business services",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2023年11月、Westinghouseを含む原子力事業をCamecoとBrookfield Renewableの連合に売却",
+          "text_en": "In November 2023, sold its nuclear technology services business (Westinghouse) to a consortium led by Cameco and Brookfield Renewable",
+          "source": {
+            "label": "Brookfield Business 20-F(2025年度)",
+            "label_en": "Brookfield Business 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1871130/000162828026022153/bbuc-20251231.htm",
+            "level": "official",
+            "date": "2026-03",
+            "quote": "On November 7, 2023, we completed the sale of our nuclear technology services operation to a strategic consortium led by Cameco",
+            "note": "過去の取引です。",
+            "note_en": "A past transaction."
+          }
+        }
+      ]
+    },
+    {
+      "id": "UEC",
+      "ticker": "UEC",
+      "name": "ウラニウム・エナジー",
+      "name_en": "Uranium Energy",
+      "sub": "ウラン生産",
+      "sub_en": "Uranium mining",
+      "row": 2,
+      "relations": [
+        {
+          "type": "down",
+          "text": "購入したウランの保管をCamecoとConverDynの施設に委託",
+          "text_en": "Stores purchased uranium at Cameco’s and ConverDyn’s facilities",
+          "source": {
+            "label": "Uranium Energy 10-K(2025年7月期)",
+            "label_en": "Uranium Energy 10-K (FY ended Jul 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1334933/000143774925029761/uec20250731_10k.htm",
+            "level": "official",
+            "date": "2025-09",
+            "quote": "Failure to negotiate commercially reasonable storage terms for a subsequent storage period with ConverDyn and Cameco may have a material adverse effect on our financial condition."
+          }
+        }
+      ]
+    },
+    {
+      "id": "UUUU",
+      "ticker": "UUUU",
+      "name": "エナジー・フューエルズ",
+      "name_en": "Energy Fuels",
+      "sub": "ウラン・レアアース",
+      "sub_en": "Uranium & rare earths",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Camecoの子会社が操業するワイオミング州の鉱山のロイヤルティを保有",
+          "text_en": "Holds royalties on Wyoming projects operated by a Cameco subsidiary",
+          "source": {
+            "label": "Energy Fuels 10-K(2025年度)",
+            "label_en": "Energy Fuels 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1385849/000138584926000009/efr-20251231.htm",
+            "level": "official",
+            "date": "2026-02",
+            "quote": "owned and operated by Power Resources, Inc., a wholly owned subsidiary of Cameco Corporation"
+          }
+        }
+      ]
+    },
+    {
+      "id": "LAC",
+      "ticker": "LAC",
+      "name": "リチウム・アメリカズ",
+      "name_en": "Lithium Americas",
+      "sub": "リチウム",
+      "sub_en": "Lithium",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ネバダ州の採掘権の一部に、Camecoの子会社への20%のロイヤルティが付く",
+          "text_en": "Some of its Nevada mining claims carry a 20% royalty payable to a Cameco subsidiary",
+          "source": {
+            "label": "Lithium Americas 10-K(2025年度)",
+            "label_en": "Lithium Americas 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1966983/000119312526115081/lac-20251231.htm",
+            "level": "official",
+            "date": "2026-03",
+            "quote": "Certain of the Thacker Mining Claims are subject to a 20% royalty payable to Cameco Global Exploration II Ltd."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BWXT",
+      "ticker": "BWXT",
+      "name": "BWXテクノロジーズ",
+      "name_en": "BWX Technologies",
+      "sub": "原子力機器・燃料",
+      "sub_en": "Nuclear components & fuel",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "BWXTが、原子力機器・燃料の分野の競合としてCamecoを挙げる",
+          "text_en": "BWXT names Cameco among competitors for nuclear components, fuel and services",
+          "source": {
+            "label": "BWX Technologies 10-K(2025年度)",
+            "label_en": "BWX Technologies 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1486957/000148695726000007/bwxt-20251231.htm",
+            "level": "official",
+            "date": "2026-02",
+            "quote": "This segment competes with a number of companies specializing in nuclear capabilities including, but not limited to, Framatome, Cameco Corporation"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Orano",
+      "ticker": "Orano",
+      "name": "オラノ",
+      "name_en": "Orano",
+      "sub": "核燃料(仏政府系)",
+      "sub_en": "Nuclear fuel (French state-owned)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Cigar Lake鉱山(Orano 40.5%)とMcArthur River鉱山(同30.2%)を共同保有",
+          "text_en": "Co-owns the Cigar Lake (40.5%) and McArthur River (30.2%) mines with Cameco",
+          "source": {
+            "label": "Cameco 年次情報書(2025年度、40-F添付)",
+            "label_en": "Cameco Annual Information Form (FY2025, Form 40-F exhibit)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1009001/000119312526116229/d34605dex991.htm",
+            "level": "official",
+            "date": "2026-03-19",
+            "quote": "• Cameco - 54.547% (operator) • Orano - 40.453% • TEPCO Resources Inc. - 5.000%"
+          }
+        },
+        {
+          "type": "tie",
+          "text": "Cigar Lakeの鉱石はすべてOranoのMcClean Lake工場で処理される",
+          "text_en": "All Cigar Lake ore is processed at Orano’s McClean Lake mill",
+          "source": {
+            "label": "Cameco 年次情報書(2025年度、40-F添付)",
+            "label_en": "Cameco Annual Information Form (FY2025, Form 40-F exhibit)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1009001/000119312526116229/d34605dex991.htm",
+            "level": "official",
+            "date": "2026-03-19",
+            "quote": "All of Cigar Lake's ore slurry from current mineral reserves will be processed at the McClean Lake mill, operated by Orano."
+          }
+        }
+      ]
+    },
+    {
+      "id": "UROY",
+      "ticker": "UROY",
+      "name": "ウラニウム・ロイヤルティ",
+      "name_en": "Uranium Royalty",
+      "sub": "ウランのロイヤルティ",
+      "sub_en": "Uranium royalties",
+      "row": 2,
+      "relations": [
+        {
+          "type": "down",
+          "text": "ロイヤルティで受け取ったウランをCamecoのBlind River精錬所の口座で保管",
+          "text_en": "Holds royalty uranium in its account at Cameco’s Blind River refinery",
+          "source": {
+            "label": "Uranium Royalty 年次情報書(2025年4月期)",
+            "label_en": "Uranium Royalty Annual Information Form (FY ended Apr 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1711570/000095017025096279/uroy-ex99_1.htm",
+            "level": "official",
+            "date": "2025-07",
+            "quote": "delivering 18,366 pounds U 3 O 8 to the Company's storage account at Cameco's Blind River uranium refining facility"
+          }
+        }
+      ]
+    },
+    {
+      "id": "EU",
+      "ticker": "EU",
+      "name": "エンコア・エナジー",
+      "name_en": "enCore Energy",
+      "sub": "ウラン生産",
+      "sub_en": "Uranium mining",
+      "row": 2,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Alta Mesa合弁の生産物の受け渡し先の一つがCamecoの施設",
+          "text_en": "Alta Mesa JV products may be delivered to the Cameco facility",
+          "source": {
+            "label": "enCore Energy 10-K添付(Alta Mesa合弁契約)",
+            "label_en": "enCore Energy 10-K exhibit (Alta Mesa JV agreement)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1500881/000162828026022507/exhibit1014-jvaltamesallcx.htm",
+            "level": "official",
+            "date": "2026-03",
+            "quote": "The Company shall arrange for the physical Products to be delivered to either the ConverDyn Facility or the Cameco Facility"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

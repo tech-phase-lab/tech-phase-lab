@@ -1,0 +1,368 @@
+{
+  "root": {
+    "ticker": "LEU",
+    "name": "セントラス・エナジー",
+    "cik": 1065059,
+    "name_en": "Centrus Energy"
+  },
+  "rows": [
+    {
+      "ja": "供給元(濃縮ウラン・建設)",
+      "en": "Suppliers (enriched uranium & construction)",
+      "above": true
+    },
+    {
+      "ja": "顧客(先進原子炉の開発企業)",
+      "en": "Customers (advanced reactor developers)"
+    },
+    {
+      "ja": "提携・資金支援",
+      "en": "Partners & funding support"
+    },
+    {
+      "ja": "競合(ウラン濃縮)",
+      "en": "Competitors (uranium enrichment)"
+    }
+  ],
+  "rivals": [
+    "Urenco",
+    "Orano",
+    "CNEIC"
+  ],
+  "companies": [
+    {
+      "id": "TENEX",
+      "ticker": "TENEX",
+      "name": "テネックス",
+      "name_en": "TENEX",
+      "sub": "濃縮ウラン(ロシア国営)",
+      "sub_en": "Enriched uranium (Russian state-owned)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "濃縮役務(SWU)の最大の調達先",
+          "text_en": "Its largest supplier of enrichment (SWU)",
+          "source": {
+            "label": "Centrus 10-K(2025年度)",
+            "label_en": "Centrus 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1065059/000162828026007117/leu-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "Currently, our largest supplier of SWU is TENEX followed by the French government-owned company, Orano.",
+            "note": "ロシアからの輸入は規制と輸出許可の影響を受けます。",
+            "note_en": "Imports are subject to US restrictions and Russian export licences."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "親会社のRosatomは、世界の主要な濃縮ウラン供給者として競合でもある",
+          "text_en": "Its parent Rosatom is also one of the main LEU suppliers competing worldwide",
+          "source": {
+            "label": "Centrus 10-K(2025年度)",
+            "label_en": "Centrus 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1065059/000162828026007117/leu-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "Rosatom, a Russian government entity, which sells LEU through its wholly-owned subsidiary TENEX;"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Orano",
+      "ticker": "Orano",
+      "name": "オラノ",
+      "name_en": "Orano",
+      "sub": "核燃料(仏政府系)",
+      "sub_en": "Nuclear fuel (French state-owned)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "TENEXに次ぐ濃縮役務の調達先。長期供給契約は2030年まで",
+          "text_en": "Its second-largest enrichment supplier, under a long-term agreement through 2030",
+          "source": {
+            "label": "Centrus 10-K(2025年度)",
+            "label_en": "Centrus 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1065059/000162828026007117/leu-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "Currently, our largest supplier of SWU is TENEX followed by the French government-owned company, Orano."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "世界の主要な濃縮ウラン供給者として競合でもある",
+          "text_en": "Also one of the main LEU suppliers competing worldwide",
+          "source": {
+            "label": "Centrus 10-K(2025年度)",
+            "label_en": "Centrus 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1065059/000162828026007117/leu-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "Orano, a company largely owned by the French government, and formerly part of the French government."
+          }
+        }
+      ]
+    },
+    {
+      "id": "FLR",
+      "ticker": "FLR",
+      "name": "フルア",
+      "name_en": "Fluor",
+      "sub": "エンジニアリング・建設",
+      "sub_en": "Engineering & construction",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "オハイオ州ピケトンの濃縮工場拡張の設計・調達・建設(EPC)契約",
+          "text_en": "EPC contractor for expanding enrichment capacity in Piketon, Ohio",
+          "source": {
+            "label": "Centrus 10-Q(2026年7-9月期)",
+            "label_en": "Centrus 10-Q (Q3 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1065059/000162828026070557/leu-20260930.htm",
+            "level": "official",
+            "date": "2026-11",
+            "quote": "On February 9, 2026, ACO entered into an EPC Contract with Fluor, for the commercial expansion and deployment of LEU and HALEU production capability at the ACP in Piketon, Ohio."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Geiger",
+      "ticker": "Geiger Brothers",
+      "name": "ガイガー・ブラザーズ",
+      "name_en": "Geiger Brothers",
+      "sub": "建設",
+      "sub_en": "Construction",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "ピケトンの濃縮工場拡張の建設工事を担当",
+          "text_en": "Construction contractor for the Piketon enrichment expansion",
+          "source": {
+            "label": "Centrus 10-Q(2026年7-9月期)",
+            "label_en": "Centrus 10-Q (Q3 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1065059/000162828026070557/leu-20260930.htm",
+            "level": "official",
+            "date": "2026-11",
+            "quote": "In April 2026, Centrus entered into a contract with Geiger Brothers, as the construction contractor"
+          }
+        }
+      ]
+    },
+    {
+      "id": "OKLO",
+      "ticker": "OKLO",
+      "name": "オクロ",
+      "name_en": "Oklo",
+      "sub": "小型原子炉",
+      "sub_en": "Advanced nuclear",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Okloの原子炉最大5基分の高純度低濃縮ウラン(HALEU)を供給する契約。納入は2029年開始予定",
+          "text_en": "Agreed to supply HALEU for up to five Oklo reactors, with deliveries from 2029",
+          "source": {
+            "label": "Centrus 10-Q(2026年7-9月期)",
+            "label_en": "Centrus 10-Q (Q3 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1065059/000162828026070557/leu-20260930.htm",
+            "level": "official",
+            "date": "2026-11",
+            "quote": "In June 2026, Centrus and Oklo signed a letter of intent in which Centrus agreed to supply enough domestic HALEU to power, for multiple years, up to five of Oklo"
+          }
+        },
+        {
+          "type": "tie",
+          "text": "HALEUの再転換(脱フッ化)で合弁設立を検討",
+          "text_en": "Exploring a joint venture for HALEU deconversion services",
+          "source": {
+            "label": "Centrus 10-Q(2026年7-9月期)",
+            "label_en": "Centrus 10-Q (Q3 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1065059/000162828026070557/leu-20260930.htm",
+            "level": "official",
+            "date": "2026-11",
+            "quote": "Centrus announced that the Company is exploring a joint venture with Oklo Inc. (\"Oklo\") focused on deconversion services for HALEU"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Xenergy",
+      "ticker": "X-energy",
+      "name": "Xエナジー",
+      "name_en": "X-energy",
+      "sub": "小型原子炉",
+      "sub_en": "Advanced nuclear",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "LEUとHALEUの長期供給契約(前払いあり)",
+          "text_en": "Long-term LEU and HALEU supply agreement with prepayments",
+          "source": {
+            "label": "Centrus 10-Q(2026年7-9月期)",
+            "label_en": "Centrus 10-Q (Q3 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1065059/000162828026070557/leu-20260930.htm",
+            "level": "official",
+            "date": "2026-11",
+            "quote": "The Company executed long‑term supply agreements with X‑energy to supply both LEU and HALEU, with Radiant to provide HALEU, and with Antares to provide HALEU."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Radiant",
+      "ticker": "Radiant",
+      "name": "ラディアント",
+      "name_en": "Radiant",
+      "sub": "超小型原子炉",
+      "sub_en": "Microreactors",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "HALEUの長期供給契約(前払いあり)",
+          "text_en": "Long-term HALEU supply agreement with prepayments",
+          "source": {
+            "label": "Centrus 10-Q(2026年7-9月期)",
+            "label_en": "Centrus 10-Q (Q3 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1065059/000162828026070557/leu-20260930.htm",
+            "level": "official",
+            "date": "2026-11",
+            "quote": "The Company executed long‑term supply agreements with X‑energy to supply both LEU and HALEU, with Radiant to provide HALEU, and with Antares to provide HALEU."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Antares",
+      "ticker": "Antares",
+      "name": "アンタレス",
+      "name_en": "Antares",
+      "sub": "超小型原子炉",
+      "sub_en": "Microreactors",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "HALEUの長期供給契約(前払いあり)",
+          "text_en": "Long-term HALEU supply agreement with prepayments",
+          "source": {
+            "label": "Centrus 10-Q(2026年7-9月期)",
+            "label_en": "Centrus 10-Q (Q3 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1065059/000162828026070557/leu-20260930.htm",
+            "level": "official",
+            "date": "2026-11",
+            "quote": "The Company executed long‑term supply agreements with X‑energy to supply both LEU and HALEU, with Radiant to provide HALEU, and with Antares to provide HALEU."
+          }
+        }
+      ]
+    },
+    {
+      "id": "META",
+      "ticker": "META",
+      "name": "メタ・プラットフォームズ",
+      "name_en": "Meta Platforms",
+      "sub": "SNS・AI",
+      "sub_en": "Social & AI",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Okloへの電力代金の前払いが、Centrusからの燃料購入の資金になっている",
+          "text_en": "Meta’s prepayment for Oklo power supports the HALEU purchase from Centrus",
+          "source": {
+            "label": "Oklo・Centrus の共同発表(Centrus 8-K添付、2026年11月)",
+            "label_en": "Oklo and Centrus joint release (Centrus 8-K exhibit, Nov 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1065059/000162828026073175/oklo_metasecurefuelfromc.htm",
+            "level": "official",
+            "date": "2026-11-12",
+            "quote": "The HALEU purchase is supported by Meta's prepayment for future Oklo power production"
+          }
+        }
+      ]
+    },
+    {
+      "id": "PLTR",
+      "ticker": "PLTR",
+      "name": "パランティア・テクノロジーズ",
+      "name_en": "Palantir Technologies",
+      "sub": "AIソフト",
+      "sub_en": "AI software",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "工場拡張の管理にPalantirのAIソフトを使う提携",
+          "text_en": "Partnership using Palantir’s AI software to manage the plant expansion",
+          "source": {
+            "label": "Centrus 10-Q(2026年7-9月期)",
+            "label_en": "Centrus 10-Q (Q3 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1065059/000162828026070557/leu-20260930.htm",
+            "level": "official",
+            "date": "2026-11",
+            "quote": "In March 2026, Centrus announced a partnership with Palantir"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Urenco",
+      "ticker": "Urenco",
+      "name": "ウレンコ",
+      "name_en": "Urenco",
+      "sub": "ウラン濃縮(英蘭独)",
+      "sub_en": "Uranium enrichment (UK/NL/DE)",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "世界の主要な濃縮ウラン供給者として競合",
+          "text_en": "One of the main LEU suppliers it competes with",
+          "source": {
+            "label": "Centrus 10-K(2025年度)",
+            "label_en": "Centrus 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1065059/000162828026007117/leu-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "Urenco, a consortium of companies owned or controlled by the British and Dutch governments and two German utilities;"
+          }
+        }
+      ]
+    },
+    {
+      "id": "CNEIC",
+      "ticker": "CNEIC",
+      "name": "CNEIC(中国政府系)",
+      "name_en": "CNEIC",
+      "sub": "ウラン濃縮(中国)",
+      "sub_en": "Uranium enrichment (China)",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "世界の主要な濃縮ウラン供給者として競合",
+          "text_en": "One of the main LEU suppliers it competes with",
+          "source": {
+            "label": "Centrus 10-K(2025年度)",
+            "label_en": "Centrus 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1065059/000162828026007117/leu-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "CNEIC, a company owned by the Chinese government; and"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

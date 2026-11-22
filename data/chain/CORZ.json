@@ -1,0 +1,467 @@
+{
+  "root": {
+    "ticker": "CORZ",
+    "name": "コア・サイエンティフィック",
+    "cik": 1839341,
+    "name_en": "Core Scientific"
+  },
+  "rows": [
+    {
+      "ja": "供給元(採掘用チップ)",
+      "en": "Suppliers (mining chips)",
+      "above": true
+    },
+    {
+      "ja": "顧客(AIクラウド・採掘の受託)",
+      "en": "Customers (AI cloud & hosted mining)"
+    },
+    {
+      "ja": "競合(AIデータセンター)",
+      "en": "Competitors (AI data centers)"
+    },
+    {
+      "ja": "競合(ビットコイン採掘)",
+      "en": "Competitors (bitcoin mining)"
+    }
+  ],
+  "rivals": [
+    "EQIX",
+    "DLR",
+    "APLD",
+    "IREN"
+  ],
+  "companies": [
+    {
+      "id": "XYZ",
+      "ticker": "XYZ",
+      "name": "ブロック",
+      "name_en": "Block",
+      "sub": "決済・半導体開発",
+      "sub_en": "Payments & chip design",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Blockと契約し、採掘向けに最適化した3nmのASIC(専用チップ)を調達",
+          "text_en": "Agreed with Block, Inc. to acquire 3 nm ASICs customized for bitcoin mining",
+          "source": {
+            "label": "Core Scientific 10-K(2025年度)",
+            "label_en": "Core Scientific 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1839341/000162828026013305/core-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "we entered into an agreement with Block, Inc. a technology company developing ASICs, to acquire 3 nm ASICs customized for digital asset mining"
+          }
+        }
+      ]
+    },
+    {
+      "id": "CRWV",
+      "ticker": "CRWV",
+      "name": "コアウィーブ",
+      "name_en": "CoreWeave",
+      "sub": "AIクラウド",
+      "sub_en": "AI cloud",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "CoreWeave向けのAIデータセンター賃貸は約590MWまで拡大",
+          "text_en": "Leased power capacity for CoreWeave grew to about 590 MW",
+          "source": {
+            "label": "Core Scientific 10-K(2025年度)",
+            "label_en": "Core Scientific 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1839341/000162828026013305/core-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "total leased customer power capacity under the relationship with CoreWeave increased to approximately 590 MW"
+          }
+        },
+        {
+          "type": "down",
+          "text": "データセンター賃貸(コロケーション)部門の売上の100%をCoreWeaveが占める",
+          "text_en": "CoreWeave accounts for 100% of Colocation segment revenue",
+          "source": {
+            "label": "Core Scientific 10-K(2025年度)",
+            "label_en": "Core Scientific 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1839341/000162828026013305/core-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "One customer, CoreWeave, currently accounts for 100% of our Colocation segment revenue."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "2025年7月にCoreWeaveによる買収で合意したが、10月の株主総会で否決され契約は終了",
+          "text_en": "Agreed in July 2025 to be acquired by CoreWeave; the agreement ended after shareholders rejected it in October",
+          "source": {
+            "label": "Core Scientific 10-K(2025年度)",
+            "label_en": "Core Scientific 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1839341/000162828026013305/core-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "the Company terminated the Merger Agreement in accordance with its terms following Company stockholder rejection of the terms of the Merger Agreement",
+            "note": "買収は成立していません。",
+            "note_en": "The acquisition did not happen."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GPUS",
+      "ticker": "GPUS",
+      "name": "ハイパースケール・データ",
+      "name_en": "Hyperscale Data",
+      "sub": "データセンター・採掘",
+      "sub_en": "Data centers & mining",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "子会社Sentinumの採掘機を、基本サービス契約に基づき預かって運用",
+          "text_en": "Hosts mining operations for subsidiary Sentinum under a master services agreement",
+          "source": {
+            "label": "Hyperscale Data 10-K(2025年度)",
+            "label_en": "Hyperscale Data 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/896493/000121465926004697/hdi32026010k.htm",
+            "level": "official",
+            "date": "2026",
+            "quote": "pursuant to the terms of a Master Services Agreement (\"MSA\") with Core Scientific, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "EQIX",
+      "ticker": "EQIX",
+      "name": "エクイニクス",
+      "name_en": "Equinix",
+      "sub": "データセンター",
+      "sub_en": "Data centers",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "AI向けデータセンター市場で競合する大手事業者の一社",
+          "text_en": "An established data center provider it competes with in AI data centers",
+          "source": {
+            "label": "Core Scientific 10-K(2025年度)",
+            "label_en": "Core Scientific 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1839341/000162828026013305/core-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "In the HDC market, we compete with numerous established data center providers"
+          }
+        }
+      ]
+    },
+    {
+      "id": "DLR",
+      "ticker": "DLR",
+      "name": "デジタル・リアルティ・トラスト",
+      "name_en": "Digital Realty Trust",
+      "sub": "データセンター",
+      "sub_en": "Data centers",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "AI向けデータセンター市場で競合する大手事業者の一社",
+          "text_en": "An established data center provider it competes with in AI data centers",
+          "source": {
+            "label": "Core Scientific 10-K(2025年度)",
+            "label_en": "Core Scientific 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1839341/000162828026013305/core-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "In the HDC market, we compete with numerous established data center providers"
+          }
+        }
+      ]
+    },
+    {
+      "id": "NTT",
+      "ticker": "9432",
+      "name": "日本電信電話(NTT)",
+      "name_en": "NTT",
+      "sub": "通信・データセンター",
+      "sub_en": "Telecom & data centers",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "AI向けデータセンター市場で競合する大手事業者の一社",
+          "text_en": "An established data center provider it competes with in AI data centers",
+          "source": {
+            "label": "Core Scientific 10-K(2025年度)",
+            "label_en": "Core Scientific 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1839341/000162828026013305/core-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "In the HDC market, we compete with numerous established data center providers"
+          }
+        }
+      ]
+    },
+    {
+      "id": "APLD",
+      "ticker": "APLD",
+      "name": "アプライド・デジタル",
+      "name_en": "Applied Digital",
+      "sub": "AIデータセンター",
+      "sub_en": "AI data centers",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "採掘拠点をAI向けに転用し、AI企業と契約した競合の一社",
+          "text_en": "A rival miner converting facilities to AI under contracts with AI customers",
+          "source": {
+            "label": "Core Scientific 10-K(2025年度)",
+            "label_en": "Core Scientific 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1839341/000162828026013305/core-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "we compete with other digital asset miners who have signed contracts with AI / HPC customers to convert existing digital mining facilities into HDC facilities including: • Applied Digital Corporation; • Cipher Mining Inc.; • Galaxy Digital; • Hut 8 Corp.; • IREN; and • Terawulf, Inc."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "Applied Digitalも自社の10-KでCore Scientificを競合に挙げる",
+          "text_en": "Applied Digital’s 10-K also names Core Scientific as a competitor",
+          "source": {
+            "label": "Applied Digital 10-K(2026年5月期)",
+            "label_en": "Applied Digital 10-K (FY ended May 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1144879/000114487926000048/apld-20260531.htm",
+            "level": "official",
+            "date": "2026-07-29",
+            "quote": "HIVE Digital Technologies Ltd., Core Scientific, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "IREN",
+      "ticker": "IREN",
+      "name": "アイレン",
+      "name_en": "IREN",
+      "sub": "AIクラウド・データセンター",
+      "sub_en": "AI cloud & data centers",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "採掘拠点をAI向けに転用し、AI企業と契約した競合の一社",
+          "text_en": "A rival miner converting facilities to AI under contracts with AI customers",
+          "source": {
+            "label": "Core Scientific 10-K(2025年度)",
+            "label_en": "Core Scientific 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1839341/000162828026013305/core-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "we compete with other digital asset miners who have signed contracts with AI / HPC customers to convert existing digital mining facilities into HDC facilities including: • Applied Digital Corporation; • Cipher Mining Inc.; • Galaxy Digital; • Hut 8 Corp.; • IREN; and • Terawulf, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CIFR",
+      "ticker": "CIFR",
+      "name": "サイファー・デジタル",
+      "name_en": "Cipher Digital",
+      "sub": "AIデータセンター",
+      "sub_en": "AI data centers",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "採掘拠点をAI向けに転用し、AI企業と契約した競合の一社",
+          "text_en": "A rival miner converting facilities to AI under contracts with AI customers",
+          "source": {
+            "label": "Core Scientific 10-K(2025年度)",
+            "label_en": "Core Scientific 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1839341/000162828026013305/core-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "we compete with other digital asset miners who have signed contracts with AI / HPC customers to convert existing digital mining facilities into HDC facilities including: • Applied Digital Corporation; • Cipher Mining Inc.; • Galaxy Digital; • Hut 8 Corp.; • IREN; and • Terawulf, Inc."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "Cipherも、大手IT企業とリース契約を結んだ競合としてCore Scientificを挙げる",
+          "text_en": "Cipher names Core Scientific among rivals that signed leases with hyperscalers",
+          "source": {
+            "label": "Cipher Digital 10-K(2025年度)",
+            "label_en": "Cipher Digital 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1819989/000181998926000009/cifr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "have signed leases with hyperscalers and HPC tenants, including: Hut 8 Corp., IREN Limited, TeraWulf Inc., Core Scientific, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "HUT",
+      "ticker": "HUT",
+      "name": "ハット8",
+      "name_en": "Hut 8",
+      "sub": "AIデータセンター",
+      "sub_en": "AI data centers",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "採掘拠点をAI向けに転用し、AI企業と契約した競合の一社",
+          "text_en": "A rival miner converting facilities to AI under contracts with AI customers",
+          "source": {
+            "label": "Core Scientific 10-K(2025年度)",
+            "label_en": "Core Scientific 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1839341/000162828026013305/core-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "we compete with other digital asset miners who have signed contracts with AI / HPC customers to convert existing digital mining facilities into HDC facilities including: • Applied Digital Corporation; • Cipher Mining Inc.; • Galaxy Digital; • Hut 8 Corp.; • IREN; and • Terawulf, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "WULF",
+      "ticker": "WULF",
+      "name": "テラウルフ",
+      "name_en": "TeraWulf",
+      "sub": "AIデータセンター",
+      "sub_en": "AI data centers",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "採掘拠点をAI向けに転用し、AI企業と契約した競合の一社",
+          "text_en": "A rival miner converting facilities to AI under contracts with AI customers",
+          "source": {
+            "label": "Core Scientific 10-K(2025年度)",
+            "label_en": "Core Scientific 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1839341/000162828026013305/core-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "we compete with other digital asset miners who have signed contracts with AI / HPC customers to convert existing digital mining facilities into HDC facilities including: • Applied Digital Corporation; • Cipher Mining Inc.; • Galaxy Digital; • Hut 8 Corp.; • IREN; and • Terawulf, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GLXY",
+      "ticker": "GLXY",
+      "name": "ギャラクシー・デジタル",
+      "name_en": "Galaxy Digital",
+      "sub": "デジタル資産・データセンター",
+      "sub_en": "Digital assets & data centers",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "採掘拠点をAI向けに転用し、AI企業と契約した競合の一社",
+          "text_en": "A rival converting facilities to AI under contracts with AI customers",
+          "source": {
+            "label": "Core Scientific 10-K(2025年度)",
+            "label_en": "Core Scientific 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1839341/000162828026013305/core-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "we compete with other digital asset miners who have signed contracts with AI / HPC customers to convert existing digital mining facilities into HDC facilities including: • Applied Digital Corporation; • Cipher Mining Inc.; • Galaxy Digital; • Hut 8 Corp.; • IREN; and • Terawulf, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CLSK",
+      "ticker": "CLSK",
+      "name": "クリーンスパーク",
+      "name_en": "CleanSpark",
+      "sub": "ビットコイン採掘",
+      "sub_en": "Bitcoin mining",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "自社採掘と受託の両方で競合しうる上場企業の一社",
+          "text_en": "A listed company that may compete in self-mining and hosting",
+          "source": {
+            "label": "Core Scientific 10-K(2025年度)",
+            "label_en": "Core Scientific 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1839341/000162828026013305/core-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "may be considered self-mining and hosting competitors to the Company: • Applied Digital Corporation • Bit Digital, Inc.; • Bitfarms Ltd.; • Cipher Mining Inc.; and • CleanSpark, Inc."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "CleanSparkも北米の主な競合としてCore Scientificを挙げる",
+          "text_en": "CleanSpark names Core Scientific among its major North American competitors",
+          "source": {
+            "label": "CleanSpark 10-K(2025年9月期)",
+            "label_en": "CleanSpark 10-K (FY ended Sep 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/827876/000119312525297510/clsk-20250930.htm",
+            "level": "official",
+            "date": "2025-11-25",
+            "quote": "Within North America, our major competitors include: • MARA Holdings, Inc.; • Riot Platforms, Inc.; • Core Scientific, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BITF",
+      "ticker": "BITF",
+      "name": "ビットファームズ",
+      "name_en": "Bitfarms",
+      "sub": "ビットコイン採掘",
+      "sub_en": "Bitcoin mining",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "自社採掘と受託の両方で競合しうる上場企業の一社",
+          "text_en": "A listed company that may compete in self-mining and hosting",
+          "source": {
+            "label": "Core Scientific 10-K(2025年度)",
+            "label_en": "Core Scientific 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1839341/000162828026013305/core-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "may be considered self-mining and hosting competitors to the Company: • Applied Digital Corporation • Bit Digital, Inc.; • Bitfarms Ltd.; • Cipher Mining Inc.; and • CleanSpark, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BTBT",
+      "ticker": "BTBT",
+      "name": "ビット・デジタル",
+      "name_en": "Bit Digital",
+      "sub": "ビットコイン採掘",
+      "sub_en": "Bitcoin mining",
+      "row": 3,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "自社採掘と受託の両方で競合しうる上場企業の一社",
+          "text_en": "A listed company that may compete in self-mining and hosting",
+          "source": {
+            "label": "Core Scientific 10-K(2025年度)",
+            "label_en": "Core Scientific 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1839341/000162828026013305/core-20251231.htm",
+            "level": "official",
+            "date": "2026-03-02",
+            "quote": "may be considered self-mining and hosting competitors to the Company: • Applied Digital Corporation • Bit Digital, Inc.; • Bitfarms Ltd.; • Cipher Mining Inc.; and • CleanSpark, Inc."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
