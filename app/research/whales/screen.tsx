@@ -36,7 +36,7 @@ function useWhaleMoves(allowed: boolean) {
 const Name = ({ ticker, name }: { ticker: string; name: string }) => <span className={styles.names}>
   <b className={styles.ticker}>{ticker}</b><span className={styles.company}>{name}</span>
 </span>;
-const tone = (value: number | null) => value === null || value === 0 ? styles.flat : value > 0 ? styles.up : styles.down;
+const tone = (value: number | null, digits = 1) => value === null || Number(Math.abs(value).toFixed(digits)) === 0 ? styles.flat : value > 0 ? styles.up : styles.down;
 
 function Institutions({ data, sort, ja }: { data: WhaleSnapshot; sort: string; ja: boolean }) {
   return <ul className={styles.list}>{sortInstitutions(data.institutional, sort).map(row => <li key={row.ticker}>
@@ -62,7 +62,7 @@ function Short({ data, sort, ja }: { data: WhaleSnapshot; sort: string; ja: bool
       <span className={styles.figure}>
         <span className={styles.label}>{ja ? "空売り比率" : "Short share"}</span>
         <b className={styles.mid}>{percent(row.pct, row.pct < 10 ? 2 : 1)}</b>
-        <span className={`${styles.change} ${tone(row.change)}`}>{signedPoints(row.change, row.pct < 10 ? 2 : 1)}</span>
+        <span className={`${styles.change} ${tone(row.change, row.pct < 10 ? 2 : 1)}`}>{signedPoints(row.change, row.pct < 10 ? 2 : 1)}</span>
       </span>
       <span className={styles.days}>
         <span className={styles.label}>{ja ? "買い戻し" : "Days to cover"}</span>

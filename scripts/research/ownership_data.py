@@ -292,16 +292,21 @@ def dei_shares(cik):
 
 
 def shares_for(db, ticker, on):
-    """Shares outstanding nearest to a date: a cover dated on or after it (within 100 days), else the latest before it."""
+    """Shares outstanding near a date: a cover dated on or after it (within 100 days), else the latest in the 200 days before it.
+    None otherwise: a count from another quarter can be on the other side of a stock split."""
     rows = db.execute('SELECT as_of, shares FROM ownership_shares WHERE ticker=? ORDER BY as_of', (ticker,)).fetchall()
     if not rows:
         return None
     target = date.fromisoformat(on)
     after = [r for r in rows if target <= date.fromisoformat(r[0]) <= target + timedelta(days=100)]
+    before = [r for r in rows if target - timedelta(days=200) <= date.fromisoformat(r[0]) < target]  # 20-F filers: once a year
+    if after and before and not 1 / 1.5 < after[0][1] / before[-1][1] < 1.5:
+        # A stock split between the two covers (e.g. CRWD 4-for-1 in July 2026): the cover nearer the date is on its side.
+        nearest = min((after[0], before[-1]), key=lambda r: abs((date.fromisoformat(r[0]) - target).days))
+        return nearest[1], nearest[0]
     if after:
         return after[0][1], after[0][0]
-    before = [r for r in rows if date.fromisoformat(r[0]) < target]
-    return (before[-1][1], before[-1][0]) if before else (rows[0][1], rows[0][0])
+    return (before[-1][1], before[-1][0]) if before else None
 
 
 def refresh_dei_shares(db, ticker, cik):
@@ -432,6 +437,19 @@ def store_institutional(db, period, totals, tickers, config, source):
                        (round(later[1] - pct, 2) if later[1] is not None and pct is not None else None, later[2] - count, ticker, later[0]))
 
 
+def period_cover(db, ticker, cik, period):
+    end = (date.fromisoformat(period) + timedelta(days=100)).isoformat()
+    row = db.execute("SELECT accession, document FROM ownership_filings WHERE ticker=? AND form IN ('10-Q','10-K') AND filed>? AND filed<=? "
+                     "ORDER BY filed LIMIT 1", (ticker, period, end)).fetchone()
+    if not row:
+        return None
+    html = sec_get(f'https://www.sec.gov/Archives/edgar/data/{cik}/{row[0].replace("-", "")}/{row[1]}', limit=40_000_000).decode('utf-8', 'replace')
+    cover = cover_shares(html)
+    if cover and cover[1]:
+        db.execute('INSERT OR REPLACE INTO ownership_shares VALUES(?,?,?,?,?)', (ticker, cover[1], cover[0], 'cover', row[0]))
+    return cover
+
+
 def run_13f(db, tickers, config, ciks, files=2, stop_event=None):
     links = dataset_links(sec_get(DATASETS_PAGE).decode('utf-8', 'replace'))
     if not links:
@@ -450,6 +468,14 @@ def run_13f(db, tickers, config, ciks, files=2, stop_event=None):
                 if period is None:
                     raise RuntimeError('13f-empty-dataset')
                 totals = aggregate_holdings(zf, accessions, config['cusips'])
+        for ticker in tickers:  # an older quarter needs its own share count (XBRL dei history)
+            if ticker in ciks and shares_for(db, ticker, period) is None:
+                try:
+                    refresh_dei_shares(db, ticker, ciks[ticker])
+                    if shares_for(db, ticker, period) is None:  # several share classes: read the next 10-Q/10-K cover
+                        period_cover(db, ticker, ciks[ticker], period)
+                except Exception as error:
+                    issue(db, 'shares', ticker, str(error))
         store_institutional(db, period, totals, tickers, config, name)
         db.execute('INSERT OR REPLACE INTO ownership_13f_files VALUES(?,?,?,?)', (name, period, iso(), len(accessions)))
         db.commit()

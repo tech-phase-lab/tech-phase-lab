@@ -103,7 +103,11 @@ export function money(value: number, ja: boolean) {
   return `$${grouped(value)}`;
 }
 export const percent = (value: number, digits = 1) => `${value.toFixed(digits)}%`;
-export const signedPoints = (value: number | null, digits = 1) => value === null ? "" : `${value > 0 ? "+" : value < 0 ? "−" : "±"}${Math.abs(value).toFixed(digits)}pt`;
+export function signedPoints(value: number | null, digits = 1) {
+  if (value === null) return "";
+  const shown = Math.abs(value).toFixed(digits);
+  return `${Number(shown) === 0 ? "±" : value > 0 ? "+" : "−"}${shown}pt`;
+}
 export const monthDay = (iso: string) => `${Number(iso.slice(5, 7))}/${Number(iso.slice(8, 10))}`;
 export const stockHref = (ticker: string) => `/research/stocks?q=${encodeURIComponent(ticker)}`;
 

@@ -121,6 +121,16 @@ class OwnershipDataTest(unittest.TestCase):
         self.assertIn('no-13f-rows-2026-06-30', reasons)
         self.assertFalse(db.execute("SELECT 1 FROM sqlite_master WHERE sql LIKE '%filer_name%'").fetchone())  # totals only
 
+    def test_shares_outstanding_side_of_a_split(self):
+        db = od.connect(':memory:')
+        db.execute("INSERT INTO ownership_shares VALUES('CRWD','2026-06-04',254564820,'cover','a')")
+        db.execute("INSERT INTO ownership_shares VALUES('CRWD','2026-08-27',1023934842,'cover','b')")
+        self.assertEqual(od.shares_for(db, 'CRWD', '2026-06-30'), (254564820, '2026-06-04'))  # 4-for-1 in July
+        db.execute("INSERT INTO ownership_shares VALUES('MU','2026-06-25',1129393151,'cover','c')")
+        db.execute("INSERT INTO ownership_shares VALUES('MU','2026-10-02',1131423212,'cover','d')")
+        self.assertEqual(od.shares_for(db, 'MU', '2026-06-30'), (1131423212, '2026-10-02'))
+        self.assertIsNone(od.shares_for(db, 'MU', '2025-06-30'))
+
     def test_form4_open_market_and_10b5_1(self):
         rows = od.parse_form4(FORM4)
         self.assertEqual([(r['code'], r['category'], r['side']) for r in rows],

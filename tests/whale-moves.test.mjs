@@ -73,6 +73,7 @@ test("amounts in Japanese units and short English units (owner's sheet)", () => 
   assert.equal(money(110000000000, false), "$110B");
   assert.equal(signedPoints(3.14), "+3.1pt");
   assert.equal(signedPoints(-0.09, 2), "−0.09pt");
+  assert.equal(signedPoints(0.04), "±0.0pt");
 });
 
 test("labels: quarter months, officer titles, the as-of line and the owner's i text", () => {
