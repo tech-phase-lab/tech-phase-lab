@@ -1,5 +1,6 @@
 import { getMembership } from "@/lib/membership/server";
 import { parseWhaleSnapshot, whaleMovesAccess, whaleMovesEnabled } from "@/lib/research/whale-moves";
+import { whaleSnapshotWithNames } from "@/lib/research/company-display-names";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -22,6 +23,6 @@ export async function GET() {
     if (!response.ok) return fail(503, "unavailable");
     const body = await response.text();
     if (new TextEncoder().encode(body).length > 1_500_000) return fail(503, "unavailable");
-    return Response.json(parseWhaleSnapshot(JSON.parse(body)), { headers });
+    return Response.json(whaleSnapshotWithNames(parseWhaleSnapshot(JSON.parse(body))), { headers });
   } catch { return fail(503, "unavailable"); }
 }
