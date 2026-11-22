@@ -256,7 +256,9 @@ class BloomPhaseServiceTests(unittest.TestCase):
             }, {})
 
     def make_app(self, workers=3):
-        with patch.dict(os.environ, {'RESEARCH_TICKERS': 'BE', 'RESEARCH_AUTO_DRAFTS': '0'}):
+        with patch.dict(os.environ, {'RESEARCH_TICKERS': 'BE', 'RESEARCH_AUTO_DRAFTS': '0',
+                                     # The pinned test clock is a U.S. night: these tests measure the usual pace.
+                                     'RESEARCH_OFF_HOURS_ENABLED': 'false'}):
             app = service.AutomaticMonitor(self.path, self.snapshot)
         app.workers = workers
         app.body_interval = 0.05

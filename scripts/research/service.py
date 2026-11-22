@@ -23,6 +23,7 @@ import traceback
 from urllib.parse import parse_qs, urlsplit
 
 import monitor
+import off_hours
 import brief_generator
 import incident_delivery
 import persistence
@@ -646,6 +647,8 @@ class AutomaticMonitor:
         self.workers = positive_int("RESEARCH_MAX_WORKERS", 8, 1)
         self.body_interval = positive_int("RESEARCH_BODY_FETCH_INTERVAL_SECONDS", 10, 5)
         self.body_batch = min(100, positive_int("RESEARCH_BODY_FETCH_BATCH", 2, 1))
+        # Off-hours pacing (Nov 22): slower background work only while U.S. markets are closed and no release is near.
+        self.pacing = off_hours.Pacing()
         self.backup_interval = positive_int("RESEARCH_BACKUP_INTERVAL_SECONDS", 3600, 300)
         self.backup_grace = positive_int("RESEARCH_BACKUP_GRACE_SECONDS", 600, 60)
         self.backup_retention = positive_int("RESEARCH_BACKUP_RETENTION", 24, 2)
@@ -710,8 +713,10 @@ class AutomaticMonitor:
         self.wire_lock = threading.Lock()
         self.wire_requested_at = time.monotonic()
         self.live_cache = None
+        self.live_state_cache = None
         self.live_lock = threading.Lock()
         self.live_requested_at = time.monotonic()
+        self.live_full_requested_at = self.live_requested_at
         self.body_probe_urls = set()
         self.body_probe_eligible_at = {}
         self.stop_event = threading.Event()
@@ -960,7 +965,7 @@ class AutomaticMonitor:
             # Extra workers only help with a backlog; when idle they wait for a
             # new-article wake instead of rescanning the queue every 5 s.
             if not self.stop_event.is_set():
-                wake.wait(0.2 if result in PRODUCTIVE_RESULTS else 5 if index == 0 else 60)
+                wake.wait(0.2 if result in PRODUCTIVE_RESULTS else self.idle_wait(5) if index == 0 else 60)
 
     def run_market_translation(self):
         if headline_translation.configuration(os.environ) is None:
@@ -974,7 +979,7 @@ class AutomaticMonitor:
             except Exception as exc:
                 log_publication_failure("market-translation-unavailable", exc)
             if not self.stop_event.is_set():
-                wake.wait(0.2 if result in PRODUCTIVE_RESULTS else 5)
+                wake.wait(0.2 if result in PRODUCTIVE_RESULTS else self.idle_wait(5))
 
     def run_preview_summaries(self):
         # Bilingual one-line summary + detail for original-preview stories.
@@ -989,7 +994,7 @@ class AutomaticMonitor:
             except Exception as exc:
                 log_publication_failure("preview-summary-unavailable", exc)
             if not self.stop_event.is_set():
-                wake.wait(0.2 if result in PRODUCTIVE_RESULTS else 5)
+                wake.wait(0.2 if result in PRODUCTIVE_RESULTS else self.idle_wait(5))
 
     def run_pulse_titles(self):
         # One-line strip titles for published stories whose headline is too long.
@@ -1002,7 +1007,7 @@ class AutomaticMonitor:
             except Exception as exc:
                 log_publication_failure("pulse-title-unavailable", exc)
             if not self.stop_event.is_set():
-                self.stop_event.wait(0.5 if result in PRODUCTIVE_RESULTS else 10)
+                self.stop_event.wait(0.5 if result in PRODUCTIVE_RESULTS else self.idle_wait(10))
 
     def run_news_refresh(self):
         """Recompute each recently requested feed after a write, off the request path."""
@@ -2030,9 +2035,37 @@ class AutomaticMonitor:
         provider = monitor.PROVIDERS[ticker]
         if provider.get("pollSeconds"):
             return max(3, int(provider["pollSeconds"]))
+        pacing = getattr(self, "pacing", None)
         if provider["format"] == "rss" or provider.get("automaticSource") == "fallback":
+            # The fast lane keeps its pace at all hours unless RESEARCH_OFF_HOURS_FAST_POLL_SECONDS is set.
+            if pacing is not None and pacing.fast_seconds and pacing.slows(ticker):
+                return max(self.fast_seconds, pacing.fast_seconds)
             return self.fast_seconds
+        if pacing is not None and pacing.slows(ticker):
+            return max(self.standard_seconds, pacing.standard_seconds)
         return self.standard_seconds
+
+    def current_body_interval(self):
+        """Seconds between body-fetch admissions: longer in off-hours (a newly found source is still admitted at once)."""
+        pacing = getattr(self, "pacing", None)
+        if pacing is not None and pacing.off_hours():
+            return max(self.body_interval, pacing.body_interval)
+        return self.body_interval
+
+    def idle_wait(self, usual):
+        """An idle worker's wait; a wake event still ends it at once."""
+        pacing = getattr(self, "pacing", None)
+        return pacing.idle(usual) if pacing is not None else usual
+
+    def live_refresh_interval(self):
+        pacing = getattr(self, "pacing", None)
+        if pacing is not None and pacing.off_hours():
+            return max(LIVE_REFRESH_INTERVAL, pacing.live_refresh_seconds)
+        return LIVE_REFRESH_INTERVAL
+
+    def live_max_age(self):
+        # A cached build stays servable a little past the next background build, so no request waits for a build.
+        return max(LIVE_MAX_AGE, self.live_refresh_interval() + 30)
 
     def collect_discovery_timed(self, ticker, cached_sources=None, source_scope=None):
         """Measure one official-source request separately from its polling interval."""
@@ -2383,6 +2416,8 @@ class AutomaticMonitor:
         with self.state_lock:
             state = json.loads(json.dumps(self.state))
         state["fetchCache"] = monitor.fetch_cache_stats()
+        if getattr(self, "pacing", None) is not None:
+            state["offHours"] = self.pacing.status()
         state["secAccess"] = {**monitor.SEC_ACCESS.state(), "currentFeed": monitor.EDGAR_CURRENT.state()}
         with self.db_lock, monitor.connect(self.db_path) as db:
             state["generation"].update(monitor.generation_queue_stats(
@@ -2432,12 +2467,21 @@ class AutomaticMonitor:
         with self.db_lock, monitor.connect(self.db_path) as db:
             return monitor.snapshot(db, recent_per_item=20)
 
-    def build_live(self):
+    def build_live(self, full=True):
         """Callers hold live_lock. The intake dashboard's /live payload: full operating state and a byte-bounded snapshot,
-        with how long each part took (Nov 20: public_state alone took 4-11 s in production, mostly waiting for db_lock)."""
+        with how long each part took (Nov 20: public_state alone took 4-11 s in production, mostly waiting for db_lock).
+        full=False builds only the operating state, all the site's freshness notice reads (Nov 22: the notice asked for /live
+        on every page view, which kept the multi-second snapshot rebuilding every 15 s around the clock)."""
         started = time.monotonic()
         state = self.public_state()
         state_done = time.monotonic()
+        if not full:
+            previous = self.live_cache
+            if previous and "liveBuild" in previous[1]["monitor"]:
+                state["liveBuild"] = previous[1]["monitor"]["liveBuild"]
+            payload = {"ok": True, "mode": "automatic", "monitor": state}
+            self.live_state_cache = (state_done, payload)
+            return payload
         with self.db_lock:
             locked = time.monotonic()
             with monitor.connect(self.db_path) as db:
@@ -2458,19 +2502,31 @@ class AutomaticMonitor:
                                                              if key != "builtAt"}}), flush=True)
         payload = {"ok": True, "mode": "automatic", "monitor": state, "snapshot": snapshot}
         self.live_cache = (done, payload)
+        self.live_state_cache = (done, {"ok": True, "mode": "automatic", "monitor": state})
         return payload
 
-    def live_payload(self):
-        """/live from the last background build when it is at most LIVE_MAX_AGE seconds old, else built now. The cycle age and
-        the monitor-stale issue are recomputed for the moment of the answer, so a cached build never hides a stalled monitor."""
+    def newest_live_state(self):
+        """The most recent build that carries the operating state (a full build or a state-only one)."""
+        builds = [entry for entry in (getattr(self, "live_state_cache", None), self.live_cache) if entry]
+        return max(builds, key=lambda entry: entry[0]) if builds else None
+
+    def live_payload(self, view=None):
+        """/live from the last background build when it is at most live_max_age() seconds old, else built now. The cycle age
+        and the monitor-stale issue are recomputed for the moment of the answer, so a cached build never hides a stalled
+        monitor. view="freshness" answers only the operating state (no snapshot) and never asks for a snapshot build."""
         arrived = time.monotonic()
         self.live_requested_at = arrived
-        cached = self.live_cache
-        if not (cached and arrived - cached[0] <= LIVE_MAX_AGE):
+        freshness = view == "freshness"
+        if not freshness:
+            self.live_full_requested_at = arrived
+        latest = self.newest_live_state if freshness else (lambda: self.live_cache)
+        max_age = self.live_max_age()
+        cached = latest()
+        if not (cached and arrived - cached[0] <= max_age):
             with self.live_lock:
-                cached = self.live_cache
-                if not (cached and time.monotonic() - cached[0] <= LIVE_MAX_AGE):
-                    cached = (time.monotonic(), self.build_live())
+                cached = latest()
+                if not (cached and time.monotonic() - cached[0] <= max_age):
+                    cached = (time.monotonic(), self.build_live(full=not freshness))
         payload = cached[1]
         state = dict(payload["monitor"])
         age = timestamp_age_seconds(state.get("lastCycleAt"))
@@ -2483,18 +2539,22 @@ class AutomaticMonitor:
         if health:
             health["issues"] = issues
             state["health"] = health
+        if freshness:
+            return {"ok": payload["ok"], "mode": payload["mode"], "monitor": state}
         return {**payload, "monitor": state}
 
     def refresh_live(self):
-        """One background step: rebuild every LIVE_REFRESH_INTERVAL seconds while someone asked within LIVE_IDLE_SECONDS."""
+        """One background step while someone asked within LIVE_IDLE_SECONDS: every live_refresh_interval() seconds, the full
+        payload when the intake dashboard (or a full /live reader) asked, otherwise only the operating state."""
         now = time.monotonic()
         if now - self.live_requested_at > LIVE_IDLE_SECONDS:
             return False
-        cached = self.live_cache
-        if cached and now - cached[0] < LIVE_REFRESH_INTERVAL:
+        full = now - getattr(self, "live_full_requested_at", self.live_requested_at) <= LIVE_IDLE_SECONDS
+        cached = self.live_cache if full else self.newest_live_state()
+        if cached and now - cached[0] < self.live_refresh_interval():
             return False
         with self.live_lock:
-            self.build_live()
+            self.build_live(full=full)
         return True
 
     def run_live_refresh(self):
@@ -3298,6 +3358,11 @@ class AutomaticMonitor:
         failure_streak = {job: 0 for job in jobs}
         next_body_fetch = 0.0
         body_admission_due = 0.0
+        # Off-hours pacing state: when the usual speed resumes, waits scheduled at the slower pace are pulled in at once.
+        pacing = getattr(self, "pacing", None) or off_hours.Pacing(env={"RESEARCH_OFF_HOURS_ENABLED": "false"})
+        was_off_hours = pacing.off_hours()
+        new_source_seen = False
+        body_admitted_at = float("-inf")
         with self.db_lock, monitor.connect(self.db_path) as db:
             invalidated_sources = 0
             for ticker in self.tickers:
@@ -3361,6 +3426,7 @@ class AutomaticMonitor:
             next_metrics_flush = time.monotonic() + DISCOVERY_METRICS_FLUSH_SECONDS
 
         def persist_completion(job, future, cycle_started, cycle_started_at):
+            nonlocal new_source_seen
             ticker, phase = jobs[job]
             try:
                 result, links, request_duration_ms = future.result()
@@ -3407,6 +3473,8 @@ class AutomaticMonitor:
                     if signatures.get(job) != signature or new_urls:
                         inserted = monitor.save_discovery(db, ticker, result, links)
                         known[ticker].update(inserted)
+                        if inserted:
+                            new_source_seen = True
                         if baseline_ready[job]:
                             events = monitor.add_release_events(db, ticker, inserted)
                             if self.auto_drafts_enabled:
@@ -3550,6 +3618,27 @@ class AutomaticMonitor:
                         )
                     body_batches.remove(batch)
 
+                off_hours_now = pacing.off_hours()
+                if was_off_hours and not off_hours_now:
+                    # Back to the usual speed (04:00 New York, a release ahead, or switched off): no source keeps an
+                    # off-hours wait. Failure backoffs are left as they are.
+                    resumed = time.monotonic()
+                    for job, (ticker, _phase) in jobs.items():
+                        if failure_streak[job] == 0 and next_due[job] != float("inf"):
+                            next_due[job] = min(next_due[job], resumed + self.interval_for(ticker))
+                    if next_body_fetch <= body_admission_due:
+                        body_admission_due = min(body_admission_due, body_admitted_at + self.body_interval)
+                        next_body_fetch = body_admission_due
+                if was_off_hours != off_hours_now:
+                    print(json.dumps({"event": "off-hours-pacing", "offHours": off_hours_now,
+                                      "reason": pacing.state()[1]}), flush=True)
+                was_off_hours = off_hours_now
+                if new_source_seen:
+                    new_source_seen = False
+                    # A newly found page has its body read at the usual pace even in off-hours (never during a failure hold).
+                    if off_hours_now and next_body_fetch <= body_admission_due:
+                        body_admission_due = min(body_admission_due, body_admitted_at + self.body_interval)
+                        next_body_fetch = body_admission_due
                 body_rows = [row for batch in body_batches for row in batch["remaining"]]
                 body_rows += [row for _batch, row in body_futures.values()]
                 capacity = self.body_batch - len(body_rows)
@@ -3576,7 +3665,8 @@ class AutomaticMonitor:
                         # not defer a newly eligible source's next selection.
                         # Across batches, queued plus running rows never exceed
                         # the existing configured body-batch allowance.
-                        body_admission_due = time.monotonic() + self.body_interval
+                        body_admitted_at = time.monotonic()
+                        body_admission_due = body_admitted_at + self.current_body_interval()
                         next_body_fetch = body_admission_due
                     except Exception:
                         next_body_fetch = time.monotonic() + self.record_body_fetch_failure()
@@ -4203,7 +4293,8 @@ class Handler(BaseHTTPRequestHandler):
             if path == "/snapshot":
                 self.send_json(200, self.app.public_snapshot())
             else:
-                self.send_json(200, self.app.live_payload())
+                view = parse_qs(parsed.query).get("view", [None])[0]
+                self.send_json(200, self.app.live_payload(view="freshness") if view == "freshness" else self.app.live_payload())
         except Exception as exc:
             if path == "/news":
                 log_publication_failure("public-news-unavailable", exc)
