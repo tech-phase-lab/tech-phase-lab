@@ -12,8 +12,8 @@ const read = path => readFileSync(new URL(path, import.meta.url), "utf8");
 const SAMPLES = "../app/research/pro-experience/samples/";
 const sampleFiles = readdirSync(new URL(SAMPLES, import.meta.url)).filter(name => name.endsWith(".tsx"));
 
-test("seven features show a sample in place of a video (RIZEL'S DESK since Nov 17); phone notifications keep the video", () => {
-  assert.deepEqual([...SAMPLE_FEATURES].sort(), ["compare", "financial-radar", "relation-map", "rizels-desk", "theme-ranking", "us-portfolio", "watch-22"]);
+test("nine features show a sample in place of a video (RIZEL'S DESK since Nov 17); phone notifications keep the video", () => {
+  assert.deepEqual([...SAMPLE_FEATURES].sort(), ["compare", "financial-radar", "relation-map", "rizels-desk", "theme-ranking", "treasure-hunt", "us-portfolio", "watch-22", "whale-tracks"]);
   for (const id of SAMPLE_FEATURES) assert.ok(proFeatures.some(feature => feature.id === id), id);
   assert.equal(hasSample("phone-alerts"), false);
   assert.equal(hasSample("rizels-desk"), true);
@@ -39,7 +39,7 @@ test("the tour's samples never ask the network: no fetch, no API address, no Nex
     for (const [, from] of source.matchAll(/from "(@\/lib\/[^"]+)"/g))
       assert.ok(/pro-experience-sample|comparison-scorecard|theme-definitions|theme-ranking|theme-stock-names|portfolio\/calc|chain-map-core|radar|company-watch|watch-earnings|weekly-format/.test(from), `${name} imports ${from}`);
   }
-  for (const name of ["compare.json", "portfolio.json", "radar.json", "relation-map-nvda.json", "themes.json", "watch22.json", "watch22-dives.json"]) {
+  for (const name of ["compare.json", "portfolio.json", "radar.json", "relation-map-nvda.json", "themes.json", "treasure-hunt.json", "watch22.json", "watch22-dives.json", "whale-tracks.json"]) {
     const file = JSON.parse(read(`../lib/research/pro-experience-samples/${name}`));
     assert.ok(typeof file._source === "string" && file._source.length > 20, `${name} says where its numbers came from`);
   }
@@ -147,7 +147,7 @@ test("nothing in a sample leads to a real PRO screen: unhandled links only show 
 
 // ---- Owner, Nov 16: 「サンプルなのですべて埋めてください」 — no blank, 「—」 or missing value anywhere; dates on the frame's made-up timeline. ----
 const SAMPLE_DIR = "../lib/research/pro-experience-samples/";
-const SAMPLE_FILES = ["compare.json", "portfolio.json", "radar.json", "relation-map-nvda.json", "themes.json", "watch22.json", "watch22-dives.json"];
+const SAMPLE_FILES = ["compare.json", "portfolio.json", "radar.json", "relation-map-nvda.json", "themes.json", "treasure-hunt.json", "watch22.json", "watch22-dives.json", "whale-tracks.json"];
 const MISSING_TEXT = /—|未取得|未開示|確認できません|そろいません|記載なし|読み取れません|不足|データなし|N\/A|未確認/;
 
 test("Stock Comparison: every factor of every pair has a score and a figure (割安性 and 株価モメンタム included), and every company has a strength and a weakness", () => {

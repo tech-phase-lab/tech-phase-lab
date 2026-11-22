@@ -113,7 +113,7 @@ test("no advice words and no institution lists on the page (owner's rules)", () 
 test("menu: PRO tiles in the owner's order, クジラの足あと behind its switch, 財務レーダー under Research", () => {
   const header = read("../app/research/site-header.tsx");
   const tiles = header.slice(header.indexOf('tile("/research/notes"'), header.indexOf('heading(ja ? "リサーチ"'));
-  const order = ["/research/notes", "/research#monitored-companies", "/research/themes", "/research/value-check", "/research/compare", "/research/whales"].map(h => tiles.indexOf(`"${h}"`));
+  const order = ["/research/notes", "/research#monitored-companies", "/research/themes", "/research/treasure-hunt", "/research/compare", "/research/whales"].map(h => tiles.indexOf(`"${h}"`));
   assert.ok(order.every((at, i) => at > -1 && (i === 0 || at > order[i - 1])), String(order));
   assert.match(tiles, /\{whaleMoves && tile\("\/research\/whales", "whale"/);
   assert.match(header, /const whaleMoves = whaleMovesEnabled\(\) \|\| ownerAccount;/);

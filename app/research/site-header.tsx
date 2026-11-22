@@ -295,10 +295,10 @@ function SiteMenu({ lang, member, ownerAccount, onClose, onRefresh, onPro }: { l
           {tile("/research/notes", "desk", "RIZEL'S DESK")}
           {tile("/research#monitored-companies", "watch22", ja ? "監視22銘柄" : "22 Tracked Stocks")}
           {tile("/research/themes", "bars", ja ? "テーマランキング" : "Theme Ranking")}
-          {/* Owner's sheet (Nov 22): 割安判別ツール right of Theme Ranking, クジラの足あと right of Compare. 財務レーダー stays under Research. */}
-          {valueCheck && tile("/research/value-check", "tag", ja ? "割安判別ツール" : "Value Check")}
+          {/* Owner's sheet (Nov 22): トレジャーハント (formerly 割安判別ツール) right of Theme Ranking, クジラの足あと right of Compare. 財務レーダー stays under Research. */}
+          {valueCheck && tile("/research/treasure-hunt", "tag", ja ? "トレジャーハント" : "Treasure Hunt")}
           {tile("/research/compare", "compare", ja ? "銘柄比較" : "Compare")}
-          {whaleMoves && tile("/research/whales", "whale", ja ? "クジラの足あと" : "Whale Moves")}
+          {whaleMoves && tile("/research/whales", "whale", ja ? "クジラの足あと" : "Whale Tracks")}
         </div>
       </div>}
       <div className={styles.grp}>

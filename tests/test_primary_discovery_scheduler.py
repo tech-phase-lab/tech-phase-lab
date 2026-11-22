@@ -28,6 +28,8 @@ class PrimaryDiscoverySchedulerTests(unittest.TestCase):
         self.app = service.AutomaticMonitor(Path(folder) / 'db.sqlite', Path(folder) / 'snapshot.json')
         self.app.tickers = ['ASML', 'MU', 'NBIS']
         self.app.workers = 3
+        # The pinned test clock is a U.S. night (off-hours pacing): these tests measure the usual pace.
+        self.app.pacing = service.off_hours.Pacing(env={'RESEARCH_OFF_HOURS_ENABLED': 'false'})
         self.gates = []
         self.threads = []
         self.errors = []

@@ -25,7 +25,9 @@ test("変えないもの: PRO card copy, the LP's 「もう暴落は怖くない
   const cards = read("../app/research/plan-cards.tsx");
   for (const phrase of ["一手先まで読む独自の分析", "1週間の変化と展望", "競合・提携・協業の関係を図解", "いま強い分野がすぐ分かる", "迷う2〜3銘柄を瞬時に見極める",
     "守る力と稼ぐ力を一望", "リアルタイム・全件", "目標株価・決算・指標・ニュース", "主要株の変化を見逃さない", "スクショで持ち株を登録", "文章と音声で相場を語る", "会員の疑問を厳選して深掘り",
-    "Original analysis to help you understand the results", "The week's shifts and outlook"]) assert.ok(cards.includes(phrase), phrase);
+    "What's next", "Recap & outlook"]) assert.ok(cards.includes(phrase), phrase);
+  // Nov 22: the owner replaced the English rows with a short table (every row on one line); the Japanese rows above are unchanged.
+  for (const phrase of ["Original analysis to help you understand the results", "The week's shifts and outlook"]) assert.ok(!cards.includes(phrase), phrase);
   assert.ok(lp.includes(`<p className={s.bigGold}>もう暴落は怖くない。</p>`));
   assert.ok(lp.includes(`<p className={s.launch}>発売記念価格 ・ 2027年2月末まで</p>`));
   assert.ok(lp.includes(`<p className={s.amount}><del>¥9,800</del><b>¥7,980</b><small>税込</small></p>`));

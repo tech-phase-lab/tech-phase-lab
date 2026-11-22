@@ -1,5 +1,5 @@
 {
-  "_comment": "PRO機能体験の設定。動画・画像のURLと説明文は、ここを書き換えて差し替える。空のままの動画・画像は、その枠を出さずに文章だけを表示する。英語の文(…En)が空のときは日本語を表示する。順番がそのまま一覧の順番になる。 ハイテク速報は、この一覧には載せない(一覧の下の「そのほかのPROの違い」に文字だけで置く)。 連関マップ・銘柄比較・テーマランキング・監視22銘柄・財務レーダー・米国株の資産管理は、動画の代わりに固定のサンプル(lib/research/pro-experience-samples/)を出す。動画を使うのはスマホ通知だけ。",
+  "_comment": "PRO機能体験の設定。動画・画像のURLと説明文は、ここを書き換えて差し替える。空のままの動画・画像は、その枠を出さずに文章だけを表示する。英語の文(…En)が空のときは日本語を表示する。順番がそのまま一覧の順番になる。 ハイテク速報は、この一覧には載せない(一覧の下の「そのほかのPROの違い」に文字だけで置く)。 連関マップ・銘柄比較・テーマランキング・トレジャーハント・クジラの足あと・監視22銘柄・財務レーダー・米国株の資産管理は、動画の代わりに固定のサンプル(lib/research/pro-experience-samples/)を出す。動画を使うのはスマホ通知だけ。",
   "features": [
     {
       "id": "relation-map",
@@ -32,6 +32,40 @@
       "imageCaptionEn": "Example screen",
       "textBeforeImageJa": "いま強いジャンルをひと目で",
       "textBeforeImageEn": "See which themes are leading at a glance.",
+      "textAfterImageJa": "",
+      "textAfterImageEn": ""
+    },
+    {
+      "id": "treasure-hunt",
+      "nameJa": "トレジャーハント",
+      "nameEn": "Treasure Hunt",
+      "summaryJa": "割安銘柄を毎日掘り起こす",
+      "summaryEn": "Daily value finds",
+      "thumbnailUrl": "",
+      "videoUrl": "",
+      "videoLabel": "",
+      "imageUrl": "",
+      "imageCaptionJa": "画面の例",
+      "imageCaptionEn": "Example screen",
+      "textBeforeImageJa": "割安銘柄を毎日掘り起こす",
+      "textBeforeImageEn": "Daily value finds",
+      "textAfterImageJa": "",
+      "textAfterImageEn": ""
+    },
+    {
+      "id": "whale-tracks",
+      "nameJa": "クジラの足あと",
+      "nameEn": "Whale Tracks",
+      "summaryJa": "機関・空売り・自社株買いの裏側",
+      "summaryEn": "Funds, shorts & buybacks",
+      "thumbnailUrl": "",
+      "videoUrl": "",
+      "videoLabel": "",
+      "imageUrl": "",
+      "imageCaptionJa": "画面の例",
+      "imageCaptionEn": "Example screen",
+      "textBeforeImageJa": "機関・空売り・自社株買いの裏側",
+      "textBeforeImageEn": "Funds, shorts & buybacks",
       "textAfterImageJa": "",
       "textAfterImageEn": ""
     },

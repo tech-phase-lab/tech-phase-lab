@@ -5,8 +5,9 @@
 export const SAMPLE_TIME = { ja: "2035/03/12 09:00 時点", en: "As of 2035/03/12 09:00" } as const;
 /** The last U.S. close before that moment (2035-03-12 is a Monday): the date the samples' prices are "as of". */
 export const SAMPLE_CLOSE_DAY = "2035-03-09";
-/** The features that show a sample instead of a video. Phone notifications keep the video; RIZEL'S DESK has its sample since Nov 17. */
-export const SAMPLE_FEATURES = ["relation-map", "compare", "theme-ranking", "watch-22", "rizels-desk", "financial-radar", "us-portfolio"] as const;
+/** The features that show a sample instead of a video. Phone notifications keep the video; RIZEL'S DESK has its sample since Nov 17;
+ * トレジャーハント and クジラの足あと since Nov 22. */
+export const SAMPLE_FEATURES = ["relation-map", "compare", "theme-ranking", "treasure-hunt", "whale-tracks", "watch-22", "rizels-desk", "financial-radar", "us-portfolio"] as const;
 export type SampleFeature = typeof SAMPLE_FEATURES[number];
 export const hasSample = (id: string): id is SampleFeature => (SAMPLE_FEATURES as readonly string[]).includes(id);
 
@@ -29,6 +30,8 @@ export const SAMPLE_HINTS: Record<SampleFeature, { ja: string; en: string }> = {
   "relation-map": { ja: "企業をタップすると、NVDAとのつながりが見られます", en: "Tap a company to see how it connects to NVDA" },
   compare: { ja: "4銘柄から2つを選ぶと、結果ページが開きます", en: "Choose two of the four stocks to open the result" },
   "theme-ranking": { ja: "テーマをタップすると、中の銘柄が見られます", en: "Tap a theme to see its stocks" },
+  "treasure-hunt": { ja: "ハイテクと全セクターを切り替えて、ある1日の順位を見られます", en: "Switch between Tech and All sectors to see one day's ranking" },
+  "whale-tracks": { ja: "4つのタブを切り替えて、並び替えも試せます", en: "Switch between the four tabs and try the sort buttons" },
   "watch-22": { ja: "NVDAとAMDを切り替えて、決算の深掘りを読めます", en: "Switch between NVDA and AMD to read their earnings deep dive" },
   "financial-radar": { ja: "半導体6社を、稼ぐ力と守る力の点数で順位付けしています", en: "Six chipmakers, ranked by their cash-generation and resilience scores" },
   "us-portfolio": { ja: "押すと読み取りの動きのあと、サンプルの持ち株が表示されます", en: "Press it to watch the reading, then see the sample holdings" },

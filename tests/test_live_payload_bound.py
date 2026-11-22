@@ -146,6 +146,8 @@ class LivePayloadBoundTests(unittest.TestCase):
     def test_live_is_served_from_the_background_build_with_a_current_cycle_age(self):
         fill(self.db_path, sources=20, heavy_history=0, runs=50, events=5)
         app = service.AutomaticMonitor(self.db_path, self.snapshot_path)
+        # The pinned test clock is a U.S. night (off-hours pacing): this test measures the usual intervals.
+        app.pacing = service.off_hours.Pacing(env={"RESEARCH_OFF_HOURS_ENABLED": "false"})
         with patch.object(app, "build_live", wraps=app.build_live) as build:
             first = app.live_payload()
             second = app.live_payload()

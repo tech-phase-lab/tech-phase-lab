@@ -6,7 +6,7 @@ export const dynamic = "force-dynamic";
 const headers = { "Cache-Control": "private, no-store", Vary: "Cookie", "X-Content-Type-Options": "nosniff" };
 const fail = (status: number, error: string) => Response.json({ ok: false, error }, { status, headers });
 
-/** 割安判別ツール (PRO; the owner's accounts always). The scores come from the research monitor, computed once a day after the close. */
+/** トレジャーハント, internally value-check (PRO; the owner's accounts always). The scores come from the research monitor, computed once a day after the close. */
 export async function GET() {
   try {
     const member = await getMembership().catch(() => ({ status: "unavailable", plan: "free" }));
