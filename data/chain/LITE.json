@@ -281,6 +281,32 @@
           }
         }
       ]
+    },
+    {
+      "id": "MRVL",
+      "ticker": "MRVL",
+      "name": "マーベル・テクノロジー",
+      "name_en": "Marvell Technology",
+      "sub": "データセンター半導体",
+      "sub_en": "Data-center chips",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2026年11月、MarvellがLumentumを株式交換で買収することで最終合意",
+          "text_en": "In November 2026, agreed to be acquired by Marvell in an all-stock deal",
+          "source": {
+            "label": "Lumentum 8-K Ex.99.1(Marvellとの共同発表、2026年11月2日)",
+            "label_en": "Lumentum 8-K Ex.99.1 (joint release with Marvell, Nov 2, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1633978/000119312526442758/d163169dex991.htm",
+            "level": "official",
+            "date": "2026-11-02",
+            "quote": "today announced that they have entered into a definitive agreement for Marvell to acquire Lumentum in an all-stock transaction.",
+            "note": "買収は株主・当局の承認などが前提で、まだ完了していません。",
+            "note_en": "The deal is subject to shareholder and regulatory approvals and has not closed."
+          }
+        }
+      ]
     }
   ],
   "far": [],

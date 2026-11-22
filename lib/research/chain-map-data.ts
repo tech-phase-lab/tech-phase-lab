@@ -86,6 +86,7 @@ import c_carg from "../../data/chain/CARG.json" with { type: "json" };
 import c_cat from "../../data/chain/CAT.json" with { type: "json" };
 import c_ccep from "../../data/chain/CCEP.json" with { type: "json" };
 import c_cci from "../../data/chain/CCI.json" with { type: "json" };
+import c_ccj from "../../data/chain/CCJ.json" with { type: "json" };
 import c_ccl from "../../data/chain/CCL.json" with { type: "json" };
 import c_ccoi from "../../data/chain/CCOI.json" with { type: "json" };
 import c_cdns from "../../data/chain/CDNS.json" with { type: "json" };
@@ -381,6 +382,7 @@ import c_qrvo from "../../data/chain/QRVO.json" with { type: "json" };
 import c_qtwo from "../../data/chain/QTWO.json" with { type: "json" };
 import c_qubt from "../../data/chain/QUBT.json" with { type: "json" };
 import c_rblx from "../../data/chain/RBLX.json" with { type: "json" };
+import c_rcat from "../../data/chain/RCAT.json" with { type: "json" };
 import c_rcl from "../../data/chain/RCL.json" with { type: "json" };
 import c_rddt from "../../data/chain/RDDT.json" with { type: "json" };
 import c_rdw from "../../data/chain/RDW.json" with { type: "json" };
@@ -599,6 +601,7 @@ const available: Record<string, ChainMapData> = {
   CAT: c_cat as ChainMapData,
   CCEP: c_ccep as ChainMapData,
   CCI: c_cci as ChainMapData,
+  CCJ: c_ccj as ChainMapData,
   CCL: c_ccl as ChainMapData,
   CCOI: c_ccoi as ChainMapData,
   CDNS: c_cdns as ChainMapData,
@@ -894,6 +897,7 @@ const available: Record<string, ChainMapData> = {
   QTWO: c_qtwo as ChainMapData,
   QUBT: c_qubt as ChainMapData,
   RBLX: c_rblx as ChainMapData,
+  RCAT: c_rcat as ChainMapData,
   RCL: c_rcl as ChainMapData,
   RDDT: c_rddt as ChainMapData,
   RDW: c_rdw as ChainMapData,
