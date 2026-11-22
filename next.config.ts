@@ -27,7 +27,11 @@ const nextConfig: NextConfig = {
   },
   // The 特商法 notice moved next to /terms and /privacy (Nov 19); old links (LPs, emails, payment settings) keep working, with ?lang= carried over.
   async redirects() {
-    return [{ source: "/resolute/legal/commerce", destination: "/commerce", permanent: false }];
+    // 割安判別ツール became トレジャーハント (owner, Nov 22): the old address opens the new page. The API and monitor keep their value-check names.
+    return [
+      { source: "/resolute/legal/commerce", destination: "/commerce", permanent: false },
+      { source: "/research/value-check", destination: "/research/treasure-hunt", permanent: false },
+    ];
   },
   async headers() {
     // The notification worker is never kept by a cache: a phone checking for a new version must get the current file (owner, Nov 16).

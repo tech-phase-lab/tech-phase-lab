@@ -50,7 +50,7 @@ test("copy: owner's wording, 実績値 for the trailing history, no advice words
   assert.equal(aboutText("forward", false), "The Value Score shows how far a stock's forward P/E and forward P/S are below their own five-year averages. The higher the number, the cheaper it is compared with its five-year average. \"5Y Low\" marks stocks at their lowest level in five years. Stocks with falling year-over-year revenue are excluded. Updated daily at the close.");
   assert.equal(aboutText("trailing", false), "The Value Score shows how far a stock's P/E and P/S are below their own five-year averages. The higher the number, the cheaper it is compared with its five-year average. \"5Y Low\" marks stocks at their lowest level in five years. Stocks with falling year-over-year revenue are excluded. Updated daily at the close.");
   assert.doesNotMatch(aboutText("trailing", false), /forward/);
-  const screen = readFileSync(new URL("../app/research/value-check/screen.tsx", import.meta.url), "utf8");
+  const screen = readFileSync(new URL("../app/research/treasure-hunt/screen.tsx", import.meta.url), "utf8");
   for (const source of [screen, aboutText("trailing", true), footerLine("2026-11-20", "trailing", true)]) {
     assert.doesNotMatch(source, /買い|おすすめ|オススメ|チャンス|狙い目|NEW/);
     assert.doesNotMatch(source, /）[、。・]/);
@@ -75,37 +75,39 @@ test("copy: owner's wording, 実績値 for the trailing history, no advice words
   assert.match(screen, /\{item\.in && <i className=\{styles\.inMini\}>IN<\/i>\}\n\s*\{item\.low && <i className=\{styles\.lowMini\}>\{ja \? "5年最安" : "5Y Low"\}<\/i>\}/);
 });
 
-test("menu: PRO members get the 2x3 frame with Value Check and Whale Moves; 財務レーダー stays under Research (owner, Nov 22 v2)", () => {
+test("menu: PRO members get the 2x3 frame with Treasure Hunt and Whale Tracks; 財務レーダー stays under Research (owner, Nov 22 v2)", () => {
   const header = readFileSync(new URL("../app/research/site-header.tsx", import.meta.url), "utf8");
   const tiles = [...header.matchAll(/\{(?:(?:valueCheck|whaleMoves) && )?tile\("([^"]+)"/g)].map(match => match[1]);
-  assert.deepEqual(tiles, ["/research/notes", "/research#monitored-companies", "/research/themes", "/research/value-check", "/research/compare", "/research/whales"]);
-  assert.match(header, /ja \? "割安判別ツール" : "Value Check"/);
+  assert.deepEqual(tiles, ["/research/notes", "/research#monitored-companies", "/research/themes", "/research/treasure-hunt", "/research/compare", "/research/whales"]);
+  assert.match(header, /ja \? "トレジャーハント" : "Treasure Hunt"/);
+  assert.match(header, /ja \? "クジラの足あと" : "Whale Tracks"/);
   assert.match(header, /\{item\("\/research\/radar"/);
   assert.match(header, /const valueCheck = valueCheckEnabled\(\) \|\| ownerAccount;/);
   // A missing logo shows the whole ticker, never two letters that read as the IN / OUT badge (INTU -> 「IN」).
-  const screen = readFileSync(new URL("../app/research/value-check/screen.tsx", import.meta.url), "utf8");
+  const screen = readFileSync(new URL("../app/research/treasure-hunt/screen.tsx", import.meta.url), "utf8");
   assert.equal(screen.match(/<StockLogo [^>]*\bfull\b/g)?.length, 2);
   assert.match(readFileSync(new URL("../app/research/watchlist/stock-logo.tsx", import.meta.url), "utf8"), /full \? <span style=\{fullSize\(ticker\)\}>\{ticker\}<\/span>/);
-  const page = readFileSync(new URL("../app/research/value-check/page.tsx", import.meta.url), "utf8");
+  const page = readFileSync(new URL("../app/research/treasure-hunt/page.tsx", import.meta.url), "utf8");
   assert.match(page, /notFound\(\)/);
+  assert.match(page, /title: "トレジャーハント \| Tech Phase PRO"/);
   const route = readFileSync(new URL("../app/api/research/value-check/route.ts", import.meta.url), "utf8");
   assert.match(route, /valueCheckAccess\(member, valueCheckEnabled\(\)\)/);
 });
 
-test("desktop left menu: Value Check and Whale Moves sit in the PRO rows in the phone menu's order, behind the same switches (owner, Nov 22)", () => {
+test("desktop left menu: Treasure Hunt and Whale Tracks sit in the PRO rows in the phone menu's order, behind the same switches (owner, Nov 22)", () => {
   const sidebar = readFileSync(new URL("../app/research/home-sidebar.tsx", import.meta.url), "utf8");
   const start = sidebar.indexOf("const research: Item[]"), end = sidebar.indexOf("const destinations", start);
   const rows = sidebar.slice(start, end);
   const hrefs = [...rows.matchAll(/href: "(\/research\/[^"]+)"/g)].map(match => match[1]);
-  assert.deepEqual(hrefs.slice(hrefs.indexOf("/research/themes")), ["/research/themes", "/research/value-check", "/research/compare", "/research/whales"]);
+  assert.deepEqual(hrefs.slice(hrefs.indexOf("/research/themes")), ["/research/themes", "/research/treasure-hunt", "/research/compare", "/research/whales"]);
   // PRO only: both rows live inside the member block, each behind its own switch.
   const memberBlock = rows.slice(rows.indexOf("...(member ? [\n"), rows.lastIndexOf("] : []),"));
-  assert.match(memberBlock, /\.\.\.\(valueCheck \? \[\{ key: "value-check", icon: icons\.tag, label: t\("割安判別ツール", "Value Check"\), href: "\/research\/value-check" \}\] : \[\]\)/);
-  assert.match(memberBlock, /\.\.\.\(whaleMoves \? \[\{ key: "whales", icon: icons\.whale, label: t\("クジラの足あと", "Whale Moves"\), href: "\/research\/whales" \}\] : \[\]\)/);
+  assert.match(memberBlock, /\.\.\.\(valueCheck \? \[\{ key: "value-check", icon: icons\.tag, label: t\("トレジャーハント", "Treasure Hunt"\), href: "\/research\/treasure-hunt" \}\] : \[\]\)/);
+  assert.match(memberBlock, /\.\.\.\(whaleMoves \? \[\{ key: "whales", icon: icons\.whale, label: t\("クジラの足あと", "Whale Tracks"\), href: "\/research\/whales" \}\] : \[\]\)/);
   // The owner's accounts always see them (AGENTS.md, operator access); FREE rows are unchanged.
   assert.match(sidebar, /const valueCheck = valueCheckEnabled\(\) \|\| ownerAccount;/);
   assert.match(sidebar, /const whaleMoves = whaleMovesEnabled\(\) \|\| ownerAccount;/);
   assert.match(sidebar, /const member = ownerAccount \|\| plan === "pro"/);
   const quick = sidebar.slice(sidebar.indexOf("const quick: Item[]"), start);
-  assert.doesNotMatch(quick + rows.slice(0, rows.indexOf("...(member ? [\n")), /value-check|whales/);
+  assert.doesNotMatch(quick + rows.slice(0, rows.indexOf("...(member ? [\n")), /value-check|treasure-hunt|whales/);
 });

@@ -1,4 +1,4 @@
-/* 割安判別ツール (owner's sheet 01, Nov 22): PRO gold on the dark card. */
+/* トレジャーハント, formerly 割安判別ツール (owner's sheet 01, Nov 22): PRO gold on the dark card. */
 .card { --gold:#e9c46a; --goldDeep:#c69a45; --muted:#8e9aaa; --line:rgba(255,255,255,.08);
   margin:4px 0 0; padding:20px 16px 18px; border:1px solid rgba(255,255,255,.12); border-radius:26px; background:#0b1018; color:#eef1f5; overflow:hidden; }
 .head { display:flex; align-items:flex-start; justify-content:space-between; gap:12px; }

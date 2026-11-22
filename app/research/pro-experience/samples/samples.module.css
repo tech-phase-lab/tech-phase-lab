@@ -67,3 +67,7 @@
 .rankingWrap header{flex-wrap:wrap;row-gap:2px}
 .rankingWrap h2{white-space:nowrap}
 .chartNote{margin:6px 0 0;font-size:12px;color:#7d8a9a}
+
+/* トレジャーハント and クジラの足あと (owner, Nov 22): the PRO page's own card inside the frame; a stock row only shows the small notice. */
+.tool{display:flex;flex-direction:column;gap:10px;min-width:0}
+.tool [data-pro-only]{cursor:pointer}
