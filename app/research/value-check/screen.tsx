@@ -56,7 +56,7 @@ function Podium({ items, ja }: { items: ValueItem[]; ja: boolean }) {
   return <ol className={styles.podium} aria-label={ja ? "1〜3位" : "Top three"}>
     {order.map((item, index) => item ? <li key={item.ticker} className={styles[tone[index]]} value={place[index]}>
       <Link href={stockHref(item.ticker)} className={styles.podiumLink} aria-label={`${place[index]}${ja ? "位" : ""} ${item.ticker} ${ja ? "割安度" : "Value Score"} ${item.score}%`}>
-        <StockLogo ticker={item.ticker} className={styles.logo} />
+        <StockLogo ticker={item.ticker} className={styles.logo} full />
         <b className={styles.podiumTicker}>{item.ticker}{item.in && <i className={styles.inMini}>IN</i>}</b>
         <span className={styles.label}>{ja ? "割安度" : "Value Score"}</span>
         <span className={styles.podiumScore}>{item.score}<small>%</small></span>
@@ -71,7 +71,7 @@ function Row({ item, rank, ja }: { item: ValueItem; rank: number; ja: boolean })
   return <li>
     <Link href={stockHref(item.ticker)} className={styles.row}>
       <span className={styles.rank} aria-label={`${rank}${ja ? "位" : ""}`}>{rank}</span>
-      <StockLogo ticker={item.ticker} className={styles.logo} />
+      <StockLogo ticker={item.ticker} className={styles.logo} full />
       <span className={styles.names}>
         <b className={styles.ticker}>{item.ticker}{item.in && <i className={styles.inMini}>IN</i>}</b>
         <span className={styles.company}>{ja ? item.ja : item.en}</span>

@@ -64,6 +64,10 @@ test("menu: PRO members get the 2x3 frame with Value Check and Financial Radar; 
   assert.match(header, /ja \? "割安判別ツール" : "Value Check"/);
   assert.match(header, /!\(member && valueCheck\) && item\("\/research\/radar"/);
   assert.match(header, /const valueCheck = valueCheckEnabled\(\) \|\| ownerAccount;/);
+  // A missing logo shows the whole ticker, never two letters that read as the IN / OUT badge (INTU -> 「IN」).
+  const screen = readFileSync(new URL("../app/research/value-check/screen.tsx", import.meta.url), "utf8");
+  assert.equal(screen.match(/<StockLogo [^>]*\bfull\b/g)?.length, 2);
+  assert.match(readFileSync(new URL("../app/research/watchlist/stock-logo.tsx", import.meta.url), "utf8"), /full \? <span style=\{fullSize\(ticker\)\}>\{ticker\}<\/span>/);
   const page = readFileSync(new URL("../app/research/value-check/page.tsx", import.meta.url), "utf8");
   assert.match(page, /notFound\(\)/);
   const route = readFileSync(new URL("../app/api/research/value-check/route.ts", import.meta.url), "utf8");
