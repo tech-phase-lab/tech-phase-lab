@@ -3086,16 +3086,90 @@ class ResearchServiceTests(unittest.TestCase):
         with patch.object(app, "sync_health_incidents", side_effect=OSError("private database path must not leak")):
             self.assertFalse(app.check_incident_watch_once())
         failed = app.public_state()
-        self.assertIn("incident-watch-failed", failed["health"]["issues"])
+        self.assertFalse(failed["incidentWatch"]["healthy"])
         self.assertEqual(failed["incidentWatch"]["lastError"], "incident-watch-failed")
         self.assertNotIn("private database path", json.dumps(failed))
+        # Nov 22: alerted only once the watch has kept failing for ten minutes (a deploy or restart window stays quiet).
+        self.assertNotIn("incident-watch-failed", failed["health"]["issues"])
+        with app.state_lock:
+            app.state["incidentWatch"]["failingSince"] = (
+                datetime.now(timezone.utc) - timedelta(seconds=service.INCIDENT_WATCH_ALERT_SECONDS + 5)).isoformat()
+        self.assertIn("incident-watch-failed", app.public_state()["health"]["issues"])
         app.sync_health_incidents = original
         self.assertTrue(app.check_incident_watch_once())
         recovered = app.public_state()
         self.assertNotIn("incident-watch-failed", recovered["health"]["issues"])
         self.assertTrue(recovered["incidentWatch"]["healthy"])
+        self.assertIsNone(recovered["incidentWatch"]["failingSince"])
         self.assertEqual(recovered["incidents"]["open"], 0)
-        self.assertEqual(recovered["incidents"]["heldNotifications"], 2)
+        self.assertEqual(recovered["incidents"]["heldNotifications"], 2)  # a sustained outage: failure and recovery
+
+    def test_incident_watch_failure_during_a_restart_window_sends_nothing(self):
+        """Nov 22: SQLITE_BUSY around a deploy made one watch pass fail; the owner got 「障害見張りが失敗しました」 and 「復旧しました」.
+        A failure that recovers within the window records no incident and holds no notification."""
+        app = service.AutomaticMonitor(self.db_path, self.snapshot_path)
+        original = app.sync_health_incidents
+        with patch.object(app, "sync_health_incidents", side_effect=sqlite3.OperationalError("database is locked")):
+            self.assertFalse(app.check_incident_watch_once())
+            self.assertFalse(app.check_incident_watch_once())
+        first_failure = app.public_state()["incidentWatch"]["failingSince"]
+        self.assertIsNotNone(first_failure)
+        app.sync_health_incidents = original
+        self.assertTrue(app.check_incident_watch_once())
+        state = app.public_state()
+        self.assertEqual(state["incidents"]["total"], 0)
+        self.assertEqual(state["incidents"]["heldNotifications"], 0)
+
+    def test_ownership_runs_in_its_own_process_on_its_own_file(self):
+        """Nov 22 incident: never the monitor database, never the monitor's process; a failing child does not raise."""
+        app = service.AutomaticMonitor(self.db_path, self.snapshot_path)
+        commands = []
+
+        class Child:
+            def __init__(self, command, **kwargs):
+                commands.append(command)
+                app.stop_event.set()
+
+            def poll(self):
+                return 3
+
+        with patch.dict(os.environ, {"OWNERSHIP_DATA_ENABLED": "true"}):
+            app.run_ownership(popen=Child)
+        self.assertEqual(len(commands), 1)
+        command = commands[0]
+        self.assertEqual(command[2], "run-due")
+        self.assertEqual(command[command.index("--db") + 1], str(Path(self.db_path).with_name("ownership.sqlite")))
+        self.assertNotEqual(Path(app.ownership_path()).resolve(), Path(self.db_path).resolve())
+
+        def broken(command, **kwargs):
+            app.stop_event.set()
+            raise OSError("no such interpreter")
+
+        app.stop_event.clear()
+        with patch.dict(os.environ, {"OWNERSHIP_DATA_ENABLED": "true"}):
+            app.run_ownership(popen=broken)  # logged, not raised
+
+    def test_child_is_stopped_with_the_monitor(self):
+        app = service.AutomaticMonitor(self.db_path, self.snapshot_path)
+        calls = []
+
+        class Child:
+            def __init__(self, command, **kwargs):
+                self.code = None
+
+            def poll(self):
+                return self.code
+
+            def terminate(self):
+                calls.append("terminate")
+                self.code = -15
+
+            def wait(self, timeout=None):
+                return self.code
+
+        app.stop_event.set()
+        self.assertIsNone(app.run_child(Child, ["x"], 60))
+        self.assertEqual(calls, ["terminate"])
 
     def test_incident_delivery_is_fail_closed_by_default(self):
         app = service.AutomaticMonitor(self.db_path, self.snapshot_path)

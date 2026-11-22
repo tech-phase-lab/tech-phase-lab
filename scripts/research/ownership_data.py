@@ -13,6 +13,12 @@
 SEC: User-Agent with the owner's contact, at most 8 requests a second across threads. A ticker that fails is recorded in
 ownership_issues and skipped; the run continues. Off unless OWNERSHIP_DATA_ENABLED=true (service.py).
 
+Storage (Nov 22 incident): its own file, ownership.sqlite beside the monitor database (ownership_path), never the monitor
+database itself. On Nov 22 the jobs wrote into the monitor database and kept its write lock open across SEC downloads (Python's
+implicit transactions stay open until commit), so every news lane hit SQLITE_BUSY and the monitor restarted. connect() now opens in
+autocommit mode: every statement is its own short transaction, so no lock is ever held across a network call or a 13F parse.
+service.py runs run-due in a separate, lower-priority (nice) process, so its CPU, memory or a crash never reach the monitor.
+
 Usage:
   python3 scripts/research/ownership_data.py run --db .research-private/ownership.sqlite [--job 13f|short|form4|buyback] [--tickers NVDA,MU]
   python3 scripts/research/ownership_data.py report --db .research-private/ownership.sqlite [--tickers NVDA,MU]
@@ -56,11 +62,28 @@ FORM4_LOOKBACK_DAYS = 120
 FORM4_MAX_PER_RUN = 4000
 FILINGS_PER_TICKER = 2     # 10-Q/10-K documents read per ticker the first time
 FTS_LOOKBACK_DAYS = 730
+BATCH_PAUSE = 0.5          # seconds between tickers (low priority: the monitor's own lanes come first)
+YIELD_ROWS = 20_000        # a 13F INFOTABLE row count after which the parser briefly sleeps
 INTERVALS = {'form4': 3600, 'short': 6 * 3600, '13f': 24 * 3600, 'buyback': 24 * 3600}
 ADS_TITLES = re.compile(r'\bADS\b|\bADR\b|DEPOSITARY|SPONSORED', re.I)
 
 _sec_lock = threading.Lock()
 _sec_last = [0.0]
+
+
+def ownership_path(db_path):
+    """The ownership file beside the monitor database (same volume, its own SQLite file and lock)."""
+    return str(Path(db_path).with_name('ownership.sqlite'))
+
+
+def pause(stop_event=None, seconds=None):
+    """Low priority between batches. True when the monitor is stopping."""
+    seconds = BATCH_PAUSE if seconds is None else seconds
+    if stop_event is not None:
+        return stop_event.wait(seconds)
+    if seconds:
+        time.sleep(seconds)
+    return False
 
 
 def enabled(env=None):
@@ -235,8 +258,15 @@ CREATE TABLE IF NOT EXISTS ownership_fts_seen(ticker TEXT, document_id TEXT, PRI
 
 
 def connect(path):
-    Path(path).parent.mkdir(parents=True, exist_ok=True)
-    db = sqlite3.connect(path, timeout=30)
+    """Autocommit (isolation_level=None): each statement commits at once, so a write never stays open across a download, a
+    parse or a pause; db.commit() is a no-op. WAL lets the /ownership reader run while a job writes; busy_timeout 30 s."""
+    if str(path) != ':memory:':
+        Path(path).parent.mkdir(parents=True, exist_ok=True)
+    db = sqlite3.connect(path, timeout=30, isolation_level=None)
+    db.execute('PRAGMA busy_timeout = 30000')
+    if str(path) != ':memory:':
+        db.execute('PRAGMA journal_mode = WAL')
+        db.execute('PRAGMA synchronous = NORMAL')
     db.executescript(SCHEMA)
     columns = {r[1] for r in db.execute('PRAGMA table_info(ownership_buyback_authorizations)')}
     for name, kind in (('check_status', 'TEXT'), ('market_cap', 'REAL'), ('checked_at', 'TEXT')):
@@ -394,7 +424,9 @@ def aggregate_holdings(zf, accessions, cusips):
     """{ticker: (shares, holders)}; SH rows only, puts/calls excluded (Capital Map's 13F rules)."""
     ticker_of = {c.upper(): t for t, values in cusips.items() for c in values}
     shares, holders = {}, {}
-    for row in _tsv(zf, 'INFOTABLE.tsv'):
+    for count, row in enumerate(_tsv(zf, 'INFOTABLE.tsv'), 1):
+        if count % YIELD_ROWS == 0:
+            time.sleep(0.01)  # a ~100 MB data set: let other threads and processes in
         ticker = ticker_of.get(row['CUSIP'].strip().upper())
         if ticker is None or row['SSHPRNAMTTYPE'].strip() != 'SH' or row['PUTCALL'].strip():
             continue
@@ -474,6 +506,8 @@ def run_13f(db, tickers, config, ciks, files=2, stop_event=None):
                 totals = aggregate_holdings(zf, accessions, config['cusips'])
         for ticker in tickers:  # an older quarter needs its own share count (XBRL dei history)
             if ticker in ciks and shares_for(db, ticker, period) is None:
+                if pause(stop_event):
+                    return ','.join(done) or 'stopped'
                 try:
                     refresh_dei_shares(db, ticker, ciks[ticker])
                     if shares_for(db, ticker, period) is None:  # several share classes: read the next 10-Q/10-K cover
@@ -498,6 +532,8 @@ def ensure_shares(db, tickers, ciks, stop_event=None, max_age_days=7):
         if ticker not in ciks:
             issue(db, 'shares', ticker, 'no-cik')
             continue
+        if pause(stop_event):
+            return
         try:
             if not refresh_dei_shares(db, ticker, ciks[ticker]):
                 issue(db, 'shares', ticker, 'no-dei-shares')
@@ -696,7 +732,7 @@ def run_form4(db, tickers, config, ciks, stop_event=None, lookback_days=FORM4_LO
     since = (date.today() - timedelta(days=lookback_days)).isoformat()
     fetched = stored = 0
     for ticker in tickers:
-        if stop_event is not None and stop_event.is_set():
+        if pause(stop_event):
             break
         cik = ciks.get(ticker)
         if cik is None:
@@ -1095,7 +1131,7 @@ def check_authorizations(db, config, stop_event=None, closes=None, allow_quotes=
 def run_buyback(db, tickers, config, ciks, stop_event=None):
     counts = {'xbrl': 0, 'tables': 0, 'authorizations': 0}
     for ticker in tickers:
-        if stop_event is not None and stop_event.is_set():
+        if pause(stop_event):
             break
         cik = ciks.get(ticker)
         if cik is None:
@@ -1256,11 +1292,19 @@ def report(db, tickers):
 
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
-    parser.add_argument('command', choices=('run', 'report'))
+    parser.add_argument('command', choices=('run', 'run-due', 'report'))
     parser.add_argument('--db', required=True)
     parser.add_argument('--job', choices=sorted(JOBS))
     parser.add_argument('--tickers')
     args = parser.parse_args(argv)
+    if args.command == 'run-due':
+        # service.py's child process: lower CPU priority than the monitor, and the monitor never waits on it.
+        try:
+            os.nice(10)
+        except (AttributeError, OSError):
+            pass
+        run_due(args.db)
+        return 0
     db = connect(args.db)
     tickers = [t.strip().upper() for t in args.tickers.split(',')] if args.tickers else None
     if args.command == 'report':

@@ -238,5 +238,139 @@ class OwnershipDataTest(unittest.TestCase):
             self.assertTrue(sqlite3.connect(path).execute('SELECT count(*) FROM ownership_runs').fetchone()[0])
 
 
+class OwnershipContentionTest(unittest.TestCase):
+    """Nov 22 incident: the jobs kept the monitor database's write lock open across SEC downloads and every lane hit SQLITE_BUSY."""
+
+    def setUp(self):
+        self.folder = tempfile.TemporaryDirectory()
+        self.addCleanup(self.folder.cleanup)
+        self.main_path = str(Path(self.folder.name) / 'automatic.sqlite')
+        self.saved = (od.sec_get, od.sec_json, od.BATCH_PAUSE)
+        od.BATCH_PAUSE = 0
+        self.addCleanup(self.restore)
+
+    def restore(self):
+        od.sec_get, od.sec_json, od.BATCH_PAUSE = self.saved
+
+    def test_own_file_beside_the_monitor_database(self):
+        path = od.ownership_path(self.main_path)
+        self.assertNotEqual(Path(path).resolve(), Path(self.main_path).resolve())
+        self.assertEqual(Path(path).parent, Path(self.main_path).parent)
+        db = od.connect(path)
+        self.assertEqual(db.execute('PRAGMA busy_timeout').fetchone()[0], 30000)
+        self.assertEqual(db.execute('PRAGMA journal_mode').fetchone()[0], 'wal')
+        self.assertIsNone(db.isolation_level)  # autocommit: no implicit transaction left open
+        db.close()
+        self.assertFalse(Path(self.main_path).exists())
+
+    def test_no_write_lock_is_held_while_waiting_on_the_network(self):
+        """Form 4 and the share counts: during every (slow) SEC call another connection can write at once (busy_timeout 0)."""
+        path = od.ownership_path(self.main_path)
+        db = od.connect(path)
+        other = sqlite3.connect(path, timeout=0, isolation_level=None)
+        other.execute('CREATE TABLE IF NOT EXISTS probe(n INTEGER)')
+        probes = []
+
+        def probe():
+            self.assertFalse(db.in_transaction)
+            other.execute('INSERT INTO probe VALUES(1)')  # raises "database is locked" if the job held a write
+            probes.append(1)
+
+        def fake_json(url):
+            probe()
+            if 'companyconcept' in url:
+                return {'units': {'shares': [{'end': '2026-09-30', 'val': 1000, 'accn': 'a', 'filed': '2026-10-30'}]}}
+            return {'filings': {'recent': {'form': ['4', '10-Q'], 'accessionNumber': ['0001-26-000001', '0001-26-000002'],
+                                           'filingDate': [od.date.today().isoformat()] * 2, 'reportDate': ['', '2026-09-30'],
+                                           'primaryDocument': ['xslF345X05/form4.xml', 'q3.htm']}}}
+
+        def fake_get(url, limit=0, timeout=0):
+            probe()
+            return b'<ownershipDocument></ownershipDocument>'
+
+        od.sec_json, od.sec_get = fake_json, fake_get
+        od.issue(db, 'shares', 'X', 'earlier write')  # a write just before the network calls
+        od.ensure_shares(db, ['AAA', 'BBB'], {'AAA': 1, 'BBB': 2})
+        od.run_form4(db, ['AAA', 'BBB'], {}, {'AAA': 1, 'BBB': 2})
+        self.assertGreaterEqual(len(probes), 4)
+        self.assertEqual(db.execute('SELECT count(*) FROM ownership_form4_seen').fetchone()[0], 1)
+        db.close()
+        other.close()
+
+    def contend(self, open_ingest):
+        """A slow ownership ingest (network waits between writes) in a thread while three main-database lanes keep writing with
+        a short busy timeout (0.2 s). Returns the lanes' SQLITE_BUSY errors and the tickers the ingest stored."""
+        import threading
+        import monitor
+        with monitor.connect(self.main_path) as main:
+            main.execute('CREATE TABLE IF NOT EXISTS lane_probe(n INTEGER)')
+
+        def slow(url, *a, **k):
+            threading.Event().wait(0.05)
+            return {'units': {'shares': [{'end': '2026-09-30', 'val': 10, 'accn': 'a', 'filed': '2026-10-30'}]}}
+
+        od.sec_json = slow
+        tickers = [f'T{i}' for i in range(20)]
+        stored = []
+
+        def ingest():
+            db = open_ingest()
+            od.ensure_shares(db, tickers, {t: i for i, t in enumerate(tickers)})
+            stored.append(db.execute('SELECT count(DISTINCT ticker) FROM ownership_shares').fetchone()[0])
+            db.close()
+
+        worker = threading.Thread(target=ingest)
+        errors = []
+
+        def lane():
+            db = sqlite3.connect(self.main_path, timeout=0.2, isolation_level=None)
+            while worker.is_alive():
+                try:
+                    db.execute('BEGIN IMMEDIATE')
+                    db.execute('INSERT INTO lane_probe VALUES(1)')
+                    db.execute('COMMIT')
+                except sqlite3.OperationalError as error:
+                    errors.append(str(error))
+                threading.Event().wait(0.01)
+            db.close()
+
+        worker.start()
+        lanes = [threading.Thread(target=lane) for _ in range(3)]
+        for t in lanes:
+            t.start()
+        worker.join(60)
+        for t in lanes:
+            t.join(60)
+        return errors, stored
+
+    def test_reproduces_the_incident_when_the_ingest_writes_the_monitor_database(self):
+        """The Nov 22 shape: the jobs in the monitor database with Python's implicit transaction left open across SEC calls."""
+        def old_connect():
+            db = sqlite3.connect(self.main_path, timeout=30)
+            db.executescript(od.SCHEMA)
+            return db
+        errors, stored = self.contend(old_connect)
+        self.assertTrue(errors)
+        self.assertIn('database is locked', errors[0])
+        self.assertEqual(stored, [20])
+
+    def test_long_ingest_never_blocks_the_monitor_lanes(self):
+        errors, stored = self.contend(lambda: od.connect(od.ownership_path(self.main_path)))
+        self.assertEqual(errors, [])
+        self.assertEqual(stored, [20])
+
+    def test_runtime_files_are_in_the_monitor_image(self):
+        """value-check-failed FileNotFoundError (Nov 22): the image lacked lib/research/value-check-universe.json."""
+        root = Path(__file__).resolve().parents[1]
+        dockerfile = (root / 'Dockerfile.research-monitor').read_text(encoding='utf-8')
+        import re
+        needed = set()
+        for source in (root / 'scripts' / 'research').glob('*.py'):
+            needed.update(re.findall(r"'lib' / 'research' / '([^']+)'", source.read_text(encoding='utf-8')))
+        self.assertIn('value-check-universe.json', needed)
+        for name in sorted(needed):
+            self.assertIn(f'COPY lib/research/{name} lib/research/{name}', dockerfile)
+
+
 if __name__ == '__main__':
     unittest.main()

@@ -77,7 +77,14 @@ def load_universe(path=UNIVERSE_FILE):
 
 
 def connect(path):
+    """Its own file (value-check.sqlite), never the monitor database. Every write is committed before the next provider call;
+    busy_timeout 30 s; WAL so the /value-check reader runs while the daily job writes."""
+    if str(path) != ':memory:':
+        Path(path).parent.mkdir(parents=True, exist_ok=True)
     db = sqlite3.connect(path, timeout=30)
+    db.execute('PRAGMA busy_timeout = 30000')
+    if str(path) != ':memory:':
+        db.execute('PRAGMA journal_mode = WAL')
     schema(db)
     return db
 
