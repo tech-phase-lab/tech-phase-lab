@@ -58,6 +58,7 @@ import dart_api
 import dart_watch
 import earnings_announce
 import earnings_history
+import value_check
 import official_research
 import deep_analysis
 import llm_cost
@@ -849,6 +850,7 @@ class AutomaticMonitor:
                                       if x_stream_trial_service.requested() else None)
         self.push_thread = threading.Thread(target=self.run_web_push, name="web-push-pilot", daemon=True)
         self.price_alert_thread = threading.Thread(target=self.run_price_alerts, name="price-alerts", daemon=True)
+        self.value_check_thread = threading.Thread(target=self.run_value_check, name="value-check", daemon=True)
         self.push_demo_thread = threading.Thread(target=self.run_push_demo, name="push-demo-target", daemon=True)
         self.note_translation_thread = threading.Thread(target=self.run_note_translation, name="note-translation", daemon=True)
         # Several headline workers translate different articles at once. Each
@@ -1289,6 +1291,34 @@ class AutomaticMonitor:
                     print(json.dumps({"event": "price-alerts-failed", "error": type(error).__name__}), flush=True)
             self.stop_event.wait(price_alerts.CHECK_SECONDS)
 
+    def value_check_path(self):
+        # Its own file next to the monitor database: five years of closes stay out of the main database and its backups
+        # (they can be read again from the provider).
+        return str(Path(self.db_path).with_name("value-check.sqlite"))
+
+    def run_value_check(self, now=lambda: datetime.now(timezone.utc)):
+        """割安判別ツール (Nov 22): off unless VALUE_CHECK_ENABLED is "true". Builds the five-year history once (paced, resumable),
+        then one run each weekday after the close (value_check.due)."""
+        if not value_check.enabled():
+            return
+        last_day = None
+        while not self.stop_event.is_set():
+            try:
+                db = value_check.connect(self.value_check_path())
+                try:
+                    slot = value_check.due(now(), last_day) or (None if value_check.snapshot(db) else "first")
+                    if slot:
+                        result = value_check.run_once(db, should_stop=self.stop_event.is_set)
+                        last_day = slot if slot != "first" else (value_check.due(now(), None) or last_day)
+                        print(json.dumps({"event": "value-check-run", "asOf": result.get("asOf"), "credits": result.get("credits"),
+                                          "ranked": {k: len(v["items"]) for k, v in result["universes"].items()}}), flush=True)
+                finally:
+                    db.close()
+            except Exception as error:
+                value_check.STATUS["lastError"] = type(error).__name__
+                print(json.dumps({"event": "value-check-failed", "error": type(error).__name__}), flush=True)
+            self.stop_event.wait(300)
+
     def run_web_push(self):
         if not self.web_push_enabled:
             return
@@ -1444,6 +1474,7 @@ class AutomaticMonitor:
         self.watch_earnings_thread.start()
         self.push_thread.start()
         self.price_alert_thread.start()
+        self.value_check_thread.start()
         self.push_demo_thread.start()
 
     def stop(self):
@@ -1479,6 +1510,7 @@ class AutomaticMonitor:
         self.watch_earnings_thread.join(timeout=10)
         self.push_thread.join(timeout=15)
         self.price_alert_thread.join(timeout=15)
+        self.value_check_thread.join(timeout=15)
         self.push_demo_thread.join(timeout=15)
 
     def run_stock_news(self):
@@ -3785,6 +3817,21 @@ class Handler(BaseHTTPRequestHandler):
                 self.send_json(200, watch_earnings.feed(self.app.db_path))
             except Exception:
                 self.send_json(503, {"ok": False, "error": "watch-earnings-unavailable"})
+            return
+        if path == "/value-check":
+            # 割安判別ツール: served only to the site's server, which checks PRO membership (the same for every member).
+            if not os.environ.get("RESEARCH_API_TOKEN") or not self.authorized():
+                self.send_json(401, {"ok": False})
+                return
+            try:
+                db = value_check.connect(self.app.value_check_path())
+                try:
+                    payload = value_check.public_payload(db)
+                finally:
+                    db.close()
+                self.send_json(200 if payload.get("ok") else 503, payload)
+            except Exception:
+                self.send_json(503, {"ok": False, "error": "value-check-unavailable"})
             return
         if path == "/push/send-log":
             # Nov 16: the last sends for the owner's panel (the website allows owner accounts only): a short device hash, the push
