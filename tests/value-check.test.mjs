@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
-import { aboutText, footerLine, growth, monthDay, parseValueSnapshot, ratio, stockHref, valueCheckAccess, valueCheckEnabled } from "../lib/research/value-check.ts";
+import { CHEAP_FROM, aboutText, footerLine, growth, monthDay, parseValueSnapshot, periodNote, ratio, stockHref, valueCheckAccess, valueCheckEnabled } from "../lib/research/value-check.ts";
 
 const now = Date.UTC(2026, 10, 22);
 const pro = { status: "signed-in", plan: "pro", accessExpiresAt: now + 60_000 };
@@ -30,7 +30,11 @@ const row = (ticker, score, extra = {}) => ({ ticker, ja: ticker, en: ticker, sc
 test("the payload is validated and must already be ranked (no other order can reach the screen)", () => {
   const good = { ok: true, basis: "trailing", asOf: "2026-11-20", computedAt: "2026-11-20T22:40:00Z",
     universes: { tech: list([row("MU", 96, { in: true, previous: 61 }), row("QCOM", 91, { pe: null })], { in: [{ ticker: "MU", from: 61, to: 96 }], out: [] }), all: list([]) } };
-  const parsed = parseValueSnapshot(good);
+  const parsed = parseValueSnapshot({ ...good, universes: { ...good.universes, tech: { ...good.universes.tech, items: [{ ...good.universes.tech.items[0], low: true, period: "listed", previous: -12 }, good.universes.tech.items[1]] } } });
+  assert.equal(parsed.universes.tech.items[0].low, true);
+  assert.equal(parsed.universes.tech.items[0].period, "listed");
+  assert.equal(parsed.universes.tech.items[0].previous, -12);
+  assert.equal(parsed.universes.tech.items[1].low, false);
   assert.equal(parsed.universes.tech.items[0].ticker, "MU");
   assert.equal(parsed.universes.tech.items[1].pe, null);
   assert.throws(() => parseValueSnapshot({ ...good, universes: { ...good.universes, tech: list([row("A", 50), row("B", 80)]) } }));
@@ -41,9 +45,10 @@ test("the payload is validated and must already be ranked (no other order can re
 test("copy: owner's wording, 実績値 for the trailing history, no advice words, no punctuation right after a closing parenthesis", () => {
   assert.equal(footerLine("2026-11-20", "trailing", true), "11/20の終値で更新・PERとPSRは実績値・売上は前年比");
   assert.equal(footerLine("2026-11-21", "forward", true), "11/21の終値で更新・PERとPSRは予想値・売上は前年比");
-  assert.equal(aboutText("forward", true), "割安度は、予想PERと予想PSRがその銘柄の過去5年の中でどれだけ低い位置にあるかを0〜100%で表したものです。100%に近いほど過去5年の中で安い位置にあります。売上が前年より減っている銘柄はのぞいています。毎日の終値で更新します。");
-  assert.equal(aboutText("trailing", true), "割安度は、PERとPSRがその銘柄の過去5年の中でどれだけ低い位置にあるかを0〜100%で表したものです。100%に近いほど過去5年の中で安い位置にあります。売上が前年より減っている銘柄はのぞいています。毎日の終値で更新します。");
-  assert.equal(aboutText("forward", false), "The Value Score shows where a stock's forward P/E and forward P/S sit within its own five-year range, from 0% to 100%. The closer to 100%, the cheaper it is compared with its own past five years. Stocks with falling year-over-year revenue are excluded. Updated daily at the close.");
+  assert.equal(aboutText("forward", true), "割安度は、予想PERと予想PSRが、その銘柄の過去5年の平均と比べてどれだけ低いかを%で表したものです。数字が大きいほど、5年平均より安い位置にあります。「5年最安」は、過去5年で一番安い水準にある銘柄です。売上が前年より減っている銘柄はのぞいています。毎日の終値で更新します。");
+  assert.equal(aboutText("trailing", true), "割安度は、PERとPSRが、その銘柄の過去5年の平均と比べてどれだけ低いかを%で表したものです。数字が大きいほど、5年平均より安い位置にあります。「5年最安」は、過去5年で一番安い水準にある銘柄です。売上が前年より減っている銘柄はのぞいています。毎日の終値で更新します。");
+  assert.equal(aboutText("forward", false), "The Value Score shows how far a stock's forward P/E and forward P/S are below their own five-year averages. The higher the number, the cheaper it is compared with its five-year average. \"5Y Low\" marks stocks at their lowest level in five years. Stocks with falling year-over-year revenue are excluded. Updated daily at the close.");
+  assert.equal(aboutText("trailing", false), "The Value Score shows how far a stock's P/E and P/S are below their own five-year averages. The higher the number, the cheaper it is compared with its five-year average. \"5Y Low\" marks stocks at their lowest level in five years. Stocks with falling year-over-year revenue are excluded. Updated daily at the close.");
   assert.doesNotMatch(aboutText("trailing", false), /forward/);
   const screen = readFileSync(new URL("../app/research/value-check/screen.tsx", import.meta.url), "utf8");
   for (const source of [screen, aboutText("trailing", true), footerLine("2026-11-20", "trailing", true)]) {
@@ -55,6 +60,11 @@ test("copy: owner's wording, 実績値 for the trailing history, no advice words
   assert.equal(ratio(3.84), "3.8");
   assert.equal(growth(190), "+190%");
   assert.equal(stockHref("MU"), "/research/stocks?q=MU");
+  assert.equal(CHEAP_FROM, 30);
+  assert.equal(periodNote("listed", true), "上場後の期間で計算");
+  assert.equal(periodNote(null, true), null);
+  // 5年最安 comes after IN, as an outline (IN is filled)
+  assert.match(screen, /\{item\.in && <i className=\{styles\.inMini\}>IN<\/i>\}\n\s*\{item\.low && <i className=\{styles\.lowMini\}>\{ja \? "5年最安" : "5Y Low"\}<\/i>\}/);
 });
 
 test("menu: PRO members get the 2x3 frame with Value Check and Financial Radar; FREE keeps the radar under Research", () => {
