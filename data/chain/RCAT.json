@@ -1,0 +1,264 @@
+{
+  "root": {
+    "ticker": "RCAT",
+    "name": "レッドキャット・ホールディングス",
+    "cik": 748268,
+    "name_en": "Red Cat Holdings"
+  },
+  "rows": [
+    {
+      "ja": "供給元(部品・組込み)",
+      "en": "Suppliers (components & embedded)",
+      "above": true
+    },
+    {
+      "ja": "提携(ソフト・機体連携・システム)",
+      "en": "Partners (software, airframes & systems)"
+    },
+    {
+      "ja": "競合(防衛)",
+      "en": "Competitors (defense)"
+    }
+  ],
+  "rivals": [
+    "AVAV",
+    "LMT",
+    "NOC"
+  ],
+  "companies": [
+    {
+      "id": "UMAC",
+      "ticker": "UMAC",
+      "name": "アンユージュアル・マシーンズ",
+      "name_en": "Unusual Machines",
+      "sub": "ドローン部品",
+      "sub_en": "Drone components",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Red Catから高性能ドローン部品の80万ドルの注文を受けた",
+          "text_en": "Received an $800,000 order from Red Cat for high-performance drone components",
+          "source": {
+            "label": "Unusual Machines の発表(8-K添付、2025年10月)",
+            "label_en": "Unusual Machines press release (8-K exhibit, Oct 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1956955/000168316825007399/umac_ex9901.htm",
+            "level": "official",
+            "date": "2025-10-03",
+            "quote": "today announced it has received an $800,000 order from Red Cat Holdings, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "LTRX",
+      "ticker": "LTRX",
+      "name": "ラントロニクス",
+      "name_en": "Lantronix",
+      "sub": "組込みコンピューター",
+      "sub_en": "Embedded computing",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "Teal社のドローン向けに部品を供給し、生産量の増加に合わせて供給を拡大",
+          "text_en": "Supplies Teal drones and is expanding higher-volume builds as Red Cat’s production grows",
+          "source": {
+            "label": "Lantronix 8-K添付(2026年)",
+            "label_en": "Lantronix 8-K exhibit (2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1114925/000168316826000750/lantronix_ex9902.htm",
+            "level": "official",
+            "date": "2026",
+            "quote": "Red Cat, with their Teal drones, continues to expand their work with us beyond hardware, into software and next-generation platform development."
+          }
+        }
+      ]
+    },
+    {
+      "id": "PLTR",
+      "ticker": "PLTR",
+      "name": "パランティア・テクノロジーズ",
+      "name_en": "Palantir Technologies",
+      "sub": "AIソフト",
+      "sub_en": "AI software",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Black WidowドローンでPalantirの画像航法ソフト(GPSなしでの飛行)の飛行試験に成功",
+          "text_en": "Flight-tested Palantir’s visual navigation software on the Black Widow drone for GPS-denied flight",
+          "source": {
+            "label": "Red Cat 10-K(2025年度)",
+            "label_en": "Red Cat 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/748268/000162828026019861/rcat-20251231.htm",
+            "level": "official",
+            "date": "2026-03-19",
+            "quote": "We successfully completed flight testing of our Black Widow™ drone equipped with Palantir Technologies Inc. (Nasdaq: PLTR) Visual Navigation (VNav) Software."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AVAV",
+      "ticker": "AVAV",
+      "name": "エアロバイロンメント",
+      "name_en": "AeroVironment",
+      "sub": "無人機・防衛",
+      "sub_en": "Drones & defense",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "FPVドローン「FANG」をAeroVironmentの機体P550から発進させる開発計画を発表",
+          "text_en": "Announced a roadmap to launch its FANG FPV drones from AeroVironment’s P550 aircraft",
+          "source": {
+            "label": "Red Cat 10-K(2025年度)",
+            "label_en": "Red Cat 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/748268/000162828026019861/rcat-20251231.htm",
+            "level": "official",
+            "date": "2026-03-19",
+            "quote": "We announced a development roadmap with AeroVironment, Inc. (\"AV\") (NASDAQ: AVAV) to enable our FANG™ FPV drones to be deployed as a payload from AV’s P550™ all-electric Group 2 eVTOL UAS."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "一方で防衛分野の競合としても挙げる",
+          "text_en": "Also named as a defense competitor",
+          "source": {
+            "label": "Red Cat 10-K(2025年度)",
+            "label_en": "Red Cat 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/748268/000162828026019861/rcat-20251231.htm",
+            "level": "official",
+            "date": "2026-03-19",
+            "quote": "as well as defense companies such as Lockheed Martin Corporation, Northrop Grumman Corporation, and AeroVironment."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SPAI",
+      "ticker": "SPAI",
+      "name": "セーフ・プロ・グループ",
+      "name_en": "Safe Pro Group",
+      "sub": "AI画像解析",
+      "sub_en": "AI imagery analysis",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Black WidowドローンとSafe ProのAI解析装置を組み合わせたキットを米陸軍が発注",
+          "text_en": "The US Army ordered a kit combining Safe Pro’s AI analysis unit with Black Widow drones",
+          "source": {
+            "label": "Safe Pro Group の発表(8-K添付、2026年)",
+            "label_en": "Safe Pro Group press release (8-K exhibit, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2011208/000149315226026778/ex99-1.htm",
+            "level": "official",
+            "date": "2026",
+            "quote": "Black Widow TM drones from Red Cat Holdings (\"Red Cat\")(Nasdaq: RCAT)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "OPTT",
+      "ticker": "OPTT",
+      "name": "オーシャン・パワー・テクノロジーズ",
+      "name_en": "Ocean Power Technologies",
+      "sub": "無人艇",
+      "sub_en": "Uncrewed vessels",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ドローンと無人艇(USV)を組み合わせた監視・偵察で戦略提携",
+          "text_en": "Strategic alliance combining Red Cat drones with its uncrewed surface vessels for ISR",
+          "source": {
+            "label": "Ocean Power Technologies 8-K添付(2025年)",
+            "label_en": "Ocean Power Technologies 8-K exhibit (2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1378140/000164117225021008/ex99-1.htm",
+            "level": "official",
+            "date": "2025",
+            "quote": "We entered into a strategic alliance with Red Cat Holdings (Red Cat) , a leading provider of military-grade aerial drones."
+          }
+        }
+      ]
+    },
+    {
+      "id": "PDYN",
+      "ticker": "PDYN",
+      "name": "パラダイン・エーアイ",
+      "name_en": "Palladyne AI",
+      "sub": "自律制御ソフト",
+      "sub_en": "Autonomy software",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "自社機とRed Catの複数機体による自律的な編隊飛行(スウォーム)を実証",
+          "text_en": "Demonstrated autonomous swarming between its Gremlin-X and multiple Red Cat platforms",
+          "source": {
+            "label": "Palladyne AI の発表(8-K添付、2026年)",
+            "label_en": "Palladyne AI press release (8-K exhibit, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1826681/000119312526092435/pdyn-ex99_1.htm",
+            "level": "official",
+            "date": "2026",
+            "quote": "Demonstrated collaborative autonomous swarming between the Gremlin-X platform utilizing IntelliSwarm, and multiple Red Cat platforms operating with SwarmOS"
+          }
+        }
+      ]
+    },
+    {
+      "id": "LMT",
+      "ticker": "LMT",
+      "name": "ロッキード・マーティン",
+      "name_en": "Lockheed Martin",
+      "sub": "防衛・宇宙",
+      "sub_en": "Defense & space",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "防衛分野の大手競合として挙げる",
+          "text_en": "Named as a large defense competitor",
+          "source": {
+            "label": "Red Cat 10-K(2025年度)",
+            "label_en": "Red Cat 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/748268/000162828026019861/rcat-20251231.htm",
+            "level": "official",
+            "date": "2026-03-19",
+            "quote": "as well as defense companies such as Lockheed Martin Corporation, Northrop Grumman Corporation, and AeroVironment."
+          }
+        }
+      ]
+    },
+    {
+      "id": "NOC",
+      "ticker": "NOC",
+      "name": "ノースロップ・グラマン",
+      "name_en": "Northrop Grumman",
+      "sub": "防衛・宇宙",
+      "sub_en": "Defense & space",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "防衛分野の大手競合として挙げる",
+          "text_en": "Named as a large defense competitor",
+          "source": {
+            "label": "Red Cat 10-K(2025年度)",
+            "label_en": "Red Cat 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/748268/000162828026019861/rcat-20251231.htm",
+            "level": "official",
+            "date": "2026-03-19",
+            "quote": "as well as defense companies such as Lockheed Martin Corporation, Northrop Grumman Corporation, and AeroVironment."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
