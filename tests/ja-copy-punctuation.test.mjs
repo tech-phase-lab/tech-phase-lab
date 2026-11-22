@@ -13,6 +13,7 @@ const PATTERNS = [/[)）][。、]/g, /\d米ドル/g, /百万米ドル/g];
 
 // Each entry: file, a piece of the matching line, and why it stays.
 const ALLOWED = [
+  { file: "lib/research/whale-moves.ts", text: "（空売り残高÷平均出来高）。", reason: "クジラの足あとの「i」の説明。オーナー指定の文言をそのまま使う（11/22）" },
   { file: "app/legal/agree-button.tsx", text: "使えない場合を除く)。", reason: "弁護士確認済みの購入直前の文言。法律ページと一緒に、弁護士の確認後に直す" },
   { file: "lib/research/company-introductions.data.json", text: "Applied Optoelectronics（AAOI）、産業用", reason: "社名のティッカーの括弧のあとで、分野の区切りの読点。並べ替えても括弧が読点の前に来る" },
   { file: "lib/research/company-introductions.data.json", text: "Constellation（Calpine取得済み）、NRG", reason: "社名の補足の括弧のあとの列挙。並べ替えても分野の区切りの読点の前に来る" },

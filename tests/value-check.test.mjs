@@ -57,12 +57,12 @@ test("copy: owner's wording, 実績値 for the trailing history, no advice words
   assert.equal(stockHref("MU"), "/research/stocks?q=MU");
 });
 
-test("menu: PRO members get the 2x3 frame with Value Check and Financial Radar; FREE keeps the radar under Research", () => {
+test("menu: PRO members get the 2x3 frame with Value Check and Whale Moves; 財務レーダー stays under Research (owner, Nov 22 v2)", () => {
   const header = readFileSync(new URL("../app/research/site-header.tsx", import.meta.url), "utf8");
-  const tiles = [...header.matchAll(/\{(?:valueCheck && )?tile\("([^"]+)"/g)].map(match => match[1]);
-  assert.deepEqual(tiles, ["/research/notes", "/research#monitored-companies", "/research/themes", "/research/value-check", "/research/compare", "/research/radar"]);
+  const tiles = [...header.matchAll(/\{(?:(?:valueCheck|whaleMoves) && )?tile\("([^"]+)"/g)].map(match => match[1]);
+  assert.deepEqual(tiles, ["/research/notes", "/research#monitored-companies", "/research/themes", "/research/value-check", "/research/compare", "/research/whales"]);
   assert.match(header, /ja \? "割安判別ツール" : "Value Check"/);
-  assert.match(header, /!\(member && valueCheck\) && item\("\/research\/radar"/);
+  assert.match(header, /\{item\("\/research\/radar"/);
   assert.match(header, /const valueCheck = valueCheckEnabled\(\) \|\| ownerAccount;/);
   // A missing logo shows the whole ticker, never two letters that read as the IN / OUT badge (INTU -> 「IN」).
   const screen = readFileSync(new URL("../app/research/value-check/screen.tsx", import.meta.url), "utf8");
