@@ -64,7 +64,7 @@ class Score(unittest.TestCase):
 
     def test_score_averages_pe_and_ps_and_uses_ps_alone_on_a_loss(self):
         ratios = [(i, 30.0 - i * 0.01, 10.0 - i * 0.001) for i in range(800)]
-        score, pe_pos, ps_pos, _, _ = vc.score_at(ratios, 799)
+        score, pe_pos, ps_pos, _, _, _ = vc.score_at(ratios, 799)
         self.assertEqual((pe_pos, ps_pos, score), (100.0, 100.0, 100))
         ratios[-1] = (799, None, 10.0)  # loss today: P/S only, P/S now the highest -> 0
         self.assertEqual(vc.score_at(ratios, 799)[0], 0)

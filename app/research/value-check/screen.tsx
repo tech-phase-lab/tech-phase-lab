@@ -31,10 +31,10 @@ function useValueCheck(allowed: boolean) {
 }
 
 const Metrics = ({ item, ja, inline }: { item: ValueItem; ja: boolean; inline?: boolean }) => {
-  const sales = <>{ja ? "売上" : "Revenue"} <b className={styles.up}>{growth(item.revenueGrowth)}</b></>;
+  const sales = (lead: string) => <span className={styles.keep}>{lead}{ja ? "売上" : "Revenue"} <b className={styles.up}>{growth(item.revenueGrowth)}</b></span>;
   return inline
-    ? <span className={styles.metrics}>PER {ratio(item.pe)}・PSR {ratio(item.ps)}・{sales}</span>
-    : <span className={styles.podiumMetrics}><span>PER {ratio(item.pe)}・PSR {ratio(item.ps)}</span><span>{sales}</span></span>;
+    ? <span className={styles.metrics}><span className={styles.keep}>PER {ratio(item.pe)}・PSR {ratio(item.ps)}</span>{sales("・")}</span>
+    : <span className={styles.podiumMetrics}><span>PER {ratio(item.pe)}・PSR {ratio(item.ps)}</span>{sales("")}</span>;
 };
 
 function Band({ list, ja }: { list: ValueList; ja: boolean }) {

@@ -438,7 +438,8 @@ def score_at(ratios, index):
     pe_history = [r[1] for r in window if r[1] is not None]
     pe_pos = position(pe_history, pe) if pe is not None and len(pe_history) >= MIN_PE_DAYS else None
     parts = [p for p in (pe_pos, ps_pos) if p is not None]
-    return round(sum(parts) / len(parts)), pe_pos, ps_pos, pe, ps
+    exact = sum(parts) / len(parts)
+    return round(exact), pe_pos, ps_pos, pe, ps, exact
 
 
 def revenue_growth(record):
@@ -476,14 +477,14 @@ def evaluate(ticker, closes, record, as_of):
     if growth < 0:
         return {'excluded': 'revenue-decline'}
     previous = score_at(ratios, len(ratios) - 2)
-    score, _, _, pe, ps = today
-    return {'ticker': ticker, 'score': score, 'previous': previous[0] if previous else None,
+    score, _, _, pe, ps, exact = today
+    return {'ticker': ticker, 'score': score, 'exact': exact, 'previous': previous[0] if previous else None,
             'pe': round(pe, 1) if pe is not None else None, 'ps': round(ps, 1), 'revenueGrowth': round(growth)}
 
 
 def rank(rows):
-    """Highest score first; ties by ticker so the order never depends on anything else."""
-    return sorted(rows, key=lambda r: (-r['score'], r['ticker']))
+    """Highest score first; the same rounded score by the unrounded one, then by ticker, so nothing else decides the order."""
+    return sorted(rows, key=lambda r: (-r['score'], -r.get('exact', r['score']), r['ticker']))
 
 
 def changes(rows):
@@ -521,6 +522,8 @@ def build_snapshot(universe, closes_by_ticker, records, now=None):
             info = companies.get(ticker) or {}
             rows.append({**result, 'ja': info.get('ja') or info.get('en') or ticker, 'en': info.get('en') or ticker})
         rows = rank(rows)
+        for row in rows:
+            row.pop('exact', None)
         moved = changes(rows)
         entered = {c['ticker'] for c in moved['in']}
         for row in rows:
