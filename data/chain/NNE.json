@@ -1,0 +1,277 @@
+{
+  "root": {
+    "ticker": "NNE",
+    "name": "ナノ・ニュークリア・エナジー",
+    "cik": 1923891,
+    "name_en": "NANO Nuclear Energy"
+  },
+  "rows": [
+    {
+      "ja": "技術の取得・開発委託・出資",
+      "en": "Technology acquisitions, development & investments",
+      "above": true
+    },
+    {
+      "ja": "顧客・協業",
+      "en": "Customers & collaboration"
+    },
+    {
+      "ja": "競合(先進原子炉)",
+      "en": "Competitors (advanced reactors)"
+    }
+  ],
+  "rivals": [
+    "OKLO",
+    "TerraPower",
+    "X-energy"
+  ],
+  "companies": [
+    {
+      "id": "USNC",
+      "ticker": "USNC",
+      "name": "ウルトラ・セーフ・ニュークリア(USNC)",
+      "name_en": "Ultra Safe Nuclear",
+      "sub": "小型原子炉(破産)",
+      "sub_en": "Microreactors (bankrupt)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "破産したUSNCから、主力の原子炉KRONOS・LOKIの資産と特許を2025年1月に取得",
+          "text_en": "Bought the KRONOS and LOKI reactor assets and patents from bankrupt USNC in January 2025",
+          "source": {
+            "label": "NANO Nuclear 10-K(2025年9月期)",
+            "label_en": "NANO Nuclear 10-K (FY ended Sep 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1923891/000149315225028285/form10-k.htm",
+            "level": "official",
+            "date": "2025-12-18",
+            "quote": "we closed the acquisition of certain assets related to the KRONOS MMR™ Energy System and the LOKI MMR™ Energy System from Ultra Safe Nuclear Corporation (\"USNC\")."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CAW",
+      "ticker": "Cambridge Atom Works",
+      "name": "ケンブリッジ・アトム・ワークス",
+      "name_en": "Cambridge Atom Works",
+      "sub": "先進原子炉(英国)",
+      "sub_en": "Advanced reactors (UK)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ODIN炉の開発を委託しており、2025年9月にODINの売却に向けた意向書を締結",
+          "text_en": "Develops the ODIN design on contract; a September 2025 letter of intent covers selling ODIN to it",
+          "source": {
+            "label": "NANO Nuclear 10-K(2025年9月期)",
+            "label_en": "NANO Nuclear 10-K (FY ended Sep 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1923891/000149315225028285/form10-k.htm",
+            "level": "official",
+            "date": "2025-12-18",
+            "quote": "In September 2025, we signed a letter of intent for the proposed sale of our ODIN™ microreactor design and all associated intellectual property to Cambridge Atom Works",
+            "note": "売却は意向書の段階です。",
+            "note_en": "The sale is at the letter-of-intent stage."
+          }
+        }
+      ]
+    },
+    {
+      "id": "LIST",
+      "ticker": "LIS Technologies",
+      "name": "LISテクノロジーズ",
+      "name_en": "LIS Technologies",
+      "sub": "レーザー濃縮",
+      "sub_en": "Laser enrichment",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "レーザー濃縮のLIS Technologiesに出資(役員が兼務する関連当事者)",
+          "text_en": "Invested in laser-enrichment company LIS Technologies, a related party with shared officers",
+          "source": {
+            "label": "NANO Nuclear 10-K(2025年9月期)",
+            "label_en": "NANO Nuclear 10-K (FY ended Sep 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1923891/000149315225028285/form10-k.htm",
+            "level": "official",
+            "date": "2025-12-18",
+            "quote": "Our investment in LIST was unanimously approved by all of our disinterested independent directors."
+          }
+        }
+      ]
+    },
+    {
+      "id": "DGHI",
+      "ticker": "DGHI",
+      "name": "デジホスト・テクノロジー",
+      "name_en": "Digihost Technology",
+      "sub": "データセンター・採掘",
+      "sub_en": "Data centers & mining",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "ニューヨーク州の60MW発電所の脱炭素化で覚書を結び、2025年にコンサルティングを提供",
+          "text_en": "Signed an MOU on decarbonizing its 60 MW New York plant and provided consulting in 2025",
+          "source": {
+            "label": "NANO Nuclear 10-K(2025年9月期)",
+            "label_en": "NANO Nuclear 10-K (FY ended Sep 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1923891/000149315225028285/form10-k.htm",
+            "level": "official",
+            "date": "2025-12-18",
+            "quote": "we entered into a non-binding memorandum of understanding with Digihost to advance the transition to carbon-free energy at Digihost’s 60-megawatt power plant in upstate New York."
+          }
+        }
+      ]
+    },
+    {
+      "id": "OKLO",
+      "ticker": "OKLO",
+      "name": "オクロ",
+      "name_en": "Oklo",
+      "sub": "小型原子炉",
+      "sub_en": "Advanced nuclear",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "開発中の先進炉の例として挙げる企業の一社",
+          "text_en": "Named among developers of other advanced reactor designs",
+          "source": {
+            "label": "NANO Nuclear 10-K(2025年9月期)",
+            "label_en": "NANO Nuclear 10-K (FY ended Sep 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1923891/000149315225028285/form10-k.htm",
+            "level": "official",
+            "date": "2025-12-18",
+            "quote": "These include reactors being designed and developed by TerraPower, X-Energy, GE Hitachi, Holtec, Oklo and Kairos."
+          }
+        }
+      ]
+    },
+    {
+      "id": "TerraPower",
+      "ticker": "TerraPower",
+      "name": "テラパワー",
+      "name_en": "TerraPower",
+      "sub": "先進原子炉",
+      "sub_en": "Advanced nuclear",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "開発中の先進炉の例として挙げる企業の一社",
+          "text_en": "Named among developers of other advanced reactor designs",
+          "source": {
+            "label": "NANO Nuclear 10-K(2025年9月期)",
+            "label_en": "NANO Nuclear 10-K (FY ended Sep 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1923891/000149315225028285/form10-k.htm",
+            "level": "official",
+            "date": "2025-12-18",
+            "quote": "These include reactors being designed and developed by TerraPower, X-Energy, GE Hitachi, Holtec, Oklo and Kairos."
+          }
+        }
+      ]
+    },
+    {
+      "id": "X-energy",
+      "ticker": "X-energy",
+      "name": "Xエナジー",
+      "name_en": "X-energy",
+      "sub": "小型原子炉",
+      "sub_en": "Advanced nuclear",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "開発中の先進炉の例として挙げる企業の一社",
+          "text_en": "Named among developers of other advanced reactor designs",
+          "source": {
+            "label": "NANO Nuclear 10-K(2025年9月期)",
+            "label_en": "NANO Nuclear 10-K (FY ended Sep 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1923891/000149315225028285/form10-k.htm",
+            "level": "official",
+            "date": "2025-12-18",
+            "quote": "These include reactors being designed and developed by TerraPower, X-Energy, GE Hitachi, Holtec, Oklo and Kairos."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GEH",
+      "ticker": "GE Hitachi",
+      "name": "GE日立ニュークリア・エナジー",
+      "name_en": "GE Hitachi",
+      "sub": "小型原子炉",
+      "sub_en": "Advanced nuclear",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "開発中の先進炉の例として挙げる企業の一社",
+          "text_en": "Named among developers of other advanced reactor designs",
+          "source": {
+            "label": "NANO Nuclear 10-K(2025年9月期)",
+            "label_en": "NANO Nuclear 10-K (FY ended Sep 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1923891/000149315225028285/form10-k.htm",
+            "level": "official",
+            "date": "2025-12-18",
+            "quote": "These include reactors being designed and developed by TerraPower, X-Energy, GE Hitachi, Holtec, Oklo and Kairos."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Holtec",
+      "ticker": "Holtec",
+      "name": "ホルテック",
+      "name_en": "Holtec",
+      "sub": "原子力",
+      "sub_en": "Nuclear",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "開発中の先進炉の例として挙げる企業の一社",
+          "text_en": "Named among developers of other advanced reactor designs",
+          "source": {
+            "label": "NANO Nuclear 10-K(2025年9月期)",
+            "label_en": "NANO Nuclear 10-K (FY ended Sep 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1923891/000149315225028285/form10-k.htm",
+            "level": "official",
+            "date": "2025-12-18",
+            "quote": "These include reactors being designed and developed by TerraPower, X-Energy, GE Hitachi, Holtec, Oklo and Kairos."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Kairos",
+      "ticker": "Kairos",
+      "name": "カイロス・パワー",
+      "name_en": "Kairos Power",
+      "sub": "先進原子炉",
+      "sub_en": "Advanced nuclear",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "開発中の先進炉の例として挙げる企業の一社",
+          "text_en": "Named among developers of other advanced reactor designs",
+          "source": {
+            "label": "NANO Nuclear 10-K(2025年9月期)",
+            "label_en": "NANO Nuclear 10-K (FY ended Sep 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1923891/000149315225028285/form10-k.htm",
+            "level": "official",
+            "date": "2025-12-18",
+            "quote": "These include reactors being designed and developed by TerraPower, X-Energy, GE Hitachi, Holtec, Oklo and Kairos."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

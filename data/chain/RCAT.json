@@ -254,6 +254,30 @@
           }
         }
       ]
+    },
+    {
+      "id": "RDW",
+      "ticker": "RDW",
+      "name": "レッドワイヤー",
+      "name_en": "Redwire",
+      "sub": "宇宙・防衛",
+      "sub_en": "Space & defense",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Black WidowとFANGを任務システムに組み込むための新たな提携",
+          "text_en": "New partnership to integrate Black Widow and FANG into broader mission systems",
+          "source": {
+            "label": "Red Cat 決算発表(8-K添付、2026年3月18日)",
+            "label_en": "Red Cat results release (8-K exhibit, Mar 18, 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/748268/000162828026019403/ex-991xrcatx20260318.htm",
+            "level": "official",
+            "date": "2026-03-18",
+            "quote": "established a new partnership with Redwire - to integrate Black WidowTM and FANGTM into broader mission-system architectures"
+          }
+        }
+      ]
     }
   ],
   "far": [],
