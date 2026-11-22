@@ -112,9 +112,10 @@ function Buybacks({ data, sort, ja }: { data: WhaleSnapshot; sort: string; ja: b
 }
 
 /** The sheet: WHALE TRACKS over the heading and the 「i」 text for the four tabs. The page and the PRO feature tour's sample share it. */
-export function WhaleTracksSheet({ ja, children }: { ja: boolean; children: ReactNode }) {
+export function WhaleTracksSheet({ ja, top, children }: { ja: boolean; top?: ReactNode; children: ReactNode }) {
   const [about, setAbout] = useState(false);
   return <section className={styles.sheet} aria-labelledby="whale-tracks-title">
+    {top}
     <header className={styles.head}>
       <div>
         <p className={styles.eyebrow}><span aria-hidden="true" />WHALE TRACKS</p>
@@ -135,8 +136,8 @@ export function WhaleTabBar({ tab, onChange, ja }: { tab: WhaleTab; onChange: (t
   </div>;
 }
 
-/** One tab: the as-of line, the sort buttons and the list. */
-export function WhalePanel({ data, tab, sort, onSort, ja }: { data: WhaleSnapshot; tab: WhaleTab; sort: string; onSort: (sort: string) => void; ja: boolean }) {
+/** One tab: the as-of line, the sort buttons and the list. withYear: the tour's sample shows the made-up year (owner, Nov 22). */
+export function WhalePanel({ data, tab, sort, onSort, ja, withYear = false }: { data: WhaleSnapshot; tab: WhaleTab; sort: string; onSort: (sort: string) => void; ja: boolean; withYear?: boolean }) {
   const body = useMemo(() => {
     if (tab === "institutions") return <Institutions data={data} sort={sort} ja={ja} />;
     if (tab === "short") return <Short data={data} sort={sort} ja={ja} />;
@@ -144,7 +145,7 @@ export function WhalePanel({ data, tab, sort, onSort, ja }: { data: WhaleSnapsho
     return <Buybacks data={data} sort={sort} ja={ja} />;
   }, [data, tab, sort, ja]);
   return <div role="tabpanel">
-    <p className={styles.asOf}>{asOfLine(tab, data, ja)}</p>
+    <p className={styles.asOf}>{asOfLine(tab, data, ja, withYear)}</p>
     <div className={styles.sorts} role="group" aria-label={ja ? "並び替え" : "Sort"}>
       {SORTS[tab].map(option => <button key={option.id} type="button" aria-pressed={sort === option.id} onClick={() => onSort(option.id)}>{ja ? option.ja : option.en}</button>)}
     </div>

@@ -197,7 +197,9 @@ test("US stock portfolio: the yen gain is the image's +484,710円, row by row in
   assert.equal(rows.reduce((sum, row) => sum + Math.round(row.gainJpy), 0), 484710);
 });
 
-test("dates inside the samples belong to the made-up timeline: nothing after 2035/03/12 09:00 and no real 2020s dates; every file says its values are fictional", () => {
+test("dates inside the samples belong to the made-up timeline: nothing after 2035/03/12 09:00 (2035 for the two with their own dated card) and no real 2020s dates; every file says its values are fictional", () => {
+  // トレジャーハント and クジラの足あと (owner's mockups, Nov 22) carry their own April 2035 dates and no frame time line (CARD_HEAD_FEATURES).
+  const OWN_DATES = new Set(["treasure-hunt.json", "whale-tracks.json"]);
   const sampleMoment = Date.parse("2035-03-12T00:00:00.000Z"); // 2035/03/12 09:00 in Japan
   assert.equal(compareNow, sampleMoment);
   const NOT_SHOWN = new Set(["url", "sourceUrl", "quarterSourceUrl", "href", "accession", "sourceRevision", "_source"]);
@@ -210,7 +212,7 @@ test("dates inside the samples belong to the made-up timeline: nothing after 203
       if (typeof value !== "string" || NOT_SHOWN.has(key)) return;
       for (const [date] of value.matchAll(/\b20\d\d-\d\d-\d\d(T[\d:.]+Z)?/g)) {
         const at = Date.parse(date);
-        assert.ok(at <= sampleMoment && at >= Date.parse("2030-01-01"), `${name} ${key}: ${date}`);
+        assert.ok(at <= (OWN_DATES.has(name) ? Date.parse("2035-12-31T23:59:59Z") : sampleMoment) && at >= Date.parse("2030-01-01"), `${name} ${key}: ${date}`);
       }
       assert.doesNotMatch(value, /(?<![\d,.$])202\d(?![\d,])/, `${name} ${key}: ${value.slice(0, 80)}`);
     };

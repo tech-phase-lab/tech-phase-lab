@@ -1,50 +1,35 @@
 {
- "_source": "Hand-written for the PRO feature tour (owner, Nov 22: クジラの足あと shows all four tabs at one moment). The shape is the research monitor's ownership snapshot (scripts/research/ownership_data.py), read by lib/research/whale-moves.ts parseWhaleSnapshot. All holdings, short interest, filings, buyback amounts and dates are fictional sample values on the samples' own timeline (as of 2035/03/12 09:00 JST); they are not real data.",
+ "_source": "The owner's mockup 02_体験_クジラの足あと.png (Nov 22): five rows per tab with the tickers, names, figures and dates copied from it (holder counts are not shown and are made up). The shape is the research monitor's ownership snapshot (scripts/research/ownership_data.py), read by lib/research/whale-moves.ts parseWhaleSnapshot. All holdings, short interest, filings, buyback amounts and dates are fictional sample values on a made-up 2035 timeline; they are not real data.",
  "fictional": true,
  "ok": true,
- "institutionalAsOf": "2034-12-31",
- "shortAsOf": "2035-02-27",
+ "institutionalAsOf": "2035-03-31",
+ "shortAsOf": "2035-04-13",
  "institutional": [
-  { "ticker": "NVDA", "ja": "エヌビディア", "en": "NVIDIA", "pct": 68.2, "change": 1.4, "holders": 5120, "holdersChange": 86 },
-  { "ticker": "AMD", "ja": "AMD社", "en": "AMD", "pct": 74.5, "change": 2.9, "holders": 3410, "holdersChange": 64 },
-  { "ticker": "MU", "ja": "マイクロン・テクノロジー", "en": "Micron Technology", "pct": 81.3, "change": 3.6, "holders": 2580, "holdersChange": 71 },
-  { "ticker": "AVGO", "ja": "ブロードコム", "en": "Broadcom", "pct": 79.8, "change": -0.7, "holders": 3960, "holdersChange": -12 },
-  { "ticker": "INTC", "ja": "インテル", "en": "Intel", "pct": 63.1, "change": -2.2, "holders": 2870, "holdersChange": -45 },
-  { "ticker": "MRVL", "ja": "マーベル・テクノロジー", "en": "Marvell Technology", "pct": 88.4, "change": 4.1, "holders": 1490, "holdersChange": 52 },
-  { "ticker": "QCOM", "ja": "クアルコム", "en": "Qualcomm", "pct": 77.9, "change": 0.3, "holders": 2760, "holdersChange": 8 },
-  { "ticker": "AMAT", "ja": "アプライド マテリアルズ", "en": "Applied Materials", "pct": 82.6, "change": -1.1, "holders": 2340, "holdersChange": -21 },
-  { "ticker": "ARM", "ja": "アーム・ホールディングス", "en": "Arm Holdings", "pct": 9.6, "change": 0.8, "holders": 610, "holdersChange": 37 },
-  { "ticker": "SMCI", "ja": "スーパー・マイクロ・コンピューター", "en": "Super Micro Computer", "pct": 102.4, "change": 5.2, "holders": 980, "holdersChange": 44 }
+  { "ticker": "NBIS", "ja": "ネビウス", "en": "Nebius", "pct": 58.2, "change": 6.4, "holders": 640, "holdersChange": 58 },
+  { "ticker": "NVDA", "ja": "エヌビディア", "en": "NVIDIA", "pct": 69.7, "change": 3.1, "holders": 5210, "holdersChange": 94 },
+  { "ticker": "MU", "ja": "マイクロン", "en": "Micron", "pct": 77.7, "change": 3.0, "holders": 2610, "holdersChange": 47 },
+  { "ticker": "MRVL", "ja": "マーベル", "en": "Marvell", "pct": 84.1, "change": 2.2, "holders": 1520, "holdersChange": 31 },
+  { "ticker": "ARM", "ja": "アーム", "en": "Arm", "pct": 21.4, "change": 1.8, "holders": 690, "holdersChange": 26 }
  ],
  "short": [
-  { "ticker": "NVDA", "ja": "エヌビディア", "en": "NVIDIA", "pct": 1.12, "change": 0.05, "days": 1.3 },
-  { "ticker": "AMD", "ja": "AMD社", "en": "AMD", "pct": 2.48, "change": -0.14, "days": 1.9 },
-  { "ticker": "INTC", "ja": "インテル", "en": "Intel", "pct": 3.61, "change": 0.42, "days": 2.7 },
-  { "ticker": "MU", "ja": "マイクロン・テクノロジー", "en": "Micron Technology", "pct": 2.95, "change": 0.31, "days": 1.6 },
-  { "ticker": "SMCI", "ja": "スーパー・マイクロ・コンピューター", "en": "Super Micro Computer", "pct": 17.8, "change": 2.4, "days": 3.9 },
-  { "ticker": "ARM", "ja": "アーム・ホールディングス", "en": "Arm Holdings", "pct": 4.84, "change": -0.36, "days": 2.2 },
-  { "ticker": "MRVL", "ja": "マーベル・テクノロジー", "en": "Marvell Technology", "pct": 3.27, "change": 0.18, "days": 2.1 },
-  { "ticker": "AVGO", "ja": "ブロードコム", "en": "Broadcom", "pct": 1.04, "change": -0.02, "days": 1.8 },
-  { "ticker": "QCOM", "ja": "クアルコム", "en": "Qualcomm", "pct": 1.86, "change": 0.07, "days": 2.4 },
-  { "ticker": "AMAT", "ja": "アプライド マテリアルズ", "en": "Applied Materials", "pct": 1.41, "change": -0.09, "days": 1.5 }
+  { "ticker": "SMCI", "ja": "スーパー・マイクロ", "en": "Super Micro", "pct": 18.4, "change": 2.1, "days": 3.9 },
+  { "ticker": "CRWV", "ja": "コアウィーブ", "en": "CoreWeave", "pct": 14.7, "change": -1.2, "days": 2.6 },
+  { "ticker": "PLTR", "ja": "パランティア", "en": "Palantir", "pct": 3.1, "change": 0.4, "days": 1.4 },
+  { "ticker": "MU", "ja": "マイクロン", "en": "Micron", "pct": 2.07, "change": 0.3, "days": 1.9 },
+  { "ticker": "NVDA", "ja": "エヌビディア", "en": "NVIDIA", "pct": 1.16, "change": -0.1, "days": 2.8 }
  ],
  "insiders": [
-  { "ticker": "NVDA", "ja": "エヌビディア", "en": "NVIDIA", "date": "2035-03-09", "role": "President and Chief Executive Officer, Director", "side": "sell", "planned": true, "value": 41200000 },
-  { "ticker": "MU", "ja": "マイクロン・テクノロジー", "en": "Micron Technology", "date": "2035-03-09", "role": "Director", "side": "buy", "planned": false, "value": 1250000 },
-  { "ticker": "AMD", "ja": "AMD社", "en": "AMD", "date": "2035-03-06", "role": "Chief Financial Officer", "side": "sell", "planned": true, "value": 3800000 },
-  { "ticker": "INTC", "ja": "インテル", "en": "Intel", "date": "2035-03-06", "role": "Director", "side": "buy", "planned": false, "value": 520000 },
-  { "ticker": "MRVL", "ja": "マーベル・テクノロジー", "en": "Marvell Technology", "date": "2035-03-05", "role": "Chief Operating Officer", "side": "sell", "planned": true, "value": 2150000 },
-  { "ticker": "AVGO", "ja": "ブロードコム", "en": "Broadcom", "date": "2035-03-04", "role": "Director", "side": "sell", "planned": false, "value": 6900000 },
-  { "ticker": "QCOM", "ja": "クアルコム", "en": "Qualcomm", "date": "2035-03-03", "role": "Chief Executive Officer, President, Director", "side": "sell", "planned": true, "value": 9400000 },
-  { "ticker": "AMAT", "ja": "アプライド マテリアルズ", "en": "Applied Materials", "date": "2035-03-02", "role": "Director", "side": "buy", "planned": false, "value": 300000 }
+  { "ticker": "MU", "ja": "マイクロン", "en": "Micron", "date": "2035-04-18", "role": "Chief Executive Officer", "side": "buy", "planned": false, "value": 4200000 },
+  { "ticker": "AMD", "ja": "AMD社", "en": "AMD", "date": "2035-04-17", "role": "Chief Financial Officer", "side": "sell", "planned": true, "value": 12500000 },
+  { "ticker": "ORCL", "ja": "オラクル", "en": "Oracle", "date": "2035-04-16", "role": "Chairman", "side": "sell", "planned": true, "value": 89000000 },
+  { "ticker": "INTC", "ja": "インテル", "en": "Intel", "date": "2035-04-13", "role": "Director", "side": "buy", "planned": false, "value": 1100000 },
+  { "ticker": "NVDA", "ja": "エヌビディア", "en": "NVIDIA", "date": "2035-04-02", "role": "Director", "side": "sell", "planned": true, "value": 298000000 }
  ],
  "buybacks": [
-  { "ticker": "QCOM", "ja": "クアルコム", "en": "Qualcomm", "kind": "authorization", "date": "2035-03-04", "amount": 15000000000 },
-  { "ticker": "AVGO", "ja": "ブロードコム", "en": "Broadcom", "kind": "quarter", "date": "2035-03-06", "start": "2034-11-03", "end": "2035-02-01", "amount": 4200000000 },
-  { "ticker": "NVDA", "ja": "エヌビディア", "en": "NVIDIA", "kind": "authorization", "date": "2035-02-26", "amount": 60000000000 },
-  { "ticker": "NVDA", "ja": "エヌビディア", "en": "NVIDIA", "kind": "quarter", "date": "2035-02-26", "start": "2034-10-28", "end": "2035-01-27", "amount": 12400000000 },
-  { "ticker": "AMAT", "ja": "アプライド マテリアルズ", "en": "Applied Materials", "kind": "quarter", "date": "2035-02-12", "start": "2034-10-27", "end": "2035-01-26", "amount": 1900000000 },
-  { "ticker": "AMD", "ja": "AMD社", "en": "AMD", "kind": "quarter", "date": "2035-02-04", "start": "2034-09-28", "end": "2034-12-27", "amount": 980000000 },
-  { "ticker": "MU", "ja": "マイクロン・テクノロジー", "en": "Micron Technology", "kind": "quarter", "date": "2034-12-18", "start": "2034-08-29", "end": "2034-11-27", "amount": 300000000 }
+  { "ticker": "AAPL", "ja": "アップル", "en": "Apple", "kind": "authorization", "date": "2035-04-18", "amount": 110000000000 },
+  { "ticker": "META", "ja": "メタ", "en": "Meta", "kind": "authorization", "date": "2035-04-11", "amount": 50000000000 },
+  { "ticker": "NVDA", "ja": "エヌビディア", "en": "NVIDIA", "kind": "quarter", "date": "2035-04-10", "start": "2034-12-31", "end": "2035-03-30", "amount": 14200000000 },
+  { "ticker": "QCOM", "ja": "クアルコム", "en": "Qualcomm", "kind": "quarter", "date": "2035-04-09", "start": "2034-12-31", "end": "2035-03-30", "amount": 3800000000 },
+  { "ticker": "AVGO", "ja": "ブロードコム", "en": "Broadcom", "kind": "quarter", "date": "2035-04-08", "start": "2034-12-31", "end": "2035-03-30", "amount": 2500000000 }
  ]
 }

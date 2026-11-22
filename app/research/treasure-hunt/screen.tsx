@@ -98,9 +98,10 @@ function Row({ item, rank, ja }: { item: ValueItem; rank: number; ja: boolean })
 
 /** The card: TREASURE HUNT over the heading, no line under it (owner, Nov 22, the same as クジラの足あと), and the 「i」 text.
  * The page and the PRO feature tour's sample share it. */
-export function TreasureHuntCard({ ja, basis, children }: { ja: boolean; basis: ValueSnapshot["basis"]; children: ReactNode }) {
+export function TreasureHuntCard({ ja, basis, top, children }: { ja: boolean; basis: ValueSnapshot["basis"]; top?: ReactNode; children: ReactNode }) {
   const [about, setAbout] = useState(false);
   return <section className={styles.card} aria-labelledby="treasure-hunt-title">
+    {top}
     <header className={styles.head}>
       <div>
         <p className={styles.eyebrow}><span aria-hidden="true" />TREASURE HUNT</p>
@@ -120,8 +121,9 @@ export function UniverseSwitch({ universe, onChange, ja }: { universe: ValueUniv
 }
 
 /** One universe's day: the IN / OUT band, the podium, the list down to 7th (すべて見る for the rest) and the footer line.
- * Rendered with key={universe}, so すべて見る closes again when the universe changes. */
-export function ValueRanking({ data, universe, ja }: { data: ValueSnapshot; universe: ValueUniverse; ja: boolean }) {
+ * Rendered with key={universe}, so すべて見る closes again when the universe changes. The PRO feature tour's sample (owner, Nov 22) shows
+ * a gold note in place of すべて見る and the date with its year. */
+export function ValueRanking({ data, universe, ja, note, withYear = false }: { data: ValueSnapshot; universe: ValueUniverse; ja: boolean; note?: string; withYear?: boolean }) {
   const [all, setAll] = useState(false);
   const list = data.universes[universe];
   const items = list.items;
@@ -131,11 +133,14 @@ export function ValueRanking({ data, universe, ja }: { data: ValueSnapshot; univ
     {items.length ? <>
       <Podium items={items.slice(0, 3)} ja={ja} />
       <ol className={styles.list} start={4}>{shown.slice(3).map((item, index) => <Row key={item.ticker} item={item} rank={index + 4} ja={ja} />)}</ol>
-      {!all && items.length > FIRST_ROWS && <button type="button" className={styles.more} onClick={() => setAll(true)}>{ja ? `すべて見る（${items.length}銘柄）` : `See all (${items.length} stocks)`}</button>}
+      {note ? <p className={styles.sampleNote}>{note}</p> : !all && items.length > FIRST_ROWS && <button type="button" className={styles.more} onClick={() => setAll(true)}>{ja ? `すべて見る（${items.length}銘柄）` : `See all (${items.length} stocks)`}</button>}
     </> : <p className={styles.note}>{ja ? "表示できる銘柄がありません。" : "No stocks to show."}</p>}
-    <p className={styles.fine}>{footerLine(data.asOf, data.basis, ja)}</p>
+    <p className={styles.fine}>{footerLine(data.asOf, data.basis, ja, withYear)}</p>
   </>;
 }
+
+/** 提供：Twelve Data (outside the card on the page; inside it on the tour's sample, as in the owner's mockup). */
+export const ValueCredit = ({ ja }: { ja: boolean }) => <p className={styles.credit}>{ja ? "提供：Twelve Data" : "Data: Twelve Data"}</p>;
 
 export default function TreasureHuntScreen() {
   const memberPlan = useMemberDisplay();
@@ -167,6 +172,6 @@ export default function TreasureHuntScreen() {
         {state === "ready" && data && <ValueRanking key={universe} data={data} universe={universe} ja={ja} />}
       </>}
     </TreasureHuntCard>
-    {plan === "pro" && state === "ready" && <p className={styles.credit}>{t("提供：Twelve Data", "Data: Twelve Data")}</p>}
+    {plan === "pro" && state === "ready" && <ValueCredit ja={ja} />}
   </ResearchToolShell>;
 }

@@ -9,6 +9,10 @@ export const SAMPLE_CLOSE_DAY = "2035-03-09";
  * トレジャーハント and クジラの足あと since Nov 22. */
 export const SAMPLE_FEATURES = ["relation-map", "compare", "theme-ranking", "treasure-hunt", "whale-tracks", "watch-22", "rizels-desk", "financial-radar", "us-portfolio"] as const;
 export type SampleFeature = typeof SAMPLE_FEATURES[number];
+/** Samples whose 「サンプル」 mark sits inside the PRO card, beside 「PRO機能体験」, with the dates of their own data in place of the frame's
+ * one time line (owner's mockups, Nov 22). */
+export const CARD_HEAD_FEATURES: readonly SampleFeature[] = ["treasure-hunt", "whale-tracks"];
+export const CARD_HEAD = { tag: { ja: "サンプル", en: "Sample" }, label: { ja: "PRO機能体験", en: "PRO feature tour" } } as const;
 export const hasSample = (id: string): id is SampleFeature => (SAMPLE_FEATURES as readonly string[]).includes(id);
 
 /** 「PROではじめる」 and 「PROなら好きな銘柄で使えます」 are for people who are not PRO. They wait for the membership check, so a PRO member never
