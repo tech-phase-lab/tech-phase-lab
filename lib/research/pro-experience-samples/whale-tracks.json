@@ -20,7 +20,7 @@
  ],
  "insiders": [
   { "ticker": "MU", "ja": "マイクロン", "en": "Micron", "date": "2035-04-18", "role": "Chief Executive Officer", "side": "buy", "planned": false, "value": 4200000 },
-  { "ticker": "AMD", "ja": "AMD社", "en": "AMD", "date": "2035-04-17", "role": "Chief Financial Officer", "side": "sell", "planned": true, "value": 12500000 },
+  { "ticker": "AMD", "ja": "AMD", "en": "AMD", "date": "2035-04-17", "role": "Chief Financial Officer", "side": "sell", "planned": true, "value": 12500000 },
   { "ticker": "ORCL", "ja": "オラクル", "en": "Oracle", "date": "2035-04-16", "role": "Chairman", "side": "sell", "planned": true, "value": 89000000 },
   { "ticker": "INTC", "ja": "インテル", "en": "Intel", "date": "2035-04-13", "role": "Director", "side": "buy", "planned": false, "value": 1100000 },
   { "ticker": "NVDA", "ja": "エヌビディア", "en": "NVIDIA", "date": "2035-04-02", "role": "Director", "side": "sell", "planned": true, "value": 298000000 }

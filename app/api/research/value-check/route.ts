@@ -1,5 +1,6 @@
 import { getMembership } from "@/lib/membership/server";
 import { parseValueSnapshot, valueCheckAccess, valueCheckEnabled } from "@/lib/research/value-check";
+import { valueSnapshotWithNames } from "@/lib/research/company-display-names";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -22,6 +23,6 @@ export async function GET() {
     if (!response.ok) return fail(503, "unavailable");
     const body = await response.text();
     if (new TextEncoder().encode(body).length > 1_500_000) return fail(503, "unavailable");
-    return Response.json(parseValueSnapshot(JSON.parse(body)), { headers });
+    return Response.json(valueSnapshotWithNames(parseValueSnapshot(JSON.parse(body))), { headers });
   } catch { return fail(503, "unavailable"); }
 }
