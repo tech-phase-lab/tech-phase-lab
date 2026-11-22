@@ -264,6 +264,7 @@ import c_kvue from "../../data/chain/KVUE.json" with { type: "json" };
 import c_kvyo from "../../data/chain/KVYO.json" with { type: "json" };
 import c_lcid from "../../data/chain/LCID.json" with { type: "json" };
 import c_ldos from "../../data/chain/LDOS.json" with { type: "json" };
+import c_leu from "../../data/chain/LEU.json" with { type: "json" };
 import c_lfus from "../../data/chain/LFUS.json" with { type: "json" };
 import c_lhx from "../../data/chain/LHX.json" with { type: "json" };
 import c_lif from "../../data/chain/LIF.json" with { type: "json" };
@@ -323,6 +324,7 @@ import c_net from "../../data/chain/NET.json" with { type: "json" };
 import c_nflx from "../../data/chain/NFLX.json" with { type: "json" };
 import c_nice from "../../data/chain/NICE.json" with { type: "json" };
 import c_nke from "../../data/chain/NKE.json" with { type: "json" };
+import c_nne from "../../data/chain/NNE.json" with { type: "json" };
 import c_noc from "../../data/chain/NOC.json" with { type: "json" };
 import c_now from "../../data/chain/NOW.json" with { type: "json" };
 import c_nsc from "../../data/chain/NSC.json" with { type: "json" };
@@ -787,6 +789,7 @@ const available: Record<string, ChainMapData> = {
   KVYO: c_kvyo as ChainMapData,
   LCID: c_lcid as ChainMapData,
   LDOS: c_ldos as ChainMapData,
+  LEU: c_leu as ChainMapData,
   LFUS: c_lfus as ChainMapData,
   LHX: c_lhx as ChainMapData,
   LIF: c_lif as ChainMapData,
@@ -846,6 +849,7 @@ const available: Record<string, ChainMapData> = {
   NFLX: c_nflx as ChainMapData,
   NICE: c_nice as ChainMapData,
   NKE: c_nke as ChainMapData,
+  NNE: c_nne as ChainMapData,
   NOC: c_noc as ChainMapData,
   NOW: c_now as ChainMapData,
   NSC: c_nsc as ChainMapData,

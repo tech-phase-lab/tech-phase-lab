@@ -230,6 +230,198 @@
           }
         }
       ]
+    },
+    {
+      "id": "CMR Surgical",
+      "ticker": "CMR Surgical",
+      "name": "CMRサージカル",
+      "name_en": "CMR Surgical",
+      "sub": "手術支援ロボット(英国)",
+      "sub_en": "Surgical robots (UK)",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "手術支援ロボットの分野に参入した競合の一社",
+          "text_en": "A competitor that has entered robotic-assisted surgery",
+          "source": {
+            "label": "Intuitive Surgical 10-K(2025年度)",
+            "label_en": "Intuitive Surgical 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1035267/000103526726000010/isrg-20251231.htm",
+            "level": "official",
+            "date": "2026-02-03",
+            "quote": "include, but are not limited to, the following: Beijing Surgerii Robotics Company Limited; CMR Surgical Ltd.; Distalmotion SA; Harbin Sizhe Rui Intelligent Medical Equipment Co., Ltd.; Johnson & Johnson; Karl Storz SE & Co. KG; Medicaroid Corporation; Medtronic plc; meerecompany Inc.; Noah Medical Corporation; Shandong Weigao Group Medical Polymer Company Ltd.; Shanghai Microport Medbot (Group) Co., Ltd.; Shenzhen Edge Medical Co., Ltd.; and SS Innovations International, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Distalmotion",
+      "ticker": "Distalmotion",
+      "name": "ディスタルモーション",
+      "name_en": "Distalmotion",
+      "sub": "手術支援ロボット(スイス)",
+      "sub_en": "Surgical robots (Switzerland)",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "手術支援ロボットの分野に参入した競合の一社",
+          "text_en": "A competitor that has entered robotic-assisted surgery",
+          "source": {
+            "label": "Intuitive Surgical 10-K(2025年度)",
+            "label_en": "Intuitive Surgical 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1035267/000103526726000010/isrg-20251231.htm",
+            "level": "official",
+            "date": "2026-02-03",
+            "quote": "include, but are not limited to, the following: Beijing Surgerii Robotics Company Limited; CMR Surgical Ltd.; Distalmotion SA; Harbin Sizhe Rui Intelligent Medical Equipment Co., Ltd.; Johnson & Johnson; Karl Storz SE & Co. KG; Medicaroid Corporation; Medtronic plc; meerecompany Inc.; Noah Medical Corporation; Shandong Weigao Group Medical Polymer Company Ltd.; Shanghai Microport Medbot (Group) Co., Ltd.; Shenzhen Edge Medical Co., Ltd.; and SS Innovations International, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Karl Storz",
+      "ticker": "Karl Storz",
+      "name": "カールストルツ",
+      "name_en": "Karl Storz",
+      "sub": "内視鏡(ドイツ)",
+      "sub_en": "Endoscopy (Germany)",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "手術支援ロボットの分野に参入した競合の一社",
+          "text_en": "A competitor that has entered robotic-assisted surgery",
+          "source": {
+            "label": "Intuitive Surgical 10-K(2025年度)",
+            "label_en": "Intuitive Surgical 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1035267/000103526726000010/isrg-20251231.htm",
+            "level": "official",
+            "date": "2026-02-03",
+            "quote": "include, but are not limited to, the following: Beijing Surgerii Robotics Company Limited; CMR Surgical Ltd.; Distalmotion SA; Harbin Sizhe Rui Intelligent Medical Equipment Co., Ltd.; Johnson & Johnson; Karl Storz SE & Co. KG; Medicaroid Corporation; Medtronic plc; meerecompany Inc.; Noah Medical Corporation; Shandong Weigao Group Medical Polymer Company Ltd.; Shanghai Microport Medbot (Group) Co., Ltd.; Shenzhen Edge Medical Co., Ltd.; and SS Innovations International, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Medicaroid",
+      "ticker": "Medicaroid",
+      "name": "メディカロイド",
+      "name_en": "Medicaroid",
+      "sub": "手術支援ロボット(日本)",
+      "sub_en": "Surgical robots (Japan)",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "手術支援ロボットの分野に参入した競合の一社",
+          "text_en": "A competitor that has entered robotic-assisted surgery",
+          "source": {
+            "label": "Intuitive Surgical 10-K(2025年度)",
+            "label_en": "Intuitive Surgical 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1035267/000103526726000010/isrg-20251231.htm",
+            "level": "official",
+            "date": "2026-02-03",
+            "quote": "include, but are not limited to, the following: Beijing Surgerii Robotics Company Limited; CMR Surgical Ltd.; Distalmotion SA; Harbin Sizhe Rui Intelligent Medical Equipment Co., Ltd.; Johnson & Johnson; Karl Storz SE & Co. KG; Medicaroid Corporation; Medtronic plc; meerecompany Inc.; Noah Medical Corporation; Shandong Weigao Group Medical Polymer Company Ltd.; Shanghai Microport Medbot (Group) Co., Ltd.; Shenzhen Edge Medical Co., Ltd.; and SS Innovations International, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Noah Medical",
+      "ticker": "Noah Medical",
+      "name": "ノア・メディカル",
+      "name_en": "Noah Medical",
+      "sub": "気管支鏡ロボット",
+      "sub_en": "Bronchoscopy robots",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "手術支援ロボットの分野に参入した競合の一社",
+          "text_en": "A competitor that has entered robotic-assisted surgery",
+          "source": {
+            "label": "Intuitive Surgical 10-K(2025年度)",
+            "label_en": "Intuitive Surgical 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1035267/000103526726000010/isrg-20251231.htm",
+            "level": "official",
+            "date": "2026-02-03",
+            "quote": "include, but are not limited to, the following: Beijing Surgerii Robotics Company Limited; CMR Surgical Ltd.; Distalmotion SA; Harbin Sizhe Rui Intelligent Medical Equipment Co., Ltd.; Johnson & Johnson; Karl Storz SE & Co. KG; Medicaroid Corporation; Medtronic plc; meerecompany Inc.; Noah Medical Corporation; Shandong Weigao Group Medical Polymer Company Ltd.; Shanghai Microport Medbot (Group) Co., Ltd.; Shenzhen Edge Medical Co., Ltd.; and SS Innovations International, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Edge Medical",
+      "ticker": "Edge Medical",
+      "name": "深圳精鋒医療",
+      "name_en": "Shenzhen Edge Medical",
+      "sub": "手術支援ロボット(中国)",
+      "sub_en": "Surgical robots (China)",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "手術支援ロボットの分野に参入した競合の一社",
+          "text_en": "A competitor that has entered robotic-assisted surgery",
+          "source": {
+            "label": "Intuitive Surgical 10-K(2025年度)",
+            "label_en": "Intuitive Surgical 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1035267/000103526726000010/isrg-20251231.htm",
+            "level": "official",
+            "date": "2026-02-03",
+            "quote": "include, but are not limited to, the following: Beijing Surgerii Robotics Company Limited; CMR Surgical Ltd.; Distalmotion SA; Harbin Sizhe Rui Intelligent Medical Equipment Co., Ltd.; Johnson & Johnson; Karl Storz SE & Co. KG; Medicaroid Corporation; Medtronic plc; meerecompany Inc.; Noah Medical Corporation; Shandong Weigao Group Medical Polymer Company Ltd.; Shanghai Microport Medbot (Group) Co., Ltd.; Shenzhen Edge Medical Co., Ltd.; and SS Innovations International, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "meerecompany",
+      "ticker": "meerecompany",
+      "name": "ミレカンパニー",
+      "name_en": "meerecompany",
+      "sub": "手術支援ロボット(韓国)",
+      "sub_en": "Surgical robots (Korea)",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "手術支援ロボットの分野に参入した競合の一社",
+          "text_en": "A competitor that has entered robotic-assisted surgery",
+          "source": {
+            "label": "Intuitive Surgical 10-K(2025年度)",
+            "label_en": "Intuitive Surgical 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1035267/000103526726000010/isrg-20251231.htm",
+            "level": "official",
+            "date": "2026-02-03",
+            "quote": "include, but are not limited to, the following: Beijing Surgerii Robotics Company Limited; CMR Surgical Ltd.; Distalmotion SA; Harbin Sizhe Rui Intelligent Medical Equipment Co., Ltd.; Johnson & Johnson; Karl Storz SE & Co. KG; Medicaroid Corporation; Medtronic plc; meerecompany Inc.; Noah Medical Corporation; Shandong Weigao Group Medical Polymer Company Ltd.; Shanghai Microport Medbot (Group) Co., Ltd.; Shenzhen Edge Medical Co., Ltd.; and SS Innovations International, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Surgerii",
+      "ticker": "Surgerii",
+      "name": "北京術鋭",
+      "name_en": "Beijing Surgerii Robotics",
+      "sub": "手術支援ロボット(中国)",
+      "sub_en": "Surgical robots (China)",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "手術支援ロボットの分野に参入した競合の一社",
+          "text_en": "A competitor that has entered robotic-assisted surgery",
+          "source": {
+            "label": "Intuitive Surgical 10-K(2025年度)",
+            "label_en": "Intuitive Surgical 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1035267/000103526726000010/isrg-20251231.htm",
+            "level": "official",
+            "date": "2026-02-03",
+            "quote": "include, but are not limited to, the following: Beijing Surgerii Robotics Company Limited; CMR Surgical Ltd.; Distalmotion SA; Harbin Sizhe Rui Intelligent Medical Equipment Co., Ltd.; Johnson & Johnson; Karl Storz SE & Co. KG; Medicaroid Corporation; Medtronic plc; meerecompany Inc.; Noah Medical Corporation; Shandong Weigao Group Medical Polymer Company Ltd.; Shanghai Microport Medbot (Group) Co., Ltd.; Shenzhen Edge Medical Co., Ltd.; and SS Innovations International, Inc."
+          }
+        }
+      ]
     }
   ],
   "far": [],

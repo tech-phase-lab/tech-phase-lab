@@ -310,6 +310,178 @@
           }
         }
       ]
+    },
+    {
+      "id": "Kiewit",
+      "ticker": "Kiewit",
+      "name": "キーウィット",
+      "name_en": "Kiewit",
+      "sub": "建設",
+      "sub_en": "Construction",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "アイダホ州の1号機の建設主体(リード・コンストラクター)に選定",
+          "text_en": "Selected as lead constructor for its first Aurora powerhouse in Idaho",
+          "source": {
+            "label": "Oklo 10-Q(2026年7-9月期)",
+            "label_en": "Oklo 10-Q (Q3 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1849056/000162828026071319/oklo-20260930.htm",
+            "level": "official",
+            "date": "2026-11-06",
+            "quote": "Working with Kiewit Nuclear Solutions Co. (\"Kiewit\"), who was selected as the lead constructor for our first Aurora powerhouse in Idaho"
+          }
+        }
+      ]
+    },
+    {
+      "id": "USFR",
+      "ticker": "U.S. Forged Rings",
+      "name": "U.S.フォージド・リングス",
+      "name_en": "U.S. Forged Rings",
+      "sub": "大型鍛造品",
+      "sub_en": "Large forgings",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "2026年10月、原子炉容器など大型部品の製造能力を確保する契約",
+          "text_en": "October 2026 agreement reserving capacity for reactor vessels and other large components",
+          "source": {
+            "label": "Oklo 10-Q(2026年7-9月期)",
+            "label_en": "Oklo 10-Q (Q3 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1849056/000162828026071319/oklo-20260930.htm",
+            "level": "official",
+            "date": "2026-11-06",
+            "quote": "In October 2026, Oklo entered into a strategic manufacturing agreement with U.S. Forged Rings, Inc. (\"USFR\") to support the deployment of our Aurora powerhouses."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Switch",
+      "ticker": "Switch",
+      "name": "スイッチ",
+      "name_en": "Switch",
+      "sub": "データセンター",
+      "sub_en": "Data centers",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "2024年12月、12GWの電力を供給する基本合意(マスター電力契約)を締結",
+          "text_en": "Signed a 12 GW master power agreement in December 2024",
+          "source": {
+            "label": "Oklo 10-Q(2026年7-9月期)",
+            "label_en": "Oklo 10-Q (Q3 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1849056/000162828026071319/oklo-20260930.htm",
+            "level": "official",
+            "date": "2026-11-06",
+            "quote": "In December 2024, we signed a 12 gigawatt (\"GW\") Master Power Agreement with Switch, Ltd. (\"Switch\")",
+            "note": "拘束力のない合意です。",
+            "note_en": "A non-binding agreement."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Prometheus",
+      "ticker": "Prometheus Hyperscale",
+      "name": "プロメテウス・ハイパースケール",
+      "name_en": "Prometheus Hyperscale",
+      "sub": "データセンター",
+      "sub_en": "Data centers",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "データセンター向けに100MWの電力購入の意向書(拘束力なし)",
+          "text_en": "Signed a non-binding letter of intent for 100 MW for its data center campus",
+          "source": {
+            "label": "Oklo 2024年度 株主への手紙(8-K添付)",
+            "label_en": "Oklo FY2024 shareholder letter (8-K exhibit)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1849056/000110465925027276/tm2510004d1_ex99-1.htm",
+            "level": "official",
+            "date": "2025-03-24",
+            "quote": "Signed an LOI with Prometheus Hyperscale for 100 MW",
+            "note": "拘束力のない合意です。",
+            "note_en": "A non-binding agreement."
+          }
+        }
+      ]
+    },
+    {
+      "id": "RPower",
+      "ticker": "RPower",
+      "name": "Rパワー",
+      "name_en": "RPower",
+      "sub": "ガス発電",
+      "sub_en": "Gas generation",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "原子炉の稼働までガス発電でつなぐ戦略提携",
+          "text_en": "Strategic partnership using natural-gas generation as a bridge until reactors are online",
+          "source": {
+            "label": "Oklo 2024年度 株主への手紙(8-K添付)",
+            "label_en": "Oklo FY2024 shareholder letter (8-K exhibit)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1849056/000110465925027276/tm2510004d1_ex99-1.htm",
+            "level": "official",
+            "date": "2025-03-24",
+            "quote": "Entered into strategic partnership with RPower to provide customers with a natural gas bridge to nuclear power"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Battelle",
+      "ticker": "Battelle Energy Alliance",
+      "name": "バテル・エナジー・アライアンス",
+      "name_en": "Battelle Energy Alliance",
+      "sub": "研究所運営(INL)",
+      "sub_en": "National lab operator (INL)",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "アイダホ国立研究所(INL)の運営会社と、AIによる設計解析で戦略提携",
+          "text_en": "Strategic partnership project with the operator of Idaho National Laboratory on AI-enabled engineering",
+          "source": {
+            "label": "Oklo 10-Q(2026年7-9月期)",
+            "label_en": "Oklo 10-Q (Q3 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1849056/000162828026071319/oklo-20260930.htm",
+            "level": "official",
+            "date": "2026-11-06",
+            "quote": "In May 2026, we announced a strategic partnership project with Battelle Energy Alliance, the management and operating contractor for INL"
+          }
+        }
+      ]
+    },
+    {
+      "id": "newcleo",
+      "ticker": "newcleo",
+      "name": "ニュークレオ",
+      "name_en": "newcleo",
+      "sub": "先進原子炉(欧州)",
+      "sub_en": "Advanced nuclear (Europe)",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "米エネルギー省の余剰プルトニウム活用事業で、Okloとnewcleoの組が交渉先に選定",
+          "text_en": "Selected with Oklo by the US DOE for negotiations under the surplus plutonium program",
+          "source": {
+            "label": "NewHold Investment Corp. III 8-K添付(newcleoとの統合資料、2026年5月)",
+            "label_en": "NewHold Investment Corp. III 8-K exhibit (newcleo combination, May 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2043699/000121390026061270/ea029209701ex99-3.htm",
+            "level": "official",
+            "date": "2026-05-27",
+            "quote": "the DOE announced that Oklo, in partnership with newcleo, has been selected for advanced negotiations under the Surplus Plutonium Utilization Program."
+          }
+        }
+      ]
     }
   ],
   "far": [],

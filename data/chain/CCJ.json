@@ -260,6 +260,91 @@
           }
         }
       ]
+    },
+    {
+      "id": "Orano",
+      "ticker": "Orano",
+      "name": "オラノ",
+      "name_en": "Orano",
+      "sub": "核燃料(仏政府系)",
+      "sub_en": "Nuclear fuel (French state-owned)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Cigar Lake鉱山(Orano 40.5%)とMcArthur River鉱山(同30.2%)を共同保有",
+          "text_en": "Co-owns the Cigar Lake (40.5%) and McArthur River (30.2%) mines with Cameco",
+          "source": {
+            "label": "Cameco 年次情報書(2025年度、40-F添付)",
+            "label_en": "Cameco Annual Information Form (FY2025, Form 40-F exhibit)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1009001/000119312526116229/d34605dex991.htm",
+            "level": "official",
+            "date": "2026-03-19",
+            "quote": "• Cameco - 54.547% (operator) • Orano - 40.453% • TEPCO Resources Inc. - 5.000%"
+          }
+        },
+        {
+          "type": "tie",
+          "text": "Cigar Lakeの鉱石はすべてOranoのMcClean Lake工場で処理される",
+          "text_en": "All Cigar Lake ore is processed at Orano’s McClean Lake mill",
+          "source": {
+            "label": "Cameco 年次情報書(2025年度、40-F添付)",
+            "label_en": "Cameco Annual Information Form (FY2025, Form 40-F exhibit)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1009001/000119312526116229/d34605dex991.htm",
+            "level": "official",
+            "date": "2026-03-19",
+            "quote": "All of Cigar Lake's ore slurry from current mineral reserves will be processed at the McClean Lake mill, operated by Orano."
+          }
+        }
+      ]
+    },
+    {
+      "id": "UROY",
+      "ticker": "UROY",
+      "name": "ウラニウム・ロイヤルティ",
+      "name_en": "Uranium Royalty",
+      "sub": "ウランのロイヤルティ",
+      "sub_en": "Uranium royalties",
+      "row": 2,
+      "relations": [
+        {
+          "type": "down",
+          "text": "ロイヤルティで受け取ったウランをCamecoのBlind River精錬所の口座で保管",
+          "text_en": "Holds royalty uranium in its account at Cameco’s Blind River refinery",
+          "source": {
+            "label": "Uranium Royalty 年次情報書(2025年4月期)",
+            "label_en": "Uranium Royalty Annual Information Form (FY ended Apr 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1711570/000095017025096279/uroy-ex99_1.htm",
+            "level": "official",
+            "date": "2025-07",
+            "quote": "delivering 18,366 pounds U 3 O 8 to the Company's storage account at Cameco's Blind River uranium refining facility"
+          }
+        }
+      ]
+    },
+    {
+      "id": "EU",
+      "ticker": "EU",
+      "name": "エンコア・エナジー",
+      "name_en": "enCore Energy",
+      "sub": "ウラン生産",
+      "sub_en": "Uranium mining",
+      "row": 2,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Alta Mesa合弁の生産物の受け渡し先の一つがCamecoの施設",
+          "text_en": "Alta Mesa JV products may be delivered to the Cameco facility",
+          "source": {
+            "label": "enCore Energy 10-K添付(Alta Mesa合弁契約)",
+            "label_en": "enCore Energy 10-K exhibit (Alta Mesa JV agreement)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1500881/000162828026022507/exhibit1014-jvaltamesallcx.htm",
+            "level": "official",
+            "date": "2026-03",
+            "quote": "The Company shall arrange for the physical Products to be delivered to either the ConverDyn Facility or the Cameco Facility"
+          }
+        }
+      ]
     }
   ],
   "far": [],

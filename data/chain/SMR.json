@@ -252,6 +252,285 @@
           }
         }
       ]
+    },
+    {
+      "id": "PCC",
+      "ticker": "Precision Custom Components",
+      "name": "プレシジョン・カスタム・コンポーネンツ",
+      "name_en": "Precision Custom Components",
+      "sub": "原子炉部品",
+      "sub_en": "Reactor components",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "原子炉モジュールの部品を製造する主要供給元の一社",
+          "text_en": "A key supplier expected to build reactor-module components",
+          "source": {
+            "label": "NuScale 10-K(2025年度)",
+            "label_en": "NuScale 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1822966/000182296626000018/smr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Management continues to focus on partnerships with suppliers, such as Doosan Enerbility Co., Ltd.; IHI Corporation; Precision Custom Components LLC; Sarens Nuclear & Industrial Services, LLC; and Curtiss-Wright Corporation"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Sarens",
+      "ticker": "Sarens",
+      "name": "サレンス",
+      "name_en": "Sarens Nuclear & Industrial Services",
+      "sub": "重量物据付",
+      "sub_en": "Heavy lifting & installation",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "原子炉モジュールの製造・据付を担う主要供給元の一社",
+          "text_en": "A key supplier for building and installing reactor modules",
+          "source": {
+            "label": "NuScale 10-K(2025年度)",
+            "label_en": "NuScale 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1822966/000182296626000018/smr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Management continues to focus on partnerships with suppliers, such as Doosan Enerbility Co., Ltd.; IHI Corporation; Precision Custom Components LLC; Sarens Nuclear & Industrial Services, LLC; and Curtiss-Wright Corporation"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Paragon",
+      "ticker": "Paragon Energy Solutions",
+      "name": "パラゴン・エナジー・ソリューションズ",
+      "name_en": "Paragon Energy Solutions",
+      "sub": "安全保護系",
+      "sub_en": "Protection systems",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "安全保護系(プロテクションシステム)の主要供給元",
+          "text_en": "Key supplier of protection systems",
+          "source": {
+            "label": "NuScale 10-K(2025年度)",
+            "label_en": "NuScale 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1822966/000182296626000018/smr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Paragon Energy Solutions (protection systems), Sensia LLC, Mirion Technologies, Weed Instruments, dba Curtiss-Wright (sensors and instrumentation), ATS Industrial Automation (Automation Tooling & Remote Handling), Trillium Flow Technologies, Conval (valves) and PaR Systems, Inc. (reactor building crane)."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Sensia",
+      "ticker": "Sensia",
+      "name": "センシア",
+      "name_en": "Sensia",
+      "sub": "計測・制御",
+      "sub_en": "Measurement & control",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "主要供給元の一社として挙げられる",
+          "text_en": "Named among key suppliers",
+          "source": {
+            "label": "NuScale 10-K(2025年度)",
+            "label_en": "NuScale 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1822966/000182296626000018/smr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Paragon Energy Solutions (protection systems), Sensia LLC, Mirion Technologies, Weed Instruments, dba Curtiss-Wright (sensors and instrumentation), ATS Industrial Automation (Automation Tooling & Remote Handling), Trillium Flow Technologies, Conval (valves) and PaR Systems, Inc. (reactor building crane)."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ATS",
+      "ticker": "ATS",
+      "name": "ATSコーポレーション",
+      "name_en": "ATS Corporation",
+      "sub": "自動化設備",
+      "sub_en": "Automation systems",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "グループのATS Industrial Automationが、自動化治具・遠隔操作設備を供給",
+          "text_en": "Its ATS Industrial Automation unit supplies automation tooling and remote handling",
+          "source": {
+            "label": "NuScale 10-K(2025年度)",
+            "label_en": "NuScale 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1822966/000182296626000018/smr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Paragon Energy Solutions (protection systems), Sensia LLC, Mirion Technologies, Weed Instruments, dba Curtiss-Wright (sensors and instrumentation), ATS Industrial Automation (Automation Tooling & Remote Handling), Trillium Flow Technologies, Conval (valves) and PaR Systems, Inc. (reactor building crane)."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Trillium",
+      "ticker": "Trillium Flow Technologies",
+      "name": "トリリウム・フロー・テクノロジーズ",
+      "name_en": "Trillium Flow Technologies",
+      "sub": "バルブ・ポンプ",
+      "sub_en": "Valves & pumps",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "主要供給元の一社として挙げられる",
+          "text_en": "Named among key suppliers",
+          "source": {
+            "label": "NuScale 10-K(2025年度)",
+            "label_en": "NuScale 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1822966/000182296626000018/smr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Paragon Energy Solutions (protection systems), Sensia LLC, Mirion Technologies, Weed Instruments, dba Curtiss-Wright (sensors and instrumentation), ATS Industrial Automation (Automation Tooling & Remote Handling), Trillium Flow Technologies, Conval (valves) and PaR Systems, Inc. (reactor building crane)."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Conval",
+      "ticker": "Conval",
+      "name": "コンバル",
+      "name_en": "Conval",
+      "sub": "バルブ",
+      "sub_en": "Valves",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "バルブの主要供給元",
+          "text_en": "Key supplier of valves",
+          "source": {
+            "label": "NuScale 10-K(2025年度)",
+            "label_en": "NuScale 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1822966/000182296626000018/smr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Paragon Energy Solutions (protection systems), Sensia LLC, Mirion Technologies, Weed Instruments, dba Curtiss-Wright (sensors and instrumentation), ATS Industrial Automation (Automation Tooling & Remote Handling), Trillium Flow Technologies, Conval (valves) and PaR Systems, Inc. (reactor building crane)."
+          }
+        }
+      ]
+    },
+    {
+      "id": "PaR",
+      "ticker": "PaR Systems",
+      "name": "PaRシステムズ",
+      "name_en": "PaR Systems",
+      "sub": "クレーン",
+      "sub_en": "Cranes",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "原子炉建屋のクレーンの主要供給元",
+          "text_en": "Key supplier of the reactor building crane",
+          "source": {
+            "label": "NuScale 10-K(2025年度)",
+            "label_en": "NuScale 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1822966/000182296626000018/smr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Paragon Energy Solutions (protection systems), Sensia LLC, Mirion Technologies, Weed Instruments, dba Curtiss-Wright (sensors and instrumentation), ATS Industrial Automation (Automation Tooling & Remote Handling), Trillium Flow Technologies, Conval (valves) and PaR Systems, Inc. (reactor building crane)."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ENTRA1",
+      "ticker": "ENTRA1",
+      "name": "ENTRA1エナジー",
+      "name_en": "ENTRA1 Energy",
+      "sub": "原子力発電の事業開発",
+      "sub_en": "Nuclear project development",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "世界での販売・開発を独占的に担う戦略パートナー",
+          "text_en": "Exclusive global commercialization partner",
+          "source": {
+            "label": "NuScale 10-K(2025年度)",
+            "label_en": "NuScale 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1822966/000182296626000018/smr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "ENTRA1 holds the exclusive rights for the worldwide commercialization, distribution, sales and development of Company products, services and power plants."
+          }
+        },
+        {
+          "type": "tie",
+          "text": "TVAとENTRA1の合意(最大6GW、拘束力なし)を受け、72基分のマイルストーン拠出金(約5.07億ドル)の支払い条件を満たした",
+          "text_en": "The non-binding TVA agreement for up to 6 GW triggered NuScale’s milestone contribution for 72 modules, about $507M",
+          "source": {
+            "label": "NuScale 10-K(2025年度)",
+            "label_en": "NuScale 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1822966/000182296626000018/smr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "This agreement satisfied the criteria for NuScale’s payment of Milestone Contribution 1 for 72 NPMs",
+            "note": "TVAとENTRA1の合意は拘束力がありません。",
+            "note_en": "The TVA–ENTRA1 agreement is non-binding."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SargentLundy",
+      "ticker": "Sargent & Lundy",
+      "name": "サージェント・アンド・ランディ",
+      "name_en": "Sargent & Lundy",
+      "sub": "エンジニアリング",
+      "sub_en": "Engineering",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "提携先の一社として挙げられる",
+          "text_en": "Named among its partners",
+          "source": {
+            "label": "NuScale 10-K(2025年度)",
+            "label_en": "NuScale 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1822966/000182296626000018/smr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "In addition, the Company’s partners include Fluor, Sargent & Lundy, LLC, JGC Holdings Corporation, GS Energy Corporation and Samsung C&T Corporation."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GSEnergy",
+      "ticker": "GS Energy",
+      "name": "GSエナジー",
+      "name_en": "GS Energy",
+      "sub": "エネルギー(韓国)",
+      "sub_en": "Energy (Korea)",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "特定の市場でのプロジェクト開発の提携先",
+          "text_en": "Partner for project development in certain markets",
+          "source": {
+            "label": "NuScale 10-K(2025年度)",
+            "label_en": "NuScale 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1822966/000182296626000018/smr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "and with GS Energy with respect to project development in certain markets."
+          }
+        }
+      ]
     }
   ],
   "far": [],

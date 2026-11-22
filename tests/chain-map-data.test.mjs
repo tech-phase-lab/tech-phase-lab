@@ -74,7 +74,7 @@ test('the map shows suppliers first, no range buttons, a card per company with s
 const BATCH = {
   NFLX: [15, 19], LRCX: [22, 24], TSLA: [20, 22], IBM: [29, 42], META: [33, 37],
   BE: [7, 10], SKHY: [14, 16], GEV: [19, 20], MSFT: [24, 29], KLAC: [9, 11],
-  SNDK: [8, 16], AMD: [24, 33], ANET: [17, 23], ARM: [31, 32], LITE: [9, 14],
+  SNDK: [9, 17], AMD: [24, 33], ANET: [17, 23], ARM: [31, 32], LITE: [11, 16],
   INTC: [16, 20], QCOM: [17, 21], GOOGL: [21, 24], AAPL: [25, 26], AMZN: [21, 25],
   VRT: [13, 15], PLTR: [24, 25], CEG: [6, 6], AAOI: [13, 13], NBIS: [14, 15],
   APH: [11, 13], NOW: [26, 30], STX: [14, 16], ALAB: [32, 35], IONQ: [18, 22],
