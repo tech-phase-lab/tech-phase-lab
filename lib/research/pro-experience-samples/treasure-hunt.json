@@ -43,7 +43,7 @@
     { "ticker": "CVX", "ja": "シェブロン", "en": "Chevron", "score": 74, "previous": 75, "pe": 11.8, "ps": 1.3, "revenueGrowth": 4, "in": false, "low": false, "period": null },
     { "ticker": "TXN", "ja": "テキサス・インスツルメンツ", "en": "Texas Instruments", "score": 71, "previous": 69, "pe": 24.3, "ps": 8.1, "revenueGrowth": 6, "in": false, "low": false, "period": null },
     { "ticker": "CSCO", "ja": "シスコシステムズ", "en": "Cisco Systems", "score": 64, "previous": 63, "pe": 13.9, "ps": 3.9, "revenueGrowth": 4, "in": false, "low": false, "period": null },
-    { "ticker": "HD", "ja": "ホーム・デポ", "en": "The Home Depot", "score": 58, "previous": 56, "pe": 21.4, "ps": 2.2, "revenueGrowth": 3, "in": false, "low": false, "period": null },
+    { "ticker": "HD", "ja": "ホーム・デポ", "en": "Home Depot", "score": 58, "previous": 56, "pe": 21.4, "ps": 2.2, "revenueGrowth": 3, "in": false, "low": false, "period": null },
     { "ticker": "CRM", "ja": "セールスフォース", "en": "Salesforce", "score": 52, "previous": 54, "pe": 19.8, "ps": 5.1, "revenueGrowth": 8, "in": false, "low": false, "period": null },
     { "ticker": "LRCX", "ja": "ラムリサーチ", "en": "Lam Research", "score": 44, "previous": 41, "pe": 17.5, "ps": 4.9, "revenueGrowth": 13, "in": false, "low": false, "period": null },
     { "ticker": "CAT", "ja": "キャタピラー", "en": "Caterpillar", "score": 38, "previous": 28, "pe": 15.9, "ps": 2.6, "revenueGrowth": 7, "in": true, "low": false, "period": null },
