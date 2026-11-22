@@ -141,15 +141,18 @@ export function roleLabel(role: string, ja: boolean) {
   return out.slice(0, 2).join(ja ? "・" : " · ");
 }
 
-/** The small line above each tab's list (owner's sheet). */
-export function asOfLine(tab: WhaleTab, data: WhaleSnapshot, ja: boolean) {
+/** The small line above each tab's list (owner's sheet). withYear: the PRO feature tour's sample, whose made-up year must show (owner, Nov 22). */
+export function asOfLine(tab: WhaleTab, data: WhaleSnapshot, ja: boolean, withYear = false) {
   if (tab === "institutions") {
-    const month = data.institutionalAsOf ? Number(data.institutionalAsOf.slice(5, 7)) : null;
-    return ja ? `${month ?? "—"}月末時点・13F（四半期ごとに更新）` : `As of end-${month ? MONTHS[month - 1] : "—"} · 13F (updated quarterly)`;
+    const at = data.institutionalAsOf;
+    const month = at ? Number(at.slice(5, 7)) : null;
+    const year = withYear && at ? at.slice(0, 4) : "";
+    return ja ? `${year ? `${year}年` : ""}${month ?? "—"}月末時点・13F（四半期ごとに更新）` : `As of end-${month ? MONTHS[month - 1] : "—"}${year ? ` ${year}` : ""} · 13F (updated quarterly)`;
   }
   if (tab === "short") {
     const d = data.shortAsOf;
-    return ja ? `${d ? `${Number(d.slice(5, 7))}月${Number(d.slice(8, 10))}日` : "—"}時点・FINRA（月2回更新）` : `As of ${d ? monthDay(d, false) : "—"} · FINRA (updated twice a month)`;
+    const year = withYear && d ? d.slice(0, 4) : "";
+    return ja ? `${d ? `${year ? `${year}年` : ""}${Number(d.slice(5, 7))}月${Number(d.slice(8, 10))}日` : "—"}時点・FINRA（月2回更新）` : `As of ${d ? `${monthDay(d, false)}${year ? `, ${year}` : ""}` : "—"} · FINRA (updated twice a month)`;
   }
   if (tab === "insiders") return ja ? "Form 4・提出から2営業日以内" : "Form 4 · filed within 2 business days";
   return ja ? "10-Q・10-K・8-K（発表から自動で反映）" : "10-Q, 10-K, 8-K (added automatically when filed)";
