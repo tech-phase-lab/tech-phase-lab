@@ -20,7 +20,8 @@ export async function GET() {
     if (url.username || url.password || (url.protocol !== "https:" && !(process.env.NODE_ENV !== "production" && local))) {
       return Response.json({ ok: true, status: "unreachable" }, { headers });
     }
-    url.pathname = `${url.pathname.replace(/\/$/, "")}/live`; url.search = ""; url.hash = "";
+    // view=freshness: only the operating state, so this never makes the monitor rebuild its intake data (Nov 22, cost).
+    url.pathname = `${url.pathname.replace(/\/$/, "")}/live`; url.search = "?view=freshness"; url.hash = "";
     const token = process.env.RESEARCH_MONITOR_TOKEN;
     const response = await fetch(url, { cache: "no-store", headers: token ? { Authorization: `Bearer ${token}` } : undefined, signal: AbortSignal.timeout(13_000) });
     if (!response.ok) return Response.json({ ok: true, status: "unreachable" }, { headers });

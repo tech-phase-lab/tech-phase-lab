@@ -209,6 +209,7 @@ python3 scripts/research/persistence.py restore --backup /data/backups/research-
 - `RESEARCH_MAX_WORKERS`：標準8
 - `RESEARCH_BODY_FETCH_INTERVAL_SECONDS`：本文取得キューの実行間隔。標準10秒、最低5秒
 - `RESEARCH_BODY_FETCH_BATCH`：1回に取得する本文数。標準2件
+- `RESEARCH_OFF_HOURS_ENABLED`：既定true。falseで夜間・週末の省電力ペースを即時停止（`off_hours.py`）。米国平日4:00〜20:30（ニューヨーク時間、NYSE休場日を除く）以外で、かつ予定された決算・経済指標の3時間前〜2時間後でない時だけ、標準レーン（既定5秒→`RESEARCH_OFF_HOURS_STANDARD_POLL_SECONDS` 30秒）、本文取得間隔（10秒→`RESEARCH_OFF_HOURS_BODY_FETCH_INTERVAL_SECONDS` 60秒。新着検知時は通常どおり）、翻訳ワーカーの待機（→`RESEARCH_OFF_HOURS_IDLE_SECONDS` 30秒。新着の起床は即時）、/liveの再構築（15秒→`RESEARCH_OFF_HOURS_LIVE_REFRESH_SECONDS` 60秒）を延ばします。3秒の高速レーンと`pollSeconds`指定の取得元は変えません（`RESEARCH_OFF_HOURS_FAST_POLL_SECONDS`を設定した時だけ）。24時間以内に決算予定がある銘柄と`RESEARCH_OFF_HOURS_EXEMPT_TICKERS`（既定SKHY,IREN,NBIS）は常に通常ペース。Web Push、価格通知、障害監視、ヘルスは対象外
 - `RESEARCH_REVIEW_SOURCE_MAX_AGE_SECONDS`：速報の承認・公開候補に使える原文最終取得の最大経過秒数。標準8時間、5分〜24時間。監視間隔や配信時間の保証値ではありません
 - `RESEARCH_HOT_BODY_RECHECK_SECONDS`：検知直後・変更直後の本文再確認間隔。標準900秒、最低60秒
 - `RESEARCH_HOT_EVENT_WINDOW_SECONDS`：新着本文を上記の短い間隔で追う期間。標準86400秒
