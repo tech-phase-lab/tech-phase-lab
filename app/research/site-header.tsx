@@ -5,6 +5,7 @@ import { useCallback, useEffect, useId, useRef, useState, useSyncExternalStore, 
 import type { Language } from "@/lib/research/data";
 import { useMemberDisplay, useMemberSettled, useOwnerAccount } from "./member-display-provider";
 import { valueCheckEnabled } from "@/lib/research/value-check";
+import { whaleMovesEnabled } from "@/lib/research/whale-moves";
 import { useProIntroduction } from "./header-pro";
 import { useScrollLock } from "./use-scroll-lock";
 import { rememberHash } from "@/lib/research/view-hash";
@@ -158,6 +159,7 @@ const menuIcons = {
   compare: <path d="M12 4v16M5 8h14M5 8l-2 5h4zM19 8l-2 5h4z" />,
   pulse: <path d="M3 12h4l3-7 4 14 3-7h4" />,
   tag: <><path d="M3.5 12.2V4.5a1 1 0 0 1 1-1h7.7l8.3 8.3a1.4 1.4 0 0 1 0 2l-6.2 6.2a1.4 1.4 0 0 1-2 0z" /><circle cx="8.3" cy="8.3" r="1.4" /></>,
+  whale: <path d="M12 20.5v-7.2M12 13.3C10.4 9.6 7 7.6 3 7.8c1 3.4 4.6 5.8 9 5.5zM12 13.3c1.6-3.7 5-5.7 9-5.5-1 3.4-4.6 5.8-9 5.5z" />,
   radar: <><circle cx="12" cy="12" r="8.5" /><circle cx="12" cy="12" r="4.5" /><path d="M12 12l5-5M12 3.5v2M3.5 12h2" /></>,
   crown: <path d="M3 8l4.5 4L12 5l4.5 7L21 8l-2 11H5z" />,
   book: <path d="M4 5h7a3 3 0 0 1 3 3v12a2 2 0 0 0-2-2H4zM20 5h-6" />,
@@ -257,6 +259,7 @@ function SiteMenu({ lang, member, ownerAccount, onClose, onRefresh, onPro }: { l
   const heading = (text: string, crown = false) => <h4>{crown && <Icon name="crown" className={styles.headCrown} />}<span className={styles.headText}>{text}</span></h4>;
   // Shown once the owner turns it on; the owner's accounts see it before that (AGENTS.md, operator access).
   const valueCheck = valueCheckEnabled() || ownerAccount;
+  const whaleMoves = whaleMovesEnabled() || ownerAccount;
   const perks = [`RIZEL'S DESK`, ja ? "テーマランキング" : "Theme Ranking", ja ? "銘柄比較" : "Compare", ja ? "連関マップ" : "Relationship maps", realtime, alerts];
   return <>
     <button type="button" className={styles.backdrop} aria-label={ja ? "メニューを閉じる" : "Close menu"} onClick={onClose} />
@@ -292,10 +295,10 @@ function SiteMenu({ lang, member, ownerAccount, onClose, onRefresh, onPro }: { l
           {tile("/research/notes", "desk", "RIZEL'S DESK")}
           {tile("/research#monitored-companies", "watch22", ja ? "監視22銘柄" : "22 Tracked Stocks")}
           {tile("/research/themes", "bars", ja ? "テーマランキング" : "Theme Ranking")}
-          {/* 割安判別ツール (owner, Nov 22): right of Theme Ranking; 財務レーダー moves into this frame for PRO members only. */}
+          {/* Owner's sheet (Nov 22): 割安判別ツール right of Theme Ranking, クジラの足あと right of Compare. 財務レーダー stays under Research. */}
           {valueCheck && tile("/research/value-check", "tag", ja ? "割安判別ツール" : "Value Check")}
           {tile("/research/compare", "compare", ja ? "銘柄比較" : "Compare")}
-          {valueCheck && tile("/research/radar", "radar", ja ? "財務レーダー" : "Financial Radar")}
+          {whaleMoves && tile("/research/whales", "whale", ja ? "クジラの足あと" : "Whale Moves")}
         </div>
       </div>}
       <div className={styles.grp}>
@@ -304,7 +307,7 @@ function SiteMenu({ lang, member, ownerAccount, onClose, onRefresh, onPro }: { l
         {item("/research/market", "market", ja ? "マーケット" : "Markets")}
         {item("/research/calendar", "calendar", ja ? "決算・経済指標" : "Earnings & economic calendar")}
         {item("/research/capital-map", "pulse", ja ? "資本マップ" : "Capital Map")}
-        {!(member && valueCheck) && item("/research/radar", "radar", ja ? "財務レーダー" : "Financial Radar")}
+        {item("/research/radar", "radar", ja ? "財務レーダー" : "Financial Radar")}
         {item("/research/price-targets", "bars", ja ? "目標株価" : "Price targets")}
       </div>
       <div className={styles.grp}>

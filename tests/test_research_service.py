@@ -277,8 +277,9 @@ class ResearchServiceTests(unittest.TestCase):
             # parallel headline translator, the stock comparison's once-a-minute refresh clock and the
             # Financial Radar's twice-daily refresh clock, and (Nov 17) the scheduled demo notice clock.
             # Nov 19: the company-headline refresher. Nov 20: the /live refresher. Nov 21: the price-alert checker.
+            # Nov 22: the ownership-data clock (returns at once unless OWNERSHIP_DATA_ENABLED=true).
             # Nov 22: the 割安判別ツール daily run.
-            self.assertEqual(len(observed), 30 + app.translation_workers)
+            self.assertEqual(len(observed), 31 + app.translation_workers)
             self.assertTrue(all(observed))
 
     def test_release_watch_alerts_from_the_public_payload_and_reports_in_health(self):

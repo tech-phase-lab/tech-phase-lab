@@ -75,6 +75,7 @@ import voice_inbox
 import event_results
 import indicator_results
 import price_alerts
+import ownership_data
 import weekly_generator
 import weekly_issues
 import release_watch
@@ -873,6 +874,7 @@ class AutomaticMonitor:
         self.comparison_warm_thread = threading.Thread(target=self.run_comparison_warm, name="comparison-warm-clock", daemon=True)
         self.radar_refresh_thread = threading.Thread(target=self.run_radar_refresh, name="radar-refresh-clock", daemon=True)
         self.weekly_thread = threading.Thread(target=self.run_weekly, name="weekly-auto-draft-clock", daemon=True)
+        self.ownership_thread = threading.Thread(target=self.run_ownership, name="ownership-data", daemon=True)
         self.event_results_thread = threading.Thread(target=self.run_event_results, name="event-results", daemon=True)
         self.news_thread = threading.Thread(target=self.run_stock_news, name="stock-news-intake", daemon=True)
         self.company_wire_thread = threading.Thread(target=self.run_company_wire, name="company-wire", daemon=True)
@@ -1196,6 +1198,18 @@ class AutomaticMonitor:
                 print("mu-measurement-unavailable", flush=True)
             self.stop_event.wait(5)
 
+    def run_ownership(self):
+        """大口の動き (owner, Nov 22): 13F institutional totals, FINRA short interest, Form 4 open-market trades and buybacks into this
+        database. Off unless OWNERSHIP_DATA_ENABLED=true; every 15 minutes ownership_data.run_due starts only the jobs that are due."""
+        if not ownership_data.enabled():
+            return
+        while not self.stop_event.is_set():
+            try:
+                ownership_data.run_due(self.db_path, stop_event=self.stop_event)
+            except Exception as error:
+                print(f"ownership-data-unavailable {type(error).__name__} {failure_detail(error)}".rstrip(), flush=True)
+            self.stop_event.wait(900)
+
     def run_comparison_warm(self):
         # The stock comparison's provider refresh: one call to the site per minute (off unless COMPARISON_WARM_URL and _SECRET are set).
         if not comparison_warm.config():
@@ -1455,6 +1469,7 @@ class AutomaticMonitor:
         self.comparison_warm_thread.start()
         self.radar_refresh_thread.start()
         self.weekly_thread.start()
+        self.ownership_thread.start()
         self.event_results_thread.start()
         self.watch_earnings_thread.start()
         self.push_thread.start()
@@ -3817,6 +3832,21 @@ class Handler(BaseHTTPRequestHandler):
                 self.send_json(200 if payload.get("ok") else 503, payload)
             except Exception:
                 self.send_json(503, {"ok": False, "error": "value-check-unavailable"})
+            return
+        if path == "/ownership":
+            # クジラの足あと: served only to the site's server, which checks PRO membership (per-ticker totals; the same for every member).
+            if not os.environ.get("RESEARCH_API_TOKEN") or not self.authorized():
+                self.send_json(401, {"ok": False})
+                return
+            try:
+                db = ownership_data.connect(self.app.db_path)
+                try:
+                    payload = ownership_data.public_payload(db)
+                finally:
+                    db.close()
+                self.send_json(200 if payload.get("ok") else 503, payload)
+            except Exception:
+                self.send_json(503, {"ok": False, "error": "ownership-unavailable"})
             return
         if path == "/push/send-log":
             # Nov 16: the last sends for the owner's panel (the website allows owner accounts only): a short device hash, the push
