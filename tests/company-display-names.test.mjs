@@ -79,9 +79,14 @@ test("the API routes and both PRO samples carry the resolved names; scores and o
   assert.equal(named.universes.tech.items[0].ja, "HubSpot");
   assert.deepEqual(named.universes.tech.items.map(r => [r.ticker, r.score, r.in]), snapshot.universes.tech.items.map(r => [r.ticker, r.score, r.in]));
   assert.deepEqual(named, valueSnapshotWithNames(named));
-  // The samples are already written with the same names, so the browser never needs the maps.
-  assert.deepEqual(valueSnapshotWithNames(treasureHuntSample), treasureHuntSample);
-  assert.deepEqual(whaleSnapshotWithNames(whaleTracksSample), whaleTracksSample);
+  // The samples keep the mockup's short names (PR #755) but follow the same rules: no legal suffix, no capitals, no "AMD社".
+  const sampleRows = [...treasureHuntSample.universes.tech.items, ...treasureHuntSample.universes.all.items,
+    ...whaleTracksSample.institutional, ...whaleTracksSample.short, ...whaleTracksSample.insiders, ...whaleTracksSample.buybacks];
+  assert.ok(sampleRows.length > 0);
+  for (const { ticker, ja, en } of sampleRows) {
+    assert.equal(cleanEnglishName(en), en, ticker);
+    assert.doesNotMatch(ja, /(?<=[A-Za-z0-9])社$|\b(?:INC|CORP|LTD|PLC)\b|[(（]/, `${ticker} ${ja}`);
+  }
   // The maps stay on the server: no client screen imports them.
   for (const screen of ["../app/research/treasure-hunt/screen.tsx", "../app/research/whales/screen.tsx", "../lib/research/value-check.ts", "../lib/research/whale-moves.ts"])
     assert.doesNotMatch(read(screen), /company-display-names/);

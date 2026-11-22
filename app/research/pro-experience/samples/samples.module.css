@@ -71,3 +71,7 @@
 /* トレジャーハント and クジラの足あと (owner, Nov 22): the PRO page's own card inside the frame; a stock row only shows the small notice. */
 .tool{display:flex;flex-direction:column;gap:10px;min-width:0}
 .tool [data-pro-only]{cursor:pointer}
+/* The mark inside the card: 「サンプル」 and 「PRO機能体験」 above the eyebrow (owner's mockups, Nov 22). */
+.cardHead{display:flex;align-items:center;gap:10px;margin:0 0 14px;font-size:12.5px;line-height:1.4}
+.cardHead b{padding:3px 10px;border-radius:999px;background:#c6d0dc;color:#0b111c;font-weight:700}
+.cardHead span{color:#9aa7b7}
