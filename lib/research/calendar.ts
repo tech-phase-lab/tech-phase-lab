@@ -337,6 +337,19 @@ export const calendarEvents: CalendarEvent[] = [
     sourceUrl: "https://www.snowflake.com/en/news/press-releases/fy27-q3-earnings-date-announcement/",
     note: { ja: "説明会の開始予定です。決算資料は同日の米国市場終了後に公開予定ですが、正確な公開時刻は公表されていません。", en: "Scheduled call start. Results are due after the U.S. market closes that day, but no exact publication time was announced." },
   },
+  // Official date notices read on 2026-11-22 from each company's own investor feed.
+  {
+    id: "dell-fq3-2027-call", afterClose: true, ticker: "DELL", kind: "earnings" as const, title: { ja: "Dell 決算説明会（2027年度Q3）", en: "Dell Technologies fiscal Q3 2027 earnings call" },
+    startsAt: "2026-11-24T15:30:00-06:00", sourceTimezone: "America/Chicago", sourceName: "Dell Technologies IR (press release)",
+    sourceUrl: "https://investors.delltechnologies.com/news-events/press-releases/detail/1661/dell-technologies-to-hold-conference-call-nov-24-to-discuss-third-quarter-fiscal-2027-financial-results",
+    note: { ja: "説明会は米中部時間15:30に始まる予定です。決算資料は説明会の前に公開される予定ですが、正確な公開時刻は公表されていません。", en: "Scheduled call start (3:30 p.m. CST). Results are released before the call, but no exact publication time was announced." },
+  },
+  {
+    id: "crdo-fq2-2027-call", afterClose: true, ticker: "CRDO", kind: "earnings" as const, title: { ja: "Credo 決算説明会（2027年度Q2）", en: "Credo fiscal Q2 2027 earnings call" },
+    startsAt: "2026-12-01T14:00:00-08:00", sourceTimezone: "America/Los_Angeles", sourceName: "Credo IR (press release)",
+    sourceUrl: "https://investors.credosemi.com/news-events/news/news-details/2026/Credo-Schedules-Second-Quarter-Fiscal-Year-2027-Financial-Results-Conference-Call/default.aspx",
+    note: { ja: "説明会の開始予定です。決算資料は同日の米国市場終了後に公開予定ですが、正確な公開時刻は公表されていません。", en: "Scheduled call start. Results are due after the U.S. market closes that day, but no exact publication time was announced." },
+  },
   {
     id: "fomc-2026-10-28", kind: "economic" as const, title: { ja: "FOMC 声明発表（会合最終日）", en: "FOMC statement (final day of meeting)" },
     startsAt: "2026-10-28T14:00:00-04:00", sourceTimezone: "America/New_York", sourceName: "Federal Reserve",
