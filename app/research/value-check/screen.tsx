@@ -37,10 +37,13 @@ const Marks = ({ item, ja }: { item: ValueItem; ja: boolean }) => <>
 </>;
 
 const Metrics = ({ item, ja, inline }: { item: ValueItem; ja: boolean; inline?: boolean }) => {
+  // English uses the US names (P/E, P/S) and a spaced middle dot; PER / PSR and 「・」 are Japanese usage.
+  const dot = ja ? "・" : " · ";
+  const multiples = ja ? `PER ${ratio(item.pe)}・PSR ${ratio(item.ps)}` : `P/E ${ratio(item.pe)} · P/S ${ratio(item.ps)}`;
   const sales = (lead: string) => <span className={styles.keep}>{lead}{ja ? "売上" : "Revenue"} <b className={styles.up}>{growth(item.revenueGrowth)}</b></span>;
   return inline
-    ? <span className={styles.metrics}><span className={styles.keep}>PER {ratio(item.pe)}・PSR {ratio(item.ps)}</span>{sales("・")}</span>
-    : <span className={styles.podiumMetrics}><span>PER {ratio(item.pe)}・PSR {ratio(item.ps)}</span>{sales("")}</span>;
+    ? <span className={styles.metrics}><span className={styles.keep}>{multiples}</span>{sales(dot)}</span>
+    : <span className={styles.podiumMetrics}><span>{multiples}</span>{sales("")}</span>;
 };
 
 function Band({ list, ja }: { list: ValueList; ja: boolean }) {
@@ -61,7 +64,7 @@ function Podium({ items, ja }: { items: ValueItem[]; ja: boolean }) {
   const tone = ["silver", "gold", "bronze"] as const;
   return <ol className={styles.podium} aria-label={ja ? "1〜3位" : "Top three"}>
     {order.map((item, index) => item ? <li key={item.ticker} className={styles[tone[index]]} value={place[index]}>
-      <Link href={stockHref(item.ticker)} className={styles.podiumLink} aria-label={`${place[index]}${ja ? "位" : ""} ${item.ticker} ${ja ? "割安度" : "Value Score"} ${item.score}%${item.period ? ` ${periodNote(item.period, ja)}` : ""}`} title={periodNote(item.period, ja) ?? undefined}>
+      <Link href={stockHref(item.ticker)} className={styles.podiumLink} aria-label={ja ? `${place[index]}位 ${item.ticker} 割安度 ${item.score}%${item.period ? ` ${periodNote(item.period, ja)}` : ""}` : `No. ${place[index]}, ${item.ticker}, Value Score ${item.score}%${item.period ? `, ${periodNote(item.period, ja)}` : ""}`} title={periodNote(item.period, ja) ?? undefined}>
         <StockLogo ticker={item.ticker} className={styles.logo} full />
         <b className={styles.podiumTicker}>{item.ticker}<Marks item={item} ja={ja} /></b>
         <span className={styles.label}>{ja ? "割安度" : "Value Score"}</span>
@@ -76,7 +79,7 @@ function Podium({ items, ja }: { items: ValueItem[]; ja: boolean }) {
 function Row({ item, rank, ja }: { item: ValueItem; rank: number; ja: boolean }) {
   return <li>
     <Link href={stockHref(item.ticker)} className={styles.row}>
-      <span className={styles.rank} aria-label={`${rank}${ja ? "位" : ""}`}>{rank}</span>
+      <span className={styles.rank} aria-label={ja ? `${rank}位` : `No. ${rank}`}>{rank}</span>
       <StockLogo ticker={item.ticker} className={styles.logo} full />
       <span className={styles.names}>
         <b className={styles.ticker}>{item.ticker}<Marks item={item} ja={ja} /></b>
@@ -118,8 +121,8 @@ export default function ValueCheckScreen() {
 
       {plan === null && <p role="status" className={styles.note}>{t("会員情報を確認中…", "Checking membership…")}</p>}
       {plan === "free" && <div className={styles.lock}>
-        <p>{t("割安判別ツールはPRO会員限定です", "Value Check is for PRO members")}</p>
-        <Link href="/research#tech-phase-pro">{t("Tech Phase PROを見る", "See Tech Phase PRO")}</Link>
+        <p>{t("割安判別ツールはPRO会員限定です", "Value Check is available to PRO members")}</p>
+        <Link href="/research#tech-phase-pro">{t("Tech Phase PROを見る", "Learn about Tech Phase PRO")}</Link>
       </div>}
 
       {plan === "pro" && <>
@@ -127,9 +130,9 @@ export default function ValueCheckScreen() {
           {VALUE_UNIVERSES.map(option => <button key={option.id} type="button" aria-pressed={universe === option.id} onClick={() => { setUniverse(option.id); setAll(false); }}>{ja ? option.ja : option.en}</button>)}
         </div>
         {state === "loading" && <p role="status" className={styles.note}>{t("データを読み込み中…", "Loading data…")}</p>}
-        {state === "not-ready" && <p role="status" className={styles.note}>{t("株価と決算のデータを準備中です。準備ができ次第、ここに順位が入ります。", "The price and earnings data is being prepared. The ranking will appear here once it is ready.")}</p>}
+        {state === "not-ready" && <p role="status" className={styles.note}>{t("株価と決算のデータを準備中です。準備ができ次第、ここに順位が入ります。", "Price and earnings data is being prepared. The ranking will appear here once it's ready.")}</p>}
         {(state === "error" || state === "sign-in" || state === "pro-required") && <p role="alert" className={styles.note}>
-          {state === "sign-in" ? t("ログインしてください。", "Please sign in.") : state === "pro-required" ? t("PRO会員の期間を確認できませんでした。", "Your PRO membership could not be confirmed.") : t("データを読み込めませんでした。", "The data could not be loaded.")}
+          {state === "sign-in" ? t("ログインしてください。", "Please sign in.") : state === "pro-required" ? t("PRO会員の期間を確認できませんでした。", "We couldn't confirm your PRO membership.") : t("データを読み込めませんでした。", "Couldn't load the data.")}
           {state === "error" && <button type="button" className={styles.retry} onClick={retry}>{t("再読み込み", "Retry")}</button>}
         </p>}
         {state === "ready" && data && list && <>
@@ -138,7 +141,7 @@ export default function ValueCheckScreen() {
             <Podium items={items.slice(0, 3)} ja={ja} />
             <ol className={styles.list} start={4}>{shown.slice(3).map((item, index) => <Row key={item.ticker} item={item} rank={index + 4} ja={ja} />)}</ol>
             {!all && items.length > FIRST_ROWS && <button type="button" className={styles.more} onClick={() => setAll(true)}>{t(`すべて見る（${items.length}銘柄）`, `See all (${items.length} stocks)`)}</button>}
-          </> : <p className={styles.note}>{t("表示できる銘柄がありません。", "There are no stocks to show.")}</p>}
+          </> : <p className={styles.note}>{t("表示できる銘柄がありません。", "No stocks to show.")}</p>}
           <p className={styles.fine}>{footerLine(data.asOf, data.basis, ja)}</p>
         </>}
       </>}

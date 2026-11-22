@@ -10,9 +10,9 @@ export const WHALE_TABS: readonly { id: WhaleTab; ja: string; en: string }[] = [
   { id: "buybacks", ja: "自社株買い", en: "Buybacks" },
 ];
 export const SORTS: Record<WhaleTab, readonly { id: string; ja: string; en: string }[]> = {
-  institutions: [{ id: "up", ja: "増えた順", en: "Biggest rise" }, { id: "down", ja: "減った順", en: "Biggest fall" }, { id: "high", ja: "比率の高い順", en: "Highest share" }],
-  short: [{ id: "high", ja: "比率の高い順", en: "Highest share" }, { id: "up", ja: "増えた順", en: "Biggest rise" }, { id: "days", ja: "日数の長い順", en: "Most days" }],
-  insiders: [{ id: "all", ja: "すべて", en: "All" }, { id: "buy", ja: "買いだけ", en: "Buys only" }, { id: "sell", ja: "売りだけ", en: "Sells only" }],
+  institutions: [{ id: "up", ja: "増えた順", en: "Biggest rise" }, { id: "down", ja: "減った順", en: "Biggest fall" }, { id: "high", ja: "比率の高い順", en: "Highest %" }],
+  short: [{ id: "high", ja: "比率の高い順", en: "Highest %" }, { id: "up", ja: "増えた順", en: "Biggest rise" }, { id: "days", ja: "日数の長い順", en: "Days to cover" }],
+  insiders: [{ id: "all", ja: "すべて", en: "All" }, { id: "buy", ja: "買いだけ", en: "Purchases" }, { id: "sell", ja: "売りだけ", en: "Sales" }],
   buybacks: [{ id: "new", ja: "新しい順", en: "Newest" }, { id: "amount", ja: "金額の大きい順", en: "Largest" }],
 };
 
@@ -103,12 +103,15 @@ export function money(value: number, ja: boolean) {
   return `$${grouped(value)}`;
 }
 export const percent = (value: number, digits = 1) => `${value.toFixed(digits)}%`;
-export function signedPoints(value: number | null, digits = 1) {
+/** A change in percentage points: "+3.1pt" in Japanese, "+3.1 pts" in English. */
+export function signedPoints(value: number | null, digits = 1, ja = true) {
   if (value === null) return "";
   const shown = Math.abs(value).toFixed(digits);
-  return `${Number(shown) === 0 ? "±" : value > 0 ? "+" : "−"}${shown}pt`;
+  return `${Number(shown) === 0 ? "±" : value > 0 ? "+" : "−"}${shown}${ja ? "pt" : " pts"}`;
 }
-export const monthDay = (iso: string) => `${Number(iso.slice(5, 7))}/${Number(iso.slice(8, 10))}`;
+const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+/** "11/20" from "2026-11-20"; "Nov 20" in English. */
+export const monthDay = (iso: string, ja = true) => ja ? `${Number(iso.slice(5, 7))}/${Number(iso.slice(8, 10))}` : `${MONTHS[Number(iso.slice(5, 7)) - 1]} ${Number(iso.slice(8, 10))}`;
 export const stockHref = (ticker: string) => `/research/stocks?q=${encodeURIComponent(ticker)}`;
 
 /** "7〜9月" for the quarter that ends on `end` (an end in the first half of a month belongs to the month before: 52/53-week years). */
@@ -117,8 +120,7 @@ export function quarterLabel(end: string, ja: boolean) {
   let month = d.getUTCMonth() + 1;
   if (d.getUTCDate() < 15) month = month === 1 ? 12 : month - 1;
   const first = ((month + 9) % 12) + 1;
-  const names = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-  return ja ? `${first}〜${month}月` : `${names[first - 1]}–${names[month - 1]}`;
+  return ja ? `${first}〜${month}月` : `${MONTHS[first - 1]}–${MONTHS[month - 1]}`;
 }
 
 /** The officer title in a few words (CEO, CFO, 取締役...); the filing's own text when it is none of these. */
@@ -143,11 +145,11 @@ export function roleLabel(role: string, ja: boolean) {
 export function asOfLine(tab: WhaleTab, data: WhaleSnapshot, ja: boolean) {
   if (tab === "institutions") {
     const month = data.institutionalAsOf ? Number(data.institutionalAsOf.slice(5, 7)) : null;
-    return ja ? `${month ?? "—"}月末時点・13F（四半期ごとに更新）` : `As of end-${month ? ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"][month - 1] : "—"} · 13F (updated quarterly)`;
+    return ja ? `${month ?? "—"}月末時点・13F（四半期ごとに更新）` : `As of end-${month ? MONTHS[month - 1] : "—"} · 13F (updated quarterly)`;
   }
   if (tab === "short") {
     const d = data.shortAsOf;
-    return ja ? `${d ? `${Number(d.slice(5, 7))}月${Number(d.slice(8, 10))}日` : "—"}時点・FINRA（月2回更新）` : `As of ${d ? monthDay(d) : "—"} · FINRA (twice a month)`;
+    return ja ? `${d ? `${Number(d.slice(5, 7))}月${Number(d.slice(8, 10))}日` : "—"}時点・FINRA（月2回更新）` : `As of ${d ? monthDay(d, false) : "—"} · FINRA (updated twice a month)`;
   }
   if (tab === "insiders") return ja ? "Form 4・提出から2営業日以内" : "Form 4 · filed within 2 business days";
   return ja ? "10-Q・10-K・8-K（発表から自動で反映）" : "10-Q, 10-K, 8-K (added automatically when filed)";
