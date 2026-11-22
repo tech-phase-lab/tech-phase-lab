@@ -1,5 +1,5 @@
 {
- "_source": "The owner's mockup 01_体験_トレジャーハント.png (Nov 22): the ハイテク ranking, the IN / OUT band and every figure are copied from it; the 全セクター ranking and the OUT entries (cut off in the mockup) are made up in the same style. The shape is the research monitor's value-check snapshot (scripts/research/value_check.py build_snapshot), read by lib/research/value-check.ts parseValueSnapshot. All scores, multiples, growth figures and dates are fictional sample values on a made-up 2035 timeline; they are not real data. basis stays trailing, as production computes it (the footer says 実績値, not the mockup's 予想値).",
+ "_source": "The owner's mockup 01_体験_トレジャーハント.png (Nov 22) for the tickers, names, multiples and growth; the owner's decisions of Nov 22 for the rest: the Value Scores of ranks 1-7 take the magnitude production showed at the Nov 20 close (tech 93, 89, 86, 86, 84, 81, 79; all sectors 93, 89, 86, 86, 85, 84, 84), and the IN / OUT band follows production's rule (IN crosses 30 from below, OUT from above), so its stocks sit below the top seven and no list row carries IN. The 全セクター ranking is made up in the same style. The shape is the research monitor's value-check snapshot (scripts/research/value_check.py build_snapshot), read by lib/research/value-check.ts parseValueSnapshot. All scores, multiples, growth figures and dates are fictional sample values on a made-up 2035 timeline; they are not real data. basis stays trailing, as production computes it (the footer says 実績値).",
  "fictional": true,
  "ok": true,
  "basis": "trailing",
@@ -9,34 +9,44 @@
   "tech": {
    "total": 152,
    "items": [
-    { "ticker": "MU", "ja": "マイクロン", "en": "Micron", "score": 96, "previous": 78, "pe": 3.8, "ps": 1.9, "revenueGrowth": 190, "in": false, "low": false, "period": null },
-    { "ticker": "QCOM", "ja": "クアルコム", "en": "Qualcomm", "score": 91, "previous": 90, "pe": 12.1, "ps": 3.4, "revenueGrowth": 12, "in": false, "low": false, "period": null },
-    { "ticker": "AMAT", "ja": "アプライド マテリアルズ", "en": "Applied Materials", "score": 88, "previous": 66, "pe": 14.6, "ps": 4.1, "revenueGrowth": 9, "in": false, "low": false, "period": null },
-    { "ticker": "ADBE", "ja": "アドビ", "en": "Adobe", "score": 84, "previous": 83, "pe": 15.2, "ps": 5.8, "revenueGrowth": 11, "in": false, "low": false, "period": null },
-    { "ticker": "INTC", "ja": "インテル", "en": "Intel", "score": 79, "previous": 80, "pe": 18.4, "ps": 1.7, "revenueGrowth": 3, "in": false, "low": false, "period": null },
-    { "ticker": "MRVL", "ja": "マーベル", "en": "Marvell", "score": 72, "previous": 58, "pe": 22.9, "ps": 7.2, "revenueGrowth": 22, "in": true, "low": false, "period": null },
-    { "ticker": "TXN", "ja": "テキサス・インスツルメンツ", "en": "Texas Instruments", "score": 71, "previous": 69, "pe": 24.3, "ps": 8.1, "revenueGrowth": 6, "in": false, "low": false, "period": null }
+    { "ticker": "MU", "ja": "マイクロン", "en": "Micron", "score": 93, "previous": 92, "pe": 3.8, "ps": 1.9, "revenueGrowth": 190, "in": false, "low": false, "period": null },
+    { "ticker": "QCOM", "ja": "クアルコム", "en": "Qualcomm", "score": 89, "previous": 89, "pe": 12.1, "ps": 3.4, "revenueGrowth": 12, "in": false, "low": false, "period": null },
+    { "ticker": "AMAT", "ja": "アプライド マテリアルズ", "en": "Applied Materials", "score": 86, "previous": 85, "pe": 14.6, "ps": 4.1, "revenueGrowth": 9, "in": false, "low": false, "period": null },
+    { "ticker": "ADBE", "ja": "アドビ", "en": "Adobe", "score": 86, "previous": 86, "pe": 15.2, "ps": 5.8, "revenueGrowth": 11, "in": false, "low": false, "period": null },
+    { "ticker": "INTC", "ja": "インテル", "en": "Intel", "score": 84, "previous": 85, "pe": 18.4, "ps": 1.7, "revenueGrowth": 3, "in": false, "low": false, "period": null },
+    { "ticker": "MRVL", "ja": "マーベル", "en": "Marvell", "score": 81, "previous": 80, "pe": 22.9, "ps": 7.2, "revenueGrowth": 22, "in": false, "low": false, "period": null },
+    { "ticker": "TXN", "ja": "テキサス・インスツルメンツ", "en": "Texas Instruments", "score": 79, "previous": 78, "pe": 24.3, "ps": 8.1, "revenueGrowth": 6, "in": false, "low": false, "period": null }
    ],
    "changes": {
-    "in": [{ "ticker": "MU", "from": 78, "to": 96 }, { "ticker": "AMAT", "from": 66, "to": 88 }, { "ticker": "MRVL", "from": 58, "to": 72 }],
-    "out": [{ "ticker": "CSCO", "from": 33, "to": 27 }]
+    "in": [
+     { "ticker": "ARM", "from": 27, "to": 37 },
+     { "ticker": "NBIS", "from": 18, "to": 31 }
+    ],
+    "out": [
+     { "ticker": "CSCO", "from": 33, "to": 28 }
+    ]
    },
    "excluded": {}
   },
   "all": {
    "total": 503,
    "items": [
-    { "ticker": "MU", "ja": "マイクロン", "en": "Micron", "score": 96, "previous": 78, "pe": 3.8, "ps": 1.9, "revenueGrowth": 190, "in": false, "low": false, "period": null },
-    { "ticker": "PFE", "ja": "ファイザー", "en": "Pfizer", "score": 93, "previous": 71, "pe": 8.9, "ps": 2.4, "revenueGrowth": 4, "in": false, "low": false, "period": null },
-    { "ticker": "QCOM", "ja": "クアルコム", "en": "Qualcomm", "score": 91, "previous": 90, "pe": 12.1, "ps": 3.4, "revenueGrowth": 12, "in": false, "low": false, "period": null },
-    { "ticker": "AMAT", "ja": "アプライド マテリアルズ", "en": "Applied Materials", "score": 88, "previous": 66, "pe": 14.6, "ps": 4.1, "revenueGrowth": 9, "in": false, "low": false, "period": null },
-    { "ticker": "MRK", "ja": "メルク", "en": "Merck", "score": 86, "previous": 84, "pe": 10.2, "ps": 3.6, "revenueGrowth": 5, "in": false, "low": false, "period": null },
-    { "ticker": "ADBE", "ja": "アドビ", "en": "Adobe", "score": 84, "previous": 83, "pe": 15.2, "ps": 5.8, "revenueGrowth": 11, "in": false, "low": false, "period": null },
-    { "ticker": "CVX", "ja": "シェブロン", "en": "Chevron", "score": 81, "previous": 80, "pe": 11.8, "ps": 1.3, "revenueGrowth": 3, "in": false, "low": false, "period": null }
+    { "ticker": "MU", "ja": "マイクロン", "en": "Micron", "score": 93, "previous": 92, "pe": 3.8, "ps": 1.9, "revenueGrowth": 190, "in": false, "low": false, "period": null },
+    { "ticker": "PFE", "ja": "ファイザー", "en": "Pfizer", "score": 89, "previous": 88, "pe": 8.9, "ps": 2.4, "revenueGrowth": 4, "in": false, "low": false, "period": null },
+    { "ticker": "QCOM", "ja": "クアルコム", "en": "Qualcomm", "score": 86, "previous": 86, "pe": 12.1, "ps": 3.4, "revenueGrowth": 12, "in": false, "low": false, "period": null },
+    { "ticker": "AMAT", "ja": "アプライド マテリアルズ", "en": "Applied Materials", "score": 86, "previous": 85, "pe": 14.6, "ps": 4.1, "revenueGrowth": 9, "in": false, "low": false, "period": null },
+    { "ticker": "MRK", "ja": "メルク", "en": "Merck", "score": 85, "previous": 84, "pe": 10.2, "ps": 3.6, "revenueGrowth": 5, "in": false, "low": false, "period": null },
+    { "ticker": "ADBE", "ja": "アドビ", "en": "Adobe", "score": 84, "previous": 84, "pe": 15.2, "ps": 5.8, "revenueGrowth": 11, "in": false, "low": false, "period": null },
+    { "ticker": "CVX", "ja": "シェブロン", "en": "Chevron", "score": 84, "previous": 83, "pe": 11.8, "ps": 1.3, "revenueGrowth": 3, "in": false, "low": false, "period": null }
    ],
    "changes": {
-    "in": [{ "ticker": "MU", "from": 78, "to": 96 }, { "ticker": "PFE", "from": 71, "to": 93 }, { "ticker": "AMAT", "from": 66, "to": 88 }],
-    "out": [{ "ticker": "JPM", "from": 32, "to": 26 }]
+    "in": [
+     { "ticker": "ARM", "from": 27, "to": 37 },
+     { "ticker": "NBIS", "from": 18, "to": 31 }
+    ],
+    "out": [
+     { "ticker": "JPM", "from": 33, "to": 28 }
+    ]
    },
    "excluded": {}
   }

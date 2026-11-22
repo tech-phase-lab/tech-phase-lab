@@ -116,14 +116,23 @@ test("samples: the owner's mockups (Nov 22), on a made-up 2035 timeline", () => 
   assert.equal(valueLib.footerLine("2026-11-20", "trailing", true), "11/20の終値で更新・PERとPSRは実績値・売上は前年比", "the page keeps its short date");
   const tech = t.universes.tech;
   assert.deepEqual(tech.items.map(i => [i.ticker, i.score, i.pe, i.ps, i.revenueGrowth]), [
-    ["MU", 96, 3.8, 1.9, 190], ["QCOM", 91, 12.1, 3.4, 12], ["AMAT", 88, 14.6, 4.1, 9], ["ADBE", 84, 15.2, 5.8, 11],
-    ["INTC", 79, 18.4, 1.7, 3], ["MRVL", 72, 22.9, 7.2, 22], ["TXN", 71, 24.3, 8.1, 6]]);
-  assert.deepEqual(tech.changes.in, [{ ticker: "MU", from: 78, to: 96 }, { ticker: "AMAT", from: 66, to: 88 }, { ticker: "MRVL", from: 58, to: 72 }]);
-  assert.deepEqual(tech.items.filter(i => i.in).map(i => i.ticker), ["MRVL"], "as in the mockup: the IN mark on 6th only");
+    ["MU", 93, 3.8, 1.9, 190], ["QCOM", 89, 12.1, 3.4, 12], ["AMAT", 86, 14.6, 4.1, 9], ["ADBE", 86, 15.2, 5.8, 11],
+    ["INTC", 84, 18.4, 1.7, 3], ["MRVL", 81, 22.9, 7.2, 22], ["TXN", 79, 24.3, 8.1, 6]]);
+  // Owner, Nov 22: the scores take the magnitude production showed at the Nov 20 close.
+  assert.deepEqual(tech.items.map(i => i.score), [93, 89, 86, 86, 84, 81, 79]);
+  assert.deepEqual(t.universes.all.items.map(i => i.score), [93, 89, 86, 86, 85, 84, 84]);
   for (const universe of ["tech", "all"]) {
     const list = t.universes[universe];
     assert.equal(list.items.length, valueLib.FIRST_ROWS, `${universe}: the podium and 4th to 7th`);
     assert.ok(list.changes.in.length && list.changes.out.length, `${universe}: the band shows IN and OUT`);
+    // Production's rule (owner, Nov 22): IN crosses 30 from below, OUT from above; a row is IN only when the band has it at its score.
+    for (const c of list.changes.in) assert.ok(c.from < valueLib.CHEAP_FROM && c.to >= valueLib.CHEAP_FROM, `${universe} IN ${c.ticker}`);
+    for (const c of list.changes.out) assert.ok(c.from >= valueLib.CHEAP_FROM && c.to < valueLib.CHEAP_FROM, `${universe} OUT ${c.ticker}`);
+    for (const item of list.items) {
+      const band = list.changes.in.find(c => c.ticker === item.ticker);
+      assert.equal(item.in, Boolean(band && band.to === item.score && item.score >= valueLib.CHEAP_FROM), `${universe} ${item.ticker}`);
+      assert.ok(item.previous === null || item.previous >= valueLib.CHEAP_FROM, `${universe} ${item.ticker}: no crossing outside the band`);
+    }
   }
   assert.deepEqual(TREASURE_NOTE.tech, { ja: "※実際は約150銘柄のランキングです", en: "*The full ranking covers about 150 stocks" });
   assert.equal(TREASURE_NOTE.all.ja, "※実際は約500銘柄のランキングです");
@@ -218,7 +227,8 @@ test("Treasure Hunt sample: サンプル・PRO機能体験 on top, the switch wo
     assert.match(text(c), ja ? /※実際は約150銘柄のランキングです ?2035年4月18日の終値で更新・PERとPSRは実績値・売上は前年比 ?提供：Twelve Data/
       : /\*The full ranking covers about 150 stocks ?As of Apr 18, 2035 close · Trailing P\/E and P\/S · Revenue growth YoY ?Data: Twelve Data/);
     assert.ok(![...c.querySelectorAll("button")].some(b => /すべて見る|See all/.test(b.textContent)));
-    assert.match(text(c), /IN ?MU ?78→96/);
+    assert.match(text(c), /IN ?ARM ?27→37/);
+    assert.match(text(c), /OUT ?CSCO ?33→28/);
     await click(c.querySelector("[aria-controls=treasure-hunt-about]"));
     assert.equal(c.querySelector("#treasure-hunt-about").textContent, valueLib.aboutText("trailing", ja), "the i text is the page's");
     await click(switchButtons[1]);
