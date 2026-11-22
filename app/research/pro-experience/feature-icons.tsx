@@ -13,6 +13,21 @@ const ICONS: Record<string, ReactNode> = {
   "theme-ranking": <>
     {[38, 30, 22, 15].map((width, i) => <rect key={width} x="12" y={14 + i * 10} width={width} height="6" rx="3" fill={G} opacity={1 - i * 0.2} />)}
   </>,
+  // トレジャーハント (Nov 22): the podium, 1st in the middle.
+  "treasure-hunt": <>
+    <rect x="12" y="34" width="12" height="16" rx="2" fill="#c6ccd4" opacity=".8" />
+    <rect x="26" y="24" width="12" height="26" rx="2" fill={G} />
+    <rect x="40" y="40" width="12" height="10" rx="2" fill="#d99a72" opacity=".85" />
+    <circle cx="32" cy="15" r="4" fill="none" stroke={G} strokeWidth="1.6" />
+  </>,
+  // クジラの足あと (Nov 22): a share bar per stock, one rising (mint) and one falling (red).
+  "whale-tracks": <>
+    {([[16, 30, G], [24, 22, MINT], [32, 34, G], [40, 16, RED]] as const).map(([y, width, fill]) => <g key={y}>
+      <rect x="12" y={y} width="40" height="5" rx="2.5" fill="#2a3542" />
+      <rect x="12" y={y} width={width} height="5" rx="2.5" fill={fill} opacity=".9" />
+    </g>)}
+    <path d="M12 50H52" stroke={G} strokeWidth="1" strokeDasharray="2 3" opacity=".6" />
+  </>,
   compare: <>
     <polygon points="32,12 50,26 44,48 20,48 14,26" fill="none" stroke="#3a4656" />
     <polygon points="32,16 46,27 40,44 22,42 18,28" fill={G} fillOpacity=".25" stroke={G} strokeWidth="1.5" />

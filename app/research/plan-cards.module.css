@@ -29,8 +29,9 @@
 .paypal:not(:disabled)::after { content:""; position:absolute; top:0; left:-60%; width:40%; height:100%; background:linear-gradient(100deg,rgba(255,255,255,0) 0%,rgba(255,255,255,.75) 50%,rgba(255,255,255,0) 100%); transform:skewX(-20deg); animation:shine 3.2s ease-in-out infinite; pointer-events:none; }
 @keyframes shine { 0% { left:-60%; } 45% { left:130%; } 100% { left:130%; } }
 @media (prefers-reduced-motion:reduce) { .paypal::after { animation:none !important; display:none !important; } }
-.includes { margin:22px 0 0; font-size:14px; color:#8d8a7f; }
-.proCard .includes + .group { margin-top:26px; }
+/* Owner, Nov 22: more room above (about 32px from the PayPal button), and close to 「読み解く」 below (about 14px), as its lead-in. */
+.includes { margin:32px 0 0; font-size:14px; color:#8d8a7f; }
+.proCard .includes + .group { margin-top:14px; }
 .note { margin:16px auto 0; max-width:420px; padding:0 20px; box-sizing:border-box; font-size:11px; line-height:1.8; color:#6f6c63; text-align:center; grid-column:1 / -1; }
 .note a { color:#a9a597; text-decoration:underline; }
 .note a:hover { color:#f6e2ae; }
@@ -59,6 +60,8 @@
 .proCard .group li span { overflow:visible; padding:0; }
 /* Japanese rows stay on one line (no single character left alone at a line end): the size follows the card width, down to 9px. */
 .proCard .group ul[data-ja="true"] li { white-space:nowrap; gap:7px; font-size:clamp(9px,calc(100cqw / 24.5),14px); }
+/* English rows too (owner, Nov 22: the short English table; every row on one line). */
+.proCard .group ul[data-ja="false"] li { white-space:nowrap; gap:7px; font-size:clamp(9px,calc(100cqw / 22),14px); }
 .proCard .group h4 { font-size:13px; letter-spacing:.28em; margin-bottom:14px; }
 .proCard .group { margin-top:26px; }
 

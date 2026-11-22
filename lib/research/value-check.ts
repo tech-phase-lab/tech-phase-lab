@@ -1,4 +1,4 @@
-/** 割安判別ツール / Value Check (PRO, owner Nov 22). The research monitor computes the scores once a day after the close
+/** トレジャーハント / Treasure Hunt (PRO, owner Nov 22; first named 割安判別ツール / Value Check, which stays the internal name). The research monitor computes the scores once a day after the close
  * (scripts/research/value_check.py); the site only checks membership and shows them. Mechanical and the same for every member. */
 
 export type ValueUniverse = "tech" | "all";

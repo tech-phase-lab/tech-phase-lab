@@ -5,10 +5,13 @@ import { featureById, inLanguage, mediaUrl, nextFeature, proFeatures, readFeatur
 
 const read = path => readFileSync(new URL(path, import.meta.url), "utf8");
 
-test("eight features, in the owner's order, each with its own address; Tech Alerts is not one of them", () => {
+test("ten features, in the owner's order, each with its own address; Tech Alerts is not one of them", () => {
   // Nov 16 (owner's mockup 01-list): a new order; names unchanged.
-  assert.deepEqual(proFeatures.map(feature => feature.name.ja), ["連関マップ", "テーマランキング", "銘柄比較", "監視22銘柄", "RIZEL'S DESK", "財務レーダー", "米国株の資産管理", "スマホ通知"]);
-  assert.equal(new Set(proFeatures.map(feature => feature.id)).size, 8);
+  assert.deepEqual(proFeatures.map(feature => feature.name.ja), ["連関マップ", "テーマランキング", "トレジャーハント", "クジラの足あと", "銘柄比較", "監視22銘柄", "RIZEL'S DESK", "財務レーダー", "米国株の資産管理", "スマホ通知"]);
+  assert.equal(new Set(proFeatures.map(feature => feature.id)).size, 10);
+  // Nov 22: トレジャーハント and クジラの足あと under テーマランキング, in the owner's words.
+  assert.deepEqual([featureById("treasure-hunt").name, featureById("treasure-hunt").summary], [{ ja: "トレジャーハント", en: "Treasure Hunt" }, { ja: "割安銘柄を毎日掘り起こす", en: "Daily value finds" }]);
+  assert.deepEqual([featureById("whale-tracks").name, featureById("whale-tracks").summary], [{ ja: "クジラの足あと", en: "Whale Tracks" }, { ja: "機関・空売り・自社株買いの裏側", en: "Funds, shorts & buybacks" }]);
   assert.equal(proFeatures.some(feature => /ハイテク速報|厳選ニュース/.test(feature.name.ja)), false);
   assert.equal(featureById("watch-22").summary.ja, "22銘柄の動きと、決算後のまとめを確認");
 });

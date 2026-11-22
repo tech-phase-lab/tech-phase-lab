@@ -1,12 +1,16 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import Link from "next/link";
 import ResearchToolShell from "../research-tool-shell";
 import StockLogo from "../watchlist/stock-logo";
+import StockRowLink from "../stock-row-link";
 import { useMemberDisplay, useMemberSettled, useOwnerAccount } from "../member-display-provider";
 import { useResearchLanguage } from "../use-research-language";
 import { FIRST_ROWS, VALUE_UNIVERSES, aboutText, footerLine, growth, parseValueSnapshot, periodNote, ratio, stockHref, type ValueItem, type ValueList, type ValueSnapshot, type ValueUniverse } from "@/lib/research/value-check";
 import styles from "./value-check.module.css";
+
+/** トレジャーハント / Treasure Hunt (owner, Nov 22; formerly 割安判別ツール / Value Check). Internal names (value-check, VALUE_CHECK_ENABLED) stay. */
+export const TREASURE_HUNT = { ja: "トレジャーハント", en: "Treasure Hunt" } as const;
 
 type State = "loading" | "ready" | "not-ready" | "error" | "sign-in" | "pro-required";
 
@@ -64,21 +68,21 @@ function Podium({ items, ja }: { items: ValueItem[]; ja: boolean }) {
   const tone = ["silver", "gold", "bronze"] as const;
   return <ol className={styles.podium} aria-label={ja ? "1〜3位" : "Top three"}>
     {order.map((item, index) => item ? <li key={item.ticker} className={styles[tone[index]]} value={place[index]}>
-      <Link href={stockHref(item.ticker)} className={styles.podiumLink} aria-label={ja ? `${place[index]}位 ${item.ticker} 割安度 ${item.score}%${item.period ? ` ${periodNote(item.period, ja)}` : ""}` : `No. ${place[index]}, ${item.ticker}, Value Score ${item.score}%${item.period ? `, ${periodNote(item.period, ja)}` : ""}`} title={periodNote(item.period, ja) ?? undefined}>
+      <StockRowLink href={stockHref(item.ticker)} className={styles.podiumLink} aria-label={ja ? `${place[index]}位 ${item.ticker} 割安度 ${item.score}%${item.period ? ` ${periodNote(item.period, ja)}` : ""}` : `No. ${place[index]}, ${item.ticker}, Value Score ${item.score}%${item.period ? `, ${periodNote(item.period, ja)}` : ""}`} title={periodNote(item.period, ja) ?? undefined}>
         <StockLogo ticker={item.ticker} className={styles.logo} full />
         <b className={styles.podiumTicker}>{item.ticker}<Marks item={item} ja={ja} /></b>
         <span className={styles.label}>{ja ? "割安度" : "Value Score"}</span>
         <span className={styles.podiumScore}>{item.score}<small>%</small></span>
         <Metrics item={item} ja={ja} />
         <span className={styles.step} aria-hidden="true">{place[index]}</span>
-      </Link>
+      </StockRowLink>
     </li> : <li key={`empty-${index}`} aria-hidden="true" />)}
   </ol>;
 }
 
 function Row({ item, rank, ja }: { item: ValueItem; rank: number; ja: boolean }) {
   return <li>
-    <Link href={stockHref(item.ticker)} className={styles.row}>
+    <StockRowLink href={stockHref(item.ticker)} className={styles.row}>
       <span className={styles.rank} aria-label={ja ? `${rank}位` : `No. ${rank}`}>{rank}</span>
       <StockLogo ticker={item.ticker} className={styles.logo} full />
       <span className={styles.names}>
@@ -88,11 +92,52 @@ function Row({ item, rank, ja }: { item: ValueItem; rank: number; ja: boolean })
         {item.period && <span className={styles.period}>{periodNote(item.period, ja)}</span>}
       </span>
       <span className={styles.value}><span className={styles.label}>{ja ? "割安度" : "Value Score"}</span><b>{item.score}<small>%</small></b></span>
-    </Link>
+    </StockRowLink>
   </li>;
 }
 
-export default function ValueCheckScreen() {
+/** The card: TREASURE HUNT over the heading, no line under it (owner, Nov 22, the same as クジラの足あと), and the 「i」 text.
+ * The page and the PRO feature tour's sample share it. */
+export function TreasureHuntCard({ ja, basis, children }: { ja: boolean; basis: ValueSnapshot["basis"]; children: ReactNode }) {
+  const [about, setAbout] = useState(false);
+  return <section className={styles.card} aria-labelledby="treasure-hunt-title">
+    <header className={styles.head}>
+      <div>
+        <p className={styles.eyebrow}><span aria-hidden="true" />TREASURE HUNT</p>
+        <h1 id="treasure-hunt-title">{ja ? TREASURE_HUNT.ja : TREASURE_HUNT.en}</h1>
+      </div>
+      <button type="button" className={styles.info} aria-expanded={about} aria-controls="treasure-hunt-about" aria-label={ja ? "割安度について" : "About the Value Score"} onClick={() => setAbout(open => !open)}>i</button>
+    </header>
+    {about && <p id="treasure-hunt-about" className={styles.about}>{aboutText(basis, ja)}</p>}
+    {children}
+  </section>;
+}
+
+export function UniverseSwitch({ universe, onChange, ja }: { universe: ValueUniverse; onChange: (universe: ValueUniverse) => void; ja: boolean }) {
+  return <div className={styles.switch} role="group" aria-label={ja ? "対象" : "Universe"}>
+    {VALUE_UNIVERSES.map(option => <button key={option.id} type="button" aria-pressed={universe === option.id} onClick={() => onChange(option.id)}>{ja ? option.ja : option.en}</button>)}
+  </div>;
+}
+
+/** One universe's day: the IN / OUT band, the podium, the list down to 7th (すべて見る for the rest) and the footer line.
+ * Rendered with key={universe}, so すべて見る closes again when the universe changes. */
+export function ValueRanking({ data, universe, ja }: { data: ValueSnapshot; universe: ValueUniverse; ja: boolean }) {
+  const [all, setAll] = useState(false);
+  const list = data.universes[universe];
+  const items = list.items;
+  const shown = all ? items : items.slice(0, FIRST_ROWS);
+  return <>
+    <Band list={list} ja={ja} />
+    {items.length ? <>
+      <Podium items={items.slice(0, 3)} ja={ja} />
+      <ol className={styles.list} start={4}>{shown.slice(3).map((item, index) => <Row key={item.ticker} item={item} rank={index + 4} ja={ja} />)}</ol>
+      {!all && items.length > FIRST_ROWS && <button type="button" className={styles.more} onClick={() => setAll(true)}>{ja ? `すべて見る（${items.length}銘柄）` : `See all (${items.length} stocks)`}</button>}
+    </> : <p className={styles.note}>{ja ? "表示できる銘柄がありません。" : "No stocks to show."}</p>}
+    <p className={styles.fine}>{footerLine(data.asOf, data.basis, ja)}</p>
+  </>;
+}
+
+export default function TreasureHuntScreen() {
   const memberPlan = useMemberDisplay();
   const settled = useMemberSettled();
   const owner = useOwnerAccount();
@@ -101,51 +146,27 @@ export default function ValueCheckScreen() {
   const ja = lang === "ja";
   const t = (a: string, b: string) => ja ? a : b;
   const [universe, setUniverse] = useState<ValueUniverse>("tech");
-  const [all, setAll] = useState(false);
-  const [about, setAbout] = useState(false);
   const { state, data, retry } = useValueCheck(plan === "pro");
-  const list = data?.universes[universe];
-  const items = list?.items ?? [];
-  const shown = all ? items : items.slice(0, FIRST_ROWS);
 
-  return <ResearchToolShell lang={lang} setLang={setLang} title={t("割安判別ツール", "Value Check")} showHeading={false} description="">
-    <section className={styles.card} aria-labelledby="value-check-title">
-      <header className={styles.head}>
-        <div>
-          <p className={styles.eyebrow}><span aria-hidden="true" />VALUE CHECK</p>
-          <h1 id="value-check-title">{t("割安判別ツール", "Value Check")}</h1>
-        </div>
-        <button type="button" className={styles.info} aria-expanded={about} aria-controls="value-check-about" aria-label={t("割安度について", "About the Value Score")} onClick={() => setAbout(open => !open)}>i</button>
-      </header>
-      {about && <p id="value-check-about" className={styles.about}>{aboutText(data?.basis ?? "trailing", ja)}</p>}
-
+  return <ResearchToolShell lang={lang} setLang={setLang} title={t(TREASURE_HUNT.ja, TREASURE_HUNT.en)} showHeading={false} description="">
+    <TreasureHuntCard ja={ja} basis={data?.basis ?? "trailing"}>
       {plan === null && <p role="status" className={styles.note}>{t("会員情報を確認中…", "Checking membership…")}</p>}
       {plan === "free" && <div className={styles.lock}>
-        <p>{t("割安判別ツールはPRO会員限定です", "Value Check is available to PRO members")}</p>
+        <p>{t("トレジャーハントはPRO会員限定です", "Treasure Hunt is available to PRO members")}</p>
         <Link href="/research#tech-phase-pro">{t("Tech Phase PROを見る", "Learn about Tech Phase PRO")}</Link>
       </div>}
 
       {plan === "pro" && <>
-        <div className={styles.switch} role="group" aria-label={t("対象", "Universe")}>
-          {VALUE_UNIVERSES.map(option => <button key={option.id} type="button" aria-pressed={universe === option.id} onClick={() => { setUniverse(option.id); setAll(false); }}>{ja ? option.ja : option.en}</button>)}
-        </div>
+        <UniverseSwitch universe={universe} onChange={setUniverse} ja={ja} />
         {state === "loading" && <p role="status" className={styles.note}>{t("データを読み込み中…", "Loading data…")}</p>}
         {state === "not-ready" && <p role="status" className={styles.note}>{t("株価と決算のデータを準備中です。準備ができ次第、ここに順位が入ります。", "Price and earnings data is being prepared. The ranking will appear here once it's ready.")}</p>}
         {(state === "error" || state === "sign-in" || state === "pro-required") && <p role="alert" className={styles.note}>
           {state === "sign-in" ? t("ログインしてください。", "Please sign in.") : state === "pro-required" ? t("PRO会員の期間を確認できませんでした。", "We couldn't confirm your PRO membership.") : t("データを読み込めませんでした。", "Couldn't load the data.")}
           {state === "error" && <button type="button" className={styles.retry} onClick={retry}>{t("再読み込み", "Retry")}</button>}
         </p>}
-        {state === "ready" && data && list && <>
-          <Band list={list} ja={ja} />
-          {items.length ? <>
-            <Podium items={items.slice(0, 3)} ja={ja} />
-            <ol className={styles.list} start={4}>{shown.slice(3).map((item, index) => <Row key={item.ticker} item={item} rank={index + 4} ja={ja} />)}</ol>
-            {!all && items.length > FIRST_ROWS && <button type="button" className={styles.more} onClick={() => setAll(true)}>{t(`すべて見る（${items.length}銘柄）`, `See all (${items.length} stocks)`)}</button>}
-          </> : <p className={styles.note}>{t("表示できる銘柄がありません。", "No stocks to show.")}</p>}
-          <p className={styles.fine}>{footerLine(data.asOf, data.basis, ja)}</p>
-        </>}
+        {state === "ready" && data && <ValueRanking key={universe} data={data} universe={universe} ja={ja} />}
       </>}
-    </section>
+    </TreasureHuntCard>
     {plan === "pro" && state === "ready" && <p className={styles.credit}>{t("提供：Twelve Data", "Data: Twelve Data")}</p>}
   </ResearchToolShell>;
 }

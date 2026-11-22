@@ -138,7 +138,8 @@ test("the cards follow the owner's colours and sizes, with no gold", () => {
 test("the name 注目トピック is used everywhere the page is named", () => {
   assert.match(read("../app/research/home-sidebar.tsx"), /label: t\("注目トピック", "Top Topics"\), href: "\/research\/general-news"/);
   assert.match(read("../app/research/site-header.tsx"), /item\("\/research\/general-news", "news", ja \? "注目トピック" : "Top Topics"\)/);
-  assert.match(read("../app/research/plan-cards.tsx"), /\[t\("米国市場の注目トピック", "Top topics in the U.S. market"\)\]/);
+  // English FREE card (owner, Nov 22): the short table names it "Top US market stories"; the Japanese row keeps 注目トピック.
+  assert.match(read("../app/research/plan-cards.tsx"), /\[t\("米国市場の注目トピック", "Top US market stories"\)\]/);
   assert.match(read("../app/research/news/general-news-panel.tsx"), /注目トピックですべて見る/);
   for (const file of ["../app/research/home-sidebar.tsx", "../app/research/site-header.tsx", "../app/research/plan-cards.tsx", "../app/research/news/general-news-panel.tsx", "../app/research/general-news/page.tsx"]) {
     assert.doesNotMatch(read(file), /一般ニュース|General News|GENERAL NEWS/, file);

@@ -1,4 +1,4 @@
-/** クジラの足あと / Whale Moves (PRO, owner Nov 22). The research monitor collects 13F institutional totals, FINRA short interest,
+/** クジラの足あと / Whale Tracks (PRO, owner Nov 22; first called Whale Moves in English, which stays the internal name). The research monitor collects 13F institutional totals, FINRA short interest,
  * Form 4 open-market trades and buybacks (scripts/research/ownership_data.py); the site only checks membership and shows them.
  * Facts and numbers only: no comment or rating. Per-ticker totals only, never a list of institutions (that is Capital Map). */
 

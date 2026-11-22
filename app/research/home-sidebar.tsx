@@ -68,10 +68,10 @@ export default function HomeSidebar({ lang, tab, companyCount, savedCount, openV
     { key: "radar", icon: icons.radar, label: t("財務レーダー", "Financial Radar"), href: "/research/radar", current: pathname === "/research/radar" },
     ...(member ? [
       { key: "themes", icon: icons.market, label: t("テーマランキング", "Theme Ranking"), href: "/research/themes" },
-      // Phone menu order (owner, Nov 22): Theme Ranking, Value Check, Compare, Whale Moves.
-      ...(valueCheck ? [{ key: "value-check", icon: icons.tag, label: t("割安判別ツール", "Value Check"), href: "/research/value-check" }] : []),
+      // Phone menu order (owner, Nov 22): Theme Ranking, Treasure Hunt, Compare, Whale Tracks.
+      ...(valueCheck ? [{ key: "value-check", icon: icons.tag, label: t("トレジャーハント", "Treasure Hunt"), href: "/research/treasure-hunt" }] : []),
       { key: "compare", icon: icons.compare, label: t("銘柄比較", "Stock Comparison"), href: "/research/compare" },
-      ...(whaleMoves ? [{ key: "whales", icon: icons.whale, label: t("クジラの足あと", "Whale Moves"), href: "/research/whales" }] : []),
+      ...(whaleMoves ? [{ key: "whales", icon: icons.whale, label: t("クジラの足あと", "Whale Tracks"), href: "/research/whales" }] : []),
     ] : []),
     { key: "saved", icon: icons.saved, label: t("リサーチノート", "Research notes"), onClick: () => openView?.("saved"), current: tab === "saved", badge: savedCount === undefined ? null : <em className={styles.count}>{savedCount}</em> },
   ];
