@@ -193,8 +193,8 @@ class OwnershipDataTest(unittest.TestCase):
             db.execute('INSERT INTO ownership_insider_trades VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)',
                        ('acc1', line, 'NVDA', '2026-11-03', '2026-11-02', 'Doe', 'Director', code, 'sell',
                         'open-market' if code == 'S' else 'other', 1, value, value, 1, 'checkbox'))
-        db.execute("INSERT INTO ownership_buyback_authorizations VALUES('NVDA','a1','2026-11-17',150e9,'s','u')")
-        db.execute("INSERT INTO ownership_buyback_authorizations VALUES('NVDA','a2','2026-11-20',150e9,'s','u')")
+        db.execute("INSERT INTO ownership_buyback_authorizations(ticker,accession,filed,amount_usd,sentence,document) VALUES('NVDA','a1','2026-11-17',150e9,'s','u')")
+        db.execute("INSERT INTO ownership_buyback_authorizations(ticker,accession,filed,amount_usd,sentence,document) VALUES('NVDA','a2','2026-11-20',150e9,'s','u')")
         payload = od.public_payload(db, companies={'NVDA': ('エヌビディア', 'NVIDIA')}, today=od.date(2026, 11, 22))
         self.assertEqual([r['ticker'] for r in payload['institutional']], ['NVDA'])
         self.assertEqual(payload['short'][0]['change'], round(1.16 - 300 * 1.16 / 280, 2))
@@ -202,6 +202,22 @@ class OwnershipDataTest(unittest.TestCase):
         self.assertEqual([(t['side'], t['value'], t['planned']) for t in payload['insiders']], [('sell', 1500.0, True)])
         self.assertEqual([(b['kind'], b['date']) for b in payload['buybacks']], [('authorization', '2026-11-17')])
         self.assertNotIn('filer', json.dumps(payload))
+
+    def test_authorization_above_20_percent_of_market_value_is_kept_but_not_shown(self):
+        db = od.connect(':memory:')
+        today = od.date.today().isoformat()
+        db.execute("INSERT INTO ownership_shares VALUES('NVDA',?,24100000000,'cover','a')", (today,))
+        db.execute("INSERT INTO ownership_shares VALUES('SMOL',?,100000000,'cover','b')", (today,))
+        db.execute("INSERT INTO ownership_buyback_authorizations(ticker,accession,filed,amount_usd,sentence,document) VALUES('NVDA','n1',?,150e9,'s','u')", (today,))
+        db.execute("INSERT INTO ownership_buyback_authorizations(ticker,accession,filed,amount_usd,sentence,document) VALUES('SMOL','s1',?,6.7e9,'s','u')", (today,))
+        db.execute("INSERT INTO ownership_buyback_authorizations(ticker,accession,filed,amount_usd,sentence,document) VALUES('NOCAP','x1',?,1e9,'s','u')", (today,))
+        flagged = od.check_authorizations(db, {'adsShares': {}}, closes={'NVDA': (today, 125.53), 'SMOL': (today, 50.0)}, allow_quotes=False)
+        self.assertEqual(flagged, 1)
+        status = dict(db.execute('SELECT ticker, check_status FROM ownership_buyback_authorizations'))
+        self.assertEqual(status, {'NVDA': 'ok', 'SMOL': 'suspect-amount', 'NOCAP': 'unchecked'})  # $150B < 20% of ~$3.0T; $6.7B > 20% of $5B
+        payload = od.public_payload(db, companies={t: (t, t) for t in ('NVDA', 'SMOL', 'NOCAP')})
+        self.assertEqual(sorted(b['ticker'] for b in payload['buybacks']), ['NOCAP', 'NVDA'])
+        self.assertEqual(db.execute("SELECT count(*) FROM ownership_buyback_authorizations").fetchone()[0], 3)  # kept for audit
 
     def test_run_due_skips_jobs_not_due(self):
         with tempfile.TemporaryDirectory() as folder:

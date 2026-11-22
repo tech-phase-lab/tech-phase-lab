@@ -238,6 +238,10 @@ def connect(path):
     Path(path).parent.mkdir(parents=True, exist_ok=True)
     db = sqlite3.connect(path, timeout=30)
     db.executescript(SCHEMA)
+    columns = {r[1] for r in db.execute('PRAGMA table_info(ownership_buyback_authorizations)')}
+    for name, kind in (('check_status', 'TEXT'), ('market_cap', 'REAL'), ('checked_at', 'TEXT')):
+        if name not in columns:  # added Nov 22 (owner: hide an amount above 20% of the market value, keep it for audit)
+            db.execute(f'ALTER TABLE ownership_buyback_authorizations ADD COLUMN {name} {kind}')
     return db
 
 
@@ -1003,11 +1007,89 @@ def run_authorizations(db, ticker, cik, lookback_days=FTS_LOOKBACK_DAYS, max_doc
         url = f'https://www.sec.gov/Archives/edgar/data/{cik}/{accession.replace("-", "")}/{filename}'
         text = html_text(sec_get(url, limit=10_000_000).decode('utf-8', 'replace'))
         for amount, sentence in authorization_sentences(text, source.get('file_date')):
-            db.execute('INSERT OR REPLACE INTO ownership_buyback_authorizations VALUES(?,?,?,?,?,?)',
+            db.execute('INSERT OR REPLACE INTO ownership_buyback_authorizations(ticker, accession, filed, amount_usd, sentence, document) VALUES(?,?,?,?,?,?)',
                        (ticker, accession, source.get('file_date'), amount, sentence[:600], url))
             found += 1
         db.execute('INSERT OR IGNORE INTO ownership_fts_seen VALUES(?,?)', (ticker, doc_id))
     return found
+
+
+SUSPECT_SHARE = 0.20  # owner, Nov 22: a "new authorization" above 20% of the market value is not shown (kept, flagged)
+
+
+def value_check_closes(db):
+    """{ticker: (day, close)} from the 割安判別ツール's own closes (value-check.sqlite beside this database); no provider call."""
+    main = next((r[2] for r in db.execute('PRAGMA database_list') if r[1] == 'main'), '')
+    path = Path(main).with_name('value-check.sqlite') if main else None
+    if not path or not path.exists():
+        return {}
+    other = sqlite3.connect(f'file:{path}?mode=ro', uri=True, timeout=30)
+    try:
+        rows = other.execute('SELECT c.ticker, c.day, c.raw FROM value_check_closes c JOIN (SELECT ticker, max(day) AS day FROM value_check_closes '
+                             'GROUP BY ticker) m ON c.ticker=m.ticker AND c.day=m.day').fetchall()
+    except sqlite3.Error:
+        rows = []
+    finally:
+        other.close()
+    return {t: (d, p) for t, d, p in rows if p and p > 0}
+
+
+def quote_closes(tickers, stop_event=None):
+    """Fallback for tickers the value check has no close for: one batched Twelve Data /quote per TWELVE_BATCH tickers (1 credit each)."""
+    closes = {}
+    for start in range(0, len(tickers), TWELVE_BATCH):
+        if start and (stop_event.wait(60) if stop_event is not None else time.sleep(60)):
+            break
+        used = twelve_credits_used()
+        if used is not None and used > TWELVE_MAX_USED:
+            continue
+        chunk = tickers[start:start + TWELVE_BATCH]
+        body = twelve_get('quote', {'symbol': ','.join(chunk)})
+        if len(chunk) == 1 and isinstance(body, dict) and 'symbol' in body:
+            body = {chunk[0]: body}
+        for ticker in chunk:
+            raw = body.get(ticker) if isinstance(body, dict) else None
+            try:
+                price = float(raw['close'])
+            except (TypeError, KeyError, ValueError):
+                continue
+            if price > 0:
+                closes[ticker] = (str(raw.get('datetime') or '')[:10], price)
+    return closes
+
+
+def check_authorizations(db, config, stop_event=None, closes=None, allow_quotes=True):
+    """Market value = shares outstanding (10-Q/10-K cover or XBRL dei) × latest close. An amount above SUSPECT_SHARE of it is
+    marked 'suspect-amount' and not shown; 'unchecked' when the market value cannot be formed (shown, as before)."""
+    pending = [r[0] for r in db.execute('SELECT DISTINCT ticker FROM ownership_buyback_authorizations WHERE check_status IS NULL')]
+    if not pending:
+        return 0
+    closes = dict(closes if closes is not None else value_check_closes(db))
+    missing = [t for t in pending if t not in closes]
+    if missing and allow_quotes:
+        try:
+            closes.update(quote_closes(missing, stop_event=stop_event))
+        except Exception as error:
+            issue(db, 'buyback', '*', f'quote-{type(error).__name__}')
+    ads = config.get('adsShares', {})
+    flagged = 0
+    for ticker in pending:
+        shares = shares_for(db, ticker, date.today().isoformat())
+        close = closes.get(ticker)
+        cap = shares[0] * close[1] / ads.get(ticker, 1) if shares and close else None
+        if cap is not None:  # a split between the share count and the close (SNDK 8-for-1 on 2026-11-20): count in post-split shares
+            import stock_splits
+            for split_ticker, split_day, ratio in stock_splits.known_splits():
+                if split_ticker == ticker and shares[1] < split_day.isoformat() <= (close[0] or date.today().isoformat()):
+                    cap *= ratio
+        for rowid, amount in db.execute('SELECT rowid, amount_usd FROM ownership_buyback_authorizations WHERE ticker=? AND check_status IS NULL',
+                                        (ticker,)).fetchall():
+            status = 'unchecked' if cap is None else 'suspect-amount' if amount > SUSPECT_SHARE * cap else 'ok'
+            flagged += status == 'suspect-amount'
+            db.execute('UPDATE ownership_buyback_authorizations SET check_status=?, market_cap=?, checked_at=? WHERE rowid=?',
+                       (status, cap, iso(), rowid))
+    db.commit()
+    return flagged
 
 
 def run_buyback(db, tickers, config, ciks, stop_event=None):
@@ -1032,6 +1114,10 @@ def run_buyback(db, tickers, config, ciks, stop_event=None):
             except Exception as error:
                 issue(db, 'buyback', ticker, f'{part}-{error}')
         db.commit()
+    try:
+        counts['suspect'] = check_authorizations(db, config, stop_event=stop_event)
+    except Exception as error:
+        issue(db, 'buyback', '*', f'check-{type(error).__name__}')
     return ','.join(f'{k}={v}' for k, v in counts.items())
 
 
@@ -1126,8 +1212,9 @@ def public_payload(db, companies=None, today=None):
                                               'value': round(r['value'], 2)}))
 
     buybacks, seen = [], set()
-    for r in _rows(db, 'SELECT ticker, min(filed) AS filed, amount_usd FROM ownership_buyback_authorizations WHERE filed>=? '
-                       'GROUP BY ticker, amount_usd ORDER BY filed DESC', ((today - timedelta(days=365)).isoformat(),)):
+    for r in _rows(db, "SELECT ticker, min(filed) AS filed, amount_usd FROM ownership_buyback_authorizations WHERE filed>=? "
+                       "AND coalesce(check_status, '')!='suspect-amount' "
+                       "GROUP BY ticker, amount_usd ORDER BY filed DESC",((today - timedelta(days=365)).isoformat(),)):
         if r['ticker'] in companies:
             buybacks.append(named(r['ticker'], {'kind': 'authorization', 'date': r['filed'], 'amount': r['amount_usd']}))
     for r in _rows(db, "SELECT ticker, concept, period_start, period_end, value, filed FROM ownership_buyback_quarters "
