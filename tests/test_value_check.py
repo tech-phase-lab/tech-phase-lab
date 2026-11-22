@@ -42,6 +42,20 @@ class TwelveMonths(unittest.TestCase):
                 {'val': 7, 'end': '2025-07-20', 'filed': '2025-08-01', 'form': '10-Q', 'accn': 'x'}]
         self.assertEqual(vc.share_points(facts([], shares=rows))[0]['value'], 12)
 
+    def test_before_the_first_cover_count_the_weighted_count_as_first_reported(self):
+        data = facts([], shares=[{'val': 100, 'end': '2025-07-20', 'filed': '2025-08-01', 'form': '10-Q', 'accn': 'x'}])
+        data['facts']['us-gaap']['WeightedAverageNumberOfDilutedSharesOutstanding'] = {'units': {'shares': [
+            fact(10, '2024-04-01', '2024-06-30', '2024-08-01'), fact(80, '2024-04-01', '2024-06-30', '2025-08-01'),  # restated after a split
+            fact(90, '2025-04-01', '2025-06-30', '2025-08-01')]}}
+        points = vc.share_points(data)
+        self.assertEqual([p['value'] for p in points], [10, 90, 100])
+
+    def test_revenue_takes_the_widest_name(self):
+        rows = {'facts': {'us-gaap': {
+            'RevenueFromContractWithCustomerExcludingAssessedTax': {'units': {'USD': [fact(5, '2024-01-01', '2024-12-31', '2025-02-10', '10-K')]}},
+            'Revenues': {'units': {'USD': [fact(100, '2024-01-01', '2024-12-31', '2025-02-10', '10-K')]}}}}}
+        self.assertEqual(vc.fundamentals(rows)['revenue'][-1]['value'], 100)
+
 
 class Score(unittest.TestCase):
     def test_position_is_the_share_of_days_higher_than_today(self):
@@ -134,7 +148,7 @@ class Credits(unittest.TestCase):
 
         pacer = vc.Pacer(transport, sleep=sleep, clock=lambda: clock[0])
         self.assertTrue(pacer.wait_for(8))
-        self.assertEqual(clock[0], 20)  # two busy minutes (445 + 8 and 448 + 8 pass 450), then room
+        self.assertEqual(clock[0], 30)  # two busy minutes (445 + 8 and 448 + 8 pass 450), then room
 
     def test_own_budget_per_minute(self):
         clock = [0.0]

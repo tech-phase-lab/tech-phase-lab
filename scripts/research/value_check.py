@@ -43,12 +43,13 @@ UPDATE_BARS = 30              # the daily read: enough overlap to notice a split
 WINDOW_DAYS = 5 * 365 + 2     # the five-year look-back
 MIN_PS_DAYS = 3 * 252         # at least three years of daily P/S (a younger listing uses what it has, from three years)
 MIN_PE_DAYS = 252             # fewer profitable days than this: the P/S position alone
+MAX_PS = 200                  # a P/S above this means the filed revenue is only a part of the total: left out, not guessed
 CHEAP = 70                    # 割安: Value Score of 70 or more
 FACTS_MAX_AGE = 7 * 86400     # SEC company facts are read again after a week
 RUN_AT = (17, 30)             # weekdays, Eastern, after the close
 
 REVENUE = ['RevenueFromContractWithCustomerExcludingAssessedTax', 'Revenues', 'RevenueFromContractWithCustomerIncludingAssessedTax',
-           'SalesRevenueNet', 'SalesRevenueGoodsNet']
+           'SalesRevenueNet', 'SalesRevenueGoodsNet', 'RevenuesNetOfInterestExpense', 'RegulatedAndUnregulatedOperatingRevenue']
 NET_INCOME = ['NetIncomeLoss', 'NetIncomeLossAvailableToCommonStockholdersBasic', 'ProfitLoss']
 FORMS = {'10-K', '10-K/A', '10-Q', '10-Q/A'}
 
@@ -115,10 +116,16 @@ def _near(a, b, within):
     return abs(a - b) <= within
 
 
-def twelve_months(rows_by_tag, end):
+def twelve_months(rows_by_tag, end, widest=False):
     """One flow for the twelve months ending around `end` (same rule as the Financial Radar, lib/research/radar-facts.ts):
     the fiscal year when one ends there, else the year to date + the previous fiscal year - the same period a year earlier.
+    The first name of the list that has it wins; with `widest` (revenue) the largest of the names, since a company can file its
+    total under one name and a part (contract revenue without lease income, at a landlord) under another.
     Returns (value, first filed day) or None."""
+    if widest:
+        found = [twelve_months([rows], end) for rows in rows_by_tag]
+        found = [item for item in found if item]
+        return max(found, key=lambda item: item[0]) if found else twelve_months(rows_by_tag, end)
     partial = []
     for rows in rows_by_tag:
         year = _pick(rows, lambda r: _near(r['end'], end, 9) and 350 <= _dur(r) <= 380)
@@ -152,13 +159,13 @@ def _first_filed(rows, chosen):
     return min((r['filed'] for r in rows if r['end'] == chosen['end'] and r['start'] == chosen['start']), default=chosen['filed'])
 
 
-def ttm_points(rows_by_tag):
+def ttm_points(rows_by_tag, widest=False):
     ends = sorted({r['end'] for rows in rows_by_tag for r in rows if 80 <= _dur(r) <= 380})
     points, seen = [], set()
     for end in ends:
         if any(_near(end, other, 9) for other in seen):
             continue
-        found = twelve_months(rows_by_tag, end)
+        found = twelve_months(rows_by_tag, end, widest)
         if found:
             seen.add(end)
             points.append({'end': end, 'filed': found[1], 'value': found[0]})
@@ -166,10 +173,19 @@ def ttm_points(rows_by_tag):
 
 
 def share_points(facts):
-    """Shares outstanding by cover date: every share class of one filing added together (dei), else the balance sheet count."""
+    """Shares outstanding by cover date: every share class of one filing added together (dei). Before the first cover count (a
+    company with several share classes files them only by class, which the SEC's company facts leave out), the diluted weighted
+    average share count of each period as first reported (a later filing restates it for a split; the closes are matched to the
+    count as it was then)."""
     rows = _rows(facts, 'dei', 'EntityCommonStockSharesOutstanding', 'shares')
-    if not rows:
-        rows = _rows(facts, 'us-gaap', 'CommonStockSharesOutstanding', 'shares')
+    first_cover = min((row['end'] for row in rows), default=None)
+    weighted = {}
+    for row in _rows(facts, 'us-gaap', 'WeightedAverageNumberOfDilutedSharesOutstanding', 'shares'):
+        if row['val'] <= 0 or (first_cover is not None and row['end'] >= first_cover):
+            continue
+        best = weighted.get(row['end'])
+        if best is None or (row['filed'], _dur(row)) < (best['filed'], _dur(best)):
+            weighted[row['end']] = row
     by_filing = {}
     for row in rows:
         key = (row['accn'], row['end'])
@@ -178,6 +194,8 @@ def share_points(facts):
     for (accn, end), value in by_filing.items():
         if value > 0:
             latest[end] = value
+    for end, row in weighted.items():
+        latest[end] = row['val']
     return [{'end': end, 'value': value} for end, value in sorted(latest.items())]
 
 
@@ -186,7 +204,7 @@ def fundamentals(facts):
     if not isinstance(facts, dict):
         return {'error': 'no-sec-data'}
     usd = lambda tags: [_rows(facts, 'us-gaap', tag, 'USD') for tag in tags]  # noqa: E731
-    revenue = ttm_points(usd(REVENUE))
+    revenue = ttm_points(usd(REVENUE), widest=True)
     income = ttm_points(usd(NET_INCOME))
     shares = share_points(facts)
     return {'revenue': revenue, 'income': income, 'shares': shares}
@@ -258,7 +276,7 @@ class Pacer:
                 return True
             if now - started > self.max_wait:
                 return False
-            self.sleep(10)
+            self.sleep(15)  # each /api_usage read itself costs a credit
 
 
 def parse_series(body, symbols):
@@ -450,6 +468,8 @@ def evaluate(ticker, closes, record, as_of):
     today = score_at(ratios, len(ratios) - 1)
     if today is None:
         return {'excluded': 'short-history' if ratios and ratios[-1][2] is not None else 'no-current-figures'}
+    if today[4] > MAX_PS:
+        return {'excluded': 'implausible'}
     growth = revenue_growth(record)
     if growth is None:
         return {'excluded': 'no-growth'}
