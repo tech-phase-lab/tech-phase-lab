@@ -1,6 +1,6 @@
 "use client";
 import { createContext, useCallback, useContext, useEffect, useRef, useState, type MouseEvent, type ReactNode } from "react";
-import { SAMPLE_HINTS, SAMPLE_TIME, guardedTarget, type SampleFeature } from "@/lib/research/pro-experience-samples";
+import { CARD_HEAD_FEATURES, SAMPLE_HINTS, SAMPLE_TIME, guardedTarget, type SampleFeature } from "@/lib/research/pro-experience-samples";
 import styles from "./samples.module.css";
 
 type Lang = "ja" | "en";
@@ -34,7 +34,8 @@ export default function SampleFrame({ feature, lang, children }: { feature: Samp
     show();
   };
   return <section className={styles.sample} aria-label={lang === "ja" ? "サンプル" : "Sample"}>
-    <div className={styles.sampleHead}><span className={styles.sampleTag}>{lang === "ja" ? "サンプル" : "Sample"}</span><span className={styles.sampleTime}>{SAMPLE_TIME[lang]}</span></div>
+    {/* トレジャーハント and クジラの足あと carry the mark inside the card (owner, Nov 22). */}
+    {!CARD_HEAD_FEATURES.includes(feature) && <div className={styles.sampleHead}><span className={styles.sampleTag}>{lang === "ja" ? "サンプル" : "Sample"}</span><span className={styles.sampleTime}>{SAMPLE_TIME[lang]}</span></div>}
     <Notice.Provider value={show}>
       <Hint.Provider value={setHint}>
         <div className={styles.sampleBox} data-sample={feature} onClick={guard}>

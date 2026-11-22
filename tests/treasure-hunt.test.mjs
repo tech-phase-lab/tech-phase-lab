@@ -11,7 +11,7 @@ import { englishTitle } from "../lib/research/english-titles.ts";
 import * as valueLib from "../lib/research/value-check.ts";
 import * as whaleLib from "../lib/research/whale-moves.ts";
 import * as samplesLib from "../lib/research/pro-experience-samples.ts";
-import { treasureHuntSample } from "../lib/research/pro-experience-sample-treasure.ts";
+import { TREASURE_NOTE, treasureHuntSample } from "../lib/research/pro-experience-sample-treasure.ts";
 import { whaleTracksSample } from "../lib/research/pro-experience-sample-whales.ts";
 import { proFeatures } from "../lib/research/pro-experience.ts";
 import { PRO_ONLY_FEATURES } from "../lib/research/pro-features.ts";
@@ -103,37 +103,57 @@ test("FREE card in English: the owner's short table (Nov 22); the Japanese card 
   assert.match(cards, /t\("米国株を調べる、深く知る。", "Explore US stocks in depth\."\)/);
 });
 
-test("samples: one fixed day and one fixed moment on the tour's 2035 timeline, by the real rules", () => {
+test("samples: the owner's mockups (Nov 22), on a made-up 2035 timeline", () => {
   assert.deepEqual(proFeatures.map(f => f.id).slice(0, 5), ["relation-map", "theme-ranking", "treasure-hunt", "whale-tracks", "compare"]);
   assert.equal(samplesLib.hasSample("treasure-hunt"), true);
   assert.equal(samplesLib.hasSample("whale-tracks"), true);
   const t = treasureHuntSample;
-  assert.equal(t.asOf, samplesLib.SAMPLE_CLOSE_DAY);
+  assert.equal(t.asOf, "2035-04-18");
+  // Production computes trailing multiples, so the sample says 実績値 like the page (the mockup's 予想値 would misdescribe it).
+  assert.equal(t.basis, "trailing");
+  assert.equal(valueLib.footerLine(t.asOf, t.basis, true, true), "2035年4月18日の終値で更新・PERとPSRは実績値・売上は前年比");
+  assert.equal(valueLib.footerLine(t.asOf, t.basis, false, true), "As of Apr 18, 2035 close · Trailing P/E and P/S · Revenue growth YoY");
+  assert.equal(valueLib.footerLine("2026-11-20", "trailing", true), "11/20の終値で更新・PERとPSRは実績値・売上は前年比", "the page keeps its short date");
+  const tech = t.universes.tech;
+  assert.deepEqual(tech.items.map(i => [i.ticker, i.score, i.pe, i.ps, i.revenueGrowth]), [
+    ["MU", 96, 3.8, 1.9, 190], ["QCOM", 91, 12.1, 3.4, 12], ["AMAT", 88, 14.6, 4.1, 9], ["ADBE", 84, 15.2, 5.8, 11],
+    ["INTC", 79, 18.4, 1.7, 3], ["MRVL", 72, 22.9, 7.2, 22], ["TXN", 71, 24.3, 8.1, 6]]);
+  assert.deepEqual(tech.changes.in, [{ ticker: "MU", from: 78, to: 96 }, { ticker: "AMAT", from: 66, to: 88 }, { ticker: "MRVL", from: 58, to: 72 }]);
+  assert.deepEqual(tech.items.filter(i => i.in).map(i => i.ticker), ["MRVL"], "as in the mockup: the IN mark on 6th only");
   for (const universe of ["tech", "all"]) {
     const list = t.universes[universe];
-    assert.ok(list.items.length > valueLib.FIRST_ROWS, `${universe}: すべて見る opens more rows`);
-    // IN / OUT: crossing 30 (value_check.py changes); the IN mark sits on exactly those rows.
-    const ins = list.items.filter(i => i.previous !== null && i.previous < valueLib.CHEAP_FROM && i.score >= valueLib.CHEAP_FROM).map(i => i.ticker).sort();
-    const outs = list.items.filter(i => i.previous !== null && i.score < valueLib.CHEAP_FROM && i.previous >= valueLib.CHEAP_FROM).map(i => i.ticker).sort();
-    assert.deepEqual(list.changes.in.map(c => c.ticker).sort(), ins, universe);
-    assert.deepEqual(list.changes.out.map(c => c.ticker).sort(), outs, universe);
-    assert.deepEqual(list.items.filter(i => i.in).map(i => i.ticker).sort(), ins, universe);
-    assert.ok(ins.length && outs.length, `${universe}: the band shows both`);
+    assert.equal(list.items.length, valueLib.FIRST_ROWS, `${universe}: the podium and 4th to 7th`);
+    assert.ok(list.changes.in.length && list.changes.out.length, `${universe}: the band shows IN and OUT`);
   }
+  assert.deepEqual(TREASURE_NOTE.tech, { ja: "※実際は約150銘柄のランキングです", en: "*The full ranking covers about 150 stocks" });
+  assert.equal(TREASURE_NOTE.all.ja, "※実際は約500銘柄のランキングです");
+
   const w = whaleTracksSample;
-  for (const key of ["institutional", "short", "insiders", "buybacks"]) assert.ok(w[key].length >= 5, key);
-  for (const day of [w.institutionalAsOf, w.shortAsOf, ...w.insiders.map(r => r.date), ...w.buybacks.map(r => r.date)]) assert.match(day, /^203[45]-/);
-  assert.ok(w.insiders.some(r => r.side === "buy") && w.insiders.some(r => r.side === "sell"));
-  assert.ok(w.buybacks.some(r => r.kind === "authorization") && w.buybacks.some(r => r.kind === "quarter"));
+  for (const key of ["institutional", "short", "insiders", "buybacks"]) assert.equal(w[key].length, 5, key);
+  assert.equal(whaleLib.asOfLine("institutions", w, true, true), "2035年3月末時点・13F（四半期ごとに更新）");
+  assert.equal(whaleLib.asOfLine("short", w, true, true), "2035年4月13日時点・FINRA（月2回更新）");
+  assert.equal(whaleLib.asOfLine("institutions", w, false, true), "As of end-Mar 2035 · 13F (updated quarterly)");
+  assert.equal(whaleLib.asOfLine("short", w, false, true), "As of Apr 13, 2035 · FINRA (updated twice a month)");
+  assert.equal(whaleLib.asOfLine("short", w, true), "4月13日時点・FINRA（月2回更新）", "the page keeps its short date");
+  assert.deepEqual(w.institutional.map(r => [r.ticker, r.pct, r.change]), [["NBIS", 58.2, 6.4], ["NVDA", 69.7, 3.1], ["MU", 77.7, 3], ["MRVL", 84.1, 2.2], ["ARM", 21.4, 1.8]]);
+  assert.deepEqual(w.short.map(r => [r.ticker, r.pct, r.change, r.days]), [["SMCI", 18.4, 2.1, 3.9], ["CRWV", 14.7, -1.2, 2.6], ["PLTR", 3.1, 0.4, 1.4], ["MU", 2.07, 0.3, 1.9], ["NVDA", 1.16, -0.1, 2.8]]);
+  assert.deepEqual(w.insiders.map(r => [r.date.slice(5), r.ticker, whaleLib.roleLabel(r.role, true), r.side, r.planned, whaleLib.money(r.value, true)]), [
+    ["04-18", "MU", "CEO", "buy", false, "420万ドル"], ["04-17", "AMD", "CFO", "sell", true, "1,250万ドル"], ["04-16", "ORCL", "会長", "sell", true, "8,900万ドル"],
+    ["04-13", "INTC", "取締役", "buy", false, "110万ドル"], ["04-02", "NVDA", "取締役", "sell", true, "2.98億ドル"]]);
+  assert.deepEqual(w.buybacks.map(r => [r.ticker, r.kind, r.kind === "quarter" ? whaleLib.quarterLabel(r.end, true) : r.date.slice(5), whaleLib.money(r.amount, true)]), [
+    ["AAPL", "authorization", "04-18", "1,100億ドル"], ["META", "authorization", "04-11", "500億ドル"], ["NVDA", "quarter", "1〜3月", "142億ドル"],
+    ["QCOM", "quarter", "1〜3月", "38億ドル"], ["AVGO", "quarter", "1〜3月", "25億ドル"]]);
+  for (const day of [w.institutionalAsOf, w.shortAsOf, ...w.insiders.map(r => r.date), ...w.buybacks.map(r => r.date)]) assert.match(day, /^2035-/);
   for (const name of ["treasure-hunt.json", "whale-tracks.json"]) {
     const file = JSON.parse(read(`../lib/research/pro-experience-samples/${name}`));
     assert.equal(file.fictional, true, name);
     assert.match(file._source, /fictional/, name);
   }
-  // Each sample says it is not real data, and the copy carries no advice words.
+  // The card itself says サンプル / PRO機能体験; the frame leaves out its own line for these two. No advice words.
+  assert.deepEqual(samplesLib.CARD_HEAD_FEATURES, ["treasure-hunt", "whale-tracks"]);
   for (const name of ["treasure-hunt.tsx", "whale-tracks.tsx"]) {
     const source = read(`../app/research/pro-experience/samples/${name}`);
-    assert.match(source, /サンプルの数値です。実際のデータではありません。/);
+    assert.match(source, /top=\{<CardHead lang=\{lang\} \/>\}/);
     assert.doesNotMatch(source, /おすすめ|チャンス|狙い目|\b(recommend\w*|opportunit\w*|bargain\w*)\b/i);
   }
   for (const id of ["treasure-hunt", "whale-tracks"]) assert.doesNotMatch(`${samplesLib.SAMPLE_HINTS[id].ja}\n${samplesLib.SAMPLE_HINTS[id].en}`, /買い|おすすめ|チャンス|狙い目|\b(buys?|recommend\w*|opportunit\w*|bargain\w*)\b/i);
@@ -166,8 +186,9 @@ const shared = {
 const treasureScreen = load("../app/research/treasure-hunt/screen.tsx", { ...shared, "@/lib/research/value-check": valueLib });
 const whaleScreen = load("../app/research/whales/screen.tsx", { ...shared, "@/lib/research/whale-moves": whaleLib });
 const Frame = load("../app/research/pro-experience/samples/frame.tsx", { "@/lib/research/pro-experience-samples": samplesLib }).default;
-const sampleStubs = { "../../stock-row-link": rowLink, "../../treasure-hunt/screen": treasureScreen, "../../whales/screen": whaleScreen,
-  "@/lib/research/pro-experience-sample-treasure": { treasureHuntSample }, "@/lib/research/pro-experience-sample-whales": { whaleTracksSample } };
+const cardHead = load("../app/research/pro-experience/samples/card-head.tsx", { "@/lib/research/pro-experience-samples": samplesLib });
+const sampleStubs = { "../../stock-row-link": rowLink, "../../treasure-hunt/screen": treasureScreen, "../../whales/screen": whaleScreen, "./card-head": cardHead,
+  "@/lib/research/pro-experience-sample-treasure": { treasureHuntSample, TREASURE_NOTE }, "@/lib/research/pro-experience-sample-whales": { whaleTracksSample } };
 const TreasureSample = load("../app/research/pro-experience/samples/treasure-hunt.tsx", sampleStubs).default;
 const WhaleSample = load("../app/research/pro-experience/samples/whale-tracks.tsx", sampleStubs).default;
 
@@ -181,69 +202,91 @@ async function mount(element) {
 const click = async target => { await act(async () => { target.dispatchEvent(new dom.window.MouseEvent("click", { bubbles: true, cancelable: true })); }); };
 const text = el => el.textContent.replace(/\s+/g, " ");
 
-test("Treasure Hunt sample: サンプル and the 2035 time on top, the switch and すべて見る work, a stock stays in the sample", async () => {
+test("Treasure Hunt sample: サンプル・PRO機能体験 on top, the switch works, the gold note in place of すべて見る, a stock stays in the sample", async () => {
   for (const lang of ["ja", "en"]) {
+    const ja = lang === "ja";
     const ui = await mount(h(Frame, { feature: "treasure-hunt", lang }, h(TreasureSample, { lang })));
     const c = ui.container;
-    assert.match(text(c), lang === "ja" ? /サンプル.*2035\/03\/12 09:00 時点/ : /Sample.*As of 2035\/03\/12 09:00/);
-    assert.match(text(c), /TREASURE HUNT/);
-    assert.equal(c.querySelector("h1").textContent, lang === "ja" ? "トレジャーハント" : "Treasure Hunt");
+    assert.match(text(c), ja ? /^サンプル ?PRO機能体験 ?TREASURE HUNT/ : /^Sample ?PRO feature tour ?TREASURE HUNT/);
+    assert.doesNotMatch(text(c), /2035\/03\/12/, "no frame time line");
+    assert.equal(c.querySelector("h1").textContent, ja ? "トレジャーハント" : "Treasure Hunt");
     assert.equal(c.querySelectorAll("a[href]").length, 0, "no stock link inside the sample");
     const switchButtons = [...c.querySelectorAll('[role="group"] button')];
-    assert.deepEqual(switchButtons.map(b => b.textContent), lang === "ja" ? ["ハイテク", "全セクター"] : ["Tech", "All sectors"]);
+    assert.deepEqual(switchButtons.map(b => b.textContent), ja ? ["ハイテク", "全セクター"] : ["Tech", "All sectors"]);
     const tickers = () => [...c.querySelectorAll("[data-logo]")].map(el => el.getAttribute("data-logo"));
-    assert.deepEqual(tickers().slice(0, 3), ["QCOM", "MU", "AMAT"], "podium: 2nd, 1st, 3rd");
-    assert.equal(tickers().length, valueLib.FIRST_ROWS);
-    assert.match(text(c), lang === "ja" ? /3\/9の終値で更新/ : /As of Mar 9 close/);
-    await click([...c.querySelectorAll("button")].find(b => /すべて見る|See all/.test(b.textContent)));
-    assert.equal(tickers().length, treasureHuntSample.universes.tech.items.length);
+    assert.deepEqual(tickers(), ["QCOM", "MU", "AMAT", "ADBE", "INTC", "MRVL", "TXN"], "podium: 2nd, 1st, 3rd; then 4th to 7th");
+    assert.match(text(c), ja ? /※実際は約150銘柄のランキングです ?2035年4月18日の終値で更新・PERとPSRは実績値・売上は前年比 ?提供：Twelve Data/
+      : /\*The full ranking covers about 150 stocks ?As of Apr 18, 2035 close · Trailing P\/E and P\/S · Revenue growth YoY ?Data: Twelve Data/);
+    assert.ok(![...c.querySelectorAll("button")].some(b => /すべて見る|See all/.test(b.textContent)));
+    assert.match(text(c), /IN ?MU ?78→96/);
+    await click(c.querySelector("[aria-controls=treasure-hunt-about]"));
+    assert.equal(c.querySelector("#treasure-hunt-about").textContent, valueLib.aboutText("trailing", ja), "the i text is the page's");
     await click(switchButtons[1]);
     assert.equal(switchButtons[1].getAttribute("aria-pressed"), "true");
-    assert.equal(tickers().length, valueLib.FIRST_ROWS, "すべて見る closes again on the other universe");
-    assert.ok(tickers().includes("PFE"));
+    assert.deepEqual(tickers(), ["PFE", "MU", "QCOM", "AMAT", "MRK", "ADBE", "CVX"]);
+    assert.match(text(c), ja ? /※実際は約500銘柄のランキングです/ : /about 500 stocks/);
     const before = navigations;
     await click(c.querySelector("[data-pro-only]"));
     assert.equal(navigations, before);
-    assert.equal(c.querySelector('[role="status"]').textContent, lang === "ja" ? "PROで使えます" : "Available with PRO");
+    assert.equal(c.querySelector('[role="status"]').textContent, ja ? "PROで使えます" : "Available with PRO");
     await ui.done();
   }
 });
 
-test("Whale Tracks sample: all four tabs, their sort buttons, and no way out of the sample", async () => {
-  const ui = await mount(h(Frame, { feature: "whale-tracks", lang: "en" }, h(WhaleSample, { lang: "en" })));
-  const c = ui.container;
-  assert.match(text(c), /WHALE TRACKS/);
-  assert.equal(c.querySelector("h1").textContent, "Whale Tracks");
-  const tabs = [...c.querySelectorAll('[role="tab"]')];
-  assert.deepEqual(tabs.map(t => t.textContent), ["Institutions", "Short interest", "Insider trades", "Buybacks"]);
-  const firstTicker = () => c.querySelector("[data-pro-only] [data-logo]").getAttribute("data-logo");
-  const sorts = () => [...c.querySelectorAll('[role="tabpanel"] [role="group"] button')];
-  assert.equal(firstTicker(), "SMCI", "Biggest rise first");
-  await click(sorts()[1]);
-  assert.equal(firstTicker(), "INTC", "Biggest fall");
-  for (const [index, expected] of [[1, "SMCI"], [2, "NVDA"], [3, "AVGO"]]) {
-    await click(tabs[index]);
-    assert.equal(tabs[index].getAttribute("aria-selected"), "true");
-    assert.equal(firstTicker(), expected, tabs[index].textContent);
+test("Whale Tracks sample: four tabs of five, every sort button reorders, the dated lines, and no way out of the sample", async () => {
+  for (const lang of ["ja", "en"]) {
+    const ja = lang === "ja";
+    const ui = await mount(h(Frame, { feature: "whale-tracks", lang }, h(WhaleSample, { lang })));
+    const c = ui.container;
+    assert.match(text(c), ja ? /^サンプル ?PRO機能体験 ?WHALE TRACKS/ : /^Sample ?PRO feature tour ?WHALE TRACKS/);
+    assert.equal(c.querySelector("h1").textContent, ja ? "クジラの足あと" : "Whale Tracks");
+    const tabs = [...c.querySelectorAll('[role="tab"]')];
+    assert.deepEqual(tabs.map(t => t.textContent), ja ? ["機関", "空売り", "役員売買", "自社株買い"] : ["Institutions", "Short interest", "Insider trades", "Buybacks"]);
+    const order = () => [...c.querySelectorAll("[data-pro-only] [data-logo]")].map(el => el.getAttribute("data-logo"));
+    const sorts = () => [...c.querySelectorAll('[role="tabpanel"] [role="group"] button')];
+    const panel = () => text(c.querySelector('[role="tabpanel"]'));
+    const expected = [
+      [ja ? "2035年3月末時点・13F（四半期ごとに更新）" : "As of end-Mar 2035 · 13F (updated quarterly)",
+        [["NBIS", "NVDA", "MU", "MRVL", "ARM"], ["ARM", "MRVL", "MU", "NVDA", "NBIS"], ["MRVL", "MU", "NVDA", "NBIS", "ARM"]]],
+      [ja ? "2035年4月13日時点・FINRA（月2回更新）" : "As of Apr 13, 2035 · FINRA (updated twice a month)",
+        [["SMCI", "CRWV", "PLTR", "MU", "NVDA"], ["SMCI", "PLTR", "MU", "NVDA", "CRWV"], ["SMCI", "NVDA", "CRWV", "MU", "PLTR"]]],
+      [ja ? "Form 4・提出から2営業日以内" : "Form 4 · filed within 2 business days",
+        [["MU", "AMD", "ORCL", "INTC", "NVDA"], ["MU", "INTC"], ["AMD", "ORCL", "NVDA"]]],
+      [ja ? "10-Q・10-K・8-K（発表から自動で反映）" : "10-Q, 10-K, 8-K (added automatically when filed)",
+        [["AAPL", "META", "NVDA", "QCOM", "AVGO"], ["AAPL", "META", "NVDA", "QCOM", "AVGO"]]],
+    ];
+    for (const [index, [line, orders]] of expected.entries()) {
+      await click(tabs[index]);
+      assert.equal(tabs[index].getAttribute("aria-selected"), "true");
+      assert.ok(panel().startsWith(line), `${lang} ${index}: ${panel().slice(0, 60)}`);
+      assert.equal(sorts().length, orders.length);
+      for (let s = orders.length - 1; s >= 0; s--) {
+        await click(sorts()[s]);
+        assert.equal(sorts()[s].getAttribute("aria-pressed"), "true");
+        assert.deepEqual(order(), orders[s], `${lang} tab ${index} sort ${s}`);
+      }
+    }
+    await click(tabs[2]);
+    assert.match(panel(), ja ? /AMD ?CFO・計画売買/ : /AMD ?CFO · Planned/);
+    await click(tabs[3]);
+    assert.match(panel(), ja ? /AAPL ?4\/18・新しい枠を発表 ?1,100億ドル/ : /AAPL ?Apr 18 · New authorization ?\$110B/);
+    assert.match(panel(), ja ? /NVDA ?1〜3月・買い戻した金額 ?142億ドル/ : /NVDA ?Jan–Mar · Repurchased ?\$14B/);
+    assert.equal(c.querySelectorAll("[class~=goldCard]").length, 2);
+    assert.equal(c.querySelectorAll("a[href]").length, 0);
+    const before = navigations;
+    await click(c.querySelector("[data-pro-only]"));
+    assert.equal(navigations, before);
+    assert.equal(c.querySelector('[role="status"]').textContent, ja ? "PROで使えます" : "Available with PRO");
+    await ui.done();
   }
-  await click(sorts()[1]);
-  assert.equal(firstTicker(), "NVDA", "Largest buyback first");
-  await click(tabs[2]);
-  await click(sorts()[1]);
-  assert.deepEqual([...new Set([...c.querySelectorAll("[data-pro-only] [data-logo]")].map(el => el.getAttribute("data-logo")))], ["MU", "INTC", "AMAT"], "Purchases only");
-  await click(tabs[0]);
-  assert.equal(firstTicker(), "INTC", "each tab keeps its own sort");
-  assert.equal(c.querySelectorAll("a[href]").length, 0);
-  const before = navigations;
-  await click(c.querySelector("[data-pro-only]"));
-  assert.equal(navigations, before);
-  assert.equal(c.querySelector('[role="status"]').textContent, "Available with PRO");
-  await ui.done();
 });
 
-test("the PRO page itself still links each stock to its page (sample mode is only inside the tour)", async () => {
+test("the PRO pages themselves are unchanged: stocks link to their pages, すべて見る, no sample mark", async () => {
   const ui = await mount(h(treasureScreen.ValueRanking, { data: treasureHuntSample, universe: "tech", ja: true }));
   assert.ok(ui.container.querySelectorAll('a[href^="/research/stocks?q="]').length >= valueLib.FIRST_ROWS);
   assert.equal(ui.container.querySelectorAll("[data-pro-only]").length, 0);
+  assert.doesNotMatch(text(ui.container), /※実際は|2035年/);
   await ui.done();
+  const frame = read("../app/research/pro-experience/samples/frame.tsx");
+  assert.match(frame, /\{!CARD_HEAD_FEATURES\.includes\(feature\) && <div className=\{styles\.sampleHead\}>/);
 });

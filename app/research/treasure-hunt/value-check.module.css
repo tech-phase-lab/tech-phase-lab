@@ -73,3 +73,5 @@
 .keep { white-space:nowrap; }
 .lowMini { padding:0 4px; border:1px solid rgba(233,196,106,.75); border-radius:4px; color:#e9c46a; font-size:9.5px; font-weight:700; line-height:1.4; font-style:normal; white-space:nowrap; }
 .period { font-size:10.5px; line-height:1.4; color:#8e9aaa; }
+/* The PRO feature tour's sample (owner, Nov 22): a gold note where すべて見る would be, on the same line above it. */
+.sampleNote { margin:4px 0 0; padding:12px 0; border-top:1px solid var(--line); color:var(--gold); font-size:14px; font-weight:600; text-align:center; }
