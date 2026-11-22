@@ -77,8 +77,9 @@ export function parseValueSnapshot(raw: unknown): ValueSnapshot {
     universes: { tech: list(u.tech), all: list(u.all) } };
 }
 
-/** "11/20" from "2026-11-20". */
-export const monthDay = (iso: string) => `${Number(iso.slice(5, 7))}/${Number(iso.slice(8, 10))}`;
+const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+/** "11/20" from "2026-11-20"; "Nov 20" in English. */
+export const monthDay = (iso: string, ja = true) => ja ? `${Number(iso.slice(5, 7))}/${Number(iso.slice(8, 10))}` : `${MONTHS[Number(iso.slice(5, 7)) - 1]} ${Number(iso.slice(8, 10))}`;
 export const ratio = (value: number | null) => value === null ? "—" : value >= 1000 ? Math.round(value).toLocaleString("en-US") : value.toFixed(1);
 export const growth = (value: number) => `${value >= 0 ? "+" : ""}${Math.round(value)}%`;
 export const stockHref = (ticker: string) => `/research/stocks?q=${encodeURIComponent(ticker)}`;
@@ -86,7 +87,7 @@ export const stockHref = (ticker: string) => `/research/stocks?q=${encodeURIComp
 /** The footer line under the list (owner's wording; 実績値 when the history is the trailing one). */
 export function footerLine(asOf: string, basis: ValueSnapshot["basis"], ja: boolean) {
   return ja ? `${monthDay(asOf)}の終値で更新・PERとPSRは${basis === "forward" ? "予想値" : "実績値"}・売上は前年比`
-    : `Updated at the ${monthDay(asOf)} close · ${basis === "forward" ? "Forward" : "Trailing"} P/E and P/S · Revenue year over year`;
+    : `As of ${monthDay(asOf, false)} close · ${basis === "forward" ? "Forward" : "Trailing"} P/E and P/S · Revenue growth YoY`;
 }
 
 /** The "i" text, verbatim from the owner's sheet of Nov 22 (the trailing version drops 予想 / forward as the sheet says). */
@@ -98,6 +99,6 @@ export function aboutText(basis: ValueSnapshot["basis"], ja: boolean) {
 /** The small note on a row whose look-back is shorter than five years. */
 export function periodNote(period: ValuePeriod, ja: boolean) {
   if (period === "listed") return ja ? "上場後の期間で計算" : "Since listing";
-  if (period === "data") return ja ? "決算データのある期間で計算" : "Over the filed period";
+  if (period === "data") return ja ? "決算データのある期間で計算" : "Based on available filings";
   return null;
 }
