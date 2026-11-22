@@ -237,5 +237,19 @@ class Credits(unittest.TestCase):
         json.dumps(universe)
 
 
+class ValueCheckStorageTest(unittest.TestCase):
+    def test_connect_creates_its_folder_and_waits_on_a_busy_file(self):
+        """value-check-failed (Nov 22): the file and its folder are created on first use; busy_timeout and WAL like the monitor."""
+        import tempfile
+        with tempfile.TemporaryDirectory() as folder:
+            path = Path(folder) / 'missing' / 'value-check.sqlite'
+            db = vc.connect(str(path))
+            try:
+                self.assertTrue(path.exists())
+                self.assertEqual(db.execute('PRAGMA busy_timeout').fetchone()[0], 30000)
+                self.assertEqual(db.execute('PRAGMA journal_mode').fetchone()[0], 'wal')
+            finally:
+                db.close()
+
 if __name__ == '__main__':
     unittest.main()

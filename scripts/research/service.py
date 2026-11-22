@@ -15,6 +15,8 @@ import re
 import shutil
 import signal
 import sqlite3
+import subprocess
+import sys
 import threading
 import time
 import traceback
@@ -99,6 +101,11 @@ PUSH_DEMO_CHECK_SECONDS = 5
 # Waits before a push request that found the database locked is tried again (Nov 16: preferences answered 503, then 200 on a retry).
 PUSH_BUSY_RETRY_SECONDS = (0.2, 0.6)
 WEB_PUSH_STALE_SECONDS = 30
+# Nov 22: a deploy or restart can make one incident-watch pass fail (SQLITE_BUSY while the new process opens the database). The
+# owner's phone alert (and its "recovered" twin) fires only when the watch has kept failing this long; a shorter failure is shown in
+# /health's incidentWatch block (healthy=false, failingSince) but never recorded as an incident.
+INCIDENT_WATCH_ALERT_SECONDS = 600
+OWNERSHIP_CHILD_LIMIT_SECONDS = 6 * 3600  # a 13F quarter plus a first Form 4 pass; the next run resumes what is left
 DISCOVERY_METRICS_FLUSH_SECONDS = 5
 DISCOVERY_METRICS_MAX_CHECKS = 1000
 PUBLICATION_FAILURE_LANES = frozenset({
@@ -644,6 +651,7 @@ class AutomaticMonitor:
         self.backup_retention = positive_int("RESEARCH_BACKUP_RETENTION", 24, 2)
         self.monitor_stale_seconds = positive_int("RESEARCH_MONITOR_STALE_SECONDS", 60, 15)
         self.incident_check_seconds = positive_int("RESEARCH_INCIDENT_CHECK_SECONDS", 5, 1)
+        self.incident_watch_alert_seconds = INCIDENT_WATCH_ALERT_SECONDS
         self.notification_interval = positive_int("RESEARCH_INCIDENT_DELIVERY_INTERVAL_SECONDS", 5, 1)
         self.notification_max_attempts = min(
             20, positive_int("RESEARCH_INCIDENT_DELIVERY_MAX_ATTEMPTS", 5, 1)
@@ -780,7 +788,7 @@ class AutomaticMonitor:
             },
             "incidentWatch": {
                 "enabled": True, "intervalSeconds": self.incident_check_seconds,
-                "lastCheckAt": None, "healthy": None, "lastError": None,
+                "lastCheckAt": None, "healthy": None, "lastError": None, "failingSince": None,
             },
             "priorityPersistence": {
                 "lastAttemptAt": None, "lastSuccessAt": None,
@@ -1198,17 +1206,45 @@ class AutomaticMonitor:
                 print("mu-measurement-unavailable", flush=True)
             self.stop_event.wait(5)
 
-    def run_ownership(self):
-        """大口の動き (owner, Nov 22): 13F institutional totals, FINRA short interest, Form 4 open-market trades and buybacks into this
-        database. Off unless OWNERSHIP_DATA_ENABLED=true; every 15 minutes ownership_data.run_due starts only the jobs that are due."""
+    def ownership_path(self):
+        return ownership_data.ownership_path(self.db_path)
+
+    def run_ownership(self, popen=subprocess.Popen):
+        """大口の動き (owner, Nov 22): 13F institutional totals, FINRA short interest, Form 4 open-market trades and buybacks.
+        Off unless OWNERSHIP_DATA_ENABLED=true; every 15 minutes `ownership_data.py run-due` starts only the jobs that are due.
+        Nov 22 incident: it runs in its own lower-priority process and writes only ownership.sqlite (never the monitor database),
+        so its downloads, its 13F parse, its memory or a crash cannot slow, lock or restart the monitor."""
         if not ownership_data.enabled():
             return
         while not self.stop_event.is_set():
             try:
-                ownership_data.run_due(self.db_path, stop_event=self.stop_event)
+                code = self.run_child(popen, [sys.executable, str(Path(ownership_data.__file__).resolve()), "run-due",
+                                              "--db", self.ownership_path()], OWNERSHIP_CHILD_LIMIT_SECONDS)
+                if code:
+                    print(json.dumps({"event": "ownership-data-exit", "code": code}), flush=True)
             except Exception as error:
                 print(f"ownership-data-unavailable {type(error).__name__} {failure_detail(error)}".rstrip(), flush=True)
             self.stop_event.wait(900)
+
+    def run_child(self, popen, command, limit_seconds):
+        """Run a helper process; stop it when the monitor stops or it overruns. Returns its exit code (None when stopped)."""
+        child = popen(command, stdin=subprocess.DEVNULL)
+        deadline = time.monotonic() + limit_seconds
+        try:
+            while True:
+                code = child.poll()
+                if code is not None:
+                    return code
+                if self.stop_event.wait(2) or time.monotonic() > deadline:
+                    return None
+        finally:
+            if child.poll() is None:
+                child.terminate()
+                try:
+                    child.wait(timeout=10)
+                except subprocess.TimeoutExpired:
+                    child.kill()
+                    child.wait(timeout=10)
 
     def run_comparison_warm(self):
         # The stock comparison's provider refresh: one call to the site per minute (off unless COMPARISON_WARM_URL and _SECRET are set).
@@ -2042,8 +2078,11 @@ class AutomaticMonitor:
             issues.append("backup-failed")
         elif backup["status"] == "overdue":
             issues.append("backup-overdue")
-        if state["incidentWatch"]["healthy"] is False:
-            issues.append("incident-watch-failed")
+        watch = state["incidentWatch"]
+        if watch["healthy"] is False:
+            failing_for = timestamp_age_seconds(watch.get("failingSince"))
+            if failing_for is not None and failing_for >= self.incident_watch_alert_seconds:
+                issues.append("incident-watch-failed")
         if state["priorityPersistence"]["healthy"] is False:
             issues.append("priority-source-metrics-failed")
         push = state["webPush"]
@@ -2215,14 +2254,16 @@ class AutomaticMonitor:
             self.sync_health_incidents()
         except Exception:
             with self.state_lock:
-                self.state["incidentWatch"].update({
+                watch = self.state["incidentWatch"]
+                watch.update({
                     "lastCheckAt": checked_at, "healthy": False,
                     "lastError": "incident-watch-failed",
+                    "failingSince": watch.get("failingSince") or checked_at,
                 })
             return False
         with self.state_lock:
             self.state["incidentWatch"].update({
-                "lastCheckAt": checked_at, "healthy": True, "lastError": None,
+                "lastCheckAt": checked_at, "healthy": True, "lastError": None, "failingSince": None,
             })
         if recovering:
             # The successful pass above records the watch failure that could not be
@@ -2232,7 +2273,7 @@ class AutomaticMonitor:
             except Exception:
                 with self.state_lock:
                     self.state["incidentWatch"].update({
-                        "healthy": False, "lastError": "incident-watch-failed",
+                        "healthy": False, "lastError": "incident-watch-failed", "failingSince": checked_at,
                     })
                 return False
         return True
@@ -3281,7 +3322,13 @@ class AutomaticMonitor:
                 # Never log the value itself; only that SEC requests are withheld.
                 print(json.dumps({"event": "sec-user-agent-missing",
                                   "action": "set RESEARCH_USER_AGENT to 'Service name contact@example.com'"}), flush=True)
-            released = monitor.release_long_sec_backoffs(db)
+            try:
+                released = monitor.release_long_sec_backoffs(db)
+            except sqlite3.OperationalError as exc:
+                # Nov 22: a one-off clean-up; a busy database must not restart the monitor (it runs again at the next start).
+                print(json.dumps({"event": "sec-backoff-release-deferred", "error": type(exc).__name__,
+                                  "detail": failure_detail(exc)}), flush=True)
+                released = 0
             if released:
                 print(json.dumps({"event": "sec-backoff-released", "filings": released}), flush=True)
             monitor.write_snapshot(db, self.snapshot_path)
@@ -3839,7 +3886,7 @@ class Handler(BaseHTTPRequestHandler):
                 self.send_json(401, {"ok": False})
                 return
             try:
-                db = ownership_data.connect(self.app.db_path)
+                db = ownership_data.connect(self.app.ownership_path())
                 try:
                     payload = ownership_data.public_payload(db)
                 finally:
