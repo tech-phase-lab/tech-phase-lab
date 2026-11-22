@@ -6,10 +6,13 @@ export const VALUE_UNIVERSES: readonly { id: ValueUniverse; ja: string; en: stri
   { id: "tech", ja: "ハイテク", en: "Tech" },
   { id: "all", ja: "全セクター", en: "All sectors" },
 ];
-export const CHEAP_FROM = 70;
+/** 割安 for the IN / OUT band: a Value Score of 30% or more (owner, Nov 22). */
+export const CHEAP_FROM = 30;
 export const FIRST_ROWS = 7; // the podium (1-3) and the list down to 7th; the rest behind すべて見る
 
-export type ValueItem = { ticker: string; ja: string; en: string; score: number; previous: number | null; pe: number | null; ps: number; revenueGrowth: number; in: boolean };
+/** period: why the look-back is shorter than five years ("listed" recently, or SEC "data" that starts later); null for the full five years. */
+export type ValuePeriod = "listed" | "data" | null;
+export type ValueItem = { ticker: string; ja: string; en: string; score: number; previous: number | null; pe: number | null; ps: number; revenueGrowth: number; in: boolean; low: boolean; period: ValuePeriod };
 export type ValueChange = { ticker: string; from: number; to: number };
 export type ValueList = { total: number; items: ValueItem[]; changes: { in: ValueChange[]; out: ValueChange[] }; excluded: Record<string, string[]> };
 export type ValueSnapshot = { ok: true; basis: "trailing" | "forward"; asOf: string; computedAt: string; universes: Record<ValueUniverse, ValueList> };
@@ -36,19 +39,22 @@ const num = (v: unknown, min = -Infinity, max = Infinity): number => {
 };
 const text = (v: unknown, max = 120) => { if (typeof v !== "string" || !v || v.length > max) throw Error("Invalid text"); return v; };
 const percent = (v: unknown) => Math.round(num(v, 0, 100));
+// The day before can be at or above the five-year mean (zero or below).
+const signedPercent = (v: unknown) => Math.round(num(v, -10_000, 100));
 
 function item(raw: unknown): ValueItem {
   const r = raw as Record<string, unknown>;
   const ticker = text(r.ticker, 10);
   if (!TICKER.test(ticker)) throw Error("Invalid ticker");
-  return { ticker, ja: text(r.ja), en: text(r.en), score: percent(r.score), previous: r.previous === null || r.previous === undefined ? null : percent(r.previous),
-    pe: r.pe === null || r.pe === undefined ? null : num(r.pe, 0), ps: num(r.ps, 0), revenueGrowth: num(r.revenueGrowth, 0), in: r.in === true };
+  return { ticker, ja: text(r.ja), en: text(r.en), score: percent(r.score), previous: r.previous === null || r.previous === undefined ? null : signedPercent(r.previous),
+    pe: r.pe === null || r.pe === undefined ? null : num(r.pe, 0), ps: num(r.ps, 0), revenueGrowth: num(r.revenueGrowth, 0), in: r.in === true, low: r.low === true,
+    period: r.period === "listed" || r.period === "data" ? r.period : null };
 }
 const change = (raw: unknown): ValueChange => {
   const r = raw as Record<string, unknown>;
   const ticker = text(r.ticker, 10);
   if (!TICKER.test(ticker)) throw Error("Invalid ticker");
-  return { ticker, from: percent(r.from), to: percent(r.to) };
+  return { ticker, from: signedPercent(r.from), to: signedPercent(r.to) };
 };
 function list(raw: unknown): ValueList {
   const r = raw as Record<string, unknown>;
@@ -83,8 +89,15 @@ export function footerLine(asOf: string, basis: ValueSnapshot["basis"], ja: bool
     : `Updated at the ${monthDay(asOf)} close · ${basis === "forward" ? "Forward" : "Trailing"} P/E and P/S · Revenue year over year`;
 }
 
-/** The "i" text, verbatim from the owner's sheet (the trailing version drops 予想 / forward as the sheet says). */
+/** The "i" text, verbatim from the owner's sheet of Nov 22 (the trailing version drops 予想 / forward as the sheet says). */
 export function aboutText(basis: ValueSnapshot["basis"], ja: boolean) {
-  if (ja) return `割安度は、${basis === "forward" ? "予想PERと予想PSR" : "PERとPSR"}がその銘柄の過去5年の中でどれだけ低い位置にあるかを0〜100%で表したものです。100%に近いほど過去5年の中で安い位置にあります。売上が前年より減っている銘柄はのぞいています。毎日の終値で更新します。`;
-  return `The Value Score shows where a stock's ${basis === "forward" ? "forward P/E and forward P/S" : "P/E and P/S"} sit within its own five-year range, from 0% to 100%. The closer to 100%, the cheaper it is compared with its own past five years. Stocks with falling year-over-year revenue are excluded. Updated daily at the close.`;
+  if (ja) return `割安度は、${basis === "forward" ? "予想PERと予想PSR" : "PERとPSR"}が、その銘柄の過去5年の平均と比べてどれだけ低いかを%で表したものです。数字が大きいほど、5年平均より安い位置にあります。「5年最安」は、過去5年で一番安い水準にある銘柄です。売上が前年より減っている銘柄はのぞいています。毎日の終値で更新します。`;
+  return `The Value Score shows how far a stock's ${basis === "forward" ? "forward P/E and forward P/S are" : "P/E and P/S are"} below their own five-year averages. The higher the number, the cheaper it is compared with its five-year average. "5Y Low" marks stocks at their lowest level in five years. Stocks with falling year-over-year revenue are excluded. Updated daily at the close.`;
+}
+
+/** The small note on a row whose look-back is shorter than five years. */
+export function periodNote(period: ValuePeriod, ja: boolean) {
+  if (period === "listed") return ja ? "上場後の期間で計算" : "Since listing";
+  if (period === "data") return ja ? "決算データのある期間で計算" : "Over the filed period";
+  return null;
 }

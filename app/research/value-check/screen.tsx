@@ -5,7 +5,7 @@ import ResearchToolShell from "../research-tool-shell";
 import StockLogo from "../watchlist/stock-logo";
 import { useMemberDisplay, useMemberSettled, useOwnerAccount } from "../member-display-provider";
 import { useResearchLanguage } from "../use-research-language";
-import { FIRST_ROWS, VALUE_UNIVERSES, aboutText, footerLine, growth, parseValueSnapshot, ratio, stockHref, type ValueItem, type ValueList, type ValueSnapshot, type ValueUniverse } from "@/lib/research/value-check";
+import { FIRST_ROWS, VALUE_UNIVERSES, aboutText, footerLine, growth, parseValueSnapshot, periodNote, ratio, stockHref, type ValueItem, type ValueList, type ValueSnapshot, type ValueUniverse } from "@/lib/research/value-check";
 import styles from "./value-check.module.css";
 
 type State = "loading" | "ready" | "not-ready" | "error" | "sign-in" | "pro-required";
@@ -29,6 +29,12 @@ function useValueCheck(allowed: boolean) {
   }, [allowed, attempt]);
   return { state, data, retry: () => { setState("loading"); setAttempt(n => n + 1); } };
 }
+
+/** After the ticker: IN (filled) first, then 5年最安 (a thin gold outline, so the two never look alike). */
+const Marks = ({ item, ja }: { item: ValueItem; ja: boolean }) => <>
+  {item.in && <i className={styles.inMini}>IN</i>}
+  {item.low && <i className={styles.lowMini}>{ja ? "5年最安" : "5Y Low"}</i>}
+</>;
 
 const Metrics = ({ item, ja, inline }: { item: ValueItem; ja: boolean; inline?: boolean }) => {
   const sales = (lead: string) => <span className={styles.keep}>{lead}{ja ? "売上" : "Revenue"} <b className={styles.up}>{growth(item.revenueGrowth)}</b></span>;
@@ -55,9 +61,9 @@ function Podium({ items, ja }: { items: ValueItem[]; ja: boolean }) {
   const tone = ["silver", "gold", "bronze"] as const;
   return <ol className={styles.podium} aria-label={ja ? "1〜3位" : "Top three"}>
     {order.map((item, index) => item ? <li key={item.ticker} className={styles[tone[index]]} value={place[index]}>
-      <Link href={stockHref(item.ticker)} className={styles.podiumLink} aria-label={`${place[index]}${ja ? "位" : ""} ${item.ticker} ${ja ? "割安度" : "Value Score"} ${item.score}%`}>
+      <Link href={stockHref(item.ticker)} className={styles.podiumLink} aria-label={`${place[index]}${ja ? "位" : ""} ${item.ticker} ${ja ? "割安度" : "Value Score"} ${item.score}%${item.period ? ` ${periodNote(item.period, ja)}` : ""}`} title={periodNote(item.period, ja) ?? undefined}>
         <StockLogo ticker={item.ticker} className={styles.logo} full />
-        <b className={styles.podiumTicker}>{item.ticker}{item.in && <i className={styles.inMini}>IN</i>}</b>
+        <b className={styles.podiumTicker}>{item.ticker}<Marks item={item} ja={ja} /></b>
         <span className={styles.label}>{ja ? "割安度" : "Value Score"}</span>
         <span className={styles.podiumScore}>{item.score}<small>%</small></span>
         <Metrics item={item} ja={ja} />
@@ -73,9 +79,10 @@ function Row({ item, rank, ja }: { item: ValueItem; rank: number; ja: boolean })
       <span className={styles.rank} aria-label={`${rank}${ja ? "位" : ""}`}>{rank}</span>
       <StockLogo ticker={item.ticker} className={styles.logo} full />
       <span className={styles.names}>
-        <b className={styles.ticker}>{item.ticker}{item.in && <i className={styles.inMini}>IN</i>}</b>
+        <b className={styles.ticker}>{item.ticker}<Marks item={item} ja={ja} /></b>
         <span className={styles.company}>{ja ? item.ja : item.en}</span>
         <Metrics item={item} ja={ja} inline />
+        {item.period && <span className={styles.period}>{periodNote(item.period, ja)}</span>}
       </span>
       <span className={styles.value}><span className={styles.label}>{ja ? "割安度" : "Value Score"}</span><b>{item.score}<small>%</small></b></span>
     </Link>

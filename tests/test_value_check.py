@@ -50,6 +50,10 @@ class TwelveMonths(unittest.TestCase):
         points = vc.share_points(data)
         self.assertEqual([p['value'] for p in points], [10, 90, 100])
 
+    def test_a_share_count_off_by_a_thousand_in_one_filing_is_left_out(self):
+        points = [{'end': 1, 'value': 90e6}, {'end': 2, 'value': 89e9}, {'end': 3, 'value': 89e6}, {'end': 4, 'value': 180e6}]
+        self.assertEqual([p['end'] for p in vc.clean_shares(points)], [1, 3, 4])  # a real doubling (a split) stays
+
     def test_revenue_takes_the_widest_name(self):
         rows = {'facts': {'us-gaap': {
             'RevenueFromContractWithCustomerExcludingAssessedTax': {'units': {'USD': [fact(5, '2024-01-01', '2024-12-31', '2025-02-10', '10-K')]}},
@@ -58,17 +62,23 @@ class TwelveMonths(unittest.TestCase):
 
 
 class Score(unittest.TestCase):
-    def test_position_is_the_share_of_days_higher_than_today(self):
-        self.assertEqual(vc.position([10, 20, 30, 40], 15), 75.0)
-        self.assertIsNone(vc.position([], 1))
+    def test_trimmed_mean_leaves_out_the_top_and_bottom_five_percent(self):
+        self.assertEqual(vc.trimmed_mean(list(range(1, 101))), 50.5)
 
-    def test_score_averages_pe_and_ps_and_uses_ps_alone_on_a_loss(self):
-        ratios = [(i, 30.0 - i * 0.01, 10.0 - i * 0.001) for i in range(800)]
-        score, pe_pos, ps_pos, _, _, _ = vc.score_at(ratios, 799)
-        self.assertEqual((pe_pos, ps_pos, score), (100.0, 100.0, 100))
-        ratios[-1] = (799, None, 10.0)  # loss today: P/S only, P/S now the highest -> 0
-        self.assertEqual(vc.score_at(ratios, 799)[0], 0)
-        self.assertIsNone(vc.score_at(ratios[:200], 199))  # under three years of history
+    def test_score_is_the_distance_below_the_five_year_mean(self):
+        history = [(i, 15.0, 5.0) for i in range(300)]
+        today = vc.score_at(history + [(300, 3.8, 5.0)], 300)
+        self.assertAlmostEqual(today['exact'], (100 * (1 - 3.8 / 15) + 0) / 2)  # P/E 3.8 against 15: 75%; P/S at its mean: 0%
+        self.assertFalse(today['low'])  # P/S is not below every day
+        both = vc.score_at(history + [(300, 3.8, 2.5)], 300)
+        self.assertAlmostEqual(both['exact'], (100 * (1 - 3.8 / 15) + 50) / 2)
+        self.assertTrue(both['low'])
+        loss = vc.score_at(history + [(300, None, 2.5)], 300)  # no P/E today: P/S alone
+        self.assertAlmostEqual(loss['exact'], 50)
+        self.assertIsNone(vc.score_at(history[:200] + [(200, 3.8, 2.5)], 200))  # under a year of history
+        # loss days have no P/E and stay out of its mean
+        mixed = [(i, None if i % 2 else 10.0, 5.0) for i in range(600)]
+        self.assertAlmostEqual(vc.score_at(mixed + [(600, 5.0, 5.0)], 600)['exact'], (50 + 0) / 2)
 
     def test_split_rebases_the_stored_closes_and_keeps_market_value(self):
         db = sqlite3.connect(':memory:')
@@ -116,21 +126,71 @@ class Snapshot(unittest.TestCase):
     def test_ranking_exclusions_and_order(self):
         snap = self.build()
         tech = snap['universes']['tech']
-        self.assertEqual([r['ticker'] for r in tech['items']], ['LOSS', 'UP', 'DOWN'])  # ties by ticker
-        self.assertEqual(tech['excluded'], {'revenue-decline': ['SHRINK']})
+        self.assertEqual([r['ticker'] for r in tech['items']], ['LOSS', 'UP'])  # the same value: by ticker
+        self.assertEqual(tech['excluded'], {'above-average': ['DOWN'], 'revenue-decline': ['SHRINK']})
         self.assertEqual(snap['universes']['all']['excluded']['share-class'], ['BRK.B'])
         loss = tech['items'][0]
         self.assertIsNone(loss['pe'])
-        self.assertEqual(loss['score'], 100)
+        self.assertGreater(loss['score'], 30)
+        self.assertTrue(loss['low'])
         self.assertEqual(snap['basis'], 'trailing')
         self.assertEqual(loss['ja'], 'LOSSジャ')
 
     def test_in_and_out(self):
-        rows = [{'ticker': 'A', 'score': 96, 'previous': 61}, {'ticker': 'B', 'score': 61, 'previous': 74},
-                {'ticker': 'C', 'score': 80, 'previous': 75}, {'ticker': 'D', 'score': 72, 'previous': 69}]
-        moved = vc.changes(rows)
-        self.assertEqual(moved['in'], [{'ticker': 'A', 'from': 61, 'to': 96}, {'ticker': 'D', 'from': 69, 'to': 72}])
-        self.assertEqual(moved['out'], [{'ticker': 'B', 'from': 74, 'to': 61}])
+        rows = [{'ticker': 'A', 'score': 50, 'previous': 20}, {'ticker': 'B', 'score': 20, 'previous': 40},
+                {'ticker': 'C', 'score': 60, 'previous': 40}, {'ticker': 'D', 'score': 31, 'previous': 29}]
+        moved = vc.changes(rows)  # the line is 30% (owner, Nov 22)
+        self.assertEqual(moved['in'], [{'ticker': 'A', 'from': 20, 'to': 50}, {'ticker': 'D', 'from': 29, 'to': 31}])
+        self.assertEqual(moved['out'], [{'ticker': 'B', 'from': 40, 'to': 20}])
+
+
+class ForeignAndShort(unittest.TestCase):
+    def test_ifrs_facts_in_their_own_currency(self):
+        data = {'facts': {'ifrs-full': {'Revenue': {'units': {
+            'TWD': [fact(1000, '2024-01-01', '2024-12-31', '2025-04-10', '20-F'), fact(800, '2023-01-01', '2023-12-31', '2024-04-10', '20-F')],
+            'USD': [fact(31, '2024-01-01', '2024-12-31', '2025-04-10', '20-F')]}}}}}
+        record = vc.fundamentals(data)
+        self.assertEqual(record['currency'], 'TWD')
+        self.assertEqual(record['revenue'][-1]['value'], 1000)
+
+    def test_provider_quarters_extend_the_sec_series_on_the_depositary_share_basis(self):
+        end = lambda text: date.fromisoformat(text).toordinal()  # noqa: E731
+        record = {'revenue': [{'end': end('2024-12-31'), 'filed': end('2025-04-10'), 'value': 1000.0}], 'income': [],
+                  'shares': [{'end': end('2025-12-31'), 'value': 25.0}], 'currency': 'TWD', 'source': 'sec'}
+        quarters = [('2025-03-31', 100), ('2025-06-30', 110), ('2025-09-30', 120), ('2025-12-31', 130), ('2026-03-31', 140), ('2026-06-30', 150)]
+        body = {'meta': {'currency': 'TWD'}, 'income_statement': [
+            {'fiscal_date': d, 'sales': v, 'net_income': v / 2, 'diluted_shares_outstanding': 5.0} for d, v in reversed(quarters)]}
+        merged = vc.supplement(record, body)
+        self.assertEqual(merged['source'], 'sec+twelvedata')
+        self.assertEqual([p['value'] for p in merged['revenue']], [1000.0, 460.0, 500.0, 540.0])
+        self.assertEqual(merged['shares'][0]['value'], 5.0)  # 25 ordinary shares = 5 depositary shares
+        self.assertAlmostEqual(vc.revenue_growth(merged), 150 / 110 * 100 - 100)  # no twelve months a year back: the quarter
+        # never two currencies in one series
+        self.assertEqual(vc.supplement(record, {**body, 'meta': {'currency': 'USD'}})['revenue'], record['revenue'])
+
+    def test_market_value_is_turned_into_the_filing_currency(self):
+        days = trading_days('2026-01-05', 3)
+        record = {'shares': [{'end': date.fromisoformat(days[0]).toordinal() - 5, 'value': 2.0}], 'income': [], 'currency': 'TWD',
+                  'revenue': [{'end': date.fromisoformat(days[0]).toordinal() - 30, 'filed': date.fromisoformat(days[0]).toordinal() - 1, 'value': 640.0}]}
+        closes = [(d, 10.0, 10.0) for d in days]
+        ratios = vc.daily_ratios(closes, record, [(days[0], 32.0)])
+        self.assertAlmostEqual(ratios[-1][2], 1.0)  # 10 x 2 = 20 dollars = 640 Taiwan dollars, over 640 of revenue
+        self.assertEqual(vc.daily_ratios(closes, record, None), [])
+
+    def test_a_recent_listing_is_calculated_over_its_own_history_and_says_so(self):
+        days = trading_days('2025-06-02', 300)
+        first = date.fromisoformat(days[0]).toordinal()
+        record = {'shares': [{'end': first - 5, 'value': 1.0}], 'income': [],
+                  'revenue': [{'end': first - 400 + q * 91, 'filed': first - 380 + q * 91, 'value': 100.0 + q} for q in range(12)]}
+        closes = [(d, 100.0 - i * 0.1, 100.0 - i * 0.1) for i, d in enumerate(days)]
+        row = vc.evaluate('NEW', closes, record, days[-1])
+        self.assertEqual(row['period'], 'listed')
+        self.assertGreater(row['score'], 0)
+        self.assertTrue(row['low'])
+
+    def test_the_same_percent_is_ordered_by_the_unrounded_value(self):
+        rows = [{'ticker': 'A', 'score': 40, 'exact': 40.2}, {'ticker': 'B', 'score': 40, 'exact': 40.4}, {'ticker': 'C', 'score': 41, 'exact': 40.6}]
+        self.assertEqual([r['ticker'] for r in vc.rank(rows)], ['C', 'B', 'A'])
 
 
 class Credits(unittest.TestCase):
@@ -146,13 +206,13 @@ class Credits(unittest.TestCase):
         def sleep(seconds):
             clock[0] += seconds
 
-        pacer = vc.Pacer(transport, sleep=sleep, clock=lambda: clock[0])
+        pacer = vc.Pacer(transport, sleep=sleep, clock=lambda: clock[0], wall=lambda: clock[0])
         self.assertTrue(pacer.wait_for(8))
-        self.assertEqual(clock[0], 30)  # two busy minutes (445 + 8 and 448 + 8 pass 450), then room
+        self.assertEqual(clock[0], 122)  # two busy minutes, each waited out to 2 s into the next minute
 
     def test_own_budget_per_minute(self):
         clock = [0.0]
-        pacer = vc.Pacer(lambda p, q: {'current_usage': 0}, sleep=lambda s: clock.__setitem__(0, clock[0] + s), clock=lambda: clock[0], own=16)
+        pacer = vc.Pacer(lambda p, q: {'current_usage': 0}, sleep=lambda s: clock.__setitem__(0, clock[0] + s), clock=lambda: clock[0], own=16, wall=lambda: clock[0])
         self.assertTrue(pacer.wait_for(8))
         self.assertTrue(pacer.wait_for(8))
         self.assertTrue(pacer.wait_for(8))

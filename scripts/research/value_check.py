@@ -5,8 +5,9 @@ Mechanical and the same for everyone:
     Market value = split-adjusted daily close (Twelve Data) x shares outstanding from the SEC cover page, brought to today's share basis.
     The twelve-month figures come from SEC XBRL company facts and are used from the day they were filed.
     Forward (estimate-based) P/E and P/S have no five-year daily history at Twelve Data, so the trailing (実績) values are used.
-  * Position = share of the past five years' days on which the value was higher than today (0-100).
-  * Value Score = mean of the P/E and P/S positions, rounded; with no positive P/E (a loss) the P/S position alone.
+  * For each: 1 - today / the five-year mean without the top and bottom 5% of days (loss days have no P/E).
+  * Value Score = mean of the two, in percent (P/S alone without a P/E today); at 0% or below a stock is not ranked.
+    5年最安 = both below every day of the five years. Owner's revision of Nov 22.
   * Stocks whose trailing revenue is below the year before are left out of the ranking; so are stocks without enough data (recorded).
 
 Credits (Twelve Data plan: 610 a minute shared with the whole site): the job never lets the minute's usage pass CREDIT_CEILING and
@@ -41,17 +42,27 @@ CHUNK = 8                     # symbols per Twelve Data request
 HISTORY_BARS = 1300           # a little over five years of trading days
 UPDATE_BARS = 30              # the daily read: enough overlap to notice a split
 WINDOW_DAYS = 5 * 365 + 2     # the five-year look-back
-MIN_PS_DAYS = 3 * 252         # at least three years of daily P/S (a younger listing uses what it has, from three years)
+MIN_PS_DAYS = 252             # at least a year of daily P/S; a younger listing is calculated over what it has (and says so)
+FULL_DAYS = 1150              # fewer days of P/S than this (about 4.6 years): the row says the period was shorter
 MIN_PE_DAYS = 252             # fewer profitable days than this: the P/S position alone
 MAX_PS = 200                  # a P/S above this means the filed revenue is only a part of the total: left out, not guessed
-CHEAP = 70                    # 割安: Value Score of 70 or more
+CHEAP = 30                    # 割安: Value Score of 30% or more (IN / OUT), owner Nov 22
+TRIM = 0.05                   # the five-year mean leaves out the top and bottom 5% of days
 FACTS_MAX_AGE = 7 * 86400     # SEC company facts are read again after a week
+MAX_FIGURE_AGE = 400          # a twelve-month figure older than this (days after its period end) is no longer used
+TD_WHEN_OLDER = 300           # SEC figures older than this: the provider's quarterly statements fill in (100 credits a read)
+TD_STATEMENT_COST = 100
+TD_REREAD = 7 * 86400         # and are read again only when a newer quarter can be out (TD_NEW_QUARTER days after the last)
+TD_NEW_QUARTER = 100
 RUN_AT = (17, 30)             # weekdays, Eastern, after the close
 
+# "ifrs-full:" names read a foreign filer's IFRS facts (20-F, 40-F, 6-K), as the stock comparison does.
 REVENUE = ['RevenueFromContractWithCustomerExcludingAssessedTax', 'Revenues', 'RevenueFromContractWithCustomerIncludingAssessedTax',
-           'SalesRevenueNet', 'SalesRevenueGoodsNet', 'RevenuesNetOfInterestExpense', 'RegulatedAndUnregulatedOperatingRevenue']
-NET_INCOME = ['NetIncomeLoss', 'NetIncomeLossAvailableToCommonStockholdersBasic', 'ProfitLoss']
-FORMS = {'10-K', '10-K/A', '10-Q', '10-Q/A'}
+           'SalesRevenueNet', 'SalesRevenueGoodsNet', 'RevenuesNetOfInterestExpense', 'RegulatedAndUnregulatedOperatingRevenue',
+           'ifrs-full:Revenue', 'ifrs-full:RevenueFromContractsWithCustomers']
+NET_INCOME = ['NetIncomeLoss', 'NetIncomeLossAvailableToCommonStockholdersBasic', 'ProfitLoss',
+              'ifrs-full:ProfitLossAttributableToOwnersOfParent', 'ifrs-full:ProfitLoss']
+FORMS = {'10-K', '10-K/A', '10-Q', '10-Q/A', '10-KT', '20-F', '20-F/A', '40-F', '40-F/A', '6-K', '6-K/A'}
 
 STATUS = {'lastRun': None, 'lastError': None, 'credits': 0}
 
@@ -77,6 +88,8 @@ def schema(db):
     db.execute('''CREATE TABLE IF NOT EXISTS value_check_facts(
       ticker TEXT PRIMARY KEY, fetched_at REAL NOT NULL, payload TEXT NOT NULL)''')
     db.execute('''CREATE TABLE IF NOT EXISTS value_check_state(key TEXT PRIMARY KEY, value TEXT NOT NULL)''')
+    db.execute('''CREATE TABLE IF NOT EXISTS value_check_statements(
+      ticker TEXT PRIMARY KEY, fetched_at REAL NOT NULL, payload TEXT NOT NULL)''')
     db.commit()
 
 
@@ -177,7 +190,7 @@ def share_points(facts):
     company with several share classes files them only by class, which the SEC's company facts leave out), the diluted weighted
     average share count of each period as first reported (a later filing restates it for a split; the closes are matched to the
     count as it was then)."""
-    rows = _rows(facts, 'dei', 'EntityCommonStockSharesOutstanding', 'shares')
+    rows = _rows(facts, 'dei', 'EntityCommonStockSharesOutstanding', 'shares') or _rows(facts, 'ifrs-full', 'NumberOfSharesOutstanding', 'shares')
     first_cover = min((row['end'] for row in rows), default=None)
     weighted = {}
     for row in _rows(facts, 'us-gaap', 'WeightedAverageNumberOfDilutedSharesOutstanding', 'shares'):
@@ -199,15 +212,100 @@ def share_points(facts):
     return [{'end': end, 'value': value} for end, value in sorted(latest.items())]
 
 
+def _name(tag):
+    return tuple(tag.split(':', 1)) if ':' in tag else ('us-gaap', tag)
+
+
+def reporting_currency(facts):
+    """The currency of the latest revenue facts (TWD for TSMC, EUR for ASML; USD for most; Nebius reports in dollars now, in
+    roubles before), and of those the one with the most facts, so a few years translated for convenience do not decide it."""
+    seen = {}
+    for tag in REVENUE:
+        taxonomy, name = _name(tag)
+        units = (((facts.get('facts') or {}).get(taxonomy) or {}).get(name) or {}).get('units') or {}
+        for unit, rows in units.items():
+            if len(unit) == 3 and unit.isalpha() and unit.isupper() and isinstance(rows, list):
+                ends = [str(row.get('end')) for row in rows if isinstance(row, dict) and row.get('form') in FORMS]
+                if ends:
+                    latest, count = seen.get(unit, ('', 0))
+                    seen[unit] = (max(latest, max(ends)), count + len(ends))
+    return max(sorted(seen), key=lambda unit: (seen[unit][0][:4], seen[unit][1], unit == 'USD')) if seen else 'USD'
+
+
 def fundamentals(facts):
-    """The compact per-company record kept in the database (no raw filing data)."""
-    if not isinstance(facts, dict):
+    """The compact per-company record kept in the database (no raw filing data). Figures stay in the filing's currency;
+    they are turned into dollars day by day with that day's exchange rate."""
+    if not isinstance(facts, dict) or not facts.get('facts'):
         return {'error': 'no-sec-data'}
-    usd = lambda tags: [_rows(facts, 'us-gaap', tag, 'USD') for tag in tags]  # noqa: E731
-    revenue = ttm_points(usd(REVENUE), widest=True)
-    income = ttm_points(usd(NET_INCOME))
+    currency = reporting_currency(facts)
+    flows = lambda tags: [_rows(facts, *_name(tag), currency) for tag in tags]  # noqa: E731
+    revenue = ttm_points(flows(REVENUE), widest=True)
+    income = ttm_points(flows(NET_INCOME))
     shares = share_points(facts)
-    return {'revenue': revenue, 'income': income, 'shares': shares}
+    return {'revenue': revenue, 'income': income, 'shares': shares, 'currency': currency, 'source': 'sec'}
+
+
+# ---- the provider's quarterly statements, where the SEC's figures are missing or old -------------------------------------------------
+
+def statement_quarters(body):
+    """Twelve Data income_statement (quarterly) -> (currency, [{end, sales, income, shares}] oldest first)."""
+    if not isinstance(body, dict) or not isinstance(body.get('income_statement'), list):
+        return None, []
+    currency = str((body.get('meta') or {}).get('currency') or 'USD').upper()
+    out = []
+    for row in body['income_statement']:
+        try:
+            end = _day(str(row['fiscal_date'])[:10])
+        except (KeyError, TypeError, ValueError):
+            continue
+        number = lambda key: row.get(key) if isinstance(row.get(key), (int, float)) and math.isfinite(row.get(key)) else None  # noqa: E731
+        out.append({'end': end, 'sales': number('sales'), 'income': number('net_income'), 'shares': number('diluted_shares_outstanding')})
+    return currency, sorted(out, key=lambda q: q['end'])
+
+
+def supplement(record, body):
+    """Adds the provider's quarters after the last SEC period: trailing twelve months from four quarters in a row (counted as known
+    30 days after the quarter), the share count, and the quarters themselves for the year-over-year revenue. A depositary share
+    stands for a fixed number of ordinary shares; when the provider counts depositary shares (TSMC: one for five), the SEC counts
+    are brought to the same basis."""
+    currency, quarters = statement_quarters(body)
+    if not quarters:
+        return record
+    record = dict(record) if record and not record.get('error') else {'revenue': [], 'income': [], 'shares': [], 'currency': currency}
+    if record.get('revenue') and record.get('currency') != currency:
+        return record  # never mix two currencies in one series
+    record['currency'] = currency
+    record['source'] = 'sec+twelvedata' if record.get('revenue') else 'twelvedata'
+    for key, field in (('revenue', 'sales'), ('income', 'income')):
+        points = list(record.get(key) or [])
+        last = max((p['end'] for p in points), default=0)
+        for i in range(3, len(quarters)):
+            run = quarters[i - 3:i + 1]
+            if any(not 75 <= b['end'] - a['end'] <= 105 for a, b in zip(run, run[1:])) or any(q[field] is None for q in run):
+                continue
+            if run[-1]['end'] > last + 9:
+                points.append({'end': run[-1]['end'], 'filed': run[-1]['end'] + 30, 'value': float(sum(q[field] for q in run))})
+        record[key] = sorted(points, key=lambda p: p['end'])
+    provider_shares = [{'end': q['end'] + 30, 'value': float(q['shares'])} for q in quarters if q['shares'] and q['shares'] > 0]
+    shares = list(record.get('shares') or [])
+    if provider_shares and shares:
+        latest = provider_shares[-1]
+        nearest = min(shares, key=lambda p: abs(p['end'] - latest['end']))
+        factor = latest['value'] / nearest['value'] if nearest['value'] > 0 else 1.0
+        if not 0.67 <= factor <= 1.5:
+            shares = [{**p, 'value': p['value'] * factor} for p in shares]
+    last_share = max((p['end'] for p in shares), default=0)
+    shares += [p for p in provider_shares if p['end'] > last_share]
+    record['shares'] = sorted(shares, key=lambda p: p['end'])
+    record['quarters'] = [{'end': q['end'], 'value': float(q['sales'])} for q in quarters if q['sales'] is not None]
+    return record
+
+
+def needs_statements(record, today):
+    """True when the SEC's latest twelve-month revenue is missing or more than TD_WHEN_OLDER days old."""
+    if not record or record.get('error') or not record.get('revenue'):
+        return True
+    return today - max(p['end'] for p in record['revenue']) > TD_WHEN_OLDER
 
 
 def sec_fetch(cik, user_agent, opener=urllib.request.urlopen):
@@ -247,8 +345,9 @@ def td_get(path, params, env=None, timeout=60):
 class Pacer:
     """Spends credits only while the key's usage this minute leaves room, and never more than OWN_PER_MINUTE of its own."""
 
-    def __init__(self, transport, sleep=time.sleep, clock=time.monotonic, ceiling=CREDIT_CEILING, own=OWN_PER_MINUTE, max_wait=900):
-        self.transport, self.sleep, self.clock = transport, sleep, clock
+    def __init__(self, transport, sleep=time.sleep, clock=time.monotonic, ceiling=CREDIT_CEILING, own=OWN_PER_MINUTE, max_wait=900,
+                 wall=time.time):
+        self.transport, self.sleep, self.clock, self.wall = transport, sleep, clock, wall
         self.ceiling, self.own, self.max_wait = ceiling, own, max_wait
         self.spent = []  # (time, credits)
         self.total = 0
@@ -276,7 +375,9 @@ class Pacer:
                 return True
             if now - started > self.max_wait:
                 return False
-            self.sleep(15)  # each /api_usage read itself costs a credit
+            # The provider counts per clock minute: a busy minute is waited out to just after the next one starts, when the
+            # usage is lowest (each /api_usage read itself costs a credit, so it is not polled meanwhile).
+            self.sleep(max(5.0, 62 - self.wall() % 60))
 
 
 def parse_series(body, symbols):
@@ -306,7 +407,8 @@ def parse_series(body, symbols):
 
 
 def provider_symbol(ticker):
-    return ticker.replace('-', '.')
+    """FX:TWD is the dollar's rate in Taiwan dollars (USD/TWD); a share class dash becomes a dot."""
+    return f'USD/{ticker[3:]}' if ticker.startswith('FX:') else ticker.replace('-', '.')
 
 
 def read_series(tickers, bars, adjust, pacer, transport):
@@ -366,6 +468,17 @@ def _latest(points, day, key):
     return points[lo - 1] if lo else None
 
 
+def _latest_index(days, day):
+    lo, hi = 0, len(days)
+    while lo < hi:
+        mid = (lo + hi) // 2
+        if days[mid] <= day:
+            lo = mid + 1
+        else:
+            hi = mid
+    return lo - 1
+
+
 def _known(points, day):
     """The most recent period already filed on `day`."""
     best = None
@@ -375,11 +488,29 @@ def _known(points, day):
     return best
 
 
-def daily_ratios(closes, record):
-    """[(ordinal day, pe or None, ps or None)] for every stored close. closes: [(day text, raw, adj)] oldest first."""
-    shares = record.get('shares') or []
+def clean_shares(points):
+    """Leaves out a cover count that is more than five times off both its neighbours (Packaging Corp's 10-K of Feb 2026 gives
+    89 billion shares for 89 million): a typing slip in one filing, not a change in the company."""
+    out = []
+    for i, point in enumerate(points):
+        before = points[i - 1]['value'] if i else None
+        after = points[i + 1]['value'] if i + 1 < len(points) else None
+        off = lambda other: other is not None and other > 0 and not 0.2 <= point['value'] / other <= 5  # noqa: E731
+        if off(before) and (after is None or off(after)):
+            continue
+        out.append(point)
+    return out
+
+
+def daily_ratios(closes, record, fx=None):
+    """[(ordinal day, pe or None, ps or None)] for every stored close. closes: [(day text, raw, adj)] oldest first.
+    fx: [(day text, units of the filing currency per dollar)] when the figures are not in dollars."""
+    shares = clean_shares(record.get('shares') or [])
     if not closes or not shares:
         return []
+    if (record.get('currency') or 'USD') != 'USD' and not fx:
+        return []
+    fx_days = [_day(day) for day, _ in fx] if fx else []
     days = [_day(day) for day, _, _ in closes]
     factors = [raw / adj if adj > 0 else 1.0 for _, raw, adj in closes]
 
@@ -410,21 +541,27 @@ def daily_ratios(closes, record):
             out.append((ordinal, None, None))
             continue
         value = adj * point['value'] * factor_at(point['end'])
-        pe = value / inc['value'] if inc and inc['value'] > 0 and ordinal - inc['end'] < 200 else None
-        ps = value / rev['value'] if rev and rev['value'] > 0 and ordinal - rev['end'] < 200 else None
+        if fx_days:
+            at = _latest_index(fx_days, ordinal)
+            value *= fx[max(at, 0)][1]  # the market value in the filing's currency
+        pe = value / inc['value'] if inc and inc['value'] > 0 and ordinal - inc['end'] < MAX_FIGURE_AGE else None
+        ps = value / rev['value'] if rev and rev['value'] > 0 and ordinal - rev['end'] < MAX_FIGURE_AGE else None
         out.append((ordinal, pe, ps))
     return out
 
 
-def position(history, today):
-    """Share (0-100) of the past days on which the value was higher than today."""
-    if not history:
-        return None
-    return 100.0 * sum(1 for value in history if value > today) / len(history)
+def trimmed_mean(values, cut=TRIM):
+    """The mean without the highest and the lowest `cut` share of the values (5% each), so a few extreme days do not decide it."""
+    ordered = sorted(values)
+    drop = int(len(ordered) * cut)
+    kept = ordered[drop:len(ordered) - drop] if drop else ordered
+    return sum(kept) / len(kept)
 
 
 def score_at(ratios, index):
-    """(score, pe position, ps position, pe, ps) on ratios[index], looking back five years; None without enough data."""
+    """The Value Score on ratios[index] (owner, Nov 22 revision): for P/E and P/S each, 1 - today / the five-year trimmed mean
+    (loss days have no P/E and are left out of its mean); the mean of the two, or P/S alone without a P/E today. In percent,
+    unrounded. Also whether both are below every day of the period (5年最安). None without enough data."""
     if index < 0 or index >= len(ratios):
         return None
     day, pe, ps = ratios[index]
@@ -434,26 +571,35 @@ def score_at(ratios, index):
     ps_history = [r[2] for r in window if r[2] is not None]
     if len(ps_history) < MIN_PS_DAYS:
         return None
-    ps_pos = position(ps_history, ps)
     pe_history = [r[1] for r in window if r[1] is not None]
-    pe_pos = position(pe_history, pe) if pe is not None and len(pe_history) >= MIN_PE_DAYS else None
-    parts = [p for p in (pe_pos, ps_pos) if p is not None]
-    exact = sum(parts) / len(parts)
-    return round(exact), pe_pos, ps_pos, pe, ps, exact
+    use_pe = pe is not None and len(pe_history) >= MIN_PE_DAYS
+    parts = [1 - ps / trimmed_mean(ps_history)]
+    low = ps < min(ps_history)
+    if use_pe:
+        parts.insert(0, 1 - pe / trimmed_mean(pe_history))
+        low = low and pe < min(pe_history)
+    return {'exact': 100 * sum(parts) / len(parts), 'pe': pe, 'ps': ps, 'low': low, 'days': len(ps_history)}
 
 
 def revenue_growth(record):
+    """Trailing twelve months against the twelve months a year earlier; without that, the latest quarter against the same quarter a
+    year earlier (the provider's quarters)."""
     points = sorted(record.get('revenue') or [], key=lambda p: p['end'])
-    if not points:
-        return None
-    latest = points[-1]
-    before = next((p for p in reversed(points) if _near(p['end'], latest['end'] - 365, 12)), None)
-    if not before or before['value'] <= 0:
-        return None
-    return (latest['value'] / before['value'] - 1) * 100
+    if points:
+        latest = points[-1]
+        before = next((p for p in reversed(points) if _near(p['end'], latest['end'] - 365, 12)), None)
+        if before and before['value'] > 0:
+            return (latest['value'] / before['value'] - 1) * 100
+    quarters = sorted(record.get('quarters') or [], key=lambda q: q['end'])
+    if quarters:
+        latest = quarters[-1]
+        before = next((q for q in quarters if _near(q['end'], latest['end'] - 365, 12)), None)
+        if before and before['value'] > 0:
+            return (latest['value'] / before['value'] - 1) * 100
+    return None
 
 
-def evaluate(ticker, closes, record, as_of):
+def evaluate(ticker, closes, record, as_of, fx=None):
     """One ticker: a ranked row, or an exclusion reason."""
     if record.get('error'):
         return {'excluded': record['error']}
@@ -465,26 +611,36 @@ def evaluate(ticker, closes, record, as_of):
         return {'excluded': 'no-price'}
     if closes[-1][0] != as_of:
         return {'excluded': 'stale-price'}
-    ratios = daily_ratios(closes, record)
+    if (record.get('currency') or 'USD') != 'USD' and not fx:
+        return {'excluded': 'no-exchange-rate'}
+    ratios = daily_ratios(closes, record, fx)
     today = score_at(ratios, len(ratios) - 1)
     if today is None:
         return {'excluded': 'short-history' if ratios and ratios[-1][2] is not None else 'no-current-figures'}
-    if today[4] > MAX_PS:
+    if today['ps'] > MAX_PS:
         return {'excluded': 'implausible'}
     growth = revenue_growth(record)
     if growth is None:
         return {'excluded': 'no-growth'}
     if growth < 0:
         return {'excluded': 'revenue-decline'}
+    if today['exact'] <= 0 or round(today['exact']) <= 0:
+        return {'excluded': 'above-average'}  # at or above its five-year mean: not in the ranking (owner, Nov 22)
     previous = score_at(ratios, len(ratios) - 2)
-    score, _, _, pe, ps, exact = today
-    return {'ticker': ticker, 'score': score, 'exact': exact, 'previous': previous[0] if previous else None,
-            'pe': round(pe, 1) if pe is not None else None, 'ps': round(ps, 1), 'revenueGrowth': round(growth)}
+    pe, ps = today['pe'], today['ps']
+    # The note says why the period is shorter than five years: a recent listing, or filings that start later.
+    note = None
+    if today['days'] < FULL_DAYS:
+        note = 'listed' if _day(closes[0][0]) > _day(as_of) - WINDOW_DAYS + 60 else 'data'
+    return {'ticker': ticker, 'score': round(today['exact']), 'exact': today['exact'],
+            'previous': round(previous['exact']) if previous else None, 'low': today['low'],
+            'pe': round(pe, 1) if pe is not None else None, 'ps': round(ps, 1), 'revenueGrowth': round(growth),
+            'period': note, 'source': record.get('source') or 'sec'}
 
 
 def rank(rows):
-    """Highest score first; the same rounded score by the unrounded one, then by ticker, so nothing else decides the order."""
-    return sorted(rows, key=lambda r: (-r['score'], -r.get('exact', r['score']), r['ticker']))
+    """Highest Value Score first, by the unrounded value (two stocks shown at the same % still have an order), then by ticker."""
+    return sorted(rows, key=lambda r: (-r.get('exact', r['score']), r['ticker']))
 
 
 def changes(rows):
@@ -498,7 +654,7 @@ def changes(rows):
     return {'in': ins, 'out': outs}
 
 
-def build_snapshot(universe, closes_by_ticker, records, now=None):
+def build_snapshot(universe, closes_by_ticker, records, now=None, fx=None):
     now = now or datetime.now(timezone.utc)
     last_days = sorted(c[-1][0] for c in closes_by_ticker.values() if c)
     as_of = max(set(last_days), key=last_days.count) if last_days else None  # the day most tickers closed on
@@ -509,7 +665,8 @@ def build_snapshot(universe, closes_by_ticker, records, now=None):
         if '.' in ticker:
             evaluated[ticker] = {'excluded': 'share-class'}
             continue
-        evaluated[ticker] = evaluate(ticker, closes_by_ticker.get(ticker) or [], records.get(ticker) or {'error': 'no-sec-data'}, as_of)
+        record = records.get(ticker) or {'error': 'no-sec-data'}
+        evaluated[ticker] = evaluate(ticker, closes_by_ticker.get(ticker) or [], record, as_of, (fx or {}).get(record.get('currency')))
     companies = universe['companies']
     lists = {}
     for name in ('tech', 'all'):
@@ -524,13 +681,15 @@ def build_snapshot(universe, closes_by_ticker, records, now=None):
         rows = rank(rows)
         for row in rows:
             row.pop('exact', None)
+            row.pop('source', None)
         moved = changes(rows)
         entered = {c['ticker'] for c in moved['in']}
         for row in rows:
             row['in'] = row['ticker'] in entered
         lists[name] = {'total': len(universe[name]), 'items': rows, 'changes': moved,
                        'excluded': {reason: sorted(tickers) for reason, tickers in sorted(excluded.items())}}
-    return {'ok': True, 'version': 1, 'basis': 'trailing', 'asOf': as_of,
+    sources = {t: r.get('source') for t, r in evaluated.items() if r.get('source') and r['source'] != 'sec'}
+    return {'ok': True, 'version': 3, 'basis': 'trailing', 'asOf': as_of, 'sources': dict(sorted(sources.items())),
             'computedAt': now.astimezone(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ'), 'universes': lists}
 
 
@@ -540,12 +699,46 @@ def _closes(db, ticker):
     return db.execute('SELECT day, raw, adj FROM value_check_closes WHERE ticker=? ORDER BY day', (ticker,)).fetchall()
 
 
+def load_records(db):
+    records = {}
+    for ticker, payload in db.execute('SELECT ticker, payload FROM value_check_facts'):
+        try:
+            records[ticker] = json.loads(payload)
+        except ValueError:
+            continue
+    return records
+
+
+def merged_records(db):
+    """SEC facts with the provider's quarters added where they were read."""
+    records = load_records(db)
+    for ticker, payload in db.execute('SELECT ticker, payload FROM value_check_statements'):
+        try:
+            records[ticker] = supplement(records.get(ticker), json.loads(payload))
+        except ValueError:
+            continue
+    return records
+
+
+def compute(db, universe, now=None):
+    """The snapshot from what is stored (no provider call)."""
+    records = merged_records(db)
+    closes = {t: _closes(db, t) for t in universe['all'] if '.' not in t}
+    fx = {}
+    for currency in {r.get('currency') for r in records.values() if r.get('currency') not in (None, 'USD')}:
+        rows = _closes(db, f'FX:{currency}')
+        if rows:
+            fx[currency] = [(day, adj) for day, _, adj in rows]
+    return build_snapshot(universe, closes, records, now, fx)
+
+
 def run_once(db, *, universe=None, transport=None, sec=None, sec_pause=0.25, now=None, sleep=time.sleep, only=None, should_stop=lambda: False):
     """Backfill what is missing (resumable: what is stored stays), read the latest bars, refresh old SEC facts, store the snapshot."""
     universe = universe or load_universe()
     transport = transport or td_get
     tickers = [t for t in (universe[only] if only else universe['all']) if '.' not in t]
     pacer = Pacer(transport, sleep=sleep)
+    priced = list(tickers)
     stamp = time.time() if now is None else now.timestamp()
 
     # SEC facts: free, about four requests a second.
@@ -570,7 +763,35 @@ def run_once(db, *, universe=None, transport=None, sec=None, sec_pause=0.25, now
         db.commit()
         sleep(sec_pause)
 
-    # Prices: the five-year history once per ticker, then the last bars.
+    # The provider's quarterly statements where the SEC's figures are missing or old (foreign filers mostly): 100 credits a read,
+    # read again only once a newer quarter can be out.
+    today = (now or datetime.now(timezone.utc)).astimezone(EASTERN).date().toordinal()
+    records = load_records(db)
+    statements = {row[0]: (row[1], row[2]) for row in db.execute('SELECT ticker, fetched_at, payload FROM value_check_statements')}
+    # High-tech names first, so a busy day still fills the ones most looked at.
+    for ticker in sorted(tickers, key=lambda t: t not in set(universe['tech'])):
+        if should_stop() or not needs_statements(records.get(ticker), today):
+            continue
+        if ticker in statements:
+            fetched_at, payload = statements[ticker]
+            _, quarters = statement_quarters(json.loads(payload))
+            newest = max((q['end'] for q in quarters), default=0)
+            if stamp - fetched_at < TD_REREAD or today - newest < TD_NEW_QUARTER:
+                continue
+        if not pacer.wait_for(TD_STATEMENT_COST):
+            break
+        try:
+            body = transport('income_statement', {'symbol': provider_symbol(ticker), 'period': 'quarterly'})
+        except Exception as error:
+            print(json.dumps({'event': 'value-check-statement-failed', 'ticker': ticker, 'error': str(error)[:80]}), flush=True)
+            continue
+        kept = body if isinstance(body, dict) and isinstance(body.get('income_statement'), list) else {'income_statement': []}
+        db.execute('INSERT OR REPLACE INTO value_check_statements(ticker,fetched_at,payload) VALUES(?,?,?)', (ticker, stamp, json.dumps(kept)))
+        db.commit()
+
+    # Prices: the five-year history once per ticker, then the last bars; the exchange rates of the filings' currencies too.
+    currencies = {r.get('currency') for r in merged_records(db).values() if r.get('currency') not in (None, 'USD')}
+    tickers = priced + [f'FX:{c}' for c in sorted(currencies)]
     have = {row[0] for row in db.execute('SELECT DISTINCT ticker FROM value_check_closes')}
     missing = [t for t in tickers if t not in have]
     for i in range(0, len(missing), CHUNK * 4):
@@ -590,14 +811,7 @@ def run_once(db, *, universe=None, transport=None, sec=None, sec_pause=0.25, now
             store_update(db, ticker, bars)
         db.commit()
 
-    records = {}
-    for ticker, payload in db.execute('SELECT ticker, payload FROM value_check_facts'):
-        try:
-            records[ticker] = json.loads(payload)
-        except ValueError:
-            continue
-    closes = {t: _closes(db, t) for t in universe['all'] if '.' not in t}
-    snapshot = build_snapshot(universe, closes, records, now)
+    snapshot = compute(db, universe, now)
     snapshot['credits'] = pacer.total
     db.execute('INSERT OR REPLACE INTO value_check_state(key,value) VALUES(?,?)', ('snapshot', json.dumps(snapshot, ensure_ascii=False)))
     db.commit()
