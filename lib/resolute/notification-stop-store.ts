@@ -1,6 +1,8 @@
 import type { Pool } from "pg";
 import type { ProtectionBarrier } from "./protection-outbox.ts";
 import { parseNotificationSnapshot } from "./notification-settings.ts";
+import { stampPriceDays } from "./notification-splits.ts";
+import { etDay } from "../research/stock-splits.ts";
 
 /** Stop-only capability: no purchase requirement, no row/account recreation,
  * no caller-controlled settings, and no re-enable path. Existing stop triggers
@@ -14,13 +16,17 @@ export function createMailStopStore(pool:Pick<Pool,"connect">,protect:Protection
   try{
    await client.query("BEGIN");
    await client.query("SELECT pg_advisory_xact_lock(hashtextextended($1, 0))",[userId]);
-   const row=(await client.query("SELECT settings,revision FROM resolute.notification_settings WHERE clerk_user_id=$1 FOR UPDATE",[userId])).rows[0];
+   const row=(await client.query("SELECT settings,revision,updated_at FROM resolute.notification_settings WHERE clerk_user_id=$1 FOR UPDATE",[userId])).rows[0];
    if(row){
     const current=parseNotificationSnapshot({settings:row.settings,revision:Number(row.revision)});
     if(current.settings.alertsEnabled||current.settings.morningEnabled){
      if(current.revision>=Number.MAX_SAFE_INTEGER-1)throw new Error("Revision exhausted");
+     // The stop moves updated_at, which stands in for the day of reference prices saved without one (notification-splits.ts): that day
+     // is written into those items first, so a split after it is still applied later. No price is changed here.
+     const now=new Date(),saved=row.updated_at?etDay(row.updated_at):etDay(now);
+     const settings=stampPriceDays(current.settings,saved,etDay(now));
      await client.query(`UPDATE resolute.notification_settings SET settings=$2,revision=$3,updated_at=statement_timestamp()
-      WHERE clerk_user_id=$1`,[userId,JSON.stringify({...current.settings,alertsEnabled:false,morningEnabled:false}),current.revision+1]);
+      WHERE clerk_user_id=$1`,[userId,JSON.stringify({...settings,alertsEnabled:false,morningEnabled:false}),current.revision+1]);
     }
    }
    await client.query("COMMIT");

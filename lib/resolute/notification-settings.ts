@@ -4,7 +4,9 @@ export type NotificationSettings = {
  deliveryHourJst: DeliveryHour;
  alertsEnabled: boolean;
  morningEnabled: boolean;
- watchItems: { symbol: string; referencePrice: number }[];
+ /** priceDay: the US (ET) day the reference price is on (stock splits after it are applied when read; notification-splits.ts).
+  * Absent on rows saved before Nov 21 2026: the row's updated_at stands in once, and every write from then on records it. */
+ watchItems: { symbol: string; referencePrice: number; priceDay?: string }[];
  surgeCapPct: number | null;
 };
 export type NotificationSnapshot = { settings: NotificationSettings; revision: number };
@@ -23,6 +25,7 @@ function decimal(n: unknown, min: number, max: number, precision: number): n is 
  return typeof n === "number" && Number.isFinite(n) && n >= min && n <= max &&
   Math.abs(Math.round(n*precision)/precision-n)<1e-9;
 }
+const validDay=(x:unknown)=>typeof x==="string"&&/^\d{4}-\d{2}-\d{2}$/.test(x)&&Number.isFinite(Date.parse(x))&&new Date(x+"T00:00:00Z").toISOString().slice(0,10)===x;
 export function parseNotificationSettings(value: unknown): NotificationSettings {
  const s=object(value,["deliveryHourJst","alertsEnabled","morningEnabled","watchItems","surgeCapPct"]);
  if (!DELIVERY_HOURS.includes(s.deliveryHourJst as DeliveryHour) || typeof s.alertsEnabled!=="boolean" ||
@@ -30,10 +33,11 @@ export function parseNotificationSettings(value: unknown): NotificationSettings 
   (s.surgeCapPct!==null && !decimal(s.surgeCapPct,0.1,1000,10))) throw new NotificationInputError();
  const symbols=new Set<string>();
  const watchItems=s.watchItems.map(v=>{
-  const i=object(v,["symbol","referencePrice"]);
+  const dated=!!v&&typeof v==="object"&&Object.hasOwn(v,"priceDay");
+  const i=object(v,dated?["symbol","referencePrice","priceDay"]:["symbol","referencePrice"]);
   if(typeof i.symbol!=="string" || !/^[A-Z][A-Z0-9.-]{0,14}$/.test(i.symbol) || symbols.has(i.symbol) ||
-   !decimal(i.referencePrice,0.01,1000000,100)) throw new NotificationInputError();
-  symbols.add(i.symbol); return {symbol:i.symbol,referencePrice:i.referencePrice};
+   !decimal(i.referencePrice,0.01,1000000,100) || (dated && !validDay(i.priceDay))) throw new NotificationInputError();
+  symbols.add(i.symbol); return {symbol:i.symbol,referencePrice:i.referencePrice,...(dated?{priceDay:i.priceDay as string}:{})};
  });
  if(s.alertsEnabled && !watchItems.length) throw new NotificationInputError();
  return {deliveryHourJst:s.deliveryHourJst as DeliveryHour,alertsEnabled:s.alertsEnabled,

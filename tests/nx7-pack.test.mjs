@@ -97,19 +97,19 @@ test("the day PRO ends is the real date in Japan time (U.S. Eastern on the Engli
   assert.ok(!names.includes("決算の深掘り"), "the earnings summaries are read inside 監視22銘柄 (owner, Nov 5)");
 });
 
-test("FOMC, ISM, GDP and retail sales have result readers wired into the monitor and the notification list; only jobless claims is skipped", () => {
+test("FOMC, ISM, GDP, retail sales and jobless claims have result readers wired into the monitor and the notification list", () => {
   const service = read("../scripts/research/service.py");
   assert.match(service, /import indicator_results/);
   assert.match(service, /indicator_results\.run_once\(self\.db_path\)/);
   assert.match(service, /wait = min\(wait, indicator_results\.next_wait\(\)\)/);
   const sources = JSON.parse(read("../scripts/research/indicator_sources.json"));
-  assert.equal(sources.notes.skipped[0].indicator, "claims");
+  assert.deepEqual(sources.notes.skipped, []);
+  assert.equal(sources.notes.claims.source, "https://www.dol.gov/ui/data.pdf");
   assert.ok(sources.fomcMeetings.includes("2026-12-09"));
   const watches = JSON.parse(read("../scripts/research/event_watches.json")).watches.map(watch => watch.id);
   for (const id of ["ism-2026-11", "ism-2026-12", "ism-2027-01", "ism-2027-02"]) assert.ok(watches.includes(id), id);
   const view = read("../app/research/notification-page-view.tsx");
-  for (const key of ["fomc", "ism", "gdp", "retail"]) assert.match(view, new RegExp(`key: "${key}"[^\\n]*ready: true`));
-  assert.match(view, /key: "claims"[^\n]*ready: false/);
+  for (const key of ["fomc", "ism", "gdp", "retail", "claims"]) assert.match(view, new RegExp(`key: "${key}"[^\\n]*ready: true`));
 });
 
 test("plan cards: 財務レーダー is on the PRO card, and 厳選ニュース moved to the FREE card (owner, Nov 5)", () => {

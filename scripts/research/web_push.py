@@ -22,6 +22,8 @@ from urllib.parse import urlsplit, urlencode, urlunsplit
 from urllib.error import HTTPError
 from urllib.request import Request, build_opener, HTTPRedirectHandler
 
+import stock_splits
+
 DEVICE_LIMIT = 20
 DELIVERY_RETENTION_SECONDS = 7 * 86400
 PROVIDER_DURATION_LIMIT_MS = 60_000
@@ -145,7 +147,10 @@ def connect(path):
             ('question_owner', 'TEXT'),
             # RESOLUTE (Nov 17, owner): the member's choice for this device (on unless turned off), and until when the website last
             # confirmed, on its own server, that the member holds the RESOLUTE alert rights (epoch seconds; NULL: not confirmed).
-            ('resolute', 'INTEGER NOT NULL DEFAULT 1'), ('resolute_until', 'REAL')):
+            ('resolute', 'INTEGER NOT NULL DEFAULT 1'), ('resolute_until', 'REAL'),
+            # ウォッチリストの価格通知 (Nov 21): the key the website stores the member's watchlists (and their price alerts) under, sent by the
+            # website with each registration, and the device's switch for these notices (on: the member chose each alert).
+            ('favorites_owner', 'TEXT'), ('price_alerts', 'INTEGER NOT NULL DEFAULT 1')):
         if column not in columns:
             db.execute(f"ALTER TABLE push_devices ADD COLUMN {column} {definition}")
     db.execute('''CREATE TABLE IF NOT EXISTS push_device_preferences (
@@ -290,7 +295,7 @@ def monitored_news_tickers():
 
 
 def validate_preferences(value):
-    flags = ('targets', 'earnings', 'news', 'weeklyNotebook', 'rizelNote', 'weeklyDraft', 'economic', 'weeklyIssue', 'rizelAnswer', 'resolute')
+    flags = ('targets', 'earnings', 'news', 'weeklyNotebook', 'rizelNote', 'weeklyDraft', 'economic', 'weeklyIssue', 'rizelAnswer', 'resolute', 'priceAlerts')
     if not isinstance(value, dict) or not value or set(value) - {*flags, 'newsTickers', 'economicKinds', 'quiet'}:
         raise ValueError('invalid-preferences')
     for field in flags:
@@ -335,7 +340,7 @@ def preference_view(db, device):
                         'newsTickers': list(monitored_news_tickers())}),
             'weeklyNotebook': bool(device['weekly_notebook']), 'rizelNote': bool(device['note_posts']), 'weeklyDraft': bool(device['weekly_draft']),
             'economic': bool(device['econ']), 'economicKinds': economic_kinds(device), 'weeklyIssue': bool(device['weekly_issue']),
-            'rizelAnswer': bool(device['answer_posts']), 'resolute': bool(device['resolute']),
+            'rizelAnswer': bool(device['answer_posts']), 'resolute': bool(device['resolute']), 'priceAlerts': bool(device['price_alerts']),
             'quiet': {'on': bool(device['quiet_on']), 'start': device['quiet_start'], 'end': device['quiet_end'], 'zone': quiet_zone(device)}}
 
 
@@ -416,9 +421,9 @@ def write_preferences(db, device, patch):
       news=excluded.news,news_tickers=excluded.news_tickers''',
       (device['id'], int(prefs['targets']), int(prefs['earnings']), int(prefs['news']), json.dumps(prefs['newsTickers'])))
     db.execute('''UPDATE push_devices SET weekly_notebook=?, note_posts=?, weekly_draft=?, econ=?, econ_kinds=?, weekly_issue=?, answer_posts=?,
-      quiet_on=?, quiet_start=?, quiet_end=?, quiet_zone=?, resolute=? WHERE id=?''', (int(prefs['weeklyNotebook']), int(prefs['rizelNote']), int(prefs['weeklyDraft']),
+      quiet_on=?, quiet_start=?, quiet_end=?, quiet_zone=?, resolute=?, price_alerts=? WHERE id=?''', (int(prefs['weeklyNotebook']), int(prefs['rizelNote']), int(prefs['weeklyDraft']),
       int(prefs['economic']), json.dumps(prefs['economicKinds']), int(prefs['weeklyIssue']), int(prefs['rizelAnswer']),
-      int(prefs['quiet']['on']), prefs['quiet']['start'], prefs['quiet']['end'], prefs['quiet']['zone'], int(prefs['resolute']), device['id']))
+      int(prefs['quiet']['on']), prefs['quiet']['start'], prefs['quiet']['end'], prefs['quiet']['zone'], int(prefs['resolute']), int(prefs['priceAlerts']), device['id']))
     return prefs
 
 
@@ -426,6 +431,10 @@ def remember_question_owner(db, device_id, payload):
     key = payload.get('questionOwner')
     if isinstance(key, str) and QUESTION_OWNER.fullmatch(key):
         db.execute('UPDATE push_devices SET question_owner=? WHERE id=?', (key, device_id))
+    # The member's watchlist key (price alerts, price_alerts.py), sent by the website on the same requests as the question key.
+    key = payload.get('favoritesOwner')
+    if isinstance(key, str) and QUESTION_OWNER.fullmatch(key):
+        db.execute('UPDATE push_devices SET favorites_owner=? WHERE id=?', (key, device_id))
 
 
 def member_preferences(db, payload, *, save=False, now=None):
@@ -615,6 +624,8 @@ def member_action(db, payload, action, transport=None, now=None):
     if row['active']:
         with db:
             remember_resolute(db, device, payload, now)
+            # A device registered before Nov 21 learns its member's watchlist key (price alerts) on its next status check.
+            remember_question_owner(db, device, payload)
         row = db.execute('SELECT * FROM push_devices WHERE id=?', (device,)).fetchone()
     resolute_ok = bool(row['active'] and resolute_entitled(row, now))
     if row['active'] and not eligible and not resolute_ok and action in ('status', 'test'):
@@ -707,12 +718,18 @@ def test_notification(db, payload, transport=None, now=None):
             'providerStatus': code, 'failureKind': failure_kind}
 
 
-def price_target_payload(ticker, firm, previous, latest, ja, tag):
+def price_target_payload(ticker, firm, previous, latest, ja, tag, earlier=()):
     """The phone notice for one price-target change. The real notices (deliver) and the owner's demo notice (scheduled_demo_target) are
     both built here, so the demo always looks exactly like a real one."""
     # Nov 15: a price-target notice opens the price-target page (it opened the dashboard's #what-changed view).
+    # Nov 21 (SNDK 8-for-1): an old target that the same firm set before the split (found in `earlier`, the feed's other items) is put on
+    # today's basis, so "$1400 → $180" is not read as a cut. The size of the change alone never decides it.
+    body = f"{firm}: ${previous:g} → ${latest:g}"
+    ratio = stock_splits.pre_split_previous(ticker, firm, previous, latest, earlier)
+    if ratio:
+        body = f"{firm}: ${round(previous / ratio, 2):g} → ${latest:g}" + (f"（旧目標${previous:g}は{ratio:g}:1分割前）" if ja else f" (old ${previous:g} was before the {ratio:g}:1 split)")
     return {'title': f"{ticker} · " + ('目標株価の変更' if ja else 'Price target update'),
-            'body': f"{firm}: ${previous:g} → ${latest:g}",
+            'body': body,
             'tag': tag, 'url': '/research/price-targets'}
 
 
@@ -1246,7 +1263,7 @@ def deliver(db, items, transport=send, now=None, monotonic_now=time.monotonic,
                 payload = {'title': f"{' · '.join(item['tickers'][:3])} · " + ('ニュース' if ja else 'News'),
                            'body': item['texts']['ja' if ja else 'en'], 'tag': key, 'url': '/research/news'}
             else:
-                payload = price_target_payload(item['ticker'], item['firm'], item['previous'], item['latest'], ja, key)
+                payload = price_target_payload(item['ticker'], item['firm'], item['previous'], item['latest'], ja, key, items)
             if quiet:
                 payload = quietly(payload, ja)
             provider_started = monotonic_now()
@@ -1599,17 +1616,18 @@ BLS_PATH = {'jobs': 'empsit', 'cpi': 'cpi', 'ppi': 'ppi'}
 MONTHS = ['january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november', 'december']
 NAMES = {'jobs': ('米国雇用統計', 'U.S. employment report'), 'cpi': ('米国CPI', 'U.S. CPI'), 'ppi': ('米国PPI', 'U.S. PPI'), 'pce': ('米国PCE', 'U.S. PCE'),
          'adp': ('ADP雇用統計', 'ADP employment report'), 'fomc': ('FOMC政策金利', 'FOMC rate decision'), 'ism': ('ISM製造業景況指数', 'ISM manufacturing PMI'),
-         'gdp': ('米国GDP', 'U.S. GDP'), 'retail': ('米国小売売上高', 'U.S. retail sales')}
-# Results read by event_results / indicator_results carry an id that starts with the indicator (Nov 5). Jobless claims have no reader.
-EVENT_KINDS = ('adp', 'fomc', 'ism', 'gdp', 'retail')
+         'gdp': ('米国GDP', 'U.S. GDP'), 'retail': ('米国小売売上高', 'U.S. retail sales'),
+         'claims': ('米国新規失業保険申請件数', 'U.S. jobless claims')}
+# Results read by event_results / indicator_results carry an id that starts with the indicator (Nov 5). Jobless claims: DOL's weekly PDF (Nov 21).
+EVENT_KINDS = ('adp', 'fomc', 'ism', 'gdp', 'retail', 'claims')
 
 
 def economic_items(updates, events, route_errors=None):
     """Releases with a result already read by the site, as {kind, id, publishedAt, ja, en}.
 
     Read from the same places the economic calendar uses: BLS (jobs, CPI) and BEA (PCE) official releases, and the ADP
-    result read from outlets, FOMC, GDP and retail sales read from the official pages, and ISM from headlines. Jobless claims have no reader
-    (the Department of Labor blocks automated reading), so they cannot be sent."""
+    result read from outlets, FOMC, GDP, retail sales and jobless claims (DOL's weekly release PDF) read from the official pages, and ISM
+    from headlines."""
     items = []
     for update in updates or []:
         try:

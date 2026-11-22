@@ -1,6 +1,6 @@
 import {Pool} from 'pg';
 import {resoluteDatabaseConfig} from '../../lib/resolute/database-config.ts';
-import {parseRiskFeed,parseRiskArticle,parseQuote,latestRiskDate,riskDate,isLegacyRiskArticle} from '../../lib/resolute/risk.ts';
+import {parseRiskFeed,parseRiskArticle,parseQuote,latestRiskDate,riskDate,isLegacyRiskArticle,dailyRunStart} from '../../lib/resolute/risk.ts';
 import {quoteIssues} from '../../lib/resolute/risk-copy-check.ts';
 import {isOwnerAccount} from '../../lib/membership/entitlements.ts';
 import {createHash} from 'node:crypto';
@@ -30,7 +30,7 @@ export async function publicRiskFeed(pool,owner=false,now=new Date()){
  if(!owner&&!enabled)return{state:'stopped',date:null,articles:[],quotes:[]};
  const day=latestRiskDate(now),row=(await pool.query('SELECT state,articles FROM resolute.risk_days WHERE day=$1',[day])).rows[0];
  // A missing row inside the morning run window is still being prepared; later it is a real failure.
- if(!row&&now.getTime()-Date.parse(day+'T07:00:00+09:00')<PREPARING_MS&&now.getTime()>=Date.parse(day+'T07:00:00+09:00'))return{state:'preparing',date:day,articles:[],quotes:[]};
+ if(!row&&now.getTime()-dailyRunStart(day)<PREPARING_MS&&now.getTime()>=dailyRunStart(day))return{state:'preparing',date:day,articles:[],quotes:[]};
  if(!row||row.state!=='ready')return{state:row?.state==='processing'?'preparing':'failed',date:day,articles:[],quotes:[]};
  // Rows from before the Shock Gauge carry rubric stars that no longer apply: never shown (recorded as not updated).
  if(row.articles.some(isLegacyRiskArticle))return{state:'failed',date:day,articles:[],quotes:[]};

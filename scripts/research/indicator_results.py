@@ -12,9 +12,11 @@ Nothing here writes a word: the Japanese and English text is fixed wording aroun
 differs from what is expected is not read, and the miss is recorded (event_feed_status), never guessed. A figure outside a sane range
 is not read either. Results are stored in the same table as the other event results and reach the site through the same lane.
 
-Weekly jobless claims are not read: the Department of Labor's own page refuses automated requests (HTTP 403) and the weekly claims
-table on its data site was weeks behind. We do not work around a site's bot block, so claims stay a calendar entry without a result
-until the Department of Labor offers a way to read it (see docs/INDICATOR-RESULTS-2026-11-05.md)."""
+- Weekly jobless claims (Nov 21): the Department of Labor's own weekly release, the PDF it publishes at dol.gov/ui/data.pdf at
+  8:30 a.m. ET (normally Thursday). Its news pages still answer automated requests with HTTP 403 and are not read; the release PDF
+  answers our plainly named reader (no browser disguise). "In the week ending <date>, the advance figure for seasonally adjusted
+  initial claims was X, an increase/a decrease of Y from the previous week's revised level". If dol.gov starts refusing the PDF too,
+  the refusal is recorded (event_feed_status) and nothing is worked around (see docs/INDICATOR-RESULTS-2026-11-05.md)."""
 
 import html
 import json
@@ -204,6 +206,118 @@ def retail_payload(result, url, now):
     }
 
 
+# ---- Weekly jobless claims (DOL) ------------------------------------------------
+
+CLAIMS_URL = "https://www.dol.gov/ui/data.pdf"
+CLAIMS_SOURCE = "DOL（失業保険申請）"
+_MONTH = r"January|February|March|April|May|June|July|August|September|October|November|December"
+CLAIMS = re.compile(
+    rf"In the week ending (?P<month>{_MONTH}) (?P<day>\d{{1,2}}), the advance figure for seasonally adjusted initial claims was "
+    r"(?P<value>\d{1,3}(?:,\d{3})+), (?:(?:an|a) (?P<dir>increase|decrease) of (?P<change>\d{1,3}(?:,\d{3})*)|(?P<same>unchanged)) "
+    r"from the previous week['’]s (?:revised|unrevised) level")
+CLAIMS_RELEASE = re.compile(rf"EMBARGOED UNTIL (?P<hour>\d{{1,2}}):(?P<minute>\d{{2}}) (?P<half>[AP])\.M\. \(Eastern\) \w+day, (?P<day>(?:{_MONTH}) \d{{1,2}}, 20\d{{2}})")
+
+
+def parse_claims(text):
+    """The advance initial-claims figure of DOL's weekly release; None unless the wording, dates and size are as expected."""
+    text = re.sub(r"\s+", " ", text)
+    match, release = CLAIMS.search(text), CLAIMS_RELEASE.search(text)
+    if not match or not release:
+        return None
+    released = long_date(release["day"])
+    month = MONTHS.index(match["month"]) + 1
+    # The week ends on the Saturday before the release (in the year before it, for a late-December week released in January).
+    year = released.year - (1 if month > released.month else 0)
+    try:
+        week = datetime(year, month, int(match["day"])).date()
+    except ValueError:
+        return None
+    if week.weekday() != 5 or not 2 <= (released - week).days <= 8:
+        return None
+    value = int(match["value"].replace(",", ""))
+    change = 0 if match["same"] else int(match["change"].replace(",", "")) * (1 if match["dir"] == "increase" else -1)
+    # A sane size: initial claims have stayed between about 160,000 and 7 million since 1967, and a week's move is smaller than the level.
+    if not 100_000 <= value <= 7_000_000 or abs(change) >= value:
+        return None
+    clock = f"{release['hour']}:{release['minute']} {release['half'].lower()}.m."
+    at = eastern_time(released, clock, "EDT" if _is_edt(released) else "EST")
+    if at is None:
+        return None
+    return {"value": value, "change": change, "week": week, "at": at}
+
+
+def claims_payload(result, url, now):
+    week, change = result["week"], result["change"]
+    change_ja = "前週改定値から変わらず" if change == 0 else f"前週改定値から{abs(change):,}件{'増' if change > 0 else '減'}"
+    change_en = "unchanged from the previous week's revised level" if change == 0 else f"{'up' if change > 0 else 'down'} {abs(change):,} from the previous week's revised level"
+    return {
+        "id": f"claims-{week.isoformat()}", "titleJa": f"米国新規失業保険申請件数（{week.month}月{week.day}日終了週）",
+        "titleEn": f"U.S. initial jobless claims (week ending {MONTHS[week.month - 1]} {week.day}, {week.year})", "sourceName": "DOL",
+        "releasedAt": event_results.stamp(result["at"]),
+        "resultJa": f"{result['value']:,}件（{change_ja}）", "resultEn": f"{result['value']:,} ({change_en})",
+        "detailJa": "季節調整済みの新規失業保険申請件数（速報値）を、米国労働省の週次発表から取得。市場予想との比較は含みません。",
+        "detailEn": "Seasonally adjusted advance initial claims from the Department of Labor's weekly release. No consensus comparison is included.",
+        "sourceUrl": url, "sources": [{"publisher": "U.S. Department of Labor", "title": "Unemployment Insurance Weekly Claims", "url": url}],
+        "verifiedOn": event_results.stamp(now)[:10],
+    }
+
+
+def _eastern(now):
+    return now + timedelta(hours=-4 if _is_edt(now.date()) else -5)
+
+
+def _thursday_holiday(day):
+    """Thanksgiving (fourth Thursday of November), or New Year's Day, Independence Day or Christmas on a Thursday: DOL then
+    releases on Wednesday."""
+    return day.weekday() == 3 and ((day.month == 11 and 22 <= day.day <= 28) or (day.month, day.day) in ((1, 1), (7, 4), (12, 25)))
+
+
+def claims_window(now):
+    """The release comes out at 8:30 a.m. ET on Thursday, on Wednesday when Thursday is a holiday, and late (Friday) only rarely.
+    The PDF is read from 8:29 a.m. to noon ET on Thursday and Friday, and on Wednesday only before a Thursday holiday; never again
+    once the week's result is stored."""
+    local = _eastern(now)
+    minutes = local.hour * 60 + local.minute
+    day = local.weekday()
+    wanted = day in (3, 4) or (day == 2 and _thursday_holiday(local.date() + timedelta(days=1)))
+    return wanted and 8 * 60 + 29 <= minutes <= 12 * 60
+
+
+def expected_week(now):
+    """The week a release made on `now`'s day (ET) reports: the Saturday before that day."""
+    day = _eastern(now).date()
+    return day - timedelta(days=(day.weekday() - 5) % 7 or 7)
+
+
+def fetch_bytes(url):
+    request = urllib.request.Request(url, headers={"User-Agent": USER_AGENT, "Accept": "application/pdf"})
+    with urllib.request.urlopen(request, timeout=30) as response:
+        body = response.read(MAX_BYTES + 1)
+    if len(body) > MAX_BYTES:
+        raise ValueError("pdf-too-large")
+    return body
+
+
+def pdf_text(content):
+    """The release's first page as text, read by the monitor's resource-limited PDF reader."""
+    import monitor
+    return monitor.extract_pdf_text(content, first_pages=1)
+
+
+def _claims(db, now, fetch_pdf, read_pdf):
+    if not claims_window(now) or _stored(db, f"claims-{expected_week(now).isoformat()}"):
+        return 0
+    def work():
+        result = parse_claims(read_pdf(fetch_pdf(CLAIMS_URL)))
+        if result is None:
+            _status(db, CLAIMS_SOURCE, now, False, "wording-not-recognised")
+            return 0
+        _status(db, CLAIMS_SOURCE, now, True)
+        # Before 8:30 the PDF still holds the week before: that result is stored once (if it is not already) and nothing else happens.
+        return 0 if _stored(db, f"claims-{result['week'].isoformat()}") else _save(db, claims_payload(result, CLAIMS_URL, now), now)
+    return _guard(db, CLAIMS_SOURCE, now, work)
+
+
 # ---- running -------------------------------------------------------------------
 
 def _status(db, name, now, ok, error=None):
@@ -290,13 +404,16 @@ def _retail(db, config, now, transport):
     return _guard(db, "Census（小売売上高）", now, work)
 
 
-def run_once(db_path, now=None, config=None, transport=None):
-    """One pass over the three official pages. Returns how many results were newly stored."""
+def run_once(db_path, now=None, config=None, transport=None, fetch_pdf=None, read_pdf=None):
+    """One pass over the official pages (and, around its release, DOL's claims PDF). Returns how many results were newly stored."""
     now = now or datetime.now(timezone.utc)
     config = config or load_config()
+    # A caller that hands in its own page reader (a test) reads the PDF only through its own `fetch_pdf`, never the network.
+    fetch_pdf = fetch_pdf or (fetch_bytes if transport is None else None)
     transport = transport or fetch
     with event_results.connect(db_path) as db:
-        return _fomc(db, config, now, transport) + _gdp(db, config, now, transport) + _retail(db, config, now, transport)
+        return (_fomc(db, config, now, transport) + _gdp(db, config, now, transport) + _retail(db, config, now, transport)
+                + (_claims(db, now, fetch_pdf, read_pdf or pdf_text) if fetch_pdf else 0))
 
 
 def next_wait(now=None):

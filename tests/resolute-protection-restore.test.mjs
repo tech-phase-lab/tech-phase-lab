@@ -60,6 +60,8 @@ test('isolated restore erases old answers, preserves later recreation and applie
   assert.equal(plans.find(r=>r.clerk_user_id==='user_new').plan.answers.q01,'private');
   const rows=(await db.query('SELECT * FROM resolute.notification_settings')).rows;
   const stopped=rows.find(r=>r.clerk_user_id==='user_stop');assert.equal(stopped.revision,7);assert.equal(stopped.settings.alertsEnabled,false);assert.equal(stopped.settings.morningEnabled,false);
+  // Stock splits: the replay moves updated_at, so it first writes the old price day (UTC−5h of the old updated_at) into the items.
+  assert.deepEqual(stopped.settings.watchItems,[{symbol:'MU',referencePrice:100,priceDay:'2026-10-19'}]);
   assert.equal(rows.find(r=>r.clerk_user_id==='user_reconsent').settings.alertsEnabled,true);
   assert.equal(rows.find(r=>r.clerk_user_id==='user_absent').settings.alertsEnabled,false);
   assert.equal((await db.query('SELECT count(*)::int n FROM resolute.notification_outbox')).rows[0].n,0);

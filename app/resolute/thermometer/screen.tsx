@@ -94,9 +94,6 @@ export function MarketGauge({ locale, snapshot }: { locale: DiagnosisLocale; sna
       <div className={styles.marketMap} role="group" aria-label={t("トレンドと相場の温度", "Trend and market temperature")}>{positions.map((p, i) => <button key={p.en} aria-label={p[locale]} aria-pressed={selected === i} aria-controls="market-position-description" onClick={() => setSelected(i)}>{p[locale].split(" × ").map((line,k)=><span key={k}>{line}</span>)}</button>)}</div>
       <div id="market-position-description" aria-live="polite">{selected !== null ? <><h2>{positions[selected][locale]}</h2><p>{en ? positions[selected].detailEn : positions[selected].detailJa}</p></> : <p className={styles.muted}>{t("それぞれの位置の意味を確認できます。", "See what each combination means.")}</p>}</div>
     </section>
-    <section className={styles.card}><div className={styles.switchRow}><h2>{t("セクター別", "By sector")}</h2><span className={styles.badge}>{t("通知利用権", "Alerts access")}</span></div>
-      {[["半導体", "Semiconductors"], ["クラウド・AI", "Cloud & AI"], ["ソフトウェア", "Software"], ["通信機器", "Networking"], ["ヘルスケア", "Healthcare"]].map(([ja, eng]) => <div className={styles.sectorRow} key={eng}><span>{t(ja, eng)}</span><span className={styles.muted}>{t("準備中", "Coming soon")}</span></div>)}
-    </section>
 
     <p className={styles.disclaimer}>{t("これからの値動きを当てるものではありません。あくまでも一つの指標として捉えてください。", "This does not predict future moves. Treat it as one indicator among many.")}</p>
     <FlowNavigation step={5} locale={locale}/>

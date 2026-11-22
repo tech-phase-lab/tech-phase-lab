@@ -73,6 +73,7 @@ import web_push
 import voice_inbox
 import event_results
 import indicator_results
+import price_alerts
 import weekly_generator
 import weekly_issues
 import release_watch
@@ -846,6 +847,7 @@ class AutomaticMonitor:
         self.x_stream_trial_thread = (threading.Thread(target=self.run_x_stream_trial, name="x-receive-only-trial", daemon=True)
                                       if x_stream_trial_service.requested() else None)
         self.push_thread = threading.Thread(target=self.run_web_push, name="web-push-pilot", daemon=True)
+        self.price_alert_thread = threading.Thread(target=self.run_price_alerts, name="price-alerts", daemon=True)
         self.push_demo_thread = threading.Thread(target=self.run_push_demo, name="push-demo-target", daemon=True)
         self.note_translation_thread = threading.Thread(target=self.run_note_translation, name="note-translation", daemon=True)
         # Several headline workers translate different articles at once. Each
@@ -1253,6 +1255,26 @@ class AutomaticMonitor:
                     print(json.dumps({"event": "push-demo-target-error", "error": type(exc).__name__}), flush=True)
             self.stop_event.wait(PUSH_DEMO_CHECK_SECONDS)
 
+    def run_price_alerts(self):
+        """ウォッチリストの価格通知 (Nov 21): off unless PRICE_ALERT_PUSH_ENABLED is "true". A pass every five minutes while the U.S.
+        regular session is open; price_alerts.run_once decides, so a closed market or a disabled switch costs nothing."""
+        if not self.web_push_enabled:
+            return
+        while not self.stop_event.is_set():
+            if price_alerts.enabled():
+                try:
+                    db = web_push.connect(self.db_path)
+                    try:
+                        price_alerts.run_once(db)
+                    finally:
+                        db.close()
+                    price_alerts.STATUS["lastError"] = None
+                except Exception as error:
+                    # The class only: a Twelve Data message can carry the URL and the key.
+                    price_alerts.STATUS["lastError"] = type(error).__name__
+                    print(json.dumps({"event": "price-alerts-failed", "error": type(error).__name__}), flush=True)
+            self.stop_event.wait(price_alerts.CHECK_SECONDS)
+
     def run_web_push(self):
         if not self.web_push_enabled:
             return
@@ -1406,6 +1428,7 @@ class AutomaticMonitor:
         self.event_results_thread.start()
         self.watch_earnings_thread.start()
         self.push_thread.start()
+        self.price_alert_thread.start()
         self.push_demo_thread.start()
 
     def stop(self):
@@ -1440,6 +1463,7 @@ class AutomaticMonitor:
         self.radar_refresh_thread.join(timeout=90)
         self.watch_earnings_thread.join(timeout=10)
         self.push_thread.join(timeout=15)
+        self.price_alert_thread.join(timeout=15)
         self.push_demo_thread.join(timeout=15)
 
     def run_stock_news(self):
@@ -1980,6 +2004,7 @@ class AutomaticMonitor:
         if push_poll_age is None and push["enabled"]:
             push_poll_age = timestamp_age_seconds(state["startedAt"])
         push["lastPollAgeSeconds"] = push_poll_age
+        push["priceAlerts"] = price_alerts.public_status()
         push["pollOverdueAfterSeconds"] = WEB_PUSH_STALE_SECONDS
         push["pollOverdue"] = bool(
             push["enabled"]
@@ -3763,6 +3788,8 @@ class Handler(BaseHTTPRequestHandler):
                 self.send_json(401, {"ok": False})
                 return
             self.send_json(200, {"ok": True, **web_push.configuration(),
+                                # ウォッチリストの価格通知 is delivered (PRICE_ALERT_PUSH_ENABLED): the site says so only then (Nov 21).
+                                "priceAlerts": price_alerts.enabled(),
                                 "tickers": sorted(set(self.app.tickers) | signals.X_EXTRA_TICKERS)})
             return
         if path == "/livez":

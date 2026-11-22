@@ -8,7 +8,7 @@ import {prepareDailyReview,dailyReviewFailure} from '../services/resolute-api/ri
 
 // Owner, Nov 16: the daily review crashed at 07:01 JST (stage "source") while the research monitor was restarting.
 const token='synthetic-reader-token-for-tests-only-1234';
-const now=new Date('2026-10-14T22:01:00Z');
+const now=new Date('2026-10-14T23:01:00Z');
 const feed={ok:true,enabled:true,items:[]};
 const quiet=()=>{const lines=[],waits=[];return {lines,waits,options:{log:line=>lines.push(line),sleep:async ms=>{waits.push(ms);}}};};
 const monitorDown=()=>{throw new TypeError('fetch failed');};

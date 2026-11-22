@@ -140,10 +140,15 @@ INSERT INTO resolute.notification_settings(clerk_user_id,settings,revision,updat
  SELECT user_id,'{"deliveryHourJst":7,"alertsEnabled":false,"morningEnabled":false,"watchItems":[],"surgeCapPct":null}'::jsonb,
  revision,stopped_at FROM protection_stops
  ON CONFLICT(clerk_user_id) DO NOTHING;
+-- updated_at stands in for the price day of reference prices saved without one (lib/resolute/notification-splits.ts, stock splits):
+-- that day is written into those items before updated_at moves (UTC minus 5 hours: the ET day or the one before, never a later one).
 UPDATE resolute.notification_settings s SET
  settings=s.settings || jsonb_build_object(
  'alertsEnabled',CASE WHEN p.alerts THEN false ELSE (s.settings->>'alertsEnabled')::boolean END,
- 'morningEnabled',CASE WHEN p.morning THEN false ELSE (s.settings->>'morningEnabled')::boolean END),
+ 'morningEnabled',CASE WHEN p.morning THEN false ELSE (s.settings->>'morningEnabled')::boolean END,
+ 'watchItems',COALESCE((SELECT jsonb_agg(CASE WHEN i ? 'priceDay' THEN i
+   ELSE i || jsonb_build_object('priceDay',to_char((s.updated_at AT TIME ZONE 'UTC') - interval '5 hours','YYYY-MM-DD')) END ORDER BY n)
+   FROM jsonb_array_elements(s.settings->'watchItems') WITH ORDINALITY AS e(i,n)),'[]'::jsonb)),
  revision=GREATEST(s.revision,p.revision),updated_at=GREATEST(s.updated_at,p.stopped_at)
  FROM protection_stops p WHERE s.clerk_user_id=p.user_id AND (p.alerts OR p.morning);
 -- Rebuild journals too so the next export cannot lose pre-restore protections.

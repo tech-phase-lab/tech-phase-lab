@@ -6,7 +6,8 @@ import { useResearchLanguage } from "../use-research-language";
 import { aggregate, replaceSource, statusOf, valueHoldings, weights, type Holding, type Quote, type Row } from "@/lib/portfolio/calc";
 import { BROKER_CHOICES, MANUAL, OTHER, typedBroker } from "@/lib/portfolio/brokers";
 import { parseStored, readHide, readRaw, readSavedDay, subscribeStore, writeHide, writeHoldings } from "@/lib/portfolio/store";
-import { applySplits, today, type Applied } from "@/lib/portfolio/splits";
+import { adjustForSplits, chooseReading, fresh as freshLot, knownSplits, today, type Ambiguous, type Reading as SplitReading, type Split } from "@/lib/portfolio/splits";
+import { adjustedNote, checkBody, checkTitle, lotTitle, readingParts, splitSentences } from "@/lib/portfolio/split-copy";
 import s from "./portfolio.module.css";
 
 type ReviewRow = { id: number; ticker: string; name?: string; shares: string; avg: string; fx?: number; added?: boolean };
@@ -26,6 +27,18 @@ const dateEn = (iso: string) => { const [y, m, d] = iso.split("-").map(Number); 
 const pick2 = (ja: boolean) => (a: string, b: string) => ja ? a : b;
 const TICKER = /^[A-Z][A-Z0-9.\-]{0,9}$/;
 let nextId = 1;
+const SPLIT_CACHE_KEY = "tech-phase:portfolio:splits:v4";
+type SplitCache = { splits: Record<string, Split[]>; through: Record<string, string> };
+/** The provider's answers kept on this device for the ET day they were asked for (failed reads are never kept). */
+function readSplitCache(day: string): SplitCache {
+  try {
+    const value = JSON.parse(localStorage.getItem(SPLIT_CACHE_KEY) ?? "null");
+    return value?.day === day && value.splits && typeof value.splits === "object" && value.through && typeof value.through === "object" ? { splits: value.splits, through: value.through } : { splits: {}, through: {} };
+  } catch { return { splits: {}, through: {} }; }
+}
+function writeSplitCache(day: string, answer: SplitCache) {
+  try { const old = readSplitCache(day); localStorage.setItem(SPLIT_CACHE_KEY, JSON.stringify({ day, splits: { ...old.splits, ...answer.splits }, through: { ...old.through, ...answer.through } })); } catch { /* optional */ }
+}
 
 /** Shrink the screenshot in the browser before it is sent (a phone screenshot is several megabytes). */
 async function shrink(file: File): Promise<string> {
@@ -59,15 +72,11 @@ function Illustration() {
   </div>;
 }
 
-/** Paused on Nov 21 (owner): see the split effect in PortfolioScreen. */
-const SPLIT_ADJUSTMENT_PAUSED = true;
-
 export default function PortfolioScreen() {
   const [lang, setLang] = useResearchLanguage();
   const raw = useSyncExternalStore(subscribeStore, readRaw, () => "");
   const hide = useSyncExternalStore(subscribeStore, () => (readHide() ? "1" : "0"), () => "0") === "1";
   const lots = useMemo(() => parseStored(raw), [raw]);
-  const holdings = useMemo(() => aggregate(lots), [lots]);
   const [market, setMarket] = useState<Market | null>(null);
   const [marketError, setMarketError] = useState(false);
   const [retry, setRetry] = useState(0);
@@ -78,29 +87,38 @@ export default function PortfolioScreen() {
   const [manual, setManual] = useState(false);
   const [sheet, setSheet] = useState(false);
   const abort = useRef<AbortController | null>(null);
-  const tickers = holdings.map(h => h.ticker).join(",");
-  // Stock splits (owner, Nov 11: APH split and the shares stayed at 100): once a day, splits that took effect after a lot was last checked are applied.
-  const [splitNote, setSplitNote] = useState<Applied[]>([]);
+  // Stock splits (owner, Nov 11 APH; Nov 21 SNDK 8-for-1): a lot keeps the numbers of the day it was entered (checkedAt); splits after that
+  // day are applied when the list is shown (shares × ratio, cost ÷ ratio). Saving writes the shown numbers on the basis they were brought to.
+  // Only the provider's answers count as complete; a ticker it could not answer for keeps its date (the manual list may still apply).
+  const day = today();
+  const [answer, setAnswer] = useState<SplitCache>({ splits: {}, through: {} });
+  useEffect(() => { const cached = readSplitCache(day); setAnswer(previous => ({ splits: { ...cached.splits, ...previous.splits }, through: { ...cached.through, ...previous.through } })); }, [day]);
+  const heldTickers = useMemo(() => [...new Set(lots.map(lot => lot.ticker))].sort().join(","), [lots]);
   useEffect(() => {
-    try { const saved = JSON.parse(localStorage.getItem("tech-phase:portfolio:split-note") ?? "null"); if (saved && Date.now() - saved.at < 7 * 86400_000 && Array.isArray(saved.applied)) setSplitNote(saved.applied); } catch { /* optional */ }
-  }, []);
-  useEffect(() => {
-    // Nov 21 hotfix: the split adjustment below applied splits the wrong way round (SNDK 8-for-1 cut shares to 1/8). It is paused, so saved
-    // holdings are no longer rewritten, until the corrected handling (split-aware display, PR #733) ships.
-    if (SPLIT_ADJUSTMENT_PAUSED || !lots.length) return;
-    const day = today();
-    if (lots.every(lot => lot.checkedAt === day)) return;
+    if (!heldTickers) return;
+    // One answer a day per device (the provider charges 20 credits a call; the server also keeps each ticker a day).
+    const cached = readSplitCache(day), missing = heldTickers.split(",").filter(t => !(t in cached.splits));
+    if (!missing.length) return;
     const controller = new AbortController();
-    const list = [...new Set(lots.map(lot => lot.ticker))];
-    fetch(`/api/research/portfolio/splits?tickers=${encodeURIComponent(list.join(","))}`, { cache: "no-store", credentials: "same-origin", signal: controller.signal })
+    fetch(`/api/research/portfolio/splits?tickers=${encodeURIComponent(missing.join(","))}`, { cache: "no-store", credentials: "same-origin", signal: controller.signal })
       .then(response => response.ok ? response.json() : Promise.reject(new Error("splits")))
-      .then((data: { splits?: Record<string, { date: string; from: number; to: number }[]> }) => {
-        const { holdings: next, applied } = applySplits(lots, data.splits ?? {}, readSavedDay(raw) ?? day, day);
-        writeHoldings(next);
-        if (applied.length) { setSplitNote(applied); try { localStorage.setItem("tech-phase:portfolio:split-note", JSON.stringify({ at: Date.now(), applied })); } catch { /* optional */ } }
-      }).catch(() => { /* the lots stay unchecked and are tried again next time */ });
+      .then((data: Partial<SplitCache>) => {
+        if (!data.splits || !data.through) return;
+        const got = { splits: data.splits, through: data.through };
+        setAnswer(previous => ({ splits: { ...previous.splits, ...got.splits }, through: { ...previous.through, ...got.through } })); writeSplitCache(day, got);
+      })
+      .catch(() => { /* the manual list is used meanwhile; the dates of these tickers stay where they are */ });
     return () => controller.abort();
-  }, [lots, raw]);
+  }, [heldTickers, day]);
+  const allSplits = useMemo(() => ({ ...knownSplits(lots.map(lot => lot.ticker)), ...answer.splits }), [lots, answer]);
+  const current = useMemo(() => adjustForSplits(lots, allSplits, readSavedDay(raw) ?? day, day, { through: answer.through, savedDay: readSavedDay(raw) }), [lots, allSplits, answer, raw, day]);
+  const holdings = useMemo(() => aggregate(current.holdings), [current]);
+  const tickers = holdings.map(h => h.ticker).join(",");
+  const recentSplits = current.applied.filter(item => Date.parse(day) - Date.parse(item.date) <= 45 * 86400_000);
+  // A lot that cannot be read safely (the old screen may have applied a split the wrong way round, or it was read on a split's own days) is
+  // shown as stored until the reader picks a reading; nothing is guessed from the price.
+  const choose = (lot: Ambiguous, reading: SplitReading) => writeHoldings(chooseReading(lots, lot, reading));
+  const stamp = (h: Holding): Holding => freshLot(h, day);
 
   useEffect(() => {
     if (!tickers) return;
@@ -152,17 +170,23 @@ export default function PortfolioScreen() {
 
   return <ResearchToolShell showTools={false} showHeading={false} lang={lang} setLang={setLang} title={ja ? "米国株の資産管理" : "US stock portfolio"} description="">
     <div className={s.page}>
-      {manual ? <ManualForm ja={ja} onCancel={() => setManual(false)} onAdd={h => { writeHoldings([...lots.filter(x => !(x.source === MANUAL && x.ticker === h.ticker)), { ...h, source: MANUAL }]); setManual(false); setProblem(null); }} />
-        : review ? <ReviewScreen ja={ja} review={review} setReview={setReview} existing={lots} />
+      {manual ? <ManualForm ja={ja} onCancel={() => setManual(false)} onAdd={h => { writeHoldings([...current.holdings.filter(x => !(x.source === MANUAL && x.ticker === h.ticker)), stamp({ ...h, source: MANUAL })]); setManual(false); setProblem(null); }} />
+        : review ? <ReviewScreen ja={ja} review={review} setReview={setReview} existing={current.holdings} day={day} />
         : reading ? <>
           <Head ja={ja} />
           <Reading ja={ja} stage={reading} onCancel={() => abort.current?.abort()} onInfo={() => setSheet(true)} />
         </>
         : <>
           <Head ja={ja} sub={holdings.length > 0} />
-          {splitNote.length > 0 && holdings.length > 0 && <p role="status" className={s.splitNote}>{ja
-            ? <>{splitNote.map(item => `${item.ticker} ${item.from}→${item.to}の株式分割（${item.date.slice(5).replace("-", "/")}）`).join("、")}を、株数と平均取得に反映しました。</>
-            : <>Applied {splitNote.map(item => `the ${item.ticker} ${item.from}→${item.to} stock split (${item.date.slice(5).replace("-", "/")})`).join(", ")} to shares and average cost.</>}</p>}
+          {current.ambiguous.length > 0 && <section role="alert" className={s.splitCheck} aria-labelledby="split-check-title">
+            <h2 id="split-check-title">{checkTitle(current.ambiguous, ja)}</h2>
+            <p>{splitSentences(current.ambiguous, ja).join(ja ? "" : " ")}{ja ? "" : " "}{checkBody(current.ambiguous, ja)}</p>
+            {current.ambiguous.map(item => <div key={item.key} className={s.splitLot}>
+              <h3>{lotTitle(item, ja)}</h3>
+              {item.readings.map(r => <button type="button" key={`${r.kind}${r.splits}`} onClick={() => choose(item, r)}>{(([main, note]) => <><b>{main}</b><small>{note}</small></>)(readingParts(r, ja))}</button>)}
+            </div>)}
+          </section>}
+          {recentSplits.length > 0 && holdings.length > 0 && <p role="status" className={s.splitNote}>{adjustedNote(recentSplits, ja)}</p>}
           {problem && <ErrorCard ja={ja} kind={problem} reason={reason} onManual={() => setManual(true)} pick={pick} onClose={() => setProblem(null)} />}
           {!problem && holdings.length === 0 && <Empty ja={ja} pick={pick} onManual={() => setManual(true)} onInfo={() => setSheet(true)} />}
           {holdings.length > 0 && <List ja={ja} rows={rows} totals={totals} shares={shares} hide={hide} market={market} marketError={marketError} onRetry={() => { setMarketError(false); setRetry(value => value + 1); }}
@@ -324,7 +348,7 @@ export function List({ ja, rows, totals, shares, hide, market, marketError, onRe
   </>;
 }
 
-function ReviewScreen({ ja, review, setReview, existing }: { ja: boolean; review: Review; setReview: (value: Review | null) => void; existing: Holding[] }) {
+function ReviewScreen({ ja, review, setReview, existing, day }: { ja: boolean; review: Review; setReview: (value: Review | null) => void; existing: Holding[]; day: string }) {
   const [attempted, setAttempted] = useState(false);
   const [picking, setPicking] = useState(false);
   // The check screen is a focused task with its own docked button: the bottom tab bar is hidden meanwhile.
@@ -337,7 +361,8 @@ function ReviewScreen({ ja, review, setReview, existing }: { ja: boolean; review
   const save = () => {
     setAttempted(true);
     if (needs.length || !review.rows.length) return;
-    writeHoldings(replaceSource(existing, review.source, review.rows.map(asHolding)));
+    // A lot read today is on today's basis: a split before today is never applied to it.
+    writeHoldings(replaceSource(existing, review.source, review.rows.map(row => freshLot(asHolding(row), day))));
     setReview(null);
   };
   // New / updated, judged against what is saved for the same broker. Unchanged rows carry no badge.

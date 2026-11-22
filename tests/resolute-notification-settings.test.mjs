@@ -12,7 +12,7 @@ import {createHandler} from '../services/resolute-api/handler.mjs';
 import {prepareNotificationSlot,jstSlot,NOTIFICATION_CRON_UTC} from '../lib/resolute/notification-job.ts';
 import {emptyPlanAnswers} from '../lib/resolute/plan-answers.ts';
 const defaults=defaultNotificationSettings();
-const settings={...defaults,alertsEnabled:true,watchItems:[{symbol:'AAA',referencePrice:100}],surgeCapPct:50};
+const settings={...defaults,alertsEnabled:true,watchItems:[{symbol:'AAA',referencePrice:100,priceDay:'2026-11-01'}],surgeCapPct:50};
 const rights=[{kind:'use',startsAt:'2026-01-01T00:00:00.000Z',expiresAt:null,revokedAt:null},{kind:'alerts',startsAt:'2026-01-01T00:00:00.000Z',expiresAt:'2028-01-01T00:00:00.000Z',revokedAt:null}];
 const plan={schemaVersion:1,answersVersion:1,answers:emptyPlanAnswers(),fx:{thresholdYen:null,usdJpy:null,note:''},currency:'JPY',monthlyLivingCost:250000,savingsMonths:12,reserveMonths:6,nearTermExpense:0,financialAssets:10000000,investedAmount:3000000,investable:8500000,tolerancePct:20,toleranceDrop:600000,perStockCapPct:20,buyMode:'steps',buyLines:[{dropPct:10,amount:100000},{dropPct:20,amount:100000}],buyBudgetPct:10,allocation:'equal',noBuyConditions:[],haltConditions:[],ruleType:'undecided'};
 const inputs={locale:'en',preferencesConfigured:true,recipientVerified:true,unsubscribed:false,marketDate:'2027-02-03',closes:[{symbol:'AAA',date:'2027-02-03',close:80,isFinal:true}]};
