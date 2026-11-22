@@ -1,0 +1,324 @@
+{
+  "root": {
+    "ticker": "SYM",
+    "name": "シンボティック",
+    "cik": 1837240,
+    "name_en": "Symbotic"
+  },
+  "rows": [
+    {
+      "ja": "顧客(小売・卸)",
+      "en": "Customers (retail & wholesale)"
+    },
+    {
+      "ja": "出資・合弁",
+      "en": "Investors & joint venture"
+    },
+    {
+      "ja": "競合(倉庫自動化)",
+      "en": "Competitors (warehouse automation)"
+    }
+  ],
+  "rivals": [
+    "HON",
+    "OCDO",
+    "AUTO"
+  ],
+  "companies": [
+    {
+      "id": "WMT",
+      "ticker": "WMT",
+      "name": "ウォルマート",
+      "name_en": "Walmart",
+      "sub": "小売",
+      "sub_en": "Retail",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "全42カ所の地域物流センターへの自動化システム導入契約",
+          "text_en": "Contract to automate all 42 of its regional distribution centers",
+          "source": {
+            "label": "Symbotic 10-K(2025年9月期)",
+            "label_en": "Symbotic 10-K (FY ended Sep 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1837240/000183724025000278/sym-20250927.htm",
+            "level": "official",
+            "date": "2025-11-24",
+            "quote": "to the implementation of additional systems across all of Walmart’s 42 regional distribution centers"
+          }
+        },
+        {
+          "type": "down",
+          "text": "2025年1月にWalmartの店舗向け自動化事業(ASR)を買収し、店舗の小型自動倉庫400基の契約も締結",
+          "text_en": "Bought Walmart’s Advanced Systems and Robotics business in January 2025 and signed a deal for 400 in-store micro-fulfillment systems",
+          "source": {
+            "label": "Symbotic 10-K(2025年9月期)",
+            "label_en": "Symbotic 10-K (FY ended Sep 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1837240/000183724025000278/sym-20250927.htm",
+            "level": "official",
+            "date": "2025-11-24",
+            "quote": "In January 2025, we acquired the Advanced Systems and Robotics (\"ASR\") business from Walmart and signed a Master Automation Agreement"
+          }
+        },
+        {
+          "type": "tie",
+          "text": "Walmartは発行済み株式の約13%を保有する株主でもある",
+          "text_en": "Walmart also beneficially owns about 13% of Symbotic’s common stock",
+          "source": {
+            "label": "Symbotic 10-K(2025年9月期)",
+            "label_en": "Symbotic 10-K (FY ended Sep 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1837240/000183724025000278/sym-20250927.htm",
+            "level": "official",
+            "date": "2025-11-24",
+            "quote": "Walmart had beneficial ownership of approximately 13% of our issued and outstanding common stock"
+          }
+        }
+      ]
+    },
+    {
+      "id": "WALMEX",
+      "ticker": "WALMEX",
+      "name": "ウォルマート・デ・メヒコ",
+      "name_en": "Walmart de México",
+      "sub": "小売(メキシコ)",
+      "sub_en": "Retail (Mexico)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "メキシコ市近郊の2拠点に自動化システムを導入する契約",
+          "text_en": "Agreement to install its systems at two sites near Mexico City",
+          "source": {
+            "label": "Symbotic 10-K(2025年9月期)",
+            "label_en": "Symbotic 10-K (FY ended Sep 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1837240/000183724025000278/sym-20250927.htm",
+            "level": "official",
+            "date": "2025-11-24",
+            "quote": "we entered into a commercial agreement with Nueva Wal Mart de México, S. de R.L. de C.V to implement our systems in two of their locations near Mexico City"
+          }
+        }
+      ]
+    },
+    {
+      "id": "ACI",
+      "ticker": "ACI",
+      "name": "アルバートソンズ",
+      "name_en": "Albertsons",
+      "sub": "スーパー",
+      "sub_en": "Grocery",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "主要顧客の一社",
+          "text_en": "One of its larger customers",
+          "source": {
+            "label": "Symbotic 10-K(2025年9月期)",
+            "label_en": "Symbotic 10-K (FY ended Sep 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1837240/000183724025000278/sym-20250927.htm",
+            "level": "official",
+            "date": "2025-11-24",
+            "quote": "We have several larger customers, UNFI, GreenBox, Southern Glazers and Albertsons. Net sales to these customers accounted for approximately 13% of our total revenue"
+          }
+        }
+      ]
+    },
+    {
+      "id": "UNFI",
+      "ticker": "UNFI",
+      "name": "ユナイテッド・ナチュラル・フーズ",
+      "name_en": "United Natural Foods",
+      "sub": "食品卸",
+      "sub_en": "Food wholesale",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "主要顧客の一社",
+          "text_en": "One of its larger customers",
+          "source": {
+            "label": "Symbotic 10-K(2025年9月期)",
+            "label_en": "Symbotic 10-K (FY ended Sep 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1837240/000183724025000278/sym-20250927.htm",
+            "level": "official",
+            "date": "2025-11-24",
+            "quote": "We have several larger customers, UNFI, GreenBox, Southern Glazers and Albertsons. Net sales to these customers accounted for approximately 13% of our total revenue"
+          }
+        }
+      ]
+    },
+    {
+      "id": "TGT",
+      "ticker": "TGT",
+      "name": "ターゲット",
+      "name_en": "Target",
+      "sub": "小売",
+      "sub_en": "Retail",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "顧客基盤の一社として挙げる",
+          "text_en": "Named in its customer base",
+          "source": {
+            "label": "Symbotic 10-K(2025年9月期)",
+            "label_en": "Symbotic 10-K (FY ended Sep 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1837240/000183724025000278/sym-20250927.htm",
+            "level": "official",
+            "date": "2025-11-24",
+            "quote": "We have a strong blue-chip customer base that includes some of the world’s largest retailers and wholesale grocers, including Walmart, Albertsons, our affiliate, C&S Wholesale Grocers, GreenBox, and Target."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SOFTBANK",
+      "ticker": "9984",
+      "name": "ソフトバンクグループ",
+      "name_en": "SoftBank Group",
+      "sub": "投資",
+      "sub_en": "Investment",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "倉庫自動化サービスの合弁GreenBoxを共同設立(SoftBank 65%、Symbotic 35%)。GreenBoxは主要顧客でもある",
+          "text_en": "Co-founded the GreenBox warehouse-as-a-service JV (SoftBank 65%, Symbotic 35%); GreenBox is also a major customer",
+          "source": {
+            "label": "Symbotic 10-K(2025年9月期)",
+            "label_en": "Symbotic 10-K (FY ended Sep 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1837240/000183724025000278/sym-20250927.htm",
+            "level": "official",
+            "date": "2025-11-24",
+            "quote": "We own 35% of GreenBox and SoftBank Group owns 65% of GreenBox."
+          }
+        }
+      ]
+    },
+    {
+      "id": "HON",
+      "ticker": "HON",
+      "name": "ハネウェル",
+      "name_en": "Honeywell",
+      "sub": "産業機器・自動化",
+      "sub_en": "Industrial automation",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "倉庫全体の自動化システムで競合",
+          "text_en": "Competes in comprehensive warehouse automation systems",
+          "source": {
+            "label": "Symbotic 10-K(2025年9月期)",
+            "label_en": "Symbotic 10-K (FY ended Sep 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1837240/000183724025000278/sym-20250927.htm",
+            "level": "official",
+            "date": "2025-11-24",
+            "quote": "Other companies that offer comprehensive solutions, most notably Witron, Honeywell, Dematic, Vanderlande, Knapp AG, SSI Schaefer and Swisslog"
+          }
+        }
+      ]
+    },
+    {
+      "id": "KGX",
+      "ticker": "KGX",
+      "name": "KIONグループ(Dematic)",
+      "name_en": "KION Group (Dematic)",
+      "sub": "物流機器",
+      "sub_en": "Logistics equipment",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "傘下のDematicが倉庫全体の自動化システムで競合",
+          "text_en": "Its Dematic business competes in comprehensive warehouse automation",
+          "source": {
+            "label": "Symbotic 10-K(2025年9月期)",
+            "label_en": "Symbotic 10-K (FY ended Sep 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1837240/000183724025000278/sym-20250927.htm",
+            "level": "official",
+            "date": "2025-11-24",
+            "quote": "Other companies that offer comprehensive solutions, most notably Witron, Honeywell, Dematic, Vanderlande, Knapp AG, SSI Schaefer and Swisslog"
+          }
+        }
+      ]
+    },
+    {
+      "id": "OCDO",
+      "ticker": "OCDO",
+      "name": "オカド・グループ",
+      "name_en": "Ocado Group",
+      "sub": "EC物流技術",
+      "sub_en": "E-commerce logistics tech",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "店舗・ECの小型自動倉庫で競合",
+          "text_en": "Competes in micro-fulfillment for e-commerce",
+          "source": {
+            "label": "Symbotic 10-K(2025年9月期)",
+            "label_en": "Symbotic 10-K (FY ended Sep 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1837240/000183724025000278/sym-20250927.htm",
+            "level": "official",
+            "date": "2025-11-24",
+            "quote": "Since we expanded into e-commerce with our micro-fulfillment system, Knapp AG, Exotec, Ocado, Geek+, Hai Robotics and AutoStore are competitors."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AUTO",
+      "ticker": "AUTO",
+      "name": "オートストア",
+      "name_en": "AutoStore",
+      "sub": "自動倉庫",
+      "sub_en": "Automated storage",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "店舗・ECの小型自動倉庫で競合",
+          "text_en": "Competes in micro-fulfillment for e-commerce",
+          "source": {
+            "label": "Symbotic 10-K(2025年9月期)",
+            "label_en": "Symbotic 10-K (FY ended Sep 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1837240/000183724025000278/sym-20250927.htm",
+            "level": "official",
+            "date": "2025-11-24",
+            "quote": "Since we expanded into e-commerce with our micro-fulfillment system, Knapp AG, Exotec, Ocado, Geek+, Hai Robotics and AutoStore are competitors."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GEEKPLUS",
+      "ticker": "2590",
+      "name": "極智嘉(Geek+)",
+      "name_en": "Geek+",
+      "sub": "倉庫ロボット",
+      "sub_en": "Warehouse robots",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "店舗・ECの小型自動倉庫で競合",
+          "text_en": "Competes in micro-fulfillment for e-commerce",
+          "source": {
+            "label": "Symbotic 10-K(2025年9月期)",
+            "label_en": "Symbotic 10-K (FY ended Sep 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1837240/000183724025000278/sym-20250927.htm",
+            "level": "official",
+            "date": "2025-11-24",
+            "quote": "Since we expanded into e-commerce with our micro-fulfillment system, Knapp AG, Exotec, Ocado, Geek+, Hai Robotics and AutoStore are competitors."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
