@@ -1,0 +1,240 @@
+{
+  "root": {
+    "ticker": "ISRG",
+    "name": "インテュイティブサージカル",
+    "cik": 1035267,
+    "name_en": "Intuitive Surgical"
+  },
+  "rows": [
+    {
+      "ja": "供給元(部品)",
+      "en": "Suppliers (components)",
+      "above": true
+    },
+    {
+      "ja": "中国の合弁パートナー",
+      "en": "China joint-venture partner"
+    },
+    {
+      "ja": "競合(手術支援ロボット)",
+      "en": "Competitors (surgical robots)"
+    }
+  ],
+  "rivals": [
+    "MDT",
+    "JNJ",
+    "SSII"
+  ],
+  "companies": [
+    {
+      "id": "UFPT",
+      "ticker": "UFPT",
+      "name": "UFPテクノロジーズ",
+      "name_en": "UFP Technologies",
+      "sub": "医療用部品",
+      "sub_en": "Medical components",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "医療用部品の供給元。Intuitive Surgicalの子会社がUFPの2025年売上の約24.3%を占める",
+          "text_en": "Medical component supplier; an Intuitive Surgical subsidiary was about 24.3% of UFP’s 2025 net sales",
+          "source": {
+            "label": "UFP Technologies 10-K(2025年度)",
+            "label_en": "UFP Technologies 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/914156/000162828026012816/ufpt-20251231.htm",
+            "level": "official",
+            "date": "2026-03",
+            "quote": "Two customers (Intuitive Surgical SARL and Stryker) comprised approximately 24.3% and 21.5%, respectively, of our net sales for the year ended December 31, 2025"
+          }
+        }
+      ]
+    },
+    {
+      "id": "FOSUN",
+      "ticker": "2196",
+      "name": "上海復星医薬",
+      "name_en": "Fosun Pharma",
+      "sub": "医薬品",
+      "sub_en": "Pharmaceuticals",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "中国で手術支援ロボットを販売する合弁会社を復星医薬と運営(Intuitiveが過半を保有)",
+          "text_en": "Runs majority-owned joint ventures with Fosun Pharma that sell its systems in China",
+          "source": {
+            "label": "Intuitive Surgical 10-K(2025年度)",
+            "label_en": "Intuitive Surgical 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1035267/000103526726000010/isrg-20251231.htm",
+            "level": "official",
+            "date": "2026-02-03",
+            "quote": "China (through our majority-owned joint ventures, Intuitive Surgical-Fosun Medical Technology (Shanghai) Co., Ltd. and Intuitive Surgical-Fosun (HongKong) Co. Ltd. (collectively, the \"Joint Venture\"), with Fosun Pharma)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "MDT",
+      "ticker": "MDT",
+      "name": "メドトロニック",
+      "name_en": "Medtronic",
+      "sub": "医療機器",
+      "sub_en": "Medical devices",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "手術支援ロボットや器具で競合する大手医療機器メーカー",
+          "text_en": "A large medical device maker competing in surgical robots and instruments",
+          "source": {
+            "label": "Intuitive Surgical 10-K(2025年度)",
+            "label_en": "Intuitive Surgical 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1035267/000103526726000010/isrg-20251231.htm",
+            "level": "official",
+            "date": "2026-02-03",
+            "quote": "we face greater competition from larger and well-established companies, such as Johnson & Johnson and Medtronic plc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "JNJ",
+      "ticker": "JNJ",
+      "name": "ジョンソン・エンド・ジョンソン",
+      "name_en": "Johnson & Johnson",
+      "sub": "医療機器・医薬品",
+      "sub_en": "Medical devices & pharma",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "手術支援ロボットや器具で競合する大手医療機器メーカー",
+          "text_en": "A large medical device maker competing in surgical robots and instruments",
+          "source": {
+            "label": "Intuitive Surgical 10-K(2025年度)",
+            "label_en": "Intuitive Surgical 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1035267/000103526726000010/isrg-20251231.htm",
+            "level": "official",
+            "date": "2026-02-03",
+            "quote": "we face greater competition from larger and well-established companies, such as Johnson & Johnson and Medtronic plc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SSII",
+      "ticker": "SSII",
+      "name": "SSイノベーションズ",
+      "name_en": "SS Innovations",
+      "sub": "手術支援ロボット",
+      "sub_en": "Surgical robots",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "手術支援ロボットの分野に参入した競合の一社",
+          "text_en": "A competitor that has entered robotic-assisted surgery",
+          "source": {
+            "label": "Intuitive Surgical 10-K(2025年度)",
+            "label_en": "Intuitive Surgical 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1035267/000103526726000010/isrg-20251231.htm",
+            "level": "official",
+            "date": "2026-02-03",
+            "quote": "include, but are not limited to, the following: Beijing Surgerii Robotics Company Limited; CMR Surgical Ltd.; Distalmotion SA; Harbin Sizhe Rui Intelligent Medical Equipment Co., Ltd.; Johnson & Johnson; Karl Storz SE & Co. KG; Medicaroid Corporation; Medtronic plc; meerecompany Inc.; Noah Medical Corporation; Shandong Weigao Group Medical Polymer Company Ltd.; Shanghai Microport Medbot (Group) Co., Ltd.; Shenzhen Edge Medical Co., Ltd.; and SS Innovations International, Inc."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "SS Innovationsも10-KでIntuitive Surgicalを競合に挙げる",
+          "text_en": "SS Innovations’ 10-K also names Intuitive Surgical as a competitor",
+          "source": {
+            "label": "SS Innovations 10-K(2025年度)",
+            "label_en": "SS Innovations 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1676163/000121390026025440/ea0277925-10k_ssinnova.htm",
+            "level": "official",
+            "date": "2026-03",
+            "quote": "We compete with a number of U.S. and foreign companies that have developed and currently manufacture and market products in the field of robotic-assisted medical procedures, including but not limited to: Intuitive Surgical, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MEDBOT",
+      "ticker": "2252",
+      "name": "上海微創医療機器人",
+      "name_en": "MicroPort MedBot",
+      "sub": "手術支援ロボット",
+      "sub_en": "Surgical robots",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "手術支援ロボットの分野に参入した中国の競合",
+          "text_en": "A Chinese competitor in robotic-assisted surgery",
+          "source": {
+            "label": "Intuitive Surgical 10-K(2025年度)",
+            "label_en": "Intuitive Surgical 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1035267/000103526726000010/isrg-20251231.htm",
+            "level": "official",
+            "date": "2026-02-03",
+            "quote": "include, but are not limited to, the following: Beijing Surgerii Robotics Company Limited; CMR Surgical Ltd.; Distalmotion SA; Harbin Sizhe Rui Intelligent Medical Equipment Co., Ltd.; Johnson & Johnson; Karl Storz SE & Co. KG; Medicaroid Corporation; Medtronic plc; meerecompany Inc.; Noah Medical Corporation; Shandong Weigao Group Medical Polymer Company Ltd.; Shanghai Microport Medbot (Group) Co., Ltd.; Shenzhen Edge Medical Co., Ltd.; and SS Innovations International, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "WEIGAO",
+      "ticker": "1066",
+      "name": "山東威高集団医用高分子製品",
+      "name_en": "Shandong Weigao",
+      "sub": "医療機器",
+      "sub_en": "Medical devices",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "手術支援ロボットの分野に参入した中国の競合",
+          "text_en": "A Chinese competitor in robotic-assisted surgery",
+          "source": {
+            "label": "Intuitive Surgical 10-K(2025年度)",
+            "label_en": "Intuitive Surgical 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1035267/000103526726000010/isrg-20251231.htm",
+            "level": "official",
+            "date": "2026-02-03",
+            "quote": "include, but are not limited to, the following: Beijing Surgerii Robotics Company Limited; CMR Surgical Ltd.; Distalmotion SA; Harbin Sizhe Rui Intelligent Medical Equipment Co., Ltd.; Johnson & Johnson; Karl Storz SE & Co. KG; Medicaroid Corporation; Medtronic plc; meerecompany Inc.; Noah Medical Corporation; Shandong Weigao Group Medical Polymer Company Ltd.; Shanghai Microport Medbot (Group) Co., Ltd.; Shenzhen Edge Medical Co., Ltd.; and SS Innovations International, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "RBOT",
+      "ticker": "RBOT",
+      "name": "ヴィカリアス・サージカル",
+      "name_en": "Vicarious Surgical",
+      "sub": "手術支援ロボット",
+      "sub_en": "Surgical robots",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Vicarious Surgicalが10-KでIntuitive Surgicalを競合に挙げる",
+          "text_en": "Vicarious Surgical’s 10-K names Intuitive Surgical as a competitor",
+          "source": {
+            "label": "Vicarious Surgical 10-K(2025年度)",
+            "label_en": "Vicarious Surgical 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1812173/000121390026025189/ea0276827-10k_vicarious.htm",
+            "level": "official",
+            "date": "2026-03",
+            "quote": "We face competition from larger and well-established companies. The companies that have introduced products in the field of robotic-assisted surgery or have made explicit statements about their efforts to enter the field, include, but are not limited to: Intuitive Surgical, Inc."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

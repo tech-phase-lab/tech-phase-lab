@@ -1,0 +1,399 @@
+{
+  "root": {
+    "ticker": "LUNR",
+    "name": "インテュイティブ・マシーンズ",
+    "cik": 1844452,
+    "name_en": "Intuitive Machines"
+  },
+  "rows": [
+    {
+      "ja": "顧客(防衛・通信・月面輸送)",
+      "en": "Customers (defense, telecom & lunar cargo)"
+    },
+    {
+      "ja": "提携(月面車・通信)",
+      "en": "Partners (lunar rover & communications)"
+    },
+    {
+      "ja": "競合(月面輸送・衛星製造)",
+      "en": "Competitors (lunar delivery & satellites)"
+    }
+  ],
+  "rivals": [
+    "LMT",
+    "FLY",
+    "RKLB",
+    "NOC"
+  ],
+  "companies": [
+    {
+      "id": "LHX",
+      "ticker": "LHX",
+      "name": "L3ハリス・テクノロジーズ",
+      "name_en": "L3Harris Technologies",
+      "sub": "防衛・通信",
+      "sub_en": "Defense & communications",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "ミサイル追跡衛星網向けに衛星本体(バス)16機をL3Harrisに納入(買収したLanterisが受注)",
+          "text_en": "Delivering 16 satellite buses to L3Harris for a missile-tracking constellation (won by Lanteris before the acquisition)",
+          "source": {
+            "label": "Intuitive Machines 10-K(2025年度)",
+            "label_en": "Intuitive Machines 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1844452/000162828026019865/lunr-20251231.htm",
+            "level": "official",
+            "date": "2026-03-19",
+            "quote": "our subsidiary was selected to build 16 satellite buses for its customer, L3Harris Technologies (L3Harris)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "SATS",
+      "ticker": "SATS",
+      "name": "エコースター",
+      "name_en": "EchoStar",
+      "sub": "衛星通信",
+      "sub_en": "Satellite communications",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "買収したLanterisが、子会社Hughes向けに大型通信衛星JUPITER 3を製造",
+          "text_en": "Lanteris built the JUPITER 3 communications satellite for subsidiary Hughes Network Systems",
+          "source": {
+            "label": "Intuitive Machines 10-K(2025年度)",
+            "label_en": "Intuitive Machines 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1844452/000162828026019865/lunr-20251231.htm",
+            "level": "official",
+            "date": "2026-03-19",
+            "quote": "Lanteris built JUPITER 3, a transformational Ultra High Density Satellite, for Hughes Network Systems to be designated EchoStar XXIV.",
+            "note": "Lanteris買収(2026年1月)前の実績です。",
+            "note_en": "Work completed before the January 2026 Lanteris acquisition."
+          }
+        }
+      ]
+    },
+    {
+      "id": "COLM",
+      "ticker": "COLM",
+      "name": "コロンビア・スポーツウェア",
+      "name_en": "Columbia Sportswear",
+      "sub": "アパレル",
+      "sub_en": "Apparel",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "月面への貨物輸送ミッションの商業顧客",
+          "text_en": "Commercial customer of its lunar cargo delivery missions",
+          "source": {
+            "label": "Intuitive Machines 10-K(2025年度)",
+            "label_en": "Intuitive Machines 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1844452/000162828026019865/lunr-20251231.htm",
+            "level": "official",
+            "date": "2026-03-19",
+            "quote": "Our lunar cargo delivery missions include commercial customers including, Columbia Sportswear Company, Nokia Corporation"
+          }
+        }
+      ]
+    },
+    {
+      "id": "NOK",
+      "ticker": "NOK",
+      "name": "ノキア",
+      "name_en": "Nokia",
+      "sub": "通信機器",
+      "sub_en": "Telecom equipment",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "月面への貨物輸送ミッションの商業顧客",
+          "text_en": "Commercial customer of its lunar cargo delivery missions",
+          "source": {
+            "label": "Intuitive Machines 10-K(2025年度)",
+            "label_en": "Intuitive Machines 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1844452/000162828026019865/lunr-20251231.htm",
+            "level": "official",
+            "date": "2026-03-19",
+            "quote": "Our lunar cargo delivery missions include commercial customers including, Columbia Sportswear Company, Nokia Corporation"
+          }
+        }
+      ]
+    },
+    {
+      "id": "BA",
+      "ticker": "BA",
+      "name": "ボーイング",
+      "name_en": "Boeing",
+      "sub": "航空宇宙",
+      "sub_en": "Aerospace",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "NASA向け月面探査車(LTV)の開発チームの一員",
+          "text_en": "Member of its Lunar Terrain Vehicle team for NASA",
+          "source": {
+            "label": "Intuitive Machines 10-K(2025年度)",
+            "label_en": "Intuitive Machines 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1844452/000162828026019865/lunr-20251231.htm",
+            "level": "official",
+            "date": "2026-03-19",
+            "quote": "Intuitive Machines is developing its Lunar Terrain Vehicle for NASA through its global partnership team including, AVL, Boeing, CSIRO, Fugro, Michelin, Northrop Grumman, and Roush."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "一方で、民間の宇宙ミッションでは衛星製造の競合でもある",
+          "text_en": "Also a competitor in civil space missions",
+          "source": {
+            "label": "Intuitive Machines 10-K(2025年度)",
+            "label_en": "Intuitive Machines 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1844452/000162828026019865/lunr-20251231.htm",
+            "level": "official",
+            "date": "2026-03-19",
+            "quote": "with respect to civil space missions various companies including BAE Systems, Blue Origin, Boeing, Lockheed Martin, Northrop Grumman, SpaceX, and Voyager."
+          }
+        }
+      ]
+    },
+    {
+      "id": "NOC",
+      "ticker": "NOC",
+      "name": "ノースロップ・グラマン",
+      "name_en": "Northrop Grumman",
+      "sub": "防衛・宇宙",
+      "sub_en": "Defense & space",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "NASA向け月面探査車(LTV)の開発チームの一員",
+          "text_en": "Member of its Lunar Terrain Vehicle team for NASA",
+          "source": {
+            "label": "Intuitive Machines 10-K(2025年度)",
+            "label_en": "Intuitive Machines 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1844452/000162828026019865/lunr-20251231.htm",
+            "level": "official",
+            "date": "2026-03-19",
+            "quote": "Intuitive Machines is developing its Lunar Terrain Vehicle for NASA through its global partnership team including, AVL, Boeing, CSIRO, Fugro, Michelin, Northrop Grumman, and Roush."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "一方で、防衛・静止衛星の製造では競合でもある",
+          "text_en": "Also a competitor in defense and geostationary satellites",
+          "source": {
+            "label": "Intuitive Machines 10-K(2025年度)",
+            "label_en": "Intuitive Machines 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1844452/000162828026019865/lunr-20251231.htm",
+            "level": "official",
+            "date": "2026-03-19",
+            "quote": "Lanteris’ primary competitors for commercial geostationary satellite construction projects are Airbus, Astranis, Northrop Grumman, and ThalesAlenia Space."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MICHELIN",
+      "ticker": "ML",
+      "name": "ミシュラン",
+      "name_en": "Michelin",
+      "sub": "タイヤ",
+      "sub_en": "Tires",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "NASA向け月面探査車(LTV)の開発チームの一員",
+          "text_en": "Member of its Lunar Terrain Vehicle team for NASA",
+          "source": {
+            "label": "Intuitive Machines 10-K(2025年度)",
+            "label_en": "Intuitive Machines 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1844452/000162828026019865/lunr-20251231.htm",
+            "level": "official",
+            "date": "2026-03-19",
+            "quote": "Intuitive Machines is developing its Lunar Terrain Vehicle for NASA through its global partnership team including, AVL, Boeing, CSIRO, Fugro, Michelin, Northrop Grumman, and Roush."
+          }
+        }
+      ]
+    },
+    {
+      "id": "FUGRO",
+      "ticker": "FUR",
+      "name": "フグロ",
+      "name_en": "Fugro",
+      "sub": "地理空間データ",
+      "sub_en": "Geo-data",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "月面探査車チームの一員で、地上局ネットワークの提携先でもある",
+          "text_en": "Lunar Terrain Vehicle team member and ground-network partner",
+          "source": {
+            "label": "Intuitive Machines 10-K(2025年度)",
+            "label_en": "Intuitive Machines 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1844452/000162828026019865/lunr-20251231.htm",
+            "level": "official",
+            "date": "2026-03-19",
+            "quote": "Intuitive Machines is developing its Lunar Terrain Vehicle for NASA through its global partnership team including, AVL, Boeing, CSIRO, Fugro, Michelin, Northrop Grumman, and Roush."
+          }
+        }
+      ]
+    },
+    {
+      "id": "LEONARDO",
+      "ticker": "LDO",
+      "name": "レオナルド",
+      "name_en": "Leonardo",
+      "sub": "防衛・宇宙",
+      "sub_en": "Defense & space",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2025年12月、月探査向けの通信・測位サービスで戦略協力協定を締結",
+          "text_en": "Signed a December 2025 strategic cooperation agreement on lunar communications and navigation",
+          "source": {
+            "label": "Intuitive Machines 10-K(2025年度)",
+            "label_en": "Intuitive Machines 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1844452/000162828026019865/lunr-20251231.htm",
+            "level": "official",
+            "date": "2026-03-19",
+            "quote": "in December 2025, the Company signed a strategic cooperation agreement to advance interoperable infrastructures and provide communications and navigation services in support of lunar exploration with international partners, Leonardo, and Telespazio."
+          }
+        }
+      ]
+    },
+    {
+      "id": "LMT",
+      "ticker": "LMT",
+      "name": "ロッキード・マーティン",
+      "name_en": "Lockheed Martin",
+      "sub": "防衛・宇宙",
+      "sub_en": "Defense & space",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "有人月探査など大型案件を狙う既存大手の競合",
+          "text_en": "An incumbent rival pursuing larger lunar contracts such as crewed missions",
+          "source": {
+            "label": "Intuitive Machines 10-K(2025年度)",
+            "label_en": "Intuitive Machines 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1844452/000162828026019865/lunr-20251231.htm",
+            "level": "official",
+            "date": "2026-03-19",
+            "quote": "Competition in our addressable market is mainly divided between incumbents, such as Lockheed Martin and Blue Origin who pursue larger, more complex contracts such as crewed lunar missions, and next generation players, including our competitors on the CLPS contract such as Astrobotic and Firefly Aerospace."
+          }
+        }
+      ]
+    },
+    {
+      "id": "FLY",
+      "ticker": "FLY",
+      "name": "ファイアフライ・エアロスペース",
+      "name_en": "Firefly Aerospace",
+      "sub": "ロケット・月着陸機",
+      "sub_en": "Launch & lunar landers",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "NASAの月面輸送(CLPS)契約を競う相手",
+          "text_en": "A rival for NASA’s CLPS lunar delivery contracts",
+          "source": {
+            "label": "Intuitive Machines 10-K(2025年度)",
+            "label_en": "Intuitive Machines 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1844452/000162828026019865/lunr-20251231.htm",
+            "level": "official",
+            "date": "2026-03-19",
+            "quote": "Competition in our addressable market is mainly divided between incumbents, such as Lockheed Martin and Blue Origin who pursue larger, more complex contracts such as crewed lunar missions, and next generation players, including our competitors on the CLPS contract such as Astrobotic and Firefly Aerospace."
+          }
+        }
+      ]
+    },
+    {
+      "id": "RKLB",
+      "ticker": "RKLB",
+      "name": "ロケット・ラボ",
+      "name_en": "Rocket Lab",
+      "sub": "ロケット・衛星",
+      "sub_en": "Launch & satellites",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "防衛向けの衛星製造で競合",
+          "text_en": "Competes in national-security satellite manufacturing",
+          "source": {
+            "label": "Intuitive Machines 10-K(2025年度)",
+            "label_en": "Intuitive Machines 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1844452/000162828026019865/lunr-20251231.htm",
+            "level": "official",
+            "date": "2026-03-19",
+            "quote": "For national security and defense market opportunities relevant to Lanteris, competitors include BAE Systems, K2 Space, Lockheed Martin, Millenium Space Systems, Northrop Grumman, Rocket Lab, and York Space Systems."
+          }
+        }
+      ]
+    },
+    {
+      "id": "VOYG",
+      "ticker": "VOYG",
+      "name": "ボイジャー・テクノロジーズ",
+      "name_en": "Voyager Technologies",
+      "sub": "宇宙・防衛",
+      "sub_en": "Space & defense",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "民間の宇宙ミッションで競合",
+          "text_en": "Competes in civil space missions",
+          "source": {
+            "label": "Intuitive Machines 10-K(2025年度)",
+            "label_en": "Intuitive Machines 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1844452/000162828026019865/lunr-20251231.htm",
+            "level": "official",
+            "date": "2026-03-19",
+            "quote": "with respect to civil space missions various companies including BAE Systems, Blue Origin, Boeing, Lockheed Martin, Northrop Grumman, SpaceX, and Voyager."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AIRBUS",
+      "ticker": "AIR",
+      "name": "エアバス",
+      "name_en": "Airbus",
+      "sub": "航空宇宙",
+      "sub_en": "Aerospace",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "静止軌道の通信衛星製造で主な競合",
+          "text_en": "A primary competitor in geostationary satellite construction",
+          "source": {
+            "label": "Intuitive Machines 10-K(2025年度)",
+            "label_en": "Intuitive Machines 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1844452/000162828026019865/lunr-20251231.htm",
+            "level": "official",
+            "date": "2026-03-19",
+            "quote": "Lanteris’ primary competitors for commercial geostationary satellite construction projects are Airbus, Astranis, Northrop Grumman, and ThalesAlenia Space."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
