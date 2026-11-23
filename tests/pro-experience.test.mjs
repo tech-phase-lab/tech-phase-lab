@@ -92,8 +92,10 @@ test("the video does not start by itself: tap to play, inline on a phone, poster
   for (const attribute of [/\bcontrols\b/, /\bplaysInline\b/, /preload="metadata"/, /poster=\{poster/, /src=\{src\}/]) assert.match(tag, attribute);
   assert.match(screen, /videoFor\(feature, lang\)/);
   const css = read("../app/research/pro-experience/styles.module.css");
+  // Owner, Nov 23: no wider than 360px and no taller than 70% of the screen, centred, never cropped.
   assert.match(css, /\.video\{[^}]*width:100%;height:auto;aspect-ratio:720\/1566;object-fit:contain/);
-  assert.doesNotMatch(css.match(/\.video\{[^}]*\}/)[0], /max-height/);
+  assert.match(css, /\.media\{[^}]*width:min\(100%,360px,calc\(70svh \* 720 \/ 1566\)\);margin:22px auto 0/);
+  assert.match(css, /\.page\{[^}]*padding:6px 0 140px/, "the controls scroll clear of the fixed bottom menu");
 });
 
 test("「PROではじめる」 is for people who are not PRO, goes to the plan page, and the next-feature link follows it", () => {
@@ -101,6 +103,12 @@ test("「PROではじめる」 is for people who are not PRO, goes to the plan p
   assert.match(screen, /const showStart = showStartButton\(\{ settled, plan: plan \?\? null, ownerAccount: owner, ownerRole \}\);/);
   assert.match(screen, /\{showStart && <div className=\{styles\.start\}>\s*<Link className=\{styles\.go\} href="\/research\/account\?upgrade=1"/);
   assert.ok(screen.indexOf("PROではじめる") < screen.indexOf("次の機能"));
+  // Owner, Nov 23: the last row is 「‹ PRO機能体験に戻る」 on the left and the next feature on the right, on one line.
+  assert.match(screen, /<div className=\{styles\.nextRow\}><BackToList ja=\{ja\} \/>\s*\{next && <Link className=\{styles\.next\}/);
+  const rowCss = read("../app/research/pro-experience/styles.module.css");
+  assert.match(rowCss, /\.nextRow\{display:flex;align-items:center;justify-content:space-between/);
+  assert.match(rowCss, /\.nextRow \.back\{margin:0;white-space:nowrap\}/);
+  assert.match(rowCss, /\.next\{[^}]*white-space:nowrap/);
   // Nov 16 (second review): the button is gold and glowing, like the header's PRO button (owner's mockups 01/02).
   assert.match(read("../app/research/pro-experience/styles.module.css"), /\.go\{[^}]*background:linear-gradient\(135deg,#f1dca0,#d9b25f 55%,#b8893a\)/);
 });
