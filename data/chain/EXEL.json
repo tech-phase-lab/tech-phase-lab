@@ -1,0 +1,298 @@
+{
+  "root": {
+    "ticker": "EXEL",
+    "name": "エクセリクシス",
+    "cik": 939767,
+    "name_en": "Exelixis"
+  },
+  "rows": [
+    {
+      "ja": "販売・開発パートナー(カボザンチニブなど)",
+      "en": "Commercial & development partners"
+    },
+    {
+      "ja": "創薬提携・ライセンス",
+      "en": "Discovery deals & licenses"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "MRUS",
+    "CANF",
+    "RPTX"
+  ],
+  "companies": [
+    {
+      "id": "Ipsen",
+      "ticker": "Ipsen",
+      "name": "イプセン",
+      "name_en": "Ipsen",
+      "sub": "製薬(仏)",
+      "sub_en": "Pharma (France)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "米国・カナダ・日本以外でカボザンチニブを販売し、累計8.379億ドルのロイヤルティを支払う",
+          "text_en": "Sells cabozantinib outside the US, Canada and Japan; $837.9 million in royalties paid so far",
+          "source": {
+            "label": "Exelixis 10-K(2025年度)",
+            "label_en": "Exelixis 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/939767/000093976726000021/exel-20260102.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "As of December 31, 2025, we have earned royalties of $837.9 million on net sales of cabozantinib by Ipsen since the inception of the collaboration agreement."
+          }
+        }
+      ]
+    },
+    {
+      "id": "TAK",
+      "ticker": "TAK",
+      "name": "武田薬品工業",
+      "name_en": "Takeda",
+      "sub": "製薬",
+      "sub_en": "Pharma",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "日本でカボザンチニブを独占販売",
+          "text_en": "Holds exclusive cabozantinib rights in Japan",
+          "source": {
+            "label": "Exelixis 10-K(2025年度)",
+            "label_en": "Exelixis 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/939767/000093976726000021/exel-20260102.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "Takeda received exclusive commercialization rights for current and potential future cabozantinib indications in Japan"
+          }
+        }
+      ]
+    },
+    {
+      "id": "MRK",
+      "ticker": "MRK",
+      "name": "メルク",
+      "name_en": "Merck",
+      "sub": "製薬",
+      "sub_en": "Pharma",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ザンザリンチニブの臨床開発で協業(2024年10月)",
+          "text_en": "Clinical development collaboration on zanzalintinib (October 2024)",
+          "source": {
+            "label": "Exelixis 10-K(2025年度)",
+            "label_en": "Exelixis 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/939767/000093976726000021/exel-20260102.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "in October 2024, we announced our entry into a clinical development collaboration with MSD International Business GmbH, known as Merck within the United States and Canada (Merck)."
+          }
+        }
+      ]
+    },
+    {
+      "id": "RPRX",
+      "ticker": "RPRX",
+      "name": "ロイヤルティ・ファーマ",
+      "name_en": "Royalty Pharma",
+      "sub": "医薬品ロイヤルティ",
+      "sub_en": "Drug royalties",
+      "row": 0,
+      "relations": [
+        {
+          "type": "up",
+          "text": "カボザンチニブ製品の売上の3%をロイヤルティとして支払う",
+          "text_en": "Pays it a 3% royalty on all cabozantinib sales",
+          "source": {
+            "label": "Exelixis 10-K(2025年度)",
+            "label_en": "Exelixis 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/939767/000093976726000021/exel-20260102.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "we are required to pay a 3% royalty to Royalty Pharma on total net sales of any product containing cabozantinib, including net sales by Ipsen."
+          }
+        }
+      ]
+    },
+    {
+      "id": "DSNKY",
+      "ticker": "4568",
+      "name": "第一三共",
+      "name_en": "Daiichi Sankyo",
+      "sub": "製薬",
+      "sub_en": "Pharma",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "降圧薬ミネブロ(エサキセレノン)のライセンス先",
+          "text_en": "Licensee of the hypertension drug MINNEBRO",
+          "source": {
+            "label": "Exelixis 10-K(2025年度)",
+            "label_en": "Exelixis 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/939767/000093976726000021/exel-20260102.htm",
+            "level": "official",
+            "date": "2026-02-10",
+            "quote": "licensed to Daiichi Sankyo Company, Limited (Daiichi Sankyo)."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ADAG",
+      "ticker": "ADAG",
+      "name": "アダジーン",
+      "name_en": "Adagene",
+      "sub": "抗体技術",
+      "sub_en": "Antibody technology",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "SAFEbody技術でマスク型ADCを共同開発(3つ目のプログラム)",
+          "text_en": "Advanced a third masked ADC program with Exelixis using SAFEbody",
+          "source": {
+            "label": "Adagene 20-F(2025年度)",
+            "label_en": "Adagene 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1818838/000110465926038612/adag-20251231x20f.htm",
+            "level": "official",
+            "date": "2026-04-01",
+            "quote": "We advanced a third masked ADC program with Exelixis against a solid tumor target, building on the 2021 collaboration."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GPCR",
+      "ticker": "GPCR",
+      "name": "ストラクチャー・セラピューティクス",
+      "name_en": "Structure Therapeutics",
+      "sub": "創薬(GPCR)",
+      "sub_en": "Drug discovery (GPCR)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "初期段階の特許をExelixisに売却し1020万ドルの利益",
+          "text_en": "Sold early-stage patents to Exelixis for a $10.2 million gain",
+          "source": {
+            "label": "Structure Therapeutics 10-K(2025年度)",
+            "label_en": "Structure Therapeutics 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1888886/000110465926020562/gpcr-20251231x10k.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Gains on sale of non-financial assets consists of the gain on sale of certain patents under the Exelixis Agreement."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ZYME",
+      "ticker": "ZYME",
+      "name": "ザイムワークス",
+      "name_en": "Zymeworks",
+      "sub": "抗体医薬",
+      "sub_en": "Antibody therapeutics",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ExelixisがIconic社からADC(XB002)をライセンス導入し、Zymeworksも対価を受領",
+          "text_en": "Received a share when Exelixis licensed the XB002 ADC from Iconic",
+          "source": {
+            "label": "Zymeworks 10-K(2024年度)",
+            "label_en": "Zymeworks 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1937653/000193765325000014/zyme-20241231.htm",
+            "level": "official",
+            "date": "2025-03-05",
+            "quote": "exercised an option under an existing agreement with Iconic to license ICON-2 (also known as XB002)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "MRUS",
+      "ticker": "MRUS",
+      "name": "メルス",
+      "name_en": "Merus",
+      "sub": "がん抗体",
+      "sub_en": "Cancer antibodies",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Merusが10-Kで、最も近い競合の一社として挙げる",
+          "text_en": "Merus names Exelixis among its closest competitors",
+          "source": {
+            "label": "Merus 10-K(2024年度)",
+            "label_en": "Merus 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1651311/000095017025029024/mrus-20241231.htm",
+            "level": "official",
+            "date": "2025-02-27",
+            "quote": "Our closest competitors in this area include Genmab A/S, Janssen Pharmaceutical Companies, Regeneron Pharmaceuticals, Inc., Bicara Therapeutics, Exelixis, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CANF",
+      "ticker": "CANF",
+      "name": "キャンファイト・バイオファーマ",
+      "name_en": "Can-Fite BioPharma",
+      "sub": "創薬(イスラエル)",
+      "sub_en": "Biotech (Israel)",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Can-Fiteが20-Fで、肝細胞がん分野の競合として挙げる",
+          "text_en": "Can-Fite names Exelixis among liver cancer competitors",
+          "source": {
+            "label": "Can-Fite BioPharma 20-F(2024年度)",
+            "label_en": "Can-Fite BioPharma 20-F (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1536196/000121390025031298/ea0235093-20f_canfite.htm",
+            "level": "official",
+            "date": "2025-04-14",
+            "quote": "Competitors in the HCC field include companies such as Bayer, Exelixis, Merck"
+          }
+        }
+      ]
+    },
+    {
+      "id": "RPTX",
+      "ticker": "RPTX",
+      "name": "リペア・セラピューティクス",
+      "name_en": "Repare Therapeutics",
+      "sub": "がん創薬",
+      "sub_en": "Cancer drug discovery",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Repareが10-Kで、合成致死分野の競合として挙げる",
+          "text_en": "Repare names Exelixis among synthetic lethality competitors",
+          "source": {
+            "label": "Repare Therapeutics 10-K(2024年度)",
+            "label_en": "Repare Therapeutics 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1808158/000095017025030405/rptx-20241231.htm",
+            "level": "official",
+            "date": "2025-03-03",
+            "quote": "Schrodinger, Inc., Exelixis, Inc., Artios Pharma Ltd."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

@@ -157,7 +157,7 @@ class Scope(Base):
     def test_one_batched_read_and_it_waits_when_the_minutes_credits_are_used(self):
         self.alerts([{'ticker': t, 'price': 10, 'direction': 'above', 'currency': 'USD'} for t in ('NVDA', 'MU', 'BRK-B')])
         self.alerts([{'ticker': 'NVDA', 'price': 5, 'direction': 'below', 'currency': 'USD'}], owner=OTHER_FAV)
-        self.usage = 449
+        self.usage = pa.CREDIT_CEILING - 1  # 3 tickers would pass the critical tier's ceiling
         self.assertEqual(self.run_at(self.now)['status'], 'credits-busy')
         self.assertEqual([c[0] for c in self.calls], ['api_usage'])
         self.usage = 100

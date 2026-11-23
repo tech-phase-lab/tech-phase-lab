@@ -28,6 +28,8 @@ import time
 import urllib.error
 import urllib.parse
 import urllib.request
+
+import twelve_allocator
 from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 from zoneinfo import ZoneInfo
@@ -333,6 +335,10 @@ def sec_fetch(cik, user_agent, opener=urllib.request.urlopen):
 # ---- Twelve Data ------------------------------------------------------------------------------------------------------------------
 
 def td_get(path, params, env=None, timeout=60):
+    answered = twelve_allocator.intercept(path, params)  # inside the monitor: the allocator's view of the minute
+    if answered is not None:
+        return answered
+    twelve_allocator.spent(path, params)  # counted before it is sent
     env = os.environ if env is None else env
     base = (env.get('TWELVE_DATA_BASE_URL') or 'https://api.twelvedata.com').rstrip('/')
     query = dict(params)

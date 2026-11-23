@@ -1,0 +1,273 @@
+{
+  "root": {
+    "ticker": "CTVA",
+    "name": "コルテバ",
+    "cik": 1755672,
+    "name_en": "Corteva"
+  },
+  "rows": [
+    {
+      "ja": "分離元・関連会社(旧ダウ・デュポン)",
+      "en": "Former DowDuPont companies",
+      "above": true
+    },
+    {
+      "ja": "技術ライセンス・合弁・取引",
+      "en": "Technology licenses, JV & deals"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "CBUS"
+  ],
+  "companies": [
+    {
+      "id": "DD",
+      "ticker": "DD",
+      "name": "デュポン",
+      "name_en": "DuPont de Nemours",
+      "sub": "化学・素材",
+      "sub_en": "Chemicals & materials",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "分離時の税務契約などをDuPont・Dowと結ぶ",
+          "text_en": "Bound with DuPont and Dow by separation tax agreements",
+          "source": {
+            "label": "DuPont 10-K(2024年度)",
+            "label_en": "DuPont 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1666700/000166670025000005/dd-20241231.htm",
+            "level": "official",
+            "date": "2025-02-14",
+            "quote": "In connection with the separations and DWDP Distributions, DuPont, Dow and Corteva have entered into a Tax Matters Agreement"
+          }
+        }
+      ]
+    },
+    {
+      "id": "DOW",
+      "ticker": "DOW",
+      "name": "ダウ",
+      "name_en": "Dow",
+      "sub": "化学",
+      "sub_en": "Chemicals",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "分離時の契約で相互補償・債務分担を定める",
+          "text_en": "Separation agreements set cross-indemnities and shared liabilities",
+          "source": {
+            "label": "Dow 10-K(2024年度)",
+            "label_en": "Dow 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1751788/000175178825000012/dow-20241231.htm",
+            "level": "official",
+            "date": "2025-02-04",
+            "quote": "Includes charges associated with agreements entered into with DuPont and Corteva as part of the separation and distribution"
+          }
+        }
+      ]
+    },
+    {
+      "id": "CC",
+      "ticker": "CC",
+      "name": "ケマーズ",
+      "name_en": "Chemours",
+      "sub": "化学(フッ素)",
+      "sub_en": "Chemicals (fluoroproducts)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Chemoursの分離契約の相手EIDはCorteva子会社",
+          "text_en": "EID, party to Chemours' separation agreements, is a Corteva subsidiary",
+          "source": {
+            "label": "Chemours 10-K(2025年度)",
+            "label_en": "Chemours 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1627223/000119312526065201/cc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-24",
+            "quote": "EID is now a subsidiary of Corteva, and, at this time, any agreements related to our Separation are between us and EID, Corteva, and DuPont."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BP",
+      "ticker": "BP",
+      "name": "BP",
+      "name_en": "BP",
+      "sub": "石油",
+      "sub_en": "Oil & gas",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "バイオ燃料の折半合弁Etlasを設立",
+          "text_en": "Formed the Etlas 50:50 biofuels joint venture",
+          "source": {
+            "label": "BP 20-F(2025年度)",
+            "label_en": "BP 20-F (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/313807/000031380726000006/bp-20251231.htm",
+            "level": "official",
+            "date": "2026-03-06",
+            "quote": "Partnering in biofuels bp and Corteva, one of the world's leading agriscience companies, launched Etlas - a new biofuels 50:50 joint venture."
+          }
+        }
+      ]
+    },
+    {
+      "id": "RKDA",
+      "ticker": "RKDA",
+      "name": "アルカディア・バイオサイエンシズ",
+      "name_en": "Arcadia Biosciences",
+      "sub": "農業バイオ",
+      "sub_en": "Ag biotech",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "小麦の形質をCortevaに400万ドルで売却(2024年5月)",
+          "text_en": "Sold its resistant starch wheat trait to Corteva for $4.0 million (May 2024)",
+          "source": {
+            "label": "Arcadia Biosciences 10-K(2024年度)",
+            "label_en": "Arcadia Biosciences 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1469443/000095017025044487/rkda-20241231.htm",
+            "level": "official",
+            "date": "2025-03-25",
+            "quote": "On May 14, 2024, Arcadia sold its non-GMO Resistant Starch (\"RS\") durum wheat trait to longtime partner Corteva Agriscience (\"Corteva\") for total cash consideration of $4.0 million."
+          }
+        }
+      ]
+    },
+    {
+      "id": "EVGN",
+      "ticker": "EVGN",
+      "name": "エボジーン",
+      "name_en": "Evogene",
+      "sub": "農業バイオ",
+      "sub_en": "Ag biotech",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "子会社Lavie Bioの生物殺菌剤をCortevaにライセンス",
+          "text_en": "Its Lavie Bio unit licenses a bio-fungicide to Corteva",
+          "source": {
+            "label": "Evogene 20-F(2024年度)",
+            "label_en": "Evogene 20-F (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1574565/000117891325001092/zk2532892.htm",
+            "level": "official",
+            "date": "2025-03-27",
+            "quote": "payments under a licensing agreement of Lavie Bio with Corteva"
+          }
+        }
+      ]
+    },
+    {
+      "id": "CRBU",
+      "ticker": "CRBU",
+      "name": "カリブー・バイオサイエンシズ",
+      "name_en": "Caribou Biosciences",
+      "sub": "ゲノム編集",
+      "sub_en": "Gene editing",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "旧Pioneer(現Corteva)とゲノム編集の協業・ライセンス契約",
+          "text_en": "Collaboration and license agreement with Pioneer, now Corteva",
+          "source": {
+            "label": "Caribou Biosciences 10-K(2025年度)",
+            "label_en": "Caribou Biosciences 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1619856/000161985626000008/crbu-20251231.htm",
+            "level": "official",
+            "date": "2026-03-05",
+            "quote": "On July 13, 2015, we entered into an Amended and Restated Collaboration and License Agreement (as amended, \"Pioneer Agreement\") with Pioneer (then a DuPont company)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "SGMO",
+      "ticker": "SGMO",
+      "name": "サンガモ・セラピューティクス",
+      "name_en": "Sangamo Therapeutics",
+      "sub": "遺伝子治療",
+      "sub_en": "Genomic medicine",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ゲノム編集技術のライセンス先の一社",
+          "text_en": "One of its genome editing licensees",
+          "source": {
+            "label": "Sangamo Therapeutics 10-K(2024年度)",
+            "label_en": "Sangamo Therapeutics 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1001233/000162828025013088/sgmo-20241231.htm",
+            "level": "official",
+            "date": "2025-03-17",
+            "quote": "These license partners include Corteva AgriScience, formerly known as Dow AgroSciences LLC"
+          }
+        }
+      ]
+    },
+    {
+      "id": "AWK",
+      "ticker": "AWK",
+      "name": "アメリカン・ウォーター・ワークス",
+      "name_en": "American Water Works",
+      "sub": "水道",
+      "sub_en": "Water utility",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "PFAS訴訟でCortevaなどと和解し、請求を提出",
+          "text_en": "Filed claims under PFAS settlements with Corteva and others",
+          "source": {
+            "label": "American Water Works 10-K(2024年度)",
+            "label_en": "American Water Works 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1410636/000141063625000022/awk-20241231.htm",
+            "level": "official",
+            "date": "2025-02-19",
+            "quote": "the Company timely submitted to the MDL court its Phase One claims forms under settlement agreements with defendants 3M Company, The Chemours Company, Corteva, Inc. and DuPont de Nemours, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "CBUS",
+      "ticker": "CBUS",
+      "name": "シバス",
+      "name_en": "Cibus",
+      "sub": "遺伝子編集作物",
+      "sub_en": "Gene-edited crops",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Cibusが10-Kで、有力な競合の一社として挙げる",
+          "text_en": "Cibus names Corteva among its most likely competitors",
+          "source": {
+            "label": "Cibus 10-K(2025年度)",
+            "label_en": "Cibus 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1705843/000162828026018815/cbus-20251231.htm",
+            "level": "official",
+            "date": "2026-03-17",
+            "quote": "including BASF, Bayer Crop Science, Corteva AgriScience, and Syngenta"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

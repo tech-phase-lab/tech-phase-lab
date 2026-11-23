@@ -59,7 +59,10 @@ async function loadStore() {
     .replace(/import \{ after \} from "next\/server";/, "const { after } = globalThis.__store;")
     .replace('"./twelve-credit-gate"', JSON.stringify(here("twelve-credit-gate.ts")))
     .replace('"./twelve-warm-plan"', JSON.stringify(here("twelve-warm-plan.ts")))
-    .replace('"./provider-symbol"', JSON.stringify(here("provider-symbol.ts")));
+    .replace('"./provider-symbol"', JSON.stringify(here("provider-symbol.ts")))
+    // The allocator grants everything here (the simulated provider refuses past the plan); the meter is the provider's own count.
+    .replace(/import \{ reserveCredits, sharedMeterUsage \}[^;]*;/, `const reserveCredits = async () => {}; const sharedMeterUsage = async () => { const r = await fetch("https://api.twelvedata.com/api_usage?apikey=test"); return parseUsage(await r.json()); };`)
+    .replace(/import type \{ Tier \}[^;]*;/, "");
   const mod = await import("data:text/javascript;base64," + Buffer.from(stripTypeScriptTypes(text)).toString("base64") + `#${Math.random()}`);
   return { mod, cache, afterJobs };
 }

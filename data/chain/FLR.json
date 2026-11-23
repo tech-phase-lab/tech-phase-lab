@@ -1,0 +1,300 @@
+{
+  "root": {
+    "ticker": "FLR",
+    "name": "フルアー",
+    "cik": 1124198,
+    "name_en": "Fluor"
+  },
+  "rows": [
+    {
+      "ja": "出資先・合弁",
+      "en": "Investee & joint ventures",
+      "above": true
+    },
+    {
+      "ja": "顧客(相手の資料に記載)",
+      "en": "Clients (named in their filings)"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "AMTM",
+    "VVX",
+    "EME",
+    "BW"
+  ],
+  "companies": [
+    {
+      "id": "SMR",
+      "ticker": "SMR",
+      "name": "ニュースケール・パワー",
+      "name_en": "NuScale Power",
+      "sub": "小型原子炉",
+      "sub_en": "Small modular reactors",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Fluorは関連当事者(出資者)。ルーマニアのFEED契約も受注",
+          "text_en": "Fluor is a related-party investor and holds the Romania FEED contract",
+          "source": {
+            "label": "NuScale Power 10-K(2025年度)",
+            "label_en": "NuScale Power 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1822966/000182296626000018/smr-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "In the third quarter of the 2024 fiscal year, Nuclearelectrica and RoPower signed the FEED Phase 2 contract with Fluor, a related party to NuScale."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BWXT",
+      "ticker": "BWXT",
+      "name": "BWXテクノロジーズ",
+      "name_en": "BWX Technologies",
+      "sub": "原子力部品",
+      "sub_en": "Nuclear components",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "サバンナリバーの放射性廃液処理の合弁をAmentumと3社で組む",
+          "text_en": "Partner with BWXT and Amentum in the Savannah River liquid waste venture",
+          "source": {
+            "label": "BWX Technologies 10-K/A(2024年度)",
+            "label_en": "BWX Technologies 10-K/A (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1486957/000148695725000015/bwxt-20241231.htm",
+            "level": "official",
+            "date": "2025-03-19",
+            "quote": "Savannah River Mission Completion, LLC, a limited liability company formed by BWXT TSG, Amentum Environment & Energy, Inc. and Fluor Federal Services, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "LEU",
+      "ticker": "LEU",
+      "name": "セントラス・エナジー",
+      "name_en": "Centrus Energy",
+      "sub": "ウラン濃縮",
+      "sub_en": "Uranium enrichment",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "オハイオ州の濃縮工場拡張のEPC契約をFluorと締結(2026年2月)",
+          "text_en": "Awarded Fluor the EPC contract to expand its Ohio enrichment plant (February 2026)",
+          "source": {
+            "label": "Centrus Energy 10-K(2025年度)",
+            "label_en": "Centrus Energy 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1065059/000162828026007117/leu-20251231.htm",
+            "level": "official",
+            "date": "2026-02-11",
+            "quote": "On February 9, 2026, ACO entered into an engineering, procurement and construction contract with Fluor Federal Services, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "USAR",
+      "ticker": "USAR",
+      "name": "USAレアアース",
+      "name_en": "USA Rare Earth",
+      "sub": "レアアース",
+      "sub_en": "Rare earths",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "予備的事業化調査をFluorとWSPに委託",
+          "text_en": "Contracted Fluor and WSP for its pre-feasibility study",
+          "source": {
+            "label": "USA Rare Earth 10-K(2025年度)",
+            "label_en": "USA Rare Earth 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1970622/000197062226000021/usar-20251231.htm",
+            "level": "official",
+            "date": "2026-03-30",
+            "quote": "which is currently underway and has been contracted to Fluor Corporation and WSP Global Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "UEC",
+      "ticker": "UEC",
+      "name": "ウラニウム・エナジー",
+      "name_en": "Uranium Energy",
+      "sub": "ウラン",
+      "sub_en": "Uranium",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "Fluorを技術パートナーとする",
+          "text_en": "Works with Fluor as its engineering partner",
+          "source": {
+            "label": "Uranium Energy 10-K(2026年7月期)",
+            "label_en": "Uranium Energy 10-K (FY ended Jul 2026)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1334933/000143774926031414/uec20260731_10k.htm",
+            "level": "official",
+            "date": "2026-09-29",
+            "quote": "Working with our engineering partner, Fluor Enterprises, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "IONR",
+      "ticker": "IONR",
+      "name": "アイオニア",
+      "name_en": "ioneer",
+      "sub": "リチウム",
+      "sub_en": "Lithium",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "リチウム事業のエンジニアリングにFluorを起用",
+          "text_en": "Engaged Fluor as an engineering partner for its lithium project",
+          "source": {
+            "label": "ioneer 20-F(2025年6月期)",
+            "label_en": "ioneer 20-F (FY ended Jun 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1896084/000114036125038934/ef20050367_20f.htm",
+            "level": "official",
+            "date": "2025-10-22",
+            "quote": "Engaged top-tier mining, engineering, processing and environmental partners in Fluor, Veolia, and AtkinsRealis"
+          }
+        }
+      ]
+    },
+    {
+      "id": "FEAM",
+      "ticker": "FEAM",
+      "name": "5Eアドバンスト・マテリアルズ",
+      "name_en": "5E Advanced Materials",
+      "sub": "ホウ素",
+      "sub_en": "Boron",
+      "row": 1,
+      "relations": [
+        {
+          "type": "down",
+          "text": "事業費見積もりをFluorが主導",
+          "text_en": "Fluor led its project cost estimate",
+          "source": {
+            "label": "5E Advanced Materials 技術報告書(10-K添付)",
+            "label_en": "5E Advanced Materials technical report (10-K exhibit)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1888654/000119312526394541/feam-ex96_1.htm",
+            "level": "official",
+            "date": "2026-09-17",
+            "quote": "Led by Fluor, an industry leading engineering and construction firm, in close collaboration with 5E and Tier 1 equipment vendors"
+          }
+        }
+      ]
+    },
+    {
+      "id": "AMTM",
+      "ticker": "AMTM",
+      "name": "アメンタム",
+      "name_en": "Amentum",
+      "sub": "政府向け技術サービス",
+      "sub_en": "Government technical services",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "Amentumが10-Kで、環境事業の競合として挙げる",
+          "text_en": "Amentum names Fluor among environmental business competitors",
+          "source": {
+            "label": "Amentum 10-K(2025年9月期)",
+            "label_en": "Amentum 10-K (FY ended Sep 2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2011286/000162828025053993/amtm-20251003.htm",
+            "level": "official",
+            "date": "2025-11-25",
+            "quote": "Competitors for our global environmental business include AtkinsRealis, Bechtel Global Corporation, BWX Technologies Inc., Honeywell International Inc., Huntington Ingalls Industries, Inc., Fluor Corporation and Westinghouse Electric."
+          }
+        }
+      ]
+    },
+    {
+      "id": "VVX",
+      "ticker": "VVX",
+      "name": "V2X",
+      "name_en": "V2X",
+      "sub": "政府向けサービス",
+      "sub_en": "Government services",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "V2Xが10-Kで、主な競合の一社として挙げる",
+          "text_en": "V2X names Fluor among principal competitors",
+          "source": {
+            "label": "V2X 10-K(2025年度)",
+            "label_en": "V2X 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1601548/000160154826000015/vec-20251231.htm",
+            "level": "official",
+            "date": "2026-02-23",
+            "quote": "KBR, Inc., Fluor Corporation, Intrepid Global Solutions"
+          }
+        }
+      ]
+    },
+    {
+      "id": "EME",
+      "ticker": "EME",
+      "name": "EMCORグループ",
+      "name_en": "EMCOR Group",
+      "sub": "設備工事・保守",
+      "sub_en": "Building services",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "EMCORが10-Kで、ビルサービスの大手競合として挙げる",
+          "text_en": "EMCOR names Fluor among large building services competitors",
+          "source": {
+            "label": "EMCOR 10-K(2024年度)",
+            "label_en": "EMCOR 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/105634/000010563425000015/eme-20241231.htm",
+            "level": "official",
+            "date": "2025-02-26",
+            "quote": "a number of large corporations such as Amentum Services, Inc., IAP Worldwide Services, Inc., Fluor Corporation, Cushman & Wakefield plc"
+          }
+        }
+      ]
+    },
+    {
+      "id": "BW",
+      "ticker": "BW",
+      "name": "バブコック&ウィルコックス",
+      "name_en": "Babcock & Wilcox",
+      "sub": "ボイラー",
+      "sub_en": "Boilers",
+      "row": 2,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "B&Wが10-Kで、競合の一社として挙げる",
+          "text_en": "Babcock & Wilcox names Fluor among competitors",
+          "source": {
+            "label": "Babcock & Wilcox 10-K(2025年度)",
+            "label_en": "Babcock & Wilcox 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1630805/000163080526000018/bw-20251231.htm",
+            "level": "official",
+            "date": "2026-03-16",
+            "quote": "Valmet Oyj Fluor Corporation"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

@@ -33,14 +33,16 @@ import urllib.request
 from datetime import datetime, timedelta, timezone
 from zoneinfo import ZoneInfo
 
+import twelve_allocator
 import web_push
 
 ET = ZoneInfo('America/New_York')
 CHECK_SECONDS = 300
+BUSY_RETRY_SECONDS = 60  # a pass the minute had no room for is tried again in the next minute
 MAX_SYMBOLS = 120
 # The plan's per-minute credit limit is shared by the site's price screens, the comparison, the thermometer and this check
 # (lib/research/twelve-credit-gate.ts: 610). A pass waits for a later turn when this minute's use plus its own cost would pass this.
-CREDIT_CEILING = 450
+CREDIT_CEILING = 600  # critical tier (lib/research/twelve-budget.ts): above the site's page views (480) and background jobs (450)
 REARM_FRACTION = 0.01
 QUOTE_FRESH_SECONDS = 20 * 60
 SPLIT_LOW, SPLIT_HIGH = 0.55, 1.8
@@ -119,6 +121,10 @@ def member_alerts(db):
 # ---- Twelve Data ------------------------------------------------------------------
 
 def _get(path, params, env=None, timeout=20):
+    answered = twelve_allocator.intercept(path, params)  # inside the monitor: the allocator's view of the minute
+    if answered is not None:
+        return answered
+    twelve_allocator.spent(path, params)  # counted before it is sent
     env = os.environ if env is None else env
     base = (env.get('TWELVE_DATA_BASE_URL') or 'https://api.twelvedata.com').rstrip('/')
     query = dict(params)

@@ -1,0 +1,198 @@
+{
+  "root": {
+    "ticker": "HL",
+    "name": "ヘクラ・マイニング",
+    "cik": 719413,
+    "name_en": "Hecla Mining"
+  },
+  "rows": [
+    {
+      "ja": "資産の売却・ストリーム",
+      "en": "Asset sale & streams"
+    },
+    {
+      "ja": "買収した会社",
+      "en": "Acquired companies"
+    },
+    {
+      "ja": "近隣・その他",
+      "en": "Neighbors & others"
+    }
+  ],
+  "rivals": [],
+  "companies": [
+    {
+      "id": "ORE",
+      "ticker": "Orezone",
+      "name": "オレゾーン・ゴールド",
+      "name_en": "Orezone Gold",
+      "sub": "金(加)",
+      "sub_en": "Gold (Canada)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "カサ・ベラルディ鉱山を最大5.93億ドルでOrezoneに売却する契約",
+          "text_en": "Agreed to sell the Casa Berardi operation to Orezone for up to $593 million",
+          "source": {
+            "label": "Hecla Mining 10-K(2025年度)",
+            "label_en": "Hecla Mining 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/719413/000119312526055059/hl-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "We have entered into an agreement to sell our Casa Berardi operation to Orezone for total consideration of up to $593 million"
+          }
+        }
+      ]
+    },
+    {
+      "id": "FNV",
+      "ticker": "FNV",
+      "name": "フランコ・ネバダ",
+      "name_en": "Franco-Nevada",
+      "sub": "ロイヤルティ・ストリーム",
+      "sub_en": "Royalties & streams",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "OrezoneのHecla資産買収をストリーム契約で支える",
+          "text_en": "Its stream funds Orezone's purchase of Hecla's Casa Berardi mine",
+          "source": {
+            "label": "Franco-Nevada 年次情報(40-F添付)",
+            "label_en": "Franco-Nevada annual information form (40-F exhibit)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1456346/000110465926032133/fnv-20251231xex99d1.htm",
+            "level": "official",
+            "date": "2026-03-19",
+            "quote": "The stream transaction will support Orezone's acquisition of Hecla Mining Company's (\" Hecla \") producing Casa Berardi gold mine"
+          }
+        }
+      ]
+    },
+    {
+      "id": "WPM",
+      "ticker": "WPM",
+      "name": "ウィートン・プレシャス・メタルズ",
+      "name_en": "Wheaton Precious Metals",
+      "sub": "ストリーム",
+      "sub_en": "Precious metals streams",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Alexco買収に伴い、ストリーム契約の解約対価としてHecla株1.35億ドル分を受け取った",
+          "text_en": "Took $135 million of Hecla stock to end its Alexco stream when Hecla bought Alexco",
+          "source": {
+            "label": "Wheaton Precious Metals 年次情報(40-F添付)",
+            "label_en": "Wheaton Precious Metals annual information form (40-F exhibit)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1323404/000119312525068900/d893628dex991.htm",
+            "level": "official",
+            "date": "2025-03-31",
+            "quote": "On September 7, 2022, Hecla completed its acquisition of all the outstanding common shares of Alexco and the Company received $135 million of Hecla common stock for the termination of the Alexco PMPA."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Alexco",
+      "ticker": "Alexco",
+      "name": "アレクスコ・リソース",
+      "name_en": "Alexco Resource",
+      "sub": "銀(ユーコン)",
+      "sub_en": "Silver (Yukon)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ユーコンのKeno Hillを持つAlexcoを買収(2022年9月)",
+          "text_en": "Acquired Alexco, owner of Keno Hill in the Yukon (September 2022)",
+          "source": {
+            "label": "Wheaton Precious Metals 年次情報(40-F添付)",
+            "label_en": "Wheaton Precious Metals annual information form (40-F exhibit)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1323404/000119312525068900/d893628dex991.htm",
+            "level": "official",
+            "date": "2025-03-31",
+            "quote": "On September 7, 2022, Hecla completed its acquisition of all the outstanding common shares of Alexco"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Klondex",
+      "ticker": "Klondex",
+      "name": "クロンデックス・マインズ",
+      "name_en": "Klondex Mines",
+      "sub": "金(ネバダ)",
+      "sub_en": "Gold (Nevada)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ネバダの金鉱会社Klondexを買収",
+          "text_en": "Acquired the Nevada gold miner Klondex",
+          "source": {
+            "label": "Aqua Metals 10-K(2024年度)",
+            "label_en": "Aqua Metals 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1621832/000143774925010177/aqms20241231_10k.htm",
+            "level": "official",
+            "date": "2025-03-31",
+            "quote": "Before its acquisition by Hecla, Klondex was a $500 million dollar company traded on the New York Stock Exchange and the Toronto Stock Exchange."
+          }
+        }
+      ]
+    },
+    {
+      "id": "PPTA",
+      "ticker": "PPTA",
+      "name": "パーペチュア・リソーシズ",
+      "name_en": "Perpetua Resources",
+      "sub": "金・アンチモン",
+      "sub_en": "Gold & antimony",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "Stibnite計画の一部の地表権をHeclaが持ち、Perpetuaが取得を検討",
+          "text_en": "Considering buying surface rights Hecla holds within its Stibnite project",
+          "source": {
+            "label": "Perpetua Resources 技術報告書(10-K添付)",
+            "label_en": "Perpetua Resources technical report (10-K exhibit)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1526243/000110465926037403/ppta-20251231xex96d1.htm",
+            "level": "official",
+            "date": "2026-03-31",
+            "quote": "Perpetua Resources is exploring alternatives with respect to these partial millsites, which may include acquiring such property from Hecla."
+          }
+        }
+      ]
+    },
+    {
+      "id": "VGCX",
+      "ticker": "Victoria Gold",
+      "name": "ヴィクトリア・ゴールド",
+      "name_en": "Victoria Gold",
+      "sub": "金(ユーコン)",
+      "sub_en": "Gold (Yukon)",
+      "row": 2,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "近隣のEagle鉱山の事故(2024年6月)で、Keno Hillの選鉱を停止せざるを得なかった",
+          "text_en": "Its Eagle Mine heap leach failure (June 2024) forced Hecla to halt milling at Keno Hill",
+          "source": {
+            "label": "Hecla Mining 10-K(2025年度)",
+            "label_en": "Hecla Mining 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/719413/000119312526055059/hl-20251231.htm",
+            "level": "official",
+            "date": "2026-02-17",
+            "quote": "In late June 2024, an unrelated, third party, Victoria Gold, experienced a heap leach failure at its Eagle Mine which is located near Keno Hill."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

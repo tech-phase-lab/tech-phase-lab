@@ -59,6 +59,7 @@ test("the watchlist and a stock's page ask with fast=1 every 15 seconds; other s
   assert.match(route, /params\.get\("fast"\) === "1"/);
   assert.match(route, /"X-Quote-Refresh": granted \? "15s" : "60s"/);
   const data = await read("lib/research/market-data.ts");
-  assert.match(data, /const TTL = 60_000;/); // the shared one-minute cache for everything else is unchanged
-  assert.match(data, /fitsBudget\(used, extra, FAST_REFRESH_BUDGET\)/);
+  // The shared one-minute copy for everyone; the 15-second refresh only under the "fast" tier (200, lib/research/twelve-budget.ts).
+  assert.match(data, /sharedReader\.readMany<MarketQuote>\(spec, tickers/);
+  assert.match(data, /fetchQuotes\(older, "fast"\)/);
 });

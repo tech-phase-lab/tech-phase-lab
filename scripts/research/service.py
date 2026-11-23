@@ -63,6 +63,7 @@ import dart_watch
 import earnings_announce
 import earnings_history
 import value_check
+import twelve_allocator
 import official_research
 import deep_analysis
 import llm_cost
@@ -1357,19 +1358,23 @@ class AutomaticMonitor:
         if not self.web_push_enabled:
             return
         while not self.stop_event.is_set():
+            wait = price_alerts.CHECK_SECONDS
             if price_alerts.enabled():
                 try:
                     db = web_push.connect(self.db_path)
                     try:
-                        price_alerts.run_once(db)
+                        result = price_alerts.run_once(db)
                     finally:
                         db.close()
+                    # A minute with no room for the pass is tried again in the next minute, not five minutes later.
+                    if isinstance(result, dict) and result.get("status") == "credits-busy":
+                        wait = price_alerts.BUSY_RETRY_SECONDS
                     price_alerts.STATUS["lastError"] = None
                 except Exception as error:
                     # The class only: a Twelve Data message can carry the URL and the key.
                     price_alerts.STATUS["lastError"] = type(error).__name__
                     print(json.dumps({"event": "price-alerts-failed", "error": type(error).__name__}), flush=True)
-            self.stop_event.wait(price_alerts.CHECK_SECONDS)
+            self.stop_event.wait(wait)
 
     def value_check_path(self):
         # Its own file next to the monitor database: five years of closes stay out of the main database and its backups
@@ -3380,7 +3385,31 @@ class AutomaticMonitor:
                 print(("research-monitor-restarting " + type(exc).__name__ + " " + failure_detail(exc)).rstrip(), flush=True)
                 self.stop_event.wait(min(30, 2 ** min(failures, 5)))
 
+    def run_false_earnings_cleanup(self, env=None):
+        """Nov 23 (owner-approved): remove the false COHR/LRCX earnings rows once, at start, before any discovery runs.
+        Runs only when FALSE_EARNINGS_CLEANUP=apply and CLEANUP_CONFIRM names the tickers; writes a backup next to the
+        database and a marker so it never runs twice. Any failure is logged and the monitor carries on."""
+        env = os.environ if env is None else env
+        if env.get("FALSE_EARNINGS_CLEANUP") != "apply" or not env.get("CLEANUP_CONFIRM"):
+            return None
+        marker = Path(self.db_path).with_name("false-earnings-cleanup.done")
+        if marker.exists():
+            return None
+        backup = Path(self.db_path).with_name("false-earnings-cleanup-backup.json")
+        try:
+            import false_earnings_cleanup
+            with self.db_lock:
+                code = false_earnings_cleanup.main(["--db", str(self.db_path), "--tickers", env["CLEANUP_CONFIRM"],
+                                                    "--apply", "--backup", str(backup)])
+            marker.write_text(utc_now())
+            print(json.dumps({"event": "false-earnings-cleanup", "code": code, "tickers": env["CLEANUP_CONFIRM"]}), flush=True)
+            return code
+        except (Exception, SystemExit) as exc:
+            print(json.dumps({"event": "false-earnings-cleanup-failed", "error": type(exc).__name__}), flush=True)
+            return None
+
     def run(self):
+        self.run_false_earnings_cleanup()
         jobs = discovery_jobs(self.tickers)
         independent_tickers = {ticker for ticker, phase in jobs.values() if phase == "primary"}
 
@@ -4360,6 +4389,23 @@ class Handler(BaseHTTPRequestHandler):
             self.send_json(403, {"ok": False, "error": "read-only"})
             return
         path = urlsplit(self.path).path
+        if path == "/twelve/lease":
+            # The website's instances ask here for each Twelve Data call's credits (twelve_allocator.py). The site's server token only.
+            if not os.environ.get("RESEARCH_API_TOKEN") or not self.authorized():
+                self.send_json(401, {"ok": False})
+                return
+            allocator = twelve_allocator.installed()
+            if allocator is None:
+                self.send_json(503, {"ok": False, "error": "allocator-off"})
+                return
+            try:
+                payload = self.read_json(1024)
+                granted = allocator.grant(payload.get("cost"), payload.get("tier"))
+            except Exception:
+                self.send_json(400, {"ok": False})
+                return
+            self.send_json(200, {"ok": True, "granted": granted})
+            return
         if path == "/internal/resolute/push":
             # Nov 17 (owner): RESOLUTE's sender asks for its ③/④ notice to reach the member's phones (web_push.resolute_push). Its own
             # token only; RESOLUTE has already checked the member's rights and settings in its database. Counts only in the answer.
@@ -4644,6 +4690,9 @@ def main():
     # (owner, Oct 10). RESEARCH_SEMANTIC_NEWS=1 restores the old behavior.
     general_source_news.SEMANTIC_ASSESSMENT_ENABLED = os.environ.get("RESEARCH_SEMANTIC_NEWS", "") == "1"
     app = AutomaticMonitor(db_path, snapshot_path)
+    # The single Twelve Data credit allocator for the website's instances and this monitor's own jobs (twelve_allocator.py).
+    if os.environ.get("TWELVE_DATA_API_KEY", "").strip():
+        twelve_allocator.install()
     streaming = os.environ.get("RESEARCH_STREAM_ENABLED", "true").lower() == "true"
     server = ThreadingHTTPServer(("127.0.0.1", 0) if streaming else (host, port), Handler)
     server.app = app
