@@ -1,0 +1,223 @@
+{
+  "root": {
+    "ticker": "OC",
+    "name": "オーウェンス・コーニング",
+    "cik": 1370946,
+    "name_en": "Owens Corning"
+  },
+  "rows": [
+    {
+      "ja": "買収・販売先",
+      "en": "Acquisitions & customers"
+    },
+    {
+      "ja": "競合(相手の資料に記載)",
+      "en": "Competitors (named in their filings)"
+    }
+  ],
+  "rivals": [
+    "AMRZ",
+    "JELD",
+    "APT",
+    "BASA"
+  ],
+  "companies": [
+    {
+      "id": "Masonite",
+      "ticker": "Masonite",
+      "name": "メイソナイト",
+      "name_en": "Masonite",
+      "sub": "ドア",
+      "sub_en": "Doors",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ドア大手メイソナイトを2024年5月に買収し、ドア部門に",
+          "text_en": "Acquired door maker Masonite in May 2024, now its Doors segment",
+          "source": {
+            "label": "Owens Corning 10-K(2025年度)",
+            "label_en": "Owens Corning 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1370946/000137094626000067/oc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "On May 15, 2024, the Company acquired all of the outstanding shares of Masonite International Corporation (\"Masonite\")"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Paroc",
+      "ticker": "Paroc",
+      "name": "パロック",
+      "name_en": "Paroc",
+      "sub": "断熱材(欧州)",
+      "sub_en": "Insulation (Europe)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "2018年に買収した欧州の断熱材子会社",
+          "text_en": "European insulation subsidiary acquired in 2018",
+          "source": {
+            "label": "Owens Corning 10-K(2025年度)",
+            "label_en": "Owens Corning 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1370946/000137094626000067/oc-20251231.htm",
+            "level": "official",
+            "date": "2026-02-25",
+            "quote": "the Company's subsidiary, Paroc Group OY (\"Paroc\"), which was acquired in 2018"
+          }
+        }
+      ]
+    },
+    {
+      "id": "IBP",
+      "ticker": "IBP",
+      "name": "インストールド・ビルディング・プロダクツ",
+      "name_en": "Installed Building Products",
+      "sub": "断熱材施工",
+      "sub_en": "Insulation installation",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "グラスファイバー断熱材をオーウェンス・コーニングなど大手4社から大量に購入",
+          "text_en": "Buys significant volumes of fiberglass insulation from Owens Corning and three others",
+          "source": {
+            "label": "Installed Building Products 10-K(2025年度)",
+            "label_en": "Installed Building Products 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1580905/000158090526000004/ibp-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "The fiberglass insulation manufacturing market is highly consolidated and primarily served by four major manufacturers (Owens Corning, Knauf Insulation, CertainTeed and Johns Manville). We buy significant volume from all four manufacturers"
+          }
+        }
+      ]
+    },
+    {
+      "id": "QXO",
+      "ticker": "QXO",
+      "name": "QXO",
+      "name_en": "QXO",
+      "sub": "建材卸(屋根材)",
+      "sub_en": "Building products distribution",
+      "row": 0,
+      "relations": [
+        {
+          "type": "down",
+          "text": "最大級の仕入先にオーウェンス・コーニング",
+          "text_en": "Names Owens Corning among its largest suppliers",
+          "source": {
+            "label": "QXO 10-K(2025年度)",
+            "label_en": "QXO 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1236275/000162828026012601/qxo-20251231.htm",
+            "level": "official",
+            "date": "2026-02-27",
+            "quote": "Our largest suppliers include predominantly domestic companies such as Owens Corning, GAF, Carlisle Construction Materials"
+          }
+        }
+      ]
+    },
+    {
+      "id": "AMRZ",
+      "ticker": "AMRZ",
+      "name": "アムライズ",
+      "name_en": "Amrize",
+      "sub": "建材(屋根・セメント)",
+      "sub_en": "Building materials",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "北米の主な競合にオーウェンス・コーニングを挙げる",
+          "text_en": "Names Owens Corning among its principal North American competitors",
+          "source": {
+            "label": "Amrize 10-K(2025年度)",
+            "label_en": "Amrize 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/2035989/000203598926000017/holcim-20251231.htm",
+            "level": "official",
+            "date": "2026-02-18",
+            "quote": "Principal competitors across our products in North America include Carlisle, CertainTeed, GAF, Johns Manville, Owens Corning and RPM."
+          }
+        }
+      ]
+    },
+    {
+      "id": "JELD",
+      "ticker": "JELD",
+      "name": "ジェルドウェン",
+      "name_en": "JELD-WEN",
+      "sub": "ドア・窓",
+      "sub_en": "Doors & windows",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "北米のドアの主な競合にメイソナイト(オーウェンス・コーニング)を挙げる",
+          "text_en": "Names Masonite, a division of Owens Corning, as a major North American door competitor",
+          "source": {
+            "label": "JELD-WEN 10-K(2024年度)",
+            "label_en": "JELD-WEN 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1674335/000167433525000055/jeld-20241231.htm",
+            "level": "official",
+            "date": "2025-02-20",
+            "quote": "For North American interior doors, our major competitors include Masonite (a division of Owens Corning), Steves & Sons, Inc. and several smaller independent door manufacturers."
+          }
+        }
+      ]
+    },
+    {
+      "id": "APT",
+      "ticker": "APT",
+      "name": "アルファ・プロ・テック",
+      "name_en": "Alpha Pro Tech",
+      "sub": "建築用シート",
+      "sub_en": "Building wraps",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "屋根下葺き材の主な競合にオーウェンス・コーニング",
+          "text_en": "Names Owens Corning among major competitors for synthetic roof underlayment",
+          "source": {
+            "label": "Alpha Pro Tech 10-K(2024年度)",
+            "label_en": "Alpha Pro Tech 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/884269/000143774925007218/apt20241231_10k.htm",
+            "level": "official",
+            "date": "2025-03-12",
+            "quote": "Our major competitors in the construction supply weatherization market are DuPont and Berry Global for housewrap and Owens Corning and GAF for synthetic roof underlayment."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BASA",
+      "ticker": "BASA",
+      "name": "バサナイト",
+      "name_en": "Basanite",
+      "sub": "玄武岩繊維補強材",
+      "sub_en": "Basalt fiber rebar",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "FRP補強材の競合にオーウェンス・コーニングを挙げる",
+          "text_en": "Names Owens Corning among non-basalt FRP rebar competitors",
+          "source": {
+            "label": "Basanite 10-K(2024年度)",
+            "label_en": "Basanite 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1448705/000107997325000548/basa_10k.htm",
+            "level": "official",
+            "date": "2025-03-31",
+            "quote": "Other, non-basalt FRP competitors include Owens Corning/Mateen"
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

@@ -1,0 +1,309 @@
+{
+  "root": {
+    "ticker": "IART",
+    "name": "インテグラ・ライフサイエンシズ",
+    "cik": 917520,
+    "name_en": "Integra LifeSciences"
+  },
+  "rows": [
+    {
+      "ja": "事業の買収元",
+      "en": "Businesses bought from",
+      "above": true
+    },
+    {
+      "ja": "競合(各社の10-Kに記載)",
+      "en": "Competitors (named in 10-Ks)"
+    }
+  ],
+  "rivals": [
+    "MDT",
+    "SYK",
+    "SNN",
+    "ORGO"
+  ],
+  "companies": [
+    {
+      "id": "JNJ",
+      "ticker": "JNJ",
+      "name": "ジョンソン・エンド・ジョンソン",
+      "name_en": "Johnson & Johnson",
+      "sub": "医薬・医療機器",
+      "sub_en": "Pharma & medtech",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "耳鼻科機器のアクラレントをJ&J傘下エチコンから約2.8億ドルで買収(2024年)",
+          "text_en": "Bought ENT device maker Acclarent from J&J's Ethicon for about $282 million in 2024",
+          "source": {
+            "label": "Integra 10-K(2025年度)",
+            "label_en": "Integra 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/917520/000091752026000011/iart-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "On April 1, 2024, the Company completed the acquisition of all of the outstanding capital stock of Acclarent, Inc. (\"Acclarent\"), a developer and marketer of medical devices used in ear, nose, throat (\"ENT\") procedures, from Ethicon, Inc., a subsidiary of Johnson & Johnson"
+          }
+        }
+      ]
+    },
+    {
+      "id": "MDT",
+      "ticker": "MDT",
+      "name": "メドトロニック",
+      "name_en": "Medtronic",
+      "sub": "医療機器",
+      "sub_en": "Medical devices",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "人工硬膜Durepairの製品権をメドトロニックから取得し、脳外科分野で競合もする",
+          "text_en": "Bought Durepair dural graft rights from Medtronic; also a CSS competitor",
+          "source": {
+            "label": "Integra 10-K(2025年度)",
+            "label_en": "Integra 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/917520/000091752026000011/iart-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "the Company completed the acquisition of the product rights for the Durepair ® Regeneration Matrix (\"Durepair\"), a non-synthetic dura substitute for repair of the dura mater during neurosurgical procedures, from Medtronic plc for total cash consideration of $45.0 million."
+          }
+        },
+        {
+          "type": "rival",
+          "text": "脳外科・専門外科(CSS)の競合",
+          "text_en": "Competitor in Codman Specialty Surgical",
+          "source": {
+            "label": "Integra 10-K(2025年度)",
+            "label_en": "Integra 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/917520/000091752026000011/iart-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Our competitors for CSS include divisions within Medtronic, Inc., Stryker Corporation, Steris PLC, and B. Braun Medical, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SYK",
+      "ticker": "SYK",
+      "name": "ストライカー",
+      "name_en": "Stryker",
+      "sub": "医療機器",
+      "sub_en": "Medical devices",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "専門外科(CSS)の競合",
+          "text_en": "Competitor in Codman Specialty Surgical",
+          "source": {
+            "label": "Integra 10-K(2025年度)",
+            "label_en": "Integra 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/917520/000091752026000011/iart-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Our competitors for CSS include divisions within Medtronic, Inc., Stryker Corporation, Steris PLC, and B. Braun Medical, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "STE",
+      "ticker": "STE",
+      "name": "ステリス",
+      "name_en": "Steris",
+      "sub": "滅菌・手術機器",
+      "sub_en": "Sterilization & surgical",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "専門外科(CSS)の競合",
+          "text_en": "Competitor in Codman Specialty Surgical",
+          "source": {
+            "label": "Integra 10-K(2025年度)",
+            "label_en": "Integra 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/917520/000091752026000011/iart-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Our competitors for CSS include divisions within Medtronic, Inc., Stryker Corporation, Steris PLC, and B. Braun Medical, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SNN",
+      "ticker": "SNN",
+      "name": "スミス・アンド・ネフュー",
+      "name_en": "Smith & Nephew",
+      "sub": "創傷・整形",
+      "sub_en": "Wound & orthopedics",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "組織再生(TT)の競合",
+          "text_en": "Competitor in Tissue Technologies",
+          "source": {
+            "label": "Integra 10-K(2025年度)",
+            "label_en": "Integra 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/917520/000091752026000011/iart-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Our competitors for TT include Smith & Nephew plc, Organogenesis Holdings Inc., MiMedx Group, Inc., Allergan PLC, Becton Dickinson and Company, and Axogen, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ORGO",
+      "ticker": "ORGO",
+      "name": "オルガノジェネシス",
+      "name_en": "Organogenesis",
+      "sub": "再生医療",
+      "sub_en": "Regenerative medicine",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "組織再生(TT)の競合",
+          "text_en": "Competitor in Tissue Technologies",
+          "source": {
+            "label": "Integra 10-K(2025年度)",
+            "label_en": "Integra 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/917520/000091752026000011/iart-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Our competitors for TT include Smith & Nephew plc, Organogenesis Holdings Inc., MiMedx Group, Inc., Allergan PLC, Becton Dickinson and Company, and Axogen, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MDXG",
+      "ticker": "MDXG",
+      "name": "マイメディックス",
+      "name_en": "MiMedx Group",
+      "sub": "胎盤組織製品",
+      "sub_en": "Placental tissue products",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "組織再生(TT)の競合",
+          "text_en": "Competitor in Tissue Technologies",
+          "source": {
+            "label": "Integra 10-K(2025年度)",
+            "label_en": "Integra 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/917520/000091752026000011/iart-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Our competitors for TT include Smith & Nephew plc, Organogenesis Holdings Inc., MiMedx Group, Inc., Allergan PLC, Becton Dickinson and Company, and Axogen, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BDX",
+      "ticker": "BDX",
+      "name": "ベクトン・ディッキンソン",
+      "name_en": "Becton Dickinson",
+      "sub": "医療機器",
+      "sub_en": "Medical devices",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "組織再生(TT)の競合",
+          "text_en": "Competitor in Tissue Technologies",
+          "source": {
+            "label": "Integra 10-K(2025年度)",
+            "label_en": "Integra 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/917520/000091752026000011/iart-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Our competitors for TT include Smith & Nephew plc, Organogenesis Holdings Inc., MiMedx Group, Inc., Allergan PLC, Becton Dickinson and Company, and Axogen, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "AXGN",
+      "ticker": "AXGN",
+      "name": "アクソジェン",
+      "name_en": "Axogen",
+      "sub": "末梢神経修復",
+      "sub_en": "Nerve repair",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "組織再生(TT)の競合",
+          "text_en": "Competitor in Tissue Technologies",
+          "source": {
+            "label": "Integra 10-K(2025年度)",
+            "label_en": "Integra 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/917520/000091752026000011/iart-20251231.htm",
+            "level": "official",
+            "date": "2026-02-26",
+            "quote": "Our competitors for TT include Smith & Nephew plc, Organogenesis Holdings Inc., MiMedx Group, Inc., Allergan PLC, Becton Dickinson and Company, and Axogen, Inc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "GMED",
+      "ticker": "GMED",
+      "name": "グローバス・メディカル",
+      "name_en": "Globus Medical",
+      "sub": "脊椎機器",
+      "sub_en": "Spine devices",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "競合の一社にインテグラを挙げる",
+          "text_en": "Names Integra among its competitors",
+          "source": {
+            "label": "Globus Medical 10-K(2024年度)",
+            "label_en": "Globus Medical 10-K (FY2024)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1237831/000156276225000026/gmed-20241231x10k.htm",
+            "level": "official",
+            "date": "2025-02-20",
+            "quote": "Alphatec Holdings, Orthofix, Integra LifeSciences , ZimVie and other smaller public and private companies are also competitors of ours."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SNWV",
+      "ticker": "SNWV",
+      "name": "サヌウェーブ・ヘルス",
+      "name_en": "Sanuwave Health",
+      "sub": "創傷治療機器",
+      "sub_en": "Wound care devices",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "組織由来製品の競合にインテグラを挙げる",
+          "text_en": "Names Integra among competing cellular and tissue-based product makers",
+          "source": {
+            "label": "Sanuwave Health 10-K(2025年度)",
+            "label_en": "Sanuwave Health 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/1417663/000162828026021443/snwv-20251231.htm",
+            "level": "official",
+            "date": "2026-03-26",
+            "quote": "including Organogenesis, MiMedx Group, Integra LifeSciences, Vericel, and Kerecis."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}

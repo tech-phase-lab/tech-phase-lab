@@ -1,0 +1,272 @@
+{
+  "root": {
+    "ticker": "ICUI",
+    "name": "ICUメディカル",
+    "cik": 883984,
+    "name_en": "ICU Medical"
+  },
+  "rows": [
+    {
+      "ja": "事業の買収元",
+      "en": "Businesses bought from",
+      "above": true
+    },
+    {
+      "ja": "競合(10-Kに記載)",
+      "en": "Competitors (named in the 10-K)"
+    }
+  ],
+  "rivals": [
+    "BDX",
+    "BAX",
+    "EW",
+    "TFX"
+  ],
+  "companies": [
+    {
+      "id": "PFE",
+      "ticker": "PFE",
+      "name": "ファイザー",
+      "name_en": "Pfizer",
+      "sub": "製薬",
+      "sub_en": "Pharmaceuticals",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "ファイザーの輸液事業ホスピーラ・インフュージョン・システムズを2017年に買収",
+          "text_en": "Acquired Pfizer's Hospira Infusion Systems business in 2017",
+          "source": {
+            "label": "ICU Medical 10-K(2025年度)",
+            "label_en": "ICU Medical 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/883984/000088398426000008/icui-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "In February 2017, we acquired Pfizer Inc.'s (\"Pfizer\") Hospira Infusion Systems (\"HIS\") business."
+          }
+        }
+      ]
+    },
+    {
+      "id": "SmithsGroup",
+      "ticker": "Smiths Group",
+      "name": "スミス・グループ",
+      "name_en": "Smiths Group",
+      "sub": "産業機器(英)",
+      "sub_en": "Industrial technology (UK)",
+      "row": 0,
+      "relations": [
+        {
+          "type": "tie",
+          "text": "医療機器事業スミス・メディカルを2022年に買収",
+          "text_en": "Acquired its Smiths Medical business in 2022",
+          "source": {
+            "label": "ICU Medical 10-K(2025年度)",
+            "label_en": "ICU Medical 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/883984/000088398426000008/icui-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "In January 2022, we acquired Smiths Medical 2020 Limited (\"Smiths Medical\"), the holding company of Smiths Group plc's (\"Smiths\") global medical device business."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BDX",
+      "ticker": "BDX",
+      "name": "ベクトン・ディッキンソン",
+      "name_en": "Becton Dickinson",
+      "sub": "医療機器",
+      "sub_en": "Medical devices",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "米国内外の輸液システムの競合",
+          "text_en": "Infusion systems competitor in and outside the U.S.",
+          "source": {
+            "label": "ICU Medical 10-K(2025年度)",
+            "label_en": "ICU Medical 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/883984/000088398426000008/icui-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "In the U.S. our competitors include BD, Baxter, B. Braun, Moog Medical, and Fresenius Kabi, a division of Fresenius Group."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BAX",
+      "ticker": "BAX",
+      "name": "バクスター",
+      "name_en": "Baxter",
+      "sub": "医療機器・輸液",
+      "sub_en": "Medical devices & IV",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "米国の輸液システムの競合",
+          "text_en": "Infusion systems competitor in the U.S.",
+          "source": {
+            "label": "ICU Medical 10-K(2025年度)",
+            "label_en": "ICU Medical 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/883984/000088398426000008/icui-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "In the U.S. our competitors include BD, Baxter, B. Braun, Moog Medical, and Fresenius Kabi, a division of Fresenius Group."
+          }
+        }
+      ]
+    },
+    {
+      "id": "BBraun",
+      "ticker": "B. Braun",
+      "name": "B.ブラウン",
+      "name_en": "B. Braun",
+      "sub": "医療機器(独)",
+      "sub_en": "Medical devices (Germany)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "輸液システムの競合",
+          "text_en": "Infusion systems competitor",
+          "source": {
+            "label": "ICU Medical 10-K(2025年度)",
+            "label_en": "ICU Medical 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/883984/000088398426000008/icui-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "In the U.S. our competitors include BD, Baxter, B. Braun, Moog Medical, and Fresenius Kabi, a division of Fresenius Group."
+          }
+        }
+      ]
+    },
+    {
+      "id": "Fresenius",
+      "ticker": "Fresenius",
+      "name": "フレゼニウス",
+      "name_en": "Fresenius",
+      "sub": "医療機器・透析(独)",
+      "sub_en": "Medical devices & dialysis (Germany)",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "輸液システムの競合(フレゼニウス・カービ)",
+          "text_en": "Infusion systems competitor through Fresenius Kabi",
+          "source": {
+            "label": "ICU Medical 10-K(2025年度)",
+            "label_en": "ICU Medical 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/883984/000088398426000008/icui-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "In the U.S. our competitors include BD, Baxter, B. Braun, Moog Medical, and Fresenius Kabi, a division of Fresenius Group."
+          }
+        }
+      ]
+    },
+    {
+      "id": "MOG",
+      "ticker": "MOG",
+      "name": "ムーグ",
+      "name_en": "Moog",
+      "sub": "精密機器",
+      "sub_en": "Precision controls",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "米国の輸液システムの競合(ムーグ・メディカル)",
+          "text_en": "U.S. infusion competitor through Moog Medical",
+          "source": {
+            "label": "ICU Medical 10-K(2025年度)",
+            "label_en": "ICU Medical 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/883984/000088398426000008/icui-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "In the U.S. our competitors include BD, Baxter, B. Braun, Moog Medical, and Fresenius Kabi, a division of Fresenius Group."
+          }
+        }
+      ]
+    },
+    {
+      "id": "EW",
+      "ticker": "EW",
+      "name": "エドワーズ・ライフサイエンス",
+      "name_en": "Edwards Lifesciences",
+      "sub": "心臓弁・モニタリング",
+      "sub_en": "Heart valves & monitoring",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "バイタルケア製品の主な競合",
+          "text_en": "Primary competitor in vital care",
+          "source": {
+            "label": "ICU Medical 10-K(2025年度)",
+            "label_en": "ICU Medical 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/883984/000088398426000008/icui-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "Our primary competitors include Edwards Lifesciences, Belmont, Medical Technologies and Intersurgical plc."
+          }
+        }
+      ]
+    },
+    {
+      "id": "TFX",
+      "ticker": "TFX",
+      "name": "テレフレックス",
+      "name_en": "Teleflex",
+      "sub": "医療機器",
+      "sub_en": "Medical devices",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "製品・システムで競合する企業の一社",
+          "text_en": "Named among companies whose products it competes with",
+          "source": {
+            "label": "ICU Medical 10-K(2025年度)",
+            "label_en": "ICU Medical 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/883984/000088398426000008/icui-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "We compete with products and systems marketed by Becton Dickinson (\"BD\"), Baxter International (\"Baxter\"), B. Braun Medical, Inc. (\"B. Braun\"), Angiodynamics, Teleflex, EquaShield and Medtronic."
+          }
+        }
+      ]
+    },
+    {
+      "id": "ANGO",
+      "ticker": "ANGO",
+      "name": "アンジオダイナミクス",
+      "name_en": "AngioDynamics",
+      "sub": "血管治療機器",
+      "sub_en": "Vascular devices",
+      "row": 1,
+      "relations": [
+        {
+          "type": "rival",
+          "text": "製品・システムで競合する企業の一社",
+          "text_en": "Named among companies whose products it competes with",
+          "source": {
+            "label": "ICU Medical 10-K(2025年度)",
+            "label_en": "ICU Medical 10-K (FY2025)",
+            "url": "https://www.sec.gov/Archives/edgar/data/883984/000088398426000008/icui-20251231.htm",
+            "level": "official",
+            "date": "2026-02-19",
+            "quote": "We compete with products and systems marketed by Becton Dickinson (\"BD\"), Baxter International (\"Baxter\"), B. Braun Medical, Inc. (\"B. Braun\"), Angiodynamics, Teleflex, EquaShield and Medtronic."
+          }
+        }
+      ]
+    }
+  ],
+  "far": [],
+  "note": {
+    "ja": "公式資料で確認できた関係だけを載せています。投資判断を勧めるものではありません。",
+    "en": "Only relationships confirmed in official materials are shown. Not investment advice."
+  }
+}
