@@ -43,7 +43,11 @@ export const RISK_POLICY = {
    * (about 08:00–08:05 JST), so a story published before that close gets its stars in the same run (owner, Nov 21).
    * The Railway cron of resolute-rizel-daily-review must start inside this hour (20 23 * * 0-4 = 08:20 JST). */
   runHourJst: 8,
-  /** Up to this many stories a day; the next candidates are tried only when one fails the checks (bounded AI cost). */
+  /** Up to this many stories a day; the next candidates are tried only when one fails the checks (bounded AI cost).
+   * Nov 24: five attempts were too few once the whole window is read (opinion pieces and quiet stories are withheld by the
+   * model); twelve cost about ¥0.7 each. RESOLUTE_RIZEL_DAILY_STORIES / RESOLUTE_RIZEL_DAILY_ATTEMPTS change them up to the caps. */
   dailyStories: 3,
-  dailyAttempts: 5,
+  dailyAttempts: 12,
+  maxDailyStories: 5,
+  maxDailyAttempts: 20,
 } as const;

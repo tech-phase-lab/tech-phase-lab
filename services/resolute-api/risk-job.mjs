@@ -47,8 +47,8 @@ export function isInDailyWindow(value,now=new Date()){
  return bounds.latest<=now.getTime()&&bounds.earliest>=start;
 }
 // Bounds for one read. buildPublicNews returns at most 30 general items and 100 official updates; the Stock News reader
-// returns at most one page per lane (company + market-wide), so up to two pages of reports.
-export const FEED_LIMITS=Object.freeze({items:500,reportUpdates:REPORT_UPDATES_LIMIT,raw:1000});
+// pages each lane (company + market-wide) back to the window start, at most REPORT_MAX_PAGES_CAP pages each.
+export const FEED_LIMITS=Object.freeze({items:500,reportUpdates:REPORT_UPDATES_LIMIT,raw:500+500+REPORT_UPDATES_LIMIT});
 /** Which shape or size check rejected a feed. Every value is a fixed code: safe to log. */
 export const FEED_CHECKS=Object.freeze(['feed-not-ok','enabled-not-boolean','items-not-array','items-over-limit','reports-not-array','reports-over-limit','official-not-array','general-disabled-without-official','raw-over-limit']);
 const count=v=>Array.isArray(v)?v.length:null;
@@ -77,8 +77,12 @@ export function inspectCandidateFeed(feed,now=new Date(),{allowDateOnly=false}={
  for(const a of raw){if(!a||a.pendingResearch||a.brief||a.confidence==='low'){rejected.partial++;continue;}const title=a.title,body=[a.bodyJa,a.bodyEn].filter(Boolean).join('\n')||[a.summaryJa,a.summaryEn].filter(Boolean).join('\n');
  if(typeof title!=='string'||!body||body.length<100||body.length>24000){rejected.body++;continue;}
  const marketHeadline=marketWide.test(title)&&marketDownside.test(title);
- if(!relevant.test(title+' '+body)&&!marketHeadline){rejected.unrelated++;continue;}
- if(!negative.test(title)&&!marketHeadline&&!hasConcreteBodyDownside(body)){rejected.noDownsideHeadline++;continue;}
+ // Nov 24: a company-lane story already names a rostered (high-tech) ticker, and the provider's own Negative sentiment is a
+ // downside signal; without these, stories such as "Dell shares slide after outlook" never reached the model. Screening only:
+ // the model still decides publishability from the text.
+ const rostered=a.lane==='company'&&Array.isArray(a.tickers)&&a.tickers.length>0,providerNegative=a.sentiment==='negative';
+ if(!relevant.test(title+' '+body)&&!marketHeadline&&!rostered){rejected.unrelated++;continue;}
+ if(!negative.test(title)&&!marketHeadline&&!providerNegative&&!hasConcreteBodyDownside(body)){rejected.noDownsideHeadline++;continue;}
  const publishedAt=a.publishedAt??(allowDateOnly?a.publishedOn:undefined),bounds=publicationBounds(publishedAt);
  if(!bounds||!allowDateOnly&&publishedAt.length===10||bounds.latest>now.getTime()||now.getTime()-bounds.earliest>7*86400000){rejected.date++;continue;}
  let u;try{u=new URL(a.url);}catch{rejected.url++;continue;}if(u.protocol!=='https:'||u.username||u.password||u.href.length>2048){rejected.url++;continue;}u.hash='';for(const key of [...u.searchParams.keys()])if(key.startsWith('utm_'))u.searchParams.delete(key);
@@ -87,8 +91,10 @@ export function inspectCandidateFeed(feed,now=new Date(),{allowDateOnly=false}={
  const primary=['nvidia.com','investor.nvidia.com','ir.micron.com','micron.com','tsmc.com','pr.tsmc.com','asml.com','nebius.com','ir.amd.com','amd.com','sec.gov','bis.gov','federalreserve.gov'].includes(host);
  const id=hash(u.href),fingerprint=hash(title.normalize('NFKC').replace(/\s/g,''));
  if(unique.has(id))rejected.duplicateUrl++;
- unique.set(id,{id,url:u.href,title,body:body.slice(0,12000),publishedAt:publishedAt.length===10?publishedAt:new Date(publishedAt).toISOString(),source:primary?'official':sns?'sns':'report',fingerprint,tickers:cleanTickers(a.tickers)});
- }return {candidates:[...unique.values()].sort((a,b)=>b.publishedAt.localeCompare(a.publishedAt)),diagnostics:{reportConfigured:feed.reportCoverage?.configured===true,reportCount:feed.reportUpdates?.length??0,reportPossiblyTruncated:feed.reportCoverage?.possiblyTruncated===true,reportOldestPublishedAt:typeof feed.reportCoverage?.oldestPublishedAt==='string'?feed.reportCoverage.oldestPublishedAt:null,reportMarketLane:feed.reportCoverage?.marketLane===true,reportSkipped:Number.isSafeInteger(feed.reportCoverage?.skipped)?feed.reportCoverage.skipped:0,generalEnabled:feed.enabled,generalCount:feed.items.length,officialCount:feed.officialUpdates?.length??0,inspected:raw.length,rejected,coverage:'configured-feed-only',unconsumedMarketCount:feed.marketUpdates?.length??0,unconsumedAnalystCount:feed.analystUpdates?.length??0}};
+ const publisher=typeof a.publisher==='string'&&a.publisher.trim()&&a.publisher.length<=200?a.publisher.trim():null;
+ unique.set(id,{id,url:u.href,title,body:body.slice(0,12000),publishedAt:publishedAt.length===10?publishedAt:new Date(publishedAt).toISOString(),source:primary?'official':sns?'sns':'report',fingerprint,tickers:cleanTickers(a.tickers),
+  ...(publisher?{publisher}:{}),...(providerNegative?{providerNegative:true}:{}),...(a.video===true?{video:true}:{}),...(rostered?{rostered:true}:{}),headlineDownside:negative.test(title)||marketHeadline});
+ }return {candidates:[...unique.values()].sort((a,b)=>b.publishedAt.localeCompare(a.publishedAt)),diagnostics:{reportConfigured:feed.reportCoverage?.configured===true,reportCount:feed.reportUpdates?.length??0,reportPossiblyTruncated:feed.reportCoverage?.possiblyTruncated===true,...(Number.isSafeInteger(feed.reportCoverage?.pages)?{reportPages:feed.reportCoverage.pages}:{}),reportOldestPublishedAt:typeof feed.reportCoverage?.oldestPublishedAt==='string'?feed.reportCoverage.oldestPublishedAt:null,reportMarketLane:feed.reportCoverage?.marketLane===true,reportSkipped:Number.isSafeInteger(feed.reportCoverage?.skipped)?feed.reportCoverage.skipped:0,generalEnabled:feed.enabled,generalCount:feed.items.length,officialCount:feed.officialUpdates?.length??0,inspected:raw.length,rejected,coverage:'configured-feed-only',unconsumedMarketCount:feed.marketUpdates?.length??0,unconsumedAnalystCount:feed.analystUpdates?.length??0}};
 }
 export function candidatesFromFeed(feed,now=new Date(),options={}){return inspectCandidateFeed(feed,now,options).candidates;}
 const strings={type:'string'};
@@ -105,7 +111,14 @@ export const SUMMARY_INSTRUCTIONS='Summarize the supplied article only, in natur
  +'Fields: title (<=100 characters), source (who announced or reported it), content (the facts, <=250 characters), date (when it was announced or takes effect, as stated in the source; otherwise publishedDateTokyo for Japanese and publishedDateNewYork for English). '
  +'Do not add a closing question; the service appends a fixed one. '
  +'Japanese copy: keep every dollar amount exactly as the source writes it (for example $5 billion, $120 or 12%); the service converts amounts to Japanese units. Never write 米ドル, and never put 。 or 、 right after a closing parenthesis. '
- +'Return publishable false when ambiguous, unsupported or unrelated to downside concerns for AI, semiconductor or other high-technology stocks. Market-wide events (macro, rates, tariffs, policy, broad sell-offs) qualify only when the text itself ties them to equities or technology companies. No markdown.';
+ +'The input may be a short news summary rather than the full article; that is enough. Summarize only what it states and leave out what it does not give (an exact price move, figures or an event date are not required). '
+ +'The source field names who announced or reported it: use the publisher given in the input; when none is given, name the organization the text says announced it. '
+ +'Decide publishable from the text only. publishable is true when the text reports a concrete negative development for AI, semiconductor or other high-technology companies or their shares, '
+ +'or a market-wide event (economic data, interest rates, tariffs, export controls, sanctions, policy, a broad stock sell-off) that the text ties to stocks or technology companies. '
+ +'Examples that qualify: shares fell or were sold off, a lowered forecast or guidance, weak or missed results, an analyst downgrade or price-target cut, export restrictions, a probe, lawsuit or fine, '
+ +'supply shortages or production delays, cancelled or cut orders, financing or debt stress, falling stock indexes. A mixed story (good results but the shares fell) qualifies; describe the negative part as reported. '
+ +'publishable is false only for: opinion, ranking or promotional pieces (stocks to buy, price predictions, should-you-buy questions), stories with no negative development, '
+ +'subjects unrelated to technology companies or the stock market, and text too unclear to tell what happened. No markdown.';
 const stripQuestion=(text,question)=>{let t=text.trim();for(const q of [question,question.replace('？','?')])if(t.endsWith(q))t=t.slice(0,-q.length).trim();return t;};
 /** Every summary ends with the exact closing question (added here, so the model cannot alter it). */
 export function withClosingQuestion(copy,locale){const body=stripQuestion(copy.content,SUMMARY_QUESTION[locale]);return {...copy,content:body+'\n'+SUMMARY_QUESTION[locale]};}
@@ -166,7 +179,7 @@ export function bannedLog(candidate,codes,log=console.log){log(JSON.stringify({e
 export async function generate(candidate,pool,now,fetcher,{log=console.log,why={}}={}){
  if(!process.env.RESOLUTE_OPENAI_API_KEY)throw Error('MODEL_NOT_CONFIGURED');
  const dates=publicationDates(candidate.publishedAt);
- const input=JSON.stringify({title:candidate.title,body:candidate.body,source:candidate.source,publishedAt:candidate.publishedAt,publishedDateTokyo:dates.tokyo,publishedDateNewYork:dates.newYork});
+ const input=JSON.stringify({title:candidate.title,body:candidate.body,source:candidate.source,...(candidate.publisher?{publisher:candidate.publisher}:{}),...(candidate.tickers?.length?{tickers:candidate.tickers}:{}),publishedAt:candidate.publishedAt,publishedDateTokyo:dates.tokyo,publishedDateNewYork:dates.newYork});
  delete why.reason;
  let article=validateGeneration(await callModel(input,SUMMARY_INSTRUCTIONS,pool,now,fetcher),candidate,why);
  if(!article){rejectedLog(candidate,why.reason,log);return null;}

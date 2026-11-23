@@ -10,11 +10,33 @@ import {selectArticleForReview} from './rizel-worker.mjs';
 export function candidateSession(c){return {session:firstCloseAfter(newsInstant(c.publishedAt)),index:chooseRiskIndex({tickers:c.tickers??[],texts:[c.title]})};}
 /** True when that close's move is already in the thermometer snapshots, so the story gets its stars in this run. */
 export function hasKnownMove(c,moves){const {session,index}=candidateSession(c);const m=session?moves?.[session]?.[index]:null;return !!m&&typeof m.changePercent==='number'&&Number.isFinite(m.changePercent);}
+/** Stories a day and model attempts a day: RISK_POLICY defaults, lowered or raised (within the policy's hard caps) by
+ * RESOLUTE_RIZEL_DAILY_STORIES and RESOLUTE_RIZEL_DAILY_ATTEMPTS. Anything malformed falls back to the default. */
+export function dailyLimits(env=process.env){
+ const pick=(raw,fallback,max)=>{const n=typeof raw==='string'&&/^\d{1,2}$/.test(raw.trim())?Number(raw.trim()):NaN;return n>=1&&n<=max?n:fallback;};
+ const stories=pick(env?.RESOLUTE_RIZEL_DAILY_STORIES,RISK_POLICY.dailyStories,RISK_POLICY.maxDailyStories);
+ return {stories,attempts:Math.max(stories,pick(env?.RESOLUTE_RIZEL_DAILY_ATTEMPTS,RISK_POLICY.dailyAttempts,RISK_POLICY.maxDailyAttempts))};
+}
+// Opinion, ranking and promotional headlines: the model withholds these, so they go to the back of the queue (never dropped).
+const OPINION=/\b(?:stocks? to (?:buy|sell|watch|own)|buy (?:now|the dip)|should you|is it (?:time|too late)|(?:top|best) (?:\d+ )?(?:ai |tech |chip |semiconductor |growth )?stocks?|\d+ (?:stocks|reasons|things|ways)|millionaire|predictions?|could (?:soar|double|triple)|here's (?:why|what|how)|what to (?:know|expect|watch)|my (?:top|favorite))\b/i;
+const PRICE_MOVE=/\b(?:fell|falls?|drops?|dropped|slides?|slid|sinks?|sank|tumbl\w+|plung\w+|slump\w*|sell-?off|down|lower|declin\w+)\b[^.]{0,40}?\d+(?:\.\d+)?%|\d+(?:\.\d+)?%[^.]{0,30}?\b(?:drop|decline|fall|slide|lower|loss)/i;
+/** Ranking hint (Nov 24): how likely a story is the day's market-moving downside news. Never a reason to publish. */
+export function candidateScore(c){
+ let score=0;
+ if(c.headlineDownside)score+=2;
+ if(c.providerNegative)score+=2;
+ if(PRICE_MOVE.test(c.title))score+=2;
+ if(c.source==='official'||c.rostered||c.tickers?.length)score+=1;
+ if(OPINION.test(c.title)||/\?\s*$/.test(c.title))score-=4;
+ if(c.video)score-=3;
+ return score;
+}
 /** Pure intake shared by the paid worker and read-only diagnostics.
- * `selected` holds up to RISK_POLICY.dailyStories stories; `reserve` holds the next candidates, tried only when a selected one fails
- * the checks (at most RISK_POLICY.dailyAttempts in all). With `moves`, stories whose U.S. close is already known come first
- * (newest first in each group), so the day's stories show stars instead of "waiting for the market". */
-export function selectDailyCandidates(feed,now=new Date(),{moves=null}={}){
+ * `selected` holds up to `limits.stories` stories; `reserve` holds the next candidates, tried only when a selected one fails
+ * the checks (at most `limits.attempts` in all). With `moves`, stories whose U.S. close is already known come first, so the
+ * day's stories show stars instead of "waiting for the market". Inside each group the most likely downside news comes first
+ * (candidateScore), then the newest. */
+export function selectDailyCandidates(feed,now=new Date(),{moves=null,limits=dailyLimits()}={}){
  if(!(now instanceof Date)||!Number.isFinite(now.getTime()))throw Error('INVALID_CLOCK');
  const intake=inspectCandidateFeed(feed,now,{allowDateOnly:true});
  const diagnostics={...intake.diagnostics,outsideDailyWindow:0,duplicateHeadline:0,overDailyLimit:0};
@@ -27,9 +49,11 @@ export function selectDailyCandidates(feed,now=new Date(),{moves=null}={}){
  // Every in-window candidate's first close, so the known-move ordering can reach past the newest few stories (Nov 23 fix:
  // reading only the newest five, all from the weekend, left Friday's stories unordered and every pick was weekend commentary).
  const sessions=[...new Set(selected.map(c=>candidateSession(c).session).filter(Boolean))];
- if(moves){const known=selected.filter(c=>hasKnownMove(c,moves));diagnostics.knownMove=known.length;selected.splice(0,selected.length,...known,...selected.filter(c=>!known.includes(c)));}
- diagnostics.overDailyLimit=Math.max(0,selected.length-RISK_POLICY.dailyStories);
- const reserve=selected.splice(RISK_POLICY.dailyStories).slice(0,RISK_POLICY.dailyAttempts-RISK_POLICY.dailyStories);
+ const known=new Set(moves?selected.filter(c=>hasKnownMove(c,moves)):[]);if(moves)diagnostics.knownMove=known.size;
+ const scores=new Map(selected.map(c=>[c,candidateScore(c)]));
+ selected.sort((a,b)=>(known.has(b)-known.has(a))||(scores.get(b)-scores.get(a))||b.publishedAt.localeCompare(a.publishedAt));
+ diagnostics.overDailyLimit=Math.max(0,selected.length-limits.stories);
+ const reserve=selected.splice(limits.stories).slice(0,limits.attempts-limits.stories);
  // A quiet day may be claimed only when every configured lane was actually read.
  // Complete = company AND market-wide lanes read, and a full page still reached back past the window start.
  const reached=!diagnostics.reportPossiblyTruncated||(diagnostics.reportOldestPublishedAt!==null&&Date.parse(diagnostics.reportOldestPublishedAt)<=now.getTime()-windowHours(now)*3600000);
@@ -42,7 +66,7 @@ export function selectDailyCandidates(feed,now=new Date(),{moves=null}={}){
  * Daily claims survive errors: retrying cannot silently repeat paid generation.
  */
 export async function prepareDailyReview({enabled=false,readFeed,selectionPool,budgetPool,apiKey,
- publishPool,now=new Date(),summarize=generate,select=selectArticleForReview,fetcher=fetch,readMoves=null}) {
+ publishPool,now=new Date(),summarize=generate,select=selectArticleForReview,fetcher=fetch,readMoves=null,limits=dailyLimits()}) {
  if(!enabled)return {state:'disabled'};
  if(!isDailyRunHour(now))return {state:'outside-window'};
  const day=riskDate(now);
@@ -51,8 +75,9 @@ export async function prepareDailyReview({enabled=false,readFeed,selectionPool,b
  if(!claim.rows.length)return {state:'already-claimed',day};
  const refs=[],articles=[];let stage='source',diagnostics;
  try{
-  const feed=await readFeed();
-  let intake=selectDailyCandidates(feed,now);
+  // The report reader pages back to the window start (Nov 24: one page reached only about 4 of the 30 hours).
+  const feed=await readFeed({since:now.getTime()-windowHours(now)*3600000});
+  let intake=selectDailyCandidates(feed,now,{limits});
   // Both steps below only improve the day (stars on earlier stories, starred stories first); a failure in them never
   // blocks it or changes what is checked. Stories still waiting from earlier days get their stars once their close is known.
   let market=null;
@@ -60,7 +85,7 @@ export async function prepareDailyReview({enabled=false,readFeed,selectionPool,b
    market={};
    try{if(publishPool??budgetPool){const f=await fillMarketReactions(publishPool??budgetPool,readMoves,now);market.earlierDaysFilled=f.updated;market.earlierStoriesWaiting=f.waiting;}}catch{market.earlierDays='failed';}
    try{const sessions=intake.sessions;
-    if(sessions.length)intake=selectDailyCandidates(feed,now,{moves:await readMoves(sessions)});}catch{market.ordering='failed';}
+    if(sessions.length)intake=selectDailyCandidates(feed,now,{moves:await readMoves(sessions),limits});}catch{market.ordering='failed';}
   }
   diagnostics={...intake.diagnostics,...(market?{market}:{})};
   const selected=intake.selected,reserve=[...intake.reserve];
@@ -68,9 +93,9 @@ export async function prepareDailyReview({enabled=false,readFeed,selectionPool,b
   await selectionPool.query('UPDATE public.resolute_rizel_daily_runs SET candidate_count=$2 WHERE day=$1',[day,selected.length]);
   stage='generation';
   const quotes=(publishPool??budgetPool)&&readMoves?((await (publishPool??budgetPool).query('SELECT value FROM resolute.risk_quotes')).rows??[]).map(r=>r.value).filter(q=>q?.approved===true):[];
-  // A candidate that fails the checks is replaced by the next one in reserve (bounded: dailyAttempts model calls at most).
+  // A candidate that fails the checks is replaced by the next one in reserve (bounded: limits.attempts model calls at most).
   const queue=[...selected];let attempts=0;const withheld=[];
-  while(queue.length&&articles.length<RISK_POLICY.dailyStories){
+  while(queue.length&&articles.length<limits.stories){
    const candidate=queue.shift();attempts++;
    const why={};
    const draft=await summarize(candidate,budgetPool,now,fetcher,{why});
